@@ -1,3 +1,11 @@
+#define INTACT 0
+#define SUPPORT_LINES 1
+#define COVER 2
+#define CUT_COVER 3
+#define BOLTS 4
+#define SUPPORT_RODS 5
+#define SHEATH 6
+
 /turf/closed/wall/r_wall
 	name = "reinforced wall"
 	desc = "A huge chunk of reinforced metal used to separate rooms."
@@ -6,10 +14,28 @@
 	opacity = 1
 	density = 1
 
-	var/d_state = 0
+	var/d_state = INTACT
 	hardness = 10
 	sheet_type = /obj/item/stack/sheet/plasteel
 	explosion_block = 2
+
+/turf/closed/wall/r_wall/examine(mob/user)
+	..()
+	switch(d_state)
+		if(INTACT)
+			user << "<span class='notice'><b>Wirecutters</b> are required to remove the outter grille.</span>"
+		if(SUPPORT_LINES)
+			user << "<span class='notice'>The outter grille has been removed. A <b>screwdriver</b> could remove the support lines.</span>"
+		if(COVER)
+			user << "<span class='notice'>The support lines have been removed. A <b>welding tool</b> could slice through the cover.</span>"
+		if(CUT_COVER)
+			user << "<span class='notice'>The cover has been cut open. A <b>crowbar</b> could dislodge it.</span>"
+		if(BOLTS)
+			user << "<span class='notice'>The cover has been removed. A <b>wrench</b> could loosen the bolts.</span>"
+		if(SUPPORT_RODS)
+			user << "<span class='notice'>The bolts have been loosened. A <b>welding tool</b> could cut through the support rods.</span>"
+		if(SHEATH)
+			user << "<span class='notice'>The support rods have been cut. A <b>crowbar</b> could pry off the outer sheath.</span>"
 
 /turf/closed/wall/r_wall/break_wall()
 	builtin_sheet.loc = src
@@ -51,7 +77,7 @@
 			if(loc == null || MS.get_amount() < 1)
 				return 1
 			MS.use(1)
-			src.d_state = 0
+			d_state = INTACT
 			src.icon_state = "r_wall"
 			queue_smooth_neighbors(src)
 			user << "<span class='notice'>You repair the last of the damage.</span>"
@@ -61,25 +87,25 @@
 /turf/closed/wall/r_wall/try_decon(obj/item/weapon/W, mob/user, turf/T)
 	//DECONSTRUCTION
 	switch(d_state)
-		if(0)
+		if(INTACT)
 			if (istype(W, /obj/item/weapon/wirecutters))
 				playsound(src, W.usesound, 100, 1)
-				src.d_state = 1
+				d_state = SUPPORT_LINES
 				update_icon()
 				user << "<span class='notice'>You cut the outer grille.</span>"
 				return 1
 
-		if(1)
+		if(SUPPORT_LINES)
 			if (istype(W, /obj/item/weapon/screwdriver))
 				user << "<span class='notice'>You begin removing the support lines...</span>"
 				playsound(src, W.usesound, 100, 1)
 
 				if(do_after(user, 40, target = src))
-					if( !istype(src, /turf/closed/wall/r_wall) || !user || !W || !T )
+					if(!istype(src, /turf/closed/wall/r_wall) || !user || !W || !T )
 						return 1
 
-					if( d_state == 1 && user.loc == T && user.get_active_held_item() == W )
-						src.d_state = 2
+					if(d_state == SUPPORT_LINES && user.loc == T && user.get_active_held_item() == W )
+						d_state = COVER
 						update_icon()
 						user << "<span class='notice'>You remove the support lines.</span>"
 				return 1
@@ -88,7 +114,7 @@
 			else if(istype(W, /obj/item/stack/sheet/metal))
 				var/obj/item/stack/sheet/metal/O = W
 				if (O.use(1))
-					src.d_state = 0
+					d_state = INTACT
 					update_icon()
 					src.icon_state = "r_wall"
 					user << "<span class='notice'>You replace the outer grille.</span>"
@@ -97,8 +123,8 @@
 					return 1
 				return 1
 
-		if(2)
-			if( istype(W, /obj/item/weapon/weldingtool) )
+		if(COVER)
+			if(istype(W, /obj/item/weapon/weldingtool))
 				var/obj/item/weapon/weldingtool/WT = W
 				if( WT.remove_fuel(0,user) )
 
@@ -106,64 +132,64 @@
 					playsound(src, W.usesound, 100, 1)
 
 					if(do_after(user, 60, target = src))
-						if( !istype(src, /turf/closed/wall/r_wall) || !user || !WT || !WT.isOn() || !T )
+						if(!istype(src, /turf/closed/wall/r_wall) || !user || !WT || !WT.isOn() || !T )
 							return 0
 
-						if( d_state == 2 && user.loc == T && user.get_active_held_item() == WT )
-							src.d_state = 3
+						if(d_state == COVER && user.loc == T && user.get_active_held_item() == WT )
+							d_state = CUT_COVER
 							update_icon()
 							user << "<span class='notice'>You press firmly on the cover, dislodging it.</span>"
 				return 1
 
-			if( istype(W, /obj/item/weapon/gun/energy/plasmacutter) )
+			if(istype(W, /obj/item/weapon/gun/energy/plasmacutter))
 
 				user << "<span class='notice'>You begin slicing through the metal cover...</span>"
 				playsound(src, 'sound/items/Welder.ogg', 100, 1)
 
 				if(do_after(user, 60, target = src))
-					if( !istype(src, /turf/closed/wall/r_wall) || !user || !W || !T )
+					if(!istype(src, /turf/closed/wall/r_wall) || !user || !W || !T )
 						return 1
 
-					if( d_state == 2 && user.loc == T && user.get_active_held_item() == W )
-						src.d_state = 3
+					if(d_state == COVER && user.loc == T && user.get_active_held_item() == W )
+						d_state = CUT_COVER
 						update_icon()
 						user << "<span class='notice'>You press firmly on the cover, dislodging it.</span>"
 				return 1
 
-		if(3)
+		if(CUT_COVER)
 			if (istype(W, /obj/item/weapon/crowbar))
 
 				user << "<span class='notice'>You struggle to pry off the cover...</span>"
 				playsound(src, W.usesound, 100, 1)
 
 				if(do_after(user, 100, target = src))
-					if( !istype(src, /turf/closed/wall/r_wall) || !user || !W || !T )
+					if(!istype(src, /turf/closed/wall/r_wall) || !user || !W || !T )
 						return 1
 
-					if( d_state == 3 && user.loc == T && user.get_active_held_item() == W )
-						src.d_state = 4
+					if(d_state == CUT_COVER && user.loc == T && user.get_active_held_item() == W )
+						d_state = BOLTS
 						update_icon()
 						user << "<span class='notice'>You pry off the cover.</span>"
 				return 1
 
-		if(4)
+		if(BOLTS)
 			if (istype(W, /obj/item/weapon/wrench))
 
 				user << "<span class='notice'>You start loosening the anchoring bolts which secure the support rods to their frame...</span>"
 				playsound(src, W.usesound, 100, 1)
 
 				if(do_after(user, 40, target = src))
-					if( !istype(src, /turf/closed/wall/r_wall) || !user || !W || !T )
+					if(!istype(src, /turf/closed/wall/r_wall) || !user || !W || !T )
 						return 1
 
-					if( d_state == 4 && user.loc == T && user.get_active_held_item() == W )
-						src.d_state = 5
+					if(d_state == BOLTS && user.loc == T && user.get_active_held_item() == W )
+						d_state = SUPPORT_RODS
 						update_icon()
 						user << "<span class='notice'>You remove the bolts anchoring the support rods.</span>"
 				return 1
 
-		if(5)
-			if( istype(W, /obj/item/weapon/weldingtool) )
+		if(SUPPORT_RODS)
+			if(istype(W, /obj/item/weapon/weldingtool))
 				var/obj/item/weapon/weldingtool/WT = W
 				if( WT.remove_fuel(0,user) )
 
@@ -174,38 +200,38 @@
 						if( !istype(src, /turf/closed/wall/r_wall) || !user || !WT || !WT.isOn() || !T )
 							return 1
 
-						if( d_state == 5 && user.loc == T && user.get_active_held_item() == WT )
-							src.d_state = 6
+						if(d_state == SUPPORT_RODS && user.loc == T && user.get_active_held_item() == WT )
+							d_state = SHEATH
 							update_icon()
 							user << "<span class='notice'>You slice through the support rods.</span>"
 				return 1
 
-			if( istype(W, /obj/item/weapon/gun/energy/plasmacutter) )
+			if(istype(W, /obj/item/weapon/gun/energy/plasmacutter))
 
 				user << "<span class='notice'>You begin slicing through the support rods...</span>"
 				playsound(src, 'sound/items/Welder.ogg', 100, 1)
 
 				if(do_after(user, 70, target = src))
-					if( !istype(src, /turf/closed/wall/r_wall) || !user || !W || !T )
+					if(!istype(src, /turf/closed/wall/r_wall) || !user || !W || !T )
 						return 1
 
-					if( d_state == 5 && user.loc == T && user.get_active_held_item() == W )
-						src.d_state = 6
+					if(d_state == SUPPORT_RODS && user.loc == T && user.get_active_held_item() == W )
+						d_state = SHEATH
 						update_icon()
 						user << "<span class='notice'>You slice through the support rods.</span>"
 				return 1
 
-		if(6)
-			if( istype(W, /obj/item/weapon/crowbar) )
+		if(SHEATH)
+			if(istype(W, /obj/item/weapon/crowbar))
 
 				user << "<span class='notice'>You struggle to pry off the outer sheath...</span>"
 				playsound(src, W.usesound, 100, 1)
 
 				if(do_after(user, 100, target = src))
-					if( !istype(src, /turf/closed/wall/r_wall) || !user || !W || !T )
+					if(!istype(src, /turf/closed/wall/r_wall) || !user || !W || !T )
 						return 1
 
-					if( user.loc == T && user.get_active_held_item() == W )
+					if(user.loc == T && user.get_active_held_item() == W )
 						user << "<span class='notice'>You pry off the outer sheath.</span>"
 						dismantle_wall()
 				return 1
@@ -224,3 +250,11 @@
 	if(current_size >= STAGE_FIVE)
 		if(prob(30))
 			dismantle_wall()
+
+#undef INTACT
+#undef SUPPORT_LINES
+#undef COVER
+#undef CUT_COVER
+#undef BOLTS
+#undef SUPPORT_RODS
+#undef SHEATH
