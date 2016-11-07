@@ -42,7 +42,6 @@
 	invocation_type = "shout"
 	range = -1
 	include_user = 1
-	centcom_cancast = 0
 
 	mutations = list(LASEREYES, HULK)
 	duration = 300
@@ -104,8 +103,6 @@
 
 	inner_tele_radius = 0
 	outer_tele_radius = 6
-
-	centcom_cancast = 0 //prevent people from getting to centcom
 
 	action_icon_state = "blink"
 	sound1="sound/magic/blink.ogg"
@@ -277,15 +274,15 @@
 
 	if(!can_cast(user))
 		msg = "<span class='warning'>You can no longer cast Fireball.</span>"
-		remove_ranged_ability(user, msg)
+		remove_ranged_ability(msg)
 		return
 
 	if(active)
 		msg = "<span class='notice'>You extinguish your fireball...for now.</span>"
-		remove_ranged_ability(user, msg)
+		remove_ranged_ability(msg)
 	else
 		msg = "<span class='notice'>Your prepare to cast your fireball spell! <B>Left-click to cast at a target!</B></span>"
-		add_ranged_ability(user, msg)
+		add_ranged_ability(user, msg, TRUE)
 
 /obj/effect/proc_holder/spell/fireball/update_icon()
 	if(!action)
@@ -293,16 +290,16 @@
 	action.button_icon_state = "fireball[active]"
 	action.UpdateButtonIcon()
 
-/obj/effect/proc_holder/spell/fireball/InterceptClickOn(mob/living/user, params, atom/target)
+/obj/effect/proc_holder/spell/fireball/InterceptClickOn(mob/living/caller, params, atom/target)
 	if(..())
 		return FALSE
 
-	if(!cast_check(0, user))
-		remove_ranged_ability(user)
+	if(!cast_check(0, ranged_ability_user))
+		remove_ranged_ability()
 		return FALSE
 
 	var/list/targets = list(target)
-	perform(targets,user = user)
+	perform(targets,user = ranged_ability_user)
 
 	return TRUE
 
@@ -354,13 +351,13 @@
 		throwtarget = get_edge_target_turf(user, get_dir(user, get_step_away(AM, user)))
 		distfromcaster = get_dist(user, AM)
 		if(distfromcaster == 0)
-			if(istype(AM, /mob/living))
+			if(isliving(AM))
 				var/mob/living/M = AM
 				M.Weaken(5)
 				M.adjustBruteLoss(5)
 				M << "<span class='userdanger'>You're slammed into the floor by [user]!</span>"
 		else
-			if(istype(AM, /mob/living))
+			if(isliving(AM))
 				var/mob/living/M = AM
 				M.Weaken(stun_amt)
 				M << "<span class='userdanger'>You're thrown back by [user]!</span>"
@@ -385,3 +382,56 @@
 		playsound(C.loc, 'sound/voice/hiss5.ogg', 80, 1, 1)
 		C.spin(6,1)
 	..(targets, user, 3)
+
+/obj/effect/proc_holder/spell/targeted/sacred_flame
+	name = "Sacred Flame"
+	desc = "Makes everyone around you more flammable, and lights yourself on fire."
+	charge_max = 60
+	clothes_req = 0
+	invocation = "FI'RAN DADISKO"
+	invocation_type = "shout"
+	max_targets = 0
+	range = 6
+	include_user = 1
+	selection_type = "view"
+	action_icon_state = "sacredflame"
+	sound = "sound/magic/Fireball.ogg"
+
+/obj/effect/proc_holder/spell/targeted/sacred_flame/cast(list/targets, mob/user = usr)
+	for(var/mob/living/L in targets)
+		L.adjust_fire_stacks(20)
+	if(isliving(user))
+		var/mob/living/U = user
+		U.IgniteMob()
+
+/obj/effect/proc_holder/spell/targeted/conjure_item/spellpacket
+	name = "Thrown Lightning"
+	desc = "Forged from eldrich energies, a packet of pure power, known as a spell packet will appear in your hand, that when thrown will stun the target."
+	clothes_req = 1
+	item_type = /obj/item/spellpacket/lightningbolt
+	charge_max = 10
+
+/obj/effect/proc_holder/spell/targeted/conjure_item/spellpacket/cast(list/targets, mob/user = usr)
+	..()
+	for(var/mob/living/carbon/C in targets)
+		C.throw_mode_on()
+
+/obj/item/spellpacket/lightningbolt
+	name = "\improper Lightning bolt Spell Packet"
+	desc = "Some birdseed wrapped in cloth that somehow crackles with electricity."
+	icon = 'icons/obj/toy.dmi'
+	icon_state = "snappop"
+	w_class = 1
+
+/obj/item/spellpacket/lightningbolt/throw_impact(atom/hit_atom)
+	if(!..())
+		if(isliving(hit_atom))
+			var/mob/living/M = hit_atom
+			M.electrocute_act(80, src, illusion = 1)
+		qdel(src)
+
+/obj/item/spellpacket/lightningbolt/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0)
+	. = ..()
+	if(ishuman(thrower))
+		var/mob/living/carbon/human/H = thrower
+		H.say("LIGHTNINGBOLT!!")

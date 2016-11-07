@@ -46,7 +46,7 @@
 	staticOverlays = list()
 	hud_possible = list(DIAG_STAT_HUD, DIAG_HUD, ANTAG_HUD)
 	unique_name = TRUE
-	faction = list("silicon")
+	faction = list("neutral","silicon")
 	dextrous = TRUE
 	dextrous_hud_type = /datum/hud/dextrous/drone
 	var/staticChoice = "static"
@@ -140,23 +140,30 @@
 /mob/living/simple_animal/drone/gib()
 	dust()
 
+/mob/living/simple_animal/drone/ratvar_act()
+	if(internal_storage)
+		unEquip(internal_storage)
+	if(head)
+		unEquip(head)
+	var/mob/living/simple_animal/drone/cogscarab/ratvar/R = new /mob/living/simple_animal/drone/cogscarab/ratvar(loc)
+	R.setDir(dir)
+	if(mind)
+		mind.transfer_to(R, 1)
+	else
+		R.key = key
+	qdel(src)
+
 
 /mob/living/simple_animal/drone/examine(mob/user)
 	var/msg = "<span class='info'>*---------*\nThis is \icon[src] \a <b>[src]</b>!\n"
 
-	//Left hand items
-	if(l_hand && !(l_hand.flags&ABSTRACT))
-		if(l_hand.blood_DNA)
-			msg += "<span class='warning'>It is holding \icon[l_hand] [l_hand.gender==PLURAL?"some":"a"] blood-stained [l_hand.name] in its left hand!</span>\n"
-		else
-			msg += "It is holding \icon[l_hand] \a [l_hand] in its left hand.\n"
-
-	//Right hand items
-	if(r_hand && !(r_hand.flags&ABSTRACT))
-		if(r_hand.blood_DNA)
-			msg += "<span class='warning'>It is holding \icon[r_hand] [r_hand.gender==PLURAL?"some":"a"] blood-stained [r_hand.name] in its right hand!</span>\n"
-		else
-			msg += "It is holding \icon[r_hand] \a [r_hand] in its right hand.\n"
+	//Hands
+	for(var/obj/item/I in held_items)
+		if(!(I.flags & ABSTRACT))
+			if(I.blood_DNA)
+				msg += "<span class='warning'>It has \icon[I] [I.gender==PLURAL?"some":"a"] blood-stained [I.name] in its [get_held_index_name(get_held_index_of_item(I))]!</span>\n"
+			else
+				msg += "It has \icon[I] \a [I] in its [get_held_index_name(get_held_index_of_item(I))].\n"
 
 	//Internal storage
 	if(internal_storage && !(internal_storage.flags&ABSTRACT))
@@ -182,10 +189,10 @@
 
 	//Damaged
 	if(health != maxHealth)
-		if(health > 10) //Between 30 and 10
+		if(health > maxHealth * 0.33) //Between maxHealth and about a third of maxHealth, between 30 and 10 for normal drones
 			msg += "<span class='warning'>Its screws are slightly loose.</span>\n"
-		else //Between 9 and 0
-			msg += "<span class='warning'><b>Its screws are very loose!</b></span>\n"
+		else //otherwise, below about 33%
+			msg += "<span class='boldwarning'>Its screws are very loose!</span>\n"
 
 	//Dead
 	if(stat == DEAD)
@@ -244,7 +251,7 @@
 /mob/living/simple_animal/drone/handle_temperature_damage()
 	return
 
-/mob/living/simple_animal/drone/flash_eyes(intensity = 1, override_blindness_check = 0, affect_silicon = 0)
+/mob/living/simple_animal/drone/flash_act(intensity = 1, override_blindness_check = 0, affect_silicon = 0)
 	if(affect_silicon)
 		return ..()
 
@@ -257,12 +264,9 @@
 /mob/living/simple_animal/drone/experience_pressure_difference(pressure_difference, direction)
 	return
 
-/mob/living/simple_animal/drone/fully_heal(admin_revive = 0)
-	adjustBruteLoss(-getBruteLoss()) //Heal all brute damage
-
 /mob/living/simple_animal/drone/bee_friendly()
 	// Why would bees pay attention to drones?
 	return 1
 
-/mob/living/simple_animal/drone/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, safety = 0, tesla_shock = 0)
+/mob/living/simple_animal/drone/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, safety = 0, tesla_shock = 0, illusion = 0)
 	return 0 //So they don't die trying to fix wiring

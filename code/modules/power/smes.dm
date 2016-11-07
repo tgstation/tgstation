@@ -164,7 +164,7 @@
 
 	//disassembling the terminal
 	if(istype(I, /obj/item/weapon/wirecutters) && terminal && panel_open)
-		terminal.dismantle(user)
+		terminal.dismantle(user, I)
 		return
 
 	//crowbarring it !
@@ -177,7 +177,7 @@
 
 	return ..()
 
-/obj/machinery/power/smes/deconstruction()
+/obj/machinery/power/smes/on_deconstruction()
 	for(var/obj/item/weapon/stock_parts/cell/cell in component_parts)
 		cell.charge = (charge / capacity) * cell.maxcharge
 

@@ -33,6 +33,7 @@
 			ranged = initial(ranged)
 			melee_damage_lower = initial(melee_damage_lower)
 			melee_damage_upper = initial(melee_damage_upper)
+			obj_damage = initial(obj_damage)
 			environment_smash = initial(environment_smash)
 			alpha = 255
 			range = initial(range)
@@ -43,6 +44,7 @@
 			ranged = 0
 			melee_damage_lower = 0
 			melee_damage_upper = 0
+			obj_damage = 0
 			environment_smash = 0
 			alpha = 45
 			range = 255

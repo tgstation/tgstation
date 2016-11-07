@@ -110,7 +110,7 @@
 /obj/item/device/radio/interact(mob/user)
 	if (..())
 		return
-	if(b_stat && !istype(user, /mob/living/silicon/ai))
+	if(b_stat && !isAI(user))
 		wires.interact(user)
 	else
 		ui_interact(user)
@@ -197,6 +197,9 @@
 				. = TRUE
 
 /obj/item/device/radio/talk_into(atom/movable/M, message, channel, list/spans)
+	addtimer(src,"talk_into_impl",0,FALSE,M,message,channel,spans)
+
+/obj/item/device/radio/proc/talk_into_impl(atom/movable/M, message, channel, list/spans)
 	if(!on) return // the device has to be on
 	//  Fix for permacell radios, but kinda eh about actually fixing them.
 	if(!M || !message) return
@@ -277,7 +280,7 @@
 		jobname = "AI"
 
 	// --- Cyborg ---
-	else if(isrobot(M))
+	else if(iscyborg(M))
 		var/mob/living/silicon/robot/B = M
 		jobname = "[B.designation] Cyborg"
 

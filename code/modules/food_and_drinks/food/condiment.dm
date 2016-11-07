@@ -125,7 +125,7 @@
 	possible_states = list()
 
 /obj/item/weapon/reagent_containers/food/condiment/saltshaker/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] begins to swap forms with the salt shaker! It looks like \he's trying to commit suicide.</span>")
+	user.visible_message("<span class='suicide'>[user] begins to swap forms with the salt shaker! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	var/newname = "[name]"
 	name = "[user.name]"
 	user.name = newname

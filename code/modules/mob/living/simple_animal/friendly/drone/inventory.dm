@@ -49,10 +49,9 @@
 	if(!istype(I))
 		return
 
-	if(I == l_hand)
-		l_hand = null
-	else if(I == r_hand)
-		r_hand = null
+	var/index = get_held_index_of_item(I)
+	if(index)
+		held_items[index] = null
 	update_inv_hands()
 
 	if(I.pulledby)
@@ -60,8 +59,8 @@
 
 	I.screen_loc = null // will get moved if inventory is visible
 	I.loc = src
-	I.equipped(src, slot)
 	I.layer = ABOVE_HUD_LAYER
+	I.plane = ABOVE_HUD_PLANE
 
 	switch(slot)
 		if(slot_head)
@@ -74,6 +73,8 @@
 			src << "<span class='danger'>You are trying to equip this item to an unsupported inventory slot. Report this to a coder!</span>"
 			return
 
+	//Call back for item being equipped to drone
+	I.equipped(src, slot)
 
 /mob/living/simple_animal/drone/getBackSlot()
 	return slot_generic_dextrous_storage

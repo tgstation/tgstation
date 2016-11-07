@@ -1,7 +1,10 @@
 /obj/effect/decal/cleanable
+	gender = PLURAL
+	layer = ABOVE_NORMAL_TURF_LAYER
 	var/list/random_icon_states = list()
 	var/blood_state = "" //I'm sorry but cleanable/blood code is ass, and so is blood_DNA
 	var/bloodiness = 0 //0-100, amount of blood in this decal, used for making footprints and affecting the alpha of bloody footprints
+	var/mergeable_decal = 1 //when two of these are on a same tile or do we need to merge them into just one?
 
 /obj/effect/decal/cleanable/New()
 	if (random_icon_states && length(src.random_icon_states) > 0)
@@ -16,7 +19,8 @@
 
 
 /obj/effect/decal/cleanable/proc/replace_decal(obj/effect/decal/cleanable/C)
-	qdel(C)
+	if(mergeable_decal)
+		qdel(C)
 
 /obj/effect/decal/cleanable/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/reagent_containers/glass) || istype(W, /obj/item/weapon/reagent_containers/food/drinks))
@@ -42,6 +46,8 @@
 			src.reagents.chem_temp = min(src.reagents.chem_temp + added_heat, hotness)
 			src.reagents.handle_reactions()
 			user << "<span class='notice'>You heat [src] with [W]!</span>"
+	else
+		return ..()
 
 /obj/effect/decal/cleanable/ex_act()
 	if(reagents)
@@ -49,7 +55,7 @@
 			R.on_ex_act()
 	..()
 
-/obj/effect/decal/cleanable/fire_act()
+/obj/effect/decal/cleanable/fire_act(exposed_temperature, exposed_volume)
 	if(reagents)
 		reagents.chem_temp += 30
 		reagents.handle_reactions()

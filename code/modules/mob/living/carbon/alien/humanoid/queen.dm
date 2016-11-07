@@ -22,7 +22,27 @@
 	maxHealth = 400
 	health = 400
 	icon_state = "alienq"
+	var/datum/action/small_sprite/smallsprite = new/datum/action/small_sprite()
 
+/datum/action/small_sprite
+	name = "Toggle Giant Sprite - Others will always see you as giant"
+	button_icon_state = "smallqueen"
+	background_icon_state = "bg_alien"
+	var/small = 0
+
+/datum/action/small_sprite/Trigger()
+	..()
+	if(!small)
+		var/image/I = image(icon = 'icons/mob/alien.dmi' , icon_state = "alienq_running", loc = owner)
+		I.override = 1
+		I.pixel_x -= owner.pixel_x
+		I.pixel_y -= owner.pixel_y
+		owner.add_alt_appearance("smallqueen", I, list(owner))
+
+		small = 1
+	else
+		owner.remove_alt_appearance("smallqueen")
+		small = 0
 
 /mob/living/carbon/alien/humanoid/royal/queen/New()
 	//there should only be one queen
@@ -37,13 +57,17 @@
 
 	real_name = src.name
 
+	AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/repulse/xeno(src))
+	AddAbility(new/obj/effect/proc_holder/alien/royal/queen/promote())
+	smallsprite.Grant(src)
+	..()
+
+/mob/living/carbon/alien/humanoid/royal/queen/create_internal_organs()
 	internal_organs += new /obj/item/organ/alien/plasmavessel/large/queen
 	internal_organs += new /obj/item/organ/alien/resinspinner
 	internal_organs += new /obj/item/organ/alien/acid
 	internal_organs += new /obj/item/organ/alien/neurotoxin
 	internal_organs += new /obj/item/organ/alien/eggsac
-	AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/repulse/xeno(src))
-	AddAbility(new/obj/effect/proc_holder/alien/royal/queen/promote())
 	..()
 
 /mob/living/carbon/alien/humanoid/royal/queen/movement_delay()

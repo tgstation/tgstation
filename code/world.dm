@@ -4,9 +4,13 @@
 	area = /area/space
 	view = "15x15"
 	cache_lifespan = 7
+	hub = "Exadv1.spacestation13"
+	hub_password = "kMZy3U5jJHSiBQjr"
+	name = "/tg/ Station 13"
 	fps = 20
+	visibility = 0
 
-var/global/list/map_transition_config = MAP_TRANSITION_CONFIG
+var/list/map_transition_config = MAP_TRANSITION_CONFIG
 
 /world/New()
 	check_for_cleanbot_bug()
@@ -32,14 +36,12 @@ var/global/list/map_transition_config = MAP_TRANSITION_CONFIG
 	changelog_hash = md5('html/changelog.html')					//used for telling if the changelog has changed recently
 
 	make_datum_references_lists()	//initialises global lists for referencing frequently used datums (so that we only ever do it once)
-
 	load_configuration()
 	load_mode()
 	load_motd()
 	load_admins()
 	if(config.usewhitelist)
 		load_whitelist()
-	appearance_loadbanfile()
 	LoadBans()
 	investigate_reset()
 
@@ -60,8 +62,8 @@ var/global/list/map_transition_config = MAP_TRANSITION_CONFIG
 	spawn(10)
 		Master.Setup()
 
-	process_teleport_locs()			//Sets up the wizard teleport locations
 	SortAreas()						//Build the list of all existing areas and sort it alphabetically
+	process_teleport_locs()			//Sets up the wizard teleport locations
 
 	#ifdef MAP_NAME
 	map_name = "[MAP_NAME]"
@@ -99,8 +101,8 @@ var/last_irc_status = 0
 		if(world.time - last_irc_status < IRC_STATUS_THROTTLE)
 			return
 		var/list/adm = get_admin_counts()
-		var/status = "Admins: [Sum(adm)] (Active: [adm["admins"]] AFK: [adm["afkadmins"]] Stealth: [adm["stealthadmins"]] Skipped: [adm["noflagadmins"]]). "
-		status += "Players: [clients.len] (Active: [get_active_player_count()]). Mode: [master_mode]."
+		var/status = "Admins: [adm["total"]] (Active: [adm["present"]] AFK: [adm["afk"]] Stealth: [adm["stealth"]] Skipped: [adm["noflags"]]). "
+		status += "Players: [clients.len] (Active: [get_active_player_count(0,1,0)]). Mode: [ticker.mode.name]."
 		send2irc("Status", status)
 		last_irc_status = world.time
 
@@ -169,6 +171,18 @@ var/last_irc_status = 0
 		else
 			return IrcPm(input["adminmsg"],input["msg"],input["sender"])
 
+	else if("namecheck" in input)
+		if(!key_valid)
+			return "Bad Key"
+		else
+			log_admin("IRC Name Check: [input["sender"]] on [input["namecheck"]]")
+			message_admins("IRC name checking on [input["namecheck"]] from [input["sender"]]")
+			return keywords_lookup(input["namecheck"],1)
+	else if("adminwho" in input)
+		if(!key_valid)
+			return "Bad Key"
+		else
+			return ircadminwho()
 
 
 /world/Reboot(var/reason, var/feedback_c, var/feedback_r, var/time)
@@ -187,6 +201,14 @@ var/last_irc_status = 0
 		world << "<span class='boldannounce'>An admin has delayed the round end.</span>"
 		return
 	world << "<span class='boldannounce'>Rebooting World in [delay/10] [delay > 10 ? "seconds" : "second"]. [reason]</span>"
+	var/round_end_sound_sent = FALSE
+	if(ticker.round_end_sound)
+		round_end_sound_sent = TRUE
+		for(var/thing in clients)
+			var/client/C = thing
+			if (!C)
+				continue
+			C.Export("##action=load_rsc", ticker.round_end_sound)
 	sleep(delay)
 	if(blackbox)
 		blackbox.save_all_data_to_sql()
@@ -204,7 +226,7 @@ var/last_irc_status = 0
 	feedback_set_details("[feedback_c]","[feedback_r]")
 	log_game("<span class='boldannounce'>Rebooting World. [reason]</span>")
 	kick_clients_in_lobby("<span class='boldannounce'>The round came to an end with you in the lobby.</span>", 1) //second parameter ensures only afk clients are kicked
-	#ifdef dellogging
+#ifdef dellogging
 	var/log = file("data/logs/del.log")
 	log << time2text(world.realtime)
 	for(var/index in del_counter)
@@ -212,12 +234,24 @@ var/last_irc_status = 0
 		if(count > 10)
 			log << "#[count]\t[index]"
 #endif
-	spawn(0)
+	var/soundwait = 0
+	if (ticker.round_end_sound && !round_end_sound_sent)
+		soundwait = 10
+		for(var/thing in clients)
+			var/client/C = thing
+			if (!C)
+				continue
+			C.Export("##action=load_rsc", ticker.round_end_sound)
+	spawn(soundwait/2)
 		if(ticker && ticker.round_end_sound)
 			world << sound(ticker.round_end_sound)
 		else
-			world << sound(pick('sound/AI/newroundsexy.ogg','sound/misc/apcdestroyed.ogg','sound/misc/bangindonk.ogg','sound/misc/leavingtg.ogg')) // random end sounds!! - LastyBatsy
-	for(var/client/C in clients)
+			world << sound(pick('sound/AI/newroundsexy.ogg','sound/misc/apcdestroyed.ogg','sound/misc/bangindonk.ogg','sound/misc/leavingtg.ogg', 'sound/misc/its_only_game.ogg')) // random end sounds!! - LastyBatsy
+	sleep(soundwait)
+	for(var/thing in clients)
+		var/client/C = thing
+		if (!C)
+			continue
 		if(config.server)	//if you set a server location in config.txt, it sends you there instead of trying to reconnect to the same world address. -- NeoFite
 			C << link("byond://[config.server]")
 	..(0)

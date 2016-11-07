@@ -34,11 +34,11 @@
 	if(!M.has_dna())
 		return  //No robots, AIs, aliens, Ians or other mobs should be affected by this.
 	if((method==VAPOR && prob(min(33, reac_volume))) || method==INGEST || method==PATCH || method==INJECT)
-		randmuti(M)
+		M.randmuti()
 		if(prob(98))
-			randmutb(M)
+			M.randmutb()
 		else
-			randmutg(M)
+			M.randmutg()
 		M.updateappearance()
 		M.domutcheck()
 	..()
@@ -74,7 +74,7 @@
 	return
 
 /datum/reagent/toxin/plasma/reaction_mob(mob/living/M, method=TOUCH, reac_volume)//Splashing people with plasma is stronger than fuel!
-	if(!istype(M, /mob/living))
+	if(!isliving(M))
 		return
 	if(method == TOUCH || method == VAPOR)
 		M.adjust_fire_stacks(reac_volume / 5)
@@ -118,7 +118,7 @@
 		M.adjustToxLoss(rand(20,60)*REM, 0)
 		. = 1
 	else if(prob(40))
-		M.heal_organ_damage(5*REM,0, 0)
+		M.heal_bodypart_damage(5*REM,0, 0)
 		. = 1
 	..()
 
@@ -184,10 +184,10 @@
 	if(istype(O,/obj/structure/alien/weeds))
 		var/obj/structure/alien/weeds/alien_weeds = O
 		alien_weeds.take_damage(rand(15,35), BRUTE, 0) // Kills alien weeds pretty fast
-	else if(istype(O,/obj/effect/glowshroom)) //even a small amount is enough to kill it
+	else if(istype(O,/obj/structure/glowshroom)) //even a small amount is enough to kill it
 		qdel(O)
-	else if(istype(O,/obj/effect/spacevine))
-		var/obj/effect/spacevine/SV = O
+	else if(istype(O,/obj/structure/spacevine))
+		var/obj/structure/spacevine/SV = O
 		SV.on_chem_effect(src)
 
 /datum/reagent/toxin/plantbgone/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
@@ -520,12 +520,12 @@
 				M.adjustOxyLoss(rand(5,25), 0)
 				. = 1
 			if(3)
-				if(istype(M, /mob/living/carbon/human))
+				if(ishuman(M))
 					var/mob/living/carbon/human/H = M
 					if(!H.heart_attack)
 						H.heart_attack = 1 // rip in pepperoni
 						if(H.stat == CONSCIOUS)
-							H.visible_message("<span class='userdanger'>[H] clutches at their chest as if their heart stopped!</span>")
+							H.visible_message("<span class='userdanger'>[H] clutches at [H.p_their()] chest as if [H.p_their()] heart stopped!</span>")
 					else
 						H.losebreath += 10
 						H.adjustOxyLoss(rand(5,25), 0)
@@ -657,22 +657,31 @@
 		. = 1
 	return ..() || .
 
-/datum/reagent/toxin/teslium //Teslium. Causes periodic shocks, and makes shocks against the target much more effective.
-	name = "Teslium"
-	id = "teslium"
-	description = "An unstable, electrically-charged metallic slurry. Periodically electrocutes its victim, and makes electrocutions against them more deadly."
-	reagent_state = LIQUID
-	color = "#20324D" //RGB: 32, 50, 77
-	metabolization_rate = 0.5 * REAGENTS_METABOLISM
-	toxpwr = 0
-	var/shock_timer = 0
 
-/datum/reagent/toxin/teslium/on_mob_life(mob/living/M)
-	shock_timer++
-	if(shock_timer >= rand(5,30)) //Random shocks are wildly unpredictable
-		shock_timer = 0
-		M.electrocute_act(rand(5,20), "Teslium in their body", 1, 1) //Override because it's caused from INSIDE of you
-		playsound(M, "sparks", 50, 1)
+/datum/reagent/toxin/rotatium //Rotatium. Fucks up your rotation and is hilarious
+	name = "Rotatium"
+	id = "rotatium"
+	description = "A constantly swirling, oddly colourful fluid. Causes the consumer's sense of direction and hand-eye coordination to become wild."
+	reagent_state = LIQUID
+	color = "#AC88CA" //RGB: 172, 136, 202
+	metabolization_rate = 0.6 * REAGENTS_METABOLISM
+	toxpwr = 0.5
+
+/datum/reagent/toxin/rotatium/on_mob_life(mob/living/M)
+	if(M.hud_used)
+		if(current_cycle >= 20 && current_cycle%20 == 0)
+			var/list/screens = list(M.hud_used.plane_masters["[GAME_PLANE]"], M.hud_used.plane_masters["[LIGHTING_PLANE]"])
+			var/rotation = min(round(current_cycle/20), 89) // By this point the player is probably puking and quitting anyway
+			for(var/whole_screen in screens)
+				animate(whole_screen, transform = matrix(rotation, MATRIX_ROTATE), time = 5, easing = QUAD_EASING, loop = -1)
+				animate(transform = matrix(-rotation, MATRIX_ROTATE), time = 5, easing = QUAD_EASING)
+	return ..()
+
+/datum/reagent/toxin/rotatium/on_mob_delete(mob/living/M)
+	if(M && M.hud_used)
+		var/list/screens = list(M.hud_used.plane_masters["[GAME_PLANE]"], M.hud_used.plane_masters["[LIGHTING_PLANE]"])
+		for(var/whole_screen in screens)
+			animate(whole_screen, transform = matrix(), time = 5, easing = QUAD_EASING)
 	..()
 
 
@@ -697,7 +706,7 @@
 	if(method == INJECT)
 		C.adjustBruteLoss(1.5 * min(6*toxpwr, reac_volume * toxpwr))
 		return
-	C.acid_act(acidpwr, toxpwr, reac_volume)
+	C.acid_act(acidpwr, reac_volume)
 
 /datum/reagent/toxin/acid/reaction_obj(obj/O, reac_volume)
 	if(istype(O.loc, /mob)) //handled in human acid_act()
@@ -709,8 +718,7 @@
 	if (!istype(T))
 		return
 	reac_volume = round(reac_volume,0.1)
-	for(var/obj/O in T)
-		O.acid_act(acidpwr, reac_volume)
+	T.acid_act(acidpwr, reac_volume)
 
 /datum/reagent/toxin/acid/fluacid
 	name = "Fluorosulfuric acid"

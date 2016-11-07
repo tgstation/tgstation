@@ -50,14 +50,14 @@
 			src.visible_message("<span class='notice'>[src] calms down.</span>")
 	if(stat == CONSCIOUS)
 		udder.generateMilk()
-		if(locate(/obj/effect/spacevine) in loc)
-			var/obj/effect/spacevine/SV = locate(/obj/effect/spacevine) in loc
+		var/obj/structure/spacevine/SV = locate(/obj/structure/spacevine) in loc
+		if(SV)
 			SV.eat(src)
 		if(!pulledby)
 			for(var/direction in shuffle(list(1,2,4,8,5,6,9,10)))
 				var/step = get_step(src, direction)
 				if(step)
-					if(locate(/obj/effect/spacevine) in step)
+					if(locate(/obj/structure/spacevine) in step)
 						Move(step, get_dir(src, step))
 
 /mob/living/simple_animal/hostile/retaliate/goat/Retaliate()
@@ -67,8 +67,8 @@
 /mob/living/simple_animal/hostile/retaliate/goat/Move()
 	..()
 	if(!stat)
-		if(locate(/obj/effect/spacevine) in loc)
-			var/obj/effect/spacevine/SV = locate(/obj/effect/spacevine) in loc
+		var/obj/structure/spacevine/SV = locate(/obj/structure/spacevine) in loc
+		if(SV)
 			SV.eat(src)
 
 /mob/living/simple_animal/hostile/retaliate/goat/attackby(obj/item/O, mob/user, params)
@@ -86,6 +86,7 @@
 	icon_living = "cow"
 	icon_dead = "cow_dead"
 	icon_gib = "cow_gib"
+	gender = FEMALE
 	speak = list("moo?","moo","MOOOOOO")
 	speak_emote = list("moos","moos hauntingly")
 	emote_hear = list("brays.")
@@ -159,6 +160,7 @@
 	icon_living = "chick"
 	icon_dead = "chick_dead"
 	icon_gib = "chick_gib"
+	gender = FEMALE
 	speak = list("Cherp.","Cherp?","Chirrup.","Cheep!")
 	speak_emote = list("cheeps")
 	emote_hear = list("cheeps.")
@@ -204,6 +206,7 @@ var/global/chicken_count = 0
 /mob/living/simple_animal/chicken
 	name = "\improper chicken"
 	desc = "Hopefully the eggs are good this season."
+	gender = FEMALE
 	icon_state = "chicken_brown"
 	icon_living = "chicken_brown"
 	icon_dead = "chicken_brown_dead"

@@ -55,7 +55,7 @@
 	if(!drone)
 		return
 
-	if(istype(loc, /mob/living))
+	if(isliving(loc))
 		var/mob/living/L = loc
 		L << "<span class='warning'>[drone] is trying to escape!</span>"
 		if(!do_after(drone, 50, target = L))
@@ -74,7 +74,7 @@
 /obj/item/clothing/head/drone_holder/relaymove()
 	uncurl()
 
-/obj/item/clothing/head/drone_holder/container_resist()
+/obj/item/clothing/head/drone_holder/container_resist(mob/living/user)
 	uncurl()
 
 

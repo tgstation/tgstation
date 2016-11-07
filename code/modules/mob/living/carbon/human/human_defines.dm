@@ -30,19 +30,13 @@ var/global/default_martial_art = new/datum/martial_art
 	//Equipment slots
 	var/obj/item/wear_suit = null
 	var/obj/item/w_uniform = null
-	var/obj/item/shoes = null
 	var/obj/item/belt = null
-	var/obj/item/gloves = null
-	var/obj/item/clothing/glasses/glasses = null
-	var/obj/item/ears = null
 	var/obj/item/wear_id = null
 	var/obj/item/r_store = null
 	var/obj/item/l_store = null
 	var/obj/item/s_store = null
 
 	var/special_voice = "" // For changing our voice. Used by a symptom.
-
-	var/gender_ambiguous = 0 //if something goes wrong during gender reassignment this generates a line in examine
 
 	var/bleed_rate = 0 //how much are we bleeding
 	var/bleedsuppress = 0 //for stopping bloodloss, eventually this will be limb-based like bleeding

@@ -17,7 +17,7 @@ LINEN BINS
 	throw_range = 2
 	w_class = 1
 	item_color = "white"
-	burn_state = FLAMMABLE
+	resistance_flags = FLAMMABLE
 
 	dog_fashion = /datum/dog_fashion/head/ghost
 
@@ -38,7 +38,7 @@ LINEN BINS
 
 /obj/item/weapon/bedsheet/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/wirecutters) || I.is_sharp())
-		var/obj/item/stack/sheet/cloth/C = new (loc, 3)
+		var/obj/item/stack/sheet/cloth/C = new (get_turf(src), 3)
 		transfer_fingerprints_to(C)
 		C.add_fingerprint(user)
 		qdel(src)
@@ -205,8 +205,9 @@ LINEN BINS
 	icon = 'icons/obj/structures.dmi'
 	icon_state = "linenbin-full"
 	anchored = 1
-	burn_state = FLAMMABLE
-	burntime = 20
+	resistance_flags = FLAMMABLE
+	obj_integrity = 70
+	max_integrity = 70
 	var/amount = 10
 	var/list/sheets = list()
 	var/obj/item/hidden = null
@@ -231,16 +232,11 @@ LINEN BINS
 		else
 			icon_state = "linenbin-full"
 
-/obj/structure/bedsheetbin/fire_act()
-	if(!amount)
-		return
+/obj/structure/bedsheetbin/fire_act(exposed_temperature, exposed_volume)
+	if(amount)
+		amount = 0
+		update_icon()
 	..()
-
-/obj/structure/bedsheetbin/burn()
-	amount = 0
-	extinguish()
-	update_icon()
-	return
 
 /obj/structure/bedsheetbin/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/bedsheet))

@@ -6400,7 +6400,7 @@
 /area/medical/medbay)
 "nR" = (
 /obj/structure/table,
-/obj/item/clothing/tie/stethoscope,
+/obj/item/clothing/neck/stethoscope,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay)
 "nS" = (
@@ -9028,10 +9028,8 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "tP" = (
-/obj/structure/transit_tube{
-	icon_state = "N-S"
-	},
 /obj/structure/window/reinforced/fulltile,
+/obj/structure/transit_tube,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "tQ" = (
@@ -9288,10 +9286,8 @@
 	},
 /area/hallway/primary/central)
 "uw" = (
-/obj/structure/transit_tube{
-	icon_state = "N-S"
-	},
 /obj/structure/window/reinforced/fulltile,
+/obj/structure/transit_tube,
 /turf/open/floor/plating,
 /area/tcommsat/computer)
 "ux" = (
@@ -10679,7 +10675,7 @@
 /area/engine/engineering)
 "xU" = (
 /obj/structure/table/wood,
-/obj/item/weapon/gun/projectile/revolver/doublebarrel,
+/obj/item/weapon/gun/ballistic/revolver/doublebarrel,
 /obj/item/weapon/reagent_containers/food/drinks/shaker,
 /turf/open/floor/wood,
 /area/crew_quarters/bar)
@@ -10764,7 +10760,7 @@
 /obj/item/clothing/glasses/hud/health,
 /obj/item/clothing/glasses/hud/health,
 /obj/item/clothing/glasses/hud/health,
-/obj/item/clothing/tie/stethoscope,
+/obj/item/clothing/neck/stethoscope,
 /obj/item/weapon/reagent_containers/hypospray,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay)
@@ -12330,10 +12326,10 @@
 	},
 /area/engine/engineering)
 "BH" = (
-/obj/structure/transit_tube/station/reverse{
-	dir = 8;
-	icon_state = "closed"
+/obj/structure/transit_tube/station/reverse/flipped{
+	dir = 4
 	},
+/obj/structure/transit_tube_pod,
 /turf/open/floor/plating/warnplate{
 	dir = 8
 	},
@@ -12446,10 +12442,7 @@
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "BW" = (
-/obj/structure/transit_tube{
-	icon_state = "N-S"
-	},
-/obj/structure/transit_tube_pod,
+/obj/structure/transit_tube,
 /turf/open/floor/plating/warnplate{
 	dir = 8
 	},
@@ -12535,8 +12528,8 @@
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "Ci" = (
-/obj/structure/transit_tube{
-	icon_state = "N-SE"
+/obj/structure/transit_tube/curved/flipped{
+	dir = 1
 	},
 /turf/open/space,
 /area/space)
@@ -12576,10 +12569,10 @@
 /turf/open/space,
 /area/space)
 "Cp" = (
-/obj/structure/transit_tube{
-	icon_state = "E-NW"
-	},
 /obj/structure/lattice,
+/obj/structure/transit_tube/curved{
+	dir = 4
+	},
 /turf/open/space,
 /area/space)
 "Cq" = (
@@ -12587,15 +12580,13 @@
 /turf/open/space,
 /area/space)
 "Cr" = (
-/obj/structure/transit_tube{
-	icon_state = "E-W-Pass"
-	},
 /obj/structure/lattice,
+/obj/structure/transit_tube/crossing/horizontal,
 /turf/open/space,
 /area/space)
 "Cs" = (
-/obj/structure/transit_tube{
-	icon_state = "W-SE"
+/obj/structure/transit_tube/curved{
+	dir = 8
 	},
 /turf/open/space,
 /area/space)
@@ -12658,10 +12649,8 @@
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "CA" = (
-/obj/structure/transit_tube{
-	icon_state = "S-NW"
-	},
 /obj/structure/lattice,
+/obj/structure/transit_tube/curved/flipped,
 /turf/open/space,
 /area/space)
 "CB" = (
@@ -13234,10 +13223,8 @@
 /turf/open/floor/engine/vacuum,
 /area/engine/engineering)
 "DX" = (
-/obj/structure/transit_tube{
-	icon_state = "N-S"
-	},
 /obj/structure/lattice,
+/obj/structure/transit_tube/crossing,
 /turf/open/space,
 /area/space)
 "DY" = (
@@ -13287,10 +13274,10 @@
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/syndicate)
 "Ee" = (
-/obj/structure/transit_tube{
-	icon_state = "N-SE"
-	},
 /obj/structure/lattice,
+/obj/structure/transit_tube/curved/flipped{
+	dir = 1
+	},
 /turf/open/space,
 /area/space)
 "Ef" = (
@@ -13367,8 +13354,8 @@
 /turf/open/space,
 /area/space)
 "Eq" = (
-/obj/structure/transit_tube{
-	icon_state = "E-NW"
+/obj/structure/transit_tube/curved{
+	dir = 4
 	},
 /turf/open/space,
 /area/space)
@@ -13380,15 +13367,15 @@
 /turf/open/space,
 /area/space)
 "Es" = (
-/obj/structure/transit_tube,
 /obj/structure/lattice,
+/obj/structure/transit_tube/horizontal,
 /turf/open/space,
 /area/space)
 "Et" = (
-/obj/structure/transit_tube{
-	icon_state = "W-SE"
-	},
 /obj/structure/lattice,
+/obj/structure/transit_tube/curved{
+	dir = 8
+	},
 /turf/open/space,
 /area/space)
 "Eu" = (
@@ -13435,10 +13422,8 @@
 	},
 /area/tcommsat/computer)
 "EB" = (
-/obj/structure/transit_tube{
-	icon_state = "NW-SE"
-	},
 /obj/structure/lattice,
+/obj/structure/transit_tube/diagonal/topleft,
 /turf/open/space,
 /area/space)
 "EC" = (
@@ -13625,9 +13610,7 @@
 /turf/open/floor/plasteel/black,
 /area/engine/gravity_generator)
 "Fh" = (
-/obj/structure/transit_tube{
-	icon_state = "N-S"
-	},
+/obj/structure/transit_tube,
 /turf/open/floor/plating/warnplate{
 	dir = 4
 	},
@@ -13747,9 +13730,8 @@
 /turf/open/floor/plating,
 /area/space)
 "Fw" = (
-/obj/structure/transit_tube/station/reverse{
-	icon_state = "closed";
-	dir = 4
+/obj/structure/transit_tube/station/reverse/flipped{
+	dir = 8
 	},
 /turf/open/floor/plating/warnplate{
 	dir = 4
@@ -13852,10 +13834,6 @@
 /turf/closed/wall/mineral/plastitanium,
 /area/space)
 "FK" = (
-/obj/structure/transit_tube{
-	icon_state = "Block";
-	dir = 1
-	},
 /turf/open/floor/plating/warnplate{
 	dir = 4
 	},
@@ -13899,7 +13877,7 @@
 /turf/open/floor/plasteel,
 /area/tcommsat/computer)
 "FQ" = (
-/obj/machinery/hologram/holopad,
+/obj/machinery/holopad,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/landmark/start{
 	name = "Cyborg"
@@ -14145,8 +14123,8 @@
 	dir = 1
 	},
 /obj/structure/table,
-/obj/item/robot_parts/r_arm,
-/obj/item/robot_parts/l_arm,
+/obj/item/bodypart/r_arm/robot,
+/obj/item/bodypart/l_arm/robot,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/syndicate)
 "Gv" = (
@@ -14521,8 +14499,9 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/supply)
 "Hk" = (
-/turf/closed/wall/mineral/titanium/overspace,
-/area/shuttle/supply)
+/obj/structure/transit_tube/horizontal,
+/turf/open/space,
+/area/space)
 "Hl" = (
 /obj/structure/shuttle/engine/heater{
 	icon_state = "heater";
@@ -50249,7 +50228,7 @@ BH
 BW
 tP
 Ci
-Co
+am
 am
 yB
 CY
@@ -50505,7 +50484,7 @@ qI
 qI
 qI
 yB
-Cj
+aa
 Cp
 am
 yB
@@ -50763,7 +50742,7 @@ aa
 aa
 aa
 aa
-Cq
+Hk
 am
 yB
 CX
@@ -51020,7 +50999,7 @@ aa
 aa
 aa
 aa
-Cq
+Hk
 am
 yB
 Da
@@ -51277,7 +51256,7 @@ aa
 aa
 aa
 aa
-Cq
+Hk
 am
 yB
 yB
@@ -51791,7 +51770,7 @@ aa
 aa
 aa
 aa
-Cq
+Hk
 am
 aa
 aa
@@ -52048,7 +52027,7 @@ aa
 aa
 aa
 aa
-Cq
+Hk
 am
 aa
 aa
@@ -52305,7 +52284,7 @@ aa
 aa
 aa
 aa
-Cq
+Hk
 am
 aa
 aa
@@ -52562,7 +52541,7 @@ aa
 aa
 aa
 aa
-Cq
+Hk
 am
 aa
 aa
@@ -52820,7 +52799,7 @@ aa
 aa
 aa
 Cs
-Co
+am
 am
 aa
 aa
@@ -53076,21 +53055,21 @@ aa
 aa
 aa
 aa
-Cj
+aa
 CA
-CK
-Db
-Db
-Db
-Db
+Cq
+Cq
+Cq
+Cq
+Cq
 DX
-DZ
 DX
-Db
-Db
-Db
+DX
+Cq
+Cq
+Cq
 Ee
-Ep
+aa
 aa
 aa
 aa
@@ -53346,7 +53325,7 @@ am
 am
 am
 am
-Ef
+am
 Eq
 aa
 aa
@@ -53604,7 +53583,7 @@ aa
 aa
 aa
 am
-Cq
+Hk
 aa
 aa
 aa
@@ -53861,7 +53840,7 @@ aa
 aa
 aa
 am
-Er
+Cr
 aa
 aa
 aa
@@ -54118,7 +54097,7 @@ aa
 aa
 aa
 am
-Cq
+Hk
 aa
 aa
 aa
@@ -54375,7 +54354,7 @@ aa
 aa
 aa
 am
-Cq
+Hk
 aa
 aa
 aa
@@ -54632,7 +54611,7 @@ aa
 aa
 aa
 am
-Cq
+Hk
 aa
 aa
 aa
@@ -54889,7 +54868,7 @@ aa
 aa
 aa
 am
-Cq
+Hk
 aa
 aa
 aa
@@ -55146,7 +55125,7 @@ aa
 aa
 aa
 am
-Cq
+Hk
 aa
 aa
 aa
@@ -55403,7 +55382,7 @@ aa
 aa
 aa
 am
-Cq
+Hk
 aa
 aa
 aa
@@ -55660,7 +55639,7 @@ aa
 aa
 aa
 am
-Er
+Cr
 aa
 aa
 aa
@@ -55917,7 +55896,7 @@ aa
 aa
 aa
 am
-Cq
+Hk
 aa
 aa
 aa
@@ -56174,7 +56153,7 @@ aa
 aa
 aa
 am
-Cq
+Hk
 aa
 aa
 aa
@@ -56431,7 +56410,7 @@ aa
 aa
 aa
 am
-Cq
+Hk
 aa
 aa
 aa
@@ -56688,7 +56667,7 @@ aa
 aa
 aa
 am
-Cq
+Hk
 aa
 aa
 aa
@@ -56945,7 +56924,7 @@ aa
 aa
 aa
 am
-Er
+Cr
 aa
 aa
 aa
@@ -57460,7 +57439,7 @@ aa
 aa
 am
 Et
-Co
+am
 am
 am
 am
@@ -57716,9 +57695,9 @@ aa
 aa
 aa
 am
-Ef
+am
 EB
-Co
+am
 Ea
 uR
 uR
@@ -57974,7 +57953,7 @@ aa
 aa
 am
 am
-Ef
+am
 CA
 uw
 Fh

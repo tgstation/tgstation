@@ -3,6 +3,7 @@
 	icon = 'icons/mob/animal.dmi'
 	health = 100
 	maxHealth = 100
+	gender = NEUTER
 	var/list/spawned_mobs = list()
 	var/max_mobs = 5
 	var/spawn_delay = 0

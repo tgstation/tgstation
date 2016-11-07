@@ -8,7 +8,7 @@
 	actions_types = list(/datum/action/item_action/toggle)
 	strip_delay = 70
 	put_on_delay = 70
-	burn_state = FIRE_PROOF
+	resistance_flags = FIRE_PROOF
 	origin_tech = "materials=3;magnets=4;engineering=4"
 
 /obj/item/clothing/shoes/magboots/verb/toggle()
@@ -31,7 +31,7 @@
 	icon_state = "[magboot_state][magpulse]"
 	user << "<span class='notice'>You [magpulse ? "enable" : "disable"] the mag-pulse traction system.</span>"
 	user.update_inv_shoes()	//so our mob-overlays update
-	user.update_gravity(user.mob_has_gravity())
+	user.update_gravity(user.has_gravity())
 	for(var/X in actions)
 		var/datum/action/A = X
 		A.UpdateButtonIcon()
@@ -51,6 +51,7 @@
 	magboot_state = "advmag"
 	slowdown_active = SHOES_SLOWDOWN
 	origin_tech = null
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 
 /obj/item/clothing/shoes/magboots/syndie
 	desc = "Reverse-engineered magnetic boots that have a heavy magnetic pull. Property of Gorlex Marauders."

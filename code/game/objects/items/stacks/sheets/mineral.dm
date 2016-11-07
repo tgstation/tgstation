@@ -135,8 +135,9 @@ var/global/list/datum/stack_recipe/uranium_recipes = list ( \
 	singular_name = "plasma sheet"
 	origin_tech = "plasmatech=2;materials=2"
 	sheettype = "plasma"
-	burn_state = FLAMMABLE
-	burntime = 5
+	resistance_flags = FLAMMABLE
+	obj_integrity = 100
+	max_integrity = 100
 	materials = list(MAT_PLASMA=MINERAL_MATERIAL_AMOUNT)
 
 var/global/list/datum/stack_recipe/plasma_recipes = list ( \
@@ -159,7 +160,7 @@ var/global/list/datum/stack_recipe/plasma_recipes = list ( \
 	else
 		return ..()
 
-/obj/item/stack/sheet/mineral/plasma/fire_act()
+/obj/item/stack/sheet/mineral/plasma/fire_act(exposed_temperature, exposed_volume)
 	atmos_spawn_air("plasma=[amount*10];TEMP=1000")
 	qdel(src)
 

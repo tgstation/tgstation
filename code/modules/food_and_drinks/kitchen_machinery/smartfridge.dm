@@ -49,14 +49,6 @@
 	else
 		return ..()
 
-/obj/machinery/smartfridge/construction()
-	for(var/datum/A in contents)
-		qdel(A)
-
-/obj/machinery/smartfridge/deconstruction()
-	for(var/atom/movable/A in contents)
-		A.loc = loc
-
 /obj/machinery/smartfridge/RefreshParts()
 	for(var/obj/item/weapon/stock_parts/matter_bin/B in component_parts)
 		max_n_of_items = 1500 * B.rating
@@ -95,44 +87,44 @@
 		updateUsrDialog()
 		return
 
-	if(stat)
-		return 0
+	if(!stat)
 
-	if(contents.len >= max_n_of_items)
-		user << "<span class='warning'>\The [src] is full!</span>"
-		return 0
-
-	if(accept_check(O))
-		load(O)
-		user.visible_message("[user] has added \the [O] to \the [src].", "<span class='notice'>You add \the [O] to \the [src].</span>")
-		updateUsrDialog()
-		return 1
-
-	if(istype(O, /obj/item/weapon/storage/bag))
-		var/obj/item/weapon/storage/P = O
-		var/loaded = 0
-		for(var/obj/G in P.contents)
-			if(contents.len >= max_n_of_items)
-				break
-			if(accept_check(G))
-				load(G)
-				loaded++
-		updateUsrDialog()
-
-		if(loaded)
-			if(contents.len >= max_n_of_items)
-				user.visible_message("[user] loads \the [src] with \the [O].", \
-								 "<span class='notice'>You fill \the [src] with \the [O].</span>")
-			else
-				user.visible_message("[user] loads \the [src] with \the [O].", \
-									 "<span class='notice'>You load \the [src] with \the [O].</span>")
-			if(O.contents.len > 0)
-				user << "<span class='warning'>Some items are refused.</span>"
-		else
-			user << "<span class='warning'>There is nothing in [O] to put in [src]!</span>"
+		if(contents.len >= max_n_of_items)
+			user << "<span class='warning'>\The [src] is full!</span>"
 			return 0
 
-	else if(user.a_intent != "harm")
+		if(accept_check(O))
+			load(O)
+			user.visible_message("[user] has added \the [O] to \the [src].", "<span class='notice'>You add \the [O] to \the [src].</span>")
+			updateUsrDialog()
+			return 1
+
+		if(istype(O, /obj/item/weapon/storage/bag))
+			var/obj/item/weapon/storage/P = O
+			var/loaded = 0
+			for(var/obj/G in P.contents)
+				if(contents.len >= max_n_of_items)
+					break
+				if(accept_check(G))
+					load(G)
+					loaded++
+			updateUsrDialog()
+
+			if(loaded)
+				if(contents.len >= max_n_of_items)
+					user.visible_message("[user] loads \the [src] with \the [O].", \
+									 "<span class='notice'>You fill \the [src] with \the [O].</span>")
+				else
+					user.visible_message("[user] loads \the [src] with \the [O].", \
+										 "<span class='notice'>You load \the [src] with \the [O].</span>")
+				if(O.contents.len > 0)
+					user << "<span class='warning'>Some items are refused.</span>"
+				return 1
+			else
+				user << "<span class='warning'>There is nothing in [O] to put in [src]!</span>"
+				return 0
+
+	if(user.a_intent != "harm")
 		user << "<span class='warning'>\The [src] smartly refuses [O].</span>"
 		updateUsrDialog()
 		return 0
@@ -247,6 +239,24 @@
 	icon_off = "drying_rack"
 	var/drying = 0
 
+/obj/machinery/smartfridge/drying_rack/New()
+	..()
+	if(component_parts && component_parts.len)
+		component_parts.Cut()
+	component_parts = null
+
+/obj/machinery/smartfridge/drying_rack/on_deconstruction()
+	new /obj/item/stack/sheet/mineral/wood(loc, 10)
+	..()
+
+/obj/machinery/smartfridge/drying_rack/RefreshParts()
+/obj/machinery/smartfridge/drying_rack/default_deconstruction_screwdriver()
+/obj/machinery/smartfridge/drying_rack/exchange_parts()
+/obj/machinery/smartfridge/drying_rack/spawn_frame()
+
+/obj/machinery/smartfridge/drying_rack/default_deconstruction_crowbar(obj/item/weapon/crowbar/C, ignore_panel = 1)
+	..()
+
 /obj/machinery/smartfridge/drying_rack/interact(mob/user)
 	var/dat = ..()
 	if(dat)
@@ -306,7 +316,7 @@
 /obj/machinery/smartfridge/drying_rack/proc/rack_dry()
 	for(var/obj/item/weapon/reagent_containers/food/snacks/S in contents)
 		if(S.dried_type == S.type)//if the dried type is the same as the object's type, don't bother creating a whole new item...
-			S.color = "#ad7257"
+			S.add_atom_colour("#ad7257", FIXED_COLOUR_PRIORITY)
 			S.dry = 1
 			S.loc = get_turf(src)
 		else

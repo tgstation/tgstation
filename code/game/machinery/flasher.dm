@@ -11,6 +11,9 @@
 	var/last_flash = 0 //Don't want it getting spammed like regular flashes
 	var/strength = 5 //How weakened targets are when flashed.
 	var/base_state = "mflash"
+	obj_integrity = 250
+	max_integrity = 250
+	integrity_failure = 100
 	anchored = 1
 
 /obj/machinery/flasher/portable //Portable version of the flasher. Only flashes when anchored
@@ -31,6 +34,13 @@
 	else
 		bulb = new /obj/item/device/assembly/flash/handheld(src)
 
+/obj/machinery/flasher/Destroy()
+	remove_from_proximity_list(src, range)
+	if(bulb)
+		qdel(bulb)
+		bulb = null
+	..()
+
 /obj/machinery/flasher/Move()
 	remove_from_proximity_list(src, range)
 	..()
@@ -43,7 +53,7 @@
 		else
 			icon_state = "[base_state]1"
 	else
-		stat |= ~NOPOWER
+		stat |= NOPOWER
 		icon_state = "[base_state]1-p"
 
 //Don't want to render prison breaks impossible
@@ -55,7 +65,7 @@
 			playsound(src.loc, 'sound/items/Wirecutter.ogg', 100, 1)
 			if(do_after(user, 30/W.toolspeed, target = src) && bulb)
 				user.visible_message("[user] has disconnected [src]'s flashbulb!", "<span class='notice'>You disconnect [src]'s flashbulb.</span>")
-				bulb.loc = src.loc
+				bulb.forceMove(loc)
 				bulb = null
 				power_change()
 
@@ -64,7 +74,7 @@
 			if(!user.drop_item())
 				return
 			user.visible_message("[user] installs [W] into [src].", "<span class='notice'>You install [W] into [src].</span>")
-			W.loc = src
+			W.forceMove(src)
 			bulb = W
 			power_change()
 		else
@@ -76,11 +86,7 @@
 			playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
 			if(do_after(user, 40/W.toolspeed, target = src))
 				user << "<span class='notice'>You unsecure the flasher frame.</span>"
-				var/obj/item/wallframe/flasher/F = new(get_turf(src))
-				transfer_fingerprints_to(F)
-				F.id = id
-				playsound(loc, 'sound/items/Deconstruct.ogg', 50, 1)
-				qdel(src)
+				deconstruct(TRUE)
 		else
 			user << "<span class='warning'>Remove a flashbulb from [src] first!</span>"
 	else
@@ -90,8 +96,11 @@
 /obj/machinery/flasher/attack_ai()
 	if (anchored)
 		return flash()
-	else
-		return
+
+/obj/machinery/flasher/run_obj_armor(damage_amount, damage_type, damage_flag = 0, attack_dir)
+	if(damage_flag == "melee" && damage_amount < 10) //any melee attack below 10 dmg does nothing
+		return 0
+	. = ..()
 
 /obj/machinery/flasher/proc/flash()
 	if (!powered() || !bulb)
@@ -114,7 +123,7 @@
 		if (get_dist(src, L) > range)
 			continue
 
-		if(L.flash_eyes(affect_silicon = 1))
+		if(L.flash_act(affect_silicon = 1))
 			L.Weaken(strength)
 			if(L.weakeyes)
 				L.Weaken(strength * 1.5)
@@ -124,14 +133,34 @@
 
 
 /obj/machinery/flasher/emp_act(severity)
-	if(stat & (BROKEN|NOPOWER))
-		..(severity)
-		return
-	if(bulb && prob(75/severity))
-		flash()
-		bulb.burn_out()
-		power_change()
-	..(severity)
+	if(!(stat & (BROKEN|NOPOWER)))
+		if(bulb && prob(75/severity))
+			flash()
+			bulb.burn_out()
+			power_change()
+	..()
+
+/obj/machinery/flasher/obj_break(damage_flag)
+	if(!(flags & NODECONSTRUCT))
+		if(!(stat & BROKEN))
+			stat |= BROKEN
+			if(bulb)
+				bulb.burn_out()
+				power_change()
+
+/obj/machinery/flasher/deconstruct(disassembled = TRUE)
+	if(!(flags & NODECONSTRUCT))
+		if(bulb)
+			bulb.forceMove(loc)
+			bulb = null
+		if(disassembled)
+			var/obj/item/wallframe/flasher/F = new(get_turf(src))
+			transfer_fingerprints_to(F)
+			F.id = id
+			playsound(loc, 'sound/items/Deconstruct.ogg', 50, 1)
+		else
+			new /obj/item/stack/sheet/metal (loc, 2)
+	qdel(src)
 
 /obj/machinery/flasher/portable/HasProximity(atom/movable/AM)
 	if (last_flash && world.time < last_flash + 150)

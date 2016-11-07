@@ -88,7 +88,7 @@
 	name = "pizza spawner"
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/cobweb2,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/wood{
 	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
@@ -103,7 +103,7 @@
 	},
 /area/ruin/unpowered)
 "n" = (
-/obj/effect/glowshroom/single,
+/obj/structure/glowshroom/single,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/wood{
 	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
@@ -161,7 +161,7 @@
 	},
 /area/ruin/unpowered)
 "u" = (
-/obj/effect/glowshroom/single,
+/obj/structure/glowshroom/single,
 /turf/open/floor/wood{
 	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
@@ -202,7 +202,7 @@
 /area/ruin/unpowered)
 "z" = (
 /obj/structure/table/wood,
-/obj/effect/glowshroom/single,
+/obj/structure/glowshroom/single,
 /obj/item/weapon/a_gift,
 /turf/open/floor/wood{
 	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
@@ -283,7 +283,7 @@
 	},
 /area/ruin/unpowered)
 "J" = (
-/obj/effect/glowshroom/single,
+/obj/structure/glowshroom/single,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
@@ -690,7 +690,7 @@ d
 d
 e
 e
-B
+N
 e
 e
 d

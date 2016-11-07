@@ -5,6 +5,7 @@
 	icon_living = "old"
 	icon_dead = "old_dead"
 	icon_gib = "clown_gib"
+	gender = MALE
 	turns_per_move = 5
 	response_help = "pokes"
 	response_disarm = "gently pushes aside"
@@ -18,6 +19,7 @@
 	melee_damage_upper = 10
 	attacktext = "hits"
 	attack_sound = 'sound/weapons/punch1.ogg'
+	obj_damage = 0
 	environment_smash = 0
 	del_on_death = 0
 

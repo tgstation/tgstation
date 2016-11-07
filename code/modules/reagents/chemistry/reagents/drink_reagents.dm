@@ -24,7 +24,7 @@
 
 /datum/reagent/consumable/tomatojuice/on_mob_life(mob/living/M)
 	if(M.getFireLoss() && prob(20))
-		M.heal_organ_damage(0,1, 0)
+		M.heal_bodypart_damage(0,1, 0)
 		. = 1
 	..()
 
@@ -64,6 +64,12 @@
 	description = "A delicious blend of several different kinds of berries."
 	color = "#863333" // rgb: 134, 51, 51
 
+/datum/reagent/consumable/applejuice
+	name = "Apple Juice"
+	id = "applejuice"
+	description = "The sweet juice of an apple, fit for all ages."
+	color = "#ECFF56" // rgb: 236, 255, 86
+
 /datum/reagent/consumable/poisonberryjuice
 	name = "Poison Berry Juice"
 	id = "poisonberryjuice"
@@ -94,8 +100,8 @@
 	color = "#863333" // rgb: 175, 175, 0
 
 /datum/reagent/consumable/banana/on_mob_life(mob/living/M)
-	if( ( istype(M, /mob/living/carbon/human) && M.job in list("Clown") ) || istype(M, /mob/living/carbon/monkey) )
-		M.heal_organ_damage(1,1, 0)
+	if((ishuman(M) && M.job in list("Clown") ) || ismonkey(M))
+		M.heal_bodypart_damage(1,1, 0)
 		. = 1
 	..()
 
@@ -105,8 +111,8 @@
 	description = "Absolutely nothing."
 
 /datum/reagent/consumable/nothing/on_mob_life(mob/living/M)
-	if(istype(M, /mob/living/carbon/human) && M.job in list("Mime"))
-		M.heal_organ_damage(1,1, 0)
+	if(ishuman(M) && M.job in list("Mime"))
+		M.heal_bodypart_damage(1,1, 0)
 		. = 1
 	..()
 
@@ -155,13 +161,13 @@
 
 /datum/reagent/consumable/milk/on_mob_life(mob/living/M)
 	if(M.getBruteLoss() && prob(20))
-		M.heal_organ_damage(1,0, 0)
+		M.heal_bodypart_damage(1,0, 0)
 		. = 1
 	if(holder.has_reagent("capsaicin"))
 		holder.remove_reagent("capsaicin", 2)
 	var/datum/dna/Mdna = M.has_dna()
 	if(Mdna && Mdna.species && (Mdna.species.id == "plasmaman" || Mdna.species.id == "skeleton"))
-		M.heal_organ_damage(1,0, 0)
+		M.heal_bodypart_damage(1,0, 0)
 		. = 1
 	..()
 
@@ -173,7 +179,7 @@
 
 /datum/reagent/consumable/soymilk/on_mob_life(mob/living/M)
 	if(M.getBruteLoss() && prob(20))
-		M.heal_organ_damage(1,0, 0)
+		M.heal_bodypart_damage(1,0, 0)
 		. = 1
 	..()
 
@@ -185,7 +191,7 @@
 
 /datum/reagent/consumable/cream/on_mob_life(mob/living/M)
 	if(M.getBruteLoss() && prob(20))
-		M.heal_organ_damage(1,0, 0)
+		M.heal_bodypart_damage(1,0, 0)
 		. = 1
 	..()
 
@@ -411,7 +417,7 @@
 		M.bodytemperature = min(310, M.bodytemperature + (5 * TEMPERATURE_DAMAGE_COEFFICIENT))
 	M.Jitter(5)
 	if(M.getBruteLoss() && prob(20))
-		M.heal_organ_damage(1,0, 0)
+		M.heal_bodypart_damage(1,0, 0)
 	..()
 	. = 1
 
@@ -429,7 +435,7 @@
 		M.bodytemperature = min(310, M.bodytemperature + (5 * TEMPERATURE_DAMAGE_COEFFICIENT))
 	M.Jitter(5)
 	if(M.getBruteLoss() && prob(20))
-		M.heal_organ_damage(1,0, 0)
+		M.heal_bodypart_damage(1,0, 0)
 	..()
 	. = 1
 
@@ -516,115 +522,8 @@
 	description = "Beloved of children and teetotalers."
 	color = "#E6CDFF"
 
-//////////////////////////////////////////////The ten friggen million reagents that get you drunk//////////////////////////////////////////////
-
-/datum/reagent/consumable/atomicbomb
-	name = "Atomic Bomb"
-	id = "atomicbomb"
-	description = "Nuclear proliferation never tasted so good."
-	color = "#666300" // rgb: 102, 99, 0
-
-/datum/reagent/consumable/atomicbomb/on_mob_life(mob/living/M)
-	M.set_drugginess(50)
-	M.confused = max(M.confused+2,0)
-	M.Dizzy(10)
-	if (!M.slurring)
-		M.slurring = 1
-	M.slurring += 3
-	switch(current_cycle)
-		if(51 to 200)
-			M.Sleeping(5, 0)
-			. = 1
-		if(201 to INFINITY)
-			M.AdjustSleeping(2, 0)
-			M.adjustToxLoss(2, 0)
-			. = 1
-	..()
-
-/datum/reagent/consumable/gargle_blaster
-	name = "Pan-Galactic Gargle Blaster"
-	id = "gargleblaster"
-	description = "Whoah, this stuff looks volatile!"
-	color = "#664300" // rgb: 102, 67, 0
-
-/datum/reagent/consumable/gargle_blaster/on_mob_life(mob/living/M)
-	M.dizziness +=6
-	switch(current_cycle)
-		if(15 to 45)
-			if(!M.slurring)
-				M.slurring = 1
-			M.slurring += 3
-		if(45 to 55)
-			if(prob(50))
-				M.confused = max(M.confused+3,0)
-		if(55 to 200)
-			M.set_drugginess(55)
-		if(200 to INFINITY)
-			M.adjustToxLoss(2, 0)
-			. = 1
-	..()
-
-/datum/reagent/consumable/neurotoxin
-	name = "Neurotoxin"
-	id = "neurotoxin"
-	description = "A strong neurotoxin that puts the subject into a death-like state."
-	color = "#2E2E61" // rgb: 46, 46, 97
-
-/datum/reagent/consumable/neurotoxin/on_mob_life(mob/living/carbon/M)
-	M.Weaken(3, 1, 0)
-	M.dizziness +=6
-	switch(current_cycle)
-		if(15 to 45)
-			if(!M.slurring)
-				M.slurring = 1
-			M.slurring += 3
-		if(45 to 55)
-			if(prob(50))
-				M.confused = max(M.confused+3,0)
-		if(55 to 200)
-			M.set_drugginess(55)
-		if(200 to INFINITY)
-			M.adjustToxLoss(2, 0)
-	..()
-	. = 1
-
-/datum/reagent/consumable/hippies_delight
-	name = "Hippie's Delight"
-	id = "hippiesdelight"
-	description = "You just don't get it maaaan."
-	color = "#664300" // rgb: 102, 67, 0
-	nutriment_factor = 0
-	metabolization_rate = 0.2 * REAGENTS_METABOLISM
-
-/datum/reagent/consumable/hippies_delight/on_mob_life(mob/living/M)
-	if (!M.slurring)
-		M.slurring = 1
-	switch(current_cycle)
-		if(1 to 5)
-			M.Dizzy(10)
-			M.set_drugginess(30)
-			if(prob(10))
-				M.emote(pick("twitch","giggle"))
-		if(5 to 10)
-			M.Jitter(20)
-			M.Dizzy(20)
-			M.set_drugginess(45)
-			if(prob(20))
-				M.emote(pick("twitch","giggle"))
-		if (10 to 200)
-			M.Jitter(40)
-			M.Dizzy(40)
-			M.set_drugginess(60)
-			if(prob(30))
-				M.emote(pick("twitch","giggle"))
-		if(200 to INFINITY)
-			M.Jitter(60)
-			M.Dizzy(60)
-			M.set_drugginess(75)
-			if(prob(40))
-				M.emote(pick("twitch","giggle"))
-			if(prob(30))
-				M.adjustToxLoss(2, 0)
-				. = 1
-	..()
-
+/datum/reagent/consumable/milk/chocolate_milk
+	name = "Chocolate Milk"
+	id = "chocolate_milk"
+	description = "Milk for cool kids."
+	color = "#7D4E29"

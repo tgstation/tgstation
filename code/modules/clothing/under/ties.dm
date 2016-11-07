@@ -1,4 +1,4 @@
-/obj/item/clothing/tie
+/obj/item/clothing/tie //Ties moved to neck slot items, but as there are still things like medals and armbands, this accessory system is being kept as-is
 	name = "tie"
 	desc = "A neosilk clip-on tie."
 	icon = 'icons/obj/clothing/ties.dmi'
@@ -7,7 +7,55 @@
 	item_color = "bluetie"
 	slot_flags = 0
 	w_class = 2
+	var/minimize_when_attached = TRUE // TRUE if shown as a small icon in corner, FALSE if overlayed
 
+/obj/item/clothing/tie/proc/attach(obj/item/clothing/under/U, user)
+	if(pockets) // Attach storage to jumpsuit
+		if(U.pockets) // storage items conflict
+			return 0
+
+		pockets.loc = U
+		U.pockets = pockets
+
+	U.hastie = src
+	loc = U
+	layer = FLOAT_LAYER
+	plane = FLOAT_PLANE
+	if(minimize_when_attached)
+		transform *= 0.5	//halve the size so it doesn't overpower the under
+		pixel_x += 8
+		pixel_y -= 8
+	U.add_overlay(src)
+
+	for(var/armor_type in armor)
+		U.armor[armor_type] += armor[armor_type]
+
+	return 1
+
+
+/obj/item/clothing/tie/proc/detach(obj/item/clothing/under/U, user)
+	if(pockets && pockets == U.pockets)
+		pockets.loc = src
+		U.pockets = null
+
+	for(var/armor_type in armor)
+		U.armor[armor_type] -= armor[armor_type]
+
+	if(minimize_when_attached)
+		transform *= 2
+		pixel_x -= 8
+		pixel_y += 8
+	layer = initial(layer)
+	plane = initial(plane)
+	U.cut_overlays()
+	U.hastie = null
+
+/obj/item/clothing/tie/proc/on_uniform_equip(obj/item/clothing/under/U)
+	return
+
+/obj/item/clothing/tie/proc/on_uniform_dropped(obj/item/clothing/under/U)
+	return
+/*
 /obj/item/clothing/tie/blue
 	name = "blue tie"
 	icon_state = "bluetie"
@@ -28,14 +76,15 @@
 	desc = "A neosilk clip-on tie. This one is disgusting."
 	icon_state = "horribletie"
 	item_color = "horribletie"
-
+*/
 /obj/item/clothing/tie/waistcoat
 	name = "waistcoat"
 	desc = "For some classy, murderous fun."
 	icon_state = "waistcoat"
 	item_state = "waistcoat"
 	item_color = "waistcoat"
-
+	minimize_when_attached = FALSE
+/*
 /obj/item/clothing/tie/stethoscope
 	name = "stethoscope"
 	desc = "An outdated medical apparatus for listening to the sounds of the human body. It also makes you look like you know what you're doing."
@@ -76,7 +125,7 @@
 				user.visible_message("[user] places [src] against [M]'s [body_part] and listens attentively.", "You place [src] against [their] [body_part]. You [sound_strength] [sound].")
 				return
 	return ..(M,user)
-
+*/
 //////////
 //Medals//
 //////////
@@ -87,7 +136,7 @@
 	icon_state = "bronze"
 	item_color = "bronze"
 	materials = list(MAT_METAL=1000)
-	burn_state = FIRE_PROOF
+	resistance_flags = FIRE_PROOF
 
 //Pinning medals on people
 /obj/item/clothing/tie/medal/attack(mob/living/carbon/human/M, mob/living/user)
@@ -155,6 +204,7 @@
 /obj/item/clothing/tie/medal/gold/captain
 	name = "medal of captaincy"
 	desc = "A golden medal awarded exclusively to those promoted to the rank of captain. It signifies the codified responsibilities of a captain to Nanotrasen, and their undisputable authority over their crew."
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 
 /obj/item/clothing/tie/medal/gold/heroism
 	name = "medal of exceptional heroism"
@@ -209,7 +259,7 @@
 	desc = "An armband, worn by the station's security forces to display which department they're assigned to. This one is white and blue."
 	icon_state = "medblueband"
 	item_color = "medblueband"
-
+/*
 ///////////
 //SCARVES//
 ///////////
@@ -312,7 +362,6 @@
 	desc = "Damn, it feels good to be a gangster."
 	icon = 'icons/obj/clothing/ties.dmi'
 	icon_state = "bling"
-	item_state = ""	//no inhands
 	item_color = "bling"
 
 ////////////////
@@ -322,9 +371,39 @@
 /obj/item/clothing/tie/talisman
 	name = "bone talisman"
 	desc = "A hunter's talisman, some say the old gods smile on those who wear it."
-	icon = 'icons/obj/clothing/ties.dmi'
 	icon_state = "talisman"
-	item_state = ""
 	item_color = "talisman"
-	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS|HEAD
-	armor = list(melee = 5, bullet = 5, laser = 5, energy = 5, bomb = 50, bio = 65, rad = 5) //Faith is the best armor. //This won't actually work because of accessories kill me with a fucking knife jesus christ I hate code
+	armor = list(melee = 5, bullet = 5, laser = 5, energy = 5, bomb = 20, bio = 20, rad = 5, fire = 0, acid = 25)
+*/
+//////////////
+//OBJECTION!//
+//////////////
+
+/obj/item/clothing/tie/lawyers_badge
+	name = "attorney's badge"
+	desc = "Fills you with the conviction of JUSTICE. Lawyers tend to want to show it to everyone they meet."
+	icon_state = "lawyerbadge"
+	item_color = "lawyerbadge"
+
+/obj/item/clothing/tie/lawyers_badge/attach(obj/item/clothing/under/U, user)
+	if(!..())
+		return 0
+	if(isliving(U.loc))
+		on_uniform_equip(U)
+
+/obj/item/clothing/tie/lawyers_badge/detach(obj/item/clothing/under/U, user)
+	..()
+	if(isliving(U.loc))
+		on_uniform_dropped(U)
+
+/obj/item/clothing/tie/lawyers_badge/on_uniform_equip(obj/item/clothing/under/U)
+	if(!isliving(U.loc))
+		return
+	var/mob/living/L = U.loc
+	L.bubble_icon = "lawyer"
+
+/obj/item/clothing/tie/lawyers_badge/on_uniform_dropped(obj/item/clothing/under/U)
+	if(!isliving(U.loc))
+		return
+	var/mob/living/L = U.loc
+	L.bubble_icon = initial(L.bubble_icon)

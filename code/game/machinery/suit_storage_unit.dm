@@ -1,4 +1,4 @@
-// SUIT STORAGE UNIT /////////////////close_machine(
+// SUIT STORAGE UNIT /////////////////
 /obj/machinery/suit_storage_unit
 	name = "suit storage unit"
 	desc = "An industrial unit made to hold space suits. It comes with a built-in UV cauterization mechanism. A small warning label advises that organic matter should not be placed into the unit."
@@ -6,6 +6,8 @@
 	icon_state = "close"
 	anchored = 1
 	density = 1
+	obj_integrity = 250
+	max_integrity = 250
 
 	var/obj/item/clothing/suit/space/suit = null
 	var/obj/item/clothing/head/helmet/space/helmet = null
@@ -32,9 +34,8 @@
 	mask_type = /obj/item/clothing/mask/breath
 
 /obj/machinery/suit_storage_unit/captain
-	suit_type = /obj/item/clothing/suit/space/captain
-	helmet_type = /obj/item/clothing/head/helmet/space/captain
-	mask_type = /obj/item/clothing/mask/gas
+	suit_type = /obj/item/clothing/suit/space/hardsuit/captain
+	mask_type = /obj/item/clothing/mask/gas/sechailer
 	storage_type = /obj/item/weapon/tank/jetpack/oxygen/captain
 
 /obj/machinery/suit_storage_unit/engine
@@ -113,6 +114,21 @@
 		storage = new storage_type(src)
 	update_icon()
 
+/obj/machinery/suit_storage_unit/Destroy()
+	if(suit)
+		qdel(suit)
+		suit = null
+	if(helmet)
+		qdel(helmet)
+		helmet = null
+	if(mask)
+		qdel(mask)
+		mask = null
+	if(storage)
+		qdel(storage)
+		storage = null
+	return ..()
+
 /obj/machinery/suit_storage_unit/update_icon()
 	cut_overlays()
 
@@ -152,18 +168,12 @@
 	storage = null
 	occupant = null
 
-/obj/machinery/suit_storage_unit/ex_act(severity, target)
-	switch(severity)
-		if(1)
-			if(prob(50))
-				open_machine()
-				dump_contents()
-			qdel(src)
-		if(2)
-			if(prob(50))
-				open_machine()
-				dump_contents()
-				qdel(src)
+/obj/machinery/suit_storage_unit/deconstruct(disassembled = TRUE)
+	if(!(flags & NODECONSTRUCT))
+		open_machine()
+		dump_contents()
+		new /obj/item/stack/sheet/metal (loc, 2)
+	qdel(src)
 
 /obj/machinery/suit_storage_unit/MouseDrop_T(atom/A, mob/user)
 	if(user.stat || user.lying || !Adjacent(user) || !Adjacent(A) || !isliving(A))
@@ -247,10 +257,9 @@
 			return 1
 
 /obj/machinery/suit_storage_unit/relaymove(mob/user)
-	container_resist()
+	container_resist(user)
 
-/obj/machinery/suit_storage_unit/container_resist()
-	var/mob/living/user = usr
+/obj/machinery/suit_storage_unit/container_resist(mob/living/user)
 	add_fingerprint(user)
 	if(locked)
 		visible_message("<span class='notice'>You see [user] kicking against the doors of [src]!</span>", "<span class='notice'>You start kicking against the doors...</span>")

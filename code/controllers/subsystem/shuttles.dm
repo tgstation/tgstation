@@ -66,6 +66,9 @@ var/datum/subsystem/shuttle/SSshuttle
 #endif
 
 /datum/subsystem/shuttle/proc/setup_transit_zone()
+	if(transit_markers.len == 0)
+		WARNING("No /obj/effect/landmark/transit placed on the map!")
+		return
 	// transit zone
 	var/turf/A = get_turf(transit_markers[1])
 	var/turf/B = get_turf(transit_markers[2])
@@ -77,12 +80,15 @@ var/datum/subsystem/shuttle/SSshuttle
 
 #ifdef HIGHLIGHT_DYNAMIC_TRANSIT
 /datum/subsystem/shuttle/proc/color_space()
+	if(transit_markers.len == 0)
+		WARNING("No /obj/effect/landmark/transit placed on the map!")
+		return
 	var/turf/A = get_turf(transit_markers[1])
 	var/turf/B = get_turf(transit_markers[2])
 	for(var/i in block(A, B))
 		var/turf/T = i
 		// Only dying the "pure" space, not the transit tiles
-		if(!(T.type == /turf/open/space))
+		if(istype(T, /turf/open/space/transit) || !isspaceturf(T))
 			continue
 		if((T.x == A.x) || (T.x == B.x) || (T.y == A.y) || (T.y == B.y))
 			T.color = "#ffff00"
@@ -234,7 +240,7 @@ var/datum/subsystem/shuttle/SSshuttle
 	var/callShuttle = 1
 
 	for(var/thing in shuttle_caller_list)
-		if(istype(thing, /mob/living/silicon/ai))
+		if(isAI(thing))
 			var/mob/living/silicon/ai/AI = thing
 			if(AI.stat || !AI.client)
 				continue

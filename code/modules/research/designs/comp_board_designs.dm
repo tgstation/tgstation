@@ -7,7 +7,7 @@
 	req_tech = list("programming" = 1)
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 1000)
-	reagents = list("sacid" = 20)
+	reagents_list = list("sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/computer/arcade/battle
 	category = list("Computer Boards")
 

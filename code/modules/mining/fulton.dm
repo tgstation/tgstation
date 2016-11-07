@@ -1,8 +1,8 @@
 var/list/total_extraction_beacons = list()
 
 /obj/item/weapon/extraction_pack
-	name = "fulton material extraction pack"
-	desc = "A balloon that can be used to extract a target to a Fulton Recovery Beacon. Anything not bolted down can be moved. Link the pack to a beacon by using the pack in hand."
+	name = "fulton extraction pack"
+	desc = "A balloon that can be used to extract equipment or personnel to a Fulton Recovery Beacon. Anything not bolted down can be moved. Link the pack to a beacon by using the pack in hand."
 	icon = 'icons/obj/fulton.dmi'
 	icon_state = "extraction_pack"
 	w_class = 3
@@ -10,13 +10,7 @@ var/list/total_extraction_beacons = list()
 	var/list/beacon_networks = list("station")
 	var/uses_left = 3
 	var/can_use_indoors
-	var/safe_for_living_creatures = 0
-
-/obj/item/weapon/extraction_pack/medivac
-	name = "fulton medivac extraction pack"
-	desc = "A specialized extraction balloon capable of safely extracting living targets."
-	uses_left = 1
-	safe_for_living_creatures = 1
+	var/safe_for_living_creatures = 1
 
 /obj/item/weapon/extraction_pack/examine()
 	. = ..()
@@ -59,13 +53,17 @@ var/list/total_extraction_beacons = list()
 		if(!safe_for_living_creatures && check_for_living_mobs(A))
 			user << "[src] is not safe for use with living creatures, they wouldn't survive the trip back!"
 			return
-		if(A.loc == user || A == user) // no extracting stuff you're holding in your hands/yourself
+		if(A.loc == user) // no extracting stuff you're holding
 			return
 		if(A.anchored)
 			return
 		user << "<span class='notice'>You start attaching the pack to [A]...</span>"
 		if(do_after(user,50,target=A))
 			user << "<span class='notice'>You attach the pack to [A] and activate it.</span>"
+			if(loc == user || istype(user.back, /obj/item/weapon/storage/backpack))
+				var/obj/item/weapon/storage/backpack/B = user.back
+				if(B.can_be_inserted(src,stop_messages = 1))
+					B.handle_item_insertion(src)
 			uses_left--
 			if(uses_left <= 0)
 				user.drop_item(src)
@@ -73,7 +71,7 @@ var/list/total_extraction_beacons = list()
 			var/image/balloon
 			var/image/balloon2
 			var/image/balloon3
-			if(istype(A, /mob/living))
+			if(isliving(A))
 				var/mob/living/M = A
 				M.Weaken(16) // Keep them from moving during the duration of the extraction
 				M.buckled = 0 // Unbuckle them to prevent anchoring problems
@@ -106,7 +104,7 @@ var/list/total_extraction_beacons = list()
 			sleep(10)
 			playsound(holder_obj.loc, 'sound/items/fultext_launch.wav', 50, 1, -3)
 			animate(holder_obj, pixel_z = 1000, time = 30)
-			if(istype(A, /mob/living/carbon/human))
+			if(ishuman(A))
 				var/mob/living/carbon/human/L = A
 				L.SetParalysis(0)
 				L.drowsyness = 0
@@ -141,16 +139,14 @@ var/list/total_extraction_beacons = list()
 
 /obj/item/fulton_core
 	name = "extraction beacon signaller"
-	desc = "Emits a signal which fulton recovery devices can lock on to. Craft with metal to create a beacon."
+	desc = "Emits a signal which fulton recovery devices can lock on to. Activate in hand to create a beacon."
 	icon = 'icons/obj/stock_parts.dmi'
 	icon_state = "subspace_amplifier"
 
-/datum/crafting_recipe/fulton
-	name = "Fulton Recovery Beacon"
-	result = /obj/structure/extraction_point
-	reqs = list(/obj/item/fulton_core = 1, /obj/item/stack/sheet/metal = 5)
-	time = 15
-	category = CAT_MISC
+/obj/item/fulton_core/attack_self(mob/user)
+	if(do_after(user,15,target = user) && !qdeleted(src))
+		new /obj/structure/extraction_point(get_turf(user))
+		qdel(src)
 
 /obj/structure/extraction_point
 	name = "fulton recovery beacon"
@@ -177,12 +173,12 @@ var/list/total_extraction_beacons = list()
 	var/atom/movable/stored_obj
 
 /obj/item/weapon/extraction_pack/proc/check_for_living_mobs(atom/A)
-	if(istype(A, /mob/living))
+	if(isliving(A))
 		var/mob/living/L = A
 		if(L.stat != DEAD)
 			return 1
 	for(var/thing in A.GetAllContents())
-		if(istype(A, /mob/living))
+		if(isliving(A))
 			var/mob/living/L = A
 			if(L.stat != DEAD)
 				return 1

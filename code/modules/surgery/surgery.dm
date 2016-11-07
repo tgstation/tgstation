@@ -10,26 +10,26 @@
 	var/list/possible_locs = list() 						//Multiple locations
 	var/ignore_clothes = 0									//This surgery ignores clothes
 	var/mob/living/carbon/target							//Operation target mob
-	var/obj/item/organ/organ								//Operable body part
+	var/obj/item/bodypart/operated_bodypart					//Operable body part
 	var/requires_bodypart = TRUE							//Surgery available only when a bodypart is present, or only when it is missing.
 	var/success_multiplier = 0								//Step success propability multiplier
 
 
-/datum/surgery/New(surgery_target, surgery_location, surgery_organ)
+/datum/surgery/New(surgery_target, surgery_location, surgery_bodypart)
 	..()
 	if(surgery_target)
 		target = surgery_target
 		target.surgeries += src
 		if(surgery_location)
 			location = surgery_location
-		if(surgery_organ)
-			organ = surgery_organ
+		if(surgery_bodypart)
+			operated_bodypart = surgery_bodypart
 
 /datum/surgery/Destroy()
 	if(target)
 		target.surgeries -= src
 	target = null
-	organ = null
+	operated_bodypart = null
 	return ..()
 
 
@@ -45,7 +45,7 @@
 
 	var/datum/surgery_step/S = get_surgery_step()
 	if(S)
-		if(S.try_op(user, target, user.zone_selected, user.get_active_hand(), src))
+		if(S.try_op(user, target, user.zone_selected, user.get_active_held_item(), src))
 			return 1
 	return 0
 
@@ -54,6 +54,7 @@
 	return new step_type
 
 /datum/surgery/proc/complete()
+	feedback_add_details("surgeries_completed", type)
 	qdel(src)
 
 

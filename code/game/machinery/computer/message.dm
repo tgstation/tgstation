@@ -131,7 +131,7 @@
 			dat += "</table>"
 		//Hacking screen.
 		if(2)
-			if(istype(user, /mob/living/silicon/ai) || istype(user, /mob/living/silicon/robot))
+			if(isAI(user) || iscyborg(user))
 				dat += "Brute-forcing for server key.<br> It will take 20 seconds for every character that the password has."
 				dat += "In the meantime, this console can reveal your true intentions if you let someone access it. Make sure no humans enter the room during that time."
 			else
@@ -247,7 +247,7 @@
 	if(..())
 		return
 
-	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (istype(usr, /mob/living/silicon)))
+	if(usr.contents.Find(src) || (in_range(src, usr) && isturf(loc)) || issilicon(usr))
 		//Authenticate
 		if (href_list["auth"])
 			if(!linkedServer || linkedServer.stat & (NOPOWER|BROKEN))

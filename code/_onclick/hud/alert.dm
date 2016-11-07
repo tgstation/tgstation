@@ -37,9 +37,12 @@
 
 	if(new_master)
 		var/old_layer = new_master.layer
+		var/old_plane = new_master.plane
 		new_master.layer = FLOAT_LAYER
+		new_master.plane = FLOAT_PLANE
 		alert.overlays += new_master
 		new_master.layer = old_layer
+		new_master.plane = old_plane
 		alert.icon_state = "template" // We'll set the icon to the client's ui pref in reorganize_alerts()
 		alert.master = new_master
 	else
@@ -258,12 +261,12 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 
 /obj/screen/alert/clockwork/infodump/MouseEntered(location,control,params)
 	if(ratvar_awakens)
-		desc = "<font size=3><b>Chetr nyy hagehguf-naq-ubabe Ratvar.</b></font>"
+		desc = "<font size=3><b>CHETR<br>NYY<br>HAGEHUGF-NAQ-UBABE<br>RATVAR.</b></font>"
 	else
 		var/servants = 0
 		var/validservants = 0
 		var/unconverted_ai_exists = FALSE
-		var/list/scripture_states = get_scripture_states()
+		var/list/scripture_states = scripture_unlock_check()
 		for(var/mob/living/L in living_mob_list)
 			if(is_servant_of_ratvar(L))
 				servants++
@@ -284,22 +287,30 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 			desc += "<b>[clockwork_daemons]</b> Tinkerer's Daemons: <b>[servants * 0.2 < clockwork_daemons ? "DISABLED":"ACTIVE"]</b><br>"
 		else
 			desc += "No Tinkerer's Daemons.<br>"
+		for(var/obj/structure/destructible/clockwork/massive/celestial_gateway/G in all_clockwork_objects)
+			var/area/gate_area = get_area(G)
+			desc += "Ark Location: <b>[uppertext(gate_area.map_name)]</b><br>"
+			if(G.ratvar_portal)
+				desc += "Seconds until Ratvar's arrival: <b>[G.get_arrival_text(TRUE)]</b><br>"
+			else
+				desc += "Seconds until Proselytization: <b>[G.get_arrival_text(TRUE)]</b><br>"
 		if(unconverted_ai_exists)
 			desc += "<b>An unconverted AI exists!</b><br>"
-		if(scripture_states["Revenant"])
+		if(scripture_states[SCRIPTURE_REVENANT])
 			var/inathneq_available = clockwork_generals_invoked["inath-neq"] <= world.time
 			var/sevtug_available = clockwork_generals_invoked["sevtug"] <= world.time
 			var/nezbere_available = clockwork_generals_invoked["nezbere"] <= world.time
 			var/nezcrentr_available = clockwork_generals_invoked["nzcrentr"] <= world.time
 			if(inathneq_available || sevtug_available || nezbere_available || nezcrentr_available)
-				desc += "Generals available:<br><b>[inathneq_available ? "<font color=#1E8CE1>INATH-NEQ</font><br>":""][sevtug_available ? "<font color=#AF0AAF>SEVTUG</font><br>":""]\
-				[nezbere_available ? "<font color=#5A6068>NEZBERE</font><br>":""][nezcrentr_available ? "<font color=#DAAA18>NZCRENTR</font>":""]</b><br>"
+				desc += "Generals available:<b>[inathneq_available ? "<br><font color=#1E8CE1>INATH-NEQ</font>":""][sevtug_available ? "<br><font color=#AF0AAF>SEVTUG</font>":""]\
+				[nezbere_available ? "<br><font color=#5A6068>NEZBERE</font>":""][nezcrentr_available ? "<br><font color=#DAAA18>NZCRENTR</font>":""]</b><br>"
 			else
 				desc += "Generals available: <b>NONE</b><br>"
 		else
 			desc += "Generals available: <b>NONE</b><br>"
 		for(var/i in scripture_states)
-			desc += "[i] Scripture: <b>[scripture_states[i] ? "UNLOCKED":"LOCKED"]</b><br>"
+			if(i != SCRIPTURE_DRIVER) //ignore the always-unlocked stuff
+				desc += "[i] Scripture: <b>[scripture_states[i] ? "UNLOCKED":"LOCKED"]</b><br>"
 	..()
 
 //GUARDIANS
@@ -438,6 +449,7 @@ so as to remain in compliance with the most up-to-date laws."
 	if(isliving(usr))
 		var/mob/living/L = usr
 		return L.resist()
+
 // PRIVATE = only edit, use, or override these if you're editing the system as a whole
 
 // Re-render all alerts - also called in /datum/hud/show_hud() because it's needed there

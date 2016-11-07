@@ -37,7 +37,7 @@
 	item_state = "armor"
 	can_adjust = 0
 	strip_delay = 100
-	burn_state = FIRE_PROOF
+	resistance_flags = 0
 
 /obj/item/clothing/under/waiter
 	name = "waiter's outfit"
@@ -79,6 +79,14 @@
 	item_color = "sexyclown"
 	can_adjust = 0
 
+/obj/item/clothing/under/jabroni
+	name = "Jabroni Outfit"
+	desc = "The leather club is two sectors down."
+	icon_state = "darkholme"
+	item_state = "darkholme"
+	item_color = "darkholme"
+	can_adjust = 0
+
 /obj/item/clothing/under/rank/vice
 	name = "vice officer's jumpsuit"
 	desc = "It's the standard issue pretty-boy outfit, as seen on Holo-Vision."
@@ -117,7 +125,7 @@
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	max_heat_protection_temperature = SPACE_SUIT_MAX_TEMP_PROTECT
 	can_adjust = 0
-	burn_state = FIRE_PROOF
+	resistance_flags = 0
 
 /obj/item/clothing/under/acj
 	name = "administrative cybernetic jumpsuit"
@@ -128,13 +136,13 @@
 	gas_transfer_coefficient = 0.01
 	permeability_coefficient = 0.01
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
-	armor = list(melee = 100, bullet = 100, laser = 100,energy = 100, bomb = 100, bio = 100, rad = 100)
+	armor = list(melee = 100, bullet = 100, laser = 100,energy = 100, bomb = 100, bio = 100, rad = 100, fire = 100, acid = 100)
 	cold_protection = CHEST | GROIN | LEGS | FEET | ARMS | HANDS
 	min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	max_heat_protection_temperature = SPACE_SUIT_MAX_TEMP_PROTECT
 	can_adjust = 0
-	burn_state = FIRE_PROOF
+	resistance_flags = FIRE_PROOF | ACID_PROOF
 
 /obj/item/clothing/under/owl
 	name = "owl uniform"
@@ -251,7 +259,7 @@
 	item_state = "burial"
 	item_color = "burial"
 
-/obj/item/clothing/under/blackskirt
+/obj/item/clothing/under/skirt/black
 	name = "black skirt"
 	desc = "A black skirt, very fancy!"
 	icon_state = "blackskirt"
@@ -260,7 +268,7 @@
 	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = 0
 
-/obj/item/clothing/under/blueskirt
+/obj/item/clothing/under/skirt/blue
 	name = "blue skirt"
 	desc = "A blue, casual skirt."
 	icon_state = "blueskirt"
@@ -270,12 +278,26 @@
 	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = 0
 
-/obj/item/clothing/under/blueskirt/redskirt
+/obj/item/clothing/under/skirt/red
 	name = "red skirt"
 	desc = "A red, casual skirt."
 	icon_state = "redskirt"
 	item_color = "redskirt"
 	item_state = "r_suit"
+	body_parts_covered = CHEST|GROIN|ARMS
+	fitted = FEMALE_UNIFORM_TOP
+	can_adjust = 0
+
+/obj/item/clothing/under/skirt/purple
+	name = "purple skirt"
+	desc = "A purple, casual skirt."
+	icon_state = "purpleskirt"
+	item_color = "purpleskirt"
+	item_state = "p_suit"
+	body_parts_covered = CHEST|GROIN|ARMS
+	fitted = FEMALE_UNIFORM_TOP
+	can_adjust = 0
+
 
 /obj/item/clothing/under/schoolgirl
 	name = "blue schoolgirl uniform"
@@ -347,6 +369,10 @@
 	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = 0
 
+/obj/item/clothing/under/kilt/highlander
+	desc = "You're the only one worthy of this kilt."
+	flags = NODROP
+
 /obj/item/clothing/under/sexymime
 	name = "sexy mime outfit"
 	desc = "The only time when you DON'T enjoy looking at someone's rack."
@@ -366,7 +392,7 @@
 	body_parts_covered = CHEST|GROIN|ARMS
 	fitted = NO_FEMALE_UNIFORM
 	can_adjust = 0
-	burn_state = FIRE_PROOF
+	resistance_flags = 0
 
 /obj/item/clothing/under/sundress
 	name = "sundress"
@@ -514,13 +540,20 @@
 	item_color = "jester"
 	can_adjust = 0
 
+/obj/item/clothing/under/geisha
+	name = "geisha suit"
+	desc = "Cute space ninja senpai not included."
+	icon_state = "geisha"
+	item_color = "geisha"
+	can_adjust = 0
+
 /obj/item/clothing/under/plasmaman
 	name = "Plasma-man Jumpsuit"
 	desc = "A specially designed suit that allows Plasma based life forms to exist in an oxygenated environment."
 	icon_state = "plasmaman"
 	item_state = "plasmaman"
 	item_color = "plasmaman"
-	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 100, rad = 0)
+	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 100, rad = 0, fire = 95, acid = 95)
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	can_adjust = 0
 	strip_delay = 80

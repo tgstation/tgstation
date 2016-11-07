@@ -8,7 +8,7 @@
 	generic_pixel_y = 4
 	vehicle_move_delay = 1
 	var/static/image/atvcover = null
-
+	
 
 /obj/vehicle/atv/New()
 	..()

@@ -1,123 +1,23 @@
-var/list/wire_colors = list( // http://www.crockford.com/wrrrld/color.html
-	"aliceblue",
-	"antiquewhite",
-	"aqua",
-	"aquamarine",
-	"beige",
-	"blanchedalmond",
+var/list/wire_colors = list(
 	"blue",
-	"blueviolet",
 	"brown",
-	"burlywood",
-	"cadetblue",
-	"chartreuse",
-	"chocolate",
-	"coral",
-	"cornflowerblue",
-	"cornsilk",
 	"crimson",
 	"cyan",
-	"deeppink",
-	"deepskyblue",
-	"dimgray",
-	"dodgerblue",
-	"firebrick",
-	"floralwhite",
-	"forestgreen",
-	"fuchsia",
-	"gainsboro",
-	"ghostwhite",
 	"gold",
-	"goldenrod",
-	"gray",
+	"grey",
 	"green",
-	"greenyellow",
-	"honeydew",
-	"hotpink",
-	"indianred",
-	"ivory",
-	"khaki",
-	"lavender",
-	"lavenderblush",
-	"lawngreen",
-	"lemonchiffon",
-	"lightblue",
-	"lightcoral",
-	"lightcyan",
-	"lightgoldenrodyellow",
-	"lightgray",
-	"lightgreen",
-	"lightpink",
-	"lightsalmon",
-	"lightseagreen",
-	"lightskyblue",
-	"lightslategray",
-	"lightsteelblue",
-	"lightyellow",
-	"lime",
-	"limegreen",
-	"linen",
 	"magenta",
-	"maroon",
-	"mediumaquamarine",
-	"mediumblue",
-	"mediumorchid",
-	"mediumpurple",
-	"mediumseagreen",
-	"mediumslateblue",
-	"mediumspringgreen",
-	"mediumturquoise",
-	"mediumvioletred",
-	"mintcream",
-	"mistyrose",
-	"moccasin",
-	"navajowhite",
-	"oldlace",
-	"olive",
-	"olivedrab",
 	"orange",
-	"orangered",
-	"orchid",
-	"palegoldenrod",
-	"palegreen",
-	"paleturquoise",
-	"palevioletred",
-	"papayawhip",
-	"peachpuff",
-	"peru",
 	"pink",
-	"plum",
-	"powderblue",
 	"purple",
 	"red",
-	"rosybrown",
-	"royalblue",
-	"saddlebrown",
-	"salmon",
-	"sandybrown",
-	"seagreen",
-	"seashell",
-	"sienna",
 	"silver",
-	"skyblue",
-	"slateblue",
-	"slategray",
-	"snow",
-	"springgreen",
-	"steelblue",
-	"tan",
-	"teal",
-	"thistle",
-	"tomato",
-	"turquoise",
 	"violet",
-	"wheat",
 	"white",
-	"whitesmoke",
 	"yellow",
-	"yellowgreen",
 )
 var/list/wire_color_directory = list()
+var/list/wire_name_directory = list()
 
 /proc/is_wire_tool(obj/item/I)
 	if(istype(I, /obj/item/device/multitool))
@@ -136,12 +36,14 @@ var/list/wire_color_directory = list()
 /datum/wires
 	var/atom/holder = null // The holder (atom that contains these wires).
 	var/holder_type = null // The holder's typepath (used to make wire colors common to all holders).
+	var/proper_name = "Unknown" // The display name for the wire set shown in station blueprints. Not used if randomize is true or it's an item NT wouldn't know about (Explosives/Nuke)
 
 	var/list/wires = list() // List of wires.
 	var/list/cut_wires = list() // List of wires that have been cut.
 	var/list/colors = list() // Dictionary of colors to wire.
 	var/list/assemblies = list() // List of attached assemblies.
 	var/randomize = 0 // If every instance of these wires should be random.
+					  // Prevents wires from showing up in station blueprints
 
 /datum/wires/New(atom/holder)
 	..()
@@ -156,6 +58,7 @@ var/list/wire_color_directory = list()
 		if(!wire_color_directory[holder_type])
 			randomize()
 			wire_color_directory[holder_type] = colors
+			wire_name_directory[holder_type] = proper_name
 		else
 			colors = wire_color_directory[holder_type]
 
@@ -166,7 +69,7 @@ var/list/wire_color_directory = list()
 
 /datum/wires/proc/add_duds(duds)
 	while(duds)
-		var/dud = "dud[--duds]"
+		var/dud = WIRE_DUD_PREFIX + "[--duds]"
 		if(dud in wires)
 			continue
 		wires += dud
@@ -310,7 +213,7 @@ var/list/wire_color_directory = list()
 		return
 	var/target_wire = params["wire"]
 	var/mob/living/L = usr
-	var/obj/item/I = L.get_active_hand()
+	var/obj/item/I = L.get_active_held_item()
 	switch(action)
 		if("cut")
 			if(istype(I, /obj/item/weapon/wirecutters) || IsAdminGhost(usr))

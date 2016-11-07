@@ -85,7 +85,7 @@
 
 
 /datum/game_mode/proc/forge_traitor_objectives(datum/mind/traitor)
-	if(istype(traitor.current, /mob/living/silicon))
+	if(issilicon(traitor.current))
 		var/objective_count = 0
 
 		if(prob(30))
@@ -200,7 +200,7 @@
 
 
 /datum/game_mode/proc/finalize_traitor(var/datum/mind/traitor)
-	if (istype(traitor.current, /mob/living/silicon))
+	if(issilicon(traitor.current))
 		add_law_zero(traitor.current)
 	else
 		equip_traitor(traitor.current)
@@ -330,7 +330,7 @@
 			traitor_mob.mind.store_memory("<B>Radio Frequency:</B> [format_frequency(R.traitor_frequency)] ([R.name] [loc]).")
 		else if(istype(I, /obj/item/device/pda))
 			var/obj/item/device/pda/P = I
-			P.lock_code = "[rand(100,999)] [pick("Alpha","Bravo","Delta","Omega")]"
+			P.lock_code = "[rand(100,999)] [pick("Alpha","Bravo","Charlie","Delta","Echo","Foxtrot","Golf","Hotel","India","Juliet","Kilo","Lima","Mike","November","Oscar","Papa","Quebec","Romeo","Sierra","Tango","Uniform","Victor","Whiskey","X-ray","Yankee","Zulu")]"
 
 			traitor_mob << "The Syndicate have cunningly disguised a Syndicate Uplink as your [P.name] [loc]. Simply enter the code \"[P.lock_code]\" into the ringtone select to unlock its hidden features."
 			traitor_mob.mind.store_memory("<B>Uplink Passcode:</B> [P.lock_code] ([P.name] [loc]).")
@@ -367,9 +367,7 @@
 	var/list/slots = list (
 		"backpack" = slot_in_backpack,
 		"left pocket" = slot_l_store,
-		"right pocket" = slot_r_store,
-		"left hand" = slot_l_hand,
-		"right hand" = slot_r_hand,
+		"right pocket" = slot_r_store
 	)
 
 	var/where = "At your feet"
@@ -377,7 +375,6 @@
 	if (equipped_slot)
 		where = "In your [equipped_slot]"
 	mob << "<BR><BR><span class='info'>[where] is a folder containing <b>secret documents</b> that another Syndicate group wants. We have set up a meeting with one of their agents on station to make an exchange. Exercise extreme caution as they cannot be trusted and may be hostile.</span><BR>"
-	mob.update_icons()
 
 /datum/game_mode/proc/update_traitor_icons_added(datum/mind/traitor_mind)
 	var/datum/atom_hud/antag/traitorhud = huds[ANTAG_HUD_TRAITOR]

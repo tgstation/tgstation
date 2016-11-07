@@ -12,14 +12,14 @@
 	item_state = "armor"
 	blood_overlay_type = "armor"
 	origin_tech = "magnets=7;biotech=4;powerstorage=4;abductor=4"
-	armor = list(melee = 15, bullet = 15, laser = 15, energy = 15, bomb = 15, bio = 15, rad = 15)
+	armor = list(melee = 15, bullet = 15, laser = 15, energy = 15, bomb = 15, bio = 15, rad = 15, fire = 70, acid = 70)
 	actions_types = list(/datum/action/item_action/hands_free/activate)
 	var/mode = VEST_STEALTH
 	var/stealth_active = 0
 	var/combat_cooldown = 10
 	var/datum/icon_snapshot/disguise
-	var/stealth_armor = list(melee = 15, bullet = 15, laser = 15, energy = 15, bomb = 15, bio = 15, rad = 15)
-	var/combat_armor = list(melee = 50, bullet = 50, laser = 50, energy = 50, bomb = 50, bio = 50, rad = 50)
+	var/stealth_armor = list(melee = 15, bullet = 15, laser = 15, energy = 15, bomb = 15, bio = 15, rad = 15, fire = 70, acid = 70)
+	var/combat_armor = list(melee = 50, bullet = 50, laser = 50, energy = 50, bomb = 50, bio = 50, rad = 50, fire = 90, acid = 90)
 
 /obj/item/clothing/suit/armor/abductor/vest/proc/flip_mode()
 	switch(mode)
@@ -32,7 +32,7 @@
 			mode = VEST_STEALTH
 			armor = stealth_armor
 			icon_state = "vest_stealth"
-	if(istype(loc, /mob/living/carbon/human))
+	if(ishuman(loc))
 		var/mob/living/carbon/human/H = loc
 		H.update_inv_wear_suit()
 	for(var/X in actions)
@@ -50,26 +50,24 @@
 	if(disguise == null)
 		return
 	stealth_active = 1
-	if(istype(src.loc, /mob/living/carbon/human))
-		var/mob/living/carbon/human/M = src.loc
-		addtimer(GLOBAL_PROC, "anim", 0, FALSE, M.loc, M, 'icons/mob/mob.dmi',
-			null, "cloak", null, M.dir)
-
+	if(ishuman(loc))
+		var/mob/living/carbon/human/M = loc
+		PoolOrNew(/obj/effect/overlay/temp/dir_setting/ninja/cloak,
+			list(get_turf(M), M.dir))
 		M.name_override = disguise.name
 		M.icon = disguise.icon
 		M.icon_state = disguise.icon_state
 		M.overlays = disguise.overlays
-		M.update_inv_r_hand()
-		M.update_inv_l_hand()
+		M.update_inv_hands()
 
 /obj/item/clothing/suit/armor/abductor/vest/proc/DeactivateStealth()
 	if(!stealth_active)
 		return
 	stealth_active = 0
-	if(istype(src.loc, /mob/living/carbon/human))
-		var/mob/living/carbon/human/M = src.loc
-		addtimer(GLOBAL_PROC, "anim", 0, FALSE, M.loc, M, 'icons/mob/mob.dmi',
-			null, "uncloak", null, M.dir)
+	if(ishuman(loc))
+		var/mob/living/carbon/human/M = loc
+		PoolOrNew(/obj/effect/overlay/temp/dir_setting/ninja,
+			list(get_turf(M), M.dir))
 		M.name_override = null
 		M.cut_overlays()
 		M.regenerate_icons()
@@ -93,11 +91,11 @@
 				ActivateStealth()
 
 /obj/item/clothing/suit/armor/abductor/vest/proc/Adrenaline()
-	if(istype(src.loc, /mob/living/carbon/human))
+	if(ishuman(loc))
 		if(combat_cooldown != initial(combat_cooldown))
-			src.loc << "<span class='warning'>Combat injection is still recharging.</span>"
+			loc << "<span class='warning'>Combat injection is still recharging.</span>"
 			return
-		var/mob/living/carbon/human/M = src.loc
+		var/mob/living/carbon/human/M = loc
 		M.adjustStaminaLoss(-75)
 		M.SetParalysis(0)
 		M.SetStunned(0)
@@ -174,7 +172,7 @@
 			mark(target, user)
 
 /obj/item/device/abductor/gizmo/proc/scan(atom/target, mob/living/user)
-	if(istype(target,/mob/living/carbon/human))
+	if(ishuman(target))
 		if(console!=null)
 			console.AddSnapshot(target)
 			user << "<span class='notice'>You scan [target] and add them to the database.</span>"
@@ -183,7 +181,7 @@
 	if(marked == target)
 		user << "<span class='warning'>This specimen is already marked!</span>"
 		return
-	if(istype(target,/mob/living/carbon/human))
+	if(ishuman(target))
 		if(isabductor(target))
 			marked = target
 			user << "<span class='notice'>You mark [target] for future retrieval.</span>"
@@ -244,54 +242,6 @@
 			r.listening = 0
 			if(!istype(I,/obj/item/device/radio/headset))
 				r.broadcasting = 0 //goddamned headset hacks
-
-
-/obj/item/weapon/implant/abductor
-	name = "recall implant"
-	desc = "Returns you to the mothership."
-	icon = 'icons/obj/abductor.dmi'
-	icon_state = "implant"
-	activated = 1
-	origin_tech = "materials=2;biotech=7;magnets=4;bluespace=4;abductor=5"
-	var/obj/machinery/abductor/pad/home
-	var/cooldown = 30
-
-/obj/item/weapon/implant/abductor/activate()
-	if(cooldown == initial(cooldown))
-		home.Retrieve(imp_in,1)
-		cooldown = 0
-		START_PROCESSING(SSobj, src)
-	else
-		imp_in << "<span class='warning'>You must wait [30 - cooldown] seconds to use [src] again!</span>"
-
-/obj/item/weapon/implant/abductor/process()
-	if(cooldown < initial(cooldown))
-		cooldown++
-		if(cooldown == initial(cooldown))
-			STOP_PROCESSING(SSobj, src)
-
-/obj/item/weapon/implant/abductor/implant(var/mob/source, var/mob/user)
-	if(..())
-		var/obj/machinery/abductor/console/console
-		if(ishuman(source))
-			var/mob/living/carbon/human/H = source
-			if(H.dna.species.id == "abductor")
-				var/datum/species/abductor/S = H.dna.species
-				console = get_team_console(S.team)
-				home = console.pad
-
-		if(!home)
-			console = get_team_console(pick(1, 2, 3, 4))
-			home = console.pad
-		return 1
-
-/obj/item/weapon/implant/abductor/proc/get_team_console(var/team)
-	var/obj/machinery/abductor/console/console
-	for(var/obj/machinery/abductor/console/c in machines)
-		if(c.team == team)
-			console = c
-			break
-	return console
 
 /obj/item/device/firing_pin/abductor
 	name = "alien firing pin"
@@ -394,7 +344,7 @@ Congratulations! You are now trained for xenobiology research!"}
 	if(!isabductor(user))
 		return
 
-	if(isrobot(target))
+	if(iscyborg(target))
 		..()
 		return
 
@@ -460,11 +410,11 @@ Congratulations! You are now trained for xenobiology research!"}
 		return
 	var/mob/living/carbon/C = L
 	if(!C.handcuffed)
-		if(C.get_num_arms() >= 2)
+		if(C.get_num_arms() >= 2 || C.get_arm_ignore())
 			playsound(loc, 'sound/weapons/cablecuff.ogg', 30, 1, -2)
 			C.visible_message("<span class='danger'>[user] begins restraining [C] with [src]!</span>", \
 									"<span class='userdanger'>[user] begins shaping an energy field around your hands!</span>")
-			if(do_mob(user, C, 30) && C.get_num_arms() >= 2)
+			if(do_mob(user, C, 30) && (C.get_num_arms() >= 2 || C.get_arm_ignore()))
 				if(!C.handcuffed)
 					C.handcuffed = new /obj/item/weapon/restraints/handcuffs/energy/used(C)
 					C.update_handcuffed()
@@ -583,9 +533,8 @@ Congratulations! You are now trained for xenobiology research!"}
 	can_buckle = 1
 	buckle_lying = 1
 	flags = NODECONSTRUCT
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 
-/obj/structure/table/optable/abductor/table_destroy()
-	return //can't destroy the abductor's only optable.
 
 /obj/structure/bed/abductor
 	name = "resting contraption"

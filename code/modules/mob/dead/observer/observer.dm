@@ -117,11 +117,13 @@ var/list/image/ghost_images_simple = list() //this is a list of all ghost images
 	var/old_color = color
 	color = "#960000"
 	animate(src, color = old_color, time = 10)
+	addtimer(src, "update_atom_colour", 10)
 
 /mob/dead/observer/ratvar_act()
 	var/old_color = color
 	color = "#FAE48C"
 	animate(src, color = old_color, time = 10)
+	addtimer(src, "update_atom_colour", 10)
 
 /mob/dead/observer/Destroy()
 	ghost_images_full -= ghostimage
@@ -256,11 +258,6 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	set name = "Ghost"
 	set desc = "Relinquish your life and enter the land of the dead."
 
-	if(mental_dominator)
-		src << "<span class='warning'>This body's force of will is too strong! You can't break it enough to force them into a catatonic state.</span>"
-		if(mind_control_holder)
-			mind_control_holder << "<span class='userdanger'>Through tremendous force of will, you stop a catatonia attempt!</span>"
-		return 0
 	if(stat != DEAD)
 		succumb()
 	if(stat == DEAD)
@@ -302,11 +299,14 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	..()
 	if(statpanel("Status"))
 		stat(null, "Station Time: [worldtime2text()]")
-		if(ticker)
-			if(ticker.mode)
-				for(var/datum/gang/G in ticker.mode.gangs)
-					if(G.is_dominating)
-						stat(null, "[G.name] Gang Takeover: [max(G.domination_time_remaining(), 0)]")
+		if(ticker && ticker.mode)
+			for(var/datum/gang/G in ticker.mode.gangs)
+				if(G.is_dominating)
+					stat(null, "[G.name] Gang Takeover: [max(G.domination_time_remaining(), 0)]")
+			if(istype(ticker.mode, /datum/game_mode/blob))
+				var/datum/game_mode/blob/B = ticker.mode
+				if(B.message_sent)
+					stat(null, "Blobs to Blob Win: [blobs_legit.len]/[B.blobwincount]")
 
 /mob/dead/observer/verb/reenter_corpse()
 	set category = "Ghost"
@@ -336,9 +336,12 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 					A.icon = ui_style2icon(client.prefs.UI_style)
 				A.desc = message
 				var/old_layer = source.layer
+				var/old_plane = source.plane
 				source.layer = FLOAT_LAYER
+				source.plane = FLOAT_PLANE
 				A.add_overlay(source)
 				source.layer = old_layer
+				source.plane = old_plane
 	src << "<span class='ghostalert'><a href=?src=\ref[src];reenter=1>(Click to re-enter)</a></span>"
 	if(sound)
 		src << sound(sound)
@@ -347,7 +350,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	set category = "Ghost"
 	set name = "Teleport"
 	set desc= "Teleport to a location"
-	if(!istype(usr, /mob/dead/observer))
+	if(!isobserver(usr))
 		usr << "Not when you're not dead!"
 		return
 	var/A
@@ -385,7 +388,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	var/orbitsize = (I.Width()+I.Height())*0.5
 	orbitsize -= (orbitsize/world.icon_size)*(world.icon_size*0.25)
 
-	if(orbiting != target)
+	if(orbiting && orbiting.orbiting != target)
 		src << "<span class='notice'>Now orbiting [target].</span>"
 
 	var/rot_seg
@@ -405,20 +408,21 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	orbit(target,orbitsize, FALSE, 20, rot_seg)
 
 /mob/dead/observer/orbit()
-	setDir(2 )//reset dir so the right directional sprites show up
+	setDir(2)//reset dir so the right directional sprites show up
+	..()
+
+/mob/dead/observer/stop_orbit()
 	..()
 	//restart our floating animation after orbit is done.
-	sleep 2  //orbit sets up a 2ds animation when it finishes, so we wait for that to end
-	if (!orbiting) //make sure another orbit hasn't started
-		pixel_y = 0
-		animate(src, pixel_y = 2, time = 10, loop = -1)
+	pixel_y = 0
+	animate(src, pixel_y = 2, time = 10, loop = -1)
 
 /mob/dead/observer/verb/jumptomob() //Moves the ghost instead of just changing the ghosts's eye -Nodrak
 	set category = "Ghost"
 	set name = "Jump to Mob"
 	set desc = "Teleport to a mob"
 
-	if(istype(usr, /mob/dead/observer)) //Make sure they're an observer!
+	if(isobserver(usr)) //Make sure they're an observer!
 
 
 		var/list/dest = list() //List of possible destinations (mobs)
@@ -543,7 +547,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	if(!target)
 		return 0
 
-	if(istype (target, /mob/living/simple_animal/hostile/megafauna))
+	if(ismegafauna(target))
 		src << "<span class='warning'>This creature is too powerful for you to possess!</span>"
 		return 0
 
@@ -555,6 +559,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		return 0
 
 	target.key = key
+	target.faction = list("neutral")
 	return 1
 
 /mob/dead/observer/proc/server_hop()

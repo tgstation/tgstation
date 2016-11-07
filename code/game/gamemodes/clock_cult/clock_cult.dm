@@ -16,16 +16,28 @@ Components, which are fallen fragments of Ratvar's body as he rusts in Reebe, ar
 Game-wise, clockwork slabs will generate components over time, with more powerful components being slower.
 
 This file's folder contains:
-	__clock_defines.dm: Defined variables
 	clock_cult.dm: Core gamemode files.
-	clock_items.dm: Items (excluding the proselytizer).
-	clock_machines.dm: Machinery like the mending motor.
-	clock_mobs.dm: Hostile and benign clockwork creatures.
-	clock_proselytizer: The clockwork proselytizer and all of its special interactions.
-	clock_ratvar.dm: The Ark of the Clockwork Justiciar and Ratvar himself. Important enough to have his own file.
-	clock_scripture.dm: Scripture and rites.
-	clock_structures.dm: Structures and effects
-	clock_unsorted.dm: Anything else with no place to be
+	clock_effect.dm: The base clockwork effect code.
+	- Effect files are in game/gamemodes/clock_cult/clock_effects/
+	clock_item.dm: The base clockwork item code.
+	- Item files are in game/gamemodes/clock_cult/clock_items/
+	clock_mobs.dm: Hostile clockwork creatures.
+	clock_scripture.dm: The base Scripture code.
+	- Scripture files are in game/gamemodes/clock_cult/clock_scripture/
+	clock_structure.dm: The base clockwork structure code, including clockwork machines.
+	- Structure files, and Ratvar, are in game/gamemodes/clock_cult/clock_structures/
+
+	game/gamemodes/clock_cult/clock_helpers/ contains several helper procs, including the Ratvarian language.
+
+	clockcult defines are in __DEFINES/clockcult.dm
+
+Credit where due:
+1. VelardAmakar from /vg/ for the entire design document, idea, and plan. Thank you very much.
+2. SkowronX from /vg/ for MANY of the assets
+3. FuryMcFlurry from /vg/ for many of the assets
+4. PJB3005 from /vg/ for the failed continuation PR
+5. Xhuis from /tg/ for coding the basic gamemode as it is today
+6. ChangelingRain from /tg/ for maintaining the gamemode for months after its release
 
 */
 
@@ -34,144 +46,37 @@ This file's folder contains:
 ///////////
 
 /proc/is_servant_of_ratvar(mob/living/M)
-	return M && istype(M) && M.mind && ticker && ticker.mode && (M.mind in ticker.mode.servants_of_ratvar)
+	return istype(M) && M.has_antag_datum(/datum/antagonist/clockcultist, TRUE)
 
 /proc/is_eligible_servant(mob/living/M)
 	if(!istype(M))
-		return 0
-	if(!M.mind)
-		return 0
-	if(M.mind.enslaved_to && !is_servant_of_ratvar(M.mind.enslaved_to))
-		return 0
-	if(iscultist(M) || isconstruct(M))
-		return 0
-	if(isbrain(M))
-		return 1
-	if(ishuman(M))
-		if(isloyal(M) || (M.mind.assigned_role in list("Captain", "Chaplain")))
-			return 0
-		return 1
-	if(isguardian(M))
-		var/mob/living/simple_animal/hostile/guardian/G = M
-		if(is_servant_of_ratvar(G.summoner))
-			return 1 //can't convert it unless the owner is converted
-	if(issilicon(M) || isclockmob(M) || istype(M, /mob/living/simple_animal/drone/cogscarab))
-		return 1
-	return 0
+		return FALSE
+	if(M.mind)
+		if(ishuman(M) && (M.mind.assigned_role in list("Captain", "Chaplain")))
+			return FALSE
+		if(M.mind.enslaved_to && !is_servant_of_ratvar(M.mind.enslaved_to))
+			return FALSE
+	else
+		return FALSE
+	if(iscultist(M) || isconstruct(M) || M.isloyal())
+		return FALSE
+	if(ishuman(M) || isbrain(M) || isguardian(M) || issilicon(M) || isclockmob(M) || istype(M, /mob/living/simple_animal/drone/cogscarab))
+		return TRUE
+	return FALSE
 
-/proc/add_servant_of_ratvar(mob/M, silent = FALSE)
-	if(is_servant_of_ratvar(M) || !ticker || !ticker.mode)
-		return 0
-	if(iscarbon(M))
-		if(!silent)
-			M << "<span class='heavy_brass'>Your mind is racing! Your body feels incredibly light! Your world glows a brilliant yellow! All at once it comes to you. Ratvar, the Clockwork \
-			Justiciar, lies in exile, derelict and forgotten in an unseen realm.</span>"
-	else if(issilicon(M))
-		if(!silent)
-			M << "<span class='heavy_brass'>You are unable to compute this truth. Your vision glows a brilliant yellow, and all at once it comes to you. Ratvar, the Clockwork Justiciar, lies in \
-			exile, derelict and forgotten in an unseen realm.</span>"
-		if(!is_eligible_servant(M))
-			if(!M.stat)
-				M.visible_message("<span class='warning'>[M] whirs as it resists an outside influence!</span>")
-			M << "<span class='warning'><b>Corrupt data purged. Resetting cortex chip to factory defaults... complete.</b></span>" //silicons have a custom fail message
-			return 0
-	else if(!silent)
-		M << "<span class='heavy_brass'>Your world glows a brilliant yellow! All at once it comes to you. Ratvar, the Clockwork Justiciar, lies in exile, derelict and forgotten in an unseen realm.</span>"
+/proc/add_servant_of_ratvar(mob/living/L, silent = FALSE)
+	var/update_type = /datum/antagonist/clockcultist
+	if(silent)
+		update_type = /datum/antagonist/clockcultist/silent
+	. = L.gain_antag_datum(update_type)
 
-	if(!is_eligible_servant(M))
-		if(!silent && !M.stat)
-			M.visible_message("<span class='warning'>[M] seems to resist an unseen force!</span>")
-		M << "<span class='warning'><b>And yet, you somehow push it all away.</b></span>"
-		return 0
-
-	if(!silent)
-		M.visible_message("<span class='heavy_brass'>[M]'s eyes glow a blazing yellow!</span>", \
-		"<span class='heavy_brass'>Assist your new companions in their righteous efforts. Your goal is theirs, and theirs yours. You serve the Clockwork Justiciar above all else. Perform his every \
-		whim without hesitation.</span>")
-	var/list/scripture_states = get_scripture_states()
-	ticker.mode.servants_of_ratvar += M.mind
-	scripture_unlock_alert(scripture_states)
-	ticker.mode.update_servant_icons_added(M.mind)
-	M.mind.special_role = "Servant of Ratvar"
-	M.languages_spoken |= RATVAR
-	M.languages_understood |= RATVAR
-	all_clockwork_mobs += M
-	M.update_action_buttons_icon() //because a few clockcult things are action buttons and we may be wearing/holding them for whatever reason, we need to update buttons
-	M.attack_log += "\[[time_stamp()]\] <span class='brass'>Has been converted to the cult of Ratvar!</span>"
-	if(issilicon(M))
-		var/mob/living/silicon/S = M
-		if(isrobot(S))
-			var/mob/living/silicon/robot/R = S
-			R.UnlinkSelf()
-			R.emagged = 1
-			R << "<span class='boldwarning'>You have been desynced from your master AI. In addition, your onboard camera is no longer active and your safeties have been disabled.</span>"
-		else if(isAI(S))
-			var/mob/living/silicon/ai/A = S
-			for(var/C in A.connected_robots)
-				var/mob/living/silicon/robot/R = C
-				if(R.connected_ai == A)
-					add_servant_of_ratvar(R)
-		S.laws = new/datum/ai_laws/ratvar
-		S.laws.associate(S)
-		S.update_icons()
-		S.show_laws()
-		var/datum/action/innate/hierophant/H = new()
-		H.Grant(S)
-		H.title = null //so it's just the borg's name
-		S << "<span class='heavy_brass'>You can communicate with other servants by using the Hierophant Network action button in the upper left.</span>"
-	else if(isbrain(M))
-		var/datum/action/innate/hierophant/H = new()
-		H.Grant(M)
-		H.title = "Vessel"
-		H.span_for_name = "nezbere"
-		H.span_for_message = "alloy"
-		M << "<span class='nezbere'>You can communicate with other servants by using the Hierophant Network action button in the upper left.</span>"
-	else if(isclockmob(M))
-		var/datum/action/innate/hierophant/H = new()
-		H.Grant(M)
-		H.title = "Construct"
-		H.span_for_name = "nezbere"
-		M << "<span class='nezbere'>You can communicate with other servants by using the Hierophant Network action button in the upper left.</span>"
-	if(istype(ticker.mode, /datum/game_mode/clockwork_cult))
-		var/datum/game_mode/clockwork_cult/C = ticker.mode
-		C.present_tasks(M) //Memorize the objectives
-	M.throw_alert("clockinfo", /obj/screen/alert/clockwork/infodump)
-	cache_check(M)
-	return 1
-
-/proc/remove_servant_of_ratvar(mob/living/M, silent = FALSE)
-	if(!is_servant_of_ratvar(M)) //In this way, is_servant_of_ratvar() checks the existence of ticker and minds
-		return 0
-	if(!silent)
-		M.visible_message("<span class='big'>[M] seems to have remembered their true allegiance!</span>", \
-		"<span class='userdanger'>A cold, cold darkness flows through your mind, extinguishing the Justiciar's light and all of your memories as his servant.</span>")
-	var/list/scripture_states = get_scripture_states()
-	ticker.mode.servants_of_ratvar -= M.mind
-	scripture_unlock_alert(scripture_states)
-	ticker.mode.update_servant_icons_removed(M.mind)
-	all_clockwork_mobs -= M
-	M.mind.memory = "" //Not sure if there's a better way to do this
-	M.mind.special_role = null
-	M.languages_spoken &= ~RATVAR
-	M.languages_understood &= ~RATVAR
-	M.update_action_buttons_icon() //because a few clockcult things are action buttons and we may be wearing/holding them, we need to update buttons
-	M.attack_log += "\[[time_stamp()]\] <span class='brass'>Has renounced the cult of Ratvar!</span>"
-	M.clear_alert("clockinfo")
-	M.clear_alert("nocache")
-	for(var/datum/action/innate/function_call/F in M.actions) //Removes any bound Ratvarian spears
-		qdel(F)
-	for(var/datum/action/innate/hierophant/H in M.actions) //Removes any communication actions
-		qdel(H)
-	if(issilicon(M))
-		var/mob/living/silicon/S = M
-		if(isrobot(S))
-			var/mob/living/silicon/robot/R = S
-			R.emagged = initial(R.emagged)
-			R << "<span class='warning'>Despite your freedom from Ratvar's influence, you are still irreparably damaged and no longer possess certain functions such as AI linking.</span>"
-		S.make_laws()
-		S.update_icons()
-		S.show_laws()
-	return 1
+/proc/remove_servant_of_ratvar(mob/living/L, silent = FALSE)
+	var/datum/antagonist/clockcultist/clock_datum = L.has_antag_datum(/datum/antagonist/clockcultist, TRUE)
+	if(!clock_datum)
+		return FALSE
+	clock_datum.silent_update = silent
+	clock_datum.on_remove()
+	return TRUE
 
 ///////////////
 // GAME MODE //
@@ -181,7 +86,7 @@ This file's folder contains:
 	var/list/servants_of_ratvar = list() //The Enlightened servants of Ratvar
 	var/required_escapees = 0 //How many servants need to escape, if applicable
 	var/required_silicon_converts = 0 //How many robotic lifeforms need to be converted, if applicable
-	var/clockwork_objective = "gateway" //The objective that the servants must fulfill
+	var/clockwork_objective = CLOCKCULT_GATEWAY //The objective that the servants must fulfill
 	var/clockwork_explanation = "Construct a Gateway to the Celestial Derelict and free Ratvar." //The description of the current objective
 
 /datum/game_mode/clockwork_cult
@@ -235,21 +140,21 @@ This file's folder contains:
 	return 1
 
 /datum/game_mode/clockwork_cult/proc/forge_clock_objectives() //Determine what objective that Ratvar's servants will fulfill
-	var/list/possible_objectives = list("escape", "gateway")
+	var/list/possible_objectives = list(CLOCKCULT_ESCAPE, CLOCKCULT_GATEWAY)
 	var/silicons_possible = FALSE
-	for(var/mob/living/silicon/S in living_mob_list)
+	for(var/mob/living/silicon/ai/S in living_mob_list)
 		silicons_possible = TRUE
 	if(silicons_possible)
-		possible_objectives += "silicons"
+		possible_objectives += CLOCKCULT_SILICONS
 	clockwork_objective = pick(possible_objectives)
 	switch(clockwork_objective)
-		if("escape")
-			required_escapees = max(1, roundstart_player_count / 3) //33% of the player count must be cultists
+		if(CLOCKCULT_ESCAPE)
+			required_escapees = round(max(1, roundstart_player_count / 3)) //33% of the player count must be cultists
 			clockwork_explanation = "Ensure that [required_escapees] servants of Ratvar escape from [station_name()]."
-		if("gateway")
+		if(CLOCKCULT_GATEWAY)
 			clockwork_explanation = "Construct a Gateway to the Celestial Derelict and free Ratvar."
-		if("silicons")
-			clockwork_explanation = "Ensure that all active silicon-based lifeforms on [station_name()] are servants of Ratvar by the end of the shift."
+		if(CLOCKCULT_SILICONS)
+			clockwork_explanation = "Ensure that all active silicon-based lifeforms on [station_name()] are servants of Ratvar and Application scripture is unlocked."
 	return 1
 
 /datum/game_mode/clockwork_cult/proc/greet_servant(mob/M) //Description of their role
@@ -289,33 +194,32 @@ This file's folder contains:
 
 /datum/game_mode/clockwork_cult/proc/check_clockwork_victory()
 	switch(clockwork_objective)
-		if("escape")
+		if(CLOCKCULT_ESCAPE)
 			var/surviving_servants = 0
 			for(var/datum/mind/M in servants_of_ratvar)
 				if(M.current && M.current.stat != DEAD && (M.current.onCentcom() || M.current.onSyndieBase()))
 					surviving_servants++
-			clockwork_explanation = "Ensure that [required_escapees] servant(s) of Ratvar escape from [station_name()]. <i><b>[surviving_servants]</b> managed to escape!</i>"
+			clockwork_explanation = "Ensure that [required_escapees] servant(s) of Ratvar escape from [station_name()].<br><i><b>[surviving_servants]</b> managed to escape!</i>"
 			if(surviving_servants >= required_escapees)
 				return TRUE
 			return FALSE
-		if("silicons")
+		if(CLOCKCULT_SILICONS)
 			var/total_silicons = 0
 			var/valid_silicons = 0
-			var/successful = TRUE
-			for(var/mob/living/silicon/robot/S in mob_list) //Only check robots and AIs
-				total_silicons++
-				if(is_servant_of_ratvar(S) || S.stat == DEAD)
-					valid_silicons++
-			for(var/mob/living/silicon/ai/A in mob_list)
-				total_silicons++
-				if(is_servant_of_ratvar(A) || A.stat == DEAD)
-					valid_silicons++
-			if(valid_silicons < total_silicons)
-				successful = FALSE
-			clockwork_explanation = "Ensure that all active silicon-based lifeforms on [station_name()] are servants of Ratvar by the end of the shift. \
-			<i><b>[valid_silicons]/[total_silicons]</b> silicons were killed or converted!</i>"
+			var/successful = FALSE
+			for(var/mob/living/silicon/S in mob_list) //Only check robots and AIs
+				if(isAI(S) || iscyborg(S))
+					total_silicons++
+					if(is_servant_of_ratvar(S) || S.stat == DEAD)
+						valid_silicons++
+			var/list/scripture_states = scripture_unlock_check()
+			if(valid_silicons >= total_silicons && scripture_states[SCRIPTURE_APPLICATION])
+				successful = TRUE
+			clockwork_explanation = "Ensure that all active silicon-based lifeforms on [station_name()] are servants of Ratvar and Application scripture is unlocked.<br>\
+			<i><b>[valid_silicons]/[total_silicons]</b> silicons were killed or converted!<br>\
+			Application scripture was <b>[scripture_states[SCRIPTURE_APPLICATION] ? "UNLOCKED":"LOCKED"]</b></i>"
 			return successful
-		if("gateway")
+		if(CLOCKCULT_GATEWAY)
 			return ratvar_awakens
 	return FALSE //This shouldn't ever be reached, but just in case it is
 
@@ -332,8 +236,8 @@ This file's folder contains:
 			feedback_set_details("round_end_result", "win - servants completed their objective ([clockwork_objective])")
 		else
 			var/half_victory = FALSE
-			if(clockwork_objective == "gateway")
-				var/obj/structure/clockwork/massive/celestial_gateway/G = locate() in all_clockwork_objects
+			if(clockwork_objective == CLOCKCULT_GATEWAY)
+				var/obj/structure/destructible/clockwork/massive/celestial_gateway/G = locate() in all_clockwork_objects
 				if(G)
 					half_victory = TRUE
 			if(half_victory)

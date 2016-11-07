@@ -11,7 +11,7 @@
 	var/reskinned = FALSE
 
 /obj/item/weapon/nullrod/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is killing \himself with \the [src.name]! It looks like \he's trying to get closer to god!</span>")
+	user.visible_message("<span class='suicide'>[user] is killing [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to get closer to god!</span>")
 	return (BRUTELOSS|FIRELOSS)
 
 /obj/item/weapon/nullrod/attack_self(mob/user)
@@ -127,10 +127,14 @@
 
 /obj/item/weapon/nullrod/claymore/multiverse
 	name = "extradimensional blade"
-	desc = "Once the harbringer of a interdimensional war, now a dormant souvenir. Still sharp though."
+	desc = "Once the harbinger of a interdimensional war, its sharpness fluctuates wildly. "
 	icon_state = "multiverse"
 	item_state = "multiverse"
 	slot_flags = SLOT_BELT
+
+/obj/item/weapon/nullrod/claymore/multiverse/attack(mob/living/carbon/M, mob/living/carbon/user)
+	force = rand(1, 30)
+	..()
 
 /obj/item/weapon/nullrod/claymore/saber
 	name = "light energy sword"
@@ -180,7 +184,16 @@
 	name = "high frequency blade"
 	desc = "Bad references are the DNA of the soul."
 	attack_verb = list("chopped", "sliced", "cut", "zandatsu'd")
-	hitsound = 'sound/weapons/bladeslice.ogg'
+	hitsound = 'sound/weapons/rapierhit.ogg'
+
+
+/obj/item/weapon/nullrod/scythe/spellblade
+	icon_state = "spellblade"
+	item_state = "spellblade"
+	icon = 'icons/obj/guns/magic.dmi'
+	name = "dormant spellblade"
+	desc = "The blade grants the wielder nearly limitless power...if they can figure out how to turn it on, that is."
+	hitsound = 'sound/weapons/rapierhit.ogg'
 
 /obj/item/weapon/nullrod/scythe/talking
 	icon_state = "talking_sword"
@@ -188,7 +201,7 @@
 	name = "possessed blade"
 	desc = "When the station falls into chaos, it's nice to have a friend by your side."
 	attack_verb = list("chopped", "sliced", "cut")
-	hitsound = 'sound/weapons/bladeslice.ogg'
+	hitsound = 'sound/weapons/rapierhit.ogg'
 	var/possessed = FALSE
 
 /obj/item/weapon/nullrod/scythe/talking/attack_self(mob/living/user)
@@ -262,6 +275,7 @@
 	item_state = "chain"
 	slot_flags = SLOT_BELT
 	attack_verb = list("whipped", "lashed")
+	hitsound = 'sound/weapons/chainhit.ogg'
 
 /obj/item/weapon/nullrod/fedora
 	name = "atheist's fedora"
@@ -288,7 +302,7 @@
 
 /obj/item/weapon/nullrod/carp
 	name = "carp-sie plushie"
-	desc = "An adorable stuffed toy that resembles the god of all carp. The teeth look pretty sharp. Activate it to recieve the blessing of Carp-Sie."
+	desc = "An adorable stuffed toy that resembles the god of all carp. The teeth look pretty sharp. Activate it to receive the blessing of Carp-Sie."
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "carpplushie"
 	item_state = "carp_plushie"
@@ -351,3 +365,4 @@
 
 /obj/item/weapon/nullrod/tribal_knife/process()
 	slowdown = rand(-2, 2)
+
