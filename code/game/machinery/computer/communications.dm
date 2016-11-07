@@ -136,8 +136,9 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 
 		if("buyshuttle")
 			if(authenticated==2)
-				var/datum/map_template/shuttle/S = locate(href_list["chosen_shuttle"])
-				if(S)
+				var/list/shuttles = flatten_list(shuttle_templates)
+				var/datum/map_template/shuttle/S = locate(href_list["chosen_shuttle"]) in shuttles
+				if(S && istype(S))
 					for(var/obj/machinery/shuttle_manipulator/M in machines)
 						if(M.shuttle_purchased)
 							usr << "A replacement shuttle has already been purchased."

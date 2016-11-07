@@ -40,9 +40,10 @@
 		In case of emergency: Break glass."
 	admin_notes = "No brig, no medical facilities, no air."
 
-/datum/map_template/shuttle/emergency/asteroid //Too large to fit on several stations
+/datum/map_template/shuttle/emergency/asteroid
 	suffix = "asteroid"
 	name = "Asteroid emergency shuttle"
+	credit_cost = 3000
 
 /datum/map_template/shuttle/emergency/bar
 	suffix = "bar"
