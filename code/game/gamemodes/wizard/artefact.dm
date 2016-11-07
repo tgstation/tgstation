@@ -277,7 +277,7 @@ var/global/list/multiverse = list()
 	M.key = C.key
 	M.mind.name = usr.real_name
 	M << "<B>You are an alternate version of [usr.real_name] from another universe! Help them accomplish their goals at all costs.</B>"
-	ticker.mode.add_gangster(M.mind, usr.mind.gang_datum, TRUE)
+	ticker.mode.add_gangster(M.mind, usr.mind.gang_datum, FALSE)
 	M.real_name = usr.real_name
 	M.name = usr.real_name
 	M.faction = list("[usr.real_name]")

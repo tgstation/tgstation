@@ -16,6 +16,7 @@
 	var/dom_attempts = 2
 	var/points = 15
 	var/datum/atom_hud/antag/gang/ganghud
+	var/is_deconvertible = TRUE //Can you deconvert normal gangsters from the gang
 
 	var/domination_timer
 	var/is_dominating
@@ -221,6 +222,7 @@
 	dom_attempts = 0
 	points = 0
 	fighting_style = "multiverse"
+	is_deconvertible = FALSE
 
 /datum/gang/multiverse/New(loc, multiverse_override)
 	name = multiverse_override

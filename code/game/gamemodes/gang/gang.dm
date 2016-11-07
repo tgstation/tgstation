@@ -190,7 +190,7 @@ var/list/gang_colors_pool = list("red","orange","yellow","green","blue","purple"
 	var/removed
 
 	for(var/datum/gang/G in gangs)
-		if(G.fighting_style == "multiverse" && !remove_bosses)
+		if(!G.is_deconvertible && !remove_bosses)
 			return 0
 		if(gangster_mind in G.gangsters)
 			G.gangsters -= gangster_mind

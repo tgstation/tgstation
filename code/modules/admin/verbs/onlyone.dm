@@ -94,7 +94,6 @@ var/highlander = FALSE
 
 		var/datum/gang/multiverse/G = new(src, "[H.real_name]")
 		ticker.mode.gangs += G
-		G.fighting_style = "multiverse"
 		G.bosses += H.mind
 		G.add_gang_hud(H.mind)
 		H.mind.gang_datum = G
