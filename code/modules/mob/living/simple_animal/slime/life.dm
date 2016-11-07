@@ -63,7 +63,7 @@
 				break
 
 			if(Target in view(1,src))
-				if(istype(Target, /mob/living/silicon))
+				if(issilicon(Target))
 					if(!Atkcool)
 						Atkcool = 1
 						spawn(45)
@@ -234,7 +234,7 @@
 		Feedstop(0, 0)
 		return
 
-	add_nutrition(rand(7,15))
+	add_nutrition((rand(7,15) * config.damage_multiplier))
 
 	//Heal yourself.
 	adjustBruteLoss(-3)
@@ -343,7 +343,7 @@
 					if(issilicon(L) && (rabid || attacked)) // They can't eat silicons, but they can glomp them in defence
 						targets += L // Possible target found!
 
-					if(istype(L, /mob/living/carbon/human)) //Ignore slime(wo)men
+					if(ishuman(L)) //Ignore slime(wo)men
 						var/mob/living/carbon/human/H = L
 						if(src.type in H.dna.species.ignored_by)
 							continue

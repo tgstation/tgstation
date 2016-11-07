@@ -62,7 +62,7 @@
 
 /obj/item/toy/beach_ball/holoball
 	name = "basketball"
-	icon = 'icons/obj/basketball.dmi'
+	icon = 'icons/obj/items.dmi'
 	icon_state = "basketball"
 	item_state = "basketball"
 	desc = "Here's your chance, do your dance at the Space Jam."
@@ -203,3 +203,17 @@
 
 	for(var/mob/M in currentarea)
 		M << "FIGHT!"
+
+/obj/machinery/conveyor/holodeck
+
+/obj/machinery/conveyor/holodeck/attackby(obj/item/I, mob/user, params)
+	if(user.drop_item())
+		I.loc = src.loc
+	else
+		return ..()
+
+/obj/item/weapon/paper/trek_diploma
+	name = "paper - Starfleet Academy Diploma"
+	info = {"<h2>Starfleet Academy</h2></br><p>Official Diploma</p></br>"}
+
+

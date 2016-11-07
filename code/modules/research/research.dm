@@ -143,6 +143,16 @@ research holder datum.
 		if((D.build_type & AUTOLATHE) && ("initial" in D.category))  //autolathe starts without hacked designs
 			AddDesign2Known(D)
 
+//Limb Grower files
+/datum/research/limbgrower/New()
+	for(var/T in (subtypesof(/datum/tech)))
+		possible_tech += new T(src)
+	for(var/path in subtypesof(/datum/design))
+		var/datum/design/D = new path(src)
+		possible_designs += D
+		if((D.build_type & LIMBGROWER) && ("initial" in D.category))
+			AddDesign2Known(D)
+
 /datum/research/autolathe/AddDesign2Known(datum/design/D)
 	if(!(D.build_type & AUTOLATHE))
 		return
@@ -289,12 +299,42 @@ research holder datum.
 	return cost
 
 /obj/item/weapon/disk/tech_disk
-	name = "Technology Disk"
+	name = "technology disk"
 	desc = "A disk for storing technology data for further research."
 	icon_state = "datadisk0"
-	materials = list(MAT_METAL=30, MAT_GLASS=10)
-	var/datum/tech/stored
+	materials = list(MAT_METAL=300, MAT_GLASS=100)
+	var/list/tech_stored = list()
+	var/max_tech_stored = 1
 
 /obj/item/weapon/disk/tech_disk/New()
 	src.pixel_x = rand(-5, 5)
 	src.pixel_y = rand(-5, 5)
+	for(var/i in 1 to max_tech_stored)
+		tech_stored += null
+
+/obj/item/weapon/disk/tech_disk/adv
+	name = "advanced technology disk"
+	desc = "A disk for storing technology data for further research. This one has extra storage space."
+	materials = list(MAT_METAL=300, MAT_GLASS=100, MAT_SILVER=50)
+	max_tech_stored = 5
+
+/obj/item/weapon/disk/tech_disk/super_adv
+	name = "quantum technology disk"
+	desc = "A disk for storing technology data for further research. This one has extremely large storage space."
+	materials = list(MAT_METAL=300, MAT_GLASS=100, MAT_SILVER=100, MAT_GOLD=100)
+	max_tech_stored = 10
+
+/obj/item/weapon/disk/tech_disk/debug
+	name = "centcomm technology disk"
+	desc = "A debug item for research"
+	materials = list()
+	max_tech_stored = 0
+
+/obj/item/weapon/disk/tech_disk/debug/New()
+	..()
+	var/list/techs = subtypesof(/datum/tech)
+	max_tech_stored = techs.len
+	for(var/V in techs)
+		var/datum/tech/T = new V()
+		tech_stored += T
+		T.level = 8

@@ -2,6 +2,10 @@
 	name = "portable_atmospherics"
 	icon = 'icons/obj/atmos.dmi'
 	use_power = 0
+	obj_integrity = 250
+	max_integrity = 250
+	armor = list(melee = 0, bullet = 0, laser = 0, energy = 100, bomb = 0, bio = 100, rad = 100, fire = 60, acid = 30)
+
 
 	var/datum/gas_mixture/air_contents
 	var/obj/machinery/atmospherics/components/unary/portables_connector/connected_port
@@ -18,6 +22,7 @@
 	air_contents = new
 	air_contents.volume = volume
 	air_contents.temperature = T20C
+	air_contents.holder = src
 
 	return 1
 
@@ -106,3 +111,11 @@
 		atmosanalyzer_scan(air_contents, user)
 	else
 		return ..()
+
+/obj/machinery/portable_atmospherics/attacked_by(obj/item/I, mob/user)
+	if(I.force < 10 && !(stat & BROKEN))
+		take_damage(0)
+	else
+		investigate_log("was smacked with \a [I] by [key_name(user)].", "atmos")
+		add_fingerprint(user)
+		..()

@@ -9,7 +9,7 @@
 /turf/open/floor/engine/cult,
 /area/ruin/powered)
 "d" = (
-/obj/structure/cult/pylon,
+/obj/structure/destructible/cult/pylon,
 /turf/open/floor/engine/cult,
 /area/ruin/powered)
 "e" = (
@@ -57,7 +57,7 @@
 /turf/open/floor/plasteel/circuit/gcircuit/off,
 /area/ruin/powered)
 "o" = (
-/obj/structure/cult/pylon,
+/obj/structure/destructible/cult/pylon,
 /turf/open/floor/plasteel/circuit/gcircuit/off,
 /area/ruin/powered)
 "p" = (
@@ -69,7 +69,7 @@
 /turf/open/floor/plasteel/circuit/gcircuit/off,
 /area/ruin/powered)
 "r" = (
-/obj/structure/cult/pylon,
+/obj/structure/destructible/cult/pylon,
 /turf/open/floor/plasteel/circuit/off,
 /area/ruin/powered)
 "s" = (
@@ -96,7 +96,7 @@
 /turf/open/floor/engine/cult,
 /area/ruin/powered)
 "x" = (
-/obj/structure/cult/pylon,
+/obj/structure/destructible/cult/pylon,
 /turf/open/floor/engine/cult{
 	baseturf = /turf/open/floor/plating/lava/smooth
 	},

@@ -28,7 +28,7 @@
 			if(!channel)
 				return 1
 			var/mob/living/user = usr
-			var/message = sanitize(input(user, "Enter message or leave blank to cancel: "))
+			var/message = reject_bad_text(input(user, "Enter message or leave blank to cancel: "))
 			if(!message || !channel)
 				return
 			channel.add_message(message, username)
@@ -51,7 +51,7 @@
 
 			if(C.password)
 				var/mob/living/user = usr
-				var/password = sanitize(input(user,"Access Denied. Enter password:"))
+				var/password = reject_bad_text(input(user,"Access Denied. Enter password:"))
 				if(C && (password == C.password))
 					C.add_client(src)
 					channel = C
@@ -66,7 +66,7 @@
 		if("PRG_newchannel")
 			. = 1
 			var/mob/living/user = usr
-			var/channel_title = sanitize(input(user,"Enter channel name or leave blank to cancel:"))
+			var/channel_title = reject_bad_text(input(user,"Enter channel name or leave blank to cancel:"))
 			if(!channel_title)
 				return
 			var/datum/ntnet_conversation/C = new/datum/ntnet_conversation()
@@ -119,12 +119,13 @@
 				logfile.stored_data += "[logstring]\[BR\]"
 			logfile.stored_data += "\[b\]Logfile dump completed.\[/b\]"
 			logfile.calculate_size()
-			if(!computer || !computer.hard_drive || !computer.hard_drive.store_file(logfile))
+			var/obj/item/weapon/computer_hardware/hard_drive/hard_drive = computer.all_components[MC_HDD]
+			if(!computer || !hard_drive || !hard_drive.store_file(logfile))
 				if(!computer)
 					// This program shouldn't even be runnable without computer.
 					CRASH("Var computer is null!")
 					return 1
-				if(!computer.hard_drive)
+				if(!hard_drive)
 					computer.visible_message("\The [computer] shows an \"I/O Error - Hard drive connection error\" warning.")
 				else	// In 99.9% cases this will mean our HDD is full
 					computer.visible_message("\The [computer] shows an \"I/O Error - Hard drive may be full. Please free some space and try again. Required space: [logfile.size]GQ\" warning.")
@@ -133,7 +134,7 @@
 			if(!operator_mode || !channel)
 				return 1
 			var/mob/living/user = usr
-			var/newname = sanitize(input(user, "Enter new channel name or leave blank to cancel:"))
+			var/newname = reject_bad_text(input(user, "Enter new channel name or leave blank to cancel:"))
 			if(!newname || !channel)
 				return
 			channel.add_status_message("Channel renamed from [channel.title] to [newname] by operator.")
@@ -173,11 +174,11 @@
 	else
 		ui_header = "ntnrc_idle.gif"
 
-/datum/computer_file/program/chatclient/kill_program(forced = 0)
+/datum/computer_file/program/chatclient/kill_program(forced = FALSE)
 	if(channel)
 		channel.remove_client(src)
 		channel = null
-	..(forced)
+	..()
 
 /datum/computer_file/program/chatclient/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = default_state)
 

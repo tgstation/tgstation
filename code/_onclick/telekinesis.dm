@@ -72,6 +72,7 @@ var/const/tk_maxrange = 15
 	//item_state = null
 	w_class = 10
 	layer = ABOVE_HUD_LAYER
+	plane = ABOVE_HUD_PLANE
 
 	var/last_throw = 0
 	var/atom/movable/focus = null
@@ -86,7 +87,7 @@ var/const/tk_maxrange = 15
 
 //stops TK grabs being equipped anywhere but into hands
 /obj/item/tk_grab/equipped(mob/user, slot)
-	if( (slot == slot_l_hand) || (slot== slot_r_hand) )
+	if(slot == slot_hands)
 		return
 	qdel(src)
 	return
@@ -121,15 +122,16 @@ var/const/tk_maxrange = 15
 		focus_object(target, user)
 		return
 
-	if(focus.anchored)
+	if(focus.anchored || !isturf(focus.loc))
 		qdel(src)
+		return
 
 	if(target == focus)
 		target.attack_self_tk(user)
 		return // todo: something like attack_self not laden with assumptions inherent to attack_self
 
 
-	if(!istype(target, /turf) && istype(focus,/obj/item) && target.Adjacent(focus))
+	if(!isturf(target) && istype(focus,/obj/item) && target.Adjacent(focus))
 		var/obj/item/I = focus
 		var/resolved = target.attackby(I, user, params)
 		if(!resolved && target && I)
@@ -139,7 +141,6 @@ var/const/tk_maxrange = 15
 		focus.throw_at(target, 10, 1,user)
 		last_throw = world.time
 		user.changeNext_move(CLICK_CD_MELEE)
-	return
 
 /proc/tkMaxRangeCheck(mob/user, atom/target, atom/focus)
 	var/d = get_dist(user, target)
@@ -155,7 +156,7 @@ var/const/tk_maxrange = 15
 
 
 /obj/item/tk_grab/proc/focus_object(obj/target, mob/living/user)
-	if(!istype(target,/obj))
+	if(!isobj(target))
 		return//Cant throw non objects atm might let it do mobs later
 	if(target.anchored || !isturf(target.loc))
 		qdel(src)
@@ -189,7 +190,7 @@ var/const/tk_maxrange = 15
 	return
 
 /obj/item/tk_grab/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is using \his telekinesis to choke \himself! It looks like \he's trying to commit suicide.</span>")
+	user.visible_message("<span class='suicide'>[user] is using [user.p_their()] telekinesis to choke [user.p_them()]self! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return (OXYLOSS)
 
 /*Not quite done likely needs to use something thats not get_step_to

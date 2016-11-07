@@ -6,7 +6,7 @@
 	desc = "It's good to be emperor."
 	item_state = "that"
 	flags_inv = 0
-	armor = list(melee = 30, bullet = 15, laser = 30, energy = 10, bomb = 25, bio = 0, rad = 0)
+	armor = list(melee = 30, bullet = 15, laser = 30, energy = 10, bomb = 25, bio = 0, rad = 0, fire = 50, acid = 50)
 	strip_delay = 80
 
 /obj/item/clothing/head/powdered_wig
@@ -24,7 +24,7 @@
 
 /obj/item/clothing/head/canada
 	name = "striped red tophat"
-	desc = " It feels sticky, like maple syrup - <i>il se sent collante, comme le sirop d'Ã©rable</i>"
+	desc = " It feels sticky, like maple syrup - <i>il se sent collante, comme le sirop d'érable</i>"
 	icon_state = "canada"
 	item_state = "canada"
 
@@ -133,7 +133,6 @@
 	desc = "Gentleman, elite aboard!"
 	icon_state = "bowler"
 	item_state = "bowler"
-	pockets = /obj/item/weapon/storage/internal/pocket/small
 
 /obj/item/clothing/head/witchwig
 	name = "witch costume wig"
@@ -223,7 +222,7 @@
 	throw_range = 5
 	w_class = 2
 	attack_verb = list("warned", "cautioned", "smashed")
-	burn_state = FIRE_PROOF
+	resistance_flags = 0
 
 /obj/item/clothing/head/santa
 	name = "santa hat"
@@ -265,7 +264,8 @@
 	name = "crown"
 	desc = "A crown fit for a king, a petty king maybe."
 	icon_state = "crown"
-	armor = list(melee = 15, bullet = 0, laser = 0,energy = 15, bomb = 0, bio = 0, rad = 0) //for a warrior king //energy cause gold is reflective //worse than sec helm overall
+	armor = list(melee = 15, bullet = 0, laser = 0,energy = 15, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 50)
+	resistance_flags = FIRE_PROOF
 
 /obj/item/clothing/head/crown/fancy
 	name = "magnificent crown"

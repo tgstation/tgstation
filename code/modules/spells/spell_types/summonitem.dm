@@ -17,8 +17,7 @@
 
 /obj/effect/proc_holder/spell/targeted/summonitem/cast(list/targets,mob/user = usr)
 	for(var/mob/living/L in targets)
-		var/list/hand_items = list(L.get_active_hand(),L.get_inactive_hand())
-		var/butterfingers = 0
+		var/list/hand_items = list(L.get_active_held_item(),L.get_inactive_held_item())
 		var/message
 
 		if(!marked_item) //linking item to the spell
@@ -93,17 +92,7 @@
 
 			if(item_to_retrive.loc)
 				item_to_retrive.loc.visible_message("<span class='warning'>The [item_to_retrive.name] suddenly disappears!</span>")
-
-
-			if(L.hand) //left active hand
-				if(!L.equip_to_slot_if_possible(item_to_retrive, slot_l_hand, 0, 1, 1))
-					if(!L.equip_to_slot_if_possible(item_to_retrive, slot_r_hand, 0, 1, 1))
-						butterfingers = 1
-			else			//right active hand
-				if(!L.equip_to_slot_if_possible(item_to_retrive, slot_r_hand, 0, 1, 1))
-					if(!L.equip_to_slot_if_possible(item_to_retrive, slot_l_hand, 0, 1, 1))
-						butterfingers = 1
-			if(butterfingers)
+			if(!L.put_in_hands(item_to_retrive))
 				item_to_retrive.loc = L.loc
 				item_to_retrive.loc.visible_message("<span class='caution'>The [item_to_retrive.name] suddenly appears!</span>")
 				playsound(get_turf(L),"sound/magic/SummonItems_generic.ogg",50,1)

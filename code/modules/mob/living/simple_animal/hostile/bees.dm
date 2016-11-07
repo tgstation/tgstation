@@ -16,6 +16,7 @@
 	icon_state = ""
 	icon_living = ""
 	icon = 'icons/mob/bees.dmi'
+	gender = FEMALE
 	speak_emote = list("buzzes")
 	emote_hear = list("buzzes")
 	turns_per_move = 0
@@ -29,6 +30,7 @@
 	health = 10
 	faction = list("hostile")
 	move_to_delay = 0
+	obj_damage = 0
 	environment_smash = 0
 	mouse_opacity = 2
 	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
@@ -144,8 +146,9 @@
 	else
 		if(beegent && isliving(target))
 			var/mob/living/L = target
-			beegent.reaction_mob(L, INJECT)
-			L.reagents.add_reagent(beegent.id, rand(1,5))
+			if(L.reagents)
+				beegent.reaction_mob(L, INJECT)
+				L.reagents.add_reagent(beegent.id, rand(1,5))
 		target.attack_animal(src)
 
 

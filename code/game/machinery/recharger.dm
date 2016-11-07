@@ -7,8 +7,8 @@
 	use_power = 1
 	idle_power_usage = 4
 	active_power_usage = 250
-	var/obj/item/weapon/charging = null
-	var/list/allowed_devices = list(/obj/item/weapon/gun/energy,/obj/item/weapon/melee/baton,/obj/item/ammo_box/magazine/recharge,/obj/item/weapon/computer_hardware/battery_module,/obj/item/laptop,/obj/item/modular_computer/)
+	var/obj/item/charging = null
+	var/list/allowed_devices = list(/obj/item/weapon/gun/energy,/obj/item/weapon/melee/baton,/obj/item/ammo_box/magazine/recharge,/obj/item/device/modular_computer)
 	var/recharge_coeff = 1
 
 /obj/machinery/recharger/New()
@@ -37,9 +37,7 @@
 		playsound(loc, 'sound/items/Ratchet.ogg', 75, 1)
 		return
 
-	var/allowed = 0
-	for (var/allowed_type in allowed_devices)
-		if (istype(G, allowed_type)) allowed = 1
+	var/allowed = is_type_in_list(G, allowed_devices)
 
 	if(allowed)
 		if(anchored)
@@ -53,8 +51,8 @@
 				return 1
 
 			if (istype(G, /obj/item/weapon/gun/energy))
-				var/obj/item/weapon/gun/energy/gun = G
-				if(!gun.can_charge)
+				var/obj/item/weapon/gun/energy/E = G
+				if(!E.can_charge)
 					user << "<span class='notice'>Your gun has no external power connector.</span>"
 					return 1
 
@@ -114,6 +112,7 @@
 			var/obj/item/weapon/gun/energy/E = charging
 			if(E.power_supply.charge < E.power_supply.maxcharge)
 				E.power_supply.give(E.power_supply.chargerate * recharge_coeff)
+				E.recharge_newshot()
 				use_power(250 * recharge_coeff)
 				using_power = 1
 
@@ -132,28 +131,11 @@
 				use_power(200 * recharge_coeff)
 				using_power = 1
 
-		if(istype(charging, /obj/item/laptop))
-			var/obj/item/laptop/L = charging
-			if(L.stored_computer.cpu.battery_module)
-				var/obj/item/weapon/computer_hardware/battery_module/B = L.stored_computer.cpu.battery_module
-				if(B.battery)
-					if(B.battery.charge < B.battery.maxcharge)
-						B.battery.give(B.battery.chargerate * recharge_coeff)
-						use_power(200 * recharge_coeff)
-						using_power = 1
-
-		if(istype(charging, /obj/item/weapon/computer_hardware/battery_module))
-			var/obj/item/weapon/computer_hardware/battery_module/B = charging
-			if(B.battery)
-				if(B.battery.charge < B.battery.maxcharge)
-					B.battery.give(B.battery.chargerate * recharge_coeff)
-					use_power(200 * recharge_coeff)
-					using_power = 1
-
-		if(istype(charging, /obj/item/modular_computer))
-			var/obj/item/modular_computer/C = charging
-			if(C.battery_module)
-				var/obj/item/weapon/computer_hardware/battery_module/B = C.battery_module
+		if(istype(charging, /obj/item/device/modular_computer))
+			var/obj/item/device/modular_computer/C = charging
+			var/obj/item/weapon/computer_hardware/battery/battery_module = C.all_components[MC_CELL]
+			if(battery_module)
+				var/obj/item/weapon/computer_hardware/battery/B = battery_module
 				if(B.battery)
 					if(B.battery.charge < B.battery.maxcharge)
 						B.battery.give(B.battery.chargerate * recharge_coeff)
@@ -167,20 +149,17 @@
 	update_icon()
 
 /obj/machinery/recharger/emp_act(severity)
-	if(stat & (NOPOWER|BROKEN) || !anchored)
-		..(severity)
-		return
+	if(!(stat & (NOPOWER|BROKEN)) && anchored)
+		if(istype(charging,  /obj/item/weapon/gun/energy))
+			var/obj/item/weapon/gun/energy/E = charging
+			if(E.power_supply)
+				E.power_supply.emp_act(severity)
 
-	if(istype(charging,  /obj/item/weapon/gun/energy))
-		var/obj/item/weapon/gun/energy/E = charging
-		if(E.power_supply)
-			E.power_supply.emp_act(severity)
-
-	else if(istype(charging, /obj/item/weapon/melee/baton))
-		var/obj/item/weapon/melee/baton/B = charging
-		if(B.bcell)
-			B.bcell.charge = 0
-	..(severity)
+		else if(istype(charging, /obj/item/weapon/melee/baton))
+			var/obj/item/weapon/melee/baton/B = charging
+			if(B.bcell)
+				B.bcell.charge = 0
+	..()
 
 
 /obj/machinery/recharger/update_icon(using_power = 0)	//we have an update_icon() in addition to the stuff in process to make it feel a tiny bit snappier.

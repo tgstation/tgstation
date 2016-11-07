@@ -11,6 +11,7 @@
 	var/blobbernaut_message = "slams" //blobbernaut attack verb
 	var/message = "The blob strikes you" //message sent to any mob hit by the blob
 	var/message_living = null //extension to first mob sent to only living mobs i.e. silicons have no skin to be burnt
+	can_synth = 0
 
 /datum/reagent/blob/proc/send_message(mob/living/M)
 	var/totalmessage = message
@@ -24,22 +25,22 @@
 		return 0 //the dead, and blob mobs, don't cause reactions
 	return round(reac_volume * min(1.5 - touch_protection, 1), 0.1) //full touch protection means 50% volume, any prot below 0.5 means 100% volume.
 
-/datum/reagent/blob/proc/damage_reaction(obj/effect/blob/B, original_health, damage, damage_type, cause) //when the blob takes damage, do this
+/datum/reagent/blob/proc/damage_reaction(obj/structure/blob/B, damage, damage_type, damage_flag) //when the blob takes damage, do this
 	return damage
 
-/datum/reagent/blob/proc/death_reaction(obj/effect/blob/B, cause) //when a blob dies, do this
+/datum/reagent/blob/proc/death_reaction(obj/structure/blob/B, damage_flag) //when a blob dies, do this
 	return
 
-/datum/reagent/blob/proc/expand_reaction(obj/effect/blob/B, obj/effect/blob/newB, turf/T) //when the blob expands, do this
+/datum/reagent/blob/proc/expand_reaction(obj/structure/blob/B, obj/structure/blob/newB, turf/T) //when the blob expands, do this
 	return
 
-/datum/reagent/blob/proc/tesla_reaction(obj/effect/blob/B, power) //when the blob is hit by a tesla bolt, do this
+/datum/reagent/blob/proc/tesla_reaction(obj/structure/blob/B, power) //when the blob is hit by a tesla bolt, do this
 	return 1 //return 0 to ignore damage
 
-/datum/reagent/blob/proc/extinguish_reaction(obj/effect/blob/B) //when the blob is hit with water, do this
+/datum/reagent/blob/proc/extinguish_reaction(obj/structure/blob/B) //when the blob is hit with water, do this
 	return
 
-/datum/reagent/blob/proc/emp_reaction(obj/effect/blob/B, severity) //when the blob is hit with an emp, do this
+/datum/reagent/blob/proc/emp_reaction(obj/structure/blob/B, severity) //when the blob is hit with an emp, do this
 	return
 
 //does brute damage but can replicate when damaged and has a chance of expanding again
@@ -58,19 +59,17 @@
 	reac_volume = ..()
 	M.apply_damage(0.7*reac_volume, BRUTE)
 
-/datum/reagent/blob/replicating_foam/damage_reaction(obj/effect/blob/B, original_health, damage, damage_type, cause)
-	var/effectivedamage = damage
+/datum/reagent/blob/replicating_foam/damage_reaction(obj/structure/blob/B, damage, damage_type, damage_flag)
 	if(damage_type == BRUTE)
-		effectivedamage = damage * 2
-	if(damage_type == BURN && effectivedamage > 0 && original_health - effectivedamage > 0 && prob(60))
-		var/obj/effect/blob/newB = B.expand(null, null, 0)
+		damage = damage * 2
+	else if(damage_type == BURN && damage > 0 && B.obj_integrity - damage > 0 && prob(60))
+		var/obj/structure/blob/newB = B.expand(null, null, 0)
 		if(newB)
-			newB.health = original_health - effectivedamage
-			newB.check_health(cause)
+			newB.obj_integrity = B.obj_integrity - damage
 			newB.update_icon()
-	return effectivedamage
+	return ..()
 
-/datum/reagent/blob/replicating_foam/expand_reaction(obj/effect/blob/B, obj/effect/blob/newB, turf/T)
+/datum/reagent/blob/replicating_foam/expand_reaction(obj/structure/blob/B, obj/structure/blob/newB, turf/T)
 	if(prob(30))
 		newB.expand(null, null, 0) //do it again!
 
@@ -89,19 +88,19 @@
 	reac_volume = ..()
 	M.apply_damage(0.7*reac_volume, BRUTE)
 
-/datum/reagent/blob/shifting_fragments/expand_reaction(obj/effect/blob/B, obj/effect/blob/newB, turf/T)
-	if(istype(B, /obj/effect/blob/normal) || (istype(B, /obj/effect/blob/shield) && prob(25)))
+/datum/reagent/blob/shifting_fragments/expand_reaction(obj/structure/blob/B, obj/structure/blob/newB, turf/T)
+	if(istype(B, /obj/structure/blob/normal) || (istype(B, /obj/structure/blob/shield) && prob(25)))
 		newB.forceMove(get_turf(B))
 		B.forceMove(T)
 
-/datum/reagent/blob/shifting_fragments/damage_reaction(obj/effect/blob/B, original_health, damage, damage_type, cause)
-	if(cause && damage > 0 && original_health - damage > 0 && prob(60-damage))
+/datum/reagent/blob/shifting_fragments/damage_reaction(obj/structure/blob/B, damage, damage_type, damage_flag)
+	if((damage_flag == "melee" || damage_flag == "bullet" || damage_flag == "laser") && damage > 0 && B.obj_integrity - damage > 0 && prob(60-damage))
 		var/list/blobstopick = list()
-		for(var/obj/effect/blob/OB in orange(1, B))
-			if((istype(OB, /obj/effect/blob/normal) || (istype(OB, /obj/effect/blob/shield) && prob(25))) && OB.overmind && OB.overmind.blob_reagent_datum.id == B.overmind.blob_reagent_datum.id)
+		for(var/obj/structure/blob/OB in orange(1, B))
+			if((istype(OB, /obj/structure/blob/normal) || (istype(OB, /obj/structure/blob/shield) && prob(25))) && OB.overmind && OB.overmind.blob_reagent_datum.id == B.overmind.blob_reagent_datum.id)
 				blobstopick += OB //as long as the blob picked is valid; ie, a normal or shield blob that has the same chemical as we do, we can swap with it
 		if(blobstopick.len)
-			var/obj/effect/blob/targeted = pick(blobstopick) //randomize the blob chosen, because otherwise it'd tend to the lower left
+			var/obj/structure/blob/targeted = pick(blobstopick) //randomize the blob chosen, because otherwise it'd tend to the lower left
 			var/turf/T = get_turf(targeted)
 			targeted.forceMove(get_turf(B))
 			B.forceMove(T) //swap the blobs
@@ -130,15 +129,17 @@
 	if(iscarbon(M))
 		M.emote("scream")
 
-/datum/reagent/blob/blazing_oil/extinguish_reaction(obj/effect/blob/B)
-	B.take_damage(rand(1, 3), BURN)
+/datum/reagent/blob/blazing_oil/extinguish_reaction(obj/structure/blob/B)
+	B.take_damage(rand(1, 3), BURN, "energy")
 
-/datum/reagent/blob/blazing_oil/damage_reaction(obj/effect/blob/B, original_health, damage, damage_type, cause)
-	if(cause && damage_type == BURN)
+/datum/reagent/blob/blazing_oil/damage_reaction(obj/structure/blob/B, damage, damage_type, damage_flag)
+	if(damage_type == BURN && damage_flag != "energy")
 		for(var/turf/open/T in range(1, B))
-			var/obj/effect/blob/C = locate() in T
+			var/obj/structure/blob/C = locate() in T
 			if(!(C && C.overmind && C.overmind.blob_reagent_datum.id == B.overmind.blob_reagent_datum.id) && prob(80))
 				PoolOrNew(/obj/effect/hotspot, T)
+	if(damage_flag == "fire")
+		return 0
 	return ..()
 
 //does toxin damage, hallucination, targets think they're not hurt at all
@@ -199,8 +200,8 @@
 		O.add_points(points)
 		O << "<span class='notice'>Gained [points] resources from the zombification of [M].</span>"
 
-/datum/reagent/blob/zombifying_pods/damage_reaction(obj/effect/blob/B, original_health, damage, damage_type, cause)
-	if(!isnull(cause) && damage <= 20 && original_health - damage <= 0 && prob(30)) //if the cause isn't fire or a bomb, the damage is less than 21, we're going to die from that damage, 20% chance of a shitty spore.
+/datum/reagent/blob/zombifying_pods/damage_reaction(obj/structure/blob/B, damage, damage_type, damage_flag)
+	if((damage_flag == "melee" || damage_flag == "bullet" || damage_flag == "laser") && damage <= 20 && B.obj_integrity - damage <= 0 && prob(30)) //if the cause isn't fire or a bomb, the damage is less than 21, we're going to die from that damage, 20% chance of a shitty spore.
 		B.visible_message("<span class='warning'><b>A spore floats free of the blob!</b></span>")
 		var/mob/living/simple_animal/hostile/blob/blobspore/weak/BS = new/mob/living/simple_animal/hostile/blob/blobspore/weak(B.loc)
 		BS.overmind = B.overmind
@@ -208,7 +209,7 @@
 		B.overmind.blob_mobs.Add(BS)
 	return ..()
 
-/datum/reagent/blob/zombifying_pods/expand_reaction(obj/effect/blob/B, obj/effect/blob/newB, turf/T)
+/datum/reagent/blob/zombifying_pods/expand_reaction(obj/structure/blob/B, obj/structure/blob/newB, turf/T)
 	if(prob(10))
 		var/mob/living/simple_animal/hostile/blob/blobspore/weak/BS = new/mob/living/simple_animal/hostile/blob/blobspore/weak(T)
 		BS.overmind = B.overmind
@@ -235,18 +236,18 @@
 	if(M)
 		M.apply_damage(0.6*reac_volume, OXY)
 
-/datum/reagent/blob/energized_jelly/damage_reaction(obj/effect/blob/B, original_health, damage, damage_type, cause)
-	if(!isnull(cause) && original_health - damage <= 0 && prob(10))
+/datum/reagent/blob/energized_jelly/damage_reaction(obj/structure/blob/B, damage, damage_type, damage_flag)
+	if((damage_flag == "melee" || damage_flag == "bullet" || damage_flag == "laser") && B.obj_integrity - damage <= 0 && prob(10))
 		spark_system.set_up(rand(2, 4), 0, B)
 		spark_system.start()
 	return ..()
 
-/datum/reagent/blob/energized_jelly/tesla_reaction(obj/effect/blob/B, power)
+/datum/reagent/blob/energized_jelly/tesla_reaction(obj/structure/blob/B, power)
 	return 0
 
-/datum/reagent/blob/energized_jelly/emp_reaction(obj/effect/blob/B, severity)
+/datum/reagent/blob/energized_jelly/emp_reaction(obj/structure/blob/B, severity)
 	var/damage = rand(30, 50) - severity * rand(10, 15)
-	B.take_damage(damage, BURN)
+	B.take_damage(damage, BURN, "energy")
 
 //does aoe brute damage when hitting targets, is immune to explosions
 /datum/reagent/blob/explosive_lattice
@@ -277,12 +278,11 @@
 	else
 		M.apply_damage(0.6*reac_volume, BRUTE)
 
-/datum/reagent/blob/explosive_lattice/damage_reaction(obj/effect/blob/B, original_health, damage, damage_type, cause)
-	if(isnull(cause))
-		if(damage_type == BRUTE)
-			return 0 //no-sell the explosion we do not take damage
-		if(damage_type == BURN)
-			return damage * 1.5 //take more from fire, tesla, and flashbangs
+/datum/reagent/blob/explosive_lattice/damage_reaction(obj/structure/blob/B, damage, damage_type, damage_flag)
+	if(damage_flag == "bomb")
+		return 0
+	else if(damage_flag != "melee" || damage_flag != "bullet" || damage_flag != "laser")
+		return damage * 1.5
 	return ..()
 
 //does brute, burn, and toxin damage, and cools targets down
@@ -333,7 +333,7 @@
 	if(M)
 		M.apply_damage(reac_volume, BURN)
 
-/datum/reagent/blob/electromagnetic_web/damage_reaction(obj/effect/blob/B, original_health, damage, damage_type, cause)
+/datum/reagent/blob/electromagnetic_web/damage_reaction(obj/structure/blob/B, damage, damage_type, damage_flag)
 	if(damage_type == BRUTE) //take full brute
 		switch(B.brute_resist)
 			if(0.5)
@@ -344,8 +344,8 @@
 				return damage * 10
 	return damage * 1.25 //a laser will do 25 damage, which will kill any normal blob
 
-/datum/reagent/blob/electromagnetic_web/death_reaction(obj/effect/blob/B, cause)
-	if(cause)
+/datum/reagent/blob/electromagnetic_web/death_reaction(obj/structure/blob/B, damage_flag)
+	if(damage_flag == "melee" || damage_flag == "bullet" || damage_flag == "laser")
 		empulse(B.loc, 1, 3) //less than screen range, so you can stand out of range to avoid it
 
 //does brute damage, bonus damage for each nearby blob, and spreads damage out
@@ -365,20 +365,20 @@
 	reac_volume = ..()
 	M.apply_damage(0.2*reac_volume, BRUTE)
 	if(M && reac_volume)
-		for(var/obj/effect/blob/B in range(1, M)) //if the target is completely surrounded, this is 2.4*reac_volume bonus damage, total of 2.6*reac_volume
+		for(var/obj/structure/blob/B in range(1, M)) //if the target is completely surrounded, this is 2.4*reac_volume bonus damage, total of 2.6*reac_volume
 			if(M)
 				B.blob_attack_animation(M) //show them they're getting a bad time
 				M.apply_damage(0.3*reac_volume, BRUTE)
 
-/datum/reagent/blob/synchronous_mesh/damage_reaction(obj/effect/blob/B, original_health, damage, damage_type, cause)
-	if(!isnull(cause)) //the cause isn't fire or bombs, so split the damage
+/datum/reagent/blob/synchronous_mesh/damage_reaction(obj/structure/blob/B, damage, damage_type, damage_flag)
+	if(damage_flag == "melee" || damage_flag == "bullet" || damage_flag == "laser") //the cause isn't fire or bombs, so split the damage
 		var/damagesplit = 1 //maximum split is 9, reducing the damage each blob takes to 11% but doing that damage to 9 blobs
-		for(var/obj/effect/blob/C in orange(1, B))
-			if(!istype(C, /obj/effect/blob/core) && !istype(C, /obj/effect/blob/node) && C.overmind && C.overmind.blob_reagent_datum.id == B.overmind.blob_reagent_datum.id) //if it doesn't have the same chemical or is a core or node, don't split damage to it
+		for(var/obj/structure/blob/C in orange(1, B))
+			if(!istype(C, /obj/structure/blob/core) && !istype(C, /obj/structure/blob/node) && C.overmind && C.overmind.blob_reagent_datum.id == B.overmind.blob_reagent_datum.id) //if it doesn't have the same chemical or is a core or node, don't split damage to it
 				damagesplit += 1
-		for(var/obj/effect/blob/C in orange(1, B))
-			if(!istype(C, /obj/effect/blob/core) && !istype(C, /obj/effect/blob/node) && C.overmind && C.overmind.blob_reagent_datum.id == B.overmind.blob_reagent_datum.id) //only hurt blobs that have the same overmind chemical and aren't cores or nodes
-				C.take_damage(damage/damagesplit, CLONE, B, 0)
+		for(var/obj/structure/blob/C in orange(1, B))
+			if(!istype(C, /obj/structure/blob/core) && !istype(C, /obj/structure/blob/node) && C.overmind && C.overmind.blob_reagent_datum.id == B.overmind.blob_reagent_datum.id) //only hurt blobs that have the same overmind chemical and aren't cores or nodes
+				C.take_damage(damage/damagesplit, CLONE, 0, 0)
 		return damage / damagesplit
 	else
 		return damage * 1.25
@@ -401,9 +401,9 @@
 		return 0 //the dead, and blob mobs, don't cause reactions
 	M.adjustBruteLoss(0.8*reac_volume)
 
-/datum/reagent/blob/reactive_spines/damage_reaction(obj/effect/blob/B, original_health, damage, damage_type, cause)
-	if(damage && damage_type == BRUTE && original_health - damage > 0) //is there any damage, is it brute, and will we be alive
-		if(isliving(cause))
+/datum/reagent/blob/reactive_spines/damage_reaction(obj/structure/blob/B, damage, damage_type, damage_flag)
+	if(damage && damage_type == BRUTE && B.obj_integrity - damage > 0) //is there any damage, is it brute, and will we be alive
+		if(damage_flag == "melee")
 			B.visible_message("<span class='boldwarning'>The blob retaliates, lashing out!</span>")
 		for(var/atom/A in range(1, B))
 			A.blob_act(B)
@@ -436,17 +436,17 @@
 	if(M)
 		M.adjustStaminaLoss(0.2*reac_volume)
 
-/datum/reagent/blob/pressurized_slime/damage_reaction(obj/effect/blob/B, original_health, damage, damage_type, cause)
-	if(cause || damage_type != BURN)
+/datum/reagent/blob/pressurized_slime/damage_reaction(obj/structure/blob/B, damage, damage_type, damage_flag)
+	if((damage_flag == "melee" || damage_flag == "bullet" || damage_flag == "laser") || damage_type != BURN)
 		extinguisharea(B, damage)
 	return ..()
 
-/datum/reagent/blob/pressurized_slime/death_reaction(obj/effect/blob/B, cause)
-	if(!isnull(cause))
+/datum/reagent/blob/pressurized_slime/death_reaction(obj/structure/blob/B, damage_flag)
+	if(damage_flag == "melee" || damage_flag == "bullet" || damage_flag == "laser")
 		B.visible_message("<span class='boldwarning'>The blob ruptures, spraying the area with liquid!</span>")
 		extinguisharea(B, 50)
 
-/datum/reagent/blob/pressurized_slime/proc/extinguisharea(obj/effect/blob/B, probchance)
+/datum/reagent/blob/pressurized_slime/proc/extinguisharea(obj/structure/blob/B, probchance)
 	for(var/turf/open/T in range(1, B))
 		if(prob(probchance))
 			T.MakeSlippery(min_wet_time = 10, wet_time_to_add = 5)

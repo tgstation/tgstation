@@ -34,9 +34,12 @@
 	var/obj/item/weapon/reagent_containers/food/drinks/soda_cans/can = locate() in contents
 	if(can)
 		var/muh_layer = can.layer
+		var/muh_plane = can.plane
 		can.layer = FLOAT_LAYER
+		can.plane = FLOAT_PLANE
 		underlays += can
 		can.layer = muh_layer
+		can.plane = muh_plane
 
 
 /obj/item/weapon/grenade/iedcasing/attack_self(mob/user) //
@@ -50,8 +53,8 @@
 			var/turf/bombturf = get_turf(src)
 			var/area/A = get_area(bombturf)
 
-			message_admins("[key_name_admin(usr)]<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A> (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[usr]'>FLW</A>) has primed a [name] for detonation at <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[bombturf.x];Y=[bombturf.y];Z=[bombturf.z]'>[A.name] (JMP)</a>.")
-			log_game("[key_name(usr)] has primed a [name] for detonation at [A.name] ([bombturf.x],[bombturf.y],[bombturf.z]).")
+			message_admins("[ADMIN_LOOKUPFLW(user)] has primed a [name] for detonation at [ADMIN_COORDJMP(bombturf)].")
+			log_game("[key_name(usr)] has primed a [name] for detonation at [A.name] [COORD(bombturf)].")
 			if(iscarbon(user))
 				var/mob/living/carbon/C = user
 				C.throw_mode_on()

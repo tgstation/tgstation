@@ -62,7 +62,7 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 		T += M.rating
 	efficiency_coeff = 2 ** (T - 1) //Only 1 manipulator here, you're making runtimes Razharas
 
-/obj/machinery/r_n_d/circuit_imprinter/blob_act(obj/effect/blob/B)
+/obj/machinery/r_n_d/circuit_imprinter/blob_act(obj/structure/blob/B)
 	if (prob(50))
 		qdel(src)
 
@@ -76,7 +76,7 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 	return round(A / max(1, (all_materials[M]/efficiency_coeff)))
 
 //we eject the materials upon deconstruction.
-/obj/machinery/r_n_d/circuit_imprinter/deconstruction()
+/obj/machinery/r_n_d/circuit_imprinter/on_deconstruction()
 	for(var/obj/item/weapon/reagent_containers/glass/G in component_parts)
 		reagents.trans_to(G, G.reagents.maximum_volume)
 	materials.retrieve_all()

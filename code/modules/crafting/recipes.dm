@@ -94,17 +94,17 @@
 /datum/crafting_recipe/ed209
 	name = "ED209"
 	result = /mob/living/simple_animal/bot/ed209
-	reqs = list(/obj/item/robot_parts/robot_suit = 1,
+	reqs = list(/obj/item/robot_suit = 1,
 				/obj/item/clothing/head/helmet = 1,
 				/obj/item/clothing/suit/armor/vest = 1,
-				/obj/item/robot_parts/l_leg = 1,
-				/obj/item/robot_parts/r_leg = 1,
+				/obj/item/bodypart/l_leg/robot = 1,
+				/obj/item/bodypart/r_leg/robot = 1,
 				/obj/item/stack/sheet/metal = 5,
 				/obj/item/stack/cable_coil = 5,
-				/obj/item/weapon/gun/energy/gun/advtaser = 1,
+				/obj/item/weapon/gun/energy/e_gun/advtaser = 1,
 				/obj/item/weapon/stock_parts/cell = 1,
 				/obj/item/device/assembly/prox_sensor = 1,
-				/obj/item/robot_parts/r_arm = 1)
+				/obj/item/bodypart/r_arm/robot = 1)
 	tools = list(/obj/item/weapon/weldingtool, /obj/item/weapon/screwdriver)
 	time = 60
 	category = CAT_ROBOT
@@ -116,7 +116,7 @@
 				/obj/item/clothing/head/helmet/sec = 1,
 				/obj/item/weapon/melee/baton = 1,
 				/obj/item/device/assembly/prox_sensor = 1,
-				/obj/item/robot_parts/r_arm = 1)
+				/obj/item/bodypart/r_arm/robot = 1)
 	tools = list(/obj/item/weapon/weldingtool)
 	time = 60
 	category = CAT_ROBOT
@@ -126,7 +126,7 @@
 	result = /mob/living/simple_animal/bot/cleanbot
 	reqs = list(/obj/item/weapon/reagent_containers/glass/bucket = 1,
 				/obj/item/device/assembly/prox_sensor = 1,
-				/obj/item/robot_parts/r_arm = 1)
+				/obj/item/bodypart/r_arm/robot = 1)
 	time = 40
 	category = CAT_ROBOT
 
@@ -136,7 +136,7 @@
 	reqs = list(/obj/item/weapon/storage/toolbox/mechanical = 1,
 				/obj/item/stack/tile/plasteel = 1,
 				/obj/item/device/assembly/prox_sensor = 1,
-				/obj/item/robot_parts/r_arm = 1)
+				/obj/item/bodypart/r_arm/robot = 1)
 	time = 40
 	category = CAT_ROBOT
 
@@ -146,7 +146,7 @@
 	reqs = list(/obj/item/device/healthanalyzer = 1,
 				/obj/item/weapon/storage/firstaid = 1,
 				/obj/item/device/assembly/prox_sensor = 1,
-				/obj/item/robot_parts/r_arm = 1)
+				/obj/item/bodypart/r_arm/robot = 1)
 	time = 40
 	category = CAT_ROBOT
 
@@ -245,7 +245,7 @@
 
 /datum/crafting_recipe/ishotgun
 	name = "Improvised Shotgun"
-	result = /obj/item/weapon/gun/projectile/revolver/doublebarrel/improvised
+	result = /obj/item/weapon/gun/ballistic/revolver/doublebarrel/improvised
 	reqs = list(/obj/item/weaponcrafting/reciever = 1,
 				/obj/item/pipe = 1,
 				/obj/item/weaponcrafting/stock = 1,
@@ -353,7 +353,7 @@
 
 /datum/crafting_recipe/bonetalisman
 	name = "Bone Talisman"
-	result = /obj/item/clothing/tie/talisman
+	result = /obj/item/clothing/neck/talisman
 	time = 20
 	reqs = list(/obj/item/stack/sheet/bone = 2,
 				 /obj/item/stack/sheet/sinew = 1)
@@ -375,7 +375,7 @@
 	category = CAT_PRIMAL
 
 /datum/crafting_recipe/drakecloak
-	name = "Ash Drake Cloak"
+	name = "Ash Drake Armour"
 	result = /obj/item/clothing/suit/hooded/cloak/drake
 	time = 60
 	reqs = list(/obj/item/stack/sheet/bone = 10,
@@ -420,3 +420,10 @@
 	reqs = list(/obj/item/weapon/grown/log = 5)
 	result = /obj/structure/bonfire
 	category = CAT_PRIMAL
+
+/datum/crafting_recipe/smallcarton
+	name = "Small Carton"
+	result = /obj/item/weapon/reagent_containers/food/drinks/sillycup/smallcarton
+	time = 10
+	reqs = list(/obj/item/stack/sheet/cardboard = 1)
+	category = CAT_MISC

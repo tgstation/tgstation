@@ -48,9 +48,9 @@
 	if(hex2num(getblock(se_string, dna_block)) >= lowest_value)
 		return 1
 
-/datum/mutation/human/proc/check_block(mob/living/carbon/human/owner)
+/datum/mutation/human/proc/check_block(mob/living/carbon/human/owner, force_powers=0)
 	if(check_block_string(owner.dna.struc_enzymes))
-		if(prob(get_chance))
+		if(prob(get_chance)||force_powers)
 			. = on_acquiring(owner)
 	else
 		. = on_losing(owner)
@@ -79,7 +79,7 @@
 /datum/mutation/human/proc/get_visual_indicator(mob/living/carbon/human/owner)
 	return
 
-/datum/mutation/human/proc/on_attack_hand(mob/living/carbon/human/owner, atom/target)
+/datum/mutation/human/proc/on_attack_hand(mob/living/carbon/human/owner, atom/target, proximity)
 	return
 
 /datum/mutation/human/proc/on_ranged_attack(mob/living/carbon/human/owner, atom/target)
@@ -130,8 +130,9 @@
 	owner.status_flags &= ~status
 	owner.update_body_parts()
 
-/datum/mutation/human/hulk/on_attack_hand(mob/living/carbon/human/owner, atom/target)
-	return target.attack_hulk(owner)
+/datum/mutation/human/hulk/on_attack_hand(mob/living/carbon/human/owner, atom/target, proximity)
+	if(proximity) //no telekinetic hulk attack
+		return target.attack_hulk(owner)
 
 /datum/mutation/human/hulk/on_life(mob/living/carbon/human/owner)
 	if(owner.health < 0)
@@ -187,7 +188,7 @@
 /datum/mutation/human/cold_resistance/on_life(mob/living/carbon/human/owner)
 	if(owner.getFireLoss())
 		if(prob(1))
-			owner.heal_organ_damage(0,1)   //Is this really needed?
+			owner.heal_bodypart_damage(0,1)   //Is this really needed?
 
 /datum/mutation/human/x_ray
 
@@ -252,11 +253,11 @@
 	var/mob/new_mob
 	if(prob(95))
 		if(prob(50))
-			new_mob = randmutb(owner)
+			new_mob = owner.randmutb()
 		else
-			new_mob = randmuti(owner)
+			new_mob = owner.randmuti()
 	else
-		new_mob = randmutg(owner)
+		new_mob = owner.randmutg()
 	if(new_mob && ismob(new_mob))
 		owner = new_mob
 	. = owner
@@ -531,6 +532,10 @@
 /datum/mutation/human/swedish/say_mod(message)
 	if(message)
 		message = replacetext(message,"w","v")
+		message = replacetext(message,"j","y")
+		message = replacetext(message,"a",pick("å","ä","æ","a"))
+		message = replacetext(message,"bo","bjo")
+		message = replacetext(message,"o",pick("ö","ø","o"))
 		if(prob(30))
 			message += " Bork[pick("",", bork",", bork, bork")]!"
 	return message

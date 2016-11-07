@@ -199,7 +199,7 @@
 		return
 
 	//Is the usr's mob type able to do this? (lolaliens)
-	if(ishuman(usr) || ismonkey(usr) || isrobot(usr) ||  isalienadult(usr))
+	if(ishuman(usr) || ismonkey(usr) || iscyborg(usr) ||  isalienadult(usr))
 
 		//Removing from inventory
 		if(href_list["remove_inv"])
@@ -224,7 +224,7 @@
 		//Adding things to inventory
 		else if(href_list["add_inv"])
 			var/add_to = href_list["add_inv"]
-			if(!usr.get_active_hand())
+			if(!usr.get_active_held_item())
 				usr << "<span class='warning'>You have nothing in your hand to put on its [add_to]!</span>"
 				return
 			switch(add_to)
@@ -233,7 +233,7 @@
 						usr << "<span class='warning'>It's already wearing something!</span>"
 						return
 					else
-						var/obj/item/item_to_add = usr.get_active_hand()
+						var/obj/item/item_to_add = usr.get_active_held_item()
 						if(!item_to_add)
 							return
 
@@ -633,8 +633,10 @@
 				item = I
 		else if(iscarbon(AM))
 			var/mob/living/carbon/C = AM
-			if((C.l_hand && C.l_hand.w_class <= 2) || (C.r_hand && C.r_hand.w_class <= 2))
-				item = C
+			for(var/obj/item/I in C.held_items)
+				if(I.w_class <= 2)
+					item = I
+					break
 		if(item)
 			if(!AStar(src, get_turf(item), /turf/proc/Distance_cardinal))
 				item = null
@@ -668,8 +670,9 @@
 
 		if(iscarbon(AM))
 			var/mob/living/carbon/C = AM
-			if(C.l_hand && C.l_hand.w_class <= 2 || C.r_hand && C.r_hand.w_class <= 2)
-				return C
+			for(var/obj/item/I in C.held_items)
+				if(I.w_class <= 2)
+					return C
 	return null
 
 
@@ -719,11 +722,10 @@
 	var/obj/item/stolen_item = null
 
 	for(var/mob/living/carbon/C in view(1,src))
-		if(C.l_hand && C.l_hand.w_class <= 2)
-			stolen_item = C.l_hand
-
-		if(C.r_hand && C.r_hand.w_class <= 2)
-			stolen_item = C.r_hand
+		for(var/obj/item/I in C.held_items)
+			if(I.w_class <= 2)
+				stolen_item = I
+				break
 
 		if(stolen_item)
 			C.unEquip(stolen_item)
@@ -883,11 +885,11 @@
 		speak += pick("...[longest_survival].", "The things I've seen!", "I have lived many lives!", "What are you before me?")
 		desc += " Old as sin, and just as loud. Claimed to be [rounds_survived]."
 		speak_chance = 20 //His hubris has made him more annoying/easier to justify killing
-		color = "#EEEE22"
+		add_atom_colour("#EEEE22", FIXED_COLOUR_PRIORITY)
 	else if(rounds_survived == longest_deathstreak)
 		speak += pick("What are you waiting for!", "Violence breeds violence!", "Blood! Blood!", "Strike me down if you dare!")
 		desc += " The squawks of [-rounds_survived] dead parrots ring out in your ears..."
-		color = "#BB7777"
+		add_atom_colour("#BB7777", FIXED_COLOUR_PRIORITY)
 	else if(rounds_survived > 0)
 		speak += pick("...again?", "No, It was over!", "Let me out!", "It never ends!")
 		desc += " Over [rounds_survived] shifts without a \"terrible\" \"accident\"!"

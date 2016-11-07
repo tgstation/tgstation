@@ -109,8 +109,8 @@
 		target.visible_message("<span class='danger'>[user] has hit [target][head_attack_message] with a bottle of [src.name]!</span>", \
 				"<span class='userdanger'>[user] has hit [target][head_attack_message] with a bottle of [src.name]!</span>")
 	else
-		user.visible_message("<span class='danger'>[target] hits \himself with a bottle of [src.name][head_attack_message]!</span>", \
-				"<span class='userdanger'>[target] hits \himself with a bottle of [src.name][head_attack_message]!</span>")
+		user.visible_message("<span class='danger'>[target] hits [target.p_them()]self with a bottle of [src.name][head_attack_message]!</span>", \
+				"<span class='userdanger'>[target] hits [target.p_them()]self with a bottle of [src.name][head_attack_message]!</span>")
 
 	//Attack logs
 	add_logs(user, target, "attacked", src)
@@ -125,7 +125,7 @@
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/proc/SplashReagents(var/mob/M)
 	if(src.reagents.total_volume)
-		M.visible_message("<span class='danger'>The contents of \the [src] splashes all over [M]!</span>")
+		M.visible_message("<span class='danger'>The contents of [src] splashes all over [M]!</span>")
 		reagents.reaction(M, TOUCH)
 		reagents.clear_reagents()
 	return
@@ -375,10 +375,12 @@
 		active = 1
 		var/turf/bombturf = get_turf(src)
 		var/area/bombarea = get_area(bombturf)
-		message_admins("[key_name(user)]<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A> has primed a [name] for detonation at <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[bombturf.x];Y=[bombturf.y];Z=[bombturf.z]'>[bombarea] (JMP)</a>.")
-		log_game("[key_name(user)] has primed a [name] for detonation at [bombarea] ([bombturf.x],[bombturf.y],[bombturf.z]).")
+		var/message = "[ADMIN_LOOKUP(user)] has primed a [name] for detonation at [ADMIN_COORDJMP(bombturf)]."
+		bombers += message
+		message_admins(message)
+		log_game("[key_name(user)] has primed a [name] for detonation at [bombarea] [COORD(bombturf)].")
 
-		user << "<span class='info'>You light \the [src] on fire.</span>"
+		user << "<span class='info'>You light [src] on fire.</span>"
 		add_overlay(fire_overlay)
 		if(!isGlass)
 			spawn(50)
@@ -400,6 +402,6 @@
 		if(!isGlass)
 			user << "<span class='danger'>The flame's spread too far on it!</span>"
 			return
-		user << "<span class='info'>You snuff out the flame on \the [src].</span>"
+		user << "<span class='info'>You snuff out the flame on [src].</span>"
 		overlays -= fire_overlay
 		active = 0

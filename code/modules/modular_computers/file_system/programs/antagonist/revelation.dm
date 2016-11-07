@@ -19,20 +19,23 @@
 		computer.visible_message("<span class='notice'>\The [computer]'s screen brightly flashes and loud electrical buzzing is heard.</span>")
 		computer.enabled = 0
 		computer.update_icon()
-		qdel(computer.hard_drive)
-		computer.take_damage(25, 10, 1, 1)
-		if(computer.battery_module && prob(25))
-			qdel(computer.battery_module)
+		var/obj/item/weapon/computer_hardware/hard_drive/hard_drive = computer.all_components[MC_HDD]
+		var/obj/item/weapon/computer_hardware/battery/battery_module = computer.all_components[MC_CELL]
+		var/obj/item/weapon/computer_hardware/recharger/recharger = computer.all_components[MC_CHARGE]
+		qdel(hard_drive)
+		computer.take_damage(25, BRUTE, 0, 0)
+		if(battery_module && prob(25))
+			qdel(battery_module)
 			computer.visible_message("<span class='notice'>\The [computer]'s battery explodes in rain of sparks.</span>")
 			var/datum/effect_system/spark_spread/spark_system = new /datum/effect_system/spark_spread
 			spark_system.start()
-		if(istype(computer, /obj/item/modular_computer/processor))
-			var/obj/item/modular_computer/processor/P = computer
-			if(P.machinery_computer.tesla_link && prob(50))
-				qdel(P.machinery_computer.tesla_link)
-				computer.visible_message("<span class='notice'>\The [computer]'s tesla link explodes in rain of sparks.</span>")
-				var/datum/effect_system/spark_spread/spark_system = new /datum/effect_system/spark_spread
-				spark_system.start()
+
+		if(recharger && prob(50))
+			qdel(recharger)
+			computer.visible_message("<span class='notice'>\The [computer]'s recharger explodes in rain of sparks.</span>")
+			var/datum/effect_system/spark_spread/spark_system = new /datum/effect_system/spark_spread
+			spark_system.start()
+
 
 /datum/computer_file/program/revelation/ui_act(action, params)
 	if(..())

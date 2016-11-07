@@ -19,7 +19,7 @@
 	var/controls_inside = FALSE
 	var/list/possible_chems = list(
 		list("epinephrine", "morphine", "salbutamol", "bicaridine", "kelotane"),
-		list("oculine"),
+		list("oculine","inacusiate"),
 		list("antitoxin", "mutadone", "mannitol", "pen_acid"),
 		list("omnizine")
 	)
@@ -60,13 +60,13 @@
 	if(state_open)
 		icon_state += "-open"
 
-/obj/machinery/sleeper/container_resist()
+/obj/machinery/sleeper/container_resist(mob/living/user)
 	visible_message("<span class='notice'>[occupant] emerges from [src]!</span>",
 		"<span class='notice'>You climb out of [src]!</span>")
 	open_machine()
 
 /obj/machinery/sleeper/relaymove(mob/user)
-	container_resist()
+	container_resist(user)
 
 /obj/machinery/sleeper/open_machine()
 	if(!state_open && !panel_open)
@@ -77,12 +77,6 @@
 		..(user)
 		if(occupant && occupant.stat != DEAD)
 			occupant << "<span class='notice'><b>You feel cool air surround you. You go numb as your senses turn inward.</b></span>"
-
-/obj/machinery/sleeper/attack_animal(mob/living/simple_animal/M)
-	if(M.environment_smash)
-		M.do_attack_animation(src)
-		visible_message("<span class='danger'>[M.name] smashes [src] apart!</span>")
-		qdel(src)
 
 /obj/machinery/sleeper/emp_act(severity)
 	if(is_operational() && occupant)
@@ -135,7 +129,7 @@
 		data["occupant"]["stat"] = occupant.stat
 		data["occupant"]["health"] = occupant.health
 		data["occupant"]["maxHealth"] = occupant.maxHealth
-		data["occupant"]["minHealth"] = config.health_threshold_dead
+		data["occupant"]["minHealth"] = HEALTH_THRESHOLD_DEAD
 		data["occupant"]["bruteLoss"] = occupant.getBruteLoss()
 		data["occupant"]["oxyLoss"] = occupant.getOxyLoss()
 		data["occupant"]["toxLoss"] = occupant.getToxLoss()
@@ -176,8 +170,8 @@
 	if(!occupant)
 		return
 	var/amount = occupant.reagents.get_reagent_amount(chem) + 10 <= 20 * efficiency
-	var/health = occupant.health > min_health || chem == "epinephrine"
-	return amount && health
+	var/occ_health = occupant.health > min_health || chem == "epinephrine"
+	return amount && occ_health
 
 
 /obj/machinery/sleeper/syndie

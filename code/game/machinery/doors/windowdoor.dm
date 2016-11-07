@@ -3,8 +3,12 @@
 	desc = "A strong door."
 	icon = 'icons/obj/doors/windoor.dmi'
 	icon_state = "left"
+	resistance_flags = ACID_PROOF
 	var/base_state = "left"
-	var/health = 150 //If you change this, consider changing ../door/window/brigdoor/ health at the bottom of this .dm file
+	obj_integrity = 150 //If you change this, consider changing ../door/window/brigdoor/ health at the bottom of this .dm file
+	max_integrity = 150
+	integrity_failure = 0
+	armor = list(melee = 20, bullet = 50, laser = 50, energy = 50, bomb = 10, bio = 100, rad = 100, fire = 70, acid = 100)
 	visible = 0
 	flags = ON_BORDER
 	opacity = 0
@@ -33,7 +37,7 @@
 	density = 0
 	for(var/I in debris)
 		qdel(I)
-	if(health == 0)
+	if(obj_integrity == 0)
 		playsound(src, "shatter", 70, 1)
 	electronics = null
 	return ..()
@@ -158,67 +162,33 @@
 	src.operating = 0
 	return 1
 
-/obj/machinery/door/window/take_damage(damage, damage_type = BRUTE, sound_effect = 1)
+/obj/machinery/door/window/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
 		if(BRUTE)
-			if(sound_effect)
-				playsound(loc, 'sound/effects/Glasshit.ogg', 90, 1)
+			playsound(loc, 'sound/effects/Glasshit.ogg', 90, 1)
 		if(BURN)
-			if(sound_effect)
-				playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
-		else
-			return
-	health = max(0, src.health - damage)
-	if(health <= 0)
-		shatter()
+			playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
 
-/obj/machinery/door/window/proc/shatter()
-	if(!(flags & NODECONSTRUCT))
+
+/obj/machinery/door/window/deconstruct(disassembled = TRUE)
+	if(!(flags & NODECONSTRUCT) && !disassembled)
 		for(var/obj/fragment in debris)
 			fragment.forceMove(get_turf(src))
 			transfer_fingerprints_to(fragment)
 			debris -= fragment
 	qdel(src)
 
-/obj/machinery/door/window/ex_act(severity, target)
-	switch(severity)
-		if(1)
-			qdel(src)
-		if(2)
-			if(prob(25))
-				shatter()
-			else
-				take_damage(120, BRUTE, 0)
-		if(3)
-			take_damage(60, BRUTE, 0)
-
 /obj/machinery/door/window/narsie_act()
-	color = "#7D1919"
+	add_atom_colour("#7D1919", FIXED_COLOUR_PRIORITY)
 
 /obj/machinery/door/window/ratvar_act()
 	new/obj/machinery/door/window/clockwork(src.loc, dir)
 	qdel(src)
 
-/obj/machinery/door/window/bullet_act(obj/item/projectile/P)
-	. = ..()
-	take_damage(round(P.damage / 2), P.damage_type, 0)
-
 /obj/machinery/door/window/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(exposed_temperature > T0C + (reinf ? 1600 : 800))
-		take_damage(round(exposed_volume / 200), BURN, 0)
+		take_damage(round(exposed_volume / 200), BURN, 0, 0)
 	..()
-
-//When an object is thrown at the window
-/obj/machinery/door/window/hitby(atom/movable/AM)
-	..()
-	var/tforce = 0
-	if(ismob(AM))
-		tforce = 40
-	else if(isobj(AM))
-		var/obj/O = AM
-		tforce = O.throwforce
-	take_damage(tforce)
-
 
 
 /obj/machinery/door/window/attack_ai(mob/user)
@@ -245,14 +215,14 @@
 			if(density || operating)
 				user << "<span class='warning'>You need to open the door to access the maintenance panel!</span>"
 				return
-			playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+			playsound(src.loc, I.usesound, 50, 1)
 			panel_open = !panel_open
 			user << "<span class='notice'>You [panel_open ? "open":"close"] the maintenance panel of the [src.name].</span>"
 			return
 
 		if(istype(I, /obj/item/weapon/crowbar))
 			if(panel_open && !density && !operating)
-				playsound(src.loc, 'sound/items/Crowbar.ogg', 100, 1)
+				playsound(src.loc, I.usesound, 100, 1)
 				user.visible_message("[user] removes the electronics from the [src.name].", \
 									 "<span class='notice'>You start to remove electronics from the [src.name]...</span>")
 				if(do_after(user,40/I.toolspeed, target = src))
@@ -318,47 +288,46 @@
 		if("deny")
 			flick("[src.base_state]deny", src)
 
-/obj/machinery/door/window/attack_hulk(mob/user)
-	..(user, 1)
-	user.visible_message("<span class='danger'>[user] smashes through the windoor!</span>", \
-						"<span class='danger'>You tear through the windoor!</span>")
-	user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
-	take_damage(health)
-
 
 /obj/machinery/door/window/brigdoor
 	name = "secure door"
 	icon_state = "leftsecure"
 	base_state = "leftsecure"
 	var/id = null
-	health = 300 //Stronger doors for prison (regular window door health is 200)
+	obj_integrity = 300 //Stronger doors for prison (regular window door health is 200)
+	max_integrity = 300
 	reinf = 1
 	explosion_block = 1
 
 /obj/machinery/door/window/clockwork
-	name = "clockwork door"
+	name = "brass windoor"
 	desc = "A thin door with translucent brass paneling."
 	icon_state = "clockwork"
 	base_state = "clockwork"
 	shards = 0
 	rods = 0
+	resistance_flags = FIRE_PROOF | ACID_PROOF
+	var/made_glow = FALSE
 
 /obj/machinery/door/window/clockwork/New(loc, set_dir)
 	..()
-	var/obj/effect/E = PoolOrNew(/obj/effect/overlay/temp/ratvar/door/window, get_turf(src))
-	if(set_dir)
-		E.setDir(set_dir)
-	else
-		E.setDir(dir)
-	debris += new/obj/item/clockwork/component/vanguard_cogwheel(src)
+	for(var/i in 1 to 2)
+		debris += new/obj/item/clockwork/alloy_shards/medium/gear_bit/large(src)
 	change_construction_value(2)
+
+/obj/machinery/door/window/clockwork/setDir(direct)
+	if(!made_glow)
+		var/obj/effect/E = PoolOrNew(/obj/effect/overlay/temp/ratvar/door/window, get_turf(src))
+		E.setDir(direct)
+		made_glow = TRUE
+	..()
 
 /obj/machinery/door/window/clockwork/Destroy()
 	change_construction_value(-2)
 	return ..()
 
 /obj/machinery/door/window/clockwork/ratvar_act()
-	health = initial(health)
+	obj_integrity = max_integrity
 
 /obj/machinery/door/window/clockwork/hasPower()
 	return TRUE //yup that's power all right
@@ -369,6 +338,7 @@
 		var/previouscolor = color
 		color = "#960000"
 		animate(src, color = previouscolor, time = 8)
+		addtimer(src, "update_atom_colour", 8)
 
 /obj/machinery/door/window/clockwork/allowed(mob/M)
 	if(is_servant_of_ratvar(M))

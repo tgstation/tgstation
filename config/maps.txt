@@ -43,3 +43,7 @@ endmap
 map efficiencystation
 	friendlyname Efficiency Station
 endmap
+
+map pubbystation
+	friendlyname Pubby Station
+endmap

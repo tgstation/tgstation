@@ -91,6 +91,7 @@
 
 /datum/map_template/ruin/lavaland/sin
 	cost = 10
+	allow_duplicates = FALSE
 
 /datum/map_template/ruin/lavaland/sin/envy
 	name = "Ruin of Envy"
@@ -124,14 +125,14 @@
 	suffix = "lavaland_surface_sloth.dmm"
 	// Generates nothing but atmos runtimes and salt
 	cost = 0
-	allow_duplicates = FALSE
 
-/datum/map_template/ruin/lavaland/ato
-	name = "Automated Trade Outpost"
-	id = "ato"
-	description = "A sign at the front says 'Stealing is bad.'"
-	suffix = "lavaland_surface_automated_trade_outpost.dmm"
-	cost = 5
+/datum/map_template/ruin/lavaland/hierophant
+	name = "Hierophant's Arena"
+	id = "hierophant"
+	description = "A huge fucking bird priest awaits you in this arena."
+	suffix = "lavaland_surface_hierophant.dmm"
+	cost = 0
+	allow_duplicates = FALSE
 
 /datum/map_template/ruin/lavaland/ufo_crash
 	name = "UFO Crash"
@@ -175,14 +176,6 @@
 	suffix = "lavaland_surface_survivalpod.dmm"
 	cost = 5
 
-/datum/map_template/ruin/lavaland/tomb
-	name = "Strange Outpost"
-	id = "tomb"
-	description = "A strange tomb, housing the dead of whatever strange civilization \
-		lived here before. You swear you hear rattling coming from the inside."
-	suffix = "lavaland_surface_tomb.dmm"
-	cost = 10
-
 /datum/map_template/ruin/lavaland/pizza
 	name = "Ruined Pizza Party"
 	id = "pizza"
@@ -207,12 +200,4 @@
 	description = "A place of shelter for a lone hermit, scraping by to live another day."
 	suffix = "lavaland_surface_hermit.dmm"
 	allow_duplicates = FALSE
-	cost = 10
-
-/datum/map_template/ruin/lavaland/cult_shuttle
-	name = "Crashed Cult Hive"
-	id = "cultshuttle"
-	description = "A once-bustling home for zealots of the blood-worshiping type. Turns out practicing \
-		dark rituals mid-jump isn't the best idea."
-	suffix = "lavaland_surface_cultcrash.dmm"
 	cost = 10

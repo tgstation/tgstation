@@ -1,0 +1,5 @@
+author: "phil235"
+delete-after: True
+changes: 
+  - rscadd: "Altclicking a PDA without id now removes its pen."
+  - rscadd: "The PDA's sprite now shows whether it has an id, a pAI, a pen, or if its light is on."

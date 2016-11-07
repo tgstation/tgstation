@@ -189,7 +189,7 @@ Auto Patrol: []"},
 /mob/living/simple_animal/bot/secbot/hitby(atom/movable/AM, skipcatch = 0, hitpush = 1, blocked = 0)
 	if(istype(AM, /obj/item))
 		var/obj/item/I = AM
-		if(I.throwforce < src.health && I.thrownby && (istype(I.thrownby, /mob/living/carbon/human)))
+		if(I.throwforce < src.health && I.thrownby && ishuman(I.thrownby))
 			var/mob/living/carbon/human/H = I.thrownby
 			retaliate(H)
 	..()
@@ -215,7 +215,7 @@ Auto Patrol: []"},
 	spawn(2)
 		icon_state = "secbot[on]"
 	var/threat = 5
-	if(istype(C, /mob/living/carbon/human))
+	if(ishuman(C))
 		C.stuttering = 5
 		C.Stun(5)
 		C.Weaken(5)
@@ -383,7 +383,7 @@ Auto Patrol: []"},
 	new /obj/item/weapon/melee/baton(Tsec)
 
 	if(prob(50))
-		new /obj/item/robot_parts/l_arm(Tsec)
+		new /obj/item/bodypart/l_arm/robot(Tsec)
 
 	var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 	s.set_up(3, 1, src)

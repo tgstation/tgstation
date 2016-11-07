@@ -21,7 +21,7 @@
 				CAT_SPAGHETTI)
 	var/datum/action/innate/crafting/button
 	var/display_craftable_only = FALSE
-	var/display_compact = FALSE
+	var/display_compact = TRUE
 
 
 
@@ -60,9 +60,9 @@
 
 /datum/personal_crafting/proc/get_environment(mob/user)
 	. = list()
-	. += user.r_hand
-	. += user.l_hand
-	if(!istype(user.loc, /turf))
+	for(var/obj/item/I in user.held_items)
+		. += I
+	if(!isturf(user.loc))
 		return
 	var/list/L = block(get_step(user, SOUTHWEST), get_step(user, NORTHEAST))
 	for(var/A in L)
@@ -110,7 +110,6 @@
 	return 1
 
 /datum/personal_crafting/proc/construct_item(mob/user, datum/crafting_recipe/R)
-	for(var/A in R.parts)
 	var/list/contents = get_surroundings(user)
 	var/send_feedback = 1
 	if(check_contents(R, contents))

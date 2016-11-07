@@ -28,13 +28,13 @@
 			target = null
 			error = "Connection to destination relay lost."
 
-/datum/computer_file/program/ntnet_dos/kill_program(var/forced)
+/datum/computer_file/program/ntnet_dos/kill_program(forced = FALSE)
 	if(target)
 		target.dos_sources.Remove(src)
 	target = null
 	executed = 0
 
-	..(forced)
+	..()
 
 
 /datum/computer_file/program/ntnet_dos/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = default_state)
@@ -69,7 +69,8 @@
 				executed = 1
 				target.dos_sources.Add(src)
 				if(ntnet_global.intrusion_detection_enabled)
-					ntnet_global.add_log("IDS WARNING - Excess traffic flood targeting relay [target.uid] detected from device: [computer.network_card.get_network_tag()]")
+					var/obj/item/weapon/computer_hardware/network_card/network_card = computer.all_components[MC_NET]
+					ntnet_global.add_log("IDS WARNING - Excess traffic flood targeting relay [target.uid] detected from device: [network_card.get_network_tag()]")
 					ntnet_global.intrusion_detection_alarm = 1
 			return 1
 

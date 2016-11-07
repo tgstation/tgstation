@@ -23,16 +23,15 @@
 	var/list/client/targets[0]
 	for(var/client/T)
 		if(T.mob)
-			if(istype(T.mob, /mob/new_player))
+			if(isnewplayer(T.mob))
 				targets["(New Player) - [T]"] = T
-			else if(istype(T.mob, /mob/dead/observer))
+			else if(isobserver(T.mob))
 				targets["[T.mob.name](Ghost) - [T]"] = T
 			else
 				targets["[T.mob.real_name](as [T.mob.name]) - [T]"] = T
 		else
 			targets["(No Mob) - [T]"] = T
-	var/list/sorted = sortList(targets)
-	var/target = input(src,"To whom shall we send a message?","Admin PM",null) in sorted|null
+	var/target = input(src,"To whom shall we send a message?","Admin PM",null) as null|anything in sortList(targets)
 	cmd_admin_pm(targets[target],null)
 	feedback_add_details("admin_verb","APM") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
@@ -176,6 +175,7 @@
 		for(var/client/X in admins)
 			X << "<B><font color='blue'>PM: [key_name(src, X, 0)]-&gt;IRC:</B> \blue [keywordparsedmsg]</font>" //inform X
 	else
+		window_flash(C)
 		log_admin("PM: [key_name(src)]->[key_name(C)]: [rawmsg]")
 		//we don't use message_admins here because the sender/receiver might get it too
 		for(var/client/X in admins)
@@ -190,6 +190,7 @@
 	var/client/C = directory[target]
 
 	var/static/stealthkey
+	var/adminname = config.showircname ? "[sender](IRC)" : "Administrator"
 
 	if(!C)
 		return "No client"
@@ -206,9 +207,9 @@
 	msg = emoji_parse(msg)
 
 	C << "<font color='red' size='4'><b>-- Administrator private message --</b></font>"
-	C << "<font color='red'>Admin PM from-<b><a href='?priv_msg=[stealthkey]'>Administrator</A></b>: [msg]</font>"
+	C << "<font color='red'>Admin PM from-<b><a href='?priv_msg=[stealthkey]'>[adminname]</A></b>: [msg]</font>"
 	C << "<font color='red'><i>Click on the administrator's name to reply.</i></font>"
-
+	window_flash(C)
 	//always play non-admin recipients the adminhelp sound
 	C << 'sound/effects/adminhelp.ogg'
 

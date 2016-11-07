@@ -38,9 +38,12 @@
 
 /turf/open/space/TakeTemperature(temp)
 
+/turf/open/space/RemoveLattice()
+	return
+
 /turf/open/space/AfterChange()
 	..()
-	atmos_overlay_types.Cut()
+	atmos_overlay_types = null
 
 /turf/open/space/Assimilate_Air()
 	return
@@ -48,7 +51,7 @@
 /turf/open/space/proc/update_starlight()
 	if(config.starlight)
 		for(var/t in RANGE_TURFS(1,src)) //RANGE_TURFS is in code\__HELPERS\game.dm
-			if(istype(t, /turf/open/space))
+			if(isspaceturf(t))
 				//let's NOT update this that much pls
 				continue
 			SetLuminosity(4,1)
@@ -167,3 +170,11 @@
 
 /turf/open/space/proc/update_icon()
 	icon_state = SPACE_ICON_STATE
+
+/turf/open/space/is_transition_turf()
+	if(destination_x || destination_y || destination_z)
+		return 1
+
+
+/turf/open/space/acid_act(acidpwr, acid_volume)
+	return 0

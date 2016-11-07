@@ -13,9 +13,9 @@
 
 	var/PathNode/PNode = null //associated PathNode in the A* algorithm
 
-	flags = 0
+	flags = CAN_BE_DIRTY
 
-	var/list/proximity_checkers = list()
+	var/list/proximity_checkers
 
 	var/image/obscured	//camerachunks
 
@@ -108,8 +108,8 @@
 					M.confused = max(M.confused, 8)
 			if(TURF_WET_ICE)
 				M.slip(0, 6, null, (SLIDE|GALOSHES_DONT_HELP))
-			if(TURF_WET_ICE || TURF_WET_PERMAFROST)
-				M.slip(0, 4, null, (SLIDE|NO_SLIP_WHEN_WALKING))
+			if(TURF_WET_PERMAFROST)
+				M.slip(0, 6, null, (SLIDE_ICE|GALOSHES_DONT_HELP))
 			if(TURF_WET_SLIDE)
 				M.slip(0, 4, null, (SLIDE|GALOSHES_DONT_HELP))
 
@@ -155,7 +155,7 @@
 
 	if(!can_have_cabling())
 		for(var/obj/structure/cable/C in contents)
-			C.Deconstruct()
+			C.deconstruct()
 
 	queue_smooth_neighbors(src)
 
@@ -172,10 +172,12 @@
 
 	var/datum/gas_mixture/total = new//Holders to assimilate air from nearby turfs
 	var/list/total_gases = total.gases
-	var/turf_count = atmos_adjacent_turfs.len
+	var/turf_count = LAZYLEN(atmos_adjacent_turfs)
 
 	for(var/T in atmos_adjacent_turfs)
 		var/turf/open/S = T
+		if(!S.air)
+			continue
 		var/list/S_gases = S.air.gases
 		for(var/id in S_gases)
 			total.assert_gas(id)
@@ -192,7 +194,7 @@
 		air_gases[id][MOLES] /= turf_count //Averages contents of the turfs, ignoring walls and the like
 
 	air.temperature /= turf_count
-
+	air.holder = src
 	SSair.add_to_active(src)
 
 /turf/proc/ReplaceWithLattice()
@@ -210,7 +212,7 @@
 		M.adjustBruteLoss(damage)
 		M.Paralyse(damage/5)
 	for(var/obj/mecha/M in src)
-		M.take_damage(damage*2, "brute")
+		M.take_damage(damage*2, BRUTE, "melee", 1)
 
 /turf/proc/Bless()
 	flags |= NOJAUNT
@@ -283,10 +285,14 @@
 		var/atom/A = V
 		if(A.level >= affecting_level)
 			A.ex_act(severity, target)
+			CHECK_TICK
 
-/turf/ratvar_act()
-	for(var/mob/M in src)
-		M.ratvar_act()
+/turf/ratvar_act(force)
+	. = (prob(40) || force)
+	for(var/I in src)
+		var/atom/A = I
+		if(ismob(A) || .)
+			A.ratvar_act()
 
 /turf/proc/add_blueprints(atom/movable/AM)
 	var/image/I = new
@@ -323,3 +329,52 @@
 	SSair.remove_from_active(T0)
 	T0.CalculateAdjacentTurfs()
 	SSair.add_to_active(T0,1)
+
+/turf/proc/is_transition_turf()
+	return
+
+
+/turf/acid_act(acidpwr, acid_volume)
+	. = 1
+	var/acid_type = /obj/effect/acid
+	if(acidpwr >= 200) //alien acid power
+		acid_type = /obj/effect/acid/alien
+	var/has_acid_effect = 0
+	for(var/obj/O in src)
+		if(intact && O.level == 1) //hidden under the floor
+			continue
+		if(istype(O, acid_type))
+			var/obj/effect/acid/A = O
+			A.acid_level = min(A.level + acid_volume * acidpwr, 12000)//capping acid level to limit power of the acid
+			has_acid_effect = 1
+			continue
+		O.acid_act(acidpwr, acid_volume)
+	if(!has_acid_effect)
+		new acid_type(src, acidpwr, acid_volume)
+
+
+/turf/proc/acid_melt()
+	return
+
+
+/turf/proc/copyTurf(turf/T)
+	if(T.type != type)
+		var/obj/O
+		if(underlays.len)	//we have underlays, which implies some sort of transparency, so we want to a snapshot of the previous turf as an underlay
+			O = new()
+			O.underlays.Add(T)
+		T.ChangeTurf(type)
+		if(underlays.len)
+			T.underlays = O.underlays
+	if(T.icon_state != icon_state)
+		T.icon_state = icon_state
+	if(T.icon != icon)
+		T.icon = icon
+	if(color)
+		T.atom_colours = atom_colours.Copy()
+		T.update_atom_colour()
+	if(T.dir != dir)
+		T.setDir(dir)
+	return T
+
+

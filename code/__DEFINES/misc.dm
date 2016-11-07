@@ -48,12 +48,12 @@
 #define SUIT_STORE_LAYER		11
 #define BACK_LAYER				10
 #define HAIR_LAYER				9		//TODO: make part of head layer?
-#define FACEMASK_LAYER			8
-#define HEAD_LAYER				7
-#define HANDCUFF_LAYER			6
-#define LEGCUFF_LAYER			5
-#define L_HAND_LAYER			4
-#define R_HAND_LAYER			3		//Having the two hands seperate seems rather silly, merge them together? It'll allow for code to be reused on mobs with arbitarily many hands
+#define NECK_LAYER				8
+#define FACEMASK_LAYER			7
+#define HEAD_LAYER				6
+#define HANDCUFF_LAYER			5
+#define LEGCUFF_LAYER			4
+#define HANDS_LAYER				3
 #define BODY_FRONT_LAYER		2
 #define FIRE_LAYER				1		//If you're on fire
 #define TOTAL_LAYERS			26		//KEEP THIS UP-TO-DATE OR SHIT WILL BREAK ;_;
@@ -82,8 +82,7 @@
 #define UNDER_HEAD_LAYER			HEAD_LAYER+1
 #define UNDER_HANDCUFF_LAYER		HANDCUFF_LAYER+1
 #define UNDER_LEGCUFF_LAYER			LEGCUFF_LAYER+1
-#define UNDER_L_HAND_LAYER			L_HAND_LAYER+1
-#define UNDER_R_HAND_LAYER			R_HAND_LAYER+1
+#define UNDER_HANDS_LAYER			HANDS_LAYER+1
 #define UNDER_BODY_FRONT_LAYER		BODY_FRONT_LAYER+1
 #define UNDER_FIRE_LAYER			FIRE_LAYER+1
 
@@ -109,8 +108,7 @@
 #define ABOVE_HEAD_LAYER			HEAD_LAYER-1
 #define ABOVE_HANDCUFF_LAYER		HANDCUFF_LAYER-1
 #define ABOVE_LEGCUFF_LAYER			LEGCUFF_LAYER-1
-#define ABOVE_L_HAND_LAYER			L_HAND_LAYER-1
-#define ABOVE_R_HAND_LAYER			R_HAND_LAYER-1
+#define ABOVE_HANDS_LAYER			HANDS_LAYER-1
 #define ABOVE_BODY_FRONT_LAYER		BODY_FRONT_LAYER-1
 #define ABOVE_FIRE_LAYER			FIRE_LAYER-1
 
@@ -343,12 +341,15 @@ var/list/bloody_footprints_cache = list()
 #define SENTIENCE_MINEBOT 4
 #define SENTIENCE_BOSS 5
 
-//Fire stuff, for burn_state
-#define LAVA_PROOF -2
-#define FIRE_PROOF -1
-#define FLAMMABLE 0
-#define ON_FIRE 1
 
+//Fire and Acid stuff, for resistance_flags
+#define LAVA_PROOF 1
+#define FIRE_PROOF 2 //100% immune to fire damage (but not necessarily to lava or heat)
+#define FLAMMABLE 4
+#define ON_FIRE 8
+#define UNACIDABLE 16 //acid can't even appear on it, let alone melt it.
+#define ACID_PROOF 32 //acid stuck on it doesn't melt it.
+#define INDESTRUCTIBLE 64 //doesn't take damage
 
 //Ghost orbit types:
 #define GHOST_ORBIT_CIRCLE		"circle"
@@ -444,6 +445,9 @@ var/global/list/ghost_others_options = list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 // Evil narsie colour
 #define NARSIE_WINDOW_COLOUR "#7D1919"
 
+//let's just pretend fulltile windows being children of border windows is fine
+#define FULLTILE_WINDOW_DIR NORTHEAST
+
 // Defib stats
 #define DEFIB_TIME_LIMIT 120
 #define DEFIB_TIME_LOSS 60
@@ -485,7 +489,6 @@ var/global/list/ghost_others_options = list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 #define STORAGE_VIEW_DEPTH	2
 
 
-
 // Medal names
 
 #define BOSS_KILL_MEDAL "Killer"
@@ -498,6 +501,7 @@ var/global/list/ghost_others_options = list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 #define COLOSSUS_SCORE "Colossus Killed"
 #define BUBBLEGUM_SCORE "Bubblegum Killed"
 #define DRAKE_SCORE "Drakes Killed"
+#define BIRD_SCORE "Hierophants Killed"
 #define BOSS_SCORE "Bosses Killed"
 #define TENDRIL_CLEAR_SCORE "Tendrils Killed"
 
@@ -528,3 +532,29 @@ var/global/list/ghost_others_options = list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 // Caps for NTNet logging. Less than 10 would make logging useless anyway, more than 500 may make the log browser too laggy. Defaults to 100 unless user changes it.
 #define MAX_NTNET_LOGS 300
 #define MIN_NTNET_LOGS 10
+//TODO Move to a pref
+#define STATION_GOAL_BUDGET  1
+
+//Luma coefficients suggested for HDTVs. If you change these, make sure they add up to 1.
+#define LUMA_R 0.213
+#define LUMA_G 0.715
+#define LUMA_B 0.072
+
+
+//attack visual effects
+#define ATTACK_EFFECT_PUNCH		"punch"
+#define ATTACK_EFFECT_KICK		"kick"
+#define ATTACK_EFFECT_SMASH		"smash"
+#define ATTACK_EFFECT_CLAW		"claw"
+#define ATTACK_EFFECT_DISARM	"disarm"
+#define ATTACK_EFFECT_BITE		"bite"
+#define ATTACK_EFFECT_MECHFIRE	"mech_fire"
+#define ATTACK_EFFECT_MECHTOXIN	"mech_toxin"
+
+
+//different types of atom colorations
+#define ADMIN_COLOUR_PRIORITY 		1 //only used by rare effects like greentext coloring mobs and when admins varedit color
+#define TEMPORARY_COLOUR_PRIORITY 	2 //e.g. purple effect of the revenant on a mob, black effect when mob electrocuted
+#define WASHABLE_COLOUR_PRIORITY 	3 //color splashed onto an atom (e.g. paint on turf)
+#define FIXED_COLOUR_PRIORITY 		4 //color inherent to the atom (e.g. blob color)
+#define COLOUR_PRIORITY_AMOUNT 4 //how many priority levels there are.

@@ -5,7 +5,7 @@
 	var/required_access = null				// List of required accesses to *run* the program.
 	var/transfer_access = null				// List of required access to download or file host the program
 	var/program_state = PROGRAM_STATE_KILLED// PROGRAM_STATE_KILLED or PROGRAM_STATE_BACKGROUND or PROGRAM_STATE_ACTIVE - specifies whether this program is running.
-	var/obj/item/modular_computer/computer	// Device that runs this program.
+	var/obj/item/device/modular_computer/computer	// Device that runs this program.
 	var/filedesc = "Unknown Program"		// User-friendly name of this program.
 	var/extended_desc = "N/A"				// Short description of this program's function.
 	var/program_icon_state = null			// Program-specific screen icon state
@@ -16,10 +16,9 @@
 	var/network_destination = null			// Optional string that describes what NTNet server/system this program connects to. Used in default logging.
 	var/available_on_ntnet = 1				// Whether the program can be downloaded from NTNet. Set to 0 to disable.
 	var/available_on_syndinet = 0			// Whether the program can be downloaded from SyndiNet (accessible via emagging the computer). Set to 1 to enable.
-	var/computer_emagged = 0				// Set to 1 if computer that's running us was emagged. Computer updates this every Process() tick
 	var/ui_header = null					// Example: "something.gif" - a header image that will be rendered in computer's UI when this program is running at background. Images are taken from /icons/program_icons. Be careful not to use too large images!
 
-/datum/computer_file/program/New(obj/item/modular_computer/comp = null)
+/datum/computer_file/program/New(obj/item/device/modular_computer/comp = null)
 	..()
 	if(comp && istype(comp))
 		computer = comp
@@ -78,7 +77,7 @@
 	if(!access_to_check) // No required_access, allow it.
 		return 1
 
-	if(computer_emagged && !transfer)	//emags can bypass the execution locks but not the download ones.
+	if(!transfer && computer && computer.emagged)	//emags can bypass the execution locks but not the download ones.
 		return 1
 
 	if(IsAdminGhost(user))
@@ -88,16 +87,20 @@
 		return 1
 
 	if(ishuman(user))
+		var/obj/item/weapon/card/id/D
+		var/obj/item/weapon/computer_hardware/card_slot/card_slot
+		if(computer && card_slot)
+			card_slot = computer.all_components[MC_CARD]
+			D = card_slot.GetID()
 		var/mob/living/carbon/human/h = user
 		var/obj/item/weapon/card/id/I = h.get_idcard()
-		var/obj/item/weapon/card/id/C = h.get_active_hand()
-		if (istype(C, /obj/item/device/pda))
-			var/obj/item/device/pda/pda = C
-			C = pda.id
+		var/obj/item/weapon/card/id/C = h.get_active_held_item()
+		if(C)
+			C = C.GetID()
 		if(!(C && istype(C)))
 			C = null
 
-		if(!I && !C)
+		if(!I && !C && !D)
 			if(loud)
 				user << "<span class='danger'>\The [computer] flashes an \"RFID Error - Unable to scan ID\" warning.</span>"
 			return 0
@@ -107,6 +110,9 @@
 				return 1
 		else if(C)
 			if(access_to_check in C.GetAccess())
+				return 1
+		else if(D)
+			if(access_to_check in D.GetAccess())
 				return 1
 		if(loud)
 			user << "<span class='danger'>\The [computer] flashes an \"Access Denied\" warning.</span>"
@@ -130,7 +136,7 @@
 	return 0
 
 // Use this proc to kill the program. Designed to be implemented by each program if it requires on-quit logic, such as the NTNRC client.
-/datum/computer_file/program/proc/kill_program(forced = 0)
+/datum/computer_file/program/proc/kill_program(forced = FALSE)
 	program_state = PROGRAM_STATE_KILLED
 	if(network_destination)
 		generate_network_log("Connection to [network_destination] closed.")
@@ -164,7 +170,7 @@
 				return 1
 			if("PC_minimize")
 				var/mob/user = usr
-				if(!computer.active_program || !computer.processor_unit)
+				if(!computer.active_program || !computer.all_components[MC_CPU])
 					return
 
 				computer.idle_threads.Add(computer.active_program)

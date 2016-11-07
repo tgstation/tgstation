@@ -4,6 +4,9 @@
 ## Station name: The name of the station as it is referred to in-game. If commented out, the game will generate a random name instead.
 STATIONNAME Space Station 13
 
+## Put on byond hub: uncomment this to put your server on the byond hub.
+#HUB
+
 # Lobby time: This is the amount of time between rounds that players have to setup their characters and be ready.
 LOBBY_COUNTDOWN 120
 
@@ -22,6 +25,9 @@ BAN_LEGACY_SYSTEM
 ## NOTE: If you have just set-up the database keep this DISABLED, as player age is determined from the first time they connect to the server with the database up. If you just set it up, it means
 ## you have noone older than 0 days, since noone has been logged yet. Only turn this on once you have had the database up for 30 days.
 #USE_AGE_RESTRICTION_FOR_JOBS
+
+# Uncomment this to have the job system use the player's account creation date, rather than the when they first joined the server for job timers.
+#USE_ACCOUNT_AGE_FOR_JOBS
 
 ## log OOC channel
 LOG_OOC
@@ -111,6 +117,9 @@ HOSTEDBY Yournamehere
 ## Uncomment this to stop people connecting to your server without a registered ckey. (i.e. guest-* are all blocked from connecting)
 GUEST_BAN
 
+## Comment to disable checking for the cid randomizer dll. (disabled if database isn't enabled or connected)
+CHECK_RANDOMIZER
+
 ### IPINTEL:
 ### This allows you to detect likely proxies by checking ips against getipintel.net
 ## Rating to warn at: (0.90 is good, 1 is 100% likely to be a spammer/proxy, 0.8 is 80%, etc) anything equal to or higher then this number triggers an admin warning
@@ -171,6 +180,9 @@ ALLOW_HOLIDAYS
 
 ##Remove the # mark if you are going to use the SVN irc bot to relay adminhelps
 #USEIRCBOT
+
+##Uncomment to show the names of the admin sending a pm from IRC instead of showing as a stealthmin.
+#SHOW_IRC_NAME
 
 ##Defines the ticklag for the world.  0.9 is the normal one, 0.5 is smoother.
 TICKLAG 0.5

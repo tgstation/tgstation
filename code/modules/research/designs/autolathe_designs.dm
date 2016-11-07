@@ -499,7 +499,7 @@
 	name = "Light tube"
 	id = "light_tube"
 	build_type = AUTOLATHE
-	materials = list(MAT_METAL = 60, MAT_GLASS = 100)
+	materials = list(MAT_GLASS = 100)
 	build_path = /obj/item/weapon/light/tube
 	category = list("initial", "Construction")
 
@@ -507,7 +507,7 @@
 	name = "Light bulb"
 	id = "light_bulb"
 	build_type = AUTOLATHE
-	materials = list(MAT_METAL = 60, MAT_GLASS = 100)
+	materials = list(MAT_GLASS = 100)
 	build_path = /obj/item/weapon/light/bulb
 	category = list("initial", "Construction")
 
@@ -732,14 +732,14 @@
 	name = "Laptop Frame"
 	id = "laptop"
 	build_type = AUTOLATHE
-	materials = list(MAT_METAL = 1200, MAT_GLASS = 200)
-	build_path = /obj/machinery/modular_computer/laptop/buildable
+	materials = list(MAT_METAL = 10000, MAT_GLASS = 1000)
+	build_path = /obj/item/device/modular_computer/laptop/buildable
 	category = list("initial","Misc")
 
 /datum/design/tablet
 	name = "Tablet Frame"
 	id = "tablet"
 	build_type = AUTOLATHE
-	materials = list(MAT_METAL = 500, MAT_GLASS = 1000)
-	build_path = /obj/item/modular_computer/tablet
+	materials = list(MAT_METAL = 2000, MAT_GLASS = 1000)
+	build_path = /obj/item/device/modular_computer/tablet
 	category = list("initial","Misc")

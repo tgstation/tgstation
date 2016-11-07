@@ -4,16 +4,14 @@
 			return back
 		if(slot_wear_mask)
 			return wear_mask
+		if(slot_neck)
+			return wear_neck
 		if(slot_head)
 			return head
 		if(slot_handcuffed)
 			return handcuffed
 		if(slot_legcuffed)
 			return legcuffed
-		if(slot_l_hand)
-			return l_hand
-		if(slot_r_hand)
-			return r_hand
 	return null
 
 
@@ -24,10 +22,9 @@
 	if(!istype(I))
 		return
 
-	if(I == l_hand)
-		l_hand = null
-	else if(I == r_hand)
-		r_hand = null
+	var/index = get_held_index_of_item(I)
+	if(index)
+		held_items[index] = null
 
 	if(I.pulledby)
 		I.pulledby.stop_pulling()
@@ -42,6 +39,8 @@
 				observe.client.screen -= I
 	I.loc = src
 	I.layer = ABOVE_HUD_LAYER
+	I.plane = ABOVE_HUD_PLANE
+	I.appearance_flags |= NO_CLIENT_COLOR
 	var/not_handled = FALSE
 	switch(slot)
 		if(slot_back)
@@ -53,31 +52,31 @@
 		if(slot_head)
 			head = I
 			head_update(I)
+		if(slot_neck)
+			wear_neck = I
+			update_inv_neck(I)
 		if(slot_handcuffed)
 			handcuffed = I
 			update_handcuffed()
 		if(slot_legcuffed)
 			legcuffed = I
 			update_inv_legcuffed()
-		if(slot_l_hand)
-			l_hand = I
-			update_inv_l_hand()
-		if(slot_r_hand)
-			r_hand = I
-			update_inv_r_hand()
+		if(slot_hands)
+			put_in_hands(I)
+			update_inv_hands()
 		if(slot_in_backpack)
-			if(I == get_active_hand())
+			if(I == get_active_held_item())
 				unEquip(I)
 			I.loc = back
 		else
 			not_handled = TRUE
-	
+
 	//Item has been handled at this point and equipped callback can be safely called
 	//We cannot call it for items that have not been handled as they are not yet correctly
 	//in a slot (handled further down inheritance chain, probably living/carbon/human/equip_to_slot
 	if(!not_handled)
 		I.equipped(src, slot)
-	
+
 	return not_handled
 
 /mob/living/carbon/unEquip(obj/item/I)
@@ -94,6 +93,9 @@
 	else if(I == wear_mask)
 		wear_mask = null
 		wear_mask_update(I, toggle_off = 1)
+	if(I == wear_neck)
+		wear_neck = null
+		update_inv_neck(I)
 	else if(I == handcuffed)
 		handcuffed = null
 		if(buckled && buckled.buckle_requires_restraints)
@@ -121,3 +123,4 @@
 	if(I.flags_inv & HIDEMASK || forced)
 		update_inv_wear_mask()
 	update_inv_head()
+

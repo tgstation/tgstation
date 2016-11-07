@@ -6,6 +6,7 @@
 	icon_living = "alienh_s"
 	icon_dead = "alienh_dead"
 	icon_gib = "syndicate_gib"
+	gender = FEMALE
 	response_help = "pokes"
 	response_disarm = "shoves"
 	response_harm = "hits"
@@ -15,6 +16,7 @@
 	maxHealth = 125
 	health = 125
 	harm_intent_damage = 5
+	obj_damage = 60
 	melee_damage_lower = 25
 	melee_damage_upper = 25
 	attacktext = "slashes"
@@ -107,7 +109,7 @@
 			LayEggs()
 
 /mob/living/simple_animal/hostile/alien/proc/SpreadPlants()
-	if(!isturf(loc) || istype(loc, /turf/open/space))
+	if(!isturf(loc) || isspaceturf(loc))
 		return
 	if(locate(/obj/structure/alien/weeds/node) in get_turf(src))
 		return
@@ -115,7 +117,7 @@
 	new /obj/structure/alien/weeds/node(loc)
 
 /mob/living/simple_animal/hostile/alien/proc/LayEggs()
-	if(!isturf(loc) || istype(loc, /turf/open/space))
+	if(!isturf(loc) || isspaceturf(loc))
 		return
 	if(locate(/obj/structure/alien/egg) in get_turf(src))
 		return
@@ -155,6 +157,7 @@
 	melee_damage_upper = 0
 	a_intent = "help"
 	friendly = "caresses"
+	obj_damage = 0
 	environment_smash = 0
 	gold_core_spawnable = 1
 	icon_state = "maid"

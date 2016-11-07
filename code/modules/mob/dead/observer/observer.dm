@@ -117,11 +117,13 @@ var/list/image/ghost_images_simple = list() //this is a list of all ghost images
 	var/old_color = color
 	color = "#960000"
 	animate(src, color = old_color, time = 10)
+	addtimer(src, "update_atom_colour", 10)
 
 /mob/dead/observer/ratvar_act()
 	var/old_color = color
 	color = "#FAE48C"
 	animate(src, color = old_color, time = 10)
+	addtimer(src, "update_atom_colour", 10)
 
 /mob/dead/observer/Destroy()
 	ghost_images_full -= ghostimage
@@ -334,9 +336,12 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 					A.icon = ui_style2icon(client.prefs.UI_style)
 				A.desc = message
 				var/old_layer = source.layer
+				var/old_plane = source.plane
 				source.layer = FLOAT_LAYER
+				source.plane = FLOAT_PLANE
 				A.add_overlay(source)
 				source.layer = old_layer
+				source.plane = old_plane
 	src << "<span class='ghostalert'><a href=?src=\ref[src];reenter=1>(Click to re-enter)</a></span>"
 	if(sound)
 		src << sound(sound)
@@ -345,7 +350,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	set category = "Ghost"
 	set name = "Teleport"
 	set desc= "Teleport to a location"
-	if(!istype(usr, /mob/dead/observer))
+	if(!isobserver(usr))
 		usr << "Not when you're not dead!"
 		return
 	var/A
@@ -383,7 +388,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	var/orbitsize = (I.Width()+I.Height())*0.5
 	orbitsize -= (orbitsize/world.icon_size)*(world.icon_size*0.25)
 
-	if(orbiting != target)
+	if(orbiting && orbiting.orbiting != target)
 		src << "<span class='notice'>Now orbiting [target].</span>"
 
 	var/rot_seg
@@ -403,20 +408,21 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	orbit(target,orbitsize, FALSE, 20, rot_seg)
 
 /mob/dead/observer/orbit()
-	setDir(2 )//reset dir so the right directional sprites show up
+	setDir(2)//reset dir so the right directional sprites show up
+	..()
+
+/mob/dead/observer/stop_orbit()
 	..()
 	//restart our floating animation after orbit is done.
-	sleep 2  //orbit sets up a 2ds animation when it finishes, so we wait for that to end
-	if (!orbiting) //make sure another orbit hasn't started
-		pixel_y = 0
-		animate(src, pixel_y = 2, time = 10, loop = -1)
+	pixel_y = 0
+	animate(src, pixel_y = 2, time = 10, loop = -1)
 
 /mob/dead/observer/verb/jumptomob() //Moves the ghost instead of just changing the ghosts's eye -Nodrak
 	set category = "Ghost"
 	set name = "Jump to Mob"
 	set desc = "Teleport to a mob"
 
-	if(istype(usr, /mob/dead/observer)) //Make sure they're an observer!
+	if(isobserver(usr)) //Make sure they're an observer!
 
 
 		var/list/dest = list() //List of possible destinations (mobs)

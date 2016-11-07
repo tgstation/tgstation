@@ -22,7 +22,6 @@
 	icon_state = "corgi"
 	icon_living = "corgi"
 	icon_dead = "corgi_dead"
-	gender = MALE
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab/corgi = 3, /obj/item/stack/sheet/animalhide/corgi = 1)
 	childtype = list(/mob/living/simple_animal/pet/dog/corgi/puppy = 95, /mob/living/simple_animal/pet/dog/corgi/puppy/void = 5)
 	animal_species = /mob/living/simple_animal/pet/dog
@@ -114,7 +113,7 @@
 
 	//Removing from inventory
 	if(href_list["remove_inv"])
-		if(!Adjacent(usr) || !(ishuman(usr) || ismonkey(usr) || isrobot(usr) ||  isalienadult(usr)))
+		if(!Adjacent(usr) || !(ishuman(usr) || ismonkey(usr) || iscyborg(usr) ||  isalienadult(usr)))
 			return
 		var/remove_from = href_list["remove_inv"]
 		switch(remove_from)
@@ -141,21 +140,21 @@
 
 	//Adding things to inventory
 	else if(href_list["add_inv"])
-		if(!Adjacent(usr) || !(ishuman(usr) || ismonkey(usr) || isrobot(usr) ||  isalienadult(usr)))
+		if(!Adjacent(usr) || !(ishuman(usr) || ismonkey(usr) || iscyborg(usr) ||  isalienadult(usr)))
 			return
 
 		var/add_to = href_list["add_inv"]
 
 		switch(add_to)
 			if("head")
-				place_on_head(usr.get_active_hand(),usr)
+				place_on_head(usr.get_active_held_item(),usr)
 
 			if("back")
 				if(inventory_back)
 					usr << "<span class='warning'>It's already wearing something!</span>"
 					return
 				else
-					var/obj/item/item_to_add = usr.get_active_hand()
+					var/obj/item/item_to_add = usr.get_active_held_item()
 
 					if(!item_to_add)
 						usr.visible_message("[usr] pets [src].","<span class='notice'>You rest your hand on [src]'s back for a moment.</span>")
@@ -283,22 +282,26 @@
 	var/saved_head //path
 
 /mob/living/simple_animal/pet/dog/corgi/Ian/New()
+	..()
+	//parent call must happen first to ensure IAN
+	//is not in nullspace when child puppies spawn
 	Read_Memory()
 	if(age == 0)
-		var/mob/living/simple_animal/pet/dog/corgi/puppy/P = new /mob/living/simple_animal/pet/dog/corgi/puppy(loc)
-		P.name = "Ian"
-		P.real_name = "Ian"
-		P.gender = MALE
-		P.desc = "It's the HoP's beloved corgi puppy."
-		Write_Memory(0)
-		qdel(src)
+		var/turf/target = get_turf(loc)
+		if(target)
+			var/mob/living/simple_animal/pet/dog/corgi/puppy/P = new /mob/living/simple_animal/pet/dog/corgi/puppy(target)
+			P.name = "Ian"
+			P.real_name = "Ian"
+			P.gender = MALE
+			P.desc = "It's the HoP's beloved corgi puppy."
+			Write_Memory(0)
+			qdel(src)
 	else if(age == record_age)
 		icon_state = "old_corgi"
 		icon_living = "old_corgi"
 		icon_dead = "old_corgi_dead"
 		desc = "At a ripe old age of [record_age] Ian's not as spry as he used to be, but he'll always be the HoP's beloved corgi." //RIP
 		turns_per_move = 20
-	..()
 
 /mob/living/simple_animal/pet/dog/corgi/Ian/Life()
 	if(ticker.current_state == GAME_STATE_FINISHED && !memory_saved)

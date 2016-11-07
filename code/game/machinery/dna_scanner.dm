@@ -78,8 +78,7 @@
 
 	open_machine()
 
-/obj/machinery/dna_scannernew/container_resist()
-	var/mob/living/user = usr
+/obj/machinery/dna_scannernew/container_resist(mob/living/user)
 	var/breakout_time = 2
 	if(state_open || !locked)	//Open and unlocked, no need to escape
 		state_open = 1

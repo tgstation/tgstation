@@ -1,0 +1,5 @@
+author: "Joan"
+delete-after: True
+changes: 
+  - tweak: "Clockwork armor is much stronger against bullets and bombs but much weaker against lasers."
+  - wip: "Specific numbers; Bullet armor from 50% to 70%, bomb armor from 35% to 60%, laser armor from -15% to -25%. This means lasers are a 4-hit crit."

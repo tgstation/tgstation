@@ -8,6 +8,7 @@
 	var/variance = 0
 	var/randomspread = 0 //use random spread for machineguns, instead of shotgun scatter
 	var/projectile_delay = 0
+	var/firing_effect_type = /obj/effect/overlay/temp/dir_setting/firing_effect	//the visual effect appearing when the weapon is fired.
 
 /obj/item/mecha_parts/mecha_equipment/weapon/can_attach(obj/mecha/combat/M)
 	if(..())
@@ -35,6 +36,9 @@
 		A.firer = chassis.occupant
 		A.original = target
 		A.current = curloc
+		if(!A.suppressed && firing_effect_type)
+			PoolOrNew(firing_effect_type, list(get_turf(src), chassis.dir))
+
 
 		var/spread = 0
 		if(variance)
@@ -56,6 +60,7 @@
 //Base energy weapon type
 /obj/item/mecha_parts/mecha_equipment/weapon/energy
 	name = "general energy weapon"
+	firing_effect_type = /obj/effect/overlay/temp/dir_setting/firing_effect/energy
 
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/get_shot_amount()
 	return min(round(chassis.cell.charge / energy_drain), projectiles_per_shot)
@@ -154,7 +159,7 @@
 	playsound(chassis, 'sound/items/AirHorn.ogg', 100, 1)
 	chassis.occupant_message("<font color='red' size='5'>HONK</font>")
 	for(var/mob/living/carbon/M in ohearers(6, chassis))
-		if(istype(M, /mob/living/carbon/human))
+		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
 			if(istype(H.ears, /obj/item/clothing/ears/earmuffs))
 				continue

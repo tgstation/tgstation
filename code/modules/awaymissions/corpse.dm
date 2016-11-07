@@ -109,6 +109,7 @@
 	var/radio = null
 	var/glasses = null
 	var/mask = null
+	var/neck = null
 	var/helmet = null
 	var/belt = null
 	var/pocket1 = null
@@ -143,6 +144,8 @@
 		H.equip_to_slot_or_del(new glasses(H), slot_glasses)
 	if(mask)
 		H.equip_to_slot_or_del(new mask(H), slot_wear_mask)
+	if(neck)
+		H.equip_to_slot_or_del(new neck(H), slot_neck)
 	if(helmet)
 		H.equip_to_slot_or_del(new helmet(H), slot_head)
 	if(belt)
@@ -154,9 +157,9 @@
 	if(back)
 		H.equip_to_slot_or_del(new back(H), slot_back)
 	if(l_hand)
-		H.equip_to_slot_or_del(new l_hand(H), slot_l_hand)
+		H.put_in_hands_or_del(new l_hand(H))
 	if(r_hand)
-		H.equip_to_slot_or_del(new r_hand(H), slot_r_hand)
+		H.put_in_hands_or_del(new r_hand(H))
 	if(has_id)
 		var/obj/item/weapon/card/id/W = new(H)
 		if(id_icon)

@@ -13,7 +13,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/customizable
 	bitesize = 4
-	w_class = 3
+	w_class = 2
 	volume = 80
 
 	var/ingMax = 12
@@ -36,12 +36,14 @@
 	user << "It contains [ingredients.len?"[ingredients_listed]":"no ingredient, "]making a [size]-sized [initial(name)]."
 
 /obj/item/weapon/reagent_containers/food/snacks/customizable/attackby(obj/item/I, mob/user, params)
-	if(istype(I,/obj/item/weapon/reagent_containers/food/snacks))
+	if(!istype(I, /obj/item/weapon/reagent_containers/food/snacks/customizable) && istype(I,/obj/item/weapon/reagent_containers/food/snacks))
 		var/obj/item/weapon/reagent_containers/food/snacks/S = I
 		if(I.w_class > 2)
 			user << "<span class='warning'>The ingredient is too big for [src]!</span>"
 		else if((ingredients.len >= ingMax) || (reagents.total_volume >= volume))
 			user << "<span class='warning'>You can't add more ingredients to [src]!</span>"
+		else if(istype(I, /obj/item/weapon/reagent_containers/food/snacks/pizzaslice/custom) || istype(I, /obj/item/weapon/reagent_containers/food/snacks/cakeslice/custom))
+			user << "<span class='warning'>Adding [I.name] to [src] would make a mess.</span>"
 		else
 			if(!user.unEquip(I))
 				return
@@ -67,7 +69,6 @@
 					name = "[customname] sandwich"
 					return
 			name = "[customname] [initial(name)]"
-
 	else . = ..()
 
 

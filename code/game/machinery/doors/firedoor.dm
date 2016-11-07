@@ -14,12 +14,16 @@
 	icon_state = "door_open"
 	opacity = 0
 	density = 0
+	obj_integrity = 300
+	max_integrity = 300
 	heat_proof = 1
 	glass = 1
 	var/nextstate = null
 	sub_door = 1
 	closingLayer = CLOSED_FIREDOOR_LAYER
 	assemblytype = /obj/structure/firelock_frame
+	armor = list(melee = 30, bullet = 30, laser = 20, energy = 20, bomb = 10, bio = 100, rad = 100, fire = 95, acid = 70)
+
 
 /obj/machinery/door/firedoor/Bumped(atom/AM)
 	if(panel_open || operating)
@@ -52,10 +56,7 @@
 		playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
 		user.visible_message("<span class='notice'>[user] unfastens [src]'s bolts.</span>", \
 							 "<span class='notice'>You undo [src]'s floor bolts.</span>")
-		var/obj/structure/firelock_frame/F = new assemblytype(get_turf(src))
-		F.constructionStep = CONSTRUCTION_PANEL_OPEN
-		F.update_icon()
-		qdel(src)
+		deconstruct(TRUE)
 		return
 
 	if(istype(C, /obj/item/weapon/screwdriver))
@@ -123,6 +124,18 @@
 	. = ..()
 	latetoggle()
 
+/obj/machinery/door/firedoor/deconstruct(disassembled = TRUE)
+	if(!(flags & NODECONSTRUCT))
+		var/obj/structure/firelock_frame/F = new assemblytype(get_turf(src))
+		if(disassembled)
+			F.constructionStep = CONSTRUCTION_PANEL_OPEN
+		else
+			F.constructionStep = CONSTRUCTION_WIRES_EXPOSED
+			F.obj_integrity = F.max_integrity * 0.5
+		F.update_icon()
+	qdel(src)
+
+
 /obj/machinery/door/firedoor/proc/latetoggle()
 	if(operating || stat & NOPOWER || !nextstate)
 		return
@@ -160,12 +173,14 @@
 	else
 		return 1
 
-
 /obj/machinery/door/firedoor/heavy
 	name = "heavy firelock"
 	icon = 'icons/obj/doors/Doorfire.dmi'
 	glass = 0
 	assemblytype = /obj/structure/firelock_frame/heavy
+	obj_integrity = 550
+	max_integrity = 550
+
 
 /obj/item/weapon/electronics/firelock
 	name = "firelock circuitry"
@@ -217,7 +232,7 @@
 				return
 			if(istype(C, /obj/item/weapon/wrench))
 				if(locate(/obj/machinery/door/firedoor) in get_turf(src))
-					user << "<span class='warning'>There's already a firlock there.</span>"
+					user << "<span class='warning'>There's already a firelock there.</span>"
 					return
 				playsound(get_turf(src), 'sound/items/Ratchet.ogg', 50, 1)
 				user.visible_message("<span class='notice'>[user] starts bolting down [src]...</span>", \

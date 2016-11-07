@@ -29,15 +29,15 @@ Bonus
 
 /datum/symptom/genetic_mutation/Activate(datum/disease/advance/A)
 	..()
-	if(prob(SYMPTOM_ACTIVATION_PROB * 5)) // 15% chance
-		var/mob/living/carbon/M = A.affected_mob
-		if(!M.has_dna())
+	if(prob(SYMPTOM_ACTIVATION_PROB * 3)) // 15% chance
+		var/mob/living/carbon/C = A.affected_mob
+		if(!C.has_dna())
 			return
 		switch(A.stage)
 			if(4, 5)
-				M << "<span class='warning'>[pick("Your skin feels itchy.", "You feel light headed.")]</span>"
-				M.dna.remove_mutation_group(possible_mutations)
-				randmut(M, possible_mutations)
+				C << "<span class='warning'>[pick("Your skin feels itchy.", "You feel light headed.")]</span>"
+				C.dna.remove_mutation_group(possible_mutations)
+				C.randmut(possible_mutations)
 	return
 
 // Archive their DNA before they were infected.

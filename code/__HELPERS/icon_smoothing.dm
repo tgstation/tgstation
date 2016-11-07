@@ -166,7 +166,7 @@
 				if(T && (T.density || T.smooth))
 					T = get_step(src, turn(adjacencies, 225))
 
-			if(istype(T, /turf/open/space) && !istype(T, /turf/open/space/transit))
+			if(isspaceturf(T) && !istype(T, /turf/open/space/transit))
 				underlays += image('icons/turf/space.dmi', SPACE_ICON_STATE, layer=TURF_LAYER)
 			else if(T && !T.density && !T.smooth)
 				underlays += T
@@ -386,6 +386,5 @@
 	name = "smooth wall"
 	icon = 'icons/turf/smooth_wall.dmi'
 	icon_state = "smooth"
-	walltype = "shuttle"
 	smooth = SMOOTH_TRUE|SMOOTH_DIAGONAL|SMOOTH_BORDER
 	canSmoothWith = null

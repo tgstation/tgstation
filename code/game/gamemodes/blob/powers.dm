@@ -28,13 +28,13 @@
 			src << "<span class='warning'>This spot is too dense to place a blob core on!</span>"
 			return 0
 		for(var/obj/O in T)
-			if(istype(O, /obj/effect/blob))
-				if(istype(O, /obj/effect/blob/normal))
+			if(istype(O, /obj/structure/blob))
+				if(istype(O, /obj/structure/blob/normal))
 					qdel(O)
 				else
 					src << "<span class='warning'>There is already a blob here!</span>"
 					return 0
-			if(O.density)
+			else if(O.density)
 				src << "<span class='warning'>This spot is too dense to place a blob core on!</span>"
 				return 0
 		if(world.time <= manualplace_min_time && world.time <= autoplace_max_time)
@@ -46,7 +46,7 @@
 	if(placed && blob_core)
 		blob_core.forceMove(loc)
 	else
-		var/obj/effect/blob/core/core = new(get_turf(src), null, point_rate, 1)
+		var/obj/structure/blob/core/core = new(get_turf(src), null, point_rate, 1)
 		core.overmind = src
 		blob_core = core
 		core.update_icon()
@@ -68,35 +68,35 @@
 	if(blob_nodes.len)
 		var/list/nodes = list()
 		for(var/i in 1 to blob_nodes.len)
-			var/obj/effect/blob/node/B = blob_nodes[i]
+			var/obj/structure/blob/node/B = blob_nodes[i]
 			nodes["Blob Node #[i] ([B.overmind ? "B.overmind.blob_reagent_datum.name":"No Chemical"]"] = B
 		var/node_name = input(src, "Choose a node to jump to.", "Node Jump") in nodes
-		var/obj/effect/blob/node/chosen_node = nodes[node_name]
+		var/obj/structure/blob/node/chosen_node = nodes[node_name]
 		if(chosen_node)
 			loc = chosen_node.loc
 
 /mob/camera/blob/proc/createSpecial(price, blobType, nearEquals, needsNode, turf/T)
 	if(!T)
 		T = get_turf(src)
-	var/obj/effect/blob/B = (locate(/obj/effect/blob) in T)
+	var/obj/structure/blob/B = (locate(/obj/structure/blob) in T)
 	if(!B)
 		src << "<span class='warning'>There is no blob here!</span>"
 		return
-	if(!istype(B, /obj/effect/blob/normal))
+	if(!istype(B, /obj/structure/blob/normal))
 		src << "<span class='warning'>Unable to use this blob, find a normal one.</span>"
 		return
 	if(needsNode && nodes_required)
-		if(!(locate(/obj/effect/blob/node) in orange(3, T)) && !(locate(/obj/effect/blob/core) in orange(4, T)))
+		if(!(locate(/obj/structure/blob/node) in orange(3, T)) && !(locate(/obj/structure/blob/core) in orange(4, T)))
 			src << "<span class='warning'>You need to place this blob closer to a node or core!</span>"
 			return //handholdotron 2000
 	if(nearEquals)
-		for(var/obj/effect/blob/L in orange(nearEquals, T))
+		for(var/obj/structure/blob/L in orange(nearEquals, T))
 			if(L.type == blobType)
 				src << "<span class='warning'>There is a similar blob nearby, move more than [nearEquals] tiles away from it!</span>"
 				return
 	if(!can_buy(price))
 		return
-	var/obj/effect/blob/N = B.change_to(blobType, src)
+	var/obj/structure/blob/N = B.change_to(blobType, src)
 	return N
 
 /mob/camera/blob/verb/toggle_node_req()
@@ -116,45 +116,46 @@
 	create_shield()
 
 /mob/camera/blob/proc/create_shield(turf/T)
-	createSpecial(15, /obj/effect/blob/shield, 0, 0, T)
+	createSpecial(15, /obj/structure/blob/shield, 0, 0, T)
 
 /mob/camera/blob/verb/create_resource()
 	set category = "Blob"
 	set name = "Create Resource Blob (40)"
 	set desc = "Create a resource tower which will generate resources for you."
-	createSpecial(40, /obj/effect/blob/resource, 4, 1)
+	createSpecial(40, /obj/structure/blob/resource, 4, 1)
 
 /mob/camera/blob/verb/create_node()
 	set category = "Blob"
 	set name = "Create Node Blob (50)"
 	set desc = "Create a node, which will power nearby factory and resource blobs."
-	createSpecial(50, /obj/effect/blob/node, 5, 0)
+	createSpecial(50, /obj/structure/blob/node, 5, 0)
 
 /mob/camera/blob/verb/create_factory()
 	set category = "Blob"
 	set name = "Create Factory Blob (60)"
 	set desc = "Create a spore tower that will spawn spores to harass your enemies."
-	createSpecial(60, /obj/effect/blob/factory, 7, 1)
+	createSpecial(60, /obj/structure/blob/factory, 7, 1)
 
 /mob/camera/blob/verb/create_blobbernaut()
 	set category = "Blob"
 	set name = "Create Blobbernaut (40)"
 	set desc = "Create a powerful blobbernaut which is mildly smart and will attack enemies."
 	var/turf/T = get_turf(src)
-	var/obj/effect/blob/factory/B = locate(/obj/effect/blob/factory) in T
+	var/obj/structure/blob/factory/B = locate(/obj/structure/blob/factory) in T
 	if(!B)
 		src << "<span class='warning'>You must be on a factory blob!</span>"
 		return
 	if(B.naut) //if it already made a blobbernaut, it can't do it again
 		src << "<span class='warning'>This factory blob is already sustaining a blobbernaut.</span>"
 		return
-	if(B.health < B.maxhealth * 0.5)
+	if(B.obj_integrity < B.max_integrity * 0.5)
 		src << "<span class='warning'>This factory blob is too damaged to sustain a blobbernaut.</span>"
 		return
 	if(!can_buy(40))
 		return
-	B.maxhealth = initial(B.maxhealth) * 0.25 //factories that produced a blobbernaut have much lower health
-	B.check_health()
+	B.max_integrity = initial(B.max_integrity) * 0.25 //factories that produced a blobbernaut have much lower health
+	B.obj_integrity = min(B.obj_integrity, B.max_integrity)
+	B.update_icon()
 	B.visible_message("<span class='warning'><b>The blobbernaut [pick("rips", "tears", "shreds")] its way out of the factory blob!</b></span>")
 	playsound(B.loc, 'sound/effects/splat.ogg', 50, 1)
 	var/mob/living/simple_animal/hostile/blob/blobbernaut/blobber = new /mob/living/simple_animal/hostile/blob/blobbernaut(get_turf(B))
@@ -166,10 +167,9 @@
 	blobber.notransform = 1 //stop the naut from moving around
 	blobber.adjustHealth(blobber.maxHealth * 0.5)
 	blob_mobs += blobber
-	var/list/mob/dead/observer/candidates = pollCandidates("Do you want to play as a [blob_reagent_datum.name] blobbernaut?", ROLE_BLOB, null, ROLE_BLOB, 50) //players must answer rapidly
+	var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as a [blob_reagent_datum.name] blobbernaut?", ROLE_BLOB, null, ROLE_BLOB, 50, blobber) //players must answer rapidly
 	if(candidates.len) //if we got at least one candidate, they're a blobbernaut now.
 		var/client/C = pick(candidates)
-		blobber.notransform = 0
 		blobber.key = C.key
 		blobber << 'sound/effects/blobattack.ogg'
 		blobber << 'sound/effects/attackblob.ogg'
@@ -178,15 +178,15 @@
 		blobber << "You can communicate with other blobbernauts and overminds via <b>:b</b>"
 		blobber << "Your overmind's blob reagent is: <b><font color=\"[blob_reagent_datum.color]\">[blob_reagent_datum.name]</b></font>!"
 		blobber << "The <b><font color=\"[blob_reagent_datum.color]\">[blob_reagent_datum.name]</b></font> reagent [blob_reagent_datum.shortdesc ? "[blob_reagent_datum.shortdesc]" : "[blob_reagent_datum.description]"]"
-	else
-		blobber.notransform = 0 //otherwise, just let it move
+	if(blobber)
+		blobber.notransform = 0
 
 /mob/camera/blob/verb/relocate_core()
 	set category = "Blob"
 	set name = "Relocate Core (80)"
 	set desc = "Swaps the locations of your core and the selected node."
 	var/turf/T = get_turf(src)
-	var/obj/effect/blob/node/B = locate(/obj/effect/blob/node) in T
+	var/obj/structure/blob/node/B = locate(/obj/structure/blob/node) in T
 	if(!B)
 		src << "<span class='warning'>You must be on a blob node!</span>"
 		return
@@ -194,7 +194,7 @@
 		src << "<span class='userdanger'>You have no core and are about to die! May you rest in peace.</span>"
 		return
 	var/area/A = get_area(T)
-	if(istype(T, /turf/open/space) || A && !A.blob_allowed)
+	if(isspaceturf(T) || A && !A.blob_allowed)
 		src << "<span class='warning'>You cannot relocate your core here!</span>"
 		return
 	if(!can_buy(80))
@@ -214,7 +214,7 @@
 	remove_blob(T)
 
 /mob/camera/blob/proc/remove_blob(turf/T)
-	var/obj/effect/blob/B = locate() in T
+	var/obj/structure/blob/B = locate() in T
 	if(!B)
 		src << "<span class='warning'>There is no blob there!</span>"
 		return
@@ -240,7 +240,7 @@
 	if(world.time < last_attack)
 		return
 	var/list/possibleblobs = list()
-	for(var/obj/effect/blob/AB in range(T, 1))
+	for(var/obj/structure/blob/AB in range(T, 1))
 		possibleblobs += AB
 	if(!possibleblobs.len)
 		src << "<span class='warning'>There is no blob adjacent to the target tile!</span>"
@@ -255,7 +255,7 @@
 			var/mob_protection = L.get_permeability_protection()
 			blob_reagent_datum.reaction_mob(L, VAPOR, 25, 1, mob_protection, src)
 			blob_reagent_datum.send_message(L)
-		var/obj/effect/blob/B = locate() in T
+		var/obj/structure/blob/B = locate() in T
 		if(B)
 			if(attacksuccess) //if we successfully attacked a turf with a blob on it, don't refund shit
 				B.blob_attack_animation(T, src)
@@ -266,12 +266,12 @@
 			var/list/cardinalblobs = list()
 			var/list/diagonalblobs = list()
 			for(var/I in possibleblobs)
-				var/obj/effect/blob/IB = I
+				var/obj/structure/blob/IB = I
 				if(get_dir(IB, T) in cardinal)
 					cardinalblobs += IB
 				else
 					diagonalblobs += IB
-			var/obj/effect/blob/OB
+			var/obj/structure/blob/OB
 			if(cardinalblobs.len)
 				OB = pick(cardinalblobs)
 				OB.expand(T, src)
@@ -332,7 +332,7 @@
 	blob_reagent_datum = new BC
 	color = blob_reagent_datum.complementary_color
 	for(var/BL in blobs)
-		var/obj/effect/blob/B = BL
+		var/obj/structure/blob/B = BL
 		B.update_icon()
 	for(var/BLO in blob_mobs)
 		var/mob/living/simple_animal/hostile/blob/BM = BLO

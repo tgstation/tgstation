@@ -296,7 +296,7 @@
 /obj/effect/spawner/lootdrop/maintenance,
 /obj/item/weapon/extinguisher,
 /obj/item/weapon/extinguisher,
-/obj/effect/decal/cleanable/cobweb2,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/effect/decal/cleanable/dirt{
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
@@ -716,7 +716,7 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/obj/effect/decal/cleanable/cobweb2,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
 "br" = (
@@ -1319,7 +1319,7 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/obj/effect/decal/cleanable/cobweb2,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "cw" = (

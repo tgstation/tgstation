@@ -37,9 +37,12 @@
 
 	if(new_master)
 		var/old_layer = new_master.layer
+		var/old_plane = new_master.plane
 		new_master.layer = FLOAT_LAYER
+		new_master.plane = FLOAT_PLANE
 		alert.overlays += new_master
 		new_master.layer = old_layer
+		new_master.plane = old_plane
 		alert.icon_state = "template" // We'll set the icon to the client's ui pref in reorganize_alerts()
 		alert.master = new_master
 	else
@@ -284,7 +287,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 			desc += "<b>[clockwork_daemons]</b> Tinkerer's Daemons: <b>[servants * 0.2 < clockwork_daemons ? "DISABLED":"ACTIVE"]</b><br>"
 		else
 			desc += "No Tinkerer's Daemons.<br>"
-		for(var/obj/structure/clockwork/massive/celestial_gateway/G in all_clockwork_objects)
+		for(var/obj/structure/destructible/clockwork/massive/celestial_gateway/G in all_clockwork_objects)
 			var/area/gate_area = get_area(G)
 			desc += "Ark Location: <b>[uppertext(gate_area.map_name)]</b><br>"
 			if(G.ratvar_portal)
@@ -299,8 +302,8 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 			var/nezbere_available = clockwork_generals_invoked["nezbere"] <= world.time
 			var/nezcrentr_available = clockwork_generals_invoked["nzcrentr"] <= world.time
 			if(inathneq_available || sevtug_available || nezbere_available || nezcrentr_available)
-				desc += "Generals available:<br><b>[inathneq_available ? "<font color=#1E8CE1>INATH-NEQ</font><br>":""][sevtug_available ? "<font color=#AF0AAF>SEVTUG</font><br>":""]\
-				[nezbere_available ? "<font color=#5A6068>NEZBERE</font><br>":""][nezcrentr_available ? "<font color=#DAAA18>NZCRENTR</font>":""]</b><br>"
+				desc += "Generals available:<b>[inathneq_available ? "<br><font color=#1E8CE1>INATH-NEQ</font>":""][sevtug_available ? "<br><font color=#AF0AAF>SEVTUG</font>":""]\
+				[nezbere_available ? "<br><font color=#5A6068>NEZBERE</font>":""][nezcrentr_available ? "<br><font color=#DAAA18>NZCRENTR</font>":""]</b><br>"
 			else
 				desc += "Generals available: <b>NONE</b><br>"
 		else
@@ -446,6 +449,7 @@ so as to remain in compliance with the most up-to-date laws."
 	if(isliving(usr))
 		var/mob/living/L = usr
 		return L.resist()
+
 // PRIVATE = only edit, use, or override these if you're editing the system as a whole
 
 // Re-render all alerts - also called in /datum/hud/show_hud() because it's needed there

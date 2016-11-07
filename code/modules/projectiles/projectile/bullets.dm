@@ -6,6 +6,7 @@
 	nodamage = 0
 	flag = "bullet"
 	hitsound_wall = "ricochet"
+	impact_effect_type = /obj/effect/overlay/temp/impact_effect
 
 /obj/item/projectile/bullet/weakbullet //beanbag, heavy stamina damage
 	damage = 5
@@ -174,11 +175,11 @@
 	create_reagents(50)
 	reagents.set_reacting(FALSE)
 
-/obj/item/projectile/bullet/dart/on_hit(atom/target, blocked = 0, hit_zone)
+/obj/item/projectile/bullet/dart/on_hit(atom/target, blocked = 0)
 	if(iscarbon(target))
 		var/mob/living/carbon/M = target
 		if(blocked != 100) // not completely blocked
-			if(M.can_inject(null,0,hit_zone,piercing)) // Pass the hit zone to see if it can inject by whether it hit the head or the body.
+			if(M.can_inject(null, 0, def_zone, piercing)) // Pass the hit zone to see if it can inject by whether it hit the head or the body.
 				..()
 				reagents.reaction(M, INJECT)
 				reagents.trans_to(M, reagents.total_volume)
@@ -188,7 +189,7 @@
 				target.visible_message("<span class='danger'>The [name] was deflected!</span>", \
 									   "<span class='userdanger'>You were protected against the [name]!</span>")
 
-	..(target, blocked, hit_zone)
+	..(target, blocked)
 	reagents.set_reacting(TRUE)
 	reagents.handle_reactions()
 	return 1
@@ -202,12 +203,7 @@
 //This one is for future syringe guns update
 /obj/item/projectile/bullet/dart/syringe
 	name = "syringe"
-	icon = 'icons/obj/chemical.dmi'
 	icon_state = "syringeproj"
-
-//Piercing Syringe
-/obj/item/projectile/bullet/dart/syringe/piercing
-	piercing = 1
 
 /obj/item/projectile/bullet/neurotoxin
 	name = "neurotoxin spit"
@@ -227,13 +223,15 @@
 //// SNIPER BULLETS
 
 /obj/item/projectile/bullet/sniper
+	speed = 0		//360 alwaysscope.
 	damage = 70
 	stun = 5
 	weaken = 5
+	dismemberment = 50
 	armour_penetration = 50
 	var/breakthings = TRUE
 
-/obj/item/projectile/bullet/sniper/on_hit(atom/target, blocked = 0, hit_zone)
+/obj/item/projectile/bullet/sniper/on_hit(atom/target, blocked = 0)
 	if((blocked != 100) && (!ismob(target) && breakthings))
 		target.ex_act(rand(1,2))
 	return ..()
@@ -243,11 +241,12 @@
 	armour_penetration = 0
 	nodamage = 1
 	stun = 0
+	dismemberment = 0
 	weaken = 0
 	breakthings = FALSE
 
-/obj/item/projectile/bullet/sniper/soporific/on_hit(atom/target, blocked = 0, hit_zone)
-	if((blocked != 100) && istype(target, /mob/living))
+/obj/item/projectile/bullet/sniper/soporific/on_hit(atom/target, blocked = 0)
+	if((blocked != 100) && isliving(target))
 		var/mob/living/L = target
 		L.Sleeping(20)
 	return ..()
@@ -257,10 +256,11 @@
 	armour_penetration = 15
 	damage = 15
 	stun = 0
+	dismemberment = 0
 	weaken = 0
 	breakthings = FALSE
 
-/obj/item/projectile/bullet/sniper/haemorrhage/on_hit(atom/target, blocked = 0, hit_zone)
+/obj/item/projectile/bullet/sniper/haemorrhage/on_hit(atom/target, blocked = 0)
 	if((blocked != 100) && iscarbon(target))
 		var/mob/living/carbon/C = target
 		C.bleed(100)
@@ -272,6 +272,7 @@
 	name = "penetrator round"
 	damage = 60
 	forcedodge = 1
+	dismemberment = 0 //It goes through you cleanly.
 	stun = 0
 	weaken = 0
 	breakthings = FALSE
@@ -289,7 +290,7 @@
 	damage = 20
 	armour_penetration = 0
 
-/obj/item/projectile/bullet/saw/bleeding/on_hit(atom/target, blocked = 0, hit_zone)
+/obj/item/projectile/bullet/saw/bleeding/on_hit(atom/target, blocked = 0)
 	. = ..()
 	if((blocked != 100) && iscarbon(target))
 		var/mob/living/carbon/C = target

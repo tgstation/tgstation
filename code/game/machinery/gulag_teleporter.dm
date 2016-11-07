@@ -21,9 +21,18 @@ The console is located at computer/gulag_teleporter.dm
 	var/jumpsuit_type = /obj/item/clothing/under/rank/prisoner
 	var/shoes_type = /obj/item/clothing/shoes/sneakers/orange
 	var/obj/machinery/gulag_item_reclaimer/linked_reclaimer = null
+	var/list/required_items
 
 /obj/machinery/gulag_teleporter/New()
 	..()
+	required_items = typecacheof(list(
+				/obj/item/weapon/implant,
+				/obj/item/clothing/suit/space/eva/plasmaman,
+				/obj/item/clothing/under/plasmaman,
+				/obj/item/clothing/head/helmet/space/plasmaman,
+				/obj/item/weapon/tank/internals,
+				/obj/item/clothing/mask/breath,
+				/obj/item/clothing/mask/gas))
 	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/gulag_teleporter(null)
 	B.apply_default_parts(src)
 	addtimer(src, "locate_reclaimer", 5)
@@ -128,11 +137,9 @@ The console is located at computer/gulag_teleporter.dm
 	if(linked_reclaimer)
 		linked_reclaimer.stored_items[occupant] = list()
 	for(var/obj/item/W in occupant)
-		if(occupant.unEquip(W))
+		if(!is_type_in_typecache(W, required_items) && occupant.unEquip(W))
 			if(istype(W, /obj/item/weapon/restraints/handcuffs))
 				W.forceMove(get_turf(src))
-				continue
-			if(istype(W, /obj/item/weapon/implant/storage))
 				continue
 			if(linked_reclaimer)
 				linked_reclaimer.stored_items[occupant] += W
@@ -146,7 +153,7 @@ The console is located at computer/gulag_teleporter.dm
 		return
 	strip_occupant()
 	var/mob/living/carbon/human/prisoner = occupant
-	if(jumpsuit_type)
+	if(!isplasmaman(prisoner) && jumpsuit_type)
 		prisoner.equip_to_appropriate_slot(new jumpsuit_type)
 	if(shoes_type)
 		prisoner.equip_to_appropriate_slot(new shoes_type)

@@ -31,13 +31,14 @@
 	id = "adminordrazine"
 	description = "It's magic. We don't have to explain it."
 	color = "#C8A5DC" // rgb: 200, 165, 220
+	can_synth = 0
 
 /datum/reagent/medicine/adminordrazine/on_mob_life(mob/living/carbon/M)
 	M.reagents.remove_all_type(/datum/reagent/toxin, 5*REM, 0, 1)
 	M.setCloneLoss(0, 0)
 	M.setOxyLoss(0, 0)
 	M.radiation = 0
-	M.heal_organ_damage(5,5, 0)
+	M.heal_bodypart_damage(5,5, 0)
 	M.adjustToxLoss(-5, 0)
 	M.hallucination = 0
 	M.setBrainLoss(0)
@@ -162,7 +163,7 @@
 
 /datum/reagent/medicine/rezadone/on_mob_life(mob/living/M)
 	M.setCloneLoss(0) //Rezadone is almost never used in favor of cryoxadone. Hopefully this will change that.
-	M.heal_organ_damage(1,1, 0)
+	M.heal_bodypart_damage(1,1, 0)
 	M.status_flags &= ~DISFIGURED
 	..()
 	. = 1
@@ -330,7 +331,9 @@
 	color = "#FFEBEB"
 
 /datum/reagent/medicine/synthflesh/reaction_mob(mob/living/M, method=TOUCH, reac_volume,show_message = 1)
-	if(iscarbon(M) && M.stat != DEAD)
+	if(iscarbon(M))
+		if (M.stat == DEAD)
+			show_message = 0
 		if(method in list(PATCH, TOUCH))
 			M.adjustBruteLoss(-1.25 * reac_volume)
 			M.adjustFireLoss(-1.25 * reac_volume)
@@ -578,7 +581,7 @@
 
 /datum/reagent/medicine/morphine/overdose_process(mob/living/M)
 	if(prob(33))
-		var/obj/item/I = M.get_active_hand()
+		var/obj/item/I = M.get_active_held_item()
 		if(I)
 			M.drop_item()
 		M.Dizzy(2)
@@ -587,7 +590,7 @@
 
 /datum/reagent/medicine/morphine/addiction_act_stage1(mob/living/M)
 	if(prob(33))
-		var/obj/item/I = M.get_active_hand()
+		var/obj/item/I = M.get_active_held_item()
 		if(I)
 			M.drop_item()
 		M.Dizzy(2)
@@ -596,7 +599,7 @@
 
 /datum/reagent/medicine/morphine/addiction_act_stage2(mob/living/M)
 	if(prob(33))
-		var/obj/item/I = M.get_active_hand()
+		var/obj/item/I = M.get_active_held_item()
 		if(I)
 			M.drop_item()
 		M.adjustToxLoss(1*REM, 0)
@@ -607,7 +610,7 @@
 
 /datum/reagent/medicine/morphine/addiction_act_stage3(mob/living/M)
 	if(prob(33))
-		var/obj/item/I = M.get_active_hand()
+		var/obj/item/I = M.get_active_held_item()
 		if(I)
 			M.drop_item()
 		M.adjustToxLoss(2*REM, 0)
@@ -618,7 +621,7 @@
 
 /datum/reagent/medicine/morphine/addiction_act_stage4(mob/living/M)
 	if(prob(33))
-		var/obj/item/I = M.get_active_hand()
+		var/obj/item/I = M.get_active_held_item()
 		if(I)
 			M.drop_item()
 		M.adjustToxLoss(3*REM, 0)
@@ -1054,6 +1057,26 @@ datum/reagent/medicine/syndicate_nanites/on_mob_life(mob/living/M)
 	if(prob(20))
 		M.adjustBrainLoss(1*REM)
 	M.adjustStaminaLoss(2.5*REM, 0)
+	..()
+	. = 1
+
+/datum/reagent/medicine/miningnanites
+	name = "Nanites"
+	id = "miningnanites"
+	description = "It's mining magic. We don't have to explain it."
+	color = "#C8A5DC" // rgb: 200, 165, 220
+	overdose_threshold = 3 //To prevent people stacking massive amounts of a very strong healing reagent
+	can_synth = 0
+
+/datum/reagent/medicine/miningnanites/on_mob_life(mob/living/M)
+	M.heal_bodypart_damage(5,5, 0)
+	..()
+	. = 1
+
+/datum/reagent/medicine/miningnanites/overdose_process(mob/living/M)
+	M.adjustBruteLoss(3*REM, 0)
+	M.adjustFireLoss(3*REM, 0)
+	M.adjustToxLoss(3*REM, 0)
 	..()
 	. = 1
 

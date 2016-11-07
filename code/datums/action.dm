@@ -138,10 +138,13 @@
 		..(current_button)
 	else if(target)
 		var/obj/item/I = target
-		var/old = I.layer
+		var/old_layer = I.layer
+		var/old_plane = I.plane
 		I.layer = FLOAT_LAYER //AAAH
+		I.plane = FLOAT_PLANE //^ what that guy said
 		current_button.add_overlay(I)
-		I.layer = old
+		I.layer = old_layer
+		I.plane = old_plane
 
 /datum/action/item_action/toggle_light
 	name = "Toggle Light"
@@ -189,6 +192,40 @@
 /datum/action/item_action/toggle_helmet_light
 	name = "Toggle Helmet Light"
 
+/datum/action/item_action/toggle_unfriendly_fire
+	name = "Toggle Friendly Fire \[ON\]"
+	desc = "Toggles if the staff causes friendly fire."
+	button_icon_state = "vortex_ff_on"
+
+/datum/action/item_action/toggle_unfriendly_fire/Trigger()
+	if(..())
+		UpdateButtonIcon()
+
+/datum/action/item_action/toggle_unfriendly_fire/UpdateButtonIcon()
+	if(istype(target, /obj/item/weapon/hierophant_staff))
+		var/obj/item/weapon/hierophant_staff/H = target
+		if(H.friendly_fire_check)
+			button_icon_state = "vortex_ff_off"
+			name = "Toggle Friendly Fire \[OFF\]"
+			button.name = name
+		else
+			button_icon_state = "vortex_ff_on"
+			name = "Toggle Friendly Fire \[ON\]"
+			button.name = name
+	..()
+
+/datum/action/item_action/vortex_recall
+	name = "Vortex Recall"
+	desc = "Recall yourself, and anyone nearby, to an attuned hierophant rune at any time.<br>If no such rune exists, will produce a rune at your location."
+	button_icon_state = "vortex_recall"
+
+/datum/action/item_action/vortex_recall/IsAvailable()
+	if(istype(target, /obj/item/weapon/hierophant_staff))
+		var/obj/item/weapon/hierophant_staff/H = target
+		if(H.teleporting)
+			return 0
+	return ..()
+
 /datum/action/item_action/clock
 	background_icon_state = "bg_clock"
 	buttontooltipstyle = "clockcult"
@@ -198,11 +235,11 @@
 		return 0
 	return ..()
 
-/datum/action/item_action/clock/toggle_flame
-	name = "Summon/Dismiss Ratvar's Flame"
-	desc = "Allows you to summon a flame that can create stunning zones at any range."
+/datum/action/item_action/clock/toggle_visor
+	name = "Create Judicial Marker"
+	desc = "Allows you to create a stunning Judicial Marker at any location in view. Click again to disable."
 
-/datum/action/item_action/clock/toggle_flame/IsAvailable()
+/datum/action/item_action/clock/toggle_visor/IsAvailable()
 	if(!is_servant_of_ratvar(owner))
 		return 0
 	if(istype(target, /obj/item/clothing/glasses/judicial_visor))
@@ -218,7 +255,7 @@
 
 /datum/action/item_action/clock/guvax
 	name = "Guvax"
-	desc = "Allows you to convert adjacent nonservants while holding the slab."
+	desc = "Allows you to convert an adjacent target nonservant. Click your slab to disable."
 	button_icon_state = "guvax_capacitor"
 
 /datum/action/item_action/clock/vanguard

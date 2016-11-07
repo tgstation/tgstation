@@ -37,7 +37,7 @@
 
 	// If whispering your last words, limit the whisper based on how close you are to death.
 	if(critical)
-		var/health_diff = round(-config.health_threshold_dead + health)
+		var/health_diff = round(-HEALTH_THRESHOLD_DEAD + health)
 		// If we cut our message short, abruptly end it with a-..
 		var/message_len = length(message)
 		message = copytext(message, 1, health_diff) + "[message_len > health_diff ? "-.." : "..."]"
@@ -59,13 +59,13 @@
 	watching  -= eavesdropping
 
 	var/rendered
-	whispers = critical ? "whispers something in their final breath." : "whispers something."
+	whispers = critical ? "whispers something in [p_their()] final breath." : "whispers something."
 	rendered = "<span class='game say'><span class='name'>[src.name]</span> [whispers]</span>"
 	for(var/mob/M in watching)
 		M.show_message(rendered, 2)
 
 	var/spans = list(SPAN_ITALICS)
-	whispers = critical ? "whispers in their final breath" : "whispers"
+	whispers = critical ? "whispers in [p_their()] final breath" : "whispers"
 	rendered = "<span class='game say'><span class='name'>[GetVoice()]</span>[alt_name] [whispers], <span class='message'>\"[attach_spans(message, spans)]\"</span></span>"
 
 	for(var/atom/movable/AM in listening)

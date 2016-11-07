@@ -99,6 +99,13 @@
 	unique_frequency = TRUE
 	can_flashlight = 0
 
+/obj/item/weapon/gun/energy/kinetic_accelerator/crossbow/halloween
+	name = "candy corn crossbow"
+	desc = "A weapon favored by Syndicate trick-or-treaters."
+	icon_state = "crossbow_halloween"
+	item_state = "crossbow"
+	ammo_type = list(/obj/item/ammo_casing/energy/bolt/halloween)
+
 /obj/item/weapon/gun/energy/kinetic_accelerator/crossbow/large
 	name = "energy crossbow"
 	desc = "A reverse engineered weapon using syndicate technology."
@@ -110,19 +117,11 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/bolt/large)
 	pin = null
 
-/obj/item/weapon/gun/energy/kinetic_accelerator/suicide_act(mob/user)
-	if(!suppressed)
-		playsound(src.loc, 'sound/weapons/kenetic_reload.ogg', 60, 1)
-	user.visible_message("<span class='suicide'>[user] cocks the [src.name] and pretends to blow \his brains out! It looks like \he's trying to commit suicide!</b></span>")
-	shoot_live_shot()
-	return (OXYLOSS)
-
 /obj/item/weapon/gun/energy/plasmacutter
 	name = "plasma cutter"
 	desc = "A mining tool capable of expelling concentrated plasma bursts. You could use it to cut limbs off of xenos! Or, you know, mine stuff."
 	icon_state = "plasmacutter"
 	item_state = "plasmacutter"
-	modifystate = -1
 	origin_tech = "combat=1;materials=3;magnets=2;plasmatech=3;engineering=1"
 	ammo_type = list(/obj/item/ammo_casing/energy/plasma)
 	flags = CONDUCT | OPENCONTAINER
@@ -142,10 +141,12 @@
 		var/obj/item/stack/sheet/S = A
 		S.use(1)
 		power_supply.give(1000)
+		recharge_newshot(1)
 		user << "<span class='notice'>You insert [A] in [src], recharging it.</span>"
 	else if(istype(A, /obj/item/weapon/ore/plasma))
 		qdel(A)
 		power_supply.give(500)
+		recharge_newshot(1)
 		user << "<span class='notice'>You insert [A] in [src], recharging it.</span>"
 	else
 		..()
@@ -214,16 +215,13 @@
 	cell_type = "/obj/item/weapon/stock_parts/cell/secborg"
 	ammo_type = list(/obj/item/ammo_casing/energy/c3dbullet)
 	can_charge = 0
+	use_cyborg_cell = 1
 
 /obj/item/weapon/gun/energy/printer/update_icon()
 	return
 
 /obj/item/weapon/gun/energy/printer/emp_act()
 	return
-
-/obj/item/weapon/gun/energy/printer/newshot()
-	..()
-	robocharge()
 
 /obj/item/weapon/gun/energy/temperature
 	name = "temperature gun"
@@ -238,6 +236,7 @@
 	name = "security temperature gun"
 	desc = "A weapon that can only be used to its full potential by the truly robust."
 	origin_tech = "combat=2;materials=2;powerstorage=1;magnets=1"
+	pin = /obj/item/device/firing_pin
 
 /obj/item/weapon/gun/energy/laser/instakill
 	name = "instakill rifle"

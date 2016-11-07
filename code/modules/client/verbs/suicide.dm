@@ -10,7 +10,7 @@
 	if(confirm == "Yes")
 		suiciding = 1
 		log_game("[key_name(src)] (job: [job ? "[job]" : "None"]) commited suicide at [get_area(src)].")
-		var/obj/item/held_item = get_active_hand()
+		var/obj/item/held_item = get_active_held_item()
 		if(held_item)
 			var/damagetype = held_item.suicide_act(src)
 			if(damagetype)
@@ -53,7 +53,7 @@
 		adjustOxyLoss(max(200 - getToxLoss() - getFireLoss() - getBruteLoss() - getOxyLoss(), 0))
 		death(0)
 
-/mob/living/carbon/brain/verb/suicide()
+/mob/living/brain/verb/suicide()
 	set hidden = 1
 	if(!canSuicide())
 		return
@@ -118,9 +118,9 @@
 	set name = "pAI Suicide"
 	var/answer = input("REALLY kill yourself? This action can't be undone.", "Suicide", "No") in list ("Yes", "No")
 	if(answer == "Yes")
-		card.removePersonality()
 		var/turf/T = get_turf(src.loc)
-		T.visible_message("<span class='notice'>[src] flashes a message across its screen, \"Wiping core files. Please acquire a new personality to continue using pAI device functions.\"</span>", "<span class='notice'>[src] bleeps electronically.</span>")
+		T.visible_message("<span class='notice'>[src] flashes a message across its screen, \"Wiping core files. Please acquire a new personality to continue using pAI device functions.\"</span>", null, \
+		 "<span class='notice'>[src] bleeps electronically.</span>")
 		death(0)
 	else
 		src << "Aborting suicide attempt."

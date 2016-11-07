@@ -14,7 +14,7 @@
 	attack_verb = list("stamped")
 
 /obj/item/weapon/stamp/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] stamps 'VOID' on \his forehead, then promptly falls over, dead.</span>")
+	user.visible_message("<span class='suicide'>[user] stamps 'VOID' on [user.p_their()] forehead, then promptly falls over, dead.</span>")
 	return (OXYLOSS)
 
 /obj/item/weapon/stamp/qm

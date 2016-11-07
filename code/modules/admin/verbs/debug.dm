@@ -220,7 +220,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		return
 	var/turf/T = mob.loc
 
-	if (!( istype(T, /turf) ))
+	if(!isturf(T))
 		return
 
 	var/datum/gas_mixture/env = T.return_air()
@@ -241,7 +241,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	if(!ticker || !ticker.mode)
 		alert("Wait until the game starts")
 		return
-	if(istype(M, /mob/living/carbon/human))
+	if(ishuman(M))
 		log_admin("[key_name(src)] has robotized [M.key].")
 		var/mob/living/carbon/human/H = M
 		spawn(0)
@@ -257,7 +257,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	if(!ticker || !ticker.mode)
 		alert("Wait until the game starts")
 		return
-	if(istype(M, /mob/living/carbon/human))
+	if(ishuman(M))
 		log_admin("[key_name(src)] has blobized [M.key].")
 		var/mob/living/carbon/human/H = M
 		spawn(0)
@@ -280,7 +280,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		alert("That mob doesn't seem to exist, close the panel and try again.")
 		return
 
-	if(istype(M, /mob/new_player))
+	if(isnewplayer(M))
 		alert("The mob must not be a new_player.")
 		return
 
@@ -301,7 +301,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	var/mob/choice = input("Choose a player to play the pAI", "Spawn pAI") in available
 	if(!choice)
 		return 0
-	if(!istype(choice, /mob/dead/observer))
+	if(!isobserver(choice))
 		var/confirm = input("[choice.key] isn't ghosting right now. Are you sure you want to yank him out of them out of their body and place them in this pAI?", "Spawn pAI Confirmation", "No") in list("Yes", "No")
 		if(confirm != "Yes")
 			return 0
@@ -427,7 +427,7 @@ var/global/list/g_fancy_list_of_types = null
 	if(!ticker || !ticker.mode)
 		alert("Wait until the game starts")
 		return
-	if (istype(M, /mob/living/carbon/human))
+	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		var/obj/item/worn = H.wear_id
 		var/obj/item/weapon/card/id/id = null
@@ -605,9 +605,7 @@ var/global/list/g_fancy_list_of_types = null
 			return
 
 	feedback_add_details("admin_verb","SEQ") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-	for (var/obj/item/I in M)
-		if (istype(I, /obj/item/weapon/implant))
-			continue
+	for (var/obj/item/I in M.get_equipped_items())
 		qdel(I)
 	switch(dresscode)
 		if ("Naked")

@@ -1,3 +1,23 @@
+1 September 2016, by Jordie0608
+
+Modified table 'notes', adding column 'secret'.
+
+ALTER TABLE `feedback`.`notes` ADD COLUMN `secret` TINYINT(1) NOT NULL DEFAULT '1'  AFTER `server`
+
+Remember to add a prefix to the table name if you use them
+
+----------------------------------------------------
+
+19 August 2016, by Shadowlight213
+
+Changed appearance bans to be jobbans.
+
+UPDATE 'feedback'.`ban` SET `job` = "appearance", `bantype` = "JOB_PERMABAN" WHERE `bantype` = "APPEARANCE_PERMABAN"
+
+Remember to add a prefix to the table name if you use them
+
+----------------------------------------------------
+
 3 July 2016, by Jordie0608
 
 Modified table 'poll_question', adding column 'dontshow' which was recently added to the server schema.

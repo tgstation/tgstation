@@ -27,13 +27,17 @@
 		if ("small")
 			new /obj/item/weapon/tank/internals/emergency_oxygen(src)
 			new /obj/item/weapon/tank/internals/emergency_oxygen(src)
+			new /obj/item/clothing/mask/breath(src)
+			new /obj/item/clothing/mask/breath(src)
 
 		if ("aid")
 			new /obj/item/weapon/tank/internals/emergency_oxygen(src)
 			new /obj/item/weapon/storage/firstaid/o2(src)
+			new /obj/item/clothing/mask/breath(src)
 
 		if ("tank")
 			new /obj/item/weapon/tank/internals/air(src)
+			new /obj/item/clothing/mask/breath(src)
 
 		if ("both")
 			new /obj/item/weapon/tank/internals/emergency_oxygen(src)

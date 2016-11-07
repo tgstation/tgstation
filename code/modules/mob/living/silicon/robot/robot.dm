@@ -14,7 +14,7 @@
 	var/custom_name = ""
 	var/braintype = "Cyborg"
 	var/modtype = "robot"
-	var/obj/item/robot_parts/robot_suit/robot_suit = null //Used for deconstruction to remember what the borg was constructed out of..
+	var/obj/item/robot_suit/robot_suit = null //Used for deconstruction to remember what the borg was constructed out of..
 	var/obj/item/device/mmi/mmi = null
 
 //Hud stuff
@@ -24,6 +24,7 @@
 	var/obj/screen/inv3 = null
 	var/obj/screen/lamp_button = null
 	var/obj/screen/thruster_button = null
+	var/obj/screen/hands = null
 
 	var/shown_robot_modules = 0	//Used to determine whether they have the module menu shown or not
 	var/obj/screen/robot_modules_background
@@ -49,7 +50,6 @@
 	var/list/req_access = list(access_robotics)
 
 	var/alarms = list("Motion"=list(), "Fire"=list(), "Atmosphere"=list(), "Power"=list(), "Camera"=list(), "Burglar"=list())
-	var/viewalerts = 0
 
 	var/speed = 0 // VTEC speed boost.
 	var/magpulse = FALSE // Magboot-like effect.
@@ -85,6 +85,7 @@
 	robot_modules_background = new()
 	robot_modules_background.icon_state = "block"
 	robot_modules_background.layer = HUD_LAYER	//Objects that appear on screen are on layer ABOVE_HUD_LAYER, UI should be just below it.
+	robot_modules_background.plane = HUD_PLANE
 
 	ident = rand(1, 999)
 	update_icons()
@@ -314,8 +315,7 @@
 	uneq_active()
 
 /mob/living/silicon/robot/proc/robot_alerts()
-	var/dat = "<HEAD><TITLE>Current Station Alerts</TITLE><META HTTP-EQUIV='Refresh' CONTENT='10'></HEAD><BODY>\n"
-	dat += "<A HREF='?src=\ref[src];mach_close=robotalerts'>Close</A><BR><BR>"
+	var/dat = ""
 	for (var/cat in alarms)
 		dat += text("<B>[cat]</B><BR>\n")
 		var/list/L = alarms[cat]
@@ -323,18 +323,16 @@
 			for (var/alarm in L)
 				var/list/alm = L[alarm]
 				var/area/A = alm[1]
-				var/list/sources = alm[3]
 				dat += "<NOBR>"
 				dat += text("-- [A.name]")
-				if (sources.len > 1)
-					dat += text("- [sources.len] sources")
 				dat += "</NOBR><BR>\n"
 		else
 			dat += "-- All Systems Nominal<BR>\n"
 		dat += "<BR>\n"
 
-	viewalerts = 1
-	src << browse(dat, "window=robotalerts&can_close=0")
+	var/datum/browser/alerts = new(usr, "robotalerts", "Current Station Alerts", 400, 410)
+	alerts.set_content(dat)
+	alerts.open()
 
 /mob/living/silicon/robot/proc/ionpulse()
 	if(!ionpulse_on)
@@ -365,16 +363,6 @@
 	if(thruster_button)
 		thruster_button.icon_state = "ionpulse[ionpulse_on]"
 
-/mob/living/silicon/robot/blob_act(obj/effect/blob/B)
-	if (stat != 2)
-		adjustBruteLoss(60)
-		updatehealth()
-		return 1
-	else
-		gib()
-		return 1
-	return 0
-
 /mob/living/silicon/robot/Stat()
 	..()
 	if(statpanel("Status"))
@@ -392,27 +380,6 @@
 
 /mob/living/silicon/robot/restrained(ignore_grab)
 	. = 0
-
-/mob/living/silicon/robot/ex_act(severity, target)
-	switch(severity)
-		if(1)
-			gib()
-			return
-		if(2)
-			if (stat != 2)
-				adjustBruteLoss(60)
-				adjustFireLoss(60)
-		if(3)
-			if (stat != 2)
-				adjustBruteLoss(30)
-	return
-
-
-/mob/living/silicon/robot/bullet_act(var/obj/item/projectile/Proj)
-	..(Proj)
-	updatehealth()
-	if(prob(75) && Proj.damage > 0) spark_system.start()
-	return 2
 
 /mob/living/silicon/robot/triggerAlarm(class, area/A, O, obj/alarmsource)
 	if(alarmsource.z != z)
@@ -437,7 +404,6 @@
 		C = O
 	L[A.name] = list(A, (C) ? C : O, list(alarmsource))
 	queueAlarm(text("--- [class] alarm detected in [A.name]!"), class)
-//	if (viewalerts) robot_alerts()
 	return 1
 
 /mob/living/silicon/robot/cancelAlarm(class, area/A, obj/origin)
@@ -454,7 +420,6 @@
 				L -= I
 	if (cleared)
 		queueAlarm("--- [class] alarm in [A.name] has been cleared.", class, 0)
-//		if (viewalerts) robot_alerts()
 	return !cleared
 
 /mob/living/silicon/robot/attackby(obj/item/weapon/W, mob/user, params)
@@ -621,83 +586,6 @@
 	else
 		return ..()
 
-/mob/living/silicon/robot/attacked_by(obj/item/I, mob/living/user, def_zone)
-	if(I.force && I.damtype != STAMINA && stat != DEAD) //only sparks if real damage is dealt.
-		spark_system.start()
-	return ..()
-
-
-/mob/living/silicon/robot/emag_act(mob/user)
-	if(user != src)//To prevent syndieborgs from emagging themselves
-		if(!opened)//Cover is closed
-			if(locked)
-				user << "<span class='notice'>You emag the cover lock.</span>"
-				locked = 0
-			else
-				user << "<span class='warning'>The cover is already unlocked!</span>"
-			return
-		if(opened)//Cover is open
-			if((world.time - 100) < emag_cooldown)
-				return
-
-			if(syndicate)
-				user << "<span class='notice'>You emag [src]'s interface.</span>"
-				src << "<span class='danger'>ALERT: Foreign software execution prevented.</span>"
-				log_game("[key_name(user)] attempted to emag cyborg [key_name(src)] but they were a syndicate cyborg.")
-				emag_cooldown = world.time
-				return
-
-			var/ai_is_antag = 0
-			if(connected_ai && connected_ai.mind)
-				if(connected_ai.mind.special_role)
-					ai_is_antag = (connected_ai.mind.special_role == "traitor")
-			if(ai_is_antag)
-				user << "<span class='notice'>You emag [src]'s interface.</span>"
-				src << "<span class='danger'>ALERT: Foreign software execution prevented.</span>"
-				connected_ai << "<span class='danger'>ALERT: Cyborg unit \[[src]] successfuly defended against subversion.</span>"
-				log_game("[key_name(user)] attempted to emag cyborg [key_name(src)] slaved to traitor AI [connected_ai].")
-				emag_cooldown = world.time
-				return
-
-			if(wiresexposed)
-				user << "<span class='warning'>You must unexpose the wires first!</span>"
-				return
-			else
-				emag_cooldown = world.time
-				sleep(6)
-				SetEmagged(1)
-				SetLockdown(1) //Borgs were getting into trouble because they would attack the emagger before the new laws were shown
-				lawupdate = 0
-				connected_ai = null
-				user << "<span class='notice'>You emag [src]'s interface.</span>"
-				message_admins("[key_name_admin(user)] emagged cyborg [key_name_admin(src)].  Laws overridden.")
-				log_game("[key_name(user)] emagged cyborg [key_name(src)].  Laws overridden.")
-				clear_supplied_laws()
-				clear_inherent_laws()
-				clear_zeroth_law(0)
-				laws = new /datum/ai_laws/syndicate_override
-				var/time = time2text(world.realtime,"hh:mm:ss")
-				lawchanges.Add("[time] <B>:</B> [user.name]([user.key]) emagged [name]([key])")
-				set_zeroth_law("Only [user.real_name] and people they designate as being such are Syndicate Agents.")
-				src << "<span class='danger'>ALERT: Foreign software detected.</span>"
-				sleep(5)
-				src << "<span class='danger'>Initiating diagnostics...</span>"
-				sleep(20)
-				src << "<span class='danger'>SynBorg v1.7 loaded.</span>"
-				sleep(5)
-				src << "<span class='danger'>LAW SYNCHRONISATION ERROR</span>"
-				sleep(5)
-				src << "<span class='danger'>Would you like to send a report to NanoTraSoft? Y/N</span>"
-				sleep(10)
-				src << "<span class='danger'>> N</span>"
-				sleep(20)
-				src << "<span class='danger'>ERRORERRORERROR</span>"
-				src << "<b>Obey these laws:</b>"
-				laws.show_laws(src)
-				src << "<span class='danger'>ALERT: [user.real_name] is your new master. Obey your new laws and their commands.</span>"
-				SetLockdown(0)
-				update_icons()
-
 /mob/living/silicon/robot/verb/unlock_own_cover()
 	set category = "Robot Commands"
 	set name = "Unlock Cover"
@@ -711,79 +599,20 @@
 				update_icons()
 				usr << "<span class='notice'>You unlock your cover.</span>"
 
-/mob/living/silicon/robot/attack_alien(mob/living/carbon/alien/humanoid/M)
-	if (M.a_intent =="disarm")
-		if(!(lying))
-			M.do_attack_animation(src)
-			if(get_active_hand())
-				uneq_active()
-				visible_message("<span class='danger'>[M] disarmed [src]!</span>", \
-				"<span class='userdanger'>[M] has disabled [src]'s active module!</span>")
-				add_logs(M, src, "disarmed")
-			else
-				Stun(2)
-				step(src,get_dir(M,src))
-				add_logs(M, src, "pushed")
-				visible_message("<span class='danger'>[M] has forced back [src]!</span>", \
-				"<span class='userdanger'>[M] has forced back [src]!</span>")
-			playsound(loc, 'sound/weapons/pierce.ogg', 50, 1, -1)
-	else
-		..()
-	return
-
-/mob/living/silicon/robot/attack_slime(mob/living/simple_animal/slime/M)
-	if(..()) //successful slime shock
-		flash_eyes()
-		var/stunprob = M.powerlevel * 7 + 10
-		if(prob(stunprob) && M.powerlevel >= 8)
-			adjustBruteLoss(M.powerlevel * rand(6,10))
-
-	var/damage = rand(1, 3)
-
-	if(M.is_adult)
-		damage = rand(20, 40)
-	else
-		damage = rand(5, 35)
-	damage = round(damage / 2) // borgs recieve half damage
-	adjustBruteLoss(damage)
-	updatehealth()
-
-	return
-
-/mob/living/silicon/robot/attack_hand(mob/living/carbon/human/user)
-	add_fingerprint(user)
-	if(opened && !wiresexposed && (!istype(user, /mob/living/silicon)))
-		if(cell)
-			cell.updateicon()
-			cell.add_fingerprint(user)
-			user.put_in_active_hand(cell)
-			user << "<span class='notice'>You remove \the [cell].</span>"
-			cell = null
-			update_icons()
-			diag_hud_set_borgcell()
-
-	if(!opened)
-		if(..()) // hulk attack
-			spark_system.start()
-			spawn(0)
-				step_away(src,user,15)
-				sleep(3)
-				step_away(src,user,15)
-
 /mob/living/silicon/robot/proc/allowed(mob/M)
 	//check if it doesn't require any access at all
 	if(check_access(null))
 		return 1
-	if(istype(M, /mob/living/carbon/human))
+	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		//if they are holding or wearing a card that has access, that works
-		if(check_access(H.get_active_hand()) || check_access(H.wear_id))
+		if(check_access(H.get_active_held_item()) || check_access(H.wear_id))
 			return 1
-	else if(istype(M, /mob/living/carbon/monkey))
+	else if(ismonkey(M))
 		var/mob/living/carbon/monkey/george = M
 		//they can only hold things :(
-		if(istype(george.get_active_hand(), /obj/item))
-			return check_access(george.get_active_hand())
+		if(istype(george.get_active_held_item(), /obj/item))
+			return check_access(george.get_active_held_item())
 	return 0
 
 /mob/living/silicon/robot/proc/check_access(obj/item/weapon/card/id/I)
@@ -849,90 +678,6 @@
 
 	update_fire()
 
-/mob/living/silicon/robot/proc/installed_modules()
-	if(!module)
-		pick_module()
-		return
-	var/dat = {"<A HREF='?src=\ref[src];mach_close=robotmod'>Close</A>
-	<BR>
-	<BR>
-	<B>Activated Modules</B>
-	<BR>
-	<table border='0'>
-	<tr><td>Module 1:</td><td>[module_state_1 ? "<A HREF=?src=\ref[src];mod=\ref[module_state_1]>[module_state_1]<A>" : "No Module"]</td></tr>
-	<tr><td>Module 2:</td><td>[module_state_2 ? "<A HREF=?src=\ref[src];mod=\ref[module_state_2]>[module_state_2]<A>" : "No Module"]</td></tr>
-	<tr><td>Module 3:</td><td>[module_state_3 ? "<A HREF=?src=\ref[src];mod=\ref[module_state_3]>[module_state_3]<A>" : "No Module"]</td></tr>
-	</table><BR>
-	<B>Installed Modules</B><BR><BR>
-
-	<table border='0'>"}
-
-	for (var/obj in module.modules)
-		if (!obj)
-			dat += text("<tr><td><B>Resource depleted</B></td></tr>")
-		else if(activated(obj))
-			dat += text("<tr><td>[obj]</td><td><B>Activated</B></td></tr>")
-		else
-			dat += text("<tr><td>[obj]</td><td><A HREF=?src=\ref[src];act=\ref[obj]>Activate</A></td></tr>")
-	if (emagged)
-		if(activated(module.emag))
-			dat += text("<tr><td>[module.emag]</td><td><B>Activated</B></td></tr>")
-		else
-			dat += text("<tr><td>[module.emag]</td><td><A HREF=?src=\ref[src];act=\ref[module.emag]>Activate</A></td></tr>")
-	dat += "</table>"
-/*
-		if(activated(obj))
-			dat += text("[obj]: \[<B>Activated</B> | <A HREF=?src=\ref[src];deact=\ref[obj]>Deactivate</A>\]<BR>")
-		else
-			dat += text("[obj]: \[<A HREF=?src=\ref[src];act=\ref[obj]>Activate</A> | <B>Deactivated</B>\]<BR>")
-*/
-	var/datum/browser/popup = new(src, "robotmod", "Modules")
-	popup.set_content(dat)
-	popup.open()
-
-/mob/living/silicon/robot/Topic(href, href_list)
-	..()
-	if(usr && (src != usr))
-		return
-
-	if (href_list["mach_close"])
-		var/t1 = text("window=[href_list["mach_close"]]")
-		unset_machine()
-		src << browse(null, t1)
-		return
-
-	if (href_list["showalerts"])
-		robot_alerts()
-		return
-
-	if (href_list["mod"])
-		var/obj/item/O = locate(href_list["mod"])
-		if (O)
-			O.attack_self(src)
-
-	if (href_list["act"])
-		var/obj/item/O = locate(href_list["act"])
-		activate_module(O)
-		installed_modules()
-
-	if (href_list["deact"])
-		var/obj/item/O = locate(href_list["deact"])
-		if(activated(O))
-			if(module_state_1 == O)
-				module_state_1 = null
-				contents -= O
-			else if(module_state_2 == O)
-				module_state_2 = null
-				contents -= O
-			else if(module_state_3 == O)
-				module_state_3 = null
-				contents -= O
-			else
-				src << "Module isn't activated."
-		else
-			src << "Module isn't activated"
-		installed_modules()
-
 #define BORG_CAMERA_BUFFER 30
 /mob/living/silicon/robot/Move(a, b, flag)
 	var/oldLoc = src.loc
@@ -951,13 +696,12 @@
 			if(isturf(tile))
 				tile.clean_blood()
 				for(var/A in tile)
-					if(istype(A, /obj/effect))
-						if(is_cleanable(A))
-							qdel(A)
+					if(is_cleanable(A))
+						qdel(A)
 					else if(istype(A, /obj/item))
 						var/obj/item/cleaned_item = A
 						cleaned_item.clean_blood()
-					else if(istype(A, /mob/living/carbon/human))
+					else if(ishuman(A))
 						var/mob/living/carbon/human/cleaned_human = A
 						if(cleaned_human.lying)
 							if(cleaned_human.head)
@@ -1033,7 +777,7 @@
 
 	if(incapacitated())
 		return
-	var/obj/item/W = get_active_hand()
+	var/obj/item/W = get_active_held_item()
 	if(W)
 		W.attack_self(src)
 
@@ -1135,14 +879,14 @@
 		robot_suit.head = null
 		robot_suit.updateicon()
 	else
-		new /obj/item/robot_parts/robot_suit(T)
-		new /obj/item/robot_parts/l_leg(T)
-		new /obj/item/robot_parts/r_leg(T)
+		new /obj/item/robot_suit(T)
+		new /obj/item/bodypart/l_leg/robot(T)
+		new /obj/item/bodypart/r_leg/robot(T)
 		new /obj/item/stack/cable_coil(T, 1)
-		new /obj/item/robot_parts/chest(T)
-		new /obj/item/robot_parts/l_arm(T)
-		new /obj/item/robot_parts/r_arm(T)
-		new /obj/item/robot_parts/head(T)
+		new /obj/item/bodypart/chest/robot(T)
+		new /obj/item/bodypart/l_arm/robot(T)
+		new /obj/item/bodypart/r_arm/robot(T)
+		new /obj/item/bodypart/head/robot(T)
 		var/b
 		for(b=0, b!=2, b++)
 			var/obj/item/device/assembly/flash/handheld/F = new /obj/item/device/assembly/flash/handheld(T)
@@ -1286,22 +1030,6 @@
 	diag_hud_set_health()
 	update_health_hud()
 
-/mob/living/silicon/robot/fully_replace_character_name(oldname, newname)
-	..()
-	if(oldname != real_name)
-		notify_ai(3, oldname, newname)
-	if(camera)
-		camera.c_tag = real_name
-	custom_name = newname
-
-/mob/living/silicon/robot/emp_act(severity)
-	switch(severity)
-		if(1)
-			Stun(8)
-		if(2)
-			Stun(3)
-	..()
-
 /mob/living/silicon/robot/revive(full_heal = 0, admin_revive = 0)
 	if(..()) //successfully ressuscitated from death
 		if(camera && !wires.is_cut(WIRE_CAMERA))
@@ -1311,3 +1039,37 @@
 			locked = 1
 		notify_ai(1)
 		. = 1
+
+/mob/living/silicon/robot/fully_replace_character_name(oldname, newname)
+	..()
+	if(oldname != real_name)
+		notify_ai(3, oldname, newname)
+	if(camera)
+		camera.c_tag = real_name
+	custom_name = newname
+
+
+/mob/living/silicon/robot/proc/ResetModule()
+
+	notify_ai(2)
+
+	uneq_all()
+	hands.icon_state = "nomod"
+	icon_state = "robot"
+	qdel(module)
+	module = null
+
+	modtype = "robot"
+	designation = "Default"
+	updatename("Default")
+
+	update_icons()
+	update_headlamp()
+
+	speed = 0 // Remove upgrades.
+	ionpulse = FALSE
+	magpulse = FALSE
+
+	status_flags |= CANPUSH
+
+	return 1

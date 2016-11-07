@@ -12,7 +12,7 @@
 	heat_protection = CHEST|GROIN|LEGS|ARMS
 	hooded = 1
 	hoodtype = /obj/item/clothing/head/explorer
-	armor = list(melee = 30, bullet = 20, laser = 20, energy = 20, bomb = 50, bio = 100, rad = 50)
+	armor = list(melee = 30, bullet = 20, laser = 20, energy = 20, bomb = 50, bio = 100, rad = 50, fire = 50, acid = 50)
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/internals, /obj/item/weapon/resonator, /obj/item/device/mining_scanner, /obj/item/device/t_scanner/adv_mining_scanner, /obj/item/weapon/gun/energy/kinetic_accelerator, /obj/item/weapon/pickaxe)
 
 /obj/item/clothing/head/explorer
@@ -24,7 +24,7 @@
 	flags_inv = HIDEHAIR|HIDEFACE|HIDEEARS
 	min_cold_protection_temperature = FIRE_HELM_MIN_TEMP_PROTECT
 	max_heat_protection_temperature = FIRE_HELM_MAX_TEMP_PROTECT
-	armor = list(melee = 30, bullet = 20, laser = 20, energy = 20, bomb = 50, bio = 100, rad = 50)
+	armor = list(melee = 30, bullet = 20, laser = 20, energy = 20, bomb = 50, bio = 100, rad = 50, fire = 50, acid = 50)
 
 /obj/item/clothing/mask/gas/explorer
 	name = "explorer gas mask"
@@ -34,7 +34,7 @@
 	visor_flags_inv = HIDEFACIALHAIR
 	visor_flags_cover = MASKCOVERSMOUTH
 	actions_types = list(/datum/action/item_action/adjust)
-	armor = list(melee = 10, bullet = 5, laser = 5, energy = 5, bomb = 0, bio = 50, rad = 0)
+	armor = list(melee = 10, bullet = 5, laser = 5, energy = 5, bomb = 0, bio = 50, rad = 0, fire = 20, acid = 40)
 
 /obj/item/clothing/mask/gas/explorer/attack_self(mob/user)
 	adjustmask(user)
@@ -81,7 +81,7 @@
 	var/list/destinations = list()
 
 	if(isgolem(user))
-		for(var/obj/item/device/radio/beacon/B in world)
+		for(var/obj/item/device/radio/beacon/B in teleportbeacons)
 			var/turf/T = get_turf(B)
 			if(istype(T.loc, /area/ruin/powered/golem_ship))
 				destinations += B
@@ -90,7 +90,7 @@
 	if(destinations.len)
 		return destinations
 
-	for(var/obj/item/device/radio/beacon/B in world)
+	for(var/obj/item/device/radio/beacon/B in teleportbeacons)
 		var/turf/T = get_turf(B)
 		if(T.z == ZLEVEL_STATION)
 			destinations += B
@@ -167,10 +167,10 @@
 	w_class = 3
 	force = 15
 	throwforce = 10
-	var/cooldown = 0
-	var/fieldsactive = 0
 	var/burst_time = 30
 	var/fieldlimit = 4
+	var/list/fields = list()
+	var/quick_burst_mod = 0.8
 	origin_tech = "magnets=3;engineering=3"
 
 /obj/item/weapon/resonator/upgraded
@@ -180,17 +180,19 @@
 	item_state = "resonator_u"
 	origin_tech = "materials=4;powerstorage=3;engineering=3;magnets=3"
 	fieldlimit = 6
+	quick_burst_mod = 1
 
 /obj/item/weapon/resonator/proc/CreateResonance(target, creator)
 	var/turf/T = get_turf(target)
-	if(locate(/obj/effect/resonance) in T)
+	var/obj/effect/resonance/R = locate(/obj/effect/resonance) in T
+	if(R)
+		R.resonance_damage *= quick_burst_mod
+		R.burst(T)
 		return
-	if(fieldsactive < fieldlimit)
+	if(fields.len < fieldlimit)
 		playsound(src,'sound/weapons/resonator_fire.ogg',50,1)
-		new /obj/effect/resonance(T, creator, burst_time)
-		fieldsactive++
-		spawn(burst_time)
-			fieldsactive--
+		var/obj/effect/resonance/RE = new /obj/effect/resonance(T, creator, burst_time, src)
+		fields += RE
 
 /obj/item/weapon/resonator/attack_self(mob/user)
 	if(burst_time == 50)
@@ -202,7 +204,9 @@
 
 /obj/item/weapon/resonator/afterattack(atom/target, mob/user, proximity_flag)
 	if(proximity_flag)
-		if(!check_allowed_items(target, 1)) return
+		if(!check_allowed_items(target, 1))
+			return
+		user.changeNext_move(CLICK_CD_MELEE)
 		CreateResonance(target, user)
 
 /obj/effect/resonance
@@ -211,37 +215,42 @@
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "shield1"
 	layer = ABOVE_ALL_MOB_LAYER
+	anchored = TRUE
 	mouse_opacity = 0
 	var/resonance_damage = 20
+	var/creator
+	var/obj/item/weapon/resonator/res
 
-/obj/effect/resonance/New(loc, var/creator = null, var/timetoburst)
+/obj/effect/resonance/New(loc, set_creator, timetoburst, set_resonator)
+	..()
+	creator = set_creator
+	res = set_resonator
 	var/turf/proj_turf = get_turf(src)
 	if(!istype(proj_turf))
 		return
-	if(istype(proj_turf, /turf/closed/mineral))
-		var/turf/closed/mineral/M = proj_turf
-		spawn(timetoburst)
-			playsound(src,'sound/weapons/resonator_blast.ogg',50,1)
-			M.gets_drilled(creator)
-			qdel(src)
-	else
-		var/datum/gas_mixture/environment = proj_turf.return_air()
-		var/pressure = environment.return_pressure()
-		if(pressure < 50)
-			name = "strong resonance field"
-			resonance_damage = 60
-		spawn(timetoburst)
-			playsound(src,'sound/weapons/resonator_blast.ogg',50,1)
-			if(creator)
-				for(var/mob/living/L in src.loc)
-					add_logs(creator, L, "used a resonator field on", "resonator")
-					L << "<span class='danger'>The [src.name] ruptured with you in it!</span>"
-					L.adjustBruteLoss(resonance_damage)
-			else
-				for(var/mob/living/L in src.loc)
-					L << "<span class='danger'>The [src.name] ruptured with you in it!</span>"
-					L.adjustBruteLoss(resonance_damage)
-			qdel(src)
+	var/datum/gas_mixture/environment = proj_turf.return_air()
+	var/pressure = environment.return_pressure()
+	if(pressure < 50)
+		name = "strong resonance field"
+		resonance_damage = 60
+	addtimer(src, "burst", timetoburst, FALSE, proj_turf)
+
+/obj/effect/resonance/Destroy()
+	if(res)
+		res.fields -= src
+	return ..()
+
+/obj/effect/resonance/proc/burst(turf/T)
+	playsound(src,'sound/weapons/resonator_blast.ogg',50,1)
+	if(ismineralturf(T))
+		var/turf/closed/mineral/M = T
+		M.gets_drilled(creator)
+	for(var/mob/living/L in T)
+		if(creator)
+			add_logs(creator, L, "used a resonator field on", "resonator")
+		L << "<span class='danger'>The [src.name] ruptured with you in it!</span>"
+		L.apply_damage(resonance_damage, BRUTE)
+	qdel(src)
 
 /**********************Facehugger toy**********************/
 
@@ -276,7 +285,7 @@
 /obj/item/weapon/lazarus_injector/afterattack(atom/target, mob/user, proximity_flag)
 	if(!loaded)
 		return
-	if(istype(target, /mob/living) && proximity_flag)
+	if(isliving(target) && proximity_flag)
 		if(istype(target, /mob/living/simple_animal))
 			var/mob/living/simple_animal/M = target
 			if(M.sentience_type != revive_type)
@@ -285,7 +294,7 @@
 			if(M.stat == DEAD)
 				M.faction = list("neutral")
 				M.revive(full_heal = 1, admin_revive = 1)
-				if(istype(target, /mob/living/simple_animal/hostile))
+				if(ishostile(target))
 					var/mob/living/simple_animal/hostile/H = M
 					if(malfunctioning)
 						H.faction |= list("lazarus", "\ref[user]")
@@ -408,6 +417,7 @@
 				for(var/turf/closed/mineral/M in minerals)
 					var/turf/F = get_turf(M)
 					var/image/I = image('icons/turf/smoothrocks.dmi', loc = F, icon_state = M.scan_state, layer = FLASH_LAYER)
+					I.plane = FULLSCREEN_PLANE
 					C.images += I
 					spawn(30)
 						if(C)
@@ -467,10 +477,10 @@
 	icon_state = "mining_hammer1"
 	item_state = "mining_hammer1"
 	name = "proto-kinetic crusher"
-	desc = "An early design of the proto-kinetic accelerator, it is little more than an combination of various mining tools cobbled together, forming a high-tech club.\
-	  While it is an effective mining tool, it did little to aid any but the most skilled and/or suicidal miners against local fauna. \
-	 \n<span class='info'>Mark a mob with the destabilizing force, then hit them in melee to activate it for extra damage. Extra damage if backstabbed in this fashion. \
-	 This weapon is only particularly effective against large creatures.</span>"
+	desc = "An early design of the proto-kinetic accelerator, it is little more than an combination of various mining tools cobbled together, forming a high-tech club. \
+	While it is an effective mining tool, it did little to aid any but the most skilled and/or suicidal miners against local fauna.\
+	\n<span class='info'>Mark a mob with the destabilizing force, then hit them in melee to activate it for extra damage. Extra damage if backstabbed in this fashion. \
+	This weapon is only particularly effective against large creatures.</span>"
 	force = 20 //As much as a bone spear, but this is significantly more annoying to carry around due to requiring the use of both hands at all times
 	w_class = 4
 	slot_flags = SLOT_BACK
@@ -482,7 +492,7 @@
 	armour_penetration = 10
 	materials = list(MAT_METAL=1150, MAT_GLASS=2075)
 	hitsound = 'sound/weapons/bladeslice.ogg'
-	attack_verb = list("smashes", "crushes", "cleaves", "chops", "pulps")
+	attack_verb = list("smashed", "crushed", "cleaved", "chopped", "pulped")
 	sharpness = IS_SHARP
 	var/charged = 1
 	var/charge_time = 16
@@ -498,7 +508,7 @@
 	range = 6
 	var/obj/item/weapon/twohanded/required/mining_hammer/hammer_synced =  null
 
-/obj/item/projectile/destabilizer/on_hit(atom/target, blocked = 0, hit_zone)
+/obj/item/projectile/destabilizer/on_hit(atom/target, blocked = 0)
 	if(hammer_synced)
 		if(hammer_synced.mark == target)
 			return ..()
@@ -513,7 +523,7 @@
 				L.underlays += I
 				hammer_synced.marked_image = I
 		var/target_turf = get_turf(target)
-		if(istype(target_turf, /turf/closed/mineral))
+		if(ismineralturf(target_turf))
 			var/turf/closed/mineral/M = target_turf
 			PoolOrNew(/obj/effect/overlay/temp/kinetic_blast, M)
 			M.gets_drilled(firer)
@@ -522,7 +532,7 @@
 /obj/item/weapon/twohanded/required/mining_hammer/afterattack(atom/target, mob/user, proximity_flag)
 	if(!proximity_flag && charged)//Mark a target, or mine a tile.
 		var/turf/proj_turf = get_turf(src)
-		if(!istype(proj_turf, /turf))
+		if(!isturf(proj_turf))
 			return
 		var/datum/gas_mixture/environment = proj_turf.return_air()
 		var/pressure = environment.return_pressure()

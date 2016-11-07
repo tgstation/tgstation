@@ -1,4 +1,3 @@
-import collections
 import sys
 
 try:
@@ -9,6 +8,8 @@ try:
 except:
     print("ERROR: Something went wrong, you might be running an incompatible version of Python. The current minimum version required is [3.5].\nYour version: {}".format(sys.version))
     sys.exit()
+
+import collections
 
 error = {0:"OK", 1:"WARNING: Key lengths are different, all the lines change."}
 

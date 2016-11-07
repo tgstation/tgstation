@@ -77,7 +77,7 @@
 	chameleon_blacklist += target.type
 	var/list/temp_list = typesof(chameleon_type)
 	for(var/V in temp_list - (chameleon_blacklist))
-		if(istype(V, /obj/item))
+		if(ispath(V, /obj/item))
 			var/obj/item/I = V
 			if(initial(I.flags) & ABSTRACT)
 				continue
@@ -159,8 +159,8 @@
 	origin_tech = "syndicate=2"
 	sensor_mode = 0 //Hey who's this guy on the Syndicate Shuttle??
 	random_sensor = 0
-	burn_state = FIRE_PROOF
-	armor = list(melee = 10, bullet = 10, laser = 10, energy = 0, bomb = 0, bio = 0, rad = 0)
+	resistance_flags = 0
+	armor = list(melee = 10, bullet = 10, laser = 10, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 50)
 
 /obj/item/clothing/under/chameleon/New()
 	..()
@@ -176,8 +176,8 @@
 	item_state = "armor"
 	blood_overlay_type = "armor"
 	origin_tech = "syndicate=2"
-	burn_state = FIRE_PROOF
-	armor = list(melee = 10, bullet = 10, laser = 10, energy = 0, bomb = 0, bio = 0, rad = 0)
+	resistance_flags = 0
+	armor = list(melee = 10, bullet = 10, laser = 10, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 50)
 
 /obj/item/clothing/suit/chameleon/New()
 	..()
@@ -192,8 +192,8 @@
 	icon_state = "meson"
 	item_state = "meson"
 	origin_tech = "syndicate=2"
-	burn_state = FIRE_PROOF
-	armor = list(melee = 10, bullet = 10, laser = 10, energy = 0, bomb = 0, bio = 0, rad = 0)
+	resistance_flags = 0
+	armor = list(melee = 10, bullet = 10, laser = 10, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 50)
 
 /obj/item/clothing/glasses/chameleon/New()
 	..()
@@ -208,8 +208,8 @@
 	icon_state = "yellow"
 	item_state = "ygloves"
 
-	burn_state = FIRE_PROOF
-	armor = list(melee = 10, bullet = 10, laser = 10, energy = 0, bomb = 0, bio = 0, rad = 0)
+	resistance_flags = 0
+	armor = list(melee = 10, bullet = 10, laser = 10, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 50)
 
 /obj/item/clothing/gloves/chameleon/New()
 	..()
@@ -224,8 +224,8 @@
 	icon_state = "greysoft"
 	item_color = "grey"
 
-	burn_state = FIRE_PROOF
-	armor = list(melee = 5, bullet = 5, laser = 5, energy = 0, bomb = 0, bio = 0, rad = 0)
+	resistance_flags = 0
+	armor = list(melee = 5, bullet = 5, laser = 5, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 50)
 
 	var/datum/action/item_action/chameleon/change/chameleon_action = null
 
@@ -240,7 +240,7 @@
 	// The camohat, I mean, holographic hat projection, is part of the
 	// drone itself.
 	flags = NODROP
-	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0)
+	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 0, acid = 0)
 	// which means it offers no protection, it's just air and light
 
 /obj/item/clothing/head/chameleon/drone/New()
@@ -256,8 +256,8 @@
 	desc = "A face-covering mask that can be connected to an air supply. While good for concealing your identity, it isn't good for blocking gas flow." //More accurate
 	icon_state = "gas_alt"
 	item_state = "gas_alt"
-	burn_state = FIRE_PROOF
-	armor = list(melee = 5, bullet = 5, laser = 5, energy = 0, bomb = 0, bio = 0, rad = 0)
+	resistance_flags = 0
+	armor = list(melee = 5, bullet = 5, laser = 5, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 50)
 
 	flags = BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
 	flags_inv = HIDEEARS|HIDEEYES|HIDEFACE|HIDEFACIALHAIR
@@ -284,7 +284,7 @@
 /obj/item/clothing/mask/chameleon/drone
 	//Same as the drone chameleon hat, undroppable and no protection
 	flags = NODROP
-	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0)
+	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 0, acid = 0)
 	// Can drones use the voice changer part? Let's not find out.
 	vchange = 0
 
@@ -307,9 +307,9 @@
 	permeability_coefficient = 0.05
 	flags = NOSLIP
 	origin_tech = "syndicate=2"
-	burn_state = FIRE_PROOF
+	resistance_flags = 0
 	pockets = /obj/item/weapon/storage/internal/pocket/shoes
-	armor = list(melee = 10, bullet = 10, laser = 10, energy = 0, bomb = 0, bio = 0, rad = 0)
+	armor = list(melee = 10, bullet = 10, laser = 10, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 50)
 
 /obj/item/clothing/shoes/chameleon/New()
 	..()

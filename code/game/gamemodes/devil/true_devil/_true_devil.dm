@@ -22,13 +22,20 @@
 	mob_size = MOB_SIZE_LARGE
 	var/mob/living/oldform
 	var/list/devil_overlays[DEVIL_TOTAL_LAYERS]
+	bodyparts = list(/obj/item/bodypart/chest/devil, /obj/item/bodypart/head/devil, /obj/item/bodypart/l_arm/devil,
+					 /obj/item/bodypart/r_arm/devil, /obj/item/bodypart/r_leg/devil, /obj/item/bodypart/l_leg/devil)
+
+
 
 /mob/living/carbon/true_devil/New()
-	internal_organs += new /obj/item/organ/brain/
+	create_bodyparts() //initialize bodyparts
+
+	create_internal_organs()
+	..()
+
+/mob/living/carbon/true_devil/create_internal_organs()
+	internal_organs += new /obj/item/organ/brain
 	internal_organs += new /obj/item/organ/tongue
-	for(var/X in internal_organs)
-		var/obj/item/organ/I = X
-		I.Insert(src)
 	..()
 
 
@@ -51,8 +58,7 @@
 /mob/living/carbon/true_devil/death(gibbed)
 	stat = DEAD
 	..(gibbed)
-	drop_l_hand()
-	drop_r_hand()
+	drop_all_held_items()
 	spawn (0)
 		mind.devilinfo.beginResurrectionCheck(src)
 
@@ -61,18 +67,12 @@
 	var/msg = "<span class='info'>*---------*\nThis is \icon[src] <b>[src]</b>!\n"
 
 	//Left hand items
-	if(l_hand && !(l_hand.flags&ABSTRACT))
-		if(l_hand.blood_DNA)
-			msg += "<span class='warning'>It is holding \icon[l_hand] [l_hand.gender==PLURAL?"some":"a"] blood-stained [l_hand.name] in its left hand!</span>\n"
-		else
-			msg += "It is holding \icon[l_hand] \a [l_hand] in its left hand.\n"
-
-	//Right hand items
-	if(r_hand && !(r_hand.flags&ABSTRACT))
-		if(r_hand.blood_DNA)
-			msg += "<span class='warning'>It is holding \icon[r_hand] [r_hand.gender==PLURAL?"some":"a"] blood-stained [r_hand.name] in its right hand!</span>\n"
-		else
-			msg += "It is holding \icon[r_hand] \a [r_hand] in its right hand.\n"
+	for(var/obj/item/I in held_items)
+		if(!(I.flags & ABSTRACT))
+			if(I.blood_DNA)
+				msg += "<span class='warning'>It is holding \icon[I] [I.gender==PLURAL?"some":"a"] blood-stained [I.name] in its [get_held_index_name(get_held_index_of_item(I))]!</span>\n"
+			else
+				msg += "It is holding \icon[I] \a [I] in its [get_held_index_name(get_held_index_of_item(I))].\n"
 
 	//Braindead
 	if(!client && stat != DEAD)
@@ -102,10 +102,16 @@
 /mob/living/carbon/true_devil/assess_threat()
 	return 666
 
-/mob/living/carbon/true_devil/flash_eyes(intensity = 1, override_blindness_check = 0, affect_silicon = 0)
+/mob/living/carbon/true_devil/flash_act(intensity = 1, override_blindness_check = 0, affect_silicon = 0)
 	if(mind && has_bane(BANE_LIGHT))
 		mind.disrupt_spells(-500)
 		return ..() //flashes don't stop devils UNLESS it's their bane.
+
+/mob/living/carbon/true_devil/soundbang_act()
+	return 0
+
+/mob/living/carbon/true_devil/get_ear_protection()
+	return 2
 
 
 /mob/living/carbon/true_devil/attacked_by(obj/item/I, mob/living/user, def_zone)
@@ -124,11 +130,8 @@
 			attack_message = "[user] has [message_verb] [src] with [I]!"
 	if(message_verb)
 		visible_message("<span class='danger'>[attack_message]</span>",
-		"<span class='userdanger'>[attack_message]</span>")
+		"<span class='userdanger'>[attack_message]</span>", null, COMBAT_MESSAGE_RANGE)
 	return TRUE
-
-/mob/living/carbon/true_devil/UnarmedAttack(atom/A, proximity)
-	A.attack_hand(src)
 
 /mob/living/carbon/true_devil/Process_Spacemove(movement_dir = 0)
 	return 1
@@ -208,3 +211,13 @@
 			b_loss *=2
 		adjustBruteLoss(b_loss)
 	return ..()
+
+
+/mob/living/carbon/true_devil/update_body() //we don't use the bodyparts layer for devils.
+	return
+
+/mob/living/carbon/true_devil/update_body_parts()
+	return
+
+/mob/living/carbon/true_devil/update_damage_overlays() //devils don't have damage overlays.
+	return

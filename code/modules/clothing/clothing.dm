@@ -1,6 +1,10 @@
 /obj/item/clothing
 	name = "clothing"
-	burn_state = FLAMMABLE
+	resistance_flags = FLAMMABLE
+	obj_integrity = 200
+	max_integrity = 200
+	integrity_failure = 80
+	var/damaged_clothes = 0 //similar to machine's BROKEN stat and structure's broken var
 	var/flash_protect = 0		//Malk: What level of bright light protection item has. 1 = Flashers, Flashes, & Flashbangs | 2 = Welding | -1 = OH GOD WELDING BURNT OUT MY RETINAS
 	var/tint = 0				//Malk: Sets the item's level of visual impairment tint, normally set to the same as flash_protect
 	var/up = 0					//	   but seperated to allow items to protect but not impair vision, like space helmets
@@ -44,15 +48,10 @@
 		var/obj/screen/inventory/hand/H = over_object
 		if(!M.unEquip(src))
 			return
-		switch(H.slot_id)
-			if(slot_r_hand)
-				M.put_in_r_hand(src)
-			if(slot_l_hand)
-				M.put_in_l_hand(src)
-
+		M.put_in_hand(src, H.held_index)
 		add_fingerprint(usr)
 
-/obj/item/clothing/throw_at(atom/target, range, speed, mob/thrower, spin)
+/obj/item/clothing/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0)
 	if(pockets)
 		pockets.close_all()
 	return ..()
@@ -64,6 +63,13 @@
 		return ..()
 
 /obj/item/clothing/attackby(obj/item/W, mob/user, params)
+	if(damaged_clothes && istype(W, /obj/item/stack/sheet/cloth))
+		var/obj/item/stack/sheet/cloth/C = W
+		C.use(1)
+		update_clothes_damaged_state(FALSE)
+		obj_integrity = max_integrity
+		user << "<span class='notice'>You fix the damages on [src] with [C].</span>"
+		return 1
 	if(pockets)
 		return pockets.attackby(W, user, params)
 	else
@@ -115,6 +121,34 @@
 				user.vars[variable] = user_vars_to_edit[variable]
 
 
+/obj/item/clothing/examine(mob/user)
+	..()
+	if(damaged_clothes)
+		user <<  "<span class='warning'>It looks damaged!</span>"
+
+/obj/item/clothing/obj_break(damage_flag)
+	if(!damaged_clothes)
+		update_clothes_damaged_state(TRUE)
+
+var/list/damaged_clothes_icons = list()
+
+/obj/item/clothing/proc/update_clothes_damaged_state(damaging = TRUE)
+	var/index = "\ref[initial(icon)]-[initial(icon_state)]"
+	if(damaging)
+		damaged_clothes = 1
+		var/icon/damaged_clothes_icon = damaged_clothes_icons[index]
+		if(!damaged_clothes_icon)
+			damaged_clothes_icon = icon(initial(icon), initial(icon_state), , 1)	//we only want to apply damaged effect to the initial icon_state for each object
+			damaged_clothes_icon.Blend("#fff", ICON_ADD) 	//fills the icon_state with white (except where it's transparent)
+			damaged_clothes_icon.Blend(icon('icons/effects/item_damage.dmi', "itemdamaged"), ICON_MULTIPLY) //adds damage effect and the remaining white areas become transparant
+			damaged_clothes_icon = fcopy_rsc(damaged_clothes_icon)
+			damaged_clothes_icons[index] = damaged_clothes_icon
+		add_overlay(damaged_clothes_icon, 1)
+	else
+		damaged_clothes = 0
+		overlays -= damaged_clothes_icons[index]
+		priority_overlays -= damaged_clothes_icons[index]
+
 
 //Ears: currently only used for headsets and earmuffs
 /obj/item/clothing/ears
@@ -122,7 +156,7 @@
 	w_class = 1
 	throwforce = 0
 	slot_flags = SLOT_EARS
-	burn_state = FIRE_PROOF
+	resistance_flags = 0
 
 /obj/item/clothing/ears/earmuffs
 	name = "earmuffs"
@@ -132,7 +166,7 @@
 	flags = EARBANGPROTECT
 	strip_delay = 15
 	put_on_delay = 25
-	burn_state = FLAMMABLE
+	resistance_flags = FLAMMABLE
 
 //Glasses
 /obj/item/clothing/glasses
@@ -150,7 +184,7 @@
 	var/vision_correction = 0 //does wearing these glasses correct some of our vision defects?
 	strip_delay = 20
 	put_on_delay = 25
-	burn_state = FIRE_PROOF
+	resistance_flags = 0
 /*
 SEE_SELF  // can see self, no matter what
 SEE_MOBS  // can see all mobs, no matter what
@@ -177,12 +211,19 @@ BLIND     // can't see anything
 	put_on_delay = 40
 
 
-/obj/item/clothing/gloves/worn_overlays(var/isinhands = FALSE)
+/obj/item/clothing/gloves/worn_overlays(isinhands = FALSE)
 	. = list()
 	if(!isinhands)
+		if(damaged_clothes)
+			. += image("icon"='icons/effects/item_damage.dmi', "icon_state"="damagedgloves")
 		if(blood_DNA)
 			. += image("icon"='icons/effects/blood.dmi', "icon_state"="bloodyhands")
 
+/obj/item/clothing/gloves/update_clothes_damaged_state(damaging = TRUE)
+	..()
+	if(ismob(loc))
+		var/mob/M = loc
+		M.update_inv_gloves()
 
 // Called just before an attack_hand(), in mob/UnarmedAttack()
 /obj/item/clothing/gloves/proc/Touch(atom/A, proximity)
@@ -198,11 +239,39 @@ BLIND     // can't see anything
 	var/can_toggle = null
 
 
-/obj/item/clothing/head/worn_overlays(var/isinhands = FALSE)
+/obj/item/clothing/head/worn_overlays(isinhands = FALSE)
 	. = list()
 	if(!isinhands)
+		if(damaged_clothes)
+			. += image("icon"='icons/effects/item_damage.dmi', "icon_state"="damagedhelmet")
 		if(blood_DNA)
 			. += image("icon"='icons/effects/blood.dmi', "icon_state"="helmetblood")
+
+/obj/item/clothing/head/update_clothes_damaged_state(damaging = TRUE)
+	..()
+	if(ismob(loc))
+		var/mob/M = loc
+		M.update_inv_head()
+
+
+//Neck
+/obj/item/clothing/neck
+	name = "necklace"
+	icon = 'icons/obj/clothing/neck.dmi'
+	body_parts_covered = NECK
+	slot_flags = SLOT_NECK
+	strip_delay = 40
+	put_on_delay = 40
+
+/obj/item/clothing/neck/worn_overlays(isinhands = FALSE)
+	. = list()
+	if(!isinhands)
+		if(body_parts_covered & HEAD)
+			if(damaged_clothes)
+				. += image("icon"='icons/effects/item_damage.dmi', "icon_state"="damagedmask")
+			if(blood_DNA)
+				. += image("icon"='icons/effects/blood.dmi', "icon_state"="maskblood")
+
 
 //Mask
 /obj/item/clothing/mask
@@ -216,11 +285,21 @@ BLIND     // can't see anything
 	var/adjusted_flags = null
 
 
-/obj/item/clothing/mask/worn_overlays(var/isinhands = FALSE)
+/obj/item/clothing/mask/worn_overlays(isinhands = FALSE)
 	. = list()
 	if(!isinhands)
-		if(blood_DNA && (body_parts_covered & HEAD))
-			. += image("icon"='icons/effects/blood.dmi', "icon_state"="maskblood")
+		if(body_parts_covered & HEAD)
+			if(damaged_clothes)
+				. += image("icon"='icons/effects/item_damage.dmi', "icon_state"="damagedmask")
+			if(blood_DNA)
+				. += image("icon"='icons/effects/blood.dmi', "icon_state"="maskblood")
+
+/obj/item/clothing/mask/update_clothes_damaged_state(damaging = TRUE)
+	..()
+	if(ismob(loc))
+		var/mob/M = loc
+		M.update_inv_wear_mask()
+
 
 //Override this to modify speech like luchador masks.
 /obj/item/clothing/mask/proc/speechModification(message)
@@ -273,7 +352,7 @@ BLIND     // can't see anything
 	var/blood_state = BLOOD_STATE_NOT_BLOODY
 	var/list/bloody_shoes = list(BLOOD_STATE_HUMAN = 0,BLOOD_STATE_XENO = 0, BLOOD_STATE_OIL = 0, BLOOD_STATE_NOT_BLOODY = 0)
 
-/obj/item/clothing/shoes/worn_overlays(var/isinhands = FALSE)
+/obj/item/clothing/shoes/worn_overlays(isinhands = FALSE)
 	. = list()
 	if(!isinhands)
 		var/bloody = 0
@@ -282,9 +361,16 @@ BLIND     // can't see anything
 		else
 			bloody = bloody_shoes[BLOOD_STATE_HUMAN]
 
+		if(damaged_clothes)
+			. += image("icon"='icons/effects/item_damage.dmi', "icon_state"="damagedshoe")
 		if(bloody)
 			. += image("icon"='icons/effects/blood.dmi', "icon_state"="shoeblood")
 
+/obj/item/clothing/shoes/update_clothes_damaged_state(damaging = TRUE)
+	..()
+	if(ismob(loc))
+		var/mob/M = loc
+		M.update_inv_shoes()
 
 /obj/item/clothing/shoes/clean_blood()
 	..()
@@ -303,17 +389,25 @@ BLIND     // can't see anything
 	name = "suit"
 	var/fire_resist = T0C+100
 	allowed = list(/obj/item/weapon/tank/internals/emergency_oxygen)
-	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
+	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0, fire = 0, acid = 0)
 	slot_flags = SLOT_OCLOTHING
 	var/blood_overlay_type = "suit"
 	var/togglename = null
 
 
-/obj/item/clothing/suit/worn_overlays(var/isinhands = FALSE)
+/obj/item/clothing/suit/worn_overlays(isinhands = FALSE)
 	. = list()
 	if(!isinhands)
+		if(damaged_clothes)
+			. += image("icon"='icons/effects/item_damage.dmi', "icon_state"="damaged[blood_overlay_type]")
 		if(blood_DNA)
 			. += image("icon"='icons/effects/blood.dmi', "icon_state"="[blood_overlay_type]blood")
+
+/obj/item/clothing/suit/update_clothes_damaged_state(damaging = TRUE)
+	..()
+	if(ismob(loc))
+		var/mob/M = loc
+		M.update_inv_wear_suit()
 
 //Spacesuit
 //Note: Everything in modules/clothing/spacesuits should have the entire suit grouped together.
@@ -325,7 +419,7 @@ BLIND     // can't see anything
 	flags = STOPSPRESSUREDMAGE | THICKMATERIAL
 	item_state = "spaceold"
 	permeability_coefficient = 0.01
-	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 100, rad = 50)
+	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 100, rad = 50, fire = 80, acid = 70)
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
 	cold_protection = HEAD
 	min_cold_protection_temperature = SPACE_HELM_MIN_TEMP_PROTECT
@@ -335,7 +429,7 @@ BLIND     // can't see anything
 	strip_delay = 50
 	put_on_delay = 50
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
-	burn_state = FIRE_PROOF
+	resistance_flags = 0
 
 /obj/item/clothing/suit/space
 	name = "space suit"
@@ -349,7 +443,7 @@ BLIND     // can't see anything
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/internals)
 	slowdown = 1
-	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 100, rad = 50)
+	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 100, rad = 50, fire = 80, acid = 70)
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 	cold_protection = CHEST | GROIN | LEGS | FEET | ARMS | HANDS
 	min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT
@@ -357,7 +451,7 @@ BLIND     // can't see anything
 	max_heat_protection_temperature = SPACE_SUIT_MAX_TEMP_PROTECT
 	strip_delay = 80
 	put_on_delay = 80
-	burn_state = FIRE_PROOF
+	resistance_flags = 0
 
 //Under clothing
 
@@ -367,23 +461,26 @@ BLIND     // can't see anything
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	permeability_coefficient = 0.90
 	slot_flags = SLOT_ICLOTHING
-	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
+	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0, fire = 0, acid = 0)
 	var/fitted = FEMALE_UNIFORM_FULL // For use in alternate clothing styles for women
 	var/has_sensor = 1//For the crew computer 2 = unable to change mode
 	var/random_sensor = 1
 	var/sensor_mode = 0	/* 1 = Report living/dead, 2 = Report detailed damages, 3 = Report location */
 	var/can_adjust = 1
-	var/adjusted = 0
+	var/adjusted = NORMAL_STYLE
 	var/alt_covers_chest = 0 // for adjusted/rolled-down jumpsuits, 0 = exposes chest and arms, 1 = exposes arms only
 	var/obj/item/clothing/tie/hastie = null
+	var/mutantrace_variation = NO_MUTANTRACE_VARIATION //Are there special sprites for specific situations? Don't use this unless you need to.
 
-/obj/item/clothing/under/worn_overlays(var/isinhands = FALSE)
+/obj/item/clothing/under/worn_overlays(isinhands = FALSE)
 	. = list()
 
 	if(!isinhands)
+
+		if(damaged_clothes)
+			. += image("icon"='icons/effects/item_damage.dmi', "icon_state"="damageduniform")
 		if(blood_DNA)
 			. += image("icon"='icons/effects/blood.dmi', "icon_state"="uniformblood")
-
 		if(hastie)
 			var/tie_color = hastie.item_color
 			if(!tie_color)
@@ -393,12 +490,39 @@ BLIND     // can't see anything
 			tI.color = hastie.color
 			. += tI
 
+/obj/item/clothing/under/update_clothes_damaged_state(damaging = TRUE)
+	..()
+	if(ismob(loc))
+		var/mob/M = loc
+		M.update_inv_w_uniform()
 
 /obj/item/clothing/under/New()
 	if(random_sensor)
 		//make the sensor mode favor higher levels, except coords.
 		sensor_mode = pick(0, 1, 1, 2, 2, 2, 3, 3)
-	adjusted = 0
+	adjusted = NORMAL_STYLE
+	..()
+
+/obj/item/clothing/under/equipped(mob/user, slot)
+	..()
+	if(adjusted)
+		adjusted = NORMAL_STYLE
+		fitted = initial(fitted)
+		if(!alt_covers_chest)
+			body_parts_covered |= CHEST
+
+	if(mutantrace_variation && ishuman(user))
+		var/mob/living/carbon/human/H = user
+		if(DIGITIGRADE in H.dna.species.specflags)
+			adjusted = DIGITIGRADE_STYLE
+		H.update_inv_w_uniform()
+
+	if(hastie)
+		hastie.on_uniform_equip(src, user)
+
+/obj/item/clothing/under/dropped(mob/user)
+	if(hastie)
+		hastie.on_uniform_dropped(src, user)
 	..()
 
 /obj/item/clothing/under/attackby(obj/item/I, mob/user, params)
@@ -421,7 +545,7 @@ BLIND     // can't see anything
 			if(user && notifyAttach)
 				user << "<span class='notice'>You attach [I] to [src].</span>"
 
-			if(istype(loc, /mob/living/carbon/human))
+			if(ishuman(loc))
 				var/mob/living/carbon/human/H = loc
 				H.update_inv_w_uniform()
 
@@ -441,14 +565,18 @@ BLIND     // can't see anything
 		else
 			user << "<span class='notice'>You detach [T] from [src] and it falls on the floor.</span>"
 
-		if(istype(loc, /mob/living/carbon/human))
+		if(ishuman(loc))
 			var/mob/living/carbon/human/H = loc
 			H.update_inv_w_uniform()
 
 
 /obj/item/clothing/under/examine(mob/user)
 	..()
-	switch(src.sensor_mode)
+	if(adjusted == ALT_STYLE)
+		user << "Alt-click on [src] to wear it normally."
+	else
+		user << "Alt-click on [src] to wear it casually."
+	switch(sensor_mode)
 		if(0)
 			user << "Its sensors appear to be disabled."
 		if(1)
@@ -501,7 +629,7 @@ BLIND     // can't see anything
 			if(3)
 				usr << "<span class='notice'>Your suit will now report your exact vital lifesigns as well as your coordinate position.</span>"
 
-	if(istype(loc,/mob/living/carbon/human))
+	if(ishuman(loc))
 		var/mob/living/carbon/human/H = loc
 		if(H.w_uniform == src)
 			H.update_suit_sensors()
@@ -537,28 +665,25 @@ BLIND     // can't see anything
 		usr << "<span class='notice'>You adjust the suit to wear it more casually.</span>"
 	else
 		usr << "<span class='notice'>You adjust the suit back to normal.</span>"
-	usr.update_inv_w_uniform()
+	if(ishuman(usr))
+		var/mob/living/carbon/human/H = usr
+		H.update_inv_w_uniform()
+		H.update_body()
 
 /obj/item/clothing/under/proc/toggle_jumpsuit_adjust()
+	if(adjusted == DIGITIGRADE_STYLE)
+		return
 	adjusted = !adjusted
 	if(adjusted)
 		if(fitted != FEMALE_UNIFORM_TOP)
 			fitted = NO_FEMALE_UNIFORM
-		if (alt_covers_chest) // for the special snowflake suits that don't expose the chest when adjusted
-			body_parts_covered = CHEST|GROIN|LEGS
-		else
-			body_parts_covered = GROIN|LEGS
+		if(!alt_covers_chest) // for the special snowflake suits that expose the chest when adjusted
+			body_parts_covered &= ~CHEST
 	else
 		fitted = initial(fitted)
-		body_parts_covered = CHEST|GROIN|LEGS|ARMS
+		if(!alt_covers_chest)
+			body_parts_covered |= CHEST
 	return adjusted
-
-/obj/item/clothing/under/examine(mob/user)
-	..()
-	if(src.adjusted)
-		user << "Alt-click on [src] to wear it normally."
-	else
-		user << "Alt-click on [src] to wear it casually."
 
 /obj/item/clothing/proc/weldingvisortoggle()			//Malk: proc to toggle welding visors on helmets, masks, goggles, etc.
 	if(!can_use(usr))
@@ -585,3 +710,14 @@ BLIND     // can't see anything
 		if(!user.incapacitated())
 			return 1
 	return 0
+
+
+/obj/item/clothing/obj_destruction(damage_flag)
+	if(damage_flag == "bomb" || damage_flag == "melee")
+		var/turf/T = get_turf(src)
+		spawn(1) //so the shred survives potential turf change from the explosion.
+			var/obj/effect/decal/cleanable/shreds/Shreds = new(T)
+			Shreds.desc = "The sad remains of what used to be [name]."
+		deconstruct(FALSE)
+	else
+		..()

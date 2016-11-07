@@ -10,6 +10,7 @@ var/list/slime_colours = list("rainbow", "grey", "purple", "metal", "orange",
 	icon_state = "grey baby slime"
 	pass_flags = PASSTABLE
 	ventcrawler = 2
+	gender = NEUTER
 	var/is_adult = 0
 	var/docile = 0
 	languages_spoken = SLIME | HUMAN
@@ -258,14 +259,16 @@ var/list/slime_colours = list("rainbow", "grey", "purple", "metal", "orange",
 	if(..()) //successful larva bite.
 		attacked += 10
 
-/mob/living/simple_animal/slime/attack_hulk(mob/living/carbon/human/user)
+/mob/living/simple_animal/slime/attack_hulk(mob/living/carbon/human/user, does_attack_animation = 0)
 	if(user.a_intent == "harm")
-		adjustBruteLoss(15)
 		discipline_slime(user)
+		return ..()
+
 
 
 /mob/living/simple_animal/slime/attack_hand(mob/living/carbon/human/M)
 	if(buckled)
+		M.do_attack_animation(src, ATTACK_EFFECT_DISARM)
 		if(buckled == M)
 			if(prob(60))
 				visible_message("<span class='warning'>[M] attempts to wrestle \the [name] off!</span>")
@@ -278,7 +281,6 @@ var/list/slime_colours = list("rainbow", "grey", "purple", "metal", "orange",
 				discipline_slime(M)
 
 		else
-			M.do_attack_animation(src)
 			if(prob(30))
 				visible_message("<span class='warning'>[M] attempts to wrestle \the [name] off of [buckled]!</span>")
 				playsound(loc, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
