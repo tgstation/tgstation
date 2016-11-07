@@ -111,8 +111,8 @@ Judgement: 12 servants, 5 caches, 300 CV, and any existing AIs are converted or 
 		for(var/i in consumed_components)
 			if(consumed_components[i])
 				consumed_components[i] *= 2
-				if(req_components[i])
-					req_components[i] = max(consumed_components[i], req_components[i])
+				if(required_components[i])
+					required_components[i] = max(consumed_components[i], required_components[i])
 		return TRUE
 	return FALSE
 
