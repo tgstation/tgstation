@@ -78,7 +78,7 @@ Judgement: 12 servants, 5 caches, 300 CV, and any existing AIs are converted or 
 /datum/clockwork_scripture/proc/has_requirements() //if we have the components and invokers to do it
 	var/checked_penalty = FALSE
 	if(!ratvar_awakens && !slab.no_cost)
-		var/checked_penalty = check_offstation_penalty()
+		checked_penalty = check_offstation_penalty()
 		var/component_printout = "<span class='warning'>You lack the components to recite this piece of scripture!"
 		var/failed = FALSE
 		for(var/i in required_components)
