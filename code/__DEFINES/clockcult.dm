@@ -69,7 +69,7 @@ var/global/clockwork_gateway_activated = FALSE //if a gateway to the celestial d
 #define REPLICANT_ALLOY_POWER REPLICANT_ALLOY_UNIT*CLOCKCULT_ALLOY_TO_POWER_MULTIPLIER //the amount of power you get from a single piece of replicant alloy
 
 //Ark defines
-#define GATEWAY_SUMMON_RATE 1 //the time amount the Gateway to the Celestial Derelict gets each process tick; defaults to 2 per tick
+#define GATEWAY_SUMMON_RATE 1 //the time amount the Gateway to the Celestial Derelict gets each process tick; defaults to 1 per tick
 
 #define GATEWAY_REEBE_FOUND 119 //when progress is at or above this, the gateway finds reebe and begins drawing power
 
