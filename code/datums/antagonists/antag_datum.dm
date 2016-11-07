@@ -1,4 +1,4 @@
-//The Datum, Antagonist. Handles various antag things via a datum.
+//The datum antagonist! Each one holds different information about the role and how it interacts with other roles.
 /datum/antagonist
 	var/name = "antagonist" //What's our short name?
 	var/desc = "You exist to make the crew's lives suck." //What do we do?
