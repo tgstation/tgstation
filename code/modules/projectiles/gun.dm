@@ -170,7 +170,22 @@
 		user << "<span class='userdanger'>You need both hands free to fire [src]!</span>"
 		return
 
-	process_fire(target,user,1,params)
+	//DUAL (or more!) WIELDING
+	var/bonus_spread = 0
+	var/loop_counter = 0
+	if(ishuman(user) && user.a_intent == "harm")
+		var/mob/living/carbon/human/H = user
+		for(var/obj/item/weapon/gun/G in H.held_items)
+			if(G == src)
+				continue
+			else if(G.can_trigger_gun(user))
+				bonus_spread += 24 * G.weapon_weight
+				loop_counter++
+				spawn(loop_counter)
+					G.recharge_newshot()
+					G.process_fire(target,user,1,params, null, bonus_spread)
+
+	process_fire(target,user,1,params, null, bonus_spread)
 
 
 
@@ -195,17 +210,21 @@
 obj/item/weapon/gun/proc/recharge_newshot()
 	return
 
-/obj/item/weapon/gun/proc/process_fire(atom/target as mob|obj|turf, mob/living/user as mob|obj, message = 1, params, zone_override)
+/obj/item/weapon/gun/proc/process_fire(atom/target as mob|obj|turf, mob/living/user as mob|obj, message = 1, params, zone_override, bonus_spread = 0)
 	add_fingerprint(user)
 
 	if(semicd)
 		return
 
-	if(weapon_weight)
+	if(weapon_weight >= WEAPON_MEDIUM)
 		if(user.get_inactive_held_item())
 			recoil = 4 //one-handed kick
 		else
 			recoil = initial(recoil)
+
+	var/sprd = 0
+	var/randomized_gun_spread = rand(0,spread)
+	var/randomized_bonus_spread = rand(0, bonus_spread)
 
 	if(burst_size > 1)
 		firing_burst = 1
@@ -216,11 +235,10 @@ obj/item/weapon/gun/proc/recharge_newshot()
 				if( i>1 && !(user.is_holding(src))) //for burst firing
 					break
 			if(chambered && chambered.BB)
-				var/sprd = 0
 				if(randomspread)
-					sprd = round((rand() - 0.5) * spread)
+					sprd = round((rand() - 0.5) * (randomized_gun_spread + randomized_bonus_spread))
 				else //Smart spread
-					sprd = round((i / burst_size - 0.5) * spread)
+					sprd = round((i / burst_size - 0.5) * (randomized_gun_spread + randomized_bonus_spread))
 
 				if(!chambered.fire_casing(target, user, params, ,suppressed, zone_override, sprd))
 					shoot_with_empty_chamber(user)
@@ -239,7 +257,8 @@ obj/item/weapon/gun/proc/recharge_newshot()
 		firing_burst = 0
 	else
 		if(chambered)
-			if(!chambered.fire_casing(target, user, params, , suppressed, zone_override, spread))
+			sprd = round((pick(1,-1)) * (randomized_gun_spread + randomized_bonus_spread))
+			if(!chambered.fire_casing(target, user, params, , suppressed, zone_override, sprd))
 				shoot_with_empty_chamber(user)
 				return
 			else
