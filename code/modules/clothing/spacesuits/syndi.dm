@@ -4,7 +4,6 @@
 	desc = "Top secret spess helmet."
 	icon_state = "syndicate"
 	item_state = "syndicate"
-	desc = "Has a tag: Totally not property of an enemy corporation, honest."
 	armor = list(melee = 40, bullet = 50, laser = 30,energy = 15, bomb = 30, bio = 30, rad = 30, fire = 80, acid = 85)
 
 /obj/item/clothing/suit/space/syndicate
