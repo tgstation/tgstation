@@ -50,15 +50,6 @@
 	user << "The safety is [safety ? "on" : "off"]."
 	return
 
-/obj/item/weapon/extinguisher/attack(mob/M, mob/user)
-	if(user.a_intent == "help")
-		// If we're in help intent, don't bash anyone with the
-		// extinguisher
-		user.visible_message("[user] targets [M] with \the [src]", "<span class='info'>You target [M] with \the [src].</span>")
-		return 0
-	else
-		return ..()
-
 /obj/item/weapon/extinguisher/examine(mob/user)
 	..()
 	if(reagents.total_volume)
