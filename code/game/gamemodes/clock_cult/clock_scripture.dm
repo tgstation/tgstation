@@ -68,7 +68,7 @@ Judgement: 12 servants, 5 caches, 300 CV, and any existing AIs are converted or 
 	return TRUE
 
 /datum/clockwork_scripture/proc/can_recite() //If the words can be spoken
-	if(!ticker || !ticker.mode || !slab || !invoker)
+	if(!slab || !invoker)
 		return FALSE
 	if(!invoker.can_speak_vocal())
 		invoker << "<span class='warning'>You are unable to speak the words of the scripture!</span>"
