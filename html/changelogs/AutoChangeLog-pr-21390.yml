@@ -1,4 +1,0 @@
-author: "Cyberboss"
-delete-after: True
-changes: 
-  - bugfix: "Tesla zaps that don't come from an energy ball can no longer destroy nukes and gravity generators"

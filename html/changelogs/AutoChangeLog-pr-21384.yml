@@ -1,5 +1,0 @@
-author: "Joan"
-delete-after: True
-changes: 
-  - tweak: "Dropping items into Spatial Gateways no longer consumes a use from the gateway."
-  - rscadd: "If your Spatial Gateway target is unconscious, you can pick a new target instead."
