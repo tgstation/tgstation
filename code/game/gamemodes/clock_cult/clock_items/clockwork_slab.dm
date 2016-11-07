@@ -159,7 +159,7 @@
 	else
 		return ..()
 
-//Slab actions; Hierophant, Guvax, Vanguard
+//Slab actions; Hierophant, Quickbind One and Two
 /obj/item/clockwork/slab/ui_action_click(mob/user, actiontype)
 	switch(actiontype)
 		if(/datum/action/item_action/clock/hierophant)
@@ -335,20 +335,20 @@
 			<center><font size=1><A href='?src=\ref[src];hidetext=1'>Hide Above Information</A></font></center><br>"
 
 		text += "A complete list of scripture, its effects, and its requirements can be found, and thus <b>Quickbound</b> to this slab, below.<br>\
-		Key:<br>"
+		<font size=1>Key:<br>"
 		for(var/i in clockwork_component_cache)
-			text += "<font color=[get_component_color_brightalloy(i)]>[get_component_acronym(i)]</font> = [get_component_name(i)][i != REPLICANT_ALLOY ? "s":""]<br>"
-		text += "<br><center><font size=1><A href='?src=\ref[src];compactscripture=1'>Compact Scripture Text: [compact_scripture ? "ON":"OFF"]</A></font></center><br>"
+			text += "<b><font color=[get_component_color_brightalloy(i)]>[get_component_acronym(i)]</font></b> = [get_component_name(i)][i != REPLICANT_ALLOY ? "s":""]<br>"
+		text += "</font><br><center><font size=1><A href='?src=\ref[src];compactscripture=1'>Compact Scripture Text: [compact_scripture ? "ON":"OFF"]</A></font></center><br>"
 		var/text_to_add = ""
-		var/drivers = "<br><center><font size=3><b><A href='?src=\ref[src];Driver=1'>[SCRIPTURE_DRIVER]</A></b></font><br><i>These scriptures are always unlocked.</i></center><br>"
-		var/scripts = "<br><center><font size=3><b><A href='?src=\ref[src];Script=1'>[SCRIPTURE_SCRIPT]</A></b></font><br><i>These scriptures require at least <b>5</b> Servants and \
-		<b>1</b> Tinkerer's Cache.</i></center><br>"
-		var/applications = "<br><center><font size=3><b><A href='?src=\ref[src];Application=1'>[SCRIPTURE_APPLICATION]</A></b></font><br><i>These scriptures require at least <b>8</b> Servants, \
-		<b>3</b> Tinkerer's Caches, and <b>100CV</b>.</i></center><br>"
-		var/revenant = "<br><center><font size=3><b><A href='?src=\ref[src];Revenant=1'>[SCRIPTURE_REVENANT]</A></b></font><br><i>These scriptures require at least <b>10</b> Servants, \
-		<b>4</b> Tinkerer's Caches, and <b>200CV</b>.</i></center><br>"
-		var/judgement = "<br><center><font size=3><b><A href='?src=\ref[src];Judgement=1'>[SCRIPTURE_JUDGEMENT]</A></b></font><br><i>This scripture requires at least <b>12</b> Servants, \
-		<b>5</b> Tinkerer's Caches, and <b>300CV</b>.<br>In addition, there may not be any active non-Servant AIs.</i></center><br>"
+		var/drivers = "<br><b><A href='?src=\ref[src];Driver=1'>[SCRIPTURE_DRIVER]</A></b><br><font size=1><i>These scriptures are always unlocked.</i>[compact_scripture ? "":"</font>"]<br>"
+		var/scripts = "<br><b><A href='?src=\ref[src];Script=1'>[SCRIPTURE_SCRIPT]</A></b><br><font size=1><i>These scriptures require at least <b>5</b> Servants and \
+		<b>1</b> Tinkerer's Cache.</i>[compact_scripture ? "":"</font>"]<br>"
+		var/applications = "<br><b><A href='?src=\ref[src];Application=1'>[SCRIPTURE_APPLICATION]</A></b><br><font size=1><i>These scriptures require at least <b>8</b> Servants, \
+		<b>3</b> Tinkerer's Caches, and <b>100CV</b>.</i>[compact_scripture ? "":"</font>"]<br>"
+		var/revenant = "<br><b><A href='?src=\ref[src];Revenant=1'>[SCRIPTURE_REVENANT]</A></b><br><font size=1><i>These scriptures require at least <b>10</b> Servants, \
+		<b>4</b> Tinkerer's Caches, and <b>200CV</b>.</i>[compact_scripture ? "":"</font>"]<br>"
+		var/judgement = "<br><b><A href='?src=\ref[src];Judgement=1'>[SCRIPTURE_JUDGEMENT]</A></b><br><font size=1><i>This scripture requires at least <b>12</b> Servants, \
+		<b>5</b> Tinkerer's Caches, and <b>300CV</b>.<br>In addition, there may not be any active non-Servant AIs.</i>[compact_scripture ? "":"</font>"]<br>"
 		for(var/V in sortList(subtypesof(/datum/clockwork_scripture), /proc/cmp_clockscripture_priority))
 			var/datum/clockwork_scripture/S = V
 			var/initial_tier = initial(S.tier)
@@ -375,8 +375,8 @@
 							break //we want this to only show up if the scripture has a cost of some sort
 					scripture_text += "<br><b>Tip:</b> [initial(S.usage_tip)]"
 				if(initial(S.quickbind))
-					scripture_text += "<br><b><font color=#BE8700 size=1>[S == quickbind_slot_one || S == quickbind_slot_two ? "Currently Quickbound":\
-					"<A href='?src=\ref[src];Quickbindone=[S]'>Quickbind to button One</A>| <A href='?src=\ref[src];Quickbindtwo=[S]'>Quickbind to button Two</A>"]</font></b>"
+					scripture_text += "<br><font color=#BE8700 size=1>[S == quickbind_slot_one || S == quickbind_slot_two ? "Currently Quickbound":\
+					"<A href='?src=\ref[src];Quickbindone=[S]'>Quickbind to button One</A>| <A href='?src=\ref[src];Quickbindtwo=[S]'>Quickbind to button Two</A>"]</font>"
 				scripture_text += "<br><b><A href='?src=\ref[src];Recite=[S]'>Recite</A></b><br>"
 				switch(initial_tier)
 					if(SCRIPTURE_DRIVER)
@@ -389,8 +389,11 @@
 						revenant += scripture_text
 					if(SCRIPTURE_JUDGEMENT)
 						judgement += scripture_text
-		text_to_add += "[drivers]<br>[scripts]<br>[applications]<br>[revenant]<br>[judgement]<br>"
-		text_to_add += "<font color=#BE8700 size=3><b><center>Purge all untruths and honor Ratvar.</center></b></font>"
+		if(compact_scripture)
+			text_to_add += "[drivers]</font>[scripts]</font>[applications]</font>[revenant]</font>[judgement]</font>"
+		else
+			text_to_add += "[drivers][scripts][applications][revenant][judgement]"
+		text_to_add += "<br><font color=#BE8700 size=3><b><center>Purge all untruths and honor Ratvar.</center></b></font>"
 		text += text_to_add
 	var/datum/browser/popup = new(user, "slab", "", 600, 500)
 	popup.set_content(text)
@@ -408,6 +411,7 @@
 		return 0
 
 	if(href_list["Recite"])
+		href_list["Recite"] = text2path(href_list["Recite"])
 		addtimer(src, "recite_scripture", 0, FALSE, href_list["Recite"], usr, FALSE)
 		return
 

@@ -159,7 +159,6 @@
 				H << "<span class='sevtug'>[text2ratvar(pick(mindbreaksayings))]</span>"
 			H.playsound_local(T, hum, visualsdistance, 1)
 			flash_color(H, flash_color="#AF0AAF", flash_time=visualsdistance*10)
-			H.set_drugginess(visualsdistance + H.druggy)
 			H.dizziness = minordistance + H.dizziness
 			H.hallucination = minordistance + H.hallucination
 			H.confused = majordistance + H.confused
