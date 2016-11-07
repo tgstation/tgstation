@@ -43,13 +43,12 @@
 			SSshuttle.points -= 200
 			if(last_warning < world.time && prob(15))
 				var/area/A = get_area(loc)
-			//	var/locname = A.map_name
 				minor_announce("Unauthorized credit withdrawal underway in [A.map_name]." , "Network Breach")
 				last_warning = world.time + 400
 
 
 /obj/machinery/computer/bank_machine/attack_hand(mob/user)
-	if(..(user))
+	if(..())
 		return
 	src.add_fingerprint(usr)
 	var/dat = "[world.name] secure vault. Authorized personnel only.<br>"
