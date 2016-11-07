@@ -21,7 +21,7 @@
 		return FALSE
 
 	if(battery)
-		user << "<span class='warning'>You try to connect \the [I] to \the [src], but it's connectors are occupied.</span>"
+		user << "<span class='warning'>You try to connect \the [I] to \the [src], but its connectors are occupied.</span>"
 		return FALSE
 
 	if(I.w_class > holder.max_hardware_size)
