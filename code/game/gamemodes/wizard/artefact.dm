@@ -86,8 +86,6 @@
 /obj/singularity/wizard
 	name = "tear in the fabric of reality"
 	desc = "This isn't right."
-	icon = 'icons/obj/singularity.dmi'
-	icon_state = "singularity_s1"
 	icon = 'icons/effects/224x224.dmi'
 	icon_state = "reality"
 	pixel_x = -96
@@ -594,4 +592,3 @@ var/global/list/multiverse = list()
 	heal_brute = 25
 	heal_burn = 25
 	heal_oxy = 25
-
