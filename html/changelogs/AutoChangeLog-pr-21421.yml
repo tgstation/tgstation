@@ -1,0 +1,4 @@
+author: "Joan"
+delete-after: True
+changes: 
+  - tweak: "Repairing clockwork structures with a Clockwork Proselytizer now only costs 1 alloy per point of damage."
