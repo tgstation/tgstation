@@ -17,17 +17,17 @@
 		if(INTACT)
 			user << "<span class='notice'>The outer <b>grille</b> is fully intact.</span>"
 		if(SUPPORT_LINES)
-			user << "<span class='notice'>The outer grille has been cut, and the support lines are <b>screwed</b> securely to the outer cover.</span>"
+			user << "<span class='notice'>The outer <i>grille</i> has been cut, and the support lines are <b>screwed</b> securely to the outer cover.</span>"
 		if(COVER)
-			user << "<span class='notice'>The support lines have been unscrewed, and the metal cover is <b>welded</b> firmly in place.</span>"
+			user << "<span class='notice'>The support lines have been <i>unscrewed</i>, and the metal cover is <b>welded</b> firmly in place.</span>"
 		if(CUT_COVER)
-			user << "<span class='notice'>The metal cover has been sliced through, and is <b>connected loosely</b> to the girder.</span>"
+			user << "<span class='notice'>The metal cover has been <i>sliced through</i>, and is <b>connected loosely</b> to the girder.</span>"
 		if(BOLTS)
-			user << "<span class='notice'>The outer cover has been pried away, and the bolts anchoring the support rods are <b>wrenched</b> in place.</span>"
+			user << "<span class='notice'>The outer cover has been <i>pried away</i>, and the bolts anchoring the support rods are <b>wrenched</b> in place.</span>"
 		if(SUPPORT_RODS)
-			user << "<span class='notice'>The bolts anchoring the support rods have been loosened, but are still <b>welded</b> firmly to the girder.</span>"
+			user << "<span class='notice'>The bolts anchoring the support rods have been <i>loosened</i>, but are still <b>welded</b> firmly to the girder.</span>"
 		if(SHEATH)
-			user << "<span class='notice'>The support rods have been sliced through, and the outer sheath is <b>connected loosely</b> to the girder.</span>"
+			user << "<span class='notice'>The support rods have been <i>sliced through</i>, and the outer sheath is <b>connected loosely</b> to the girder.</span>"
 
 /turf/closed/wall/r_wall/break_wall()
 	builtin_sheet.loc = src
