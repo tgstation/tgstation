@@ -732,8 +732,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		client.eye = mob_eye
 		client.screen = list()
 		if(mob_eye.hud_used)
-			if(!mob_eye.observers)
-				mob_eye.observers = list()
+			LAZYINITLIST(mob_eye.observers)
 			mob_eye.observers |= src
 			mob_eye.hud_used.show_hud(1,src)
 			observetarget = mob_eye
