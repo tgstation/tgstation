@@ -18,11 +18,14 @@
 	tier = SCRIPTURE_SCRIPT
 	one_per_tile = TRUE
 	space_allowed = TRUE
+	primary_component = BELLIGERENT_EYE
 	sort_priority = 1
+	quickbind = TRUE
+	quickbind_desc = "Creates an Ocular Warden, which will automatically attack nearby unrestrained non-Servants that can see it."
 
 /datum/clockwork_scripture/create_object/ocular_warden/check_special_requirements()
 	for(var/obj/structure/destructible/clockwork/ocular_warden/W in range(3, invoker))
-		invoker << "<span class='alloy'>You sense another ocular warden too near this location. Placing another this close would cause them to fight.</span>" //fluff message
+		invoker << "<span class='neovgre'>You sense another ocular warden too near this location. Placing another this close would cause them to fight.</span>" //fluff message
 		return FALSE
 	return ..()
 
@@ -41,7 +44,10 @@
 	observer_message = "<span class='warning'>The slab disgorges a puddle of black metal that contracts and forms into a strange shell!</span>"
 	usage_tip = "Useless without a soul vessel and should not be created without one."
 	tier = SCRIPTURE_SCRIPT
+	primary_component = BELLIGERENT_EYE
 	sort_priority = 2
+	quickbind = TRUE
+	quickbind_desc = "Creates a Cogscarab Shell, which produces a Cogscarab when filled with a Soul Vessel."
 
 
 //Fellowship Armory: Arms the invoker and nearby servants with Ratvarian armor.
@@ -58,7 +64,10 @@
 	tier = SCRIPTURE_SCRIPT
 	multiple_invokers_used = TRUE
 	multiple_invokers_optional = TRUE
+	primary_component = VANGUARD_COGWHEEL
 	sort_priority = 4
+	quickbind = TRUE
+	quickbind_desc = "Attempts to armor all nearby Servants with powerful Ratvarian armor."
 
 /datum/clockwork_scripture/fellowship_armory/run_scripture()
 	for(var/mob/living/L in orange(1, get_turf(invoker)))
@@ -94,7 +103,10 @@
 	usage_tip = "This is not a primary conversion method - use Guvax for that. It is advantageous as a trap, however, as it will transmit the name of the newly-converted."
 	tier = SCRIPTURE_SCRIPT
 	one_per_tile = TRUE
+	primary_component = GUVAX_CAPACITOR
 	sort_priority = 5
+	quickbind = TRUE
+	quickbind_desc = "Creates a Sigil of Submission, which will convert one non-Servant that remains on it."
 
 
 //Soul Vessel: Creates a soul vessel, which can seek a ghost or be used on the uncovered head of a dead or dying human to take their brain.
@@ -112,7 +124,10 @@
 	usage_tip = "The vessel can be used as a teleport target for Spatial Gateway, though it is generally better-used by placing it in a shell or cyborg body."
 	tier = SCRIPTURE_SCRIPT
 	space_allowed = TRUE
+	primary_component = GUVAX_CAPACITOR
 	sort_priority = 6
+	quickbind = TRUE
+	quickbind_desc = "Creates a Soul Vessel, which can be placed in construct shells and cyborg bodies once filled."
 
 
 //Clockwork Proselytizer: Creates a clockwork proselytizer, used to convert objects and repair clockwork structures.
@@ -130,7 +145,10 @@
 	usage_tip = "Clockwork Walls cause nearby tinkerer's caches to generate components passively, making them a vital tool. Clockwork Floors heal toxin damage in Servants standing on them."
 	tier = SCRIPTURE_SCRIPT
 	space_allowed = TRUE
+	primary_component = REPLICANT_ALLOY
 	sort_priority = 7
+	quickbind = TRUE
+	quickbind_desc = "Creates a Clockwork Proselytizer, which can convert various objects to Ratvarian variants."
 
 
 //Function Call: Grants the invoker the ability to call forth a Ratvarian spear that deals significant damage to silicons.
@@ -146,6 +164,7 @@
 	whispered = TRUE
 	usage_tip = "You can impale human targets with the spear by pulling them, then attacking. Throwing the spear at a mob will do massive damage and stun them, but break the spear."
 	tier = SCRIPTURE_SCRIPT
+	primary_component = REPLICANT_ALLOY
 	sort_priority = 8
 
 /datum/clockwork_scripture/function_call/check_special_requirements()
@@ -212,7 +231,10 @@
 	multiple_invokers_optional = TRUE
 	usage_tip = "This gateway is strictly one-way and will only allow things through the invoker's portal."
 	tier = SCRIPTURE_SCRIPT
+	primary_component = HIEROPHANT_ANSIBLE
 	sort_priority = 9
+	quickbind = TRUE
+	quickbind_desc = "Allows you to create a one-way Spatial Gateway to a living Servant or Clockwork Obelisk."
 
 /datum/clockwork_scripture/spatial_gateway/check_special_requirements()
 	if(!isturf(invoker.loc))
@@ -220,7 +242,7 @@
 		return FALSE
 	var/other_servants = 0
 	for(var/mob/living/L in living_mob_list)
-		if(is_servant_of_ratvar(L) && !L.stat != DEAD)
+		if(is_servant_of_ratvar(L) && !L.stat && L != invoker)
 			other_servants++
 	for(var/obj/structure/destructible/clockwork/powered/clockwork_obelisk/O in all_clockwork_objects)
 		other_servants++
@@ -254,13 +276,17 @@
 	consumed_components = list(GUVAX_CAPACITOR = 1, HIEROPHANT_ANSIBLE = 1)
 	usage_tip = "If standing on a Sigil of Transmission, will transfer power to it. Augumented limbs will also be healed unless above a very high threshhold."
 	tier = SCRIPTURE_SCRIPT
+	primary_component = HIEROPHANT_ANSIBLE
 	sort_priority = 10
+	quickbind = TRUE
+	quickbind_desc = "Drains power from nearby objects. If standing on a Sigil of Transmission, gives it that power.<br><b>Maximum 30 chants.</b>"
 	var/total_power_drained = 0
 	var/power_damage_threshhold = 3000
 	var/augument_damage_threshhold = 6000
 
 /datum/clockwork_scripture/channeled/volt_void/chant_effects(chant_number)
 	playsound(invoker, 'sound/effects/EMPulse.ogg', 50, 1)
+	PoolOrNew(/obj/effect/overlay/temp/ratvar/sigil/voltvoid, get_turf(invoker))
 	var/power_drained = 0
 	for(var/atom/movable/A in view(7, invoker))
 		power_drained += A.power_drain(TRUE)

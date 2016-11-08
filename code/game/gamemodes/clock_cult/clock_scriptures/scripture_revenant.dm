@@ -13,6 +13,7 @@
 	consumed_components = list(VANGUARD_COGWHEEL = 6, GUVAX_CAPACITOR = 3, REPLICANT_ALLOY = 3, HIEROPHANT_ANSIBLE = 3)
 	usage_tip = "Those affected by this scripture are only weak to things that outright destroy bodies, such as bombs or the singularity."
 	tier = SCRIPTURE_REVENANT
+	primary_component = VANGUARD_COGWHEEL
 	sort_priority = 2
 
 /datum/clockwork_scripture/invoke_inathneq/check_special_requirements()
@@ -49,6 +50,7 @@
 	usage_tip = "Ocular wardens will become empowered, clockwork proselytizers will require no alloy, tinkerer's daemons will produce twice as quickly, \
 	and interdiction lenses, mending motors, mania motors, tinkerer's daemons, and clockwork obelisks will all require no power."
 	tier = SCRIPTURE_REVENANT
+	primary_component = REPLICANT_ALLOY
 	sort_priority = 3
 	invokers_required = 3
 	multiple_invokers_used = TRUE
@@ -106,6 +108,7 @@
 	usage_tip = "Causes brain damage, hallucinations, confusion, and dizziness in massive amounts."
 	tier = SCRIPTURE_REVENANT
 	sort_priority = 4
+	primary_component = GUVAX_CAPACITOR
 	invokers_required = 3
 	multiple_invokers_used = TRUE
 	var/list/mindbreaksayings = list("\"Oh, great. I get to shatter some minds.\"", "\"More minds to crush.\"", \
@@ -156,7 +159,6 @@
 				H << "<span class='sevtug'>[text2ratvar(pick(mindbreaksayings))]</span>"
 			H.playsound_local(T, hum, visualsdistance, 1)
 			flash_color(H, flash_color="#AF0AAF", flash_time=visualsdistance*10)
-			H.set_drugginess(visualsdistance + H.druggy)
 			H.dizziness = minordistance + H.dizziness
 			H.hallucination = minordistance + H.hallucination
 			H.confused = majordistance + H.confused
@@ -176,6 +178,7 @@
 	consumed_components = list(BELLIGERENT_EYE = 3, GUVAX_CAPACITOR = 3, REPLICANT_ALLOY = 3, HIEROPHANT_ANSIBLE = 6)
 	usage_tip = "Struck targets will also be knocked down for about sixteen seconds."
 	tier = SCRIPTURE_REVENANT
+	primary_component = HIEROPHANT_ANSIBLE
 	sort_priority = 5
 
 /datum/clockwork_scripture/invoke_nzcrentr/check_special_requirements()

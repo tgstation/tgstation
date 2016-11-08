@@ -1,7 +1,0 @@
-author: "Basilman"
-delete-after: True
-changes: 
-  - rscadd: "CQC users can now block attacks by having their throw mode on."
-  - tweak: "The CQC kick and Disorient-disarm combos are now much easier to use, CQC harm intent attacks are stronger aswell."
-  - bugfix: "Fixed being able to CQC restrain someone, let him go, then 10 minutes later disarm someone else to instantly chokehold them."
-  - tweak: "CQC costs more TC (13)"

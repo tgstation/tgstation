@@ -22,7 +22,6 @@
 	icon_state = "drone_maint_grey"
 	icon_living = "drone_maint_grey"
 	icon_dead = "drone_maint_dead"
-	gender = NEUTER
 	health = 30
 	maxHealth = 30
 	unsuitable_atmos_damage = 0

@@ -1,6 +1,0 @@
-author: "Joan"
-delete-after: True
-changes: 
-  - rscadd: "Standard drones will be converted to Cogscarabs by Ratvar and the Celestial Gateway proselytization."
-  - rscdel: "Cogscarabs no longer receive station alerts."
-  - bugfix: "Anima Fragments, Clockwork Marauders, and cult constructs are now properly immune to heat and electricity."
