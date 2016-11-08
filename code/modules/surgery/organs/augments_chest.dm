@@ -198,30 +198,30 @@
 	toggle(silent=1)
 	return 0
 
-/obj/item/organ/cyberimp/chest/rocket_arm_ports
-	name = "Rocket arms"
-	desc = "Please help, I need description."
+/obj/item/organ/cyberimp/chest/limb_sockets
+	name = "Limb Sockets"
+	desc = "Lets you reattach cyborg limbs and fire your arms!"
 	icon_state = "chest_implant"
 	implant_color = "#AA0000"
-	slot = "rocket_arms"
+	slot = "limb_sockets"
 	origin_tech = "materials=2;powerstorage=2;biotech=2"
 	actions_types = list(/datum/action/item_action/organ_action/toggle/)
 	var active = FALSE
 	var/obj/effect/proc_holder/rocket_arms_ability/ability = new
 
-/obj/item/organ/cyberimp/chest/rocket_arm_ports/Insert(mob/living/carbon/M, special = 0)
+/obj/item/organ/cyberimp/chest/limb_sockets/Insert(mob/living/carbon/M, special = 0)
 	..()
 	active = FALSE
 
-/obj/item/organ/cyberimp/chest/rocket_arm_ports/Remove(mob/living/carbon/M, special = 0)
+/obj/item/organ/cyberimp/chest/limb_sockets/Remove(mob/living/carbon/M, special = 0)
 	..()
 	active = FALSE
 
 
-/obj/item/organ/cyberimp/chest/rocket_arm_ports/ui_action_click()
+/obj/item/organ/cyberimp/chest/limb_sockets/ui_action_click()
  	toggle()
 
-/obj/item/organ/cyberimp/chest/rocket_arm_ports/proc/toggle()
+/obj/item/organ/cyberimp/chest/limb_sockets/proc/toggle()
 	var/message
 	if(active)
 		message = "<span class='notice'>You deactivate your arm</span>"
@@ -230,7 +230,7 @@
 		message = "<span class='notice'>You prepare your rocket arm. <B>Left-click to fire at a target!</B></span>"
 		ability.add_ranged_ability(owner, message, TRUE)
 
-/obj/item/organ/cyberimp/chest/rocket_arm_ports/proc/fire(target, params)
+/obj/item/organ/cyberimp/chest/limb_sockets/proc/fire(target, params)
 	if(!owner)
 		return 0
 
@@ -267,7 +267,7 @@
 
 	user.visible_message("<span class='danger'>[user] fires his arm!", "<span class='alertalien'>You fire your arm!.</span>")
 
-	var/obj/item/organ/cyberimp/chest/rocket_arm_ports/implant = user.getorganslot("rocket_arms")
+	var/obj/item/organ/cyberimp/chest/limb_sockets/implant = user.getorganslot("limb_sockets")
 	if(implant.fire(target, params))
 		user.newtonian_move(get_dir(U, T))
 

@@ -62,7 +62,17 @@
 /obj/item/bodypart/attack(mob/living/carbon/C, mob/user)
 	if(ishuman(C))
 		var/mob/living/carbon/human/H = C
-		if(EASYLIMBATTACHMENT in H.dna.species.specflags)
+		H << "what"
+		if(user.getorganslot("limb_sockets"))
+			H << "has organslot" 
+		else
+			H << "no organslot"
+		
+		if(status == BODYPART_ROBOTIC)
+			H << "robo"
+
+		if((EASYLIMBATTACHMENT in H.dna.species.specflags) || (user.getorganslot("limb_sockets") != null && status == BODYPART_ROBOTIC))
+			H << "has stuff"
 			if(!H.get_bodypart(body_zone) && !animal_origin)
 				if(H == user)
 					H.visible_message("<span class='warning'>[H] jams [src] into \his empty socket!</span>",\

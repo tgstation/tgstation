@@ -266,14 +266,15 @@
 	if(hand_index)
 		held_items[hand_index] = null
 		update_inv_hands()
-	if(I)
-		if(client)
-			client.screen -= I
-		I.layer = initial(I.layer)
-		I.plane = initial(I.plane)
-		I.appearance_flags &= ~NO_CLIENT_COLOR
-		I.forceMove(loc)
-		I.dropped(src)
+
+	if(client)
+		client.screen -= I
+	I.layer = initial(I.layer)
+	I.plane = initial(I.plane)
+	I.appearance_flags &= ~NO_CLIENT_COLOR
+	I.forceMove(loc)
+	I.dropped(src)
+	
 	return TRUE
 
 

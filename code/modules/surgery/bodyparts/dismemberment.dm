@@ -49,8 +49,7 @@
 		return 0
 
 	var/obj/item/projectile/bodypart/proj = new(loc, src)
-	if(params)
-		world.log << params
+	
 	proj.original = target
 	proj.preparePixelProjectile(target, get_turf(target), stored_owner, params)
 	proj.fire()
@@ -316,6 +315,9 @@
 	C.bodyparts += src
 	if(held_index)
 		C.hand_bodyparts += src
+		if(attached_weapon)
+			C.put_in_hand(attached_weapon, held_index)
+			attached_weapon = null
 		if(C.hud_used)
 			var/obj/screen/inventory/hand/hand = C.hud_used.hand_slots["[held_index]"]
 			if(hand)
