@@ -99,6 +99,11 @@
 	spell_type = /obj/effect/proc_holder/spell/fireball
 	log_name = "FB"
 
+/datum/spellbook_entry/rod_form
+	name = "Rod Form"
+	spell_type = /obj/effect/proc_holder/spell/targeted/rod_form
+	log_name = "RF"
+
 /datum/spellbook_entry/magicm
 	name = "Magic Missile"
 	spell_type = /obj/effect/proc_holder/spell/targeted/projectile/magic_missile
