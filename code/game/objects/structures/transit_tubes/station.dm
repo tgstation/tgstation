@@ -147,7 +147,7 @@
 		sleep(OPEN_DURATION + 2)
 		pod_moving = 0
 		if(!qdeleted(pod))
-			pod.mix_air()
+			pod.air_contents.share(loc.return_air()) //mix the pod's gas mixture with the tile it's on
 
 /obj/structure/transit_tube/station/init_tube_dirs()
 	switch(dir)
