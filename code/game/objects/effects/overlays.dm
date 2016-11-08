@@ -340,6 +340,18 @@
 	animate(src, transform = matrix()*2, time = 5)
 	animate(transform = oldtransform, alpha = 0, time = 65)
 
+/obj/effect/overlay/temp/ratvar/sigil/voltvoid
+	color = "#EC8A2D"
+	layer = ABOVE_MOB_LAYER
+	duration = 10
+	luminosity = 3
+
+/obj/effect/overlay/temp/ratvar/sigil/voltvoid/New()
+	..()
+	var/oldtransform = transform
+	animate(src, transform = matrix()*3, time = 1)
+	animate(transform = oldtransform, alpha = 0, time = 9)
+
 /obj/effect/overlay/temp/ratvar/sigil/vitality
 	color = "#1E8CE1"
 	icon_state = "sigilactivepulse"

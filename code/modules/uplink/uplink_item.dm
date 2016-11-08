@@ -533,9 +533,9 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 /datum/uplink_item/stealthy_weapons/cqc
 	name = "CQC Manual"
 	desc = "A manual that teaches a single user tactical Close-Quarters Combat before self-destructing."
-	item = /obj/item/weapon/CQC_manual
+	item = /obj/item/weapon/cqc_manual
 	include_modes = list(/datum/game_mode/nuclear)
-	cost = 10
+	cost = 13
 	surplus = 0
 
 /datum/uplink_item/stealthy_weapons/throwingweapons

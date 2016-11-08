@@ -82,6 +82,8 @@
 
 /datum/action/proc/UpdateButtonIcon()
 	if(button)
+		button.name = name
+		button.desc = desc
 		button.icon = button_icon
 		button.icon_state = background_icon_state
 
@@ -207,11 +209,9 @@
 		if(H.friendly_fire_check)
 			button_icon_state = "vortex_ff_off"
 			name = "Toggle Friendly Fire \[OFF\]"
-			button.name = name
 		else
 			button_icon_state = "vortex_ff_on"
 			name = "Toggle Friendly Fire \[ON\]"
-			button.name = name
 	..()
 
 /datum/action/item_action/vortex_recall
@@ -253,15 +253,13 @@
 	desc = "Allows you to communicate with other Servants."
 	button_icon_state = "hierophant_slab"
 
-/datum/action/item_action/clock/guvax
-	name = "Guvax"
-	desc = "Allows you to convert an adjacent target nonservant. Click your slab to disable."
-	button_icon_state = "guvax_capacitor"
+/datum/action/item_action/clock/quickbind_one
+	name = "Quickbind"
+	desc = "If you're seeing this, file a bug report."
 
-/datum/action/item_action/clock/vanguard
-	name = "Vanguard"
-	desc = "Allows you to temporarily absorb stuns. All stuns absorbed will affect you when disabled."
-	button_icon_state = "vanguard_cogwheel"
+/datum/action/item_action/clock/quickbind_two
+	name = "Quickbind"
+	desc = "If you're seeing this, file a bug report."
 
 /datum/action/item_action/toggle_helmet_flashlight
 	name = "Toggle Helmet Flashlight"

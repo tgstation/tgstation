@@ -1,0 +1,6 @@
+author: "Joan"
+delete-after: True
+changes: 
+  - rscadd: "You can now Quickbind scripture other than Guvax and Vanguard to the Clockwork Slab's action buttons, via Recollection."
+  - rscadd: "You can also recite scripture directly from Recollection, if doing so suits your taste. Of course it suits your taste, it's way easier than menus."
+  - tweak: "You can also toggle compact scripture in Recollection, so that you don't see description, invocation time, component cost, or tips."
