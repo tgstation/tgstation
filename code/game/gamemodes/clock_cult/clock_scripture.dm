@@ -122,16 +122,16 @@ Judgement: 12 servants, 5 caches, 300 CV, and any existing AIs are converted or 
 		switch(primary_component)
 			if(BELLIGERENT_EYE)
 				message = pick(neovgre_penalty)
-				ratvarian_prob = 76
+				ratvarian_prob = 80
 			if(VANGUARD_COGWHEEL)
 				message = pick(inathneq_penalty)
-				ratvarian_prob = 28
+				ratvarian_prob = 30
 			if(GUVAX_CAPACITOR)
 				message = pick(sevtug_penalty)
-				ratvarian_prob = 52
+				ratvarian_prob = 50
 			if(REPLICANT_ALLOY)
 				message = pick(nezbere_penalty)
-				ratvarian_prob = 4
+				ratvarian_prob = 10
 			if(HIEROPHANT_ANSIBLE)
 				message = pick(nzcrentr_penalty)
 				ratvarian_prob = 100
