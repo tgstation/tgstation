@@ -258,10 +258,11 @@ var/next_mob_id = 0
 			clear_fullscreen("remote_view", 0)
 		update_pipe_vision()
 
-/mob/dead/reset_perspective(atom/A)
+/mob/dead/observer/reset_perspective(atom/A)
 	if(client)
 		if(ismob(client.eye) && (client.eye != src))
 			var/mob/target = client.eye
+			observetarget = null
 			if(target.observers)
 				target.observers -= src
 				var/list/L = target.observers
@@ -478,6 +479,8 @@ var/next_mob_id = 0
 					mob_eye.observers = list()
 				mob_eye.observers |= src
 				mob_eye.hud_used.show_hud(1,src)
+				var/mob/dead/observer/spook = src
+				spook.observetarget = mob_eye
 
 /mob/verb/cancel_camera()
 	set name = "Cancel Camera View"
