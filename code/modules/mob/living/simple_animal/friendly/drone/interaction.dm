@@ -81,19 +81,16 @@
 
 
 /mob/living/simple_animal/drone/attackby(obj/item/I, mob/user)
-	if(istype(I, /obj/item/weapon/screwdriver))
-		if(stat != DEAD)
-			if(health < maxHealth)
-				user << "<span class='notice'>You start to tighten loose screws on [src]...</span>"
-				if(do_after(user,80/I.toolspeed,target=user))
-					adjustBruteLoss(-getBruteLoss())
-					visible_message("<span class='notice'>[user] tightens [src == user ? "[user.p_their()]" : "[src]'s"] loose screws!</span>", "<span class='notice'>You tighten [src == user ? "your" : "[src]'s"] loose screws.</span>")
-				else
-					user << "<span class='warning'>You need to remain still to tighten [src]'s screws!</span>"
+	if(istype(I, /obj/item/weapon/screwdriver) && stat != DEAD)
+		if(health < maxHealth)
+			user << "<span class='notice'>You start to tighten loose screws on [src]...</span>"
+			if(do_after(user,80/I.toolspeed,target=user))
+				adjustBruteLoss(-getBruteLoss())
+				visible_message("<span class='notice'>[user] tightens [src == user ? "[user.p_their()]" : "[src]'s"] loose screws!</span>", "<span class='notice'>You tighten [src == user ? "your" : "[src]'s"] loose screws.</span>")
 			else
-				user << "<span class='warning'>[src]'s screws can't get any tighter!</span>"
+				user << "<span class='warning'>You need to remain still to tighten [src]'s screws!</span>"
 		else
-			try_reactivate(user)
+			user << "<span class='warning'>[src]'s screws can't get any tighter!</span>"
 		return //This used to not exist and drones who repaired themselves also stabbed the shit out of themselves.
 	else if(istype(I, /obj/item/weapon/wrench) && user != src) //They aren't required to be hacked, because laws can change in other ways (i.e. admins)
 		user.visible_message("<span class='notice'>[user] starts resetting [src]...</span>", \
