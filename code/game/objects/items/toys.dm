@@ -1214,7 +1214,7 @@
 /obj/item/toy/figure/botanist
 	name = "Botanist action figure"
 	icon_state = "botanist"
-	toysay = "Dude, I see colors..."
+	toysay = "Blaze it!"
 
 /obj/item/toy/figure/captain
 	name = "Captain action figure"
@@ -1239,7 +1239,7 @@
 /obj/item/toy/figure/chef
 	name = "Chef action figure"
 	icon_state = "chef"
-	toysay = "Pun-Pun is a tasty burger."
+	toysay = " I'll make you into a burger!"
 
 /obj/item/toy/figure/chemist
 	name = "Chemist action figure"
@@ -1265,7 +1265,7 @@
 /obj/item/toy/figure/dsquad
 	name = "Death Squad Officer action figure"
 	icon_state = "dsquad"
-	toysay = "Eliminate all threats!"
+	toysay = "Kill em all!"
 
 /obj/item/toy/figure/engineer
 	name = "Engineer action figure"
@@ -1285,7 +1285,7 @@
 /obj/item/toy/figure/hos
 	name = "Head of Security action figure"
 	icon_state = "hos"
-	toysay = "Get the justice chamber ready, I think we got a joker here."
+	toysay = "Go ahead, make my day."
 
 /obj/item/toy/figure/qm
 	name = "Quartermaster action figure"
@@ -1321,7 +1321,7 @@
 /obj/item/toy/figure/miner
 	name = "Shaft Miner action figure"
 	icon_state = "miner"
-	toysay = "Oh god it's eating my intestines!"
+	toysay = "COLOSSUS RIGHT OUTSIDE THE BASE!"
 
 /obj/item/toy/figure/ninja
 	name = "Ninja action figure"
@@ -1348,7 +1348,7 @@
 /obj/item/toy/figure/scientist
 	name = "Scientist action figure"
 	icon_state = "scientist"
-	toysay = "For science!"
+	toysay = "I call toxins."
 	toysound = 'sound/effects/explosionfar.ogg'
 
 /obj/item/toy/figure/syndie

@@ -1,9 +1,3 @@
-#define GIRDER_NORMAL 0
-#define GIRDER_REINF_STRUTS 1
-#define GIRDER_REINF 2
-#define GIRDER_DISPLACED 3
-#define GIRDER_DISASSEMBLED 4
-
 /obj/structure/girder
 	name = "girder"
 	icon_state = "girder"
@@ -270,6 +264,13 @@
 	if(!(flags & NODECONSTRUCT))
 		var/remains = pick(/obj/item/stack/rods,/obj/item/stack/sheet/metal)
 		new remains(loc)
+	qdel(src)
+
+/obj/structure/girder/ratvar_act()
+	if(anchored)
+		new /obj/structure/destructible/clockwork/wall_gear(loc)
+	else
+		new /obj/structure/destructible/clockwork/wall_gear/displaced(loc)
 	qdel(src)
 
 /obj/structure/girder/narsie_act()

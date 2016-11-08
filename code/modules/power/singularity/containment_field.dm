@@ -98,25 +98,23 @@
 	return ..()
 
 /obj/machinery/field/proc/shock(mob/living/user)
-	if(isliving(user))
-		var/shock_damage = min(rand(30,40),rand(30,40))
+	var/shock_damage = min(rand(30,40),rand(30,40))
 
-		if(iscarbon(user))
-			var/stun = min(shock_damage, 15)
-			user.Stun(stun)
-			user.Weaken(10)
-			user.electrocute_act(shock_damage, src, 1)
+	if(iscarbon(user))
+		user.Stun(15)
+		user.Weaken(10)
+		user.electrocute_act(shock_damage, src, 1)
 
-		else if(issilicon(user))
-			if(prob(20))
-				user.Stun(2)
-			user.take_overall_damage(0, shock_damage)
-			user.visible_message("<span class='danger'>[user.name] was shocked by the [src.name]!</span>", \
-			"<span class='userdanger'>Energy pulse detected, system damaged!</span>", \
-			"<span class='italics'>You hear an electrical crack.</span>")
+	else if(issilicon(user))
+		if(prob(20))
+			user.Stun(2)
+		user.take_overall_damage(0, shock_damage)
+		user.visible_message("<span class='danger'>[user.name] was shocked by the [src.name]!</span>", \
+		"<span class='userdanger'>Energy pulse detected, system damaged!</span>", \
+		"<span class='italics'>You hear an electrical crack.</span>")
 
-		user.updatehealth()
-		bump_field(user)
+	user.updatehealth()
+	bump_field(user)
 
 /obj/machinery/field/proc/clear_shock()
 	hasShocked = 0

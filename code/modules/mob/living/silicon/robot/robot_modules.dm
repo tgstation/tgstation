@@ -94,10 +94,14 @@
 			F.times_used = 0
 			F.crit_fail = 0
 			F.update_icon()
-		if(istype(I, /obj/item/weapon/melee/baton))
+		else if(istype(I, /obj/item/weapon/melee/baton))
 			var/obj/item/weapon/melee/baton/B = I
 			if(B.bcell)
 				B.bcell.charge = B.bcell.maxcharge
+		else if(istype(I, /obj/item/weapon/gun/energy))
+			var/obj/item/weapon/gun/energy/EG = I
+			if(!EG.chambered)
+				EG.recharge_newshot() //try to reload a new shot.
 
 	R.toner = R.tonermax
 
@@ -222,7 +226,7 @@
 
 /obj/item/weapon/robot_module/security/respawn_consumable(mob/living/silicon/robot/R, coeff = 1)
 	..()
-	var/obj/item/weapon/gun/energy/gun/advtaser/cyborg/T = locate(/obj/item/weapon/gun/energy/gun/advtaser/cyborg) in get_usable_modules()
+	var/obj/item/weapon/gun/energy/e_gun/advtaser/cyborg/T = locate(/obj/item/weapon/gun/energy/e_gun/advtaser/cyborg) in get_usable_modules()
 	if(T)
 		if(T.power_supply.charge < T.power_supply.maxcharge)
 			var/obj/item/ammo_casing/energy/S = T.ammo_type[T.select]
@@ -259,7 +263,7 @@
 	drying_agent = new(src)
 	drying_agent.reagents.add_reagent("drying_agent", 250)
 	drying_agent.name = "drying agent spray"
-	drying_agent.color = "#A000A0"
+	drying_agent.add_atom_colour("#A000A0", FIXED_COLOUR_PRIORITY)
 	modules += drying_agent
 	emag = new /obj/item/weapon/reagent_containers/spray(src)
 
@@ -334,7 +338,7 @@
 	..()
 	modules += new /obj/item/weapon/melee/energy/sword/cyborg(src)
 	modules += new /obj/item/weapon/gun/energy/printer(src)
-	modules += new /obj/item/weapon/gun/projectile/revolver/grenadelauncher/cyborg(src)
+	modules += new /obj/item/weapon/gun/ballistic/revolver/grenadelauncher/cyborg(src)
 	modules += new /obj/item/weapon/card/emag(src)
 	modules += new /obj/item/weapon/crowbar/cyborg(src)
 	modules += new /obj/item/weapon/pinpointer/syndicate/cyborg(src)

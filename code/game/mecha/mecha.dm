@@ -673,7 +673,7 @@
 //Hack and From Card interactions share some code, so leave that here for both to use.
 /obj/mecha/proc/ai_enter_mech(mob/living/silicon/ai/AI, interaction)
 	AI.ai_restore_power()
-	AI.loc = src
+	AI.forceMove(src)
 	occupant = AI
 	icon_state = initial(icon_state)
 	playsound(src, 'sound/machines/windowdoor.ogg', 50, 1)
@@ -886,7 +886,7 @@
 	else
 		return 0
 
-/obj/mecha/container_resist()
+/obj/mecha/container_resist(mob/living/user)
 	go_out()
 
 

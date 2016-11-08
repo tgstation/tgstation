@@ -720,7 +720,7 @@
 	},
 /area/awaymission/challenge/end)
 "bQ" = (
-/obj/item/weapon/gun/projectile/revolver/russian,
+/obj/item/weapon/gun/ballistic/revolver/russian,
 /turf/open/floor/plasteel/white/side{
 	dir = 2
 	},
@@ -858,7 +858,7 @@
 /area/awaymission/challenge/end)
 "ck" = (
 /obj/structure/rack,
-/obj/item/weapon/gun/projectile/revolver/mateba,
+/obj/item/weapon/gun/ballistic/revolver/mateba,
 /turf/open/floor/wood,
 /area/awaymission/challenge/end)
 "cl" = (
@@ -927,7 +927,7 @@
 /area/awaymission/challenge/end)
 "cw" = (
 /obj/structure/rack,
-/obj/item/weapon/gun/projectile/automatic/l6_saw,
+/obj/item/weapon/gun/ballistic/automatic/l6_saw,
 /turf/open/floor/wood,
 /area/awaymission/challenge/end)
 "cx" = (

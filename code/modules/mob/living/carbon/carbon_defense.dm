@@ -56,6 +56,9 @@ mob/living/carbon/bullet_act(obj/item/projectile/P, def_zone)
 					if(wear_mask)
 						wear_mask.add_mob_blood(src)
 						update_inv_wear_mask()
+					if(wear_neck)
+						wear_neck.add_mob_blood(src)
+						update_inv_neck()
 					if(head)
 						head.add_mob_blood(src)
 						update_inv_head()
@@ -169,7 +172,7 @@ mob/living/carbon/bullet_act(obj/item/projectile/P, def_zone)
 		O.emp_act(severity)
 	..()
 
-/mob/living/carbon/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, override = 0, tesla_shock = 0)
+/mob/living/carbon/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, safety = 0, override = 0, tesla_shock = 0, illusion = 0)
 	shock_damage *= siemens_coeff
 	if(dna && dna.species)
 		shock_damage *= dna.species.siemens_coeff
@@ -177,7 +180,10 @@ mob/living/carbon/bullet_act(obj/item/projectile/P, def_zone)
 		return 0
 	if(reagents.has_reagent("teslium"))
 		shock_damage *= 1.5 //If the mob has teslium in their body, shocks are 50% more damaging!
-	take_overall_damage(0,shock_damage)
+	if(illusion)
+		adjustStaminaLoss(shock_damage)
+	else
+		take_overall_damage(0,shock_damage)
 	visible_message(
 		"<span class='danger'>[src] was shocked by \the [source]!</span>", \
 		"<span class='userdanger'>You feel a powerful shock coursing through your body!</span>", \
@@ -297,6 +303,8 @@ mob/living/carbon/bullet_act(obj/item/projectile/P, def_zone)
 		var/obj/item/clothing/hit_clothes
 		if(wear_mask)
 			hit_clothes = wear_mask
+		if(wear_neck)
+			hit_clothes = wear_neck
 		if(head)
 			hit_clothes = head
 		if(hit_clothes)

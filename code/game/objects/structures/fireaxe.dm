@@ -58,7 +58,7 @@
 			if(!user.drop_item())
 				return
 			fireaxe = F
-			F.forceMove(loc)
+			F.forceMove(src)
 			user << "<span class='caution'>You place the [F.name] back in the [name].</span>"
 			update_icon()
 			return

@@ -20,7 +20,7 @@
 	var/override = 0
 
 	for(var/datum/mutation/human/HM in dna.mutations)
-		override += HM.on_attack_hand(src, A)
+		override += HM.on_attack_hand(src, A, proximity)
 
 	if(override)
 		return

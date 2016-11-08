@@ -87,7 +87,7 @@
 	switch(M.damtype)
 		if(BRUTE)
 			playsound(src, 'sound/weapons/punch4.ogg', 50, 1)
-			visible_message("<span class='danger'>[M.name] has hit [src]!</span>", null, null, COMBAT_MESSAGE_RANGE, M.occupant)
+			visible_message("<span class='danger'>[M.name] has hit [src]!</span>", null, null, COMBAT_MESSAGE_RANGE)
 			if(prob(hardness + M.force) && M.force > 20)
 				dismantle_wall(1)
 				playsound(src, 'sound/effects/meteorimpact.ogg', 100, 1)
@@ -256,16 +256,17 @@
 		ChangeTurf(/turf/closed/wall/mineral/cult)
 
 /turf/closed/wall/ratvar_act(force)
-	var/converted = (prob(40) || force)
-	if(converted)
+	. = ..()
+	if(.)
 		ChangeTurf(/turf/closed/wall/clockwork)
-	for(var/I in src)
-		var/atom/A = I
-		if(ismob(A) || converted)
-			A.ratvar_act()
 
 /turf/closed/wall/storage_contents_dump_act(obj/item/weapon/storage/src_object, mob/user)
 	return 0
+
+/turf/closed/wall/acid_act(acidpwr, acid_volume)
+	if(explosion_block >= 2)
+		acidpwr = min(acidpwr, 50) //we reduce the power so strong walls never get melted.
+	. = ..()
 
 /turf/closed/wall/acid_melt()
 	dismantle_wall(1)

@@ -213,7 +213,7 @@
 						new /obj/item/weapon/coin/gold(M)
 		if(14)
 			//Free Gun
-			new /obj/item/weapon/gun/projectile/revolver/mateba(get_turf(src))
+			new /obj/item/weapon/gun/ballistic/revolver/mateba(get_turf(src))
 		if(15)
 			//Random One-use spellbook
 			new /obj/item/weapon/spellbook/oneuse/random(get_turf(src))

@@ -407,3 +407,9 @@
 
 //Picks from the list, with some safeties, and returns the "default" arg if it fails
 #define DEFAULTPICK(L, default) ((istype(L, /list) && L:len) ? pick(L) : default)
+
+#define LAZYINITLIST(L) if (!L) L = list()
+
+#define UNSETEMPTY(L) if (L && !L.len) L = null
+
+#define LAZYLEN(L) ( L ? L.len : 0 )

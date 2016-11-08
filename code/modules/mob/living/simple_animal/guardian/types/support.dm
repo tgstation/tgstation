@@ -103,7 +103,7 @@
 /obj/structure/recieving_pad/New(loc, mob/living/simple_animal/hostile/guardian/healer/G)
 	. = ..()
 	if(G.namedatum)
-		color = G.namedatum.colour
+		add_atom_colour(G.namedatum.colour, FIXED_COLOUR_PRIORITY)
 
 /obj/structure/recieving_pad/proc/disappear()
 	visible_message("[src] vanishes!")

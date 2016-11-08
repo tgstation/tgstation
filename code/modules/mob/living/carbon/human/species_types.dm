@@ -65,7 +65,8 @@
 */
 /datum/species/lizard/ashwalker
 	name = "Ash Walker"
-	id = "lizard"
+	id = "ashlizard"
+	limbs_id = "lizard"
 	specflags = list(MUTCOLORS,EYECOLOR,LIPS,NOBREATH,NOGUNS,DIGITIGRADE)
 /*
  PODPEOPLE
@@ -203,7 +204,7 @@
 	default_color = "00FF90"
 	say_mod = "chirps"
 	eyes = "jelleyes"
-	specflags = list(MUTCOLORS,EYECOLOR,NOBLOOD,VIRUSIMMUNE, TOXINLOVER)
+	specflags = list(MUTCOLORS,EYECOLOR,NOBLOOD,VIRUSIMMUNE,TOXINLOVER)
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/slime
 	exotic_blood = "slimejelly"
 	var/datum/action/innate/regenerate_limbs/regenerate_limbs
@@ -664,14 +665,16 @@
 	sexes = 0
 	blacklisted = 1
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/zombie
-	specflags = list(NOBREATH,RESISTTEMP,NOBLOOD,RADIMMUNE,NOZOMBIE,EASYDISMEMBER,EASYLIMBATTACHMENT, TOXINLOVER)
+	specflags = list(NOBREATH,RESISTTEMP,NOBLOOD,RADIMMUNE,NOZOMBIE,EASYDISMEMBER,EASYLIMBATTACHMENT,TOXINLOVER)
 	mutant_organs = list(/obj/item/organ/tongue/zombie)
-	speedmod = 2
 
 /datum/species/zombie/infectious
 	name = "Infectious Zombie"
+	id = "memezombies"
+	limbs_id = "zombie"
 	no_equip = list(slot_wear_mask, slot_head)
 	armor = 20 // 120 damage to KO a zombie, which kills it
+	speedmod = 2
 
 /datum/species/zombie/infectious/spec_life(mob/living/carbon/C)
 	. = ..()
@@ -705,7 +708,8 @@
 // Your skin falls off
 /datum/species/krokodil_addict
 	name = "Human"
-	id = "zombie"
+	id = "goofzombies"
+	limbs_id = "zombie" //They look like zombies
 	sexes = 0
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/zombie
 	mutant_organs = list(/obj/item/organ/tongue/zombie)

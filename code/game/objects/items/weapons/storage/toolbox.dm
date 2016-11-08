@@ -55,17 +55,17 @@
 
 /obj/item/weapon/storage/toolbox/electrical/New()
 	..()
-	var/color = pick("red","yellow","green","blue","pink","orange","cyan","white")
+	var/pickedcolor = pick("red","yellow","green","blue","pink","orange","cyan","white")
 	new /obj/item/weapon/screwdriver(src)
 	new /obj/item/weapon/wirecutters(src)
 	new /obj/item/device/t_scanner(src)
 	new /obj/item/weapon/crowbar(src)
-	new /obj/item/stack/cable_coil(src,30,color)
-	new /obj/item/stack/cable_coil(src,30,color)
+	new /obj/item/stack/cable_coil(src,30,pickedcolor)
+	new /obj/item/stack/cable_coil(src,30,pickedcolor)
 	if(prob(5))
 		new /obj/item/clothing/gloves/color/yellow(src)
 	else
-		new /obj/item/stack/cable_coil(src,30,color)
+		new /obj/item/stack/cable_coil(src,30,pickedcolor)
 
 /obj/item/weapon/storage/toolbox/syndicate
 	name = "suspicious looking toolbox"
@@ -93,12 +93,12 @@
 
 /obj/item/weapon/storage/toolbox/drone/New()
 	..()
-	var/color = pick("red","yellow","green","blue","pink","orange","cyan","white")
+	var/pickedcolor = pick("red","yellow","green","blue","pink","orange","cyan","white")
 	new /obj/item/weapon/screwdriver(src)
 	new /obj/item/weapon/wrench(src)
 	new /obj/item/weapon/weldingtool(src)
 	new /obj/item/weapon/crowbar(src)
-	new /obj/item/stack/cable_coil(src,30,color)
+	new /obj/item/stack/cable_coil(src,30,pickedcolor)
 	new /obj/item/weapon/wirecutters(src)
 	new /obj/item/device/multitool(src)
 

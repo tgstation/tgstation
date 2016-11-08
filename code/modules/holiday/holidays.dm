@@ -302,6 +302,11 @@
 	begin_day = 14
 	begin_month = DECEMBER
 
+/datum/holiday/doomsday
+	name = "Mayan Doomsday Anniversary"
+	begin_day = 21
+	begin_month = DECEMBER
+
 /datum/holiday/xmas
 	name = CHRISTMAS
 	begin_day = 23
