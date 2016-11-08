@@ -154,6 +154,7 @@
 	throw_range = 0
 	throw_speed = 0
 	sharpness = IS_SHARP
+	attach_on_dismember = TRUE
 
 /obj/item/weapon/melee/arm_blade/New(location,silent)
 	..()

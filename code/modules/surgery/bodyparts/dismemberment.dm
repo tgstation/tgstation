@@ -130,7 +130,30 @@
 	update_limb(1)
 	C.bodyparts -= src
 	if(held_index)
-		C.unEquip(owner.get_item_for_held_index(held_index), 1)
+		var/obj/item/I = owner.get_item_for_held_index(held_index)
+
+		var/did_special_unequip = FALSE
+		if(istype(I, /obj/item/weapon))
+			var/obj/item/weapon/W = I
+			if(W.attach_on_dismember)
+				attached_weapon = W
+				attached_weapon.forceMove(src)
+
+				// This is kind of horrible and I apologize. 
+				// TODO: allow new_loc on unEquip
+				C.held_items[held_index] = null
+				C.update_inv_hands()
+				if(owner.client)
+					owner.client.screen -= I
+				I.layer = initial(I.layer)
+				I.plane = initial(I.plane)
+				//I.appearance_flags &= ~NO_CLIENT_COLOR
+
+				did_special_unequip = TRUE
+
+		if(!did_special_unequip)
+			C.unEquip(owner.get_item_for_held_index(held_index), 1)
+
 		C.hand_bodyparts -= src
 
 	owner = null

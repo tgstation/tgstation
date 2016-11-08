@@ -40,6 +40,9 @@
 	var/species_flags_list = list()
 	var/dmg_overlay_type //the type of damage overlay (if any) to use when this bodypart is bruised/burned.
 
+	var/obj/item/weapon/attached_weapon = null // Attached weapon for dismemberment
+	var/list/item_overlays = list()
+
 /obj/item/bodypart/examine(mob/user)
 	..()
 	if(brute_dam > 0)
@@ -342,6 +345,20 @@
 	//End Greyscale Colouring
 	standing += I
 
+
+	if(attached_weapon)
+		var/state = attached_weapon.item_state
+		if(!state)
+			state = attached_weapon.icon_state
+
+		var/icon_file = null
+
+		if(held_index == 2)
+			icon_file = attached_weapon.righthand_file
+		else
+			icon_file = attached_weapon.lefthand_file
+
+		standing += attached_weapon.build_worn_icon(state = state, default_layer = HANDS_LAYER, default_icon_file = icon_file, isinhands = TRUE)
 	return standing
 
 
