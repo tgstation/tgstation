@@ -145,27 +145,19 @@
 	if(!TT || (!(dir in TT.tube_dirs) && !(turn(dir,180) in TT.tube_dirs)))	//landed on a turf without transit tube or not in our direction
 		deconstruct(FALSE)	//we automatically deconstruct the pod
 
-// Should I return a copy here? If the caller edits or del()s the returned
-//  datum, there might be problems if I don't...
 /obj/structure/transit_tube_pod/return_air()
-	var/datum/gas_mixture/GM = new()
-	GM.copy_from(air_contents)
-	return GM
+	return air_contents
 
-// For now, copying what I found in an unused FEA file (and almost identical in a
-//  used ZAS file). Means that assume_air and remove_air don't actually alter the
-//  air contents.
 /obj/structure/transit_tube_pod/assume_air(datum/gas_mixture/giver)
 	return air_contents.merge(giver)
 
 /obj/structure/transit_tube_pod/remove_air(amount)
 	return air_contents.remove(amount)
 
-
-
 // Called when a pod arrives at, and before a pod departs from a station,
 //  giving it a chance to mix its internal air supply with the turf it is
 //  currently on.
+/*
 /obj/structure/transit_tube_pod/proc/mix_air()
 	var/datum/gas_mixture/environment = loc.return_air()
 	var/env_pressure = environment.return_pressure()
@@ -189,7 +181,7 @@
 
 	loc.assume_air(from_int)
 	air_contents.merge(from_env)
-
+*/
 
 
 /obj/structure/transit_tube_pod/relaymove(mob/mob, direction)
