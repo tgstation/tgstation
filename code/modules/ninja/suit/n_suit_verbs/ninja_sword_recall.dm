@@ -1,7 +1,7 @@
 
 /obj/item/clothing/suit/space/space_ninja/proc/ninja_sword_recall()
 	set name = "Recall Energy Katana (Variable Cost)"
-	set desc = "Teleports the Energy Katana linked to this suit to it's wearer, cost based on distance."
+	set desc = "Teleports the Energy Katana linked to this suit to its wearer, cost based on distance."
 	set category = "Ninja Ability"
 	set popup_menu = 0
 

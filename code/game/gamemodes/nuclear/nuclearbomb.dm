@@ -399,9 +399,10 @@ var/bomb_set
 		return
 	qdel(src)
 
-/obj/machinery/nuclearbomb/tesla_act(var/power)
+/obj/machinery/nuclearbomb/tesla_act(power, explosive)
 	..()
-	qdel(src)//like the singulo, tesla deletes it. stops it from exploding over and over
+	if(explosive)
+		qdel(src)//like the singulo, tesla deletes it. stops it from exploding over and over
 
 #define NUKERANGE 127
 /obj/machinery/nuclearbomb/proc/explode()

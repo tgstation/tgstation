@@ -120,7 +120,10 @@
 	if(!isliving(M))
 		return
 
-	var/mob/living/L = M
+	var/mob/living/carbon/human/L = M
+
+	if(check_martial_counter(L, user))
+		return 0
 
 	if(user.a_intent != "harm")
 		if(status)

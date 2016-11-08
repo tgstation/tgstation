@@ -377,4 +377,9 @@
 		T.setDir(dir)
 	return T
 
-
+/turf/handle_fall(mob/faller, forced)
+	faller.lying = pick(90, 270)
+	if(!forced)
+		return
+	if(has_gravity(src))
+		playsound(src, "bodyfall", 50, 1)
