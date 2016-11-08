@@ -50,6 +50,12 @@
 	user << "The safety is [safety ? "on" : "off"]."
 	return
 
+/obj/item/weapon/extinguisher/attack(mob/M, mob/user)
+	if(user.a_intent == "help" && !safety) //If we're on help intent and going to spray people, don't bash them.
+		return 0
+	else
+		return ..()
+
 /obj/item/weapon/extinguisher/examine(mob/user)
 	..()
 	if(reagents.total_volume)
