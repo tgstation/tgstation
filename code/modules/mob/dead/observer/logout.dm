@@ -6,9 +6,7 @@
 			var/mob/target = observetarget
 			if(target.observers)
 				target.observers -= src
-				var/list/L = target.observers
-				if(!L.len)
-					target.observers = null
+				UNSETEMPTY(target.observers)
 			observetarget = null
 	..()
 	spawn(0)
