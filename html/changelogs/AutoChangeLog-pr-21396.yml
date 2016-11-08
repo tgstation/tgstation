@@ -1,0 +1,4 @@
+author: "Kor"
+delete-after: True
+changes: 
+  - rscadd: "The game will now recognize a successful detonation of the nuclear bomb in the syndicate base."
