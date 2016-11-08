@@ -246,7 +246,7 @@
 	C.bodyparts += src
 	if(held_index)
 		if(held_index > C.hand_bodyparts.len)
-		C.hand_bodyparts.len = held_index
+			C.hand_bodyparts.len = held_index
 		C.hand_bodyparts[held_index] = src
 		if(C.hud_used)
 			var/obj/screen/inventory/hand/hand = C.hud_used.hand_slots["[held_index]"]
