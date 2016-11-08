@@ -239,7 +239,7 @@ var/datum/subsystem/ticker/ticker
 
 	//Now animate the cinematic
 	switch(station_missed)
-		if(1)	//nuke was nearby but (mostly) missed
+		if(NUKE_NEAR_MISS)	//nuke was nearby but (mostly) missed
 			if( mode && !override )
 				override = mode.name
 			switch( override )
@@ -265,7 +265,7 @@ var/datum/subsystem/ticker/ticker
 					//flick("end",cinematic)
 
 
-		if(2)	//nuke was nowhere nearby	//TODO: a really distant explosion animation
+		if(NUKE_MISS_STATION || NUKE_SYNDICATE_BASE)	//nuke was nowhere nearby	//TODO: a really distant explosion animation
 			sleep(50)
 			world << sound('sound/effects/explosionfar.ogg')
 		else	//station was destroyed
