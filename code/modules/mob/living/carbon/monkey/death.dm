@@ -8,10 +8,10 @@
 	if(stat == DEAD)
 		return
 
-	stat = DEAD
-
 	if(!gibbed)
 		emote("deathgasp")
+
+	stat = DEAD
 
 	if(ticker && ticker.mode)
 		ticker.mode.check_win()
