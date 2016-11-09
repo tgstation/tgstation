@@ -164,6 +164,8 @@
 	return 1 //Bullets don't drift in space
 
 /obj/item/projectile/proc/fire(setAngle, atom/direct_target)
+	if(firer && original)
+		add_logs(firer, original, "fired at", src, " [get_area(src)]")
 	if(direct_target)
 		direct_target.bullet_act(src, def_zone)
 		qdel(src)
