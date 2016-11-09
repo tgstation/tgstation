@@ -25094,7 +25094,7 @@
 /obj/machinery/conveyor{
 	dir = 6;
 	id = "garbage";
-	verted = 1
+	verted = -1
 	},
 /turf/open/floor/plating,
 /area/maintenance/disposal)
