@@ -157,7 +157,7 @@
 
 /mob/living/proc/canSuicide()
 	if(stat == CONSCIOUS)
-		return 1
+		return TRUE
 	else if(stat == DEAD)
 		src << "You're already dead!"
 	else if(stat == UNCONSCIOUS)
@@ -170,4 +170,7 @@
 	if(!canmove || restrained())	//just while I finish up the new 'fun' suiciding verb. This is to prevent metagaming via suicide
 		src << "You can't commit suicide whilst restrained! ((You can type Ghost instead however.))"
 		return
-	return 1
+	if(has_brain_worms())
+		src << "You can't bring yourself to commit suicide!"
+		return
+	return TRUE

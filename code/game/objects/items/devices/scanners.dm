@@ -131,6 +131,12 @@ MASS SPECTROMETER
 		var/mob/living/carbon/human/H = M
 		if(H.heart_attack && H.stat != DEAD)
 			user << "<span class='danger'>Subject suffering from heart attack: Apply defibrillator immediately!</span>"
+
+	if(iscarbon(M))
+		var/mob/living/carbon/C = M
+		if(C.has_brain_worms())
+			user << "<span class='danger'>Foreign organism detected in subject's cranium. Recommended treatment: Dosage of sucrose solution and removal of object via surgery.</span>"
+
 	user << "<span class='info'>Analyzing results for [M]:\n\tOverall status: [mob_status]</span>"
 
 	// Damage descriptions
