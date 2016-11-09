@@ -36,10 +36,10 @@ datum/supply_pack
 
 /datum/supply_pack/emergency
 	group = "Emergency"
-
+	
 /datum/supply_pack/emergency/vehicle
 	name = "Biker Gang Kit" //TUNNEL SNAKES OWN THIS TOWN
-	cost = 2000
+	cost = 2000 
 	contraband = TRUE
 	contains = list(/obj/vehicle/atv,
 					/obj/item/key,
@@ -1700,11 +1700,3 @@ datum/supply_pack
 					/obj/item/weapon/circuitboard/machine/computer/sat_control
 					)
 	crate_name= "shield control board crate"
-
-/datum/supply_pack/misc/esigs
-     name = "Pack of E-sigarets"
-     cost = 8000
-     contraband = TRUE
-     dangerous = TRUE
-     contains = list (/obj/item/clothing/mask/vape, /obj/item/clothing/mask/vape, /obj/item/clothing/mask/vape, /obj/item/clothing/mask/vape, /obj/item/clothing/mask/vape)
-     crate_name = "esigarets crate"
