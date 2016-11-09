@@ -33,6 +33,7 @@
 		if (!antag_candidates.len)
 			break
 		var/datum/mind/traitor = pick(antag_candidates)
+		antag_candidates -= traitor
 		traitors += traitor
 		traitor.restricted_roles = restricted_jobs
 		antag_candidates.Remove(traitor)

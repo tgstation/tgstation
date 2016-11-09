@@ -193,6 +193,7 @@
 #include "code\datums\shuttles.dm"
 #include "code\datums\votablemap.dm"
 #include "code\datums\antagonists\antag_datum.dm"
+#include "code\datums\antagonists\datum_changeling.dm"
 #include "code\datums\antagonists\datum_clockcult.dm"
 #include "code\datums\antagonists\datum_cult.dm"
 #include "code\datums\antagonists\datum_traitor.dm"

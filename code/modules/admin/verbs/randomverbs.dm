@@ -347,6 +347,9 @@ Traitors and the like can also be revived with the previous role mostly intact.
 
 	new_character.name = new_character.real_name
 
+	for(var/datum/antagonist/A in G_found.mind.current.antag_datums)
+		A.transfer_to_new_body(new_character)
+
 	if(G_found.mind && !G_found.mind.active)
 		G_found.mind.transfer_to(new_character)	//be careful when doing stuff like this! I've already checked the mind isn't in use
 		new_character.mind.special_verbs = list()
@@ -354,9 +357,6 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		new_character.mind_initialize()
 	if(!new_character.mind.assigned_role)
 		new_character.mind.assigned_role = "Assistant"//If they somehow got a null assigned role.
-
-	for(var/datum/antagonist/A in G_found.mind.current.antag_datums)
-		A.transfer_to_new_body(new_character) //Confirming this is (TBWO)
 
 	new_character.key = G_found.key
 

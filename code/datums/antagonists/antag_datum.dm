@@ -20,10 +20,16 @@
 	return ..()
 
 /datum/antagonist/proc/can_be_owned(mob/living/new_body)
+	if(new_body.has_antag_datum(type, TRUE))
+		return 0
 	for(var/D in prevented_antag_datum_types)
 		if(D == type)
 			return 0
-	return new_body && !new_body.has_antag_datum(type, TRUE)
+	for(var/V in datum_antags)
+		var/datum/antagonist/A = V
+		if(A.allegiance_priority < allegiance_priority && !can_coexist)
+			A.owner.on_remove() //Destroy other antagonists that we can't be friends with
+	return new_body
 
 /datum/antagonist/proc/give_to_body(mob/living/new_body) //tries to give an antag datum to a mob. cancels out if it can't be owned by the new body
 	if(new_body && can_be_owned(new_body))
@@ -83,8 +89,9 @@
 		new_body.antag_datums = list()
 	new_body.antag_datums += src
 	owner.antag_datums -= src
-	owner = new_body
-	apply_innate_effects()
+	spawn(1) //Give the game time to sort out new minds, bodies...
+		owner = new_body
+		apply_innate_effects()
 
 //mob var and helper procs/Destroy override
 /mob/living

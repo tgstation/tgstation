@@ -6,7 +6,7 @@
 	gain_fluff = "<span class='userdanger'>You are a traitor!</span>"
 	loss_fluff = "<span class='userdanger'>Your allegiance to the Syndicate wavers. You make a choice: you are no longer a traitor to Nanotrasen!</span>"
 	allegiance_priority = ANTAGONIST_PRIORITY_SYNDICATE
-	constant_objective = /datum/objective/escape //We aren't much of a traitor if we're stuffed in a locker with our throat cut, are we?
+	constant_objective = /datum/objective/escape //We aren't much of a traitor if we're stuffed in a locker with our throat cut, are we? (This can change to "Die a glorious death.")
 	var/has_uplink = FALSE //If we have a Syndicate uplink to buy contraband with.
 
 /datum/antagonist/traitor/admin
@@ -21,10 +21,11 @@
 		if(has_uplink)
 			give_uplink()
 	ticker.mode.update_traitor_icons_added(owner.mind)
-//On remove is (TBWO)
+
+/datum/antagonist/traitor/remove_innate_effects()
+	owner.mind.remove_traitor()
 
 /datum/antagonist/traitor/proc/give_uplink()
-	world << "You're doing something right at least"
 	var/uplink_string
 	var/memory_string
 	var/obj/item/I = locate(/obj/item/device/pda) in owner.contents //Ideally, hide the uplink in a PDA.
