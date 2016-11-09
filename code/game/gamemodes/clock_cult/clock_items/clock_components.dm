@@ -59,20 +59,20 @@
 	"\"It's a shame it can't be reused.\"" = TRUE)
 	w_class = 3
 
-/obj/item/clockwork/component/guvax_capacitor
-	name = "guvax capacitor"
+/obj/item/clockwork/component/geis_capacitor
+	name = "geis capacitor"
 	desc = "A curiously cold brass doodad. It seems as though it really doesn't appreciate being held."
-	icon_state = "guvax_capacitor"
-	component_id = GUVAX_CAPACITOR
+	icon_state = "geis_capacitor"
+	component_id = GEIS_CAPACITOR
 	cultist_message = "\"Try not to lose your mind - I'll need it. Heh heh...\""
 	servant_of_ratvar_messages = list("\"Disgusting.\"" = FALSE, "\"Well, aren't you an inquisitive fellow?\"" = FALSE, "A foul presence pervades your mind, then vanishes." = FALSE, \
 	"\"The fact that Ratvar has to depend on simpletons like you is appalling.\"" = FALSE)
 	message_span = "sevtug"
 
-/obj/item/clockwork/component/guvax_capacitor/antennae
+/obj/item/clockwork/component/geis_capacitor/antennae
 	name = "mania motor antennae"
 	desc = "A pair of dented and bent antennae. They constantly emit a static hiss."
-	clockwork_desc = "The antennae from a mania motor. <b>Serviceable as a substitute for a guvax capacitor.</b>"
+	clockwork_desc = "The antennae from a mania motor. <b>Serviceable as a substitute for a geis capacitor.</b>"
 	icon_state = "mania_motor_antennae"
 	cultist_message = "Your head is filled with a burst of static."
 	servant_of_ratvar_messages = list("\"Who broke this.\"" = TRUE, "\"Did you break these off YOURSELF?\"" = TRUE, "\"Why did we give this to such simpletons, anyway?\"" = TRUE, \
