@@ -1,0 +1,4 @@
+author: "Shadowlight213"
+delete-after: True
+changes: 
+  - rscdel: "Removed the restriction on attacking people with a fire extinguisher on help intent if the safety is on."
