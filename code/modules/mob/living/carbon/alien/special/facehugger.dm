@@ -38,6 +38,11 @@ var/const/MAX_ACTIVE_TIME = 400
 	item_state = "facehugger_inactive"
 	stat = DEAD
 
+/obj/item/clothing/mask/facehugger/impregnated
+	icon_state = "facehugger_impregnated"
+	item_state = "facehugger_impregnated"
+	stat = DEAD
+
 /obj/item/clothing/mask/facehugger/attack_alien(mob/user) //can be picked up by aliens
 	attack_hand(user)
 	return
