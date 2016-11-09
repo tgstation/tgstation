@@ -1,0 +1,4 @@
+author: "Kor"
+delete-after: True
+changes: 
+  - rscadd: "Cloaks are now cosmetic items that can be worn in the neck slot, allowing you to wear them over armour."
