@@ -1,5 +1,0 @@
-author: "Joan"
-delete-after: True
-changes: 
-  - rscadd: "The Celestial Gateway will now prevent the emergency shuttle from leaving."
-  - tweak: "However, Centcom will alert, in general terms, the location of the Celestial Gateway two minutes after it is summoned."
