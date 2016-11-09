@@ -111,6 +111,9 @@ var/const/MAX_ACTIVE_TIME = 400
 		return 0
 	if((!iscorgi(M) && !iscarbon(M)) || isalien(M))
 		return 0
+	var/mob/living/carbon/Carb = M
+	if(!Carb.head)
+		return 0
 	if(attached)
 		return 0
 	else
