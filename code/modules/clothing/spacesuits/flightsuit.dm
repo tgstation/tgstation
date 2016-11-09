@@ -447,6 +447,7 @@
 	suit.user.visible_message("[suit.user] is knocked flying by the impact!")
 
 /obj/item/device/flightpack/proc/flight_impact(atom/unmovablevictim)	//Yes, victim.
+	var/atom/movable/victim = null
 	if(flight && momentum_speed > 1)
 		world << "DEBUG: IMPACT TRIGGERED BY BUMP"
 	else
@@ -456,22 +457,20 @@
 	crashing = 1
 	var/density = 0
 	var/anchored = 1
-	//var/victim
 	if(isclosedturf(unmovablevictim))
 		density = 1
 		anchored = 1
-	crash_damage(density, anchored, momentum_speed, unmovablevictim.name)
-	userknockback(density, anchored, momentum_speed)
-/*	victimknockback(density, anchored, momentum_speed, unmovablevictim.name)
-	else if(ismovableatom(unmovablevictim))
-		victim = unmovablevictim		//Now we know it can be moved!
+	if(ismovable(unmovablevictim))
+		victim = unmovablevictim
 		density = victim.density
 		anchored = victim.anchored
-	if(!anchored)
-			//THIS NEEDS A COMPLETE REWRITE.
-		victim.visible_message("<span class='userdanger'>[victim.name] is thrown backwards violently by the impact of [suit.user.name]!</span>") */
+		victimknockback(density, anchored, momentum_speed, victim)
+	crash_damage(density, anchored, momentum_speed, unmovablevictim.name)
+	userknockback(density, anchored, momentum_speed)
 	losecontrol()
 	crashing = 0
+
+/obj/item/device/flightpack/proc/victimknockback(density, anchored, momentum_speed, victim)
 
 /obj/item/device/flightpack/proc/losecontrol()
 	wearer.visible_message("<span class='warning'>[wearer]'s flight suit abruptly shuts off and they lose control!</span>")
