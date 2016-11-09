@@ -179,11 +179,14 @@
 
 /mob/living/carbon/human/attack_hulk(mob/living/carbon/human/user, does_attack_animation = 0)
 	if(user.a_intent == "harm")
+		var/hulk_verb = pick("smash","pummel")
+		if(check_shields(15, "the [hulk_verb]ing"))
+			return
 		..(user, 1)
 		playsound(loc, user.dna.species.attack_sound, 25, 1, -1)
-		var/hulk_verb = pick("smash","pummel")
-		visible_message("<span class='danger'>[user] has [hulk_verb]ed [src]!</span>", \
-								"<span class='userdanger'>[user] has [hulk_verb]ed [src]!</span>")
+		var/message = "[user] has [hulk_verb]ed [src]!"
+		visible_message("<span class='danger'>[message]</span>", \
+								"<span class='userdanger'>[message]</span>")
 		adjustBruteLoss(15)
 		damage_clothes(15, BRUTE, "melee")
 		return 1
