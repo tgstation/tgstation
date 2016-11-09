@@ -11,18 +11,18 @@
 		if(client.handle_spam_prevention(message,MUTE_IC))
 			return
 
-	if(isborer(src.loc))
+	if(isborer(loc))
 
 		message = sanitize(message)
 		if(!message)
 			return
 		log_say("[key_name(src)] : [message]")
-		if (stat == 2)
+		if(stat == 2)
 			return say_dead(message)
 
-		var/mob/living/simple_animal/borer/B = src.loc
-		src << "You whisper silently, \"[message]\""
-		B.victim << "The captive mind of [src] whispers, \"[message]\""
+		var/mob/living/simple_animal/borer/B = loc
+		src << "<i><span class='alien'>You whisper silently, \"[message]\"</span></i>"
+		B.victim << "<i><span class='alien'>The captive mind of [src] whispers, \"[message]\"</span></i>"
 
 		for (var/mob/M in player_list)
 			if(isnewplayer(M))
@@ -35,7 +35,7 @@
 
 /mob/living/captive_brain/resist()
 
-	var/mob/living/simple_animal/borer/B = src.loc
+	var/mob/living/simple_animal/borer/B = loc
 
 	src << "<span class='danger'>You begin doggedly resisting the parasite's control (this will take approximately 40 seconds).</span>"
 	B.victim << "<span class='danger'>You feel the captive mind of [src] begin to resist your control.</span>"
@@ -86,14 +86,13 @@ var/total_borer_hosts_needed = 10
 	var/mob/living/carbon/victim = null
 	var/mob/living/captive_brain/host_brain = null
 	var/truename
-	var/docile = 0
+	var/docile = FALSE
 	var/bonding = FALSE
-	var/controlling = 0
+	var/controlling = FALSE
 	var/chemicals = 10
 	var/used_dominate
 	var/borer_chems = list()
-	var/dominate_cooldown = 150
-	var/leaving = 0
+	var/leaving = FALSE
 	var/hiding = FALSE
 
 	var/datum/action/innate/borer/talk_to_host/talk_to_host_action = new
@@ -143,9 +142,7 @@ var/total_borer_hosts_needed = 10
 	var/be_swarmer = alert("Become a cortical borer? (Warning, You can no longer be cloned!)",,"Yes","No")
 	if(be_swarmer == "No")
 		return
-	if(qdeleted(src))
-		return
-	if (src && !qdeleted(src))
+	if(src && !qdeleted(src))
 		transfer_personality(user.client)
 
 /mob/living/simple_animal/borer/Stat()
@@ -173,17 +170,17 @@ var/total_borer_hosts_needed = 10
 	if(!input)
 		return
 
-	if(src && !qdeleted(src))
+	if(src && !qdeleted(src) && !qdeleted(victim))
 		var/say_string = (docile) ? "slurs" :"states"
 		if(victim)
-			victim << "<span class='changeling'><i>[src.truename] [say_string]:</i> [input]</span>"
+			victim << "<span class='changeling'><i>[truename] [say_string]:</i> [input]</span>"
 			log_say("Borer Communication: [key_name(src)] -> [key_name(victim)] : [input]")
 			for(var/M in dead_mob_list)
 				if(isobserver(M))
-					var/rendered = "<span class='changeling'><i>Borer Communication from <b>[src.truename]</b> : [input]</i>"
+					var/rendered = "<span class='changeling'><i>Borer Communication from <b>[truename]</b> : [input]</i>"
 					var/link = FOLLOW_LINK(M, src)
 					M << "[link] [rendered]"
-		src << "<span class='changeling'><i>[src.truename] [say_string]:</i> [input]</span>"
+		src << "<span class='changeling'><i>[truename] [say_string]:</i> [input]</span>"
 		victim.verbs += /mob/living/proc/borer_comm
 		talk_to_borer_action.Grant(victim)
 
@@ -193,7 +190,7 @@ var/total_borer_hosts_needed = 10
 	set desc = "Communicate mentally with your borer."
 
 
-	var/mob/living/simple_animal/borer/B = src.has_brain_worms()
+	var/mob/living/simple_animal/borer/B = has_brain_worms()
 	if(!B)
 		return
 
@@ -217,7 +214,7 @@ var/total_borer_hosts_needed = 10
 	set desc = "Communicate mentally with the trapped mind of your host."
 
 
-	var/mob/living/simple_animal/borer/B = src.has_brain_worms()
+	var/mob/living/simple_animal/borer/B = has_brain_worms()
 	if(!B || !B.host_brain)
 		return
 	var/mob/living/captive_brain/CB = B.host_brain
@@ -256,14 +253,14 @@ var/total_borer_hosts_needed = 10
 						victim << "<span class='warning'>You feel the soporific flow of sugar in your host's blood, lulling you into docility.</span>"
 					else
 						src << "<span class='warning'>You feel the soporific flow of sugar in your host's blood, lulling you into docility.</span>"
-					docile = 1
+					docile = TRUE
 			else
 				if(docile)
 					if(controlling)
 						victim << "<span class='warning'>You shake off your lethargy as the sugar leaves your host's blood.</span>"
 					else
 						src << "<span class='warning'>You shake off your lethargy as the sugar leaves your host's blood.</span>"
-					docile = 0
+					docile = FALSE
 			if(controlling)
 
 				if(docile)
@@ -334,7 +331,7 @@ var/total_borer_hosts_needed = 10
 		return
 
 	src << "<span class='warning'>You slither up [H] and begin probing at their ear canal...</span>"
-	src.layer = MOB_LAYER
+	layer = MOB_LAYER
 	if(!do_mob(src, H, 30))
 		src << "<span class='warning'>As [H] moves away, you are dislodged and fall to the ground.</span>"
 		return
@@ -356,11 +353,11 @@ var/total_borer_hosts_needed = 10
 		src << "<span class='warning'>[C]'s mind seems unresponsive. Try someone else!</span>"
 		return
 
-	if (C && C.dna && istype(C.dna.species, /datum/species/skeleton))
+	if(C && C.dna && istype(C.dna.species, /datum/species/skeleton))
 		src << "<span class='warning'>[C] does not possess the vital systems needed to support us.</span>"
 		return
 
-	src.victim = C
+	victim = C
 	forceMove(victim)
 
 	RemoveBorerActions()
@@ -414,7 +411,7 @@ var/total_borer_hosts_needed = 10
 	if(stat != CONSCIOUS)
 		return
 
-	if (!hiding)
+	if(!hiding)
 		layer = LATTICE_LAYER
 		visible_message("<span class='name'>[src] scurries to the ground!</span>", \
 						"<span class='noticealien'>You are now hiding.</span>")
@@ -438,7 +435,7 @@ var/total_borer_hosts_needed = 10
 		src << "<span class='warning'>You cannot do that from within a host body.</span>"
 		return
 
-	if(src.stat != CONSCIOUS)
+	if(stat != CONSCIOUS)
 		src << "<span class='warning'>You cannot do that in your current state.</span>"
 		return
 
@@ -446,10 +443,6 @@ var/total_borer_hosts_needed = 10
 	for(var/mob/living/carbon/C in view(1,src))
 		if(C.stat == CONSCIOUS)
 			choices += C
-
-	if(world.time - used_dominate < dominate_cooldown)
-		src << "<span class='warning'>You cannot use that ability again so soon.</span>"
-		return
 
 	var/mob/living/carbon/M = input(src,"Who do you wish to dominate?") in null|choices
 
@@ -463,7 +456,7 @@ var/total_borer_hosts_needed = 10
 		src << "<span class='warning'>You cannot paralyze someone who is already infested!</span>"
 		return
 
-	src.layer = MOB_LAYER
+	layer = MOB_LAYER
 
 	src << "<span class='warning'>You focus your psychic lance on [M] and freeze their limbs with a wave of terrible dread.</span>"
 	M << "<span class='userdanger'>You feel a creeping, horrible sense of dread come over you, freezing your limbs and setting your heart racing.</span>"
@@ -484,7 +477,7 @@ var/total_borer_hosts_needed = 10
 		src << "<span class='userdanger'>You cannot leave your host in your current state.</span>"
 
 	if(leaving)
-		leaving = 0
+		leaving = FALSE
 		src << "<span class='userdanger'>You decide against leaving your host.</span>"
 		return
 
@@ -493,7 +486,7 @@ var/total_borer_hosts_needed = 10
 	if(victim.stat != DEAD)
 		victim << "<span class='userdanger'>An odd, uncomfortable pressure begins to build inside your skull, behind your ear...</span>"
 
-	leaving = 1
+	leaving = TRUE
 
 	addtimer(src, "release_host", 100, FALSE)
 
@@ -514,7 +507,7 @@ var/total_borer_hosts_needed = 10
 		victim << "<span class='danger'>Something slimy wiggles out of your ear and plops to the ground!</span>"
 		victim << "<span class='danger'>As though waking from a dream, you shake off the insidious mind control of the brain worm. Your thoughts are your own again.</span>"
 
-	leaving = 0
+	leaving = FALSE
 
 	leave_victim()
 
@@ -555,12 +548,12 @@ var/total_borer_hosts_needed = 10
 		src << "<span class='warning'>You are feeling too docile to use this!</span>"
 		return
 
-	if(chemicals < 250)
-		src << "<span class='warning'>You need 250 chemicals to use this!</span>"
-		return
-
 	if(victim.stat != DEAD)
 		src << "<span class='warning'>Your host is already alive!</span>"
+		return
+
+	if(chemicals < 250)
+		src << "<span class='warning'>You need 250 chemicals to use this!</span>"
 		return
 
 	if(victim.stat == DEAD)
@@ -607,6 +600,8 @@ var/total_borer_hosts_needed = 10
 		return
 
 	if(bonding)
+		bonding = FALSE
+		src << "<span class='userdanger'>You stop attempting to take control of your host.</span>"
 		return
 
 	src << "<span class='danger'>You begin delicately adjusting your connection to the host brain...</span>"
@@ -671,7 +666,7 @@ var/total_borer_hosts_needed = 10
 		if(!victim.lastKnownIP)
 			victim.lastKnownIP = s2h_ip
 
-		controlling = 1
+		controlling = TRUE
 
 		bonding = FALSE
 
@@ -799,7 +794,7 @@ mob/living/carbon/proc/release_control()
 	if(!victim || !controlling)
 		return
 
-	controlling = 0
+	controlling = FALSE
 
 	victim.verbs -= /mob/living/carbon/proc/release_control
 	victim.verbs -= /mob/living/carbon/proc/spawn_larvae
