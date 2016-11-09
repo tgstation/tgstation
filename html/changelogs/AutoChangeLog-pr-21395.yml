@@ -1,4 +1,0 @@
-author: "Kor"
-delete-after: True
-changes: 
-  - rscadd: "You can now examine an r-wall to find out which tool is needed to continue deconstructing it."
