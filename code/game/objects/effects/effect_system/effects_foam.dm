@@ -13,6 +13,7 @@
 	animate_movement = 0
 	var/metal = 0
 	var/lifetime = 40
+	var/reagent_divisor = 7
 
 
 /obj/effect/particle_effect/foam/metal
@@ -53,7 +54,7 @@
 		kill_foam()
 		return
 
-	var/fraction = 1/initial(lifetime)
+	var/fraction = 1/initial(reagent_divisor)
 	for(var/obj/O in range(0,src))
 		if(O.type == src.type)
 			continue
@@ -61,14 +62,16 @@
 			var/turf/T = O.loc
 			if(T.intact && O.level == 1) //hidden under the floor
 				continue
-		reagents.reaction(O, VAPOR, fraction)
+		if(lifetime % reagent_divisor)
+			reagents.reaction(O, VAPOR, fraction)
 	var/hit = 0
 	for(var/mob/living/L in range(0,src))
 		hit += foam_mob(L)
 	if(hit)
 		lifetime++ //this is so the decrease from mobs hit and the natural decrease don't cumulate.
 	var/T = get_turf(src)
-	reagents.reaction(T, VAPOR, fraction)
+	if(lifetime % reagent_divisor)
+		reagents.reaction(T, VAPOR, fraction)
 
 	if(--amount < 0)
 		return
@@ -79,8 +82,9 @@
 		return 0
 	if(!istype(L))
 		return 0
-	var/fraction = 1/initial(lifetime)
-	reagents.reaction(L, VAPOR, fraction)
+	var/fraction = 1/initial(reagent_divisor)
+	if(lifetime % reagent_divisor)
+		reagents.reaction(L, VAPOR, fraction)
 	lifetime--
 	return 1
 
@@ -105,7 +109,7 @@
 		var/obj/effect/particle_effect/foam/F = PoolOrNew(src.type, T)
 		F.amount = amount
 		reagents.copy_to(F, (reagents.total_volume))
-		F.color = color
+		F.add_atom_colour(color, FIXED_COLOUR_PRIORITY)
 		F.metal = metal
 
 
@@ -164,7 +168,7 @@
 		var/obj/effect/particle_effect/foam/F = PoolOrNew(effect_type, location)
 		var/foamcolor = mix_color_from_reagents(chemholder.reagents.reagent_list)
 		chemholder.reagents.copy_to(F, chemholder.reagents.total_volume/amount)
-		F.color = foamcolor
+		F.add_atom_colour(foamcolor, FIXED_COLOUR_PRIORITY)
 		F.amount = amount
 		F.metal = metal
 

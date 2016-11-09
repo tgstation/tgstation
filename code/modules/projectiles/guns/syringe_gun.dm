@@ -18,30 +18,17 @@
 	..()
 	chambered = new /obj/item/ammo_casing/syringegun(src)
 
-/obj/item/weapon/gun/syringe/newshot()
-	if(!syringes.len) return
+/obj/item/weapon/gun/syringe/recharge_newshot()
+	if(!syringes.len)
+		return
+	chambered.newshot()
 
-	var/obj/item/weapon/reagent_containers/syringe/S = syringes[1]
-
-	if(!S) return
-
-	chambered.BB = new S.projectile_type (src)
-
-	S.reagents.trans_to(chambered.BB, S.reagents.total_volume)
-	chambered.BB.name = S.name
-	syringes.Remove(S)
-
-	qdel(S)
-	return
+/obj/item/weapon/gun/syringe/can_shoot()
+	return syringes.len
 
 /obj/item/weapon/gun/syringe/process_chamber()
-	return
-
-/obj/item/weapon/gun/syringe/afterattack(atom/target as mob|obj|turf, mob/living/user as mob|obj, params)
-	if(target == loc)
-		return
-	newshot()
-	..()
+	if(chambered && !chambered.BB) //we just fired
+		recharge_newshot()
 
 /obj/item/weapon/gun/syringe/examine(mob/user)
 	..()
@@ -69,7 +56,8 @@
 				return
 			user << "<span class='notice'>You load [A] into \the [src].</span>"
 			syringes.Add(A)
-			A.loc = src
+			A.forceMove(src)
+			recharge_newshot()
 			return 1
 		else
 			usr << "<span class='warning'>[src] cannot hold more syringes!</span>"

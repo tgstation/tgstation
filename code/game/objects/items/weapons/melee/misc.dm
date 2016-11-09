@@ -1,6 +1,13 @@
 /obj/item/weapon/melee
 	needs_permit = 1
 
+/obj/item/weapon/melee/proc/check_martial_counter(mob/living/carbon/human/target, mob/living/carbon/human/user)
+	if(target.check_block())
+		target.visible_message("<span class='danger'>[target.name] blocks [src] and twists [user]'s arm behind their back!</span>",
+					"<span class='userdanger'>You block the attack!</span>")
+		user.Stun(2)
+		return TRUE
+
 
 /obj/item/weapon/melee/chainofcommand
 	name = "chain of command"
@@ -97,6 +104,8 @@
 			if(ishuman(target))
 				var/mob/living/carbon/human/H = target
 				if (H.check_shields(0, "[user]'s [name]", src, MELEE_ATTACK))
+					return
+				if(check_martial_counter(H, user))
 					return
 			playsound(get_turf(src), 'sound/effects/woodhit.ogg', 75, 1, -1)
 			target.Weaken(3)

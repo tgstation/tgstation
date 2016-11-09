@@ -6,6 +6,8 @@
 	item_state = "utility"
 	slot_flags = SLOT_BELT
 	attack_verb = list("whipped", "lashed", "disciplined")
+	obj_integrity = 300
+	max_integrity = 300
 
 /obj/item/weapon/storage/belt/update_icon()
 	cut_overlays()
@@ -111,7 +113,7 @@
 		/obj/item/weapon/cautery,
 		/obj/item/weapon/hemostat,
 		/obj/item/device/geiger_counter,
-		/obj/item/clothing/tie/stethoscope,
+		/obj/item/clothing/neck/stethoscope,
 		/obj/item/weapon/stamp,
 		/obj/item/clothing/glasses,
 		/obj/item/weapon/wrench/medical,
@@ -373,8 +375,8 @@
 	storage_slots = 3
 	max_w_class = 3
 	can_hold = list(
-		/obj/item/weapon/gun/projectile/automatic/pistol,
-		/obj/item/weapon/gun/projectile/revolver,
+		/obj/item/weapon/gun/ballistic/automatic/pistol,
+		/obj/item/weapon/gun/ballistic/revolver,
 		/obj/item/ammo_box,
 		)
 	alternate_worn_layer = UNDER_SUIT_LAYER

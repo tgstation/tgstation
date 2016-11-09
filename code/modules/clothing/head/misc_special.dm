@@ -132,7 +132,7 @@
 	name = "kitty ears"
 	desc = "A pair of kitty ears. Meow!"
 	icon_state = "kitty"
-	color = "#999"
+	color = "#999999"
 
 	dog_fashion = /datum/dog_fashion/head/kitty
 
@@ -143,7 +143,7 @@
 
 /obj/item/clothing/head/kitty/update_icon(mob/living/carbon/human/user)
 	if(istype(user))
-		color = "#[user.hair_color]"
+		add_atom_colour("#[user.hair_color]", FIXED_COLOUR_PRIORITY)
 
 
 /obj/item/clothing/head/hardhat/reindeer

@@ -576,7 +576,7 @@
 
 	else if(istype(W, /obj/item/device/toner))
 		if(toner >= tonermax)
-			user << "<span class='warning'>The toner level of [src] is at it's highest level possible!</span>"
+			user << "<span class='warning'>The toner level of [src] is at its highest level possible!</span>"
 		else
 			if(!user.drop_item())
 				return

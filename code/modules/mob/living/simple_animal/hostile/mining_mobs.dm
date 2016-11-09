@@ -401,7 +401,8 @@
 /mob/living/simple_animal/hostile/asteroid/hivelordbrood/blood/proc/link_host(mob/living/carbon/C)
 	faction = list("\ref[src]", "\ref[C]") // Hostile to everyone except the host.
 	C.transfer_blood_to(src, 30)
-	color = mix_color_from_reagents(reagents.reagent_list)
+	var/newcolor = mix_color_from_reagents(reagents.reagent_list)
+	add_atom_colour(newcolor, FIXED_COLOUR_PRIORITY)
 
 /mob/living/simple_animal/hostile/asteroid/goliath
 	name = "goliath"
@@ -412,7 +413,6 @@
 	icon_aggro = "Goliath_alert"
 	icon_dead = "Goliath_dead"
 	icon_gib = "syndicate_gib"
-	attack_sound = 'sound/weapons/punch4.ogg'
 	mouse_opacity = 2
 	move_to_delay = 40
 	ranged = 1
@@ -574,7 +574,6 @@
 	icon_aggro = "Fugu"
 	icon_dead = "Fugu_dead"
 	icon_gib = "syndicate_gib"
-	attack_sound = 'sound/weapons/punch4.ogg'
 	mouse_opacity = 2
 	move_to_delay = 5
 	friendly = "floats near"
@@ -947,7 +946,7 @@
 
 /mob/living/simple_animal/hostile/asteroid/gutlunch/gubbuck/New()
 	..()
-	color = pick("#E39FBB", "#D97D64", "#CF8C4A")
+	add_atom_colour(pick("#E39FBB", "#D97D64", "#CF8C4A"), FIXED_COLOUR_PRIORITY)
 	resize = 0.85
 	update_transform()
 

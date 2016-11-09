@@ -95,6 +95,12 @@
 	pixel_y = rand(6,-6)
 	START_PROCESSING(SSobj, src)
 
+/obj/structure/spider/spiderling/hunter
+	grow_as = /mob/living/simple_animal/hostile/poison/giant_spider/hunter
+
+/obj/structure/spider/spiderling/nurse
+	grow_as = /mob/living/simple_animal/hostile/poison/giant_spider/nurse
+
 /obj/structure/spider/spiderling/Bump(atom/user)
 	if(istype(user, /obj/structure/table))
 		src.loc = user.loc
@@ -184,8 +190,7 @@
 /obj/structure/spider/cocoon/New()
 	icon_state = pick("cocoon1","cocoon2","cocoon3")
 
-/obj/structure/spider/cocoon/container_resist()
-	var/mob/living/user = usr
+/obj/structure/spider/cocoon/container_resist(mob/living/user)
 	var/breakout_time = 1
 	user.changeNext_move(CLICK_CD_BREAKOUT)
 	user.last_special = world.time + CLICK_CD_BREAKOUT

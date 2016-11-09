@@ -58,7 +58,7 @@ var/datum/subsystem/ticker/ticker
 /datum/subsystem/ticker/New()
 	NEW_SS_GLOBAL(ticker)
 
-	login_music = pickweight(list('sound/ambience/title2.ogg' = 23, 'sound/ambience/title1.ogg' =23, 'sound/ambience/title3.ogg' =23, 'sound/ambience/title4.ogg' =23, 'sound/ambience/clown.ogg' = 8)) // choose title music!
+	login_music = pickweight(list('sound/ambience/title2.ogg' = 15, 'sound/ambience/title1.ogg' =15, 'sound/ambience/title3.ogg' =14, 'sound/ambience/title4.ogg' =14, 'sound/misc/i_did_not_grief_them.ogg' =14, 'sound/ambience/clown.ogg' = 9)) // choose title music!
 	if(SSevent.holidays && SSevent.holidays[APRIL_FOOLS])
 		login_music = 'sound/ambience/clown.ogg'
 
@@ -239,7 +239,7 @@ var/datum/subsystem/ticker/ticker
 
 	//Now animate the cinematic
 	switch(station_missed)
-		if(1)	//nuke was nearby but (mostly) missed
+		if(NUKE_NEAR_MISS)	//nuke was nearby but (mostly) missed
 			if( mode && !override )
 				override = mode.name
 			switch( override )
@@ -265,7 +265,7 @@ var/datum/subsystem/ticker/ticker
 					//flick("end",cinematic)
 
 
-		if(2)	//nuke was nowhere nearby	//TODO: a really distant explosion animation
+		if(NUKE_MISS_STATION || NUKE_SYNDICATE_BASE)	//nuke was nowhere nearby	//TODO: a really distant explosion animation
 			sleep(50)
 			world << sound('sound/effects/explosionfar.ogg')
 		else	//station was destroyed

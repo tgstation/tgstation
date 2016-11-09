@@ -236,7 +236,7 @@
 	slot_equipment_priority = list( \
 		slot_back, slot_wear_id,\
 		slot_w_uniform, slot_wear_suit,\
-		slot_wear_mask, slot_head,\
+		slot_wear_mask, slot_head, slot_neck,\
 		slot_shoes, slot_gloves,\
 		slot_ears, slot_glasses,\
 		slot_belt, slot_s_store,\

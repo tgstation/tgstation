@@ -420,8 +420,8 @@
 /obj/machinery/firealarm{
 	pixel_y = 24
 	},
-/obj/item/weapon/gun/energy/gun/dragnet,
-/obj/item/weapon/gun/energy/gun/dragnet,
+/obj/item/weapon/gun/energy/e_gun/dragnet,
+/obj/item/weapon/gun/energy/e_gun/dragnet,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
@@ -1126,12 +1126,12 @@
 /area/ai_monitored/security/armory)
 "acM" = (
 /obj/structure/rack,
-/obj/item/weapon/gun/energy/gun{
+/obj/item/weapon/gun/energy/e_gun{
 	pixel_x = -3;
 	pixel_y = 3
 	},
-/obj/item/weapon/gun/energy/gun,
-/obj/item/weapon/gun/energy/gun{
+/obj/item/weapon/gun/energy/e_gun,
+/obj/item/weapon/gun/energy/e_gun{
 	pixel_x = 3;
 	pixel_y = -3
 	},
@@ -1322,12 +1322,12 @@
 /area/ai_monitored/security/armory)
 "adj" = (
 /obj/structure/rack,
-/obj/item/weapon/gun/energy/gun/advtaser{
+/obj/item/weapon/gun/energy/e_gun/advtaser{
 	pixel_x = -3;
 	pixel_y = 3
 	},
-/obj/item/weapon/gun/energy/gun/advtaser,
-/obj/item/weapon/gun/energy/gun/advtaser{
+/obj/item/weapon/gun/energy/e_gun/advtaser,
+/obj/item/weapon/gun/energy/e_gun/advtaser{
 	pixel_x = 3;
 	pixel_y = -3
 	},
@@ -1337,12 +1337,12 @@
 /area/ai_monitored/security/armory)
 "adk" = (
 /obj/structure/rack,
-/obj/item/weapon/gun/projectile/shotgun/riot{
+/obj/item/weapon/gun/ballistic/shotgun/riot{
 	pixel_x = -3;
 	pixel_y = 3
 	},
-/obj/item/weapon/gun/projectile/shotgun/riot,
-/obj/item/weapon/gun/projectile/shotgun/riot{
+/obj/item/weapon/gun/ballistic/shotgun/riot,
+/obj/item/weapon/gun/ballistic/shotgun/riot{
 	pixel_x = 3;
 	pixel_y = -3
 	},
@@ -4776,12 +4776,18 @@
 /turf/open/floor/plasteel,
 /area/atmos)
 "ajZ" = (
-/obj/machinery/atmospherics/pipe/manifold/green/visible{
-	dir = 4
+/obj/structure/grille,
+/obj/structure/window/reinforced/fulltile,
+/obj/structure/sign/securearea{
+	desc = "A warning sign which reads 'EXTERNAL AIRLOCK'";
+	icon_state = "space";
+	layer = 4;
+	name = "EXTERNAL AIRLOCK";
+	pixel_x = 0;
+	pixel_y = 32
 	},
-/obj/machinery/meter,
-/turf/open/floor/plasteel,
-/area/atmos)
+/turf/open/floor/plating,
+/area/mining_construction)
 "aka" = (
 /obj/structure/chair{
 	dir = 1
@@ -7844,6 +7850,9 @@
 /turf/open/floor/plating,
 /area/maintenance/fpmaint2)
 "aqN" = (
+/obj/structure/closet/secure_closet/miner{
+	locked = 0
+	},
 /turf/open/floor/plating/warnplate{
 	dir = 5
 	},
@@ -8595,9 +8604,7 @@
 /area/space/nearstation)
 "asD" = (
 /turf/open/floor/plating/warnplate{
-	dir = 4;
-	luminosity = 2;
-	initial_gas_mix = "o2=0.01;n2=0.01"
+	dir = 4
 	},
 /area/shuttle/auxillary_base)
 "asE" = (
@@ -8841,7 +8848,8 @@
 "atk" = (
 /obj/machinery/camera{
 	c_tag = "Auxillary Mining Base";
-	dir = 8
+	dir = 8;
+	network = list("SS13","AuxBase")
 	},
 /turf/open/floor/plating,
 /area/shuttle/auxillary_base)
@@ -10547,6 +10555,13 @@
 /obj/item/wallframe/camera,
 /obj/item/wallframe/camera,
 /obj/item/device/assault_pod/mining,
+/obj/machinery/computer/security/telescreen{
+	desc = "Used for the Auxillary Mining Base.";
+	dir = 8;
+	name = "Auxillary Base Monitor";
+	network = list("AuxBase");
+	pixel_x = 28
+	},
 /turf/open/floor/plasteel/yellow/side{
 	dir = 4
 	},
@@ -14660,7 +14675,7 @@
 /obj/item/clothing/head/bearpelt,
 /obj/item/weapon/reagent_containers/food/drinks/drinkingglass/shotglass,
 /obj/item/weapon/reagent_containers/food/drinks/drinkingglass/shotglass,
-/obj/item/weapon/gun/projectile/revolver/russian,
+/obj/item/weapon/gun/ballistic/revolver/russian,
 /obj/item/ammo_box/a357,
 /obj/item/weapon/reagent_containers/food/drinks/bottle/vodka/badminka,
 /turf/open/floor/plasteel/vault{
@@ -16316,7 +16331,7 @@
 /area/maintenance/fsmaint2)
 "aJE" = (
 /obj/item/weapon/reagent_containers/food/drinks/shaker,
-/obj/item/weapon/gun/projectile/revolver/doublebarrel,
+/obj/item/weapon/gun/ballistic/revolver/doublebarrel,
 /obj/structure/table/wood,
 /obj/item/stack/spacecash/c10,
 /obj/item/stack/spacecash/c100,
@@ -20415,7 +20430,9 @@
 /turf/open/floor/plasteel,
 /area/bridge)
 "aUd" = (
-/obj/machinery/computer/security/mining,
+/obj/machinery/computer/security/mining{
+	network = list("MINE","AuxBase")
+	},
 /turf/open/floor/plasteel/brown{
 	dir = 6
 	},
@@ -30624,7 +30641,7 @@
 "bqR" = (
 /obj/structure/table,
 /obj/item/weapon/crowbar,
-/obj/item/clothing/tie/stethoscope,
+/obj/item/clothing/neck/stethoscope,
 /obj/item/weapon/reagent_containers/spray/cleaner,
 /obj/structure/sign/nosmoking_2{
 	pixel_x = 0;
@@ -34585,7 +34602,9 @@
 	name = "Station Intercom (General)";
 	pixel_x = 27
 	},
-/obj/machinery/computer/security/mining,
+/obj/machinery/computer/security/mining{
+	network = list("MINE","AuxBase")
+	},
 /turf/open/floor/plasteel/red/side{
 	dir = 4
 	},
@@ -35578,7 +35597,9 @@
 /turf/open/floor/engine,
 /area/toxins/explab)
 "bAS" = (
-/obj/machinery/computer/security/mining,
+/obj/machinery/computer/security/mining{
+	network = list("MINE","AuxBase")
+	},
 /obj/machinery/camera{
 	c_tag = "Quartermaster's Office";
 	dir = 4
@@ -36551,7 +36572,7 @@
 	pixel_x = 0;
 	pixel_y = 2
 	},
-/obj/item/clothing/tie/stethoscope,
+/obj/item/clothing/neck/stethoscope,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
@@ -37166,7 +37187,7 @@
 "bEj" = (
 /obj/structure/table/glass,
 /obj/item/weapon/pen,
-/obj/item/clothing/tie/stethoscope,
+/obj/item/clothing/neck/stethoscope,
 /mob/living/simple_animal/pet/cat/Runtime,
 /turf/open/floor/plasteel/barber,
 /area/medical/cmo)
@@ -37416,7 +37437,9 @@
 /turf/open/floor/plating,
 /area/maintenance/fpmaint2)
 "bEK" = (
-/obj/machinery/computer/security/mining,
+/obj/machinery/computer/security/mining{
+	network = list("MINE","AuxBase")
+	},
 /obj/machinery/camera{
 	c_tag = "Mining Dock";
 	dir = 4;
@@ -38449,7 +38472,7 @@
 "bGT" = (
 /obj/structure/table,
 /obj/item/weapon/folder/white,
-/obj/item/clothing/tie/stethoscope,
+/obj/item/clothing/neck/stethoscope,
 /obj/machinery/vending/wallmed{
 	pixel_y = 28
 	},
@@ -40976,7 +40999,7 @@
 "bLU" = (
 /obj/structure/table,
 /obj/item/weapon/folder/white,
-/obj/item/clothing/tie/stethoscope,
+/obj/item/clothing/neck/stethoscope,
 /obj/machinery/light/small{
 	dir = 8
 	},
@@ -42243,9 +42266,6 @@
 /turf/open/floor/plasteel,
 /area/tcommsat/computer)
 "bON" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
 /obj/machinery/door/poddoor/shutters/preopen{
@@ -42485,7 +42505,7 @@
 	dir = 8;
 	external_pressure_bound = 0;
 	frequency = 1441;
-	id_tag = "mix_in";
+	id_tag = "mix_out";
 	initialize_directions = 1;
 	internal_pressure_bound = 4000;
 	on = 1;
@@ -42999,7 +43019,7 @@
 	frequency = 1441;
 	input_tag = "mix_in";
 	name = "Gas Mix Tank Control";
-	output_tag = "mix_in";
+	output_tag = "mix_out";
 	sensors = list("mix_sensor" = "Tank")
 	},
 /turf/open/floor/plasteel/green/side{
@@ -54440,9 +54460,6 @@
 	pixel_x = 3;
 	pixel_y = -3
 	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 10
-	},
 /turf/open/floor/plasteel/bot{
 	dir = 2
 	},
@@ -55509,9 +55526,6 @@
 /turf/open/floor/plating,
 /area/shuttle/syndicate)
 "crh" = (
-/obj/structure/transit_tube{
-	icon_state = "Block"
-	},
 /turf/open/floor/plating/warnplate{
 	dir = 8
 	},
@@ -55654,12 +55668,10 @@
 /turf/open/floor/plasteel/warning,
 /area/hallway/secondary/entry)
 "crA" = (
-/obj/structure/transit_tube/station{
-	dir = 8;
-	icon_state = "closed";
-	reverse_launch = 1
-	},
 /obj/structure/transit_tube_pod,
+/obj/structure/transit_tube/station/reverse/flipped{
+	dir = 4
+	},
 /turf/open/floor/plating/warnplate{
 	dir = 8
 	},
@@ -55818,9 +55830,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "crR" = (
-/obj/structure/transit_tube{
-	icon_state = "N-S"
-	},
+/obj/structure/transit_tube,
 /turf/open/floor/plating/warnplate{
 	dir = 8
 	},
@@ -55867,10 +55877,8 @@
 /turf/open/floor/plating,
 /area/engine/engineering)
 "crY" = (
-/obj/structure/transit_tube{
-	icon_state = "N-S"
-	},
 /obj/structure/window/reinforced/fulltile,
+/obj/structure/transit_tube,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "crZ" = (
@@ -55956,8 +55964,8 @@
 /turf/open/space,
 /area/space)
 "csi" = (
-/obj/structure/transit_tube{
-	icon_state = "N-SE"
+/obj/structure/transit_tube/curved/flipped{
+	dir = 1
 	},
 /turf/open/space,
 /area/space)
@@ -55970,8 +55978,8 @@
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
 "csl" = (
-/obj/structure/transit_tube{
-	icon_state = "E-NW"
+/obj/structure/transit_tube/curved{
+	dir = 4
 	},
 /turf/open/space,
 /area/space)
@@ -55982,12 +55990,12 @@
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
 "csn" = (
-/obj/structure/transit_tube,
+/obj/structure/transit_tube/horizontal,
 /turf/open/space,
 /area/space)
 "cso" = (
-/obj/structure/transit_tube,
 /obj/structure/lattice,
+/obj/structure/transit_tube/crossing/horizontal,
 /turf/open/space,
 /area/space)
 "csp" = (
@@ -56183,18 +56191,18 @@
 /turf/open/space,
 /area/space)
 "csM" = (
-/obj/structure/transit_tube,
 /obj/structure/lattice,
 /obj/machinery/atmospherics/pipe/simple/yellow/visible,
+/obj/structure/transit_tube/crossing/horizontal,
 /turf/open/space,
 /area/space)
 "csN" = (
-/obj/structure/transit_tube,
+/obj/structure/transit_tube/horizontal,
 /turf/open/floor/plating,
 /area/ai_monitored/turret_protected/aisat_interior)
 "csO" = (
 /obj/structure/window/reinforced/fulltile,
-/obj/structure/transit_tube,
+/obj/structure/transit_tube/horizontal,
 /turf/open/floor/plating,
 /area/ai_monitored/turret_protected/aisat_interior)
 "csP" = (
@@ -56223,9 +56231,7 @@
 /turf/open/floor/plating,
 /area/ai_monitored/turret_protected/aisat_interior)
 "csU" = (
-/obj/structure/transit_tube/station{
-	reverse_launch = 1
-	},
+/obj/structure/transit_tube/station/reverse,
 /turf/open/floor/plating,
 /area/ai_monitored/turret_protected/aisat_interior)
 "csV" = (
@@ -57746,7 +57752,7 @@
 "cvG" = (
 /obj/machinery/porta_turret/ai{
 	dir = 4;
-	installation = /obj/item/weapon/gun/energy/gun
+	installation = /obj/item/weapon/gun/energy/e_gun
 	},
 /obj/machinery/light{
 	icon_state = "tube1";
@@ -57786,7 +57792,7 @@
 "cvJ" = (
 /obj/machinery/porta_turret/ai{
 	dir = 4;
-	installation = /obj/item/weapon/gun/energy/gun
+	installation = /obj/item/weapon/gun/energy/e_gun
 	},
 /obj/machinery/light{
 	icon_state = "tube1";
@@ -72094,7 +72100,7 @@ apJ
 apJ
 apJ
 apJ
-asF
+ajZ
 atp
 asF
 asF
@@ -86235,7 +86241,7 @@ asj
 asU
 ats
 atY
-awg
+auo
 axy
 ayN
 azP
@@ -86492,7 +86498,7 @@ arS
 apU
 atu
 cCi
-auo
+awg
 axy
 ayM
 azs
@@ -94035,7 +94041,7 @@ crA
 crR
 crY
 csi
-csL
+aaa
 aaa
 aaf
 aag
@@ -94291,7 +94297,7 @@ cqY
 cqY
 cqY
 cig
-csh
+aaa
 csl
 aaa
 aaf
@@ -95063,7 +95069,7 @@ aaa
 aaa
 aaf
 aaa
-csp
+csn
 aaa
 aaf
 aag
@@ -96091,7 +96097,7 @@ aaa
 aaa
 aaf
 aaa
-csp
+csn
 aaa
 aaf
 aag
@@ -97119,7 +97125,7 @@ aaa
 aaa
 aaf
 aaa
-csp
+csn
 aaa
 aaf
 aag
@@ -99432,7 +99438,7 @@ aaa
 aaa
 aaf
 csD
-csT
+ctb
 csV
 ctb
 ctj

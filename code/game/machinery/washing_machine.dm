@@ -76,7 +76,7 @@
 	if(WM.color_source)
 		if(istype(WM.color_source,/obj/item/toy/crayon))
 			var/obj/item/toy/crayon/CR = WM.color_source
-			color = CR.paint_color
+			add_atom_colour(CR.paint_color, WASHABLE_COLOUR_PRIORITY)
 
 /mob/living/simple_animal/pet/dog/corgi/machine_wash(obj/machinery/washing_machine/WM)
 	gib()
@@ -169,7 +169,7 @@
 /obj/machinery/washing_machine/relaymove(mob/user)
 	container_resist(user)
 
-/obj/machinery/washing_machine/container_resist(mob/user)
+/obj/machinery/washing_machine/container_resist(mob/living/user)
 	if(!busy)
 		add_fingerprint(user)
 		open_machine()

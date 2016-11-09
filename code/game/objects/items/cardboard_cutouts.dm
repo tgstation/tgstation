@@ -30,7 +30,7 @@
 	desc = "[initial(desc)] It's been pushed over."
 	icon = initial(icon)
 	icon_state = "cutout_pushed_over"
-	color = initial(color)
+	remove_atom_colour(FIXED_COLOUR_PRIORITY)
 	alpha = initial(alpha)
 	pushed_over = TRUE
 
@@ -94,7 +94,7 @@
 	alpha = 255
 	icon = initial(icon)
 	if(!deceptive)
-		color = "#FFD7A7"
+		add_atom_colour("#FFD7A7", FIXED_COLOUR_PRIORITY)
 	switch(new_appearance)
 		if("Assistant")
 			name = "[pick(first_names_male)] [pick(last_names)]"

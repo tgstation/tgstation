@@ -316,7 +316,7 @@
 /obj/machinery/smartfridge/drying_rack/proc/rack_dry()
 	for(var/obj/item/weapon/reagent_containers/food/snacks/S in contents)
 		if(S.dried_type == S.type)//if the dried type is the same as the object's type, don't bother creating a whole new item...
-			S.color = "#ad7257"
+			S.add_atom_colour("#ad7257", FIXED_COLOUR_PRIORITY)
 			S.dry = 1
 			S.loc = get_turf(src)
 		else

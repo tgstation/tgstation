@@ -68,9 +68,14 @@
 	for(var/obj/machinery/power/terminal/term in attached.powernet.nodes)
 		var/obj/machinery/power/apc/A = term.master
 		if(istype(A))
+			var/cell_charge
+			if(!A.cell)
+				cell_charge = 0
+			else
+				cell_charge = A.cell.percent()
 			data["areas"] += list(list(
 				"name" = A.area.name,
-				"charge" = A.cell.percent(),
+				"charge" = cell_charge,
 				"load" = A.lastused_total,
 				"charging" = A.charging,
 				"eqp" = A.equipment,

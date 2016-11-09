@@ -79,7 +79,7 @@
 /datum/mutation/human/proc/get_visual_indicator(mob/living/carbon/human/owner)
 	return
 
-/datum/mutation/human/proc/on_attack_hand(mob/living/carbon/human/owner, atom/target)
+/datum/mutation/human/proc/on_attack_hand(mob/living/carbon/human/owner, atom/target, proximity)
 	return
 
 /datum/mutation/human/proc/on_ranged_attack(mob/living/carbon/human/owner, atom/target)
@@ -130,8 +130,9 @@
 	owner.status_flags &= ~status
 	owner.update_body_parts()
 
-/datum/mutation/human/hulk/on_attack_hand(mob/living/carbon/human/owner, atom/target)
-	return target.attack_hulk(owner)
+/datum/mutation/human/hulk/on_attack_hand(mob/living/carbon/human/owner, atom/target, proximity)
+	if(proximity) //no telekinetic hulk attack
+		return target.attack_hulk(owner)
 
 /datum/mutation/human/hulk/on_life(mob/living/carbon/human/owner)
 	if(owner.health < 0)
@@ -534,6 +535,10 @@
 /datum/mutation/human/swedish/say_mod(message)
 	if(message)
 		message = replacetext(message,"w","v")
+		message = replacetext(message,"j","y")
+		message = replacetext(message,"a",pick("å","ä","æ","a"))
+		message = replacetext(message,"bo","bjo")
+		message = replacetext(message,"o",pick("ö","ø","o"))
 		if(prob(30))
 			message += " Bork[pick("",", bork",", bork, bork")]!"
 	return message

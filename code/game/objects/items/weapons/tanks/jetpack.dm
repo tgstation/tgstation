@@ -74,6 +74,15 @@
 
 	return 1
 
+/obj/item/weapon/tank/jetpack/suicide_act(mob/user)
+	if (istype(user,/mob/living/carbon/human/))
+		var/mob/living/carbon/human/H = user
+		H.forcesay("WHAT THE FUCK IS CARBON DIOXIDE?")
+		H.visible_message("<span class='suicide'>[user] is suffocating [user.p_them()]self with [src]! It looks like [user.p_they()] didn't read what that jetpack says!</span>")
+		return (OXYLOSS)
+	else
+		..()
+
 /obj/item/weapon/tank/jetpack/void
 	name = "void jetpack (oxygen)"
 	desc = "It works well in a void."
@@ -102,6 +111,7 @@
 	item_state = "jetpack-captain"
 	w_class = 3
 	volume = 90
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF //steal objective items are hard to destroy.
 
 /obj/item/weapon/tank/jetpack/carbondioxide
 	name = "jetpack (carbon dioxide)"

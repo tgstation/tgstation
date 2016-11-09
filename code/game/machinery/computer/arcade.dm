@@ -12,7 +12,7 @@
 		/obj/item/clothing/under/syndicate/tacticool			= 2,
 		/obj/item/toy/sword										= 2,
 		/obj/item/toy/gun										= 2,
-		/obj/item/weapon/gun/projectile/shotgun/toy/crossbow	= 2,
+		/obj/item/weapon/gun/ballistic/shotgun/toy/crossbow	= 2,
 		/obj/item/weapon/storage/box/fakesyndiesuit				= 2,
 		/obj/item/weapon/storage/crayons						= 2,
 		/obj/item/toy/spinningtoy								= 2,
@@ -38,6 +38,7 @@
 		/obj/item/weapon/coin/antagtoken						= 2,
 		/obj/item/stack/tile/fakespace/loaded					= 2,
 		/obj/item/toy/toy_xeno									= 2,
+		/obj/item/weapon/storage/box/actionfigure				= 1,
 		/obj/item/weapon/restraints/handcuffs/fake              = 2)
 
 /obj/machinery/computer/arcade/New()
@@ -1039,7 +1040,7 @@
 	desc = "The Premier security forces for all spaceports found along the Orion Trail."
 	faction = list("orion")
 	loot = list(/obj/effect/mob_spawn/human/corpse/orionsecurity,
-				/obj/item/weapon/gun/projectile/automatic/c20r/unrestricted,
+				/obj/item/weapon/gun/ballistic/automatic/c20r/unrestricted,
 				/obj/item/weapon/shield/energy)
 
 /obj/effect/mob_spawn/human/corpse/orionsecurity

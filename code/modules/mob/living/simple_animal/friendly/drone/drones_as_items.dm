@@ -74,7 +74,7 @@
 /obj/item/clothing/head/drone_holder/relaymove()
 	uncurl()
 
-/obj/item/clothing/head/drone_holder/container_resist()
+/obj/item/clothing/head/drone_holder/container_resist(mob/living/user)
 	uncurl()
 
 

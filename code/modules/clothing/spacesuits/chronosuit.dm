@@ -89,7 +89,7 @@
 		user.SetStunned(0)
 		user.next_move = 1
 		user.alpha = 255
-		user.color = "#ffffff"
+		user.update_atom_colour()
 		user.animate_movement = FORWARD_STEPS
 		user.notransform = 0
 		user.anchored = 0
@@ -121,10 +121,15 @@
 		teleport_now.UpdateButtonIcon()
 
 		var/list/nonsafe_slots = list(slot_belt, slot_back)
+		var/list/exposed = list()
 		for(var/slot in nonsafe_slots)
 			var/obj/item/slot_item = user.get_item_by_slot(slot)
-			if(slot_item && !(slot_item.type in chronosafe_items) && user.unEquip(slot_item))
-				user << "<span class='notice'>Your [slot_item.name] got left behind.</span>"
+			exposed += slot_item
+		exposed += user.held_items
+		for(var/exposed_item in exposed)
+			var/obj/item/exposed_I = exposed_item
+			if(exposed_I && !(exposed_I.type in chronosafe_items) && user.unEquip(exposed_I))
+				user << "<span class='notice'>Your [exposed_I.name] got left behind.</span>"
 
 		user.ExtinguishMob()
 

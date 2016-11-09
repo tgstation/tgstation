@@ -194,6 +194,12 @@ var/pipenetwarnings = 10
 			air.temperature -= heat/total_heat_capacity
 	update = 1
 
+/datum/pipeline/proc/return_air()
+	. = other_airs + air
+	if(null in .)
+		stack_trace("[src] has one or more null gas mixtures, which may cause bugs. Null mixtures will not be considered in reconcile_air().")
+		return removeNullsFromList(.)
+
 /datum/pipeline/proc/reconcile_air()
 	var/list/datum/gas_mixture/GL = list()
 	var/list/datum/pipeline/PL = list()
@@ -201,8 +207,7 @@ var/pipenetwarnings = 10
 
 	for(var/i = 1; i <= PL.len; i++) //can't do a for-each here because we may add to the list within the loop
 		var/datum/pipeline/P = PL[i]
-		GL += P.air
-		GL += P.other_airs
+		GL += P.return_air()
 		for(var/obj/machinery/atmospherics/components/binary/valve/V in P.other_atmosmch)
 			if(V.open)
 				PL |= V.PARENT1

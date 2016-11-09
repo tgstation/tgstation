@@ -254,6 +254,25 @@ BLIND     // can't see anything
 		M.update_inv_head()
 
 
+//Neck
+/obj/item/clothing/neck
+	name = "necklace"
+	icon = 'icons/obj/clothing/neck.dmi'
+	body_parts_covered = NECK
+	slot_flags = SLOT_NECK
+	strip_delay = 40
+	put_on_delay = 40
+
+/obj/item/clothing/neck/worn_overlays(isinhands = FALSE)
+	. = list()
+	if(!isinhands)
+		if(body_parts_covered & HEAD)
+			if(damaged_clothes)
+				. += image("icon"='icons/effects/item_damage.dmi', "icon_state"="damagedmask")
+			if(blood_DNA)
+				. += image("icon"='icons/effects/blood.dmi', "icon_state"="maskblood")
+
+
 //Mask
 /obj/item/clothing/mask
 	name = "mask"

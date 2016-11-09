@@ -66,6 +66,9 @@ var/datum/subsystem/shuttle/SSshuttle
 #endif
 
 /datum/subsystem/shuttle/proc/setup_transit_zone()
+	if(transit_markers.len == 0)
+		WARNING("No /obj/effect/landmark/transit placed on the map!")
+		return
 	// transit zone
 	var/turf/A = get_turf(transit_markers[1])
 	var/turf/B = get_turf(transit_markers[2])
@@ -77,6 +80,9 @@ var/datum/subsystem/shuttle/SSshuttle
 
 #ifdef HIGHLIGHT_DYNAMIC_TRANSIT
 /datum/subsystem/shuttle/proc/color_space()
+	if(transit_markers.len == 0)
+		WARNING("No /obj/effect/landmark/transit placed on the map!")
+		return
 	var/turf/A = get_turf(transit_markers[1])
 	var/turf/B = get_turf(transit_markers[2])
 	for(var/i in block(A, B))

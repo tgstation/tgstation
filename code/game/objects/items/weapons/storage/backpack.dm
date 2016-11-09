@@ -19,7 +19,7 @@
 	max_w_class = 3
 	max_combined_w_class = 21
 	storage_slots = 21
-	resistance_flags = FLAMMABLE
+	resistance_flags = 0
 	obj_integrity = 300
 	max_integrity = 300
 
@@ -38,7 +38,7 @@
 	icon_state = "holdingpack"
 	max_w_class = 6
 	max_combined_w_class = 35
-	resistance_flags = 0
+	resistance_flags = FIRE_PROOF
 	var/pshoom = 'sound/items/PSHOOM.ogg'
 	var/alt_sound = 'sound/items/PSHOOM_2.ogg'
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 60, acid = 50)
@@ -151,7 +151,7 @@
 	desc = "It's a tough backpack for the daily grind of station life."
 	icon_state = "engiepack"
 	item_state = "engiepack"
-	resistance_flags = 0
+	resistance_flags = FIRE_PROOF
 
 /obj/item/weapon/storage/backpack/botany
 	name = "botany backpack"
@@ -454,7 +454,7 @@
 	contents = list()
 	new /obj/item/ammo_box/magazine/smgm45(src)
 	new /obj/item/ammo_box/magazine/smgm45(src)
-	new /obj/item/weapon/gun/projectile/automatic/c20r(src)
+	new /obj/item/weapon/gun/ballistic/automatic/c20r(src)
 	new /obj/item/weapon/suppressor/specialoffer(src)
 	return
 
@@ -465,7 +465,7 @@
 	..()
 	contents = list()
 	new /obj/item/ammo_box/magazine/m12g(src)
-	new /obj/item/weapon/gun/projectile/automatic/shotgun/bulldog(src)
+	new /obj/item/weapon/gun/ballistic/automatic/shotgun/bulldog(src)
 	new /obj/item/ammo_box/magazine/m12g/buckshot(src)
 	new /obj/item/clothing/glasses/thermal/syndi(src)
 	return
@@ -478,7 +478,7 @@
 	contents = list()
 	new /obj/item/clothing/shoes/magboots/syndie(src)
 	new /obj/item/weapon/storage/firstaid/tactical(src)
-	new /obj/item/weapon/gun/projectile/automatic/l6_saw/toy(src)
+	new /obj/item/weapon/gun/ballistic/automatic/l6_saw/toy(src)
 	new /obj/item/ammo_box/foambox/riot(src)
 	return
 
@@ -490,7 +490,7 @@
 	contents = list()
 	new /obj/item/clothing/shoes/magboots/syndie(src)
 	new /obj/item/weapon/storage/firstaid/tactical(src)
-	new /obj/item/weapon/gun/projectile/automatic/l6_saw/toy(src)
+	new /obj/item/weapon/gun/ballistic/automatic/l6_saw/toy(src)
 	new /obj/item/ammo_box/foambox/riot(src)
 	return
 
@@ -503,7 +503,7 @@
 	new /obj/item/weapon/reagent_containers/spray/chemsprayer/bioterror(src)
 	new /obj/item/weapon/storage/box/syndie_kit/chemical(src)
 	new /obj/item/weapon/gun/syringe/syndicate(src)
-	new /obj/item/weapon/gun/projectile/automatic/c20r/toy(src)
+	new /obj/item/weapon/gun/ballistic/automatic/c20r/toy(src)
 	new /obj/item/weapon/storage/box/syringes(src)
 	new /obj/item/ammo_box/foambox/riot(src)
 	new /obj/item/weapon/grenade/chem_grenade/bioterrorfoam(src)
@@ -530,7 +530,7 @@
 	new /obj/item/clothing/under/syndicate/soviet(src)
 	new /obj/item/weapon/watertank/operator(src)
 	new /obj/item/clothing/suit/space/hardsuit/syndi/elite(src)
-	new /obj/item/weapon/gun/projectile/automatic/pistol/APS(src)
+	new /obj/item/weapon/gun/ballistic/automatic/pistol/APS(src)
 	new /obj/item/ammo_box/magazine/pistolm9mm(src)
 	new /obj/item/ammo_box/magazine/pistolm9mm(src)
 	new /obj/item/weapon/reagent_containers/food/drinks/bottle/vodka/badminka(src)

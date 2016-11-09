@@ -399,9 +399,10 @@ var/bomb_set
 		return
 	qdel(src)
 
-/obj/machinery/nuclearbomb/tesla_act(var/power)
+/obj/machinery/nuclearbomb/tesla_act(power, explosive)
 	..()
-	qdel(src)//like the singulo, tesla deletes it. stops it from exploding over and over
+	if(explosive)
+		qdel(src)//like the singulo, tesla deletes it. stops it from exploding over and over
 
 #define NUKERANGE 127
 /obj/machinery/nuclearbomb/proc/explode()
@@ -428,14 +429,16 @@ var/bomb_set
 
 	var/off_station = 0
 	var/turf/bomb_location = get_turf(src)
+	var/area/A = get_area(bomb_location)
 	if(bomb_location && (bomb_location.z == ZLEVEL_STATION))
-		var/area/A = get_area(bomb_location)
 		if(istype(A, /area/space))
-			off_station = 1
+			off_station = NUKE_MISS_STATION
 		if((bomb_location.x < (128-NUKERANGE)) || (bomb_location.x > (128+NUKERANGE)) || (bomb_location.y < (128-NUKERANGE)) || (bomb_location.y > (128+NUKERANGE)))
-			off_station = 1
+			off_station = NUKE_MISS_STATION
+	else if(istype(A, /area/syndicate_mothership) || (istype(A,/area/shuttle/syndicate) && bomb_location.z == ZLEVEL_CENTCOM))
+		off_station = NUKE_SYNDICATE_BASE
 	else
-		off_station = 2
+		off_station = NUKE_NEAR_MISS
 
 	if(ticker.mode && ticker.mode.name == "nuclear emergency")
 		var/obj/docking_port/mobile/Shuttle = SSshuttle.getShuttle("syndicate")
@@ -490,7 +493,8 @@ This is here to make the tiles around the station mininuke change when it's arme
 	persistence_replacement = /obj/item/weapon/disk/fakenucleardisk
 	obj_integrity = 250
 	max_integrity = 250
-	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 30, bio = 0, rad = 0, fire = 90, acid = 70)
+	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 30, bio = 0, rad = 0, fire = 100, acid = 100)
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 
 /obj/item/weapon/disk/nuclear/New()
 	..()
@@ -515,16 +519,17 @@ This is here to make the tiles around the station mininuke change when it's arme
 	user.visible_message("<span class='suicide'>[user] is going delta! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	playsound(user.loc, 'sound/machines/Alarm.ogg', 50, -1, 1)
 	var/end_time = world.time + 100
-	var/orig_color = user.color
+	var/newcolor = "#00FF00"
 	while(world.time < end_time)
 		if(!user)
 			return
-		if(user.color == "#FF0000")
-			user.color = "#00FF00"
+		if(newcolor == "#FF0000")
+			newcolor = "#00FF00"
 		else
-			user.color = "#FF0000"
+			newcolor = "#FF0000"
+		user.add_atom_colour(newcolor, ADMIN_COLOUR_PRIORITY)
 		sleep(1)
-	user.color = orig_color
+	user.remove_atom_colour(ADMIN_COLOUR_PRIORITY)
 	user.visible_message("<span class='suicide'>[user] was destroyed by the nuclear blast!</span>")
 	return OXYLOSS
 

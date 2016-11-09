@@ -35,7 +35,7 @@ var/datum/subsystem/weather/SSweather
 	..()
 	for(var/V in subtypesof(/datum/weather))
 		var/datum/weather/W = V
-		existing_weather |= new W
+		new W	//weather->New will handle adding itself to the list
 
 /datum/subsystem/weather/proc/run_weather(weather_name, Z)
 	if(!weather_name)

@@ -17,6 +17,7 @@
 	origin_tech = "materials=1"
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 100)
 	resistance_flags = ACID_PROOF
+	merge_type = /obj/item/stack/sheet/glass
 
 /obj/item/stack/sheet/glass/cyborg
 	materials = list()
@@ -141,6 +142,7 @@
 	origin_tech = "materials=2"
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 70, acid = 100)
 	resistance_flags = ACID_PROOF
+	merge_type = /obj/item/stack/sheet/rglass
 
 /obj/item/stack/sheet/rglass/cyborg
 	materials = list()

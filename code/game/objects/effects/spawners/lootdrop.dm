@@ -23,16 +23,16 @@
 	lootdoubles = 0
 
 	loot = list(
-				/obj/item/weapon/gun/projectile/automatic/pistol = 8,
-				/obj/item/weapon/gun/projectile/shotgun/automatic/combat = 5,
-				/obj/item/weapon/gun/projectile/revolver/mateba,
-				/obj/item/weapon/gun/projectile/automatic/pistol/deagle
+				/obj/item/weapon/gun/ballistic/automatic/pistol = 8,
+				/obj/item/weapon/gun/ballistic/shotgun/automatic/combat = 5,
+				/obj/item/weapon/gun/ballistic/revolver/mateba,
+				/obj/item/weapon/gun/ballistic/automatic/pistol/deagle
 				)
 
 /obj/effect/spawner/lootdrop/gambling
 	name = "gambling valuables spawner"
 	loot = list(
-				/obj/item/weapon/gun/projectile/revolver/russian = 5,
+				/obj/item/weapon/gun/ballistic/revolver/russian = 5,
 				/obj/item/weapon/storage/box/syndie_kit/throwing_weapons = 1,
 				/obj/item/toy/cards/deck/syndicate = 2
 				)
@@ -121,7 +121,7 @@
 				/obj/item/weapon/crowbar = 1,
 				/obj/item/weapon/crowbar/red = 1,
 				/obj/item/weapon/extinguisher = 11,
-				//obj/item/weapon/gun/projectile/revolver/russian = 1, //disabled until lootdrop is a proper world proc.
+				//obj/item/weapon/gun/ballistic/revolver/russian = 1, //disabled until lootdrop is a proper world proc.
 				/obj/item/weapon/hand_labeler = 1,
 				/obj/item/weapon/paper/crumpled = 1,
 				/obj/item/weapon/pen = 1,

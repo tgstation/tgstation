@@ -51,7 +51,7 @@
 	data["ready_implants"]  = ready_implants
 	data["ready"] = ready
 	data["replenishing"] = replenishing
-	
+
 	return data
 
 /obj/machinery/implantchair/ui_act(action, params)
@@ -114,8 +114,7 @@
 	ready = TRUE
 	update_icon()
 
-/obj/machinery/implantchair/container_resist()
-	var/mob/living/user = usr
+/obj/machinery/implantchair/container_resist(mob/living/user)
 	if(state_open)
 		return
 	user.changeNext_move(CLICK_CD_BREAKOUT)
@@ -131,7 +130,7 @@
 		open_machine()
 
 /obj/machinery/implantchair/relaymove(mob/user)
-	container_resist()
+	container_resist(user)
 
 /obj/machinery/implantchair/MouseDrop_T(mob/target, mob/user)
 	if(user.stat || user.lying || !Adjacent(user) || !user.Adjacent(target) || !iscarbon(target) || !user.IsAdvancedToolUser())
@@ -189,4 +188,3 @@
 	log_game("[key_name_admin(user)] brainwashed [key_name_admin(C)] with objective '[objective]'.")
 	return 1
 
-	

@@ -92,15 +92,20 @@
 	if(!(resistance_flags & INDESTRUCTIBLE))
 		if(resistance_flags & ON_FIRE)
 			user << "<span class='warning'>It's on fire!</span>"
-		var/healthpercent = (obj_integrity/max_integrity) * 100
 		if(broken)
 			user << "<span class='notice'>It looks broken.</span>"
-		switch(healthpercent)
-			if(100 to INFINITY)
-				user <<  "It seems pristine and undamaged."
-			if(50 to 100)
-				user <<  "It looks slightly damaged."
-			if(25 to 50)
-				user <<  "It appears heavily damaged."
-			if(0 to 25)
-				user <<  "<span class='warning'>It's falling apart!</span>"
+		var/examine_status = examine_status()
+		if(examine_status)
+			user << examine_status
+
+/obj/structure/proc/examine_status() //An overridable proc, mostly for falsewalls.
+	var/healthpercent = (obj_integrity/max_integrity) * 100
+	switch(healthpercent)
+		if(100 to INFINITY)
+			return  "It seems pristine and undamaged."
+		if(50 to 100)
+			return  "It looks slightly damaged."
+		if(25 to 50)
+			return  "It appears heavily damaged."
+		if(0 to 25)
+			return  "<span class='warning'>It's falling apart!</span>"

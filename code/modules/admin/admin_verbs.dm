@@ -497,6 +497,7 @@ var/list/admin_verbs_hideable = list(
 	var/list/choices = list("Small Bomb", "Medium Bomb", "Big Bomb", "Custom Bomb")
 	var/choice = input("What size explosion would you like to produce?") in choices
 	var/turf/epicenter = mob.loc
+
 	switch(choice)
 		if(null)
 			return 0
@@ -521,7 +522,8 @@ var/list/admin_verbs_hideable = list(
 				return
 			epicenter = mob.loc //We need to reupdate as they may have moved again
 			explosion(epicenter, devastation_range, heavy_impact_range, light_impact_range, flash_range)
-	message_admins("<span class='adminnotice'>[ckey] creating an admin explosion at [epicenter.loc].</span>")
+	message_admins("[ADMIN_LOOKUPFLW(usr)] creating an admin explosion at [epicenter.loc].")
+	log_admin("[key_name(usr)] created an admin explosion at [epicenter.loc].")
 	feedback_add_details("admin_verb","DB") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/drop_dynex_bomb()
@@ -533,7 +535,8 @@ var/list/admin_verbs_hideable = list(
 	var/turf/epicenter = mob.loc
 	if(ex_power && epicenter)
 		dyn_explosion(epicenter, ex_power)
-		message_admins("<span class='adminnotice'>[ckey] creating an admin explosion at [epicenter.loc].</span>")
+		message_admins("[ADMIN_LOOKUPFLW(usr)] creating an admin explosion at [epicenter.loc].")
+		log_admin("[key_name(usr)] created an admin explosion at [epicenter.loc].")
 		feedback_add_details("admin_verb","DDXB") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/get_dynex_range()
