@@ -90386,7 +90386,9 @@
 	color = "#330000";
 	dir = 4
 	},
-/obj/machinery/atmospherics/components/binary/valve/digital,
+/obj/machinery/atmospherics/components/binary/valve/digital{
+	name = "Waste Release"
+	},
 /turf/open/floor/plasteel/black,
 /area/atmos)
 "cYM" = (
