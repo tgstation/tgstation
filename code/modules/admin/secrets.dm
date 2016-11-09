@@ -328,28 +328,14 @@
 			for(var/mob/living/carbon/human/H in player_list)
 				if(H.stat == 2 || !H.client || !H.mind) continue
 				if(is_special_character(H)) continue
-				//traitorize(H, objective, 0)
 				ticker.mode.traitors += H.mind
-				H.mind.special_role = "traitor"
-				var/datum/objective/new_objective = new
-				new_objective.owner = H
-				new_objective.explanation_text = objective
-				H.mind.objectives += new_objective
-				ticker.mode.greet_traitor(H.mind)
-				//ticker.mode.forge_traitor_objectives(H.mind)
-				ticker.mode.finalize_traitor(H.mind)
+				H.gain_antag_datum(/datum/antagonist/traitor/uplink)
 			for(var/mob/living/silicon/A in player_list)
 				if(A.stat == 2 || !A.client || !A.mind) continue
 				if(ispAI(A)) continue
 				else if(is_special_character(A)) continue
 				ticker.mode.traitors += A.mind
-				A.mind.special_role = "traitor"
-				var/datum/objective/new_objective = new
-				new_objective.owner = A
-				new_objective.explanation_text = objective
-				A.mind.objectives += new_objective
-				ticker.mode.greet_traitor(A.mind)
-				ticker.mode.finalize_traitor(A.mind)
+				A.gain_antag_datum(/datum/antagonist/traitor/uplink)
 			message_admins("<span class='adminnotice'>[key_name_admin(usr)] used everyone is a traitor secret. Objective is [objective]</span>")
 			log_admin("[key_name(usr)] used everyone is a traitor secret. Objective is [objective]")
 

@@ -2,7 +2,8 @@
 
 /datum/antagonist/clockcultist
 	prevented_antag_datum_types = list(/datum/antagonist/cultist)
-	greeting_text = null
+	gain_fluff = null //Handled in give_to_body()
+	loss_fluff = null //Handled in on_remove()
 	var/datum/action/innate/hierophant/hierophant_network = new()
 
 /datum/antagonist/clockcultist/silent

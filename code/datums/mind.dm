@@ -1074,27 +1074,20 @@
 	else if (href_list["traitor"])
 		switch(href_list["traitor"])
 			if("clear")
+				current.lose_antag_datum(/datum/antagonist/traitor, TRUE)
 				remove_traitor()
-				current << "<span class='userdanger'>You have been brainwashed! You are no longer a traitor!</span>"
 				message_admins("[key_name_admin(usr)] has de-traitor'ed [current].")
 				log_admin("[key_name(usr)] has de-traitor'ed [current].")
 				ticker.mode.update_traitor_icons_removed(src)
 
 			if("traitor")
 				if(!(src in ticker.mode.traitors))
-					ticker.mode.traitors += src
-					special_role = "traitor"
-					current << "<span class='boldannounce'>You are a traitor!</span>"
-					message_admins("[key_name_admin(usr)] has traitor'ed [current].")
-					log_admin("[key_name(usr)] has traitor'ed [current].")
-					if(isAI(current))
-						var/mob/living/silicon/ai/A = current
-						ticker.mode.add_law_zero(A)
-					ticker.mode.update_traitor_icons_added(src)
+					current.gain_antag_datum(/datum/antagonist/traitor/admin)
 
 			if("autoobjectives")
-				ticker.mode.forge_traitor_objectives(src)
-				usr << "<span class='notice'>The objectives for traitor [key] have been generated. You can edit them and anounce manually.</span>"
+				current.call_antag_datum_proc(/datum/antagonist/traitor, "forge_objectives")
+				message_admins("[key_name_admin(usr)] has automatically generated objectives for [current.real_name] ([current.key]).")
+				usr << "<span class='notice'>You have automatically generated objectives for [current.real_name]. You may view and edit them manually.</span>"
 
 	else if(href_list["devil"])
 		switch(href_list["devil"])
@@ -1249,9 +1242,8 @@
 							message_admins("[key_name_admin(usr)] changed [current]'s telecrystal count to [crystals].")
 							log_admin("[key_name(usr)] changed [current]'s telecrystal count to [crystals].")
 			if("uplink")
-				if(!ticker.mode.equip_traitor(current, !(src in ticker.mode.traitors)))
-					usr << "<span class='danger'>Equipping a syndicate failed!</span>"
-				log_admin("[key_name(usr)] attempted to give [current] an uplink.")
+				current.call_antag_datum_proc(/datum/antagonist/traitor, "give_uplink")
+				return
 
 	else if (href_list["obj_announce"])
 		announce_objectives()
@@ -1280,11 +1272,7 @@
 
 /datum/mind/proc/make_Traitor()
 	if(!(src in ticker.mode.traitors))
-		ticker.mode.traitors += src
-		special_role = "traitor"
-		ticker.mode.forge_traitor_objectives(src)
-		ticker.mode.finalize_traitor(src)
-		ticker.mode.greet_traitor(src)
+		current.gain_antag_datum(/datum/antagonist/traitor)
 
 /datum/mind/proc/make_Nuke(turf/spawnloc, nuke_code, leader=0, telecrystals = TRUE)
 	if(!(src in ticker.mode.syndicates))

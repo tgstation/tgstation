@@ -2,7 +2,8 @@
 /datum/antagonist
 	var/name = "antagonist" //What's our short name?
 	var/desc = "You exist to make the crew's lives suck." //What do we do?
-	var/greeting_text = "You're an antagonist! Go kill people, it's what everyone else does." //What do we hear when we turn into the antagonist?
+	var/gain_fluff = "You're an antagonist! Go kill people, it's what everyone else does." //What do we hear when we turn into the antagonist?
+	var/loss_fluff = "The gods have revoked your license to grief. Sucks to be you." //What do we hear when we lose our antagonism?
 	var/mob/living/owner //who's our owner and accordingly an antagonist
 	var/list/prevented_antag_datum_types = list() //types of antag datum that this datum can't coexist with
 	var/silent_update = FALSE //if we suppress messages during on_gain, apply_innate_effects, remove_innate_effects, and on_remove
@@ -28,22 +29,30 @@
 	if(new_body && can_be_owned(new_body))
 		new_body.antag_datums += src
 		owner = new_body
+		owner.mind.special_role = name
+		log_game("[owner.key] (ckey) became a(n) [name]!")
 		on_gain()
-		forge_objectives()
+		if(has_objectives)
+			forge_objectives()
 		. = src //return the datum if successful
 	else
 		qdel(src)
 		. = FALSE
 
 /datum/antagonist/proc/on_gain() //on initial gain of antag datum, do this. should only be called once per datum
-	if(!silent_update && greeting_text)
+	if(!silent_update && gain_fluff)
 		greet()
 	apply_innate_effects()
 
 /datum/antagonist/proc/greet() //Sends some text to our new owner.
-	if(!owner || !greeting_text)
+	if(!owner || !gain_fluff)
 		return
-	owner << greeting_text
+	owner << gain_fluff
+
+/datum/antagonist/proc/farewell() //Sends some text to our owner before we leave.
+	if(!owner || !loss_fluff)
+		return
+	owner << loss_fluff
 
 /datum/antagonist/proc/forge_objectives() //Assigns primary objectives and the constant one.
 	generate_objectives()
@@ -62,6 +71,8 @@
 	//also antag huds but see above antag huds a shit
 
 /datum/antagonist/proc/on_remove() //totally removes the antag datum from the owner; can only be called once per owner
+	if(!silent_update && loss_fluff)
+		farewell()
 	remove_innate_effects()
 	owner.antag_datums -= src
 	qdel(src)
@@ -77,7 +88,7 @@
 
 //mob var and helper procs/Destroy override
 /mob/living
-	var/list/antag_datums
+	var/list/antag_datums = list()
 
 /mob/living/Destroy() //TODO: merge this with the living/Destroy() in code\modules\mob\living\living.dm (currently line 29)
 	if(islist(antag_datums))
@@ -115,3 +126,10 @@
 			if(D.type == type)
 				return D
 	return FALSE
+
+/mob/living/proc/call_antag_datum_proc(datum, proc_to_call, ...)
+	var/datum/antagonist/A = has_antag_datum(datum, TRUE)
+	if(!A)
+		return
+	call(A, proc_to_call)(arglist(args))
+	return 1

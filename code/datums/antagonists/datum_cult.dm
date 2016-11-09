@@ -1,6 +1,9 @@
 /datum/antagonist/cultist
 	prevented_antag_datum_types = list(/datum/antagonist/clockcultist)
-	greeting_text = null
+	gain_fluff = "<span class='cultitalic'><b>Your blood pulses. Your head throbs. The world goes red. All at once you are aware of a horrible, horrible truth. The veil of reality has been \
+	torn open and something evil takes root.<br>Assist your new compatriots in their dark dealings. Your goal is theirs, and theirs is yours. You serve the Geometer above all else. \
+	Bring It back.</b></span>"
+	loss_fluff = "<span class='userdanger'>An unfamiliar white light courses through your mind, cleansing the Geometer's taint and all your memories of your time as its servant.</span>"
 	var/datum/action/innate/cultcomm/communion = new()
 
 /datum/antagonist/cultist/Destroy()
@@ -43,7 +46,6 @@
 		if(ticker && ticker.mode)
 			ticker.mode.cult -= owner.mind
 			ticker.mode.update_cult_icons_removed(owner.mind)
-	owner << "<span class='userdanger'>An unfamiliar white light flashes through your mind, cleansing the taint of the Dark One and all your memories as its servant.</span>"
 	owner.attack_log += "\[[time_stamp()]\] <span class='cult'>Has renounced the cult of Nar'Sie!</span>"
 	if(!silent_update)
 		owner.visible_message("<span class='big'>[owner] looks like they just reverted to their old faith!</span>")
