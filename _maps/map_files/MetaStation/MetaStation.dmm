@@ -7331,8 +7331,9 @@
 	dir = 8
 	},
 /obj/machinery/conveyor{
-	dir = 2;
-	id = "garbage"
+	dir = 9;
+	id = "garbage";
+	verted = -1
 	},
 /turf/open/floor/plating,
 /area/maintenance/disposal)
@@ -7345,7 +7346,7 @@
 /area/maintenance/disposal)
 "amW" = (
 /obj/machinery/conveyor{
-	dir = 4;
+	dir = 6;
 	id = "garbage"
 	},
 /obj/machinery/door/window/eastright{
@@ -7950,7 +7951,7 @@
 	req_access_txt = "12"
 	},
 /obj/machinery/conveyor{
-	dir = 2;
+	dir = 10;
 	id = "garbage"
 	},
 /turf/open/floor/plating,
