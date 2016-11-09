@@ -460,7 +460,7 @@
 	if(isclosedturf(unmovablevictim))
 		density = 1
 		anchored = 1
-	if(ismovable(unmovablevictim))
+	if(ismovableatom(unmovablevictim))
 		victim = unmovablevictim
 		density = victim.density
 		anchored = victim.anchored
