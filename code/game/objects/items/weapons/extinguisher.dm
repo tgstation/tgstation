@@ -51,11 +51,8 @@
 	return
 
 /obj/item/weapon/extinguisher/attack(mob/M, mob/user)
-	if(user.a_intent == "help")
-		// If we're in help intent, don't bash anyone with the
-		// extinguisher
-		user.visible_message("[user] targets [M] with \the [src]", "<span class='info'>You target [M] with \the [src].</span>")
-		return 0
+	if(user.a_intent == "help" && !safety) //If we're on help intent and going to spray people, don't bash them.
+		return FALSE
 	else
 		return ..()
 

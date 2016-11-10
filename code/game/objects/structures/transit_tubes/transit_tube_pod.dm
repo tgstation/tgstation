@@ -145,52 +145,14 @@
 	if(!TT || (!(dir in TT.tube_dirs) && !(turn(dir,180) in TT.tube_dirs)))	//landed on a turf without transit tube or not in our direction
 		deconstruct(FALSE)	//we automatically deconstruct the pod
 
-// Should I return a copy here? If the caller edits or del()s the returned
-//  datum, there might be problems if I don't...
 /obj/structure/transit_tube_pod/return_air()
-	var/datum/gas_mixture/GM = new()
-	GM.copy_from(air_contents)
-	return GM
+	return air_contents
 
-// For now, copying what I found in an unused FEA file (and almost identical in a
-//  used ZAS file). Means that assume_air and remove_air don't actually alter the
-//  air contents.
 /obj/structure/transit_tube_pod/assume_air(datum/gas_mixture/giver)
 	return air_contents.merge(giver)
 
 /obj/structure/transit_tube_pod/remove_air(amount)
 	return air_contents.remove(amount)
-
-
-
-// Called when a pod arrives at, and before a pod departs from a station,
-//  giving it a chance to mix its internal air supply with the turf it is
-//  currently on.
-/obj/structure/transit_tube_pod/proc/mix_air()
-	var/datum/gas_mixture/environment = loc.return_air()
-	var/env_pressure = environment.return_pressure()
-	var/int_pressure = air_contents.return_pressure()
-	var/total_pressure = env_pressure + int_pressure
-
-	if(total_pressure == 0)
-		return
-
-	// Math here: Completely made up, not based on realistic equasions.
-	//  Goal is to balance towards equal pressure, but ensure some gas
-	//  transfer in both directions regardless.
-	// Feel free to rip this out and replace it with something better,
-	//  I don't really know much about how gas transfer rates work in
-	//  SS13.
-	var/transfer_in = max(0.1, 0.5 * (env_pressure - int_pressure) / total_pressure)
-	var/transfer_out = max(0.1, 0.3 * (int_pressure - env_pressure) / total_pressure)
-
-	var/datum/gas_mixture/from_env = loc.remove_air(environment.total_moles() * transfer_in)
-	var/datum/gas_mixture/from_int = air_contents.remove(air_contents.total_moles() * transfer_out)
-
-	loc.assume_air(from_int)
-	air_contents.merge(from_env)
-
-
 
 /obj/structure/transit_tube_pod/relaymove(mob/mob, direction)
 	if(istype(mob) && mob.client)

@@ -646,7 +646,8 @@ Difficulty: Very Hard
 			PoolOrNew(/obj/effect/overlay/temp/heal, list(get_turf(target), "#80F5FF"))
 
 /mob/living/simple_animal/hostile/lightgeist/ghostize()
-	if(..())
+	. = ..()
+	if(.)
 		death()
 
 

@@ -115,7 +115,7 @@
 /obj/item/clockwork/component/replicant_alloy/fallen_armor
 	name = "fallen armor"
 	desc = "Lifeless chunks of armor. They're designed in a strange way and won't fit on you."
-	clockwork_desc = "The armor from a former clockwork marauder. <b>Serviceable as a substitute for replicant alloy."
+	clockwork_desc = "The armor from a former clockwork marauder. <b>Serviceable as a substitute for replicant alloy.</b>"
 	icon_state = "fallen_armor"
 	cultist_message = "Red flame sputters from the mask's eye before winking out."
 	servant_of_ratvar_messages = list("A piece of armor hovers away from the others for a moment." = FALSE, "Red flame appears in the cuirass before sputtering out." = FALSE)

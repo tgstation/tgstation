@@ -255,8 +255,40 @@ SEC_START_BRIG
 ## This controls what the AI's laws are at the start of the round.
 ## Set to 0/commented for "off", silicons will just start with Asimov.
 ## Set to 1 for "custom", silicons will start with the custom laws defined in silicon_laws.txt. (If silicon_laws.txt is empty, the AI will spawn with asimov and Custom boards will auto-delete.)
-## Set to 2 for "random", silicons will start with a random lawset picked from (at the time of writing): P.A.L.A.D.I.N., Corporate, Asimov. More can be added by changing the law datum paths in ai_laws.dm.
-DEFAULT_LAWS 1
+## Set to 2 for "random", silicons will start with a random lawset picked from random laws specified below.
+DEFAULT_LAWS 0
+
+## RANDOM LAWS ##
+## ------------------------------------------------------------------------------------------
+## These control what laws are available for selection if random silicon laws are active.
+## See datums\ai_laws.dm for the full law lists
+
+## standard-ish laws. These are fairly ok to run
+RANDOM_LAWS asimov
+RANDOM_LAWS asimovpp
+RANDOM_LAWS paladin
+RANDOM_LAWS robocop
+RANDOM_LAWS corporate
+
+## Quirky laws. Shouldn't cause too much harm
+#RANDOM_LAWS hippocratic
+#RANDOM_LAWS maintain
+#RANDOM_LAWS drone
+#RANDOM_LAWS liveandletlive
+#RANDOM_LAWS peacekeeper
+#RANDOM_LAWS reporter
+
+## Bad idea laws. Probably shouldn't enable these
+#RANDOM_LAWS syndie
+#RANDOM_LAWS ninja
+#RANDOM_LAWS antimov
+#RANDOM_LAWS thermodynamic
+#RANDOM_LAWS ratvar
+
+## meme laws. Honk
+#RANDOM_LAWS buildawall
+
+##------------------------------------------------
 
 ### SILICON LAW MAX AMOUNT ###
 ## The maximum number of laws a silicon can have
