@@ -1,11 +1,3 @@
-#define INTACT 0
-#define SUPPORT_LINES 1
-#define COVER 2
-#define CUT_COVER 3
-#define BOLTS 4
-#define SUPPORT_RODS 5
-#define SHEATH 6
-
 /turf/closed/wall/r_wall
 	name = "reinforced wall"
 	desc = "A huge chunk of reinforced metal used to separate rooms."
@@ -23,19 +15,19 @@
 	..()
 	switch(d_state)
 		if(INTACT)
-			user << "<span class='notice'><b>Wirecutters</b> are required to remove the outter grille.</span>"
+			user << "<span class='notice'>The outer <b>grille</b> is fully intact.</span>"
 		if(SUPPORT_LINES)
-			user << "<span class='notice'>The outter grille has been removed. A <b>screwdriver</b> could remove the support lines.</span>"
+			user << "<span class='notice'>The outer <i>grille</i> has been cut, and the support lines are <b>screwed</b> securely to the outer cover.</span>"
 		if(COVER)
-			user << "<span class='notice'>The support lines have been removed. A <b>welding tool</b> could slice through the cover.</span>"
+			user << "<span class='notice'>The support lines have been <i>unscrewed</i>, and the metal cover is <b>welded</b> firmly in place.</span>"
 		if(CUT_COVER)
-			user << "<span class='notice'>The cover has been cut open. A <b>crowbar</b> could dislodge it.</span>"
+			user << "<span class='notice'>The metal cover has been <i>sliced through</i>, and is <b>connected loosely</b> to the girder.</span>"
 		if(BOLTS)
-			user << "<span class='notice'>The cover has been removed. A <b>wrench</b> could loosen the bolts.</span>"
+			user << "<span class='notice'>The outer cover has been <i>pried away</i>, and the bolts anchoring the support rods are <b>wrenched</b> in place.</span>"
 		if(SUPPORT_RODS)
-			user << "<span class='notice'>The bolts have been loosened. A <b>welding tool</b> could cut through the support rods.</span>"
+			user << "<span class='notice'>The bolts anchoring the support rods have been <i>loosened</i>, but are still <b>welded</b> firmly to the girder.</span>"
 		if(SHEATH)
-			user << "<span class='notice'>The support rods have been cut. A <b>crowbar</b> could pry off the outer sheath.</span>"
+			user << "<span class='notice'>The support rods have been <i>sliced through</i>, and the outer sheath is <b>connected loosely</b> to the girder.</span>"
 
 /turf/closed/wall/r_wall/break_wall()
 	builtin_sheet.loc = src
@@ -250,11 +242,3 @@
 	if(current_size >= STAGE_FIVE)
 		if(prob(30))
 			dismantle_wall()
-
-#undef INTACT
-#undef SUPPORT_LINES
-#undef COVER
-#undef CUT_COVER
-#undef BOLTS
-#undef SUPPORT_RODS
-#undef SHEATH
