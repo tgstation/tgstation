@@ -39,4 +39,4 @@
 		wizard.status_flags &= ~GODMODE
 		wizard.notransform = 0
 		wizard.forceMove(get_turf(src))
-	..()
+	return ..()
