@@ -5,6 +5,7 @@
 	icon = 'icons/obj/clothing/clockwork_garb.dmi'
 	icon_state = "clockwork_helmet"
 	w_class = 3
+	flags = HEADBANGPROTECT
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	armor = list(melee = 80, bullet = 70, laser = -25, energy = 0, bomb = 60, bio = 0, rad = 0, fire = 100, acid = 100)
 
