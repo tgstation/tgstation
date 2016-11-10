@@ -98,7 +98,7 @@
 	if(buckle_mob(M))
 		if(M == user)
 			M.visible_message(\
-				"<span class='notice'>[M] buckles themself to [src].</span>",\
+				"<span class='notice'>[M] buckles [M.p_them()]self to [src].</span>",\
 				"<span class='notice'>You buckle yourself to [src].</span>",\
 				"<span class='italics'>You hear metal clanking.</span>")
 		else
@@ -119,7 +119,7 @@
 				"<span class='italics'>You hear metal clanking.</span>")
 		else
 			M.visible_message(\
-				"<span class='notice'>[M] unbuckles themselves from [src].</span>",\
+				"<span class='notice'>[M] unbuckles [M.p_them()]self from [src].</span>",\
 				"<span class='notice'>You unbuckle yourself from [src].</span>",\
 				"<span class='italics'>You hear metal clanking.</span>")
 		add_fingerprint(user)

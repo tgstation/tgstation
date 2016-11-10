@@ -212,11 +212,11 @@ mob/living/carbon/bullet_act(obj/item/projectile/P, def_zone)
 	if(health >= 0 && !(status_flags & FAKEDEATH))
 
 		if(lying)
-			M.visible_message("<span class='notice'>[M] shakes [src] trying to get them up!</span>", \
-							"<span class='notice'>You shake [src] trying to get them up!</span>")
+			M.visible_message("<span class='notice'>[M] shakes [src] trying to get [p_them()] up!</span>", \
+							"<span class='notice'>You shake [src] trying to get [p_them()] up!</span>")
 		else
-			M.visible_message("<span class='notice'>[M] hugs [src] to make them feel better!</span>", \
-						"<span class='notice'>You hug [src] to make them feel better!</span>")
+			M.visible_message("<span class='notice'>[M] hugs [src] to make [p_them()] feel better!</span>", \
+						"<span class='notice'>You hug [src] to make [p_them()] feel better!</span>")
 		AdjustSleeping(-5)
 		AdjustParalysis(-3)
 		AdjustStunned(-3)
