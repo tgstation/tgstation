@@ -182,7 +182,6 @@
 				bonus_spread += 24 * G.weapon_weight
 				loop_counter++
 				spawn(loop_counter)
-					G.recharge_newshot()
 					G.process_fire(target,user,1,params, null, bonus_spread)
 
 	process_fire(target,user,1,params, null, bonus_spread)
@@ -223,7 +222,9 @@ obj/item/weapon/gun/proc/recharge_newshot()
 			recoil = initial(recoil)
 
 	var/sprd = 0
-	var/randomized_gun_spread = rand(0,spread)
+	var/randomized_gun_spread = 0
+	if(spread)
+		randomized_gun_spread =	rand(0,spread)
 	var/randomized_bonus_spread = rand(0, bonus_spread)
 
 	if(burst_size > 1)
