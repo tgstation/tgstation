@@ -132,18 +132,25 @@ var/total_borer_hosts_needed = 10
 
 	GrantBorerActions()
 
+/mob/living/simple_animal/borer/Topic(href, href_list)//not entirely sure if this is even required
+	if(href_list["ghostjoin"])
+		var/mob/dead/observer/ghost = usr
+		if(istype(ghost))
+			attack_ghost(ghost)
+
 /mob/living/simple_animal/borer/attack_ghost(mob/user)
 	if(jobban_isbanned(user, ROLE_BORER) || jobban_isbanned(user, "Syndicate"))
 		return
-	if(ckey)
+	if(key)
 		return
 	if(stat != CONSCIOUS)
 		return
-	var/be_swarmer = alert("Become a cortical borer? (Warning, You can no longer be cloned!)",,"Yes","No")
-	if(be_swarmer == "No")
+	var/be_borer = alert("Become a cortical borer? (Warning, You can no longer be cloned!)",,"Yes","No")
+	if(be_borer == "No" || !src || qdeleted(src))
 		return
-	if(src && !qdeleted(src))
-		transfer_personality(user.client)
+	if(key)
+		return
+	transfer_personality(user.client)
 
 /mob/living/simple_animal/borer/Stat()
 	..()
@@ -783,9 +790,8 @@ mob/living/carbon/proc/release_control()
 		if(mind)
 			mind.store_memory("You must escape with at least [total_borer_hosts_needed] borers with hosts on the shuttle.")
 
-		src << "<span class='notice'>You are a cortical borer!</span> You are a brain slug that worms its way \
-		into the head of its victim. Use stealth, persuasion and your powers of mind control to keep you, \
-		your host and your eventual spawn safe and warm."
+		src << "<span class='notice'>You are a cortical borer!</span>"
+		src << "You are a brain slug that worms its way into the head of its victim. Use stealth, persuasion and your powers of mind control to keep you, your host and your eventual spawn safe and warm."
 		src << "Sugar nullifies your abilities, avoid it at all costs!"
 		src << "You can speak to your fellow borers by prefixing your messages with ';'. Check out your Borer tab to see your abilities."
 		src << "You must escape with at least [total_borer_hosts_needed] borers with hosts on the shuttle. To reproduce you must have 100 chemicals and be controlling a host."

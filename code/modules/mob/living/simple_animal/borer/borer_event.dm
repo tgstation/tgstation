@@ -40,7 +40,7 @@
 		if(H.stat != DEAD)
 			total_humans++
 
-	total_borer_hosts_needed = round(6 + total_humans/7)
+	total_borer_hosts_needed = round(1 + total_humans/6)
 
 	while(spawncount >= 1  && vents.len)
 		var/obj/vent = pick_n_take(vents)
