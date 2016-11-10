@@ -1,0 +1,4 @@
+author: "Cyberboss"
+delete-after: True
+changes: 
+  - bugfix: "Promotion of revheads won't occur if they are restrained/incapacitated"
