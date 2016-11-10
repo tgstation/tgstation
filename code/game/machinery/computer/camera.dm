@@ -57,7 +57,6 @@
 		user.unset_machine()
 		return
 
-	playsound(src, 'sound/machines/terminal_on.ogg', 25, 0)
 	var/list/camera_list = get_available_cameras()
 	if(!(user in watchers))
 		for(var/Num in camera_list)
@@ -112,7 +111,7 @@
 			A.client.eye = A.eyeobj
 		else
 			user.reset_perspective(C)
-			user.overlay_fullscreen("flash", /obj/screen/fullscreen/flash/noise)
+			user.overlay_fullscreen("flash", /obj/screen/fullscreen/flash/static)
 			user.clear_fullscreen("flash", 5)
 		watchers[user] = C
 		use_power(50)
