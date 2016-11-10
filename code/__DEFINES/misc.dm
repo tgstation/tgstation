@@ -558,3 +558,10 @@ var/global/list/ghost_others_options = list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 #define WASHABLE_COLOUR_PRIORITY 	3 //color splashed onto an atom (e.g. paint on turf)
 #define FIXED_COLOUR_PRIORITY 		4 //color inherent to the atom (e.g. blob color)
 #define COLOUR_PRIORITY_AMOUNT 4 //how many priority levels there are.
+
+
+//Nuke Endgame
+
+#define NUKE_NEAR_MISS 1
+#define NUKE_MISS_STATION 2
+#define NUKE_SYNDICATE_BASE 3
