@@ -66,13 +66,12 @@
 	skin = "bezerk"
 	heal_threshold = 0
 	declare_crit = 0
-	treatment_avoid_oxy = null
 	treatment_oxy = "pancuronium"
-	treatment_avoid_brute = null
+	treatment_brute_avoid = null
 	treatment_brute = "pancuronium"
-	treatment_avoid_fire = null
+	treatment_fire_avoid = null
 	treatment_fire = "sodium_thiopental"
-	treatment_avoid_tox = null
+	treatment_tox_avoid = null
 	treatment_tox = "sodium_thiopental"
 
 /mob/living/simple_animal/bot/medbot/update_icon()
@@ -359,29 +358,25 @@
 				return 1
 
 	//They're injured enough for it!
-	if((!C.has_reagent(treatment_brute_avoid)) && (C.getBruteLoss() >= heal_threshold) && (!C.reagents.has_reagent(treatment_brute)))
+	if((!C.reagents.has_reagent(treatment_brute_avoid)) && (C.getBruteLoss() >= heal_threshold) && (!C.reagents.has_reagent(treatment_brute)))
 		return 1 //If they're already medicated don't bother!
 
-	if((!C.has_reagent(treatment_oxy_avoid)) && (C.getOxyLoss() >= (15 + heal_threshold)) && (!C.reagents.has_reagent(treatment_oxy)))
+	if((!C.reagents.has_reagent(treatment_oxy_avoid)) && (C.getOxyLoss() >= (15 + heal_threshold)) && (!C.reagents.has_reagent(treatment_oxy)))
 		return 1
 
-	if((!C.has_reagent(treatment_fire_avoid)) && (C.getFireLoss() >= heal_threshold) && (!C.reagents.has_reagent(treatment_fire)))
+	if((!C.reagents.has_reagent(treatment_fire_avoid)) && (C.getFireLoss() >= heal_threshold) && (!C.reagents.has_reagent(treatment_fire)))
 		return 1
 
-	if((!C.has_reagent(treatment_tox_avoid)) && (C.getToxLoss() >= heal_threshold) && (!C.reagents.has_reagent(treatment_tox)))
+	if((!C.reagents.has_reagent(treatment_tox_avoid)) && (C.getToxLoss() >= heal_threshold) && (!C.reagents.has_reagent(treatment_tox)))
 		return 1
 
-	if(treat_virus && (!C.has_reagent(treatment_virus_avoid)))
+	if(treat_virus && !C.reagents.has_reagent(treatment_virus_avoid) && !C.reagents.has_reagent(treatment_virus))
 		for(var/datum/disease/D in C.viruses)
 			//the medibot can't detect viruses that are undetectable to Health Analyzers or Pandemic machines.
-			if(D.visibility_flags & HIDDEN_SCANNER || D.visibility_flags & HIDDEN_PANDEMIC)
-				return 0
-			if(D.severity == NONTHREAT) // medibot doesn't try to heal truly harmless viruses
-				return 0
-			if((D.stage > 1) || (D.spread_flags & AIRBORNE)) // medibot can't detect a virus in its initial stage unless it spreads airborne.
-
-				if(!C.reagents.has_reagent(treatment_virus))
-					return 1 //STOP DISEASE FOREVER
+			if(!(D.visibility_flags & HIDDEN_SCANNER || D.visibility_flags & HIDDEN_PANDEMIC) \
+			&& D.severity != NONTHREAT \
+			&& (D.stage > 1 || (D.spread_flags & AIRBORNE))) // medibot can't detect a virus in its initial stage unless it spreads airborne.
+				return 1 //STOP DISEASE FOREVER
 
 	return 0
 
@@ -435,23 +430,23 @@
 							virus = 1
 
 			if(!reagent_id && (virus))
-				if(!C.reagents.has_reagent(treatment_virus) && !C.has_reagent(treatment_virus_avoid))
+				if(!C.reagents.has_reagent(treatment_virus) && !C.reagents.has_reagent(treatment_virus_avoid))
 					reagent_id = treatment_virus
 
 		if(!reagent_id && (C.getBruteLoss() >= heal_threshold))
-			if(!C.reagents.has_reagent(treatment_brute) && !C.has_reagent(treatment_brute_avoid))
+			if(!C.reagents.has_reagent(treatment_brute) && !C.reagents.has_reagent(treatment_brute_avoid))
 				reagent_id = treatment_brute
 
 		if(!reagent_id && (C.getOxyLoss() >= (15 + heal_threshold)))
-			if(!C.reagents.has_reagent(treatment_oxy) && !C.has_reagent(treatment_oxy_avoid))
+			if(!C.reagents.has_reagent(treatment_oxy) && !C.reagents.has_reagent(treatment_oxy_avoid))
 				reagent_id = treatment_oxy
 
 		if(!reagent_id && (C.getFireLoss() >= heal_threshold))
-			if(!C.reagents.has_reagent(treatment_fire) && !C.has_reagent(treatment_fire_avoid))
+			if(!C.reagents.has_reagent(treatment_fire) && !C.reagents.has_reagent(treatment_fire_avoid))
 				reagent_id = treatment_fire
 
 		if(!reagent_id && (C.getToxLoss() >= heal_threshold))
-			if(!C.reagents.has_reagent(treatment_tox) && !C.has_reagent(treatment_tox_avoid))
+			if(!C.reagents.has_reagent(treatment_tox) && !C.reagents.has_reagent(treatment_tox_avoid))
 				reagent_id = treatment_tox
 
 		//If the patient is injured but doesn't have our special reagent in them then we should give it to them first
