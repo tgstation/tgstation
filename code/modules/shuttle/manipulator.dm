@@ -20,8 +20,6 @@
 	var/obj/docking_port/mobile/preview_shuttle
 	var/datum/map_template/shuttle/preview_template
 
-	var/shuttle_purchased = FALSE
-
 /obj/machinery/shuttle_manipulator/New()
 	. = ..()
 	update_icon()

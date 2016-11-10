@@ -139,12 +139,13 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 				var/list/shuttles = flatten_list(shuttle_templates)
 				var/datum/map_template/shuttle/S = locate(href_list["chosen_shuttle"]) in shuttles
 				if(S && istype(S))
-					for(var/obj/machinery/shuttle_manipulator/M in machines)
-						if(M.shuttle_purchased)
-							usr << "A replacement shuttle has already been purchased."
-						else
-							if(SSshuttle.points >= S.credit_cost)
-								M.shuttle_purchased = TRUE
+					if(SSshuttle.shuttle_purchased)
+						usr << "A replacement shuttle has already been purchased."
+					else
+						if(SSshuttle.points >= S.credit_cost)
+							var/obj/machinery/shuttle_manipulator/M  = locate() in machines
+							if(M)
+								SSshuttle.shuttle_purchased = TRUE
 								M.unload_preview()
 								M.load_template(S)
 								M.existing_shuttle = SSshuttle.emergency
@@ -154,8 +155,9 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 								message_admins("[key_name_admin(usr)] purchased [S.name].")
 								feedback_add_details("shuttle_manipulator", S.name)
 							else
-								usr << "Not enough credits."
-						break
+								usr << "Something went wrong! The shuttle exchange system seems to be down."
+						else
+							usr << "Not enough credits."
 
 		if("callshuttle")
 			src.state = STATE_DEFAULT
