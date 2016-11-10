@@ -1876,6 +1876,7 @@
 #include "code\modules\spells\spell_types\emplosion.dm"
 #include "code\modules\spells\spell_types\ethereal_jaunt.dm"
 #include "code\modules\spells\spell_types\explosion.dm"
+#include "code\modules\spells\spell_types\forcewall.dm"
 #include "code\modules\spells\spell_types\genetic.dm"
 #include "code\modules\spells\spell_types\godhand.dm"
 #include "code\modules\spells\spell_types\infinite_guns.dm"
