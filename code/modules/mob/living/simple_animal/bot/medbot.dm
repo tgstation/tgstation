@@ -38,6 +38,7 @@
 	var/declare_cooldown = 0 //Prevents spam of critical patient alerts.
 	var/stationary_mode = 0 //If enabled, the Medibot will not move automatically.
 	//Setting which reagents to use to treat what by default. By id.
+	var/treatment_avoid = "tricordrazine"	//will not treat if present
 	var/treatment_brute = "bicaridine"
 	var/treatment_oxy = "dexalin"
 	var/treatment_fire = "kelotane"
@@ -50,6 +51,7 @@
 	name = "\improper Mysterious Medibot"
 	desc = "International Medibot of mystery."
 	skin = "bezerk"
+	treatment_avoid = null
 	treatment_oxy = "tricordrazine"
 	treatment_brute = "tricordrazine"
 	treatment_fire = "tricordrazine"
@@ -61,6 +63,7 @@
 	skin = "bezerk"
 	heal_threshold = 0
 	declare_crit = 0
+	treatment_avoid = null
 	treatment_oxy = "pancuronium"
 	treatment_brute = "pancuronium"
 	treatment_fire = "sodium_thiopental"
@@ -349,18 +352,19 @@
 			if(!C.reagents.has_reagent(R.id))
 				return 1
 
-	//They're injured enough for it!
-	if((C.getBruteLoss() >= heal_threshold) && (!C.reagents.has_reagent(treatment_brute)))
-		return 1 //If they're already medicated don't bother!
+	if(!C.reagents.has_reagent(treatment_avoid))
+		if((C.getOxyLoss() >= (15 + heal_threshold)) && (!C.reagents.has_reagent(treatment_oxy)))
+			return 1
 
-	if((C.getOxyLoss() >= (15 + heal_threshold)) && (!C.reagents.has_reagent(treatment_oxy)))
-		return 1
+		//They're injured enough for it!
+		if((C.getBruteLoss() >= heal_threshold) && (!C.reagents.has_reagent(treatment_brute)))
+			return 1 //If they're already medicated don't bother!
 
-	if((C.getFireLoss() >= heal_threshold) && (!C.reagents.has_reagent(treatment_fire)))
-		return 1
+		if((C.getFireLoss() >= heal_threshold) && (!C.reagents.has_reagent(treatment_fire)))
+			return 1
 
-	if((C.getToxLoss() >= heal_threshold) && (!C.reagents.has_reagent(treatment_tox)))
-		return 1
+		if((C.getToxLoss() >= heal_threshold) && (!C.reagents.has_reagent(treatment_tox)))
+			return 1
 
 	if(treat_virus)
 		for(var/datum/disease/D in C.viruses)
@@ -429,21 +433,22 @@
 				if(!C.reagents.has_reagent(treatment_virus))
 					reagent_id = treatment_virus
 
-		if(!reagent_id && (C.getBruteLoss() >= heal_threshold))
-			if(!C.reagents.has_reagent(treatment_brute))
-				reagent_id = treatment_brute
+		if(!C.reagents.has_reagent(treatment_avoid))
+			if(!reagent_id && (C.getOxyLoss() >= (15 + heal_threshold)))
+				if(!C.reagents.has_reagent(treatment_oxy))
+					reagent_id = treatment_oxy
 
-		if(!reagent_id && (C.getOxyLoss() >= (15 + heal_threshold)))
-			if(!C.reagents.has_reagent(treatment_oxy))
-				reagent_id = treatment_oxy
+			if(!reagent_id && (C.getBruteLoss() >= heal_threshold))
+				if(!C.reagents.has_reagent(treatment_brute))
+					reagent_id = treatment_brute
 
-		if(!reagent_id && (C.getFireLoss() >= heal_threshold))
-			if(!C.reagents.has_reagent(treatment_fire))
-				reagent_id = treatment_fire
+			if(!reagent_id && (C.getFireLoss() >= heal_threshold))
+				if(!C.reagents.has_reagent(treatment_fire))
+					reagent_id = treatment_fire
 
-		if(!reagent_id && (C.getToxLoss() >= heal_threshold))
-			if(!C.reagents.has_reagent(treatment_tox))
-				reagent_id = treatment_tox
+			if(!reagent_id && (C.getToxLoss() >= heal_threshold))
+				if(!C.reagents.has_reagent(treatment_tox))
+					reagent_id = treatment_tox
 
 		//If the patient is injured but doesn't have our special reagent in them then we should give it to them first
 		if(reagent_id && use_beaker && reagent_glass && reagent_glass.reagents.total_volume)
