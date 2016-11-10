@@ -119,7 +119,11 @@ var/const/MAX_ACTIVE_TIME = 400
 /obj/item/clothing/mask/facehugger/proc/Attach(mob/living/M)
 	if(!isliving(M))
 		return 0
-	if((!iscorgi(M) && !iscarbon(M)) || isalien(M))
+	var/Corgi = iscorgi(M)
+	if((!Corgi && !iscarbon(M)) || isalien(M))
+		return 0
+	var/mob/living/carbon/Carb = M
+	if(!Corgi && !Carb.head)
 		return 0
 	if(attached)
 		return 0
