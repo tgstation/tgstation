@@ -31,6 +31,7 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 	var/const/STATE_ALERT_LEVEL = 8
 	var/const/STATE_CONFIRM_LEVEL = 9
 	var/const/STATE_TOGGLE_EMERGENCY = 10
+	var/const/STATE_PURCHASE = 11
 	var/const/COMMUNICATION_COOLDOWN = 600
 	var/const/COMMUNICATION_COOLDOWN_AI = 600
 
@@ -129,6 +130,34 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 				log_say("[key_name(usr)] has sent a message to the other server: [input]")
 				message_admins("[key_name_admin(usr)] has sent a message to the other server.")
 				CM.lastTimeUsed = world.time
+
+		if("purchase_menu")
+			state = STATE_PURCHASE
+
+		if("buyshuttle")
+			if(authenticated==2)
+				var/list/shuttles = flatten_list(shuttle_templates)
+				var/datum/map_template/shuttle/S = locate(href_list["chosen_shuttle"]) in shuttles
+				if(S && istype(S))
+					if(SSshuttle.shuttle_purchased)
+						usr << "A replacement shuttle has already been purchased."
+					else
+						if(SSshuttle.points >= S.credit_cost)
+							var/obj/machinery/shuttle_manipulator/M  = locate() in machines
+							if(M)
+								SSshuttle.shuttle_purchased = TRUE
+								M.unload_preview()
+								M.load_template(S)
+								M.existing_shuttle = SSshuttle.emergency
+								M.action_load(S)
+								SSshuttle.points -= S.credit_cost
+								minor_announce("[usr.name] has purchased [S.name] for [S.credit_cost] credits." , "Shuttle Purchase")
+								message_admins("[key_name_admin(usr)] purchased [S.name].")
+								feedback_add_details("shuttle_manipulator", S.name)
+							else
+								usr << "Something went wrong! The shuttle exchange system seems to be down."
+						else
+							usr << "Not enough credits."
 
 		if("callshuttle")
 			src.state = STATE_DEFAULT
@@ -399,6 +428,7 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 					dat += "<BR>\[ <A HREF='?src=\ref[src];operation=announce'>Make a Captain's Announcement</A> \]"
 					if(cross_allowed)
 						dat += "<BR>\[ <A HREF='?src=\ref[src];operation=crossserver'>Send a message to an allied station</A> \]"
+					dat += "<BR>\[ <A HREF='?src=\ref[src];operation=purchase_menu'>Purchase Shuttle</A> \]"
 					dat += "<BR>\[ <A HREF='?src=\ref[src];operation=changeseclevel'>Change Alert Level</A> \]"
 					dat += "<BR>\[ <A HREF='?src=\ref[src];operation=emergencyaccess'>Emergency Maintenance Access</A> \]"
 					dat += "<BR>\[ <A HREF='?src=\ref[src];operation=nukerequest'>Request Nuclear Authentication Codes</A> \]"
@@ -463,9 +493,19 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 				dat += "<b>Emergency Maintenance Access is currently <font color='green'>DISABLED</font></b>"
 				dat += "<BR>Lift access restrictions on maintenance and external airlocks? <BR>\[ <A HREF='?src=\ref[src];operation=enableemergency'>OK</A> | <A HREF='?src=\ref[src];operation=viewmessage'>Cancel</A> \]"
 
+		if(STATE_PURCHASE)
+			dat += "Budget: [SSshuttle.points] Credits.<BR>"
+			for(var/shuttle_id in shuttle_templates)
+				var/datum/map_template/shuttle/S = shuttle_templates[shuttle_id]
+				if(S.credit_cost < INFINITY)
+					dat += "[S.name] | [S.credit_cost] Credits<BR>"
+					dat += "[S.description]<BR>"
+					dat += "<A href='?src=\ref[src];operation=buyshuttle;chosen_shuttle=\ref[S]'>(<font color=red><i>Purchase</i></font>)</A><BR>"
+
 	dat += "<BR><BR>\[ [(src.state != STATE_DEFAULT) ? "<A HREF='?src=\ref[src];operation=main'>Main Menu</A> | " : ""]<A HREF='?src=\ref[user];mach_close=communications'>Close</A> \]"
-	//user << browse(dat, "window=communications;size=400x500")
-	//onclose(user, "communications")
+
+	popup.set_content(dat)
+	popup.open()
 	popup.set_content(dat)
 	popup.open()
 
