@@ -28,8 +28,7 @@
 /obj/effect/forcefield/wizard/New(atom/loc, mob/summoner)
 	..()
 	wizard = summoner
-	spawn(300)
-		qdel(src)
+	QDEL_IN(src, 300)
 
 /obj/effect/forcefield/wizard/CanPass(atom/movable/mover, turf/target, height=0)
 	if(mover == wizard)
