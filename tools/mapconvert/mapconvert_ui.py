@@ -28,12 +28,12 @@ def main(map_folder):
     for m in in_list:
         index_range = m.split("-")
         if len(index_range) == 1:
-            index = str(index_range[0])
+            index = int(index_range[0])
             if index >= 0 and index < len(list_of_files):
                 valid_indices.append(index)
         elif len(index_range) == 2:
-            index0 = str(index_range[0])
-            index1 = str(index_range[1])
+            index0 = int(index_range[0])
+            index1 = int(index_range[1])
             if index0 >= 0 and index0 <= index1 and index1 < len(list_of_files):
                 valid_indices.extend(range(index0, index1 + 1))
 

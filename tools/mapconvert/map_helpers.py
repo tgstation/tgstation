@@ -23,8 +23,8 @@ def hash_to_key(h):
     d2 = (h // 52) % 52
     d3 = (h // (52 * 52)) % 52
     def d2c(i):
-            return chr(ord('a' if i >= 26 else'A') + (i % 26))
-    return d2c(d1) + d2c(d2) + d2c(d3)
+            return chr(ord('a' if i < 26 else'A') + (i % 26))
+    return d2c(d3) + d2c(d2) + d2c(d1)
 
 def convert_map(infile, outfile):
     parsed_map = parse_map(infile)
@@ -33,30 +33,14 @@ def convert_map(infile, outfile):
     dictionary_in = parsed_map["dictionary"]
     grid_in = parsed_map["grid"]
 
-    used_hashes = dict()
-    known_keys = dict()
-
-    dictionary_out = dict()
-    grid_out = dict()
-
-    for y in range(1,maxy+1):
-        for x in range(1,maxx+1):
-            key_in = grid_in[x,y]
-
-            if (key_in in known_keys):
-                grid_out[x,y] = known_keys[key_in]
-            else:
-                h = tgm_hash(parsed_value_to_string(dictionary_in[key_in]))
-                while h in used_hashes:
-                    h = (h + 1) % (52 ** 3)
-                used_hashes[h] = True
-                key_out = hash_to_key(h)
-                dictionary_out[key_out] = dictionary_in[key_in]
-                grid_out[x,y] = key_out
-                known_keys[key_in] = key_out
-
-    write_dictionary_tgm(outfile, dictionary_out)
-    write_grid_coord_small(outfile, grid_out, maxx, maxy)
+    with open(outfile, "w") as output:
+        for y in range(1,maxy+1):
+            for x in range(1,maxx+1):
+                key = hash_to_key((x-1) + (y-1)*maxx)
+                output.write("\"{}\"=(\n".format(key))
+                output.write(parsed_value_to_string(dictionary_in[grid_in[x,y]]))
+                output.write(")\n")
+                output.write('({},{},1)={{"{}"}}\n'.format(x, y, key))
 
 def parsed_value_to_string(list_):
     string = ""
@@ -65,11 +49,11 @@ def parsed_value_to_string(list_):
         in_varedit_block = False
         for char in thing:
             if in_quote_block:
-                if char == "\"":
+                if char == '"':
                     in_quote_block = False
                 string = string + char
                 continue
-            elif char == "\"":
+            elif char == '"':
                 in_quote_block = True
                 string = string + char
                 continue
@@ -77,14 +61,14 @@ def parsed_value_to_string(list_):
             if not in_varedit_block:
                 if char == "{":
                     in_varedit_block = True
-                    string = string + "{\n\t"
+                    string = string + "{\n"
                     continue
             else:
                 if char == ";":
-                    string = string + ";\n\t"
+                    string = string + ";\n"
                     continue
                 elif char == "}":
-                    string = string + "\n\t}"
+                    string = string + "\n}"
                     in_varedit_block = False
                     continue
 
@@ -97,9 +81,8 @@ def parsed_value_to_string(list_):
 
 def write_dictionary_tgm(filename, dictionary): 
     with open(filename, "w") as output:
-        output.write("//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE \n")
         for key in sorted(dictionary.keys()):
-            output.write("\"{}\" = (\n".format(key))
+            output.write("\"{}\" = (".format(key))
             output.write(parsed_value_to_string(dictionary[key]))
             output.write(")\n")
 
