@@ -11,3 +11,6 @@
 
 /datum/game_mode/extended/post_setup()
 	..()
+
+/datum/game_mode/extended/send_intercept(report = 0)
+	priority_announce("Thanks to the tireless efforts of our security and intelligence divisions, there are currently no credible threats to [station_name()]. Have a secure shift!", "Central Command Update", 'sound/AI/commandreport.ogg')
