@@ -469,7 +469,8 @@
 		C.visible_message("<span class='danger'>[src] is trying to inject [patient]!</span>", \
 			"<span class='userdanger'>[src] is trying to inject you!</span>")
 
-		spawn(30)//replace with do mob
+		var/failed = FALSE;
+		if(do_mob(src, patient, 30))	//Is C == patient? This is so confusing
 			if((get_dist(src, patient) <= 1) && (on) && assess_patient(patient))
 				if(reagent_id == "internal_beaker")
 					if(use_beaker && reagent_glass && reagent_glass.reagents.total_volume)
@@ -481,10 +482,15 @@
 				C.visible_message("<span class='danger'>[src] injects [patient] with its syringe!</span>", \
 					"<span class='userdanger'>[src] injects you with its syringe!</span>")
 			else
-				visible_message("[src] retracts its syringe.")
-			update_icon()
-			soft_reset()
-			return
+				failed = TRUE
+		else
+			failed = TRUE
+
+		if(failed)
+			visible_message("[src] retracts its syringe.")
+		update_icon()
+		soft_reset()
+		return
 
 	reagent_id = null
 	return
