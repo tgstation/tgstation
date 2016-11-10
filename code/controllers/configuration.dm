@@ -177,6 +177,7 @@
 
 	var/default_laws = 0 //Controls what laws the AI spawns with.
 	var/silicon_max_law_amount = 12
+	var/list/lawids = list()
 
 	var/assistant_cap = -1
 
@@ -604,6 +605,9 @@
 					config.sandbox_autoclose		= 1
 				if("default_laws")
 					config.default_laws				= text2num(value)
+				if("random_laws")
+					var/law_id = lowertext(value)
+					lawids += law_id
 				if("silicon_max_law_amount")
 					config.silicon_max_law_amount	= text2num(value)
 				if("join_with_mutant_race")

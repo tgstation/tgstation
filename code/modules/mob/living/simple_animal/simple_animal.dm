@@ -87,7 +87,6 @@
 /mob/living/simple_animal/New()
 	..()
 	handcrafting = new()
-	verbs -= /mob/verb/observe
 	if(gender == PLURAL)
 		gender = pick(MALE,FEMALE)
 	if(!real_name)
