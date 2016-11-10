@@ -779,14 +779,13 @@ var/list/wall_runes = list()
 		density = FALSE
 		update_state()
 		var/oldcolor = color
-		color = "#696969"
-		animate(src, oldcolor, time = 50, easing = EASE_IN)
-		addtimer(src, "update_atom_colour", 50)
+		add_atom_colour("#696969", FIXED_COLOUR_PRIORITY)
+		animate(src, color = oldcolor, time = 50, easing = EASE_IN)
 		addtimer(src, "recharge", 50)
 
 /obj/effect/rune/wall/proc/recharge()
 	recharging = FALSE
-	color = initial(color)
+	add_atom_colour("#C80000", FIXED_COLOUR_PRIORITY)
 
 /obj/effect/rune/wall/proc/update_state()
 	deltimer(density_timer)
@@ -797,10 +796,10 @@ var/list/wall_runes = list()
 		I.alpha = 60
 		I.color = "#701414"
 		add_overlay(I)
-		color = "#FF0000"
+		add_atom_colour("#FF0000", FIXED_COLOUR_PRIORITY)
 	else
 		cut_overlays()
-		color = "#C80000"
+		add_atom_colour("#C80000", FIXED_COLOUR_PRIORITY)
 
 //Rite of Joined Souls: Summons a single cultist.
 /obj/effect/rune/summon

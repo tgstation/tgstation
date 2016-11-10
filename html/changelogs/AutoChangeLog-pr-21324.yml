@@ -1,5 +1,0 @@
-author: "Joan"
-delete-after: True
-changes: 
-  - tweak: "Ratvarian Spears now do 18 damage and ignore a small amount of armor on normal attacks, but have a slightly lower chance to knowdown/knockout. Impaling also ignores a larger amount of armor."
-  - rscadd: "Throwing a Ratvarian Spear at a Servant will not damage them and may cause them to catch the spear."

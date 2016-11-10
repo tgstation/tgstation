@@ -1,0 +1,4 @@
+author: "Kor"
+delete-after: True
+changes: 
+  - rscadd: "The wizard has a new spell, Rod Form, which allows him to transform into an immovable rod."

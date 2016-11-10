@@ -295,8 +295,6 @@
 
 /obj/item/weapon/reagent_containers/glass/bowl
 	name = "bowl"
-	icon_state	= "snack_bowl"
-	name = "bowl"
 	desc = "A simple bowl, used for soups and salads."
 	icon = 'icons/obj/food/soupsalad.dmi'
 	icon_state = "bowl"

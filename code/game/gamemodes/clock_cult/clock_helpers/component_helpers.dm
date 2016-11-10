@@ -83,7 +83,7 @@
 		if(HIEROPHANT_ANSIBLE)
 			return "nzcrentr"
 		else
-			return null
+			return "brass"
 
 //returns a component color from a component id, but with a brighter replicant alloy color
 /proc/get_component_color_brightalloy(id)

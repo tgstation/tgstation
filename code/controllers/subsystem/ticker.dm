@@ -239,7 +239,7 @@ var/datum/subsystem/ticker/ticker
 
 	//Now animate the cinematic
 	switch(station_missed)
-		if(1)	//nuke was nearby but (mostly) missed
+		if(NUKE_NEAR_MISS)	//nuke was nearby but (mostly) missed
 			if( mode && !override )
 				override = mode.name
 			switch( override )
@@ -265,7 +265,7 @@ var/datum/subsystem/ticker/ticker
 					//flick("end",cinematic)
 
 
-		if(2)	//nuke was nowhere nearby	//TODO: a really distant explosion animation
+		if(NUKE_MISS_STATION || NUKE_SYNDICATE_BASE)	//nuke was nowhere nearby	//TODO: a really distant explosion animation
 			sleep(50)
 			world << sound('sound/effects/explosionfar.ogg')
 		else	//station was destroyed
@@ -441,6 +441,22 @@ var/datum/subsystem/ticker/ticker
 	log_game("Antagonists at round end were...")
 	for(var/i in total_antagonists)
 		log_game("[i]s[total_antagonists[i]].")
+
+	if(borers.len)
+		var/total_borers = 0
+		for(var/mob/living/simple_animal/borer/B in borers)
+			if(B.stat != DEAD)
+				total_borers++
+		if(total_borers)
+			var/total_borer_hosts = 0
+			for(var/mob/living/carbon/C in mob_list)
+				var/mob/living/simple_animal/borer/D = C.has_brain_worms()
+				var/turf/location = get_turf(C)
+				if(location.z == ZLEVEL_CENTCOM && C.has_brain_worms() && D.stat != DEAD)
+					total_borer_hosts++
+			world << "<b>There were [total_borers] borers alive at round end!</b>"
+			world << "<b>A total of [total_borer_hosts] borers with hosts escaped on the shuttle alive. The borers needed [total_borer_hosts_needed] hosts on the shuttle so they [(total_borer_hosts_needed <= total_borer_hosts) ? "<font color='green'>won!</font>" : "<font color='red'>lost!</font>"]</b>"
+	return TRUE
 
 	mode.declare_station_goal_completion()
 

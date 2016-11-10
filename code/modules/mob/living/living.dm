@@ -44,7 +44,8 @@
 
 /mob/living/ghostize(can_reenter_corpse = 1)
 	var/prev_client = client
-	if(..())
+	. = ..()
+	if(.)
 		if(ranged_ability && prev_client)
 			ranged_ability.remove_mousepointer(prev_client)
 

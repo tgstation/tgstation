@@ -6,7 +6,7 @@
 		target.visible_message("<span class='danger'>[target.name] blocks [src] and twists [user]'s arm behind their back!</span>",
 					"<span class='userdanger'>You block the attack!</span>")
 		user.Stun(2)
-		return 1
+		return TRUE
 
 
 /obj/item/weapon/melee/chainofcommand

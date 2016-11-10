@@ -90,7 +90,6 @@
 	strip_delay = 50
 	put_on_delay = 30
 	body_parts_covered = ARMS
-	resistance_flags = 0
 	siemens_coefficient = 0
 	permeability_coefficient = 0.05
 	resistance_flags = FIRE_PROOF | ACID_PROOF

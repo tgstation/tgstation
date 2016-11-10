@@ -45,7 +45,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/icecreamsandwich
 	name = "icecream sandwich"
-	desc = "Portable Ice-cream in it's own packaging."
+	desc = "Portable Ice-cream in its own packaging."
 	icon = 'icons/obj/food/food.dmi'
 	icon_state = "icecreamsandwich"
 	bonus_reagents = list("nutriment" = 1, "ice" = 2)

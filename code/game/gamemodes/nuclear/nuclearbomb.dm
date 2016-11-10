@@ -399,9 +399,10 @@ var/bomb_set
 		return
 	qdel(src)
 
-/obj/machinery/nuclearbomb/tesla_act(var/power)
+/obj/machinery/nuclearbomb/tesla_act(power, explosive)
 	..()
-	qdel(src)//like the singulo, tesla deletes it. stops it from exploding over and over
+	if(explosive)
+		qdel(src)//like the singulo, tesla deletes it. stops it from exploding over and over
 
 #define NUKERANGE 127
 /obj/machinery/nuclearbomb/proc/explode()
@@ -428,14 +429,16 @@ var/bomb_set
 
 	var/off_station = 0
 	var/turf/bomb_location = get_turf(src)
+	var/area/A = get_area(bomb_location)
 	if(bomb_location && (bomb_location.z == ZLEVEL_STATION))
-		var/area/A = get_area(bomb_location)
 		if(istype(A, /area/space))
-			off_station = 1
+			off_station = NUKE_MISS_STATION
 		if((bomb_location.x < (128-NUKERANGE)) || (bomb_location.x > (128+NUKERANGE)) || (bomb_location.y < (128-NUKERANGE)) || (bomb_location.y > (128+NUKERANGE)))
-			off_station = 1
+			off_station = NUKE_MISS_STATION
+	else if(istype(A, /area/syndicate_mothership) || (istype(A,/area/shuttle/syndicate) && bomb_location.z == ZLEVEL_CENTCOM))
+		off_station = NUKE_SYNDICATE_BASE
 	else
-		off_station = 2
+		off_station = NUKE_NEAR_MISS
 
 	if(ticker.mode && ticker.mode.name == "nuclear emergency")
 		var/obj/docking_port/mobile/Shuttle = SSshuttle.getShuttle("syndicate")

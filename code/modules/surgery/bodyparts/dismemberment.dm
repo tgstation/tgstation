@@ -84,7 +84,7 @@
 	C.bodyparts -= src
 	if(held_index)
 		C.unEquip(owner.get_item_for_held_index(held_index), 1)
-		C.hand_bodyparts -= src
+		C.hand_bodyparts[held_index] = null
 
 	owner = null
 
@@ -245,7 +245,9 @@
 	owner = C
 	C.bodyparts += src
 	if(held_index)
-		C.hand_bodyparts += src
+		if(held_index > C.hand_bodyparts.len)
+			C.hand_bodyparts.len = held_index
+		C.hand_bodyparts[held_index] = src
 		if(C.hud_used)
 			var/obj/screen/inventory/hand/hand = C.hud_used.hand_slots["[held_index]"]
 			if(hand)
