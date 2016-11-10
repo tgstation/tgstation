@@ -3,6 +3,7 @@
 /obj/item/clothing/head/chefhat
 	name = "chef's hat"
 	item_state = "chef"
+	icon_state = "chef"
 	desc = "The commander in chef's head wear."
 	strip_delay = 10
 	put_on_delay = 10
