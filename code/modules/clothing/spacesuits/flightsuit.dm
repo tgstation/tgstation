@@ -442,19 +442,21 @@
 		return 0
 	var/turf/target = get_turf(suit.user)
 	for(var/i in 1 to (speed+anchored+density))
-		target = get_step(target, pick(diagonals))
+		target = get_step(target, pick(alldirs))
 	suit.user.throw_at_fast(target, (speed+density+anchored), suit.user)
 	suit.user.visible_message("[suit.user] is knocked flying by the impact!")
 
 /obj/item/device/flightpack/proc/flight_impact(atom/unmovablevictim)	//Yes, victim.
 	var/atom/movable/victim = null
-	if(flight && momentum_speed > 1)
-		world << "DEBUG: IMPACT TRIGGERED BY BUMP"
-	else
-		return 0
+	var/dir = null
 	if(crashing)	//We're already in the process of getting knocked around by a crash.
 		return 0
-	crashing = 1
+	if(flight && momentum_speed > 1)
+		world << "DEBUG: IMPACT TRIGGERED BY BUMP"
+		crashing = 1
+		dir = suit.user.name
+	else
+		return 0
 	var/density = 0
 	var/anchored = 1
 	if(isclosedturf(unmovablevictim))
@@ -464,23 +466,48 @@
 		victim = unmovablevictim
 		density = victim.density
 		anchored = victim.anchored
-		victimknockback(density, anchored, momentum_speed, victim)
+		victimknockback(density, anchored, momentum_speed, victim, dir)
 	crash_damage(density, anchored, momentum_speed, unmovablevictim.name)
 	userknockback(density, anchored, momentum_speed)
-	losecontrol()
+	losecontrol(move = FALSE)
 	crashing = 0
 
-/obj/item/device/flightpack/proc/victimknockback(density, anchored, momentum_speed, victim)
+/obj/item/device/flightpack/proc/victimknockback(density, anchored, momentum_speed, atom/movable/victim, dir)
+	var/knockback = 0
+	var/damage = 0
+	var/stun = 0
+	var/turf/target
+	knockback -= (density * 2)
+	knockback += momentum_speed
+	knockback += (part_manip.rating / 2)
+	knockback += (part_bin.rating / 2)
+	knockback *= 4
+	stun = ((part_manip.rating + part_bin.rating) / 2)
+	damage = knockback / 2.5
+	if(anchored)
+		knockback = 0
+	target = get_edge_target_turf(victim, dir)
+	target = get_edge_target_turf(target, dir)
+	victim.visible_message("<span class='warning'>[victim.name] is sent flying by the impact!</span>")
+	if(knockback)
+		victim.throw_at_fast(target, knockback, part_manip.rating, suit.user)
+	if(ismob(victim))
+		var/mob/living/victimmob = victim
+		victimmob.Weaken(stun)
+		victimmob.adjustBruteLoss(damage)
 
-/obj/item/device/flightpack/proc/losecontrol()
+/obj/item/device/flightpack/proc/losecontrol(stun = FALSE, move = TRUE)
 	wearer.visible_message("<span class='warning'>[wearer]'s flight suit abruptly shuts off and they lose control!</span>")
 	if(wearer)
-		while(momentum_x != 0 || momentum_y != 0)
-			sleep(2)
-			step(wearer, pick(cardinal))
-			momentum_decay()
-			adjust_momentum(0, 0, 10)
+		if(move)
+			while(momentum_x != 0 || momentum_y != 0)
+				sleep(2)
+				step(wearer, pick(cardinal))
+				momentum_decay()
+				adjust_momentum(0, 0, 10)
 		wearer.visible_message("<span class='warning'>[wearer]'s flight suit crashes into the ground!</span>")
+		if(stun)
+			wearer.Weaken(4)
 	momentum_x = 0
 	momentum_y = 0
 	if(flight)
@@ -501,7 +528,7 @@
 
 /obj/item/device/flightpack/proc/disable_flight(forced = 0)
 	if(forced)
-		losecontrol()
+		losecontrol(stun = TRUE)
 		return 1
 	if(abs(momentum_x) <= 20 && abs(momentum_y) <= 20)
 		momentum_x = 0
