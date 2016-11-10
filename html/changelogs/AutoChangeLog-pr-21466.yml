@@ -1,7 +1,0 @@
-author: "uraniummeltdown"
-delete-after: True
-changes: 
-  - bugfix: "fixed brains not having ckeys when removed"
-  - bugfix: "hopefully fixed multiple ghosts entering a borer ghosting all but one"
-  - tweak: "tweaked the formula for hosts needed for borer event to 1+humans/6"
-  - tweak: "borer endround report is a lot nicer"
