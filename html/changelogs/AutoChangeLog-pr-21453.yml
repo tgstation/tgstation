@@ -1,0 +1,4 @@
+author: "Kor"
+delete-after: True
+changes: 
+  - rscadd: "The forcewall spell now creates a 3x1 wall which the caster can pass through."
