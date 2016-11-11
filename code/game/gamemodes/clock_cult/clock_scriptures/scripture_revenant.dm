@@ -53,7 +53,7 @@
 	primary_component = GEIS_CAPACITOR
 	invokers_required = 3
 	multiple_invokers_used = TRUE
-	var/list/mindbreaksayings = list("\"Oh, great. I get to shatter some minds.\"", "\"More minds to crush.\"", \
+	var/static/list/mindbreaksayings = list("\"Oh, great. I get to shatter some minds.\"", "\"More minds to crush.\"", \
 	"\"Really, this is almost boring.\"", "\"None of these minds have anything interesting in them.\"", "\"Maybe I can instill a little bit of terror in this one.\"", \
 	"\"What a waste of my power.\"", "\"I'm sure I could just control these minds instead, but they never ask.\"")
 

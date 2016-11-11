@@ -239,15 +239,15 @@
 		text += " <b><font color=[get_component_color_brightalloy(i)]>[get_component_name(i)][i != REPLICANT_ALLOY ? "s":""]</font></b>"
 	text += "</font><br><br><br><center><font size=1><A href='?src=\ref[src];compactscripture=1'>Compact Scripture Text: [compact_scripture ? "ON":"OFF"]</A></font></center><br>"
 	var/text_to_add = ""
-	var/drivers = "<br><b><A href='?src=\ref[src];Driver=1'>[SCRIPTURE_DRIVER]</A></b><br><font size=1><i>These scriptures are always unlocked.</i>[compact_scripture ? "":"</font>"]<br>"
+	var/drivers = "<br><b><A href='?src=\ref[src];Driver=1'>[SCRIPTURE_DRIVER]</A></b><br><font size=1><i>These scriptures are always unlocked.</i><br>"
 	var/scripts = "<br><b><A href='?src=\ref[src];Script=1'>[SCRIPTURE_SCRIPT]</A></b><br><font size=1><i>These scriptures require at least <b>5</b> Servants and \
-	<b>1</b> Tinkerer's Cache.</i>[compact_scripture ? "":"</font>"]<br>"
+	<b>1</b> Tinkerer's Cache.</i><br>"
 	var/applications = "<br><b><A href='?src=\ref[src];Application=1'>[SCRIPTURE_APPLICATION]</A></b><br><font size=1><i>These scriptures require at least <b>8</b> Servants, \
-	<b>3</b> Tinkerer's Caches, and <b>100CV</b>.</i>[compact_scripture ? "":"</font>"]<br>"
+	<b>3</b> Tinkerer's Caches, and <b>100CV</b>.</i><br>"
 	var/revenant = "<br><b><A href='?src=\ref[src];Revenant=1'>[SCRIPTURE_REVENANT]</A></b><br><font size=1><i>These scriptures require at least <b>10</b> Servants, \
-	<b>4</b> Tinkerer's Caches, and <b>200CV</b>.</i>[compact_scripture ? "":"</font>"]<br>"
+	<b>4</b> Tinkerer's Caches, and <b>200CV</b>.</i><br>"
 	var/judgement = "<br><b><A href='?src=\ref[src];Judgement=1'>[SCRIPTURE_JUDGEMENT]</A></b><br><font size=1><i>This scripture requires at least <b>12</b> Servants, \
-	<b>5</b> Tinkerer's Caches, and <b>300CV</b>.<br>In addition, there may not be any active non-Servant AIs.</i>[compact_scripture ? "":"</font>"]<br>"
+	<b>5</b> Tinkerer's Caches, and <b>300CV</b>.<br>In addition, there may not be any active non-Servant AIs.</i><br>"
 	for(var/V in sortList(subtypesof(/datum/clockwork_scripture), /proc/cmp_clockscripture_priority))
 		var/datum/clockwork_scripture/S = V
 		var/initial_tier = initial(S.tier)
@@ -288,10 +288,7 @@
 					revenant += scripture_text
 				if(SCRIPTURE_JUDGEMENT)
 					judgement += scripture_text
-	if(compact_scripture)
-		text_to_add += "[drivers]</font>[scripts]</font>[applications]</font>[revenant]</font>[judgement]</font>"
-	else
-		text_to_add += "[drivers][scripts][applications][revenant][judgement]"
+	text_to_add += "[drivers]</font>[scripts]</font>[applications]</font>[revenant]</font>[judgement]</font>"
 	text += text_to_add
 	text += "<br><br><font color=#BE8700 size=3><b><center>Purge all untruths and honor Ratvar.</center></b></font>"
 	var/datum/browser/popup = new(user, "recital", "", 600, 500)
