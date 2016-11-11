@@ -300,6 +300,7 @@
 
 	var/list/targets = list(target)
 	perform(targets,user = ranged_ability_user)
+	remove_ranged_ability() //Auto-disable the ability once performed
 
 	return TRUE
 
