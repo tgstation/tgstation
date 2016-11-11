@@ -4,7 +4,7 @@
 
 //Invoke Inath-neq, the Resonant Cogwheel: Grants invulnerability and stun immunity to everyone nearby for 15 seconds.
 /datum/clockwork_scripture/invoke_inathneq
-	descname = "Area Invuln"
+	descname = "Area Invulnerability"
 	name = "Invoke Inath-neq, the Resonant Cogwheel"
 	desc = "Taps the limitless power of Inath-neq, one of Ratvar's four generals. The benevolence of Inath-Neq will grant complete invulnerability to all servants in range for fifteen seconds."
 	invocations = list("I call upon you, Vanguard!!", "Let the Resonant Cogs turn once more!!", "Grant me and my allies the strength to vanquish our foes!!")
@@ -39,7 +39,7 @@
 
 //Invoke Nezbere, the Brass Eidolon: Invokes Nezbere, bolstering the strength of many clockwork items for one minute.
 /datum/clockwork_scripture/invoke_nezbere
-	descname = "Structure Buff"
+	descname = "Global Structure Buff"
 	name = "Invoke Nezbere, the Brass Eidolon"
 	desc = "Taps the limitless power of Nezbere, one of Ratvar's four generals. The restless toil of the Eidolon will empower a wide variety of clockwork apparatus for a full minute - notably, \
 	clockwork proselytizers will cost no replicant alloy to use."
@@ -168,7 +168,7 @@
 
 //Invoke Nzcrentr, the Eternal Thunderbolt: Imbues an immense amount of energy into the invoker. After several seconds, everyone near the invoker will be hit with a devastating lightning blast.
 /datum/clockwork_scripture/invoke_nzcrentr
-	descname = "Lightning Blast"
+	descname = "Area Lightning Blast"
 	name = "Invoke Nzcrentr, the Eternal Thunderbolt"
 	desc = "Taps the limitless power of Nzcrentr, one of Ratvar's four generals. The immense energy Nzcrentr wields will allow you to imbue a tiny fraction of it into your body. After several \
 	seconds, anyone near you will be struck by a devastating lightning bolt."
