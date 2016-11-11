@@ -300,7 +300,6 @@
 
 	var/list/targets = list(target)
 	perform(targets,user = ranged_ability_user)
-	remove_ranged_ability() //Auto-disable the ability once performed
 
 	return TRUE
 
@@ -316,7 +315,7 @@
 	FB.preparePixelProjectile(target, get_turf(target), user)
 	FB.fire()
 	user.newtonian_move(get_dir(U, T))
-
+	remove_ranged_ability() //Auto-disable the ability once successfully performed
 	return 1
 
 /obj/effect/proc_holder/spell/aoe_turf/repulse
