@@ -103,7 +103,6 @@
 			user.unset_machine()
 			return 0
 
-		playsound(src, "terminal_type", 25, 0)
 		playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 25, 0)
 		if(isAI(user))
 			var/mob/living/silicon/ai/A = user
