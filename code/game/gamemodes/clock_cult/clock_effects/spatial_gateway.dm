@@ -190,11 +190,11 @@
 	var/istargetobelisk = istype(target, /obj/structure/destructible/clockwork/powered/clockwork_obelisk)
 	var/issrcobelisk = istype(src, /obj/structure/destructible/clockwork/powered/clockwork_obelisk)
 	if(issrcobelisk && !anchored)
-		invoker << "<span class='warning'>This obelisk is no longer secured!</span>"
+		invoker << "<span class='warning'>[src] is no longer secured!</span>"
 		return FALSE
 	if(istargetobelisk)
 		if(!target.anchored)
-			invoker << "<span class='warning'>That obelisk is no longer secured!</span>"
+			invoker << "<span class='warning'>That [target.name] is no longer secured!</span>"
 			return procure_gateway(invoker, time_duration, gateway_uses, two_way)
 		gateway_uses *= 2
 		time_duration *= 2
