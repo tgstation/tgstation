@@ -550,6 +550,14 @@
 	materials = list(MAT_METAL = 500)
 	build_path = /obj/item/ammo_box/foambox
 	category = list("initial", "Misc")
+	
+/datum/design/spray
+	name = "Spray Bottle"
+	id = "spray"
+	build_type = AUTOLATHE
+	materials = list(MAT_GLASS = 15000)
+	build_path = /obj/item/weapon/reagent_containers/spray
+	category = list("initial", "Misc")
 
 //hacked autolathe recipes
 /datum/design/flamethrower
