@@ -726,11 +726,13 @@
 	//Handle mutant parts if possible
 	if(dna && dna.species)
 		add_atom_colour("#000000", TEMPORARY_COLOUR_PRIORITY)
-		add_overlay("electrocuted_base")
+		var/static/image/electrocution_skeleton_anim = image(icon = icon, icon_state = "electrocuted_base")
+		electrocution_skeleton_anim.appearance_flags = RESET_COLOR
+		add_overlay(electrocution_skeleton_anim)
 		spawn(anim_duration)
 			if(src)
 				remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, "#000000")
-				overlays -= "electrocuted_base"
+				overlays -= electrocution_skeleton_anim
 
 	else //or just do a generic animation
 		var/list/viewing = list()
