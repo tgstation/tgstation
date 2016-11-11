@@ -4,6 +4,7 @@
 	desc = "A large brass eye with tendrils trailing below it and a wide red iris."
 	clockwork_desc = "A fragile turret that will deal sustained damage to any non-faithful it sees."
 	icon_state = "ocular_warden"
+	unanchored_icon = "ocular_warden_unwrenched"
 	obj_integrity = 25
 	max_integrity = 25
 	construction_value = 15
@@ -31,7 +32,17 @@
 /obj/structure/destructible/clockwork/ocular_warden/hulk_damage()
 	return 25
 
+/obj/structure/destructible/clockwork/ocular_warden/can_be_unfasten_wrench(mob/user)
+	if(!anchored)
+		for(var/obj/structure/destructible/clockwork/ocular_warden/W in range(3, src))
+			user << "<span class='neovgre'>You sense another ocular warden too near this location. Activating this one this close would cause them to fight.</span>"
+			return FAILED_UNFASTEN
+	return SUCCESSFUL_UNFASTEN
+
 /obj/structure/destructible/clockwork/ocular_warden/process()
+	if(!anchored)
+		lose_target()
+		return
 	var/list/validtargets = acquire_nearby_targets()
 	if(ratvar_awakens && (damage_per_tick == initial(damage_per_tick) || sight_range == initial(sight_range))) //Massive buff if Ratvar has returned
 		damage_per_tick = 10
