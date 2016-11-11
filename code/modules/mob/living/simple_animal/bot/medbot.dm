@@ -45,7 +45,7 @@
 	var/treatment_fire_avoid = "tricordrazine"
 	var/treatment_fire = "kelotane"
 	var/treatment_tox_avoid = "tricordrazine"
-	var/treatment_tox = "antitoxin"
+	var/treatment_tox = "charcoal"
 	var/treatment_virus_avoid = null
 	var/treatment_virus = "spaceacillin"
 	var/treat_virus = 1 //If on, the bot will attempt to treat viral infections, curing them if possible.
