@@ -6,6 +6,7 @@
 	icon_state = "mania_motor_inactive"
 	active_icon = "mania_motor"
 	inactive_icon = "mania_motor_inactive"
+	unanchored_icon = "mania_motor_unwrenched"
 	construction_value = 20
 	max_integrity = 80
 	obj_integrity = 80

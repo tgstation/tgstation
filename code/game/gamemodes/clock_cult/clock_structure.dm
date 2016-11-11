@@ -5,6 +5,7 @@
 	var/clockwork_desc //Shown to servants when they examine
 	icon = 'icons/obj/clockwork_objects.dmi'
 	icon_state = "rare_pepe"
+	var/unanchored_icon //icon for when this structure is unanchored, doubles as the var for if it can be unanchored
 	anchored = 1
 	density = 1
 	resistance_flags = FIRE_PROOF | ACID_PROOF
@@ -53,9 +54,21 @@
 			heavily_damaged = TRUE
 		if(can_see_clockwork)
 			user << "<span class='[heavily_damaged ? "alloy":"brass"]'>[servant_message][heavily_damaged ? "!":"."]</span>"
+	if(unanchored_icon)
+		user << "<span class='notice'>[src] is [anchored ? "":"not "]secured to the floor.</span>"
 
 /obj/structure/destructible/clockwork/hulk_damage()
 	return 20
+
+/obj/structure/destructible/clockwork/attackby(obj/item/I, mob/user, params)
+	if(is_servant_of_ratvar(user) && istype(I, /obj/item/weapon/wrench) && unanchored_icon)
+		if(default_unfasten_wrench(user, I, 50) == SUCCESSFUL_UNFASTEN)
+			if(anchored)
+				icon_state = initial(icon_state)
+			else
+				icon_state = unanchored_icon
+		return 1
+	return ..()
 
 
 //for the ark and Ratvar
@@ -101,9 +114,24 @@
 	var/powered = total_accessable_power()
 	return powered == PROCESS_KILL ? 25 : powered //make sure we don't accidentally return the arbitrary PROCESS_KILL define
 
+/obj/structure/destructible/clockwork/powered/proc/can_be_unwrenched(mob/user)
+	if(active)
+		user << "<span class='warning'>[src] needs to be disabled before it can be unsecured!</span>"
+		return FAILED_UNFASTEN
+	return SUCCESSFUL_UNFASTEN
+
+/obj/structure/destructible/clockwork/powered/default_unfasten_wrench(mob/user, obj/item/weapon/wrench/W, time = 20)
+	var/can_unwrench = can_be_unwrenched(user)
+	if(!can_unwrench || can_unwrench == FAILED_UNFASTEN)
+		return can_unwrench
+	return ..()
+
 /obj/structure/destructible/clockwork/powered/proc/toggle(fast_process, mob/living/user)
 	if(user)
 		if(!is_servant_of_ratvar(user))
+			return FALSE
+		if(!anchored && !active)
+			user << "<span class='warning'>[src] needs to be secured to the floor before it can be activated!</span>"
 			return FALSE
 		user.visible_message("<span class='notice'>[user] [active ? "dis" : "en"]ables [src].</span>", "<span class='brass'>You [active ? "dis" : "en"]able [src].</span>")
 	active = !active

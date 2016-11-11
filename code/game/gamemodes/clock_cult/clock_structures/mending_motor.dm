@@ -6,6 +6,7 @@
 	icon_state = "mending_motor_inactive"
 	active_icon = "mending_motor"
 	inactive_icon = "mending_motor_inactive"
+	unanchored_icon = "mending_motor_unwrenched"
 	construction_value = 20
 	max_integrity = 125
 	obj_integrity = 125

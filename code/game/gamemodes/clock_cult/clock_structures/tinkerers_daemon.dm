@@ -6,6 +6,7 @@
 	icon_state = "tinkerers_daemon"
 	active_icon = "tinkerers_daemon"
 	inactive_icon = "tinkerers_daemon"
+	unanchored_icon = "tinkerers_daemon_unwrenched"
 	max_integrity = 100
 	obj_integrity = 100
 	construction_value = 25
@@ -46,6 +47,9 @@
 	if(active)
 		toggle(0, user)
 	else
+		if(!anchored)
+			user << "<span class='warning'>[src] needs to be secured to the floor before it can be activated!</span>"
+			return FALSE
 		var/servants = 0
 		for(var/mob/living/L in living_mob_list)
 			if(is_servant_of_ratvar(L))

@@ -6,6 +6,7 @@
 	icon_state = "obelisk_inactive"
 	active_icon = "obelisk"
 	inactive_icon = "obelisk_inactive"
+	unanchored_icon = "obelisk_unwrenched"
 	construction_value = 20
 	max_integrity = 150
 	obj_integrity = 150
@@ -25,7 +26,15 @@
 	if(is_servant_of_ratvar(user) || isobserver(user))
 		user << "<span class='nzcrentr_small'>It requires <b>[hierophant_cost]W</b> to broadcast over the Hierophant Network, and <b>[gateway_cost]W</b> to open a Spatial Gateway.</span>"
 
+/obj/structure/destructible/clockwork/powered/clockwork_obelisk/can_be_unwrenched(mob/user)
+	if(gateway_active)
+		user << "<span class='warning'>[src] is currently sustaining a gateway!</span>"
+		return FAILED_UNFASTEN
+	return TRUE
+
 /obj/structure/destructible/clockwork/powered/clockwork_obelisk/process()
+	if(!anchored)
+		return
 	if(locate(/obj/effect/clockwork/spatial_gateway) in loc)
 		icon_state = active_icon
 		density = 0
@@ -36,7 +45,7 @@
 		gateway_active = FALSE
 
 /obj/structure/destructible/clockwork/powered/clockwork_obelisk/attack_hand(mob/living/user)
-	if(!is_servant_of_ratvar(user) || !total_accessable_power() >= hierophant_cost)
+	if(!is_servant_of_ratvar(user) || !total_accessable_power() >= hierophant_cost || !anchored)
 		user << "<span class='warning'>You place your hand on the obelisk, but it doesn't react.</span>"
 		return
 	var/choice = alert(user,"You place your hand on the obelisk...",,"Hierophant Broadcast","Spatial Gateway","Cancel")

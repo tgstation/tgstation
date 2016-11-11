@@ -7,6 +7,7 @@
 	construction_value = 25
 	active_icon = "interdiction_lens_active"
 	inactive_icon = "interdiction_lens"
+	unanchored_icon = "interdiction_lens_unwrenched"
 	break_message = "<span class='warning'>The lens flares a blinding violet before shattering!</span>"
 	break_sound = 'sound/effects/Glassbr3.ogg'
 	var/recharging = 0 //world.time when the lens was last used
