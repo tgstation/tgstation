@@ -357,16 +357,25 @@ Class Procs:
 		return 1
 	return 0
 
+/obj/proc/can_be_unfasten_wrench(mob/user)
+	if(!isfloorturf(loc) && !anchored)
+		user << "<span class='warning'>[src] needs to be on the floor to be secured!</span>"
+		return FAILED_UNFASTEN
+	return SUCCESSFUL_UNFASTEN
+
 /obj/proc/default_unfasten_wrench(mob/user, obj/item/weapon/wrench/W, time = 20)
 	if(istype(W) &&  !(flags & NODECONSTRUCT))
-		if(!isfloorturf(loc) && !anchored)
-			user << "<span class='warning'>[src] needs to be on the floor to be secured!</span>"
-			return FAILED_UNFASTEN
+		var/can_be_unfasten = can_be_unfasten_wrench(user)
+		if(!can_be_unfasten || can_be_unfasten == FAILED_UNFASTEN)
+			return can_be_unfasten
 		user << "<span class='notice'>You begin [anchored ? "un" : ""]securing [src]...</span>"
 		playsound(loc, W.usesound, 50, 1)
 		var/prev_anchored = anchored
 		//as long as we're the same anchored state and we're either on a floor or are anchored, toggle our anchored state
-		if(do_after(user, time/W.toolspeed, target = src) && anchored == prev_anchored && (anchored || isfloorturf(loc)))
+		if(do_after(user, time/W.toolspeed, target = src) && anchored == prev_anchored)
+			can_be_unfasten = can_be_unfasten_wrench(user)
+			if(!can_be_unfasten || can_be_unfasten == FAILED_UNFASTEN)
+				return can_be_unfasten
 			user << "<span class='notice'>You [anchored ? "un" : ""]secure [src].</span>"
 			anchored = !anchored
 			playsound(loc, 'sound/items/Deconstruct.ogg', 50, 1)

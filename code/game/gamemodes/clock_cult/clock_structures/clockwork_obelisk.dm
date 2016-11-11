@@ -26,11 +26,11 @@
 	if(is_servant_of_ratvar(user) || isobserver(user))
 		user << "<span class='nzcrentr_small'>It requires <b>[hierophant_cost]W</b> to broadcast over the Hierophant Network, and <b>[gateway_cost]W</b> to open a Spatial Gateway.</span>"
 
-/obj/structure/destructible/clockwork/powered/clockwork_obelisk/can_be_unwrenched(mob/user)
+/obj/structure/destructible/clockwork/powered/clockwork_obelisk/can_be_unfasten_wrench(mob/user)
 	if(gateway_active)
 		user << "<span class='warning'>[src] is currently sustaining a gateway!</span>"
 		return FAILED_UNFASTEN
-	return TRUE
+	return ..()
 
 /obj/structure/destructible/clockwork/powered/clockwork_obelisk/process()
 	if(!anchored)

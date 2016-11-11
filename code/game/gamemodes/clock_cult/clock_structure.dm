@@ -114,16 +114,10 @@
 	var/powered = total_accessable_power()
 	return powered == PROCESS_KILL ? 25 : powered //make sure we don't accidentally return the arbitrary PROCESS_KILL define
 
-/obj/structure/destructible/clockwork/powered/proc/can_be_unwrenched(mob/user)
+/obj/structure/destructible/clockwork/powered/can_be_unfasten_wrench(mob/user)
 	if(active)
 		user << "<span class='warning'>[src] needs to be disabled before it can be unsecured!</span>"
 		return FAILED_UNFASTEN
-	return SUCCESSFUL_UNFASTEN
-
-/obj/structure/destructible/clockwork/powered/default_unfasten_wrench(mob/user, obj/item/weapon/wrench/W, time = 20)
-	var/can_unwrench = can_be_unwrenched(user)
-	if(!can_unwrench || can_unwrench == FAILED_UNFASTEN)
-		return can_unwrench
 	return ..()
 
 /obj/structure/destructible/clockwork/powered/proc/toggle(fast_process, mob/living/user)
