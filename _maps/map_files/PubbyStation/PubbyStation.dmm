@@ -26569,7 +26569,6 @@
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/purple/corner{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
 	dir = 4
 	},
 /area/hallway/primary/central)
@@ -26584,14 +26583,12 @@
 	pixel_y = 26
 	},
 /turf/open/floor/plasteel/purple/corner{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
 	dir = 4
 	},
 /area/hallway/primary/central)
 "bbQ" = (
 /obj/machinery/vending/cola,
 /turf/open/floor/plasteel/purple/corner{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
 	dir = 4
 	},
 /area/hallway/primary/central)
@@ -28961,7 +28958,6 @@
 "bgN" = (
 /obj/structure/filingcabinet/chestdrawer,
 /turf/open/floor/plasteel/purple/side{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
 	dir = 8
 	},
 /area/assembly/robotics)
@@ -29518,7 +29514,6 @@
 	},
 /obj/item/clothing/glasses/welding,
 /turf/open/floor/plasteel/purple/side{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
 	dir = 8
 	},
 /area/assembly/robotics)
@@ -29955,7 +29950,6 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/purple/side{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
 	dir = 8
 	},
 /area/assembly/robotics)
@@ -30468,7 +30462,6 @@
 "bjR" = (
 /obj/machinery/computer/rdconsole/robotics,
 /turf/open/floor/plasteel/purple/side{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
 	dir = 8
 	},
 /area/assembly/robotics)
@@ -31081,7 +31074,6 @@
 	pixel_x = -27
 	},
 /turf/open/floor/plasteel/purple/side{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
 	dir = 8
 	},
 /area/assembly/robotics)
@@ -31786,7 +31778,6 @@
 	},
 /obj/item/weapon/book/manual/research_and_development,
 /turf/open/floor/plasteel/purple/side{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
 	dir = 1
 	},
 /area/toxins/explab)
@@ -31797,7 +31788,6 @@
 	pixel_y = 28
 	},
 /turf/open/floor/plasteel/purple/side{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
 	dir = 1
 	},
 /area/toxins/explab)
@@ -31810,7 +31800,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/purple/side{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
 	dir = 1
 	},
 /area/toxins/explab)
@@ -31823,7 +31812,6 @@
 	on = 1
 	},
 /turf/open/floor/plasteel/purple/side{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
 	dir = 1
 	},
 /area/toxins/explab)
@@ -31832,7 +31820,6 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/purple/side{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
 	dir = 1
 	},
 /area/toxins/explab)
@@ -31840,7 +31827,6 @@
 /obj/item/weapon/storage/toolbox/mechanical,
 /obj/machinery/holopad,
 /turf/open/floor/plasteel/purple/side{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
 	dir = 1
 	},
 /area/toxins/explab)
@@ -31891,7 +31877,6 @@
 	pixel_x = -3
 	},
 /turf/open/floor/plasteel/purple/side{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
 	dir = 8
 	},
 /area/assembly/robotics)
@@ -52999,7 +52984,6 @@
 /area/maintenance/aft)
 "bZG" = (
 /turf/open/floor/plasteel/purple/side{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
 	dir = 8
 	},
 /area/assembly/robotics)
@@ -53397,7 +53381,6 @@
 /obj/machinery/disposal/bin,
 /obj/structure/disposalpipe/trunk,
 /turf/open/floor/plasteel/purple/corner{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
 	dir = 4
 	},
 /area/hallway/primary/central)
