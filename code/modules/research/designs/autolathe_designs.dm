@@ -555,7 +555,7 @@
 	name = "Spray Bottle"
 	id = "spray"
 	build_type = AUTOLATHE
-	materials = list(MAT_GLASS = 15000)
+	materials = list(MAT_GLASS = 10000)
 	build_path = /obj/item/weapon/reagent_containers/spray
 	category = list("initial", "Misc")
 
