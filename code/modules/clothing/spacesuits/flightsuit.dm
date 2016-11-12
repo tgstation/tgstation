@@ -465,6 +465,8 @@
 	crashing = 0
 
 /obj/item/device/flightpack/proc/victimknockback(density, anchored, momentum_speed, atom/movable/victim, dir)
+	if(!victim)
+		return 0
 	var/knockback = 0
 	var/damage = 0
 	var/stun = 0
@@ -696,7 +698,7 @@
 /obj/item/device/flightpack/proc/allow_thrust()
 	return 1
 
-//FLIGHT SHOES FOR MOVEMENT DETECTION------------------------------------------------------------------------------------------------------------------------------
+//FLIGHT SHOES-----------------------------------------------------------------------------------------------------------------------------------------------------
 
 /obj/item/clothing/shoes/flightshoes
 	name = "flight shoes"
@@ -803,12 +805,13 @@
 	..()
 
 /obj/item/clothing/suit/space/hardsuit/flightsuit/proc/resync()
-	pack.relink_suit(src)
+	if(pack)
+		pack.relink_suit(src)
 	if(user)
 		pack.wearer = user
 		shoes.wearer = user
-	shoes.pack = pack
-	shoes.suit = src
+	if(shoes)
+		relink_suit(src)
 
 /obj/item/clothing/suit/space/hardsuit/flightsuit/attack_hand(mob/user)
 	if(ishuman(user))
@@ -1002,7 +1005,6 @@
 
 /obj/item/clothing/suit/space/hardsuit/flightsuit/attackby(obj/item/I, mob/wearer, params)
 	user = wearer
-
 	if(src == user.get_item_by_slot(slot_wear_suit))
 		usermessage("You can not perform any service without taking the suit off!", 1)
 		return 0
