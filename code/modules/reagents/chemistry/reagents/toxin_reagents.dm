@@ -741,8 +741,8 @@
 	metabolization_rate = 1.5 * REAGENTS_METABOLISM
 
 /datum/reagent/toxin/peaceborg/confuse/on_mob_life(mob/living/M)
-	M.confused += 1
-	M.Dizzy(1)
+	M.confused = Clamp(M.confused + 3, 0, 5)
+	M.dizziness = Clamp(M.dizziness + 3, 0, 5)
 	if(prob(20))
 		M << "You feel confused and disorientated."
 	..()
