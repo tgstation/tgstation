@@ -1,5 +1,7 @@
 #define INFINITE -1
 
+//stop trying to add these to R&D or I will be forced to slay you
+
 /obj/item/device/autoimplanter
 	name = "autoimplanter"
 	desc = "A device that automatically injects a cyber-implant into the user without the hassle of extensive surgery. It has a slot to insert implants and a screwdriver slot for removing accidentally added implants."
