@@ -1,0 +1,5 @@
+author: "Joan"
+delete-after: True
+changes: 
+  - rscadd: "Reciting Scripture is now done through an actual interface, and can thus be done much faster."
+  - rscdel: "The recital and quickbind functions that Recollection had have been moved to this interface instead."
