@@ -599,3 +599,9 @@ obj/item/proc/item_action_slot_check(slot, mob/user)
 		MO.pixel_y = rand(-16,16)
 		MO.desc = "Looks like this was \an [src] some time ago."
 		..()
+
+/obj/item/proc/get_icon_for_attack_animation()
+	return icon
+
+/obj/item/proc/get_icon_state_for_attack_animation()
+	return icon_state

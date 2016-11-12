@@ -73,7 +73,27 @@
 				user.unEquip(src,1)
 				attach_limb(C)
 				return
+	if(attached_weapon) // If we have a chainsaw arm or armblade, smack with this instead!
+		attached_weapon.attack(C, user)
+		return
 	..()
+
+/obj/item/bodypart/attack_obj(obj/O, mob/living/user)
+	if(attached_weapon)
+		attached_weapon.attack_obj(O, user)
+		return
+	..()
+
+/obj/item/bodypart/get_icon_for_attack_animation()
+	if(attached_weapon)
+		return attached_weapon.get_icon_for_attack_animation()
+	return ..()
+
+/obj/item/bodypart/get_icon_state_for_attack_animation()
+	if(attached_weapon)
+		return attached_weapon.get_icon_state_for_attack_animation()
+	return ..()
+
 
 /obj/item/bodypart/attackby(obj/item/W, mob/user, params)
 	if(W.sharpness)
