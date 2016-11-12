@@ -152,7 +152,7 @@
 			new /obj/item/weapon/twohanded/required/chainsaw(src)
 			new /obj/item/clothing/mask/gas/clown_hat(src)
 			new /obj/item/weapon/bikehorn(src)
-			new /obj/item/clothing/gloves/color/black(src)
+			new /obj/item/clothing/gloves/combat(src)
 
 /obj/item/weapon/storage/box/syndie_kit
 	name = "box"
