@@ -104,6 +104,12 @@
 	for(var/obj/item/I in src)
 		I.forceMove(T)
 
+	// Force special update for attached weapon
+	if(attached_weapon)
+	 	attached_weapon = null
+		if(!owner)
+			update_icon_dropped()
+
 //Applies brute and burn damage to the organ. Returns 1 if the damage-icon states changed at all.
 //Damage will not exceed max_damage using this proc
 //Cannot apply negative damage
@@ -312,6 +318,21 @@
 				I = image("icon"='icons/mob/human_parts_greyscale.dmi', "icon_state"="digitigrade_[use_digitigrade]_[body_zone]_s", "layer"=-BODYPARTS_LAYER, "dir"=image_dir)
 			else
 				I = image("icon"='icons/mob/human_parts_greyscale.dmi', "icon_state"="[species_id]_[body_zone]_s", "layer"=-BODYPARTS_LAYER, "dir"=image_dir)
+		
+			//Greyscale Colouring
+			var/draw_color
+
+			if(skin_tone) //Limb has skin color variable defined, use it
+				draw_color = skintone2hex(skin_tone)
+			if(species_color)
+				draw_color = species_color
+			if(mutation_color)
+				draw_color = mutation_color
+
+			if(draw_color)
+				I.color = "#[draw_color]"
+			//End Greyscale Colouring
+		
 		else
 			if(should_draw_gender)
 				I = image("icon"='icons/mob/human_parts.dmi', "icon_state"="[species_id]_[body_zone]_[icon_gender]_s", "layer"=-BODYPARTS_LAYER, "dir"=image_dir)
@@ -322,29 +343,8 @@
 			I = image("icon"='icons/mob/augments.dmi', "icon_state"="[body_zone]_[icon_gender]_s", "layer"=-BODYPARTS_LAYER, "dir"=image_dir)
 		else
 			I = image("icon"='icons/mob/augments.dmi', "icon_state"="[body_zone]_s", "layer"=-BODYPARTS_LAYER, "dir"=image_dir)
-		standing += I
-		return standing
 
-
-	if(!should_draw_greyscale)
-		standing += I
-		return standing
-
-	//Greyscale Colouring
-	var/draw_color
-
-	if(skin_tone) //Limb has skin color variable defined, use it
-		draw_color = skintone2hex(skin_tone)
-	if(species_color)
-		draw_color = species_color
-	if(mutation_color)
-		draw_color = mutation_color
-
-	if(draw_color)
-		I.color = "#[draw_color]"
-	//End Greyscale Colouring
 	standing += I
-
 
 	if(attached_weapon)
 		var/state = attached_weapon.item_state
@@ -359,6 +359,7 @@
 			icon_file = attached_weapon.lefthand_file
 
 		standing += attached_weapon.build_worn_icon(state = state, default_layer = HANDS_LAYER, default_icon_file = icon_file, isinhands = TRUE)
+
 	return standing
 
 
