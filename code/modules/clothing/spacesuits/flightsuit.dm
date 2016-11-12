@@ -1024,7 +1024,7 @@
 			inputlist += "Pack"
 		if(shoes)
 			inputlist += "Shoes"
-		if(!input.len)
+		if(!inputlist.len)
 			usermessage("There is nothing inside the flightsuit to remove!", 1)
 			return 0
 		var/input = input(user, "What to remove?", "Removing module") as null|anything in list("Pack", "Shoes")
