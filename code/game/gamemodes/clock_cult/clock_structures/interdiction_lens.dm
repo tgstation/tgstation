@@ -68,7 +68,7 @@
 			if(prob(1))
 				A << "<span class='neovgre'>\"[text2ratvar(pick(rage_messages))]\"</span>"
 
-			if(prob(100 * efficiency)
+			if(prob(100 * efficiency))
 				if(istype(A, /obj/machinery/camera))
 					var/obj/machinery/camera/C = A
 					if(C.isEmpProof() || !C.status)
