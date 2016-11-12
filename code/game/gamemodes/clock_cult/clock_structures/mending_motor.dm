@@ -85,6 +85,8 @@
 				if(C.obj_integrity < C.max_integrity)
 					if(try_use_power(MIN_CLOCKCULT_POWER))
 						C.obj_integrity = min(C.obj_integrity + (8 * efficiency), C.max_integrity)
+						if(C == src)
+							efficiency = get_efficiency_mod()
 						C.update_icon()
 						PoolOrNew(/obj/effect/overlay/temp/heal, list(T, "#1E8CE1"))
 					else
