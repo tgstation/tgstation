@@ -39,3 +39,10 @@
 		apply_effect(amount, IRRADIATE, blocked)
 		for(var/obj/I in src) //Radiation is also applied to items held by the mob
 			I.rad_act(amount)
+
+//Silicons will inherently not get irradiated due to having an empty handle_mutations_and_radiation, but they need to not hear this
+/mob/living/silicon/rad_act(amount)
+	. = ..(amount, TRUE)
+
+/mob/living/simple_animal/bot/rad_act(amount)
+	. = ..(amount, TRUE)
