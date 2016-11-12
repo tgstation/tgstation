@@ -134,7 +134,7 @@
 		if(!(stat & BROKEN))
 			verted = verted * -1
 			update_move_direction()
-			user << "<span class='notice'>You reverse the [src]'s direction.</span>"
+			user << "<span class='notice'>You reverse [src]'s direction.</span>"
 
 	else if(user.a_intent != "harm")
 		if(user.drop_item())
