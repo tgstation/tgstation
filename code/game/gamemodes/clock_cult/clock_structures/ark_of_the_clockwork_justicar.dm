@@ -75,14 +75,19 @@
 		ratvar_portal = FALSE
 		hierophant_message("<span class='big_brass'>This newly constructed gateway will not free Ratvar, \
 		and will instead simply proselytize and convert everything and everyone on the station.</span>", TRUE)
-	START_PROCESSING(SSobj, src)
+	SSshuttle.registerHostileEnvironment(src)
+	START_PROCESSING(SSprocessing, src)
 
 /obj/structure/destructible/clockwork/massive/celestial_gateway/Destroy()
-	STOP_PROCESSING(SSobj, src)
+	STOP_PROCESSING(SSprocessing, src)
 	if(!purpose_fulfilled)
 		var/area/gate_area = get_area(src)
 		hierophant_message("<span class='large_brass'><b>A gateway to the Celestial Derelict has fallen at [gate_area.map_name]!</b></span>")
 		send_to_playing_players(sound(null, 0, channel = 8))
+	var/was_stranded = SSshuttle.emergency.mode == SHUTTLE_STRANDED
+	SSshuttle.clearHostileEnvironment(src)
+	if(!was_stranded && !purpose_fulfilled)
+		priority_announce("Massive energy anomaly no longer on short-range scanners.","Anomaly Alert")
 	if(glow)
 		qdel(glow)
 		glow = null
@@ -118,7 +123,7 @@
 	if(!obj_integrity)
 		. = "DETONATING"
 	else if(GATEWAY_RATVAR_ARRIVAL - progress_in_seconds > 0)
-		. = "[round(max((GATEWAY_RATVAR_ARRIVAL - progress_in_seconds) / (GATEWAY_SUMMON_RATE * 0.5), 0), 1)][s_on_time ? "S":""]"
+		. = "[round(max((GATEWAY_RATVAR_ARRIVAL - progress_in_seconds) / (GATEWAY_SUMMON_RATE), 0), 1)][s_on_time ? "S":""]"
 
 /obj/structure/destructible/clockwork/massive/celestial_gateway/examine(mob/user)
 	icon_state = "spatial_gateway" //cheat wildly by pretending to have an icon
@@ -159,6 +164,8 @@
 			glow.icon_state = "clockwork_gateway_charging"
 		if(GATEWAY_REEBE_FOUND to GATEWAY_RATVAR_COMING)
 			if(!second_sound_played)
+				var/area/gate_area = get_area(src)
+				priority_announce("Massive energy anomaly detected on short-range scanners. Location: [gate_area.map_name].", "Anomaly Alert")
 				send_to_playing_players(sound('sound/effects/clockcult_gateway_active.ogg', 1, channel = 8, volume = 35))
 				second_sound_played = TRUE
 			make_glow()

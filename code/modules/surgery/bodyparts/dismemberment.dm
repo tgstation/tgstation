@@ -130,7 +130,6 @@
 	C.bodyparts -= src
 	if(held_index)
 		var/obj/item/I = owner.get_item_for_held_index(held_index)
-
 		var/did_special_unequip = FALSE
 		if(istype(I, /obj/item/weapon))
 			var/obj/item/weapon/W = I
@@ -152,8 +151,8 @@
 
 		if(!did_special_unequip)
 			C.unEquip(owner.get_item_for_held_index(held_index), 1)
-
-		C.hand_bodyparts -= src
+		
+		C.hand_bodyparts[held_index] = null
 
 	owner = null
 
@@ -314,14 +313,19 @@
 	owner = C
 	C.bodyparts += src
 	if(held_index)
-		C.hand_bodyparts += src
+		if(held_index > C.hand_bodyparts.len)
+			C.hand_bodyparts.len = held_index
+		C.hand_bodyparts[held_index] = src
+
 		if(attached_weapon)
 			C.put_in_hand(attached_weapon, held_index)
 			attached_weapon = null
+
 		if(C.hud_used)
 			var/obj/screen/inventory/hand/hand = C.hud_used.hand_slots["[held_index]"]
 			if(hand)
 				hand.update_icon()
+				
 		C.update_inv_gloves()
 
 	if(special) //non conventional limb attachment

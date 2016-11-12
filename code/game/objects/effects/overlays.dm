@@ -316,7 +316,7 @@
 	icon_state = "vanguard_cogwheel"
 
 /obj/effect/overlay/temp/ratvar/component/capacitor
-	icon_state = "guvax_capacitor"
+	icon_state = "geis_capacitor"
 
 /obj/effect/overlay/temp/ratvar/component/alloy
 	icon_state = "replicant_alloy"

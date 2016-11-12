@@ -10,8 +10,8 @@
 	It will penetrate mindshield implants once before disappearing."
 	invocations = list("Divinity, enslave...", "...all who trespass here!")
 	channel_time = 70
-	required_components = list(BELLIGERENT_EYE = 3, GUVAX_CAPACITOR = 1, HIEROPHANT_ANSIBLE = 1)
-	consumed_components = list(BELLIGERENT_EYE = 2, GUVAX_CAPACITOR = 1, HIEROPHANT_ANSIBLE = 1)
+	required_components = list(BELLIGERENT_EYE = 3, GEIS_CAPACITOR = 1, HIEROPHANT_ANSIBLE = 1)
+	consumed_components = list(BELLIGERENT_EYE = 2, GEIS_CAPACITOR = 1, HIEROPHANT_ANSIBLE = 1)
 	whispered = TRUE
 	object_path = /obj/effect/clockwork/sigil/submission/accession
 	prevent_path = /obj/effect/clockwork/sigil/submission
@@ -57,11 +57,11 @@
 	and will gain Fatigue at an increasing rate as they grow farther away. At maximum Fatigue, the marauder is forced to return to you and will be unable to manifest until its Fatigue is at zero."
 	invocations = list("Fright's will...", "...call forth...")
 	channel_time = 100
-	required_components = list(BELLIGERENT_EYE = 1, VANGUARD_COGWHEEL = 1, GUVAX_CAPACITOR = 3)
-	consumed_components = list(BELLIGERENT_EYE = 1, VANGUARD_COGWHEEL = 1, GUVAX_CAPACITOR = 2)
+	required_components = list(BELLIGERENT_EYE = 1, VANGUARD_COGWHEEL = 1, GEIS_CAPACITOR = 3)
+	consumed_components = list(BELLIGERENT_EYE = 1, VANGUARD_COGWHEEL = 1, GEIS_CAPACITOR = 2)
 	usage_tip = "Marauders are useful as personal bodyguards and frontline warriors, although they do little damage."
 	tier = SCRIPTURE_APPLICATION
-	primary_component = GUVAX_CAPACITOR
+	primary_component = GEIS_CAPACITOR
 	sort_priority = 3
 
 /datum/clockwork_scripture/memory_allocation/check_special_requirements()
@@ -144,8 +144,8 @@
 	desc = "Scribes a sigil beneath the invoker which stores power to power clockwork structures."
 	invocations = list("Divinity...", "...power our creations!")
 	channel_time = 70
-	required_components = list(VANGUARD_COGWHEEL = 1, GUVAX_CAPACITOR = 1, HIEROPHANT_ANSIBLE = 3)
-	consumed_components = list(VANGUARD_COGWHEEL = 1, GUVAX_CAPACITOR = 1, HIEROPHANT_ANSIBLE = 2)
+	required_components = list(VANGUARD_COGWHEEL = 1, GEIS_CAPACITOR = 1, HIEROPHANT_ANSIBLE = 3)
+	consumed_components = list(VANGUARD_COGWHEEL = 1, GEIS_CAPACITOR = 1, HIEROPHANT_ANSIBLE = 2)
 	whispered = TRUE
 	object_path = /obj/effect/clockwork/sigil/transmission
 	creator_message = "<span class='brass'>A sigil silently appears below you. It will automatically power clockwork structures adjecent to it.</span>"
@@ -188,8 +188,8 @@
 	desc = "Creates a mechanized prism that will rapidly repair damage to clockwork creatures, converted cyborgs, and clockwork structures. Requires replicant alloy or power to function."
 	invocations = list("May this prism...", "...mend our dents and scratches!")
 	channel_time = 80
-	required_components = list(VANGUARD_COGWHEEL = 4, GUVAX_CAPACITOR = 1, REPLICANT_ALLOY = 1)
-	consumed_components = list(VANGUARD_COGWHEEL = 3, GUVAX_CAPACITOR = 1, REPLICANT_ALLOY = 1)
+	required_components = list(VANGUARD_COGWHEEL = 4, GEIS_CAPACITOR = 1, REPLICANT_ALLOY = 1)
+	consumed_components = list(VANGUARD_COGWHEEL = 3, GEIS_CAPACITOR = 1, REPLICANT_ALLOY = 1)
 	object_path = /obj/structure/destructible/clockwork/powered/mending_motor/prefilled
 	creator_message = "<span class='brass'>You form a mending motor, which will consume power or replicant alloy to mend constructs and structures.</span>"
 	observer_message = "<span class='warning'>An onyx prism forms in midair and sprouts tendrils to support itself!</span>"
@@ -211,8 +211,8 @@
 	desc = "Creates a mania motor which will cause brain damage and hallucinations in nearby non-servant humans. It will also try to convert humans directly adjecent to the motor."
 	invocations = list("May this transmitter...", "...break the will of all who oppose us!")
 	channel_time = 80
-	required_components = list(GUVAX_CAPACITOR = 4, REPLICANT_ALLOY = 1, HIEROPHANT_ANSIBLE = 1)
-	consumed_components = list(GUVAX_CAPACITOR = 3, REPLICANT_ALLOY = 1, HIEROPHANT_ANSIBLE = 1)
+	required_components = list(GEIS_CAPACITOR = 4, REPLICANT_ALLOY = 1, HIEROPHANT_ANSIBLE = 1)
+	consumed_components = list(GEIS_CAPACITOR = 3, REPLICANT_ALLOY = 1, HIEROPHANT_ANSIBLE = 1)
 	object_path = /obj/structure/destructible/clockwork/powered/mania_motor
 	creator_message = "<span class='brass'>You form a mania motor which will cause brain damage and hallucinations in nearby humans while active.</span>"
 	observer_message = "<span class='warning'>A two-pronged machine rises from the ground!</span>"
@@ -221,7 +221,7 @@
 	usage_tip = "Eligible human servants next to the motor will be converted at an additional power cost. It will also cure hallucinations and brain damage in nearby servants."
 	tier = SCRIPTURE_APPLICATION
 	one_per_tile = TRUE
-	primary_component = GUVAX_CAPACITOR
+	primary_component = GEIS_CAPACITOR
 	sort_priority = 8
 	quickbind = TRUE
 	quickbind_desc = "Creates a Mania Motor, which can convert adjacent non-Servants with power."
@@ -234,8 +234,8 @@
 	desc = "Creates a tinkerer's daemon which can rapidly collect components. It will only function if it has sufficient power, is outnumbered by servants by a ratio of 5:1, and there is at least one existing cache."
 	invocations = list("May this generator...", "...collect Engine parts that yet hold greatness!")
 	channel_time = 80
-	required_components = list(BELLIGERENT_EYE = 1, GUVAX_CAPACITOR = 1, REPLICANT_ALLOY = 4)
-	consumed_components = list(BELLIGERENT_EYE = 1, GUVAX_CAPACITOR = 1, REPLICANT_ALLOY = 3)
+	required_components = list(BELLIGERENT_EYE = 1, GEIS_CAPACITOR = 1, REPLICANT_ALLOY = 4)
+	consumed_components = list(BELLIGERENT_EYE = 1, GEIS_CAPACITOR = 1, REPLICANT_ALLOY = 3)
 	object_path = /obj/structure/destructible/clockwork/powered/tinkerers_daemon
 	creator_message = "<span class='brass'>You form a tinkerer's daemon which can rapidly collect components at a power cost.</span>"
 	invokers_required = 2

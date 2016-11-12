@@ -5,7 +5,7 @@
 	icon_state = "dread_ipad"
 	slot_flags = SLOT_BELT
 	w_class = 2
-	var/list/stored_components = list(BELLIGERENT_EYE = 0, VANGUARD_COGWHEEL = 0, GUVAX_CAPACITOR = 0, REPLICANT_ALLOY = 0, HIEROPHANT_ANSIBLE = 0)
+	var/list/stored_components = list(BELLIGERENT_EYE = 0, VANGUARD_COGWHEEL = 0, GEIS_CAPACITOR = 0, REPLICANT_ALLOY = 0, HIEROPHANT_ANSIBLE = 0)
 	var/busy //If the slab is currently being used by something
 	var/production_time = 0
 	var/no_cost = FALSE //If the slab is admin-only and needs no components and has no scripture locks
@@ -20,7 +20,7 @@
 	actions_types = list(/datum/action/item_action/clock/hierophant, /datum/action/item_action/clock/quickbind_one, /datum/action/item_action/clock/quickbind_two)
 
 /obj/item/clockwork/slab/starter
-	stored_components = list(BELLIGERENT_EYE = 1, VANGUARD_COGWHEEL = 1, GUVAX_CAPACITOR = 1, REPLICANT_ALLOY = 1, HIEROPHANT_ANSIBLE = 1)
+	stored_components = list(BELLIGERENT_EYE = 1, VANGUARD_COGWHEEL = 1, GEIS_CAPACITOR = 1, REPLICANT_ALLOY = 1, HIEROPHANT_ANSIBLE = 1)
 
 /obj/item/clockwork/slab/internal //an internal motor for mobs running scripture
 	name = "scripture motor"
@@ -41,7 +41,7 @@
 
 /obj/item/clockwork/slab/New()
 	..()
-	quickbind_to_one(/datum/clockwork_scripture/ranged_ability/guvax_prep)
+	quickbind_to_one(/datum/clockwork_scripture/ranged_ability/geis_prep)
 	quickbind_to_two(/datum/clockwork_scripture/vanguard)
 	START_PROCESSING(SSobj, src)
 	production_time = world.time + SLAB_PRODUCTION_TIME
@@ -303,7 +303,7 @@
 			<font color=#BE8700>Components</font> are stored either within slabs, where they can only be accessed by that slab, or in the Global Cache accessed by Tinkerer's Caches, which all slabs \
 			can draw from to recite scripture.<br>\
 			There are five types of component, and in general, <font color=#6E001A>Belligerent Eyes</font> are aggressive and judgemental, <font color=#1E8CE1>Vanguard Cogwheels</font> are defensive and \
-			repairing, <font color=#AF0AAF>Guvax Capacitors</font> are for conversion and control, <font color=#5A6068>Replicant Alloy</font> is for construction and fuel, and \
+			repairing, <font color=#AF0AAF>Geis Capacitors</font> are for conversion and control, <font color=#5A6068>Replicant Alloy</font> is for construction and fuel, and \
 			<font color=#DAAA18>Hierophant Ansibles</font> are for transmission and power, though in combination their effects become more nuanced.<br><br>\
 			\
 			There are also five tiers of <font color=#BE8700>Scripture</font>; <font color=#BE8700>[SCRIPTURE_DRIVER]</font>, <font color=#BE8700>[SCRIPTURE_SCRIPT]</font>, <font color=#BE8700>[SCRIPTURE_APPLICATION]</font>, <font color=#BE8700>[SCRIPTURE_REVENANT]</font>, and <font color=#BE8700>[SCRIPTURE_JUDGEMENT]</font>.<br>\
@@ -320,7 +320,7 @@
 			\
 			Some effects of scripture include granting the invoker a temporary complete immunity to stuns, summoning a turret that can attack anything that sets eyes on it, binding a powerful guardian \
 			to the invoker, or even, at one of the highest tiers, granting all nearby Servants temporary invulnerability.<br>\
-			However, the most important scripture is <font color=#AF0AAF>Guvax</font>, which allows you to convert heathens with relative ease.<br><br>\
+			However, the most important scripture is <font color=#AF0AAF>Geis</font>, which allows you to convert heathens with relative ease.<br><br>\
 			\
 			The second function of the clockwork slab is <b><font color=#BE8700>Recollection</font></b>, which will display this guide and allows for the quickbinding and <font color=#BE8700>recital</font> \
 			of scripture.<br><br>\

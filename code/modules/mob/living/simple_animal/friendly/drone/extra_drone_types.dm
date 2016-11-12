@@ -150,6 +150,12 @@
 		msg = "<span class='brass'><i>Hierophant Network:</i></span> <span class='alloy'>[name] disabled.</span>"
 	..()
 
+/mob/living/simple_animal/drone/cogscarab/try_reactivate(mob/living/user)
+	if(!is_servant_of_ratvar(user))
+		user << "<span class='warning'>You fiddle around with [src] to no avail.</span>"
+	else
+		..()
+
 /mob/living/simple_animal/drone/cogscarab/triggerAlarm(class, area/A, O, obj/alarmsource)
 	return
 

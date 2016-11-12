@@ -185,6 +185,9 @@
 	roundstart_move = "emergency_away"
 	var/sound_played = 0 //If the launch sound has been sent to all players on the shuttle itself
 
+/obj/docking_port/mobile/emergency/canDock(obj/docking_port/stationary/S)
+	return SHUTTLE_CAN_DOCK //If the emergency shuttle can't move, the whole game breaks, so it will force itself to land even if it has to crush a few departments in the process
+
 /obj/docking_port/mobile/emergency/register()
 	. = ..()
 	SSshuttle.emergency = src

@@ -11,7 +11,7 @@
 			return L
 
 /mob/living/carbon/has_hand_for_held_index(i)
-	if(i && hand_bodyparts.len >= i)
+	if(i)
 		var/obj/item/bodypart/L = hand_bodyparts[i]
 		if(L)
 			return L
