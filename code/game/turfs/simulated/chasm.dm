@@ -39,7 +39,7 @@
 		//Portals aren't affected by gravity. Probably.
 		return 0
 	//Flies right over the chasm
-	if(ismob(AM))
+	if(isliving(AM))
 		var/mob/MM = AM
 		if(FLYING in MM.movement_type)
 			return 0

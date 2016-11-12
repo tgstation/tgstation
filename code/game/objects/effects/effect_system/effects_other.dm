@@ -74,10 +74,7 @@
 		if(T != oldposition)
 			if(!T.has_gravity() || !nograv_required)
 				var/obj/effect/particle_effect/ion_trails/I = PoolOrNew(effect_type, oldposition)
-				I.setDir(holder.dir)
-				if(istype(holder, /obj/item/device/flightpack))
-					var/obj/item/device/flightpack/F = holder
-					I.setDir(F.suit.user.dir)
+				set_dir(I)
 				if(fade)
 					flick(fadetype, I)
 					I.icon_state = ""
@@ -89,10 +86,19 @@
 				processing = 1
 				start()
 
+/datum/effect_system/trail_follow/ion/proc/set_dir(obj/effect/particle_effect/ion_trails/I)
+	I.setDir(holder.dir)
+
 /datum/effect_system/trail_follow/ion/flight
 	effect_type = /obj/effect/particle_effect/ion_trails/flight
 	fadetype = "ion_fade_flight"
 	nograv_required = 0
+
+/datum/effect_system/trail_follow/ion/flight/set_dir(obj/effect/particle_effect/ion_trails/I)
+	if(istype(holder, /obj/item/device/flightpack))
+		var/obj/item/device/flightpack/F = holder
+		I.setDir(F.suit.user.dir)
+
 
 //Reagent-based explosion effect
 

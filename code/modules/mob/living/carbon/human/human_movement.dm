@@ -61,6 +61,4 @@
 /mob/living/carbon/human/Process_Spacemove(movement_dir = 0) //Temporary laziness thing. Will change to handles by species reee.
 	if(..())
 		return 1
-	var/mob/living/carbon/human/H = src
-	if(ishuman(H))
-		return dna.species.space_move(H)
+	return dna.species.space_move(src)

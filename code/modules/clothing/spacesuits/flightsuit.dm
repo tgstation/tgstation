@@ -85,7 +85,7 @@
 	var/crash_damage_low = 1
 	var/crash_damage_high = 2.5
 	var/crash_disable_threshold = 5
-	var/crash_heal_amount = 0.2
+	var/crash_heal_amount = 0.1
 	var/crash_disabled = 0
 	var/crash_dampening = 0
 
@@ -361,6 +361,7 @@
 			emp_disabled = 1
 		if(emp_disabled && (emp_damage <= 0.5))
 			emp_disabled = 0
+			emp_disable_message = 0
 			usermessage("Flightpack: Systems rebooted. Flightpack re-enabled")
 	disabled = crash_disabled + emp_disabled
 	if(disabled)
@@ -368,7 +369,7 @@
 			usermessage("WARNING: STABILIZERS DAMAGED. UNABLE TO CONTINUE OPERATION. PLEASE WAIT FOR AUTOMATIC RECALIBRATION", 1)
 			usermessage("Your flightpack abruptly shuts off!", 2)
 			crash_disable_message = 1
-		if(emp_disabled)
+		if(emp_disabled && (!emp_disable_message))
 			usermessage("WARNING: POWER SURGE DETECTED FROM INTERNAL SHORT CIRCUIT. PLEASE WAIT FOR AUTOMATIC REBOOT.", 1)
 			usermessage("Your flightpack abruptly shuts off!", 2)
 			emp_disable_message = 1
@@ -415,34 +416,26 @@
 
 /obj/item/device/flightpack/proc/crash_damage(density, anchored, speed, victim_name)
 	var/crashmessagesrc = "<span class='userdanger'>[suit.user] violently crashes into [victim_name], "
-	var/userdamage = speed
-	userdamage -= stabilizer*2
+	var/userdamage = 10
+	userdamage -= stabilizer*3
 	userdamage -= part_bin.rating
-	userdamage += density*2
-	userdamage += anchored*2
+	userdamage += anchored*4
 	if(userdamage)
-		crashmessagesrc += "that really must of hurt!"
+		crashmessagesrc += "that really must have hurt!"
 	else
 		crashmessagesrc += "but luckily [suit.user]'s impact was absorbed by their suit's stabilizers!</span>"
 	suit.user.adjustBruteLoss(userdamage)
 	usermessage("WARNING: Stabilizers taking damage!", 1)
 	suit.user.visible_message(crashmessagesrc)
-	crash_damage = Clamp(crash_damage + crash_damage_low, 0, crash_disable_threshold*1.5)
+	crash_damage = Clamp(crash_damage + 3, 0, crash_disable_threshold*1.5)
 
-/obj/item/device/flightpack/proc/userknockback(density, anchored, speed)
-	var/dampening = 0
-	dampening += crash_dampening
-	dampening += (stabilizer*3)
-	dampening += (brake*1000)	//Why are you even crashing with the brakes on?!
-	dampening -= (speed*2)
-	dampening -= (density*2)
-	dampening -= (anchored*2)
-	if(dampening)
-		suit.user.visible_message("[suit.user]'s suit resists the force of the impact!")
-		return 0
-	var/turf/target = get_turf(suit.user)
-	for(var/i in 1 to (speed+anchored+density))
-		target = get_step(target, pick(alldirs))
+/obj/item/device/flightpack/proc/userknockback(density, anchored, speed, dir)
+	var/angle = dir2angle(dir)
+	angle += 180
+	if(angle > 360)
+		angle -= 360
+	dir = angle2dir(angle)
+	var/turf/target = get_edge_target_turf(suit.user, dir)
 	suit.user.throw_at_fast(target, (speed+density+anchored), suit.user)
 	suit.user.visible_message("[suit.user] is knocked flying by the impact!")
 
@@ -452,7 +445,6 @@
 	if(crashing)	//We're already in the process of getting knocked around by a crash.
 		return 0
 	if(flight && momentum_speed > 1)
-		world << "DEBUG: IMPACT TRIGGERED BY BUMP"
 		crashing = 1
 		dir = suit.user.name
 	else
@@ -468,7 +460,7 @@
 		anchored = victim.anchored
 		victimknockback(density, anchored, momentum_speed, victim, dir)
 	crash_damage(density, anchored, momentum_speed, unmovablevictim.name)
-	userknockback(density, anchored, momentum_speed)
+	userknockback(density, anchored, momentum_speed, dir)
 	losecontrol(move = FALSE)
 	crashing = 0
 
@@ -487,7 +479,6 @@
 	if(anchored)
 		knockback = 0
 	target = get_edge_target_turf(victim, dir)
-	target = get_edge_target_turf(target, dir)
 	victim.visible_message("<span class='warning'>[victim.name] is sent flying by the impact!</span>")
 	if(knockback)
 		victim.throw_at_fast(target, knockback, part_manip.rating, suit.user)
@@ -663,28 +654,34 @@
 		if(istype(S, /obj/item/weapon/stock_parts/manipulator))
 			if((!part_manip) || (part_manip.rating < S.rating))
 				usermessage("[I] has been sucessfully installed into systems.")
-				I.loc = src
-				part_manip = I
+				if(user.unEquip(I))
+					I.loc = src
+					part_manip = I
 		if(istype(S, /obj/item/weapon/stock_parts/scanning_module))
 			if((!part_scan) || (part_scan.rating < S.rating))
 				usermessage("[I] has been sucessfully installed into systems.")
-				I.loc = src
-				part_scan = I
+				if(user.unEquip(I))
+					I.loc = src
+					part_scan = I
 		if(istype(S, /obj/item/weapon/stock_parts/micro_laser))
 			if((!part_laser) || (part_laser.rating < S.rating))
 				usermessage("[I] has been sucessfully installed into systems.")
-				I.loc = src
-				part_laser = I
+				if(user.unEquip(I))
+					I.loc = src
+					part_laser = I
 		if(istype(S, /obj/item/weapon/stock_parts/matter_bin))
 			if((!part_bin) || (part_bin.rating < S.rating))
 				usermessage("[I] has been sucessfully installed into systems.")
-				I.loc = src
-				part_bin = I
+				if(user.unEquip(I))
+					I.loc = src
+					part_bin = I
 		if(istype(S, /obj/item/weapon/stock_parts/capacitor))
 			if((!part_cap) || (part_cap.rating < S.rating))
 				usermessage("[I] has been sucessfully installed into systems.")
-				I.loc = src
-				part_cap = I
+				if(user.unEquip(I))
+					I.loc = src
+					part_cap = I
+	update_parts()
 
 //MOB MOVEMENT STUFF----------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -730,9 +727,6 @@
 /obj/item/clothing/shoes/flightshoes/item_action_slot_check(slot)
 	if(slot == slot_shoes)
 		return 1
-
-/obj/item/clothing/shoes/flightshoes/equipped(mob/wearer, slot)
-	..()
 
 /obj/item/clothing/shoes/flightshoes/proc/delink_suit()
 	if(suit)
@@ -874,7 +868,7 @@
 	if(suittoggled)
 		usermessage("You must retract the helmet before unlocking your suit!", 1)
 		return 0
-	if(pack.flight)
+	if(pack && pack.flight)
 		usermessage("You must shut off the flight-pack before unlocking your suit!", 1)
 		return 0
 	if(deployedpack)
@@ -1025,6 +1019,14 @@
 		usermessage("The maintainence panel is closed!", 1)
 		return 0
 	if(istype(I, /obj/item/weapon/crowbar))
+		var/inputlist = list()
+		if(pack)
+			inputlist += "Pack"
+		if(shoes)
+			inputlist += "Shoes"
+		if(!input.len)
+			usermessage("There is nothing inside the flightsuit to remove!", 1)
+			return 0
 		var/input = input(user, "What to remove?", "Removing module") as null|anything in list("Pack", "Shoes")
 		if(pack && input == "Pack")
 			if(pack.flight)
