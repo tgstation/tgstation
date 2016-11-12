@@ -320,15 +320,6 @@
 /obj/structure/closet/attack_robot(mob/user)
 	if(user.Adjacent(src))
 		return attack_hand(user)
-	else
-		return attack_ai(user)
-
-/obj/structure/closet/attack_ai(mob/user)
-	if(secure && opened)
-		user << "<span class='warning'>You cannot lock [src] while it is open!</span>"
-		return
-	else
-		return togglelock(user)
 
 // tk grab then use on self
 /obj/structure/closet/attack_self_tk(mob/user)
