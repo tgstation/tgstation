@@ -325,7 +325,7 @@
 
 /obj/structure/closet/attack_ai(mob/user)
 	if(secure && opened)
-		user << "<span class='warning'>You cannot lock open locker!</span>"
+		user << "<span class='warning'>You cannot lock [src] while it is open!</span>"
 		return
 	else
 		return togglelock(user)
