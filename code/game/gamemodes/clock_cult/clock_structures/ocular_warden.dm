@@ -33,11 +33,11 @@
 	return 25
 
 /obj/structure/destructible/clockwork/ocular_warden/can_be_unfasten_wrench(mob/user)
-	var/integrity_percent = (obj_integrity/max_integrity) * 100
-	if(integrity_percent <= 25)
-		user << "<span class='warning'>[src] is too damaged to unsecure!</span>"
-		return FAILED_UNFASTEN
-	if(!anchored)
+	if(anchored)
+		if(obj_integrity <= max_integrity * 0.25)
+			user << "<span class='warning'>[src] is too damaged to unsecure!</span>"
+			return FAILED_UNFASTEN
+	else
 		for(var/obj/structure/destructible/clockwork/ocular_warden/W in range(3, src))
 			user << "<span class='neovgre'>You sense another ocular warden too near this location. Activating this one this close would cause them to fight.</span>"
 			return FAILED_UNFASTEN

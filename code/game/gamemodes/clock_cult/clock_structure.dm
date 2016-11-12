@@ -65,11 +65,11 @@
 		return 1
 	. = max(sqrt(obj_integrity/max_integrity), 0.5)
 	if(increasing)
-		. *= max_integrity/obj_integrity
+		. *= min(max_integrity/obj_integrity, 4)
+	. = round(., 0.01)
 
 /obj/structure/destructible/clockwork/can_be_unfasten_wrench(mob/user)
-	var/integrity_percent = (obj_integrity/max_integrity) * 100
-	if(integrity_percent <= 25)
+	if(anchored && obj_integrity <= max_integrity * 0.25)
 		user << "<span class='warning'>[src] is too damaged to unsecure!</span>"
 		return FAILED_UNFASTEN
 	return ..()
@@ -81,7 +81,9 @@
 				icon_state = initial(icon_state)
 			else
 				icon_state = unanchored_icon
+				playsound(src, break_sound, 10 * get_efficiency_mod(TRUE), 1)
 				take_damage(max_integrity * 0.25, BRUTE)
+				user << "<span class='warning'>As you unsecure [src] from the floor, you see cracks appear in its surface!</span>"
 		return 1
 	return ..()
 

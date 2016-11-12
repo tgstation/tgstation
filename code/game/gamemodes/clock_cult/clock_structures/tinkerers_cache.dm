@@ -97,7 +97,7 @@
 	..()
 	if(is_servant_of_ratvar(user) || isobserver(user))
 		if(linkedwall)
-			user << "<span class='brass'>It is linked and will generate a component every <b>[(CACHE_PRODUCTION_TIME * 0.1) * get_efficiency_mod(TRUE)]</b> seconds!</span>"
+			user << "<span class='brass'>It is linked and will generate a component every <b>[round((CACHE_PRODUCTION_TIME * 0.1) * get_efficiency_mod(TRUE), 0.1)]</b> seconds!</span>"
 		user << "<b>Stored components:</b>"
 		for(var/i in clockwork_component_cache)
 			user << "<span class='[get_component_span(i)]_small'><i>[get_component_name(i)][i != REPLICANT_ALLOY ? "s":""]:</i> <b>[clockwork_component_cache[i]]</b></span>"
