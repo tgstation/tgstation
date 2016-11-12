@@ -3,6 +3,7 @@
 	var/_has_id_slot = 0
 	var/_has_printer = 0
 	var/_has_battery = 0
+	var/_has_ai = 0
 
 /obj/machinery/modular_computer/console/preset/New()
 	. = ..()
@@ -16,6 +17,8 @@
 		cpu.install_component(new /obj/item/weapon/computer_hardware/printer)
 	if(_has_battery)
 		cpu.install_component(new /obj/item/weapon/computer_hardware/battery(cpu, /obj/item/weapon/stock_parts/cell/computer/super))
+	if(_has_ai)
+		cpu.install_component(new /obj/item/weapon/computer_hardware/ai_slot)
 	install_programs()
 
 // Override in child types to install preset-specific programs.
@@ -38,12 +41,14 @@
 /obj/machinery/modular_computer/console/preset/research
 	 console_department = "Research"
 	 desc = "A stationary computer. This one comes preloaded with research programs."
+	 _has_ai = 1
 
 /obj/machinery/modular_computer/console/preset/research/install_programs()
 	var/obj/item/weapon/computer_hardware/hard_drive/hard_drive = cpu.all_components[MC_HDD]
 	hard_drive.store_file(new/datum/computer_file/program/ntnetmonitor())
 	hard_drive.store_file(new/datum/computer_file/program/nttransfer())
 	hard_drive.store_file(new/datum/computer_file/program/chatclient())
+	hard_drive.store_file(new/datum/computer_file/program/aidiag())
 
 
 // ===== COMMAND CONSOLE =====
