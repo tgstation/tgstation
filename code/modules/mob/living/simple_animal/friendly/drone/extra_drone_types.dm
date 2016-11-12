@@ -150,11 +150,21 @@
 		msg = "<span class='brass'><i>Hierophant Network:</i></span> <span class='alloy'>[name] disabled.</span>"
 	..()
 
+/mob/living/simple_animal/drone/attackby(obj/item/I, mob/user)
+	if(istype(I, /obj/item/weapon/screwdriver) && stat == DEAD)
+		try_reactivate(user)
+	else
+		..()
+
 /mob/living/simple_animal/drone/cogscarab/try_reactivate(mob/living/user)
 	if(!is_servant_of_ratvar(user))
 		user << "<span class='warning'>You fiddle around with [src] to no avail.</span>"
 	else
 		..()
+
+/mob/living/simple_animal/drone/cogscarab/can_use_guns(obj/item/weapon/gun/G)
+	changeNext_move(CLICK_CD_RANGE*4) //about as much delay as an unupgraded kinetic accelerator
+	return TRUE
 
 /mob/living/simple_animal/drone/cogscarab/triggerAlarm(class, area/A, O, obj/alarmsource)
 	return
