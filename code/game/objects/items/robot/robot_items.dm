@@ -327,6 +327,11 @@
 		cooldown = world.time + 600
 		log_game("[user.ckey]([user]) used an emagged Cyborg Harm Alarm in ([user.x],[user.y],[user.z])")
 
+/obj/item/clothing/head/helmet/justice/cyborg
+	name = "Ambulance Siren"
+	desc = "Emergency, get out of the way!"
+	icon_state = "megaphone"
+
 /**********************************************************************
 						HUD/SIGHT things
 ***********************************************************************/
