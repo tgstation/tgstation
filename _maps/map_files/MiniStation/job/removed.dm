@@ -50,6 +50,3 @@
 
 /datum/job/warden/config_check()
 	return 0
-
-/datum/job/cyborg/config_check()
-	return 0

@@ -886,7 +886,7 @@
 	else
 		return 0
 
-/obj/mecha/container_resist()
+/obj/mecha/container_resist(mob/living/user)
 	go_out()
 
 

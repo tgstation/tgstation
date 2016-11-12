@@ -622,7 +622,6 @@ Difficulty: Very Hard
 	languages_understood = ALL
 	del_on_death = 1
 	unsuitable_atmos_damage = 0
-	flying = 1
 	minbodytemp = 0
 	maxbodytemp = 1500
 	obj_damage = 0
@@ -647,7 +646,8 @@ Difficulty: Very Hard
 			PoolOrNew(/obj/effect/overlay/temp/heal, list(get_turf(target), "#80F5FF"))
 
 /mob/living/simple_animal/hostile/lightgeist/ghostize()
-	if(..())
+	. = ..()
+	if(.)
 		death()
 
 

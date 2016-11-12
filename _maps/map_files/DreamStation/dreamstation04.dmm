@@ -2608,23 +2608,20 @@
 /turf/open/space,
 /area/space)
 "afa" = (
-/obj/structure/transit_tube{
-	icon_state = "E-SW"
-	},
 /obj/structure/lattice,
+/obj/structure/transit_tube/curved/flipped{
+	dir = 4
+	},
 /turf/open/space,
 /area/space)
 "afb" = (
-/obj/structure/transit_tube,
 /obj/structure/lattice,
+/obj/structure/transit_tube/horizontal,
 /turf/open/space,
 /area/space)
 "afc" = (
 /obj/structure/lattice/catwalk,
-/obj/structure/transit_tube{
-	tag = "icon-E-W-Pass";
-	icon_state = "E-W-Pass"
-	},
+/obj/structure/transit_tube/crossing/horizontal,
 /turf/open/space,
 /area/space)
 "afd" = (
@@ -2634,15 +2631,15 @@
 /area/space)
 "afe" = (
 /obj/structure/window/reinforced/fulltile,
-/obj/structure/transit_tube,
+/obj/structure/transit_tube/horizontal,
 /turf/open/floor/plating,
 /area/aisat)
 "aff" = (
-/obj/structure/transit_tube,
 /obj/structure/cable/blue{
 	tag = "icon-1-2";
 	icon_state = "1-2"
 	},
+/obj/structure/transit_tube/horizontal,
 /turf/open/floor/plasteel/darkblue/corner{
 	tag = "icon-darkbluecorners (WEST)";
 	dir = 8
@@ -2653,22 +2650,13 @@
 	tag = "icon-1-2";
 	icon_state = "1-2"
 	},
-/obj/structure/transit_tube/station/reverse{
-	tag = "icon-closed (NORTH)";
-	icon_state = "closed";
-	dir = 1
-	},
+/obj/structure/transit_tube/station/reverse/flipped,
 /turf/open/floor/plasteel/black,
 /area/aisat)
 "afh" = (
 /obj/structure/cable/blue{
 	tag = "icon-1-2";
 	icon_state = "1-2"
-	},
-/obj/structure/transit_tube{
-	tag = "icon-Block (WEST)";
-	icon_state = "Block";
-	dir = 8
 	},
 /turf/open/floor/plasteel/darkblue/corner{
 	tag = "icon-darkbluecorners"
@@ -2759,10 +2747,8 @@
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/syndicate)
 "aft" = (
-/obj/structure/transit_tube{
-	icon_state = "NE-SW"
-	},
 /obj/structure/lattice,
+/obj/structure/transit_tube/diagonal,
 /turf/open/space,
 /area/space)
 "afu" = (
@@ -3047,10 +3033,8 @@
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/syndicate)
 "agf" = (
-/obj/structure/transit_tube{
-	icon_state = "S-NE"
-	},
 /obj/structure/lattice,
+/obj/structure/transit_tube/curved,
 /turf/open/space,
 /area/space)
 "agg" = (
@@ -3110,9 +3094,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/syndicate)
 "ago" = (
-/obj/structure/transit_tube{
-	icon_state = "N-S"
-	},
+/obj/structure/transit_tube,
 /turf/open/space,
 /area/space)
 "agp" = (
@@ -3155,10 +3137,8 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/syndicate)
 "agu" = (
-/obj/structure/transit_tube{
-	icon_state = "N-S-Pass"
-	},
 /obj/structure/lattice,
+/obj/structure/transit_tube/crossing,
 /turf/open/space,
 /area/space)
 "agv" = (
@@ -4680,11 +4660,10 @@
 /turf/open/space,
 /area/solar/auxport)
 "akd" = (
-/obj/structure/transit_tube{
-	tag = "icon-N-SE";
-	icon_state = "N-SE"
-	},
 /obj/structure/lattice,
+/obj/structure/transit_tube/curved/flipped{
+	dir = 1
+	},
 /turf/open/space,
 /area/space)
 "ake" = (
@@ -4797,24 +4776,23 @@
 /turf/open/space,
 /area/space)
 "akt" = (
-/obj/structure/transit_tube{
-	tag = "icon-E-NW";
-	icon_state = "E-NW"
-	},
 /obj/structure/lattice,
+/obj/structure/transit_tube/curved{
+	dir = 4
+	},
 /turf/open/space,
 /area/space)
 "aku" = (
 /obj/structure/window/reinforced/fulltile,
-/obj/structure/transit_tube,
+/obj/structure/transit_tube/horizontal,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "akv" = (
-/obj/structure/transit_tube,
 /obj/structure/cable/green{
 	tag = "icon-1-2";
 	icon_state = "1-2"
 	},
+/obj/structure/transit_tube/horizontal,
 /turf/open/floor/plasteel/darkblue/corner{
 	tag = "icon-darkbluecorners (NORTH)";
 	dir = 1
@@ -4835,11 +4813,6 @@
 /obj/structure/cable/green{
 	tag = "icon-1-2";
 	icon_state = "1-2"
-	},
-/obj/structure/transit_tube{
-	tag = "icon-Block (WEST)";
-	icon_state = "Block";
-	dir = 8
 	},
 /turf/open/floor/plasteel/darkblue/corner{
 	tag = "icon-darkbluecorners (EAST)";
@@ -10132,7 +10105,7 @@
 	dir = 8;
 	external_pressure_bound = 0;
 	frequency = 1441;
-	id_tag = "mix_in";
+	id_tag = "mix_out";
 	initialize_directions = 1;
 	internal_pressure_bound = 4000;
 	on = 1;
@@ -10736,7 +10709,7 @@
 	frequency = 1441;
 	input_tag = "mix_in";
 	name = "Gas Mix Tank Control";
-	output_tag = "mix_in";
+	output_tag = "mix_out";
 	sensors = list("mix_sensor" = "Tank")
 	},
 /turf/open/floor/plasteel/green/side{
@@ -105938,7 +105911,7 @@ aac
 aaa
 aaa
 aaa
-aeZ
+aae
 agf
 ago
 agu
@@ -105965,7 +105938,7 @@ agu
 ago
 ago
 akd
-aks
+aae
 aae
 aae
 alN
@@ -106194,9 +106167,9 @@ aaa
 aac
 aaa
 aaa
-aeZ
+aae
 aft
-afu
+aae
 afN
 agv
 agG
@@ -106221,7 +106194,7 @@ agG
 ajr
 ajz
 aae
-ake
+aae
 akt
 aae
 aaa
@@ -106450,9 +106423,9 @@ aak
 aaa
 aac
 aaa
-aeZ
+aae
 aft
-afu
+aae
 afN
 agb
 aaa
@@ -106706,9 +106679,9 @@ aar
 aak
 aaa
 aac
-aeZ
+aae
 aft
-afu
+aae
 afN
 agb
 aae
@@ -106964,7 +106937,7 @@ abl
 abl
 abl
 afa
-afu
+aae
 afN
 agb
 aaa
@@ -107734,7 +107707,7 @@ adT
 aej
 aey
 abl
-afd
+afb
 aae
 afP
 aaa

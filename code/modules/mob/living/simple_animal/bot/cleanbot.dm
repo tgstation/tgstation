@@ -217,7 +217,7 @@
 	else if(istype(A, /mob/living/simple_animal/cockroach) || istype(A, /mob/living/simple_animal/mouse))
 		var/mob/living/simple_animal/M = target
 		if(!M.stat)
-			visible_message("<span class='danger'>[src] smashes [target] with it's mop!</span>")
+			visible_message("<span class='danger'>[src] smashes [target] with its mop!</span>")
 			M.death()
 		target = null
 

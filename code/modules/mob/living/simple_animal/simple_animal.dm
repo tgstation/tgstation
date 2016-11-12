@@ -87,7 +87,6 @@
 /mob/living/simple_animal/New()
 	..()
 	handcrafting = new()
-	verbs -= /mob/verb/observe
 	if(gender == PLURAL)
 		gender = pick(MALE,FEMALE)
 	if(!real_name)
@@ -344,10 +343,6 @@
 		density = initial(density)
 		lying = 0
 		. = 1
-
-/mob/living/simple_animal/fully_heal(admin_revive = 0)
-	health = maxHealth
-	..()
 
 /mob/living/simple_animal/proc/make_babies() // <3 <3 <3
 	if(gender != FEMALE || stat || next_scan_time > world.time || !childtype || !animal_species || ticker.current_state != GAME_STATE_PLAYING)

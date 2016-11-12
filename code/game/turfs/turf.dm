@@ -285,12 +285,13 @@
 		var/atom/A = V
 		if(A.level >= affecting_level)
 			A.ex_act(severity, target)
+			CHECK_TICK
 
 /turf/ratvar_act(force)
-	var/converted = (prob(40) || force)
+	. = (prob(40) || force)
 	for(var/I in src)
 		var/atom/A = I
-		if(ismob(A) || converted)
+		if(ismob(A) || .)
 			A.ratvar_act()
 
 /turf/proc/add_blueprints(atom/movable/AM)
@@ -376,8 +377,9 @@
 		T.setDir(dir)
 	return T
 
-/turf/contents_explosion(severity, target)
-	for(var/atom/A in contents)
-		A.ex_act(severity, target)
-		CHECK_TICK
-
+/turf/handle_fall(mob/faller, forced)
+	faller.lying = pick(90, 270)
+	if(!forced)
+		return
+	if(has_gravity(src))
+		playsound(src, "bodyfall", 50, 1)

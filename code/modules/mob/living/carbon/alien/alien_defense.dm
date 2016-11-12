@@ -26,13 +26,13 @@ In all, this is a lot like the monkey code. /N
 			AdjustParalysis(-3)
 			AdjustStunned(-3)
 			AdjustWeakened(-3)
-			visible_message("<span class='notice'>[M.name] nuzzles [src] trying to wake it up!</span>")
+			visible_message("<span class='notice'>[M.name] nuzzles [src] trying to wake [p_them()] up!</span>")
 
 		if ("grab")
 			grabbedby(M)
 
 		else
-			if (health > 0)
+			if(health > 0)
 				M.do_attack_animation(src, ATTACK_EFFECT_BITE)
 				playsound(loc, 'sound/weapons/bite.ogg', 50, 1, -1)
 				visible_message("<span class='danger'>[M.name] bites [src]!</span>", \

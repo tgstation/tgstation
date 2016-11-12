@@ -119,13 +119,6 @@
 		qdel(hotspot)
 	return 1
 
-/turf/open/handle_fall(mob/faller, forced)
-	faller.lying = pick(90, 270)
-	if(!forced)
-		return
-	if(has_gravity(src))
-		playsound(src, "bodyfall", 50, 1)
-
 /turf/open/handle_slip(mob/living/carbon/C, s_amount, w_amount, obj/O, lube)
 	if(has_gravity(src))
 		var/obj/buckled_obj

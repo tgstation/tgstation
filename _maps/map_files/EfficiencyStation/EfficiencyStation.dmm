@@ -10354,7 +10354,7 @@
 /obj/machinery/atmospherics/components/unary/outlet_injector/on{
 	dir = 2;
 	frequency = 1441;
-	id = "waste_in";
+	id = "mix_in";
 	pixel_y = 1
 	},
 /turf/open/floor/engine/vacuum,
@@ -10371,7 +10371,7 @@
 	dir = 2;
 	external_pressure_bound = 0;
 	frequency = 1441;
-	id_tag = "waste_out";
+	id_tag = "mix_out";
 	initialize_directions = 1;
 	internal_pressure_bound = 4000;
 	on = 1;
@@ -13605,7 +13605,7 @@
 	frequency = 1441;
 	input_tag = "mix_in";
 	name = "Gas Mix Tank Control";
-	output_tag = "mix_in";
+	output_tag = "mix_out";
 	sensors = list("mix_sensor" = "Tank")
 	},
 /turf/open/floor/plasteel/green/side{
@@ -49158,9 +49158,6 @@
 /turf/open/floor/plating,
 /area/engine/engineering)
 "bTM" = (
-/obj/structure/transit_tube{
-	icon_state = "E-SW"
-	},
 /obj/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable{
@@ -49168,23 +49165,26 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/structure/transit_tube/curved/flipped{
+	dir = 4
+	},
 /turf/open/floor/plating,
 /area/engine/engineering)
 "bTN" = (
-/obj/structure/transit_tube/station{
-	dir = 1
-	},
 /obj/structure/transit_tube_pod{
 	dir = 4
 	},
 /obj/structure/window/reinforced,
+/obj/structure/transit_tube/station{
+	dir = 1
+	},
 /turf/open/floor/plating,
 /area/engine/engineering)
 "bTO" = (
-/obj/structure/transit_tube{
-	icon_state = "W-SE"
-	},
 /obj/structure/window/reinforced,
+/obj/structure/transit_tube/curved{
+	dir = 8
+	},
 /turf/open/floor/plating,
 /area/engine/engineering)
 "bTP" = (
@@ -49668,19 +49668,14 @@
 /turf/open/floor/plasteel/bar,
 /area/maintenance/starboard)
 "bUR" = (
-/obj/structure/transit_tube{
-	icon_state = "S-NE"
-	},
 /obj/structure/window/reinforced{
 	dir = 1
 	},
 /obj/structure/lattice,
+/obj/structure/transit_tube/curved,
 /turf/open/space,
 /area/space)
 "bUS" = (
-/obj/structure/transit_tube{
-	icon_state = "D-NW"
-	},
 /obj/structure/window/reinforced{
 	dir = 1
 	},
@@ -51826,9 +51821,7 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard)
 "bZc" = (
-/obj/structure/transit_tube{
-	icon_state = "N-S-Pass"
-	},
+/obj/structure/transit_tube/crossing,
 /turf/open/space,
 /area/space)
 "bZd" = (
@@ -53734,16 +53727,13 @@
 	name = "Arrivals"
 	})
 "cdv" = (
-/obj/structure/transit_tube{
-	icon_state = "N-SE"
-	},
 /obj/structure/window/reinforced,
+/obj/structure/transit_tube/curved/flipped{
+	dir = 1
+	},
 /turf/open/space,
 /area/space)
 "cdw" = (
-/obj/structure/transit_tube{
-	icon_state = "D-SW"
-	},
 /obj/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable{
@@ -53766,10 +53756,10 @@
 /turf/open/space,
 /area/space)
 "cdz" = (
-/obj/structure/transit_tube{
-	icon_state = "N-SW"
-	},
 /obj/structure/window/reinforced,
+/obj/structure/transit_tube/curved{
+	dir = 1
+	},
 /turf/open/space,
 /area/space)
 "cdA" = (
@@ -53917,9 +53907,6 @@
 	name = "\improper Telecoms Control Room"
 	})
 "cdS" = (
-/obj/structure/transit_tube{
-	icon_state = "E-NW"
-	},
 /obj/structure/window/reinforced{
 	dir = 1
 	},
@@ -53929,25 +53916,28 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/structure/transit_tube/curved{
+	dir = 4
+	},
 /turf/open/floor/plating,
 /area/tcommsat/computer{
 	name = "\improper Telecoms Control Room"
 	})
 "cdT" = (
-/obj/structure/transit_tube/station,
 /obj/structure/window/reinforced{
 	dir = 1
 	},
+/obj/structure/transit_tube/station,
 /turf/open/floor/plating,
 /area/tcommsat/computer{
 	name = "\improper Telecoms Control Room"
 	})
 "cdU" = (
-/obj/structure/transit_tube{
-	icon_state = "W-NE"
-	},
 /obj/structure/window/reinforced{
 	dir = 1
+	},
+/obj/structure/transit_tube/curved/flipped{
+	dir = 8
 	},
 /turf/open/floor/plating,
 /area/tcommsat/computer{
@@ -55900,16 +55890,20 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "ciD" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall_f12"
+/obj/structure/window/reinforced{
+	dir = 1
 	},
-/area/shuttle/escape)
+/obj/structure/lattice,
+/turf/open/space,
+/area/space)
 "ciE" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall_s9";
-	dir = 2
+/obj/structure/window/reinforced{
+	dir = 1
 	},
-/area/shuttle/escape)
+/obj/structure/lattice,
+/obj/structure/transit_tube/curved/flipped,
+/turf/open/space,
+/area/space)
 "ciF" = (
 /obj/structure/shuttle/engine/propulsion,
 /turf/closed/wall/mineral/titanium,
@@ -102645,20 +102639,20 @@ bOQ
 bnG
 bxg
 bxg
-bTL
+bxg
 bUR
-bVY
-bVY
-bVY
+aik
+aik
+aik
 bZc
-bVY
-bVY
+aik
+aik
 bZc
-bVY
-bVY
-bVY
+aik
+aik
+aik
 cdv
-cdR
+cen
 cen
 cen
 ceY
@@ -103417,7 +103411,7 @@ bnG
 bRv
 bDA
 bTO
-ahQ
+ciD
 aab
 aab
 aab
@@ -103428,7 +103422,7 @@ aab
 aab
 aab
 aab
-cdy
+ajH
 cdU
 ceq
 ceM
@@ -103673,20 +103667,20 @@ bOU
 bnG
 bxg
 bxg
-bTP
-ahR
-bVY
-bVY
-bVY
+bxg
+ciE
+aik
+aik
+aik
 bZc
-bVY
-bVY
+aik
+aik
 bZc
-bVY
-bVY
-bVY
+aik
+aik
+aik
 cdz
-cdV
+cen
 cen
 ceN
 cfb

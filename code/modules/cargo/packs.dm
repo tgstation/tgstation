@@ -44,8 +44,10 @@ datum/supply_pack
 	contains = list(/obj/vehicle/atv,
 					/obj/item/key,
 					/obj/item/clothing/suit/jacket/leather/overcoat,
+					/obj/item/clothing/gloves/color/black,
+					/obj/item/clothing/head/soft,
 					/obj/item/clothing/mask/bandana/skull)//so you can properly #cargoniabikergang
-	crate_name = "ATV crate"
+	crate_name = "Biker Kit"
 	crate_type = /obj/structure/closet/crate/large
 
 /datum/supply_pack/emergency/equipment
@@ -1265,7 +1267,7 @@ datum/supply_pack
 			/obj/item/device/t_scanner/adv_mining_scanner/lesser,
 			/obj/item/device/radio/headset/headset_cargo/mining,
 			/obj/item/weapon/storage/bag/ore,
-			/obj/item/clothing/suit/space/hardsuit/mining,
+			/obj/item/clothing/suit/hooded/explorer,
 			/obj/item/clothing/mask/gas/explorer)
 	crate_name = "shaft miner starter kit"
 	crate_type = /obj/structure/closet/crate/secure

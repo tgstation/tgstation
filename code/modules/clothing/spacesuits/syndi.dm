@@ -1,7 +1,6 @@
 //Regular syndicate space suit
 /obj/item/clothing/head/helmet/space/syndicate
 	name = "red space helmet"
-	desc = "Top secret spess helmet."
 	icon_state = "syndicate"
 	item_state = "syndicate"
 	desc = "Has a tag: Totally not property of an enemy corporation, honest."

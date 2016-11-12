@@ -39,14 +39,14 @@
 
 /obj/item/weapon/melee/baton/proc/deductcharge(chrgdeductamt)
 	if(bcell)
+		//Note this value returned is significant, as it will determine
+		//if a stun is applied or not
 		. = bcell.use(chrgdeductamt)
-		if(bcell.charge >= hitcost) // If after the deduction the baton doesn't have enough charge for a stun hit it turns off.
-			return
-	if(status)
-		status = 0
-		update_icon()
-		playsound(loc, "sparks", 75, 1, -1)
-	return 0
+		if(status && bcell.charge < hitcost)
+			//we're below minimum, turn off
+			status = 0
+			update_icon()
+			playsound(loc, "sparks", 75, 1, -1)
 
 
 /obj/item/weapon/melee/baton/update_icon()
@@ -117,10 +117,12 @@
 		..()
 		return
 
-	if(!isliving(M))
+	var/mob/living/carbon/human/L = M
+	if(!istype(L))
 		return
 
-	var/mob/living/L = M
+	if(check_martial_counter(L, user))
+		return 
 
 	if(user.a_intent != "harm")
 		if(status)

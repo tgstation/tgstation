@@ -118,7 +118,6 @@
 	set name = "pAI Suicide"
 	var/answer = input("REALLY kill yourself? This action can't be undone.", "Suicide", "No") in list ("Yes", "No")
 	if(answer == "Yes")
-		card.removePersonality()
 		var/turf/T = get_turf(src.loc)
 		T.visible_message("<span class='notice'>[src] flashes a message across its screen, \"Wiping core files. Please acquire a new personality to continue using pAI device functions.\"</span>", null, \
 		 "<span class='notice'>[src] bleeps electronically.</span>")
@@ -158,7 +157,7 @@
 
 /mob/living/proc/canSuicide()
 	if(stat == CONSCIOUS)
-		return 1
+		return TRUE
 	else if(stat == DEAD)
 		src << "You're already dead!"
 	else if(stat == UNCONSCIOUS)
@@ -171,4 +170,7 @@
 	if(!canmove || restrained())	//just while I finish up the new 'fun' suiciding verb. This is to prevent metagaming via suicide
 		src << "You can't commit suicide whilst restrained! ((You can type Ghost instead however.))"
 		return
-	return 1
+	if(has_brain_worms())
+		src << "You can't bring yourself to commit suicide!"
+		return
+	return TRUE

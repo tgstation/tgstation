@@ -7331,8 +7331,9 @@
 	dir = 8
 	},
 /obj/machinery/conveyor{
-	dir = 2;
-	id = "garbage"
+	dir = 9;
+	id = "garbage";
+	verted = -1
 	},
 /turf/open/floor/plating,
 /area/maintenance/disposal)
@@ -7345,7 +7346,7 @@
 /area/maintenance/disposal)
 "amW" = (
 /obj/machinery/conveyor{
-	dir = 4;
+	dir = 6;
 	id = "garbage"
 	},
 /obj/machinery/door/window/eastright{
@@ -7950,7 +7951,7 @@
 	req_access_txt = "12"
 	},
 /obj/machinery/conveyor{
-	dir = 2;
+	dir = 10;
 	id = "garbage"
 	},
 /turf/open/floor/plating,
@@ -37682,22 +37683,20 @@
 /turf/open/space,
 /area/space)
 "bnj" = (
-/obj/structure/transit_tube{
-	icon_state = "E-SW"
-	},
 /obj/structure/lattice,
+/obj/structure/transit_tube/curved/flipped{
+	dir = 4
+	},
 /turf/open/space,
 /area/space)
 "bnk" = (
-/obj/structure/transit_tube{
-	icon_state = "E-W-Pass"
-	},
 /obj/structure/lattice,
+/obj/structure/transit_tube/crossing/horizontal,
 /turf/open/space,
 /area/space)
 "bnl" = (
-/obj/structure/transit_tube{
-	icon_state = "W-SE"
+/obj/structure/transit_tube/curved{
+	dir = 8
 	},
 /turf/open/space,
 /area/space)
@@ -38825,9 +38824,7 @@
 /turf/open/space,
 /area/space)
 "bph" = (
-/obj/structure/transit_tube{
-	icon_state = "NE-SW"
-	},
+/obj/structure/transit_tube/diagonal,
 /turf/open/space,
 /area/space)
 "bpi" = (
@@ -38853,9 +38850,7 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/obj/structure/transit_tube{
-	icon_state = "S-NW"
-	},
+/obj/structure/transit_tube/curved/flipped,
 /turf/open/floor/plasteel/darkblue/corner{
 	dir = 1
 	},
@@ -40072,18 +40067,20 @@
 /turf/closed/wall/r_wall,
 /area/space)
 "brs" = (
-/obj/structure/transit_tube/station{
-	reverse_launch = 1
-	},
 /obj/structure/sign/securearea{
 	pixel_y = 32
+	},
+/obj/structure/transit_tube/station/reverse/flipped{
+	dir = 1
+	},
+/obj/structure/transit_tube_pod{
+	dir = 4
 	},
 /turf/open/floor/plasteel/darkblue/corner{
 	dir = 4
 	},
 /area/engine/break_room)
 "brt" = (
-/obj/structure/transit_tube,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
@@ -40094,12 +40091,10 @@
 	icon_state = "4-8";
 	pixel_y = 0
 	},
+/obj/structure/transit_tube/horizontal,
 /turf/open/space,
 /area/space)
 "bru" = (
-/obj/structure/transit_tube{
-	icon_state = "E-W-Pass"
-	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
@@ -40110,10 +40105,10 @@
 	icon_state = "4-8";
 	pixel_y = 0
 	},
+/obj/structure/transit_tube/crossing/horizontal,
 /turf/open/space,
 /area/space)
 "brv" = (
-/obj/structure/transit_tube,
 /obj/structure/lattice/catwalk,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -40124,12 +40119,10 @@
 	icon_state = "4-8";
 	pixel_y = 0
 	},
+/obj/structure/transit_tube/horizontal,
 /turf/open/space,
 /area/space)
 "brw" = (
-/obj/structure/transit_tube{
-	icon_state = "W-NE-SE"
-	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
@@ -40139,6 +40132,9 @@
 	d2 = 8;
 	icon_state = "4-8";
 	pixel_y = 0
+	},
+/obj/structure/transit_tube/junction/flipped{
+	dir = 8
 	},
 /turf/open/space,
 /area/space)
@@ -40191,10 +40187,6 @@
 /turf/open/space,
 /area/space)
 "brA" = (
-/obj/structure/transit_tube/station{
-	icon_state = "closed";
-	dir = 4
-	},
 /obj/structure/window/reinforced{
 	dir = 8
 	},
@@ -40206,6 +40198,9 @@
 	d2 = 8;
 	icon_state = "4-8";
 	pixel_y = 0
+	},
+/obj/structure/transit_tube/station{
+	dir = 4
 	},
 /turf/open/floor/plasteel/black,
 /area/construction/hallway{
@@ -40941,10 +40936,6 @@
 /turf/open/floor/wood,
 /area/crew_quarters/heads)
 "bsD" = (
-/obj/structure/transit_tube{
-	dir = 4;
-	icon_state = "Block"
-	},
 /obj/machinery/status_display{
 	density = 0;
 	layer = 4;
@@ -41621,11 +41612,11 @@
 	dir = 4;
 	pixel_x = 0
 	},
-/obj/structure/transit_tube{
-	icon_state = "W-SE"
-	},
 /obj/machinery/ai_status_display{
 	pixel_y = 32
+	},
+/obj/structure/transit_tube/curved{
+	dir = 8
 	},
 /turf/open/floor/plasteel/darkblue/corner{
 	dir = 4
@@ -41672,8 +41663,8 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/obj/structure/transit_tube{
-	icon_state = "E-NW"
+/obj/structure/transit_tube/curved{
+	dir = 4
 	},
 /turf/open/space,
 /area/space)
@@ -41681,9 +41672,6 @@
 /obj/structure/window/reinforced{
 	dir = 4;
 	pixel_x = 0
-	},
-/obj/structure/transit_tube{
-	icon_state = "D-NE"
 	},
 /obj/structure/cable{
 	d1 = 4;
@@ -41729,9 +41717,7 @@
 /turf/open/space,
 /area/space)
 "btP" = (
-/obj/structure/transit_tube{
-	icon_state = "NW-SE"
-	},
+/obj/structure/transit_tube/diagonal/topleft,
 /turf/open/space,
 /area/space)
 "btQ" = (
@@ -41748,8 +41734,8 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/obj/structure/transit_tube{
-	icon_state = "N-SW"
+/obj/structure/transit_tube/curved{
+	dir = 1
 	},
 /turf/open/floor/plasteel/darkblue/corner{
 	dir = 8
@@ -42938,26 +42924,23 @@
 /turf/open/space,
 /area/space)
 "bvL" = (
-/obj/structure/transit_tube{
-	icon_state = "E-NW"
-	},
 /obj/structure/lattice,
+/obj/structure/transit_tube/curved{
+	dir = 4
+	},
 /turf/open/space,
 /area/space)
 "bvM" = (
-/obj/structure/transit_tube{
-	icon_state = "W-NE"
-	},
 /obj/structure/lattice,
+/obj/structure/transit_tube/curved/flipped{
+	dir = 8
+	},
 /turf/open/space,
 /area/space)
 "bvN" = (
 /obj/structure/window/reinforced{
 	dir = 1;
 	pixel_y = 1
-	},
-/obj/structure/transit_tube{
-	icon_state = "D-NW"
 	},
 /obj/structure/lattice,
 /turf/open/space,
@@ -62221,9 +62204,6 @@
 /turf/open/floor/plasteel/black,
 /area/atmos)
 "cdo" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
-	dir = 5
-	},
 /obj/structure/window/reinforced{
 	dir = 4;
 	pixel_x = 0
@@ -62231,6 +62211,9 @@
 /obj/structure/window/reinforced{
 	dir = 1;
 	pixel_y = 0
+	},
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/visible{
+	dir = 8
 	},
 /turf/open/floor/plasteel/black,
 /area/atmos)
@@ -90400,8 +90383,15 @@
 /turf/open/floor/plating,
 /area/shuttle/syndicate)
 "cYL" = (
-/turf/closed/wall/mineral/titanium/overspace,
-/area/shuttle/supply)
+/obj/machinery/atmospherics/pipe/simple/general/visible{
+	color = "#330000";
+	dir = 4
+	},
+/obj/machinery/atmospherics/components/binary/valve/digital{
+	name = "Waste Release"
+	},
+/turf/open/floor/plasteel/black,
+/area/atmos)
 "cYM" = (
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/supply)
@@ -90643,31 +90633,22 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/transport)
 "cZs" = (
-/obj/structure/cable/yellow{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
+/obj/machinery/atmospherics/pipe/simple/scrubbers/visible,
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 5;
+	obj_integrity = 10000
 	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 5
-	},
-/obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
-	},
-/turf/open/floor/wood,
-/area/library)
+/turf/open/floor/plating,
+/area/atmos)
 "cZt" = (
-/obj/structure/cable/yellow{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
+/obj/machinery/atmospherics/components/unary/outlet_injector/on{
+	dir = 1;
+	frequency = 1441;
+	id = "n2_in"
 	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 5
-	},
-/turf/open/floor/carpet,
-/area/library)
+/turf/open/floor/plating,
+/area/atmos)
 "cZu" = (
 /obj/structure/closet/crate,
 /turf/open/floor/mineral/titanium/blue,
@@ -134899,9 +134880,9 @@ bZs
 bCS
 cbS
 cdo
-ceY
-bzf
-aaf
+cYL
+cZs
+cZt
 bCV
 bCV
 bCV
@@ -137700,7 +137681,7 @@ bhK
 cWO
 bhK
 brr
-bsE
+aOx
 btL
 aOx
 bjF
@@ -141042,7 +141023,7 @@ aaa
 aaa
 aaf
 aaa
-btN
+brt
 aaa
 aaf
 aaa
@@ -144125,9 +144106,9 @@ aaf
 aaa
 aaa
 aaf
-bpg
+aaa
 brw
-btO
+aaa
 aaf
 aaa
 aaa
@@ -144381,11 +144362,11 @@ aaa
 aaf
 aaf
 aaf
-bni
+aaf
 bph
-brx
+bry
 btP
-bvK
+aaf
 aaa
 aaa
 aaa
@@ -144639,9 +144620,9 @@ aaf
 aaa
 aaa
 bnj
-bpi
+aaa
 bry
-bpf
+aaa
 bvL
 aaa
 aaa
@@ -145153,9 +145134,9 @@ bhM
 bhM
 aPX
 bnl
-bpj
+aOr
 brz
-btQ
+aOr
 bvM
 aaa
 aaa
@@ -145409,7 +145390,7 @@ aNi
 bhN
 bhN
 aPX
-bnm
+aNi
 bpk
 brA
 btR

@@ -52,7 +52,16 @@
 		if(1)
 			laws = new /datum/ai_laws/custom()
 		if(2)
-			var/datum/ai_laws/lawtype = pick(subtypesof(/datum/ai_laws/default))
+			var/list/randlaws = list()
+			for(var/lpath in subtypesof(/datum/ai_laws))
+				var/datum/ai_laws/L = lpath
+				if(initial(L.id) in config.lawids)
+					randlaws += lpath
+			var/datum/ai_laws/lawtype
+			if(randlaws.len)
+				lawtype = pick(randlaws)
+			else
+				lawtype = pick(subtypesof(/datum/ai_laws/default))
 			laws = new lawtype()
 	laws.associate(src)
 

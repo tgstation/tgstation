@@ -21,7 +21,7 @@
 	return
 
 /turf/closed/wall/mineral/cult/ratvar_act()
-	..()
+	. = ..()
 	if(istype(src, /turf/closed/wall/mineral/cult)) //if we haven't changed type
 		var/previouscolor = color
 		color = "#FAE48C"
@@ -149,14 +149,12 @@
 	name = "rusted wall"
 	desc = "A rusted metal wall."
 	icon = 'icons/turf/walls/rusty_wall.dmi'
-	icon_state = "arust"
 	hardness = 45
 
 /turf/closed/wall/r_wall/rust
 	name = "rusted reinforced wall"
 	desc = "A huge chunk of rusted reinforced metal."
 	icon = 'icons/turf/walls/rusty_reinforced_wall.dmi'
-	icon_state = "rrust"
 	hardness = 15
 
 

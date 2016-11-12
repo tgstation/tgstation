@@ -35,13 +35,12 @@
 		var/mob/living/L = AM
 		if(L.stat <= stat_affected)
 			if((!is_servant_of_ratvar(L) || (is_servant_of_ratvar(L) && affects_servants)) && L.mind)
-				if(L.null_rod_check())
-					var/obj/item/I = L.null_rod_check()
+				var/obj/item/I = L.null_rod_check()
+				if(I)
 					L.visible_message("<span class='warning'>[L]'s [I.name] [resist_string], protecting them from [src]'s effects!</span>", \
 					"<span class='userdanger'>Your [I.name] [resist_string], protecting you!</span>")
 					return
 				sigil_effects(L)
-			return 1
 
 /obj/effect/clockwork/sigil/proc/sigil_effects(mob/living/L)
 
@@ -69,7 +68,6 @@
 	L.Stun(5)
 	PoolOrNew(/obj/effect/overlay/temp/ratvar/sigil/transgression, get_turf(src))
 	qdel(src)
-	return 1
 
 
 //Sigil of Submission: After a short time, converts any non-servant standing on it. Knocks down and silences them for five seconds afterwards.
@@ -113,7 +111,7 @@
 		animate(src, color = oldcolor, time = 20)
 		addtimer(src, "update_atom_colour", 20)
 		visible_message("<span class='warning'>[src] slowly stops glowing!</span>")
-		return 0
+		return
 	post_channel(L)
 	if(is_eligible_servant(L))
 		L << "<span class='heavy_brass'>\"You belong to me now.\"</span>"
@@ -139,7 +137,6 @@
 		animate(src, color = oldcolor, time = 20)
 		addtimer(src, "update_atom_colour", 20)
 		visible_message("<span class='warning'>[src] slowly stops glowing!</span>")
-	return 1
 
 
 //Sigil of Accession: After a short time, converts any non-servant standing on it though implants. Knocks down and silences them for five seconds afterwards.
@@ -194,7 +191,6 @@
 /obj/effect/clockwork/sigil/transmission/sigil_effects(mob/living/L)
 	if(power_charge)
 		L << "<span class='brass'>You feel a slight, static shock.</span>"
-	return 1
 
 /obj/effect/clockwork/sigil/transmission/New()
 	..()
@@ -202,17 +198,17 @@
 
 /obj/effect/clockwork/sigil/transmission/proc/modify_charge(amount)
 	if(power_charge - amount < 0)
-		return 0
+		return FALSE
 	power_charge -= amount
 	alpha = min(initial(alpha) + power_charge*0.02, 255)
-	return 1
+	return TRUE
 
 
 //Vitality Matrix: Drains health from non-servants to heal or even revive servants.
 /obj/effect/clockwork/sigil/vitality
 	name = "comforting sigil"
 	desc = "A faint blue sigil. Looking at it makes you feel protected."
-	clockwork_desc = "A sigil that will drain non-servants that remain on it. Servants that remain on it will be healed if it has any vitality drained."
+	clockwork_desc = "A sigil that will drain non-Servants that remain on it. Servants that remain on it will be healed if it has any vitality drained."
 	icon_state = "sigilvitality"
 	color = "#123456"
 	alpha = 75
@@ -228,17 +224,18 @@
 	..()
 	if(is_servant_of_ratvar(user) || isobserver(user))
 		user << "<span class='[vitality ? "inathneq_small":"alloy"]'>It is storing <b>[ratvar_awakens ? "INFINITE":"[vitality]"]</b> units of vitality.</span>"
-		user << "<span class='inathneq_small'>It requires at least <b>[base_revive_cost]</b> units of vitality to revive dead servants, in addition to any damage the servant has.</span>"
+		user << "<span class='inathneq_small'>It requires at least <b>[base_revive_cost]</b> units of vitality to revive dead Servants, in addition to any damage the Servant has.</span>"
 
 /obj/effect/clockwork/sigil/vitality/sigil_effects(mob/living/L)
 	if((is_servant_of_ratvar(L) && L.suiciding) || sigil_active)
-		return 0
+		return
 	visible_message("<span class='warning'>[src] begins to glow bright blue!</span>")
 	animate(src, alpha = 255, time = 10)
+	addtimer(src, "update_alpha", 10)
 	sleep(10)
-	sigil_active = TRUE
 //as long as they're still on the sigil and are either not a servant or they're a servant AND it has remaining vitality
 	while(L && (!is_servant_of_ratvar(L) || (is_servant_of_ratvar(L) && vitality)) && get_turf(L) == get_turf(src))
+		sigil_active = TRUE
 		if(animation_number >= 4)
 			PoolOrNew(/obj/effect/overlay/temp/ratvar/sigil/vitality, get_turf(src))
 			animation_number = 0
@@ -274,17 +271,14 @@
 				if(ratvar_awakens)
 					revival_cost = 0
 				var/mob/dead/observer/ghost = L.get_ghost(TRUE)
-				if(ghost)
-					if(vitality >= revival_cost)
-						ghost.reenter_corpse()
-						L.revive(1, 1)
-						playsound(L, 'sound/magic/Staff_Healing.ogg', 50, 1)
-						L.visible_message("<span class='warning'>[L] suddenly gets back up, [L.p_their()] mouth dripping blue ichor!</span>", \
-						"<span class='inathneq'>\"[text2ratvar("You will be okay, child.")]\"</span>")
-						vitality -= revival_cost
-						break
-				else
-					break
+				if(ghost && vitality >= revival_cost)
+					ghost.reenter_corpse()
+					L.revive(1, 1)
+					playsound(L, 'sound/magic/Staff_Healing.ogg', 50, 1)
+					L.visible_message("<span class='warning'>[L] suddenly gets back up, [L.p_their()] mouth dripping blue ichor!</span>", \
+					"<span class='inathneq'>\"[text2ratvar("You will be okay, child.")]\"</span>")
+					vitality -= revival_cost
+				break
 			if(!total_damage)
 				break
 			var/vitality_for_cycle = min(vitality, 3)
@@ -326,7 +320,16 @@
 				vitality -= vitality_used
 		sleep(2)
 
-	animation_number = initial(animation_number)
-	sigil_active = FALSE
-	animate(src, alpha = initial(alpha), time = 20)
-	visible_message("<span class='warning'>[src] slowly stops glowing!</span>")
+	if(sigil_active)
+		animation_number = initial(animation_number)
+		sigil_active = FALSE
+		visible_message("<span class='warning'>[src] slowly stops glowing!</span>")
+	if(sigil_active || alpha == 255)
+		animate(src, alpha = initial(alpha), time = 10)
+		addtimer(src, "update_alpha", 10)
+
+/obj/effect/clockwork/sigil/vitality/proc/update_alpha()
+	if(sigil_active)
+		alpha = 255
+	else
+		alpha = initial(alpha)
