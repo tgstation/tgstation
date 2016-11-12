@@ -376,15 +376,15 @@
 	var/T2 = created_volume * 50
 	var/T3 = created_volume * 120
 	sleep(5)
-	if(created_volume >= 75)			//10 units minimum for lightning, 40 units for secondary blast, 75 units for tertiary blast.
+	if(created_volume >= 75)
 		tesla_zap(holder.my_atom, 7, T1)
 		playsound(holder.my_atom, 'sound/machines/defib_zap.ogg', 50, 1)
-	sleep(15)
+		sleep(15)
 	if(created_volume >= 40)
 		tesla_zap(holder.my_atom, 7, T2)
 		playsound(holder.my_atom, 'sound/machines/defib_zap.ogg', 50, 1)
-	sleep(15)
-	if(created_volume >= 10)
+		sleep(15)
+	if(created_volume >= 10)			//10 units minimum for lightning, 40 units for secondary blast, 75 units for tertiary blast.
 		tesla_zap(holder.my_atom, 7, T3)
 		playsound(holder.my_atom, 'sound/machines/defib_zap.ogg', 50, 1)
 	..()
