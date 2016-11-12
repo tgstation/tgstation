@@ -108,7 +108,7 @@
 	if(attached_weapon)
 		attached_weapon = null
 		if(!owner)
-			update_icon_dropped()
+			update_item_icon()
 
 //Applies brute and burn damage to the organ. Returns 1 if the damage-icon states changed at all.
 //Damage will not exceed max_damage using this proc
@@ -266,9 +266,9 @@
 		no_update = 1 //when attached, the limb won't be affected by the appearance changes of its mob owner.
 
 //to update the bodypart's icon when not attached to a mob
-/obj/item/bodypart/proc/update_icon_dropped()
+/obj/item/bodypart/proc/update_item_icon(as_dropped = TRUE)
 	cut_overlays()
-	var/list/standing = get_limb_icon(1)
+	var/list/standing = get_limb_icon(as_dropped)
 	if(!standing.len)
 		icon_state = initial(icon_state)//no overlays found, we default back to initial icon.
 		return
@@ -354,12 +354,12 @@
 		var/icon_file = null
 
 		if(held_index % 2)
-			icon_file = attached_weapon.righthand_file
-		else
 			icon_file = attached_weapon.lefthand_file
+		else
+			icon_file = attached_weapon.righthand_file
 
 		standing += attached_weapon.build_worn_icon(state = state, default_layer = HANDS_LAYER, default_icon_file = icon_file, isinhands = TRUE)
-
+		
 	return standing
 
 

@@ -5,7 +5,7 @@
 
 //Dismember a limb
 
-/obj/item/bodypart/proc/dismember_internal()
+/obj/item/bodypart/proc/dismember_internal(use_dropped_icon = TRUE)
 	if(!owner)
 		return 0
 	var/mob/living/carbon/C = owner
@@ -16,7 +16,7 @@
 		if(NODISMEMBER in H.dna.species.specflags) // species don't allow dismemberment
 			return 0
 
-	drop_limb()
+	drop_limb(0, use_dropped_icon)
 
 	return 1
 
@@ -28,10 +28,11 @@
 /obj/item/projectile/bodypart/New(location, obj/item/bodypart/limb)
 	..()
 
+	limb.forceMove(src)
+
 	appearance = limb.appearance
 
-	limb.forceMove(src)
-	if(limb.status == BODYPART_ROBOTIC)
+	if(limb.status != BODYPART_ROBOTIC)
 		stun = 5
 		weaken = 5
 
@@ -45,13 +46,14 @@
 
 /obj/item/bodypart/proc/fire_at(target, params = null, range = 7, speed = 3)
 	var/stored_owner = owner
-	if(!dismember_internal())
+	if(!dismember_internal(FALSE))
 		return 0
 
 	var/obj/item/projectile/bodypart/proj = new(loc, src)
-	
+
 	proj.original = target
 	proj.preparePixelProjectile(target, get_turf(target), stored_owner, params)
+
 	proj.fire()
 
 /obj/item/bodypart/proc/dismember(dam_type = BRUTE)
@@ -120,8 +122,8 @@
 
 
 
-//limb removal. The "special" argument is used for swapping a limb with a new one without the effects of losing a limb kicking in.
-/obj/item/bodypart/proc/drop_limb(special)
+//limb removal. The "is_replacement" argument is used for swapping a limb with a new one without the effects of losing a limb kicking in.
+/obj/item/bodypart/proc/drop_limb(is_replacement, use_dropped_icon = TRUE)
 	if(!owner)
 		return
 	var/turf/T = get_turf(owner)
@@ -137,7 +139,7 @@
 				attached_weapon = W
 				attached_weapon.forceMove(src)
 
-				// This is kind of horrible and I apologize. 
+				// This is kind of horrible and I apologize.
 				// TODO: allow new_loc on unEquip
 				C.held_items[held_index] = null
 				C.update_inv_hands()
@@ -151,7 +153,7 @@
 
 		if(!did_special_unequip)
 			C.unEquip(I, 1)
-		
+
 		C.hand_bodyparts[held_index] = null
 
 	owner = null
@@ -169,7 +171,7 @@
 	if(!C.has_embedded_objects())
 		C.clear_alert("embeddedobject")
 
-	if(!special)
+	if(!is_replacement)
 		if(C.dna)
 			for(var/X in C.dna.mutations) //some mutations require having specific limbs to be kept.
 				var/datum/mutation/human/MT = X
@@ -183,7 +185,7 @@
 				continue
 			O.transfer_to_limb(src, C)
 
-	update_icon_dropped()
+	update_item_icon(use_dropped_icon)
 	forceMove(T)
 	C.update_health_hud() //update the healthdoll
 	C.update_body()
@@ -211,13 +213,13 @@
 		LB.brainmob.stat = DEAD
 
 
-/obj/item/bodypart/chest/drop_limb(special)
+/obj/item/bodypart/chest/drop_limb(is_replacement, use_dropped_icon = TRUE)
 	return
 
-/obj/item/bodypart/r_arm/drop_limb(special)
+/obj/item/bodypart/r_arm/drop_limb(is_replacement, use_dropped_icon = TRUE)
 	var/mob/living/carbon/C = owner
 	..()
-	if(C && !special)
+	if(C && !is_replacement)
 		if(C.handcuffed)
 			C.handcuffed.loc = C.loc
 			C.handcuffed.dropped(C)
@@ -232,10 +234,10 @@
 		C.update_inv_gloves() //to remove the bloody hands overlay
 
 
-/obj/item/bodypart/l_arm/drop_limb(special)
+/obj/item/bodypart/l_arm/drop_limb(is_replacement, use_dropped_icon = TRUE)
 	var/mob/living/carbon/C = owner
 	..()
-	if(C && !special)
+	if(C && !is_replacement)
 		if(C.handcuffed)
 			C.handcuffed.loc = C.loc
 			C.handcuffed.dropped(C)
@@ -250,8 +252,8 @@
 		C.update_inv_gloves() //to remove the bloody hands overlay
 
 
-/obj/item/bodypart/r_leg/drop_limb(special)
-	if(owner && !special)
+/obj/item/bodypart/r_leg/drop_limb(is_replacement, use_dropped_icon = TRUE)
+	if(owner && !is_replacement)
 		owner.Weaken(2)
 		if(owner.legcuffed)
 			owner.legcuffed.loc = owner.loc
@@ -262,8 +264,8 @@
 			owner.unEquip(owner.shoes, 1)
 	..()
 
-/obj/item/bodypart/l_leg/drop_limb(special) //copypasta
-	if(owner && !special)
+/obj/item/bodypart/l_leg/drop_limb(is_replacement, use_dropped_icon = TRUE) //copypasta
+	if(owner && !is_replacement)
 		owner.Weaken(2)
 		if(owner.legcuffed)
 			owner.legcuffed.loc = owner.loc
@@ -274,8 +276,8 @@
 			owner.unEquip(owner.shoes, 1)
 	..()
 
-/obj/item/bodypart/head/drop_limb(special)
-	if(!special)
+/obj/item/bodypart/head/drop_limb(is_replacement, use_dropped_icon = TRUE)
+	if(!is_replacement)
 		//Drop all worn head items
 		for(var/X in list(owner.glasses, owner.ears, owner.wear_mask, owner.head))
 			var/obj/item/I = X
@@ -325,7 +327,7 @@
 			var/obj/screen/inventory/hand/hand = C.hud_used.hand_slots["[held_index]"]
 			if(hand)
 				hand.update_icon()
-				
+
 		C.update_inv_gloves()
 
 	if(special) //non conventional limb attachment
