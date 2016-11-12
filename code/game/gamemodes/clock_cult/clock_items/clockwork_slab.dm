@@ -11,8 +11,7 @@
 	var/no_cost = FALSE //If the slab is admin-only and needs no components and has no scripture locks
 	var/nonhuman_usable = FALSE //if the slab can be used by nonhumans, defaults to off
 	var/produces_components = TRUE //if it produces components at all
-	var/list/shown_scripture = list(SCRIPTURE_DRIVER = FALSE, SCRIPTURE_SCRIPT = FALSE, SCRIPTURE_APPLICATION = FALSE, SCRIPTURE_REVENANT = FALSE, SCRIPTURE_JUDGEMENT = FALSE)
-	var/text_hidden = FALSE
+	var/list/shown_scripture = list(SCRIPTURE_DRIVER = TRUE, SCRIPTURE_SCRIPT = FALSE, SCRIPTURE_APPLICATION = FALSE, SCRIPTURE_REVENANT = FALSE, SCRIPTURE_JUDGEMENT = FALSE)
 	var/compact_scripture = FALSE
 	var/obj/effect/proc_holder/slab/slab_ability //the slab's current bound ability, for certain scripture
 	var/datum/clockwork_scripture/quickbind_slot_one //these are paths, not instances
@@ -209,38 +208,12 @@
 		return 0
 	switch(action)
 		if("Recital")
-			try_recite_scripture(user)
-		if("Recollection")
-			user.set_machine(src)
 			interact(user)
+		if("Recollection")
+			recollection(user)
 		if("Cancel")
 			return
 	return 1
-
-/obj/item/clockwork/slab/proc/try_recite_scripture(mob/living/user)
-	var/list/tiers_of_scripture = scripture_unlock_check()
-	for(var/i in tiers_of_scripture)
-		if(!tiers_of_scripture[i] && !ratvar_awakens && !no_cost)
-			tiers_of_scripture["[i] \[LOCKED\]"] = TRUE
-			tiers_of_scripture -= i
-	var/scripture_tier = input(user, "Choose a category of scripture to recite.", "[src]") as null|anything in tiers_of_scripture
-	if(!scripture_tier || !user.canUseTopic(src))
-		return FALSE
-	var/list/available_scriptures = list()
-	switch(scripture_tier)
-		if(SCRIPTURE_DRIVER,SCRIPTURE_SCRIPT,SCRIPTURE_APPLICATION,SCRIPTURE_REVENANT,SCRIPTURE_JUDGEMENT); //; for the empty if
-		else
-			user << "<span class='warning'>That section of scripture is still locked!</span>"
-			return FALSE
-	for(var/S in sortList(subtypesof(/datum/clockwork_scripture), /proc/cmp_clockscripture_priority))
-		var/datum/clockwork_scripture/C = S
-		if(initial(C.tier) == scripture_tier)
-			available_scriptures["[initial(C.name)] ([initial(C.descname)])"] = C
-	if(!available_scriptures.len)
-		return FALSE
-	var/chosen_scripture_key = input(user, "Choose a piece of scripture to recite.", "[src]") as null|anything in available_scriptures
-	var/datum/clockwork_scripture/chosen_scripture = available_scriptures[chosen_scripture_key]
-	return recite_scripture(chosen_scripture, user, TRUE)
 
 /obj/item/clockwork/slab/proc/recite_scripture(datum/clockwork_scripture/scripture, mob/living/user, delayed)
 	if(!scripture || !user || !user.canUseTopic(src) || (!nonhuman_usable && !ishuman(user)))
@@ -258,8 +231,73 @@
 	scripture_to_recite.run_scripture()
 	return TRUE
 
-//Guide to Serving Ratvar
 /obj/item/clockwork/slab/interact(mob/living/user)
+	var/text = "<center>A complete list of scripture can be found and <font color=#BE8700><b>Quickbound</b></font> below.<br><br>\
+	\
+	<font size=1>Key:"
+	for(var/i in clockwork_component_cache)
+		text += " <b><font color=[get_component_color_brightalloy(i)]>[get_component_name(i)][i != REPLICANT_ALLOY ? "s":""]</font></b>"
+	text += "</font><br><br><br><center><font size=1><A href='?src=\ref[src];compactscripture=1'>Compact Scripture Text: [compact_scripture ? "ON":"OFF"]</A></font></center><br>"
+	var/text_to_add = ""
+	var/drivers = "<br><b><A href='?src=\ref[src];Driver=1'>[SCRIPTURE_DRIVER]</A></b><br><font size=1><i>These scriptures are always unlocked.</i><br>"
+	var/scripts = "<br><b><A href='?src=\ref[src];Script=1'>[SCRIPTURE_SCRIPT]</A></b><br><font size=1><i>These scriptures require at least <b>5</b> Servants and \
+	<b>1</b> Tinkerer's Cache.</i><br>"
+	var/applications = "<br><b><A href='?src=\ref[src];Application=1'>[SCRIPTURE_APPLICATION]</A></b><br><font size=1><i>These scriptures require at least <b>8</b> Servants, \
+	<b>3</b> Tinkerer's Caches, and <b>100CV</b>.</i><br>"
+	var/revenant = "<br><b><A href='?src=\ref[src];Revenant=1'>[SCRIPTURE_REVENANT]</A></b><br><font size=1><i>These scriptures require at least <b>10</b> Servants, \
+	<b>4</b> Tinkerer's Caches, and <b>200CV</b>.</i><br>"
+	var/judgement = "<br><b><A href='?src=\ref[src];Judgement=1'>[SCRIPTURE_JUDGEMENT]</A></b><br><font size=1><i>This scripture requires at least <b>12</b> Servants, \
+	<b>5</b> Tinkerer's Caches, and <b>300CV</b>.<br>In addition, there may not be any active non-Servant AIs.</i><br>"
+	for(var/V in sortList(subtypesof(/datum/clockwork_scripture), /proc/cmp_clockscripture_priority))
+		var/datum/clockwork_scripture/S = V
+		var/initial_tier = initial(S.tier)
+		if(initial_tier != SCRIPTURE_PERIPHERAL && shown_scripture[initial_tier])
+			var/datum/clockwork_scripture/S2 = new V
+			var/list/req_comps = S2.required_components
+			var/list/cons_comps = S2.consumed_components
+			qdel(S2)
+			var/scripture_text = "<br><b><font color=[get_component_color_brightalloy(initial(S.primary_component))]>[initial(S.name)] ([initial(S.descname)])</font>:</b>"
+			if(!compact_scripture)
+				scripture_text += "<br>[initial(S.desc)]<br><b>Invocation Time:</b> <b>[initial(S.channel_time) / 10]</b> second\s\
+				[initial(S.invokers_required) > 1 ? "<br><b>Invokers Required:</b> <b>[initial(S.invokers_required)]</b>":""]\
+				<br><b>Component Requirement:</b>"
+			for(var/i in req_comps)
+				if(req_comps[i])
+					scripture_text += " <font color=[get_component_color_brightalloy(i)]><b>[req_comps[i]]</b> [get_component_acronym(i)]</font>"
+			if(!compact_scripture)
+				for(var/a in cons_comps)
+					if(cons_comps[a])
+						scripture_text += "<br><b>Component Cost:</b>"
+						for(var/i in cons_comps)
+							if(cons_comps[i])
+								scripture_text += " <font color=[get_component_color_brightalloy(i)]><b>[cons_comps[i]]</b> [get_component_acronym(i)]</font>"
+						break //we want this to only show up if the scripture has a cost of some sort
+				scripture_text += "<br><b>Tip:</b> [initial(S.usage_tip)]"
+			if(initial(S.quickbind))
+				scripture_text += "<br><font color=#BE8700 size=1>[S == quickbind_slot_one || S == quickbind_slot_two ? "Currently Quickbound":\
+				"<A href='?src=\ref[src];Quickbindone=[S]'>Quickbind to button One</A>| <A href='?src=\ref[src];Quickbindtwo=[S]'>Quickbind to button Two</A>"]</font>"
+			scripture_text += "<br><b><A href='?src=\ref[src];Recite=[S]'>Recite</A></b><br>"
+			switch(initial_tier)
+				if(SCRIPTURE_DRIVER)
+					drivers += scripture_text
+				if(SCRIPTURE_SCRIPT)
+					scripts += scripture_text
+				if(SCRIPTURE_APPLICATION)
+					applications += scripture_text
+				if(SCRIPTURE_REVENANT)
+					revenant += scripture_text
+				if(SCRIPTURE_JUDGEMENT)
+					judgement += scripture_text
+	text_to_add += "[drivers]</font>[scripts]</font>[applications]</font>[revenant]</font>[judgement]</font>"
+	text += text_to_add
+	text += "<br><br><font color=#BE8700 size=3><b><center>Purge all untruths and honor Ratvar.</center></b></font>"
+	var/datum/browser/popup = new(user, "recital", "", 600, 500)
+	popup.set_content(text)
+	popup.open()
+	return 1
+
+//Guide to Serving Ratvar
+/obj/item/clockwork/slab/proc/recollection(mob/living/user)
 	var/text = "If you're seeing this, file a bug report."
 	if(ratvar_awakens)
 		text = "<font color=#BE8700 size=3><b>"
@@ -267,134 +305,69 @@
 			text += "HONOR RATVAR "
 		text += "</b></font>"
 	else
+		var/servants = 0
+		var/production_time = SLAB_PRODUCTION_TIME
+		for(var/mob/living/M in living_mob_list)
+			if(is_servant_of_ratvar(M) && (ishuman(M) || issilicon(M)))
+				servants++
+		if(servants > 5)
+			servants -= 5
+			production_time += min(SLAB_SERVANT_SLOWDOWN * servants, SLAB_SLOWDOWN_MAXIMUM)
+		var/production_text_addon = ""
+		if(production_time != SLAB_PRODUCTION_TIME+SLAB_SLOWDOWN_MAXIMUM)
+			production_text_addon = ", which increases for each human or silicon servant above <b>5</b>"
+		production_time = production_time/600
+		var/production_text = "<b>[round(production_time)] minute\s"
+		if(production_time != round(production_time))
+			production_time -= round(production_time)
+			production_time *= 60
+			production_text += " and [round(production_time, 1)] second\s"
+		production_text += "</b>"
+		production_text += production_text_addon
 
 		text = "<font color=#BE8700 size=3><b><center>Chetr nyy hagehguf-naq-ubabe Ratvar.</center></b></font><br>\
 		\
-		<center><font size=1><A href='?src=\ref[src];hidetext=1'>[text_hidden ? "Show":"Hide"] Information</A></font></center><br>"
-		if(!text_hidden)
-			var/servants = 0
-			var/production_time = SLAB_PRODUCTION_TIME
-			for(var/mob/living/M in living_mob_list)
-				if(is_servant_of_ratvar(M) && (ishuman(M) || issilicon(M)))
-					servants++
-			if(servants > 5)
-				servants -= 5
-				production_time += min(SLAB_SERVANT_SLOWDOWN * servants, SLAB_SLOWDOWN_MAXIMUM)
-			var/production_text_addon = ""
-			if(production_time != SLAB_PRODUCTION_TIME+SLAB_SLOWDOWN_MAXIMUM)
-				production_text_addon = ", which increases for each human or silicon servant above <b>5</b>"
-			production_time = production_time/600
-			var/production_text = "<b>[round(production_time)] minute\s"
-			if(production_time != round(production_time))
-				production_time -= round(production_time)
-				production_time *= 60
-				production_text += " and [round(production_time, 1)] second\s"
-			production_text += "</b>"
-			production_text += production_text_addon
-
-			text += "First and foremost, you serve Ratvar, the Clockwork Justicar, in any ways he sees fit. This is with no regard to your personal well-being, and you would do well to think of the larger \
-			scale of things than your life. Ratvar wishes retribution upon those that trapped him in Reebe - the Nar-Sian cultists - and you are to help him obtain it.<br><br>\
-			\
-			Ratvar, being trapped in Reebe, the Celestial Derelict, cannot directly affect the mortal plane. However, links, such as this Clockwork Slab, can be created to draw \
-			<b><font color=#BE8700>Components</font></b>, fragments of the Justicar, from Reebe, and those Components can be used to draw power and material from Reebe through arcane chants \
-			known as <b><font color=#BE8700>Scripture</font></b>.<br><br>\
-			\
-			One component of a random type is made in this slab every [production_text].<br>\
-			<font color=#BE8700>Components</font> are stored either within slabs, where they can only be accessed by that slab, or in the Global Cache accessed by Tinkerer's Caches, which all slabs \
-			can draw from to recite scripture.<br>\
-			There are five types of component, and in general, <font color=#6E001A>Belligerent Eyes</font> are aggressive and judgemental, <font color=#1E8CE1>Vanguard Cogwheels</font> are defensive and \
-			repairing, <font color=#AF0AAF>Geis Capacitors</font> are for conversion and control, <font color=#5A6068>Replicant Alloy</font> is for construction and fuel, and \
-			<font color=#DAAA18>Hierophant Ansibles</font> are for transmission and power, though in combination their effects become more nuanced.<br><br>\
-			\
-			There are also five tiers of <font color=#BE8700>Scripture</font>; <font color=#BE8700>[SCRIPTURE_DRIVER]</font>, <font color=#BE8700>[SCRIPTURE_SCRIPT]</font>, <font color=#BE8700>[SCRIPTURE_APPLICATION]</font>, <font color=#BE8700>[SCRIPTURE_REVENANT]</font>, and <font color=#BE8700>[SCRIPTURE_JUDGEMENT]</font>.<br>\
-			Each tier has additional requirements, including Servants, Tinkerer's Caches, and <b>Construction Value</b>(<b>CV</b>). Construction Value is gained by creating structures or converting the \
-			station, and everything too large to hold will grant some amount of it.<br><br>\
-			\
-			This would be a massive amount of information to try and keep track of, but all Servants have the <b><font color=#BE8700>Global Records</font></b> alert, which appears in the top right.<br>\
-			Mousing over that alert will display Servants, Caches, CV, and other information, such as the tiers of scripture that are unlocked.<br><br>\
-			\
-			On that note, <font color=#BE8700>Scripture</font> is recited through <b><font color=#BE8700>Recital</font></b>, the first and most important function of the slab.<br>\
-			All scripture requires some amount of <font color=#BE8700>Components</font> to recite, and only the weakest scripture does not consume any components when recited.<br>\
-			However, weak is relative when it comes to scripture; even the 'weakest' could be enough to dominate a station in the hands of cunning Servants, and higher tiers of scripture are even \
-			stronger in the right hands.<br><br>\
-			\
-			Some effects of scripture include granting the invoker a temporary complete immunity to stuns, summoning a turret that can attack anything that sets eyes on it, binding a powerful guardian \
-			to the invoker, or even, at one of the highest tiers, granting all nearby Servants temporary invulnerability.<br>\
-			However, the most important scripture is <font color=#AF0AAF>Geis</font>, which allows you to convert heathens with relative ease.<br><br>\
-			\
-			The second function of the clockwork slab is <b><font color=#BE8700>Recollection</font></b>, which will display this guide and allows for the quickbinding and <font color=#BE8700>recital</font> \
-			of scripture.<br><br>\
-			\
-			The third to fifth functions are three buttons in the top left while holding the slab.<br>From left to right, they are:<br>\
-			<b><font color=#DAAA18>Hierophant Network</font></b>, which allows communication to other Servants.<br>\
-			<b>Quickbind slot One</b>, currently set to <b><font color=[get_component_color_brightalloy(initial(quickbind_slot_one.primary_component))]>[initial(quickbind_slot_one.name)]</font></b>.<br>\
-			<b>Quickbind slot Two</b>, currently set to <b><font color=[get_component_color_brightalloy(initial(quickbind_slot_two.primary_component))]>[initial(quickbind_slot_two.name)]</font></b>.<br><br>\
-			\
-			Examine the slab to check the number of components it has available.<br><br>\
-			\
-			<center><font size=1><A href='?src=\ref[src];hidetext=1'>Hide Above Information</A></font></center><br>"
-
-		text += "A complete list of scripture, its effects, and its requirements can be found, and thus <b>Quickbound</b> to this slab, below.<br>\
-		<font size=1>Key:<br>"
-		for(var/i in clockwork_component_cache)
-			text += "<b><font color=[get_component_color_brightalloy(i)]>[get_component_acronym(i)]</font></b> = [get_component_name(i)][i != REPLICANT_ALLOY ? "s":""]<br>"
-		text += "</font><br><center><font size=1><A href='?src=\ref[src];compactscripture=1'>Compact Scripture Text: [compact_scripture ? "ON":"OFF"]</A></font></center><br>"
-		var/text_to_add = ""
-		var/drivers = "<br><b><A href='?src=\ref[src];Driver=1'>[SCRIPTURE_DRIVER]</A></b><br><font size=1><i>These scriptures are always unlocked.</i>[compact_scripture ? "":"</font>"]<br>"
-		var/scripts = "<br><b><A href='?src=\ref[src];Script=1'>[SCRIPTURE_SCRIPT]</A></b><br><font size=1><i>These scriptures require at least <b>5</b> Servants and \
-		<b>1</b> Tinkerer's Cache.</i>[compact_scripture ? "":"</font>"]<br>"
-		var/applications = "<br><b><A href='?src=\ref[src];Application=1'>[SCRIPTURE_APPLICATION]</A></b><br><font size=1><i>These scriptures require at least <b>8</b> Servants, \
-		<b>3</b> Tinkerer's Caches, and <b>100CV</b>.</i>[compact_scripture ? "":"</font>"]<br>"
-		var/revenant = "<br><b><A href='?src=\ref[src];Revenant=1'>[SCRIPTURE_REVENANT]</A></b><br><font size=1><i>These scriptures require at least <b>10</b> Servants, \
-		<b>4</b> Tinkerer's Caches, and <b>200CV</b>.</i>[compact_scripture ? "":"</font>"]<br>"
-		var/judgement = "<br><b><A href='?src=\ref[src];Judgement=1'>[SCRIPTURE_JUDGEMENT]</A></b><br><font size=1><i>This scripture requires at least <b>12</b> Servants, \
-		<b>5</b> Tinkerer's Caches, and <b>300CV</b>.<br>In addition, there may not be any active non-Servant AIs.</i>[compact_scripture ? "":"</font>"]<br>"
-		for(var/V in sortList(subtypesof(/datum/clockwork_scripture), /proc/cmp_clockscripture_priority))
-			var/datum/clockwork_scripture/S = V
-			var/initial_tier = initial(S.tier)
-			if(initial_tier != SCRIPTURE_PERIPHERAL && shown_scripture[initial_tier])
-				var/datum/clockwork_scripture/S2 = new V
-				var/list/req_comps = S2.required_components
-				var/list/cons_comps = S2.consumed_components
-				qdel(S2)
-				var/scripture_text = "<br><b><font color=[get_component_color_brightalloy(initial(S.primary_component))]>[initial(S.name)]</font>:</b>"
-				if(!compact_scripture)
-					scripture_text += "<br>[initial(S.desc)]<br><b>Invocation Time:</b> <b>[initial(S.channel_time) / 10]</b> second\s\
-					[initial(S.invokers_required) > 1 ? "<br><b>Invokers Required:</b> <b>[initial(S.invokers_required)]</b>":""]\
-					<br><b>Component Requirement:</b>"
-				for(var/i in req_comps)
-					if(req_comps[i])
-						scripture_text += " <font color=[get_component_color_brightalloy(i)]><b>[req_comps[i]]</b> [get_component_acronym(i)]</font>"
-				if(!compact_scripture)
-					for(var/a in cons_comps)
-						if(cons_comps[a])
-							scripture_text += "<br><b>Component Cost:</b>"
-							for(var/i in cons_comps)
-								if(cons_comps[i])
-									scripture_text += " <font color=[get_component_color_brightalloy(i)]><b>[cons_comps[i]]</b> [get_component_acronym(i)]</font>"
-							break //we want this to only show up if the scripture has a cost of some sort
-					scripture_text += "<br><b>Tip:</b> [initial(S.usage_tip)]"
-				if(initial(S.quickbind))
-					scripture_text += "<br><font color=#BE8700 size=1>[S == quickbind_slot_one || S == quickbind_slot_two ? "Currently Quickbound":\
-					"<A href='?src=\ref[src];Quickbindone=[S]'>Quickbind to button One</A>| <A href='?src=\ref[src];Quickbindtwo=[S]'>Quickbind to button Two</A>"]</font>"
-				scripture_text += "<br><b><A href='?src=\ref[src];Recite=[S]'>Recite</A></b><br>"
-				switch(initial_tier)
-					if(SCRIPTURE_DRIVER)
-						drivers += scripture_text
-					if(SCRIPTURE_SCRIPT)
-						scripts += scripture_text
-					if(SCRIPTURE_APPLICATION)
-						applications += scripture_text
-					if(SCRIPTURE_REVENANT)
-						revenant += scripture_text
-					if(SCRIPTURE_JUDGEMENT)
-						judgement += scripture_text
-		if(compact_scripture)
-			text_to_add += "[drivers]</font>[scripts]</font>[applications]</font>[revenant]</font>[judgement]</font>"
-		else
-			text_to_add += "[drivers][scripts][applications][revenant][judgement]"
-		text_to_add += "<br><font color=#BE8700 size=3><b><center>Purge all untruths and honor Ratvar.</center></b></font>"
-		text += text_to_add
+		First and foremost, you serve Ratvar, the Clockwork Justicar, in any ways he sees fit. This is with no regard to your personal well-being, and you would do well to think of the larger \
+		scale of things than your life. Ratvar wishes retribution upon those that trapped him in Reebe - the Nar-Sian cultists - and you are to help him obtain it.<br><br>\
+		\
+		Ratvar, being trapped in Reebe, the Celestial Derelict, cannot directly affect the mortal plane. However, links, such as this Clockwork Slab, can be created to draw \
+		<b><font color=#BE8700>Components</font></b>, fragments of the Justicar, from Reebe, and those Components can be used to draw power and material from Reebe through arcane chants \
+		known as <b><font color=#BE8700>Scripture</font></b>.<br><br>\
+		\
+		One component of a random type is made in this slab every [production_text].<br>\
+		<font color=#BE8700>Components</font> are stored either within slabs, where they can only be accessed by that slab, or in the Global Cache accessed by Tinkerer's Caches, which all slabs \
+		can draw from to recite scripture.<br>\
+		There are five types of component, and in general, <font color=#6E001A>Belligerent Eyes</font> are aggressive and judgemental, <font color=#1E8CE1>Vanguard Cogwheels</font> are defensive and \
+		repairing, <font color=#AF0AAF>Geis Capacitors</font> are for conversion and control, <font color=#5A6068>Replicant Alloy</font> is for construction and fuel, and \
+		<font color=#DAAA18>Hierophant Ansibles</font> are for transmission and power, though in combination their effects become more nuanced.<br><br>\
+		\
+		There are also five tiers of <font color=#BE8700>Scripture</font>; <font color=#BE8700>[SCRIPTURE_DRIVER]</font>, <font color=#BE8700>[SCRIPTURE_SCRIPT]</font>, <font color=#BE8700>[SCRIPTURE_APPLICATION]</font>, <font color=#BE8700>[SCRIPTURE_REVENANT]</font>, and <font color=#BE8700>[SCRIPTURE_JUDGEMENT]</font>.<br>\
+		Each tier has additional requirements, including Servants, Tinkerer's Caches, and <b>Construction Value</b>(<b>CV</b>). Construction Value is gained by creating structures or converting the \
+		station, and everything too large to hold will grant some amount of it.<br><br>\
+		\
+		This would be a massive amount of information to try and keep track of, but all Servants have the <b><font color=#BE8700>Global Records</font></b> alert, which appears in the top right.<br>\
+		Mousing over that alert will display Servants, Caches, CV, and other information, such as the tiers of scripture that are unlocked.<br><br>\
+		\
+		On that note, <font color=#BE8700>Scripture</font> is recited through <b><font color=#BE8700>Recital</font></b>, the first and most important function of the slab.<br>\
+		All scripture requires some amount of <font color=#BE8700>Components</font> to recite, and only the weakest scripture does not consume any components when recited.<br>\
+		However, weak is relative when it comes to scripture; even the 'weakest' could be enough to dominate a station in the hands of cunning Servants, and higher tiers of scripture are even \
+		stronger in the right hands.<br><br>\
+		\
+		Some effects of scripture include granting the invoker a temporary complete immunity to stuns, summoning a turret that can attack anything that sets eyes on it, binding a powerful guardian \
+		to the invoker, or even, at one of the highest tiers, granting all nearby Servants temporary invulnerability.<br>\
+		However, the most important scripture is <font color=#AF0AAF>Geis</font>, which allows you to convert heathens with relative ease.<br><br>\
+		\
+		The second function of the clockwork slab is <b><font color=#BE8700>Recollection</font></b>, which will display this guide and allows for the quickbinding and <font color=#BE8700>recital</font> \
+		of scripture.<br><br>\
+		\
+		The third to fifth functions are three buttons in the top left while holding the slab.<br>From left to right, they are:<br>\
+		<b><font color=#DAAA18>Hierophant Network</font></b>, which allows communication to other Servants.<br>\
+		<b>Quickbind slot One</b>, currently set to <b><font color=[get_component_color_brightalloy(initial(quickbind_slot_one.primary_component))]>[initial(quickbind_slot_one.name)]</font></b>.<br>\
+		<b>Quickbind slot Two</b>, currently set to <b><font color=[get_component_color_brightalloy(initial(quickbind_slot_two.primary_component))]>[initial(quickbind_slot_two.name)]</font></b>.<br><br>\
+		\
+		Examine the slab to check the number of components it has available.<br><br>\
+		\
+		<font color=#BE8700 size=3><b><center>Purge all untruths and honor Ratvar.</center></b></font>"
 	var/datum/browser/popup = new(user, "slab", "", 600, 500)
 	popup.set_content(text)
 	popup.open()
@@ -406,8 +379,6 @@
 		return .
 
 	if(!usr || !src || !(src in usr) || usr.incapacitated())
-		if(usr && usr.machine == src)
-			usr.unset_machine()
 		return 0
 
 	if(href_list["Recite"])
@@ -420,9 +391,6 @@
 
 	if(href_list["Quickbindtwo"])
 		quickbind_to_two(href_list["Quickbindtwo"])
-
-	if(href_list["hidetext"])
-		text_hidden = !text_hidden
 
 	if(href_list["compactscripture"])
 		compact_scripture = !compact_scripture
