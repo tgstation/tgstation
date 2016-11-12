@@ -71,6 +71,20 @@
 /obj/item/projectile/bullet/midbullet3
 	damage = 30
 
+/obj/item/projectile/bullet/midbullet3/hp
+	damage = 40
+	armour_penetration = -50
+
+/obj/item/projectile/bullet/midbullet3/ap
+	damage = 27
+	armour_penetration = 40
+
+/obj/item/projectile/bullet/midbullet3/fire/on_hit(atom/target, blocked = 0)
+	if(..(target, blocked))
+		var/mob/living/M = target
+		M.adjust_fire_stacks(1)
+		M.IgniteMob()
+
 /obj/item/projectile/bullet/heavybullet
 	damage = 35
 
