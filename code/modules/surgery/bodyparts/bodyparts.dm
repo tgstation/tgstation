@@ -126,6 +126,7 @@
 
 	// Force special update for attached weapon
 	if(attached_weapon)
+		attached_weapon.dropped()
 		attached_weapon = null
 		if(!owner)
 			update_item_icon()
