@@ -317,6 +317,19 @@
 		togglelock(user)
 		return
 
+/obj/structure/closet/attack_robot(mob/user)
+	if(user.Adjacent(src))
+		return attack_hand(user)
+	else
+		return attack_ai(user)
+
+/obj/structure/closet/attack_ai(mob/user)
+	if(secure && opened)
+		user << "<span class='warning'>You cannot lock open locker!</span>"
+		return
+	else
+		return togglelock(user)
+
 // tk grab then use on self
 /obj/structure/closet/attack_self_tk(mob/user)
 	return attack_hand(user)
@@ -373,7 +386,7 @@
 			user << "<span class='warning'>You fail to break out of [src]!</span>"
 
 /obj/structure/closet/proc/bust_open()
-	welded = 0 //applies to all lockers lockers
+	welded = 0 //applies to all lockers
 	locked = 0 //applies to critter crates and secure lockers only
 	broken = 1 //applies to secure lockers only
 	open()
@@ -391,7 +404,8 @@
 /obj/structure/closet/proc/togglelock(mob/living/user)
 	if(secure && !broken)
 		if(allowed(user))
-			add_fingerprint(user)
+			if(iscarbon(user))
+				add_fingerprint(user)
 			locked = !locked
 			user.visible_message("<span class='notice'>[user] [locked ? null : "un"]locks [src].</span>",
 							"<span class='notice'>You [locked ? null : "un"]lock [src].</span>")
