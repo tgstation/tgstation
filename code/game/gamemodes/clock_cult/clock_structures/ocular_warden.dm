@@ -33,6 +33,10 @@
 	return 25
 
 /obj/structure/destructible/clockwork/ocular_warden/can_be_unfasten_wrench(mob/user)
+	var/integrity_percent = (obj_integrity/max_integrity) * 100
+	if(integrity_percent <= 25)
+		user << "<span class='warning'>[src] is too damaged to unsecure!</span>"
+		return FAILED_UNFASTEN
 	if(!anchored)
 		for(var/obj/structure/destructible/clockwork/ocular_warden/W in range(3, src))
 			user << "<span class='neovgre'>You sense another ocular warden too near this location. Activating this one this close would cause them to fight.</span>"
@@ -54,13 +58,13 @@
 			if(isliving(target))
 				var/mob/living/L = target
 				if(!L.null_rod_check())
-					L.adjustFireLoss(!iscultist(L) ? damage_per_tick : damage_per_tick * 2) //Nar-Sian cultists take additional damage
+					L.adjustFireLoss((!iscultist(L) ? damage_per_tick : damage_per_tick * 2) * get_efficiency_mod()) //Nar-Sian cultists take additional damage
 					if(ratvar_awakens && L)
 						L.adjust_fire_stacks(damage_per_tick)
 						L.IgniteMob()
 			else if(istype(target,/obj/mecha))
 				var/obj/mecha/M = target
-				M.take_damage(damage_per_tick, BURN, "melee", 1, get_dir(src, M)) //does about half of standard damage to mechs * whatever their fire armor is
+				M.take_damage(damage_per_tick * get_efficiency_mod(), BURN, "melee", 1, get_dir(src, M))
 
 			setDir(get_dir(get_turf(src), get_turf(target)))
 	if(!target)

@@ -36,7 +36,7 @@
 				user << "<span class='[get_component_span(component_id_to_produce)]_small'>It is currently producing [get_component_name(component_id_to_produce)][component_id_to_produce != REPLICANT_ALLOY ? "s":""].</span>"
 			else
 				user << "<span class='brass'>It is currently producing random components.</span>"
-		user << "<span class='nezbere_small'>It will produce a component every <b>[production_cooldown*0.1]</b> seconds and requires at least the following power for each component type:</span>"
+		user << "<span class='nezbere_small'>It will produce a component every <b>[(production_cooldown*0.1) * get_efficiency_mod(TRUE)]</b> seconds and requires at least the following power for each component type:</span>"
 		for(var/i in clockwork_component_cache)
 			user << "<span class='[get_component_span(i)]_small'><i>[get_component_name(i)]:</i> <b>[get_component_cost(i)]W</b> <i>([clockwork_component_cache[i]] exist[clockwork_component_cache[i] == 1 ? "s" : ""])</i></span>"
 
@@ -148,7 +148,7 @@
 		if(component_to_generate)
 			PoolOrNew(get_component_animation_type(component_to_generate), get_turf(src))
 			clockwork_component_cache[component_to_generate]++
-			production_time = world.time + production_cooldown //go on cooldown
+			production_time = world.time + (production_cooldown * get_efficiency_mod(TRUE)) //go on cooldown
 			visible_message("<span class='warning'>[src] hums as it produces a [get_component_name(component_to_generate)].</span>")
 		else
 			visible_message("<span class='warning'>[src] shuts down!</span>") //we shouldn't actually ever get here, as we should cancel out way before this

@@ -41,11 +41,11 @@
 		if(!C.linkedcache && !linkedwall)
 			C.linkedcache = src
 			linkedwall = C
-			wall_generation_cooldown = world.time + CACHE_PRODUCTION_TIME
+			wall_generation_cooldown = world.time + (CACHE_PRODUCTION_TIME * get_efficiency_mod(TRUE))
 			visible_message("<span class='warning'>[src] starts to whirr in the presence of [C]...</span>")
 			break
 	if(linkedwall && wall_generation_cooldown <= world.time)
-		wall_generation_cooldown = world.time + CACHE_PRODUCTION_TIME
+		wall_generation_cooldown = world.time + (CACHE_PRODUCTION_TIME * get_efficiency_mod(TRUE))
 		var/component_to_generate = get_weighted_component_id()
 		PoolOrNew(get_component_animation_type(component_to_generate), get_turf(src))
 		clockwork_component_cache[component_to_generate]++
@@ -97,7 +97,7 @@
 	..()
 	if(is_servant_of_ratvar(user) || isobserver(user))
 		if(linkedwall)
-			user << "<span class='brass'>It is linked and will generate components!</span>"
+			user << "<span class='brass'>It is linked and will generate a component every <b>[(CACHE_PRODUCTION_TIME * 0.1) * get_efficiency_mod(TRUE)]</b> seconds!</span>"
 		user << "<b>Stored components:</b>"
 		for(var/i in clockwork_component_cache)
 			user << "<span class='[get_component_span(i)]_small'><i>[get_component_name(i)][i != REPLICANT_ALLOY ? "s":""]:</i> <b>[clockwork_component_cache[i]]</b></span>"

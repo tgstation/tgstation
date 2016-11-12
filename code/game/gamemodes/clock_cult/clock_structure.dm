@@ -60,6 +60,20 @@
 /obj/structure/destructible/clockwork/hulk_damage()
 	return 20
 
+/obj/structure/destructible/clockwork/proc/get_efficiency_mod(increasing)
+	if(ratvar_awakens)
+		return 1
+	. = max(sqrt(obj_integrity/max_integrity), 0.5)
+	if(increasing)
+		. *= max_integrity/obj_integrity
+
+/obj/structure/destructible/clockwork/can_be_unfasten_wrench(mob/user)
+	var/integrity_percent = (obj_integrity/max_integrity) * 100
+	if(integrity_percent <= 25)
+		user << "<span class='warning'>[src] is too damaged to unsecure!</span>"
+		return FAILED_UNFASTEN
+	return ..()
+
 /obj/structure/destructible/clockwork/attackby(obj/item/I, mob/user, params)
 	if(is_servant_of_ratvar(user) && istype(I, /obj/item/weapon/wrench) && unanchored_icon)
 		if(default_unfasten_wrench(user, I, 50) == SUCCESSFUL_UNFASTEN)
@@ -67,6 +81,7 @@
 				icon_state = initial(icon_state)
 			else
 				icon_state = unanchored_icon
+				take_damage(max_integrity * 0.25, BRUTE)
 		return 1
 	return ..()
 
