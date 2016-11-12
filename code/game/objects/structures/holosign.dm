@@ -70,15 +70,15 @@
 	name = "Energy Field"
 	desc = "A fragile energy field that blocks movement"
 	density = 1
-	obj_integrity = 1
-	max_integrity = 1
+	obj_integrity = 10
+	max_integrity = 10
 	allow_walk = 0
 
 /obj/structure/holosign/barrier/cyborg/hacked
 	name = "Charged Energy Field"
 	desc = "A powerful energy field that blocks movement. Energy arcs off it"
-	obj_integrity = 10
-	max_integrity = 10
+	obj_integrity = 20
+	max_integrity = 20
 	var/shockcd = 0
 
 /obj/structure/holosign/barrier/cyborg/hacked/proc/cooldown()
