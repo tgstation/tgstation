@@ -89990,12 +89990,9 @@
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/syndicate)
 "cXN" = (
-/turf/open/space,
-/turf/closed/wall/shuttle{
-	dir = 8;
-	icon_state = "diagonalWall3"
-	},
-/area/shuttle/syndicate)
+/obj/structure/disposalpipe/segment,
+/turf/closed/wall/r_wall,
+/area/toxins/xenobiology)
 "cXO" = (
 /obj/machinery/door/window{
 	name = "Ready Room";
@@ -93314,6 +93311,9 @@
 "deD" = (
 /obj/structure/disposaloutlet{
 	dir = 2
+	},
+/obj/structure/disposalpipe/trunk{
+	dir = 1
 	},
 /turf/open/floor/engine,
 /area/toxins/xenobiology)
@@ -125446,7 +125446,7 @@ deR
 deS
 deW
 dfz
-cTC
+cXN
 cXl
 aaa
 aaa
