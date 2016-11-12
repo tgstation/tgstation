@@ -1019,7 +1019,7 @@
 		usermessage("The maintainence panel is closed!", 1)
 		return 0
 	if(istype(I, /obj/item/weapon/crowbar))
-		var/inputlist = list()
+		var/list/inputlist = list()
 		if(pack)
 			inputlist += "Pack"
 		if(shoes)
