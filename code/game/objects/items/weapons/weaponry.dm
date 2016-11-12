@@ -1,7 +1,7 @@
 /obj/item/weapon
 
 	var/unique_rename = 0 //allows renaming with a pen
-	var/attach_on_dismember = 0
+	var/attach_on_dismember = FALSE
 
 /obj/item/weapon/examine(mob/user)
 	..()

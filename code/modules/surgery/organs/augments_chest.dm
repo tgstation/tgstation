@@ -206,7 +206,7 @@
 	slot = "limb_sockets"
 	origin_tech = "materials=2;powerstorage=2;biotech=2"
 	actions_types = list(/datum/action/item_action/organ_action/toggle/)
-	var active = FALSE
+	var/active = FALSE
 	var/obj/effect/proc_holder/rocket_arms_ability/ability = new
 
 /obj/item/organ/cyberimp/chest/limb_sockets/Insert(mob/living/carbon/M, special = 0)
@@ -265,7 +265,7 @@
 	if(!isturf(U) || !isturf(T))
 		return FALSE
 
-	user.visible_message("<span class='danger'>[user] fires his arm!", "<span class='alertalien'>You fire your arm!.</span>")
+	user.visible_message("<span class='danger'>[user] fires his arm!", "<span class='alertalien'>You fire your arm!</span>")
 
 	var/obj/item/organ/cyberimp/chest/limb_sockets/implant = user.getorganslot("limb_sockets")
 	if(implant.fire(target, params))

@@ -40,7 +40,7 @@
 
 /obj/item/projectile/bodypart/on_hit(atom/target, blocked = 0)
 	. = ..()
-	contained_limb.forceMove(src.loc)
+	contained_limb.forceMove(loc)
 	contained_limb = null
 
 /obj/item/bodypart/proc/fire_at(target, params = null, range = 7, speed = 3)
@@ -150,7 +150,7 @@
 				did_special_unequip = TRUE
 
 		if(!did_special_unequip)
-			C.unEquip(owner.get_item_for_held_index(held_index), 1)
+			C.unEquip(I, 1)
 		
 		C.hand_bodyparts[held_index] = null
 

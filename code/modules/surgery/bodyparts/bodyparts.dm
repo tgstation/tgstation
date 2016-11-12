@@ -106,7 +106,7 @@
 
 	// Force special update for attached weapon
 	if(attached_weapon)
-	 	attached_weapon = null
+		attached_weapon = null
 		if(!owner)
 			update_icon_dropped()
 
@@ -318,7 +318,7 @@
 				I = image("icon"='icons/mob/human_parts_greyscale.dmi', "icon_state"="digitigrade_[use_digitigrade]_[body_zone]_s", "layer"=-BODYPARTS_LAYER, "dir"=image_dir)
 			else
 				I = image("icon"='icons/mob/human_parts_greyscale.dmi', "icon_state"="[species_id]_[body_zone]_s", "layer"=-BODYPARTS_LAYER, "dir"=image_dir)
-		
+
 			//Greyscale Colouring
 			var/draw_color
 
@@ -332,7 +332,7 @@
 			if(draw_color)
 				I.color = "#[draw_color]"
 			//End Greyscale Colouring
-		
+
 		else
 			if(should_draw_gender)
 				I = image("icon"='icons/mob/human_parts.dmi', "icon_state"="[species_id]_[body_zone]_[icon_gender]_s", "layer"=-BODYPARTS_LAYER, "dir"=image_dir)
@@ -353,7 +353,7 @@
 
 		var/icon_file = null
 
-		if(held_index == 2)
+		if(held_index % 2)
 			icon_file = attached_weapon.righthand_file
 		else
 			icon_file = attached_weapon.lefthand_file
