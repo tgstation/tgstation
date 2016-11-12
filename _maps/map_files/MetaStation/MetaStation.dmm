@@ -62983,6 +62983,7 @@
 	})
 "ceA" = (
 /obj/machinery/light/small,
+/obj/item/toy/dummy,
 /obj/item/toy/prize/honk{
 	pixel_y = 12
 	},
