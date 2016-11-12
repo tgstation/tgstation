@@ -101,6 +101,7 @@
 	pass_flags = PASSTABLE
 	health = 50
 	maxHealth = 50
+	harm_intent_damage = 5
 	density = TRUE
 	speed = 1
 	ventcrawler = 0
@@ -116,6 +117,7 @@
 	seeStatic = 0
 	hacked = TRUE
 	visualAppearence = CLOCKDRONE
+	can_be_held = FALSE
 
 /mob/living/simple_animal/drone/cogscarab/ratvar //a subtype for spawning when ratvar is alive, has a slab that it can use and a normal proselytizer
 	default_storage = /obj/item/weapon/storage/toolbox/brass/prefilled/ratvar
