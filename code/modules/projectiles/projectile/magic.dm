@@ -6,7 +6,6 @@
 	nodamage = 1
 	armour_penetration = 100
 	flag = "magic"
-	speed = 1
 
 /obj/item/projectile/magic/death
 	name = "bolt of death"
@@ -24,6 +23,7 @@
 	damage = 10
 	damage_type = BRUTE
 	nodamage = 0
+	speed = 1
 
 	//explosion values
 	var/exp_heavy = 0
