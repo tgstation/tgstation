@@ -84,7 +84,6 @@
 					pai << "<span class='userdanger'>Your mental faculties leave you.</span>"
 					pai << "<span class='rose'>oblivion... </span>"
 					pai.death(0)
-				removePersonality()
 		if(href_list["wires"])
 			var/wire = text2num(href_list["wires"])
 			if(radio)

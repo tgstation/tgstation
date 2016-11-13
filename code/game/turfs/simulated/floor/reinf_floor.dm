@@ -140,7 +140,7 @@
 	return
 
 /turf/open/floor/engine/cult/ratvar_act()
-	..()
+	. = ..()
 	if(istype(src, /turf/open/floor/engine/cult)) //if we haven't changed type
 		var/previouscolor = color
 		color = "#FAE48C"

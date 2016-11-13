@@ -86,8 +86,6 @@
 /obj/singularity/wizard
 	name = "tear in the fabric of reality"
 	desc = "This isn't right."
-	icon = 'icons/obj/singularity.dmi'
-	icon_state = "singularity_s1"
 	icon = 'icons/effects/224x224.dmi'
 	icon_state = "reality"
 	pixel_x = -96
@@ -208,14 +206,14 @@ var/global/list/multiverse = list()
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
+	sharpness = IS_SHARP
 	force = 20
 	throwforce = 10
-	w_class = 2
+	w_class = 3
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	var/faction = list("unassigned")
 	var/cooldown = 0
 	var/assigned = "unassigned"
-	var/evil = TRUE
 
 /obj/item/weapon/multisword/New()
 	..()
@@ -241,27 +239,20 @@ var/global/list/multiverse = list()
 			assigned = "[user.real_name]"
 			user.faction = list("[user.real_name]")
 			user << "You bind the sword to yourself. You can now use it to summon help."
-			if(!usr.mind.special_role)
-				if(prob(30))
-					user << "<span class='warning'><B>With your new found power you could easily conquer the station!</B></span>"
-					var/datum/objective/hijackclone/hijack_objective = new /datum/objective/hijackclone
-					hijack_objective.owner = usr.mind
-					usr.mind.objectives += hijack_objective
-					hijack_objective.explanation_text = "Ensure only [usr.real_name] and their copies are on the shuttle!"
-					usr << "<B>Objective #[1]</B>: [hijack_objective.explanation_text]"
-					ticker.mode.traitors += usr.mind
-					usr.mind.special_role = "[usr.real_name] Prime"
-					evil = TRUE
-				else
-					user << "<span class='warning'><B>With your new found power you could easily defend the station!</B></span>"
-					var/datum/objective/survive/new_objective = new /datum/objective/survive
-					new_objective.owner = usr.mind
-					new_objective.explanation_text = "Survive, and help defend the innocent from the mobs of multiverse clones."
-					usr << "<B>Objective #[1]</B>: [new_objective.explanation_text]"
-					usr.mind.objectives += new_objective
-					ticker.mode.traitors += usr.mind
-					usr.mind.special_role = "[usr.real_name] Prime"
-					evil = FALSE
+			if(!is_gangster(user))
+				var/datum/gang/multiverse/G = new(src, "[user.real_name]")
+				ticker.mode.gangs += G
+				G.bosses += user.mind
+				G.add_gang_hud(user.mind)
+				user.mind.gang_datum = G
+				user << "<span class='warning'><B>With your new found power you could easily conquer the station!</B></span>"
+				var/datum/objective/hijackclone/hijack_objective = new /datum/objective/hijackclone
+				hijack_objective.owner = user.mind
+				user.mind.objectives += hijack_objective
+				hijack_objective.explanation_text = "Ensure only [user.real_name] and their copies are on the shuttle!"
+				user << "<B>Objective #[1]</B>: [hijack_objective.explanation_text]"
+				ticker.mode.traitors += user.mind
+				user.mind.special_role = "[user.real_name] Prime"
 		else
 			var/list/candidates = get_candidates(ROLE_WIZARD)
 			if(candidates.len)
@@ -279,15 +270,16 @@ var/global/list/multiverse = list()
 		user << "<span class='warning'><B>[src] is recharging! Keep in mind it shares a cooldown with the swords wielded by your copies.</span>"
 
 
-/obj/item/weapon/multisword/proc/spawn_copy(var/client/C, var/turf/T)
+/obj/item/weapon/multisword/proc/spawn_copy(var/client/C, var/turf/T, mob/user)
 	var/mob/living/carbon/human/M = new/mob/living/carbon/human(T)
 	C.prefs.copy_to(M, icon_updates=0)
 	M.key = C.key
-	M.mind.name = usr.real_name
-	M << "<B>You are an alternate version of [usr.real_name] from another universe! Help them accomplish their goals at all costs.</B>"
-	M.real_name = usr.real_name
-	M.name = usr.real_name
-	M.faction = list("[usr.real_name]")
+	M.mind.name = user.real_name
+	M << "<B>You are an alternate version of [user.real_name] from another universe! Help them accomplish their goals at all costs.</B>"
+	ticker.mode.add_gangster(M.mind, user.mind.gang_datum, FALSE)
+	M.real_name = user.real_name
+	M.name = user.real_name
+	M.faction = list("[user.real_name]")
 	if(prob(50))
 		var/list/all_species = list()
 		for(var/speciestype in subtypesof(/datum/species))
@@ -301,30 +293,11 @@ var/global/list/multiverse = list()
 	M.dna.update_dna_identity()
 	equip_copy(M)
 
-	if(evil)
-		var/datum/objective/hijackclone/hijack_objective = new /datum/objective/hijackclone
-		hijack_objective.owner = M.mind
-		M.mind.objectives += hijack_objective
-		hijack_objective.explanation_text = "Ensure only [usr.real_name] and their copies are on the shuttle!"
-		M << "<B>Objective #[1]</B>: [hijack_objective.explanation_text]"
-		M.mind.special_role = "multiverse traveller"
-		log_game("[M.key] was made a multiverse traveller with the objective to help [usr.real_name] hijack.")
-	else
-		var/datum/objective/protect/new_objective = new /datum/objective/protect
-		new_objective.owner = M.mind
-		new_objective.target = usr.mind
-		new_objective.explanation_text = "Protect [usr.real_name], your copy, and help them defend the innocent from the mobs of multiverse clones."
-		M.mind.objectives += new_objective
-		M << "<B>Objective #[1]</B>: [new_objective.explanation_text]"
-		M.mind.special_role = "multiverse traveller"
-		log_game("[M.key] was made a multiverse traveller with the objective to help [usr.real_name] protect the station.")
-
 /obj/item/weapon/multisword/proc/equip_copy(var/mob/living/carbon/human/M)
 
 	var/obj/item/weapon/multisword/sword = new /obj/item/weapon/multisword
 	sword.assigned = assigned
 	sword.faction = list("[assigned]")
-	sword.evil = evil
 
 	var/randomize = pick("mobster","roman","wizard","cyborg","syndicate","assistant", "animu", "cultist", "highlander", "clown", "killer", "pirate", "soviet", "officer", "gladiator")
 
@@ -594,4 +567,3 @@ var/global/list/multiverse = list()
 	heal_brute = 25
 	heal_burn = 25
 	heal_oxy = 25
-

@@ -22,7 +22,6 @@
 	icon_state = "drone_maint_grey"
 	icon_living = "drone_maint_grey"
 	icon_dead = "drone_maint_dead"
-	gender = NEUTER
 	health = 30
 	maxHealth = 30
 	unsuitable_atmos_damage = 0
@@ -140,6 +139,19 @@
 /mob/living/simple_animal/drone/gib()
 	dust()
 
+/mob/living/simple_animal/drone/ratvar_act()
+	if(internal_storage)
+		unEquip(internal_storage)
+	if(head)
+		unEquip(head)
+	var/mob/living/simple_animal/drone/cogscarab/ratvar/R = new /mob/living/simple_animal/drone/cogscarab/ratvar(loc)
+	R.setDir(dir)
+	if(mind)
+		mind.transfer_to(R, 1)
+	else
+		R.key = key
+	qdel(src)
+
 
 /mob/living/simple_animal/drone/examine(mob/user)
 	var/msg = "<span class='info'>*---------*\nThis is \icon[src] \a <b>[src]</b>!\n"
@@ -176,10 +188,10 @@
 
 	//Damaged
 	if(health != maxHealth)
-		if(health > 10) //Between 30 and 10
+		if(health > maxHealth * 0.33) //Between maxHealth and about a third of maxHealth, between 30 and 10 for normal drones
 			msg += "<span class='warning'>Its screws are slightly loose.</span>\n"
-		else //Between 9 and 0
-			msg += "<span class='warning'><b>Its screws are very loose!</b></span>\n"
+		else //otherwise, below about 33%
+			msg += "<span class='boldwarning'>Its screws are very loose!</span>\n"
 
 	//Dead
 	if(stat == DEAD)
@@ -250,9 +262,6 @@
 
 /mob/living/simple_animal/drone/experience_pressure_difference(pressure_difference, direction)
 	return
-
-/mob/living/simple_animal/drone/fully_heal(admin_revive = 0)
-	adjustBruteLoss(-getBruteLoss()) //Heal all brute damage
 
 /mob/living/simple_animal/drone/bee_friendly()
 	// Why would bees pay attention to drones?

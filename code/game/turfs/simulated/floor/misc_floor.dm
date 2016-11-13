@@ -148,10 +148,6 @@
 	new/obj/item/clockwork/alloy_shards/medium(src)
 	return ..()
 
-/turf/open/floor/clockwork/ratvar_act()
-	for(var/mob/M in src)
-		M.ratvar_act()
-
 /turf/open/floor/clockwork/narsie_act()
 	..()
 	if(istype(src, /turf/open/floor/clockwork)) //if we haven't changed type

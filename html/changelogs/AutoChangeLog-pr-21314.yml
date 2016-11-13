@@ -1,5 +1,0 @@
-author: "Joan"
-delete-after: True
-changes: 
-  - rscadd: "Proselytizing a window will automatically proselytize any grilles under it. This is free, so don't worry about wasting alloy.
-rcsadd: Trying to proselytize something that can't be proselytized will try to proselytize the turf under it, instead."

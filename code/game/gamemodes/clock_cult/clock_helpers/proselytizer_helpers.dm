@@ -9,8 +9,20 @@
 	return FALSE
 
 //Turf conversion
-/turf/closed/wall/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer)
-	return list("operation_time" = 50, "new_obj_type" = /turf/closed/wall/clockwork, "alloy_cost" = REPLICANT_WALL_TOTAL, "spawn_dir" = SOUTH)
+/turf/closed/wall/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer) //four sheets of metal
+	return list("operation_time" = 50, "new_obj_type" = /turf/closed/wall/clockwork, "alloy_cost" = REPLICANT_WALL_TOTAL - (REPLICANT_METAL * 4), "spawn_dir" = SOUTH)
+
+/turf/closed/wall/mineral/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer) //two sheets of metal
+	return list("operation_time" = 50, "new_obj_type" = /turf/closed/wall/clockwork, "alloy_cost" = REPLICANT_WALL_TOTAL - (REPLICANT_METAL * 2), "spawn_dir" = SOUTH)
+
+/turf/closed/wall/mineral/iron/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer) //two sheets of metal, five rods
+	return list("operation_time" = 50, "new_obj_type" = /turf/closed/wall/clockwork, "alloy_cost" = REPLICANT_WALL_TOTAL - (REPLICANT_METAL * 2) - (REPLICANT_ROD * 5), "spawn_dir" = SOUTH)
+
+/turf/closed/wall/mineral/cult/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer) //no metal
+	return list("operation_time" = 80, "new_obj_type" = /turf/closed/wall/clockwork, "alloy_cost" = REPLICANT_WALL_TOTAL, "spawn_dir" = SOUTH)
+
+/turf/closed/wall/shuttle/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer) //two sheets of metal
+	return list("operation_time" = 50, "new_obj_type" = /turf/closed/wall/clockwork, "alloy_cost" = REPLICANT_WALL_TOTAL - (REPLICANT_METAL * 2), "spawn_dir" = SOUTH)
 
 /turf/closed/wall/r_wall/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer)
 	return FALSE
@@ -31,11 +43,28 @@
 	return FALSE
 
 /turf/open/floor/clockwork/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer)
-	for(var/obj/O in src)
-		if(O.density && !O.CanPass(user, src, 5))
-			user << "<span class='warning'>Something is in the way, preventing you from proselytizing [src] into a clockwork wall.</span>"
-			return TRUE
+	if(is_blocked_turf(src))
+		user << "<span class='warning'>Something is in the way, preventing you from proselytizing [src] into a clockwork wall.</span>"
+		return TRUE
 	return list("operation_time" = 100, "new_obj_type" = /turf/closed/wall/clockwork, "alloy_cost" = REPLICANT_WALL_MINUS_FLOOR, "spawn_dir" = SOUTH)
+
+//False wall conversion
+/obj/structure/falsewall/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer)
+	var/cost = REPLICANT_WALL_MINUS_FLOOR
+	if(ispath(mineral, /obj/item/stack/sheet/metal))
+		cost -= (REPLICANT_METAL * (2 + mineral_amount)) //four sheets of metal, plus an assumption that the girder is also two
+	else
+		cost -= (REPLICANT_METAL * 2) //anything that doesn't use metal just has the girder
+	return list("operation_time" = 50, "new_obj_type" = /obj/structure/falsewall/brass, "alloy_cost" = cost, "spawn_dir" = SOUTH)
+
+/obj/structure/falsewall/iron/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer) //two sheets of metal, two rods; special assumption
+	return list("operation_time" = 50, "new_obj_type" = /obj/structure/falsewall/brass, "alloy_cost" = REPLICANT_WALL_MINUS_FLOOR - (REPLICANT_METAL * 2) - (REPLICANT_ROD * 2), "spawn_dir" = SOUTH)
+
+/obj/structure/falsewall/reinforced/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer)
+	return FALSE
+
+/obj/structure/falsewall/brass/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer)
+	return FALSE
 
 //Metal conversion
 /obj/item/stack/rods/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer)
@@ -85,8 +114,7 @@
 	if(!proselytizer.metal_to_alloy)
 		return FALSE
 	var/prosel_cost = -amount*REPLICANT_FLOOR
-	var/prosel_time = -amount
-	return list("operation_time" = -prosel_time, "new_obj_type" = /obj/effect/overlay/temp/ratvar/beam/itemconsume, "alloy_cost" = prosel_cost, "spawn_dir" = SOUTH)
+	return list("operation_time" = amount, "new_obj_type" = /obj/effect/overlay/temp/ratvar/beam/itemconsume, "alloy_cost" = prosel_cost, "spawn_dir" = SOUTH)
 
 //Airlock conversion
 /obj/machinery/door/airlock/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer)
@@ -109,6 +137,10 @@
 		new_dir = FALSE
 		prosel_time = 30
 		prosel_cost = REPLICANT_STANDARD
+		if(reinf)
+			prosel_cost -= REPLICANT_ROD
+	if(reinf)
+		prosel_cost -= REPLICANT_ROD
 	for(var/obj/structure/grille/G in get_turf(src))
 		addtimer(proselytizer, "proselytize", 0, FALSE, G, user)
 	return list("operation_time" = prosel_time, "new_obj_type" = windowtype, "alloy_cost" = prosel_cost, "spawn_dir" = dir, "dir_in_new" = new_dir)
@@ -137,7 +169,10 @@
 
 //Girder conversion
 /obj/structure/girder/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer)
-	return list("operation_time" = 20, "new_obj_type" = /obj/structure/destructible/clockwork/wall_gear, "alloy_cost" = REPLICANT_GEAR, "spawn_dir" = SOUTH)
+	var/prosel_cost = REPLICANT_GEAR - (REPLICANT_METAL * 2)
+	if(state == GIRDER_REINF_STRUTS || state == GIRDER_REINF)
+		prosel_cost -= REPLICANT_PLASTEEL
+	return list("operation_time" = 20, "new_obj_type" = /obj/structure/destructible/clockwork/wall_gear, "alloy_cost" = prosel_cost, "spawn_dir" = SOUTH)
 
 //Hitting a clockwork structure will try to repair it.
 /obj/structure/destructible/clockwork/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer)
@@ -150,51 +185,44 @@
 		return
 	var/amount_to_heal = max_integrity - obj_integrity
 	var/healing_for_cycle = min(amount_to_heal, repair_amount)
-	var/proselytizer_cost = 0
+	var/alloy_required = healing_for_cycle
 	if(!proselytizer.can_use_alloy(RATVAR_ALLOY_CHECK))
-		healing_for_cycle = min(healing_for_cycle, proselytizer.stored_alloy * 0.5)
-		proselytizer_cost = healing_for_cycle * 2
-	if(!proselytizer.can_use_alloy(proselytizer_cost))
-		user << "<span class='warning'>You need more liquified alloy to repair [src]!</span>"
+		healing_for_cycle = min(healing_for_cycle, proselytizer.stored_alloy)
+	if(!healing_for_cycle || (!proselytizer.can_use_alloy(RATVAR_ALLOY_CHECK) && !proselytizer.can_use_alloy(healing_for_cycle)))
+		user << "<span class='warning'>You need at least <b>[alloy_required]</b> liquified alloy to start repairing [src], and at least <b>[amount_to_heal]</b> to fully repair it!</span>"
 		return
 	user.visible_message("<span class='notice'>[user]'s [proselytizer.name] starts covering [src] in black liquid metal...</span>", \
 	"<span class='alloy'>You start repairing [src]...</span>")
 	//hugeass while because we need to re-check after the do_after
 	proselytizer.repairing = src
-	while(proselytizer && user && src && obj_integrity != max_integrity)
+	while(proselytizer && user && src && obj_integrity < max_integrity)
 		amount_to_heal = max_integrity - obj_integrity
 		if(amount_to_heal <= 0)
 			break
 		healing_for_cycle = min(amount_to_heal, repair_amount)
 		if(!proselytizer.can_use_alloy(RATVAR_ALLOY_CHECK))
-			healing_for_cycle = min(healing_for_cycle, proselytizer.stored_alloy * 0.5)
-			proselytizer_cost = healing_for_cycle * 2
-			if(!proselytizer.can_use_alloy(proselytizer_cost))
-				break
-		else
-			proselytizer_cost = 0
-		if(!proselytizer.can_use_alloy(proselytizer_cost) || !do_after(user, proselytizer_cost, target = src) || !proselytizer || !proselytizer.can_use_alloy(proselytizer_cost))
+			healing_for_cycle = min(healing_for_cycle, proselytizer.stored_alloy)
+		if(!healing_for_cycle || (!proselytizer.can_use_alloy(RATVAR_ALLOY_CHECK) && !proselytizer.can_use_alloy(healing_for_cycle)) || \
+		!do_after(user, healing_for_cycle, target = src) || \
+		!proselytizer || (!proselytizer.can_use_alloy(RATVAR_ALLOY_CHECK) && !proselytizer.can_use_alloy(healing_for_cycle)))
 			break
 		amount_to_heal = max_integrity - obj_integrity
 		if(amount_to_heal <= 0)
 			break
 		healing_for_cycle = min(amount_to_heal, repair_amount)
 		if(!proselytizer.can_use_alloy(RATVAR_ALLOY_CHECK))
-			healing_for_cycle = min(healing_for_cycle, proselytizer.stored_alloy * 0.5)
-			proselytizer_cost = healing_for_cycle * 2
-			if(!proselytizer.can_use_alloy(proselytizer_cost))
-				break
-		else
-			proselytizer_cost = 0
+			healing_for_cycle = min(healing_for_cycle, proselytizer.stored_alloy)
+		if(!healing_for_cycle || (!proselytizer.can_use_alloy(RATVAR_ALLOY_CHECK) && !proselytizer.can_use_alloy(healing_for_cycle)))
+			break
 		obj_integrity = Clamp(obj_integrity + healing_for_cycle, 0, max_integrity)
-		proselytizer.modify_stored_alloy(-proselytizer_cost)
+		proselytizer.modify_stored_alloy(-healing_for_cycle)
 		playsound(src, 'sound/machines/click.ogg', 50, 1)
 
 	if(proselytizer)
 		proselytizer.repairing = null
 		if(user)
 			user.visible_message("<span class='notice'>[user]'s [proselytizer.name] stops covering [src] with black liquid metal.</span>", \
-		"<span class='alloy'>You finish repairing [src]. It is now at <b>[obj_integrity]/[max_integrity]</b> integrity.</span>")
+			"<span class='alloy'>You finish repairing [src]. It is now at <b>[obj_integrity]/[max_integrity]</b> integrity.</span>")
 	return
 
 //Hitting a tinkerer's cache will try to fill the proselytizer with alloy after trying to repair.

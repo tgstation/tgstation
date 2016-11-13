@@ -50,6 +50,7 @@
 	new /obj/item/device/multitool(src)
 	new /obj/item/stack/cable_coil(src,30,pick("red","yellow","orange"))
 	new /obj/item/weapon/extinguisher/mini(src)
+	new /obj/item/device/analyzer(src)
 	//much roomier now that we've managed to remove two tools
 
 

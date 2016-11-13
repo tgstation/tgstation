@@ -44,7 +44,7 @@
 			return FALSE
 
 		if(stored_paper >= max_paper)
-			user << "<span class='warning'>You try to add \the [I] into [src], but it's paper bin is full!</span>"
+			user << "<span class='warning'>You try to add \the [I] into [src], but its paper bin is full!</span>"
 			return FALSE
 
 		user << "<span class='notice'>You insert \the [I] into [src]'s paper recycler.</span>"

@@ -78,7 +78,7 @@
 			for(var/obj/item/weapon/storage/book/bible/BI in L.GetAllContents())
 				if(!(BI.resistance_flags & ON_FIRE))
 					BI.fire_act()
-		else if(!is_servant_of_ratvar(L) && !L.stat && L.mind && !L.restrained() && !(L.buckled && (L.lying || istype(L.buckled, /obj/structure/destructible/clockwork/guvax_binding))) && \
+		else if(!is_servant_of_ratvar(L) && !L.stat && L.mind && !L.restrained() && !(L.buckled && (L.lying || istype(L.buckled, /obj/structure/destructible/clockwork/geis_binding))) && \
 		!(L.disabilities & BLIND) && !L.null_rod_check())
 			. += L
 	for(var/N in mechas_list)

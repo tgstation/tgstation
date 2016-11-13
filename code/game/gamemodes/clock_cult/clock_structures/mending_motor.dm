@@ -17,6 +17,10 @@
 	var/stored_alloy = 0
 	var/max_alloy = REPLICANT_ALLOY_POWER * 10
 	var/heal_attempts = 4
+	var/list/heal_finish_messages = list("There, all mended!", "Try not to get too damaged.", "No more dents and scratches for you!", "Champions never die.", "All patched up.", \
+	"Ah, child, it's okay now.")
+	var/list/heal_failure_messages = list("Pain is temporary.", "What you do for the Justiciar is eternal.", "Bear this for me.", "Be strong, child.", "Please, be careful!", \
+	"If you die, you will be remembered.")
 	var/static/list/mending_motor_typecache = typecacheof(list(
 	/obj/structure/destructible/clockwork,
 	/obj/machinery/door/airlock/clockwork,
@@ -51,13 +55,10 @@
 		user << "<span class='inathneq_small'>It requires at least <b>[MIN_CLOCKCULT_POWER]W</b> to attempt to repair clockwork mobs, structures, or converted silicons.</span>"
 
 /obj/structure/destructible/clockwork/powered/mending_motor/process()
-	. = ..()
-	if(. < MIN_CLOCKCULT_POWER)
-		visible_message("<span class='warning'>[src] emits an airy chuckling sound and falls dark!</span>")
-		toggle()
-		return
 	for(var/atom/movable/M in range(7, src))
+		var/turf/T
 		if(isclockmob(M) || istype(M, /mob/living/simple_animal/drone/cogscarab))
+			T = get_turf(M)
 			var/mob/living/simple_animal/hostile/clockwork/marauder/E = M
 			var/is_marauder = istype(E)
 			if(E.health == E.maxHealth || E.stat == DEAD || (is_marauder && !E.fatigue))
@@ -66,9 +67,15 @@
 				if(E.health < E.maxHealth || (is_marauder && E.fatigue))
 					if(try_use_power(MIN_CLOCKCULT_POWER))
 						E.adjustHealth(-8)
+						PoolOrNew(/obj/effect/overlay/temp/heal, list(T, "#1E8CE1"))
 					else
+						E << "<span class='inathneq'>\"[text2ratvar(pick(heal_failure_messages))]\"</span>"
 						break
+				else
+					E << "<span class='inathneq'>\"[text2ratvar(pick(heal_finish_messages))]\"</span>"
+					break
 		else if(is_type_in_typecache(M, mending_motor_typecache))
+			T = get_turf(M)
 			var/obj/structure/C = M
 			if(C.obj_integrity == C.max_integrity)
 				continue
@@ -76,9 +83,14 @@
 				if(C.obj_integrity < C.max_integrity)
 					if(try_use_power(MIN_CLOCKCULT_POWER))
 						C.obj_integrity = min(C.obj_integrity + 8, C.max_integrity)
+						C.update_icon()
+						PoolOrNew(/obj/effect/overlay/temp/heal, list(T, "#1E8CE1"))
 					else
 						break
+				else
+					break
 		else if(issilicon(M))
+			T = get_turf(M)
 			var/mob/living/silicon/S = M
 			if(S.health == S.maxHealth || S.stat == DEAD || !is_servant_of_ratvar(S))
 				continue
@@ -87,8 +99,18 @@
 					if(try_use_power(MIN_CLOCKCULT_POWER))
 						S.adjustBruteLoss(-5)
 						S.adjustFireLoss(-3)
+						PoolOrNew(/obj/effect/overlay/temp/heal, list(T, "#1E8CE1"))
 					else
+						S << "<span class='inathneq'>\"[text2ratvar(pick(heal_failure_messages))]\"</span>"
 						break
+				else
+					S << "<span class='inathneq'>\"[text2ratvar(pick(heal_finish_messages))]\"</span>"
+					break
+	. = ..()
+	if(. < MIN_CLOCKCULT_POWER)
+		visible_message("<span class='warning'>[src] emits an airy chuckling sound and falls dark!</span>")
+		toggle()
+		return
 
 /obj/structure/destructible/clockwork/powered/mending_motor/attack_hand(mob/living/user)
 	if(user.canUseTopic(src, BE_CLOSE))
