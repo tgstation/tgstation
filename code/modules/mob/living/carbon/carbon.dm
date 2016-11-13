@@ -93,12 +93,6 @@
 
 /mob/living/carbon/throw_impact(atom/hit_atom)
 	. = ..()
-	if(ishuman(src))
-		var/mob/living/carbon/human/H = src
-		var/obj/item/device/flightpack/FP = H.get_flightpack()
-		if(istype(FP) && FP.flight && (FP.momentum_speed > 1))
-			FP.flight_impact(hit_atom)
-			return 1
 	if(hit_atom.density && isturf(hit_atom))
 		Weaken(1)
 		take_bodypart_damage(10)
