@@ -117,7 +117,7 @@ var/const/SAFETY_COOLDOWN = 100
 	for(var/i in to_eat)
 		var/atom/movable/AM = i
 		var/obj/item/bodypart/head/as_head = AM
-		var/brain_holder = istype(AM, /obj/item/organ/brain) || as_head.brain
+		var/brain_holder = istype(AM, /obj/item/organ/brain) || (as_head && as_head.brain)
 		if(isliving(AM) || brain_holder)
 			if(emagged)
 				if(!brain_holder)
