@@ -4,7 +4,7 @@
 	var/mob/living/carbon/owner = null
 	var/status = ORGAN_ORGANIC
 	origin_tech = "biotech=3"
-	force = 1
+	force = 0
 	w_class = 2
 	throwforce = 0
 	var/zone = "chest"
