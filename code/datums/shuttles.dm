@@ -56,6 +56,12 @@
 		medical facilities."
 	credit_cost = 5000
 
+/datum/map_template/shuttle/emergency/meteor
+	suffix = "meteor"
+	name = "an asteroid with engines strapped to it"
+	description = "A hollowed out asteroid with engines strapped to it. Due to its size and difficulty in steering it, this shuttle may damage the docking area."
+	admin_notes = "This shuttle will likely crush escape, killing anyone there."
+	credit_cost = -5000
 
 /datum/map_template/shuttle/emergency/birdboat
 	suffix = "birdboat"
