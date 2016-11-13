@@ -503,17 +503,17 @@ var/list/airlock_overlays = list()
 			if(AIRLOCK_SECURITY_NONE)
 				user << "Wires are exposed!"
 			if(AIRLOCK_SECURITY_METAL)
-				user << "There is welded metal cover protecting wires"
+				user << "Wires are hidden behind welded metal cover"
 			if(AIRLOCK_SECURITY_PLASTEEL_I_S)
-				user << "There is cut plasteel"
+				user << "There is some shredded plasteel inside"
 			if(AIRLOCK_SECURITY_PLASTEEL_I)
-				user << "There is inner welded plasteel cover"
+				user << "Wires are behind inner layer of plasteel"
 			if(AIRLOCK_SECURITY_PLASTEEL_O_S)
-				user << "There is cut plasteel"
+				user << "There is some shredded plasteel inside"
 			if(AIRLOCK_SECURITY_PLASTEEL_O)
-				user << "There is welded plasteel cover"
+				user << "There is welded plasteel cover hiding wires"
 			if(AIRLOCK_SECURITY_PLASTEEL)
-				user << "There is protective grile over panel"
+				user << "There is protective grille over panel"
 	else if(security_level)
 		if(security_level == AIRLOCK_SECURITY_METAL)
 			user << "It looks a bit stronger"
@@ -989,8 +989,8 @@ var/list/airlock_overlays = list()
 						if(!panel_open || !WT.isOn())
 							return
 						playsound(loc, WT.usesound, 50, 1)
-						user.visible_message("<span class='notice'>[user] cuts throught \the [src]'s shielding.</span>",
-										"<span class='notice'>You cut throught \the [src]'s shielding.</span>",
+						user.visible_message("<span class='notice'>[user] cuts through \the [src]'s shielding.</span>",
+										"<span class='notice'>You cut through \the [src]'s shielding.</span>",
 										"<span class='italics'>You hear welding.</span>")
 						security_level = AIRLOCK_SECURITY_NONE
 						obj_integrity = AIRLOCK_INTEGRITY_N
@@ -1023,8 +1023,8 @@ var/list/airlock_overlays = list()
 						if(!panel_open || !WT.isOn())
 							return
 						playsound(loc, WT.usesound, 50, 1)
-						user.visible_message("<span class='notice'>[user] cuts throught \the [src]'s shielding.</span>",
-										"<span class='notice'>You cut throught \the [src]'s shielding.</span>",
+						user.visible_message("<span class='notice'>[user] cuts through \the [src]'s shielding.</span>",
+										"<span class='notice'>You cut through \the [src]'s shielding.</span>",
 										"<span class='italics'>You hear welding.</span>")
 						security_level = AIRLOCK_SECURITY_PLASTEEL_I_S
 					return
@@ -1052,8 +1052,8 @@ var/list/airlock_overlays = list()
 						if(!panel_open || !WT.isOn())
 							return
 						playsound(loc, WT.usesound, 50, 1)
-						user.visible_message("<span class='notice'>[user] cuts throught \the [src]'s shielding.</span>",
-										"<span class='notice'>You cut throught \the [src]'s shielding.</span>",
+						user.visible_message("<span class='notice'>[user] cuts through \the [src]'s shielding.</span>",
+										"<span class='notice'>You cut through \the [src]'s shielding.</span>",
 										"<span class='italics'>You hear welding.</span>")
 						security_level = AIRLOCK_SECURITY_PLASTEEL_O_S
 					return
@@ -1062,13 +1062,13 @@ var/list/airlock_overlays = list()
 					var/obj/item/weapon/W = C
 					if(src.hasPower() && src.shock(user, 60)) // Protective grille of wiring is electrified
 						return
-					user << "<span class='notice'>You started cutting throught outer grille</span>"
+					user << "<span class='notice'>You started cutting through outer grille</span>"
 					playsound(src, W.usesound, 100, 1)
 					if(do_after(user, 10, 1, target = src))
 						if(!panel_open)
 							return
-						user.visible_message("<span class='notice'>[user] cut throught \the [src]'s outer grille.</span>",
-											"<span class='notice'>You cut throught \the [src]'s outer grille.</span>")
+						user.visible_message("<span class='notice'>[user] cut through \the [src]'s outer grille.</span>",
+											"<span class='notice'>You cut through \the [src]'s outer grille.</span>")
 						security_level = AIRLOCK_SECURITY_PLASTEEL_O
 					return
 	if(istype(C, /obj/item/weapon/screwdriver))
