@@ -1,4 +1,0 @@
-author: "uraniummeltdown"
-delete-after: True
-changes: 
-  - bugfix: "Cancel Assume Control works as borer now"

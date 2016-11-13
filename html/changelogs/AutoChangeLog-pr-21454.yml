@@ -1,5 +1,0 @@
-author: "Cyberboss"
-delete-after: True
-changes: 
-  - bugfix: "Medibots, by default, can no longer OD you on tricord"
-  - tweak: "They will now use charcoal instead of anti-toxin to heal tox damage"
