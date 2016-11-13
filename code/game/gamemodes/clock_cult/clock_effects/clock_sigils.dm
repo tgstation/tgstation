@@ -271,8 +271,9 @@
 				if(ratvar_awakens)
 					revival_cost = 0
 				var/mob/dead/observer/ghost = L.get_ghost(TRUE)
-				if(ghost && vitality >= revival_cost)
-					ghost.reenter_corpse()
+				if(vitality >= revival_cost && (ghost || (L.mind && L.mind.active)))
+					if(ghost)
+						ghost.reenter_corpse()
 					L.revive(1, 1)
 					playsound(L, 'sound/magic/Staff_Healing.ogg', 50, 1)
 					L.visible_message("<span class='warning'>[L] suddenly gets back up, [L.p_their()] mouth dripping blue ichor!</span>", \
