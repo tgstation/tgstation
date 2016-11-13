@@ -21,7 +21,7 @@
 /obj/item/weapon/grenade/flashbang/proc/bang(turf/T , mob/living/M)
 	M.show_message("<span class='warning'>BANG</span>", 2)
 	playsound(loc, 'sound/weapons/flashbang.ogg', 100, 1)
-	var/distance = max(1,get_dist(get_turf(src),T))
+	var/distance = max(0,get_dist(get_turf(src),T))
 
 //Flash
 	if(M.weakeyes)
@@ -33,7 +33,7 @@
 	if(M.flash_act(affect_silicon = 1))
 		M.Stun(max(10/distance, 3))
 		M.Weaken(max(10/distance, 3))
-	if(distance == 1 || loc == M || loc == M.loc)	//Stop allahu akbarring rooms with this.
+	if(!distance || loc == M || loc == M.loc)	//Stop allahu akbarring rooms with this.
 		M.Stun(10)
 		M.Weaken(10)
 		M.soundbang_act(1, 10, 10, 15)
