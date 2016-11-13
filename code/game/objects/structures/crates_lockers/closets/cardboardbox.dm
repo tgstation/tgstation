@@ -43,6 +43,7 @@
 		egged = world.time
 		for(var/mob/living/L in alerted)
 			if(!L.stat)
+				L.face_atom(src)
 				L.do_alert_animation(L)
 		playsound(loc, 'sound/misc/snake.ogg', 50, FALSE, -5)
 
