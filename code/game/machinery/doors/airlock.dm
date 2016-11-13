@@ -32,9 +32,11 @@
 #define AIRLOCK_SECURITY_PLASTEEL_O		5 								//There is first layer of plasteel (use welder)
 #define AIRLOCK_SECURITY_PLASTEEL		6 //Max security airlock		//Fully secured wires (use wirecutters to remove grille, that is electrified)
 
-#define AIRLOCK_INTEGRITY_N		300 // Normal airlock integrity
-#define AIRLOCK_INTEGRITY_M		400 // Reinforced airlock integrity
-#define AIRLOCK_INTEGRITY_P		600 // Plasteel reinforced airlock integrity
+#define AIRLOCK_INTEGRITY_N			 300 // Normal airlock integrity
+#define AIRLOCK_INTEGRITY_MULTIPLIER 1.5 // How much reinforced doors health increases
+#define AIRLOCK_DAMAGE_DEFLECTION_N  20  // Normal airlock damage deflection
+#define AIRLOCK_DAMAGE_DEFLECTION_R  30  // Reinforced airlock damage deflection
+
 
 var/list/airlock_overlays = list()
 
@@ -42,10 +44,11 @@ var/list/airlock_overlays = list()
 	name = "airlock"
 	icon = 'icons/obj/doors/airlocks/station/public.dmi'
 	icon_state = "closed"
-	obj_integrity = AIRLOCK_INTEGRITY_N
-	max_integrity = AIRLOCK_INTEGRITY_N
+	obj_integrity = 300
+	max_integrity = 300
+	var/normal_integrity = AIRLOCK_INTEGRITY_N
 	integrity_failure = 70
-	damage_deflection = 20
+	damage_deflection = AIRLOCK_DAMAGE_DEFLECTION_N
 
 	var/security_level = 0 //How much are wires secured
 	var/aiControlDisabled = 0 //If 1, AI control is disabled until the AI hacks back in and disables the lock. If 2, the AI has bypassed the lock. If -1, the control is enabled but the AI had bypassed it earlier, so if it is disabled again the AI would have no trouble getting back in.
@@ -103,13 +106,14 @@ var/list/airlock_overlays = list()
 					break
 	if(glass)
 		airlock_material = "glass"
-	if(security_level)
-		if(security_level == AIRLOCK_SECURITY_METAL)
-			obj_integrity = AIRLOCK_INTEGRITY_M
-			max_integrity = AIRLOCK_INTEGRITY_M
-		else
-			obj_integrity = AIRLOCK_INTEGRITY_P
-			max_integrity = AIRLOCK_INTEGRITY_P
+	if(security_level > AIRLOCK_SECURITY_METAL)
+		obj_integrity = normal_integrity * AIRLOCK_INTEGRITY_MULTIPLIER
+		max_integrity = normal_integrity * AIRLOCK_INTEGRITY_MULTIPLIER
+	else
+		obj_integrity = normal_integrity
+		max_integrity = normal_integrity
+	if(damage_deflection == AIRLOCK_DAMAGE_DEFLECTION_N && security_level > AIRLOCK_SECURITY_METAL)
+		damage_deflection = AIRLOCK_DAMAGE_DEFLECTION_R
 	update_icon()
 
 /obj/machinery/door/airlock/initialize()
@@ -958,8 +962,6 @@ var/list/airlock_overlays = list()
 						user.visible_message("<span class='notice'>[user] reinforced \the [src] with metal.</span>",
 											"<span class='notice'>You reinforced \the [src] with metal.</span>")
 						security_level = AIRLOCK_SECURITY_METAL
-						obj_integrity = AIRLOCK_INTEGRITY_M
-						max_integrity = AIRLOCK_INTEGRITY_M
 						update_icon()
 					return
 				else if(istype(C, /obj/item/stack/sheet/plasteel))
@@ -974,8 +976,9 @@ var/list/airlock_overlays = list()
 						user.visible_message("<span class='notice'>[user] reinforced \the [src] with plasteel.</span>",
 											"<span class='notice'>You reinforced \the [src] with plasteel.</span>")
 						security_level = AIRLOCK_SECURITY_PLASTEEL
-						obj_integrity = AIRLOCK_INTEGRITY_P
-						max_integrity = AIRLOCK_INTEGRITY_P
+						obj_integrity = normal_integrity * AIRLOCK_INTEGRITY_MULTIPLIER
+						max_integrity = normal_integrity * AIRLOCK_INTEGRITY_MULTIPLIER
+						damage_deflection = AIRLOCK_DAMAGE_DEFLECTION_R
 						update_icon()
 					return
 			if(AIRLOCK_SECURITY_METAL)
@@ -993,8 +996,6 @@ var/list/airlock_overlays = list()
 										"<span class='notice'>You cut through \the [src]'s shielding.</span>",
 										"<span class='italics'>You hear welding.</span>")
 						security_level = AIRLOCK_SECURITY_NONE
-						obj_integrity = AIRLOCK_INTEGRITY_N
-						max_integrity = AIRLOCK_INTEGRITY_N
 						spawn_atom_to_turf(/obj/item/stack/sheet/metal, user.loc, 2)
 						update_icon()
 					return
@@ -1009,6 +1010,9 @@ var/list/airlock_overlays = list()
 						user.visible_message("<span class='notice'>[user] removed \the [src]'s shielding.</span>",
 											"<span class='notice'>You removed \the [src]'s inner shielding.</span>")
 						security_level = AIRLOCK_SECURITY_NONE
+						obj_integrity = normal_integrity
+						max_integrity = normal_integrity
+						damage_deflection = AIRLOCK_DAMAGE_DEFLECTION_N
 						spawn_atom_to_turf(/obj/item/stack/sheet/plasteel, user.loc, 1)
 						update_icon()
 					return
