@@ -388,6 +388,7 @@
 			item_state = item_state_boost
 	if(wearer)
 		wearer.update_inv_wear_suit()
+		wearer.update_inv_back()
 	..()
 
 /obj/item/device/flightpack/proc/handle_flight()
