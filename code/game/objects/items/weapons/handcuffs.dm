@@ -309,8 +309,31 @@
 /obj/item/weapon/restraints/legcuffs/beartrap/energy/attack_hand(mob/user)
 	Crossed(user) //honk
 
+/obj/item/weapon/restraints/legcuffs/beartrap/energy/cyborg/dissipate()
+	..()
+	if(istype(loc, /mob/living/carbon))
+		var/mob/living/carbon/C = loc
+		if(C.legcuffed = src)
+			C.legcuffed = null
+			C.update_inv_legcuffed()
+		src.loc = get_turf(C)
+	qdel(src)
+
 /obj/item/weapon/restraints/legcuffs/beartrap/energy/cyborg
-	breakouttime = 20 // Cyborgs shouldn't have a strong restraint
+	breakouttime = 15
+
+/obj/item/weapon/restraints/legcuffs/beartrap/energy/cyborg/Crossed()
+	..()
+	addtimer(src, "dissipate", 25)
+
+/obj/item/weapon/restraints/legcuffs/beartrap/energy/cyborg/Destroy()
+	var/datum/effect_system/spark_spread/sparks = new /datum/effect_system/spark_spread
+	sparks.set_up(1, 1, src)
+	sparks.start()
+	..()
+
+/obj/item/weapon/restraints/legcuffs/beartrap/energy/security
+	breakouttime = 20
 
 /obj/item/weapon/restraints/legcuffs/bola
 	name = "bola"
@@ -357,7 +380,7 @@
 
 /obj/item/weapon/restraints/legcuffs/bola/energy/throw_impact(atom/hit_atom)
 	if(iscarbon(hit_atom))
-		var/obj/item/weapon/restraints/legcuffs/beartrap/B = new /obj/item/weapon/restraints/legcuffs/beartrap/energy/cyborg(get_turf(hit_atom))
+		var/obj/item/weapon/restraints/legcuffs/beartrap/B = new /obj/item/weapon/restraints/legcuffs/beartrap/energy/security(get_turf(hit_atom))
 		B.Crossed(hit_atom)
 		qdel(src)
 	..()
