@@ -1,7 +1,0 @@
-author: "Joan"
-delete-after: True
-changes: 
-  - rscadd: "Servants of Ratvar can now unsecure and move most Clockwork Structures with a wrench, though doing so will damage the structure by 25% of its maximum integrity."
-  - rscadd: "Clockwork Structures become less effective as their integrity lowers, reducing their effect by up to 50% at 25% integrity."
-  - tweak: "You can now deconstruct unsecured wall gears with a screwdriver."
-  - tweak: "Wall gears now have much more health and can be repaired with a proselytizer."
