@@ -24,6 +24,7 @@
 	var/allow_quick_gather	//Set this variable to allow the object to have the 'toggle mode' verb, which quickly collects all items from a tile.
 	var/collection_mode = 1;  //0 = pick one at a time, 1 = pick all on tile, 2 = pick all of a type
 	var/preposition = "in" // You put things 'in' a bag, but trays need 'on'.
+	var/rustle_jimmies = TRUE	//Play the rustle sound on insertion
 
 
 /obj/item/weapon/storage/MouseDrop(atom/over_object)
@@ -326,6 +327,8 @@
 					observe.client.screen -= W
 
 		add_fingerprint(usr)
+		if(rustle_jimmies)
+			playsound(src.loc, "rustle", 50, 1, -5)
 
 		if(!prevent_warning)
 			for(var/mob/M in viewers(usr, null))
