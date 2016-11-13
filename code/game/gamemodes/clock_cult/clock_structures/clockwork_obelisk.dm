@@ -71,7 +71,7 @@
 			if(!try_use_power(gateway_cost))
 				user << "<span class='warning'>The obelisk lacks the power to open a gateway!</span>"
 				return
-			if(procure_gateway(user, 100 * get_efficiency_mod(), round(5 * get_efficiency_mod(), 1), 1) && !active)
+			if(procure_gateway(user, round(100 * get_efficiency_mod(), 1), round(5 * get_efficiency_mod(), 1), 1) && !active)
 				clockwork_say(user, text2ratvar("Spatial Gateway, activate!"))
 			else
 				return_power(gateway_cost)

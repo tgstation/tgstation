@@ -196,8 +196,10 @@
 		if(!target.anchored)
 			invoker << "<span class='warning'>That [target.name] is no longer secured!</span>"
 			return procure_gateway(invoker, time_duration, gateway_uses, two_way)
-		gateway_uses *= 2
-		time_duration *= 2
+		var/obj/structure/destructible/clockwork/powered/clockwork_obelisk/CO = target
+		var/efficiency = CO.get_efficiency_mod()
+		gateway_uses = round(gateway_uses * (2 * efficiency), 1)
+		time_duration = round(time_duration * (2 * efficiency), 1)
 	invoker.visible_message("<span class='warning'>The air in front of [invoker] ripples before suddenly tearing open!</span>", \
 	"<span class='brass'>With a word, you rip open a [two_way ? "two-way":"one-way"] rift to [input_target_key]. It will last for [time_duration / 10] seconds and has [gateway_uses] use[gateway_uses > 1 ? "s" : ""].</span>")
 	var/obj/effect/clockwork/spatial_gateway/S1 = new(issrcobelisk ? get_turf(src) : get_step(get_turf(invoker), invoker.dir))
