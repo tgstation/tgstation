@@ -83,3 +83,19 @@
 		PoolOrNew(/obj/effect/overlay/temp/sparkle, M)
 		M.forceMove(T)
 		M << "<span class='notice'>Pop!</span>"
+
+/obj/effect/station_crash
+	name = "station crash"
+	desc = "With no survivors!"
+	icon = 'icons/obj/weapons.dmi'
+	icon_state = "syndballoon"
+	anchored = TRUE
+
+/obj/effect/station_crash/New()
+	for(var/S in SSshuttle.stationary)
+		var/obj/docking_port/stationary/SM = S
+		if(SM.id == "emergency_home")
+			var/new_dir = turn(SM.dir, 180)
+			SM.loc = get_ranged_target_turf(SM, new_dir, rand(3,15))
+			break
+	qdel(src)

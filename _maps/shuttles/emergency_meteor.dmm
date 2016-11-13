@@ -12,16 +12,17 @@
 "l" = (/obj/structure/cable{d1 = 2; d2 = 4; icon_state = "2-4"; tag = ""},/turf/open/floor/plating/asteroid,/area/shuttle/escape{always_unpowered = 1; requires_power = 1})
 "m" = (/obj/structure/cable{icon_state = "1-8"},/turf/open/floor/plating/asteroid,/area/shuttle/escape{always_unpowered = 1; requires_power = 1})
 "n" = (/obj/item/weapon/pickaxe,/turf/open/floor/plating/asteroid,/area/shuttle/escape{always_unpowered = 1; requires_power = 1})
-"o" = (/obj/docking_port/mobile/emergency{dwidth = 20; height = 40; name = "a meteor with engines strapped to it"; timid = 1; width = 40},/turf/open/floor/plating/asteroid,/area/shuttle/escape{always_unpowered = 1; requires_power = 1})
-"p" = (/obj/structure/closet/crate,/turf/open/floor/plating/asteroid,/area/shuttle/escape{always_unpowered = 1; requires_power = 1})
-"q" = (/obj/machinery/power/smes,/turf/open/floor/plating/asteroid,/area/shuttle/escape{always_unpowered = 1; requires_power = 1})
-"r" = (/obj/machinery/power/smes,/obj/structure/cable{icon_state = "0-2"; d2 = 2},/turf/open/floor/plating/asteroid,/area/shuttle/escape{always_unpowered = 1; requires_power = 1})
-"s" = (/obj/structure/cable{d1 = 2; d2 = 4; icon_state = "2-4"; tag = ""},/obj/structure/cable{d1 = 1; d2 = 4; icon_state = "1-4"; tag = "90Curve"},/turf/open/floor/plating/asteroid,/area/shuttle/escape{always_unpowered = 1; requires_power = 1})
-"t" = (/obj/structure/cable{d1 = 4; d2 = 8; icon_state = "4-8"; pixel_x = 0},/obj/structure/cable{d1 = 4; d2 = 8; icon_state = "4-8"; pixel_x = 0},/turf/open/floor/plating/asteroid,/area/shuttle/escape{always_unpowered = 1; requires_power = 1})
-"u" = (/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"; pixel_y = 0},/obj/structure/cable{icon_state = "1-8"},/turf/open/floor/plating/asteroid,/area/shuttle/escape{always_unpowered = 1; requires_power = 1})
-"v" = (/obj/structure/window/reinforced{dir = 1},/obj/structure/shuttle/engine/heater,/turf/open/floor/plating/airless,/area/shuttle/escape{always_unpowered = 1; requires_power = 1})
-"w" = (/obj/structure/window/reinforced{dir = 1},/obj/structure/shuttle/engine/heater,/obj/structure/cable,/turf/open/floor/plating/airless,/area/shuttle/escape{always_unpowered = 1; requires_power = 1})
-"x" = (/obj/structure/shuttle/engine/propulsion,/turf/open/floor/plating/airless,/area/shuttle/escape{always_unpowered = 1; requires_power = 1})
+"o" = (/obj/effect/station_crash,/turf/open/floor/plating/asteroid,/area/shuttle/escape{always_unpowered = 1; requires_power = 1})
+"p" = (/obj/docking_port/mobile/emergency{dwidth = 20; height = 40; name = "a meteor with engines strapped to it"; timid = 1; width = 40},/turf/open/floor/plating/asteroid,/area/shuttle/escape{always_unpowered = 1; requires_power = 1})
+"q" = (/obj/structure/closet/crate,/turf/open/floor/plating/asteroid,/area/shuttle/escape{always_unpowered = 1; requires_power = 1})
+"r" = (/obj/machinery/power/smes,/turf/open/floor/plating/asteroid,/area/shuttle/escape{always_unpowered = 1; requires_power = 1})
+"s" = (/obj/machinery/power/smes,/obj/structure/cable{icon_state = "0-2"; d2 = 2},/turf/open/floor/plating/asteroid,/area/shuttle/escape{always_unpowered = 1; requires_power = 1})
+"t" = (/obj/structure/cable{d1 = 2; d2 = 4; icon_state = "2-4"; tag = ""},/obj/structure/cable{d1 = 1; d2 = 4; icon_state = "1-4"; tag = "90Curve"},/turf/open/floor/plating/asteroid,/area/shuttle/escape{always_unpowered = 1; requires_power = 1})
+"u" = (/obj/structure/cable{d1 = 4; d2 = 8; icon_state = "4-8"; pixel_x = 0},/obj/structure/cable{d1 = 4; d2 = 8; icon_state = "4-8"; pixel_x = 0},/turf/open/floor/plating/asteroid,/area/shuttle/escape{always_unpowered = 1; requires_power = 1})
+"v" = (/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"; pixel_y = 0},/obj/structure/cable{icon_state = "1-8"},/turf/open/floor/plating/asteroid,/area/shuttle/escape{always_unpowered = 1; requires_power = 1})
+"w" = (/obj/structure/window/reinforced{dir = 1},/obj/structure/shuttle/engine/heater,/turf/open/floor/plating/airless,/area/shuttle/escape{always_unpowered = 1; requires_power = 1})
+"x" = (/obj/structure/window/reinforced{dir = 1},/obj/structure/shuttle/engine/heater,/obj/structure/cable,/turf/open/floor/plating/airless,/area/shuttle/escape{always_unpowered = 1; requires_power = 1})
+"y" = (/obj/structure/shuttle/engine/propulsion,/turf/open/floor/plating/airless,/area/shuttle/escape{always_unpowered = 1; requires_power = 1})
 
 (1,1,1) = {"
 aaabbbbbbaaabbbbaaaaabbbbbabbbbaaaaaaaaa
@@ -43,16 +44,16 @@ bddbbbbbbbbdbbbbbbbhbbbbbbbddddddddbbbbb
 bdbbbbbbbbbdbbbbbbbhbbbbbbbbdbbbbbdbbbbb
 ddbbbbbbbbbdbbbbbbbhbbbbbbbbdbbbbbdbbbbb
 dbbbbbbbbbbdbbbbbbbhbbbbbbbbddddnbdbbbbb
-ddbbbbbbbbbdbbbbbbbhbbbbbbbbbbbbbbdbbbbb
-obbbbbbbbbbdbbbbbbbhbbbbbbbbbbbbbbdbbbba
+dobbbbbbbbbdbbbbbbbhbbbbbbbbbbbbbbdbbbbb
+pbbbbbbbbbbdbbbbbbbhbbbbbbbbbbbbbbdbbbba
 dbbbbddddddddddddddhdbbbbbbdbbbbbbdbbbba
 dbbbdddbbbbdbbbbbbbhbbbbbbbddddddddbbbbb
 bbbbdddbbbbdbbbbbbbhbbbbbbbdbbbbbbbbbbba
 dbbbdddbbbbdbbbbbbbhbbbbbbbdbbbbbbbbbbba
 dbbbddbbbbbbbbbbbbbhbbbbbbbdbbbbbbbbbbba
-dbbbpppbbbbbbbbbbbbhbbbbbbbdbbbqqqqrqbba
+dbbbqqqbbbbbbbbbbbbhbbbbbbbdbbbrrrrsrbba
 dbbbbbbbbbbbbbbbbbbhbbbbbbbdbbbddddhdbbb
-dbbbbbbbbbbbbbbbbbbsfffffffffffftffudbbb
+dbbbbbbbbbbbbbbbbbbtffffffffffffuffvdbbb
 ddbbbbbbbbbbbbbbbbbhbbbbbbbbbbbddddhdbbb
 ddbbbbbbbbbbbbbbbbbhbbbbbbbbbbbddddhdbbb
 ddbbbbbbbbbbbbbbbbbhbbbbbbbbbbbddddhdbbb
@@ -61,7 +62,7 @@ ddbbbbbbbbbbbbbbbbbhbbbbbbbbbbbbbbbhbbbb
 ddbbbbbbbbbbbbbbbbbhbbbbbbbbbbbbbbbhbbbb
 ddbbbbbbbbbbbbbbbbdhddbbbbbbbbbbbbbhbbbb
 bbbbbbbbbbbbbbbbbbdhddbbbbbbbbbbbbbhbbbb
-abbbbbbbbbbbbbbbbbdhddbbbbbbbbbbbvvwvbba
-aaabbbbaaaaaabbbbbvvvvbbbbbbbbaaaxxxxbaa
-aaaaabbaaaaaabbaabxxxxaaaaaaaaaaaaaaaaaa
+abbbbbbbbbbbbbbbbbdhddbbbbbbbbbbbwwxwbba
+aaabbbbaaaaaabbbbbwwwwbbbbbbbbaaayyyybaa
+aaaaabbaaaaaabbaabyyyyaaaaaaaaaaaaaaaaaa
 "}
