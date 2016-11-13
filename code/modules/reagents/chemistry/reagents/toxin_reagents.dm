@@ -755,7 +755,8 @@
 	metabolization_rate = 1.5 * REAGENTS_METABOLISM
 
 /datum/reagent/toxin/peaceborg/tire/on_mob_life(mob/living/M)
-	if(M.staminaloss < 50)
+	var/healthcomp = (M.maxhealth - M.health)	//DOES NOT ACCOUNT FOR ADMINBUS THINGS THAT MAKE YOU HAVE MORE THAN 200/210 HEALTH
+	if(M.staminaloss < (60 - healthcomp))	//At 50 health you would have 200 - 150 health meaning 50 compensation. 60 - 50 = 10, so would only do 10-19 stamina.)
 		M.adjustStaminaLoss(10)
 	if(prob(30))
 		M << "You should sit down and take a rest..."
