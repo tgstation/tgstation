@@ -24,10 +24,5 @@
 /obj/effect/proc_holder/spell/targeted/infinite_guns/arcane_barrage
 	name = "Arcane Barrage"
 	desc = "Requires both hands free to use."
-
-	charge_max = 750
-	clothes_req = 1
-	cooldown_min = 10 //Spell wizard
 	action_icon_state = "arcane_barrage"
-
 	summon_path = /obj/item/weapon/gun/ballistic/shotgun/boltaction/enchanted/arcane_barrage
