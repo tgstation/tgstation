@@ -42,7 +42,7 @@
 					if(!L.stat)
 						L.do_alert_animation(L)
 						egged = 1
-				alerted << sound('sound/misc/snake.ogg')
+			playsound(loc, 'sound/misc/snake.ogg', 50, FALSE, -5)
 	..()
 
 /mob/living/proc/do_alert_animation(atom/A)
