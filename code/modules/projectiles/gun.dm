@@ -119,12 +119,6 @@
 			else
 				user.visible_message("<span class='danger'>[user] fires [src]!</span>", null, null, COMBAT_MESSAGE_RANGE)
 
-	if(weapon_weight >= WEAPON_MEDIUM)
-		if(user.get_inactive_held_item())
-			if(prob(15))
-				if(user.drop_item())
-					user.visible_message("<span class='danger'>[src] flies out of [user]'s hands!</span>", "<span class='userdanger'>[src] kicks out of your grip!</span>")
-
 /obj/item/weapon/gun/emp_act(severity)
 	for(var/obj/O in contents)
 		O.emp_act(severity)
@@ -176,7 +170,7 @@
 	if(ishuman(user) && user.a_intent == "harm")
 		var/mob/living/carbon/human/H = user
 		for(var/obj/item/weapon/gun/G in H.held_items)
-			if(G == src)
+			if(G == src || G.weapon_weight >= WEAPON_MEDIUM)
 				continue
 			else if(G.can_trigger_gun(user))
 				bonus_spread += 24 * G.weapon_weight
@@ -214,12 +208,6 @@ obj/item/weapon/gun/proc/recharge_newshot()
 
 	if(semicd)
 		return
-
-	if(weapon_weight >= WEAPON_MEDIUM)
-		if(user.get_inactive_held_item())
-			recoil = 4 //one-handed kick
-		else
-			recoil = initial(recoil)
 
 	var/sprd = 0
 	var/randomized_gun_spread = 0

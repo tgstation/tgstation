@@ -11,6 +11,7 @@
 	mag_type = /obj/item/ammo_box/magazine/internal/shot
 	casing_ejector = 0
 	var/recentpump = 0 // to prevent spammage
+	weapon_weight = WEAPON_MEDIUM
 
 /obj/item/weapon/gun/ballistic/shotgun/attackby(obj/item/A, mob/user, params)
 	. = ..()
