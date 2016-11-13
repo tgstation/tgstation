@@ -313,7 +313,7 @@
 	..()
 	if(istype(loc, /mob/living/carbon))
 		var/mob/living/carbon/C = loc
-		if(C.legcuffed = src)
+		if(C.legcuffed == src)
 			C.legcuffed = null
 			C.update_inv_legcuffed()
 		src.loc = get_turf(C)
