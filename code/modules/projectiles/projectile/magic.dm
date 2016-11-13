@@ -381,5 +381,5 @@
 	damage = 20
 	damage_type = BURN
 	nodamage = 0
-	armour_penetration = 100
+	armour_penetration = 0
 	flag = "magic"

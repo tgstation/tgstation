@@ -11,6 +11,11 @@
 	var/obj/effect/proc_holder/spell/S = null //Since spellbooks can be used by only one person anyway we can track the actual spell
 	var/buy_word = "Learn"
 	var/limit //used to prevent a spellbook_entry from being bought more than X times with one wizard spellbook
+	var/list/no_coexistance_typecache //Used so you can't have specific spells together
+
+/datum/spellbook_entry/New()
+	..()
+	no_coexistance_typecache = typecacheof(no_coexistance_typecache)
 
 /datum/spellbook_entry/proc/IsAvailible() // For config prefs / gamemode restrictions - these are round applied
 	return 1
@@ -18,6 +23,9 @@
 /datum/spellbook_entry/proc/CanBuy(mob/living/carbon/human/user,obj/item/weapon/spellbook/book) // Specific circumstances
 	if(book.uses<cost || limit == 0)
 		return 0
+	for(var/spell in user.mind.spell_list)
+		if(is_type_in_typecache(spell, no_coexistance_typecache))
+			return 0
 	return 1
 
 /datum/spellbook_entry/proc/Buy(mob/living/carbon/human/user,obj/item/weapon/spellbook/book) //return 1 on success
@@ -220,10 +228,18 @@
 	log_name = "LB"
 
 /datum/spellbook_entry/infinite_guns
-	name = "Arcane Barrage"
-	spell_type = /obj/effect/proc_holder/spell/targeted/infinite_guns/arcane_barrage
+	name = "Lesser Summon Guns"
+	spell_type = /obj/effect/proc_holder/spell/targeted/infinite_guns/gun
 	log_name = "IG"
 	cost = 3
+	no_coexistance_typecache = /obj/effect/proc_holder/spell/targeted/infinite_guns/arcane_barrage
+
+/datum/spellbook_entry/arcane_barrage
+	name = "Arcane Barrage"
+	spell_type = /obj/effect/proc_holder/spell/targeted/infinite_guns/arcane_barrage
+	log_name = "AB"
+	cost = 3
+	no_coexistance_typecache = /obj/effect/proc_holder/spell/targeted/infinite_guns/gun
 
 /datum/spellbook_entry/barnyard
 	name = "Barnyard Curse"

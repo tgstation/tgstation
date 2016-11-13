@@ -21,6 +21,8 @@
 		C.put_in_hands(GUN)
 		C.swap_hand(C.get_held_index_of_item(GUN))
 
+/obj/effect/proc_holder/spell/targeted/infinite_guns/gun
+
 /obj/effect/proc_holder/spell/targeted/infinite_guns/arcane_barrage
 	name = "Arcane Barrage"
 	desc = "Requires both hands free to use."
