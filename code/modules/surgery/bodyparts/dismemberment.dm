@@ -24,37 +24,51 @@
 	name = "limb"
 	desc = "why is it detached..."
 	var/obj/item/bodypart/contained_limb = null
+	var/mob/living/carbon/old_owner = null
 
-/obj/item/projectile/bodypart/New(location, obj/item/bodypart/limb)
+/obj/item/projectile/bodypart/New(location, obj/item/bodypart/limb, owner)
 	..()
 
 	limb.forceMove(src)
 
 	appearance = limb.appearance
 
-	if(limb.status != BODYPART_ROBOTIC)
+	// If we hit something and are robotic, do extra damage
+	if(limb.status == BODYPART_ROBOTIC)
 		stun = 5
 		weaken = 5
 
 	contained_limb = limb
-
+	old_owner = owner
 
 /obj/item/projectile/bodypart/on_hit(atom/target, blocked = 0)
 	. = ..()
 	contained_limb.forceMove(loc)
 	contained_limb = null
 
+/obj/item/projectile/bodypart/Moved(atom/oldLoc, direct)
+	..()
+	if(contained_limb.status != BODYPART_ROBOTIC)
+		old_owner.add_splatter_floor(get_turf(src), TRUE)
+
+
 /obj/item/bodypart/proc/fire_at(target, params = null, range = 7, speed = 3)
-	var/stored_owner = owner
+	var/mob/living/carbon/C = owner
 	if(!dismember_internal(FALSE))
 		return 0
 
-	var/obj/item/projectile/bodypart/proj = new(loc, src)
+	add_mob_blood(C)
+	var/turf/location = C.loc
+	if(istype(location))
+		C.add_splatter_floor(location)
+
+	var/obj/item/projectile/bodypart/proj = new(loc, src, C)
 
 	proj.original = target
-	proj.preparePixelProjectile(target, get_turf(target), stored_owner, params)
+	proj.preparePixelProjectile(target, get_turf(target), C, params)
 
 	proj.fire()
+
 
 /obj/item/bodypart/proc/dismember(dam_type = BRUTE)
 	if(!dismember_internal())
