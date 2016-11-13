@@ -812,7 +812,7 @@
 		pack.wearer = user
 		shoes.wearer = user
 	if(shoes)
-		relink_suit(src)
+		shoes.relink_suit(src)
 
 /obj/item/clothing/suit/space/hardsuit/flightsuit/attack_hand(mob/user)
 	if(ishuman(user))
