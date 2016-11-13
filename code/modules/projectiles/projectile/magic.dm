@@ -23,6 +23,7 @@
 	damage = 10
 	damage_type = BRUTE
 	nodamage = 0
+	speed = 1
 
 	//explosion values
 	var/exp_heavy = 0
@@ -55,6 +56,9 @@
 	if(ismob(target)) //multiple flavors of pain
 		var/mob/living/M = target
 		M.take_overall_damage(0,10) //between this 10 burn, the 10 brute, the explosion brute, and the onfire burn, your at about 65 damage if you stop drop and roll immediately
+					//65 damage with a single shot of a spammable spell is rediculous with knockout + fire.
+					//Let me just make a note here that explosions have a 50% rate to knock you out regardless of protection so in reality you're dead half the time you get hit.
+					//We also have clothing damage now, and fire more or less rapidly shreds everything you have to scraps.
 
 /obj/item/projectile/magic/fireball/infernal
 	name = "infernal fireball"
