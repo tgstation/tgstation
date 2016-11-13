@@ -143,7 +143,7 @@
 			new /obj/item/weapon/storage/belt/military/assault(src) // 3 tc
 			new /obj/item/weapon/card/id/syndicate(src) // 2 tc
 			new /obj/item/device/chameleon(src) // 7 tc
-		        return
+
 			
 		if("tclown") // Tunnelclowns the predetors of maint
 			new /obj/item/clothing/glasses/thermal/monocle(src) // 4tc since copypasta thermals
