@@ -220,8 +220,8 @@
 	log_name = "LB"
 
 /datum/spellbook_entry/infinite_guns
-	name = "Lesser Summon Guns"
-	spell_type = /obj/effect/proc_holder/spell/targeted/infinite_guns
+	name = "Arcane Barrage"
+	spell_type = /obj/effect/proc_holder/spell/targeted/infinite_guns/arcane_barrage
 	log_name = "IG"
 	cost = 3
 

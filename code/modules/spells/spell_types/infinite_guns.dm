@@ -10,14 +10,24 @@
 	clothes_req = 1
 	cooldown_min = 10 //Gun wizard
 	action_icon_state = "bolt_action"
-
-
+	var/summon_path = /obj/item/weapon/gun/ballistic/shotgun/boltaction/enchanted
 
 /obj/effect/proc_holder/spell/targeted/infinite_guns/cast(list/targets, mob/user = usr)
 	for(var/mob/living/carbon/C in targets)
 		C.drop_item()
 		C.swap_hand()
 		C.drop_item()
-		var/obj/item/weapon/gun/ballistic/shotgun/boltaction/enchanted/GUN = new
+		var/GUN = new summon_path
 		C.put_in_hands(GUN)
 		C.swap_hand(C.get_held_index_of_item(GUN))
+
+/obj/effect/proc_holder/spell/targeted/infinite_guns/arcane_barrage
+	name = "Arcane Barrage"
+	desc = "Requires both hands free to use."
+
+	charge_max = 750
+	clothes_req = 1
+	cooldown_min = 10 //Spell wizard
+	action_icon_state = "arcane_barrage"
+
+	summon_path = /obj/item/weapon/gun/ballistic/shotgun/boltaction/enchanted/arcane_barrage
