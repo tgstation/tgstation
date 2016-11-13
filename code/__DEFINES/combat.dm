@@ -79,10 +79,10 @@
  #define SAWN_INTACT  0
  #define SAWN_OFF     1
 
- #define WEAPON_LIGHT 0
- #define WEAPON_MEDIUM 1
- #define WEAPON_HEAVY 2
-
+#define WEAPON_DUAL_WIELD 0
+#define WEAPON_LIGHT 1
+#define WEAPON_MEDIUM 2
+#define WEAPON_HEAVY 3
 
 //Health Defines
 
