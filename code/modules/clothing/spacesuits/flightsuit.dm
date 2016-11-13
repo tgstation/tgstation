@@ -432,12 +432,16 @@
 
 /obj/item/device/flightpack/proc/userknockback(density, anchored, speed, dir)
 	var/angle = dir2angle(dir)
+	world << "DEBUG: INITIAL DIR: [dir2text(dir)]"
+	world << "DEBUG: INITIAL ANGLE: [angle2text(angle)]"
 	angle += 180
 	if(angle > 360)
 		angle -= 360
 	dir = angle2dir(angle)
-	var/turf/target = get_edge_target_turf(suit.user, dir)
-	suit.user.throw_at_fast(target, (speed+density+anchored), suit.user)
+	world << "DEBUG: INITIAL ANGLE: [angle2text(angle)]"
+	world << "DEBUG: FINAL DIR: [dir2text(dir)]"
+	var/turf/target = get_edge_target_turf(get_turf(suit.user), dir)
+	suit.user.throw_at_fast(target, (speed+density+anchored), 2, suit.user)
 	suit.user.visible_message("[suit.user] is knocked flying by the impact!")
 
 /obj/item/device/flightpack/proc/flight_impact(atom/unmovablevictim)	//Yes, victim.
@@ -447,9 +451,10 @@
 		return 0
 	if(flight && momentum_speed > 1)
 		crashing = 1
-		dir = suit.user.name
+		dir = suit.user.dir
 	else
 		return 0
+	dir = suit.user.dir
 	var/density = 0
 	var/anchored = 1
 	if(isclosedturf(unmovablevictim))
@@ -479,6 +484,7 @@
 	knockback *= 4
 	stun = ((part_manip.rating + part_bin.rating) / 2)
 	damage = knockback / 2.5
+	world << "DEBUG: VICTIMKNOCKBACK: KNOCKBACK [knockback] STUN [stun] DAMAGE [damage]"
 	if(anchored)
 		knockback = 0
 	target = get_edge_target_turf(victim, dir)
@@ -489,6 +495,7 @@
 		var/mob/living/victimmob = victim
 		victimmob.Weaken(stun)
 		victimmob.adjustBruteLoss(damage)
+	world << "DEBUG: KNOCKED VICTIM BACK"
 
 /obj/item/device/flightpack/proc/losecontrol(stun = FALSE, move = TRUE)
 	wearer.visible_message("<span class='warning'>[wearer]'s flight suit abruptly shuts off and they lose control!</span>")
@@ -1050,7 +1057,20 @@
 			usermessage("[src] already has a flightpack installed!", 1)
 			return 0
 		if(!F.assembled)
-			usermessage("The flightpack you are trying to install is not fully assembled and operational!", 1)
+			var/addmsg = " It is missing a "
+			var/list/addmsglist = list()
+			if(!F.part_manip)
+				addmsglist += "manipulator"
+			if(!F.part_cap)
+				addmsglist += "capacitor"
+			if(!F.part_scan)
+				addmsglist += "scanning module"
+			if(!F.part_laser)
+				addmsglist += "micro-laser"
+			if(!F.part_bin)
+				addmsglist += "matter bin"
+			addmsg += english_list(addmsglist)
+			usermessage("The flightpack you are trying to install is not fully assembled and operational![addmsg]", 1)
 			return 0
 		if(user.unEquip(F))
 			attach_pack(F)
