@@ -66,7 +66,7 @@
 						contract = new /obj/item/weapon/paper/contract/infernal/knowledge(C.loc, C.mind, user.mind)
 				C.put_in_hands(contract)
 		else
-			user << "<span class='notice'>[C] seems to not be sentient.  You cannot summon a contract for them.</span>"
+			user << "<span class='notice'>[C] seems to not be sentient.  You cannot summon a contract for [C.p_them()].</span>"
 
 
 /obj/effect/proc_holder/spell/fireball/hellish

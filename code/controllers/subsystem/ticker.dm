@@ -239,7 +239,7 @@ var/datum/subsystem/ticker/ticker
 
 	//Now animate the cinematic
 	switch(station_missed)
-		if(1)	//nuke was nearby but (mostly) missed
+		if(NUKE_NEAR_MISS)	//nuke was nearby but (mostly) missed
 			if( mode && !override )
 				override = mode.name
 			switch( override )
@@ -265,7 +265,7 @@ var/datum/subsystem/ticker/ticker
 					//flick("end",cinematic)
 
 
-		if(2)	//nuke was nowhere nearby	//TODO: a really distant explosion animation
+		if(NUKE_MISS_STATION || NUKE_SYNDICATE_BASE)	//nuke was nowhere nearby	//TODO: a really distant explosion animation
 			sleep(50)
 			world << sound('sound/effects/explosionfar.ogg')
 		else	//station was destroyed
@@ -441,6 +441,42 @@ var/datum/subsystem/ticker/ticker
 	log_game("Antagonists at round end were...")
 	for(var/i in total_antagonists)
 		log_game("[i]s[total_antagonists[i]].")
+
+	//Borers
+	var/borerwin = FALSE
+	if(borers.len)
+		var/borertext = "<br><font size=3><b>The borers were:</b></font>"
+		for(var/mob/living/simple_animal/borer/B in borers)
+			if((B.key || B.controlling) && B.stat != DEAD)
+				borertext += "<br>[B.controlling ? B.victim.key : B.key] was [B.truename] ("
+				var/turf/location = get_turf(B)
+				if(location.z == ZLEVEL_CENTCOM && B.victim)
+					borertext += "escaped with host"
+				else
+					borertext += "failed"
+				borertext += ")"
+		world << borertext
+
+		var/total_borers = 0
+		for(var/mob/living/simple_animal/borer/B in borers)
+			if((B.key || B.victim) && B.stat != DEAD)
+				total_borers++
+		if(total_borers)
+			var/total_borer_hosts = 0
+			for(var/mob/living/carbon/C in mob_list)
+				var/mob/living/simple_animal/borer/D = C.has_brain_worms()
+				var/turf/location = get_turf(C)
+				if(location.z == ZLEVEL_CENTCOM && D && D.stat != DEAD)
+					total_borer_hosts++
+			if(total_borer_hosts_needed <= total_borer_hosts)
+				borerwin = TRUE
+			world << "<b>There were [total_borers] borers alive at round end!</b>"
+			world << "<b>A total of [total_borer_hosts] borers with hosts escaped on the shuttle alive. The borers needed [total_borer_hosts_needed] hosts to escape.</b>"
+			if(borerwin)
+				world << "<b><font color='green'>The borers were successful!</font></b>"
+			else
+				world << "<b><font color='red'>The borers have failed!</font></b>"
+	return TRUE
 
 	mode.declare_station_goal_completion()
 

@@ -4,7 +4,7 @@
 
 //Ocular Warden: Creates an ocular warden, which defends a small area near it.
 /datum/clockwork_scripture/create_object/ocular_warden
-	descname = "Turret"
+	descname = "Structure, Turret"
 	name = "Ocular Warden"
 	desc = "Forms an automatic short-range turret that deals low sustained damage to the unenlightened in its range."
 	invocations = list("Guardians...", "...of the Engine...", "...defend us!")
@@ -90,20 +90,20 @@
 
 //Sigil of Submission: Creates a sigil of submission, which converts one heretic above it after a delay.
 /datum/clockwork_scripture/create_object/sigil_of_submission
-	descname = "Conversion Trap"
+	descname = "Trap, Conversion"
 	name = "Sigil of Submission"
 	desc = "Places a luminous sigil that will enslave any valid beings standing on it after a time."
 	invocations = list("Divinity, enlighten...", "...those who trespass here!")
 	channel_time = 60
-	required_components = list(BELLIGERENT_EYE = 1, GUVAX_CAPACITOR = 2)
-	consumed_components = list(BELLIGERENT_EYE = 1, GUVAX_CAPACITOR = 1)
+	required_components = list(BELLIGERENT_EYE = 1, GEIS_CAPACITOR = 2)
+	consumed_components = list(BELLIGERENT_EYE = 1, GEIS_CAPACITOR = 1)
 	whispered = TRUE
 	object_path = /obj/effect/clockwork/sigil/submission
 	creator_message = "<span class='brass'>A luminous sigil appears below you. The next non-servant to cross it will be enslaved after a brief time if they do not move.</span>"
-	usage_tip = "This is not a primary conversion method - use Guvax for that. It is advantageous as a trap, however, as it will transmit the name of the newly-converted."
+	usage_tip = "This is not a primary conversion method - use Geis for that. It is advantageous as a trap, however, as it will transmit the name of the newly-converted."
 	tier = SCRIPTURE_SCRIPT
 	one_per_tile = TRUE
-	primary_component = GUVAX_CAPACITOR
+	primary_component = GEIS_CAPACITOR
 	sort_priority = 5
 	quickbind = TRUE
 	quickbind_desc = "Creates a Sigil of Submission, which will convert one non-Servant that remains on it."
@@ -116,15 +116,15 @@
 	desc = "Forms an ancient positronic brain with an overriding directive to serve Ratvar."
 	invocations = list("Herd the souls of...", "...the blasphemous damned!")
 	channel_time = 30
-	required_components = list(VANGUARD_COGWHEEL = 1, GUVAX_CAPACITOR = 2)
-	consumed_components = list(VANGUARD_COGWHEEL = 1, GUVAX_CAPACITOR = 1)
+	required_components = list(VANGUARD_COGWHEEL = 1, GEIS_CAPACITOR = 2)
+	consumed_components = list(VANGUARD_COGWHEEL = 1, GEIS_CAPACITOR = 1)
 	whispered = TRUE
 	object_path = /obj/item/device/mmi/posibrain/soul_vessel
 	creator_message = "<span class='brass'>You form a soul vessel, which can be used in-hand to attract spirits, or used on an unconscious or dead human to extract their consciousness.</span>"
 	usage_tip = "The vessel can be used as a teleport target for Spatial Gateway, though it is generally better-used by placing it in a shell or cyborg body."
 	tier = SCRIPTURE_SCRIPT
 	space_allowed = TRUE
-	primary_component = GUVAX_CAPACITOR
+	primary_component = GEIS_CAPACITOR
 	sort_priority = 6
 	quickbind = TRUE
 	quickbind_desc = "Creates a Soul Vessel, which can be placed in construct shells and cyborg bodies once filled."
@@ -132,13 +132,13 @@
 
 //Clockwork Proselytizer: Creates a clockwork proselytizer, used to convert objects and repair clockwork structures.
 /datum/clockwork_scripture/create_object/clockwork_proselytizer
-	descname = "Necessary, Converts Objects"
+	descname = "Converts Objects to Ratvarian"
 	name = "Clockwork Proselytizer"
 	desc = "Forms a device that, when used on certain objects, converts them into their Ratvarian equivalents. It requires replicant alloy to function."
 	invocations = list("With this device...", "...his presence shall be made known.")
 	channel_time = 20
-	required_components = list(GUVAX_CAPACITOR = 1, REPLICANT_ALLOY = 2)
-	consumed_components = list(GUVAX_CAPACITOR = 1, REPLICANT_ALLOY = 1)
+	required_components = list(GEIS_CAPACITOR = 1, REPLICANT_ALLOY = 2)
+	consumed_components = list(GEIS_CAPACITOR = 1, REPLICANT_ALLOY = 1)
 	whispered = TRUE
 	object_path = /obj/item/clockwork/clockwork_proselytizer/preloaded
 	creator_message = "<span class='brass'>You form a clockwork proselytizer, which is already pre-loaded with a small amount of replicant alloy.</span>"
@@ -153,7 +153,7 @@
 
 //Function Call: Grants the invoker the ability to call forth a Ratvarian spear that deals significant damage to silicons.
 /datum/clockwork_scripture/function_call
-	descname = "Summonable Spear"
+	descname = "Permenant Summonable Spear"
 	name = "Function Call"
 	desc = "Grants the invoker the ability to call forth a powerful Ratvarian spear every three minutes. The spear will deal significant damage to Nar-Sie's dogs and silicon lifeforms, but will \
 	vanish three minutes after being summoned."
@@ -272,8 +272,8 @@
 	chant_invocations = list("Draw charge to this shell!")
 	chant_amount = 30
 	chant_interval = 10
-	required_components = list(GUVAX_CAPACITOR = 1, HIEROPHANT_ANSIBLE = 2)
-	consumed_components = list(GUVAX_CAPACITOR = 1, HIEROPHANT_ANSIBLE = 1)
+	required_components = list(GEIS_CAPACITOR = 1, HIEROPHANT_ANSIBLE = 2)
+	consumed_components = list(GEIS_CAPACITOR = 1, HIEROPHANT_ANSIBLE = 1)
 	usage_tip = "If standing on a Sigil of Transmission, will transfer power to it. Augumented limbs will also be healed unless above a very high threshhold."
 	tier = SCRIPTURE_SCRIPT
 	primary_component = HIEROPHANT_ANSIBLE

@@ -168,6 +168,8 @@
 	damage_type = BRUTE
 	flag = "bomb"
 	range = 3
+	log_override = TRUE
+
 	var/pressure_decrease = 0.25
 	var/turf_aoe = FALSE
 	var/mob_aoe = 0

@@ -195,7 +195,13 @@
 	//derp //Used for tracking if the syndies actually haul the nuke to the station	//no
 	//herp //Used for tracking if the syndies got the shuttle off of the z-level	//NO, DON'T FUCKING NAME VARS LIKE THIS
 
-	if      (!disk_rescued &&  station_was_nuked && !syndies_didnt_escape)
+
+	if(nuke_off_station == NUKE_SYNDICATE_BASE)
+		feedback_set_details("round_end_result","loss - syndicate nuked - disk secured")
+		world << "<FONT size = 3><B>Humiliating Syndicate Defeat</B></FONT>"
+		world << "<B>The crew of [station_name()] gave [syndicate_name()] operatives back their bomb! The syndicate base was destroyed!</B> Next time, don't lose the nuke!"
+
+	else if(!disk_rescued &&  station_was_nuked && !syndies_didnt_escape)
 		feedback_set_details("round_end_result","win - syndicate nuke")
 		world << "<FONT size = 3><B>Syndicate Major Victory!</B></FONT>"
 		world << "<B>[syndicate_name()] operatives have destroyed [station_name()]!</B>"

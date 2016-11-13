@@ -4,7 +4,7 @@
 
 //Ark of the Clockwork Justiciar: Creates a Gateway to the Celestial Derelict, either summoning ratvar or proselytizing everything.
 /datum/clockwork_scripture/ark_of_the_clockwork_justiciar
-	descname = "Win Condition"
+	descname = "Structure, Win Condition"
 	name = "Ark of the Clockwork Justiciar"
 	desc = "Pulls from the power of all of Ratvar's servants and generals to construct a massive machine used to tear apart a rift in spacetime to Reebe, the Celestial Derelict.\n\
 	This gateway will either call forth Ratvar from his exile if that is the task he has set you, or proselytize the entire station if it is not."
@@ -12,8 +12,8 @@
 	"THE TIME HAS COME FOR OUR MASTER TO BREAK THE CHAINS OF EXILE!!", \
 	"LEND US YOUR AID! ENGINE COMES!!")
 	channel_time = 150
-	required_components = list(BELLIGERENT_EYE = 10, VANGUARD_COGWHEEL = 10, GUVAX_CAPACITOR = 10, REPLICANT_ALLOY = 10, HIEROPHANT_ANSIBLE = 10)
-	consumed_components = list(BELLIGERENT_EYE = 10, VANGUARD_COGWHEEL = 10, GUVAX_CAPACITOR = 10, REPLICANT_ALLOY = 10, HIEROPHANT_ANSIBLE = 10)
+	required_components = list(BELLIGERENT_EYE = 10, VANGUARD_COGWHEEL = 10, GEIS_CAPACITOR = 10, REPLICANT_ALLOY = 10, HIEROPHANT_ANSIBLE = 10)
+	consumed_components = list(BELLIGERENT_EYE = 10, VANGUARD_COGWHEEL = 10, GEIS_CAPACITOR = 10, REPLICANT_ALLOY = 10, HIEROPHANT_ANSIBLE = 10)
 	invokers_required = 5
 	multiple_invokers_used = TRUE
 	usage_tip = "The gateway is completely vulnerable to attack during its five-minute duration. It will periodically give indication of its general position to everyone on the station \

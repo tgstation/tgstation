@@ -1,7 +1,7 @@
 //component id defines
 #define BELLIGERENT_EYE "belligerent_eye"
 #define VANGUARD_COGWHEEL "vanguard_cogwheel"
-#define GUVAX_CAPACITOR "guvax_capacitor"
+#define GEIS_CAPACITOR "geis_capacitor"
 #define REPLICANT_ALLOY "replicant_alloy"
 #define HIEROPHANT_ANSIBLE "hierophant_ansible"
 
@@ -11,7 +11,7 @@ var/global/clockwork_daemons = 0 //How many daemons exist in the world
 var/global/list/clockwork_generals_invoked = list("nezbere" = FALSE, "sevtug" = FALSE, "nzcrentr" = FALSE, "inath-neq" = FALSE) //How many generals have been recently invoked
 var/global/list/all_clockwork_objects = list() //All clockwork items, structures, and effects in existence
 var/global/list/all_clockwork_mobs = list() //All clockwork SERVANTS (not creatures) in existence
-var/global/list/clockwork_component_cache = list(BELLIGERENT_EYE = 0, VANGUARD_COGWHEEL = 0, GUVAX_CAPACITOR = 0, REPLICANT_ALLOY = 0, HIEROPHANT_ANSIBLE = 0) //The pool of components that caches draw from
+var/global/list/clockwork_component_cache = list(BELLIGERENT_EYE = 0, VANGUARD_COGWHEEL = 0, GEIS_CAPACITOR = 0, REPLICANT_ALLOY = 0, HIEROPHANT_ANSIBLE = 0) //The pool of components that caches draw from
 var/global/ratvar_awakens = FALSE //If Ratvar has been summoned
 var/global/clockwork_gateway_activated = FALSE //if a gateway to the celestial derelict has ever been successfully activated
 
@@ -69,11 +69,11 @@ var/global/clockwork_gateway_activated = FALSE //if a gateway to the celestial d
 #define REPLICANT_ALLOY_POWER REPLICANT_ALLOY_UNIT*CLOCKCULT_ALLOY_TO_POWER_MULTIPLIER //the amount of power you get from a single piece of replicant alloy
 
 //Ark defines
-#define GATEWAY_SUMMON_RATE 2 //the time amount the Gateway to the Celestial Derelict gets each process tick; defaults to 2 per tick
+#define GATEWAY_SUMMON_RATE 1 //the time amount the Gateway to the Celestial Derelict gets each process tick; defaults to 1 per tick
 
-#define GATEWAY_REEBE_FOUND 100 //when progress is at or above this, the gateway finds reebe and begins drawing power
+#define GATEWAY_REEBE_FOUND 119 //when progress is at or above this, the gateway finds reebe and begins drawing power
 
-#define GATEWAY_RATVAR_COMING 250 //when progress is at or above this, ratvar has entered and is coming through the gateway
+#define GATEWAY_RATVAR_COMING 239 //when progress is at or above this, ratvar has entered and is coming through the gateway
 
 #define GATEWAY_RATVAR_ARRIVAL 300 //when progress is at or above this, game over ratvar's here everybody go home
 
