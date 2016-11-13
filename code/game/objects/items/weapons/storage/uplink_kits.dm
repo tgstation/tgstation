@@ -149,10 +149,11 @@
 			new /obj/item/clothing/glasses/thermal/monocle(src) // 4tc since copypasta thermals
 			new /obj/item/clothing/suit/hooded/chaplain_hoodie(src)
 			new /obj/item/clothing/shoes/clown_shoes(src)
-			new /obj/item/weapon/twohanded/required/chainsaw(src)
+			new /obj/item/weapon/twohanded/fireaxe(src)
 			new /obj/item/clothing/mask/gas/clown_hat(src)
 			new /obj/item/weapon/bikehorn(src)
 			new /obj/item/clothing/gloves/combat(src)
+			new /obj/item/organ/heart/demon(src)
 
 /obj/item/weapon/storage/box/syndie_kit
 	name = "box"
