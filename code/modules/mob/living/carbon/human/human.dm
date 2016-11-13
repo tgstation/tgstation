@@ -76,6 +76,11 @@
 				stat("Internal Atmosphere Info", internal.name)
 				stat("Tank Pressure", internal.air_contents.return_pressure())
 				stat("Distribution Pressure", internal.distribute_pressure)
+
+		var/mob/living/simple_animal/borer/B = has_brain_worms()
+		if(B && B.controlling)
+			stat("Chemicals", B.chemicals)
+
 		if(mind)
 			if(mind.changeling)
 				stat("Chemical Storage", "[mind.changeling.chem_charges]/[mind.changeling.chem_storage]")
@@ -721,11 +726,10 @@
 	//Handle mutant parts if possible
 	if(dna && dna.species)
 		add_atom_colour("#000000", TEMPORARY_COLOUR_PRIORITY)
-		add_overlay("electrocuted_base")
-		spawn(anim_duration)
-			if(src)
-				remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, "#000000")
-				overlays -= "electrocuted_base"
+		var/static/image/electrocution_skeleton_anim = image(icon = icon, icon_state = "electrocuted_base")
+		electrocution_skeleton_anim.appearance_flags = RESET_COLOR
+		add_overlay(electrocution_skeleton_anim)
+		addtimer(src, "end_electrocution_animation", anim_duration, FALSE, electrocution_skeleton_anim)
 
 	else //or just do a generic animation
 		var/list/viewing = list()
@@ -733,6 +737,10 @@
 			if(M.client)
 				viewing += M.client
 		flick_overlay(image(icon,src,"electrocuted_generic",ABOVE_MOB_LAYER), viewing, anim_duration)
+
+/mob/living/carbon/human/proc/end_electrocution_animation(image/I)
+	remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, "#000000")
+	overlays -= I
 
 /mob/living/carbon/human/canUseTopic(atom/movable/M, be_close = 0)
 	if(incapacitated() || lying )

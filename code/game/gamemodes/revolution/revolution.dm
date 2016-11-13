@@ -209,7 +209,7 @@
 	if(revolutionaries) //Head Revs are not in this list
 		var/list/promotable_revs = list()
 		for(var/datum/mind/khrushchev in revolutionaries)
-			if(khrushchev.current && khrushchev.current.client && khrushchev.current.stat != DEAD)
+			if(khrushchev.current && !khrushchev.current.incapacitated() && !khrushchev.current.restrained() && khrushchev.current.client && khrushchev.current.stat != DEAD)
 				if(ROLE_REV in khrushchev.current.client.prefs.be_special)
 					promotable_revs += khrushchev
 		if(promotable_revs.len)

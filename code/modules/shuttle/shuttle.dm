@@ -188,7 +188,6 @@
 
 
 /obj/docking_port/mobile
-	icon_state = "mobile"
 	name = "shuttle"
 	icon_state = "pinonclose"
 
@@ -661,4 +660,3 @@
 			dst = destination
 		. += " towards [dst ? dst.name : "unknown location"] ([timeLeft(600)] minutes)"
 #undef DOCKING_PORT_HIGHLIGHT
-

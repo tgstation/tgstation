@@ -138,6 +138,13 @@
 	if(statpanel("Status"))
 		stat("Resources:",resources)
 
+/mob/living/simple_animal/hostile/swarmer/handle_inherent_channels(message, message_mode)
+	if(message_mode == MODE_BINARY)
+		swarmer_chat(message)
+		return ITALICS | REDUCE_RANGE
+	else
+		. = ..()
+
 /mob/living/simple_animal/hostile/swarmer/get_spans()
 	return ..() | SPAN_ROBOT
 
@@ -525,14 +532,17 @@
 	else
 		SetLuminosity(0)
 
+/mob/living/simple_animal/hostile/swarmer/proc/swarmer_chat(msg)
+	var/rendered = "<B>Swarm communication - [src]</b> [say_quote(msg, get_spans())]"
+	for(var/mob/M in mob_list)
+		if(isswarmer(M))
+			M << rendered
+		if(isobserver(M))
+			var/link = FOLLOW_LINK(M, src)
+			M << "[link] [rendered]"
+
 /mob/living/simple_animal/hostile/swarmer/proc/ContactSwarmers()
 	var/message = input(src, "Announce to other swarmers", "Swarmer contact")
 	// TODO get swarmers their own colour rather than just boldtext
-	var/rendered = "<B>Swarm communication - [src]</b> [say_quote(message, get_spans())]"
 	if(message)
-		for(var/mob/M in mob_list)
-			if(isswarmer(M))
-				M << rendered
-			if(isobserver(M))
-				var/link = FOLLOW_LINK(M, src)
-				M << "[link] [rendered]"
+		swarmer_chat(message)

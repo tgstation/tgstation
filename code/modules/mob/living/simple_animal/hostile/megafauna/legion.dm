@@ -147,7 +147,6 @@ Difficulty: Medium
 	item_state = "staffofstorms"
 	icon = 'icons/obj/guns/magic.dmi'
 	slot_flags = SLOT_BACK
-	item_state = "staffofstorms"
 	w_class = 4
 	force = 25
 	damtype = BURN

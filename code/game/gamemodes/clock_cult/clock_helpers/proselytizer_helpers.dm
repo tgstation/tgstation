@@ -185,51 +185,44 @@
 		return
 	var/amount_to_heal = max_integrity - obj_integrity
 	var/healing_for_cycle = min(amount_to_heal, repair_amount)
-	var/proselytizer_cost = 0
+	var/alloy_required = healing_for_cycle
 	if(!proselytizer.can_use_alloy(RATVAR_ALLOY_CHECK))
-		healing_for_cycle = min(healing_for_cycle, proselytizer.stored_alloy * 0.5)
-		proselytizer_cost = healing_for_cycle * 2
-	if(!proselytizer.can_use_alloy(proselytizer_cost))
-		user << "<span class='warning'>You need more liquified alloy to repair [src]!</span>"
+		healing_for_cycle = min(healing_for_cycle, proselytizer.stored_alloy)
+	if(!healing_for_cycle || (!proselytizer.can_use_alloy(RATVAR_ALLOY_CHECK) && !proselytizer.can_use_alloy(healing_for_cycle)))
+		user << "<span class='warning'>You need at least <b>[alloy_required]</b> liquified alloy to start repairing [src], and at least <b>[amount_to_heal]</b> to fully repair it!</span>"
 		return
 	user.visible_message("<span class='notice'>[user]'s [proselytizer.name] starts covering [src] in black liquid metal...</span>", \
 	"<span class='alloy'>You start repairing [src]...</span>")
 	//hugeass while because we need to re-check after the do_after
 	proselytizer.repairing = src
-	while(proselytizer && user && src && obj_integrity != max_integrity)
+	while(proselytizer && user && src && obj_integrity < max_integrity)
 		amount_to_heal = max_integrity - obj_integrity
 		if(amount_to_heal <= 0)
 			break
 		healing_for_cycle = min(amount_to_heal, repair_amount)
 		if(!proselytizer.can_use_alloy(RATVAR_ALLOY_CHECK))
-			healing_for_cycle = min(healing_for_cycle, proselytizer.stored_alloy * 0.5)
-			proselytizer_cost = healing_for_cycle * 2
-			if(!proselytizer.can_use_alloy(proselytizer_cost))
-				break
-		else
-			proselytizer_cost = 0
-		if(!proselytizer.can_use_alloy(proselytizer_cost) || !do_after(user, proselytizer_cost, target = src) || !proselytizer || !proselytizer.can_use_alloy(proselytizer_cost))
+			healing_for_cycle = min(healing_for_cycle, proselytizer.stored_alloy)
+		if(!healing_for_cycle || (!proselytizer.can_use_alloy(RATVAR_ALLOY_CHECK) && !proselytizer.can_use_alloy(healing_for_cycle)) || \
+		!do_after(user, healing_for_cycle, target = src) || \
+		!proselytizer || (!proselytizer.can_use_alloy(RATVAR_ALLOY_CHECK) && !proselytizer.can_use_alloy(healing_for_cycle)))
 			break
 		amount_to_heal = max_integrity - obj_integrity
 		if(amount_to_heal <= 0)
 			break
 		healing_for_cycle = min(amount_to_heal, repair_amount)
 		if(!proselytizer.can_use_alloy(RATVAR_ALLOY_CHECK))
-			healing_for_cycle = min(healing_for_cycle, proselytizer.stored_alloy * 0.5)
-			proselytizer_cost = healing_for_cycle * 2
-			if(!proselytizer.can_use_alloy(proselytizer_cost))
-				break
-		else
-			proselytizer_cost = 0
+			healing_for_cycle = min(healing_for_cycle, proselytizer.stored_alloy)
+		if(!healing_for_cycle || (!proselytizer.can_use_alloy(RATVAR_ALLOY_CHECK) && !proselytizer.can_use_alloy(healing_for_cycle)))
+			break
 		obj_integrity = Clamp(obj_integrity + healing_for_cycle, 0, max_integrity)
-		proselytizer.modify_stored_alloy(-proselytizer_cost)
+		proselytizer.modify_stored_alloy(-healing_for_cycle)
 		playsound(src, 'sound/machines/click.ogg', 50, 1)
 
 	if(proselytizer)
 		proselytizer.repairing = null
 		if(user)
 			user.visible_message("<span class='notice'>[user]'s [proselytizer.name] stops covering [src] with black liquid metal.</span>", \
-		"<span class='alloy'>You finish repairing [src]. It is now at <b>[obj_integrity]/[max_integrity]</b> integrity.</span>")
+			"<span class='alloy'>You finish repairing [src]. It is now at <b>[obj_integrity]/[max_integrity]</b> integrity.</span>")
 	return
 
 //Hitting a tinkerer's cache will try to fill the proselytizer with alloy after trying to repair.

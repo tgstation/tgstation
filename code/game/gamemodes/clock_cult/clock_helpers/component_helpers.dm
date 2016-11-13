@@ -28,8 +28,8 @@
 			return "Belligerent Eye"
 		if(VANGUARD_COGWHEEL)
 			return "Vanguard Cogwheel"
-		if(GUVAX_CAPACITOR)
-			return "Guvax Capacitor"
+		if(GEIS_CAPACITOR)
+			return "Geis Capacitor"
 		if(REPLICANT_ALLOY)
 			return "Replicant Alloy"
 		if(HIEROPHANT_ANSIBLE)
@@ -44,7 +44,7 @@
 			return "BE"
 		if(VANGUARD_COGWHEEL)
 			return "VC"
-		if(GUVAX_CAPACITOR)
+		if(GEIS_CAPACITOR)
 			return "GC"
 		if(REPLICANT_ALLOY)
 			return "RA"
@@ -60,8 +60,8 @@
 			return BELLIGERENT_EYE
 		if("Vanguard Cogwheel")
 			return VANGUARD_COGWHEEL
-		if("Guvax Capacitor")
-			return GUVAX_CAPACITOR
+		if("Geis Capacitor")
+			return GEIS_CAPACITOR
 		if("Replicant Alloy")
 			return REPLICANT_ALLOY
 		if("Hierophant Ansible")
@@ -76,14 +76,14 @@
 			return "neovgre"
 		if(VANGUARD_COGWHEEL)
 			return "inathneq"
-		if(GUVAX_CAPACITOR)
+		if(GEIS_CAPACITOR)
 			return "sevtug"
 		if(REPLICANT_ALLOY)
 			return "nezbere"
 		if(HIEROPHANT_ANSIBLE)
 			return "nzcrentr"
 		else
-			return null
+			return "brass"
 
 //returns a component color from a component id, but with a brighter replicant alloy color
 /proc/get_component_color_brightalloy(id)
@@ -99,7 +99,7 @@
 			return "#6E001A"
 		if(VANGUARD_COGWHEEL)
 			return "#1E8CE1"
-		if(GUVAX_CAPACITOR)
+		if(GEIS_CAPACITOR)
 			return "#AF0AAF"
 		if(REPLICANT_ALLOY)
 			return "#42474D"
@@ -115,7 +115,7 @@
 			return /obj/effect/overlay/temp/ratvar/component
 		if(VANGUARD_COGWHEEL)
 			return /obj/effect/overlay/temp/ratvar/component/cogwheel
-		if(GUVAX_CAPACITOR)
+		if(GEIS_CAPACITOR)
 			return /obj/effect/overlay/temp/ratvar/component/capacitor
 		if(REPLICANT_ALLOY)
 			return /obj/effect/overlay/temp/ratvar/component/alloy
@@ -131,8 +131,8 @@
 			return /obj/item/clockwork/component/belligerent_eye
 		if(VANGUARD_COGWHEEL)
 			return /obj/item/clockwork/component/vanguard_cogwheel
-		if(GUVAX_CAPACITOR)
-			return /obj/item/clockwork/component/guvax_capacitor
+		if(GEIS_CAPACITOR)
+			return /obj/item/clockwork/component/geis_capacitor
 		if(REPLICANT_ALLOY)
 			return /obj/item/clockwork/component/replicant_alloy
 		if(HIEROPHANT_ANSIBLE)

@@ -23,7 +23,7 @@
 	var/paused = FALSE //for suspending the projectile midair
 	var/p_x = 16
 	var/p_y = 16			// the pixel location of the tile that the player clicked. Default is the center
-	var/speed = 1			//Amount of deciseconds it takes for projectile to travel
+	var/speed = 0.5			//Amount of deciseconds it takes for projectile to travel
 	var/Angle = 0
 	var/spread = 0			//amount (in degrees) of projectile spread
 	var/legacy = 0			//legacy projectile system
@@ -49,6 +49,7 @@
 	var/forcedodge = 0 //to pass through everything
 	var/dismemberment = 0 //The higher the number, the greater the bonus to dismembering. 0 will not dismember at all.
 	var/impact_effect_type //what type of impact effect to show when hitting something
+	var/log_override = FALSE //is this type spammed enough to not log? (KAs)
 
 /obj/item/projectile/New()
 	permutated = list()
@@ -164,6 +165,8 @@
 	return 1 //Bullets don't drift in space
 
 /obj/item/projectile/proc/fire(setAngle, atom/direct_target)
+	if(!log_override && firer && original)
+		add_logs(firer, original, "fired at", src, " [get_area(src)]")
 	if(direct_target)
 		direct_target.bullet_act(src, def_zone)
 		qdel(src)

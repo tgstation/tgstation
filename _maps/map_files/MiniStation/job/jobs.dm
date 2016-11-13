@@ -81,3 +81,10 @@
 	spawn_positions = 4
 	access = list(access_security, access_sec_doors, access_brig, access_court)
 	minimal_access = list(access_security, access_sec_doors, access_brig, access_court)
+
+/obj/item/weapon/robot_module/miner/New()
+	..()
+	var/mining_type = MINETYPE
+	if (mining_type == "mining")
+		add_module(new /obj/item/stack/rods/cyborg())
+		fix_modules()

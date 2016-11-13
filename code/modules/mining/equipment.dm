@@ -507,6 +507,7 @@
 	flag = "bomb"
 	range = 6
 	var/obj/item/weapon/twohanded/required/mining_hammer/hammer_synced =  null
+	log_override = TRUE
 
 /obj/item/projectile/destabilizer/on_hit(atom/target, blocked = 0)
 	if(hammer_synced)

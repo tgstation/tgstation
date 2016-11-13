@@ -163,7 +163,7 @@
 
 /obj/item/weapon/dnainjector/tourmut
 	name = "\improper DNA injector (Tour.)"
-	desc = "Gives you a nasty case off Tourette's."
+	desc = "Gives you a nasty case of Tourette's."
 	add_mutations_static = list(TOURETTES)
 
 /obj/item/weapon/dnainjector/stuttmut

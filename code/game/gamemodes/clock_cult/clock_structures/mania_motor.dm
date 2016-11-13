@@ -12,7 +12,7 @@
 	break_message = "<span class='warning'>The antenna break off, leaving a pile of shards!</span>"
 	debris = list(/obj/item/clockwork/alloy_shards/large = 1, \
 	/obj/item/clockwork/alloy_shards/small = 3, \
-	/obj/item/clockwork/component/guvax_capacitor/antennae = 1)
+	/obj/item/clockwork/component/geis_capacitor/antennae = 1)
 	var/mania_cost = 200
 	var/convert_attempt_cost = 200
 	var/convert_cost = 200

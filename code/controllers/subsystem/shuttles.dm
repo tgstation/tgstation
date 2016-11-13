@@ -40,6 +40,8 @@ var/datum/subsystem/shuttle/SSshuttle
 
 	var/datum/round_event/shuttle_loan/shuttle_loan
 
+	var/shuttle_purchased = FALSE //If the station has purchased a replacement escape shuttle this round
+
 /datum/subsystem/shuttle/New()
 	NEW_SS_GLOBAL(SSshuttle)
 

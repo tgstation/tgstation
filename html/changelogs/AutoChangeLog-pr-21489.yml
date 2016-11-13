@@ -1,0 +1,4 @@
+author: "coiax"
+delete-after: True
+changes: 
+  - rscadd: "Swarmers can now use :b to talk on Swarm Communication."
