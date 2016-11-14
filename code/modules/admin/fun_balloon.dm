@@ -101,17 +101,6 @@
 	qdel(src)
 
 
-
-//meteor/asteroid shuttle slamming into the station
-
-/obj/effect/station_crash
-	name = "station crash"
-	desc = "With no survivors!"
-	icon = 'icons/obj/weapons.dmi'
-	icon_state = "syndballoon"
-	anchored = TRUE
-
-
 //Luxury Shuttle Blockers
 
 /obj/effect/forcefield/luxury_shuttle
@@ -138,6 +127,7 @@
 	if(total_cash >= threshhold)
 		for(var/obj/I in counted_money)
 			qdel(I)
+
 		mover << "Thank you for your payment! Please enjoy your flight."
 		approved_passengers += mover
 		return 1
