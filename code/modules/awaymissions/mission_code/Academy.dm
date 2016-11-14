@@ -136,7 +136,7 @@
 		if(!ishuman(user) || !user.mind || (user.mind in ticker.mode.wizards))
 			user << "<span class='warning'>You feel the magic of the dice is restricted to ordinary humans!</span>"
 			return
-		if(rigged > 0)
+		if(rigged)
 			effect(user,rigged)
 		else
 			effect(user,result)
