@@ -49,12 +49,7 @@
 	else
 		var/successfulprocess = FALSE
 		var/power_drained = 0
-		var/unconverted_ai = FALSE
 		var/list/atoms_to_test = list()
-		for(var/i in ai_list)
-			var/mob/living/silicon/ai/AI = i
-			if(!is_servant_of_ratvar(AI))
-				unconverted_ai = TRUE
 		for(var/A in spiral_range_turfs(interdiction_range, src))
 			var/turf/T = A
 			for(var/M in T)
@@ -62,7 +57,13 @@
 
 			CHECK_TICK
 
+		var/unconverted_ai = FALSE
 		var/efficiency = get_efficiency_mod()
+
+		for(var/i in ai_list)
+			var/mob/living/silicon/ai/AI = i
+			if(AI && AI.stat != DEAD && !is_servant_of_ratvar(AI))
+				unconverted_ai = TRUE
 
 		for(var/M in atoms_to_test)
 			var/atom/movable/A = M
