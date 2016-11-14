@@ -59,7 +59,7 @@
 	return TRUE
 
 
-/obj/item/weapon/computer_hardware/card_slot/try_eject(slot=0, mob/living/user = null)
+/obj/item/weapon/computer_hardware/card_slot/try_eject(slot=0, mob/living/user = null, forced = 0)
 	if(!stored_card && !stored_card2)
 		user << "<span class='warning'>There are no cards in \the [src].</span>"
 		return FALSE
@@ -89,3 +89,16 @@
 		user << "<span class='notice'>You remove the card[ejected>1 ? "s" : ""] from \the [src].</span>"
 		return TRUE
 	return FALSE
+
+/obj/item/weapon/computer_hardware/card_slot/attackby(obj/item/I, mob/living/user)
+	if(..())
+		return
+	if(istype(I, /obj/item/weapon/screwdriver))
+		user << "<span class='notice'>You press down on the manual eject button with \the [I].</span>"
+		try_eject(0,user)
+		return
+
+/obj/item/weapon/computer_hardware/card_slot/examine(mob/user)
+	..()
+	if(stored_card || stored_card2)
+		user << "There appears to be something loaded in the card slots."

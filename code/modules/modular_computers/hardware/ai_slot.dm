@@ -1,6 +1,6 @@
 /obj/item/weapon/computer_hardware/ai_slot
-	name = "\improper Intellicard interface slot"
-	desc = "A module allowing this computer to interface with most common intellicard modules. Necessary for some programs to run properly."
+	name = "\improper intelliCard interface slot"
+	desc = "A module allowing this computer to interface with most common intelliCard modules. Necessary for some programs to run properly."
 	power_usage = 100 //W
 	icon_state = "card_mini"
 	w_class = 2
@@ -11,9 +11,10 @@
 	var/locked = FALSE
 
 
-/obj/item/weapon/computer_hardware/ai_slot/Destroy()
-	try_eject(forced = 1)
-	return ..()
+obj/item/weapon/computer_hardware/ai_slot/examine(mob/user)
+	..()
+	if(stored_card)
+		user << "There appears to be an intelliCard loaded."
 
 /obj/item/weapon/computer_hardware/ai_slot/on_install(obj/item/device/modular_computer/M, mob/living/user = null)
 	M.add_verb(device_type)
@@ -54,9 +55,18 @@
 
 	if(stored_card)
 		stored_card.forceMove(get_turf(src))
+		locked = FALSE
 		stored_card.verb_pickup()
 		stored_card = null
 
 		user << "<span class='notice'>You remove the card from \the [src].</span>"
 		return TRUE
 	return FALSE
+
+/obj/item/weapon/computer_hardware/ai_slot/attackby(obj/item/I, mob/living/user)
+	if(..())
+		return
+	if(istype(I, /obj/item/weapon/screwdriver))
+		user << "<span class='notice'>You press down on the manual eject button with \the [I].</span>"
+		try_eject(,user,1)
+		return

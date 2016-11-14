@@ -10,8 +10,7 @@
 	usage_flags = PROGRAM_CONSOLE
 	transfer_access = access_heads
 	available_on_ntnet = 1
-	var/restoring = 0
-
+	var/restoring = FALSE
 
 /datum/computer_file/program/aidiag/proc/get_ai()
 
@@ -24,19 +23,19 @@
 		return ai_slot.stored_card.AI
 	return null
 
-/datum/computer_file/program/aidiag/ui_data(action, params)
+/datum/computer_file/program/aidiag/ui_act(action, params)
 	if(..())
 		return 1
 
 	var/mob/living/silicon/ai/A = get_ai()
 	if(!A)
-		restoring = 0
+		restoring = FALSE
 		return 0
 
 	switch("action")
 		if("PRG_beginReconstruction")
 			if(A.health < 100)
-				restoring = 1
+				restoring = TRUE
 			return 1
 
 /datum/computer_file/program/aidiag/process_tick()
@@ -46,7 +45,11 @@
 
 	var/mob/living/silicon/ai/A = get_ai()
 	if(!A)
-		restoring = 0	// If the AI was removed, stop the restoration sequence.
+		restoring = FALSE	// If the AI was removed, stop the restoration sequence.
+		return
+	var/obj/item/device/aicard/cardhold = A.loc
+	if(cardhold.flush)
+		restoring = FALSE
 		return
 	A.adjustOxyLoss(-1, 0)
 	A.adjustFireLoss(-1, 0)
@@ -55,16 +58,9 @@
 	A.updatehealth()
 	if(A.health >= 0 && A.stat == DEAD)
 		A.revive()
-
-		//update_icon()
-	// If the AI is dead, revive it.
-//	if (A.health >= -100 && A.stat == DEAD)
-//		var/obj/item/weapon/aicard/AC = A.loc
-//		if(AC)
-//			AC.update_icon()
 	// Finished restoring
 	if(A.health >= 100)
-		restoring = 0
+		restoring = FALSE
 
 	return 1
 
@@ -83,14 +79,13 @@
 			data["error"] = "Flush in progress"
 		else
 			data["name"] = AI.name
+			data["restoring"] = restoring
 			data["laws"] = AI.laws.get_law_list(include_zeroth = 1)
 			data["health"] = (AI.health + 100) / 2
 			data["isDead"] = AI.stat == DEAD
 			data["ai_laws"] = AI.laws.get_law_list(include_zeroth = 1)
 
 	return data
-
-
 
 /datum/computer_file/program/aidiag/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
@@ -99,5 +94,5 @@
 		ui.open()
 
 datum/computer_file/program/aidiag/kill_program(forced)
-	restoring = 0
+	restoring = FALSE
 	return ..(forced)
