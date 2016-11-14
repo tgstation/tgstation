@@ -6,7 +6,7 @@
 
 /obj/item/weapon/storage/pill_bottle/dice/New()
 	..()
-	var/special_die = pick("1","2","fudge","00","8bd20","4dd6","100")
+	var/special_die = pick("1","2","fudge","space","00","8bd20","4dd6","100")
 	if(special_die == "1")
 		new /obj/item/weapon/dice/d1(src)
 	if(special_die == "2")
@@ -15,6 +15,8 @@
 	new /obj/item/weapon/dice/d6(src)
 	if(special_die == "fudge")
 		new /obj/item/weapon/dice/fudge(src)
+	if(special_die == "space")
+		new /obj/item/weapon/dice/d6/space(src)
 	new /obj/item/weapon/dice/d8(src)
 	new /obj/item/weapon/dice/d10(src)
 	if(special_die == "00")
@@ -62,6 +64,16 @@
 
 /obj/item/weapon/dice/d6
 	name = "d6"
+
+/obj/item/weapon/dice/d6/space
+	name = "space cube"
+	desc = "A die with six sides. 6 TIMES 255 TIMES 255 TILE TOTAL EXISTENCE, SQUARE YOUR MIND OF EDUCATED STUPID: 2 DOES NOT EXIST."
+	icon_state = "spaced6"
+
+/obj/item/weapon/dice/d6/space/New()
+	..()
+	if(prob(10))
+		name = "spess cube"
 
 /obj/item/weapon/dice/fudge
 	name = "fudge die"
