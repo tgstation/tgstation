@@ -338,11 +338,10 @@
 /obj/item/borg/upgrade/shield
 	name = "Combat Energy Shielding"
 	desc = "Advanced energy shielding that draws directly from a cyborg's internal power cell to provide shielding against hostile forces."
-	icon_state =
-	var/activeborgoverlayweak =
-	var/activeborgoverlaymed =
-	var/activeborgoverlaystrong =
-	var/activatingborgoverlay =
+	icon_state = cyborg_upgrade5
+	var/activatingoverlay = image(icon = 'icons/effects/effects.dmi', icon_state = "shield")
+	var/activeoverlay = image(icon = 'icons/effects/effects.dmi', icon_state = "shield_grey")
+	var/flickeroverlay = image(icon = 'icons/effects/effects.dmi', icon_state = "shield_flash")
 	var/active = 0
 	var/passivepower = 10	//Passively use this amount of power when active per process() tick.
 
@@ -384,6 +383,11 @@
 	..()
 
 /obj/item/borg/upgrade/shield/action(mob/living/silicon/robot/R)
+
+
+
+
+	user = R
 
 /obj/item/borg/upgrade/shield/process()
 	if(!active)
