@@ -12944,6 +12944,7 @@
 	pixel_y = 0
 	},
 /obj/item/weapon/reagent_containers/food/snacks/baguette,
+/obj/item/toy/dummy,
 /turf/open/floor/plasteel/white/side{
 	dir = 4
 	},

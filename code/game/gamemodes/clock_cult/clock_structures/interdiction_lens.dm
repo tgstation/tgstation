@@ -7,6 +7,7 @@
 	construction_value = 25
 	active_icon = "interdiction_lens_active"
 	inactive_icon = "interdiction_lens"
+	unanchored_icon = "interdiction_lens_unwrenched"
 	break_message = "<span class='warning'>The lens flares a blinding violet before shattering!</span>"
 	break_sound = 'sound/effects/Glassbr3.ogg'
 	var/recharging = 0 //world.time when the lens was last used
@@ -56,35 +57,38 @@
 
 			CHECK_TICK
 
+		var/efficiency = get_efficiency_mod()
+
 		for(var/M in atoms_to_test)
 			var/atom/movable/A = M
 			if(!A || qdeleted(A) || A == target_apc)
 				continue
-			power_drained += A.power_drain(TRUE)
+			power_drained += (A.power_drain(TRUE) * efficiency)
 
 			if(prob(1))
 				A << "<span class='neovgre'>\"[text2ratvar(pick(rage_messages))]\"</span>"
 
-			if(istype(A, /obj/machinery/camera))
-				var/obj/machinery/camera/C = A
-				if(C.isEmpProof() || !C.status)
-					continue
-				successfulprocess = TRUE
-				if(C.emped)
-					continue
-				C.emp_act(1)
-			else if(istype(A, /obj/item/device/radio))
-				var/obj/item/device/radio/O = A
-				successfulprocess = TRUE
-				if(O.emped || !O.on)
-					continue
-				O.emp_act(1)
-			else if((isliving(A) && !is_servant_of_ratvar(A)) || istype(A, /obj/structure/closet) || istype(A, /obj/item/weapon/storage)) //other things may have radios in them but we don't care
-				for(var/obj/item/device/radio/O in A.GetAllContents())
+			if(prob(100 * efficiency))
+				if(istype(A, /obj/machinery/camera))
+					var/obj/machinery/camera/C = A
+					if(C.isEmpProof() || !C.status)
+						continue
+					successfulprocess = TRUE
+					if(C.emped)
+						continue
+					C.emp_act(1)
+				else if(istype(A, /obj/item/device/radio))
+					var/obj/item/device/radio/O = A
 					successfulprocess = TRUE
 					if(O.emped || !O.on)
 						continue
 					O.emp_act(1)
+				else if((isliving(A) && !is_servant_of_ratvar(A)) || istype(A, /obj/structure/closet) || istype(A, /obj/item/weapon/storage)) //other things may have radios in them but we don't care
+					for(var/obj/item/device/radio/O in A.GetAllContents())
+						successfulprocess = TRUE
+						if(O.emped || !O.on)
+							continue
+						O.emp_act(1)
 
 			CHECK_TICK
 

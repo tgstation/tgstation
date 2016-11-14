@@ -1,7 +1,0 @@
-author: "Mysak0CZ"
-delete-after: True
-changes: 
-  - rscadd: "You can now use wrech to anchor (as long as it is not in space) / unanchor lockers"
-  - bugfix: "Cyborgs can now simply use \"hand\" to open / close lockers (instead of using toggle open verb)"
-  - bugfix: "You can now properly put unlit welder inside lockers"
-  - bugfix: "Lockers using different decostruction tools (like cardboard boxes wirecutters) can now be deconstructed too"

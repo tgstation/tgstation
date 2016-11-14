@@ -269,12 +269,12 @@ var/list/crit_allowed_modes = list(MODE_WHISPER,MODE_CHANGELING,MODE_ALIEN)
 		if(MODE_R_HAND)
 			for(var/obj/item/r_hand in get_held_items_for_side("r", all = TRUE))
 				if (r_hand)
-					r_hand.talk_into(src, message, , spans)
+					return r_hand.talk_into(src, message, , spans)
 				return ITALICS | REDUCE_RANGE
 		if(MODE_L_HAND)
 			for(var/obj/item/l_hand in get_held_items_for_side("l", all = TRUE))
 				if (l_hand)
-					l_hand.talk_into(src, message, , spans)
+					return l_hand.talk_into(src, message, , spans)
 				return ITALICS | REDUCE_RANGE
 
 		if(MODE_INTERCOM)
