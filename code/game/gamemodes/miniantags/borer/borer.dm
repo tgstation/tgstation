@@ -624,11 +624,12 @@ var/total_borer_hosts_needed = 10
 /mob/living/simple_animal/borer/proc/assume_control()
 	if(!victim || !src || controlling || victim.stat == DEAD)
 		return
+	if(!bonding)
+		return
 	if(docile)
 		src <<"<span class='warning'>You are feeling far too docile to do that.</span>"
 		return
 	else
-
 
 		log_game("[src]/([src.ckey]) assumed control of [victim]/([victim.ckey] with borer powers.")
 		src << "<span class='warning'>You plunge your probosci deep into the cortex of the host brain, interfacing directly with their nervous system.</span>"
@@ -673,9 +674,8 @@ var/total_borer_hosts_needed = 10
 		if(!victim.lastKnownIP)
 			victim.lastKnownIP = s2h_ip
 
-		controlling = TRUE
-
 		bonding = FALSE
+		controlling = TRUE
 
 		victim.verbs += /mob/living/carbon/proc/release_control
 		victim.verbs += /mob/living/carbon/proc/spawn_larvae

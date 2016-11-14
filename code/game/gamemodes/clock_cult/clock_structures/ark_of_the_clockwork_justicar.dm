@@ -52,7 +52,7 @@
 	if(objective_is_gateway)
 		hierophant_message("<span class='nzcrentr'>\"[text2ratvar("Engine, come forth")].\"</span>")
 	else
-		hierophant_message("<span class='nezbere'>\"[text2ratvar("We will show all Engine's power")].\"</span>")
+		hierophant_message("<span class='nzcrentr'>\"[text2ratvar("We will show all Engine's power")].\"</span>")
 	playsound(T, 'sound/magic/clockwork/invoke_general.ogg', 75, 0)
 	sleep(10)
 	playsound(T, 'sound/magic/clockwork/invoke_general.ogg', 100, 0)

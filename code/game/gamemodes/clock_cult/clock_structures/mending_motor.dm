@@ -6,6 +6,7 @@
 	icon_state = "mending_motor_inactive"
 	active_icon = "mending_motor"
 	inactive_icon = "mending_motor_inactive"
+	unanchored_icon = "mending_motor_unwrenched"
 	construction_value = 20
 	max_integrity = 125
 	obj_integrity = 125
@@ -55,6 +56,7 @@
 		user << "<span class='inathneq_small'>It requires at least <b>[MIN_CLOCKCULT_POWER]W</b> to attempt to repair clockwork mobs, structures, or converted silicons.</span>"
 
 /obj/structure/destructible/clockwork/powered/mending_motor/process()
+	var/efficiency = get_efficiency_mod()
 	for(var/atom/movable/M in range(7, src))
 		var/turf/T
 		if(isclockmob(M) || istype(M, /mob/living/simple_animal/drone/cogscarab))
@@ -66,7 +68,7 @@
 			for(var/i in 1 to heal_attempts)
 				if(E.health < E.maxHealth || (is_marauder && E.fatigue))
 					if(try_use_power(MIN_CLOCKCULT_POWER))
-						E.adjustHealth(-8)
+						E.adjustHealth(-(8 * efficiency))
 						PoolOrNew(/obj/effect/overlay/temp/heal, list(T, "#1E8CE1"))
 					else
 						E << "<span class='inathneq'>\"[text2ratvar(pick(heal_failure_messages))]\"</span>"
@@ -82,7 +84,9 @@
 			for(var/i in 1 to heal_attempts)
 				if(C.obj_integrity < C.max_integrity)
 					if(try_use_power(MIN_CLOCKCULT_POWER))
-						C.obj_integrity = min(C.obj_integrity + 8, C.max_integrity)
+						C.obj_integrity = min(C.obj_integrity + (8 * efficiency), C.max_integrity)
+						if(C == src)
+							efficiency = get_efficiency_mod()
 						C.update_icon()
 						PoolOrNew(/obj/effect/overlay/temp/heal, list(T, "#1E8CE1"))
 					else
@@ -97,8 +101,8 @@
 			for(var/i in 1 to heal_attempts)
 				if(S.health < S.maxHealth)
 					if(try_use_power(MIN_CLOCKCULT_POWER))
-						S.adjustBruteLoss(-5)
-						S.adjustFireLoss(-3)
+						S.adjustBruteLoss(-(5 * efficiency))
+						S.adjustFireLoss(-(3 * efficiency))
 						PoolOrNew(/obj/effect/overlay/temp/heal, list(T, "#1E8CE1"))
 					else
 						S << "<span class='inathneq'>\"[text2ratvar(pick(heal_failure_messages))]\"</span>"

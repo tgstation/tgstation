@@ -1,4 +1,0 @@
-author: "Joan"
-delete-after: True
-changes: 
-  - rscadd: "You can now repair reinforced walls by using the tool you'd use to get to the state they're currently in. Examining will give you a hint as to which tool to use."

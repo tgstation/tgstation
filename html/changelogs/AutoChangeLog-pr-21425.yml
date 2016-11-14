@@ -1,4 +1,0 @@
-author: "Kor"
-delete-after: True
-changes: 
-  - rscadd: "Explosions are no longer capped on the mining z level."

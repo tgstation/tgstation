@@ -133,25 +133,6 @@
 	sound1="sound/magic/Teleport_diss.ogg"
 	sound2="sound/magic/Teleport_app.ogg"
 
-/obj/effect/proc_holder/spell/aoe_turf/conjure/forcewall
-	name = "Forcewall"
-	desc = "This spell creates an unbreakable wall that lasts for 30 seconds and does not need wizard garb."
-
-	school = "transmutation"
-	charge_max = 100
-	clothes_req = 0
-	invocation = "TARCOL MINTI ZHERI"
-	invocation_type = "whisper"
-	range = 0
-	cooldown_min = 50 //12 deciseconds reduction per rank
-
-	summon_type = list("/obj/effect/forcefield")
-	summon_lifespan = 300
-
-	action_icon_state = "shield"
-	cast_sound = "sound/magic/ForceWall.ogg"
-
-
 /obj/effect/proc_holder/spell/aoe_turf/conjure/timestop
 	name = "Stop Time"
 	desc = "This spell stops time for everyone except for you, allowing you to move freely while your enemies and even projectiles are frozen."
@@ -315,7 +296,7 @@
 	FB.preparePixelProjectile(target, get_turf(target), user)
 	FB.fire()
 	user.newtonian_move(get_dir(U, T))
-
+	remove_ranged_ability() //Auto-disable the ability once successfully performed
 	return 1
 
 /obj/effect/proc_holder/spell/aoe_turf/repulse

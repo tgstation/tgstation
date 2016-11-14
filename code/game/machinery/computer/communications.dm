@@ -65,6 +65,7 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 		// main interface
 		if("main")
 			src.state = STATE_DEFAULT
+			playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
 		if("login")
 			var/mob/M = usr
 			var/obj/item/weapon/card/id/I = M.get_active_held_item()
@@ -77,11 +78,19 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 					auth_id = "[I.registered_name] ([I.assignment])"
 					if((20 in I.access))
 						authenticated = 2
+					playsound(src, 'sound/machines/terminal_on.ogg', 50, 0)
 				if(src.emagged)
 					authenticated = 2
 					auth_id = "Unknown"
+					M << "<span class='warning'>[src] lets out a quiet alarm as its login is overriden.</span>"
+					playsound(src, 'sound/machines/terminal_on.ogg', 50, 0)
+					playsound(src, 'sound/machines/terminal_alert.ogg', 25, 0)
+					if(prob(25))
+						for(var/mob/living/silicon/ai/AI in active_ais())
+							AI << sound('sound/machines/terminal_alert.ogg', volume = 10) //Very quiet for balance reasons
 		if("logout")
 			authenticated = 0
+			playsound(src, 'sound/machines/terminal_off.ogg', 50, 0)
 
 		if("swipeidseclevel")
 			var/mob/M = usr
@@ -97,6 +106,8 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 					if(tmp_alertlevel > SEC_LEVEL_BLUE) tmp_alertlevel = SEC_LEVEL_BLUE //Cannot engage delta with this
 					set_security_level(tmp_alertlevel)
 					if(security_level != old_level)
+						usr << "<span class='notice'>Authorization confirmed. Modifying security level.</span>"
+						playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
 						//Only notify the admins if an actual change happened
 						log_game("[key_name(usr)] has changed the security level to [get_security_level()].")
 						message_admins("[key_name_admin(usr)] has changed the security level to [get_security_level()].")
@@ -108,23 +119,28 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 					tmp_alertlevel = 0
 				else:
 					usr << "<span class='warning'>You are not authorized to do this!</span>"
+					playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
 					tmp_alertlevel = 0
 				state = STATE_DEFAULT
 			else
 				usr << "<span class='warning'>You need to swipe your ID!</span>"
+				playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
 
 		if("announce")
 			if(src.authenticated==2)
+				playsound(src, 'sound/machines/terminal_prompt.ogg', 50, 0)
 				make_announcement(usr)
 
 		if("crossserver")
 			if(authenticated==2)
 				if(CM.lastTimeUsed + 600 > world.time)
-					usr << "Arrays recycling.  Please stand by."
+					usr << "<span class='warning'>Arrays recycling.  Please stand by.</span>"
+					playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
 					return
 				var/input = stripped_multiline_input(usr, "Please choose a message to transmit to an allied station.  Please be aware that this process is very expensive, and abuse will lead to... termination.", "Send a message to an allied station.", "")
 				if(!input || !(usr in view(1,src)))
 					return
+				playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
 				send2otherserver("[station_name()]", input,"Comms_Console")
 				minor_announce(input, title = "Outgoing message to allied station")
 				log_say("[key_name(usr)] has sent a message to the other server: [input]")
@@ -227,6 +243,7 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 
 		// Status display stuff
 		if("setstat")
+			playsound(src, "terminal_type", 50, 0)
 			switch(href_list["statdisp"])
 				if("message")
 					post_status("message", stat_msg1, stat_msg2)
@@ -246,13 +263,14 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 		if("MessageCentcomm")
 			if(src.authenticated==2)
 				if(CM.lastTimeUsed + 600 > world.time)
-					usr << "Arrays recycling.  Please stand by."
+					usr << "<span class='warning'>Arrays recycling.  Please stand by.</span>"
 					return
 				var/input = stripped_input(usr, "Please choose a message to transmit to Centcom via quantum entanglement.  Please be aware that this process is very expensive, and abuse will lead to... termination.  Transmission does not guarantee a response.", "Send a message to Centcomm.", "")
 				if(!input || !(usr in view(1,src)))
 					return
+				playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
 				Centcomm_announce(input, usr)
-				usr << "Message transmitted."
+				usr << "<span class='notice'>Message transmitted to Central Command.</span>"
 				log_say("[key_name(usr)] has made a Centcom announcement: [input]")
 				CM.lastTimeUsed = world.time
 
@@ -261,31 +279,34 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 		if("MessageSyndicate")
 			if((src.authenticated==2) && (src.emagged))
 				if(CM.lastTimeUsed + 600 > world.time)
-					usr << "Arrays recycling.  Please stand by."
+					usr << "<span class='warning'>Arrays recycling.  Please stand by.</span>"
+					playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
 					return
 				var/input = stripped_input(usr, "Please choose a message to transmit to \[ABNORMAL ROUTING COORDINATES\] via quantum entanglement.  Please be aware that this process is very expensive, and abuse will lead to... termination. Transmission does not guarantee a response.", "Send a message to /??????/.", "")
 				if(!input || !(usr in view(1,src)))
 					return
+				playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
 				Syndicate_announce(input, usr)
-				usr << "Message transmitted."
+				usr << "<span class='danger'>SYSERR @l(19833)of(transmit.dm): !@$ MESSAGE TRANSMITTED TO SYNDICATE COMMAND.</span>"
 				log_say("[key_name(usr)] has made a Syndicate announcement: [input]")
 				CM.lastTimeUsed = world.time
 
 		if("RestoreBackup")
-			usr << "Backup routing data restored!"
+			usr << "<span class='notice'>Backup routing data restored!</span>"
+			playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
 			src.emagged = 0
 			src.updateDialog()
 
 		if("nukerequest") //When there's no other way
 			if(src.authenticated==2)
 				if(CM.lastTimeUsed + 600 > world.time)
-					usr << "Arrays recycling. Please stand by."
+					usr << "<span class='warning'>Arrays recycling. Please stand by.</span>"
 					return
 				var/input = stripped_input(usr, "Please enter the reason for requesting the nuclear self-destruct codes. Misuse of the nuclear request system will not be tolerated under any circumstances.  Transmission does not guarantee a response.", "Self Destruct Code Request.","")
 				if(!input || !(usr in view(1,src)))
 					return
 				Nuke_request(input, usr)
-				usr << "Request sent."
+				usr << "<span class='notice'>Request sent.</span>"
 				log_say("[key_name(usr)] has requested the nuclear codes from Centcomm")
 				priority_announce("The codes for the on-station nuclear self-destruct have been requested by [usr]. Confirmation or denial of this request will be sent shortly.", "Nuclear Self Destruct Codes Requested",'sound/AI/commandreport.ogg')
 				CM.lastTimeUsed = world.time
@@ -374,7 +395,8 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 		src.emagged = 1
 		if(authenticated == 1)
 			authenticated = 2
-		user << "<span class='notice'>You scramble the communication routing circuits.</span>"
+		user << "<span class='danger'>You scramble the communication routing circuits!</span>"
+		playsound(src, 'sound/machines/terminal_alert.ogg', 50, 0)
 
 /obj/machinery/computer/communications/attack_hand(mob/user)
 	if(..())
@@ -441,12 +463,15 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 				dat += "<BR>\[ <A HREF='?src=\ref[src];operation=login'>Log In</A> \]"
 		if(STATE_CALLSHUTTLE)
 			dat += get_call_shuttle_form()
+			playsound(src, 'sound/machines/terminal_prompt.ogg', 50, 0)
 		if(STATE_CANCELSHUTTLE)
 			dat += get_cancel_shuttle_form()
+			playsound(src, 'sound/machines/terminal_prompt.ogg', 50, 0)
 		if(STATE_MESSAGELIST)
 			dat += "Messages:"
 			for(var/i = 1; i<=src.messagetitle.len; i++)
 				dat += "<BR><A HREF='?src=\ref[src];operation=viewmessage;message-num=[i]'>[src.messagetitle[i]]</A>"
+			playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
 		if(STATE_VIEWMESSAGE)
 			if (src.currmsg)
 				dat += "<B>[src.messagetitle[src.currmsg]]</B><BR><BR>[src.messagetext[src.currmsg]]"
@@ -474,6 +499,7 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 			dat += " <A HREF='?src=\ref[src];operation=setstat;statdisp=alert;alert=redalert'>Red Alert</A> |"
 			dat += " <A HREF='?src=\ref[src];operation=setstat;statdisp=alert;alert=lockdown'>Lockdown</A> |"
 			dat += " <A HREF='?src=\ref[src];operation=setstat;statdisp=alert;alert=biohazard'>Biohazard</A> \]<BR><HR>"
+			playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
 		if(STATE_ALERT_LEVEL)
 			dat += "Current alert level: [get_security_level()]<BR>"
 			if(security_level == SEC_LEVEL_DELTA)
@@ -486,6 +512,7 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 			dat += "Confirm the change to: [num2seclevel(tmp_alertlevel)]<BR>"
 			dat += "<A HREF='?src=\ref[src];operation=swipeidseclevel'>Swipe ID</A> to confirm change.<BR>"
 		if(STATE_TOGGLE_EMERGENCY)
+			playsound(src, 'sound/machines/terminal_prompt.ogg', 50, 0)
 			if(emergency_access == 1)
 				dat += "<b>Emergency Maintenance Access is currently <font color='red'>ENABLED</font></b>"
 				dat += "<BR>Restore maintenance access restrictions? <BR>\[ <A HREF='?src=\ref[src];operation=disableemergency'>OK</A> | <A HREF='?src=\ref[src];operation=viewmessage'>Cancel</A> \]"
