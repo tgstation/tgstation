@@ -5,6 +5,7 @@
 	var/clockwork_desc //Shown to servants when they examine
 	icon = 'icons/obj/clockwork_objects.dmi'
 	icon_state = "rare_pepe"
+	var/unanchored_icon //icon for when this structure is unanchored, doubles as the var for if it can be unanchored
 	anchored = 1
 	density = 1
 	resistance_flags = FIRE_PROOF | ACID_PROOF
@@ -53,9 +54,38 @@
 			heavily_damaged = TRUE
 		if(can_see_clockwork)
 			user << "<span class='[heavily_damaged ? "alloy":"brass"]'>[servant_message][heavily_damaged ? "!":"."]</span>"
+	if(unanchored_icon)
+		user << "<span class='notice'>[src] is [anchored ? "":"not "]secured to the floor.</span>"
 
 /obj/structure/destructible/clockwork/hulk_damage()
 	return 20
+
+/obj/structure/destructible/clockwork/proc/get_efficiency_mod(increasing)
+	if(ratvar_awakens)
+		return 1
+	. = max(sqrt(obj_integrity/max(max_integrity, 1)), 0.5)
+	if(increasing)
+		. *= min(max_integrity/max(obj_integrity, 1), 4)
+	. = round(., 0.01)
+
+/obj/structure/destructible/clockwork/can_be_unfasten_wrench(mob/user)
+	if(anchored && obj_integrity <= round(max_integrity * 0.25, 1))
+		user << "<span class='warning'>[src] is too damaged to unsecure!</span>"
+		return FAILED_UNFASTEN
+	return ..()
+
+/obj/structure/destructible/clockwork/attackby(obj/item/I, mob/user, params)
+	if(is_servant_of_ratvar(user) && istype(I, /obj/item/weapon/wrench) && unanchored_icon)
+		if(default_unfasten_wrench(user, I, 50) == SUCCESSFUL_UNFASTEN)
+			if(anchored)
+				icon_state = initial(icon_state)
+			else
+				icon_state = unanchored_icon
+				playsound(src, break_sound, 10 * get_efficiency_mod(TRUE), 1)
+				take_damage(round(max_integrity * 0.25, 1), BRUTE)
+				user << "<span class='warning'>As you unsecure [src] from the floor, you see cracks appear in its surface!</span>"
+		return 1
+	return ..()
 
 
 //for the ark and Ratvar
@@ -101,9 +131,18 @@
 	var/powered = total_accessable_power()
 	return powered == PROCESS_KILL ? 25 : powered //make sure we don't accidentally return the arbitrary PROCESS_KILL define
 
+/obj/structure/destructible/clockwork/powered/can_be_unfasten_wrench(mob/user)
+	if(active)
+		user << "<span class='warning'>[src] needs to be disabled before it can be unsecured!</span>"
+		return FAILED_UNFASTEN
+	return ..()
+
 /obj/structure/destructible/clockwork/powered/proc/toggle(fast_process, mob/living/user)
 	if(user)
 		if(!is_servant_of_ratvar(user))
+			return FALSE
+		if(!anchored && !active)
+			user << "<span class='warning'>[src] needs to be secured to the floor before it can be activated!</span>"
 			return FALSE
 		user.visible_message("<span class='notice'>[user] [active ? "dis" : "en"]ables [src].</span>", "<span class='brass'>You [active ? "dis" : "en"]able [src].</span>")
 	active = !active
