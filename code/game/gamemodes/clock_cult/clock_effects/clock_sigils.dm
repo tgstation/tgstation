@@ -195,9 +195,9 @@
 			user << "<span class='brass'>You can recharge from the [sigil_name] by crossing it.</span>"
 
 /obj/effect/clockwork/sigil/transmission/sigil_effects(mob/living/L)
-	if(is_servant_of_ratvar(user))
-		if(iscyborg(user))
-			charge_cyborg(user)
+	if(is_servant_of_ratvar(L))
+		if(iscyborg(L))
+			charge_cyborg(L)
 	else if(power_charge)
 		L << "<span class='brass'>You feel a slight, static shock.</span>"
 
