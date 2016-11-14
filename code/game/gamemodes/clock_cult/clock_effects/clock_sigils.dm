@@ -177,8 +177,8 @@
 	alpha = 50
 	resist_string = "glows faintly"
 	sigil_name = "Sigil of Transmission"
+	affects_servants = TRUE
 	var/power_charge = REPLICANT_ALLOY_POWER //starts with REPLICANT_ALLOY_POWER by default
-	var/cyborg_charging = FALSE
 
 /obj/effect/clockwork/sigil/transmission/ex_act(severity)
 	if(severity == 3)
@@ -192,21 +192,21 @@
 	if(is_servant_of_ratvar(user) || isobserver(user))
 		user << "<span class='[power_charge ? "brass":"alloy"]'>It is storing <b>[ratvar_awakens ? "INFINITY":"[power_charge]"]W</b> of power.</span>"
 		if(iscyborg(user))
-			user << "<span class='brass'>You can recharge from the [sigil_name] by standing on it and activating it.</span>"
+			user << "<span class='brass'>You can recharge from the [sigil_name] by crossing it.</span>"
 
-/obj/effect/clockwork/sigil/transmission/attack_ai(mob/user)
-	if(iscyborg(user) && is_servant_of_ratvar(user))
-		charge_cyborg(user)
+/obj/effect/clockwork/sigil/transmission/sigil_effects(mob/living/L)
+	if(is_servant_of_ratvar(user))
+		if(iscyborg(user))
+			charge_cyborg(user)
+	else if(power_charge)
+		L << "<span class='brass'>You feel a slight, static shock.</span>"
 
 /obj/effect/clockwork/sigil/transmission/proc/charge_cyborg(mob/living/silicon/robot/cyborg)
 	if(!cyborg_checks(cyborg))
 		return
-	cyborg_charging = TRUE
 	cyborg << "<span class='brass'>You start to charge from the [sigil_name]...</span>"
 	if(!do_after(cyborg, 50, target = src))
-		cyborg_charging = FALSE
 		return
-	cyborg_charging = FALSE
 	if(!cyborg_checks(cyborg))
 		return
 	var/giving_power = min(round((cyborg.cell.maxcharge - cyborg.cell.charge) * 0.02) * 50, power_charge) //give the borg either all our power or their missing power floored to 50
@@ -220,12 +220,6 @@
 		addtimer(cyborg, "update_atom_colour", 100)
 
 /obj/effect/clockwork/sigil/transmission/proc/cyborg_checks(mob/living/silicon/robot/cyborg)
-	if(cyborg.loc != loc)
-		cyborg << "<span class='warning'>You need to be standing on the [sigil_name] to charge from it!</span>"
-		return FALSE
-	if(cyborg_charging)
-		cyborg << "<span class='warning'>You are already trying to gain power from this [sigil_name]!</span>"
-		return FALSE
 	if(!cyborg.cell)
 		cyborg << "<span class='warning'>You have no cell!</span>"
 		return FALSE
@@ -239,10 +233,6 @@
 		cyborg << "<span class='warning'>You are already regenerating power!</span>"
 		return FALSE
 	return TRUE
-
-/obj/effect/clockwork/sigil/transmission/sigil_effects(mob/living/L)
-	if(power_charge)
-		L << "<span class='brass'>You feel a slight, static shock.</span>"
 
 /obj/effect/clockwork/sigil/transmission/New()
 	..()
