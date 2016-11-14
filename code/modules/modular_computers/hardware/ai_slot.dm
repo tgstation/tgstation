@@ -1,5 +1,5 @@
 /obj/item/weapon/computer_hardware/ai_slot
-	name = "\improper intelliCard interface slot"
+	name = "intelliCard interface slot"
 	desc = "A module allowing this computer to interface with most common intelliCard modules. Necessary for some programs to run properly."
 	power_usage = 100 //W
 	icon_state = "card_mini"
