@@ -215,7 +215,7 @@
 			return
 	return 1
 
-/obj/item/clockwork/slab/proc/recite_scripture(datum/clockwork_scripture/scripture, mob/living/user, delayed)
+/obj/item/clockwork/slab/proc/recite_scripture(datum/clockwork_scripture/scripture, mob/living/user)
 	if(!scripture || !user || !user.canUseTopic(src) || (!nonhuman_usable && !ishuman(user)))
 		return FALSE
 	if(user.get_active_held_item() != src)
@@ -223,7 +223,7 @@
 		return FALSE
 	var/list/tiers_of_scripture = scripture_unlock_check()
 	if(!ratvar_awakens && !no_cost && !tiers_of_scripture[initial(scripture.tier)])
-		user << "<span class='warning'>That scripture is no[delayed ? " longer":"t"] unlocked, and cannot be recited!</span>"
+		user << "<span class='warning'>That scripture is not unlocked, and cannot be recited!</span>"
 		return FALSE
 	var/datum/clockwork_scripture/scripture_to_recite = new scripture
 	scripture_to_recite.slab = src
@@ -240,14 +240,14 @@
 	text += "</font><br><br><br><center><font size=1><A href='?src=\ref[src];compactscripture=1'>Compact Scripture Text: [compact_scripture ? "ON":"OFF"]</A></font></center><br>"
 	var/text_to_add = ""
 	var/drivers = "<br><b><A href='?src=\ref[src];Driver=1'>[SCRIPTURE_DRIVER]</A></b><br><font size=1><i>These scriptures are always unlocked.</i><br>"
-	var/scripts = "<br><b><A href='?src=\ref[src];Script=1'>[SCRIPTURE_SCRIPT]</A></b><br><font size=1><i>These scriptures require at least <b>5</b> Servants and \
-	<b>1</b> Tinkerer's Cache.</i><br>"
-	var/applications = "<br><b><A href='?src=\ref[src];Application=1'>[SCRIPTURE_APPLICATION]</A></b><br><font size=1><i>These scriptures require at least <b>8</b> Servants, \
-	<b>3</b> Tinkerer's Caches, and <b>100CV</b>.</i><br>"
-	var/revenant = "<br><b><A href='?src=\ref[src];Revenant=1'>[SCRIPTURE_REVENANT]</A></b><br><font size=1><i>These scriptures require at least <b>10</b> Servants, \
-	<b>4</b> Tinkerer's Caches, and <b>200CV</b>.</i><br>"
-	var/judgement = "<br><b><A href='?src=\ref[src];Judgement=1'>[SCRIPTURE_JUDGEMENT]</A></b><br><font size=1><i>This scripture requires at least <b>12</b> Servants, \
-	<b>5</b> Tinkerer's Caches, and <b>300CV</b>.<br>In addition, there may not be any active non-Servant AIs.</i><br>"
+	var/scripts = "<br><b><A href='?src=\ref[src];Script=1'>[SCRIPTURE_SCRIPT]</A></b><br><font size=1><i>These scriptures require at least <b>[SCRIPT_SERVANT_REQ]</b> Servants and \
+	<b>[SCRIPT_CACHE_REQ]</b> Tinkerer's Cache.</i><br>"
+	var/applications = "<br><b><A href='?src=\ref[src];Application=1'>[SCRIPTURE_APPLICATION]</A></b><br><font size=1><i>These scriptures require at least <b>[APPLICATION_SERVANT_REQ]</b> Servants, \
+	<b>[APPLICATION_CACHE_REQ]</b> Tinkerer's Caches, and <b>[APPLICATION_CV_REQ]CV</b>.</i><br>"
+	var/revenant = "<br><b><A href='?src=\ref[src];Revenant=1'>[SCRIPTURE_REVENANT]</A></b><br><font size=1><i>These scriptures require at least <b>[REVENANT_SERVANT_REQ]</b> Servants, \
+	<b>[REVENANT_CACHE_REQ]</b> Tinkerer's Caches, and <b>[REVENANT_CV_REQ]CV</b>.</i><br>"
+	var/judgement = "<br><b><A href='?src=\ref[src];Judgement=1'>[SCRIPTURE_JUDGEMENT]</A></b><br><font size=1><i>This scripture requires at least <b>[JUDGEMENT_SERVANT_REQ]</b> Servants, \
+	<b>[JUDGEMENT_CACHE_REQ]</b> Tinkerer's Caches, and <b>[JUDGEMENT_CV_REQ]CV</b>.<br>In addition, there may not be any active non-Servant AIs.</i><br>"
 	for(var/V in sortList(subtypesof(/datum/clockwork_scripture), /proc/cmp_clockscripture_priority))
 		var/datum/clockwork_scripture/S = V
 		var/initial_tier = initial(S.tier)
@@ -315,7 +315,7 @@
 			production_time += min(SLAB_SERVANT_SLOWDOWN * servants, SLAB_SLOWDOWN_MAXIMUM)
 		var/production_text_addon = ""
 		if(production_time != SLAB_PRODUCTION_TIME+SLAB_SLOWDOWN_MAXIMUM)
-			production_text_addon = ", which increases for each human or silicon servant above <b>5</b>"
+			production_text_addon = ", which increases for each human or silicon servant above <b>[SCRIPT_SERVANT_REQ]</b>"
 		production_time = production_time/600
 		var/production_text = "<b>[round(production_time)] minute\s"
 		if(production_time != round(production_time))
@@ -348,7 +348,8 @@
 		This would be a massive amount of information to try and keep track of, but all Servants have the <b><font color=#BE8700>Global Records</font></b> alert, which appears in the top right.<br>\
 		Mousing over that alert will display Servants, Caches, CV, and other information, such as the tiers of scripture that are unlocked.<br><br>\
 		\
-		On that note, <font color=#BE8700>Scripture</font> is recited through <b><font color=#BE8700>Recital</font></b>, the first and most important function of the slab.<br>\
+		On that note, <font color=#BE8700>Scripture</font> is recited through <b><font color=#BE8700>Recital</font></b>, the first and most important function of the slab, \
+		which also allows <b>Quickbinding</b> scripture.<br>\
 		All scripture requires some amount of <font color=#BE8700>Components</font> to recite, and only the weakest scripture does not consume any components when recited.<br>\
 		However, weak is relative when it comes to scripture; even the 'weakest' could be enough to dominate a station in the hands of cunning Servants, and higher tiers of scripture are even \
 		stronger in the right hands.<br><br>\
@@ -357,8 +358,7 @@
 		to the invoker, or even, at one of the highest tiers, granting all nearby Servants temporary invulnerability.<br>\
 		However, the most important scripture is <font color=#AF0AAF>Geis</font>, which allows you to convert heathens with relative ease.<br><br>\
 		\
-		The second function of the clockwork slab is <b><font color=#BE8700>Recollection</font></b>, which will display this guide and allows for the quickbinding and <font color=#BE8700>recital</font> \
-		of scripture.<br><br>\
+		The second function of the clockwork slab is <b><font color=#BE8700>Recollection</font></b>, which will display this guide.<br><br>\
 		\
 		The third to fifth functions are three buttons in the top left while holding the slab.<br>From left to right, they are:<br>\
 		<b><font color=#DAAA18>Hierophant Network</font></b>, which allows communication to other Servants.<br>\
