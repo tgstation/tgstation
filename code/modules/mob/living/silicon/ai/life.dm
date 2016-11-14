@@ -47,7 +47,7 @@
 /mob/living/silicon/ai/proc/lacks_power()
 	var/turf/T = get_turf(src)
 	var/area/A = get_area(src)
-	return !T || !A || ((!A.master.power_equip || isspaceturf(T)) && !is_type_in_list(loc, list(/obj/item, /obj/mecha)))
+	return (!T || !A || ((!A.master.power_equip || isspaceturf(T)) && !is_type_in_list(loc, list(/obj/item, /obj/mecha)))) && requires_power
 
 /mob/living/silicon/ai/updatehealth()
 	if(status_flags & GODMODE)

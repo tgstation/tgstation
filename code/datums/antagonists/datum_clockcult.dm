@@ -70,6 +70,8 @@
 			R.SetEmagged(TRUE)
 		else if(isAI(S))
 			var/mob/living/silicon/ai/A = S
+			A.requires_power = FALSE
+			A.ai_restore_power()
 			for(var/C in A.connected_robots)
 				var/mob/living/silicon/robot/R = C
 				if(R.connected_ai == A)
@@ -115,6 +117,9 @@
 		if(iscyborg(S))
 			var/mob/living/silicon/robot/R = S
 			R.SetEmagged(FALSE)
+		else if(isAI(S))
+			var/mob/living/silicon/ai/A = S
+			A.requires_power = TRUE
 		S.make_laws()
 		S.update_icons()
 		S.show_laws()
