@@ -151,6 +151,7 @@
 /obj/item/projectile/magic/change/on_hit(atom/change)
 	. = ..()
 	wabbajack(change)
+	qdel(src)
 
 /proc/wabbajack(mob/living/M)
 	if(!istype(M) || M.stat == DEAD || M.notransform || (GODMODE & M.status_flags))
@@ -346,6 +347,7 @@
 				S.icon_state = P.icon_state
 				S.overlays = P.overlays
 				S.color = P.color
+				S.atom_colours = P.atom_colours.Copy()
 				if(L.mind)
 					L.mind.transfer_to(S)
 					S << "<span class='userdanger'>You are an animate statue. You cannot move when monitored, but are nearly invincible and deadly when unobserved! Do not harm [firer.name], your creator.</span>"

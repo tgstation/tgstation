@@ -130,6 +130,12 @@
 			update_move_direction()
 			user << "<span class='notice'>You rotate [src].</span>"
 
+	else if(istype(I, /obj/item/weapon/screwdriver))
+		if(!(stat & BROKEN))
+			verted = verted * -1
+			update_move_direction()
+			user << "<span class='notice'>You reverse [src]'s direction.</span>"
+
 	else if(user.a_intent != "harm")
 		if(user.drop_item())
 			I.loc = src.loc

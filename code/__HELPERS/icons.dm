@@ -948,9 +948,8 @@ var/global/list/friendly_animal_types = list()
 	overlays += priority_overlays
 
 /atom/proc/add_overlay(image, priority = 0)
-	if(image in overlays)
-		return
 	var/list/new_overlays = overlays.Copy()
+	new_overlays -= image
 	if(priority)
 		if(!priority_overlays)
 			priority_overlays = list()

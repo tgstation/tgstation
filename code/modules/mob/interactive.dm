@@ -1547,8 +1547,8 @@
 						if(istype(main_hand,/obj/item/weapon/gun))
 							var/obj/item/weapon/gun/G = main_hand
 							if(G.can_trigger_gun(src))
-								if(istype(main_hand,/obj/item/weapon/gun/projectile))
-									var/obj/item/weapon/gun/projectile/P = main_hand
+								if(istype(main_hand,/obj/item/weapon/gun/ballistic))
+									var/obj/item/weapon/gun/ballistic/P = main_hand
 									if(!P.chambered)
 										P.chamber_round()
 										P.update_icon()

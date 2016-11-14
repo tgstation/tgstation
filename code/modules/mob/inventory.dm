@@ -297,6 +297,8 @@
 		items += head
 	if(wear_mask)
 		items += wear_mask
+	if(wear_neck)
+		items += wear_neck
 	return items
 
 /mob/living/carbon/human/get_equipped_items()

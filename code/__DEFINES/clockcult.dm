@@ -1,20 +1,29 @@
+//component id defines
+#define BELLIGERENT_EYE "belligerent_eye"
+#define VANGUARD_COGWHEEL "vanguard_cogwheel"
+#define GEIS_CAPACITOR "geis_capacitor"
+#define REPLICANT_ALLOY "replicant_alloy"
+#define HIEROPHANT_ANSIBLE "hierophant_ansible"
+
 var/global/clockwork_construction_value = 0 //The total value of all structures built by the clockwork cult
 var/global/clockwork_caches = 0 //How many clockwork caches exist in the world (not each individual)
 var/global/clockwork_daemons = 0 //How many daemons exist in the world
 var/global/list/clockwork_generals_invoked = list("nezbere" = FALSE, "sevtug" = FALSE, "nzcrentr" = FALSE, "inath-neq" = FALSE) //How many generals have been recently invoked
 var/global/list/all_clockwork_objects = list() //All clockwork items, structures, and effects in existence
 var/global/list/all_clockwork_mobs = list() //All clockwork SERVANTS (not creatures) in existence
-var/global/list/clockwork_component_cache = list("belligerent_eye" = 0, "vanguard_cogwheel" = 0, "guvax_capacitor" = 0, "replicant_alloy" = 0, "hierophant_ansible" = 0) //The pool of components that caches draw from
+var/global/list/clockwork_component_cache = list(BELLIGERENT_EYE = 0, VANGUARD_COGWHEEL = 0, GEIS_CAPACITOR = 0, REPLICANT_ALLOY = 0, HIEROPHANT_ANSIBLE = 0) //The pool of components that caches draw from
 var/global/ratvar_awakens = FALSE //If Ratvar has been summoned
 var/global/clockwork_gateway_activated = FALSE //if a gateway to the celestial derelict has ever been successfully activated
 
-#define SCRIPTURE_PERIPHERAL "Peripheral" //Scripture tiers; peripherals should never be used
+//Scripture tiers; peripherals should never be used
+#define SCRIPTURE_PERIPHERAL "Peripheral"
 #define SCRIPTURE_DRIVER "Driver"
 #define SCRIPTURE_SCRIPT "Script"
 #define SCRIPTURE_APPLICATION "Application"
 #define SCRIPTURE_REVENANT "Revenant"
 #define SCRIPTURE_JUDGEMENT "Judgement"
 
+//general component/cooldown things
 #define SLAB_PRODUCTION_TIME 900 //how long(deciseconds) slabs require to produce a single component; defaults to 1 minute 30 seconds
 
 #define SLAB_SERVANT_SLOWDOWN 300 //how much each servant above 5 slows down slab-based generation; defaults to 30 seconds per sevant
@@ -42,6 +51,12 @@ var/global/clockwork_gateway_activated = FALSE //if a gateway to the celestial d
 
 #define REPLICANT_WALL_TOTAL REPLICANT_WALL_MINUS_FLOOR+REPLICANT_FLOOR //how much alloy is in a clockwork wall and the floor under it
 
+#define REPLICANT_ROD REPLICANT_ALLOY_UNIT*0.01 //amount of replicant alloy in one rod
+
+#define REPLICANT_METAL REPLICANT_ALLOY_UNIT*0.02 //amount of replicant alloy in one sheet of metal
+
+#define REPLICANT_PLASTEEL REPLICANT_ALLOY_UNIT*0.05 //amount of replicant alloy in one sheet of plasteel
+
 #define RATVAR_ALLOY_CHECK "ratvar?" //when passed into can_use_alloy(), converts it into a check for if ratvar has woken/the proselytizer is debug
 
 //clockcult power defines
@@ -54,11 +69,11 @@ var/global/clockwork_gateway_activated = FALSE //if a gateway to the celestial d
 #define REPLICANT_ALLOY_POWER REPLICANT_ALLOY_UNIT*CLOCKCULT_ALLOY_TO_POWER_MULTIPLIER //the amount of power you get from a single piece of replicant alloy
 
 //Ark defines
-#define GATEWAY_SUMMON_RATE 2 //the time amount the Gateway to the Celestial Derelict gets each process tick; defaults to 2 per tick
+#define GATEWAY_SUMMON_RATE 1 //the time amount the Gateway to the Celestial Derelict gets each process tick; defaults to 1 per tick
 
-#define GATEWAY_REEBE_FOUND 100 //when progress is at or above this, the gateway finds reebe and begins drawing power
+#define GATEWAY_REEBE_FOUND 119 //when progress is at or above this, the gateway finds reebe and begins drawing power
 
-#define GATEWAY_RATVAR_COMING 250 //when progress is at or above this, ratvar has entered and is coming through the gateway
+#define GATEWAY_RATVAR_COMING 239 //when progress is at or above this, ratvar has entered and is coming through the gateway
 
 #define GATEWAY_RATVAR_ARRIVAL 300 //when progress is at or above this, game over ratvar's here everybody go home
 

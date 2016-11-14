@@ -212,7 +212,7 @@
 		return 1
 	return
 
-/obj/item/mecha_parts/mecha_equipment/medical/sleeper/container_resist()
+/obj/item/mecha_parts/mecha_equipment/medical/sleeper/container_resist(mob/living/user)
 	go_out()
 
 /obj/item/mecha_parts/mecha_equipment/medical/sleeper/process()

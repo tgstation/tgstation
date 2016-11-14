@@ -89,7 +89,7 @@
 			M << "<B>Your service has not gone unrewarded, however. Studying under [wizard_name], you have learned reality bending mobility spells. You are able to cast teleport and ethereal jaunt."
 		if("healing")
 			M.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/charge(null))
-			M.mind.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/conjure/forcewall(null))
+			M.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/forcewall(null))
 			M.put_in_hands_or_del(new /obj/item/weapon/gun/magic/staff/healing(M))
 			M << "<B>Your service has not gone unrewarded, however. Studying under [wizard_name], you have learned livesaving survival spells. You are able to cast charge and forcewall."
 		if("robeless")

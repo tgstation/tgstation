@@ -100,8 +100,23 @@
 
 /turf/open/floor/clockwork/proc/healservants()
 	for(var/mob/living/L in src)
-		if(L.stat == DEAD || !is_servant_of_ratvar(L))
+		if(L.stat == DEAD)
 			continue
+		. = 1
+		if(!is_servant_of_ratvar(L) || !L.toxloss)
+			continue
+
+		var/image/I = new('icons/effects/effects.dmi', src, "heal", ABOVE_MOB_LAYER) //fake a healing glow for servants
+		I.appearance_flags = RESET_COLOR
+		I.color = "#5A6068"
+		I.pixel_x = rand(-12, 12)
+		I.pixel_y = rand(-9, 0)
+		var/list/viewing = list()
+		for(var/mob/M in viewers(src))
+			if(M.client && (is_servant_of_ratvar(M) || isobserver(M) || M.stat == DEAD))
+				viewing += M.client
+		flick_overlay(I, viewing, 8)
+
 		var/swapdamage = FALSE
 		if(L.has_dna()) //if has_dna() is true they're at least carbon
 			var/mob/living/carbon/C = L
@@ -115,7 +130,6 @@
 			L.adjustToxLoss(3)
 		else
 			L.adjustToxLoss(-3)
-		. = 1
 
 /turf/open/floor/clockwork/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/weapon/crowbar))
@@ -134,16 +148,13 @@
 	new/obj/item/clockwork/alloy_shards/medium(src)
 	return ..()
 
-/turf/open/floor/clockwork/ratvar_act()
-	for(var/mob/M in src)
-		M.ratvar_act()
-
 /turf/open/floor/clockwork/narsie_act()
 	..()
 	if(istype(src, /turf/open/floor/clockwork)) //if we haven't changed type
 		var/previouscolor = color
 		color = "#960000"
 		animate(src, color = previouscolor, time = 8)
+		addtimer(src, "update_atom_colour", 8)
 
 
 /turf/open/floor/bluespace
@@ -159,3 +170,49 @@
 	desc = "Time seems to flow very slowly around these tiles"
 	floor_tile = /obj/item/stack/tile/sepia
 
+
+
+// VINE FLOOR
+
+/turf/open/floor/vines
+	color = "#aa77aa"
+	icon_state = "vinefloor"
+	broken_states = list()
+
+
+//All of this shit is useless for vines
+
+/turf/open/floor/vines/attackby()
+	return
+
+/turf/open/floor/vines/burn_tile()
+	return
+
+/turf/open/floor/vines/break_tile()
+	return
+
+/turf/open/floor/vines/make_plating()
+	return
+
+/turf/open/floor/vines/break_tile_to_plating()
+	return
+
+/turf/open/floor/vines/ex_act(severity, target)
+	..()
+	if(severity < 3 || target == src)
+		ChangeTurf(src.baseturf)
+
+/turf/open/floor/vines/narsie_act()
+	if(prob(20))
+		ChangeTurf(src.baseturf) //nar sie eats this shit
+
+/turf/open/floor/vines/singularity_pull(S, current_size)
+	if(current_size >= STAGE_FIVE)
+		if(prob(50))
+			ChangeTurf(src.baseturf)
+
+/turf/open/floor/vines/ChangeTurf(turf/open/floor/T)
+	for(var/obj/structure/spacevine/SV in src)
+		qdel(SV)
+	. = ..()
+	UpdateAffectingLights()

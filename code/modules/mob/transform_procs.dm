@@ -77,10 +77,12 @@
 
 	//keep damage?
 	if (tr_flags & TR_KEEPDAMAGE)
-		O.setToxLoss(getToxLoss())
-		O.adjustBruteLoss(getBruteLoss())
-		O.setOxyLoss(getOxyLoss())
-		O.adjustFireLoss(getFireLoss())
+		O.setToxLoss(getToxLoss(), 0)
+		O.adjustBruteLoss(getBruteLoss(), 0)
+		O.setOxyLoss(getOxyLoss(), 0)
+		O.setCloneLoss(getCloneLoss(), 0)
+		O.adjustFireLoss(getFireLoss(), 0)
+		O.updatehealth()
 		O.radiation = radiation
 
 	//re-add implants to new mob
@@ -229,10 +231,12 @@
 
 	//keep damage?
 	if (tr_flags & TR_KEEPDAMAGE)
-		O.setToxLoss(getToxLoss())
-		O.adjustBruteLoss(getBruteLoss())
-		O.setOxyLoss(getOxyLoss())
-		O.adjustFireLoss(getFireLoss())
+		O.setToxLoss(getToxLoss(), 0)
+		O.adjustBruteLoss(getBruteLoss(), 0)
+		O.setOxyLoss(getOxyLoss(), 0)
+		O.setCloneLoss(getCloneLoss(), 0)
+		O.adjustFireLoss(getFireLoss(), 0)
+		O.updatehealth()
 		O.radiation = radiation
 
 	//re-add implants to new mob

@@ -36,6 +36,7 @@
 	icon_state = "foamdart_proj"
 	ammo_type = /obj/item/ammo_casing/caseless/foam_dart
 	range = 10
+	var/modified = 0
 	var/obj/item/weapon/pen/pen = null
 
 /obj/item/projectile/bullet/reusable/foam_dart/handle_drop()
@@ -43,17 +44,17 @@
 		return
 	var/turf/T = get_turf(src)
 	dropped = 1
-	var/obj/item/ammo_casing/caseless/foam_dart/newdart = new ammo_type(T)
-	var/obj/item/ammo_casing/caseless/foam_dart/old_dart = ammo_casing
-	newdart.modified = old_dart.modified
+	var/obj/item/ammo_casing/caseless/foam_dart/newcasing = new ammo_type(T)
+	newcasing.modified = modified
+	var/obj/item/projectile/bullet/reusable/foam_dart/newdart = newcasing.BB
+	newdart.modified = modified
+	newdart.damage = damage
+	newdart.nodamage = nodamage
+	newdart.damage_type = damage_type
 	if(pen)
-		var/obj/item/projectile/bullet/reusable/foam_dart/newdart_FD = newdart.BB
-		newdart_FD.pen = pen
-		pen.loc = newdart_FD
+		newdart.pen = pen
+		pen.forceMove(newdart)
 		pen = null
-	newdart.BB.damage = damage
-	newdart.BB.nodamage = nodamage
-	newdart.BB.damage_type = damage_type
 	newdart.update_icon()
 
 
@@ -66,3 +67,11 @@
 	icon_state = "foamdart_riot_proj"
 	ammo_type = /obj/item/ammo_casing/caseless/foam_dart/riot
 	stamina = 25
+
+/obj/item/projectile/bullet/reusable/arrow
+	name = "arrow"
+	icon_state = "arrow"
+	ammo_type = /obj/item/ammo_casing/caseless/arrow
+	range = 10
+	damage = 25
+	damage_type = BRUTE

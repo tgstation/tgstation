@@ -116,6 +116,7 @@
 
 /obj/item/weapon/gun/energy/kinetic_accelerator/proc/reload()
 	power_supply.give(500)
+	recharge_newshot(1)
 	if(!suppressed)
 		playsound(src.loc, 'sound/weapons/kenetic_reload.ogg', 60, 1)
 	else
@@ -128,9 +129,9 @@
 	if(!can_shoot())
 		add_overlay("kineticgun_empty")
 
-	if(F && can_flashlight)
+	if(gun_light && can_flashlight)
 		var/iconF = "flight"
-		if(F.on)
+		if(gun_light.on)
 			iconF = "flight_on"
 		add_overlay(image(icon = icon, icon_state = iconF, pixel_x = flight_x_offset, pixel_y = flight_y_offset))
 
@@ -167,6 +168,8 @@
 	damage_type = BRUTE
 	flag = "bomb"
 	range = 3
+	log_override = TRUE
+
 	var/pressure_decrease = 0.25
 	var/turf_aoe = FALSE
 	var/mob_aoe = 0

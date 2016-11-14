@@ -32,6 +32,7 @@
 	var/cutting_sound = 'sound/items/Welder.ogg'
 	var/material_drop = /obj/item/stack/sheet/metal
 	var/material_drop_amount = 3
+	var/delivery_icon = "deliverycloset" //which icon to use when packagewrapped. null to be unwrappable.
 
 /obj/structure/closet/New()
 	..()
@@ -72,6 +73,8 @@
 
 /obj/structure/closet/examine(mob/user)
 	..()
+	if(anchored)
+		user << "It is anchored to the ground."
 	if(broken)
 		user << "<span class='notice'>It appears to be broken.</span>"
 	else if(secure && !opened)
@@ -204,20 +207,24 @@
 		if(istype(W, cutting_tool))
 			if(istype(W, /obj/item/weapon/weldingtool))
 				var/obj/item/weapon/weldingtool/WT = W
-				if(!WT.remove_fuel(0, user))
-					return
-				user << "<span class='notice'>You begin cutting \the [src] apart...</span>"
-				playsound(loc, cutting_sound, 40, 1)
-				if(do_after(user, 40/WT.toolspeed, 1, target = src))
-					if(!opened || !WT.isOn())
-						return
-					playsound(loc, cutting_sound, 50, 1)
-					visible_message("<span class='notice'>[user] slices apart \the [src].</span>",
-									"<span class='notice'>You cut \the [src] apart with \the [WT].</span>",
-									"<span class='italics'>You hear welding.</span>")
-					deconstruct(TRUE)
+				if(WT.remove_fuel(0, user))
+					user << "<span class='notice'>You begin cutting \the [src] apart...</span>"
+					playsound(loc, cutting_sound, 40, 1)
+					if(do_after(user, 40/WT.toolspeed, 1, target = src))
+						if(!opened || !WT.isOn())
+							return
+						playsound(loc, cutting_sound, 50, 1)
+						user.visible_message("<span class='notice'>[user] slices apart \the [src].</span>",
+										"<span class='notice'>You cut \the [src] apart with \the [WT].</span>",
+										"<span class='italics'>You hear welding.</span>")
+						deconstruct(TRUE)
 					return 0
-		else if(user.drop_item())
+			else // for example cardboard box is cut with wirecutters
+				user.visible_message("<span class='notice'>[user] cut apart \the [src].</span>", \
+									"<span class='notice'>You cut \the [src] apart with \the [W].</span>")
+				deconstruct(TRUE)
+				return 0
+		if(user.drop_item()) // so we put in unlit welder too
 			W.forceMove(loc)
 			return 1
 	else if(istype(W, /obj/item/weapon/weldingtool) && can_weld_shut)
@@ -231,10 +238,18 @@
 				return
 			playsound(loc, 'sound/items/welder.ogg', 50, 1)
 			welded = !welded
-			visible_message("<span class='notice'>[user] [welded ? "welds shut" : "unweldeds"] \the [src].</span>",
+			user.visible_message("<span class='notice'>[user] [welded ? "welds shut" : "unweldeds"] \the [src].</span>",
 							"<span class='notice'>You [welded ? "weld" : "unwelded"] \the [src] with \the [WT].</span>",
 							"<span class='italics'>You hear welding.</span>")
 			update_icon()
+	else if(istype(W, /obj/item/weapon/wrench))
+		if(isinspace() && !anchored)
+			return
+		anchored = !anchored
+		playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
+		user.visible_message("<span class='notice'>[user] [anchored ? "anchored" : "unanchored"] \the [src] [anchored ? "to" : "from"] the ground.</span>", \
+						"<span class='notice'>You [anchored ? "anchored" : "unanchored"] \the [src] [anchored ? "to" : "from"] the ground.</span>", \
+						"<span class='italics'>You hear a ratchet.</span>")
 	else if(user.a_intent != "harm" && !(W.flags & NOBLUDGEON))
 		if(W.GetID() || !toggle(user))
 			togglelock(user)
@@ -302,6 +317,10 @@
 		togglelock(user)
 		return
 
+/obj/structure/closet/attack_robot(mob/user)
+	if(user.Adjacent(src))
+		return attack_hand(user)
+
 // tk grab then use on self
 /obj/structure/closet/attack_self_tk(mob/user)
 	return attack_hand(user)
@@ -358,7 +377,7 @@
 			user << "<span class='warning'>You fail to break out of [src]!</span>"
 
 /obj/structure/closet/proc/bust_open()
-	welded = 0 //applies to all lockers lockers
+	welded = 0 //applies to all lockers
 	locked = 0 //applies to critter crates and secure lockers only
 	broken = 1 //applies to secure lockers only
 	open()
@@ -376,7 +395,8 @@
 /obj/structure/closet/proc/togglelock(mob/living/user)
 	if(secure && !broken)
 		if(allowed(user))
-			add_fingerprint(user)
+			if(iscarbon(user))
+				add_fingerprint(user)
 			locked = !locked
 			user.visible_message("<span class='notice'>[user] [locked ? null : "un"]locks [src].</span>",
 							"<span class='notice'>You [locked ? null : "un"]lock [src].</span>")

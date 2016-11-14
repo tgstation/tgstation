@@ -98,11 +98,11 @@
 	name = "shotgun locker"
 	desc = "A locker that holds shotguns."
 	case_type = "shotgun"
-	gun_category = /obj/item/weapon/gun/projectile/shotgun
+	gun_category = /obj/item/weapon/gun/ballistic/shotgun
 
 /obj/structure/guncase/ecase
 	name = "energy gun locker"
 	desc = "A locker that holds energy guns."
 	icon_state = "ecase"
 	case_type = "egun"
-	gun_category = /obj/item/weapon/gun/energy/gun
+	gun_category = /obj/item/weapon/gun/energy/e_gun

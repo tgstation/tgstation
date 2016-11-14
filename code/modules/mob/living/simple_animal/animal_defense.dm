@@ -15,7 +15,7 @@
 		if("harm", "disarm")
 			M.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
 			visible_message("<span class='danger'>[M] [response_harm] [src]!</span>",\
-			"<span class='userdanger'>[M] [response_harm] [src]!</span>", null, 2, M)
+			"<span class='userdanger'>[M] [response_harm] [src]!</span>", null, COMBAT_MESSAGE_RANGE)
 			playsound(loc, attacked_sound, 25, 1, -1)
 			attack_threshold_check(harm_intent_damage)
 			add_logs(M, src, "attacked")
@@ -27,7 +27,7 @@
 		..(user, 1)
 		playsound(loc, "punch", 25, 1, -1)
 		visible_message("<span class='danger'>[user] has punched [src]!</span>", \
-			"<span class='userdanger'>[user] has punched [src]!</span>", null, 2, user)
+			"<span class='userdanger'>[user] has punched [src]!</span>", null, COMBAT_MESSAGE_RANGE)
 		adjustBruteLoss(15)
 		return 1
 
@@ -48,29 +48,28 @@
 		if(M.a_intent == "disarm")
 			playsound(loc, 'sound/weapons/pierce.ogg', 25, 1, -1)
 			visible_message("<span class='danger'>[M] [response_disarm] [name]!</span>", \
-					"<span class='userdanger'>[M] [response_disarm] [name]!</span>", null, 2, M)
+					"<span class='userdanger'>[M] [response_disarm] [name]!</span>", null, COMBAT_MESSAGE_RANGE)
 			add_logs(M, src, "disarmed")
 		else
 			var/damage = rand(15, 30)
 			visible_message("<span class='danger'>[M] has slashed at [src]!</span>", \
-					"<span class='userdanger'>[M] has slashed at [src]!</span>", null, 2, M)
+					"<span class='userdanger'>[M] has slashed at [src]!</span>", null, COMBAT_MESSAGE_RANGE)
 			playsound(loc, 'sound/weapons/slice.ogg', 25, 1, -1)
 			attack_threshold_check(damage)
 			add_logs(M, src, "attacked")
 		return 1
 
 /mob/living/simple_animal/attack_larva(mob/living/carbon/alien/larva/L)
-	if(..()) //successful larva bite
+	if(..() && stat != DEAD) //successful larva bite
 		var/damage = rand(5, 10)
-		if(stat != DEAD)
-			L.amount_grown = min(L.amount_grown + damage, L.max_grown)
-			attack_threshold_check(damage)
+		L.amount_grown = min(L.amount_grown + damage, L.max_grown)
+		attack_threshold_check(damage)
 		return 1
 
 /mob/living/simple_animal/attack_animal(mob/living/simple_animal/M)
 	if(..())
 		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
-		attack_threshold_check(damage,M.melee_damage_type)
+		attack_threshold_check(damage, M.melee_damage_type)
 		return 1
 
 /mob/living/simple_animal/attack_slime(mob/living/simple_animal/slime/M)
@@ -81,17 +80,17 @@
 		attack_threshold_check(damage)
 		return 1
 
-/mob/living/simple_animal/proc/attack_threshold_check(damage, damagetype = BRUTE)
+/mob/living/simple_animal/proc/attack_threshold_check(damage, damagetype = BRUTE, armorcheck = "melee")
+	var/temp_damage = damage
 	if(!damage_coeff[damagetype])
-		damage = 0
+		temp_damage = 0
 	else
-		damage *= damage_coeff[damagetype]
+		temp_damage *= damage_coeff[damagetype]
 
-	if(damage >= 0 && damage <= force_threshold)
+	if(temp_damage >= 0 && temp_damage <= force_threshold)
 		visible_message("<span class='warning'>[src] looks unharmed.</span>")
 	else
-		adjustHealth(damage * config.damage_multiplier)
-
+		apply_damage(damage, damagetype, null, getarmor(null, armorcheck))
 
 /mob/living/simple_animal/bullet_act(obj/item/projectile/Proj)
 	if(!Proj)

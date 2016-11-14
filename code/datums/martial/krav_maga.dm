@@ -17,7 +17,7 @@
 	H.martial_art.streak = "neck_chop"
 
 /datum/action/leg_sweep
-	name = "Leg Sweep - Trips the victim, rendering them prone and unable to move for a short time."
+	name = "Leg Sweep - Trips the victim, knocking them down for a brief moment."
 	button_icon_state = "legsweep"
 
 /datum/action/leg_sweep/Trigger()
@@ -86,7 +86,8 @@
 	D.visible_message("<span class='warning'>[A] pounds [D] on the chest!</span>", \
 				  	"<span class='userdanger'>[A] slams your chest! You can't breathe!</span>")
 	playsound(get_turf(A), 'sound/effects/hit_punch.ogg', 50, 1, -1)
-	D.losebreath += 5
+	if(D.losebreath <= 10)
+		D.losebreath = Clamp(D.losebreath + 5, 0, 10)
 	D.adjustOxyLoss(10)
 	add_logs(A, D, "quickchoked")
 	return 1
@@ -96,7 +97,8 @@
 				  	"<span class='userdanger'>[A] karate chops your neck, rendering you unable to speak!</span>")
 	playsound(get_turf(A), 'sound/effects/hit_punch.ogg', 50, 1, -1)
 	D.apply_damage(5, BRUTE)
-	D.silent += 10
+	if(D.silent <= 10)
+		D.silent = Clamp(D.silent + 10, 0, 10)
 	add_logs(A, D, "neck chopped")
 	return 1
 
@@ -116,7 +118,7 @@ datum/martial_art/krav_maga/grab_act(var/mob/living/carbon/human/A, var/mob/livi
 		bonus_damage += 5
 		picked_hit_type = "stomps on"
 	D.apply_damage(bonus_damage, BRUTE)
-	if(picked_hit_type == "kicks" || picked_hit_type == "stomps")
+	if(picked_hit_type == "kicks" || picked_hit_type == "stomps on")
 		A.do_attack_animation(D, ATTACK_EFFECT_KICK)
 		playsound(get_turf(D), 'sound/effects/hit_kick.ogg', 50, 1, -1)
 	else

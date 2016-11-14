@@ -83,18 +83,25 @@
 
 		if(!removed)
 			return
-		var/datum/gas_mixture/filtered_out = new
-		filtered_out.temperature = removed.temperature
-
-		if(filter_type && removed.gases[filter_type])
+		
+		var/filtering = filter_type ? TRUE : FALSE
+		
+		if(filtering && !istext(filter_type))
+			WARNING("Wrong gas ID in [src]'s filter_type var. filter_type == [filter_type]")
+			filtering = FALSE
+		
+		if(filtering && removed.gases[filter_type])
+			var/datum/gas_mixture/filtered_out = new
+			
+			filtered_out.temperature = removed.temperature
 			filtered_out.assert_gas(filter_type)
 			filtered_out.gases[filter_type][MOLES] = removed.gases[filter_type][MOLES]
+			
 			removed.gases[filter_type][MOLES] = 0
 			removed.garbage_collect()
-		else
-			filtered_out = null
 
-		air2.merge(filtered_out)
+			air2.merge(filtered_out)
+
 		air3.merge(removed)
 
 	update_parents()

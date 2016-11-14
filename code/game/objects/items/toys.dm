@@ -1214,7 +1214,7 @@
 /obj/item/toy/figure/botanist
 	name = "Botanist action figure"
 	icon_state = "botanist"
-	toysay = "Dude, I see colors..."
+	toysay = "Blaze it!"
 
 /obj/item/toy/figure/captain
 	name = "Captain action figure"
@@ -1239,7 +1239,7 @@
 /obj/item/toy/figure/chef
 	name = "Chef action figure"
 	icon_state = "chef"
-	toysay = "Pun-Pun is a tasty burger."
+	toysay = " I'll make you into a burger!"
 
 /obj/item/toy/figure/chemist
 	name = "Chemist action figure"
@@ -1265,7 +1265,7 @@
 /obj/item/toy/figure/dsquad
 	name = "Death Squad Officer action figure"
 	icon_state = "dsquad"
-	toysay = "Eliminate all threats!"
+	toysay = "Kill em all!"
 
 /obj/item/toy/figure/engineer
 	name = "Engineer action figure"
@@ -1285,7 +1285,7 @@
 /obj/item/toy/figure/hos
 	name = "Head of Security action figure"
 	icon_state = "hos"
-	toysay = "Get the justice chamber ready, I think we got a joker here."
+	toysay = "Go ahead, make my day."
 
 /obj/item/toy/figure/qm
 	name = "Quartermaster action figure"
@@ -1321,7 +1321,7 @@
 /obj/item/toy/figure/miner
 	name = "Shaft Miner action figure"
 	icon_state = "miner"
-	toysay = "Oh god it's eating my intestines!"
+	toysay = "COLOSSUS RIGHT OUTSIDE THE BASE!"
 
 /obj/item/toy/figure/ninja
 	name = "Ninja action figure"
@@ -1348,7 +1348,7 @@
 /obj/item/toy/figure/scientist
 	name = "Scientist action figure"
 	icon_state = "scientist"
-	toysay = "For science!"
+	toysay = "I call toxins."
 	toysound = 'sound/effects/explosionfar.ogg'
 
 /obj/item/toy/figure/syndie
@@ -1371,3 +1371,29 @@
 	name = "Warden action figure"
 	icon_state = "warden"
 	toysay = "Seventeen minutes for coughing at an officer!"
+
+
+/obj/item/toy/dummy
+	name = "ventriloquist dummy"
+	desc = "It's a dummy, dummy."
+	icon = 'icons/obj/toy.dmi'
+	icon_state = "assistant"
+	item_state = "doll"
+	var/doll_name = "Dummy"
+
+//Add changing looks when i feel suicidal about making 20 inhands for these.
+/obj/item/toy/dummy/attack_self(mob/user)
+	var/new_name = stripped_input(usr,"What would you like to name the dummy?","Input a name",doll_name,MAX_NAME_LEN)
+	if(!new_name)
+		return
+	doll_name = new_name
+	user << "You name the dummy as \"[doll_name]\""
+	name = "[initial(name)] - [doll_name]"
+
+/obj/item/toy/dummy/talk_into(atom/movable/M, message, channel, list/spans)
+	log_say("[key_name(M)] : through dummy : [message]")
+	say(message)
+	return NOPASS
+
+/obj/item/toy/dummy/GetVoice()
+	return doll_name

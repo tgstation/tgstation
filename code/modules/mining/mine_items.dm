@@ -46,6 +46,7 @@
 	new /obj/item/weapon/shovel(src)
 	new /obj/item/weapon/pickaxe/mini(src)
 	new /obj/item/device/radio/headset/headset_cargo/mining(src)
+	new /obj/item/device/flashlight/seclite(src)
 	new /obj/item/weapon/storage/bag/plants(src)
 	new /obj/item/weapon/storage/bag/ore(src)
 	new /obj/item/device/t_scanner/adv_mining_scanner/lesser(src)
@@ -493,7 +494,7 @@
 interface with the mining shuttle at the landing site if a mobile beacon is also deployed."
 	var/launch_warning = TRUE
 
-	req_access = list(access_heads)
+	req_one_access = list(access_cargo, access_construction, access_heads)
 	possible_destinations = null
 	clockwork = TRUE
 	var/obj/item/device/gps/internal/base/locator

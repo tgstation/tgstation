@@ -79,9 +79,14 @@
 				var/datum/mind/lenin = M
 				antag_candidates -= lenin
 				newcandidates -= lenin
-				if(istype(lenin.current,/mob/new_player))
+				if(istype(lenin.current,/mob/new_player)) //We don't want to make the same mistake again
 					continue
 				else
+					var/mob/Nm = lenin.current
+					if(Nm.job in restricted_jobs)	//Don't make the HOS a replacement revhead
+						antag_candidates += lenin	//Let's let them keep antag chance for other antags
+						continue
+
 					head_revolutionaries += lenin
 					break
 
@@ -204,7 +209,7 @@
 	if(revolutionaries) //Head Revs are not in this list
 		var/list/promotable_revs = list()
 		for(var/datum/mind/khrushchev in revolutionaries)
-			if(khrushchev.current && khrushchev.current.client && khrushchev.current.stat != DEAD)
+			if(khrushchev.current && !khrushchev.current.incapacitated() && !khrushchev.current.restrained() && khrushchev.current.client && khrushchev.current.stat != DEAD)
 				if(ROLE_REV in khrushchev.current.client.prefs.be_special)
 					promotable_revs += khrushchev
 		if(promotable_revs.len)

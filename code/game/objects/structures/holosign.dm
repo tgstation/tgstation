@@ -34,7 +34,6 @@
 		if(BURN)
 			playsound(loc, 'sound/weapons/Egloves.ogg', 80, 1)
 
-
 /obj/structure/holosign/wetsign
 	name = "wet floor sign"
 	desc = "The words flicker as if they mean nothing."
@@ -50,7 +49,7 @@
 	obj_integrity = 20
 	max_integrity = 20
 	var/allow_walk = 1 //can we pass through it on walk intent
-
+	
 /obj/structure/holosign/barrier/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 	if(!density)
 		return 1
@@ -68,18 +67,28 @@
 
 /obj/structure/holosign/barrier/cyborg
 	name = "Energy Field"
-	desc = "A fragile energy field that blocks movement"
+	desc = "A fragile energy field that blocks movement. Excels at blocking lethal projectiles."
 	density = 1
-	obj_integrity = 1
-	max_integrity = 1
+	obj_integrity = 10
+	max_integrity = 10
 	allow_walk = 0
+
+/obj/structure/holosign/barrier/cyborg/bullet_act(obj/item/projectile/P)
+	take_damage((P.damage / 5) , BRUTE, "melee", 1)	//Doesn't really matter what damage flag it is.
+	if(istype(P, /obj/item/projectile/energy/electrode))
+		take_damage(10, BRUTE, "melee", 1)	//Tasers aren't harmful.
+	if(istype(P, /obj/item/projectile/beam/disabler))
+		take_damage(5, BRUTE, "melee", 1)	//Disablers aren't harmful.
 
 /obj/structure/holosign/barrier/cyborg/hacked
 	name = "Charged Energy Field"
 	desc = "A powerful energy field that blocks movement. Energy arcs off it"
-	obj_integrity = 10
-	max_integrity = 10
+	obj_integrity = 20
+	max_integrity = 20
 	var/shockcd = 0
+
+/obj/structure/holosign/barrier/cyborg/hacked/bullet_act(obj/item/projectile/P)
+	take_damage(P.damage, BRUTE, "melee", 1)	//Yeah no this doesn't get projectile resistance.
 
 /obj/structure/holosign/barrier/cyborg/hacked/proc/cooldown()
 	shockcd = FALSE
@@ -90,7 +99,7 @@
 			var/mob/living/M = user
 			M.electrocute_act(15,"Energy Barrier", safety=1)
 			shockcd = TRUE
-			addtimer(src, "cooldown", 10)
+			addtimer(src, "cooldown", 5)
 
 /obj/structure/holosign/barrier/cyborg/hacked/Bumped(atom/user)
 	if(!shockcd)
@@ -98,4 +107,4 @@
 			var/mob/living/M = user
 			M.electrocute_act(15,"Energy Barrier", safety=1)
 			shockcd = TRUE
-			addtimer(src, "cooldown", 10)
+			addtimer(src, "cooldown", 5)

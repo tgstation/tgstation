@@ -2,9 +2,8 @@
 //Chef
 /obj/item/clothing/head/chefhat
 	name = "chef's hat"
-	desc = "It's a hat used by chefs to keep hair out of your food. Judging by the food in the mess, they don't work."
-	icon_state = "chef"
 	item_state = "chef"
+	icon_state = "chef"
 	desc = "The commander in chef's head wear."
 	strip_delay = 10
 	put_on_delay = 10

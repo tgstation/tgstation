@@ -320,7 +320,7 @@
 	S.set_up(2, src.loc, blasting=1)
 	S.start()
 	var/obj/effect/decal/cleanable/flour/F = new /obj/effect/decal/cleanable/flour(src.loc)
-	F.color = "#B2FFFF"
+	F.add_atom_colour("#B2FFFF", FIXED_COLOUR_PRIORITY)
 	F.name = "nanofrost residue"
 	F.desc = "Residue left behind from a nanofrost detonation. Perhaps there was a fire here?"
 	playsound(src,'sound/effects/bamf.ogg',100,1)

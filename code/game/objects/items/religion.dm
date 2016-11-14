@@ -111,7 +111,7 @@
 		return
 	user.visible_message("[user] chants deeply and waves their staff!")
 	if(do_after(user, 20,1,src))
-		target.color = conversion_color //wololo
+		target.add_atom_colour(conversion_color, WASHABLE_COLOUR_PRIORITY) //wololo
 	staffcooldown = world.time
 
 /obj/item/weapon/godstaff/red
