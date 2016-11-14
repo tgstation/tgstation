@@ -2,7 +2,6 @@
 	name = "bank machine"
 	desc = "A machine used to deposit and withdraw station funds."
 	icon = 'goon/icons/obj/goon_terminals.dmi'
-	icon_state = "atm"
 	idle_power_usage = 100
 	var/siphoning = FALSE
 	var/last_warning = 0
@@ -23,14 +22,6 @@
 	return ..()
 
 
-/obj/machinery/computer/bank_machine/update_icon()
-	if(stat & BROKEN)
-		icon_state = "atmb"
-	else if(stat & NOPOWER)
-		icon_state = "atmoff"
-	else
-		icon_state = "atm"
-
 /obj/machinery/computer/bank_machine/process()
 	..()
 	if(siphoning)
@@ -38,7 +29,11 @@
 			say("Station funds depleted. Halting siphon.")
 			siphoning = FALSE
 		else
-			new /obj/item/stack/spacecash/c200(get_turf(src))
+			var/obj/item/stack/spacecash/c200/on_turf = locate() in src.loc
+			if(on_turf && on_turf.amount < on_turf.max_amount)
+				on_turf.amount++
+			else
+				new /obj/item/stack/spacecash/c200(get_turf(src))
 			playsound(src.loc, 'sound/items/poster_being_created.ogg', 100, 1)
 			SSshuttle.points -= 200
 			if(last_warning < world.time && prob(15))
