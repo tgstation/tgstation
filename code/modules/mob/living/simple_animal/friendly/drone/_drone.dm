@@ -66,6 +66,7 @@
 	var/seeStatic = 1 //Whether we see static instead of mobs
 	var/visualAppearence = MAINTDRONE //What we appear as
 	var/hacked = 0 //If we have laws to destroy the station
+	var/can_be_held = TRUE //if assholes can pick us up
 
 /mob/living/simple_animal/drone/New()
 	. = ..()
