@@ -1,6 +1,0 @@
-author: "Joan"
-delete-after: True
-changes: 
-  - rscadd: "Servants of Ratvar can now reactivate Cogscarabs with a screwdriver."
-  - tweak: "Cogscarab proselytizers proselytize things twice as fast."
-  - tweak: "Cogscarabs now have 1.6 seconds of delay when firing guns, as much as an unmodded kinetic accelerator."

@@ -1,5 +1,0 @@
-author: "uraniummeltdown"
-delete-after: True
-changes: 
-  - rscadd: "Added raw telecrystals to the uplink, can be used with uplinks and uplink implants."
-  - rscadd: "Added 10mm ammo variants to uplink"

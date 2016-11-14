@@ -1,4 +1,0 @@
-author: "Joan"
-delete-after: True
-changes: 
-  - bugfix: "Fixed Vitality Matrices and Raise Dead runes not reviving if the target happened to be in their body already."

@@ -1,5 +1,0 @@
-author: "Kor"
-delete-after: True
-changes: 
-  - rscadd: "Extended mode now has a special command report that tells you the round type. This is to let people know they have time to start on large scale projects rather than milling about waiting for antagonists to attack."
-  - rscadd: "All station goals are now unlocked during extended."
