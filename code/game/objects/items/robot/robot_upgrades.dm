@@ -321,3 +321,125 @@
 			msg_cooldown = world.time
 	else
 		deactivate()
+
+//None/Flashes cause blindness/Flashes cause nearsightedness/Flashes cause blurring/Flashes completely blocked
+#define FLASH_PROTECTION_NONE 0
+#define FLASH_PROTECTION_BLIND 1
+#define FLASH_PROTECTION_NEAR 2
+#define FLASH_PROTECTION_BLUR 3
+#define FLASH_PROTECTION_FULL 4
+
+//None/Stays active when EMPed and blocks cell damage/Lessens EMP by one severity degree/Blocks EMPs
+#define EMP_PROTECTION_NONE 0
+#define EMP_PROTECTION_IGNORE 1
+#define EMP_PROTECTION_LESSEN 2
+#define EMP_PROTECTION_FULL 3
+
+/obj/item/borg/upgrade/shield
+	name = "Combat Energy Shielding"
+	desc = "Advanced energy shielding that draws directly from a cyborg's internal power cell to provide shielding against hostile forces."
+	icon_state =
+	var/activeborgoverlayweak =
+	var/activeborgoverlaymed =
+	var/activeborgoverlaystrong =
+	var/activatingborgoverlay =
+	var/active = 0
+	var/passivepower = 10	//Passively use this amount of power when active per process() tick.
+
+	var/flashprotect = FLASH_PROTECTION_NONE
+	var/maxflashprotect = FLASH_PROTECTION_BLUR
+	var/flashprotectpower = 300				//On flash, consume: flashprotectpower + (flashprotectadd * (flashprotect - 1) * flashprotectmultiplier)
+	var/flashprotectadd = 200
+	var/flashprotectmultiplier = 1
+	var/flashprotectbuffer = 10				//Buffer: The shield can not protect from as many flashes as you think, this is to prevent bluespace cell'd bots from being immune to everything.
+	var/flashprotectbufferheal = 0.25
+
+	var/empprotect = EMP_PROTECTION_NONE
+	var/maxempprotect = EMP_PROTECTION_LESSEN
+	var/empprotectpower = 500				//Same as above
+	var/empprotectadd = 1000
+	var/empprotectmultiplier = 1
+	var/empprotectbuffer = 5
+	var/empprotectbufferheal = 0.25
+
+	var/damagemitigation = 0
+	var/damagemultiplier = 1				//Actual damage mitigation multiplier, (1 - damagemitigation/100)
+	var/damagemitigationmax = 80
+	var/damagehitpower = 50					//Base mitigation power cost
+	var/damagepowermultiplier = 20			//Damage blocked * multiplier = power used. At 100% mitigation and 20 burn laser with 20 multiplier, 1.00 * 20 * 20 = 400 + 50(per hit base power) = 450 power used
+
+	var/activationdelay = 10				//How long it takes to activate
+	var/activationmovementallow = TRUE		//Whether moving will interrupt activation
+	var/activationmovementpenalty = 20		//How longer it will take if you move
+	var/allowmoduleuse = TRUE				//Can you use modules?
+	var/modulewhitelistcheck = FALSE		//Can you use only whitelisted modules?
+	var/modulemitigationpenalty = 10		//Mitigation reduction per active module
+	var/modulepowerpenalty = 20				//Power use per active module
+
+	var/powercutthreshold = 800
+
+	var/mob/living/silicon/robot/user
+
+/obj/item/borg/upgrade/shield/examine(mob/M)
+	..()
+
+/obj/item/borg/upgrade/shield/action(mob/living/silicon/robot/R)
+
+/obj/item/borg/upgrade/shield/process()
+	if(!active)
+		STOP_PROCESSING(SSObj, src)
+		return
+	processpoweruse()
+	processmitigation()
+	processHUD()
+	updateicon()
+
+/obj/item/borg/upgrade/shield/proc/activemodulecount()
+	var/penalty = 0
+	if(module_state_1)
+		penalty++
+	if(module_state_2)
+		penalty++
+	if(module_state_3)
+		penalty++
+	return penalty
+
+/obj/item/borg/upgrade/shield/proc/processpoweruse()
+	var/power = user.cell.charge
+	user.cell.use(passivepower)
+	if(modulepowerpenalty)
+		user.cell.use((activemodulecount()*modulepowerpenalty))
+	if(power < powercutthreshold)
+		if(activationmovementallow)
+			deactivate()
+		else
+			user << "<span class='userdanger'>WARNING: CELL VOLTAGE CRITICAL. DEACTIVATING ENERGY SHI-ZZZZZZzzzz....</span>"
+			deactivate(1)
+
+/obj/item/borg/upgrade/shield/proc/processmitigation()
+	var/multiplier = 1
+	var/mitigation = damagemitigation
+	mitigation -= (activemodulecount() * modulemitigationpenalty)
+	multiplier = Clamp((1 - (mitigation/100)), 0, 1)
+	damagemultiplier = multiplier
+
+/obj/item/borg/upgrade/shield/proc/activate(force = 0)
+
+
+/obj/item/borg/upgrade/shield/proc/deactivate(force = 0)
+
+
+/obj/item/borg/upgrade/shield/peacekeeper
+	name = "cyborg riot shield"
+	desc = "For when you need to be a punching bag, AND not die in the process."
+	maxflashprotect = FLASH_PROTECTION_BLIND	//Shouldn't be TOO unbalanced.
+	maxempprotect = EMP_PROTECTION_NONE	//RIP, EMPs still hard counter the poor eggbots.
+	damagemitigationmax = 70
+	damagepowermultiplier = 25
+	activationdelay = 20
+	activationmovementpenalty = 30
+	modulewhitelistcheck = TRUE
+	modulemitigationpenalty = 5
+	modulepowerpenalty = 10
+
+

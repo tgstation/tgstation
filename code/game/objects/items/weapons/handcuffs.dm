@@ -324,7 +324,7 @@
 
 /obj/item/weapon/restraints/legcuffs/beartrap/energy/cyborg/Crossed()
 	..()
-	addtimer(src, "dissipate", 25)
+	addtimer(src, "dissipate", 15)
 
 /obj/item/weapon/restraints/legcuffs/beartrap/energy/cyborg/Destroy()
 	var/datum/effect_system/spark_spread/sparks = new /datum/effect_system/spark_spread
