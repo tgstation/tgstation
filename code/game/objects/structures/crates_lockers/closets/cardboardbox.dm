@@ -1,3 +1,4 @@
+#define SNAKE_SPAM_TICKS 600 //how long between cardboard box openings that trigger the '!'
 /obj/structure/closet/cardboard
 	name = "large cardboard box"
 	desc = "Just a box..."
@@ -72,3 +73,4 @@
 	open_sound = 'sound/machines/click.ogg'
 	cutting_sound = 'sound/items/Welder.ogg'
 	material_drop = /obj/item/stack/sheet/plasteel
+#undef SNAKE_SPAM_TICKS
