@@ -137,6 +137,10 @@
 		return FAILED_UNFASTEN
 	return ..()
 
+/obj/structure/destructible/clockwork/powered/attack_ai(mob/user)
+	if(is_servant_of_ratvar(user))
+		attack_hand(user)
+
 /obj/structure/destructible/clockwork/powered/proc/toggle(fast_process, mob/living/user)
 	if(user)
 		if(!is_servant_of_ratvar(user))
@@ -144,7 +148,7 @@
 		if(!anchored && !active)
 			user << "<span class='warning'>[src] needs to be secured to the floor before it can be activated!</span>"
 			return FALSE
-		user.visible_message("<span class='notice'>[user] [active ? "dis" : "en"]ables [src].</span>", "<span class='brass'>You [active ? "dis" : "en"]able [src].</span>")
+		visible_message("<span class='notice'>[user] [active ? "dis" : "en"]ables [src].</span>", "<span class='brass'>You [active ? "dis" : "en"]able [src].</span>")
 	active = !active
 	if(active)
 		icon_state = active_icon
