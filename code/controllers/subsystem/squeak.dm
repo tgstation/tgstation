@@ -34,7 +34,7 @@ var/datum/subsystem/squeak/SSsqueak
 /datum/subsystem/squeak/proc/find_exposed_wires()
 	exposed_wires.Cut()
 
-	var/all_turfs = block(locate(1,1,1), locate(world.maxx, world.maxy, 1))
+	var/list/all_turfs = block(locate(1,1,1), locate(world.maxx,world.maxy,1))
 	for(var/turf/open/floor/plating/T in all_turfs)
 		if(locate(/obj/structure/cable) in T)
 			exposed_wires += T
