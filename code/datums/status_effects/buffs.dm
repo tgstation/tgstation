@@ -113,3 +113,22 @@
 	owner.visible_message("<span class='warning'>The light around [owner] flickers and dissipates!</span>", "<span class='boldwarning'>You feel Inath-neq's power fade from your body!</span>")
 	owner.status_flags &= ~GODMODE
 	playsound(owner, 'sound/magic/Ethereal_Exit.ogg', 50, 1)
+
+/datum/status_effect/cyborg_power_regen
+	id = "power_regen"
+	duration = 10
+	alert_type = /obj/screen/alert/status_effect/power_regen
+	var/power_to_give = 0 //how much power is gained each tick
+
+/obj/screen/alert/status_effect/power_regen
+	name = "Power Regeneration"
+	desc = "You are quickly regenerating power!"
+	icon_state = "power_regen"
+
+/datum/status_effect/cyborg_power_regen/tick()
+	var/mob/living/silicon/robot/cyborg = owner
+	if(!istype(cyborg) || !cyborg.cell)
+		cancel_effect()
+		return
+	playsound(cyborg, 'sound/effects/light_flicker.ogg', 50, 1)
+	cyborg.cell.give(power_to_give)
