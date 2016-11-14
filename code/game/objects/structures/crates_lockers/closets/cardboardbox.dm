@@ -16,7 +16,7 @@
 	delivery_icon = "deliverybox"
 	var/move_speed_multiplier = 1
 	var/move_delay = 0
-	var/egged = -SNAKE_SPAM_TICKS
+	var/egged = 0
 
 /obj/structure/closet/cardboard/relaymove(mob/user, direction)
 	if(opened || move_delay || user.stat || user.stunned || user.weakened || user.paralysis || !isturf(loc) || !has_gravity(loc))
@@ -32,7 +32,7 @@
 	if(opened || !can_open())
 		return 0
 	var/list/alerted = null
-	if(world.time - egged > SNAKE_SPAM_TICKS)
+	if(egged < world.time)
 		var/mob/living/Snake = null
 		for(var/mob/living/L in src.contents)
 			Snake = L
@@ -41,7 +41,7 @@
 			alerted = viewers(7,src)
 	..()
 	if(alerted)
-		egged = world.time
+		egged = world.time + SNAKE_SPAM_TICKS
 		for(var/mob/living/L in alerted)
 			if(!L.stat)
 				if(!L.incapacitated(ignore_restraints = 1))
