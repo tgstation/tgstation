@@ -149,7 +149,7 @@
 			user << "<span class='notice'>You insert [loaded] items into [src].</span>"
 
 
-	else if(istype(O,/obj/item/weapon/reagent_containers/food/snacks))
+	else if(istype(O,/obj/item/weapon/reagent_containers/food/snacks) || istype(O,/obj/item/weapon/dice))
 		if (contents.len>=max_n_of_items)
 			user << "<span class='warning'>[src] is full, you cannot put more!</span>"
 			return 1
@@ -256,6 +256,11 @@
 					dirty++
 			qdel(F)
 
+		for(var/obj/item/weapon/dice/D in contents)
+			if(D.can_be_rigged)
+				D.rigged = D.result
+			if(dirty < 100)
+				dirty++
 		return
 
 /obj/machinery/microwave/proc/microwaving(seconds as num)
@@ -270,7 +275,8 @@
 	for (var/obj/O in contents)
 		if ( \
 				!istype(O,/obj/item/weapon/reagent_containers/food) && \
-				!istype(O, /obj/item/weapon/grown) \
+				!istype(O, /obj/item/weapon/grown) && \
+				!istype(O, /obj/item/weapon/dice) \
 			)
 			return 1
 	return 0

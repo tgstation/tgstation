@@ -33,6 +33,8 @@
 	var/sides = 6
 	var/result = null
 	var/list/special_faces = list() //entries should match up to sides var if used
+	var/can_be_rigged = TRUE
+	var/rigged = -1
 
 /obj/item/weapon/dice/New()
 	result = rand(1, sides)
@@ -115,6 +117,9 @@
 
 /obj/item/weapon/dice/proc/diceroll(mob/user)
 	result = rand(1, sides)
+	if(rigged > 0 && result != rigged)
+		if(prob(Clamp(1/(sides - 1) * 100, 25, 80)))
+			result = rigged
 	var/fake_result = rand(1, sides)//Daredevil isn't as good as he used to be
 	var/comment = ""
 	if(sides == 20 && result == 20)
