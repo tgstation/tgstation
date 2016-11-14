@@ -99,3 +99,48 @@
 			SM.loc = get_ranged_target_turf(SM, new_dir, rand(3,15))
 			break
 	qdel(src)
+
+
+
+//meteor/asteroid shuttle slamming into the station
+
+/obj/effect/station_crash
+	name = "station crash"
+	desc = "With no survivors!"
+	icon = 'icons/obj/weapons.dmi'
+	icon_state = "syndballoon"
+	anchored = TRUE
+
+
+//Luxury Shuttle Blockers
+
+/obj/effect/forcefield/luxury_shuttle
+	var/threshhold = 500
+	var/list/approved_passengers = list()
+
+/obj/effect/forcefield/luxury_shuttle/CanPass(atom/movable/mover, turf/target, height=0)
+	if(mover in approved_passengers)
+		return 1
+
+	if(!isliving(mover)) //No stowaways
+		return 0
+
+	var/total_cash = 0
+	var/list/counted_money = list()
+
+	for(var/obj/item/weapon/coin/C in mover)
+		total_cash += C.value
+		counted_money += C
+	for(var/obj/item/stack/spacecash/S in mover)
+		total_cash += S.value
+		counted_money += S
+
+	if(total_cash >= threshhold)
+		for(var/obj/I in counted_money)
+			qdel()
+			mover << "Thank you for your payment! Please enjoy your flight."
+			approved_passengers += mover
+			return 1
+	else
+		mover << "You don't have enough money to enter the main shuttle. You'll have to fly coach."
+		return 0
