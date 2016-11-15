@@ -45,7 +45,7 @@
 				brainmob = null
 			brain.loc = T
 			brain = null
-			update_icon_dropped()
+			update_item_icon()
 		else
 			I.loc = T
 
@@ -116,8 +116,8 @@
 
 	..()
 
-/obj/item/bodypart/head/update_icon_dropped()
-	var/list/standing = get_limb_icon(1)
+/obj/item/bodypart/head/update_item_icon(as_dropped = TRUE)
+	var/list/standing = get_limb_icon(as_dropped)
 	if(!standing.len)
 		icon_state = initial(icon_state)//no overlays found, we default back to initial icon.
 		return

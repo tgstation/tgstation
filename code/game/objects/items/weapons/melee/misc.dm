@@ -39,6 +39,7 @@
 	force = 15
 	throwforce = 10
 	sharpness = IS_SHARP
+	attach_on_dismember = TRUE
 
 /obj/item/weapon/melee/sabre
 	name = "officer's sabre"

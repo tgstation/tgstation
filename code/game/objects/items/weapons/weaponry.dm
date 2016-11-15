@@ -1,6 +1,7 @@
 /obj/item/weapon
 
 	var/unique_rename = 0 //allows renaming with a pen
+	var/attach_on_dismember = FALSE
 
 /obj/item/weapon/examine(mob/user)
 	..()
@@ -429,6 +430,7 @@ var/highlander_claymores = 0
 	sharpness = IS_SHARP
 	attack_verb = list("sawed", "torn", "cut", "chopped", "diced")
 	hitsound = "sound/weapons/chainsawhit.ogg"
+	attach_on_dismember = TRUE
 
 /obj/item/weapon/mounted_chainsaw/dropped()
 	..()

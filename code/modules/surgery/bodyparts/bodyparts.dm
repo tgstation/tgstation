@@ -40,6 +40,9 @@
 	var/species_flags_list = list()
 	var/dmg_overlay_type //the type of damage overlay (if any) to use when this bodypart is bruised/burned.
 
+	var/obj/item/weapon/attached_weapon = null // Attached weapon for dismemberment
+	var/list/item_overlays = list()
+
 /obj/item/bodypart/examine(mob/user)
 	..()
 	if(brute_dam > 0)
@@ -59,7 +62,7 @@
 /obj/item/bodypart/attack(mob/living/carbon/C, mob/user)
 	if(ishuman(C))
 		var/mob/living/carbon/human/H = C
-		if(EASYLIMBATTACHMENT in H.dna.species.specflags)
+		if((EASYLIMBATTACHMENT in H.dna.species.specflags) || (user.getorganslot("limb_sockets") != null))
 			if(!H.get_bodypart(body_zone) && !animal_origin)
 				if(H == user)
 					H.visible_message("<span class='warning'>[H] jams [src] into \his empty socket!</span>",\
@@ -70,7 +73,27 @@
 				user.unEquip(src,1)
 				attach_limb(C)
 				return
+	if(attached_weapon) // If we have a chainsaw arm or armblade, smack with this instead!
+		attached_weapon.attack(C, user)
+		return
 	..()
+
+/obj/item/bodypart/attack_obj(obj/O, mob/living/user)
+	if(attached_weapon)
+		attached_weapon.attack_obj(O, user)
+		return
+	..()
+
+/obj/item/bodypart/get_icon_for_attack_animation()
+	if(attached_weapon)
+		return attached_weapon.get_icon_for_attack_animation()
+	return ..()
+
+/obj/item/bodypart/get_icon_state_for_attack_animation()
+	if(attached_weapon)
+		return attached_weapon.get_icon_state_for_attack_animation()
+	return ..()
+
 
 /obj/item/bodypart/attackby(obj/item/W, mob/user, params)
 	if(W.sharpness)
@@ -100,6 +123,13 @@
 		playsound(T, 'sound/misc/splort.ogg', 50, 1, -1)
 	for(var/obj/item/I in src)
 		I.forceMove(T)
+
+	// Force special update for attached weapon
+	if(attached_weapon)
+		attached_weapon.dropped()
+		attached_weapon = null
+		if(!owner)
+			update_item_icon()
 
 //Applies brute and burn damage to the organ. Returns 1 if the damage-icon states changed at all.
 //Damage will not exceed max_damage using this proc
@@ -257,9 +287,9 @@
 		no_update = 1 //when attached, the limb won't be affected by the appearance changes of its mob owner.
 
 //to update the bodypart's icon when not attached to a mob
-/obj/item/bodypart/proc/update_icon_dropped()
+/obj/item/bodypart/proc/update_item_icon(as_dropped = TRUE)
 	cut_overlays()
-	var/list/standing = get_limb_icon(1)
+	var/list/standing = get_limb_icon(as_dropped)
 	if(!standing.len)
 		icon_state = initial(icon_state)//no overlays found, we default back to initial icon.
 		return
@@ -309,6 +339,21 @@
 				I = image("icon"='icons/mob/human_parts_greyscale.dmi', "icon_state"="digitigrade_[use_digitigrade]_[body_zone]_s", "layer"=-BODYPARTS_LAYER, "dir"=image_dir)
 			else
 				I = image("icon"='icons/mob/human_parts_greyscale.dmi', "icon_state"="[species_id]_[body_zone]_s", "layer"=-BODYPARTS_LAYER, "dir"=image_dir)
+
+			//Greyscale Colouring
+			var/draw_color
+
+			if(skin_tone) //Limb has skin color variable defined, use it
+				draw_color = skintone2hex(skin_tone)
+			if(species_color)
+				draw_color = species_color
+			if(mutation_color)
+				draw_color = mutation_color
+
+			if(draw_color)
+				I.color = "#[draw_color]"
+			//End Greyscale Colouring
+
 		else
 			if(should_draw_gender)
 				I = image("icon"='icons/mob/human_parts.dmi', "icon_state"="[species_id]_[body_zone]_[icon_gender]_s", "layer"=-BODYPARTS_LAYER, "dir"=image_dir)
@@ -319,29 +364,23 @@
 			I = image("icon"='icons/mob/augments.dmi', "icon_state"="[body_zone]_[icon_gender]_s", "layer"=-BODYPARTS_LAYER, "dir"=image_dir)
 		else
 			I = image("icon"='icons/mob/augments.dmi', "icon_state"="[body_zone]_s", "layer"=-BODYPARTS_LAYER, "dir"=image_dir)
-		standing += I
-		return standing
 
-
-	if(!should_draw_greyscale)
-		standing += I
-		return standing
-
-	//Greyscale Colouring
-	var/draw_color
-
-	if(skin_tone) //Limb has skin color variable defined, use it
-		draw_color = skintone2hex(skin_tone)
-	if(species_color)
-		draw_color = species_color
-	if(mutation_color)
-		draw_color = mutation_color
-
-	if(draw_color)
-		I.color = "#[draw_color]"
-	//End Greyscale Colouring
 	standing += I
 
+	if(attached_weapon)
+		var/state = attached_weapon.item_state
+		if(!state)
+			state = attached_weapon.icon_state
+
+		var/icon_file = null
+
+		if(held_index % 2)
+			icon_file = attached_weapon.lefthand_file
+		else
+			icon_file = attached_weapon.righthand_file
+
+		standing += attached_weapon.build_worn_icon(state = state, default_layer = HANDS_LAYER, default_icon_file = icon_file, isinhands = TRUE)
+		
 	return standing
 
 
