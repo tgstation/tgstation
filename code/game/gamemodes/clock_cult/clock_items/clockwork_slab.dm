@@ -417,7 +417,7 @@
 		qdel(Q)
 	if(LAZYLEN(quickbound))
 		for(var/i in 1 to quickbound.len)
-			var/datum/action/item_action/clock/quickbind/Q  new /datum/action/item_action/clock/quickbind(src)
+			var/datum/action/item_action/clock/quickbind/Q = new /datum/action/item_action/clock/quickbind(src)
 			Q.scripture_index = i
 			var/datum/clockwork_scripture/quickbind_slot = quickbound[i]
 			Q.name = initial(quickbind_slot.name)
