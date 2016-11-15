@@ -240,11 +240,8 @@
 			return
 		stop()
 
-		for(var/obj/O in contents)
+		for(var/obj/item/O in contents)
 			O.microwave_act(src)
-			if(!istype(O,/obj/item/weapon/reagent_containers/food) && !istype(O, /obj/item/weapon/grown))
-				if(dirty < 100)
-					dirty++
 			
 		return
 
