@@ -25174,7 +25174,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 6
 	},
-/mob/living/simple_animal/mouse,
 /turf/open/floor/plating,
 /area/crew_quarters/locker)
 "bfd" = (
@@ -38361,7 +38360,6 @@
 	icon_state = "4-8"
 	},
 /obj/structure/disposalpipe/segment,
-/mob/living/simple_animal/mouse,
 /turf/open/floor/plating,
 /area/maintenance/asmaint)
 "bGJ" = (
@@ -52618,7 +52616,6 @@
 	name = "Mix to Incinerator";
 	on = 0
 	},
-/mob/living/simple_animal/mouse,
 /turf/open/floor/plasteel/floorgrime,
 /area/maintenance/incinerator)
 "cle" = (
@@ -74678,7 +74675,7 @@ asc
 atq
 auX
 avS
-axd
+amC
 amC
 alU
 aAM
@@ -81175,7 +81172,7 @@ cdY
 ceY
 bCq
 bHE
-chU
+cgH
 bHE
 bLu
 bCq
@@ -102226,7 +102223,7 @@ bLS
 cbQ
 bLS
 bLS
-bHB
+bKE
 caU
 bNc
 bOj
@@ -104486,7 +104483,7 @@ alO
 aqA
 anf
 alP
-atz
+anf
 anf
 alP
 awJ
@@ -105564,7 +105561,7 @@ bBZ
 bDc
 bEp
 bCX
-bDX
+bEc
 bIA
 bIA
 bJN
