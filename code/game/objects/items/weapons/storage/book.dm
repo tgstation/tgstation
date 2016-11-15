@@ -203,7 +203,3 @@ var/global/list/bibleitemstates =	list("bible", "koran", "scrapbook", "bible", "
 			var/unholy2clean = A.reagents.get_reagent_amount("unholywater")
 			A.reagents.del_reagent("unholywater")
 			A.reagents.add_reagent("holywater",unholy2clean)
-
-/obj/item/weapon/storage/book/bible/attackby(obj/item/weapon/W, mob/user, params)
-	playsound(src.loc, "rustle", 50, 1, -5)
-	return ..()
