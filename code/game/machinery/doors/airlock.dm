@@ -92,6 +92,7 @@ var/list/airlock_overlays = list()
 	var/cyclelinkeddir = 0
 	var/obj/machinery/door/airlock/cyclelinkedairlock
 	var/shuttledocked = 0
+	var/delayed_close_requested = FALSE // TRUE means the door will automatically close the next time it's opened.
 
 	explosion_block = 1
 
@@ -228,7 +229,10 @@ var/list/airlock_overlays = list()
 			return
 	if (cyclelinkedairlock)
 		if (!shuttledocked && !emergency && !cyclelinkedairlock.shuttledocked && !cyclelinkedairlock.emergency && allowed(user))
-			addtimer(cyclelinkedairlock, "close", ( cyclelinkedairlock.operating ? 2 : 0 ))
+			if(cyclelinkedairlock.operating)
+				cyclelinkedairlock.delayed_close_requested = TRUE
+			else
+				addtimer(cyclelinkedairlock, "close", 2)
 	..()
 
 
@@ -1261,6 +1265,9 @@ var/list/airlock_overlays = list()
 	operating = 0
 	air_update_turf(1)
 	update_freelook_sight()
+	if(delayed_close_requested)
+		delayed_close_requested = FALSE
+		addtimer(src, "close", 2)
 	return 1
 
 
@@ -1302,6 +1309,7 @@ var/list/airlock_overlays = list()
 	if(visible && !glass)
 		SetOpacity(1)
 	operating = 0
+	delayed_close_requested = FALSE
 	air_update_turf(1)
 	update_freelook_sight()
 	if(safe)
