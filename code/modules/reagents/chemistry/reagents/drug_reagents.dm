@@ -101,7 +101,7 @@
 	reagent_state = LIQUID
 	color = "#000080"
 	overdose_threshold = 16
-	addiction_threshold = 1
+	addiction_threshold = 0.01 //Very addictive
 	metabolization_rate = 0.75 * REAGENTS_METABOLISM //Taking the drug makes your body work faster, so it will metabolize more
 
 /datum/reagent/drug/celeritate/on_mob_life(mob/living/M)
