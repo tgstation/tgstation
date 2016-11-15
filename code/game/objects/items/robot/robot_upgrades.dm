@@ -383,7 +383,18 @@
 	..()
 
 /obj/item/borg/upgrade/shield/action(mob/living/silicon/robot/R)
+	if(..())
+		return
 
+	var/obj/item/borg/upgrade/shield/S = locate() in R
+	if(S)
+		usr << "<span class='warning'>This unit is already equipped with a combat shielding module.</span>"
+		return 0
+	/*
+	icon_state = "selfrepair_off"
+	var/datum/action/A = new /datum/action/item_action/toggle(src)
+	A.Grant(R)
+	*/
 
 
 
@@ -396,6 +407,7 @@
 	processpoweruse()
 	processmitigation()
 	processHUD()
+	handlebuffer()
 	updateicon()
 
 /obj/item/borg/upgrade/shield/proc/activemodulecount()
@@ -428,9 +440,35 @@
 	damagemultiplier = multiplier
 
 /obj/item/borg/upgrade/shield/proc/activate(force = 0)
-
+	//ACTIVATING OVERLAYS
+	user << "<span class='boldnotice'>Energizing energy shielding. Please remain still...</span>"
+	if(!force)
+		sleep(activationdelay)
+			if(user.cell.charge < powercutthreshold)
+				user << "<span class='boldwarning'>WARNING: Insufficient cell power to maintain shielding.</span>"
+				return 0
+		if(!do_after(user, activationdelay) &&)
+			user << "<span class='boldwarning'>WARNING: Calculated offsets disrupted by movement.</span>"
+			if(activationmovementallow)
+				user << "<span class='boldnotice'>Compensating for movement. This will take longer...</span>"
+				sleep(activationmovementpenalty)
+			else
+				return 0
+	active = 1
+	//DELETE ACTIVATING OVERLAYS
+	//ACTIVE OVERLAYS
+	var/power = "weak"
+	if(damagemitigationmax > 75)
+		power = "powerful"
+	if(maxempprotect > EMP_PROTECTION_NONE)
+		power += ", magnetically charged"
+	if(maxflashprotect > FLASH_PROTECT_NONE)
+		power += ", photonically reactive"
+	user << "<span class='boldnotice'>Energy shielding at full integrity!</span>"
+	user.visible_message("[user]'s chassis projects a [power] energy shield around them!</span>"
 
 /obj/item/borg/upgrade/shield/proc/deactivate(force = 0)
+
 
 
 /obj/item/borg/upgrade/shield/peacekeeper
