@@ -149,3 +149,8 @@
 /obj/item/weapon/dice/update_icon()
 	cut_overlays()
 	add_overlay("[src.icon_state][src.result]")
+	
+/obj/item/weapon/dice/microwave_act(obj/machinery/microwave/M)
+	if(can_be_rigged)
+		rigged = result
+	..(M)

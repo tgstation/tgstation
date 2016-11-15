@@ -230,37 +230,22 @@
 		muck_finish()
 		return
 
-	else if (has_extra_item())
-		if (!microwaving(4))
+	else
+		if(has_extra_item() && prob(min(dirty*5,100)) && !microwaving(4))
 			broke()
 			return
-
-		broke()
-		return
-
-	else
-
+				
 		if(!microwaving(10))
 			abort()
 			return
 		stop()
 
-		for(var/obj/item/weapon/reagent_containers/food/snacks/F in contents)
-			if(F.cooked_type)
-				var/obj/item/weapon/reagent_containers/food/snacks/S = new F.cooked_type (get_turf(src))
-				F.initialize_cooked_food(S, efficiency)
-				feedback_add_details("food_made","[F.type]")
-			else
-				new /obj/item/weapon/reagent_containers/food/snacks/badrecipe(src)
+		for(var/obj/O in contents)
+			O.microwave_act(src)
+			if(!istype(O,/obj/item/weapon/reagent_containers/food) && !istype(O, /obj/item/weapon/grown))
 				if(dirty < 100)
 					dirty++
-			qdel(F)
-
-		for(var/obj/item/weapon/dice/D in contents)
-			if(D.can_be_rigged)
-				D.rigged = D.result
-			if(dirty < 100)
-				dirty++
+			
 		return
 
 /obj/machinery/microwave/proc/microwaving(seconds as num)
@@ -275,8 +260,7 @@
 	for (var/obj/O in contents)
 		if ( \
 				!istype(O,/obj/item/weapon/reagent_containers/food) && \
-				!istype(O, /obj/item/weapon/grown) && \
-				!istype(O, /obj/item/weapon/dice) \
+				!istype(O, /obj/item/weapon/grown) \
 			)
 			return 1
 	return 0
