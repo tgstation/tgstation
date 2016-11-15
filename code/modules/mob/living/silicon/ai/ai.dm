@@ -651,71 +651,48 @@ var/list/ai_list = list()
 
 		if("Animal")
 			var/list/icon_list = list(
-			"bear",
-			"carp",
-			"chicken",
-			"corgi",
-			"cow",
-			"crab",
-			"fox",
-			"goat",
-			"cat",
-			"cat2",
-			"poly",
-			"pug",
-			"spider"
+			"bear" = 'icons/mob/animal.dmi',
+			"carp" = 'icons/mob/animal.dmi',
+			"chicken" = 'icons/mob/animal.dmi',
+			"corgi" = 'icons/mob/pets.dmi',
+			"cow" = 'icons/mob/animal.dmi',
+			"crab" = 'icons/mob/animal.dmi',
+			"fox" = 'icons/mob/pets.dmi',
+			"goat" = 'icons/mob/animal.dmi',
+			"cat" = 'icons/mob/pets.dmi',
+			"cat2" = 'icons/mob/pets.dmi',
+			"poly" = 'icons/mob/animal.dmi',
+			"pug" = 'icons/mob/pets.dmi',
+			"spider" = 'icons/mob/animal.dmi'
 			)
 
 			input = input("Please select a hologram:") as null|anything in icon_list
 			if(input)
 				qdel(holo_icon)
 				switch(input)
-					if("bear")
-						holo_icon = getHologramIcon(icon('icons/mob/animal.dmi', input))
-					if("carp")
-						holo_icon = getHologramIcon(icon('icons/mob/animal.dmi', input))
-					if("chicken")
-						holo_icon = getHologramIcon(icon('icons/mob/animal.dmi',"chicken_brown"))
-					if("corgi")
-						holo_icon = getHologramIcon(icon('icons/mob/pets.dmi', input))
-					if("cow")
-						holo_icon = getHologramIcon(icon('icons/mob/animal.dmi', input))
-					if("crab")
-						holo_icon = getHologramIcon(icon('icons/mob/animal.dmi', input))
-					if("fox")
-						holo_icon = getHologramIcon(icon('icons/mob/pets.dmi', input))
-					if("goat")
-						holo_icon = getHologramIcon(icon('icons/mob/animal.dmi', input))
-					if("cat")
-						holo_icon = getHologramIcon(icon('icons/mob/pets.dmi', input))
-					if("cat2")
-						holo_icon = getHologramIcon(icon('icons/mob/pets.dmi', input))
 					if("poly")
-						holo_icon = getHologramIcon(icon('icons/mob/animal.dmi',"parrot_fly"))
-					if("pug")
-						holo_icon = getHologramIcon(icon('icons/mob/pets.dmi', input))
+						qdel(holo_icon)
+						holo_icon = getHologramIcon(icon(icon_list[input],"parrot_fly"))
+					if("chicken")
+						qdel(holo_icon)
+						holo_icon = getHologramIcon(icon(icon_list[input],"chicken_brown"))
 					if("spider")
-						holo_icon = getHologramIcon(icon('icons/mob/animal.dmi',"guard"))
+						qdel(holo_icon)
+						holo_icon = getHologramIcon(icon(icon_list[input],"guard"))
+					else
+						holo_icon = getHologramIcon(icon(icon_list[input], input))
 		else
 			var/list/icon_list = list(
-			"default",
-			"floating face",
-			"xeno queen",
-			"horror"
+			"default" = 'icons/mob/AI.dmi',
+			"floating face" = 'icons/mob/AI.dmi',
+			"xeno queen" = 'icons/mob/AI.dmi',
+			"horror" = 'icons/mob/AI.dmi'
 			)
 
 			input = input("Please select a hologram:") as null|anything in icon_list
 			if(input)
 				qdel(holo_icon)
-				switch(input)
-					if("default")
-						holo_icon = getHologramIcon(icon('icons/mob/AI.dmi', input))
-					if("floating face")
-						holo_icon = getHologramIcon(icon('icons/mob/AI.dmi', input))
-					if("xeno queen")
-						holo_icon = getHologramIcon(icon('icons/mob/AI.dmi', input))
-					if("horror")
-						holo_icon = getHologramIcon(icon('icons/mob/AI.dmi', input))
+				holo_icon = getHologramIcon(icon(icon_list[input], input))
 	return
 
 /mob/living/silicon/ai/proc/corereturn()
