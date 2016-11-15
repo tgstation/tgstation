@@ -10,7 +10,7 @@
 	var/value = 0
 	if(istype(I, /obj/item/stack/spacecash))
 		var/obj/item/stack/spacecash/C = I
-		value = C.value
+		value = C.value * C.amount
 	if(istype(I, /obj/item/weapon/coin))
 		var/obj/item/weapon/coin/C  = I
 		value = C.value
