@@ -145,14 +145,12 @@
 	if(..())
 		return
 
-	for(var/obj/item/weapon/pickaxe/drill/cyborg/D in R.module.modules)
-		qdel(D)
-	for(var/obj/item/weapon/shovel/S in R.module.modules)
-		qdel(S)
+	for(var/obj/item/weapon/pickaxe/drill/cyborg/D in R.module)
+		R.module.remove_module(D, TRUE)
+	for(var/obj/item/weapon/shovel/S in R.module)
+		R.module.remove_module(S, TRUE)
 
-	R.module.modules += new /obj/item/weapon/pickaxe/drill/cyborg/diamond(R.module)
-	R.module.rebuild()
-
+	R.module.add_module(new /obj/item/weapon/pickaxe/drill/cyborg/diamond(R.module), FALSE, TRUE)
 	return 1
 
 /obj/item/borg/upgrade/soh
@@ -167,12 +165,10 @@
 	if(..())
 		return
 
-	for(var/obj/item/weapon/storage/bag/ore/cyborg/S in R.module.modules)
-		qdel(S)
+	for(var/obj/item/weapon/storage/bag/ore/cyborg/S in R.module)
+		R.module.remove_module(S, TRUE)
 
-	R.module.modules += new /obj/item/weapon/storage/bag/ore/holding(R.module)
-	R.module.rebuild()
-
+	R.module.add_module(new /obj/item/weapon/storage/bag/ore/holding(R.module), FALSE, TRUE)
 	return 1
 
 /obj/item/borg/upgrade/syndicate
