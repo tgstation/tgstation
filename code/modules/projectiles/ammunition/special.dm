@@ -31,6 +31,9 @@
 /obj/item/ammo_casing/magic/spellblade
 	projectile_type = /obj/item/projectile/magic/spellblade
 
+/obj/item/ammo_casing/magic/arcane_barrage
+	projectile_type = /obj/item/projectile/magic/arcane_barrage
+
 /obj/item/ammo_casing/magic/chaos/newshot()
 	projectile_type = pick(typesof(/obj/item/projectile/magic))
 	..()
