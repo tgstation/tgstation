@@ -338,10 +338,11 @@
 /obj/item/borg/upgrade/shield
 	name = "Combat Energy Shielding"
 	desc = "Advanced energy shielding that draws directly from a cyborg's internal power cell to provide shielding against hostile forces."
-	icon_state = cyborg_upgrade5
-	var/activatingoverlay = image(icon = 'icons/effects/effects.dmi', icon_state = "shield")
-	var/activeoverlay = image(icon = 'icons/effects/effects.dmi', icon_state = "shield_grey")
-	var/flickeroverlay = image(icon = 'icons/effects/effects.dmi', icon_state = "shield_flash")
+	icon_state = "cyborg_upgrade5"
+	var/activatingoverlay =
+	var/deactivatingoverlay =
+	var/activeoverlay =
+	var/flickeroverlay =
 	var/active = 0
 	var/passivepower = 10	//Passively use this amount of power when active per process() tick.
 
@@ -412,11 +413,11 @@
 
 /obj/item/borg/upgrade/shield/proc/activemodulecount()
 	var/penalty = 0
-	if(module_state_1)
+	if(user.module_state_1)
 		penalty++
-	if(module_state_2)
+	if(user.module_state_2)
 		penalty++
-	if(module_state_3)
+	if(user.module_state_3)
 		penalty++
 	return penalty
 
@@ -440,13 +441,14 @@
 	damagemultiplier = multiplier
 
 /obj/item/borg/upgrade/shield/proc/activate(force = 0)
+	//SOUND EFFECT
 	//ACTIVATING OVERLAYS
 	user << "<span class='boldnotice'>Energizing energy shielding. Please remain still...</span>"
 	if(!force)
 		sleep(activationdelay)
-			if(user.cell.charge < powercutthreshold)
-				user << "<span class='boldwarning'>WARNING: Insufficient cell power to maintain shielding.</span>"
-				return 0
+		if(user.cell.charge < powercutthreshold)
+			user << "<span class='boldwarning'>WARNING: Insufficient cell power to maintain shielding.</span>"
+			return 0
 		if(!do_after(user, activationdelay) &&)
 			user << "<span class='boldwarning'>WARNING: Calculated offsets disrupted by movement.</span>"
 			if(activationmovementallow)
@@ -455,21 +457,44 @@
 			else
 				return 0
 	active = 1
+	START_PROCESSING(SSObj, src)
 	//DELETE ACTIVATING OVERLAYS
 	//ACTIVE OVERLAYS
 	var/power = "weak"
 	if(damagemitigationmax > 75)
 		power = "powerful"
 	if(maxempprotect > EMP_PROTECTION_NONE)
-		power += ", magnetically charged"
+		power += " magnetically charged"
 	if(maxflashprotect > FLASH_PROTECT_NONE)
-		power += ", photonically reactive"
+		power += " photonically reactive"
 	user << "<span class='boldnotice'>Energy shielding at full integrity!</span>"
-	user.visible_message("[user]'s chassis projects a [power] energy shield around them!</span>"
+	user.visible_message("<span class='warning'>[user]'s chassis projects a [power] energy shield around them!</span>"
+	//SOUND EFFECT
+	return 1
 
 /obj/item/borg/upgrade/shield/proc/deactivate(force = 0)
+	//SOUND EFFECT
+	if(force)
+		user << "<span class='boldwarning'>WARNING: Energy shield collapsing! ZZZZZzzzzTTtttt....</span>"
+		user.visible_message("<span class='warning'>[user]'s energy shielding collapses in a burst of sparks!</span>"
+		user.spark_system.start()
+	else
+		user << "<span class='boldnotice'>Energy shield discharging! Please remain still!</span>"
+		//DEACTIVATING OVERLAY
+		//DELETE ORIGINAL OVERLAY
+		sleep(activationdelay)
+		if(!do_after(user, activationdelay) && !activationmovementallow)
+			user << "<span class='boldwarning'>WARNING: Energy shield can not deactivate while chassis is in motion. Doing so will result in shield collapse and power overload!</span>"
+			//RETURN ORIGINAL OVERLAY
+			//DELETE DEACTIVATION OVERLAY
+			return 0
+		user.visible_message("<span class='warning'>[user]'s energy shielding discharges in a flash of light!</span>"
+	user << "<span class='boldnotice'>Energy Combat Shield discharged!</span>"
 
-
+	active = 0
+	STOP_PROCESSING(SSObj, src)
+	//DELETE OVERLAYS
+	//SOUND EFFECT
 
 /obj/item/borg/upgrade/shield/peacekeeper
 	name = "cyborg riot shield"
