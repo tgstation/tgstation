@@ -76,7 +76,7 @@
 						"crank" = 0.15,
 						"krokodil" = 0.15,
 						"histamine" = 0.15,
-						"lipolicide" = 0.15
+						"lipolicide" = 0.15,
 						"celeritate" = 0.01)
 	rarity = 69
 
