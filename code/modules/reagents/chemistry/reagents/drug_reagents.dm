@@ -117,8 +117,6 @@
 			user.visible_message("<span class='notice'>[user] wounds seems to nearly instantly repair itself!</span>") //Invisible healing is bad, fix with visual text
 			if(M.has_reagent("mannitol", 1))
 				M.reagents.remove_reagent("mannitol", 5) //Prevents using other medicines to counter the brain damage done by the effects of Celeritate, use medicines after the effects expire
-			if(M.has_reagent("earthsblood", 1))
-				M.reagents.remove_reagent("earthsblood", 5)
 	if(prob(5))
 		M.AdjustParalysis(-2, 0)
 		M.adjustStunned(-2, 0)
