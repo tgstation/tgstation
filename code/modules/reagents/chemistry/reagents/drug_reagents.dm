@@ -97,7 +97,7 @@
 /datum/reagent/drug/celeritate
 	name = "Celeritate"
 	id = "celeritate"
-	description = "A chemical that is derived from a plant, makes your body work extremely fast, healing and speeding it up at a high rate. Do not take or inject unless you want to be addicted. Not taking this chemical while addicted will cause some bad things."
+	description = "A chemical that is derived from Omega Cannibis, taking this will heal a lot of damage when low health, speed you up and lower the effects of stuns. Even injecting less than a unit will cause an addiction, overdose makes you hyper and take brain damage."
 	reagent_state = LIQUID
 	color = "#000080"
 	overdose_threshold = 16
@@ -106,7 +106,7 @@
 
 /datum/reagent/drug/celeritate/on_mob_life(mob/living/M)
 	M.status_flags |= GOTTAGOFAST
-	if(prob(25)) //4 units on average until your healed, on average 7.2 seconds for -10 damage of the 3 basic damage types at 1.8 tick rate
+	if(prob(25)) // (i don't know how to math pls help me) 4 units on average until your healed, on average 7.2 seconds for -10 damage of the 3 basic damage types at 1.8 tick rate
 		if (M.health < 70) //No, you need some regular medicine to get to 100 health
 			M.adjustBruteLoss(-10*REM, 0)
 			M.adjustFireLoss(-10*REM, 0)
@@ -131,19 +131,20 @@
 		M << "<span class='warning'>You feel like you took to much of celeritate! </span>"
 
 	if (prob(5))
-		if (M.age < 101) //Don't want people to get instakilled because reasons
+		if (M.age < 101) //Don't want people to get instakilled from stage 4 addiction
 			M.age += 3
-			M << "<span class='notice'>Your body feels a lot older!.</span>"
-
-	if (prob(25)) //Cancels out the healing I hope
-		if(M.health < 70)
+			M << "<span class='notice'>Your body feels a lot older!</span>"
+	if (prob(25)) //Keeps your health down
+		if(M.health > 70)
 			M.adjustBruteLoss(10)
 			M.adjustFireLoss(10)
 			M.adjustToxLoss(10)
 	if (prob(5))
-		M << "<span class='warning'>You feel your mind deteriate from old age!.</span>"
-		M.adjustBrainLoss(30)
-
+		M << "<span class='warning'>You feel your mind deteriate from old age!</span>"
+		M.adjustBrainLoss(1 * M.age / 4)
+	if (prob(5))
+		M << "<span class='notice'>Your body feels a bit weird.</span>" //I have no idea what to put here
+		M.adjustCloneLoss(1 * M.age / 4) //Your body is replicating DNA fast enough for the tiny errors to matter
 /datum/reagent/drug/celeritate/addiction_act_stage1(mob/living/carbon/human/M)
 	if (prob(10))
 		M << "<span class='notice'>You feel a slight craving for some celeritate.</span>"
@@ -167,7 +168,7 @@
 
 /datum/reagent/drug/celeritate/addiction_act_stage3(mob/living/carbon/human/M)
 	if (prob(1))
-		M << "<span class='notice'>Your body feels older than it used to be</span>"
+		M << "<span class='notice'>Your body feels older than it used to be.</span>"
 		M.age += 1
 		M.adjustBrainLoss(5) //Your getting old, brain is rip
 	if (prob(1))
@@ -180,7 +181,7 @@
 /datum/reagent/drug/celeritate/addiction_act_stage4(mob/living/carbon/human/M)
 	if(prob(10))
 		if (M.age < 101)
-		M.age += 2
+		M.age += 3
 		M << "<span class='notice'>Your body feels much more older.</span>"
 		user.visible_message("<span class='notice'>[user] suddenly looks much more older</span>")
 	if (prob(8))
@@ -194,8 +195,8 @@
 			M << "<span class='warning'>Your body tries to adept to it's new disability!</span>"
 		if (prob(33))
 			randmutvg() //Impossible to get hulk or dwarfism this way
-			M << "<span class='notice'>Your body tries to adapt to it's new evolutionary advantage!</span>"
-		if (prob(34)) //1%+ is op
+			M << "<span class='notice'>Your body tries to adapt to its new evolutionary advantage!</span>"
+		if (prob(34)) //+1% is op
 			clean_dna()
 			M << "<span class='notce'>Your body suddenly feels like it's old self again!</span>"
 
