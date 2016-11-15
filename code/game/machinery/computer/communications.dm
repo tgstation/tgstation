@@ -155,6 +155,9 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 				var/list/shuttles = flatten_list(shuttle_templates)
 				var/datum/map_template/shuttle/S = locate(href_list["chosen_shuttle"]) in shuttles
 				if(S && istype(S))
+					if(SSshuttle.emergency.mode != SHUTTLE_CALL && SSshuttle.emergency.mode != SHUTTLE_RECALL && SSshuttle.emergency.mode != SHUTTLE_IDLE)
+						usr << "It's a bit late to buy a new shuttle, don't you think?"
+						return
 					if(SSshuttle.shuttle_purchased)
 						usr << "A replacement shuttle has already been purchased."
 					else
