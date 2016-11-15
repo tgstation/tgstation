@@ -242,7 +242,6 @@
 		if(M && M.dirty < 100)
 			M.dirty++
 	qdel(src)
-	..(M)
 			
 /obj/item/weapon/reagent_containers/food/snacks/Destroy()
 	if(contents)
