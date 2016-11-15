@@ -1,0 +1,6 @@
+author: "Mysak0CZ"
+delete-after: True
+changes: 
+  - rscadd: "Door can now have higher security, making them stronger and wires harder to access"
+  - rscadd: "More info can be found on github or wiki (if this passes)"
+  - imageadd: "Protected wires now have sprites"
