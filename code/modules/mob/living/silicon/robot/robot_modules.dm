@@ -178,9 +178,6 @@
 	R.alpha = 0
 	animate(R, alpha = 255, time = 50)
 	do_transform_delay()
-
-/obj/item/weapon/robot_module/proc/do_transform_delay()
-	var/mob/living/silicon/robot/R = loc
 	R.SetLockdown(1)
 	for(var/i in 1 to 5)
 		playsound(R, pick('sound/items/drill_use.ogg', 'sound/items/jaws_cut.ogg', 'sound/items/jaws_pry.ogg', 'sound/items/Welder.ogg'), 100, 1, -1)
@@ -269,13 +266,8 @@
 	can_be_pushed = FALSE
 
 /obj/item/weapon/robot_module/peacekeeper/do_transform_animation()
-	var/mob/living/silicon/robot/R = loc
-	R.cut_overlays()
-	R.setDir(SOUTH)
-	flick("peace_transform", R)
-	do_transform_delay()
-	R.update_headlamp()
-	R << "<span class='userdanger'>Under ASIMOV, you are an enforcer of the PEACE and preventer of HUMAN HARM. \
+	..()
+	loc << "<span class='userdanger'>Under ASIMOV, you are an enforcer of the PEACE and preventer of HUMAN HARM. \
 	You are not a security module and you are expected to follow orders and prevent harm above all else. Space law means nothing to you.</span>"
 
 /obj/item/weapon/robot_module/janitor
