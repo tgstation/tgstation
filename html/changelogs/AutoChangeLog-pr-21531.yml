@@ -1,0 +1,4 @@
+author: "Cyberboss"
+delete-after: True
+changes: 
+  - bugfix: "Brains and heads with brains trigger the emergency stop on the recycler"
