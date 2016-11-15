@@ -177,7 +177,6 @@
 	R.update_headlamp()
 	R.alpha = 0
 	animate(R, alpha = 255, time = 50)
-	do_transform_delay()
 	var/prev_lockcharge = R.lockcharge
 	R.SetLockdown(1)
 	for(var/i in 1 to 5)
