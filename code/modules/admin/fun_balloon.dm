@@ -120,9 +120,13 @@
 	for(var/obj/item/weapon/coin/C in mover)
 		total_cash += C.value
 		counted_money += C
+		if(total_cash >= threshhold)
+			break
 	for(var/obj/item/stack/spacecash/S in mover)
 		total_cash += S.value * S.amount
 		counted_money += S
+		if(total_cash >= threshhold)
+			break
 
 	if(total_cash >= threshhold)
 		for(var/obj/I in counted_money)
