@@ -141,7 +141,6 @@
 	suffix = "pubby"
 	name = "Pubby Station Emergency Shuttle"
 	description = "A small, but feature complete shuttle. It boasts a card table to keep crew members occupied on the long flight home."
-	credit_cost = 1000
 
 /datum/map_template/shuttle/emergency/supermatter
 	suffix = "supermatter"
@@ -173,7 +172,7 @@
 
 /datum/map_template/shuttle/emergency/goon
 	suffix = "goon"
-	name = "NES Port Shuttle"
+	name = "NES Port"
 	description = "The Nanotrasen Emergency Shuttle Port(NES Port for short) \
 	is a shuttle used at other less known nanotrasen facilities \
 	and has a more open inside for larger crowds."
