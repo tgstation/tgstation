@@ -59,7 +59,7 @@
 	plantname = "Ambrosia Gaia"
 	product = /obj/item/weapon/reagent_containers/food/snacks/grown/ambrosia/gaia
 	mutatelist = list()
-	reagents_add = list("earthsblood" = 0.05, "nutriment" = 0.06, "vitamin" = 0.05)
+	reagents_add = list("earthsblood" = 0.05, "nutriment" = 0.06, "vitamin" = 0.05, "celeritate" = 0.01)
 	rarity = 30 //These are some pretty good plants right here
 	oneharvest = TRUE
 	weed_rate = 4
