@@ -14073,11 +14073,7 @@
 /turf/open/floor/plating,
 /area/maintenance/fore)
 "ayF" = (
-/obj/structure/closet/secure_closet/freezer/money,
-/obj/item/weapon/reagent_containers/food/drinks/bottle/vodka/badminka,
-/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/shotglass,
-/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/shotglass,
-/obj/item/clothing/head/bearpelt,
+/obj/machinery/computer/bank_machine,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},

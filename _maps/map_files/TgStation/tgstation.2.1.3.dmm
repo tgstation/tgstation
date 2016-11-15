@@ -12712,7 +12712,7 @@
 /turf/open/floor/bluegrid,
 /area/ai_monitored/nuke_storage)
 "aBT" = (
-/obj/structure/closet/secure_closet/freezer/money,
+/obj/machinery/computer/bank_machine,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
