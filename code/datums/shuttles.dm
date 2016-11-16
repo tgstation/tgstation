@@ -121,6 +121,7 @@
 /datum/map_template/shuttle/emergency/pubby
 	suffix = "pubby"
 	name = "Pubby emergency shuttle"
+	credit_cost = 1000
 
 /datum/map_template/shuttle/emergency/supermatter
 	suffix = "supermatter"
