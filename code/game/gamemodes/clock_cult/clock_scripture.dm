@@ -251,6 +251,11 @@ Judgement: 12 servants, 5 caches, 300 CV, and any existing AIs are converted or 
 	var/ranged_type = /obj/effect/proc_holder/slab
 	var/ranged_message = "This is a huge goddamn bug, how'd you cast this?"
 	var/timeout_time = 0
+	var/datum/progressbar/progbar
+
+/datum/clockwork_scripture/ranged_ability/Destroy()
+	qdel(progbar)
+	return ..()
 
 /datum/clockwork_scripture/ranged_ability/scripture_effects()
 	slab.icon_state = slab_icon
@@ -260,9 +265,16 @@ Judgement: 12 servants, 5 caches, 300 CV, and any existing AIs are converted or 
 	invoker.update_inv_hands()
 	var/end_time = world.time + timeout_time
 	var/successful = FALSE
+	if(timeout_time)
+		progbar = new(invoker, timeout_time, slab)
 	while(slab && slab.slab_ability && !slab.slab_ability.finished && (slab.slab_ability.in_progress || !timeout_time || world.time <= end_time))
 		successful = slab.slab_ability.successful
 		sleep(1)
+		if(progbar)
+			if(slab.slab_ability.in_progress)
+				qdel(progbar)
+			else
+				progbar.update(end_time - world.time)
 	if(slab)
 		if(slab.slab_ability && !slab.slab_ability.finished)
 			slab.slab_ability.remove_ranged_ability()
