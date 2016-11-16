@@ -162,7 +162,7 @@
 			possible_targets[resultkey] = O
 
 	for(var/mob/living/L in living_mob_list)
-		if(!L.stat && is_servant_of_ratvar(L) && !L.Adjacent(invoker) && L != invoker && (L.z <= ZLEVEL_SPACEMAX)) //People right next to the invoker can't be portaled to, for obvious reasons
+		if(!L.stat && is_servant_of_ratvar(L) && !L.Adjacent(invoker) && (L.z <= ZLEVEL_SPACEMAX)) //People right next to the invoker can't be portaled to, for obvious reasons
 			var/resultkey = "[L.name] ([L.real_name])"
 			if(resultkey in teleportnames)
 				duplicatenamecount[resultkey]++
@@ -177,7 +177,7 @@
 		return FALSE
 	var/input_target_key = input(invoker, "Choose a target to form a rift to.", "Spatial Gateway") as null|anything in possible_targets
 	var/atom/movable/target = possible_targets[input_target_key]
-	if(!src || !target || !invoker || !invoker.canUseTopic(src, BE_CLOSE) || !is_servant_of_ratvar(invoker) || (istype(src, /obj/item) && invoker.get_active_held_item() != src))
+	if(!src || !target || !invoker || !invoker.canUseTopic(src, !issilicon(invoker)) || !is_servant_of_ratvar(invoker) || (istype(src, /obj/item) && invoker.get_active_held_item() != src))
 		return FALSE //if any of the involved things no longer exist, the invoker is stunned, too far away to use the object, or does not serve ratvar, or if the object is an item and not in the mob's active hand, fail
 	if(isliving(target))
 		var/mob/living/L = target
