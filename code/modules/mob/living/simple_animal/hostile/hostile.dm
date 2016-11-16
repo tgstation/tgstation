@@ -46,6 +46,11 @@
 	var/attack_same = 0 //Set us to 1 to allow us to attack our own faction, or 2, to only ever attack our own faction
 	var/AIStatus = AI_ON //The Status of our AI, can be set to AI_ON (On, usual processing), AI_IDLE (Will not process, but will return to AI_ON if an enemy comes near), AI_OFF (Off, Not processing ever)
 	var/atom/targets_from = null //all range/attack/etc. calculations should be done from this atom, defaults to the mob itself, useful for Vehicles and such
+	var/attack_all_objects = FALSE //if true, equivalent to having a wanted_objects list containing ALL objects.
+
+	var/lose_patience_timer_id //id for a timer to call LoseTarget(), used to stop mobs fixating on a target they can't reach
+	var/lose_patience_timeout = 300 //30 seconds by default, so there's no major changes to AI behaviour, beyond actually bailing if stuck forever
+
 
 
 /mob/living/simple_animal/hostile/New()
@@ -197,13 +202,15 @@
 
 
 	if(isobj(the_target))
-		if(is_type_in_list(the_target, wanted_objects))
+		if(attack_all_objects || is_type_in_list(the_target, wanted_objects))
 			return 1
 	return 0
 
 /mob/living/simple_animal/hostile/proc/GiveTarget(new_target)//Step 4, give us our selected target
 	target = new_target
+	LosePatience()
 	if(target != null)
+		GainPatience()
 		Aggro()
 		return 1
 
@@ -233,6 +240,7 @@
 		if(target)
 			if(targets_from && isturf(targets_from.loc) && target.Adjacent(targets_from)) //If they're next to us, attack
 				AttackingTarget()
+				GainPatience()
 			return 1
 		return 0
 	if(environment_smash)
@@ -400,3 +408,13 @@
 
 /mob/living/simple_animal/hostile/proc/AIShouldSleep(var/list/possible_targets)
 	return !FindTarget(possible_targets, 1)
+
+
+
+/mob/living/simple_animal/hostile/proc/GainPatience()
+	if(lose_patience_timeout)
+		LosePatience()
+		lose_patience_timer_id = addtimer(src, "LoseTarget", lose_patience_timeout, TRUE)
+
+/mob/living/simple_animal/hostile/proc/LosePatience()
+	deltimer(lose_patience_timer_id)
