@@ -180,9 +180,9 @@
 	var/prev_lockcharge = R.lockcharge
 	R.SetLockdown(1)
 	for(var/i in 1 to 5)
-		playsound(R, pick('sound/items/drill_use.ogg', 'sound/items/jaws_cut.ogg', 'sound/items/jaws_pry.ogg', 'sound/items/Welder.ogg'), 100, 1, -1)
+		playsound(R, pick('sound/items/drill_use.ogg', 'sound/items/jaws_cut.ogg', 'sound/items/jaws_pry.ogg', 'sound/items/Welder.ogg', 'sound/items/Ratchet.ogg'), 100, 1, -1)
 		sleep(10)
-	if(!prev_lockcharge && R.lockcharge == prev_lockcharge)
+	if(!prev_lockcharge)
 		R.SetLockdown(0)
 	R.notify_ai(2)
 	R.update_module_innate()
