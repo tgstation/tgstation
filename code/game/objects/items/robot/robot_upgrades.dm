@@ -150,7 +150,9 @@
 	for(var/obj/item/weapon/shovel/S in R.module)
 		R.module.remove_module(S, TRUE)
 
-	R.module.add_module(new /obj/item/weapon/pickaxe/drill/cyborg/diamond(R.module), FALSE, TRUE)
+	var/obj/item/weapon/pickaxe/drill/cyborg/diamond/DD = new /obj/item/weapon/pickaxe/drill/cyborg/diamond(R.module)
+	R.module.basic_modules += DD
+	R.module.add_module(DD, FALSE, TRUE)
 	return 1
 
 /obj/item/borg/upgrade/soh
@@ -168,7 +170,9 @@
 	for(var/obj/item/weapon/storage/bag/ore/cyborg/S in R.module)
 		R.module.remove_module(S, TRUE)
 
-	R.module.add_module(new /obj/item/weapon/storage/bag/ore/holding(R.module), FALSE, TRUE)
+	var/obj/item/weapon/storage/bag/ore/holding/H = new /obj/item/weapon/storage/bag/ore/holding(R.module)
+	R.module.basic_modules += H
+	R.module.add_module(H, FALSE, TRUE)
 	return 1
 
 /obj/item/borg/upgrade/syndicate
