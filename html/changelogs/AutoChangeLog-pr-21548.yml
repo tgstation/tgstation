@@ -1,4 +1,0 @@
-author: "Pubby"
-delete-after: True
-changes: 
-  - bugfix: "cyclelinked airlock pairs now close behind you even when running through at full speed."
