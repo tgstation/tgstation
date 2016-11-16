@@ -269,12 +269,12 @@ Judgement: 12 servants, 5 caches, 300 CV, and any existing AIs are converted or 
 		progbar = new(invoker, timeout_time, slab)
 	while(slab && slab.slab_ability && !slab.slab_ability.finished && (slab.slab_ability.in_progress || !timeout_time || world.time <= end_time))
 		successful = slab.slab_ability.successful
-		sleep(1)
 		if(progbar)
 			if(slab.slab_ability.in_progress)
 				qdel(progbar)
 			else
 				progbar.update(end_time - world.time)
+		sleep(1)
 	if(slab)
 		if(slab.slab_ability && !slab.slab_ability.finished)
 			slab.slab_ability.remove_ranged_ability()
