@@ -38,6 +38,8 @@ var/global/list/mob/living/simple_animal/hostile/swarmer/ai/AISwarmerMobs = list
 	anchored = TRUE
 	var/swarmer_spawn_cooldown = 0
 	var/swarmer_spawn_cooldown_amt = 150 //Deciseconds between the swarmers we spawn
+	var/too_many_swarmers_to_replenish = TOO_MANY_SWARMERS_BEACON
+	var/too_many_swarmers_at_all = TOO_MANY_SWARMERS //Passed down to the swarmers, allowing for admin-led apocalypses, doesn't update swarmers that already exist
 
 
 /mob/living/simple_animal/hostile/megafauna/swarmer_swarm_beacon/New()
@@ -50,9 +52,10 @@ var/global/list/mob/living/simple_animal/hostile/swarmer/ai/AISwarmerMobs = list
 /mob/living/simple_animal/hostile/megafauna/swarmer_swarm_beacon/handle_automated_action()
 	. = ..()
 	if(.)
-		if(AISwarmerMobs.len < TOO_MANY_SWARMERS_BEACON && world.time > swarmer_spawn_cooldown)
+		if(AISwarmerMobs.len < too_many_swarmers_to_replenish && world.time > swarmer_spawn_cooldown)
 			swarmer_spawn_cooldown = world.time + swarmer_spawn_cooldown_amt
-			new /mob/living/simple_animal/hostile/swarmer/ai(loc)
+			var/mob/living/simple_animal/hostile/swarmer/ai/S = new /mob/living/simple_animal/hostile/swarmer/ai(loc)
+			S.max_swarmers = too_many_swarmers_at_all
 
 
 /obj/item/device/gps/internal/swarmer_beacon
@@ -74,6 +77,7 @@ var/global/list/mob/living/simple_animal/hostile/swarmer/ai/AISwarmerMobs = list
 	lose_patience_timeout = 110 //11 seconds, just enough to pass DismantleMachine() do_after()s, but not too slow either
 	var/static/list/sharedWanted = list(/turf/closed/mineral, /turf/closed/wall) //eat rocks and walls
 	var/static/list/sharedIgnore = list()
+	var/max_swarmers = TOO_MANY_SWARMERS
 
 
 /mob/living/simple_animal/hostile/swarmer/ai/New()
@@ -129,7 +133,7 @@ var/global/list/mob/living/simple_animal/hostile/swarmer/ai/AISwarmerMobs = list
 	. = ..()
 	if(.)
 		if(!stop_automated_movement)
-			if(AISwarmerMobs.len < TOO_MANY_SWARMERS && resources > 50)
+			if(AISwarmerMobs.len < max_swarmers && resources > 50)
 				StartAction(100) //so they'll actually sit still and use the verbs
 				CreateSwarmer()
 				return
@@ -147,6 +151,15 @@ var/global/list/mob/living/simple_animal/hostile/swarmer/ai/AISwarmerMobs = list
 				StartAction(100)
 				RepairSelf()
 				return
+
+
+
+/mob/living/simple_animal/hostile/swarmer/ai/CreateSwarmer()
+	. = ..()
+	if(.)
+		var/mob/living/simple_animal/hostile/swarmer/ai/S = .
+		if(S)
+			S.max_swarmers = max_swarmers
 
 
 /mob/living/simple_animal/hostile/swarmer/ai/proc/StartAction(deci = 0)

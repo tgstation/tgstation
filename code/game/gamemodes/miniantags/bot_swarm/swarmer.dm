@@ -374,8 +374,8 @@
 	else
 		src << "<span class='warning'>You do not have the necessary resources to fabricate this object.</span>"
 		return 0
-	new fabrication_object(loc)
-	return 1
+	return new fabrication_object(loc)
+
 
 /mob/living/simple_animal/hostile/swarmer/proc/Integrate(obj/item/target)
 	if(resources >= max_resources)
@@ -579,7 +579,8 @@
 		src << "<span class='warning'>This is not a suitable location for replicating ourselves. We need more room.</span>"
 		return
 	if(do_mob(src, src, 100))
-		if(Fabricate(created_shell_type, 50))
+		. = Fabricate(created_shell_type, 50)
+		if(.)
 			playsound(loc,'sound/items/poster_being_created.ogg',50, 1, -1)
 
 /mob/living/simple_animal/hostile/swarmer/proc/RepairSelf()
