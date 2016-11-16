@@ -229,6 +229,20 @@
 			var/amount = S.bonus_reagents[r_id] * cooking_efficiency
 			S.reagents.add_reagent(r_id, amount)
 
+/obj/item/weapon/reagent_containers/food/snacks/microwave_act(obj/machinery/microwave/M)
+	if(cooked_type)
+		var/obj/item/weapon/reagent_containers/food/snacks/S = new cooked_type(get_turf(src))
+		if(M)
+			initialize_cooked_food(S, M.efficiency)
+		else
+			initialize_cooked_food(S, 1)
+		feedback_add_details("food_made","[type]")
+	else
+		new /obj/item/weapon/reagent_containers/food/snacks/badrecipe(src)
+		if(M && M.dirty < 100)
+			M.dirty++
+	qdel(src)
+			
 /obj/item/weapon/reagent_containers/food/snacks/Destroy()
 	if(contents)
 		for(var/atom/movable/something in contents)

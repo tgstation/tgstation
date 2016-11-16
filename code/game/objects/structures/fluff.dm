@@ -131,17 +131,17 @@
 /obj/structure/fluff/divine/nexus
 	name = "nexus"
 	desc = "It anchors a deity to this world. It radiates an unusual aura. It looks well protected from explosive shock."
-	icon_state = "nexus-neutral"
+	icon_state = "nexus"
 
 /obj/structure/fluff/divine/conduit
 	name = "conduit"
 	desc = "It allows a deity to extend their reach.  Their powers are just as potent near a conduit as a nexus."
-	icon_state = "conduit-neutral"
+	icon_state = "conduit"
 
 /obj/structure/fluff/divine/convertaltar
 	name = "conversion altar"
 	desc = "An altar dedicated to a deity."
-	icon_state = "convertaltar-neutral"
+	icon_state = "convertaltar"
 	density = 0
 	can_buckle = 1
 
