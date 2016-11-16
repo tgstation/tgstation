@@ -9,14 +9,14 @@
 	var/busy //If the slab is currently being used by something
 	var/production_time = 0
 	var/no_cost = FALSE //If the slab is admin-only and needs no components and has no scripture locks
+	var/speed_multiplier = 1 //multiples how fast this slab recites scripture
 	var/nonhuman_usable = FALSE //if the slab can be used by nonhumans, defaults to off
 	var/produces_components = TRUE //if it produces components at all
 	var/list/shown_scripture = list(SCRIPTURE_DRIVER = TRUE, SCRIPTURE_SCRIPT = FALSE, SCRIPTURE_APPLICATION = FALSE, SCRIPTURE_REVENANT = FALSE, SCRIPTURE_JUDGEMENT = FALSE)
 	var/compact_scripture = FALSE
 	var/obj/effect/proc_holder/slab/slab_ability //the slab's current bound ability, for certain scripture
-	var/datum/clockwork_scripture/quickbind_slot_one //these are paths, not instances
-	var/datum/clockwork_scripture/quickbind_slot_two //accordingly, use initial() for non-list vars
-	actions_types = list(/datum/action/item_action/clock/hierophant, /datum/action/item_action/clock/quickbind_one, /datum/action/item_action/clock/quickbind_two)
+	var/list/quickbound = list(/datum/clockwork_scripture/ranged_ability/geis_prep, /datum/clockwork_scripture/vanguard) //quickbound scripture, accessed by index
+	actions_types = list(/datum/action/item_action/clock/hierophant)
 
 /obj/item/clockwork/slab/starter
 	stored_components = list(BELLIGERENT_EYE = 1, VANGUARD_COGWHEEL = 1, GEIS_CAPACITOR = 1, REPLICANT_ALLOY = 1, HIEROPHANT_ANSIBLE = 1)
@@ -30,6 +30,7 @@
 	nonhuman_usable = TRUE
 
 /obj/item/clockwork/slab/debug
+	speed_multiplier = 0
 	no_cost = TRUE
 	nonhuman_usable = TRUE
 
@@ -40,8 +41,7 @@
 
 /obj/item/clockwork/slab/New()
 	..()
-	quickbind_to_one(/datum/clockwork_scripture/ranged_ability/geis_prep)
-	quickbind_to_two(/datum/clockwork_scripture/vanguard)
+	update_quickbind()
 	START_PROCESSING(SSobj, src)
 	production_time = world.time + SLAB_PRODUCTION_TIME
 
@@ -97,10 +97,10 @@
 		user << "Use the <span class='brass'>Hierophant Network</span> action button to communicate with other servants."
 		user << "Clockwork slabs will only make components if held or if inside an item held by a human, and when making a component will prevent all other slabs held from making components."
 		user << "Hitting a slab, a Servant with a slab, or a cache will <b>transfer</b> this slab's components into the target, the target's slab, or the global cache, respectively."
-		if(quickbind_slot_one)
-			user << "Quickbind button One: <span class='[get_component_span(initial(quickbind_slot_one.primary_component))]'>[initial(quickbind_slot_one.name)]</span>"
-		if(quickbind_slot_two)
-			user << "Quickbind button Two: <span class='[get_component_span(initial(quickbind_slot_two.primary_component))]'>[initial(quickbind_slot_two.name)]</span>"
+		if(LAZYLEN(quickbound))
+			for(var/i in 1 to quickbound.len)
+				var/datum/clockwork_scripture/quickbind_slot = quickbound[i]
+				user << "<b>Quickbind</b> button: <span class='[get_component_span(initial(quickbind_slot.primary_component))]'>[initial(quickbind_slot.name)]</span>."
 		if(clockwork_caches)
 			user << "<b>Stored components (with global cache):</b>"
 			for(var/i in stored_components)
@@ -158,15 +158,13 @@
 	else
 		return ..()
 
-//Slab actions; Hierophant, Quickbind One and Two
-/obj/item/clockwork/slab/ui_action_click(mob/user, actiontype)
-	switch(actiontype)
-		if(/datum/action/item_action/clock/hierophant)
-			show_hierophant(user)
-		if(/datum/action/item_action/clock/quickbind_one)
-			recite_scripture(quickbind_slot_one, user, FALSE)
-		if(/datum/action/item_action/clock/quickbind_two)
-			recite_scripture(quickbind_slot_two, user, FALSE)
+//Slab actions; Hierophant, Quickbind
+/obj/item/clockwork/slab/ui_action_click(mob/user, action)
+	if(istype(action, /datum/action/item_action/clock/hierophant))
+		show_hierophant(user)
+	else if(istype(action, /datum/action/item_action/clock/quickbind))
+		var/datum/action/item_action/clock/quickbind/Q = action
+		recite_scripture(quickbound[Q.scripture_index], user, FALSE)
 
 /obj/item/clockwork/slab/proc/show_hierophant(mob/living/user)
 	var/message = stripped_input(user, "Enter a message to send to your fellow servants.", "Hierophant")
@@ -274,7 +272,10 @@
 						break //we want this to only show up if the scripture has a cost of some sort
 				scripture_text += "<br><b>Tip:</b> [initial(S.usage_tip)]"
 			if(initial(S.quickbind))
-				scripture_text += "<br><font color=#BE8700 size=1>[S == quickbind_slot_one || S == quickbind_slot_two ? "Currently Quickbound":\
+				var/is_bound = FALSE
+				if(S in quickbound)
+					is_bound = TRUE
+				scripture_text += "<br><font color=#BE8700 size=1>[is_bound ? "Currently Quickbound":\
 				"<A href='?src=\ref[src];Quickbindone=[S]'>Quickbind to button One</A>| <A href='?src=\ref[src];Quickbindtwo=[S]'>Quickbind to button Two</A>"]</font>"
 			scripture_text += "<br><b><A href='?src=\ref[src];Recite=[S]'>Recite</A></b><br>"
 			switch(initial_tier)
@@ -361,10 +362,12 @@
 		The second function of the clockwork slab is <b><font color=#BE8700>Recollection</font></b>, which will display this guide.<br><br>\
 		\
 		The third to fifth functions are three buttons in the top left while holding the slab.<br>From left to right, they are:<br>\
-		<b><font color=#DAAA18>Hierophant Network</font></b>, which allows communication to other Servants.<br>\
-		<b>Quickbind slot One</b>, currently set to <b><font color=[get_component_color_brightalloy(initial(quickbind_slot_one.primary_component))]>[initial(quickbind_slot_one.name)]</font></b>.<br>\
-		<b>Quickbind slot Two</b>, currently set to <b><font color=[get_component_color_brightalloy(initial(quickbind_slot_two.primary_component))]>[initial(quickbind_slot_two.name)]</font></b>.<br><br>\
-		\
+		<b><font color=#DAAA18>Hierophant Network</font></b>, which allows communication to other Servants.<br>"
+		if(LAZYLEN(quickbound))
+			for(var/i in 1 to quickbound.len)
+				var/datum/clockwork_scripture/quickbind_slot = quickbound[i]
+				text += "A <b>Quickbind</b> slot, currently set to <b><font color=[get_component_color_brightalloy(initial(quickbind_slot.primary_component))]>[initial(quickbind_slot.name)]</font></b>.<br>"
+		text += "<br>\
 		Examine the slab to check the number of components it has available.<br><br>\
 		\
 		<font color=#BE8700 size=3><b><center>Purge all untruths and honor Ratvar.</center></b></font>"
@@ -387,10 +390,10 @@
 		return
 
 	if(href_list["Quickbindone"])
-		quickbind_to_one(href_list["Quickbindone"])
+		quickbind_to_slot(href_list["Quickbindone"], 1)
 
 	if(href_list["Quickbindtwo"])
-		quickbind_to_two(href_list["Quickbindtwo"])
+		quickbind_to_slot(href_list["Quickbindtwo"], 2)
 
 	if(href_list["compactscripture"])
 		compact_scripture = !compact_scripture
@@ -401,26 +404,25 @@
 
 	interact(usr)
 
-/obj/item/clockwork/slab/proc/quickbind_to_one(datum/clockwork_scripture/scripture) //takes a typepath(typecast for initial()) and binds it to slot 1
+/obj/item/clockwork/slab/proc/quickbind_to_slot(datum/clockwork_scripture/scripture, index) //takes a typepath(typecast for initial()) and binds it to a slot
 	if(!ispath(scripture) && istext(scripture))
 		scripture = text2path(scripture) //if given as a href, the scripture will be a string and not a path. obviously, we need a path and not a string
-	if(!scripture || quickbind_slot_two == scripture)
+	if(!scripture || (scripture in quickbound))
 		return
-	quickbind_slot_one = scripture
-	for(var/datum/action/item_action/clock/quickbind_one/O in actions)
-		O.name = initial(quickbind_slot_one.name)
-		O.desc = initial(quickbind_slot_one.quickbind_desc)
-		O.button_icon_state = initial(quickbind_slot_one.name)
-		O.UpdateButtonIcon()
+	quickbound[index] = scripture
+	update_quickbind()
 
-/obj/item/clockwork/slab/proc/quickbind_to_two(datum/clockwork_scripture/scripture) //takes a typepath(typecast for initial()) and binds it to slot 2
-	if(!ispath(scripture) && istext(scripture))
-		scripture = text2path(scripture) //if given as a href, the scripture will be a string and not a path. obviously, we need a path and not a string
-	if(!scripture || quickbind_slot_one == scripture)
-		return
-	quickbind_slot_two = scripture
-	for(var/datum/action/item_action/clock/quickbind_two/O in actions)
-		O.name = initial(quickbind_slot_two.name)
-		O.desc = initial(quickbind_slot_two.quickbind_desc)
-		O.button_icon_state = initial(quickbind_slot_two.name)
-		O.UpdateButtonIcon()
+/obj/item/clockwork/slab/proc/update_quickbind()
+	for(var/datum/action/item_action/clock/quickbind/Q in actions)
+		qdel(Q)
+	if(LAZYLEN(quickbound))
+		for(var/i in 1 to quickbound.len)
+			var/datum/action/item_action/clock/quickbind/Q = new /datum/action/item_action/clock/quickbind(src)
+			Q.scripture_index = i
+			var/datum/clockwork_scripture/quickbind_slot = quickbound[i]
+			Q.name = initial(quickbind_slot.name)
+			Q.desc = initial(quickbind_slot.quickbind_desc)
+			Q.button_icon_state = initial(quickbind_slot.name)
+			Q.UpdateButtonIcon()
+			if(isliving(loc))
+				Q.Grant(loc)
