@@ -3,8 +3,8 @@
 "ac" = (/turf/closed/wall/mineral/plastitanium,/area/ruin/powered/syndicate_lava_base)
 "ad" = (/obj/effect/mob_spawn/human/lavaland_syndicate{tag = "icon-sleeper_s"; icon_state = "sleeper_s"},/turf/open/floor/mineral/plastitanium,/area/ruin/powered/syndicate_lava_base)
 "ae" = (/obj/effect/mob_spawn/human/lavaland_syndicate/comms{tag = "icon-sleeper_s"; icon_state = "sleeper_s"},/turf/open/floor/mineral/plastitanium,/area/ruin/powered/syndicate_lava_base)
-"af" = (/obj/machinery/syndicatebomb{anchored = 1},/turf/open/floor/mineral/plastitanium,/area/ruin/powered/syndicate_lava_base)
-"ag" = (/turf/open/floor/mineral/plastitanium,/area/ruin/powered/syndicate_lava_base)
+"af" = (/turf/open/floor/mineral/plastitanium,/area/ruin/powered/syndicate_lava_base)
+"ag" = (/obj/machinery/syndicatebomb/badmin/varplosion{can_unanchor = 0; name = "self destruct device"},/turf/open/floor/mineral/plastitanium,/area/ruin/powered/syndicate_lava_base)
 "ah" = (/obj/structure/closet/emcloset,/obj/item/weapon/tank/internals/emergency_oxygen/engi,/obj/item/clothing/mask/breath,/turf/open/floor/mineral/plastitanium,/area/ruin/powered/syndicate_lava_base)
 "ai" = (/obj/structure/table,/obj/item/weapon/hand_labeler,/turf/open/floor/mineral/plastitanium,/area/ruin/powered/syndicate_lava_base)
 "aj" = (/obj/structure/table,/obj/item/clothing/gloves/color/latex,/obj/item/weapon/storage/box/syringes,/obj/item/weapon/storage/box/beakers{pixel_x = 2; pixel_y = 2},/turf/open/floor/mineral/plastitanium,/area/ruin/powered/syndicate_lava_base)
@@ -41,42 +41,45 @@
 "aO" = (/obj/structure/table,/turf/open/floor/engine,/area/ruin/powered/syndicate_lava_base)
 "aP" = (/turf/open/floor/engine,/area/ruin/powered/syndicate_lava_base)
 "aQ" = (/obj/structure/table,/obj/item/weapon/storage/toolbox/electrical,/obj/item/weapon/storage/toolbox/electrical,/turf/open/floor/engine,/area/ruin/powered/syndicate_lava_base)
-"aR" = (/obj/structure/table,/obj/machinery/light/small{dir = 8},/obj/item/weapon/storage/toolbox/mechanical,/turf/open/floor/engine,/area/ruin/powered/syndicate_lava_base)
-"aS" = (/obj/structure/table,/obj/item/weapon/paper_bin,/obj/item/weapon/pen/fourcolor,/turf/open/floor/mineral/plastitanium,/area/ruin/powered/syndicate_lava_base)
-"aT" = (/obj/structure/table,/obj/item/device/radio/intercom{broadcasting = 0; dir = 8; freerange = 1; listening = 1; name = "Pirate Radio Listening Channel"; pixel_x = 0},/turf/open/floor/mineral/plastitanium,/area/ruin/powered/syndicate_lava_base)
-"aU" = (/obj/structure/table,/obj/item/device/radio/intercom{broadcasting = 1; dir = 8; freerange = 1; listening = 0; name = "Pirate Radio Broadcast Channel"; pixel_x = 0},/turf/open/floor/mineral/plastitanium,/area/ruin/powered/syndicate_lava_base)
-"aV" = (/obj/structure/chair/office/light{dir = 8},/turf/open/floor/mineral/plastitanium,/area/ruin/powered/syndicate_lava_base)
-"aW" = (/obj/machinery/telecomms/relay/preset/ruskie{use_power = 0},/turf/open/floor/mineral/plastitanium,/area/ruin/powered/syndicate_lava_base)
-"aX" = (/obj/structure/table,/obj/item/weapon/gun/projectile/automatic/sniper_rifle/syndicate,/obj/item/ammo_box/magazine/sniper_rounds,/obj/item/ammo_box/magazine/sniper_rounds,/turf/open/floor/mineral/plastitanium,/area/ruin/powered/syndicate_lava_base)
-"aY" = (/obj/structure/table,/obj/item/weapon/gun/projectile/automatic/pistol,/obj/item/ammo_box/magazine/m10mm,/turf/open/floor/mineral/plastitanium,/area/ruin/powered/syndicate_lava_base)
+"aR" = (/obj/structure/table,/obj/item/weapon/paper_bin,/obj/item/weapon/pen/fourcolor,/turf/open/floor/mineral/plastitanium,/area/ruin/powered/syndicate_lava_base)
+"aS" = (/obj/structure/table,/obj/item/device/radio/intercom{broadcasting = 0; dir = 8; freerange = 1; listening = 1; name = "Pirate Radio Listening Channel"; pixel_x = 0},/turf/open/floor/mineral/plastitanium,/area/ruin/powered/syndicate_lava_base)
+"aT" = (/obj/machinery/telecomms/relay/preset/ruskie{use_power = 0},/turf/open/floor/mineral/plastitanium,/area/ruin/powered/syndicate_lava_base)
+"aU" = (/obj/structure/table,/obj/machinery/light/small{dir = 8},/obj/item/weapon/storage/toolbox/mechanical,/turf/open/floor/engine,/area/ruin/powered/syndicate_lava_base)
+"aV" = (/obj/structure/table,/obj/item/device/radio/intercom{broadcasting = 1; dir = 8; freerange = 1; listening = 0; name = "Pirate Radio Broadcast Channel"; pixel_x = 0},/turf/open/floor/mineral/plastitanium,/area/ruin/powered/syndicate_lava_base)
+"aW" = (/obj/structure/chair/office/light{dir = 8},/turf/open/floor/mineral/plastitanium,/area/ruin/powered/syndicate_lava_base)
+"aX" = (/obj/structure/table,/obj/item/ammo_box/magazine/sniper_rounds,/obj/item/ammo_box/magazine/sniper_rounds,/obj/item/weapon/gun/ballistic/automatic/sniper_rifle,/turf/open/floor/mineral/plastitanium,/area/ruin/powered/syndicate_lava_base)
+"aY" = (/obj/structure/table,/obj/item/ammo_box/magazine/m10mm,/obj/item/ammo_box/magazine/m10mm,/obj/item/ammo_box/magazine/m10mm,/obj/item/ammo_box/magazine/m10mm,/obj/item/weapon/gun/ballistic/automatic/pistol,/obj/item/weapon/gun/ballistic/automatic/pistol,/turf/open/floor/mineral/plastitanium,/area/ruin/powered/syndicate_lava_base)
+"aZ" = (/obj/structure/table,/obj/item/weapon/gun/ballistic/automatic/sniper_rifle,/obj/item/ammo_box/magazine/sniper_rounds,/obj/item/ammo_box/magazine/sniper_rounds,/turf/open/floor/mineral/plastitanium,/area/ruin/powered/syndicate_lava_base)
+"ba" = (/obj/structure/table,/obj/item/weapon/grenade/syndieminibomb,/turf/open/floor/mineral/plastitanium,/area/ruin/powered/syndicate_lava_base)
+"bb" = (/obj/structure/table,/obj/item/weapon/cqc_manual,/turf/open/floor/mineral/plastitanium,/area/ruin/powered/syndicate_lava_base)
 
 (1,1,1) = {"
 aaababababababababababababababababababababababababababaaaaaa
 aaababababababababababababababababababababababababababababab
 ababababababababababacacacacacacabababaaabababababababaaabab
 ababababababababababacadadaeadacabababababababababababaaabab
-ababababababababababacafagagagacaaaaabababababababababababab
-ababababababababaaaaacagagagacacacacacacacacacacacababababab
-abababababacacacacacacahagagacaiajakalamanaoapapacababababab
-abababababacaqararaqacahagagacagagagagagafaoapapacababababab
-abaaabababacasatatauacahagagacagagagagagagavapapacababababab
-ababaaababacawagagaxacacagagacagayayayayayaoapapacababababab
-abababababacazagagagaAacagagacavacacacacacacacacacababababab
-ababababaaacaBagagagaCacagagacagaDacaEaFacayayaGacababababab
-abababacacacacavavacacacavavacavacacagagacagagaHacababababab
-abababacaIagafagagagagagagaJaKagagagagagaLagagaMacababababab
-abababacaNagagagagagagagagagagafagagagagacacacacacaaabababab
-abababacacacacavavacacacacagagacacacagagacaaaaaaaaaaaaababab
-abababaaacaOaPaPaPaPaPaPacagagacaaacaLaLacacacacacacaaababab
-abababaaacaQaPaPaPaPaPaPacagagacaaacagagagagagagagacabababab
-abababaaacaRaPaPaPaPaPaPacagagacaaacagagagagaSaTagacabababab
-ababababacaOaPaPaPaPaPaPacagagacabacagagagagaUaVagacabababab
-ababababacaPaPaPaPaPaPaPacagagacabacagagagagayaTaWacabababab
-ababababacaPaPaPaPaPaPaPacagagacabacaXaYaYagagagafacabababab
-ababababacacacacacacacacacagagacabacacacacacacacacacabababab
-abababababababababaaaaaaacagagacabababababababababababababab
-ababababababababababaaaaacagagacabababababababababababababab
-ababababababababababababacagagacababababaaabababababababaaaa
+ababababababababababacafafafafacaaaaabababababababababababab
+ababababababababaaaaacagafafacacacacacacacacacacacababababab
+abababababacacacacacacahafafacaiajakalamanaoapapacababababab
+abababababacaqararaqacahafafacafafafagafafaoapapacababababab
+abaaabababacasatatauacahafafacafafafafafafavapapacababababab
+ababaaababacawafafaxacacafafacafayayayayayaoapapacababababab
+abababababacazafafafaAacafafacavacacacacacacacacacababababab
+ababababaaacaBafafafaCacafafacafaDacaEaFacayayaGacababababab
+abababacacacacavavacacacavavacavacacafafacafafaHacababababab
+abababacaIagafafafafafafafaJaKafafagafafaLafafaMacababababab
+abababacaNafafafafafafafafafafafafafafafacacacacacaaabababab
+abababacacacacavavacacacacafafacacacafafacaaaaaaaaaaaaababab
+abababaaacaOaPaPaPaPaPaPacafafacaaacaLaLacacacacacacaaababab
+abababaaacaQaPaPaPaPaPaPacafafacaaacafafafafaRaSaTacabababab
+abababaaacaUaPaPaPaPaPaPacafafacaaacagafafafaVaWafacabababab
+ababababacaOaPaPaPaPaPaPacafafacabacafafafafayaSafacabababab
+ababababacaPaPaPaPaPaPaPacafafacabacafafafafafafafacabababab
+ababababacaPaPaPaPaPaPaPacafafacabacaXaYaYaZbababbacabababab
+ababababacacacacacacacacacafafacabacacacacacacacacacabababab
+abababababababababaaaaaaacafafacabababababababababababababab
+ababababababababababaaaaacafafacabababababababababababababab
+ababababababababababababacafafacababababaaabababababababaaaa
 ababababababababababababacavavacababababababababababaaabaaaa
 ababaaababababababababababababababababababababababababaaaaaa
 aaaaaaabababababababababababababababababaaababababababababaa
