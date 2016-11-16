@@ -599,3 +599,7 @@ obj/item/proc/item_action_slot_check(slot, mob/user)
 		MO.pixel_y = rand(-16,16)
 		MO.desc = "Looks like this was \an [src] some time ago."
 		..()
+
+/obj/item/proc/microwave_act(obj/machinery/microwave/M)
+	if(M && M.dirty < 100)
+		M.dirty++

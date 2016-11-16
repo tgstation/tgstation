@@ -149,7 +149,7 @@
 			user << "<span class='notice'>You insert [loaded] items into [src].</span>"
 
 
-	else if(istype(O,/obj/item/weapon/reagent_containers/food/snacks))
+	else if(istype(O,/obj/item/weapon/reagent_containers/food/snacks) || istype(O,/obj/item/weapon/dice))
 		if (contents.len>=max_n_of_items)
 			user << "<span class='warning'>[src] is full, you cannot put more!</span>"
 			return 1
@@ -230,32 +230,19 @@
 		muck_finish()
 		return
 
-	else if (has_extra_item())
-		if (!microwaving(4))
+	else
+		if(has_extra_item() && prob(min(dirty*5,100)) && !microwaving(4))
 			broke()
 			return
-
-		broke()
-		return
-
-	else
-
+				
 		if(!microwaving(10))
 			abort()
 			return
 		stop()
 
-		for(var/obj/item/weapon/reagent_containers/food/snacks/F in contents)
-			if(F.cooked_type)
-				var/obj/item/weapon/reagent_containers/food/snacks/S = new F.cooked_type (get_turf(src))
-				F.initialize_cooked_food(S, efficiency)
-				feedback_add_details("food_made","[F.type]")
-			else
-				new /obj/item/weapon/reagent_containers/food/snacks/badrecipe(src)
-				if(dirty < 100)
-					dirty++
-			qdel(F)
-
+		for(var/obj/item/O in contents)
+			O.microwave_act(src)
+			
 		return
 
 /obj/machinery/microwave/proc/microwaving(seconds as num)

@@ -78,3 +78,6 @@
 		if(G)
 			user.AddLuminosity(-G.get_lum(seed))
 			SetLuminosity(G.get_lum(seed))
+			
+/obj/item/weapon/grown/microwave_act(obj/machine/microwave/M)
+	return

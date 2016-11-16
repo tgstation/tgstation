@@ -39,6 +39,8 @@
 	var/sides = 6
 	var/result = null
 	var/list/special_faces = list() //entries should match up to sides var if used
+	var/can_be_rigged = TRUE
+	var/rigged = FALSE
 
 /obj/item/weapon/dice/New()
 	result = rand(1, sides)
@@ -151,6 +153,9 @@
 
 /obj/item/weapon/dice/proc/diceroll(mob/user)
 	result = rand(1, sides)
+	if(rigged && result != rigged)
+		if(prob(Clamp(1/(sides - 1) * 100, 25, 80)))
+			result = rigged
 	var/fake_result = rand(1, sides)//Daredevil isn't as good as he used to be
 	var/comment = ""
 	if(sides == 20 && result == 20)
@@ -180,3 +185,8 @@
 /obj/item/weapon/dice/update_icon()
 	cut_overlays()
 	add_overlay("[src.icon_state][src.result]")
+	
+/obj/item/weapon/dice/microwave_act(obj/machinery/microwave/M)
+	if(can_be_rigged)
+		rigged = result
+	..(M)
