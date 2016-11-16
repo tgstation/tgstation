@@ -194,7 +194,7 @@
 			B.loc = T
 			B.update_icon()
 			if(B.overmind && expand_reaction)
-				B.overmind.blob_reagent_datum.expand_reaction(src, B, T)
+				B.overmind.blob_reagent_datum.expand_reaction(src, B, T, controller)
 			return B
 		else
 			blob_attack_animation(T, controller)

@@ -69,7 +69,7 @@
 		var/list/nodes = list()
 		for(var/i in 1 to blob_nodes.len)
 			var/obj/structure/blob/node/B = blob_nodes[i]
-			nodes["Blob Node #[i] ([B.overmind ? "B.overmind.blob_reagent_datum.name":"No Chemical"]"] = B
+			nodes["Blob Node #[i] ([B.overmind ? "[B.overmind.blob_reagent_datum.name]":"No Chemical"])"] = B
 		var/node_name = input(src, "Choose a node to jump to.", "Node Jump") in nodes
 		var/obj/structure/blob/node/chosen_node = nodes[node_name]
 		if(chosen_node)
