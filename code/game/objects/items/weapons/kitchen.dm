@@ -28,27 +28,87 @@
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 30)
 	var/datum/reagent/forkload //used to eat omelette
 
-/obj/item/weapon/kitchen/fork/attack(mob/living/carbon/M, mob/living/carbon/user)
-	if(!istype(M))
+	var/loaded_food_name
+	var/image/loaded_food
+	melt_temperature = MELTPOINT_STEEL
+
+/obj/item/weapon/kitchen/utensil/fork/New()
+	..()
+	reagents = new(10)
+	reagents.my_atom = src
+
+/obj/item/weapon/kitchen/utensil/fork/attack_self(var/mob/living/carbon/user)
+	if(loaded_food)
+		attack(user,user)
+
+/obj/item/weapon/kitchen/utensil/fork/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
+	if(!istype(M) || !istype(user))
 		return ..()
 
-	if(forkload)
+	if(user.zone_sel.selecting != "eyes" && user.zone_sel.selecting != LIMB_HEAD && M != user && !loaded_food)
+		return ..()
+
+	if (src.loaded_food)
+		reagents.update_total()
 		if(M == user)
-			M.visible_message("<span class='notice'>[user] eats a delicious forkful of omelette!</span>")
-			M.reagents.add_reagent(forkload.id, 1)
+			user.visible_message("<span class='notice'>[user] eats a delicious forkful of [loaded_food_name]!</span>")
+			feed_to(user, user)
+			return
 		else
-			M.visible_message("<span class='notice'>[user] feeds [M] a delicious forkful of omelette!</span>")
-			M.reagents.add_reagent(forkload.id, 1)
-		icon_state = "fork"
-		forkload = null
+			user.visible_message("<span class='notice'>[user] attempts to feed [M] a delicious forkful of [loaded_food_name].</span>")
+			if(do_mob(user, M))
+				if(!loaded_food)
+					return
 
-	else if(user.zone_selected == "eyes")
-		if(user.disabilities & CLUMSY && prob(50))
-			M = user
-		return eyestab(M,user)
+				user.visible_message("<span class='notice'>[user] feeds [M] a delicious forkful of [loaded_food_name]!</span>")
+				feed_to(user, M)
+				return
 	else
-		return ..()
+		if((M_CLUMSY in user.mutations) && prob(50))
+			return eyestab(user,user)
+		else
+			return eyestab(M, user)
 
+/obj/item/weapon/kitchen/utensil/fork/examine(mob/user)
+	..()
+	if(loaded_food)
+		user.show_message("It has a forkful of [loaded_food_name] on it.")
+
+/obj/item/weapon/kitchen/utensil/fork/proc/load_food(obj/item/weapon/reagent_containers/food/snacks/snack, mob/user)
+	if(!snack || !user || !istype(snack) || !istype(user))
+		return
+
+	if(loaded_food)
+		to_chat(user, "<span class='notice'>You already have food on \the [src].</span>")
+		return
+
+	if(snack.wrapped)
+		to_chat(user, "<span class='notice'>You can't eat packaging!</span>")
+		return
+
+	if(snack.reagents.total_volume)
+		loaded_food_name = snack.name
+		var/icon/food_to_load = getFlatIcon(snack)
+		food_to_load.Scale(16,16)
+		loaded_food = image(food_to_load)
+		loaded_food.pixel_x = 8 * PIXEL_MULTIPLIER + src.pixel_x
+		loaded_food.pixel_y = 15 * PIXEL_MULTIPLIER + src.pixel_y
+		src.overlays += loaded_food
+		if(snack.reagents.total_volume > snack.bitesize)
+			snack.reagents.trans_to(src, snack.bitesize)
+		else
+			snack.reagents.trans_to(src, snack.reagents.total_volume)
+			snack.bitecount++
+			snack.after_consume(user)
+	return 1
+
+/obj/item/weapon/kitchen/utensil/fork/proc/feed_to(mob/living/carbon/user, mob/living/carbon/target)
+	reagents.reaction(target, INGEST)
+	reagents.trans_to(target.reagents, reagents.total_volume, log_transfer = TRUE, whodunnit = user)
+	overlays -= loaded_food
+	qdel(loaded_food)
+	loaded_food = null
+	loaded_food_name = null
 
 /obj/item/weapon/kitchen/knife
 	name = "kitchen knife"
