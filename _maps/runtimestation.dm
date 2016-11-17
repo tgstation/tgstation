@@ -14,7 +14,7 @@
         #define MAP_FILE "runtimestation.dmm"
         #define MAP_NAME "Runtime Station"
 
-		#define MAP_TRANSITION_CONFIG DEFAULT_MAP_TRANSITION_CONFIG
+		#define MAP_TRANSITION_CONFIG list(MAIN_STATION = UNAFFECTED)
 
 #elif !defined(MAP_OVERRIDE)
 

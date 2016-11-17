@@ -34,7 +34,18 @@ Chaplain
 	if(visualsOnly)
 		return
 
+
 	var/obj/item/weapon/storage/book/bible/B = new /obj/item/weapon/storage/book/bible/booze(H)
+
+	if(ticker && ticker.Bible_deity_name)
+		B.deity_name = ticker.Bible_deity_name
+		B.name = ticker.Bible_name
+		H << "There is already an established religion onboard the station. You are an acolyte of [ticker.Bible_deity_name]. Defer to the Chaplain."
+		H.equip_to_slot_or_del(B, slot_in_backpack)
+		var/obj/item/weapon/nullrod/N = new(H)
+		H.equip_to_slot_or_del(N, slot_in_backpack)
+		return
+
 	var/new_religion = "Christianity"
 	if(H.client && H.client.prefs.custom_names["religion"])
 		new_religion = H.client.prefs.custom_names["religion"]

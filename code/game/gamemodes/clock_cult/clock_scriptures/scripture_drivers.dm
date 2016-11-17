@@ -108,7 +108,7 @@
 
 //Geis: Grants a short-range binding that will immediately start chanting on binding a valid target.
 /datum/clockwork_scripture/ranged_ability/geis_prep
-	descname = "Convert Attack"
+	descname = "Melee Convert Attack"
 	name = "Geis"
 	desc = "Charges your slab with divine energy, allowing you to bind a nearby heretic for conversion. This is very obvious and will make your slab visible in-hand."
 	invocations = list("Divinity, grant me strength...", "...to enlighten the heathen!")
@@ -133,7 +133,7 @@
 	for(var/mob/living/M in living_mob_list)
 		if(is_servant_of_ratvar(M) && (ishuman(M) || issilicon(M)))
 			servants++
-	if(servants > 5)
+	if(servants > SCRIPT_SERVANT_REQ)
 		whispered = FALSE
 	return ..()
 
@@ -160,8 +160,8 @@
 	for(var/mob/living/M in living_mob_list)
 		if(is_servant_of_ratvar(M) && (ishuman(M) || issilicon(M)))
 			servants++
-	if(servants > 5)
-		servants -= 5
+	if(servants > SCRIPT_SERVANT_REQ)
+		servants -= SCRIPT_SERVANT_REQ
 		channel_time = min(channel_time + servants*5, 100)
 	if(target.buckled)
 		target.buckled.unbuckle_mob(target, TRUE)
@@ -249,7 +249,7 @@
 
 //Tinkerer's Cache: Creates a tinkerer's cache, allowing global component storage.
 /datum/clockwork_scripture/create_object/tinkerers_cache
-	descname = "Necessary, Shares Components"
+	descname = "Necessary Structure, Shares Components"
 	name = "Tinkerer's Cache"
 	desc = "Forms a cache that can store an infinite amount of components. All caches are linked and will provide components to slabs."
 	invocations = list("Constructing...", "...a cache!")
@@ -298,7 +298,7 @@
 
 //Sigil of Transgression: Creates a sigil of transgression, which stuns the first nonservant to cross it.
 /datum/clockwork_scripture/create_object/sigil_of_transgression
-	descname = "Stun Trap"
+	descname = "Trap, Stunning"
 	name = "Sigil of Transgression"
 	desc = "Wards a tile with a sigil. The next person to cross the sigil will be smitten and unable to move. Nar-Sian cultists are stunned altogether."
 	invocations = list("Divinity, dazzle...", "...those who tresspass here!")

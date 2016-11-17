@@ -24,8 +24,8 @@
 
 /obj/item/device/radio/headset/talk_into(mob/living/M, message, channel, list/spans)
 	if (!listening)
-		return
-	..()
+		return ITALICS | REDUCE_RANGE
+	return ..()
 
 /obj/item/device/radio/headset/receive_range(freq, level, AIuser)
 	if(ishuman(src.loc))

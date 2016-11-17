@@ -7489,7 +7489,6 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
 	dir = 5
 	},
-/mob/living/simple_animal/mouse,
 /turf/open/floor/plasteel/floorgrime,
 /area/maintenance/incinerator)
 "anY" = (

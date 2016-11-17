@@ -128,7 +128,7 @@
 		return 0
 	if(target)
 		var/obj/item/I = target
-		I.ui_action_click(owner, src.type)
+		I.ui_action_click(owner, src)
 	return 1
 
 /datum/action/item_action/ApplyIcon(obj/screen/movable/action_button/current_button)
@@ -253,13 +253,10 @@
 	desc = "Allows you to communicate with other Servants."
 	button_icon_state = "hierophant_slab"
 
-/datum/action/item_action/clock/quickbind_one
+/datum/action/item_action/clock/quickbind
 	name = "Quickbind"
 	desc = "If you're seeing this, file a bug report."
-
-/datum/action/item_action/clock/quickbind_two
-	name = "Quickbind"
-	desc = "If you're seeing this, file a bug report."
+	var/scripture_index = 0 //the index of the scripture we're associated with
 
 /datum/action/item_action/toggle_helmet_flashlight
 	name = "Toggle Helmet Flashlight"

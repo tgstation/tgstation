@@ -149,7 +149,7 @@
 	var/list/duplicatenamecount = list()
 
 	for(var/obj/structure/destructible/clockwork/powered/clockwork_obelisk/O in all_clockwork_objects)
-		if(!O.Adjacent(invoker) && O != src && (O.z <= ZLEVEL_SPACEMAX)) //don't list obelisks that we're next to
+		if(!O.Adjacent(invoker) && O != src && (O.z <= ZLEVEL_SPACEMAX) && O.anchored) //don't list obelisks that we're next to
 			var/area/A = get_area(O)
 			var/locname = initial(A.name)
 			var/resultkey = "[locname] [O.name]"
@@ -162,7 +162,7 @@
 			possible_targets[resultkey] = O
 
 	for(var/mob/living/L in living_mob_list)
-		if(!L.stat && is_servant_of_ratvar(L) && !L.Adjacent(invoker) && L != invoker && (L.z <= ZLEVEL_SPACEMAX)) //People right next to the invoker can't be portaled to, for obvious reasons
+		if(!L.stat && is_servant_of_ratvar(L) && !L.Adjacent(invoker) && (L.z <= ZLEVEL_SPACEMAX)) //People right next to the invoker can't be portaled to, for obvious reasons
 			var/resultkey = "[L.name] ([L.real_name])"
 			if(resultkey in teleportnames)
 				duplicatenamecount[resultkey]++
@@ -177,20 +177,32 @@
 		return FALSE
 	var/input_target_key = input(invoker, "Choose a target to form a rift to.", "Spatial Gateway") as null|anything in possible_targets
 	var/atom/movable/target = possible_targets[input_target_key]
-	if(!src || !target || !invoker || !invoker.canUseTopic(src, BE_CLOSE) || !is_servant_of_ratvar(invoker) || (istype(src, /obj/item) && invoker.get_active_held_item() != src))
+	if(!src || !target || !invoker || !invoker.canUseTopic(src, !issilicon(invoker)) || !is_servant_of_ratvar(invoker) || (istype(src, /obj/item) && invoker.get_active_held_item() != src))
 		return FALSE //if any of the involved things no longer exist, the invoker is stunned, too far away to use the object, or does not serve ratvar, or if the object is an item and not in the mob's active hand, fail
 	if(isliving(target))
 		var/mob/living/L = target
 		if(L.stat != CONSCIOUS)
-			invoker << "<span class='warning'>That target is no longer conscious!</span>"
+			invoker << "<span class='warning'>That Servant is no longer conscious!</span>"
 			return procure_gateway(invoker, time_duration, gateway_uses, two_way) //try again?
+		if(!is_servant_of_ratvar(L))
+			invoker << "<span class='warning'>That target is no longer a Servant!</span>"
+			return procure_gateway(invoker, time_duration, gateway_uses, two_way)
 	var/istargetobelisk = istype(target, /obj/structure/destructible/clockwork/powered/clockwork_obelisk)
+	var/issrcobelisk = istype(src, /obj/structure/destructible/clockwork/powered/clockwork_obelisk)
+	if(issrcobelisk && !anchored)
+		invoker << "<span class='warning'>[src] is no longer secured!</span>"
+		return FALSE
 	if(istargetobelisk)
-		gateway_uses *= 2
-		time_duration *= 2
+		if(!target.anchored)
+			invoker << "<span class='warning'>That [target.name] is no longer secured!</span>"
+			return procure_gateway(invoker, time_duration, gateway_uses, two_way)
+		var/obj/structure/destructible/clockwork/powered/clockwork_obelisk/CO = target
+		var/efficiency = CO.get_efficiency_mod()
+		gateway_uses = round(gateway_uses * (2 * efficiency), 1)
+		time_duration = round(time_duration * (2 * efficiency), 1)
 	invoker.visible_message("<span class='warning'>The air in front of [invoker] ripples before suddenly tearing open!</span>", \
 	"<span class='brass'>With a word, you rip open a [two_way ? "two-way":"one-way"] rift to [input_target_key]. It will last for [time_duration / 10] seconds and has [gateway_uses] use[gateway_uses > 1 ? "s" : ""].</span>")
-	var/obj/effect/clockwork/spatial_gateway/S1 = new(istype(src, /obj/structure/destructible/clockwork/powered/clockwork_obelisk) ? get_turf(src) : get_step(get_turf(invoker), invoker.dir))
+	var/obj/effect/clockwork/spatial_gateway/S1 = new(issrcobelisk ? get_turf(src) : get_step(get_turf(invoker), invoker.dir))
 	var/obj/effect/clockwork/spatial_gateway/S2 = new(istargetobelisk ? get_turf(target) : get_step(get_turf(target), target.dir))
 
 	//Set up the portals now that they've spawned

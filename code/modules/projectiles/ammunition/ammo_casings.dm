@@ -27,6 +27,15 @@
 	caliber = "10mm"
 	projectile_type = /obj/item/projectile/bullet/midbullet3
 
+/obj/item/ammo_casing/c10mm/ap
+	projectile_type = /obj/item/projectile/bullet/midbullet3/ap
+
+/obj/item/ammo_casing/c10mm/fire
+	projectile_type = /obj/item/projectile/bullet/midbullet3/fire
+
+/obj/item/ammo_casing/c10mm/hp
+	projectile_type = /obj/item/projectile/bullet/midbullet3/hp
+
 /obj/item/ammo_casing/c9mm
 	desc = "A 9mm bullet casing."
 	caliber = "9mm"

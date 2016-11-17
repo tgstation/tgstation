@@ -198,6 +198,7 @@
 
 /obj/item/device/radio/talk_into(atom/movable/M, message, channel, list/spans)
 	addtimer(src,"talk_into_impl",0,FALSE,M,message,channel,spans)
+	return ITALICS | REDUCE_RANGE
 
 /obj/item/device/radio/proc/talk_into_impl(atom/movable/M, message, channel, list/spans)
 	if(!on) return // the device has to be on

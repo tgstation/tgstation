@@ -153,19 +153,9 @@
 /obj/item/weapon/storage/secure/briefcase/attack_hand(mob/user)
 	if ((src.loc == user) && (src.locked == 1))
 		usr << "<span class='warning'>[src] is locked and cannot be opened!</span>"
-	else if ((src.loc == user) && (!src.locked))
-		playsound(src.loc, "rustle", 50, 1, -5)
-		if (user.s_active)
-			user.s_active.close(user) //Close and re-open
-		src.show_to(user)
+		add_fingerprint(user)
 	else
 		..()
-		for(var/mob/M in range(1))
-			if (M.s_active == src)
-				src.close(M)
-		src.orient2hud(user)
-	src.add_fingerprint(user)
-	return
 
 //Syndie variant of Secure Briefcase. Contains space cash, slightly more robust.
 /obj/item/weapon/storage/secure/briefcase/syndie

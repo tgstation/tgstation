@@ -344,7 +344,7 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 	return 0
 
 /obj/item/proc/talk_into(mob/M, input, channel, spans)
-	return
+	return ITALICS | REDUCE_RANGE
 
 /obj/item/proc/dropped(mob/user)
 	for(var/X in actions)
@@ -599,3 +599,7 @@ obj/item/proc/item_action_slot_check(slot, mob/user)
 		MO.pixel_y = rand(-16,16)
 		MO.desc = "Looks like this was \an [src] some time ago."
 		..()
+
+/obj/item/proc/microwave_act(obj/machinery/microwave/M)
+	if(M && M.dirty < 100)
+		M.dirty++
