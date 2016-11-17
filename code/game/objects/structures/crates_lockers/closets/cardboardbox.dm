@@ -47,7 +47,7 @@
 				if(!L.incapacitated(ignore_restraints = 1))
 					L.face_atom(src)
 				L.do_alert_animation(L)
-		playsound(loc, 'sound/misc/snake.ogg', 50, FALSE, -5)
+		playsound(loc, 'sound/machines/chime.ogg', 50, FALSE, -5)
 
 /mob/living/proc/do_alert_animation(atom/A)
 	var/image/I
