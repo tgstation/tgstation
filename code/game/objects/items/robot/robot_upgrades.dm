@@ -449,13 +449,15 @@
 		if(user.cell.charge < powercutthreshold)
 			user << "<span class='boldwarning'>WARNING: Insufficient cell power to maintain shielding.</span>"
 			return 0
-		if(!do_after(user, activationdelay) &&)
+		if(!do_after(user, activationdelay))
 			user << "<span class='boldwarning'>WARNING: Calculated offsets disrupted by movement.</span>"
 			if(activationmovementallow)
 				user << "<span class='boldnotice'>Compensating for movement. This will take longer...</span>"
 				sleep(activationmovementpenalty)
 			else
 				return 0
+			if(!activationmovementpenalty)
+				user << "<span class='boldnotice'>Automatically compensated for movement. Resuming... </span>"
 	active = 1
 	START_PROCESSING(SSObj, src)
 	//DELETE ACTIVATING OVERLAYS
@@ -468,7 +470,7 @@
 	if(maxflashprotect > FLASH_PROTECT_NONE)
 		power += " photonically reactive"
 	user << "<span class='boldnotice'>Energy shielding at full integrity!</span>"
-	user.visible_message("<span class='warning'>[user]'s chassis projects a [power] energy shield around them!</span>"
+	user.visible_message("<span class='warning'>[user]'s chassis projects a [power] energy shield around them!</span>")
 	//SOUND EFFECT
 	return 1
 
@@ -476,7 +478,7 @@
 	//SOUND EFFECT
 	if(force)
 		user << "<span class='boldwarning'>WARNING: Energy shield collapsing! ZZZZZzzzzTTtttt....</span>"
-		user.visible_message("<span class='warning'>[user]'s energy shielding collapses in a burst of sparks!</span>"
+		user.visible_message("<span class='warning'>[user]'s energy shielding collapses in a burst of sparks!</span>")
 		user.spark_system.start()
 	else
 		user << "<span class='boldnotice'>Energy shield discharging! Please remain still!</span>"
@@ -488,7 +490,7 @@
 			//RETURN ORIGINAL OVERLAY
 			//DELETE DEACTIVATION OVERLAY
 			return 0
-		user.visible_message("<span class='warning'>[user]'s energy shielding discharges in a flash of light!</span>"
+		user.visible_message("<span class='warning'>[user]'s energy shielding discharges in a flash of light!</span>")
 	user << "<span class='boldnotice'>Energy Combat Shield discharged!</span>"
 
 	active = 0
