@@ -65,6 +65,14 @@
 	desc = "A plastic replica of a Syndicate agent's space helmet. You'll look just like a real murderous Syndicate agent in this! This is a toy, it is not made for use in space!"
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
 
+/obj/item/clothing/head/cueball
+	name = "cueball helmet"
+	desc = "A large, featureless white orb meant to be worn on your head. How do you even see out of this thing?"
+	icon_state = "cueball"
+	item_state="cueball"
+	flags_cover = HEADCOVERSEYES|HEADCOVERSMOUTH
+	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
+
 /obj/item/clothing/head/snowman
 	name = "Snowman Head"
 	desc = "A ball of white styrofoam. So festive."

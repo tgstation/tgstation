@@ -116,7 +116,6 @@
 				obj_break("energy")
 	..()
 
-
 /obj/machinery/computer/deconstruct(disassembled = TRUE, mob/user)
 	on_deconstruction()
 	if(!(flags & NODECONSTRUCT))

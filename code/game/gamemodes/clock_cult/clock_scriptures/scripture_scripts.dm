@@ -4,7 +4,7 @@
 
 //Ocular Warden: Creates an ocular warden, which defends a small area near it.
 /datum/clockwork_scripture/create_object/ocular_warden
-	descname = "Turret"
+	descname = "Structure, Turret"
 	name = "Ocular Warden"
 	desc = "Forms an automatic short-range turret that deals low sustained damage to the unenlightened in its range."
 	invocations = list("Guardians...", "...of the Engine...", "...defend us!")
@@ -90,7 +90,7 @@
 
 //Sigil of Submission: Creates a sigil of submission, which converts one heretic above it after a delay.
 /datum/clockwork_scripture/create_object/sigil_of_submission
-	descname = "Conversion Trap"
+	descname = "Trap, Conversion"
 	name = "Sigil of Submission"
 	desc = "Places a luminous sigil that will enslave any valid beings standing on it after a time."
 	invocations = list("Divinity, enlighten...", "...those who trespass here!")
@@ -132,7 +132,7 @@
 
 //Clockwork Proselytizer: Creates a clockwork proselytizer, used to convert objects and repair clockwork structures.
 /datum/clockwork_scripture/create_object/clockwork_proselytizer
-	descname = "Necessary, Converts Objects"
+	descname = "Converts Objects to Ratvarian"
 	name = "Clockwork Proselytizer"
 	desc = "Forms a device that, when used on certain objects, converts them into their Ratvarian equivalents. It requires replicant alloy to function."
 	invocations = list("With this device...", "...his presence shall be made known.")
@@ -153,7 +153,7 @@
 
 //Function Call: Grants the invoker the ability to call forth a Ratvarian spear that deals significant damage to silicons.
 /datum/clockwork_scripture/function_call
-	descname = "Summonable Spear"
+	descname = "Permenant Summonable Spear"
 	name = "Function Call"
 	desc = "Grants the invoker the ability to call forth a powerful Ratvarian spear every three minutes. The spear will deal significant damage to Nar-Sie's dogs and silicon lifeforms, but will \
 	vanish three minutes after being summoned."

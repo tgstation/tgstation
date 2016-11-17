@@ -595,7 +595,7 @@ var/list/teleport_runes = list()
 		log_game("Raise Dead rune failed - revival target moved")
 		return 0
 	var/mob/dead/observer/ghost = target_mob.get_ghost(TRUE)
-	if(!ghost)
+	if(!ghost && (!target_mob.mind || !target_mob.mind.active))
 		user << "<span class='cultitalic'>The corpse to revive has no spirit!</span>"
 		fail_invoke()
 		log_game("Raise Dead rune failed - revival target has no ghost")

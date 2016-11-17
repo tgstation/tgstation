@@ -13,6 +13,7 @@
 	var/metal_to_alloy = FALSE
 	var/repairing = null //what we're currently repairing, if anything
 	var/refueling = FALSE //if we're currently refueling from a cache
+	var/speed_multiplier = 1 //how fast this proselytizer works
 
 /obj/item/clockwork/clockwork_proselytizer/preloaded
 	stored_alloy = REPLICANT_WALL_MINUS_FLOOR+REPLICANT_WALL_TOTAL
@@ -23,6 +24,7 @@
 	metal_to_alloy = TRUE
 	item_state = "nothing"
 	w_class = 1
+	speed_multiplier = 0.5
 	var/debug = FALSE
 
 /obj/item/clockwork/clockwork_proselytizer/scarab/proselytize(atom/target, mob/living/user)
@@ -128,6 +130,8 @@
 
 	if(can_use_alloy(RATVAR_ALLOY_CHECK)) //Ratvar makes it faster
 		proselytize_values["operation_time"] *= 0.5
+
+	proselytize_values["operation_time"] *= speed_multiplier
 
 	user.visible_message("<span class='warning'>[user]'s [name] begins tearing apart [target]!</span>", "<span class='brass'>You begin proselytizing [target]...</span>")
 	playsound(target, 'sound/machines/click.ogg', 50, 1)

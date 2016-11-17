@@ -4,7 +4,7 @@
 
 //Sigil of Accession: Creates a sigil of accession, which is like a sigil of submission, but can convert any number of non-implanted targets and up to one implanted target.
 /datum/clockwork_scripture/create_object/sigil_of_accession
-	descname = "Permenant Conversion Trap"
+	descname = "Trap, Permenant Conversion"
 	name = "Sigil of Accession"
 	desc = "Places a luminous sigil much like a Sigil of Submission, but it will remain even after successfully converting a non-implanted target. \
 	It will penetrate mindshield implants once before disappearing."
@@ -27,7 +27,7 @@
 
 //Vitality Matrix: Creates a sigil which will drain health from nonservants and can use that health to heal or even revive servants.
 /datum/clockwork_scripture/create_object/vitality_matrix
-	descname = "Damage Trap"
+	descname = "Trap, Damage to Healing"
 	name = "Vitality Matrix"
 	desc = "Scribes a sigil beneath the invoker which drains life from any living non-Servants that cross it. Servants that cross it, however, will be healed based on how much it drained from non-Servants. \
 	Dead Servants can be revived by this sigil if it has enough stored vitality."
