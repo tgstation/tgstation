@@ -37,10 +37,8 @@ var/datum/subsystem/squeak/SSsqueak
 	exposed_wires.Cut()
 
 	var/list/all_turfs = block(locate(1,1,1), locate(world.maxx,world.maxy,1))
-	turf_loop:
-		for(var/turf/open/floor/plating/T in all_turfs)
-			if(locate(/obj/structure/cable) in T)
-				for(var/atom/A in T)
-					if(A.density)
-						continue turf_loop
-				exposed_wires += T
+	for(var/turf/open/floor/plating/T in all_turfs)
+		if(is_blocked_turf(T))
+			continue
+		if(locate(/obj/structure/cable) in T)
+			exposed_wires += T
