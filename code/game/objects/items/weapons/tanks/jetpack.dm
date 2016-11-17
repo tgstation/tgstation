@@ -20,10 +20,10 @@
 	ion_trail = new
 	ion_trail.set_up(src)
 
-/obj/item/weapon/tank/jetpack/ui_action_click(mob/user, actiontype)
-	if(actiontype == /datum/action/item_action/toggle_jetpack)
+/obj/item/weapon/tank/jetpack/ui_action_click(mob/user, action)
+	if(istype(action, /datum/action/item_action/toggle_jetpack))
 		cycle(user)
-	else if(actiontype == /datum/action/item_action/jetpack_stabilization)
+	else if(istype(action, /datum/action/item_action/jetpack_stabilization))
 		if(on)
 			stabilizers = !stabilizers
 			user << "<span class='notice'>You turn the jetpack stabilization [stabilizers ? "on" : "off"].</span>"

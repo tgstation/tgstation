@@ -98,18 +98,18 @@ Bonus
 	return
 
 /datum/symptom/asphyxiation/proc/Asphyxiate_stage_3_4(mob/living/M, datum/disease/advance/A)
-	var/get_damage = sqrt(21+A.totalStageSpeed()*0.7)+sqrt(16+A.totalStealth())
+	var/get_damage = sqrt(abs(21+A.totalStageSpeed()*0.7))+sqrt(abs(16+A.totalStealth()))
 	M.adjustOxyLoss(get_damage)
 	return 1
 
 /datum/symptom/asphyxiation/proc/Asphyxiate(mob/living/M, datum/disease/advance/A)
-	var/get_damage = sqrt(21+A.totalStageSpeed())+sqrt(16+A.totalStealth()*5)
+	var/get_damage = sqrt(abs(21+A.totalStageSpeed()))+sqrt(abs(16+A.totalStealth()*5))
 	M.adjustOxyLoss(get_damage)
 	M.reagents.add_reagent_list(list("pancuronium" = 2, "sodium_thiopental" = 2))
 	return 1
 
 /datum/symptom/asphyxiation/proc/Asphyxiate_death(mob/living/M, datum/disease/advance/A)
-	var/get_damage = sqrt(21+A.totalStageSpeed()*1.5)+sqrt(16+A.totalStealth()*7)
+	var/get_damage = sqrt(abs(21+A.totalStageSpeed()*1.5))+sqrt(abs(16+A.totalStealth()*7))
 	M.adjustOxyLoss(get_damage)
 	M.adjustBrainLoss(get_damage/2)
 	return 1

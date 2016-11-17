@@ -4,7 +4,7 @@
 
 //Invoke Inath-neq, the Resonant Cogwheel: Grants invulnerability and stun immunity to everyone nearby for 15 seconds.
 /datum/clockwork_scripture/invoke_inathneq
-	descname = "Area Invuln"
+	descname = "Area Invulnerability"
 	name = "Invoke Inath-neq, the Resonant Cogwheel"
 	desc = "Taps the limitless power of Inath-neq, one of Ratvar's four generals. The benevolence of Inath-Neq will grant complete invulnerability to all servants in range for fifteen seconds."
 	invocations = list("I call upon you, Vanguard!!", "Let the Resonant Cogs turn once more!!", "Grant me and my allies the strength to vanquish our foes!!")
@@ -37,64 +37,6 @@
 	return TRUE
 
 
-//Invoke Nezbere, the Brass Eidolon: Invokes Nezbere, bolstering the strength of many clockwork items for one minute.
-/datum/clockwork_scripture/invoke_nezbere
-	descname = "Structure Buff"
-	name = "Invoke Nezbere, the Brass Eidolon"
-	desc = "Taps the limitless power of Nezbere, one of Ratvar's four generals. The restless toil of the Eidolon will empower a wide variety of clockwork apparatus for a full minute - notably, \
-	clockwork proselytizers will cost no replicant alloy to use."
-	invocations = list("I call upon you, Armorer!!", "Let your machinations reign on this miserable station!!", "Let your power flow through the tools of your master!!")
-	channel_time = 150
-	required_components = list(BELLIGERENT_EYE = 3, VANGUARD_COGWHEEL = 3, GEIS_CAPACITOR = 3, REPLICANT_ALLOY = 6)
-	consumed_components = list(BELLIGERENT_EYE = 3, VANGUARD_COGWHEEL = 3, GEIS_CAPACITOR = 3, REPLICANT_ALLOY = 6)
-	usage_tip = "Ocular wardens will become empowered, clockwork proselytizers will require no alloy, tinkerer's daemons will produce twice as quickly, \
-	and interdiction lenses, mending motors, mania motors, tinkerer's daemons, and clockwork obelisks will all require no power."
-	tier = SCRIPTURE_REVENANT
-	primary_component = REPLICANT_ALLOY
-	sort_priority = 3
-	invokers_required = 3
-	multiple_invokers_used = TRUE
-
-/datum/clockwork_scripture/invoke_nezbere/check_special_requirements()
-	if(!slab.no_cost && clockwork_generals_invoked["nezbere"] > world.time)
-		invoker << "<span class='nezbere'>\"[text2ratvar("Not just yet, friend. Patience is a virtue.")]\"</span>\n\
-		<span class='warning'>Nezbere has already been invoked recently! You must wait several minutes before calling upon the Brass Eidolon.</span>"
-		return FALSE
-	if(!slab.no_cost && ratvar_awakens)
-		invoker << "<span class='nezbere'>\"[text2ratvar("Our master is here already. You do not require my help, friend.")]\"</span>\n\
-		<span class='warning'>Nezbere will not grant his power while Ratvar's dwarfs his own!</span>"
-		return FALSE
-	return TRUE
-
-/datum/clockwork_scripture/invoke_nezbere/scripture_effects()
-	new/obj/effect/clockwork/general_marker/nezbere(get_turf(invoker))
-	hierophant_message("<span class='nezbere_large'>[text2ratvar("Armorer: \"I heed your call, champions. May your artifacts bring ruin upon the heathens that oppose our master!")]\"</span>", FALSE, invoker)
-	clockwork_generals_invoked["nezbere"] = world.time + CLOCKWORK_GENERAL_COOLDOWN
-	playsound(invoker, 'sound/magic/clockwork/invoke_general.ogg', 50, 0)
-	for(var/obj/structure/destructible/clockwork/ocular_warden/W in all_clockwork_objects) //Ocular wardens have increased damage and radius
-		W.damage_per_tick *= 1.5
-		W.sight_range *= 2
-	for(var/obj/item/clockwork/clockwork_proselytizer/P in all_clockwork_objects) //Proselytizers no longer require alloy
-		P.uses_alloy = FALSE
-	for(var/obj/structure/destructible/clockwork/powered/M in all_clockwork_objects) //Powered clockwork structures no longer need power
-		M.needs_power = FALSE
-		if(istype(M, /obj/structure/destructible/clockwork/powered/tinkerers_daemon)) //Daemons produce components twice as quickly
-			var/obj/structure/destructible/clockwork/powered/tinkerers_daemon/D = M
-			D.production_time *= 0.5
-	spawn(600)
-		for(var/obj/structure/destructible/clockwork/ocular_warden/W in all_clockwork_objects)
-			W.damage_per_tick = initial(W.damage_per_tick)
-			W.sight_range = initial(W.sight_range)
-		for(var/obj/item/clockwork/clockwork_proselytizer/P in all_clockwork_objects)
-			P.uses_alloy = initial(P.uses_alloy)
-		for(var/obj/structure/destructible/clockwork/powered/M in all_clockwork_objects)
-			M.needs_power = initial(M.needs_power)
-			if(istype(M, /obj/structure/destructible/clockwork/powered/tinkerers_daemon))
-				var/obj/structure/destructible/clockwork/powered/tinkerers_daemon/D = M
-				D.production_time = initial(D.production_time)
-	return TRUE
-
-
 //Invoke Sevtug, the Formless Pariah: Causes massive global hallucinations, braindamage, confusion, and dizziness to all humans on the same zlevel.
 /datum/clockwork_scripture/invoke_sevtug
 	descname = "Global Hallucination"
@@ -107,11 +49,11 @@
 	consumed_components = list(BELLIGERENT_EYE = 3, VANGUARD_COGWHEEL = 3, GEIS_CAPACITOR = 6, HIEROPHANT_ANSIBLE = 3)
 	usage_tip = "Causes brain damage, hallucinations, confusion, and dizziness in massive amounts."
 	tier = SCRIPTURE_REVENANT
-	sort_priority = 4
+	sort_priority = 3
 	primary_component = GEIS_CAPACITOR
 	invokers_required = 3
 	multiple_invokers_used = TRUE
-	var/list/mindbreaksayings = list("\"Oh, great. I get to shatter some minds.\"", "\"More minds to crush.\"", \
+	var/static/list/mindbreaksayings = list("\"Oh, great. I get to shatter some minds.\"", "\"More minds to crush.\"", \
 	"\"Really, this is almost boring.\"", "\"None of these minds have anything interesting in them.\"", "\"Maybe I can instill a little bit of terror in this one.\"", \
 	"\"What a waste of my power.\"", "\"I'm sure I could just control these minds instead, but they never ask.\"")
 
@@ -166,9 +108,67 @@
 	return TRUE
 
 
+//Invoke Nezbere, the Brass Eidolon: Invokes Nezbere, bolstering the strength of many clockwork items for one minute.
+/datum/clockwork_scripture/invoke_nezbere
+	descname = "Global Structure Buff"
+	name = "Invoke Nezbere, the Brass Eidolon"
+	desc = "Taps the limitless power of Nezbere, one of Ratvar's four generals. The restless toil of the Eidolon will empower a wide variety of clockwork apparatus for a full minute - notably, \
+	clockwork proselytizers will cost no replicant alloy to use."
+	invocations = list("I call upon you, Armorer!!", "Let your machinations reign on this miserable station!!", "Let your power flow through the tools of your master!!")
+	channel_time = 150
+	required_components = list(BELLIGERENT_EYE = 3, VANGUARD_COGWHEEL = 3, GEIS_CAPACITOR = 3, REPLICANT_ALLOY = 6)
+	consumed_components = list(BELLIGERENT_EYE = 3, VANGUARD_COGWHEEL = 3, GEIS_CAPACITOR = 3, REPLICANT_ALLOY = 6)
+	usage_tip = "Ocular wardens will become empowered, clockwork proselytizers will require no alloy, tinkerer's daemons will produce twice as quickly, \
+	and interdiction lenses, mending motors, mania motors, tinkerer's daemons, and clockwork obelisks will all require no power."
+	tier = SCRIPTURE_REVENANT
+	primary_component = REPLICANT_ALLOY
+	sort_priority = 4
+	invokers_required = 3
+	multiple_invokers_used = TRUE
+
+/datum/clockwork_scripture/invoke_nezbere/check_special_requirements()
+	if(!slab.no_cost && clockwork_generals_invoked["nezbere"] > world.time)
+		invoker << "<span class='nezbere'>\"[text2ratvar("Not just yet, friend. Patience is a virtue.")]\"</span>\n\
+		<span class='warning'>Nezbere has already been invoked recently! You must wait several minutes before calling upon the Brass Eidolon.</span>"
+		return FALSE
+	if(!slab.no_cost && ratvar_awakens)
+		invoker << "<span class='nezbere'>\"[text2ratvar("Our master is here already. You do not require my help, friend.")]\"</span>\n\
+		<span class='warning'>Nezbere will not grant his power while Ratvar's dwarfs his own!</span>"
+		return FALSE
+	return TRUE
+
+/datum/clockwork_scripture/invoke_nezbere/scripture_effects()
+	new/obj/effect/clockwork/general_marker/nezbere(get_turf(invoker))
+	hierophant_message("<span class='nezbere_large'>[text2ratvar("Armorer: \"I heed your call, champions. May your artifacts bring ruin upon the heathens that oppose our master!")]\"</span>", FALSE, invoker)
+	clockwork_generals_invoked["nezbere"] = world.time + CLOCKWORK_GENERAL_COOLDOWN
+	playsound(invoker, 'sound/magic/clockwork/invoke_general.ogg', 50, 0)
+	for(var/obj/structure/destructible/clockwork/ocular_warden/W in all_clockwork_objects) //Ocular wardens have increased damage and radius
+		W.damage_per_tick *= 1.5
+		W.sight_range *= 2
+	for(var/obj/item/clockwork/clockwork_proselytizer/P in all_clockwork_objects) //Proselytizers no longer require alloy
+		P.uses_alloy = FALSE
+	for(var/obj/structure/destructible/clockwork/powered/M in all_clockwork_objects) //Powered clockwork structures no longer need power
+		M.needs_power = FALSE
+		if(istype(M, /obj/structure/destructible/clockwork/powered/tinkerers_daemon)) //Daemons produce components twice as quickly
+			var/obj/structure/destructible/clockwork/powered/tinkerers_daemon/D = M
+			D.production_time *= 0.5
+	spawn(600)
+		for(var/obj/structure/destructible/clockwork/ocular_warden/W in all_clockwork_objects)
+			W.damage_per_tick = initial(W.damage_per_tick)
+			W.sight_range = initial(W.sight_range)
+		for(var/obj/item/clockwork/clockwork_proselytizer/P in all_clockwork_objects)
+			P.uses_alloy = initial(P.uses_alloy)
+		for(var/obj/structure/destructible/clockwork/powered/M in all_clockwork_objects)
+			M.needs_power = initial(M.needs_power)
+			if(istype(M, /obj/structure/destructible/clockwork/powered/tinkerers_daemon))
+				var/obj/structure/destructible/clockwork/powered/tinkerers_daemon/D = M
+				D.production_time = initial(D.production_time)
+	return TRUE
+
+
 //Invoke Nzcrentr, the Eternal Thunderbolt: Imbues an immense amount of energy into the invoker. After several seconds, everyone near the invoker will be hit with a devastating lightning blast.
 /datum/clockwork_scripture/invoke_nzcrentr
-	descname = "Lightning Blast"
+	descname = "Area Lightning Blast"
 	name = "Invoke Nzcrentr, the Eternal Thunderbolt"
 	desc = "Taps the limitless power of Nzcrentr, one of Ratvar's four generals. The immense energy Nzcrentr wields will allow you to imbue a tiny fraction of it into your body. After several \
 	seconds, anyone near you will be struck by a devastating lightning bolt."
