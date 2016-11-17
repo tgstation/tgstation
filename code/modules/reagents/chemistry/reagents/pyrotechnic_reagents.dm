@@ -223,10 +223,3 @@
 		M.electrocute_act(rand(5,20), "Teslium in their body", 1, 1) //Override because it's caused from INSIDE of you
 		playsound(M, "sparks", 50, 1)
 	..()
-
-/datum/reagent/nitrous_oxide
-	name = "Nitrous Oxide"
-	id = "nitrous_oxide"
-	description = "A potent oxidizer used to fuel rockets and race cars and to anesthetize patients during surgery."
-	reagent_state = LIQUID
-	color = "#808080"
