@@ -66,6 +66,14 @@
 	build_path = /obj/item/weapon/weldingtool
 	category = list("initial","Tools")
 
+/datum/design/mini_weldingtool
+	name = "Emergency welding tool"
+	id = "mini_welding_tool"
+	build_type = AUTOLATHE
+	materials = list(MAT_METAL = 30, MAT_GLASS = 10)
+	build_path = /obj/item/weapon/weldingtool/mini
+	category = list("initial","Tools")
+
 /datum/design/screwdriver
 	name = "Screwdriver"
 	id = "screwdriver"
