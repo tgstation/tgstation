@@ -210,7 +210,6 @@
 	target = new_target
 	LosePatience()
 	if(target != null)
-		target.color = "red" //DEBUG REMIE
 		GainPatience()
 		Aggro()
 		return 1
@@ -290,8 +289,6 @@
 	taunt_chance = initial(taunt_chance)
 
 /mob/living/simple_animal/hostile/proc/LoseTarget()
-	if(target)
-		target.color = "white" //DEBUG REMIE
 	target = null
 	walk(src, 0)
 	LoseAggro()
