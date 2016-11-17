@@ -27121,6 +27121,10 @@
 	tag = "every single paper bin is edited to this"
 	},
 /obj/item/weapon/folder/white,
+/obj/item/weapon/paper/morguereminder{
+	pixel_x = 4;
+	pixel_y = 5
+	},
 /turf/open/floor/plasteel/black,
 /area/medical/morgue)
 "bev" = (

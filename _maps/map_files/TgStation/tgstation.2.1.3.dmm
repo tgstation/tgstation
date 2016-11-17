@@ -28712,6 +28712,10 @@
 /area/quartermaster/office)
 "bmR" = (
 /obj/structure/table,
+/obj/item/weapon/paper/morguereminder{
+	pixel_x = 5;
+	pixel_y = 4
+	},
 /turf/open/floor/plasteel/black,
 /area/medical/morgue)
 "bmS" = (
