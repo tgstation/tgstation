@@ -251,7 +251,7 @@
 	back = /obj/item/weapon/storage/backpack
 	objectives = "Cater to visiting guests with your fellow staff. Do not leave your assigned hotel and always remember: The customer is always right!"
 	implants = list(/obj/item/weapon/implant/mindshield)
-	death = FALSE
+	death = TRUE
 	roundstart = FALSE
 	random = TRUE
 	flavour_text = "You are a staff member of a top-of-the-line space hotel! Cater to guests and <font size=6><b>DON'T</b></font> leave the hotel, lest the manager fire you for\

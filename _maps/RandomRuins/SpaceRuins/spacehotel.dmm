@@ -615,7 +615,7 @@
 "lQ" = (/obj/structure/table,/turf/open/floor/plasteel/showroomfloor,/area/ruin/hotel/pool)
 "lR" = (/obj/structure/dresser,/turf/open/floor/plasteel/showroomfloor,/area/ruin/hotel/pool)
 "lS" = (/obj/structure/table,/obj/item/weapon/card/id/away/hotel/securty,/turf/open/floor/plasteel/darkred,/area/ruin/hotel/security)
-"lT" = (/obj/structure/closet/secure_closet/security{req_access = null; req_access_txt = "203"},/obj/item/weapon/gun/energy/laser/scatter/shotty,/obj/item/clothing/head/helmet/justice,/turf/open/floor/plasteel/darkred,/area/ruin/hotel/security)
+"lT" = (/obj/structure/closet/secure_closet/security{req_access = null; req_access_txt = "203"},/obj/item/clothing/head/helmet/justice,/turf/open/floor/plasteel/darkred,/area/ruin/hotel/security)
 "lU" = (/turf/open/floor/plasteel/red/side{tag = "icon-red (SOUTHEAST)"; icon_state = "red"; dir = 6},/area/ruin/hotel/security)
 "lV" = (/obj/machinery/power/solar,/obj/structure/cable/yellow{icon_state = "0-4"; d2 = 4},/turf/open/floor/plating/airless,/area/ruin/unpowered/no_grav)
 "lW" = (/obj/machinery/power/solar,/obj/structure/cable/yellow{icon_state = "0-4"; d2 = 4},/obj/structure/cable/yellow{d1 = 4; d2 = 8; icon_state = "4-8"},/turf/open/floor/plating/airless,/area/ruin/unpowered/no_grav)
