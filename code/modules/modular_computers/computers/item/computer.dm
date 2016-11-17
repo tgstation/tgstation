@@ -96,26 +96,24 @@
 		return
 	var/obj/item/weapon/computer_hardware/card_slot/card_slot = all_components[MC_CARD]
 	if(usr.canUseTopic(src))
-		card_slot.try_eject(, usr)
+		card_slot.try_eject(null, usr)
 
 // Eject ID card from computer, if it has ID slot with card inside.
 /obj/item/device/modular_computer/proc/eject_card()
 	set name = "Eject Intellicard"
 	set category = "Object"
-	set src in view(1)
 
 	if(issilicon(usr))
 		return
 	var/obj/item/weapon/computer_hardware/ai_slot/ai_slot = all_components[MC_AI]
 	if(usr.canUseTopic(src))
-		ai_slot.try_eject(, usr,1)
+		ai_slot.try_eject(null, usr,1)
 
 
 // Eject ID card from computer, if it has ID slot with card inside.
 /obj/item/device/modular_computer/proc/eject_disk()
 	set name = "Eject Data Disk"
 	set category = "Object"
-	set src in view(1)
 
 	if(issilicon(usr))
 		return
@@ -138,10 +136,10 @@
 			if(uninstall_component(portable_drive, user))
 				portable_drive.verb_pickup()
 		else
-			if(card_slot && card_slot.try_eject(, user))
+			if(card_slot && card_slot.try_eject(null, user))
 				return
 			if(ai_slot)
-				ai_slot.try_eject(, user)
+				ai_slot.try_eject(null, user)
 
 
 // Gets IDs/access levels from card slot. Would be useful when/if PDAs would become modular PCs.

@@ -25,18 +25,18 @@
 
 /datum/computer_file/program/aidiag/ui_act(action, params)
 	if(..())
-		return 1
+		return TRUE
 
 	var/mob/living/silicon/ai/A = get_ai()
 	if(!A)
 		restoring = FALSE
-		return 0
+		return FALSE
 
 	switch("action")
 		if("PRG_beginReconstruction")
 			if(A.health < 100)
 				restoring = TRUE
-			return 1
+			return TRUE
 
 /datum/computer_file/program/aidiag/process_tick()
 	..()
@@ -62,7 +62,7 @@
 	if(A.health >= 100)
 		restoring = FALSE
 
-	return 1
+	return TRUE
 
 
 /datum/computer_file/program/aidiag/ui_data(mob/user)
