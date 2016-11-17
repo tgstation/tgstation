@@ -101,6 +101,7 @@
 	pass_flags = PASSTABLE
 	health = 50
 	maxHealth = 50
+	harm_intent_damage = 5
 	density = TRUE
 	speed = 1
 	ventcrawler = 0
@@ -116,6 +117,7 @@
 	seeStatic = 0
 	hacked = TRUE
 	visualAppearence = CLOCKDRONE
+	can_be_held = FALSE
 
 /mob/living/simple_animal/drone/cogscarab/ratvar //a subtype for spawning when ratvar is alive, has a slab that it can use and a normal proselytizer
 	default_storage = /obj/item/weapon/storage/toolbox/brass/prefilled/ratvar
@@ -150,11 +152,21 @@
 		msg = "<span class='brass'><i>Hierophant Network:</i></span> <span class='alloy'>[name] disabled.</span>"
 	..()
 
+/mob/living/simple_animal/drone/attackby(obj/item/I, mob/user)
+	if(istype(I, /obj/item/weapon/screwdriver) && stat == DEAD)
+		try_reactivate(user)
+	else
+		..()
+
 /mob/living/simple_animal/drone/cogscarab/try_reactivate(mob/living/user)
 	if(!is_servant_of_ratvar(user))
 		user << "<span class='warning'>You fiddle around with [src] to no avail.</span>"
 	else
 		..()
+
+/mob/living/simple_animal/drone/cogscarab/can_use_guns(obj/item/weapon/gun/G)
+	changeNext_move(CLICK_CD_RANGE*4) //about as much delay as an unupgraded kinetic accelerator
+	return TRUE
 
 /mob/living/simple_animal/drone/cogscarab/triggerAlarm(class, area/A, O, obj/alarmsource)
 	return

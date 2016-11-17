@@ -546,8 +546,6 @@
 		var/datum/station_goal/G = T
 		if(config_tag in initial(G.gamemode_blacklist))
 			continue
-		//if(num_players() < initial(G.required_crew))
-		//	continue
 		possible += T
 	var/goal_weights = 0
 	while(possible.len && goal_weights < STATION_GOAL_BUDGET)

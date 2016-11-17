@@ -203,7 +203,7 @@
 		if(!proselytizer.can_use_alloy(RATVAR_ALLOY_CHECK))
 			healing_for_cycle = min(healing_for_cycle, proselytizer.stored_alloy)
 		if(!healing_for_cycle || (!proselytizer.can_use_alloy(RATVAR_ALLOY_CHECK) && !proselytizer.can_use_alloy(healing_for_cycle)) || \
-		!do_after(user, healing_for_cycle, target = src) || \
+		!do_after(user, healing_for_cycle * proselytizer.speed_multiplier, target = src) || \
 		!proselytizer || (!proselytizer.can_use_alloy(RATVAR_ALLOY_CHECK) && !proselytizer.can_use_alloy(healing_for_cycle)))
 			break
 		amount_to_heal = max_integrity - obj_integrity

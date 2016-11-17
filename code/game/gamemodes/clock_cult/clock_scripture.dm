@@ -52,7 +52,9 @@ Judgement: 12 servants, 5 caches, 300 CV, and any existing AIs are converted or 
 			invoker << "<span class='warning'>[slab] refuses to work, displaying the message: \"[slab.busy]!\"</span>"
 			return FALSE
 		slab.busy = "Invocation ([name]) in progress"
-		if(!ratvar_awakens && !slab.no_cost)
+		if(ratvar_awakens)
+			channel_time *= 0.5 //if ratvar has awoken, half channel time and no cost
+		else if(!slab.no_cost)
 			for(var/i in consumed_components)
 				if(consumed_components[i])
 					for(var/j in 1 to consumed_components[i])
@@ -62,8 +64,7 @@ Judgement: 12 servants, 5 caches, 300 CV, and any existing AIs are converted or 
 						else
 							clockwork_component_cache[i]--
 							used_cache_components[i]++
-		else
-			channel_time *= 0.5 //if ratvar has awoken or the slab has no cost, half channel time
+		channel_time *= slab.speed_multiplier
 		if(!recital() || !check_special_requirements() || !scripture_effects()) //if we fail any of these, refund components used
 			for(var/i in used_slab_components)
 				if(used_slab_components[i])
@@ -74,7 +75,7 @@ Judgement: 12 servants, 5 caches, 300 CV, and any existing AIs are converted or 
 			for(var/i in used_cache_components)
 				if(used_cache_components[i])
 					clockwork_component_cache[i] += consumed_components[i]
-		else if(slab && !slab.no_cost) //if the slab exists and isn't debug, log the scripture as being used
+		else if(slab && !slab.no_cost && !ratvar_awakens) //if the slab exists and isn't debug and ratvar isn't up, log the scripture as being used
 			feedback_add_details("clockcult_scripture_recited", name)
 	if(slab)
 		slab.busy = null
