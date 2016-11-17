@@ -339,10 +339,10 @@
 	name = "Combat Energy Shielding"
 	desc = "Advanced energy shielding that draws directly from a cyborg's internal power cell to provide shielding against hostile forces."
 	icon_state = "cyborg_upgrade5"
-	var/activatingoverlay =
+	/*var/activatingoverlay =
 	var/deactivatingoverlay =
 	var/activeoverlay =
-	var/flickeroverlay =
+	var/flickeroverlay =*/
 	var/active = 0
 	var/passivepower = 10	//Passively use this amount of power when active per process() tick.
 
@@ -467,7 +467,7 @@
 		power = "powerful"
 	if(maxempprotect > EMP_PROTECTION_NONE)
 		power += " magnetically charged"
-	if(maxflashprotect > FLASH_PROTECT_NONE)
+	if(maxflashprotect > FLASH_PROTECTION_NONE)
 		power += " photonically reactive"
 	user << "<span class='boldnotice'>Energy shielding at full integrity!</span>"
 	user.visible_message("<span class='warning'>[user]'s chassis projects a [power] energy shield around them!</span>")
