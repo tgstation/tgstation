@@ -15,8 +15,10 @@ var/datum/subsystem/squeak/SSsqueak
 	NEW_SS_GLOBAL(SSsqueak)
 
 /datum/subsystem/squeak/Initialize(timeofday)
+	trigger_migration()
+
+/datum/subsystem/squeak/proc/trigger_migration(num_mice=10)
 	find_exposed_wires()
-	var/num_mice = 10
 
 	var/mob/living/simple_animal/mouse/M
 	var/turf/proposed_turf
@@ -35,6 +37,10 @@ var/datum/subsystem/squeak/SSsqueak
 	exposed_wires.Cut()
 
 	var/list/all_turfs = block(locate(1,1,1), locate(world.maxx,world.maxy,1))
-	for(var/turf/open/floor/plating/T in all_turfs)
-		if(locate(/obj/structure/cable) in T)
-			exposed_wires += T
+	turf_loop:
+		for(var/turf/open/floor/plating/T in all_turfs)
+			if(locate(/obj/structure/cable) in T)
+				for(var/atom/A in T)
+					if(A.density)
+						continue turf_loop
+				exposed_wires += T
