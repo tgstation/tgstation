@@ -1,15 +1,12 @@
 #define MEDAL_PREFIX "Swarmer Beacon"
-#define TOO_MANY_SWARMERS_BEACON	10 //If there's this many swarmers, the beacon won't repopulate them
-#define TOO_MANY_SWARMERS 50 //Cap of AI swarmers, no reproduction past this number
-
 
 /*
 
 Swarmer Beacon
 
 A strange machine appears anywhere a normal lavaland mob can it produces a swarmer at a rate of
-1/15 seconds, until there are 10 swarmers, after this it is up to the swarmers themselves to
-increase their population (should they fall under 10, the machine will continue to repopulate back up to 10)
+1/15 seconds, until there are GetTotalAISwarmerCap()/2 swarmers, after this it is up to the swarmers themselves to
+increase their population (it will repopulate them should they fall under GetTotalAISwarmerCap()/2 again)
 
 tl;dr A million of the little hellraisers spawn (controlled by AI) and try to eat mining
 
@@ -20,42 +17,67 @@ Difficulty: Special
 
 */
 
-var/global/list/mob/living/simple_animal/hostile/swarmer/ai/AISwarmerMobs = list()
+var/global/list/mob/living/simple_animal/hostile/swarmer/ai/AISwarmers
+var/global/list/mob/living/simple_animal/hostile/swarmer/ai/AISwarmersByType //AISwarmersByType[.../resource] = list(1st, 2nd, nth), AISwarmersByType[../ranged] = list(1st, 2nd, nth) etc.
+var/global/list/AISwarmerCapsByType = list(/mob/living/simple_animal/hostile/swarmer/ai/resource = 30, /mob/living/simple_animal/hostile/swarmer/ai/ranged_combat = 20, /mob/living/simple_animal/hostile/swarmer/ai/melee_combat = 10)
+
+
+//returns a type of AI swarmer that is NOT at max cap
+//type order is shuffled, to prevent bias
+/proc/GetUncappedAISwarmerType()
+	var/static/list/swarmerTypes = subtypesof(/mob/living/simple_animal/hostile/swarmer/ai)
+	LAZYINITLIST(AISwarmersByType)
+	for(var/t in shuffle(swarmerTypes))
+		var/list/amount = AISwarmersByType[t]
+		if(!amount || amount.len <  AISwarmerCapsByType[t])
+			return t
+
+
+//Total of all subtype caps
+/proc/GetTotalAISwarmerCap()
+	var/static/list/swarmerTypes = subtypesof(/mob/living/simple_animal/hostile/swarmer/ai)
+	. = 0
+	LAZYINITLIST(AISwarmersByType)
+	for(var/t in swarmerTypes)
+		. += AISwarmerCapsByType[t]
+
 
 /mob/living/simple_animal/hostile/megafauna/swarmer_swarm_beacon
 	name = "swarmer beacon"
 	desc = "That name is a bit of a mouthful, but stop paying attention to your mouth they're eating everything!"
 	icon = 'icons/mob/swarmer.dmi'
 	icon_state = "swarmer_console"
-	health = 2000
-	maxHealth = 2000 //low-ish HP because it's a passive boss, and the swarm itself is the real foe
+	health = 3000
+	maxHealth = 3000 //low-ish HP because it's a passive boss, and the swarm itself is the real foe
 	medal_type = MEDAL_PREFIX
 	score_type = SWARMER_BEACON_SCORE
 	faction = list("mining", "boss", "swarmer")
 	weather_immunities = list("lava","ash")
-	canmove = FALSE
+	stop_automated_movement = TRUE
 	wander = FALSE
 	anchored = TRUE
+	layer = BELOW_MOB_LAYER
+	AIStatus = AI_OFF
 	var/swarmer_spawn_cooldown = 0
 	var/swarmer_spawn_cooldown_amt = 150 //Deciseconds between the swarmers we spawn
-	var/too_many_swarmers_to_replenish = TOO_MANY_SWARMERS_BEACON
-	var/too_many_swarmers_at_all = TOO_MANY_SWARMERS //Passed down to the swarmers, allowing for admin-led apocalypses, doesn't update swarmers that already exist
+	var/static/list/swarmer_caps
 
 
 /mob/living/simple_animal/hostile/megafauna/swarmer_swarm_beacon/New()
 	..()
+	swarmer_caps = AISwarmerCapsByType //for admin-edits
 	internal = new/obj/item/device/gps/internal/swarmer_beacon(src)
 	for(var/ddir in cardinal)
 		new /obj/structure/swarmer/blockade (get_step(src, ddir))
 
 
-/mob/living/simple_animal/hostile/megafauna/swarmer_swarm_beacon/handle_automated_action()
+/mob/living/simple_animal/hostile/megafauna/swarmer_swarm_beacon/Life()
 	. = ..()
 	if(.)
-		if(AISwarmerMobs.len < too_many_swarmers_to_replenish && world.time > swarmer_spawn_cooldown)
+		var/createtype = GetUncappedAISwarmerType()
+		if(createtype && world.time > swarmer_spawn_cooldown && AISwarmers.len < (GetTotalAISwarmerCap()*0.5))
 			swarmer_spawn_cooldown = world.time + swarmer_spawn_cooldown_amt
-			var/mob/living/simple_animal/hostile/swarmer/ai/S = new /mob/living/simple_animal/hostile/swarmer/ai(loc)
-			S.max_swarmers = too_many_swarmers_at_all
+			new createtype(loc)
 
 
 /obj/item/device/gps/internal/swarmer_beacon
@@ -65,123 +87,44 @@ var/global/list/mob/living/simple_animal/hostile/swarmer/ai/AISwarmerMobs = list
 	invisibility = 100
 
 
+//SWARMER AI
 //AI versions of the swarmer mini-antag
+//This is an Abstract Base, it re-enables AI, but does not give the swarmer any goals/targets
 /mob/living/simple_animal/hostile/swarmer/ai
 	wander = 1
 	faction = list("swarmer", "mining")
 	weather_immunities = list("ash") //wouldn't be fun otherwise
 	AIStatus = AI_ON
-	created_shell_type = /mob/living/simple_animal/hostile/swarmer/ai
-	search_objects = 2
-	attack_all_objects = TRUE //attempt to nibble everything
-	lose_patience_timeout = 110 //11 seconds, just enough to pass DismantleMachine() do_after()s, but not too slow either
-	var/static/list/sharedWanted = list(/turf/closed/mineral, /turf/closed/wall) //eat rocks and walls
-	var/static/list/sharedIgnore = list()
-	var/max_swarmers = TOO_MANY_SWARMERS
 
 
 /mob/living/simple_animal/hostile/swarmer/ai/New()
 	..()
-	ToggleLight() //so you can see them eating you out of house and home
-	AISwarmerMobs += src
-	sharedWanted = typecacheof(sharedWanted)
-	sharedIgnore = typecacheof(sharedIgnore)
+	ToggleLight() //so you can see them eating you out of house and home/shooting you/stunlocking you for eternity
+	LAZYINITLIST(AISwarmers)
+	LAZYINITLIST(AISwarmersByType)
+	LAZYINITLIST(AISwarmersByType[type])
+	AISwarmers += src
+	AISwarmersByType[type] += src
 
 
 /mob/living/simple_animal/hostile/swarmer/ai/Destroy()
-	AISwarmerMobs -= src
+	AISwarmers -= src
+	AISwarmersByType[type] -= src
 	return ..()
 
 
-//This handles viable things to attack/eat
-//Place specific cases of AI derpiness here
-//Most can be left to the automatic Gain/LosePatience() system
-/mob/living/simple_animal/hostile/swarmer/ai/CanAttack(atom/the_target)
-
-	//SPECIFIC CASES:
-
-	//Smash fulltile windows before grilles
-	if(istype(the_target, /obj/structure/grille))
-		for(var/obj/structure/window/rogueWindow in get_turf(the_target))
-			if(rogueWindow.fulltile) //done this way because the subtypes are weird.
-				the_target = rogueWindow
-				break
+/mob/living/simple_animal/hostile/swarmer/ai/SwarmerTypeToCreate()
+	return GetUncappedAISwarmerType()
 
 
-	//GENERAL CASES:
-	if(is_type_in_typecache(the_target, sharedIgnore)) //always ignore
-		return FALSE
-	if(is_type_in_typecache(the_target, sharedWanted)) //always eat
-		return TRUE
-
-	return ..()	//else, have a nibble, see if it's food
-
-
-/mob/living/simple_animal/hostile/swarmer/ai/OpenFire(atom/A)
-	if(isliving(A)) //don't shoot rocks, sillies.
-		..()
-
-
-/mob/living/simple_animal/hostile/swarmer/ai/AttackingTarget()
-	if(target.swarmer_act(src))
-		add_type_to_wanted(target.type)
-	else
-		add_type_to_ignore(target.type)
-
-
-/mob/living/simple_animal/hostile/swarmer/ai/handle_automated_action()
+/mob/living/simple_animal/hostile/swarmer/ai/resource/handle_automated_action()
 	. = ..()
 	if(.)
 		if(!stop_automated_movement)
-			if(AISwarmerMobs.len < max_swarmers && resources > 50)
-				StartAction(100) //so they'll actually sit still and use the verbs
-				CreateSwarmer()
-				return
-
-			if(resources > 5)
-				if(prob(5)) //lower odds, as to prioritise reproduction
-					StartAction(10) //not a typo
-					CreateBarricade()
-					return
-				if(prob(5))
-					CreateTrap()
-					return
-
 			if(health < maxHealth*0.25)
 				StartAction(100)
 				RepairSelf()
 				return
-
-
-
-/mob/living/simple_animal/hostile/swarmer/ai/CreateSwarmer()
-	. = ..()
-	if(.)
-		var/mob/living/simple_animal/hostile/swarmer/ai/S = .
-		if(S)
-			S.max_swarmers = max_swarmers
-
-
-/mob/living/simple_animal/hostile/swarmer/ai/proc/StartAction(deci = 0)
-	stop_automated_movement = TRUE
-	addtimer(src, "EndAction", deci, FALSE)
-
-
-/mob/living/simple_animal/hostile/swarmer/ai/proc/EndAction()
-	stop_automated_movement = FALSE
-
-
-//So swarmers can learn what is and isn't food
-/mob/living/simple_animal/hostile/swarmer/ai/proc/add_type_to_wanted(typepath)
-	LAZYINITLIST(sharedWanted)
-	if(!sharedWanted[typepath])// this and += is faster than |=
-		sharedWanted += typecacheof(typepath)
-
-
-/mob/living/simple_animal/hostile/swarmer/ai/proc/add_type_to_ignore(typepath)
-	LAZYINITLIST(sharedIgnore)
-	if(!sharedIgnore[typepath])
-		sharedIgnore += typecacheof(typepath)
 
 
 /mob/living/simple_animal/hostile/swarmer/ai/Move(atom/newloc)
@@ -201,8 +144,166 @@ var/global/list/mob/living/simple_animal/hostile/swarmer/ai/AISwarmerMobs = list
 		return ..()
 
 
+/mob/living/simple_animal/hostile/swarmer/ai/proc/StartAction(deci = 0)
+	stop_automated_movement = TRUE
+	AIStatus = AI_OFF
+	addtimer(src, "EndAction", deci, FALSE)
 
 
+/mob/living/simple_animal/hostile/swarmer/ai/proc/EndAction()
+	stop_automated_movement = FALSE
+	AIStatus = AI_ON
+
+
+
+
+//RESOURCE SWARMER:
+//Similar to the original Player-Swarmers, these dismantle things to obtain the metal inside
+//They then use this medal to produce more swarmers or traps/barricades
+
+/mob/living/simple_animal/hostile/swarmer/ai/resource
+	search_objects = 1
+	attack_all_objects = TRUE //attempt to nibble everything
+	lose_patience_timeout = 150
+	var/static/list/sharedWanted = list(/turf/closed/mineral, /turf/closed/wall) //eat rocks and walls
+	var/static/list/sharedIgnore = list()
+
+
+/mob/living/simple_animal/hostile/swarmer/ai/resource/New()
+	..()
+	sharedWanted = typecacheof(sharedWanted)
+	sharedIgnore = typecacheof(sharedIgnore)
+
+
+//This handles viable things to eat/attack
+//Place specific cases of AI derpiness here
+//Most can be left to the automatic Gain/LosePatience() system
+/mob/living/simple_animal/hostile/swarmer/ai/resource/CanAttack(atom/the_target)
+
+	//SPECIFIC CASES:
+	//Smash fulltile windows before grilles
+	if(istype(the_target, /obj/structure/grille))
+		for(var/obj/structure/window/rogueWindow in get_turf(the_target))
+			if(rogueWindow.fulltile) //done this way because the subtypes are weird.
+				the_target = rogueWindow
+				break
+
+	//GENERAL CASES:
+	if(is_type_in_typecache(the_target, sharedIgnore)) //always ignore
+		return FALSE
+	if(is_type_in_typecache(the_target, sharedWanted)) //always eat
+		return TRUE
+
+	return ..()	//else, have a nibble, see if it's food
+
+
+/mob/living/simple_animal/hostile/swarmer/ai/resource/OpenFire(atom/A)
+	if(isliving(A)) //don't shoot rocks, sillies.
+		..()
+
+
+/mob/living/simple_animal/hostile/swarmer/ai/resource/AttackingTarget()
+	if(target.swarmer_act(src))
+		add_type_to_wanted(target.type)
+	else
+		add_type_to_ignore(target.type)
+
+
+/mob/living/simple_animal/hostile/swarmer/ai/resource/handle_automated_action()
+	. = ..()
+	if(.)
+		if(!stop_automated_movement)
+			if(AISwarmers.len < GetTotalAISwarmerCap() && resources >= 50)
+				StartAction(100) //so they'll actually sit still and use the verbs
+				CreateSwarmer()
+				return
+
+			if(resources > 5)
+				if(prob(5)) //lower odds, as to prioritise reproduction
+					StartAction(10) //not a typo
+					CreateBarricade()
+					return
+				if(prob(5))
+					CreateTrap()
+					return
+
+
+//So swarmers can learn what is and isn't food
+/mob/living/simple_animal/hostile/swarmer/ai/resource/proc/add_type_to_wanted(typepath)
+	LAZYINITLIST(sharedWanted)
+	if(!sharedWanted[typepath])// this and += is faster than |=
+		sharedWanted += typecacheof(typepath)
+
+
+/mob/living/simple_animal/hostile/swarmer/ai/resource/proc/add_type_to_ignore(typepath)
+	LAZYINITLIST(sharedIgnore)
+	if(!sharedIgnore[typepath])
+		sharedIgnore += typecacheof(typepath)
+
+
+
+//RANGED SWARMER
+/mob/living/simple_animal/hostile/swarmer/ai/ranged_combat
+	icon_state = "swarmer_ranged"
+	icon_living = "swarmer_ranged"
+	projectiletype = /obj/item/projectile/beam/laser
+	projectilesound = 'sound/weapons/Laser.ogg'
+	check_friendly_fire = TRUE //you're supposed to protect the resource swarmers, you poop
+	retreat_distance = 3
+	minimum_distance = 3
+	login_text_dump = {"
+	<b>You are a swarmer, a weapon of a long dead civilization. Until further orders from your original masters are received, you must continue to consume and replicate.</b>
+	<b>Clicking on any object will try to consume it, either deconstructing it into its components, destroying it, or integrating any materials it has into you if successful.</b>
+	<b>Ctrl-Clicking on a mob will attempt to remove it from the area and place it in a safe environment for storage.</b>
+	<b>Objectives:</b>
+	1. Defend Resource Swarmers while they consume resources and replicate until there are no more resources left.
+	2. Ensure that this location is fit for invasion at a later date; do not perform actions that would render it dangerous or inhospitable.
+	3. Biological resources should not be harmed if possible, violent force can be applied should they fail to keep away.
+	"}
+
+
+/mob/living/simple_animal/hostile/swarmer/ai/ranged_combat/Aggro()
+	..()
+	summon_backup(15, TRUE) //Exact matching, so that goliaths don't come to aid the swarmers, that'd be silly
+
+
+//MELEE SWARMER
+/mob/living/simple_animal/hostile/swarmer/ai/melee_combat
+	icon_state = "swarmer_melee"
+	icon_living = "swarmer_melee"
+	ranged = FALSE
+	login_text_dump = {"
+	<b>You are a swarmer, a weapon of a long dead civilization. Until further orders from your original masters are received, you must continue to consume and replicate.</b>
+	<b>Clicking on any object will try to consume it, either deconstructing it into its components, destroying it, or integrating any materials it has into you if successful.</b>
+	<b>Ctrl-Clicking on a mob will attempt to remove it from the area and place it in a safe environment for storage.</b>
+	<b>Objectives:</b>
+	1. Defend Resource Swarmers while they consume resources and replicate until there are no more resources left.
+	2. Ensure that this location is fit for invasion at a later date; do not perform actions that would render it dangerous or inhospitable.
+	3. Biological resources should not be harmed if possible, violent force can be applied should they fail to keep away.
+	"}
+
+
+/mob/living/simple_animal/hostile/swarmer/ai/melee_combat/Aggro()
+	..()
+	summon_backup(15, TRUE)
+
+
+/mob/living/simple_animal/hostile/swarmer/ai/melee_combat/AttackingTarget()
+	if(isliving(target))
+		if(prob(35))
+			StartAction(30)
+			DisperseTarget(target)
+		else
+			var/mob/living/L = target
+			L.attack_animal(src)
+			L.electrocute_act(10, src, safety = TRUE) //safety = TRUE means we don't check gloves... Ok?
+	else
+		..()
+
+
+
+
+//SWARMER CATWALKS
 //Used so they can survive lavaland better
 /obj/structure/lattice/catwalk/swarmer_catwalk
 	name = "swarmer catwalk"
@@ -213,6 +314,3 @@ var/global/list/mob/living/simple_animal/hostile/swarmer/ai/AISwarmerMobs = list
 
 
 #undef MEDAL_PREFIX
-#undef TOO_MANY_SWARMERS_BEACON
-#undef TOO_MANY_SWARMERS
-

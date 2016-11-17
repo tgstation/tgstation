@@ -210,6 +210,7 @@
 	target = new_target
 	LosePatience()
 	if(target != null)
+		target.color = "red" //DEBUG REMIE
 		GainPatience()
 		Aggro()
 		return 1
@@ -289,6 +290,8 @@
 	taunt_chance = initial(taunt_chance)
 
 /mob/living/simple_animal/hostile/proc/LoseTarget()
+	if(target)
+		target.color = "white" //DEBUG REMIE
 	target = null
 	walk(src, 0)
 	LoseAggro()
@@ -299,12 +302,15 @@
 	LoseTarget()
 	..(gibbed)
 
-/mob/living/simple_animal/hostile/proc/summon_backup(distance)
+/mob/living/simple_animal/hostile/proc/summon_backup(distance, exact_faction_match)
 	do_alert_animation(src)
 	playsound(loc, 'sound/machines/chime.ogg', 50, 1, -1)
 	for(var/mob/living/simple_animal/hostile/M in oview(distance, targets_from))
 		var/list/L = M.faction&faction
-		if(L.len)
+		var/success = L.len
+		if(exact_faction_match)
+			success = (L.len == faction.len) //since the above op is &, an exact match would be of the same length
+		if(success)
 			if(M.AIStatus == AI_OFF)
 				return
 			else
