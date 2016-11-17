@@ -457,18 +457,48 @@
 	dir = suit.user.dir
 	var/density = 0
 	var/anchored = 1
-	if(isclosedturf(unmovablevictim))
+	var/nocrash = 0
+	if(ismob(unmovablevictim))
+		var/mob/living/L = unmovablevictim
+		mobknockback(density, anchored, momentum_speed, L, dir)
+		nocrash = 1
+		density = 0
+		anchored = 0
+	else if(isclosedturf(unmovablevictim))
 		density = 1
 		anchored = 1
-	if(ismovableatom(unmovablevictim))
+	else if(ismovableatom(unmovablevictim))
 		victim = unmovablevictim
 		density = victim.density
 		anchored = victim.anchored
 		victimknockback(density, anchored, momentum_speed, victim, dir)
-	crash_damage(density, anchored, momentum_speed, unmovablevictim.name)
-	userknockback(density, anchored, momentum_speed, dir)
-	losecontrol(move = FALSE)
+	if(!nocrash)
+		crash_damage(density, anchored, momentum_speed, unmovablevictim.name)
+		userknockback(density, anchored, momentum_speed, dir)
+		losecontrol(move = FALSE)
 	crashing = 0
+
+/obj/item/device/flightpack/proc/mobknockback(density, anchored, momentum_speed, mob/living/L, dir)
+	if(!ismob(L))
+		return 0
+	var/knockmessage = "<span class='warning'>[L] is knocked back by [suit.user] as they narrowly avoid a collision!"
+	var/knockback = 0
+	var/stun = boost * 2
+	if(stun)
+		knockmessage += "[L] is knocked to the ground by [suit.user]'s speed!"
+	knockmessage += "</span>"
+	knockback += momentum_speed
+	knockback += (part_manip.rating / 2)
+	knockback += (part_bin.rating / 2)
+	knockback += boost
+	knockback = knockback / 3
+	var/direction = pick(alldirs)
+	var/target = get_step(L, direction)
+	for(var/i in 1 to (knockback - 1))
+		target = get_step(target, direction)
+	suit.user.visible_message(knockmessage)
+	L.throw_at_fast(target, 7, 3)
+	L.Weaken(stun)
 
 /obj/item/device/flightpack/proc/victimknockback(density, anchored, momentum_speed, atom/movable/victim, dir)
 	if(!victim)
