@@ -1,4 +1,0 @@
-author: "Cyberboss"
-delete-after: True
-changes: 
-  - bugfix: "The amount of metal used to construct High Security airlocks with the RCD is now consistent with the actual cost"

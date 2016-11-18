@@ -1,4 +1,0 @@
-author: "Joan"
-delete-after: True
-changes: 
-  - rscadd: "Adds Networked Fibers, which gains points instead of automatic expansion and causes manual expansion near its core to move its core."
