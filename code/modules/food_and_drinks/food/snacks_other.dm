@@ -72,6 +72,13 @@
 	list_reagents = list("nutriment" = 4)
 	filling_color = "#FFD700"
 
+/obj/item/weapon/reagent_containers/food/snacks/tatortot
+	name = "tator tot"
+	desc = "A large fried potato nugget that may or may not try to valid you"
+	icon_state = "tatortot"
+	list_reagents = list("nutriment" = 4)
+	filling_color = "FFD700"
+
 /obj/item/weapon/reagent_containers/food/snacks/soydope
 	name = "soy dope"
 	desc = "Dope from a soy."
