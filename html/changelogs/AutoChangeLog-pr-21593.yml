@@ -1,0 +1,4 @@
+author: "Incoming5643"
+delete-after: True
+changes: 
+  - bugfix: "The charge spell should once again work correctly with guns/wands"
