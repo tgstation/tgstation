@@ -7,7 +7,7 @@
 
 
 
-/*-------TODOOOOOOOOOO--------*/
+/*-------TODOOOOOOOOOO--------*/ //fuck yooooooooooooou
 /mob/living/silicon/robot/proc/uneq_module(obj/item/O)
 	if(!O)
 		return 0
@@ -41,7 +41,7 @@
 	return 1
 
 /mob/living/silicon/robot/proc/activate_module(obj/item/O)
-	if(!(locate(O) in src.module.modules) && O != src.module.emag)
+	if(!(locate(O) in src.module.modules))
 		return
 	if(activated(O))
 		src << "<span class='notice'>Already activated</span>"

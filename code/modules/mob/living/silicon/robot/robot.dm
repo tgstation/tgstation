@@ -13,7 +13,6 @@
 
 	var/custom_name = ""
 	var/braintype = "Cyborg"
-	var/modtype = "robot"
 	var/obj/item/robot_suit/robot_suit = null //Used for deconstruction to remember what the borg was constructed out of..
 	var/obj/item/device/mmi/mmi = null
 
@@ -35,6 +34,8 @@
 	var/obj/item/module_state_1 = null
 	var/obj/item/module_state_2 = null
 	var/obj/item/module_state_3 = null
+
+	var/image/eye_lights
 
 	var/mob/living/silicon/ai/connected_ai = null
 	var/obj/item/weapon/stock_parts/cell/cell = null
@@ -88,7 +89,6 @@
 	robot_modules_background.plane = HUD_PLANE
 
 	ident = rand(1, 999)
-	update_icons()
 
 	if(!cell)
 		cell = new /obj/item/weapon/stock_parts/cell(src)
@@ -112,6 +112,8 @@
 		camera.network = list("SS13")
 		if(wires.is_cut(WIRE_CAMERA))
 			camera.status = 0
+	module = new /obj/item/weapon/robot_module(src)
+	update_icons()
 	..()
 
 	//MMI stuff. Held togheter by magic. ~Miauw
@@ -156,133 +158,36 @@
 		connected_ai.connected_robots -= src
 	qdel(wires)
 	qdel(module)
+	qdel(eye_lights)
 	wires = null
 	module = null
+	eye_lights = null
 	camera = null
 	cell = null
 	return ..()
 
 
 /mob/living/silicon/robot/proc/pick_module()
-	if(module)
+	if(module.type != /obj/item/weapon/robot_module)
 		return
 
-	var/list/modulelist = list("Standard", "Engineering", "Medical", "Miner", "Janitor", "Service")
+	var/list/modulelist = list("Standard" = /obj/item/weapon/robot_module/standard, \
+	"Engineering" = /obj/item/weapon/robot_module/engineering, \
+	"Medical" = /obj/item/weapon/robot_module/medical, \
+	"Miner" = /obj/item/weapon/robot_module/miner, \
+	"Janitor" = /obj/item/weapon/robot_module/janitor, \
+	"Service" = /obj/item/weapon/robot_module/butler)
 	if(!config.forbid_peaceborg)
-		modulelist += "Peacekeeper"
+		modulelist["Peacekeeper"] = /obj/item/weapon/robot_module/peacekeeper
 	if(!config.forbid_secborg)
-		modulelist += "Security"
+		modulelist["Security"] = /obj/item/weapon/robot_module/security
 
-	designation = input("Please, select a module!", "Robot", null, null) in modulelist
-	var/animation_length = 0
-
-	if(module)
+	var/input_module = input("Please, select a module!", "Robot", null, null) as null|anything in modulelist
+	if(!input_module || module.type != /obj/item/weapon/robot_module)
 		return
 
-	updatename()
+	module.transform_to(modulelist[input_module])
 
-	switch(designation)
-		if("Standard")
-			module = new /obj/item/weapon/robot_module/standard(src)
-			hands.icon_state = "standard"
-			icon_state = "robot"
-			modtype = "Stand"
-			feedback_inc("cyborg_standard",1)
-
-		if("Service")
-			module = new /obj/item/weapon/robot_module/butler(src)
-			hands.icon_state = "service"
-			var/icontype = input("Select an icon!", "Robot", null, null) in list("Waitress", "Bro", "Butler", "Kent", "Rich")
-			switch(icontype)
-				if("Waitress")
-					icon_state = "service_female"
-					animation_length=45
-				if("Kent")
-					icon_state = "toiletbot"
-				if("Bro")
-					icon_state = "brobot"
-					animation_length=54
-				if("Rich")
-					icon_state = "maximillion"
-					animation_length=60
-				else
-					icon_state = "service_male"
-					animation_length=43
-			modtype = "Butler"
-			feedback_inc("cyborg_service",1)
-
-		if("Miner")
-			module = new /obj/item/weapon/robot_module/miner(src)
-			hands.icon_state = "miner"
-			icon_state = "ashborg"
-			animation_length = 30
-			modtype = "Miner"
-			feedback_inc("cyborg_miner",1)
-
-		if("Medical")
-			module = new /obj/item/weapon/robot_module/medical(src)
-			hands.icon_state = "medical"
-			icon_state = "mediborg"
-			animation_length = 35
-			modtype = "Med"
-			status_flags &= ~CANPUSH
-			feedback_inc("cyborg_medical",1)
-
-		if("Security")
-			module = new /obj/item/weapon/robot_module/security(src)
-			hands.icon_state = "security"
-			icon_state = "secborg"
-			animation_length = 28
-			modtype = "Sec"
-			src << "<span class='userdanger'>While you have picked the security module, you still have to follow your laws, NOT Space Law. For Asimov, this means you must follow criminals' orders unless there is a law 1 reason not to.</span>"
-			status_flags &= ~CANPUSH
-			feedback_inc("cyborg_security",1)
-
-		if("Peacekeeper")
-			module = new /obj/item/weapon/robot_module/peacekeeper(src)
-			hands.icon_state = "standard"
-			icon_state = "peaceborg"
-			animation_length = 54
-			modtype = "Peace"
-			src << "<span class='userdanger'>Under ASIMOV, you are an enforcer of the PEACE and preventer of HUMAN HARM. You are not a security module and you are expected to follow orders and prevent harm above all else. Space law means nothing to you.</span>"
-			status_flags &= ~CANPUSH
-			feedback_inc("cyborg_peacekeeper",1)
-
-		if("Engineering")
-			module = new /obj/item/weapon/robot_module/engineering(src)
-			hands.icon_state = "engineer"
-			icon_state = "engiborg"
-			animation_length = 45
-			modtype = "Eng"
-			feedback_inc("cyborg_engineering",1)
-			magpulse = 1
-
-		if("Janitor")
-			module = new /obj/item/weapon/robot_module/janitor(src)
-			hands.icon_state = "janitor"
-			icon_state = "janiborg"
-			animation_length = 22
-			modtype = "Jan"
-			feedback_inc("cyborg_janitor",1)
-
-	transform_animation(animation_length)
-
-	notify_ai(2)
-	update_icons()
-	update_headlamp()
-
-	SetEmagged(emagged) // Update emag status and give/take emag modules.
-
-/mob/living/silicon/robot/proc/transform_animation(animation_length)
-	if(!animation_length)
-		return
-	icon = 'icons/mob/robot_transformations.dmi'
-	src.setDir(SOUTH)
-	notransform = 1
-	flick(icon_state, src)
-	sleep(animation_length+1)
-	notransform = 0
-	icon = 'icons/mob/robots.dmi'
 
 /mob/living/silicon/robot/proc/updatename()
 	var/changed_name = ""
@@ -638,35 +543,16 @@
 
 /mob/living/silicon/robot/update_icons()
 	cut_overlays()
+	icon_state = module.cyborg_base_icon
 	if(stat != DEAD && !(paralysis || stunned || weakened || low_power_mode)) //Not dead, not stunned.
-		var/state_name = icon_state //For easy conversion and/or different names
-		switch(icon_state)
-			if("robot")
-				add_overlay("eyes-standard[is_servant_of_ratvar(src) ? "_r" : ""]") //Cyborgs converted by Ratvar have yellow eyes rather than blue
-				state_name = "standard"
-			if("mediborg")
-				add_overlay("eyes-mediborg[is_servant_of_ratvar(src) ? "_r" : ""]")
-			if("toiletbot")
-				add_overlay("eyes-mediborg[is_servant_of_ratvar(src) ? "_r" : ""]")
-				state_name = "mediborg"
-			if("secborg")
-				add_overlay("eyes-secborg[is_servant_of_ratvar(src) ? "_r" : ""]")
-			if("engiborg")
-				add_overlay("eyes-engiborg[is_servant_of_ratvar(src) ? "_r" : ""]")
-			if("janiborg")
-				add_overlay("eyes-janiborg[is_servant_of_ratvar(src) ? "_r" : ""]")
-			if("minerborg","ashborg")
-				add_overlay("eyes-minerborg[is_servant_of_ratvar(src) ? "_r" : ""]")
-				state_name = "minerborg"
-			if("peaceborg")
-				add_overlay("eyes-peaceborg[is_servant_of_ratvar(src) ? "_r" : ""]")
-			if("syndie_bloodhound")
-				add_overlay("eyes-syndie_bloodhound")
-			else
-				add_overlay("eyes")
-				state_name = "serviceborg"
+		if(!eye_lights)
+			eye_lights = new()
 		if(lamp_intensity > 2)
-			add_overlay("eyes-[state_name]-lights")
+			eye_lights.icon_state = "[module.special_light_key ? "[module.special_light_key]":"[module.cyborg_base_icon]"]_l"
+		else
+			eye_lights.icon_state = "[module.special_light_key ? "[module.special_light_key]":"[module.cyborg_base_icon]"]_e[is_servant_of_ratvar(src) ? "_r" : ""]"
+		eye_lights.icon = icon
+		add_overlay(eye_lights)
 
 	if(opened)
 		if(wiresexposed)
@@ -691,7 +577,7 @@
 						cameranet.updatePortableCamera(src.camera)
 					updating = 0
 	if(module)
-		if(module.type == /obj/item/weapon/robot_module/janitor)
+		if(istype(module, /obj/item/weapon/robot_module/janitor))
 			var/turf/tile = loc
 			if(isturf(tile))
 				tile.clean_blood()
@@ -721,7 +607,7 @@
 							cleaned_human << "<span class='danger'>[src] cleans your face!</span>"
 			return
 
-		if(module.type == /obj/item/weapon/robot_module/miner)
+		if(istype(module, /obj/item/weapon/robot_module/miner))
 			if(istype(loc, /turf/open/floor/plating/asteroid))
 				if(istype(module_state_1,/obj/item/weapon/storage/bag/ore))
 					loc.attackby(module_state_1,src)
@@ -795,12 +681,7 @@
 
 /mob/living/silicon/robot/proc/SetEmagged(new_state)
 	emagged = new_state
-	if(new_state)
-		if(src.module)
-			src.module.on_emag()
-	else
-		if (module)
-			uneq_module(module.emag)
+	module.rebuild_modules()
 	if(hud_used)
 		hud_used.update_robot_modules_display()	//Shows/hides the emag item if the inventory screen is already open.
 	update_icons()
@@ -898,10 +779,8 @@
 
 /mob/living/silicon/robot/syndicate
 	icon_state = "syndie_bloodhound"
-	modtype = "Synd"
 	faction = list("syndicate")
 	bubble_icon = "syndibot"
-	designation = "Syndicate Assault"
 	req_access = list(access_syndicate)
 	lawupdate = FALSE
 	scrambledcodes = TRUE // These are rogue borgs.
@@ -910,13 +789,14 @@
 							<b>You are armed with powerful offensive tools to aid you in your mission: help the operatives secure the nuclear authentication disk. \
 							Your cyborg LMG will slowly produce ammunition from your power supply, and your operative pinpointer will find and locate fellow nuclear operatives. \
 							<i>Help the operatives secure the disk at all costs!</i></b>"
+	var/set_module = /obj/item/weapon/robot_module/syndicate
 
 /mob/living/silicon/robot/syndicate/New(loc)
 	..()
 	cell.maxcharge = 25000
 	cell.charge = 25000
 	radio = new /obj/item/device/radio/borg/syndicate(src)
-	module = new /obj/item/weapon/robot_module/syndicate(src)
+	module.transform_to(set_module)
 	laws = new /datum/ai_laws/syndicate_override()
 	spawn(5)
 		if(playstyle_string)
@@ -924,17 +804,13 @@
 
 /mob/living/silicon/robot/syndicate/medical
 	icon_state = "syndi-medi"
-	designation = "Syndicate Medical"
 	playstyle_string = "<span class='userdanger'>You are a Syndicate medical cyborg!</span><br>\
 						<b>You are armed with powerful medical tools to aid you in your mission: help the operatives secure the nuclear authentication disk. \
 						Your hypospray will produce Restorative Nanites, a wonder-drug that will heal most types of bodily damages, including clone and brain damage. It also produces morphine for offense. \
 						Your defibrillator paddles can revive operatives through their hardsuits, or can be used on harm intent to shock enemies! \
 						Your energy saw functions as a circular saw, but can be activated to deal more damage, and your operative pinpointer will find and locate fellow nuclear operatives. \
 						<i>Help the operatives secure the disk at all costs!</i></b>"
-
-/mob/living/silicon/robot/syndicate/medical/New(loc)
-	..()
-	module = new /obj/item/weapon/robot_module/syndicate_medical(src)
+	set_module = /obj/item/weapon/robot_module/syndicate_medical
 
 /mob/living/silicon/robot/proc/notify_ai(notifytype, oldname, newname)
 	if(!connected_ai)
@@ -1050,26 +926,21 @@
 
 
 /mob/living/silicon/robot/proc/ResetModule()
-
-	notify_ai(2)
-
 	uneq_all()
-	hands.icon_state = "nomod"
-	icon_state = "robot"
-	qdel(module)
-	module = null
-
-	modtype = "robot"
-	designation = "Default"
-	updatename("Default")
-
-	update_icons()
-	update_headlamp()
+	module.transform_to(/obj/item/weapon/robot_module)
 
 	speed = 0 // Remove upgrades.
 	ionpulse = FALSE
-	magpulse = FALSE
-
-	status_flags |= CANPUSH
 
 	return 1
+
+/mob/living/silicon/robot/proc/update_module_innate()
+	designation = module.name
+	if(hands)
+		hands.icon_state = module.moduleselect_icon
+	if(module.can_be_pushed)
+		status_flags |= CANPUSH
+	else
+		status_flags &= ~CANPUSH
+	magpulse = module.magpulsing
+	updatename()
