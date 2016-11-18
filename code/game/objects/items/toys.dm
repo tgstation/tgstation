@@ -73,7 +73,7 @@
 				user << "<span class='notice'>You fill the balloon with the contents of [I].</span>"
 				I.reagents.trans_to(src, 10)
 				update_icon()
-	else if(is_sharp(I))
+	else if(I.is_sharp())
 		balloon_burst()
 	else
 		return ..()
