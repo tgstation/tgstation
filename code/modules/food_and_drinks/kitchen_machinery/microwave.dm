@@ -252,7 +252,7 @@
 				
 		if(metal)
 			visible_message("<span class='warning'>Sparks fly around [src]!")
-			if(prob(50))
+			if(prob(max(metal/2, 33)))
 				explosion(loc,0,1,2)
 			broke()
 			return
