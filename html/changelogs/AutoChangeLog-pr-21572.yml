@@ -1,0 +1,6 @@
+author: "Joan"
+delete-after: True
+changes: 
+  - rscadd: "You can now cancel out of selecting a robot module!"
+  - imagedel: "Robot modules now only have a generic transform animation when selected; the borg is locked in place for 5 seconds in a small cloud of smoke while the base borg sprite fades out and the new module fades in."
+  - tweak: "Resetting a borg will do that animation."
