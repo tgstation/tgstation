@@ -17,8 +17,8 @@ Difficulty: Special
 
 */
 
-var/global/list/mob/living/simple_animal/hostile/swarmer/ai/AISwarmers
-var/global/list/mob/living/simple_animal/hostile/swarmer/ai/AISwarmersByType //AISwarmersByType[.../resource] = list(1st, 2nd, nth), AISwarmersByType[../ranged] = list(1st, 2nd, nth) etc.
+var/global/list/mob/living/simple_animal/hostile/swarmer/ai/AISwarmers = list()
+var/global/list/mob/living/simple_animal/hostile/swarmer/ai/AISwarmersByType = list()//AISwarmersByType[.../resource] = list(1st, 2nd, nth), AISwarmersByType[../ranged] = list(1st, 2nd, nth) etc.
 var/global/list/AISwarmerCapsByType = list(/mob/living/simple_animal/hostile/swarmer/ai/resource = 30, /mob/living/simple_animal/hostile/swarmer/ai/ranged_combat = 20, /mob/living/simple_animal/hostile/swarmer/ai/melee_combat = 10)
 
 
@@ -100,8 +100,6 @@ var/global/list/AISwarmerCapsByType = list(/mob/living/simple_animal/hostile/swa
 /mob/living/simple_animal/hostile/swarmer/ai/New()
 	..()
 	ToggleLight() //so you can see them eating you out of house and home/shooting you/stunlocking you for eternity
-	LAZYINITLIST(AISwarmers)
-	LAZYINITLIST(AISwarmersByType)
 	LAZYINITLIST(AISwarmersByType[type])
 	AISwarmers += src
 	AISwarmersByType[type] += src
