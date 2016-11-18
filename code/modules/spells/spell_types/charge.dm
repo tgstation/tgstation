@@ -69,9 +69,6 @@
 					if(C.maxcharge <= 1) //Div by 0 protection
 						C.maxcharge = 1
 						burnt_out = 1
-				if(istype(C.loc,/obj/item/weapon/gun))
-					var/obj/item/weapon/gun/G = C.loc
-					G.process_chamber()
 				C.charge = C.maxcharge
 				charged_item = C
 				break
@@ -87,6 +84,9 @@
 								C.maxcharge = 1
 								burnt_out = 1
 						C.charge = C.maxcharge
+						if(istype(C.loc,/obj/item/weapon/gun))
+							var/obj/item/weapon/gun/G = C.loc
+							G.process_chamber()
 						item.update_icon()
 						charged_item = item
 						break
