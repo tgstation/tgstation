@@ -245,8 +245,12 @@
 			animation_length = 54
 			modtype = "Peace"
 			src << "<span class='userdanger'>Under ASIMOV, you are an enforcer of the PEACE and preventer of HUMAN HARM. You are not a security module and you are expected to follow orders and prevent harm above all else. Space law means nothing to you.</span>"
+			src << "<span class='notice'>SYSTEM: Integrated repair nanoswarm online!</span>"
 			status_flags &= ~CANPUSH
 			feedback_inc("cyborg_peacekeeper",1)
+			var/obj/item/borg/upgrade/selfrepair/peacekeeper/S = new /obj/item/borg/upgrade/selfrepair/peacekeeper(src.loc)
+			S.action(src)
+			S.loc = src
 
 		if("Engineering")
 			module = new /obj/item/weapon/robot_module/engineering(src)
