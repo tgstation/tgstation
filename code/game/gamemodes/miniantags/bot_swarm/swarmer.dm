@@ -414,7 +414,7 @@
 	if(target == src)
 		return
 
-	if(z != ZLEVEL_STATION || z != ZLEVEL_LAVALAND)
+	if(z != ZLEVEL_STATION && z != ZLEVEL_LAVALAND)
 		src << "<span class='warning'>Our bluespace transceiver cannot \
 			locate a viable bluespace link, our teleportation abilities \
 			are useless in this area.</span>"
@@ -530,7 +530,7 @@
 		var/mob/living/L = AM
 		if(!istype(L, /mob/living/simple_animal/hostile/swarmer))
 			playsound(loc,'sound/effects/snap.ogg',50, 1, -1)
-			L.electrocute_act(0, src, 1, 1)
+			L.electrocute_act(0, src, 1, 1, 1)
 			if(iscyborg(L))
 				L.Weaken(5)
 			qdel(src)

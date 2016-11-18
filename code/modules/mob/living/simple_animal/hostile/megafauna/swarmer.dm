@@ -60,6 +60,8 @@ var/global/list/AISwarmerCapsByType = list(/mob/living/simple_animal/hostile/swa
 	AIStatus = AI_OFF
 	var/swarmer_spawn_cooldown = 0
 	var/swarmer_spawn_cooldown_amt = 150 //Deciseconds between the swarmers we spawn
+	var/call_help_cooldown = 0
+	var/call_help_cooldown_amt = 150 //Deciseconds between calling swarmers to help us when attacked
 	var/static/list/swarmer_caps
 
 
@@ -69,6 +71,8 @@ var/global/list/AISwarmerCapsByType = list(/mob/living/simple_animal/hostile/swa
 	internal = new/obj/item/device/gps/internal/swarmer_beacon(src)
 	for(var/ddir in cardinal)
 		new /obj/structure/swarmer/blockade (get_step(src, ddir))
+		var/mob/living/simple_animal/hostile/swarmer/ai/resource/R = new(loc)
+		step(R, ddir) //Step the swarmers, instead of spawning them there, incase the turf is solid
 
 
 /mob/living/simple_animal/hostile/megafauna/swarmer_swarm_beacon/Life()
@@ -78,6 +82,13 @@ var/global/list/AISwarmerCapsByType = list(/mob/living/simple_animal/hostile/swa
 		if(createtype && world.time > swarmer_spawn_cooldown && AISwarmers.len < (GetTotalAISwarmerCap()*0.5))
 			swarmer_spawn_cooldown = world.time + swarmer_spawn_cooldown_amt
 			new createtype(loc)
+
+
+/mob/living/simple_animal/hostile/megafauna/swarmer_swarm_beacon/adjustHealth(damage)
+	. = ..()
+	if(damage > 0 && world.time > call_help_cooldown)
+		call_help_cooldown = world.time + call_help_cooldown_amt
+		summon_backup(25) //long range, only called max once per 15 seconds, so it's not deathlag
 
 
 /obj/item/device/gps/internal/swarmer_beacon
@@ -269,6 +280,8 @@ var/global/list/AISwarmerCapsByType = list(/mob/living/simple_animal/hostile/swa
 /mob/living/simple_animal/hostile/swarmer/ai/melee_combat
 	icon_state = "swarmer_melee"
 	icon_living = "swarmer_melee"
+	health = 60
+	maxHealth = 60
 	ranged = FALSE
 	login_text_dump = {"
 	<b>You are a swarmer, a weapon of a long dead civilization. Until further orders from your original masters are received, you must continue to consume and replicate.</b>

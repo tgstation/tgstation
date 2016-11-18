@@ -40,6 +40,8 @@
 	var/aggro_vision_range = 9 //If a mob is aggro, we search in this radius. Defaults to 9 to keep in line with original simple mob aggro radius
 	var/idle_vision_range = 9 //If a mob is just idling around, it's vision range is limited to this. Defaults to 9 to keep in line with original simple mob aggro radius
 	var/search_objects = 0 //If we want to consider objects when searching around, set this to 1. If you want to search for objects while also ignoring mobs until hurt, set it to 2. To completely ignore mobs, even when attacked, set it to 3
+	var/search_objects_timer_id //Timer for regaining our old search_objects value after being attacked
+	var/search_objects_regain_time = 30 //the delay between being attacked and gaining our old search_objects value back
 	var/list/wanted_objects = list() //A list of objects that will be checked against to attack, should we have search_objects enabled
 	var/stat_attack = 0 //Mobs with stat_attack to 1 will attempt to attack things that are unconscious, Mobs with stat_attack set to 2 will attempt to attack the dead.
 	var/stat_exclusive = 0 //Mobs with this set to 1 will exclusively attack things defined by stat_attack, stat_attack 2 means they will only attack corpses
@@ -50,7 +52,6 @@
 
 	var/lose_patience_timer_id //id for a timer to call LoseTarget(), used to stop mobs fixating on a target they can't reach
 	var/lose_patience_timeout = 300 //30 seconds by default, so there's no major changes to AI behaviour, beyond actually bailing if stuck forever
-
 
 
 /mob/living/simple_animal/hostile/New()
@@ -264,8 +265,8 @@
 	. = ..()
 	if(!ckey && !stat && search_objects < 3 && damage > 0)//Not unconscious, and we don't ignore mobs
 		if(search_objects)//Turn off item searching and ignore whatever item we were looking at, we're more concerned with fight or flight
-			search_objects = 0
 			target = null
+			LoseSearchObjects()
 		if(AIStatus == AI_IDLE)
 			AIStatus = AI_ON
 			FindTarget()
@@ -413,11 +414,26 @@
 	return !FindTarget(possible_targets, 1)
 
 
-
+//These two procs handle losing our target if we've failed to attack them for
+//more than lose_patience_timeout deciseconds, which probably means we're stuck
 /mob/living/simple_animal/hostile/proc/GainPatience()
 	if(lose_patience_timeout)
 		LosePatience()
-		lose_patience_timer_id = addtimer(src, "LoseTarget", lose_patience_timeout, TRUE)
+		lose_patience_timer_id = addtimer(src, "LoseTarget", lose_patience_timeout)
+
 
 /mob/living/simple_animal/hostile/proc/LosePatience()
 	deltimer(lose_patience_timer_id)
+
+
+//These two procs handle losing and regaining search_objects when attacked by a mob
+/mob/living/simple_animal/hostile/proc/LoseSearchObjects()
+	search_objects = 0
+	deltimer(search_objects_timer_id)
+	search_objects_timer_id = addtimer(src, "RegainSearchObjects", search_objects_regain_time)
+
+
+/mob/living/simple_animal/hostile/proc/RegainSearchObjects(value)
+	if(!value)
+		value = initial(search_objects)
+	search_objects = value
