@@ -1161,6 +1161,7 @@
 #include "code\modules\events\mass_hallucination.dm"
 #include "code\modules\events\meateor_wave.dm"
 #include "code\modules\events\meteor_wave.dm"
+#include "code\modules\events\mice_migration.dm"
 #include "code\modules\events\operative.dm"
 #include "code\modules\events\portal_storm.dm"
 #include "code\modules\events\prison_break.dm"
