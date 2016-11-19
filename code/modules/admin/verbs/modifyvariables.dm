@@ -6,6 +6,7 @@ var/list/forbidden_varedit_object_types = list(
 									)
 
 var/list/VVlocked = list("vars", "var_edited", "client", "virus", "viruses", "cuffed", "last_eaten", "unlock_content", "step_x", "step_y", "force_ending")
+var/list/VVforbidden = list("step_x", "step_y", "step_z")
 var/list/VVicon_edit_lock = list("icon", "icon_state", "overlays", "underlays", "resize")
 var/list/VVckey_edit = list("key", "ckey")
 
@@ -215,6 +216,8 @@ var/list/VVckey_edit = list("key", "ckey")
 	if(variable in VVlocked)
 		if(!check_rights(R_DEBUG))
 			return
+	if(variable in VVforbidden)
+		return
 	if(variable in VVckey_edit)
 		if(!check_rights(R_SPAWN|R_DEBUG))
 			return
