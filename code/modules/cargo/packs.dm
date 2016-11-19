@@ -511,10 +511,12 @@ datum/supply_pack
 /datum/supply_pack/engineering/powergamermitts
 	name = "Insulated Gloves Crate"
 	cost = 2000	//Made of pure-grade bullshittinium
+	access = access_engine_equip
 	contains = list(/obj/item/clothing/gloves/color/yellow,
 					/obj/item/clothing/gloves/color/yellow,
 					/obj/item/clothing/gloves/color/yellow)
 	crate_name = "insulated gloves crate"
+	crate_type = /obj/structure/closet/crate/secure/engineering
 
 /datum/supply_pack/engineering/power
 	name = "Powercell Crate"
