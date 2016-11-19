@@ -46,7 +46,8 @@
 	clockwork_desc = "A divine link to the Celestial Derelict, allowing for limited recital of scripture.\n\
 	Hitting a slab, a Servant with a slab, or a cache will <b>transfer</b> this slab's components into the target, the target's slab, or the global cache, respectively."
 	nonhuman_usable = TRUE
-	quickbound = list(/datum/clockwork_scripture/ranged_ability/judicial_marker, /datum/clockwork_scripture/ranged_ability/sentinels_compromise)
+	quickbound = list(/datum/clockwork_scripture/ranged_ability/judicial_marker, /datum/clockwork_scripture/ranged_ability/sentinels_compromise, \
+	/datum/clockwork_scripture/create_object/sigil_of_transgression, /datum/clockwork_scripture/create_object/vitality_matrix)
 	actions_types = list()
 
 /obj/item/clockwork/slab/cyborg/engineer
