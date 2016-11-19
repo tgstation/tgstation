@@ -629,8 +629,8 @@ var/total_borer_hosts_needed = 10
 	if(docile)
 		src <<"<span class='warning'>You are feeling far too docile to do that.</span>"
 		return
-	if(is_servant_of_ratvar(C) || iscultist(C) || C.isloyal())
-		src << "<span class='warning'>[C]'s mind seems to be blocked by some unknown force!</span>"
+	if(is_servant_of_ratvar(victim) || iscultist(victim) || victim.isloyal())
+		src << "<span class='warning'>[victim]'s mind seems to be blocked by some unknown force!</span>"
 		return
 
 	else
