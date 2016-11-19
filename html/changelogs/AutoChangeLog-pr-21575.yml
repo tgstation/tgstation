@@ -1,0 +1,4 @@
+author: "Crushtoe"
+delete-after: True
+changes: 
+  - imageadd: "Added a shiny new icon for the reaper's scythe in-hand and normal sprite. It's 25% less gardener."
