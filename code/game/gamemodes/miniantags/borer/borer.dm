@@ -94,6 +94,7 @@ var/total_borer_hosts_needed = 10
 	var/borer_chems = list()
 	var/leaving = FALSE
 	var/hiding = FALSE
+	var/waketimerid = null
 
 	var/datum/action/innate/borer/talk_to_host/talk_to_host_action = new
 	var/datum/action/innate/borer/infest_host/infest_host_action = new
@@ -255,19 +256,23 @@ var/total_borer_hosts_needed = 10
 		if(stat != DEAD && victim.stat != DEAD)
 
 			if(victim.reagents.has_reagent("sugar"))
-				if(!docile)
+				if(!docile || waketimerid)
 					if(controlling)
 						victim << "<span class='warning'>You feel the soporific flow of sugar in your host's blood, lulling you into docility.</span>"
 					else
 						src << "<span class='warning'>You feel the soporific flow of sugar in your host's blood, lulling you into docility.</span>"
+					if(waketimerid)
+						deltimer(waketimerid)
+						waketimerid = null
 					docile = TRUE
 			else
-				if(docile)
+				if(docile && !waketimerid)
 					if(controlling)
-						victim << "<span class='warning'>You shake off your lethargy as the sugar leaves your host's blood.</span>"
+						victim << "<span class='warning'>You start shaking off your lethargy as the sugar leaves your host's blood. This will take about 10 seconds...</span>"
 					else
-						src << "<span class='warning'>You shake off your lethargy as the sugar leaves your host's blood.</span>"
-					docile = FALSE
+						src << "<span class='warning'>You start shaking off your lethargy as the sugar leaves your host's blood. This will take about 10 seconds...</span>"
+
+					waketimerid = addtimer(src,"wakeup",10,FALSE)
 			if(controlling)
 
 				if(docile)
@@ -278,8 +283,22 @@ var/total_borer_hosts_needed = 10
 				if(prob(5))
 					victim.adjustBrainLoss(rand(1,2))
 
-				if(prob(victim.brainloss/20))
+				if(prob(victim.brainloss/10))
 					victim.say("*[pick(list("blink","blink_r","choke","aflap","drool","twitch","twitch_s","gasp"))]")
+
+				if(prob(victim.brainloss/20))
+					victim << "<span class='danger'>An unexpected spark passes through you host's brain and your control is ripped away!</span>"
+					host_brain << "<span class='danger'>You suddenly regain control!</span>"
+					detatch()
+
+/mob/living/simple_animal/borer/proc/wakeup()
+	if(controlling)
+		victim << "<span class='warning'>You finish shaking off your lethargy.</span>"
+	else
+		src << "<span class='warning'>You finish shaking off your lethargy.</span>"
+	docile = FALSE
+	if(waketimerid)
+		waketimerid = null
 
 /mob/living/simple_animal/borer/say(message)
 	if(dd_hasprefix(message, ";"))
