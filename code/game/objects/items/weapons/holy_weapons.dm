@@ -168,8 +168,8 @@
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 
 /obj/item/weapon/nullrod/scythe
-	icon_state = "scythe0"
-	item_state = "scythe0"
+	icon_state = "scythe1"
+	item_state = "scythe1"
 	name = "reaper scythe"
 	desc = "Ask not for whom the bell tolls..."
 	w_class = 4
