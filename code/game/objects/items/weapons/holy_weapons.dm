@@ -242,7 +242,7 @@
 	icon_state = "hammeron"
 	item_state = "hammeron"
 	name = "relic war hammer"
-	desc = "This war hammer cost the chaplain fourty thousand space dollars."
+	desc = "This war hammer cost the chaplain forty thousand space dollars."
 	slot_flags = SLOT_BELT
 	w_class = 5
 	attack_verb = list("smashed", "bashed", "hammered", "crunched")
