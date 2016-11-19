@@ -364,10 +364,6 @@ var/total_borer_hosts_needed = 10
 		src << "<span class='warning'>[C] does not possess the vital systems needed to support us.</span>"
 		return
 
-	if(is_servant_of_ratvar(C) || iscultist(C) || C.isloyal())
-		src << "<span class='warning'>[C]'s mind seems to be blocked by some unknown force!</span>"
-		return
-
 	victim = C
 	forceMove(victim)
 
