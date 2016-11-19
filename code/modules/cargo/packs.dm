@@ -518,6 +518,14 @@ datum/supply_pack
 	crate_name = "insulated gloves crate"
 	crate_type = /obj/structure/closet/crate/secure/engineering
 
+/datum/supply_pack/engineering/nowaythiswillendbadly
+	name = "Bootleg Insulated Gloves Crate"
+	cost = 1000 //But its such a good deal!
+	contains =  list(/obj/item/clothing/gloves/color/fyellow,
+					/obj/item/clothing/gloves/color/fyellow,
+					/obj/item/clothing/gloves/color/fyellow)
+	crate_name = "insulated gloves crate"
+
 /datum/supply_pack/engineering/power
 	name = "Powercell Crate"
 	cost = 1000
