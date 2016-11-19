@@ -521,6 +521,7 @@ datum/supply_pack
 /datum/supply_pack/engineering/nowaythiswillendbadly
 	name = "Bootleg Insulated Gloves Crate"
 	cost = 1000 //But its such a good deal!
+	contraband = TRUE
 	contains =  list(/obj/item/clothing/gloves/color/fyellow,
 					/obj/item/clothing/gloves/color/fyellow,
 					/obj/item/clothing/gloves/color/fyellow)
