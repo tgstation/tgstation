@@ -920,6 +920,9 @@
 
 /mob/living/silicon/robot/proc/ResetModule()
 	uneq_all()
+	shown_robot_modules = FALSE
+	if(hud_used)
+		hud_used.update_robot_modules_display()
 	module.transform_to(/obj/item/weapon/robot_module)
 
 	speed = 0 // Remove upgrades.

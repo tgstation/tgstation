@@ -148,10 +148,12 @@
 	R.toner = R.tonermax
 
 /obj/item/weapon/robot_module/proc/rebuild_modules() //builds the usable module list from the modules we have
+	var/mob/living/silicon/robot/R = loc
+	var/held_modules = R.held_items.Copy()
+	R.uneq_all()
 	modules = list()
 	for(var/obj/item/I in basic_modules)
 		add_module(I, FALSE, FALSE)
-	var/mob/living/silicon/robot/R = loc
 	if(R.emagged)
 		for(var/obj/item/I in emag_modules)
 			add_module(I, FALSE, FALSE)
@@ -160,6 +162,8 @@
 			add_module(I, FALSE, FALSE)
 	for(var/obj/item/I in added_modules)
 		add_module(I, FALSE, FALSE)
+	for(var/i in held_modules)
+		R.activate_module(i)
 	if(R.hud_used)
 		R.hud_used.update_robot_modules_display()
 
