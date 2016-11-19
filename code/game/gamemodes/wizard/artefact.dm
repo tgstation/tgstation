@@ -578,7 +578,7 @@ var/global/list/multiverse = list()
 	var/on_cooldown = 0 //0: usable, 1: in use, 2: on cooldown
 	var/mob/living/carbon/last_user
 
-/obj/item/warpwhistle/interrupted(mob/living/carbon/user)
+/obj/item/warpwhistle/proc/interrupted(mob/living/carbon/user)
 	if(!user || qdeleted(src))
 		on_cooldown = FALSE
 		return TRUE
