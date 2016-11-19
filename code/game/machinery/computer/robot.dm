@@ -61,7 +61,7 @@
 			dat += " Independent from AI |"
 		if(issilicon(user) || IsAdminGhost(user))
 			if(is_servant_of_ratvar(user) && user != R)
-				dat += "<A href='?src=\ref[src];convert=\ref[R]'>(<font color=#BE8700><i>Convert</i></font>)</A>
+				dat += "<A href='?src=\ref[src];convert=\ref[R]'>(<font color=#BE8700><i>Convert</i></font>)</A> "
 			else if(((issilicon(user) && is_special_character(user)) || IsAdminGhost(user)) && !R.emagged && (user != R || R.syndicate))
 				dat += "<A href='?src=\ref[src];magbot=\ref[R]'>(<font color=blue><i>Hack</i></font>)</A> "
 		dat += "<A href='?src=\ref[src];stopbot=\ref[R]'>(<font color=green><i>[R.canmove ? "Lockdown" : "Release"]</i></font>)</A> "
