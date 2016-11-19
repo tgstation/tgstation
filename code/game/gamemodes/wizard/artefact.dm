@@ -578,6 +578,12 @@ var/global/list/multiverse = list()
 	var/on_cooldown = 0 //0: usable, 1: in use, 2: on cooldown
 	var/mob/living/carbon/last_user
 
+/obj/item/warpwhistle/interrupted(mob/living/carbon/user)
+	if(!user || qdeleted(src))
+		on_cooldown = FALSE
+		return TRUE
+	return FALSE
+
 /obj/item/warpwhistle/attack_self(mob/living/carbon/user)
 	if(!istype(user) || on_cooldown)
 		return
@@ -588,14 +594,12 @@ var/global/list/multiverse = list()
 	user.canmove = 0
 	PoolOrNew(/obj/effect/overlay/temp/tornado,T)
 	sleep(20)
-	if(!user)
-		on_cooldown = FALSE
+	if(interrupted(user))
 		return
 	user.invisibility = INVISIBILITY_MAXIMUM
 	user.status_flags |= GODMODE
 	sleep(20)
-	if(!user)
-		on_cooldown = FALSE
+	if(interrupted(user))
 		return
 	var/breakout = 0
 	while(breakout < 50)
@@ -608,8 +612,7 @@ var/global/list/multiverse = list()
 		breakout += 1
 	PoolOrNew(/obj/effect/overlay/temp/tornado,T)
 	sleep(20)
-	if(!user)
-		on_cooldown = FALSE
+	if(interrupted(user))
 		return
 	user.invisibility = initial(user.invisibility)
 	user.status_flags &= ~GODMODE
