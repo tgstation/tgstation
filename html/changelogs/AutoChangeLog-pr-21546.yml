@@ -1,0 +1,8 @@
+author: "Shadowlight213"
+delete-after: True
+changes: 
+  - rscadd: "Added the AI integrity restorer as a modular computer program"
+  - rscadd: "Added an AI intelliCard slot. Insert an Intellicard into it to be able to use the restoration program."
+  - bugfix: "Fixes Alarm program detecting ruins"
+  - bugfix: "Fixes being unable to toggle the card reader module power"
+  - tweak: "The downloader will now tell you if a program is incompatible with your hardware"
