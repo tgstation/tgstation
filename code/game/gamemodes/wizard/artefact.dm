@@ -567,3 +567,77 @@ var/global/list/multiverse = list()
 	heal_brute = 25
 	heal_burn = 25
 	heal_oxy = 25
+
+//Warp Whistle: Provides uncontrolled long distance teleportation.
+
+/obj/item/warpwhistle
+	name = "warp whistle"
+	desc = "One toot on this whistle will send you to a far away land!"
+	icon = 'icons/obj/wizard.dmi'
+	icon_state = "whistle"
+	var/on_cooldown = 0 //0: usable, 1: in use, 2: on cooldown
+	var/mob/living/carbon/last_user
+
+/obj/item/warpwhistle/proc/interrupted(mob/living/carbon/user)
+	if(!user || qdeleted(src))
+		on_cooldown = FALSE
+		return TRUE
+	return FALSE
+
+/obj/item/warpwhistle/attack_self(mob/living/carbon/user)
+	if(!istype(user) || on_cooldown)
+		return
+	on_cooldown = TRUE
+	last_user = user
+	var/turf/T = get_turf(user)
+	playsound(T,'sound/magic/WarpWhistle.ogg', 200, 1)
+	user.canmove = 0
+	PoolOrNew(/obj/effect/overlay/temp/tornado,T)
+	sleep(20)
+	if(interrupted(user))
+		return
+	user.invisibility = INVISIBILITY_MAXIMUM
+	user.status_flags |= GODMODE
+	sleep(20)
+	if(interrupted(user))
+		return
+	var/breakout = 0
+	while(breakout < 50)
+		var/turf/potential_T = find_safe_turf()
+		if(T.z != potential_T.z || abs(get_dist_euclidian(potential_T,T)) > 50 - breakout)
+			user.forceMove(potential_T)
+			user.canmove = 0
+			T = potential_T
+			break
+		breakout += 1
+	PoolOrNew(/obj/effect/overlay/temp/tornado,T)
+	sleep(20)
+	if(interrupted(user))
+		return
+	user.invisibility = initial(user.invisibility)
+	user.status_flags &= ~GODMODE
+	user.canmove = 1
+	on_cooldown = 2
+	sleep(40)
+	on_cooldown = 0
+
+/obj/item/warpwhistle/Destroy()
+	if(on_cooldown == 1 && last_user) //Flute got dunked somewhere in the teleport
+		last_user.invisibility = initial(last_user.invisibility)
+		last_user.status_flags &= ~GODMODE
+		last_user.canmove = 1
+	return ..()
+
+/obj/effect/overlay/temp/tornado
+	icon = 'icons/obj/wizard.dmi'
+	icon_state = "tornado"
+	name = "tornado"
+	desc = "This thing sucks!"
+	layer = FLY_LAYER
+	randomdir = 0
+	duration = 40
+	pixel_x = 500
+
+/obj/effect/overlay/temp/tornado/New(loc)
+	..()
+	animate(src, pixel_x = -500, time = 40)

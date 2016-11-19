@@ -21598,7 +21598,7 @@
 	d2 = 4
 	},
 /obj/machinery/door/airlock/glass_command{
-	crit_fail = 4;
+	cyclelinkeddir = 4;
 	name = "Bridge";
 	req_access_txt = "19"
 	},
@@ -28712,6 +28712,10 @@
 /area/quartermaster/office)
 "bmR" = (
 /obj/structure/table,
+/obj/item/weapon/paper/morguereminder{
+	pixel_x = 5;
+	pixel_y = 4
+	},
 /turf/open/floor/plasteel/black,
 /area/medical/morgue)
 "bmS" = (

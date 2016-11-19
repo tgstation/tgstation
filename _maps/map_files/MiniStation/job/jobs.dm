@@ -85,6 +85,7 @@
 /obj/item/weapon/robot_module/miner/New()
 	..()
 	var/mining_type = MINETYPE
-	if (mining_type == "mining")
-		add_module(new /obj/item/stack/rods/cyborg())
-		fix_modules()
+	if(mining_type == "mining")
+		var/obj/item/stack/rods/cyborg/R = new /obj/item/stack/rods/cyborg(src)
+		basic_modules += R
+		add_module(R, FALSE, TRUE)

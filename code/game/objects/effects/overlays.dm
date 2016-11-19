@@ -197,6 +197,13 @@
 	..()
 	animate(src, alpha = 0, time = duration)
 
+/obj/effect/overlay/temp/decoy/fading/fivesecond
+	duration = 50
+
+/obj/effect/overlay/temp/small_smoke
+	icon_state = "smoke"
+	duration = 50
+
 /obj/effect/overlay/temp/cult
 	randomdir = 0
 	duration = 10

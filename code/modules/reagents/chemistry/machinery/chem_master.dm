@@ -200,8 +200,9 @@
 					. = TRUE
 				else if (amount == -1) // -1 means custom amount
 					useramount = input("Enter the Amount you want to transfer:", name, useramount) as num|null
-					beaker.reagents.trans_id_to(src, id, useramount)
-					. = TRUE
+					if (useramount > 0)
+						beaker.reagents.trans_id_to(src, id, useramount)
+						. = TRUE
 
 		if("transferFromBuffer")
 			var/id = params["id"]

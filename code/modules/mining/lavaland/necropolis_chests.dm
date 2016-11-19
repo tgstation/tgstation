@@ -804,8 +804,8 @@
 		else
 			user << "<span class='warning'>That target is out of range!</span>" //too far away
 
-/obj/item/weapon/hierophant_staff/ui_action_click(mob/user, actiontype)
-	if(actiontype == /datum/action/item_action/toggle_unfriendly_fire) //toggle friendly fire...
+/obj/item/weapon/hierophant_staff/ui_action_click(mob/user, action)
+	if(istype(action, /datum/action/item_action/toggle_unfriendly_fire)) //toggle friendly fire...
 		friendly_fire_check = !friendly_fire_check
 		user << "<span class='warning'>You toggle friendly fire [friendly_fire_check ? "off":"on"]!</span>"
 		return

@@ -1,3 +1,4 @@
+#define SNAKE_SPAM_TICKS 600 //how long between cardboard box openings that trigger the '!'
 /obj/structure/closet/cardboard
 	name = "large cardboard box"
 	desc = "Just a box..."
@@ -30,20 +31,23 @@
 /obj/structure/closet/cardboard/open()
 	if(opened || !can_open())
 		return 0
-	if(!egged)
+	var/list/alerted = null
+	if(egged < world.time)
 		var/mob/living/Snake = null
 		for(var/mob/living/L in src.contents)
 			Snake = L
 			break
 		if(Snake)
-			var/list/alerted = viewers(7,src)
-			if(alerted)
-				for(var/mob/living/L in alerted)
-					if(!L.stat)
-						L.do_alert_animation(L)
-						egged = 1
-				alerted << sound('sound/machines/chime.ogg')
+			alerted = viewers(7,src)
 	..()
+	if(alerted)
+		egged = world.time + SNAKE_SPAM_TICKS
+		for(var/mob/living/L in alerted)
+			if(!L.stat)
+				if(!L.incapacitated(ignore_restraints = 1))
+					L.face_atom(src)
+				L.do_alert_animation(L)
+		playsound(loc, 'sound/machines/chime.ogg', 50, FALSE, -5)
 
 /mob/living/proc/do_alert_animation(atom/A)
 	var/image/I
@@ -69,3 +73,4 @@
 	open_sound = 'sound/machines/click.ogg'
 	cutting_sound = 'sound/items/Welder.ogg'
 	material_drop = /obj/item/stack/sheet/plasteel
+#undef SNAKE_SPAM_TICKS

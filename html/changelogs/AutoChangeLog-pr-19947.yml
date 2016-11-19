@@ -1,5 +1,0 @@
-author: "Kor"
-delete-after: True
-changes: 
-  - rscadd: "The vault is now home to a new machine which can accept cash deposits, adding to the cargo point total."
-  - rscadd: "You can also use this machine to steal credits from the cargo point total. Doing so takes time, and will set off an alarm."

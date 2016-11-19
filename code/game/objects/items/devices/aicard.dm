@@ -53,7 +53,7 @@
 		data["wireless"] = !AI.control_disabled //todo disabled->enabled
 		data["radio"] = AI.radio_enabled
 		data["isDead"] = AI.stat == DEAD
-		data["isBraindead"] = AI.client ? TRUE : FALSE
+		data["isBraindead"] = AI.client ? FALSE : TRUE
 	data["wiping"] = flush
 	return data
 

@@ -440,6 +440,14 @@
 	category = "Defensive"
 	cost = 1
 
+/datum/spellbook_entry/item/warpwhistle
+	name = "Warp Whistle"
+	desc = "A strange whistle that will transport you to a distant safe place on the station. There is a window of vulnerability at the begining of every use."
+	item_path = /obj/item/warpwhistle
+	log_name = "WW"
+	category = "Mobility"
+	cost = 1
+
 /datum/spellbook_entry/summon
 	name = "Summon Stuff"
 	category = "Rituals"

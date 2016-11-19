@@ -117,7 +117,7 @@
 		return
 
 /obj/structure/destructible/clockwork/powered/mending_motor/attack_hand(mob/living/user)
-	if(user.canUseTopic(src, BE_CLOSE))
+	if(user.canUseTopic(src, !issilicon(user)) && is_servant_of_ratvar(user))
 		if(total_accessable_power() < MIN_CLOCKCULT_POWER)
 			user << "<span class='warning'>[src] needs more power or replicant alloy to function!</span>"
 			return 0

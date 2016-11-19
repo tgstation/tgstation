@@ -38,7 +38,7 @@
 	return TRUE
 
 
-/obj/item/weapon/computer_hardware/battery/try_eject(slot=0, mob/living/user = null)
+/obj/item/weapon/computer_hardware/battery/try_eject(slot=0, mob/living/user = null, forced = 0)
 	if(!battery)
 		user << "<span class='warning'>There is no power cell connected to \the [src].</span>"
 		return FALSE

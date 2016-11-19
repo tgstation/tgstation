@@ -54,7 +54,7 @@
 				user << "<span class='warning'>The obelisk is sustaining a gateway and cannot broadcast!</span>"
 				return
 			var/input = stripped_input(usr, "Please choose a message to send over the Hierophant Network.", "Hierophant Broadcast", "")
-			if(!input || !user.canUseTopic(src, BE_CLOSE))
+			if(!is_servant_of_ratvar(user) || !input || !user.canUseTopic(src, !issilicon(user)))
 				return
 			if(active)
 				user << "<span class='warning'>The obelisk is sustaining a gateway and cannot broadcast!</span>"
