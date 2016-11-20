@@ -581,25 +581,45 @@
 	id = "plasma"
 	fixed_mut_color = "a3d"
 
+/datum/species/golem/plasma/spec_death(gibbed, mob/living/carbon/human/H)
+	explosion(get_turf(H),0,2,3,flame_range = 5)
+	if(H)
+		H.gib()
+
 /datum/species/golem/diamond
 	name = "Diamond Golem"
 	id = "diamond"
 	fixed_mut_color = "0ff"
+	armor = 70
 
 /datum/species/golem/gold
 	name = "Gold Golem"
 	id = "gold"
 	fixed_mut_color = "ee0"
+	speedmod = 1
+	armor = 25
 
 /datum/species/golem/silver
 	name = "Silver Golem"
 	id = "silver"
 	fixed_mut_color = "ddd"
+	punchstunthreshold = 8 //heavy
 
 /datum/species/golem/uranium
 	name = "Uranium Golem"
 	id = "uranium"
 	fixed_mut_color = "7f0"
+	var/last_event = 0
+	var/active = null
+
+/datum/species/golem/uranium/spec_life(mob/living/carbon/human/H)
+	if(!active)
+		if(world.time > last_event+15)
+			active = 1
+			radiation_pulse(get_turf(H), 3, 3, 8, 0)
+			last_event = world.time
+			active = null
+	..()
 
 
 /*
