@@ -194,7 +194,7 @@
 
 /obj/item/weapon/robot_module/standard
 	name = "Standard"
-	basic_modules = list(/obj/item/weapon/reagent_containers/borghypo/epi, /obj/item/device/healthanalyzer, \
+	basic_modules = list(/obj/item/device/assembly/flash/cyborg, /obj/item/weapon/reagent_containers/borghypo/epi, /obj/item/device/healthanalyzer, \
 	/obj/item/weapon/weldingtool/largetank/cyborg, /obj/item/weapon/wrench/cyborg, /obj/item/weapon/crowbar/cyborg, \
 	/obj/item/stack/sheet/metal/cyborg, /obj/item/weapon/extinguisher, /obj/item/weapon/pickaxe, \
 	/obj/item/device/t_scanner/adv_mining_scanner, /obj/item/weapon/restraints/handcuffs/cable/zipties/cyborg, \
@@ -205,7 +205,7 @@
 
 /obj/item/weapon/robot_module/medical
 	name = "Medical"
-	basic_modules = list(/obj/item/device/healthanalyzer, /obj/item/weapon/reagent_containers/borghypo, \
+	basic_modules = list(/obj/item/device/assembly/flash/cyborg, /obj/item/device/healthanalyzer, /obj/item/weapon/reagent_containers/borghypo, \
 	/obj/item/weapon/reagent_containers/glass/beaker/large, /obj/item/weapon/reagent_containers/dropper, \
 	/obj/item/weapon/reagent_containers/syringe, /obj/item/weapon/surgical_drapes, /obj/item/weapon/retractor, \
 	/obj/item/weapon/hemostat, /obj/item/weapon/cautery, /obj/item/weapon/surgicaldrill, /obj/item/weapon/scalpel, \
@@ -219,7 +219,7 @@
 
 /obj/item/weapon/robot_module/engineering
 	name = "Engineering"
-	basic_modules = list(/obj/item/borg/sight/meson, /obj/item/weapon/rcd/borg, /obj/item/weapon/pipe_dispenser, \
+	basic_modules = list(/obj/item/device/assembly/flash/cyborg, /obj/item/borg/sight/meson, /obj/item/weapon/rcd/borg, /obj/item/weapon/pipe_dispenser, \
 	/obj/item/weapon/extinguisher, /obj/item/weapon/weldingtool/largetank/cyborg, /obj/item/weapon/screwdriver/cyborg, \
 	/obj/item/weapon/wrench/cyborg, /obj/item/weapon/crowbar/cyborg, /obj/item/weapon/wirecutters/cyborg, \
 	/obj/item/device/multitool/cyborg, /obj/item/device/t_scanner, /obj/item/device/analyzer, \
@@ -233,7 +233,7 @@
 
 /obj/item/weapon/robot_module/security
 	name = "Security"
-	basic_modules = list(/obj/item/weapon/restraints/handcuffs/cable/zipties/cyborg, /obj/item/weapon/melee/baton/loaded, \
+	basic_modules = list(/obj/item/device/assembly/flash/cyborg, /obj/item/weapon/restraints/handcuffs/cable/zipties/cyborg, /obj/item/weapon/melee/baton/loaded, \
 	/obj/item/weapon/gun/energy/disabler/cyborg, /obj/item/clothing/mask/gas/sechailer/cyborg)
 	emag_modules = list(/obj/item/weapon/gun/energy/laser/cyborg)
 	cyborg_base_icon = "sec"
@@ -259,7 +259,7 @@
 
 /obj/item/weapon/robot_module/peacekeeper
 	name = "Peacekeeper"
-	basic_modules = list(/obj/item/weapon/cookiesynth, /obj/item/device/harmalarm, /obj/item/weapon/reagent_containers/borghypo/peace, \
+	basic_modules = list(/obj/item/device/assembly/flash/cyborg, /obj/item/weapon/cookiesynth, /obj/item/device/harmalarm, /obj/item/weapon/reagent_containers/borghypo/peace, \
 	/obj/item/weapon/holosign_creator/cyborg, /obj/item/borg/cyborghug/peacekeeper, /obj/item/weapon/extinguisher)
 	emag_modules = list(/obj/item/weapon/reagent_containers/borghypo/peace/hacked)
 	cyborg_base_icon = "peace"
@@ -274,7 +274,7 @@
 
 /obj/item/weapon/robot_module/janitor
 	name = "Janitor"
-	basic_modules = list(/obj/item/weapon/soap/nanotrasen, /obj/item/weapon/storage/bag/trash/cyborg, /obj/item/weapon/mop/cyborg, \
+	basic_modules = list(/obj/item/device/assembly/flash/cyborg, /obj/item/weapon/soap/nanotrasen, /obj/item/weapon/storage/bag/trash/cyborg, /obj/item/weapon/mop/cyborg, \
 	/obj/item/device/lightreplacer/cyborg, /obj/item/weapon/holosign_creator, /obj/item/weapon/reagent_containers/spray/cyborg_drying)
 	emag_modules = list(/obj/item/weapon/reagent_containers/spray/cyborg_lube)
 	cyborg_base_icon = "janitor"
@@ -307,7 +307,7 @@
 
 /obj/item/weapon/robot_module/butler
 	name = "Service"
-	basic_modules = list(/obj/item/weapon/reagent_containers/food/drinks/drinkingglass, /obj/item/weapon/reagent_containers/food/condiment/enzyme, \
+	basic_modules = list(/obj/item/device/assembly/flash/cyborg, /obj/item/weapon/reagent_containers/food/drinks/drinkingglass, /obj/item/weapon/reagent_containers/food/condiment/enzyme, \
 	/obj/item/weapon/pen, /obj/item/toy/crayon/spraycan/borg, /obj/item/weapon/hand_labeler/borg, /obj/item/weapon/razor, \
 	/obj/item/device/instrument/violin, /obj/item/device/instrument/guitar, /obj/item/weapon/rsf/cyborg, /obj/item/weapon/reagent_containers/dropper, \
 	/obj/item/weapon/lighter, /obj/item/weapon/storage/bag/tray, /obj/item/weapon/reagent_containers/borghypo/borgshaker)
@@ -344,7 +344,7 @@
 
 /obj/item/weapon/robot_module/miner
 	name = "Miner"
-	basic_modules = list(/obj/item/borg/sight/meson, /obj/item/weapon/storage/bag/ore/cyborg, /obj/item/weapon/pickaxe/drill/cyborg, /obj/item/weapon/shovel, \
+	basic_modules = list(/obj/item/device/assembly/flash/cyborg, /obj/item/borg/sight/meson, /obj/item/weapon/storage/bag/ore/cyborg, /obj/item/weapon/pickaxe/drill/cyborg, /obj/item/weapon/shovel, \
 	/obj/item/weapon/crowbar/cyborg, /obj/item/weapon/weldingtool/mini, /obj/item/weapon/extinguisher/mini, /obj/item/weapon/storage/bag/sheetsnatcher/borg, \
 	/obj/item/device/t_scanner/adv_mining_scanner, /obj/item/weapon/gun/energy/kinetic_accelerator/cyborg, /obj/item/device/gps/cyborg)
 	emag_modules = list(/obj/item/borg/stun)
@@ -354,7 +354,7 @@
 
 /obj/item/weapon/robot_module/syndicate
 	name = "Syndicate Assault"
-	basic_modules = list(/obj/item/weapon/melee/energy/sword/cyborg, /obj/item/weapon/gun/energy/printer, \
+	basic_modules = list(/obj/item/device/assembly/flash/cyborg, /obj/item/weapon/melee/energy/sword/cyborg, /obj/item/weapon/gun/energy/printer, \
 	/obj/item/weapon/gun/ballistic/revolver/grenadelauncher/cyborg, /obj/item/weapon/card/emag, /obj/item/weapon/crowbar/cyborg, \
 	/obj/item/weapon/pinpointer/syndicate/cyborg)
 	cyborg_base_icon = "synd_sec"
@@ -363,7 +363,7 @@
 
 /obj/item/weapon/robot_module/syndicate_medical
 	name = "Syndicate Medical"
-	basic_modules = list(/obj/item/weapon/reagent_containers/borghypo/syndicate, /obj/item/weapon/twohanded/shockpaddles/syndicate, \
+	basic_modules = list(/obj/item/device/assembly/flash/cyborg, /obj/item/weapon/reagent_containers/borghypo/syndicate, /obj/item/weapon/twohanded/shockpaddles/syndicate, \
 	/obj/item/device/healthanalyzer, /obj/item/weapon/surgical_drapes, /obj/item/weapon/retractor, /obj/item/weapon/hemostat, \
 	/obj/item/weapon/cautery, /obj/item/weapon/scalpel, /obj/item/weapon/melee/energy/sword/cyborg/saw, /obj/item/roller/robo, \
 	/obj/item/weapon/card/emag, /obj/item/weapon/crowbar/cyborg, /obj/item/weapon/pinpointer/syndicate/cyborg, /obj/item/stack/medical/gauze/cyborg)
