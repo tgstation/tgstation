@@ -226,7 +226,7 @@
 	if(!power_charge)
 		cyborg << "<span class='warning'>The [sigil_name] has no stored power!</span>"
 		return FALSE
-	if(cyborg.cell.charge == cyborg.cell.maxcharge)
+	if(cyborg.cell.charge > cyborg.cell.maxcharge - MIN_CLOCKCULT_POWER)
 		cyborg << "<span class='warning'>You are already at maximum charge!</span>"
 		return FALSE
 	if(cyborg.has_status_effect(STATUS_EFFECT_POWERREGEN))

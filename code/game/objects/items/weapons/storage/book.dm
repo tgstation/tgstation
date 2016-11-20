@@ -50,7 +50,7 @@ var/global/list/bibleitemstates =	list("bible", "koran", "scrapbook", "bible", "
 /obj/item/weapon/storage/book/bible/attack_self(mob/living/carbon/human/H)
 	if(!istype(H))
 		return
-	if(ticker && !ticker.Bible_icon_state && H.job == "Chaplain")
+	if(!SSreligion.Bible_icon_state && H.job == "Chaplain")
 		//Open bible selection
 		var/dat = "<html><head><title>Pick Bible Style</title></head><body><center><h2>Pick a bible style</h2></center><table>"
 
@@ -95,7 +95,7 @@ var/global/list/bibleitemstates =	list("bible", "koran", "scrapbook", "bible", "
 						T.setDir(10)
 
 /obj/item/weapon/storage/book/bible/Topic(href, href_list)
-	if(href_list["seticon"] && ticker && !ticker.Bible_icon_state)
+	if(href_list["seticon"] && ticker && !SSreligion.Bible_icon_state)
 		var/iconi = text2num(href_list["seticon"])
 
 		var/biblename = biblenames[iconi]
@@ -107,9 +107,9 @@ var/global/list/bibleitemstates =	list("bible", "koran", "scrapbook", "bible", "
 		//Set biblespecific chapels
 		setupbiblespecifics(B, usr)
 
-		if(ticker)
-			ticker.Bible_icon_state = B.icon_state
-			ticker.Bible_item_state = B.item_state
+
+		SSreligion.Bible_icon_state = B.icon_state
+		SSreligion.Bible_item_state = B.item_state
 		feedback_set_details("religion_book","[biblename]")
 
 		usr << browse(null, "window=editicon") // Close window

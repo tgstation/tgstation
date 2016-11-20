@@ -1,4 +1,0 @@
-author: "Cobby"
-delete-after: True
-changes: 
-  - tweak: "Airlock security is only given to vault doors, centcomm, and Secure Tech [Secure Tech just requires a welder]"
