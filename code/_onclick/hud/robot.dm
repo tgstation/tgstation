@@ -253,19 +253,19 @@
 
 	if(screenmob.hud_used)
 		if(screenmob.hud_used.hud_shown)
-			if(R.module_state_1)
-				R.module_state_1.screen_loc = ui_inv1
-				screenmob.client.screen += R.module_state_1
-			if(R.module_state_2)
-				R.module_state_2.screen_loc = ui_inv2
-				screenmob.client.screen += R.module_state_2
-			if(R.module_state_3)
-				R.module_state_3.screen_loc = ui_inv3
-				screenmob.client.screen += R.module_state_3
+			for(var/i in 1 to R.held_items.len)
+				var/obj/item/I = R.held_items[i]
+				if(I)
+					switch(i)
+						if(1)
+							I.screen_loc = ui_inv1
+						if(2)
+							I.screen_loc = ui_inv2
+						if(3)
+							I.screen_loc = ui_inv3
+						else
+							return
+					screenmob.client.screen += I
 		else
-			if(R.module_state_1)
-				screenmob.client.screen -= R.module_state_1
-			if(R.module_state_2)
-				screenmob.client.screen -= R.module_state_2
-			if(R.module_state_3)
-				screenmob.client.screen -= R.module_state_3
+			for(var/obj/item/I in R.held_items)
+				screenmob.client.screen -= I

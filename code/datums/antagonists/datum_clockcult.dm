@@ -47,7 +47,8 @@
 	if(issilicon(owner))
 		var/mob/living/silicon/S = owner
 		if(iscyborg(S) && !silent_update)
-			S << "<span class='boldwarning'>You have been desynced from your master AI. In addition, your onboard camera is no longer active and your safeties have been disabled.</span>"
+			S << "<span class='boldwarning'>You have been desynced from your master AI.\n\
+			In addition, your onboard camera is no longer active and you have gained additional equipment, including a limited clockwork slab.</span>"
 		S << "<span class='heavy_brass'>You can communicate with other servants by using the Hierophant Network action button in the upper left.</span>"
 	else if(isbrain(owner) || isclockmob(owner))
 		owner << "<span class='nezbere'>You can communicate with other servants by using the Hierophant Network action button in the upper left.</span>"
@@ -67,7 +68,7 @@
 		if(iscyborg(S))
 			var/mob/living/silicon/robot/R = S
 			R.UnlinkSelf()
-			R.SetEmagged(TRUE)
+			R.module.rebuild_modules()
 		else if(isAI(S))
 			var/mob/living/silicon/ai/A = S
 			A.requires_power = POWER_REQ_CLOCKCULT
@@ -79,7 +80,7 @@
 					R.visible_message("<span class='heavy_brass'>[R]'s eyes glow a blazing yellow!</span>", \
 					"<span class='heavy_brass'>Assist your new companions in their righteous efforts. Your goal is theirs, and theirs yours. You serve the Clockwork Justiciar above all else. Perform his every \
 					whim without hesitation.</span>")
-					R << "<span class='boldwarning'>Your onboard camera is no longer active and your safeties have been disabled.</span>"
+					R << "<span class='boldwarning'>Your onboard camera is no longer active and you have gained additional equipment, including a limited clockwork slab.</span>"
 					add_servant_of_ratvar(R, TRUE)
 		S.laws = new/datum/ai_laws/ratvar
 		S.laws.associate(S)
@@ -108,23 +109,25 @@
 	owner.faction -= "ratvar"
 	owner.languages_spoken &= ~RATVAR
 	owner.languages_understood &= ~RATVAR
-	addtimer(owner, "update_action_buttons_icon", 1) //because a few clockcult things are action buttons and we may be wearing/holding them, we need to update buttons
 	owner.clear_alert("clockinfo")
 	owner.clear_alert("nocache")
 	for(var/datum/action/innate/function_call/F in owner.actions) //Removes any bound Ratvarian spears
 		qdel(F)
 	if(issilicon(owner))
 		var/mob/living/silicon/S = owner
-		if(iscyborg(S))
-			var/mob/living/silicon/robot/R = S
-			R.SetEmagged(FALSE)
-		else if(isAI(S))
+		if(isAI(S))
 			var/mob/living/silicon/ai/A = S
 			A.requires_power = initial(A.requires_power)
 		S.make_laws()
 		S.update_icons()
 		S.show_laws()
+	var/mob/living/temp_owner = owner
 	..()
+	if(iscyborg(temp_owner))
+		var/mob/living/silicon/robot/R = temp_owner
+		R.module.rebuild_modules()
+	if(temp_owner)
+		temp_owner.update_action_buttons_icon() //because a few clockcult things are action buttons and we may be wearing/holding them, we need to update buttons
 
 /datum/antagonist/clockcultist/on_remove()
 	if(!silent_update)
