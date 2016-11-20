@@ -1,5 +1,0 @@
-author: "Joan"
-delete-after: True
-changes: 
-  - rscadd: "Clockcult silicons can now activate Clockwork Structures from a distance."
-  - rscdel: "Interdiction Lenses will not disable cameras if there are no living unconverted AIs."

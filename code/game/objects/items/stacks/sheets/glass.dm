@@ -146,23 +146,20 @@
 
 /obj/item/stack/sheet/rglass/cyborg
 	materials = list()
-	var/datum/robot_energy_storage/metsource
 	var/datum/robot_energy_storage/glasource
 	var/metcost = 250
 	var/glacost = 500
 
 /obj/item/stack/sheet/rglass/cyborg/get_amount()
-	return min(round(metsource.energy / metcost), round(glasource.energy / glacost))
+	return min(round(source.energy / metcost), round(glasource.energy / glacost))
 
 /obj/item/stack/sheet/rglass/cyborg/use(amount) // Requires special checks, because it uses two storages
-	metsource.use_charge(amount * metcost)
+	source.use_charge(amount * metcost)
 	glasource.use_charge(amount * glacost)
-	return
 
 /obj/item/stack/sheet/rglass/cyborg/add(amount)
-	metsource.add_charge(amount * metcost)
+	source.add_charge(amount * metcost)
 	glasource.add_charge(amount * glacost)
-	return
 
 /obj/item/stack/sheet/rglass/attack_self(mob/user)
 	construct_window(user)

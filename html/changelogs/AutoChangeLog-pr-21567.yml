@@ -1,4 +1,0 @@
-author: "coiax"
-delete-after: True
-changes: 
-  - bugfix: "The observer visible countdown timer for the malfunctioning AI doomsday device is now formatted and rounded appropriately."

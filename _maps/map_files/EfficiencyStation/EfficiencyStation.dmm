@@ -26652,11 +26652,17 @@
 /turf/open/floor/plasteel/black,
 /area/medical/morgue)
 "aZI" = (
-/obj/item/weapon/pen,
+/obj/item/weapon/pen{
+	pixel_x = 6;
+	pixel_y = 7
+	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
 /obj/structure/table,
+/obj/item/weapon/paper/morguereminder{
+	pixel_x = -4
+	},
 /turf/open/floor/plasteel/black,
 /area/medical/morgue)
 "aZJ" = (

@@ -15,6 +15,8 @@
 	var/timer_set = 60
 	var/maximum_timer = 60000
 
+	var/can_unanchor = TRUE
+
 	var/open_panel = FALSE 	//are the wires exposed?
 	var/active = FALSE		//is the bomb counting down?
 	var/defused = FALSE		//is the bomb capable of exploding?
@@ -98,7 +100,7 @@
 		. = timer_set
 
 /obj/machinery/syndicatebomb/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/weapon/wrench))
+	if(istype(I, /obj/item/weapon/wrench) && can_unanchor)
 		if(!anchored)
 			if(!isturf(loc) || isspaceturf(loc))
 				user << "<span class='notice'>The bomb must be placed on solid ground to attach it.</span>"
@@ -350,10 +352,10 @@
 	..()
 
 /obj/item/weapon/bombcore/badmin/explosion
-	var/HeavyExplosion = 2
-	var/MediumExplosion = 5
-	var/LightExplosion = 11
-	var/Flames = 11
+	var/HeavyExplosion = 5
+	var/MediumExplosion = 10
+	var/LightExplosion = 20
+	var/Flames = 20
 
 /obj/item/weapon/bombcore/badmin/explosion/detonate()
 	explosion(get_turf(src), HeavyExplosion, MediumExplosion, LightExplosion, flame_range = Flames)
@@ -529,5 +531,7 @@
 		detonated =	0
 		existant =	0
 		timer = world.time + BUTTON_COOLDOWN
+
+
 
 #undef BUTTON_COOLDOWN

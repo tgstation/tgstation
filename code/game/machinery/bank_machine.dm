@@ -38,7 +38,7 @@
 			SSshuttle.points -= 200
 			if(last_warning < world.time && prob(15))
 				var/area/A = get_area(loc)
-				minor_announce("Unauthorized credit withdrawal underway in [A.map_name]." , "Network Breach")
+				minor_announce("Unauthorized credit withdrawal underway in [A.map_name]." , "Network Breach", TRUE)
 				last_warning = world.time + 400
 
 

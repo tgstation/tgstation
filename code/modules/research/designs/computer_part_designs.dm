@@ -131,6 +131,16 @@
 	build_path = /obj/item/weapon/computer_hardware/card_slot
 	category = list("Computer Parts")
 
+// Intellicard slot
+/datum/design/aislot
+	name = "Intellicard slot"
+	id = "aislot"
+	req_tech = list("programming" = 2)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 600)
+	build_path = /obj/item/weapon/computer_hardware/ai_slot
+	category = list("Computer Parts")
+
 // Mini printer
 /datum/design/miniprinter
 	name = "miniprinter"
