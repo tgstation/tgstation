@@ -174,31 +174,31 @@
 	wearer << "<span class='userdanger'>Flightpack: BZZZZZZZZZZZT</span>"
 	wearer << "<span class='warning'>Flightpack: WARNING: Class [severity] EMP detected! Circuit damage at [(100/emp_disable_threshold)*emp_damage]!</span>"
 
-//ACTION BUTTON CODE
+//action BUTTON CODE
 /obj/item/device/flightpack/ui_action_click(owner, action)
 	if(wearer != owner)
 		wearer = owner
 	if(!suit)
 		usermessage("The flightpack will not work without being attached to a suit first!")
 		return 0
-	if(action == /datum/action/item_action/flightpack/toggle_flight)
+	if(istype(action, /datum/action/item_action/flightpack/toggle_flight))
 		if(!flight)
 			enable_flight()
 		else
 			disable_flight()
-	if(action == /datum/action/item_action/flightpack/engage_boosters)
+	if(istype(action, /datum/action/item_action/flightpack/engage_boosters))
 		if(!boost)
 			activate_booster()
 		else
 			deactivate_booster()
-	if(action == /datum/action/item_action/flightpack/toggle_stabilizers)
+	if(istype(action, /datum/action/item_action/flightpack/toggle_stabilizers))
 		if(!stabilizer)
 			enable_stabilizers()
 		else
 			disable_stabilizers()
-	if(action == /datum/action/item_action/flightpack/change_power)
+	if(istype(action, /datum/action/item_action/flightpack/change_power))
 		cycle_power()
-	if(action == /datum/action/item_action/flightpack/toggle_airbrake)
+	if(istype(action, /datum/action/item_action/flightpack/toggle_airbrake))
 		if(!brake)
 			enable_airbrake()
 		else
@@ -432,14 +432,10 @@
 
 /obj/item/device/flightpack/proc/userknockback(density, anchored, speed, dir)
 	var/angle = dir2angle(dir)
-	world << "DEBUG: INITIAL DIR: [dir2text(dir)]"
-	world << "DEBUG: INITIAL ANGLE: [angle2text(angle)]"
 	angle += 180
 	if(angle > 360)
 		angle -= 360
 	dir = angle2dir(angle)
-	world << "DEBUG: INITIAL ANGLE: [angle2text(angle)]"
-	world << "DEBUG: FINAL DIR: [dir2text(dir)]"
 	var/turf/target = get_edge_target_turf(get_turf(suit.user), dir)
 	suit.user.throw_at_fast(target, (speed+density+anchored), 2, suit.user)
 	suit.user.visible_message("[suit.user] is knocked flying by the impact!")
@@ -459,20 +455,24 @@
 	var/anchored = 1
 	var/nocrash = 0
 	if(ismob(unmovablevictim))
+		world << "DEBUG: CRASHING INTO MOB"
 		var/mob/living/L = unmovablevictim
 		mobknockback(density, anchored, momentum_speed, L, dir)
 		nocrash = 1
 		density = 0
 		anchored = 0
 	else if(isclosedturf(unmovablevictim))
+		world << "DEBUG: CRASHING INTO CLOSED TURF"
 		density = 1
 		anchored = 1
 	else if(ismovableatom(unmovablevictim))
+		world << "DEBUG: CRASHING INTO MOVABLE ATOM"
 		victim = unmovablevictim
 		density = victim.density
 		anchored = victim.anchored
 		victimknockback(density, anchored, momentum_speed, victim, dir)
 	if(!nocrash)
+		world << "DEBUG: NOCRASH == [nocrash]"
 		crash_damage(density, anchored, momentum_speed, unmovablevictim.name)
 		userknockback(density, anchored, momentum_speed, dir)
 		losecontrol(move = FALSE)
@@ -485,7 +485,7 @@
 	var/knockback = 0
 	var/stun = boost * 2
 	if(stun)
-		knockmessage += "[L] is knocked to the ground by [suit.user]'s speed!"
+		knockmessage += "[suit.user] dashes across [L], knocking them down!"
 	knockmessage += "</span>"
 	knockback += momentum_speed
 	knockback += (part_manip.rating / 2)
@@ -514,7 +514,6 @@
 	knockback *= 4
 	stun = ((part_manip.rating + part_bin.rating) / 2)
 	damage = knockback / 2.5
-	world << "DEBUG: VICTIMKNOCKBACK: KNOCKBACK [knockback] STUN [stun] DAMAGE [damage]"
 	if(anchored)
 		knockback = 0
 	target = get_edge_target_turf(victim, dir)
@@ -525,7 +524,6 @@
 		var/mob/living/victimmob = victim
 		victimmob.Weaken(stun)
 		victimmob.adjustBruteLoss(damage)
-	world << "DEBUG: KNOCKED VICTIM BACK"
 
 /obj/item/device/flightpack/proc/losecontrol(stun = FALSE, move = TRUE)
 	wearer.visible_message("<span class='warning'>[wearer]'s flight suit abruptly shuts off and they lose control!</span>")
@@ -860,22 +858,22 @@
 	..()
 
 /obj/item/clothing/suit/space/hardsuit/flightsuit/ui_action_click(owner, action)
-	if(action == /datum/action/item_action/flightsuit/lock_suit)
+	if(istype(action, /datum/action/item_action/flightsuit/lock_suit))
 		if(!locked)
 			lock_suit(owner)
 		else
 			unlock_suit(owner)
-	if(action == /datum/action/item_action/flightsuit/toggle_flightpack)
+	if(istype(action, /datum/action/item_action/flightsuit/toggle_flightpack))
 		if(!deployedpack)
 			extend_flightpack()
 		else
 			retract_flightpack()
-	if(action == /datum/action/item_action/flightsuit/toggle_boots)
+	if(istype(action, /datum/action/item_action/flightsuit/toggle_boots))
 		if(!deployedshoes)
 			extend_flightshoes()
 		else
 			retract_flightshoes()
-	if(action == /datum/action/item_action/flightsuit/toggle_helmet)
+	if(istype(action, /datum/action/item_action/flightsuit/toggle_helmet))
 		ToggleHelmet()
 
 /obj/item/clothing/suit/space/hardsuit/flightsuit/dropped()
@@ -1123,7 +1121,7 @@
 	brightness_on = 7
 	armor = list(melee = 20, bullet = 10, laser = 10, energy = 10, bomb = 30, bio = 100, rad = 75, fire = 50, acid = 100)
 
-//ITEM ACTIONS------------------------------------------------------------------------------------------------------------------------------------------------------
+//ITEM actionS------------------------------------------------------------------------------------------------------------------------------------------------------
 //TODO: TOGGLED BUTTON SPRITES
 /datum/action/item_action/flightsuit/toggle_boots
 	name = "Toggle Boots"
