@@ -569,6 +569,7 @@
 	name = initial(golem_type.name)
 	id = initial(golem_type.id)
 	meat = initial(golem_type.meat)
+	fixed_mut_color = initial(golem_type.fixed_mut_color)
 
 /datum/species/golem/adamantine
 	name = "Adamantine Golem"
