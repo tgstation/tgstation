@@ -246,12 +246,12 @@ Credit where due:
 				text += "<span class='userdanger'>Ratvar's servants have failed!</span>"
 				feedback_set_details("round_end_result", "loss - servants failed their objective ([clockwork_objective])")
 		text += "<br><b>The servants' objective was:</b> <br>[clockwork_explanation]<br>"
-	text += "<br>Ratvar's servants had <b>[clockwork_caches]</b> Tinkerer's Caches."
-	text += "<br><b>Construction Value(CV)</b> was: <b>[clockwork_construction_value]</b>"
-	var/list/scripture_states = scripture_unlock_check()
-	for(var/i in scripture_states)
-		if(i != SCRIPTURE_DRIVER)
-			text += "<br><b>[i] scripture</b> was: <b>[scripture_states[i] ? "UN":""]LOCKED</b>"
+		text += "<br>Ratvar's servants had <b>[clockwork_caches]</b> Tinkerer's Caches."
+		text += "<br><b>Construction Value(CV)</b> was: <b>[clockwork_construction_value]</b>"
+		var/list/scripture_states = scripture_unlock_check()
+		for(var/i in scripture_states)
+			if(i != SCRIPTURE_DRIVER)
+				text += "<br><b>[i] scripture</b> was: <b>[scripture_states[i] ? "UN":""]LOCKED</b>"
 	if(servants_of_ratvar.len)
 		text += "<br><b>Ratvar's servants were:</b>"
 		for(var/datum/mind/M in servants_of_ratvar)
