@@ -75,7 +75,7 @@
 	if(isliving(target))
 		var/mob/living/L = target
 		if(L.stat != DEAD)
-			if(ranged && ranged_cooldown <= world.time)
+			if(!client && ranged && ranged_cooldown <= world.time)
 				OpenFire()
 		else
 			devour(L)

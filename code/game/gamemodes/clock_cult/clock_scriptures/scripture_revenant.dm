@@ -151,7 +151,8 @@
 		M.needs_power = FALSE
 		if(istype(M, /obj/structure/destructible/clockwork/powered/tinkerers_daemon)) //Daemons produce components twice as quickly
 			var/obj/structure/destructible/clockwork/powered/tinkerers_daemon/D = M
-			D.production_time *= 0.5
+			D.production_time = 0
+			D.production_cooldown *= 0.5
 	spawn(600)
 		for(var/obj/structure/destructible/clockwork/ocular_warden/W in all_clockwork_objects)
 			W.damage_per_tick = initial(W.damage_per_tick)
@@ -162,7 +163,7 @@
 			M.needs_power = initial(M.needs_power)
 			if(istype(M, /obj/structure/destructible/clockwork/powered/tinkerers_daemon))
 				var/obj/structure/destructible/clockwork/powered/tinkerers_daemon/D = M
-				D.production_time = initial(D.production_time)
+				D.production_cooldown = initial(D.production_cooldown)
 	return TRUE
 
 

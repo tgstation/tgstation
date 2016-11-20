@@ -1,4 +1,0 @@
-author: "Joan"
-delete-after: True
-changes: 
-  - rscadd: "Clockcult Cyborgs can charge from Sigils of Transmission by crossing them; after a 5 second delay, the cyborg regains either their missing charge or the amount of power in the sigil(whichever is lower) over 10 seconds."

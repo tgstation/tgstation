@@ -994,6 +994,23 @@
 		T.atmos_spawn_air("co2=[reac_volume/5];TEMP=[T20C]")
 	return
 
+/datum/reagent/nitrous_oxide
+	name = "Nitrous Oxide"
+	id = "nitrous_oxide"
+	description = "A potent oxidizer used as fuel in rockets and as an anaesthetic during surgery."
+	reagent_state = LIQUID
+	color = "#808080"
+	
+/datum/reagent/nitrous_oxide/reaction_obj(obj/O, reac_volume)
+	if((!O) || (!reac_volume))
+		return 0
+	O.atmos_spawn_air("n2o=[reac_volume/5];TEMP=[T20C]")
+
+/datum/reagent/nitrous_oxide/reaction_turf(turf/open/T, reac_volume)
+	if(istype(T))
+		T.atmos_spawn_air("n2o=[reac_volume/5];TEMP=[T20C]")
+	return
+
 
 
 /////////////////////////Coloured Crayon Powder////////////////////////////

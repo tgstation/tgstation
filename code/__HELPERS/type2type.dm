@@ -225,6 +225,8 @@
 			return 'icons/mob/screen_slimecore.dmi'
 		if("Operative")
 			return 'icons/mob/screen_operative.dmi'
+		if("Clockwork")
+			return 'icons/mob/screen_clockwork.dmi'
 		else
 			return 'icons/mob/screen_midnight.dmi'
 

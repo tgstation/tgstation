@@ -145,6 +145,7 @@
 			"filename" = P.filename,
 			"filedesc" = P.filedesc,
 			"fileinfo" = P.extended_desc,
+			"compatibility" = check_compatibility(P),
 			"size" = P.size
 			)))
 		data["hackedavailable"] = 0
@@ -164,6 +165,13 @@
 		data["downloadable_programs"] = all_entries
 
 	return data
+
+/datum/computer_file/program/ntnetdownload/proc/check_compatibility(datum/computer_file/program/P)
+	var/hardflag = computer.hardware_flag
+
+	if(P && P.is_supported_by_hardware(hardflag,0))
+		return "Compatible"
+	return "Incompatible!"
 
 /datum/computer_file/program/ntnetdownload/kill_program(forced)
 	abort_file_download()
