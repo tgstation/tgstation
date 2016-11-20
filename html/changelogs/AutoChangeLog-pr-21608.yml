@@ -1,0 +1,4 @@
+author: "Swindly"
+delete-after: True
+changes: 
+  - rscadd: "Added a nitrous oxide reagent. It can be created by heating 3 parts ammonia, 1 part nitrogen, and 2 parts oxygen to 525K. The process produces water as a by-product and will cause an explosion if too much heat is applied."
