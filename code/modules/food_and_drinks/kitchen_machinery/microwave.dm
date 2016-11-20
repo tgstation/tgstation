@@ -149,7 +149,7 @@
 			user << "<span class='notice'>You insert [loaded] items into [src].</span>"
 
 
-	else if(O.w_class <= 3 && !istype(O,/obj/item/weapon/storage))
+	else if(O.w_class <= 3 && !istype(O,/obj/item/weapon/storage) && user.a_intent == "help")
 		if (contents.len>=max_n_of_items)
 			user << "<span class='warning'>[src] is full, you can't put anything in!</span>"
 			return 1
