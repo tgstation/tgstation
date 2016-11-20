@@ -595,7 +595,7 @@ var/datum/subsystem/ticker/ticker
 		if(NUKE_SYNDICATE_BASE)
 			news_message = "In a daring raid, the heroic crew of [station_name()] detonated a nuclear device in the heart of a terrorist base."
 		if(STATION_DESTROYED_NUKE)
-			news_message = "We would like to reassure all employees that the reports of a Syndicate backed nuclear attack on [station_name()] in fact a hoax. Have a secure day!"
+			news_message = "We would like to reassure all employees that the reports of a Syndicate backed nuclear attack on [station_name()] are, in fact, a hoax. Have a secure day!"
 		if(STATION_EVACUATED)
 			news_message = "The crew of [station_name()] has been evacuated amid unconfirmed reports of enemy activity."
 		if(GANG_LOSS)
@@ -607,13 +607,13 @@ var/datum/subsystem/ticker/ticker
 		if(BLOB_NUKE)
 			news_message = "[station_name()] is currently undergoing decontanimation after a controlled burst of radiation was used to remove a biological ooze. All employees were safely evacuated prior, and are enjoying a relaxing vacation."
 		if(BLOB_DESTROYED)
-			news_message = "[station_name()] is currently undergoing decontamination procedures after the destruction of a biological hazard. As a reminder, any crew members experiencing cramps or bloating should report immediatley to security for incineration."
+			news_message = "[station_name()] is currently undergoing decontamination procedures after the destruction of a biological hazard. As a reminder, any crew members experiencing cramps or bloating should report immediately to security for incineration."
 		if(CULT_ESCAPE)
-			news_message = "Security Alert: A group of religous fanatics have escaped from [station_name()]."
+			news_message = "Security Alert: A group of religious fanatics have escaped from [station_name()]."
 		if(CULT_FAILURE)
 			news_message = "Following the dismantling of a restricted cult aboard [station_name()], we would like to remind all employees that worship outside of the Chapel is strictly prohibited, and cause for termination."
 		if(CULT_SUMMON)
-			news_message = "Company officials would like to clarify that [station_name()] was scheduled to be decommissioned following meteor damage earlier this year. Earlier reports of an uknowable eldritch horror were made in error."
+			news_message = "Company officials would like to clarify that [station_name()] was scheduled to be decommissioned following meteor damage earlier this year. Earlier reports of an unknowable eldritch horror were made in error."
 		if(NUKE_MISS)
 			news_message = "The Syndicate have bungled a terrorist attack [station_name()], detonating a nuclear weapon in empty space near by."
 		if(OPERATIVES_KILLED)
@@ -627,7 +627,7 @@ var/datum/subsystem/ticker/ticker
 		if(WIZARD_KILLED)
 			news_message = "Tensions have flared with the Wizard's Federation following the death of one of their members aboard [station_name()]."
 		if(STATION_NUKED)
-			news_message = "[station_name()] activated it's self destruct device for unknown reasons. Attempts to clone the Captain so he can be arrested and executed are under way."
+			news_message = "[station_name()] activated its self destruct device for unknown reasons. Attempts to clone the Captain so he can be arrested and executed are under way."
 
 	if(news_message)
 		send2otherserver(news_source, news_message,"News_Report")
