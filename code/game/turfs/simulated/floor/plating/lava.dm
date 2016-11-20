@@ -1,7 +1,7 @@
 ///LAVA
 
 /turf/open/floor/plating/lava
-	name = "lava"
+	name = "\improper lava"
 	icon_state = "lava"
 	baseturf = /turf/open/floor/plating/lava //lava all the way down
 	slowdown = 2
