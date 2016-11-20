@@ -393,3 +393,11 @@
 	id = "teslium_lightning2"
 	required_temp = 474
 	required_reagents = list("teslium" = 1)
+	
+/datum/chemical_reaction/reagent_explosion/nitrous_oxide
+	name = "N2O explosion"
+	id = "n2o_explosion"
+	required_reagents = list("nitrous_oxide" = 1)
+	strengthdiv = 7
+	required_temp = 575
+	modifier = 1
