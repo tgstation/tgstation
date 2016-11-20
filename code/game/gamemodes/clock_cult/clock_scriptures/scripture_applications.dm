@@ -245,6 +245,7 @@
 	one_per_tile = TRUE
 	primary_component = REPLICANT_ALLOY
 	sort_priority = 9
+	quickbind_desc = "Creates a Tinkerer's Daemon, which can rapidly collect components for power."
 
 /datum/clockwork_scripture/create_object/tinkerers_daemon/check_special_requirements()
 	var/servants = 0

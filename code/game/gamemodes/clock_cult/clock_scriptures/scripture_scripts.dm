@@ -56,7 +56,7 @@
 	name = "Fellowship Armory"
 	desc = "Equips the invoker and any nearby servants with Ratvarian armor. This armor provides high melee resistance but a weakness to lasers. \
 	It grows faster to invoke with more nearby servants."
-	invocations = list("Shield me...", "...with the...", "... fragments of Engine!")
+	invocations = list("Shield us...", "...with the...", "... fragments of Engine!")
 	channel_time = 100
 	required_components = list(VANGUARD_COGWHEEL = 2, REPLICANT_ALLOY = 1)
 	consumed_components = list(VANGUARD_COGWHEEL = 1, REPLICANT_ALLOY = 1)
@@ -76,16 +76,24 @@
 	return ..()
 
 /datum/clockwork_scripture/fellowship_armory/scripture_effects()
+	var/affected = 0
 	for(var/mob/living/L in range(1, invoker))
 		if(!is_servant_of_ratvar(L))
 			continue
-		L.visible_message("<span class='warning'>Strange armor appears on [L]!</span>", "<span class='heavy_brass'>A bright shimmer runs down your body, equipping you with Ratvarian armor.</span>")
-		playsound(L, 'sound/magic/clockwork/fellowship_armory.ogg', 50, 1)
-		L.equip_to_slot_or_del(new/obj/item/clothing/head/helmet/clockwork(null), slot_head)
-		L.equip_to_slot_or_del(new/obj/item/clothing/suit/armor/clockwork(null), slot_wear_suit)
-		L.equip_to_slot_or_del(new/obj/item/clothing/gloves/clockwork(null), slot_gloves)
-		L.equip_to_slot_or_del(new/obj/item/clothing/shoes/clockwork(null), slot_shoes)
-	return TRUE
+		var/do_message = FALSE
+		if(L.equip_to_slot_or_del(new/obj/item/clothing/head/helmet/clockwork(null), slot_head))
+			do_message = TRUE
+		if(L.equip_to_slot_or_del(new/obj/item/clothing/suit/armor/clockwork(null), slot_wear_suit))
+			do_message = TRUE
+		if(L.equip_to_slot_or_del(new/obj/item/clothing/gloves/clockwork(null), slot_gloves))
+			do_message = TRUE
+		if(L.equip_to_slot_or_del(new/obj/item/clothing/shoes/clockwork(null), slot_shoes))
+			do_message = TRUE
+		if(do_message)
+			L.visible_message("<span class='warning'>Strange armor appears on [L]!</span>", "<span class='heavy_brass'>A bright shimmer runs down your body, equipping you with Ratvarian armor.</span>")
+			playsound(L, 'sound/magic/clockwork/fellowship_armory.ogg', 50, 1)
+			affected++
+	return affected
 
 
 //Sigil of Submission: Creates a sigil of submission, which converts one heretic above it after a delay.
@@ -288,7 +296,7 @@
 	playsound(invoker, 'sound/effects/EMPulse.ogg', 50, 1)
 	PoolOrNew(/obj/effect/overlay/temp/ratvar/sigil/voltvoid, get_turf(invoker))
 	var/power_drained = 0
-	for(var/atom/movable/A in view(7, invoker))
+	for(var/atom/movable/A in view(7, get_turf(invoker)))
 		power_drained += A.power_drain(TRUE)
 	var/obj/effect/clockwork/sigil/transmission/ST = locate(/obj/effect/clockwork/sigil/transmission) in get_turf(invoker)
 	if(ST && power_drained >= MIN_CLOCKCULT_POWER)
@@ -296,24 +304,30 @@
 		while(power_drained >= MIN_CLOCKCULT_POWER)
 			ST.modify_charge(-MIN_CLOCKCULT_POWER)
 			power_drained -= MIN_CLOCKCULT_POWER
-			sigil_drain += 10
+			sigil_drain += MIN_CLOCKCULT_POWER * 0.2
 		power_drained += sigil_drain //readd part of the power given to the sigil to the power drained this cycle
 		ST.visible_message("<span class='warning'>[ST] flares a brilliant orange!</span>")
 	total_power_drained += power_drained
-	if(power_drained >= 100 && total_power_drained >= power_damage_threshhold)
-		var/power_damage = power_drained * 0.01
-		invoker.visible_message("<span class='warning'>[invoker] flares a brilliant orange!</span>", "<span class='warning'>You feel the warmth of electricity running into your body.</span>")
-		if(ishuman(invoker))
-			var/mob/living/carbon/human/H = invoker
-			for(var/X in H.bodyparts)
-				var/obj/item/bodypart/BP = X
-				if(ratvar_awakens || (BP.status == BODYPART_ROBOTIC && total_power_drained < augument_damage_threshhold)) //if ratvar is alive, it won't damage and will always heal augumented limbs
-					if(BP.heal_damage(power_damage, power_damage, 1, 0)) //heals one point of burn and brute for every ~100W drained on augumented limbs
-						H.update_damage_overlays()
-				else
-					if(BP.receive_damage(0, power_damage))
-						H.update_damage_overlays()
-		else if(isanimal(invoker))
-			var/mob/living/simple_animal/A = invoker
-			A.adjustHealth(-power_damage) //if a simple animal is using volt void, just heal it
+	if(power_drained >= MIN_CLOCKCULT_POWER)
+		if(iscyborg(invoker))
+			var/mob/living/silicon/robot/R = invoker
+			if(R.cell)
+				R.cell.give(power_drained)
+				R.visible_message("<span class='warning'>[invoker] flares a brilliant orange!</span>", "<span class='brass'>You feel your cell charging.</span>")
+		else if(total_power_drained >= power_damage_threshhold)
+			var/power_damage = power_drained * 0.01
+			invoker.visible_message("<span class='warning'>[invoker] flares a brilliant orange!</span>", "<span class='warning'>You feel the warmth of electricity running into your body.</span>")
+			if(ishuman(invoker))
+				var/mob/living/carbon/human/H = invoker
+				for(var/X in H.bodyparts)
+					var/obj/item/bodypart/BP = X
+					if(ratvar_awakens || (BP.status == BODYPART_ROBOTIC && total_power_drained < augument_damage_threshhold)) //if ratvar is alive, it won't damage and will always heal augumented limbs
+						if(BP.heal_damage(power_damage, power_damage, 1, 0)) //heals one point of burn and brute for every ~100W drained on augumented limbs
+							H.update_damage_overlays()
+					else
+						if(BP.receive_damage(0, power_damage))
+							H.update_damage_overlays()
+			else if(isanimal(invoker))
+				var/mob/living/simple_animal/A = invoker
+				A.adjustHealth(-power_damage) //if a simple animal is using volt void, just heal it
 	return TRUE
