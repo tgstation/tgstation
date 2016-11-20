@@ -1,0 +1,4 @@
+author: "Kor"
+delete-after: True
+changes: 
+  - bugfix: "Station goals will once again function in extended."
