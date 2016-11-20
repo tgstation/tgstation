@@ -1,5 +1,0 @@
-author: "Joan"
-delete-after: True
-changes: 
-  - rscdel: "Servant cyborgs no longer have emagged modules."
-  - rscadd: "Servant cyborgs now have a limited selection of scripture and tools, which varies by cyborg type."
