@@ -54,15 +54,15 @@
 	var/momentum_speed_x = 0
 	var/momentum_speed_y = 0
 	var/momentum_drift_tick = 0 //Cooldowns
-	var/momentum_passive_loss = 4
+	var/momentum_passive_loss = 7
 	var/momentum_gain = 20
 
 	var/stabilizer = 1
-	var/stabilizer_decay_amount = 25
+	var/stabilizer_decay_amount = 23
 	var/gravity = 1
-	var/gravity_decay_amount = 6
+	var/gravity_decay_amount = 5
 	var/pressure = 1
-	var/pressure_decay_amount = 6
+	var/pressure_decay_amount = 5
 	var/pressure_threshold = 30
 	var/brake = 0
 	var/airbrake_decay_amount = 60
@@ -441,6 +441,8 @@
 	suit.user.visible_message("[suit.user] is knocked flying by the impact!")
 
 /obj/item/device/flightpack/proc/flight_impact(atom/unmovablevictim)	//Yes, victim.
+	if(unmovablevictim == suit.user)
+		return 0
 	var/atom/movable/victim = null
 	var/dir = null
 	if(crashing)	//We're already in the process of getting knocked around by a crash.
