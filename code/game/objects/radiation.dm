@@ -41,7 +41,7 @@
 			I.rad_act(amount)
 
 /mob/living/carbon/rad_act(amount, silent = 0)
-	if(C.dna && (RADIMMUNE in C.dna.species.specflags))
+	if(dna && (RADIMMUNE in dna.species.specflags))
 		silent = TRUE
 	..()
 
