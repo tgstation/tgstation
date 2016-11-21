@@ -842,8 +842,10 @@
 	if(pack)
 		pack.relink_suit(src)
 	if(user)
-		pack.wearer = user
-		shoes.wearer = user
+		if(pack)
+			pack.wearer = user
+		if(shoes)
+			shoes.wearer = user
 	if(shoes)
 		shoes.relink_suit(src)
 
@@ -924,6 +926,7 @@
 /obj/item/clothing/suit/space/hardsuit/flightsuit/proc/extend_flightpack(forced = 0)
 	if(!pack)
 		usermessage("There is no attached flightpack!", 1)
+		return 0
 	if(deployedpack)
 		retract_flightpack()
 	if(!locked)
@@ -959,7 +962,8 @@
 
 /obj/item/clothing/suit/space/hardsuit/flightsuit/proc/extend_flightshoes(forced = 0)
 	if(!shoes)
-		usermessage("Flight shoes not installed!", 1)
+		usermessage("Flight shoes are not installed!", 1)
+		return 0
 	if(deployedshoes)
 		retract_flightshoes()
 	if(!locked)
