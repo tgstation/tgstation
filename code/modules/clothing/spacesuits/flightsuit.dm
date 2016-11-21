@@ -261,15 +261,15 @@
 	if(momentum_speed == 0)
 		return 0
 	if(suit)
-		if(suit.user)
-			if(!suit.user.canmove)
+		if(wearer)
+			if(!wearer.canmove)
 				losecontrol()
 			momentum_decay()
 			for(var/i in 1 to momentum_speed)
 				if(drift_x)
-					step(suit.user, drift_dir_x)
+					step(wearer, drift_dir_x)
 				if(drift_y)
-					step(suit.user, drift_dir_y)
+					step(wearer, drift_dir_y)
 				sleep(1)
 	momentum_drift_tick = 0
 
@@ -288,12 +288,12 @@
 //Check for gravity, air pressure, and whether this is still linked to a suit. Also, resync the flightpack/flight suit every minute.
 /obj/item/device/flightpack/proc/check_conditions()
 	if(suit)
-		if(suit.user)
-			if(suit.user.has_gravity())
+		if(wearer)
+			if(wearer.has_gravity())
 				gravity = 1
 			else
 				gravity = 0
-			var/turf/T = get_turf(suit.user)
+			var/turf/T = get_turf(wearer)
 			var/datum/gas_mixture/gas = T.return_air()
 			var/envpressure =	gas.return_pressure()
 			if(envpressure >= pressure_threshold)
@@ -312,7 +312,7 @@
 			disable_flight(1)
 	if(!pressure && brake)
 		brake = 0
-		usermessage("Airbrakes deactivated due to lack of pressure!")
+		usermessage("Airbrakes deactivated due to lack of pressure!", 2)
 	//Add check for wearer wearing the shoes and suit here
 
 //Resync the suit
@@ -354,7 +354,7 @@
 		if(crash_disabled && (crash_damage <= 1))
 			crash_disabled = 0
 			crash_disable_message = 0
-			usermessage("Flightpack: Stabilizers re-calibrated. Flightpack re-enabled.")
+			usermessage("Gyroscopic sensors recalibrated. Flight systems re-enabled.")
 	if(emp_damage)
 		emp_damage = Clamp(emp_damage-emp_heal_amount, 0, emp_disable_threshold * 10)
 		if(emp_damage >= emp_disable_threshold)
@@ -362,16 +362,16 @@
 		if(emp_disabled && (emp_damage <= 0.5))
 			emp_disabled = 0
 			emp_disable_message = 0
-			usermessage("Flightpack: Systems rebooted. Flightpack re-enabled")
+			usermessage("Electromagnetic deflection system re-activated. Flight systems re-enabled.")
 	disabled = crash_disabled + emp_disabled
 	if(disabled)
 		if(crash_disabled && (!crash_disable_message))
-			usermessage("WARNING: STABILIZERS DAMAGED. UNABLE TO CONTINUE OPERATION. PLEASE WAIT FOR AUTOMATIC RECALIBRATION", 1)
-			usermessage("Your flightpack abruptly shuts off!", 2)
+			usermessage("Internal gyroscopes scrambled from excessive impacts.", 2)
+			usermessage("Deactivating to recalibrate flight systems!", 2)
 			crash_disable_message = 1
 		if(emp_disabled && (!emp_disable_message))
-			usermessage("WARNING: POWER SURGE DETECTED FROM INTERNAL SHORT CIRCUIT. PLEASE WAIT FOR AUTOMATIC REBOOT.", 1)
-			usermessage("Your flightpack abruptly shuts off!", 2)
+			usermessage("Electromagnetic deflectors overloaded. Short circuit detected in internal systems!", 1)
+			usermessage("Deactivating to prevent fatal power overload!", 2)
 			emp_disable_message = 1
 		if(flight)
 			disable_flight(1)
@@ -411,12 +411,10 @@
 	else
 		powersetting = 1
 	momentum_gain = powersetting * 10
-	if(suit)
-		if(suit.user)
-			wearer << "<span class='notice'>FLIGHTPACK: Engines set to force [momentum_gain].</span>"
+	usermessage("Engine output set to [momentum_gain].")
 
 /obj/item/device/flightpack/proc/crash_damage(density, anchored, speed, victim_name)
-	var/crashmessagesrc = "<span class='userdanger'>[suit.user] violently crashes into [victim_name], "
+	var/crashmessagesrc = "<span class='userdanger'>[wearer] violently crashes into [victim_name], "
 	var/userdamage = 10
 	userdamage -= stabilizer*3
 	userdamage -= part_bin.rating
@@ -424,10 +422,10 @@
 	if(userdamage)
 		crashmessagesrc += "that really must have hurt!"
 	else
-		crashmessagesrc += "but luckily [suit.user]'s impact was absorbed by their suit's stabilizers!</span>"
-	suit.user.adjustBruteLoss(userdamage)
-	usermessage("WARNING: Stabilizers taking damage!", 1)
-	suit.user.visible_message(crashmessagesrc)
+		crashmessagesrc += "but luckily [wearer]'s impact was absorbed by their suit's stabilizers!</span>"
+	wearer.adjustBruteLoss(userdamage)
+	usermessage("WARNING: Stabilizers taking damage!", 2)
+	wearer.visible_message(crashmessagesrc)
 	crash_damage = Clamp(crash_damage + 3, 0, crash_disable_threshold*1.5)
 
 /obj/item/device/flightpack/proc/userknockback(density, anchored, speed, dir)
@@ -436,12 +434,12 @@
 	if(angle > 360)
 		angle -= 360
 	dir = angle2dir(angle)
-	var/turf/target = get_edge_target_turf(get_turf(suit.user), dir)
-	suit.user.throw_at_fast(target, (speed+density+anchored), 2, suit.user)
-	suit.user.visible_message("[suit.user] is knocked flying by the impact!")
+	var/turf/target = get_edge_target_turf(get_turf(wearer), dir)
+	wearer.throw_at_fast(target, (speed+density+anchored), 2, wearer)
+	wearer.visible_message("[wearer] is knocked flying by the impact!")
 
 /obj/item/device/flightpack/proc/flight_impact(atom/unmovablevictim)	//Yes, victim.
-	if(unmovablevictim == suit.user)
+	if(unmovablevictim == wearer)
 		return 0
 	var/atom/movable/victim = null
 	var/dir = null
@@ -449,10 +447,10 @@
 		return 0
 	if(flight && momentum_speed > 1)
 		crashing = 1
-		dir = suit.user.dir
+		dir = wearer.dir
 	else
 		return 0
-	dir = suit.user.dir
+	dir = wearer.dir
 	var/density = 0
 	var/anchored = 1
 	var/nocrash = 0
@@ -479,11 +477,11 @@
 /obj/item/device/flightpack/proc/mobknockback(density, anchored, momentum_speed, mob/living/L, dir)
 	if(!ismob(L))
 		return 0
-	var/knockmessage = "<span class='warning'>[L] is knocked back by [suit.user] as they narrowly avoid a collision!"
+	var/knockmessage = "<span class='warning'>[L] is knocked back by [wearer] as they narrowly avoid a collision!"
 	var/knockback = 0
 	var/stun = boost * 2
 	if(stun)
-		knockmessage += " [suit.user] dashes across [L], knocking them down!"
+		knockmessage += " [wearer] dashes across [L], knocking them down!"
 	knockmessage += "</span>"
 	knockback += momentum_speed
 	knockback += (part_manip.rating / 2)
@@ -494,7 +492,7 @@
 	var/target = get_step(L, direction)
 	for(var/i in 1 to (knockback - 1))
 		target = get_step(target, direction)
-	suit.user.visible_message(knockmessage)
+	wearer.visible_message(knockmessage)
 	L.throw_at_fast(target, 7, 3)
 	L.Weaken(stun)
 
@@ -517,13 +515,14 @@
 	target = get_edge_target_turf(victim, dir)
 	victim.visible_message("<span class='warning'>[victim.name] is sent flying by the impact!</span>")
 	if(knockback)
-		victim.throw_at_fast(target, knockback, part_manip.rating, suit.user)
+		victim.throw_at_fast(target, knockback, part_manip.rating, wearer)
 	if(ismob(victim))
 		var/mob/living/victimmob = victim
 		victimmob.Weaken(stun)
 		victimmob.adjustBruteLoss(damage)
 
 /obj/item/device/flightpack/proc/losecontrol(stun = FALSE, move = TRUE)
+	usermessage("Warning: Control system not responsiding. Deactivating!", 3)
 	wearer.visible_message("<span class='warning'>[wearer]'s flight suit abruptly shuts off and they lose control!</span>")
 	if(wearer)
 		if(move)
@@ -542,9 +541,12 @@
 
 /obj/item/device/flightpack/proc/enable_flight(forced = 0)
 	if(!suit)
-		wearer << "<span class='warning'>Your flight pack must be linked to a flight suit to work properly!</span>"
+		usermessage("Warning: Flightpack not linked to compatible flight-suit mount!", 2)
+	if(disabled)
+		usermessage("Internal systems recalibrating. Unable to safely proceed.", 2)
 	wearer.movement_type |= FLYING
 	wearer.pass_flags |= flight_passflags
+	usermessage("ENGAGING FLIGHT ENGINES.")
 	wearer.visible_message("<font color='blue' size='2'>[wearer]'s flight engines activate as they lift into the air!</font>")
 	//I DONT HAVE SOUND EFFECTS YET playsound(
 	flight = 1
@@ -560,7 +562,8 @@
 	if(abs(momentum_x) <= 20 && abs(momentum_y) <= 20)
 		momentum_x = 0
 		momentum_y = 0
-		suit.user.visible_message("<font color='blue' size='2'>[wearer] drops to the ground as their flight engines cut out!</font>")
+		usermessage("DISENGAGING FLIGHT ENGINES.")
+		wearer.visible_message("<font color='blue' size='2'>[wearer] drops to the ground as their flight engines cut out!</font>")
 		//NO SOUND YET	playsound(
 		ion_trail.stop()
 		wearer.movement_type &= ~FLYING
@@ -572,7 +575,7 @@
 		if(override_safe)
 			disable_flight(1)
 			return 1
-		wearer << "<span class='warning'>You are moving too fast to safely stop flying! Try to stop flying once more to override the safety restrictions.</span>"
+		usermessage("Warning: Velocity too high to safely disengage. Retry to confirm emergency shutoff.", 2)
 		override_safe = 1
 		addtimer(src, "enable_safe", 50)
 		return 0
@@ -619,27 +622,29 @@
 		return 1
 
 /obj/item/device/flightpack/proc/enable_stabilizers()
-	wearer << "<span class='notice'>Your [name]'s integrated stabilizer system restarts as fins fold out and thrusters steady your movement!</span>"
+	usermessage("Activating automatic stabilization controller and enabling maneuvering assistance.")
 	stabilizer = 1
 
 /obj/item/device/flightpack/proc/disable_stabilizers()
 	if(wearer)
 		if(brake)
 			disable_airbrake()
-		wearer << "<span class='warning'>Your [name]'s stabilizers cut off, fins folding in and maneuvering thrusters shutting off!</span>"
+		usermessage("Deactivating stabilization controllers!", 2)
 	stabilizer = 0
 
 /obj/item/device/flightpack/proc/activate_booster()
+	if(!flight)
+		usermessage("Error: Engines offline!", 2)
 	if(boost_charge < 5)
-		wearer << "<span class='warning'>Your [name] beeps an alert. Its boost capacitors are still charging!</span>"
+		usermessage("Insufficient charge in boost capacitors to engage.", 2)
 		return 0
-	wearer << "<span class='notice'>Flightpack: Boosters engaged!</span>"
+	usermessage("Boosters engaged!")
 	wearer.visible_message("<span class='notice'>[wearer.name]'s flightpack engines flare in intensity as they are rocketed forward by the immense thrust!</span>")
 	boost = 1
 	update_slowdown()
 
 /obj/item/device/flightpack/proc/deactivate_booster()
-	wearer << "<span class='warning'>Flightpack: Boosters disengaged!</span>"
+	usermessage("Boosters disengaged!")
 	boost = 0
 	update_slowdown()
 
@@ -678,9 +683,15 @@
 			suit.pack = null
 	suit = null
 
-/obj/item/device/flightpack/proc/usermessage(message)
-	wearer << "\icon[src]|[message]"
-
+/obj/item/device/flightpack/proc/usermessage(message, urgency = 0)
+	if(urgency == 0)
+		wearer << "\icon[src]|<span class='boldnotice'>[message]</span>"
+	if(urgency == 1)
+		wearer << "\icon[src]|<span class='warning'>[message]</span>"
+	if(urgency == 2)
+		wearer << "\icon[src]|<span class='boldwarning'>[message]</span>"
+	if(urgency == 3)
+		wearer << "\icon[src]|<span class='userdanger'>[message]</span>"
 
 /obj/item/device/flightpack/attackby(obj/item/I, mob/user, params)
 	if(ishuman(user) && !ishuman(src.loc))
