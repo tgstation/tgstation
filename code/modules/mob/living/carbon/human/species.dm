@@ -895,7 +895,7 @@
 
 				if(flightpack && F.allow_thrust(0.01, src))
 					. -= 1
-		else if(!(flight && flightpack))
+		if(!(flight && flightpack))
 			var/health_deficiency = (100 - H.health + H.staminaloss)
 			if(health_deficiency >= 40)
 				if(flight)
