@@ -577,6 +577,7 @@
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/golem/adamantine
 	fixed_mut_color = "4ed"
 
+//Explodes on death
 /datum/species/golem/plasma
 	name = "Plasma Golem"
 	id = "plasma"
@@ -588,6 +589,7 @@
 	if(H)
 		H.gib()
 
+//Harder to hurt
 /datum/species/golem/diamond
 	name = "Diamond Golem"
 	id = "diamond"
@@ -595,6 +597,7 @@
 	armor = 70 //up from 55
 	meat = /obj/item/weapon/ore/diamond
 
+//Faster but softer and less armoured
 /datum/species/golem/gold
 	name = "Gold Golem"
 	id = "gold"
@@ -603,6 +606,7 @@
 	armor = 25 //down from 55
 	meat = /obj/item/weapon/ore/gold
 
+//Heavier, thus higher chance of stunning when punching
 /datum/species/golem/silver
 	name = "Silver Golem"
 	id = "silver"
@@ -610,6 +614,102 @@
 	punchstunthreshold = 9 //60% chance, from 40%
 	meat = /obj/item/weapon/ore/silver
 
+//Harder to stun, deals more damage, but it's even slower
+/datum/species/golem/plasteel
+	name = "Plasteel Golem"
+	id = "plasteel"
+	fixed_mut_color = "bbb"
+	stunmod = 0.40
+	punchdamagelow = 12
+	punchdamagehigh = 21
+	punchstunthreshold = 18 //still 40% stun chance
+	speedmod = 4 //pretty fucking slow
+	meat = /obj/item/weapon/ore/iron
+
+//Can equip clothing
+/datum/species/golem/titanium
+	name = "Titanium Golem"
+	id = "titanium"
+	fixed_mut_color = "fff"
+	no_equip = list()
+	armor = 30 //for balance
+	punchdamagelow = 0
+	punchdamagehigh = 9 //human-level punches
+	punchstunthreshold = 9 //10% chance, like normal humans
+	meat = /obj/item/weapon/ore/titanium
+
+//Like titanium, but can use guns
+/datum/species/golem/titanium/plastitanium
+	name = "Plastitanium Golem"
+	id = "plastitanium"
+	fixed_mut_color = "888"
+	meat = /obj/item/weapon/ore/titanium
+	specflags = list(NOBREATH,NOBLOOD,RADIMMUNE,VIRUSIMMUNE,PIERCEIMMUNE,NODISMEMBER,MUTCOLORS)
+
+//Fast and regenerates... but can only speak like an abductor
+/datum/species/golem/alloy
+	name = "Alien Alloy Golem"
+	id = "alienalloy"
+	fixed_mut_color = "333"
+	no_equip = list() //can equip clothing
+	meat = /obj/item/stack/sheet/mineral/abductor
+	mutant_organs = list(/obj/item/organ/tongue/abductor) //abductor tongue
+	speedmod = 0 //human-level speed
+
+//Regenerates because self-repairing super-advanced alien tech
+/datum/species/golem/alloy/spec_life(mob/living/carbon/human/H)
+	if(H.stat == DEAD)
+		return
+	H.heal_overall_damage(1,1)
+	H.adjustToxLoss(-1)
+	H.adjustOxyLoss(-1)
+
+//Since this will usually be created from a collaboration between podpeople and free golems, wood golems are a mix between the two races
+/datum/species/golem/wood
+	name = "Wood Golem"
+	id = "wood"
+	fixed_mut_color = "49311c"
+	meat = /obj/item/stack/sheet/mineral/wood
+	specflags = list(NOBREATH,NOGUNS,NOBLOOD,RADIMMUNE,VIRUSIMMUNE,PIERCEIMMUNE,NODISMEMBER,MUTCOLORS) //No RESISTTEMP, can burn
+	armor = 30
+	burnmod = 1.25
+	heatmod = 1.5
+
+/datum/species/golem/wood/on_species_gain(mob/living/carbon/C, datum/species/old_species)
+	. = ..()
+	C.faction |= "plants"
+	C.faction |= "vines"
+
+/datum/species/golem/wood/on_species_loss(mob/living/carbon/C)
+	. = ..()
+	C.faction -= "plants"
+	C.faction -= "vines"
+
+/datum/species/golem/wood/spec_life(mob/living/carbon/human/H)
+	if(H.stat == DEAD)
+		return
+	var/light_amount = 0 //how much light there is in the place, affects receiving nutrition and healing
+	if(isturf(H.loc)) //else, there's considered to be no light
+		var/turf/T = H.loc
+		light_amount = min(10,T.get_lumcount()) - 5
+		H.nutrition += light_amount
+		if(H.nutrition > NUTRITION_LEVEL_FULL)
+			H.nutrition = NUTRITION_LEVEL_FULL
+		if(light_amount > 2) //if there's enough light, heal
+			H.heal_overall_damage(1,1)
+			H.adjustToxLoss(-1)
+			H.adjustOxyLoss(-1)
+
+	if(H.nutrition < NUTRITION_LEVEL_STARVING + 50)
+		H.take_overall_damage(2,0)
+
+/datum/species/golem/wood/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
+	if(chem.id == "plantbgone")
+		H.adjustToxLoss(3)
+		H.reagents.remove_reagent(chem.id, REAGENTS_METABOLISM)
+		return 1
+
+//Radioactive
 /datum/species/golem/uranium
 	name = "Uranium Golem"
 	id = "uranium"
@@ -628,13 +728,42 @@
 			active = null
 	..()
 
+//Immune to physical bullets and resistant to brute, but very vulnerable to burn damage. Dusts on death.
+/datum/species/golem/sand
+	name = "Sand Golem"
+	id = "sand"
+	fixed_mut_color = "ffdc8f"
+	meat = /obj/item/weapon/ore/glass //this is sand
+	armor = 0
+	burnmod = 3 //melts easily
+	brutemod = 0.25
+
+/datum/species/golem/sand/spec_death(gibbed, mob/living/carbon/human/H)
+	H.visible_message("<span class='danger'>[H] turns into a pile of sand!</span>")
+	for(var/obj/item/W in H)
+		H.unEquip(W)
+	for(var/i=1, i <= rand(3,5), i++)
+		new /obj/item/weapon/ore/glass(get_turf(H))
+	qdel(H)
+
+/datum/species/golem/sand/bullet_act(obj/item/projectile/P, mob/living/carbon/human/H)
+	if(!(P.original == H && P.firer == H))
+		if(istype(P, /obj/item/projectile/bullet))
+			playsound(H, "sound/effects/shovel_dig.ogg", 70, 1)
+			H.visible_message("<span class='danger'>The [P.name] sinks harmlessly in [H]'s sandy body!</span>", \
+			"<span class='userdanger'>The [P.name] sinks harmlessly in [H]'s sandy body!</span>")
+			return 2
+	return 0
+
+//Reflects lasers and resistant to burn damage, but very vulnerable to brute damage. Shatters on death.
 /datum/species/golem/glass
 	name = "Glass Golem"
 	id = "glass"
 	fixed_mut_color = "5a96b4"
 	meat = /obj/item/weapon/shard
 	armor = 0
-	brutemod = 2
+	brutemod = 3 //very fragile
+	burnmod = 0.25
 
 /datum/species/golem/glass/on_species_gain(mob/living/carbon/C, datum/species/old_species)
 	..()
@@ -654,10 +783,10 @@
 	qdel(H)
 
 /datum/species/golem/glass/bullet_act(obj/item/projectile/P, mob/living/carbon/human/H)
-	if(!(P.original == H && P.firer == H))
+	if(!(P.original == H && P.firer == H)) //self-shots don't reflect
 		if(istype(P, /obj/item/projectile/beam) || istype(P, /obj/item/projectile/energy))
-			H.visible_message("<span class='danger'>The [P.name] gets reflected by [H]'s skin!</span>", \
-			"<span class='userdanger'>The [P.name] gets reflected by [H]'s skin!</span>")
+			H.visible_message("<span class='danger'>The [P.name] gets reflected by [H]'s glass skin!</span>", \
+			"<span class='userdanger'>The [P.name] gets reflected by [H]'s glass skin!</span>")
 			if(P.starting)
 				var/new_x = P.starting.x + pick(0, 0, 0, 0, 0, -1, 1, -2, 2)
 				var/new_y = P.starting.y + pick(0, 0, 0, 0, 0, -1, 1, -2, 2)
@@ -673,6 +802,7 @@
 				P.Angle = null
 			return -1
 	return 0
+
 /*
  FLIES
 */
