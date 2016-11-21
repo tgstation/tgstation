@@ -13,7 +13,7 @@
 	var/nonhuman_usable = FALSE //if the slab can be used by nonhumans, defaults to off
 	var/produces_components = TRUE //if it produces components at all
 	var/list/shown_scripture = list(SCRIPTURE_DRIVER = TRUE, SCRIPTURE_SCRIPT = FALSE, SCRIPTURE_APPLICATION = FALSE, SCRIPTURE_REVENANT = FALSE, SCRIPTURE_JUDGEMENT = FALSE)
-	var/compact_scripture = FALSE
+	var/compact_scripture = TRUE
 	var/obj/effect/proc_holder/slab/slab_ability //the slab's current bound ability, for certain scripture
 	var/list/quickbound = list(/datum/clockwork_scripture/ranged_ability/geis_prep, /datum/clockwork_scripture/vanguard) //quickbound scripture, accessed by index
 	actions_types = list(/datum/action/item_action/clock/hierophant)
@@ -235,7 +235,7 @@
 	<font size=1>Key:"
 	for(var/i in clockwork_component_cache)
 		text += " <b><font color=[get_component_color_brightalloy(i)]>[get_component_name(i)][i != REPLICANT_ALLOY ? "s":""]</font></b>"
-	text += "</font><br><br><br><center><font size=1><A href='?src=\ref[src];compactscripture=1'>Compact Scripture Text: [compact_scripture ? "ON":"OFF"]</A></font></center><br>"
+	text += "</font><br><br><br><center><A href='?src=\ref[src];compactscripture=1'>[compact_scripture ? "Dec":"C"]ompress Scripture Information</A></center><br>"
 	var/text_to_add = ""
 	var/drivers = "<br><b><A href='?src=\ref[src];Driver=1'>[SCRIPTURE_DRIVER]</A></b><br><font size=1><i>These scriptures are always unlocked.</i><br>"
 	var/scripts = "<br><b><A href='?src=\ref[src];Script=1'>[SCRIPTURE_SCRIPT]</A></b><br><font size=1><i>These scriptures require at least <b>[SCRIPT_SERVANT_REQ]</b> Servants and \
