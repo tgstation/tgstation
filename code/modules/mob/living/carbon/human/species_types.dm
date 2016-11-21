@@ -644,6 +644,15 @@
 	..()
 	C.alpha = 255
 
+/datum/species/golem/glass/spec_death(gibbed, mob/living/carbon/human/H)
+	playsound(H, "shatter", 70, 1)
+	H.visible_message("<span class='danger'>[H] shatters!</span>")
+	for(var/obj/item/W in H)
+		H.unEquip(W)
+	for(var/i=1, i <= rand(3,5), i++)
+		new /obj/item/weapon/shard(get_turf(H))
+	qdel(H)
+
 /datum/species/golem/glass/bullet_act(obj/item/projectile/P, mob/living/carbon/human/H)
 	if(!(P.original == H && P.firer == H))
 		if(istype(P, /obj/item/projectile/beam) || istype(P, /obj/item/projectile/energy))
