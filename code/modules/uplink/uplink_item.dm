@@ -555,7 +555,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	desc = "A box of shurikens and reinforced bolas from ancient Earth martial arts. They are highly effective \
 			 throwing weapons. The bolas can knock a target down and the shurikens will embed into limbs."
 	item = /obj/item/weapon/storage/box/syndie_kit/throwing_weapons
-	cost = 5
+	cost = 3
 
 /datum/uplink_item/stealthy_weapons/edagger
 	name = "Energy Dagger"
