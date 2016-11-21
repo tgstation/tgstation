@@ -457,24 +457,20 @@
 	var/anchored = 1
 	var/nocrash = 0
 	if(ismob(unmovablevictim))
-		world << "DEBUG: CRASHING INTO MOB"
 		var/mob/living/L = unmovablevictim
 		mobknockback(density, anchored, momentum_speed, L, dir)
 		nocrash = 1
 		density = 0
 		anchored = 0
 	else if(isclosedturf(unmovablevictim))
-		world << "DEBUG: CRASHING INTO CLOSED TURF"
 		density = 1
 		anchored = 1
 	else if(ismovableatom(unmovablevictim))
-		world << "DEBUG: CRASHING INTO MOVABLE ATOM"
 		victim = unmovablevictim
 		density = victim.density
 		anchored = victim.anchored
 		victimknockback(density, anchored, momentum_speed, victim, dir)
 	if(!nocrash)
-		world << "DEBUG: NOCRASH == [nocrash]"
 		crash_damage(density, anchored, momentum_speed, unmovablevictim.name)
 		userknockback(density, anchored, momentum_speed, dir)
 		losecontrol(move = FALSE)
@@ -829,7 +825,7 @@
 /obj/item/clothing/suit/space/hardsuit/flightsuit/examine(mob/user)
 	usermessage("SUIT: [locked ? "LOCKED" : "UNLOCKED"]")
 	usermessage("FLIGHTPACK: [deployedpack ? "ENGAGED" : "DISENGAGED"] FLIGHTSHOES : [deployedshoes ? "ENGAGED" : "DISENGAGED"] HELMET : [suittoggled ? "ENGAGED" : "DISENGAGED"]")
-	usermessage("Its maintainence panel is [maint_panel ? "CLOSED" : "OPEN"].")
+	usermessage("Its maintainence panel is [maint_panel ? "OPEN" : "CLOSED"].")
 
 /obj/item/clothing/suit/space/hardsuit/flightsuit/Destroy()
 	dropped()
@@ -1100,7 +1096,7 @@
 			if(!F.part_bin)
 				addmsglist += "matter bin"
 			addmsg += english_list(addmsglist)
-			usermessage("The flightpack you are trying to install is not fully assembled and operational![addmsg]", 1)
+			usermessage("The flightpack you are trying to install is not fully assembled and operational![addmsg].", 1)
 			return 0
 		if(user.unEquip(F))
 			attach_pack(F)
