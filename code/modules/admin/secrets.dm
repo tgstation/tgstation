@@ -23,6 +23,7 @@
 			<A href='?src=\ref[src];secrets=list_lawchanges'>Show last [length(lawchanges)] law changes</A><BR>
 			<A href='?src=\ref[src];secrets=showailaws'>Show AI Laws</A><BR>
 			<A href='?src=\ref[src];secrets=showgm'>Show Game Mode</A><BR>
+			<A href='?src=\ref[src];secrets=show_current_watchlist'>Show online players in the watchlist</A><BR>
 			<A href='?src=\ref[src];secrets=manifest'>Show Crew Manifest</A><BR>
 			<A href='?src=\ref[src];secrets=DNA'>List DNA (Blood)</A><BR>
 			<A href='?src=\ref[src];secrets=fingerprints'>List Fingerprints</A><BR>
@@ -118,6 +119,13 @@
 					var/datum/admins/D = admin_datums[ckey]
 					dat += "[ckey] - [D.rank] - [rights2text(D.rights," ")]<br>"
 				usr << browse(dat, "window=showadmins;size=600x500")
+
+		if("show_current_watchlist")
+			var/dat = "<B>Watchlist: </B><HR>"
+			if(current_watchlist)
+				for(var/ckey in current_watchlist)
+					dat += "[ckey] - [current_watchlist[ckey]]"
+				usr << browse(dat, "window=showcurrentwatchlist;size=600x500")
 
 		if("tdomereset")
 			if(!check_rights(R_ADMIN))
