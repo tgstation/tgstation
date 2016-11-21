@@ -728,9 +728,12 @@
 	var/obj/item/device/flightpack/F = back
 	if(istype(F))
 		return F
+	else
+		return 0
 
-/obj/item/device/flightpack/proc/allow_thrust()
-	return 1
+/obj/item/device/flightpack/proc/allow_thrust(amount)
+	if(flight)
+		return 1
 
 //FLIGHT SHOES-----------------------------------------------------------------------------------------------------------------------------------------------------
 

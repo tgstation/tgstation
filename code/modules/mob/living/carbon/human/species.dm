@@ -872,14 +872,17 @@
 	if(FLYING in H.movement_type)
 		flight = 1
 
-	if(H.status_flags & GOTTAGOFAST)
-		if(!flightpack)
+	if(!flightpack)
+		if(H.status_flags & GOTTAGOFAST)
 			. -= 1
-	if(H.status_flags & GOTTAGOREALLYFAST)
-		if(!flightpack)
+		if(H.status_flags & GOTTAGOREALLYFAST)
 			. -= 2
+
 	if(!(H.status_flags & IGNORESLOWDOWN))
 		if(!H.has_gravity())
+			if((FLYING in H.movement_type) && !flightpack)	//No hyperstacking angel wings!
+				. += speedmod
+				return
 			// If there's no gravity we have the sanic speed of jetpack.
 			var/obj/item/weapon/tank/jetpack/J = H.back
 			var/obj/item/clothing/suit/space/hardsuit/C = H.wear_suit
@@ -893,9 +896,10 @@
 				if(istype(T) && T.allow_thrust(0.01, H))
 					. -= 2
 
-				if(flightpack && F.allow_thrust(0.01, src))
+				else if(flightpack && F.allow_thrust(0.01, src))	//No jetpack/flightsuit hyperstacking!
 					. -= 1
-		if(!(flight && flightpack))
+
+		if(!(flightpack))
 			var/health_deficiency = (100 - H.health + H.staminaloss)
 			if(health_deficiency >= 40)
 				if(flight)
