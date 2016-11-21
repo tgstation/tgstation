@@ -30,7 +30,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/potato/wedges
 	name = "potato wedges"
 	desc = "a potato cut up into wedges"
-	icon_state = "potato_wedge"
+	icon_state = "potato_wedges"
 	filling_color = "#E9967A"
 	bitesize = 100
 
