@@ -119,8 +119,8 @@
 		H.reagents.remove_reagent(chem.id, REAGENTS_METABOLISM)
 		return 1
 
-/datum/species/pod/on_hit(proj_type, mob/living/carbon/human/H)
-	switch(proj_type)
+/datum/species/pod/on_hit(obj/item/projectile/P, mob/living/carbon/human/H)
+	switch(P.type)
 		if(/obj/item/projectile/energy/floramut)
 			if(prob(15))
 				H.rad_act(rand(30,80))
@@ -581,6 +581,7 @@
 	name = "Plasma Golem"
 	id = "plasma"
 	fixed_mut_color = "a3d"
+	meat = /obj/item/weapon/ore/plasma
 
 /datum/species/golem/plasma/spec_death(gibbed, mob/living/carbon/human/H)
 	explosion(get_turf(H),0,1,2,flame_range = 5)
@@ -592,6 +593,7 @@
 	id = "diamond"
 	fixed_mut_color = "0ff"
 	armor = 70 //up from 55
+	meat = /obj/item/weapon/ore/diamond
 
 /datum/species/golem/gold
 	name = "Gold Golem"
@@ -599,17 +601,21 @@
 	fixed_mut_color = "ee0"
 	speedmod = 1
 	armor = 25 //down from 55
+	meat = /obj/item/weapon/ore/gold
 
 /datum/species/golem/silver
 	name = "Silver Golem"
 	id = "silver"
 	fixed_mut_color = "ddd"
 	punchstunthreshold = 9 //60% chance, from 40%
+	meat = /obj/item/weapon/ore/silver
 
 /datum/species/golem/uranium
 	name = "Uranium Golem"
 	id = "uranium"
 	fixed_mut_color = "7f0"
+	meat = /obj/item/weapon/ore/uranium
+
 	var/last_event = 0
 	var/active = null
 
@@ -622,7 +628,42 @@
 			active = null
 	..()
 
+/datum/species/golem/glass
+	name = "Glass Golem"
+	id = "glass"
+	fixed_mut_color = "5a96b4"
+	meat = /obj/item/weapon/shard
+	armor = 0
+	brutemod = 2
 
+/datum/species/golem/glass/on_species_gain(mob/living/carbon/C, datum/species/old_species)
+	..()
+	C.alpha = 150
+
+/datum/species/golem/glass/on_species_loss(mob/living/carbon/C)
+	..()
+	C.alpha = 255
+
+/datum/species/golem/glass/bullet_act(obj/item/projectile/P, mob/living/carbon/human/H)
+	if(!(P.original == H && P.firer == H))
+		if(istype(P, /obj/item/projectile/beam) || istype(P, /obj/item/projectile/energy))
+			H.visible_message("<span class='danger'>The [P.name] gets reflected by [H]'s skin!</span>", \
+			"<span class='userdanger'>The [P.name] gets reflected by [H]'s skin!</span>")
+			if(P.starting)
+				var/new_x = P.starting.x + pick(0, 0, 0, 0, 0, -1, 1, -2, 2)
+				var/new_y = P.starting.y + pick(0, 0, 0, 0, 0, -1, 1, -2, 2)
+				var/turf/curloc = get_turf(H)
+
+				// redirect the projectile
+				P.original = locate(new_x, new_y, P.z)
+				P.starting = curloc
+				P.current = curloc
+				P.firer = H
+				P.yo = new_y - curloc.y
+				P.xo = new_x - curloc.x
+				P.Angle = null
+			return -1
+	return 0
 /*
  FLIES
 */
