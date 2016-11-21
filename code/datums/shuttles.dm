@@ -141,6 +141,7 @@
 	suffix = "pubby"
 	name = "Pubby Station Emergency Shuttle"
 	description = "A small, but feature complete shuttle. It boasts a card table to keep crew members occupied on the long flight home."
+	credit_cost = 1000
 
 /datum/map_template/shuttle/emergency/supermatter
 	suffix = "supermatter"
