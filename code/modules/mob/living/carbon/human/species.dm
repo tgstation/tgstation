@@ -898,7 +898,7 @@
 		else if(!(flight && flightpack))
 			var/health_deficiency = (100 - H.health + H.staminaloss)
 			if(health_deficiency >= 40)
-				else if(flight)
+				if(flight)
 					. += (health_deficiency / 75)
 				else
 					. += (health_deficiency / 25)
