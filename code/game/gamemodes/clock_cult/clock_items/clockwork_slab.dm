@@ -1,7 +1,10 @@
 /obj/item/clockwork/slab //Clockwork slab: The most important tool in Ratvar's arsenal. Allows scripture recital, tutorials, and generates components.
 	name = "clockwork slab"
 	desc = "A strange metal tablet. A clock in the center turns around and around."
-	clockwork_desc = "A link between the Celestial Derelict and the mortal plane. Contains limitless knowledge, fabricates components, and outputs a stream of information that only a trained eye can detect."
+	clockwork_desc = "A link between the Celestial Derelict and the mortal plane. Contains limitless knowledge, fabricates components, and outputs a stream of information that only a trained eye can detect.\n\
+	Use the <span class='brass'>Hierophant Network</span> action button to communicate with other servants.\n\
+	Clockwork slabs will only make components if held or if inside an item held by a human, and when making a component will prevent all other slabs held from making components.\n\
+	Hitting a slab, a Servant with a slab, or a cache will <b>transfer</b> this slab's components into the target, the target's slab, or the global cache, respectively."
 	icon_state = "dread_ipad"
 	slot_flags = SLOT_BELT
 	w_class = 2
@@ -39,6 +42,42 @@
 	if(!is_servant_of_ratvar(user))
 		add_servant_of_ratvar(user)
 
+/obj/item/clockwork/slab/cyborg
+	clockwork_desc = "A divine link to the Celestial Derelict, allowing for limited recital of scripture.\n\
+	Hitting a slab, a Servant with a slab, or a cache will <b>transfer</b> this slab's components into the target, the target's slab, or the global cache, respectively."
+	nonhuman_usable = TRUE
+	quickbound = list(/datum/clockwork_scripture/ranged_ability/judicial_marker, /datum/clockwork_scripture/ranged_ability/sentinels_compromise, \
+	/datum/clockwork_scripture/create_object/sigil_of_transgression, /datum/clockwork_scripture/create_object/vitality_matrix)
+	actions_types = list()
+
+/obj/item/clockwork/slab/cyborg/engineer
+	quickbound = list(/datum/clockwork_scripture/create_object/tinkerers_cache, /datum/clockwork_scripture/create_object/ocular_warden, /datum/clockwork_scripture/create_object/tinkerers_daemon)
+
+/obj/item/clockwork/slab/cyborg/medical
+	quickbound = list(/datum/clockwork_scripture/ranged_ability/linked_vanguard, /datum/clockwork_scripture/ranged_ability/sentinels_compromise, /datum/clockwork_scripture/fellowship_armory, \
+	/datum/clockwork_scripture/create_object/mending_motor)
+
+/obj/item/clockwork/slab/cyborg/security
+	quickbound = list(/datum/clockwork_scripture/channeled/belligerent, /datum/clockwork_scripture/ranged_ability/judicial_marker, /datum/clockwork_scripture/create_object/ocular_warden)
+
+/obj/item/clockwork/slab/cyborg/peacekeeper
+	quickbound = list(/datum/clockwork_scripture/channeled/belligerent, /datum/clockwork_scripture/ranged_ability/judicial_marker, /datum/clockwork_scripture/channeled/taunting_tirade, \
+	/datum/clockwork_scripture/create_object/mania_motor)
+
+/obj/item/clockwork/slab/cyborg/janitor
+	quickbound = list(/datum/clockwork_scripture/channeled/belligerent, /datum/clockwork_scripture/channeled/volt_void, /datum/clockwork_scripture/create_object/sigil_of_transmission, \
+	/datum/clockwork_scripture/create_object/interdiction_lens)
+
+/obj/item/clockwork/slab/cyborg/service
+	quickbound = list(/datum/clockwork_scripture/replicant, /datum/clockwork_scripture/fellowship_armory, /datum/clockwork_scripture/spatial_gateway, \
+	/datum/clockwork_scripture/create_object/clockwork_obelisk)
+
+/obj/item/clockwork/slab/cyborg/miner
+	quickbound = list(/datum/clockwork_scripture/ranged_ability/judicial_marker, /datum/clockwork_scripture/ranged_ability/linked_vanguard, /datum/clockwork_scripture/spatial_gateway)
+
+/obj/item/clockwork/slab/cyborg/access_display(mob/living/user)
+	user << "<span class='warning'>Use the action buttons to recite your limited set of scripture!</span>"
+
 /obj/item/clockwork/slab/New()
 	..()
 	update_quickbind()
@@ -71,8 +110,8 @@
 	for(var/mob/living/M in living_mob_list)
 		if(is_servant_of_ratvar(M) && (ishuman(M) || issilicon(M)))
 			servants++
-	if(servants > 5)
-		servants -= 5
+	if(servants > SCRIPT_SERVANT_REQ)
+		servants -= SCRIPT_SERVANT_REQ
 		production_slowdown = min(SLAB_SERVANT_SLOWDOWN * servants, SLAB_SLOWDOWN_MAXIMUM) //SLAB_SERVANT_SLOWDOWN additional seconds for each servant above 5, up to SLAB_SLOWDOWN_MAXIMUM
 	production_time = world.time + SLAB_PRODUCTION_TIME + production_slowdown
 	var/mob/living/L
@@ -94,9 +133,6 @@
 /obj/item/clockwork/slab/examine(mob/user)
 	..()
 	if(is_servant_of_ratvar(user) || isobserver(user))
-		user << "Use the <span class='brass'>Hierophant Network</span> action button to communicate with other servants."
-		user << "Clockwork slabs will only make components if held or if inside an item held by a human, and when making a component will prevent all other slabs held from making components."
-		user << "Hitting a slab, a Servant with a slab, or a cache will <b>transfer</b> this slab's components into the target, the target's slab, or the global cache, respectively."
 		if(LAZYLEN(quickbound))
 			for(var/i in 1 to quickbound.len)
 				var/datum/clockwork_scripture/quickbind_slot = quickbound[i]
@@ -219,10 +255,12 @@
 	if(user.get_active_held_item() != src)
 		user << "<span class='warning'>You need to hold the slab in your active hand to recite scripture!</span>"
 		return FALSE
-	var/list/tiers_of_scripture = scripture_unlock_check()
-	if(!ratvar_awakens && !no_cost && !tiers_of_scripture[initial(scripture.tier)])
-		user << "<span class='warning'>That scripture is not unlocked, and cannot be recited!</span>"
-		return FALSE
+	var/initial_tier = initial(scripture.tier)
+	if(initial_tier != SCRIPTURE_PERIPHERAL)
+		var/list/tiers_of_scripture = scripture_unlock_check()
+		if(!ratvar_awakens && !no_cost && !tiers_of_scripture[initial_tier])
+			user << "<span class='warning'>That scripture is not unlocked, and cannot be recited!</span>"
+			return FALSE
 	var/datum/clockwork_scripture/scripture_to_recite = new scripture
 	scripture_to_recite.slab = src
 	scripture_to_recite.invoker = user

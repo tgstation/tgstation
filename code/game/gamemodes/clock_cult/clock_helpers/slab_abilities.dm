@@ -178,3 +178,66 @@
 		remove_ranged_ability()
 
 	return TRUE
+
+//For the cyborg Linked Vanguard scripture, grants you and a nearby ally Vanguard
+/obj/effect/proc_holder/slab/vanguard
+	ranged_mousepointer = 'icons/effects/vanguard_target.dmi'
+
+/obj/effect/proc_holder/slab/vanguard/InterceptClickOn(mob/living/caller, params, atom/target)
+	if(..())
+		return TRUE
+
+	var/turf/T = ranged_ability_user.loc
+	if(!isturf(T))
+		return TRUE
+
+	if(isliving(target) && (target in view(7, get_turf(ranged_ability_user))))
+		var/mob/living/L = target
+		if(!is_servant_of_ratvar(L))
+			ranged_ability_user << "<span class='inathneq'>\"[L] does not yet serve Ratvar.\"</span>"
+			return TRUE
+		if(L.stat == DEAD)
+			ranged_ability_user << "<span class='inathneq'>\"[L.p_they(TRUE)] [L.p_are()] dead. [text2ratvar("Oh, child. To have your life cut short...")]\"</span>"
+			return TRUE
+		if(islist(L.stun_absorption) && L.stun_absorption["vanguard"] && L.stun_absorption["vanguard"]["end_time"] > world.time)
+			ranged_ability_user << "<span class='inathneq'>\"[L.p_they(TRUE)] [L.p_are()] already shielded by a Vanguard.\"</span>"
+			return TRUE
+
+		if(L == ranged_ability_user)
+			for(var/mob/living/LT in spiral_range(7, T))
+				if(LT.stat == DEAD || !is_servant_of_ratvar(LT) || LT == ranged_ability_user || !(LT in view(7, get_turf(ranged_ability_user))) || \
+				(islist(LT.stun_absorption) && LT.stun_absorption["vanguard"] && LT.stun_absorption["vanguard"]["end_time"] > world.time))
+					continue
+				LT.apply_status_effect(STATUS_EFFECT_VANGUARD)
+		else
+			L.apply_status_effect(STATUS_EFFECT_VANGUARD)
+		ranged_ability_user.apply_status_effect(STATUS_EFFECT_VANGUARD)
+
+		clockwork_say(ranged_ability_user, text2ratvar("Shield us from darkness!"))
+
+		remove_ranged_ability()
+
+	return TRUE
+
+//For the cyborg Judicial Marker scripture, places a judicial marker
+/obj/effect/proc_holder/slab/judicial
+	ranged_mousepointer = 'icons/effects/visor_reticule.dmi'
+
+/obj/effect/proc_holder/slab/judicial/InterceptClickOn(mob/living/caller, params, atom/target)
+	if(..())
+		return TRUE
+
+	var/turf/T = ranged_ability_user.loc
+	if(!isturf(T))
+		return TRUE
+
+	if(target in view(7, get_turf(ranged_ability_user)))
+		clockwork_say(ranged_ability_user, text2ratvar("Kneel, heathens!"))
+		ranged_ability_user.visible_message("<span class='warning'>[ranged_ability_user]'s eyes fire a stream of energy at [target], creating a strange mark!</span>", \
+		"<span class='heavy_brass'>You direct the judicial force to [target].</span>")
+		var/turf/targetturf = get_turf(target)
+		new/obj/effect/clockwork/judicial_marker(targetturf, ranged_ability_user)
+		add_logs(ranged_ability_user, targetturf, "created a judicial marker")
+		remove_ranged_ability()
+
+	return TRUE

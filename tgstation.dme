@@ -376,6 +376,7 @@
 #include "code\game\gamemodes\clock_cult\clock_items\soul_vessel.dm"
 #include "code\game\gamemodes\clock_cult\clock_items\wraith_spectacles.dm"
 #include "code\game\gamemodes\clock_cult\clock_scriptures\scripture_applications.dm"
+#include "code\game\gamemodes\clock_cult\clock_scriptures\scripture_cyborg.dm"
 #include "code\game\gamemodes\clock_cult\clock_scriptures\scripture_drivers.dm"
 #include "code\game\gamemodes\clock_cult\clock_scriptures\scripture_judgement.dm"
 #include "code\game\gamemodes\clock_cult\clock_scriptures\scripture_revenant.dm"
