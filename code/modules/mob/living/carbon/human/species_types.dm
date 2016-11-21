@@ -1086,7 +1086,7 @@ SYNDICATE BLACK OPS
 	else
 		stunmod = 1
 		speedmod = 0
-		H.movement_type += FLYING
+		H.movement_type -= FLYING
 		override_float = 0
 		H.pass_flags &= ~PASSTABLE
 		H.CloseWings()

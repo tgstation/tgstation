@@ -483,7 +483,7 @@
 	var/knockback = 0
 	var/stun = boost * 2
 	if(stun)
-		knockmessage += "[suit.user] dashes across [L], knocking them down!"
+		knockmessage += " [suit.user] dashes across [L], knocking them down!"
 	knockmessage += "</span>"
 	knockback += momentum_speed
 	knockback += (part_manip.rating / 2)
