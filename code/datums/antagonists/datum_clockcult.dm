@@ -49,6 +49,8 @@
 		if(iscyborg(S) && !silent_update)
 			S << "<span class='boldwarning'>You have been desynced from your master AI.\n\
 			In addition, your onboard camera is no longer active and you have gained additional equipment, including a limited clockwork slab.</span>"
+		if(isAI(S))
+			S << "<span class='boldwarning'>You are able to use your cameras to listen in on conversations.</span>"
 		S << "<span class='heavy_brass'>You can communicate with other servants by using the Hierophant Network action button in the upper left.</span>"
 	else if(isbrain(owner) || isclockmob(owner))
 		owner << "<span class='nezbere'>You can communicate with other servants by using the Hierophant Network action button in the upper left.</span>"
@@ -74,6 +76,8 @@
 			A.requires_power = POWER_REQ_CLOCKCULT
 			if(!A.lacks_power())
 				A.ai_restore_power()
+			if(A.eyeobj)
+				A.eyeobj.relay_speech = TRUE
 			for(var/C in A.connected_robots)
 				var/mob/living/silicon/robot/R = C
 				if(R.connected_ai == A)
