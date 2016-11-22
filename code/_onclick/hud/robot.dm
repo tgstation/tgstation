@@ -88,7 +88,10 @@
 	var/mob/living/silicon/robot/R = usr
 	R.toggle_ionpulse()
 
-/datum/hud/robot/New(mob/owner)
+/datum/hud/robot
+	ui_style_icon = 'icons/mob/screen_cyborg.dmi'
+
+/datum/hud/robot/New(mob/owner, ui_style = 'icons/mob/screen_cyborg.dmi')
 	..()
 	var/mob/living/silicon/robot/mymobR = mymob
 	var/obj/screen/using
