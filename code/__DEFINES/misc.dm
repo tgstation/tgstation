@@ -582,3 +582,6 @@ var/global/list/ghost_others_options = list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 #define REVS_LOSE 18
 #define WIZARD_KILLED 19
 #define STATION_NUKED 20
+#define CLOCK_SUMMON 21
+#define CLOCK_SILICONS 22
+#define CLOCK_PROSELYTIZATION 23
