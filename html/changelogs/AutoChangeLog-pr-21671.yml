@@ -1,0 +1,4 @@
+author: "Joan"
+delete-after: True
+changes: 
+  - rscadd: "Due to complaints that the new slab interface was too difficult to navigate, it now starts off in compressed format. The button to toggle this is now also larger."
