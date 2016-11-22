@@ -556,6 +556,7 @@
 	dangerous_existence = TRUE
 	limbs_id = "golem"
 	fixed_mut_color = "aaa"
+	var/info_text = "As an <span class='danger'>Iron Golem</span>, you don't have any special traits."
 
 /datum/species/golem/random
 	name = "Random Golem"
@@ -576,6 +577,7 @@
 	id = "adamantine"
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/golem/adamantine
 	fixed_mut_color = "4ed"
+	info_text = "As an <span class='danger'>Adamantine Golem</span>, you don't have any special traits."
 
 //Explodes on death
 /datum/species/golem/plasma
@@ -583,6 +585,7 @@
 	id = "plasma"
 	fixed_mut_color = "a3d"
 	meat = /obj/item/weapon/ore/plasma
+	info_text = "As a <span class='danger'>Plasma Golem</span>, you explode on death!."
 
 /datum/species/golem/plasma/spec_death(gibbed, mob/living/carbon/human/H)
 	explosion(get_turf(H),0,1,2,flame_range = 5)
@@ -596,15 +599,17 @@
 	fixed_mut_color = "0ff"
 	armor = 70 //up from 55
 	meat = /obj/item/weapon/ore/diamond
+	info_text = "As a <span class='danger'>Diamond Golem</span>, you are more resistant than the average golem."
 
 //Faster but softer and less armoured
 /datum/species/golem/gold
 	name = "Gold Golem"
 	id = "gold"
-	fixed_mut_color = "ee0"
+	fixed_mut_color = "cc0"
 	speedmod = 1
 	armor = 25 //down from 55
 	meat = /obj/item/weapon/ore/gold
+	info_text = "As a <span class='danger'>Gold Golem</span>, you are faster but less resistant than the average golem."
 
 //Heavier, thus higher chance of stunning when punching
 /datum/species/golem/silver
@@ -613,6 +618,7 @@
 	fixed_mut_color = "ddd"
 	punchstunthreshold = 9 //60% chance, from 40%
 	meat = /obj/item/weapon/ore/silver
+	info_text = "As a <span class='danger'>Silver Golem</span>, your attacks are heavier and have a higher chance of stunning."
 
 //Harder to stun, deals more damage, but it's even slower
 /datum/species/golem/plasteel
@@ -625,6 +631,7 @@
 	punchstunthreshold = 18 //still 40% stun chance
 	speedmod = 4 //pretty fucking slow
 	meat = /obj/item/weapon/ore/iron
+	info_text = "As a <span class='danger'>Plasteel Golem</span>, you are slower, but harder to stun, and hit very hard when punching."
 
 //Can equip clothing
 /datum/species/golem/titanium
@@ -637,6 +644,7 @@
 	punchdamagehigh = 9 //human-level punches
 	punchstunthreshold = 9 //10% chance, like normal humans
 	meat = /obj/item/weapon/ore/titanium
+	info_text = "As a <span class='danger'>Titanium Golem</span>, you are more leaner than normal golems and can equip clothing. However, you are less resistant and do less damage when punching."
 
 //Like titanium, but can use guns
 /datum/species/golem/titanium/plastitanium
@@ -645,6 +653,7 @@
 	fixed_mut_color = "888"
 	meat = /obj/item/weapon/ore/titanium
 	specflags = list(NOBREATH,NOBLOOD,RADIMMUNE,VIRUSIMMUNE,PIERCEIMMUNE,NODISMEMBER,MUTCOLORS)
+	info_text = "As a <span class='danger'>Plastitanium Golem</span>, you are more leaner than normal golems, so you can equip clothing and use guns. However, you are less resistant and do less damage when punching."
 
 //Fast and regenerates... but can only speak like an abductor
 /datum/species/golem/alloy
@@ -655,6 +664,7 @@
 	meat = /obj/item/stack/sheet/mineral/abductor
 	mutant_organs = list(/obj/item/organ/tongue/abductor) //abductor tongue
 	speedmod = 0 //human-level speed
+	info_text = "As an <span class='danger'>Alloy Golem</span>, you are made of advanced alien materials: you are faster, can wear clothing, and regenerate over time. You are, however, only able to be heard by other alloy golems."
 
 //Regenerates because self-repairing super-advanced alien tech
 /datum/species/golem/alloy/spec_life(mob/living/carbon/human/H)
@@ -674,6 +684,7 @@
 	armor = 30
 	burnmod = 1.25
 	heatmod = 1.5
+	info_text = "As a <span class='danger'>Wooden Golem</span>, you have plant-like traits: you take damage from extreme temperatures, can be set on fire, and have lower armor than a normal golem. You regenerate when in the light and wither in the darkness."
 
 /datum/species/golem/wood/on_species_gain(mob/living/carbon/C, datum/species/old_species)
 	. = ..()
@@ -715,6 +726,7 @@
 	id = "uranium"
 	fixed_mut_color = "7f0"
 	meat = /obj/item/weapon/ore/uranium
+	info_text = "As an <span class='danger'>Uranium Golem</span>, you emit radiation pulses every once in a while. It won't harm fellow golems, but organic lifeforms will be affected."
 
 	var/last_event = 0
 	var/active = null
@@ -737,6 +749,7 @@
 	armor = 0
 	burnmod = 3 //melts easily
 	brutemod = 0.25
+	info_text = "As a <span class='danger'>Sand Golem</span>, you are immune to physical bullets and take very little Brute damage, but are extremely vulnerable to burn damage. You will also turn to sand when dying, preventing any form of recovery."
 
 /datum/species/golem/sand/spec_death(gibbed, mob/living/carbon/human/H)
 	H.visible_message("<span class='danger'>[H] turns into a pile of sand!</span>")
@@ -748,7 +761,7 @@
 
 /datum/species/golem/sand/bullet_act(obj/item/projectile/P, mob/living/carbon/human/H)
 	if(!(P.original == H && P.firer == H))
-		if(istype(P, /obj/item/projectile/bullet))
+		if(istype(P, /obj/item/projectile/bullet) || istype(P, /obj/item/projectile/kinetic))
 			playsound(H, "sound/effects/shovel_dig.ogg", 70, 1)
 			H.visible_message("<span class='danger'>The [P.name] sinks harmlessly in [H]'s sandy body!</span>", \
 			"<span class='userdanger'>The [P.name] sinks harmlessly in [H]'s sandy body!</span>")
@@ -759,19 +772,12 @@
 /datum/species/golem/glass
 	name = "Glass Golem"
 	id = "glass"
-	fixed_mut_color = "5a96b4"
+	fixed_mut_color = "5a96b4aa" //transparent body
 	meat = /obj/item/weapon/shard
 	armor = 0
 	brutemod = 3 //very fragile
 	burnmod = 0.25
-
-/datum/species/golem/glass/on_species_gain(mob/living/carbon/C, datum/species/old_species)
-	..()
-	C.alpha = 150
-
-/datum/species/golem/glass/on_species_loss(mob/living/carbon/C)
-	..()
-	C.alpha = 255
+	info_text = "As a <span class='danger'>Glass Golem</span>, you reflect lasers and energy weapons, and are very resistant to Burn damage, but you are extremely vulnerable to brute damage. On death, you'll shatter beyond any hope of recovery."
 
 /datum/species/golem/glass/spec_death(gibbed, mob/living/carbon/human/H)
 	playsound(H, "shatter", 70, 1)
@@ -802,6 +808,38 @@
 				P.Angle = null
 			return -1
 	return 0
+
+//honk
+/datum/species/golem/bananium
+	name = "Bananium Golem"
+	id = "bananium"
+	fixed_mut_color = "ff0"
+	say_mod = "honks"
+	punchdamagelow = 0
+	punchdamagehigh = 1
+	punchstunthreshold = 2 //Harmless and can't stun
+	meat = /obj/item/weapon/ore/bananium
+	info_text = "As a <span class='danger'>Bananium Golem</span>, you are made for pranking. Your body emits natural honks, and you cannot hurt people when punching them."
+
+	var/last_event = 0
+	var/honkooldown = 0
+	var/active = null
+
+/datum/species/golem/bananium/spec_life(mob/living/carbon/human/H)
+	if(!active)
+		if(world.time > last_event+honkooldown)
+			active = 1
+			playsound(get_turf(H), 'sound/items/bikehorn.ogg', 50, 1)
+			last_event = world.time
+			honkooldown = rand(20, 80)
+			active = null
+	..()
+
+/datum/species/golem/bananium/spec_death(gibbed, mob/living/carbon/human/H)
+	playsound(get_turf(H), 'sound/misc/sadtrombone.ogg', 70, 0)
+
+/datum/species/golem/bananium/get_spans()
+	return list(SPAN_CLOWN)
 
 /*
  FLIES

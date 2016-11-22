@@ -54,6 +54,15 @@
 		if(istype(O, /obj/item/stack/sheet/metal))
 			species = /datum/species/golem
 
+		if(istype(O, /obj/item/stack/sheet/glass))
+			species = /datum/species/golem/glass
+
+		if(istype(O, /obj/item/stack/sheet/plasteel))
+			species = /datum/species/golem/plasteel
+
+		if(istype(O, /obj/item/stack/sheet/mineral/sandstone))
+			species = /datum/species/golem/sand
+
 		if(istype(O, /obj/item/stack/sheet/mineral/plasma))
 			species = /datum/species/golem/plasma
 
@@ -68,6 +77,21 @@
 
 		if(istype(O, /obj/item/stack/sheet/mineral/uranium))
 			species = /datum/species/golem/uranium
+
+		if(istype(O, /obj/item/stack/sheet/mineral/bananium))
+			species = /datum/species/golem/bananium
+
+		if(istype(O, /obj/item/stack/sheet/mineral/titanium))
+			species = /datum/species/golem/titanium
+
+		if(istype(O, /obj/item/stack/sheet/mineral/plastitanium))
+			species = /datum/species/golem/titanium/plastitanium
+
+		if(istype(O, /obj/item/stack/sheet/mineral/abductor))
+			species = /datum/species/golem/alloy
+
+		if(istype(O, /obj/item/stack/sheet/mineral/wood))
+			species = /datum/species/golem/wood
 
 		if(species)
 			if(O.use(10))

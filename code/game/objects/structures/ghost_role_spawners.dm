@@ -118,7 +118,7 @@
 	if(prob(3))
 		golem_surname = pick(last_names)
 
-	var/datum/species/X = mob_species
+	var/datum/species/golem/X = mob_species
 	var/golem_forename = initial(X.id)
 
 	// The id of golem species is either their material "diamond","gold",
@@ -132,6 +132,7 @@
 	// also a tiny chance of being called "Plasma Meme"
 	// which is clearly a feature
 
+	new_spawn << "[initial(X.info_text)]"
 	new_spawn << "Build golem shells in the autolathe, and feed refined mineral sheets to the shells to bring them to life! You are generally a peaceful group unless provoked."
 	if(ishuman(new_spawn))
 		var/mob/living/carbon/human/H = new_spawn
