@@ -1,0 +1,4 @@
+author: "Gun Hog"
+delete-after: True
+changes: 
+  - bugfix: "Medibots now heal toxin damage again."
