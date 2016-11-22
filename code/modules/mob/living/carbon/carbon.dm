@@ -105,6 +105,7 @@
 		visible_message("<span class='danger'>[src] crashes into [victim], knocking them both over!</span>", "<span class='userdanger'>You violently crash into [victim]!</span>")
 		playsound(src,'sound/weapons/punch1.ogg',50,1)
 
+
 //Throwing stuff
 /mob/living/carbon/proc/toggle_throw_mode()
 	if(stat)
