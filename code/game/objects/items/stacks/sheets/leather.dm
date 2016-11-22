@@ -125,6 +125,21 @@ var/global/list/datum/stack_recipe/xeno_recipes = list ( \
 	icon_state = "sheet-leather"
 	origin_tech = "materials=2"
 
+var/global/list/datum/stack_recipe/leather_recipes = list ( \
+	new/datum/stack_recipe("wallet", /obj/item/weapon/storage/wallet, 1), \
+	new/datum/stack_recipe("botanical gloves", /obj/item/clothing/gloves/botanic_leather, 1), \
+	new/datum/stack_recipe("leather jacket", /obj/item/clothing/suit/jacket/leather, 3), \
+	new/datum/stack_recipe("leather overcoat", /obj/item/clothing/suit/jacket/leather/overcoat, 9), \
+	new/datum/stack_recipe("leather satchel", /obj/item/weapon/storage/backpack/satchel, 3), \
+	new/datum/stack_recipe("shoulder holster", /obj/item/weapon/storage/belt/holster, 4), \
+	new/datum/stack_recipe("utility belt", /obj/item/weapon/storage/belt/utility, 3), \
+	new/datum/stack_recipe("leather briefcase", /obj/item/weapon/storage/briefcase/leather/, 6), \
+	)
+
+/obj/item/stack/sheet/leather/New(var/loc, var/amount=null)
+	recipes = leather_recipes
+	return ..()
+	
 /obj/item/stack/sheet/sinew
 	name = "watcher sinew"
 	icon = 'icons/obj/mining.dmi'
@@ -208,3 +223,9 @@ var/global/list/datum/stack_recipe/sinew_recipes = list ( \
 			HS.amount = 1
 			wetness = initial(wetness)
 			src.use(1)
+
+/obj/item/stack/sheet/wetleather/microwave_act(obj/machinery/microwave/M)
+	..()
+	var/obj/item/stack/sheet/leather/HS = new(loc)
+	HS.amount = amount
+	qdel(src)

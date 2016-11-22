@@ -63,6 +63,17 @@
 	unit_name = "alien hide"
 	export_types = list(/obj/item/stack/sheet/animalhide/xeno)
 
+// Processed leather. Fashionable.
+/datum/export/stack/skin/leather
+	cost = 3000
+	unit_name = "leather"
+	export_types = list(/obj/item/stack/sheet/leather)
+	
+// Dragon hide. Tough.
+/datum/export/stack/skin/ashdrake
+	cost = 7000
+	unit_name = "drake hide"
+	export_types = list(/obj/item/stack/sheet/animalhide/ashdrake)
 
 // Common materials.
 // For base materials, see materials.dm

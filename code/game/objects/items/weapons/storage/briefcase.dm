@@ -14,25 +14,17 @@
 	resistance_flags = FLAMMABLE
 	obj_integrity = 150
 	max_integrity = 150
-	var/folder_path = /obj/item/weapon/folder //this is the path of the folder that gets spawned in New()
-
-/obj/item/weapon/storage/briefcase/New()
-	..()
-	new /obj/item/weapon/pen(src)
-	var/obj/item/weapon/folder/folder = new folder_path(src)
-	for(var/i in 1 to 6)
-		new /obj/item/weapon/paper(folder)
-
-/obj/item/weapon/storage/briefcase/lawyer
-	folder_path = /obj/item/weapon/folder/blue
 
 /obj/item/weapon/storage/briefcase/lawyer/New()
-	new /obj/item/weapon/stamp/law(src)
+	new /obj/item/weapon/pen(src)
+	var/obj/item/weapon/folder/folder =  new /obj/item/weapon/folder/blue(src)
+	for(var/i in 1 to 6)
+		new /obj/item/weapon/paper(folder)
 	..()
 
 /obj/item/weapon/storage/briefcase/sniperbundle
 	name = "briefcase"
-	desc = "It's label reads genuine hardened Captain leather, but suspiciously has no other tags or branding. Smells like L'Air du Temps."
+	desc = "Its label reads genuine hardened Captain leather, but suspiciously has no other tags or branding. Smells like L'Air du Temps."
 	icon_state = "briefcase"
 	flags = CONDUCT
 	force = 10
@@ -56,3 +48,6 @@
 	new /obj/item/ammo_box/magazine/sniper_rounds/haemorrhage(src)
 	new /obj/item/weapon/suppressor/specialoffer(src)
 
+/obj/item/weapon/storage/briefcase/leather/
+	desc = "A briefcase made from real skin from mutilated animal corpses!"
+	force = 10
