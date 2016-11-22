@@ -190,9 +190,6 @@
 				var/turf/startpoint = get_turf(src)
 				QDEL_IN(src, 3)
 				clockwork_gateway_activated = TRUE
-				for(var/I in all_clockwork_mobs)
-					var/mob/M = I
-					M.clear_alert("scripturereq")
 				if(ratvar_portal)
 					sleep(3)
 					new/obj/structure/destructible/clockwork/massive/ratvar(startpoint)
