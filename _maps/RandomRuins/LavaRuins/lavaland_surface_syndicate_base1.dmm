@@ -159,18 +159,19 @@
 "dc" = (/obj/structure/table/reinforced,/obj/item/weapon/paper_bin,/obj/item/weapon/pen,/turf/open/floor/plasteel/vault{dir = 8},/area/ruin/powered/syndicate_lava_base)
 "dd" = (/obj/machinery/computer/message_monitor,/obj/item/weapon/paper/monitorkey,/turf/open/floor/plasteel/vault{dir = 8},/area/ruin/powered/syndicate_lava_base)
 "de" = (/turf/open/floor/plasteel/vault{tag = "icon-vault (NORTHEAST)"; dir = 5},/area/ruin/powered/syndicate_lava_base)
-"df" = (/obj/machinery/button/door{id = "lavalandsyndi"; name = "Syndicate Experimentor Lockdown Control"; pixel_x = 26; req_access_txt = "150"},/turf/open/floor/engine,/area/ruin/powered/syndicate_lava_base)
-"dg" = (/obj/machinery/button/door{id = "lavalandsyndi"; name = "Syndicate Experimentor Lockdown Control"; pixel_x = -26; req_access_txt = "150"},/turf/open/floor/plasteel/vault{dir = 5},/area/ruin/powered/syndicate_lava_base)
-"dh" = (/obj/item/stack/sheet/mineral/plastitanium{amount = 30},/obj/item/stack/rods{amount = 50},/obj/structure/table/reinforced,/turf/open/floor/plasteel/vault{dir = 8},/area/ruin/powered/syndicate_lava_base)
-"di" = (/obj/structure/filingcabinet/medical,/turf/open/floor/plasteel/vault{dir = 5},/area/ruin/powered/syndicate_lava_base)
-"dj" = (/turf/open/floor/plasteel/circuit/gcircuit,/area/ruin/powered/syndicate_lava_base)
-"dk" = (/obj/machinery/door/poddoor/preopen{id = "lavalandsyndi"; name = "Syndicate Research Experimentor Shutters"},/obj/machinery/door/airlock/hatch{name = "Experimentation Room"; req_access_txt = "150"},/turf/open/floor/plasteel/vault{dir = 8},/area/ruin/powered/syndicate_lava_base)
-"dl" = (/obj/item/stack/sheet/metal{amount = 50},/obj/item/weapon/grenade/chem_grenade,/obj/item/weapon/grenade/chem_grenade,/obj/item/weapon/grenade/chem_grenade,/obj/structure/table/reinforced,/turf/open/floor/plasteel/vault{dir = 8},/area/ruin/powered/syndicate_lava_base)
-"dm" = (/obj/machinery/telecomms/relay/preset/ruskie{use_power = 0},/turf/open/floor/plasteel/vault{tag = "icon-vault (NORTHEAST)"; dir = 5},/area/ruin/powered/syndicate_lava_base)
-"dn" = (/obj/machinery/door/airlock/hatch{name = "Syndicate Recon Outpost"; req_access_txt = "150"},/obj/structure/fans/tiny,/turf/open/floor/plasteel/vault{dir = 8},/area/ruin/powered/syndicate_lava_base)
-"do" = (/obj/structure/sign/vacuum{pixel_x = -32},/turf/open/floor/plasteel/vault{dir = 8},/area/ruin/powered/syndicate_lava_base)
-"dp" = (/obj/structure/sign/xeno_warning_mining{pixel_x = 32},/turf/open/floor/plasteel/vault{dir = 8},/area/ruin/powered/syndicate_lava_base)
-"dq" = (/obj/structure/sign/securearea{pixel_y = 32},/turf/open/floor/plating/lava/smooth/lava_land_surface,/area/lavaland/surface/outdoors)
+"df" = (/obj/effect/baseturf_helper,/turf/open/floor/plasteel/vault{tag = "icon-vault (NORTHEAST)"; dir = 5},/area/ruin/powered/syndicate_lava_base)
+"dg" = (/obj/machinery/button/door{id = "lavalandsyndi"; name = "Syndicate Experimentor Lockdown Control"; pixel_x = 26; req_access_txt = "150"},/turf/open/floor/engine,/area/ruin/powered/syndicate_lava_base)
+"dh" = (/obj/machinery/button/door{id = "lavalandsyndi"; name = "Syndicate Experimentor Lockdown Control"; pixel_x = -26; req_access_txt = "150"},/turf/open/floor/plasteel/vault{dir = 5},/area/ruin/powered/syndicate_lava_base)
+"di" = (/obj/item/stack/sheet/mineral/plastitanium{amount = 30},/obj/item/stack/rods{amount = 50},/obj/structure/table/reinforced,/turf/open/floor/plasteel/vault{dir = 8},/area/ruin/powered/syndicate_lava_base)
+"dj" = (/obj/structure/filingcabinet/medical,/turf/open/floor/plasteel/vault{dir = 5},/area/ruin/powered/syndicate_lava_base)
+"dk" = (/turf/open/floor/plasteel/circuit/gcircuit,/area/ruin/powered/syndicate_lava_base)
+"dl" = (/obj/machinery/door/poddoor/preopen{id = "lavalandsyndi"; name = "Syndicate Research Experimentor Shutters"},/obj/machinery/door/airlock/hatch{name = "Experimentation Room"; req_access_txt = "150"},/turf/open/floor/plasteel/vault{dir = 8},/area/ruin/powered/syndicate_lava_base)
+"dm" = (/obj/item/stack/sheet/metal{amount = 50},/obj/item/weapon/grenade/chem_grenade,/obj/item/weapon/grenade/chem_grenade,/obj/item/weapon/grenade/chem_grenade,/obj/structure/table/reinforced,/turf/open/floor/plasteel/vault{dir = 8},/area/ruin/powered/syndicate_lava_base)
+"dn" = (/obj/machinery/telecomms/relay/preset/ruskie{use_power = 0},/turf/open/floor/plasteel/vault{tag = "icon-vault (NORTHEAST)"; dir = 5},/area/ruin/powered/syndicate_lava_base)
+"do" = (/obj/machinery/door/airlock/hatch{name = "Syndicate Recon Outpost"; req_access_txt = "150"},/obj/structure/fans/tiny,/turf/open/floor/plasteel/vault{dir = 8},/area/ruin/powered/syndicate_lava_base)
+"dp" = (/obj/structure/sign/vacuum{pixel_x = -32},/turf/open/floor/plasteel/vault{dir = 8},/area/ruin/powered/syndicate_lava_base)
+"dq" = (/obj/structure/sign/xeno_warning_mining{pixel_x = 32},/turf/open/floor/plasteel/vault{dir = 8},/area/ruin/powered/syndicate_lava_base)
+"dr" = (/obj/structure/sign/securearea{pixel_y = 32},/turf/open/floor/plating/lava/smooth/lava_land_surface,/area/lavaland/surface/outdoors)
 
 (1,1,1) = {"
 aaaaaaaaabaaaaabababababababababababababababababababababababababababababaaaa
@@ -200,14 +201,14 @@ aaabababababacadadadcFadadadadadadcGcfadaYaZadadcHcfadadadadapapcuadabababab
 abababababababadcIcIcIcIcIcIcIcfaRapapadaYaZadaRapapcJbbcKadcLapcMadabababab
 abababababababadcIcIcIcIcIcIcIcFcNapapadaYaZadapaocOcPcQcRadcScTcUadabababab
 abababababababadcIcIcIcIcIcIcIcFbFapcVadaYaZadcWaocXbHapaNadadadadadabababab
-ababababababacadcYcIcIcIcIcIcIcFcZapdaadaYaZaddbaodcddapaNcHdededeadabababab
-abababababababadcIcIcIcIcIcIdfaddgapdhadaYaZaddiapapapapbJaddjdjdjadabababab
-ababababababacadcIcIcIcIcIcIcIdkapapdladcwcCadadadadadadadaddjdmdjadabababab
-ababababababacadcIcIcIcIcIcIcIadcWapaRaddndnadacacacacacabadadadadadabababab
-ababababababacadadadadadadadadadbxbMbxaddodpadacacacababababababacacabababab
+ababababababacadcYcIcIcIcIcIcIcFcZapdaadaYaZaddbaodcddapaNcHdedfdeadabababab
+abababababababadcIcIcIcIcIcIdgaddhapdiadaYaZaddjapapapapbJaddkdkdkadabababab
+ababababababacadcIcIcIcIcIcIcIdlapapdmadcwcCadadadadadadadaddkdndkadabababab
+ababababababacadcIcIcIcIcIcIcIadcWapaRaddodoadacacacacacabadadadadadabababab
+ababababababacadadadadadadadadadbxbMbxaddpdqadacacacababababababacacabababab
 ababababababacacacabababacacacadbyaNbyadaNaNadacababababacababababababababab
-ababababababababababababababacadadadadaddndnadababacacababababababababababab
-abababababababababababababababababababdqababdqababababababababababababababab
+ababababababababababababababacadadadadaddodoadababacacababababababababababab
+abababababababababababababababababababdrababdrababababababababababababababab
 abababababababababababababababababababababababababababababababababababababaa
 aaababababababababababababababababababababababababababababababababababababaa
 aaaaabaaababababababababababababababababababababababababababababababaaaaaaaa
