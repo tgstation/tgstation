@@ -92,7 +92,7 @@
 	return 0
 	
 /datum/mapGeneratorModule/bottomlayer/snow
-	spawnableAtoms = list(/turf/open/floor/plating/asteroid/snow/atmosphere = 100)
+	spawnableTurfs = list(/turf/open/floor/plating/asteroid/snow/atmosphere = 100)
 
 /datum/mapGeneratorModule/snow/pineTrees
 	spawnableAtoms = list(/obj/structure/flora/tree/pine = 30)
