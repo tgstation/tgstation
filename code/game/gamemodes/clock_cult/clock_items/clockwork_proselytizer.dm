@@ -11,6 +11,7 @@
 	var/max_alloy = REPLICANT_ALLOY_UNIT * 10
 	var/uses_alloy = TRUE
 	var/metal_to_alloy = FALSE
+	var/reform_alloy = TRUE
 	var/repairing = null //what we're currently repairing, if anything
 	var/refueling = FALSE //if we're currently refueling from a cache
 	var/speed_multiplier = 1 //how fast this proselytizer works
@@ -37,6 +38,37 @@
 	uses_alloy = FALSE
 	debug = TRUE
 
+/obj/item/clockwork/clockwork_proselytizer/cyborg
+	name = "cyborg proselytizer"
+	clockwork_desc = "A cyborg's internal proselytizer. It is capable of using the cyborg's power if it lacks liquified replicant alloy."
+	metal_to_alloy = TRUE
+	reform_alloy = FALSE
+
+/obj/item/clockwork/clockwork_proselytizer/cyborg/examine(mob/living/user)
+	..()
+	if(is_servant_of_ratvar(user) || isobserver(user))
+		user << "<span class='alloy'>It will use cell charge at a rate of <b>[CLOCKCULT_ALLOY_TO_POWER_MULTIPLIER]</b> charge to <b>1</b> alloy if it has insufficient alloy.</span>"
+
+/obj/item/clockwork/clockwork_proselytizer/cyborg/can_use_alloy(amount)
+	if(amount != RATVAR_ALLOY_CHECK)
+		var/mob/living/silicon/robot/R = loc
+		var/current_charge = 0
+		if(istype(R) && R.cell)
+			current_charge = R.cell.charge
+			while(amount > 0 && stored_alloy - amount < 0) //amount is greater than 0 and stored alloy minus the amount is still less than 0
+				current_charge -= CLOCKCULT_ALLOY_TO_POWER_MULTIPLIER
+				amount--
+		if(current_charge < 0)
+			return FALSE
+	. = ..()
+
+/obj/item/clockwork/clockwork_proselytizer/cyborg/modify_stored_alloy(amount)
+	var/mob/living/silicon/robot/R = loc
+	while(istype(R) && R.cell && amount < 0 && stored_alloy + amount < 0) //amount is less than 0 and stored alloy plus the amount is less than 0
+		R.cell.use(CLOCKCULT_ALLOY_TO_POWER_MULTIPLIER)
+		amount++
+	. = ..()
+
 /obj/item/clockwork/clockwork_proselytizer/examine(mob/living/user)
 	..()
 	if(is_servant_of_ratvar(user) || isobserver(user))
@@ -47,12 +79,13 @@
 				user << "<span class='alloy'>It can convert Brass sheets to liquified replicant alloy at a rate of <b>1</b> sheet to <b>[REPLICANT_FLOOR]</b> alloy.</span>"
 			user << "<span class='alloy'>It has <b>[stored_alloy]/[max_alloy]</b> units of liquified alloy stored.</span>"
 			user << "<span class='alloy'>Use it on a Tinkerer's Cache, strike it with Replicant Alloy, or attack Replicant Alloy with it to add additional liquified alloy.</span>"
-			user << "<span class='alloy'>Use it in-hand to remove stored liquified alloy.</span>"
+			if(reform_alloy)
+				user << "<span class='alloy'>Use it in-hand to remove stored liquified alloy.</span>"
 
 /obj/item/clockwork/clockwork_proselytizer/attack_self(mob/living/user)
-	if(is_servant_of_ratvar(user) && uses_alloy)
+	if(is_servant_of_ratvar(user) && uses_alloy && reform_alloy)
 		if(!can_use_alloy(REPLICANT_ALLOY_UNIT))
-			user << "<span class='warning'>[src] [stored_alloy ? "Lacks enough":"Contains no"] alloy to reform[stored_alloy ? "":" any"] into solidified alloy!</span>"
+			user << "<span class='warning'>[src] [stored_alloy ? "lacks enough":"contains no"] alloy to reform[stored_alloy ? "":" any"] into solidified alloy!</span>"
 			return
 		modify_stored_alloy(-REPLICANT_ALLOY_UNIT)
 		playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
