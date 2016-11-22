@@ -160,7 +160,10 @@
 	S.sensor_mode()
 
 
-/datum/hud/ai/New(mob/owner)
+/datum/hud/ai
+	ui_style_icon = 'icons/mob/screen_ai.dmi'
+
+/datum/hud/ai/New(mob/owner, ui_style = 'icons/mob/screen_ai.dmi')
 	..()
 	var/obj/screen/using
 
