@@ -111,6 +111,12 @@
 	icon_state = "cargo_cypherkey"
 	channels = list("Supply" = 1)
 
+/obj/item/device/encryptionkey/headset_mining
+	name = "mining radio encryption key"
+	desc = "An encryption key for a radio headset.  To access the supply channel, use :u. For science, use :n."
+	icon_state = "cargo_cypherkey"
+	channels = list("Supply" = 1, "Science" = 1)
+
 /obj/item/device/encryptionkey/headset_service
 	name = "service radio encryption key"
 	desc = "An encryption key for a radio headset.  To access the service channel, use :v."
