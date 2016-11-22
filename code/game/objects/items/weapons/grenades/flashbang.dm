@@ -31,8 +31,8 @@
 		M.Stun(15)
 		M.adjust_eye_damage(8)
 	if(M.flash_act(affect_silicon = 1))
-		M.Stun(max(10/distance, 3))
-		M.Weaken(max(10/distance, 3))
+		M.Stun(max(10/max(1,distance), 3))
+		M.Weaken(max(10/max(1,distance), 3))
 	if(!distance || loc == M || loc == M.loc)	//Stop allahu akbarring rooms with this.
 		M.Stun(10)
 		M.Weaken(10)
