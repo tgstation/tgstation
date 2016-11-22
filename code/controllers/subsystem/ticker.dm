@@ -49,6 +49,8 @@ var/datum/subsystem/ticker/ticker
 
 	var/maprotatechecked = 0
 
+	var/news_report
+
 /datum/subsystem/ticker/New()
 	NEW_SS_GLOBAL(ticker)
 
@@ -378,10 +380,13 @@ var/datum/subsystem/ticker/ticker
 
 	world << "<BR>[TAB]Shift Duration: <B>[round(world.time / 36000)]:[add_zero("[world.time / 600 % 60]", 2)]:[world.time / 100 % 6][world.time / 100 % 10]</B>"
 	world << "<BR>[TAB]Station Integrity: <B>[mode.station_was_nuked ? "<font color='red'>Destroyed</font>" : "[station_integrity]%"]</B>"
+	if(mode.station_was_nuked)
+		ticker.news_report = STATION_DESTROYED_NUKE
 	if(joined_player_list.len)
 		world << "<BR>[TAB]Total Population: <B>[joined_player_list.len]</B>"
 		if(station_evacuated)
 			world << "<BR>[TAB]Evacuation Rate: <B>[num_escapees] ([round((num_escapees/joined_player_list.len)*100, 0.1)]%)</B>"
+			news_report = STATION_EVACUATED
 		world << "<BR>[TAB]Survival Rate: <B>[num_survivors] ([round((num_survivors/joined_player_list.len)*100, 0.1)]%)</B>"
 	world << "<BR>"
 
@@ -413,6 +418,9 @@ var/datum/subsystem/ticker/ticker
 				robo.laws.show_laws(world)
 
 	mode.declare_completion()//To declare normal completion.
+
+	if(cross_allowed)
+		send_news_report()
 
 	//calls auto_declare_completion_* for all modes
 	for(var/handler in typesof(/datum/game_mode/proc))
@@ -578,3 +586,48 @@ var/datum/subsystem/ticker/ticker
 	queued_players = ticker.queued_players
 	cinematic = ticker.cinematic
 	maprotatechecked = ticker.maprotatechecked
+
+
+/datum/subsystem/ticker/proc/send_news_report()
+	var/news_message
+	var/news_source = "Nanotrasen News Network"
+	switch(news_report)
+		if(NUKE_SYNDICATE_BASE)
+			news_message = "In a daring raid, the heroic crew of [station_name()] detonated a nuclear device in the heart of a terrorist base."
+		if(STATION_DESTROYED_NUKE)
+			news_message = "We would like to reassure all employees that the reports of a Syndicate backed nuclear attack on [station_name()] are, in fact, a hoax. Have a secure day!"
+		if(STATION_EVACUATED)
+			news_message = "The crew of [station_name()] has been evacuated amid unconfirmed reports of enemy activity."
+		if(GANG_LOSS)
+			news_message = "Organized crime aboard [station_name()] has been stamped out by members of our ever vigilant security team. Remember to thank your assigned officers today!"
+		if(GANG_TAKEOVER)
+			news_message = "Contact with [station_name()] has been lost after a sophisticated hacking attack by organized criminal elements. Stay vigilant!"
+		if(BLOB_WIN)
+			news_message = "[station_name()] was overcome by an unknown biological outbreak, killing all crew on board. Don't let it happen to you! Remember, a clean work station is a safe work station."
+		if(BLOB_NUKE)
+			news_message = "[station_name()] is currently undergoing decontanimation after a controlled burst of radiation was used to remove a biological ooze. All employees were safely evacuated prior, and are enjoying a relaxing vacation."
+		if(BLOB_DESTROYED)
+			news_message = "[station_name()] is currently undergoing decontamination procedures after the destruction of a biological hazard. As a reminder, any crew members experiencing cramps or bloating should report immediately to security for incineration."
+		if(CULT_ESCAPE)
+			news_message = "Security Alert: A group of religious fanatics have escaped from [station_name()]."
+		if(CULT_FAILURE)
+			news_message = "Following the dismantling of a restricted cult aboard [station_name()], we would like to remind all employees that worship outside of the Chapel is strictly prohibited, and cause for termination."
+		if(CULT_SUMMON)
+			news_message = "Company officials would like to clarify that [station_name()] was scheduled to be decommissioned following meteor damage earlier this year. Earlier reports of an unknowable eldritch horror were made in error."
+		if(NUKE_MISS)
+			news_message = "The Syndicate have bungled a terrorist attack [station_name()], detonating a nuclear weapon in empty space near by."
+		if(OPERATIVES_KILLED)
+			news_message = "Repairs to [station_name()] are underway after an elite Syndicate death squad was wiped out by the crew."
+		if(OPERATIVE_SKIRMISH)
+			news_message = "A skirmish between security forces and Syndicate agents aboard [station_name()] ended with both sides bloodied but intact."
+		if(REVS_WIN)
+			news_message = "Company officials have reassured investors that despite a union led revolt aboard [station_name()] that there will be no wage increases for workers."
+		if(REVS_LOSE)
+			news_message = "[station_name()] quickly put down a misguided attempt at mutiny. Remember, unionizing is illegal!"
+		if(WIZARD_KILLED)
+			news_message = "Tensions have flared with the Wizard's Federation following the death of one of their members aboard [station_name()]."
+		if(STATION_NUKED)
+			news_message = "[station_name()] activated its self destruct device for unknown reasons. Attempts to clone the Captain so he can be arrested and executed are under way."
+
+	if(news_message)
+		send2otherserver(news_source, news_message,"News_Report")

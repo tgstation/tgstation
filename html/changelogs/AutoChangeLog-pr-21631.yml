@@ -1,0 +1,4 @@
+author: "jakeramsay007"
+delete-after: True
+changes: 
+  - tweak: "Borers can no longer take control of people who have a mindshield implant or are a member of either cult. This however does not stop them from infesting and controlling them through other means, such as chemicals."
