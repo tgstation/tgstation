@@ -355,11 +355,10 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 					if(unconverted_ais_exist > 1)
 						desc += "<br><b>[unconverted_ais_exist] unconverted AIs exist!</b><br>"
 					else
-						desc += "<br><b>An unconverted AI exists!</b><br>"
-					if(unconverted_ais_exist)
-						icon_state += "-ai"
+						desc += "<br><b>An unconverted AI exists!</b>"
+					icon_state += "-ai"
 				else
-					desc += "<br>No unconverted AIs exist.<br>"
+					desc += "<br>No unconverted AIs exist: <b><font color=#5A6068>\[CHECK\]</font></b>"
 
 /obj/screen/alert/clockwork/infodump
 	name = "Global Records"
