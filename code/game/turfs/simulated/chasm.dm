@@ -41,7 +41,7 @@
 	//Flies right over the chasm
 	if(isliving(AM))
 		var/mob/MM = AM
-		if(FLYING in MM.movement_type)
+		if(MM.movement_type & FLYING)
 			return 0
 	if(ishuman(AM))
 		var/mob/living/carbon/human/H = AM

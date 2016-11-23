@@ -106,7 +106,7 @@
 	if(armed)
 		if(ismob(AM))
 			var/mob/MM = AM
-			if(!(FLYING in MM.movement_type))
+			if(!(MM.movement_type & FLYING))
 				if(ishuman(AM))
 					var/mob/living/carbon/H = AM
 					if(H.m_intent == "run")

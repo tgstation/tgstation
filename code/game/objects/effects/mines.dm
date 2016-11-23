@@ -13,7 +13,7 @@
 /obj/effect/mine/Crossed(AM as mob|obj)
 	if(ismob(AM))
 		var/mob/MM = AM
-		if(!(FLYING in MM.movement_type))
+		if(!(MM.movement_type & FLYING))
 			triggermine(AM)
 	else
 		triggermine(AM)

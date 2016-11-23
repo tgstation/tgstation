@@ -869,7 +869,7 @@
 	if(istype(F) && F.flight)
 		flightpack = 1
 	var/flight = 0
-	if(FLYING in H.movement_type)
+	if(H.movement_type & FLYING)
 		flight = 1
 
 	if(!flightpack)
@@ -880,7 +880,7 @@
 
 	if(!(H.status_flags & IGNORESLOWDOWN))
 		if(!H.has_gravity())
-			if((FLYING in H.movement_type) && !flightpack)	//No hyperstacking angel wings!
+			if((H.movement_type & FLYING) && !flightpack)	//No hyperstacking angel wings!
 				. += speedmod
 				return
 			// If there's no gravity we have the sanic speed of jetpack.
