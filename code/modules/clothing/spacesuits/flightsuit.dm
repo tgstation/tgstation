@@ -825,6 +825,7 @@
 	actions_types = list(/datum/action/item_action/flightsuit/toggle_helmet,/datum/action/item_action/flightsuit/toggle_boots,/datum/action/item_action/flightsuit/toggle_flightpack,/datum/action/item_action/flightsuit/lock_suit)
 	armor = list(melee = 20, bullet = 20, laser = 20, energy = 10, bomb = 30, bio = 100, rad = 75, fire = 100, acid = 100)
 	var/maint_panel = 0
+	max_heat_protection_temperature = FIRE_SUIT_MAX_TEMP_PROTECT
 
 /obj/item/clothing/suit/space/hardsuit/flightsuit/full/New()
 	..()
@@ -1135,6 +1136,7 @@
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	brightness_on = 7
 	armor = list(melee = 20, bullet = 20, laser = 20, energy = 10, bomb = 30, bio = 100, rad = 75, fire = 100, acid = 100)
+	max_heat_protection_temperature = FIRE_HELM_MAX_TEMP_PROTECT
 
 //ITEM actionS------------------------------------------------------------------------------------------------------------------------------------------------------
 //TODO: TOGGLED BUTTON SPRITES
