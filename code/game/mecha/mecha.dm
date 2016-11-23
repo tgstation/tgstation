@@ -142,9 +142,11 @@
 
 /obj/mecha/Destroy()
 	go_out()
+	var/mob/living/silicon/ai/AI
 	for(var/mob/M in src) //Let's just be ultra sure
 		if(isAI(M))
-			M.gib() //AIs are loaded into the mech computer itself. When the mech dies, so does the AI. Forever.
+			occupant = null
+			AI = M //AIs are loaded into the mech computer itself. When the mech dies, so does the AI. They can be recovered with an AI card from the wreck.
 		else
 			M.forceMove(loc)
 
@@ -152,7 +154,7 @@
 		explosion(get_turf(loc), 0, 0, 1, 3)
 
 	if(wreckage)
-		var/obj/structure/mecha_wreckage/WR = new wreckage(loc)
+		var/obj/structure/mecha_wreckage/WR = new wreckage(loc, AI)
 		for(var/obj/item/mecha_parts/mecha_equipment/E in equipment)
 			if(E.salvageable && prob(30))
 				WR.crowbar_salvage += E
@@ -176,6 +178,8 @@
 			qdel(cell)
 		if(internal_tank)
 			qdel(internal_tank)
+		if(AI)
+			AI.gib() //No wreck, no AI to recover
 	STOP_PROCESSING(SSobj, src)
 	poi_list.Remove(src)
 	equipment.Cut()
@@ -630,9 +634,6 @@
 			if(!AI || !isAI(occupant)) //Mech does not have an AI for a pilot
 				user << "<span class='warning'>No AI detected in the [name] onboard computer.</span>"
 				return
-			if(AI.mind.special_role) //Malf AIs cannot leave mechs. Except through death.
-				user << "<span class='boldannounce'>ACCESS DENIED.</span>"
-				return
 			AI.ai_restore_power()//So the AI initially has power.
 			AI.control_disabled = 1
 			AI.radio_enabled = 0
@@ -684,9 +685,9 @@
 	AI.remote_control = src
 	AI.canmove = 1 //Much easier than adding AI checks! Be sure to set this back to 0 if you decide to allow an AI to leave a mech somehow.
 	AI.can_shunt = 0 //ONE AI ENTERS. NO AI LEAVES.
-	AI << "[interaction == AI_MECH_HACK ? "<span class='announce'>Takeover of [name] complete! You are now permanently loaded onto the onboard computer. Do not attempt to leave the station sector!</span>" \
+	AI << "[interaction == AI_MECH_HACK ? "<span class='announce'>Takeover of [name] complete! You are now loaded onto the onboard computer. Do not attempt to leave the station sector!</span>" \
 	: "<span class='notice'>You have been uploaded to a mech's onboard computer."]"
-	AI << "<span class='boldnotice'>Use Middle-Mouse to activate mech functions and equipment. Click normally for AI interactions.</span>"
+	AI << "<span class='reallybig boldnotice'>Use Middle-Mouse to activate mech functions and equipment. Click normally for AI interactions.</span>"
 	GrantActions(AI)
 
 
