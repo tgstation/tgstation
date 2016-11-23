@@ -17,7 +17,7 @@ var/const/GALOSHES_DONT_HELP = 4
 var/const/SLIDE_ICE = 8
 
 /mob/living/carbon/slip(s_amount, w_amount, obj/O, lube)
-	if(FLYING in movement_type)
+	if(movement_type & FLYING)
 		return 0
 	if(!(lube&SLIDE_ICE))
 		add_logs(src,, "slipped",, "on [O ? O.name : "floor"]")

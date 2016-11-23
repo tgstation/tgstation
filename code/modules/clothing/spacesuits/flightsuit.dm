@@ -399,7 +399,6 @@
 /obj/item/device/flightpack/proc/handle_flight()
 	if(!flight)
 		return 0
-	wearer.float(2)
 
 /obj/item/device/flightpack/proc/handle_boost()
 	if(boost)
