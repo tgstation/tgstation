@@ -1,0 +1,4 @@
+author: "Lzimann"
+delete-after: True
+changes: 
+  - rscdel: "Multiverse sword is no longer buyable by wizards"
