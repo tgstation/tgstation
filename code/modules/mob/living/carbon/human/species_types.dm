@@ -977,7 +977,7 @@ SYNDICATE BLACK OPS
 	if(fly)
 		fly.Remove(H)
 	if(H.movement_type & FLYING)
-		H.movement_type -= FLYING
+		H.movement_type &= ~FLYING
 	ToggleFlight(H,0)
 	if(H.dna && H.dna.species &&((H.dna.features["wings"] != "None") && ("wings" in H.dna.species.mutant_bodyparts)))
 		H.dna.features["wings"] = "None"

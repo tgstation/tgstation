@@ -89,7 +89,7 @@
 	return 1
 
 /mob/living/carbon/human/get_leg_ignore()
-	if(FLYING in movement_type)
+	if(movement_type & FLYING)
 		return 1
 
 /mob/living/proc/get_missing_limbs()
