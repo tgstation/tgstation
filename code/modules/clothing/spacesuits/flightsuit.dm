@@ -318,7 +318,6 @@
 			brake = 0
 			stabilizer = 0
 			usermessage("Warning: Sensor data is not being recieved from flight shoes. Stabilizers and airbrake modules OFFLINE!", 2)
-	//Add check for wearer wearing the shoes and suit here
 
 //Resync the suit
 /obj/item/device/flightpack/proc/resync()

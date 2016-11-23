@@ -443,7 +443,7 @@
 	var/ignore
 	if(iscarbon(src))
 		var/mob/living/carbon/C = src
-		var/F = C.get_flightpack()
+		var/obj/item/device/flightpack/F = C.get_flightpack()
 		if(istype(F) && F.flight)
 			ignore = 1
 	if((isopenturf(loc)) && (!(movement_type & FLYING)))
