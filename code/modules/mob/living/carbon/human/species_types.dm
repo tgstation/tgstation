@@ -991,12 +991,9 @@ SYNDICATE BLACK OPS
 	if(H.movement_type & FLYING)
 		if(!CanFly(H))
 			ToggleFlight(H,0)
-			H.float(0)
 			return 0
-		H.float(1)
 		return 1
 	else
-		H.float(0)
 		return 0
 
 /datum/species/angel/proc/CanFly(mob/living/carbon/human/H)
