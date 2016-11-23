@@ -46,7 +46,7 @@
 		var/obj/item/weapon/ore/T = locate(i) in contents
 		dat += "[capitalize(T.name)]: [count_by_type(contents, T.type)]<br>"
 	dat += text("<br><br><A href='?src=\ref[src];removeall=1'>Empty box</A>")
-	user << browse("[dat]", "window=orebox")
+	user << browse(dat, "window=orebox")
 
 /obj/structure/ore_box/proc/dump_box_contents()
 	for(var/obj/item/weapon/ore/O in contents)
