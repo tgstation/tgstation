@@ -7,8 +7,8 @@
 		. += 6 - 3*leg_amount //the fewer the legs, the slower the mob
 		if(!leg_amount)
 			. += 6 - 3*get_num_arms() //crawling is harder with fewer arms
-	if(legcuffed)
-		. += legcuffed.slowdown
+		if(legcuffed)
+			. += legcuffed.slowdown
 
 
 var/const/NO_SLIP_WHEN_WALKING = 1
