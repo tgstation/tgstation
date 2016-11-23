@@ -9,6 +9,7 @@
 	var/admin_notes
 
 	var/credit_cost = INFINITY
+	var/can_be_bought = TRUE
 
 /datum/map_template/shuttle/New()
 	shuttle_id = "[port_id]_[suffix]"
@@ -141,6 +142,7 @@
 	suffix = "pubby"
 	name = "Pubby Station Emergency Shuttle"
 	description = "A small, but feature complete shuttle. It boasts a card table to keep crew members occupied on the long flight home."
+	credit_cost = 1000
 
 /datum/map_template/shuttle/emergency/supermatter
 	suffix = "supermatter"

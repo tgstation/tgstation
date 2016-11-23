@@ -40,7 +40,7 @@
 		if(Snake)
 			alerted = viewers(7,src)
 	..()
-	if(alerted)
+	if(alerted.len)
 		egged = world.time + SNAKE_SPAM_TICKS
 		for(var/mob/living/L in alerted)
 			if(!L.stat)
