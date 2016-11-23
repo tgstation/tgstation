@@ -210,8 +210,6 @@
 			dat += "<b><a href='byond://?src=\ref[src];menu=3'>Cancel</a></b>"
 
 
-	//user << browse(dat, "window=cloning")
-	//onclose(user, "cloning")
 	var/datum/browser/popup = new(user, "cloning", "Cloning System Control")
 	popup.set_content(dat)
 	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))

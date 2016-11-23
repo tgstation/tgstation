@@ -317,10 +317,6 @@ var/time_last_changed_position = 0
 				body += "<br><hr><a href = '?src=\ref[src];choice=mode;mode_target=2'>Job Management</a>"
 
 		dat = "<tt>[header][body]<hr><br></tt>"
-
-	//user << browse(dat, "window=id_com;size=900x520")
-	//onclose(user, "id_com")
-
 	var/datum/browser/popup = new(user, "id_com", src.name, 900, 620)
 	popup.set_content(dat)
 	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
