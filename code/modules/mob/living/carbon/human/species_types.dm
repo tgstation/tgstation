@@ -911,18 +911,49 @@
 	punchdamagehigh = 1
 	punchstunthreshold = 2 //Harmless and can't stun
 	meat = /obj/item/weapon/ore/bananium
-	info_text = "As a <span class='danger'>Bananium Golem</span>, you are made for pranking. Your body emits natural honks, and you cannot hurt people when punching them."
+	info_text = "As a <span class='danger'>Bananium Golem</span>, you are made for pranking. Your body emits natural honks, and you cannot hurt people when punching them. Your skin also emits bananas when damaged."
 
-	var/last_event = 0
+	var/last_honk = 0
 	var/honkooldown = 0
+	var/last_banana = 0
+	var/banana_cooldown = 100
 	var/active = null
+
+/datum/species/golem/bananium/spec_attack_hand(mob/living/carbon/human/M, mob/living/carbon/human/H, datum/martial_art/attacker_style = M.martial_art)
+	..()
+	if(world.time > last_banana + banana_cooldown && M != H &&  M.a_intent != "help")
+		new/obj/item/weapon/grown/bananapeel/specialpeel(get_turf(H))
+		last_banana = world.time
+
+/datum/species/golem/bananium/spec_attacked_by(obj/item/I, mob/living/user, obj/item/bodypart/affecting, intent, mob/living/carbon/human/H)
+	..()
+	if(world.time > last_banana + banana_cooldown && user != H)
+		new/obj/item/weapon/grown/bananapeel/specialpeel(get_turf(H))
+		last_banana = world.time
+
+/datum/species/golem/bananium/on_hit(obj/item/projectile/P, mob/living/carbon/human/H)
+	..()
+	if(world.time > last_banana + banana_cooldown)
+		new/obj/item/weapon/grown/bananapeel/specialpeel(get_turf(H))
+		last_banana = world.time
+
+/datum/species/golem/bluespace/spec_hitby(atom/movable/AM, mob/living/carbon/human/H)
+	..()
+	var/obj/item/I
+	if(istype(AM, /obj/item))
+		I = AM
+		if(I.thrownby == H) //No throwing stuff at yourself to make bananas
+			return 0
+		else
+			new/obj/item/weapon/grown/bananapeel/specialpeel(get_turf(H))
+			last_banana = world.time
 
 /datum/species/golem/bananium/spec_life(mob/living/carbon/human/H)
 	if(!active)
-		if(world.time > last_event + honkooldown)
+		if(world.time > last_honk + honkooldown)
 			active = 1
 			playsound(get_turf(H), 'sound/items/bikehorn.ogg', 50, 1)
-			last_event = world.time
+			last_honk = world.time
 			honkooldown = rand(20, 80)
 			active = null
 	..()
