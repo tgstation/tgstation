@@ -593,6 +593,20 @@
 	notify_ghosts("Golem rune created in [get_area(Z)].", 'sound/effects/ghost2.ogg', source = Z)
 	..()
 
+/datum/chemical_reaction/slime/slimegolem2
+	name = "Slime Golem 2"
+	id = "m_golem2"
+	required_reagents = list("iron" = 1)
+	required_container = /obj/item/slime_extract/adamantine
+	required_other = 1
+
+/datum/chemical_reaction/slime/slimegolem2/on_reaction(datum/reagents/holder)
+	feedback_add_details("slime_cores_used","[type]")
+	var/obj/item/golem_shell/artificial/Z = new /obj/item/golem_shell/artificial
+	Z.loc = get_turf(holder.my_atom)
+	notify_ghosts("Artificial golem shell created in [get_area(Z)].", 'sound/effects/ghost2.ogg', source = Z)
+	..()
+
 //Bluespace
 /datum/chemical_reaction/slime/slimefloor2
 	name = "Bluespace Floor"

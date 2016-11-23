@@ -538,7 +538,7 @@
 /datum/species/golem
 	// Animated beings of stone. They have increased defenses, and do not need to breathe. They're also slow as fuuuck.
 	name = "Golem"
-	id = "golem"
+	id = "iron"
 	specflags = list(NOBREATH,RESISTTEMP,NOGUNS,NOBLOOD,RADIMMUNE,VIRUSIMMUNE,PIERCEIMMUNE,NODISMEMBER,MUTCOLORS)
 	speedmod = 2
 	armor = 55
@@ -658,7 +658,7 @@
 //Fast and regenerates... but can only speak like an abductor
 /datum/species/golem/alloy
 	name = "Alien Alloy Golem"
-	id = "alienalloy"
+	id = "alloy"
 	fixed_mut_color = "333"
 	no_equip = list() //can equip clothing
 	meat = /obj/item/stack/sheet/mineral/abductor
@@ -749,7 +749,7 @@
 	armor = 0
 	burnmod = 3 //melts easily
 	brutemod = 0.25
-	info_text = "As a <span class='danger'>Sand Golem</span>, you are immune to physical bullets and take very little Brute damage, but are extremely vulnerable to burn damage. You will also turn to sand when dying, preventing any form of recovery."
+	info_text = "As a <span class='danger'>Sand Golem</span>, you are immune to physical bullets and take very little brute damage, but are extremely vulnerable to burn damage. You will also turn to sand when dying, preventing any form of recovery."
 
 /datum/species/golem/sand/spec_death(gibbed, mob/living/carbon/human/H)
 	H.visible_message("<span class='danger'>[H] turns into a pile of sand!</span>")
@@ -777,7 +777,7 @@
 	armor = 0
 	brutemod = 3 //very fragile
 	burnmod = 0.25
-	info_text = "As a <span class='danger'>Glass Golem</span>, you reflect lasers and energy weapons, and are very resistant to Burn damage, but you are extremely vulnerable to brute damage. On death, you'll shatter beyond any hope of recovery."
+	info_text = "As a <span class='danger'>Glass Golem</span>, you reflect lasers and energy weapons, and are very resistant to burn damage, but you are extremely vulnerable to brute damage. On death, you'll shatter beyond any hope of recovery."
 
 /datum/species/golem/glass/spec_death(gibbed, mob/living/carbon/human/H)
 	playsound(H, "shatter", 70, 1)
@@ -809,6 +809,98 @@
 			return -1
 	return 0
 
+//Teleports when hit or when it wants to
+/datum/species/golem/bluespace
+	name = "Bluespace Golem"
+	id = "bluespace"
+	fixed_mut_color = "33f"
+	meat = /obj/item/weapon/ore/bluespace_crystal
+	info_text = "As a <span class='danger'>Bluespace Golem</span>, are spatially unstable: you will teleport when hit, and you can teleport manually at a long distance."
+
+	var/datum/action/innate/unstable_teleport/unstable_teleport
+	var/teleport_cooldown = 100
+	var/last_teleport = 0
+
+/datum/species/golem/bluespace/proc/reactive_teleport(mob/living/carbon/human/H)
+	H.visible_message("<span class='warning'>[H] teleports!</span>", "<span class='danger'>You destabilize and teleport!</span>")
+	PoolOrNew(/obj/effect/particle_effect/sparks, get_turf(H))
+	playsound(get_turf(H), "sparks", 50, 1)
+	do_teleport(H, get_turf(H), 6, asoundin = 'sound/weapons/emitter2.ogg')
+	last_teleport = world.time
+
+/datum/species/golem/bluespace/spec_hitby(atom/movable/AM, mob/living/carbon/human/H)
+	..()
+	var/obj/item/I
+	if(istype(AM, /obj/item))
+		I = AM
+		if(I.thrownby == H) //No throwing stuff at yourself to trigger the teleport
+			return 0
+		else
+			reactive_teleport(H)
+
+/datum/species/golem/bluespace/spec_attack_hand(mob/living/carbon/human/M, mob/living/carbon/human/H, datum/martial_art/attacker_style = M.martial_art)
+	..()
+	if(world.time > last_teleport + teleport_cooldown && M != H &&  M.a_intent != "help")
+		reactive_teleport(H)
+
+/datum/species/golem/bluespace/spec_attacked_by(obj/item/I, mob/living/user, obj/item/bodypart/affecting, intent, mob/living/carbon/human/H)
+	..()
+	if(world.time > last_teleport + teleport_cooldown && user != H)
+		reactive_teleport(H)
+
+/datum/species/golem/bluespace/on_hit(obj/item/projectile/P, mob/living/carbon/human/H)
+	..()
+	if(world.time > last_teleport + teleport_cooldown)
+		reactive_teleport(H)
+
+/datum/species/golem/bluespace/on_species_gain(mob/living/carbon/C, datum/species/old_species)
+	..()
+	if(ishuman(C))
+		unstable_teleport = new
+		unstable_teleport.Grant(C)
+
+/datum/species/golem/bluespace/on_species_loss(mob/living/carbon/C)
+	if(unstable_teleport)
+		unstable_teleport.Remove(C)
+	..()
+
+/datum/action/innate/unstable_teleport
+	name = "Unstable Teleport"
+	check_flags = AB_CHECK_CONSCIOUS
+	button_icon_state = "jaunt"
+	var/cooldown = 150
+	var/last_teleport = 0
+
+/datum/action/innate/unstable_teleport/IsAvailable()
+	if(..())
+		if(world.time > last_teleport + cooldown)
+			return 1
+		return 0
+
+/datum/action/innate/unstable_teleport/Activate()
+	var/mob/living/carbon/human/H = owner
+	H.visible_message("<span class='warning'>[H] starts vibrating!</span>", "<span class='danger'>You start charging your bluespace core...</span>")
+	playsound(get_turf(H), 'sound/weapons/flash.ogg', 25, 1)
+	spawn(15)
+		teleport(H)
+		start_recharge()
+
+/datum/action/innate/unstable_teleport/proc/teleport(mob/living/carbon/human/H)
+	H.visible_message("<span class='warning'>[H] disappears in a shower of sparks!</span>", "<span class='danger'>You teleport!</span>")
+	var/datum/effect_system/spark_spread/spark_system = new /datum/effect_system/spark_spread
+	spark_system.set_up(10, 0, src)
+	spark_system.attach(H)
+	spark_system.start()
+	do_teleport(H, get_turf(H), 12, asoundin = 'sound/weapons/emitter2.ogg')
+	last_teleport = world.time
+
+//To make the action icon work properly
+/datum/action/innate/unstable_teleport/proc/start_recharge()
+	UpdateButtonIcon()
+	sleep(cooldown + 5)
+	UpdateButtonIcon()
+
+
 //honk
 /datum/species/golem/bananium
 	name = "Bananium Golem"
@@ -827,7 +919,7 @@
 
 /datum/species/golem/bananium/spec_life(mob/living/carbon/human/H)
 	if(!active)
-		if(world.time > last_event+honkooldown)
+		if(world.time > last_event + honkooldown)
 			active = 1
 			playsound(get_turf(H), 'sound/items/bikehorn.ogg', 50, 1)
 			last_event = world.time

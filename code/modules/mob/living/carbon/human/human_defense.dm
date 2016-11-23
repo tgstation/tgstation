@@ -56,9 +56,9 @@
 
 
 /mob/living/carbon/human/bullet_act(obj/item/projectile/P, def_zone)
-	var/species_return = dna.species.bullet_act(P, src)
-	if(species_return)
-		return species_return
+	var/spec_return = dna.species.bullet_act(P, src)
+	if(spec_return)
+		return spec_return
 
 	if(martial_art && martial_art.deflection_chance) //Some martial arts users can deflect projectiles!
 		if(prob(martial_art.deflection_chance))
@@ -130,6 +130,9 @@
 	return FALSE
 
 /mob/living/carbon/human/hitby(atom/movable/AM, skipcatch = 0, hitpush = 1, blocked = 0)
+	var/spec_return = dna.species.spec_hitby(AM, src)
+	if(spec_return)
+		return spec_return
 	var/obj/item/I
 	var/throwpower = 30
 	if(istype(AM, /obj/item))

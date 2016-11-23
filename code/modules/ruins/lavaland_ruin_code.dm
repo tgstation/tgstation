@@ -44,6 +44,8 @@
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "construct"
 	desc = "The incomplete body of a golem. Add ten sheets of any mineral to finish."
+	var/shell_type = /obj/effect/mob_spawn/human/golem
+	var/has_owner = FALSE //if the resulting golem obeys someone
 
 /obj/item/golem_shell/attackby(obj/item/I, mob/user, params)
 	..()
@@ -93,16 +95,28 @@
 		if(istype(O, /obj/item/stack/sheet/mineral/wood))
 			species = /datum/species/golem/wood
 
+		if(istype(O, /obj/item/stack/sheet/bluespace_crystal))
+			species = /datum/species/golem/bluespace
+
 		if(species)
 			if(O.use(10))
 				user << "You finish up the golem shell with ten sheets of [O]."
-				var/obj/effect/mob_spawn/human/golem/G = new(get_turf(src))
+				var/obj/effect/mob_spawn/human/golem/G = new shell_type(get_turf(src))
 				G.mob_species = species
+				var/datum/species/golem/S = species
+				G.name += " ([initial(S.id)])"
+				if(has_owner)
+					G.owner = user
 				qdel(src)
 			else
 				user << "You need at least ten sheets to finish a golem."
 		else
 			user << "You can't build a golem out of this kind of material."
+
+//made with xenobiology, the golem obeys its creator
+/obj/item/golem_shell/artificial
+	name = "incomplete artificial golem shell"
+	has_owner = TRUE
 
 
 ///Syndicate Listening Post
