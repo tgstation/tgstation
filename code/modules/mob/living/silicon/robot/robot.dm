@@ -31,9 +31,7 @@
 //3 Modules can be activated at any one time.
 	var/obj/item/weapon/robot_module/module = null
 	var/obj/item/module_active = null
-	var/obj/item/module_state_1 = null
-	var/obj/item/module_state_2 = null
-	var/obj/item/module_state_3 = null
+	held_items = list(null, null, null) //we use held_items for the module holding, because that makes sense to do!
 
 	var/image/eye_lights
 
@@ -609,12 +607,9 @@
 
 		if(istype(module, /obj/item/weapon/robot_module/miner))
 			if(istype(loc, /turf/open/floor/plating/asteroid))
-				if(istype(module_state_1,/obj/item/weapon/storage/bag/ore))
-					loc.attackby(module_state_1,src)
-				else if(istype(module_state_2,/obj/item/weapon/storage/bag/ore))
-					loc.attackby(module_state_2,src)
-				else if(istype(module_state_3,/obj/item/weapon/storage/bag/ore))
-					loc.attackby(module_state_3,src)
+				for(var/obj/item/I in held_items)
+					if(istype(I,/obj/item/weapon/storage/bag/ore))
+						loc.attackby(I, src)
 #undef BORG_CAMERA_BUFFER
 
 /mob/living/silicon/robot/proc/self_destruct()
@@ -682,8 +677,6 @@
 /mob/living/silicon/robot/proc/SetEmagged(new_state)
 	emagged = new_state
 	module.rebuild_modules()
-	if(hud_used)
-		hud_used.update_robot_modules_display()	//Shows/hides the emag item if the inventory screen is already open.
 	update_icons()
 	if(emagged)
 		throw_alert("hacked", /obj/screen/alert/hacked)
@@ -833,13 +826,13 @@
 /mob/living/silicon/robot/updatehealth()
 	..()
 	if(health < maxHealth*0.5) //Gradual break down of modules as more damage is sustained
-		if(uneq_module(module_state_3))
+		if(uneq_module(held_items[3]))
 			src << "<span class='warning'>SYSTEM ERROR: Module 3 OFFLINE.</span>"
 		if(health < 0)
-			if(uneq_module(module_state_2))
+			if(uneq_module(held_items[2]))
 				src << "<span class='warning'>SYSTEM ERROR: Module 2 OFFLINE.</span>"
 			if(health < -maxHealth*0.5)
-				if(uneq_module(module_state_1))
+				if(uneq_module(held_items[1]))
 					src << "<span class='warning'>CRITICAL ERROR: All modules OFFLINE.</span>"
 
 /mob/living/silicon/robot/update_sight()
@@ -927,6 +920,9 @@
 
 /mob/living/silicon/robot/proc/ResetModule()
 	uneq_all()
+	shown_robot_modules = FALSE
+	if(hud_used)
+		hud_used.update_robot_modules_display()
 	module.transform_to(/obj/item/weapon/robot_module)
 
 	speed = 0 // Remove upgrades.

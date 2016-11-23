@@ -43,7 +43,7 @@
 /mob/living/carbon/rad_act(amount, silent = 0)
 	if(dna && (RADIMMUNE in dna.species.specflags))
 		silent = TRUE
-			..()
+	..()
 
 //Silicons will inherently not get irradiated due to having an empty handle_mutations_and_radiation, but they need to not hear this
 /mob/living/silicon/rad_act(amount)

@@ -339,6 +339,10 @@
 	icon_state = "securearea"
 	sight_mode = BORGXRAY
 
+/obj/item/borg/sight/xray/truesight_lens
+	name = "truesight lens"
+	icon = 'icons/obj/clockwork_objects.dmi'
+	icon_state = "truesight_lens"
 
 /obj/item/borg/sight/thermal
 	name = "\proper thermal vision"

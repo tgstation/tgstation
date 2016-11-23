@@ -12,7 +12,7 @@
 	var/processing = 0
 	var/obj/screen/movable/action_button/button = null
 	var/button_icon = 'icons/mob/actions.dmi'
-	var/background_icon_state = "bg_default"
+	var/background_icon_state = ACTION_BUTTON_DEFAULT_BACKGROUND
 	var/buttontooltipstyle = ""
 
 	var/icon_icon = 'icons/mob/actions.dmi'
@@ -84,8 +84,13 @@
 	if(button)
 		button.name = name
 		button.desc = desc
-		button.icon = button_icon
-		button.icon_state = background_icon_state
+		if(owner && owner.hud_used && background_icon_state == ACTION_BUTTON_DEFAULT_BACKGROUND)
+			var/list/settings = owner.hud_used.get_action_buttons_icons()
+			button.icon = settings["bg_icon"]
+			button.icon_state = settings["bg_state"]
+		else
+			button.icon = button_icon
+			button.icon_state = background_icon_state
 
 		ApplyIcon(button)
 
