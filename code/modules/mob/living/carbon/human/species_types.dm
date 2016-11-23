@@ -798,6 +798,16 @@ var/global/image/plasmaman_on_fire = image("icon"='icons/mob/OnFire.dmi', "icon_
 		return 0
 	return ..()
 
+/datum/species/plasmaman/random_name(unique,lastname)
+	if(unique)
+		return random_unique_plasmaman_name()
+
+	var/randname = plasmaman_name()
+
+	if(lastname)
+		randname += " [lastname]"
+
+	return randname
 
 
 /datum/species/synth
