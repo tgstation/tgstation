@@ -99,6 +99,8 @@
 	//slipping
 	if (istype(AM,/mob/living/carbon))
 		var/mob/living/carbon/M = AM
+		if(FLYING in M.movement_type)
+			return
 		switch(wet)
 			if(TURF_WET_WATER)
 				if(!M.slip(0, 3, null, NO_SLIP_WHEN_WALKING))

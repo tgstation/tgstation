@@ -18,11 +18,11 @@
 	var/icon_state_boost = "flightpack_boost"
 	var/item_state_boost = "flightpack_boost"
 	actions_types = list(/datum/action/item_action/flightpack/toggle_flight, /datum/action/item_action/flightpack/engage_boosters, /datum/action/item_action/flightpack/toggle_stabilizers, /datum/action/item_action/flightpack/change_power, /datum/action/item_action/flightpack/toggle_airbrake)
-	armor = list(melee = 20, bullet = 10, laser = 10, energy = 10, bomb = 30, bio = 100, rad = 75, fire = 50, acid = 100)
+	armor = list(melee = 20, bullet = 20, laser = 20, energy = 10, bomb = 30, bio = 100, rad = 75, fire = 100, acid = 100)
 
 	w_class = 4
 	slot_flags = SLOT_BACK
-	resistance_flags = FIRE_PROOF
+	resistance_flags = FIRE_PROOF | ACID_PROOF
 
 	var/obj/item/clothing/suit/space/hardsuit/flightsuit/suit = null
 	var/mob/living/carbon/human/wearer = null
@@ -313,6 +313,11 @@
 	if(!pressure && brake)
 		brake = 0
 		usermessage("Airbrakes deactivated due to lack of pressure!", 2)
+	if(!suit.deployedshoes)
+		if(brake || stabilizer)
+			brake = 0
+			stabilizer = 0
+			usermessage("Warning: Sensor data is not being recieved from flight shoes. Stabilizers and airbrake modules OFFLINE!", 2)
 	//Add check for wearer wearing the shoes and suit here
 
 //Resync the suit
@@ -522,7 +527,7 @@
 		victimmob.adjustBruteLoss(damage)
 
 /obj/item/device/flightpack/proc/losecontrol(stun = FALSE, move = TRUE)
-	usermessage("Warning: Control system not responsiding. Deactivating!", 3)
+	usermessage("Warning: Control system not responding. Deactivating!", 3)
 	wearer.visible_message("<span class='warning'>[wearer]'s flight suit abruptly shuts off and they lose control!</span>")
 	if(wearer)
 		if(move)
@@ -757,7 +762,7 @@
 	var/obj/item/device/flightpack/pack = null
 	var/mob/living/carbon/human/wearer = null
 	var/active = 0
-	resistance_flags = FIRE_PROOF
+	resistance_flags = FIRE_PROOF | ACID_PROOF
 
 /obj/item/clothing/shoes/flightshoes/Destroy()
 	if(suit)
@@ -812,14 +817,14 @@
 	var/deployedpack = 0
 	var/deployedshoes = 0
 	var/locked = 0
-	resistance_flags = FIRE_PROOF
+	resistance_flags = FIRE_PROOF | ACID_PROOF
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/flightsuit
 	jetpack = null
 	var/flightpack
 	var/flight = 0
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/internals, /obj/item/weapon/gun,/obj/item/weapon/reagent_containers/spray/pepper,/obj/item/ammo_box,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/restraints/handcuffs)
 	actions_types = list(/datum/action/item_action/flightsuit/toggle_helmet,/datum/action/item_action/flightsuit/toggle_boots,/datum/action/item_action/flightsuit/toggle_flightpack,/datum/action/item_action/flightsuit/lock_suit)
-	armor = list(melee = 20, bullet = 10, laser = 10, energy = 10, bomb = 30, bio = 100, rad = 75, fire = 50, acid = 100)
+	armor = list(melee = 20, bullet = 20, laser = 20, energy = 10, bomb = 30, bio = 100, rad = 75, fire = 100, acid = 100)
 	var/maint_panel = 0
 
 /obj/item/clothing/suit/space/hardsuit/flightsuit/full/New()
@@ -995,11 +1000,6 @@
 	deployedshoes = 1
 
 /obj/item/clothing/suit/space/hardsuit/flightsuit/proc/retract_flightshoes(forced = 0)
-	if(pack.flight && !forced)
-		usermessage("You can not take off your flight shoes without shutting off the engines first!", 1)
-		return 0
-	if(pack.flight && forced)
-		pack.disable_flight(1)
 	shoes.flags &= ~NODROP
 	user.unEquip(shoes, 1)
 	shoes.loc = src
@@ -1133,9 +1133,9 @@
 	icon_state = "flighthelmet"
 	item_state = "flighthelmet"
 	item_color = "flight"
-	resistance_flags = FIRE_PROOF
+	resistance_flags = FIRE_PROOF | ACID_PROOF
 	brightness_on = 7
-	armor = list(melee = 20, bullet = 10, laser = 10, energy = 10, bomb = 30, bio = 100, rad = 75, fire = 50, acid = 100)
+	armor = list(melee = 20, bullet = 20, laser = 20, energy = 10, bomb = 30, bio = 100, rad = 75, fire = 100, acid = 100)
 
 //ITEM actionS------------------------------------------------------------------------------------------------------------------------------------------------------
 //TODO: TOGGLED BUTTON SPRITES

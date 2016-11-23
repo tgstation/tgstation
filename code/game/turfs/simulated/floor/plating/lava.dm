@@ -58,11 +58,8 @@
 		else if (isliving(thing))
 			. = 1
 			var/mob/living/L = thing
-			if(ishuman(thing))
-				var/mob/living/carbon/human/T = thing
-				var/obj/item/device/flightpack/F = T.get_flightpack()
-				if(istype(F) && F.flight)
-					continue	//YOU'RE FLYING OVER IT
+			if(FLYING in L.movement_type)
+				continue	//YOU'RE FLYING OVER IT
 			if("lava" in L.weather_immunities)
 				continue
 			if(L.buckled)
