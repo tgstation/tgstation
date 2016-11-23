@@ -10,6 +10,7 @@
 	flags_inv = 0
 	actions_types = list(/datum/action/item_action/toggle_helmet_light)
 	resistance_flags = FIRE_PROOF
+
 	dog_fashion = /datum/dog_fashion/head
 
 /obj/item/clothing/head/hardhat/attack_self(mob/user)
