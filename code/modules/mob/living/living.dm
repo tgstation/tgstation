@@ -440,16 +440,25 @@
 
 /mob/living/movement_delay()
 	. = ..()
-	if(isopenturf(loc))
+	var/ignore
+	if(iscarbon(src))
+		var/mob/living/carbon/C = src
+		var/F = C.get_flightpack()
+		if(istype(F) && F.flight)
+			ignore = 1
+	if((isopenturf(loc)) && (!(movement_type & FLYING)))
 		var/turf/open/T = loc
 		. += T.slowdown
-	switch(m_intent)
-		if("run")
-			if(drowsyness > 0)
-				. += 6
-			. += config.run_speed
-		if("walk")
-			. += config.walk_speed
+	if(ignore)
+		. += config.run_speed
+	else
+		switch(m_intent)
+			if("run")
+				if(drowsyness > 0)
+					. += 6
+				. += config.run_speed
+			if("walk")
+				. += config.walk_speed
 
 /mob/living/proc/makeTrail(turf/T)
 	if(!has_gravity())
