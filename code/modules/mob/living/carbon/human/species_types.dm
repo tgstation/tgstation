@@ -761,7 +761,7 @@
 
 /datum/species/golem/sand/bullet_act(obj/item/projectile/P, mob/living/carbon/human/H)
 	if(!(P.original == H && P.firer == H))
-		if(istype(P, /obj/item/projectile/bullet) || istype(P, /obj/item/projectile/kinetic))
+		if(P.flag == "bullet" || P.flag == "bomb")
 			playsound(H, "sound/effects/shovel_dig.ogg", 70, 1)
 			H.visible_message("<span class='danger'>The [P.name] sinks harmlessly in [H]'s sandy body!</span>", \
 			"<span class='userdanger'>The [P.name] sinks harmlessly in [H]'s sandy body!</span>")
@@ -790,7 +790,7 @@
 
 /datum/species/golem/glass/bullet_act(obj/item/projectile/P, mob/living/carbon/human/H)
 	if(!(P.original == H && P.firer == H)) //self-shots don't reflect
-		if(istype(P, /obj/item/projectile/beam) || istype(P, /obj/item/projectile/energy))
+		if(P.flag == "laser" || P.flag == "energy")
 			H.visible_message("<span class='danger'>The [P.name] gets reflected by [H]'s glass skin!</span>", \
 			"<span class='userdanger'>The [P.name] gets reflected by [H]'s glass skin!</span>")
 			if(P.starting)
@@ -881,9 +881,7 @@
 	var/mob/living/carbon/human/H = owner
 	H.visible_message("<span class='warning'>[H] starts vibrating!</span>", "<span class='danger'>You start charging your bluespace core...</span>")
 	playsound(get_turf(H), 'sound/weapons/flash.ogg', 25, 1)
-	spawn(15)
-		teleport(H)
-		start_recharge()
+	addtimer(src, "teleport", 15)
 
 /datum/action/innate/unstable_teleport/proc/teleport(mob/living/carbon/human/H)
 	H.visible_message("<span class='warning'>[H] disappears in a shower of sparks!</span>", "<span class='danger'>You teleport!</span>")
@@ -893,12 +891,9 @@
 	spark_system.start()
 	do_teleport(H, get_turf(H), 12, asoundin = 'sound/weapons/emitter2.ogg')
 	last_teleport = world.time
-
-//To make the action icon work properly
-/datum/action/innate/unstable_teleport/proc/start_recharge()
-	UpdateButtonIcon()
+	UpdateButtonIcon() //action icon looks unavailable
 	sleep(cooldown + 5)
-	UpdateButtonIcon()
+	UpdateButtonIcon() //action icon looks available again
 
 
 //honk
