@@ -14,7 +14,7 @@
 obj/item/weapon/computer_hardware/ai_slot/examine(mob/user)
 	..()
 	if(stored_card)
-		user << "There appears to be an intelliCard loaded."
+		user << "There appears to be an intelliCard loaded. There appears to be a pinhole protecting a manual eject button. A screwdriver could probably press it"
 
 /obj/item/weapon/computer_hardware/ai_slot/on_install(obj/item/device/modular_computer/M, mob/living/user = null)
 	M.add_verb(device_type)
@@ -44,13 +44,13 @@ obj/item/weapon/computer_hardware/ai_slot/examine(mob/user)
 	return TRUE
 
 
-/obj/item/weapon/computer_hardware/ai_slot/try_eject(forced = 0,mob/living/user = null)
+/obj/item/weapon/computer_hardware/ai_slot/try_eject(slot=0,mob/living/user = null,forced = 0)
 	if(!stored_card)
 		user << "<span class='warning'>There is no card in \the [src].</span>"
 		return FALSE
 
 	if(locked && !forced)
-		user << "<span class='warning'>Safeties prevent you from removing the card while reconstruction is in progress...</span>"
+		user << "<span class='warning'>Safeties prevent you from removing the card until reconstruction is complete...</span>"
 		return FALSE
 
 	if(stored_card)
