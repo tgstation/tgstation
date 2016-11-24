@@ -101,7 +101,7 @@
 
 	else if (href_list["killbot"])
 		if(src.allowed(usr))
-			var/mob/living/silicon/robot/R = locate(href_list["killbot"])
+			var/mob/living/silicon/robot/R = locate(href_list["killbot"]) in silicon_mobs
 			if(can_control(usr, R))
 				var/choice = input("Are you certain you wish to detonate [R.name]?") in list("Confirm", "Abort")
 				if(choice == "Confirm" && can_control(usr, R) && !..())
@@ -121,7 +121,7 @@
 
 	else if (href_list["stopbot"])
 		if(src.allowed(usr))
-			var/mob/living/silicon/robot/R = locate(href_list["stopbot"])
+			var/mob/living/silicon/robot/R = locate(href_list["stopbot"]) in silicon_mobs
 			if(can_control(usr, R))
 				var/choice = input("Are you certain you wish to [R.canmove ? "lock down" : "release"] [R.name]?") in list("Confirm", "Abort")
 				if(choice == "Confirm" && can_control(usr, R) && !..())
@@ -137,7 +137,7 @@
 
 	else if (href_list["magbot"])
 		if((issilicon(usr) && is_special_character(usr)) || IsAdminGhost(usr))
-			var/mob/living/silicon/robot/R = locate(href_list["magbot"])
+			var/mob/living/silicon/robot/R = locate(href_list["magbot"]) in silicon_mobs
 			if(istype(R) && !R.emagged && ((R.syndicate && R == usr) || R.connected_ai == usr || IsAdminGhost(usr)) && !R.scrambledcodes && can_control(usr, R))
 				log_game("[key_name(usr)] emagged [R.name] using robotic console!")
 				message_admins("[key_name_admin(usr)] emagged cyborg [key_name_admin(R)] using robotic console!")
@@ -147,7 +147,7 @@
 
 	else if(href_list["convert"])
 		if(issilicon(usr) && is_special_character(usr))
-			var/mob/living/silicon/robot/R = locate(href_list["convert"])
+			var/mob/living/silicon/robot/R = locate(href_list["convert"]) in silicon_mobs
 			if(istype(R) && !is_servant_of_ratvar(R) && is_servant_of_ratvar(usr) && R.connected_ai == usr)
 				log_game("[key_name(usr)] converted [R.name] using robotic console!")
 				message_admins("[key_name_admin(usr)] converted cyborg [key_name_admin(R)] using robotic console!")
