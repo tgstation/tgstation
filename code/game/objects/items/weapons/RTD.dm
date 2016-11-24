@@ -53,6 +53,7 @@ EMAGGED FUNCTIONS - TODO
 	var/list/conf_access = null
 	var/use_one_access = 0 //If the airlock should require ALL or only ONE of the listed accesses.
 
+	var/no_ammo_message = "Insufficient Matter."
 	/*
 	Construction costs
 	COST| FUNCTION
@@ -73,6 +74,7 @@ EMAGGED FUNCTIONS - TODO
 	var/airlockcost = 25
 	var/membranecost = 2
 	var/removecatwalkcost = 0
+	var/processtick = 0
 
 	/* Build delays (deciseconds) */
 
@@ -87,8 +89,8 @@ EMAGGED FUNCTIONS - TODO
 /obj/item/weapon/rtd/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] sets the RTD to 'Airlock' and points it down [user.p_their()] throat! It looks like [user.p_theyre()] trying to commit suicide..</span>")
 	var/obj/machinery/door/airlock/A = new /obj/machinery/door/airlock/glass_command(get_turf(src))
-	A.maxintegrity = 500
-	A.integrity = 500
+	A.max_integrity = 500
+	A.obj_integrity = 500
 	A.name = user.name
 	return (BRUTELOSS)
 
@@ -160,7 +162,7 @@ EMAGGED FUNCTIONS - TODO
 			if (!conf_access.len)
 				conf_access = null
 
-/obj/item/weapon/rtd/verb/toggle_gas_enrichment
+/obj/item/weapon/rtd/verb/toggle_gas_enrichment()
 	set name = "Change Gas Enrichment"
 	set category = "Object"
 	set src in usr
@@ -260,7 +262,7 @@ EMAGGED FUNCTIONS - TODO
 		else
 			airlock_type = /obj/machinery/door/airlock
 
-/obj/item/weapon/rtd/electrocute_check(P, mob/living/user)
+/obj/item/weapon/rtd/proc/electrocute_check(P, mob/living/user)
 	var/S = 0.5
 	if(prob(P))
 		if(ishuman(user))
@@ -383,13 +385,15 @@ EMAGGED FUNCTIONS - TODO
 
 
 /obj/item/weapon/rtd/afterattack(atom/A, mob/user, proximity)
+	if(src.z != 2)
+		return 0
 	if(!proximity && mode > 2)
 		return 0
 	if(mode == 1)
-		if(!(A in range(range_plating), get_turf(src)))
+		if(get_dist(A, get_turf(src)) > range_plating)
 			return 0
 	if(mode == 2)
-		if(!(A in range(range_catwalk), get_turf(src)))
+		if(get_dist(A, get_turf(src)) > range_catwalk)
 			return 0
 	if(istype(A,/turf/open/space/transit))
 		return 0
@@ -470,7 +474,7 @@ EMAGGED FUNCTIONS - TODO
 					activate(user)
 					if(do_after(user, walldelay, target = A))
 						if(useResource(wallcost, user))
-							W.ChangeTurf(/turf/closed/wall)
+							A.ChangeTurf(/turf/closed/wall)
 							return 1
 			return 0
 		if(5)
@@ -480,7 +484,7 @@ EMAGGED FUNCTIONS - TODO
 					playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 					activate(user)
 					if(do_after(user, membranedelay, target = A))
-						if(useResource(grillecost, user))
+						if(useResource(membranecost, user))
 							new /obj/structure/destructible/airwall(get_turf(A))
 							return 1
 			return 0
@@ -498,11 +502,11 @@ EMAGGED FUNCTIONS - TODO
 			if(isfloorturf(A))
 				user << "<span class='notice'>You let out a blast of compressed airmix with your terraforming device!</span>"
 				var/datum/gas_mixture/OUT = new /datum/gas_mixture
-				OUT.assert_gas(oxygen)
-				OUT.assert_gas(nitrogen)
+				OUT.assert_gas(o2)
+				OUT.assert_gas(n2)
 				OUT.gases["o2"][MOLES] += gas_amount*o2ratio
 				OUT.gases["n2"][MOLES] += gas_amount*n2ratio
-				A.air.merge(OUT)
+				A.gas.merge(OUT)
 				gas = (gas - gas_use)
 			return 0
 		else
@@ -534,9 +538,6 @@ EMAGGED FUNCTIONS - TODO
 /obj/item/weapon/rtd/proc/detonate_pulse_explode()
 	explosion(src, 0, 0, 3, 1, flame_range = 1)
 	qdel(src)
-
-/obj/item/weapon/rtd/borg
-	var/no_ammo_message = "Zap. I have no ammo!"
 
 /obj/item/weapon/rtd/borg/New()
 	..()
