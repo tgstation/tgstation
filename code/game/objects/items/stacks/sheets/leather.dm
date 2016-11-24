@@ -208,9 +208,3 @@ var/global/list/datum/stack_recipe/sinew_recipes = list ( \
 			HS.amount = 1
 			wetness = initial(wetness)
 			src.use(1)
-
-/obj/item/stack/sheet/wetleather/microwave_act(obj/machinery/microwave/M)
-	..()
-	var/obj/item/stack/sheet/leather/HS = new(loc)
-	HS.amount = amount
-	qdel(src)
