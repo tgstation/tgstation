@@ -8,6 +8,7 @@
 
 //A flashy ability, good for crowd control and sewing chaos.
 /obj/effect/proc_holder/changeling/resonant_shriek/sting_action(mob/user)
+	playsound(src, 'sound/effects/Reee.ogg', 100, 0)
 	for(var/mob/living/M in get_hearers_in_view(4, user))
 		if(iscarbon(M))
 			if(!M.mind || !M.mind.changeling)
@@ -15,7 +16,6 @@
 				M.confused += 25
 				M.Jitter(50)
 			else
-				M << sound('sound/effects/screech.ogg')
 
 		if(issilicon(M))
 			M << sound('sound/weapons/flash.ogg')
