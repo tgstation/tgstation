@@ -1,8 +1,5 @@
 var/datum/subsystem/timer/SStimer
 
-#define TIMER_NORMAL "normal"
-#define TIMER_UNIQUE "unique"
-
 /datum/subsystem/timer
 	name = "Timer"
 	wait = 2 //SS_TICKER subsystem, so wait is in ticks
