@@ -29,6 +29,7 @@
 	var/step_in = 10 //make a step in step_in/10 sec.
 	var/dir_in = 2//What direction will the mech face when entered/powered on? Defaults to South.
 	var/step_energy_drain = 10
+	var/melee_energy_drain = 15
 	obj_integrity = 300 //obj_integrity is health
 	max_integrity = 300
 	var/deflect_chance = 10 //chance to deflect the incoming projectiles, hits, or lesser the effect of ex_act.
@@ -112,6 +113,7 @@
 	var/strafe = FALSE //If we are strafing
 
 	var/nextsmash = 0
+	var/smashcooldown = 3	//deciseconds
 
 	var/occupant_sight_flags = 0 //sight flags to give to the occupant (e.g. mech mining scanner gives meson-like vision)
 
@@ -551,7 +553,7 @@
 					obstacle.mech_melee_attack(src)
 					if(!obstacle || (obstacle && !obstacle.density))
 						step(src,dir)
-					nextsmash = world.time + (melee_cooldown/1.5)
+					nextsmash = world.time + smashcooldown
 			if(isobj(obstacle))
 				var/obj/O = obstacle
 				if(!O.anchored)

@@ -282,6 +282,9 @@
 
 
 /obj/mecha/mech_melee_attack(obj/mecha/M)
+	if(!has_charge(melee_energy_drain))
+		return 0
+	use_power(melee_energy_drain)
 	if(M.damtype == BRUTE || M.damtype == BURN)
 		add_logs(M.occupant, src, "attacked", M, "(INTENT: [uppertext(M.occupant.a_intent)]) (DAMTYPE: [uppertext(M.damtype)])")
 		. = ..()
