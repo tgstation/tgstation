@@ -47,7 +47,7 @@
 			clockwork_say(ranged_ability_user, text2ratvar("Be bound, heathen!"))
 			remove_mousepointer(ranged_ability_user.client)
 			ranged_ability_user.notransform = TRUE
-			addtimer(src, "reset_user_notransform", 5, FALSE, ranged_ability_user) //stop us moving for a little bit so we don't break the scripture following this
+			addtimer(src, "reset_user_notransform", 5, TIMER_NORMAL, ranged_ability_user) //stop us moving for a little bit so we don't break the scripture following this
 			slab.busy = null
 			var/datum/clockwork_scripture/geis/conversion = new
 			conversion.slab = slab

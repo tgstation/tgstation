@@ -134,7 +134,7 @@
 		if(!G)
 			return FALSE
 	if(clonemind.damnation_type) //Can't clone the damned.
-		addtimer(0, "horrifyingsound", src)
+		addtimer(src, "horrifyingsound", 0)
 		mess = 1
 		icon_state = "pod_g"
 		update_icon()
