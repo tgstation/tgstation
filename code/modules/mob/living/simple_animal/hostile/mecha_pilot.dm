@@ -41,7 +41,7 @@
 
 /mob/living/simple_animal/hostile/syndicate/mecha_pilot/no_mech/New()
 	..()
-	wanted_objects = subtypesof(/obj/mecha/combat)
+	wanted_objects = typecacheof(/obj/mecha/combat, ignore_root_path=TRUE)
 
 /mob/living/simple_animal/hostile/syndicate/mecha_pilot/nanotrasen //nanotrasen are syndies! no it's just a weird path.
 	name = "Nanotrasen Mecha Pilot"
@@ -101,7 +101,7 @@
 	targets_from = src
 
 	//Find a new mecha
-	wanted_objects = subtypesof(/obj/mecha/combat)
+	wanted_objects = typecacheof(/obj/mecha/combat, ignore_root_path=TRUE)
 	var/search_aggressiveness = 2
 	for(var/obj/mecha/combat/C in range(vision_range,src))
 		if(is_valid_mecha(C))
