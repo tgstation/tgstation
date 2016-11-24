@@ -62,8 +62,6 @@
 //Simple animals
 #define isanimal(A) (istype(A, /mob/living/simple_animal))
 
-#define isborer(A) (istype(A, /mob/living/simple_animal/borer))
-
 #define isbot(A) (istype(A, /mob/living/simple_animal/bot))
 
 #define iscrab(A) (istype(A, /mob/living/simple_animal/crab))
