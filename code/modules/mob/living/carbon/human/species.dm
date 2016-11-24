@@ -899,6 +899,15 @@
 				else if(flightpack && F.allow_thrust(0.01, src))	//No jetpack/flightsuit hyperstacking!
 					. -= 1
 
+		if(H.wear_suit)
+			. += H.wear_suit.slowdown
+		if(H.shoes)
+			. += H.shoes.slowdown
+		if(H.back)
+			. += H.back.slowdown
+		for(var/obj/item/I in H.held_items)
+			if(I.flags & HANDSLOW)
+				. += I.slowdown
 		if(!(flightpack))
 			var/health_deficiency = (100 - H.health + H.staminaloss)
 			if(health_deficiency >= 40)
@@ -911,15 +920,6 @@
 			if((hungry >= 70) && !flight)		//Being hungry won't stop you from using flightpack controls/flapping your wings although it probably will in the wing case but who cares.
 				. += hungry / 50
 
-			if(H.wear_suit)
-				. += H.wear_suit.slowdown
-			if(H.shoes)
-				. += H.shoes.slowdown
-			if(H.back)
-				. += H.back.slowdown
-			for(var/obj/item/I in H.held_items)
-				if(I.flags & HANDSLOW)
-					. += I.slowdown
 			if((H.disabilities & FAT))
 				. += (1.5 - flight)
 			if(H.bodytemperature < BODYTEMP_COLD_DAMAGE_LIMIT)
