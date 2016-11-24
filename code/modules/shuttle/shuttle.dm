@@ -422,6 +422,9 @@
 //this is the main proc. It instantly moves our mobile port to stationary port S1
 //it handles all the generic behaviour, such as sanity checks, closing doors on the shuttle, stunning mobs, etc
 /obj/docking_port/mobile/proc/dock(obj/docking_port/stationary/S1, force=FALSE)
+	if(S1.get_docked() == src)
+		remove_ripples()
+		return
 	// Crashing this ship with NO SURVIVORS
 	if(!force)
 		if(!check_dock(S1))
