@@ -170,7 +170,4 @@
 	if(!canmove || restrained())	//just while I finish up the new 'fun' suiciding verb. This is to prevent metagaming via suicide
 		src << "You can't commit suicide whilst restrained! ((You can type Ghost instead however.))"
 		return
-	if(has_brain_worms())
-		src << "You can't bring yourself to commit suicide!"
-		return
 	return TRUE
