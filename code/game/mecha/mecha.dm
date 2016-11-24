@@ -111,6 +111,8 @@
 	var/phase_state = "" //icon_state when phasing
 	var/strafe = FALSE //If we are strafing
 
+	var/nextsmash = 0
+
 	var/occupant_sight_flags = 0 //sight flags to give to the occupant (e.g. mech mining scanner gives meson-like vision)
 
 	hud_possible = list (DIAG_STAT_HUD, DIAG_BATT_HUD, DIAG_MECH_HUD)
@@ -545,9 +547,11 @@
 			if(..()) //mech was thrown
 				return
 			if(bumpsmash && occupant) //Need a pilot to push the PUNCH button.
-				obstacle.mech_melee_attack(src)
-				if(!obstacle || (obstacle && !obstacle.density))
-					step(src,dir)
+				if(nextsmash < world.time)
+					obstacle.mech_melee_attack(src)
+					if(!obstacle || (obstacle && !obstacle.density))
+						step(src,dir)
+					nextsmash = world.time + melee_cooldown
 			if(isobj(obstacle))
 				var/obj/O = obstacle
 				if(!O.anchored)
