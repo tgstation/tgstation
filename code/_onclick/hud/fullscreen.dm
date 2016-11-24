@@ -153,7 +153,7 @@
 	color = "#000"
 	show_when_dead = TRUE
 
-//Provides whiteness in case you donn't see lights so everything is still visible
+//Provides whiteness in case you don't see lights so everything is still visible
 /obj/screen/fullscreen/lighting_backdrop/unlit
 	layer = BACKGROUND_LAYER+20
 	show_when_dead = TRUE
@@ -163,5 +163,4 @@
 	plane = LIGHTING_PLANE
 	layer = LIGHTING_LAYER
 	blend_mode = BLEND_ADD
-	color = "#555"
 	show_when_dead = TRUE
