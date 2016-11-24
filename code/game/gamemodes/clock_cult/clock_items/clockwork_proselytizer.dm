@@ -76,7 +76,7 @@
 		user << "<span class='brass'>Can also form some objects into Brass sheets, as well as reform Clockwork Walls into Clockwork Floors, and vice versa.</span>"
 		if(uses_alloy)
 			if(metal_to_alloy)
-				user << "<span class='alloy'>It can convert Brass sheets to liquified replicant alloy at a rate of <b>1</b> sheet to <b>[REPLICANT_FLOOR]</b> alloy.</span>"
+				user << "<span class='alloy'>It can convert rods, metal, plasteel, and brass to liquified replicant alloy at rates of <b>1:1</b>, <b>1:2</b>, <b>1:5</b>, and <b>1:10</b>, respectively.</span>"
 			user << "<span class='alloy'>It has <b>[stored_alloy]/[max_alloy]</b> units of liquified alloy stored.</span>"
 			user << "<span class='alloy'>Use it on a Tinkerer's Cache, strike it with Replicant Alloy, or attack Replicant Alloy with it to add additional liquified alloy.</span>"
 			if(reform_alloy)
