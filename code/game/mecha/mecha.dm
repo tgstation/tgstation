@@ -551,7 +551,7 @@
 					obstacle.mech_melee_attack(src)
 					if(!obstacle || (obstacle && !obstacle.density))
 						step(src,dir)
-					nextsmash = world.time + melee_cooldown
+					nextsmash = world.time + (melee_cooldown/1.5)
 			if(isobj(obstacle))
 				var/obj/O = obstacle
 				if(!O.anchored)
