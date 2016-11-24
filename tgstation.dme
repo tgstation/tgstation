@@ -1070,6 +1070,7 @@
 #include "code\modules\client\verbs\sethotkeys.dm"
 #include "code\modules\client\verbs\suicide.dm"
 #include "code\modules\client\verbs\who.dm"
+#include "code\modules\clothing\bishehlop.dm"
 #include "code\modules\clothing\chameleon.dm"
 #include "code\modules\clothing\clothing.dm"
 #include "code\modules\clothing\glasses\engine_goggles.dm"
