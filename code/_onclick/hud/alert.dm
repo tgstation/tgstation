@@ -312,31 +312,31 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 				req_caches = JUDGEMENT_CACHE_REQ
 				req_cv = JUDGEMENT_CV_REQ
 				req_ai = TRUE
-			desc += "<br><b>[validservants]/[req_servants]</b> Servants"
-			if(validservants < req_servants)
-				icon_state += "-servants" //in this manner, generate an icon key based on what we're missing
+		desc += "<br><b>[validservants]/[req_servants]</b> Servants"
+		if(validservants < req_servants)
+			icon_state += "-servants" //in this manner, generate an icon key based on what we're missing
+		else
+			desc += ": <b><font color=#5A6068>\[CHECK\]</font></b>"
+		desc += "<br><b>[clockwork_caches]/[req_caches]</b> Tinkerer's Caches"
+		if(clockwork_caches < req_caches)
+			icon_state += "-caches"
+		else
+			desc += ": <b><font color=#5A6068>\[CHECK\]</font></b>"
+		if(req_cv) //cv only shows up if the tier requires it
+			desc += "<br><b>[clockwork_construction_value]/[req_cv]</b> Construction Value"
+			if(clockwork_construction_value < req_cv)
+				icon_state += "-cv"
 			else
 				desc += ": <b><font color=#5A6068>\[CHECK\]</font></b>"
-			desc += "<br><b>[clockwork_caches]/[req_caches]</b> Tinkerer's Caches"
-			if(clockwork_caches < req_caches)
-				icon_state += "-caches"
+		if(req_ai) //same for ai
+			if(unconverted_ais_exist)
+				if(unconverted_ais_exist > 1)
+					desc += "<br><b>[unconverted_ais_exist] unconverted AIs exist!</b><br>"
+				else
+					desc += "<br><b>An unconverted AI exists!</b>"
+				icon_state += "-ai"
 			else
-				desc += ": <b><font color=#5A6068>\[CHECK\]</font></b>"
-			if(req_cv) //cv only shows up if the tier requires it
-				desc += "<br><b>[clockwork_construction_value]/[req_cv]</b> Construction Value"
-				if(clockwork_construction_value < req_cv)
-					icon_state += "-cv"
-				else
-					desc += ": <b><font color=#5A6068>\[CHECK\]</font></b>"
-			if(req_ai) //same for ai
-				if(unconverted_ais_exist)
-					if(unconverted_ais_exist > 1)
-						desc += "<br><b>[unconverted_ais_exist] unconverted AIs exist!</b><br>"
-					else
-						desc += "<br><b>An unconverted AI exists!</b>"
-					icon_state += "-ai"
-				else
-					desc += "<br>No unconverted AIs exist: <b><font color=#5A6068>\[CHECK\]</font></b>"
+				desc += "<br>No unconverted AIs exist: <b><font color=#5A6068>\[CHECK\]</font></b>"
 
 /obj/screen/alert/clockwork/infodump
 	name = "Global Records"
