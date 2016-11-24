@@ -1,5 +1,0 @@
-author: "Shadowlight213"
-delete-after: True
-changes: 
-  - tweak: "Borers now have a 10 second delay before waking up after sugar leaves the host system"
-  - tweak: "There is a chance for borers to lose control, based on brain damage levels"

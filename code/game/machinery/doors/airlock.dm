@@ -980,8 +980,7 @@ var/list/airlock_overlays = list()
 						user.visible_message("<span class='notice'>[user] reinforced \the [src] with plasteel.</span>",
 											"<span class='notice'>You reinforced \the [src] with plasteel.</span>")
 						security_level = AIRLOCK_SECURITY_PLASTEEL
-						obj_integrity = normal_integrity * AIRLOCK_INTEGRITY_MULTIPLIER
-						max_integrity = normal_integrity * AIRLOCK_INTEGRITY_MULTIPLIER
+						modify_max_integrity(normal_integrity * AIRLOCK_INTEGRITY_MULTIPLIER)
 						damage_deflection = AIRLOCK_DAMAGE_DEFLECTION_R
 						update_icon()
 					return
@@ -1014,8 +1013,7 @@ var/list/airlock_overlays = list()
 						user.visible_message("<span class='notice'>[user] removed \the [src]'s shielding.</span>",
 											"<span class='notice'>You removed \the [src]'s inner shielding.</span>")
 						security_level = AIRLOCK_SECURITY_NONE
-						obj_integrity = normal_integrity
-						max_integrity = normal_integrity
+						modify_max_integrity(normal_integrity)
 						damage_deflection = AIRLOCK_DAMAGE_DEFLECTION_N
 						spawn_atom_to_turf(/obj/item/stack/sheet/plasteel, user.loc, 1)
 						update_icon()

@@ -573,6 +573,7 @@
 	name = initial(golem_type.name)
 	id = initial(golem_type.id)
 	meat = initial(golem_type.meat)
+	fixed_mut_color = initial(golem_type.fixed_mut_color)
 
 /datum/species/golem/adamantine
 	name = "Adamantine Golem"
@@ -585,25 +586,45 @@
 	id = "plasma"
 	fixed_mut_color = "a3d"
 
+/datum/species/golem/plasma/spec_death(gibbed, mob/living/carbon/human/H)
+	explosion(get_turf(H),0,1,2,flame_range = 5)
+	if(H)
+		H.gib()
+
 /datum/species/golem/diamond
 	name = "Diamond Golem"
 	id = "diamond"
 	fixed_mut_color = "0ff"
+	armor = 70 //up from 55
 
 /datum/species/golem/gold
 	name = "Gold Golem"
 	id = "gold"
 	fixed_mut_color = "ee0"
+	speedmod = 1
+	armor = 25 //down from 55
 
 /datum/species/golem/silver
 	name = "Silver Golem"
 	id = "silver"
 	fixed_mut_color = "ddd"
+	punchstunthreshold = 9 //60% chance, from 40%
 
 /datum/species/golem/uranium
 	name = "Uranium Golem"
 	id = "uranium"
 	fixed_mut_color = "7f0"
+	var/last_event = 0
+	var/active = null
+
+/datum/species/golem/uranium/spec_life(mob/living/carbon/human/H)
+	if(!active)
+		if(world.time > last_event+30)
+			active = 1
+			radiation_pulse(get_turf(H), 3, 3, 5, 0)
+			last_event = world.time
+			active = null
+	..()
 
 
 /*
@@ -781,6 +802,16 @@ var/global/image/plasmaman_on_fire = image("icon"='icons/mob/OnFire.dmi', "icon_
 		return 0
 	return ..()
 
+/datum/species/plasmaman/random_name(unique,lastname)
+	if(unique)
+		return random_unique_plasmaman_name()
+
+	var/randname = plasmaman_name()
+
+	if(lastname)
+		randname += " [lastname]"
+
+	return randname
 
 
 /datum/species/synth
