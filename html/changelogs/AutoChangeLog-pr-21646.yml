@@ -1,0 +1,4 @@
+author: "Joan"
+delete-after: True
+changes: 
+  - rscadd: "Clockcult AIs with borgs 'slaved' to them will convert them when hacking via the robotics console."
