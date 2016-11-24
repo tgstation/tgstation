@@ -124,9 +124,11 @@
 			charge_max = 1800 //3 minute cooldown, if you rise in sight of someone and killed again, you're probably screwed.
 			charge_counter = 1800
 			stat_allowed = 1
-			marked_item.name = "Ensouled [marked_item.name]"
-			marked_item.desc = "A terrible aura surrounds this item, its very existence is offensive to life itself..."
-			marked_item.color = "#003300"
+			marked_item.name = "ensouled [marked_item.name]"
+			marked_item.desc += "\nA terrible aura surrounds this item, its very existence is offensive to life itself..."
+			marked_item.add_atom_colour("#003300", ADMIN_COLOUR_PRIORITY)
+			poi_list |= marked_item
+
 			M << "<span class='userdanger'>With a hideous feeling of emptiness you watch in horrified fascination as skin sloughs off bone! Blood boils, nerves disintegrate, eyes boil in their sockets! As your organs crumble to dust in your fleshless chest you come to terms with your choice. You're a lich!</span>"
 			M.set_species(/datum/species/skeleton)
 			current_body = M.mind.current

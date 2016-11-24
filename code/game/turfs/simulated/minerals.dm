@@ -36,6 +36,9 @@
 				if(istype(T, /turf/closed/mineral/random))
 					Spread(T)
 
+/turf/closed/mineral/shuttleRotate(rotation)
+	setDir(angle2dir(rotation+dir2angle(dir)))
+	queue_smooth(src)
 
 
 /turf/closed/mineral/attackby(obj/item/weapon/pickaxe/P, mob/user, params)

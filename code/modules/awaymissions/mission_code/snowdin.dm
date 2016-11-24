@@ -130,7 +130,7 @@ obj/item/weapon/paper/crumpled/snowdin/shovel
 				/obj/item/organ/brain/alien = 17,
 				/obj/item/weapon/twohanded/dualsaber = 15,
 				/obj/item/organ/heart/demon = 7,
-				/obj/item/weapon/gun/projectile/automatic/c20r/unrestricted = 16,
+				/obj/item/weapon/gun/ballistic/automatic/c20r/unrestricted = 16,
 				/obj/item/weapon/gun/magic/wand/resurrection/inert = 15,
 				/obj/item/weapon/gun/magic/wand/resurrection = 10,
 				/obj/item/device/radio/uplink/old = 2,
@@ -189,7 +189,7 @@ obj/effect/mob_spawn/human/syndicatesoldier/coldres
 	uniform = /obj/item/clothing/under/syndicate/coldres
 	shoes = /obj/item/clothing/shoes/combat/coldres
 	radio = /obj/item/device/radio/headset/syndicate/alt
-	pocket1 = /obj/item/weapon/gun/projectile/automatic/pistol
+	pocket1 = /obj/item/weapon/gun/ballistic/automatic/pistol
 	pocket2 = /obj/item/weapon/card/id/syndicate
 	has_id = 0
 
@@ -240,4 +240,5 @@ obj/effect/mob_spawn/human/syndicatesoldier/coldres/alive/female
 /obj/structure/flora/rock/pile/icy
 	name = "icey rocks"
 	color = rgb(114,228,250)
+
 

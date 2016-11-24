@@ -72,6 +72,8 @@
 		H.wear_suit.add_fingerprint(H,1)
 	if(H.wear_mask)
 		H.wear_mask.add_fingerprint(H,1)
+	if(H.wear_neck)
+		H.wear_neck.add_fingerprint(H,1)
 	if(H.head)
 		H.head.add_fingerprint(H,1)
 	if(H.shoes)

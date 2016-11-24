@@ -41,7 +41,10 @@
 	if(!(NOHUNGER in dna.species.specflags))
 		internal_organs += new /obj/item/organ/appendix
 	if(!(NOBREATH in dna.species.specflags))
-		internal_organs += new /obj/item/organ/lungs
+		if(dna.species.mutantlungs)
+			internal_organs += new dna.species.mutantlungs()
+		else
+			internal_organs += new /obj/item/organ/lungs()
 	if(!(NOBLOOD in dna.species.specflags))
 		internal_organs += new /obj/item/organ/heart
 	internal_organs += new /obj/item/organ/brain
@@ -73,6 +76,11 @@
 				stat("Internal Atmosphere Info", internal.name)
 				stat("Tank Pressure", internal.air_contents.return_pressure())
 				stat("Distribution Pressure", internal.distribute_pressure)
+
+		var/mob/living/simple_animal/borer/B = has_brain_worms()
+		if(B && B.controlling)
+			stat("Chemicals", B.chemicals)
+
 		if(mind)
 			if(mind.changeling)
 				stat("Chemical Storage", "[mind.changeling.chem_charges]/[mind.changeling.chem_storage]")
@@ -132,6 +140,11 @@
 		dat += "<tr><td><font color=grey><B>Mask:</B></font></td><td><font color=grey>Obscured</font></td></tr>"
 	else
 		dat += "<tr><td><B>Mask:</B></td><td><A href='?src=\ref[src];item=[slot_wear_mask]'>[(wear_mask && !(wear_mask.flags&ABSTRACT)) ? wear_mask : "<font color=grey>Empty</font>"]</A></td></tr>"
+
+	if(slot_neck in obscured)
+		dat += "<tr><td><font color=grey><B>Neck:</B></font></td><td><font color=grey>Obscured</font></td></tr>"
+	else
+		dat += "<tr><td><B>Neck:</B></td><td><A href='?src=\ref[src];item=[slot_neck]'>[(wear_neck && !(wear_neck.flags&ABSTRACT)) ? wear_neck : "<font color=grey>Empty</font>"]</A></td></tr>"
 
 	if(slot_glasses in obscured)
 		dat += "<tr><td><font color=grey><B>Eyes:</B></font></td><td><font color=grey>Obscured</font></td></tr>"
@@ -712,10 +725,11 @@
 /mob/living/carbon/human/proc/electrocution_animation(anim_duration)
 	//Handle mutant parts if possible
 	if(dna && dna.species)
-		add_overlay("electrocuted_base")
-		spawn(anim_duration)
-			if(src)
-				overlays -= "electrocuted_base"
+		add_atom_colour("#000000", TEMPORARY_COLOUR_PRIORITY)
+		var/static/image/electrocution_skeleton_anim = image(icon = icon, icon_state = "electrocuted_base")
+		electrocution_skeleton_anim.appearance_flags = RESET_COLOR
+		add_overlay(electrocution_skeleton_anim)
+		addtimer(src, "end_electrocution_animation", anim_duration, FALSE, electrocution_skeleton_anim)
 
 	else //or just do a generic animation
 		var/list/viewing = list()
@@ -723,6 +737,10 @@
 			if(M.client)
 				viewing += M.client
 		flick_overlay(image(icon,src,"electrocuted_generic",ABOVE_MOB_LAYER), viewing, anim_duration)
+
+/mob/living/carbon/human/proc/end_electrocution_animation(image/I)
+	remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, "#000000")
+	overlays -= I
 
 /mob/living/carbon/human/canUseTopic(atom/movable/M, be_close = 0)
 	if(incapacitated() || lying )

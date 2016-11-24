@@ -12,6 +12,9 @@
 
 #define STATUS_EFFECT_VANGUARD /datum/status_effect/vanguard_shield //Grants temporary stun absorption, but will stun the user based on how many stuns they absorbed.
 #define STATUS_EFFECT_INATHNEQS_ENDOWMENT /datum/status_effect/inathneqs_endowment //A 15-second invulnerability and stun absorption, granted by Inath-neq.
+#define STATUS_EFFECT_WRAITHSPECS /datum/status_effect/wraith_spectacles
+
+#define STATUS_EFFECT_POWERREGEN /datum/status_effect/cyborg_power_regen //Regenerates power on a given cyborg over time
 
 /////////////
 // DEBUFFS //

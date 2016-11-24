@@ -65,7 +65,8 @@
 */
 /datum/species/lizard/ashwalker
 	name = "Ash Walker"
-	id = "lizard"
+	id = "ashlizard"
+	limbs_id = "lizard"
 	specflags = list(MUTCOLORS,EYECOLOR,LIPS,NOBREATH,NOGUNS,DIGITIGRADE)
 /*
  PODPEOPLE
@@ -203,7 +204,7 @@
 	default_color = "00FF90"
 	say_mod = "chirps"
 	eyes = "jelleyes"
-	specflags = list(MUTCOLORS,EYECOLOR,NOBLOOD,VIRUSIMMUNE, TOXINLOVER)
+	specflags = list(MUTCOLORS,EYECOLOR,NOBLOOD,VIRUSIMMUNE,TOXINLOVER)
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/slime
 	exotic_blood = "slimejelly"
 	var/datum/action/innate/regenerate_limbs/regenerate_limbs
@@ -568,6 +569,7 @@
 	name = initial(golem_type.name)
 	id = initial(golem_type.id)
 	meat = initial(golem_type.meat)
+	fixed_mut_color = initial(golem_type.fixed_mut_color)
 
 /datum/species/golem/adamantine
 	name = "Adamantine Golem"
@@ -580,25 +582,45 @@
 	id = "plasma"
 	fixed_mut_color = "a3d"
 
+/datum/species/golem/plasma/spec_death(gibbed, mob/living/carbon/human/H)
+	explosion(get_turf(H),0,1,2,flame_range = 5)
+	if(H)
+		H.gib()
+
 /datum/species/golem/diamond
 	name = "Diamond Golem"
 	id = "diamond"
 	fixed_mut_color = "0ff"
+	armor = 70 //up from 55
 
 /datum/species/golem/gold
 	name = "Gold Golem"
 	id = "gold"
 	fixed_mut_color = "ee0"
+	speedmod = 1
+	armor = 25 //down from 55
 
 /datum/species/golem/silver
 	name = "Silver Golem"
 	id = "silver"
 	fixed_mut_color = "ddd"
+	punchstunthreshold = 9 //60% chance, from 40%
 
 /datum/species/golem/uranium
 	name = "Uranium Golem"
 	id = "uranium"
 	fixed_mut_color = "7f0"
+	var/last_event = 0
+	var/active = null
+
+/datum/species/golem/uranium/spec_life(mob/living/carbon/human/H)
+	if(!active)
+		if(world.time > last_event+30)
+			active = 1
+			radiation_pulse(get_turf(H), 3, 3, 5, 0)
+			last_event = world.time
+			active = null
+	..()
 
 
 /*
@@ -664,14 +686,16 @@
 	sexes = 0
 	blacklisted = 1
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/zombie
-	specflags = list(NOBREATH,RESISTTEMP,NOBLOOD,RADIMMUNE,NOZOMBIE,EASYDISMEMBER,EASYLIMBATTACHMENT, TOXINLOVER)
+	specflags = list(NOBREATH,RESISTTEMP,NOBLOOD,RADIMMUNE,NOZOMBIE,EASYDISMEMBER,EASYLIMBATTACHMENT,TOXINLOVER)
 	mutant_organs = list(/obj/item/organ/tongue/zombie)
-	speedmod = 2
 
 /datum/species/zombie/infectious
 	name = "Infectious Zombie"
+	id = "memezombies"
+	limbs_id = "zombie"
 	no_equip = list(slot_wear_mask, slot_head)
 	armor = 20 // 120 damage to KO a zombie, which kills it
+	speedmod = 2
 
 /datum/species/zombie/infectious/spec_life(mob/living/carbon/C)
 	. = ..()
@@ -705,7 +729,8 @@
 // Your skin falls off
 /datum/species/krokodil_addict
 	name = "Human"
-	id = "zombie"
+	id = "goofzombies"
+	limbs_id = "zombie" //They look like zombies
 	sexes = 0
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/zombie
 	mutant_organs = list(/obj/item/organ/tongue/zombie)
@@ -731,13 +756,12 @@ var/global/image/plasmaman_on_fire = image("icon"='icons/mob/OnFire.dmi', "icon_
 	sexes = 0
 	meat = /obj/item/stack/sheet/mineral/plasma
 	specflags = list(NOBLOOD,RADIMMUNE,NOTRANSSTING,VIRUSIMMUNE,NOHUNGER)
-	safe_oxygen_min = 0 //We don't breath this
-	safe_toxins_min = 16 //We breath THIS!
-	safe_toxins_max = 0
+	mutantlungs = /obj/item/organ/lungs/plasmaman
 	dangerous_existence = 1 //So so much
 	blacklisted = 1 //See above
 	burnmod = 2
 	heatmod = 2
+	breathid = "tox"
 	speedmod = 1
 	damage_overlay_type = ""//let's not show bloody wounds or burns over bones.
 
@@ -774,6 +798,16 @@ var/global/image/plasmaman_on_fire = image("icon"='icons/mob/OnFire.dmi', "icon_
 		return 0
 	return ..()
 
+/datum/species/plasmaman/random_name(unique,lastname)
+	if(unique)
+		return random_unique_plasmaman_name()
+
+	var/randname = plasmaman_name()
+
+	if(lastname)
+		randname += " [lastname]"
+
+	return randname
 
 
 /datum/species/synth
@@ -782,12 +816,6 @@ var/global/image/plasmaman_on_fire = image("icon"='icons/mob/OnFire.dmi', "icon_
 	say_mod = "beep boops" //inherited from a user's real species
 	sexes = 0
 	specflags = list(NOTRANSSTING,NOBREATH,VIRUSIMMUNE,NODISMEMBER,NOHUNGER) //all of these + whatever we inherit from the real species
-	safe_oxygen_min = 0
-	safe_toxins_min = 0
-	safe_toxins_max = 0
-	safe_co2_max = 0
-	SA_para_min = 0
-	SA_sleep_min = 0
 	dangerous_existence = 1
 	blacklisted = 1
 	meat = null
@@ -906,12 +934,6 @@ var/global/image/plasmaman_on_fire = image("icon"='icons/mob/OnFire.dmi', "icon_
 	id = "android"
 	say_mod = "states"
 	specflags = list(NOBREATH,RESISTTEMP,NOBLOOD,VIRUSIMMUNE,PIERCEIMMUNE,NOHUNGER,EASYLIMBATTACHMENT)
-	safe_oxygen_min = 0
-	safe_toxins_min = 0
-	safe_toxins_max = 0
-	safe_co2_max = 0
-	SA_para_min = 0
-	SA_sleep_min = 0
 	meat = null
 	damage_overlay_type = "synth"
 	limbs_id = "synth"

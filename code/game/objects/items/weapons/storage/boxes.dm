@@ -15,6 +15,7 @@
  *		Handcuff, mousetrap, and pillbottle boxes,
  *		Snap-pops and matchboxes,
  *		Replacement light boxes.
+ *		Action Figure Boxes
  *		Various paper bags.
  *
  *		For syndicate call-ins see uplink_kits.dm
@@ -126,7 +127,6 @@
 /obj/item/weapon/storage/box/syringes
 	name = "box of syringes"
 	desc = "A box full of syringes."
-	desc = "A biohazard alert warning is printed on the box."
 	icon_state = "syringe"
 
 /obj/item/weapon/storage/box/syringes/New()
@@ -622,6 +622,18 @@
 	new /obj/item/ammo_casing/shotgun/beanbag(src)
 	new /obj/item/ammo_casing/shotgun/beanbag(src)
 	new /obj/item/ammo_casing/shotgun/beanbag(src)
+
+
+/obj/item/weapon/storage/box/actionfigure
+	name = "box of action figures"
+	desc = "The latest set of collectable action figures."
+	icon_state = "box"
+
+/obj/item/weapon/storage/box/actionfigure/New()
+	..()
+	for(var/i in 1 to 4)
+		var/randomFigure = pick(subtypesof(/obj/item/toy/figure))
+		new randomFigure(src)
 
 #define NODESIGN "None"
 #define NANOTRASEN "NanotrasenStandard"

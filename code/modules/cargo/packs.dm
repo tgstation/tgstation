@@ -36,6 +36,19 @@ datum/supply_pack
 
 /datum/supply_pack/emergency
 	group = "Emergency"
+	
+/datum/supply_pack/emergency/vehicle
+	name = "Biker Gang Kit" //TUNNEL SNAKES OWN THIS TOWN
+	cost = 2000 
+	contraband = TRUE
+	contains = list(/obj/vehicle/atv,
+					/obj/item/key,
+					/obj/item/clothing/suit/jacket/leather/overcoat,
+					/obj/item/clothing/gloves/color/black,
+					/obj/item/clothing/head/soft,
+					/obj/item/clothing/mask/bandana/skull)//so you can properly #cargoniabikergang
+	crate_name = "Biker Kit"
+	crate_type = /obj/structure/closet/crate/large
 
 /datum/supply_pack/emergency/equipment
 	name = "Emergency Equipment"
@@ -234,9 +247,9 @@ datum/supply_pack
 /datum/supply_pack/security/taser
 	name = "Taser Crate"
 	cost = 1500
-	contains = list(/obj/item/weapon/gun/energy/gun/advtaser,
-					/obj/item/weapon/gun/energy/gun/advtaser,
-					/obj/item/weapon/gun/energy/gun/advtaser)
+	contains = list(/obj/item/weapon/gun/energy/e_gun/advtaser,
+					/obj/item/weapon/gun/energy/e_gun/advtaser,
+					/obj/item/weapon/gun/energy/e_gun/advtaser)
 	crate_name = "taser crate"
 
 /datum/supply_pack/security/disabler
@@ -328,9 +341,9 @@ datum/supply_pack
 /datum/supply_pack/security/armory/ballistic
 	name = "Combat Shotguns Crate"
 	cost = 2000
-	contains = list(/obj/item/weapon/gun/projectile/shotgun/automatic/combat,
-					/obj/item/weapon/gun/projectile/shotgun/automatic/combat,
-					/obj/item/weapon/gun/projectile/shotgun/automatic/combat,
+	contains = list(/obj/item/weapon/gun/ballistic/shotgun/automatic/combat,
+					/obj/item/weapon/gun/ballistic/shotgun/automatic/combat,
+					/obj/item/weapon/gun/ballistic/shotgun/automatic/combat,
 					/obj/item/weapon/storage/belt/bandolier,
 					/obj/item/weapon/storage/belt/bandolier,
 					/obj/item/weapon/storage/belt/bandolier)
@@ -339,8 +352,8 @@ datum/supply_pack
 /datum/supply_pack/security/armory/energy
 	name = "Energy Guns Crate"
 	cost = 2500
-	contains = list(/obj/item/weapon/gun/energy/gun,
-					/obj/item/weapon/gun/energy/gun)
+	contains = list(/obj/item/weapon/gun/energy/e_gun,
+					/obj/item/weapon/gun/energy/e_gun)
 	crate_name = "energy gun crate"
 	crate_type = /obj/structure/closet/crate/secure/plasma
 
@@ -362,8 +375,8 @@ datum/supply_pack
 /datum/supply_pack/security/armory/wt550
 	name = "WT-550 Auto Rifle Crate"
 	cost = 3500
-	contains = list(/obj/item/weapon/gun/projectile/automatic/wt550,
-					/obj/item/weapon/gun/projectile/automatic/wt550)
+	contains = list(/obj/item/weapon/gun/ballistic/automatic/wt550,
+					/obj/item/weapon/gun/ballistic/automatic/wt550)
 	crate_name = "auto rifle crate"
 
 /datum/supply_pack/security/armory/wt550ammo
@@ -1014,7 +1027,7 @@ datum/supply_pack
 	name = "Corgi Crate"
 	cost = 5000
 	contains = list(/mob/living/simple_animal/pet/dog/corgi,
-					/obj/item/clothing/tie/petcollar)
+					/obj/item/clothing/neck/petcollar)
 	crate_name = "corgi crate"
 
 /datum/supply_pack/organic/critter/corgi/generate()
@@ -1028,7 +1041,7 @@ datum/supply_pack
 	name = "Cat Crate"
 	cost = 5000 //Cats are worth as much as corgis.
 	contains = list(/mob/living/simple_animal/pet/cat,
-					/obj/item/clothing/tie/petcollar,
+					/obj/item/clothing/neck/petcollar,
                     /obj/item/toy/cattoy)
 	crate_name = "cat crate"
 
@@ -1043,14 +1056,14 @@ datum/supply_pack
 	name = "Pug Crate"
 	cost = 5000
 	contains = list(/mob/living/simple_animal/pet/dog/pug,
-					/obj/item/clothing/tie/petcollar)
+					/obj/item/clothing/neck/petcollar)
 	crate_name = "pug crate"
 
 /datum/supply_pack/organic/critter/fox
 	name = "Fox Crate"
 	cost = 5000
 	contains = list(/mob/living/simple_animal/pet/fox,
-					/obj/item/clothing/tie/petcollar)
+					/obj/item/clothing/neck/petcollar)
 	crate_name = "fox crate"
 
 /datum/supply_pack/organic/critter/butterfly
@@ -1254,7 +1267,7 @@ datum/supply_pack
 			/obj/item/device/t_scanner/adv_mining_scanner/lesser,
 			/obj/item/device/radio/headset/headset_cargo/mining,
 			/obj/item/weapon/storage/bag/ore,
-			/obj/item/clothing/suit/space/hardsuit/mining,
+			/obj/item/clothing/suit/hooded/explorer,
 			/obj/item/clothing/mask/gas/explorer)
 	crate_name = "shaft miner starter kit"
 	crate_type = /obj/structure/closet/crate/secure
@@ -1535,7 +1548,7 @@ datum/supply_pack
 					/obj/item/weapon/storage/fancy/cigarettes/cigpack_shadyjims,
 					/obj/item/weapon/storage/fancy/cigarettes/cigpack_midori,
 					/obj/item/seeds/ambrosia/deus,
-					/obj/item/clothing/tie/dope_necklace)
+					/obj/item/clothing/neck/necklace/dope)
 	crate_name = "crate"
 
 /datum/supply_pack/misc/randomised/toys
@@ -1554,7 +1567,7 @@ datum/supply_pack
 	                /obj/item/toy/carpplushie,
 	                /obj/item/weapon/coin/antagtoken,
 	                /obj/item/stack/tile/fakespace/loaded,
-	                /obj/item/weapon/gun/projectile/shotgun/toy/crossbow,
+	                /obj/item/weapon/gun/ballistic/shotgun/toy/crossbow,
 	                /obj/item/toy/redbutton)
 	crate_name = "toy crate"
 
@@ -1578,9 +1591,9 @@ datum/supply_pack
 					/obj/item/clothing/under/lawyer/blacksuit,
 					/obj/item/clothing/suit/toggle/lawyer/black,
 					/obj/item/clothing/tie/waistcoat,
-					/obj/item/clothing/tie/blue,
-					/obj/item/clothing/tie/red,
-					/obj/item/clothing/tie/black,
+					/obj/item/clothing/neck/tie/blue,
+					/obj/item/clothing/neck/tie/red,
+					/obj/item/clothing/neck/tie/black,
 					/obj/item/clothing/head/bowler,
 					/obj/item/clothing/head/fedora,
 					/obj/item/clothing/head/flatcap,
@@ -1600,22 +1613,22 @@ datum/supply_pack
 /datum/supply_pack/misc/foamforce
 	name = "Foam Force Crate"
 	cost = 1000
-	contains = list(/obj/item/weapon/gun/projectile/shotgun/toy,
-					/obj/item/weapon/gun/projectile/shotgun/toy,
-					/obj/item/weapon/gun/projectile/shotgun/toy,
-					/obj/item/weapon/gun/projectile/shotgun/toy,
-					/obj/item/weapon/gun/projectile/shotgun/toy,
-					/obj/item/weapon/gun/projectile/shotgun/toy,
-					/obj/item/weapon/gun/projectile/shotgun/toy,
-					/obj/item/weapon/gun/projectile/shotgun/toy)
+	contains = list(/obj/item/weapon/gun/ballistic/shotgun/toy,
+					/obj/item/weapon/gun/ballistic/shotgun/toy,
+					/obj/item/weapon/gun/ballistic/shotgun/toy,
+					/obj/item/weapon/gun/ballistic/shotgun/toy,
+					/obj/item/weapon/gun/ballistic/shotgun/toy,
+					/obj/item/weapon/gun/ballistic/shotgun/toy,
+					/obj/item/weapon/gun/ballistic/shotgun/toy,
+					/obj/item/weapon/gun/ballistic/shotgun/toy)
 	crate_name = "foam force crate"
 
 /datum/supply_pack/misc/foamforce/bonus
 	name = "Foam Force Pistols Crate"
 	contraband = TRUE
 	cost = 4000
-	contains = list(/obj/item/weapon/gun/projectile/automatic/toy/pistol,
-					/obj/item/weapon/gun/projectile/automatic/toy/pistol,
+	contains = list(/obj/item/weapon/gun/ballistic/automatic/toy/pistol,
+					/obj/item/weapon/gun/ballistic/automatic/toy/pistol,
 					/obj/item/ammo_box/magazine/toy/pistol,
 					/obj/item/ammo_box/magazine/toy/pistol)
 	crate_name = "foam force crate"

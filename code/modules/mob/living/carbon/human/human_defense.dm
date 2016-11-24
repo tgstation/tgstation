@@ -59,7 +59,7 @@
 	if(martial_art && martial_art.deflection_chance) //Some martial arts users can deflect projectiles!
 		if(prob(martial_art.deflection_chance))
 			if(!lying && dna && !dna.check_mutation(HULK)) //But only if they're not lying down, and hulks can't do it
-				visible_message("<span class='danger'>[src] deflects the projectile; they can't be hit with ranged weapons!</span>", "<span class='userdanger'>You deflect the projectile!</span>")
+				visible_message("<span class='danger'>[src] deflects the projectile; [p_they()] can't be hit with ranged weapons!</span>", "<span class='userdanger'>You deflect the projectile!</span>")
 				playsound(src, pick("sound/weapons/bulletflyby.ogg","sound/weapons/bulletflyby2.ogg","sound/weapons/bulletflyby3.ogg"), 75, 1)
 				return 0
 	if(!(P.original == src && P.firer == src)) //can't block or reflect when shooting yourself
@@ -117,6 +117,12 @@
 			return 1
 	return 0
 
+/mob/living/carbon/human/proc/check_block()
+	if(martial_art && martial_art.block_chance \
+	&& prob(martial_art.block_chance) && in_throw_mode \
+	&& !stat && !weakened && !stunned)
+		return TRUE
+	return FALSE
 
 /mob/living/carbon/human/hitby(atom/movable/AM, skipcatch = 0, hitpush = 1, blocked = 0)
 	var/obj/item/I
@@ -173,11 +179,14 @@
 
 /mob/living/carbon/human/attack_hulk(mob/living/carbon/human/user, does_attack_animation = 0)
 	if(user.a_intent == "harm")
+		var/hulk_verb = pick("smash","pummel")
+		if(check_shields(15, "the [hulk_verb]ing"))
+			return
 		..(user, 1)
 		playsound(loc, user.dna.species.attack_sound, 25, 1, -1)
-		var/hulk_verb = pick("smash","pummel")
-		visible_message("<span class='danger'>[user] has [hulk_verb]ed [src]!</span>", \
-								"<span class='userdanger'>[user] has [hulk_verb]ed [src]!</span>")
+		var/message = "[user] has [hulk_verb]ed [src]!"
+		visible_message("<span class='danger'>[message]</span>", \
+								"<span class='userdanger'>[message]</span>")
 		adjustBruteLoss(15)
 		damage_clothes(15, BRUTE, "melee")
 		return 1
@@ -203,6 +212,8 @@
 	if(can_inject(M, 1, affecting))//Thick suits can stop monkey bites.
 		if(..()) //successful monkey bite, this handles disease contraction.
 			var/damage = rand(1, 3)
+			if(check_shields(damage))
+				return 0
 			if(stat != DEAD)
 				apply_damage(damage, BRUTE, affecting, run_armor_check(affecting, "melee"))
 				damage_clothes(damage, BRUTE, "melee", affecting.body_zone)
@@ -279,7 +290,7 @@
 			affecting = get_bodypart("chest")
 		var/armor = run_armor_check(affecting, "melee", armour_penetration = M.armour_penetration)
 		apply_damage(damage, M.melee_damage_type, affecting, armor)
-		damage_clothes(damage, BRUTE, "melee", affecting.body_zone)
+		damage_clothes(damage, M.melee_damage_type, "melee", affecting.body_zone)
 
 
 /mob/living/carbon/human/attack_slime(mob/living/simple_animal/slime/M)
@@ -332,7 +343,7 @@
 			updatehealth()
 
 		visible_message("<span class='danger'>[M.name] has hit [src]!</span>", \
-								"<span class='userdanger'>[M.name] has hit [src]!</span>", null, 2, M.occupant)
+								"<span class='userdanger'>[M.name] has hit [src]!</span>", null, COMBAT_MESSAGE_RANGE)
 		add_logs(M.occupant, src, "attacked", M, "(INTENT: [uppertext(M.occupant.a_intent)]) (DAMTYPE: [uppertext(M.damtype)])")
 
 	else
@@ -406,7 +417,7 @@
 
 
 //Added a safety check in case you want to shock a human mob directly through electrocute_act.
-/mob/living/carbon/human/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, safety = 0, override = 0, tesla_shock = 0)
+/mob/living/carbon/human/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, safety = 0, override = 0, tesla_shock = 0, illusion = 0)
 	if(tesla_shock)
 		var/total_coeff = 1
 		if(gloves)
@@ -424,12 +435,12 @@
 			var/obj/item/clothing/gloves/G = gloves
 			gloves_siemens_coeff = G.siemens_coefficient
 		siemens_coeff = gloves_siemens_coeff
-	if(heart_attack)
+	if(heart_attack && !illusion)
 		if(shock_damage * siemens_coeff >= 1 && prob(25))
 			heart_attack = 0
 			if(stat == CONSCIOUS)
 				src << "<span class='notice'>You feel your heart beating again!</span>"
-	. = ..(shock_damage,source,siemens_coeff,safety,override,tesla_shock)
+	. = ..(shock_damage,source,siemens_coeff,safety,override,tesla_shock, illusion)
 	if(.)
 		electrocution_animation(40)
 
@@ -461,6 +472,8 @@
 			head_clothes = glasses
 		if(wear_mask)
 			head_clothes = wear_mask
+		if(wear_neck)
+			head_clothes = wear_neck
 		if(head)
 			head_clothes = head
 		if(head_clothes)
@@ -468,6 +481,7 @@
 				head_clothes.acid_act(acidpwr, acid_volume)
 				update_inv_glasses()
 				update_inv_wear_mask()
+				update_inv_neck()
 				update_inv_head()
 			else
 				src << "<span class='notice'>Your [head_clothes.name] protects your head and face from the acid!</span>"
@@ -675,6 +689,8 @@
 			head_clothes = glasses
 		if(wear_mask)
 			head_clothes = wear_mask
+		if(wear_neck)
+			head_clothes = wear_neck
 		if(head)
 			head_clothes = head
 		if(head_clothes)

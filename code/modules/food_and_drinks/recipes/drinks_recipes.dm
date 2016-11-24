@@ -535,3 +535,10 @@
 	results = list("arnold_palmer" = 2)
 	required_reagents = list("tea" = 1, "lemonjuice" = 1)
 	mix_message = "The smells of fresh green grass and sand traps waft through the air as the mixture turns a friendly yellow-orange."
+
+/datum/chemical_reaction/chocolate_milk
+	name = "chocolate milk"
+	id = "chocolate_milk"
+	results = list("chocolate_milk" = 2)
+	required_reagents = list("milk" = 1, "cocoa" = 1)
+	mix_message = "The color changes as the mixture blends smoothly."

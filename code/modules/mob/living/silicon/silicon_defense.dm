@@ -69,10 +69,10 @@
 			M.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
 			playsound(src.loc, 'sound/effects/bang.ogg', 10, 1)
 			visible_message("<span class='danger'>[M] punches [src], but doesn't leave a dent.</span>", \
-				"<span class='warning'>[M] punches [src], but doesn't leave a dent.</span>", null, 2, M)
+				"<span class='warning'>[M] punches [src], but doesn't leave a dent.</span>", null, COMBAT_MESSAGE_RANGE)
 	return 0
 
-/mob/living/silicon/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, safety = 0, tesla_shock = 0)
+/mob/living/silicon/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, safety = 0, tesla_shock = 0, illusion = 0)
 	return 0 //So borgs they don't die trying to fix wiring
 
 /mob/living/silicon/emp_act(severity)
@@ -92,6 +92,6 @@
 	Proj.on_hit(src)
 	return 2
 
-/mob/living/silicon/flash_act(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0, type = /obj/screen/fullscreen/flash/noise)
+/mob/living/silicon/flash_act(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0, type = /obj/screen/fullscreen/flash/static)
 	if(affect_silicon)
 		return ..()

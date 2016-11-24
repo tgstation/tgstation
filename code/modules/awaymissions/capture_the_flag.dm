@@ -19,6 +19,7 @@
 	throw_range = 1
 	force = 200
 	armour_penetration = 1000
+	resistance_flags = INDESTRUCTIBLE
 	anchored = TRUE
 	flags = HANDSLOW
 	var/team = WHITE_TEAM
@@ -123,6 +124,7 @@
 	icon = 'icons/obj/device.dmi'
 	icon_state = "syndbeacon"
 	anchored = 1
+	resistance_flags = INDESTRUCTIBLE
 	var/team = WHITE_TEAM
 	//Capture the Flag scoring
 	var/points = 0
@@ -328,19 +330,19 @@
 			CTF.ctf_gear = initial(ctf_gear)
 			CTF.respawn_cooldown = DEFAULT_RESPAWN
 
-/obj/item/weapon/gun/projectile/automatic/pistol/deagle/ctf
+/obj/item/weapon/gun/ballistic/automatic/pistol/deagle/ctf
 	desc = "This looks like it could really hurt in melee."
 	force = 75
 
-/obj/item/weapon/gun/projectile/automatic/pistol/deagle/ctf/dropped()
+/obj/item/weapon/gun/ballistic/automatic/pistol/deagle/ctf/dropped()
 	. = ..()
 	addtimer(src, "floor_vanish", 1)
 
-/obj/item/weapon/gun/projectile/automatic/pistol/deagle/ctf/proc/floor_vanish()
+/obj/item/weapon/gun/ballistic/automatic/pistol/deagle/ctf/proc/floor_vanish()
 	if(isturf(loc))
 		qdel(src)
 
-/obj/item/weapon/gun/projectile/automatic/laser/ctf
+/obj/item/weapon/gun/ballistic/automatic/laser/ctf
 	mag_type = /obj/item/ammo_box/magazine/recharge/ctf
 	desc = "This looks like it could really hurt in melee."
 	force = 50
@@ -366,7 +368,7 @@
 
 // RED TEAM GUNS
 
-/obj/item/weapon/gun/projectile/automatic/laser/ctf/red
+/obj/item/weapon/gun/ballistic/automatic/laser/ctf/red
 	mag_type = /obj/item/ammo_box/magazine/recharge/ctf/red
 
 /obj/item/ammo_box/magazine/recharge/ctf/red
@@ -380,7 +382,7 @@
 
 // BLUE TEAM GUNS
 
-/obj/item/weapon/gun/projectile/automatic/laser/ctf/blue
+/obj/item/weapon/gun/ballistic/automatic/laser/ctf/blue
 	mag_type = /obj/item/ammo_box/magazine/recharge/ctf/blue
 
 /obj/item/ammo_box/magazine/recharge/ctf/blue
@@ -400,10 +402,10 @@
 	shoes = /obj/item/clothing/shoes/combat
 	gloves = /obj/item/clothing/gloves/combat
 	id = /obj/item/weapon/card/id/syndicate
-	belt = /obj/item/weapon/gun/projectile/automatic/pistol/deagle/ctf
+	belt = /obj/item/weapon/gun/ballistic/automatic/pistol/deagle/ctf
 	l_pocket = /obj/item/ammo_box/magazine/recharge/ctf
 	r_pocket = /obj/item/ammo_box/magazine/recharge/ctf
-	r_hand = /obj/item/weapon/gun/projectile/automatic/laser/ctf
+	r_hand = /obj/item/weapon/gun/ballistic/automatic/laser/ctf
 
 /datum/outfit/ctf/post_equip(mob/living/carbon/human/H, visualsOnly=FALSE)
 	if(visualsOnly)
@@ -430,7 +432,7 @@
 /datum/outfit/ctf/red
 	ears = /obj/item/device/radio/headset/syndicate/alt
 	suit = /obj/item/clothing/suit/space/hardsuit/shielded/ctf/red
-	r_hand = /obj/item/weapon/gun/projectile/automatic/laser/ctf/red
+	r_hand = /obj/item/weapon/gun/ballistic/automatic/laser/ctf/red
 	l_pocket = /obj/item/ammo_box/magazine/recharge/ctf/red
 	r_pocket = /obj/item/ammo_box/magazine/recharge/ctf/red
 
@@ -441,7 +443,7 @@
 /datum/outfit/ctf/blue
 	ears = /obj/item/device/radio/headset/headset_cent/commander
 	suit = /obj/item/clothing/suit/space/hardsuit/shielded/ctf/blue
-	r_hand = /obj/item/weapon/gun/projectile/automatic/laser/ctf/blue
+	r_hand = /obj/item/weapon/gun/ballistic/automatic/laser/ctf/blue
 	l_pocket = /obj/item/ammo_box/magazine/recharge/ctf/blue
 	r_pocket = /obj/item/ammo_box/magazine/recharge/ctf/blue
 
@@ -467,6 +469,7 @@
 	name = "Spawn protection"
 	desc = "Stay outta the enemy spawn!"
 	icon_state = "trap"
+	resistance_flags = INDESTRUCTIBLE
 	var/team = WHITE_TEAM
 	time_between_triggers = 1
 	alpha = 255
@@ -499,6 +502,7 @@
 	anchored = TRUE
 	invisibility = INVISIBILITY_OBSERVER
 	alpha = 100
+	resistance_flags = INDESTRUCTIBLE
 
 /obj/effect/ctf/ammo
 	name = "ammo pickup"
@@ -563,6 +567,7 @@
 	icon = 'icons/obj/machines/dominator.dmi'
 	icon_state = "dominator"
 	anchored = 1
+	resistance_flags = INDESTRUCTIBLE
 	var/obj/machinery/capture_the_flag/controlling
 	var/team = "none"
 	var/point_rate = 1

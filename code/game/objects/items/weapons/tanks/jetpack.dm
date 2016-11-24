@@ -20,10 +20,10 @@
 	ion_trail = new
 	ion_trail.set_up(src)
 
-/obj/item/weapon/tank/jetpack/ui_action_click(mob/user, actiontype)
-	if(actiontype == /datum/action/item_action/toggle_jetpack)
+/obj/item/weapon/tank/jetpack/ui_action_click(mob/user, action)
+	if(istype(action, /datum/action/item_action/toggle_jetpack))
 		cycle(user)
-	else if(actiontype == /datum/action/item_action/jetpack_stabilization)
+	else if(istype(action, /datum/action/item_action/jetpack_stabilization))
 		if(on)
 			stabilizers = !stabilizers
 			user << "<span class='notice'>You turn the jetpack stabilization [stabilizers ? "on" : "off"].</span>"
@@ -73,6 +73,15 @@
 	T.assume_air(removed)
 
 	return 1
+
+/obj/item/weapon/tank/jetpack/suicide_act(mob/user)
+	if (istype(user,/mob/living/carbon/human/))
+		var/mob/living/carbon/human/H = user
+		H.forcesay("WHAT THE FUCK IS CARBON DIOXIDE?")
+		H.visible_message("<span class='suicide'>[user] is suffocating [user.p_them()]self with [src]! It looks like [user.p_they()] didn't read what that jetpack says!</span>")
+		return (OXYLOSS)
+	else
+		..()
 
 /obj/item/weapon/tank/jetpack/void
 	name = "void jetpack (oxygen)"

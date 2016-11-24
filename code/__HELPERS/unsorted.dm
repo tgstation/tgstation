@@ -1189,7 +1189,8 @@ B --><-- A
 	var/list/L = block(locate(T.x - range, T.y - range, T.z), locate(T.x + range, T.y + range, T.z))
 	for(var/B in L)
 		var/turf/C = B
-		C.proximity_checkers |= A
+		LAZYINITLIST(C.proximity_checkers)
+		C.proximity_checkers[A] = TRUE
 	return L
 
 /proc/remove_from_proximity_list(atom/A, range)
@@ -1197,7 +1198,11 @@ B --><-- A
 	var/list/L = block(locate(T.x - range, T.y - range, T.z), locate(T.x + range, T.y + range, T.z))
 	for(var/B in L)
 		var/turf/C = B
+		if (!C.proximity_checkers)
+			continue
 		C.proximity_checkers.Remove(A)
+		UNSETEMPTY(C.proximity_checkers)
+
 
 /proc/shift_proximity(atom/checker, atom/A, range, atom/B, newrange)
 	var/turf/T = get_turf(A)
@@ -1210,10 +1215,14 @@ B --><-- A
 	var/list/O = M - L
 	for(var/C in N)
 		var/turf/D = C
+		if (!D.proximity_checkers)
+			continue
 		D.proximity_checkers.Remove(checker)
+		UNSETEMPTY(D.proximity_checkers)
 	for(var/E in O)
 		var/turf/F = E
-		F.proximity_checkers |= checker
+		LAZYINITLIST(F.proximity_checkers)
+		F.proximity_checkers[checker] = TRUE
 	return 1
 
 /proc/flick_overlay_static(image/I, atom/A, duration)

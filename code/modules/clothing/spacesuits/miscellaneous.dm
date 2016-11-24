@@ -258,7 +258,7 @@ Contains:
 	item_state = "space_suit_syndicate"
 	slowdown = 0	//Space carp magic, never stop believing
 	armor = list(melee = -20, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 100, rad = 75, fire = 60, acid = 75) //As whimpy whimpy whoo
-	allowed = list(/obj/item/weapon/tank/internals, /obj/item/weapon/gun/projectile/automatic/speargun)	//I'm giving you a hint here
+	allowed = list(/obj/item/weapon/tank/internals, /obj/item/weapon/gun/ballistic/automatic/speargun)	//I'm giving you a hint here
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/carp
 
 
@@ -270,6 +270,7 @@ Contains:
 	item_color = "knight_grey"
 	max_heat_protection_temperature = FIRE_IMMUNITY_HELM_MAX_TEMP_PROTECT
 	actions_types = list()
+	resistance_flags = FIRE_PROOF
 
 /obj/item/clothing/suit/space/hardsuit/ert/paranormal
 	name = "paranormal response team suit"
@@ -278,7 +279,7 @@ Contains:
 	item_state = "knight_grey"
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/ert/paranormal
 	max_heat_protection_temperature = FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT
-
+	resistance_flags = FIRE_PROOF
 
 /obj/item/clothing/suit/space/hardsuit/ert/paranormal/New()
 	..()

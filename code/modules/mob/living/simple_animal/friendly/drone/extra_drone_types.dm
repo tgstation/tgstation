@@ -101,11 +101,15 @@
 	pass_flags = PASSTABLE
 	health = 50
 	maxHealth = 50
+	harm_intent_damage = 5
 	density = TRUE
 	speed = 1
 	ventcrawler = 0
 	faction = list("ratvar")
-	speak_emote = list("clinks", "clunks")
+	speak_emote = list("clanks", "clinks", "clunks", "clangs")
+	verb_ask = "requests"
+	verb_exclaim = "proclaims"
+	verb_yell = "harangues"
 	bubble_icon = "clock"
 	heavy_emp_damage = 10
 	laws = "0. Purge all untruths and honor Ratvar."
@@ -113,6 +117,7 @@
 	seeStatic = 0
 	hacked = TRUE
 	visualAppearence = CLOCKDRONE
+	can_be_held = FALSE
 
 /mob/living/simple_animal/drone/cogscarab/ratvar //a subtype for spawning when ratvar is alive, has a slab that it can use and a normal proselytizer
 	default_storage = /obj/item/weapon/storage/toolbox/brass/prefilled/ratvar
@@ -132,16 +137,48 @@
 /mob/living/simple_animal/drone/cogscarab/Login()
 	..()
 	add_servant_of_ratvar(src, TRUE)
-	src << "<span class='heavy_brass'>You are a cogscarab</span><b>, a clockwork creation of Ratvar. As a cogscarab, you have low health, an inbuilt proselytizer that can convert rods, \
-	metal, and plasteel to alloy, a set of relatively fast tools, can communicate over the Hierophant Network with </b><span class='heavy_brass'>:b</span><b>, and are immune to extreme \
+	src << "<span class='heavy_brass'>You are a cogscarab</span><b>, a clockwork creation of Ratvar. As a cogscarab, you have low health, an inbuilt proselytizer that can convert brass \
+	to liquified alloy, a set of relatively fast tools, </b><span class='heavy_brass'>can communicate over the Hierophant Network with :b</span><b>, and are immune to extreme \
 	temperatures and pressures. \nYour goal is to serve the Justiciar and his servants by repairing and defending all they create. \
-	\nYou yourself are one of these servants, and will be able to utilize almost anything they can, excluding a clockwork slab.</b>"
+	\nYou yourself are one of these servants, and will be able to utilize almost anything they can, <i>excluding a clockwork slab.</i></b>"
 
 /mob/living/simple_animal/drone/cogscarab/binarycheck()
 	return FALSE
+
+/mob/living/simple_animal/drone/cogscarab/alert_drones(msg, dead_can_hear = 0)
+	if(msg == DRONE_NET_CONNECT)
+		msg = "<span class='brass'><i>Hierophant Network:</i> [name] activated.</span>"
+	else if(msg == DRONE_NET_DISCONNECT)
+		msg = "<span class='brass'><i>Hierophant Network:</i></span> <span class='alloy'>[name] disabled.</span>"
+	..()
+
+/mob/living/simple_animal/drone/attackby(obj/item/I, mob/user)
+	if(istype(I, /obj/item/weapon/screwdriver) && stat == DEAD)
+		try_reactivate(user)
+	else
+		..()
+
+/mob/living/simple_animal/drone/cogscarab/try_reactivate(mob/living/user)
+	if(!is_servant_of_ratvar(user))
+		user << "<span class='warning'>You fiddle around with [src] to no avail.</span>"
+	else
+		..()
+
+/mob/living/simple_animal/drone/cogscarab/can_use_guns(obj/item/weapon/gun/G)
+	changeNext_move(CLICK_CD_RANGE*4) //about as much delay as an unupgraded kinetic accelerator
+	return TRUE
+
+/mob/living/simple_animal/drone/cogscarab/triggerAlarm(class, area/A, O, obj/alarmsource)
+	return
+
+/mob/living/simple_animal/drone/cogscarab/cancelAlarm(class, area/A, obj/origin)
+	return
 
 /mob/living/simple_animal/drone/cogscarab/update_drone_hack()
 	return //we don't get hacked or give a shit about it
 
 /mob/living/simple_animal/drone/cogscarab/drone_chat(msg)
 	titled_hierophant_message(src, msg, "nezbere", "brass", "Construct") //HIEROPHANT DRONES
+
+/mob/living/simple_animal/drone/cogscarab/ratvar_act()
+	fully_heal(TRUE)

@@ -58,6 +58,17 @@
 	for(var/i = 1, i <= created_volume, i++)
 		new /obj/item/stack/sheet/mineral/plasma(location)
 
+/datum/chemical_reaction/goldsolidification
+	name = "Solid Gold"
+	id = "solidgold"
+	required_reagents = list("frostoil" = 5, "gold" = 20, "iron" = 1)
+	mob_react = 1
+
+/datum/chemical_reaction/goldsolidification/on_reaction(datum/reagents/holder, created_volume)
+	var/location = get_turf(holder.my_atom)
+	for(var/i = 1, i <= created_volume, i++)
+		new /obj/item/stack/sheet/mineral/gold(location)
+		 
 /datum/chemical_reaction/capsaicincondensation
 	name = "Capsaicincondensation"
 	id = "capsaicincondensation"
@@ -107,6 +118,13 @@
 	required_reagents = list("carbon" = 1, "oxygen" = 2)
 	required_temp = 777 // pure carbon isn't especially reactive.
 
+/datum/chemical_reaction/nitrous_oxide
+	name = "Nitrous Oxide"
+	id = "nitrous_oxide"
+	results = list("nitrous_oxide" = 2, "water" = 4)
+	required_reagents = list("ammonia" = 3, "nitrogen" = 1, "oxygen" = 2)
+	required_temp = 525
+	
 ////////////////////////////////// Mutation Toxins ///////////////////////////////////
 
 /datum/chemical_reaction/stable_mutation_toxin

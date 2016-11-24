@@ -46,6 +46,7 @@
 		var/previouscolor = color
 		color = "#FAE48C"
 		animate(src, color = previouscolor, time = 8)
+		addtimer(src, "update_atom_colour", 8)
 
 /obj/structure/destructible/cult/proc/getETA()
 	var/time = (cooldowntime - world.time)/600

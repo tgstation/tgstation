@@ -61,7 +61,7 @@
 	// Autoapproves after a certain time
 	response_timer_id = addtimer(src, "rename_station", approval_time, \
 		FALSE, new_name, user)
-	admins << "<span class='adminnotice'><b><font color=orange>CUSTOM STATION RENAME:</font></b>[key_name_admin(user)] (<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) proposes to rename the station to [new_name] (will autoapprove in [approval_time / 10] seconds). (<A HREF='?_src_=holder;BlueSpaceArtillery=\ref[user]'>BSA</A>) (<A HREF='?_src_=holder;reject_custom_name=\ref[src]'>REJECT</A>)</span>"
+	admins << "<span class='adminnotice'><b><font color=orange>CUSTOM STATION RENAME:</font></b>[key_name_admin(user)] (<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) proposes to rename the station to [new_name] (will autoapprove in [approval_time / 10] seconds). (<A HREF='?_src_=holder;BlueSpaceArtillery=\ref[user]'>BSA</A>) (<A HREF='?_src_=holder;reject_custom_name=\ref[src]'>REJECT</A>) (<a href='?_src_=holder;CentcommReply=\ref[user]'>RPLY</a>)</span>"
 
 /obj/item/station_charter/proc/reject_proposed(user)
 	if(!user)

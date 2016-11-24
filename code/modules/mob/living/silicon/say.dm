@@ -65,5 +65,5 @@
 	if(message_mode == MODE_BINARY)
 		if(binarycheck())
 			robot_talk(message)
-			return 1
+		return 1
 	return 0

@@ -76,7 +76,7 @@
 	},
 /area/ruin/unpowered)
 "n" = (
-/obj/item/weapon/gun/projectile/automatic/pistol/m1911,
+/obj/item/weapon/gun/ballistic/automatic/pistol/m1911,
 /turf/open/floor/mineral/plastitanium/brig{
 	baseturf = /turf/open/floor/plating/lava/smooth
 	},
@@ -107,7 +107,7 @@
 /area/ruin/unpowered)
 "s" = (
 /obj/effect/mob_spawn/human/nanotrasensoldier,
-/obj/item/weapon/gun/projectile/automatic/pistol/m1911,
+/obj/item/weapon/gun/ballistic/automatic/pistol/m1911,
 /obj/effect/decal/cleanable/blood,
 /turf/open/floor/mineral/plastitanium/brig{
 	baseturf = /turf/open/floor/plating/lava/smooth
@@ -135,7 +135,7 @@
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "x" = (
-/obj/item/weapon/gun/projectile/automatic/pistol/m1911,
+/obj/item/weapon/gun/ballistic/automatic/pistol/m1911,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "y" = (

@@ -195,50 +195,76 @@
 	//derp //Used for tracking if the syndies actually haul the nuke to the station	//no
 	//herp //Used for tracking if the syndies got the shuttle off of the z-level	//NO, DON'T FUCKING NAME VARS LIKE THIS
 
-	if      (!disk_rescued &&  station_was_nuked && !syndies_didnt_escape)
+
+	if(nuke_off_station == NUKE_SYNDICATE_BASE)
+		feedback_set_details("round_end_result","loss - syndicate nuked - disk secured")
+		world << "<FONT size = 3><B>Humiliating Syndicate Defeat</B></FONT>"
+		world << "<B>The crew of [station_name()] gave [syndicate_name()] operatives back their bomb! The syndicate base was destroyed!</B> Next time, don't lose the nuke!"
+
+		ticker.news_report = NUKE_SYNDICATE_BASE
+
+	else if(!disk_rescued &&  station_was_nuked && !syndies_didnt_escape)
 		feedback_set_details("round_end_result","win - syndicate nuke")
 		world << "<FONT size = 3><B>Syndicate Major Victory!</B></FONT>"
 		world << "<B>[syndicate_name()] operatives have destroyed [station_name()]!</B>"
+
+		ticker.news_report = STATION_NUKED
 
 	else if (!disk_rescued &&  station_was_nuked && syndies_didnt_escape)
 		feedback_set_details("round_end_result","halfwin - syndicate nuke - did not evacuate in time")
 		world << "<FONT size = 3><B>Total Annihilation</B></FONT>"
 		world << "<B>[syndicate_name()] operatives destroyed [station_name()] but did not leave the area in time and got caught in the explosion.</B> Next time, don't lose the disk!"
 
+		ticker.news_report = STATION_NUKED
+
 	else if (!disk_rescued && !station_was_nuked && nuke_off_station && !syndies_didnt_escape)
 		feedback_set_details("round_end_result","halfwin - blew wrong station")
 		world << "<FONT size = 3><B>Crew Minor Victory</B></FONT>"
 		world << "<B>[syndicate_name()] operatives secured the authentication disk but blew up something that wasn't [station_name()].</B> Next time, don't lose the disk!"
+
+		ticker.news_report = NUKE_MISS
 
 	else if (!disk_rescued && !station_was_nuked && nuke_off_station && syndies_didnt_escape)
 		feedback_set_details("round_end_result","halfwin - blew wrong station - did not evacuate in time")
 		world << "<FONT size = 3><B>[syndicate_name()] operatives have earned Darwin Award!</B></FONT>"
 		world << "<B>[syndicate_name()] operatives blew up something that wasn't [station_name()] and got caught in the explosion.</B> Next time, don't lose the disk!"
 
+		ticker.news_report = NUKE_MISS
+
 	else if ((disk_rescued || SSshuttle.emergency.mode != SHUTTLE_ENDGAME) && are_operatives_dead())
 		feedback_set_details("round_end_result","loss - evacuation - disk secured - syndi team dead")
 		world << "<FONT size = 3><B>Crew Major Victory!</B></FONT>"
 		world << "<B>The Research Staff has saved the disc and killed the [syndicate_name()] Operatives</B>"
+
+		ticker.news_report = OPERATIVES_KILLED
 
 	else if (disk_rescued)
 		feedback_set_details("round_end_result","loss - evacuation - disk secured")
 		world << "<FONT size = 3><B>Crew Major Victory</B></FONT>"
 		world << "<B>The Research Staff has saved the disc and stopped the [syndicate_name()] Operatives!</B>"
 
+		ticker.news_report = OPERATIVES_KILLED
+
 	else if (!disk_rescued && are_operatives_dead())
 		feedback_set_details("round_end_result","halfwin - evacuation - disk not secured")
 		world << "<FONT size = 3><B>Neutral Victory!</B></FONT>"
 		world << "<B>The Research Staff failed to secure the authentication disk but did manage to kill most of the [syndicate_name()] Operatives!</B>"
+
+		ticker.news_report = OPERATIVE_SKIRMISH
 
 	else if (!disk_rescued &&  crew_evacuated)
 		feedback_set_details("round_end_result","halfwin - detonation averted")
 		world << "<FONT size = 3><B>Syndicate Minor Victory!</B></FONT>"
 		world << "<B>[syndicate_name()] operatives recovered the abandoned authentication disk but detonation of [station_name()] was averted.</B> Next time, don't lose the disk!"
 
+		ticker.news_report = OPERATIVE_SKIRMISH
+
 	else if (!disk_rescued && !crew_evacuated)
 		feedback_set_details("round_end_result","halfwin - interrupted")
 		world << "<FONT size = 3><B>Neutral Victory</B></FONT>"
 		world << "<B>Round was mysteriously interrupted!</B>"
+
+		ticker.news_report = OPERATIVE_SKIRMISH
 
 	..()
 	return
@@ -297,7 +323,7 @@
 	ears = /obj/item/device/radio/headset/syndicate/alt
 	l_pocket = /obj/item/weapon/pinpointer/syndicate
 	id = /obj/item/weapon/card/id/syndicate
-	belt = /obj/item/weapon/gun/projectile/automatic/pistol
+	belt = /obj/item/weapon/gun/ballistic/automatic/pistol
 	backpack_contents = list(/obj/item/weapon/storage/box/syndie=1)
 
 	var/tc = 25
@@ -332,10 +358,10 @@
 	suit = /obj/item/clothing/suit/space/hardsuit/syndi
 	r_pocket = /obj/item/weapon/tank/internals/emergency_oxygen/engi
 	belt = /obj/item/weapon/storage/belt/military
-	r_hand = /obj/item/weapon/gun/projectile/automatic/shotgun/bulldog
+	r_hand = /obj/item/weapon/gun/ballistic/automatic/shotgun/bulldog
 	backpack_contents = list(/obj/item/weapon/storage/box/syndie=1,\
 		/obj/item/weapon/tank/jetpack/oxygen/harness=1,\
-		/obj/item/weapon/gun/projectile/automatic/pistol=1)
+		/obj/item/weapon/gun/ballistic/automatic/pistol=1)
 
 /datum/outfit/syndicate/full/post_equip(mob/living/carbon/human/H)
 	..()

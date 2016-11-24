@@ -536,8 +536,9 @@
 			orbiters += A.orbiters
 
 	for(var/thing in orbiters)
-		if (isobserver(thing))
-			var/mob/dead/observer/G = thing
+		var/datum/orbit/O = thing
+		if (isobserver(O.orbiter))
+			var/mob/dead/observer/G = O.orbiter
 			ghost_counter++
 			G.invisibility = 0
 			current_spirits |= G
@@ -588,9 +589,10 @@
 			user << "<span class='danger'>Your flesh begins to melt! Miraculously, you seem fine otherwise.</span>"
 			H.set_species(/datum/species/skeleton)
 		if(3)
-			user << "<span class='danger'>You don't feel so good...</span>"
-			message_admins("[key_name_admin(user)](<A HREF='?_src_=holder;adminplayerobservefollow=\ref[user]'>FLW</A>) has started transforming into a dragon via dragon's blood.")
-			H.ForceContractDisease(new /datum/disease/transformation/dragon(0))
+			user << "<span class='danger'>Power courses through you! You can now shift your form at will."
+			if(user.mind)
+				var/obj/effect/proc_holder/spell/targeted/shapeshift/dragon/D = new
+				user.mind.AddSpell(D)
 		if(4)
 			user << "<span class='danger'>You feel like you could walk straight through lava now.</span>"
 			H.weather_immunities |= "lava"
@@ -624,7 +626,6 @@
 	item_state = "staffofstorms"
 	icon = 'icons/obj/guns/magic.dmi'
 	slot_flags = SLOT_BACK
-	item_state = "staffofstorms"
 	w_class = 4
 	force = 25
 	damtype = BURN
@@ -743,7 +744,7 @@
 		survive.owner = L.mind
 		L.mind.objectives += survive
 		L << "<span class='userdanger'>You've been marked for death! Don't let the demons get you!</span>"
-		L.color = "#FF0000"
+		L.add_atom_colour("#FF0000", ADMIN_COLOUR_PRIORITY)
 		spawn()
 			var/obj/effect/mine/pickup/bloodbath/B = new(L)
 			B.mineEffect(L)
@@ -804,8 +805,8 @@
 		else
 			user << "<span class='warning'>That target is out of range!</span>" //too far away
 
-/obj/item/weapon/hierophant_staff/ui_action_click(mob/user, actiontype)
-	if(actiontype == /datum/action/item_action/toggle_unfriendly_fire) //toggle friendly fire...
+/obj/item/weapon/hierophant_staff/ui_action_click(mob/user, action)
+	if(istype(action, /datum/action/item_action/toggle_unfriendly_fire)) //toggle friendly fire...
 		friendly_fire_check = !friendly_fire_check
 		user << "<span class='warning'>You toggle friendly fire [friendly_fire_check ? "off":"on"]!</span>"
 		return

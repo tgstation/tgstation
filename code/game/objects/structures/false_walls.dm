@@ -41,6 +41,10 @@
 /obj/structure/falsewall/CanAtmosPass(turf/T)
 	return !density
 
+/obj/structure/falsewall/ratvar_act()
+	new /obj/structure/falsewall/brass(loc)
+	qdel(src)
+
 /obj/structure/falsewall/attack_hand(mob/user)
 	if(opening)
 		return
@@ -138,6 +142,9 @@
 
 /obj/structure/falsewall/storage_contents_dump_act(obj/item/weapon/storage/src_object, mob/user)
 	return 0
+
+/obj/structure/falsewall/examine_status() //So you can't detect falsewalls by examine.
+	return null
 
 /*
  * False R-Walls
@@ -320,3 +327,17 @@
 	girder_type = /obj/structure/destructible/clockwork/wall_gear/displaced
 	walltype = /turf/closed/wall/clockwork
 	mineral = /obj/item/stack/sheet/brass
+
+/obj/structure/falsewall/brass/New(loc)
+	..()
+	var/turf/T = get_turf(src)
+	PoolOrNew(/obj/effect/overlay/temp/ratvar/wall/false, T)
+	PoolOrNew(/obj/effect/overlay/temp/ratvar/beam/falsewall, T)
+	change_construction_value(4)
+
+/obj/structure/falsewall/brass/Destroy()
+	change_construction_value(-4)
+	return ..()
+
+/obj/structure/falsewall/brass/ratvar_act()
+	obj_integrity = max_integrity

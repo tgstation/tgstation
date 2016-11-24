@@ -92,7 +92,7 @@ FLOOR SAFES
 	var/mob/living/carbon/human/user = usr
 
 	var/canhear = 0
-	if(user.is_holding_item_of_type(/obj/item/clothing/tie/stethoscope))
+	if(user.is_holding_item_of_type(/obj/item/clothing/neck/stethoscope))
 		canhear = 1
 
 	if(href_list["open"])
@@ -159,7 +159,7 @@ FLOOR SAFES
 		else
 			user << "<span class='notice'>[I] won't fit in [src].</span>"
 			return
-	else if(istype(I, /obj/item/clothing/tie/stethoscope))
+	else if(istype(I, /obj/item/clothing/neck/stethoscope))
 		user << "<span class='warning'>Hold [I] in one of your hands while you manipulate the dial!</span>"
 	else
 		return ..()

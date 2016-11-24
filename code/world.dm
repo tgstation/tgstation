@@ -164,6 +164,8 @@ var/last_irc_status = 0
 				minor_announce(input["message"], "Incoming message from [input["message_sender"]]")
 				for(var/obj/machinery/computer/communications/CM in machines)
 					CM.overrideCooldown()
+			if(input["crossmessage"] == "News_Report")
+				minor_announce(input["message"], "Breaking Update From [input["message_sender"]]")
 
 	else if("adminmsg" in input)
 		if(!key_valid)

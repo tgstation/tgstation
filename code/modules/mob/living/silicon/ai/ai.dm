@@ -31,6 +31,7 @@ var/list/ai_list = list()
 	var/obj/machinery/camera/current = null
 	var/list/connected_robots = list()
 	var/aiRestorePowerRoutine = 0
+	var/requires_power = POWER_REQ_ALL
 	//var/list/laws = list()
 	var/alarms = list("Motion"=list(), "Fire"=list(), "Atmosphere"=list(), "Power"=list(), "Camera"=list(), "Burglar"=list())
 	var/viewalerts = 0
@@ -858,6 +859,7 @@ var/list/ai_list = list()
 		apc.malfai = parent || src
 		apc.malfhack = TRUE
 		apc.locked = TRUE
+		apc.coverlocked = TRUE
 
 		playsound(get_turf(src), 'sound/machines/ding.ogg', 50, 1)
 		src << "Hack complete. \The [apc] is now under your \

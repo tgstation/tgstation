@@ -60,8 +60,10 @@
 		playsound(get_turf(holder.my_atom), 'sound/effects/pray.ogg', 80, 0, round(created_volume/48))
 		strengthdiv = 8
 		for(var/mob/living/simple_animal/revenant/R in get_hearers_in_view(7,get_turf(holder.my_atom)))
-			var/deity = ticker.Bible_deity_name
-			if(!ticker.Bible_deity_name)
+			var/deity
+			if(SSreligion.Bible_deity_name)
+				deity = SSreligion.Bible_deity_name
+			else
 				deity = "Christ"
 			R << "<span class='userdanger'>The power of [deity] compels you!</span>"
 			R.stun(20)
@@ -375,16 +377,16 @@
 	var/T1 = created_volume * 20		//100 units : Zap 3 times, with powers 2000/5000/12000. Tesla revolvers have a power of 10000 for comparison.
 	var/T2 = created_volume * 50
 	var/T3 = created_volume * 120
-	sleep(10)
-	if(created_volume >= 75)			//10 units minimum for lightning, 40 units for secondary blast, 75 units for tertiary blast.
+	sleep(5)
+	if(created_volume >= 75)
 		tesla_zap(holder.my_atom, 7, T1)
 		playsound(holder.my_atom, 'sound/machines/defib_zap.ogg', 50, 1)
-	sleep(10)
+		sleep(15)
 	if(created_volume >= 40)
 		tesla_zap(holder.my_atom, 7, T2)
 		playsound(holder.my_atom, 'sound/machines/defib_zap.ogg', 50, 1)
-	sleep(10)
-	if(created_volume >= 10)
+		sleep(15)
+	if(created_volume >= 10)			//10 units minimum for lightning, 40 units for secondary blast, 75 units for tertiary blast.
 		tesla_zap(holder.my_atom, 7, T3)
 		playsound(holder.my_atom, 'sound/machines/defib_zap.ogg', 50, 1)
 	..()
@@ -393,3 +395,11 @@
 	id = "teslium_lightning2"
 	required_temp = 474
 	required_reagents = list("teslium" = 1)
+	
+/datum/chemical_reaction/reagent_explosion/nitrous_oxide
+	name = "N2O explosion"
+	id = "n2o_explosion"
+	required_reagents = list("nitrous_oxide" = 1)
+	strengthdiv = 7
+	required_temp = 575
+	modifier = 1

@@ -54,7 +54,7 @@ Buildable meters
 	if(make_from)
 		src.setDir(make_from.dir)
 		src.pipename = make_from.name
-		src.color = make_from.color
+		add_atom_colour(make_from.color, FIXED_COLOUR_PRIORITY)
 
 		if(make_from.type in pipe_types)
 			src.pipe_type = make_from.type

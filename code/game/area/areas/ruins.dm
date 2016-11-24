@@ -31,7 +31,8 @@
 /area/ruin/powered/golem_ship
 	name = "Free Golem Ship"
 
-
+/area/ruin/powered/syndicate_lava_base
+	name = "Secret Base"
 
 // Ruins of "onehalf" ship
 
