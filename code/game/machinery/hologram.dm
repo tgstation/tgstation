@@ -31,6 +31,8 @@ Possible to do for anyone motivated enough:
 
 var/const/HOLOPAD_MODE = RANGE_BASED
 
+/var/list/holopads = list()
+
 /obj/machinery/holopad
 	name = "\improper AI holopad"
 	desc = "It's a floor-mounted device for projecting holographic images. It is activated remotely."
@@ -55,10 +57,12 @@ var/const/HOLOPAD_MODE = RANGE_BASED
 	..()
 	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/holopad(null)
 	B.apply_default_parts(src)
+	holopads += src
 
 /obj/machinery/holopad/Destroy()
 	for (var/mob/living/silicon/ai/master in masters)
 		clear_holo(master)
+	holopads -= src
 	return ..()
 
 /obj/machinery/holo_pad/power_change()
@@ -151,8 +155,16 @@ var/const/HOLOPAD_MODE = RANGE_BASED
 		for (var/mob/living/silicon/ai/master in masters)
 			if(master && !master.stat && master.client && master.eyeobj)//If there is an AI attached, it's not incapacitated, it has a client, and the client eye is centered on the projector.
 				if(!(stat & NOPOWER))//If the  machine has power.
-					if((HOLOPAD_MODE == RANGE_BASED && (get_dist(master.eyeobj, src) <= holo_range)))
-						return 1
+					if(HOLOPAD_MODE == RANGE_BASED)
+						if(get_dist(master.eyeobj, src) <= holo_range)
+							return 1
+						else
+							var/obj/machinery/holopad/pad_close = get_closest_atom(/obj/machinery/holopad, holopads, master.eyeobj)
+							if(get_dist(pad_close, master.eyeobj) <= holo_range)
+								clear_holo(master)
+								pad_close.create_holo(master)
+								pad_close.move_hologram(master)
+								return 1
 
 					else if (HOLOPAD_MODE == AREA_BASED)
 
