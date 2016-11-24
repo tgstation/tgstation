@@ -346,7 +346,7 @@ RCD
 				if(useResource(floorcost*10, user))
 					user << "<span class='notice'>You start fabricating plating over the lava...</span>"
 					activate()
-					S.ChangeTurf(/turf/open/floor/plating)
+					L.ChangeTurf(/turf/open/floor/plating)
 					return 1
 				return 0
 

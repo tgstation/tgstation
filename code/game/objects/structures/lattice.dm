@@ -72,3 +72,12 @@
 		C.deconstruct()
 	..()
 
+
+/obj/structure/lattice/catwalk/lava
+	name = "thermal shielded  catwalk"
+	desc = "A catwalk with thermal shielding for protection from hostile terrain."
+	icon_state = "miningcatwalk"
+
+/obj/structure/lattice/catwalk/lava/attackby(obj/item/C, mob/user, params)
+	var/turf/T = get_turf(src)
+	return T.attackby(C, user)

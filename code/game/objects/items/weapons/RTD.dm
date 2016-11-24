@@ -11,7 +11,8 @@ EMAGGED FUNCTIONS - TODO
 */
 /obj/item/weapon/rtd
 	name = "rapid-terraforming device (RTD)"
-	desc = "A bulky industrial device based on RCD and compressed matter technology that is designed for rapid terraforming of hostile planetary environments. Has safeguards to not work on station. Automatically synthesizes compressed air to pressurize colonies."
+	desc = "A bulky, prototype industrial device based on RCD and compressed matter technology that is designed for rapid terraforming of hostile planetary environments. \
+	Has safeguards to not work on station. Automatically synthesizes compressed air to pressurize colonies. A label on the side reads: WARNING: DO NOT USE DEVICE WITHOUT INSULATED GLOVES!"
 	icon = 'icons/obj/tools.dmi'
 	icon_state = "rtd"
 	opacity = 0
@@ -29,19 +30,25 @@ EMAGGED FUNCTIONS - TODO
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	var/datum/effect_system/spark_spread/spark_system
 	var/matter = 0
-	var/max_matter = 400
-	var/gas = 40
-	var/maxgas = 40
+	var/maxmatter = 400
+	var/gas = 10
+	var/maxgas = 10
 	var/working = 0
 	var/mode = 1
 	var/canRturf = 0
 	var/airlock_type = /obj/machinery/door/airlock
+	var/range_catwalk = 4
+	var/range_plating = 3
+	var/o2ratio = 0.2
+	var/n2ratio = 0.8
+	var/gas_use = 1
 
 	var/advanced_airlock_setting = 1
 	var/sheetmultiplier	= 8
 	var/plasteelmultiplier = 5
 	var/ironoreworth = 5
-	var/gasamount = 20
+	var/gas_amount = (MOLES_CELLSTANDARD * 4)
+	var/gas_regen_delay = 5
 
 	var/list/conf_access = null
 	var/use_one_access = 0 //If the airlock should require ALL or only ONE of the listed accesses.
@@ -79,9 +86,9 @@ EMAGGED FUNCTIONS - TODO
 
 /obj/item/weapon/rtd/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] sets the RTD to 'Airlock' and points it down [user.p_their()] throat! It looks like [user.p_theyre()] trying to commit suicide..</span>")
-	var/obj/machinery/door/airlock/A = new obj/machinery/door/airlock/glass_command(get_turf(src))
-	A.maxhealth = 500
-	A.health = 500
+	var/obj/machinery/door/airlock/A = new /obj/machinery/door/airlock/glass_command(get_turf(src))
+	A.maxintegrity = 500
+	A.integrity = 500
 	A.name = user.name
 	return (BRUTELOSS)
 
@@ -89,25 +96,18 @@ EMAGGED FUNCTIONS - TODO
 	set name = "Change Airlock Access"
 	set category = "Object"
 	set src in usr
-
 	if (!ishuman(usr) && !usr.has_unlimited_silicon_privilege)
 		return ..(usr)
-
 	var/mob/living/carbon/human/H = usr
 	if(H.getBrainLoss() >= 60)
 		return
-
 	var/t1 = text("")
-
-
-
 	if(use_one_access)
 		t1 += "Restriction Type: <a href='?src=\ref[src];access=one'>At least one access required</a><br>"
 	else
 		t1 += "Restriction Type: <a href='?src=\ref[src];access=one'>All accesses required</a><br>"
 
 	t1 += "<a href='?src=\ref[src];access=all'>Remove All</a><br>"
-
 	var/accesses = ""
 	accesses += "<div align='center'><b>Access</b></div>"
 	accesses += "<table style='width:100%'>"
@@ -126,9 +126,7 @@ EMAGGED FUNCTIONS - TODO
 		accesses += "</td>"
 	accesses += "</tr></table>"
 	t1 += "<tt>[accesses]</tt>"
-
 	t1 += text("<p><a href='?src=\ref[];close=1'>Close</a></p>\n", src)
-
 	var/datum/browser/popup = new(usr, "airlock_electronics", "Access Control", 900, 500)
 	popup.set_content(t1)
 	popup.set_title_image(usr.browse_rsc_icon(src.icon, src.icon_state))
@@ -142,10 +140,8 @@ EMAGGED FUNCTIONS - TODO
 	if (href_list["close"])
 		usr << browse(null, "window=airlock")
 		return
-
 	if (href_list["access"])
 		toggle_access(href_list["access"])
-
 	change_airlock_access()
 
 /obj/item/weapon/rtd/proc/toggle_access(acc)
@@ -155,16 +151,51 @@ EMAGGED FUNCTIONS - TODO
 		use_one_access = !use_one_access
 	else
 		var/req = text2num(acc)
-
 		if (conf_access == null)
 			conf_access = list()
-
 		if (!(req in conf_access))
 			conf_access += req
 		else
 			conf_access -= req
 			if (!conf_access.len)
 				conf_access = null
+
+/obj/item/weapon/rtd/verb/toggle_gas_enrichment
+	set name = "Change Gas Enrichment"
+	set category = "Object"
+	set src in usr
+
+	usr << "Higher settings use more synthesized gas."
+	var/enrich = input(usr, "Select oxygen injection amount.") in list ("NONE", "Standard", "Slightly Enriched", "Highly Enriched", "Half-Half O2-N2", "75%", "Full O2")
+	switch(enrich)
+		if("NONE")
+			o2ratio = 0
+			n2ratio = 1
+			gas_use = 0.5
+		if("Standard")
+			o2ratio = 0.2
+			n2ratio = 0.8
+			gas_use = 1
+		if("Slightly Enriched")
+			o2ratio = 0.3
+			n2ratio = 0.7
+			gas_use = 1.2
+		if("Highly Enriched")
+			o2ratio = 0.4
+			n2ratio = 0.6
+			gas_use = 1.5
+		if("Half-Half O2-N2")
+			o2ratio = 0.5
+			n2ratio = 0.5
+			gas_use = 1.75
+		if("75%")
+			o2ratio = 0.75
+			n2ratio = 0.25
+			gas_use = 2
+		if("Full O2")
+			o2ratio = 1
+			n2ratio = 0
+			gas_use = 2.5
 
 /obj/item/weapon/rtd/verb/change_airlock_setting()
 	set name = "Change Airlock Setting"
@@ -229,6 +260,17 @@ EMAGGED FUNCTIONS - TODO
 		else
 			airlock_type = /obj/machinery/door/airlock
 
+/obj/item/weapon/rtd/electrocute_check(P, mob/living/user)
+	var/S = 0.5
+	if(prob(P))
+		if(ishuman(user))
+			var/mob/living/carbon/human/H = user
+			if(H.gloves)
+				var/obj/item/clothing/gloves/G = H.gloves
+				S = G.siemens_coefficient
+				if(G.siemens_coefficient == 0)
+					return 0
+		user.electrocute_act(10, src, S)
 
 /obj/item/weapon/rtd/New()
 	..()
@@ -236,6 +278,7 @@ EMAGGED FUNCTIONS - TODO
 	spark_system.set_up(5, 0, src)
 	spark_system.attach(src)
 	rcd_list += src
+	START_PROCESSING(SSobj, src)
 
 /obj/item/weapon/rtd/examine(mob/user)
 	..()
@@ -246,7 +289,15 @@ EMAGGED FUNCTIONS - TODO
 	qdel(spark_system)
 	spark_system = null
 	rcd_list -= src
+	STOP_PROCESSING(SSobj, src)
 	. = ..()
+
+/obj/item/weapon/rtd/process()
+	processtick++
+	if(processtick < gas_regen_delay)
+		return
+	if(gas < maxgas)
+		gas++
 
 /obj/item/weapon/rtd/attackby(obj/item/weapon/W, mob/user, params)
 	if(iscyborg(user))	//Make sure cyborgs can't load their rtds
@@ -254,7 +305,7 @@ EMAGGED FUNCTIONS - TODO
 	var/loaded = 0
 	if(istype(W, /obj/item/weapon/rcd_ammo))
 		var/obj/item/weapon/rcd_ammo/R = W
-		if((matter + R.ammoamt) > max_matter)
+		if((matter + R.ammoamt) > maxmatter)
 			user << "<span class='warning'>The RTD can't hold any more matter-units!</span>"
 			return
 		if(!user.unEquip(W))
@@ -264,7 +315,7 @@ EMAGGED FUNCTIONS - TODO
 		playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 		loaded = 1
 	else if(istype(W, /obj/item/weapon/ore/iron))
-		if((matter + ironoreworth) > max_matter)
+		if((matter + ironoreworth) > maxmatter)
 			user << "<span class='warning'>The RTD can't hold any more matter-units!</span>"
 			return
 		if(!user.unEquip(W))
@@ -278,99 +329,100 @@ EMAGGED FUNCTIONS - TODO
 	else if(istype(W, /obj/item/stack/sheet/plasteel))
 		loaded = loadwithsheets(W, plasteelmultiplier*sheetmultiplier, user)
 	if(loaded)
-		user << "<span class='notice'>The RTD now holds [matter]/[max_matter] matter-units.</span>"
+		user << "<span class='notice'>The RTD now holds [matter]/[maxmatter] matter-units.</span>"
 	else
 		return ..()
 
 /obj/item/weapon/rtd/proc/loadwithsheets(obj/item/stack/sheet/S, value, mob/user)
-    var/maxsheets = round((max_matter-matter)/value)
-    if(maxsheets > 0)
-        if(S.amount > maxsheets)
-            S.use(maxsheets)
+	var/maxsheets = round((maxmatter-matter)/value)
+	if(maxsheets > 0)
+		if(S.amount > maxsheets)
+			S.use(maxsheets)
 			matter += value*maxsheets
 			playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
-			user << "<span class='notice'>You insert [maxsheets] [S.name] sheets into the rtd. </span>"
+			user << "<span class='notice'>You insert [maxsheets] [S.name] sheets into the RTD. </span>"
 		else
 			matter += value*(S.amount)
 			user.unEquip()
 			S.use(S.amount)
 			playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
-			user << "<span class='notice'>You insert [S.amount] [S.name] sheets into the rtd. </span>"
+			user << "<span class='notice'>You insert [S.amount] [S.name] sheets into the RTD. </span>"
 		return 1
-	user << "<span class='warning'>You can't insert any more [S.name] sheets into the rtd!"
+	user << "<span class='warning'>You can't insert any more [S.name] sheets into the RTD!"
 	return 0
 
 /obj/item/weapon/rtd/attack_self(mob/user)
 	//Change the mode
 	playsound(src.loc, 'sound/effects/pop.ogg', 50, 0)
+	mode++
+	if(mode > 7)
+		mode = 1
 	switch(mode)
 		if(1)
-			mode = 2
-			user << "<span class='notice'>You change rtd's mode to 'Airlock'.</span>"
+			user << "<span class='notice'>The Rapid Terraforming Device is now converting natural ground to plating. Ranged matter projection activated.</span>"
 		if(2)
-			mode = 3
-			user << "<span class='notice'>You change rtd's mode to 'Deconstruct'.</span>"
+			user << "<span class='notice'>The Rapid Terraforming Device is now building catwalks over lava and chasms. Ranged matter projection activated.</span>"
 		if(3)
-			mode = 4
-			user << "<span class='notice'>You change rtd's mode to 'Grilles & Windows'.</span>"
+			user << "<span class='notice'>The Rapid Terraforming Device is now building airlocks.</span>"
 		if(4)
-			mode = 1
-			user << "<span class='notice'>You change rtd's mode to 'Floor & Walls'.</span>"
+			user << "<span class='notice'>The Rapid Terraforming Device is now changing rock to walls.</span>"
+		if(5)
+			user << "<span class='notice'>The Rapid Terraforming Device is now building airtight membranes.</span>"
+		if(6)
+			user << "<span class='notice'>The Rapid Terraforming Device is now removing constructions.</span>"
+		if(7)
+			user << "<span class='notice'>The Rapid Terraforming Device is now pressurizing with compressed air.</span>"
 
-	if(prob(20))
+	if(prob(50))
 		src.spark_system.start()
+	electrocute_check(15, user)
 
-/obj/item/weapon/rtd/proc/activate()
+/obj/item/weapon/rtd/proc/activate(mob/living/user)
 	playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+	electrocute_check(30, user)
 
 
 /obj/item/weapon/rtd/afterattack(atom/A, mob/user, proximity)
-	if(!proximity) return 0
-	if(istype(A,/turf/open/space/transit))
+	if(!proximity && mode > 2)
 		return 0
-	if(!(isturf(A) || istype(A, /obj/machinery/door/airlock) || istype(A, /obj/structure/grille) || istype(A, /obj/structure/window) || istype(A, /obj/structure/girder)))
+	if(mode == 1)
+		if(!(A in range(range_plating), get_turf(src)))
+			return 0
+	if(mode == 2)
+		if(!(A in range(range_catwalk), get_turf(src)))
+			return 0
+	if(istype(A,/turf/open/space/transit))
 		return 0
 
 	switch(mode)
 		if(1)
-			if(isspaceturf(A))
+			if(isminingturf(A))
 				var/turf/open/space/S = A
 				if(useResource(floorcost, user))
-					user << "<span class='notice'>You start building floor...</span>"
-					activate()
+					user << "<span class='notice'>You start to fabricate plating over the rocky ground...</span>"
+					activate(user)
 					S.ChangeTurf(/turf/open/floor/plating)
 					return 1
 				return 0
-
-			if(isfloorturf(A))
-				var/turf/open/floor/F = A
-				if(checkResource(wallcost, user))
-					user << "<span class='notice'>You start building wall...</span>"
-					playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
-					if(do_after(user, walldelay, target = A))
-						if(!istype(F)) return 0
-						if(!useResource(wallcost, user)) return 0
-						activate()
-						F.ChangeTurf(/turf/closed/wall)
-						return 1
-				return 0
-
-			if(istype(A, /obj/structure/girder))
-				var/turf/open/floor/F = get_turf(A)
-				if(checkResource(girderupgradecost, user))
-					user << "<span class='notice'>You start finishing the \
-						wall...</span>"
-					playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
-					if(do_after(user, walldelay, target = A))
-						if(!istype(A)) return 0
-						if(!useResource(girderupgradecost, user)) return 0
-						activate()
-						qdel(A)
-						F.ChangeTurf(/turf/closed/wall)
-						return 1
-				return 0
+			return 0
 
 		if(2)
+			if(islavaturf(A))
+				if(useResource(catwalkcost, user))
+					user << "<span class='notice'>You start to fabricate a catwalk over the lava...</span>"
+					activate(user)
+					new /obj/structure/lattice/catwalk/lava(get_turf(A))
+					return 1
+				return 0
+			if(ischasm(A))
+				if(useResource(chasmcatwalkcost, user))
+					user << "<span class='notice'>You start to fabricate a catwalk over the chasm...</span>"
+					activate(user)
+					new /obj/structure/lattice/catwalk/lava(get_turf(A))
+					return 1
+				return 0
+			return 0
+		if(3)
 			if(isfloorturf(A))
 				if(checkResource(airlockcost, user))
 					var/door_check = 1
@@ -384,7 +436,7 @@ EMAGGED FUNCTIONS - TODO
 						playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 						if(do_after(user, airlockdelay, target = A))
 							if(!useResource(airlockcost, user)) return 0
-							activate()
+							activate(user)
 							var/obj/machinery/door/airlock/T = new airlock_type( A )
 
 							T.electronics = new/obj/item/weapon/electronics/airlock( src.loc )
@@ -409,127 +461,52 @@ EMAGGED FUNCTIONS - TODO
 						user << "<span class='warning'>There is another door here!</span>"
 						return 0
 				return 0
-
-		if(3)
-			if(iswallturf(A))
-				var/turf/closed/wall/W = A
-				if(istype(W, /turf/closed/wall/r_wall) && !canRturf)
-					return 0
-				if(checkResource(deconwallcost, user))
-					user << "<span class='notice'>You start deconstructing [W]...</span>"
+			return 0
+		if(4)
+			if(ismineralturf(A))
+				if(checkResource(wallcost, user))
+					user << "<span class='notice'>You start converting the [A] to a metal wall...</span>"
 					playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
-					if(do_after(user, deconwalldelay, target = A))
-						if(!useResource(deconwallcost, user)) return 0
-						activate()
-						W.ChangeTurf(/turf/open/floor/plating)
-						return 1
-				return 0
-
+					activate(user)
+					if(do_after(user, walldelay, target = A))
+						if(useResource(wallcost, user))
+							W.ChangeTurf(/turf/closed/wall)
+							return 1
+			return 0
+		if(5)
 			if(isfloorturf(A))
-				var/turf/open/floor/F = A
-				if(istype(F, /turf/open/floor/engine) && !canRturf)
-					return 0
-				if(istype(F, F.baseturf))
-					user << "<span class='notice'>You can't dig any deeper!</span>"
-					return 0
-				else if(checkResource(deconfloorcost, user))
-					user << "<span class='notice'>You start deconstructing floor...</span>"
+				if(checkResource(membranecost, user))
+					user << "<span class='notice'>You start fabricating an airtight membrane...</span>"
 					playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
-					if(do_after(user, deconfloordelay, target = A))
-						if(!useResource(deconfloorcost, user)) return 0
-						activate()
-						F.ChangeTurf(F.baseturf)
-						return 1
+					activate(user)
+					if(do_after(user, membranedelay, target = A))
+						if(useResource(grillecost, user))
+							new /obj/structure/destructible/airwall(get_turf(A))
+							return 1
+			return 0
+		if(6)
+			if(istype(A, /obj/structure/lattice/catwalk))
+				activate(user)
+				user << "<span class='warning'>You start disintegrating the catwalk...</span>"
+				if(do_after(user, removedelay, target = A))
+					qdel(A)
+					return 1
+			return 0
+		if(7)
+			if(!gas)
 				return 0
-
-			if(istype(A, /obj/machinery/door/airlock))
-				if(checkResource(deconairlockcost, user))
-					user << "<span class='notice'>You start deconstructing airlock...</span>"
-					playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
-					if(do_after(user, deconairlockdelay, target = A))
-						if(!useResource(deconairlockcost, user)) return 0
-						activate()
-						qdel(A)
-						return 1
-				return	0
-
-			if(istype(A, /obj/structure/window))
-				if(checkResource(deconwindowcost, user))
-					user << "<span class='notice'>You start deconstructing the window...</span>"
-					playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
-					if(do_after(user, deconwindowdelay, target = A))
-						if(!useResource(deconwindowcost, user)) return 0
-						activate()
-						qdel(A)
-						return 1
-				return	0
-
-			if(istype(A, /obj/structure/grille))
-				var/obj/structure/grille/G = A
-				if(!G.shock(user, 90)) //if it's shocked, try to shock them
-					if(useResource(decongrillecost, user))
-						user << "<span class='notice'>You start deconstructing the grille...</span>"
-						activate()
-						playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
-						qdel(A)
-						return 1
-					return 0
-
-			if(istype(A, /obj/structure/girder))
-				if(useResource(decongirdercost, user))
-					user << "<span class='notice'>You start deconstructing \
-						[A]...</span>"
-					playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
-					if(do_after(user, decongirderdelay, target = A))
-						if(!useResource(decongirdercost, user)) return 0
-						activate()
-						qdel(A)
-						return 1
-
-		if (4)
 			if(isfloorturf(A))
-				if(checkResource(grillecost, user))
-					if(locate(/obj/structure/grille) in A)
-						user << "<span class='warning'>There is already a grille there!</span>"
-						return 0
-					user << "<span class='notice'>You start building a grille...</span>"
-					playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
-					if(do_after(user, grilledelay, target = A))
-						if(locate(/obj/structure/grille) in A)
-							return 0
-						if(!useResource(grillecost, user)) return 0
-						activate()
-						var/obj/structure/grille/G = new/obj/structure/grille(A)
-						G.anchored = 1
-						return 1
-					return 0
-				return 0
-			if(istype(A, /obj/structure/grille))
-				var wname = "window?"
-				var cost = 0
-				if (window_type == /obj/structure/window/fulltile)
-					cost = windowcost
-					wname = "window"
-				else if (window_type == /obj/structure/window/reinforced/fulltile)
-					cost = reinforcedwindowcost
-					wname = "reinforced window"
-
-				if(checkResource(cost, user))
-					user << "<span class='notice'>You start building a \
-						[wname]...</span>"
-					playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
-					if(do_after(user, windowdelay, target = A))
-						if(locate(/obj/structure/window) in A.loc) return 0
-						if(!useResource(cost, user)) return 0
-						activate()
-						var /obj/structure/window/WD = new window_type(A.loc)
-						WD.anchored = 1
-						return 1
-					return 0
-				return 0
-
+				user << "<span class='notice'>You let out a blast of compressed airmix with your terraforming device!</span>"
+				var/datum/gas_mixture/OUT = new /datum/gas_mixture
+				OUT.assert_gas(oxygen)
+				OUT.assert_gas(nitrogen)
+				OUT.gases["o2"][MOLES] += gas_amount*o2ratio
+				OUT.gases["n2"][MOLES] += gas_amount*n2ratio
+				A.air.merge(OUT)
+				gas = (gas - gas_use)
+			return 0
 		else
-			user << "ERROR: rtd in MODE: [mode] attempted use by [user]. Send this text #coderbus or an admin."
+			user << "ERROR: RAPID_TERRAFORMING_DEVICE in MODE: [mode] attempted use by [user]. Send this text #coderbus or an admin."
 			return 0
 
 /obj/item/weapon/rtd/proc/useResource(amount, mob/user)
@@ -538,7 +515,7 @@ EMAGGED FUNCTIONS - TODO
 			user << no_ammo_message
 		return 0
 	matter -= amount
-	desc = "An rtd. It currently holds [matter]/[max_matter] matter-units."
+	desc = "An rtd. It currently holds [matter]/[maxmatter] matter-units."
 	return 1
 
 /obj/item/weapon/rtd/proc/checkResource(amount, mob/user)
@@ -558,12 +535,12 @@ EMAGGED FUNCTIONS - TODO
 	explosion(src, 0, 0, 3, 1, flame_range = 1)
 	qdel(src)
 
+/obj/item/weapon/rtd/borg
+	var/no_ammo_message = "Zap. I have no ammo!"
 
 /obj/item/weapon/rtd/borg/New()
 	..()
 	no_ammo_message = "<span class='warning'>Insufficient charge.</span>"
-	desc = "A device used to rapidly build walls and floors."
-	canRturf = 1
 
 /obj/item/weapon/rtd/borg/useResource(amount, mob/user)
 	if(!iscyborg(user))
@@ -573,7 +550,7 @@ EMAGGED FUNCTIONS - TODO
 		if(user)
 			user << no_ammo_message
 		return 0
-	. = borgy.cell.use(amount * 72) //borgs get 1.3x the use of their rtds
+	. = borgy.cell.use(amount * 50)
 	if(!. && user)
 		user << no_ammo_message
 	return .
@@ -590,27 +567,3 @@ EMAGGED FUNCTIONS - TODO
 	if(!. && user)
 		user << no_ammo_message
 	return .
-
-/obj/item/weapon/rtd/loaded
-	matter = 160
-
-/obj/item/weapon/rtd/combat
-	name = "industrial rtd"
-	max_matter = 500
-	matter = 500
-	canRturf = 1
-
-/obj/item/weapon/rtd_ammo
-	name = "compressed matter cartridge"
-	desc = "Highly compressed matter for the rtd."
-	icon = 'icons/obj/ammo.dmi'
-	icon_state = "rtd"
-	item_state = "rtdammo"
-	origin_tech = "materials=3"
-	materials = list(MAT_METAL=3000, MAT_GLASS=2000)
-	var/ammoamt = 40
-
-/obj/item/weapon/rtd_ammo/large
-	origin_tech = "materials=4"
-	materials = list(MAT_METAL=12000, MAT_GLASS=8000)
-	ammoamt = 160
