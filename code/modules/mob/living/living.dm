@@ -438,18 +438,12 @@
 	if (s_active && !(s_active.ClickAccessible(src, depth=STORAGE_VIEW_DEPTH) || s_active.Adjacent(src)))
 		s_active.close(src)
 
-/mob/living/movement_delay()
+/mob/living/movement_delay(ignorewalk = 0)
 	. = ..()
-	var/ignore
-	if(iscarbon(src))
-		var/mob/living/carbon/C = src
-		var/obj/item/device/flightpack/F = C.get_flightpack()
-		if(istype(F) && F.flight)
-			ignore = 1
 	if(isopenturf(loc) && !is_flying())
 		var/turf/open/T = loc
 		. += T.slowdown
-	if(ignore)
+	if(!ignorewalk)
 		. += config.run_speed
 	else
 		switch(m_intent)

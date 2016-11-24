@@ -47,7 +47,7 @@
 	var/momentum_x = 0		//Realistic physics. No more "Instant stopping while barreling down a hallway at Mach 1".
 	var/momentum_y = 0
 	var/momentum_max = 500
-	var/momentum_impact_coeff = 0.6	//At this speed you'll start coliding with people resulting in momentum loss and them being knocked back, but no injuries or knockdowns
+	var/momentum_impact_coeff = 0.5	//At this speed you'll start coliding with people resulting in momentum loss and them being knocked back, but no injuries or knockdowns
 	var/momentum_impact_loss = 50
 	var/momentum_crash_coeff = 0.8	//At this speed if you hit a dense object, you will careen out of control, while that object will be knocked flying.
 	var/momentum_speed = 0	//How fast we are drifting around
@@ -446,11 +446,16 @@
 		return 0
 	var/atom/movable/victim = null
 	var/dir = null
+	var/mobonly = 0
 	if(crashing)	//We're already in the process of getting knocked around by a crash.
 		return 0
-	if(flight && momentum_speed > 1)
+	if((flight && momentum_speed > 2) || boost)
 		crashing = 1
 		dir = wearer.dir
+	else if (flight && momentum_speed > 1)
+		crashing = 1
+		dir = wearer.dir
+		mobonly = 1
 	else
 		return 0
 	dir = wearer.dir
@@ -463,15 +468,15 @@
 		nocrash = 1
 		density = 0
 		anchored = 0
-	else if(isclosedturf(unmovablevictim))
+	else if(isclosedturf(unmovablevictim) && !mobonly)
 		density = 1
 		anchored = 1
-	else if(ismovableatom(unmovablevictim))
+	else if(ismovableatom(unmovablevictim) && !mobonly)
 		victim = unmovablevictim
 		density = victim.density
 		anchored = victim.anchored
 		victimknockback(density, anchored, momentum_speed, victim, dir)
-	if(!nocrash)
+	if(!nocrash || mobonly)
 		crash_damage(density, anchored, momentum_speed, unmovablevictim.name)
 		userknockback(density, anchored, momentum_speed, dir)
 		losecontrol(move = FALSE)
@@ -864,6 +869,11 @@
 			pack.wearer = user
 		if(shoes)
 			shoes.wearer = user
+	else
+		if(pack)
+			pack.wearer = null
+		if(shoes)
+			shoes.wearer = null
 	if(shoes)
 		shoes.relink_suit(src)
 
@@ -900,7 +910,7 @@
 	if(deployedshoes)
 		retract_flightshoes(1)
 	if(locked)
-		unlock_suit(user)
+		unlock_suit(null)
 	if(user)
 		user = null
 	..()
@@ -934,7 +944,8 @@
 	if(deployedshoes)
 		usermessage("Your flight shoes must be fully retracted first!", 1)
 		return 0
-	user.visible_message("<span class='notice'>[wearer]'s flight suit detaches from their body, becoming nothing more then a bulky metal skeleton.</span>")
+	if(wearer)
+		user.visible_message("<span class='notice'>[wearer]'s flight suit detaches from their body, becoming nothing more then a bulky metal skeleton.</span>")
 	playsound(src.loc, 'sound/items/rped.ogg', 65, 1)
 	resync()
 	strip_delay = initial(strip_delay)
@@ -970,10 +981,11 @@
 		if(pack.flight && forced)
 			pack.disable_flight(1)
 		pack.flags &= ~NODROP
-		user.unEquip(pack, 1)
-		user.update_inv_wear_suit()
 		resync()
-		user.visible_message("<span class='notice'>[user]'s [pack.name] detaches from their back and retracts into their [src]!</span>")
+		if(user)
+			user.unEquip(pack, 1)
+			user.update_inv_wear_suit()
+			user.visible_message("<span class='notice'>[user]'s [pack.name] detaches from their back and retracts into their [src]!</span>")
 	pack.loc = src
 	playsound(src.loc, 'sound/mecha/mechmove03.ogg', 50, 1)
 	deployedpack = 0
@@ -1000,12 +1012,13 @@
 
 /obj/item/clothing/suit/space/hardsuit/flightsuit/proc/retract_flightshoes(forced = 0)
 	shoes.flags &= ~NODROP
-	user.unEquip(shoes, 1)
-	shoes.loc = src
-	user.visible_message("<span class='notice'>[user]'s [shoes.name] retracts back into their [name]!</span>")
 	playsound(src.loc, 'sound/mecha/mechmove03.ogg', 50, 1)
 	deployedshoes = 0
-	user.update_inv_wear_suit()
+	if(user)
+		user.unEquip(shoes, 1)
+		user.update_inv_wear_suit()
+		user.visible_message("<span class='notice'>[user]'s [shoes.name] retracts back into their [name]!</span>")
+	shoes.loc = src
 
 /obj/item/clothing/suit/space/hardsuit/flightsuit/proc/makepack()
 	if(!pack)

@@ -1,6 +1,15 @@
 /mob/living/carbon/movement_delay()
-	. = ..()
-	. += grab_state * 3 //can't go fast while grabbing something.
+	var/FP
+	if(iscarbon(src))
+		var/mob/living/carbon/C = src
+		var/obj/item/device/flightpack/F = C.get_flightpack()
+		if(istype(F) && F.flight)
+			FP = 1
+	. = ..(FP)
+	if(!FP)
+		. += grab_state * 1	//Flightpacks are too powerful to be slowed too much by the weight of a corpse.
+	else
+		. += grab_state * 3 //can't go fast while grabbing something.
 
 	if(!get_leg_ignore()) //ignore the fact we lack legs
 		var/leg_amount = get_num_legs()
