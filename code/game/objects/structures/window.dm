@@ -475,6 +475,9 @@
 	change_construction_value(fulltile ? -2 : -1)
 	return ..()
 
+/obj/structure/window/reinforced/clockwork/hulk_damage()
+	return 60
+
 /obj/structure/window/reinforced/clockwork/ratvar_act()
 	obj_integrity = max_integrity
 	update_icon()

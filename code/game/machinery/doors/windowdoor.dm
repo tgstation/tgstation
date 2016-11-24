@@ -326,6 +326,9 @@
 	change_construction_value(-2)
 	return ..()
 
+/obj/machinery/door/window/clockwork/hulk_damage()
+	return 30
+
 /obj/machinery/door/window/clockwork/ratvar_act()
 	obj_integrity = max_integrity
 
