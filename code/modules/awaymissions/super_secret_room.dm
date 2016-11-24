@@ -105,6 +105,8 @@
 	..()
 
 /obj/item/rupee/Crossed(mob/M)
+	if(!istype(M))
+		return
 	if(M.put_in_hands(src))
 		if(src != M.get_active_held_item())
 			M.swap_hand()
