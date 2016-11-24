@@ -1,0 +1,4 @@
+author: "Shadowlight213"
+delete-after: True
+changes: 
+  - bugfix: "The activation button for the AI integrity restorer modular program actually works now!"
