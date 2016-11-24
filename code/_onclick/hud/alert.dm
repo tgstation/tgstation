@@ -290,67 +290,44 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 				validservants++
 			else if(isAI(L))
 				unconverted_ais_exist++
+		var/req_servants = 0
+		var/req_caches = 0
+		var/req_cv = 0
+		var/req_ai = FALSE
 		desc = "Requirements for <b>[current_state] Scripture:</b>"
 		switch(current_state)
 			if(SCRIPTURE_SCRIPT)
-				desc += "<br><b>[validservants]/[SCRIPT_SERVANT_REQ]</b> Servants"
-				if(validservants < SCRIPT_SERVANT_REQ)
-					icon_state += "-servants"
-				else
-					desc += ": <b><font color=#5A6068>\[CHECK\]</font></b>"
-				desc += "<br><b>[clockwork_caches]/[SCRIPT_CACHE_REQ]</b> Tinkerer's Caches"
-				if(clockwork_caches < SCRIPT_CACHE_REQ)
-					icon_state += "-caches"
-				else
-					desc += ": <b><font color=#5A6068>\[CHECK\]</font></b>"
+				req_servants = SCRIPT_SERVANT_REQ
+				req_caches = SCRIPT_CACHE_REQ
 			if(SCRIPTURE_APPLICATION)
-				desc += "<br><b>[validservants]/[APPLICATION_SERVANT_REQ]</b> Servants"
-				if(validservants < APPLICATION_SERVANT_REQ)
-					icon_state += "-servants"
-				else
-					desc += ": <b><font color=#5A6068>\[CHECK\]</font></b>"
-				desc += "<br><b>[clockwork_caches]/[APPLICATION_CACHE_REQ]</b> Tinkerer's Caches"
-				if(clockwork_caches < APPLICATION_CACHE_REQ)
-					icon_state += "-caches"
-				else
-					desc += ": <b><font color=#5A6068>\[CHECK\]</font></b>"
-				desc += "<br><b>[clockwork_construction_value]/[APPLICATION_CV_REQ]</b> Construction Value"
-				if(clockwork_construction_value < APPLICATION_CV_REQ)
-					icon_state += "-cv"
-				else
-					desc += ": <b><font color=#5A6068>\[CHECK\]</font></b>"
+				req_servants = APPLICATION_SERVANT_REQ)
+				req_caches = APPLICATION_CACHE_REQ
+				req_cv = APPLICATION_CV_REQ)
 			if(SCRIPTURE_REVENANT)
-				desc += "<br><b>[validservants]/[REVENANT_SERVANT_REQ]</b> Servants"
-				if(validservants < REVENANT_SERVANT_REQ)
-					icon_state += "-servants"
-				else
-					desc += ": <b><font color=#5A6068>\[CHECK\]</font></b>"
-				desc += "<br><b>[clockwork_caches]/[REVENANT_CACHE_REQ]</b> Tinkerer's Caches"
-				if(clockwork_caches < REVENANT_CACHE_REQ)
-					icon_state += "-caches"
-				else
-					desc += ": <b><font color=#5A6068>\[CHECK\]</font></b>"
-				desc += "<br><b>[clockwork_construction_value]/[REVENANT_CV_REQ]</b> Construction Value"
-				if(clockwork_construction_value < REVENANT_CV_REQ)
-					icon_state += "-cv"
-				else
-					desc += ": <b><font color=#5A6068>\[CHECK\]</font></b>"
+				req_servants = REVENANT_SERVANT_REQ
+				req_caches = REVENANT_CACHE_REQ
+				req_cv = REVENANT_CV_REQ
 			if(SCRIPTURE_JUDGEMENT)
-				desc += "<br><b>[validservants]/[JUDGEMENT_SERVANT_REQ]</b> Servants"
-				if(validservants < JUDGEMENT_SERVANT_REQ)
-					icon_state += "-servants"
-				else
-					desc += ": <b><font color=#5A6068>\[CHECK\]</font></b>"
-				desc += "<br><b>[clockwork_caches]/[JUDGEMENT_CACHE_REQ]</b> Tinkerer's Caches"
-				if(clockwork_caches < JUDGEMENT_CACHE_REQ)
-					icon_state += "-caches"
-				else
-					desc += ": <b><font color=#5A6068>\[CHECK\]</font></b>"
-				desc += "<br><b>[clockwork_construction_value]/[JUDGEMENT_CV_REQ]</b> Construction Value"
-				if(clockwork_construction_value < JUDGEMENT_CV_REQ)
+				req_servants = JUDGEMENT_SERVANT_REQ
+				req_caches = JUDGEMENT_CACHE_REQ
+				req_cv = JUDGEMENT_CV_REQ
+			desc += "<br><b>[validservants]/[req_servants]</b> Servants"
+			if(validservants < req_servants)
+				icon_state += "-servants"
+			else
+				desc += ": <b><font color=#5A6068>\[CHECK\]</font></b>"
+			desc += "<br><b>[clockwork_caches]/[req_caches]</b> Tinkerer's Caches"
+			if(clockwork_caches < req_caches)
+				icon_state += "-caches"
+			else
+				desc += ": <b><font color=#5A6068>\[CHECK\]</font></b>"
+			if(req_cv)
+				desc += "<br><b>[clockwork_construction_value]/[req_cv]</b> Construction Value"
+				if(clockwork_construction_value < req_cv)
 					icon_state += "-cv"
 				else
 					desc += ": <b><font color=#5A6068>\[CHECK\]</font></b>"
+			if(req_ai)
 				if(unconverted_ais_exist)
 					if(unconverted_ais_exist > 1)
 						desc += "<br><b>[unconverted_ais_exist] unconverted AIs exist!</b><br>"
