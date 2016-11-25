@@ -224,4 +224,4 @@
 	icon_state = "clockwork_gateway_charging"
 	pixel_x = -32
 	pixel_y = -32
-	layer = MASSIVE_OBJ_LAYER
+	layer = NOT_HIGH_OBJ_LAYER
