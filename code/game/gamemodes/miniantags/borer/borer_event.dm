@@ -13,7 +13,7 @@
 	var/spawncount = 2
 
 /datum/round_event/borer/setup()
-	spawncount = rand(1, 3)
+	spawncount = rand(2, 3)
 
 /datum/round_event/borer/announce()
 	if(successSpawn)

@@ -481,7 +481,7 @@ var/total_borer_hosts_needed = 10
 
 	src << "<span class='warning'>You focus your psychic lance on [M] and freeze their limbs with a wave of terrible dread.</span>"
 	M << "<span class='userdanger'>You feel a creeping, horrible sense of dread come over you, freezing your limbs and setting your heart racing.</span>"
-	M.Stun(2)
+	M.Stun(3)
 
 	used_dominate = world.time
 
