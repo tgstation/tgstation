@@ -633,46 +633,59 @@
 	meat = /obj/item/weapon/ore/iron
 	info_text = "As a <span class='danger'>Plasteel Golem</span>, you are slower, but harder to stun, and hit very hard when punching."
 
-//Can equip clothing
+//Immune to ash storms
 /datum/species/golem/titanium
 	name = "Titanium Golem"
 	id = "titanium"
 	fixed_mut_color = "fff"
-	no_equip = list()
-	armor = 30 //for balance
-	punchdamagelow = 0
-	punchdamagehigh = 9 //human-level punches
-	punchstunthreshold = 9 //10% chance, like normal humans
 	meat = /obj/item/weapon/ore/titanium
-	info_text = "As a <span class='danger'>Titanium Golem</span>, you are more leaner than normal golems and can equip clothing. However, you are less resistant and do less damage when punching."
+	info_text = "As a <span class='danger'>Titanium Golem</span>, you are immune to ash storms, and slightly more resistant to burn damage."
+	burnmod = 0.9
 
-//Like titanium, but can use guns
-/datum/species/golem/titanium/plastitanium
+/datum/species/golem/titanium/on_species_gain(mob/living/carbon/C, datum/species/old_species)
+	. = ..()
+	C.weather_immunities |= "ash"
+
+/datum/species/golem/titanium/on_species_loss(mob/living/carbon/C)
+	. = ..()
+	C.weather_immunities |= "ash"
+
+//Immune to ash storms and lava
+/datum/species/golem/plastitanium
 	name = "Plastitanium Golem"
 	id = "plastitanium"
 	fixed_mut_color = "888"
 	meat = /obj/item/weapon/ore/titanium
-	specflags = list(NOBREATH,NOBLOOD,RADIMMUNE,VIRUSIMMUNE,PIERCEIMMUNE,NODISMEMBER,MUTCOLORS)
-	info_text = "As a <span class='danger'>Plastitanium Golem</span>, you are more leaner than normal golems, so you can equip clothing and use guns. However, you are less resistant and do less damage when punching."
+	info_text = "As a <span class='danger'>Plastitanium Golem</span>, you are immune to both ash storms and lava, and slightly more resistant to burn damage."
+	burnmod = 0.8
+
+/datum/species/golem/plastitanium/on_species_gain(mob/living/carbon/C, datum/species/old_species)
+	. = ..()
+	C.weather_immunities |= "lava"
+	C.weather_immunities |= "ash"
+
+/datum/species/golem/plastitanium/on_species_loss(mob/living/carbon/C)
+	. = ..()
+	C.weather_immunities |= "ash"
+	C.weather_immunities |= "lava"
 
 //Fast and regenerates... but can only speak like an abductor
 /datum/species/golem/alloy
 	name = "Alien Alloy Golem"
 	id = "alloy"
 	fixed_mut_color = "333"
-	no_equip = list() //can equip clothing
 	meat = /obj/item/stack/sheet/mineral/abductor
 	mutant_organs = list(/obj/item/organ/tongue/abductor) //abductor tongue
-	speedmod = 0 //human-level speed
-	info_text = "As an <span class='danger'>Alloy Golem</span>, you are made of advanced alien materials: you are faster, can wear clothing, and regenerate over time. You are, however, only able to be heard by other alloy golems."
+	speedmod = 1 //faster
+	info_text = "As an <span class='danger'>Alloy Golem</span>, you are made of advanced alien materials: you are faster and regenerate over time. You are, however, only able to be heard by other alloy golems."
 
 //Regenerates because self-repairing super-advanced alien tech
 /datum/species/golem/alloy/spec_life(mob/living/carbon/human/H)
 	if(H.stat == DEAD)
 		return
-	H.heal_overall_damage(1,1)
-	H.adjustToxLoss(-1)
-	H.adjustOxyLoss(-1)
+	H.heal_overall_damage(2,2)
+	H.adjustToxLoss(-2)
+	H.adjustOxyLoss(-2)
 
 //Since this will usually be created from a collaboration between podpeople and free golems, wood golems are a mix between the two races
 /datum/species/golem/wood
@@ -684,6 +697,7 @@
 	armor = 30
 	burnmod = 1.25
 	heatmod = 1.5
+	coldmod = 0 //keep the golem cold immunity
 	info_text = "As a <span class='danger'>Wooden Golem</span>, you have plant-like traits: you take damage from extreme temperatures, can be set on fire, and have lower armor than a normal golem. You regenerate when in the light and wither in the darkness."
 
 /datum/species/golem/wood/on_species_gain(mob/living/carbon/C, datum/species/old_species)

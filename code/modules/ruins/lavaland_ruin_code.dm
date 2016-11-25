@@ -87,7 +87,7 @@
 			species = /datum/species/golem/titanium
 
 		if(istype(O, /obj/item/stack/sheet/mineral/plastitanium))
-			species = /datum/species/golem/titanium/plastitanium
+			species = /datum/species/golem/plastitanium
 
 		if(istype(O, /obj/item/stack/sheet/mineral/abductor))
 			species = /datum/species/golem/alloy
