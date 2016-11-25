@@ -56,6 +56,16 @@
 
 
 <ui-display>
+
+<div class='item'>
+  <div class='itemLabel'>
+	Inserted AI:
+  </div>
+  <div class='itemContent'>
+	<ui-button icon='eject' action='PRG_eject' state='{{data.nocard ? "disabled" : null}}'>{{data.name ? data.name : "---"}}</ui-button>
+  </div>
+</div>
+
 {{#if data.error}}
 	<b>ERROR: {{data.error}}</b>
 {{else}}

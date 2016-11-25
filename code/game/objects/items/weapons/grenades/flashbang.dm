@@ -30,13 +30,14 @@
 		M.Weaken(15) //hella stunned
 		M.Stun(15)
 		M.adjust_eye_damage(8)
-	if(M.flash_act(affect_silicon = 1))
-		M.Stun(max(10/distance, 3))
-		M.Weaken(max(10/distance, 3))
+	else if(M.flash_act(affect_silicon = 1))
+		M.Stun(max(10/max(1,distance), 3))
+		M.Weaken(max(10/max(1,distance), 3))
+//Bang
 	if(!distance || loc == M || loc == M.loc)	//Stop allahu akbarring rooms with this.
 		M.Stun(10)
 		M.Weaken(10)
 		M.soundbang_act(1, 10, 10, 15)
-//Bang
 
-	M.soundbang_act(1, max(10/distance, 3), rand(0, 5))
+	else
+		M.soundbang_act(1, max(10/max(1,distance), 3), rand(0, 5))

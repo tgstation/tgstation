@@ -11,10 +11,10 @@
 	victim << "<span class='danger'>*click*</span>"
 
 /obj/effect/mine/Crossed(AM as mob|obj)
-	if(isanimal(AM))
-		var/mob/living/simple_animal/SA = AM
-		if(!SA.flying)
-			triggermine(SA)
+	if(ismob(AM))
+		var/mob/MM = AM
+		if(!(MM.movement_type & FLYING))
+			triggermine(AM)
 	else
 		triggermine(AM)
 

@@ -83,6 +83,7 @@
 
 ///Syndicate Listening Post
 /obj/effect/mob_spawn/human/lavaland_syndicate
+	r_hand = /obj/item/weapon/gun/ballistic/automatic/sniper_rifle
 	name = "Syndicate Bioweapon Scientist"
 	uniform = /obj/item/clothing/under/syndicate
 	suit = /obj/item/clothing/suit/toggle/labcoat
@@ -90,6 +91,7 @@
 	gloves = /obj/item/clothing/gloves/combat
 	radio = /obj/item/device/radio/headset/syndicate/alt
 	back = /obj/item/weapon/storage/backpack
+	pocket1 = /obj/item/weapon/gun/ballistic/automatic/pistol
 	id_job = "Operative"
 	id_access = "Syndicate"
 	roundstart = FALSE
@@ -101,7 +103,8 @@
 
 /obj/effect/mob_spawn/human/lavaland_syndicate/comms
 	name = "Syndicate Comms Agent"
+	r_hand = /obj/item/weapon/melee/energy/sword/saber
 	mask = /obj/item/clothing/mask/chameleon
 	suit = /obj/item/clothing/suit/armor/vest
 	flavour_text = "<font size=3>You are a syndicate agent, employed in a top secret research facility developing biological weapons. Unfortunatley, your hated enemy, Nanotrasen, has begun mining in this sector. <b>Monitor enemy activity as best you can, and try to keep a low profile. Do not abandon the base without good cause.</b> Use the communication equipment to provide support to any field agents, and sow disinformation to throw Nanotrasen off your trail. Do not let the base fall into enemy hands!</b>"
-	pocket2 = /obj/item/weapon/card/id/syndicate
+	pocket2 = /obj/item/weapon/card/id/syndicate/anyone

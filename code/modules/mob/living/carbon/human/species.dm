@@ -864,15 +864,23 @@
 
 /datum/species/proc/movement_delay(mob/living/carbon/human/H)
 	. = 0
+	var/obj/item/device/flightpack/F = H.get_flightpack()
+	var/flightpack = 0
+	if(istype(F) && F.flight)
+		flightpack = 1
+	var/flight = 0
+	if(H.movement_type & FLYING)
+		flight = 1
 
-	if(H.status_flags & GOTTAGOFAST)
-		. -= 1
-	if(H.status_flags & GOTTAGOREALLYFAST)
-		. -= 2
+	if(!flightpack)
+		if(H.status_flags & GOTTAGOFAST)
+			. -= 1
+		if(H.status_flags & GOTTAGOREALLYFAST)
+			. -= 2
 
 	if(!(H.status_flags & IGNORESLOWDOWN))
 		if(!H.has_gravity())
-			if(FLYING in specflags)
+			if((H.movement_type & FLYING) && !flightpack)	//No hyperstacking angel wings!
 				. += speedmod
 				return
 			// If there's no gravity we have the sanic speed of jetpack.
@@ -888,30 +896,36 @@
 				if(istype(T) && T.allow_thrust(0.01, H))
 					. -= 2
 
-		else
+				else if(flightpack && F.allow_thrust(0.01, src))	//No jetpack/flightsuit hyperstacking!
+					. -= 1
+
+		if(H.wear_suit)
+			. += H.wear_suit.slowdown
+		if(H.shoes)
+			. += H.shoes.slowdown
+		if(H.back)
+			. += H.back.slowdown
+		for(var/obj/item/I in H.held_items)
+			if(I.flags & HANDSLOW)
+				. += I.slowdown
+		if(!(flightpack))
 			var/health_deficiency = (100 - H.health + H.staminaloss)
 			if(health_deficiency >= 40)
-				. += (health_deficiency / 25)
+				if(flight)
+					. += (health_deficiency / 75)
+				else
+					. += (health_deficiency / 25)
 
 			var/hungry = (500 - H.nutrition) / 5 // So overeat would be 100 and default level would be 80
-			if(hungry >= 70)
+			if((hungry >= 70) && !flight)		//Being hungry won't stop you from using flightpack controls/flapping your wings although it probably will in the wing case but who cares.
 				. += hungry / 50
 
-			if(H.wear_suit)
-				. += H.wear_suit.slowdown
-			if(H.shoes)
-				. += H.shoes.slowdown
-			if(H.back)
-				. += H.back.slowdown
-			for(var/obj/item/I in H.held_items)
-				if(I.flags & HANDSLOW)
-					. += I.slowdown
 			if((H.disabilities & FAT))
-				. += 1.5
+				. += (1.5 - flight)
 			if(H.bodytemperature < BODYTEMP_COLD_DAMAGE_LIMIT)
 				. += (BODYTEMP_COLD_DAMAGE_LIMIT - H.bodytemperature) / COLD_SLOWDOWN_FACTOR
 
-			. += speedmod
+ 			. += speedmod
 
 //////////////////
 // ATTACK PROCS //
@@ -1335,10 +1349,10 @@
 //Space Move//
 //////////////
 
-/datum/species/proc/space_move()
+/datum/species/proc/space_move(mob/living/carbon/human/H)
 	return 0
 
-/datum/species/proc/negates_gravity()
+/datum/species/proc/negates_gravity(mob/living/carbon/human/H)
 	return 0
 
 

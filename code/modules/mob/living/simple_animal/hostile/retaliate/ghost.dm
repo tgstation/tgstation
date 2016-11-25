@@ -27,7 +27,7 @@
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 	maxbodytemp = 1500
-	flying = 1
+	movement_type = FLYING
 	pressure_resistance = 300
 	gold_core_spawnable = 0 //too spooky for science
 	var/ghost_hair_style

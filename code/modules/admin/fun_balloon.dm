@@ -138,3 +138,16 @@
 	else
 		mover << "You don't have enough money to enter the main shuttle. You'll have to fly coach."
 		return 0
+
+//Shuttle Build
+
+/obj/effect/shuttle_build
+	name = "shuttle_build"
+	desc = "Some assembly required"
+	icon = 'icons/obj/weapons.dmi'
+	icon_state = "syndballoon"
+	anchored = TRUE
+
+/obj/effect/shuttle_build/New()
+	SSshuttle.emergency.dock(SSshuttle.getDock("emergency_home"))
+	qdel(src)
