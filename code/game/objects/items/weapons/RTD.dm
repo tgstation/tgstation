@@ -481,12 +481,17 @@ EMAGGED FUNCTIONS - TODO
 		if(5)
 			if(isfloorturf(A))
 				if(checkResource(membranecost, user))
+					var/turf/open/floor/F = A
 					user << "<span class='notice'>You start fabricating an airtight membrane...</span>"
 					playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 					activate(user)
-					if(do_after(user, membranedelay, target = A))
+					for(var/obj/O in F.contents)
+						if(istype(O, /obj/structure/destructible/airwall))
+							user << "<span class='notice'>There is already an inflated membrane wall here!</span>"
+							return 0
+					if(do_after(user, membranedelay, target = F))
 						if(useResource(membranecost, user))
-							new /obj/structure/destructible/airwall(get_turf(A))
+							new /obj/structure/destructible/airwall(get_turf(F))
 							return 1
 			return 0
 		if(6)
