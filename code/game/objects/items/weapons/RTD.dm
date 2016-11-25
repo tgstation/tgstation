@@ -313,6 +313,8 @@ EMAGGED FUNCTIONS - TODO
 					qdel(O)
 					matter += ironoreworth
 					A++
+				else
+					break
 		user << "<span class='notice'>Loaded [A] pieces of iron ore. The RTD now has [matter]/[maxmatter] matter left.</span>"
 	if(istype(W, /obj/item/weapon/rcd_ammo))
 		var/obj/item/weapon/rcd_ammo/R = W
