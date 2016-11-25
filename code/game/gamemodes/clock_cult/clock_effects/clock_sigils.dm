@@ -61,7 +61,7 @@
 	for(var/mob/living/M in viewers(5, src))
 		if(!is_servant_of_ratvar(M) && M != L)
 			M.flash_act()
-	if(iscultist(L))
+	if(iscultist(L) || L.has_mutation(HULK))
 		L << "<span class='heavy_brass'>\"Watch your step, wretch.\"</span>"
 		L.adjustBruteLoss(10)
 		L.Weaken(7)

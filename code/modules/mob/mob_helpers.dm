@@ -4,6 +4,14 @@
 /mob/proc/isloyal() //Checks to see if the person contains a mindshield implant, then checks that the implant is actually inside of them
 	return 0
 
+/mob/proc/has_mutation(mutation) //wrapper for dna mutation checks to avoid having to typecast a mob to check if it has dna
+	return FALSE
+
+/mob/living/carbon/has_mutation(mutation)
+	if(dna && dna.check_mutation(mutation))
+		return TRUE
+	return FALSE
+
 /mob/living/carbon/isloyal()
 	for(var/obj/item/weapon/implant/mindshield/L in implants)
 		return 1

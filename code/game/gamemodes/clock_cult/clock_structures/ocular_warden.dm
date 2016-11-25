@@ -58,7 +58,7 @@
 			if(isliving(target))
 				var/mob/living/L = target
 				if(!L.null_rod_check())
-					L.adjustFireLoss((!iscultist(L) ? damage_per_tick : damage_per_tick * 2) * get_efficiency_mod()) //Nar-Sian cultists take additional damage
+					L.adjustFireLoss((iscultist(L) || L.has_mutation(HULK) ? damage_per_tick * 2 : damage_per_tick) * get_efficiency_mod()) //Nar-Sian cultists take additional damage
 					if(ratvar_awakens && L)
 						L.adjust_fire_stacks(damage_per_tick)
 						L.IgniteMob()
