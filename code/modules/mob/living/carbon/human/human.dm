@@ -911,3 +911,9 @@
 			Weaken(10)
 		return 1
 	..()
+
+/mob/living/carbon/human/Bump(atom/A)
+	..()
+	var/obj/item/device/flightpack/FP = get_flightpack()
+	if(FP)
+		FP.flight_impact(A)

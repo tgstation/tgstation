@@ -420,8 +420,6 @@
 		if(shock(user, 100))
 			return
 
-	//user << browse(dat, "window=vending")
-	//onclose(user, "")
 	var/datum/browser/popup = new(user, "vending", (name))
 	popup.set_content(dat)
 	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
