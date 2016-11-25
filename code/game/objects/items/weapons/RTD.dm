@@ -27,7 +27,7 @@ EMAGGED FUNCTIONS - TODO
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 100)
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	var/datum/effect_system/spark_spread/spark_system
-	var/matter = 0
+	var/matter = 400
 	var/maxmatter = 400
 	var/gas = 10
 	var/maxgas = 10
@@ -45,13 +45,14 @@ EMAGGED FUNCTIONS - TODO
 	var/sheetmultiplier	= 8
 	var/plasteelmultiplier = 5
 	var/ironoreworth = 5
-	var/gas_amount = (MOLES_CELLSTANDARD * 4)
+	var/gas_amount = (MOLES_CELLSTANDARD * 2)
 	var/gas_regen_delay = 5
 
 	var/list/conf_access = null
 	var/use_one_access = 0 //If the airlock should require ALL or only ONE of the listed accesses.
 
 	var/no_ammo_message = "Insufficient Matter."
+	var/safety = 1
 	/*
 	Construction costs
 	COST| FUNCTION
@@ -497,16 +498,21 @@ EMAGGED FUNCTIONS - TODO
 					return 1
 			return 0
 		if(7)
-			if(!gas)
+			if(gas < gas_use)
+				user << "<span class='notice'>Not enough gas stored! Wait a while for internal compressors to regenerate enough gas...</span>"
 				return 0
 			if(isfloorturf(A))
 				var/turf/open/floor/F = A
+				if((F.air.return_pressure() > 4.5*ONE_ATMOSPHERE) && safety)
+					user << "<span class='warning'>Danger! Air pressure too high to inject any more compressed air with safety interlocks active!</span>"
+					return 0
 				user << "<span class='notice'>You blast a jet of compressed airmix onto [F] with your terraforming device!</span>"
 				var/datum/gas_mixture/OUT = new /datum/gas_mixture
 				OUT.assert_gas("o2")
 				OUT.assert_gas("n2")
 				OUT.gases["o2"][MOLES] += gas_amount*o2ratio
 				OUT.gases["n2"][MOLES] += gas_amount*n2ratio
+				OUT.temperature = 300	//Room temperature + 6.85
 				F.air.merge(OUT)
 				gas = (gas - gas_use)
 			return 0

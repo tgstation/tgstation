@@ -38,6 +38,8 @@
 
 /turf/open/floor/plating/lava/proc/burn_stuff(AM)
 	. = 0
+	if(/obj/structure/lattice/catwalk/lava in get_turf(src))
+		return 0
 	var/thing_to_check = src
 	if (AM)
 		thing_to_check = list(AM)
