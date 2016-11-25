@@ -441,6 +441,9 @@
 	wearer.visible_message("[wearer] is knocked flying by the impact!")
 
 /obj/item/device/flightpack/proc/flight_impact(atom/unmovablevictim, crashdir)	//Yes, victim.
+	if(unmovablevictim == wearer)
+		crashing = 0
+		return 0
 	world << "<span class='boldnotice'> DEBUG: CRASHDIR == [crashdir]</span>"
 	var/V = ""
 	if(crashdir == NORTH || crashdir == SOUTH)
@@ -458,9 +461,6 @@
 	if(crashing)	//We're already in the process of getting knocked around by a crash.
 		return 0
 	crashing = 1
-	if(unmovablevictim == wearer)
-		crashing = 0
-		return 0
 	if(!flight)
 		crashing = 0
 		return 0
@@ -511,7 +511,7 @@
 	if(power == 1)
 		knockmessage = "<span class='warning'>[wearer] soars into [victim], pushing them away!"
 	var/knockback = 0
-	var/stun = boost * 2 + power
+	var/stun = boost * 2 + (power - 2)
 	if(stun || (power == 3))
 		knockmessage += " [wearer] dashes across [victim] at full impulse, knocking them [stun ? "down" : "away"]!"	//Impulse...
 	knockmessage += "</span>"
