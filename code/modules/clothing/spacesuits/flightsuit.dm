@@ -173,7 +173,7 @@
 		emp_damage += damage
 	wearer << "<span class='userdanger'>Flightpack: BZZZZZZZZZZZT</span>"
 	wearer << "<span class='warning'>Flightpack: WARNING: Class [severity] EMP detected! Circuit damage at [(100/emp_disable_threshold)*emp_damage]!</span>"
-	wearer.Confuse(3)
+	wearer.confused += 3
 
 //action BUTTON CODE
 /obj/item/device/flightpack/ui_action_click(owner, action)
@@ -300,7 +300,7 @@
 		if(!suit)
 			disable_flight(1)
 		if(!resync)
-			addtimer(src, "resync", 600)
+			addtimer(src, "resync", 600, TIMER_NORMAL)
 			resync = 1
 		if(!wearer)	//Oh god our user fell off!
 			disable_flight(1)
@@ -580,7 +580,7 @@
 	momentum_y = 0
 	if(flight)
 		disable_flight()
-	wearer.Confuse(3)
+	wearer.confused += 3
 
 /obj/item/device/flightpack/proc/enable_flight(forced = 0)
 	if(!suit)
@@ -620,7 +620,7 @@
 			return 1
 		usermessage("Warning: Velocity too high to safely disengage. Retry to confirm emergency shutoff.", 2)
 		override_safe = 1
-		addtimer(src, "enable_safe", 50)
+		addtimer(src, "enable_safe", 50, TIMER_NORMAL)
 		return 0
 	update_icon()
 
