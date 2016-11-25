@@ -1,0 +1,4 @@
+author: "Cyberboss"
+delete-after: True
+changes: 
+  - bugfix: "False armblades are now removed after one minute. Start feeling the P A R A N O I A when you see em"
