@@ -213,6 +213,13 @@
 							dist = FALSE
 						T.ratvar_act(dist)
 						CHECK_TICK
+					for(var/mob/living/silicon/robot/R in silicon_mobs)
+						if(R && R.stat != DEAD && !is_servant_of_ratvar(R))
+							add_servant_of_ratvar(R)
+					for(var/i in ai_list)
+						var/mob/living/silicon/ai/A = i
+						if(A && A.stat != DEAD && !is_servant_of_ratvar(A))
+							add_servant_of_ratvar(A)
 					for(var/I in all_clockwork_mobs)
 						var/mob/M = I
 						if(M.stat == CONSCIOUS)
