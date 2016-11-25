@@ -45,12 +45,9 @@
 	target = user
 	message_admins("[ADMIN_LOOKUPFLW(user)] suicided with [name] at [ADMIN_COORDJMP(src)]",0,1)
 	message_admins("[key_name(user)] suicided with [name] at ([x],[y],[z])")
-	addtimer(src, "suicide_explosion", 10, TRUE, user)
-
-/obj/item/weapon/c4/proc/suicide_boom(mob/living/user)
+	sleep(10)
 	explode(get_turf(user))
 	user.gib(1, 1)
-	qdel(src)
 
 /obj/item/weapon/c4/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/screwdriver))
