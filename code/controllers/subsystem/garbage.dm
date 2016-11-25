@@ -158,7 +158,7 @@ var/datum/subsystem/garbage_collector/SSgarbage
 	if(!D)
 		return
 #ifdef TESTING
-	SSgarbage.qdel_list += "[A.type]"
+	SSgarbage.qdel_list += "[D.type]"
 #endif
 	if(!istype(D))
 		del(D)
@@ -191,7 +191,7 @@ var/datum/subsystem/garbage_collector/SSgarbage
 			if (QDEL_HINT_FINDREFERENCE)//qdel will, if TESTING is enabled, display all references to this object, then queue the object for deletion.
 				SSgarbage.QueueForQueuing(D)
 				#ifdef TESTING
-				A.find_references()
+				D.find_references()
 				#endif
 			else
 				if(!SSgarbage.noqdelhint["[D.type]"])
@@ -217,7 +217,6 @@ var/datum/subsystem/garbage_collector/SSgarbage
 /datum/var/gc_destroyed //Time when this object was destroyed.
 
 #ifdef TESTING
-/client/var/running_find_references
 /datum/var/running_find_references
 
 /datum/verb/find_references()
@@ -249,9 +248,7 @@ var/datum/subsystem/garbage_collector/SSgarbage
 
 	testing("Beginning search for references to a [type].")
 	var/list/things = list()
-	for(var/client/thing)
-		things |= thing
-	for(var/datum/thing)
+	for(var/datum/thing in world)
 		things |= thing
 	testing("Collected list of things in search for references to a [type]. ([things.len] Thing\s)")
 	for(var/datum/thing in things)
