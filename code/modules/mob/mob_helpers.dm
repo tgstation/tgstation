@@ -483,3 +483,8 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 			for(var/obj/screen/wheel/talk/TW in L.hud_used.wheels)
 				TW.Click()
 
+/mob/proc/is_flying(mob/M = src)
+	if(M.movement_type & FLYING)
+		return 1
+	else
+		return 0

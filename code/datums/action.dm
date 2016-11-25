@@ -37,23 +37,26 @@
 	return ..()
 
 /datum/action/proc/Grant(mob/M)
-	if(owner)
-		if(owner == M)
-			return
+	if(M)
+		if(owner)
+			if(owner == M)
+				return
+		owner = M
+		M.actions += src
+		if(M.client)
+			M.client.screen += button
+		M.update_action_buttons()
+	else
 		Remove(owner)
-	owner = M
-	M.actions += src
-	if(M.client)
-		M.client.screen += button
-	M.update_action_buttons()
 
 /datum/action/proc/Remove(mob/M)
-	if(M.client)
-		M.client.screen -= button
-	button.moved = FALSE //so the button appears in its normal position when given to another owner.
-	M.actions -= src
-	M.update_action_buttons()
+	if(M)
+		if(M.client)
+			M.client.screen -= button
+		M.actions -= src
+		M.update_action_buttons()
 	owner = null
+	button.moved = FALSE //so the button appears in its normal position when given to another owner.
 
 /datum/action/proc/Trigger()
 	if(!IsAvailable())

@@ -120,6 +120,8 @@
 	return 1
 
 /turf/open/handle_slip(mob/living/carbon/C, s_amount, w_amount, obj/O, lube)
+	if(C.movement_type & FLYING)
+		return 0
 	if(has_gravity(src))
 		var/obj/buckled_obj
 		if(C.buckled)

@@ -175,6 +175,9 @@
 	if(mob && .)
 		mob.throwing = 0
 
+	for(var/obj/O in mob)
+		O.on_mob_move(direct, src)
+
 	return .
 
 

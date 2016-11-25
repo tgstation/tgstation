@@ -1104,6 +1104,7 @@
 #include "code\modules\clothing\shoes\magboots.dm"
 #include "code\modules\clothing\shoes\miscellaneous.dm"
 #include "code\modules\clothing\spacesuits\chronosuit.dm"
+#include "code\modules\clothing\spacesuits\flightsuit.dm"
 #include "code\modules\clothing\spacesuits\hardsuit.dm"
 #include "code\modules\clothing\spacesuits\miscellaneous.dm"
 #include "code\modules\clothing\spacesuits\plasmamen.dm"
