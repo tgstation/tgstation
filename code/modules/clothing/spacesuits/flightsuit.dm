@@ -50,10 +50,10 @@
 	var/momentum_impact_coeff = 0.5	//At this speed you'll start coliding with people resulting in momentum loss and them being knocked back, but no injuries or knockdowns
 	var/momentum_impact_loss = 50
 	var/momentum_crash_coeff = 0.8	//At this speed if you hit a dense object, you will careen out of control, while that object will be knocked flying.
+	var/momentum_drift_coeff = 0.13
 	var/momentum_speed = 0	//How fast we are drifting around
 	var/momentum_speed_x = 0
 	var/momentum_speed_y = 0
-	var/momentum_drift_tick = 0 //Cooldowns
 	var/momentum_passive_loss = 7
 	var/momentum_gain = 20
 
@@ -242,21 +242,15 @@
 /obj/item/device/flightpack/proc/momentum_drift()
 	if(!flight)
 		return 0
-	var/drift_x = 0
 	var/drift_dir_x = 0
-	var/drift_y = 0
 	var/drift_dir_y = 0
 	if(momentum_x > 0)
-		drift_x = 1
 		drift_dir_x = EAST
 	if(momentum_x < 0)
-		drift_x = 1
 		drift_dir_x = WEST
 	if(momentum_y > 0)
-		drift_y = 1
 		drift_dir_y = NORTH
 	if(momentum_y < 0)
-		drift_y = 1
 		drift_dir_y = SOUTH
 	if(momentum_speed == 0)
 		return 0
@@ -266,12 +260,11 @@
 				losecontrol()
 			momentum_decay()
 			for(var/i in 1 to momentum_speed)
-				if(drift_x)
+				if(momentum_speed_x >= i)
 					step(wearer, drift_dir_x)
-				if(drift_y)
+				if(momentum_speed_y >= i)
 					step(wearer, drift_dir_y)
 				sleep(1)
-	momentum_drift_tick = 0
 
 //Make the wearer lose some momentum.
 /obj/item/device/flightpack/proc/momentum_decay()
@@ -344,7 +337,6 @@
 	check_conditions()
 	handle_flight()
 	calculate_momentum_speed()
-	momentum_drift_tick++
 	momentum_drift()
 	handle_boost()
 	handle_damage()
@@ -421,7 +413,13 @@
 	var/userdamage = 10
 	userdamage -= stabilizer*3
 	userdamage -= part_bin.rating
-	userdamage += anchored*4
+	userdamage -= part_scan.rating
+	userdamage -= part_manip.rating
+	userdamage += anchored*3
+	userdamage += boost*3
+	userdamage += speed*2
+	if(userdamage < 0)
+		userdamage = 0
 	if(userdamage)
 		crashmessagesrc += "that really must have hurt!"
 	else
@@ -441,93 +439,128 @@
 	wearer.throw_at_fast(target, (speed+density+anchored), 2, wearer)
 	wearer.visible_message("[wearer] is knocked flying by the impact!")
 
-/obj/item/device/flightpack/proc/flight_impact(atom/unmovablevictim)	//Yes, victim.
-	if(unmovablevictim == wearer)
-		return 0
-	var/atom/movable/victim = null
-	var/dir = null
-	var/mobonly = 0
+/obj/item/device/flightpack/proc/flight_impact(atom/unmovablevictim, crashdir)	//Yes, victim.
+	world << "<span class='boldnotice'> DEBUG: CRASHDIR == [crashdir]</span>"
+	var/V = ""
+	if(crashdir == NORTH || crashdir == SOUTH)
+		V = "y"
+	else if(crashdir == EAST || crashdir == WEST)
+		V = "x"
+	else
+		wearer << "Crash directions on this flightsuit are bugged. Report it to Coderbus or admins immediately!"
+	var/crashpower = 0
+	switch(V)
+		if("y")
+			crashpower = momentum_speed_y
+		if("x")
+			crashpower = momentum_speed_x
 	if(crashing)	//We're already in the process of getting knocked around by a crash.
 		return 0
-	if((flight && momentum_speed > 2) || boost)
-		crashing = 1
-		dir = wearer.dir
-	else if (flight && momentum_speed > 1)
-		crashing = 1
-		dir = wearer.dir
-		mobonly = 1
-	else
+	crashing = 1
+	if(unmovablevictim == wearer)
+		crashing = 0
 		return 0
-	dir = wearer.dir
+	if(!flight)
+		crashing = 0
+		return 0
+	if(boost)
+		crashpower = 3
+	if(!crashpower)
+		crashing = 0
+		return 0
+	//crashdirs..
 	var/density = 0
-	var/anchored = 1
-	var/nocrash = 0
+	var/anchored = 1	//Just in case...
+	var/damage = 0
 	if(ismob(unmovablevictim))
+		suit.user.forceMove(get_turf(unmovablevictim))
+		crashing = 0
 		var/mob/living/L = unmovablevictim
-		mobknockback(density, anchored, momentum_speed, L, dir)
-		nocrash = 1
-		density = 0
+		mobknockback(L, crashpower, crashdir)
+		damage = 0
+		density = 1
 		anchored = 0
-	else if(isclosedturf(unmovablevictim) && !mobonly)
+	else if(isclosedturf(unmovablevictim))
+		if(crashpower < 3)
+			crashing = 0
+			return 0
+		damage = 1
 		density = 1
 		anchored = 1
-	else if(ismovableatom(unmovablevictim) && !mobonly)
-		victim = unmovablevictim
+	else if(ismovableatom(unmovablevictim))
+		if(crashpower < 3)
+			crashing = 0
+			return 0
+		var/atom/movable/victim = unmovablevictim
 		density = victim.density
 		anchored = victim.anchored
-		victimknockback(density, anchored, momentum_speed, victim, dir)
-	if(!nocrash || mobonly)
+		victimknockback(victim, crashpower, crashdir)
+		if(anchored)
+			damage = 1
+	if(damage)
 		crash_damage(density, anchored, momentum_speed, unmovablevictim.name)
 		userknockback(density, anchored, momentum_speed, dir)
 		losecontrol(move = FALSE)
 	crashing = 0
 
-/obj/item/device/flightpack/proc/mobknockback(density, anchored, momentum_speed, mob/living/L, dir)
-	if(!ismob(L))
+/obj/item/device/flightpack/proc/mobknockback(mob/living/victim, power, direction)
+	if(!ismob(victim))
 		return 0
-	var/knockmessage = "<span class='warning'>[L] is knocked back by [wearer] as they narrowly avoid a collision!"
+	var/knockmessage = "<span class='warning'>[victim] is knocked back by [wearer] as they narrowly avoid a collision!"
+	if(power == 1)
+		knockmessage = "<span class='warning'>[wearer] soars into [victim], pushing them away!"
 	var/knockback = 0
-	var/stun = boost * 2
-	if(stun)
-		knockmessage += " [wearer] dashes across [L], knocking them down!"
+	var/stun = boost * 2 + power
+	if(stun || (power == 3))
+		knockmessage += " [wearer] dashes across [victim] at full impulse, knocking them [stun ? "down" : "away"]!"	//Impulse...
 	knockmessage += "</span>"
-	knockback += momentum_speed
+	knockback += power
 	knockback += (part_manip.rating / 2)
 	knockback += (part_bin.rating / 2)
-	knockback += boost
+	knockback += boost*2
 	knockback = knockback / 3
-	var/direction = pick(alldirs)
-	var/target = get_step(L, direction)
-	for(var/i in 1 to (knockback - 1))
-		target = get_step(target, direction)
+	switch(power)
+		if(1)
+			knockback = 1
+		if(2)
+			knockback /= 2
+	var/throwdir = pick(alldirs)
+	var/turf/target = get_step(victim, throwdir)
+	for(var/i in 1 to (knockback-1))
+		target = get_step(target, throwdir)
 	wearer.visible_message(knockmessage)
-	L.throw_at_fast(target, 7, 3)
-	L.Weaken(stun)
+	victim.throw_at_fast(target, knockback, 1)
+	victim.Weaken(stun)
 
-/obj/item/device/flightpack/proc/victimknockback(density, anchored, momentum_speed, atom/movable/victim, dir)
+/obj/item/device/flightpack/proc/victimknockback(atom/movable/victim, power, direction)
 	if(!victim)
 		return 0
 	var/knockback = 0
 	var/damage = 0
-	var/stun = 0
-	var/turf/target
 	knockback -= (density * 2)
-	knockback += momentum_speed
+	knockback += power
 	knockback += (part_manip.rating / 2)
 	knockback += (part_bin.rating / 2)
 	knockback *= 4
-	stun = ((part_manip.rating + part_bin.rating) / 2)
-	damage = knockback / 2.5
+	if(victim.anchored)
+		knockback = 0
+	damage = power*14	//I mean, if you REALLY want to break your skull to break an airlock...
+	if(ismob(victim))	//Why the hell didn't it proc the mob one instead?
+		mobknockback(victim, power, direction)
+		return 0
 	if(anchored)
 		knockback = 0
-	target = get_edge_target_turf(victim, dir)
 	victim.visible_message("<span class='warning'>[victim.name] is sent flying by the impact!</span>")
+	var/turf/target = get_turf(victim)
+	for(var/i in 1 to knockback)
+		target = get_step(target, direction)
+	for(var/i in 1 to knockback/3)
+		target = get_step(target, pick(alldirs))
 	if(knockback)
-		victim.throw_at_fast(target, knockback, part_manip.rating, wearer)
-	if(ismob(victim))
-		var/mob/living/victimmob = victim
-		victimmob.Weaken(stun)
-		victimmob.adjustBruteLoss(damage)
+		victim.throw_at_fast(target, knockback, part_manip.rating)
+	if(isobj(victim))
+		var/obj/O = victim
+		O.take_damage(damage)
 
 /obj/item/device/flightpack/proc/losecontrol(stun = FALSE, move = TRUE)
 	usermessage("Warning: Control system not responding. Deactivating!", 3)
@@ -606,24 +639,30 @@
 	..()
 
 /obj/item/device/flightpack/proc/calculate_momentum_speed()
-	if(momentum_x == 0 && momentum_y == 0)
+	if(momentum_x == 0 && momentum_y == 0)	//Calculate total
 		momentum_speed = 0
 	else if((abs(momentum_x) >= (momentum_crash_coeff*momentum_max))||(abs(momentum_y) >= (momentum_crash_coeff*momentum_max)))
 		momentum_speed = 3
-		if(abs(momentum_x) >= (momentum_crash_coeff*momentum_max))
-			momentum_speed_x = 3
-		if(abs(momentum_y) >= (momentum_crash_coeff*momentum_max))
-			momentum_speed_y = 3
 	else if((abs(momentum_x) >= (momentum_impact_coeff*momentum_max))||(abs(momentum_y) >= (momentum_impact_coeff*momentum_max)))
 		momentum_speed = 2
-		if(abs(momentum_x) >= (momentum_impact_coeff*momentum_max))
-			momentum_speed_x = 2
-		if(abs(momentum_y) >= (momentum_impact_coeff*momentum_max))
-			momentum_speed_y = 2
-	else if((momentum_x != 0)||(momentum_y != 0))
+	else if((abs(momentum_x) >= (momentum_drift_coeff*momentum_max))||(abs(momentum_y) >= (momentum_drift_coeff*momentum_max)))
 		momentum_speed = 1
+	if(abs(momentum_x) >= (momentum_crash_coeff*momentum_max))	//Calculate X
+		momentum_speed_x = 3
+	else if(abs(momentum_x) >= (momentum_impact_coeff*momentum_max))
+		momentum_speed_x = 2
+	else if(abs(momentum_x) >= (momentum_drift_coeff*momentum_max))
 		momentum_speed_x = 1
+	else
+		momentum_speed_x = 0
+	if(abs(momentum_y) >= (momentum_crash_coeff*momentum_max))	//Calculate Y
+		momentum_speed_y = 3
+	else if(abs(momentum_y) >= (momentum_impact_coeff*momentum_max))
+		momentum_speed_y = 2
+	else if(abs(momentum_y) >= (momentum_drift_coeff*momentum_max))
 		momentum_speed_y = 1
+	else
+		momentum_speed_y = 0
 
 /obj/item/device/flightpack/item_action_slot_check(slot)
 	if(slot == slot_back)
