@@ -267,7 +267,6 @@
 	. = ..()
 	if(!ckey && !stat && search_objects < 3 && damage > 0)//Not unconscious, and we don't ignore mobs
 		if(search_objects)//Turn off item searching and ignore whatever item we were looking at, we're more concerned with fight or flight
-			search_objects = 0
 			target = null
 			LoseSearchObjects()
 		if(AIStatus == AI_IDLE)
