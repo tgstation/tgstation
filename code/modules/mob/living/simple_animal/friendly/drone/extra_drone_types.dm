@@ -99,11 +99,11 @@
 	languages_spoken = RATVAR
 	languages_understood = HUMAN|RATVAR
 	pass_flags = PASSTABLE
-	health = 50
-	maxHealth = 50
+	health = 30
+	maxHealth = 30
 	harm_intent_damage = 5
 	density = TRUE
-	speed = 1
+	speed = 2
 	ventcrawler = 0
 	faction = list("ratvar")
 	speak_emote = list("clanks", "clinks", "clunks", "clangs")
@@ -165,8 +165,7 @@
 		..()
 
 /mob/living/simple_animal/drone/cogscarab/can_use_guns(obj/item/weapon/gun/G)
-	changeNext_move(CLICK_CD_RANGE*4) //about as much delay as an unupgraded kinetic accelerator
-	return TRUE
+	return 0
 
 /mob/living/simple_animal/drone/cogscarab/triggerAlarm(class, area/A, O, obj/alarmsource)
 	return
