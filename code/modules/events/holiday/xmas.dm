@@ -84,6 +84,10 @@
 	name = "christmas tree spawner"
 	var/tree = /obj/structure/flora/tree/pine/xmas
 
+/obj/effect/landmark/xmastree/rdrod
+	name = "festivus pole spawner"
+	tree = /obj/structure/festivus
+
 /datum/round_event_control/santa
 	name = "Santa is coming to town! (Christmas)"
 	holidayID = CHRISTMAS

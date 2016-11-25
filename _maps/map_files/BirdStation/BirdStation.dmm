@@ -23262,6 +23262,12 @@
 /area/maintenance/fore{
 	name = "Security Maintenance"
 	})
+"ZyZ" = (
+/obj/effect/landmark/xmastree/rdrod,
+/turf/open/floor/plasteel/warnwhite{
+	dir = 8
+	},
+/area/toxins/lab)
 "Zza" = (
 /turf/open/space,
 /obj/machinery/porta_turret/syndicate{
@@ -65064,7 +65070,7 @@ aJt
 aKn
 aHu
 aEF
-aMC
+ZyZ
 aMC
 aOu
 aPk

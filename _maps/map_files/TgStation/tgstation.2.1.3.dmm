@@ -33955,6 +33955,7 @@
 	},
 /area/crew_quarters/hor)
 "bxm" = (
+/obj/effect/landmark/xmastree/rdrod,
 /turf/open/floor/plasteel/warnwhite{
 	dir = 5
 	},
@@ -52977,6 +52978,7 @@
 /area/atmos)
 "clX" = (
 /obj/effect/landmark/event_spawn,
+/obj/effect/landmark/vr_spawn,
 /turf/open/floor/plasteel/bar,
 /area/crew_quarters/bar)
 "clY" = (
@@ -56226,12 +56228,10 @@
 /turf/open/space,
 /area/space/nearstation)
 "csT" = (
-/obj/structure/transit_tube{
-	dir = 8;
-	icon_state = "Block"
-	},
-/turf/open/floor/plating,
-/area/ai_monitored/turret_protected/aisat_interior)
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/effect/landmark/vr_spawn,
+/turf/open/floor/plasteel/black,
+/area/chapel/main)
 "csU" = (
 /obj/structure/transit_tube/station/reverse,
 /turf/open/floor/plating,
@@ -107841,7 +107841,7 @@ aEk
 aFB
 aHn
 aFB
-aFB
+csT
 aFB
 aLr
 aFB
