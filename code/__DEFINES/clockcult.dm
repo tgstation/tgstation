@@ -12,16 +12,27 @@ var/global/list/clockwork_generals_invoked = list("nezbere" = FALSE, "sevtug" = 
 var/global/list/all_clockwork_objects = list() //All clockwork items, structures, and effects in existence
 var/global/list/all_clockwork_mobs = list() //All clockwork SERVANTS (not creatures) in existence
 var/global/list/clockwork_component_cache = list(BELLIGERENT_EYE = 0, VANGUARD_COGWHEEL = 0, GEIS_CAPACITOR = 0, REPLICANT_ALLOY = 0, HIEROPHANT_ANSIBLE = 0) //The pool of components that caches draw from
-var/global/ratvar_awakens = FALSE //If Ratvar has been summoned
+var/global/ratvar_awakens = 0 //If Ratvar has been summoned; not a boolean, for proper handling of multiple ratvars
 var/global/clockwork_gateway_activated = FALSE //if a gateway to the celestial derelict has ever been successfully activated
 
-//Scripture tiers; peripherals should never be used
+//Scripture tiers and requirements; peripherals should never be used
 #define SCRIPTURE_PERIPHERAL "Peripheral"
 #define SCRIPTURE_DRIVER "Driver"
 #define SCRIPTURE_SCRIPT "Script"
+#define SCRIPT_SERVANT_REQ 5
+#define SCRIPT_CACHE_REQ 1
 #define SCRIPTURE_APPLICATION "Application"
+#define APPLICATION_SERVANT_REQ 8
+#define APPLICATION_CACHE_REQ 3
+#define APPLICATION_CV_REQ 100
 #define SCRIPTURE_REVENANT "Revenant"
+#define REVENANT_SERVANT_REQ 10
+#define REVENANT_CACHE_REQ 4
+#define REVENANT_CV_REQ 200
 #define SCRIPTURE_JUDGEMENT "Judgement"
+#define JUDGEMENT_SERVANT_REQ 12
+#define JUDGEMENT_CACHE_REQ 5
+#define JUDGEMENT_CV_REQ 300
 
 //general component/cooldown things
 #define SLAB_PRODUCTION_TIME 900 //how long(deciseconds) slabs require to produce a single component; defaults to 1 minute 30 seconds

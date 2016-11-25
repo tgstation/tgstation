@@ -42,7 +42,7 @@
 	var/search_objects = 0 //If we want to consider objects when searching around, set this to 1. If you want to search for objects while also ignoring mobs until hurt, set it to 2. To completely ignore mobs, even when attacked, set it to 3
 	var/search_objects_timer_id //Timer for regaining our old search_objects value after being attacked
 	var/search_objects_regain_time = 30 //the delay between being attacked and gaining our old search_objects value back
-	var/list/wanted_objects = list() //A list of objects that will be checked against to attack, should we have search_objects enabled
+	var/list/wanted_objects = list() //A typecache of objects types that will be checked against to attack, should we have search_objects enabled
 	var/stat_attack = 0 //Mobs with stat_attack to 1 will attempt to attack things that are unconscious, Mobs with stat_attack set to 2 will attempt to attack the dead.
 	var/stat_exclusive = 0 //Mobs with this set to 1 will exclusively attack things defined by stat_attack, stat_attack 2 means they will only attack corpses
 	var/attack_same = 0 //Set us to 1 to allow us to attack our own faction, or 2, to only ever attack our own faction
@@ -56,9 +56,11 @@
 
 /mob/living/simple_animal/hostile/New()
 	..()
+
 	if(!targets_from)
 		targets_from = src
 	environment_target_typecache = typecacheof(environment_target_typecache)
+	wanted_objects = typecacheof(wanted_objects)
 
 
 /mob/living/simple_animal/hostile/Destroy()
@@ -203,7 +205,7 @@
 
 
 	if(isobj(the_target))
-		if(attack_all_objects || is_type_in_list(the_target, wanted_objects))
+		if(attack_all_objects || is_type_in_typecache(the_target, wanted_objects))
 			return 1
 	return 0
 
@@ -265,6 +267,7 @@
 	. = ..()
 	if(!ckey && !stat && search_objects < 3 && damage > 0)//Not unconscious, and we don't ignore mobs
 		if(search_objects)//Turn off item searching and ignore whatever item we were looking at, we're more concerned with fight or flight
+			search_objects = 0
 			target = null
 			LoseSearchObjects()
 		if(AIStatus == AI_IDLE)

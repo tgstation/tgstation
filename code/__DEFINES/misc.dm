@@ -561,8 +561,33 @@ var/global/list/ghost_others_options = list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 #define COLOUR_PRIORITY_AMOUNT 4 //how many priority levels there are.
 
 
-//Nuke Endgame
+//Endgame Results
 
 #define NUKE_NEAR_MISS 1
 #define NUKE_MISS_STATION 2
 #define NUKE_SYNDICATE_BASE 3
+#define STATION_DESTROYED_NUKE 4
+#define STATION_EVACUATED 5
+#define GANG_LOSS 6
+#define GANG_TAKEOVER 7
+#define BLOB_WIN 8
+#define BLOB_NUKE 9
+#define BLOB_DESTROYED 10
+#define CULT_ESCAPE 11
+#define CULT_FAILURE 12
+#define CULT_SUMMON 13
+#define NUKE_MISS 14
+#define OPERATIVES_KILLED 15
+#define OPERATIVE_SKIRMISH 16
+#define REVS_WIN 17
+#define REVS_LOSE 18
+#define WIZARD_KILLED 19
+#define STATION_NUKED 20
+#define CLOCK_SUMMON 21
+#define CLOCK_SILICONS 22
+#define CLOCK_PROSELYTIZATION 23
+
+//For SSTimer
+
+#define TIMER_NORMAL "normal"
+#define TIMER_UNIQUE "unique"

@@ -7155,7 +7155,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/mob/living/simple_animal/mouse,
 /turf/open/floor/plating{
 	broken = 1;
 	icon_state = "platingdmg1"
@@ -9277,7 +9276,6 @@
 	dir = 4
 	},
 /obj/machinery/meter,
-/mob/living/simple_animal/mouse,
 /turf/open/floor/plasteel/floorgrime,
 /area/maintenance/incinerator)
 "auf" = (
@@ -10958,7 +10956,6 @@
 	lootcount = 2;
 	name = "random material damage spawner"
 	},
-/mob/living/simple_animal/mouse,
 /turf/open/floor/plating,
 /area/maintenance/asmaint)
 "axw" = (
@@ -27124,6 +27121,10 @@
 	tag = "every single paper bin is edited to this"
 	},
 /obj/item/weapon/folder/white,
+/obj/item/weapon/paper/morguereminder{
+	pixel_x = 4;
+	pixel_y = 5
+	},
 /turf/open/floor/plasteel/black,
 /area/medical/morgue)
 "bev" = (
@@ -29770,7 +29771,6 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/mob/living/simple_animal/mouse,
 /turf/open/floor/plating{
 	broken = 1;
 	icon_state = "platingdmg3"
@@ -43647,7 +43647,6 @@
 	dir = 1;
 	icon_state = "pipe-c"
 	},
-/mob/living/simple_animal/mouse,
 /turf/open/floor/plating,
 /area/maintenance/fpmaint)
 "bIT" = (
@@ -61475,7 +61474,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/mob/living/simple_animal/mouse,
 /turf/open/floor/plating,
 /area/maintenance/fsmaint)
 "csB" = (
@@ -67964,7 +67962,6 @@
 	tag = "icon-4-8";
 	icon_state = "4-8"
 	},
-/mob/living/simple_animal/mouse,
 /turf/open/floor/plasteel/floorgrime,
 /area/toxins/storage)
 "cFj" = (
@@ -86934,7 +86931,7 @@ aaa
 anS
 auo
 avT
-axk
+aqh
 ayG
 aqh
 aBA
@@ -86948,7 +86945,7 @@ aqh
 aqh
 aMH
 aNN
-aPD
+aNN
 aRp
 aqh
 aqh
@@ -91366,7 +91363,7 @@ cgO
 cgO
 crh
 cgO
-cuj
+cdl
 cvT
 cgO
 aaa
@@ -96508,7 +96505,7 @@ cpF
 csV
 cpF
 cpF
-cxB
+cpF
 cpF
 czQ
 cAP
@@ -97489,7 +97486,7 @@ aQi
 aHv
 aHv
 aQl
-aWs
+aWq
 aYc
 aYc
 aYc
@@ -100382,7 +100379,7 @@ cdO
 ckC
 cdO
 cdO
-cMe
+chl
 cdO
 cpP
 cMV
@@ -103967,7 +103964,7 @@ cqd
 cBb
 cCi
 cpP
-cEe
+cfG
 cdO
 cpP
 cpP
@@ -104506,7 +104503,7 @@ cdO
 chl
 cdO
 cfG
-cLD
+cdO
 cdO
 cdO
 cdO
@@ -106034,7 +106031,7 @@ cJV
 cCj
 cKC
 cqd
-cLD
+cdO
 cLR
 cMk
 cMz
@@ -110405,7 +110402,7 @@ cKO
 cLk
 cpP
 ahA
-cMu
+cwt
 cpP
 cLC
 cdO
@@ -114769,7 +114766,7 @@ cIh
 csr
 csq
 ccC
-cKv
+chZ
 ccC
 aaa
 aaa
@@ -115454,7 +115451,7 @@ amb
 amS
 anH
 aol
-apb
+akZ
 apO
 aqI
 arQ
@@ -122677,7 +122674,7 @@ azZ
 azX
 azX
 azX
-aRg
+aRh
 bcp
 bdM
 bfl
@@ -124984,7 +124981,7 @@ aae
 aae
 azZ
 arV
-aRg
+aRh
 aSw
 aTC
 aVu
@@ -128057,7 +128054,7 @@ aaa
 aaa
 aaa
 azY
-aBr
+aBm
 azY
 azY
 azY
@@ -129355,7 +129352,7 @@ aCS
 aPB
 aRn
 aRn
-aTP
+aRn
 aRn
 aRn
 aZj

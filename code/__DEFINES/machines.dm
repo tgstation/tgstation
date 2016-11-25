@@ -33,3 +33,4 @@
 #define MC_PRINT "PRINT"
 #define MC_CELL "CELL"
 #define MC_CHARGE "CHARGE"
+#define MC_AI "AI"

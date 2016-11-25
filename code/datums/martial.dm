@@ -349,8 +349,12 @@
 		if(A.pulling)
 			D.drop_all_held_items()
 			D.stop_pulling()
-			add_logs(A, D, "grabbed", addition="aggressively")
-			A.grab_state = GRAB_AGGRESSIVE //Instant aggressive grab
+			if(A.a_intent == "grab")
+				add_logs(A, D, "grabbed", addition="aggressively")
+				A.grab_state = GRAB_AGGRESSIVE //Instant aggressive grab
+			else
+				add_logs(A, D, "grabbed", addition="passively")
+				A.grab_state = GRAB_PASSIVE
 	return 1
 
 /datum/martial_art/the_sleeping_carp/harm_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
@@ -467,7 +471,7 @@
 		D.adjustStaminaLoss(20)
 		D.Stun(5)
 		restraining = 1
-		addtimer(src, "drop_restraining", 50, TRUE)
+		addtimer(src, "drop_restraining", 50, TIMER_UNIQUE)
 	return 1
 
 /datum/martial_art/cqc/proc/Consecutive(mob/living/carbon/human/A, mob/living/carbon/human/D)

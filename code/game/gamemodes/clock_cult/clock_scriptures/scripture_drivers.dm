@@ -34,7 +34,7 @@
 					C << "<span class='warning'>Your leg[number_legs > 1 ? "s burn":" burns"] with pain!</span>"
 					C.apply_damage(cultist_damage * 0.5, BURN, "l_leg")
 					C.apply_damage(cultist_damage * 0.5, BURN, "r_leg")
-				C.m_intent = "walk"
+				C.toggle_move_intent()
 
 
 //Judicial Visor: Creates a judicial visor, which can smite an area.
@@ -133,7 +133,7 @@
 	for(var/mob/living/M in living_mob_list)
 		if(is_servant_of_ratvar(M) && (ishuman(M) || issilicon(M)))
 			servants++
-	if(servants > 5)
+	if(servants > SCRIPT_SERVANT_REQ)
 		whispered = FALSE
 	return ..()
 
@@ -160,8 +160,8 @@
 	for(var/mob/living/M in living_mob_list)
 		if(is_servant_of_ratvar(M) && (ishuman(M) || issilicon(M)))
 			servants++
-	if(servants > 5)
-		servants -= 5
+	if(servants > SCRIPT_SERVANT_REQ)
+		servants -= SCRIPT_SERVANT_REQ
 		channel_time = min(channel_time + servants*5, 100)
 	if(target.buckled)
 		target.buckled.unbuckle_mob(target, TRUE)

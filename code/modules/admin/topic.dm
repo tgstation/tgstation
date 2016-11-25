@@ -1934,7 +1934,7 @@
 								if(iscyborg(L))
 									var/mob/living/silicon/robot/R = L
 									if(R.module)
-										R.module.add_module(I)
+										R.module.add_module(I, TRUE, TRUE)
 										R.activate_module(I)
 
 

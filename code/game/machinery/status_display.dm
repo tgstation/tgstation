@@ -222,6 +222,9 @@
 
 	var/emotion = "Neutral"
 
+/obj/machinery/ai_status_display/attack_ai(mob/living/silicon/ai/user)
+	if(isAI(user))
+		user.ai_statuschange()
 
 /obj/machinery/ai_status_display/process()
 	if(stat & NOPOWER)

@@ -135,10 +135,11 @@
 
 /obj/effect/countdown/doomsday
 	name = "doomsday countdown"
+	text_size = 3
 
 /obj/effect/countdown/doomsday/get_value()
 	var/obj/machinery/doomsday_device/DD = attached_to
 	if(!istype(DD))
 		return
 	else if(DD.timing)
-		. = DD.seconds_remaining()
+		return "<div align='center' valign='middle' style='position:relative; top:0px; left:0px'>[DD.seconds_remaining()]</div>"

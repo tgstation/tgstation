@@ -15,7 +15,7 @@
 
 /datum/species/human/qualifies_for_rank(rank, list/features)
 	if((!features["tail_human"] || features["tail_human"] == "None") && (!features["ears"] || features["ears"] == "None"))
-		return 1	//Pure humans are always allowed in all roles.
+		return TRUE	//Pure humans are always allowed in all roles.
 	return ..()
 
 //Curiosity killed the cat's wagging tail.
@@ -23,6 +23,10 @@
 	if(H)
 		H.endTailWag()
 
+/datum/species/human/space_move(mob/living/carbon/human/H)
+	var/obj/item/device/flightpack/F = H.get_flightpack()
+	if(istype(F) && (F.flight) && F.allow_thrust(0.01, src))
+		return TRUE
 /*
  LIZARDPEOPLE
 */
@@ -569,6 +573,7 @@
 	name = initial(golem_type.name)
 	id = initial(golem_type.id)
 	meat = initial(golem_type.meat)
+	fixed_mut_color = initial(golem_type.fixed_mut_color)
 
 /datum/species/golem/adamantine
 	name = "Adamantine Golem"
@@ -581,25 +586,45 @@
 	id = "plasma"
 	fixed_mut_color = "a3d"
 
+/datum/species/golem/plasma/spec_death(gibbed, mob/living/carbon/human/H)
+	explosion(get_turf(H),0,1,2,flame_range = 5)
+	if(H)
+		H.gib()
+
 /datum/species/golem/diamond
 	name = "Diamond Golem"
 	id = "diamond"
 	fixed_mut_color = "0ff"
+	armor = 70 //up from 55
 
 /datum/species/golem/gold
 	name = "Gold Golem"
 	id = "gold"
 	fixed_mut_color = "ee0"
+	speedmod = 1
+	armor = 25 //down from 55
 
 /datum/species/golem/silver
 	name = "Silver Golem"
 	id = "silver"
 	fixed_mut_color = "ddd"
+	punchstunthreshold = 9 //60% chance, from 40%
 
 /datum/species/golem/uranium
 	name = "Uranium Golem"
 	id = "uranium"
 	fixed_mut_color = "7f0"
+	var/last_event = 0
+	var/active = null
+
+/datum/species/golem/uranium/spec_life(mob/living/carbon/human/H)
+	if(!active)
+		if(world.time > last_event+30)
+			active = 1
+			radiation_pulse(get_turf(H), 3, 3, 5, 0)
+			last_event = world.time
+			active = null
+	..()
 
 
 /*
@@ -777,6 +802,16 @@ var/global/image/plasmaman_on_fire = image("icon"='icons/mob/OnFire.dmi', "icon_
 		return 0
 	return ..()
 
+/datum/species/plasmaman/random_name(unique,lastname)
+	if(unique)
+		return random_unique_plasmaman_name()
+
+	var/randname = plasmaman_name()
+
+	if(lastname)
+		randname += " [lastname]"
+
+	return randname
 
 
 /datum/species/synth
@@ -972,8 +1007,8 @@ SYNDICATE BLACK OPS
 /datum/species/angel/on_species_loss(mob/living/carbon/human/H)
 	if(fly)
 		fly.Remove(H)
-	if(FLYING in specflags)
-		specflags -= FLYING
+	if(H.movement_type & FLYING)
+		H.movement_type &= ~FLYING
 	ToggleFlight(H,0)
 	if(H.dna && H.dna.species &&((H.dna.features["wings"] != "None") && ("wings" in H.dna.species.mutant_bodyparts)))
 		H.dna.features["wings"] = "None"
@@ -984,15 +1019,12 @@ SYNDICATE BLACK OPS
 	HandleFlight(H)
 
 /datum/species/angel/proc/HandleFlight(mob/living/carbon/human/H)
-	if(FLYING in specflags)
+	if(H.movement_type & FLYING)
 		if(!CanFly(H))
 			ToggleFlight(H,0)
-			H.float(0)
 			return 0
-		H.float(1)
 		return 1
 	else
-		H.float(0)
 		return 0
 
 /datum/species/angel/proc/CanFly(mob/living/carbon/human/H)
@@ -1021,7 +1053,7 @@ SYNDICATE BLACK OPS
 	var/mob/living/carbon/human/H = owner
 	var/datum/species/angel/A = H.dna.species
 	if(A.CanFly(H))
-		if(FLYING in A.specflags)
+		if(H.movement_type & FLYING)
 			H << "<span class='notice'>You settle gently back onto the ground...</span>"
 			A.ToggleFlight(H,0)
 			H.update_canmove()
@@ -1058,31 +1090,31 @@ SYNDICATE BLACK OPS
 
 
 /datum/species/angel/spec_stun(mob/living/carbon/human/H,amount)
-	if(FLYING in specflags)
+	if(H.movement_type & FLYING)
 		ToggleFlight(H,0)
 		flyslip(H)
 	. = ..()
 
-/datum/species/angel/negates_gravity()
-	if(FLYING in specflags)
+/datum/species/angel/negates_gravity(mob/living/carbon/human/H)
+	if(H.movement_type & FLYING)
 		return 1
 
-/datum/species/angel/space_move()
-	if(FLYING in specflags)
+/datum/species/angel/space_move(mob/living/carbon/human/H)
+	if(H.movement_type & FLYING)
 		return 1
 
 /datum/species/angel/proc/ToggleFlight(mob/living/carbon/human/H,flight)
 	if(flight && CanFly(H))
 		stunmod = 2
 		speedmod = -1
-		specflags += FLYING
+		H.movement_type |= FLYING
 		override_float = 1
 		H.pass_flags |= PASSTABLE
 		H.OpenWings()
 	else
 		stunmod = 1
 		speedmod = 0
-		specflags -= FLYING
+		H.movement_type &= ~FLYING
 		override_float = 0
 		H.pass_flags &= ~PASSTABLE
 		H.CloseWings()

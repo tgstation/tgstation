@@ -12,7 +12,7 @@
 "l" = (/obj/structure/chair{dir = 4},/turf/open/floor/plating/abductor,/area/shuttle/abandoned)
 "m" = (/obj/machinery/computer/shuttle/white_ship,/turf/open/floor/plating/abductor,/area/shuttle/abandoned)
 "n" = (/obj/structure/chair{dir = 8},/turf/open/floor/plating/abductor,/area/shuttle/abandoned)
-"o" = (/obj/machinery/door/airlock/glass{name = "Shuttle Airlock"},/obj/docking_port/mobile{dheight = 0; dir = 8; dwidth = 4; height = 9; id = "whiteship"; launch_status = 0; name = "White Ship"; port_angle = 90; preferred_direction = 1; roundstart_move = "whiteship_away"; timid = null; width = 9},/obj/docking_port/stationary{dir = 8; dwidth = 11; height = 22; id = "whiteship_home"; name = "monastery"; turf_type = /turf/open/space; width = 35},/turf/open/floor/plasteel/black,/area/shuttle/abandoned)
+"o" = (/obj/machinery/door/airlock/glass{name = "Shuttle Airlock"},/obj/docking_port/mobile{dheight = 0; dir = 8; dwidth = 4; height = 9; id = "whiteship"; launch_status = 0; name = "White Ship"; port_angle = 90; preferred_direction = 1; roundstart_move = "whiteship_away"; timid = 1; width = 9},/turf/open/floor/plasteel/black,/area/shuttle/abandoned)
 "p" = (/obj/structure/window/reinforced{dir = 8},/obj/structure/window/reinforced,/obj/structure/table/glass,/obj/item/weapon/tank/internals/oxygen,/obj/item/clothing/mask/breath,/obj/item/clothing/suit/space/hardsuit/engine/elite,/turf/open/floor/plating/abductor,/area/shuttle/abandoned)
 "q" = (/obj/structure/chair{dir = 1},/turf/open/floor/plating/abductor,/area/shuttle/abandoned)
 "r" = (/obj/structure/window/reinforced{dir = 4},/obj/structure/window/reinforced,/obj/structure/table/glass,/obj/item/clothing/shoes/magboots,/turf/open/floor/plating/abductor,/area/shuttle/abandoned)

@@ -155,6 +155,9 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 				var/list/shuttles = flatten_list(shuttle_templates)
 				var/datum/map_template/shuttle/S = locate(href_list["chosen_shuttle"]) in shuttles
 				if(S && istype(S))
+					if(SSshuttle.emergency.mode != SHUTTLE_CALL && SSshuttle.emergency.mode != SHUTTLE_RECALL && SSshuttle.emergency.mode != SHUTTLE_IDLE)
+						usr << "It's a bit late to buy a new shuttle, don't you think?"
+						return
 					if(SSshuttle.shuttle_purchased)
 						usr << "A replacement shuttle has already been purchased."
 					else
@@ -419,9 +422,6 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 		var/dat2 = src.interact_ai(user) // give the AI a different interact proc to limit its access
 		if(dat2)
 			dat +=  dat2
-			//user << browse(dat, "window=communications;size=400x500")
-			//onclose(user, "communications")
-
 			popup.set_content(dat)
 			popup.open()
 		return
@@ -524,10 +524,10 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 			dat += "Budget: [SSshuttle.points] Credits.<BR>"
 			for(var/shuttle_id in shuttle_templates)
 				var/datum/map_template/shuttle/S = shuttle_templates[shuttle_id]
-				if(S.credit_cost < INFINITY)
+				if(S.can_be_bought && S.credit_cost < INFINITY)
 					dat += "[S.name] | [S.credit_cost] Credits<BR>"
 					dat += "[S.description]<BR>"
-					dat += "<A href='?src=\ref[src];operation=buyshuttle;chosen_shuttle=\ref[S]'>(<font color=red><i>Purchase</i></font>)</A><BR>"
+					dat += "<A href='?src=\ref[src];operation=buyshuttle;chosen_shuttle=\ref[S]'>(<font color=red><i>Purchase</i></font>)</A><BR><BR>"
 
 	dat += "<BR><BR>\[ [(src.state != STATE_DEFAULT) ? "<A HREF='?src=\ref[src];operation=main'>Main Menu</A> | " : ""]<A HREF='?src=\ref[user];mach_close=communications'>Close</A> \]"
 

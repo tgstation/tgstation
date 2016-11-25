@@ -14,7 +14,7 @@
 	harm_intent_damage = 1
 	friendly = "nudges"
 	density = 0
-	flying = 1
+	movement_type = FLYING
 	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
 	ventcrawler = 2
 	mob_size = MOB_SIZE_TINY

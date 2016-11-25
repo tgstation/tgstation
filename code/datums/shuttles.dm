@@ -9,6 +9,7 @@
 	var/admin_notes
 
 	var/credit_cost = INFINITY
+	var/can_be_bought = TRUE
 
 /datum/map_template/shuttle/New()
 	shuttle_id = "[port_id]_[suffix]"
@@ -34,15 +35,15 @@
 
 /datum/map_template/shuttle/emergency/airless
 	suffix = "airless"
-	name = "(Shuttle Under Construction)"
-	description = "The documentation hasn't been finished yet for this \
-		shuttle.\n\
-		In case of emergency: Break glass."
+	name = "Build your own shuttle kit"
+	description = "Save money by building your own shuttle! The chassis will dock upon purchase, but launch will have to be authorized as usual via shuttle call. Interior and atmosphere not included."
 	admin_notes = "No brig, no medical facilities, no air."
+	credit_cost = -7500
 
 /datum/map_template/shuttle/emergency/asteroid
 	suffix = "asteroid"
-	name = "Asteroid emergency shuttle"
+	name = "Asteroid Station Emergency Shuttle"
+	description = "A respectable mid-sized shuttle that first saw service shuttling Nanotrasen crew to and from their asteroid belt embedded facilities."
 	credit_cost = 3000
 
 /datum/map_template/shuttle/emergency/bar
@@ -56,15 +57,31 @@
 		medical facilities."
 	credit_cost = 5000
 
+/datum/map_template/shuttle/emergency/meteor
+	suffix = "meteor"
+	name = "An Asteroid With Engines Strapped To It"
+	description = "A hollowed out asteroid with engines strapped to it. Due to its size and difficulty in steering it, this shuttle may damage the docking area."
+	admin_notes = "This shuttle will likely crush escape, killing anyone there."
+	credit_cost = -5000
+
+/datum/map_template/shuttle/emergency/luxury
+	suffix = "luxury"
+	name = "Luxury Shuttle"
+	description = "A luxurious golden shuttle complete with an indoor swimming pool. Each crewmember wishing to board must bring 500 credits, payable in cash and mineral coin."
+	admin_notes = "Due to the limited space for non paying crew, this shuttle may cause a riot."
+	credit_cost = 10000
 
 /datum/map_template/shuttle/emergency/birdboat
 	suffix = "birdboat"
-	name = "Birdboat emergency shuttle"
+	name = "Birdboat Station Emergency Shuttle"
+	description = "Though a little on the small side, this shuttle is feature complete, which is more than can be said for the pattern of station it was commissioned for."
+	credit_cost = 1000
 
 /datum/map_template/shuttle/emergency/box
 	suffix = "box"
-	name = "Box emergency shuttle"
+	name = "Box Station Emergency Shuttle"
 	credit_cost = 2000
+	description = "The gold standard in emergency exfiltration, this tried and true design is equipped with everything the crew needs for a safe flight home."
 
 /datum/map_template/shuttle/emergency/clown
 	suffix = "clown"
@@ -99,13 +116,15 @@
 
 /datum/map_template/shuttle/emergency/meta
 	suffix = "meta"
-	name = "Meta emergency shuttle"
+	name = "Meta Station Emergency Shuttle"
 	credit_cost = 4000
+	description = "A fairly standard shuttle, though larger and slightly better equipped than the Box Station variant."
 
 /datum/map_template/shuttle/emergency/mini
 	suffix = "mini"
 	name = "Ministation emergency shuttle"
 	credit_cost = 1000
+	description = "Despite it's namesake, this shuttle is actually only slightly smaller than standard, and still complete with a brig and medbay."
 
 /datum/map_template/shuttle/emergency/narnar
 	suffix = "narnar"
@@ -120,7 +139,9 @@
 
 /datum/map_template/shuttle/emergency/pubby
 	suffix = "pubby"
-	name = "Pubby emergency shuttle"
+	name = "Pubby Station Emergency Shuttle"
+	description = "A small, but feature complete shuttle. It boasts a card table to keep crew members occupied on the long flight home."
+	credit_cost = 1000
 
 /datum/map_template/shuttle/emergency/supermatter
 	suffix = "supermatter"

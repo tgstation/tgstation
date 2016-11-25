@@ -118,6 +118,13 @@
 	required_reagents = list("carbon" = 1, "oxygen" = 2)
 	required_temp = 777 // pure carbon isn't especially reactive.
 
+/datum/chemical_reaction/nitrous_oxide
+	name = "Nitrous Oxide"
+	id = "nitrous_oxide"
+	results = list("nitrous_oxide" = 2, "water" = 4)
+	required_reagents = list("ammonia" = 3, "nitrogen" = 1, "oxygen" = 2)
+	required_temp = 525
+	
 ////////////////////////////////// Mutation Toxins ///////////////////////////////////
 
 /datum/chemical_reaction/stable_mutation_toxin

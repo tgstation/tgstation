@@ -244,12 +244,6 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	item = /obj/item/weapon/melee/powerfist
 	cost = 8
 
-/datum/uplink_item/dangerous/atmosgrenades
-	name = "Atmos Grenades"
-	desc = "A box of three grenades that wreak havoc with the atmosphere of the target area. Capable of engulfing a large area in lit plasma, N2O or Freon. Deploy with extreme caution!"
-	item = /obj/item/weapon/storage/box/syndie_kit/atmosgasgrenades
-	cost = 11
-
 /datum/uplink_item/dangerous/emp
 	name = "EMP Grenades and Implanter Kit"
 	desc = "A box that contains two EMP grenades and an EMP implant. Useful to disrupt communication, \
@@ -561,7 +555,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	desc = "A box of shurikens and reinforced bolas from ancient Earth martial arts. They are highly effective \
 			 throwing weapons. The bolas can knock a target down and the shurikens will embed into limbs."
 	item = /obj/item/weapon/storage/box/syndie_kit/throwing_weapons
-	cost = 5
+	cost = 3
 
 /datum/uplink_item/stealthy_weapons/edagger
 	name = "Energy Dagger"

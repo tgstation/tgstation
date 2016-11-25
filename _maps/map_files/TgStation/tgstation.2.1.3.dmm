@@ -12712,7 +12712,7 @@
 /turf/open/floor/bluegrid,
 /area/ai_monitored/nuke_storage)
 "aBT" = (
-/obj/structure/closet/secure_closet/freezer/money,
+/obj/machinery/computer/bank_machine,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
@@ -21598,7 +21598,7 @@
 	d2 = 4
 	},
 /obj/machinery/door/airlock/glass_command{
-	crit_fail = 4;
+	cyclelinkeddir = 4;
 	name = "Bridge";
 	req_access_txt = "19"
 	},
@@ -25174,7 +25174,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 6
 	},
-/mob/living/simple_animal/mouse,
 /turf/open/floor/plating,
 /area/crew_quarters/locker)
 "bfd" = (
@@ -28713,6 +28712,10 @@
 /area/quartermaster/office)
 "bmR" = (
 /obj/structure/table,
+/obj/item/weapon/paper/morguereminder{
+	pixel_x = 5;
+	pixel_y = 4
+	},
 /turf/open/floor/plasteel/black,
 /area/medical/morgue)
 "bmS" = (
@@ -38361,7 +38364,6 @@
 	icon_state = "4-8"
 	},
 /obj/structure/disposalpipe/segment,
-/mob/living/simple_animal/mouse,
 /turf/open/floor/plating,
 /area/maintenance/asmaint)
 "bGJ" = (
@@ -52618,7 +52620,6 @@
 	name = "Mix to Incinerator";
 	on = 0
 	},
-/mob/living/simple_animal/mouse,
 /turf/open/floor/plasteel/floorgrime,
 /area/maintenance/incinerator)
 "cle" = (
@@ -74678,7 +74679,7 @@ asc
 atq
 auX
 avS
-axd
+amC
 amC
 alU
 aAM
@@ -81175,7 +81176,7 @@ cdY
 ceY
 bCq
 bHE
-chU
+cgH
 bHE
 bLu
 bCq
@@ -95774,7 +95775,7 @@ aQc
 aRx
 aQc
 aQc
-aOK
+aQg
 aYV
 aYV
 bes
@@ -102226,7 +102227,7 @@ bLS
 cbQ
 bLS
 bLS
-bHB
+bKE
 caU
 bNc
 bOj
@@ -104486,7 +104487,7 @@ alO
 aqA
 anf
 alP
-atz
+anf
 anf
 alP
 awJ
@@ -105564,7 +105565,7 @@ bBZ
 bDc
 bEp
 bCX
-bDX
+bEc
 bIA
 bIA
 bJN

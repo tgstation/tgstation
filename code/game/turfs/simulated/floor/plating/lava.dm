@@ -71,10 +71,11 @@
 				O.armor["fire"] = 50
 			O.fire_act(10000, 1000)
 
-
 		else if (isliving(thing))
 			. = 1
 			var/mob/living/L = thing
+			if(L.movement_type & FLYING)
+				continue	//YOU'RE FLYING OVER IT
 			if("lava" in L.weather_immunities)
 				continue
 			if(L.buckled)

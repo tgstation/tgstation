@@ -21,22 +21,30 @@
 		reskin_holy_weapon(user)
 
 /obj/item/weapon/nullrod/proc/reskin_holy_weapon(mob/M)
-	var/list/holy_weapons_list = typesof(/obj/item/weapon/nullrod)
-	var/list/display_names = list()
-	for(var/V in holy_weapons_list)
-		var/atom/A = V
-		display_names += initial(A.name)
+	var/obj/item/weapon/nullrod/holy_weapon
 
-	var/choice = input(M,"What theme would you like for your holy weapon?","Holy Weapon Theme") as null|anything in display_names
-	if(!src || !choice || M.stat || !in_range(M, src) || M.restrained() || !M.canmove || reskinned)
-		return
+	if(SSreligion.holy_weapon)
+		holy_weapon = SSreligion.holy_weapon
+	else
+		var/list/holy_weapons_list = typesof(/obj/item/weapon/nullrod)
+		var/list/display_names = list()
+		for(var/V in holy_weapons_list)
+			var/atom/A = V
+			display_names += initial(A.name)
 
-	var/index = display_names.Find(choice)
-	var/A = holy_weapons_list[index]
+		var/choice = input(M,"What theme would you like for your holy weapon?","Holy Weapon Theme") as null|anything in display_names
+		if(!src || !choice || M.stat || !in_range(M, src) || M.restrained() || !M.canmove || reskinned)
+			return
 
-	var/obj/item/weapon/nullrod/holy_weapon = new A
+		var/index = display_names.Find(choice)
+		var/A = holy_weapons_list[index]
 
-	feedback_set_details("chaplain_weapon","[choice]")
+		holy_weapon = new A
+
+		SSreligion.holy_weapon = holy_weapon.type
+
+		feedback_set_details("chaplain_weapon","[choice]")
+
 
 	if(holy_weapon)
 		holy_weapon.reskinned = TRUE
@@ -127,7 +135,7 @@
 
 /obj/item/weapon/nullrod/claymore/multiverse
 	name = "extradimensional blade"
-	desc = "Once the harbinger of a interdimensional war, its sharpness fluctuates wildly. "
+	desc = "Once the harbinger of an interdimensional war, its sharpness fluctuates wildly."
 	icon_state = "multiverse"
 	item_state = "multiverse"
 	slot_flags = SLOT_BELT
@@ -168,8 +176,8 @@
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 
 /obj/item/weapon/nullrod/scythe
-	icon_state = "scythe0"
-	item_state = "scythe0"
+	icon_state = "scythe1"
+	item_state = "scythe1"
 	name = "reaper scythe"
 	desc = "Ask not for whom the bell tolls..."
 	w_class = 4
@@ -242,7 +250,7 @@
 	icon_state = "hammeron"
 	item_state = "hammeron"
 	name = "relic war hammer"
-	desc = "This war hammer cost the chaplain fourty thousand space dollars."
+	desc = "This war hammer cost the chaplain forty thousand space dollars."
 	slot_flags = SLOT_BELT
 	w_class = 5
 	attack_verb = list("smashed", "bashed", "hammered", "crunched")
@@ -322,7 +330,7 @@
 
 /obj/item/weapon/nullrod/claymore/bostaff //May as well make it a "claymore" and inherit the blocking
 	name = "monk's staff"
-	desc = "A long, tall staff made of polished wood. Traditionally used in ancient old-Earth martial arts, now used to harass the clown."
+	desc = "A long, tall staff made of polished wood. Traditionally used in ancient old-Earth martial arts, it is now used to harass the clown."
 	w_class = 4
 	force = 15
 	block_chance = 40

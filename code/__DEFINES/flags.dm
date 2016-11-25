@@ -75,7 +75,11 @@
 #define TOXINLOVER		22
 #define DIGITIGRADE		23	//Uses weird leg sprites. Optional for Lizards, required for ashwalkers. Don't give it to other races unless you make sprites for this (see human_parts_greyscale.dmi)
 
-#define FLYING	65536
+//Movement Types
+#define IMMOBILE 0
+#define GROUND 1
+#define FLYING 2
+
 
 /*
 	These defines are used specifically with the atom/movable/languages bitmask.
