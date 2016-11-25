@@ -255,7 +255,7 @@ var/list/teleportlocs = list()
 	for (var/mob/living/silicon/SILICON in player_list)
 		if(SILICON.triggerAlarm("Burglar", src, cameras, trigger))
 			//Cancel silicon alert after 1 minute
-			addtimer(SILICON, "cancelAlarm", 600, FALSE,"Burglar",src,trigger)
+			addtimer(SILICON, "cancelAlarm", 600, TIMER_NORMAL,"Burglar",src,trigger)
 
 /area/proc/set_fire_alarm_effect()
 	fire = 1

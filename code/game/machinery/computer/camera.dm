@@ -114,7 +114,7 @@
 			user.clear_fullscreen("flash", 5)
 		watchers[user] = C
 		use_power(50)
-		addtimer(src, "use_camera_console", 5, FALSE, user)
+		addtimer(src, "use_camera_console", 5, TIMER_NORMAL, user)
 	else
 		user.unset_machine()
 

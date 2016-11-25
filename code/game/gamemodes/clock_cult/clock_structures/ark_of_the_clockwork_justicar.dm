@@ -194,7 +194,7 @@
 					sleep(3)
 					new/obj/structure/destructible/clockwork/massive/ratvar(startpoint)
 				else
-					addtimer(SSshuttle.emergency, "request", 0, FALSE, null, 0) //call the shuttle immediately
+					addtimer(SSshuttle.emergency, "request", 0, TIMER_NORMAL, null, 0) //call the shuttle immediately
 					sleep(3)
 					send_to_playing_players("<span class='ratvar'>\"[text2ratvar("Behold")]!\"</span>\n<span class='inathneq_large'>\"[text2ratvar("See Engine's mercy")]!\"</span>\n\
 					<span class='sevtug_large'>\"[text2ratvar("Observe Engine's design skills")]!\"</span>\n<span class='nezbere_large'>\"[text2ratvar("Behold Engine's light")]!!\"</span>\n\

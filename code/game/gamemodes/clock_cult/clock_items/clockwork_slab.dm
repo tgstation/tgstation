@@ -92,7 +92,7 @@
 
 /obj/item/clockwork/slab/dropped(mob/user)
 	. = ..()
-	addtimer(src, "check_on_mob", 1, FALSE, user) //dropped is called before the item is out of the slot, so we need to check slightly later
+	addtimer(src, "check_on_mob", 1, TIMER_NORMAL, user) //dropped is called before the item is out of the slot, so we need to check slightly later
 
 /obj/item/clockwork/slab/proc/check_on_mob(mob/user)
 	if(user && !(src in user.held_items) && slab_ability && slab_ability.ranged_ability_user) //if we happen to check and we AREN'T in user's hands, remove whatever ability we have
@@ -424,7 +424,7 @@
 
 	if(href_list["Recite"])
 		href_list["Recite"] = text2path(href_list["Recite"])
-		addtimer(src, "recite_scripture", 0, FALSE, href_list["Recite"], usr, FALSE)
+		addtimer(src, "recite_scripture", 0, TIMER_NORMAL, href_list["Recite"], usr, FALSE)
 		return
 
 	if(href_list["Quickbindone"])
