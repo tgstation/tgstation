@@ -442,7 +442,12 @@
 	. = ..()
 	if(isopenturf(loc) && !is_flying())
 		var/turf/open/T = loc
-		. += T.slowdown
+		var/insulate = 0
+		for(var/obj/O in T.contents)
+			if(istype(O, /obj/structure/lattice/catwalk))
+				insulate = 1
+		if(!insulate)
+			. += T.slowdown
 	if(!ignorewalk)
 		. += config.run_speed
 	else
