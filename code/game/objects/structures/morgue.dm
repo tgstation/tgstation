@@ -61,6 +61,9 @@
 		close()
 	add_fingerprint(user)
 
+/obj/structure/bodycontainer/attack_robot(mob/user)
+	return attack_hand(user)
+
 /obj/structure/bodycontainer/attackby(obj/P, mob/user, params)
 	add_fingerprint(user)
 	if(istype(P, /obj/item/weapon/pen))
