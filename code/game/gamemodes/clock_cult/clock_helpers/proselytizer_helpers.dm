@@ -142,7 +142,7 @@
 	if(reinf)
 		prosel_cost -= REPLICANT_ROD
 	for(var/obj/structure/grille/G in get_turf(src))
-		addtimer(proselytizer, "proselytize", 0, FALSE, G, user)
+		addtimer(proselytizer, "proselytize", 0, TIMER_NORMAL, G, user)
 	return list("operation_time" = prosel_time, "new_obj_type" = windowtype, "alloy_cost" = prosel_cost, "spawn_dir" = dir, "dir_in_new" = new_dir)
 
 /obj/structure/window/reinforced/clockwork/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer)
@@ -187,7 +187,7 @@
 	var/healing_for_cycle = min(amount_to_heal, repair_amount)
 	var/alloy_required = healing_for_cycle
 	if(!proselytizer.can_use_alloy(RATVAR_ALLOY_CHECK))
-		healing_for_cycle = min(healing_for_cycle, proselytizer.stored_alloy)
+		healing_for_cycle = min(healing_for_cycle, proselytizer.get_power_alloy())
 	if(!healing_for_cycle || (!proselytizer.can_use_alloy(RATVAR_ALLOY_CHECK) && !proselytizer.can_use_alloy(healing_for_cycle)))
 		user << "<span class='warning'>You need at least <b>[alloy_required]</b> liquified alloy to start repairing [src], and at least <b>[amount_to_heal]</b> to fully repair it!</span>"
 		return
@@ -201,9 +201,9 @@
 			break
 		healing_for_cycle = min(amount_to_heal, repair_amount)
 		if(!proselytizer.can_use_alloy(RATVAR_ALLOY_CHECK))
-			healing_for_cycle = min(healing_for_cycle, proselytizer.stored_alloy)
+			healing_for_cycle = min(healing_for_cycle, proselytizer.get_power_alloy())
 		if(!healing_for_cycle || (!proselytizer.can_use_alloy(RATVAR_ALLOY_CHECK) && !proselytizer.can_use_alloy(healing_for_cycle)) || \
-		!do_after(user, healing_for_cycle, target = src) || \
+		!do_after(user, healing_for_cycle * proselytizer.speed_multiplier, target = src) || \
 		!proselytizer || (!proselytizer.can_use_alloy(RATVAR_ALLOY_CHECK) && !proselytizer.can_use_alloy(healing_for_cycle)))
 			break
 		amount_to_heal = max_integrity - obj_integrity
@@ -211,7 +211,7 @@
 			break
 		healing_for_cycle = min(amount_to_heal, repair_amount)
 		if(!proselytizer.can_use_alloy(RATVAR_ALLOY_CHECK))
-			healing_for_cycle = min(healing_for_cycle, proselytizer.stored_alloy)
+			healing_for_cycle = min(healing_for_cycle, proselytizer.get_power_alloy())
 		if(!healing_for_cycle || (!proselytizer.can_use_alloy(RATVAR_ALLOY_CHECK) && !proselytizer.can_use_alloy(healing_for_cycle)))
 			break
 		obj_integrity = Clamp(obj_integrity + healing_for_cycle, 0, max_integrity)
@@ -231,6 +231,9 @@
 	if(proselytizer.can_use_alloy(RATVAR_ALLOY_CHECK) || proselytizer.stored_alloy + REPLICANT_ALLOY_UNIT > proselytizer.max_alloy)
 		user << "<span class='warning'>[proselytizer]'s containers of liquified alloy are full!</span>"
 		return
+	if(!anchored)
+		user << "<span class='warning'>You need to anchor [src] to fill your [proselytizer.name] from it!</span>"
+		return
 	if(!clockwork_component_cache["replicant_alloy"])
 		user << "<span class='warning'>There is no Replicant Alloy in the global component cache!</span>"
 		return
@@ -238,9 +241,9 @@
 	user.visible_message("<span class='notice'>[user] places the end of [proselytizer] in the hole in [src]...</span>", \
 	"<span class='notice'>You start filling [proselytizer] with liquified alloy...</span>")
 	//hugeass check because we need to re-check after the do_after
-	while(proselytizer && !proselytizer.can_use_alloy(RATVAR_ALLOY_CHECK) && proselytizer.stored_alloy + REPLICANT_ALLOY_UNIT <= proselytizer.max_alloy && clockwork_component_cache["replicant_alloy"] \
+	while(anchored && proselytizer && !proselytizer.can_use_alloy(RATVAR_ALLOY_CHECK) && proselytizer.stored_alloy + REPLICANT_ALLOY_UNIT <= proselytizer.max_alloy && clockwork_component_cache["replicant_alloy"] \
 	&& do_after(user, 10, target = src) \
-	&& proselytizer && !proselytizer.can_use_alloy(RATVAR_ALLOY_CHECK) &&  proselytizer.stored_alloy + REPLICANT_ALLOY_UNIT <= proselytizer.max_alloy && clockwork_component_cache["replicant_alloy"])
+	&& anchored && proselytizer && !proselytizer.can_use_alloy(RATVAR_ALLOY_CHECK) &&  proselytizer.stored_alloy + REPLICANT_ALLOY_UNIT <= proselytizer.max_alloy && clockwork_component_cache["replicant_alloy"])
 		proselytizer.modify_stored_alloy(REPLICANT_ALLOY_UNIT)
 		clockwork_component_cache["replicant_alloy"]--
 		playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
@@ -250,10 +253,6 @@
 			user.visible_message("<span class='notice'>[user] removes [proselytizer] from the hole in [src], apparently satisfied.</span>", \
 		"<span class='brass'>You finish filling [proselytizer] with liquified alloy. It now contains <b>[proselytizer.stored_alloy]/[proselytizer.max_alloy]</b> units of liquified alloy.</span>")
 	return
-
-//convert wall gears back to brass sheets
-/obj/structure/destructible/clockwork/wall_gear/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer)
-	return list("operation_time" = 10, "new_obj_type" = /obj/item/stack/sheet/brass, "alloy_cost" = 0, "spawn_dir" = 3, "dir_in_new" = TRUE)
 
 //Convert shards and replicant alloy directly to liquid alloy
 /obj/item/clockwork/alloy_shards/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer)

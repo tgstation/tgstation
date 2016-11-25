@@ -179,6 +179,7 @@ RCD
 	set category = "Object"
 	set src in usr
 
+	airlockcost = initial(airlockcost)
 	var airlockcat = input(usr, "Select whether the airlock is solid or glass.") in list("Solid", "Glass")
 	switch(airlockcat)
 		if("Solid")
@@ -207,6 +208,7 @@ RCD
 						airlock_type = /obj/machinery/door/airlock/external
 					if("High Security")
 						airlock_type = /obj/machinery/door/airlock/highsecurity
+						airlockcost += 2 * sheetmultiplier	//extra cost
 			else
 				airlock_type = /obj/machinery/door/airlock
 

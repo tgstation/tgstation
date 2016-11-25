@@ -290,7 +290,7 @@
 	slot_flags = 0
 	origin_tech = "combat=6;engineering=3;syndicate=6"
 	mag_type = /obj/item/ammo_box/magazine/mm556x45
-	weapon_weight = WEAPON_MEDIUM
+	weapon_weight = WEAPON_HEAVY
 	fire_sound = 'sound/weapons/Gunshot_smg.ogg'
 	var/cover_open = 0
 	can_suppress = 0
@@ -356,7 +356,7 @@
 	icon_state = "sniper"
 	item_state = "sniper"
 	recoil = 2
-	weapon_weight = WEAPON_MEDIUM
+	weapon_weight = WEAPON_HEAVY
 	mag_type = /obj/item/ammo_box/magazine/sniper_rounds
 	fire_delay = 40
 	burst_size = 1

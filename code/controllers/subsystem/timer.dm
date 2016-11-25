@@ -62,7 +62,7 @@ var/datum/subsystem/timer/SStimer
 	SStimer.hashes -= hash
 	return QDEL_HINT_IWILLGC
 
-/proc/addtimer(thingToCall, procToCall, wait, unique = FALSE, ...)
+/proc/addtimer(thingToCall, procToCall, wait, unique = TIMER_NORMAL, ...)
 	if (!thingToCall || !procToCall)
 		return
 	if (!SStimer.can_fire)
@@ -76,11 +76,17 @@ var/datum/subsystem/timer/SStimer
 
 	hashlist[1] = "[thingToCall](\ref[thingToCall])"
 	event.hash = jointext(args, null)
-	if(args.len > 4)
-		event.argList = args.Copy(5)
+
+	var/bad_args = unique != TIMER_NORMAL && unique != TIMER_UNIQUE
+	if(args.len > 4 || bad_args)
+		if(bad_args)
+			stack_trace("Invalid arguments in call to addtimer!")
+			event.argList = args.Copy(4)
+		else
+			event.argList = args.Copy(5)
 
 	// Check for dupes if unique = 1.
-	if(unique)
+	if(!bad_args && unique != TIMER_NORMAL)	//faster than checking if(unique == TIMER_UNIQUE)
 		var/datum/timedevent/hash_event = SStimer.hashes[event.hash]
 		if(hash_event)
 			return hash_event.id

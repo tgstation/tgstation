@@ -200,7 +200,7 @@
 		if(has_electronics && terminal)
 			user << "The cover is [opened==2?"removed":"open"] and the power cell is [ cell ? "installed" : "missing"]."
 		else
-			user << "It's [!terminal?" not":""]wired up."
+			user << "It's [ !terminal ? "not" : "" ] wired up."
 			user << "The electronics are[!has_electronics?"n't":""] installed."
 
 	else

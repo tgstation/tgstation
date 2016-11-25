@@ -201,27 +201,28 @@ Credit where due:
 					surviving_servants++
 			clockwork_explanation = "Ensure that [required_escapees] servant(s) of Ratvar escape from [station_name()].<br><i><b>[surviving_servants]</b> managed to escape!</i>"
 			if(surviving_servants >= required_escapees)
+				ticker.news_report = CULT_ESCAPE
 				return TRUE
-			return FALSE
 		if(CLOCKCULT_SILICONS)
 			var/total_silicons = 0
 			var/valid_silicons = 0
-			var/successful = FALSE
 			for(var/mob/living/silicon/S in mob_list) //Only check robots and AIs
 				if(isAI(S) || iscyborg(S))
 					total_silicons++
 					if(is_servant_of_ratvar(S) || S.stat == DEAD)
 						valid_silicons++
+			clockwork_explanation = "Ensure that all active silicon-based lifeforms on [station_name()] are servants of Ratvar and Application scripture is unlocked.<br>\
+			<i><b>[valid_silicons]/[total_silicons]</b> silicons were killed or converted!"
 			var/list/scripture_states = scripture_unlock_check()
 			if(valid_silicons >= total_silicons && scripture_states[SCRIPTURE_APPLICATION])
-				successful = TRUE
-			clockwork_explanation = "Ensure that all active silicon-based lifeforms on [station_name()] are servants of Ratvar and Application scripture is unlocked.<br>\
-			<i><b>[valid_silicons]/[total_silicons]</b> silicons were killed or converted!<br>\
-			Application scripture was <b>[scripture_states[SCRIPTURE_APPLICATION] ? "UNLOCKED":"LOCKED"]</b></i>"
-			return successful
+				ticker.news_report = CLOCK_SILICONS
+				return TRUE
 		if(CLOCKCULT_GATEWAY)
-			return ratvar_awakens
-	return FALSE //This shouldn't ever be reached, but just in case it is
+			if(ratvar_awakens)
+				ticker.news_report = CLOCK_SUMMON
+				return TRUE
+	ticker.news_report = CULT_FAILURE
+	return FALSE
 
 /datum/game_mode/clockwork_cult/declare_completion()
 	..()
@@ -246,9 +247,17 @@ Credit where due:
 			else
 				text += "<span class='userdanger'>Ratvar's servants have failed!</span>"
 				feedback_set_details("round_end_result", "loss - servants failed their objective ([clockwork_objective])")
-		text += "<br><b>The servants' objective was:</b> <br>[clockwork_explanation]<br>"
+		if(clockwork_gateway_activated && clockwork_objective != CLOCKCULT_GATEWAY)
+			ticker.news_report = CLOCK_PROSELYTIZATION
+		text += "<br><b>The servants' objective was:</b> <br>[clockwork_explanation]"
+		text += "<br>Ratvar's servants had <b>[clockwork_caches]</b> Tinkerer's Caches."
+		text += "<br><b>Construction Value(CV)</b> was: <b>[clockwork_construction_value]</b>"
+		var/list/scripture_states = scripture_unlock_check()
+		for(var/i in scripture_states)
+			if(i != SCRIPTURE_DRIVER)
+				text += "<br><b>[i] scripture</b> was: <b>[scripture_states[i] ? "UN":""]LOCKED</b>"
 	if(servants_of_ratvar.len)
-		text += "<b>Ratvar's servants were:</b>"
+		text += "<br><b>Ratvar's servants were:</b>"
 		for(var/datum/mind/M in servants_of_ratvar)
 			text += printplayer(M)
 	world << text

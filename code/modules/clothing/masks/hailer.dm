@@ -61,12 +61,12 @@
 	else
 		..()
 
-/obj/item/clothing/mask/gas/sechailer/ui_action_click(mob/user, actiontype)
-	if(actiontype == /datum/action/item_action/halt)
+/obj/item/clothing/mask/gas/sechailer/ui_action_click(mob/user, action)
+	if(istype(action, /datum/action/item_action/halt))
 		halt()
-	else if(actiontype == /datum/action/item_action/adjust)
+	else if(istype(action, /datum/action/item_action/adjust))
 		adjustmask(user)
-	else if(actiontype == /datum/action/item_action/selectphrase)
+	else if(istype(action, /datum/action/item_action/selectphrase))
 		switch(aggressiveness)
 			if(1)
 				switch(phrase)

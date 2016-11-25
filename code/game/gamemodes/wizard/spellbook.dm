@@ -11,6 +11,11 @@
 	var/obj/effect/proc_holder/spell/S = null //Since spellbooks can be used by only one person anyway we can track the actual spell
 	var/buy_word = "Learn"
 	var/limit //used to prevent a spellbook_entry from being bought more than X times with one wizard spellbook
+	var/list/no_coexistance_typecache //Used so you can't have specific spells together
+
+/datum/spellbook_entry/New()
+	..()
+	no_coexistance_typecache = typecacheof(no_coexistance_typecache)
 
 /datum/spellbook_entry/proc/IsAvailible() // For config prefs / gamemode restrictions - these are round applied
 	return 1
@@ -18,6 +23,9 @@
 /datum/spellbook_entry/proc/CanBuy(mob/living/carbon/human/user,obj/item/weapon/spellbook/book) // Specific circumstances
 	if(book.uses<cost || limit == 0)
 		return 0
+	for(var/spell in user.mind.spell_list)
+		if(is_type_in_typecache(spell, no_coexistance_typecache))
+			return 0
 	return 1
 
 /datum/spellbook_entry/proc/Buy(mob/living/carbon/human/user,obj/item/weapon/spellbook/book) //return 1 on success
@@ -221,9 +229,17 @@
 
 /datum/spellbook_entry/infinite_guns
 	name = "Lesser Summon Guns"
-	spell_type = /obj/effect/proc_holder/spell/targeted/infinite_guns
+	spell_type = /obj/effect/proc_holder/spell/targeted/infinite_guns/gun
 	log_name = "IG"
 	cost = 3
+	no_coexistance_typecache = /obj/effect/proc_holder/spell/targeted/infinite_guns/arcane_barrage
+
+/datum/spellbook_entry/arcane_barrage
+	name = "Arcane Barrage"
+	spell_type = /obj/effect/proc_holder/spell/targeted/infinite_guns/arcane_barrage
+	log_name = "AB"
+	cost = 3
+	no_coexistance_typecache = /obj/effect/proc_holder/spell/targeted/infinite_guns/gun
 
 /datum/spellbook_entry/barnyard
 	name = "Barnyard Curse"
@@ -424,6 +440,14 @@
 	category = "Defensive"
 	cost = 1
 
+/datum/spellbook_entry/item/warpwhistle
+	name = "Warp Whistle"
+	desc = "A strange whistle that will transport you to a distant safe place on the station. There is a window of vulnerability at the begining of every use."
+	item_path = /obj/item/warpwhistle
+	log_name = "WW"
+	category = "Mobility"
+	cost = 1
+
 /datum/spellbook_entry/summon
 	name = "Summon Stuff"
 	category = "Rituals"
@@ -473,26 +497,6 @@
 	if(!ticker.mode) // In case spellbook is placed on map
 		return 0
 	return (ticker.mode.name != "ragin' mages" && !config.no_summon_magic)
-
-/datum/spellbook_entry/summon/multisword
-	name = "Multiverse War"
-	category = "Rituals"
-	desc = "Triggers a multiverse war in which the crew (and you) must summon copies of yourself from alternate realities to do battle and hijack the emergency shuttle. Automatically triggers a shuttle call on purchase."
-	log_name = "MW"
-	cost = 8
-
-/datum/spellbook_entry/summon/multisword/IsAvailible()
-	if(!ticker.mode) // In case spellbook is placed on map
-		return 0
-	return (ticker.mode.name != "ragin' mages" && !config.no_summon_magic)
-
-/datum/spellbook_entry/summon/multisword/Buy(mob/living/carbon/human/user,obj/item/weapon/spellbook/book)
-	feedback_add_details("wizard_spell_learned",log_name)
-	only_me()
-	new /obj/item/weapon/multisword(get_turf(user)) //Because the proc skips special roles
-	SSshuttle.emergency.request()
-	playsound(get_turf(user),"sound/magic/CastSummon.ogg",50,1)
-	user << "<span class='notice'>You have triggerd a multiverse war!</span>"
 
 /datum/spellbook_entry/summon/magic/Buy(mob/living/carbon/human/user,obj/item/weapon/spellbook/book)
 	feedback_add_details("wizard_spell_learned",log_name)

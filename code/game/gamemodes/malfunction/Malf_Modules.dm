@@ -81,7 +81,7 @@
 	SSshuttle.registerHostileEnvironment(src)
 
 /obj/machinery/doomsday_device/proc/seconds_remaining()
-	. = max(0, (round(detonation_timer - world.time) / 10))
+	. = max(0, (round((detonation_timer - world.time) / 10)))
 
 /obj/machinery/doomsday_device/process()
 	var/turf/T = get_turf(src)
@@ -162,7 +162,7 @@
 	for(var/obj/machinery/door/D in airlocks)
 		if(D.z != ZLEVEL_STATION)
 			continue
-		addtimer(D, "hostile_lockdown", 0, FALSE, src)
+		addtimer(D, "hostile_lockdown", 0, TIMER_NORMAL, src)
 		addtimer(D, "disable_lockdown", 900)
 
 	var/obj/machinery/computer/communications/C = locate() in machines
@@ -172,7 +172,7 @@
 	verbs -= /mob/living/silicon/ai/proc/lockdown
 	minor_announce("Hostile runtime detected in door controllers. Isolation Lockdown protocols are now in effect. Please remain calm.","Network Alert:", 1)
 	src << "<span class = 'warning'>Lockdown Initiated. Network reset in 90 seconds.</span>"
-	addtimer(GLOBAL_PROC, "minor_announce", 900, FALSE,
+	addtimer(GLOBAL_PROC, "minor_announce", 900, TIMER_NORMAL,
 		"Automatic system reboot complete. Have a secure day.",
 		"Network reset:")
 

@@ -12692,7 +12692,6 @@
 	})
 "awe" = (
 /obj/structure/disposalpipe/segment,
-/mob/living/simple_animal/mouse,
 /turf/open/floor/plating{
 	icon_state = "platingdmg2"
 	},
@@ -14074,11 +14073,7 @@
 /turf/open/floor/plating,
 /area/maintenance/fore)
 "ayF" = (
-/obj/structure/closet/secure_closet/freezer/money,
-/obj/item/weapon/reagent_containers/food/drinks/bottle/vodka/badminka,
-/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/shotglass,
-/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/shotglass,
-/obj/item/clothing/head/bearpelt,
+/obj/machinery/computer/bank_machine,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
@@ -62983,6 +62978,7 @@
 	})
 "ceA" = (
 /obj/machinery/light/small,
+/obj/item/toy/dummy,
 /obj/item/toy/prize/honk{
 	pixel_y = 12
 	},
@@ -64000,7 +63996,6 @@
 	scrub_N2O = 0;
 	scrub_Toxins = 0
 	},
-/mob/living/simple_animal/mouse,
 /turf/open/floor/plasteel/floorgrime,
 /area/maintenance/incinerator)
 "cgp" = (
@@ -75810,7 +75805,6 @@
 	dir = 9;
 	pixel_y = 0
 	},
-/mob/living/simple_animal/mouse,
 /turf/open/floor/plating,
 /area/maintenance/aft{
 	name = "Aft Maintenance"
@@ -78471,8 +78465,11 @@
 	},
 /obj/structure/table,
 /obj/item/weapon/paper_bin{
-	pixel_x = -2;
+	pixel_x = 6;
 	pixel_y = 4
+	},
+/obj/item/weapon/paper/morguereminder{
+	pixel_x = -4
 	},
 /obj/effect/landmark{
 	name = "revenantspawn"
@@ -89990,12 +89987,9 @@
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/syndicate)
 "cXN" = (
-/turf/open/space,
-/turf/closed/wall/shuttle{
-	dir = 8;
-	icon_state = "diagonalWall3"
-	},
-/area/shuttle/syndicate)
+/obj/structure/disposalpipe/segment,
+/turf/closed/wall/r_wall,
+/area/toxins/xenobiology)
 "cXO" = (
 /obj/machinery/door/window{
 	name = "Ready Room";
@@ -93314,6 +93308,9 @@
 "deD" = (
 /obj/structure/disposaloutlet{
 	dir = 2
+	},
+/obj/structure/disposalpipe/trunk{
+	dir = 1
 	},
 /turf/open/floor/engine,
 /area/toxins/xenobiology)
@@ -111691,7 +111688,7 @@ amW
 aog
 ahv
 aqm
-asr
+asj
 atE
 alI
 alI
@@ -115051,7 +115048,7 @@ aLV
 awf
 bhD
 aQp
-aRC
+awf
 avY
 aUn
 awf
@@ -125446,7 +125443,7 @@ deR
 deS
 deW
 dfz
-cTC
+cXN
 cXl
 aaa
 aaa
@@ -132304,7 +132301,7 @@ bRs
 bJs
 bUo
 bVq
-bWI
+apk
 bXO
 apj
 bZm

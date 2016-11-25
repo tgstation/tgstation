@@ -248,9 +248,6 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 					dat += "Speaker <A href='?src=\ref[src];setSilent=0'>OFF</A>"
 				else
 					dat += "Speaker <A href='?src=\ref[src];setSilent=1'>ON</A>"
-
-		//user << browse("[dat]", "window=request_console")
-		//onclose(user, "req_console")
 		var/datum/browser/popup = new(user, "req_console", "[department] Requests Console", 450, 440)
 		popup.set_content(dat)
 		popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
