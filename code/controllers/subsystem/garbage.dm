@@ -219,12 +219,16 @@ var/datum/subsystem/garbage_collector/SSgarbage
 #ifdef TESTING
 /datum/var/running_find_references
 
-/datum/verb/find_references()
+/datum/verb/find_refs()
 	set category = "Debug"
 	set name = "Find References"
 	set background = 1
 	set src in world
 
+	find_references(FALSE)
+
+datum/proc/find_references(skip_alert)
+	set background = 1
 	running_find_references = type
 	if(usr && usr.client)
 		if(usr.client.running_find_references)
@@ -236,9 +240,10 @@ var/datum/subsystem/garbage_collector/SSgarbage
 			SSgarbage.next_fire = world.time + world.tick_lag
 			return
 
-		if(alert("Running this will create a lot of lag until it finishes.  You can cancel it by running it again.  Would you like to begin the search?", "Find References", "Yes", "No") == "No")
-			running_find_references = null
-			return
+		if(!skip_alert)
+			if(alert("Running this will lock everything up for about 5 minutes.  Would you like to begin the search?", "Find References", "Yes", "No") == "No")
+				running_find_references = null
+				return
 
 	//this keeps the garbage collector from failing to collect objects being searched for in here
 	SSgarbage.can_fire = 0
@@ -247,11 +252,7 @@ var/datum/subsystem/garbage_collector/SSgarbage
 		usr.client.running_find_references = type
 
 	testing("Beginning search for references to a [type].")
-	var/list/things = list()
 	for(var/datum/thing in world)
-		things |= thing
-	testing("Collected list of things in search for references to a [type]. ([things.len] Thing\s)")
-	for(var/datum/thing in things)
 		if(usr && usr.client && !usr.client.running_find_references) return
 		for(var/varname in thing.vars)
 			var/variable = thing.vars[varname]
@@ -287,7 +288,7 @@ var/datum/subsystem/garbage_collector/SSgarbage
 
 	qdel(src)
 	if(!running_find_references)
-		find_references()
+		find_references(TRUE)
 
 /client/verb/show_qdeleted()
 	set category = "Debug"
