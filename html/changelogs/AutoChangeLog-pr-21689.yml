@@ -1,0 +1,4 @@
+author: "Joan"
+delete-after: True
+changes: 
+  - experiment: "Replaced the \"No Cache\" alert with an alert that will show what you need for the next tier of scripture."
