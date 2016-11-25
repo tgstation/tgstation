@@ -173,6 +173,7 @@
 		emp_damage += damage
 	wearer << "<span class='userdanger'>Flightpack: BZZZZZZZZZZZT</span>"
 	wearer << "<span class='warning'>Flightpack: WARNING: Class [severity] EMP detected! Circuit damage at [(100/emp_disable_threshold)*emp_damage]!</span>"
+	wearer.Confuse(3)
 
 //action BUTTON CODE
 /obj/item/device/flightpack/ui_action_click(owner, action)
@@ -579,6 +580,7 @@
 	momentum_y = 0
 	if(flight)
 		disable_flight()
+	wearer.Confuse(3)
 
 /obj/item/device/flightpack/proc/enable_flight(forced = 0)
 	if(!suit)
