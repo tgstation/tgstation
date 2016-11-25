@@ -304,6 +304,16 @@ EMAGGED FUNCTIONS - TODO
 	if(iscyborg(user))	//Make sure cyborgs can't load their rtds
 		return
 	var/loaded = 0
+	if(istype(W, /obj/item/weapon/storage/bag/ore))
+		var/obj/item/weapon/storage/bag/ore/B = W
+		var/A = 0
+		for(var/obj/O in B)
+			if(istype(O, /obj/item/weapon/ore/iron))
+				if((matter + ironoreworth) <= maxmatter)
+					qdel(O)
+					matter += ironoreworth
+					A++
+		user << "<span class='notice'>Loaded [A] pieces of iron ore. The RTD now has [matter]/[maxmatter] matter left.</span>"
 	if(istype(W, /obj/item/weapon/rcd_ammo))
 		var/obj/item/weapon/rcd_ammo/R = W
 		if((matter + R.ammoamt) > maxmatter)
