@@ -8,7 +8,7 @@
 	var/emp_damage = 0//Handles a type of MMI damage
 	var/datum/dna/stored/stored_dna // dna var for brain. Used to store dna, brain dna is not considered like actual dna, brain.has_dna() returns FALSE.
 	stat = DEAD //we start dead by default
-	see_invisible = SEE_INVISIBLE_MINIMUM
+	see_invisible = SEE_INVISIBLE_LIVING
 
 /mob/living/brain/New(loc)
 	..()

@@ -67,7 +67,7 @@
 	SetSleeping(0, 0)
 	blind_eyes(1)
 	reset_perspective(null)
-	hide_fullscreens()
+	reload_fullscreen()
 	update_action_buttons_icon()
 	update_damage_hud()
 	update_health_hud()
