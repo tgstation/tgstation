@@ -106,7 +106,7 @@
 				message_say = "[uppertext(user.mind.gang_datum.name)] RULES!"
 	user.say(message_say)
 	explosion(user,0,2,0) //Cheap explosion imitation because putting prime() here causes runtimes
-	user.gib()
+	user.gib(1, 1)
 	qdel(src)
 
 /obj/item/weapon/grenade/plastic/update_icon()
