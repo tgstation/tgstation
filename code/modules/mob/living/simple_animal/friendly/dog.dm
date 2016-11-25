@@ -40,7 +40,7 @@
 	icon_state = "pug"
 	icon_living = "pug"
 	icon_dead = "pug_dead"
-	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab/pug = 3)
+	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab/pug = 3, /obj/item/stack/sheet/animalhide/generic = 1)
 	gold_core_spawnable = 2
 
 /mob/living/simple_animal/pet/dog/corgi/New()
