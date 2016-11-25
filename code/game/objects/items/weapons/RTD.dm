@@ -1,5 +1,3 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:32
-
 /*
 CONTAINS
 RAPID TERRAFORMING DEVICE
@@ -385,7 +383,8 @@ EMAGGED FUNCTIONS - TODO
 
 
 /obj/item/weapon/rtd/afterattack(atom/A, mob/user, proximity)
-	if(src.z != 2)
+	if(user.z == 1)
+		user << "<span class='warning'>This device can not be used in the station!</span>"
 		return 0
 	if(!proximity && mode > 2)
 		return 0
@@ -468,13 +467,14 @@ EMAGGED FUNCTIONS - TODO
 			return 0
 		if(4)
 			if(ismineralturf(A))
+				var/turf/closed/mineral/M = A
 				if(checkResource(wallcost, user))
 					user << "<span class='notice'>You start converting the [A] to a metal wall...</span>"
 					playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 					activate(user)
-					if(do_after(user, walldelay, target = A))
+					if(do_after(user, walldelay, target = M))
 						if(useResource(wallcost, user))
-							A.ChangeTurf(/turf/closed/wall)
+							M.ChangeTurf(/turf/closed/wall)
 							return 1
 			return 0
 		if(5)
@@ -500,13 +500,14 @@ EMAGGED FUNCTIONS - TODO
 			if(!gas)
 				return 0
 			if(isfloorturf(A))
-				user << "<span class='notice'>You let out a blast of compressed airmix with your terraforming device!</span>"
+				var/turf/open/floor/F = A
+				user << "<span class='notice'>You blast a jet of compressed airmix onto [F] with your terraforming device!</span>"
 				var/datum/gas_mixture/OUT = new /datum/gas_mixture
-				OUT.assert_gas(o2)
-				OUT.assert_gas(n2)
+				OUT.assert_gas("o2")
+				OUT.assert_gas("n2")
 				OUT.gases["o2"][MOLES] += gas_amount*o2ratio
 				OUT.gases["n2"][MOLES] += gas_amount*n2ratio
-				A.gas.merge(OUT)
+				F.air.merge(OUT)
 				gas = (gas - gas_use)
 			return 0
 		else
