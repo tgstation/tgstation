@@ -113,6 +113,6 @@
 
 /obj/item/weapon/reagent_containers/microwave_act(obj/machinery/microwave/M)
 	if(is_open_container())
-		reagents.chem_temp += 250
+		reagents.chem_temp = max(reagents.chem_temp, 1000)
 		reagents.handle_reactions()
 	..()
