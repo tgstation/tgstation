@@ -110,3 +110,9 @@
 			return
 
 	reagents.clear_reagents()
+
+/obj/item/weapon/reagent_containers/microwave_act(obj/machinery/microwave/M)
+	if(is_open_container())
+		reagents.chem_temp += 250
+		reagents.handle_reactions()
+	..()
