@@ -443,7 +443,7 @@
 	if(isopenturf(loc) && !is_flying())
 		var/turf/open/T = loc
 		. += T.slowdown
-	if(!ignorewalk)
+	if(ignorewalk)
 		. += config.run_speed
 	else
 		switch(m_intent)
