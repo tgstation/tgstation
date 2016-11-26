@@ -75,7 +75,7 @@
 //Cycles through all of the colours
 /turf/open/floor/light/colour_cycle
 	coloredlights = list("cycle_all")
-	can_modifiy_colour = FALSE
+	can_modify_colour = FALSE
 
 
 
