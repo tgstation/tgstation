@@ -442,25 +442,21 @@
 
 /obj/item/device/flightpack/proc/flight_impact(atom/unmovablevictim, crashdir)	//Yes, victim.
 	if(unmovablevictim == wearer)
-		crashing = 0
 		return 0
-	world << "<span class='boldnotice'> DEBUG: CRASHDIR == [crashdir]</span>"
+	if(crashing)	//We're already in the process of getting knocked around by a crash.
+		return 0
+	crashing = 1
 	var/V = ""
 	if(crashdir == NORTH || crashdir == SOUTH)
 		V = "y"
 	else if(crashdir == EAST || crashdir == WEST)
 		V = "x"
-	else
-		wearer << "Crash directions on this flightsuit are bugged. Report it to Coderbus or admins immediately!"
 	var/crashpower = 0
 	switch(V)
 		if("y")
 			crashpower = momentum_speed_y
 		if("x")
 			crashpower = momentum_speed_x
-	if(crashing)	//We're already in the process of getting knocked around by a crash.
-		return 0
-	crashing = 1
 	if(!flight)
 		crashing = 0
 		return 0
@@ -474,9 +470,12 @@
 	var/anchored = 1	//Just in case...
 	var/damage = 0
 	if(ismob(unmovablevictim))
+		var/mob/living/L = unmovablevictim
+		if(L.throwing)
+			crashing = 0
+			return 0
 		suit.user.forceMove(get_turf(unmovablevictim))
 		crashing = 0
-		var/mob/living/L = unmovablevictim
 		mobknockback(L, crashpower, crashdir)
 		damage = 0
 		density = 1
@@ -489,15 +488,16 @@
 		density = 1
 		anchored = 1
 	else if(ismovableatom(unmovablevictim))
-		if(crashpower < 3)
+		var/atom/movable/victim = unmovablevictim
+		if(crashpower < 3 || victim.throwing)
 			crashing = 0
 			return 0
-		var/atom/movable/victim = unmovablevictim
 		density = victim.density
 		anchored = victim.anchored
 		victimknockback(victim, crashpower, crashdir)
 		if(anchored)
 			damage = 1
+	world << "<span class='boldwarning'>DEBUG: CRASHED WITH POWER [crashpower]</span>"
 	if(damage)
 		crash_damage(density, anchored, momentum_speed, unmovablevictim.name)
 		userknockback(density, anchored, momentum_speed, dir)
@@ -519,12 +519,11 @@
 	knockback += (part_manip.rating / 2)
 	knockback += (part_bin.rating / 2)
 	knockback += boost*2
-	knockback = knockback / 3
 	switch(power)
 		if(1)
 			knockback = 1
 		if(2)
-			knockback /= 2
+			knockback /= 1.5
 	var/throwdir = pick(alldirs)
 	var/turf/target = get_step(victim, throwdir)
 	for(var/i in 1 to (knockback-1))
@@ -684,6 +683,7 @@
 /obj/item/device/flightpack/proc/activate_booster()
 	if(!flight)
 		usermessage("Error: Engines offline!", 2)
+		return 0
 	if(boost_charge < 5)
 		usermessage("Insufficient charge in boost capacitors to engage.", 2)
 		return 0

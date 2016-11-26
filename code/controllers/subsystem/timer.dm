@@ -80,7 +80,7 @@ var/datum/subsystem/timer/SStimer
 	var/bad_args = unique != TIMER_NORMAL && unique != TIMER_UNIQUE
 	if(args.len > 4 || bad_args)
 		if(bad_args)
-			stack_trace("Invalid arguments in call to addtimer!")
+			stack_trace("Invalid arguments in call to addtimer! thingToCall:[thingToCall] procToCall:[procToCall] timeToRun:[world.time + wait].")
 			event.argList = args.Copy(4)
 		else
 			event.argList = args.Copy(5)
