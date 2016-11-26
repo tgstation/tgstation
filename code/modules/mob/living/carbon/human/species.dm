@@ -866,15 +866,11 @@
 	. = 0	//We start at 0.
 	var/flight = 0	//Check for flight and flying items
 	var/flightpack = 0
-	var/slowcarry = 1
-	var/ignoreslow = 0
 	var/obj/item/device/flightpack/F = H.get_flightpack()
 	if(istype(F) && F.flight)
 		flightpack = 1
 	if(H.movement_type & FLYING)
 		flight = 1
-	if(H.status_flags & IGNORESLOWDOWN)
-		ignoreslow = 1
 
 	if(!flightpack)	//Check for chemicals and innate speedups and slowdowns if we're moving using our body and not a flying suit
 		if(H.status_flags & GOTTAGOFAST)
@@ -900,7 +896,7 @@
 	else if(flightpack && F.brake)
 		. += 2
 
-	if(!ignoreslow && !flightpack)
+	if(!(H.status_flags & IGNORESLOWDOWN) && !flightpack)
 		if(H.wear_suit)
 			. += H.wear_suit.slowdown
 		if(H.shoes)
@@ -911,12 +907,12 @@
 			if(I.flags & HANDSLOW)
 				. += I.slowdown
 		var/health_deficiency = (100 - H.health + H.staminaloss)
+		var/hungry = (500 - H.nutrition) / 5 // So overeat would be 100 and default level would be 80
 		if(health_deficiency >= 40)
 			if(flight)
 				. += (health_deficiency / 75)
 			else
 				. += (health_deficiency / 25)
-			var/hungry = (500 - H.nutrition) / 5 // So overeat would be 100 and default level would be 80
 		if((hungry >= 70) && !flight)		//Being hungry won't stop you from using flightpack controls/flapping your wings although it probably will in the wing case but who cares.
 			. += hungry / 50
 			if((H.disabilities & FAT))
