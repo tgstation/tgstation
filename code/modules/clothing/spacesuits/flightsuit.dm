@@ -329,10 +329,6 @@
 	if(!flight)
 		suit.slowdown = slowdown_ground
 		return
-	if(brake)
-		suit.slowdown = slowdown_brake
-	else if(boost)
-		suit.slowdown = -boost_speed
 	else
 		suit.slowdown = slowdown_air
 
