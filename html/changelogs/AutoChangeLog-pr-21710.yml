@@ -1,0 +1,5 @@
+author: "MMMiracles"
+delete-after: True
+changes: 
+  - tweak: "Jump boots now have a pocket"
+  - imageadd: "Jump boots from mining now have on-character icons."
