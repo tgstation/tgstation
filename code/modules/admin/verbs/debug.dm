@@ -358,26 +358,56 @@ var/list/TYPES_SHORTCUTS = list(
 	/obj/item/weapon/reagent_containers/food/drinks = "DRINK", //longest paths comes first
 	/obj/item/weapon/reagent_containers/food = "FOOD",
 	/obj/item/weapon/reagent_containers = "REAGENT_CONTAINERS",
-	/obj/machinery/atmospherics = "ATMOS",
+	/obj/item/weapon = "WEAPON",
+	/obj/machinery/atmospherics = "ATMOS_MECH",
 	/obj/machinery/portable_atmospherics = "PORT_ATMOS",
 	/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/missile_rack = "MECHA_MISSILE_RACK",
 	/obj/item/mecha_parts/mecha_equipment = "MECHA_EQUIP",
 	/obj/item/organ = "ORGAN",
+	/obj/item = "ITEM",
+	/obj/machinery = "MACHINERY",
+	/obj/effect = "EFFECT",
+	/obj = "O",
+	/datum = "D",
+	/turf/open = "OPEN",
+	/turf/closed = "CLOSED",
+	/turf = "T",
+	/mob/living/carbon = "CARBON",
+	/mob/living/simple_animal = "SIMPLE",
+	/mob/living = "LIVING",
+	/mob = "M"
 )
 
-var/global/list/g_fancy_list_of_types = null
-/proc/get_fancy_list_of_types()
-	if (isnull(g_fancy_list_of_types)) //init
-		var/list/temp = sortList(subtypesof(/atom) - typesof(/area) - /atom/movable)
-		g_fancy_list_of_types = new(temp.len)
+
+/proc/get_fancy_list_of_atom_types()
+	var/static/list/pre_generated_list
+	if (!pre_generated_list) //init
+		var/list/temp = sortList(typesof(/atom))
+		pre_generated_list = new(temp.len)
 		for(var/type in temp)
 			var/typename = "[type]"
 			for (var/tn in TYPES_SHORTCUTS)
 				if (copytext(typename,1, length("[tn]/")+1)=="[tn]/" /*findtextEx(typename,"[tn]/",1,2)*/ )
 					typename = TYPES_SHORTCUTS[tn]+copytext(typename,length("[tn]/"))
 					break
-			g_fancy_list_of_types[typename] = type
-	return g_fancy_list_of_types
+			pre_generated_list[typename] = type
+	return pre_generated_list
+
+
+/proc/get_fancy_list_of_datum_types()
+	var/static/list/pre_generated_list
+	if (!pre_generated_list) //init
+		var/list/temp = sortList(typesof(/datum) - typesof(/atom))
+		pre_generated_list = new(temp.len)
+		for(var/type in temp)
+			var/typename = "[type]"
+			for (var/tn in TYPES_SHORTCUTS)
+				if (copytext(typename,1, length("[tn]/")+1)=="[tn]/" /*findtextEx(typename,"[tn]/",1,2)*/ )
+					typename = TYPES_SHORTCUTS[tn]+copytext(typename,length("[tn]/"))
+					break
+			pre_generated_list[typename] = type
+	return pre_generated_list
+
 
 /proc/filter_fancy_list(list/L, filter as text)
 	var/list/matches = new
@@ -392,7 +422,7 @@ var/global/list/g_fancy_list_of_types = null
 	set category = "Debug"
 	set name = "Del-All"
 
-	var/list/matches = get_fancy_list_of_types()
+	var/list/matches = get_fancy_list_of_atom_types()
 	if (!isnull(object) && object!="")
 		matches = filter_fancy_list(matches, object)
 

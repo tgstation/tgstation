@@ -183,3 +183,7 @@
 
 /obj/proc/on_mob_move(dir, mob)
 	return
+
+/obj/vv_get_dropdown()
+	. = ..()
+	.["Delete all of type"] = "?_src_=vars;delall=\ref[src]"
