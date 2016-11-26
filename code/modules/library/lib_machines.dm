@@ -479,8 +479,6 @@ var/global/list/datum/cachedbook/cachedbooks // List of our cached book datums
 		dat += "       <A href='?src=\ref[src];clear=1'>\[Clear Memory\]</A><BR><BR><A href='?src=\ref[src];eject=1'>\[Remove Book\]</A>"
 	else
 		dat += "<BR>"
-	//user << browse(dat, "window=scanner")
-	//onclose(user, "scanner")
 	var/datum/browser/popup = new(user, "scanner", name, 600, 400)
 	popup.set_content(dat)
 	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))

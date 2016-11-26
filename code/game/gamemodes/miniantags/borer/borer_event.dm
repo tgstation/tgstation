@@ -2,18 +2,18 @@
 	name = "Borer"
 	typepath = /datum/round_event/borer
 	weight = 15
-	max_occurrences = 1
+	max_occurrences = 0
 	min_players = 15
 	earliest_start = 12000
 
 /datum/round_event/borer
-	announceWhen = 1800 //Borers get 3 minutes till the crew tries to murder them.
+	announceWhen = 2400 //Borers get 4 minutes till the crew tries to murder them.
 	var/successSpawn = 0
 
 	var/spawncount = 2
 
 /datum/round_event/borer/setup()
-	spawncount = rand(2, 3)
+	spawncount = rand(2, 4)
 
 /datum/round_event/borer/announce()
 	if(successSpawn)

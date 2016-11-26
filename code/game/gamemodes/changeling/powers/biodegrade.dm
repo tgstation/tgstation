@@ -25,7 +25,7 @@
 			"<span class='warning'>We vomit acidic ooze onto our \
 			restraints!</span>")
 
-		addtimer(src, "dissolve_handcuffs", 30, FALSE, user, O)
+		addtimer(src, "dissolve_handcuffs", 30, TIMER_NORMAL, user, O)
 		used = TRUE
 
 	if(user.wear_suit && user.wear_suit.breakouttime && !used)
@@ -36,7 +36,7 @@
 			of acid across the front of \his [S]!</span>", \
 			"<span class='warning'>We vomit acidic ooze onto our straight \
 			jacket!</span>")
-		addtimer(src, "dissolve_straightjacket", 30, FALSE, user, S)
+		addtimer(src, "dissolve_straightjacket", 30, TIMER_NORMAL, user, S)
 		used = TRUE
 
 
@@ -48,7 +48,7 @@
 			begin to melt and run!</span>")
 		user << "<span class='warning'>We vomit acidic goop onto the \
 			interior of [C]!</span>"
-		addtimer(src, "open_closet", 70, FALSE, user, C)
+		addtimer(src, "open_closet", 70, TIMER_NORMAL, user, C)
 		used = TRUE
 
 	if(istype(user.loc, /obj/structure/spider/cocoon) && !used)
@@ -57,7 +57,7 @@
 			return 0
 		C.visible_message("<span class='warning'>[src] shifts and starts to fall apart!</span>")
 		user << "<span class='warning'>We secrete acidic enzymes from our skin and begin melting our cocoon...</span>"
-		addtimer(src, "dissolve_cocoon", 25, FALSE, user, C) //Very short because it's just webs
+		addtimer(src, "dissolve_cocoon", 25, TIMER_NORMAL, user, C) //Very short because it's just webs
 		used = TRUE
 
 	if(used)

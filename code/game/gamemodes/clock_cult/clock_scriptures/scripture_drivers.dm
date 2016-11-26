@@ -34,7 +34,7 @@
 					C << "<span class='warning'>Your leg[number_legs > 1 ? "s burn":" burns"] with pain!</span>"
 					C.apply_damage(cultist_damage * 0.5, BURN, "l_leg")
 					C.apply_damage(cultist_damage * 0.5, BURN, "r_leg")
-				C.m_intent = "walk"
+				C.toggle_move_intent()
 
 
 //Judicial Visor: Creates a judicial visor, which can smite an area.

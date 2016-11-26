@@ -38,11 +38,6 @@
 
 /datum/hud/ghost/New(mob/owner)
 	..()
-	var/mob/dead/observer/G = mymob
-	if(!G.client.prefs.ghost_hud)
-		mymob.client.screen = null
-		return
-
 	var/obj/screen/using
 
 	using = new /obj/screen/ghost/jumptomob()
@@ -62,12 +57,12 @@
 	static_inventory += using
 
 
-/datum/hud/ghost/show_hud()
-	var/mob/dead/observer/G = mymob
-	mymob.client.screen = list()
-	if(!G.client.prefs.ghost_hud)
-		return
-	mymob.client.screen += static_inventory
+/datum/hud/ghost/show_hud(version = 0, mob/viewmob)
+	..()
+	if(!mymob.client.prefs.ghost_hud)
+		mymob.client.screen -= static_inventory
+	else
+		mymob.client.screen += static_inventory
 
 /mob/dead/observer/create_mob_hud()
 	if(client && !hud_used)

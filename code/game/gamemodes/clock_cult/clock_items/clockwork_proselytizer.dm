@@ -48,6 +48,18 @@
 	..()
 	if(is_servant_of_ratvar(user) || isobserver(user))
 		user << "<span class='alloy'>It will use cell charge at a rate of <b>[CLOCKCULT_ALLOY_TO_POWER_MULTIPLIER]</b> charge to <b>1</b> alloy if it has insufficient alloy.</span>"
+		user << "<span class='alloy'><b>[get_power_alloy()]</b> is usable in this manner.</span>"
+
+/obj/item/clockwork/clockwork_proselytizer/cyborg/get_power_alloy() //returns alloy plus the alloy we have from power, where we need such
+	var/mob/living/silicon/robot/R = loc
+	var/alloy_power = 0
+	var/current_charge = 0
+	if(istype(R) && R.cell)
+		current_charge = R.cell.charge
+		while(current_charge > CLOCKCULT_ALLOY_TO_POWER_MULTIPLIER)
+			current_charge -= CLOCKCULT_ALLOY_TO_POWER_MULTIPLIER
+			alloy_power++
+	return ..() + alloy_power
 
 /obj/item/clockwork/clockwork_proselytizer/cyborg/can_use_alloy(amount)
 	if(amount != RATVAR_ALLOY_CHECK)
@@ -114,6 +126,9 @@
 	if(!is_servant_of_ratvar(user))
 		return ..()
 	proselytize(target, user)
+
+/obj/item/clockwork/clockwork_proselytizer/proc/get_power_alloy()
+	return stored_alloy
 
 /obj/item/clockwork/clockwork_proselytizer/proc/modify_stored_alloy(amount)
 	stored_alloy = Clamp(stored_alloy + amount, 0, max_alloy)

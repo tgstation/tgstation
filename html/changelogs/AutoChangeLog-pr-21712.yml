@@ -1,0 +1,6 @@
+author: "Gun Hog"
+delete-after: True
+changes: 
+  - rscadd: "AIs piloting a mech may now be recovered with an Intellicard from the wreckage if the mech is destroyed. They will be require repair once recovered."
+  - tweak: "Instructions for piloting mechs as an AI are now more obvious."
+  - tweak: "Traitor and Ratvar AIs may now be carded from mechs, at their discretion."
