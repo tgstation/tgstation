@@ -159,8 +159,6 @@ var/const/HOLOPAD_MODE = RANGE_BASED
 						if(get_dist(master.eyeobj, src) <= holo_range)
 							return 1
 						else
-							var/turf/T = master.eyeobj.loc
-
 							var/obj/machinery/holopad/pad_close = get_closest_atom(/obj/machinery/holopad, holopads, master.eyeobj)
 							world << "[pad_close] [get_dist(pad_close, master.eyeobj)]"
 							if(get_dist(pad_close, master.eyeobj) <= holo_range)
