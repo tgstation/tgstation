@@ -884,7 +884,7 @@
 	if(H.status_flags & IGNORESLOWDOWN)
 		ignoreslow = 1
 	
-	if(H.has_gravity()
+	if(H.has_gravity())
 		gravity = 1
 
 	if(!gravity)
