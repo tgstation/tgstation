@@ -159,11 +159,14 @@ var/const/HOLOPAD_MODE = RANGE_BASED
 						if(get_dist(master.eyeobj, src) <= holo_range)
 							return 1
 						else
+							var/turf/T = master.eyeobj.loc
+
 							var/obj/machinery/holopad/pad_close = get_closest_atom(/obj/machinery/holopad, holopads, master.eyeobj)
+							world << "[pad_close] [get_dist(pad_close, master.eyeobj)]"
 							if(get_dist(pad_close, master.eyeobj) <= holo_range)
-								clear_holo(master)
-								pad_close.create_holo(master)
-								pad_close.move_hologram(master)
+								var/obj/effect/overlay/holo_pad_hologram/h = masters[master]
+								unset_holo(master)
+								pad_close.set_holo(master, h)
 								return 1
 
 					else if (HOLOPAD_MODE == AREA_BASED)
@@ -203,21 +206,29 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	h.anchored = 1//So space wind cannot drag it.
 	h.name = "[A.name] (Hologram)"//If someone decides to right click.
 	h.SetLuminosity(2)	//hologram lighting
+	set_holo(A, h)
+	return 1
+
+/obj/machinery/holopad/proc/set_holo(mob/living/silicon/ai/A, var/obj/effect/overlay/holo_pad_hologram/h)
 	masters[A] = h
-	SetLuminosity(2)			//pad lighting
+	SetLuminosity(2) // pad lighting
 	icon_state = "holopad1"
 	A.current = src
 	use_power += HOLOGRAM_POWER_USAGE
 	return 1
 
 /obj/machinery/holopad/proc/clear_holo(mob/living/silicon/ai/user)
+	qdel(masters[user]) // Get rid of user's hologram
+	unset_holo(user)
+	return 1
+
+/obj/machinery/holopad/proc/unset_holo(mob/living/silicon/ai/user)
 	if(user.current == src)
 		user.current = null
-	qdel(masters[user])//Get rid of user's hologram
-	masters -= user //Discard AI from the list of those who use holopad
+	masters -= user // Discard AI from the list of those who use holopad
 	use_power = max(HOLOPAD_PASSIVE_POWER_USAGE, use_power - HOLOGRAM_POWER_USAGE)//Reduce power usage
-	if (!masters.len)//If no users left
-		SetLuminosity(0)			//pad lighting (hologram lighting will be handled automatically since its owner was deleted)
+	if (!masters.len) // If no users left
+		SetLuminosity(0) // pad lighting (hologram lighting will be handled automatically since its owner was deleted)
 		icon_state = "holopad0"
 		use_power = HOLOPAD_PASSIVE_POWER_USAGE
 	return 1
