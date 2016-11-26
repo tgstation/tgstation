@@ -866,6 +866,8 @@
 	. = 0	//We start at 0.
 	var/flight = 0	//Check for flight and flying items
 	var/flightpack = 0
+	var/ignoreslow = 0
+	var/gravity = 0
 	var/obj/item/device/flightpack/F = H.get_flightpack()
 	if(istype(F) && F.flight)
 		flightpack = 1
@@ -878,8 +880,14 @@
 		if(H.status_flags & GOTTAGOREALLYFAST)
 			. -= 2
 		. += speedmod
+	
+	if(H.status_flags & IGNORESLOWDOWN)
+		ignoreslow = 1
+	
+	if(H.has_gravity()
+		gravity = 1
 
-	if(!H.has_gravity())
+	if(!gravity)
 		var/obj/item/weapon/tank/jetpack/J = H.back
 		var/obj/item/clothing/suit/space/hardsuit/C = H.wear_suit
 		var/obj/item/organ/cyberimp/chest/thrusters/T = H.getorganslot("thrusters")
@@ -891,12 +899,13 @@
 			. -= 2
 		else if(flightpack && F.allow_thrust(0.01, src))
 			. -= 1
+
 	if(flightpack && F.boost)
 		. -= F.boost_speed
 	else if(flightpack && F.brake)
 		. += 2
 
-	if(!(H.status_flags & IGNORESLOWDOWN) && !flightpack)
+	if(!ignoreslow && !flightpack && gravity)
 		if(H.wear_suit)
 			. += H.wear_suit.slowdown
 		if(H.shoes)
