@@ -316,11 +316,6 @@
 /datum/holiday/xmas/greet()
 	return "Have a merry Christmas!"
 
-/datum/holiday/xmas/celebrate()
-	for(var/obj/effect/landmark/xmastree/XT in world)
-		new XT.tree(get_turf(XT))
-		qdel(XT)
-
 /datum/holiday/festive_season
 	name = FESTIVE_SEASON
 	begin_day = 1
@@ -328,9 +323,8 @@
 	end_day = 31
 
 /datum/holiday/festive_season/celebrate()
-	for(var/obj/effect/landmark/xmastree/XT in world)
-		var/turf/t = get_turf(XT)
-		new /obj/structure/flora/tree/pine/xmas(t)
+	for(var/obj/effect/landmark/xmastree/XT in landmarks_list)
+		new XT.tree(get_turf(XT))
 		qdel(XT)
 
 /datum/holiday/festive_season/greet()
