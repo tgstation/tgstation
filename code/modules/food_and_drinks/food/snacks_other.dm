@@ -338,4 +338,43 @@
 	attack_verb = list("slapped", "slathered")
 	w_class = 4
 
+/obj/item/weapon/reagent_containers/food/snacks/lollipop
+	name = "lollipop"
+	desc = "A delicious lollipop. Makes for a great Valentine's present."
+	icon = 'icons/obj/lollipop.dmi'
+	icon_state = "lollipop_stick"
+	list_reagents = list("nutriment" = 1, "vitamin" = 1, "iron" = 10, "sugar" = 5, "omnizine" = 2)	//Honk
 
+/obj/item/weapon/reagent_containers/food/snacks/lollipop/New()
+	var/image/I = image(icon = 'icons/obj/lollipop.dmi', icon_state = "lollipop_head")
+	var/rcolor = "#"
+	var/r = num2hex(pick(0, 255))
+	var/g = num2hex(pick(0, 255))
+	var/b = num2hex(pick(0, 255))
+	rcolor += r
+	rcolor += g
+	rcolor += b
+	I.color = rcolor
+	add_overlay(I)
+
+/obj/item/weapon/reagent_containers/food/snacks/lollipop/throw_impact(atom/A)
+	..(A)
+	throw_speed = 1
+	throw_force = 0
+
+/obj/item/weapon/reagent_containers/food/snacks/gumball
+	name = "gumball"
+	desc = "A colorful, sugary gumball."
+	icon = 'icons/obj/lollipop.dmi'
+	icon_state = "gumball"
+	list_reagents = list("sugar" = 5, "bicardine" = 2, "kelotene" = 2)	//Kek
+
+/obj/item/weapon/reagent_containers/food/snacks/lollipop/New()
+	var/rcolor = "#"
+	var/r = num2hex(pick(0, 255))
+	var/g = num2hex(pick(0, 255))
+	var/b = num2hex(pick(0, 255))
+	rcolor += r
+	rcolor += g
+	rcolor += b
+	color = rcolor

@@ -41,6 +41,7 @@
 	var/ccooldown = 0
 	var/scooldown = 0
 	var/shockallowed = 0//Can it be a stunarm when emagged. Only PK borgs get this by default.
+	var/boop = 0
 
 /obj/item/borg/cyborghug/attack_self(mob/living/user)
 	if(iscyborg(user))
@@ -72,6 +73,10 @@
 					if(M.lying)
 						user.visible_message("<span class='notice'>[user] shakes [M] trying to get \him up!</span>", \
 										"<span class='notice'>You shake [M] trying to get \him up!</span>")
+					else if(user.zone_selected == "head")
+						user.visible_message("<span class='notice'>[user] boops [M] on the head playfully!</span>", \
+										"<span class='notice'>You playfully boop [M]!</span>")
+						user.do_attack_animation(M, ATTACK_EFFECT_BOOP)
 					else
 						user.visible_message("<span class='notice'>[user] hugs [M] to make \him feel better!</span>", \
 								"<span class='notice'>You hug [M] to make \him feel better!</span>")
@@ -88,6 +93,10 @@
 					if(M.lying)
 						user.visible_message("<span class='notice'>[user] shakes [M] trying to get \him up!</span>", \
 										"<span class='notice'>You shake [M] trying to get \him up!</span>")
+					else if(user.zone_selected == "head")
+						user.visible_message("<span class='warning'>[user] bops [M] on the head!</span>", \
+										"<span class='warning'>You bop [M] on the head!</span>")
+						user.do_attack_animation(M, ATTACK_EFFECT_PUNCH)
 					else
 						user.visible_message("<span class='warning'>[user] hugs [M] in a firm bear-hug! [M] looks uncomfortable...</span>", \
 								"<span class='warning'>You hug [M] firmly to make \him feel better! [M] looks uncomfortable...</span>")
@@ -137,6 +146,9 @@
 
 /obj/item/borg/cyborghug/peacekeeper
 	shockallowed = 1
+
+/obj/item/borg/cyborghug/medical
+	boop = 1
 
 /obj/item/borg/charger
 	name = "power connector"
@@ -325,6 +337,148 @@
 		playsound(get_turf(src), 'sound/machines/warning-buzzer.ogg', 130, 3)
 		cooldown = world.time + 600
 		log_game("[user.ckey]([user]) used an emagged Cyborg Harm Alarm in ([user.x],[user.y],[user.z])")
+
+/obj/item/borg/lollipop
+	name = "Lollipop Fabricator"
+	desc = "Reward good humans with this. Toggle in-module to switch between dispensing and high velocity ejection modes."
+	icon_state = "lollipop"
+	var/lollipops = 10
+	var/lollipopsmax = 10
+	var/gumballs = 15
+	var/gumballsmax = 15
+	var/charge_delay = 20
+	var/charging = 0
+	var/mode = 1
+	var/firedelay = 0
+	var/hitspeed = 2
+	var/hitdamage = 0
+	var/emaggedhitdamage = 5
+
+/obj/item/borg/lollipop/New()
+	..()
+	setchems(chems_default)
+
+/obj/item/borg/lollipop/proc/setchems(list/chems_new)
+	chems = chems_new
+
+/obj/item/borg/lollipop/equipped()
+	check_amount()
+
+/obj/item/borg/lollipop/dropped()
+	check_amount()
+
+/obj/item/borg/lollipop/proc/check_amount()	//Doesn't even use processing ticks.
+	var/L = 0
+	var/G = 0
+	if(lollipops < lollipopsmax)
+		L = 1
+	if(gumballs < gumballsmax)
+		G = 1
+	if(L || G)
+		addtimer(src, "charge_lollipops", lollipops_charge_delay, TIMER_NORMAL, L, G)
+		charging = 1
+
+/obj/item/borg/lollipop/proc/charge_lollipops(L, G)
+	lollipops += L
+	gumballs += G
+	charging = 0
+	check_amount()
+
+/obj/item/borg/lollipop/proc/generate(mob/user)
+	if(!lollipops)
+		user << "<span class='warning'>No lollipops left in storage!</span>"
+		return 0
+	var/obj/item/weapon/reagent_containers/food/snacks/lollipop/L = new /obj/item/weapon/reagent_containers/food/snacks/lollipop(src)
+	lollipops--
+	check_amount()
+	return L
+
+/obj/item/borg/lollipop/proc/dispense(obj/item/weapon/reagent_containers/food/snacks/lollipop/L, turf/T, mob/living/user)
+	if(!L)
+		return 0
+	L.forceMove(T)
+	user << "<span class='notice'>Dispensing lollipop...</span>"
+	playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
+	return L
+
+/obj/item/borg/lollipop/proc/throwL(obj/obj/item/weapon/reagent_containers/food/snacks/lollipop/L, turf/T, mob/living/user)
+	if(!(L && istype(L)))
+		return 0
+	L.forceMove(get_turf(user))
+	user << "<span class='notice'>Launching lollipop!</span>"
+	L.throw_at_fast(T, 10, hit_speed, user)
+	return 1
+
+/obj/item/borg/lollipop/proc/shootG(atom/target, mob/living/user)	//Most certainly a good idea.
+	if(!gumballs)
+		user << "<span class='warning'>Not enough gumballs left!</span>"
+		return 0
+	gumballs--
+	var/obj/item/ammo_casing/caseless/gumball/A = new /obj/item/ammo_casing/caseless/gumball(src)
+	var/obj/item/weapon/reagent_containers/food/snacks/gumball/G = new /obj/item/weapon/reagent_containers/food/snacks/gumball(A)
+	A.damage = hitdamage
+	A.speed = 0.5
+	A.G = G
+	A.fire_casing(target, user, params, 0, 0, null, 0)
+	A.color = G.color
+	user.visible_message("<span class='warning'>[user] shoots a high-velocity gumball at [target]!</span>")
+	check_amount()
+
+/obj/item/borg/lollipop/afterattack(atom/target, mob/living/user, proximity_flag)
+	if(isrobot(user))
+		var/mob/living/silicon/robot/R = user
+		if(R.emagged)
+			hitdamage = emaggedhitdamage
+	switch(mode)
+		if(1)
+			if(!proximity_flag)
+				return 0
+			dispense(generate(user), user)
+		if(2)
+			throwL(generate(user), get_turf(target), user)
+		if(3)
+			shootG(target, user)
+	hitdamage = initial(hitdamage)
+
+/obj/item/borg/lollipop/attack_self(mob/living/user)
+	switch(mode)
+		if(1)
+			mode++
+			user << "<span class='notice'>Module is now throwing lollipops.</span>"
+		if(2)
+			mode++
+			user << "<span class='notice'>Module is now blasting gumballs.</span>"
+		if(3)
+			mode = 1
+			user << "<span class='notice'>Module is now dispensing lollipops.</span>"
+	..()
+
+/obj/item/ammo_casing/caseless/gumball
+	name = "Gumball"
+	desc = "Why are you seeing this?!"
+	var/damage = 0
+	var/speed = 0.5
+	var/obj/item/weapon/reagent_containers/food/snacks/gumball/G = null
+	projectile_type = /obj/item/projectile/gumball
+
+/obj/item/ammo_casing/caseless/gumball/New()
+	..()
+	BB.damage = damage
+	BB.speed = speed
+	BB.G = G
+	BB.color = color
+
+/obj/item/projectile/gumball
+	name = "gumball"
+	desc = "Oh noes! A fast-moving gumball!"
+	icon_state = "gumball"
+	var/obj/item/weapon/reagent_containers/food/snacks/gumball/G = null
+
+/obj/item/projectile/gumball/Bump(atom/target, yes)
+	if(yes)
+		var/turf/T = get_turf(target)
+		G.loc = T
+	..()
 
 /**********************************************************************
 						HUD/SIGHT things
