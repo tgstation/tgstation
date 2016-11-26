@@ -235,10 +235,9 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 
 /obj/machinery/holopad/proc/move_hologram(mob/living/silicon/ai/user)
 	if(masters[user])
-		step_to(masters[user], user.eyeobj) // So it turns.
 		var/obj/effect/overlay/holo_pad_hologram/H = masters[user]
 		H.loc = get_turf(user.eyeobj)
-		masters[user] = H
+		H.setDir(user.eyeobj.dir)
 	return 1
 
 /obj/effect/overlay/holo_pad_hologram/Process_Spacemove(movement_dir = 0)
