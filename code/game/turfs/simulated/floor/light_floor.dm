@@ -9,7 +9,7 @@
 	var/state = 0//0 = fine, 1 = flickering, 2 = breaking, 3 = broken
 	var/list/coloredlights = list("g", "r", "y", "b", "p", "w", "s","o","g")
 	var/currentcolor = 1
-	var/can_modifiy_colour = TRUE
+	var/can_modify_colour = TRUE
 
 
 /turf/open/floor/light/New()
@@ -43,7 +43,7 @@
 	..()
 
 /turf/open/floor/light/attack_hand(mob/user)
-	if(!can_modifiy_colour)
+	if(!can_modify_colour)
 		return
 	if(!on)
 		on = 1
