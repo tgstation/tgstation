@@ -75,7 +75,7 @@
 										"<span class='notice'>You shake [M] trying to get \him up!</span>")
 					else if(user.zone_selected == "head")
 						user.visible_message("<span class='notice'>[user] boops [M] on the head playfully!</span>", \
-										"<span class='notice'>You playfully boop [M]!</span>")
+										"<span class='notice'>You playfully boop [M] on the head!</span>")
 						user.do_attack_animation(M, ATTACK_EFFECT_BOOP)
 					else
 						user.visible_message("<span class='notice'>[user] hugs [M] to make \him feel better!</span>", \
@@ -354,13 +354,6 @@
 	var/hitdamage = 0
 	var/emaggedhitdamage = 5
 
-/obj/item/borg/lollipop/New()
-	..()
-	setchems(chems_default)
-
-/obj/item/borg/lollipop/proc/setchems(list/chems_new)
-	chems = chems_new
-
 /obj/item/borg/lollipop/equipped()
 	check_amount()
 
@@ -368,6 +361,8 @@
 	check_amount()
 
 /obj/item/borg/lollipop/proc/check_amount()	//Doesn't even use processing ticks.
+	if(charging)
+		return
 	var/L = 0
 	var/G = 0
 	if(lollipops < lollipopsmax)
@@ -375,7 +370,7 @@
 	if(gumballs < gumballsmax)
 		G = 1
 	if(L || G)
-		addtimer(src, "charge_lollipops", lollipops_charge_delay, TIMER_NORMAL, L, G)
+		addtimer(src, "charge_lollipops", charge_delay, TIMER_NORMAL, L, G)
 		charging = 1
 
 /obj/item/borg/lollipop/proc/charge_lollipops(L, G)
@@ -384,60 +379,60 @@
 	charging = 0
 	check_amount()
 
-/obj/item/borg/lollipop/proc/generate(mob/user)
+/obj/item/borg/lollipop/proc/dispense(turf/T, mob/user)
 	if(!lollipops)
 		user << "<span class='warning'>No lollipops left in storage!</span>"
 		return 0
-	var/obj/item/weapon/reagent_containers/food/snacks/lollipop/L = new /obj/item/weapon/reagent_containers/food/snacks/lollipop(src)
+	new /obj/item/weapon/reagent_containers/food/snacks/lollipop(T)
 	lollipops--
 	check_amount()
-	return L
-
-/obj/item/borg/lollipop/proc/dispense(obj/item/weapon/reagent_containers/food/snacks/lollipop/L, turf/T, mob/living/user)
-	if(!L)
-		return 0
-	L.forceMove(T)
 	user << "<span class='notice'>Dispensing lollipop...</span>"
 	playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
-	return L
-
-/obj/item/borg/lollipop/proc/throwL(obj/obj/item/weapon/reagent_containers/food/snacks/lollipop/L, turf/T, mob/living/user)
-	if(!(L && istype(L)))
-		return 0
-	L.forceMove(get_turf(user))
-	user << "<span class='notice'>Launching lollipop!</span>"
-	L.throw_at_fast(T, 10, hit_speed, user)
 	return 1
 
-/obj/item/borg/lollipop/proc/shootG(atom/target, mob/living/user)	//Most certainly a good idea.
+/obj/item/borg/lollipop/proc/throwL(turf/T, mob/living/user)
+	if(!lollipops)
+		user << "<span class='warning'>No lollipops left in storage!</span>"
+		return 0
+	var/turf/spawnT = get_step(get_turf(user), get_dir(user, T))
+	var/obj/item/weapon/reagent_containers/food/snacks/lollipop/L = new /obj/item/weapon/reagent_containers/food/snacks/lollipop(spawnT)
+	lollipops--
+	check_amount()
+	user << "<span class='notice'>Launching lollipop!</span>"
+	playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
+	L.throw_speed = hitspeed
+	L.throwforce = hitdamage
+	L.throw_at_fast(T, 10, hitspeed, user)
+	check_amount()
+	return 1
+
+/obj/item/borg/lollipop/proc/shootG(atom/target, mob/living/user, params)	//Most certainly a good idea.
 	if(!gumballs)
 		user << "<span class='warning'>Not enough gumballs left!</span>"
 		return 0
 	gumballs--
 	var/obj/item/ammo_casing/caseless/gumball/A = new /obj/item/ammo_casing/caseless/gumball(src)
-	var/obj/item/weapon/reagent_containers/food/snacks/gumball/G = new /obj/item/weapon/reagent_containers/food/snacks/gumball(A)
-	A.damage = hitdamage
-	A.speed = 0.5
-	A.G = G
+	A.BB.damage = hitdamage
+	A.BB.speed = 0.5
+	A.BB.color = rgb(rand(0, 255), rand(0, 255), rand(0, 255))
 	A.fire_casing(target, user, params, 0, 0, null, 0)
-	A.color = G.color
 	user.visible_message("<span class='warning'>[user] shoots a high-velocity gumball at [target]!</span>")
 	check_amount()
 
-/obj/item/borg/lollipop/afterattack(atom/target, mob/living/user, proximity_flag)
-	if(isrobot(user))
+/obj/item/borg/lollipop/afterattack(atom/target, mob/living/user, proximity, click_params)
+	if(iscyborg(user))
 		var/mob/living/silicon/robot/R = user
 		if(R.emagged)
 			hitdamage = emaggedhitdamage
 	switch(mode)
 		if(1)
-			if(!proximity_flag)
+			if(!proximity)
 				return 0
-			dispense(generate(user), user)
+			dispense(get_turf(target), user)
 		if(2)
-			throwL(generate(user), get_turf(target), user)
+			throwL(get_turf(target), user)
 		if(3)
-			shootG(target, user)
+			shootG(target, user, click_params)
 	hitdamage = initial(hitdamage)
 
 /obj/item/borg/lollipop/attack_self(mob/living/user)
@@ -456,29 +451,23 @@
 /obj/item/ammo_casing/caseless/gumball
 	name = "Gumball"
 	desc = "Why are you seeing this?!"
-	var/damage = 0
-	var/speed = 0.5
-	var/obj/item/weapon/reagent_containers/food/snacks/gumball/G = null
-	projectile_type = /obj/item/projectile/gumball
+	projectile_type = /obj/item/projectile/bullet/reusable/gumball
+	click_cooldown_override = 2
 
-/obj/item/ammo_casing/caseless/gumball/New()
-	..()
-	BB.damage = damage
-	BB.speed = speed
-	BB.G = G
-	BB.color = color
 
-/obj/item/projectile/gumball
+/obj/item/projectile/bullet/reusable/gumball
 	name = "gumball"
 	desc = "Oh noes! A fast-moving gumball!"
 	icon_state = "gumball"
-	var/obj/item/weapon/reagent_containers/food/snacks/gumball/G = null
+	ammo_type = /obj/item/weapon/reagent_containers/food/snacks/gumball
 
-/obj/item/projectile/gumball/Bump(atom/target, yes)
-	if(yes)
-		var/turf/T = get_turf(target)
-		G.loc = T
-	..()
+/obj/item/projectile/bullet/reusable/gumball/handle_drop()
+	if(!dropped)
+		var/turf/T = get_turf(src)
+		var/obj/item/weapon/reagent_containers/food/snacks/gumball/S = new ammo_type(T)
+		S.color = color
+		dropped = 1
+
 
 /**********************************************************************
 						HUD/SIGHT things
