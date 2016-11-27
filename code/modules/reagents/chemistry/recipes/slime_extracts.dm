@@ -118,7 +118,7 @@
 	feedback_add_details("slime_cores_used","[type]")
 	var/turf/T = get_turf(holder.my_atom)
 	T.visible_message("<span class='danger'>The slime extract begins to vibrate violently !</span>")
-	addtimer(src, "chemical_mob_spawn", 50, FALSE, holder, 5, "Gold Slime")
+	addtimer(src, "chemical_mob_spawn", 50, TIMER_NORMAL, holder, 5, "Gold Slime")
 	spawn(60)
 	..()
 
@@ -133,7 +133,7 @@
 	feedback_add_details("slime_cores_used","[type]")
 	var/turf/T = get_turf(holder.my_atom)
 	T.visible_message("<span class='danger'>The slime extract begins to vibrate violently !</span>")
-	addtimer(src, "chemical_mob_spawn", 50, FALSE, holder, 3, "Lesser Gold Slime", "neutral")
+	addtimer(src, "chemical_mob_spawn", 50, TIMER_NORMAL, holder, 3, "Lesser Gold Slime", "neutral")
 	spawn(60)
 	..()
 
@@ -148,7 +148,7 @@
 	feedback_add_details("slime_cores_used","[type]")
 	var/turf/T = get_turf(holder.my_atom)
 	T.visible_message("<span class='danger'>The slime extract begins to vibrate adorably !</span>")
-	addtimer(src, "chemical_mob_spawn", 50, FALSE, holder, 1, "Friendly Gold Slime", "neutral")
+	addtimer(src, "chemical_mob_spawn", 50, TIMER_NORMAL, holder, 1, "Friendly Gold Slime", "neutral")
 	spawn(60)
 	..()
 
@@ -283,7 +283,7 @@
 	feedback_add_details("slime_cores_used","[type]")
 	var/turf/T = get_turf(holder.my_atom)
 	T.visible_message("<span class='danger'>The slime extract begins to vibrate adorably!</span>")
-	addtimer(src, "freeze", 50, FALSE, holder)
+	addtimer(src, "freeze", 50, TIMER_NORMAL, holder)
 	spawn(60)
 	..()
 
@@ -332,7 +332,7 @@
 	feedback_add_details("slime_cores_used","[type]")
 	var/turf/TU = get_turf(holder.my_atom)
 	TU.visible_message("<span class='danger'>The slime extract begins to vibrate adorably!</span>")
-	addtimer(src, "slime_burn", 50, FALSE, holder)
+	addtimer(src, "slime_burn", 50, TIMER_NORMAL, holder)
 	spawn(60)
 	..()
 
@@ -543,7 +543,7 @@
 	message_admins("Slime Explosion reaction started at <a href='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>[T.loc.name] (JMP)</a>. Last Fingerprint: [touch_msg]")
 	log_game("Slime Explosion reaction started at [T.loc.name] ([T.x],[T.y],[T.z]). Last Fingerprint: [lastkey ? lastkey : "N/A"].")
 	T.visible_message("<span class='danger'>The slime extract begins to vibrate violently !</span>")
-	addtimer(src, "boom", 50, FALSE, holder)
+	addtimer(src, "boom", 50, TIMER_NORMAL, holder)
 	spawn(60)
 	..()
 
