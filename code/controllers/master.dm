@@ -72,7 +72,7 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 	while(looping)
 		sleep(1)
 	for(var/datum/subsystem/ss in subsystems)
-		qdel(ss)
+		ss.Shutdown
 	..()
 	// Tell qdel() to Del() this object.
 	return QDEL_HINT_HARDDEL_NOW
