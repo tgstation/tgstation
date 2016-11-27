@@ -272,7 +272,7 @@
 		L.reagents.add_reagent("nutriment", 0.4)
 		L.reagents.add_reagent("vitamin", 0.4)
 
-/mob/living/simple_animal/pet/cat/ascendant // Now you silly admins can summon the Catlord's true form. Or turn me into it!
+/mob/living/simple_animal/pet/cat/ascendant
 	name = "Ascendant Cat"
 	desc = "It appears this cat has ascended to a godlike form. It'd be best to stay on it's good side."
 	health = 2000
