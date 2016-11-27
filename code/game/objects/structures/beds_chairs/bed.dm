@@ -104,6 +104,17 @@
 	icon_state = "folded"
 	w_class = 4 // Can't be put in backpacks.
 
+/obj/item/roller/attackby(obj/item/I, mob/living/user, params)
+	if(istype(I, /obj/item/roller/robo))
+		var/obj/item/roller/robo/R = I
+		if(R.loaded)
+			user << "<span class='warning'>[R] already has a roller bed loaded!</span>"
+			return
+		user.visible_message("<span class='notice'>[user] loads [src].</span>", "<span class='notice'>You load [src] into [R].</span>")
+		R.loaded = new/obj/structure/bed/roller(R)
+		qdel(src) //"Load"
+		return
+	else return ..()
 
 /obj/item/roller/attack_self(mob/user)
 	deploy_roller(user, user.loc)
