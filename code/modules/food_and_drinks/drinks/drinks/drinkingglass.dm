@@ -529,8 +529,8 @@
 	if(istype(I, /obj/item/weapon/pen))
 		var/txt = stripped_input(user, "What would you like to name this drink?", "Mixology", "", 30)
 		if(txt)
-			user << "<span class='notice'>You give the drink a new name.</span>"
-			name = "glass of [txt]"
+			user << "<span class='notice'>You give the drink a new name. Fancy!</span>"
+			name = "[txt]"
 			desc = "The bartender calls this [txt]. Wonder what's in it..."
 
 
