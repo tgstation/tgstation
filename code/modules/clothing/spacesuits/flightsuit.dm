@@ -329,10 +329,6 @@
 	if(!flight)
 		suit.slowdown = slowdown_ground
 		return
-	if(brake)
-		suit.slowdown = slowdown_brake
-	else if(boost)
-		suit.slowdown = -boost_speed
 	else
 		suit.slowdown = slowdown_air
 
@@ -429,7 +425,7 @@
 	wearer.adjustBruteLoss(userdamage)
 	usermessage("WARNING: Stabilizers taking damage!", 2)
 	wearer.visible_message(crashmessagesrc)
-	crash_damage = Clamp(crash_damage + 3, 0, crash_disable_threshold*1.5)
+	crash_damage = Clamp(crash_damage + crash_damage_high, 0, crash_disable_threshold*1.5)
 
 /obj/item/device/flightpack/proc/userknockback(density, anchored, speed, dir)
 	var/angle = dir2angle(dir)

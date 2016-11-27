@@ -863,42 +863,49 @@
 ////////////////
 
 /datum/species/proc/movement_delay(mob/living/carbon/human/H)
-	. = 0
-	var/obj/item/device/flightpack/F = H.get_flightpack()
+	. = 0	//We start at 0.
+	var/flight = 0	//Check for flight and flying items
 	var/flightpack = 0
+	var/ignoreslow = 0
+	var/gravity = 0
+	var/obj/item/device/flightpack/F = H.get_flightpack()
 	if(istype(F) && F.flight)
 		flightpack = 1
-	var/flight = 0
 	if(H.movement_type & FLYING)
 		flight = 1
 
-	if(!flightpack)
+	if(!flightpack)	//Check for chemicals and innate speedups and slowdowns if we're moving using our body and not a flying suit
 		if(H.status_flags & GOTTAGOFAST)
 			. -= 1
 		if(H.status_flags & GOTTAGOREALLYFAST)
 			. -= 2
+		. += speedmod
+	
+	if(H.status_flags & IGNORESLOWDOWN)
+		ignoreslow = 1
+	
+	if(H.has_gravity())
+		gravity = 1
 
-	if(!(H.status_flags & IGNORESLOWDOWN))
-		if(!H.has_gravity())
-			if((H.movement_type & FLYING) && !flightpack)	//No hyperstacking angel wings!
-				. += speedmod
-				return
-			// If there's no gravity we have the sanic speed of jetpack.
-			var/obj/item/weapon/tank/jetpack/J = H.back
-			var/obj/item/clothing/suit/space/hardsuit/C = H.wear_suit
-			if(!istype(J) && istype(C))
-				J = C.jetpack
+	if(!gravity)
+		var/obj/item/weapon/tank/jetpack/J = H.back
+		var/obj/item/clothing/suit/space/hardsuit/C = H.wear_suit
+		var/obj/item/organ/cyberimp/chest/thrusters/T = H.getorganslot("thrusters")
+		if(!istype(J) && istype(C))
+			J = C.jetpack
+		if(istype(J) && J.allow_thrust(0.01, H))	//Prevents stacking
+			. -= 2
+		else if(istype(T) && T.allow_thrust(0.01, H))
+			. -= 2
+		else if(flightpack && F.allow_thrust(0.01, src))
+			. -= 1
 
-			if(istype(J) && J.allow_thrust(0.01, H))
-				. -= 2
-			else
-				var/obj/item/organ/cyberimp/chest/thrusters/T = H.getorganslot("thrusters")
-				if(istype(T) && T.allow_thrust(0.01, H))
-					. -= 2
+	if(flightpack && F.boost)
+		. -= F.boost_speed
+	else if(flightpack && F.brake)
+		. += 2
 
-				else if(flightpack && F.allow_thrust(0.01, src))	//No jetpack/flightsuit hyperstacking!
-					. -= 1
-
+	if(!ignoreslow && !flightpack && gravity)
 		if(H.wear_suit)
 			. += H.wear_suit.slowdown
 		if(H.shoes)
@@ -908,24 +915,20 @@
 		for(var/obj/item/I in H.held_items)
 			if(I.flags & HANDSLOW)
 				. += I.slowdown
-		if(!(flightpack))
-			var/health_deficiency = (100 - H.health + H.staminaloss)
-			if(health_deficiency >= 40)
-				if(flight)
-					. += (health_deficiency / 75)
-				else
-					. += (health_deficiency / 25)
-
-			var/hungry = (500 - H.nutrition) / 5 // So overeat would be 100 and default level would be 80
-			if((hungry >= 70) && !flight)		//Being hungry won't stop you from using flightpack controls/flapping your wings although it probably will in the wing case but who cares.
-				. += hungry / 50
-
-			if((H.disabilities & FAT))
-				. += (1.5 - flight)
-			if(H.bodytemperature < BODYTEMP_COLD_DAMAGE_LIMIT)
-				. += (BODYTEMP_COLD_DAMAGE_LIMIT - H.bodytemperature) / COLD_SLOWDOWN_FACTOR
-
- 			. += speedmod
+		var/health_deficiency = (100 - H.health + H.staminaloss)
+		var/hungry = (500 - H.nutrition) / 5 // So overeat would be 100 and default level would be 80
+		if(health_deficiency >= 40)
+			if(flight)
+				. += (health_deficiency / 75)
+			else
+				. += (health_deficiency / 25)
+		if((hungry >= 70) && !flight)		//Being hungry won't stop you from using flightpack controls/flapping your wings although it probably will in the wing case but who cares.
+			. += hungry / 50
+		if(H.disabilities & FAT)
+			. += (1.5 - flight)
+		if(H.bodytemperature < BODYTEMP_COLD_DAMAGE_LIMIT)
+			. += (BODYTEMP_COLD_DAMAGE_LIMIT - H.bodytemperature) / COLD_SLOWDOWN_FACTOR
+	return .
 
 //////////////////
 // ATTACK PROCS //
