@@ -360,7 +360,7 @@
 	desc = "A colorful, sugary gumball."
 	icon = 'icons/obj/lollipop.dmi'
 	icon_state = "gumball"
-	list_reagents = list("sugar" = 5, "bicardine" = 2, "kelotene" = 2)	//Kek
+	list_reagents = list("sugar" = 5, "bicardine" = 2, "kelotane" = 2)	//Kek
 
 /obj/item/weapon/reagent_containers/food/snacks/gumball/New()
 	color = rgb(rand(0, 255), rand(0, 255), rand(0, 255))
