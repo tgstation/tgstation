@@ -18,7 +18,7 @@ var/highlander = FALSE
 
 	message_admins("<span class='adminnotice'>[key_name_admin(usr)] used THERE CAN BE ONLY ONE!</span>")
 	log_admin("[key_name(usr)] used THERE CAN BE ONLY ONE.")
-	addtimer(SSshuttle.emergency, "request", 50, FALSE, null, 1)
+	addtimer(SSshuttle.emergency, "request", 50, TIMER_NORMAL, null, 1)
 
 /mob/living/carbon/human/proc/make_scottish()
 	ticker.mode.traitors += mind

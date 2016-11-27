@@ -39,7 +39,7 @@ var/global/posibrain_notif_cooldown = 0
 		notify_ghosts("[name] [msg] in [get_area(src)]!", ghost_sound = !newlymade ? 'sound/effects/ghost2.ogg':null, enter_link = "<a href=?src=\ref[src];activate=1>(Click to enter)</a>", source = src, action = NOTIFY_ATTACK)
 		if(!newlymade)
 			posibrain_notif_cooldown = 1
-			addtimer(src, "reset_posibrain_cooldown", askDelay, FALSE)
+			addtimer(src, "reset_posibrain_cooldown", askDelay, TIMER_NORMAL)
 
 /obj/item/device/mmi/posibrain/proc/reset_posibrain_cooldown()
 	posibrain_notif_cooldown = 0

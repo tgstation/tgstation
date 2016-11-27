@@ -64,7 +64,7 @@
 	if(C.smoke_delay)
 		return 0
 	C.smoke_delay++
-	addtimer(src, "remove_smoke_delay", 10, FALSE, C)
+	addtimer(src, "remove_smoke_delay", 10, TIMER_NORMAL, C)
 	return 1
 
 /obj/effect/particle_effect/smoke/proc/remove_smoke_delay(mob/living/carbon/C)

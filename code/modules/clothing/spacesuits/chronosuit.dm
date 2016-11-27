@@ -147,12 +147,12 @@
 		user.Stun(INFINITY)
 
 		animate(user, color = "#00ccee", time = 3)
-		phase_timer_id = addtimer(src, "phase_2", 3, FALSE, user, to_turf, phase_in_ds)
+		phase_timer_id = addtimer(src, "phase_2", 3, TIMER_NORMAL, user, to_turf, phase_in_ds)
 
 /obj/item/clothing/suit/space/chronos/proc/phase_2(mob/living/carbon/human/user, turf/to_turf, phase_in_ds)
 	if(teleporting && activated && user)
 		animate(user, alpha = 0, time = 2)
-		phase_timer_id = addtimer(src, "phase_3", 2, FALSE, user, to_turf, phase_in_ds)
+		phase_timer_id = addtimer(src, "phase_3", 2, TIMER_NORMAL, user, to_turf, phase_in_ds)
 	else
 		finish_chronowalk(user, to_turf)
 
@@ -160,14 +160,14 @@
 	if(teleporting && activated && user)
 		user.forceMove(to_turf)
 		animate(user, alpha = 255, time = phase_in_ds)
-		phase_timer_id = addtimer(src, "phase_4", phase_in_ds, FALSE, user, to_turf)
+		phase_timer_id = addtimer(src, "phase_4", phase_in_ds, TIMER_NORMAL, user, to_turf)
 	else
 		finish_chronowalk(user, to_turf)
 
 /obj/item/clothing/suit/space/chronos/proc/phase_4(mob/living/carbon/human/user, turf/to_turf)
 	if(teleporting && activated && user)
 		animate(user, color = "#ffffff", time = 3)
-		phase_timer_id = addtimer(src, "finish_chronowalk", 3, FALSE, user, to_turf)
+		phase_timer_id = addtimer(src, "finish_chronowalk", 3, TIMER_NORMAL, user, to_turf)
 	else
 		finish_chronowalk(user, to_turf)
 

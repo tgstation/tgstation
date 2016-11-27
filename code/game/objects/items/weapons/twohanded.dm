@@ -254,7 +254,7 @@
 		impale(user)
 		return
 	if((wielded) && prob(50))
-		addtimer(src, "jedi_spin", 0, TRUE, user)
+		addtimer(src, "jedi_spin", 0, TIMER_UNIQUE, user)
 
 /obj/item/weapon/twohanded/dualsaber/proc/jedi_spin(mob/living/user)
 	for(var/i in list(1,2,4,8,4,2,1,2,4,8,4,2))
@@ -321,7 +321,7 @@
 	playsound(loc, hitsound, get_clamped_volume(), 1, -1)
 	add_fingerprint(user)
 	// Light your candles while spinning around the room
-	addtimer(src, "jedi_spin", 0, TRUE, user)
+	addtimer(src, "jedi_spin", 0, TIMER_UNIQUE, user)
 
 /obj/item/weapon/twohanded/dualsaber/green/New()
 	item_color = "green"

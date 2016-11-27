@@ -28,7 +28,7 @@
 	for(var/thing in thing_to_check)
 		if(droppable(thing))
 			. = 1
-			addtimer(src, "drop", 0, FALSE, thing)
+			addtimer(src, "drop", 0, TIMER_NORMAL, thing)
 
 /turf/open/chasm/proc/droppable(atom/movable/AM)
 	if(!isliving(AM) && !isobj(AM))

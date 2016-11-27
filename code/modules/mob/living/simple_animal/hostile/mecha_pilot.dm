@@ -231,13 +231,13 @@
 					if(mecha.defense_action && mecha.defense_action.owner && !mecha.defence_mode)
 						mecha.leg_overload_mode = 0
 						mecha.defense_action.Activate(TRUE)
-						addtimer(mecha.defense_action, "Activate", 100, FALSE, FALSE) //10 seconds of defence, then toggle off
+						addtimer(mecha.defense_action, "Activate", 100, TIMER_NORMAL, FALSE) //10 seconds of defence, then toggle off
 
 				else if(prob(retreat_chance))
 					//Speed boost if possible
 					if(mecha.overload_action && mecha.overload_action.owner && !mecha.leg_overload_mode)
 						mecha.overload_action.Activate(TRUE)
-						addtimer(mecha.overload_action, "Activate", 100, FALSE, FALSE) //10 seconds of speeeeed, then toggle off
+						addtimer(mecha.overload_action, "Activate", 100, TIMER_NORMAL, FALSE) //10 seconds of speeeeed, then toggle off
 
 					retreat_distance = 50
 					spawn(100)
