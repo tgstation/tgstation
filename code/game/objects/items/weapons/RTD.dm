@@ -26,6 +26,7 @@ EMAGGED FUNCTIONS - TODO
 	origin_tech = "engineering=5;materials=5"
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 100)
 	resistance_flags = FIRE_PROOF | ACID_PROOF
+	actions_types = list(/datum/action/item_action/rtd/gas,/datum/action/item_action/rtd/type,/datum/action/item_action/rtd/access)
 	var/datum/effect_system/spark_spread/spark_system
 	var/matter = 400
 	var/maxmatter = 400
@@ -93,10 +94,7 @@ EMAGGED FUNCTIONS - TODO
 	A.name = user.name
 	return (BRUTELOSS)
 
-/obj/item/weapon/rtd/verb/change_airlock_access()
-	set name = "Change Airlock Access"
-	set category = "Object"
-	set src in usr
+/obj/item/weapon/rtd/proc/change_airlock_access(mob/living/usr)
 	if (!ishuman(usr) && !usr.has_unlimited_silicon_privilege)
 		return ..(usr)
 	var/mob/living/carbon/human/H = usr
@@ -145,6 +143,14 @@ EMAGGED FUNCTIONS - TODO
 		toggle_access(href_list["access"])
 	change_airlock_access()
 
+/obj/item/weapon/rtd/ui_action_click(owner, action)
+	if(istype(action, /datum/action/item_action/rtd/gas))
+		toggle_gas_enrichment(owner)
+	if(istype(action, /datum/action/item_action/rtd/access))
+		change_airlock_access(owner)
+	if(istype(action, /datum/action/item_action/rtd/type))
+		change_airlock_setting(owner)
+
 /obj/item/weapon/rtd/proc/toggle_access(acc)
 	if (acc == "all")
 		conf_access = null
@@ -161,11 +167,7 @@ EMAGGED FUNCTIONS - TODO
 			if (!conf_access.len)
 				conf_access = null
 
-/obj/item/weapon/rtd/verb/toggle_gas_enrichment()
-	set name = "Change Gas Enrichment"
-	set category = "Object"
-	set src in usr
-
+/obj/item/weapon/rtd/proc/toggle_gas_enrichment(mob/living/usr)
 	usr << "Higher settings use more synthesized gas."
 	var/enrich = input(usr, "Select oxygen injection amount.") in list ("NONE", "Standard", "Slightly Enriched", "Highly Enriched", "Half-Half O2-N2", "75%", "Full O2")
 	switch(enrich)
@@ -198,11 +200,7 @@ EMAGGED FUNCTIONS - TODO
 			n2ratio = 0
 			gas_use = 2.5
 
-/obj/item/weapon/rtd/verb/change_airlock_setting()
-	set name = "Change Airlock Setting"
-	set category = "Object"
-	set src in usr
-
+/obj/item/weapon/rtd/proc/change_airlock_setting(mob/living/usr)
 	airlockcost = initial(airlockcost)
 	var airlockcat = input(usr, "Select whether the airlock is solid or glass.") in list("Solid", "Glass")
 	switch(airlockcat)
@@ -592,3 +590,18 @@ EMAGGED FUNCTIONS - TODO
 	if(!. && user)
 		user << no_ammo_message
 	return .
+
+/datum/action/item_action/rtd/access
+	name = "RTD: Set Airlock Access"
+	button_icon_state = "rcd_access"
+	background_icon_state = "bg_default"
+
+/datum/action/item_action/rtd/type
+	name = "RTD: Set Airlock Type"
+	button_icon_state = "rcd_type"
+	background_icon_state = "bg_default"
+
+/datum/action/item_action/rtd/gas
+	name = "RTD: Set O2 Concentration"
+	button_icon_state = "rtd_gas"
+	background_icon_state = "bg_default"
