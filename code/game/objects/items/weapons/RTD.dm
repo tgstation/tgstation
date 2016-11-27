@@ -41,6 +41,7 @@ EMAGGED FUNCTIONS - TODO
 	var/o2ratio = 0.2
 	var/n2ratio = 0.8
 	var/gas_use = 1
+	var/mob/living/user = null
 
 	var/advanced_airlock_setting = 1
 	var/sheetmultiplier	= 8
@@ -94,8 +95,11 @@ EMAGGED FUNCTIONS - TODO
 	A.name = user.name
 	return (BRUTELOSS)
 
-/obj/item/weapon/rtd/proc/change_airlock_access(mob/living/usr)
-	var/mob/living/carbon/human/H = usr
+/obj/item/weapon/rtd/proc/change_airlock_access(mob/living/L)
+	if(!L)
+		return 0
+	user = L
+	var/mob/living/carbon/human/H = L
 	if(H.getBrainLoss() >= 60)
 		return
 	var/t1 = text("")
@@ -124,24 +128,26 @@ EMAGGED FUNCTIONS - TODO
 	accesses += "</tr></table>"
 	t1 += "<tt>[accesses]</tt>"
 	t1 += text("<p><a href='?src=\ref[];close=1'>Close</a></p>\n", src)
-	var/datum/browser/popup = new(usr, "airlock_electronics", "Access Control", 900, 500)
+	var/datum/browser/popup = new(L, "airlock_electronics", "Access Control", 900, 500)
 	popup.set_content(t1)
-	popup.set_title_image(usr.browse_rsc_icon(src.icon, src.icon_state))
+	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 	popup.open()
-	onclose(usr, "airlock")
+	onclose(user, "airlock")
 
 /obj/item/weapon/rtd/Topic(href, href_list)
 	..()
-	if (usr.stat || usr.restrained())
+	if (user.stat || user.restrained())
 		return
 	if (href_list["close"])
-		usr << browse(null, "window=airlock")
+		user << browse(null, "window=airlock")
 		return
 	if (href_list["access"])
 		toggle_access(href_list["access"])
-	change_airlock_access()
+	change_airlock_access(user)
 
 /obj/item/weapon/rtd/ui_action_click(owner, action)
+	if(user != owner)
+		user = owner
 	if(istype(action, /datum/action/item_action/rtd/gas))
 		toggle_gas_enrichment(owner)
 	if(istype(action, /datum/action/item_action/rtd/access))
@@ -165,9 +171,9 @@ EMAGGED FUNCTIONS - TODO
 			if (!conf_access.len)
 				conf_access = null
 
-/obj/item/weapon/rtd/proc/toggle_gas_enrichment(mob/living/usr)
-	usr << "Higher settings use more synthesized gas."
-	var/enrich = input(usr, "Select oxygen injection amount.") in list ("NONE", "Standard", "Slightly Enriched", "Highly Enriched", "Half-Half O2-N2", "75%", "Full O2")
+/obj/item/weapon/rtd/proc/toggle_gas_enrichment(mob/living/L)
+	L << "Higher settings use more synthesized gas."
+	var/enrich = input(user, "Select oxygen injection amount.") in list ("NONE", "Standard", "Slightly Enriched", "Highly Enriched", "Half-Half O2-N2", "75%", "Full O2")
 	switch(enrich)
 		if("NONE")
 			o2ratio = 0
@@ -198,13 +204,13 @@ EMAGGED FUNCTIONS - TODO
 			n2ratio = 0
 			gas_use = 2.5
 
-/obj/item/weapon/rtd/proc/change_airlock_setting(mob/living/usr)
+/obj/item/weapon/rtd/proc/change_airlock_setting(mob/living/L)
 	airlockcost = initial(airlockcost)
-	var airlockcat = input(usr, "Select whether the airlock is solid or glass.") in list("Solid", "Glass")
+	var airlockcat = input(L, "Select whether the airlock is solid or glass.") in list("Solid", "Glass")
 	switch(airlockcat)
 		if("Solid")
 			if(advanced_airlock_setting == 1)
-				var airlockpaint = input(usr, "Select the paintjob of the airlock.") in list("Default", "Engineering", "Atmospherics", "Security", "Command", "Medical", "Research", "Mining", "Maintenance", "External", "High Security")
+				var airlockpaint = input(L, "Select the paintjob of the airlock.") in list("Default", "Engineering", "Atmospherics", "Security", "Command", "Medical", "Research", "Mining", "Maintenance", "External", "High Security")
 				switch(airlockpaint)
 					if("Default")
 						airlock_type = /obj/machinery/door/airlock
@@ -234,7 +240,7 @@ EMAGGED FUNCTIONS - TODO
 
 		if("Glass")
 			if(advanced_airlock_setting == 1)
-				var airlockpaint = input(usr, "Select the paintjob of the airlock.") in list("Default", "Engineering", "Atmospherics", "Security", "Command", "Medical", "Research", "Mining")
+				var airlockpaint = input(L, "Select the paintjob of the airlock.") in list("Default", "Engineering", "Atmospherics", "Security", "Command", "Medical", "Research", "Mining")
 				switch(airlockpaint)
 					if("Default")
 						airlock_type = /obj/machinery/door/airlock/glass
