@@ -842,7 +842,7 @@
 						if(!( H.hair_style == "Shaved") || !(H.hair_style == "Bald") || (HAIR in specflags))
 							H << "<span class='danger'>Your hair starts to \
 								fall out in clumps...<span>"
-							addtimer(src, "go_bald", 50, TRUE, H)
+							addtimer(src, "go_bald", 50, TIMER_UNIQUE, H)
 
 				if(75 to 100)
 					if(prob(1))

@@ -61,7 +61,7 @@
 	anchored = A.anchored
 	density = A.density
 	appearance = A.appearance
-	addtimer(src, "disable", 600, FALSE)
+	addtimer(src, "disable", 600, TIMER_NORMAL)
 
 /obj/guardian_bomb/proc/disable()
 	stored_obj.forceMove(get_turf(src))

@@ -67,7 +67,7 @@
 	playsound(src.loc, 'sound/machines/airlock_alien_prying.ogg', 100, 1)
 	A.audible_message("<span class='italics'>You hear a loud metallic grinding sound.</span>")
 
-	addtimer(src, "growl", 20, FALSE, user)
+	addtimer(src, "growl", 20, TIMER_NORMAL, user)
 
 	if(do_after(user, delay=160, needhand=FALSE, target=A, progress=TRUE))
 		playsound(src.loc, 'sound/hallucinations/far_noise.ogg', 50, 1)
