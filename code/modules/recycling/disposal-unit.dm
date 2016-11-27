@@ -112,7 +112,6 @@
 	user.visible_message("[user.name] places \the [I] into \the [src].", \
 						"<span class='notice'>You place \the [I] into \the [src].</span>")
 
-
 // mouse drop another mob or self
 
 /obj/machinery/disposal/MouseDrop_T(mob/living/target, mob/living/user)
@@ -171,7 +170,6 @@
 	update_icon()
 	return
 
-
 // monkeys and xenos can only pull the flush lever
 /obj/machinery/disposal/attack_paw(mob/user)
 	if(stat & BROKEN)
@@ -188,11 +186,6 @@
 	if(user && user.loc == src)
 		usr << "<span class='warning'>You cannot reach the controls from inside!</span>"
 		return
-	/*
-	if(mode==-1)
-		usr << "\red The disposal units power is disabled."
-		return
-	*/
 	interact(user, 0)
 
 // eject the contents of the disposal unit
@@ -239,7 +232,6 @@
 	update_icon()	// update icon
 	return
 
-
 // called when holder is expelled from a disposal
 // should usually only occur if the pipe network is modified
 /obj/machinery/disposal/proc/expel(obj/structure/disposalholder/H)
@@ -277,7 +269,6 @@
 		src_object.remove_from_storage(I, src)
 	return 1
 
-
 // Disposal bin
 // Holds items for disposal into pipe system
 // Draws air from turf, gradually charges internal reservoir
@@ -290,7 +281,7 @@
 	desc = "A pneumatic waste disposal unit."
 	icon_state = "disposal"
 
-	// attack by item places it in to disposal
+// attack by item places it in to disposal
 /obj/machinery/disposal/bin/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/storage/bag/trash))
 		var/obj/item/weapon/storage/bag/trash/T = I
@@ -302,73 +293,52 @@
 	else
 		return ..()
 
-// user interaction
-/obj/machinery/disposal/bin/interact(mob/user, ai=0)
-	src.add_fingerprint(user)
-	if(stat & BROKEN)
-		user.unset_machine()
-		return
-
-	var/dat = "<head><title>Waste Disposal Unit</title></head><body><TT><B>Waste Disposal Unit</B><HR>"
-
-	if(!ai)  // AI can't pull flush handle
-		if(flush)
-			dat += "Disposal handle: <A href='?src=\ref[src];handle=0'>Disengage</A> <B>Engaged</B>"
-		else
-			dat += "Disposal handle: <B>Disengaged</B> <A href='?src=\ref[src];handle=1'>Engage</A>"
-
-		dat += "<BR><HR><A href='?src=\ref[src];eject=1'>Eject contents</A><HR>"
-
-	if(mode <= 0)
-		dat += "Pump: <B>Off</B> <A href='?src=\ref[src];pump=1'>On</A><BR>"
-	else if(mode == 1)
-		dat += "Pump: <A href='?src=\ref[src];pump=0'>Off</A> <B>On</B> (pressurizing)<BR>"
-	else
-		dat += "Pump: <A href='?src=\ref[src];pump=0'>Off</A> <B>On</B> (idle)<BR>"
-
-	var/per = Clamp(100* air_contents.return_pressure() / (SEND_PRESSURE), 0, 100)
-
-	dat += "Pressure: [round(per, 1)]%<BR></body>"
-
-
-	user.set_machine(src)
-	user << browse(dat, "window=disposal;size=360x170")
-	onclose(user, "disposal")
-
 // handle machine interaction
 
-/obj/machinery/disposal/bin/Topic(href, href_list)
+/obj/machinery/disposal/bin/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
+									datum/tgui/master_ui = null, datum/ui_state/state = default_state)
+	if(stat & BROKEN)
+		return
+	if(user.loc == src)
+		user << "<span class='warning'>You cannot reach the controls from inside!</span>"
+		return
+	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+	if(!ui)
+		ui = new(user, src, ui_key, "disposal_unit", name, 300, 200, master_ui, state)
+		ui.open()
+
+/obj/machinery/disposal/bin/ui_data(mob/user)
+	var/list/data = list()
+	data["flush"] = flush
+	data["mode"] = mode
+	var/per = Clamp(100* air_contents.return_pressure() / (SEND_PRESSURE), 0, 100)
+	data["per"] = round(per, 1)
+	data["si"] = isAI(user)
+	return data
+
+/obj/machinery/disposal/bin/ui_act(action, params)
 	if(..())
 		return
-	if(usr.loc == src)
-		usr << "<span class='warning'>You cannot reach the controls from inside!</span>"
-		return
-
-	if(mode==-1 && !href_list["eject"]) // only allow ejecting if mode is -1
-		usr << "<span class='danger'>\The [src]'s power is disabled.</span>"
-		return
-	..()
-	usr.set_machine(src)
-
-	if(href_list["close"])
-		usr.unset_machine()
-		usr << browse(null, "window=disposal")
-		return
-
-	if(href_list["pump"])
-		if(text2num(href_list["pump"]))
-			mode = 1
-		else
+	switch(action)
+		if("handle-0")
+			flush = 0
+			update_icon()
+			. = TRUE
+		if("handle-1")
+			flush = 1
+			update_icon()
+			. = TRUE
+		if("pump-0")
 			mode = 0
-		update_icon()
-
-	if(href_list["handle"])
-		flush = text2num(href_list["handle"])
-		update_icon()
-
-	if(href_list["eject"])
-		eject()
-	return
+			update_icon()
+			. = TRUE
+		if("pump-1")
+			mode = 1
+			update_icon()
+			. = TRUE
+		if("eject")
+			eject()
+			. = TRUE
 
 /obj/machinery/disposal/bin/CanPass(atom/movable/mover, turf/target, height=0)
 	if (istype(mover,/obj/item) && mover.throwing)
@@ -415,7 +385,6 @@
 		add_overlay(image('icons/obj/atmospherics/pipes/disposal.dmi', "dispover-charge"))
 	else if(mode == 2)
 		add_overlay(image('icons/obj/atmospherics/pipes/disposal.dmi', "dispover-ready"))
-
 
 // timed process
 // charge the gas reservoir and perform flush if ready
@@ -472,7 +441,6 @@
 /obj/machinery/disposal/bin/get_remote_view_fullscreens(mob/user)
 	if(user.stat == DEAD || !(user.sight & (SEEOBJS|SEEMOBS)))
 		user.overlay_fullscreen("remote_view", /obj/screen/fullscreen/impaired, 2)
-
 
 //Delivery Chute
 
@@ -534,4 +502,3 @@
 
 /obj/machinery/disposal/deliveryChute/newHolderDestination(obj/structure/disposalholder/H)
 	H.destinationTag = 1
-

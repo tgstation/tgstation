@@ -82,9 +82,9 @@
 /datum/teleport/proc/playSpecials(atom/location,datum/effect_system/effect,sound)
 	if(location)
 		if(effect)
-			addtimer(src, "do_effect", 0, FALSE, location, effect)
+			addtimer(src, "do_effect", 0, TIMER_NORMAL, location, effect)
 		if(sound)
-			addtimer(src, "do_sound", 0, FALSE, location, sound)
+			addtimer(src, "do_sound", 0, TIMER_NORMAL, location, sound)
 
 /datum/teleport/proc/do_effect(atom/location, datum/effect_system/effect)
 	src = null

@@ -27,8 +27,6 @@
 	var/on = 1
 
 /obj/machinery/embedded_controller/interact(mob/user)
-	//user << browse(return_text(), "window=computer")
-	//onclose(user, "computer")
 	user.set_machine(src)
 	var/datum/browser/popup = new(user, "computer", name) // Set up the popup browser window
 	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))

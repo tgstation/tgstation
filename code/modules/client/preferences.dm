@@ -450,7 +450,6 @@ var/list/preferences_datums = list()
 	dat += "<a href='?_src_=prefs;preference=reset_all'>Reset Setup</a>"
 	dat += "</center>"
 
-	//user << browse(dat, "window=preferences;size=560x560")
 	var/datum/browser/popup = new(user, "preferences", "<div align='center'>Character Setup</div>", 640, 750)
 	popup.set_content(dat)
 	popup.open(0)
@@ -577,7 +576,6 @@ var/list/preferences_datums = list()
 		HTML += "<center><a href='?_src_=prefs;preference=job;task=reset'>Reset Preferences</a></center>"
 
 	user << browse(null, "window=preferences")
-	//user << browse(HTML, "window=mob_occupation;size=[width]x[height]")
 	var/datum/browser/popup = new(user, "mob_occupation", "<div align='center'>Occupation Preferences</div>", width, height)
 	popup.set_window_options("can_close=0")
 	popup.set_content(HTML)

@@ -166,7 +166,7 @@
 	return ..()
 
 /obj/machinery/mineral/equipment_vendor/proc/RedeemVoucher(obj/item/weapon/mining_voucher/voucher, mob/redeemer)
-	var/items = list("Survival Capsule and Explorer's Webbing", "Resonator and Advanced Scanner", "Mining Drone", "Extraction and Rescue Kit", "Crusher Kit")
+	var/items = list("Survival Capsule and Explorer's Webbing", "Resonator and Advanced Scanner", "Mining Drone", "Extraction and Rescue Kit", "Crusher Kit", "Mining Conscription Kit")
 
 	var/selection = input(redeemer, "Pick your equipment", "Mining Voucher Redemption") as null|anything in items
 	if(!selection || !Adjacent(redeemer) || qdeleted(voucher) || voucher.loc != redeemer)
@@ -187,6 +187,8 @@
 			new /obj/item/weapon/twohanded/required/mining_hammer(loc)
 			new /obj/item/weapon/storage/belt/mining/alt(loc)
 			new /obj/item/weapon/extinguisher/mini(loc)
+		if("Mining Conscription Kit")
+			new /obj/item/weapon/storage/backpack/dufflebag/mining_conscript(loc)
 
 	feedback_add_details("mining_voucher_redeemed", selection)
 	qdel(voucher)
@@ -260,3 +262,35 @@
 /obj/item/weapon/card/mining_point_card/examine(mob/user)
 	..()
 	user << "There's [points] point\s on the card."
+
+///Conscript kit
+/obj/item/weapon/card/mining_access_card
+	name = "mining access card"
+	desc = "A small card, that when used on any ID, will add mining access."
+	icon_state = "data"
+
+/obj/item/weapon/card/mining_access_card/afterattack(atom/movable/AM, mob/user, proximity)
+	if(istype(AM, /obj/item/weapon/card/id) && proximity)
+		var/obj/item/weapon/card/id/I = AM
+		I.access |=	access_mining
+		I.access |= access_mining_station
+		I.access |= access_mineral_storeroom
+		I.access |= access_cargo
+		user  << "You upgrade [I] with mining access."
+		qdel(src)
+	..()
+
+/obj/item/weapon/storage/backpack/dufflebag/mining_conscript
+	name = "mining conscription kit"
+	desc = "A kit containing everything a crewmember needs to support a shaft miner in the field."
+
+/obj/item/weapon/storage/backpack/dufflebag/mining_conscript/New()
+	..()
+	new /obj/item/weapon/pickaxe/mini(src)
+	new /obj/item/clothing/glasses/meson(src)
+	new /obj/item/device/t_scanner/adv_mining_scanner/lesser(src)
+	new /obj/item/weapon/storage/bag/ore(src)
+	new /obj/item/clothing/suit/hooded/explorer(src)
+	new /obj/item/device/encryptionkey/headset_cargo(src)
+	new /obj/item/clothing/mask/gas/explorer(src)
+	new /obj/item/weapon/card/mining_access_card(src)

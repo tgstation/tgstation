@@ -422,9 +422,6 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 		var/dat2 = src.interact_ai(user) // give the AI a different interact proc to limit its access
 		if(dat2)
 			dat +=  dat2
-			//user << browse(dat, "window=communications;size=400x500")
-			//onclose(user, "communications")
-
 			popup.set_content(dat)
 			popup.open()
 		return

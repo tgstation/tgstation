@@ -150,7 +150,6 @@
 /turf/open/floor/engine/cult/airless
 	initial_gas_mix = "TEMP=2.7"
 
-
 /turf/open/floor/engine/vacuum
 	name = "vacuum floor"
 	initial_gas_mix = "TEMP=2.7"

@@ -3,6 +3,7 @@
 /turf/open/floor/plating/lava
 	name = "lava"
 	icon_state = "lava"
+	gender = PLURAL //"That's some lava."
 	baseturf = /turf/open/floor/plating/lava //lava all the way down
 	slowdown = 2
 	luminosity = 1
@@ -55,10 +56,11 @@
 				O.armor["fire"] = 50
 			O.fire_act(10000, 1000)
 
-
 		else if (isliving(thing))
 			. = 1
 			var/mob/living/L = thing
+			if(L.movement_type & FLYING)
+				continue	//YOU'RE FLYING OVER IT
 			if("lava" in L.weather_immunities)
 				continue
 			if(L.buckled)
