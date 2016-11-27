@@ -19,10 +19,6 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 /datum/controller/master
 	name = "Master"
 
-	// Are we running?
-	var/running = TRUE
-	// Is the MC in the loop
-	var/looping = FALSE
 	// Are we processing (higher values increase the processing delay by n ticks)
 	var/processing = 1
 	// How many times have we ran
@@ -77,7 +73,7 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 	while(looping)
 		sleep(1)
 	for(var/datum/subsystem/ss in subsystems)
-		ss.Shutdown
+		ss.Shutdown()
 	..()
 
 // Returns 1 if we created a new mc, 0 if we couldn't due to a recent restart,
@@ -114,7 +110,6 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 				else
 					msg += "\t [varname] = [varval]\n"
 	world.log << msg
-	running = TRUE
 	if (istype(Master.subsystems))
 		subsystems = Master.subsystems
 		spawn (10)
@@ -238,8 +233,7 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 	var/sleep_delta = 0
 	var/list/subsystems_to_check
 	//the actual loop.
-	looping = TRUE
-	while (running)
+	while (TRUE)
 		tickdrift = max(0, MC_AVERAGE_FAST(tickdrift, (((world.timeofday - init_timeofday) - (world.time - init_time)) / world.tick_lag)))
 		if (processing <= 0)
 			sleep(10)
@@ -299,9 +293,6 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 		last_run = world.time
 		src.sleep_delta = MC_AVERAGE_FAST(src.sleep_delta, sleep_delta)
 		sleep(world.tick_lag * (processing + sleep_delta))
-	world.log << "MC: Stopped running"
-	looping = FALSE
-	return TRUE
 
 // This is what decides if something should run.
 /datum/controller/master/proc/CheckQueue(list/subsystemstocheck)
