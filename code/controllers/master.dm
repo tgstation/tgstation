@@ -67,6 +67,11 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 		Master = src
 
 /datum/controller/master/Destroy()
+	..()
+	// Tell qdel() to Del() this object.
+	return QDEL_HINT_HARDDEL_NOW
+
+/datum/controller/master/proc/Shutdown()
 	running = FALSE
 	//Give the loop thread some shutdown time
 	while(looping)
@@ -74,8 +79,6 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 	for(var/datum/subsystem/ss in subsystems)
 		ss.Shutdown
 	..()
-	// Tell qdel() to Del() this object.
-	return QDEL_HINT_HARDDEL_NOW
 
 // Returns 1 if we created a new mc, 0 if we couldn't due to a recent restart,
 //	-1 if we encountered a runtime trying to recreate it
