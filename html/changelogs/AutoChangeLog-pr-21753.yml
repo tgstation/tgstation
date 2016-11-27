@@ -1,5 +1,0 @@
-author: "Joan"
-delete-after: True
-changes: 
-  - rscadd: "You can now quickbind up to 5 scriptures from the recital menu, and the recital menu has less empty space."
-  - tweak: "Clockwork slabs now only start with only Geis pre-bound."
