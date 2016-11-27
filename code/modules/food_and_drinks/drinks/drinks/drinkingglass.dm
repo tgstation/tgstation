@@ -508,6 +508,10 @@
 				icon_state = "triplecitrus" //needs own sprite mine are trash
 				name = "glass of triple citrus"
 				desc = "A mixture of citrus juices. Tangy, yet smooth."
+			if("grappa")
+				icon_state = "grappa"
+				name = "glass of grappa"
+				desc = "A fine drink originally made to prevent waste by using the leftovers from winemaking."
 			else
 				icon_state ="glass_brown"
 				var/image/I = image(icon, "glassoverlay")

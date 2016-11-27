@@ -27,6 +27,7 @@
 #define EASTER					"Easter"
 #define HALLOWEEN				"Halloween"
 #define CHRISTMAS				"Christmas"
+#define FESTIVE_SEASON			"Festive Season"
 #define FRIDAY_13TH				"Friday the 13th"
 
 //Human Overlays Indexes/////////
@@ -585,3 +586,8 @@ var/global/list/ghost_others_options = list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 #define CLOCK_SUMMON 21
 #define CLOCK_SILICONS 22
 #define CLOCK_PROSELYTIZATION 23
+
+//For SSTimer
+
+#define TIMER_NORMAL "normal"
+#define TIMER_UNIQUE "unique"

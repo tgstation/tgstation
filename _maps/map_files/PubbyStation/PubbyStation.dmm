@@ -23982,6 +23982,7 @@
 	dir = 8;
 	initialize_directions = 11
 	},
+/obj/effect/landmark/xmastree,
 /turf/open/floor/carpet{
 	icon_state = "carpetsymbol"
 	},
@@ -54593,10 +54594,46 @@
 /area/chapel/main{
 	name = "Monastery"
 	})
-"chr" = (
-/obj/item/weapon/storage/toolbox/mechanical,
-/turf/open/floor/plating,
-/area/maintenance/aft)
+"chk" = (
+/obj/structure/closet/firecloset,
+/obj/effect/decal/cleanable/cobweb,
+/turf/open/floor/plating{
+	icon_state = "platingdmg3"
+	},
+/area/maintenance/fsmaint)
+"chl" = (
+/obj/structure/grille/broken,
+/turf/open/floor/plating{
+	icon_state = "platingdmg3"
+	},
+/area/maintenance/fsmaint)
+"chm" = (
+/obj/machinery/atmospherics/pipe/simple/cyan/hidden,
+/obj/structure/disposalpipe/segment{
+	dir = 2;
+	icon_state = "pipe-c"
+	},
+/turf/open/floor/plasteel/showroomfloor,
+/area/security/warden)
+"chn" = (
+/obj/machinery/atmospherics/pipe/simple/cyan/hidden,
+/obj/structure/disposalpipe/segment{
+	dir = 1;
+	icon_state = "pipe-c"
+	},
+/turf/open/floor/plasteel,
+/area/security/brig)
+"cho" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/security/brig)
+"chp" = (
+/obj/machinery/holopad,
+/turf/open/floor/plasteel,
+/area/quartermaster/miningdock)
 "chq" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -54607,46 +54644,10 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
-"chp" = (
-/obj/machinery/holopad,
-/turf/open/floor/plasteel,
-/area/quartermaster/miningdock)
-"cho" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/security/brig)
-"chn" = (
-/obj/machinery/atmospherics/pipe/simple/cyan/hidden,
-/obj/structure/disposalpipe/segment{
-	dir = 1;
-	icon_state = "pipe-c"
-	},
-/turf/open/floor/plasteel,
-/area/security/brig)
-"chm" = (
-/obj/machinery/atmospherics/pipe/simple/cyan/hidden,
-/obj/structure/disposalpipe/segment{
-	dir = 2;
-	icon_state = "pipe-c"
-	},
-/turf/open/floor/plasteel/showroomfloor,
-/area/security/warden)
-"chl" = (
-/obj/structure/grille/broken,
-/turf/open/floor/plating{
-	icon_state = "platingdmg3"
-	},
-/area/maintenance/fsmaint)
-"chk" = (
-/obj/structure/closet/firecloset,
-/obj/effect/decal/cleanable/cobweb,
-/turf/open/floor/plating{
-	icon_state = "platingdmg3"
-	},
-/area/maintenance/fsmaint)
+"chr" = (
+/obj/item/weapon/storage/toolbox/mechanical,
+/turf/open/floor/plating,
+/area/maintenance/aft)
 
 (1,1,1) = {"
 aaa

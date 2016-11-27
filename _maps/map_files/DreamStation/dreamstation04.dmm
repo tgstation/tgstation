@@ -71623,14 +71623,9 @@
 /turf/open/floor/plating,
 /area/maintenance/asmaint2)
 "cMe" = (
-/obj/effect/spawner/lootdrop{
-	loot = list(/obj/item/stack/sheet/metal = 1, /obj/item/stack/rods = 2, /obj/item/weapon/shard = 2, "" = 3);
-	lootcount = 2;
-	name = "random material damage spawner"
-	},
-/mob/living/simple_animal/mouse,
-/turf/open/floor/plating,
-/area/maintenance/asmaint2)
+/obj/effect/landmark/xmastree,
+/turf/open/floor/plasteel/bar,
+/area/crew_quarters/bar)
 "cMf" = (
 /obj/item/clothing/suit/bio_suit/plaguedoctorsuit,
 /obj/item/clothing/head/plaguedoctorhat,
@@ -71765,12 +71760,9 @@
 /turf/open/floor/plating,
 /area/maintenance/asmaint2)
 "cMu" = (
-/mob/living/simple_animal/mouse,
-/turf/open/floor/plating{
-	broken = 1;
-	icon_state = "platingdmg2"
-	},
-/area/maintenance/asmaint2)
+/obj/effect/landmark/xmastree,
+/turf/open/floor/carpet,
+/area/chapel/main)
 "cMv" = (
 /obj/structure/girder,
 /turf/open/floor/plating/airless,
@@ -90071,7 +90063,7 @@ bZI
 cba
 cfd
 cgN
-cgN
+cMu
 cfd
 clO
 bZI
@@ -101359,7 +101351,7 @@ bsV
 bvb
 bor
 bsV
-bor
+cMe
 bor
 bEP
 bsV

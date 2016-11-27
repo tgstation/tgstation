@@ -13426,6 +13426,7 @@
 	},
 /area/maintenance/fore)
 "azr" = (
+/obj/effect/landmark/xmastree/rdrod,
 /turf/open/floor/plasteel/warnwhite{
 	dir = 10
 	},
@@ -55555,11 +55556,11 @@
 /turf/open/floor/plating,
 /area/shuttle/pod_2)
 "chK" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall_s9";
-	dir = 2
-	},
-/area/shuttle/pod_2)
+/obj/effect/landmark/xmastree,
+/turf/open/floor/plasteel/bar,
+/area/crew_quarters/bar{
+	name = "\improper Maltese Falcon"
+	})
 "chL" = (
 /obj/machinery/light{
 	dir = 8
@@ -55805,12 +55806,9 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "cip" = (
-/obj/machinery/status_display,
-/turf/closed/wall/shuttle{
-	icon_state = "swall2";
-	dir = 2
-	},
-/area/shuttle/escape)
+/obj/effect/landmark/xmastree,
+/turf/open/floor/carpet,
+/area/chapel/main)
 "ciq" = (
 /obj/structure/chair,
 /turf/open/floor/mineral/titanium/blue,
@@ -81055,7 +81053,7 @@ bMD
 bNT
 bPd
 bQu
-bQu
+cip
 bQu
 bQu
 bQu
@@ -91042,7 +91040,7 @@ aWO
 aWM
 aWM
 aWM
-aWM
+chK
 aWM
 bcu
 bdy
