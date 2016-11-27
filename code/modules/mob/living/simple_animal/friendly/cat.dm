@@ -348,5 +348,5 @@
 /mob/living/simple_animal/pet/cat/ascendant/can_hold_items()
 	return TRUE
 
-/mob/living/simple_animal/pet/cat/ascendant/proc/canUseHUD()
+/mob/living/simple_animal/pet/cat/ascendant/proc/canUseHUD() 
 	return TRUE
