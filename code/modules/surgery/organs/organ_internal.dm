@@ -575,22 +575,49 @@
 
 /obj/item/organ/tongue/abductor/TongueSpeech(var/message)
 	//Hacks
+	. = ""
 	var/mob/living/carbon/human/user = usr
 	var/rendered = "<span class='abductor'><b>[user.name]:</b> [message]</span>"
-	for(var/mob/living/carbon/human/H in living_mob_list)
-		var/obj/item/organ/tongue/T = H.getorganslot("tongue")
-		if(!T || T.type != type)
-			continue
-		else if(H.dna && H.dna.species.id == "abductor" && user.dna && user.dna.species.id == "abductor")
-			var/datum/species/abductor/Ayy = user.dna.species
-			var/datum/species/abductor/Byy = H.dna.species
-			if(Ayy.team != Byy.team)
+
+	// Ayy tongues have two modes, when they're part of a "team", or not.
+	var/team = 0
+	var/datum/species/abductor/Ayy
+
+	if(isabductor(user))
+		Ayy = user.dna.species
+		team = Ayy.team
+
+
+	// Team mode is a private universal chat between all team members, with no range
+	if(team)
+		for(var/mob/living/carbon/human/H in living_mob_list)
+			var/obj/item/organ/tongue/T = H.getorganslot("tongue")
+			if(!T || T.type != type)
 				continue
-		H << rendered
-	for(var/mob/M in dead_mob_list)
-		var/link = FOLLOW_LINK(M, user)
-		M << "[link] [rendered]"
-	return ""
+			else if(isabductor(H))
+				var/datum/species/abductor/Byy = H.dna.species
+				if(team == Byy.team)
+					H << rendered
+		for(var/mob/M in dead_mob_list)
+			var/link = FOLLOW_LINK(M, user)
+			M << "[link] [rendered]"
+	// Independent mode speaks to anyone the user can see (and ghosts that can see the user)
+	else
+		user << rendered
+		var/spoken_to = list()
+		for(var/mob/living/L in view(src, 7))
+			L << rendered
+			spoken_to += L
+
+		var/can_see = viewers(7, src)
+
+		for(var/mob/M in dead_mob_list)
+			if(M in spoken_to)
+				continue
+			if(!(M in can_see))
+				continue
+			var/link = FOLLOW_LINK(M, user)
+			M << "[link] [rendered]"
 
 /obj/item/organ/tongue/zombie
 	name = "rotting tongue"
