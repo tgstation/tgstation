@@ -12,10 +12,10 @@
 			CMP subsequently gained. Be vigilant for any large organisms rapidly spreading across the station, as they are classified as a level 5 biohazard and critically dangerous. Note that \
 			this organism seems to be weak to extreme heat; concentrated fire (such as welding tools and lasers) will be effective against it."
 		if("changeling")
-			text += "The Gorlex Marauders have announced the successful raid and destruction of Central Command containment ship #S-[rand(1111, 9999)]. This ship housed only a single prisoner - \
-			codenamed \"Thing\", and it was highly adaptive and extremely dangerous. We have reason to believe that the Thing has allied with the Syndicate, and you should note that likelihood \
-			of the Thing being sent to a station in this sector is highly likely. It may be in the guise of any crew member. Trust nobody - suspect everybody. Do not announce this to the crew, \
-			as paranoia may spread and inhibit workplace efficiency."
+			text += ""A follow up on the investigation of a derelict ship from the age of Orion found unreported corpses. Though they were dressed in the crew's clothing; carbon dating and bone-structure \
+            		analysis has revealed them to be the investigative team. By the time this was discovere all elements of the team had already been transferred.  Records dating from this time period indicate the \
+            		work of hostile aliens that can mimic carbon life forms to the genetic level, referred to as "changelings". They are psychic, can impersonate anyone, and are extremely dangerous in close \
+            		combat. Central Command has ordered that these creatures be incinerated if they can not be contained. None of the investigative crew had security implants, crew with these are free of suspicion."
 		if("clock_cult")
 			text += "We have lost contact with multiple stations in your sector. They have gone dark and do not respond to all transmissions, although they appear intact and the crew's life \
 			signs remain uninterrupted. Those that have managed to send a transmission or have had some of their crew escape tell tales of a machine cult creating sapient automatons and seeking \
