@@ -70,7 +70,6 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 /datum/controller/master/proc/Shutdown()
 	for(var/datum/subsystem/ss in subsystems)
 		ss.Shutdown()
-	..()
 
 // Returns 1 if we created a new mc, 0 if we couldn't due to a recent restart,
 //	-1 if we encountered a runtime trying to recreate it
@@ -229,7 +228,7 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 	var/sleep_delta = 0
 	var/list/subsystems_to_check
 	//the actual loop.
-	while (TRUE)
+	while (1)
 		tickdrift = max(0, MC_AVERAGE_FAST(tickdrift, (((world.timeofday - init_timeofday) - (world.time - init_time)) / world.tick_lag)))
 		if (processing <= 0)
 			sleep(10)
@@ -289,6 +288,9 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 		last_run = world.time
 		src.sleep_delta = MC_AVERAGE_FAST(src.sleep_delta, sleep_delta)
 		sleep(world.tick_lag * (processing + sleep_delta))
+
+
+
 
 // This is what decides if something should run.
 /datum/controller/master/proc/CheckQueue(list/subsystemstocheck)

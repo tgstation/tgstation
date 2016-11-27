@@ -544,43 +544,104 @@ var/list/airlock_overlays = list()
 
 	//Separate interface for the AI.
 	user.set_machine(src)
-	ui_interact(user)
+	var/t1 = text("<B>Airlock Control</B><br>\n")
+	if(src.secondsMainPowerLost > 0)
+		if(!wires.is_cut(WIRE_POWER1) && !wires.is_cut(WIRE_POWER2))
+			t1 += text("Main power is offline for [] seconds.<br>\n", src.secondsMainPowerLost)
+		else
+			t1 += text("Main power is offline indefinitely.<br>\n")
+	else
+		t1 += text("Main power is online.")
 
-/obj/machinery/door/airlock/ui_interact(mob/user, ui_key = "ai_airlockk", datum/tgui/ui = null, force_open = 0, \
-									datum/tgui/master_ui = null, datum/ui_state/state = default_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
-	if(!ui)
-		ui = new(user, src, ui_key, "ai_airlock", name, 500, 500, master_ui, state)
-		ui.open()
+	if(src.secondsBackupPowerLost > 0)
+		if(!wires.is_cut(WIRE_BACKUP1) && !wires.is_cut(WIRE_BACKUP2))
+			t1 += text("Backup power is offline for [] seconds.<br>\n", src.secondsBackupPowerLost)
+		else
+			t1 += text("Backup power is offline indefinitely.<br>\n")
+	else if(src.secondsMainPowerLost > 0)
+		t1 += text("Backup power is online.")
+	else
+		t1 += text("Backup power is offline, but will turn on if main power fails.")
+	t1 += "<br>\n"
 
-/obj/machinery/door/airlock/ui_act(action, params)
-	return
+	if(wires.is_cut(WIRE_IDSCAN))
+		t1 += text("IdScan wire is cut.<br>\n")
+	else if(src.aiDisabledIdScanner)
+		t1 += text("IdScan disabled. <A href='?src=\ref[];aiEnable=1'>Enable?</a><br>\n", src)
+	else
+		t1 += text("IdScan enabled. <A href='?src=\ref[];aiDisable=1'>Disable?</a><br>\n", src)
 
-/obj/machinery/door/airlock/ui_data(mob/user)
-	var/list/data = list()
-	data["mrepower_time"] = secondsMainPowerLost
-	data["mpowered"] = !wires.is_cut(WIRE_POWER1) && !wires.is_cut(WIRE_POWER2)
+	if(src.emergency)
+		t1 += text("Emergency Access Override is enabled. <A href='?src=\ref[];aiDisable=11'>Disable?</a><br>\n", src)
+	else
+		t1 += text("Emergency Access Override is disabled. <A href='?src=\ref[];aiEnable=11'>Enable?</a><br>\n", src)
 
-	data["brepower_time"] = secondsBackupPowerLost
-	data["bpowered"] = !wires.is_cut(WIRE_BACKUP1) && !wires.is_cut(WIRE_BACKUP2)
+	if(wires.is_cut(WIRE_POWER1))
+		t1 += text("Main Power Input wire is cut.<br>\n")
+	if(wires.is_cut(WIRE_POWER2))
+		t1 += text("Main Power Output wire is cut.<br>\n")
+	if(src.secondsMainPowerLost == 0)
+		t1 += text("<A href='?src=\ref[];aiDisable=2'>Temporarily disrupt main power?</a>.<br>\n", src)
+	if(src.secondsBackupPowerLost == 0)
+		t1 += text("<A href='?src=\ref[];aiDisable=3'>Temporarily disrupt backup power?</a>.<br>\n", src)
 
-	data["idscan_wire"] = !wires.is_cut(WIRE_IDSCAN)
-	data["idscan_disabled"] = aiDisabledIdScanner
+	if(wires.is_cut(WIRE_BACKUP1))
+		t1 += text("Backup Power Input wire is cut.<br>\n")
+	if(wires.is_cut(WIRE_BACKUP2))
+		t1 += text("Backup Power Output wire is cut.<br>\n")
 
-	data["emergency"] = emergency
+	if(wires.is_cut(WIRE_BOLTS))
+		t1 += text("Door bolt drop wire is cut.<br>\n")
+	else if(!src.locked)
+		t1 += text("Door bolts are up. <A href='?src=\ref[];aiDisable=4'>Drop them?</a><br>\n", src)
+	else
+		t1 += text("Door bolts are down.")
+		if(src.hasPower())
+			t1 += text(" <A href='?src=\ref[];aiEnable=4'>Raise?</a><br>\n", src)
+		else
+			t1 += text(" Cannot raise door bolts due to power failure.<br>\n")
 
-	data["bolt_wire"] = !wires.is_cut(WIRE_BOLTS)
-	data["bolts"] = locked
+	if(wires.is_cut(WIRE_LIGHT))
+		t1 += text("Door bolt lights wire is cut.<br>\n")
+	else if(!src.lights)
+		t1 += text("Door bolt lights are off. <A href='?src=\ref[];aiEnable=10'>Enable?</a><br>\n", src)
+	else
+		t1 += text("Door bolt lights are on. <A href='?src=\ref[];aiDisable=10'>Disable?</a><br>\n", src)
 
-	data["lights_wire"] = !wires.is_cut(WIRE_LIGHT)
-	data["lights"] = lights
+	if(wires.is_cut(WIRE_SHOCK))
+		t1 += text("Electrification wire is cut.<br>\n")
+	if(src.secondsElectrified==-1)
+		t1 += text("Door is electrified indefinitely. <A href='?src=\ref[];aiDisable=5'>Un-electrify it?</a><br>\n", src)
+	else if(src.secondsElectrified>0)
+		t1 += text("Door is electrified temporarily ([] seconds). <A href='?src=\ref[];aiDisable=5'>Un-electrify it?</a><br>\n", src.secondsElectrified, src)
+	else
+		t1 += text("Door is not electrified. <A href='?src=\ref[];aiEnable=5'>Electrify it for 30 seconds?</a> Or, <A href='?src=\ref[];aiEnable=6'>Electrify it indefinitely until someone cancels the electrification?</a><br>\n", src, src)
 
-	data["safety_wire"] = !wires.is_cut(WIRE_SAFETY)
-	data["safety"] = safe
+	if(wires.is_cut(WIRE_SAFETY))
+		t1 += text("Door force sensors not responding.</a><br>\n")
+	else if(src.safe)
+		t1 += text("Door safeties operating normally.  <A href='?src=\ref[];aiDisable=8'>Override?</a><br>\n",src)
+	else
+		t1 += text("Danger.  Door safeties disabled.  <A href='?src=\ref[];aiEnable=8'>Restore?</a><br>\n",src)
 
-	data["openable"] = !welded && !locked
+	if(wires.is_cut(WIRE_TIMING))
+		t1 += text("Door timing circuitry not responding.</a><br>\n")
+	else if(src.normalspeed)
+		t1 += text("Door timing circuitry operating normally.  <A href='?src=\ref[];aiDisable=9'>Override?</a><br>\n",src)
+	else
+		t1 += text("Warning.  Door timing circuitry operating abnormally.  <A href='?src=\ref[];aiEnable=9'>Restore?</a><br>\n",src)
 
-	return data
+	if(src.welded)
+		t1 += text("Door appears to have been welded shut.<br>\n")
+	else if(!src.locked)
+		if(src.density)
+			t1 += text("<A href='?src=\ref[];aiEnable=7'>Open door</a><br>\n", src)
+		else
+			t1 += text("<A href='?src=\ref[];aiDisable=7'>Close door</a><br>\n", src)
+
+	t1 += text("<p><a href='?src=\ref[];close=1'>Close</a></p>\n", src)
+	user << browse(t1, "window=airlock")
+	onclose(user, "airlock")
 
 //aiDisable - 1 idscan, 2 disrupt main power, 3 disrupt backup power, 4 drop door bolts, 5 un-electrify door, 7 close door, 11 lift access override
 //aiEnable - 1 idscan, 4 raise door bolts, 5 electrify door for 30 seconds, 6 electrify door indefinitely, 7 open door, 11 enable access override
