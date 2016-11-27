@@ -1,6 +1,3 @@
-
-var/global/list/internal_byond_list_vars = list("contents" = TRUE, "verbs" = TRUE, "screen" = TRUE, "images" = TRUE)
-
 /datum
 	var/var_edited = FALSE //Warrenty void if seal is broken
 	var/datum/reagents/reagents = null
@@ -9,6 +6,8 @@ var/global/list/internal_byond_list_vars = list("contents" = TRUE, "verbs" = TRU
 /datum/proc/vv_edit_var(var_name, var_value) //called whenever a var is edited
 	switch(var_name)
 		if ("vars")
+			return FALSE
+		if ("var_edited")
 			return FALSE
 	var_edited = TRUE
 	vars[var_name] = var_value
@@ -36,6 +35,8 @@ var/global/list/internal_byond_list_vars = list("contents" = TRUE, "verbs" = TRU
 	set category = "Debug"
 	set name = "View Variables"
 	//set src in world
+	var/static/cookieoffset = rand(1, 9999) //to force cookies to reset after the round.
+
 	if(!usr.client || !usr.client.holder)
 		usr << "<span class='danger'>You need to be an administrator to access this.</span>"
 		return
@@ -43,12 +44,19 @@ var/global/list/internal_byond_list_vars = list("contents" = TRUE, "verbs" = TRU
 	if(!D)
 		return
 
-	var/islist = FALSE
-	if (istype(D, /list))
-		islist = TRUE
+	var/islist = islist(D)
+	if (!islist && !istype(D))
+		return
+
 	var/title = ""
 	var/refid = "\ref[D]"
 	var/icon/sprite
+
+	var/type = /list
+	if (!islist)
+		type = D.type
+
+
 
 	if(istype(D,/atom))
 		var/atom/AT = D
@@ -56,7 +64,7 @@ var/global/list/internal_byond_list_vars = list("contents" = TRUE, "verbs" = TRU
 			sprite = new /icon(AT.icon, AT.icon_state)
 			usr << browse_rsc(sprite, "view_vars_sprite.png")
 
-	title = "[D] (\ref[D]) = [(islist ? /list : D.type)]"
+	title = "[D] (\ref[D]) = [type]"
 
 	var/sprite_text
 	if(sprite)
@@ -89,7 +97,7 @@ var/global/list/internal_byond_list_vars = list("contents" = TRUE, "verbs" = TRU
 	else
 		atomsnowflake += "<b>[D]</b>"
 
-	var/formatted_type = text("[(islist ? /list : D.type)]")
+	var/formatted_type = "[type]"
 	if(length(formatted_type) > 25)
 		var/middle_point = length(formatted_type) / 2
 		var/splitpoint = findtext(formatted_type,"/",middle_point)
@@ -127,7 +135,11 @@ var/global/list/internal_byond_list_vars = list("contents" = TRUE, "verbs" = TRU
 	if (islist)
 		var/list/L = D
 		for (var/i in 1 to L.len)
-			variable_html += debug_variable(i, L[L[i]], 0, D)
+			var/key = L[i]
+			var/value
+			if (IS_NORMAL_LIST(L) && !isnum(key))
+				value = L[key]
+			variable_html += debug_variable(i, value, 0, D)
 	else
 
 		names = sortList(names)
@@ -226,7 +238,7 @@ var/global/list/internal_byond_list_vars = list("contents" = TRUE, "verbs" = TRU
 					var vars_ol1 = document.getElementById("vars");
 					vars_ol1.innerHTML = complete_list
 				}
-				document.cookie="[refid]search="+encodeURIComponent(filter);
+				document.cookie="[refid][cookieoffset]search="+encodeURIComponent(filter);
 				if(filter == ""){
 					return;
 				}else{
@@ -259,7 +271,7 @@ var/global/list/internal_byond_list_vars = list("contents" = TRUE, "verbs" = TRU
 				var filter_text = document.getElementById('filter');
 				filter_text.focus();
 				filter_text.select();
-				var lastsearch = getCookie("[refid]search");
+				var lastsearch = getCookie("[refid][cookieoffset]search");
 				if (lastsearch) {
 					filter_text.value = lastsearch;
 					updateSearch();
@@ -361,7 +373,10 @@ var/global/list/internal_byond_list_vars = list("contents" = TRUE, "verbs" = TRU
 	if(DA)
 		if (istype(DA, /list))
 			var/index = name
-			name = DA[name] //name is really the index until this line
+			if (value)
+				name = DA[name] //name is really the index until this line
+			else
+				value = DA[name]
 			html += "<li style='backgroundColor:white'>(<a href='?_src_=vars;listedit=\ref[DA];index=[index]'>E</a>) (<a href='?_src_=vars;listchange=\ref[DA];index=[index]'>C</a>) (<a href='?_src_=vars;listremove=\ref[DA];index=[index]'>-</a>) "
 		else
 			html += "<li style='backgroundColor:white'>(<a href='?_src_=vars;datumedit=\ref[DA];varnameedit=[name]'>E</a>) (<a href='?_src_=vars;datumchange=\ref[DA];varnamechange=[name]'>C</a>) (<a href='?_src_=vars;datummass=\ref[DA];varnamemass=[name]'>M</a>) "
@@ -409,29 +424,20 @@ var/global/list/internal_byond_list_vars = list("contents" = TRUE, "verbs" = TRU
 
 	else if (istype(value, /list))
 		var/list/L = value
-		if (internal_byond_list_vars[name])
-			html += "[html_encode(name)] = /list ([L.len])"
-		else
-			html += "<a href='?_src_=vars;Vars=\ref[value]'>[VV_HTML_ENCODE(name)] = /list ([L.len])</a>"
-
+		html += "<a href='?_src_=vars;Vars=\ref[value]'>[VV_HTML_ENCODE(name)] = /list ([L.len])</a>"
 		if (L.len > 0 && !(name == "underlays" || name == "overlays" || L.len > 500))
-			name = "[name]"	//Needs to be a string or it will go out of bounds in the internal_byond_list_vars array
 			html += "<ul>"
-			var/index = 1
-			for(var/entry in L)
-				var/state = "ASSOC"
-				var/val = null
-				if(internal_byond_list_vars[name])
-					state = "INDEX"
-				else
-					val = L[entry]
+			for (var/i in 1 to L.len)
+				var/key = L[i]
+				var/val
+				if (IS_NORMAL_LIST(L) && !isnum(key))
+					val = L[key]
+				if (!val)
+					val = key
+					key = i
 
-				switch(state)
-					if("INDEX")
-						html += debug_variable(index, L[index], level + 1, sanitize = sanitize)
-					if("ASSOC")
-						html += debug_variable(entry, val, level + 1, sanitize = sanitize)
-				index++
+				html += debug_variable(key, val, level + 1, sanitize = sanitize)
+
 			html += "</ul>"
 
 	else
@@ -584,7 +590,7 @@ var/global/list/internal_byond_list_vars = list("contents" = TRUE, "verbs" = TRU
 			if (!index)
 				return
 
-			var/list/L = locate(href_list["listedit"])
+			var/list/L = locate(href_list["listchange"])
 			if (!istype(L))
 				usr << "This can only be used on instances of type /list"
 				return
@@ -596,7 +602,7 @@ var/global/list/internal_byond_list_vars = list("contents" = TRUE, "verbs" = TRU
 			if (!index)
 				return
 
-			var/list/L = locate(href_list["listedit"])
+			var/list/L = locate(href_list["listremove"])
 			if (!istype(L))
 				usr << "This can only be used on instances of type /list"
 				return

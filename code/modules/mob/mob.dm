@@ -855,10 +855,10 @@ var/next_mob_id = 0
 /mob/living/vv_edit_var(var_name, var_value)
 	switch(var_name)
 		if("stat")
-			if((stat == 2) && (var_value < 2))//Bringing the dead back to life
+			if((stat == DEAD) && (var_value < DEAD))//Bringing the dead back to life
 				dead_mob_list -= src
 				living_mob_list += src
-			if((stat < 2) && (var_value == 2))//Kill he
+			if((stat < DEAD) && (var_value == DEAD))//Kill he
 				living_mob_list -= src
 				dead_mob_list += src
 	. = ..()
@@ -916,3 +916,4 @@ var/next_mob_id = 0
 	switch(var_name)
 		if ("attack_log")
 			return debug_variable(var_name, attack_log, 0, src, FALSE)
+	. = ..()

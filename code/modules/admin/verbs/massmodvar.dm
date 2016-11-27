@@ -3,22 +3,13 @@
 	set name = "Mass Edit Variables"
 	set desc="(target) Edit all instances of a target item's variables"
 
-	var/method = 0	//0 means strict type detection while 1 means this type and all subtypes (IE: /obj/item with this set to 1 will set it to ALL itms)
+	var/method = 0	//0 means strict type detection while 1 means this type and all subtypes (IE: /obj/item with this set to 1 will set it to ALL items)
 
 	if(!check_rights(R_VAREDIT))
 		return
 
 	if(A && A.type)
-		if(typesof(A.type))
-			switch(input("Strict object type detection?") as null|anything in list("Strictly this type","This type and subtypes", "Cancel"))
-				if("Strictly this type")
-					method = 0
-				if("This type and subtypes")
-					method = 1
-				if("Cancel")
-					return
-				if(null)
-					return
+		method = vv_subtype_prompt(A.type)
 
 	src.massmodify_variables(A, var_name, method)
 	feedback_add_details("admin_verb","MEV") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
@@ -106,8 +97,9 @@
 
 	switch(class)
 		if(VV_RESTORE_DEFAULT)
-			src << "Finding items"
-			var/list/items = get_all_of_type(O.type, !method)
+			src << "Finding items..."
+			var/list/items = get_all_of_type(O.type, method)
+			src << "Changing [items.len] items..."
 			for(var/thing in items)
 				if (!thing)
 					continue
@@ -119,36 +111,26 @@
 				CHECK_TICK
 
 		if(VV_TEXT)
-			var/process_vars = 0
-			var/unique = 0
-			if(findtext(new_value,"\["))
-				process_vars = alert(usr, "\[] detected in string, process as variables?", "Process Variables?", "Yes", "No")
-				if(process_vars == "Yes")
-					process_vars = 1
-					unique = alert(usr, "Process vars unique to each instance, or same for all?", "Variable Association", "Unique", "Same")
-					if(unique == "Unique")
-						unique = 1
-					else
-						unique = 0
-				else
-					process_vars = 0
-
+			var/list/varsvars = vv_parse_text(O, new_value)
 			var/pre_processing = new_value
-			var/list/varsvars = list()
-
-			if(process_vars && !unique)
-				varsvars = string2listofvars(new_value, O)
-				if(varsvars.len)
+			var/unique
+			if (varsvars && varsvars.len)
+				unique = alert(usr, "Process vars unique to each instance, or same for all?", "Variable Association", "Unique", "Same")
+				if(unique == "Unique")
+					unique = TRUE
+				else
+					unique = FALSE
 					for(var/V in varsvars)
 						new_value = replacetext(new_value,"\[[V]]","[O.vars[V]]")
 
-			src << "Finding items"
-			var/list/items = get_all_of_type(O.type, !method)
+			src << "Finding items..."
+			var/list/items = get_all_of_type(O.type, method)
+			src << "Changing [items.len] items..."
 			for(var/thing in items)
 				if (!thing)
 					continue
 				var/datum/D = thing
-				if(process_vars && unique)
+				if(unique)
 					new_value = pre_processing
 					for(var/V in varsvars)
 						new_value = replacetext(new_value,"\[[V]]","[D.vars[V]]")
@@ -169,8 +151,9 @@
 				many = FALSE
 
 			var/type = value["type"]
-			src << "Finding items"
-			var/list/items = get_all_of_type(O.type, !method)
+			src << "Finding items..."
+			var/list/items = get_all_of_type(O.type, method)
+			src << "Changing [items.len] items..."
 			for(var/thing in items)
 				if (!thing)
 					continue
@@ -186,8 +169,9 @@
 				CHECK_TICK
 
 		else
-			src << "Finding items"
-			var/list/items = get_all_of_type(O.type, !method)
+			src << "Finding items..."
+			var/list/items = get_all_of_type(O.type, method)
+			src << "Changing [items.len] items..."
 			for(var/thing in items)
 				if (!thing)
 					continue
@@ -200,25 +184,24 @@
 
 
 	var/count = rejected+accepted
+	if (!count)
+		src << "No objects found"
+		return
 	if (!accepted)
-		if (!rejected)
-			src << "No objects found"
-		else
-			src << "Every object rejected your edit"
-		//return
-
+		src << "Every object rejected your edit"
+		return
 	if (rejected)
 		src << "[rejected] out of [count] objects rejected your edit"
 
 	world.log << "### MassVarEdit by [src]: [O.type] (A/R [accepted]/[rejected]) [variable]=[html_encode("[O.vars[variable]]")]([list2params(value)])"
-	log_admin("[key_name(src)] mass modified [accepted] [original_name]' [variable] to [O.vars[variable]]")
-	message_admins("[key_name_admin(src)] mass modified [accepted] [original_name]' [variable] to [O.vars[variable]]")
+	log_admin("[key_name(src)] mass modified [original_name]'s [variable] to [O.vars[variable]] ([accepted] objects modified)")
+	message_admins("[key_name_admin(src)] mass modified [original_name]'s [variable] to [O.vars[variable]] ([accepted] objects modified)")
 
 
-/proc/get_all_of_type(var/T, stricttype = FALSE)
+/proc/get_all_of_type(var/T, subtypes = TRUE)
 	var/list/typecache = list()
 	typecache[T] = 1
-	if (!stricttype)
+	if (subtypes)
 		typecache = typecacheof(typecache)
 	. = list()
 	if (ispath(T, /mob))

@@ -57,9 +57,7 @@ var/list/VVpixelmovement = list("step_x", "step_y", "bound_height", "bound_width
 			VV_MESSAGE,
 			VV_ICON,
 			VV_ATOM_REFERENCE,
-			//#ifdef TESTING
-			//VV_DATUM_REFERENCE,
-			//#endif TESTING
+			VV_DATUM_REFERENCE,
 			VV_MOB_REFERENCE,
 			VV_CLIENT,
 			VV_ATOM_TYPE,
@@ -98,21 +96,27 @@ var/list/VVpixelmovement = list("step_x", "step_y", "bound_height", "bound_width
 			if (.["value"] == null)
 				.["class"] = null
 				return
+
+
 		if (VV_NUM)
 			.["value"] = input("Enter new number:", "Num", current_value) as null|num
 			if (.["value"] == null)
 				.["class"] = null
 				return
+
+
 		if (VV_ATOM_TYPE)
-			.["value"] = input("Enter type:", "Type", current_value) as null|anything in get_fancy_list_of_atom_types()
+			.["value"] = pick_closest_path(FALSE)
 			if (.["value"] == null)
 				.["class"] = null
 				return
+
 		if (VV_DATUM_TYPE)
-			.["value"] = input("Enter type:", "Type", current_value) as null|anything in get_fancy_list_of_datum_types()
+			.["value"] = pick_closest_path(FALSE, get_fancy_list_of_datum_types())
 			if (.["value"] == null)
 				.["class"] = null
 				return
+
 		if (VV_TYPE)
 			var/type = current_value
 			do
@@ -125,66 +129,170 @@ var/list/VVpixelmovement = list("step_x", "step_y", "bound_height", "bound_width
 				.["class"] = null
 				return
 			.["value"] = type
+
+
 		if (VV_ATOM_REFERENCE)
-			.["value"] = input("Select reference:", "Reference", current_value) as null|mob|obj|turf|area in world
-			if (.["value"] == null)
+			var/type = pick_closest_path(FALSE)
+			var/subtypes = vv_subtype_prompt(type)
+			if (subtypes == null)
 				.["class"] = null
 				return
+			var/list/things = vv_reference_list(type, subtypes)
+			var/value = input("Select reference:", "Reference", current_value) as null|anything in things
+			if (!value)
+				.["class"] = null
+				return
+			.["value"] = things[value]
+
+		if (VV_DATUM_REFERENCE)
+			var/type = pick_closest_path(FALSE, get_fancy_list_of_datum_types())
+			var/subtypes = vv_subtype_prompt(type)
+			if (subtypes == null)
+				.["class"] = null
+				return
+			var/list/things = vv_reference_list(type, subtypes)
+			var/value = input("Select reference:", "Reference", current_value) as null|anything in things
+			if (!value)
+				.["class"] = null
+				return
+			.["value"] = things[value]
+
 		if (VV_MOB_REFERENCE)
-			.["value"] = input("Select reference:", "Reference", current_value) as null|mob in world
-			if (.["value"] == null)
+			var/type = pick_closest_path(FALSE, filter_fancy_list(get_fancy_list_of_datum_types(), /mob))
+			var/subtypes = vv_subtype_prompt(type)
+			if (subtypes == null)
 				.["class"] = null
 				return
+			var/list/things = vv_reference_list(type, subtypes)
+			var/value = input("Select reference:", "Reference", current_value) as null|anything in things
+			if (!value)
+				.["class"] = null
+				return
+			.["value"] = things[value]
+
+
+
 		if (VV_CLIENT)
 			.["value"] = input("Select reference:", "Reference", current_value) as null|anything in clients
 			if (.["value"] == null)
 				.["class"] = null
 				return
+
+
 		if (VV_FILE)
 			.["value"] = input("Pick file:", "File") as null|file
 			if (.["value"] == null)
 				.["class"] = null
 				return
+
+
 		if (VV_ICON)
 			.["value"] = input("Pick icon:", "Icon") as null|icon
 			if (.["value"] == null)
 				.["class"] = null
 				return
+
+
 		if (VV_MARKED_DATUM)
 			.["value"] = holder.marked_datum
 			if (.["value"] == null)
 				.["class"] = null
 				return
+
+
 		if (VV_NEW_ATOM)
-			var/type = input("Enter type:", "Type", current_value) as null|anything in get_fancy_list_of_atom_types()
+			var/type = pick_closest_path(FALSE)
 			if (!type)
 				.["class"] = null
 				return
-			.["value"] = new type()
 			.["type"] = type
+			.["value"] = new type()
+
 		if (VV_NEW_DATUM)
-			var/type = input("Enter type:", "Type", current_value) as null|anything in get_fancy_list_of_datum_types()
+			var/type = pick_closest_path(FALSE, get_fancy_list_of_datum_types())
 			if (!type)
 				.["class"] = null
 				return
-			.["value"] = new type()
 			.["type"] = type
+			.["value"] = new type()
+
 		if (VV_NEW_TYPE)
 			var/type = current_value
+			var/error = ""
 			do
-				type = input("Enter type:", "Type", type) as null|text
+				type = input("Enter type:[error]", "Type", type) as null|text
 				if (!type)
 					break
 				type = text2path(type)
+				error = "\nType not found, Please try again"
 			while(!type)
 			if (!type)
 				.["class"] = null
 				return
-			.["value"] = new type()
 			.["type"] = type
+			.["value"] = new type()
+
+
 		if (VV_NEW_LIST)
 			.["value"] = list()
 			.["type"] = /list
+
+/client/proc/vv_parse_text(O, new_var)
+	if(O && findtext(new_var,"\["))
+		var/process_vars = alert(usr,"\[] detected in string, process as variables?","Process Variables?","Yes","No")
+		if(process_vars == "Yes")
+			. = string2listofvars(new_var, O)
+
+//do they want you to include subtypes?
+//FALSE = no subtypes, strict exact type pathing (or the type doesn't have subtypes)
+//TRUE = Yes subtypes
+//NULL = User cancelled at the prompt or invalid type given
+/client/proc/vv_subtype_prompt(var/type)
+	if (!ispath(type))
+		return
+	var/list/subtypes = subtypesof(type)
+	if (!subtypes || !subtypes.len)
+		return FALSE
+	if (subtypes && subtypes.len)
+		switch(alert("Strict object type detection?", "Type detection", "Strictly this type","This type and subtypes", "Cancel"))
+			if("Strictly this type")
+				return FALSE
+			if("This type and subtypes")
+				return TRUE
+			else
+				return
+
+/client/proc/vv_reference_list(type, subtypes)
+	. = list()
+	var/list/types = list(type)
+	if (subtypes)
+		types = typesof(type)
+
+	var/list/fancytypes = make_types_fancy(types)
+
+	for(var/fancytype in fancytypes) //swap the assoication
+		types[fancytypes[fancytype]] = fancytype
+
+	var/things = get_all_of_type(type, subtypes)
+
+	var/i = 0
+	for(var/thing in things)
+		var/datum/D = thing
+		i++
+		//try one of 3 methods to shorten the type text:
+		//	fancy type,
+		//	fancy type with the base type removed from the begaining,
+		//	the type with the base type removed from the begaining
+		var/fancytype = types[D.type]
+		if (findtext(fancytype, types[type]))
+			fancytype = copytext(fancytype, lentext(types[type])+1)
+		var/shorttype = copytext("[D.type]", lentext("[type]")+1)
+		if (lentext(shorttype) > lentext(fancytype))
+			shorttype = fancytype
+		if (!lentext(shorttype))
+			shorttype = "/"
+
+		.["[D]([shorttype])\ref[D]#[i]"] = D
 
 /client/proc/mod_list_add_ass(atom/O) //hehe
 
@@ -195,12 +303,9 @@ var/list/VVpixelmovement = list("step_x", "step_y", "bound_height", "bound_width
 	var/var_value = L["value"]
 
 	if(class == VV_TEXT || class == VV_MESSAGE)
-		if(findtext(var_value,"\["))
-			var/process_vars = alert(usr,"\[] detected in string, process as variables?","Process Variables?","Yes","No")
-			if(process_vars == "Yes")
-				var/list/varsvars = string2listofvars(var_value, O)
-				for(var/V in varsvars)
-					var_value = replacetext(var_value,"\[[V]]","[O.vars[V]]")
+		var/list/varsvars = vv_parse_text(O, var_value)
+		for(var/V in varsvars)
+			var_value = replacetext(var_value,"\[[V]]","[O.vars[V]]")
 
 	return var_value
 
@@ -213,12 +318,9 @@ var/list/VVpixelmovement = list("step_x", "step_y", "bound_height", "bound_width
 	var/var_value = LL["value"]
 
 	if(class == VV_TEXT || class == VV_MESSAGE)
-		if(O && findtext(var_value,"\["))
-			var/process_vars = alert(usr,"\[] detected in string, process as variables?","Process Variables?","Yes","No")
-			if(process_vars == "Yes")
-				var/list/varsvars = string2listofvars(var_value, O)
-				for(var/V in varsvars)
-					var_value = replacetext(var_value,"\[[V]]","[O.vars[V]]")
+		var/list/varsvars = vv_parse_text(O, var_value)
+		for(var/V in varsvars)
+			var_value = replacetext(var_value,"\[[V]]","[O.vars[V]]")
 
 	var/list/newlist = L.Copy()
 	newlist += var_value
@@ -248,9 +350,15 @@ var/list/VVpixelmovement = list("step_x", "step_y", "bound_height", "bound_width
 
 
 
-	var/list/names = null
+	var/list/names = list()
 	for (var/i in 1 to L.len)
-		names["#[i] [L[i]] = [L[L[i]]]"] = i
+		var/key = L[i]
+		var/value
+		if (IS_NORMAL_LIST(L) && !isnum(key))
+			value = L[key]
+		if (value == null)
+			value = "null"
+		names["#[i] [key] = [value]"] = i
 	if (!index)
 		var/variable = input("Which var?","Var") as null|anything in names + "(ADD VAR)" + "(CLEAR NULLS)" + "(CLEAR DUPES)" + "(SHUFFLE)"
 
@@ -370,12 +478,9 @@ var/list/VVpixelmovement = list("step_x", "step_y", "bound_height", "bound_width
 			return
 
 		if(VV_TEXT)
-			if(O && findtext(new_var,"\["))
-				var/process_vars = alert(usr,"\[] detected in string, process as variables?","Process Variables?","Yes","No")
-				if(process_vars == "Yes")
-					var/list/varsvars = string2listofvars(new_var, O)
-					for(var/V in varsvars)
-						new_var = replacetext(new_var,"\[[V]]","[O.vars[V]]")
+			var/list/varsvars = vv_parse_text(O, new_var)
+			for(var/V in varsvars)
+				new_var = replacetext(new_var,"\[[V]]","[O.vars[V]]")
 
 
 	if(assoc)
@@ -475,9 +580,6 @@ var/list/VVpixelmovement = list("step_x", "step_y", "bound_height", "bound_width
 
 	var/original_name = "[O]"
 
-	if(holder.marked_datum && class == "marked datum ([holder.marked_datum.type])")
-		class = "marked datum"
-
 	switch(class)
 		if(VV_LIST)
 			if(!istype(var_value,/list))
@@ -490,12 +592,9 @@ var/list/VVpixelmovement = list("step_x", "step_y", "bound_height", "bound_width
 			var_new = initial(O.vars[variable])
 
 		if(VV_TEXT)
-			if(findtext(var_new,"\["))
-				var/process_vars = alert(usr,"\[] detected in string, process as variables?","Process Variables?","Yes","No")
-				if(process_vars == "Yes")
-					var/list/varsvars = string2listofvars(var_new, O)
-					for(var/V in varsvars)
-						var_new = replacetext(var_new,"\[[V]]","[O.vars[V]]")
+			var/list/varsvars = vv_parse_text(O, var_new)
+			for(var/V in varsvars)
+				var_new = replacetext(var_new,"\[[V]]","[O.vars[V]]")
 
 
 	if (O.vv_edit_var(variable, var_new) == FALSE)

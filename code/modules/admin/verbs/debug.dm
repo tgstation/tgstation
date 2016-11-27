@@ -378,34 +378,29 @@ var/list/TYPES_SHORTCUTS = list(
 	/mob = "M"
 )
 
+/proc/make_types_fancy(var/list/types)
+	if (ispath(types))
+		types = list(types)
+	. = list()
+	for(var/type in types)
+		var/typename = "[type]"
+		for (var/tn in TYPES_SHORTCUTS)
+			if (copytext(typename,1, length("[tn]/")+1)=="[tn]/" /*findtextEx(typename,"[tn]/",1,2)*/ )
+				typename = TYPES_SHORTCUTS[tn]+copytext(typename,length("[tn]/"))
+				break
+		.[typename] = type
 
 /proc/get_fancy_list_of_atom_types()
 	var/static/list/pre_generated_list
 	if (!pre_generated_list) //init
-		var/list/temp = sortList(typesof(/atom))
-		pre_generated_list = new(temp.len)
-		for(var/type in temp)
-			var/typename = "[type]"
-			for (var/tn in TYPES_SHORTCUTS)
-				if (copytext(typename,1, length("[tn]/")+1)=="[tn]/" /*findtextEx(typename,"[tn]/",1,2)*/ )
-					typename = TYPES_SHORTCUTS[tn]+copytext(typename,length("[tn]/"))
-					break
-			pre_generated_list[typename] = type
+		pre_generated_list = make_types_fancy(typesof(/atom))
 	return pre_generated_list
 
 
 /proc/get_fancy_list_of_datum_types()
 	var/static/list/pre_generated_list
 	if (!pre_generated_list) //init
-		var/list/temp = sortList(typesof(/datum) - typesof(/atom))
-		pre_generated_list = new(temp.len)
-		for(var/type in temp)
-			var/typename = "[type]"
-			for (var/tn in TYPES_SHORTCUTS)
-				if (copytext(typename,1, length("[tn]/")+1)=="[tn]/" /*findtextEx(typename,"[tn]/",1,2)*/ )
-					typename = TYPES_SHORTCUTS[tn]+copytext(typename,length("[tn]/"))
-					break
-			pre_generated_list[typename] = type
+		pre_generated_list = make_types_fancy(sortList(typesof(/datum) - typesof(/atom)))
 	return pre_generated_list
 
 
