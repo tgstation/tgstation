@@ -294,9 +294,6 @@
 		mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/emplosion/disable_tech/cat(null))
 		mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/lightning/cat(null))
 		mind.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/knock/cat(null))
-		if (ckey == "darkbitt") //i'll remove this if you want, but this is still funny
-			name = "Catlord"
-			desc = "IT'S THE CATLORD!!!"
 		didcrap = 1
 
 // Ascendant Spells. Slightly modified wizard spells, removing cooldowns and changing invocations. GODLIKE CREATURS DONT NEED COOLDOWNS!
