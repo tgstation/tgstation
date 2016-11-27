@@ -37,11 +37,10 @@ var/datum/subsystem/garbage_collector/SSgarbage
 /datum/subsystem/garbage_collector/New()
 	NEW_SS_GLOBAL(SSgarbage)
 
-/datum/subsystem/garbage_collector/Destroy()
+/datum/subsystem/garbage_collector/Shutdown()
 	//empty the queue
 	HandleToBeQueued(FALSE)
 	HandleQueue(null, FALSE)
-	return ..()
 
 /datum/subsystem/garbage_collector/stat_entry(msg)
 	msg += "Q:[queue.len]|D:[delslasttick]|G:[gcedlasttick]|"

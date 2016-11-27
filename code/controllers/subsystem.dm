@@ -37,10 +37,9 @@
 // Used to initialize the subsystem BEFORE the map has loaded
 /datum/subsystem/New()
 
-//cleanup actions, must return harddel_now
-/datum/subsystem/Destroy()
-	..()
-	return QDEL_HINT_HARDDEL_NOW
+//cleanup actions
+/datum/subsystem/proc/Shutdown()
+	return
 
 //previously, this would have been named 'process()' but that name is used everywhere for different things!
 //fire() seems more suitable. This is the procedure that gets called every 'wait' deciseconds.
