@@ -37,6 +37,12 @@ var/datum/subsystem/garbage_collector/SSgarbage
 /datum/subsystem/garbage_collector/New()
 	NEW_SS_GLOBAL(SSgarbage)
 
+/datum/subsystem/garbage_collector/Destroy()
+	//empty the queue
+	HandleToBeQueued(FALSE)
+	HandleQueue(null, FALSE)
+	return ..()
+
 /datum/subsystem/garbage_collector/stat_entry(msg)
 	msg += "Q:[queue.len]|D:[delslasttick]|G:[gcedlasttick]|"
 	msg += "GR:"
@@ -53,24 +59,24 @@ var/datum/subsystem/garbage_collector/SSgarbage
 	..(msg)
 
 /datum/subsystem/garbage_collector/fire()
-	HandleToBeQueued()
+	HandleToBeQueued(TRUE)
 	if (!paused)
-		HandleQueue()
+		HandleQueue(TRUE)
 
 //If you see this proc high on the profile, what you are really seeing is the garbage collection/soft delete overhead in byond.
 //Don't attempt to optimize, not worth the effort.
-/datum/subsystem/garbage_collector/proc/HandleToBeQueued()
+/datum/subsystem/garbage_collector/proc/HandleToBeQueued(tick_check)
 	var/list/tobequeued = src.tobequeued
 	var/starttime = world.time
 	var/starttimeofday = world.timeofday
 	while(tobequeued.len && starttime == world.time && starttimeofday == world.timeofday)
-		if (MC_TICK_CHECK)
+		if (tick_check && MC_TICK_CHECK)
 			break
 		var/ref = tobequeued[1]
 		Queue(ref)
 		tobequeued.Cut(1, 2)
 
-/datum/subsystem/garbage_collector/proc/HandleQueue(time_to_stop)
+/datum/subsystem/garbage_collector/proc/HandleQueue(tick_check)
 	delslasttick = 0
 	gcedlasttick = 0
 	var/time_to_kill = world.time - collection_timeout // Anything qdel() but not GC'd BEFORE this time needs to be manually del()
@@ -78,7 +84,7 @@ var/datum/subsystem/garbage_collector/SSgarbage
 	var/starttime = world.time
 	var/starttimeofday = world.timeofday
 	while(queue.len && starttime == world.time && starttimeofday == world.timeofday)
-		if (MC_TICK_CHECK)
+		if (tick_check && MC_TICK_CHECK)
 			break
 		var/refID = queue[1]
 		if (!refID)
