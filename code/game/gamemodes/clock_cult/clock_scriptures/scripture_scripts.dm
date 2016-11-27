@@ -80,18 +80,14 @@
 	for(var/mob/living/L in range(1, invoker))
 		if(!is_servant_of_ratvar(L))
 			continue
-		var/do_message = FALSE
-		if(L.equip_to_slot_or_del(new/obj/item/clothing/head/helmet/clockwork(null), slot_head))
-			do_message = TRUE
-		if(L.equip_to_slot_or_del(new/obj/item/clothing/suit/armor/clockwork(null), slot_wear_suit))
-			do_message = TRUE
-		if(L.equip_to_slot_or_del(new/obj/item/clothing/gloves/clockwork(null), slot_gloves))
-			do_message = TRUE
-		if(L.equip_to_slot_or_del(new/obj/item/clothing/shoes/clockwork(null), slot_shoes))
-			do_message = TRUE
+		var/do_message = 0
+		do_message += L.equip_to_slot_or_del(new/obj/item/clothing/head/helmet/clockwork(null), slot_head)
+		do_message += L.equip_to_slot_or_del(new/obj/item/clothing/suit/armor/clockwork(null), slot_wear_suit)
+		do_message += L.equip_to_slot_or_del(new/obj/item/clothing/gloves/clockwork(null), slot_gloves)
+		do_message += L.equip_to_slot_or_del(new/obj/item/clothing/shoes/clockwork(null), slot_shoes)
 		if(do_message)
 			L.visible_message("<span class='warning'>Strange armor appears on [L]!</span>", "<span class='heavy_brass'>A bright shimmer runs down your body, equipping you with Ratvarian armor.</span>")
-			playsound(L, 'sound/magic/clockwork/fellowship_armory.ogg', 50, 1)
+			playsound(L, 'sound/magic/clockwork/fellowship_armory.ogg', 15*do_message, 1) //get sound loudness based on how much we equipped
 			affected++
 	return affected
 
