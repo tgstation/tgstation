@@ -286,11 +286,6 @@ var/total_borer_hosts_needed = 10
 				if(prob(victim.brainloss/10))
 					victim.say("*[pick(list("blink","blink_r","choke","aflap","drool","twitch","twitch_s","gasp"))]")
 
-				if(prob(victim.brainloss/20))
-					victim << "<span class='danger'>An unexpected spark passes through you host's brain and your control is ripped away!</span>"
-					host_brain << "<span class='danger'>You suddenly regain control!</span>"
-					detatch()
-
 /mob/living/simple_animal/borer/proc/wakeup()
 	if(controlling)
 		victim << "<span class='warning'>You finish shaking off your lethargy.</span>"
@@ -357,7 +352,6 @@ var/total_borer_hosts_needed = 10
 		return
 
 	src << "<span class='warning'>You slither up [H] and begin probing at their ear canal...</span>"
-	layer = MOB_LAYER
 	if(!do_mob(src, H, 30))
 		src << "<span class='warning'>As [H] moves away, you are dislodged and fall to the ground.</span>"
 		return
@@ -368,6 +362,7 @@ var/total_borer_hosts_needed = 10
 	Infect(H)
 
 /mob/living/simple_animal/borer/proc/Infect(mob/living/carbon/C)
+
 	if(!C)
 		return
 
@@ -486,7 +481,7 @@ var/total_borer_hosts_needed = 10
 
 	src << "<span class='warning'>You focus your psychic lance on [M] and freeze their limbs with a wave of terrible dread.</span>"
 	M << "<span class='userdanger'>You feel a creeping, horrible sense of dread come over you, freezing your limbs and setting your heart racing.</span>"
-	M.Stun(4)
+	M.Stun(3)
 
 	used_dominate = world.time
 
@@ -786,16 +781,16 @@ mob/living/carbon/proc/release_control()
 	if(!B)
 		return
 
-	if(B.chemicals >= 100)
+	if(B.chemicals >= 200)
 		visible_message("<span class='danger'>[src] heaves violently, expelling a rush of vomit and a wriggling, sluglike creature!</span>")
-		B.chemicals -= 100
+		B.chemicals -= 200
 
 		new /obj/effect/decal/cleanable/vomit(get_turf(src))
 		playsound(loc, 'sound/effects/splat.ogg', 50, 1)
 		new /mob/living/simple_animal/borer(get_turf(src), B.generation + 1)
 		log_game("[src]/([src.ckey]) has spawned a new borer via reproducing.")
 	else
-		src << "<span class='warning'>You do not have enough chemicals stored to reproduce.</span>"
+		src << "<span class='warning'>You need 200 chemicals stored to reproduce.</span>"
 		return
 
 
