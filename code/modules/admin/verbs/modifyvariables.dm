@@ -566,7 +566,7 @@ var/list/VVpixelmovement = list("step_x", "step_y", "bound_height", "bound_width
 		if(dir_text)
 			src << "If a direction, direction is: [dir_text]"
 
-	if(autodetect_class)
+	if(autodetect_class && default != VV_NULL)
 		if (default == VV_TEXT)
 			default = VV_MESSAGE
 		class = default
