@@ -158,7 +158,7 @@ var/datum/subsystem/garbage_collector/SSgarbage
 	if(!D)
 		return
 #ifdef TESTING
-	SSgarbage.qdel_list += "[A.type]"
+	SSgarbage.qdel_list += "[D.type]"
 #endif
 	if(!istype(D))
 		del(D)
@@ -191,7 +191,7 @@ var/datum/subsystem/garbage_collector/SSgarbage
 			if (QDEL_HINT_FINDREFERENCE)//qdel will, if TESTING is enabled, display all references to this object, then queue the object for deletion.
 				SSgarbage.QueueForQueuing(D)
 				#ifdef TESTING
-				A.find_references()
+				D.find_references()
 				#endif
 			else
 				if(!SSgarbage.noqdelhint["[D.type]"])
@@ -217,15 +217,18 @@ var/datum/subsystem/garbage_collector/SSgarbage
 /datum/var/gc_destroyed //Time when this object was destroyed.
 
 #ifdef TESTING
-/client/var/running_find_references
 /datum/var/running_find_references
 
-/datum/verb/find_references()
+/datum/verb/find_refs()
 	set category = "Debug"
 	set name = "Find References"
 	set background = 1
 	set src in world
 
+	find_references(FALSE)
+
+datum/proc/find_references(skip_alert)
+	set background = 1
 	running_find_references = type
 	if(usr && usr.client)
 		if(usr.client.running_find_references)
@@ -237,9 +240,10 @@ var/datum/subsystem/garbage_collector/SSgarbage
 			SSgarbage.next_fire = world.time + world.tick_lag
 			return
 
-		if(alert("Running this will create a lot of lag until it finishes.  You can cancel it by running it again.  Would you like to begin the search?", "Find References", "Yes", "No") == "No")
-			running_find_references = null
-			return
+		if(!skip_alert)
+			if(alert("Running this will lock everything up for about 5 minutes.  Would you like to begin the search?", "Find References", "Yes", "No") == "No")
+				running_find_references = null
+				return
 
 	//this keeps the garbage collector from failing to collect objects being searched for in here
 	SSgarbage.can_fire = 0
@@ -248,13 +252,7 @@ var/datum/subsystem/garbage_collector/SSgarbage
 		usr.client.running_find_references = type
 
 	testing("Beginning search for references to a [type].")
-	var/list/things = list()
-	for(var/client/thing)
-		things |= thing
-	for(var/datum/thing)
-		things |= thing
-	testing("Collected list of things in search for references to a [type]. ([things.len] Thing\s)")
-	for(var/datum/thing in things)
+	for(var/datum/thing in world)
 		if(usr && usr.client && !usr.client.running_find_references) return
 		for(var/varname in thing.vars)
 			var/variable = thing.vars[varname]
@@ -290,7 +288,7 @@ var/datum/subsystem/garbage_collector/SSgarbage
 
 	qdel(src)
 	if(!running_find_references)
-		find_references()
+		find_references(TRUE)
 
 /client/verb/show_qdeleted()
 	set category = "Debug"
