@@ -21,6 +21,8 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 
 	// Are we running?
 	var/running = TRUE
+	// Is the MC in the loop
+	var/looping = FALSE
 	// Are we processing (higher values increase the processing delay by n ticks)
 	var/processing = 1
 	// How many times have we ran
@@ -67,7 +69,8 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 /datum/controller/master/Destroy()
 	running = FALSE
 	//Give the loop thread some shutdown time
-	sleep(3)
+	while(looping)
+		sleep(1)
 	for(var/datum/subsystem/ss in subsystems)
 		qdel(ss)
 	..()
@@ -232,6 +235,7 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 	var/sleep_delta = 0
 	var/list/subsystems_to_check
 	//the actual loop.
+	looping = TRUE
 	while (running)
 		tickdrift = max(0, MC_AVERAGE_FAST(tickdrift, (((world.timeofday - init_timeofday) - (world.time - init_time)) / world.tick_lag)))
 		if (processing <= 0)
@@ -293,6 +297,7 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 		src.sleep_delta = MC_AVERAGE_FAST(src.sleep_delta, sleep_delta)
 		sleep(world.tick_lag * (processing + sleep_delta))
 	world.log << "MC: Stopped running"
+	looping = FALSE
 	return TRUE
 
 // This is what decides if something should run.
