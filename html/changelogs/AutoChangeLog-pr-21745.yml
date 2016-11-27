@@ -1,0 +1,6 @@
+author: "Xhuis"
+delete-after: True
+changes: 
+  - bugfix: "Plastic explosives now actually explode when you commit suicide with them."
+  - bugfix: "Resisting out of straight jackets now works properly."
+  - rscdel: "Highlander will no longer announce the last man standing."
