@@ -48,29 +48,30 @@ var/list/VVpixelmovement = list("step_x", "step_y", "bound_height", "bound_width
 	else
 		. = VV_NULL
 
-/client/proc/vv_get_value(class, default_class, current_value, restricted_classes, extra_classes)
+/client/proc/vv_get_value(class, default_class, current_value, list/restricted_classes, list/extra_classes, list/classes)
 	. = list("class" = class, "value" = null)
 	if (!class)
-		var/list/classes = list (
-			VV_NUM,
-			VV_TEXT,
-			VV_MESSAGE,
-			VV_ICON,
-			VV_ATOM_REFERENCE,
-			VV_DATUM_REFERENCE,
-			VV_MOB_REFERENCE,
-			VV_CLIENT,
-			VV_ATOM_TYPE,
-			VV_DATUM_TYPE,
-			VV_TYPE,
-			VV_FILE,
-			VV_NEW_ATOM,
-			VV_NEW_DATUM,
-			VV_NEW_TYPE,
-			VV_NEW_LIST,
-			VV_NULL,
-			VV_RESTORE_DEFAULT
-			)
+		if (!classes)
+			classes = list (
+				VV_NUM,
+				VV_TEXT,
+				VV_MESSAGE,
+				VV_ICON,
+				VV_ATOM_REFERENCE,
+				VV_DATUM_REFERENCE,
+				VV_MOB_REFERENCE,
+				VV_CLIENT,
+				VV_ATOM_TYPE,
+				VV_DATUM_TYPE,
+				VV_TYPE,
+				VV_FILE,
+				VV_NEW_ATOM,
+				VV_NEW_DATUM,
+				VV_NEW_TYPE,
+				VV_NEW_LIST,
+				VV_NULL,
+				VV_RESTORE_DEFAULT
+				)
 
 		if(holder && holder.marked_datum && !(VV_MARKED_DATUM in restricted_classes))
 			classes += "[VV_MARKED_DATUM] ([holder.marked_datum.type])"
@@ -119,11 +120,13 @@ var/list/VVpixelmovement = list("step_x", "step_y", "bound_height", "bound_width
 
 		if (VV_TYPE)
 			var/type = current_value
+			var/error = ""
 			do
-				type = input("Enter type:", "Type", type) as null|text
+				type = input("Enter type:[error]", "Type", type) as null|text
 				if (!type)
 					break
 				type = text2path(type)
+				error = "\nType not found, Please try again"
 			while(!type)
 			if (!type)
 				.["class"] = null
@@ -158,7 +161,7 @@ var/list/VVpixelmovement = list("step_x", "step_y", "bound_height", "bound_width
 			.["value"] = things[value]
 
 		if (VV_MOB_REFERENCE)
-			var/type = pick_closest_path(FALSE, filter_fancy_list(get_fancy_list_of_datum_types(), /mob))
+			var/type = pick_closest_path(FALSE, make_types_fancy(typesof(/mob)))
 			var/subtypes = vv_subtype_prompt(type)
 			if (subtypes == null)
 				.["class"] = null
