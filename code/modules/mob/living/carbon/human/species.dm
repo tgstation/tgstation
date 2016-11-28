@@ -1274,7 +1274,7 @@
 				H.bodytemperature += min((1-thermal_protection) * ((loc_temp - H.bodytemperature) / BODYTEMP_HEAT_DIVISOR), BODYTEMP_HEATING_MAX)
 
 	// +/- 50 degrees from 310.15K is the 'safe' zone, where no damage is dealt.
-	if(H.bodytemperature > BODYTEMP_HEAT_DAMAGE_LIMIT && !(RESISTTEMP in specflags))
+	if(H.bodytemperature > BODYTEMP_HEAT_DAMAGE_LIMIT && !(RESISTHOT in specflags))
 		//Body temperature is too hot.
 		switch(H.bodytemperature)
 			if(360 to 400)
@@ -1313,7 +1313,7 @@
 	var/adjusted_pressure = H.calculate_affecting_pressure(pressure) //Returns how much pressure actually affects the mob.
 	switch(adjusted_pressure)
 		if(HAZARD_HIGH_PRESSURE to INFINITY)
-			if(!(RESISTTEMP in specflags))
+			if(!(RESISTPRESSURE in specflags))
 				H.adjustBruteLoss( min( ( (adjusted_pressure / HAZARD_HIGH_PRESSURE) -1 )*PRESSURE_DAMAGE_COEFFICIENT , MAX_HIGH_PRESSURE_DAMAGE) )
 				H.throw_alert("pressure", /obj/screen/alert/highpressure, 2)
 			else
@@ -1325,7 +1325,7 @@
 		if(HAZARD_LOW_PRESSURE to WARNING_LOW_PRESSURE)
 			H.throw_alert("pressure", /obj/screen/alert/lowpressure, 1)
 		else
-			if(H.dna.check_mutation(COLDRES) || (RESISTTEMP in specflags))
+			if(H.dna.check_mutation(COLDRES) || (RESISTPRESSURE in specflags))
 				H.clear_alert("pressure")
 			else
 				H.adjustBruteLoss( LOW_PRESSURE_DAMAGE )
@@ -1336,11 +1336,11 @@
 //////////
 
 /datum/species/proc/handle_fire(mob/living/carbon/human/H)
-	if((RESISTTEMP in specflags) || (NOFIRE in specflags))
+	if(NOFIRE in specflags)
 		return 1
 
 /datum/species/proc/CanIgniteMob(mob/living/carbon/human/H)
-	if((RESISTTEMP in specflags) || (NOFIRE in specflags))
+	if(NOFIRE in specflags)
 		return FALSE
 	return TRUE
 
