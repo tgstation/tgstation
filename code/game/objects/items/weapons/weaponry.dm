@@ -26,7 +26,7 @@
 		return
 
 /obj/item/weapon/proc/redesc_weapon(mob/M)
-	var/input = stripped_input(M,"Describe your object here", ,"", MAX_BROADCAST_LEN)
+	var/input = stripped_input(M,"Describe your object here", ,"", 100)
 
 	if(src && input && !M.stat && in_range(M,src) && !M.restrained() && M.canmove)
 		desc = input
