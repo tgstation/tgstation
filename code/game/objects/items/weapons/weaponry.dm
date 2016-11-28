@@ -10,10 +10,10 @@
 /obj/item/weapon/attackby(obj/item/I, mob/user, params)
 	if(unique_rename)
 		if(istype(I, /obj/item/weapon/pen))
-			var/penchoice = alert("What would you like to edit?", "Rename or change description?", "Rename", "Change description")
-			if(penchoice = "Rename")
+			var/penchoice = alert("What would you like to edit?", "Rename or change description?", "Rename", "Change description", "Cancel")
+			if(penchoice == "Rename")
 				rename_weapon(user)
-			if(penchoice = "Change description")
+			if(penchoice == "Change description")
 				redesc_weapon(user)
 	..()
 
