@@ -344,6 +344,13 @@
 	momentum_drift()
 	handle_boost()
 	handle_damage()
+	handle_flight()
+
+/obj/item/device/flightpack/proc/handle_flight()
+	if(!flight)
+		return 0
+	if(wearer)
+		wearer.float(1)
 
 
 /obj/item/device/flightpack/proc/handle_damage()
@@ -390,10 +397,6 @@
 		wearer.update_inv_wear_suit()
 		wearer.update_inv_back()
 	..()
-
-/obj/item/device/flightpack/proc/handle_flight()
-	if(!flight)
-		return 0
 
 /obj/item/device/flightpack/proc/handle_boost()
 	if(boost)
