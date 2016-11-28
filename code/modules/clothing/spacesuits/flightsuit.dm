@@ -338,7 +338,6 @@
 	update_slowdown()
 	update_icon()
 	check_conditions()
-	handle_flight()
 	calculate_momentum_speed()
 	momentum_drift_tick++
 	momentum_drift()
