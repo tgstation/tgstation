@@ -346,6 +346,7 @@
 	list_reagents = list("nutriment" = 1, "vitamin" = 1, "iron" = 10, "sugar" = 5, "omnizine" = 2)	//Honk
 
 /obj/item/weapon/reagent_containers/food/snacks/lollipop/New()
+	..()
 	var/image/I = image(icon = 'icons/obj/lollipop.dmi', icon_state = "lollipop_head")
 	I.color = rgb(rand(0, 255), rand(0, 255), rand(0, 255))
 	add_overlay(I)
@@ -363,4 +364,5 @@
 	list_reagents = list("sugar" = 5, "bicaridine" = 2, "kelotane" = 2)	//Kek
 
 /obj/item/weapon/reagent_containers/food/snacks/gumball/New()
+	..()
 	color = rgb(rand(0, 255), rand(0, 255), rand(0, 255))
