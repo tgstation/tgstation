@@ -19,6 +19,7 @@
 	var/item_state_boost = "flightpack_boost"
 	actions_types = list(/datum/action/item_action/flightpack/toggle_flight, /datum/action/item_action/flightpack/engage_boosters, /datum/action/item_action/flightpack/toggle_stabilizers, /datum/action/item_action/flightpack/change_power, /datum/action/item_action/flightpack/toggle_airbrake)
 	armor = list(melee = 20, bullet = 20, laser = 20, energy = 10, bomb = 30, bio = 100, rad = 75, fire = 100, acid = 100)
+	var/list/datahuds = list(DATA_HUD_SECURITY_ADVANCED, DATA_HUD_MEDICAL_ADVANCED, DATA_HUD_DIAGNOSTIC)
 
 	w_class = 4
 	slot_flags = SLOT_BACK
@@ -1182,7 +1183,7 @@
 //FLIGHT HELMET----------------------------------------------------------------------------------------------------------------------------------------------------
 /obj/item/clothing/head/helmet/space/hardsuit/flightsuit
 	name = "flight helmet"
-	desc = "A sealed helmet attached to a flight suit for EVA usage scenerios."
+	desc = "A sealed helmet attached to a flight suit for EVA usage scenerios. Its visor contains an information uplink HUD."
 	icon_state = "flighthelmet"
 	item_state = "flighthelmet"
 	item_color = "flight"
@@ -1190,6 +1191,17 @@
 	brightness_on = 7
 	armor = list(melee = 20, bullet = 20, laser = 20, energy = 10, bomb = 30, bio = 100, rad = 75, fire = 100, acid = 100)
 	max_heat_protection_temperature = FIRE_HELM_MAX_TEMP_PROTECT
+
+/obj/item/clothing/head/helmet/space/hardsuit/flightsuit/equipped(mob/living/carbon/human/wearer, slot)
+	for(var/hudtype in datahuds)
+		var/datum/atom_hud/H = huds[hudtype]
+		H.add_hud_to(wearer)
+
+/obj/item/clothing/head/helmet/space/hardsuit/flightsuit/dropped()
+	for(var/hudtype in datahuds)
+		var/datum/atom_hud/H = huds[hudtype]
+		H.remove_hud_from(wearer)
+
 
 //ITEM actionS------------------------------------------------------------------------------------------------------------------------------------------------------
 //TODO: TOGGLED BUTTON SPRITES
