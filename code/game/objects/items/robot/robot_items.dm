@@ -399,6 +399,7 @@
 	lollipops--
 	check_amount()
 	user << "<span class='notice'>Launching lollipop!</span>"
+	user.changeNext_move(2)
 	playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 	L.throw_speed = hitspeed
 	L.throwforce = hitdamage
@@ -415,6 +416,7 @@
 	A.BB.damage = hitdamage
 	A.BB.speed = 0.5
 	A.BB.color = rgb(rand(0, 255), rand(0, 255), rand(0, 255))
+	playsound(src.loc, 'sound/weapons/bulletflyby3.ogg', 50, 1)
 	A.fire_casing(target, user, params, 0, 0, null, 0)
 	user.visible_message("<span class='warning'>[user] shoots a high-velocity gumball at [target]!</span>")
 	check_amount()
