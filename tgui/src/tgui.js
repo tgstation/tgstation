@@ -48,6 +48,6 @@ loadCSS('https://cdn.jsdelivr.net/fontawesome/4.5.0/css/font-awesome.min.css')
 // Handle font loads.
 import FontFaceObserver from 'fontfaceobserver'
 const fontawesome = new FontFaceObserver('FontAwesome')
-fontawesome.check('\uf240')
+fontawesome.load('\uf240')
   .then(() => document.body.classList.add('icons'))
   .catch(() => document.body.classList.add('no-icons'))
