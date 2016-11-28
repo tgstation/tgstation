@@ -169,7 +169,7 @@ var/datum/subsystem/garbage_collector/SSgarbage
 		switch(hint)
 			if (QDEL_HINT_QUEUE)		//qdel should queue the object for deletion.
 				SSgarbage.QueueForQueuing(D)
-			if (QDEL_HINT_LETMELIVE, QDEL_HINT_IWILLGC)	//qdel should let the object live after calling destory.
+			if (QDEL_HINT_LETMELIVE)//, QDEL_HINT_IWILLGC)	//qdel should let the object live after calling destory.
 				if(!force)
 					return
 				// Returning LETMELIVE after being told to force destroy
