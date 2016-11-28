@@ -278,7 +278,6 @@
 	health = 2000
 	maxHealth = 2000
 	unsuitable_atmos_damage = 0
-	var/didcrap = 0
 
 
 /mob/living/simple_animal/pet/cat/ascendant/Life()
@@ -286,15 +285,18 @@
 	if(stat)
 		return
 	if(health < maxHealth)
-		adjustBruteLoss(-2) //Some life regen.
-	if (didcrap != 1)
-		mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/area_teleport/teleport/cat(null))
-		mind.AddSpell(new /obj/effect/proc_holder/spell/fireball/cat(null))
-		mind.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/repulse/cat(null))
-		mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/emplosion/disable_tech/cat(null))
-		mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/lightning/cat(null))
-		mind.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/knock/cat(null))
-		didcrap = 1
+		adjustBruteLoss(-2) //Some life regen. Not too much, but it should not be too easy to defeat, either.
+
+/mob/living/simple_animal/pet/cat/ascendant/New()
+	. = ..()
+
+	AddSpell(new /obj/effect/proc_holder/spell/targeted/area_teleport/teleport/cat(null))
+	AddSpell(new /obj/effect/proc_holder/spell/fireball/cat(null))
+	AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/repulse/cat(null))
+	AddSpell(new /obj/effect/proc_holder/spell/targeted/emplosion/disable_tech/cat(null))
+	AddSpell(new /obj/effect/proc_holder/spell/targeted/lightning/cat(null))
+	AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/knock/cat(null))
+	add_overlay(image ('icons/effects/effects.dmi', "shield2"))
 
 // Ascendant Spells. Slightly modified wizard spells, removing cooldowns and changing invocations. GODLIKE CREATURS DONT NEED COOLDOWNS!
 /obj/effect/proc_holder/spell/targeted/area_teleport/teleport/cat
@@ -344,9 +346,3 @@
 	desc = "Does the AI's main job for them."
 	invocation = "Mrrow?"
 	clothes_req = 0
-
-/mob/living/simple_animal/pet/cat/ascendant/can_hold_items()
-	return TRUE
-
-/mob/living/simple_animal/pet/cat/ascendant/proc/canUseHUD() 
-	return TRUE
