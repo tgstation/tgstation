@@ -1,8 +1,0 @@
-author: "uraniummeltdown"
-delete-after: True
-changes: 
-  - rscdel: "Borers no longer randomly lose control based on host brain damage"
-  - tweak: "Borer Dominate Victim stun time reduced from 4 -> 2."
-  - tweak: "Borers no longer force unhidden when infesting someone."
-  - tweak: "Borer event is rarer (weight 20->15)."
-  - tweak: "Borer reproduction chemicals required increased from 100 to 200."

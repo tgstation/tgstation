@@ -448,7 +448,7 @@
 				insulate = 1
 		if(!insulate)
 			. += T.slowdown
-	if(!ignorewalk)
+	if(ignorewalk)
 		. += config.run_speed
 	else
 		switch(m_intent)
