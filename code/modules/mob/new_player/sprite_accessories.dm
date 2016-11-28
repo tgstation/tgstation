@@ -1294,7 +1294,6 @@
 	dimension_x = 46
 	center = TRUE
 	dimension_y = 34
-	locked = TRUE
 
 /datum/sprite_accessory/frills
 	icon = 'icons/mob/mutant_bodyparts.dmi'
