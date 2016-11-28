@@ -1,0 +1,7 @@
+author: "XDTM"
+delete-after: True
+changes: 
+  - rscadd: "Added new types of golem: glass, sand, wood, plasteel, titanium, plastitanium, alien alloy, bananium, bluespace, each with their own traits. Experiment!"
+  - tweak: "Golems will be told what their traits are when spawning."
+  - rscadd: "Putting a golem in a gibber will give ores of its mineral type, instead of meat."
+  - rscadd: "Using Iron on an adamantine slime extract will spawn an incomplete golem shell, that will be slaved to whoever completes it, much like a normal adamantine golem."
