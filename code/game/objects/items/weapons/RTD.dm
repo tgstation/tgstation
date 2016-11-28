@@ -1,3 +1,5 @@
+#define NO_AMMO_MESSAGE "Insufficient Matter"
+
 /*
 CONTAINS
 RAPID TERRAFORMING DEVICE
@@ -53,7 +55,6 @@ EMAGGED FUNCTIONS - TODO
 	var/list/conf_access = null
 	var/use_one_access = 0 //If the airlock should require ALL or only ONE of the listed accesses.
 
-	var/no_ammo_message = "Insufficient Matter."
 	var/safety = 1
 	/*
 	Construction costs
@@ -542,7 +543,7 @@ EMAGGED FUNCTIONS - TODO
 /obj/item/weapon/rtd/proc/useResource(amount, mob/user)
 	if(matter < amount)
 		if(user)
-			user << no_ammo_message
+			user << NO_AMMO_MESSAGE
 		return 0
 	matter -= amount
 	desc = "An rtd. It currently holds [matter]/[maxmatter] matter-units."
@@ -551,7 +552,7 @@ EMAGGED FUNCTIONS - TODO
 /obj/item/weapon/rtd/proc/checkResource(amount, mob/user)
 	. = matter >= amount
 	if(!. && user)
-		user << no_ammo_message
+		user << NO_AMMO_MESSAGE
 	return .
 
 /obj/item/weapon/rtd/proc/detonate_pulse()
@@ -567,7 +568,6 @@ EMAGGED FUNCTIONS - TODO
 
 /obj/item/weapon/rtd/borg/New()
 	..()
-	no_ammo_message = "<span class='warning'>Insufficient charge.</span>"
 
 /obj/item/weapon/rtd/borg/useResource(amount, mob/user)
 	if(!iscyborg(user))
@@ -575,11 +575,11 @@ EMAGGED FUNCTIONS - TODO
 	var/mob/living/silicon/robot/borgy = user
 	if(!borgy.cell)
 		if(user)
-			user << no_ammo_message
+			user << NO_AMMO_MESSAGE
 		return 0
 	. = borgy.cell.use(amount * 50)
 	if(!. && user)
-		user << no_ammo_message
+		user << NO_AMMO_MESSAGE
 	return .
 
 /obj/item/weapon/rtd/borg/checkResource(amount, mob/user)
@@ -588,11 +588,11 @@ EMAGGED FUNCTIONS - TODO
 	var/mob/living/silicon/robot/borgy = user
 	if(!borgy.cell)
 		if(user)
-			user << no_ammo_message
+			user << NO_AMMO_MESSAGE
 		return 0
 	. = borgy.cell.charge >= (amount * 72)
 	if(!. && user)
-		user << no_ammo_message
+		user << NO_AMMO_MESSAGE
 	return .
 
 /datum/action/item_action/rtd/access
