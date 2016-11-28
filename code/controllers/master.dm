@@ -68,6 +68,7 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 	return QDEL_HINT_HARDDEL_NOW
 
 /datum/controller/master/proc/Shutdown()
+	processing = FALSE
 	for(var/datum/subsystem/ss in subsystems)
 		ss.Shutdown()
 
