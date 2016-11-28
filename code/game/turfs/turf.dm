@@ -21,6 +21,7 @@
 
 	var/list/image/blueprint_data //for the station blueprints, images of objects eg: pipes
 
+	var/del_changing = FALSE	//if TRUE use QDEL_HINT_LETMELIVE so that the byond turf change can remain optimized
 
 /turf/New()
 	..()
@@ -39,7 +40,7 @@
 /turf/Destroy()
 	visibilityChanged()
 	..()
-	return QDEL_HINT_HARDDEL_NOW
+	return del_changing ? QDEL_HINT_LETMELIVE : QDEL_HINT_HARDDEL_NOW
 
 /turf/attack_hand(mob/user)
 	user.Move_Pulled(src)
@@ -145,6 +146,8 @@
 
 	SSair.remove_from_active(src)
 
+	del_changing = TRUE
+	qdel(src)
 	var/turf/W = new path(src)
 	if(!defer_change)
 		W.AfterChange()
