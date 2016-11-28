@@ -75,3 +75,25 @@
 		user << "<span class='notice'>You load [num_loaded] spear\s into \the [src].</span>"
 		update_icon()
 		chamber_round()
+
+/obj/item/weapon/gun/ballistic/automatic/atlauncher
+	desc = "A pre-loaded, single shot anti-tank launcher."
+	name = "anti-tank grenade launcher"
+	icon_state = "rocketlauncher"
+	item_state = "rocketlauncher"
+	mag_type = /obj/item/ammo_box/magazine/internal/rocketlauncher
+	fire_sound = 'sound/weapons/rocketlaunch.ogg'
+	w_class = 4
+	can_suppress = 0
+	burst_size = 1
+	fire_delay = 0
+	select = 0
+	actions_types = list()
+	casing_ejector = 0
+
+/obj/item/weapon/gun/ballistic/automatic/atlauncher/attack_self()
+	return
+
+/obj/item/weapon/gun/ballistic/automatic/atlauncher/update_icon()
+	..()
+	icon_state = "rocketlauncher[magazine ? "-[get_ammo(1)]" : ""]"

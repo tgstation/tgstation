@@ -43,6 +43,27 @@
 	explosion(target, -1, 0, 2, 1, 0, flame_range = 3)
 	return 1
 
+/obj/item/projectile/bullet/a84mm
+	name ="anti-tank rocket"
+	desc = "USE A WEEL GUN"
+	icon_state= "atrocket"
+	damage = 80
+	var/anti_armour_damage = 200
+	armour_penetration = 100
+	dismemberment = 100
+
+/obj/item/projectile/bullet/a84mm/on_hit(atom/target, blocked = 0)
+	..()
+	explosion(target, -1, 1, 3, 1, 0, flame_range = 4)
+
+	if(istype(target, /obj/mecha))
+		var/obj/mecha/M = target
+		M.take_damage(anti_armour_damage)
+	if(istype(target, /mob/living/silicon))
+		var/mob/living/silicon/S = target
+		S.take_overall_damage(3*anti_armour_damage/4, anti_armour_damage/4)
+	return 1
+
 /obj/item/projectile/temp
 	name = "freeze beam"
 	icon_state = "ice_2"
