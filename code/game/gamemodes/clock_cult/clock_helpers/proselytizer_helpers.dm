@@ -121,7 +121,7 @@
 	var/doortype = /obj/machinery/door/airlock/clockwork
 	if(glass)
 		doortype = /obj/machinery/door/airlock/clockwork/brass
-	return list("operation_time" = 40, "new_obj_type" = doortype, "alloy_cost" = REPLICANT_WALL_TOTAL, "spawn_dir" = dir)
+	return list("operation_time" = 60, "new_obj_type" = doortype, "alloy_cost" = REPLICANT_WALL_TOTAL, "spawn_dir" = dir)
 
 /obj/machinery/door/airlock/clockwork/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer)
 	return FALSE

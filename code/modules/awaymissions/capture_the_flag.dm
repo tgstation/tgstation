@@ -226,7 +226,7 @@
 		var/turf/T = get_turf(body)
 		new /obj/effect/ctf/ammo(T)
 		recently_dead_ckeys += body.ckey
-		addtimer(src, "clear_cooldown", respawn_cooldown, TRUE, body.ckey)
+		addtimer(src, "clear_cooldown", respawn_cooldown, TIMER_UNIQUE, body.ckey)
 		body.dust()
 
 /obj/machinery/capture_the_flag/proc/clear_cooldown(var/ckey)

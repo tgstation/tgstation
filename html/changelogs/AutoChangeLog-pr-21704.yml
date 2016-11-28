@@ -1,4 +1,0 @@
-author: "Kor"
-delete-after: True
-changes: 
-  - rscadd: "You can now see which emergency shuttle is coming in the status panel."

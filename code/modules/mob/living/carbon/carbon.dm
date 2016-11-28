@@ -371,6 +371,10 @@
 			legcuffed = null
 			update_inv_legcuffed()
 			return
+		else
+			unEquip(I)
+			I.dropped()
+			return
 		return TRUE
 
 /mob/living/carbon/proc/is_mouth_covered(head_only = 0, mask_only = 0)

@@ -104,13 +104,8 @@
 
 //Removes any null entries from the list
 /proc/listclearnulls(list/L)
-	if(istype(L))
-		var/i=1
-		for(var/thing in L)
-			if(thing != null)
-				++i
-				continue
-			L.Cut(i,i+1)
+	var/list/N = new(L.len)
+	L -= N
 
 /*
  * Returns list containing all the entries from first list that are not present in second.

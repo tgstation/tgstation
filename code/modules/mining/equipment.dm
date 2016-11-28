@@ -236,7 +236,7 @@
 	if(pressure < 50)
 		name = "strong resonance field"
 		resonance_damage = 60
-	addtimer(src, "burst", timetoburst, FALSE, proj_turf)
+	addtimer(src, "burst", timetoburst, TIMER_NORMAL, proj_turf)
 
 /obj/effect/resonance/Destroy()
 	if(res)

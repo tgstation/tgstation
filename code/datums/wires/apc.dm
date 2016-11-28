@@ -32,7 +32,7 @@
 				addtimer(A, "reset", 1200, TIMER_NORMAL, wire)
 		if(WIRE_IDSCAN) // Unlock for a little while.
 			A.locked = FALSE
-			addtimer(A, "reset", 300, FALSE, wire)
+			addtimer(A, "reset", 300, TIMER_NORMAL, wire)
 		if(WIRE_AI) // Disable AI control for a very short time.
 			if(!A.aidisabled)
 				A.aidisabled = TRUE

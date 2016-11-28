@@ -224,8 +224,8 @@
 			user.visible_message("<span class='notice'>With a sudden blaze, [H] stands back up.</span>")
 			H.fakefire()
 			FulfillContract(H, 1)//Revival contracts are always signed in blood
-			addtimer(H, "fakefireextinguish",5,TRUE)
-		addtimer(src,"resetcooldown",300,TRUE)
+			addtimer(H, "fakefireextinguish",5, TIMER_UNIQUE)
+		addtimer(src,"resetcooldown",300, TIMER_UNIQUE)
 	else
 		..()
 
