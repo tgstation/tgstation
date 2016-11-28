@@ -101,6 +101,7 @@
 	death = FALSE
 	anchored = 0
 	density = 0
+	var/mob/living/owner = null //golem's owner if it has one
 	flavour_text = "<font size=3><b>Y</b></font><b>ou are a Free Golem. Your family worships <span class='danger'>The Liberator</span>. In his infinite and divine wisdom, he set your clan free to \
 	travel the stars with a single declaration: \"Yeah go do whatever.\" Though you are bound to the one who created you, it is customary in your society to repeat those same words to newborn \
 	golems, so that no golem may ever be forced to serve again.</b>"
@@ -110,6 +111,10 @@
 	var/area/A = get_area(src)
 	if(A)
 		notify_ghosts("A golem shell has been completed in \the [A.name].", source = src, action=NOTIFY_ATTACK)
+	spawn(1)//give it time to get an owner
+		if(owner)
+			flavour_text = "You are a golem. You move slowly, but are highly resistant to heat and cold as well as blunt trauma. You are unable to wear clothes, but can still use most tools. \
+			Serve [owner], and assist [owner.p_them()] in completing their goals at any cost."
 
 /obj/effect/mob_spawn/human/golem/special(mob/living/new_spawn)
 	var/golem_surname = pick(golem_names)
@@ -118,7 +123,7 @@
 	if(prob(3))
 		golem_surname = pick(last_names)
 
-	var/datum/species/X = mob_species
+	var/datum/species/golem/X = mob_species
 	var/golem_forename = initial(X.id)
 
 	// The id of golem species is either their material "diamond","gold",
@@ -132,11 +137,17 @@
 	// also a tiny chance of being called "Plasma Meme"
 	// which is clearly a feature
 
-	new_spawn << "Build golem shells in the autolathe, and feed refined mineral sheets to the shells to bring them to life! You are generally a peaceful group unless provoked."
+	new_spawn << "[initial(X.info_text)]"
+	if(!owner)
+		new_spawn << "Build golem shells in the autolathe, and feed refined mineral sheets to the shells to bring them to life! You are generally a peaceful group unless provoked."
+	else
+		new_spawn.mind.store_memory("<b>Serve [owner.real_name], your creator.</b>")
+		new_spawn.mind.enslave_mind_to_creator(owner)
+		log_game("[key_name(new_spawn)] possessed a golem shell enslaved to [key_name(owner)].")
+		log_admin("[key_name(new_spawn)] possessed a golem shell enslaved to [key_name(owner)].")
 	if(ishuman(new_spawn))
 		var/mob/living/carbon/human/H = new_spawn
 		H.set_cloned_appearance()
-
 
 /obj/effect/mob_spawn/human/golem/adamantine
 	name = "dust-caked golem shell"

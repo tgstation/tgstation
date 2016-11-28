@@ -33,7 +33,7 @@
 /mob/living/proc/get_ear_protection()
 	return 0
 
-/mob/living/proc/on_hit(obj/item/projectile/proj_type)
+/mob/living/proc/on_hit(obj/item/projectile/P)
 	return
 
 /mob/living/bullet_act(obj/item/projectile/P, def_zone)

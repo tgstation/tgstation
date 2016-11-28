@@ -1069,6 +1069,9 @@
 
 
 
+/datum/species/proc/spec_hitby(atom/movable/AM, mob/living/carbon/human/H)
+	return
+
 /datum/species/proc/spec_attack_hand(mob/living/carbon/human/M, mob/living/carbon/human/H, datum/martial_art/attacker_style = M.martial_art)
 	if(!istype(M))
 		return
@@ -1224,14 +1227,18 @@
 			H.adjustStaminaLoss(damage * hit_percent)
 	return 1
 
-/datum/species/proc/on_hit(obj/item/projectile/proj_type, mob/living/carbon/human/H)
+/datum/species/proc/on_hit(obj/item/projectile/P, mob/living/carbon/human/H)
 	// called when hit by a projectile
-	switch(proj_type)
+	switch(P.type)
 		if(/obj/item/projectile/energy/floramut) // overwritten by plants/pods
 			H.show_message("<span class='notice'>The radiation beam dissipates harmlessly through your body.</span>")
 		if(/obj/item/projectile/energy/florayield)
 			H.show_message("<span class='notice'>The radiation beam dissipates harmlessly through your body.</span>")
 	return
+
+/datum/species/proc/bullet_act(obj/item/projectile/P, mob/living/carbon/human/H)
+	// called before a projectile hit
+	return 0
 
 /////////////
 //BREATHING//
