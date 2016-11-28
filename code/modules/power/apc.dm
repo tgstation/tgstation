@@ -200,7 +200,7 @@
 		if(has_electronics && terminal)
 			user << "The cover is [opened==2?"removed":"open"] and the power cell is [ cell ? "installed" : "missing"]."
 		else
-			user << "It's [!terminal?" not":""]wired up."
+			user << "It's [ !terminal ? "not" : "" ] wired up."
 			user << "The electronics are[!has_electronics?"n't":""] installed."
 
 	else
@@ -854,7 +854,7 @@
 		return
 	malf << "Beginning override of APC systems. This takes some time, and you cannot perform other actions during the process."
 	malf.malfhack = src
-	malf.malfhacking = addtimer(malf, "malfhacked", 600, FALSE, src)
+	malf.malfhacking = addtimer(malf, "malfhacked", 600, TIMER_NORMAL, src)
 
 	var/obj/screen/alert/hackingapc/A
 	A = malf.throw_alert("hackingapc", /obj/screen/alert/hackingapc)
@@ -1180,7 +1180,7 @@
 	environ = 0
 	update_icon()
 	update()
-	addtimer(src, "reset", 600, FALSE, APC_RESET_EMP)
+	addtimer(src, "reset", 600, TIMER_NORMAL, APC_RESET_EMP)
 	..()
 
 /obj/machinery/power/apc/blob_act(obj/structure/blob/B)

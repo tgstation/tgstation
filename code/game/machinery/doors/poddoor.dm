@@ -29,9 +29,9 @@
 /obj/machinery/door/poddoor/shuttledock/proc/check()
 	var/turf/T = get_step(src, checkdir)
 	if(!isspaceturf(T))
-		addtimer(src, "open", 0, TRUE)
+		addtimer(src, "open", 0, TIMER_UNIQUE)
 	else
-		addtimer(src, "close", 0, TRUE)
+		addtimer(src, "close", 0, TIMER_UNIQUE)
 
 /obj/machinery/door/poddoor/Bumped(atom/AM)
 	if(density)

@@ -40,7 +40,7 @@
 		ticker.mode.servants_of_ratvar += owner.mind
 		ticker.mode.update_servant_icons_added(owner.mind)
 		if(jobban_isbanned(owner, ROLE_SERVANT_OF_RATVAR))
-			addtimer(ticker.mode, "replace_jobbaned_player", 0, FALSE, owner, ROLE_SERVANT_OF_RATVAR, ROLE_SERVANT_OF_RATVAR)
+			addtimer(ticker.mode, "replace_jobbaned_player", 0, TIMER_NORMAL, owner, ROLE_SERVANT_OF_RATVAR, ROLE_SERVANT_OF_RATVAR)
 	if(owner.mind)
 		owner.mind.special_role = "Servant of Ratvar"
 	owner.attack_log += "\[[time_stamp()]\] <span class='brass'>Has been converted to the cult of Ratvar!</span>"
@@ -49,6 +49,8 @@
 		if(iscyborg(S) && !silent_update)
 			S << "<span class='boldwarning'>You have been desynced from your master AI.\n\
 			In addition, your onboard camera is no longer active and you have gained additional equipment, including a limited clockwork slab.</span>"
+		if(isAI(S))
+			S << "<span class='boldwarning'>You are able to use your cameras to listen in on conversations.</span>"
 		S << "<span class='heavy_brass'>You can communicate with other servants by using the Hierophant Network action button in the upper left.</span>"
 	else if(isbrain(owner) || isclockmob(owner))
 		owner << "<span class='nezbere'>You can communicate with other servants by using the Hierophant Network action button in the upper left.</span>"
@@ -74,6 +76,8 @@
 			A.requires_power = POWER_REQ_CLOCKCULT
 			if(!A.lacks_power())
 				A.ai_restore_power()
+			if(A.eyeobj)
+				A.eyeobj.relay_speech = TRUE
 			for(var/C in A.connected_robots)
 				var/mob/living/silicon/robot/R = C
 				if(R.connected_ai == A)
@@ -101,7 +105,8 @@
 		hierophant_network.span_for_name = "nezbere"
 		hierophant_network.span_for_message = "brass"
 	owner.throw_alert("clockinfo", /obj/screen/alert/clockwork/infodump)
-	cache_check(owner)
+	if(!clockwork_gateway_activated)
+		owner.throw_alert("scripturereq", /obj/screen/alert/clockwork/scripture_reqs)
 	..()
 
 /datum/antagonist/clockcultist/remove_innate_effects()
@@ -110,7 +115,7 @@
 	owner.languages_spoken &= ~RATVAR
 	owner.languages_understood &= ~RATVAR
 	owner.clear_alert("clockinfo")
-	owner.clear_alert("nocache")
+	owner.clear_alert("scripturereq")
 	for(var/datum/action/innate/function_call/F in owner.actions) //Removes any bound Ratvarian spears
 		qdel(F)
 	if(issilicon(owner))

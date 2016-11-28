@@ -179,7 +179,7 @@ var/list/gang_colors_pool = list("red","orange","yellow","green","blue","purple"
 
 	G.add_gang_hud(gangster_mind)
 	if(jobban_isbanned(gangster_mind.current, ROLE_GANG))
-		addtimer(src, "replace_jobbaned_player", 0, FALSE, gangster_mind.current, ROLE_GANG, ROLE_GANG)
+		addtimer(src, "replace_jobbaned_player", 0, TIMER_NORMAL, gangster_mind.current, ROLE_GANG, ROLE_GANG)
 	return 2
 ////////////////////////////////////////////////////////////////////
 //Deals with players reverting to neutral (Not a gangster anymore)//
@@ -260,9 +260,13 @@ var/list/gang_colors_pool = list("red","orange","yellow","green","blue","purple"
 	if(!winner)
 		world << "<span class='redtext'>The station was [station_was_nuked ? "destroyed!" : "evacuated before a gang could claim it! The station wins!"]</span><br>"
 		feedback_set_details("round_end_result","loss - gangs failed takeover")
+
+		ticker.news_report = GANG_LOSS
 	else
 		world << "<span class='redtext'>The [winner.name] Gang successfully performed a hostile takeover of the station!</span><br>"
 		feedback_set_details("round_end_result","win - gang domination complete")
+
+		ticker.news_report = GANG_TAKEOVER
 
 	for(var/datum/gang/G in gangs)
 		var/text = "<b>The [G.name] Gang was [winner==G ? "<span class='greenannounce'>victorious</span>" : "<span class='boldannounce'>defeated</span>"] with [round((G.territory.len/start_state.num_territories)*100, 1)]% control of the station!</b>"

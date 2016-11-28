@@ -140,7 +140,7 @@
 		var/loaded = 0
 		for(var/obj/item/weapon/reagent_containers/food/snacks/S in T.contents)
 			if (contents.len>=max_n_of_items)
-				user << "<span class='warning'>[src] is full, you cannot put more!</span>"
+				user << "<span class='warning'>[src] is full, you can't put anything in!</span>"
 				return 1
 			T.remove_from_storage(S, src)
 			loaded++
@@ -149,15 +149,15 @@
 			user << "<span class='notice'>You insert [loaded] items into [src].</span>"
 
 
-	else if(istype(O,/obj/item/weapon/reagent_containers/food/snacks) || istype(O,/obj/item/weapon/dice))
+	else if(O.w_class <= 3 && !istype(O,/obj/item/weapon/storage) && user.a_intent == "help")
 		if (contents.len>=max_n_of_items)
-			user << "<span class='warning'>[src] is full, you cannot put more!</span>"
+			user << "<span class='warning'>[src] is full, you can't put anything in!</span>"
 			return 1
 		else
-		//	user.unEquip(O)	//This just causes problems so far as I can tell. -Pete
 			if(!user.drop_item())
 				user << "<span class='warning'>\the [O] is stuck to your hand, you cannot put it in \the [src]!</span>"
 				return 0
+			
 			O.loc = src
 			user.visible_message( \
 				"[user] has added \the [O] to \the [src].", \
@@ -196,7 +196,11 @@
 	else
 		var/list/items_counts = new
 		for (var/obj/O in contents)
-			items_counts[O.name]++
+			if(istype(O, /obj/item/stack/))
+				var/obj/item/stack/S = O
+				items_counts[O.name] += S.amount
+			else
+				items_counts[O.name]++
 
 		for (var/O in items_counts)
 			var/N = items_counts[O]
@@ -240,9 +244,20 @@
 			return
 		stop()
 
+		var/metal = 0
 		for(var/obj/item/O in contents)
 			O.microwave_act(src)
+			if(O.materials[MAT_METAL])
+				metal += O.materials[MAT_METAL]
+				
+		if(metal)
+			visible_message("<span class='warning'>Sparks fly around [src]!")
+			if(prob(max(metal/2, 33)))
+				explosion(loc,0,1,2)
+			broke()
+			return
 			
+		dropContents()
 		return
 
 /obj/machinery/microwave/proc/microwaving(seconds as num)

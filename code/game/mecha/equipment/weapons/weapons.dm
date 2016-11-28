@@ -68,7 +68,7 @@
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/start_cooldown()
 	set_ready_state(0)
 	chassis.use_power(energy_drain*get_shot_amount())
-	addtimer(src, "set_ready_state", equip_cooldown, FALSE, 1)
+	addtimer(src, "set_ready_state", equip_cooldown, TIMER_NORMAL, 1)
 
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/laser
 	equip_cooldown = 8
@@ -111,15 +111,15 @@
 	fire_sound = 'sound/weapons/marauder.ogg'
 
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/plasma
-	equip_cooldown = 20
+	equip_cooldown = 10
 	name = "217-D Heavy Plasma Cutter"
 	desc = "A device that shoots resonant plasma bursts at extreme velocity. The blasts are capable of crushing rock and demloishing solid obstacles."
 	icon_state = "mecha_plasmacutter"
 	item_state = "plasmacutter"
-	energy_drain = 60
+	energy_drain = 30
 	origin_tech = "materials=3;plasmatech=4;engineering=3"
 	projectile = /obj/item/projectile/plasma/adv/mech
-	fire_sound = 'sound/weapons/Laser.ogg'
+	fire_sound = 'sound/weapons/plasma_cutter.ogg'
 
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/plasma/can_attach(obj/mecha/working/M)
 	if(..()) //combat mech

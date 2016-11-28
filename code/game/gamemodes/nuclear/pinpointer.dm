@@ -76,7 +76,7 @@
 	scan_for_target()
 	point_to_target()
 	my_god_jc_a_bomb()
-	addtimer(src, "refresh_target", 50, TRUE)
+	addtimer(src, "refresh_target", 50, TIMER_UNIQUE)
 
 /obj/item/weapon/pinpointer/proc/scan_for_target() //Looks for whatever it's tracking
 	if(target)

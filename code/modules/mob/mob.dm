@@ -208,7 +208,7 @@ var/next_mob_id = 0
 
 //This is just a commonly used configuration for the equip_to_slot_if_possible() proc, used to equip people when the rounds tarts and when events happen and such.
 /mob/proc/equip_to_slot_or_del(obj/item/W, slot)
-	equip_to_slot_if_possible(W, slot, 1, 1, 0)
+	return equip_to_slot_if_possible(W, slot, 1, 1, 0)
 
 //puts the item "W" into an appropriate slot in a human's inventory
 //returns 0 if it cannot, 1 if successful
@@ -520,6 +520,7 @@ var/next_mob_id = 0
 			stat(null, "Next Map: [nextmap.friendlyname]")
 		stat(null, "Server Time: [time2text(world.realtime, "YYYY-MM-DD hh:mm")]")
 		if(SSshuttle.emergency)
+			stat(null, "Current Shuttle: [SSshuttle.emergency.name]")
 			var/ETA = SSshuttle.emergency.getModeStr()
 			if(ETA)
 				stat(null, "[ETA] [SSshuttle.emergency.getTimerStr()]")

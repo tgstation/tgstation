@@ -51,17 +51,22 @@
 	if((ears && (ears.flags & EARBANGPROTECT)) || (head && (head.flags & HEADBANGPROTECT)))
 		return 1
 
-/mob/living/carbon/human/on_hit(proj_type)
-	dna.species.on_hit(proj_type, src)
+/mob/living/carbon/human/on_hit(obj/item/projectile/P)
+	dna.species.on_hit(P, src)
 
 
 /mob/living/carbon/human/bullet_act(obj/item/projectile/P, def_zone)
+	var/spec_return = dna.species.bullet_act(P, src)
+	if(spec_return)
+		return spec_return
+
 	if(martial_art && martial_art.deflection_chance) //Some martial arts users can deflect projectiles!
 		if(prob(martial_art.deflection_chance))
 			if(!lying && dna && !dna.check_mutation(HULK)) //But only if they're not lying down, and hulks can't do it
 				visible_message("<span class='danger'>[src] deflects the projectile; [p_they()] can't be hit with ranged weapons!</span>", "<span class='userdanger'>You deflect the projectile!</span>")
 				playsound(src, pick("sound/weapons/bulletflyby.ogg","sound/weapons/bulletflyby2.ogg","sound/weapons/bulletflyby3.ogg"), 75, 1)
 				return 0
+
 	if(!(P.original == src && P.firer == src)) //can't block or reflect when shooting yourself
 		if(istype(P, /obj/item/projectile/energy) || istype(P, /obj/item/projectile/beam))
 			if(check_reflect(def_zone)) // Checks if you've passed a reflection% check
@@ -125,6 +130,9 @@
 	return FALSE
 
 /mob/living/carbon/human/hitby(atom/movable/AM, skipcatch = 0, hitpush = 1, blocked = 0)
+	var/spec_return = dna.species.spec_hitby(AM, src)
+	if(spec_return)
+		return spec_return
 	var/obj/item/I
 	var/throwpower = 30
 	if(istype(AM, /obj/item))

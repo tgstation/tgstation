@@ -64,14 +64,8 @@
 /obj/effect/acid/Crossed(AM as mob|obj)
 	if(isliving(AM))
 		var/mob/living/L = AM
-		if(ishuman(L))
-			var/mob/living/carbon/human/H = L
-			if(FLYING in H.dna.species.specflags)
-				return
-		else if(isanimal(L))
-			var/mob/living/simple_animal/SA = L
-			if(SA.flying)
-				return
+		if(L.movement_type & FLYING)
+			return
 		if(L.m_intent != "walk" && prob(40))
 			var/acid_used = min(acid_level*0.05, 20)
 			if(L.acid_act(10, acid_used, "feet"))

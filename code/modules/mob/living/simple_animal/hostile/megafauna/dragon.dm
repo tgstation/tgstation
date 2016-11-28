@@ -141,7 +141,7 @@ Difficulty: Medium
 
 	if(prob(15 + anger_modifier) && !client)
 		if(health < maxHealth/2)
-			addtimer(src, "swoop_attack", 0, FALSE, 1)
+			addtimer(src, "swoop_attack", 0, TIMER_NORMAL, 1)
 		else
 			fire_rain()
 
@@ -163,7 +163,7 @@ Difficulty: Medium
 	playsound(get_turf(src),'sound/magic/Fireball.ogg', 200, 1)
 
 	for(var/d in cardinal)
-		addtimer(src, "fire_wall", 0, FALSE, d)
+		addtimer(src, "fire_wall", 0, TIMER_NORMAL, d)
 
 /mob/living/simple_animal/hostile/megafauna/dragon/proc/fire_wall(dir)
 	var/list/hit_things = list(src)

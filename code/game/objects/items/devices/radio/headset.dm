@@ -173,8 +173,9 @@
 
 /obj/item/device/radio/headset/headset_cargo/mining
 	name = "mining radio headset"
-	desc = "Headset used by shaft miners. \nTo access the supply channel, use :u."
+	desc = "Headset used by shaft miners. \nTo access the supply channel, use :u. For science, use :n."
 	icon_state = "mine_headset"
+	keyslot = new /obj/item/device/encryptionkey/headset_mining
 
 /obj/item/device/radio/headset/headset_srv
 	name = "service radio headset"

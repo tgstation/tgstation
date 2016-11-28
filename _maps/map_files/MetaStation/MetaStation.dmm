@@ -73035,6 +73035,7 @@
 	pixel_x = 0;
 	pixel_y = 32
 	},
+/obj/effect/landmark/xmastree/rdrod,
 /turf/open/floor/plasteel/warnwhite{
 	dir = 8
 	},

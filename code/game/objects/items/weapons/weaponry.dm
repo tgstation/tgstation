@@ -96,7 +96,6 @@ var/highlander_claymores = 0
 	block_chance = 0 //RNG WON'T HELP YOU NOW, PANSY
 	attack_verb = list("brutalized", "eviscerated", "disemboweled", "hacked", "carved", "cleaved") //ONLY THE MOST VISCERAL ATTACK VERBS
 	var/notches = 0 //HOW MANY PEOPLE HAVE BEEN SLAIN WITH THIS BLADE
-	var/announced = FALSE //IF WE ARE THE ONLY ONE LEFT STANDING
 	var/obj/item/weapon/disk/nuclear/nuke_disk //OUR STORED NUKE DISK
 
 /obj/item/weapon/claymore/highlander/New()
@@ -112,20 +111,6 @@ var/highlander_claymores = 0
 		nuke_disk.visible_message("<span class='warning'>The nuke disk is vulnerable!</span>")
 		nuke_disk = null
 	return ..()
-
-/obj/item/weapon/claymore/highlander/process()
-	if(isliving(loc))
-		var/mob/living/L = loc
-		if(L.stat != DEAD)
-			if(announced || admin_spawned || highlander_claymores > 1)
-				return
-			announced = TRUE
-			L.fully_heal()
-			world << "<span class='userdanger'>[uppertext(L.real_name)] IS THE ONLY ONE LEFT STANDING!</span>"
-			world << sound('sound/misc/highlander_only_one.ogg')
-			L << "<span class='notice'>YOU ARE THE ONLY ONE LEFT STANDING!</span>"
-			for(var/obj/item/weapon/bloodcrawl/B in L)
-				qdel(B)
 
 /obj/item/weapon/claymore/highlander/pickup(mob/living/user)
 	user << "<span class='notice'>The power of Scotland protects you! You are shielded from all stuns and knockdowns.</span>"

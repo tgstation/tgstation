@@ -237,9 +237,11 @@
 					if(!check_survive())
 						explanation = "Make sure at least [acolytes_needed] acolytes escape on the shuttle. ([acolytes_survived] escaped) <span class='greenannounce'>Success!</span>"
 						feedback_add_details("cult_objective","cult_survive|SUCCESS|[acolytes_needed]")
+						ticker.news_report = CULT_ESCAPE
 					else
 						explanation = "Make sure at least [acolytes_needed] acolytes escape on the shuttle. ([acolytes_survived] escaped) <span class='boldannounce'>Fail.</span>"
 						feedback_add_details("cult_objective","cult_survive|FAIL|[acolytes_needed]")
+						ticker.news_report = CULT_FAILURE
 				if("sacrifice")
 					if(sacrifice_target)
 						if(sacrifice_target in sacrificed)
@@ -255,9 +257,12 @@
 					if(!eldergod)
 						explanation = "Summon Nar-Sie. <span class='greenannounce'>Success!</span>"
 						feedback_add_details("cult_objective","cult_narsie|SUCCESS")
+						ticker.news_report = CULT_SUMMON
 					else
 						explanation = "Summon Nar-Sie. <span class='boldannounce'>Fail.</span>"
 						feedback_add_details("cult_objective","cult_narsie|FAIL")
+						ticker.news_report = CULT_FAILURE
+
 			text += "<br><B>Objective #[obj_count]</B>: [explanation]"
 	world << text
 	..()

@@ -179,6 +179,9 @@
 	if(finished)
 		feedback_set_details("round_end_result","loss - wizard killed")
 		world << "<span class='userdanger'>The wizard[(wizards.len>1)?"s":""] has been killed by the crew! The Space Wizards Federation has been taught a lesson they will not soon forget!</span>"
+
+		ticker.news_report = WIZARD_KILLED
+
 	..()
 	return 1
 

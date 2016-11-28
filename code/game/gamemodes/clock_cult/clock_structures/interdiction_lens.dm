@@ -4,7 +4,7 @@
 	desc = "An ominous, double-pronged brass totem. There's a strange gemstone clasped between the pincers."
 	clockwork_desc = "A powerful totem that constantly drains nearby electronics and funnels the power drained into nearby Sigils of Transmission or the area's APC."
 	icon_state = "interdiction_lens"
-	construction_value = 25
+	construction_value = 20
 	active_icon = "interdiction_lens_active"
 	inactive_icon = "interdiction_lens"
 	unanchored_icon = "interdiction_lens_unwrenched"
@@ -59,6 +59,7 @@
 
 		var/unconverted_ai = FALSE
 		var/efficiency = get_efficiency_mod()
+		var/rage_modifier = get_efficiency_mod(TRUE)
 
 		for(var/i in ai_list)
 			var/mob/living/silicon/ai/AI = i
@@ -71,10 +72,10 @@
 				continue
 			power_drained += (A.power_drain(TRUE) * efficiency)
 
-			if(prob(1))
+			if(prob(1 * rage_modifier))
 				A << "<span class='neovgre'>\"[text2ratvar(pick(rage_messages))]\"</span>"
 
-			if(prob(100 * efficiency))
+			if(prob(100 * (efficiency * efficiency)))
 				if(istype(A, /obj/machinery/camera) && unconverted_ai)
 					var/obj/machinery/camera/C = A
 					if(C.isEmpProof() || !C.status)
@@ -100,7 +101,7 @@
 
 		if(power_drained && power_drained >= MIN_CLOCKCULT_POWER && return_power(power_drained))
 			successfulprocess = TRUE
-			playsound(src, 'sound/items/PSHOOM.ogg', 50, 1, interdiction_range-7, 1)
+			playsound(src, 'sound/items/PSHOOM.ogg', 50 * efficiency, 1, interdiction_range-7, 1)
 
 		if(!successfulprocess)
 			visible_message("<span class='warning'>The gemstone suddenly turns horribly dark, writhing tendrils covering it!</span>")

@@ -50,9 +50,14 @@
 	if(stat != DEAD)
 		handle_status_effects() //all special effects, stunned, weakened, jitteryness, hallucination, sleeping, etc
 
+	if(floating && (!(movement_type & FLYING)))
+		float(0)
+
+	if(movement_type & FLYING)
+		float(1)
+
 	if(stat != DEAD)
 		return 1
-
 
 /mob/living/proc/handle_breathing()
 	return

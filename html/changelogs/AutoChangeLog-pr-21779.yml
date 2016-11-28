@@ -1,0 +1,5 @@
+author: "Joan"
+delete-after: True
+changes: 
+  - tweak: "Interdiction Lenses are more likely to turn off if damaged."
+  - tweak: "Reduced Interdiction Lens and Tinkerer's Daemon CV from 25 to 20."

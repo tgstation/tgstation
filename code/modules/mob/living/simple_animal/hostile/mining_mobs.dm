@@ -322,7 +322,7 @@
 	speed = 3
 	maxHealth = 1
 	health = 1
-	flying = 1
+	movement_type = FLYING
 	harm_intent_damage = 5
 	melee_damage_lower = 2
 	melee_damage_upper = 2
@@ -713,7 +713,7 @@
 	speak_emote = list("telepathically cries")
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	stat_attack = 1
-	flying = TRUE
+	movement_type = FLYING
 	robust_searching = 1
 	loot = list()
 	butcher_results = list(/obj/item/weapon/ore/diamond = 2, /obj/item/stack/sheet/sinew = 2, /obj/item/stack/sheet/bone = 1)
@@ -917,7 +917,7 @@
 		..()
 
 /mob/living/simple_animal/hostile/asteroid/gutlunch/AttackingTarget()
-	if(is_type_in_list(target,wanted_objects)) //we eats
+	if(is_type_in_typecache(target,wanted_objects)) //we eats
 		udder.generateMilk()
 		regenerate_icons()
 		visible_message("<span class='notice'>[src] slurps up [target].</span>")
