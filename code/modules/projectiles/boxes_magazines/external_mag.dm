@@ -229,7 +229,7 @@ obj/item/ammo_box/magazine/tommygunm45
 	desc = "An extremely powerful round capable of passing straight through cover and anyone unfortunate enough to be behind it."
 	ammo_type = /obj/item/ammo_casing/penetrator
 	origin_tech = "combat=6;syndicate=3"
-	max_ammo = 5
+	max_ammo = 50
 
 
 //// SAW MAGAZINES

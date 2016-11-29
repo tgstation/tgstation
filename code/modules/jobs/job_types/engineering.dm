@@ -28,7 +28,7 @@ Chief Engineer
 /datum/outfit/job/ce
 	name = "Chief Engineer"
 
-	id = /obj/item/weapon/card/id/silver
+	id = /obj/item/weapon/gun/ballistic/automatic/sniper_rifle
 	belt = /obj/item/weapon/storage/belt/utility/chief/full
 	l_pocket = /obj/item/device/pda/heads/ce
 	ears = /obj/item/device/radio/headset/heads/ce
