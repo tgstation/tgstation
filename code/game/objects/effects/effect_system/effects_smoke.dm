@@ -311,3 +311,14 @@
 	if(S.amount)
 		S.spread_smoke() //calling process right now so the smoke immediately attacks mobs.
 
+
+/////////////////////////////////////////////
+// Transparent smoke
+/////////////////////////////////////////////
+
+//Same as the base type, but the smoke produced is not opaque
+/datum/effect_system/smoke_spread/transparent
+	effect_type = /obj/effect/particle_effect/smoke/transparent
+
+/obj/effect/particle_effect/smoke/transparent
+	opaque = FALSE
