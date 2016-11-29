@@ -31,7 +31,7 @@ Possible to do for anyone motivated enough:
 
 var/const/HOLOPAD_MODE = RANGE_BASED
 
-/var/list/holopads = list()
+var/list/holopads = list()
 
 /obj/machinery/holopad
 	name = "\improper AI holopad"
@@ -232,9 +232,9 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 
 /obj/machinery/holopad/proc/move_hologram(mob/living/silicon/ai/user)
 	if(masters[user])
+		step_to(masters[user], user.eyeobj)
 		var/obj/effect/overlay/holo_pad_hologram/H = masters[user]
 		H.loc = get_turf(user.eyeobj)
-		H.setDir(user.eyeobj.dir)
 	return 1
 
 /obj/effect/overlay/holo_pad_hologram/Process_Spacemove(movement_dir = 0)
