@@ -392,7 +392,7 @@
 	playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 	return 1
 
-/obj/item/borg/lollipop/proc/throwL(turf/T, mob/living/user)
+/obj/item/borg/lollipop/proc/shootL(atom/target, mob/living/user, params)
 	if(!candy)
 		user << "<span class='warning'>Not enough gumballs left!</span>"
 		return 0
@@ -431,7 +431,7 @@
 				return 0
 			dispense(target, user)
 		if(2)
-			throwL(get_turf(target), user)
+			shootL(target, user, click_params)
 		if(3)
 			shootG(target, user, click_params)
 	hitdamage = initial(hitdamage)
@@ -475,21 +475,26 @@
 	projectile_type = /obj/item/projectile/bullet/reusable/lollipop
 	click_cooldown_override = 2
 
-
 /obj/item/projectile/bullet/reusable/lollipop
 	name = "lollipop"
 	desc = "Oh noes! A fast-moving lollipop!"
-	icon_state = "gumball"
+	icon_state = image(icon = 'icons/obj/lollipop.dmi', icon_state = "lollipop_stick")
 	ammo_type = /obj/item/weapon/reagent_containers/food/snacks/lollipop
-	var/color2
+	var/color2 = rgb(0, 0, 0)
 
 /obj/item/projectile/bullet/reusable/lollipop/New()
+	var/obj/item/weapon/reagent_containers/food/snacks/lollipop/S = new ammo_type(src)
+	color2 = S.headcolor
+	var/image/head = image(icon = 'icons/obj/lollipop.dmi', icon_state = "lollipop_head")
+	head.color = color2
+	add_overlay(head)
+	src.transform = turn(src.transform, 45)
 
 /obj/item/projectile/bullet/reusable/lollipop/handle_drop()
 	if(!dropped)
 		var/turf/T = get_turf(src)
 		var/obj/item/weapon/reagent_containers/food/snacks/lollipop/S = new ammo_type(T)
-		S.color = color2
+		S.change_head_color(color2)
 		dropped = 1
 
 /**********************************************************************
