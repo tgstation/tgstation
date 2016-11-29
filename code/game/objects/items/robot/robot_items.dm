@@ -485,10 +485,9 @@
 /obj/item/projectile/bullet/reusable/lollipop/New()
 	var/obj/item/weapon/reagent_containers/food/snacks/lollipop/S = new ammo_type(src)
 	color2 = S.headcolor
-	var/image/head = image(icon = 'icons/obj/lollipop.dmi', icon_state = "lollipop_head")
+	var/image/head = image(icon = 'icons/obj/projectiles.dmi', icon_state = "lollipop_2")
 	head.color = color2
 	add_overlay(head)
-	//src.transform = turn(src.transform, 45)
 
 /obj/item/projectile/bullet/reusable/lollipop/handle_drop()
 	if(!dropped)
