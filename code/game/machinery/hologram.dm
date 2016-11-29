@@ -160,7 +160,6 @@ var/const/HOLOPAD_MODE = RANGE_BASED
 							return 1
 						else
 							var/obj/machinery/holopad/pad_close = get_closest_atom(/obj/machinery/holopad, holopads, master.eyeobj)
-							world << "[pad_close] [get_dist(pad_close, master.eyeobj)]"
 							if(get_dist(pad_close, master.eyeobj) <= holo_range)
 								var/obj/effect/overlay/holo_pad_hologram/h = masters[master]
 								unset_holo(master)
