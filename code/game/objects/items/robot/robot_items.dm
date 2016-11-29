@@ -478,7 +478,7 @@
 /obj/item/projectile/bullet/reusable/lollipop
 	name = "lollipop"
 	desc = "Oh noes! A fast-moving lollipop!"
-	icon_state = image(icon = 'icons/obj/lollipop.dmi', icon_state = "lollipop_stick")
+	icon_state = "lollipop_1"
 	ammo_type = /obj/item/weapon/reagent_containers/food/snacks/lollipop
 	var/color2 = rgb(0, 0, 0)
 
@@ -488,7 +488,7 @@
 	var/image/head = image(icon = 'icons/obj/lollipop.dmi', icon_state = "lollipop_head")
 	head.color = color2
 	add_overlay(head)
-	src.transform = turn(src.transform, 45)
+	//src.transform = turn(src.transform, 45)
 
 /obj/item/projectile/bullet/reusable/lollipop/handle_drop()
 	if(!dropped)
