@@ -145,14 +145,14 @@
 	if(..())
 		return
 
-	for(var/obj/item/weapon/pickaxe/drill/cyborg/D in R.module.modules)
-		qdel(D)
-	for(var/obj/item/weapon/shovel/S in R.module.modules)
-		qdel(S)
+	for(var/obj/item/weapon/pickaxe/drill/cyborg/D in R.module)
+		R.module.remove_module(D, TRUE)
+	for(var/obj/item/weapon/shovel/S in R.module)
+		R.module.remove_module(S, TRUE)
 
-	R.module.modules += new /obj/item/weapon/pickaxe/drill/cyborg/diamond(R.module)
-	R.module.rebuild()
-
+	var/obj/item/weapon/pickaxe/drill/cyborg/diamond/DD = new /obj/item/weapon/pickaxe/drill/cyborg/diamond(R.module)
+	R.module.basic_modules += DD
+	R.module.add_module(DD, FALSE, TRUE)
 	return 1
 
 /obj/item/borg/upgrade/soh
@@ -167,12 +167,12 @@
 	if(..())
 		return
 
-	for(var/obj/item/weapon/storage/bag/ore/cyborg/S in R.module.modules)
-		qdel(S)
+	for(var/obj/item/weapon/storage/bag/ore/cyborg/S in R.module)
+		R.module.remove_module(S, TRUE)
 
-	R.module.modules += new /obj/item/weapon/storage/bag/ore/holding(R.module)
-	R.module.rebuild()
-
+	var/obj/item/weapon/storage/bag/ore/holding/H = new /obj/item/weapon/storage/bag/ore/holding(R.module)
+	R.module.basic_modules += H
+	R.module.add_module(H, FALSE, TRUE)
 	return 1
 
 /obj/item/borg/upgrade/syndicate
@@ -197,7 +197,7 @@
 	name = "mining cyborg lavaproof tracks"
 	desc = "An upgrade kit to apply specialized coolant systems and insulation layers to mining cyborg tracks, enabling them to withstand exposure to molten rock."
 	icon_state = "ash_plating"
-	burn_state = LAVA_PROOF
+	resistance_flags = LAVA_PROOF | FIRE_PROOF
 	require_module = 1
 	module_type = /obj/item/weapon/robot_module/miner
 	origin_tech = "engineering=4;materials=4;plasmatech=4"

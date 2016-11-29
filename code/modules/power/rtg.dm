@@ -124,7 +124,7 @@
 		"<span class='italics'>You hear a loud electrical crack!</span>")
 	playsound(src.loc, 'sound/magic/LightningShock.ogg', 100, 1, extrarange = 5)
 	tesla_zap(src, 5, power_gen * 0.05)
-	addtimer(GLOBAL_PROC, "explosion", 100, FALSE, get_turf(src), 2, 3, 4, 8) // Not a normal explosion.
+	addtimer(GLOBAL_PROC, "explosion", 100, TIMER_NORMAL, get_turf(src), 2, 3, 4, 8) // Not a normal explosion.
 
 /obj/machinery/power/rtg/abductor/bullet_act(obj/item/projectile/Proj)
 	..()
@@ -133,7 +133,7 @@
 		log_game("[key_name(Proj.firer)] triggered an Abductor Core explosion via projectile.")
 		overload()
 
-/obj/machinery/power/rtg/abductor/blob_act(obj/effect/blob/B)
+/obj/machinery/power/rtg/abductor/blob_act(obj/structure/blob/B)
 	overload()
 
 /obj/machinery/power/rtg/abductor/ex_act()
@@ -142,7 +142,7 @@
 	else
 		overload()
 
-/obj/machinery/power/rtg/abductor/fire_act()
+/obj/machinery/power/rtg/abductor/fire_act(exposed_temperature, exposed_volume)
 	overload()
 
 /obj/machinery/power/rtg/abductor/tesla_act()

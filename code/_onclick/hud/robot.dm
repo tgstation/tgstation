@@ -13,7 +13,7 @@
 	if(..())
 		return
 	var/mob/living/silicon/robot/R = usr
-	if(R.module)
+	if(R.module.type != /obj/item/weapon/robot_module)
 		R.hud_used.toggle_show_robot_modules()
 		return 1
 	R.pick_module()
@@ -88,10 +88,18 @@
 	var/mob/living/silicon/robot/R = usr
 	R.toggle_ionpulse()
 
-/datum/hud/robot/New(mob/owner)
+/datum/hud/robot
+	ui_style_icon = 'icons/mob/screen_cyborg.dmi'
+
+/datum/hud/robot/New(mob/owner, ui_style = 'icons/mob/screen_cyborg.dmi')
 	..()
 	var/mob/living/silicon/robot/mymobR = mymob
 	var/obj/screen/using
+
+	using = new/obj/screen/wheel/talk
+	using.screen_loc = ui_borg_talk_wheel
+	wheels += using
+	static_inventory += using
 
 //Radio
 	using = new /obj/screen/robot/radio()
@@ -153,9 +161,9 @@
 	infodisplay += healths
 
 //Installed Module
-	mymob.hands = new /obj/screen/robot/module()
-	mymob.hands.screen_loc = ui_borg_module
-	static_inventory += mymob.hands
+	mymobR.hands = new /obj/screen/robot/module()
+	mymobR.hands.screen_loc = ui_borg_module
+	static_inventory += mymobR.hands
 
 //Store
 	module_store_icon = new /obj/screen/robot/store()
@@ -174,7 +182,7 @@
 
 
 /datum/hud/proc/toggle_show_robot_modules()
-	if(!isrobot(mymob)) return
+	if(!iscyborg(mymob)) return
 
 	var/mob/living/silicon/robot/R = mymob
 
@@ -182,7 +190,7 @@
 	update_robot_modules_display()
 
 /datum/hud/proc/update_robot_modules_display(mob/viewer)
-	if(!isrobot(mymob)) return
+	if(!iscyborg(mymob)) return
 
 	var/mob/living/silicon/robot/R = mymob
 
@@ -217,6 +225,7 @@
 			else
 				A.screen_loc = "CENTER+[x]:16,SOUTH+[y]:7"
 			A.layer = ABOVE_HUD_LAYER
+			A.plane = ABOVE_HUD_PLANE
 
 			x++
 			if(x == 4)
@@ -245,20 +254,21 @@
 
 	var/mob/screenmob = viewer || R
 
-	if(screenmob.hud_used.hud_shown)
-		if(R.module_state_1)
-			R.module_state_1.screen_loc = ui_inv1
-			screenmob.client.screen += R.module_state_1
-		if(R.module_state_2)
-			R.module_state_2.screen_loc = ui_inv2
-			screenmob.client.screen += R.module_state_2
-		if(R.module_state_3)
-			R.module_state_3.screen_loc = ui_inv3
-			screenmob.client.screen += R.module_state_3
-	else
-		if(R.module_state_1)
-			screenmob.client.screen -= R.module_state_1
-		if(R.module_state_2)
-			screenmob.client.screen -= R.module_state_2
-		if(R.module_state_3)
-			screenmob.client.screen -= R.module_state_3
+	if(screenmob.hud_used)
+		if(screenmob.hud_used.hud_shown)
+			for(var/i in 1 to R.held_items.len)
+				var/obj/item/I = R.held_items[i]
+				if(I)
+					switch(i)
+						if(1)
+							I.screen_loc = ui_inv1
+						if(2)
+							I.screen_loc = ui_inv2
+						if(3)
+							I.screen_loc = ui_inv3
+						else
+							return
+					screenmob.client.screen += I
+		else
+			for(var/obj/item/I in R.held_items)
+				screenmob.client.screen -= I

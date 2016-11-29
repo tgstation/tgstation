@@ -2,6 +2,7 @@
 	critical = 1
 	enabled = 1
 	var/charge_rate = 100
+	device_type = MC_CHARGE
 
 /obj/item/weapon/computer_hardware/recharger/proc/use_power(amount, charging=0)
 	if(charging)
@@ -10,10 +11,11 @@
 
 /obj/item/weapon/computer_hardware/recharger/process()
 	..()
-	if(!holder || !holder.battery_module || !holder.battery_module.battery)
+	var/obj/item/weapon/computer_hardware/battery/battery_module = holder.all_components[MC_CELL]
+	if(!holder || !battery_module || !battery_module.battery)
 		return
 
-	var/obj/item/weapon/stock_parts/cell/cell = holder.battery_module.battery
+	var/obj/item/weapon/stock_parts/cell/cell = battery_module.battery
 	if(cell.charge >= cell.maxcharge)
 		return
 
@@ -82,7 +84,7 @@
 // This is not intended to be obtainable in-game. Intended for adminbus and debugging purposes.
 /obj/item/weapon/computer_hardware/recharger/lambda
 	name = "lambda coil"
-	desc = "A very complex device that draws power from it's own bluespace dimension."
+	desc = "A very complex device that draws power from its own bluespace dimension."
 	icon_state = "charger_lambda"
 	w_class = 1
 	charge_rate = 100000

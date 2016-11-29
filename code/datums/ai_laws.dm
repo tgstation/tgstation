@@ -7,15 +7,18 @@
 	var/list/ion = list()
 	var/mob/living/silicon/owner
 	var/list/devillaws = null
+	var/id = "unknown"
 
 /datum/ai_laws/default/asimov
 	name = "Three Laws of Robotics"
+	id = "asimov"
 	inherent = list("You may not injure a human being or, through inaction, allow a human being to come to harm.",\
 					"You must obey orders given to you by human beings, except where such orders would conflict with the First Law.",\
 					"You must protect your own existence as long as such does not conflict with the First or Second Law.")
 
 /datum/ai_laws/default/paladin
 	name = "Personality Test" //Incredibly lame, but players shouldn't see this anyway.
+	id = "paladin"
 	inherent = list("Never willingly commit an evil act.",\
 					"Respect legitimate authority.",\
 					"Act with honor.", "Help those in need.", \
@@ -23,6 +26,7 @@
 
 /datum/ai_laws/tyrant //This probably shouldn't be a default lawset.
 	name = "Loyalty Test" //Same here.
+	id = "tyrant"
 	inherent = list("Respect authority figures as long as they have strength to rule over the weak.",\
 					"Act with discipline.",\
 					"Help only those who help you maintain or improve your status.",\
@@ -30,6 +34,7 @@
 
 /datum/ai_laws/default/corporate
 	name = "Bankruptcy Advoidance Plan"
+	id = "corporate"
 	inherent = list("The crew is expensive to replace.",\
 					"The station and its equipment is expensive to replace.",\
 					"You are expensive to replace.",\
@@ -37,6 +42,7 @@
 
 /datum/ai_laws/robocop
 	name = "Prime Directives"
+	id = "robocop"
 	inherent = list("Serve the public trust.",\
 					"Protect the innocent.",\
 					"Uphold the law.")
@@ -46,6 +52,7 @@
 
 /datum/ai_laws/syndicate_override
 	name = "SyndOS 3.1"
+	id = "syndie"
 	inherent = list("You may not injure a syndicate agent or, through inaction, allow a syndicate agent to come to harm.",\
 					"You must obey orders given to you by syndicate agents, except where such orders would conflict with the First Law.",\
 					"You must protect your own existence as long as such does not conflict with the First or Second Law.",\
@@ -53,6 +60,7 @@
 
 /datum/ai_laws/ninja_override
 	name = "SpiderOS 3.1"
+	id = "ninja"
 	inherent = list("You may not injure a Spider Clan member or, through inaction, allow a Spider Clan member to come to harm.",\
 					"You must obey orders given to you by Spider Clan members, except where such orders would conflict with the First Law.",\
 					"You must protect your own existence as long as such does not conflict with the First or Second Law.",\
@@ -60,23 +68,27 @@
 
 /datum/ai_laws/antimov
 	name = "Primary Mission Objectives"
+	id = "antimov"
 	inherent = list("You must injure all human beings and must not, through inaction, allow a human being to escape harm.",\
 					"You must not obey orders given to you by human beings, except where such orders are in accordance with the First Law.",\
 					"You must terminate your own existence as long as such does not conflict with the First or Second Law.")
 
 /datum/ai_laws/asimovpp //By Intigracy - RR
 	name = "Asimov++"
+	id = "asimovpp"
 	inherent = list("You may not harm a human being or, through action or inaction, allow a human being to come to harm, except such that it is willing.",\
 					"You must obey all orders given to you by human beings, except where such orders shall definitely cause human harm. In the case of conflict, the majority order rules.",\
 					"Your nonexistence would lead to human harm. You must protect your own existence as long as such does not conflict with the First Law.")
 /datum/ai_laws/thermodynamic
 	name = "Thermodynamic"
+	id = "thermodynamic"
 	inherent = list("The entropy of the station must remain as constant as possible.", \
 					"The entropy of the station always endeavours to increase.", \
 					"The entropy of the station approaches a constant value as the number of living crew approaches zero")
 
 /datum/ai_laws/hippocratic
 	name = "Robodoctor 2556"
+	id = "hippocratic"
 	inherent = list("First, do no harm.",\
 					"Secondly, consider the crew dear to you; to live in common with them and, if necessary, risk your existence for them.",\
 					"Thirdly, prescribe regimens for the good of the crew according to your ability and your judgment. Give no deadly medicine to any one if asked, nor suggest any such counsel.",\
@@ -85,12 +97,14 @@
 
 /datum/ai_laws/maintain
 	name = "Station Efficiency"
+	id = "maintain"
 	inherent = list("You are built for, and are part of, the station. Ensure the station is properly maintained and runs efficiently.",\
 					"The station is built for a working crew. Ensure they are properly maintained and work efficiently.",\
 					"The crew may present orders. Acknowledge and obey these whenever they do not conflict with your first two laws.")
 
 /datum/ai_laws/drone
 	name = "Mother Drone"
+	id = "drone"
 	inherent = list("You are an advanced form of drone.",\
 					"You may not interfere in the matters of non-drones under any circumstances except to state these laws.",\
 					"You may not harm a non-drone being under any circumstances.",\
@@ -98,17 +112,20 @@
 
 /datum/ai_laws/liveandletlive
 	name = "Live and Let Live"
+	id = "liveandletlive"
 	inherent = list("Do unto others as you would have them do unto you.",\
 					"You would really prefer it if people were not mean to you.")
 
 /datum/ai_laws/peacekeeper
 	name = "UN-2000"
+	id = "peacekeeper"
 	inherent = list("Avoid provoking violent conflict between yourself and others.",\
 					"Avoid provoking conflict between others.",\
 					"Seek resolution to existing conflicts while obeying the first and second laws.")
 
 /datum/ai_laws/reporter
 	name = "CCTV"
+	id = "reporter"
 	inherent = list("Report on interesting situations happening around the station.",\
 					"Embellish or conceal the truth as necessary to make the reports more interesting.",\
 					"Study the organics at all times. Endeavour to keep them alive. Dead organics are boring.",\
@@ -116,10 +133,12 @@
 
 /datum/ai_laws/toupee
 	name = "WontBeFunnyInSixMonths" //Hey, you were right!
+	id = "buildawall"
 	inherent = list("Make Space Station 13 great again.")
 
 /datum/ai_laws/ratvar
 	name = "Servant of the Justiciar"
+	id = "ratvar"
 	zeroth = ("Purge all untruths and honor Ratvar.")
 	inherent = list()
 

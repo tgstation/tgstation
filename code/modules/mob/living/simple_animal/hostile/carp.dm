@@ -18,6 +18,7 @@
 	health = 25
 
 	harm_intent_damage = 8
+	obj_damage = 50
 	melee_damage_lower = 15
 	melee_damage_upper = 15
 	attacktext = "bites"
@@ -30,7 +31,7 @@
 	maxbodytemp = 1500
 
 	faction = list("carp")
-	flying = 1
+	movement_type = FLYING
 	pressure_resistance = 200
 	gold_core_spawnable = 1
 
@@ -63,6 +64,7 @@
 	pixel_x = -16
 	mob_size = MOB_SIZE_LARGE
 
+	obj_damage = 80
 	melee_damage_lower = 20
 	melee_damage_upper = 20
 

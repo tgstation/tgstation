@@ -21,7 +21,7 @@ var/global/list/parasites = list() //all currently existing/living guardians
 	speed = 0
 	a_intent = "harm"
 	stop_automated_movement = 1
-	flying = 1 // Immunity to chasms and landmines, etc.
+	movement_type = FLYING // Immunity to chasms and landmines, etc.
 	attack_sound = 'sound/weapons/punch1.ogg'
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
@@ -32,6 +32,7 @@ var/global/list/parasites = list() //all currently existing/living guardians
 	healable = FALSE //don't brusepack the guardian
 	damage_coeff = list(BRUTE = 0.5, BURN = 0.5, TOX = 0.5, CLONE = 0.5, STAMINA = 0, OXY = 0.5) //how much damage from each damage type we transfer to the owner
 	environment_smash = 1
+	obj_damage = 40
 	melee_damage_lower = 15
 	melee_damage_upper = 15
 	butcher_results = list(/obj/item/weapon/ectoplasm = 1)
@@ -100,7 +101,7 @@ var/global/list/parasites = list() //all currently existing/living guardians
 	bubble_icon = "[namedatum.bubbleicon]"
 
 	if (namedatum.stainself)
-		color = namedatum.colour
+		add_atom_colour(namedatum.colour, FIXED_COLOUR_PRIORITY)
 
 	//Special case holocarp, because #snowflake code
 	if(theme == "carp")
@@ -187,8 +188,7 @@ var/global/list/parasites = list() //all currently existing/living guardians
 		return 1
 
 /mob/living/simple_animal/hostile/guardian/death()
-	drop_l_hand()
-	drop_r_hand()
+	drop_all_held_items()
 	..()
 	if(summoner)
 		summoner << "<span class='danger'><B>Your [name] died somehow!</span></B>"
@@ -243,11 +243,10 @@ var/global/list/parasites = list() //all currently existing/living guardians
 		return FALSE
 
 	. = TRUE
-	if(I == l_hand)
-		l_hand = null
-	else if(I == r_hand)
-		r_hand = null
-	update_inv_hands()
+	var/index = get_held_index_of_item(I)
+	if(index)
+		held_items[index] = null
+		update_inv_hands()
 
 	if(I.pulledby)
 		I.pulledby.stop_pulling()
@@ -256,6 +255,7 @@ var/global/list/parasites = list() //all currently existing/living guardians
 	I.loc = src
 	I.equipped(src, slot)
 	I.layer = ABOVE_HUD_LAYER
+	I.plane = ABOVE_HUD_PLANE
 
 /mob/living/simple_animal/hostile/guardian/proc/apply_overlay(cache_index)
 	var/image/I = guardian_overlays[cache_index]
@@ -267,9 +267,11 @@ var/global/list/parasites = list() //all currently existing/living guardians
 		overlays -= guardian_overlays[cache_index]
 		guardian_overlays[cache_index] = null
 
-/mob/living/simple_animal/hostile/guardian/proc/update_inv_hands()
+/mob/living/simple_animal/hostile/guardian/update_inv_hands()
 	remove_overlay(GUARDIAN_HANDS_LAYER)
 	var/list/hands_overlays = list()
+	var/obj/item/l_hand = get_item_for_held_index(1)
+	var/obj/item/r_hand = get_item_for_held_index(2)
 
 	if(r_hand)
 		var/r_state = r_hand.item_state
@@ -282,7 +284,8 @@ var/global/list/parasites = list() //all currently existing/living guardians
 
 		if(client && hud_used && hud_used.hud_version != HUD_STYLE_NOHUD)
 			r_hand.layer = ABOVE_HUD_LAYER
-			r_hand.screen_loc = ui_rhand
+			r_hand.plane = ABOVE_HUD_PLANE
+			r_hand.screen_loc = ui_hand_position(get_held_index_of_item(r_hand))
 			client.screen |= r_hand
 
 	if(l_hand)
@@ -296,18 +299,13 @@ var/global/list/parasites = list() //all currently existing/living guardians
 
 		if(client && hud_used && hud_used.hud_version != HUD_STYLE_NOHUD)
 			l_hand.layer = ABOVE_HUD_LAYER
-			l_hand.screen_loc = ui_lhand
+			l_hand.plane = ABOVE_HUD_PLANE
+			l_hand.screen_loc = ui_hand_position(get_held_index_of_item(l_hand))
 			client.screen |= l_hand
 
 	if(hands_overlays.len)
 		guardian_overlays[GUARDIAN_HANDS_LAYER] = hands_overlays
 	apply_overlay(GUARDIAN_HANDS_LAYER)
-
-/mob/living/simple_animal/hostile/guardian/update_inv_l_hand()
-	update_inv_hands()
-
-/mob/living/simple_animal/hostile/guardian/update_inv_r_hand()
-	update_inv_hands()
 
 /mob/living/simple_animal/hostile/guardian/regenerate_icons()
 	update_inv_hands()

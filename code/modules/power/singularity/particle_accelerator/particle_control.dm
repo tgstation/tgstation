@@ -226,7 +226,7 @@
 
 /obj/machinery/particle_accelerator/control_box/interact(mob/user)
 	if((get_dist(src, user) > 1) || (stat & (BROKEN|NOPOWER)))
-		if(!istype(user, /mob/living/silicon))
+		if(!issilicon(user))
 			user.unset_machine()
 			user << browse(null, "window=pacontrol")
 			return
@@ -249,8 +249,6 @@
 		dat += "Particle Strength: [strength] "
 		dat += "<A href='?src=\ref[src];strengthdown=1'>--</A>|<A href='?src=\ref[src];strengthup=1'>++</A><BR><BR>"
 
-	//user << browse(dat, "window=pacontrol;size=420x500")
-	//onclose(user, "pacontrol")
 	var/datum/browser/popup = new(user, "pacontrol", name, 420, 300)
 	popup.set_content(dat)
 	popup.set_title_image(user.browse_rsc_icon(icon, icon_state))
@@ -320,7 +318,7 @@
 
 	..()
 
-/obj/machinery/particle_accelerator/control_box/blob_act(obj/effect/blob/B)
+/obj/machinery/particle_accelerator/control_box/blob_act(obj/structure/blob/B)
 	if(prob(50))
 		qdel(src)
 

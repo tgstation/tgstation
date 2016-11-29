@@ -225,6 +225,8 @@
 			return 'icons/mob/screen_slimecore.dmi'
 		if("Operative")
 			return 'icons/mob/screen_operative.dmi'
+		if("Clockwork")
+			return 'icons/mob/screen_clockwork.dmi'
 		else
 			return 'icons/mob/screen_midnight.dmi'
 
@@ -346,55 +348,6 @@ for(var/t in test_times)
 
 /proc/isLeap(y)
 	return ((y) % 4 == 0 && ((y) % 100 != 0 || (y) % 400 == 0))
-
-// A copy of text2dir, extended to accept one and two letter
-//  directions, and to clearly return 0 otherwise.
-/proc/text2dir_extended(direction)
-	switch(uppertext(direction))
-		if("NORTH", "N")
-			return 1
-		if("SOUTH", "S")
-			return 2
-		if("EAST", "E")
-			return 4
-		if("WEST", "W")
-			return 8
-		if("NORTHEAST", "NE")
-			return 5
-		if("NORTHWEST", "NW")
-			return 9
-		if("SOUTHEAST", "SE")
-			return 6
-		if("SOUTHWEST", "SW")
-			return 10
-		else
-	return 0
-
-
-
-// A copy of dir2text, which returns the short one or two letter
-//  directions used in tube icon states.
-/proc/dir2text_short(direction)
-	switch(direction)
-		if(1)
-			return "N"
-		if(2)
-			return "S"
-		if(4)
-			return "E"
-		if(8)
-			return "W"
-		if(5)
-			return "NE"
-		if(6)
-			return "SE"
-		if(9)
-			return "NW"
-		if(10)
-			return "SW"
-		else
-	return
-
 
 
 
@@ -573,3 +526,24 @@ for(var/t in test_times)
 	var/G = hex2num(copytext(A,4,6))
 	var/B = hex2num(copytext(A,6,0))
 	return R+G+B
+
+//word of warning: using a matrix like this as a color value will simplify it back to a string after being set
+/proc/color_hex2color_matrix(string)
+	var/length = length(string)
+	if(length != 7 && length != 9)
+		return color_matrix_identity()
+	var/r = hex2num(copytext(string, 2, 4))/255
+	var/g = hex2num(copytext(string, 4, 6))/255
+	var/b = hex2num(copytext(string, 6, 8))/255
+	var/a = 1
+	if(length == 9)
+		a = hex2num(copytext(string, 8, 10))/255
+	if(!isnum(r) || !isnum(g) || !isnum(b) || !isnum(a))
+		return color_matrix_identity()
+	return list(r,0,0,0, 0,g,0,0, 0,0,b,0, 0,0,0,a, 0,0,0,0)
+
+//will drop all values not on the diagonal
+/proc/color_matrix2color_hex(list/the_matrix)
+	if(!istype(the_matrix) || the_matrix.len != 20)
+		return "#ffffffff"
+	return rgb(the_matrix[1]*255, the_matrix[6]*255, the_matrix[11]*255, the_matrix[16]*255)

@@ -53,8 +53,7 @@ Clown
 		return
 
 	var/obj/item/weapon/implant/sad_trombone/S = new/obj/item/weapon/implant/sad_trombone(H)
-	S.imp_in = H
-	S.implanted = 1
+	S.implant(H, null, 1)
 
 	H.dna.add_mutation(CLOWNMUT)
 	H.rename_self("clown")
@@ -165,6 +164,8 @@ Lawyer
 	shoes = /obj/item/clothing/shoes/laceup
 	l_hand = /obj/item/weapon/storage/briefcase/lawyer
 	l_pocket = /obj/item/device/laser_pointer
+	r_pocket = /obj/item/clothing/tie/lawyers_badge
+
 
 /datum/outfit/job/lawyer/pre_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	..()

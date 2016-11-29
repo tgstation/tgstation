@@ -117,7 +117,7 @@
 	if(istype(W, /obj/item/stack/cable_coil))
 		var/obj/item/stack/cable_coil/coil = W
 		var/turf/T = user.loc
-		if(T.intact || !istype(T, /turf/open/floor))
+		if(T.intact || !isfloorturf(T))
 			return
 		if(get_dist(src, user) > 1)
 			return
@@ -279,7 +279,7 @@
 /proc/electrocute_mob(mob/living/carbon/M, power_source, obj/source, siemens_coeff = 1)
 	if(istype(M.loc,/obj/mecha))
 		return 0	//feckin mechs are dumb
-	if(istype(M,/mob/living/carbon/human))
+	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		if(H.gloves)
 			var/obj/item/clothing/gloves/G = H.gloves

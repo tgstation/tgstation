@@ -92,7 +92,7 @@
 	name = "\improper BMP Asteroid Level 4"
 	})
 "an" = (
-/obj/structure/cult/pylon,
+/obj/structure/destructible/cult/pylon,
 /turf/open/floor/plating/asteroid/basalt/lava{
 	initial_gas_mix = "n2=23;o2=14"
 	},
@@ -108,7 +108,7 @@
 	name = "\improper BMP Asteroid Level 4"
 	})
 "ap" = (
-/obj/structure/cult/pylon,
+/obj/structure/destructible/cult/pylon,
 /turf/open/floor/engine/cult{
 	baseturf = /turf/open/floor/plating/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
@@ -151,7 +151,7 @@
 	name = "\improper BMP Asteroid Level 4"
 	})
 "au" = (
-/obj/structure/cult/talisman,
+/obj/structure/destructible/cult/talisman,
 /obj/effect/decal/remains/human,
 /obj/item/stack/sheet/runed_metal{
 	amount = 25
@@ -167,7 +167,7 @@
 	name = "\improper BMP Asteroid Level 4"
 	})
 "av" = (
-/obj/structure/divine/trap/stun{
+/obj/structure/trap/stun{
 	desc = "A rune inscribed in the floor, the air feeling electrified around it.";
 	name = "shock rune"
 	},
@@ -199,7 +199,7 @@
 	name = "\improper BMP Asteroid Level 4"
 	})
 "ay" = (
-/obj/structure/cult/tome,
+/obj/structure/destructible/cult/tome,
 /obj/item/weapon/tome,
 /obj/item/stack/sheet/runed_metal{
 	amount = 25
@@ -260,7 +260,7 @@
 	name = "\improper BMP Asteroid Level 4"
 	})
 "aE" = (
-/obj/structure/cult/tome,
+/obj/structure/destructible/cult/tome,
 /obj/item/stack/sheet/runed_metal{
 	amount = 25
 	},
@@ -474,7 +474,7 @@
 	name = "\improper BMP Asteroid Level 3"
 	})
 "aY" = (
-/obj/structure/divine/trap/fire{
+/obj/structure/trap/fire{
 	desc = "An old rune inscribed on the floor, giving off an intense amount of heat.";
 	name = "flame rune"
 	},
@@ -485,7 +485,7 @@
 	name = "\improper BMP Asteroid Level 4"
 	})
 "aZ" = (
-/obj/structure/divine/trap/fire{
+/obj/structure/trap/fire{
 	desc = "An old rune inscribed on the floor, giving off an intense amount of heat.";
 	name = "flame rune"
 	},
@@ -497,7 +497,7 @@
 	name = "\improper BMP Asteroid Level 4"
 	})
 "ba" = (
-/obj/structure/cult/talisman,
+/obj/structure/destructible/cult/talisman,
 /obj/item/weapon/plasma_fist_scroll,
 /turf/open/floor/engine/cult{
 	baseturf = /turf/open/floor/plating/lava/smooth;
@@ -515,7 +515,7 @@
 	name = "\improper BMP Asteroid Level 3"
 	})
 "bc" = (
-/obj/effect/spider/stickyweb,
+/obj/structure/spider/stickyweb,
 /turf/open/floor/plating/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14"
 	},
@@ -672,7 +672,7 @@
 	name = "\improper BMP Asteroid Level 4"
 	})
 "bs" = (
-/obj/structure/divine/trap/stun{
+/obj/structure/trap/stun{
 	desc = "A rune inscribed in the floor, the air feeling electrified around it.";
 	name = "shock rune"
 	},
@@ -683,7 +683,7 @@
 	name = "\improper BMP Asteroid Level 4"
 	})
 "bt" = (
-/obj/effect/spider/stickyweb,
+/obj/structure/spider/stickyweb,
 /mob/living/simple_animal/hostile/poison/giant_spider/hunter,
 /turf/open/floor/plating/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14"
@@ -692,7 +692,7 @@
 	name = "\improper BMP Asteroid Level 3"
 	})
 "bu" = (
-/obj/effect/spider/cocoon,
+/obj/structure/spider/cocoon,
 /turf/open/floor/plating/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14"
 	},
@@ -700,7 +700,7 @@
 	name = "\improper BMP Asteroid Level 3"
 	})
 "bv" = (
-/obj/structure/cult/pylon,
+/obj/structure/destructible/cult/pylon,
 /turf/open/floor/plating/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14"
 	},
@@ -745,7 +745,7 @@
 	name = "\improper BMP Asteroid Level 4"
 	})
 "bA" = (
-/obj/structure/cult/tome,
+/obj/structure/destructible/cult/tome,
 /obj/item/device/necromantic_stone,
 /obj/effect/decal/cleanable/blood,
 /turf/open/floor/engine/cult{
@@ -781,7 +781,7 @@
 	name = "\improper BMP Asteroid Level 3"
 	})
 "bE" = (
-/obj/structure/cult/pylon,
+/obj/structure/destructible/cult/pylon,
 /obj/effect/decal/cleanable/blood,
 /turf/open/floor/engine/cult{
 	baseturf = /turf/open/floor/plating/lava/smooth;
@@ -805,7 +805,7 @@
 	name = "\improper BMP Asteroid Level 3"
 	})
 "bG" = (
-/obj/item/weapon/gun/projectile/automatic/pistol/deagle/gold,
+/obj/item/weapon/gun/ballistic/automatic/pistol/deagle/gold,
 /turf/open/floor/plating/asteroid/basalt/lava{
 	initial_gas_mix = "n2=23;o2=14"
 	},
@@ -1404,7 +1404,7 @@
 	},
 /area/awaymission/research)
 "cY" = (
-/obj/effect/glowshroom/single,
+/obj/structure/glowshroom/single,
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/basalt;
 	initial_gas_mix = "n2=23;o2=14"
@@ -1540,7 +1540,7 @@
 	name = "\improper BMP Asteroid Level 2"
 	})
 "dm" = (
-/obj/effect/spider/stickyweb,
+/obj/structure/spider/stickyweb,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/basalt
 	},
@@ -1580,7 +1580,7 @@
 	icon_state = "bulb1";
 	dir = 4
 	},
-/obj/effect/spider/stickyweb,
+/obj/structure/spider/stickyweb,
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/basalt
 	},
@@ -1588,7 +1588,7 @@
 	name = "\improper BMP Asteroid Level 2"
 	})
 "dr" = (
-/obj/effect/spider/stickyweb,
+/obj/structure/spider/stickyweb,
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/basalt
 	},
@@ -1685,7 +1685,7 @@
 /area/awaymission/northblock)
 "dD" = (
 /obj/structure/table/wood,
-/obj/effect/decal/cleanable/cobweb2,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/wood{
 	baseturf = /turf/open/floor/plating/asteroid/basalt
 	},
@@ -1735,7 +1735,7 @@
 /area/awaymission/northblock)
 "dJ" = (
 /obj/item/stack/rods,
-/obj/effect/spider/stickyweb,
+/obj/structure/spider/stickyweb,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/basalt
 	},
@@ -1800,7 +1800,7 @@
 	},
 /area/awaymission/northblock)
 "dT" = (
-/obj/effect/spider/stickyweb,
+/obj/structure/spider/stickyweb,
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/basalt
 	},
@@ -1832,7 +1832,7 @@
 "dY" = (
 /obj/structure/bed,
 /obj/item/weapon/bedsheet,
-/obj/effect/decal/cleanable/cobweb2,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/effect/landmark{
 	name = "awaystart"
 	},
@@ -2122,7 +2122,7 @@
 /obj/structure/table,
 /obj/item/weapon/gun/energy/kinetic_accelerator,
 /obj/item/weapon/gun/energy/kinetic_accelerator,
-/obj/effect/decal/cleanable/cobweb2,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/basalt
 	},
@@ -2417,7 +2417,7 @@
 	icon_state = "bulb1";
 	dir = 1
 	},
-/obj/effect/spider/stickyweb,
+/obj/structure/spider/stickyweb,
 /mob/living/simple_animal/hostile/poison/giant_spider/hunter,
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/basalt
@@ -2434,7 +2434,7 @@
 /obj/structure/table,
 /obj/item/weapon/storage/firstaid/fire,
 /obj/item/weapon/storage/firstaid/fire,
-/obj/effect/spider/stickyweb,
+/obj/structure/spider/stickyweb,
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/basalt
 	},
@@ -2448,7 +2448,7 @@
 	},
 /area/awaymission/BMPship)
 "fv" = (
-/obj/effect/glowshroom/single,
+/obj/structure/glowshroom/single,
 /turf/open/floor/plating/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14"
 	},
@@ -2493,7 +2493,7 @@
 	},
 /area/awaymission/BMPship)
 "fB" = (
-/obj/effect/spider/stickyweb,
+/obj/structure/spider/stickyweb,
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/basalt
 	},
@@ -2505,7 +2505,7 @@
 	},
 /area/awaymission/BMPship)
 "fD" = (
-/obj/effect/spider/stickyweb,
+/obj/structure/spider/stickyweb,
 /obj/machinery/sleeper{
 	icon_state = "sleeper-open";
 	dir = 8

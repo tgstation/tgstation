@@ -28,6 +28,7 @@
 	health = 200
 	healable = 0
 	environment_smash = 1
+	obj_damage = 50
 	melee_damage_lower = 30
 	melee_damage_upper = 30
 	see_in_dark = 8
@@ -63,6 +64,7 @@
 	icon = 'icons/obj/surgery.dmi'
 	name = "pile of viscera"
 	desc = "A repulsive pile of guts and gore."
+	gender = NEUTER
 	random_icon_states = list("innards")
 
 /mob/living/simple_animal/slaughter/phasein()

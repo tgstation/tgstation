@@ -11,6 +11,11 @@
 	var/obj/effect/proc_holder/spell/S = null //Since spellbooks can be used by only one person anyway we can track the actual spell
 	var/buy_word = "Learn"
 	var/limit //used to prevent a spellbook_entry from being bought more than X times with one wizard spellbook
+	var/list/no_coexistance_typecache //Used so you can't have specific spells together
+
+/datum/spellbook_entry/New()
+	..()
+	no_coexistance_typecache = typecacheof(no_coexistance_typecache)
 
 /datum/spellbook_entry/proc/IsAvailible() // For config prefs / gamemode restrictions - these are round applied
 	return 1
@@ -18,6 +23,9 @@
 /datum/spellbook_entry/proc/CanBuy(mob/living/carbon/human/user,obj/item/weapon/spellbook/book) // Specific circumstances
 	if(book.uses<cost || limit == 0)
 		return 0
+	for(var/spell in user.mind.spell_list)
+		if(is_type_in_typecache(spell, no_coexistance_typecache))
+			return 0
 	return 1
 
 /datum/spellbook_entry/proc/Buy(mob/living/carbon/human/user,obj/item/weapon/spellbook/book) //return 1 on success
@@ -99,6 +107,11 @@
 	spell_type = /obj/effect/proc_holder/spell/fireball
 	log_name = "FB"
 
+/datum/spellbook_entry/rod_form
+	name = "Rod Form"
+	spell_type = /obj/effect/proc_holder/spell/targeted/rod_form
+	log_name = "RF"
+
 /datum/spellbook_entry/magicm
 	name = "Magic Missile"
 	spell_type = /obj/effect/proc_holder/spell/targeted/projectile/magic_missile
@@ -121,6 +134,12 @@
 	name = "Repulse"
 	spell_type = /obj/effect/proc_holder/spell/aoe_turf/repulse
 	log_name = "RP"
+	category = "Defensive"
+
+/datum/spellbook_entry/lightningPacket
+	name = "Lightning bolt!  Lightning bolt!"
+	spell_type = /obj/effect/proc_holder/spell/targeted/conjure_item/spellpacket
+	log_name = "LP"
 	category = "Defensive"
 
 /datum/spellbook_entry/timestop
@@ -150,7 +169,7 @@
 
 /datum/spellbook_entry/forcewall
 	name = "Force Wall"
-	spell_type = /obj/effect/proc_holder/spell/aoe_turf/conjure/forcewall
+	spell_type = /obj/effect/proc_holder/spell/targeted/forcewall
 	log_name = "FW"
 	category = "Defensive"
 	cost = 1
@@ -210,9 +229,17 @@
 
 /datum/spellbook_entry/infinite_guns
 	name = "Lesser Summon Guns"
-	spell_type = /obj/effect/proc_holder/spell/targeted/infinite_guns
+	spell_type = /obj/effect/proc_holder/spell/targeted/infinite_guns/gun
 	log_name = "IG"
 	cost = 3
+	no_coexistance_typecache = /obj/effect/proc_holder/spell/targeted/infinite_guns/arcane_barrage
+
+/datum/spellbook_entry/arcane_barrage
+	name = "Arcane Barrage"
+	spell_type = /obj/effect/proc_holder/spell/targeted/infinite_guns/arcane_barrage
+	log_name = "AB"
+	cost = 3
+	no_coexistance_typecache = /obj/effect/proc_holder/spell/targeted/infinite_guns/gun
 
 /datum/spellbook_entry/barnyard
 	name = "Barnyard Curse"
@@ -397,18 +424,6 @@
 	item_path = /obj/item/weapon/twohanded/singularityhammer
 	log_name = "SI"
 
-/datum/spellbook_entry/item/cursed_heart
-	name = "Cursed Heart"
-	desc = "A heart that has been revived by dark magicks, the user must \
-	concentrate to ensure the heart beats, but every beat heals them. It \
-	must beat every 6 seconds. The heart is fickle, and will not work for a \
-	lich."
-	item_path = /obj/item/organ/heart/cursed/wizard
-	log_name = "CH"
-	cost = 1
-	category = "Defensive"
-
-
 /datum/spellbook_entry/item/battlemage
 	name = "Battlemage Armour"
 	desc = "An ensorcelled suit of armour, protected by a powerful shield. The shield can completly negate sixteen attacks before being permanently depleted."
@@ -423,6 +438,14 @@
 	item_path = /obj/item/wizard_armour_charge
 	log_name = "AC"
 	category = "Defensive"
+	cost = 1
+
+/datum/spellbook_entry/item/warpwhistle
+	name = "Warp Whistle"
+	desc = "A strange whistle that will transport you to a distant safe place on the station. There is a window of vulnerability at the begining of every use."
+	item_path = /obj/item/warpwhistle
+	log_name = "WW"
+	category = "Mobility"
 	cost = 1
 
 /datum/spellbook_entry/summon
@@ -669,7 +692,7 @@
 
 	if(H.stat || H.restrained())
 		return
-	if(!istype(H, /mob/living/carbon/human))
+	if(!ishuman(H))
 		return 1
 
 	if(H.mind.special_role == "apprentice")
@@ -677,7 +700,7 @@
 		return
 
 	var/datum/spellbook_entry/E = null
-	if(loc == H || (in_range(src, H) && istype(loc, /turf)))
+	if(loc == H || (in_range(src, H) && isturf(loc)))
 		H.set_machine(src)
 		if(href_list["buy"])
 			E = entries[text2num(href_list["buy"])]
@@ -814,7 +837,7 @@
 	stored_swap = null
 
 /obj/item/weapon/spellbook/oneuse/forcewall
-	spell = /obj/effect/proc_holder/spell/aoe_turf/conjure/forcewall
+	spell = /obj/effect/proc_holder/spell/targeted/forcewall
 	spellname = "forcewall"
 	icon_state ="bookforcewall"
 	desc = "This book has a dedication to mimes everywhere inside the front cover."
@@ -822,10 +845,8 @@
 /obj/item/weapon/spellbook/oneuse/forcewall/recoil(mob/user)
 	..()
 	user <<"<span class='warning'>You suddenly feel very solid!</span>"
-	var/obj/structure/closet/statue/S = new /obj/structure/closet/statue(user.loc, user)
-	S.timer = 30
-	user.drop_item()
-
+	user.Stun(2)
+	user.petrify(30)
 
 /obj/item/weapon/spellbook/oneuse/knock
 	spell = /obj/effect/proc_holder/spell/aoe_turf/knock
@@ -845,7 +866,7 @@
 	desc = "This book is more horse than your mind has room for."
 
 /obj/item/weapon/spellbook/oneuse/barnyard/recoil(mob/living/carbon/user)
-	if(istype(user, /mob/living/carbon/human))
+	if(ishuman(user))
 		user <<"<font size='15' color='red'><b>HOR-SIE HAS RISEN</b></font>"
 		var/obj/item/clothing/mask/horsehead/magichead = new /obj/item/clothing/mask/horsehead
 		magichead.flags |= NODROP		//curses!

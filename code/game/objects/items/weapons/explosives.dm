@@ -26,7 +26,7 @@
 	return ..()
 
 /obj/item/weapon/c4/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] activates the [src.name] and holds it above \his head! It looks like \he's going out with a bang!</span>")
+	user.visible_message("<span class='suicide'>[user] activates the [src.name] and holds it above [user.p_their()] head! It looks like [user.p_theyre()] going out with a bang!</span>")
 	var/message_say = "FOR NO RAISIN!"
 	if(user.mind)
 		if(user.mind.special_role)
@@ -60,7 +60,7 @@
 
 /obj/item/weapon/c4/attack_self(mob/user)
 	var/newtime = input(usr, "Please set the timer.", "Timer", 10) as num
-	if(user.get_active_hand() == src)
+	if(user.get_active_held_item() == src)
 		newtime = Clamp(newtime, 10, 60000)
 		timer = newtime
 		user << "Timer set for [timer] seconds."

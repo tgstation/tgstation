@@ -62,7 +62,7 @@
 	else if(C.is_mouth_covered(mask_only = 1))
 		covered = "mask"
 	if(covered)
-		var/who = (isnull(user) || eater == user) ? "your" : "their"
+		var/who = (isnull(user) || eater == user) ? "your" : "[eater.p_their()]"
 		user << "<span class='warning'>You have to remove [who] [covered] first!</span>"
 		return 0
 	return 1
@@ -71,9 +71,10 @@
 	if(reagents)
 		for(var/datum/reagent/R in reagents.reagent_list)
 			R.on_ex_act()
-	..()
+	if(!qdeleted(src))
+		..()
 
-/obj/item/weapon/reagent_containers/fire_act()
+/obj/item/weapon/reagent_containers/fire_act(exposed_temperature, exposed_volume)
 	reagents.chem_temp += 30
 	reagents.handle_reactions()
 	..()
@@ -109,3 +110,9 @@
 			return
 
 	reagents.clear_reagents()
+
+/obj/item/weapon/reagent_containers/microwave_act(obj/machinery/microwave/M)
+	if(is_open_container())
+		reagents.chem_temp = max(reagents.chem_temp, 1000)
+		reagents.handle_reactions()
+	..()

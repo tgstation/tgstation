@@ -184,7 +184,7 @@
 	user << "<span class='notice'>You offer the sentience potion to [SM]...</span>"
 	being_used = 1
 
-	var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as [SM.name]?", ROLE_ALIEN, null, ROLE_ALIEN, 50, POLL_IGNORE_SENTIENCE_POTION, SM) // see poll_ignore.dm
+	var/list/candidates = pollCandidatesForMob("Do you want to play as [SM.name]?", ROLE_ALIEN, null, ROLE_ALIEN, 50, SM, POLL_IGNORE_SENTIENCE_POTION) // see poll_ignore.dm
 	var/mob/dead/observer/theghost = null
 	if(candidates.len)
 		theghost = pick(candidates)
@@ -194,7 +194,7 @@
 		SM.mind.enslave_mind_to_creator(user)
 		SM.sentience_act()
 		SM << "<span class='warning'>All at once it makes sense: you know what you are and who you are! Self awareness is yours!</span>"
-		SM << "<span class='userdanger'>You are grateful to be self aware and owe [user] a great debt. Serve [user], and assist them in completing their goals at any cost.</span>"
+		SM << "<span class='userdanger'>You are grateful to be self aware and owe [user] a great debt. Serve [user], and assist [user.p_them()] in completing [user.p_their()] goals at any cost.</span>"
 		user << "<span class='notice'>[SM] accepts the potion and suddenly becomes attentive and aware. It worked!</span>"
 		qdel(src)
 	else
@@ -350,7 +350,8 @@
 		V.vehicle_move_delay = 0
 
 	user <<"<span class='notice'>You slather the red gunk over the [C], making it faster.</span>"
-	C.color = "#FF0000"
+	C.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
+	C.add_atom_colour("#FF0000", FIXED_COLOUR_PRIORITY)
 	qdel(src)
 
 
@@ -375,10 +376,11 @@
 		return ..()
 	user <<"<span class='notice'>You slather the blue gunk over the [C], fireproofing it.</span>"
 	C.name = "fireproofed [C.name]"
-	C.color = "#000080"
+	C.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
+	C.add_atom_colour("#000080", FIXED_COLOUR_PRIORITY)
 	C.max_heat_protection_temperature = FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT
 	C.heat_protection = C.body_parts_covered
-	C.burn_state = FIRE_PROOF
+	C.resistance_flags |= FIRE_PROOF
 	uses --
 	if(!uses)
 		qdel(src)
@@ -418,6 +420,7 @@
 	item_state = "golem"
 	item_color = "golem"
 	flags = ABSTRACT | NODROP
+	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	has_sensor = 0
 
 /obj/item/clothing/suit/golem
@@ -430,6 +433,7 @@
 	permeability_coefficient = 0.50
 	body_parts_covered = FULL_BODY
 	flags_inv = HIDEGLOVES | HIDESHOES | HIDEJUMPSUIT
+	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	flags = ABSTRACT | NODROP
 
 /obj/item/clothing/shoes/golem
@@ -437,6 +441,7 @@
 	desc = "sturdy adamantine feet"
 	icon_state = "golem"
 	item_state = null
+	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	flags = NOSLIP | ABSTRACT | NODROP
 
 
@@ -446,7 +451,7 @@
 	icon_state = "golem"
 	item_state = "golem"
 	siemens_coefficient = 0
-	unacidable = 1
+	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	flags = ABSTRACT | NODROP
 
 
@@ -457,6 +462,7 @@
 	item_state = null
 	siemens_coefficient = 0
 	flags = ABSTRACT | NODROP
+	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
 
 /obj/item/clothing/head/space/golem
@@ -465,7 +471,7 @@
 	item_color = "dermal"
 	name = "golem's head"
 	desc = "a golem's head"
-	unacidable = 1
+	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	flags = ABSTRACT | NODROP
 
 /obj/effect/golemrune
@@ -474,7 +480,7 @@
 	name = "rune"
 	icon = 'icons/obj/rune.dmi'
 	icon_state = "golem"
-	unacidable = 1
+	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	layer = TURF_LAYER
 
 /obj/effect/golemrune/New()
@@ -520,7 +526,8 @@
 	G.dna.species.auto_equip(G)
 	G.loc = src.loc
 	G.key = ghost.key
-	G << "You are an adamantine golem. You move slowly, but are highly resistant to heat and cold as well as blunt trauma. You are unable to wear clothes, but can still use most tools. Serve [user], and assist them in completing their goals at any cost."
+	G << "You are an adamantine golem. You move slowly, but are highly resistant to heat and cold as well as blunt trauma. You are unable to wear clothes, but can still use most tools. \
+	Serve [user], and assist [user.p_them()] in completing their goals at any cost."
 	G.mind.store_memory("<b>Serve [user.real_name], your creator.</b>")
 
 	G.mind.enslave_mind_to_creator(user)
@@ -541,7 +548,6 @@
 	layer = FLY_LAYER
 	pixel_x = -64
 	pixel_y = -64
-	unacidable = 1
 	mouse_opacity = 0
 	var/mob/living/immune = list() // the one who creates the timestop is immune
 	var/list/stopped_atoms = list()
@@ -561,13 +567,13 @@
 	playsound(get_turf(src), 'sound/magic/TIMEPARADOX2.ogg', 100, 1, -1)
 	for(var/i in 1 to duration-1)
 		for(var/atom/A in orange (freezerange, src.loc))
-			if(istype(A, /mob/living))
+			if(isliving(A))
 				var/mob/living/M = A
 				if(M in immune)
 					continue
 				M.Stun(10, 1, 1)
 				M.anchored = 1
-				if(istype(M, /mob/living/simple_animal/hostile))
+				if(ishostile(M))
 					var/mob/living/simple_animal/hostile/H = M
 					H.AIStatus = AI_OFF
 					H.LoseTarget()
@@ -622,13 +628,6 @@
 	turf_type = /turf/open/floor/bluespace
 
 
-/turf/open/floor/bluespace
-	slowdown = -1
-	icon_state = "bluespace"
-	desc = "Through a series of micro-teleports these tiles let people move at incredible speeds"
-	floor_tile = /obj/item/stack/tile/bluespace
-
-
 /obj/item/stack/tile/sepia
 	name = "sepia floor tile"
 	singular_name = "floor tile"
@@ -645,13 +644,6 @@
 	turf_type = /turf/open/floor/sepia
 
 
-/turf/open/floor/sepia
-	slowdown = 2
-	icon_state = "sepia"
-	desc = "Time seems to flow very slowly around these tiles"
-	floor_tile = /obj/item/stack/tile/sepia
-
-
 /obj/item/areaeditor/blueprints/slime
 	name = "cerulean prints"
 	desc = "A one use yet of blueprints made of jelly like organic material. Renaming an area to 'Xenobiology Lab' will extend the reach of the management console."
@@ -662,5 +654,6 @@
 	var/area/A = get_area(src)
 	if(success)
 		for(var/turf/T in A)
-			T.color = "#2956B2"
+			T.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
+			T.add_atom_colour("#2956B2", FIXED_COLOUR_PRIORITY)
 		qdel(src)

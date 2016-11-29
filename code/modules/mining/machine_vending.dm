@@ -38,13 +38,14 @@
 		new /datum/data/mining_equipment("Mining Hardsuit",		/obj/item/clothing/suit/space/hardsuit/mining,							2000),
 		new /datum/data/mining_equipment("Diamond Pickaxe",		/obj/item/weapon/pickaxe/diamond,										2000),
 		new /datum/data/mining_equipment("Super Resonator",		/obj/item/weapon/resonator/upgraded,									2500),
-		new /datum/data/mining_equipment("KA White Tracer Rounds",	/obj/item/borg/upgrade/modkit/tracer,								200),
-		new /datum/data/mining_equipment("KA Adjustable Tracer Rounds",	/obj/item/borg/upgrade/modkit/tracer/adjustable,				300),
-		new /datum/data/mining_equipment("KA Super Chassis",	/obj/item/borg/upgrade/modkit/chassis_mod,								400),
-		new /datum/data/mining_equipment("KA Hyper Chassis",	/obj/item/borg/upgrade/modkit/chassis_mod/orange,						500),
+		new /datum/data/mining_equipment("KA White Tracer Rounds",	/obj/item/borg/upgrade/modkit/tracer,								100),
+		new /datum/data/mining_equipment("KA Adjustable Tracer Rounds",	/obj/item/borg/upgrade/modkit/tracer/adjustable,				150),
+		new /datum/data/mining_equipment("KA Super Chassis",	/obj/item/borg/upgrade/modkit/chassis_mod,								250),
+		new /datum/data/mining_equipment("KA Hyper Chassis",	/obj/item/borg/upgrade/modkit/chassis_mod/orange,						300),
 		new /datum/data/mining_equipment("KA Range Increase",	/obj/item/borg/upgrade/modkit/range,									1000),
 		new /datum/data/mining_equipment("KA Damage Increase",	/obj/item/borg/upgrade/modkit/damage,									1000),
 		new /datum/data/mining_equipment("KA Cooldown Decrease",/obj/item/borg/upgrade/modkit/cooldown,									1000),
+		new /datum/data/mining_equipment("KA AoE Damage",		/obj/item/borg/upgrade/modkit/aoe/mobs,									2000),
 		new /datum/data/mining_equipment("Point Transfer Card",	/obj/item/weapon/card/mining_point_card,								500),
 		new /datum/data/mining_equipment("Mining Drone",		/mob/living/simple_animal/hostile/mining_drone,							800),
 		new /datum/data/mining_equipment("Drone Melee Upgrade",	/obj/item/device/mine_bot_ugprade,										400),
@@ -121,7 +122,7 @@
 				inserted_id.verb_pickup()
 				inserted_id = null
 		else if(href_list["choice"] == "insert")
-			var/obj/item/weapon/card/id/I = usr.get_active_hand()
+			var/obj/item/weapon/card/id/I = usr.get_active_held_item()
 			if(istype(I))
 				if(!usr.drop_item())
 					return
@@ -149,7 +150,7 @@
 		RedeemVoucher(I, user)
 		return
 	if(istype(I,/obj/item/weapon/card/id))
-		var/obj/item/weapon/card/id/C = usr.get_active_hand()
+		var/obj/item/weapon/card/id/C = usr.get_active_held_item()
 		if(istype(C) && !istype(inserted_id))
 			if(!usr.drop_item())
 				return
@@ -165,7 +166,7 @@
 	return ..()
 
 /obj/machinery/mineral/equipment_vendor/proc/RedeemVoucher(obj/item/weapon/mining_voucher/voucher, mob/redeemer)
-	var/items = list("Survival Capsule and Explorer's Webbing", "Resonator and Advanced Scanner", "Mining Drone", "Extraction and Rescue Kit", "Crusher Kit")
+	var/items = list("Survival Capsule and Explorer's Webbing", "Resonator and Advanced Scanner", "Mining Drone", "Extraction and Rescue Kit", "Crusher Kit", "Mining Conscription Kit")
 
 	var/selection = input(redeemer, "Pick your equipment", "Mining Voucher Redemption") as null|anything in items
 	if(!selection || !Adjacent(redeemer) || qdeleted(voucher) || voucher.loc != redeemer)
@@ -186,6 +187,8 @@
 			new /obj/item/weapon/twohanded/required/mining_hammer(loc)
 			new /obj/item/weapon/storage/belt/mining/alt(loc)
 			new /obj/item/weapon/extinguisher/mini(loc)
+		if("Mining Conscription Kit")
+			new /obj/item/weapon/storage/backpack/dufflebag/mining_conscript(loc)
 
 	feedback_add_details("mining_voucher_redeemed", selection)
 	qdel(voucher)
@@ -259,3 +262,35 @@
 /obj/item/weapon/card/mining_point_card/examine(mob/user)
 	..()
 	user << "There's [points] point\s on the card."
+
+///Conscript kit
+/obj/item/weapon/card/mining_access_card
+	name = "mining access card"
+	desc = "A small card, that when used on any ID, will add mining access."
+	icon_state = "data"
+
+/obj/item/weapon/card/mining_access_card/afterattack(atom/movable/AM, mob/user, proximity)
+	if(istype(AM, /obj/item/weapon/card/id) && proximity)
+		var/obj/item/weapon/card/id/I = AM
+		I.access |=	access_mining
+		I.access |= access_mining_station
+		I.access |= access_mineral_storeroom
+		I.access |= access_cargo
+		user  << "You upgrade [I] with mining access."
+		qdel(src)
+	..()
+
+/obj/item/weapon/storage/backpack/dufflebag/mining_conscript
+	name = "mining conscription kit"
+	desc = "A kit containing everything a crewmember needs to support a shaft miner in the field."
+
+/obj/item/weapon/storage/backpack/dufflebag/mining_conscript/New()
+	..()
+	new /obj/item/weapon/pickaxe/mini(src)
+	new /obj/item/clothing/glasses/meson(src)
+	new /obj/item/device/t_scanner/adv_mining_scanner/lesser(src)
+	new /obj/item/weapon/storage/bag/ore(src)
+	new /obj/item/clothing/suit/hooded/explorer(src)
+	new /obj/item/device/encryptionkey/headset_cargo(src)
+	new /obj/item/clothing/mask/gas/explorer(src)
+	new /obj/item/weapon/card/mining_access_card(src)

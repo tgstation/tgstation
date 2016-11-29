@@ -3,7 +3,6 @@
 	icon = 'icons/obj/iv_drip.dmi'
 	icon_state = "iv_drip"
 	anchored = 0
-	density = 1
 	var/mob/living/carbon/attached = null
 	var/mode = 1 // 1 is injecting, 0 is taking blood.
 	var/obj/item/weapon/reagent_containers/beaker = null
@@ -95,6 +94,10 @@
 	else
 		return ..()
 
+/obj/machinery/iv_drip/deconstruct(disassembled = TRUE)
+	if(!(flags & NODECONSTRUCT))
+		new /obj/item/stack/sheet/metal(loc)
+	qdel(src)
 
 /obj/machinery/iv_drip/process()
 	if(!attached)
@@ -154,7 +157,7 @@
 	set name = "Remove IV Container"
 	set src in view(1)
 
-	if(!istype(usr, /mob/living))
+	if(!isliving(usr))
 		usr << "<span class='warning'>You can't do that!</span>"
 		return
 
@@ -171,7 +174,7 @@
 	set name = "Toggle Mode"
 	set src in view(1)
 
-	if(!istype(usr, /mob/living))
+	if(!isliving(usr))
 		usr << "<span class='warning'>You can't do that!</span>"
 		return
 

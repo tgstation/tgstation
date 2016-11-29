@@ -41,10 +41,7 @@
 	name = "anti-drop implant"
 	desc = "This cybernetic brain implant will allow you to force your hand muscles to contract, preventing item dropping. Twitch ear to toggle."
 	var/active = 0
-	var/l_hand_ignore = 0
-	var/r_hand_ignore = 0
-	var/obj/item/l_hand_obj = null
-	var/obj/item/r_hand_obj = null
+	var/list/stored_items = list()
 	implant_color = "#DE7E00"
 	slot = "brain_antidrop"
 	origin_tech = "materials=4;programming=5;biotech=4"
@@ -53,66 +50,41 @@
 /obj/item/organ/cyberimp/brain/anti_drop/ui_action_click()
 	active = !active
 	if(active)
-		l_hand_obj = owner.l_hand
-		r_hand_obj = owner.r_hand
-		if(l_hand_obj)
-			if(owner.l_hand.flags & NODROP)
-				l_hand_ignore = 1
-			else
-				owner.l_hand.flags |= NODROP
-				l_hand_ignore = 0
+		for(var/obj/item/I in owner.held_items)
+			if(!(I.flags & NODROP))
+				stored_items += I
 
-		if(r_hand_obj)
-			if(owner.r_hand.flags & NODROP)
-				r_hand_ignore = 1
-			else
-				owner.r_hand.flags |= NODROP
-				r_hand_ignore = 0
-
-		if(!l_hand_obj && !r_hand_obj)
+		var/list/L = owner.get_empty_held_indexes()
+		if(L && L.len == owner.held_items.len)
 			owner << "<span class='notice'>You are not holding any items, your hands relax...</span>"
 			active = 0
+			stored_items = list()
 		else
-			var/msg = 0
-			msg += !l_hand_ignore && l_hand_obj ? 1 : 0
-			msg += !r_hand_ignore && r_hand_obj ? 2 : 0
-			switch(msg)
-				if(1)
-					owner << "<span class='notice'>Your left hand's grip tightens.</span>"
-				if(2)
-					owner << "<span class='notice'>Your right hand's grip tightens.</span>"
-				if(3)
-					owner << "<span class='notice'>Both of your hand's grips tighten.</span>"
+			for(var/obj/item/I in stored_items)
+				owner << "<span class='notice'>Your [owner.get_held_index_name(owner.get_held_index_of_item(I))]'s grip tightens.</span>"
 	else
 		release_items()
 		owner << "<span class='notice'>Your hands relax...</span>"
-		l_hand_obj = null
-		r_hand_obj = null
+
 
 /obj/item/organ/cyberimp/brain/anti_drop/emp_act(severity)
 	if(!owner)
 		return
 	var/range = severity ? 10 : 5
 	var/atom/A
-	var/obj/item/L_item = owner.l_hand
-	var/obj/item/R_item = owner.r_hand
-
 	release_items()
 	..()
-	if(L_item)
+	for(var/obj/item/I in stored_items)
 		A = pick(oview(range))
-		L_item.throw_at(A, range, 2)
-		owner << "<span class='warning'>Your left arm spasms and throws the [L_item.name]!</span>"
-	if(R_item)
-		A = pick(oview(range))
-		R_item.throw_at(A, range, 2)
-		owner << "<span class='warning'>Your right arm spasms and throws the [R_item.name]!</span>"
+		I.throw_at(A, range, 2)
+		owner << "<span class='warning'>Your [owner.get_held_index_name(owner.get_held_index_of_item(I))] spasms and throws the [I.name]!</span>"
+	stored_items = list()
+
 
 /obj/item/organ/cyberimp/brain/anti_drop/proc/release_items()
-	if(!l_hand_ignore && l_hand_obj in owner.contents)
-		l_hand_obj.flags ^= NODROP
-	if(!r_hand_ignore && r_hand_obj in owner.contents)
-		r_hand_obj.flags ^= NODROP
+	for(var/obj/item/I in stored_items)
+		I.flags ^= NODROP
+
 
 /obj/item/organ/cyberimp/brain/anti_drop/Remove(var/mob/living/carbon/M, special = 0)
 	if(active)

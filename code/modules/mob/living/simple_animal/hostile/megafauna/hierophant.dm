@@ -45,8 +45,8 @@ Difficulty: Hard
 	faction = list("boss") //asteroid mobs? get that shit out of my beautiful square house
 	speak_emote = list("preaches")
 	armour_penetration = 50
-	melee_damage_lower = 25
-	melee_damage_upper = 25
+	melee_damage_lower = 10
+	melee_damage_upper = 10
 	speed = 1
 	move_to_delay = 10
 	ranged = 1
@@ -87,7 +87,7 @@ Difficulty: Hard
 			did_reset = TRUE
 			//visible_message("<span class='hierophant'>\"Vixyvrmrk xs fewi...\"</span>")
 			blink(spawned_rune)
-			adjustHealth((health - maxHealth) * 0.5) //heal for 50% of our missing health
+			adjustHealth(min((health - maxHealth) * 0.5, -50)) //heal for 50% of our missing health
 			wander = FALSE
 			/*if(health > maxHealth * 0.9)
 				visible_message("<span class='hierophant'>\"Vitemvw gsqtpixi. Stivexmrk ex qebmqyq ijjmgmirgc.\"</span>")
@@ -101,6 +101,7 @@ Difficulty: Hard
 		stat = DEAD
 		blinking = TRUE //we do a fancy animation, release a huge burst(), and leave our staff.
 		animate(src, alpha = 0, color = "660099", time = 20, easing = EASE_OUT)
+		addtimer(src, "update_atom_colour", 20)
 		burst_range = 10
 		//visible_message("<span class='hierophant'>\"Mrmxmexmrk wipj-hiwxvygx wiuyirgi...\"</span>")
 		visible_message("<span class='hierophant_warning'>[src] disappears in a massive burst of magic, leaving only its staff.</span>")
@@ -139,7 +140,7 @@ Difficulty: Hard
 /mob/living/simple_animal/hostile/megafauna/hierophant/AttackingTarget()
 	if(!blinking)
 		if(target && isliving(target))
-			addtimer(src, "melee_blast", 0, FALSE, get_turf(target)) //melee attacks on living mobs produce a 3x3 blast
+			addtimer(src, "melee_blast", 0, TIMER_NORMAL, get_turf(target)) //melee attacks on living mobs produce a 3x3 blast
 		..()
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/DestroySurroundings()
@@ -197,6 +198,7 @@ Difficulty: Hard
 				if("blink_spam") //blink either once or multiple times.
 					if(health < maxHealth * 0.5 && !target_is_slow && blink_counter > 1)
 						//visible_message("<span class='hierophant'>\"Mx ampp rsx iwgeti.\"</span>")
+						var/oldcolor = color
 						animate(src, color = "#660099", time = 6)
 						while(health && target && blink_counter)
 							if(loc == target.loc || loc == target) //we're on the same tile as them after about a second we can stop now
@@ -206,7 +208,8 @@ Difficulty: Hard
 							blink(target)
 							blinking = TRUE
 							sleep(5)
-						animate(src, color = initial(color), time = 8)
+						animate(src, color = oldcolor, time = 8)
+						addtimer(src, "update_atom_colour", 8)
 						sleep(8)
 						blinking = FALSE
 					else
@@ -214,22 +217,25 @@ Difficulty: Hard
 				if("cross_blast_spam") //fire a lot of cross blasts at a target.
 					//visible_message("<span class='hierophant'>\"Piezi mx rsalivi xs vyr.\"</span>")
 					blinking = TRUE
+					var/oldcolor = color
 					animate(src, color = "#660099", time = 6)
 					while(health && target && cross_counter)
 						cross_counter--
 						var/delay = 6
 						if(prob(60))
-							addtimer(src, "cardinal_blasts", 0, FALSE, target)
+							addtimer(src, "cardinal_blasts", 0, TIMER_NORMAL, target)
 						else
-							addtimer(src, "diagonal_blasts", 0, FALSE, target)
+							addtimer(src, "diagonal_blasts", 0, TIMER_NORMAL, target)
 							delay = 5 //this one isn't so mean, so do the next one faster(if there is one)
 						sleep(delay)
-					animate(src, color = initial(color), time = 8)
+					animate(src, color = oldcolor, time = 8)
+					addtimer(src, "update_atom_colour", 8)
 					sleep(8)
 					blinking = FALSE
 				if("chaser_swarm") //fire four fucking chasers at a target and their friends.
 					//visible_message("<span class='hierophant'>\"Mx gerrsx lmhi.\"</span>")
 					blinking = TRUE
+					var/oldcolor = color
 					animate(src, color = "#660099", time = 10)
 					var/list/targets = ListTargets()
 					var/list/cardinal_copy = cardinal.Copy()
@@ -244,7 +250,8 @@ Difficulty: Hard
 						C.moving_dir = pick_n_take(cardinal_copy)
 						sleep(10)
 					chaser_cooldown = world.time + initial(chaser_cooldown)
-					animate(src, color = initial(color), time = 8)
+					animate(src, color = oldcolor, time = 8)
+					addtimer(src, "update_atom_colour", 8)
 					sleep(8)
 					blinking = FALSE
 			return
@@ -255,18 +262,18 @@ Difficulty: Hard
 	else if(prob(70 - anger_modifier)) //a cross blast of some type
 		if(prob(anger_modifier)) //at us?
 			if(prob(anger_modifier * 2) && health < maxHealth * 0.5) //we're super angry do it at all dirs
-				addtimer(src, "alldir_blasts", 0, FALSE, src)
+				addtimer(src, "alldir_blasts", 0, TIMER_NORMAL, src)
 			else if(prob(60))
-				addtimer(src, "cardinal_blasts", 0, FALSE, src)
+				addtimer(src, "cardinal_blasts", 0, TIMER_NORMAL, src)
 			else
-				addtimer(src, "diagonal_blasts", 0, FALSE, src)
+				addtimer(src, "diagonal_blasts", 0, TIMER_NORMAL, src)
 		else //at them?
 			if(prob(anger_modifier * 2) && health < maxHealth * 0.5 && !target_is_slow) //we're super angry do it at all dirs
-				addtimer(src, "alldir_blasts", 0, FALSE, target)
+				addtimer(src, "alldir_blasts", 0, TIMER_NORMAL, target)
 			else if(prob(60))
-				addtimer(src, "cardinal_blasts", 0, FALSE, target)
+				addtimer(src, "cardinal_blasts", 0, TIMER_NORMAL, target)
 			else
-				addtimer(src, "diagonal_blasts", 0, FALSE, target)
+				addtimer(src, "diagonal_blasts", 0, TIMER_NORMAL, target)
 	else if(chaser_cooldown < world.time) //if chasers are off cooldown, fire some!
 		var/obj/effect/overlay/temp/hierophant/chaser/C = PoolOrNew(/obj/effect/overlay/temp/hierophant/chaser, list(loc, src, target, chaser_speed, FALSE))
 		chaser_cooldown = world.time + initial(chaser_cooldown)
@@ -275,37 +282,43 @@ Difficulty: Hard
 			OC.moving = 4
 			OC.moving_dir = pick(cardinal - C.moving_dir)
 	else //just release a burst of power
-		addtimer(src, "burst", 0, FALSE, get_turf(src))
+		addtimer(src, "burst", 0, TIMER_NORMAL, get_turf(src))
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/proc/diagonal_blasts(mob/victim) //fire diagonal cross blasts with a delay
 	var/turf/T = get_turf(victim)
+	if(!T)
+		return
 	PoolOrNew(/obj/effect/overlay/temp/hierophant/telegraph/diagonal, list(T, src))
 	playsound(T,'sound/magic/blink.ogg', 200, 1)
 	//playsound(T,'sound/effects/bin_close.ogg', 200, 1)
 	sleep(2)
 	PoolOrNew(/obj/effect/overlay/temp/hierophant/blast, list(T, src, FALSE))
 	for(var/d in diagonals)
-		addtimer(src, "blast_wall", 0, FALSE, T, d)
+		addtimer(src, "blast_wall", 0, TIMER_NORMAL, T, d)
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/proc/cardinal_blasts(mob/victim) //fire cardinal cross blasts with a delay
 	var/turf/T = get_turf(victim)
+	if(!T)
+		return
 	PoolOrNew(/obj/effect/overlay/temp/hierophant/telegraph/cardinal, list(T, src))
 	playsound(T,'sound/magic/blink.ogg', 200, 1)
 	//playsound(T,'sound/effects/bin_close.ogg', 200, 1)
 	sleep(2)
 	PoolOrNew(/obj/effect/overlay/temp/hierophant/blast, list(T, src, FALSE))
 	for(var/d in cardinal)
-		addtimer(src, "blast_wall", 0, FALSE, T, d)
+		addtimer(src, "blast_wall", 0, TIMER_NORMAL, T, d)
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/proc/alldir_blasts(mob/victim) //fire alldir cross blasts with a delay
 	var/turf/T = get_turf(victim)
+	if(!T)
+		return
 	PoolOrNew(/obj/effect/overlay/temp/hierophant/telegraph, list(T, src))
 	playsound(T,'sound/magic/blink.ogg', 200, 1)
 	//playsound(T,'sound/effects/bin_close.ogg', 200, 1)
 	sleep(2)
 	PoolOrNew(/obj/effect/overlay/temp/hierophant/blast, list(T, src, FALSE))
 	for(var/d in alldirs)
-		addtimer(src, "blast_wall", 0, FALSE, T, d)
+		addtimer(src, "blast_wall", 0, TIMER_NORMAL, T, d)
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/proc/blast_wall(turf/T, dir) //make a wall of blasts beam_range tiles long
 	var/range = beam_range
@@ -396,6 +409,7 @@ Difficulty: Hard
 /obj/effect/overlay/temp/hierophant/chaser //a hierophant's chaser. follows target around, moving and producing a blast every speed deciseconds.
 	duration = 98
 	var/mob/living/target //what it's following
+	var/turf/targetturf //what turf the target is actually on
 	var/moving_dir //what dir it's moving in
 	var/previous_moving_dir //what dir it was moving in before that
 	var/more_previouser_moving_dir //what dir it was moving in before THAT
@@ -415,7 +429,7 @@ Difficulty: Hard
 	addtimer(src, "seek_target", 1)
 
 /obj/effect/overlay/temp/hierophant/chaser/proc/get_target_dir()
-	. = get_cardinal_dir(src, target)
+	. = get_cardinal_dir(src, targetturf)
 	if((. != previous_moving_dir && . == more_previouser_moving_dir) || . == 0) //we're alternating, recalculate
 		var/list/cardinal_copy = cardinal.Copy()
 		cardinal_copy -= more_previouser_moving_dir
@@ -424,12 +438,13 @@ Difficulty: Hard
 /obj/effect/overlay/temp/hierophant/chaser/proc/seek_target()
 	if(!currently_seeking)
 		currently_seeking = TRUE
-		while(target && src && !qdeleted(src) && currently_seeking && x && y && target.x && target.y) //can this target actually be sook out
+		targetturf = get_turf(target)
+		while(target && src && !qdeleted(src) && currently_seeking && x && y && targetturf) //can this target actually be sook out
 			if(!moving) //we're out of tiles to move, find more and where the target is!
 				more_previouser_moving_dir = previous_moving_dir
 				previous_moving_dir = moving_dir
 				moving_dir = get_target_dir()
-				var/standard_target_dir = get_cardinal_dir(src, target)
+				var/standard_target_dir = get_cardinal_dir(src, targetturf)
 				if((standard_target_dir != previous_moving_dir && standard_target_dir == more_previouser_moving_dir) || standard_target_dir == 0)
 					moving = 1 //we would be repeating, only move a tile before checking
 				else
@@ -446,6 +461,7 @@ Difficulty: Hard
 				make_blast() //make a blast, too
 				moving--
 				sleep(speed)
+			targetturf = get_turf(target)
 
 /obj/effect/overlay/temp/hierophant/chaser/proc/make_blast()
 	PoolOrNew(/obj/effect/overlay/temp/hierophant/blast, list(loc, caster, friendly_fire_check))
@@ -483,7 +499,7 @@ Difficulty: Hard
 	friendly_fire_check = friendly_fire
 	if(new_caster)
 		hit_things += new_caster
-	if(istype(loc, /turf/closed/mineral)) //drill mineral turfs
+	if(ismineralturf(loc)) //drill mineral turfs
 		var/turf/closed/mineral/M = loc
 		M.gets_drilled(caster)
 	addtimer(src, "blast", 0)
@@ -526,7 +542,7 @@ Difficulty: Hard
 				continue
 			M.occupant << "<span class='userdanger'>Your [M.name] is struck by a [name]!</span>"
 		playsound(M,'sound/weapons/sear.ogg', 50, 1, -4)
-		M.take_damage(damage, "fire", 0)
+		M.take_damage(damage, BURN, 0, 0)
 
 /obj/effect/hierophant
 	name = "hierophant rune"
@@ -550,7 +566,9 @@ Difficulty: Hard
 				H.rune = null
 				user.update_action_buttons_icon()
 				qdel(src)
-		else //use this rune instead
+			else
+				H.timer = world.time
+		else
 			user << "<span class='hierophant_warning'>You touch the rune with the staff, but nothing happens.</span>"
 
 	else

@@ -128,7 +128,7 @@
 	projectilesound = 'sound/weapons/Gunshot.ogg'
 	casingtype = /obj/item/ammo_casing/shotgun/buckshot
 	loot = list(/obj/effect/mob_spawn/human/corpse/syndicatestormtrooper,
-				/obj/item/weapon/gun/projectile/automatic/shotgun/bulldog/unrestricted,
+				/obj/item/weapon/gun/ballistic/automatic/shotgun/bulldog/unrestricted,
 				/obj/item/weapon/shield/energy)
 
 ///////////////Misc////////////
@@ -136,6 +136,7 @@
 /mob/living/simple_animal/hostile/syndicate/civilian
 	minimum_distance = 10
 	retreat_distance = 10
+	obj_damage = 0
 	environment_smash = 0
 
 /mob/living/simple_animal/hostile/syndicate/civilian/Aggro()
@@ -154,13 +155,15 @@
 	maxHealth = 25
 	melee_damage_lower = 15
 	melee_damage_upper = 15
+	obj_damage = 0
+	environment_smash = 0
 	attacktext = "cuts"
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	faction = list("syndicate")
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 	mob_size = MOB_SIZE_TINY
-	flying = 1
+	movement_type = FLYING
 	limb_destroyer = 1
 	speak_emote = list("states")
 	bubble_icon = "syndibot"

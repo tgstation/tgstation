@@ -16,10 +16,10 @@
 	. = ..()
 	if(!.)
 		return
-	addtimer(src, "close", 0, TRUE)
+	addtimer(src, "close", 0, TIMER_UNIQUE)
 	// Close any attached airlocks as well
 	for(var/obj/machinery/door/D in orange(1, src))
-		addtimer(src, "close", 0, TRUE)
+		addtimer(src, "close", 0, TIMER_UNIQUE)
 
 /obj/machinery/door/airlock/onShuttleMove()
 	shuttledocked = 0

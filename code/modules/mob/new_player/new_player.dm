@@ -304,7 +304,7 @@
 
 	var/mob/living/character = create_character()	//creates the human and transfers vars and mind
 	var/equip = SSjob.EquipRank(character, rank, 1)
-	if(isrobot(equip))	//Borgs get borged in the equip, so we need to make sure we handle the new mob.
+	if(iscyborg(equip))	//Borgs get borged in the equip, so we need to make sure we handle the new mob.
 		character = equip
 
 
@@ -332,16 +332,20 @@
 		data_core.manifest_inject(humanc)
 		AnnounceArrival(humanc, rank)
 		AddEmploymentContract(humanc)
+		if(highlander)
+			humanc << "<span class='userdanger'><i>THERE CAN BE ONLY ONE!!!</i></span>"
+			humanc.make_scottish()
 
 	joined_player_list += character.ckey
 
 	if(config.allow_latejoin_antagonists && humanc)	//Borgs aren't allowed to be antags. Will need to be tweaked if we get true latejoin ais.
-		switch(SSshuttle.emergency.mode)
-			if(SHUTTLE_RECALL, SHUTTLE_IDLE)
-				ticker.mode.make_antag_chance(humanc)
-			if(SHUTTLE_CALL)
-				if(SSshuttle.emergency.timeLeft(1) > initial(SSshuttle.emergencyCallTime)*0.5)
+		if(SSshuttle.emergency)
+			switch(SSshuttle.emergency.mode)
+				if(SHUTTLE_RECALL, SHUTTLE_IDLE)
 					ticker.mode.make_antag_chance(humanc)
+				if(SHUTTLE_CALL)
+					if(SSshuttle.emergency.timeLeft(1) > initial(SSshuttle.emergencyCallTime)*0.5)
+						ticker.mode.make_antag_chance(humanc)
 	qdel(src)
 
 /mob/new_player/proc/AnnounceArrival(var/mob/living/carbon/human/character, var/rank)
@@ -377,12 +381,13 @@
 
 	var/dat = "<div class='notice'>Round Duration: [round(hours)]h [round(mins)]m</div>"
 
-	switch(SSshuttle.emergency.mode)
-		if(SHUTTLE_ESCAPE)
-			dat += "<div class='notice red'>The station has been evacuated.</div><br>"
-		if(SHUTTLE_CALL)
-			if(!SSshuttle.canRecall())
-				dat += "<div class='notice red'>The station is currently undergoing evacuation procedures.</div><br>"
+	if(SSshuttle.emergency)
+		switch(SSshuttle.emergency.mode)
+			if(SHUTTLE_ESCAPE)
+				dat += "<div class='notice red'>The station has been evacuated.</div><br>"
+			if(SHUTTLE_CALL)
+				if(!SSshuttle.canRecall())
+					dat += "<div class='notice red'>The station is currently undergoing evacuation procedures.</div><br>"
 
 	var/available_job_count = 0
 	for(var/datum/job/job in SSjob.occupations)

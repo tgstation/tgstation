@@ -9,11 +9,13 @@
 	anchored = 0
 	density = 0
 	layer = BELOW_MOB_LAYER //so people can't hide it and it's REALLY OBVIOUS
-	unacidable = 1
+	resistance_flags = FIRE_PROOF | ACID_PROOF
 
 	var/minimum_timer = 60
 	var/timer_set = 60
 	var/maximum_timer = 60000
+
+	var/can_unanchor = TRUE
 
 	var/open_panel = FALSE 	//are the wires exposed?
 	var/active = FALSE		//is the bomb counting down?
@@ -98,9 +100,9 @@
 		. = timer_set
 
 /obj/machinery/syndicatebomb/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/weapon/wrench))
+	if(istype(I, /obj/item/weapon/wrench) && can_unanchor)
 		if(!anchored)
-			if(!isturf(src.loc) || istype(src.loc, /turf/open/space))
+			if(!isturf(loc) || isspaceturf(loc))
 				user << "<span class='notice'>The bomb must be placed on solid ground to attach it.</span>"
 			else
 				user << "<span class='notice'>You firmly wrench the bomb to the floor.</span>"
@@ -256,7 +258,7 @@
 	item_state = "eshield0"
 	w_class = 3
 	origin_tech = "syndicate=5;combat=6"
-	burn_state = FLAMMABLE //Burnable (but the casing isn't)
+	resistance_flags = FLAMMABLE //Burnable (but the casing isn't)
 	var/adminlog = null
 
 /obj/item/weapon/bombcore/ex_act(severity, target) // Little boom can chain a big boom.
@@ -337,13 +339,7 @@
 
 /obj/item/weapon/bombcore/badmin/summon/detonate()
 	var/obj/machinery/syndicatebomb/B = src.loc
-	for(var/i = 0; i < amt_summon; i++)
-		var/atom/movable/X = new summon_path
-		X.admin_spawned = TRUE
-		X.loc = get_turf(src)
-		if(prob(50))
-			for(var/j = 1, j <= rand(1, 3), j++)
-				step(X, pick(NORTH,SOUTH,EAST,WEST))
+	spawn_and_random_walk(summon_path, src, amt_summon, walk_chance=50, admin_spawn=TRUE)
 	qdel(B)
 	qdel(src)
 
@@ -356,10 +352,10 @@
 	..()
 
 /obj/item/weapon/bombcore/badmin/explosion
-	var/HeavyExplosion = 2
-	var/MediumExplosion = 5
-	var/LightExplosion = 11
-	var/Flames = 11
+	var/HeavyExplosion = 5
+	var/MediumExplosion = 10
+	var/LightExplosion = 20
+	var/Flames = 20
 
 /obj/item/weapon/bombcore/badmin/explosion/detonate()
 	explosion(get_turf(src), HeavyExplosion, MediumExplosion, LightExplosion, flame_range = Flames)
@@ -535,5 +531,7 @@
 		detonated =	0
 		existant =	0
 		timer = world.time + BUTTON_COOLDOWN
+
+
 
 #undef BUTTON_COOLDOWN

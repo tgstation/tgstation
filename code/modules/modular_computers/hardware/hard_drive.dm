@@ -6,9 +6,13 @@
 	critical = 1
 	w_class = 1
 	origin_tech = "programming=1;engineering=1"
+	device_type = MC_HDD
 	var/max_capacity = 128
 	var/used_capacity = 0
 	var/list/stored_files = list()		// List of stored files on this drive. DO NOT MODIFY DIRECTLY!
+
+/obj/item/weapon/computer_hardware/hard_drive/on_remove(obj/item/device/modular_computer/MC, mob/user)
+	MC.shutdown_computer()
 
 /obj/item/weapon/computer_hardware/hard_drive/proc/install_default_programs()
 	store_file(new/datum/computer_file/program/computerconfig(src)) 	// Computer configuration utility, allows hardware control and displays more info than status bar

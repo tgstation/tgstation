@@ -1,251 +1,350 @@
-//These procs handle putting s tuff in your hand. It's probably best to use these rather than setting l_hand = ...etc
+//These procs handle putting s tuff in your hands
 //as they handle all relevant stuff like adding it to the player's screen and updating their overlays.
 
-//Returns the thing in our active hand
-/mob/proc/get_active_hand()
-	if(hand)
-		return l_hand
-	else
-		return r_hand
+//Returns the thing we're currently holding
+/mob/proc/get_active_held_item()
+	return get_item_for_held_index(active_hand_index)
 
 
-//Returns the thing in our inactive hand
-/mob/proc/get_inactive_hand()
-	if(hand)
-		return r_hand
+//Finds the opposite limb for the active one (eg: upper left arm will find the item in upper right arm)
+//So we're treating each "pair" of limbs as a team, so "both" refers to them
+/mob/proc/get_inactive_held_item()
+	return get_item_for_held_index(get_inactive_hand_index())
+
+
+//Finds the opposite index for the active one (eg: upper left arm will find the item in upper right arm)
+//So we're treating each "pair" of limbs as a team, so "both" refers to them
+/mob/proc/get_inactive_hand_index()
+	var/other_hand = 0
+	if(!(active_hand_index % 2))
+		other_hand = active_hand_index-1 //finding the matching "left" limb
 	else
-		return l_hand
+		other_hand = active_hand_index+1 //finding the matching "right" limb
+	if(other_hand < 0 || other_hand > held_items.len)
+		other_hand = 0
+	return other_hand
+
+
+/mob/proc/get_item_for_held_index(i)
+	if(i > 0 && i <= held_items.len)
+		return held_items[i]
+	return FALSE
+
+
+//Odd = left. Even = right
+/mob/proc/held_index_to_dir(i)
+	if(!(i % 2))
+		return "r"
+	return "l"
+
+
+//Check we have an organ for this hand slot (Dismemberment), Only relevant for humans
+/mob/proc/has_hand_for_held_index(i)
+	return TRUE
+
+
+//Check we have an organ for our active hand slot (Dismemberment),Only relevant for humans
+/mob/proc/has_active_hand()
+	return has_hand_for_held_index(active_hand_index)
+
+
+//Finds the first available (null) index OR all available (null) indexes in held_items based on a side.
+//Lefts: 1, 3, 5, 7...
+//Rights:2, 4, 6, 8...
+/mob/proc/get_empty_held_index_for_side(side = "left", all = FALSE)
+	var/start = 0
+	var/static/list/lefts = list("l" = TRUE,"L" = TRUE,"LEFT" = TRUE,"left" = TRUE)
+	var/static/list/rights = list("r" = TRUE,"R" = TRUE,"RIGHT" = TRUE,"right" = TRUE) //"to remain silent"
+	if(lefts[side])
+		start = 1
+	else if(rights[side])
+		start = 2
+	if(!start)
+		return FALSE
+	var/list/empty_indexes
+	for(var/i in start to held_items.len step 2)
+		if(!held_items[i])
+			if(!all)
+				return i
+			if(!empty_indexes)
+				empty_indexes = list()
+			empty_indexes += i
+	return empty_indexes
+
+
+//Same as the above, but returns the first or ALL held *ITEMS* for the side
+/mob/proc/get_held_items_for_side(side = "left", all = FALSE)
+	var/start = 0
+	var/static/list/lefts = list("l" = TRUE,"L" = TRUE,"LEFT" = TRUE,"left" = TRUE)
+	var/static/list/rights = list("r" = TRUE,"R" = TRUE,"RIGHT" = TRUE,"right" = TRUE) //"to remain silent"
+	if(lefts[side])
+		start = 1
+	else if(rights[side])
+		start = 2
+	if(!start)
+		return FALSE
+	var/list/holding_items
+	for(var/i in start to held_items.len step 2)
+		var/obj/item/I = held_items[i]
+		if(I)
+			if(!all)
+				return I
+			if(!holding_items)
+				holding_items = list()
+			holding_items += I
+	return holding_items
+
+
+/mob/proc/get_empty_held_indexes()
+	var/list/L
+	for(var/i in 1 to held_items.len)
+		if(!held_items[i])
+			if(!L)
+				L = list()
+			L += i
+	return L
+
+/mob/proc/get_held_index_of_item(obj/item/I)
+	return held_items.Find(I)
+
+
+//Sad that this will cause some overhead, but the alias seems necessary
+//*I* may be happy with a million and one references to "indexes" but others won't be
+/mob/proc/is_holding(obj/item/I)
+	return get_held_index_of_item(I)
+
+
+//Checks if we're holding an item of type: typepath
+/mob/proc/is_holding_item_of_type(typepath)
+	for(var/obj/item/I in held_items)
+		if(istype(I, typepath))
+			return I
+	return FALSE
+
+
+//To appropriately fluff things like "they are holding [I] in their [get_held_index_name(get_held_index_of_item(I))]"
+//Can be overriden to pass off the fluff to something else (eg: science allowing people to add extra robotic limbs, and having this proc react to that
+// with say "they are holding [I] in their Nanotrasen Brand Utility Arm - Right Edition" or w/e
+/mob/proc/get_held_index_name(i)
+	var/list/hand = list()
+	if(i > 2)
+		hand += "upper "
+	var/num = 0
+	if(!(i % 2))
+		num = i-2
+		hand += "right hand"
+	else
+		num = i-1
+		hand += "left hand"
+	num -= (num*0.5)
+	if(num > 1) //"upper left hand #1" seems weird, but "upper left hand #2" is A-ok
+		hand += " #[num]"
+	return hand.Join()
+
 
 
 //Returns if a certain item can be equipped to a certain slot.
 // Currently invalid for two-handed items - call obj/item/mob_can_equip() instead.
 /mob/proc/can_equip(obj/item/I, slot, disable_warning = 0)
-	return 0
-
-//Puts the item into your l_hand if possible and calls all necessary triggers/updates. returns 1 on success.
-/mob/proc/put_in_l_hand(obj/item/W)
-	if(!put_in_hand_check(W))
-		return 0
-	if(!has_left_hand())
-		return 0
-	if(!l_hand)
-		W.loc = src		//TODO: move to equipped?
-		l_hand = W
-		W.layer = ABOVE_HUD_LAYER	//TODO: move to equipped?
-		W.equipped(src,slot_l_hand)
-		if(W.pulledby)
-			W.pulledby.stop_pulling()
-		update_inv_l_hand()
-		W.pixel_x = initial(W.pixel_x)
-		W.pixel_y = initial(W.pixel_y)
-		return 1
-	return 0
+	return FALSE
 
 
-//Puts the item into your r_hand if possible and calls all necessary triggers/updates. returns 1 on success.
-/mob/proc/put_in_r_hand(obj/item/W)
-	if(!put_in_hand_check(W))
-		return 0
-	if(!has_right_hand())
-		return 0
-	if(!r_hand)
-		W.loc = src
-		r_hand = W
-		W.layer = ABOVE_HUD_LAYER
-		W.equipped(src,slot_r_hand)
-		if(W.pulledby)
-			W.pulledby.stop_pulling()
-		update_inv_r_hand()
-		W.pixel_x = initial(W.pixel_x)
-		W.pixel_y = initial(W.pixel_y)
-		return 1
-	return 0
-
-/mob/proc/put_in_hand_check(obj/item/W)
-	if(lying && !(W.flags&ABSTRACT))
-		return 0
-	if(!istype(W))
-		return 0
-	return 1
-
-//Puts the item into our active hand if possible. returns 1 on success.
-/mob/proc/put_in_active_hand(obj/item/W)
-	if(hand)
-		return put_in_l_hand(W)
-	else
-		return put_in_r_hand(W)
+/mob/proc/put_in_hand(obj/item/I, hand_index)
+	if(!put_in_hand_check(I))
+		return FALSE
+	if(!has_hand_for_held_index(hand_index))
+		return FALSE
+	var/obj/item/curr = held_items[hand_index]
+	if(!curr)
+		I.loc = src
+		held_items[hand_index] = I
+		I.layer = ABOVE_HUD_LAYER
+		I.plane = ABOVE_HUD_PLANE
+		I.equipped(src, slot_hands)
+		if(I.pulledby)
+			I.pulledby.stop_pulling()
+		update_inv_hands()
+		I.pixel_x = initial(I.pixel_x)
+		I.pixel_y = initial(I.pixel_y)
+		return hand_index || TRUE
+	return FALSE
 
 
-//Puts the item into our inactive hand if possible. returns 1 on success.
-/mob/proc/put_in_inactive_hand(obj/item/W)
-	if(hand)
-		return put_in_r_hand(W)
-	else
-		return put_in_l_hand(W)
+//Puts the item into the first available left hand if possible and calls all necessary triggers/updates. returns 1 on success.
+/mob/proc/put_in_l_hand(obj/item/I)
+	return put_in_hand(I, get_empty_held_index_for_side("l"))
 
 
-//Puts the item our active hand if possible. Failing that it tries our inactive hand. Returns 1 on success.
-//If both fail it drops it on the floor and returns 0.
+//Puts the item into the first available right hand if possible and calls all necessary triggers/updates. returns 1 on success.
+/mob/proc/put_in_r_hand(obj/item/I)
+	return put_in_hand(I, get_empty_held_index_for_side("r"))
+
+
+/mob/proc/put_in_hand_check(obj/item/I)
+	if(lying && !(I.flags&ABSTRACT))
+		return FALSE
+	if(!istype(I))
+		return FALSE
+	return TRUE
+
+
+//Puts the item into our active hand if possible. returns TRUE on success.
+/mob/proc/put_in_active_hand(obj/item/I)
+	return put_in_hand(I, active_hand_index)
+
+
+//Puts the item into our inactive hand if possible, returns TRUE on success
+/mob/proc/put_in_inactive_hand(obj/item/I)
+	return put_in_hand(I, get_inactive_hand_index())
+
+
+//Puts the item our active hand if possible. Failing that it tries other hands. Returns TRUE on success.
+//If both fail it drops it on the floor and returns FALSE.
 //This is probably the main one you need to know :)
-/mob/proc/put_in_hands(obj/item/W)
-	if(!W)
-		return 0
-	if(put_in_active_hand(W))
-		return 1
-	else if(put_in_inactive_hand(W))
-		return 1
-	else
-		W.loc = get_turf(src)
-		W.layer = initial(W.layer)
-		W.dropped(src)
-		return 0
+/mob/proc/put_in_hands(obj/item/I, del_on_fail = FALSE)
+	if(!I)
+		return FALSE
+	if(put_in_active_hand(I))
+		return TRUE
+	var/hand = get_empty_held_index_for_side("l")
+	if(!hand)
+		hand =  get_empty_held_index_for_side("r")
+	if(hand)
+		if(put_in_hand(I, hand))
+			return TRUE
+	if(del_on_fail)
+		qdel(I)
+		return FALSE
+	I.forceMove(get_turf(src))
+	I.layer = initial(I.layer)
+	I.plane = initial(I.plane)
+	I.dropped(src)
+	return FALSE
+
+
+/mob/proc/put_in_hands_or_del(obj/item/I)
+	return put_in_hands(I, TRUE)
 
 
 /mob/proc/drop_item_v()		//this is dumb.
 	if(stat == CONSCIOUS && isturf(loc))
 		return drop_item()
-	return 0
+	return FALSE
 
 
-//Drops the item in our left hand
-/mob/proc/drop_l_hand()
+/mob/proc/drop_all_held_items()
 	if(!loc || !loc.allow_drop())
 		return
-	return unEquip(l_hand) //All needed checks are in unEquip
-
-
-//Drops the item in our right hand
-/mob/proc/drop_r_hand()
-	if(!loc || !loc.allow_drop())
-		return
-	return unEquip(r_hand)
-
+	for(var/obj/item/I in held_items)
+		unEquip(I)
 
 //Drops the item in our active hand.
 /mob/proc/drop_item()
-	if(hand)
-		return drop_l_hand()
-	else
-		return drop_r_hand()
+	if(!loc || !loc.allow_drop())
+		return
+	var/obj/item/held = get_active_held_item()
+	return unEquip(held)
 
 
 //Here lie drop_from_inventory and before_item_take, already forgotten and not missed.
 
-
 /mob/proc/canUnEquip(obj/item/I, force)
 	if(!I)
-		return 1
+		return TRUE
 	if((I.flags & NODROP) && !force)
-		return 0
-	return 1
+		return FALSE
+	return TRUE
 
 /mob/proc/unEquip(obj/item/I, force) //Force overrides NODROP for things like wizarditis and admin undress.
 	if(!I) //If there's nothing to drop, the drop is automatically succesfull. If(unEquip) should generally be used to check for NODROP.
-		return 1
+		return TRUE
 
 	if((I.flags & NODROP) && !force)
-		return 0
+		return FALSE
 
-	if(I == r_hand)
-		r_hand = null
-		update_inv_r_hand()
-	else if(I == l_hand)
-		l_hand = null
-		update_inv_l_hand()
-
+	var/hand_index = get_held_index_of_item(I)
+	if(hand_index)
+		held_items[hand_index] = null
+		update_inv_hands()
 	if(I)
 		if(client)
 			client.screen -= I
-		I.loc = loc
+		I.layer = initial(I.layer)
+		I.plane = initial(I.plane)
+		I.appearance_flags &= ~NO_CLIENT_COLOR
+		I.forceMove(loc)
 		I.dropped(src)
-		if(I)
-			I.layer = initial(I.layer)
-	return 1
+	return TRUE
 
 
 //Attemps to remove an object on a mob.  Will not move it to another area or such, just removes from the mob.
-/mob/proc/remove_from_mob(var/obj/O)
-	unEquip(O)
-	O.screen_loc = null
-	return 1
+/mob/proc/remove_from_mob(var/obj/item/I)
+	unEquip(I)
+	I.screen_loc = null
+	return TRUE
 
 
 //Outdated but still in use apparently. This should at least be a human proc.
-/mob/proc/get_equipped_items()
-	var/list/items = new/list()
+//Daily reminder to murder this - Remie.
+/mob/living/proc/get_equipped_items()
+	return
 
-	if(hasvar(src,"back"))
-		if(src:back)
-			items += src:back
-	if(hasvar(src,"belt"))
-		if(src:belt)
-			items += src:belt
-	if(hasvar(src,"ears"))
-		if(src:ears)
-			items += src:ears
-	if(hasvar(src,"glasses"))
-		if(src:glasses)
-			items += src:glasses
-	if(hasvar(src,"gloves"))
-		if(src:gloves)
-			items += src:gloves
-	if(hasvar(src,"head"))
-		if(src:head)
-			items += src:head
-	if(hasvar(src,"shoes"))
-		if(src:shoes)
-			items += src:shoes
-	if(hasvar(src,"wear_id"))
-		if(src:wear_id)
-			items += src:wear_id
-	if(hasvar(src,"wear_mask"))
-		if(src:wear_mask)
-			items += src:wear_mask
-	if(hasvar(src,"wear_suit"))
-		if(src:wear_suit)
-			items += src:wear_suit
-/*	if(hasvar(src,"w_radio"))
-		if(src:w_radio)
-			items += src:w_radio  commenting this out since headsets go on your ears now PLEASE DON'T BE MAD KEELIN */
-	if(hasvar(src,"w_uniform"))
-		if(src:w_uniform)
-			items += src:w_uniform
+/mob/living/carbon/get_equipped_items()
+	var/list/items = list()
+	if(back)
+		items += back
+	if(head)
+		items += head
+	if(wear_mask)
+		items += wear_mask
+	if(wear_neck)
+		items += wear_neck
+	return items
 
-/*	if(hasvar(src,"l_hand"))
-		if(src:l_hand)
-			items += src:l_hand
-	if(hasvar(src,"r_hand"))
-		if(src:r_hand)
-			items += src:r_hand*/
-
+/mob/living/carbon/human/get_equipped_items()
+	var/list/items = ..()
+	if(belt)
+		items += belt
+	if(ears)
+		items += ears
+	if(glasses)
+		items += glasses
+	if(gloves)
+		items += gloves
+	if(shoes)
+		items += shoes
+	if(wear_id)
+		items += wear_id
+	if(wear_suit)
+		items += wear_suit
+	if(w_uniform)
+		items += w_uniform
 	return items
 
 
+
 /obj/item/proc/equip_to_best_slot(var/mob/M)
-	if(src != M.get_active_hand())
+	if(src != M.get_active_held_item())
 		M << "<span class='warning'>You are not holding anything to equip!</span>"
-		return 0
+		return FALSE
 
 	if(M.equip_to_appropriate_slot(src))
-		if(M.hand)
-			M.update_inv_l_hand()
-		else
-			M.update_inv_r_hand()
-		return 1
+		M.update_inv_hands()
+		return TRUE
 
 	if(M.s_active && M.s_active.can_be_inserted(src,1))	//if storage active insert there
 		M.s_active.handle_item_insertion(src)
-		return 1
+		return TRUE
 
-	var/obj/item/weapon/storage/S = M.get_inactive_hand()
+	var/obj/item/weapon/storage/S = M.get_inactive_held_item()
 	if(istype(S) && S.can_be_inserted(src,1))	//see if we have box in other hand
 		S.handle_item_insertion(src)
-		return 1
+		return TRUE
 
 	S = M.get_item_by_slot(slot_belt)
 	if(istype(S) && S.can_be_inserted(src,1))		//else we put in belt
 		S.handle_item_insertion(src)
-		return 1
+		return TRUE
 
 	S = M.get_item_by_slot(slot_generic_dextrous_storage)	//else we put in whatever is in drone storage
 	if(istype(S) && S.can_be_inserted(src,1))
@@ -254,18 +353,17 @@
 	S = M.get_item_by_slot(slot_back)	//else we put in backpack
 	if(istype(S) && S.can_be_inserted(src,1))
 		S.handle_item_insertion(src)
-		playsound(src.loc, "rustle", 50, 1, -5)
-		return 1
+		return TRUE
 
 	M << "<span class='warning'>You are unable to equip that!</span>"
-	return 0
+	return FALSE
 
 
 /mob/verb/quick_equip()
 	set name = "quick-equip"
 	set hidden = 1
 
-	var/obj/item/I = get_active_hand()
+	var/obj/item/I = get_active_held_item()
 	if (I)
 		I.equip_to_best_slot(src)
 
@@ -275,3 +373,46 @@
 
 /mob/proc/getBeltSlot()
 	return slot_belt
+
+
+
+//Inventory.dm is -kind of- an ok place for this I guess
+
+//This is NOT for dismemberment, as the user still technically has 2 "hands"
+//This is for multi-handed mobs, such as a human with a third limb installed
+//This is a very rare proc to call (besides admin fuckery) so
+//any cost it has isn't a worry
+/mob/proc/change_number_of_hands(amt)
+	if(amt < held_items.len)
+		for(var/i in held_items.len to amt step -1)
+			unEquip(held_items[i])
+	held_items.len = amt
+
+	if(hud_used)
+		var/style
+		if(client && client.prefs)
+			style = ui_style2icon(client.prefs.UI_style)
+		hud_used.build_hand_slots(style)
+
+
+/mob/living/carbon/human/change_number_of_hands(amt)
+	var/old_limbs = held_items.len
+	if(amt < old_limbs)
+		for(var/i in hand_bodyparts.len to amt step -1)
+			var/obj/item/bodypart/BP = hand_bodyparts[i]
+			BP.dismember()
+			hand_bodyparts[i] = null
+		hand_bodyparts.len = amt
+	else if(amt > old_limbs)
+		hand_bodyparts.len = amt
+		for(var/i in old_limbs+1 to amt)
+			var/path = /obj/item/bodypart/l_arm
+			if(!(i % 2))
+				path = /obj/item/bodypart/r_arm
+
+			var/obj/item/bodypart/BP = new path ()
+			BP.owner = src
+			BP.held_index = i
+			bodyparts += BP
+			hand_bodyparts[i] = BP
+	..() //Don't redraw hands until we have organs for them

@@ -77,7 +77,7 @@ var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","
 		if(A.level == 3)
 			return 1
 
-/turf/open/floor/blob_act(obj/effect/blob/B)
+/turf/open/floor/blob_act(obj/structure/blob/B)
 	return
 
 /turf/open/floor/proc/update_icon()
@@ -112,10 +112,10 @@ var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","
 /turf/open/floor/proc/make_plating()
 	return ChangeTurf(/turf/open/floor/plating)
 
-/turf/open/floor/ChangeTurf(turf/open/floor/T)
-	if(!istype(src,/turf/open/floor))
+/turf/open/floor/ChangeTurf(new_path)
+	if(!isfloorturf(src))
 		return ..() //fucking turfs switch the fucking src of the fucking running procs
-	if(!ispath(T,/turf/open/floor))
+	if(!ispath(new_path, /turf/open/floor))
 		return ..()
 	var/old_icon = icon_regular_floor
 	var/old_dir = dir
@@ -171,14 +171,14 @@ var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","
 		ChangeTurf(/turf/open/floor/engine/cult)
 
 /turf/open/floor/ratvar_act(force)
-	var/converted = (prob(40) || force)
-	if(converted)
+	. = ..()
+	if(.)
 		ChangeTurf(/turf/open/floor/clockwork)
-	for(var/I in src)
-		var/atom/A = I
-		if(ismob(A) || converted)
-			A.ratvar_act()
 
 /turf/open/floor/initialize()
 	..()
 	MakeDirty()
+
+/turf/open/floor/acid_melt()
+	ChangeTurf(baseturf)
+

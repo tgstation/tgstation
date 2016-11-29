@@ -6,6 +6,7 @@
 	malfunction_probability = 1
 	origin_tech = "powerstorage=1;engineering=1"
 	var/obj/item/weapon/stock_parts/cell/battery = null
+	device_type = MC_CELL
 
 /obj/item/weapon/computer_hardware/battery/New(loc, battery_type = null)
 	if(battery_type)
@@ -20,7 +21,7 @@
 		return FALSE
 
 	if(battery)
-		user << "<span class='warning'>You try to connect \the [I] to \the [src], but it's connectors are occupied.</span>"
+		user << "<span class='warning'>You try to connect \the [I] to \the [src], but its connectors are occupied.</span>"
 		return FALSE
 
 	if(I.w_class > holder.max_hardware_size)
@@ -37,7 +38,7 @@
 	return TRUE
 
 
-/obj/item/weapon/computer_hardware/battery/try_eject(slot=0, mob/living/user = null)
+/obj/item/weapon/computer_hardware/battery/try_eject(slot=0, mob/living/user = null, forced = 0)
 	if(!battery)
 		user << "<span class='warning'>There is no power cell connected to \the [src].</span>"
 		return FALSE

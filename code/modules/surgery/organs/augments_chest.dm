@@ -96,7 +96,7 @@
 	else
 		cooldown += 200
 
-	if(istype(owner, /mob/living/carbon/human))
+	if(ishuman(owner))
 		var/mob/living/carbon/human/H = owner
 		if(H.stat != DEAD && prob(50 / severity))
 			H.heart_attack = TRUE
@@ -197,3 +197,4 @@
 
 	toggle(silent=1)
 	return 0
+

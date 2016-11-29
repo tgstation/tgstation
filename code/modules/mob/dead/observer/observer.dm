@@ -31,6 +31,7 @@ var/list/image/ghost_images_simple = list() //this is a list of all ghost images
 	var/image/ghostimage_simple = null //this mob with the simple white ghost sprite
 	var/ghostvision = 1 //is the ghost able to see things humans can't?
 	var/seedarkness = 1
+	var/mob/observetarget = null	//The target mob that the ghost is observing. Used as a reference in logout()
 	var/ghost_hud_enabled = 1 //did this ghost disable the on-screen HUD?
 	var/data_huds_on = 0 //Are data HUDs currently enabled?
 	var/list/datahuds = list(DATA_HUD_SECURITY_ADVANCED, DATA_HUD_MEDICAL_ADVANCED, DATA_HUD_DIAGNOSTIC) //list of data HUDs shown to ghosts.
@@ -117,11 +118,13 @@ var/list/image/ghost_images_simple = list() //this is a list of all ghost images
 	var/old_color = color
 	color = "#960000"
 	animate(src, color = old_color, time = 10)
+	addtimer(src, "update_atom_colour", 10)
 
 /mob/dead/observer/ratvar_act()
 	var/old_color = color
 	color = "#FAE48C"
 	animate(src, color = old_color, time = 10)
+	addtimer(src, "update_atom_colour", 10)
 
 /mob/dead/observer/Destroy()
 	ghost_images_full -= ghostimage
@@ -334,9 +337,12 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 					A.icon = ui_style2icon(client.prefs.UI_style)
 				A.desc = message
 				var/old_layer = source.layer
+				var/old_plane = source.plane
 				source.layer = FLOAT_LAYER
+				source.plane = FLOAT_PLANE
 				A.add_overlay(source)
 				source.layer = old_layer
+				source.plane = old_plane
 	src << "<span class='ghostalert'><a href=?src=\ref[src];reenter=1>(Click to re-enter)</a></span>"
 	if(sound)
 		src << sound(sound)
@@ -345,7 +351,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	set category = "Ghost"
 	set name = "Teleport"
 	set desc= "Teleport to a location"
-	if(!istype(usr, /mob/dead/observer))
+	if(!isobserver(usr))
 		usr << "Not when you're not dead!"
 		return
 	var/A
@@ -383,7 +389,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	var/orbitsize = (I.Width()+I.Height())*0.5
 	orbitsize -= (orbitsize/world.icon_size)*(world.icon_size*0.25)
 
-	if(orbiting != target)
+	if(orbiting && orbiting.orbiting != target)
 		src << "<span class='notice'>Now orbiting [target].</span>"
 
 	var/rot_seg
@@ -403,20 +409,21 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	orbit(target,orbitsize, FALSE, 20, rot_seg)
 
 /mob/dead/observer/orbit()
-	setDir(2 )//reset dir so the right directional sprites show up
+	setDir(2)//reset dir so the right directional sprites show up
+	..()
+
+/mob/dead/observer/stop_orbit()
 	..()
 	//restart our floating animation after orbit is done.
-	sleep 2  //orbit sets up a 2ds animation when it finishes, so we wait for that to end
-	if (!orbiting) //make sure another orbit hasn't started
-		pixel_y = 0
-		animate(src, pixel_y = 2, time = 10, loop = -1)
+	pixel_y = 0
+	animate(src, pixel_y = 2, time = 10, loop = -1)
 
 /mob/dead/observer/verb/jumptomob() //Moves the ghost instead of just changing the ghosts's eye -Nodrak
 	set category = "Ghost"
 	set name = "Jump to Mob"
 	set desc = "Teleport to a mob"
 
-	if(istype(usr, /mob/dead/observer)) //Make sure they're an observer!
+	if(isobserver(usr)) //Make sure they're an observer!
 
 
 		var/list/dest = list() //List of possible destinations (mobs)
@@ -690,3 +697,42 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 			else
 				verbs -= /mob/dead/observer/verb/boo
 				verbs -= /mob/dead/observer/verb/possess
+
+/mob/dead/observer/reset_perspective(atom/A)
+	if(client)
+		if(ismob(client.eye) && (client.eye != src))
+			var/mob/target = client.eye
+			observetarget = null
+			if(target.observers)
+				target.observers -= src
+				UNSETEMPTY(target.observers)
+	if(..())
+		if(hud_used)
+			client.screen = list()
+			hud_used.show_hud(hud_used.hud_version)
+
+/mob/dead/observer/verb/observe()
+	set name = "Observe"
+	set category = "OOC"
+
+	var/list/creatures = getpois()
+
+	reset_perspective(null)
+
+	var/eye_name = null
+
+	eye_name = input("Please, select a player!", "Observe", null, null) as null|anything in creatures
+
+	if (!eye_name)
+		return
+
+	var/mob/mob_eye = creatures[eye_name]
+	//Istype so we filter out points of interest that are not mobs
+	if(client && mob_eye && istype(mob_eye))
+		client.eye = mob_eye
+		client.screen = list()
+		if(mob_eye.hud_used)
+			LAZYINITLIST(mob_eye.observers)
+			mob_eye.observers |= src
+			mob_eye.hud_used.show_hud(1,src)
+			observetarget = mob_eye

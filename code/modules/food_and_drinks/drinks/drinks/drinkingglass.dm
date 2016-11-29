@@ -7,21 +7,11 @@
 	amount_per_transfer_from_this = 10
 	volume = 50
 	materials = list(MAT_GLASS=500)
-	burn_state = FLAMMABLE
-	burntime = 5
+	obj_integrity = 20
+	max_integrity = 20
 	spillable = 1
-
-/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/fire_act()
-	if(!reagents.total_volume)
-		return
-	..()
-
-/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/burn()
-	reagents.total_volume = 0 //Burns away all the alcohol :(
-	reagents.reagent_list.Cut()
-	on_reagent_change()
-	extinguish()
-	return
+	resistance_flags = ACID_PROOF
+	unique_rename = 1
 
 /obj/item/weapon/reagent_containers/food/drinks/drinkingglass/on_reagent_change()
 	cut_overlays()
@@ -519,6 +509,10 @@
 				icon_state = "triplecitrus" //needs own sprite mine are trash
 				name = "glass of triple citrus"
 				desc = "A mixture of citrus juices. Tangy, yet smooth."
+			if("grappa")
+				icon_state = "grappa"
+				name = "glass of grappa"
+				desc = "A fine drink originally made to prevent waste by using the leftovers from winemaking."
 			else
 				icon_state ="glass_brown"
 				var/image/I = image(icon, "glassoverlay")

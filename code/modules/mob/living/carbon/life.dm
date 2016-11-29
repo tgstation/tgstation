@@ -9,16 +9,19 @@
 		damageoverlaytemp = 0
 		update_damage_hud()
 
-	if(..())
-		. = 1
-
+	if(..()) //not dead
 		handle_blood()
 
-		for(var/obj/item/organ/O in internal_organs)
+	if(stat != DEAD)
+		for(var/V in internal_organs)
+			var/obj/item/organ/O = V
 			O.on_life()
 
 	//Updates the number of stored chemicals for powers
 	handle_changeling()
+
+	if(stat != DEAD)
+		return 1
 
 ///////////////
 // BREATHING //

@@ -83,6 +83,10 @@
 		var_value = "\icon[var_value]"
 		default = "icon"
 
+	else if(istype(var_value,/client))
+		usr << "Variable appears to be <b>CLIENT</b>."
+		default = "cancel"
+
 	else if(istype(var_value,/atom) || istype(var_value,/datum))
 		usr << "Variable appears to be <b>TYPE</b>."
 		default = "type"
@@ -90,10 +94,6 @@
 	else if(istype(var_value,/list))
 		usr << "Variable appears to be <b>LIST</b>."
 		default = "list"
-
-	else if(istype(var_value,/client))
-		usr << "Variable appears to be <b>CLIENT</b>."
-		default = "cancel"
 
 	else
 		usr << "Variable appears to be <b>FILE</b>."
@@ -141,38 +141,38 @@
 		if("restore to default")
 			O.vars[variable] = initial(O.vars[variable])
 			if(method)
-				if(istype(O, /mob))
+				if(ismob(O))
 					for(var/mob/M in mob_list)
 						if ( istype(M , O.type) )
 							M.vars[variable] = O.vars[variable]
 						CHECK_TICK
 
-				else if(istype(O, /obj))
+				else if(isobj(O))
 					for(var/obj/A in world)
 						if ( istype(A , O.type) )
 							A.vars[variable] = O.vars[variable]
 						CHECK_TICK
 
-				else if(istype(O, /turf))
+				else if(isturf(O))
 					for(var/turf/A in world)
 						if ( istype(A , O.type) )
 							A.vars[variable] = O.vars[variable]
 						CHECK_TICK
 
 			else
-				if(istype(O, /mob))
+				if(ismob(O))
 					for(var/mob/M in mob_list)
 						if (M.type == O.type)
 							M.vars[variable] = O.vars[variable]
 						CHECK_TICK
 
-				else if(istype(O, /obj))
+				else if(isobj(O))
 					for(var/obj/A in world)
 						if (A.type == O.type)
 							A.vars[variable] = O.vars[variable]
 						CHECK_TICK
 
-				else if(istype(O, /turf))
+				else if(isturf(O))
 					for(var/turf/A in world)
 						if (A.type == O.type)
 							A.vars[variable] = O.vars[variable]
@@ -212,7 +212,7 @@
 
 			//Convert the string vars for anything that's not O
 			if(method)
-				if(istype(O, /mob))
+				if(ismob(O))
 					for(var/mob/M in mob_list)
 						if ( istype(M , O.type) )
 							new_value = pre_processing //reset new_value, ready to convert it uniquely for the next iteration
@@ -227,7 +227,7 @@
 							M.vars[variable] = new_value
 						CHECK_TICK
 
-				else if(istype(O, /obj))
+				else if(isobj(O))
 					for(var/obj/A in world)
 						if ( istype(A , O.type) )
 							new_value = pre_processing
@@ -242,7 +242,7 @@
 							A.vars[variable] = new_value
 						CHECK_TICK
 
-				else if(istype(O, /turf))
+				else if(isturf(O))
 					for(var/turf/A in world)
 						if ( istype(A , O.type) )
 							new_value = pre_processing
@@ -257,7 +257,7 @@
 							A.vars[variable] = new_value
 						CHECK_TICK
 			else
-				if(istype(O, /mob))
+				if(ismob(O))
 					for(var/mob/M in mob_list)
 						if (M.type == O.type)
 							new_value = pre_processing
@@ -272,7 +272,7 @@
 							M.vars[variable] = new_value
 						CHECK_TICK
 
-				else if(istype(O, /obj))
+				else if(isobj(O))
 					for(var/obj/A in world)
 						if (A.type == O.type)
 							new_value = pre_processing
@@ -287,7 +287,7 @@
 							A.vars[variable] = new_value
 						CHECK_TICK
 
-				else if(istype(O, /turf))
+				else if(isturf(O))
 					for(var/turf/A in world)
 						if (A.type == O.type)
 							new_value = pre_processing
@@ -313,7 +313,7 @@
 				O.vars[variable] = new_value
 
 			if(method)
-				if(istype(O, /mob))
+				if(ismob(O))
 					for(var/mob/M in mob_list)
 						if ( istype(M , O.type) )
 							if(variable=="luminosity")
@@ -322,7 +322,7 @@
 								M.vars[variable] = O.vars[variable]
 						CHECK_TICK
 
-				else if(istype(O, /obj))
+				else if(isobj(O))
 					for(var/obj/A in world)
 						if ( istype(A , O.type) )
 							if(variable=="luminosity")
@@ -331,7 +331,7 @@
 								A.vars[variable] = O.vars[variable]
 						CHECK_TICK
 
-				else if(istype(O, /turf))
+				else if(isturf(O))
 					for(var/turf/A in world)
 						if ( istype(A , O.type) )
 							if(variable=="luminosity")
@@ -341,7 +341,7 @@
 						CHECK_TICK
 
 			else
-				if(istype(O, /mob))
+				if(ismob(O))
 					for(var/mob/M in mob_list)
 						if (M.type == O.type)
 							if(variable=="luminosity")
@@ -350,7 +350,7 @@
 								M.vars[variable] = O.vars[variable]
 						CHECK_TICK
 
-				else if(istype(O, /obj))
+				else if(isobj(O))
 					for(var/obj/A in world)
 						if (A.type == O.type)
 							if(variable=="luminosity")
@@ -359,7 +359,7 @@
 								A.vars[variable] = O.vars[variable]
 						CHECK_TICK
 
-				else if(istype(O, /turf))
+				else if(isturf(O))
 					for(var/turf/A in world)
 						if (A.type == O.type)
 							if(variable=="luminosity")
@@ -374,38 +374,38 @@
 			if(new_value == null) return
 			O.vars[variable] = new_value
 			if(method)
-				if(istype(O, /mob))
+				if(ismob(O))
 					for(var/mob/M in mob_list)
 						if ( istype(M , O.type) )
 							M.vars[variable] = O.vars[variable]
 						CHECK_TICK
 
-				else if(istype(O, /obj))
+				else if(isobj(O))
 					for(var/obj/A in world)
 						if ( istype(A , O.type) )
 							A.vars[variable] = O.vars[variable]
 						CHECK_TICK
 
-				else if(istype(O, /turf))
+				else if(isturf(O))
 					for(var/turf/A in world)
 						if ( istype(A , O.type) )
 							A.vars[variable] = O.vars[variable]
 						CHECK_TICK
 
 			else
-				if(istype(O, /mob))
+				if(ismob(O))
 					for(var/mob/M in mob_list)
 						if (M.type == O.type)
 							M.vars[variable] = O.vars[variable]
 						CHECK_TICK
 
-				else if(istype(O, /obj))
+				else if(isobj(O))
 					for(var/obj/A in world)
 						if (A.type == O.type)
 							A.vars[variable] = O.vars[variable]
 						CHECK_TICK
 
-				else if(istype(O, /turf))
+				else if(isturf(O))
 					for(var/turf/A in world)
 						if (A.type == O.type)
 							A.vars[variable] = O.vars[variable]
@@ -417,37 +417,37 @@
 			O.vars[variable] = new_value
 
 			if(method)
-				if(istype(O, /mob))
+				if(ismob(O))
 					for(var/mob/M in mob_list)
 						if ( istype(M , O.type) )
 							M.vars[variable] = O.vars[variable]
 						CHECK_TICK
 
-				else if(istype(O.type, /obj))
+				else if(isobj(O))
 					for(var/obj/A in world)
 						if ( istype(A , O.type) )
 							A.vars[variable] = O.vars[variable]
 						CHECK_TICK
 
-				else if(istype(O.type, /turf))
+				else if(isturf(O))
 					for(var/turf/A in world)
 						if ( istype(A , O.type) )
 							A.vars[variable] = O.vars[variable]
 						CHECK_TICK
 			else
-				if(istype(O, /mob))
+				if(ismob(O))
 					for(var/mob/M in mob_list)
 						if (M.type == O.type)
 							M.vars[variable] = O.vars[variable]
 						CHECK_TICK
 
-				else if(istype(O, /obj))
+				else if(isobj(O))
 					for(var/obj/A in world)
 						if (A.type == O.type)
 							A.vars[variable] = O.vars[variable]
 						CHECK_TICK
 
-				else if(istype(O, /turf))
+				else if(isturf(O))
 					for(var/turf/A in world)
 						if (A.type == O.type)
 							A.vars[variable] = O.vars[variable]
@@ -458,76 +458,76 @@
 			if(new_value == null) return
 			O.vars[variable] = new_value
 			if(method)
-				if(istype(O, /mob))
+				if(ismob(O))
 					for(var/mob/M in mob_list)
 						if ( istype(M , O.type) )
 							M.vars[variable] = O.vars[variable]
 						CHECK_TICK
 
-				else if(istype(O, /obj))
+				else if(isobj(O))
 					for(var/obj/A in world)
 						if ( istype(A , O.type) )
 							A.vars[variable] = O.vars[variable]
 						CHECK_TICK
 
-				else if(istype(O, /turf))
+				else if(isturf(O))
 					for(var/turf/A in world)
 						if ( istype(A , O.type) )
 							A.vars[variable] = O.vars[variable]
 						CHECK_TICK
 
 			else
-				if(istype(O, /mob))
+				if(ismob(O))
 					for(var/mob/M in mob_list)
 						if (M.type == O.type)
 							M.vars[variable] = O.vars[variable]
 						CHECK_TICK
 
-				else if(istype(O, /obj))
+				else if(isobj(O))
 					for(var/obj/A in world)
 						if (A.type == O.type)
 							A.vars[variable] = O.vars[variable]
 						CHECK_TICK
 
-				else if(istype(O, /turf))
+				else if(isturf(O))
 					for(var/turf/A in world)
 						if (A.type == O.type)
 							A.vars[variable] = O.vars[variable]
 						CHECK_TICK
 
 	if(method)
-		if(istype(O,/mob))
+		if(ismob(O))
 			for(var/mob/M in mob_list)
 				if(istype(M,O.type))
 					M.on_varedit(variable)
 				CHECK_TICK
 
-		else if(istype(O,/obj))
+		else if(isobj(O))
 			for(var/obj/A in world)
 				if(istype(A,O.type))
 					A.on_varedit(variable)
 				CHECK_TICK
 
-		else if(istype(O,/turf))
+		else if(isturf(O))
 			for(var/turf/A in block(locate(1,1,1),locate(world.maxx,world.maxy,world.maxz)))
 				if(istype(A,O.type))
 					A.on_varedit(variable)
 				CHECK_TICK
 
 	else
-		if(istype(O, /mob))
+		if(ismob(O))
 			for(var/mob/M in mob_list)
 				if(M.type == O.type)
 					M.on_varedit(variable)
 				CHECK_TICK
 
-		else if(istype(O, /obj))
+		else if(isobj(O))
 			for(var/obj/A in world)
 				if(A.type == O.type)
 					A.on_varedit(variable)
 				CHECK_TICK
 
-		else if(istype(O, /turf))
+		else if(isturf(O))
 			for(var/turf/A in world)
 				if(A.type == O.type)
 					A.on_varedit(variable)

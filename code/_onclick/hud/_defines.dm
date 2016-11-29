@@ -33,32 +33,44 @@
 #define ui_id "CENTER-4:12,SOUTH:5"
 #define ui_belt "CENTER-3:14,SOUTH:5"
 #define ui_back "CENTER-2:14,SOUTH:5"
-#define ui_rhand "CENTER:-16,SOUTH:5"
-#define ui_lhand "CENTER: 16,SOUTH:5"
-#define ui_equip "CENTER:-16,SOUTH+1:5"
-#define ui_swaphand1 "CENTER:-16,SOUTH+1:5"
-#define ui_swaphand2 "CENTER: 16,SOUTH+1:5"
+
+/proc/ui_hand_position(i) //values based on old hand ui positions (CENTER:-/+16,SOUTH:5)
+	var/x_off = -(!(i % 2))
+	var/y_off = round((i-1) / 2)
+	return"CENTER+[x_off]:16,SOUTH+[y_off]:5"
+
+/proc/ui_equip_position(mob/M)
+	var/y_off = round((M.held_items.len-1) / 2) //values based on old equip ui position (CENTER: +/-16,SOUTH+1:5)
+	return "CENTER:-16,SOUTH+[y_off+1]:5"
+
+/proc/ui_swaphand_position(mob/M, which = 1) //values based on old swaphand ui positions (CENTER: +/-16,SOUTH+1:5)
+	var/x_off = which == 1 ? -1 : 0
+	var/y_off = round((M.held_items.len-1) / 2)
+	return "CENTER+[x_off]:16,SOUTH+[y_off+1]:5"
+
 #define ui_storage1 "CENTER+1:18,SOUTH:5"
 #define ui_storage2 "CENTER+2:20,SOUTH:5"
 
-#define ui_borg_sensor "CENTER-3:16, SOUTH:5"	//borgs
-#define ui_borg_lamp "CENTER-4:16, SOUTH:5"		//borgies
-#define ui_borg_thrusters "CENTER-5:16, SOUTH:5"//borgies
-#define ui_inv1 "CENTER-2:16,SOUTH:5"			//borgs
-#define ui_inv2 "CENTER-1  :16,SOUTH:5"			//borgs
-#define ui_inv3 "CENTER  :16,SOUTH:5"			//borgs
-#define ui_borg_module "CENTER+1:16,SOUTH:5"
-#define ui_borg_store "CENTER+2:16,SOUTH:5"		//borgs
-
-#define ui_borg_camera "CENTER+3:21,SOUTH:5"	//borgs
-#define ui_borg_album "CENTER+4:21,SOUTH:5"		//borgs
+#define ui_borg_sensor "CENTER-3:16, SOUTH:5"		//borgs
+#define ui_borg_lamp "CENTER-4:16, SOUTH:5"			//borgs
+#define ui_borg_thrusters "CENTER-5:16, SOUTH:5"	//borgs
+#define ui_inv1 "CENTER-2:16,SOUTH:5"				//borgs
+#define ui_inv2 "CENTER-1  :16,SOUTH:5"				//borgs
+#define ui_inv3 "CENTER  :16,SOUTH:5"				//borgs
+#define ui_borg_module "CENTER+1:16,SOUTH:5"		//borgs
+#define ui_borg_store "CENTER+2:16,SOUTH:5"			//borgs
+#define ui_borg_camera "CENTER+3:21,SOUTH:5"		//borgs
+#define ui_borg_album "CENTER+4:21,SOUTH:5"			//borgs
+#define ui_borg_talk_wheel "CENTER+4:21,SOUTH+1:5"	//borgs
 
 #define ui_monkey_head "CENTER-4:13,SOUTH:5"	//monkey
 #define ui_monkey_mask "CENTER-3:14,SOUTH:5"	//monkey
-#define ui_monkey_back "CENTER-2:15,SOUTH:5"	//monkey
+#define ui_monkey_neck "CENTER-2:15,SOUTH:5"	//monkey
+#define ui_monkey_back "CENTER-1:16,SOUTH:5"	//monkey
 
 #define ui_alien_storage_l "CENTER-2:14,SOUTH:5"//alien
 #define ui_alien_storage_r "CENTER+1:18,SOUTH:5"//alien
+#define ui_alien_talk_wheel "EAST-3:26,SOUTH:5" //alien
 
 #define ui_drone_drop "CENTER+1:18,SOUTH:5"     //maintenance drones
 #define ui_drone_pull "CENTER+2:2,SOUTH:5"      //maintenance drones
@@ -123,10 +135,10 @@
 #define ui_oclothing "WEST+1:8,SOUTH+1:7"
 #define ui_gloves "WEST+2:10,SOUTH+1:7"
 
-#define ui_glasses "WEST:6,SOUTH+2:9"
+#define ui_glasses "WEST:6,SOUTH+3:11"
 #define ui_mask "WEST+1:8,SOUTH+2:9"
 #define ui_ears "WEST+2:10,SOUTH+2:9"
-
+#define ui_neck "WEST:6,SOUTH+2:9"
 #define ui_head "WEST+1:8,SOUTH+3:11"
 
 //Ghosts
@@ -141,3 +153,4 @@
 #define ui_deityhealth "EAST-1:28,CENTER-2:13"
 #define ui_deitypower	"EAST-1:28,CENTER-1:15"
 #define ui_deityfollowers "EAST-1:28,CENTER:17"
+

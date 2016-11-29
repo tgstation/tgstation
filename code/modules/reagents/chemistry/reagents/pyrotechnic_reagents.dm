@@ -7,7 +7,7 @@
 	color = "#550000"
 
 /datum/reagent/thermite/reaction_turf(turf/T, reac_volume)
-	if(reac_volume >= 1 && istype(T, /turf/closed/wall))
+	if(reac_volume >= 1 && iswallturf(T))
 		var/turf/closed/wall/Wall = T
 		if(istype(Wall, /turf/closed/wall/r_wall))
 			Wall.thermite = Wall.thermite+(reac_volume*2.5)
@@ -54,17 +54,17 @@
 		var/turf/open/floor/plating/F = T
 		if(prob(10 + F.burnt + 5*F.broken)) //broken or burnt plating is more susceptible to being destroyed
 			F.ChangeTurf(F.baseturf)
-	if(istype(T, /turf/open/floor/))
+	if(isfloorturf(T))
 		var/turf/open/floor/F = T
 		if(prob(reac_volume))
 			F.make_plating()
 		else if(prob(reac_volume))
 			F.burn_tile()
-		if(istype(F, /turf/open/floor/))
+		if(isfloorturf(F))
 			for(var/turf/turf in range(1,F))
 				if(!locate(/obj/effect/hotspot) in turf)
 					PoolOrNew(/obj/effect/hotspot, F)
-	if(istype(T, /turf/closed/wall/))
+	if(iswallturf(T))
 		var/turf/closed/wall/W = T
 		if(prob(reac_volume))
 			W.ChangeTurf(/turf/open/floor/plating)
@@ -164,7 +164,7 @@
 /datum/reagent/cryostylane
 	name = "Cryostylane"
 	id = "cryostylane"
-	description = "Comes into existence at 20K. As long as there is sufficient oxygen for it to react with, Cryostylane slowly cools all other reagents in the mob down to 0K."
+	description = "Comes into existence at 20K. As long as there is sufficient oxygen for it to react with, Cryostylane slowly cools all other reagents in the container 0K."
 	color = "#0000DC"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 
@@ -190,7 +190,7 @@
 /datum/reagent/pyrosium
 	name = "Pyrosium"
 	id = "pyrosium"
-	description = "Comes into existence at 20K. As long as there is sufficient oxygen for it to react with, Pyrosium slowly cools all other reagents in the mob down to 0K."
+	description = "Comes into existence at 20K. As long as there is sufficient oxygen for it to react with, Pyrosium slowly heats all other reagents in the container."
 	color = "#64FAC8"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 
@@ -205,4 +205,21 @@
 		holder.remove_reagent("oxygen", 1)
 		holder.chem_temp += 10
 		holder.handle_reactions()
+	..()
+
+/datum/reagent/teslium //Teslium. Causes periodic shocks, and makes shocks against the target much more effective.
+	name = "Teslium"
+	id = "teslium"
+	description = "An unstable, electrically-charged metallic slurry. Periodically electrocutes its victim, and makes electrocutions against them more deadly. Excessively heating teslium results in dangerous destabilization. Do not allow to come into contact with water."
+	reagent_state = LIQUID
+	color = "#20324D" //RGB: 32, 50, 77
+	metabolization_rate = 0.5 * REAGENTS_METABOLISM
+	var/shock_timer = 0
+
+/datum/reagent/teslium/on_mob_life(mob/living/M)
+	shock_timer++
+	if(shock_timer >= rand(5,30)) //Random shocks are wildly unpredictable
+		shock_timer = 0
+		M.electrocute_act(rand(5,20), "Teslium in their body", 1, 1) //Override because it's caused from INSIDE of you
+		playsound(M, "sparks", 50, 1)
 	..()

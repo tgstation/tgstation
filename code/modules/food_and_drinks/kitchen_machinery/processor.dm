@@ -3,7 +3,7 @@
 	name = "food processor"
 	desc = "An industrial grinder used to process meat and other foods. Keep hands clear of intake area while operating."
 	icon = 'icons/obj/kitchen.dmi'
-	icon_state = "processor"
+	icon_state = "processor1"
 	layer = BELOW_OBJ_LAYER
 	density = 1
 	anchored = 1
@@ -90,12 +90,20 @@
 	input = /obj/item/weapon/reagent_containers/food/snacks/meat/slab
 	output = /obj/item/weapon/reagent_containers/food/snacks/faggot
 
+/datum/food_processor_process/bacon
+	input = /obj/item/weapon/reagent_containers/food/snacks/meat/rawcutlet
+	output = /obj/item/weapon/reagent_containers/food/snacks/meat/rawbacon
+
 /datum/food_processor_process/sweetpotato
 	input = /obj/item/weapon/reagent_containers/food/snacks/grown/potato/sweet
 	output = /obj/item/weapon/reagent_containers/food/snacks/yakiimo
 
 /datum/food_processor_process/potato
 	input = /obj/item/weapon/reagent_containers/food/snacks/grown/potato
+	output = /obj/item/weapon/reagent_containers/food/snacks/tatortot
+
+/datum/food_processor_process/potatowedges
+	input = /obj/item/weapon/reagent_containers/food/snacks/grown/potato/wedges
 	output = /obj/item/weapon/reagent_containers/food/snacks/fries
 
 /datum/food_processor_process/carrot
@@ -185,7 +193,7 @@
 	if(src.processing)
 		user << "<span class='warning'>The processor is in the process of processing!</span>"
 		return 1
-	if(default_deconstruction_screwdriver(user, "processor1", "processor", O))
+	if(default_deconstruction_screwdriver(user, "processor", "processor1", O))
 		return
 
 	if(exchange_parts(user, O))

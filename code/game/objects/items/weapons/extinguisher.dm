@@ -14,6 +14,7 @@
 	materials = list(MAT_METAL=90)
 	attack_verb = list("slammed", "whacked", "bashed", "thunked", "battered", "bludgeoned", "thrashed")
 	dog_fashion = /datum/dog_fashion/back
+	resistance_flags = FIRE_PROOF
 	var/max_water = 50
 	var/last_use = 1
 	var/safety = 1
@@ -50,11 +51,8 @@
 	return
 
 /obj/item/weapon/extinguisher/attack(mob/M, mob/user)
-	if(user.a_intent == "help")
-		// If we're in help intent, don't bash anyone with the
-		// extinguisher
-		user.visible_message("[user] targets [M] with \the [src]", "<span class='info'>You target [M] with \the [src].</span>")
-		return 0
+	if(user.a_intent == "help" && !safety) //If we're on help intent and going to spray people, don't bash them.
+		return FALSE
 	else
 		return ..()
 
@@ -97,7 +95,7 @@
 			usr << "<span class='warning'>\The [src] is empty!</span>"
 			return
 
-		if (world.time < src.last_use + 20)
+		if (world.time < src.last_use + 12)
 			return
 
 		src.last_use = world.time
@@ -172,7 +170,7 @@
 		reagents.clear_reagents()
 
 		var/turf/T = get_turf(loc)
-		if(istype(T, /turf/open))
+		if(isopenturf(T))
 			var/turf/open/theturf = T
 			theturf.MakeSlippery(min_wet_time = 10, wet_time_to_add = 5)
 

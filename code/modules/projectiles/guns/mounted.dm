@@ -1,4 +1,4 @@
-/obj/item/weapon/gun/energy/gun/advtaser/mounted
+/obj/item/weapon/gun/energy/e_gun/advtaser/mounted
 	name = "mounted taser"
 	desc = "An arm mounted dual-mode weapon that fires electrodes and disabler shots."
 	icon = 'icons/obj/items_cyborg.dmi'
@@ -9,7 +9,7 @@
 	can_flashlight = 0
 	trigger_guard = TRIGGER_GUARD_ALLOW_ALL // Has no trigger at all, uses neural signals instead
 
-/obj/item/weapon/gun/energy/gun/advtaser/mounted/dropped()//if somebody manages to drop this somehow...
+/obj/item/weapon/gun/energy/e_gun/advtaser/mounted/dropped()//if somebody manages to drop this somehow...
 	..()
 	src.loc = null//send it to nullspace to get retrieved by the implant later on. gotta cover those edge cases.
 

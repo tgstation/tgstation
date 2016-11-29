@@ -77,7 +77,7 @@ var/list/VVckey_edit = list("key", "ckey")
 			var_value = new type()
 
 		if("new datum")
-			var/type = input("Enter type:","Type") as null|anything in (typesof(/datum)-typesof(/obj,/mob,/area,/turf))
+			var/type = input("Enter type:","Type") as null|anything in (typesof(/datum)-typesof(/obj,/mob,/area,/turf,/client))
 			var_value = new type()
 
 	if(!var_value) return
@@ -142,7 +142,7 @@ var/list/VVckey_edit = list("key", "ckey")
 			var_value = new type()
 
 		if("new datum")
-			var/type = input("Enter type:","Type") as null|anything in (typesof(/datum)-typesof(/obj,/mob,/area,/turf))
+			var/type = input("Enter type:","Type") as null|anything in (typesof(/datum)-typesof(/obj,/mob,/area,/turf,/client))
 			var_value = new type()
 
 	if(!var_value) return
@@ -243,6 +243,10 @@ var/list/VVckey_edit = list("key", "ckey")
 		variable = "\icon[variable]"
 		default = "icon"
 
+	else if(istype(variable,/client))
+		usr << "Variable appears to be <b>CLIENT</b>."
+		default = "cancel"
+
 	else if(istype(variable,/atom) || istype(variable,/datum))
 		usr << "Variable appears to be <b>TYPE</b>."
 		default = "type"
@@ -250,10 +254,6 @@ var/list/VVckey_edit = list("key", "ckey")
 	else if(istype(variable,/list))
 		usr << "Variable appears to be <b>LIST</b>."
 		default = "list"
-
-	else if(istype(variable,/client))
-		usr << "Variable appears to be <b>CLIENT</b>."
-		default = "cancel"
 
 	else
 		usr << "Variable appears to be <b>FILE</b>."
@@ -401,7 +401,7 @@ var/list/VVckey_edit = list("key", "ckey")
 				L[L.Find(variable)] = new_var
 
 		if("new datum")
-			var/type = input("Enter type:","Type") as null|anything in (typesof(/datum)-typesof(/obj,/mob,/area,/turf))
+			var/type = input("Enter type:","Type") as null|anything in (typesof(/datum)-typesof(/obj,/mob,/area,/turf,/client))
 			new_var = new type()
 			if(assoc)
 				L[assoc_key] = new_var
@@ -471,6 +471,10 @@ var/list/VVckey_edit = list("key", "ckey")
 				var_value = "\icon[var_value]"
 				class = "icon"
 
+			else if(istype(var_value,/client))
+				usr << "Variable appears to be <b>CLIENT</b>."
+				class = "cancel"
+
 			else if(istype(var_value,/atom) || istype(var_value,/datum))
 				usr << "Variable appears to be <b>TYPE</b>."
 				class = "type"
@@ -478,10 +482,6 @@ var/list/VVckey_edit = list("key", "ckey")
 			else if(istype(var_value,/list))
 				usr << "Variable appears to be <b>LIST</b>."
 				class = "list"
-
-			else if(istype(var_value,/client))
-				usr << "Variable appears to be <b>CLIENT</b>."
-				class = "cancel"
 
 			else
 				usr << "Variable appears to be <b>FILE</b>."
@@ -535,6 +535,10 @@ var/list/VVckey_edit = list("key", "ckey")
 			var_value = "\icon[var_value]"
 			default = "icon"
 
+		else if(istype(var_value,/client))
+			usr << "Variable appears to be <b>CLIENT</b>."
+			default = "cancel"
+
 		else if(istype(var_value,/atom) || istype(var_value,/datum))
 			usr << "Variable appears to be <b>TYPE</b>."
 			default = "type"
@@ -542,10 +546,6 @@ var/list/VVckey_edit = list("key", "ckey")
 		else if(istype(var_value,/list))
 			usr << "Variable appears to be <b>LIST</b>."
 			default = "list"
-
-		else if(istype(var_value,/client))
-			usr << "Variable appears to be <b>CLIENT</b>."
-			default = "cancel"
 
 		else
 			usr << "Variable appears to be <b>FILE</b>."
@@ -685,7 +685,7 @@ var/list/VVckey_edit = list("key", "ckey")
 			O.vars[variable] = var_new
 
 		if("new datum")
-			var/type = input("Enter type:","Type") as null|anything in (typesof(/datum)-typesof(/obj,/mob,/area,/turf))
+			var/type = input("Enter type:","Type") as null|anything in (typesof(/datum)-typesof(/obj,/mob,/area,/turf,/client))
 			var/var_new = new type()
 			if(var_new==null) return
 			O.vars[variable] = var_new

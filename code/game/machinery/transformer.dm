@@ -103,7 +103,7 @@
 
  	// So he can't jump out the gate right away.
 	R.SetLockdown()
-	addtimer(src, "unlock_new_robot", 50, FALSE, R)
+	addtimer(src, "unlock_new_robot", 50, TIMER_NORMAL, R)
 
 /obj/machinery/transformer/proc/unlock_new_robot(mob/living/silicon/robot/R)
 	playsound(src.loc, 'sound/machines/ping.ogg', 50, 0)
@@ -120,10 +120,10 @@
 
 		//East
 		var/turf/east = locate(T.x + 1, T.y, T.z)
-		if(istype(east, /turf/open/floor))
+		if(isfloorturf(east))
 			new /obj/machinery/conveyor/auto(east, WEST)
 
 		// West
 		var/turf/west = locate(T.x - 1, T.y, T.z)
-		if(istype(west, /turf/open/floor))
+		if(isfloorturf(west))
 			new /obj/machinery/conveyor/auto(west, WEST)

@@ -6,7 +6,7 @@
 	icon_state = "alienh_s"
 	var/obj/screen/leap_icon = null
 
-/mob/living/carbon/alien/humanoid/hunter/New()
+/mob/living/carbon/alien/humanoid/hunter/create_internal_organs()
 	internal_organs += new /obj/item/organ/alien/plasmavessel/small
 	..()
 
@@ -65,7 +65,7 @@
 		return ..()
 
 	if(A)
-		if(istype(A, /mob/living))
+		if(isliving(A))
 			var/mob/living/L = A
 			var/blocked = 0
 			if(ishuman(A))

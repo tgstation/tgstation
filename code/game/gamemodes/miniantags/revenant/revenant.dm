@@ -38,7 +38,7 @@
 	status_flags = 0
 	wander = 0
 	density = 0
-	flying = 1
+	movement_type = FLYING
 	anchored = 1
 	mob_size = MOB_SIZE_TINY
 	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
@@ -165,7 +165,7 @@
 /mob/living/simple_animal/revenant/ex_act(severity, target)
 	return 1 //Immune to the effects of explosions.
 
-/mob/living/simple_animal/revenant/blob_act(obj/effect/blob/B)
+/mob/living/simple_animal/revenant/blob_act(obj/structure/blob/B)
 	return //blah blah blobs aren't in tune with the spirit world, or something.
 
 /mob/living/simple_animal/revenant/singularity_act()
@@ -186,7 +186,7 @@
 		adjustBruteLoss(25) //hella effective
 		inhibited = 1
 		update_action_buttons_icon()
-		addtimer(src, "reset_inhibit", 30, FALSE)
+		addtimer(src, "reset_inhibit", 30, TIMER_NORMAL)
 
 /mob/living/simple_animal/revenant/proc/reset_inhibit()
 	if(src)
@@ -284,7 +284,7 @@
 	if(!src)
 		return
 	var/turf/T = get_turf(src)
-	if(istype(T, /turf/closed))
+	if(isclosedturf(T))
 		src << "<span class='revenwarning'>You cannot use abilities from inside of a wall.</span>"
 		return 0
 	for(var/obj/O in T)
@@ -331,7 +331,7 @@
 
 /obj/item/weapon/ectoplasm/revenant/New()
 	..()
-	addtimer(src, "try_reform", 600, FALSE)
+	addtimer(src, "try_reform", 600, TIMER_NORMAL)
 
 /obj/item/weapon/ectoplasm/revenant/proc/try_reform()
 	if(src)

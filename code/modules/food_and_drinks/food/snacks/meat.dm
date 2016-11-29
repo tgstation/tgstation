@@ -176,12 +176,6 @@
 	list_reagents = list("nutriment" = 3, "toxin" = 5)
 	icon_state = "goliathmeat"
 
-/obj/item/weapon/reagent_containers/food/snacks/meat/slab/goliath/burn()
-	visible_message("\The [src] finishes cooking!")
-	new/obj/item/weapon/reagent_containers/food/snacks/meat/steak/goliath/(src.loc)
-	SSobj.burning -= src
-	qdel(src)
-
 /obj/item/weapon/reagent_containers/food/snacks/meat/slab/meatwheat
 	name = "meatwheat clump"
 	desc = "This doesn't look like meat, but your standards aren't <i>that</i> high to begin with."
@@ -189,6 +183,23 @@
 	filling_color = rgb(150, 0, 0)
 	icon_state = "meatwheat_clump"
 	bitesize = 4
+
+/obj/item/weapon/reagent_containers/food/snacks/meat/rawbacon
+	name = "raw piece of bacon"
+	desc = "A raw piece of bacon."
+	icon_state = "bacon"
+	cooked_type = /obj/item/weapon/reagent_containers/food/snacks/meat/bacon
+	bitesize = 2
+	list_reagents = list("nutriment" = 1)
+	filling_color = "#B22222"
+
+/obj/item/weapon/reagent_containers/food/snacks/meat/bacon
+	name = "piece of bacon"
+	desc = "A delicious piece of bacon."
+	icon_state = "baconcooked"
+	list_reagents = list("nutriment" = 2)
+	bonus_reagents = list("nutriment" = 1, "vitamin" = 1)
+	filling_color = "#854817"
 
 ////////////////////////////////////// MEAT STEAKS ///////////////////////////////////////////////////////////
 
@@ -221,7 +232,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/meat/steak/goliath
 	name = "goliath steak"
 	desc = "A delicious, lava cooked steak."
-	burn_state = LAVA_PROOF
+	resistance_flags = LAVA_PROOF | FIRE_PROOF
 	icon_state = "goliathsteak"
 	trash = null
 
@@ -272,7 +283,6 @@
 	name = "raw spider cutlet"
 	cooked_type = /obj/item/weapon/reagent_containers/food/snacks/meat/cutlet/spider
 
-
 //Cooked cutlets
 
 /obj/item/weapon/reagent_containers/food/snacks/meat/cutlet
@@ -299,4 +309,3 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/meat/cutlet/spider
 	name = "spider cutlet"
-

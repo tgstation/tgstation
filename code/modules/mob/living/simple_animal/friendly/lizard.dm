@@ -9,7 +9,6 @@
 	maxHealth = 5
 	faction = list("Lizard")
 	attacktext = "bites"
-	attacktext = "bites"
 	melee_damage_lower = 1
 	melee_damage_upper = 2
 	response_help  = "pets"
@@ -20,6 +19,7 @@
 	pass_flags = PASSTABLE | PASSMOB
 	mob_size = MOB_SIZE_SMALL
 	gold_core_spawnable = 2
+	obj_damage = 0
 	environment_smash = 0
 	var/list/edibles = list(/mob/living/simple_animal/butterfly,/mob/living/simple_animal/cockroach) //list of atoms, however turfs won't affect AI, but will affect consumption.
 

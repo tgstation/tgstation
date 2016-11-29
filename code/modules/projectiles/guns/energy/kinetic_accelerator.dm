@@ -83,9 +83,11 @@
 	if(!holds_charge)
 		// Put it on a delay because moving item from slot to hand
 		// calls dropped().
-		sleep(1)
-		if(!ismob(loc))
-			empty()
+		addtimer(src, "empty_if_not_held", 2)
+
+/obj/item/weapon/gun/energy/kinetic_accelerator/proc/empty_if_not_held()
+	if(!ismob(loc))
+		empty()
 
 /obj/item/weapon/gun/energy/kinetic_accelerator/proc/empty()
 	power_supply.use(500)
@@ -114,6 +116,7 @@
 
 /obj/item/weapon/gun/energy/kinetic_accelerator/proc/reload()
 	power_supply.give(500)
+	recharge_newshot(1)
 	if(!suppressed)
 		playsound(src.loc, 'sound/weapons/kenetic_reload.ogg', 60, 1)
 	else
@@ -126,9 +129,9 @@
 	if(!can_shoot())
 		add_overlay("kineticgun_empty")
 
-	if(F && can_flashlight)
+	if(gun_light && can_flashlight)
 		var/iconF = "flight"
-		if(F.on)
+		if(gun_light.on)
 			iconF = "flight_on"
 		add_overlay(image(icon = icon, icon_state = iconF, pixel_x = flight_x_offset, pixel_y = flight_y_offset))
 
@@ -147,7 +150,7 @@
 		KA.modify_projectile(BB)
 
 		var/turf/proj_turf = get_turf(BB)
-		if(!istype(proj_turf, /turf))
+		if(!isturf(proj_turf))
 			return
 		var/datum/gas_mixture/environment = proj_turf.return_air()
 		var/pressure = environment.return_pressure()
@@ -165,6 +168,8 @@
 	damage_type = BRUTE
 	flag = "bomb"
 	range = 3
+	log_override = TRUE
+
 	var/pressure_decrease = 0.25
 	var/turf_aoe = FALSE
 	var/mob_aoe = 0
@@ -182,7 +187,7 @@
 	var/turf/target_turf = get_turf(target)
 	if(!target_turf)
 		target_turf = get_turf(src)
-	if(istype(target_turf, /turf/closed/mineral))
+	if(ismineralturf(target_turf))
 		var/turf/closed/mineral/M = target_turf
 		M.gets_drilled(firer)
 	var/obj/effect/overlay/temp/kinetic_blast/K = PoolOrNew(/obj/effect/overlay/temp/kinetic_blast, target_turf)
@@ -191,7 +196,7 @@
 		PoolOrNew(type, target_turf)
 	if(turf_aoe)
 		for(var/T in RANGE_TURFS(1, target_turf) - target_turf)
-			if(istype(T, /turf/closed/mineral))
+			if(ismineralturf(T))
 				var/turf/closed/mineral/M = T
 				M.gets_drilled(firer)
 	if(mob_aoe)
@@ -221,7 +226,7 @@
 
 /obj/item/borg/upgrade/modkit/attackby(obj/item/A, mob/user)
 	if(istype(A, /obj/item/weapon/gun/energy/kinetic_accelerator) && !issilicon(user))
-		install(A)
+		install(A, user)
 	else
 		..()
 
@@ -243,18 +248,19 @@
 			if(number_of_denied >= maximum_of_type)
 				. = FALSE
 				break
-	if(.)
-		if(KA.get_remaining_mod_capacity() >= cost)
+	if(KA.get_remaining_mod_capacity() >= cost)
+		if(.)
 			user << "<span class='notice'>You install the modkit.</span>"
 			playsound(loc, 'sound/items/Screwdriver.ogg', 100, 1)
 			user.unEquip(src)
 			forceMove(KA)
 			KA.modkits += src
 		else
-			user << "<span class='notice'>You don't have room(<b>[KA.get_remaining_mod_capacity()]%</b> remaining, [cost]% needed) to install this modkit. Use a crowbar to remove existing modkits.</span>"
-			. = FALSE
+			user << "<span class='notice'>The modkit you're trying to install would conflict with an already installed modkit. Use a crowbar to remove existing modkits.</span>"
 	else
-		user << "<span class='notice'>The modkit you're trying to install would conflict with an already installed modkit. Use a crowbar to remove existing modkits.</span>"
+		user << "<span class='notice'>You don't have room(<b>[KA.get_remaining_mod_capacity()]%</b> remaining, [cost]% needed) to install this modkit. Use a crowbar to remove existing modkits.</span>"
+		. = FALSE
+
 
 
 /obj/item/borg/upgrade/modkit/proc/uninstall(obj/item/weapon/gun/energy/kinetic_accelerator/KA)
@@ -292,7 +298,8 @@
 	modifier = 2.5
 
 /obj/item/borg/upgrade/modkit/cooldown/install(obj/item/weapon/gun/energy/kinetic_accelerator/KA, mob/user)
-	if(..())
+	. = ..()
+	if(.)
 		KA.overheat_time -= modifier
 
 /obj/item/borg/upgrade/modkit/cooldown/uninstall(obj/item/weapon/gun/energy/kinetic_accelerator/KA)
@@ -301,27 +308,34 @@
 
 
 //AoE blasts
+/obj/item/borg/upgrade/modkit/aoe
+	modifier = 0
+
 /obj/item/borg/upgrade/modkit/aoe/modify_projectile(obj/item/projectile/kinetic/K)
 	K.name = "kinetic explosion"
 	if(!K.turf_aoe && !K.mob_aoe)
 		K.hit_overlays += /obj/effect/overlay/temp/explosion/fast
+	K.mob_aoe += modifier
 
 /obj/item/borg/upgrade/modkit/aoe/turfs
 	name = "mining explosion"
 	desc = "Causes the kinetic accelerator to destroy rock in an AoE."
+	denied_type = /obj/item/borg/upgrade/modkit/aoe/turfs
 
 /obj/item/borg/upgrade/modkit/aoe/turfs/modify_projectile(obj/item/projectile/kinetic/K)
 	..()
 	K.turf_aoe = TRUE
 
+/obj/item/borg/upgrade/modkit/aoe/turfs/andmobs
+	name = "offensive mining explosion"
+	desc = "Causes the kinetic accelerator to destroy rock and damage mobs in an AoE."
+	maximum_of_type = 3
+	modifier = 0.25
+
 /obj/item/borg/upgrade/modkit/aoe/mobs
 	name = "offensive explosion"
 	desc = "Causes the kinetic accelerator to damage mobs in an AoE."
-	modifier = 0.25
-
-/obj/item/borg/upgrade/modkit/aoe/mobs/modify_projectile(obj/item/projectile/kinetic/K)
-	..()
-	K.mob_aoe += modifier
+	modifier = 0.2
 
 
 //Indoors
@@ -342,9 +356,11 @@
 	name = "modified trigger guard"
 	desc = "Allows creatures normally incapable of firing guns to operate the weapon when installed."
 	cost = 20
+	denied_type = /obj/item/borg/upgrade/modkit/trigger_guard
 
 /obj/item/borg/upgrade/modkit/trigger_guard/install(obj/item/weapon/gun/energy/kinetic_accelerator/KA, mob/user)
-	if(..())
+	. = ..()
+	if(.)
 		KA.trigger_guard = TRIGGER_GUARD_ALLOW_ALL
 
 /obj/item/borg/upgrade/modkit/trigger_guard/uninstall(obj/item/weapon/gun/energy/kinetic_accelerator/KA)
@@ -362,7 +378,8 @@
 	var/chassis_icon = "kineticgun_u"
 
 /obj/item/borg/upgrade/modkit/chassis_mod/install(obj/item/weapon/gun/energy/kinetic_accelerator/KA, mob/user)
-	if(..())
+	. = ..()
+	if(.)
 		KA.icon_state = chassis_icon
 
 /obj/item/borg/upgrade/modkit/chassis_mod/uninstall(obj/item/weapon/gun/energy/kinetic_accelerator/KA)

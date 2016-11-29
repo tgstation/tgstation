@@ -9,7 +9,6 @@
 	icon_state = "mining_drone"
 	icon_living = "mining_drone"
 	status_flags = CANSTUN|CANWEAKEN|CANPUSH
-	stop_automated_movement_when_pulled = 1
 	mouse_opacity = 1
 	faction = list("neutral")
 	a_intent = "harm"
@@ -24,6 +23,7 @@
 	maxHealth = 125
 	melee_damage_lower = 15
 	melee_damage_upper = 15
+	obj_damage = 0
 	environment_smash = 0
 	check_friendly_fire = 1
 	stop_automated_movement_when_pulled = 1

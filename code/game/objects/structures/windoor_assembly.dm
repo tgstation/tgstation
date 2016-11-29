@@ -101,7 +101,7 @@
 					if(WD.dir == dir)
 						user << "<span class='warning'>There is already a windoor in that location!</span>"
 						return
-				playsound(loc, 'sound/items/Ratchet.ogg', 100, 1)
+				playsound(loc, W.usesound, 100, 1)
 				user.visible_message("[user] secures the windoor assembly to the floor.", "<span class='notice'>You start to secure the windoor assembly to the floor...</span>")
 
 				if(do_after(user, 40/W.toolspeed, target = src))
@@ -120,7 +120,7 @@
 
 			//Unwrenching an unsecure assembly un-anchors it. Step 4 undone
 			else if(istype(W, /obj/item/weapon/wrench) && anchored)
-				playsound(loc, 'sound/items/Ratchet.ogg', 100, 1)
+				playsound(loc, W.usesound, 100, 1)
 				user.visible_message("[user] unsecures the windoor assembly to the floor.", "<span class='notice'>You start to unsecure the windoor assembly to the floor...</span>")
 
 				if(do_after(user, 40/W.toolspeed, target = src))
@@ -177,7 +177,7 @@
 
 			//Removing wire from the assembly. Step 5 undone.
 			if(istype(W, /obj/item/weapon/wirecutters))
-				playsound(loc, 'sound/items/Wirecutter.ogg', 100, 1)
+				playsound(loc, W.usesound, 100, 1)
 				user.visible_message("[user] cuts the wires from the airlock assembly.", "<span class='notice'>You start to cut the wires from airlock assembly...</span>")
 
 				if(do_after(user, 40/W.toolspeed, target = src))
@@ -196,7 +196,7 @@
 			else if(istype(W, /obj/item/weapon/electronics/airlock))
 				if(!user.drop_item())
 					return
-				playsound(loc, 'sound/items/Screwdriver.ogg', 100, 1)
+				playsound(loc, W.usesound, 100, 1)
 				user.visible_message("[user] installs the electronics into the airlock assembly.", "<span class='notice'>You start to install electronics into the airlock assembly...</span>")
 				W.loc = src
 
@@ -215,7 +215,7 @@
 				if(!electronics)
 					return
 
-				playsound(loc, 'sound/items/Screwdriver.ogg', 100, 1)
+				playsound(loc, W.usesound, 100, 1)
 				user.visible_message("[user] removes the electronics from the airlock assembly.", "<span class='notice'>You start to uninstall electronics from the airlock assembly...</span>")
 
 				if(do_after(user, 40/W.toolspeed, target = src))
@@ -245,7 +245,7 @@
 					usr << "<span class='warning'>The assembly is missing electronics!</span>"
 					return
 				usr << browse(null, "window=windoor_access")
-				playsound(loc, 'sound/items/Crowbar.ogg', 100, 1)
+				playsound(loc, W.usesound, 100, 1)
 				user.visible_message("[user] pries the windoor into the frame.", "<span class='notice'>You start prying the windoor into the frame...</span>")
 
 				if(do_after(user, 40/W.toolspeed, target = src))

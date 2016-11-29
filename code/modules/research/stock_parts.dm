@@ -25,7 +25,7 @@
 		if(istype(T))
 			if(T.component_parts)
 				T.exchange_parts(user, src)
-				user.Beam(T,icon_state="rped_upgrade",icon='icons/effects/effects.dmi',time=5)
+				user.Beam(T,icon_state="rped_upgrade",time=5)
 	return
 
 /obj/item/weapon/storage/part_replacer/bluespace
@@ -45,7 +45,7 @@
 		if(get_dist(user, dest_object) < 8)
 			if(dest_object.storage_contents_dump_act(src, user))
 				play_rped_sound()
-				user.Beam(dest_object,icon_state="rped_upgrade",icon='icons/effects/effects.dmi',time=5)
+				user.Beam(dest_object,icon_state="rped_upgrade",time=5)
 				return 1
 		user << "The [src.name] buzzes."
 		playsound(src, 'sound/machines/buzz-sigh.ogg', 50, 0)

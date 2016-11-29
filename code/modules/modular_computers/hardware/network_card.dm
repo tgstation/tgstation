@@ -11,6 +11,7 @@ var/global/ntnet_card_uid = 1
 	var/long_range = 0
 	var/ethernet = 0 // Hard-wired, therefore always on, ignores NTNet wireless checks.
 	malfunction_probability = 1
+	device_type = MC_NET
 
 /obj/item/weapon/computer_hardware/network_card/diagnostics(var/mob/user)
 	..()
@@ -64,7 +65,7 @@ var/global/ntnet_card_uid = 1
 
 /obj/item/weapon/computer_hardware/network_card/advanced
 	name = "advanced network card"
-	desc = "An advanced network card for usage with standard NTNet frequencies. It's transmitter is strong enough to connect even off-station."
+	desc = "An advanced network card for usage with standard NTNet frequencies. Its transmitter is strong enough to connect even off-station."
 	long_range = 1
 	origin_tech = "programming=4;engineering=2"
 	power_usage = 100 // Better range but higher power usage.

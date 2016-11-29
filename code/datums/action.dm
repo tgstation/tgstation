@@ -12,7 +12,7 @@
 	var/processing = 0
 	var/obj/screen/movable/action_button/button = null
 	var/button_icon = 'icons/mob/actions.dmi'
-	var/background_icon_state = "bg_default"
+	var/background_icon_state = ACTION_BUTTON_DEFAULT_BACKGROUND
 	var/buttontooltipstyle = ""
 
 	var/icon_icon = 'icons/mob/actions.dmi'
@@ -37,23 +37,26 @@
 	return ..()
 
 /datum/action/proc/Grant(mob/M)
-	if(owner)
-		if(owner == M)
-			return
+	if(M)
+		if(owner)
+			if(owner == M)
+				return
+		owner = M
+		M.actions += src
+		if(M.client)
+			M.client.screen += button
+		M.update_action_buttons()
+	else
 		Remove(owner)
-	owner = M
-	M.actions += src
-	if(M.client)
-		M.client.screen += button
-	M.update_action_buttons()
 
 /datum/action/proc/Remove(mob/M)
-	if(M.client)
-		M.client.screen -= button
-	button.moved = FALSE //so the button appears in its normal position when given to another owner.
-	M.actions -= src
-	M.update_action_buttons()
+	if(M)
+		if(M.client)
+			M.client.screen -= button
+		M.actions -= src
+		M.update_action_buttons()
 	owner = null
+	button.moved = FALSE //so the button appears in its normal position when given to another owner.
 
 /datum/action/proc/Trigger()
 	if(!IsAvailable())
@@ -82,8 +85,15 @@
 
 /datum/action/proc/UpdateButtonIcon()
 	if(button)
-		button.icon = button_icon
-		button.icon_state = background_icon_state
+		button.name = name
+		button.desc = desc
+		if(owner && owner.hud_used && background_icon_state == ACTION_BUTTON_DEFAULT_BACKGROUND)
+			var/list/settings = owner.hud_used.get_action_buttons_icons()
+			button.icon = settings["bg_icon"]
+			button.icon_state = settings["bg_state"]
+		else
+			button.icon = button_icon
+			button.icon_state = background_icon_state
 
 		ApplyIcon(button)
 
@@ -126,7 +136,7 @@
 		return 0
 	if(target)
 		var/obj/item/I = target
-		I.ui_action_click(owner, src.type)
+		I.ui_action_click(owner, src)
 	return 1
 
 /datum/action/item_action/ApplyIcon(obj/screen/movable/action_button/current_button)
@@ -138,10 +148,13 @@
 		..(current_button)
 	else if(target)
 		var/obj/item/I = target
-		var/old = I.layer
+		var/old_layer = I.layer
+		var/old_plane = I.plane
 		I.layer = FLOAT_LAYER //AAAH
+		I.plane = FLOAT_PLANE //^ what that guy said
 		current_button.add_overlay(I)
-		I.layer = old
+		I.layer = old_layer
+		I.plane = old_plane
 
 /datum/action/item_action/toggle_light
 	name = "Toggle Light"
@@ -178,7 +191,7 @@
 		if(iscarbon(owner))
 			var/mob/living/carbon/C = owner
 			if(target == C.internal)
-				button.icon_state = "bg_default_on"
+				button.icon_state = "template_active"
 
 /datum/action/item_action/toggle_mister
 	name = "Toggle Mister"
@@ -204,11 +217,9 @@
 		if(H.friendly_fire_check)
 			button_icon_state = "vortex_ff_off"
 			name = "Toggle Friendly Fire \[OFF\]"
-			button.name = name
 		else
 			button_icon_state = "vortex_ff_on"
 			name = "Toggle Friendly Fire \[ON\]"
-			button.name = name
 	..()
 
 /datum/action/item_action/vortex_recall
@@ -232,11 +243,11 @@
 		return 0
 	return ..()
 
-/datum/action/item_action/clock/toggle_flame
-	name = "Summon/Dismiss Ratvar's Flame"
-	desc = "Allows you to summon a flame that can create stunning zones at any range."
+/datum/action/item_action/clock/toggle_visor
+	name = "Create Judicial Marker"
+	desc = "Allows you to create a stunning Judicial Marker at any location in view. Click again to disable."
 
-/datum/action/item_action/clock/toggle_flame/IsAvailable()
+/datum/action/item_action/clock/toggle_visor/IsAvailable()
 	if(!is_servant_of_ratvar(owner))
 		return 0
 	if(istype(target, /obj/item/clothing/glasses/judicial_visor))
@@ -250,15 +261,10 @@
 	desc = "Allows you to communicate with other Servants."
 	button_icon_state = "hierophant_slab"
 
-/datum/action/item_action/clock/guvax
-	name = "Guvax"
-	desc = "Allows you to convert adjacent nonservants while holding the slab."
-	button_icon_state = "guvax_capacitor"
-
-/datum/action/item_action/clock/vanguard
-	name = "Vanguard"
-	desc = "Allows you to temporarily absorb stuns. All stuns absorbed will affect you when disabled."
-	button_icon_state = "vanguard_cogwheel"
+/datum/action/item_action/clock/quickbind
+	name = "Quickbind"
+	desc = "If you're seeing this, file a bug report."
+	var/scripture_index = 0 //the index of the scripture we're associated with
 
 /datum/action/item_action/toggle_helmet_flashlight
 	name = "Toggle Helmet Flashlight"

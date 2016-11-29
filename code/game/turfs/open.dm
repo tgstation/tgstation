@@ -18,6 +18,20 @@
 	if(istype(AM))
 		playsound(src,sound,50,1)
 
+/turf/open/indestructible/necropolis
+	name = "necropolis floor"
+	desc = "It's regarding you suspiciously."
+	icon = 'icons/turf/floors.dmi'
+	icon_state = "necro1"
+	baseturf = /turf/open/indestructible/necropolis
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+
+/turf/open/indestructible/necropolis/New()
+	..()
+	if(prob(12))
+		icon_state = "necro[rand(2,3)]"
+
+
 /turf/open/Initalize_Atmos(times_fired)
 	excited = 0
 	update_visuals()
@@ -32,21 +46,27 @@
 	for(var/direction in cardinal)
 		var/turf/open/enemy_tile = get_step(src, direction)
 		if(!istype(enemy_tile))
-			atmos_adjacent_turfs -= enemy_tile
+			if (atmos_adjacent_turfs)
+				atmos_adjacent_turfs -= enemy_tile
 			continue
 		var/datum/gas_mixture/enemy_air = enemy_tile.return_air()
 
 		//only check this turf, if it didn't check us when it was initalized
 		if(enemy_tile.current_cycle < times_fired)
 			if(CanAtmosPass(enemy_tile))
-				atmos_adjacent_turfs |= enemy_tile
-				enemy_tile.atmos_adjacent_turfs |= src
+				LAZYINITLIST(atmos_adjacent_turfs)
+				LAZYINITLIST(enemy_tile.atmos_adjacent_turfs)
+				atmos_adjacent_turfs[enemy_tile] = TRUE
+				enemy_tile.atmos_adjacent_turfs[src] = TRUE
 			else
-				atmos_adjacent_turfs -= enemy_tile
-				enemy_tile.atmos_adjacent_turfs -= src
+				if (atmos_adjacent_turfs)
+					atmos_adjacent_turfs -= enemy_tile
+				if (enemy_tile.atmos_adjacent_turfs)
+					enemy_tile.atmos_adjacent_turfs -= src
+				UNSETEMPTY(enemy_tile.atmos_adjacent_turfs)
 				continue
 		else
-			if (!(enemy_tile in atmos_adjacent_turfs))
+			if (!atmos_adjacent_turfs || !atmos_adjacent_turfs[enemy_tile])
 				continue
 
 
@@ -57,6 +77,9 @@
 			if(!excited) //make sure we aren't already excited
 				excited = 1
 				SSair.active_turfs |= src
+	UNSETEMPTY(atmos_adjacent_turfs)
+	if (atmos_adjacent_turfs)
+		src.atmos_adjacent_turfs = atmos_adjacent_turfs
 
 /turf/open/proc/GetHeatCapacity()
 	. = air.heat_capacity()
@@ -92,19 +115,14 @@
 			qdel(O)
 
 	var/obj/effect/hotspot/hotspot = (locate(/obj/effect/hotspot) in src)
-	if(hotspot && !istype(src, /turf/open/space))
+	if(hotspot && !isspaceturf(src))
 		air.temperature = max(min(air.temperature-2000,air.temperature/2),0)
 		qdel(hotspot)
 	return 1
 
-/turf/open/handle_fall(mob/faller, forced)
-	faller.lying = pick(90, 270)
-	if(!forced)
-		return
-	if(has_gravity(src))
-		playsound(src, "bodyfall", 50, 1)
-
 /turf/open/handle_slip(mob/living/carbon/C, s_amount, w_amount, obj/O, lube)
+	if(C.movement_type & FLYING)
+		return 0
 	if(has_gravity(src))
 		var/obj/buckled_obj
 		if(C.buckled)
@@ -118,13 +136,12 @@
 				return 0
 		if(!(lube&SLIDE_ICE))
 			C << "<span class='notice'>You slipped[ O ? " on the [O.name]" : ""]!</span>"
-		if(!C.slipping)
 			C.attack_log += "\[[time_stamp()]\] <font color='orange'>Slipped[O ? " on the [O.name]" : ""][(lube&SLIDE)? " (LUBE)" : ""]!</font>"
 		if(!(lube&SLIDE_ICE))
 			playsound(C.loc, 'sound/misc/slip.ogg', 50, 1, -3)
 
-		C.accident(C.l_hand)
-		C.accident(C.r_hand)
+		for(var/obj/item/I in C.held_items)
+			C.accident(I)
 
 		var/olddir = C.dir
 		if(!(lube&SLIDE_ICE))
