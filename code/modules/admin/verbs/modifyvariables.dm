@@ -325,14 +325,16 @@ var/list/VVpixelmovement = list("step_x", "step_y", "bound_height", "bound_width
 		for(var/V in varsvars)
 			var_value = replacetext(var_value,"\[[V]]","[O.vars[V]]")
 
-	var/list/newlist = L.Copy()
-	newlist += var_value
+	if (O)
+		L = L.Copy()
+
+	L += var_value
 
 	switch(alert("Would you like to associate a value with the list entry?",,"Yes","No"))
 		if("Yes")
-			newlist[var_value] = mod_list_add_ass(O) //hehe
+			L[var_value] = mod_list_add_ass(O) //hehe
 	if (O)
-		if (O.vv_edit_var(objectvar, newlist) == FALSE)
+		if (O.vv_edit_var(objectvar, L) == FALSE)
 			src << "Your edit was rejected by the object."
 			return
 	world.log << "### ListVarEdit by [src]: [(O ? O.type : "/list")] [objectvar]: ADDED=[var_value]"
@@ -537,7 +539,7 @@ var/list/VVpixelmovement = list("step_x", "step_y", "bound_height", "bound_width
 	if(variable in VVpixelmovement)
 		if(!check_rights(R_DEBUG))
 			return
-		var/prompt = alert(src, "Editing this var may irreparably break tile gliding for the rest of the round. THIS CAN'T BE UNDONE", "DANGER", "ABORT", "Continue", "ABORT")
+		var/prompt = alert(src, "Editing this var may irreparably break tile gliding for the rest of the round. THIS CAN'T BE UNDONE", "DANGER", "ABORT ", "Continue", " ABORT")
 		if (prompt != "Continue")
 			return
 
