@@ -139,6 +139,7 @@
 			else
 				hiddenitem.forceMove(get_turf(src))
 			user << "<span class='notice'>You fish [hiddenitem] out of the drain enclosure.</span>"
+			hiddenitem = null
 	else
 		..()
 
