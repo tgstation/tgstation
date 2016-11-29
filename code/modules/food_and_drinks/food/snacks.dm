@@ -25,19 +25,9 @@
 		return
 	if(!reagents.total_volume)
 		usr.unEquip(src)	//so icons update :[
-
-		if(trash)
-			if(ispath(trash, /obj/item/weapon/grown) && istype(src, /obj/item/weapon/reagent_containers/food/snacks/grown))
-				var/obj/item/weapon/reagent_containers/food/snacks/grown/G = src
-				var/obj/item/TrashItem = new trash(usr, G.seed)
-				usr.put_in_hands(TrashItem)
-			else if(ispath(trash,/obj/item))
-				var/obj/item/TrashItem = new trash(usr)
-				usr.put_in_hands(TrashItem)
-			else if(istype(trash,/obj/item))
-				usr.put_in_hands(trash)
+		var/obj/item/trash_item = generate_trash(usr)
+		usr.put_in_hands(trash_item)
 		qdel(src)
-	return
 
 
 /obj/item/weapon/reagent_containers/food/snacks/attack_self(mob/user)
@@ -208,6 +198,19 @@
 	slice.create_reagents(slice.volume)
 	reagents.trans_to(slice,reagents_per_slice)
 	return
+
+/obj/item/weapon/reagent_containers/food/snacks/proc/generate_trash(atom/location)
+	if(trash)
+		if(ispath(trash, /obj/item))
+			. = new trash(location)
+			trash = null
+			return
+		else if(istype(trash, /obj/item))
+			var/obj/item/trash_item = trash
+			trash_item.forceMove(location)
+			. = trash
+			trash = null
+			return
 
 /obj/item/weapon/reagent_containers/food/snacks/proc/update_overlays(obj/item/weapon/reagent_containers/food/snacks/S)
 	cut_overlays()
