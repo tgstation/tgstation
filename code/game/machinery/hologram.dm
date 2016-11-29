@@ -157,14 +157,14 @@ var/list/holopads = list()
 				if(!(stat & NOPOWER))//If the  machine has power.
 					if(HOLOPAD_MODE == RANGE_BASED)
 						if(get_dist(master.eyeobj, src) <= holo_range)
-							return 1
+							return TRUE
 						else
 							var/obj/machinery/holopad/pad_close = get_closest_atom(/obj/machinery/holopad, holopads, master.eyeobj)
 							if(get_dist(pad_close, master.eyeobj) <= holo_range)
 								var/obj/effect/overlay/holo_pad_hologram/h = masters[master]
 								unset_holo(master)
 								pad_close.set_holo(master, h)
-								return 1
+								return TRUE
 
 					else if (HOLOPAD_MODE == AREA_BASED)
 
@@ -172,10 +172,10 @@ var/list/holopads = list()
 						var/area/eye_area = get_area(master.eyeobj)
 
 						if(eye_area in holo_area.master.related)
-							return 1
+							return TRUE
 
 			clear_holo(master)//If not, we want to get rid of the hologram.
-	return 1
+	return TRUE
 
 /obj/machinery/holopad/proc/activate_holo(mob/living/silicon/ai/user)
 	if(!(stat & NOPOWER) && user.eyeobj.loc == src.loc)//If the projector has power and client eye is on it
@@ -204,7 +204,7 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	h.name = "[A.name] (Hologram)"//If someone decides to right click.
 	h.SetLuminosity(2)	//hologram lighting
 	set_holo(A, h)
-	return 1
+	return TRUE
 
 /obj/machinery/holopad/proc/set_holo(mob/living/silicon/ai/A, var/obj/effect/overlay/holo_pad_hologram/h)
 	masters[A] = h
@@ -212,12 +212,12 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	icon_state = "holopad1"
 	A.current = src
 	use_power += HOLOGRAM_POWER_USAGE
-	return 1
+	return TRUE
 
 /obj/machinery/holopad/proc/clear_holo(mob/living/silicon/ai/user)
 	qdel(masters[user]) // Get rid of user's hologram
 	unset_holo(user)
-	return 1
+	return TRUE
 
 /obj/machinery/holopad/proc/unset_holo(mob/living/silicon/ai/user)
 	if(user.current == src)
@@ -228,14 +228,14 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 		SetLuminosity(0) // pad lighting (hologram lighting will be handled automatically since its owner was deleted)
 		icon_state = "holopad0"
 		use_power = HOLOPAD_PASSIVE_POWER_USAGE
-	return 1
+	return TRUE
 
 /obj/machinery/holopad/proc/move_hologram(mob/living/silicon/ai/user)
 	if(masters[user])
 		step_to(masters[user], user.eyeobj)
 		var/obj/effect/overlay/holo_pad_hologram/H = masters[user]
 		H.loc = get_turf(user.eyeobj)
-	return 1
+	return TRUE
 
 /obj/effect/overlay/holo_pad_hologram/Process_Spacemove(movement_dir = 0)
 	return 1
