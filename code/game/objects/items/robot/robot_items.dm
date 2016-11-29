@@ -350,7 +350,7 @@
 	var/firedelay = 0
 	var/hitspeed = 2
 	var/hitdamage = 0
-	var/emaggedhitdamage = 5
+	var/emaggedhitdamage = 3
 
 /obj/item/borg/lollipop/equipped()
 	check_amount()
