@@ -1,4 +1,4 @@
-datum/supply_pack
+/datum/supply_pack
 	var/name = "Crate"
 	var/group = ""
 	var/hidden = FALSE

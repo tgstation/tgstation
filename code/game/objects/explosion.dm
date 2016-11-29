@@ -246,7 +246,7 @@
 		T.color = null
 		T.maptext = ""
 
-proc/dyn_explosion(turf/epicenter, power, flash_range, adminlog = 1, ignorecap = 1, flame_range = 0 ,silent = 0, smoke = 1)
+/proc/dyn_explosion(turf/epicenter, power, flash_range, adminlog = 1, ignorecap = 1, flame_range = 0 ,silent = 0, smoke = 1)
 	if(!power)
 		return
 	var/range = 0
