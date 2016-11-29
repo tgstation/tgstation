@@ -61,7 +61,7 @@
 		M.take_damage(anti_armour_damage)
 	if(istype(target, /mob/living/silicon))
 		var/mob/living/silicon/S = target
-		S.take_overall_damage(3*anti_armour_damage/4, anti_armour_damage/4)
+		S.take_overall_damage(anti_armour_damage*0.75, anti_armour_damage*0.25)
 	return 1
 
 /obj/item/projectile/temp

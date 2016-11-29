@@ -90,6 +90,7 @@
 	select = 0
 	actions_types = list()
 	casing_ejector = 0
+	weapon_weight = WEAPON_HEAVY
 
 /obj/item/weapon/gun/ballistic/automatic/atlauncher/attack_self()
 	return
