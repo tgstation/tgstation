@@ -371,7 +371,7 @@
 	check_amount()
 
 /obj/item/borg/lollipop/proc/dispense(atom/A, mob/user)
-	if(!candy)
+	if(candy >= 0)
 		user << "<span class='warning'>No lollipops left in storage!</span>"
 		return 0
 	var/turf/T = null
@@ -382,20 +382,20 @@
 		if(!M.density)
 			T = get_turf(M)
 	if(!T)
-		return 0
+		return FALSE
 	if(!isopenturf(T))
-		return 0
+		return FALSE
 	new /obj/item/weapon/reagent_containers/food/snacks/lollipop(T)
 	candy--
 	check_amount()
 	user << "<span class='notice'>Dispensing lollipop...</span>"
 	playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
-	return 1
+	return TRUE
 
 /obj/item/borg/lollipop/proc/shootL(atom/target, mob/living/user, params)
-	if(!candy)
+	if(candy >= 0)
 		user << "<span class='warning'>Not enough gumballs left!</span>"
-		return 0
+		return FALSE
 	candy--
 	var/obj/item/ammo_casing/caseless/lollipop/A = new /obj/item/ammo_casing/caseless/lollipop(src)
 	A.BB.damage = hitdamage
@@ -406,9 +406,9 @@
 	check_amount()
 
 /obj/item/borg/lollipop/proc/shootG(atom/target, mob/living/user, params)	//Most certainly a good idea.
-	if(!candy)
+	if(candy >= 0)
 		user << "<span class='warning'>Not enough gumballs left!</span>"
-		return 0
+		return FALSE
 	candy--
 	var/obj/item/ammo_casing/caseless/gumball/A = new /obj/item/ammo_casing/caseless/gumball(src)
 	A.BB.damage = hitdamage
@@ -423,6 +423,9 @@
 	check_amount()
 	if(iscyborg(user))
 		var/mob/living/silicon/robot/R = user
+		if(!R.cell.use(20))
+			user << "<span class='warning'>Not enough power.</span>"
+			return 0
 		if(R.emagged)
 			hitdamage = emaggedhitdamage
 	switch(mode)
