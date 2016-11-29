@@ -11,7 +11,7 @@
 	if(unique_rename)
 		if(istype(I, /obj/item/weapon/pen))
 			var/penchoice = alert("What would you like to edit?", "Rename or change description?", "Rename", "Change description", "Cancel")
-			if(!qdeleted(src) && user.canUseTopic(src, be_close = TRUE))
+			if(!qdeleted(src) && user.canUseTopic(src, BE_CLOSE = TRUE))
 				if(penchoice == "Rename")
 					rename_weapon(user)
 				if(penchoice == "Change description")
@@ -21,7 +21,7 @@
 /obj/item/weapon/proc/rename_weapon(mob/M)
 	var/input = stripped_input(M,"What do you want to name the weapon?", ,"", MAX_NAME_LEN)
 
-	if(!qdeleted(src) && user.canUseTopic(src, be_close = TRUE))
+	if(!qdeleted(src) && M.canUseTopic(src, BE_CLOSE = TRUE))
 		name = input
 		M << "You name the weapon [input]. Say hello to your new friend."
 		return
@@ -29,7 +29,7 @@
 /obj/item/weapon/proc/redesc_weapon(mob/M)
 	var/input = stripped_input(M,"Describe your object here", ,"", 100)
 
-	if(!qdeleted(src) && user.canUseTopic(src, be_close = TRUE))
+	if(!qdeleted(src) && M.canUseTopic(src, BE_CLOSE = TRUE))
 		desc = input
 		M << "You have successfully changed the object's description."
 		return
