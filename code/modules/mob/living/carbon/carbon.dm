@@ -264,7 +264,7 @@
 
 /mob/living/carbon/resist_fire()
 	fire_stacks -= 5
-	Weaken(3,1)
+	Weaken(3, 1, 1)
 	spin(32,2)
 	visible_message("<span class='danger'>[src] rolls on the floor, trying to put themselves out!</span>", \
 		"<span class='notice'>You stop, drop, and roll!</span>")
@@ -370,6 +370,10 @@
 			legcuffed.dropped()
 			legcuffed = null
 			update_inv_legcuffed()
+			return
+		else
+			unEquip(I)
+			I.dropped()
 			return
 		return TRUE
 

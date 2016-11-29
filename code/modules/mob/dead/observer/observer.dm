@@ -31,6 +31,7 @@ var/list/image/ghost_images_simple = list() //this is a list of all ghost images
 	var/image/ghostimage_simple = null //this mob with the simple white ghost sprite
 	var/ghostvision = 1 //is the ghost able to see things humans can't?
 	var/seedarkness = 1
+	var/mob/observetarget = null	//The target mob that the ghost is observing. Used as a reference in logout()
 	var/ghost_hud_enabled = 1 //did this ghost disable the on-screen HUD?
 	var/data_huds_on = 0 //Are data HUDs currently enabled?
 	var/list/datahuds = list(DATA_HUD_SECURITY_ADVANCED, DATA_HUD_MEDICAL_ADVANCED, DATA_HUD_DIAGNOSTIC) //list of data HUDs shown to ghosts.
@@ -117,11 +118,13 @@ var/list/image/ghost_images_simple = list() //this is a list of all ghost images
 	var/old_color = color
 	color = "#960000"
 	animate(src, color = old_color, time = 10)
+	addtimer(src, "update_atom_colour", 10)
 
 /mob/dead/observer/ratvar_act()
 	var/old_color = color
 	color = "#FAE48C"
 	animate(src, color = old_color, time = 10)
+	addtimer(src, "update_atom_colour", 10)
 
 /mob/dead/observer/Destroy()
 	ghost_images_full -= ghostimage
@@ -694,3 +697,42 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 			else
 				verbs -= /mob/dead/observer/verb/boo
 				verbs -= /mob/dead/observer/verb/possess
+
+/mob/dead/observer/reset_perspective(atom/A)
+	if(client)
+		if(ismob(client.eye) && (client.eye != src))
+			var/mob/target = client.eye
+			observetarget = null
+			if(target.observers)
+				target.observers -= src
+				UNSETEMPTY(target.observers)
+	if(..())
+		if(hud_used)
+			client.screen = list()
+			hud_used.show_hud(hud_used.hud_version)
+
+/mob/dead/observer/verb/observe()
+	set name = "Observe"
+	set category = "OOC"
+
+	var/list/creatures = getpois()
+
+	reset_perspective(null)
+
+	var/eye_name = null
+
+	eye_name = input("Please, select a player!", "Observe", null, null) as null|anything in creatures
+
+	if (!eye_name)
+		return
+
+	var/mob/mob_eye = creatures[eye_name]
+	//Istype so we filter out points of interest that are not mobs
+	if(client && mob_eye && istype(mob_eye))
+		client.eye = mob_eye
+		client.screen = list()
+		if(mob_eye.hud_used)
+			LAZYINITLIST(mob_eye.observers)
+			mob_eye.observers |= src
+			mob_eye.hud_used.show_hud(1,src)
+			observetarget = mob_eye

@@ -202,7 +202,7 @@
 /obj/effect/proc_holder/spell/aoe_turf/revenant/overload/cast(list/targets, mob/living/simple_animal/revenant/user = usr)
 	if(attempt_cast(user))
 		for(var/turf/T in targets)
-			addtimer(src, "overload", 0, FALSE, T, user)
+			addtimer(src, "overload", 0, TIMER_NORMAL, T, user)
 
 /obj/effect/proc_holder/spell/aoe_turf/revenant/overload/proc/overload(turf/T, mob/user)
 	for(var/obj/machinery/light/L in T)
@@ -242,7 +242,7 @@
 /obj/effect/proc_holder/spell/aoe_turf/revenant/defile/cast(list/targets, mob/living/simple_animal/revenant/user = usr)
 	if(attempt_cast(user))
 		for(var/turf/T in targets)
-			addtimer(src, "defile", 0, FALSE, T)
+			addtimer(src, "defile", 0, TIMER_NORMAL, T)
 
 /obj/effect/proc_holder/spell/aoe_turf/revenant/defile/proc/defile(turf/T)
 	if(T.flags & NOJAUNT)
@@ -289,7 +289,7 @@
 /obj/effect/proc_holder/spell/aoe_turf/revenant/malfunction/cast(list/targets, mob/living/simple_animal/revenant/user = usr)
 	if(attempt_cast(user))
 		for(var/turf/T in targets)
-			addtimer(src, "malfunction", 0, FALSE, T, user)
+			addtimer(src, "malfunction", 0, TIMER_NORMAL, T, user)
 
 /obj/effect/proc_holder/spell/aoe_turf/revenant/malfunction/proc/malfunction(turf/T, mob/user)
 	for(var/mob/living/simple_animal/bot/bot in T)
@@ -333,7 +333,7 @@
 /obj/effect/proc_holder/spell/aoe_turf/revenant/blight/cast(list/targets, mob/living/simple_animal/revenant/user = usr)
 	if(attempt_cast(user))
 		for(var/turf/T in targets)
-			addtimer(src, "blight", 0, FALSE, T, user)
+			addtimer(src, "blight", 0, TIMER_NORMAL, T, user)
 
 /obj/effect/proc_holder/spell/aoe_turf/revenant/blight/proc/blight(turf/T, mob/user)
 	for(var/mob/living/mob in T)
@@ -344,15 +344,7 @@
 			if(ishuman(mob))
 				var/mob/living/carbon/human/H = mob
 				if(H.dna && H.dna.species)
-					H.dna.species.handle_mutant_bodyparts(H,"#1d2953")
-					H.dna.species.handle_hair(H,"#1d2953")
-					var/old_color = H.color
-					H.color = "#1d2953"
-					spawn(20)
-						if(H && H.dna && H.dna.species)
-							H.dna.species.handle_mutant_bodyparts(H)
-							H.dna.species.handle_hair(H)
-							H.color = old_color
+					H.dna.species.handle_hair(H,"#1d2953") //will be reset when blight is cured
 				var/blightfound = 0
 				for(var/datum/disease/revblight/blight in H.viruses)
 					blightfound = 1
@@ -367,11 +359,11 @@
 		else
 			mob.adjustToxLoss(5)
 	for(var/obj/structure/spacevine/vine in T) //Fucking with botanists, the ability.
-		vine.color = "#823abb"
+		vine.add_atom_colour("#823abb", TEMPORARY_COLOUR_PRIORITY)
 		PoolOrNew(/obj/effect/overlay/temp/revenant, vine.loc)
 		QDEL_IN(vine, 10)
 	for(var/obj/structure/glowshroom/shroom in T)
-		shroom.color = "#823abb"
+		shroom.add_atom_colour("#823abb", TEMPORARY_COLOUR_PRIORITY)
 		PoolOrNew(/obj/effect/overlay/temp/revenant, shroom.loc)
 		QDEL_IN(shroom, 10)
 	for(var/obj/machinery/hydroponics/tray in T)

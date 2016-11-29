@@ -13,7 +13,6 @@
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	var/def_zone = ""	//Aiming at
 	var/mob/firer = null//Who shot it
-	var/obj/item/ammo_casing/ammo_casing = null
 	var/suppressed = 0	//Attack message
 	var/yo = null
 	var/xo = null
@@ -24,7 +23,7 @@
 	var/paused = FALSE //for suspending the projectile midair
 	var/p_x = 16
 	var/p_y = 16			// the pixel location of the tile that the player clicked. Default is the center
-	var/speed = 1			//Amount of deciseconds it takes for projectile to travel
+	var/speed = 0.8			//Amount of deciseconds it takes for projectile to travel
 	var/Angle = 0
 	var/spread = 0			//amount (in degrees) of projectile spread
 	var/legacy = 0			//legacy projectile system
@@ -50,6 +49,7 @@
 	var/forcedodge = 0 //to pass through everything
 	var/dismemberment = 0 //The higher the number, the greater the bonus to dismembering. 0 will not dismember at all.
 	var/impact_effect_type //what type of impact effect to show when hitting something
+	var/log_override = FALSE //is this type spammed enough to not log? (KAs)
 
 /obj/item/projectile/New()
 	permutated = list()
@@ -108,7 +108,7 @@
 				playsound(loc, hitsound, volume, 1, -1)
 			L.visible_message("<span class='danger'>[L] is hit by \a [src][organ_hit_text]!</span>", \
 					"<span class='userdanger'>[L] is hit by \a [src][organ_hit_text]!</span>", null, COMBAT_MESSAGE_RANGE)
-		L.on_hit(type)
+		L.on_hit(src)
 
 	var/reagent_note
 	if(reagents && reagents.reagent_list)
@@ -164,7 +164,13 @@
 /obj/item/projectile/Process_Spacemove(var/movement_dir = 0)
 	return 1 //Bullets don't drift in space
 
-/obj/item/projectile/proc/fire(var/setAngle)
+/obj/item/projectile/proc/fire(setAngle, atom/direct_target)
+	if(!log_override && firer && original)
+		add_logs(firer, original, "fired at", src, " [get_area(src)]")
+	if(direct_target)
+		direct_target.bullet_act(src, def_zone)
+		qdel(src)
+		return
 	if(setAngle)
 		Angle = setAngle
 	if(!legacy) //new projectiles
@@ -244,19 +250,53 @@
 			sleep(config.run_speed * 0.9)
 
 
+/obj/item/projectile/proc/preparePixelProjectile(atom/target, var/turf/targloc, mob/living/user, params, spread)
+	var/turf/curloc = get_turf(user)
+	src.loc = get_turf(user)
+	src.starting = get_turf(user)
+	src.current = curloc
+	src.yo = targloc.y - curloc.y
+	src.xo = targloc.x - curloc.x
+
+	if(params)
+		var/list/mouse_control = params2list(params)
+		if(mouse_control["icon-x"])
+			src.p_x = text2num(mouse_control["icon-x"])
+		if(mouse_control["icon-y"])
+			src.p_y = text2num(mouse_control["icon-y"])
+		if(mouse_control["screen-loc"])
+			//Split screen-loc up into X+Pixel_X and Y+Pixel_Y
+			var/list/screen_loc_params = splittext(mouse_control["screen-loc"], ",")
+
+			//Split X+Pixel_X up into list(X, Pixel_X)
+			var/list/screen_loc_X = splittext(screen_loc_params[1],":")
+
+			//Split Y+Pixel_Y up into list(Y, Pixel_Y)
+			var/list/screen_loc_Y = splittext(screen_loc_params[2],":")
+			// world << "X: [screen_loc_X[1]] PixelX: [screen_loc_X[2]] / Y: [screen_loc_Y[1]] PixelY: [screen_loc_Y[2]]"
+			var/x = text2num(screen_loc_X[1]) * 32 + text2num(screen_loc_X[2]) - 32
+			var/y = text2num(screen_loc_Y[1]) * 32 + text2num(screen_loc_Y[2]) - 32
+
+			//Calculate the "resolution" of screen based on client's view and world's icon size. This will work if the user can view more tiles than average.
+			var/screenview = (user.client.view * 2 + 1) * world.icon_size //Refer to http://www.byond.com/docs/ref/info.html#/client/var/view for mad maths
+
+			var/ox = round(screenview/2) //"origin" x
+			var/oy = round(screenview/2) //"origin" y
+			// world << "Pixel position: [x] [y]"
+			var/angle = Atan2(y - oy, x - ox)
+			// world << "Angle: [angle]"
+			src.Angle = angle
+	if(spread)
+		src.Angle += spread
+
+
 /obj/item/projectile/Crossed(atom/movable/AM) //A mob moving on a tile with a projectile is hit by it.
 	..()
 	if(isliving(AM) && AM.density && !checkpass(PASSMOB))
 		Bump(AM, 1)
 
 /obj/item/projectile/Destroy()
-	ammo_casing = null
 	return ..()
-
-/obj/item/projectile/proc/dumbfire(var/dir)
-	current = get_ranged_target_turf(src, dir, world.maxx)
-	fire()
-
 
 /obj/item/projectile/experience_pressure_difference()
 	return

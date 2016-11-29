@@ -43,7 +43,7 @@ Head of Security
 	gloves = /obj/item/clothing/gloves/color/black/hos
 	head = /obj/item/clothing/head/HoS/beret
 	glasses = /obj/item/clothing/glasses/hud/security/sunglasses
-	suit_store = /obj/item/weapon/gun/energy/gun
+	suit_store = /obj/item/weapon/gun/energy/e_gun
 	r_pocket = /obj/item/device/assembly/flash/handheld
 	l_pocket = /obj/item/weapon/restraints/handcuffs
 	backpack_contents = list(/obj/item/weapon/melee/baton/loaded=1)
@@ -101,7 +101,7 @@ Warden
 	glasses = /obj/item/clothing/glasses/hud/security/sunglasses
 	r_pocket = /obj/item/device/assembly/flash/handheld
 	l_pocket = /obj/item/weapon/restraints/handcuffs
-	suit_store = /obj/item/weapon/gun/energy/gun/advtaser
+	suit_store = /obj/item/weapon/gun/energy/e_gun/advtaser
 	backpack_contents = list(/obj/item/weapon/melee/baton/loaded=1)
 
 	backpack = /obj/item/weapon/storage/backpack/security
@@ -207,7 +207,7 @@ var/list/sec_departments = list("engineering", "supply", "medical", "science")
 	shoes = /obj/item/clothing/shoes/jackboots
 	l_pocket = /obj/item/weapon/restraints/handcuffs
 	r_pocket = /obj/item/device/assembly/flash/handheld
-	suit_store = /obj/item/weapon/gun/energy/gun/advtaser
+	suit_store = /obj/item/weapon/gun/energy/e_gun/advtaser
 	backpack_contents = list(/obj/item/weapon/melee/baton/loaded=1)
 
 	backpack = /obj/item/weapon/storage/backpack/security

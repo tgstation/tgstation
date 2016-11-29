@@ -322,7 +322,7 @@
 	speed = 3
 	maxHealth = 1
 	health = 1
-	flying = 1
+	movement_type = FLYING
 	harm_intent_damage = 5
 	melee_damage_lower = 2
 	melee_damage_upper = 2
@@ -401,7 +401,8 @@
 /mob/living/simple_animal/hostile/asteroid/hivelordbrood/blood/proc/link_host(mob/living/carbon/C)
 	faction = list("\ref[src]", "\ref[C]") // Hostile to everyone except the host.
 	C.transfer_blood_to(src, 30)
-	color = mix_color_from_reagents(reagents.reagent_list)
+	var/newcolor = mix_color_from_reagents(reagents.reagent_list)
+	add_atom_colour(newcolor, FIXED_COLOUR_PRIORITY)
 
 /mob/living/simple_animal/hostile/asteroid/goliath
 	name = "goliath"
@@ -412,7 +413,6 @@
 	icon_aggro = "Goliath_alert"
 	icon_dead = "Goliath_dead"
 	icon_gib = "syndicate_gib"
-	attack_sound = 'sound/weapons/punch4.ogg'
 	mouse_opacity = 2
 	move_to_delay = 40
 	ranged = 1
@@ -574,7 +574,6 @@
 	icon_aggro = "Fugu"
 	icon_dead = "Fugu_dead"
 	icon_gib = "syndicate_gib"
-	attack_sound = 'sound/weapons/punch4.ogg'
 	mouse_opacity = 2
 	move_to_delay = 5
 	friendly = "floats near"
@@ -714,7 +713,7 @@
 	speak_emote = list("telepathically cries")
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	stat_attack = 1
-	flying = TRUE
+	movement_type = FLYING
 	robust_searching = 1
 	loot = list()
 	butcher_results = list(/obj/item/weapon/ore/diamond = 2, /obj/item/stack/sheet/sinew = 2, /obj/item/stack/sheet/bone = 1)
@@ -918,7 +917,7 @@
 		..()
 
 /mob/living/simple_animal/hostile/asteroid/gutlunch/AttackingTarget()
-	if(is_type_in_list(target,wanted_objects)) //we eats
+	if(is_type_in_typecache(target,wanted_objects)) //we eats
 		udder.generateMilk()
 		regenerate_icons()
 		visible_message("<span class='notice'>[src] slurps up [target].</span>")
@@ -947,7 +946,7 @@
 
 /mob/living/simple_animal/hostile/asteroid/gutlunch/gubbuck/New()
 	..()
-	color = pick("#E39FBB", "#D97D64", "#CF8C4A")
+	add_atom_colour(pick("#E39FBB", "#D97D64", "#CF8C4A"), FIXED_COLOUR_PRIORITY)
 	resize = 0.85
 	update_transform()
 
@@ -997,7 +996,7 @@
 	for(var/F in RANGE_TURFS(1, src))
 		if(ismineralturf(F))
 			var/turf/closed/mineral/M = F
-			M.ChangeTurf(M.turf_type)
+			M.ChangeTurf(M.turf_type,FALSE,TRUE)
 	gps = new /obj/item/device/gps/internal(src)
 
 /mob/living/simple_animal/hostile/spawner/lavaland/Destroy()

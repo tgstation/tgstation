@@ -61,6 +61,11 @@
 		close()
 	add_fingerprint(user)
 
+/obj/structure/bodycontainer/attack_robot(mob/user)
+	if(!user.Adjacent(src))
+		return
+	return attack_hand(user)
+
 /obj/structure/bodycontainer/attackby(obj/P, mob/user, params)
 	add_fingerprint(user)
 	if(istype(P, /obj/item/weapon/pen))
@@ -80,12 +85,12 @@
 	new /obj/item/stack/sheet/metal (loc, 5)
 	qdel(src)
 
-/obj/structure/bodycontainer/container_resist()
+/obj/structure/bodycontainer/container_resist(mob/living/user)
 	open()
 
 /obj/structure/bodycontainer/relay_container_resist(mob/living/user, obj/O)
 	user << "<span class='notice'>You slam yourself into the side of [O].</span>"
-	container_resist()
+	container_resist(user)
 
 /obj/structure/bodycontainer/proc/open()
 	playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
@@ -135,6 +140,10 @@
 					icon_state = "morgue4" // Cloneable
 					break
 
+/obj/item/weapon/paper/morguereminder
+	name = "morgue memo"
+	info = "<font size='2'>Since this station's medbay never seems to fail to be staffed by the mindless monkeys meant for genetics experiments, I'm leaving a reminder here for anyone handling the pile of cadavers the quacks are sure to leave.</font><BR><BR><font size='4'><font color=red>Red lights mean there's a plain ol' dead body inside.</font><BR><BR><font color=orange>Yellow lights mean there's non-body objects inside.</font><BR><font size='2'>Probably stuff pried off a corpse someone grabbed, or if you're lucky it's stashed booze.</font><BR><BR><font color=green>Green lights mean the morgue system detects the body may be able to be cloned.</font></font><BR><font size='2'>I don't know how that works, but keep it away from the kitchen and go yell at the geneticists.</font><BR><BR>- Centcom medical inspector"
+
 /*
  * Crematorium
  */
@@ -145,6 +154,10 @@ var/global/list/crematoriums = new/list()
 	icon_state = "crema1"
 	opendir = SOUTH
 	var/id = 1
+
+/obj/structure/bodycontainer/crematorium/attack_robot(mob/user) //Borgs can't use crematoriums without help
+	user << "<span class='warning'>[src] is locked against you.</span>"
+	return
 
 /obj/structure/bodycontainer/crematorium/Destroy()
 	crematoriums.Remove(src)

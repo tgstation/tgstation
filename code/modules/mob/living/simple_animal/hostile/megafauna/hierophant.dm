@@ -101,6 +101,7 @@ Difficulty: Hard
 		stat = DEAD
 		blinking = TRUE //we do a fancy animation, release a huge burst(), and leave our staff.
 		animate(src, alpha = 0, color = "660099", time = 20, easing = EASE_OUT)
+		addtimer(src, "update_atom_colour", 20)
 		burst_range = 10
 		//visible_message("<span class='hierophant'>\"Mrmxmexmrk wipj-hiwxvygx wiuyirgi...\"</span>")
 		visible_message("<span class='hierophant_warning'>[src] disappears in a massive burst of magic, leaving only its staff.</span>")
@@ -139,7 +140,7 @@ Difficulty: Hard
 /mob/living/simple_animal/hostile/megafauna/hierophant/AttackingTarget()
 	if(!blinking)
 		if(target && isliving(target))
-			addtimer(src, "melee_blast", 0, FALSE, get_turf(target)) //melee attacks on living mobs produce a 3x3 blast
+			addtimer(src, "melee_blast", 0, TIMER_NORMAL, get_turf(target)) //melee attacks on living mobs produce a 3x3 blast
 		..()
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/DestroySurroundings()
@@ -197,6 +198,7 @@ Difficulty: Hard
 				if("blink_spam") //blink either once or multiple times.
 					if(health < maxHealth * 0.5 && !target_is_slow && blink_counter > 1)
 						//visible_message("<span class='hierophant'>\"Mx ampp rsx iwgeti.\"</span>")
+						var/oldcolor = color
 						animate(src, color = "#660099", time = 6)
 						while(health && target && blink_counter)
 							if(loc == target.loc || loc == target) //we're on the same tile as them after about a second we can stop now
@@ -206,7 +208,8 @@ Difficulty: Hard
 							blink(target)
 							blinking = TRUE
 							sleep(5)
-						animate(src, color = initial(color), time = 8)
+						animate(src, color = oldcolor, time = 8)
+						addtimer(src, "update_atom_colour", 8)
 						sleep(8)
 						blinking = FALSE
 					else
@@ -214,22 +217,25 @@ Difficulty: Hard
 				if("cross_blast_spam") //fire a lot of cross blasts at a target.
 					//visible_message("<span class='hierophant'>\"Piezi mx rsalivi xs vyr.\"</span>")
 					blinking = TRUE
+					var/oldcolor = color
 					animate(src, color = "#660099", time = 6)
 					while(health && target && cross_counter)
 						cross_counter--
 						var/delay = 6
 						if(prob(60))
-							addtimer(src, "cardinal_blasts", 0, FALSE, target)
+							addtimer(src, "cardinal_blasts", 0, TIMER_NORMAL, target)
 						else
-							addtimer(src, "diagonal_blasts", 0, FALSE, target)
+							addtimer(src, "diagonal_blasts", 0, TIMER_NORMAL, target)
 							delay = 5 //this one isn't so mean, so do the next one faster(if there is one)
 						sleep(delay)
-					animate(src, color = initial(color), time = 8)
+					animate(src, color = oldcolor, time = 8)
+					addtimer(src, "update_atom_colour", 8)
 					sleep(8)
 					blinking = FALSE
 				if("chaser_swarm") //fire four fucking chasers at a target and their friends.
 					//visible_message("<span class='hierophant'>\"Mx gerrsx lmhi.\"</span>")
 					blinking = TRUE
+					var/oldcolor = color
 					animate(src, color = "#660099", time = 10)
 					var/list/targets = ListTargets()
 					var/list/cardinal_copy = cardinal.Copy()
@@ -244,7 +250,8 @@ Difficulty: Hard
 						C.moving_dir = pick_n_take(cardinal_copy)
 						sleep(10)
 					chaser_cooldown = world.time + initial(chaser_cooldown)
-					animate(src, color = initial(color), time = 8)
+					animate(src, color = oldcolor, time = 8)
+					addtimer(src, "update_atom_colour", 8)
 					sleep(8)
 					blinking = FALSE
 			return
@@ -255,18 +262,18 @@ Difficulty: Hard
 	else if(prob(70 - anger_modifier)) //a cross blast of some type
 		if(prob(anger_modifier)) //at us?
 			if(prob(anger_modifier * 2) && health < maxHealth * 0.5) //we're super angry do it at all dirs
-				addtimer(src, "alldir_blasts", 0, FALSE, src)
+				addtimer(src, "alldir_blasts", 0, TIMER_NORMAL, src)
 			else if(prob(60))
-				addtimer(src, "cardinal_blasts", 0, FALSE, src)
+				addtimer(src, "cardinal_blasts", 0, TIMER_NORMAL, src)
 			else
-				addtimer(src, "diagonal_blasts", 0, FALSE, src)
+				addtimer(src, "diagonal_blasts", 0, TIMER_NORMAL, src)
 		else //at them?
 			if(prob(anger_modifier * 2) && health < maxHealth * 0.5 && !target_is_slow) //we're super angry do it at all dirs
-				addtimer(src, "alldir_blasts", 0, FALSE, target)
+				addtimer(src, "alldir_blasts", 0, TIMER_NORMAL, target)
 			else if(prob(60))
-				addtimer(src, "cardinal_blasts", 0, FALSE, target)
+				addtimer(src, "cardinal_blasts", 0, TIMER_NORMAL, target)
 			else
-				addtimer(src, "diagonal_blasts", 0, FALSE, target)
+				addtimer(src, "diagonal_blasts", 0, TIMER_NORMAL, target)
 	else if(chaser_cooldown < world.time) //if chasers are off cooldown, fire some!
 		var/obj/effect/overlay/temp/hierophant/chaser/C = PoolOrNew(/obj/effect/overlay/temp/hierophant/chaser, list(loc, src, target, chaser_speed, FALSE))
 		chaser_cooldown = world.time + initial(chaser_cooldown)
@@ -275,7 +282,7 @@ Difficulty: Hard
 			OC.moving = 4
 			OC.moving_dir = pick(cardinal - C.moving_dir)
 	else //just release a burst of power
-		addtimer(src, "burst", 0, FALSE, get_turf(src))
+		addtimer(src, "burst", 0, TIMER_NORMAL, get_turf(src))
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/proc/diagonal_blasts(mob/victim) //fire diagonal cross blasts with a delay
 	var/turf/T = get_turf(victim)
@@ -287,7 +294,7 @@ Difficulty: Hard
 	sleep(2)
 	PoolOrNew(/obj/effect/overlay/temp/hierophant/blast, list(T, src, FALSE))
 	for(var/d in diagonals)
-		addtimer(src, "blast_wall", 0, FALSE, T, d)
+		addtimer(src, "blast_wall", 0, TIMER_NORMAL, T, d)
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/proc/cardinal_blasts(mob/victim) //fire cardinal cross blasts with a delay
 	var/turf/T = get_turf(victim)
@@ -299,7 +306,7 @@ Difficulty: Hard
 	sleep(2)
 	PoolOrNew(/obj/effect/overlay/temp/hierophant/blast, list(T, src, FALSE))
 	for(var/d in cardinal)
-		addtimer(src, "blast_wall", 0, FALSE, T, d)
+		addtimer(src, "blast_wall", 0, TIMER_NORMAL, T, d)
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/proc/alldir_blasts(mob/victim) //fire alldir cross blasts with a delay
 	var/turf/T = get_turf(victim)
@@ -311,7 +318,7 @@ Difficulty: Hard
 	sleep(2)
 	PoolOrNew(/obj/effect/overlay/temp/hierophant/blast, list(T, src, FALSE))
 	for(var/d in alldirs)
-		addtimer(src, "blast_wall", 0, FALSE, T, d)
+		addtimer(src, "blast_wall", 0, TIMER_NORMAL, T, d)
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/proc/blast_wall(turf/T, dir) //make a wall of blasts beam_range tiles long
 	var/range = beam_range

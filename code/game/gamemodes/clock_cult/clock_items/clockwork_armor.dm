@@ -6,7 +6,7 @@
 	icon_state = "clockwork_helmet"
 	w_class = 3
 	resistance_flags = FIRE_PROOF | ACID_PROOF
-	armor = list(melee = 80, bullet = 50, laser = -15, energy = 0, bomb = 35, bio = 0, rad = 0, fire = 100, acid = 100)
+	armor = list(melee = 80, bullet = 70, laser = -25, energy = 0, bomb = 60, bio = 0, rad = 0, fire = 100, acid = 100)
 
 /obj/item/clothing/head/helmet/clockwork/New()
 	..()
@@ -31,7 +31,7 @@
 			user.emote("scream")
 			user.apply_damage(30, BRUTE, "head")
 			user.adjustBrainLoss(30)
-		addtimer(user, "unEquip", 1, FALSE, src, 1) //equipped happens before putting stuff on(but not before picking items up). thus, we need to wait for it to be on before forcing it off.
+		addtimer(user, "unEquip", 1, TIMER_NORMAL, src, 1) //equipped happens before putting stuff on(but not before picking items up). thus, we need to wait for it to be on before forcing it off.
 
 /obj/item/clothing/head/helmet/clockwork/mob_can_equip(mob/M, mob/equipper, slot, disable_warning = 0)
 	if(equipper && !is_servant_of_ratvar(equipper))
@@ -46,7 +46,7 @@
 	w_class = 4
 	body_parts_covered = CHEST|GROIN|LEGS
 	resistance_flags = FIRE_PROOF | ACID_PROOF
-	armor = list(melee = 80, bullet = 50, laser = -15, energy = 0, bomb = 35, bio = 0, rad = 0, fire = 100, acid = 100)
+	armor = list(melee = 80, bullet = 70, laser = -25, energy = 0, bomb = 60, bio = 0, rad = 0, fire = 100, acid = 100)
 	allowed = list(/obj/item/clockwork, /obj/item/clothing/glasses/wraith_spectacles, /obj/item/clothing/glasses/judicial_visor, /obj/item/device/mmi/posibrain/soul_vessel)
 
 /obj/item/clothing/suit/armor/clockwork/New()
@@ -78,7 +78,7 @@
 			user.apply_damage(15, BURN, "chest")
 			user.adjust_fire_stacks(2)
 			user.IgniteMob()
-		addtimer(user, "unEquip", 1, FALSE, src, 1)
+		addtimer(user, "unEquip", 1, TIMER_NORMAL, src, 1)
 
 /obj/item/clothing/gloves/clockwork
 	name = "clockwork gauntlets"
@@ -90,11 +90,10 @@
 	strip_delay = 50
 	put_on_delay = 30
 	body_parts_covered = ARMS
-	resistance_flags = 0
 	siemens_coefficient = 0
 	permeability_coefficient = 0.05
 	resistance_flags = FIRE_PROOF | ACID_PROOF
-	armor = list(melee = 80, bullet = 50, laser = -15, energy = 0, bomb = 35, bio = 0, rad = 0, fire = 100, acid = 100)
+	armor = list(melee = 80, bullet = 70, laser = -25, energy = 0, bomb = 60, bio = 0, rad = 0, fire = 100, acid = 100)
 
 /obj/item/clothing/gloves/clockwork/New()
 	..()
@@ -124,7 +123,7 @@
 			user.emote("scream")
 			user.apply_damage(7, BRUTE, "l_arm")
 			user.apply_damage(7, BRUTE, "r_arm")
-		addtimer(user, "unEquip", 1, FALSE, src, 1)
+		addtimer(user, "unEquip", 1, TIMER_NORMAL, src, 1)
 
 /obj/item/clothing/shoes/clockwork
 	name = "clockwork treads"
@@ -164,4 +163,4 @@
 			user.emote("scream")
 			user.apply_damage(7, BURN, "l_leg")
 			user.apply_damage(7, BURN, "r_leg")
-		addtimer(user, "unEquip", 1, FALSE, src, 1)
+		addtimer(user, "unEquip", 1, TIMER_NORMAL, src, 1)

@@ -66,6 +66,8 @@
 	visible_message("<span class='danger'>[src] is hit by \a [P]!</span>", null, null, COMBAT_MESSAGE_RANGE)
 	take_damage(P.damage, P.damage_type, P.flag, 0, turn(P.dir, 180))
 
+/obj/proc/hulk_damage()
+	return 150 //the damage hulks do on punches to this object, is affected by melee armor
 
 /obj/attack_hulk(mob/living/carbon/human/user, does_attack_animation = 0)
 	if(user.a_intent == "harm")
@@ -76,7 +78,7 @@
 			user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
 		else
 			playsound(src, 'sound/effects/bang.ogg', 50, 1)
-		take_damage(150, BRUTE, "melee", 0, get_dir(src, user))
+		take_damage(hulk_damage(), BRUTE, "melee", 0, get_dir(src, user))
 		return 1
 	return 0
 
@@ -234,3 +236,24 @@ var/global/image/acid_overlay = image("icon" = 'icons/effects/effects.dmi', "ico
 		burn()
 	else
 		deconstruct(FALSE)
+
+//changes max_integrity while retaining current health percentage
+//returns TRUE if the obj broke, FALSE otherwise
+/obj/proc/modify_max_integrity(new_max, can_break = TRUE, damage_type = BRUTE, new_failure_integrity = null)
+	var/current_integrity = obj_integrity
+	var/current_max = max_integrity
+
+	if(current_integrity != 0 && current_max != 0)
+		var/percentage = current_integrity / current_max
+		current_integrity = max(1, round(percentage * new_max))	//don't destroy it as a result
+		obj_integrity = current_integrity
+
+	max_integrity = new_max
+
+	if(new_failure_integrity != null)
+		integrity_failure = new_failure_integrity
+
+	if(can_break && integrity_failure && current_integrity <= integrity_failure)
+		obj_break(damage_type)
+		return TRUE
+	return FALSE

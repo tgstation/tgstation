@@ -6,6 +6,7 @@
 	icon_state = "judicial_visor_0"
 	item_state = "sunglasses"
 	resistance_flags = FIRE_PROOF | ACID_PROOF
+	flash_protect = 1
 	var/active = FALSE //If the visor is online
 	var/recharging = FALSE //If the visor is currently recharging
 	var/obj/effect/proc_holder/judicial_visor/blaster
@@ -51,7 +52,7 @@
 
 /obj/item/clothing/glasses/judicial_visor/dropped(mob/user)
 	. = ..()
-	addtimer(src, "check_on_mob", 1, FALSE, user) //dropped is called before the item is out of the slot, so we need to check slightly later
+	addtimer(src, "check_on_mob", 1, TIMER_NORMAL, user) //dropped is called before the item is out of the slot, so we need to check slightly later
 
 /obj/item/clothing/glasses/judicial_visor/proc/check_on_mob(mob/user)
 	if(user && src != user.get_item_by_slot(slot_glasses)) //if we happen to check and we AREN'T in the slot, we need to remove our shit from whoever we got dropped from
@@ -130,7 +131,7 @@
 				continue
 			V.recharging = TRUE //To prevent exploiting multiple visors to bypass the cooldown
 			V.update_status()
-			addtimer(V, "recharge_visor", (ratvar_awakens ? visor.recharge_cooldown*0.1 : visor.recharge_cooldown) * 2, FALSE, ranged_ability_user)
+			addtimer(V, "recharge_visor", (ratvar_awakens ? visor.recharge_cooldown*0.1 : visor.recharge_cooldown) * 2, TIMER_NORMAL, ranged_ability_user)
 		clockwork_say(ranged_ability_user, text2ratvar("Kneel, heathens!"))
 		ranged_ability_user.visible_message("<span class='warning'>[ranged_ability_user]'s judicial visor fires a stream of energy at [target], creating a strange mark!</span>", "<span class='heavy_brass'>You direct [visor]'s power to [target]. You must wait for some time before doing this again.</span>")
 		var/turf/targetturf = get_turf(target)
@@ -138,7 +139,7 @@
 		add_logs(ranged_ability_user, targetturf, "created a judicial marker")
 		ranged_ability_user.update_action_buttons_icon()
 		ranged_ability_user.update_inv_glasses()
-		addtimer(visor, "recharge_visor", ratvar_awakens ? visor.recharge_cooldown*0.1 : visor.recharge_cooldown, FALSE, ranged_ability_user)//Cooldown is reduced by 10x if Ratvar is up
+		addtimer(visor, "recharge_visor", ratvar_awakens ? visor.recharge_cooldown*0.1 : visor.recharge_cooldown, TIMER_NORMAL, ranged_ability_user)//Cooldown is reduced by 10x if Ratvar is up
 		remove_ranged_ability()
 
 		return TRUE
@@ -160,12 +161,12 @@
 	user = caster
 	playsound(src, 'sound/magic/MAGIC_MISSILE.ogg', 50, 1, 1, 1)
 	flick("judicial_marker", src)
-	addtimer(src, "burstanim", 16, FALSE)
+	addtimer(src, "burstanim", 16, TIMER_NORMAL)
 
 /obj/effect/clockwork/judicial_marker/proc/burstanim()
 	layer = ABOVE_ALL_MOB_LAYER
 	flick("judicial_explosion", src)
-	addtimer(src, "judicialblast", 13, FALSE)
+	addtimer(src, "judicialblast", 13, TIMER_NORMAL)
 
 /obj/effect/clockwork/judicial_marker/proc/judicialblast()
 	var/targetsjudged = 0

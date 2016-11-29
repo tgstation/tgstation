@@ -29,6 +29,7 @@
 	var/step_in = 10 //make a step in step_in/10 sec.
 	var/dir_in = 2//What direction will the mech face when entered/powered on? Defaults to South.
 	var/step_energy_drain = 10
+	var/melee_energy_drain = 15
 	obj_integrity = 300 //obj_integrity is health
 	max_integrity = 300
 	var/deflect_chance = 10 //chance to deflect the incoming projectiles, hits, or lesser the effect of ex_act.
@@ -111,6 +112,9 @@
 	var/phase_state = "" //icon_state when phasing
 	var/strafe = FALSE //If we are strafing
 
+	var/nextsmash = 0
+	var/smashcooldown = 3	//deciseconds
+
 	var/occupant_sight_flags = 0 //sight flags to give to the occupant (e.g. mech mining scanner gives meson-like vision)
 
 	hud_possible = list (DIAG_STAT_HUD, DIAG_BATT_HUD, DIAG_MECH_HUD)
@@ -142,9 +146,11 @@
 
 /obj/mecha/Destroy()
 	go_out()
+	var/mob/living/silicon/ai/AI
 	for(var/mob/M in src) //Let's just be ultra sure
 		if(isAI(M))
-			M.gib() //AIs are loaded into the mech computer itself. When the mech dies, so does the AI. Forever.
+			occupant = null
+			AI = M //AIs are loaded into the mech computer itself. When the mech dies, so does the AI. They can be recovered with an AI card from the wreck.
 		else
 			M.forceMove(loc)
 
@@ -152,7 +158,7 @@
 		explosion(get_turf(loc), 0, 0, 1, 3)
 
 	if(wreckage)
-		var/obj/structure/mecha_wreckage/WR = new wreckage(loc)
+		var/obj/structure/mecha_wreckage/WR = new wreckage(loc, AI)
 		for(var/obj/item/mecha_parts/mecha_equipment/E in equipment)
 			if(E.salvageable && prob(30))
 				WR.crowbar_salvage += E
@@ -176,6 +182,8 @@
 			qdel(cell)
 		if(internal_tank)
 			qdel(internal_tank)
+		if(AI)
+			AI.gib() //No wreck, no AI to recover
 	STOP_PROCESSING(SSobj, src)
 	poi_list.Remove(src)
 	equipment.Cut()
@@ -545,9 +553,11 @@
 			if(..()) //mech was thrown
 				return
 			if(bumpsmash && occupant) //Need a pilot to push the PUNCH button.
-				obstacle.mech_melee_attack(src)
-				if(!obstacle || (obstacle && !obstacle.density))
-					step(src,dir)
+				if(nextsmash < world.time)
+					obstacle.mech_melee_attack(src)
+					if(!obstacle || !obstacle.density)
+						step(src,dir)
+					nextsmash = world.time + smashcooldown
 			if(isobj(obstacle))
 				var/obj/O = obstacle
 				if(!O.anchored)
@@ -630,9 +640,6 @@
 			if(!AI || !isAI(occupant)) //Mech does not have an AI for a pilot
 				user << "<span class='warning'>No AI detected in the [name] onboard computer.</span>"
 				return
-			if(AI.mind.special_role) //Malf AIs cannot leave mechs. Except through death.
-				user << "<span class='boldannounce'>ACCESS DENIED.</span>"
-				return
 			AI.ai_restore_power()//So the AI initially has power.
 			AI.control_disabled = 1
 			AI.radio_enabled = 0
@@ -684,9 +691,9 @@
 	AI.remote_control = src
 	AI.canmove = 1 //Much easier than adding AI checks! Be sure to set this back to 0 if you decide to allow an AI to leave a mech somehow.
 	AI.can_shunt = 0 //ONE AI ENTERS. NO AI LEAVES.
-	AI << "[interaction == AI_MECH_HACK ? "<span class='announce'>Takeover of [name] complete! You are now permanently loaded onto the onboard computer. Do not attempt to leave the station sector!</span>" \
+	AI << "[interaction == AI_MECH_HACK ? "<span class='announce'>Takeover of [name] complete! You are now loaded onto the onboard computer. Do not attempt to leave the station sector!</span>" \
 	: "<span class='notice'>You have been uploaded to a mech's onboard computer."]"
-	AI << "<span class='boldnotice'>Use Middle-Mouse to activate mech functions and equipment. Click normally for AI interactions.</span>"
+	AI << "<span class='reallybig boldnotice'>Use Middle-Mouse to activate mech functions and equipment. Click normally for AI interactions.</span>"
 	GrantActions(AI)
 
 
@@ -886,7 +893,7 @@
 	else
 		return 0
 
-/obj/mecha/container_resist()
+/obj/mecha/container_resist(mob/living/user)
 	go_out()
 
 

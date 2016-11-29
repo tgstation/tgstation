@@ -23,10 +23,6 @@
 	obj_integrity = 300
 	max_integrity = 300
 
-/obj/item/weapon/storage/backpack/attackby(obj/item/weapon/W, mob/user, params)
-	playsound(src.loc, "rustle", 50, 1, -5)
-	return ..()
-
 /*
  * Backpack Types
  */
@@ -454,7 +450,7 @@
 	contents = list()
 	new /obj/item/ammo_box/magazine/smgm45(src)
 	new /obj/item/ammo_box/magazine/smgm45(src)
-	new /obj/item/weapon/gun/projectile/automatic/c20r(src)
+	new /obj/item/weapon/gun/ballistic/automatic/c20r(src)
 	new /obj/item/weapon/suppressor/specialoffer(src)
 	return
 
@@ -465,7 +461,7 @@
 	..()
 	contents = list()
 	new /obj/item/ammo_box/magazine/m12g(src)
-	new /obj/item/weapon/gun/projectile/automatic/shotgun/bulldog(src)
+	new /obj/item/weapon/gun/ballistic/automatic/shotgun/bulldog(src)
 	new /obj/item/ammo_box/magazine/m12g/buckshot(src)
 	new /obj/item/clothing/glasses/thermal/syndi(src)
 	return
@@ -478,7 +474,7 @@
 	contents = list()
 	new /obj/item/clothing/shoes/magboots/syndie(src)
 	new /obj/item/weapon/storage/firstaid/tactical(src)
-	new /obj/item/weapon/gun/projectile/automatic/l6_saw/toy(src)
+	new /obj/item/weapon/gun/ballistic/automatic/l6_saw/toy(src)
 	new /obj/item/ammo_box/foambox/riot(src)
 	return
 
@@ -490,7 +486,7 @@
 	contents = list()
 	new /obj/item/clothing/shoes/magboots/syndie(src)
 	new /obj/item/weapon/storage/firstaid/tactical(src)
-	new /obj/item/weapon/gun/projectile/automatic/l6_saw/toy(src)
+	new /obj/item/weapon/gun/ballistic/automatic/l6_saw/toy(src)
 	new /obj/item/ammo_box/foambox/riot(src)
 	return
 
@@ -503,7 +499,7 @@
 	new /obj/item/weapon/reagent_containers/spray/chemsprayer/bioterror(src)
 	new /obj/item/weapon/storage/box/syndie_kit/chemical(src)
 	new /obj/item/weapon/gun/syringe/syndicate(src)
-	new /obj/item/weapon/gun/projectile/automatic/c20r/toy(src)
+	new /obj/item/weapon/gun/ballistic/automatic/c20r/toy(src)
 	new /obj/item/weapon/storage/box/syringes(src)
 	new /obj/item/ammo_box/foambox/riot(src)
 	new /obj/item/weapon/grenade/chem_grenade/bioterrorfoam(src)
@@ -530,7 +526,7 @@
 	new /obj/item/clothing/under/syndicate/soviet(src)
 	new /obj/item/weapon/watertank/operator(src)
 	new /obj/item/clothing/suit/space/hardsuit/syndi/elite(src)
-	new /obj/item/weapon/gun/projectile/automatic/pistol/APS(src)
+	new /obj/item/weapon/gun/ballistic/automatic/pistol/APS(src)
 	new /obj/item/ammo_box/magazine/pistolm9mm(src)
 	new /obj/item/ammo_box/magazine/pistolm9mm(src)
 	new /obj/item/weapon/reagent_containers/food/drinks/bottle/vodka/badminka(src)

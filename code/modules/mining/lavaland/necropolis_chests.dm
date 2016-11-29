@@ -589,9 +589,10 @@
 			user << "<span class='danger'>Your flesh begins to melt! Miraculously, you seem fine otherwise.</span>"
 			H.set_species(/datum/species/skeleton)
 		if(3)
-			user << "<span class='danger'>You don't feel so good...</span>"
-			message_admins("[key_name_admin(user)](<A HREF='?_src_=holder;adminplayerobservefollow=\ref[user]'>FLW</A>) has started transforming into a dragon via dragon's blood.")
-			H.ForceContractDisease(new /datum/disease/transformation/dragon(0))
+			user << "<span class='danger'>Power courses through you! You can now shift your form at will."
+			if(user.mind)
+				var/obj/effect/proc_holder/spell/targeted/shapeshift/dragon/D = new
+				user.mind.AddSpell(D)
 		if(4)
 			user << "<span class='danger'>You feel like you could walk straight through lava now.</span>"
 			H.weather_immunities |= "lava"
@@ -625,7 +626,6 @@
 	item_state = "staffofstorms"
 	icon = 'icons/obj/guns/magic.dmi'
 	slot_flags = SLOT_BACK
-	item_state = "staffofstorms"
 	w_class = 4
 	force = 25
 	damtype = BURN
@@ -744,7 +744,7 @@
 		survive.owner = L.mind
 		L.mind.objectives += survive
 		L << "<span class='userdanger'>You've been marked for death! Don't let the demons get you!</span>"
-		L.color = "#FF0000"
+		L.add_atom_colour("#FF0000", ADMIN_COLOUR_PRIORITY)
 		spawn()
 			var/obj/effect/mine/pickup/bloodbath/B = new(L)
 			B.mineEffect(L)
@@ -787,11 +787,11 @@
 		return
 	timer = world.time + CLICK_CD_MELEE //by default, melee attacks only cause melee blasts, and have an accordingly short cooldown
 	if(proximity_flag)
-		addtimer(src, "aoe_burst", 0, FALSE, T, user)
+		addtimer(src, "aoe_burst", 0, TIMER_NORMAL, T, user)
 		add_logs(user, target, "fired 3x3 blast at", src)
 	else
 		if(ismineralturf(target) && get_dist(user, target) < 6) //target is minerals, we can hit it(even if we can't see it)
-			addtimer(src, "cardinal_blasts", 0, FALSE, T, user)
+			addtimer(src, "cardinal_blasts", 0, TIMER_NORMAL, T, user)
 			timer = world.time + cooldown_time
 		else if(target in view(5, get_turf(user))) //if the target is in view, hit it
 			timer = world.time + cooldown_time
@@ -800,13 +800,13 @@
 				PoolOrNew(/obj/effect/overlay/temp/hierophant/chaser, list(get_turf(user), user, target, 1.5, friendly_fire_check))
 				add_logs(user, target, "fired a chaser at", src)
 			else
-				addtimer(src, "cardinal_blasts", 0, FALSE, T, user) //otherwise, just do cardinal blast
+				addtimer(src, "cardinal_blasts", 0, TIMER_NORMAL, T, user) //otherwise, just do cardinal blast
 				add_logs(user, target, "fired cardinal blast at", src)
 		else
 			user << "<span class='warning'>That target is out of range!</span>" //too far away
 
-/obj/item/weapon/hierophant_staff/ui_action_click(mob/user, actiontype)
-	if(actiontype == /datum/action/item_action/toggle_unfriendly_fire) //toggle friendly fire...
+/obj/item/weapon/hierophant_staff/ui_action_click(mob/user, action)
+	if(istype(action, /datum/action/item_action/toggle_unfriendly_fire)) //toggle friendly fire...
 		friendly_fire_check = !friendly_fire_check
 		user << "<span class='warning'>You toggle friendly fire [friendly_fire_check ? "off":"on"]!</span>"
 		return
@@ -877,7 +877,7 @@
 			var/obj/effect/overlay/temp/hierophant/blast/B = PoolOrNew(/obj/effect/overlay/temp/hierophant/blast, list(t, user, TRUE)) //but absolutely will hurt enemies
 			B.damage = 30
 		for(var/mob/living/L in range(1, source))
-			addtimer(src, "teleport_mob", 0, FALSE, source, L, T, user) //regardless, take all mobs near us along
+			addtimer(src, "teleport_mob", 0, TIMER_NORMAL, source, L, T, user) //regardless, take all mobs near us along
 		sleep(6) //at this point the blasts detonate
 	else
 		timer = world.time
@@ -918,7 +918,7 @@
 	sleep(2)
 	PoolOrNew(/obj/effect/overlay/temp/hierophant/blast, list(T, user, friendly_fire_check))
 	for(var/d in cardinal)
-		addtimer(src, "blast_wall", 0, FALSE, T, d, user)
+		addtimer(src, "blast_wall", 0, TIMER_NORMAL, T, d, user)
 
 /obj/item/weapon/hierophant_staff/proc/blast_wall(turf/T, dir, mob/living/user) //make a wall of blasts blast_range tiles long
 	if(!T)

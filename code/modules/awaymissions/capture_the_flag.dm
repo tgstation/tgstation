@@ -226,7 +226,7 @@
 		var/turf/T = get_turf(body)
 		new /obj/effect/ctf/ammo(T)
 		recently_dead_ckeys += body.ckey
-		addtimer(src, "clear_cooldown", respawn_cooldown, TRUE, body.ckey)
+		addtimer(src, "clear_cooldown", respawn_cooldown, TIMER_UNIQUE, body.ckey)
 		body.dust()
 
 /obj/machinery/capture_the_flag/proc/clear_cooldown(var/ckey)
@@ -330,19 +330,19 @@
 			CTF.ctf_gear = initial(ctf_gear)
 			CTF.respawn_cooldown = DEFAULT_RESPAWN
 
-/obj/item/weapon/gun/projectile/automatic/pistol/deagle/ctf
+/obj/item/weapon/gun/ballistic/automatic/pistol/deagle/ctf
 	desc = "This looks like it could really hurt in melee."
 	force = 75
 
-/obj/item/weapon/gun/projectile/automatic/pistol/deagle/ctf/dropped()
+/obj/item/weapon/gun/ballistic/automatic/pistol/deagle/ctf/dropped()
 	. = ..()
 	addtimer(src, "floor_vanish", 1)
 
-/obj/item/weapon/gun/projectile/automatic/pistol/deagle/ctf/proc/floor_vanish()
+/obj/item/weapon/gun/ballistic/automatic/pistol/deagle/ctf/proc/floor_vanish()
 	if(isturf(loc))
 		qdel(src)
 
-/obj/item/weapon/gun/projectile/automatic/laser/ctf
+/obj/item/weapon/gun/ballistic/automatic/laser/ctf
 	mag_type = /obj/item/ammo_box/magazine/recharge/ctf
 	desc = "This looks like it could really hurt in melee."
 	force = 50
@@ -368,7 +368,7 @@
 
 // RED TEAM GUNS
 
-/obj/item/weapon/gun/projectile/automatic/laser/ctf/red
+/obj/item/weapon/gun/ballistic/automatic/laser/ctf/red
 	mag_type = /obj/item/ammo_box/magazine/recharge/ctf/red
 
 /obj/item/ammo_box/magazine/recharge/ctf/red
@@ -382,7 +382,7 @@
 
 // BLUE TEAM GUNS
 
-/obj/item/weapon/gun/projectile/automatic/laser/ctf/blue
+/obj/item/weapon/gun/ballistic/automatic/laser/ctf/blue
 	mag_type = /obj/item/ammo_box/magazine/recharge/ctf/blue
 
 /obj/item/ammo_box/magazine/recharge/ctf/blue
@@ -402,10 +402,10 @@
 	shoes = /obj/item/clothing/shoes/combat
 	gloves = /obj/item/clothing/gloves/combat
 	id = /obj/item/weapon/card/id/syndicate
-	belt = /obj/item/weapon/gun/projectile/automatic/pistol/deagle/ctf
+	belt = /obj/item/weapon/gun/ballistic/automatic/pistol/deagle/ctf
 	l_pocket = /obj/item/ammo_box/magazine/recharge/ctf
 	r_pocket = /obj/item/ammo_box/magazine/recharge/ctf
-	r_hand = /obj/item/weapon/gun/projectile/automatic/laser/ctf
+	r_hand = /obj/item/weapon/gun/ballistic/automatic/laser/ctf
 
 /datum/outfit/ctf/post_equip(mob/living/carbon/human/H, visualsOnly=FALSE)
 	if(visualsOnly)
@@ -432,7 +432,7 @@
 /datum/outfit/ctf/red
 	ears = /obj/item/device/radio/headset/syndicate/alt
 	suit = /obj/item/clothing/suit/space/hardsuit/shielded/ctf/red
-	r_hand = /obj/item/weapon/gun/projectile/automatic/laser/ctf/red
+	r_hand = /obj/item/weapon/gun/ballistic/automatic/laser/ctf/red
 	l_pocket = /obj/item/ammo_box/magazine/recharge/ctf/red
 	r_pocket = /obj/item/ammo_box/magazine/recharge/ctf/red
 
@@ -443,7 +443,7 @@
 /datum/outfit/ctf/blue
 	ears = /obj/item/device/radio/headset/headset_cent/commander
 	suit = /obj/item/clothing/suit/space/hardsuit/shielded/ctf/blue
-	r_hand = /obj/item/weapon/gun/projectile/automatic/laser/ctf/blue
+	r_hand = /obj/item/weapon/gun/ballistic/automatic/laser/ctf/blue
 	l_pocket = /obj/item/ammo_box/magazine/recharge/ctf/blue
 	r_pocket = /obj/item/ammo_box/magazine/recharge/ctf/blue
 

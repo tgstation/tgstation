@@ -6570,7 +6570,7 @@
 /turf/open/floor/wood,
 /area/maintenance/fsmaint)
 "aqc" = (
-/obj/item/weapon/gun/projectile/shotgun/toy,
+/obj/item/weapon/gun/ballistic/shotgun/toy,
 /turf/open/floor/wood,
 /area/maintenance/fsmaint)
 "aqd" = (
@@ -12643,7 +12643,7 @@
 	})
 "aFh" = (
 /obj/structure/table/wood,
-/obj/item/weapon/gun/projectile/revolver/doublebarrel,
+/obj/item/weapon/gun/ballistic/revolver/doublebarrel,
 /turf/open/floor/wood,
 /area/crew_quarters/bar{
 	name = "\improper Bar and Kitchen"
@@ -17155,8 +17155,8 @@
 /area/toxins/xenobiology)
 "aQz" = (
 /obj/structure/rack,
-/obj/item/weapon/gun/energy/gun/advtaser,
-/obj/item/weapon/gun/energy/gun/advtaser{
+/obj/item/weapon/gun/energy/e_gun/advtaser,
+/obj/item/weapon/gun/energy/e_gun/advtaser{
 	pixel_x = 5;
 	pixel_y = -5
 	},
@@ -20557,7 +20557,7 @@
 	})
 "aYD" = (
 /obj/structure/table/wood,
-/obj/item/weapon/gun/projectile/revolver/doublebarrel/improvised,
+/obj/item/weapon/gun/ballistic/revolver/doublebarrel/improvised,
 /turf/open/floor/wood,
 /area/maintenance/fore{
 	name = "Security Maintenance"
@@ -23169,7 +23169,7 @@
 /area/toxins/xenobiology)
 "beI" = (
 /obj/structure/rack,
-/obj/item/weapon/gun/energy/gun/dragnet,
+/obj/item/weapon/gun/energy/e_gun/dragnet,
 /turf/open/floor/plasteel/bot,
 /area/security/warden)
 "beJ" = (
@@ -23179,11 +23179,11 @@
 /obj/item/weapon/storage/box/rubbershot,
 /obj/item/weapon/storage/box/rubbershot,
 /obj/item/weapon/storage/box/rubbershot,
-/obj/item/weapon/gun/projectile/shotgun/riot{
+/obj/item/weapon/gun/ballistic/shotgun/riot{
 	pixel_x = -5;
 	pixel_y = 5
 	},
-/obj/item/weapon/gun/projectile/shotgun/riot,
+/obj/item/weapon/gun/ballistic/shotgun/riot,
 /turf/open/floor/plasteel/bot,
 /area/security/warden)
 "beK" = (
@@ -23233,7 +23233,7 @@
 	lootcount = 3;
 	name = "teargas clusterbuster spawner"
 	},
-/obj/item/weapon/gun/energy/gun/hos,
+/obj/item/weapon/gun/energy/e_gun/hos,
 /obj/item/weapon/storage/box/lethalshot,
 /obj/item/weapon/storage/box/lethalshot,
 /turf/open/floor/plasteel,
@@ -23262,6 +23262,12 @@
 /area/maintenance/fore{
 	name = "Security Maintenance"
 	})
+"ZyZ" = (
+/obj/effect/landmark/xmastree/rdrod,
+/turf/open/floor/plasteel/warnwhite{
+	dir = 8
+	},
+/area/toxins/lab)
 "Zza" = (
 /turf/open/space,
 /obj/machinery/porta_turret/syndicate{
@@ -65064,7 +65070,7 @@ aJt
 aKn
 aHu
 aEF
-aMC
+ZyZ
 aMC
 aOu
 aPk

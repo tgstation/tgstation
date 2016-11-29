@@ -70,7 +70,7 @@
 		return
 
 	if(!M)
-		M = input("Direct narrate to who?", "Active Players") as null|anything in player_list
+		M = input("Direct narrate to whom?", "Active Players") as null|anything in player_list
 
 	if(!M)
 		return
@@ -776,6 +776,9 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	set name = "Remove Latejoin Spawns"
 
 	if(!check_rights(R_DEBUG))
+		return
+	var/confirm = alert(src, "Disable Latejoin spawns??", "Message", "Yes", "No")
+	if(confirm != "Yes")
 		return
 
 	latejoin.Cut()

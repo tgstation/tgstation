@@ -123,9 +123,9 @@
 	desc = "A die with twenty sides. You can feel unearthly energies radiating from it. Using this might be VERY risky."
 	icon_state = "d20"
 	sides = 20
+	can_be_rigged = FALSE
 	var/reusable = 1
 	var/used = 0
-	var/rigged = -1
 
 /obj/item/weapon/dice/d20/fate/one_use
 	reusable = 0
@@ -136,7 +136,7 @@
 		if(!ishuman(user) || !user.mind || (user.mind in ticker.mode.wizards))
 			user << "<span class='warning'>You feel the magic of the dice is restricted to ordinary humans!</span>"
 			return
-		if(rigged > 0)
+		if(rigged)
 			effect(user,rigged)
 		else
 			effect(user,result)
@@ -213,7 +213,7 @@
 						new /obj/item/weapon/coin/gold(M)
 		if(14)
 			//Free Gun
-			new /obj/item/weapon/gun/projectile/revolver/mateba(get_turf(src))
+			new /obj/item/weapon/gun/ballistic/revolver/mateba(get_turf(src))
 		if(15)
 			//Random One-use spellbook
 			new /obj/item/weapon/spellbook/oneuse/random(get_turf(src))

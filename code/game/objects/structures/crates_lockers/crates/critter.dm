@@ -7,6 +7,7 @@
 	breakout_time = 1
 	material_drop = /obj/item/stack/sheet/mineral/wood
 	material_drop_amount = 4
+	delivery_icon = "deliverybox"
 	var/obj/item/weapon/tank/internals/emergency_oxygen/tank
 
 /obj/structure/closet/crate/critter/New()

@@ -34,7 +34,7 @@
 /obj/item/clockwork/component/belligerent_eye/blind_eye
 	name = "blind eye"
 	desc = "A heavy brass eye, its red iris fallen dark."
-	clockwork_desc = "A smashed ocular warden covered in dents. Might still be serviceable as a substitute for a belligerent eye."
+	clockwork_desc = "A smashed ocular warden covered in dents. <b>Serviceable as a substitute for a belligerent eye.</b>"
 	icon_state = "blind_eye"
 	cultist_message = "The eye flickers at you with intense hate before falling dark."
 	servant_of_ratvar_messages = list("The eye flickers before falling dark." = FALSE, "You feel watched." = FALSE, "\"...\"" = FALSE)
@@ -46,33 +46,33 @@
 	icon_state = "vanguard_cogwheel"
 	component_id = VANGUARD_COGWHEEL
 	cultist_message = "\"Pray to your god that we never meet.\""
-	servant_of_ratvar_messages = list("\"Be safe, child.\"" = FALSE, "You feel unexplainably comforted." = FALSE, "\"Never forget: pain is temporary. The Justiciar's glory is eternal.\"" = FALSE)
+	servant_of_ratvar_messages = list("\"Be safe, child.\"" = FALSE, "You feel unexplainably comforted." = FALSE, "\"Never forget: Pain is temporary. What you do for the Justiciar is eternal.\"" = FALSE)
 	message_span = "inathneq"
 
 /obj/item/clockwork/component/vanguard_cogwheel/pinion_lock
 	name = "pinion lock"
 	desc = "A dented and scratched gear. It's very heavy."
-	clockwork_desc = "A broken gear lock for pinion airlocks. Might still be serviceable as a substitute for a vanguard cogwheel."
+	clockwork_desc = "A broken gear lock for pinion airlocks. <b>Serviceable as a substitute for a vanguard cogwheel.</b>"
 	icon_state = "pinion_lock"
 	cultist_message = "The gear grows warm in your hands."
 	servant_of_ratvar_messages = list("The lock isn't getting any lighter." = FALSE, "\"Damaged gears are better than broken bodies.\"" = TRUE, \
-	"\"It could still be used, if there was a door to place it on.\"" = TRUE)
+	"\"It's a shame it can't be reused.\"" = TRUE)
 	w_class = 3
 
-/obj/item/clockwork/component/guvax_capacitor
-	name = "guvax capacitor"
+/obj/item/clockwork/component/geis_capacitor
+	name = "geis capacitor"
 	desc = "A curiously cold brass doodad. It seems as though it really doesn't appreciate being held."
-	icon_state = "guvax_capacitor"
-	component_id = GUVAX_CAPACITOR
+	icon_state = "geis_capacitor"
+	component_id = GEIS_CAPACITOR
 	cultist_message = "\"Try not to lose your mind - I'll need it. Heh heh...\""
 	servant_of_ratvar_messages = list("\"Disgusting.\"" = FALSE, "\"Well, aren't you an inquisitive fellow?\"" = FALSE, "A foul presence pervades your mind, then vanishes." = FALSE, \
 	"\"The fact that Ratvar has to depend on simpletons like you is appalling.\"" = FALSE)
 	message_span = "sevtug"
 
-/obj/item/clockwork/component/guvax_capacitor/antennae
+/obj/item/clockwork/component/geis_capacitor/antennae
 	name = "mania motor antennae"
 	desc = "A pair of dented and bent antennae. They constantly emit a static hiss."
-	clockwork_desc = "The antennae from a mania motor. May be usable as a substitute for a guvax capacitor."
+	clockwork_desc = "The antennae from a mania motor. <b>Serviceable as a substitute for a geis capacitor.</b>"
 	icon_state = "mania_motor_antennae"
 	cultist_message = "Your head is filled with a burst of static."
 	servant_of_ratvar_messages = list("\"Who broke this.\"" = TRUE, "\"Did you break these off YOURSELF?\"" = TRUE, "\"Why did we give this to such simpletons, anyway?\"" = TRUE, \
@@ -105,7 +105,7 @@
 /obj/item/clockwork/component/replicant_alloy/smashed_anima_fragment
 	name = "smashed anima fragment"
 	desc = "Shattered chunks of metal. Damaged beyond repair and completely unusable."
-	clockwork_desc = "The sad remains of an anima fragment. Might still be serviceable as a substitute for replicant alloy."
+	clockwork_desc = "The sad remains of an anima fragment. <b>Serviceable as a substitute for replicant alloy.</b>"
 	icon_state = "smashed_anime_fragment"
 	cultist_message = "The shards vibrate in your hands for a moment."
 	servant_of_ratvar_messages = list("\"...still fight...\"" = FALSE, "\"...where am I...?\"" = FALSE, "\"...put me... slab...\"" = FALSE)
@@ -115,7 +115,7 @@
 /obj/item/clockwork/component/replicant_alloy/fallen_armor
 	name = "fallen armor"
 	desc = "Lifeless chunks of armor. They're designed in a strange way and won't fit on you."
-	clockwork_desc = "The armor from a former clockwork marauder. Might still be serviceable as a substitute for replicant alloy."
+	clockwork_desc = "The armor from a former clockwork marauder. <b>Serviceable as a substitute for replicant alloy.</b>"
 	icon_state = "fallen_armor"
 	cultist_message = "Red flame sputters from the mask's eye before winking out."
 	servant_of_ratvar_messages = list("A piece of armor hovers away from the others for a moment." = FALSE, "Red flame appears in the cuirass before sputtering out." = FALSE)
@@ -135,7 +135,7 @@
 /obj/item/clockwork/component/hierophant_ansible/obelisk
 	name = "obelisk prism"
 	desc = "A prism that occasionally glows brightly. It seems not-quite there."
-	clockwork_desc = "The prism from a clockwork obelisk. Likely suitable as a substitute for a hierophant ansible."
+	clockwork_desc = "The prism from a clockwork obelisk. <b>Serviceable as a substitute for a hierophant ansible.</b>"
 	cultist_message = "The prism flickers wildly in your hands before resuming its normal glow."
 	servant_of_ratvar_messages = list("You hear the distinctive sound of the Hierophant Network for a moment." = FALSE, "\"Hieroph'ant Br'o'adcas't fail'ure.\"" = TRUE, \
 	"The obelisk flickers wildly, as if trying to open a gateway." = FALSE, "\"Spa'tial Ga'tewa'y fai'lure.\"" = TRUE)
@@ -146,7 +146,7 @@
 /obj/item/clockwork/alloy_shards
 	name = "replicant alloy shards"
 	desc = "Broken shards of some oddly malleable metal. They occasionally move and seem to glow."
-	clockwork_desc = "Broken shards of replicant alloy. Could probably be proselytized into replicant alloy, though there's not much left."
+	clockwork_desc = "Broken shards of replicant alloy. Could be proselytized for liquified replicant alloy."
 	icon_state = "alloy_shards"
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	var/randomsinglesprite = FALSE
@@ -155,12 +155,15 @@
 /obj/item/clockwork/alloy_shards/New()
 	..()
 	if(randomsinglesprite)
-		name = "replicant alloy shard"
-		desc = "A broken shard of some oddly malleable metal. It occasionally moves and seems to glow."
-		clockwork_desc = "A broken shard of replicant alloy. Could probably be proselytized into replicant alloy, though there's not much left."
+		replace_name_desc()
 		icon_state = "[icon_state][rand(1, randomspritemax)]"
 		pixel_x = rand(-9, 9)
 		pixel_y = rand(-9, 9)
+
+/obj/item/clockwork/alloy_shards/proc/replace_name_desc()
+	name = "replicant alloy shard"
+	desc = "A broken shard of some oddly malleable metal. It occasionally moves and seems to glow."
+	clockwork_desc = "A broken shard of replicant alloy. Could be proselytized for liquified replicant alloy."
 
 /obj/item/clockwork/alloy_shards/large
 	randomsinglesprite = TRUE
@@ -169,6 +172,21 @@
 /obj/item/clockwork/alloy_shards/medium
 	randomsinglesprite = TRUE
 	icon_state = "shard_medium"
+
+/obj/item/clockwork/alloy_shards/medium/gear_bit
+	randomspritemax = 4
+	icon_state = "gear_bit"
+
+/obj/item/clockwork/alloy_shards/medium/gear_bit/replace_name_desc()
+	name = "gear bit"
+	desc = "A broken chunk of a gear. You want it."
+	clockwork_desc = "A broken chunk of a gear. Could be proselytized for liquified replicant alloy."
+
+/obj/item/clockwork/alloy_shards/medium/gear_bit/large //gives more alloy
+
+/obj/item/clockwork/alloy_shards/medium/gear_bit/large/replace_name_desc()
+	..()
+	name = "complex gear bit"
 
 /obj/item/clockwork/alloy_shards/small
 	randomsinglesprite = TRUE

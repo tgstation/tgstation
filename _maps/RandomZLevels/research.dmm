@@ -1433,8 +1433,8 @@
 /area/awaymission/research/interior/security)
 "dU" = (
 /obj/structure/rack,
-/obj/item/weapon/gun/projectile/automatic/wt550,
-/obj/item/weapon/gun/projectile/automatic/wt550,
+/obj/item/weapon/gun/ballistic/automatic/wt550,
+/obj/item/weapon/gun/ballistic/automatic/wt550,
 /obj/item/ammo_box/magazine/wt550m9,
 /obj/item/ammo_box/magazine/wt550m9,
 /turf/open/floor/plasteel/red,
@@ -1563,8 +1563,8 @@
 /area/awaymission/research/interior/security)
 "ep" = (
 /obj/structure/rack,
-/obj/item/weapon/gun/projectile/automatic/pistol/m1911,
-/obj/item/weapon/gun/projectile/automatic/pistol/m1911,
+/obj/item/weapon/gun/ballistic/automatic/pistol/m1911,
+/obj/item/weapon/gun/ballistic/automatic/pistol/m1911,
 /obj/item/ammo_box/magazine/m45,
 /obj/item/ammo_box/magazine/m45,
 /turf/open/floor/plasteel/red,
@@ -3916,7 +3916,7 @@
 /turf/open/floor/wood,
 /area/awaymission/research/interior/dorm)
 "kt" = (
-/obj/item/weapon/gun/projectile/automatic/pistol/m1911,
+/obj/item/weapon/gun/ballistic/automatic/pistol/m1911,
 /turf/open/floor/plasteel,
 /area/awaymission/research/interior/dorm)
 "ku" = (

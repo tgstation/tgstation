@@ -36,6 +36,9 @@
 				if(istype(T, /turf/closed/mineral/random))
 					Spread(T)
 
+/turf/closed/mineral/shuttleRotate(rotation)
+	setDir(angle2dir(rotation+dir2angle(dir)))
+	queue_smooth(src)
 
 
 /turf/closed/mineral/attackby(obj/item/weapon/pickaxe/P, mob/user, params)
@@ -142,7 +145,7 @@
 
 	if (prob(mineralChance))
 		var/path = pickweight(mineralSpawnChanceList)
-		var/turf/T = ChangeTurf(path)
+		var/turf/T = ChangeTurf(path,FALSE,TRUE)
 
 		if(T && ismineralturf(T))
 			var/turf/closed/mineral/M = T

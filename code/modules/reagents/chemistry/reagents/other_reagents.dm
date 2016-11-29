@@ -843,10 +843,12 @@
 		qdel(O)
 	else
 		if(O)
+			O.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
 			O.clean_blood()
 
 /datum/reagent/space_cleaner/reaction_turf(turf/T, reac_volume)
 	if(reac_volume >= 1)
+		T.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
 		T.clean_blood()
 		for(var/obj/effect/decal/cleanable/C in T)
 			qdel(C)
@@ -856,6 +858,7 @@
 
 /datum/reagent/space_cleaner/reaction_mob(mob/M, method=TOUCH, reac_volume)
 	if(method == TOUCH || method == VAPOR)
+		M.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
 		if(iscarbon(M))
 			var/mob/living/carbon/C = M
 			if(ishuman(M))
@@ -989,6 +992,23 @@
 /datum/reagent/carbondioxide/reaction_turf(turf/open/T, reac_volume)
 	if(istype(T))
 		T.atmos_spawn_air("co2=[reac_volume/5];TEMP=[T20C]")
+	return
+
+/datum/reagent/nitrous_oxide
+	name = "Nitrous Oxide"
+	id = "nitrous_oxide"
+	description = "A potent oxidizer used as fuel in rockets and as an anaesthetic during surgery."
+	reagent_state = LIQUID
+	color = "#808080"
+	
+/datum/reagent/nitrous_oxide/reaction_obj(obj/O, reac_volume)
+	if((!O) || (!reac_volume))
+		return 0
+	O.atmos_spawn_air("n2o=[reac_volume/5];TEMP=[T20C]")
+
+/datum/reagent/nitrous_oxide/reaction_turf(turf/open/T, reac_volume)
+	if(istype(T))
+		T.atmos_spawn_air("n2o=[reac_volume/5];TEMP=[T20C]")
 	return
 
 
@@ -1180,23 +1200,23 @@
 
 /datum/reagent/colorful_reagent/on_mob_life(mob/living/M)
 	if(M && isliving(M))
-		M.color = pick(random_color_list)
+		M.add_atom_colour(pick(random_color_list), WASHABLE_COLOUR_PRIORITY)
 	..()
 	return
 
 /datum/reagent/colorful_reagent/reaction_mob(mob/living/M, reac_volume)
 	if(M && isliving(M))
-		M.color = pick(random_color_list)
+		M.add_atom_colour(pick(random_color_list), WASHABLE_COLOUR_PRIORITY)
 	..()
 
 /datum/reagent/colorful_reagent/reaction_obj(obj/O, reac_volume)
 	if(O)
-		O.color = pick(random_color_list)
+		O.add_atom_colour(pick(random_color_list), WASHABLE_COLOUR_PRIORITY)
 	..()
 
 /datum/reagent/colorful_reagent/reaction_turf(turf/T, reac_volume)
 	if(T)
-		T.color = pick(random_color_list)
+		T.add_atom_colour(pick(random_color_list), WASHABLE_COLOUR_PRIORITY)
 	..()
 
 /datum/reagent/hair_dye

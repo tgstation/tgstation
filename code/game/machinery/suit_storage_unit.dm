@@ -217,7 +217,7 @@
 				occupant.adjustFireLoss(rand(10, 16))
 			if(iscarbon(occupant))
 				occupant.emote("scream")
-		addtimer(src, "cook", 50, FALSE)
+		addtimer(src, "cook", 50, TIMER_NORMAL)
 	else
 		uv_cycles = initial(uv_cycles)
 		uv = FALSE
@@ -257,14 +257,13 @@
 			return 1
 
 /obj/machinery/suit_storage_unit/relaymove(mob/user)
-	container_resist()
+	container_resist(user)
 
-/obj/machinery/suit_storage_unit/container_resist()
-	var/mob/living/user = usr
+/obj/machinery/suit_storage_unit/container_resist(mob/living/user)
 	add_fingerprint(user)
 	if(locked)
 		visible_message("<span class='notice'>You see [user] kicking against the doors of [src]!</span>", "<span class='notice'>You start kicking against the doors...</span>")
-		addtimer(src, "resist_open", 300, FALSE, user)
+		addtimer(src, "resist_open", 300, TIMER_NORMAL, user)
 	else
 		open_machine()
 		dump_contents()

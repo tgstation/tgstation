@@ -256,7 +256,7 @@
 
 	if(self_sustaining)
 		if(istype(src, /obj/machinery/hydroponics/soil))
-			color = rgb(255, 175, 0)
+			add_atom_colour(rgb(255, 175, 0), FIXED_COLOUR_PRIORITY)
 		else
 			overlays += image('icons/obj/hydroponics/equipment.dmi', icon_state = "gaia_blessing")
 		SetLuminosity(3)
@@ -683,6 +683,8 @@
 			user << "<span class='warning'>[src] needs to be clear of plants and weeds!</span>"
 			return
 		if(alert(user, "This will make [src] self-sustaining but consume [O] forever. Are you sure?", "[name]", "I'm Sure", "Abort") == "Abort" || !user)
+			return
+		if(!O)
 			return
 		if(!Adjacent(user))
 			return

@@ -5,12 +5,17 @@
 	icon = 'icons/mob/clockwork_mobs.dmi'
 	unique_name = 1
 	minbodytemp = 0
+	unsuitable_atmos_damage = 0
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0) //Robotic
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
 	languages_spoken = RATVAR
 	languages_understood = HUMAN|RATVAR
 	healable = FALSE
 	del_on_death = TRUE
+	speak_emote = list("clanks", "clinks", "clunks", "clangs")
+	verb_ask = "requests"
+	verb_exclaim = "proclaims"
+	verb_yell = "harangues"
 	bubble_icon = "clock"
 	death_sound = 'sound/magic/clockwork/anima_fragment_death.ogg'
 	var/playstyle_string = "<span class='heavy_brass'>You are a bug, yell at whoever spawned you!</span>"
@@ -31,6 +36,12 @@
 /mob/living/simple_animal/hostile/clockwork/Login()
 	..()
 	src << playstyle_string
+
+/mob/living/simple_animal/hostile/clockwork/ratvar_act()
+	fully_heal(TRUE)
+
+/mob/living/simple_animal/hostile/clockwork/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, safety = 0, tesla_shock = 0, illusion = 0)
+	return 0 //ouch, my metal-unlikely-to-be-damaged-by-electricity-body
 
 /mob/living/simple_animal/hostile/clockwork/examine(mob/user)
 	var/t_He = p_they(TRUE)
@@ -61,7 +72,7 @@
 	attack_sound = 'sound/magic/clockwork/anima_fragment_attack.ogg'
 	loot = list(/obj/item/clockwork/component/replicant_alloy/smashed_anima_fragment)
 	weather_immunities = list("lava")
-	flying = 1
+	movement_type = FLYING
 	playstyle_string = "<span class='heavy_brass'>You are an anima fragment</span><b>, a clockwork creation of Ratvar. As a fragment, you have low health, do decent damage, and move at \
 	extreme speed in addition to being immune to extreme temperatures and pressures. Taking damage will temporarily slow you down, however. \n Your goal is to serve the Justiciar and his servants \
 	in any way you can. You yourself are one of these servants, and will be able to utilize anything they can, assuming it doesn't require opposable thumbs.</b>"
@@ -121,7 +132,7 @@
 	attacktext = "slashes"
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	weather_immunities = list("lava")
-	flying = 1
+	movement_type = FLYING
 	loot = list(/obj/item/clockwork/component/replicant_alloy/fallen_armor)
 	var/true_name = "Meme Master 69" //Required to call forth the marauder
 	var/list/possible_true_names = list("Xaven", "Melange", "Ravan", "Kel", "Rama", "Geke", "Peris", "Vestra", "Skiwa") //All fairly short and easy to pronounce

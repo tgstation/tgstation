@@ -208,7 +208,7 @@ var/next_mob_id = 0
 
 //This is just a commonly used configuration for the equip_to_slot_if_possible() proc, used to equip people when the rounds tarts and when events happen and such.
 /mob/proc/equip_to_slot_or_del(obj/item/W, slot)
-	equip_to_slot_if_possible(W, slot, 1, 1, 0)
+	return equip_to_slot_if_possible(W, slot, 1, 1, 0)
 
 //puts the item "W" into an appropriate slot in a human's inventory
 //returns 0 if it cannot, 1 if successful
@@ -257,20 +257,6 @@ var/next_mob_id = 0
 		else
 			clear_fullscreen("remote_view", 0)
 		update_pipe_vision()
-
-/mob/dead/reset_perspective(atom/A)
-	if(client)
-		if(ismob(client.eye) && (client.eye != src))
-			var/mob/target = client.eye
-			if(target.observers)
-				target.observers -= src
-				var/list/L = target.observers
-				if(!L.len)
-					target.observers = null
-	if(..())
-		if(hud_used)
-			client.screen = list()
-			hud_used.show_hud(hud_used.hud_version)
 
 /mob/proc/show_inv(mob/user)
 	return
@@ -448,36 +434,7 @@ var/next_mob_id = 0
 //	M.Login()	//wat
 	return
 
-/mob/verb/observe()
-	set name = "Observe"
-	set category = "OOC"
 
-	if(stat != DEAD || isnewplayer(src))
-		usr << "<span class='notice'>You must be observing to use this!</span>"
-		return
-
-	var/list/creatures = getpois()
-
-	reset_perspective(null)
-
-	var/eye_name = null
-
-	eye_name = input("Please, select a player!", "Observe", null, null) as null|anything in creatures
-
-	if (!eye_name)
-		return
-
-	var/mob/mob_eye = creatures[eye_name]
-	//Istype so we filter out points of interest that are not mobs
-	if(client && mob_eye && istype(mob_eye))
-		client.eye = mob_eye
-		if(isobserver(src))
-			src.client.screen = list()
-			if(mob_eye.hud_used)
-				if(!mob_eye.observers)
-					mob_eye.observers = list()
-				mob_eye.observers |= src
-				mob_eye.hud_used.show_hud(1,src)
 
 /mob/verb/cancel_camera()
 	set name = "Cancel Camera View"
@@ -563,6 +520,7 @@ var/next_mob_id = 0
 			stat(null, "Next Map: [nextmap.friendlyname]")
 		stat(null, "Server Time: [time2text(world.realtime, "YYYY-MM-DD hh:mm")]")
 		if(SSshuttle.emergency)
+			stat(null, "Current Shuttle: [SSshuttle.emergency.name]")
 			var/ETA = SSshuttle.emergency.getModeStr()
 			if(ETA)
 				stat(null, "[ETA] [SSshuttle.emergency.getTimerStr()]")

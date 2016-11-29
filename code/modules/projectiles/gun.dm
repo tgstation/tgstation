@@ -43,7 +43,7 @@
 
 	var/obj/item/device/firing_pin/pin = /obj/item/device/firing_pin //standard firing pin for most guns
 
-	var/obj/item/device/flashlight/F = null
+	var/obj/item/device/flashlight/gun_light = null
 	var/can_flashlight = 0
 
 	var/list/upgrades = list()
@@ -64,7 +64,7 @@
 	..()
 	if(pin)
 		pin = new pin(src)
-	if(F)
+	if(gun_light)
 		verbs += /obj/item/weapon/gun/proc/toggle_gunlight
 		new /datum/action/item_action/toggle_gunlight(src)
 	build_zooming()
@@ -89,7 +89,7 @@
 	if(unique_reskin && !current_skin)
 		user << "<span class='notice'>Alt-click it to reskin it.</span>"
 
-
+//called after the gun has successfully fired its chambered ammo.
 /obj/item/weapon/gun/proc/process_chamber()
 	return 0
 
@@ -119,12 +119,6 @@
 			else
 				user.visible_message("<span class='danger'>[user] fires [src]!</span>", null, null, COMBAT_MESSAGE_RANGE)
 
-	if(weapon_weight >= WEAPON_MEDIUM)
-		if(user.get_inactive_held_item())
-			if(prob(15))
-				if(user.drop_item())
-					user.visible_message("<span class='danger'>[src] flies out of [user]'s hands!</span>", "<span class='userdanger'>[src] kicks out of your grip!</span>")
-
 /obj/item/weapon/gun/emp_act(severity)
 	for(var/obj/O in contents)
 		O.emp_act(severity)
@@ -146,7 +140,7 @@
 		if(!can_trigger_gun(L))
 			return
 
-	if(!can_shoot()) //Just because you can pull the trigger doesn't mean it can't shoot.
+	if(!can_shoot()) //Just because you can pull the trigger doesn't mean it can shoot.
 		shoot_with_empty_chamber(user)
 		return
 
@@ -170,7 +164,21 @@
 		user << "<span class='userdanger'>You need both hands free to fire [src]!</span>"
 		return
 
-	process_fire(target,user,1,params)
+	//DUAL (or more!) WIELDING
+	var/bonus_spread = 0
+	var/loop_counter = 0
+	if(ishuman(user) && user.a_intent == "harm")
+		var/mob/living/carbon/human/H = user
+		for(var/obj/item/weapon/gun/G in H.held_items)
+			if(G == src || G.weapon_weight >= WEAPON_MEDIUM)
+				continue
+			else if(G.can_trigger_gun(user))
+				bonus_spread += 24 * G.weapon_weight
+				loop_counter++
+				spawn(loop_counter)
+					G.process_fire(target,user,1,params, null, bonus_spread)
+
+	process_fire(target,user,1,params, null, bonus_spread)
 
 
 
@@ -192,20 +200,20 @@
 		user << "<span class='warning'>[src]'s trigger is locked. This weapon doesn't have a firing pin installed!</span>"
 	return 0
 
-obj/item/weapon/gun/proc/newshot()
+obj/item/weapon/gun/proc/recharge_newshot()
 	return
 
-/obj/item/weapon/gun/proc/process_fire(atom/target as mob|obj|turf, mob/living/user as mob|obj, message = 1, params, zone_override)
+/obj/item/weapon/gun/proc/process_fire(atom/target as mob|obj|turf, mob/living/user as mob|obj, message = 1, params, zone_override, bonus_spread = 0)
 	add_fingerprint(user)
 
 	if(semicd)
 		return
 
-	if(weapon_weight)
-		if(user.get_inactive_held_item())
-			recoil = 4 //one-handed kick
-		else
-			recoil = initial(recoil)
+	var/sprd = 0
+	var/randomized_gun_spread = 0
+	if(spread)
+		randomized_gun_spread =	rand(0,spread)
+	var/randomized_bonus_spread = rand(0, bonus_spread)
 
 	if(burst_size > 1)
 		firing_burst = 1
@@ -215,13 +223,13 @@ obj/item/weapon/gun/proc/newshot()
 			if(!issilicon(user))
 				if( i>1 && !(user.is_holding(src))) //for burst firing
 					break
-			if(chambered)
-				var/sprd = 0
+			if(chambered && chambered.BB)
 				if(randomspread)
-					sprd = round((rand() - 0.5) * spread)
+					sprd = round((rand() - 0.5) * (randomized_gun_spread + randomized_bonus_spread))
 				else //Smart spread
-					sprd = round((i / burst_size - 0.5) * spread)
-				if(!chambered.fire(target, user, params, ,suppressed, zone_override, sprd))
+					sprd = round((i / burst_size - 0.5) * (randomized_gun_spread + randomized_bonus_spread))
+
+				if(!chambered.fire_casing(target, user, params, ,suppressed, zone_override, sprd))
 					shoot_with_empty_chamber(user)
 					break
 				else
@@ -238,7 +246,8 @@ obj/item/weapon/gun/proc/newshot()
 		firing_burst = 0
 	else
 		if(chambered)
-			if(!chambered.fire(target, user, params, , suppressed, zone_override, spread))
+			sprd = round((pick(1,-1)) * (randomized_gun_spread + randomized_bonus_spread))
+			if(!chambered.fire_casing(target, user, params, , suppressed, zone_override, sprd))
 				shoot_with_empty_chamber(user)
 				return
 			else
@@ -266,16 +275,16 @@ obj/item/weapon/gun/proc/newshot()
 		return
 
 /obj/item/weapon/gun/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/device/flashlight/seclite))
-		var/obj/item/device/flashlight/seclite/S = I
-		if(can_flashlight)
-			if(!F)
+	if(can_flashlight)
+		if(istype(I, /obj/item/device/flashlight/seclite))
+			var/obj/item/device/flashlight/seclite/S = I
+			if(!gun_light)
 				if(!user.unEquip(I))
 					return
 				user << "<span class='notice'>You click [S] into place on [src].</span>"
 				if(S.on)
 					SetLuminosity(0)
-				F = S
+				gun_light = S
 				I.loc = src
 				update_icon()
 				update_gunlight(user)
@@ -284,18 +293,18 @@ obj/item/weapon/gun/proc/newshot()
 				if(loc == user)
 					A.Grant(user)
 
-	if(istype(I, /obj/item/weapon/screwdriver))
-		if(F && can_flashlight)
-			for(var/obj/item/device/flashlight/seclite/S in src)
-				user << "<span class='notice'>You unscrew the seclite from [src].</span>"
-				F = null
-				S.loc = get_turf(user)
-				update_gunlight(user)
-				S.update_brightness(user)
-				update_icon()
-				verbs -= /obj/item/weapon/gun/proc/toggle_gunlight
-			for(var/datum/action/item_action/toggle_gunlight/TGL in actions)
-				qdel(TGL)
+		if(istype(I, /obj/item/weapon/screwdriver))
+			if(gun_light)
+				for(var/obj/item/device/flashlight/seclite/S in src)
+					user << "<span class='notice'>You unscrew the seclite from [src].</span>"
+					gun_light = null
+					S.forceMove(get_turf(user))
+					update_gunlight(user)
+					S.update_brightness(user)
+					update_icon()
+					verbs -= /obj/item/weapon/gun/proc/toggle_gunlight
+				for(var/datum/action/item_action/toggle_gunlight/TGL in actions)
+					qdel(TGL)
 
 
 
@@ -304,27 +313,27 @@ obj/item/weapon/gun/proc/newshot()
 	set category = "Object"
 	set desc = "Click to toggle your weapon's attached flashlight."
 
-	if(!F)
+	if(!gun_light)
 		return
 
 	var/mob/living/carbon/human/user = usr
-	F.on = !F.on
-	user << "<span class='notice'>You toggle the gunlight [F.on ? "on":"off"].</span>"
+	gun_light.on = !gun_light.on
+	user << "<span class='notice'>You toggle the gunlight [gun_light.on ? "on":"off"].</span>"
 
 	playsound(user, 'sound/weapons/empty.ogg', 100, 1)
 	update_gunlight(user)
 	return
 
 /obj/item/weapon/gun/proc/update_gunlight(mob/user = null)
-	if(F)
-		if(F.on)
+	if(gun_light)
+		if(gun_light.on)
 			if(loc == user)
-				user.AddLuminosity(F.brightness_on)
+				user.AddLuminosity(gun_light.brightness_on)
 			else if(isturf(loc))
-				SetLuminosity(F.brightness_on)
+				SetLuminosity(gun_light.brightness_on)
 		else
 			if(loc == user)
-				user.AddLuminosity(-F.brightness_on)
+				user.AddLuminosity(-gun_light.brightness_on)
 			else if(isturf(loc))
 				SetLuminosity(0)
 		update_icon()
@@ -340,19 +349,19 @@ obj/item/weapon/gun/proc/newshot()
 
 /obj/item/weapon/gun/pickup(mob/user)
 	..()
-	if(F)
-		if(F.on)
-			user.AddLuminosity(F.brightness_on)
+	if(gun_light)
+		if(gun_light.on)
+			user.AddLuminosity(gun_light.brightness_on)
 			SetLuminosity(0)
 	if(azoom)
 		azoom.Grant(user)
 
 /obj/item/weapon/gun/dropped(mob/user)
 	..()
-	if(F)
-		if(F.on)
-			user.AddLuminosity(-F.brightness_on)
-			SetLuminosity(F.brightness_on)
+	if(gun_light)
+		if(gun_light.on)
+			user.AddLuminosity(-gun_light.brightness_on)
+			SetLuminosity(gun_light.brightness_on)
 	zoom(user,FALSE)
 	if(azoom)
 		azoom.Remove(user)

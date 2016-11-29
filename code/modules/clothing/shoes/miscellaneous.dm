@@ -167,16 +167,17 @@
 	name = "jump boots"
 	desc = "A specialized pair of combat boots with a built-in propulsion system for rapid foward movement."
 	icon_state = "jetboots"
-	item_state = "jackboots"
+	item_state = "jetboots"
 	item_color = "hosred"
 	resistance_flags = FIRE_PROOF
+	pockets = /obj/item/weapon/storage/internal/pocket/shoes
 	actions_types = list(/datum/action/item_action/bhop)
 	var/jumpdistance = 5 //-1 from to see the actual distance, e.g 4 goes over 3 tiles
 	var/recharging_rate = 60 //default 6 seconds between each dash
 	var/recharging_time = 0 //time until next dash
 	var/jumping = FALSE //are we mid-jump?
 
-/obj/item/clothing/shoes/bhop/ui_action_click(mob/user, actiontype)
+/obj/item/clothing/shoes/bhop/ui_action_click(mob/user, action)
 	if(!isliving(usr))
 		return
 

@@ -198,7 +198,7 @@
 					pointcost = 1
 			if("pistol")
 				if(gang.points >= 25)
-					item_type = /obj/item/weapon/gun/projectile/automatic/pistol
+					item_type = /obj/item/weapon/gun/ballistic/automatic/pistol
 					pointcost = 25
 			if("10mmammo")
 				if(gang.points >= 10)
@@ -206,7 +206,7 @@
 					pointcost = 10
 			if("uzi")
 				if(gang.points >= 60)
-					item_type = /obj/item/weapon/gun/projectile/automatic/mini_uzi
+					item_type = /obj/item/weapon/gun/ballistic/automatic/mini_uzi
 					pointcost = 60
 			if("9mmammo")
 				if(gang.points >= 40)

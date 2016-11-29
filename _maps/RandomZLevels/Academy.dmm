@@ -2263,14 +2263,14 @@
 	info = "Grade: A+ Educator's Notes: Excellent form.";
 	name = "Summoning Midterm Exam"
 	},
-/obj/item/weapon/gun/projectile/shotgun/automatic/combat,
+/obj/item/weapon/gun/ballistic/shotgun/automatic/combat,
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
 /area/awaymission/academy/classrooms)
 "gI" = (
 /obj/structure/table,
-/obj/item/weapon/gun/projectile/revolver/russian,
+/obj/item/weapon/gun/ballistic/revolver/russian,
 /obj/item/weapon/paper{
 	info = "Grade: B- Educator's Notes: Keep applying yourself, you're showing improvement.";
 	name = "Summoning Midterm Exam"

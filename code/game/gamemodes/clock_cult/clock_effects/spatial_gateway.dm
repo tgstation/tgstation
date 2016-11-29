@@ -10,10 +10,15 @@
 	var/lifetime = 25 //How many deciseconds this portal will last
 	var/uses = 1 //How many objects or mobs can go through the portal
 	var/obj/effect/clockwork/spatial_gateway/linked_gateway //The gateway linked to this one
+	var/timerid
 
 /obj/effect/clockwork/spatial_gateway/New()
 	..()
 	addtimer(src, "check_setup", 1)
+
+/obj/effect/clockwork/spatial_gateway/Destroy()
+	deltimer(timerid)
+	return ..()
 
 /obj/effect/clockwork/spatial_gateway/proc/check_setup()
 	if(!linked_gateway)
@@ -23,7 +28,7 @@
 		clockwork_desc = "A gateway in reality. It can both send and receive objects."
 	else
 		clockwork_desc = "A gateway in reality. It can only [sender ? "send" : "receive"] objects."
-	QDEL_IN(src, lifetime)
+	timerid = QDEL_IN(src, lifetime)
 
 //set up a gateway with another gateway
 /obj/effect/clockwork/spatial_gateway/proc/setup_gateway(obj/effect/clockwork/spatial_gateway/gatewayB, set_duration, set_uses, two_way)
@@ -82,7 +87,7 @@
 		return TRUE
 	if(user.drop_item() && uses)
 		user.visible_message("<span class='warning'>[user] drops [I] into [src]!</span>", "<span class='danger'>You drop [I] into [src]!</span>")
-		pass_through_gateway(I)
+		pass_through_gateway(I, TRUE)
 		return TRUE
 	return ..()
 
@@ -91,11 +96,13 @@
 		uses = 0
 		visible_message("<span class='warning'>[src] is disrupted!</span>")
 		animate(src, alpha = 0, transform = matrix()*2, time = 10)
-		QDEL_IN(src, 10)
+		deltimer(timerid)
+		timerid = QDEL_IN(src, 10)
 		linked_gateway.uses = 0
 		linked_gateway.visible_message("<span class='warning'>[linked_gateway] is disrupted!</span>")
 		animate(linked_gateway, alpha = 0, transform = matrix()*2, time = 10)
-		QDEL_IN(linked_gateway, 10)
+		deltimer(linked_gateway.timerid)
+		linked_gateway.timerid = QDEL_IN(linked_gateway, 10)
 		return TRUE
 	return FALSE
 
@@ -104,7 +111,7 @@
 	if(isliving(A) || istype(A, /obj/item))
 		pass_through_gateway(A)
 
-/obj/effect/clockwork/spatial_gateway/proc/pass_through_gateway(atom/movable/A)
+/obj/effect/clockwork/spatial_gateway/proc/pass_through_gateway(atom/movable/A, no_cost)
 	if(!linked_gateway)
 		qdel(src)
 		return FALSE
@@ -124,8 +131,9 @@
 	linked_gateway.transform = matrix() * 1.5
 	animate(linked_gateway, transform = matrix() / 1.5, time = 10)
 	A.forceMove(get_turf(linked_gateway))
-	uses = max(0, uses - 1)
-	linked_gateway.uses = max(0, linked_gateway.uses - 1)
+	if(!no_cost)
+		uses = max(0, uses - 1)
+		linked_gateway.uses = max(0, linked_gateway.uses - 1)
 	addtimer(src, "check_uses", 10)
 	return TRUE
 
@@ -141,7 +149,7 @@
 	var/list/duplicatenamecount = list()
 
 	for(var/obj/structure/destructible/clockwork/powered/clockwork_obelisk/O in all_clockwork_objects)
-		if(!O.Adjacent(invoker) && O != src && (O.z <= ZLEVEL_SPACEMAX)) //don't list obelisks that we're next to
+		if(!O.Adjacent(invoker) && O != src && (O.z <= ZLEVEL_SPACEMAX) && O.anchored) //don't list obelisks that we're next to
 			var/area/A = get_area(O)
 			var/locname = initial(A.name)
 			var/resultkey = "[locname] [O.name]"
@@ -154,7 +162,7 @@
 			possible_targets[resultkey] = O
 
 	for(var/mob/living/L in living_mob_list)
-		if(!L.stat && is_servant_of_ratvar(L) && !L.Adjacent(invoker) && L != invoker && (L.z <= ZLEVEL_SPACEMAX)) //People right next to the invoker can't be portaled to, for obvious reasons
+		if(!L.stat && is_servant_of_ratvar(L) && !L.Adjacent(invoker) && (L.z <= ZLEVEL_SPACEMAX)) //People right next to the invoker can't be portaled to, for obvious reasons
 			var/resultkey = "[L.name] ([L.real_name])"
 			if(resultkey in teleportnames)
 				duplicatenamecount[resultkey]++
@@ -169,15 +177,32 @@
 		return FALSE
 	var/input_target_key = input(invoker, "Choose a target to form a rift to.", "Spatial Gateway") as null|anything in possible_targets
 	var/atom/movable/target = possible_targets[input_target_key]
-	if(!src || !target || !invoker || !invoker.canUseTopic(src, BE_CLOSE) || !is_servant_of_ratvar(invoker) || (istype(src, /obj/item) && invoker.get_active_held_item() != src))
+	if(!src || !target || !invoker || !invoker.canUseTopic(src, !issilicon(invoker)) || !is_servant_of_ratvar(invoker) || (istype(src, /obj/item) && invoker.get_active_held_item() != src))
 		return FALSE //if any of the involved things no longer exist, the invoker is stunned, too far away to use the object, or does not serve ratvar, or if the object is an item and not in the mob's active hand, fail
+	if(isliving(target))
+		var/mob/living/L = target
+		if(L.stat != CONSCIOUS)
+			invoker << "<span class='warning'>That Servant is no longer conscious!</span>"
+			return procure_gateway(invoker, time_duration, gateway_uses, two_way) //try again?
+		if(!is_servant_of_ratvar(L))
+			invoker << "<span class='warning'>That target is no longer a Servant!</span>"
+			return procure_gateway(invoker, time_duration, gateway_uses, two_way)
 	var/istargetobelisk = istype(target, /obj/structure/destructible/clockwork/powered/clockwork_obelisk)
+	var/issrcobelisk = istype(src, /obj/structure/destructible/clockwork/powered/clockwork_obelisk)
+	if(issrcobelisk && !anchored)
+		invoker << "<span class='warning'>[src] is no longer secured!</span>"
+		return FALSE
 	if(istargetobelisk)
-		gateway_uses *= 2
-		time_duration *= 2
+		if(!target.anchored)
+			invoker << "<span class='warning'>That [target.name] is no longer secured!</span>"
+			return procure_gateway(invoker, time_duration, gateway_uses, two_way)
+		var/obj/structure/destructible/clockwork/powered/clockwork_obelisk/CO = target
+		var/efficiency = CO.get_efficiency_mod()
+		gateway_uses = round(gateway_uses * (2 * efficiency), 1)
+		time_duration = round(time_duration * (2 * efficiency), 1)
 	invoker.visible_message("<span class='warning'>The air in front of [invoker] ripples before suddenly tearing open!</span>", \
 	"<span class='brass'>With a word, you rip open a [two_way ? "two-way":"one-way"] rift to [input_target_key]. It will last for [time_duration / 10] seconds and has [gateway_uses] use[gateway_uses > 1 ? "s" : ""].</span>")
-	var/obj/effect/clockwork/spatial_gateway/S1 = new(istype(src, /obj/structure/destructible/clockwork/powered/clockwork_obelisk) ? get_turf(src) : get_step(get_turf(invoker), invoker.dir))
+	var/obj/effect/clockwork/spatial_gateway/S1 = new(issrcobelisk ? get_turf(src) : get_step(get_turf(invoker), invoker.dir))
 	var/obj/effect/clockwork/spatial_gateway/S2 = new(istargetobelisk ? get_turf(target) : get_step(get_turf(target), target.dir))
 
 	//Set up the portals now that they've spawned

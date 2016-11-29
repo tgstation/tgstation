@@ -77,7 +77,7 @@ Difficulty: Very Hard
 			double_spiral()
 		else
 			visible_message("<span class='colossus'>\"<b>Judgement.</b>\"</span>")
-			addtimer(src, "spiral_shoot", 0, FALSE, rand(0, 1))
+			addtimer(src, "spiral_shoot", 0, TIMER_NORMAL, rand(0, 1))
 
 	else if(prob(20))
 		ranged_cooldown = world.time + 30
@@ -108,7 +108,7 @@ Difficulty: Very Hard
 /obj/effect/overlay/temp/at_shield/New(new_loc, new_target)
 	..()
 	target = new_target
-	addtimer(src, "orbit", 0, FALSE, target, 0, FALSE, 0, 0, FALSE, TRUE)
+	addtimer(src, "orbit", 0, TIMER_NORMAL, target, 0, FALSE, 0, 0, FALSE, TRUE)
 
 /mob/living/simple_animal/hostile/megafauna/colossus/bullet_act(obj/item/projectile/P)
 	if(!stat)
@@ -140,7 +140,7 @@ Difficulty: Very Hard
 
 	sleep(10)
 	addtimer(src, "spiral_shoot", 0)
-	addtimer(src, "spiral_shoot", 0, FALSE, 1)
+	addtimer(src, "spiral_shoot", 0, TIMER_NORMAL, 1)
 
 /mob/living/simple_animal/hostile/megafauna/colossus/proc/spiral_shoot(negative = 0, counter_start = 1)
 	var/counter = counter_start
@@ -481,7 +481,7 @@ Difficulty: Very Hard
 			NewTerrainTables = /obj/structure/table/wood
 			NewFlora = list(/obj/structure/flora/ausbushes/sparsegrass, /obj/structure/flora/ausbushes/fernybush, /obj/structure/flora/ausbushes/leafybush,
 							/obj/structure/flora/ausbushes/grassybush, /obj/structure/flora/ausbushes/sunnybush, /obj/structure/flora/tree/palm, /mob/living/carbon/monkey,
-							/obj/item/weapon/gun/projectile/bow, /obj/item/weapon/storage/backpack/quiver/full)
+							/obj/item/weapon/gun/ballistic/bow, /obj/item/weapon/storage/backpack/quiver/full)
 			florachance = 20
 		if("ayy lmao") //Beneficial, turns stuff into alien alloy which is useful to cargo and research. Also repairs atmos.
 			NewTerrainFloors = /turf/open/floor/plating/abductor
@@ -606,7 +606,7 @@ Difficulty: Very Hard
 	harm_intent_damage = 1
 	friendly = "mends"
 	density = 0
-	flying = 1
+	movement_type = FLYING
 	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
 	ventcrawler = 2
 	mob_size = MOB_SIZE_TINY
@@ -622,7 +622,7 @@ Difficulty: Very Hard
 	languages_understood = ALL
 	del_on_death = 1
 	unsuitable_atmos_damage = 0
-	flying = 1
+	movement_type = FLYING
 	minbodytemp = 0
 	maxbodytemp = 1500
 	obj_damage = 0
@@ -647,7 +647,8 @@ Difficulty: Very Hard
 			PoolOrNew(/obj/effect/overlay/temp/heal, list(get_turf(target), "#80F5FF"))
 
 /mob/living/simple_animal/hostile/lightgeist/ghostize()
-	if(..())
+	. = ..()
+	if(.)
 		death()
 
 

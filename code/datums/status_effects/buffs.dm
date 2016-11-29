@@ -100,14 +100,35 @@
 
 /datum/status_effect/inathneqs_endowment/on_apply()
 	owner.visible_message("<span class='warning'>[owner] shines with azure light!</span>", "<span class='notice'>You feel Inath-neq's power flow through you! You're invincible!</span>")
+	var/oldcolor = owner.color
 	owner.color = "#1E8CE1"
 	owner.fully_heal()
 	owner.add_stun_absorption("inathneq", 150, 2, "'s flickering blue aura momentarily intensifies!", "Inath-neq's power absorbs the stun!", " glowing with a flickering blue light!")
 	owner.status_flags |= GODMODE
-	animate(owner, color = initial(owner.color), time = 150, easing = EASE_IN)
+	animate(owner, color = oldcolor, time = 150, easing = EASE_IN)
+	addtimer(owner, "update_atom_colour", 150)
 	playsound(owner, 'sound/magic/Ethereal_Enter.ogg', 50, 1)
 
 /datum/status_effect/inathneqs_endowment/on_remove()
 	owner.visible_message("<span class='warning'>The light around [owner] flickers and dissipates!</span>", "<span class='boldwarning'>You feel Inath-neq's power fade from your body!</span>")
 	owner.status_flags &= ~GODMODE
 	playsound(owner, 'sound/magic/Ethereal_Exit.ogg', 50, 1)
+
+/datum/status_effect/cyborg_power_regen
+	id = "power_regen"
+	duration = 10
+	alert_type = /obj/screen/alert/status_effect/power_regen
+	var/power_to_give = 0 //how much power is gained each tick
+
+/obj/screen/alert/status_effect/power_regen
+	name = "Power Regeneration"
+	desc = "You are quickly regenerating power!"
+	icon_state = "power_regen"
+
+/datum/status_effect/cyborg_power_regen/tick()
+	var/mob/living/silicon/robot/cyborg = owner
+	if(!istype(cyborg) || !cyborg.cell)
+		cancel_effect()
+		return
+	playsound(cyborg, 'sound/effects/light_flicker.ogg', 50, 1)
+	cyborg.cell.give(power_to_give)

@@ -71,9 +71,6 @@
 	else
 		..()
 
-/obj/structure/table/attack_tk() // no telehulk sorry
-	return
-
 /obj/structure/table/CanPass(atom/movable/mover, turf/target, height=0)
 	if(height==0)
 		return 1
@@ -190,7 +187,7 @@
 		return
 	// Don't break if they're just flying past
 	if(AM.throwing)
-		addtimer(src, "throw_check", 5, FALSE, AM)
+		addtimer(src, "throw_check", 5, TIMER_NORMAL, AM)
 	else
 		check_break(AM)
 
@@ -345,6 +342,7 @@
 		var/previouscolor = color
 		color = "#960000"
 		animate(src, color = previouscolor, time = 8)
+		addtimer(src, "update_atom_colour", 8)
 
 /obj/structure/table/reinforced/brass/ratvar_act()
 	obj_integrity = max_integrity
@@ -451,9 +449,6 @@
 	user.visible_message("<span class='danger'>[user] kicks [src].</span>", null, null, COMBAT_MESSAGE_RANGE)
 	take_damage(rand(4,8), BRUTE, "melee", 1)
 
-
-/obj/structure/rack/attack_tk() // no telehulk sorry
-	return
 
 /obj/structure/rack/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)

@@ -350,7 +350,8 @@
 		V.vehicle_move_delay = 0
 
 	user <<"<span class='notice'>You slather the red gunk over the [C], making it faster.</span>"
-	C.color = "#FF0000"
+	C.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
+	C.add_atom_colour("#FF0000", FIXED_COLOUR_PRIORITY)
 	qdel(src)
 
 
@@ -375,7 +376,8 @@
 		return ..()
 	user <<"<span class='notice'>You slather the blue gunk over the [C], fireproofing it.</span>"
 	C.name = "fireproofed [C.name]"
-	C.color = "#000080"
+	C.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
+	C.add_atom_colour("#000080", FIXED_COLOUR_PRIORITY)
 	C.max_heat_protection_temperature = FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT
 	C.heat_protection = C.body_parts_covered
 	C.resistance_flags |= FIRE_PROOF
@@ -524,7 +526,8 @@
 	G.dna.species.auto_equip(G)
 	G.loc = src.loc
 	G.key = ghost.key
-	G << "You are an adamantine golem. You move slowly, but are highly resistant to heat and cold as well as blunt trauma. You are unable to wear clothes, but can still use most tools. Serve [user], and assist them in completing their goals at any cost."
+	G << "You are an adamantine golem. You move slowly, but are highly resistant to heat and cold as well as blunt trauma. You are unable to wear clothes, but can still use most tools. \
+	Serve [user], and assist [user.p_them()] in completing their goals at any cost."
 	G.mind.store_memory("<b>Serve [user.real_name], your creator.</b>")
 
 	G.mind.enslave_mind_to_creator(user)
@@ -651,5 +654,6 @@
 	var/area/A = get_area(src)
 	if(success)
 		for(var/turf/T in A)
-			T.color = "#2956B2"
+			T.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
+			T.add_atom_colour("#2956B2", FIXED_COLOUR_PRIORITY)
 		qdel(src)

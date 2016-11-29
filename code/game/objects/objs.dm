@@ -126,7 +126,7 @@
 		return
 	..()
 
-/obj/proc/container_resist()
+/obj/proc/container_resist(mob/living/user)
 	return
 
 /obj/proc/update_icon()
@@ -180,3 +180,6 @@
 
 /obj/proc/check_uplink_validity()
 	return 1
+
+/obj/proc/on_mob_move(dir, mob)
+	return

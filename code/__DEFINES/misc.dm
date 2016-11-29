@@ -27,6 +27,7 @@
 #define EASTER					"Easter"
 #define HALLOWEEN				"Halloween"
 #define CHRISTMAS				"Christmas"
+#define FESTIVE_SEASON			"Festive Season"
 #define FRIDAY_13TH				"Friday the 13th"
 
 //Human Overlays Indexes/////////
@@ -46,9 +47,9 @@
 #define GLASSES_LAYER			13
 #define BELT_LAYER				12		//Possible make this an overlay of somethign required to wear a belt?
 #define SUIT_STORE_LAYER		11
-#define BACK_LAYER				10
-#define HAIR_LAYER				9		//TODO: make part of head layer?
-#define NECK_LAYER				8
+#define NECK_LAYER				10
+#define BACK_LAYER				9
+#define HAIR_LAYER				8		//TODO: make part of head layer?
 #define FACEMASK_LAYER			7
 #define HEAD_LAYER				6
 #define HANDCUFF_LAYER			5
@@ -550,3 +551,43 @@ var/global/list/ghost_others_options = list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 #define ATTACK_EFFECT_BITE		"bite"
 #define ATTACK_EFFECT_MECHFIRE	"mech_fire"
 #define ATTACK_EFFECT_MECHTOXIN	"mech_toxin"
+
+
+//different types of atom colorations
+#define ADMIN_COLOUR_PRIORITY 		1 //only used by rare effects like greentext coloring mobs and when admins varedit color
+#define TEMPORARY_COLOUR_PRIORITY 	2 //e.g. purple effect of the revenant on a mob, black effect when mob electrocuted
+#define WASHABLE_COLOUR_PRIORITY 	3 //color splashed onto an atom (e.g. paint on turf)
+#define FIXED_COLOUR_PRIORITY 		4 //color inherent to the atom (e.g. blob color)
+#define COLOUR_PRIORITY_AMOUNT 4 //how many priority levels there are.
+
+
+//Endgame Results
+
+#define NUKE_NEAR_MISS 1
+#define NUKE_MISS_STATION 2
+#define NUKE_SYNDICATE_BASE 3
+#define STATION_DESTROYED_NUKE 4
+#define STATION_EVACUATED 5
+#define GANG_LOSS 6
+#define GANG_TAKEOVER 7
+#define BLOB_WIN 8
+#define BLOB_NUKE 9
+#define BLOB_DESTROYED 10
+#define CULT_ESCAPE 11
+#define CULT_FAILURE 12
+#define CULT_SUMMON 13
+#define NUKE_MISS 14
+#define OPERATIVES_KILLED 15
+#define OPERATIVE_SKIRMISH 16
+#define REVS_WIN 17
+#define REVS_LOSE 18
+#define WIZARD_KILLED 19
+#define STATION_NUKED 20
+#define CLOCK_SUMMON 21
+#define CLOCK_SILICONS 22
+#define CLOCK_PROSELYTIZATION 23
+
+//For SSTimer
+
+#define TIMER_NORMAL "normal"
+#define TIMER_UNIQUE "unique"

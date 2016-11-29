@@ -134,7 +134,7 @@
 		if(!G)
 			return FALSE
 	if(clonemind.damnation_type) //Can't clone the damned.
-		addtimer(0, "horrifyingsound", src)
+		addtimer(src, "horrifyingsound", 0)
 		mess = 1
 		icon_state = "pod_g"
 		update_icon()
@@ -208,11 +208,11 @@
 
 	else if((occupant) && (occupant.loc == src))
 		if((occupant.stat == DEAD) || (occupant.suiciding) || occupant.hellbound)  //Autoeject corpses and suiciding dudes.
-			locked = FALSE
-			go_out()
 			connected_message("Clone Rejected: Deceased.")
 			SPEAK("The cloning of <b>[occupant.real_name]</b> has been \
 				aborted due to unrecoverable tissue failure.")
+			locked = FALSE
+			go_out()
 
 		else if(occupant.cloneloss > (100 - heal_level))
 			occupant.Paralyse(4)

@@ -11,8 +11,10 @@
 	var/max_alloy = REPLICANT_ALLOY_UNIT * 10
 	var/uses_alloy = TRUE
 	var/metal_to_alloy = FALSE
+	var/reform_alloy = TRUE
 	var/repairing = null //what we're currently repairing, if anything
 	var/refueling = FALSE //if we're currently refueling from a cache
+	var/speed_multiplier = 1 //how fast this proselytizer works
 
 /obj/item/clockwork/clockwork_proselytizer/preloaded
 	stored_alloy = REPLICANT_WALL_MINUS_FLOOR+REPLICANT_WALL_TOTAL
@@ -23,6 +25,7 @@
 	metal_to_alloy = TRUE
 	item_state = "nothing"
 	w_class = 1
+	speed_multiplier = 0.5
 	var/debug = FALSE
 
 /obj/item/clockwork/clockwork_proselytizer/scarab/proselytize(atom/target, mob/living/user)
@@ -35,22 +38,66 @@
 	uses_alloy = FALSE
 	debug = TRUE
 
+/obj/item/clockwork/clockwork_proselytizer/cyborg
+	name = "cyborg proselytizer"
+	clockwork_desc = "A cyborg's internal proselytizer. It is capable of using the cyborg's power if it lacks liquified replicant alloy."
+	metal_to_alloy = TRUE
+	reform_alloy = FALSE
+
+/obj/item/clockwork/clockwork_proselytizer/cyborg/examine(mob/living/user)
+	..()
+	if(is_servant_of_ratvar(user) || isobserver(user))
+		user << "<span class='alloy'>It will use cell charge at a rate of <b>[CLOCKCULT_ALLOY_TO_POWER_MULTIPLIER]</b> charge to <b>1</b> alloy if it has insufficient alloy.</span>"
+		user << "<span class='alloy'><b>[get_power_alloy()]</b> is usable in this manner.</span>"
+
+/obj/item/clockwork/clockwork_proselytizer/cyborg/get_power_alloy() //returns alloy plus the alloy we have from power, where we need such
+	var/mob/living/silicon/robot/R = loc
+	var/alloy_power = 0
+	var/current_charge = 0
+	if(istype(R) && R.cell)
+		current_charge = R.cell.charge
+		while(current_charge > CLOCKCULT_ALLOY_TO_POWER_MULTIPLIER)
+			current_charge -= CLOCKCULT_ALLOY_TO_POWER_MULTIPLIER
+			alloy_power++
+	return ..() + alloy_power
+
+/obj/item/clockwork/clockwork_proselytizer/cyborg/can_use_alloy(amount)
+	if(amount != RATVAR_ALLOY_CHECK)
+		var/mob/living/silicon/robot/R = loc
+		var/current_charge = 0
+		if(istype(R) && R.cell)
+			current_charge = R.cell.charge
+			while(amount > 0 && stored_alloy - amount < 0) //amount is greater than 0 and stored alloy minus the amount is still less than 0
+				current_charge -= CLOCKCULT_ALLOY_TO_POWER_MULTIPLIER
+				amount--
+		if(current_charge < 0)
+			return FALSE
+	. = ..()
+
+/obj/item/clockwork/clockwork_proselytizer/cyborg/modify_stored_alloy(amount)
+	var/mob/living/silicon/robot/R = loc
+	while(istype(R) && R.cell && amount < 0 && stored_alloy + amount < 0) //amount is less than 0 and stored alloy plus the amount is less than 0
+		R.cell.use(CLOCKCULT_ALLOY_TO_POWER_MULTIPLIER)
+		amount++
+	. = ..()
+
 /obj/item/clockwork/clockwork_proselytizer/examine(mob/living/user)
 	..()
 	if(is_servant_of_ratvar(user) || isobserver(user))
-		user << "<span class='brass'>Can be used to convert walls, floors, windows, airlocks, windoors, and grilles to clockwork variants.</span>"
+		user << "<span class='brass'>Can be used to convert walls, floors, windows, airlocks, and a variety of other objects to clockwork variants.</span>"
 		user << "<span class='brass'>Can also form some objects into Brass sheets, as well as reform Clockwork Walls into Clockwork Floors, and vice versa.</span>"
-		if(metal_to_alloy)
-			user << "<span class='alloy'>It can convert Brass sheets to liquified replicant alloy at a rate of <b>1</b> sheet to <b>[REPLICANT_FLOOR]</b> alloy.</span>"
 		if(uses_alloy)
+			if(metal_to_alloy)
+				user << "<span class='alloy'>It can convert Brass sheets to liquified replicant alloy at a rate of <b>1</b> sheet to <b>[REPLICANT_FLOOR]</b> alloy.</span>"
 			user << "<span class='alloy'>It has <b>[stored_alloy]/[max_alloy]</b> units of liquified alloy stored.</span>"
 			user << "<span class='alloy'>Use it on a Tinkerer's Cache, strike it with Replicant Alloy, or attack Replicant Alloy with it to add additional liquified alloy.</span>"
-			user << "<span class='alloy'>Use it in-hand to remove stored liquified alloy.</span>"
+			if(reform_alloy)
+				user << "<span class='alloy'>Use it in-hand to remove stored liquified alloy.</span>"
 
 /obj/item/clockwork/clockwork_proselytizer/attack_self(mob/living/user)
-	if(is_servant_of_ratvar(user) && uses_alloy)
+	if(is_servant_of_ratvar(user) && uses_alloy && reform_alloy)
 		if(!can_use_alloy(REPLICANT_ALLOY_UNIT))
-			user << "<span class='warning'>[src] [stored_alloy ? "Lacks enough":"Contains no"] alloy to reform[stored_alloy ? "":" any"] into solidified alloy!</span>"
+			user << "<span class='warning'>[src] [stored_alloy ? "lacks enough":"contains no"] alloy to reform[stored_alloy ? "":" any"] into solidified alloy!</span>"
 			return
 		modify_stored_alloy(-REPLICANT_ALLOY_UNIT)
 		playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
@@ -79,6 +126,9 @@
 	if(!is_servant_of_ratvar(user))
 		return ..()
 	proselytize(target, user)
+
+/obj/item/clockwork/clockwork_proselytizer/proc/get_power_alloy()
+	return stored_alloy
 
 /obj/item/clockwork/clockwork_proselytizer/proc/modify_stored_alloy(amount)
 	stored_alloy = Clamp(stored_alloy + amount, 0, max_alloy)
@@ -109,6 +159,8 @@
 	var/list/proselytize_values = target.proselytize_vals(user, src) //relevant values for proselytizing stuff, given as an associated list
 	if(!islist(proselytize_values))
 		if(proselytize_values != TRUE) //if we get true, fail, but don't send a message for whatever reason
+			if(!isturf(target)) //otherwise, if we didn't get TRUE and the original target wasn't a turf, try to proselytize the turf
+				return proselytize(get_turf(target), user)
 			user << "<span class='warning'>[target] cannot be proselytized!</span>"
 		return FALSE
 	if(can_use_alloy(RATVAR_ALLOY_CHECK))
@@ -126,6 +178,8 @@
 
 	if(can_use_alloy(RATVAR_ALLOY_CHECK)) //Ratvar makes it faster
 		proselytize_values["operation_time"] *= 0.5
+
+	proselytize_values["operation_time"] *= speed_multiplier
 
 	user.visible_message("<span class='warning'>[user]'s [name] begins tearing apart [target]!</span>", "<span class='brass'>You begin proselytizing [target]...</span>")
 	playsound(target, 'sound/machines/click.ogg', 50, 1)

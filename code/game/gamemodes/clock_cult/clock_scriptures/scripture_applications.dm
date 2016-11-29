@@ -4,14 +4,14 @@
 
 //Sigil of Accession: Creates a sigil of accession, which is like a sigil of submission, but can convert any number of non-implanted targets and up to one implanted target.
 /datum/clockwork_scripture/create_object/sigil_of_accession
-	descname = "Permenant Conversion Trap"
+	descname = "Trap, Permenant Conversion"
 	name = "Sigil of Accession"
 	desc = "Places a luminous sigil much like a Sigil of Submission, but it will remain even after successfully converting a non-implanted target. \
 	It will penetrate mindshield implants once before disappearing."
 	invocations = list("Divinity, enslave...", "...all who trespass here!")
 	channel_time = 70
-	required_components = list(BELLIGERENT_EYE = 3, GUVAX_CAPACITOR = 1, HIEROPHANT_ANSIBLE = 1)
-	consumed_components = list(BELLIGERENT_EYE = 2, GUVAX_CAPACITOR = 1, HIEROPHANT_ANSIBLE = 1)
+	required_components = list(BELLIGERENT_EYE = 3, GEIS_CAPACITOR = 1, HIEROPHANT_ANSIBLE = 1)
+	consumed_components = list(BELLIGERENT_EYE = 2, GEIS_CAPACITOR = 1, HIEROPHANT_ANSIBLE = 1)
 	whispered = TRUE
 	object_path = /obj/effect/clockwork/sigil/submission/accession
 	prevent_path = /obj/effect/clockwork/sigil/submission
@@ -19,26 +19,32 @@
 	usage_tip = "It will remain after converting a target, unless that target has a mindshield implant, which it will break to convert them, but consume itself in the process."
 	tier = SCRIPTURE_APPLICATION
 	one_per_tile = TRUE
+	primary_component = BELLIGERENT_EYE
 	sort_priority = 1
+	quickbind = TRUE
+	quickbind_desc = "Creates a Sigil of Accession, which can convert a mindshielded non-Servant that remains on it."
 
 
 //Vitality Matrix: Creates a sigil which will drain health from nonservants and can use that health to heal or even revive servants.
 /datum/clockwork_scripture/create_object/vitality_matrix
-	descname = "Damage Trap"
+	descname = "Trap, Damage to Healing"
 	name = "Vitality Matrix"
-	desc = "Scribes a sigil beneath the invoker which drains life from any living non-servants that cross it. Servants that cross it, however, will be healed based on how much it drained from non-servants. \
-	Dead servants can be revived by this sigil if it has enough stored vitality."
+	desc = "Scribes a sigil beneath the invoker which drains life from any living non-Servants that cross it. Servants that cross it, however, will be healed based on how much it drained from non-Servants. \
+	Dead Servants can be revived by this sigil if it has enough stored vitality."
 	invocations = list("Divinity...", "...steal their life...", "...for these shells!")
 	channel_time = 70
 	required_components = list(BELLIGERENT_EYE = 1, VANGUARD_COGWHEEL = 3, HIEROPHANT_ANSIBLE = 1)
 	consumed_components = list(BELLIGERENT_EYE = 1, VANGUARD_COGWHEEL = 2, HIEROPHANT_ANSIBLE = 1)
 	whispered = TRUE
 	object_path = /obj/effect/clockwork/sigil/vitality
-	creator_message = "<span class='brass'>A vitality matrix appears below you. It will drain life from non-servants and heal servants that cross it.</span>"
-	usage_tip = "To revive a servant, the sigil must have 20 vitality plus the target servant's non-oxygen damage. It will still heal dead servants if it lacks the vitality to outright revive them."
+	creator_message = "<span class='brass'>A vitality matrix appears below you. It will drain life from non-Servants and heal Servants that cross it.</span>"
+	usage_tip = "To revive a Servant, the sigil must have 20 vitality plus the target Servant's non-oxygen damage. It will still heal dead Servants if it lacks the vitality to outright revive them."
 	tier = SCRIPTURE_APPLICATION
 	one_per_tile = TRUE
+	primary_component = VANGUARD_COGWHEEL
 	sort_priority = 2
+	quickbind = TRUE
+	quickbind_desc = "Creates a Vitality Matrix, which drains non-Servants on it to heal Servants that cross it."
 
 
 //Memory Allocation: Finds a willing ghost and makes them into a clockwork marauders for the invoker.
@@ -46,15 +52,16 @@
 	descname = "Guardian"
 	name = "Memory Allocation"
 	desc = "Allocates part of your consciousness to a Clockwork Marauder, a vigilent fighter that lives within you, able to be \
-	called forth by Speaking its True Name or if you become exceptionally low on health.<br> \
+	called forth by Speaking its True Name or if you become exceptionally low on health.<br>\
 	It gains Fatigue as it is attacked, weakening it. Marauders cannot move too far from their hosts, \
 	and will gain Fatigue at an increasing rate as they grow farther away. At maximum Fatigue, the marauder is forced to return to you and will be unable to manifest until its Fatigue is at zero."
 	invocations = list("Fright's will...", "...call forth...")
 	channel_time = 100
-	required_components = list(BELLIGERENT_EYE = 1, VANGUARD_COGWHEEL = 1, GUVAX_CAPACITOR = 3)
-	consumed_components = list(BELLIGERENT_EYE = 1, VANGUARD_COGWHEEL = 1, GUVAX_CAPACITOR = 2)
+	required_components = list(BELLIGERENT_EYE = 1, VANGUARD_COGWHEEL = 1, GEIS_CAPACITOR = 3)
+	consumed_components = list(BELLIGERENT_EYE = 1, VANGUARD_COGWHEEL = 1, GEIS_CAPACITOR = 2)
 	usage_tip = "Marauders are useful as personal bodyguards and frontline warriors, although they do little damage."
 	tier = SCRIPTURE_APPLICATION
+	primary_component = GEIS_CAPACITOR
 	sort_priority = 3
 
 /datum/clockwork_scripture/memory_allocation/check_special_requirements()
@@ -71,7 +78,7 @@
 	invoker.visible_message("<span class='warning'>A yellow tendril appears from [invoker]'s [slab.name] and impales itself in [invoker.p_their()] forehead!</span>", \
 	"<span class='heavy_brass'>A tendril flies from [slab] into your forehead. You begin waiting while it painfully rearranges your thought pattern...</span>")
 	invoker.notransform = TRUE //Vulnerable during the process
-	slab.busy = "Thought modification in process"
+	slab.busy = "Thought Modification in progress"
 	if(!do_after(invoker, 50, target = invoker))
 		invoker.visible_message("<span class='warning'>The tendril, covered in blood, retracts from [invoker]'s head and back into the [slab.name]!</span>", \
 		"<span class='heavy_brass'>Total agony overcomes you as the tendril is forced out early!</span>")
@@ -83,7 +90,7 @@
 		return FALSE
 	clockwork_say(invoker, text2ratvar("...the mind made..."))
 	invoker.notransform = FALSE
-	slab.busy = null
+	slab.busy = "Marauder Selection in progress"
 	if(!check_special_requirements())
 		return FALSE
 	invoker << "<span class='warning'>The tendril shivers slightly as it selects a marauder...</span>"
@@ -124,7 +131,10 @@
 	observer_message = "<span class='warning'>The slab disgorges a puddle of black metal that expands and forms into a strange shell!</span>"
 	usage_tip = "Useless without a soul vessel and should not be created without one."
 	tier = SCRIPTURE_APPLICATION
+	primary_component = REPLICANT_ALLOY
 	sort_priority = 4
+	quickbind = TRUE
+	quickbind_desc = "Creates a Fragment Shell, which produces an Anima Fragment when filled with a Soul Vessel."
 
 
 //Sigil of Transmission: Creates a sigil of transmission that can store power for clockwork structures.
@@ -134,15 +144,18 @@
 	desc = "Scribes a sigil beneath the invoker which stores power to power clockwork structures."
 	invocations = list("Divinity...", "...power our creations!")
 	channel_time = 70
-	required_components = list(VANGUARD_COGWHEEL = 1, GUVAX_CAPACITOR = 1, HIEROPHANT_ANSIBLE = 3)
-	consumed_components = list(VANGUARD_COGWHEEL = 1, GUVAX_CAPACITOR = 1, HIEROPHANT_ANSIBLE = 2)
+	required_components = list(VANGUARD_COGWHEEL = 1, GEIS_CAPACITOR = 1, HIEROPHANT_ANSIBLE = 3)
+	consumed_components = list(VANGUARD_COGWHEEL = 1, GEIS_CAPACITOR = 1, HIEROPHANT_ANSIBLE = 2)
 	whispered = TRUE
 	object_path = /obj/effect/clockwork/sigil/transmission
 	creator_message = "<span class='brass'>A sigil silently appears below you. It will automatically power clockwork structures adjecent to it.</span>"
 	usage_tip = "Can be recharged by using Volt Void while standing on it."
 	tier = SCRIPTURE_APPLICATION
 	one_per_tile = TRUE
+	primary_component = HIEROPHANT_ANSIBLE
 	sort_priority = 5
+	quickbind = TRUE
+	quickbind_desc = "Creates a Sigil of Transmission, which stores power for clockwork structures."
 
 
 //Interdiction Lens: Creates a powerful totem that disables radios and cameras and drains power into nearby sigils of transmission.
@@ -162,7 +175,10 @@
 	usage_tip = "If it fails to funnel power into a nearby Sigil of Transmission or the area's APC and fails to disable even one thing, it will disable itself for two minutes."
 	tier = SCRIPTURE_APPLICATION
 	one_per_tile = TRUE
+	primary_component = BELLIGERENT_EYE
 	sort_priority = 6
+	quickbind = TRUE
+	quickbind_desc = "Creates an Interdiction Lens, which drains power into nearby Sigils of Transmission."
 
 
 //Mending Motor: Creates a prism that will quickly heal mechanical servants/clockwork structures and consume power or replicant alloy.
@@ -172,17 +188,20 @@
 	desc = "Creates a mechanized prism that will rapidly repair damage to clockwork creatures, converted cyborgs, and clockwork structures. Requires replicant alloy or power to function."
 	invocations = list("May this prism...", "...mend our dents and scratches!")
 	channel_time = 80
-	required_components = list(VANGUARD_COGWHEEL = 4, GUVAX_CAPACITOR = 1, REPLICANT_ALLOY = 1)
-	consumed_components = list(VANGUARD_COGWHEEL = 3, GUVAX_CAPACITOR = 1, REPLICANT_ALLOY = 1)
+	required_components = list(VANGUARD_COGWHEEL = 4, GEIS_CAPACITOR = 1, REPLICANT_ALLOY = 1)
+	consumed_components = list(VANGUARD_COGWHEEL = 3, GEIS_CAPACITOR = 1, REPLICANT_ALLOY = 1)
 	object_path = /obj/structure/destructible/clockwork/powered/mending_motor/prefilled
-	creator_message = "<span class='brass'>You form a mending motor, which will consume power or replicant alloy to mend the wounds of mechanized servants.</span>"
+	creator_message = "<span class='brass'>You form a mending motor, which will consume power or replicant alloy to mend constructs and structures.</span>"
 	observer_message = "<span class='warning'>An onyx prism forms in midair and sprouts tendrils to support itself!</span>"
 	invokers_required = 2
 	multiple_invokers_used = TRUE
 	usage_tip = "Powerful healing but power use is very inefficient, and its alloy use is little better."
 	tier = SCRIPTURE_APPLICATION
 	one_per_tile = TRUE
+	primary_component = VANGUARD_COGWHEEL
 	sort_priority = 7
+	quickbind = TRUE
+	quickbind_desc = "Creates a Mending Motor, which rapidly repairs constructs and structures at a power cost."
 
 
 //Mania Motor: Creates a malevolent transmitter that will broadcast the whispers of Sevtug into the minds of nearby nonservants, causing a variety of mental effects at a power cost.
@@ -192,8 +211,8 @@
 	desc = "Creates a mania motor which will cause brain damage and hallucinations in nearby non-servant humans. It will also try to convert humans directly adjecent to the motor."
 	invocations = list("May this transmitter...", "...break the will of all who oppose us!")
 	channel_time = 80
-	required_components = list(GUVAX_CAPACITOR = 4, REPLICANT_ALLOY = 1, HIEROPHANT_ANSIBLE = 1)
-	consumed_components = list(GUVAX_CAPACITOR = 3, REPLICANT_ALLOY = 1, HIEROPHANT_ANSIBLE = 1)
+	required_components = list(GEIS_CAPACITOR = 4, REPLICANT_ALLOY = 1, HIEROPHANT_ANSIBLE = 1)
+	consumed_components = list(GEIS_CAPACITOR = 3, REPLICANT_ALLOY = 1, HIEROPHANT_ANSIBLE = 1)
 	object_path = /obj/structure/destructible/clockwork/powered/mania_motor
 	creator_message = "<span class='brass'>You form a mania motor which will cause brain damage and hallucinations in nearby humans while active.</span>"
 	observer_message = "<span class='warning'>A two-pronged machine rises from the ground!</span>"
@@ -202,7 +221,10 @@
 	usage_tip = "Eligible human servants next to the motor will be converted at an additional power cost. It will also cure hallucinations and brain damage in nearby servants."
 	tier = SCRIPTURE_APPLICATION
 	one_per_tile = TRUE
+	primary_component = GEIS_CAPACITOR
 	sort_priority = 8
+	quickbind = TRUE
+	quickbind_desc = "Creates a Mania Motor, which can convert adjacent non-Servants with power."
 
 
 //Tinkerer's Daemon: Creates an efficient machine that rapidly produces components at a power cost.
@@ -212,8 +234,8 @@
 	desc = "Creates a tinkerer's daemon which can rapidly collect components. It will only function if it has sufficient power, is outnumbered by servants by a ratio of 5:1, and there is at least one existing cache."
 	invocations = list("May this generator...", "...collect Engine parts that yet hold greatness!")
 	channel_time = 80
-	required_components = list(BELLIGERENT_EYE = 1, GUVAX_CAPACITOR = 1, REPLICANT_ALLOY = 4)
-	consumed_components = list(BELLIGERENT_EYE = 1, GUVAX_CAPACITOR = 1, REPLICANT_ALLOY = 3)
+	required_components = list(BELLIGERENT_EYE = 1, GEIS_CAPACITOR = 1, REPLICANT_ALLOY = 4)
+	consumed_components = list(BELLIGERENT_EYE = 1, GEIS_CAPACITOR = 1, REPLICANT_ALLOY = 3)
 	object_path = /obj/structure/destructible/clockwork/powered/tinkerers_daemon
 	creator_message = "<span class='brass'>You form a tinkerer's daemon which can rapidly collect components at a power cost.</span>"
 	invokers_required = 2
@@ -221,7 +243,9 @@
 	usage_tip = "Vital to your success!"
 	tier = SCRIPTURE_APPLICATION
 	one_per_tile = TRUE
+	primary_component = REPLICANT_ALLOY
 	sort_priority = 9
+	quickbind_desc = "Creates a Tinkerer's Daemon, which can rapidly collect components for power."
 
 /datum/clockwork_scripture/create_object/tinkerers_daemon/check_special_requirements()
 	var/servants = 0
@@ -254,4 +278,7 @@
 	usage_tip = "Producing a gateway has a high power cost. Gateways to or between clockwork obelisks recieve double duration and uses."
 	tier = SCRIPTURE_APPLICATION
 	one_per_tile = TRUE
+	primary_component = HIEROPHANT_ANSIBLE
 	sort_priority = 10
+	quickbind = TRUE
+	quickbind_desc = "Creates a Clockwork Obelisk, which can send messages or open Spatial Gateways with power."

@@ -337,11 +337,11 @@ var/global/list/datum/cachedbook/cachedbooks // List of our cached book datums
 				if(!bibledelay)
 
 					var/obj/item/weapon/storage/book/bible/B = new /obj/item/weapon/storage/book/bible(src.loc)
-					if(ticker && ( ticker.Bible_icon_state && ticker.Bible_item_state) )
-						B.icon_state = ticker.Bible_icon_state
-						B.item_state = ticker.Bible_item_state
-						B.name = ticker.Bible_name
-						B.deity_name = ticker.Bible_deity_name
+					if(SSreligion.Bible_icon_state && SSreligion.Bible_item_state)
+						B.icon_state = SSreligion.Bible_icon_state
+						B.item_state = SSreligion.Bible_item_state
+						B.name = SSreligion.Bible_name
+						B.deity_name = SSreligion.Bible_deity_name
 
 					bibledelay = 1
 					spawn(60)
@@ -479,8 +479,6 @@ var/global/list/datum/cachedbook/cachedbooks // List of our cached book datums
 		dat += "       <A href='?src=\ref[src];clear=1'>\[Clear Memory\]</A><BR><BR><A href='?src=\ref[src];eject=1'>\[Remove Book\]</A>"
 	else
 		dat += "<BR>"
-	//user << browse(dat, "window=scanner")
-	//onclose(user, "scanner")
 	var/datum/browser/popup = new(user, "scanner", name, 600, 400)
 	popup.set_content(dat)
 	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))

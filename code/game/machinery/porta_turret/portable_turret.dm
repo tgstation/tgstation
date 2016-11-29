@@ -32,7 +32,7 @@
 	var/locked = 1			//if the turret's behaviour control access is locked
 	var/controllock = 0		//if the turret responds to control panels
 
-	var/installation = /obj/item/weapon/gun/energy/gun/turret		//the type of weapon installed
+	var/installation = /obj/item/weapon/gun/energy/e_gun/turret		//the type of weapon installed
 	var/gun_charge = 0		//the charge of the gun inserted
 	var/projectile = null	//holder for bullettype
 	var/eprojectile = null	//holder for the shot when emagged
@@ -138,21 +138,21 @@
 		if(/obj/item/weapon/gun/energy/lasercannon)
 			active_state = "Laser"
 
-		if(/obj/item/weapon/gun/energy/gun/advtaser)
+		if(/obj/item/weapon/gun/energy/e_gun/advtaser)
 			eprojectile = /obj/item/projectile/beam
 			eshot_sound = 'sound/weapons/Laser.ogg'
 
-		if(/obj/item/weapon/gun/energy/gun)
+		if(/obj/item/weapon/gun/energy/e_gun)
 			eprojectile = /obj/item/projectile/beam	//If it has, going to kill mode
 			eshot_sound = 'sound/weapons/Laser.ogg'
 			egun = 1
 
-		if(/obj/item/weapon/gun/energy/gun/nuclear)
+		if(/obj/item/weapon/gun/energy/e_gun/nuclear)
 			eprojectile = /obj/item/projectile/beam	//If it has, going to kill mode
 			eshot_sound = 'sound/weapons/Laser.ogg'
 			egun = 1
 
-		if(/obj/item/weapon/gun/energy/gun/turret)
+		if(/obj/item/weapon/gun/energy/e_gun/turret)
 			eprojectile = /obj/item/projectile/beam	//If it has, going to copypaste mode
 			eshot_sound = 'sound/weapons/Laser.ogg'
 			egun = 1
@@ -276,9 +276,9 @@
 				if(prob(70))
 					user << "<span class='notice'>You remove the turret and salvage some components.</span>"
 					if(installation)
-						var/obj/item/weapon/gun/energy/Gun = new installation(loc)
-						Gun.power_supply.charge = gun_charge
-						Gun.update_icon()
+						var/obj/item/weapon/gun/energy/EG = new installation(loc)
+						EG.power_supply.charge = gun_charge
+						EG.update_icon()
 						lasercolor = null
 					if(prob(50))
 						new /obj/item/stack/sheet/metal(loc, rand(1,4))
@@ -765,8 +765,6 @@
 		t += text("Turrets [] - <A href='?src=\ref[];toggleOn=1'>[]?</a><br>\n", src.enabled?"activated":"deactivated", src, src.enabled?"Disable":"Enable")
 		t += text("Currently set for [] - <A href='?src=\ref[];toggleLethal=1'>Change to []?</a><br>\n", src.lethal?"lethal":"stun repeatedly", src,  src.lethal?"Stun repeatedly":"Lethal")
 
-	//user << browse(t, "window=turretid")
-	//onclose(user, "turretid")
 	var/datum/browser/popup = new(user, "turretid", "Turret Control Panel ([area.name])")
 	popup.set_content(t)
 	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))

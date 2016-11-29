@@ -64,7 +64,7 @@
 	if(C.smoke_delay)
 		return 0
 	C.smoke_delay++
-	addtimer(src, "remove_smoke_delay", 10, FALSE, C)
+	addtimer(src, "remove_smoke_delay", 10, TIMER_NORMAL, C)
 	return 1
 
 /obj/effect/particle_effect/smoke/proc/remove_smoke_delay(mob/living/carbon/C)
@@ -84,7 +84,7 @@
 		reagents.copy_to(S, reagents.total_volume)
 		S.setDir(pick(cardinal))
 		S.amount = amount-1
-		S.color = color
+		S.add_atom_colour(color, FIXED_COLOUR_PRIORITY)
 		S.lifetime = lifetime
 		if(S.amount>0)
 			if(opaque)
@@ -297,7 +297,7 @@
 
 
 /datum/effect_system/smoke_spread/chem/start()
-	var/color = mix_color_from_reagents(chemholder.reagents.reagent_list)
+	var/mixcolor = mix_color_from_reagents(chemholder.reagents.reagent_list)
 	if(holder)
 		location = get_turf(holder)
 	var/obj/effect/particle_effect/smoke/chem/S = new effect_type(location)
@@ -305,9 +305,20 @@
 	if(chemholder.reagents.total_volume > 1) // can't split 1 very well
 		chemholder.reagents.copy_to(S, chemholder.reagents.total_volume)
 
-	if(color)
-		S.color = color // give the smoke color, if it has any to begin with
+	if(mixcolor)
+		S.add_atom_colour(mixcolor, FIXED_COLOUR_PRIORITY) // give the smoke color, if it has any to begin with
 	S.amount = amount
 	if(S.amount)
 		S.spread_smoke() //calling process right now so the smoke immediately attacks mobs.
 
+
+/////////////////////////////////////////////
+// Transparent smoke
+/////////////////////////////////////////////
+
+//Same as the base type, but the smoke produced is not opaque
+/datum/effect_system/smoke_spread/transparent
+	effect_type = /obj/effect/particle_effect/smoke/transparent
+
+/obj/effect/particle_effect/smoke/transparent
+	opaque = FALSE

@@ -24,6 +24,7 @@
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "necro1"
 	baseturf = /turf/open/indestructible/necropolis
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 
 /turf/open/indestructible/necropolis/New()
 	..()
@@ -119,14 +120,9 @@
 		qdel(hotspot)
 	return 1
 
-/turf/open/handle_fall(mob/faller, forced)
-	faller.lying = pick(90, 270)
-	if(!forced)
-		return
-	if(has_gravity(src))
-		playsound(src, "bodyfall", 50, 1)
-
 /turf/open/handle_slip(mob/living/carbon/C, s_amount, w_amount, obj/O, lube)
+	if(C.movement_type & FLYING)
+		return 0
 	if(has_gravity(src))
 		var/obj/buckled_obj
 		if(C.buckled)

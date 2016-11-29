@@ -34,7 +34,18 @@ Chaplain
 	if(visualsOnly)
 		return
 
+
 	var/obj/item/weapon/storage/book/bible/B = new /obj/item/weapon/storage/book/bible/booze(H)
+
+	if(SSreligion.Bible_deity_name)
+		B.deity_name = SSreligion.Bible_deity_name
+		B.name = SSreligion.Bible_name
+		H << "There is already an established religion onboard the station. You are an acolyte of [SSreligion.Bible_deity_name]. Defer to the Chaplain."
+		H.equip_to_slot_or_del(B, slot_in_backpack)
+		var/obj/item/weapon/nullrod/N = new(H)
+		H.equip_to_slot_or_del(N, slot_in_backpack)
+		return
+
 	var/new_religion = "Christianity"
 	if(H.client && H.client.prefs.custom_names["religion"])
 		new_religion = H.client.prefs.custom_names["religion"]
@@ -66,14 +77,13 @@ Chaplain
 		else
 			B.name = "The Holy Book of [new_religion]"
 	feedback_set_details("religion_name","[new_religion]")
-	ticker.Bible_name = B.name
+	SSreligion.Bible_name = B.name
 
 	var/new_deity = "Space Jesus"
 	if(H.client && H.client.prefs.custom_names["deity"])
 		new_deity = H.client.prefs.custom_names["deity"]
 	B.deity_name = new_deity
 
-	if(ticker)
-		ticker.Bible_deity_name = B.deity_name
+	SSreligion.Bible_deity_name = B.deity_name
 	feedback_set_details("religion_deity","[new_deity]")
 	H.equip_to_slot_or_del(B, slot_in_backpack)

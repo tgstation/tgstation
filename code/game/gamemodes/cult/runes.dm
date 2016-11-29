@@ -151,8 +151,10 @@ structure_check() searches for nearby cultist structures required for the invoca
 	visible_message("<span class='warning'>The markings pulse with a \
 		small flash of red light, then fall dark.</span>")
 	spawn(0) //animate is a delay, we want to avoid being delayed
-		animate(src, color = rgb(255, 0, 0), time = 0)
-		animate(src, color = initial(color), time = 5)
+		var/oldcolor = color
+		color = rgb(255, 0, 0)
+		animate(src, color = oldcolor, time = 5)
+		addtimer(src, "update_atom_colour", 5)
 
 //Malformed Rune: This forms if a rune is not drawn correctly. Invoking it does nothing but hurt the user.
 /obj/effect/rune/malformed
@@ -354,6 +356,7 @@ var/list/teleport_runes = list()
 		return
 	rune_in_use = TRUE
 	visible_message("<span class='warning'>[src] pulses blood red!</span>")
+	var/oldcolor = color
 	color = "#7D1717"
 	var/mob/living/L = pick(myriad_targets)
 	var/is_clock = is_servant_of_ratvar(L)
@@ -372,7 +375,8 @@ var/list/teleport_runes = list()
 		invocation = "Barhah hra zar'garis!"
 		..()
 		do_sacrifice(L, invokers)
-	animate(src, color = initial(color), time = 5)
+	animate(src, color = oldcolor, time = 5)
+	addtimer(src, "update_atom_colour", 5)
 	rune_in_use = FALSE
 
 /obj/effect/rune/convert/proc/do_convert(mob/living/convertee, list/invokers)
@@ -496,7 +500,7 @@ var/list/teleport_runes = list()
 	//BEGIN THE SUMMONING
 	used = 1
 	..()
-	world << 'sound/effects/dimensional_rend.ogg' //There used to be a message for this but every time it was changed it got edgier so I removed it
+	send_to_playing_players('sound/effects/dimensional_rend.ogg') //There used to be a message for this but every time it was changed it got edgier so I removed it
 	var/turf/T = get_turf(src)
 	sleep(40)
 	if(src)
@@ -591,7 +595,7 @@ var/list/teleport_runes = list()
 		log_game("Raise Dead rune failed - revival target moved")
 		return 0
 	var/mob/dead/observer/ghost = target_mob.get_ghost(TRUE)
-	if(!ghost)
+	if(!ghost && (!target_mob.mind || !target_mob.mind.active))
 		user << "<span class='cultitalic'>The corpse to revive has no spirit!</span>"
 		fail_invoke()
 		log_game("Raise Dead rune failed - revival target has no ghost")
@@ -774,13 +778,14 @@ var/list/wall_runes = list()
 		recharging = TRUE
 		density = FALSE
 		update_state()
-		color = "#696969"
-		animate(src, color = initial(color), time = 50, easing = EASE_IN)
+		var/oldcolor = color
+		add_atom_colour("#696969", FIXED_COLOUR_PRIORITY)
+		animate(src, color = oldcolor, time = 50, easing = EASE_IN)
 		addtimer(src, "recharge", 50)
 
 /obj/effect/rune/wall/proc/recharge()
 	recharging = FALSE
-	color = initial(color)
+	add_atom_colour("#C80000", FIXED_COLOUR_PRIORITY)
 
 /obj/effect/rune/wall/proc/update_state()
 	deltimer(density_timer)
@@ -791,10 +796,10 @@ var/list/wall_runes = list()
 		I.alpha = 60
 		I.color = "#701414"
 		add_overlay(I)
-		color = "#FF0000"
+		add_atom_colour("#FF0000", FIXED_COLOUR_PRIORITY)
 	else
 		cut_overlays()
-		color = "#C80000"
+		add_atom_colour("#C80000", FIXED_COLOUR_PRIORITY)
 
 //Rite of Joined Souls: Summons a single cultist.
 /obj/effect/rune/summon

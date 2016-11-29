@@ -9,14 +9,14 @@
 			unconverted_ai_exists = TRUE
 	. = list(SCRIPTURE_DRIVER = TRUE, SCRIPTURE_SCRIPT = FALSE, SCRIPTURE_APPLICATION = FALSE, SCRIPTURE_REVENANT = FALSE, SCRIPTURE_JUDGEMENT = FALSE)
 	//Drivers: always unlocked
-	.[SCRIPTURE_SCRIPT] = (servants >= 5 && clockwork_caches >= 1)
-	//Script: 5 or more non-brain servants and 1+ clockwork caches
-	.[SCRIPTURE_APPLICATION] = (servants >= 8 && clockwork_caches >= 3 && clockwork_construction_value >= 100)
-	//Application: 8 or more non-brain servants, 3+ clockwork caches, and at least 100 CV
-	.[SCRIPTURE_REVENANT] = (servants >= 10 && clockwork_caches >= 4 && clockwork_construction_value >= 200)
-	//Revenant: 10 or more non-brain servants, 4+ clockwork caches, and at least 200 CV
-	.[SCRIPTURE_JUDGEMENT] = (servants >= 12 && clockwork_caches >= 5 && clockwork_construction_value >= 300 && !unconverted_ai_exists)
-	//Judgement: 12 or more non-brain servants, 5+ clockwork caches, at least 300 CV, and there are no living, non-servant ais
+	.[SCRIPTURE_SCRIPT] = (servants >= SCRIPT_SERVANT_REQ && clockwork_caches >= SCRIPT_CACHE_REQ)
+	//Script: SCRIPT_SERVANT_REQ or more non-brain servants and SCRIPT_CACHE_REQ or more clockwork caches
+	.[SCRIPTURE_APPLICATION] = (servants >= APPLICATION_SERVANT_REQ && clockwork_caches >= APPLICATION_CACHE_REQ && clockwork_construction_value >= APPLICATION_CV_REQ)
+	//Application: APPLICATION_SERVANT_REQ or more non-brain servants, APPLICATION_CACHE_REQ or more clockwork caches, and at least APPLICATION_CV_REQ CV
+	.[SCRIPTURE_REVENANT] = (servants >= REVENANT_SERVANT_REQ && clockwork_caches >= REVENANT_CACHE_REQ && clockwork_construction_value >= REVENANT_CV_REQ)
+	//Revenant: REVENANT_SERVANT_REQ or more non-brain servants, REVENANT_CACHE_REQ or more clockwork caches, and at least REVENANT_CV_REQ CV
+	.[SCRIPTURE_JUDGEMENT] = (servants >= JUDGEMENT_SERVANT_REQ && clockwork_caches >= JUDGEMENT_CACHE_REQ && clockwork_construction_value >= JUDGEMENT_CV_REQ && !unconverted_ai_exists)
+	//Judgement: JUDGEMENT_SERVANT_REQ or more non-brain servants, JUDGEMENT_CACHE_REQ or more clockwork caches, at least JUDGEMENT_CV_REQ CV, and there are no living, non-servant ais
 
 //reports to servants when scripture is locked or unlocked
 /proc/scripture_unlock_alert(list/previous_states)
@@ -28,10 +28,3 @@
 //changes construction value
 /proc/change_construction_value(amount)
 	clockwork_construction_value += amount
-
-//throws the no cache alert if there are no caches and clears it otherwise
-/proc/cache_check(mob/M)
-	if(!clockwork_caches)
-		M.throw_alert("nocache", /obj/screen/alert/clockwork/nocache)
-	else
-		M.clear_alert("nocache")

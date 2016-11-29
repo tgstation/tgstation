@@ -28,7 +28,7 @@
 			return
 
 		if("bond") // 29 tc
-			new /obj/item/weapon/gun/projectile/automatic/pistol(src)
+			new /obj/item/weapon/gun/ballistic/automatic/pistol(src)
 			new /obj/item/weapon/suppressor(src)
 			new /obj/item/ammo_box/magazine/m10mm(src)
 			new /obj/item/ammo_box/magazine/m10mm(src)
@@ -48,7 +48,7 @@
 			return
 
 		if("guns") // 28 tc now
-			new /obj/item/weapon/gun/projectile/revolver(src)
+			new /obj/item/weapon/gun/ballistic/revolver(src)
 			new /obj/item/ammo_box/a357(src)
 			new /obj/item/ammo_box/a357(src)
 			new /obj/item/weapon/card/emag(src)
@@ -113,7 +113,7 @@
 			return
 
 		if("sniper") //This shit is unique so can't really balance it around tc, also no silencer because getting killed without ANY indicator on what killed you sucks
-			new /obj/item/weapon/gun/projectile/automatic/sniper_rifle(src) // 12 tc
+			new /obj/item/weapon/gun/ballistic/automatic/sniper_rifle(src) // 12 tc
 			new /obj/item/ammo_box/magazine/sniper_rounds/penetrator(src)
 			new /obj/item/clothing/glasses/thermal/syndi(src)
 			new /obj/item/clothing/gloves/color/latex/nitrile(src)
@@ -123,7 +123,7 @@
 
 		if("metaops") // 30 tc
 			new /obj/item/clothing/suit/space/hardsuit/syndi(src) // 8 tc
-			new /obj/item/weapon/gun/projectile/automatic/shotgun/bulldog/unrestricted(src) // 8 tc
+			new /obj/item/weapon/gun/ballistic/automatic/shotgun/bulldog/unrestricted(src) // 8 tc
 			new /obj/item/weapon/implanter/explosive(src) // 2 tc
 			new /obj/item/ammo_box/magazine/m12g/buckshot(src) // 2 tc
 			new /obj/item/ammo_box/magazine/m12g/buckshot(src) // 2 tc
@@ -131,7 +131,7 @@
 			new /obj/item/weapon/grenade/plastic/c4 (src) // 1 tc
 			new /obj/item/weapon/card/emag(src) // 6 tc
 			return
-
+		
 		if("ninja") // 33 tc worth
 			new /obj/item/weapon/katana(src) // Unique , hard to tell how much tc this is worth. 8 tc?
 			new /obj/item/weapon/implanter/adrenalin(src) // 8 tc
@@ -268,15 +268,6 @@
 	new /obj/item/weapon/reagent_containers/glass/bottle/amanitin(src)
 	new /obj/item/weapon/reagent_containers/syringe(src)
 	return
-
-/obj/item/weapon/storage/box/syndie_kit/atmosgasgrenades
-	name = "Atmos Grenades"
-
-/obj/item/weapon/storage/box/syndie_kit/atmosgasgrenades/New()
-	..()
-	new /obj/item/weapon/grenade/clusterbuster/plasma(src)
-	new /obj/item/weapon/grenade/clusterbuster/n2o(src)
-	new /obj/item/weapon/grenade/clusterbuster/freon(src)
 
 /obj/item/weapon/storage/box/syndie_kit/nuke
 	name = "box"

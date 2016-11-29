@@ -12,7 +12,7 @@
 		/obj/item/clothing/under/syndicate/tacticool			= 2,
 		/obj/item/toy/sword										= 2,
 		/obj/item/toy/gun										= 2,
-		/obj/item/weapon/gun/projectile/shotgun/toy/crossbow	= 2,
+		/obj/item/weapon/gun/ballistic/shotgun/toy/crossbow	= 2,
 		/obj/item/weapon/storage/box/fakesyndiesuit				= 2,
 		/obj/item/weapon/storage/crayons						= 2,
 		/obj/item/toy/spinningtoy								= 2,
@@ -138,9 +138,6 @@
 		dat += "<a href='byond://?src=\ref[src];charge=1'>Recharge Power</a>"
 
 	dat += "</b></center>"
-
-	//user << browse(dat, "window=arcade")
-	//onclose(user, "arcade")
 	var/datum/browser/popup = new(user, "arcade", "Space Villian 2000")
 	popup.set_content(dat)
 	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
@@ -1040,7 +1037,7 @@
 	desc = "The Premier security forces for all spaceports found along the Orion Trail."
 	faction = list("orion")
 	loot = list(/obj/effect/mob_spawn/human/corpse/orionsecurity,
-				/obj/item/weapon/gun/projectile/automatic/c20r/unrestricted,
+				/obj/item/weapon/gun/ballistic/automatic/c20r/unrestricted,
 				/obj/item/weapon/shield/energy)
 
 /obj/effect/mob_spawn/human/corpse/orionsecurity

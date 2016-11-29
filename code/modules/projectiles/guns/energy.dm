@@ -16,9 +16,12 @@
 	var/selfcharge = 0
 	var/charge_tick = 0
 	var/charge_delay = 4
+	var/use_cyborg_cell = 0 //whether the gun's cell drains the cyborg user's cell to recharge
 
 /obj/item/weapon/gun/energy/emp_act(severity)
 	power_supply.use(round(power_supply.charge / severity))
+	chambered = null //we empty the chamber
+	recharge_newshot() //and try to charge a new shot
 	update_icon()
 
 
@@ -30,11 +33,10 @@
 		power_supply = new(src)
 	power_supply.give(power_supply.maxcharge)
 	update_ammo_types()
+	recharge_newshot(1)
 	if(selfcharge)
 		START_PROCESSING(SSobj, src)
 	update_icon()
-	return
-
 
 /obj/item/weapon/gun/energy/proc/update_ammo_types()
 	var/obj/item/ammo_casing/energy/shot
@@ -62,6 +64,8 @@
 		if(!power_supply)
 			return
 		power_supply.give(100)
+		if(!chambered) //if empty chamber we try to charge a new shot
+			recharge_newshot(1)
 		update_icon()
 
 /obj/item/weapon/gun/energy/attack_self(mob/living/user as mob)
@@ -69,29 +73,33 @@
 		select_fire(user)
 		update_icon()
 
-/obj/item/weapon/gun/energy/afterattack(atom/target as mob|obj|turf, mob/living/user as mob|obj, params)
-	newshot() //prepare a new shot
-	..()
-
 /obj/item/weapon/gun/energy/can_shoot()
 	var/obj/item/ammo_casing/energy/shot = ammo_type[select]
 	return power_supply.charge >= shot.e_cost
 
-/obj/item/weapon/gun/energy/newshot()
+/obj/item/weapon/gun/energy/recharge_newshot(no_cyborg_drain)
 	if (!ammo_type || !power_supply)
 		return
-	var/obj/item/ammo_casing/energy/shot = ammo_type[select]
-	if(power_supply.charge >= shot.e_cost) //if there's enough power in the power_supply cell...
-		chambered = shot //...prepare a new shot based on the current ammo type selected
-		chambered.newshot()
-	return
+	if(use_cyborg_cell && !no_cyborg_drain)
+		if(iscyborg(loc))
+			var/mob/living/silicon/robot/R = loc
+			if(R.cell)
+				var/obj/item/ammo_casing/energy/shot = ammo_type[select] //Necessary to find cost of shot
+				if(R.cell.use(shot.e_cost)) 		//Take power from the borg...
+					power_supply.give(shot.e_cost)	//... to recharge the shot
+	if(!chambered)
+		var/obj/item/ammo_casing/energy/AC = ammo_type[select]
+		if(power_supply.charge >= AC.e_cost) //if there's enough power in the power_supply cell...
+			chambered = AC //...prepare a new shot based on the current ammo type selected
+			if(!chambered.BB)
+				chambered.newshot()
 
 /obj/item/weapon/gun/energy/process_chamber()
 	if(chambered && !chambered.BB) //if BB is null, i.e the shot has been fired...
 		var/obj/item/ammo_casing/energy/shot = chambered
 		power_supply.use(shot.e_cost)//... drain the power_supply cell
 	chambered = null //either way, released the prepared shot
-	return
+	recharge_newshot() //try to charge a new shot
 
 /obj/item/weapon/gun/energy/proc/select_fire(mob/living/user)
 	select++
@@ -102,6 +110,8 @@
 	fire_delay = shot.delay
 	if (shot.select_name)
 		user << "<span class='notice'>[src] is now set to [shot.select_name].</span>"
+	chambered = null
+	recharge_newshot(1)
 	update_icon()
 	return
 
@@ -126,9 +136,9 @@
 				add_overlay(image(icon = icon, icon_state = iconState, pixel_x = ammo_x_offset * (i -1)))
 		else
 			add_overlay(image(icon = icon, icon_state = "[icon_state]_charge[ratio]"))
-	if(F && can_flashlight)
+	if(gun_light && can_flashlight)
 		var/iconF = "flight"
-		if(F.on)
+		if(gun_light.on)
 			iconF = "flight_on"
 		add_overlay(image(icon = icon, icon_state = iconF, pixel_x = flight_x_offset, pixel_y = flight_y_offset))
 	if(itemState)
@@ -156,14 +166,6 @@
 		user.visible_message("<span class='suicide'>[user] is pretending to blow [user.p_their()] brains out with [src]! It looks like [user.p_theyre()] trying to commit suicide!</b></span>")
 		playsound(loc, 'sound/weapons/empty.ogg', 50, 1, -1)
 		return (OXYLOSS)
-
-/obj/item/weapon/gun/energy/proc/robocharge()
-	if(iscyborg(src.loc))
-		var/mob/living/silicon/robot/R = src.loc
-		if(R && R.cell)
-			var/obj/item/ammo_casing/energy/shot = ammo_type[select] //Necessary to find cost of shot
-			if(R.cell.use(shot.e_cost)) 		//Take power from the borg...
-				power_supply.give(shot.e_cost)	//... to recharge the shot
 
 /obj/item/weapon/gun/energy/on_varedit(modified_var)
 	if(modified_var == "selfcharge")

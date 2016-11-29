@@ -2608,23 +2608,20 @@
 /turf/open/space,
 /area/space)
 "afa" = (
-/obj/structure/transit_tube{
-	icon_state = "E-SW"
-	},
 /obj/structure/lattice,
+/obj/structure/transit_tube/curved/flipped{
+	dir = 4
+	},
 /turf/open/space,
 /area/space)
 "afb" = (
-/obj/structure/transit_tube,
 /obj/structure/lattice,
+/obj/structure/transit_tube/horizontal,
 /turf/open/space,
 /area/space)
 "afc" = (
 /obj/structure/lattice/catwalk,
-/obj/structure/transit_tube{
-	tag = "icon-E-W-Pass";
-	icon_state = "E-W-Pass"
-	},
+/obj/structure/transit_tube/crossing/horizontal,
 /turf/open/space,
 /area/space)
 "afd" = (
@@ -2634,15 +2631,15 @@
 /area/space)
 "afe" = (
 /obj/structure/window/reinforced/fulltile,
-/obj/structure/transit_tube,
+/obj/structure/transit_tube/horizontal,
 /turf/open/floor/plating,
 /area/aisat)
 "aff" = (
-/obj/structure/transit_tube,
 /obj/structure/cable/blue{
 	tag = "icon-1-2";
 	icon_state = "1-2"
 	},
+/obj/structure/transit_tube/horizontal,
 /turf/open/floor/plasteel/darkblue/corner{
 	tag = "icon-darkbluecorners (WEST)";
 	dir = 8
@@ -2653,22 +2650,13 @@
 	tag = "icon-1-2";
 	icon_state = "1-2"
 	},
-/obj/structure/transit_tube/station/reverse{
-	tag = "icon-closed (NORTH)";
-	icon_state = "closed";
-	dir = 1
-	},
+/obj/structure/transit_tube/station/reverse/flipped,
 /turf/open/floor/plasteel/black,
 /area/aisat)
 "afh" = (
 /obj/structure/cable/blue{
 	tag = "icon-1-2";
 	icon_state = "1-2"
-	},
-/obj/structure/transit_tube{
-	tag = "icon-Block (WEST)";
-	icon_state = "Block";
-	dir = 8
 	},
 /turf/open/floor/plasteel/darkblue/corner{
 	tag = "icon-darkbluecorners"
@@ -2759,10 +2747,8 @@
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/syndicate)
 "aft" = (
-/obj/structure/transit_tube{
-	icon_state = "NE-SW"
-	},
 /obj/structure/lattice,
+/obj/structure/transit_tube/diagonal,
 /turf/open/space,
 /area/space)
 "afu" = (
@@ -3047,10 +3033,8 @@
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/syndicate)
 "agf" = (
-/obj/structure/transit_tube{
-	icon_state = "S-NE"
-	},
 /obj/structure/lattice,
+/obj/structure/transit_tube/curved,
 /turf/open/space,
 /area/space)
 "agg" = (
@@ -3110,9 +3094,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/syndicate)
 "ago" = (
-/obj/structure/transit_tube{
-	icon_state = "N-S"
-	},
+/obj/structure/transit_tube,
 /turf/open/space,
 /area/space)
 "agp" = (
@@ -3155,10 +3137,8 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/syndicate)
 "agu" = (
-/obj/structure/transit_tube{
-	icon_state = "N-S-Pass"
-	},
 /obj/structure/lattice,
+/obj/structure/transit_tube/crossing,
 /turf/open/space,
 /area/space)
 "agv" = (
@@ -4680,11 +4660,10 @@
 /turf/open/space,
 /area/solar/auxport)
 "akd" = (
-/obj/structure/transit_tube{
-	tag = "icon-N-SE";
-	icon_state = "N-SE"
-	},
 /obj/structure/lattice,
+/obj/structure/transit_tube/curved/flipped{
+	dir = 1
+	},
 /turf/open/space,
 /area/space)
 "ake" = (
@@ -4797,24 +4776,23 @@
 /turf/open/space,
 /area/space)
 "akt" = (
-/obj/structure/transit_tube{
-	tag = "icon-E-NW";
-	icon_state = "E-NW"
-	},
 /obj/structure/lattice,
+/obj/structure/transit_tube/curved{
+	dir = 4
+	},
 /turf/open/space,
 /area/space)
 "aku" = (
 /obj/structure/window/reinforced/fulltile,
-/obj/structure/transit_tube,
+/obj/structure/transit_tube/horizontal,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "akv" = (
-/obj/structure/transit_tube,
 /obj/structure/cable/green{
 	tag = "icon-1-2";
 	icon_state = "1-2"
 	},
+/obj/structure/transit_tube/horizontal,
 /turf/open/floor/plasteel/darkblue/corner{
 	tag = "icon-darkbluecorners (NORTH)";
 	dir = 1
@@ -4835,11 +4813,6 @@
 /obj/structure/cable/green{
 	tag = "icon-1-2";
 	icon_state = "1-2"
-	},
-/obj/structure/transit_tube{
-	tag = "icon-Block (WEST)";
-	icon_state = "Block";
-	dir = 8
 	},
 /turf/open/floor/plasteel/darkblue/corner{
 	tag = "icon-darkbluecorners (EAST)";
@@ -7182,7 +7155,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/mob/living/simple_animal/mouse,
 /turf/open/floor/plating{
 	broken = 1;
 	icon_state = "platingdmg1"
@@ -9304,7 +9276,6 @@
 	dir = 4
 	},
 /obj/machinery/meter,
-/mob/living/simple_animal/mouse,
 /turf/open/floor/plasteel/floorgrime,
 /area/maintenance/incinerator)
 "auf" = (
@@ -10132,7 +10103,7 @@
 	dir = 8;
 	external_pressure_bound = 0;
 	frequency = 1441;
-	id_tag = "mix_in";
+	id_tag = "mix_out";
 	initialize_directions = 1;
 	internal_pressure_bound = 4000;
 	on = 1;
@@ -10736,7 +10707,7 @@
 	frequency = 1441;
 	input_tag = "mix_in";
 	name = "Gas Mix Tank Control";
-	output_tag = "mix_in";
+	output_tag = "mix_out";
 	sensors = list("mix_sensor" = "Tank")
 	},
 /turf/open/floor/plasteel/green/side{
@@ -10985,7 +10956,6 @@
 	lootcount = 2;
 	name = "random material damage spawner"
 	},
-/mob/living/simple_animal/mouse,
 /turf/open/floor/plating,
 /area/maintenance/asmaint)
 "axw" = (
@@ -27151,6 +27121,10 @@
 	tag = "every single paper bin is edited to this"
 	},
 /obj/item/weapon/folder/white,
+/obj/item/weapon/paper/morguereminder{
+	pixel_x = 4;
+	pixel_y = 5
+	},
 /turf/open/floor/plasteel/black,
 /area/medical/morgue)
 "bev" = (
@@ -29797,7 +29771,6 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/mob/living/simple_animal/mouse,
 /turf/open/floor/plating{
 	broken = 1;
 	icon_state = "platingdmg3"
@@ -39854,7 +39827,7 @@
 "bCK" = (
 /obj/structure/table/wood,
 /obj/item/weapon/reagent_containers/food/drinks/shaker,
-/obj/item/weapon/gun/projectile/revolver/doublebarrel,
+/obj/item/weapon/gun/ballistic/revolver/doublebarrel,
 /obj/item/stack/sheet/metal{
 	amount = 50
 	},
@@ -43674,7 +43647,6 @@
 	dir = 1;
 	icon_state = "pipe-c"
 	},
-/mob/living/simple_animal/mouse,
 /turf/open/floor/plating,
 /area/maintenance/fpmaint)
 "bIT" = (
@@ -45110,11 +45082,11 @@
 /obj/item/weapon/storage/box/rubbershot,
 /obj/item/weapon/storage/box/rubbershot,
 /obj/item/weapon/storage/box/rubbershot,
-/obj/item/weapon/gun/projectile/shotgun/riot{
+/obj/item/weapon/gun/ballistic/shotgun/riot{
 	pixel_x = 3;
 	pixel_y = 3
 	},
-/obj/item/weapon/gun/projectile/shotgun/riot,
+/obj/item/weapon/gun/ballistic/shotgun/riot,
 /turf/open/floor/plasteel/vault{
 	tag = "icon-vault (WEST)";
 	dir = 8
@@ -46884,12 +46856,12 @@
 /area/security/armory)
 "bPk" = (
 /obj/structure/rack,
-/obj/item/weapon/gun/energy/gun/advtaser{
+/obj/item/weapon/gun/energy/e_gun/advtaser{
 	pixel_x = -3;
 	pixel_y = 3
 	},
-/obj/item/weapon/gun/energy/gun/advtaser,
-/obj/item/weapon/gun/energy/gun/advtaser{
+/obj/item/weapon/gun/energy/e_gun/advtaser,
+/obj/item/weapon/gun/energy/e_gun/advtaser{
 	pixel_x = 3;
 	pixel_y = -3
 	},
@@ -46922,12 +46894,12 @@
 /area/security/armory)
 "bPm" = (
 /obj/structure/rack,
-/obj/item/weapon/gun/energy/gun{
+/obj/item/weapon/gun/energy/e_gun{
 	pixel_x = -3;
 	pixel_y = 3
 	},
-/obj/item/weapon/gun/energy/gun,
-/obj/item/weapon/gun/energy/gun{
+/obj/item/weapon/gun/energy/e_gun,
+/obj/item/weapon/gun/energy/e_gun{
 	pixel_x = 3;
 	pixel_y = -3
 	},
@@ -48792,8 +48764,8 @@
 	pixel_y = -24
 	},
 /obj/machinery/light,
-/obj/item/weapon/gun/energy/gun/dragnet,
-/obj/item/weapon/gun/energy/gun/dragnet,
+/obj/item/weapon/gun/energy/e_gun/dragnet,
+/obj/item/weapon/gun/energy/e_gun/dragnet,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
@@ -61502,7 +61474,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/mob/living/simple_animal/mouse,
 /turf/open/floor/plating,
 /area/maintenance/fsmaint)
 "csB" = (
@@ -67991,7 +67962,6 @@
 	tag = "icon-4-8";
 	icon_state = "4-8"
 	},
-/mob/living/simple_animal/mouse,
 /turf/open/floor/plasteel/floorgrime,
 /area/toxins/storage)
 "cFj" = (
@@ -71653,14 +71623,9 @@
 /turf/open/floor/plating,
 /area/maintenance/asmaint2)
 "cMe" = (
-/obj/effect/spawner/lootdrop{
-	loot = list(/obj/item/stack/sheet/metal = 1, /obj/item/stack/rods = 2, /obj/item/weapon/shard = 2, "" = 3);
-	lootcount = 2;
-	name = "random material damage spawner"
-	},
-/mob/living/simple_animal/mouse,
-/turf/open/floor/plating,
-/area/maintenance/asmaint2)
+/obj/effect/landmark/xmastree,
+/turf/open/floor/plasteel/bar,
+/area/crew_quarters/bar)
 "cMf" = (
 /obj/item/clothing/suit/bio_suit/plaguedoctorsuit,
 /obj/item/clothing/head/plaguedoctorhat,
@@ -71795,12 +71760,9 @@
 /turf/open/floor/plating,
 /area/maintenance/asmaint2)
 "cMu" = (
-/mob/living/simple_animal/mouse,
-/turf/open/floor/plating{
-	broken = 1;
-	icon_state = "platingdmg2"
-	},
-/area/maintenance/asmaint2)
+/obj/effect/landmark/xmastree,
+/turf/open/floor/carpet,
+/area/chapel/main)
 "cMv" = (
 /obj/structure/girder,
 /turf/open/floor/plating/airless,
@@ -86961,7 +86923,7 @@ aaa
 anS
 auo
 avT
-axk
+aqh
 ayG
 aqh
 aBA
@@ -86975,7 +86937,7 @@ aqh
 aqh
 aMH
 aNN
-aPD
+aNN
 aRp
 aqh
 aqh
@@ -90101,7 +90063,7 @@ bZI
 cba
 cfd
 cgN
-cgN
+cMu
 cfd
 clO
 bZI
@@ -91393,7 +91355,7 @@ cgO
 cgO
 crh
 cgO
-cuj
+cdl
 cvT
 cgO
 aaa
@@ -96535,7 +96497,7 @@ cpF
 csV
 cpF
 cpF
-cxB
+cpF
 cpF
 czQ
 cAP
@@ -97516,7 +97478,7 @@ aQi
 aHv
 aHv
 aQl
-aWs
+aWq
 aYc
 aYc
 aYc
@@ -100409,7 +100371,7 @@ cdO
 ckC
 cdO
 cdO
-cMe
+chl
 cdO
 cpP
 cMV
@@ -101389,7 +101351,7 @@ bsV
 bvb
 bor
 bsV
-bor
+cMe
 bor
 bEP
 bsV
@@ -103994,7 +103956,7 @@ cqd
 cBb
 cCi
 cpP
-cEe
+cfG
 cdO
 cpP
 cpP
@@ -104533,7 +104495,7 @@ cdO
 chl
 cdO
 cfG
-cLD
+cdO
 cdO
 cdO
 cdO
@@ -105938,7 +105900,7 @@ aac
 aaa
 aaa
 aaa
-aeZ
+aae
 agf
 ago
 agu
@@ -105965,7 +105927,7 @@ agu
 ago
 ago
 akd
-aks
+aae
 aae
 aae
 alN
@@ -106061,7 +106023,7 @@ cJV
 cCj
 cKC
 cqd
-cLD
+cdO
 cLR
 cMk
 cMz
@@ -106194,9 +106156,9 @@ aaa
 aac
 aaa
 aaa
-aeZ
+aae
 aft
-afu
+aae
 afN
 agv
 agG
@@ -106221,7 +106183,7 @@ agG
 ajr
 ajz
 aae
-ake
+aae
 akt
 aae
 aaa
@@ -106450,9 +106412,9 @@ aak
 aaa
 aac
 aaa
-aeZ
+aae
 aft
-afu
+aae
 afN
 agb
 aaa
@@ -106706,9 +106668,9 @@ aar
 aak
 aaa
 aac
-aeZ
+aae
 aft
-afu
+aae
 afN
 agb
 aae
@@ -106964,7 +106926,7 @@ abl
 abl
 abl
 afa
-afu
+aae
 afN
 agb
 aaa
@@ -107734,7 +107696,7 @@ adT
 aej
 aey
 abl
-afd
+afb
 aae
 afP
 aaa
@@ -110432,7 +110394,7 @@ cKO
 cLk
 cpP
 ahA
-cMu
+cwt
 cpP
 cLC
 cdO
@@ -114796,7 +114758,7 @@ cIh
 csr
 csq
 ccC
-cKv
+chZ
 ccC
 aaa
 aaa
@@ -115481,7 +115443,7 @@ amb
 amS
 anH
 aol
-apb
+akZ
 apO
 aqI
 arQ
@@ -122704,7 +122666,7 @@ azZ
 azX
 azX
 azX
-aRg
+aRh
 bcp
 bdM
 bfl
@@ -125011,7 +124973,7 @@ aae
 aae
 azZ
 arV
-aRg
+aRh
 aSw
 aTC
 aVu
@@ -128084,7 +128046,7 @@ aaa
 aaa
 aaa
 azY
-aBr
+aBm
 azY
 azY
 azY
@@ -129382,7 +129344,7 @@ aCS
 aPB
 aRn
 aRn
-aTP
+aRn
 aRn
 aRn
 aZj

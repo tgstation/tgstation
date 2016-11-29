@@ -842,7 +842,7 @@
 						if(!( H.hair_style == "Shaved") || !(H.hair_style == "Bald") || (HAIR in specflags))
 							H << "<span class='danger'>Your hair starts to \
 								fall out in clumps...<span>"
-							addtimer(src, "go_bald", 50, TRUE, H)
+							addtimer(src, "go_bald", 50, TIMER_UNIQUE, H)
 
 				if(75 to 100)
 					if(prob(1))
@@ -863,55 +863,72 @@
 ////////////////
 
 /datum/species/proc/movement_delay(mob/living/carbon/human/H)
-	. = 0
+	. = 0	//We start at 0.
+	var/flight = 0	//Check for flight and flying items
+	var/flightpack = 0
+	var/ignoreslow = 0
+	var/gravity = 0
+	var/obj/item/device/flightpack/F = H.get_flightpack()
+	if(istype(F) && F.flight)
+		flightpack = 1
+	if(H.movement_type & FLYING)
+		flight = 1
 
-	if(H.status_flags & GOTTAGOFAST)
-		. -= 1
-	if(H.status_flags & GOTTAGOREALLYFAST)
-		. -= 2
+	if(!flightpack)	//Check for chemicals and innate speedups and slowdowns if we're moving using our body and not a flying suit
+		if(H.status_flags & GOTTAGOFAST)
+			. -= 1
+		if(H.status_flags & GOTTAGOREALLYFAST)
+			. -= 2
+		. += speedmod
+	
+	if(H.status_flags & IGNORESLOWDOWN)
+		ignoreslow = 1
+	
+	if(H.has_gravity())
+		gravity = 1
 
-	if(!(H.status_flags & IGNORESLOWDOWN))
-		if(!H.has_gravity())
-			if(FLYING in specflags)
-				. += speedmod
-				return
-			// If there's no gravity we have the sanic speed of jetpack.
-			var/obj/item/weapon/tank/jetpack/J = H.back
-			var/obj/item/clothing/suit/space/hardsuit/C = H.wear_suit
-			if(!istype(J) && istype(C))
-				J = C.jetpack
+	if(!gravity)
+		var/obj/item/weapon/tank/jetpack/J = H.back
+		var/obj/item/clothing/suit/space/hardsuit/C = H.wear_suit
+		var/obj/item/organ/cyberimp/chest/thrusters/T = H.getorganslot("thrusters")
+		if(!istype(J) && istype(C))
+			J = C.jetpack
+		if(istype(J) && J.allow_thrust(0.01, H))	//Prevents stacking
+			. -= 2
+		else if(istype(T) && T.allow_thrust(0.01, H))
+			. -= 2
+		else if(flightpack && F.allow_thrust(0.01, src))
+			. -= 1
 
-			if(istype(J) && J.allow_thrust(0.01, H))
-				. -= 2
+	if(flightpack && F.boost)
+		. -= F.boost_speed
+	else if(flightpack && F.brake)
+		. += 2
+
+	if(!ignoreslow && !flightpack && gravity)
+		if(H.wear_suit)
+			. += H.wear_suit.slowdown
+		if(H.shoes)
+			. += H.shoes.slowdown
+		if(H.back)
+			. += H.back.slowdown
+		for(var/obj/item/I in H.held_items)
+			if(I.flags & HANDSLOW)
+				. += I.slowdown
+		var/health_deficiency = (100 - H.health + H.staminaloss)
+		var/hungry = (500 - H.nutrition) / 5 // So overeat would be 100 and default level would be 80
+		if(health_deficiency >= 40)
+			if(flight)
+				. += (health_deficiency / 75)
 			else
-				var/obj/item/organ/cyberimp/chest/thrusters/T = H.getorganslot("thrusters")
-				if(istype(T) && T.allow_thrust(0.01, H))
-					. -= 2
-
-		else
-			var/health_deficiency = (100 - H.health + H.staminaloss)
-			if(health_deficiency >= 40)
 				. += (health_deficiency / 25)
-
-			var/hungry = (500 - H.nutrition) / 5 // So overeat would be 100 and default level would be 80
-			if(hungry >= 70)
-				. += hungry / 50
-
-			if(H.wear_suit)
-				. += H.wear_suit.slowdown
-			if(H.shoes)
-				. += H.shoes.slowdown
-			if(H.back)
-				. += H.back.slowdown
-			for(var/obj/item/I in H.held_items)
-				if(I.flags & HANDSLOW)
-					. += I.slowdown
-			if((H.disabilities & FAT))
-				. += 1.5
-			if(H.bodytemperature < BODYTEMP_COLD_DAMAGE_LIMIT)
-				. += (BODYTEMP_COLD_DAMAGE_LIMIT - H.bodytemperature) / COLD_SLOWDOWN_FACTOR
-
-			. += speedmod
+		if((hungry >= 70) && !flight)		//Being hungry won't stop you from using flightpack controls/flapping your wings although it probably will in the wing case but who cares.
+			. += hungry / 50
+		if(H.disabilities & FAT)
+			. += (1.5 - flight)
+		if(H.bodytemperature < BODYTEMP_COLD_DAMAGE_LIMIT)
+			. += (BODYTEMP_COLD_DAMAGE_LIMIT - H.bodytemperature) / COLD_SLOWDOWN_FACTOR
+	return .
 
 //////////////////
 // ATTACK PROCS //
@@ -939,13 +956,23 @@
 			user << "<span class='notice'>You do not breathe, so you cannot perform CPR.</span>"
 
 /datum/species/proc/grab(mob/living/carbon/human/user, mob/living/carbon/human/target, datum/martial_art/attacker_style)
+	if(target.check_block())
+		target.visible_message("<span class='warning'>[target] blocks [user]'s grab attempt!</span>")
+		return 0
 	if(attacker_style && attacker_style.grab_act(user,target))
 		return 1
 	else
 		target.grabbedby(user)
 		return 1
 
+
+
+
+
 /datum/species/proc/harm(mob/living/carbon/human/user, mob/living/carbon/human/target, datum/martial_art/attacker_style)
+	if(target.check_block())
+		target.visible_message("<span class='warning'>[target] blocks [user]'s attack!</span>")
+		return 0
 	if(attacker_style && attacker_style.harm_act(user,target))
 		return 1
 	else
@@ -994,7 +1021,12 @@
 		else if(target.lying)
 			target.forcesay(hit_appends)
 
+
+
 /datum/species/proc/disarm(mob/living/carbon/human/user, mob/living/carbon/human/target, datum/martial_art/attacker_style)
+	if(target.check_block())
+		target.visible_message("<span class='warning'>[target] blocks [user]'s disarm attempt!</span>")
+		return 0
 	if(attacker_style && attacker_style.disarm_act(user,target))
 		return 1
 	else
@@ -1036,6 +1068,10 @@
 						"<span class='userdanger'>[user] attemped to disarm [target]!</span>", null, COMBAT_MESSAGE_RANGE)
 
 
+
+/datum/species/proc/spec_hitby(atom/movable/AM, mob/living/carbon/human/H)
+	return
+
 /datum/species/proc/spec_attack_hand(mob/living/carbon/human/M, mob/living/carbon/human/H, datum/martial_art/attacker_style = M.martial_art)
 	if(!istype(M))
 		return
@@ -1066,6 +1102,9 @@
 	if(user != H)
 		if(H.check_shields(I.force, "the [I.name]", I, MELEE_ATTACK, I.armour_penetration))
 			return 0
+	if(H.check_block())
+		H.visible_message("<span class='warning'>[H] blocks [I]!</span>")
+		return 0
 
 	var/hit_area
 	if(!affecting) //Something went wrong. Maybe the limb is missing?
@@ -1188,14 +1227,18 @@
 			H.adjustStaminaLoss(damage * hit_percent)
 	return 1
 
-/datum/species/proc/on_hit(obj/item/projectile/proj_type, mob/living/carbon/human/H)
+/datum/species/proc/on_hit(obj/item/projectile/P, mob/living/carbon/human/H)
 	// called when hit by a projectile
-	switch(proj_type)
+	switch(P.type)
 		if(/obj/item/projectile/energy/floramut) // overwritten by plants/pods
 			H.show_message("<span class='notice'>The radiation beam dissipates harmlessly through your body.</span>")
 		if(/obj/item/projectile/energy/florayield)
 			H.show_message("<span class='notice'>The radiation beam dissipates harmlessly through your body.</span>")
 	return
+
+/datum/species/proc/bullet_act(obj/item/projectile/P, mob/living/carbon/human/H)
+	// called before a projectile hit
+	return 0
 
 /////////////
 //BREATHING//
@@ -1316,10 +1359,10 @@
 //Space Move//
 //////////////
 
-/datum/species/proc/space_move()
+/datum/species/proc/space_move(mob/living/carbon/human/H)
 	return 0
 
-/datum/species/proc/negates_gravity()
+/datum/species/proc/negates_gravity(mob/living/carbon/human/H)
 	return 0
 
 

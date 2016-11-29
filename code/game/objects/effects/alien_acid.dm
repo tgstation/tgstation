@@ -64,14 +64,8 @@
 /obj/effect/acid/Crossed(AM as mob|obj)
 	if(isliving(AM))
 		var/mob/living/L = AM
-		if(ishuman(L))
-			var/mob/living/carbon/human/H = L
-			if(FLYING in H.dna.species.specflags)
-				return
-		else if(isanimal(L))
-			var/mob/living/simple_animal/SA = L
-			if(SA.flying)
-				return
+		if(L.movement_type & FLYING)
+			return
 		if(L.m_intent != "walk" && prob(40))
 			var/acid_used = min(acid_level*0.05, 20)
 			if(L.acid_act(10, acid_used, "feet"))
@@ -79,8 +73,9 @@
 				playsound(L, 'sound/weapons/sear.ogg', 50, 1)
 				L << "<span class='userdanger'>[src] burns you!</span>"
 
+//xenomorph corrosive acid
 /obj/effect/acid/alien
-	var/target_strength = 60
+	var/target_strength = 30
 
 
 /obj/effect/acid/alien/process()
@@ -96,11 +91,11 @@
 		else
 
 			switch(target_strength)
-				if(48)
+				if(24)
 					visible_message("<span class='warning'>[target] is holding up against the acid!</span>")
-				if(32)
-					visible_message("<span class='warning'>[target] is being melted by the acid!</span>")
 				if(16)
-					visible_message("<span class='warning'>[target] is struggling to withstand the acid!</span>")
+					visible_message("<span class='warning'>[target] is being melted by the acid!</span>")
 				if(8)
+					visible_message("<span class='warning'>[target] is struggling to withstand the acid!</span>")
+				if(4)
 					visible_message("<span class='warning'>[target] begins to crumble under the acid!</span>")

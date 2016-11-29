@@ -22,6 +22,14 @@
 	item_color = "ek"
 	can_adjust = 0
 
+/obj/item/clothing/under/scratch
+	name = "white suit"
+	desc = "A white suit, suitable for an excellent host"
+	icon_state = "scratch"
+	item_state = "scratch"
+	item_color = "scratch"
+	can_adjust = 0
+
 /obj/item/clothing/under/sl_suit
 	desc = "It's a very amish looking suit."
 	name = "amish suit"
@@ -538,6 +546,13 @@
 	desc = "A jolly dress, well suited to entertain your master, nuncle."
 	icon_state = "jester"
 	item_color = "jester"
+	can_adjust = 0
+
+/obj/item/clothing/under/geisha
+	name = "geisha suit"
+	desc = "Cute space ninja senpai not included."
+	icon_state = "geisha"
+	item_color = "geisha"
 	can_adjust = 0
 
 /obj/item/clothing/under/plasmaman

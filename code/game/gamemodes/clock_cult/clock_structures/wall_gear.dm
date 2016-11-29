@@ -2,13 +2,13 @@
 /obj/structure/destructible/clockwork/wall_gear
 	name = "massive gear"
 	icon_state = "wall_gear"
+	unanchored_icon = "wall_gear"
 	climbable = TRUE
-	max_integrity = 50
-	obj_integrity = 50
+	max_integrity = 150
+	obj_integrity = 150
 	layer = BELOW_OBJ_LAYER
 	construction_value = 3
 	desc = "A massive brass gear. You could probably secure or unsecure it with a wrench, or just climb over it."
-	clockwork_desc = "A massive brass gear. You could probably secure or unsecure it with a wrench, just climb over it, or proselytize it into brass sheets."
 	break_message = "<span class='warning'>The gear breaks apart into shards of alloy!</span>"
 	debris = list(/obj/item/clockwork/alloy_shards/large = 1, \
 	/obj/item/clockwork/alloy_shards/medium = 4, \
@@ -17,13 +17,23 @@
 /obj/structure/destructible/clockwork/wall_gear/displaced
 	anchored = FALSE
 
-/obj/structure/destructible/clockwork/wall_gear/examine(mob/user)
+/obj/structure/destructible/clockwork/wall_gear/New()
 	..()
-	user << "<span class='notice'>[src] is [anchored ? "":"not "]secured to the floor.</span>"
+	PoolOrNew(/obj/effect/overlay/temp/ratvar/gear, get_turf(src))
 
 /obj/structure/destructible/clockwork/wall_gear/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/wrench))
 		default_unfasten_wrench(user, I, 10)
+		return 1
+	else if(istype(I, /obj/item/weapon/screwdriver))
+		if(anchored)
+			user << "<span class='warning'>[src] needs to be unsecured to disassemble it!</span>"
+		else
+			playsound(src, I.usesound, 100, 1)
+			user.visible_message("<span class='warning'>[user] starts to disassemble [src].</span>", "<span class='notice'>You start to disassemble [src]...</span>")
+			if(do_after(user, 40/I.toolspeed, target = src) && !anchored)
+				user << "<span class='notice'>You disassemble [src].</span>"
+				deconstruct(TRUE)
 		return 1
 	else if(istype(I, /obj/item/stack/sheet/brass))
 		var/obj/item/stack/sheet/brass/W = I
@@ -55,4 +65,9 @@
 			else
 				user << "<span class='warning'>You need more brass to make a [anchored ? "false ":""]wall!</span>"
 		return 1
+	return ..()
+
+/obj/structure/destructible/clockwork/wall_gear/deconstruct(disassembled = TRUE)
+	if(!(flags & NODECONSTRUCT) && disassembled)
+		new /obj/item/stack/sheet/brass(loc, 3)
 	return ..()

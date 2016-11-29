@@ -107,6 +107,13 @@
 		if(i != attempts_to_find_unique_name && !findname(.))
 			break
 
+/proc/random_unique_plasmaman_name(attempts_to_find_unique_name=10)
+	for(var/i=1, i<=attempts_to_find_unique_name, i++)
+		. = capitalize(plasmaman_name())
+
+		if(i != attempts_to_find_unique_name && !findname(.))
+			break
+
 /proc/random_skin_tone()
 	return pick(skin_tones)
 
@@ -338,7 +345,7 @@ Proc for attack log creation, because really why not
 	for(var/j in 1 to amount)
 		var/atom/X = new spawn_type(T)
 		X.admin_spawned = admin_spawn
-	
+
 /proc/spawn_and_random_walk(spawn_type, target, amount, walk_chance=100, max_walk=3, always_max_walk=FALSE, admin_spawn=FALSE)
 	var/turf/T = get_turf(target)
 	var/step_count = 0

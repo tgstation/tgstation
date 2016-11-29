@@ -3,6 +3,7 @@
 	max_w_class = 2
 	max_combined_w_class = 50 // Limited by slots, not combined weight class
 	w_class = 4
+	rustle_jimmies = FALSE
 
 /obj/item/weapon/storage/internal/ClickAccessible(mob/user, depth=1)
 	if(loc)
