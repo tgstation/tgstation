@@ -1,0 +1,4 @@
+author: "Mervill"
+delete-after: True
+changes: 
+  - rscadd: "AI hologram can move seamlessly between holopads"
