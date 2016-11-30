@@ -331,8 +331,10 @@ var/next_mob_id = 0
 			visible_message("<span class='warning'>[src] has grabbed [M] passively!</span>")
 		if(!iscarbon(src))
 			M.LAssailant = null
+			changeNext_move(CLICK_CD_MELEE)
 		else
 			M.LAssailant = usr
+			changeNext_move(CLICK_CD_MELEE)
 
 /mob/verb/stop_pulling()
 	set name = "Stop Pulling"
