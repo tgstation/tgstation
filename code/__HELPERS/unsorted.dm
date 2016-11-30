@@ -1262,7 +1262,7 @@ B --><-- A
 				closest_atom = A
 	return closest_atom
 
-proc/pick_closest_path(value)
+/proc/pick_closest_path(value)
 	var/list/matches = get_fancy_list_of_types()
 	if (!isnull(value) && value!="")
 		matches = filter_fancy_list(matches, value)
