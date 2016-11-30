@@ -371,9 +371,9 @@
 	check_amount()
 
 /obj/item/borg/lollipop/proc/dispense(atom/A, mob/user)
-	if(candy >= 0)
+	if(candy <= 0)
 		user << "<span class='warning'>No lollipops left in storage!</span>"
-		return 0
+		return FALSE
 	var/turf/T = null
 	if(isturf(A))
 		T = A
@@ -393,7 +393,7 @@
 	return TRUE
 
 /obj/item/borg/lollipop/proc/shootL(atom/target, mob/living/user, params)
-	if(candy >= 0)
+	if(candy <= 0)
 		user << "<span class='warning'>Not enough gumballs left!</span>"
 		return FALSE
 	candy--
@@ -406,7 +406,7 @@
 	check_amount()
 
 /obj/item/borg/lollipop/proc/shootG(atom/target, mob/living/user, params)	//Most certainly a good idea.
-	if(candy >= 0)
+	if(candy <= 0)
 		user << "<span class='warning'>Not enough gumballs left!</span>"
 		return FALSE
 	candy--
