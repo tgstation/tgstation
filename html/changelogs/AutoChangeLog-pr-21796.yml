@@ -1,4 +1,0 @@
-author: "Cyberboss"
-delete-after: True
-changes: 
-  - bugfix: "Roundstart airlock electronics now properly generate the correct accesses"
