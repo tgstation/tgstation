@@ -173,7 +173,6 @@
 		emp_damage += damage
 	wearer << "<span class='userdanger'>Flightpack: BZZZZZZZZZZZT</span>"
 	wearer << "<span class='warning'>Flightpack: WARNING: Class [severity] EMP detected! Circuit damage at [(100/emp_disable_threshold)*emp_damage]!</span>"
-	wearer.confused += 3
 
 //action BUTTON CODE
 /obj/item/device/flightpack/ui_action_click(owner, action)
@@ -497,7 +496,6 @@
 		victimknockback(victim, crashpower, crashdir)
 		if(anchored)
 			damage = 1
-	world << "<span class='boldwarning'>DEBUG: CRASHED WITH POWER [crashpower]</span>"
 	if(damage)
 		crash_damage(density, anchored, momentum_speed, unmovablevictim.name)
 		userknockback(density, anchored, momentum_speed, dir)
@@ -512,7 +510,7 @@
 		knockmessage = "<span class='warning'>[wearer] soars into [victim], pushing them away!"
 	var/knockback = 0
 	var/stun = boost * 2 + (power - 2)
-	if(stun || (power == 3))
+	if((stun >= 0) || (power == 3))
 		knockmessage += " [wearer] dashes across [victim] at full impulse, knocking them [stun ? "down" : "away"]!"	//Impulse...
 	knockmessage += "</span>"
 	knockback += power
@@ -579,7 +577,6 @@
 	momentum_y = 0
 	if(flight)
 		disable_flight()
-	wearer.confused += 3
 
 /obj/item/device/flightpack/proc/enable_flight(forced = 0)
 	if(!suit)
