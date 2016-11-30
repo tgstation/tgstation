@@ -200,7 +200,7 @@
 		user << "<span class='warning'>[src]'s trigger is locked. This weapon doesn't have a firing pin installed!</span>"
 	return 0
 
-obj/item/weapon/gun/proc/recharge_newshot()
+/obj/item/weapon/gun/proc/recharge_newshot()
 	return
 
 /obj/item/weapon/gun/proc/process_fire(atom/target as mob|obj|turf, mob/living/user as mob|obj, message = 1, params, zone_override, bonus_spread = 0)

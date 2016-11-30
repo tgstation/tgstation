@@ -62,7 +62,7 @@ if rights_required == 0, then it simply checks if they are an admin.
 if it doesn't return 1 and show_msg=1 it will prints a message explaining why the check has failed
 generally it would be used like so:
 
-proc/admin_proc()
+/proc/admin_proc()
 	if(!check_rights(R_ADMIN)) return
 	world << "you have enough rights!"
 

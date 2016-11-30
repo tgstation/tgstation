@@ -883,7 +883,7 @@
 	..()
 
 //Trek Chems, used primarily by medibots. Only heals a specific damage type, but is very efficient.
-datum/reagent/medicine/bicaridine
+/datum/reagent/medicine/bicaridine
 	name = "Bicaridine"
 	id = "bicaridine"
 	description = "Restores bruising. Overdose causes it instead."
@@ -891,17 +891,17 @@ datum/reagent/medicine/bicaridine
 	color = "#C8A5DC"
 	overdose_threshold = 30
 
-datum/reagent/medicine/bicaridine/on_mob_life(mob/living/M)
+/datum/reagent/medicine/bicaridine/on_mob_life(mob/living/M)
 	M.adjustBruteLoss(-2*REM, 0)
 	..()
 	. = 1
 
-datum/reagent/medicine/bicaridine/overdose_process(mob/living/M)
+/datum/reagent/medicine/bicaridine/overdose_process(mob/living/M)
 	M.adjustBruteLoss(4*REM, 0)
 	..()
 	. = 1
 
-datum/reagent/medicine/dexalin
+/datum/reagent/medicine/dexalin
 	name = "Dexalin"
 	id = "dexalin"
 	description = "Restores oxygen loss. Overdose causes it instead."
@@ -909,17 +909,17 @@ datum/reagent/medicine/dexalin
 	color = "#C8A5DC"
 	overdose_threshold = 30
 
-datum/reagent/medicine/dexalin/on_mob_life(mob/living/M)
+/datum/reagent/medicine/dexalin/on_mob_life(mob/living/M)
 	M.adjustOxyLoss(-2*REM, 0)
 	..()
 	. = 1
 
-datum/reagent/medicine/dexalin/overdose_process(mob/living/M)
+/datum/reagent/medicine/dexalin/overdose_process(mob/living/M)
 	M.adjustOxyLoss(4*REM, 0)
 	..()
 	. = 1
 
-datum/reagent/medicine/kelotane
+/datum/reagent/medicine/kelotane
 	name = "Kelotane"
 	id = "kelotane"
 	description = "Restores fire damage. Overdose causes it instead."
@@ -927,17 +927,17 @@ datum/reagent/medicine/kelotane
 	color = "#C8A5DC"
 	overdose_threshold = 30
 
-datum/reagent/medicine/kelotane/on_mob_life(mob/living/M)
+/datum/reagent/medicine/kelotane/on_mob_life(mob/living/M)
 	M.adjustFireLoss(-2*REM, 0)
 	..()
 	. = 1
 
-datum/reagent/medicine/kelotane/overdose_process(mob/living/M)
+/datum/reagent/medicine/kelotane/overdose_process(mob/living/M)
 	M.adjustFireLoss(4*REM, 0)
 	..()
 	. = 1
 
-datum/reagent/medicine/antitoxin
+/datum/reagent/medicine/antitoxin
 	name = "Anti-Toxin"
 	id = "antitoxin"
 	description = "Heals toxin damage and removes toxins in the bloodstream. Overdose causes toxin damage."
@@ -945,7 +945,7 @@ datum/reagent/medicine/antitoxin
 	color = "#C8A5DC"
 	overdose_threshold = 30
 
-datum/reagent/medicine/antitoxin/on_mob_life(mob/living/M)
+/datum/reagent/medicine/antitoxin/on_mob_life(mob/living/M)
 	M.adjustToxLoss(-2*REM, 0)
 	for(var/datum/reagent/toxin/R in M.reagents.reagent_list)
 		if(R != src)
@@ -953,24 +953,24 @@ datum/reagent/medicine/antitoxin/on_mob_life(mob/living/M)
 	..()
 	. = 1
 
-datum/reagent/medicine/antitoxin/overdose_process(mob/living/M)
+/datum/reagent/medicine/antitoxin/overdose_process(mob/living/M)
 	M.adjustToxLoss(4*REM, 0) // End result is 2 toxin loss taken, because it heals 2 and then removes 4.
 	..()
 	. = 1
 
-datum/reagent/medicine/inaprovaline
+/datum/reagent/medicine/inaprovaline
 	name = "Inaprovaline"
 	id = "inaprovaline"
 	description = "Stabilizes the breathing of patients. Good for those in critical condition."
 	reagent_state = LIQUID
 	color = "#C8A5DC"
 
-datum/reagent/medicine/inaprovaline/on_mob_life(mob/living/M)
+/datum/reagent/medicine/inaprovaline/on_mob_life(mob/living/M)
 	if(M.losebreath >= 5)
 		M.losebreath -= 5
 	..()
 
-datum/reagent/medicine/tricordrazine
+/datum/reagent/medicine/tricordrazine
 	name = "Tricordrazine"
 	id = "tricordrazine"
 	description = "Has a high chance to heal all types of damage. Overdose instead causes it."
@@ -978,7 +978,7 @@ datum/reagent/medicine/tricordrazine
 	color = "#C8A5DC"
 	overdose_threshold = 30
 
-datum/reagent/medicine/tricordrazine/on_mob_life(mob/living/M)
+/datum/reagent/medicine/tricordrazine/on_mob_life(mob/living/M)
 	if(prob(80))
 		M.adjustBruteLoss(-1*REM, 0)
 		M.adjustFireLoss(-1*REM, 0)
@@ -987,7 +987,7 @@ datum/reagent/medicine/tricordrazine/on_mob_life(mob/living/M)
 		. = 1
 	..()
 
-datum/reagent/medicine/tricordrazine/overdose_process(mob/living/M)
+/datum/reagent/medicine/tricordrazine/overdose_process(mob/living/M)
 	M.adjustToxLoss(2*REM, 0)
 	M.adjustOxyLoss(2*REM, 0)
 	M.adjustBruteLoss(2*REM, 0)
@@ -995,14 +995,14 @@ datum/reagent/medicine/tricordrazine/overdose_process(mob/living/M)
 	..()
 	. = 1
 
-datum/reagent/medicine/syndicate_nanites //Used exclusively by Syndicate medical cyborgs
+/datum/reagent/medicine/syndicate_nanites //Used exclusively by Syndicate medical cyborgs
 	name = "Restorative Nanites"
 	id = "syndicate_nanites"
 	description = "Miniature medical robots that swiftly restore bodily damage."
 	reagent_state = SOLID
 	color = "#555555"
 
-datum/reagent/medicine/syndicate_nanites/on_mob_life(mob/living/M)
+/datum/reagent/medicine/syndicate_nanites/on_mob_life(mob/living/M)
 	M.adjustBruteLoss(-5*REM, 0) //A ton of healing - this is a 50 telecrystal investment.
 	M.adjustFireLoss(-5*REM, 0)
 	M.adjustOxyLoss(-15, 0)

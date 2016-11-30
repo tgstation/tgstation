@@ -1,13 +1,13 @@
-proc/consonant()
+/proc/consonant()
 	return pick("B","C","D","F","G","H","J","K","L","M","N","P","Q","R","S","T","V","W","X","Y","Z")
 
-proc/vowel()
+/proc/vowel()
 	return pick("A", "E", "I", "O", "U")
 
-proc/ucfirst(var/S)
+/proc/ucfirst(var/S)
 	return "[uppertext(ascii2text(text2ascii(S, 1)))][copytext(S, 2)]"
 
-proc/ucfirsts(var/S)
+/proc/ucfirsts(var/S)
 	var/list/L = splittext(S, " ")
 	var/list/M = list()
 	for (var/P in L)
@@ -16,7 +16,7 @@ proc/ucfirsts(var/S)
 
 var/global/list/FrozenAccounts = list()
 
-proc/list_frozen()
+/proc/list_frozen()
 	for (var/A in FrozenAccounts)
 		usr << "[A]: [length(FrozenAccounts[A])] borrows"
 
