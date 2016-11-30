@@ -326,15 +326,14 @@ var/next_mob_id = 0
 	update_pull_hud_icon()
 
 	if(ismob(AM))
+	changeNext_move(CLICK_CD_MELEE)
 		var/mob/M = AM
 		if(!supress_message)
 			visible_message("<span class='warning'>[src] has grabbed [M] passively!</span>")
 		if(!iscarbon(src))
 			M.LAssailant = null
-			changeNext_move(CLICK_CD_MELEE)
 		else
 			M.LAssailant = usr
-			changeNext_move(CLICK_CD_MELEE)
 
 /mob/verb/stop_pulling()
 	set name = "Stop Pulling"
