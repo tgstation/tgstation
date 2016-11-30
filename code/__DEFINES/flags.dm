@@ -49,7 +49,7 @@
 #define PASSMOB			16
 #define LETPASSTHROW	32
 
-//flags for species
+//flags for species //these aren't fucking flags you idiot
 
 #define MUTCOLORS		1
 #define HAIR			2

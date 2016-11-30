@@ -275,7 +275,7 @@
 /datum/reagent/medicine/salglu_solution/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message = 1)
 	if(ishuman(M) && method == INJECT)
 		var/mob/living/carbon/human/H = M
-		if(H.dna && !(NOBLOOD in H.dna.species.specflags))
+		if(H.dna && !(NOBLOOD in H.dna.species.species_traits))
 			var/efficiency = (BLOOD_VOLUME_NORMAL-H.blood_volume)/700 + 0.2//The lower the blood of the patient, the better it is as a blood substitute.
 			efficiency = min(0.75,efficiency)
 			//As it's designed for an IV drip, make large injections not as effective as repeated small injections.

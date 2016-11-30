@@ -513,7 +513,7 @@ BLIND     // can't see anything
 
 	if(mutantrace_variation && ishuman(user))
 		var/mob/living/carbon/human/H = user
-		if(DIGITIGRADE in H.dna.species.specflags)
+		if(DIGITIGRADE in H.dna.species.species_traits)
 			adjusted = DIGITIGRADE_STYLE
 		H.update_inv_w_uniform()
 
