@@ -121,7 +121,7 @@
 			"Remove Nulls" = "?_src_=vars;listnulls=[refid]",
 			"Remove Dupes" = "?_src_=vars;listdupes=[refid]",
 			"Set len" = "?_src_=vars;listlen=[refid]",
-			"Shuffle" = "?_src_=vars;listshuttle=[refid]"
+			"Shuffle" = "?_src_=vars;listshuffle=[refid]"
 			)
 	else
 		dropdownoptions = D.vv_get_dropdown()
@@ -378,7 +378,7 @@
 
 #define VV_HTML_ENCODE(thing) ( sanitize ? html_encode(thing) : thing )
 /proc/debug_variable(name, value, level, datum/DA = null, sanitize = TRUE)
-	var/html = ""
+	var/header
 	if(DA)
 		if (istype(DA, /list))
 			var/index = name
@@ -386,17 +386,18 @@
 				name = DA[name] //name is really the index until this line
 			else
 				value = DA[name]
-			html += "<li style='backgroundColor:white'>(<a href='?_src_=vars;listedit=\ref[DA];index=[index]'>E</a>) (<a href='?_src_=vars;listchange=\ref[DA];index=[index]'>C</a>) (<a href='?_src_=vars;listremove=\ref[DA];index=[index]'>-</a>) "
+			header = "<li style='backgroundColor:white'>(<a href='?_src_=vars;listedit=\ref[DA];index=[index]'>E</a>) (<a href='?_src_=vars;listchange=\ref[DA];index=[index]'>C</a>) (<a href='?_src_=vars;listremove=\ref[DA];index=[index]'>-</a>) "
 		else
-			html += "<li style='backgroundColor:white'>(<a href='?_src_=vars;datumedit=\ref[DA];varnameedit=[name]'>E</a>) (<a href='?_src_=vars;datumchange=\ref[DA];varnamechange=[name]'>C</a>) (<a href='?_src_=vars;datummass=\ref[DA];varnamemass=[name]'>M</a>) "
+			header = "<li style='backgroundColor:white'>(<a href='?_src_=vars;datumedit=\ref[DA];varnameedit=[name]'>E</a>) (<a href='?_src_=vars;datumchange=\ref[DA];varnamechange=[name]'>C</a>) (<a href='?_src_=vars;datummass=\ref[DA];varnamemass=[name]'>M</a>) "
 	else
-		html += "<li>"
+		header = "<li>"
 
+	var/item
 	if (isnull(value))
-		html += "[VV_HTML_ENCODE(name)] = <span class='value'>null</span>"
+		item = "[VV_HTML_ENCODE(name)] = <span class='value'>null</span>"
 
 	else if (istext(value))
-		html += "[VV_HTML_ENCODE(name)] = <span class='value'>\"[VV_HTML_ENCODE(value)]\"</span>"
+		item = "[VV_HTML_ENCODE(name)] = <span class='value'>\"[VV_HTML_ENCODE(value)]\"</span>"
 
 	else if (isicon(value))
 		#ifdef VARSICON
@@ -404,9 +405,9 @@
 		var/rnd = rand(1,10000)
 		var/rname = "tmp\ref[I][rnd].png"
 		usr << browse_rsc(I, rname)
-		html += "[VV_HTML_ENCODE(name)] = (<span class='value'>[value]</span>) <img class=icon src=\"[rname]\">"
+		item = "[VV_HTML_ENCODE(name)] = (<span class='value'>[value]</span>) <img class=icon src=\"[rname]\">"
 		#else
-		html += "[VV_HTML_ENCODE(name)] = /icon (<span class='value'>[value]</span>)"
+		item = "[VV_HTML_ENCODE(name)] = /icon (<span class='value'>[value]</span>)"
 		#endif
 
 /*		else if (istype(value, /image))
@@ -421,21 +422,24 @@
 		#endif
 */
 	else if (isfile(value))
-		html += "[VV_HTML_ENCODE(name)] = <span class='value'>'[value]'</span>"
+		item = "[VV_HTML_ENCODE(name)] = <span class='value'>'[value]'</span>"
 
-	else if (istype(value, /client))
-		var/client/C = value
-		html += "<a href='?_src_=vars;Vars=\ref[value]'>[VV_HTML_ENCODE(name)] \ref[value]</a> = [C] [C.type]"
+	//else if (istype(value, /client))
+	//	var/client/C = value
+	//	item = "<a href='?_src_=vars;Vars=\ref[value]'>[VV_HTML_ENCODE(name)] \ref[value]</a> = [C] [C.type]"
 
 	else if (istype(value, /datum))
 		var/datum/D = value
-		html += "<a href='?_src_=vars;Vars=\ref[value]'>[VV_HTML_ENCODE(name)] \ref[value]</a> = [D.type]"
+		if ("[D]" != "[D.type]") //if the thing as a name var, lets use it.
+			item = "<a href='?_src_=vars;Vars=\ref[value]'>[VV_HTML_ENCODE(name)] \ref[value]</a> = [D] [D.type]"
+		else
+			item = "<a href='?_src_=vars;Vars=\ref[value]'>[VV_HTML_ENCODE(name)] \ref[value]</a> = [D.type]"
 
 	else if (istype(value, /list))
 		var/list/L = value
-		html += "<a href='?_src_=vars;Vars=\ref[value]'>[VV_HTML_ENCODE(name)] = /list ([L.len])</a>"
+		var/list/items = list()
+
 		if (L.len > 0 && !(name == "underlays" || name == "overlays" || L.len > 500))
-			html += "<ul>"
 			for (var/i in 1 to L.len)
 				var/key = L[i]
 				var/val
@@ -445,16 +449,16 @@
 					val = key
 					key = i
 
-				html += debug_variable(key, val, level + 1, sanitize = sanitize)
+				items += debug_variable(key, val, level + 1, sanitize = sanitize)
 
-			html += "</ul>"
+			item = "<a href='?_src_=vars;Vars=\ref[value]'>[VV_HTML_ENCODE(name)] = /list ([L.len])</a><ul>[items.Join()]</ul>"
+		else
+			item = "<a href='?_src_=vars;Vars=\ref[value]'>[VV_HTML_ENCODE(name)] = /list ([L.len])</a>"
 
 	else
-		html += "[VV_HTML_ENCODE(name)] = <span class='value'>[VV_HTML_ENCODE(value)]</span>"
+		item = "[VV_HTML_ENCODE(name)] = <span class='value'>[VV_HTML_ENCODE(value)]</span>"
 
-	html += "</li>"
-
-	return html
+	return "[header][item]</li>"
 
 #undef VV_HTML_ENCODE
 
@@ -639,7 +643,7 @@
 				usr << "This can only be used on instances of type /list"
 				return
 
-			L = uniqueList(L)
+			uniqueList_inplace(L)
 			world.log << "### ListVarEdit by [src]: /list contents: CLEAR DUPES"
 			log_admin("[key_name(src)] modified list's contents: CLEAR DUPES")
 			message_admins("[key_name_admin(src)] modified list's contents: CLEAR DUPES")
@@ -675,7 +679,7 @@
 				usr << "This can only be used on instances of type /list"
 				return
 
-			L = shuffle(L)
+			shuffle_inplace(L)
 			world.log << "### ListVarEdit by [src]: /list contents: SHUFFLE"
 			log_admin("[key_name(src)] modified list's contents: SHUFFLE")
 			message_admins("[key_name_admin(src)] modified list's contents: SHUFFLE")
