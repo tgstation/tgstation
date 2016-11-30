@@ -763,3 +763,10 @@
 	for(var/X in internal_organs)
 		var/obj/item/organ/I = X
 		I.Insert(src)
+
+/mob/living/carbon/vv_get_dropdown()
+	. = ..()
+	. += "---"
+	.["Make AI"] = "?_src_=vars;makeai=\ref[src]"
+	.["Modify bodypart"] = "<option value='?_src_=vars;editbodypart=\ref[src]'>Modify bodypart</option>"
+	.["Modify organs"] = "?_src_=vars;editorgans=\ref[src]"

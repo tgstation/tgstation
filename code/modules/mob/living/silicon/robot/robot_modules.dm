@@ -391,7 +391,7 @@
 	basic_modules = list(/obj/item/device/assembly/flash/cyborg, /obj/item/weapon/reagent_containers/borghypo/syndicate, /obj/item/weapon/twohanded/shockpaddles/syndicate, \
 	/obj/item/device/healthanalyzer, /obj/item/weapon/surgical_drapes, /obj/item/weapon/retractor, /obj/item/weapon/hemostat, \
 	/obj/item/weapon/cautery, /obj/item/weapon/scalpel, /obj/item/weapon/melee/energy/sword/cyborg/saw, /obj/item/roller/robo, \
-	/obj/item/weapon/card/emag, /obj/item/weapon/crowbar/cyborg, /obj/item/weapon/pinpointer/syndicate/cyborg, /obj/item/stack/medical/gauze/cyborg)
+	/obj/item/weapon/card/emag, /obj/item/weapon/crowbar/cyborg, /obj/item/weapon/pinpointer/syndicate/cyborg, /obj/item/stack/medical/gauze/cyborg, /obj/item/weapon/gun/medbeam)
 	ratvar_modules = list(/obj/item/clockwork/slab/cyborg/medical, /obj/item/clockwork/ratvarian_spear)
 	cyborg_base_icon = "synd_medical"
 	moduleselect_icon = "malf"

@@ -1,0 +1,4 @@
+author: "Joan"
+delete-after: True
+changes: 
+  - rscadd: "The Ark of the Clockwork Justicar now converts all silicons once it finishes proselytizing the station."

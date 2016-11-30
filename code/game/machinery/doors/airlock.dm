@@ -143,9 +143,9 @@ var/list/airlock_overlays = list()
 	FoundDoor.cyclelinkedairlock = src
 	cyclelinkedairlock = FoundDoor
 
-/obj/machinery/door/airlock/on_varedit(varname)
+/obj/machinery/door/airlock/vv_edit_var(var_name)
 	. = ..()
-	switch (varname)
+	switch (var_name)
 		if ("cyclelinkeddir")
 			cyclelinkairlock()
 
@@ -1490,7 +1490,8 @@ var/list/airlock_overlays = list()
 			var/obj/item/weapon/electronics/airlock/ae
 			if(!electronics)
 				ae = new/obj/item/weapon/electronics/airlock( src.loc )
-				if(req_one_access)
+				gen_access()
+				if(req_one_access.len)
 					ae.one_access = 1
 					ae.accesses = src.req_one_access
 				else

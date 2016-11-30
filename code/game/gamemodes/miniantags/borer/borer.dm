@@ -747,7 +747,7 @@ var/total_borer_hosts_needed = 10
 	chemicals -= 75
 
 
-mob/living/carbon/proc/release_control()
+/mob/living/carbon/proc/release_control()
 
 	set category = "Borer"
 	set name = "Release Control"

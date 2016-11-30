@@ -134,7 +134,8 @@
 /obj/item/proc/GetID()
 	return null
 
-/obj/proc/check_access(obj/item/I)
+//Call this before using req_access or req_one_access directly
+/obj/proc/gen_access()
 	//These generations have been moved out of /obj/New() because they were slowing down the creation of objects that never even used the access system.
 	if(!src.req_access)
 		src.req_access = list()
@@ -153,6 +154,9 @@
 				var/n = text2num(x)
 				if(n)
 					req_one_access += n
+
+/obj/proc/check_access(obj/item/I)
+	gen_access()
 
 	if(!istype(src.req_access, /list)) //something's very wrong
 		return 1

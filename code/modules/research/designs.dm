@@ -368,7 +368,7 @@ other types of metals and chemistry for reagents).
 	build_path = /obj/item/clothing/glasses/hud/security/night
 	category = list("Equipment")
 
-datum/design/diagnostic_hud
+/datum/design/diagnostic_hud
 	name = "Diagnostic HUD"
 	desc = "A HUD used to analyze and determine faults within robotic machinery."
 	id = "dianostic_hud"
@@ -378,7 +378,7 @@ datum/design/diagnostic_hud
 	build_path = /obj/item/clothing/glasses/hud/diagnostic
 	category = list("Equipment")
 
-datum/design/diagnostic_hud_night
+/datum/design/diagnostic_hud_night
 	name = "Night Vision Diagnostic HUD"
 	desc = "Upgraded version of the diagnostic HUD designed to function during a power failure."
 	id = "dianostic_hud_night"

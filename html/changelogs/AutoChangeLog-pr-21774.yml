@@ -1,4 +1,0 @@
-author: "Swindly"
-delete-after: True
-changes: 
-  - rscadd: "Microwaves now heat open reagent containers to 1000K."
