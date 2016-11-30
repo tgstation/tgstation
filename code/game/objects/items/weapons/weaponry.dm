@@ -5,23 +5,38 @@
 /obj/item/weapon/examine(mob/user)
 	..()
 	if(unique_rename)
-		user << "<span class='notice'>Use a pen on it to rename it.</span>"
+		user << "<span class='notice'>Use a pen on it to rename it or change its description.</span>"
 
 /obj/item/weapon/attackby(obj/item/I, mob/user, params)
 	if(unique_rename)
 		if(istype(I, /obj/item/weapon/pen))
-			rename_weapon(user)
+			var/penchoice = alert("What would you like to edit?", "Rename or change description?", "Rename", "Change description", "Cancel")
+			if(!qdeleted(src) && user.canUseTopic(src, BE_CLOSE))
+				if(penchoice == "Rename")
+					rename_weapon(user)
+				if(penchoice == "Change description")
+					redesc_weapon(user)
 	..()
 
 /obj/item/weapon/proc/rename_weapon(mob/M)
 	var/input = stripped_input(M,"What do you want to name the weapon?", ,"", MAX_NAME_LEN)
 
-	if(src && input && !M.stat && in_range(M,src) && !M.restrained() && M.canmove)
+	if(!qdeleted(src) && M.canUseTopic(src, BE_CLOSE) && input != "")
 		name = input
 		M << "You name the weapon [input]. Say hello to your new friend."
 		return
+	else
+		return
 
+/obj/item/weapon/proc/redesc_weapon(mob/M)
+	var/input = stripped_input(M,"Describe your object here", ,"", 100)
 
+	if(!qdeleted(src) && M.canUseTopic(src, BE_CLOSE) && input != "")
+		desc = input
+		M << "You have successfully changed the object's description."
+		return
+	else
+		return
 
 /obj/item/weapon/banhammer
 	desc = "A banhammer"

@@ -1356,7 +1356,7 @@
 
 //Misc reagents
 
-datum/reagent/romerol
+/datum/reagent/romerol
 	name = "romerol"
 	// the REAL zombie powder
 	id = "romerol"

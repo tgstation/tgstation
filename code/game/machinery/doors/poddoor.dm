@@ -61,6 +61,6 @@
 /obj/machinery/door/poddoor/try_to_activate_door(mob/user)
  	return
 
-obj/machinery/door/poddoor/try_to_crowbar(obj/item/I, mob/user)
+/obj/machinery/door/poddoor/try_to_crowbar(obj/item/I, mob/user)
 	if(stat & NOPOWER)
 		open(1)

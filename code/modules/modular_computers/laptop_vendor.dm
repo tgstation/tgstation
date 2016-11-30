@@ -240,7 +240,7 @@
 		ui.set_autoupdate(state = 1)
 
 
-obj/machinery/lapvend/attackby(obj/item/I as obj, mob/user as mob)
+/obj/machinery/lapvend/attackby(obj/item/I as obj, mob/user as mob)
 	if(istype(I,/obj/item/stack/spacecash))
 		var/obj/item/stack/spacecash/c = I
 

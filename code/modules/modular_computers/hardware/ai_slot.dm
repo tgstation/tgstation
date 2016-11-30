@@ -11,7 +11,7 @@
 	var/locked = FALSE
 
 
-obj/item/weapon/computer_hardware/ai_slot/examine(mob/user)
+/obj/item/weapon/computer_hardware/ai_slot/examine(mob/user)
 	..()
 	if(stored_card)
 		user << "There appears to be an intelliCard loaded. There appears to be a pinhole protecting a manual eject button. A screwdriver could probably press it"

@@ -227,7 +227,7 @@ var/datum/subsystem/garbage_collector/SSgarbage
 
 	find_references(FALSE)
 
-datum/proc/find_references(skip_alert)
+/datum/proc/find_references(skip_alert)
 	set background = 1
 	running_find_references = type
 	if(usr && usr.client)
