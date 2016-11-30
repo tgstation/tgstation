@@ -880,9 +880,10 @@
 		user << "\icon[src]<span class='userdanger'>|[message]</span>"
 
 /obj/item/clothing/suit/space/hardsuit/flightsuit/examine(mob/user)
-	usermessage("SUIT: [locked ? "LOCKED" : "UNLOCKED"]")
-	usermessage("FLIGHTPACK: [deployedpack ? "ENGAGED" : "DISENGAGED"] FLIGHTSHOES : [deployedshoes ? "ENGAGED" : "DISENGAGED"] HELMET : [suittoggled ? "ENGAGED" : "DISENGAGED"]")
-	usermessage("Its maintainence panel is [maint_panel ? "OPEN" : "CLOSED"].")
+	..()
+	user << "<span class='boldnotice'>SUIT: [locked ? "LOCKED" : "UNLOCKED"]</span>"
+	user << "<span class='boldnotice'>FLIGHTPACK: [deployedpack ? "ENGAGED" : "DISENGAGED"] FLIGHTSHOES : [deployedshoes ? "ENGAGED" : "DISENGAGED"] HELMET : [suittoggled ? "ENGAGED" : "DISENGAGED"]</span>"
+	user << "<span class='boldnotice'>Its maintainence panel is [maint_panel ? "OPEN" : "CLOSED"]</span>"
 
 /obj/item/clothing/suit/space/hardsuit/flightsuit/Destroy()
 	dropped()
