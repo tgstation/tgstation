@@ -716,7 +716,7 @@
 	id = "flightsuit"
 	build_type = MECHFAB
 	build_path = /obj/item/clothing/suit/space/hardsuit/flightsuit
-	materials = list(MAT_METAL=16000, MAT_GLASS = 80000, MAT_DIAMOND = 200, MAT_GOLD = 3000, MAT_SILVER = 3000, MAT_TITANIUM = 16000)	//This expensive enough for you?
+	materials = list(MAT_METAL=16000, MAT_GLASS = 8000, MAT_DIAMOND = 200, MAT_GOLD = 3000, MAT_SILVER = 3000, MAT_TITANIUM = 16000)	//This expensive enough for you?
 	construction_time = 250
 	category = list("Misc")
 
