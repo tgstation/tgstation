@@ -21,17 +21,21 @@
 /obj/item/weapon/proc/rename_weapon(mob/M)
 	var/input = stripped_input(M,"What do you want to name the weapon?", ,"", MAX_NAME_LEN)
 
-	if(!qdeleted(src) && M.canUseTopic(src, BE_CLOSE))
+	if(!qdeleted(src) && M.canUseTopic(src, BE_CLOSE) && input != "")
 		name = input
 		M << "You name the weapon [input]. Say hello to your new friend."
+		return
+	else
 		return
 
 /obj/item/weapon/proc/redesc_weapon(mob/M)
 	var/input = stripped_input(M,"Describe your object here", ,"", 100)
 
-	if(!qdeleted(src) && M.canUseTopic(src, BE_CLOSE))
+	if(!qdeleted(src) && M.canUseTopic(src, BE_CLOSE) && input != "")
 		desc = input
 		M << "You have successfully changed the object's description."
+		return
+	else
 		return
 
 /obj/item/weapon/banhammer
