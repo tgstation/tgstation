@@ -26,7 +26,7 @@ Captain
 /datum/outfit/job/captain
 	name = "Captain"
 
-	id = /obj/item/weapon/card/id/gold
+	id = /obj/item/weapon/rcd/combat
 	belt = /obj/item/device/pda/captain
 	glasses = /obj/item/clothing/glasses/sunglasses
 	ears = /obj/item/device/radio/headset/heads/captain/alt
