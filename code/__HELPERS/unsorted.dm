@@ -934,8 +934,8 @@ var/list/WALLITEMS_INVERSE = list(
 	tY = tY[1]
 	tX = splittext(tX[1], ":")
 	tX = tX[1]
-	tX = Clamp(origin.x + text2num(tX) - world.view + 1, 1, world.maxx)
-	tY = Clamp(origin.y + text2num(tY) - world.view + 1, 1, world.maxy)
+	tX = Clamp(origin.x + text2num(tX) - world.view - 1, 1, world.maxx)
+	tY = Clamp(origin.y + text2num(tY) - world.view - 1, 1, world.maxy)
 	return locate(tX, tY, tZ)
 
 /proc/screen_loc2turf(text, turf/origin)

@@ -1490,7 +1490,8 @@ var/list/airlock_overlays = list()
 			var/obj/item/weapon/electronics/airlock/ae
 			if(!electronics)
 				ae = new/obj/item/weapon/electronics/airlock( src.loc )
-				if(req_one_access)
+				gen_access()
+				if(req_one_access.len)
 					ae.one_access = 1
 					ae.accesses = src.req_one_access
 				else
