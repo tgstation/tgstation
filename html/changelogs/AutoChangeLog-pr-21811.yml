@@ -1,0 +1,4 @@
+author: "Gun Hog"
+delete-after: True
+changes: 
+  - bugfix: "Syndicate Medical Cyborg hyposprays now properly work through Operative hardsuits and other thick clothing."

@@ -275,7 +275,7 @@
 	rev_mind.special_role = "Revolutionary"
 	update_rev_icons_added(rev_mind)
 	if(jobban_isbanned(rev_mind.current, ROLE_REV))
-		addtimer(src, "replace_jobbaned_player", 0, FALSE, rev_mind.current, ROLE_REV, ROLE_REV)
+		addtimer(src, "replace_jobbaned_player", 0, TIMER_NORMAL, rev_mind.current, ROLE_REV, ROLE_REV)
 	return 1
 //////////////////////////////////////////////////////////////////////////////
 //Deals with players being converted from the revolution (Not a rev anymore)//  // Modified to handle borged MMIs.  Accepts another var if the target is being borged at the time  -- Polymorph.
@@ -352,9 +352,14 @@
 	if(finished == 1)
 		feedback_set_details("round_end_result","win - heads killed")
 		world << "<span class='redtext'>The heads of staff were killed or exiled! The revolutionaries win!</span>"
+
+		ticker.news_report = REVS_WIN
+
 	else if(finished == 2)
 		feedback_set_details("round_end_result","loss - rev heads killed")
 		world << "<span class='redtext'>The heads of staff managed to stop the revolution!</span>"
+
+		ticker.news_report = REVS_LOSE
 	..()
 	return 1
 

@@ -438,18 +438,21 @@
 	if (s_active && !(s_active.ClickAccessible(src, depth=STORAGE_VIEW_DEPTH) || s_active.Adjacent(src)))
 		s_active.close(src)
 
-/mob/living/movement_delay()
+/mob/living/movement_delay(ignorewalk = 0)
 	. = ..()
-	if(isopenturf(loc))
+	if(isopenturf(loc) && !is_flying())
 		var/turf/open/T = loc
 		. += T.slowdown
-	switch(m_intent)
-		if("run")
-			if(drowsyness > 0)
-				. += 6
-			. += config.run_speed
-		if("walk")
-			. += config.walk_speed
+	if(ignorewalk)
+		. += config.run_speed
+	else
+		switch(m_intent)
+			if("run")
+				if(drowsyness > 0)
+					. += 6
+				. += config.run_speed
+			if("walk")
+				. += config.walk_speed
 
 /mob/living/proc/makeTrail(turf/T)
 	if(!has_gravity())
@@ -603,6 +606,8 @@
 		fixed = 1
 	if(on && !floating && !fixed)
 		animate(src, pixel_y = pixel_y + 2, time = 10, loop = -1)
+		sleep(10)
+		animate(src, pixel_y = pixel_y - 2, time = 10, loop = -1)
 		floating = 1
 	else if(((!on || fixed) && floating))
 		animate(src, pixel_y = get_standard_pixel_y_offset(lying), time = 10)

@@ -9,6 +9,7 @@
 	var/admin_notes
 
 	var/credit_cost = INFINITY
+	var/can_be_bought = TRUE
 
 /datum/map_template/shuttle/New()
 	shuttle_id = "[port_id]_[suffix]"
@@ -34,11 +35,10 @@
 
 /datum/map_template/shuttle/emergency/airless
 	suffix = "airless"
-	name = "(Shuttle Under Construction)"
-	description = "The documentation hasn't been finished yet for this \
-		shuttle.\n\
-		In case of emergency: Break glass."
+	name = "Build your own shuttle kit"
+	description = "Save money by building your own shuttle! The chassis will dock upon purchase, but launch will have to be authorized as usual via shuttle call. Interior and atmosphere not included."
 	admin_notes = "No brig, no medical facilities, no air."
+	credit_cost = -7500
 
 /datum/map_template/shuttle/emergency/asteroid
 	suffix = "asteroid"
@@ -141,6 +141,7 @@
 	suffix = "pubby"
 	name = "Pubby Station Emergency Shuttle"
 	description = "A small, but feature complete shuttle. It boasts a card table to keep crew members occupied on the long flight home."
+	credit_cost = 1000
 
 /datum/map_template/shuttle/emergency/supermatter
 	suffix = "supermatter"

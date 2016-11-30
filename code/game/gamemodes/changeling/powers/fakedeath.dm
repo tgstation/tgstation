@@ -18,7 +18,7 @@
 	user.update_stat()
 	user.update_canmove()
 
-	addtimer(src, "ready_to_regenerate", LING_FAKEDEATH_TIME, FALSE, user)
+	addtimer(src, "ready_to_regenerate", LING_FAKEDEATH_TIME, TIMER_NORMAL, user)
 
 	feedback_add_details("changeling_powers","FD")
 	return 1

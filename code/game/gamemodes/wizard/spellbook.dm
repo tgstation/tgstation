@@ -440,6 +440,14 @@
 	category = "Defensive"
 	cost = 1
 
+/datum/spellbook_entry/item/warpwhistle
+	name = "Warp Whistle"
+	desc = "A strange whistle that will transport you to a distant safe place on the station. There is a window of vulnerability at the begining of every use."
+	item_path = /obj/item/warpwhistle
+	log_name = "WW"
+	category = "Mobility"
+	cost = 1
+
 /datum/spellbook_entry/summon
 	name = "Summon Stuff"
 	category = "Rituals"
@@ -489,26 +497,6 @@
 	if(!ticker.mode) // In case spellbook is placed on map
 		return 0
 	return (ticker.mode.name != "ragin' mages" && !config.no_summon_magic)
-
-/datum/spellbook_entry/summon/multisword
-	name = "Multiverse War"
-	category = "Rituals"
-	desc = "Triggers a multiverse war in which the crew (and you) must summon copies of yourself from alternate realities to do battle and hijack the emergency shuttle. Automatically triggers a shuttle call on purchase."
-	log_name = "MW"
-	cost = 8
-
-/datum/spellbook_entry/summon/multisword/IsAvailible()
-	if(!ticker.mode) // In case spellbook is placed on map
-		return 0
-	return (ticker.mode.name != "ragin' mages" && !config.no_summon_magic)
-
-/datum/spellbook_entry/summon/multisword/Buy(mob/living/carbon/human/user,obj/item/weapon/spellbook/book)
-	feedback_add_details("wizard_spell_learned",log_name)
-	only_me()
-	new /obj/item/weapon/multisword(get_turf(user)) //Because the proc skips special roles
-	SSshuttle.emergency.request()
-	playsound(get_turf(user),"sound/magic/CastSummon.ogg",50,1)
-	user << "<span class='notice'>You have triggerd a multiverse war!</span>"
 
 /datum/spellbook_entry/summon/magic/Buy(mob/living/carbon/human/user,obj/item/weapon/spellbook/book)
 	feedback_add_details("wizard_spell_learned",log_name)

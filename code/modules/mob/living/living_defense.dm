@@ -33,7 +33,7 @@
 /mob/living/proc/get_ear_protection()
 	return 0
 
-/mob/living/proc/on_hit(obj/item/projectile/proj_type)
+/mob/living/proc/on_hit(obj/item/projectile/P)
 	return
 
 /mob/living/bullet_act(obj/item/projectile/P, def_zone)
@@ -338,7 +338,7 @@
 /mob/living/proc/flash_act(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0, type = /obj/screen/fullscreen/flash)
 	if(get_eye_protection() < intensity && (override_blindness_check || !(disabilities & BLIND)))
 		overlay_fullscreen("flash", type)
-		addtimer(src, "clear_fullscreen", 25, FALSE, "flash", 25)
+		addtimer(src, "clear_fullscreen", 25, TIMER_NORMAL, "flash", 25)
 		return 1
 
 //called when the mob receives a loud bang

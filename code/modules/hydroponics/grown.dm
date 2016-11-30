@@ -106,10 +106,7 @@
 		new splat_type(T)
 
 	if(trash)
-		if(ispath(trash, /obj/item/weapon/grown) || ispath(trash, /obj/item/weapon/reagent_containers/food/snacks/grown))
-			new trash(T, seed)
-		else
-			new trash(T)
+		generate_trash(T)
 
 	visible_message("<span class='warning'>[src] has been squashed.</span>","<span class='italics'>You hear a smack.</span>")
 	if(seed)
@@ -159,17 +156,18 @@
 			user.AddLuminosity(-G.get_lum(seed))
 			SetLuminosity(G.get_lum(seed))
 
-
+/obj/item/weapon/reagent_containers/food/snacks/grown/generate_trash(atom/location)
+	if(trash && ispath(trash, /obj/item/weapon/grown))
+		. = new trash(location, seed)
+		trash = null
+		return
+	return ..()
 
 // For item-containing growns such as eggy or gatfruit
-/obj/item/weapon/reagent_containers/food/snacks/grown/shell/attack_self(mob/user as mob)
+/obj/item/weapon/reagent_containers/food/snacks/grown/shell/attack_self(mob/user)
 	user.unEquip(src)
 	if(trash)
-		var/obj/item/weapon/T
-		if(ispath(trash, /obj/item/weapon/grown) || ispath(trash, /obj/item/weapon/reagent_containers/food/snacks/grown))
-			T = new trash(user.loc, seed)
-		else
-			T = new trash(user.loc)
+		var/obj/item/T = generate_trash()
 		user.put_in_hands(T)
 		user << "<span class='notice'>You open [src]\'s shell, revealing \a [T].</span>"
 	qdel(src)

@@ -41,7 +41,7 @@
 	B.victim << "<span class='danger'>You feel the captive mind of [src] begin to resist your control.</span>"
 
 	var/delay = rand(150,250) + B.victim.brainloss
-	addtimer(src, "return_control", delay, FALSE, src.loc)
+	addtimer(src, "return_control", delay, TIMER_NORMAL, src.loc)
 
 /mob/living/captive_brain/proc/return_control(mob/living/simple_animal/borer/B)
     if(!B || !B.controlling)
@@ -94,6 +94,7 @@ var/total_borer_hosts_needed = 10
 	var/borer_chems = list()
 	var/leaving = FALSE
 	var/hiding = FALSE
+	var/waketimerid = null
 
 	var/datum/action/innate/borer/talk_to_host/talk_to_host_action = new
 	var/datum/action/innate/borer/infest_host/infest_host_action = new
@@ -255,19 +256,23 @@ var/total_borer_hosts_needed = 10
 		if(stat != DEAD && victim.stat != DEAD)
 
 			if(victim.reagents.has_reagent("sugar"))
-				if(!docile)
+				if(!docile || waketimerid)
 					if(controlling)
 						victim << "<span class='warning'>You feel the soporific flow of sugar in your host's blood, lulling you into docility.</span>"
 					else
 						src << "<span class='warning'>You feel the soporific flow of sugar in your host's blood, lulling you into docility.</span>"
+					if(waketimerid)
+						deltimer(waketimerid)
+						waketimerid = null
 					docile = TRUE
 			else
-				if(docile)
+				if(docile && !waketimerid)
 					if(controlling)
-						victim << "<span class='warning'>You shake off your lethargy as the sugar leaves your host's blood.</span>"
+						victim << "<span class='warning'>You start shaking off your lethargy as the sugar leaves your host's blood. This will take about 10 seconds...</span>"
 					else
-						src << "<span class='warning'>You shake off your lethargy as the sugar leaves your host's blood.</span>"
-					docile = FALSE
+						src << "<span class='warning'>You start shaking off your lethargy as the sugar leaves your host's blood. This will take about 10 seconds...</span>"
+
+					waketimerid = addtimer(src,"wakeup",10,TIMER_NORMAL)
 			if(controlling)
 
 				if(docile)
@@ -278,8 +283,17 @@ var/total_borer_hosts_needed = 10
 				if(prob(5))
 					victim.adjustBrainLoss(rand(1,2))
 
-				if(prob(victim.brainloss/20))
+				if(prob(victim.brainloss/10))
 					victim.say("*[pick(list("blink","blink_r","choke","aflap","drool","twitch","twitch_s","gasp"))]")
+
+/mob/living/simple_animal/borer/proc/wakeup()
+	if(controlling)
+		victim << "<span class='warning'>You finish shaking off your lethargy.</span>"
+	else
+		src << "<span class='warning'>You finish shaking off your lethargy.</span>"
+	docile = FALSE
+	if(waketimerid)
+		waketimerid = null
 
 /mob/living/simple_animal/borer/say(message)
 	if(dd_hasprefix(message, ";"))
@@ -338,7 +352,6 @@ var/total_borer_hosts_needed = 10
 		return
 
 	src << "<span class='warning'>You slither up [H] and begin probing at their ear canal...</span>"
-	layer = MOB_LAYER
 	if(!do_mob(src, H, 30))
 		src << "<span class='warning'>As [H] moves away, you are dislodged and fall to the ground.</span>"
 		return
@@ -349,6 +362,7 @@ var/total_borer_hosts_needed = 10
 	Infect(H)
 
 /mob/living/simple_animal/borer/proc/Infect(mob/living/carbon/C)
+
 	if(!C)
 		return
 
@@ -467,7 +481,7 @@ var/total_borer_hosts_needed = 10
 
 	src << "<span class='warning'>You focus your psychic lance on [M] and freeze their limbs with a wave of terrible dread.</span>"
 	M << "<span class='userdanger'>You feel a creeping, horrible sense of dread come over you, freezing your limbs and setting your heart racing.</span>"
-	M.Stun(4)
+	M.Stun(3)
 
 	used_dominate = world.time
 
@@ -495,7 +509,7 @@ var/total_borer_hosts_needed = 10
 
 	leaving = TRUE
 
-	addtimer(src, "release_host", 100, FALSE)
+	addtimer(src, "release_host", 100, TIMER_NORMAL)
 
 /mob/living/simple_animal/borer/proc/release_host()
 	if(!victim || !src || qdeleted(victim) || qdeleted(src))
@@ -619,7 +633,7 @@ var/total_borer_hosts_needed = 10
 	bonding = TRUE
 
 	var/delay = 200+(victim.brainloss*5)
-	addtimer(src, "assume_control", delay, FALSE)
+	addtimer(src, "assume_control", delay, TIMER_NORMAL)
 
 /mob/living/simple_animal/borer/proc/assume_control()
 	if(!victim || !src || controlling || victim.stat == DEAD)
@@ -629,6 +643,10 @@ var/total_borer_hosts_needed = 10
 	if(docile)
 		src <<"<span class='warning'>You are feeling far too docile to do that.</span>"
 		return
+	if(is_servant_of_ratvar(victim) || iscultist(victim) || victim.isloyal())
+		src << "<span class='warning'>[victim]'s mind seems to be blocked by some unknown force!</span>"
+		return
+
 	else
 
 		log_game("[src]/([src.ckey]) assumed control of [victim]/([victim.ckey] with borer powers.")
@@ -763,16 +781,16 @@ mob/living/carbon/proc/release_control()
 	if(!B)
 		return
 
-	if(B.chemicals >= 100)
+	if(B.chemicals >= 200)
 		visible_message("<span class='danger'>[src] heaves violently, expelling a rush of vomit and a wriggling, sluglike creature!</span>")
-		B.chemicals -= 100
+		B.chemicals -= 200
 
 		new /obj/effect/decal/cleanable/vomit(get_turf(src))
 		playsound(loc, 'sound/effects/splat.ogg', 50, 1)
 		new /mob/living/simple_animal/borer(get_turf(src), B.generation + 1)
 		log_game("[src]/([src.ckey]) has spawned a new borer via reproducing.")
 	else
-		src << "<span class='warning'>You do not have enough chemicals stored to reproduce.</span>"
+		src << "<span class='warning'>You need 200 chemicals stored to reproduce.</span>"
 		return
 
 

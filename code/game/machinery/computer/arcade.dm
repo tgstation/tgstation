@@ -138,9 +138,6 @@
 		dat += "<a href='byond://?src=\ref[src];charge=1'>Recharge Power</a>"
 
 	dat += "</b></center>"
-
-	//user << browse(dat, "window=arcade")
-	//onclose(user, "arcade")
 	var/datum/browser/popup = new(user, "arcade", "Space Villian 2000")
 	popup.set_content(dat)
 	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))

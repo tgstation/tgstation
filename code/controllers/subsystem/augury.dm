@@ -46,7 +46,7 @@ var/datum/subsystem/augury/SSaugury
 		if(O.orbiting)
 			continue
 		else if(biggest_doom)
-			addtimer(O, "orbit", 0, FALSE, biggest_doom)
+			addtimer(O, "orbit", 0, TIMER_NORMAL, biggest_doom)
 
 /datum/action/innate/augury
 	name = "Auto Follow Debris"

@@ -12,7 +12,7 @@
 	var/processing = 0
 	var/obj/screen/movable/action_button/button = null
 	var/button_icon = 'icons/mob/actions.dmi'
-	var/background_icon_state = "bg_default"
+	var/background_icon_state = ACTION_BUTTON_DEFAULT_BACKGROUND
 	var/buttontooltipstyle = ""
 
 	var/icon_icon = 'icons/mob/actions.dmi'
@@ -37,23 +37,26 @@
 	return ..()
 
 /datum/action/proc/Grant(mob/M)
-	if(owner)
-		if(owner == M)
-			return
+	if(M)
+		if(owner)
+			if(owner == M)
+				return
+		owner = M
+		M.actions += src
+		if(M.client)
+			M.client.screen += button
+		M.update_action_buttons()
+	else
 		Remove(owner)
-	owner = M
-	M.actions += src
-	if(M.client)
-		M.client.screen += button
-	M.update_action_buttons()
 
 /datum/action/proc/Remove(mob/M)
-	if(M.client)
-		M.client.screen -= button
-	button.moved = FALSE //so the button appears in its normal position when given to another owner.
-	M.actions -= src
-	M.update_action_buttons()
+	if(M)
+		if(M.client)
+			M.client.screen -= button
+		M.actions -= src
+		M.update_action_buttons()
 	owner = null
+	button.moved = FALSE //so the button appears in its normal position when given to another owner.
 
 /datum/action/proc/Trigger()
 	if(!IsAvailable())
@@ -84,8 +87,13 @@
 	if(button)
 		button.name = name
 		button.desc = desc
-		button.icon = button_icon
-		button.icon_state = background_icon_state
+		if(owner && owner.hud_used && background_icon_state == ACTION_BUTTON_DEFAULT_BACKGROUND)
+			var/list/settings = owner.hud_used.get_action_buttons_icons()
+			button.icon = settings["bg_icon"]
+			button.icon_state = settings["bg_state"]
+		else
+			button.icon = button_icon
+			button.icon_state = background_icon_state
 
 		ApplyIcon(button)
 
@@ -183,7 +191,7 @@
 		if(iscarbon(owner))
 			var/mob/living/carbon/C = owner
 			if(target == C.internal)
-				button.icon_state = "bg_default_on"
+				button.icon_state = "template_active"
 
 /datum/action/item_action/toggle_mister
 	name = "Toggle Mister"

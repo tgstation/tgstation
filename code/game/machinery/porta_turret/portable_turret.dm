@@ -765,8 +765,6 @@
 		t += text("Turrets [] - <A href='?src=\ref[];toggleOn=1'>[]?</a><br>\n", src.enabled?"activated":"deactivated", src, src.enabled?"Disable":"Enable")
 		t += text("Currently set for [] - <A href='?src=\ref[];toggleLethal=1'>Change to []?</a><br>\n", src.lethal?"lethal":"stun repeatedly", src,  src.lethal?"Stun repeatedly":"Lethal")
 
-	//user << browse(t, "window=turretid")
-	//onclose(user, "turretid")
 	var/datum/browser/popup = new(user, "turretid", "Turret Control Panel ([area.name])")
 	popup.set_content(t)
 	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))

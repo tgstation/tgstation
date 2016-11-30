@@ -18,8 +18,6 @@
 	START_PROCESSING(SSobj, src)
 	clockwork_caches++
 	SetLuminosity(2,1)
-	for(var/i in all_clockwork_mobs)
-		cache_check(i)
 
 /obj/structure/destructible/clockwork/cache/Destroy()
 	clockwork_caches--
@@ -27,8 +25,6 @@
 	if(linkedwall)
 		linkedwall.linkedcache = null
 		linkedwall = null
-	for(var/i in all_clockwork_mobs)
-		cache_check(i)
 	return ..()
 
 /obj/structure/destructible/clockwork/cache/process()

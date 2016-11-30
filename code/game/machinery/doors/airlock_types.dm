@@ -5,13 +5,11 @@
 	icon = 'icons/obj/doors/airlocks/station/command.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_com
 	normal_integrity = 450
-	security_level = 1
 
 /obj/machinery/door/airlock/security
 	icon = 'icons/obj/doors/airlocks/station/security.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_sec
 	normal_integrity = 450
-	security_level = 1
 
 /obj/machinery/door/airlock/engineering
 	icon = 'icons/obj/doors/airlocks/station/engineering.dmi'
@@ -65,7 +63,6 @@
 	assemblytype = /obj/structure/door_assembly/door_assembly_com/glass
 	glass = 1
 	normal_integrity = 400
-	security_level = 1
 
 /obj/machinery/door/airlock/glass_engineering
 	icon = 'icons/obj/doors/airlocks/station/engineering.dmi'
@@ -79,7 +76,6 @@
 	assemblytype = /obj/structure/door_assembly/door_assembly_sec/glass
 	glass = 1
 	normal_integrity = 400
-	security_level = 1
 
 /obj/machinery/door/airlock/glass_medical
 	icon = 'icons/obj/doors/airlocks/station/medical.dmi'
