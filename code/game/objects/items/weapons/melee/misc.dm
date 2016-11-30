@@ -48,7 +48,7 @@
 	flags = CONDUCT
 	unique_rename = 1
 	force = 15
-	throwforce = 10
+	throwforce = 20
 	w_class = 4
 	block_chance = 50
 	armour_penetration = 75
