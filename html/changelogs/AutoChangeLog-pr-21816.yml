@@ -1,0 +1,4 @@
+author: "Cobby [Idea stolen from Shaps]"
+delete-after: True
+changes: 
+  - rscadd: "For objects that you could previously rename with a pen, you can now edit their description as well."

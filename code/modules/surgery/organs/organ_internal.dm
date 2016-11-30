@@ -466,7 +466,7 @@
 		if(H && H.dna && H.dna.species && H.dna.species.specflags)
 			specflags = H.dna.species.specflags
 
-		if(!(mutations_list[COLDRES] in H.dna.mutations)) // COLD DAMAGE
+		if(!(mutations_list[COLDRES] in H.dna.mutations) && !(RESISTCOLD in specflags)) // COLD DAMAGE
 			switch(breath.temperature)
 				if(-INFINITY to 120)
 					H.apply_damage(COLD_GAS_DAMAGE_LEVEL_3, BURN, "head")
@@ -475,7 +475,7 @@
 				if(200 to 260)
 					H.apply_damage(COLD_GAS_DAMAGE_LEVEL_1, BURN, "head")
 
-		if(!(RESISTTEMP in specflags)) // HEAT DAMAGE
+		if(!(RESISTHOT in specflags)) // HEAT DAMAGE
 			switch(breath.temperature)
 				if(360 to 400)
 					H.apply_damage(HEAT_GAS_DAMAGE_LEVEL_1, BURN, "head")

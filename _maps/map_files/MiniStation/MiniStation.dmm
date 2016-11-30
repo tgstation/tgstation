@@ -13656,12 +13656,9 @@
 /turf/open/space,
 /area/space)
 "Er" = (
-/obj/structure/lattice,
-/obj/structure/transit_tube{
-	icon_state = "E-W-Pass"
-	},
-/turf/open/space,
-/area/space)
+/obj/effect/landmark/xmastree,
+/turf/open/floor/plasteel/bar,
+/area/crew_quarters/bar)
 "Es" = (
 /obj/structure/lattice,
 /obj/structure/transit_tube/horizontal,
@@ -50143,7 +50140,7 @@ kh
 td
 td
 td
-td
+Er
 td
 wj
 tt

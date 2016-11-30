@@ -729,7 +729,7 @@
 		var/static/image/electrocution_skeleton_anim = image(icon = icon, icon_state = "electrocuted_base")
 		electrocution_skeleton_anim.appearance_flags = RESET_COLOR
 		add_overlay(electrocution_skeleton_anim)
-		addtimer(src, "end_electrocution_animation", anim_duration, FALSE, electrocution_skeleton_anim)
+		addtimer(src, "end_electrocution_animation", anim_duration, TIMER_NORMAL, electrocution_skeleton_anim)
 
 	else //or just do a generic animation
 		var/list/viewing = list()

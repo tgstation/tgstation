@@ -934,8 +934,8 @@ var/list/WALLITEMS_INVERSE = list(
 	tY = tY[1]
 	tX = splittext(tX[1], ":")
 	tX = tX[1]
-	tX = Clamp(origin.x + text2num(tX) - world.view + 1, 1, world.maxx)
-	tY = Clamp(origin.y + text2num(tY) - world.view + 1, 1, world.maxy)
+	tX = Clamp(origin.x + text2num(tX) - world.view - 1, 1, world.maxx)
+	tY = Clamp(origin.y + text2num(tY) - world.view - 1, 1, world.maxy)
 	return locate(tX, tY, tZ)
 
 /proc/screen_loc2turf(text, turf/origin)
@@ -1253,7 +1253,7 @@ B --><-- A
 		if(!istype(A, type))
 			continue
 		var/distance = get_dist(source, A)
-		if(!closest_distance)
+		if(!closest_atom)
 			closest_distance = distance
 			closest_atom = A
 		else
@@ -1262,7 +1262,7 @@ B --><-- A
 				closest_atom = A
 	return closest_atom
 
-proc/pick_closest_path(value)
+/proc/pick_closest_path(value)
 	var/list/matches = get_fancy_list_of_types()
 	if (!isnull(value) && value!="")
 		matches = filter_fancy_list(matches, value)
@@ -1323,7 +1323,7 @@ proc/pick_closest_path(value)
 
 #define RANDOM_COLOUR (rgb(rand(0,255),rand(0,255),rand(0,255)))
 
-#define QDEL_IN(item, time) addtimer(GLOBAL_PROC, "qdel", time, FALSE, item)
+#define QDEL_IN(item, time) addtimer(GLOBAL_PROC, "qdel", time, TIMER_NORMAL, item)
 
 /proc/check_for_cleanbot_bug()
 	var/static/admins_warned //bet you didn't know you could do this!

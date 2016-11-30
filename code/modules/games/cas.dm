@@ -125,7 +125,7 @@ var/global/list/cards_against_space
 	flipped = !flipped
 	update_icon()
 
-obj/item/toy/cards/singlecard/cas/AltClick(mob/living/user)
+/obj/item/toy/cards/singlecard/cas/AltClick(mob/living/user)
 	if(!user.canUseTopic(src,1))
 		return
 	Flip()

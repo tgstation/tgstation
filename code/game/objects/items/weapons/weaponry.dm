@@ -5,23 +5,38 @@
 /obj/item/weapon/examine(mob/user)
 	..()
 	if(unique_rename)
-		user << "<span class='notice'>Use a pen on it to rename it.</span>"
+		user << "<span class='notice'>Use a pen on it to rename it or change its description.</span>"
 
 /obj/item/weapon/attackby(obj/item/I, mob/user, params)
 	if(unique_rename)
 		if(istype(I, /obj/item/weapon/pen))
-			rename_weapon(user)
+			var/penchoice = alert("What would you like to edit?", "Rename or change description?", "Rename", "Change description", "Cancel")
+			if(!qdeleted(src) && user.canUseTopic(src, BE_CLOSE))
+				if(penchoice == "Rename")
+					rename_weapon(user)
+				if(penchoice == "Change description")
+					redesc_weapon(user)
 	..()
 
 /obj/item/weapon/proc/rename_weapon(mob/M)
 	var/input = stripped_input(M,"What do you want to name the weapon?", ,"", MAX_NAME_LEN)
 
-	if(src && input && !M.stat && in_range(M,src) && !M.restrained() && M.canmove)
+	if(!qdeleted(src) && M.canUseTopic(src, BE_CLOSE) && input != "")
 		name = input
 		M << "You name the weapon [input]. Say hello to your new friend."
 		return
+	else
+		return
 
+/obj/item/weapon/proc/redesc_weapon(mob/M)
+	var/input = stripped_input(M,"Describe your object here", ,"", 100)
 
+	if(!qdeleted(src) && M.canUseTopic(src, BE_CLOSE) && input != "")
+		desc = input
+		M << "You have successfully changed the object's description."
+		return
+	else
+		return
 
 /obj/item/weapon/banhammer
 	desc = "A banhammer"
@@ -96,7 +111,6 @@ var/highlander_claymores = 0
 	block_chance = 0 //RNG WON'T HELP YOU NOW, PANSY
 	attack_verb = list("brutalized", "eviscerated", "disemboweled", "hacked", "carved", "cleaved") //ONLY THE MOST VISCERAL ATTACK VERBS
 	var/notches = 0 //HOW MANY PEOPLE HAVE BEEN SLAIN WITH THIS BLADE
-	var/announced = FALSE //IF WE ARE THE ONLY ONE LEFT STANDING
 	var/obj/item/weapon/disk/nuclear/nuke_disk //OUR STORED NUKE DISK
 
 /obj/item/weapon/claymore/highlander/New()
@@ -112,20 +126,6 @@ var/highlander_claymores = 0
 		nuke_disk.visible_message("<span class='warning'>The nuke disk is vulnerable!</span>")
 		nuke_disk = null
 	return ..()
-
-/obj/item/weapon/claymore/highlander/process()
-	if(isliving(loc))
-		var/mob/living/L = loc
-		if(L.stat != DEAD)
-			if(announced || admin_spawned || highlander_claymores > 1)
-				return
-			announced = TRUE
-			L.fully_heal()
-			world << "<span class='userdanger'>[uppertext(L.real_name)] IS THE ONLY ONE LEFT STANDING!</span>"
-			world << sound('sound/misc/highlander_only_one.ogg')
-			L << "<span class='notice'>YOU ARE THE ONLY ONE LEFT STANDING!</span>"
-			for(var/obj/item/weapon/bloodcrawl/B in L)
-				qdel(B)
 
 /obj/item/weapon/claymore/highlander/pickup(mob/living/user)
 	user << "<span class='notice'>The power of Scotland protects you! You are shielded from all stuns and knockdowns.</span>"

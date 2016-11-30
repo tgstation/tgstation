@@ -304,11 +304,15 @@ var/list/teleportlocs = list()
 			icon_state = "party"
 		else
 			icon_state = "blue-red"
+		invisibility = INVISIBILITY_LIGHTING
 	else
+	//	new lighting behaviour with obj lights
 		icon_state = null
+		invisibility = INVISIBILITY_MAXIMUM
 
 /area/space/updateicon()
 	icon_state = null
+	invisibility = INVISIBILITY_MAXIMUM
 
 /*
 #define EQUIP 1

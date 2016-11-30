@@ -65,6 +65,7 @@
 			CH.on_remove(src)
 			CH.holder = null
 			qdel(CH)
+	physical = null
 	return ..()
 
 

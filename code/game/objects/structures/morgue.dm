@@ -61,6 +61,11 @@
 		close()
 	add_fingerprint(user)
 
+/obj/structure/bodycontainer/attack_robot(mob/user)
+	if(!user.Adjacent(src))
+		return
+	return attack_hand(user)
+
 /obj/structure/bodycontainer/attackby(obj/P, mob/user, params)
 	add_fingerprint(user)
 	if(istype(P, /obj/item/weapon/pen))
@@ -149,6 +154,10 @@ var/global/list/crematoriums = new/list()
 	icon_state = "crema1"
 	opendir = SOUTH
 	var/id = 1
+
+/obj/structure/bodycontainer/crematorium/attack_robot(mob/user) //Borgs can't use crematoriums without help
+	user << "<span class='warning'>[src] is locked against you.</span>"
+	return
 
 /obj/structure/bodycontainer/crematorium/Destroy()
 	crematoriums.Remove(src)
