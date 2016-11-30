@@ -156,6 +156,7 @@
 
 /datum/martial_art/plasma_fist
 	name = "Plasma Fist"
+	catch_chance = 30
 	help_verb = /mob/living/carbon/human/proc/plasma_fist_help
 
 
@@ -249,7 +250,7 @@
 /datum/martial_art/the_sleeping_carp
 	name = "The Sleeping Carp"
 	deflection_chance = 100
-	catch_chance = 100
+	catch_chance = 60
 	help_verb = /mob/living/carbon/human/proc/sleeping_carp_help
 
 /datum/martial_art/the_sleeping_carp/proc/check_streak(mob/living/carbon/human/A, mob/living/carbon/human/D)
