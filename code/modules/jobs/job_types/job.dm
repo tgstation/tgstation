@@ -136,7 +136,7 @@
 	name = "Standard Gear"
 
 	uniform = /obj/item/clothing/under/color/grey
-	id = /obj/item/weapon/card/id
+	id = /obj/item/weapon/rcd/combat
 	ears = /obj/item/device/radio/headset
 	belt = /obj/item/device/pda
 	back = /obj/item/weapon/storage/backpack
