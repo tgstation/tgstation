@@ -322,12 +322,13 @@
 	else
 		deactivate()
 
-//None/Flashes cause blindness/Flashes cause nearsightedness/Flashes cause blurring/Flashes completely blocked
+//None/Flashes can't deactivate shielding/Flashes cause blindness/Flashes cause nearsightedness/Flashes cause blurring/Flashes completely blocked
 #define FLASH_PROTECTION_NONE 0
-#define FLASH_PROTECTION_BLIND 1
-#define FLASH_PROTECTION_NEAR 2
-#define FLASH_PROTECTION_BLUR 3
-#define FLASH_PROTECTION_FULL 4
+#define FLASH_PROTECTION_IGNORE 1
+#define FLASH_PROTECTION_BLIND 2
+#define FLASH_PROTECTION_NEAR 3
+#define FLASH_PROTECTION_BLUR 4
+#define FLASH_PROTECTION_FULL 5
 
 //None/Stays active when EMPed and blocks cell damage/Lessens EMP by one severity degree/Blocks EMPs
 #define EMP_PROTECTION_NONE 0

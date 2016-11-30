@@ -326,6 +326,18 @@
 		cooldown = world.time + 600
 		log_game("[user.ckey]([user]) used an emagged Cyborg Harm Alarm in ([user.x],[user.y],[user.z])")
 
+//WIP NOTES:
+//Peacekeeping Projectile Dissipater/Scrambler / Melee dissipater field/slowdown field
+//ACTIVE INERTIA CANCELLER
+//Peacekeeping Radio
+//Peacekeeping Stamina Disabler with staminaloss capping
+//Peacekeeping shield finish
+//AIC/Shield/Droid uses more power/weaker while slime cell is inside borg
+//peacekeeping field should be a new field datum, and field datums or objects inside turfs
+//field moves by on_mob_move()
+//Special disabler/taser interaction with shielding and fields
+//gravity guns and kinetic accelerator being pure energy should seriously fuck with both.
+
 /**********************************************************************
 						HUD/SIGHT things
 ***********************************************************************/

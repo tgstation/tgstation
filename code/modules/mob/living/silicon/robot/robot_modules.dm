@@ -280,7 +280,7 @@
 /obj/item/weapon/robot_module/peacekeeper
 	name = "Peacekeeper"
 	basic_modules = list(/obj/item/device/assembly/flash/cyborg, /obj/item/weapon/cookiesynth, /obj/item/device/harmalarm, /obj/item/weapon/reagent_containers/borghypo/peace, \
-	/obj/item/weapon/holosign_creator/cyborg, /obj/item/borg/cyborghug/peacekeeper, /obj/item/weapon/extinguisher)
+	/obj/item/weapon/holosign_creator/cyborg, /obj/item/borg/cyborghug/peacekeeper, /obj/item/weapon/extinguisher, /obj/item/weapon/gun/energy/e_gun/dragnet/snare/cyborg)
 	emag_modules = list(/obj/item/weapon/reagent_containers/borghypo/peace/hacked)
 	ratvar_modules = list(/obj/item/clockwork/slab/cyborg/peacekeeper)
 	cyborg_base_icon = "peace"
@@ -292,6 +292,20 @@
 	..()
 	loc << "<span class='userdanger'>Under ASIMOV, you are an enforcer of the PEACE and preventer of HUMAN HARM. \
 	You are not a security module and you are expected to follow orders and prevent harm above all else. Space law means nothing to you.</span>"
+	src << "<span class='boldnotice'>Integrated Peacekeeping Repair Swarm installed and activated.</span>"
+	var/obj/item/borg/upgrade/selfrepair/peacekeeper/S = new /obj/item/borg/upgrade/selfrepair/peacekeeper(loc)
+	S.action(loc)
+
+/obj/item/weapon/robot_module/peacekeeper/respawn_consumable(mob/living/silicon/robot/R, coeff = 1)
+	..()
+	var/obj/item/weapon/gun/energy/e_gun/dragnet/snare/cyborg/T = locate(/obj/item/weapon/gun/energy/e_gun/dragnet/snare/cyborg) in basic_modules
+	if(T)
+		if(T.power_supply.charge < T.power_supply.maxcharge)
+			var/obj/item/ammo_casing/energy/S = T.ammo_type[T.select]
+			T.power_supply.give(S.e_cost * coeff)
+			T.update_icon()
+		else
+			T.charge_tick = 0
 
 /obj/item/weapon/robot_module/janitor
 	name = "Janitor"
