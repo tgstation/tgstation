@@ -9,7 +9,7 @@
 	unanchored_icon = "tinkerers_daemon_unwrenched"
 	max_integrity = 100
 	obj_integrity = 100
-	construction_value = 25
+	construction_value = 20
 	break_message = "<span class='warning'>The daemon shatters into millions of pieces!</span>"
 	debris = list(/obj/item/clockwork/alloy_shards/large = 2, \
 	/obj/item/clockwork/alloy_shards/medium = 4, \
@@ -81,7 +81,7 @@
 				for(var/mob/living/L in living_mob_list)
 					if(is_servant_of_ratvar(L))
 						servants++
-				if(!user.canUseTopic(src, BE_CLOSE) || active || !clockwork_caches || servants * 0.2 < clockwork_daemons)
+				if(!is_servant_of_ratvar(user) || !user.canUseTopic(src, !issilicon(user)) || active || !clockwork_caches || servants * 0.2 < clockwork_daemons)
 					return
 				if(!component_id_to_produce)
 					user << "<span class='warning'>You decide not to select a component and activate the daemon.</span>"

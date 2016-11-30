@@ -69,7 +69,7 @@
 	user.put_in_active_hand(s_drill)
 	qdel(src)
 
-obj/item/weapon/wrench/power/suicide_act(mob/user)
+/obj/item/weapon/wrench/power/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is pressing [src] against [user.p_their()] head! It looks like [user.p_theyre()] trying to commit suicide!")
 	return (BRUTELOSS)
 
@@ -460,7 +460,7 @@ obj/item/weapon/wrench/power/suicide_act(mob/user)
 	return 1
 
 //Switches the welder on
-obj/item/weapon/weldingtool/proc/switched_on(mob/user)
+/obj/item/weapon/weldingtool/proc/switched_on(mob/user)
 	if(!status)
 		user << "<span class='warning'>[src] can't be turned on while unsecured!</span>"
 		return
@@ -483,7 +483,7 @@ obj/item/weapon/weldingtool/proc/switched_on(mob/user)
 		switched_off(user)
 
 //Switches the welder off
-obj/item/weapon/weldingtool/proc/switched_off(mob/user)
+/obj/item/weapon/weldingtool/proc/switched_off(mob/user)
 	welding = 0
 	if(user == loc) //If player is holding the welder
 		user.AddLuminosity(-light_intensity)

@@ -133,6 +133,7 @@ update_label("John Doe", "Clowny")
 	name = "agent card"
 	access = list(access_maint_tunnels, access_syndicate)
 	origin_tech = "syndicate=1"
+	var/anyone = FALSE //Can anyone forge the ID or just syndicate?
 
 /obj/item/weapon/card/id/syndicate/New()
 	..()
@@ -153,7 +154,7 @@ update_label("John Doe", "Clowny")
 
 /obj/item/weapon/card/id/syndicate/attack_self(mob/user)
 	if(isliving(user) && user.mind)
-		if(user.mind.special_role)
+		if(user.mind.special_role || anyone)
 			if(alert(user, "Action", "Agent ID", "Show", "Forge") == "Forge")
 				var t = copytext(sanitize(input(user, "What name would you like to put on this card?", "Agent card name", registered_name ? registered_name : (ishuman(user) ? user.real_name : user.name))as text | null),1,26)
 				if(!t || t == "Unknown" || t == "floor" || t == "wall" || t == "r-wall") //Same as mob/new_player/prefrences.dm
@@ -171,6 +172,9 @@ update_label("John Doe", "Clowny")
 				user << "<span class='notice'>You successfully forge the ID card.</span>"
 				return
 	..()
+
+/obj/item/weapon/card/id/syndicate/anyone
+	anyone = TRUE
 
 /obj/item/weapon/card/id/syndicate_command
 	name = "syndicate ID card"

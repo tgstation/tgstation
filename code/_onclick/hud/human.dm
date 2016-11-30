@@ -87,7 +87,6 @@
 
 /datum/hud/human/New(mob/living/carbon/human/owner, ui_style = 'icons/mob/screen_midnight.dmi')
 	..()
-
 	var/obj/screen/using
 	var/obj/screen/inventory/inv_box
 

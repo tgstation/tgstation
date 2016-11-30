@@ -10,7 +10,7 @@
 	var/value = 0
 	if(istype(I, /obj/item/stack/spacecash))
 		var/obj/item/stack/spacecash/C = I
-		value = C.value
+		value = C.value * C.amount
 	if(istype(I, /obj/item/weapon/coin))
 		var/obj/item/weapon/coin/C  = I
 		value = C.value
@@ -38,7 +38,7 @@
 			SSshuttle.points -= 200
 			if(last_warning < world.time && prob(15))
 				var/area/A = get_area(loc)
-				minor_announce("Unauthorized credit withdrawal underway in [A.map_name]." , "Network Breach")
+				minor_announce("Unauthorized credit withdrawal underway in [A.map_name]." , "Network Breach", TRUE)
 				last_warning = world.time + 400
 
 

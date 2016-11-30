@@ -25,7 +25,7 @@
 	environment_smash = 0
 	ventcrawler = 2
 	mob_size = MOB_SIZE_TINY
-	flying = 1
+	movement_type = FLYING
 	speak_emote = list("squeaks")
 	var/max_co2 = 0 //to be removed once metastation map no longer use those for Sgt Araneus
 	var/min_oxy = 0

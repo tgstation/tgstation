@@ -26,6 +26,15 @@
 	filling_color = "#E9967A"
 	bitesize = 100
 
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/potato/wedges
+	name = "potato wedges"
+	desc = "a potato cut up into wedges"
+	icon_state = "potato_wedge"
+	filling_color = "#E9967A"
+	bitesize = 100
+
+
 /obj/item/weapon/reagent_containers/food/snacks/grown/potato/attackby(obj/item/weapon/W, mob/user, params)
 	..()
 	if(istype(W, /obj/item/stack/cable_coil))
@@ -50,6 +59,16 @@
 		else
 			user << "<span class='warning'>You need five lengths of cable to make a potato battery!</span>"
 			return
+	if(W.is_sharp())
+		user << "<span class='notice'>You cut the potato into wedges with [W].</span>"
+		var/obj/item/weapon/reagent_containers/food/snacks/grown/potato/wedges/Wedges = new /obj/item/weapon/reagent_containers/food/snacks/grown/potato/wedges
+		if(!remove_item_from_storage(user))
+			user.unEquip(src)
+		user.put_in_hands(Wedges)
+		qdel(src)
+	else
+		return ..()
+
 
 // Sweet Potato
 /obj/item/seeds/potato/sweet

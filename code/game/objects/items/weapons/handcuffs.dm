@@ -277,8 +277,10 @@
 						feedback_add_details("handcuffs","B") //Yes, I know they're legcuffs. Don't change this, no need for an extra variable. The "B" is used to tell them apart.
 			else if(isanimal(L))
 				var/mob/living/simple_animal/SA = L
-				if(!SA.flying && SA.mob_size > MOB_SIZE_TINY)
+				if(SA.mob_size > MOB_SIZE_TINY)
 					snap = 1
+			if(L.movement_type & FLYING)
+				snap = 0
 			if(snap)
 				armed = 0
 				icon_state = "[initial(icon_state)][armed]"

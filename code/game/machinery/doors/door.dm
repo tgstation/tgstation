@@ -145,7 +145,7 @@
 /obj/machinery/door/proc/try_to_weld(obj/item/weapon/weldingtool/W, mob/user)
 	return
 
-obj/machinery/door/proc/try_to_crowbar(obj/item/I, mob/user)
+/obj/machinery/door/proc/try_to_crowbar(obj/item/I, mob/user)
 	return
 
 /obj/machinery/door/attackby(obj/item/I, mob/user, params)

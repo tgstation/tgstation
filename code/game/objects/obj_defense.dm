@@ -236,3 +236,24 @@ var/global/image/acid_overlay = image("icon" = 'icons/effects/effects.dmi', "ico
 		burn()
 	else
 		deconstruct(FALSE)
+
+//changes max_integrity while retaining current health percentage
+//returns TRUE if the obj broke, FALSE otherwise
+/obj/proc/modify_max_integrity(new_max, can_break = TRUE, damage_type = BRUTE, new_failure_integrity = null)
+	var/current_integrity = obj_integrity
+	var/current_max = max_integrity
+
+	if(current_integrity != 0 && current_max != 0)
+		var/percentage = current_integrity / current_max
+		current_integrity = max(1, round(percentage * new_max))	//don't destroy it as a result
+		obj_integrity = current_integrity
+
+	max_integrity = new_max
+
+	if(new_failure_integrity != null)
+		integrity_failure = new_failure_integrity
+
+	if(can_break && integrity_failure && current_integrity <= integrity_failure)
+		obj_break(damage_type)
+		return TRUE
+	return FALSE

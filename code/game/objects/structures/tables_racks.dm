@@ -187,7 +187,7 @@
 		return
 	// Don't break if they're just flying past
 	if(AM.throwing)
-		addtimer(src, "throw_check", 5, FALSE, AM)
+		addtimer(src, "throw_check", 5, TIMER_NORMAL, AM)
 	else
 		check_break(AM)
 

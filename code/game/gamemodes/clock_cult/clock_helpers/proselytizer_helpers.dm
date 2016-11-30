@@ -68,6 +68,10 @@
 
 //Metal conversion
 /obj/item/stack/rods/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer)
+	if(!source)
+		return FALSE
+	if(proselytizer.metal_to_alloy)
+		return list("operation_time" = 0, "new_obj_type" = /obj/effect/overlay/temp/ratvar/beam/itemconsume, "alloy_cost" = -(amount*REPLICANT_ROD), "spawn_dir" = SOUTH)
 	if(get_amount() >= 10)
 		var/sheets_to_make = round(get_amount() * 0.1)
 		var/used = sheets_to_make * 10
@@ -82,6 +86,10 @@
 	return TRUE
 
 /obj/item/stack/sheet/metal/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer)
+	if(!source)
+		return FALSE
+	if(proselytizer.metal_to_alloy)
+		return list("operation_time" = 0, "new_obj_type" = /obj/effect/overlay/temp/ratvar/beam/itemconsume, "alloy_cost" = -(amount*REPLICANT_METAL), "spawn_dir" = SOUTH)
 	if(get_amount() >= 5)
 		var/sheets_to_make = round(get_amount() * 0.2)
 		var/used = sheets_to_make * 5
@@ -96,6 +104,10 @@
 	return TRUE
 
 /obj/item/stack/sheet/plasteel/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer)
+	if(!source)
+		return FALSE
+	if(proselytizer.metal_to_alloy)
+		return list("operation_time" = 0, "new_obj_type" = /obj/effect/overlay/temp/ratvar/beam/itemconsume, "alloy_cost" = -(amount*REPLICANT_PLASTEEL), "spawn_dir" = SOUTH)
 	if(get_amount() >= 2)
 		var/sheets_to_make = round(get_amount() * 0.5)
 		var/used = sheets_to_make * 2
@@ -111,6 +123,8 @@
 
 //Brass directly to alloy; scarab only
 /obj/item/stack/sheet/brass/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer)
+	if(!source)
+		return FALSE
 	if(!proselytizer.metal_to_alloy)
 		return FALSE
 	var/prosel_cost = -amount*REPLICANT_FLOOR
@@ -121,7 +135,7 @@
 	var/doortype = /obj/machinery/door/airlock/clockwork
 	if(glass)
 		doortype = /obj/machinery/door/airlock/clockwork/brass
-	return list("operation_time" = 40, "new_obj_type" = doortype, "alloy_cost" = REPLICANT_WALL_TOTAL, "spawn_dir" = dir)
+	return list("operation_time" = 60, "new_obj_type" = doortype, "alloy_cost" = REPLICANT_WALL_TOTAL, "spawn_dir" = dir)
 
 /obj/machinery/door/airlock/clockwork/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer)
 	return FALSE
@@ -142,7 +156,7 @@
 	if(reinf)
 		prosel_cost -= REPLICANT_ROD
 	for(var/obj/structure/grille/G in get_turf(src))
-		addtimer(proselytizer, "proselytize", 0, FALSE, G, user)
+		addtimer(proselytizer, "proselytize", 0, TIMER_NORMAL, G, user)
 	return list("operation_time" = prosel_time, "new_obj_type" = windowtype, "alloy_cost" = prosel_cost, "spawn_dir" = dir, "dir_in_new" = new_dir)
 
 /obj/structure/window/reinforced/clockwork/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer)
@@ -187,7 +201,7 @@
 	var/healing_for_cycle = min(amount_to_heal, repair_amount)
 	var/alloy_required = healing_for_cycle
 	if(!proselytizer.can_use_alloy(RATVAR_ALLOY_CHECK))
-		healing_for_cycle = min(healing_for_cycle, proselytizer.stored_alloy)
+		healing_for_cycle = min(healing_for_cycle, proselytizer.get_power_alloy())
 	if(!healing_for_cycle || (!proselytizer.can_use_alloy(RATVAR_ALLOY_CHECK) && !proselytizer.can_use_alloy(healing_for_cycle)))
 		user << "<span class='warning'>You need at least <b>[alloy_required]</b> liquified alloy to start repairing [src], and at least <b>[amount_to_heal]</b> to fully repair it!</span>"
 		return
@@ -201,7 +215,7 @@
 			break
 		healing_for_cycle = min(amount_to_heal, repair_amount)
 		if(!proselytizer.can_use_alloy(RATVAR_ALLOY_CHECK))
-			healing_for_cycle = min(healing_for_cycle, proselytizer.stored_alloy)
+			healing_for_cycle = min(healing_for_cycle, proselytizer.get_power_alloy())
 		if(!healing_for_cycle || (!proselytizer.can_use_alloy(RATVAR_ALLOY_CHECK) && !proselytizer.can_use_alloy(healing_for_cycle)) || \
 		!do_after(user, healing_for_cycle * proselytizer.speed_multiplier, target = src) || \
 		!proselytizer || (!proselytizer.can_use_alloy(RATVAR_ALLOY_CHECK) && !proselytizer.can_use_alloy(healing_for_cycle)))
@@ -211,7 +225,7 @@
 			break
 		healing_for_cycle = min(amount_to_heal, repair_amount)
 		if(!proselytizer.can_use_alloy(RATVAR_ALLOY_CHECK))
-			healing_for_cycle = min(healing_for_cycle, proselytizer.stored_alloy)
+			healing_for_cycle = min(healing_for_cycle, proselytizer.get_power_alloy())
 		if(!healing_for_cycle || (!proselytizer.can_use_alloy(RATVAR_ALLOY_CHECK) && !proselytizer.can_use_alloy(healing_for_cycle)))
 			break
 		obj_integrity = Clamp(obj_integrity + healing_for_cycle, 0, max_integrity)
@@ -256,16 +270,16 @@
 
 //Convert shards and replicant alloy directly to liquid alloy
 /obj/item/clockwork/alloy_shards/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer)
-	return list("operation_time" = 5, "new_obj_type" = /obj/effect/overlay/temp/ratvar/beam/itemconsume, "alloy_cost" = -REPLICANT_STANDARD, "spawn_dir" = SOUTH)
+	return list("operation_time" = 0, "new_obj_type" = /obj/effect/overlay/temp/ratvar/beam/itemconsume, "alloy_cost" = -REPLICANT_STANDARD, "spawn_dir" = SOUTH)
 
 /obj/item/clockwork/alloy_shards/medium/gear_bit/large/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer)
-	return list("operation_time" = 3, "new_obj_type" = /obj/effect/overlay/temp/ratvar/beam/itemconsume, "alloy_cost" = -(REPLICANT_ALLOY_UNIT*0.08), "spawn_dir" = SOUTH)
+	return list("operation_time" = 0, "new_obj_type" = /obj/effect/overlay/temp/ratvar/beam/itemconsume, "alloy_cost" = -(REPLICANT_ALLOY_UNIT*0.08), "spawn_dir" = SOUTH)
 
 /obj/item/clockwork/alloy_shards/large/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer)
-	return list("operation_time" = 2, "new_obj_type" = /obj/effect/overlay/temp/ratvar/beam/itemconsume, "alloy_cost" = -(REPLICANT_ALLOY_UNIT*0.06), "spawn_dir" = SOUTH)
+	return list("operation_time" = 0, "new_obj_type" = /obj/effect/overlay/temp/ratvar/beam/itemconsume, "alloy_cost" = -(REPLICANT_ALLOY_UNIT*0.06), "spawn_dir" = SOUTH)
 
 /obj/item/clockwork/alloy_shards/medium/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer)
-	return list("operation_time" = 1, "new_obj_type" = /obj/effect/overlay/temp/ratvar/beam/itemconsume, "alloy_cost" = -(REPLICANT_ALLOY_UNIT*0.04), "spawn_dir" = SOUTH)
+	return list("operation_time" = 0, "new_obj_type" = /obj/effect/overlay/temp/ratvar/beam/itemconsume, "alloy_cost" = -(REPLICANT_ALLOY_UNIT*0.04), "spawn_dir" = SOUTH)
 
 /obj/item/clockwork/alloy_shards/small/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer)
 	return list("operation_time" = 0, "new_obj_type" = /obj/effect/overlay/temp/ratvar/beam/itemconsume, "alloy_cost" = -(REPLICANT_ALLOY_UNIT*0.02), "spawn_dir" = SOUTH)

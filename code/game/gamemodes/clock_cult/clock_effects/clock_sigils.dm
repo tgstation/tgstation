@@ -9,6 +9,7 @@
 	resistance_flags = NONE
 	var/affects_servants = FALSE
 	var/stat_affected = CONSCIOUS
+	var/sigil_name = "Sigil"
 	var/resist_string = "glows blinding white" //string for when a null rod blocks its effects, "glows [resist_string]"
 
 /obj/effect/clockwork/sigil/attackby(obj/item/I, mob/living/user, params)
@@ -16,7 +17,7 @@
 		user.visible_message("<span class='warning'>[user] scatters [src] with [I]!</span>", "<span class='danger'>You scatter [src] with [I]!</span>")
 		qdel(src)
 		return 1
-	..()
+	return ..()
 
 /obj/effect/clockwork/sigil/attack_hand(mob/user)
 	if(iscarbon(user) && !user.stat && (!is_servant_of_ratvar(user) || (is_servant_of_ratvar(user) && user.a_intent == "harm")))
@@ -53,6 +54,7 @@
 	clockwork_desc = "A sigil that will stun the first non-servant to cross it. Nar-Sie's dogs will be knocked down."
 	icon_state = "sigildull"
 	color = "#FAE48C"
+	sigil_name = "Sigil of Transgression"
 
 /obj/effect/clockwork/sigil/transgression/sigil_effects(mob/living/L)
 	var/target_flashed = L.flash_act()
@@ -84,7 +86,7 @@
 	var/glow_light = 2 //soft light
 	var/glow_falloff = 1
 	var/delete_on_finish = TRUE
-	var/sigil_name = "Sigil of Submission"
+	sigil_name = "Sigil of Submission"
 	var/glow_type
 
 /obj/effect/clockwork/sigil/submission/New()
@@ -174,6 +176,8 @@
 	color = "#EC8A2D"
 	alpha = 50
 	resist_string = "glows faintly"
+	sigil_name = "Sigil of Transmission"
+	affects_servants = TRUE
 	var/power_charge = REPLICANT_ALLOY_POWER //starts with REPLICANT_ALLOY_POWER by default
 
 /obj/effect/clockwork/sigil/transmission/ex_act(severity)
@@ -186,17 +190,58 @@
 /obj/effect/clockwork/sigil/transmission/examine(mob/user)
 	..()
 	if(is_servant_of_ratvar(user) || isobserver(user))
-		user << "<span class='[power_charge ? "brass":"alloy"]'>It is storing <b>[power_charge]W</b> of power.</span>"
+		user << "<span class='[power_charge ? "brass":"alloy"]'>It is storing <b>[ratvar_awakens ? "INFINITY":"[power_charge]"]W</b> of power.</span>"
+		if(iscyborg(user))
+			user << "<span class='brass'>You can recharge from the [sigil_name] by crossing it.</span>"
 
 /obj/effect/clockwork/sigil/transmission/sigil_effects(mob/living/L)
-	if(power_charge)
+	if(is_servant_of_ratvar(L))
+		if(iscyborg(L))
+			charge_cyborg(L)
+	else if(power_charge)
 		L << "<span class='brass'>You feel a slight, static shock.</span>"
+
+/obj/effect/clockwork/sigil/transmission/proc/charge_cyborg(mob/living/silicon/robot/cyborg)
+	if(!cyborg_checks(cyborg))
+		return
+	cyborg << "<span class='brass'>You start to charge from the [sigil_name]...</span>"
+	if(!do_after(cyborg, 50, target = src))
+		return
+	if(!cyborg_checks(cyborg))
+		return
+	var/giving_power = min(round((cyborg.cell.maxcharge - cyborg.cell.charge) * 0.02) * 50, power_charge) //give the borg either all our power or their missing power floored to 50
+	if(modify_charge(giving_power))
+		cyborg.visible_message("<span class='warning'>[cyborg] glows a brilliant orange!</span>")
+		var/previous_color = cyborg.color
+		cyborg.color = list("#EC8A2D", "#EC8A2D", "#EC8A2D", rgb(0,0,0))
+		var/datum/status_effect/cyborg_power_regen/CPR = cyborg.apply_status_effect(STATUS_EFFECT_POWERREGEN)
+		CPR.power_to_give = giving_power * 0.1 //ten ticks, restoring 10% each
+		animate(cyborg, color = previous_color, time = 100)
+		addtimer(cyborg, "update_atom_colour", 100)
+
+/obj/effect/clockwork/sigil/transmission/proc/cyborg_checks(mob/living/silicon/robot/cyborg)
+	if(!cyborg.cell)
+		cyborg << "<span class='warning'>You have no cell!</span>"
+		return FALSE
+	if(!power_charge)
+		cyborg << "<span class='warning'>The [sigil_name] has no stored power!</span>"
+		return FALSE
+	if(cyborg.cell.charge > cyborg.cell.maxcharge - MIN_CLOCKCULT_POWER)
+		cyborg << "<span class='warning'>You are already at maximum charge!</span>"
+		return FALSE
+	if(cyborg.has_status_effect(STATUS_EFFECT_POWERREGEN))
+		cyborg << "<span class='warning'>You are already regenerating power!</span>"
+		return FALSE
+	return TRUE
 
 /obj/effect/clockwork/sigil/transmission/New()
 	..()
 	alpha = min(initial(alpha) + power_charge*0.02, 255)
 
 /obj/effect/clockwork/sigil/transmission/proc/modify_charge(amount)
+	if(ratvar_awakens)
+		alpha = 255
+		return TRUE
 	if(power_charge - amount < 0)
 		return FALSE
 	power_charge -= amount
@@ -215,6 +260,7 @@
 	affects_servants = TRUE
 	stat_affected = DEAD
 	resist_string = "glows shimmering yellow"
+	sigil_name = "Vitality Matrix"
 	var/vitality = 0
 	var/base_revive_cost = 20
 	var/sigil_active = FALSE

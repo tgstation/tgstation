@@ -2,8 +2,8 @@
 
 /proc/rightandwrong(summon_type, mob/user, survivor_probability) //0 = Summon Guns, 1 = Summon Magic
 	var/list/gunslist 			= list("taser","gravgun","egun","laser","revolver","detective","c20r","nuclear","deagle","gyrojet","pulse","suppressed","cannon","doublebarrel","shotgun","combatshotgun","bulldog","mateba","sabr","crossbow","saw","car","boltaction","speargun","arg","uzi","alienpistol","dragnet","turret","pulsecarbine","decloner","mindflayer","hyperkinetic","advplasmacutter","wormhole","wt550","bulldog","grenadelauncher","goldenrevolver","sniper","medibeam","scatterbeam")
-	var/list/magiclist 			= list("fireball","smoke","blind","mindswap","forcewall","knock","horsemask","charge", "summonitem", "wandnothing", "wanddeath", "wandresurrection", "wandpolymorph", "wandteleport", "wanddoor", "wandfireball", "staffchange", "staffhealing", "armor", "scrying","staffdoor","voodoo", "special")
-	var/list/magicspeciallist	= list("staffchange","staffanimation", "wandbelt", "contract", "staffchaos", "necromantic")
+	var/list/magiclist 			= list("fireball","smoke","blind","mindswap","forcewall","knock","horsemask","charge", "summonitem", "wandnothing", "wanddeath", "wandresurrection", "wandpolymorph", "wandteleport", "wanddoor", "wandfireball", "staffchange", "staffhealing", "armor", "scrying","staffdoor","voodoo", "whistle", "battlemage", "immortality", "ghostsword", "special")
+	var/list/magicspeciallist	= list("staffchange","staffanimation", "wandbelt", "contract", "staffchaos", "necromantic", "bloodcontract")
 
 	if(user) //in this case either someone holding a spellbook or a badmin
 		user << "<B>You summoned [summon_type ? "magic" : "guns"]!</B>"
@@ -173,6 +173,14 @@
 						H << "<span class='notice'>The walls suddenly disappear.</span>"
 				if("voodoo")
 					new /obj/item/voodoo(get_turf(H))
+				if("whistle")
+					new /obj/item/warpwhistle(get_turf(H))
+				if("battlemage")
+					new /obj/item/clothing/suit/space/hardsuit/shielded/wizard(get_turf(H))
+				if("immortality")
+					new /obj/item/device/immortality_talisman(get_turf(H))
+				if("ghostsword")
+					new /obj/item/weapon/melee/ghost_sword(get_turf(H))
 				if("special")
 					magiclist -= "special" //only one super OP item per summoning max
 					switch (randomizemagicspecial)
@@ -188,6 +196,8 @@
 							new /obj/item/weapon/gun/magic/staff/chaos(get_turf(H))
 						if("necromantic")
 							new /obj/item/device/necromantic_stone(get_turf(H))
+						if("bloodcontract")
+							new /obj/item/blood_contract(get_turf(H))
 					H << "<span class='notice'>You suddenly feel lucky.</span>"
 			playsound(get_turf(H),'sound/magic/Summon_Magic.ogg', 50, 1)
 

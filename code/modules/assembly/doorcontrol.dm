@@ -71,7 +71,7 @@
 				D.safe = !D.safe
 
 	for(var/D in open_or_close)
-		addtimer(D, doors_need_closing ? "close" : "open",0,FALSE)
+		addtimer(D, doors_need_closing ? "close" : "open",0, TIMER_NORMAL)
 
 	sleep(10)
 	cooldown = 0

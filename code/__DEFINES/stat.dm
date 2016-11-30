@@ -24,3 +24,8 @@
 #define POWEROFF	4		// tbd
 #define MAINT		8			// under maintaince
 #define EMPED		16		// temporary broken by EMP pulse
+
+//ai power requirement defines
+#define POWER_REQ_NONE 0
+#define POWER_REQ_ALL 1
+#define POWER_REQ_CLOCKCULT 2
