@@ -287,7 +287,6 @@ var/global/list/internal_byond_list_vars = list("contents" = TRUE, "verbs" = TRU
 			body += "<option value='?_src_=vars;makerobot=\ref[D]'>Make cyborg</option>"
 			body += "<option value='?_src_=vars;makealien=\ref[D]'>Make alien</option>"
 			body += "<option value='?_src_=vars;makeslime=\ref[D]'>Make slime</option>"
-			body += "<option value='?_src_=vars;purrbation=\ref[D]'>Toggle Purrbation</option>"
 		body += "<option value>---</option>"
 		body += "<option value='?_src_=vars;gib=\ref[D]'>Gib</option>"
 	if(isobj(D))
@@ -941,36 +940,6 @@ body
 								usr << "[C] doesn't have such bodypart."
 						else
 							usr << "Only humans can be augmented."
-
-
-
-		else if(href_list["purrbation"])
-			if(!check_rights(R_SPAWN))
-				return
-
-			var/mob/living/carbon/human/H = locate(href_list["purrbation"])
-			if(!istype(H))
-				usr << "This can only be done to instances of type /mob/living/carbon/human"
-				return
-			if(!ishumanbasic(H))
-				usr << "This can only be done to the basic human species \
-					at the moment."
-				return
-
-			if(!H)
-				usr << "Mob doesn't exist anymore"
-				return
-
-			var/success = purrbation_toggle(H)
-			if(success)
-				usr << "Put [H] on purrbation."
-				log_admin("[key_name(usr)] has put [key_name(H)] on purrbation.")
-				message_admins("<span class='notice'>[key_name(usr)] has put [key_name(H)] on purrbation.</span>")
-
-			else
-				usr << "Removed [H] from purrbation."
-				log_admin("[key_name(usr)] has removed [key_name(H)] from purrbation.")
-				message_admins("<span class='notice'>[key_name(usr)] has removed [key_name(H)] from purrbation.</span>")
 
 		else if(href_list["adjustDamage"] && href_list["mobToDamage"])
 			if(!check_rights(0))

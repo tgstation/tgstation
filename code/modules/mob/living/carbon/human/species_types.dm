@@ -7,21 +7,11 @@
 	id = "human"
 	default_color = "FFFFFF"
 	specflags = list(EYECOLOR,HAIR,FACEHAIR,LIPS)
-	mutant_bodyparts = list("tail_human", "ears", "wings")
-	default_features = list("mcolor" = "FFF", "tail_human" = "None", "ears" = "None", "wings" = "None")
+	mutant_bodyparts = list("wings")
+	default_features = list("mcolor" = "FFF", "wings" = "None")
 	use_skintones = 1
 	skinned_type = /obj/item/stack/sheet/animalhide/human
 
-
-/datum/species/human/qualifies_for_rank(rank, list/features)
-	if((!features["tail_human"] || features["tail_human"] == "None") && (!features["ears"] || features["ears"] == "None"))
-		return TRUE	//Pure humans are always allowed in all roles.
-	return ..()
-
-//Curiosity killed the cat's wagging tail.
-/datum/species/human/spec_death(gibbed, mob/living/carbon/human/H)
-	if(H)
-		H.endTailWag()
 
 /datum/species/human/space_move(mob/living/carbon/human/H)
 	var/obj/item/device/flightpack/F = H.get_flightpack()
@@ -1344,8 +1334,8 @@ SYNDICATE BLACK OPS
 	id = "angel"
 	default_color = "FFFFFF"
 	specflags = list(EYECOLOR,HAIR,FACEHAIR,LIPS)
-	mutant_bodyparts = list("tail_human", "ears", "wings")
-	default_features = list("mcolor" = "FFF", "tail_human" = "None", "ears" = "None", "wings" = "Angel")
+	mutant_bodyparts = list("wings")
+	default_features = list("mcolor" = "FFF", "wings" = "Angel")
 	use_skintones = 1
 	no_equip = list(slot_back)
 	blacklisted = 1

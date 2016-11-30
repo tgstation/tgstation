@@ -60,7 +60,7 @@ var/list/preferences_datums = list()
 	var/skin_tone = "caucasian1"		//Skin color
 	var/eye_color = "000"				//Eye color
 	var/datum/species/pref_species = new /datum/species/human()	//Mutant race
-	var/list/features = list("mcolor" = "FFF", "tail_lizard" = "Smooth", "tail_human" = "None", "snout" = "Round", "horns" = "None", "ears" = "None", "wings" = "None", "frills" = "None", "spines" = "None", "body_markings" = "None", "legs" = "Normal Legs")
+	var/list/features = list("mcolor" = "FFF", "tail_lizard" = "Smooth", "snout" = "Round", "horns" = "None", "wings" = "None", "frills" = "None", "spines" = "None", "body_markings" = "None", "legs" = "Normal Legs")
 
 	var/list/custom_names = list("clown", "mime", "ai", "cyborg", "religion", "deity")
 		//Mob preview
@@ -312,24 +312,6 @@ var/list/preferences_datums = list()
 
 					dat += "</td>"
 			if(config.mutant_humans)
-
-				if("tail_human" in pref_species.mutant_bodyparts)
-					dat += "<td valign='top' width='7%'>"
-
-					dat += "<h3>Tail</h3>"
-
-					dat += "<a href='?_src_=prefs;preference=tail_human;task=input'>[features["tail_human"]]</a><BR>"
-
-					dat += "</td>"
-
-				if("ears" in pref_species.mutant_bodyparts)
-					dat += "<td valign='top' width='7%'>"
-
-					dat += "<h3>Ears</h3>"
-
-					dat += "<a href='?_src_=prefs;preference=ears;task=input'>[features["ears"]]</a><BR>"
-
-					dat += "</td>"
 
 				if("wings" in pref_species.mutant_bodyparts && r_wings_list.len >1)
 					dat += "<td valign='top' width='7%'>"
