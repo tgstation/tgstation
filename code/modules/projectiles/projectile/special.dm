@@ -44,7 +44,7 @@
 	return 1
 
 /obj/item/projectile/bullet/a84mm
-	name ="anti-tank rocket"
+	name ="anti-armour rocket"
 	desc = "USE A WEEL GUN"
 	icon_state= "atrocket"
 	damage = 80
