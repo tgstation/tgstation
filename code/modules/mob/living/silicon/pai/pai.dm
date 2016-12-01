@@ -62,6 +62,7 @@
 	var/emitterhealth = 50
 	var/emittermaxhealth = 50
 	var/emittercd = 10
+	var/emittersemicd = 0
 
 	var/overload_ventcrawl = 0
 	var/overload_bulletblock = 0	//Why is this a good idea?
