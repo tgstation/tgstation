@@ -141,9 +141,8 @@ CHECK_RANDOMIZER
 ## byond membership starts at $10 for 3 months, so to use the webclient to evade, they would have sink 10 bucks in each evade.
 #WEBCLIENT_ONLY_BYOND_MEMBERS
 
-## Set to jobban everyone who's key is not listed in data/whitelist.txt from Captain, HoS, HoP, CE, RD, CMO, Warden, Security, Detective, and AI positions.
-## Uncomment to 1 to jobban, leave commented out to allow these positions for everyone (but see GUEST_JOBBAN above and regular jobbans)
-# USEWHITELIST
+## Set to prevent anyone but those ckeys listed in config/whitelist.txt and config/admins.txt from joining your server
+#USEWHITELIST
 
 ## set a server location for world reboot. Don't include the byond://, just give the address and port.
 # Don't set this to the same server, BYOND will automatically restart players to the server when it has restarted.
