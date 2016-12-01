@@ -378,6 +378,10 @@
 	var/turf/T = get_turf(A)
 	if(!T || !istype(T) || !isopenturf(T))
 		return FALSE
+	if(isobj(A))
+		var/obj/O = A
+		if(O.density)
+			return FALSE
 	new /obj/item/weapon/reagent_containers/food/snacks/lollipop(T)
 	candy--
 	check_amount()
