@@ -423,7 +423,7 @@
 	check_amount()
 	if(iscyborg(user))
 		var/mob/living/silicon/robot/R = user
-		if(!R.cell.use(20))
+		if(!R.cell.use(12))
 			user << "<span class='warning'>Not enough power.</span>"
 			return 0
 		if(R.emagged)
