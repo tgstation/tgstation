@@ -225,7 +225,7 @@
 
 
 //Replicant: Creates a new clockwork slab.
-/datum/clockwork_scripture/replicant
+/datum/clockwork_scripture/create_object/replicant
 	descname = "New Clockwork Slab"
 	name = "Replicant"
 	desc = "Creates a new clockwork slab."
