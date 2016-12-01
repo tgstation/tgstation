@@ -40,8 +40,8 @@
 	var/mode = 0 //0 = Hugs 1 = "Hug" 2 = Shock 3 = CRUSH
 	var/ccooldown = 0
 	var/scooldown = 0
-	var/shockallowed = 0//Can it be a stunarm when emagged. Only PK borgs get this by default.
-	var/boop = 0
+	var/shockallowed = FALSE//Can it be a stunarm when emagged. Only PK borgs get this by default.
+	var/boop = FALSE
 
 /obj/item/borg/cyborghug/attack_self(mob/living/user)
 	if(iscyborg(user))
@@ -82,7 +82,7 @@
 						user.visible_message("<span class='notice'>[user] hugs [M] to make \him feel better!</span>", \
 								"<span class='notice'>You hug [M] to make \him feel better!</span>")
 					if(M.resting)
-						M.resting = 0
+						M.resting = FALSE
 						M.update_canmove()
 				else
 					user.visible_message("<span class='notice'>[user] pets [M]!</span>", \
@@ -102,7 +102,7 @@
 						user.visible_message("<span class='warning'>[user] hugs [M] in a firm bear-hug! [M] looks uncomfortable...</span>", \
 								"<span class='warning'>You hug [M] firmly to make \him feel better! [M] looks uncomfortable...</span>")
 					if(M.resting)
-						M.resting = 0
+						M.resting = FALSE
 						M.update_canmove()
 				else
 					user.visible_message("<span class='warning'>[user] bops [M] on the head!</span>", \
@@ -126,9 +126,9 @@
 								"<span class='danger'>You shock [M] to no effect.</span>")
 					playsound(loc, 'sound/effects/sparks2.ogg', 50, 1, -1)
 					user.cell.charge -= 500
-					scooldown = 1
+					scooldown = TRUE
 					spawn(20)
-					scooldown = 0
+					scooldown = FALSE
 		if(3)
 			if(!ccooldown)
 				if(M.health >= 0)
@@ -141,15 +141,15 @@
 					playsound(loc, 'sound/weapons/smash.ogg', 50, 1, -1)
 					M.adjustBruteLoss(15)
 					user.cell.charge -= 300
-					ccooldown = 1
+					ccooldown = TRUE
 					spawn(10)
-					ccooldown = 0
+					ccooldown = FALSE
 
 /obj/item/borg/cyborghug/peacekeeper
-	shockallowed = 1
+	shockallowed = TRUE
 
 /obj/item/borg/cyborghug/medical
-	boop = 1
+	boop = TRUE
 
 /obj/item/borg/charger
 	name = "power connector"
@@ -280,7 +280,7 @@
 	desc = "Releases a harmless blast that confuses most organics. For when the harm is JUST TOO MUCH"
 	icon_state = "megaphone"
 	var/cooldown = 0
-	var/emagged = 0
+	var/emagged = FALSE
 
 /obj/item/device/harmalarm/emag_act(mob/user)
 	emagged = !emagged
@@ -302,14 +302,14 @@
 			return
 		R.cell.charge -= 1000
 		if(R.emagged)
-			safety = 0
+			safety = FALSE
 
-	if(safety == 1)
+	if(safety == TRUE)
 		user.visible_message("<font color='red' size='2'>[user] blares out a near-deafening siren from its speakers!</font>", \
 			"<span class='userdanger'>The siren pierces your hearing and confuses you!</span>", \
 			"<span class='danger'>The siren pierces your hearing!</span>")
 		for(var/mob/living/carbon/M in get_hearers_in_view(9, user))
-			if(M.get_ear_protection() == 0)
+			if(M.get_ear_protection() == FALSE)
 				M.confused += 6
 		audible_message("<font color='red' size='7'>HUMAN HARM</font>")
 		playsound(get_turf(src), 'sound/AI/harmalarm.ogg', 70, 3)
@@ -321,7 +321,7 @@
 
 		return
 
-	if(safety == 0)
+	if(safety == FALSE)
 		user.audible_message("<font color='red' size='7'>BZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZT</font>")
 		for(var/mob/living/carbon/C in get_hearers_in_view(9, user))
 			var/bang_effect = C.soundbang_act(2, 0, 0, 5)
@@ -364,11 +364,11 @@
 		return
 	if(candy < candymax)
 		addtimer(src, "charge_lollipops", charge_delay, TIMER_NORMAL)
-		charging = 1
+		charging = TRUE
 
 /obj/item/borg/lollipop/proc/charge_lollipops()
 	candy++
-	charging = 0
+	charging = FALSE
 	check_amount()
 
 /obj/item/borg/lollipop/proc/dispense(atom/A, mob/user)
