@@ -147,7 +147,10 @@
 /obj/structure/destructible/clockwork/geis_binding/proc/repair_and_interrupt()
 	obj_integrity = max_integrity
 	update_icon()
-	resisting = FALSE
+	for(var/m in buckled_mobs)
+		var/mob/living/L = m
+		if(L)
+			L.Stun(1, 1, 1)
 	visible_message("<span class='sevtug'>[src] flares brightly!</span>")
 	var/obj/effect/overlay/temp/ratvar/geis_binding/G1 = PoolOrNew(/obj/effect/overlay/temp/ratvar/geis_binding, loc)
 	var/obj/effect/overlay/temp/ratvar/geis_binding/G2 = PoolOrNew(/obj/effect/overlay/temp/ratvar/geis_binding, loc)
