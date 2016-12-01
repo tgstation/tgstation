@@ -6,7 +6,7 @@
 	icon_state = "rock"
 	var/smooth_icon = 'icons/turf/smoothrocks.dmi'
 	smooth = SMOOTH_MORE|SMOOTH_BORDER
-	canSmoothWith = list (/turf/closed)
+	canSmoothWith
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	initial_gas_mix = "TEMP=2.7"
 	opacity = 1
@@ -25,6 +25,8 @@
 	var/defer_change = 0
 
 /turf/closed/mineral/New()
+	if (!canSmoothWith)
+		canSmoothWith = list(/turf/closed)
 	pixel_y = -4
 	pixel_x = -4
 	icon = smooth_icon

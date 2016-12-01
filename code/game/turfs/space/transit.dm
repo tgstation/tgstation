@@ -67,7 +67,7 @@
 		throw_atom(AM)
 	..()
 
-/turf/open/space/transit/update_icon()
+/turf/open/space/transit/proc/update_icon()
 	var/p = 9
 	var/angle = 0
 	var/state = 1
