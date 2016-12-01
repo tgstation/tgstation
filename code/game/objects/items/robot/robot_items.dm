@@ -376,16 +376,8 @@
 	if(candy <= 0)
 		user << "<span class='warning'>No lollipops left in storage!</span>"
 		return FALSE
-	var/turf/T = null
-	if(isturf(A))
-		T = A
-	if(ismovableatom(A))
-		var/atom/movable/M = A
-		if(!M.density)
-			T = get_turf(M)
-	if(!T)
-		return FALSE
-	if(!isopenturf(T))
+	var/turf/T = get_turf(A)
+	if(!T || !istype(T) || !isopenturf(T))
 		return FALSE
 	new /obj/item/weapon/reagent_containers/food/snacks/lollipop(T)
 	candy--
