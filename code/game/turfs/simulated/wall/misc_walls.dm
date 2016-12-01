@@ -3,7 +3,6 @@
 	desc = "A cold metal wall engraved with indecipherable symbols. Studying them causes your head to pound."
 	icon = 'icons/turf/walls/cult_wall.dmi'
 	icon_state = "cult"
-	builtin_sheet = null
 	canSmoothWith = null
 
 /turf/closed/wall/mineral/cult/New()
