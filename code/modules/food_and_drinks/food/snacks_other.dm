@@ -364,6 +364,21 @@
 	throw_speed = 1
 	throwforce = 0
 
+/obj/item/weapon/reagent_containers/food/snacks/lollipop/cyborg
+	var/spamchecking = 1
+
+/obj/item/weapon/reagent_containers/food/snacks/lollipop/cyborg/New()
+	..()
+	addtimer(src, "spamcheck", 300)
+
+/obj/item/weapon/reagent_containers/food/snacks/lollipop/cyborg/equipped(mob/living/user, slot)
+	..(user, slot)
+	spamchecking = 0
+
+/obj/item/weapon/reagent_containers/food/snacks/lollipop/cyborg/spamcheck()
+	if(spamchecking)
+		qdel(src)
+
 /obj/item/weapon/reagent_containers/food/snacks/gumball
 	name = "gumball"
 	desc = "A colorful, sugary gumball."
@@ -374,3 +389,18 @@
 /obj/item/weapon/reagent_containers/food/snacks/gumball/New()
 	..()
 	color = rgb(rand(0, 255), rand(0, 255), rand(0, 255))
+
+/obj/item/weapon/reagent_containers/food/snacks/gumball/cyborg
+	var/spamchecking = 1
+
+/obj/item/weapon/reagent_containers/food/snacks/gumball/cyborg/New()
+	..()
+	addtimer(src, "spamcheck", 300)
+
+/obj/item/weapon/reagent_containers/food/snacks/gumball/cyborg/equipped(mob/living/user, slot)
+	..(user, slot)
+	spamchecking = 0
+
+/obj/item/weapon/reagent_containers/food/snacks/gumball/cyborg/spamcheck()
+	if(spamchecking)
+		qdel(src)

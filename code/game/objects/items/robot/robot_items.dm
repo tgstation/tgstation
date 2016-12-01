@@ -457,7 +457,7 @@
 	name = "gumball"
 	desc = "Oh noes! A fast-moving gumball!"
 	icon_state = "gumball"
-	ammo_type = /obj/item/weapon/reagent_containers/food/snacks/gumball
+	ammo_type = /obj/item/weapon/reagent_containers/food/snacks/gumball/cyborg
 
 /obj/item/projectile/bullet/reusable/gumball/handle_drop()
 	if(!dropped)
@@ -476,7 +476,7 @@
 	name = "lollipop"
 	desc = "Oh noes! A fast-moving lollipop!"
 	icon_state = "lollipop_1"
-	ammo_type = /obj/item/weapon/reagent_containers/food/snacks/lollipop
+	ammo_type = /obj/item/weapon/reagent_containers/food/snacks/lollipop/cyborg
 	var/color2 = rgb(0, 0, 0)
 
 /obj/item/projectile/bullet/reusable/lollipop/New()
