@@ -71,7 +71,7 @@
 		return
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
-		if(H.dna.check_mutation(HULK) || (NOGUNS in H.dna.species.specflags))
+		if(H.dna.check_mutation(HULK) || (NOGUNS in H.dna.species.species_traits))
 			user << "<span class='warning'>Your fingers can't press the button!</span>"
 			return
 

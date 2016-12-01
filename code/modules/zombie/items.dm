@@ -40,7 +40,7 @@
 /obj/item/zombie_hand/proc/check_infection(mob/living/carbon/human/target, mob/user)
 	CHECK_DNA_AND_SPECIES(target)
 
-	if(NOZOMBIE in target.dna.species.specflags)
+	if(NOZOMBIE in target.dna.species.species_traits)
 		// cannot infect any NOZOMBIE subspecies (such as high functioning
 		// zombies)
 		return

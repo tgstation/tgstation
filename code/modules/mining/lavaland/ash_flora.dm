@@ -143,7 +143,7 @@
 		if(!H.shoes && !H.lying) //ouch, my feet.
 			var/picked_def_zone = pick("l_leg", "r_leg")
 			var/obj/item/bodypart/O = H.get_bodypart(picked_def_zone)
-			if(!istype(O) || (PIERCEIMMUNE in H.dna.species.specflags))
+			if(!istype(O) || (PIERCEIMMUNE in H.dna.species.species_traits))
 				return
 			H.apply_damage(rand(3, 6), BRUTE, picked_def_zone)
 			H.Weaken(2)
