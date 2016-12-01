@@ -1,14 +1,19 @@
 /mob/living/silicon/pai
 	name = "pAI"
-	icon = 'icons/obj/status_display.dmi' //invisibility!
-	mouse_opacity = 0
-	density = 0
-	mob_size = MOB_SIZE_TINY
-
 	var/network = "SS13"
 	var/obj/machinery/camera/current = null
-
+	icon = 'icons/mob/pai.dmi'
+	icon_state = "repairbot"
+	mouse_opacity = 1
+	density = 1
+	ventcrawler = 2
+	luminosity = 0
+	pass_flags = PASSTABLE | PASSMOB
+	mob_size = MOB_SIZE_SMALL
+	desc = "A generic pAI mobile hard-light holographics emitter. It seems to be deactivated."
 	weather_immunities = list("ash")
+	health = 500
+	maxhealth = 500	//They don't die by conventional means. While in holographic mode hitting them will damage their emitters, allowing for them to be knocked back into card form and picked up.
 
 	var/ram = 100	// Used as currency to purchase different abilities
 	var/list/software = list()
@@ -49,6 +54,19 @@
 
 	var/obj/item/radio/integrated/signal/sradio // AI's signaller
 
+	var/canholo = 1
+	var/obj/item/weapon/card/id/access_card = null
+	var/chassis = "repairbot"
+	var/list/possible_chassis = list("cat", "mouse", "monkey", "corgi", "fox", "repairbot")
+
+	var/emitterhealth = 50
+	var/emittermaxhealth = 50
+	var/emittercd = 10
+
+	var/overload_ventcrawl = 0
+	var/overload_bulletblock = 0	//Why is this a good idea?
+	var/overload_maxhealth = 0
+
 
 /mob/living/silicon/pai/New(var/obj/item/device/paicard/P)
 	make_laws()
@@ -65,10 +83,12 @@
 			card.radio = new /obj/item/device/radio(card)
 		radio = card.radio
 
+	radio = new /obj/item/device/radio/borg(src)
 	//PDA
 	pda = new(src)
 	spawn(5)
 		pda.ownjob = "Personal Assistant"
+		pda.ownjob = "pAI Messenger"
 		pda.owner = text("[]", src)
 		pda.name = pda.owner + " (" + pda.ownjob + ")"
 
@@ -77,6 +97,7 @@
 /mob/living/silicon/pai/make_laws()
 	laws = new /datum/ai_laws/pai()
 	return 1
+	return TRUE
 
 /mob/living/silicon/pai/Login()
 	..()
