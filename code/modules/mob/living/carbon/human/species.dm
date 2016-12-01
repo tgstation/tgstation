@@ -880,10 +880,10 @@
 		if(H.status_flags & GOTTAGOREALLYFAST)
 			. -= 2
 		. += speedmod
-	
+
 	if(H.status_flags & IGNORESLOWDOWN)
 		ignoreslow = 1
-	
+
 	if(H.has_gravity())
 		gravity = 1
 
@@ -1325,7 +1325,7 @@
 		if(HAZARD_LOW_PRESSURE to WARNING_LOW_PRESSURE)
 			H.throw_alert("pressure", /obj/screen/alert/lowpressure, 1)
 		else
-			if(H.dna.check_mutation(COLDRES) || (RESISTPRESSURE in specflags))
+			if(RESISTPRESSURE in specflags)
 				H.clear_alert("pressure")
 			else
 				H.adjustBruteLoss( LOW_PRESSURE_DAMAGE )
