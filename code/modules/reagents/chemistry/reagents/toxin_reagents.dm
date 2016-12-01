@@ -94,7 +94,7 @@
 	if(iscarbon(M))
 		C = M
 		CHECK_DNA_AND_SPECIES(C)
-		if(NOBREATH in C.dna.species.specflags)
+		if(NOBREATH in C.dna.species.species_traits)
 			. = FALSE
 
 	if(.)

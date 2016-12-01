@@ -6,7 +6,7 @@
 	name = "Human"
 	id = "human"
 	default_color = "FFFFFF"
-	specflags = list(EYECOLOR,HAIR,FACEHAIR,LIPS)
+	species_traits = list(EYECOLOR,HAIR,FACEHAIR,LIPS)
 	mutant_bodyparts = list("tail_human", "ears", "wings")
 	default_features = list("mcolor" = "FFF", "tail_human" = "None", "ears" = "None", "wings" = "None")
 	use_skintones = 1
@@ -37,7 +37,7 @@
 	id = "lizard"
 	say_mod = "hisses"
 	default_color = "00FF00"
-	specflags = list(MUTCOLORS,EYECOLOR,LIPS)
+	species_traits = list(MUTCOLORS,EYECOLOR,LIPS)
 	mutant_bodyparts = list("tail_lizard", "snout", "spines", "horns", "frills", "body_markings", "legs")
 	mutant_organs = list(/obj/item/organ/tongue/lizard)
 	default_features = list("mcolor" = "0F0", "tail" = "Smooth", "snout" = "Round", "horns" = "None", "frills" = "None", "spines" = "None", "body_markings" = "None", "legs" = "Normal Legs")
@@ -71,7 +71,7 @@
 	name = "Ash Walker"
 	id = "ashlizard"
 	limbs_id = "lizard"
-	specflags = list(MUTCOLORS,EYECOLOR,LIPS,NOBREATH,NOGUNS,DIGITIGRADE)
+	species_traits = list(MUTCOLORS,EYECOLOR,LIPS,NOBREATH,NOGUNS,DIGITIGRADE)
 /*
  PODPEOPLE
 */
@@ -81,7 +81,7 @@
 	name = "Podperson"
 	id = "pod"
 	default_color = "59CE00"
-	specflags = list(MUTCOLORS,EYECOLOR)
+	species_traits = list(MUTCOLORS,EYECOLOR)
 	attack_verb = "slash"
 	attack_sound = 'sound/weapons/slice.ogg'
 	miss_sound = 'sound/weapons/slashmiss.ogg'
@@ -155,7 +155,7 @@
 	blacklisted = 1
 	ignored_by = list(/mob/living/simple_animal/hostile/faithless)
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/shadow
-	specflags = list(NOBREATH,NOBLOOD,RADIMMUNE,VIRUSIMMUNE)
+	species_traits = list(NOBREATH,NOBLOOD,RADIMMUNE,VIRUSIMMUNE)
 	dangerous_existence = 1
 	var/datum/action/innate/shadow/darkvision/vision_toggle
 
@@ -208,7 +208,7 @@
 	default_color = "00FF90"
 	say_mod = "chirps"
 	eyes = "jelleyes"
-	specflags = list(MUTCOLORS,EYECOLOR,NOBLOOD,VIRUSIMMUNE,TOXINLOVER)
+	species_traits = list(MUTCOLORS,EYECOLOR,NOBLOOD,VIRUSIMMUNE,TOXINLOVER)
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/slime
 	exotic_blood = "slimejelly"
 	var/datum/action/innate/regenerate_limbs/regenerate_limbs
@@ -305,7 +305,7 @@
 	id = "slime"
 	default_color = "00FFFF"
 	darksight = 3
-	specflags = list(MUTCOLORS,EYECOLOR,HAIR,FACEHAIR,NOBLOOD,VIRUSIMMUNE, TOXINLOVER)
+	species_traits = list(MUTCOLORS,EYECOLOR,HAIR,FACEHAIR,NOBLOOD,VIRUSIMMUNE, TOXINLOVER)
 	say_mod = "says"
 	eyes = "eyes"
 	hair_color = "mutcolor"
@@ -543,7 +543,7 @@
 	// Animated beings of stone. They have increased defenses, and do not need to breathe. They're also slow as fuuuck.
 	name = "Golem"
 	id = "iron"
-	specflags = list(NOBREATH,RESISTHOT,RESISTCOLD,RESISTPRESSURE,NOFIRE,NOGUNS,NOBLOOD,RADIMMUNE,VIRUSIMMUNE,PIERCEIMMUNE,NODISMEMBER,MUTCOLORS)
+	species_traits = list(NOBREATH,RESISTHOT,RESISTCOLD,RESISTPRESSURE,NOFIRE,NOGUNS,NOBLOOD,RADIMMUNE,VIRUSIMMUNE,PIERCEIMMUNE,NODISMEMBER,MUTCOLORS)
 	speedmod = 2
 	armor = 55
 	siemens_coeff = 0
@@ -590,7 +590,7 @@
 	fixed_mut_color = "a3d"
 	meat = /obj/item/weapon/ore/plasma
 	//Can burn and takes damage from heat
-	specflags = list(NOBREATH,RESISTCOLD,RESISTPRESSURE,NOGUNS,NOBLOOD,RADIMMUNE,VIRUSIMMUNE,PIERCEIMMUNE,NODISMEMBER,MUTCOLORS)
+	species_traits = list(NOBREATH,RESISTCOLD,RESISTPRESSURE,NOGUNS,NOBLOOD,RADIMMUNE,VIRUSIMMUNE,PIERCEIMMUNE,NODISMEMBER,MUTCOLORS)
 	info_text = "As a <span class='danger'>Plasma Golem</span>, you explode on death!."
 	burnmod = 1.5
 
@@ -703,7 +703,7 @@
 	fixed_mut_color = "49311c"
 	meat = /obj/item/stack/sheet/mineral/wood
 	//Can burn and take damage from heat
-	specflags = list(NOBREATH,RESISTCOLD,RESISTPRESSURE,NOGUNS,NOBLOOD,RADIMMUNE,VIRUSIMMUNE,PIERCEIMMUNE,NODISMEMBER,MUTCOLORS)
+	species_traits = list(NOBREATH,RESISTCOLD,RESISTPRESSURE,NOGUNS,NOBLOOD,RADIMMUNE,VIRUSIMMUNE,PIERCEIMMUNE,NODISMEMBER,MUTCOLORS)
 	armor = 30
 	burnmod = 1.25
 	heatmod = 1.5
@@ -1035,7 +1035,7 @@
 	blacklisted = 1
 	sexes = 0
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/skeleton
-	specflags = list(NOBREATH,RESISTHOT,RESISTCOLD,RESISTPRESSURE,NOBLOOD,RADIMMUNE,VIRUSIMMUNE,PIERCEIMMUNE,NOHUNGER,EASYDISMEMBER,EASYLIMBATTACHMENT)
+	species_traits = list(NOBREATH,RESISTHOT,RESISTCOLD,RESISTPRESSURE,NOBLOOD,RADIMMUNE,VIRUSIMMUNE,PIERCEIMMUNE,NOHUNGER,EASYDISMEMBER,EASYLIMBATTACHMENT)
 	mutant_organs = list(/obj/item/organ/tongue/bone)
 	damage_overlay_type = ""//let's not show bloody wounds or burns over bones.
 
@@ -1051,7 +1051,7 @@
 	sexes = 0
 	blacklisted = 1
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/zombie
-	specflags = list(NOBREATH,RESISTCOLD,RESISTPRESSURE,NOBLOOD,RADIMMUNE,NOZOMBIE,EASYDISMEMBER,EASYLIMBATTACHMENT,TOXINLOVER)
+	species_traits = list(NOBREATH,RESISTCOLD,RESISTPRESSURE,NOBLOOD,RADIMMUNE,NOZOMBIE,EASYDISMEMBER,EASYLIMBATTACHMENT,TOXINLOVER)
 	mutant_organs = list(/obj/item/organ/tongue/zombie)
 
 /datum/species/zombie/infectious
@@ -1106,7 +1106,7 @@
 	darksight = 3
 	say_mod = "gibbers"
 	sexes = 0
-	specflags = list(NOBLOOD,NOBREATH,VIRUSIMMUNE,NOGUNS)
+	species_traits = list(NOBLOOD,NOBREATH,VIRUSIMMUNE,NOGUNS)
 	mutant_organs = list(/obj/item/organ/tongue/abductor)
 	var/scientist = 0 // vars to not pollute spieces list with castes
 	var/agent = 0
@@ -1120,7 +1120,7 @@ var/global/image/plasmaman_on_fire = image("icon"='icons/mob/OnFire.dmi', "icon_
 	say_mod = "rattles"
 	sexes = 0
 	meat = /obj/item/stack/sheet/mineral/plasma
-	specflags = list(NOBLOOD,RESISTCOLD,RADIMMUNE,NOTRANSSTING,VIRUSIMMUNE,NOHUNGER)
+	species_traits = list(NOBLOOD,RESISTCOLD,RADIMMUNE,NOTRANSSTING,VIRUSIMMUNE,NOHUNGER)
 	mutantlungs = /obj/item/organ/lungs/plasmaman
 	dangerous_existence = 1 //So so much
 	blacklisted = 1 //See above
@@ -1179,13 +1179,13 @@ var/global/image/plasmaman_on_fire = image("icon"='icons/mob/OnFire.dmi', "icon_
 	id = "synth"
 	say_mod = "beep boops" //inherited from a user's real species
 	sexes = 0
-	specflags = list(NOTRANSSTING,NOBREATH,VIRUSIMMUNE,NODISMEMBER,NOHUNGER) //all of these + whatever we inherit from the real species
+	species_traits = list(NOTRANSSTING,NOBREATH,VIRUSIMMUNE,NODISMEMBER,NOHUNGER) //all of these + whatever we inherit from the real species
 	dangerous_existence = 1
 	blacklisted = 1
 	meat = null
 	damage_overlay_type = "synth"
 	limbs_id = "synth"
-	var/list/initial_specflags = list(NOTRANSSTING,NOBREATH,VIRUSIMMUNE,NODISMEMBER,NOHUNGER) //for getting these values back for assume_disguise()
+	var/list/initial_species_traits = list(NOTRANSSTING,NOBREATH,VIRUSIMMUNE,NODISMEMBER,NOHUNGER) //for getting these values back for assume_disguise()
 	var/disguise_fail_health = 75 //When their health gets to this level their synthflesh partially falls off
 	var/datum/species/fake_species = null //a species to do most of our work for us, unless we're damaged
 
@@ -1216,8 +1216,8 @@ var/global/image/plasmaman_on_fire = image("icon"='icons/mob/OnFire.dmi', "icon_
 		name = S.name
 		say_mod = S.say_mod
 		sexes = S.sexes
-		specflags = initial_specflags.Copy()
-		specflags.Add(S.specflags)
+		species_traits = initial_species_traits.Copy()
+		species_traits.Add(S.species_traits)
 		attack_verb = S.attack_verb
 		attack_sound = S.attack_sound
 		miss_sound = S.miss_sound
@@ -1235,7 +1235,7 @@ var/global/image/plasmaman_on_fire = image("icon"='icons/mob/OnFire.dmi', "icon_
 	else
 		name = initial(name)
 		say_mod = initial(say_mod)
-		specflags = initial_specflags.Copy()
+		species_traits = initial_species_traits.Copy()
 		attack_verb = initial(attack_verb)
 		attack_sound = initial(attack_sound)
 		miss_sound = initial(miss_sound)
@@ -1297,7 +1297,7 @@ var/global/image/plasmaman_on_fire = image("icon"='icons/mob/OnFire.dmi', "icon_
 	name = "Android"
 	id = "android"
 	say_mod = "states"
-	specflags = list(NOBREATH,RESISTHOT,RESISTCOLD,RESISTPRESSURE,NOFIRE,NOBLOOD,VIRUSIMMUNE,PIERCEIMMUNE,NOHUNGER,EASYLIMBATTACHMENT)
+	species_traits = list(NOBREATH,RESISTHOT,RESISTCOLD,RESISTPRESSURE,NOFIRE,NOBLOOD,VIRUSIMMUNE,PIERCEIMMUNE,NOHUNGER,EASYLIMBATTACHMENT)
 	meat = null
 	damage_overlay_type = "synth"
 	limbs_id = "synth"
@@ -1336,14 +1336,14 @@ SYNDICATE BLACK OPS
 	attack_sound = "sound/weapons/resonator_blast.ogg"
 	blacklisted = 1
 	use_skintones = 0
-	specflags = list(RADIMMUNE,VIRUSIMMUNE,NOBLOOD,PIERCEIMMUNE,EYECOLOR,NODISMEMBER,NOHUNGER)
+	species_traits = list(RADIMMUNE,VIRUSIMMUNE,NOBLOOD,PIERCEIMMUNE,EYECOLOR,NODISMEMBER,NOHUNGER)
 	sexes = 0
 
 /datum/species/angel
 	name = "Angel"
 	id = "angel"
 	default_color = "FFFFFF"
-	specflags = list(EYECOLOR,HAIR,FACEHAIR,LIPS)
+	species_traits = list(EYECOLOR,HAIR,FACEHAIR,LIPS)
 	mutant_bodyparts = list("tail_human", "ears", "wings")
 	default_features = list("mcolor" = "FFF", "tail_human" = "None", "ears" = "None", "wings" = "Angel")
 	use_skintones = 1

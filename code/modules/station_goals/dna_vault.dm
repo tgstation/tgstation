@@ -261,10 +261,10 @@ var/list/non_simple_animals = typecacheof(list(/mob/living/carbon/monkey,/mob/li
 				var/obj/item/organ/lungs/L = H.internal_organs_slot["lungs"]
 				L.tox_breath_dam_min = 0
 				L.tox_breath_dam_max = 0
-			S.specflags |= VIRUSIMMUNE
+			S.species_traits |= VIRUSIMMUNE
 		if(VAULT_NOBREATH)
 			H << "<span class='notice'>Your lungs feel great.</span>"
-			S.specflags |= NOBREATH
+			S.species_traits |= NOBREATH
 		if(VAULT_FIREPROOF)
 			H << "<span class='notice'>Your feel fireproof.</span>"
 			S.burnmod = 0.5

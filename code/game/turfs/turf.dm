@@ -145,6 +145,7 @@
 
 	SSair.remove_from_active(src)
 
+	Destroy()	//❄
 	var/turf/W = new path(src)
 	if(!defer_change)
 		W.AfterChange(ignore_air)
