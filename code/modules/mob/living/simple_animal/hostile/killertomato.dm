@@ -18,7 +18,7 @@
 	melee_damage_upper = 12
 	attacktext = "slams"
 	attack_sound = 'sound/weapons/punch1.ogg'
-	ventcrawler = 2
+	ventcrawler = VENTCRAWLER_ALWAYS
 	faction = list("plants")
 
 	atmos_requirements = list("min_oxy" = 5, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)

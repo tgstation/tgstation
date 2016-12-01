@@ -93,7 +93,7 @@
 	AIStatus = AI_OFF
 	pass_flags = PASSTABLE
 	mob_size = MOB_SIZE_TINY
-	ventcrawler = 2
+	ventcrawler = VENTCRAWLER_ALWAYS
 	ranged = 1
 	projectiletype = /obj/item/projectile/beam/disabler
 	ranged_cooldown_time = 20
