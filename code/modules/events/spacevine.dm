@@ -347,7 +347,7 @@
 		if(!master.vines.len)
 			var/obj/item/seeds/kudzu/KZ = new(loc)
 			KZ.mutations |= mutations
-			KZ.potency = min(100, master.mutativness * 10)
+			KZ.potency = min(100, master.mutativeness * 10)
 			KZ.production = (master.spread_cap / initial(master.spread_cap)) * 50
 	mutations = list()
 	SetOpacity(0)
@@ -430,17 +430,17 @@
 	var/spread_multiplier = 5
 	var/spread_cap = 30
 	var/list/mutations_list = list()
-	var/mutativness = 1
+	var/mutativeness = 1
 
-/obj/effect/spacevine_controller/New(loc, list/muts, mttv, spreading)
+/obj/effect/spacevine_controller/New(loc, list/muts, potency, production)
 	spawn_spacevine_piece(loc, , muts)
 	START_PROCESSING(SSobj, src)
 	init_subtypes(/datum/spacevine_mutation/, mutations_list)
-	if(mttv != null)
-		mutativness = mttv / 10
-	if(spreading != null)
-		spread_cap *= spreading / 50
-		spread_multiplier /= spreading / 50
+	if(potency != null)
+		mutativeness = potency / 10
+	if(production != null)
+		spread_cap *= production / 50
+		spread_multiplier /= production / 50
 
 /obj/effect/spacevine_controller/ex_act() //only killing all vines will end this suffering
 	return
@@ -466,9 +466,10 @@
 		return
 	if(parent)
 		SV.mutations |= parent.mutations
-		var/parentcolor = parent.atom_colours[FIXED_COLOUR_PRIORITY]
-		SV.add_atom_colour(parentcolor, FIXED_COLOUR_PRIORITY)
-		if(prob(mutativness))
+		if(parent.atom_colours)
+			var/parentcolor = parent.atom_colours[FIXED_COLOUR_PRIORITY]
+			SV.add_atom_colour(parentcolor, FIXED_COLOUR_PRIORITY)
+		if(prob(mutativeness))
 			var/datum/spacevine_mutation/randmut = pick(mutations_list - SV.mutations)
 			randmut.add_mutation_to_vinepiece(SV)
 
