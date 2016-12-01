@@ -73,6 +73,7 @@
 					user.visible_message("<span class='notice'>[user] playfully boops [M] on the head!</span>", \
 									"<span class='notice'>You playfully boop [M] on the head!</span>")
 					user.do_attack_animation(M, ATTACK_EFFECT_BOOP)
+					playsound(loc, 'sound/weapons/tap.ogg', 50, 1, -1)
 				else if(ishuman(M))
 					if(M.lying)
 						user.visible_message("<span class='notice'>[user] shakes [M] trying to get \him up!</span>", \
@@ -83,10 +84,11 @@
 					if(M.resting)
 						M.resting = 0
 						M.update_canmove()
+					playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 				else
 					user.visible_message("<span class='notice'>[user] pets [M]!</span>", \
 							"<span class='notice'>You pet [M]!</span>")
-				playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
+					playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 		if(1)
 			if(M.health >= 0)
 				if(ishuman(M))
