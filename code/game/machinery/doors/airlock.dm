@@ -143,9 +143,9 @@ var/list/airlock_overlays = list()
 	FoundDoor.cyclelinkedairlock = src
 	cyclelinkedairlock = FoundDoor
 
-/obj/machinery/door/airlock/on_varedit(varname)
+/obj/machinery/door/airlock/vv_edit_var(var_name)
 	. = ..()
-	switch (varname)
+	switch (var_name)
 		if ("cyclelinkeddir")
 			cyclelinkairlock()
 
