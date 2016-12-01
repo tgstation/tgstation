@@ -86,7 +86,7 @@
 	name = "magic mirror"
 	desc = "Turn and face the strange... face."
 	icon_state = "magic_mirror"
-	var/list/races_blacklist = list("skeleton", "agent", "angel", "military_synth", "synth", "goofzombies", "memezombies")
+	var/list/races_blacklist = list("skeleton", "agent", "angel", "military_synth", "synth", "memezombies")
 	var/list/choosable_races = list()
 
 /obj/structure/mirror/magic/New()
