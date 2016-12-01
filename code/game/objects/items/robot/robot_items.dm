@@ -464,7 +464,7 @@
 		var/turf/T = get_turf(src)
 		var/obj/item/weapon/reagent_containers/food/snacks/gumball/S = new ammo_type(T)
 		S.color = color
-		dropped = 1
+		dropped = TRUE
 
 /obj/item/ammo_casing/caseless/lollipop	//NEEDS RANDOMIZED COLOR LOGIC.
 	name = "Lollipop"
@@ -491,7 +491,7 @@
 		var/turf/T = get_turf(src)
 		var/obj/item/weapon/reagent_containers/food/snacks/lollipop/S = new ammo_type(T)
 		S.change_head_color(color2)
-		dropped = 1
+		dropped = TRUE
 
 /**********************************************************************
 						HUD/SIGHT things
