@@ -6,9 +6,9 @@
 	w_class = 2
 	slot_flags = SLOT_BELT
 	origin_tech = "programming=2"
-	var/obj/item/device/radio/radio
 	var/looking_for_personality = 0
 	var/mob/living/silicon/pai/pai
+	resistance_flags = FIRE_PROOF | ACID_PROOF | INDESTRUCTIBLE
 
 /obj/item/device/paicard/New()
 	..()
