@@ -150,7 +150,7 @@
 			H.visible_message("<span class='danger'>[H] steps on a cactus!</span>", \
 				"<span class='userdanger'>You step on a cactus!</span>")
 
-/obj/item/weapon/reagent_containers/food/snacks/ash_flora/
+/obj/item/weapon/reagent_containers/food/snacks/ash_flora
 	name = "mushroom shavings"
 	desc = "Some shavings from a tall mushroom. With enough, might serve as a bowl."
 	icon = 'icons/obj/lavaland/ash_flora.dmi'

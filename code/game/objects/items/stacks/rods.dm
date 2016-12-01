@@ -66,7 +66,7 @@ var/global/list/datum/stack_recipe/rod_recipes = list ( \
 	else
 		return ..()
 
-/obj/item/stack/rods/cyborg/
+/obj/item/stack/rods/cyborg
 	materials = list()
 	is_cyborg = 1
 	cost = 250

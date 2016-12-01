@@ -1,4 +1,4 @@
-/obj/item/weapon/gun/magic/staff/
+/obj/item/weapon/gun/magic/staff
 	slot_flags = SLOT_BACK
 
 /obj/item/weapon/gun/magic/staff/change

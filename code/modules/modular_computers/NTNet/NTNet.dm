@@ -2,7 +2,7 @@ var/global/datum/ntnet/ntnet_global = new()
 
 
 // This is the NTNet datum. There can be only one NTNet datum in game at once. Modular computers read data from this.
-/datum/ntnet/
+/datum/ntnet
 	var/list/relays = list()
 	var/list/logs = list()
 	var/list/available_station_software = list()

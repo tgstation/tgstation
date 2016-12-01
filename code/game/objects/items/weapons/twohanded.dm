@@ -128,7 +128,7 @@
 
 ///////////Two hand required objects///////////////
 //This is for objects that require two hands to even pick up
-/obj/item/weapon/twohanded/required/
+/obj/item/weapon/twohanded/required
 	w_class = 5
 
 /obj/item/weapon/twohanded/required/attack_self()
