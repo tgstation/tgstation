@@ -144,7 +144,6 @@
 		reagents.remove_reagent("sodiumchloride", 2)
 		new/obj/effect/decal/cleanable/salt(target)
 		return
-	else
 	..()
 
 /obj/item/weapon/reagent_containers/food/condiment/peppermill
