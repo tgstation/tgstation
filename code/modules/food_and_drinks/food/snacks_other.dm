@@ -391,15 +391,15 @@
 	color = rgb(rand(0, 255), rand(0, 255), rand(0, 255))
 
 /obj/item/weapon/reagent_containers/food/snacks/gumball/cyborg
-	var/spamchecking = 1
+	var/spamchecking = TRUE
 
 /obj/item/weapon/reagent_containers/food/snacks/gumball/cyborg/New()
 	..()
 	addtimer(src, "spamcheck", 1200)
 
 /obj/item/weapon/reagent_containers/food/snacks/gumball/cyborg/equipped(mob/living/user, slot)
-	..(user, slot)
-	spamchecking = 0
+	. = ..(user, slot)
+	spamchecking = FALSE
 
 /obj/item/weapon/reagent_containers/food/snacks/gumball/cyborg/proc/spamcheck()
 	if(spamchecking)
