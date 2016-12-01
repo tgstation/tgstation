@@ -304,7 +304,7 @@ var/next_mob_id = 0
 		return
 	if(isliving(AM))
 		var/mob/living/L = AM
-		if(L.buckled && L.buckled.anchored)
+		if(L.buckled && L.buckled.buckle_prevents_pull)
 			return
 	if(throwing || incapacitated())
 		return

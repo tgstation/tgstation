@@ -86,6 +86,7 @@
 	debris = list()
 	can_buckle = TRUE
 	buckle_lying = 0
+	buckle_prevents_pull = TRUE
 	var/resisting = FALSE
 	var/mob_layer = MOB_LAYER
 

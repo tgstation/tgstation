@@ -6,6 +6,7 @@
 	var/buckle_requires_restraints = 0 //require people to be handcuffed before being able to buckle. eg: pipes
 	var/list/mob/living/buckled_mobs = null //list()
 	var/max_buckled_mobs = 1
+	var/buckle_prevents_pull = FALSE
 
 //Interaction
 /atom/movable/attack_hand(mob/living/user)
@@ -49,7 +50,7 @@
 			usr << "<span class='warning'>You are unable to buckle [M] to the [src]!</span>"
 		return 0
 
-	if(M.pulledby && anchored)
+	if(M.pulledby && buckle_prevents_pull)
 		M.pulledby.stop_pulling()
 	M.buckled = src
 	M.setDir(dir)
