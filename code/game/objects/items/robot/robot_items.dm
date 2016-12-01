@@ -15,7 +15,7 @@
 		var/mob/living/carbon/human/H = M
 		if(H.check_shields(0, "[M]'s [name]", src, MELEE_ATTACK))
 			playsound(M, 'sound/weapons/Genhit.ogg', 50, 1)
-			return 0
+			return FALSE
 	if(iscyborg(user))
 		var/mob/living/silicon/robot/R = user
 		if(!R.cell.use(charge_cost))
@@ -84,11 +84,10 @@
 					if(M.resting)
 						M.resting = 0
 						M.update_canmove()
-					playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 				else
 					user.visible_message("<span class='notice'>[user] pets [M]!</span>", \
 							"<span class='notice'>You pet [M]!</span>")
-					playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
+				playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 		if(1)
 			if(M.health >= 0)
 				if(ishuman(M))
@@ -419,13 +418,13 @@
 		var/mob/living/silicon/robot/R = user
 		if(!R.cell.use(12))
 			user << "<span class='warning'>Not enough power.</span>"
-			return 0
+			return FALSE
 		if(R.emagged)
 			hitdamage = emaggedhitdamage
 	switch(mode)
 		if(1)
 			if(!proximity)
-				return 0
+				return FALSE
 			dispense(target, user)
 		if(2)
 			shootL(target, user, click_params)
