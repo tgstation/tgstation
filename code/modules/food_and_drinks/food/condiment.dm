@@ -52,7 +52,7 @@
 	playsound(M.loc,'sound/items/drink.ogg', rand(10,50), 1)
 	return 1
 
-/obj/item/weapon/reagent_containers/food/condiment/afterattack(obj/target, mob/user , proximity)
+/obj/item/weapon/reagent_containers/food/condiment/proc/condiment_afterattack(obj/target, mob/user, proximity) // Because you just HAD to give salt something special. Yes, I /AM/ Salty, pun very much intended for your displeasure!!!
 	if(!proximity) return
 	if(istype(target, /obj/structure/reagent_dispensers)) //A dispenser. Transfer FROM it TO us.
 
@@ -77,6 +77,9 @@
 			return
 		var/trans = src.reagents.trans_to(target, amount_per_transfer_from_this)
 		user << "<span class='notice'>You transfer [trans] units of the condiment to [target].</span>"
+
+/obj/item/weapon/reagent_containers/food/condiment/afterattack(obj/target, mob/user, proximity)
+	condiment_afterattack(target, user, proximity)
 
 /obj/item/weapon/reagent_containers/food/condiment/on_reagent_change()
 	if(!possible_states.len)
@@ -134,8 +137,10 @@
 	return (TOXLOSS)
 
 /obj/item/weapon/reagent_containers/food/condiment/saltshaker/afterattack(obj/target, mob/living/user, proximity)
-	if(!proximity || !isturf(target))
+	if(!proximity)
 		return
+	if(!isturf(target))
+		condiment_afterattack(target, user, proximity)
 	if(!reagents.has_reagent("sodiumchloride", 2))
 		user << "<span class='warning'>You don't have enough salt to make a pile!</span>"
 		return
