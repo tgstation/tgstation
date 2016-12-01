@@ -365,15 +365,15 @@
 	throwforce = 0
 
 /obj/item/weapon/reagent_containers/food/snacks/lollipop/cyborg
-	var/spamchecking = 1
+	var/spamchecking = TRUE
 
 /obj/item/weapon/reagent_containers/food/snacks/lollipop/cyborg/New()
 	..()
 	addtimer(src, "spamcheck", 1200)
 
 /obj/item/weapon/reagent_containers/food/snacks/lollipop/cyborg/equipped(mob/living/user, slot)
-	..(user, slot)
-	spamchecking = 0
+	. = ..(user, slot)
+	spamchecking = FALSE
 
 /obj/item/weapon/reagent_containers/food/snacks/lollipop/cyborg/proc/spamcheck()
 	if(spamchecking)
