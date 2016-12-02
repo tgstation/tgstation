@@ -62,23 +62,24 @@
 		if("harm")
 			visible_message("<span class='danger'>[user] stomps on [src]!.</span>")
 			if (user.name == master)
-				visible_message("<span class='info'>Responding to its master's touch, [src] disengages its holochassis emitter, rapidly losing coherence.</span>")
+				visible_message("<span class='notice'>Responding to its master's touch, [src] disengages its holochassis emitter, rapidly losing coherence.</span>")
 				spawn(10)
 					close_up()
-					if(user.
+					if(user.put_in_hands(card))
+						user.visible_message("<span class='notice'>[user] promptly scoops up their pAI's card.</span>")
 			else
 				take_holo_damage(2)
 
 
 /mob/living/silicon/pai/hitby(atom/movable/AM)
-	visible_message("<span class='info'>[AM] flies clean through [src]'s holographic field, causing it to stutter and warp wildly!")
+	visible_message("<span class='warning'>[AM] flies clean through [src]'s holographic field, causing it to stutter and warp wildly!")
 	if(istype(AM, /obj/item))
 		var/obj/item/I = AM
 		take_holo_damage(O.throwforce)
 	return 0
 
 /mob/living/silicon/pai/bullet_act(/obj/item/projectile/P)
-	visible_message("<span class='info'>[Proj] tears cleanly through [src]'s holographic field, distorting its image horribly!!")
+	visible_message("<span class='warning'>[Proj] tears cleanly through [src]'s holographic field, distorting its image horribly!!")
 	take_holo_damage(P.damage)
 	return 0
 	return
@@ -89,10 +90,10 @@
 */
 
 /mob/living/silicon/pai/stripPanelUnequip(obj/item/what, mob/who, where) //prevents stripping
-	src << "<span class='warning'>Your containment field stutters and warps intensely as you attempt to interact with the object, forcing you to cease lest the field fail.</span>"
+	src << "<span class='warning'>Your holochassis stutters and warps intensely as you attempt to interact with the object, forcing you to cease lest the field fail.</span>"
 
 /mob/living/silicon/pai/stripPanelEquip(obj/item/what, mob/who, where) //prevents stripping
-	src << "<span class='warning'>Your containment field stutters and warps intensely as you attempt to interact with the object, forcing you to cease lest the field fail.</span>"
+	src << "<span class='warning'>Your holochassis stutters and warps intensely as you attempt to interact with the object, forcing you to cease lest the field fail.</span>"
 
 /mob/living/silicon/pai/IgniteMob(var/mob/living/silicon/pai/P)
 	return 0	//No we're not flammable

@@ -54,6 +54,7 @@
 
 	var/obj/item/radio/integrated/signal/sradio // AI's signaller
 
+	var/holoform = 0
 	var/canholo = 1
 	var/obj/item/weapon/card/id/access_card = null
 	var/chassis = "repairbot"
@@ -68,6 +69,8 @@
 	var/overload_bulletblock = 0	//Why is this a good idea?
 	var/overload_maxhealth = 0
 	canmove = 0
+
+	actions = list(/datum/action/pai/chassis, /datum/action/pai/rest, /datum/action/pai/shell)
 
 
 /mob/living/silicon/pai/New(var/obj/item/device/paicard/P)
@@ -94,7 +97,21 @@
 		pda.owner = text("[]", src)
 		pda.name = pda.owner + " (" + pda.ownjob + ")"
 
+	for(/datum/action/pai/A in actions)
+		A.Grant(src)
+
 	..()
+
+/mob/living/silicon/pai/ui_action_click(owner, action)
+	if(istype(action, /datum/action/pai/shell))
+		if(holoform)
+			fold_in(0)
+		else
+			fold_out()
+	if(istype(action, /datum/action/pai/chassis))
+		choose_chassis()
+	if(istype(action, /datum/action/pai/rest))
+		lay_down()
 
 /mob/living/silicon/pai/make_laws()
 	laws = new /datum/ai_laws/pai()
@@ -124,12 +141,25 @@
 
 /mob/living/silicon/pai/canUseTopic(atom/movable/M)
 	return 1
-/*
-// Debug command - Maybe should be added to admin verbs later
-/mob/verb/makePAI(var/turf/t in view())
-	var/obj/item/device/paicard/card = new(t)
-	var/mob/living/silicon/pai/pai = new(card)
+
+/mob/proc/makePAI()
+	var/obj/item/device/paicard/card = new /obj/item/device/paicard(get_turf(src))
+	var/mob/living/silicon/pai/pai = new /mob/living/silicon/pai(card)
 	pai.key = src.key
 	card.setPersonality(pai)
 
-*/
+/datum/action/pai/shell
+	name = "Toggle Holoform"
+	button_icon_state = "pai_holoform"
+	background_icon_state = "bg_tech"
+
+/datum/action/pai/chassis
+	name = "Holochassis Appearence Composite"
+	button_icon_state = "pai_chassis"
+	background_icon_state = "bg_tech"
+
+/datum/action/pai/rest
+	name = "Rest"
+	button_icon_state = "pai_rest"
+	background_icon_state = "bg_tech"
+
