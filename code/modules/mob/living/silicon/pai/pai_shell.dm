@@ -1,76 +1,70 @@
-/*
-/mob/living/silicon/pai/proc/fold_out()
-	if (!canholo)
-		src << "\red Your master has not enabled your external holographic emitters! Ask nicely!"
-		return
+
+/mob/living/silicon/pai/proc/fold_out(force = FALSE)
+	if(!canholo && !force)
+		src << "<span class='warning'>Your master or another force has disabled your holochassis emitters!</span>"
+		return FALSE
 
 	if(src.loc != card)
-		src << "\red You are already in your holographic form!"
-		return
+		src << "<span class='warning'>You are already in your mobile holochassis!</span>"
+		return FALSE
 
-	if(world.time <= last_special)
-		src << "\red You must wait before altering your holographic emitters again!"
-		return
+	if(emittersemicd)
+		src << "<span class='warning'>Error: Holochassis emitters recycling. Please try again later.</span>"
+		return FALSE
 
-	last_special = world.time + 200
-
+	emittersemicd = TRUE
+	addtimer(src, "emittercool", emittercd)
 	canmove = 1
 	density = 1
 
-	//I'm not sure how much of this is necessary, but I would rather avoid issues.
-	if(istype(card.loc,/mob))
-		var/mob/holder = card.loc
-		holder.unEquip(card)
-	else if(istype(card.loc,/obj/item/device/pda))
-		var/obj/item/device/pda/holder = card.loc
-		holder.pai = null
+	if(istype(card.loc, /mob/living))
+		var/mob/living/L = card.loc
+		if(!L.unEquip(card))
+			src << "<span class='warning'>Error: Unable to expand to mobile form. Chassis is restrained by some device or person.</span>"
+			return 0
+		else if(istype(card.loc, /obj/item/device/pda))
+			var/obj/item/device/pda/P = card.loc
+			holder.pai = null
 
 	src.client.perspective = EYE_PERSPECTIVE
 	src.client.eye = src
+
 	var/turf/T = get_turf(card.loc)
 	card.loc = T
 	src.loc = T
 	src.forceMove(T)
-
 	card.forceMove(src)
 	card.screen_loc = null
-
-	src.SetLuminosity(2)
-	weather_immunities = list() //remove ash immunity in holoform
-
+	src.SetLuminosity(0)
 	icon_state = "[chassis]"
-	if(istype(T)) T.visible_message("With a faint hum, <b>[src]</b> levitates briefly on the spot before adopting its holographic form in a flash of green light.")
+	src.visible_message("<span class='boldnotice'>[src] folds out its holochassis emitter and forms a holoshell around itself!</span>")
 
-/mob/living/silicon/pai/proc/close_up(var/force = 0)
+/mob/living/silicon/pai/proc/emittercool()
+	emittersemicd = FALSE
 
-	if (health < 5 && !force)
-		src << "<span class='warning'><b>Your holographic emitters are too damaged to function!</b></span>"
-		return
-
-	last_special = world.time + 200
+/mob/living/silicon/pai/proc/fold_in(force = FALSE)
+	emittersemicd = 1
+	addtimer(src, "emittercool", emittercd)
 	resting = 0
+	icon_state = "[chassis]"
 	if(src.loc == card)
-		return
-
-	var/turf/T = get_turf(src)
-	if(istype(T)) T.visible_message("<b>[src]</b>'s holographic field distorts and collapses, leaving the central card-unit core behind.")
-
-	if (src.client) //god damnit this is going to be irritating to handle for dc'd pais that stay in holoform
-		src.stop_pulling()
+		src << "<span class='warning'>You are already in your card!</span>"
+		return 0
+	visible_message("<span class='notice'>[src] deactivates its holochassis emitter and folds back into a compact card!</span>")
+	stop_pulling()
+	if(src.client)
 		src.client.perspective = EYE_PERSPECTIVE
 		src.client.eye = card
-
-	//This seems redundant but not including the forced loc setting messes the behavior up.
 	card.loc = T
 	card.forceMove(T)
 	src.loc = card
 	src.forceMove(card)
 	canmove = 0
 	density = 0
-	weather_immunities = list("ash")
 	src.SetLuminosity(0)
-	icon_state = "[chassis]"
 
+
+/*
 /mob/living/silicon/pai/verb/fold_up()
 	set category = "pAI Commands"
 	set name = "Return to Card Form"

@@ -5,7 +5,7 @@
 	icon = 'icons/mob/pai.dmi'
 	icon_state = "repairbot"
 	mouse_opacity = 1
-	density = 1
+	density = 0
 	ventcrawler = 2
 	luminosity = 0
 	pass_flags = PASSTABLE | PASSMOB
@@ -67,6 +67,7 @@
 	var/overload_ventcrawl = 0
 	var/overload_bulletblock = 0	//Why is this a good idea?
 	var/overload_maxhealth = 0
+	canmove = 0
 
 
 /mob/living/silicon/pai/New(var/obj/item/device/paicard/P)

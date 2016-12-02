@@ -57,14 +57,17 @@
 	switch(user.a_intent)
 		if("help")
 			visible_message("<span class='notice'>[user] gently pats [src] on the head, eliciting an off-putting buzzing from its holographic field.</span>")
-	if (user.a_intent != "help")
-		visible_message("<span class='danger'>[user] stomps on [src]!.</span>")
-		if (user.name == master)
-			visible_message("<span class='info'>Responding to its master's touch, [src] disengages its holographic emitter, rapidly losing coherence..</span>")
-			spawn(10)
-				close_up()
-		else
-			take_holo_damage(5)
+		if("disarm")
+			visible_message("<span class='notice'>[user] boops [src] on the head!</span>")
+		if("harm")
+			visible_message("<span class='danger'>[user] stomps on [src]!.</span>")
+			if (user.name == master)
+				visible_message("<span class='info'>Responding to its master's touch, [src] disengages its holochassis emitter, rapidly losing coherence.</span>")
+				spawn(10)
+					close_up()
+					if(user.
+			else
+				take_holo_damage(2)
 
 
 /mob/living/silicon/pai/hitby(atom/movable/AM)
