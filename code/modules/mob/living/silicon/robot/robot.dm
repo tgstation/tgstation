@@ -111,6 +111,7 @@
 		if(wires.is_cut(WIRE_CAMERA))
 			camera.status = 0
 	module = new /obj/item/weapon/robot_module(src)
+	module.rebuild_modules()
 	update_icons()
 	..()
 
