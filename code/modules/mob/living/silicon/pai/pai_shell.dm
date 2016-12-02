@@ -1,5 +1,9 @@
 
 /mob/living/silicon/pai/proc/fold_out(force = FALSE)
+	if(emitterhealth < 0)
+		src << "<span class='warning'>Your holochassis emitters are still too unstable! Please wait for automatic repair.</span>"
+		return FALSE
+
 	if(!canholo && !force)
 		src << "<span class='warning'>Your master or another force has disabled your holochassis emitters!</span>"
 		return FALSE
@@ -14,13 +18,13 @@
 
 	emittersemicd = TRUE
 	addtimer(src, "emittercool", emittercd)
-	canmove = 1
-	density = 1
+	canmove = TRUE
+	density = TRUE
 	if(istype(card.loc, /mob/living))
 		var/mob/living/L = card.loc
 		if(!L.unEquip(card))
 			src << "<span class='warning'>Error: Unable to expand to mobile form. Chassis is restrained by some device or person.</span>"
-			return 0
+			return FALSE
 		else if(istype(card.loc, /obj/item/device/pda))
 			var/obj/item/device/pda/P = card.loc
 			holder.pai = null
@@ -36,15 +40,14 @@
 	SetLuminosity(0)
 	icon_state = "[chassis]"
 	src.visible_message("<span class='boldnotice'>[src] folds out its holochassis emitter and forms a holoshell around itself!</span>")
-	holoform = 1
+	holoform = TRUE
 
 /mob/living/silicon/pai/proc/emittercool()
 	emittersemicd = FALSE
 
 /mob/living/silicon/pai/proc/fold_in(force = FALSE)
-	emittersemicd = 1
+	emittersemicd = TRUE
 	addtimer(src, "emittercool", emittercd)
-	resting = 0
 	icon_state = "[chassis]"
 	if(!holoform)
 		. = fold_out(force)
@@ -58,10 +61,10 @@
 	card.forceMove(T)
 	loc = card
 	forceMove(card)
-	canmove = 0
-	density = 0
+	canmove = FALSE
+	density = FALSE
 	SetLuminosity(0)
-	holoform = 1
+	holoform = TRUE
 	if(resting)
 		lay_down()
 

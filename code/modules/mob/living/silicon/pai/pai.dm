@@ -54,21 +54,22 @@
 
 	var/obj/item/radio/integrated/signal/sradio // AI's signaller
 
-	var/holoform = 0
-	var/canholo = 1
+	var/holoform = FALSE
+	var/canholo = TRUE
 	var/obj/item/weapon/card/id/access_card = null
 	var/chassis = "repairbot"
 	var/list/possible_chassis = list("cat", "mouse", "monkey", "corgi", "fox", "repairbot")
 
 	var/emitterhealth = 50
 	var/emittermaxhealth = 50
+	var/emitterregen = 5
 	var/emittercd = 10
-	var/emittersemicd = 0
+	var/emittersemicd = FALSE
 
 	var/overload_ventcrawl = 0
 	var/overload_bulletblock = 0	//Why is this a good idea?
 	var/overload_maxhealth = 0
-	canmove = 0
+	canmove = FALSE
 
 	actions = list(/datum/action/pai/chassis, /datum/action/pai/rest, /datum/action/pai/shell)
 
@@ -115,13 +116,17 @@
 
 /mob/living/silicon/pai/make_laws()
 	laws = new /datum/ai_laws/pai()
-	return 1
 	return TRUE
 
 /mob/living/silicon/pai/Login()
 	..()
 	usr << browse_rsc('html/paigrid.png')			// Go ahead and cache the interface resources as early as possible
-
+	if(client)
+		client.perspective = EYE_PERSPECTIVE
+		if(holoform)
+			client.eye = src
+		else
+			client.eye = card
 
 /mob/living/silicon/pai/Stat()
 	..()
@@ -135,18 +140,24 @@
 			stat(null, text("Systems nonfunctional"))
 
 /mob/living/silicon/pai/restrained(ignore_grab)
-	. = 0
+	. = FALSE
 
 // See software.dm for Topic()
 
 /mob/living/silicon/pai/canUseTopic(atom/movable/M)
-	return 1
+	return TRUE
 
-/mob/proc/makePAI()
+/mob/living/silicon/pai/Life()
+	..()
+	emitterhealth = Clamp((emitterhealth + emitterregen), -50, maxhealth)
+
+/mob/proc/makePAI(delold)
 	var/obj/item/device/paicard/card = new /obj/item/device/paicard(get_turf(src))
 	var/mob/living/silicon/pai/pai = new /mob/living/silicon/pai(card)
 	pai.key = src.key
 	card.setPersonality(pai)
+	if(delold)
+		qdel(src)
 
 /datum/action/pai/shell
 	name = "Toggle Holoform"

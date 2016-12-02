@@ -1,9 +1,11 @@
 
 /mob/living/silicon/pai/blob_act(obj/structure/blob/B)
-	return 0
+	return FALSE
 
 /mob/living/silicon/pai/emp_act(severity)
 	take_holo_damage(severity * 25)
+	silent = severity * 25	//Ouch!
+	fullstun(severity * 5)
 	//Need more effects that aren't instadeath or permanent law corruption.
 
 /mob/living/silicon/pai/ex_act(severity, target)
@@ -76,13 +78,12 @@
 	if(istype(AM, /obj/item))
 		var/obj/item/I = AM
 		take_holo_damage(O.throwforce)
-	return 0
+	return FALSE
 
 /mob/living/silicon/pai/bullet_act(/obj/item/projectile/P)
 	visible_message("<span class='warning'>[Proj] tears cleanly through [src]'s holographic field, distorting its image horribly!!")
 	take_holo_damage(P.damage)
-	return 0
-	return
+	return FALSE
 
 /*
 /mob/living/silicon/pai/Crossed(AM as mob|obj) //cannot intercept projectiles
@@ -96,4 +97,13 @@
 	src << "<span class='warning'>Your holochassis stutters and warps intensely as you attempt to interact with the object, forcing you to cease lest the field fail.</span>"
 
 /mob/living/silicon/pai/IgniteMob(var/mob/living/silicon/pai/P)
-	return 0	//No we're not flammable
+	return FALSE	//No we're not flammable
+
+/mob/living/silicon/pai/take_holo_damage(amount)
+	emitterhealth = Clamp((emitterhealth - amount), -50, emittermaxhealth)
+	if(emitterhealth < 0)
+		fold_in(force = TRUE)
+	src << "<span class='userdanger'>The impact degrades your holochassis!</span>")
+
+/mob/living/silicon/pai/proc/fullstun(amount)
+	Weaken(amount)
