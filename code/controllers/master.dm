@@ -67,6 +67,11 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 	// Tell qdel() to Del() this object.
 	return QDEL_HINT_HARDDEL_NOW
 
+/datum/controller/master/proc/Shutdown()
+	processing = FALSE
+	for(var/datum/subsystem/ss in subsystems)
+		ss.Shutdown()
+
 // Returns 1 if we created a new mc, 0 if we couldn't due to a recent restart,
 //	-1 if we encountered a runtime trying to recreate it
 /proc/Recreate_MC()

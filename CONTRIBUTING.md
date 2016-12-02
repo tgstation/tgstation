@@ -190,6 +190,13 @@ This prevents nesting levels from getting deeper then they need to be.
 
 * Where you have code that can cause large scale modification and *FUN* make sure you start it out locked behind one of the default admin roles - use common sense to determine which role fits the level of damage a function could do
 
+###Files
+* Because runtime errors do not give the full path, try to avoid having files with the same name across folders.
+
+* File names should not be mixed case, or contain spaces or any character that would require escaping in a uri.
+
+* Files and path accessed and referenced by code above simply being #included should be strictly lowercase to avoid issues on filesystems where case matters.
+
 ###Other Notes
 * Code should be modular where possible, if you are working on a new class then it is best if you put it in a new file.
 

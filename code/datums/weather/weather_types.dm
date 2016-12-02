@@ -148,7 +148,7 @@
 		if(ishuman(L))
 			var/mob/living/carbon/human/H = L
 			if(H.dna && H.dna.species)
-				if(!(RADIMMUNE in H.dna.species.specflags))
+				if(!(RADIMMUNE in H.dna.species.species_traits))
 					if(prob(max(0,100-resist)))
 						H.randmuti()
 						if(prob(50))

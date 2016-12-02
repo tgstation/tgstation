@@ -36,7 +36,7 @@
 	var/mob/dead/observer/G = usr
 	G.dead_tele()
 
-/datum/hud/ghost/New(mob/owner)
+/datum/hud/ghost/New(mob/owner, ui_style = 'icons/mob/screen_midnight.dmi')
 	..()
 	var/mob/dead/observer/G = mymob
 	if(!G.client.prefs.ghost_hud)
@@ -71,4 +71,4 @@
 
 /mob/dead/observer/create_mob_hud()
 	if(client && !hud_used)
-		hud_used = new /datum/hud/ghost(src)
+		hud_used = new /datum/hud/ghost(src, ui_style2icon(client.prefs.UI_style))

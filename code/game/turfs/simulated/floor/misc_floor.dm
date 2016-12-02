@@ -120,7 +120,7 @@
 		var/swapdamage = FALSE
 		if(L.has_dna()) //if has_dna() is true they're at least carbon
 			var/mob/living/carbon/C = L
-			if(TOXINLOVER in C.dna.species.specflags)
+			if(TOXINLOVER in C.dna.species.species_traits)
 				swapdamage = TRUE
 		if(isanimal(L))
 			var/mob/living/simple_animal/A = L

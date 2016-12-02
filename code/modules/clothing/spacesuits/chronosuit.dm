@@ -173,7 +173,7 @@
 
 
 /obj/item/clothing/suit/space/chronos/proc/create_phase_underlay(var/mob/user)
-	var/icon/user_icon = icon('icons/effects/alphacolors.dmi', "white")
+	var/icon/user_icon = icon('icons/effects/alphacolors.dmi', "")
 	user_icon.AddAlphaMask(getFlatIcon(user))
 	var/image/phase = new(user_icon)
 	phase.appearance_flags = RESET_COLOR|RESET_ALPHA

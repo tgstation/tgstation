@@ -268,7 +268,7 @@
 	quickbind_desc = "Creates a Tinkerer's Cache, which stores components globally for slab access."
 
 /datum/clockwork_scripture/create_object/tinkerers_cache/New()
-	var/cache_cost_increase = min(round(clockwork_caches*0.2), 5)
+	var/cache_cost_increase = min(round(clockwork_caches*0.25), 5)
 	for(var/i in required_components)
 		if(i != REPLICANT_ALLOY)
 			required_components[i] += cache_cost_increase

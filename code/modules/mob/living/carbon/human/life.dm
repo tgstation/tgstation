@@ -100,7 +100,7 @@
 	if(!L)
 		if(health >= HEALTH_THRESHOLD_CRIT)
 			adjustOxyLoss(HUMAN_MAX_OXYLOSS + 1)
-		else if(!(NOCRITDAMAGE in dna.species.specflags))
+		else if(!(NOCRITDAMAGE in dna.species.species_traits))
 			adjustOxyLoss(HUMAN_CRIT_MAX_OXYLOSS)
 
 		failed_last_breath = 1
@@ -307,7 +307,7 @@
 	if(dna.check_mutation(COLDRES))
 		return 1 //Fully protected from the cold.
 
-	if(dna && (RESISTCOLD in dna.species.specflags))
+	if(dna && (RESISTCOLD in dna.species.species_traits))
 		return 1
 
 	temperature = max(temperature, 2.7) //There is an occasional bug where the temperature is miscalculated in ares with a small amount of gas on them, so this is necessary to ensure that that bug does not affect this calculation. Space's temperature is 2.7K and most suits that are intended to protect against any cold, protect down to 2.0K.
@@ -367,7 +367,7 @@
 	if(head)
 		if(head.flags & BLOCK_GAS_SMOKE_EFFECT)
 			. = 1
-	if(NOBREATH in dna.species.specflags)
+	if(NOBREATH in dna.species.species_traits)
 		. = 1
 	return .
 
@@ -391,8 +391,8 @@
 
 /mob/living/carbon/human/proc/handle_heart()
 	CHECK_DNA_AND_SPECIES(src)
-	var/needs_heart = (!(NOBLOOD in dna.species.specflags))
-	var/we_breath = (!(NOBREATH in dna.species.specflags))
+	var/needs_heart = (!(NOBLOOD in dna.species.species_traits))
+	var/we_breath = (!(NOBREATH in dna.species.species_traits))
 
 	if(heart_attack)
 		if(!needs_heart)
