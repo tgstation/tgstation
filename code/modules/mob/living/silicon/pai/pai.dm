@@ -76,6 +76,7 @@
 	..()
 
 /mob/living/silicon/pai/New(var/obj/item/device/paicard/P)
+	START_PROCESSING(SSfastprocess, src)
 	pai_list += src
 	make_laws()
 	canmove = 0
@@ -92,7 +93,6 @@
 	//PDA
 	pda = new(src)
 	spawn(5)
-		pda.ownjob = "Personal Assistant"
 		pda.ownjob = "pAI Messenger"
 		pda.owner = text("[]", src)
 		pda.name = pda.owner + " (" + pda.ownjob + ")"
@@ -151,8 +151,7 @@
 /mob/living/silicon/pai/canUseTopic(atom/movable/M)
 	return TRUE
 
-/mob/living/silicon/pai/proc/Life(seconds)
-	..(seconds)
+/mob/living/silicon/pai/process()
 	emitterhealth = Clamp((emitterhealth + emitterregen), -50, emittermaxhealth)
 
 /mob/proc/makePAI(delold)

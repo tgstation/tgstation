@@ -742,7 +742,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 /mob/dead/observer/verb/register_pai_candidate()
 	set category = "Ghost"
 	set name = "pAI Setup"
-	set desc = "Upload a fragment of your personality to the global pAI databanks
+	set desc = "Upload a fragment of your personality to the global pAI databanks"
 
 	register_pai()
 
