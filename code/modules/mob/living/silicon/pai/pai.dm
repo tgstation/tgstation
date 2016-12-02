@@ -13,7 +13,7 @@
 	desc = "A generic pAI mobile hard-light holographics emitter. It seems to be deactivated."
 	weather_immunities = list("ash")
 	health = 500
-	maxhealth = 500	//They don't die by conventional means. While in holographic mode hitting them will damage their emitters, allowing for them to be knocked back into card form and picked up.
+	maxHealth = 500
 
 	var/ram = 100	// Used as currency to purchase different abilities
 	var/list/software = list()
@@ -58,7 +58,7 @@
 	var/canholo = TRUE
 	var/obj/item/weapon/card/id/access_card = null
 	var/chassis = "repairbot"
-	var/list/possible_chassis = list("cat", "mouse", "monkey", "corgi", "fox", "repairbot")
+	var/list/possible_chassis
 
 	var/emitterhealth = 50
 	var/emittermaxhealth = 50
@@ -71,10 +71,13 @@
 	var/overload_maxhealth = 0
 	canmove = FALSE
 
-	actions = list(/datum/action/pai/chassis, /datum/action/pai/rest, /datum/action/pai/shell)
-
-
 /mob/living/silicon/pai/New(var/obj/item/device/paicard/P)
+	for(var/datum/action/pai/A in typesof(/datum/action/pai))
+		var/datum/action/pai/B = new A(src)
+		actions += B
+		B.Grant(src)
+
+	possible_chassis = list("cat", "mouse", "monkey", "corgi", "fox", "repairbot")
 	make_laws()
 	canmove = 0
 	if(!istype(P)) //when manually spawning a pai, we create a card to put it into.
@@ -84,12 +87,9 @@
 	loc = P
 	card = P
 	sradio = new(src)
-	if(card)
-		if(!card.radio)
-			card.radio = new /obj/item/device/radio(card)
-		radio = card.radio
+	if(!radio)
+		radio = new /obj/item/device/radio/borg(src)
 
-	radio = new /obj/item/device/radio/borg(src)
 	//PDA
 	pda = new(src)
 	spawn(5)
@@ -98,12 +98,9 @@
 		pda.owner = text("[]", src)
 		pda.name = pda.owner + " (" + pda.ownjob + ")"
 
-	for(/datum/action/pai/A in actions)
-		A.Grant(src)
-
 	..()
 
-/mob/living/silicon/pai/ui_action_click(owner, action)
+/mob/living/silicon/pai/proc/ui_action_click(owner, action)
 	if(istype(action, /datum/action/pai/shell))
 		if(holoform)
 			fold_in(0)
@@ -149,7 +146,7 @@
 
 /mob/living/silicon/pai/Life()
 	..()
-	emitterhealth = Clamp((emitterhealth + emitterregen), -50, maxhealth)
+	emitterhealth = Clamp((emitterhealth + emitterregen), -50, emittermaxhealth)
 
 /mob/proc/makePAI(delold)
 	var/obj/item/device/paicard/card = new /obj/item/device/paicard(get_turf(src))
@@ -158,6 +155,9 @@
 	card.setPersonality(pai)
 	if(delold)
 		qdel(src)
+
+/datum/action/pai/Trigger()
+	owner.ui_action_click(owner, src)
 
 /datum/action/pai/shell
 	name = "Toggle Holoform"

@@ -4,7 +4,6 @@
 
 /mob/living/silicon/pai/emp_act(severity)
 	take_holo_damage(severity * 25)
-	silent = severity * 25	//Ouch!
 	fullstun(severity * 5)
 	//Need more effects that aren't instadeath or permanent law corruption.
 
@@ -15,11 +14,11 @@
 			qdel(card)
 			qdel(src)
 		if(2)
-			cardform(force = 1)
-			fullstun(30)
+			fold_in(force = 1)
+			fullstun(15)
 		if(3)
-			cardform(force = 1)
-			fullstun(5)
+			fold_in(force = 1)
+			fullstun(10)
 
 /mob/living/silicon/pai/attack_animal(mob/living/simple_animal/M as mob)
 	if(M.melee_damage_upper == 0)
@@ -66,7 +65,7 @@
 			if (user.name == master)
 				visible_message("<span class='notice'>Responding to its master's touch, [src] disengages its holochassis emitter, rapidly losing coherence.</span>")
 				spawn(10)
-					close_up()
+					fold_in()
 					if(user.put_in_hands(card))
 						user.visible_message("<span class='notice'>[user] promptly scoops up their pAI's card.</span>")
 			else
@@ -75,12 +74,12 @@
 
 /mob/living/silicon/pai/hitby(atom/movable/AM)
 	visible_message("<span class='warning'>[AM] flies clean through [src]'s holographic field, causing it to stutter and warp wildly!")
-	if(istype(AM, /obj/item))
-		var/obj/item/I = AM
+	if(istype(AM, /obj))
+		var/obj/O = AM
 		take_holo_damage(O.throwforce)
 	return FALSE
 
-/mob/living/silicon/pai/bullet_act(/obj/item/projectile/P)
+/mob/living/silicon/pai/bullet_act(/obj/projectile/P)
 	visible_message("<span class='warning'>[Proj] tears cleanly through [src]'s holographic field, distorting its image horribly!!")
 	take_holo_damage(P.damage)
 	return FALSE
@@ -99,11 +98,11 @@
 /mob/living/silicon/pai/IgniteMob(var/mob/living/silicon/pai/P)
 	return FALSE	//No we're not flammable
 
-/mob/living/silicon/pai/take_holo_damage(amount)
+/mob/living/silicon/pai/proc/take_holo_damage(amount)
 	emitterhealth = Clamp((emitterhealth - amount), -50, emittermaxhealth)
 	if(emitterhealth < 0)
 		fold_in(force = TRUE)
-	src << "<span class='userdanger'>The impact degrades your holochassis!</span>")
+	src << "<span class='userdanger'>The impact degrades your holochassis!</span>"
 
 /mob/living/silicon/pai/proc/fullstun(amount)
 	Weaken(amount)

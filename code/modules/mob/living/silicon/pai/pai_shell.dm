@@ -27,7 +27,7 @@
 			return FALSE
 		else if(istype(card.loc, /obj/item/device/pda))
 			var/obj/item/device/pda/P = card.loc
-			holder.pai = null
+			P.pai = null
 	if(client)
 		client.perspective = EYE_PERSPECTIVE
 		client.eye = src
@@ -57,6 +57,7 @@
 	if(client)
 		client.perspective = EYE_PERSPECTIVE
 		client.eye = card
+	var/turf/T = get_turf(src)
 	card.loc = T
 	card.forceMove(T)
 	loc = card
@@ -69,7 +70,7 @@
 		lay_down()
 
 /mob/living/silicon/pai/proc/choose_chassis()
-	chassis = input(src, "What would you like to use for your holochassis composite?" as anything in possible_chassis)
+	chassis = input(src, "What would you like to use for your holochassis composite?" in possible_chassis)
 	src << "<span class='boldnotice'>You switch your holochassis projection composite to [chassis]</span>"
 
 /mob/living/silicon/pai/lay_down()
