@@ -552,6 +552,7 @@ var/global/list/ghost_others_options = list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 #define ATTACK_EFFECT_BITE		"bite"
 #define ATTACK_EFFECT_MECHFIRE	"mech_fire"
 #define ATTACK_EFFECT_MECHTOXIN	"mech_toxin"
+#define ATTACK_EFFECT_BOOP "boop"	//Honk
 
 
 //different types of atom colorations
