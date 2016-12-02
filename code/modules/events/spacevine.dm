@@ -441,6 +441,7 @@
 	if(production != null)
 		spread_cap *= production / 50
 		spread_multiplier /= production / 50
+	..()
 
 /obj/effect/spacevine_controller/ex_act() //only killing all vines will end this suffering
 	return
@@ -466,9 +467,8 @@
 		return
 	if(parent)
 		SV.mutations |= parent.mutations
-		if(parent.atom_colours)
-			var/parentcolor = parent.atom_colours[FIXED_COLOUR_PRIORITY]
-			SV.add_atom_colour(parentcolor, FIXED_COLOUR_PRIORITY)
+		var/parentcolor = parent.atom_colours[FIXED_COLOUR_PRIORITY]
+		SV.add_atom_colour(parentcolor, FIXED_COLOUR_PRIORITY)
 		if(prob(mutativeness))
 			var/datum/spacevine_mutation/randmut = pick(mutations_list - SV.mutations)
 			randmut.add_mutation_to_vinepiece(SV)
