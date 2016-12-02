@@ -86,7 +86,7 @@
 		send_to_playing_players(sound(null, 0, channel = 8))
 	var/was_stranded = SSshuttle.emergency.mode == SHUTTLE_STRANDED
 	SSshuttle.clearHostileEnvironment(src)
-	if(!was_stranded && !purpose_fulfilled)
+	if(!was_stranded && !purpose_fulfilled && second_sound_played)
 		priority_announce("Massive energy anomaly no longer on short-range scanners.","Anomaly Alert")
 	if(glow)
 		qdel(glow)
@@ -99,6 +99,7 @@
 /obj/structure/destructible/clockwork/massive/celestial_gateway/deconstruct(disassembled = TRUE)
 	if(!(flags & NODECONSTRUCT))
 		if(!disassembled)
+			resistance_flags |= INDESTRUCTIBLE
 			countdown.stop()
 			visible_message("<span class='userdanger'>The [src] begins to pulse uncontrollably... you might want to run!</span>")
 			send_to_playing_players(sound('sound/effects/clockcult_gateway_disrupted.ogg', 0, channel = 8, volume = 50))

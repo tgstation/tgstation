@@ -193,11 +193,11 @@ macro "default"
 		is-disabled = false
 	elem 
 		name = "F7"
-		command = "Stealth-Mode"
+		command = "Toggle-Build-Mode-Self"
 		is-disabled = false
 	elem 
 		name = "F8"
-		command = "Toggle-Build-Mode-Self"
+		command = "Invisimin"
 		is-disabled = false
 	elem 
 		name = "F12"

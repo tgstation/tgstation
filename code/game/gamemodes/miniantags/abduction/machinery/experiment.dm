@@ -47,19 +47,19 @@
 		photo.Blend("#[H.dna.features["mcolor"]]", ICON_MULTIPLY)
 
 	var/icon/eyes_s
-	if(EYECOLOR in H.dna.species.specflags)
+	if(EYECOLOR in H.dna.species.species_traits)
 		eyes_s = icon("icon" = 'icons/mob/human_face.dmi', "icon_state" = "[H.dna.species.eyes]_s")
 		eyes_s.Blend("#[H.eye_color]", ICON_MULTIPLY)
 
 	var/datum/sprite_accessory/S
 	S = hair_styles_list[H.hair_style]
-	if(S && (HAIR in H.dna.species.specflags))
+	if(S && (HAIR in H.dna.species.species_traits))
 		var/icon/hair_s = icon("icon" = S.icon, "icon_state" = "[S.icon_state]_s")
 		hair_s.Blend("#[H.hair_color]", ICON_MULTIPLY)
 		eyes_s.Blend(hair_s, ICON_OVERLAY)
 
 	S = facial_hair_styles_list[H.facial_hair_style]
-	if(S && (FACEHAIR in H.dna.species.specflags))
+	if(S && (FACEHAIR in H.dna.species.species_traits))
 		var/icon/facial_s = icon("icon" = S.icon, "icon_state" = "[S.icon_state]_s")
 		facial_s.Blend("#[H.facial_hair_color]", ICON_MULTIPLY)
 		eyes_s.Blend(facial_s, ICON_OVERLAY)

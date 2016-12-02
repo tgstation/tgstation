@@ -70,7 +70,7 @@
 		var/datum/species/S = H.dna.species
 
 		//Facial hair
-		if(H.facial_hair_style && (FACEHAIR in S.specflags))
+		if(H.facial_hair_style && (FACEHAIR in S.species_traits))
 			facial_hair_style = H.facial_hair_style
 			if(S.hair_color)
 				if(S.hair_color == "mutcolor")
@@ -85,7 +85,7 @@
 			facial_hair_color = "000"
 			hair_alpha = 255
 		//Hair
-		if(H.hair_style && (HAIR in S.specflags))
+		if(H.hair_style && (HAIR in S.species_traits))
 			hair_style = H.hair_style
 			if(S.hair_color)
 				if(S.hair_color == "mutcolor")
@@ -100,14 +100,14 @@
 			hair_color = "000"
 			hair_alpha = initial(hair_alpha)
 		// lipstick
-		if(H.lip_style && (LIPS in S.specflags))
+		if(H.lip_style && (LIPS in S.species_traits))
 			lip_style = H.lip_style
 			lip_color = H.lip_color
 		else
 			lip_style = null
 			lip_color = "white"
 		// eyes
-		if(EYECOLOR in S.specflags)
+		if(EYECOLOR in S.species_traits)
 			eyes = S.eyes
 			eye_color = H.eye_color
 		else
