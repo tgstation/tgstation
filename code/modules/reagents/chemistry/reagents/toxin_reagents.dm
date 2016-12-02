@@ -684,7 +684,20 @@
 			animate(whole_screen, transform = matrix(), time = 5, easing = QUAD_EASING)
 	..()
 
-
+/datum/reagent/toxin/anacea
+	name = "Anacea"
+	id = "anacea"
+	description = "A toxin that quickly purges medicines and metabolizes very slowly."
+	reagent_state = LIQUID
+	color = "#3C5133"
+	metabolization_rate = 0.08 * REAGENTS_METABOLISM
+	toxpwr = 0.1
+	
+/datum/reagent/toxin/anacea/on_mob_life(mob/living/M)
+	for(var/datum/reagent/medicine/R in M.reagents.reagent_list)
+		M.reagents.remove_reagent(R.id,6)
+	return ..()
+	
 //ACID
 
 

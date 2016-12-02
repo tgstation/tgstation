@@ -209,6 +209,12 @@
 	desc = "A small bottle. Contains Histamine."
 	icon_state = "bottle16"
 	list_reagents = list("histamine" = 30)
+	
+/obj/item/weapon/reagent_containers/glass/bottle/anacea
+	name = "anacea bottle"
+	desc = "A small bottle. Contains anacea."
+	icon_state = "bottle16"
+	list_reagents = list("anacea" = 30)
 
 /obj/item/weapon/reagent_containers/glass/bottle/diphenhydramine
 	name = "antihistamine bottle"
