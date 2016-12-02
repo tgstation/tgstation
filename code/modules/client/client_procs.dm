@@ -167,7 +167,7 @@ var/next_external_rsc = 0
 		src << "Required version to remove this message: [config.client_warn_version] or later"
 		src << "Visit http://www.byond.com/download/ to get the latest version of byond."
 
-	if (connection == "web")
+	if (connection == "web" && !holder)
 		if (!config.allowwebclient)
 			src << "Web client is disabled"
 			qdel(src)
@@ -488,3 +488,12 @@ var/next_external_rsc = 0
 //Like for /atoms, but clients are their own snowflake FUCK
 /client/proc/setDir(newdir)
 	dir = newdir
+
+/client/vv_edit_var(var_name, var_value)
+	switch (var_name)
+		if ("holder")
+			return FALSE
+		if ("ckey")
+			return FALSE
+		if ("key")
+			return FALSE

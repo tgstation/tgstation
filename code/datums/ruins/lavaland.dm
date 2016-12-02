@@ -209,3 +209,11 @@
 	suffix = "lavaland_surface_hermit.dmm"
 	allow_duplicates = FALSE
 	cost = 10
+
+/datum/map_template/ruin/lavaland/swarmer_boss
+	name = "Crashed Shuttle"
+	id = "swarmerboss"
+	description = "A Syndicate shuttle had an unfortunate stowaway..."
+	suffix = "lavaland_surface_swarmer_crash.dmm"
+	allow_duplicates = FALSE
+	cost = 20

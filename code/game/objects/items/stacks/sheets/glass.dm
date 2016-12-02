@@ -320,7 +320,7 @@
 	var/hit_hand = ((user.active_hand_index % 2 == 0) ? "r_" : "l_") + "arm"
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
-		if(!H.gloves && !(PIERCEIMMUNE in H.dna.species.specflags)) // golems, etc
+		if(!H.gloves && !(PIERCEIMMUNE in H.dna.species.species_traits)) // golems, etc
 			H << "<span class='warning'>[src] cuts into your hand!</span>"
 			H.apply_damage(force*0.5, BRUTE, hit_hand)
 	else if(ismonkey(user))
@@ -350,7 +350,7 @@
 		playsound(loc, 'sound/effects/glass_step.ogg', 50, 1)
 		if(ishuman(AM))
 			var/mob/living/carbon/human/H = AM
-			if(PIERCEIMMUNE in H.dna.species.specflags)
+			if(PIERCEIMMUNE in H.dna.species.species_traits)
 				return
 			var/picked_def_zone = pick("l_leg", "r_leg")
 			var/obj/item/bodypart/O = H.get_bodypart(picked_def_zone)
