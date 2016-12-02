@@ -45,12 +45,9 @@
 		dat += "<A href='byond://?src=\ref[src];wipe=1'>\[Wipe current pAI personality\]</a><br>"
 	else
 		if(looking_for_personality)
+			dat += "No personality installed.<br>"
 			dat += "Searching for a personality..."
 			dat += "<A href='byond://?src=\ref[src];request=1'>\[View available personalities\]</a><br>"
-		else
-			dat += "No personality is installed.<br>"
-			dat += "<A href='byond://?src=\ref[src];request=1'>\[Request personal AI personality\]</a><br>"
-			dat += "Each time this button is pressed, a request will be sent out to any available personalities. Check back often and give a lot of time for personalities to respond. This process could take anywhere from 15 seconds to several minutes, depending on the available personalities' timeliness."
 	user << browse(dat, "window=paicard")
 	onclose(user, "paicard")
 	return

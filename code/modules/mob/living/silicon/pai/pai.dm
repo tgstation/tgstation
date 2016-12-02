@@ -58,11 +58,11 @@
 	var/canholo = TRUE
 	var/obj/item/weapon/card/id/access_card = null
 	var/chassis = "repairbot"
-	var/list/possible_chassis
+	var/list/possible_chassis = list("cat", "mouse", "monkey", "corgi", "fox", "repairbot")
 
 	var/emitterhealth = 50
 	var/emittermaxhealth = 50
-	var/emitterregen = 5
+	var/emitterregen = 1
 	var/emittercd = 10
 	var/emittersemicd = FALSE
 
@@ -71,13 +71,12 @@
 	var/overload_maxhealth = 0
 	canmove = FALSE
 
-/mob/living/silicon/pai/New(var/obj/item/device/paicard/P)
-	for(var/datum/action/pai/A in typesof(/datum/action/pai))
-		var/datum/action/pai/B = new A(src)
-		actions += B
-		B.Grant(src)
+/mob/living/silicon/pai/Destroy()
+	pai_list -= src
+	..()
 
-	possible_chassis = list("cat", "mouse", "monkey", "corgi", "fox", "repairbot")
+/mob/living/silicon/pai/New(var/obj/item/device/paicard/P)
+	pai_list += src
 	make_laws()
 	canmove = 0
 	if(!istype(P)) //when manually spawning a pai, we create a card to put it into.
@@ -100,15 +99,23 @@
 
 	..()
 
-/mob/living/silicon/pai/proc/ui_action_click(owner, action)
-	if(istype(action, /datum/action/pai/shell))
+	var/datum/action/innate/pai/shell/AS = new /datum/action/innate/pai/shell
+	var/datum/action/innate/pai/chassis/AC = new /datum/action/innate/pai/chassis
+	var/datum/action/innate/pai/rest/AR = new /datum/action/innate/pai/rest
+	AS.Grant(src)
+	AC.Grant(src)
+	AR.Grant(src)
+
+
+/mob/living/silicon/pai/proc/pai_ui_action(action)
+	if(istype(action, /datum/action/innate/pai/shell))
 		if(holoform)
 			fold_in(0)
 		else
 			fold_out()
-	if(istype(action, /datum/action/pai/chassis))
+	if(istype(action, /datum/action/innate/pai/chassis))
 		choose_chassis()
-	if(istype(action, /datum/action/pai/rest))
+	if(istype(action, /datum/action/innate/pai/rest))
 		lay_down()
 
 /mob/living/silicon/pai/make_laws()
@@ -144,35 +151,34 @@
 /mob/living/silicon/pai/canUseTopic(atom/movable/M)
 	return TRUE
 
-/mob/living/silicon/pai/Life()
-	..()
+/mob/living/silicon/pai/proc/paiLife()
 	emitterhealth = Clamp((emitterhealth + emitterregen), -50, emittermaxhealth)
 
 /mob/proc/makePAI(delold)
 	var/obj/item/device/paicard/card = new /obj/item/device/paicard(get_turf(src))
 	var/mob/living/silicon/pai/pai = new /mob/living/silicon/pai(card)
 	pai.key = src.key
+	pai.name = src.name
 	card.setPersonality(pai)
 	if(delold)
 		qdel(src)
 
-/datum/action/pai/Trigger()
+/datum/action/innate/pai/Trigger()
 	if(ispAI(owner))
 		var/mob/living/silicon/pai/P = owner
-		P.ui_action_click(owner, src)
+		P.pai_ui_action(src)
 
-/datum/action/pai/shell
+/datum/action/innate/pai/shell
 	name = "Toggle Holoform"
 	button_icon_state = "pai_holoform"
 	background_icon_state = "bg_tech"
 
-/datum/action/pai/chassis
+/datum/action/innate/pai/chassis
 	name = "Holochassis Appearence Composite"
 	button_icon_state = "pai_chassis"
 	background_icon_state = "bg_tech"
 
-/datum/action/pai/rest
+/datum/action/innate/pai/rest
 	name = "Rest"
 	button_icon_state = "pai_rest"
 	background_icon_state = "bg_tech"
-

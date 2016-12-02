@@ -70,7 +70,13 @@
 		lay_down()
 
 /mob/living/silicon/pai/proc/choose_chassis()
-	chassis = input(src, "What would you like to use for your holochassis composite?" in possible_chassis)
+	var/choice = input(src, "What would you like to use for your holochassis composite?") as null|anything in possible_chassis
+	if(!choice)
+		return 0
+	chassis = choice
+	icon_state = "[chassis]"
+	if(resting)
+		icon_state = "[chassis]_rest"
 	src << "<span class='boldnotice'>You switch your holochassis projection composite to [chassis]</span>"
 
 /mob/living/silicon/pai/lay_down()
