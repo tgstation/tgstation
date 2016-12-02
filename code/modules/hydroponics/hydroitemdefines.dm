@@ -75,25 +75,67 @@
 
 /obj/item/weapon/hatchet
 	name = "hatchet"
-	desc = "A very sharp axe blade upon a short fibremetal handle. It has a long history of chopping things, but now it is used for chopping wood."
+	desc = "A very sharp axe blade upon a short handle. Commonly seen embedded in the skull of a dead assistant. Or chopping wood. Alt-Click it to set a warcry."
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "hatchet"
 	flags = CONDUCT
-	force = 12
+	force = 10
 	w_class = 1
-	throwforce = 15
+	throwforce = 20 //TAKEDOWN!!
+	embed_chance = 70 //for extra dank takedowns
+	embedded_impact_pain_multiplier = 4
 	throw_speed = 3
-	throw_range = 4
+	throw_range = 5
 	materials = list(MAT_METAL = 15000)
 	origin_tech = "materials=2;combat=2"
-	attack_verb = list("chopped", "torn", "cut")
+	attack_verb = list("chopped", "scalped", "cut")
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	sharpness = IS_SHARP
+	var/war_cry = "WHOOP WHOOP WHOOP!!"
 
 /obj/item/weapon/hatchet/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is chopping at [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	user.visible_message("<span class='suicide'>[user] is scalping [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to get closer to their ancestors!</span>")
+	user.say("[war_cry]")
 	playsound(loc, 'sound/weapons/bladeslice.ogg', 50, 1, -1)
 	return (BRUTELOSS)
+	
+/obj/item/weapon/hatchet/AltClick()
+	..()
+	if(ismob(loc))
+		var/mob/M = loc
+		var/input = stripped_input(M,"What do you want your war cry to be? You will shout it when you perform a takedown.", ,"", 50)
+		if(input)
+			src.war_cry = input
+	
+/obj/item/weapon/hatchet/throw_impact(atom/hit_atom, mob/user)
+	..()
+	user.say("[war_cry]")
+	if(isliving(hit_atom))
+		hatchet_stun(hit_atom) //only stun someone when thrown
+		
+
+/obj/item/weapon/hatchet/proc/hatchet_stun(mob/living/L, mob/user)
+	if(ishuman(L))
+		var/mob/living/carbon/human/H = L
+		if(H.check_shields(0, "[user]'s [name]", src, MELEE_ATTACK)) //No message; check_shields() handles that
+			playsound(L, 'sound/weapons/Genhit.ogg', 50, 1)
+			return 0
+
+	L.Stun(1)
+	if(user)
+		user.lastattacked = L
+		L.lastattacker = user
+		L.visible_message("<span class='danger'>[user] has done a takedown on [L] with [src]!</span>", \
+								"<span class='userdanger'>[user] hit you with [src] takedown!</span>")
+		add_logs(user, L, "stunned")
+
+	if(ishuman(L))
+		var/mob/living/carbon/human/H = L
+		H.forcesay(hit_appends)
+
+
+	return 1
+
 
 /obj/item/weapon/scythe
 	icon_state = "scythe0"
