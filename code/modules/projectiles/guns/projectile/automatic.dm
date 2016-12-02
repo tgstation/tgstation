@@ -363,7 +363,7 @@
 	origin_tech = "combat=7"
 	can_unsuppress = 1
 	can_suppress = 1
-	w_class = 3
+	w_class = 5	
 	zoomable = TRUE
 	zoom_amt = 7 //Long range, enough to see in front of you, but no tiles behind you.
 	slot_flags = SLOT_BACK
