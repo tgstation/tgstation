@@ -157,7 +157,9 @@
 		qdel(src)
 
 /datum/action/pai/Trigger()
-	owner.ui_action_click(owner, src)
+	if(ispAI(owner))
+		var/mob/living/silicon/pai/P = owner
+		P.ui_action_click(owner, src)
 
 /datum/action/pai/shell
 	name = "Toggle Holoform"
