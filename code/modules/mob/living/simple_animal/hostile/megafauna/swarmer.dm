@@ -156,7 +156,7 @@ var/global/list/AISwarmerCapsByType = list(/mob/living/simple_animal/hostile/swa
 /mob/living/simple_animal/hostile/swarmer/ai/proc/StartAction(deci = 0)
 	stop_automated_movement = TRUE
 	AIStatus = AI_OFF
-	addtimer(src, "EndAction", deci, FALSE)
+	addtimer(src, "EndAction", deci, TIMER_NORMAL)
 
 
 /mob/living/simple_animal/hostile/swarmer/ai/proc/EndAction()
