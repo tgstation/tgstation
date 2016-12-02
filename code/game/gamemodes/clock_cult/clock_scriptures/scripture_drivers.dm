@@ -111,7 +111,7 @@
 	descname = "Melee Convert Attack"
 	name = "Geis"
 	desc = "Charges your slab with divine energy, allowing you to bind a nearby heretic for conversion. This is very obvious and will make your slab visible in-hand."
-	invocations = list("Divinity, grant me strength...", "...to enlighten the heathen!")
+	invocations = list("Divinity, grant...", "...me strength...", "...to enlighten...", "...the heathen!")
 	whispered = TRUE
 	channel_time = 20
 	required_components = list(GEIS_CAPACITOR = 1)
@@ -135,6 +135,8 @@
 			servants++
 	if(servants > SCRIPT_SERVANT_REQ)
 		whispered = FALSE
+		servants -= SCRIPT_SERVANT_REQ
+		channel_time = min(channel_time + servants*3, 50)
 	return ..()
 
 //The scripture that does the converting.
@@ -162,7 +164,7 @@
 			servants++
 	if(servants > SCRIPT_SERVANT_REQ)
 		servants -= SCRIPT_SERVANT_REQ
-		channel_time = min(channel_time + servants*5, 100)
+		channel_time = min(channel_time + servants*7, 120)
 	if(target.buckled)
 		target.buckled.unbuckle_mob(target, TRUE)
 	binding = new(get_turf(target))

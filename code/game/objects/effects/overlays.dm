@@ -306,6 +306,12 @@
 	pixel_y = -16
 	pixel_x = -16
 
+/obj/effect/overlay/temp/ratvar/geis_binding
+	icon_state = "geisbinding"
+
+/obj/effect/overlay/temp/ratvar/geis_binding/top
+	icon_state = "geisbinding_top"
+
 /obj/effect/overlay/temp/ratvar/component
 	icon = 'icons/obj/clockwork_objects.dmi'
 	icon_state = "belligerent_eye"
