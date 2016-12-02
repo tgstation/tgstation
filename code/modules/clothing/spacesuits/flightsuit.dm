@@ -413,8 +413,8 @@
 	userdamage -= part_bin.rating
 	userdamage -= part_scan.rating
 	userdamage -= part_manip.rating
-	userdamage += anchored*3
-	userdamage += boost*3
+	userdamage += anchored*2
+	userdamage += boost*2
 	userdamage += speed*2
 	if(userdamage < 0)
 		userdamage = 0
@@ -479,7 +479,7 @@
 		if(crashpower < 3)
 			crashing = FALSE
 			return FALSE
-		damage = FALSE
+		damage = TRUE
 		density = TRUE
 		anchored = TRUE
 	else if(ismovableatom(unmovablevictim))
