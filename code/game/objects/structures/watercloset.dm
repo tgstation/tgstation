@@ -81,10 +81,10 @@
 
 	else if(cistern)
 		if(user.a_intent != "harm")
-			if(I.w_class > 3)
+			if(I.w_class > WEIGHT_CLASS_NORMAL)
 				user << "<span class='warning'>[I] does not fit!</span>"
 				return
-			if(w_items + I.w_class > 5)
+			if(w_items + I.w_class > WEIGHT_CLASS_HUGE)
 				user << "<span class='warning'>The cistern is full!</span>"
 				return
 			if(!user.drop_item())
@@ -170,7 +170,7 @@
 	desc = "The noble urinal cake, protecting the station's pipes from the station's pee. Do not eat."
 	icon = 'icons/obj/items.dmi'
 	icon_state = "urinalcake"
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 	list_reagents = list("chlorine" = 3, "ammonia" = 1)
 
 /obj/machinery/shower

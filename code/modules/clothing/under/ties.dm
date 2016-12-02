@@ -6,7 +6,7 @@
 	item_state = ""	//no inhands
 	item_color = "bluetie"
 	slot_flags = 0
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	var/minimize_when_attached = TRUE // TRUE if shown as a small icon in corner, FALSE if overlayed
 
 /obj/item/clothing/tie/proc/attach(obj/item/clothing/under/U, user)

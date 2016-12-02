@@ -278,7 +278,7 @@
 	desc = "A nasty looking shard of glass."
 	icon = 'icons/obj/shards.dmi'
 	icon_state = "large"
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 	force = 5
 	throwforce = 10
 	item_state = "shard-glass"

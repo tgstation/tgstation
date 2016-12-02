@@ -250,7 +250,7 @@ var/global/list/datum/stack_recipe/clown_recipes = list ( \
 	singular_name = "titanium sheet"
 	force = 5
 	throwforce = 5
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 	throw_speed = 1
 	throw_range = 3
 	origin_tech = "materials=4"
@@ -277,7 +277,7 @@ var/global/list/datum/stack_recipe/titanium_recipes = list ( \
 	singular_name = "plastitanium sheet"
 	force = 5
 	throwforce = 5
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 	throw_speed = 1
 	throw_range = 3
 	origin_tech = "materials=4"

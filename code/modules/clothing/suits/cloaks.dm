@@ -6,7 +6,7 @@
 	icon = 'icons/obj/clothing/cloaks.dmi'
 	icon_state = "qmcloak"
 	item_state = "qmcloak"
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 
 /obj/item/clothing/head/cloakhood

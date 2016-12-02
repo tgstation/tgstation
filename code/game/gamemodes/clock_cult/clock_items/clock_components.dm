@@ -38,7 +38,7 @@
 	icon_state = "blind_eye"
 	cultist_message = "The eye flickers at you with intense hate before falling dark."
 	servant_of_ratvar_messages = list("The eye flickers before falling dark." = FALSE, "You feel watched." = FALSE, "\"...\"" = FALSE)
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 
 /obj/item/clockwork/component/vanguard_cogwheel
 	name = "vanguard cogwheel"
@@ -57,7 +57,7 @@
 	cultist_message = "The gear grows warm in your hands."
 	servant_of_ratvar_messages = list("The lock isn't getting any lighter." = FALSE, "\"Damaged gears are better than broken bodies.\"" = TRUE, \
 	"\"It's a shame it can't be reused.\"" = TRUE)
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 
 /obj/item/clockwork/component/geis_capacitor
 	name = "geis capacitor"
@@ -110,7 +110,7 @@
 	cultist_message = "The shards vibrate in your hands for a moment."
 	servant_of_ratvar_messages = list("\"...still fight...\"" = FALSE, "\"...where am I...?\"" = FALSE, "\"...put me... slab...\"" = FALSE)
 	message_span = "heavy_brass"
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 
 /obj/item/clockwork/component/replicant_alloy/fallen_armor
 	name = "fallen armor"
@@ -120,7 +120,7 @@
 	cultist_message = "Red flame sputters from the mask's eye before winking out."
 	servant_of_ratvar_messages = list("A piece of armor hovers away from the others for a moment." = FALSE, "Red flame appears in the cuirass before sputtering out." = FALSE)
 	message_span = "heavy_brass"
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 
 /obj/item/clockwork/component/hierophant_ansible
 	name = "hierophant ansible"
@@ -140,7 +140,7 @@
 	servant_of_ratvar_messages = list("You hear the distinctive sound of the Hierophant Network for a moment." = FALSE, "\"Hieroph'ant Br'o'adcas't fail'ure.\"" = TRUE, \
 	"The obelisk flickers wildly, as if trying to open a gateway." = FALSE, "\"Spa'tial Ga'tewa'y fai'lure.\"" = TRUE)
 	icon_state = "obelisk_prism"
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 
 //Shards of Alloy, suitable only for proselytization.
 /obj/item/clockwork/alloy_shards

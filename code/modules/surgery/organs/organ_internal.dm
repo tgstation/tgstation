@@ -4,7 +4,7 @@
 	var/mob/living/carbon/owner = null
 	var/status = ORGAN_ORGANIC
 	origin_tech = "biotech=3"
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	throwforce = 0
 	var/zone = "chest"
 	var/slot
@@ -254,7 +254,7 @@
 	zone = "chest"
 	slot = "lungs"
 	gender = PLURAL
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 	var/list/breathlevels = list("safe_oxygen_min" = 16,"safe_oxygen_max" = 0,"safe_co2_min" = 0,"safe_co2_max" = 10,
 	"safe_toxins_min" = 0,"safe_toxins_max" = 0.05,"SA_para_min" = 1,"SA_sleep_min" = 5,"BZ_trip_balls_min" = 1)
 

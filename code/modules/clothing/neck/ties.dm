@@ -5,7 +5,7 @@
 	icon_state = "bluetie"
 	item_state = ""	//no inhands
 	item_color = "bluetie"
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/clothing/neck/tie/blue
 	name = "blue tie"

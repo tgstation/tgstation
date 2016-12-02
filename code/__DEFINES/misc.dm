@@ -562,6 +562,13 @@ var/global/list/ghost_others_options = list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 #define FIXED_COLOUR_PRIORITY 		4 //color inherent to the atom (e.g. blob color)
 #define COLOUR_PRIORITY_AMOUNT 4 //how many priority levels there are.
 
+// w_class (weight class)
+#define WEIGHT_CLASS_TINY     1
+#define WEIGHT_CLASS_SMALL    2
+#define WEIGHT_CLASS_NORMAL   3
+#define WEIGHT_CLASS_BULKY    4
+#define WEIGHT_CLASS_HUGE     5
+#define WEIGHT_CLASS_GIGANTIC 6
 
 //Endgame Results
 

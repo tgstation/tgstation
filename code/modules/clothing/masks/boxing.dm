@@ -5,7 +5,7 @@
 	item_state = "balaclava"
 	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
 	visor_flags_inv = HIDEFACE|HIDEFACIALHAIR
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	actions_types = list(/datum/action/item_action/adjust)
 
 /obj/item/clothing/mask/balaclava/attack_self(mob/user)
@@ -17,13 +17,13 @@
 	icon_state = "luchag"
 	item_state = "luchag"
 	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/clothing/mask/luchador/speechModification(message)
 	if(copytext(message, 1, 2) != "*")
-		message = replacetext(message, "captain", "CAPITÁN")
-		message = replacetext(message, "station", "ESTACIÓN")
-		message = replacetext(message, "sir", "SEÑOR")
+		message = replacetext(message, "captain", "CAPITï¿½N")
+		message = replacetext(message, "station", "ESTACIï¿½N")
+		message = replacetext(message, "sir", "SEï¿½OR")
 		message = replacetext(message, "the ", "el ")
 		message = replacetext(message, "my ", "mi ")
 		message = replacetext(message, "is ", "es ")

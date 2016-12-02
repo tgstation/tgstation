@@ -238,7 +238,7 @@
 	desc = "A token to redeem a piece of equipment. Use it on a mining equipment vendor."
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "mining_voucher"
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 
 /**********************Mining Point Card**********************/
 

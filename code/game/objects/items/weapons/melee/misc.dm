@@ -18,7 +18,7 @@
 	slot_flags = SLOT_BELT
 	force = 10
 	throwforce = 7
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 	origin_tech = "combat=5"
 	attack_verb = list("flogged", "whipped", "lashed", "disciplined")
 	hitsound = 'sound/weapons/chainhit.ogg'
@@ -35,7 +35,7 @@
 	icon_state = "arm_blade"
 	item_state = "arm_blade"
 	origin_tech = "combat=5,biotech=5"
-	w_class = 5.0
+	w_class = WEIGHT_CLASS_HUGE
 	force = 15
 	throwforce = 10
 	sharpness = IS_SHARP
@@ -49,7 +49,7 @@
 	unique_rename = 1
 	force = 15
 	throwforce = 10
-	w_class = 4
+	w_class = WEIGHT_CLASS_BULKY
 	block_chance = 50
 	armour_penetration = 75
 	sharpness = IS_SHARP
@@ -71,7 +71,7 @@
 	item_state = "classic_baton"
 	slot_flags = SLOT_BELT
 	force = 12 //9 hit crit
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 	var/cooldown = 0
 	var/on = 1
 
@@ -126,7 +126,7 @@
 	icon_state = "telebaton_0"
 	item_state = null
 	slot_flags = SLOT_BELT
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	needs_permit = 0
 	force = 0
 	on = 0
@@ -155,7 +155,7 @@
 		user << "<span class ='warning'>You extend the baton.</span>"
 		icon_state = "telebaton_1"
 		item_state = "nullrod"
-		w_class = 4 //doesnt fit in backpack when its on for balance
+		w_class = WEIGHT_CLASS_BULKY //doesnt fit in backpack when its on for balance
 		force = 10 //stunbaton damage
 		attack_verb = list("smacked", "struck", "cracked", "beaten")
 	else
@@ -163,7 +163,7 @@
 		icon_state = "telebaton_0"
 		item_state = null //no sprite for concealment even when in hand
 		slot_flags = SLOT_BELT
-		w_class = 2
+		w_class = WEIGHT_CLASS_SMALL
 		force = 0 //not so robust now
 		attack_verb = list("hit", "poked")
 
@@ -177,7 +177,7 @@
 	icon_state = "supermatter_sword"
 	item_state = "supermatter_sword"
 	slot_flags = null
-	w_class = 4
+	w_class = WEIGHT_CLASS_BULKY
 	force = 0.001
 	armour_penetration = 1000
 	var/obj/machinery/power/supermatter_shard/shard

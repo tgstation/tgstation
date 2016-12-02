@@ -18,7 +18,7 @@
 	throw_speed = 2
 	throw_range = 5
 	throwforce = 0
-	w_class = 2.0
+	w_class = WEIGHT_CLASS_SMALL
 	hitsound = "swing_hit"
 	armour_penetration = 50
 	var/active = 0
@@ -45,14 +45,14 @@
 	if (active)
 		force = 30
 		icon_state = "sword[item_color]"
-		w_class = 4
+		w_class = WEIGHT_CLASS_BULKY
 		hitsound = 'sound/weapons/blade1.ogg'
 		playsound(user, 'sound/weapons/saberon.ogg', 20, 1)
 		user << "<span class='warning'>[src] is now active.</span>"
 	else
 		force = 3
 		icon_state = "sword0"
-		w_class = 2
+		w_class = WEIGHT_CLASS_SMALL
 		hitsound = "swing_hit"
 		playsound(user, 'sound/weapons/saberoff.ogg', 20, 1)
 		user << "<span class='warning'>[src] can now be concealed.</span>"
@@ -66,7 +66,7 @@
 	icon_state = "basketball"
 	item_state = "basketball"
 	desc = "Here's your chance, do your dance at the Space Jam."
-	w_class = 4 //Stops people from hiding it in their bags/pockets
+	w_class = WEIGHT_CLASS_BULKY //Stops people from hiding it in their bags/pockets
 
 /obj/item/toy/beach_ball/holoball/dodgeball
 	name = "dodgeball"
@@ -215,5 +215,3 @@
 /obj/item/weapon/paper/trek_diploma
 	name = "paper - Starfleet Academy Diploma"
 	info = {"<h2>Starfleet Academy</h2></br><p>Official Diploma</p></br>"}
-
-

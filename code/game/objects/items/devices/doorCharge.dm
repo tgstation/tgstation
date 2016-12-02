@@ -3,7 +3,7 @@
 	desc = null //Different examine for traitors
 	item_state = "electronic"
 	icon_state = "doorCharge"
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	throw_range = 4
 	throw_speed = 1
 	flags = NOBLUDGEON

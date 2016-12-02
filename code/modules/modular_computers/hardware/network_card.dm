@@ -70,7 +70,7 @@ var/global/ntnet_card_uid = 1
 	origin_tech = "programming=4;engineering=2"
 	power_usage = 100 // Better range but higher power usage.
 	icon_state = "radio"
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 
 /obj/item/weapon/computer_hardware/network_card/wired
 	name = "wired network card"
@@ -79,4 +79,4 @@ var/global/ntnet_card_uid = 1
 	origin_tech = "programming=5;engineering=3"
 	power_usage = 100 // Better range but higher power usage.
 	icon_state = "net_wired"
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL

@@ -1,6 +1,6 @@
 /obj/item/weapon/storage/internal/implant
 	name = "bluespace pocket"
-	max_w_class = 3
+	max_w_class = WEIGHT_CLASS_NORMAL
 	max_combined_w_class = 6
 	cant_hold = list(/obj/item/weapon/disk/nuclear)
 	silent = 1
