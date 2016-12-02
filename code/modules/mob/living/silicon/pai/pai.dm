@@ -151,7 +151,8 @@
 /mob/living/silicon/pai/canUseTopic(atom/movable/M)
 	return TRUE
 
-/mob/living/silicon/pai/proc/paiLife()
+/mob/living/silicon/pai/proc/Life(seconds)
+	..(seconds)
 	emitterhealth = Clamp((emitterhealth + emitterregen), -50, emittermaxhealth)
 
 /mob/proc/makePAI(delold)

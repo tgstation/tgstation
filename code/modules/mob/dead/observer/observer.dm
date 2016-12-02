@@ -73,8 +73,8 @@ var/list/image/ghost_images_simple = list() //this is a list of all ghost images
 	ghost_images_simple |= ghostimage_simple
 	updateallghostimages()
 
-	var/datum/action/innate/observer/paireigster/P = new /datum/action/innate/observer/pairegister
-	P.Grant(src)
+	var/datum/action/innate/observer/pairegister/Reg = new /datum/action/innate/observer/pairegister
+	Reg.Grant(src)
 
 	var/turf/T
 	if(ismob(body))
@@ -740,11 +740,14 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 			mob_eye.hud_used.show_hud(1,src)
 			observetarget = mob_eye
 
-/mob/dead/observer/proc/register_pai_candidate()
+/mob/dead/observer/verb/register_pai_candidate()
 	set category = "Ghost"
 	set name = "pAI Setup"
-	set desc = "Upload a fragment of your personality to the global pAI databanks."
+	set desc = "Upload a fragment of your personality to the global pAI databanks
 
+	register_pai()
+
+/mob/dead/observer/proc/register_pai()
 	if(istype(usr, /mob/dead/observer))
 		if(SSpai)
 			SSpai.recruitWindow(client.mob)
@@ -754,9 +757,9 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 /datum/action/innate/observer/pairegister
 	name = "Register pAI Candidate"
 	button_icon_state = "pai"
-	background_icon_state = ACTION_BUTTON_DEFAULT_BACKGROUND
+	background_icon_state = "bg_tech_blue"
 
 /datum/action/innate/observer/pairegister/Activate()
 	if(isobserver(owner))
 		var/mob/dead/observer/O = owner
-		O.register_pai_candidate()
+		O.register_pai()

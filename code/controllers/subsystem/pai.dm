@@ -2,11 +2,8 @@ var/datum/subsystem/pai/SSpai
 
 /datum/subsystem/pai
 	name = "pAI"
-	init_order = 40
-	priority = 35
-	wait = 2
 
-	flags = SS_NO_INIT|SS_TICKER
+	flags = SS_NO_INIT|SS_NO_FIRE
 
 	var/list/candidates = list()
 
@@ -133,11 +130,6 @@ var/datum/subsystem/pai/SSpai
 	dat += "<a href='byond://?src=\ref[src];option=load;new=1;candidate=\ref[candidate]'>Load Personality</a><br>"
 
 	M << browse(dat, "window=paiRecruit")
-
-/datum/subsystem/pai/fire()
-	for(var/mob/living/silicon/pai/P in pai_list)
-		P.paiLife()
-
 
 /datum/subsystem/pai/proc/findPAI(obj/item/device/paicard/p, mob/user)
 	var/list/available = list()
