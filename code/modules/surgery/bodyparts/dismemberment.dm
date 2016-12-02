@@ -12,7 +12,7 @@
 		return 0
 	if(ishuman(C))
 		var/mob/living/carbon/human/H = C
-		if(NODISMEMBER in H.dna.species.specflags) // species don't allow dismemberment
+		if(NODISMEMBER in H.dna.species.species_traits) // species don't allow dismemberment
 			return 0
 
 	var/obj/item/bodypart/affecting = C.get_bodypart("chest")
@@ -48,7 +48,7 @@
 		return 0
 	if(ishuman(C))
 		var/mob/living/carbon/human/H = C
-		if(NODISMEMBER in H.dna.species.specflags) // species don't allow dismemberment
+		if(NODISMEMBER in H.dna.species.species_traits) // species don't allow dismemberment
 			return 0
 
 	var/organ_spilled = 0

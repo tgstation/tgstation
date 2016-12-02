@@ -124,7 +124,7 @@
 		var/mob/living/carbon/human/H = M
 		var/location = user.zone_selected
 		if(location == "mouth")
-			if(!(FACEHAIR in H.dna.species.specflags))
+			if(!(FACEHAIR in H.dna.species.species_traits))
 				user << "<span class='warning'>There is no facial hair to shave!</span>"
 				return
 			if(!get_location_accessible(H, location))
@@ -152,7 +152,7 @@
 						shave(H, location)
 
 		else if(location == "head")
-			if(!(HAIR in H.dna.species.specflags))
+			if(!(HAIR in H.dna.species.species_traits))
 				user << "<span class='warning'>There is no hair to shave!</span>"
 				return
 			if(!get_location_accessible(H, location))

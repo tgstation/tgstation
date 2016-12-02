@@ -90,10 +90,10 @@ var/list/image/ghost_images_simple = list() //this is a list of all ghost images
 		mind = body.mind	//we don't transfer the mind but we keep a reference to it.
 		if(ishuman(body))
 			var/mob/living/carbon/human/body_human = body
-			if(HAIR in body_human.dna.species.specflags)
+			if(HAIR in body_human.dna.species.species_traits)
 				hair_style = body_human.hair_style
 				hair_color = brighten_color(body_human.hair_color)
-			if(FACEHAIR in body_human.dna.species.specflags)
+			if(FACEHAIR in body_human.dna.species.species_traits)
 				facial_hair_style = body_human.facial_hair_style
 				facial_hair_color = brighten_color(body_human.facial_hair_color)
 
@@ -662,10 +662,10 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	if(client.prefs.be_random_body)
 		client.prefs.random_character(gender)
 
-	if(HAIR in client.prefs.pref_species.specflags)
+	if(HAIR in client.prefs.pref_species.species_traits)
 		hair_style = client.prefs.hair_style
 		hair_color = brighten_color(client.prefs.hair_color)
-	if(FACEHAIR in client.prefs.pref_species.specflags)
+	if(FACEHAIR in client.prefs.pref_species.species_traits)
 		facial_hair_style = client.prefs.facial_hair_style
 		facial_hair_color = brighten_color(client.prefs.facial_hair_color)
 
