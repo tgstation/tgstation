@@ -73,9 +73,6 @@ var/list/image/ghost_images_simple = list() //this is a list of all ghost images
 	ghost_images_simple |= ghostimage_simple
 	updateallghostimages()
 
-	var/datum/action/innate/observer/pairegister/Reg = new /datum/action/innate/observer/pairegister
-	Reg.Grant(src)
-
 	var/turf/T
 	if(ismob(body))
 		T = get_turf(body)				//Where is the body located?
@@ -116,6 +113,8 @@ var/list/image/ghost_images_simple = list() //this is a list of all ghost images
 
 	animate(src, pixel_y = 2, time = 10, loop = -1)
 	..()
+	var/datum/action/innate/observer/pairegister/Reg = new /datum/action/innate/observer/pairegister
+	Reg.Grant(src)
 
 /mob/dead/observer/narsie_act()
 	var/old_color = color
