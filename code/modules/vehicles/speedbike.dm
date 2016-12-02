@@ -61,3 +61,10 @@
 /obj/vehicle/space/speedbike/red
 	icon_state = "speedbike_red"
 	overlay_state = "cover_red"
+
+/obj/vehicle/space/speedbike/spaceboard
+	name = "Dolphin Spaceboard"
+	desc = "Gnarly."
+	icon_state = "waiting on sprites"
+	vehicle_move_delay = 1
+	overlay_state = null

@@ -119,6 +119,14 @@
 			new /obj/vehicle/scooter/skateboard(user.loc)
 			qdel(src)
 
+	else if(istype(I, /obj/item/weapon/dolphinfinthruster))
+		user << "<span class='notice'>You begin to attach the dolphin fin and thrusters to the bottom of the [src].</span>"
+		if(do_after(user, 80, target = src))
+			user << "<span class='notice'>You attach the thruster fin to the [src].</span>"
+			new /obj/vehicle/space/speedbike/spaceboard(user.loc)
+			qdel(src)
+
+
 /obj/vehicle/scooter/skateboard/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/screwdriver))
 		user << "<span class='notice'>You begin to deconstruct and remove the wheels on [src]...</span>"
