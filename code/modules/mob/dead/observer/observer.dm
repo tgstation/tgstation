@@ -73,6 +73,9 @@ var/list/image/ghost_images_simple = list() //this is a list of all ghost images
 	ghost_images_simple |= ghostimage_simple
 	updateallghostimages()
 
+	var/datum/action/innate/observer/paireigster/P = new /datum/action/innate/observer/pairegister
+	P.Grant(src)
+
 	var/turf/T
 	if(ismob(body))
 		T = get_turf(body)				//Where is the body located?
@@ -753,7 +756,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	button_icon_state = "pai"
 	background_icon_state = ACTION_BUTTON_DEFAULT_BACKGROUND
 
-/datum/action/innate/augury/Activate()
+/datum/action/innate/observer/pairegister/Activate()
 	if(isobserver(owner))
 		var/mob/dead/observer/O = owner
 		O.register_pai_candidate()

@@ -65,7 +65,7 @@
 	canmove = FALSE
 	density = FALSE
 	SetLuminosity(0)
-	holoform = TRUE
+	holoform = FALSE
 	if(resting)
 		lay_down()
 
@@ -89,4 +89,4 @@
 	else
 		icon_state = "[chassis]"
 	if(loc != card)
-		visible_message("<span = 'notice'>[src] [rest? "lays down for a moment..." : "perks up from the ground"]</span")
+		visible_message("<span class='notice'>[src] [rest? "lays down for a moment..." : "perks up from the ground"]</span>")
