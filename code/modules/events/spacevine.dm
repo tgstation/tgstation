@@ -306,7 +306,8 @@
 		new/obj/structure/alien/resin/flower_bud_enemy(get_turf(holder))
 
 /datum/spacevine_mutation/flowering/on_cross(obj/structure/spacevine/holder, mob/living/crosser)
-	holder.entangle(crosser)
+	if(prob(25)
+		holder.entangle(crosser)
 
 
 // SPACE VINES (Note that this code is very similar to Biomass code)
@@ -325,6 +326,10 @@
 	var/energy = 0
 	var/obj/effect/spacevine_controller/master = null
 	var/list/mutations = list()
+
+/obj/structure/spacevine/New()
+	..()
+	add_atom_colour("#ffffff", FIXED_COLOUR_PRIORITY)
 
 /obj/structure/spacevine/examine(mob/user)
 	..()
@@ -433,14 +438,15 @@
 	var/mutativeness = 1
 
 /obj/effect/spacevine_controller/New(loc, list/muts, potency, production)
+	add_atom_colour("#ffffff", FIXED_COLOUR_PRIORITY)
 	spawn_spacevine_piece(loc, , muts)
 	START_PROCESSING(SSobj, src)
 	init_subtypes(/datum/spacevine_mutation/, mutations_list)
 	if(potency != null)
 		mutativeness = potency / 10
 	if(production != null)
-		spread_cap *= production / 50
-		spread_multiplier /= production / 50
+		spread_cap *= production / 5
+		spread_multiplier /= production / 5
 	..()
 
 /obj/effect/spacevine_controller/ex_act() //only killing all vines will end this suffering
@@ -538,7 +544,7 @@
 		SM.on_buckle(src, V)
 	if((V.stat != DEAD) && (V.buckled != src)) //not dead or captured
 		V << "<span class='danger'>The vines [pick("wind", "tangle", "tighten")] around you!</span>"
-		buckle_mob(V)
+		buckle_mob(V, 1)
 
 /obj/structure/spacevine/proc/spread()
 	var/direction = pick(cardinal)

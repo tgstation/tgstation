@@ -30,12 +30,6 @@
 
 	if(color)
 		add_atom_colour(color, FIXED_COLOUR_PRIORITY)
-
-	if(!atom_colours)
-		atom_colours = list(ADMIN_COLOUR_PRIORITY = null, \
-		TEMPORARY_COLOUR_PRIORITY = null, \
-		WASHABLE_COLOUR_PRIORITY = null, \
-		FIXED_COLOUR_PRIORITY = null)
 	. = ..()
 
 /atom/Destroy()
