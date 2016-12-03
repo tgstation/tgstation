@@ -314,6 +314,16 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	surplus = 35
 	include_modes = list(/datum/game_mode/nuclear)
 
+/datum/uplink_item/dangerous/holoparasite
+	name = "Holoparasite Injector"
+	desc = "An injector full of holoparasite nanites, which will defend you and have many varying abilities. \
+			Though capable of near sorcerous feats via use of hardlight holograms, these require an \
+			organic host as a home base and source of fuel."
+	item = /obj/item/weapon/storage/box/syndie_kit/guardian
+	cost = 16
+	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/gang)
+	player_minimum = 25
+
 // Ammunition
 /datum/uplink_item/ammo
 	category = "Ammunition"
