@@ -356,7 +356,7 @@
 			var/obj/item/bodypart/O = H.get_bodypart(picked_def_zone)
 			if(!istype(O))
 				return
-			if(!H.shoes)
+			if(!H.shoes && !H.incapacitated())
 				H.apply_damage(5, BRUTE, picked_def_zone)
 				H.Weaken(3)
 				if(cooldown < world.time - 10) //cooldown to avoid message spam.
