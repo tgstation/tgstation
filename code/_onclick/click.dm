@@ -228,15 +228,14 @@
 	var/mob/living/ML = user
 	if(istype(ML))
 		ML.pulled(src)
+	return
 
 /mob/living/carbon/human/CtrlClick(mob/user)
-    if(ishuman(user) && Adjacent(user))
-        var/mob/living/carbon/human/H = user
-        H.dna.species.grab(H, src, H.martial_art)
-        H.changeNext_move(CLICK_CD_MELEE)
-        return TRUE
-    return ..()
-
+	if(ishuman(user) && Adjacent(user))
+		var/mob/living/carbon/human/H = user
+		H.dna.species.grab(H, src, H.martial_art)
+		H.next_click = world.time + CLICK_CD_MELEE
+	return
 /*
 	Alt click
 	Unused except for AI
