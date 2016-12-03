@@ -82,7 +82,7 @@
 		M.apply_damage(10, STAMINA)
 		if(prob(5))
 			M.Weaken(3)
-			visible_message("<span class='danger'>[M] is knocked right off \his feet!</span>")
+			visible_message("<span class='danger'>[M] is knocked right off [M.p_their()] feet!</span>")
 
 //
 // Structures

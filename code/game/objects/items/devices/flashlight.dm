@@ -62,11 +62,9 @@
 
 		if(M == user)	//they're using it on themselves
 			if(M.flash_act(visual = 1))
-				M.visible_message("[M] directs [src] to \his eyes.", \
-									 "<span class='notice'>You wave the light in front of your eyes! Trippy!</span>")
+				M.visible_message("[M] directs [src] to [M.p_their()] eyes.", "<span class='notice'>You wave the light in front of your eyes! Trippy!</span>")
 			else
-				M.visible_message("[M] directs [src] to \his eyes.", \
-									 "<span class='notice'>You wave the light in front of your eyes.</span>")
+				M.visible_message("[M] directs [src] to [M.p_their()] eyes.", "<span class='notice'>You wave the light in front of your eyes.</span>")
 		else
 			user.visible_message("<span class='warning'>[user] directs [src] to [M]'s eyes.</span>", \
 								 "<span class='danger'>You direct [src] to [M]'s eyes.</span>")
