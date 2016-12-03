@@ -19600,11 +19600,6 @@
 	c_tag = "Auxillary Mining Base";
 	dir = 1
 	},
-/obj/machinery/camera{
-	c_tag = "Auxillary Mining Base";
-	dir = 1;
-	network = list("SS13","AuxBase")
-	},
 /turf/open/floor/plating,
 /area/shuttle/auxillary_base)
 "aHG" = (
@@ -85590,10 +85585,7 @@
 /obj/structure/flora/ausbushes/fullgrass,
 /obj/structure/flora/ausbushes/ppflowers,
 /obj/structure/flora/ausbushes/palebush,
-/obj/structure/window/reinforced{
-	dir = 5;
-	obj_integrity = 10000
-	},
+/obj/structure/window/reinforced/fulltile,
 /turf/open/floor/grass,
 /area/hallway/secondary/exit{
 	name = "\improper Departure Lounge"
@@ -86275,13 +86267,10 @@
 /obj/structure/flora/ausbushes/fullgrass,
 /obj/structure/flora/ausbushes/brflowers,
 /obj/structure/flora/ausbushes/sunnybush,
-/obj/structure/window/reinforced{
-	dir = 5;
-	obj_integrity = 10000
-	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
+/obj/structure/window/reinforced/fulltile,
 /turf/open/floor/grass,
 /area/hallway/secondary/exit{
 	name = "\improper Departure Lounge"
@@ -90630,10 +90619,7 @@
 "cZs" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible,
 /obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 5;
-	obj_integrity = 10000
-	},
+/obj/structure/window/reinforced/fulltile,
 /turf/open/floor/plating,
 /area/atmos)
 "cZt" = (
@@ -124692,7 +124678,7 @@ aaa
 aaa
 aaa
 aaa
-dfH
+aaa
 aaa
 aaa
 aaa
@@ -132642,7 +132628,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+dfH
 aaa
 aaa
 aaa
@@ -142387,7 +142373,7 @@ aaa
 aaa
 aaa
 aaa
-dfF
+aaa
 aaa
 aaa
 aaa
@@ -148544,7 +148530,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+dfF
 aaa
 aaa
 aaa
