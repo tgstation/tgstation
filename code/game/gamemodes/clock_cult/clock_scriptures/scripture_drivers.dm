@@ -226,8 +226,8 @@
 	qdel(progbar)
 
 
-//Replicant: Creates a new clockwork slab. Doesn't use create_object because of its unique behavior.
-/datum/clockwork_scripture/replicant
+//Replicant: Creates a new clockwork slab.
+/datum/clockwork_scripture/create_object/replicant
 	descname = "New Clockwork Slab"
 	name = "Replicant"
 	desc = "Creates a new clockwork slab."
@@ -235,18 +235,15 @@
 	channel_time = 10
 	required_components = list(REPLICANT_ALLOY = 1)
 	whispered = TRUE
+	object_path = /obj/item/clockwork/slab
+	creator_message = "<span class='brass'>You copy a piece of replicant alloy and command it into a new slab.</span>"
 	usage_tip = "This is inefficient as a way to produce components, as the slab produced must be held by someone with no other slabs to produce components."
 	tier = SCRIPTURE_DRIVER
+	space_allowed = TRUE
 	primary_component = REPLICANT_ALLOY
 	sort_priority = 7
 	quickbind = TRUE
 	quickbind_desc = "Creates a new Clockwork Slab."
-
-/datum/clockwork_scripture/replicant/scripture_effects()
-	invoker <<  "<span class='brass'>You copy a piece of replicant alloy and command it into a new slab.</span>" //No visible message, for stealth purposes
-	var/obj/item/clockwork/slab/S = new(get_turf(invoker))
-	invoker.put_in_hands(S) //Put it in your hands if possible
-	return TRUE
 
 
 //Tinkerer's Cache: Creates a tinkerer's cache, allowing global component storage.
