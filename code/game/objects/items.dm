@@ -27,7 +27,7 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 	var/hitsound = null
 	var/usesound = null
 	var/throwhitsound = null
-	var/w_class = 3
+	var/w_class = WEIGHT_CLASS_NORMAL
 	var/slot_flags = 0		//This is used to determine on which slots an item can fit.
 	pass_flags = PASSTABLE
 	pressure_resistance = 4
@@ -153,17 +153,17 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 	..()
 	var/size
 	switch(src.w_class)
-		if(1)
+		if(WEIGHT_CLASS_TINY)
 			size = "tiny"
-		if(2)
+		if(WEIGHT_CLASS_SMALL)
 			size = "small"
-		if(3)
+		if(WEIGHT_CLASS_NORMAL)
 			size = "normal-sized"
-		if(4)
+		if(WEIGHT_CLASS_BULKY)
 			size = "bulky"
-		if(5)
+		if(WEIGHT_CLASS_HUGE)
 			size = "huge"
-		if(6)
+		if(WEIGHT_CLASS_GIGANTIC)
 			size = "gigantic"
 		else
 	//if ((CLUMSY in usr.mutations) && prob(50)) t = "funny-looking"

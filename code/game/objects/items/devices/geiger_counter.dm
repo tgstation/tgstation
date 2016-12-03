@@ -9,7 +9,7 @@
 	desc = "A handheld device used for detecting and measuring radiation pulses."
 	icon_state = "geiger_off"
 	item_state = "multitool"
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	slot_flags = SLOT_BELT
 	materials = list(MAT_METAL = 150, MAT_GLASS = 150)
 	var/scanning = 0

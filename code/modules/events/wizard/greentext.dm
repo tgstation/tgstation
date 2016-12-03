@@ -22,7 +22,7 @@
 /obj/item/weapon/greentext
 	name = "greentext"
 	desc = "No one knows what this massive tome does, but it feels <i><font color='green'>desirable</font></i> all the same..."
-	w_class = 4
+	w_class = WEIGHT_CLASS_BULKY
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "greentext"
 	var/mob/living/last_holder

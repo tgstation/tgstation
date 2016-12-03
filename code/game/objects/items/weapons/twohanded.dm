@@ -116,7 +116,7 @@
 /obj/item/weapon/twohanded/offhand
 	name = "offhand"
 	icon_state = "offhand"
-	w_class = 5
+	w_class = WEIGHT_CLASS_HUGE
 	flags = ABSTRACT
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
@@ -128,8 +128,8 @@
 
 ///////////Two hand required objects///////////////
 //This is for objects that require two hands to even pick up
-/obj/item/weapon/twohanded/required
-	w_class = 5
+/obj/item/weapon/twohanded/required/
+	w_class = WEIGHT_CLASS_HUGE
 
 /obj/item/weapon/twohanded/required/attack_self()
 	return
@@ -167,7 +167,7 @@
 	desc = "Truly, the weapon of a madman. Who would think to fight fire with an axe?"
 	force = 5
 	throwforce = 15
-	w_class = 4
+	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = SLOT_BACK
 	force_unwielded = 5
 	force_wielded = 24
@@ -210,8 +210,8 @@
 	throwforce = 5
 	throw_speed = 3
 	throw_range = 5
-	w_class = 2
-	var/w_class_on = 4
+	w_class = WEIGHT_CLASS_SMALL
+	var/w_class_on = WEIGHT_CLASS_BULKY
 	force_unwielded = 3
 	force_wielded = 34
 	wieldsound = 'sound/weapons/saberon.ogg'
@@ -347,7 +347,7 @@
 	name = "spear"
 	desc = "A haphazardly-constructed yet still deadly weapon of ancient design."
 	force = 10
-	w_class = 4
+	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = SLOT_BACK
 	force_unwielded = 10
 	force_wielded = 18
@@ -421,7 +421,7 @@
 	flags = CONDUCT
 	force = 13
 	var/force_on = 21
-	w_class = 5
+	w_class = WEIGHT_CLASS_HUGE
 	throwforce = 13
 	throw_speed = 2
 	throw_range = 4
@@ -500,7 +500,7 @@
 	desc = "A simple tool used for moving hay."
 	force = 7
 	throwforce = 15
-	w_class = 4
+	w_class = WEIGHT_CLASS_BULKY
 	force_unwielded = 7
 	force_wielded = 15
 	attack_verb = list("attacked", "impaled", "pierced")
@@ -570,7 +570,7 @@
 	throw_speed = 4
 	sharpness = IS_SHARP
 	attack_verb = list("cut", "sliced", "diced")
-	w_class = 4
+	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = SLOT_BACK
 	hitsound = 'sound/weapons/bladeslice.ogg'
 
@@ -611,7 +611,7 @@
 	name = "bone spear"
 	desc = "A haphazardly-constructed yet still deadly weapon. The pinnacle of modern technology."
 	force = 11
-	w_class = 4
+	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = SLOT_BACK
 	force_unwielded = 11
 	force_wielded = 20					//I have no idea how to balance

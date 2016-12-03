@@ -2,7 +2,7 @@
 	name = "Default"
 	icon = 'icons/obj/module.dmi'
 	icon_state = "std_module"
-	w_class = 100
+	w_class = WEIGHT_CLASS_GIGANTIC
 	item_state = "electronic"
 	flags = CONDUCT
 

@@ -629,12 +629,12 @@
 			continue
 		if(istype(AM, /obj/item))
 			var/obj/item/I = AM
-			if(I.w_class < 2)
+			if(I.w_class < WEIGHT_CLASS_SMALL)
 				item = I
 		else if(iscarbon(AM))
 			var/mob/living/carbon/C = AM
 			for(var/obj/item/I in C.held_items)
-				if(I.w_class <= 2)
+				if(I.w_class <= WEIGHT_CLASS_SMALL)
 					item = I
 					break
 		if(item)
@@ -665,13 +665,13 @@
 
 		if(istype(AM, /obj/item))
 			var/obj/item/I = AM
-			if(I.w_class <= 2)
+			if(I.w_class <= WEIGHT_CLASS_SMALL)
 				return I
 
 		if(iscarbon(AM))
 			var/mob/living/carbon/C = AM
 			for(var/obj/item/I in C.held_items)
-				if(I.w_class <= 2)
+				if(I.w_class <= WEIGHT_CLASS_SMALL)
 					return C
 	return null
 
@@ -693,7 +693,7 @@
 
 	for(var/obj/item/I in view(1,src))
 		//Make sure we're not already holding it and it's small enough
-		if(I.loc != src && I.w_class <= 2)
+		if(I.loc != src && I.w_class <= WEIGHT_CLASS_SMALL)
 
 			//If we have a perch and the item is sitting on it, continue
 			if(!client && parrot_perch && I.loc == parrot_perch.loc)
@@ -723,7 +723,7 @@
 
 	for(var/mob/living/carbon/C in view(1,src))
 		for(var/obj/item/I in C.held_items)
-			if(I.w_class <= 2)
+			if(I.w_class <= WEIGHT_CLASS_SMALL)
 				stolen_item = I
 				break
 

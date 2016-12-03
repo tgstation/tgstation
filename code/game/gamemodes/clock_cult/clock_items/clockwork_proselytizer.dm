@@ -4,7 +4,7 @@
 	desc = "An odd, L-shaped device that hums with energy."
 	clockwork_desc = "A device that allows the replacing of mundane objects with Ratvarian variants. It requires liquified Replicant Alloy to function."
 	icon_state = "clockwork_proselytizer"
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 	force = 5
 	flags = NOBLUDGEON
 	var/stored_alloy = 0 //Requires this to function; each chunk of replicant alloy provides REPLICANT_ALLOY_UNIT
@@ -24,7 +24,7 @@
 	clockwork_desc = "A cogscarab's internal proselytizer. It can only be successfully used by a cogscarab and requires liquified Replicant Alloy to function."
 	metal_to_alloy = TRUE
 	item_state = "nothing"
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 	speed_multiplier = 0.5
 	var/debug = FALSE
 

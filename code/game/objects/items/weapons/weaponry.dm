@@ -45,7 +45,7 @@
 	icon_state = "toyhammer"
 	slot_flags = SLOT_BELT
 	throwforce = 0
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 	throw_speed = 3
 	throw_range = 7
 	attack_verb = list("banned")
@@ -71,7 +71,7 @@
 	slot_flags = SLOT_BELT
 	force = 2
 	throwforce = 1
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 
@@ -90,7 +90,7 @@
 	slot_flags = SLOT_BELT | SLOT_BACK
 	force = 40
 	throwforce = 10
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	block_chance = 50
 	sharpness = IS_SHARP
@@ -224,7 +224,7 @@ var/highlander_claymores = 0
 	slot_flags = SLOT_BELT | SLOT_BACK
 	force = 40
 	throwforce = 10
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	block_chance = 50
@@ -249,7 +249,7 @@ var/highlander_claymores = 0
 	flags = CONDUCT
 	force = 9
 	throwforce = 10
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 	materials = list(MAT_METAL=1150, MAT_GLASS=75)
 	attack_verb = list("hit", "bludgeoned", "whacked", "bonked")
 
@@ -290,7 +290,7 @@ var/highlander_claymores = 0
 	throwforce = 20 //This is never used on mobs since this has a 100% embed chance.
 	throw_speed = 4
 	embedded_pain_multiplier = 4
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	embed_chance = 100
 	embedded_fall_chance = 0 //Hahaha!
 	sharpness = IS_SHARP
@@ -304,7 +304,7 @@ var/highlander_claymores = 0
 	desc = "A sharp, concealable, spring-loaded knife."
 	flags = CONDUCT
 	force = 3
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	throwforce = 5
 	throw_speed = 3
 	throw_range = 6
@@ -320,7 +320,7 @@ var/highlander_claymores = 0
 	playsound(src.loc, 'sound/weapons/batonextend.ogg', 50, 1)
 	if(extended)
 		force = 20
-		w_class = 3
+		w_class = WEIGHT_CLASS_NORMAL
 		throwforce = 23
 		icon_state = "switchblade_ext"
 		attack_verb = list("slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
@@ -328,7 +328,7 @@ var/highlander_claymores = 0
 		sharpness = IS_SHARP
 	else
 		force = 3
-		w_class = 2
+		w_class = WEIGHT_CLASS_SMALL
 		throwforce = 5
 		icon_state = "switchblade"
 		attack_verb = list("stubbed", "poked")
@@ -348,7 +348,7 @@ var/highlander_claymores = 0
 	throwforce = 2
 	throw_speed = 3
 	throw_range = 4
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	attack_verb = list("called", "rang")
 	hitsound = 'sound/weapons/ring.ogg'
 
@@ -367,7 +367,7 @@ var/highlander_claymores = 0
 	item_state = "stick"
 	force = 5
 	throwforce = 5
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	materials = list(MAT_METAL=50)
 	attack_verb = list("bludgeoned", "whacked", "disciplined", "thrashed")
 
@@ -380,7 +380,7 @@ var/highlander_claymores = 0
 	throwforce = 5
 	throw_speed = 2
 	throw_range = 5
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	armour_penetration = 100
 	attack_verb = list("bludgeoned", "whacked", "disciplined")
 	resistance_flags = FLAMMABLE
@@ -402,7 +402,7 @@ var/highlander_claymores = 0
 	throwforce = 5
 	throw_speed = 2
 	throw_range = 5
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/weapon/ectoplasm
 	name = "ectoplasm"
@@ -421,7 +421,7 @@ var/highlander_claymores = 0
 	icon_state = "chainsaw_on"
 	item_state = "mounted_chainsaw"
 	flags = NODROP | ABSTRACT
-	w_class = 5.0
+	w_class = WEIGHT_CLASS_HUGE
 	force = 21
 	throwforce = 0
 	throw_range = 0
@@ -470,7 +470,7 @@ var/highlander_claymores = 0
 	item_state = "skateboard"
 	force = 12
 	throwforce = 4
-	w_class = 5.0
+	w_class = WEIGHT_CLASS_HUGE
 	attack_verb = list("smacked", "whacked", "slammed", "smashed")
 
 /obj/item/weapon/melee/skateboard/attack_self(mob/user)
@@ -486,7 +486,7 @@ var/highlander_claymores = 0
 	force = 10
 	throwforce = 12
 	attack_verb = list("beat", "smacked")
-	w_class = 5
+	w_class = WEIGHT_CLASS_HUGE
 	var/homerun_ready = 0
 	var/homerun_able = 0
 
@@ -550,7 +550,7 @@ var/highlander_claymores = 0
 	throwforce = 1
 	attack_verb = list("swatted", "smacked")
 	hitsound = 'sound/effects/snap.ogg'
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	//Things in this list will be instantly splatted.  Flyman weakness is handled in the flyman species weakness proc.
 	var/list/strong_against
 

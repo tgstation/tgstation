@@ -149,7 +149,7 @@
 			user << "<span class='notice'>You insert [loaded] items into [src].</span>"
 
 
-	else if(O.w_class <= 3 && !istype(O,/obj/item/weapon/storage) && user.a_intent == "help")
+	else if(O.w_class <= WEIGHT_CLASS_NORMAL && !istype(O,/obj/item/weapon/storage) && user.a_intent == "help")
 		if (contents.len>=max_n_of_items)
 			user << "<span class='warning'>[src] is full, you can't put anything in!</span>"
 			return 1
@@ -157,7 +157,7 @@
 			if(!user.drop_item())
 				user << "<span class='warning'>\the [O] is stuck to your hand, you cannot put it in \the [src]!</span>"
 				return 0
-			
+
 			O.loc = src
 			user.visible_message( \
 				"[user] has added \the [O] to \the [src].", \
@@ -238,7 +238,7 @@
 		if(has_extra_item() && prob(min(dirty*5,100)) && !microwaving(4))
 			broke()
 			return
-				
+
 		if(!microwaving(10))
 			abort()
 			return
@@ -249,14 +249,14 @@
 			O.microwave_act(src)
 			if(O.materials[MAT_METAL])
 				metal += O.materials[MAT_METAL]
-				
+
 		if(metal)
 			visible_message("<span class='warning'>Sparks fly around [src]!")
 			if(prob(max(metal/2, 33)))
 				explosion(loc,0,1,2)
 			broke()
 			return
-			
+
 		dropContents()
 		return
 

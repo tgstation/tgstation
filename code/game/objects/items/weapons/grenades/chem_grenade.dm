@@ -7,7 +7,7 @@
 	desc = "A custom made grenade."
 	icon_state = "chemg"
 	item_state = "flashbang"
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	force = 2
 	var/stage = EMPTY
 	var/list/beakers = list()

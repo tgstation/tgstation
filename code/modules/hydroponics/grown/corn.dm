@@ -31,7 +31,7 @@
 	desc = "A reminder of meals gone by."
 	icon_state = "corncob"
 	item_state = "corncob"
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 	throwforce = 0
 	throw_speed = 3
 	throw_range = 7
@@ -62,7 +62,7 @@
 	desc = "A cob with snap pops"
 	icon_state = "snapcorn"
 	item_state = "corncob"
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 	throwforce = 0
 	throw_speed = 3
 	throw_range = 7
