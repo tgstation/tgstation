@@ -577,6 +577,10 @@ var/global/list/ghost_others_options = list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 // Examples of huge items: Shotgun, Two Handed Melee Weapons
 // Examples of gigantic items: Mech Parts, Safe
 
+// m_intent
+#define MOVE_INTENT_WALK "walk"
+#define MOVE_INTENT_RUN  "run"
+
 //Endgame Results
 
 #define NUKE_NEAR_MISS 1

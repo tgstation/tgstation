@@ -284,10 +284,10 @@
 		return
 	switch(user.m_intent)
 		if("run")
-			user.m_intent = "walk"
+			user.m_intent = MOVE_INTENT_WALK
 			icon_state = "walking"
 		if("walk")
-			user.m_intent = "run"
+			user.m_intent = MOVE_INTENT_RUN
 			icon_state = "running"
 	user.update_icons()
 
@@ -649,4 +649,3 @@
 		if(word_messages.len && talk_cooldown < world.time)
 			talk_cooldown = world.time + 10
 			L.say(pick(word_messages))
-
