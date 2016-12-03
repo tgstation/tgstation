@@ -234,12 +234,17 @@ var/datum/subsystem/shuttle/SSshuttle
 		return
 	if(ticker.mode.name == "meteor")
 		return
-	if(seclevel2num(get_security_level()) == SEC_LEVEL_RED)
-		if(emergency.timeLeft(1) < emergencyCallTime * 0.25)
-			return
-	else
-		if(emergency.timeLeft(1) < emergencyCallTime * 0.5)
-			return
+	var/security_num = seclevel2num(get_security_level())
+	switch(security_num)
+		if(SEC_LEVEL_GREEN)
+			if(emergency.timeLeft(1) < emergencyCallTime)
+				return
+		if(SEC_LEVEL_BLUE)
+			if(emergency.timeLeft(1) < emergencyCallTime * 0.5)
+				return
+		else
+			if(emergency.timeLeft(1) < emergencyCallTime * 0.25)
+				return
 	return 1
 
 /datum/subsystem/shuttle/proc/autoEvac()
