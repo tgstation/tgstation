@@ -33,7 +33,7 @@
 		/obj/item/device/analyzer,
 		/obj/item/weapon/extinguisher/mini,
 		/obj/item/device/radio,
-		/obj/item/clothing/gloves/
+		/obj/item/clothing/gloves
 		)
 
 /obj/item/weapon/storage/belt/utility/chief
@@ -355,7 +355,7 @@
 		/obj/item/weapon/soap,
 		/obj/item/weapon/holosign_creator,
 		/obj/item/key/janitor,
-		/obj/item/clothing/gloves/
+		/obj/item/clothing/gloves
 		)
 
 /obj/item/weapon/storage/belt/bandolier

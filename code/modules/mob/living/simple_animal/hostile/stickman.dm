@@ -29,7 +29,7 @@
 	faction = list("hostile","stickman")
 	check_friendly_fire = 1
 	status_flags = CANPUSH
-	var/datum/action/boss/wizard_summon_minions/changesummons = /datum/action/boss/wizard_summon_minions/
+	var/datum/action/boss/wizard_summon_minions/changesummons = /datum/action/boss/wizard_summon_minions
 	var/summoned_by_wizard = 0
 
 /mob/living/simple_animal/hostile/stickman/ranged

@@ -125,7 +125,7 @@
 	desc = "A roll of cloth roughly cut from something that can stop bleeding, but does not heal wounds."
 	stop_bleeding = 900
 
-/obj/item/stack/medical/gauze/cyborg/
+/obj/item/stack/medical/gauze/cyborg
 	materials = list()
 	is_cyborg = 1
 	cost = 250

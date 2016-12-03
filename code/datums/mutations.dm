@@ -1,6 +1,6 @@
 /var/global/list/mutations_list = list()
 
-/datum/mutation/
+/datum/mutation
 
 	var/name
 

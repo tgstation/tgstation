@@ -219,12 +219,12 @@
 	name = "training bomb"
 	icon_state = "training-bomb"
 	desc = "A salvaged syndicate device gutted of its explosives to be used as a training aid for aspiring bomb defusers."
-	payload = /obj/item/weapon/bombcore/training/
+	payload = /obj/item/weapon/bombcore/training
 
 /obj/machinery/syndicatebomb/badmin
 	name = "generic summoning badmin bomb"
 	desc = "Oh god what is in this thing?"
-	payload = /obj/item/weapon/bombcore/badmin/summon/
+	payload = /obj/item/weapon/bombcore/badmin/summon
 
 /obj/machinery/syndicatebomb/badmin/clown
 	name = "clown bomb"
@@ -234,7 +234,7 @@
 	beepsound = 'sound/items/bikehorn.ogg'
 
 /obj/machinery/syndicatebomb/badmin/varplosion
-	payload = /obj/item/weapon/bombcore/badmin/explosion/
+	payload = /obj/item/weapon/bombcore/badmin/explosion
 
 /obj/machinery/syndicatebomb/empty
 	name = "bomb"
@@ -333,7 +333,7 @@
 	qdel(B)
 	qdel(src)
 
-/obj/item/weapon/bombcore/badmin/summon/
+/obj/item/weapon/bombcore/badmin/summon
 	var/summon_path = /obj/item/weapon/reagent_containers/food/snacks/cookie
 	var/amt_summon = 1
 
