@@ -110,9 +110,13 @@
 	icon_state = "mister"
 	item_state = "mister"
 	w_class = 4
-	amount_per_transfer_from_this = 50
-	possible_transfer_amounts = list(25,50,100)
-	volume = 500
+	stream_mode = 1
+	current_range = 14
+	spray_range = 7
+	stream_range = 14
+	stream_amount = 20
+	amount_per_transfer_from_this = 10
+	volume = 1000
 	flags = NODROP | OPENCONTAINER | NOBLUDGEON
 	slot_flags = 0
 
@@ -153,6 +157,18 @@
 		return
 	..()
 
+/obj/item/weapon/reagent_containers/spray/mister/spray(atom/A)
+	var/direction = get_dir(src, A)
+	var/turf/T = get_turf(A)
+	var/turf/T1 = get_step(T,turn(direction, 90))
+	var/turf/T2 = get_step(T,turn(direction, -90))
+	var/list/the_targets = list(T,T1,T2)
+
+	for(var/i=1, i<=3, i++) // intialize sprays
+		if(reagents.total_volume < 1)
+			return
+		..(the_targets[i])
+
 //Janitor tank
 /obj/item/weapon/watertank/janitor
 	name = "backpack water tank"
@@ -162,7 +178,7 @@
 
 /obj/item/weapon/watertank/janitor/New()
 	..()
-	reagents.add_reagent("cleaner", 500)
+	reagents.add_reagent("cleaner", 1000)
 
 /obj/item/weapon/reagent_containers/spray/mister/janitor
 	name = "janitor spray nozzle"
@@ -170,7 +186,7 @@
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "misterjani"
 	item_state = "misterjani"
-	amount_per_transfer_from_this = 5
+	amount_per_transfer_from_this = 50
 	possible_transfer_amounts = list()
 
 /obj/item/weapon/watertank/janitor/make_noz()
