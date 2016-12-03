@@ -490,6 +490,7 @@
 #include "code\game\machinery\newscaster.dm"
 #include "code\game\machinery\overview.dm"
 #include "code\game\machinery\PDApainter.dm"
+#include "code\game\machinery\quantum_pad.dm"
 #include "code\game\machinery\recharger.dm"
 #include "code\game\machinery\rechargestation.dm"
 #include "code\game\machinery\recycler.dm"
