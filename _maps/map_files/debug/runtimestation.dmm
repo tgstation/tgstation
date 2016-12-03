@@ -83,7 +83,7 @@
 "bE" = (/turf/open/floor/plasteel,/area/hallway/primary/central)
 "bF" = (/obj/structure/closet/secure_closet/CMO,/turf/open/floor/plasteel,/area/hallway/primary/central)
 "bG" = (/obj/machinery/airalarm{frequency = 1439; locked = 0; pixel_y = 23},/obj/machinery/power/apc{dir = 8; pixel_x = -24},/obj/structure/cable{icon_state = "0-2"; pixel_y = 1; d2 = 2},/obj/structure/closet/secure_closet/captains,/turf/open/floor/plasteel/blue/side{dir = 8},/area/bridge)
-"bH" = (/obj/structure/table,/obj/item/ammo_box/c10mm,/obj/item/weapon/gun/ballistic,/turf/open/floor/plasteel,/area/bridge)
+"bH" = (/obj/structure/table,/obj/item/ammo_box/c10mm,/obj/item/weapon/gun/projectile,/turf/open/floor/plasteel,/area/bridge)
 "bI" = (/obj/structure/table,/turf/open/floor/plasteel,/area/bridge)
 "bJ" = (/obj/structure/table,/obj/item/weapon/card/id/captains_spare,/turf/open/floor/plasteel,/area/bridge)
 "bK" = (/obj/structure/table,/obj/item/weapon/storage/backpack/holding,/turf/open/floor/plasteel,/area/bridge)
@@ -193,12 +193,11 @@
 "dK" = (/turf/open/floor/plasteel/warning/corner{dir = 8},/area/construction)
 "dL" = (/turf/open/floor/plasteel/warning{dir = 1},/area/construction)
 "dM" = (/turf/open/floor/plasteel/warning/corner{dir = 4},/area/construction)
-"dN" = (/obj/item/weapon/storage/toolbox/syndicate,/turf/open/floor/plasteel,/area/storage/primary)
+"dN" = (/obj/structure/table,/turf/open/floor/plasteel,/area/storage/primary)
 "dO" = (/obj/structure/table,/obj/machinery/light,/obj/item/weapon/twohanded/fireaxe,/obj/item/weapon/extinguisher,/turf/open/floor/plasteel,/area/storage/primary)
-"dP" = (/obj/structure/table,/turf/open/floor/plasteel,/area/storage/primary)
-"dQ" = (/obj/structure/table,/obj/item/device/lightreplacer,/turf/open/floor/plasteel,/area/storage/primary)
-"dR" = (/obj/structure/table,/obj/item/weapon/storage/box/lights/mixed,/obj/item/weapon/storage/box/lights/tubes,/obj/machinery/light,/turf/open/floor/plasteel,/area/storage/primary)
-"dS" = (/obj/structure/table,/obj/item/device/flashlight{pixel_y = 5},/turf/open/floor/plasteel,/area/storage/primary)
+"dP" = (/obj/structure/table,/obj/item/device/lightreplacer,/turf/open/floor/plasteel,/area/storage/primary)
+"dQ" = (/obj/structure/table,/obj/item/weapon/storage/box/lights/mixed,/obj/item/weapon/storage/box/lights/tubes,/obj/machinery/light,/turf/open/floor/plasteel,/area/storage/primary)
+"dR" = (/obj/structure/table,/obj/item/device/flashlight{pixel_y = 5},/turf/open/floor/plasteel,/area/storage/primary)
 
 (1,1,1) = {"
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
@@ -239,7 +238,7 @@ aaaaaaaaaaaaaaaaabacadafcNdydndndndndndndndndndndzcSdldldAdBdBdBdBdBdBdBdCdldlcS
 aaaaaaaaaaaaaaaaabacadafcNdydndndndndndndndndndndzcSdldldldldldldldldldldldldlcSafadacabaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaabacadafcNdydndndndndndndndndndndzcSdldldDdEdEdEdEdEdEdEdFdldlcSafadacabaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaabacadafcNdmdndndndndndndndndndndocSdpdldcdJdJdJdJdJdJdJdkdldxcSafadacabaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaabacadafcNdKdLdLdLdLdLdLdLdLdLdLdMcSdldldcdNdOdPdPdQdRdSdkdldlcSafadacabaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaabacadafcNdKdLdLdLdLdLdLdLdLdLdLdMcSdldldcdNdOdNdNdPdQdRdkdldlcSafadacabaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaabacadafcNcNcNcNcNcNcNcNcNcNcNcNcNcScScScScScScScScScScScScScScSafadacabaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaabacadafafafafafafafafafafafafafafafafafafafafafafafafafafafafafafadacabaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaabacadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadacabaaaaaaaaaaaaaaaa
