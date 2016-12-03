@@ -250,7 +250,7 @@
 						if(gang.bosses.len < 3)
 							usr << "<span class='notice'><b>Gangtools</b> allow you to promote a gangster to be your Lieutenant, enabling them to recruit and purchase items like you. Simply have them register the gangtool. You may promote up to [3-gang.bosses.len] more Lieutenants</span>"
 					else
-						item_type = /obj/item/device/gangtool/spare/
+						item_type = /obj/item/device/gangtool/spare
 					pointcost = 10
 			if("dominator")
 				if(!gang.dom_attempts)

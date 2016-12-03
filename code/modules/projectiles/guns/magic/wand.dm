@@ -1,4 +1,4 @@
-/obj/item/weapon/gun/magic/wand/
+/obj/item/weapon/gun/magic/wand
 	name = "wand of nothing"
 	desc = "It's not just a stick, it's a MAGIC stick!"
 	ammo_type = /obj/item/ammo_casing/magic

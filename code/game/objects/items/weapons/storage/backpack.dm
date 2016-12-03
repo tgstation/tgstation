@@ -293,7 +293,7 @@
 	SSpersistence.new_secret_satchels -= src
 	return ..()
 
-/obj/item/weapon/storage/backpack/satchel/flat/secret/
+/obj/item/weapon/storage/backpack/satchel/flat/secret
 	var/list/reward_one_of_these = list() //Intended for map editing
 	var/list/reward_all_of_these = list() //use paths!
 	var/revealed = 0

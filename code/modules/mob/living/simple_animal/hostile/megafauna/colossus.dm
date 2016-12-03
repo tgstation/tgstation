@@ -608,7 +608,7 @@ Difficulty: Very Hard
 	density = 0
 	movement_type = FLYING
 	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
-	ventcrawler = 2
+	ventcrawler = VENTCRAWLER_ALWAYS
 	mob_size = MOB_SIZE_TINY
 	gold_core_spawnable = 0
 	verb_say = "warps"

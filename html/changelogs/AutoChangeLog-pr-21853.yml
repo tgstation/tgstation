@@ -1,4 +1,0 @@
-author: "Cobby"
-delete-after: True
-changes: 
-  - bugfix: "Removes the exploit that allowed you to bypass grabcooldowns with Ctrl+Click"

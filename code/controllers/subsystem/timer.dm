@@ -75,7 +75,7 @@ var/datum/subsystem/timer/SStimer
 	var/hashlist = args.Copy()
 
 	hashlist[1] = "[thingToCall](\ref[thingToCall])"
-	event.hash = jointext(args, null)
+	event.hash = jointext(hashlist, null)
 
 	var/bad_args = unique != TIMER_NORMAL && unique != TIMER_UNIQUE
 	if(args.len > 4 || bad_args)

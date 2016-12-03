@@ -1,6 +1,0 @@
-author: "RemieRichards"
-delete-after: True
-changes: 
-  - rscadd: "Added a new lavaland \"boss\""
-  - tweak: "Hostile mobs will now find a new target if they failed to attack their current one for 30 seconds, this reduces cheese by simply making the mob find something else to do/someone to kill"
-  - bugfix: "Hostile mobs with search_objects will now regain that value after a certain amount of time (per-mob, base 3 seconds), this is because being attacked causes mobs with this var to turn it off, so they can run away, however it was literally never turned on which caused swarmers to get depression and never do anything."

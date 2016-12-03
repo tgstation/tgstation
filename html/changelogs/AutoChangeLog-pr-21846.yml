@@ -1,0 +1,7 @@
+author: "Joan"
+delete-after: True
+changes: 
+  - rscadd: "Trying to move while bound by Geis will cause you to start resisting, but the time required to resist is up by half a second."
+  - experiment: "Resisting out of Geis now does damage to the binding, and as such being stunned while bound will no longer totally reset your resist progress."
+  - rscadd: "Using Geis on someone already bound by Geis will interrupt them resisting out of it and will fully repair the binding."
+  - tweak: "Geis's pre-binding channel now takes longer for each servant above 5. Geis's conversion channel also takes slightly longer for each servant above 5."

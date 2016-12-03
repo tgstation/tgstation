@@ -332,8 +332,9 @@ display round(lastgen) and plasmatank amount
 	power_gen = 15000
 	time_per_sheet = 85
 	board_path = /obj/item/weapon/circuitboard/machine/pacman/super
-	overheat()
-		explosion(src.loc, 3, 3, 3, -1)
+
+/obj/machinery/power/port_gen/pacman/super/overheat()
+	explosion(src.loc, 3, 3, 3, -1)
 
 /obj/machinery/power/port_gen/pacman/mrs
 	name = "\improper M.R.S.P.A.C.M.A.N.-type portable generator"
@@ -342,5 +343,6 @@ display round(lastgen) and plasmatank amount
 	power_gen = 40000
 	time_per_sheet = 80
 	board_path = /obj/item/weapon/circuitboard/machine/pacman/mrs
-	overheat()
-		explosion(src.loc, 4, 4, 4, -1)
+
+/obj/machinery/power/port_gen/pacman/mrs/overheat()
+	explosion(src.loc, 4, 4, 4, -1)

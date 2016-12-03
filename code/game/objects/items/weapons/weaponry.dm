@@ -559,7 +559,7 @@ var/highlander_claymores = 0
 					/mob/living/simple_animal/hostile/poison/bees/,
 					/mob/living/simple_animal/butterfly,
 					/mob/living/simple_animal/cockroach,
-					/obj/item/queen_bee/
+					/obj/item/queen_bee
 	))
 
 /obj/item/weapon/melee/flyswatter/afterattack(atom/target, mob/user, proximity_flag)
