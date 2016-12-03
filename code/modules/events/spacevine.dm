@@ -306,7 +306,7 @@
 		new/obj/structure/alien/resin/flower_bud_enemy(get_turf(holder))
 
 /datum/spacevine_mutation/flowering/on_cross(obj/structure/spacevine/holder, mob/living/crosser)
-	if(prob(25)
+	if(prob(25))
 		holder.entangle(crosser)
 
 
