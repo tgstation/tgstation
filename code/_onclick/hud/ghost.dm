@@ -41,7 +41,7 @@
 	icon_state = "pai"
 
 /obj/screen/ghost/teleport/Click()
-	var/mob/dead/observe/G = usr
+	var/mob/dead/observer/G = usr
 	G.register_pai()
 
 /datum/hud/ghost/New(mob/owner, ui_style = 'icons/mob/screen_midnight.dmi')
