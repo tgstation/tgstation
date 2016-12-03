@@ -233,12 +233,6 @@
 	powercost_crit = 60
 	powercost_passive = 0
 
-/obj/item/borg/upgrade/selfrepair/peacekeeper/process()
-	if(cyborg.emagged)
-		cyborg << "<span class='userdanger'>WARNING: Repair controller driver not found at /syndiOS/modules/drivers.</span>"	//This is shit I know.
-		deactivate()
-	..()
-
 /obj/item/borg/upgrade/selfrepair/action(mob/living/silicon/robot/R)
 	if(..())
 		return
