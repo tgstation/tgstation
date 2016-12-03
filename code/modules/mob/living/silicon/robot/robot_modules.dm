@@ -293,8 +293,10 @@
 	loc << "<span class='userdanger'>Under ASIMOV, you are an enforcer of the PEACE and preventer of HUMAN HARM. \
 	You are not a security module and you are expected to follow orders and prevent harm above all else. Space law means nothing to you.</span>"
 	src << "<span class='boldnotice'>Integrated Peacekeeping Repair Swarm installed and activated.</span>"
-	var/obj/item/borg/upgrade/selfrepair/peacekeeper/S = new /obj/item/borg/upgrade/selfrepair/peacekeeper(loc)
+	var/obj/item/borg/upgrade/selfrepair/peacekeeper/S = new /obj/item/borg/upgrade/selfrepair/peacekeeper(get_turf(loc))
 	S.action(loc)
+	S.loc = loc
+	S.forceMove(loc)
 
 /obj/item/weapon/robot_module/peacekeeper/respawn_consumable(mob/living/silicon/robot/R, coeff = 1)
 	..()
