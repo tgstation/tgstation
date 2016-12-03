@@ -227,6 +227,8 @@
 
 /obj/item/borg/upgrade/selfrepair/peacekeeper
 	name = "repair swarm"
+	repair_amount = 2
+	repair_amount_crit = 5
 	power_threshold = 1000
 	repair_delay = 0
 	powercost_normal = 30
