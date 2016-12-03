@@ -83,7 +83,7 @@
 "bE" = (/turf/open/floor/plasteel,/area/hallway/primary/central)
 "bF" = (/obj/structure/closet/secure_closet/CMO,/turf/open/floor/plasteel,/area/hallway/primary/central)
 "bG" = (/obj/machinery/airalarm{frequency = 1439; locked = 0; pixel_y = 23},/obj/machinery/power/apc{dir = 8; pixel_x = -24},/obj/structure/cable{icon_state = "0-2"; pixel_y = 1; d2 = 2},/obj/structure/closet/secure_closet/captains,/turf/open/floor/plasteel/blue/side{dir = 8},/area/bridge)
-"bH" = (/obj/structure/table,/obj/item/ammo_box/c10mm,/obj/item/weapon/gun/projectile,/turf/open/floor/plasteel,/area/bridge)
+"bH" = (/obj/structure/table,/obj/item/ammo_box/c10mm,/obj/item/weapon/gun/ballistic,/turf/open/floor/plasteel,/area/bridge)
 "bI" = (/obj/structure/table,/turf/open/floor/plasteel,/area/bridge)
 "bJ" = (/obj/structure/table,/obj/item/weapon/card/id/captains_spare,/turf/open/floor/plasteel,/area/bridge)
 "bK" = (/obj/structure/table,/obj/item/weapon/storage/backpack/holding,/turf/open/floor/plasteel,/area/bridge)
