@@ -563,12 +563,19 @@ var/global/list/ghost_others_options = list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 #define COLOUR_PRIORITY_AMOUNT 4 //how many priority levels there are.
 
 // w_class (weight class)
-#define WEIGHT_CLASS_TINY     1
-#define WEIGHT_CLASS_SMALL    2
-#define WEIGHT_CLASS_NORMAL   3
-#define WEIGHT_CLASS_BULKY    4
-#define WEIGHT_CLASS_HUGE     5
-#define WEIGHT_CLASS_GIGANTIC 6
+#define WEIGHT_CLASS_TINY     1 // Usually items smaller then a human hand
+#define WEIGHT_CLASS_SMALL    2 // Pockets can hold small and tiny items
+#define WEIGHT_CLASS_NORMAL   3 // Standard backpacks can carry tiny, small & normal items
+#define WEIGHT_CLASS_BULKY    4 // Items that can be weilded or equipped but not stored in an inventory
+#define WEIGHT_CLASS_HUGE     5 // Usually represents objects that require two hands to operate
+#define WEIGHT_CLASS_GIGANTIC 6 // Essentially means it cannot be picked up or placed in an inventory
+
+// Examples of tiny items: Playing Cards, Lighter, Scalpel, Coins/Money
+// Examples of small items: Flashlight, Multitool, Grenades, GPS Device
+// Examples of normal items: Fire extinguisher, Stunbaton, Gas Mask, Metal Sheets
+// Examples of bulky items: Defibrillator, Backpack, Space Suits
+// Examples of huge items: Shotgun, Two Handed Melee Weapons
+// Examples of gigantic items: Mech Parts, Safe
 
 //Endgame Results
 
