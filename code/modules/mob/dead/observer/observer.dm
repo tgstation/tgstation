@@ -113,8 +113,6 @@ var/list/image/ghost_images_simple = list() //this is a list of all ghost images
 
 	animate(src, pixel_y = 2, time = 10, loop = -1)
 	..()
-	var/datum/action/innate/observer/pairegister/Reg = new /datum/action/innate/observer/pairegister
-	Reg.Grant(src)
 
 /mob/dead/observer/narsie_act()
 	var/old_color = color
@@ -752,13 +750,3 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 			SSpai.recruitWindow(client.mob)
 	else
 		usr << "Can't become a pAI candidate while not dead!"
-
-/datum/action/innate/observer/pairegister
-	name = "Register pAI Candidate"
-	button_icon_state = "pai"
-	background_icon_state = "bg_tech_blue"
-
-/datum/action/innate/observer/pairegister/Activate()
-	if(isobserver(owner))
-		var/mob/dead/observer/O = owner
-		O.register_pai()
