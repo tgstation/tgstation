@@ -335,6 +335,8 @@ var/next_external_rsc = 0
 
 /client/proc/check_randomizer(topic)
 	. = FALSE
+	if (connection != "seeker")
+		return
 	topic = params2list(topic)
 	if (!config.check_randomizer)
 		return
