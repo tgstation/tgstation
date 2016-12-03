@@ -373,7 +373,7 @@
 		return
 	var/mob/living/carbon/human/H = M
 
-	if(user.a_intent == "disarm")
+	if(user.a_intent == INTENT_DISARM)
 		if(req_defib && defib.safety)
 			return
 		if(!req_defib && !combat)
@@ -402,7 +402,7 @@
 		user << "<span class='warning'>You need to target your patient's \
 			chest with [src]!</span>"
 		return
-	if(user.a_intent == "harm")
+	if(user.a_intent == INTENT_HARM)
 		if(req_defib && defib.safety)
 			return
 		if(!req_defib && !combat)

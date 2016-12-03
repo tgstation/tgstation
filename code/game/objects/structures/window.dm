@@ -128,7 +128,7 @@
 		return 1 //skip the afterattack
 
 	add_fingerprint(user)
-	if(istype(I, /obj/item/weapon/weldingtool) && user.a_intent == "help")
+	if(istype(I, /obj/item/weapon/weldingtool) && user.a_intent == INTENT_HELP)
 		var/obj/item/weapon/weldingtool/WT = I
 		if(obj_integrity < max_integrity)
 			if(WT.remove_fuel(0,user))

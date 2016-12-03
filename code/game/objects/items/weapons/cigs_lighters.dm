@@ -75,7 +75,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		message_admins("[key_name_admin(user)] set [key_name_admin(M)] on fire")
 		log_game("[key_name(user)] set [key_name(M)] on fire")
 	var/obj/item/clothing/mask/cigarette/cig = help_light_cig(M)
-	if(lit && cig && user.a_intent == "help")
+	if(lit && cig && user.a_intent == INTENT_HELP)
 		if(cig.lit)
 			user << "<span class='notice'>The [cig.name] is already lit.</span>"
 		if(M == user)
@@ -238,7 +238,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	if(!istype(M))
 		return ..()
 	var/obj/item/clothing/mask/cigarette/cig = help_light_cig(M)
-	if(lit && cig && user.a_intent == "help")
+	if(lit && cig && user.a_intent == INTENT_HELP)
 		if(cig.lit)
 			user << "<span class='notice'>The [cig.name] is already lit.</span>"
 		if(M == user)
@@ -524,7 +524,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		message_admins("[key_name_admin(user)] set [key_name_admin(M)] on fire")
 		log_game("[key_name(user)] set [key_name(M)] on fire")
 	var/obj/item/clothing/mask/cigarette/cig = help_light_cig(M)
-	if(lit && cig && user.a_intent == "help")
+	if(lit && cig && user.a_intent == INTENT_HELP)
 		if(cig.lit)
 			user << "<span class='notice'>The [cig.name] is already lit.</span>"
 		if(M == user)

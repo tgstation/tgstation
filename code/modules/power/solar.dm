@@ -441,7 +441,7 @@
 				A.icon_state = "4"
 				A.anchored = 1
 				qdel(src)
-	else if(user.a_intent != "harm" && !(I.flags & NOBLUDGEON))
+	else if(user.a_intent != INTENT_HARM && !(I.flags & NOBLUDGEON))
 		src.attack_hand(user)
 	else
 		return ..()

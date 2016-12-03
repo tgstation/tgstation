@@ -124,7 +124,7 @@
 	if(check_martial_counter(L, user))
 		return 
 
-	if(user.a_intent != "harm")
+	if(user.a_intent != INTENT_HARM)
 		if(status)
 			if(baton_stun(L, user))
 				user.do_attack_animation(L)

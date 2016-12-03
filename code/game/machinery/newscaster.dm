@@ -728,7 +728,7 @@ var/list/obj/machinery/newscaster/allCasters = list()
 				user << "<span class='notice'>You [anchored ? "un" : ""]secure [name].</span>"
 				new /obj/item/wallframe/newscaster(loc)
 			qdel(src)
-	else if(istype(I, /obj/item/weapon/weldingtool) && user.a_intent != "harm")
+	else if(istype(I, /obj/item/weapon/weldingtool) && user.a_intent != INTENT_HARM)
 		var/obj/item/weapon/weldingtool/WT = I
 		if(stat & BROKEN)
 			if(WT.remove_fuel(0,user))
@@ -775,7 +775,7 @@ var/list/obj/machinery/newscaster/allCasters = list()
 
 
 /obj/machinery/newscaster/attack_paw(mob/user)
-	if(user.a_intent != "harm")
+	if(user.a_intent != INTENT_HARM)
 		user << "<span class='warning'>The newscaster controls are far too complicated for your tiny brain!</span>"
 	else
 		take_damage(5, BRUTE, "melee")

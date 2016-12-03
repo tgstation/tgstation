@@ -71,7 +71,7 @@
 
 
 /obj/item/weapon/pneumatic_cannon/afterattack(atom/target, mob/living/carbon/human/user, flag, params)
-	if(flag && user.a_intent == "harm") //melee attack
+	if(flag && user.a_intent == INTENT_HARM) //melee attack
 		return
 	if(!istype(user))
 		return

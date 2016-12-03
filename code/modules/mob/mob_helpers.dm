@@ -284,24 +284,24 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 /proc/intent_numeric(argument)
 	if(istext(argument))
 		switch(argument)
-			if("help")
+			if(INTENT_HELP)
 				return 0
-			if("disarm")
+			if(INTENT_DISARM)
 				return 1
-			if("grab")
+			if(INTENT_GRAB)
 				return 2
 			else
 				return 3
 	else
 		switch(argument)
 			if(0)
-				return "help"
+				return INTENT_HELP
 			if(1)
-				return "disarm"
+				return INTENT_DISARM
 			if(2)
-				return "grab"
+				return INTENT_GRAB
 			else
-				return "harm"
+				return INTENT_HARM
 
 //change a mob's act-intent. Input the intent as a string such as "help" or use "right"/"left
 /mob/verb/a_intent_change(input as text)
@@ -310,7 +310,7 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 
 	if(ishuman(src) || isalienadult(src) || isbrain(src))
 		switch(input)
-			if("help", "disarm", "grab", "harm")
+			if(INTENT_HELP, INTENT_DISARM, INTENT_GRAB, INTENT_HARM)
 				a_intent = input
 			if("right")
 				a_intent = intent_numeric((intent_numeric(a_intent) + 1) % 4)
@@ -322,10 +322,10 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 
 	else if(iscyborg(src) || ismonkey(src) || islarva(src))
 		switch(input)
-			if("help")
-				a_intent = "help"
-			if("harm")
-				a_intent = "harm"
+			if(INTENT_HELP)
+				a_intent = INTENT_HELP
+			if(INTENT_HARM)
+				a_intent = INTENT_HARM
 			if("right","left")
 				a_intent = intent_numeric(intent_numeric(a_intent) - 3)
 
