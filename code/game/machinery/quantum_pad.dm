@@ -72,16 +72,10 @@
 	if(panel_open)
 		user << "<span class='warning'>The panel must be closed before operating this machine!</span>"
 		return
-	src.add_fingerprint(user)
-	doteleport(user)
-	return
 
-/obj/machinery/quantumpad/proc/sparks()
-	var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
-	s.set_up(5, 1, get_turf(src))
-	s.start()
-
-/obj/machinery/quantumpad/proc/doteleport(mob/user)
+	if(!linked_pad || qdeleted(linked_pad))
+		user << "<span class='warning'>There is no linked pad!</span>"
+		return
 
 	if(world.time < last_teleport + teleport_cooldown)
 		user << "<span class='warning'>[src] is recharging power. Please wait [round((last_teleport + teleport_cooldown - world.time) / 10)] seconds.</span>"
@@ -94,7 +88,16 @@
 	if(linked_pad.stat & NOPOWER)
 		user << "<span class='warning'>Linked pad is not responding to ping.</span>"
 		return
+	src.add_fingerprint(user)
+	doteleport(user)
+	return
 
+/obj/machinery/quantumpad/proc/sparks()
+	var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
+	s.set_up(5, 1, get_turf(src))
+	s.start()
+
+/obj/machinery/quantumpad/proc/doteleport(mob/user)
 	if(linked_pad)
 		if(teleport_speed > 20)
 			flick("qpad-beam", src)
@@ -106,7 +109,7 @@
 				return
 			if(stat & NOPOWER)
 				return
-			if(linked_pad.stat & NOPOWER)
+			if(!linked_pad || qdeleted(linked_pad) || linked_pad.stat & NOPOWER)
 				user << "<span class='warning'>Linked pad is not responding to ping. Teleport aborted.</span>"
 				return
 
