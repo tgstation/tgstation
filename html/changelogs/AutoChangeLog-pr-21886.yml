@@ -1,0 +1,4 @@
+author: "RandomMarine"
+delete-after: True
+changes: 
+  - tweak: "Airlocks will keep their original name when their electronics are removed and replaced. You may still use a pen to rename the assembly if desired."
