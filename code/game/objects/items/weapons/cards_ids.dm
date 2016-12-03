@@ -15,7 +15,7 @@
 	name = "card"
 	desc = "Does card things."
 	icon = 'icons/obj/card.dmi'
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 
 	var/list/files = list()
 

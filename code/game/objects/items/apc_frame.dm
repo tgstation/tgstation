@@ -3,7 +3,7 @@
 	flags = CONDUCT
 	origin_tech = "materials=1;engineering=1"
 	item_state = "syringe_kit"
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	var/result_path
 	var/inverse = 0
 	// For inverse dir frames like light fixtures.
@@ -103,6 +103,6 @@
 	icon_state = "door_electronics"
 	item_state = "electronic"
 	flags = CONDUCT
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	origin_tech = "engineering=2;programming=1"
 	materials = list(MAT_METAL=50, MAT_GLASS=50)

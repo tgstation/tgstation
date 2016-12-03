@@ -55,7 +55,7 @@
 	name = "Crusader's Armour"
 	desc = "Armour that's comprised of metal and cloth."
 	icon_state = "crusader"
-	w_class = 4 //bulky
+	w_class = WEIGHT_CLASS_BULKY
 	slowdown = 2.0 //gotta pretend we're balanced.
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	armor = list(melee = 50, bullet = 50, laser = 50, energy = 40, bomb = 60, bio = 0, rad = 0, fire = 60, acid = 60)
@@ -70,7 +70,7 @@
 	name = "Crusader's Hood"
 	desc = "A brownish hood."
 	icon_state = "crusader"
-	w_class = 3 //normal
+	w_class = WEIGHT_CLASS_NORMAL
 	flags_inv = HIDEHAIR|HIDEEARS|HIDEFACE
 	armor = list(melee = 50, bullet = 50, laser = 50, energy = 40, bomb = 60, bio = 0, rad = 0, fire = 60, acid = 60)
 
@@ -142,7 +142,7 @@
 	name = "Plate Boots"
 	desc = "Metal boots, they look heavy."
 	icon_state = "crusader"
-	w_class = 3 //normal
+	w_class = WEIGHT_CLASS_NORMAL
 	armor = list(melee = 50, bullet = 50, laser = 50, energy = 40, bomb = 60, bio = 0, rad = 0, fire = 60, acid = 60) //does this even do anything on boots?
 	flags = NOSLIP
 	cold_protection = FEET

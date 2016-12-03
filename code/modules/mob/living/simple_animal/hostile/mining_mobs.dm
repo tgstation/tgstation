@@ -1,4 +1,4 @@
-/mob/living/simple_animal/hostile/asteroid/
+/mob/living/simple_animal/hostile/asteroid
 	vision_range = 2
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	faction = list("mining")
@@ -479,7 +479,7 @@
 	if(icon_state != icon_aggro)
 		icon_state = icon_aggro
 
-/obj/effect/goliath_tentacle/
+/obj/effect/goliath_tentacle
 	name = "Goliath tentacle"
 	icon = 'icons/mob/lavaland/lavaland_monsters.dmi'
 	icon_state = "Goliath_tentacle"
@@ -525,7 +525,7 @@
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "goliath_hide"
 	flags = NOBLUDGEON
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 	layer = MOB_LAYER
 
 /obj/item/stack/sheet/animalhide/goliath_hide/afterattack(atom/target, mob/user, proximity_flag)
@@ -671,7 +671,7 @@
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "fugu_gland"
 	flags = NOBLUDGEON
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 	layer = MOB_LAYER
 	origin_tech = "biotech=6"
 	var/list/banned_mobs()
@@ -875,7 +875,7 @@
 	response_harm   = "squishes"
 	friendly = "pinches"
 	a_intent = "help"
-	ventcrawler = 2
+	ventcrawler = VENTCRAWLER_ALWAYS
 	gold_core_spawnable = 2
 	stat_attack = 1
 	gender = NEUTER

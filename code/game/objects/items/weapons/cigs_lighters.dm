@@ -23,7 +23,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	var/lit = FALSE
 	var/burnt = FALSE
 	var/smoketime = 5
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 	origin_tech = "materials=1"
 	heat = 1000
 
@@ -102,7 +102,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	icon_state = "cigoff"
 	throw_speed = 0.5
 	item_state = "cigoff"
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 	body_parts_covered = null
 	var/lit = 0
 	var/icon_on = "cigon"  //Note - these are in masks.dmi not in cigarette.dmi
@@ -327,7 +327,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	desc = "A manky old cigarette butt."
 	icon = 'icons/obj/clothing/masks.dmi'
 	icon_state = "cigbutt"
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 	throwforce = 0
 
 /obj/item/weapon/cigbutt/cigarbutt
@@ -443,7 +443,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	icon = 'icons/obj/cigarettes.dmi'
 	icon_state = "zippo"
 	item_state = "zippo"
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
 	var/lit = 0
@@ -564,7 +564,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	desc = "A thin piece of paper used to make fine smokeables."
 	icon = 'icons/obj/cigarettes.dmi'
 	icon_state = "cig_paper"
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 
 /obj/item/weapon/rollingpaper/afterattack(atom/target, mob/user, proximity)
 	if(!proximity)

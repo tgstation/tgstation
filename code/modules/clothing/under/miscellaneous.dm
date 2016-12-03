@@ -124,7 +124,7 @@
 	icon_state = "black"
 	item_state = "bl_suit"
 	item_color = "black"
-	w_class = 4//bulky item
+	w_class = WEIGHT_CLASS_BULKY
 	gas_transfer_coefficient = 0.01
 	permeability_coefficient = 0.02
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS

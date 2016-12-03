@@ -8,7 +8,7 @@
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/cheesewedge
 	slices_num = 5
 	list_reagents = list("nutriment" = 15, "vitamin" = 5)
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 
 /obj/item/weapon/reagent_containers/food/snacks/cheesewedge
 	name = "cheese wedge"
@@ -249,7 +249,7 @@
 	bonus_reagents = list("nutriment" = 2, "vitamin" = 2)
 	list_reagents = list("nutriment" = 6, "vitamin" = 4)
 	filling_color = "#FF5500"
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 
 /obj/item/weapon/reagent_containers/food/snacks/spacefreezy
 	name = "space freezy"
@@ -336,7 +336,7 @@
 	block_chance = 50
 	armour_penetration = 75
 	attack_verb = list("slapped", "slathered")
-	w_class = 4
+	w_class = WEIGHT_CLASS_BULKY
 
 /obj/item/weapon/reagent_containers/food/snacks/lollipop
 	name = "lollipop"

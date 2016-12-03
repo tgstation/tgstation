@@ -1476,6 +1476,7 @@ var/list/airlock_overlays = list()
 		else
 			A = new /obj/structure/door_assembly/door_assembly_0(src.loc)
 			//If you come across a null assemblytype, it will produce the default assembly instead of disintegrating.
+		A.created_name = name
 
 		if(!disassembled)
 			if(A)

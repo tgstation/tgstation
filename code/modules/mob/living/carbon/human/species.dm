@@ -631,7 +631,7 @@
 				return 0
 			if(I.slot_flags & SLOT_DENYPOCKET)
 				return
-			if( I.w_class <= 2 || (I.slot_flags & SLOT_POCKET) )
+			if( I.w_class <= WEIGHT_CLASS_SMALL || (I.slot_flags & SLOT_POCKET) )
 				return 1
 		if(slot_r_store)
 			if(I.flags & NODROP)
@@ -644,7 +644,7 @@
 				return 0
 			if(I.slot_flags & SLOT_DENYPOCKET)
 				return 0
-			if( I.w_class <= 2 || (I.slot_flags & SLOT_POCKET) )
+			if( I.w_class <= WEIGHT_CLASS_SMALL || (I.slot_flags & SLOT_POCKET) )
 				return 1
 			return 0
 		if(slot_s_store)
@@ -660,7 +660,7 @@
 				if(!disable_warning)
 					H << "You somehow have a suit with no defined allowed items for suit storage, stop that."
 				return 0
-			if(I.w_class > 4)
+			if(I.w_class > WEIGHT_CLASS_BULKY)
 				if(!disable_warning)
 					H << "The [I.name] is too big to attach."  //should be src?
 				return 0

@@ -4,7 +4,7 @@
 	desc = "A vaguely humanoid cardboard cutout. It's completely blank."
 	icon = 'icons/obj/cardboard_cutout.dmi'
 	icon_state = "cutout_basic"
-	w_class = 4
+	w_class = WEIGHT_CLASS_BULKY
 	resistance_flags = FLAMMABLE
 	// Possible restyles for the cutout;
 	// add an entry in change_appearance() if you add to here

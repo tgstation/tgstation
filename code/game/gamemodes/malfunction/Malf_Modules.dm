@@ -9,10 +9,10 @@
 
 	var/power_type
 
-/datum/AI_Module/large/
+/datum/AI_Module/large
 	uses = 1
 
-/datum/AI_Module/small/
+/datum/AI_Module/small
 	uses = 5
 
 /datum/AI_Module/large/nuke_station

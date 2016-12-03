@@ -140,7 +140,7 @@
 	throwforce = 5
 	throw_speed = 3
 	throw_range = 5
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 	item_state = "beer"
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb = list("stabbed", "slashed", "attacked")

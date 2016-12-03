@@ -165,7 +165,7 @@
 	icon_state ="book"
 	throw_speed = 1
 	throw_range = 5
-	w_class = 3		 //upped to three because books are, y'know, pretty big. (and you could hide them inside eachother recursively forever)
+	w_class = WEIGHT_CLASS_NORMAL		 //upped to three because books are, y'know, pretty big. (and you could hide them inside eachother recursively forever)
 	attack_verb = list("bashed", "whacked", "educated")
 	resistance_flags = FLAMMABLE
 	var/dat				//Actual page content
@@ -288,7 +288,7 @@
 	icon_state ="scanner"
 	throw_speed = 3
 	throw_range = 5
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 	var/obj/machinery/computer/libraryconsole/bookmanagement/computer	//Associated computer - Modes 1 to 3 use this
 	var/obj/item/weapon/book/book			//Currently scanned book
 	var/mode = 0							//0 - Scan only, 1 - Scan and Set Buffer, 2 - Scan and Attempt to Check In, 3 - Scan and Attempt to Add to Inventory

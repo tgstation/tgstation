@@ -1,6 +1,6 @@
 var/global/file_uid = 0
 
-/datum/computer_file/
+/datum/computer_file
 	var/filename = "NewFile" 								// Placeholder. No spacebars
 	var/filetype = "XXX" 									// File full names are [filename].[filetype] so like NewFile.XXX in this case
 	var/size = 1											// File size in GQ. Integers only!

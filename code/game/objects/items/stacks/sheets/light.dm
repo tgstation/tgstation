@@ -4,7 +4,7 @@
 	desc = "A glass tile, which is wired, somehow."
 	icon = 'icons/obj/tiles.dmi'
 	icon_state = "glass_wire"
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 	force = 3
 	throwforce = 5
 	throw_speed = 3

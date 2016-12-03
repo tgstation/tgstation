@@ -3,7 +3,7 @@
 	icon = 'icons/obj/food/piecake.dmi'
 	trash = /obj/item/trash/plate
 	bitesize = 3
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 	volume = 80
 	list_reagents = list("nutriment" = 10, "vitamin" = 2)
 

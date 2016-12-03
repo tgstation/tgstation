@@ -335,7 +335,7 @@
 	desc = "A suit that protects against some damage."
 	icon_state = "centcom"
 	item_state = "centcom"
-	w_class = 4//bulky item
+	w_class = WEIGHT_CLASS_BULKY
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	allowed = list(/obj/item/weapon/gun/energy,/obj/item/weapon/melee/baton,/obj/item/weapon/restraints/handcuffs,/obj/item/weapon/tank/internals/emergency_oxygen)
 	flags = THICKMATERIAL
@@ -351,7 +351,7 @@
 	desc = "A heavily armored suit that protects against moderate damage."
 	icon_state = "heavy"
 	item_state = "swat_suit"
-	w_class = 4//bulky item
+	w_class = WEIGHT_CLASS_BULKY
 	gas_transfer_coefficient = 0.90
 	flags = THICKMATERIAL
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
@@ -403,5 +403,3 @@
 	desc = "God wills it!"
 	icon_state = "knight_templar"
 	item_state = "knight_templar"
-
-

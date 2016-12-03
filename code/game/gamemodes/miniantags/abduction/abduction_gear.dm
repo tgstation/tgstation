@@ -306,7 +306,7 @@ Congratulations! You are now trained for xenobiology research!"}
 	slot_flags = SLOT_BELT
 	origin_tech = "materials=4;combat=4;biotech=7;abductor=4"
 	force = 7
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 	actions_types = list(/datum/action/item_action/toggle_mode)
 
 /obj/item/weapon/abductor_baton/proc/toggle(mob/living/user=usr)

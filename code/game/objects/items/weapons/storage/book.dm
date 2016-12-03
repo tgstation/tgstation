@@ -5,7 +5,7 @@
 	icon_state ="book"
 	throw_speed = 2
 	throw_range = 5
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 	resistance_flags = FLAMMABLE
 	var/title = "book"
 /obj/item/weapon/storage/book/attack_self(mob/user)

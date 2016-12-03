@@ -8,7 +8,7 @@
 	item_state = "gun"
 	mag_type = /obj/item/ammo_box/magazine/internal/grenadelauncher
 	fire_sound = 'sound/weapons/grenadelaunch.ogg'
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 	pin = /obj/item/device/firing_pin/implant/pindicate
 
 /obj/item/weapon/gun/ballistic/revolver/grenadelauncher/unrestricted
@@ -51,7 +51,7 @@
 	desc = "A weapon favored by carp hunters. Fires specialized spears using kinetic energy."
 	icon_state = "speargun"
 	item_state = "speargun"
-	w_class = 4
+	w_class = WEIGHT_CLASS_BULKY
 	origin_tech = "combat=4;engineering=4"
 	force = 10
 	can_suppress = 0
@@ -83,7 +83,7 @@
 	item_state = "rocketlauncher"
 	mag_type = /obj/item/ammo_box/magazine/internal/rocketlauncher
 	fire_sound = 'sound/weapons/rocketlaunch.ogg'
-	w_class = 4
+	w_class = WEIGHT_CLASS_BULKY
 	can_suppress = 0
 	burst_size = 1
 	fire_delay = 0

@@ -13,7 +13,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/customizable
 	bitesize = 4
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	volume = 80
 
 	var/ingMax = 12
@@ -38,7 +38,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/customizable/attackby(obj/item/I, mob/user, params)
 	if(!istype(I, /obj/item/weapon/reagent_containers/food/snacks/customizable) && istype(I,/obj/item/weapon/reagent_containers/food/snacks))
 		var/obj/item/weapon/reagent_containers/food/snacks/S = I
-		if(I.w_class > 2)
+		if(I.w_class > WEIGHT_CLASS_SMALL)
 			user << "<span class='warning'>The ingredient is too big for [src]!</span>"
 		else if((ingredients.len >= ingMax) || (reagents.total_volume >= volume))
 			user << "<span class='warning'>You can't add more ingredients to [src]!</span>"
@@ -299,12 +299,12 @@
 	icon_state = "bowl"
 	flags = OPENCONTAINER
 	materials = list(MAT_GLASS = 500)
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 
 /obj/item/weapon/reagent_containers/glass/bowl/attackby(obj/item/I,mob/user, params)
 	if(istype(I,/obj/item/weapon/reagent_containers/food/snacks))
 		var/obj/item/weapon/reagent_containers/food/snacks/S = I
-		if(I.w_class > 2)
+		if(I.w_class > WEIGHT_CLASS_SMALL)
 			user << "<span class='warning'>The ingredient is too big for [src]!</span>"
 		else if(contents.len >= 20)
 			user << "<span class='warning'>You can't add more ingredients to [src]!</span>"

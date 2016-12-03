@@ -7,7 +7,7 @@
 	throw_speed = 3
 	throw_range = 4
 	throwforce = 10
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 	var/reskinned = FALSE
 
 /obj/item/weapon/nullrod/suicide_act(mob/user)
@@ -58,7 +58,7 @@
 	name = "god hand"
 	desc = "This hand of yours glows with an awesome power!"
 	flags = ABSTRACT | NODROP | DROPDEL
-	w_class = 5
+	w_class = WEIGHT_CLASS_HUGE
 	hitsound = 'sound/weapons/sear.ogg'
 	damtype = BURN
 	attack_verb = list("punched", "cross countered", "pummeled")
@@ -68,7 +68,7 @@
 	item_state = "godstaff-red"
 	name = "red holy staff"
 	desc = "It has a mysterious, protective aura."
-	w_class = 5
+	w_class = WEIGHT_CLASS_HUGE
 	force = 5
 	slot_flags = SLOT_BACK
 	block_chance = 50
@@ -90,7 +90,7 @@
 	item_state = "claymore"
 	name = "holy claymore"
 	desc = "A weapon fit for a crusade!"
-	w_class = 5
+	w_class = WEIGHT_CLASS_HUGE
 	slot_flags = SLOT_BACK|SLOT_BELT
 	block_chance = 30
 	sharpness = IS_SHARP
@@ -180,7 +180,7 @@
 	item_state = "scythe1"
 	name = "reaper scythe"
 	desc = "Ask not for whom the bell tolls..."
-	w_class = 4
+	w_class = WEIGHT_CLASS_BULKY
 	armour_penetration = 35
 	slot_flags = SLOT_BACK
 	sharpness = IS_SHARP
@@ -252,7 +252,7 @@
 	name = "relic war hammer"
 	desc = "This war hammer cost the chaplain forty thousand space dollars."
 	slot_flags = SLOT_BELT
-	w_class = 5
+	w_class = WEIGHT_CLASS_HUGE
 	attack_verb = list("smashed", "bashed", "hammered", "crunched")
 
 /obj/item/weapon/nullrod/chainsaw
@@ -260,7 +260,7 @@
 	desc = "Good? Bad? You're the guy with the chainsaw hand."
 	icon_state = "chainsaw_on"
 	item_state = "mounted_chainsaw"
-	w_class = 5
+	w_class = WEIGHT_CLASS_HUGE
 	flags = NODROP | ABSTRACT
 	sharpness = IS_SHARP
 	attack_verb = list("sawed", "torn", "cut", "chopped", "diced")
@@ -305,7 +305,7 @@
 	icon_state = "arm_blade"
 	item_state = "arm_blade"
 	flags = ABSTRACT | NODROP
-	w_class = 5
+	w_class = WEIGHT_CLASS_HUGE
 	sharpness = IS_SHARP
 
 /obj/item/weapon/nullrod/carp
@@ -331,7 +331,7 @@
 /obj/item/weapon/nullrod/claymore/bostaff //May as well make it a "claymore" and inherit the blocking
 	name = "monk's staff"
 	desc = "A long, tall staff made of polished wood. Traditionally used in ancient old-Earth martial arts, it is now used to harass the clown."
-	w_class = 4
+	w_class = WEIGHT_CLASS_BULKY
 	force = 15
 	block_chance = 40
 	slot_flags = SLOT_BACK
@@ -346,7 +346,7 @@
 	icon_state = "crysknife"
 	item_state = "crysknife"
 	name = "arrhythmic knife"
-	w_class = 5
+	w_class = WEIGHT_CLASS_HUGE
 	desc = "They say fear is the true mind killer, but stabbing them in the head works too. Honour compels you to not sheathe it once drawn."
 	sharpness = IS_SHARP
 	slot_flags = null
@@ -357,7 +357,7 @@
 /obj/item/weapon/nullrod/pitchfork
 	icon_state = "pitchfork0"
 	name = "unholy pitchfork"
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 	desc = "Holding this makes you look absolutely devilish."
 	attack_verb = list("poked", "impaled", "pierced", "jabbed")
 	hitsound = 'sound/weapons/bladeslice.ogg'

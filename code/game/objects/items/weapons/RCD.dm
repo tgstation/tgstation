@@ -17,7 +17,7 @@ RCD
 	throwforce = 10
 	throw_speed = 3
 	throw_range = 5
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 	materials = list(MAT_METAL=100000)
 	origin_tech = "engineering=4;materials=2"
 	req_access_txt = "11"

@@ -3,7 +3,7 @@
 	singular_name = "broken tile"
 	desc = "A broken tile. This should not exist."
 	icon = 'icons/obj/tiles.dmi'
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 	force = 1
 	throwforce = 1
 	throw_speed = 3
