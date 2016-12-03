@@ -85874,6 +85874,7 @@
 	dir = 8;
 	initialize_directions = 11
 	},
+/obj/effect/landmark/xmastree,
 /turf/open/floor/carpet,
 /area/chapel/main)
 "cQz" = (
@@ -89976,11 +89977,9 @@
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/syndicate)
 "cXL" = (
-/obj/structure/chair{
-	dir = 4
-	},
-/turf/open/floor/plasteel/shuttle/red,
-/area/shuttle/syndicate)
+/obj/effect/landmark/xmastree,
+/turf/open/floor/wood,
+/area/crew_quarters/bar)
 "cXM" = (
 /obj/structure/chair{
 	dir = 8
@@ -129978,7 +129977,7 @@ byY
 bAJ
 bza
 bAG
-bAG
+cXL
 bHA
 bJm
 bAG
