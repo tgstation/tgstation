@@ -92,7 +92,7 @@
 		START_PROCESSING(SSobj, src)
 	else
 		STOP_PROCESSING(SSobj,src)
-	user << "<span class='notice'>You turn [refill_enabled ? "on" : "off"] the condenser.</span>"
+	user << "<span class='notice'>You set the condenser switch to the '[refill_enabled ? "ON" : "OFF"]' position.</span>"
 	playsound(user, 'sound/machines/click.ogg', 30, 1)
 
 /obj/item/weapon/mop/advanced/process()
@@ -102,9 +102,9 @@
 
 /obj/item/weapon/mop/advanced/examine(mob/user)
 	..()
-	user << "<span class='notice'>The condenser switch is set to <b>[refill_enabled ? "ON" : "off"]</b>.</span>"
+	user << "<span class='notice'>The condenser switch is set to <b>[refill_enabled ? "ON" : "OFF"]</b>.</span>"
 
 /obj/item/weapon/mop/advanced/Destroy()
 	if(refill_enabled)
 		STOP_PROCESSING(SSobj, src)
-	..()
+	return ..()
