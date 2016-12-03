@@ -1,0 +1,4 @@
+author: "Joan"
+delete-after: True
+changes: 
+  - rscadd: "Converted engineering and miner cyborgs can now create Sigils of Transgression."
