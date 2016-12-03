@@ -201,7 +201,7 @@
 			usr.a_intent_change(INTENT_DISARM)
 
 	else
-		usr.a_intent_change("right")
+		usr.a_intent_change(INTENT_NEXT)
 
 /obj/screen/act_intent/alien
 	icon = 'icons/mob/screen_alien.dmi'
@@ -649,4 +649,3 @@
 		if(word_messages.len && talk_cooldown < world.time)
 			talk_cooldown = world.time + 10
 			L.say(pick(word_messages))
-

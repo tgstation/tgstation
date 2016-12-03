@@ -280,29 +280,6 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 			return 1
 	return 0
 
-//converts intent-strings into numbers and back
-/proc/intent_numeric(argument)
-	if(istext(argument))
-		switch(argument)
-			if(INTENT_HELP)
-				return 0
-			if(INTENT_DISARM)
-				return 1
-			if(INTENT_GRAB)
-				return 2
-			else
-				return 3
-	else
-		switch(argument)
-			if(0)
-				return INTENT_HELP
-			if(1)
-				return INTENT_DISARM
-			if(2)
-				return INTENT_GRAB
-			else
-				return INTENT_HARM
-
 //change a mob's act-intent. Input the intent as a string such as "help" or use "right"/"left
 /mob/verb/a_intent_change(input as text)
 	set name = "a-intent"
@@ -312,10 +289,16 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 		switch(input)
 			if(INTENT_HELP, INTENT_DISARM, INTENT_GRAB, INTENT_HARM)
 				a_intent = input
-			if("right")
-				a_intent = intent_numeric((intent_numeric(a_intent) + 1) % 4)
-			if("left")
-				a_intent = intent_numeric((intent_numeric(a_intent) + 3) % 4)
+			if(INTENT_NEXT)
+				switch (a_intent)
+					if(INTENT_HELP)
+						a_intent = INTENT_DISARM
+					if(INTENT_DISARM)
+						a_intent = INTENT_GRAB
+					if(INTENT_GRAB)
+						a_intent = INTENT_HARM
+					if(INTENT_HARM)
+						a_intent = INTENT_HELP
 
 		if(hud_used && hud_used.action_intent)
 			hud_used.action_intent.icon_state = "[a_intent]"
@@ -326,8 +309,16 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 				a_intent = INTENT_HELP
 			if(INTENT_HARM)
 				a_intent = INTENT_HARM
-			if("right","left")
-				a_intent = intent_numeric(intent_numeric(a_intent) - 3)
+			if(INTENT_NEXT)
+				switch (a_intent)
+					if(INTENT_HELP)
+						a_intent = INTENT_DISARM
+					if(INTENT_DISARM)
+						a_intent = INTENT_GRAB
+					if(INTENT_GRAB)
+						a_intent = INTENT_HARM
+					if(INTENT_HARM)
+						a_intent = INTENT_HELP
 
 		if(hud_used && hud_used.action_intent)
 			hud_used.action_intent.icon_state = "[a_intent]"
