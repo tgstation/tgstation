@@ -466,7 +466,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	. = "<span class='notice'>After some fiddling, [user] manages to light [A] with [src].</span>"
 
 /obj/item/weapon/lighter/ignition_effect(atom/A, mob/user)
-	. = "<span class='rose'>With a single flick of their wrist, [user] \smoothly lights [A] with [src]. Damn [user.p_theyre()] cool.</span>"
+	. = "<span class='rose'>With a single flick of their wrist, [user] smoothly lights [A] with [src]. Damn [user.p_theyre()] cool.</span>"
 
 /obj/item/weapon/lighter/update_icon()
 	icon_state = lit ? "[icon_state]_on" : "[initial(icon_state)]"
