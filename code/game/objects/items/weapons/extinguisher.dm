@@ -51,7 +51,7 @@
 	return
 
 /obj/item/weapon/extinguisher/attack(mob/M, mob/user)
-	if(user.a_intent == "help" && !safety) //If we're on help intent and going to spray people, don't bash them.
+	if(user.a_intent == INTENT_HELP && !safety) //If we're on help intent and going to spray people, don't bash them.
 		return FALSE
 	else
 		return ..()

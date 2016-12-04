@@ -58,7 +58,7 @@
 	attack_hand(user)
 
 /obj/structure/table/attack_hand(mob/living/user)
-	if(user.a_intent == "grab" && user.pulling && isliving(user.pulling))
+	if(user.a_intent == INTENT_GRAB && user.pulling && isliving(user.pulling))
 		var/mob/living/pushed_mob = user.pulling
 		if(pushed_mob.buckled)
 			user << "<span class='warning'>[pushed_mob] is buckled to [pushed_mob.buckled]!</span>"
@@ -127,7 +127,7 @@
 			return
 		// If the tray IS empty, continue on (tray will be placed on the table like other items)
 
-	if(user.a_intent != "harm" && !(I.flags & ABSTRACT))
+	if(user.a_intent != INTENT_HARM && !(I.flags & ABSTRACT))
 		if(user.drop_item())
 			I.Move(loc)
 			var/list/click_params = params2list(params)
@@ -434,7 +434,7 @@
 		playsound(src.loc, W.usesound, 50, 1)
 		deconstruct(TRUE)
 		return
-	if(user.a_intent == "harm")
+	if(user.a_intent == INTENT_HARM)
 		return ..()
 	if(user.drop_item())
 		W.Move(loc)

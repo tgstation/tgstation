@@ -88,7 +88,7 @@
 	if(panel_open && default_deconstruction_crowbar(O))
 		return
 
-	if(user.a_intent == "harm") //so we can hit the machine
+	if(user.a_intent == INTENT_HARM) //so we can hit the machine
 		return ..()
 
 /obj/machinery/limbgrower/Topic(href, href_list)

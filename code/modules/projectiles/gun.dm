@@ -130,7 +130,7 @@
 	if(flag) //It's adjacent, is the user, or is on the user's person
 		if(target in user.contents) //can't shoot stuff inside us.
 			return
-		if(!ismob(target) || user.a_intent == "harm") //melee attack
+		if(!ismob(target) || user.a_intent == INTENT_HARM) //melee attack
 			return
 		if(target == user && user.zone_selected != "mouth") //so we can't shoot ourselves (unless mouth selected)
 			return
@@ -167,7 +167,7 @@
 	//DUAL (or more!) WIELDING
 	var/bonus_spread = 0
 	var/loop_counter = 0
-	if(ishuman(user) && user.a_intent == "harm")
+	if(ishuman(user) && user.a_intent == INTENT_HARM)
 		var/mob/living/carbon/human/H = user
 		for(var/obj/item/weapon/gun/G in H.held_items)
 			if(G == src || G.weapon_weight >= WEAPON_MEDIUM)
@@ -269,7 +269,7 @@
 	feedback_add_details("gun_fired","[src.type]")
 
 /obj/item/weapon/gun/attack(mob/M as mob, mob/user)
-	if(user.a_intent == "harm") //Flogging
+	if(user.a_intent == INTENT_HARM) //Flogging
 		..()
 	else
 		return

@@ -94,7 +94,7 @@
 		return
 	if(!isliving(target))
 		return
-	if (user.a_intent == "harm")
+	if (user.a_intent == INTENT_HARM)
 		if(!..())
 			return
 		if(!iscyborg(target))

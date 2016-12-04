@@ -65,7 +65,7 @@
 	if(hellbound)
 		O.hellbound = hellbound
 	O.loc = loc
-	O.a_intent = "harm"
+	O.a_intent = INTENT_HARM
 
 	//keep viruses?
 	if (tr_flags & TR_KEEPVIRUS)
@@ -277,7 +277,7 @@
 			for(var/obj/effect/proc_holder/changeling/humanform/HF in O.mind.changeling.purchasedpowers)
 				mind.changeling.purchasedpowers -= HF
 
-	O.a_intent = "help"
+	O.a_intent = INTENT_HELP
 	if (tr_flags & TR_DEFAULTMSG)
 		O << "<B>You are now a human.</B>"
 
@@ -446,7 +446,7 @@
 		if("Drone")
 			new_xeno = new /mob/living/carbon/alien/humanoid/drone(loc)
 
-	new_xeno.a_intent = "harm"
+	new_xeno.a_intent = INTENT_HARM
 	new_xeno.key = key
 
 	new_xeno << "<B>You are now an alien.</B>"
@@ -478,7 +478,7 @@
 		new_slime = pick(babies)
 	else
 		new_slime = new /mob/living/simple_animal/slime(loc)
-	new_slime.a_intent = "harm"
+	new_slime.a_intent = INTENT_HARM
 	new_slime.key = key
 
 	new_slime << "<B>You are now a slime. Skreee!</B>"
@@ -509,7 +509,7 @@
 		qdel(t)
 
 	var/mob/living/simple_animal/pet/dog/corgi/new_corgi = new /mob/living/simple_animal/pet/dog/corgi (loc)
-	new_corgi.a_intent = "harm"
+	new_corgi.a_intent = INTENT_HARM
 	new_corgi.key = key
 
 	new_corgi << "<B>You are now a Corgi. Yap Yap!</B>"
@@ -542,7 +542,7 @@
 	var/mob/new_mob = new mobpath(src.loc)
 
 	new_mob.key = key
-	new_mob.a_intent = "harm"
+	new_mob.a_intent = INTENT_HARM
 
 
 	new_mob << "You suddenly feel more... animalistic."
@@ -561,7 +561,7 @@
 	var/mob/new_mob = new mobpath(src.loc)
 
 	new_mob.key = key
-	new_mob.a_intent = "harm"
+	new_mob.a_intent = INTENT_HARM
 	new_mob << "You feel more... animalistic"
 
 	. = new_mob

@@ -124,7 +124,7 @@
 				user << "<span class='warning'>There is nothing in [O] to put in [src]!</span>"
 				return 0
 
-	if(user.a_intent != "harm")
+	if(user.a_intent != INTENT_HARM)
 		user << "<span class='warning'>\The [src] smartly refuses [O].</span>"
 		updateUsrDialog()
 		return 0

@@ -125,10 +125,10 @@
 	if(!M.buckled && !M.has_buckled_mobs())
 		var/mob_swap
 		//the puller can always swap with its victim if on grab intent
-		if(M.pulledby == src && a_intent == "grab")
+		if(M.pulledby == src && a_intent == INTENT_GRAB)
 			mob_swap = 1
 		//restrained people act if they were on 'help' intent to prevent a person being pulled from being seperated from their puller
-		else if((M.restrained() || M.a_intent == "help") && (restrained() || a_intent == "help"))
+		else if((M.restrained() || M.a_intent == INTENT_HELP) && (restrained() || a_intent == INTENT_HELP))
 			mob_swap = 1
 		if(mob_swap)
 			//switch our position with M

@@ -119,7 +119,7 @@ Note: Must be placed west/left of and R&D console to function.
 			busy = 0
 		updateUsrDialog()
 
-	else if(user.a_intent != "harm")
+	else if(user.a_intent != INTENT_HARM)
 		user << "<span class='warning'>You cannot insert this item into the [name]!</span>"
 		return 1
 	else
