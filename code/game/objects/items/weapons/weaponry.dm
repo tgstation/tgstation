@@ -19,11 +19,11 @@
 	..()
 
 /obj/item/weapon/proc/rename_weapon(mob/M)
-	var/input = stripped_input(M,"What do you want to name the weapon?", ,"", MAX_NAME_LEN)
+	var/input = stripped_input(M,"What do you want to name the [name]?", ,"", MAX_NAME_LEN)
 
 	if(!qdeleted(src) && M.canUseTopic(src, BE_CLOSE) && input != "")
 		name = input
-		M << "You name the weapon [input]. Say hello to your new friend."
+		M << "You have successfully changed the object's name to [input]."
 		return
 	else
 		return
