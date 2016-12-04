@@ -81,10 +81,6 @@
 	new /obj/item/weapon/gun/energy/e_gun/hos(src)
 	new /obj/item/device/flashlight/seclite(src)
 	new /obj/item/weapon/pinpointer(src)
-	new /obj/item/clothing/suit/armor/hos/jensen(src)
-	new /obj/item/clothing/under/rank/head_of_security/jensen(src)
-	new /obj/item/clothing/glasses/hud/security/sunglasses/jensenshades(src)
-	new /obj/item/clothing/head/HoS/dermal(src)
 
 /obj/structure/closet/secure_closet/warden
 	name = "\proper warden's locker"
