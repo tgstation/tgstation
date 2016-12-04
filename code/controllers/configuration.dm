@@ -100,6 +100,8 @@
 	var/list/modes = list()				// allowed modes
 	var/list/votable_modes = list()		// votable modes
 	var/list/probabilities = list()		// relative probability of each mode
+	var/list/min_pop = list()			// overrides for acceptible player counts in a mode
+	var/list/max_pop = list()
 
 	var/humans_need_surnames = 0
 	var/allow_ai = 0					// allow ai job
@@ -536,6 +538,34 @@
 					config.midround_antag_time_check = text2num(value)
 				if("midround_antag_life_check")
 					config.midround_antag_life_check = text2num(value)
+				if("min_pop")
+					var/pop_pos = findtext(value, " ")
+					var/mode_name = null
+					var/mode_value = null
+
+					if(pop_pos)
+						mode_name = lowertext(copytext(value, 1, pop_pos))
+						mode_value = copytext(value, pop_pos + 1)
+						if(mode_name in config.modes)
+							config.min_pop[mode_name] = text2num(mode_value)
+						else
+							diary << "Unknown minimum population configuration definition: [mode_name]."
+					else
+						diary << "Incorrect minimum population configuration definition: [mode_name]  [mode_value]."
+				if("max_pop")
+					var/pop_pos = findtext(value, " ")
+					var/mode_name = null
+					var/mode_value = null
+
+					if(pop_pos)
+						mode_name = lowertext(copytext(value, 1, pop_pos))
+						mode_value = copytext(value, pop_pos + 1)
+						if(mode_name in config.modes)
+							config.max_pop[mode_name] = text2num(mode_value)
+						else
+							diary << "Unknown maximum population configuration definition: [mode_name]."
+					else
+						diary << "Incorrect maximum population configuration definition: [mode_name]  [mode_value]."
 				if("shuttle_refuel_delay")
 					config.shuttle_refuel_delay     = text2num(value)
 				if("show_game_type_odds")
@@ -774,6 +804,10 @@
 		if(probabilities[M.config_tag]<=0)
 			qdel(M)
 			continue
+		if(min_pop[M.config_tag])
+			M.required_players = min_pop[M.config_tag]
+		if(max_pop[M.config_tag])
+			M.maximum_players = max_pop[M.config_tag]
 		if(M.can_start())
 			runnable_modes[M] = probabilities[M.config_tag]
 			//world << "DEBUG: runnable_mode\[[runnable_modes.len]\] = [M.config_tag]"
@@ -789,7 +823,13 @@
 		if(probabilities[M.config_tag]<=0)
 			qdel(M)
 			continue
+		if(min_pop[M.config_tag])
+			M.required_players = min_pop[M.config_tag]
+		if(max_pop[M.config_tag])
+			M.maximum_players = max_pop[M.config_tag]
 		if(M.required_players <= crew)
+			if(M.maximum_players >= 0 && M.maximum_players < crew)
+				continue
 			runnable_modes[M] = probabilities[M.config_tag]
 	return runnable_modes
 
