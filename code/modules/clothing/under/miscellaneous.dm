@@ -402,6 +402,10 @@
 	can_adjust = 0
 	resistance_flags = 0
 
+/obj/item/clothing/under/gladiator/ash_walker
+	desc = "This gladiator uniform appears to be covered in ash and appears to be fairly dated."
+	has_sensor = 0
+
 /obj/item/clothing/under/sundress
 	name = "sundress"
 	desc = "Makes you want to frolic in a field of daisies."
