@@ -503,8 +503,8 @@
 	name = "captain's hardsuit helmet"
 	icon_state = "capspace"
 	item_state = "capspacehelmet"
-	desc = "A special hardsuit helmet designed for only the most fashionable of military figureheads."
-	armor = list(melee = 40, bullet = 50, laser = 50, energy = 25, bomb = 50, bio = 100, rad = 50, fire = 100, acid = 100)
+	desc = "A tactical SWAT helmet MK.II boasting better protection and a horrible fashion sense."
+	armor = list(melee = 50, bullet = 50, laser = 50, energy = 25, bomb = 50, bio = 100, rad = 50, fire = 100, acid = 100)
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	flags_inv = HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR //we want to see the mask
 	actions_types = list()
@@ -513,13 +513,14 @@
 	return //Sprites required for flashlight
 
 /obj/item/clothing/suit/space/hardsuit/captain
-	name = "captain's hardsuit"
-	desc = "A bulky, heavy-duty piece of exclusive Nanotrasen hardsuit armor. YOU are in charge!"
+	name = "captain's SWAT suit"
+	desc = "A MK.II SWAT suit with streamlined joints and armor made out of superior materials, insulated against intense heat. The most advanced tactical armor available Usually reserved for heavy hitter corporate security, this one has a regal finish in Nanotrasen company colors. Better not let the assistants get a hold of it."
 	icon_state = "caparmor"
 	item_state = "capspacesuit"
 	allowed = list(/obj/item/weapon/tank/internals, /obj/item/device/flashlight,/obj/item/weapon/gun/energy, /obj/item/weapon/gun/ballistic, /obj/item/ammo_box, /obj/item/ammo_casing, /obj/item/weapon/melee/baton,/obj/item/weapon/restraints/handcuffs)
-	armor = list(melee = 40, bullet = 50, laser = 50, energy = 25, bomb = 50, bio = 100, rad = 50, fire = 100, acid = 100)
+	armor = list(melee = 80, bullet = 50, laser = 70, energy = 25, bomb = 50, bio = 100, rad = 50, fire = 100, acid = 100)
 	resistance_flags = FIRE_PROOF | ACID_PROOF
+	max_heat_protection_temperature = FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT //this needed to be added a long fucking time ago
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/captain
 
 	//Clown
