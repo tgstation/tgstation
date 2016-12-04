@@ -1,6 +1,7 @@
 
 /obj/machinery/juicer
 	name = "juicer"
+	desc = "a centrifugal juicer with two speeds: Juice and Seperate.
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "juicer1"
 	layer = BELOW_OBJ_LAYER
@@ -95,7 +96,7 @@
 		beaker_contents = "\The [src]  has an empty container attached."
 		is_beaker_ready = 1
 	else if (beaker.reagents.total_volume < beaker.reagents.maximum_volume)
-		beaker_contents = "\The [src]  has a container with something attached."
+		beaker_contents = "\The [src]  has a partially filled container attached."
 		is_beaker_ready = 1
 	else
 		beaker_contents = "\The [src]  has a container attached and the container is full!"
