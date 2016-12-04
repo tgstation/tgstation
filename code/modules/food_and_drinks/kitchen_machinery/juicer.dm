@@ -55,7 +55,7 @@
 			src.updateUsrDialog()
 			return 0
 	if (!is_type_in_list(O, allowed_items))
-		user << "It looks as not containing any juice."
+		user << "This object contains no fluid or extractable reagents."
 		return 1
 	if(!user.unEquip(O))
 		user << "<span class='warning'>\the [O] is stuck to your hand, you cannot put it in \the [src]!</span>"
@@ -90,15 +90,15 @@
 		is_chamber_empty = 1
 		processing_chamber = "Nothing."
 	if (!beaker)
-		beaker_contents = "\The [src] has no beaker attached."
+		beaker_contents = "\The [src] has no container attached."
 	else if (!beaker.reagents.total_volume)
-		beaker_contents = "\The [src]  has attached an empty beaker."
+		beaker_contents = "\The [src]  has an empty container attached."
 		is_beaker_ready = 1
 	else if (beaker.reagents.total_volume < beaker.reagents.maximum_volume)
-		beaker_contents = "\The [src]  has attached a beaker with something."
+		beaker_contents = "\The [src]  has a container with something attached."
 		is_beaker_ready = 1
 	else
-		beaker_contents = "\The [src]  has attached a beaker and the beaker is full!"
+		beaker_contents = "\The [src]  has a container attached and the container is full!"
 
 	var/dat = {"
 <b>Processing chamber contains:</b><br>
@@ -108,7 +108,7 @@
 	if (is_beaker_ready && !is_chamber_empty && !(stat & (NOPOWER|BROKEN)))
 		dat += "<A href='?src=\ref[src];action=juice'>Turn on!<BR>"
 	if (beaker)
-		dat += "<A href='?src=\ref[src];action=detach'>Detach a beaker!<BR>"
+		dat += "<A href='?src=\ref[src];action=detach'>Detach the container!<BR>"
 	user << browse("<HEAD><TITLE>Juicer</TITLE></HEAD><TT>[dat]</TT>", "window=juicer")
 	onclose(user, "juicer")
 	return
@@ -129,7 +129,7 @@
 
 /obj/machinery/juicer/verb/detach()
 	set category = "Object"
-	set name = "Detach Beaker from the juicer"
+	set name = "Detach container from the juicer"
 	set src in oview(1)
 	if(usr.stat || !usr.canmove || usr.restrained())
 		return
