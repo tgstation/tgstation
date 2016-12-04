@@ -46,5 +46,5 @@
 	owner << "<span class='userdanger'>An unfamiliar white light flashes through your mind, cleansing the taint of the Dark One and all your memories as its servant.</span>"
 	owner.attack_log += "\[[time_stamp()]\] <span class='cult'>Has renounced the cult of Nar'Sie!</span>"
 	if(!silent_update)
-		owner.visible_message("<span class='big'>[owner] looks like they just reverted to their old faith!</span>")
+		owner.visible_message("<span class='big'>[owner] looks like [owner.p_they()] just reverted to their old faith!</span>")
 	..()

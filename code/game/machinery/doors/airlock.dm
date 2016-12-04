@@ -714,7 +714,7 @@ var/list/airlock_overlays = list()
 				H.Weaken(5)
 				H.apply_damage(10, BRUTE, "head")
 			else
-				visible_message("<span class='danger'>[user] headbutts the airlock. Good thing they're wearing a helmet.</span>")
+				visible_message("<span class='danger'>[user] headbutts the airlock. Good thing [user.p_theyre()] wearing a helmet.</span>")
 			return
 
 	if(panel_open)

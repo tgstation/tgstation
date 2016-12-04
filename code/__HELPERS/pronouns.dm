@@ -24,6 +24,9 @@
 /datum/proc/p_were(temp_gender)
 	. = "was"
 
+/datum/proc/p_do(temp_gender)
+	. = "does"
+
 /datum/proc/p_theyve(capitalized, temp_gender)
 	. = p_they(capitalized, temp_gender) + "'" + copytext(p_have(temp_gender), 3)
 
@@ -90,6 +93,13 @@
 	. = "was"
 	if(temp_gender == PLURAL || temp_gender == NEUTER)
 		. = "were"
+
+/client/p_do(temp_gender)
+	if(!temp_gender)
+		temp_gender = gender
+	. = "does"
+	if(temp_gender == PLURAL || temp_gender == NEUTER)
+		. = "do"
 
 /client/p_s(temp_gender)
 	if(!temp_gender)
@@ -161,6 +171,13 @@
 	if(temp_gender == PLURAL)
 		. = "were"
 
+/mob/p_do(temp_gender)
+	if(!temp_gender)
+		temp_gender = gender
+	. = "does"
+	if(temp_gender == PLURAL)
+		. = "do"
+
 /mob/p_s(temp_gender)
 	if(!temp_gender)
 		temp_gender = gender
@@ -204,6 +221,13 @@
 	return ..()
 
 /mob/living/carbon/human/p_were(temp_gender)
+	var/list/obscured = check_obscured_slots()
+	var/skipface = (wear_mask && (wear_mask.flags_inv & HIDEFACE)) || (head && (head.flags_inv & HIDEFACE))
+	if((slot_w_uniform in obscured) && skipface)
+		temp_gender = PLURAL
+	return ..()
+
+/mob/living/carbon/human/p_do(temp_gender)
 	var/list/obscured = check_obscured_slots()
 	var/skipface = (wear_mask && (wear_mask.flags_inv & HIDEFACE)) || (head && (head.flags_inv & HIDEFACE))
 	if((slot_w_uniform in obscured) && skipface)

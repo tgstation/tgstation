@@ -885,7 +885,7 @@
 		if(ORION_TRAIL_SPACEPORT)
 			gameStatus = ORION_STATUS_MARKET
 			if(spaceport_raided)
-				eventdat += "The Spaceport is on high alert! they wont let you dock since you tried to attack them!"
+				eventdat += "The Spaceport is on high alert! They won't let you dock since you tried to attack them!"
 				if(last_spaceport_action)
 					eventdat += "<br>Last Spaceport Action: [last_spaceport_action]"
 				eventdat += "<P ALIGN=Right><a href='byond://?src=\ref[src];leave_spaceport=1'>Depart Spaceport</a></P>"
