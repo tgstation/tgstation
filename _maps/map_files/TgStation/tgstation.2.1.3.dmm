@@ -19612,7 +19612,7 @@
 /obj/item/weapon/electronics/apc,
 /obj/item/weapon/electronics/airlock,
 /turf/open/floor/plasteel,
-/area/storage/tools)
+/area/space)
 "aRU" = (
 /obj/structure/grille,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -19797,7 +19797,7 @@
 	on = 1
 	},
 /turf/open/floor/plasteel,
-/area/storage/tools)
+/area/space)
 "aSu" = (
 /turf/open/floor/plasteel/yellow/corner{
 	dir = 1
@@ -20572,7 +20572,7 @@
 	scrub_Toxins = 0
 	},
 /turf/open/floor/plasteel,
-/area/storage/tools)
+/area/space)
 "aUx" = (
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
@@ -21555,7 +21555,7 @@
 "aWF" = (
 /obj/structure/closet/toolcloset,
 /turf/open/floor/plasteel,
-/area/storage/tools)
+/area/space)
 "aWG" = (
 /obj/machinery/computer/secure_data,
 /obj/structure/disposalpipe/segment{
@@ -52978,7 +52978,7 @@
 /area/atmos)
 "clX" = (
 /obj/effect/landmark/event_spawn,
-/obj/effect/landmark/vr_spawn,
+/obj/effect/landmark/xmastree,
 /turf/open/floor/plasteel/bar,
 /area/crew_quarters/bar)
 "clY" = (
@@ -56003,10 +56003,7 @@
 /turf/open/space,
 /area/space)
 "csp" = (
-/obj/structure/transit_tube{
-	icon_state = "E-W-Pass"
-	},
-/turf/open/space,
+/turf/open/floor/plasteel,
 /area/space)
 "csq" = (
 /obj/machinery/computer/security/telescreen{
@@ -56191,7 +56188,7 @@
 "csL" = (
 /obj/machinery/light/small,
 /turf/open/floor/plasteel,
-/area/storage/tools)
+/area/space)
 "csM" = (
 /obj/structure/lattice,
 /obj/machinery/atmospherics/pipe/simple/yellow/visible,
@@ -56227,7 +56224,7 @@
 /area/space/nearstation)
 "csT" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/effect/landmark/vr_spawn,
+/obj/effect/landmark/xmastree,
 /turf/open/floor/plasteel/black,
 /area/chapel/main)
 "csU" = (
@@ -84204,7 +84201,7 @@ aOA
 aPO
 aRf
 aUw
-aSr
+csp
 csL
 apd
 aXK
@@ -98442,8 +98439,8 @@ cva
 cva
 cvp
 cwv
-cvp
 cvr
+cvp
 cvl
 cvr
 cwv
@@ -99984,8 +99981,8 @@ cva
 cva
 cvp
 cwB
-cvp
 cvr
+cvp
 cvl
 cvr
 cwB
