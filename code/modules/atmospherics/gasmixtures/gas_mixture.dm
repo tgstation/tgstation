@@ -6,30 +6,41 @@ What are the archived variables for?
 #define MINIMUM_HEAT_CAPACITY	0.0003
 #define QUANTIZE(variable)		(round(variable,0.0000001))/*I feel the need to document what happens here. Basically this is used to catch most rounding errors, however it's previous value made it so that
 															once gases got hot enough, most procedures wouldnt occur due to the fact that the mole counts would get rounded away. Thus, we lowered it a few orders of magnititude */
-var/list/meta_gas_info = meta_gas_list() //see ATMOSPHERICS/gas_types.dm
+var/list/meta_gas_info = init_gaslists()
 
-var/list/gaslist_cache = null
+var/list/gaslist_cache
 /proc/gaslist(id)
-	var/list/cached_gas
-
-	//only instantiate the first time it's needed
-	if(!gaslist_cache)
-		gaslist_cache = new(meta_gas_info.len)
-
-	//only setup the individual lists the first time they're needed
-	if(!gaslist_cache[id])
-		if(!meta_gas_info[id])
-			CRASH("Gas [id] does not exist!")
-		cached_gas = new(3)
-		gaslist_cache[id] = cached_gas
-
-		cached_gas[MOLES] = 0
-		cached_gas[ARCHIVE] = 0
-		cached_gas[GAS_META] = meta_gas_info[id]
-	else
-		cached_gas = gaslist_cache[id]
-	//Copy() it because only GAS_META is static
+	var/list/cached_gas = gaslist_cache[id]
 	return cached_gas.Copy()
+
+/proc/init_gaslist_cache(id)
+	if(!meta_gas_info[id])
+		CRASH("Gas [id] does not exist!")
+
+	var/list/cached_gas = new(3)
+	gaslist_cache[id] = cached_gas
+
+	cached_gas[MOLES] = 0
+	cached_gas[ARCHIVE] = 0
+	cached_gas[GAS_META] = meta_gas_info[id]
+
+/proc/init_gaslists()
+	. = new /list
+
+	gaslist_cache = new(meta_gas_info.len)
+
+	for(var/gas_path in subtypesof(/datum/gas))
+		var/list/gas_info = new(4)
+		var/datum/gas/gas = gas_path
+
+		gas_info[META_GAS_SPECIFIC_HEAT] = initial(gas.specific_heat)
+		gas_info[META_GAS_NAME] = initial(gas.name)
+		gas_info[META_GAS_MOLES_VISIBLE] = initial(gas.moles_visible)
+		if(initial(gas.moles_visible) != null)
+			gas_info[META_GAS_OVERLAY] = new /obj/effect/overlay/gas(initial(gas.gas_overlay))
+		.[initial(gas.id)] = gas_info
+
+		init_gaslist_cache(initial(gas.id))
 
 /datum/gas_mixture
 	var/list/gases

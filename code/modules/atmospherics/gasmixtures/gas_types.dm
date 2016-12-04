@@ -1,25 +1,12 @@
 var/list/hardcoded_gases = list("o2","n2","co2","plasma") //the main four gases, which were at one time hardcoded
 
-/proc/meta_gas_list()
-	. = new /list
-	for(var/gas_path in subtypesof(/datum/gas))
-		var/list/gas_info = new(4)
-		var/datum/gas/gas = gas_path
-
-		gas_info[META_GAS_SPECIFIC_HEAT] = initial(gas.specific_heat)
-		gas_info[META_GAS_NAME] = initial(gas.name)
-		gas_info[META_GAS_MOLES_VISIBLE] = initial(gas.moles_visible)
-		if(initial(gas.moles_visible) != null)
-			gas_info[META_GAS_OVERLAY] = new /obj/effect/overlay/gas(initial(gas.gas_overlay))
-		.[initial(gas.id)] = gas_info
-
 /*||||||||||||||/----------\||||||||||||||*\
 ||||||||||||||||[GAS DATUMS]||||||||||||||||
 ||||||||||||||||\__________/||||||||||||||||
 ||||These should never be instantiated. ||||
 ||||They exist only to make it easier   ||||
 ||||to add a new gas. They are accessed ||||
-||||only by meta_gas_list().            ||||
+||||only by meta_gas_list in gas_mixture||||
 \*||||||||||||||||||||||||||||||||||||||||*/
 
 /datum/gas
