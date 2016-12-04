@@ -37,8 +37,6 @@
 	rain_action.Grant(src)
 	homing_action.Grant(src)
 
-/mob/living/simple_animal/hostile/megafauna/megadrone/Destroy()
-
 /mob/living/simple_animal/hostile/megafauna/megadrone/process()
 	..()
 
