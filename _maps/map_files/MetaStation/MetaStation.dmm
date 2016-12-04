@@ -37725,12 +37725,10 @@
 	name = "\improper MiniSat Exterior"
 	})
 "bnq" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector{
-	dir = 2;
-	icon_state = "inje_on";
-	on = 1
-	},
 /obj/structure/window/reinforced,
+/obj/machinery/atmospherics/components/unary/outlet_injector/on{
+	dir = 2
+	},
 /turf/open/floor/plating/airless,
 /area/construction/hallway{
 	name = "\improper MiniSat Exterior"
@@ -70934,14 +70932,11 @@
 /turf/open/space,
 /area/space)
 "crZ" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector{
-	dir = 8;
-	on = 1;
-	pixel_y = 0;
-	use_power = 0
+/obj/machinery/atmospherics/components/unary/outlet_injector/on{
+	dir = 8
 	},
 /turf/open/floor/plating/airless,
-/area/space)
+/area/maintenance/incinerator)
 "csa" = (
 /obj/structure/window/reinforced{
 	dir = 8
@@ -84813,9 +84808,6 @@
 /turf/open/floor/plating/airless,
 /area/space)
 "cOH" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector{
-	dir = 4
-	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -85387,11 +85379,11 @@
 /turf/open/floor/plating/airless,
 /area/space)
 "cPE" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector{
+/obj/machinery/atmospherics/components/unary/outlet_injector/on{
 	dir = 1
 	},
 /turf/open/floor/plating/airless,
-/area/space)
+/area/medical/virology)
 "cPF" = (
 /obj/structure/bodycontainer/morgue,
 /turf/open/floor/plasteel/black,
@@ -87547,12 +87539,20 @@
 /turf/open/floor/plasteel/black,
 /area/chapel/main)
 "cTE" = (
-/turf/closed/wall/shuttle{
-	tag = "icon-wall3 (NORTHWEST)";
-	icon_state = "wall3";
-	dir = 9
+/obj/machinery/door/airlock/external{
+	name = "Engineering External Access";
+	req_access = null;
+	req_access_txt = "10;13"
 	},
-/area/shuttle/escape)
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
+	pixel_y = 0
+	},
+/obj/structure/fans/tiny,
+/turf/open/floor/plating,
+/area/engine/engineering)
 "cTF" = (
 /obj/machinery/door/window{
 	dir = 4;
@@ -89976,11 +89976,11 @@
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/syndicate)
 "cXL" = (
-/obj/structure/chair{
-	dir = 4
+/obj/machinery/atmospherics/components/unary/outlet_injector/on{
+	dir = 8
 	},
-/turf/open/floor/plasteel/shuttle/red,
-/area/shuttle/syndicate)
+/turf/open/floor/plating/airless,
+/area/toxins/xenobiology)
 "cXM" = (
 /obj/structure/chair{
 	dir = 8
@@ -126185,7 +126185,7 @@ aaa
 aaa
 aaa
 aaf
-crZ
+cXL
 cTC
 cUq
 cUG
@@ -136880,7 +136880,7 @@ ajh
 avN
 atw
 ayo
-azn
+cTE
 ayo
 ayo
 aDq
@@ -136898,7 +136898,7 @@ aDq
 aDq
 ayo
 ayo
-azn
+cTE
 ayo
 ayo
 aKe

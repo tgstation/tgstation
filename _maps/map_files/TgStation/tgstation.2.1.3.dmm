@@ -45325,7 +45325,7 @@
 	dir = 2
 	},
 /turf/open/floor/plating/airless,
-/area/space/nearstation)
+/area/maintenance/aft)
 "bVy" = (
 /obj/structure/grille,
 /obj/structure/disposalpipe/segment{
@@ -47411,7 +47411,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating/airless,
-/area/space/nearstation)
+/area/maintenance/aft)
 "cag" = (
 /obj/machinery/power/terminal{
 	dir = 4
@@ -48005,7 +48005,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating/airless,
-/area/space/nearstation)
+/area/maintenance/aft)
 "cbk" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -48016,7 +48016,7 @@
 	on = 1
 	},
 /turf/open/floor/plating/airless,
-/area/space/nearstation)
+/area/maintenance/aft)
 "cbl" = (
 /obj/machinery/camera{
 	c_tag = "Telecoms Server Room";
@@ -55920,7 +55920,7 @@
 /obj/structure/lattice,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible,
 /turf/open/space,
-/area/space/nearstation)
+/area/maintenance/asmaint)
 "csd" = (
 /turf/open/floor/plating/airless/warnplate{
 	dir = 4
@@ -55992,7 +55992,7 @@
 	dir = 1
 	},
 /turf/open/floor/plating/airless,
-/area/space/nearstation)
+/area/maintenance/asmaint)
 "csn" = (
 /obj/structure/transit_tube/horizontal,
 /turf/open/space,
@@ -56189,11 +56189,9 @@
 /turf/open/floor/plating/airless,
 /area/engine/engineering)
 "csL" = (
-/obj/structure/transit_tube{
-	icon_state = "D-NE"
-	},
-/turf/open/space,
-/area/space)
+/obj/machinery/light/small,
+/turf/open/floor/plasteel,
+/area/storage/tools)
 "csM" = (
 /obj/structure/lattice,
 /obj/machinery/atmospherics/pipe/simple/yellow/visible,
@@ -59268,6 +59266,7 @@
 	req_access = null;
 	req_access_txt = "10;13"
 	},
+/obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "czi" = (
@@ -84204,9 +84203,9 @@ aMY
 aOA
 aPO
 aRf
-aSc
-aSc
 aUw
+aSr
+csL
 apd
 aXK
 avr
