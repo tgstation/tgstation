@@ -211,7 +211,7 @@
 	icon = 'icons/obj/chairs.dmi'
 	icon_state = "chair_toppled"
 	item_state = "chair"
-	w_class = 5
+	w_class = WEIGHT_CLASS_HUGE
 	force = 8
 	throwforce = 10
 	throw_range = 3

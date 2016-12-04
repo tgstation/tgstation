@@ -9,7 +9,7 @@
 	throwforce = 10
 	throw_speed = 1
 	throw_range = 5
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 	materials = list(MAT_METAL=500)
 	origin_tech = "combat=1;plasmatech=2;engineering=2"
 	resistance_flags = FIRE_PROOF

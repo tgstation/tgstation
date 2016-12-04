@@ -5,7 +5,7 @@ var/global/posibrain_notif_cooldown = 0
 	desc = "A cube of shining metal, four inches to a side and covered in shallow grooves."
 	icon = 'icons/obj/assemblies.dmi'
 	icon_state = "posibrain"
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 	origin_tech = "biotech=3;programming=3;plasmatech=2"
 	var/notified = 0
 	var/askDelay = 600 //one minute

@@ -351,7 +351,7 @@
 				if("guest_ban")
 					guests_allowed = 0
 				if("usewhitelist")
-					config.usewhitelist = 1
+					config.usewhitelist = TRUE
 				if("allow_metadata")
 					config.allow_Metadata = 1
 				if("kick_inactive")

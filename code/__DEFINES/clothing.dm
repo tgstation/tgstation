@@ -10,8 +10,8 @@
 #define SLOT_ID			256
 #define SLOT_BELT		512
 #define SLOT_BACK		1024
-#define SLOT_POCKET		2048		//this is to allow items with a w_class of 3 or 4 to fit in pockets.
-#define SLOT_DENYPOCKET	4096	//this is to deny items with a w_class of 2 or 1 to fit in pockets.
+#define SLOT_POCKET		2048 // this is to allow items with a w_class of WEIGHT_CLASS_NORMAL or WEIGHT_CLASS_BULKY to fit in pockets.
+#define SLOT_DENYPOCKET	4096 // this is to deny items with a w_class of WEIGHT_CLASS_SMALL or WEIGHT_CLASS_TINY to fit in pockets.
 #define SLOT_NECK		8192
 
 //SLOTS

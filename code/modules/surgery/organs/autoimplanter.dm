@@ -5,7 +5,7 @@
 	desc = "A device that automatically injects a cyber-implant into the user without the hassle of extensive surgery. It has a slot to insert implants and a screwdriver slot for removing accidentally added implants."
 	icon_state = "autoimplanter"
 	item_state = "walkietalkie"//left as this so as to intentionally not have inhands
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	var/obj/item/organ/storedorgan
 	var/organ_type = /obj/item/organ/cyberimp
 	var/uses = INFINITE

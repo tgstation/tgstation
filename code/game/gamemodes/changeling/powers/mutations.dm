@@ -148,7 +148,7 @@
 	icon_state = "arm_blade"
 	item_state = "arm_blade"
 	flags = ABSTRACT | NODROP | DROPDEL
-	w_class = 5.0
+	w_class = WEIGHT_CLASS_HUGE
 	force = 25
 	throwforce = 0 //Just to be on the safe side
 	throw_range = 0

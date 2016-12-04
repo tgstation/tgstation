@@ -52978,7 +52978,7 @@
 /area/atmos)
 "clX" = (
 /obj/effect/landmark/event_spawn,
-/obj/effect/landmark/vr_spawn,
+/obj/effect/landmark/xmastree,
 /turf/open/floor/plasteel/bar,
 /area/crew_quarters/bar)
 "clY" = (
@@ -56229,7 +56229,7 @@
 /area/space/nearstation)
 "csT" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/effect/landmark/vr_spawn,
+/obj/effect/landmark/xmastree,
 /turf/open/floor/plasteel/black,
 /area/chapel/main)
 "csU" = (

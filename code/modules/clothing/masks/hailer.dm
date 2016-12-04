@@ -8,7 +8,7 @@
 	icon_state = "sechailer"
 	flags = BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
 	flags_inv = HIDEFACIALHAIR|HIDEFACE
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	visor_flags = BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
 	visor_flags_inv = HIDEFACE
 	flags_cover = MASKCOVERSMOUTH

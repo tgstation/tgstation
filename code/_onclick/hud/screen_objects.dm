@@ -189,19 +189,19 @@
 		var/_y = text2num(params2list(params)["icon-y"])
 
 		if(_x<=16 && _y<=16)
-			usr.a_intent_change("harm")
+			usr.a_intent_change(INTENT_HARM)
 
 		else if(_x<=16 && _y>=17)
-			usr.a_intent_change("help")
+			usr.a_intent_change(INTENT_HELP)
 
 		else if(_x>=17 && _y<=16)
-			usr.a_intent_change("grab")
+			usr.a_intent_change(INTENT_GRAB)
 
 		else if(_x>=17 && _y>=17)
-			usr.a_intent_change("disarm")
+			usr.a_intent_change(INTENT_DISARM)
 
 	else
-		usr.a_intent_change("right")
+		usr.a_intent_change(INTENT_NEXT)
 
 /obj/screen/act_intent/alien
 	icon = 'icons/mob/screen_alien.dmi'
@@ -284,10 +284,10 @@
 		return
 	switch(user.m_intent)
 		if("run")
-			user.m_intent = "walk"
+			user.m_intent = MOVE_INTENT_WALK
 			icon_state = "walking"
 		if("walk")
-			user.m_intent = "run"
+			user.m_intent = MOVE_INTENT_RUN
 			icon_state = "running"
 	user.update_icons()
 
@@ -649,4 +649,3 @@
 		if(word_messages.len && talk_cooldown < world.time)
 			talk_cooldown = world.time + 10
 			L.say(pick(word_messages))
-

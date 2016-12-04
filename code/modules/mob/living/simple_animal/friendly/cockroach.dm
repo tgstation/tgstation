@@ -17,7 +17,7 @@
 	response_disarm = "shoos"
 	response_harm   = "splats"
 	density = 0
-	ventcrawler = 2
+	ventcrawler = VENTCRAWLER_ALWAYS
 	gold_core_spawnable = 2
 	var/squish_chance = 50
 	loot = list(/obj/effect/decal/cleanable/deadcockroach)

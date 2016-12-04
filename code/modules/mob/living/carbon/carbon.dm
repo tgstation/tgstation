@@ -85,7 +85,7 @@
 
 /mob/living/carbon/attackby(obj/item/I, mob/user, params)
 	if(lying && surgeries.len)
-		if(user != src && user.a_intent == "help")
+		if(user != src && user.a_intent == INTENT_HELP)
 			for(var/datum/surgery/S in surgeries)
 				if(S.next_step(user))
 					return 1
@@ -734,7 +734,7 @@
 					"<span class='userdanger'>[src] is attempting to devour you!</span>")
 	if(!do_mob(src, C, devour_time))
 		return
-	if(pulling && pulling == C && grab_state >= GRAB_AGGRESSIVE && a_intent == "grab")
+	if(pulling && pulling == C && grab_state >= GRAB_AGGRESSIVE && a_intent == INTENT_GRAB)
 		C.visible_message("<span class='danger'>[src] devours [C]!</span>", \
 						"<span class='userdanger'>[src] devours you!</span>")
 		C.forceMove(src)

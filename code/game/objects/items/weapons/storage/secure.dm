@@ -22,8 +22,8 @@
 	var/l_setshort = 0
 	var/l_hacking = 0
 	var/open = 0
-	w_class = 3
-	max_w_class = 2
+	w_class = WEIGHT_CLASS_NORMAL
+	max_w_class = WEIGHT_CLASS_SMALL
 	max_combined_w_class = 14
 
 /obj/item/weapon/storage/secure/examine(mob/user)
@@ -140,8 +140,8 @@
 	hitsound = "swing_hit"
 	throw_speed = 2
 	throw_range = 4
-	w_class = 4
-	max_w_class = 3
+	w_class = WEIGHT_CLASS_BULKY
+	max_w_class = WEIGHT_CLASS_NORMAL
 	max_combined_w_class = 21
 	attack_verb = list("bashed", "battered", "bludgeoned", "thrashed", "whacked")
 
@@ -179,7 +179,7 @@
 	icon_locking = "safeb"
 	icon_sparking = "safespark"
 	force = 8
-	w_class = 8
+	w_class = WEIGHT_CLASS_GIGANTIC
 	max_w_class = 8
 	anchored = 1
 	density = 0

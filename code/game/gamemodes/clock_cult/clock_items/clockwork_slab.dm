@@ -7,7 +7,7 @@
 	Hitting a slab, a Servant with a slab, or a cache will <b>transfer</b> this slab's components into the target, the target's slab, or the global cache, respectively."
 	icon_state = "dread_ipad"
 	slot_flags = SLOT_BELT
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	var/list/stored_components = list(BELLIGERENT_EYE = 0, VANGUARD_COGWHEEL = 0, GEIS_CAPACITOR = 0, REPLICANT_ALLOY = 0, HIEROPHANT_ANSIBLE = 0)
 	var/busy //If the slab is currently being used by something
 	var/production_time = 0
@@ -52,7 +52,8 @@
 	actions_types = list()
 
 /obj/item/clockwork/slab/cyborg/engineer
-	quickbound = list(/datum/clockwork_scripture/create_object/tinkerers_cache, /datum/clockwork_scripture/create_object/ocular_warden, /datum/clockwork_scripture/create_object/tinkerers_daemon)
+	quickbound = list(/datum/clockwork_scripture/create_object/tinkerers_cache, /datum/clockwork_scripture/create_object/sigil_of_transgression, \
+	/datum/clockwork_scripture/create_object/ocular_warden, /datum/clockwork_scripture/create_object/tinkerers_daemon)
 
 /obj/item/clockwork/slab/cyborg/medical
 	quickbound = list(/datum/clockwork_scripture/ranged_ability/linked_vanguard, /datum/clockwork_scripture/ranged_ability/sentinels_compromise, /datum/clockwork_scripture/fellowship_armory, \
@@ -70,11 +71,12 @@
 	/datum/clockwork_scripture/create_object/interdiction_lens)
 
 /obj/item/clockwork/slab/cyborg/service
-	quickbound = list(/datum/clockwork_scripture/replicant, /datum/clockwork_scripture/fellowship_armory, /datum/clockwork_scripture/spatial_gateway, \
+	quickbound = list(/datum/clockwork_scripture/create_object/replicant, /datum/clockwork_scripture/fellowship_armory, /datum/clockwork_scripture/spatial_gateway, \
 	/datum/clockwork_scripture/create_object/clockwork_obelisk)
 
 /obj/item/clockwork/slab/cyborg/miner
-	quickbound = list(/datum/clockwork_scripture/ranged_ability/judicial_marker, /datum/clockwork_scripture/ranged_ability/linked_vanguard, /datum/clockwork_scripture/spatial_gateway)
+	quickbound = list(/datum/clockwork_scripture/ranged_ability/judicial_marker, /datum/clockwork_scripture/ranged_ability/linked_vanguard, \
+	/datum/clockwork_scripture/create_object/sigil_of_transgression, /datum/clockwork_scripture/spatial_gateway)
 
 /obj/item/clockwork/slab/cyborg/access_display(mob/living/user)
 	user << "<span class='warning'>Use the action buttons to recite your limited set of scripture!</span>"

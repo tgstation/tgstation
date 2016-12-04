@@ -5,7 +5,7 @@
 	icon_state = "dnainjector"
 	throw_speed = 3
 	throw_range = 5
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 	origin_tech = "biotech=1"
 
 	var/damage_coeff  = 1

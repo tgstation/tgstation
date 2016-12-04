@@ -867,7 +867,7 @@
 
 /datum/species/golem/bluespace/spec_attack_hand(mob/living/carbon/human/M, mob/living/carbon/human/H, datum/martial_art/attacker_style = M.martial_art)
 	..()
-	if(world.time > last_teleport + teleport_cooldown && M != H &&  M.a_intent != "help")
+	if(world.time > last_teleport + teleport_cooldown && M != H &&  M.a_intent != INTENT_HELP)
 		reactive_teleport(H)
 
 /datum/species/golem/bluespace/spec_attacked_by(obj/item/I, mob/living/user, obj/item/bodypart/affecting, intent, mob/living/carbon/human/H)
@@ -945,7 +945,7 @@
 
 /datum/species/golem/bananium/spec_attack_hand(mob/living/carbon/human/M, mob/living/carbon/human/H, datum/martial_art/attacker_style = M.martial_art)
 	..()
-	if(world.time > last_banana + banana_cooldown && M != H &&  M.a_intent != "help")
+	if(world.time > last_banana + banana_cooldown && M != H &&  M.a_intent != INTENT_HELP)
 		new/obj/item/weapon/grown/bananapeel/specialpeel(get_turf(H))
 		last_banana = world.time
 
@@ -1064,7 +1064,7 @@
 
 /datum/species/zombie/infectious/spec_life(mob/living/carbon/C)
 	. = ..()
-	C.a_intent = "harm" // THE SUFFERING MUST FLOW
+	C.a_intent = INTENT_HARM // THE SUFFERING MUST FLOW
 	if(C.InCritical())
 		C.death()
 		// Zombies only move around when not in crit, they instantly

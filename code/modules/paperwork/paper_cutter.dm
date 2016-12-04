@@ -5,7 +5,7 @@
 	icon_state = "papercutter-cutter"
 	force = 5
 	throwforce = 5
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 	var/obj/item/weapon/paper/storedpaper = null
 	var/obj/item/weapon/hatchet/cutterblade/storedcutter = null
 	var/cuttersecured = TRUE

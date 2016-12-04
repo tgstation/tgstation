@@ -9,7 +9,7 @@
 	throwforce = 5
 	throw_speed = 2
 	throw_range = 5
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	var/charge = 0	// note %age conveted to actual charge in New
 	var/maxcharge = 1000
 	materials = list(MAT_METAL=700, MAT_GLASS=50)

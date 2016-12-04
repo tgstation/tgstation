@@ -136,7 +136,7 @@
 			update_move_direction()
 			user << "<span class='notice'>You reverse [src]'s direction.</span>"
 
-	else if(user.a_intent != "harm")
+	else if(user.a_intent != INTENT_HARM)
 		if(user.drop_item())
 			I.loc = src.loc
 	else
@@ -292,7 +292,7 @@
 	icon_state = "conveyor0"
 	name = "conveyor belt assembly"
 	desc = "A conveyor belt assembly."
-	w_class = 4
+	w_class = WEIGHT_CLASS_BULKY
 	var/id = "" //inherited by the belt
 
 /obj/item/conveyor_construct/attackby(obj/item/I, mob/user, params)
@@ -319,7 +319,7 @@
 	desc = "A conveyor control switch assembly."
 	icon = 'icons/obj/recycling.dmi'
 	icon_state = "switch-off"
-	w_class = 4
+	w_class = WEIGHT_CLASS_BULKY
 	var/id = "" //inherited by the switch
 
 /obj/item/conveyor_switch_construct/New()

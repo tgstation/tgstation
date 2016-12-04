@@ -132,7 +132,7 @@
 		else
 			if(C.lying || !(C.status_flags & CANWEAKEN)) // can't slip unbuckled mob if they're lying or can't fall.
 				return 0
-			if(C.m_intent=="walk" && (lube&NO_SLIP_WHEN_WALKING))
+			if(C.m_intent == MOVE_INTENT_WALK && (lube&NO_SLIP_WHEN_WALKING))
 				return 0
 		if(!(lube&SLIDE_ICE))
 			C << "<span class='notice'>You slipped[ O ? " on the [O.name]" : ""]!</span>"
@@ -236,4 +236,3 @@
 		wet_time = 0
 	if(wet)
 		addtimer(src, "HandleWet", 15)
-

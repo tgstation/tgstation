@@ -135,7 +135,7 @@
 		PoolOrNew(/obj/effect/hotspot, turf)
 	holder.chem_temp = 1000 // hot as shit
 
-/datum/chemical_reaction/reagent_explosion/methsplosion/
+/datum/chemical_reaction/reagent_explosion/methsplosion
 	name = "Meth explosion"
 	id = "methboom1"
 	results = list("methboom1" = 1)
