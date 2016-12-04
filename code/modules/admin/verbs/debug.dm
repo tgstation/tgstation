@@ -168,7 +168,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 
 	var/t = ""
 	for(var/id in env_gases)
-		if(id in hardcoded_gases || env_gases[id][MOLES])
+		if(env_gases[id][MOLES])
 			t+= "[env_gases[id][GAS_META][META_GAS_NAME]] : [env_gases[id][MOLES]]\n"
 
 	usr << t

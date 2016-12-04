@@ -194,8 +194,9 @@
 		var/datum/gas_mixture/A = F.air
 		var/list/A_gases = A.gases
 		var/trace_gases
+		var/list/ignored_gases = list("o2", "n2", "co2")
 		for(var/id in A_gases)
-			if(id in hardcoded_gases)
+			if(id in ignored_gases)
 				continue
 			trace_gases = TRUE
 			break
@@ -204,8 +205,6 @@
 		if(trace_gases)
 			continue
 		if(!(A_gases["o2"] && A_gases["o2"][MOLES] >= 16))
-			continue
-		if(A_gases["plasma"])
 			continue
 		if(A_gases["co2"] && A_gases["co2"][MOLES] >= 10)
 			continue
