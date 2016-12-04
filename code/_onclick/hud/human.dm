@@ -110,7 +110,7 @@
 
 	using = new /obj/screen/mov_intent()
 	using.icon = ui_style
-	using.icon_state = (mymob.m_intent == "run" ? "running" : "walking")
+	using.icon_state = (mymob.m_intent == MOVE_INTENT_RUN ? "running" : "walking")
 	using.screen_loc = ui_movi
 	static_inventory += using
 

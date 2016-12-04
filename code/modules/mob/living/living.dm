@@ -447,11 +447,11 @@
 		. += config.run_speed
 	else
 		switch(m_intent)
-			if("run")
+			if(MOVE_INTENT_RUN)
 				if(drowsyness > 0)
 					. += 6
 				. += config.run_speed
-			if("walk")
+			if(MOVE_INTENT_WALK)
 				. += config.walk_speed
 
 /mob/living/proc/makeTrail(turf/T)

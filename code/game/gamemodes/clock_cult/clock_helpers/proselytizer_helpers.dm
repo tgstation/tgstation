@@ -68,7 +68,7 @@
 
 //Metal conversion
 /obj/item/stack/rods/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer)
-	if(!source)
+	if(source)
 		return FALSE
 	if(proselytizer.metal_to_alloy)
 		return list("operation_time" = 0, "new_obj_type" = /obj/effect/overlay/temp/ratvar/beam/itemconsume, "alloy_cost" = -(amount*REPLICANT_ROD), "spawn_dir" = SOUTH)
@@ -86,7 +86,7 @@
 	return TRUE
 
 /obj/item/stack/sheet/metal/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer)
-	if(!source)
+	if(source)
 		return FALSE
 	if(proselytizer.metal_to_alloy)
 		return list("operation_time" = 0, "new_obj_type" = /obj/effect/overlay/temp/ratvar/beam/itemconsume, "alloy_cost" = -(amount*REPLICANT_METAL), "spawn_dir" = SOUTH)
@@ -104,7 +104,7 @@
 	return TRUE
 
 /obj/item/stack/sheet/plasteel/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer)
-	if(!source)
+	if(source)
 		return FALSE
 	if(proselytizer.metal_to_alloy)
 		return list("operation_time" = 0, "new_obj_type" = /obj/effect/overlay/temp/ratvar/beam/itemconsume, "alloy_cost" = -(amount*REPLICANT_PLASTEEL), "spawn_dir" = SOUTH)
@@ -123,7 +123,7 @@
 
 //Brass directly to alloy; scarab only
 /obj/item/stack/sheet/brass/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer)
-	if(!source)
+	if(source)
 		return FALSE
 	if(!proselytizer.metal_to_alloy)
 		return FALSE
