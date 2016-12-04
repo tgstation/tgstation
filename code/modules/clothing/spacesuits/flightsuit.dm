@@ -447,11 +447,10 @@
 	else if(crashdir == EAST || crashdir == WEST)
 		V = "x"
 	var/crashpower = 0
-	switch(V)
-		if("y")
-			crashpower = momentum_speed_y
-		if("x")
-			crashpower = momentum_speed_x
+	if(V == "y")
+		crashpower = momentum_speed_y
+	else if(V == "x")
+		crashpower = momentum_speed_x
 	if(!flight)
 		crashing = FALSE
 		return FALSE
@@ -1187,11 +1186,13 @@
 	var/list/datahuds = list(DATA_HUD_SECURITY_ADVANCED, DATA_HUD_MEDICAL_ADVANCED, DATA_HUD_DIAGNOSTIC)
 
 /obj/item/clothing/head/helmet/space/hardsuit/flightsuit/equipped(mob/living/carbon/human/wearer, slot)
+	..()
 	for(var/hudtype in datahuds)
 		var/datum/atom_hud/H = huds[hudtype]
 		H.add_hud_to(wearer)
 
 /obj/item/clothing/head/helmet/space/hardsuit/flightsuit/dropped(mob/living/carbon/human/wearer)
+	..()
 	for(var/hudtype in datahuds)
 		var/datum/atom_hud/H = huds[hudtype]
 		H.remove_hud_from(wearer)
