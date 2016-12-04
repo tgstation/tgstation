@@ -49,7 +49,7 @@
 					src << "<span class='boldwarning'>[priority_absorb_key["self_message"]]</span>"
 			priority_absorb_key["stuns_absorbed"] += amount
 			return 0
-	..()
+	return ..()
 
 ///////////////////////////////// WEAKEN /////////////////////////////////////
 
@@ -71,4 +71,4 @@
 					src << "<span class='boldwarning'>[priority_absorb_key["self_message"]]</span>"
 			priority_absorb_key["stuns_absorbed"] += amount
 			return 0
-	..()
+	return ..()

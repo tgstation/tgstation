@@ -28,7 +28,7 @@
 			C.apply_damage(noncultist_damage * 0.5, BURN, "l_leg")
 			C.apply_damage(noncultist_damage * 0.5, BURN, "r_leg")
 			if(C.m_intent != "walk")
-				if(!iscultist(C))
+				if(!iscultist(C) && !C.has_mutation(HULK))
 					C << "<span class='warning'>Your leg[number_legs > 1 ? "s shiver":" shivers"] with pain!</span>"
 				else //Cultists take extra burn damage
 					C << "<span class='warning'>Your leg[number_legs > 1 ? "s burn":" burns"] with pain!</span>"

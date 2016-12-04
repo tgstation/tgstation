@@ -179,7 +179,7 @@
 			L.visible_message("<span class='warning'>Strange energy flows into [L]'s [I.name]!</span>", \
 			"<span class='userdanger'>Your [I.name] shields you from [src]!</span>")
 			continue
-		if(!iscultist(L))
+		if(!iscultist(L) && !L.has_mutation(HULK))
 			L.visible_message("<span class='warning'>[L] is struck by a judicial explosion!</span>", \
 			"<span class='userdanger'>[!issilicon(L) ? "An unseen force slams you into the ground!" : "ERROR: Motor servos disabled by external source!"]</span>")
 			L.Weaken(8)
