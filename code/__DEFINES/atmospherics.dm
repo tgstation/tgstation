@@ -168,14 +168,14 @@
 //NOTE: THESE ARE ALSO USED IN MAP FILES FOR SETTING filter_type ON ATMOS FILTERS
 //ALSO IN atmos_filter.ract IN TGUI
 //HOWEVER, THEY ARE PURELY NUMERIC THERE
-#define GAS_INVALID -1
+#define GAS_INVALID 0
 #define GAS_O2 1
 #define GAS_N2 2
 #define GAS_CO2 3
 #define GAS_PLASMA 4
 #define GAS_WV 5
 #define GAS_FREON 6
-#define GAS_N20 7
+#define GAS_N2O 7
 #define GAS_AGENTB 8
 #define GAS_VF 9
 #define GAS_BZ 10
