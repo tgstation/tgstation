@@ -23,10 +23,11 @@
 
 /obj/item/projectile/energy/white_only/cross_laser
 	name = "heat beam"
-	icon_state = "heat_beam"
-	icon = 'icons/obj/guns/white_only.dmi'
+	icon_state = "cross_laser"
+	icon = 'icons/mob/lavaland/related_to_drone.dmi'
 	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
-	damage = 20
+	damage = 40
+	speed = 4
 	luminosity = 1
 	damage_type = BURN
 	hitsound = 'sound/weapons/sear.ogg'
@@ -34,11 +35,22 @@
 	flag = "energy"
 	eyeblur = 2
 
+/obj/item/projectile/energy/white_only/cross_laser/proc/shoot_projectile(turf/marker)
+	if(!marker || marker == loc)
+		return
+	var/turf/startloc = get_turf(src)
+	var/obj/item/projectile/P = new /obj/item/projectile/drone_laser(startloc)
+	P.current = startloc
+	P.starting = startloc
+	P.firer = src
+	P.yo = marker.y - startloc.y
+	P.xo = marker.x - startloc.x
+	P.original = marker
+	P.fire()
+
 /obj/item/projectile/energy/white_only/cross_laser/on_hit(atom/target, blocked = 0)//These two could likely check temp protection on the mob
 	..()
-	PoolOrNew(/obj/effect/overlay/temp/hierophant/telegraph/cardinal, list(target))
 	playsound(target,'sound/magic/blink.ogg', 200, 1)
-	//playsound(T,'sound/effects/bin_close.ogg', 200, 1)
-	sleep(2)
-	PoolOrNew(/obj/effect/overlay/temp/hierophant/blast, list(target))
+	for(var/turf/turf in range(1,get_turf(src)))
+		shoot_projectile(turf)
 	return 1

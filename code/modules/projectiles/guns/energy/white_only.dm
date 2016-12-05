@@ -15,11 +15,11 @@
 	charge_delay = 2
 
 /obj/item/weapon/gun/energy/white_only/cross_laser
-	name = "Laser orb gun"
-	desc = "A  energy-based heat laser gun that fires concentrated orbs of very hot light which pass through glass and thin metal end explode into beams."
+	name = "Laser staff"
+	desc = "A  energy-based heat laser gun that fires concentrated orbs of very hot light which pass through glass and thin metal end explode into laser shots."
 	icon = 'icons/obj/guns/white_only.dmi'
-	icon_state = "heatgun"
-	item_state = "heatgun"
+	icon_state = "cross_staff"
+	item_state = "cross_staff"
 	lefthand_file = 'icons/mob/inhands/white_only_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/white_only_righthand.dmi'
 	fire_sound = 'sound/weapons/laser3.ogg'
