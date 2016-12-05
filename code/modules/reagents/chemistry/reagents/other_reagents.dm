@@ -504,7 +504,7 @@
 	for(var/type in subtypesof(/datum/species))
 		var/datum/species/S = type
 		if(initial(S.blacklisted))
-			continue
+			continueu
 		possible_morphs += S
 	race = pick(possible_morphs)
 	..()
@@ -1395,7 +1395,7 @@
 		H.resize = 2.5/current_size
 		current_size = 2.5
 		H.update_transform()
-	else if(volume >= 20 && volume < && current_size != 2)
+	else if(volume >= 20 && volume < 50 && current_size != 2)
 		H.resize = 2/current_size
 		current_size = 2
 		H.update_transform()
