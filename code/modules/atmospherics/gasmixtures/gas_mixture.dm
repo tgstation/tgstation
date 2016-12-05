@@ -191,10 +191,10 @@ var/list/gaslist_cache
 				//world << "post [temperature], [cached_gases[GAS_PLASMA][MOLES]], [cached_gases[GAS_CO2][MOLES]]
 			*/
 	if(holder)
-		if(cached_gases["freon"])
-			if(cached_gases["freon"][MOLES] >= MOLES_PLASMA_VISIBLE)
+		if(cached_gases[GAS_FREON])
+			if(cached_gases[GAS_FREON][MOLES] >= MOLES_PLASMA_VISIBLE)
 				if(holder.freon_gas_act())
-					cached_gases["freon"][MOLES] -= MOLES_PLASMA_VISIBLE
+					cached_gases[GAS_FREON][MOLES] -= MOLES_PLASMA_VISIBLE
 
 		if(cached_gases[GAS_WV])
 			if(cached_gases[GAS_WV][MOLES] >= MOLES_PLASMA_VISIBLE)
