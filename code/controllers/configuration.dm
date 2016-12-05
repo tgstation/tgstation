@@ -386,6 +386,8 @@
 						global.cross_allowed = 1
 				if("cross_comms_name")
 					cross_name = value
+				if("send_panic_bunkered_to_cross_server")
+					global.allow_panic_bunker_to_cross = 1
 				if("medal_hub_address")
 					global.medal_hub = value
 				if("medal_hub_password")

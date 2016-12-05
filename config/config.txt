@@ -241,6 +241,11 @@ NOTIFY_NEW_PLAYER_AGE 0
 ##	Requires database
 #PANIC_BUNKER
 
+## If panic bunker is on and a player is rejected (see above), attempt to send them to the connected server (see CROSS_SERVER_ADDRESS) instead.
+##	Do not use this setting if both servers are bunkered and have this setting, players will just bounce endlessly between rejections.
+##	Requires PANIC_BUNKER and CROSS_SERVER_ADDRESS
+#SEND_PANIC_BUNKERED_TO_CROSS_SERVER
+
 ## Uncomment to have the changelog file automatically open when a user connects and hasn't seen the latest changelog
 #AGGRESSIVE_CHANGELOG
 
