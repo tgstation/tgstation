@@ -403,7 +403,7 @@
 	resistance_flags = 0
 
 /obj/item/clothing/under/gladiator/ash_walker
-	desc = "This gladiator uniform appears to be covered in ash and appears to be fairly dated."
+	desc = "This gladiator uniform appears to be covered in ash and fairly dated."
 	has_sensor = 0
 
 /obj/item/clothing/under/sundress
