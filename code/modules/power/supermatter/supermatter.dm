@@ -159,9 +159,9 @@
 	if(removed.gases["n2"])
 		removed_nitrogen = (removed.gases["n2"][MOLES] * NITROGEN_RETARDATION_FACTOR)
 
-	removed.assert_gases("o2", "plasma")
+	removed.assert_gases(GAS_O2, "plasma")
 
-	oxygen = max(min((removed.gases["o2"][MOLES] - removed_nitrogen) / MOLES_CELLSTANDARD, 1), 0)
+	oxygen = max(min((removed.gases[GAS_O2][MOLES] - removed_nitrogen) / MOLES_CELLSTANDARD, 1), 0)
 
 	var/temp_factor = 50
 
@@ -194,7 +194,7 @@
 	//Calculate how much gas to release
 	removed.gases["plasma"][MOLES] += max(device_energy / PLASMA_RELEASE_MODIFIER, 0)
 
-	removed.gases["o2"][MOLES] += max((device_energy + removed.temperature - T0C) / OXYGEN_RELEASE_MODIFIER, 0)
+	removed.gases[GAS_O2][MOLES] += max((device_energy + removed.temperature - T0C) / OXYGEN_RELEASE_MODIFIER, 0)
 
 	if(produces_gas)
 		env.merge(removed)

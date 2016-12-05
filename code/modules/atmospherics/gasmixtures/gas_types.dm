@@ -11,7 +11,7 @@
 //LOOK AT __DEFINES/atmospherics.dm FOR THE GAS IDs
 
 /datum/gas
-	var/id = -1
+	var/id = GAS_INVALID
 	var/specific_heat = 0
 	var/name = ""
 	var/gas_overlay = "" //icon_state in icons/effects/tile_effects.dmi

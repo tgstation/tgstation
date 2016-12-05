@@ -194,7 +194,7 @@
 		var/datum/gas_mixture/A = F.air
 		var/list/A_gases = A.gases
 		var/trace_gases
-		var/list/ignored_gases = list("o2", "n2", "co2")
+		var/list/ignored_gases = list(GAS_O2, "n2", "co2")
 		for(var/id in A_gases)
 			if(id in ignored_gases)
 				continue
@@ -204,7 +204,7 @@
 		// Can most things breathe?
 		if(trace_gases)
 			continue
-		if(!(A_gases["o2"] && A_gases["o2"][MOLES] >= 16))
+		if(!(A_gases[GAS_O2] && A_gases[GAS_O2][MOLES] >= 16))
 			continue
 		if(A_gases["co2"] && A_gases["co2"][MOLES] >= 10)
 			continue

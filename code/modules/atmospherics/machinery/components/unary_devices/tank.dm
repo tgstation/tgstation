@@ -33,7 +33,7 @@
 
 /obj/machinery/atmospherics/components/unary/tank/oxygen
 	icon_state = "blue"
-	gas_type = "o2"
+	gas_type = GAS_O2
 
 /obj/machinery/atmospherics/components/unary/tank/nitrogen
 	icon_state = "red"
@@ -46,6 +46,6 @@
 /obj/machinery/atmospherics/components/unary/tank/air/New()
 	..()
 	var/datum/gas_mixture/air_contents = AIR1
-	air_contents.assert_gases("o2", "n2")
-	air_contents.gases["o2"][MOLES] = AIR_CONTENTS * 0.2
+	air_contents.assert_gases(GAS_O2, "n2")
+	air_contents.gases[GAS_O2][MOLES] = AIR_CONTENTS * 0.2
 	air_contents.gases["n2"][MOLES] = AIR_CONTENTS * 0.8

@@ -308,10 +308,10 @@
 
 	var/list/breath_gases = breath.gases
 
-	breath.assert_gases("o2", "plasma", "co2", "n2o", "bz")
+	breath.assert_gases(GAS_O2, "plasma", "co2", "n2o", "bz")
 
 	//Partial pressures in our breath
-	var/O2_pp = breath.get_breath_partial_pressure(breath_gases["o2"][MOLES])
+	var/O2_pp = breath.get_breath_partial_pressure(breath_gases[GAS_O2][MOLES])
 	var/Toxins_pp = breath.get_breath_partial_pressure(breath_gases["plasma"][MOLES])
 	var/CO2_pp = breath.get_breath_partial_pressure(breath_gases["co2"][MOLES])
 
@@ -321,7 +321,7 @@
 	//Too much oxygen! //Yes, some species may not like it.
 	if(safe_oxygen_max)
 		if(O2_pp > safe_oxygen_max)
-			var/ratio = (breath_gases["o2"][MOLES]/safe_oxygen_max) * 10
+			var/ratio = (breath_gases[GAS_O2][MOLES]/safe_oxygen_max) * 10
 			H.adjustOxyLoss(Clamp(ratio,oxy_breath_dam_min,oxy_breath_dam_max))
 			H.throw_alert("too_much_oxy", /obj/screen/alert/too_much_oxy)
 		else
@@ -330,17 +330,17 @@
 	//Too little oxygen!
 	if(safe_oxygen_min)
 		if(O2_pp < safe_oxygen_min)
-			gas_breathed = handle_too_little_breath(H,O2_pp,safe_oxygen_min,breath_gases["o2"][MOLES])
+			gas_breathed = handle_too_little_breath(H,O2_pp,safe_oxygen_min,breath_gases[GAS_O2][MOLES])
 			H.throw_alert("oxy", /obj/screen/alert/oxy)
 		else
 			H.failed_last_breath = 0
 			if(H.getOxyLoss())
 				H.adjustOxyLoss(-5)
-			gas_breathed = breath_gases["o2"][MOLES]
+			gas_breathed = breath_gases[GAS_O2][MOLES]
 			H.clear_alert("oxy")
 
 	//Exhale
-	breath_gases["o2"][MOLES] -= gas_breathed
+	breath_gases[GAS_O2][MOLES] -= gas_breathed
 	breath_gases["co2"][MOLES] += gas_breathed
 	gas_breathed = 0
 
@@ -378,7 +378,7 @@
 
 	//Exhale
 	breath_gases["co2"][MOLES] -= gas_breathed
-	breath_gases["o2"][MOLES] += gas_breathed
+	breath_gases[GAS_O2][MOLES] += gas_breathed
 	gas_breathed = 0
 
 

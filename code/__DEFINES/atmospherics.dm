@@ -165,6 +165,7 @@
 #define TANK_DEFAULT_RELEASE_PRESSURE 16
 
 //Gas Ids
+#define GAS_INVALID -1
 #define GAS_O2 1
 #define GAS_N2 2
 #define GAS_CO2 3

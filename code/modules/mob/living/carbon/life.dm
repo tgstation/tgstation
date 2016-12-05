@@ -118,9 +118,9 @@
 	var/breath_pressure = (breath.total_moles()*R_IDEAL_GAS_EQUATION*breath.temperature)/BREATH_VOLUME
 
 	var/list/breath_gases = breath.gases
-	breath.assert_gases("o2","plasma","co2","n2o", "bz")
+	breath.assert_gases(GAS_O2,"plasma","co2","n2o", "bz")
 
-	var/O2_partialpressure = (breath_gases["o2"][MOLES]/breath.total_moles())*breath_pressure
+	var/O2_partialpressure = (breath_gases[GAS_O2][MOLES]/breath.total_moles())*breath_pressure
 	var/Toxins_partialpressure = (breath_gases["plasma"][MOLES]/breath.total_moles())*breath_pressure
 	var/CO2_partialpressure = (breath_gases["co2"][MOLES]/breath.total_moles())*breath_pressure
 
@@ -133,7 +133,7 @@
 			var/ratio = safe_oxy_min/O2_partialpressure
 			adjustOxyLoss(min(5*ratio, 3))
 			failed_last_breath = 1
-			oxygen_used = breath_gases["o2"][MOLES]*ratio
+			oxygen_used = breath_gases[GAS_O2][MOLES]*ratio
 		else
 			adjustOxyLoss(3)
 			failed_last_breath = 1
@@ -143,10 +143,10 @@
 		failed_last_breath = 0
 		if(oxyloss)
 			adjustOxyLoss(-5)
-		oxygen_used = breath_gases["o2"][MOLES]
+		oxygen_used = breath_gases[GAS_O2][MOLES]
 		clear_alert("oxy")
 
-	breath_gases["o2"][MOLES] -= oxygen_used
+	breath_gases[GAS_O2][MOLES] -= oxygen_used
 	breath_gases["co2"][MOLES] += oxygen_used
 
 	//CARBON DIOXIDE

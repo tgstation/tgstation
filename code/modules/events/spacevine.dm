@@ -209,9 +209,9 @@
 	var/turf/open/floor/T = holder.loc
 	if(istype(T))
 		var/datum/gas_mixture/GM = T.air
-		if(!GM.gases["o2"])
+		if(!GM.gases[GAS_O2])
 			return
-		GM.gases["o2"][MOLES] -= severity * holder.energy
+		GM.gases[GAS_O2][MOLES] -= severity * holder.energy
 		GM.garbage_collect()
 
 /datum/spacevine_mutation/nitro_eater
