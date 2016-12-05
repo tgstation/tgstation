@@ -163,3 +163,15 @@
 #define TANK_MAX_RELEASE_PRESSURE (ONE_ATMOSPHERE*3)
 #define TANK_MIN_RELEASE_PRESSURE 0
 #define TANK_DEFAULT_RELEASE_PRESSURE 16
+
+//Gas Ids
+#define GAS_O2 1
+#define GAS_N2 2
+#define GAS_CO2 3
+#define GAS_PLASMA 4
+#define GAS_WV 5
+#define GAS_FREON 6
+#define GAS_N20 7
+#define GAS_AGENTB 8
+#define GAS_VF 9
+#define GAS_BZ 10
