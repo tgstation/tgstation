@@ -15052,7 +15052,7 @@
 	},
 /obj/machinery/atmospherics/components/trinary/filter{
 	dir = 1;
-	filter_type = "o2";
+	filter_type = 1;
 	on = 1
 	},
 /turf/open/floor/plasteel/blue/side{
