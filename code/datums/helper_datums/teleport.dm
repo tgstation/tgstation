@@ -194,7 +194,7 @@
 		var/datum/gas_mixture/A = F.air
 		var/list/A_gases = A.gases
 		var/trace_gases
-		var/list/ignored_gases = list(GAS_O2, "n2", "co2")
+		var/list/ignored_gases = list(GAS_O2, GAS_N2, "co2")
 		for(var/id in A_gases)
 			if(id in ignored_gases)
 				continue
