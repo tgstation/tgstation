@@ -118,10 +118,10 @@
 	var/breath_pressure = (breath.total_moles()*R_IDEAL_GAS_EQUATION*breath.temperature)/BREATH_VOLUME
 
 	var/list/breath_gases = breath.gases
-	breath.assert_gases(GAS_O2,"plasma",GAS_CO2,"n2o", "bz")
+	breath.assert_gases(GAS_O2,GAS_PLASMA,GAS_CO2,"n2o", "bz")
 
 	var/O2_partialpressure = (breath_gases[GAS_O2][MOLES]/breath.total_moles())*breath_pressure
-	var/Toxins_partialpressure = (breath_gases["plasma"][MOLES]/breath.total_moles())*breath_pressure
+	var/Toxins_partialpressure = (breath_gases[GAS_PLASMA][MOLES]/breath.total_moles())*breath_pressure
 	var/CO2_partialpressure = (breath_gases[GAS_CO2][MOLES]/breath.total_moles())*breath_pressure
 
 
@@ -166,9 +166,9 @@
 
 	//TOXINS/PLASMA
 	if(Toxins_partialpressure > safe_tox_max)
-		var/ratio = (breath_gases["plasma"][MOLES]/safe_tox_max) * 10
+		var/ratio = (breath_gases[GAS_PLASMA][MOLES]/safe_tox_max) * 10
 		if(reagents)
-			reagents.add_reagent("plasma", Clamp(ratio, MIN_PLASMA_DAMAGE, MAX_PLASMA_DAMAGE))
+			reagents.add_reagent(GAS_PLASMA, Clamp(ratio, MIN_PLASMA_DAMAGE, MAX_PLASMA_DAMAGE))
 		throw_alert("tox_in_air", /obj/screen/alert/tox_in_air)
 	else
 		clear_alert("tox_in_air")

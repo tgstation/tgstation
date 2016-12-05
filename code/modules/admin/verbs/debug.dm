@@ -638,8 +638,8 @@ var/list/TYPES_SHORTCUTS = list(
 		if(Rad.anchored)
 			if(!Rad.loaded_tank)
 				var/obj/item/weapon/tank/internals/plasma/Plasma = new/obj/item/weapon/tank/internals/plasma(Rad)
-				Plasma.air_contents.assert_gas("plasma")
-				Plasma.air_contents.gases["plasma"][MOLES] = 70
+				Plasma.air_contents.assert_gas(GAS_PLASMA)
+				Plasma.air_contents.gases[GAS_PLASMA][MOLES] = 70
 				Rad.drainratio = 0
 				Rad.loaded_tank = Plasma
 				Plasma.loc = Rad

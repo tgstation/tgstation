@@ -25,7 +25,7 @@
 
 /obj/machinery/atmospherics/components/unary/tank/toxins
 	icon_state = "orange"
-	gas_type = "plasma"
+	gas_type = GAS_PLASMA
 
 /obj/machinery/atmospherics/components/unary/tank/oxygen_agent_b
 	icon_state = "orange_2"

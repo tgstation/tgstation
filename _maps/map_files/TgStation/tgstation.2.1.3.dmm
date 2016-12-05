@@ -47217,7 +47217,7 @@
 "bZJ" = (
 /obj/machinery/atmospherics/components/trinary/filter{
 	dir = 1;
-	filter_type = "plasma";
+	filter_type = 4;
 	on = 1
 	},
 /turf/open/floor/plasteel,

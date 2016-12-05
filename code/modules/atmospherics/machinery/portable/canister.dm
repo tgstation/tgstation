@@ -61,7 +61,7 @@
 	name = "plasma canister"
 	desc = "Plasma gas. The reason YOU are here. Highly toxic."
 	icon_state = "orange"
-	gas_type = "plasma"
+	gas_type = GAS_PLASMA
 
 /obj/machinery/portable_atmospherics/canister/agent_b
 	name = "agent b canister"
@@ -317,7 +317,7 @@
 			if(valve_open)
 				logmsg = "Valve was <b>opened</b> by [key_name(usr)], starting a transfer into \the [holding || "air"].<br>"
 				if(!holding)
-					var/plasma = air_contents.gases["plasma"]
+					var/plasma = air_contents.gases[GAS_PLASMA]
 					var/n2o = air_contents.gases["n2o"]
 					var/bz = air_contents.gases["bz"]
 					var/freon = air_contents.gases["freon"]

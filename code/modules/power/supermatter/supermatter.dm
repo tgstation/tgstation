@@ -159,7 +159,7 @@
 	if(removed.gases[GAS_N2])
 		removed_nitrogen = (removed.gases[GAS_N2][MOLES] * NITROGEN_RETARDATION_FACTOR)
 
-	removed.assert_gases(GAS_O2, "plasma")
+	removed.assert_gases(GAS_O2, GAS_PLASMA)
 
 	oxygen = max(min((removed.gases[GAS_O2][MOLES] - removed_nitrogen) / MOLES_CELLSTANDARD, 1), 0)
 
@@ -192,7 +192,7 @@
 	removed.temperature = max(0, min(removed.temperature, 2500))
 
 	//Calculate how much gas to release
-	removed.gases["plasma"][MOLES] += max(device_energy / PLASMA_RELEASE_MODIFIER, 0)
+	removed.gases[GAS_PLASMA][MOLES] += max(device_energy / PLASMA_RELEASE_MODIFIER, 0)
 
 	removed.gases[GAS_O2][MOLES] += max((device_energy + removed.temperature - T0C) / OXYGEN_RELEASE_MODIFIER, 0)
 

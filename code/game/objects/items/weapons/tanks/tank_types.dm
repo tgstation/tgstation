@@ -86,8 +86,8 @@
 
 /obj/item/weapon/tank/internals/plasma/New()
 	..()
-	air_contents.assert_gas("plasma")
-	air_contents.gases["plasma"][MOLES] = (3*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C)
+	air_contents.assert_gas(GAS_PLASMA)
+	air_contents.gases[GAS_PLASMA][MOLES] = (3*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C)
 	return
 
 /obj/item/weapon/tank/internals/plasma/attackby(obj/item/weapon/W, mob/user, params)
@@ -105,8 +105,8 @@
 
 /obj/item/weapon/tank/internals/plasma/full/New()
 	..()
-	air_contents.assert_gas("plasma")
-	air_contents.gases["plasma"][MOLES] = (10*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C)
+	air_contents.assert_gas(GAS_PLASMA)
+	air_contents.gases[GAS_PLASMA][MOLES] = (10*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C)
 	return
 
 
@@ -124,14 +124,14 @@
 
 /obj/item/weapon/tank/internals/plasmaman/New()
 	..()
-	air_contents.assert_gas("plasma")
-	air_contents.gases["plasma"][MOLES] = (3*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C)
+	air_contents.assert_gas(GAS_PLASMA)
+	air_contents.gases[GAS_PLASMA][MOLES] = (3*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C)
 	return
 
 /obj/item/weapon/tank/internals/plasmaman/full/New()
 	..()
-	air_contents.assert_gas("plasma")
-	air_contents.gases["plasma"][MOLES] = (10*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C)
+	air_contents.assert_gas(GAS_PLASMA)
+	air_contents.gases[GAS_PLASMA][MOLES] = (10*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C)
 	return
 
 
@@ -143,8 +143,8 @@
 
 /obj/item/weapon/tank/internals/plasmaman/belt/full/New()
 	..()
-	air_contents.assert_gas("plasma")
-	air_contents.gases["plasma"][MOLES] = (10*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C)
+	air_contents.assert_gas(GAS_PLASMA)
+	air_contents.gases[GAS_PLASMA][MOLES] = (10*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C)
 	return
 
 
