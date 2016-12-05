@@ -194,7 +194,7 @@
 		var/datum/gas_mixture/A = F.air
 		var/list/A_gases = A.gases
 		var/trace_gases
-		var/list/ignored_gases = list(GAS_O2, GAS_N2, "co2")
+		var/list/ignored_gases = list(GAS_O2, GAS_N2, GAS_CO2)
 		for(var/id in A_gases)
 			if(id in ignored_gases)
 				continue
@@ -206,7 +206,7 @@
 			continue
 		if(!(A_gases[GAS_O2] && A_gases[GAS_O2][MOLES] >= 16))
 			continue
-		if(A_gases["co2"] && A_gases["co2"][MOLES] >= 10)
+		if(A_gases[GAS_CO2] && A_gases[GAS_CO2][MOLES] >= 10)
 			continue
 
 		// Aim for goldilocks temperatures and pressure

@@ -60069,7 +60069,7 @@
 "bZC" = (
 /obj/machinery/atmospherics/components/trinary/filter{
 	dir = 1;
-	filter_type = "co2";
+	filter_type = 3;
 	on = 1
 	},
 /obj/structure/window/reinforced{

@@ -308,12 +308,12 @@
 
 	var/list/breath_gases = breath.gases
 
-	breath.assert_gases(GAS_O2, "plasma", "co2", "n2o", "bz")
+	breath.assert_gases(GAS_O2, "plasma", GAS_CO2, "n2o", "bz")
 
 	//Partial pressures in our breath
 	var/O2_pp = breath.get_breath_partial_pressure(breath_gases[GAS_O2][MOLES])
 	var/Toxins_pp = breath.get_breath_partial_pressure(breath_gases["plasma"][MOLES])
-	var/CO2_pp = breath.get_breath_partial_pressure(breath_gases["co2"][MOLES])
+	var/CO2_pp = breath.get_breath_partial_pressure(breath_gases[GAS_CO2][MOLES])
 
 
 	//-- OXY --//
@@ -341,7 +341,7 @@
 
 	//Exhale
 	breath_gases[GAS_O2][MOLES] -= gas_breathed
-	breath_gases["co2"][MOLES] += gas_breathed
+	breath_gases[GAS_CO2][MOLES] += gas_breathed
 	gas_breathed = 0
 
 
@@ -368,16 +368,16 @@
 	//Too little CO2!
 	if(breathlevels["safe_co2_min"])
 		if(CO2_pp < safe_co2_min)
-			gas_breathed = handle_too_little_breath(H,CO2_pp, safe_co2_min,breath_gases["co2"][MOLES])
+			gas_breathed = handle_too_little_breath(H,CO2_pp, safe_co2_min,breath_gases[GAS_CO2][MOLES])
 			H.throw_alert("not_enough_co2", /obj/screen/alert/not_enough_co2)
 		else
 			H.failed_last_breath = 0
 			H.adjustOxyLoss(-5)
-			gas_breathed = breath_gases["co2"][MOLES]
+			gas_breathed = breath_gases[GAS_CO2][MOLES]
 			H.clear_alert("not_enough_co2")
 
 	//Exhale
-	breath_gases["co2"][MOLES] -= gas_breathed
+	breath_gases[GAS_CO2][MOLES] -= gas_breathed
 	breath_gases[GAS_O2][MOLES] += gas_breathed
 	gas_breathed = 0
 
@@ -408,7 +408,7 @@
 
 	//Exhale
 	breath_gases["plasma"][MOLES] -= gas_breathed
-	breath_gases["co2"][MOLES] += gas_breathed
+	breath_gases[GAS_CO2][MOLES] += gas_breathed
 	gas_breathed = 0
 
 

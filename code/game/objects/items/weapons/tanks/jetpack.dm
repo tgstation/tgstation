@@ -119,7 +119,7 @@
 	icon_state = "jetpack-black"
 	item_state =  "jetpack-black"
 	distribute_pressure = 0
-	gas_type = "co2"
+	gas_type = GAS_CO2
 
 
 /obj/item/weapon/tank/jetpack/suit

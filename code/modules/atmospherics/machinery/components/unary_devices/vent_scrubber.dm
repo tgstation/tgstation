@@ -199,10 +199,10 @@
 				filtered_gases["plasma"][MOLES] = removed_gases["plasma"][MOLES]
 				removed.gases["plasma"][MOLES] = 0
 
-			if(scrub_CO2 && removed_gases["co2"])
-				filtered_out.assert_gas("co2")
-				filtered_out.gases["co2"][MOLES] = removed_gases["co2"][MOLES]
-				removed.gases["co2"][MOLES] = 0
+			if(scrub_CO2 && removed_gases[GAS_CO2])
+				filtered_out.assert_gas(GAS_CO2)
+				filtered_out.gases[GAS_CO2][MOLES] = removed_gases[GAS_CO2][MOLES]
+				removed.gases[GAS_CO2][MOLES] = 0
 
 			if(removed_gases["agent_b"])
 				filtered_out.assert_gas("agent_b")

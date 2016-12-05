@@ -21,7 +21,7 @@
 		name = "[name] ([air_contents.gases[gas_type][GAS_META][META_GAS_NAME]])"
 
 /obj/machinery/atmospherics/components/unary/tank/carbon_dioxide
-	gas_type = "co2"
+	gas_type = GAS_CO2
 
 /obj/machinery/atmospherics/components/unary/tank/toxins
 	icon_state = "orange"
