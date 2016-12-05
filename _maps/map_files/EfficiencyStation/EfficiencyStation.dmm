@@ -13636,7 +13636,7 @@
 "azL" = (
 /obj/machinery/atmospherics/components/trinary/filter{
 	dir = 8;
-	filter_type = "n2o";
+	filter_type = 7;
 	on = 1
 	},
 /turf/open/floor/plasteel/escape{

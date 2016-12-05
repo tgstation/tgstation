@@ -308,7 +308,7 @@
 
 	var/list/breath_gases = breath.gases
 
-	breath.assert_gases(GAS_O2, GAS_PLASMA, GAS_CO2, "n2o", "bz")
+	breath.assert_gases(GAS_O2, GAS_PLASMA, GAS_CO2, GAS_N2O, "bz")
 
 	//Partial pressures in our breath
 	var/O2_pp = breath.get_breath_partial_pressure(breath_gases[GAS_O2][MOLES])
@@ -418,7 +418,7 @@
 
 	// N2O
 
-		var/SA_pp = breath.get_breath_partial_pressure(breath_gases["n2o"][MOLES])
+		var/SA_pp = breath.get_breath_partial_pressure(breath_gases[GAS_N2O][MOLES])
 		if(SA_pp > SA_para_min) // Enough to make us paralysed for a bit
 			H.Paralyse(3) // 3 gives them one second to wake up and run away a bit!
 			if(SA_pp > SA_sleep_min) // Enough to make us sleep as well

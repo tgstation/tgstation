@@ -209,10 +209,10 @@
 				filtered_out.gases["agent_b"][MOLES] = removed_gases["agent_b"][MOLES]
 				removed.gases["agent_b"][MOLES] = 0
 
-			if(scrub_N2O && removed_gases["n2o"])
-				filtered_out.assert_gas("n2o")
-				filtered_out.gases["n2o"][MOLES] = removed_gases["n2o"][MOLES]
-				removed.gases["n2o"][MOLES] = 0
+			if(scrub_N2O && removed_gases[GAS_N2O])
+				filtered_out.assert_gas(GAS_N2O)
+				filtered_out.gases[GAS_N2O][MOLES] = removed_gases[GAS_N2O][MOLES]
+				removed.gases[GAS_N2O][MOLES] = 0
 
 			if(scrub_BZ && removed_gases["bz"])
 				filtered_out.assert_gas("bz")

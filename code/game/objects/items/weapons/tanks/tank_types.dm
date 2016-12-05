@@ -49,9 +49,9 @@
 
 /obj/item/weapon/tank/internals/anesthetic/New()
 	..()
-	air_contents.assert_gases(GAS_O2, "n2o")
+	air_contents.assert_gases(GAS_O2, GAS_N2O)
 	air_contents.gases[GAS_O2][MOLES] = (3*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C) * O2STANDARD
-	air_contents.gases["n2o"][MOLES] = (3*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C) * N2STANDARD
+	air_contents.gases[GAS_N2O][MOLES] = (3*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C) * N2STANDARD
 	return
 
 /*

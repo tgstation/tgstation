@@ -7,7 +7,7 @@
 	var/volume_rate = 1000
 	volume = 1000
 
-	var/list/scrubbing = list(GAS_PLASMA, GAS_CO2, "n2o", "agent_b", "bz", GAS_FREON, GAS_WV)
+	var/list/scrubbing = list(GAS_PLASMA, GAS_CO2, GAS_N2O, "agent_b", "bz", GAS_FREON, GAS_WV)
 
 /obj/machinery/portable_atmospherics/scrubber/Destroy()
 	var/turf/T = get_turf(src)

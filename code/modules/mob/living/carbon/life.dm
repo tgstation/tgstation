@@ -118,7 +118,7 @@
 	var/breath_pressure = (breath.total_moles()*R_IDEAL_GAS_EQUATION*breath.temperature)/BREATH_VOLUME
 
 	var/list/breath_gases = breath.gases
-	breath.assert_gases(GAS_O2,GAS_PLASMA,GAS_CO2,"n2o", "bz")
+	breath.assert_gases(GAS_O2,GAS_PLASMA,GAS_CO2,GAS_N2O, "bz")
 
 	var/O2_partialpressure = (breath_gases[GAS_O2][MOLES]/breath.total_moles())*breath_pressure
 	var/Toxins_partialpressure = (breath_gases[GAS_PLASMA][MOLES]/breath.total_moles())*breath_pressure
@@ -174,8 +174,8 @@
 		clear_alert("tox_in_air")
 
 	//NITROUS OXIDE
-	if(breath_gases["n2o"])
-		var/SA_partialpressure = (breath_gases["n2o"][MOLES]/breath.total_moles())*breath_pressure
+	if(breath_gases[GAS_N2O])
+		var/SA_partialpressure = (breath_gases[GAS_N2O][MOLES]/breath.total_moles())*breath_pressure
 		if(SA_partialpressure > SA_para_min)
 			Paralyse(3)
 			if(SA_partialpressure > SA_sleep_min)
