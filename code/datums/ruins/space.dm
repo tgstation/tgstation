@@ -304,3 +304,12 @@
 	name = "Ordinary Space Tile"
 	description = "Absolutely nothing strange going on here please \
 		move along, plenty more space to see right this way!"
+
+/datum/map_template/ruin/space/wizardacademy
+	id = "wizardacademy"
+	suffix = "wizardacademy.dmm"
+	name = "Space Wizard Academy"
+	description = "An entire building which floats through space.\
+		Any astronauts or other explorers who gets close to it has \
+		reported a feeling of being watched, and that their \
+		surroundings just does not seem right..."
