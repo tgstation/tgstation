@@ -73,6 +73,9 @@
 
 	var/check_randomizer = 0
 
+	var/allow_panic_bunker_bounce = 0 //Send new players somewhere else
+	var/panic_server_name = "somewhere else"
+
 	//IP Intel vars
 	var/ipintel_email
 	var/ipintel_rating_bad = 1
@@ -386,8 +389,12 @@
 						global.cross_allowed = 1
 				if("cross_comms_name")
 					cross_name = value
-				if("send_panic_bunkered_to_cross_server")
-					global.allow_panic_bunker_to_cross = 1
+				if("panic_server_name")
+					panic_server_name = value
+				if("panic_server_address")
+					global.panic_address = value
+					if(value != "byond:\\address:port")
+						allow_panic_bunker_bounce = 1
 				if("medal_hub_address")
 					global.medal_hub = value
 				if("medal_hub_password")

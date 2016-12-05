@@ -196,10 +196,10 @@ var/next_external_rsc = 0
 			log_access("Failed Login: [key] - New account attempting to connect during panic bunker")
 			message_admins("<span class='adminnotice'>Failed Login: [key] - New account attempting to connect during panic bunker</span>")
 			src << "Sorry but the server is currently not accepting connections from never before seen players."
-			if(global.cross_allowed && global.allow_panic_bunker_to_cross)
-				src << "<span class='notice'>Sending you to [global.cross_address].</span>"
+			if(config.allow_panic_bunker_bounce && tdata != "redirect")
+				src << "<span class='notice'>Sending you to [config.panic_server_name].</span>"
 				winset(src, null, "command=.options")
-				src << link(global.cross_address)
+				src << link("[global.panic_address]?redirect")
 			qdel(src)
 			return 0
 
