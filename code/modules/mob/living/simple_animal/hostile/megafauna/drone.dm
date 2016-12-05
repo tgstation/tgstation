@@ -137,11 +137,6 @@
 	damage_type = BURN
 	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
 
-/obj/item/projectile/drone_laser/proc/on_hit(atom/target, blocked = 0)
-	if(isliving(target) && istype(target, /mob/living/simple_animal/hostile/megafauna/megadrone)
-	else
-		..()
-
 /datum/action/innate/drone_attack
 	name = "Drone Attack"
 	icon_icon = 'icons/mob/lavaland/related_to_drone.dmi'
