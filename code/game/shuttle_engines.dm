@@ -57,7 +57,6 @@
 			playsound(src, 'sound/machines/engine_loop_melting.ogg', 50, 0)
 		if(ENGINE_TEMPERATURE_EXPLODE to INFINITY)
 			shake_the_room()
-			return
 
 /obj/structure/shuttle/engine/proc/shake_the_room()
 	visible_message("<span class='boldwarning'>[src] explodes!</span>")
@@ -65,22 +64,17 @@
 	explosion(src, 1, 3, 5, 7)
 	qdel(src)
 
-/obj/structure/shuttle/engine/attackby(obj/item/I, mob/living/user, params)
-	if(istype(I, /obj/item/weapon/wrench))
-		if(heat > ENGINE_TEMPERATURE_MELTING)
-			user << "<span class='warning'>[src] sears your hand as you try to unfasten it!</span>" //Hot enough to go through gloves, of course. It's over 1000 degrees warm.
-			user.drop_item()
-			user.emote("scream")
-			return
-		user.visible_message("<span class='notice'>[user] starts unfastening [src]...</span>", "<span class='notice'>You start unfastening [src]...</span>")
-		playsound(src, 'sound/items/Ratchet.ogg', 50, 0)
-		if(!do_after(user, 50, src) || !anchored)
-			return
-		user.visible_message("<span class='notice'>[user] unfastens [src] from the ground!</span>", "<span class='notice'>You undo [src]'s bolts.</span>")
-		anchored = FALSE
-		playsound(src, 'sound/items/Deconstruct.ogg', 50, 0)
-		return
-	..()
+/obj/structure/shuttle/engine/can_be_unfasten_wrench(mob/living/user)
+	if(heat >= ENGINE_TEMPERATURE_WARM)
+		user << "<span class='boldwarning'>[src] sears your hand through your wrench!</span>"
+		user.emote("scream")
+		user.drop_item()
+		user.adjustFireLoss(5)
+		return 0
+	return 1
+
+/obj/structure/shuttle/engine/freon_gas_act()
+	adjust_heat(-100) //Freon is very good at cooling us down!
 
 /obj/structure/shuttle/engine/heater
 	name = "heater"
