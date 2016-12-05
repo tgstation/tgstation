@@ -224,10 +224,10 @@
 				filtered_out.gases["freon"][MOLES] = removed_gases["freon"][MOLES]
 				removed.gases["freon"][MOLES] = 0
 
-			if(scrub_WaterVapor && removed_gases["water_vapor"])
-				filtered_out.assert_gas("water_vapor")
-				filtered_out.gases["water_vapor"][MOLES] = removed_gases["water_vapor"][MOLES]
-				removed.gases["water_vapor"][MOLES] = 0
+			if(scrub_WaterVapor && removed_gases[GAS_WV])
+				filtered_out.assert_gas(GAS_WV)
+				filtered_out.gases[GAS_WV][MOLES] = removed_gases[GAS_WV][MOLES]
+				removed.gases[GAS_WV][MOLES] = 0
 
 			removed.garbage_collect()
 
