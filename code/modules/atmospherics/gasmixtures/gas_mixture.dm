@@ -217,18 +217,18 @@ var/list/gaslist_cache
 	var/list/cached_gases = gases //this speeds things up because accessing datum vars is slow
 
  	//General volatile gas burn
-	if(cached_gases["v_fuel"] && cached_gases["v_fuel"][MOLES])
+	if(cached_gases[GAS_VF] && cached_gases[GAS_VF][MOLES])
 		var/burned_fuel
 
 		if(!cached_gases[GAS_O2])
 			burned_fuel = 0
-		else if(cached_gases[GAS_O2][MOLES] < cached_gases["v_fuel"][MOLES])
+		else if(cached_gases[GAS_O2][MOLES] < cached_gases[GAS_VF][MOLES])
 			burned_fuel = cached_gases[GAS_O2][MOLES]
-			cached_gases["v_fuel"][MOLES] -= burned_fuel
+			cached_gases[GAS_VF][MOLES] -= burned_fuel
 			cached_gases[GAS_O2][MOLES] = 0
 		else
-			burned_fuel = cached_gases["v_fuel"][MOLES]
-			cached_gases[GAS_O2][MOLES] -= cached_gases["v_fuel"][MOLES]
+			burned_fuel = cached_gases[GAS_VF][MOLES]
+			cached_gases[GAS_O2][MOLES] -= cached_gases[GAS_VF][MOLES]
 
 		if(burned_fuel)
 			energy_released += FIRE_CARBON_ENERGY_RELEASED * burned_fuel
