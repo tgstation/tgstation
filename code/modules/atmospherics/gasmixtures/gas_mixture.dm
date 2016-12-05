@@ -173,12 +173,12 @@ var/list/gaslist_cache
 
 			reaction_energy = max(reaction_energy+((carbon_efficency*cached_gases["plasma"][MOLES])/((moles_impurities/carbon_efficency)+2)*10)+((plasma_fused/(moles_impurities/carbon_efficency))*PLASMA_BINDING_ENERGY),0)
 
-			assert_gases(GAS_O2, "n2")
+			assert_gases(GAS_O2, GAS_N2)
 
 			cached_gases["plasma"][MOLES] -= plasma_fused
 			cached_gases["co2"][MOLES] -= carbon_catalyzed
 			cached_gases[GAS_O2][MOLES] += oxygen_added
-			cached_gases["n2"][MOLES] += nitrogen_added
+			cached_gases[GAS_N2][MOLES] += nitrogen_added
 
 			garbage_collect()
 

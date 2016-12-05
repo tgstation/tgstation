@@ -284,12 +284,12 @@ MASS SPECTROMETER
 	else
 		user << "<span class='alert'>Pressure: [round(pressure,0.1)] kPa</span>"
 	if(total_moles)
-		var/list/always_show = list(GAS_O2, "n2", "co2", "plasma")
+		var/list/always_show = list(GAS_O2, GAS_N2, "co2", "plasma")
 		var/list/env_gases = environment.gases
 
 		environment.assert_gases(arglist(always_show))
 		var/o2_concentration = env_gases[GAS_O2][MOLES]/total_moles
-		var/n2_concentration = env_gases["n2"][MOLES]/total_moles
+		var/n2_concentration = env_gases[GAS_N2][MOLES]/total_moles
 		var/co2_concentration = env_gases["co2"][MOLES]/total_moles
 		var/plasma_concentration = env_gases["plasma"][MOLES]/total_moles
 		environment.garbage_collect()

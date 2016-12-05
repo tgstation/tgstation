@@ -156,8 +156,8 @@
 	//Ok, 100% oxygen atmosphere = best reaction
 	//Maxes out at 100% oxygen pressure
 	var/removed_nitrogen = 0
-	if(removed.gases["n2"])
-		removed_nitrogen = (removed.gases["n2"][MOLES] * NITROGEN_RETARDATION_FACTOR)
+	if(removed.gases[GAS_N2])
+		removed_nitrogen = (removed.gases[GAS_N2][MOLES] * NITROGEN_RETARDATION_FACTOR)
 
 	removed.assert_gases(GAS_O2, "plasma")
 

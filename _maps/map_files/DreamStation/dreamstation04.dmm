@@ -20368,7 +20368,7 @@
 "aQS" = (
 /obj/machinery/atmospherics/components/trinary/filter{
 	dir = 4;
-	filter_type = "n2";
+	filter_type = 2;
 	on = 1
 	},
 /turf/open/floor/plasteel/red/side{

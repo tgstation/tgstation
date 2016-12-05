@@ -8,7 +8,7 @@
 	max_integrity = 800
 	var/volume = 10000 //in liters, 1 meters by 1 meters by 2 meters
 	density = 1
-	var/gas_type = 0
+	var/gas_type = GAS_INVALID
 
 /obj/machinery/atmospherics/components/unary/tank/New()
 	..()
@@ -37,7 +37,7 @@
 
 /obj/machinery/atmospherics/components/unary/tank/nitrogen
 	icon_state = "red"
-	gas_type = "n2"
+	gas_type = GAS_N2
 
 /obj/machinery/atmospherics/components/unary/tank/air
 	icon_state = "grey"
@@ -46,6 +46,6 @@
 /obj/machinery/atmospherics/components/unary/tank/air/New()
 	..()
 	var/datum/gas_mixture/air_contents = AIR1
-	air_contents.assert_gases(GAS_O2, "n2")
+	air_contents.assert_gases(GAS_O2, GAS_N2)
 	air_contents.gases[GAS_O2][MOLES] = AIR_CONTENTS * 0.2
-	air_contents.gases["n2"][MOLES] = AIR_CONTENTS * 0.8
+	air_contents.gases[GAS_N2][MOLES] = AIR_CONTENTS * 0.8

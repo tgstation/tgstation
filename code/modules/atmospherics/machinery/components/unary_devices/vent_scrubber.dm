@@ -174,7 +174,7 @@
 	if(scrubbing & SCRUBBING)
 		var/should_we_scrub = FALSE
 		for(var/id in env_gases)
-			if(id == "n2" || id == GAS_O2)
+			if(id == GAS_N2 || id == GAS_O2)
 				continue
 			if(env_gases[id][MOLES])
 				should_we_scrub = TRUE

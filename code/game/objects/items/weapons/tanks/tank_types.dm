@@ -66,9 +66,9 @@
 
 /obj/item/weapon/tank/internals/air/New()
 	..()
-	air_contents.assert_gases(GAS_O2,"n2")
+	air_contents.assert_gases(GAS_O2,GAS_N2)
 	air_contents.gases[GAS_O2][MOLES] = (6*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C) * O2STANDARD
-	air_contents.gases["n2"][MOLES] = (6*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C) * N2STANDARD
+	air_contents.gases[GAS_N2][MOLES] = (6*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C) * N2STANDARD
 	return
 
 
