@@ -55,7 +55,7 @@
 	name = "co2 canister"
 	desc = "Carbon dioxide. What the fuck is carbon dioxide?"
 	icon_state = "black"
-	gas_type = "co2"
+	gas_type = GAS_CO2
 
 /obj/machinery/portable_atmospherics/canister/toxins
 	name = "plasma canister"
