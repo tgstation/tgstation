@@ -372,7 +372,7 @@
 /mob/living/silicon/pai/proc/CheckDNA(mob/living/carbon/M, mob/living/silicon/pai/P)
 	var/answer = input(M, "[P] is requesting a DNA sample from you. Will you allow it to confirm your identity?", "[P] Check DNA", "No") in list("Yes", "No")
 	if(answer == "Yes")
-		M.visible_message("<span class='notice'>[M] presses \his thumb against [P].</span>",\
+		M.visible_message("<span class='notice'>[M] presses [M.p_their()] thumb against [P].</span>",\
 						"<span class='notice'>You press your thumb against [P].</span>",\
 						"<span class='notice'>[P] makes a sharp clicking sound as it extracts DNA material from [M].</span>")
 		if(!M.has_dna())
@@ -384,7 +384,7 @@
 		else
 			P << "<b>DNA does not match stored Master DNA.</b>"
 	else
-		P << "[M] does not seem like \he is going to provide a DNA sample willingly."
+		P << "[M] does not seem like [M.p_they()] [M.p_are()] going to provide a DNA sample willingly."
 
 // -=-=-=-= Software =-=-=-=-=- //
 

@@ -43,7 +43,7 @@
 	desc = "A peel from a banana."
 	icon_state = "banana_peel"
 	item_state = "banana_peel"
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 	throwforce = 0
 	throw_speed = 3
 	throw_range = 7

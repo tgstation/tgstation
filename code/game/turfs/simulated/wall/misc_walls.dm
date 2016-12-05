@@ -45,7 +45,7 @@
 	desc = "A huge chunk of warm metal. The clanging of machinery emanates from within."
 	explosion_block = 2
 	hardness = 10
-	sheet_type = /obj/item/stack/sheet/brass
+	sheet_type = /obj/item/stack/tile/brass
 	var/obj/effect/clockwork/overlay/wall/realappearence
 	var/obj/structure/destructible/clockwork/cache/linkedcache
 

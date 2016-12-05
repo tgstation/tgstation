@@ -34,6 +34,12 @@
 	if(control_disabled || stat)
 		return
 
+	if(!cameranet.checkTurfVis(get_turf_pixel(A)))
+		log_admin("[key_name_admin(src)] might be running a modified client! (failed checkTurfVis on AI click)")
+		message_admins("[key_name_admin(src)] might be running a modified client! (failed checkTurfVis on AI click)")
+		send2irc_adminless_only("NOCHEAT", "[key_name(src)] might be running a modified client! (failed checkTurfVis on AI click)")
+		return
+
 	var/list/modifiers = params2list(params)
 	if(modifiers["shift"] && modifiers["ctrl"])
 		CtrlShiftClickOn(A)

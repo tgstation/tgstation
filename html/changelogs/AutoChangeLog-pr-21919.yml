@@ -1,0 +1,6 @@
+author: "Joan"
+delete-after: True
+changes: 
+  - rscadd: "You can now proselytize floor tiles at a rate of 20 tiles to 1 brass sheet or 2 tiles to 1 liquified alloy for cogscarabs."
+  - rscadd: "Proselytizers will automatically pry up floor tiles if those tiles can be proselytized."
+  - tweak: "Brass floor tiles no longer exist. Instead, you can just apply brass sheets to a tile. Crowbarring up a clockwork floor will yield that brass sheet."

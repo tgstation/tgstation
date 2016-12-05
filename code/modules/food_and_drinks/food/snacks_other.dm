@@ -8,7 +8,7 @@
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/cheesewedge
 	slices_num = 5
 	list_reagents = list("nutriment" = 15, "vitamin" = 5)
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 
 /obj/item/weapon/reagent_containers/food/snacks/cheesewedge
 	name = "cheese wedge"
@@ -249,7 +249,7 @@
 	bonus_reagents = list("nutriment" = 2, "vitamin" = 2)
 	list_reagents = list("nutriment" = 6, "vitamin" = 4)
 	filling_color = "#FF5500"
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 
 /obj/item/weapon/reagent_containers/food/snacks/spacefreezy
 	name = "space freezy"
@@ -336,6 +336,71 @@
 	block_chance = 50
 	armour_penetration = 75
 	attack_verb = list("slapped", "slathered")
-	w_class = 4
+	w_class = WEIGHT_CLASS_BULKY
 
+/obj/item/weapon/reagent_containers/food/snacks/lollipop
+	name = "lollipop"
+	desc = "A delicious lollipop. Makes for a great Valentine's present."
+	icon = 'icons/obj/lollipop.dmi'
+	icon_state = "lollipop_stick"
+	list_reagents = list("nutriment" = 1, "vitamin" = 1, "iron" = 10, "sugar" = 5, "omnizine" = 2)	//Honk
+	var/image/head
+	var/headcolor = rgb(0, 0, 0)
 
+/obj/item/weapon/reagent_containers/food/snacks/lollipop/New()
+	..()
+	head = image(icon = 'icons/obj/lollipop.dmi', icon_state = "lollipop_head")
+	change_head_color(rgb(rand(0, 255), rand(0, 255), rand(0, 255)))
+
+/obj/item/weapon/reagent_containers/food/snacks/lollipop/proc/change_head_color(C)
+	headcolor = C
+	if(head in overlays)
+		overlays -= head
+	head.color = C
+	add_overlay(head)
+
+/obj/item/weapon/reagent_containers/food/snacks/lollipop/throw_impact(atom/A)
+	..(A)
+	throw_speed = 1
+	throwforce = 0
+
+/obj/item/weapon/reagent_containers/food/snacks/lollipop/cyborg
+	var/spamchecking = TRUE
+
+/obj/item/weapon/reagent_containers/food/snacks/lollipop/cyborg/New()
+	..()
+	addtimer(src, "spamcheck", 1200)
+
+/obj/item/weapon/reagent_containers/food/snacks/lollipop/cyborg/equipped(mob/living/user, slot)
+	. = ..(user, slot)
+	spamchecking = FALSE
+
+/obj/item/weapon/reagent_containers/food/snacks/lollipop/cyborg/proc/spamcheck()
+	if(spamchecking)
+		qdel(src)
+
+/obj/item/weapon/reagent_containers/food/snacks/gumball
+	name = "gumball"
+	desc = "A colorful, sugary gumball."
+	icon = 'icons/obj/lollipop.dmi'
+	icon_state = "gumball"
+	list_reagents = list("sugar" = 5, "bicaridine" = 2, "kelotane" = 2)	//Kek
+
+/obj/item/weapon/reagent_containers/food/snacks/gumball/New()
+	..()
+	color = rgb(rand(0, 255), rand(0, 255), rand(0, 255))
+
+/obj/item/weapon/reagent_containers/food/snacks/gumball/cyborg
+	var/spamchecking = TRUE
+
+/obj/item/weapon/reagent_containers/food/snacks/gumball/cyborg/New()
+	..()
+	addtimer(src, "spamcheck", 1200)
+
+/obj/item/weapon/reagent_containers/food/snacks/gumball/cyborg/equipped(mob/living/user, slot)
+	. = ..(user, slot)
+	spamchecking = FALSE
+
+/obj/item/weapon/reagent_containers/food/snacks/gumball/cyborg/proc/spamcheck()
+	if(spamchecking)
+		qdel(src)

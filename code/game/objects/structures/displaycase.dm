@@ -121,7 +121,7 @@
 			toggle_lock(user)
 		else
 			user <<  "<span class='warning'>Access denied.</span>"
-	else if(istype(W, /obj/item/weapon/weldingtool) && user.a_intent == "help" && !broken)
+	else if(istype(W, /obj/item/weapon/weldingtool) && user.a_intent == INTENT_HELP && !broken)
 		var/obj/item/weapon/weldingtool/WT = W
 		if(obj_integrity < max_integrity && WT.remove_fuel(5, user))
 			user << "<span class='notice'>You begin repairing [src].</span>"

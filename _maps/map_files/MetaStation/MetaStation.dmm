@@ -19600,11 +19600,6 @@
 	c_tag = "Auxillary Mining Base";
 	dir = 1
 	},
-/obj/machinery/camera{
-	c_tag = "Auxillary Mining Base";
-	dir = 1;
-	network = list("SS13","AuxBase")
-	},
 /turf/open/floor/plating,
 /area/shuttle/auxillary_base)
 "aHG" = (
@@ -37725,11 +37720,7 @@
 	name = "\improper MiniSat Exterior"
 	})
 "bnq" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector{
-	dir = 2;
-	icon_state = "inje_on";
-	on = 1
-	},
+/obj/machinery/atmospherics/components/unary/outlet_injector/on,
 /obj/structure/window/reinforced,
 /turf/open/floor/plating/airless,
 /area/construction/hallway{
@@ -58442,9 +58433,20 @@
 	},
 /area/maintenance/starboard)
 "bWI" = (
-/mob/living/simple_animal/mouse,
+/obj/machinery/door/airlock/external{
+	name = "Engineering External Access";
+	req_access = null;
+	req_access_txt = "10;13"
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
+	pixel_y = 0
+	},
+/obj/structure/fans/tiny,
 /turf/open/floor/plating,
-/area/maintenance/starboard)
+/area/engine/engineering)
 "bWJ" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 8
@@ -70934,14 +70936,11 @@
 /turf/open/space,
 /area/space)
 "crZ" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector{
-	dir = 8;
-	on = 1;
-	pixel_y = 0;
-	use_power = 0
+/obj/machinery/atmospherics/components/unary/outlet_injector/on{
+	dir = 8
 	},
 /turf/open/floor/plating/airless,
-/area/space)
+/area/maintenance/incinerator)
 "csa" = (
 /obj/structure/window/reinforced{
 	dir = 8
@@ -84813,9 +84812,6 @@
 /turf/open/floor/plating/airless,
 /area/space)
 "cOH" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector{
-	dir = 4
-	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -84823,7 +84819,7 @@
 	dir = 6
 	},
 /turf/open/floor/plating/airless,
-/area/space)
+/area/medical/virology)
 "cOI" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
@@ -85387,11 +85383,11 @@
 /turf/open/floor/plating/airless,
 /area/space)
 "cPE" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector{
+/obj/machinery/atmospherics/components/unary/outlet_injector/on{
 	dir = 1
 	},
 /turf/open/floor/plating/airless,
-/area/space)
+/area/medical/virology)
 "cPF" = (
 /obj/structure/bodycontainer/morgue,
 /turf/open/floor/plasteel/black,
@@ -85590,10 +85586,7 @@
 /obj/structure/flora/ausbushes/fullgrass,
 /obj/structure/flora/ausbushes/ppflowers,
 /obj/structure/flora/ausbushes/palebush,
-/obj/structure/window/reinforced{
-	dir = 5;
-	obj_integrity = 10000
-	},
+/obj/structure/window/reinforced/fulltile,
 /turf/open/floor/grass,
 /area/hallway/secondary/exit{
 	name = "\improper Departure Lounge"
@@ -85874,6 +85867,7 @@
 	dir = 8;
 	initialize_directions = 11
 	},
+/obj/effect/landmark/xmastree,
 /turf/open/floor/carpet,
 /area/chapel/main)
 "cQz" = (
@@ -86275,13 +86269,10 @@
 /obj/structure/flora/ausbushes/fullgrass,
 /obj/structure/flora/ausbushes/brflowers,
 /obj/structure/flora/ausbushes/sunnybush,
-/obj/structure/window/reinforced{
-	dir = 5;
-	obj_integrity = 10000
-	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
+/obj/structure/window/reinforced/fulltile,
 /turf/open/floor/grass,
 /area/hallway/secondary/exit{
 	name = "\improper Departure Lounge"
@@ -87547,12 +87538,11 @@
 /turf/open/floor/plasteel/black,
 /area/chapel/main)
 "cTE" = (
-/turf/closed/wall/shuttle{
-	tag = "icon-wall3 (NORTHWEST)";
-	icon_state = "wall3";
-	dir = 9
+/obj/machinery/atmospherics/components/unary/outlet_injector/on{
+	dir = 8
 	},
-/area/shuttle/escape)
+/turf/open/floor/plating/airless,
+/area/toxins/xenobiology)
 "cTF" = (
 /obj/machinery/door/window{
 	dir = 4;
@@ -89976,11 +89966,9 @@
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/syndicate)
 "cXL" = (
-/obj/structure/chair{
-	dir = 4
-	},
-/turf/open/floor/plasteel/shuttle/red,
-/area/shuttle/syndicate)
+/obj/effect/landmark/xmastree,
+/turf/open/floor/wood,
+/area/crew_quarters/bar)
 "cXM" = (
 /obj/structure/chair{
 	dir = 8
@@ -90630,10 +90618,7 @@
 "cZs" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible,
 /obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 5;
-	obj_integrity = 10000
-	},
+/obj/structure/window/reinforced/fulltile,
 /turf/open/floor/plating,
 /area/atmos)
 "cZt" = (
@@ -126185,7 +126170,7 @@ aaa
 aaa
 aaa
 aaf
-crZ
+cTE
 cTC
 cUq
 cUG
@@ -129978,7 +129963,7 @@ byY
 bAJ
 bza
 bAG
-bAG
+cXL
 bHA
 bJm
 bAG
@@ -136880,7 +136865,7 @@ ajh
 avN
 atw
 ayo
-azn
+bWI
 ayo
 ayo
 aDq
@@ -136898,7 +136883,7 @@ aDq
 aDq
 ayo
 ayo
-azn
+bWI
 ayo
 ayo
 aKe

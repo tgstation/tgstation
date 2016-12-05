@@ -36,8 +36,13 @@
 	var/mob/dead/observer/G = usr
 	G.dead_tele()
 
-/datum/hud/ghost/New(mob/owner)
+/datum/hud/ghost/New(mob/owner, ui_style = 'icons/mob/screen_midnight.dmi')
 	..()
+	var/mob/dead/observer/G = mymob
+	if(!G.client.prefs.ghost_hud)
+		mymob.client.screen = null
+		return
+
 	var/obj/screen/using
 
 	using = new /obj/screen/ghost/jumptomob()
@@ -57,13 +62,13 @@
 	static_inventory += using
 
 
-/datum/hud/ghost/show_hud(version = 0, mob/viewmob)
-	..()
-	if(!mymob.client.prefs.ghost_hud)
-		mymob.client.screen -= static_inventory
-	else
-		mymob.client.screen += static_inventory
+/datum/hud/ghost/show_hud()
+	var/mob/dead/observer/G = mymob
+	mymob.client.screen = list()
+	if(!G.client.prefs.ghost_hud)
+		return
+	mymob.client.screen += static_inventory
 
 /mob/dead/observer/create_mob_hud()
 	if(client && !hud_used)
-		hud_used = new /datum/hud/ghost(src)
+		hud_used = new /datum/hud/ghost(src, ui_style2icon(client.prefs.UI_style))

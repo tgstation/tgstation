@@ -219,12 +219,12 @@
 	name = "training bomb"
 	icon_state = "training-bomb"
 	desc = "A salvaged syndicate device gutted of its explosives to be used as a training aid for aspiring bomb defusers."
-	payload = /obj/item/weapon/bombcore/training/
+	payload = /obj/item/weapon/bombcore/training
 
 /obj/machinery/syndicatebomb/badmin
 	name = "generic summoning badmin bomb"
 	desc = "Oh god what is in this thing?"
-	payload = /obj/item/weapon/bombcore/badmin/summon/
+	payload = /obj/item/weapon/bombcore/badmin/summon
 
 /obj/machinery/syndicatebomb/badmin/clown
 	name = "clown bomb"
@@ -234,7 +234,7 @@
 	beepsound = 'sound/items/bikehorn.ogg'
 
 /obj/machinery/syndicatebomb/badmin/varplosion
-	payload = /obj/item/weapon/bombcore/badmin/explosion/
+	payload = /obj/item/weapon/bombcore/badmin/explosion
 
 /obj/machinery/syndicatebomb/empty
 	name = "bomb"
@@ -256,7 +256,7 @@
 	icon = 'icons/obj/assemblies.dmi'
 	icon_state = "bombcore"
 	item_state = "eshield0"
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 	origin_tech = "syndicate=5;combat=6"
 	resistance_flags = FLAMMABLE //Burnable (but the casing isn't)
 	var/adminlog = null
@@ -333,7 +333,7 @@
 	qdel(B)
 	qdel(src)
 
-/obj/item/weapon/bombcore/badmin/summon/
+/obj/item/weapon/bombcore/badmin/summon
 	var/summon_path = /obj/item/weapon/reagent_containers/food/snacks/cookie
 	var/amt_summon = 1
 
@@ -363,7 +363,7 @@
 
 /obj/item/weapon/bombcore/miniature
 	name = "small bomb core"
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/weapon/bombcore/miniature/detonate()
 	if(adminlog)
@@ -505,7 +505,7 @@
 	icon = 'icons/obj/assemblies.dmi'
 	icon_state = "bigred"
 	item_state = "electronic"
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 	origin_tech = "syndicate=3"
 	var/timer = 0
 	var/detonated =	0

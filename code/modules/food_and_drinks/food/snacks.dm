@@ -25,19 +25,9 @@
 		return
 	if(!reagents.total_volume)
 		usr.unEquip(src)	//so icons update :[
-
-		if(trash)
-			if(ispath(trash, /obj/item/weapon/grown) && istype(src, /obj/item/weapon/reagent_containers/food/snacks/grown))
-				var/obj/item/weapon/reagent_containers/food/snacks/grown/G = src
-				var/obj/item/TrashItem = new trash(usr, G.seed)
-				usr.put_in_hands(TrashItem)
-			else if(ispath(trash,/obj/item))
-				var/obj/item/TrashItem = new trash(usr)
-				usr.put_in_hands(TrashItem)
-			else if(istype(trash,/obj/item))
-				usr.put_in_hands(trash)
+		var/obj/item/trash_item = generate_trash(usr)
+		usr.put_in_hands(trash_item)
 		qdel(src)
-	return
 
 
 /obj/item/weapon/reagent_containers/food/snacks/attack_self(mob/user)
@@ -45,7 +35,7 @@
 
 
 /obj/item/weapon/reagent_containers/food/snacks/attack(mob/M, mob/user, def_zone)
-	if(user.a_intent == "harm")
+	if(user.a_intent == INTENT_HARM)
 		return ..()
 	if(!eatverb)
 		eatverb = pick("bite","chew","nibble","gnaw","gobble","chomp")
@@ -136,7 +126,7 @@
 	if(istype(W,/obj/item/weapon/reagent_containers/food/snacks))
 		var/obj/item/weapon/reagent_containers/food/snacks/S = W
 		if(custom_food_type && ispath(custom_food_type))
-			if(S.w_class > 2)
+			if(S.w_class > WEIGHT_CLASS_SMALL)
 				user << "<span class='warning'>[S] is too big for [src]!</span>"
 				return 0
 			if(!S.customfoodfilling || istype(W, /obj/item/weapon/reagent_containers/food/snacks/customizable) || istype(W, /obj/item/weapon/reagent_containers/food/snacks/pizzaslice/custom) || istype(W, /obj/item/weapon/reagent_containers/food/snacks/cakeslice/custom))
@@ -209,6 +199,19 @@
 	reagents.trans_to(slice,reagents_per_slice)
 	return
 
+/obj/item/weapon/reagent_containers/food/snacks/proc/generate_trash(atom/location)
+	if(trash)
+		if(ispath(trash, /obj/item))
+			. = new trash(location)
+			trash = null
+			return
+		else if(istype(trash, /obj/item))
+			var/obj/item/trash_item = trash
+			trash_item.forceMove(location)
+			. = trash
+			trash = null
+			return
+
 /obj/item/weapon/reagent_containers/food/snacks/proc/update_overlays(obj/item/weapon/reagent_containers/food/snacks/S)
 	cut_overlays()
 	var/image/I = new(src.icon, "[initial(icon_state)]_filling")
@@ -242,7 +245,7 @@
 		if(M && M.dirty < 100)
 			M.dirty++
 	qdel(src)
-			
+
 /obj/item/weapon/reagent_containers/food/snacks/Destroy()
 	if(contents)
 		for(var/atom/movable/something in contents)
@@ -296,12 +299,12 @@
 
 
 /obj/item/weapon/reagent_containers/food/snacks/store
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 	var/stored_item = 0
 
 /obj/item/weapon/reagent_containers/food/snacks/store/attackby(obj/item/weapon/W, mob/user, params)
 	..()
-	if(W.w_class <= 2 & !istype(W, /obj/item/weapon/reagent_containers/food/snacks)) //can't slip snacks inside, they're used for custom foods.
+	if(W.w_class <= WEIGHT_CLASS_SMALL & !istype(W, /obj/item/weapon/reagent_containers/food/snacks)) //can't slip snacks inside, they're used for custom foods.
 		if(W.is_sharp())
 			return 0
 		if(stored_item)

@@ -43,7 +43,7 @@
 	var/obj/item/bodypart/affecting = null
 	if(ishuman(target))
 		var/mob/living/carbon/human/H = target
-		if(PIERCEIMMUNE in H.dna.species.specflags)
+		if(PIERCEIMMUNE in H.dna.species.species_traits)
 			playsound(src.loc, 'sound/effects/snap.ogg', 50, 1)
 			armed = 0
 			update_icon()
@@ -109,7 +109,7 @@
 			if(!(MM.movement_type & FLYING))
 				if(ishuman(AM))
 					var/mob/living/carbon/H = AM
-					if(H.m_intent == "run")
+					if(H.m_intent == MOVE_INTENT_RUN)
 						triggered(H)
 						H.visible_message("<span class='warning'>[H] accidentally steps on [src].</span>", \
 										  "<span class='warning'>You accidentally step on [src]</span>")

@@ -23,7 +23,7 @@
 		swirlie.visible_message("<span class='danger'>[user] slams the toilet seat onto [swirlie]'s head!</span>", "<span class='userdanger'>[user] slams the toilet seat onto your head!</span>", "<span class='italics'>You hear reverberating porcelain.</span>")
 		swirlie.adjustBruteLoss(5)
 
-	else if(user.pulling && user.a_intent == "grab" && isliving(user.pulling))
+	else if(user.pulling && user.a_intent == INTENT_GRAB && isliving(user.pulling))
 		user.changeNext_move(CLICK_CD_MELEE)
 		var/mob/living/GM = user.pulling
 		if(user.grab_state >= GRAB_AGGRESSIVE)
@@ -80,11 +80,11 @@
 			update_icon()
 
 	else if(cistern)
-		if(user.a_intent != "harm")
-			if(I.w_class > 3)
+		if(user.a_intent != INTENT_HARM)
+			if(I.w_class > WEIGHT_CLASS_NORMAL)
 				user << "<span class='warning'>[I] does not fit!</span>"
 				return
-			if(w_items + I.w_class > 5)
+			if(w_items + I.w_class > WEIGHT_CLASS_HUGE)
 				user << "<span class='warning'>The cistern is full!</span>"
 				return
 			if(!user.drop_item())
@@ -118,7 +118,7 @@
 	hiddenitem = new /obj/item/weapon/reagent_containers/food/urinalcake
 
 /obj/structure/urinal/attack_hand(mob/user)
-	if(user.pulling && user.a_intent == "grab" && isliving(user.pulling))
+	if(user.pulling && user.a_intent == INTENT_GRAB && isliving(user.pulling))
 		var/mob/living/GM = user.pulling
 		if(user.grab_state >= GRAB_AGGRESSIVE)
 			if(GM.loc != get_turf(src))
@@ -139,6 +139,7 @@
 			else
 				hiddenitem.forceMove(get_turf(src))
 			user << "<span class='notice'>You fish [hiddenitem] out of the drain enclosure.</span>"
+			hiddenitem = null
 	else
 		..()
 
@@ -169,7 +170,7 @@
 	desc = "The noble urinal cake, protecting the station's pipes from the station's pee. Do not eat."
 	icon = 'icons/obj/items.dmi'
 	icon_state = "urinalcake"
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 	list_reagents = list("chlorine" = 3, "ammonia" = 1)
 
 /obj/machinery/shower
@@ -490,7 +491,7 @@
 	if(O.flags & ABSTRACT) //Abstract items like grabs won't wash. No-drop items will though because it's still technically an item in your hand.
 		return
 
-	if(user.a_intent != "harm")
+	if(user.a_intent != INTENT_HARM)
 		user << "<span class='notice'>You start washing [O]...</span>"
 		busy = 1
 		if(!do_after(user, 40, target = src))

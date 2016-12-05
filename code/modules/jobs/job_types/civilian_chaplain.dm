@@ -40,6 +40,8 @@ Chaplain
 	if(SSreligion.Bible_deity_name)
 		B.deity_name = SSreligion.Bible_deity_name
 		B.name = SSreligion.Bible_name
+		B.icon_state = SSreligion.Bible_icon_state
+		B.item_state = SSreligion.Bible_item_state
 		H << "There is already an established religion onboard the station. You are an acolyte of [SSreligion.Bible_deity_name]. Defer to the Chaplain."
 		H.equip_to_slot_or_del(B, slot_in_backpack)
 		var/obj/item/weapon/nullrod/N = new(H)

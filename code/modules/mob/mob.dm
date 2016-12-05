@@ -302,6 +302,10 @@ var/next_mob_id = 0
 		return
 	if(AM.anchored || AM.throwing)
 		return
+	if(isliving(AM))
+		var/mob/living/L = AM
+		if(L.buckled && L.buckled.buckle_prevents_pull)
+			return
 	if(throwing || incapacitated())
 		return
 
@@ -326,6 +330,7 @@ var/next_mob_id = 0
 	update_pull_hud_icon()
 
 	if(ismob(AM))
+		changeNext_move(CLICK_CD_MELEE)
 		var/mob/M = AM
 		if(!supress_message)
 			visible_message("<span class='warning'>[src] has grabbed [M] passively!</span>")
@@ -852,31 +857,40 @@ var/next_mob_id = 0
 /mob/proc/update_health_hud()
 	return
 
-/mob/living/on_varedit(modified_var)
-	switch(modified_var)
+/mob/living/vv_edit_var(var_name, var_value)
+	switch(var_name)
+		if("stat")
+			if((stat == DEAD) && (var_value < DEAD))//Bringing the dead back to life
+				dead_mob_list -= src
+				living_mob_list += src
+			if((stat < DEAD) && (var_value == DEAD))//Kill he
+				living_mob_list -= src
+				dead_mob_list += src
+	. = ..()
+	switch(var_name)
 		if("weakened")
-			SetWeakened(weakened)
+			SetWeakened(var_value)
 		if("stunned")
-			SetStunned(stunned)
+			SetStunned(var_value)
 		if("paralysis")
-			SetParalysis(paralysis)
+			SetParalysis(var_value)
 		if("sleeping")
-			SetSleeping(sleeping)
+			SetSleeping(var_value)
 		if("eye_blind")
-			set_blindness(eye_blind)
+			set_blindness(var_value)
 		if("eye_damage")
-			set_eye_damage(eye_damage)
+			set_eye_damage(var_value)
 		if("eye_blurry")
-			set_blurriness(eye_blurry)
+			set_blurriness(var_value)
 		if("ear_deaf")
-			setEarDamage(-1, ear_deaf)
+			setEarDamage(-1, var_value)
 		if("ear_damage")
-			setEarDamage(ear_damage, -1)
+			setEarDamage(var_value, -1)
 		if("maxHealth")
 			updatehealth()
 		if("resize")
 			update_transform()
-	..()
+
 
 /mob/proc/is_literate()
 	return 0
@@ -886,3 +900,25 @@ var/next_mob_id = 0
 
 /mob/proc/get_idcard()
 	return
+
+/mob/vv_get_dropdown()
+	. = ..()
+	. += "---"
+	.["Gib"] = "?_src_=vars;gib=\ref[src]"
+	.["Give Spell"] = "?_src_=vars;give_spell=\ref[src]"
+	.["Remove Spell"] = "?_src_=vars;remove_spell=\ref[src]"
+	.["Give Disease"] = "?_src_=vars;give_disease=\ref[src]"
+	.["Toggle Godmode"] = "?_src_=vars;godmode=\ref[src]"
+	.["Drop Everything"] = "?_src_=vars;drop_everything=\ref[src]"
+	.["Regenerate Icons"] = "?_src_=vars;regenerateicons=\ref[src]"
+	.["Make Space Ninja"] = "?_src_=vars;ninja=\ref[src]"
+	.["Show player panel"] = "?_src_=vars;mob_player_panel=\ref[src]"
+	.["Toggle Build Mode"] = "?_src_=vars;build_mode=\ref[src]"
+	.["Assume Direct Control"] = "?_src_=vars;direct_control=\ref[src]"
+	.["Offer Control to Ghosts"] = "?_src_=vars;offer_control=\ref[src]"
+
+/mob/vv_get_var(var_name)
+	switch(var_name)
+		if ("attack_log")
+			return debug_variable(var_name, attack_log, 0, src, FALSE)
+	. = ..()

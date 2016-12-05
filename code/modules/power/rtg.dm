@@ -61,7 +61,7 @@
 	return ..()
 
 /obj/machinery/power/rtg/attack_hand(mob/user)
-	if(can_buckle && isliving(user.pulling) && user.a_intent == "grab" && !has_buckled_mobs())
+	if(can_buckle && isliving(user.pulling) && user.a_intent == INTENT_GRAB && !has_buckled_mobs())
 		var/mob/living/L = user.pulling
 		if(L.buckled)
 			return

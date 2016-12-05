@@ -53,7 +53,7 @@
 	response_disarm = "gently moves aside"
 	response_harm   = "swats"
 	stop_automated_movement = 1
-	a_intent = "harm" //parrots now start "aggressive" since only player parrots will nuzzle.
+	a_intent = INTENT_HARM //parrots now start "aggressive" since only player parrots will nuzzle.
 	attacktext = "chomps"
 	friendly = "grooms"
 	mob_size = MOB_SIZE_SMALL
@@ -280,7 +280,7 @@
 	..()
 	if(client)
 		return
-	if(!stat && M.a_intent == "harm")
+	if(!stat && M.a_intent == INTENT_HARM)
 
 		icon_state = "parrot_fly" //It is going to be flying regardless of whether it flees or attacks
 
@@ -295,7 +295,7 @@
 		else
 			parrot_state |= PARROT_FLEE		//Otherwise, fly like a bat out of hell!
 			drop_held_item(0)
-	if(!stat && M.a_intent == "help")
+	if(!stat && M.a_intent == INTENT_HELP)
 		handle_automated_speech(1) //assured speak/emote
 	return
 
@@ -561,7 +561,7 @@
 		var/mob/living/L = parrot_interest
 		if(melee_damage_upper == 0)
 			melee_damage_upper = parrot_damage_upper
-			a_intent = "harm"
+			a_intent = INTENT_HARM
 
 		//If the mob is close enough to interact with
 		if(Adjacent(parrot_interest))
@@ -629,12 +629,12 @@
 			continue
 		if(istype(AM, /obj/item))
 			var/obj/item/I = AM
-			if(I.w_class < 2)
+			if(I.w_class < WEIGHT_CLASS_SMALL)
 				item = I
 		else if(iscarbon(AM))
 			var/mob/living/carbon/C = AM
 			for(var/obj/item/I in C.held_items)
-				if(I.w_class <= 2)
+				if(I.w_class <= WEIGHT_CLASS_SMALL)
 					item = I
 					break
 		if(item)
@@ -665,13 +665,13 @@
 
 		if(istype(AM, /obj/item))
 			var/obj/item/I = AM
-			if(I.w_class <= 2)
+			if(I.w_class <= WEIGHT_CLASS_SMALL)
 				return I
 
 		if(iscarbon(AM))
 			var/mob/living/carbon/C = AM
 			for(var/obj/item/I in C.held_items)
-				if(I.w_class <= 2)
+				if(I.w_class <= WEIGHT_CLASS_SMALL)
 					return C
 	return null
 
@@ -693,7 +693,7 @@
 
 	for(var/obj/item/I in view(1,src))
 		//Make sure we're not already holding it and it's small enough
-		if(I.loc != src && I.w_class <= 2)
+		if(I.loc != src && I.w_class <= WEIGHT_CLASS_SMALL)
 
 			//If we have a perch and the item is sitting on it, continue
 			if(!client && parrot_perch && I.loc == parrot_perch.loc)
@@ -723,7 +723,7 @@
 
 	for(var/mob/living/carbon/C in view(1,src))
 		for(var/obj/item/I in C.held_items)
-			if(I.w_class <= 2)
+			if(I.w_class <= WEIGHT_CLASS_SMALL)
 				stolen_item = I
 				break
 
@@ -856,10 +856,10 @@
 
 	if(melee_damage_upper)
 		melee_damage_upper = 0
-		a_intent = "help"
+		a_intent = INTENT_HELP
 	else
 		melee_damage_upper = parrot_damage_upper
-		a_intent = "harm"
+		a_intent = INTENT_HARM
 	src << "You will now [a_intent] others..."
 	return
 

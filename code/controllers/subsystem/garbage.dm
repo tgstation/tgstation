@@ -70,7 +70,7 @@ var/datum/subsystem/garbage_collector/SSgarbage
 		Queue(ref)
 		tobequeued.Cut(1, 2)
 
-/datum/subsystem/garbage_collector/proc/HandleQueue(time_to_stop)
+/datum/subsystem/garbage_collector/proc/HandleQueue()
 	delslasttick = 0
 	gcedlasttick = 0
 	var/time_to_kill = world.time - collection_timeout // Anything qdel() but not GC'd BEFORE this time needs to be manually del()
@@ -227,7 +227,7 @@ var/datum/subsystem/garbage_collector/SSgarbage
 
 	find_references(FALSE)
 
-datum/proc/find_references(skip_alert)
+/datum/proc/find_references(skip_alert)
 	set background = 1
 	running_find_references = type
 	if(usr && usr.client)

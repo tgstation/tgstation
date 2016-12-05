@@ -98,7 +98,7 @@
 					deconstruct()
 			return
 
-	if(user.a_intent != "harm")
+	if(user.a_intent != INTENT_HARM)
 		if(!user.drop_item() || (I.flags & ABSTRACT))
 			return
 		place_item_in_disposal(I, user)

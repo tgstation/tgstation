@@ -11,7 +11,7 @@
 	sharpness = IS_SHARP_ACCURATE
 	attack_verb = list("stabbed", "poked", "slashed")
 	hitsound = 'sound/weapons/bladeslice.ogg'
-	w_class = 4
+	w_class = WEIGHT_CLASS_BULKY
 	var/impale_cooldown = 50 //delay, in deciseconds, where you can't impale again
 	var/attack_cooldown = 10 //delay, in deciseconds, where you can't attack with the spear
 

@@ -38,14 +38,14 @@
 	..()
 
 /mob/living/carbon/human/create_internal_organs()
-	if(!(NOHUNGER in dna.species.specflags))
+	if(!(NOHUNGER in dna.species.species_traits))
 		internal_organs += new /obj/item/organ/appendix
-	if(!(NOBREATH in dna.species.specflags))
+	if(!(NOBREATH in dna.species.species_traits))
 		if(dna.species.mutantlungs)
 			internal_organs += new dna.species.mutantlungs()
 		else
 			internal_organs += new /obj/item/organ/lungs()
-	if(!(NOBLOOD in dna.species.specflags))
+	if(!(NOBLOOD in dna.species.species_traits))
 		internal_organs += new /obj/item/organ/heart
 	internal_organs += new /obj/item/organ/brain
 	..()
@@ -497,7 +497,7 @@
 	. = 1 // Default to returning true.
 	if(user && !target_zone)
 		target_zone = user.zone_selected
-	if(dna && (PIERCEIMMUNE in dna.species.specflags))
+	if(dna && (PIERCEIMMUNE in dna.species.species_traits))
 		. = 0
 	// If targeting the head, see if the head item is thin enough.
 	// If targeting anything else, see if the wear suit is thin enough.
@@ -653,7 +653,7 @@
 			src << "<span class='warning'>You fail to perform CPR on [C]!</span>"
 			return 0
 
-		var/they_breathe = (!(NOBREATH in C.dna.species.specflags))
+		var/they_breathe = (!(NOBREATH in C.dna.species.species_traits))
 		var/they_lung = C.getorganslot("lungs")
 
 		if(C.health > HEALTH_THRESHOLD_CRIT)
@@ -831,11 +831,11 @@
 	if(admin_revive)
 		regenerate_limbs()
 
-		if(!(NOBREATH in dna.species.specflags) && !getorganslot("lungs"))
+		if(!(NOBREATH in dna.species.species_traits) && !getorganslot("lungs"))
 			var/obj/item/organ/lungs/L = new()
 			L.Insert(src)
 
-		if(!(NOBLOOD in dna.species.specflags) && !getorganslot("heart"))
+		if(!(NOBLOOD in dna.species.species_traits) && !getorganslot("heart"))
 			var/obj/item/organ/heart/H = new()
 			H.Insert(src)
 
@@ -903,7 +903,7 @@
 	..()
 
 /mob/living/carbon/human/vomit(lost_nutrition = 10, blood = 0, stun = 1, distance = 0, message = 1, toxic = 0)
-	if(blood && (NOBLOOD in dna.species.specflags))
+	if(blood && (NOBLOOD in dna.species.species_traits))
 		if(message)
 			visible_message("<span class='warning'>[src] dry heaves!</span>", \
 							"<span class='userdanger'>You try to throw up, but there's nothing in your stomach!</span>")
@@ -917,3 +917,14 @@
 	var/obj/item/device/flightpack/FP = get_flightpack()
 	if(FP)
 		FP.flight_impact(A)
+
+
+/mob/living/carbon/human/vv_get_dropdown()
+	. = ..()
+	. += "---"
+	.["Make monkey"] = "?_src_=vars;makemonkey=\ref[src]"
+	.["Set Species"] = "?_src_=vars;setspecies=\ref[src]"
+	.["Make cyborg"] = "?_src_=vars;makerobot=\ref[src]"
+	.["Make alien"] = "?_src_=vars;makealien=\ref[src]"
+	.["Make slime"] = "?_src_=vars;makeslime=\ref[src]"
+	.["Toggle Purrbation"] = "?_src_=vars;purrbation=\ref[src]"

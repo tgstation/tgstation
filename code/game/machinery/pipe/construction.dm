@@ -16,7 +16,7 @@ Buildable meters
 	icon = 'icons/obj/atmospherics/pipes/pipe_item.dmi'
 	icon_state = "simple"
 	item_state = "buildpipe"
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 	level = 2
 	var/flipped = 0
 	var/is_bent = 0
@@ -259,7 +259,7 @@ var/global/list/pipeID2State = list(
 	icon = 'icons/obj/atmospherics/pipes/pipe_item.dmi'
 	icon_state = "meter"
 	item_state = "buildpipe"
-	w_class = 4
+	w_class = WEIGHT_CLASS_BULKY
 
 /obj/item/pipe_meter/attackby(obj/item/weapon/W, mob/user, params)
 	..()

@@ -728,7 +728,7 @@ var/list/obj/machinery/newscaster/allCasters = list()
 				user << "<span class='notice'>You [anchored ? "un" : ""]secure [name].</span>"
 				new /obj/item/wallframe/newscaster(loc)
 			qdel(src)
-	else if(istype(I, /obj/item/weapon/weldingtool) && user.a_intent != "harm")
+	else if(istype(I, /obj/item/weapon/weldingtool) && user.a_intent != INTENT_HARM)
 		var/obj/item/weapon/weldingtool/WT = I
 		if(stat & BROKEN)
 			if(WT.remove_fuel(0,user))
@@ -775,7 +775,7 @@ var/list/obj/machinery/newscaster/allCasters = list()
 
 
 /obj/machinery/newscaster/attack_paw(mob/user)
-	if(user.a_intent != "harm")
+	if(user.a_intent != INTENT_HARM)
 		user << "<span class='warning'>The newscaster controls are far too complicated for your tiny brain!</span>"
 	else
 		take_damage(5, BRUTE, "melee")
@@ -884,7 +884,7 @@ var/list/obj/machinery/newscaster/allCasters = list()
 	desc = "An issue of The Griffon, the newspaper circulating aboard Nanotrasen Space Stations."
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "newspaper"
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	attack_verb = list("bapped")
 	var/screen = 0
 	var/pages = 0
@@ -899,7 +899,7 @@ var/list/obj/machinery/newscaster/allCasters = list()
 	var/creationTime
 
 /obj/item/weapon/newspaper/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is focusing intently on [src]! It looks like [user.p_theyre()] trying to commit sudoku... until their eyes light up with realization!</span>")
+	user.visible_message("<span class='suicide'>[user] is focusing intently on [src]! It looks like [user.p_theyre()] trying to commit sudoku... until [user.p_their()] eyes light up with realization!</span>")
 	user.say(";JOURNALISM IS MY CALLING! EVERYBODY APPRECIATES UNBIASED REPORTI-GLORF")
 	var/mob/living/carbon/human/H = user
 	var/obj/W = new /obj/item/weapon/reagent_containers/food/drinks/bottle/whiskey(H.loc)

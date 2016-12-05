@@ -27,7 +27,7 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 	var/hitsound = null
 	var/usesound = null
 	var/throwhitsound = null
-	var/w_class = 3
+	var/w_class = WEIGHT_CLASS_NORMAL
 	var/slot_flags = 0		//This is used to determine on which slots an item can fit.
 	pass_flags = PASSTABLE
 	pressure_resistance = 4
@@ -153,17 +153,17 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 	..()
 	var/size
 	switch(src.w_class)
-		if(1)
+		if(WEIGHT_CLASS_TINY)
 			size = "tiny"
-		if(2)
+		if(WEIGHT_CLASS_SMALL)
 			size = "small"
-		if(3)
+		if(WEIGHT_CLASS_NORMAL)
 			size = "normal-sized"
-		if(4)
+		if(WEIGHT_CLASS_BULKY)
 			size = "bulky"
-		if(5)
+		if(WEIGHT_CLASS_HUGE)
 			size = "huge"
-		if(6)
+		if(WEIGHT_CLASS_GIGANTIC)
 			size = "gigantic"
 		else
 	//if ((CLUMSY in usr.mutations) && prob(50)) t = "funny-looking"
@@ -384,8 +384,10 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 			A.Grant(user)
 
 //sometimes we only want to grant the item's action if it's equipped in a specific slot.
-obj/item/proc/item_action_slot_check(slot, mob/user)
-	return 1
+/obj/item/proc/item_action_slot_check(slot, mob/user)
+	if(slot == slot_in_backpack || slot == slot_legcuffed) //these aren't true slots, so avoid granting actions there
+		return FALSE
+	return TRUE
 
 //the mob M is attempting to equip this item into the slot passed through as 'slot'. Return 1 if it can do this and 0 if it can't.
 //if this is being done by a mob other than M, it will include the mob equipper, who is trying to equip the item to mob M. equipper will be null otherwise.

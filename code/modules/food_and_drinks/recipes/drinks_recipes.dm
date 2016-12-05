@@ -488,7 +488,7 @@
 /datum/chemical_reaction/grape_soda
 	name = "grape soda"
 	id = "grapesoda"
-	results = list("grape_soda" = 2)
+	results = list("grapesoda" = 2)
 	required_reagents = list("grapejuice" = 1, "sodawater" = 1)
 
 /datum/chemical_reaction/grappa

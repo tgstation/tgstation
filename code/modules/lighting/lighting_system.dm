@@ -27,12 +27,13 @@
 */
 
 #define LIGHTING_CIRCULAR 1									//Comment this out to use old square lighting effects.
+//#define LIGHTING_LAYER 15									//Drawing layer for lighting, moved to layers.dm
 #define LIGHTING_CAP 10										//The lumcount level at which alpha is 0 and we're fully lit.
 #define LIGHTING_CAP_FRAC (255/LIGHTING_CAP)				//A precal'd variable we'll use in turf/redraw_lighting()
 #define LIGHTING_ICON 'icons/effects/alphacolors.dmi'
-#define LIGHTING_ICON_STATE "white"
+#define LIGHTING_ICON_STATE ""
 #define LIGHTING_TIME 2									//Time to do any lighting change. Actual number pulled out of my ass
-#define LIGHTING_DARKEST_VISIBLE_ALPHA 5					//Anything darker than this is so dark, we'll just consider the whole tile unlit
+#define LIGHTING_DARKEST_VISIBLE_ALPHA 250					//Anything darker than this is so dark, we'll just consider the whole tile unlit
 #define LIGHTING_LUM_FOR_FULL_BRIGHT 6						//Anything who's lum is lower then this starts off less bright.
 #define LIGHTING_MIN_RADIUS 4								//Lowest radius a light source can effect.
 
@@ -238,8 +239,9 @@
 	layer = LIGHTING_LAYER
 	plane = LIGHTING_PLANE
 	mouse_opacity = 0
-	blend_mode = BLEND_ADD
+	blend_mode = BLEND_OVERLAY
 	invisibility = INVISIBILITY_LIGHTING
+	color = "#000"
 	luminosity = 0
 	infra_luminosity = 1
 	anchored = 1
@@ -342,21 +344,23 @@
 
 /turf/proc/redraw_lighting(instantly = 0)
 	if(lighting_object)
-		var/newalpha = 0
-		var/turf_lumcount = lighting_lumcount
-		if(turf_lumcount > 0)
-			if(turf_lumcount < LIGHTING_CAP)
-				newalpha = Clamp(turf_lumcount * LIGHTING_CAP_FRAC, 0, 255)
-			else //if(turf_lumcount >= LIGHTING_CAP)
-				newalpha = 255
-		if(newalpha <= LIGHTING_DARKEST_VISIBLE_ALPHA)
-			newalpha = 0
+		var/newalpha
+		if(lighting_lumcount <= 0)
+			newalpha = 255
+		else
+			if(lighting_lumcount < LIGHTING_CAP)
+				var/num = Clamp(lighting_lumcount * LIGHTING_CAP_FRAC, 0, 255)
+				newalpha = 255-num
+			else //if(lighting_lumcount >= LIGHTING_CAP)
+				newalpha = 0
+		if(newalpha >= LIGHTING_DARKEST_VISIBLE_ALPHA)
+			newalpha = 255
 		if(lighting_object.alpha != newalpha)
 			if(instantly)
 				lighting_object.alpha = newalpha
 			else
 				animate(lighting_object, alpha = newalpha, time = LIGHTING_TIME)
-			if(newalpha <= LIGHTING_DARKEST_VISIBLE_ALPHA)
+			if(newalpha >= LIGHTING_DARKEST_VISIBLE_ALPHA)
 				luminosity = 0
 				lighting_object.luminosity = 0
 			else
@@ -378,12 +382,10 @@
 	. = ..()
 	if(lighting_use_dynamic != DYNAMIC_LIGHTING_ENABLED)
 		luminosity = 1
-		overlays += /obj/effect/fullbright
 
 /area/proc/SetDynamicLighting()
 	if (lighting_use_dynamic == DYNAMIC_LIGHTING_DISABLED)
 		lighting_use_dynamic = DYNAMIC_LIGHTING_ENABLED
-		overlays.Cut()
 	luminosity = 0
 	for(var/turf/T in src.contents)
 		T.init_lighting()

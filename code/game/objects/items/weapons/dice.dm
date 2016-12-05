@@ -35,7 +35,7 @@
 	desc = "A die with six sides. Basic and servicable."
 	icon = 'icons/obj/dice.dmi'
 	icon_state = "d6"
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 	var/sides = 6
 	var/result = null
 	var/list/special_faces = list() //entries should match up to sides var if used
@@ -176,7 +176,7 @@
 
 /obj/item/weapon/dice/d4/Crossed(mob/living/carbon/human/H)
 	if(istype(H) && !H.shoes)
-		if(PIERCEIMMUNE in H.dna.species.specflags)
+		if(PIERCEIMMUNE in H.dna.species.species_traits)
 			return 0
 		H << "<span class='userdanger'>You step on the D4!</span>"
 		H.apply_damage(4,BRUTE,(pick("l_leg", "r_leg")))
@@ -185,7 +185,7 @@
 /obj/item/weapon/dice/update_icon()
 	cut_overlays()
 	add_overlay("[src.icon_state][src.result]")
-	
+
 /obj/item/weapon/dice/microwave_act(obj/machinery/microwave/M)
 	if(can_be_rigged)
 		rigged = result

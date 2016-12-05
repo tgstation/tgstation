@@ -20,7 +20,7 @@
 	actions_types = list(/datum/action/item_action/flightpack/toggle_flight, /datum/action/item_action/flightpack/engage_boosters, /datum/action/item_action/flightpack/toggle_stabilizers, /datum/action/item_action/flightpack/change_power, /datum/action/item_action/flightpack/toggle_airbrake)
 	armor = list(melee = 20, bullet = 20, laser = 20, energy = 10, bomb = 30, bio = 100, rad = 75, fire = 100, acid = 100)
 
-	w_class = 4
+	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = SLOT_BACK
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 
@@ -180,7 +180,7 @@
 		wearer = owner
 	if(!suit)
 		usermessage("The flightpack will not work without being attached to a suit first!")
-		return 0
+		return FALSE
 	if(istype(action, /datum/action/item_action/flightpack/toggle_flight))
 		if(!flight)
 			enable_flight()
@@ -241,7 +241,7 @@
 //The wearer has momentum left. Move them and take some away, while negating the momentum that moving the wearer would gain. Or force the wearer to lose control if they are incapacitated.
 /obj/item/device/flightpack/proc/momentum_drift()
 	if(!flight)
-		return 0
+		return FALSE
 	var/drift_x = 0
 	var/drift_dir_x = 0
 	var/drift_y = 0
@@ -259,7 +259,7 @@
 		drift_y = 1
 		drift_dir_y = SOUTH
 	if(momentum_speed == 0)
-		return 0
+		return FALSE
 	if(suit)
 		if(wearer)
 			if(!wearer.canmove)
@@ -334,16 +334,22 @@
 
 /obj/item/device/flightpack/process()
 	if(!suit)
-		return 0
+		return FALSE
 	update_slowdown()
 	update_icon()
 	check_conditions()
-	handle_flight()
 	calculate_momentum_speed()
 	momentum_drift_tick++
 	momentum_drift()
 	handle_boost()
 	handle_damage()
+	handle_flight()
+
+/obj/item/device/flightpack/proc/handle_flight()
+	if(!flight)
+		return FALSE
+	if(wearer)
+		wearer.float(1)
 
 
 /obj/item/device/flightpack/proc/handle_damage()
@@ -391,10 +397,6 @@
 		wearer.update_inv_back()
 	..()
 
-/obj/item/device/flightpack/proc/handle_flight()
-	if(!flight)
-		return 0
-
 /obj/item/device/flightpack/proc/handle_boost()
 	if(boost)
 		boost_charge = Clamp(boost_charge-boost_drain, 0, boost_maxcharge)
@@ -439,12 +441,12 @@
 
 /obj/item/device/flightpack/proc/flight_impact(atom/unmovablevictim)	//Yes, victim.
 	if(unmovablevictim == wearer)
-		return 0
+		return FALSE
 	var/atom/movable/victim = null
 	var/dir = null
 	var/mobonly = 0
 	if(crashing)	//We're already in the process of getting knocked around by a crash.
-		return 0
+		return FALSE
 	if((flight && momentum_speed > 2) || boost)
 		crashing = 1
 		dir = wearer.dir
@@ -453,7 +455,7 @@
 		dir = wearer.dir
 		mobonly = 1
 	else
-		return 0
+		return FALSE
 	dir = wearer.dir
 	var/density = 0
 	var/anchored = 1
@@ -480,7 +482,7 @@
 
 /obj/item/device/flightpack/proc/mobknockback(density, anchored, momentum_speed, mob/living/L, dir)
 	if(!ismob(L))
-		return 0
+		return FALSE
 	var/knockmessage = "<span class='warning'>[L] is knocked back by [wearer] as they narrowly avoid a collision!"
 	var/knockback = 0
 	var/stun = boost * 2
@@ -502,7 +504,7 @@
 
 /obj/item/device/flightpack/proc/victimknockback(density, anchored, momentum_speed, atom/movable/victim, dir)
 	if(!victim)
-		return 0
+		return FALSE
 	var/knockback = 0
 	var/damage = 0
 	var/stun = 0
@@ -562,7 +564,7 @@
 /obj/item/device/flightpack/proc/disable_flight(forced = 0)
 	if(forced)
 		losecontrol(stun = TRUE)
-		return 1
+		return TRUE
 	if(abs(momentum_x) <= 20 && abs(momentum_y) <= 20)
 		momentum_x = 0
 		momentum_y = 0
@@ -578,11 +580,11 @@
 	else
 		if(override_safe)
 			disable_flight(1)
-			return 1
+			return TRUE
 		usermessage("Warning: Velocity too high to safely disengage. Retry to confirm emergency shutoff.", 2)
 		override_safe = 1
 		addtimer(src, "enable_safe", 50)
-		return 0
+		return FALSE
 	update_icon()
 
 /obj/item/device/flightpack/proc/enable_safe()
@@ -594,7 +596,7 @@
 
 /obj/item/device/flightpack/item_action_slot_check(slot)
 	if(slot == SLOT_BACK)
-		return 1
+		return TRUE
 
 /obj/item/device/flightpack/equipped(mob/user, slot)
 	if(ishuman(user))
@@ -623,7 +625,7 @@
 
 /obj/item/device/flightpack/item_action_slot_check(slot)
 	if(slot == slot_back)
-		return 1
+		return TRUE
 
 /obj/item/device/flightpack/proc/enable_stabilizers()
 	usermessage("Activating automatic stabilization controller and enabling maneuvering assistance.")
@@ -641,7 +643,7 @@
 		usermessage("Error: Engines offline!", 2)
 	if(boost_charge < 5)
 		usermessage("Insufficient charge in boost capacitors to engage.", 2)
-		return 0
+		return FALSE
 	usermessage("Boosters engaged!")
 	wearer.visible_message("<span class='notice'>[wearer.name]'s flightpack engines flare in intensity as they are rocketed forward by the immense thrust!</span>")
 	boost = 1
@@ -672,7 +674,7 @@
 
 /obj/item/device/flightpack/proc/relink_suit(obj/item/clothing/suit/space/hardsuit/flightsuit/F)
 	if(suit && suit == F)
-		return 0
+		return FALSE
 	else
 		delink_suit()
 	if(istype(F))
@@ -744,11 +746,11 @@
 	if(istype(F))
 		return F
 	else
-		return 0
+		return FALSE
 
 /obj/item/device/flightpack/proc/allow_thrust(amount)
 	if(flight)
-		return 1
+		return TRUE
 
 //FLIGHT SHOES-----------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -780,7 +782,7 @@
 
 /obj/item/clothing/shoes/flightshoes/item_action_slot_check(slot)
 	if(slot == slot_shoes)
-		return 1
+		return TRUE
 
 /obj/item/clothing/shoes/flightshoes/proc/delink_suit()
 	if(suit)
@@ -790,7 +792,7 @@
 
 /obj/item/clothing/shoes/flightshoes/proc/relink_suit(obj/item/clothing/suit/space/hardsuit/flightsuit/F)
 	if(suit && suit == F)
-		return 0
+		return FALSE
 	else
 		delink_suit()
 	if(istype(F))
@@ -809,7 +811,7 @@
 	item_state = "flightsuit"
 	strip_delay = 30
 	var/locked_strip_delay = 80
-	w_class = 4
+	w_class = WEIGHT_CLASS_BULKY
 	var/obj/item/device/flightpack/pack = null
 	var/obj/item/clothing/shoes/flightshoes/shoes = null
 	var/mob/living/carbon/human/user = null
@@ -915,7 +917,7 @@
 	if(!suittoggled)
 		if(!locked)
 			usermessage("You must lock your suit before engaging the helmet!", 1)
-			return 0
+			return FALSE
 	..()
 
 /obj/item/clothing/suit/space/hardsuit/flightsuit/proc/lock_suit(mob/wearer)
@@ -925,42 +927,42 @@
 	resync()
 	strip_delay = locked_strip_delay
 	locked = 1
-	return 1
+	return TRUE
 
 /obj/item/clothing/suit/space/hardsuit/flightsuit/proc/unlock_suit(mob/wearer)
 	if(suittoggled)
 		usermessage("You must retract the helmet before unlocking your suit!", 1)
-		return 0
+		return FALSE
 	if(pack && pack.flight)
 		usermessage("You must shut off the flight-pack before unlocking your suit!", 1)
-		return 0
+		return FALSE
 	if(deployedpack)
 		usermessage("Your flightpack must be fully retracted first!", 1)
-		return 0
+		return FALSE
 	if(deployedshoes)
 		usermessage("Your flight shoes must be fully retracted first!", 1)
-		return 0
+		return FALSE
 	if(wearer)
 		user.visible_message("<span class='notice'>[wearer]'s flight suit detaches from their body, becoming nothing more then a bulky metal skeleton.</span>")
 	playsound(src.loc, 'sound/items/rped.ogg', 65, 1)
 	resync()
 	strip_delay = initial(strip_delay)
 	locked = 0
-	return 1
+	return TRUE
 
 /obj/item/clothing/suit/space/hardsuit/flightsuit/proc/extend_flightpack(forced = 0)
 	if(!pack)
 		usermessage("There is no attached flightpack!", 1)
-		return 0
+		return FALSE
 	if(deployedpack)
 		retract_flightpack()
 	if(!locked)
 		usermessage("You must lock your flight suit first before deploying anything!", 1)
-		return 0
+		return FALSE
 	if(ishuman(user))
 		if(user.back)
 			usermessage("You're already wearing something on your back!", 1)
-			return 0
+			return FALSE
 		user.equip_to_slot_if_possible(pack,slot_back,0,0,1)
 		pack.flags |= NODROP
 		resync()
@@ -973,7 +975,7 @@
 	if(ishuman(user))
 		if(pack.flight && !forced)
 			usermessage("You must disable the engines before retracting the flightpack!", 1)
-			return 0
+			return FALSE
 		if(pack.flight && forced)
 			pack.disable_flight(1)
 		pack.flags &= ~NODROP
@@ -989,16 +991,16 @@
 /obj/item/clothing/suit/space/hardsuit/flightsuit/proc/extend_flightshoes(forced = 0)
 	if(!shoes)
 		usermessage("Flight shoes are not installed!", 1)
-		return 0
+		return FALSE
 	if(deployedshoes)
 		retract_flightshoes()
 	if(!locked)
 		usermessage("You must lock your flight suit first before deploying anything!", 1)
-		return 0
+		return FALSE
 	if(ishuman(user))
 		if(user.shoes)
 			usermessage("You're already wearing something on your feet!", 1)
-			return 0
+			return FALSE
 		user.equip_to_slot_if_possible(shoes,slot_shoes,0,0,1)
 		shoes.flags |= NODROP
 		user.visible_message("<span class='notice'>[user]'s [name] extends a pair of [shoes.name] over their feet!</span>")
@@ -1067,10 +1069,10 @@
 	user = wearer
 	if(src == user.get_item_by_slot(slot_wear_suit))
 		usermessage("You can not perform any service without taking the suit off!", 1)
-		return 0
+		return FALSE
 	if(locked)
 		usermessage("You can not perform any service while the suit is locked!", 1)
-		return 0
+		return FALSE
 	if(istype(I, /obj/item/weapon/screwdriver))
 		if(!maint_panel)
 			maint_panel = 1
@@ -1079,7 +1081,7 @@
 		usermessage("You [maint_panel? "open" : "close"] the maintainence panel.")
 	if(!maint_panel)
 		usermessage("The maintainence panel is closed!", 1)
-		return 0
+		return FALSE
 	if(istype(I, /obj/item/weapon/crowbar))
 		var/list/inputlist = list()
 		if(pack)
@@ -1088,26 +1090,26 @@
 			inputlist += "Shoes"
 		if(!inputlist.len)
 			usermessage("There is nothing inside the flightsuit to remove!", 1)
-			return 0
+			return FALSE
 		var/input = input(user, "What to remove?", "Removing module") as null|anything in list("Pack", "Shoes")
 		if(pack && input == "Pack")
 			if(pack.flight)
 				usermessage("You can not pry off an active flightpack!", 1)
-				return 0
+				return FALSE
 			if(deployedpack)
 				usermessage("Disengage the flightpack first!", 1)
-				return 0
+				return FALSE
 			detach_pack()
 		if(shoes && input == "Shoes")
 			if(deployedshoes)
 				usermessage("Disengage the shoes first!", 1)
-				return 0
+				return FALSE
 			detach_shoes()
 	if(istype(I, /obj/item/device/flightpack))
 		var/obj/item/device/flightpack/F = I
 		if(pack)
 			usermessage("[src] already has a flightpack installed!", 1)
-			return 0
+			return FALSE
 		if(!F.assembled)
 			var/addmsg = " It is missing a "
 			var/list/addmsglist = list()
@@ -1123,14 +1125,14 @@
 				addmsglist += "matter bin"
 			addmsg += english_list(addmsglist)
 			usermessage("The flightpack you are trying to install is not fully assembled and operational![addmsg].", 1)
-			return 0
+			return FALSE
 		if(user.unEquip(F))
 			attach_pack(F)
 	if(istype(I, /obj/item/clothing/shoes/flightshoes))
 		var/obj/item/clothing/shoes/flightshoes/S = I
 		if(shoes)
 			usermessage("There are already shoes installed!", 1)
-			return 0
+			return FALSE
 		if(user.unEquip(S))
 			attach_shoes(S)
 

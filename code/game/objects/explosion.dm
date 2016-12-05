@@ -2,8 +2,23 @@
 
 /proc/explosion(turf/epicenter, devastation_range, heavy_impact_range, light_impact_range, flash_range, adminlog = 1, ignorecap = 0, flame_range = 0 ,silent = 0, smoke = 1)
 	set waitfor = 0
-	src = null	//so we don't abort once src is deleted
+	src = null //so we don't abort once src is deleted
 	epicenter = get_turf(epicenter)
+	if(!epicenter)
+		return
+
+	// Archive the uncapped explosion for the doppler array
+	var/orig_dev_range = devastation_range
+	var/orig_heavy_range = heavy_impact_range
+	var/orig_light_range = light_impact_range
+
+	if(!ignorecap && epicenter.z != ZLEVEL_MINING)
+		//Clamp all values to MAX_EXPLOSION_RANGE
+		devastation_range = min(MAX_EX_DEVESTATION_RANGE, devastation_range)
+		heavy_impact_range = min(MAX_EX_HEAVY_RANGE, heavy_impact_range)
+		light_impact_range = min(MAX_EX_LIGHT_RANGE, light_impact_range)
+		flash_range = min(MAX_EX_FLASH_RANGE, flash_range)
+		flame_range = min(MAX_EX_FLAME_RANGE, flame_range)
 
 	//DO NOT REMOVE THIS SLEEP, IT BREAKS THINGS
 	//not sleeping causes us to ex_act() the thing that triggered the explosion
@@ -14,21 +29,7 @@
 	//and somethings expect us to ex_act them so they can qdel()
 	sleep(1) //tldr, let the calling proc call qdel(src) before we explode
 
-	// Archive the uncapped explosion for the doppler array
-	var/orig_dev_range = devastation_range
-	var/orig_heavy_range = heavy_impact_range
-	var/orig_light_range = light_impact_range
-
-	if(!ignorecap && epicenter.z != ZLEVEL_MINING)
-		// Clamp all values to MAX_EXPLOSION_RANGE
-		devastation_range = min (MAX_EX_DEVESTATION_RANGE, devastation_range)
-		heavy_impact_range = min (MAX_EX_HEAVY_RANGE, heavy_impact_range)
-		light_impact_range = min (MAX_EX_LIGHT_RANGE, light_impact_range)
-		flash_range = min (MAX_EX_FLASH_RANGE, flash_range)
-		flame_range = min (MAX_EX_FLAME_RANGE, flame_range)
-
 	var/start = world.timeofday
-	if(!epicenter) return
 
 	var/max_range = max(devastation_range, heavy_impact_range, light_impact_range, flame_range)
 	var/list/cached_exp_block = list()
@@ -246,7 +247,7 @@
 		T.color = null
 		T.maptext = ""
 
-proc/dyn_explosion(turf/epicenter, power, flash_range, adminlog = 1, ignorecap = 1, flame_range = 0 ,silent = 0, smoke = 1)
+/proc/dyn_explosion(turf/epicenter, power, flash_range, adminlog = 1, ignorecap = 1, flame_range = 0 ,silent = 0, smoke = 1)
 	if(!power)
 		return
 	var/range = 0

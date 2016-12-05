@@ -49,31 +49,6 @@
 #define PASSMOB			16
 #define LETPASSTHROW	32
 
-//flags for species
-
-#define MUTCOLORS		1
-#define HAIR			2
-#define FACEHAIR		3
-#define EYECOLOR		4
-#define LIPS			5
-#define RESISTTEMP		6
-#define RADIMMUNE		7
-#define NOBREATH		8
-#define NOGUNS			9
-#define NOBLOOD			10
-#define NOFIRE			11
-#define VIRUSIMMUNE		12
-#define PIERCEIMMUNE	13
-#define NOTRANSSTING	14
-#define MUTCOLORS_PARTSONLY	15	//Used if we want the mutant colour to be only used by mutant bodyparts. Don't combine this with MUTCOLORS, or it will be useless.
-#define NODISMEMBER		16
-#define NOHUNGER		17
-#define NOCRITDAMAGE	18
-#define NOZOMBIE		19
-#define EASYDISMEMBER	20
-#define EASYLIMBATTACHMENT 21
-#define TOXINLOVER		22
-#define DIGITIGRADE		23	//Uses weird leg sprites. Optional for Lizards, required for ashwalkers. Don't give it to other races unless you make sprites for this (see human_parts_greyscale.dmi)
 
 //Movement Types
 #define IMMOBILE 0

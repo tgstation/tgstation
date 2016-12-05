@@ -8,7 +8,7 @@
 	flags = CONDUCT | NOBLUDGEON
 	slot_flags = SLOT_BELT
 	materials = list(MAT_METAL=500, MAT_GLASS=500)
-	w_class = 2 //Increased to 2, because diodes are w_class 2. Conservation of matter.
+	w_class = WEIGHT_CLASS_SMALL
 	origin_tech = "combat=1;magnets=2"
 	var/turf/pointer_loc
 	var/energy = 5
@@ -71,7 +71,7 @@
 		return
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
-		if(H.dna.check_mutation(HULK) || (NOGUNS in H.dna.species.specflags))
+		if(H.dna.check_mutation(HULK) || (NOGUNS in H.dna.species.species_traits))
 			user << "<span class='warning'>Your fingers can't press the button!</span>"
 			return
 

@@ -11,7 +11,7 @@
 	gender = NEUTER
 	health = 350
 	maxHealth = 350
-	ventcrawler = 0
+	ventcrawler = VENTCRAWLER_NONE
 	density = 1
 	pass_flags =  0
 	var/ascended = 0

@@ -243,7 +243,9 @@ Judgement: 12 servants, 5 caches, 300 CV, and any existing AIs are converted or 
 		invoker.visible_message(observer_message, creator_message)
 	else if(creator_message)
 		invoker << creator_message
-	new object_path (get_turf(invoker))
+	var/obj/O = new object_path (get_turf(invoker))
+	if(istype(O, /obj/item))
+		invoker.put_in_hands(O)
 	return TRUE
 
 //Uses a ranged slab ability, returning only when the ability no longer exists(ie, when interrupted) or finishes.

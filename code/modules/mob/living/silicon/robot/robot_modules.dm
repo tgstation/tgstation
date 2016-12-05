@@ -2,7 +2,7 @@
 	name = "Default"
 	icon = 'icons/obj/module.dmi'
 	icon_state = "std_module"
-	w_class = 100
+	w_class = WEIGHT_CLASS_GIGANTIC
 	item_state = "electronic"
 	flags = CONDUCT
 
@@ -38,7 +38,6 @@
 		var/obj/item/I = new i(src)
 		ratvar_modules += I
 		ratvar_modules -= i
-	rebuild_modules()
 
 /obj/item/weapon/robot_module/Destroy()
 	basic_modules.Cut()
@@ -163,7 +162,8 @@
 	for(var/obj/item/I in added_modules)
 		add_module(I, FALSE, FALSE)
 	for(var/i in held_modules)
-		R.activate_module(i)
+		if(i)
+			R.activate_module(i)
 	if(R.hud_used)
 		R.hud_used.update_robot_modules_display()
 
@@ -174,6 +174,7 @@
 		qdel(RM)
 		return
 	R.module = RM
+	RM.rebuild_modules()
 	addtimer(RM, "do_transform_animation", 0)
 	qdel(src)
 	return RM
@@ -226,8 +227,8 @@
 	/obj/item/weapon/reagent_containers/glass/beaker/large, /obj/item/weapon/reagent_containers/dropper, \
 	/obj/item/weapon/reagent_containers/syringe, /obj/item/weapon/surgical_drapes, /obj/item/weapon/retractor, \
 	/obj/item/weapon/hemostat, /obj/item/weapon/cautery, /obj/item/weapon/surgicaldrill, /obj/item/weapon/scalpel, \
-	/obj/item/weapon/circular_saw, /obj/item/weapon/extinguisher/mini, /obj/item/roller/robo, /obj/item/borg/cyborghug, \
-	/obj/item/stack/medical/gauze/cyborg)
+	/obj/item/weapon/circular_saw, /obj/item/weapon/extinguisher/mini, /obj/item/roller/robo, /obj/item/borg/cyborghug/medical, \
+	/obj/item/stack/medical/gauze/cyborg, /obj/item/borg/lollipop)
 	emag_modules = list(/obj/item/weapon/reagent_containers/borghypo/hacked)
 	ratvar_modules = list(/obj/item/clockwork/slab/cyborg/medical)
 	cyborg_base_icon = "medical"
@@ -332,7 +333,7 @@
 	basic_modules = list(/obj/item/device/assembly/flash/cyborg, /obj/item/weapon/reagent_containers/food/drinks/drinkingglass, /obj/item/weapon/reagent_containers/food/condiment/enzyme, \
 	/obj/item/weapon/pen, /obj/item/toy/crayon/spraycan/borg, /obj/item/weapon/hand_labeler/borg, /obj/item/weapon/razor, \
 	/obj/item/device/instrument/violin, /obj/item/device/instrument/guitar, /obj/item/weapon/rsf/cyborg, /obj/item/weapon/reagent_containers/dropper, \
-	/obj/item/weapon/lighter, /obj/item/weapon/storage/bag/tray, /obj/item/weapon/reagent_containers/borghypo/borgshaker)
+	/obj/item/weapon/lighter, /obj/item/weapon/storage/bag/tray, /obj/item/weapon/reagent_containers/borghypo/borgshaker, /obj/item/borg/lollipop)
 	emag_modules = list(/obj/item/weapon/reagent_containers/borghypo/borgshaker/hacked)
 	ratvar_modules = list(/obj/item/clockwork/slab/cyborg/service, /obj/item/borg/sight/xray/truesight_lens)
 	moduleselect_icon = "service"
@@ -391,7 +392,7 @@
 	basic_modules = list(/obj/item/device/assembly/flash/cyborg, /obj/item/weapon/reagent_containers/borghypo/syndicate, /obj/item/weapon/twohanded/shockpaddles/syndicate, \
 	/obj/item/device/healthanalyzer, /obj/item/weapon/surgical_drapes, /obj/item/weapon/retractor, /obj/item/weapon/hemostat, \
 	/obj/item/weapon/cautery, /obj/item/weapon/scalpel, /obj/item/weapon/melee/energy/sword/cyborg/saw, /obj/item/roller/robo, \
-	/obj/item/weapon/card/emag, /obj/item/weapon/crowbar/cyborg, /obj/item/weapon/pinpointer/syndicate/cyborg, /obj/item/stack/medical/gauze/cyborg)
+	/obj/item/weapon/card/emag, /obj/item/weapon/crowbar/cyborg, /obj/item/weapon/pinpointer/syndicate/cyborg, /obj/item/stack/medical/gauze/cyborg, /obj/item/weapon/gun/medbeam)
 	ratvar_modules = list(/obj/item/clockwork/slab/cyborg/medical, /obj/item/clockwork/ratvarian_spear)
 	cyborg_base_icon = "synd_medical"
 	moduleselect_icon = "malf"

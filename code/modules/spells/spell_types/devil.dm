@@ -196,3 +196,56 @@
 		H.influenceSin()
 		H.Weaken(2)
 		H.Stun(2)
+
+
+/obj/effect/proc_holder/spell/targeted/summon_dancefloor
+	name = "Summon Dancefloor"
+	desc = "When what a Devil really needs is funk."
+	include_user = 1
+	range = -1
+	clothes_req = 0
+
+	school = "conjuration"
+	charge_max = 10
+	cooldown_min = 50 //5 seconds, so the smoke can't be spammed
+	action_icon_state = "funk"
+	action_background_icon_state = "bg_demon"
+
+	var/list/dancefloor_turfs
+	var/list/dancefloor_turfs_types
+	var/dancefloor_exists = FALSE
+	var/datum/effect_system/smoke_spread/transparent/dancefloor_devil/smoke
+
+
+/obj/effect/proc_holder/spell/targeted/summon_dancefloor/cast(list/targets, mob/user = usr)
+	LAZYINITLIST(dancefloor_turfs)
+	LAZYINITLIST(dancefloor_turfs_types)
+
+	if(!smoke)
+		smoke = new()
+	smoke.set_up(0, get_turf(user))
+	smoke.start()
+
+	if(dancefloor_exists)
+		dancefloor_exists = FALSE
+		for(var/i in 1 to dancefloor_turfs.len)
+			var/turf/T = dancefloor_turfs[i]
+			T.ChangeTurf(dancefloor_turfs_types[i])
+	else
+		dancefloor_exists = TRUE
+		var/i = 1
+		var/list/funky_turfs = RANGE_TURFS(1, user)
+		dancefloor_turfs.len = funky_turfs.len
+		dancefloor_turfs_types.len = funky_turfs.len
+		for(var/t in funky_turfs)
+			var/turf/T = t
+			dancefloor_turfs[i] = T
+			dancefloor_turfs_types[i] = T.type
+			T.ChangeTurf((i % 2 == 0) ? /turf/open/floor/light/colour_cycle/dancefloor_a : /turf/open/floor/light/colour_cycle/dancefloor_b)
+			i++
+
+/datum/effect_system/smoke_spread/transparent/dancefloor_devil
+	effect_type = /obj/effect/particle_effect/smoke/transparent/dancefloor_devil
+
+/obj/effect/particle_effect/smoke/transparent/dancefloor_devil
+	lifetime = 2
