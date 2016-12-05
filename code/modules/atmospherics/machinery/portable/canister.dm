@@ -72,7 +72,7 @@
 	name = "BZ canister"
 	desc = "BZ, a powerful hallucinogenic nerve agent."
 	icon_state = "purple"
-	gas_type = "bz"
+	gas_type = GAS_BZ
 
 /obj/machinery/portable_atmospherics/canister/nitrous_oxide
 	name = "n2o canister"
@@ -319,7 +319,7 @@
 				if(!holding)
 					var/plasma = air_contents.gases[GAS_PLASMA]
 					var/n2o = air_contents.gases[GAS_N2O]
-					var/bz = air_contents.gases["bz"]
+					var/bz = air_contents.gases[GAS_BZ]
 					var/freon = air_contents.gases[GAS_FREON]
 					if(n2o || plasma || bz || freon)
 						message_admins("[key_name_admin(usr)] (<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[usr]'>FLW</A>) opened a canister that contains the following: (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)")

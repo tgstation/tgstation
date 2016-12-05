@@ -308,7 +308,7 @@
 
 	var/list/breath_gases = breath.gases
 
-	breath.assert_gases(GAS_O2, GAS_PLASMA, GAS_CO2, GAS_N2O, "bz")
+	breath.assert_gases(GAS_O2, GAS_PLASMA, GAS_CO2, GAS_N2O, GAS_BZ)
 
 	//Partial pressures in our breath
 	var/O2_pp = breath.get_breath_partial_pressure(breath_gases[GAS_O2][MOLES])
@@ -429,7 +429,7 @@
 
 	// BZ
 
-		var/bz_pp = breath.get_breath_partial_pressure(breath_gases["bz"][MOLES])
+		var/bz_pp = breath.get_breath_partial_pressure(breath_gases[GAS_BZ][MOLES])
 		if(bz_pp > BZ_trip_balls_min)
 			H.hallucination += 20
 			if(prob(33))

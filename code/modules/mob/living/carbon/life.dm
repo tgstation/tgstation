@@ -118,7 +118,7 @@
 	var/breath_pressure = (breath.total_moles()*R_IDEAL_GAS_EQUATION*breath.temperature)/BREATH_VOLUME
 
 	var/list/breath_gases = breath.gases
-	breath.assert_gases(GAS_O2,GAS_PLASMA,GAS_CO2,GAS_N2O, "bz")
+	breath.assert_gases(GAS_O2,GAS_PLASMA,GAS_CO2,GAS_N2O, GAS_BZ)
 
 	var/O2_partialpressure = (breath_gases[GAS_O2][MOLES]/breath.total_moles())*breath_pressure
 	var/Toxins_partialpressure = (breath_gases[GAS_PLASMA][MOLES]/breath.total_moles())*breath_pressure
@@ -185,8 +185,8 @@
 				emote(pick("giggle","laugh"))
 
 	//BZ (Facepunch port of their Agent B)
-	if(breath_gases["bz"])
-		var/bz_partialpressure = (breath_gases["bz"][MOLES]/breath.total_moles())*breath_pressure
+	if(breath_gases[GAS_BZ])
+		var/bz_partialpressure = (breath_gases[GAS_BZ][MOLES]/breath.total_moles())*breath_pressure
 		if(bz_partialpressure > 1)
 			hallucination += 20
 		else if(bz_partialpressure > 0.01)
