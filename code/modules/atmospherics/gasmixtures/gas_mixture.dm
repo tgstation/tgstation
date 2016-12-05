@@ -95,7 +95,7 @@ var/list/gaslist_cache
 	var/list/cached_gases = gases
 	for(var/id in (tocheck || cached_gases))
 		if(cached_gases[id][MOLES] <= 0 && cached_gases[id][ARCHIVE] <= 0)
-			cached_gases -= id
+			cached_gases[id] = null
 
 	//PV = nRT
 /datum/gas_mixture/proc/heat_capacity() //joules per kelvin
@@ -430,7 +430,8 @@ var/list/gaslist_cache
 		temperature = text2num(gas["TEMP"])
 		gas -= "TEMP"
 	gases.Cut()
-	for(var/id in gas)
+	for(var/shorthand in gas)
+		var/id = shorthand2gasid(shorthand)
 		add_gas(id)
 		gases[id][MOLES] = text2num(gas[id])
 	return 1

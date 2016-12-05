@@ -84,3 +84,46 @@
 /obj/effect/overlay/gas/New(state)
 	. = ..()
 	icon_state = state
+
+/proc/gasid2shorthand(id)
+	switch(id)
+		if(GAS_O2)
+			return "o2"
+		if(GAS_N2)
+			return "n2"
+		if(GAS_CO2)
+			return "co2"
+		if(GAS_PLASMA)
+			return "plasma"
+		if(GAS_WV)
+			return "water_vapor"
+		if(GAS_BZ)
+			return "bz"
+		if(GAS_VF)
+			return "v_fuel"
+		if(GAS_FREON)
+			return "freon"
+		if(GAS_AGENTB)
+			return "agent_b"
+
+
+/proc/shorthand2gasid(shorthand)
+	switch(shorthand)
+		if("o2")
+			return GAS_O2
+		if("n2")
+			return GAS_N2
+		if("co2")
+			return GAS_CO2
+		if("plasma")
+			return GAS_PLASMA
+		if("water_vapor")
+			return GAS_WV
+		if("bz")
+			return GAS_BZ
+		if("v_fuel")
+			return GAS_VF
+		if("freon")
+			return GAS_FREON
+		if("agent_b")
+			return GAS_AGENTB
