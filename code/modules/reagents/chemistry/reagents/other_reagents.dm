@@ -1382,11 +1382,23 @@
 	var/current_size = 1
 
 /datum/reagent/growthserum/on_mob_life(mob/living/carbon/H)
-	if(volume >= 20 && current_size != 2)
+	if(volume >=200 && current_size != 5)
+		H.resize = 5/current_size
+		current_size = 5
+		H.update_transform()
+	else if(volume >= 100 && volume < 200 && current_size != 3.5)
+		H.resize = 3.5/current_size
+		current_size = 3.5
+		H.update_transform()
+	else if(volume >= 50 && volume < 100 && current_size != 2.5)
+		H.resize = 2.5/current_size
+		current_size = 2.5
+		H.update_transform()
+	else if(volume >= 20 && volume < 50 && current_size != 2)
 		H.resize = 2/current_size
 		current_size = 2
 		H.update_transform()
-	else if (current_size != 1.5)
+	else if (volume < 20 && current_size != 1.5)
 		H.resize = 1.5/current_size
 		current_size = 1.5
 		H.update_transform()
