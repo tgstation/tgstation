@@ -160,7 +160,7 @@ As a Servant, remember that while the selection of scripture and tools Servant c
 As a Servant, the Judicial Visor is an effective defensive combat tool in small spaces, as it stuns and mutes anyone still on it after 3 seconds. It is also useful for stunning already-stunned enemies for long enough to convert them or finish them off.
 As a Servant, making, and protecting, Tinkerer's Caches is extremely important, as caches are required to unlock scripture and share components.
 As a Servant, Ocular Wardens, while fragile, do very high, rapid damage to a target non-servant that can see them and will even attack mechs that contain heretics. Place them behind objects that don't block vision to get the most use out of them.
-As a Servant, Mending Motors can be powere by striking it with replicant alloy, in addition to Sigils of Transmission and APC power, and will rapidly repair all nearby damaged clockwork constructs, structures, and Servant silicons.
+As a Servant, Mending Motors can be powered by striking it with replicant alloy, in addition to Sigils of Transmission and APC power, and will rapidly repair all nearby damaged clockwork constructs, structures, and Servant silicons.
 As a Servant, Clockwork Structures that require power will draw power from the APC if they cannot find a different source of power, and most power-using Structures will rapidly drain the APC.
 As a Servant, you can repair Clockwork Structures with a Clockwork Proselytizer at a rate of 1 liquified alloy to 1 health.
 As a Servant, securing a reliable source of component generation is high-priority, as simply handing out slabs will slowly become inefficient. Try placing Tinkerer's Caches near clockwork walls or creating and powering Tinkerer's Daemons.
