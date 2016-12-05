@@ -128,7 +128,7 @@ Actual Adjacent procs :
 			 //is not already in open list, so add it
 				var/PathNode/newnode = new /PathNode(T,cur,newg,call(T,dist)(end),cur.nt+1)
 				open.Insert(newnode)
-				pnodelist += newnode
+				pnodelist[T] = newnode
 			else //is already in open list, check if it's a better way from the current turf
 				if(newg < P.g)
 					P.prevNode = cur
