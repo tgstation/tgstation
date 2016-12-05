@@ -198,3 +198,37 @@
 /area/ruin/abandonedzoo
 	name = "Abandoned Zoo"
 	icon_state = "green"
+
+//Ruin of Wizard Academy
+
+/area/ruin/wizardacademy
+	name = "Wizard Academy"
+	icon_state = "academy"
+
+/area/ruin/wizardacademy/foreblock
+	name = "Wizard Academy Fore Block"
+	icon_state = "academy_foreblock"
+
+/area/ruin/wizardacademy/classroomblock
+	name = "Wizard Academy Classroom Block"
+	icon_state = "academy_classrooms"
+
+/area/ruin/wizardacademy/aftblock
+	name = "Wizard Academy Aft Block"
+	icon_state = "academy_aftblock"
+
+/area/ruin/wizardacademy/cellar
+	name = "Wizard Academy Cellar"
+	icon_state = "academy_cellar"
+
+/area/ruin/wizardacademy/engine
+	name = "Wizard Academy Engine"
+	icon_state = "academy_engine"
+
+/area/ruin/wizardacademy/vault
+	name = "Wizard Academy Vault"
+	icon_state = "academy_vault"
+
+/area/ruin/wizardacademy/laboratory
+	name = "Wizard Academy Laboratory"
+	icon_state = "academy_laboratory"
