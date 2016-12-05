@@ -463,12 +463,10 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	add_overlay(I)
 
 /obj/item/weapon/lighter/greyscale/ignition_effect(atom/A, mob/user)
-	. = "<span class='notice'>After some fiddling, [user] manages to \
-		light [A] with [src].</span>"
+	. = "<span class='notice'>After some fiddling, [user] manages to light [A] with [src].</span>"
 
 /obj/item/weapon/lighter/ignition_effect(atom/A, mob/user)
-	. = "<span class='rose'>With a single flick of their wrist, [user] \
-		smoothly lights [A] with [src]. Damn they're cool.</span>"
+	. = "<span class='rose'>With a single flick of their wrist, [user] smoothly lights [A] with [src]. Damn [user.p_theyre()] cool.</span>"
 
 /obj/item/weapon/lighter/update_icon()
 	icon_state = lit ? "[icon_state]_on" : "[initial(icon_state)]"
@@ -500,7 +498,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 				else
 					var/hitzone = user.held_index_to_dir(user.active_hand_index) == "r" ? "r_hand" : "l_hand"
 					user.apply_damage(5, BURN, hitzone)
-					user.visible_message("<span class='warning'>After a few attempts, [user] manages to light [src] - they however burn their finger in the process.</span>", "<span class='warning'>You burn yourself while lighting the lighter!</span>")
+					user.visible_message("<span class='warning'>After a few attempts, [user] manages to light [src] - however, [user.p_they()] burn their finger in the process.</span>", "<span class='warning'>You burn yourself while lighting the lighter!</span>")
 
 			user.AddLuminosity(1)
 			START_PROCESSING(SSobj, src)
@@ -511,7 +509,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 			force = 0
 			attack_verb = null //human_defense.dm takes care of it
 			if(!istype(src, /obj/item/weapon/lighter/greyscale))
-				user.visible_message("You hear a quiet click, as [user] shuts off [src] without even looking at what they're doing. Wow.", "<span class='notice'>You quietly shut off [src] without even looking at what you're doing. Wow.</span>")
+				user.visible_message("You hear a quiet click, as [user] shuts off [src] without even looking at what [user.p_theyre()] doing. Wow.", "<span class='notice'>You quietly shut off [src] without even looking at what you're doing. Wow.</span>")
 			else
 				user.visible_message("[user] quietly shuts off [src].", "<span class='notice'>You quietly shut off [src].")
 			user.AddLuminosity(-1)
@@ -531,7 +529,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 			cig.attackby(src, user)
 		else
 			if(!istype(src, /obj/item/weapon/lighter/greyscale))
-				cig.light("<span class='rose'>[user] whips the [name] out and holds it for [M]. Their arm is as steady as the unflickering flame they light \the [cig] with.</span>")
+				cig.light("<span class='rose'>[user] whips the [name] out and holds it for [M]. [user.p_their(TRUE)] arm is as steady as the unflickering flame they light \the [cig] with.</span>")
 			else
 				cig.light("<span class='notice'>[user] holds the [name] out for [M], and lights the [cig.name].</span>")
 	else

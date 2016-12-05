@@ -469,7 +469,7 @@
 	if(!(flags & NODECONSTRUCT))
 		var/turf/T = get_turf(src)
 		if(disassembled)
-			new/obj/item/stack/sheet/brass(T, 4)
+			new/obj/item/stack/tile/brass(T, 4)
 		else
 			new/obj/item/clockwork/alloy_shards(T)
 		new/obj/item/clockwork/component/vanguard_cogwheel/pinion_lock(T)

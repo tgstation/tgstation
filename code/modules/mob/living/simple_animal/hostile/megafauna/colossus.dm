@@ -579,10 +579,10 @@ Difficulty: Very Hard
 	..()
 	if(ready_to_deploy)
 		var/be_helper = alert("Become a Lightgeist? (Warning, You can no longer be cloned!)",,"Yes","No")
-		if(be_helper == "No")
-			return
-		var/mob/living/simple_animal/hostile/lightgeist/W = new /mob/living/simple_animal/hostile/lightgeist(get_turf(loc))
-		W.key = user.key
+		if(be_helper == "Yes" && !qdeleted(src) && isobserver(user))
+			var/mob/living/simple_animal/hostile/lightgeist/W = new /mob/living/simple_animal/hostile/lightgeist(get_turf(loc))
+			W.key = user.key
+
 
 /obj/machinery/anomalous_crystal/helpers/Topic(href, href_list)
 	if(href_list["ghostjoin"])

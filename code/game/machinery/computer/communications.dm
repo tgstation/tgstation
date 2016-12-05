@@ -160,6 +160,8 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 						return
 					if(SSshuttle.shuttle_purchased)
 						usr << "A replacement shuttle has already been purchased."
+					if(!S.prerequisites_met())
+						usr << "You have not met the requirements for purchasing this shuttle."
 					else
 						if(SSshuttle.points >= S.credit_cost)
 							var/obj/machinery/shuttle_manipulator/M  = locate() in machines
@@ -527,6 +529,8 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 				if(S.can_be_bought && S.credit_cost < INFINITY)
 					dat += "[S.name] | [S.credit_cost] Credits<BR>"
 					dat += "[S.description]<BR>"
+					if(S.prerequisites)
+						dat += "Prerequisites: [S.prerequisites]<BR>"
 					dat += "<A href='?src=\ref[src];operation=buyshuttle;chosen_shuttle=\ref[S]'>(<font color=red><i>Purchase</i></font>)</A><BR><BR>"
 
 	dat += "<BR><BR>\[ [(src.state != STATE_DEFAULT) ? "<A HREF='?src=\ref[src];operation=main'>Main Menu</A> | " : ""]<A HREF='?src=\ref[user];mach_close=communications'>Close</A> \]"
