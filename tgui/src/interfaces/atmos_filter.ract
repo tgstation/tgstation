@@ -11,21 +11,21 @@
   <ui-section label='Filter'>
     <ui-button state='{{data.filter_type == "" ? "selected" : null}}'
       action='filter' params='{"mode": ""}'>Nothing</ui-button>
-    <ui-button state='{{data.filter_type == "plasma" ? "selected" : null}}'
-      action='filter' params='{"mode": "plasma"}'>Plasma</ui-button>
-    <ui-button state='{{data.filter_type == "o2" ? "selected" : null}}'
-      action='filter' params='{"mode": "o2"}'>O2</ui-button>
-    <ui-button state='{{data.filter_type == "n2" ? "selected" : null}}'
-      action='filter' params='{"mode": "n2"}'>N2</ui-button>
-    <ui-button state='{{data.filter_type == "co2" ? "selected" : null}}'
-      action='filter' params='{"mode": "co2"}'>CO2</ui-button>
-    <ui-button state='{{data.filter_type == "n2o" ? "selected" : null}}'
-      action='filter' params='{"mode": "n2o"}'>N2O</ui-button>
-	<ui-button state='{{data.filter_type == "bz" ? "selected" : null}}'
-      action='filter' params='{"mode": "bz"}'>BZ</ui-button>	
-	<ui-button state='{{data.filter_type == "freon" ? "selected" : null}}'
-      action='filter' params='{"mode": "freon"}'>Freon</ui-button>	
-	<ui-button state='{{data.filter_type == "water_vapor" ? "selected" : null}}'
-      action='filter' params='{"mode": "water_vapor"}'>Water Vapor</ui-button>	
+    <ui-button state='{{data.filter_type == 4 ? "selected" : null}}'
+      action='filter' params='{"mode": 4}'>Plasma</ui-button>
+    <ui-button state='{{data.filter_type == 1 ? "selected" : null}}'
+      action='filter' params='{"mode": 1}'>O2</ui-button>
+    <ui-button state='{{data.filter_type == 2 ? "selected" : null}}'
+      action='filter' params='{"mode": 2}'>N2</ui-button>
+    <ui-button state='{{data.filter_type == 3 ? "selected" : null}}'
+      action='filter' params='{"mode": 3}'>CO2</ui-button>
+    <ui-button state='{{data.filter_type == 7 ? "selected" : null}}'
+      action='filter' params='{"mode": 7}'>N2O</ui-button>
+	<ui-button state='{{data.filter_type == 10 ? "selected" : null}}'
+      action='filter' params='{"mode": 10}'>BZ</ui-button>	
+	<ui-button state='{{data.filter_type == 6 ? "selected" : null}}'
+      action='filter' params='{"mode": 6}'>Freon</ui-button>	
+	<ui-button state='{{data.filter_type == 5 ? "selected" : null}}'
+      action='filter' params='{"mode": 5}'>Water Vapor</ui-button>	
 	</ui-section>
 </ui-display>
