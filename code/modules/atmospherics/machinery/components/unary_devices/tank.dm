@@ -29,7 +29,7 @@
 
 /obj/machinery/atmospherics/components/unary/tank/oxygen_agent_b
 	icon_state = "orange_2"
-	gas_type = "agent_b"
+	gas_type = GAS_AGENTB
 
 /obj/machinery/atmospherics/components/unary/tank/oxygen
 	icon_state = "blue"

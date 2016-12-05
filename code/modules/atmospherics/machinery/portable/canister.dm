@@ -66,7 +66,7 @@
 /obj/machinery/portable_atmospherics/canister/agent_b
 	name = "agent b canister"
 	desc = "Oxygen Agent B. You're not quite sure what it does."
-	gas_type = "agent_b"
+	gas_type = GAS_AGENTB
 
 /obj/machinery/portable_atmospherics/canister/bz
 	name = "BZ canister"
@@ -78,7 +78,7 @@
 	name = "n2o canister"
 	desc = "Nitrous oxide gas. Known to cause drowsiness."
 	icon_state = "redws"
-	gas_type = GAS_N2O
+	gas_type = "n2o"
 
 /obj/machinery/portable_atmospherics/canister/air
 	name = "air canister"
@@ -318,7 +318,7 @@
 				logmsg = "Valve was <b>opened</b> by [key_name(usr)], starting a transfer into \the [holding || "air"].<br>"
 				if(!holding)
 					var/plasma = air_contents.gases[GAS_PLASMA]
-					var/n2o = air_contents.gases[GAS_N2O]
+					var/n2o = air_contents.gases["n2o"]
 					var/bz = air_contents.gases["bz"]
 					var/freon = air_contents.gases[GAS_FREON]
 					if(n2o || plasma || bz || freon)

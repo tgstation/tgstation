@@ -139,17 +139,17 @@ var/list/gaslist_cache
 	if(temperature < TCMB)
 		temperature = TCMB
 
-	if(cached_gases["agent_b"] && temperature > 900 && cached_gases[GAS_PLASMA] && cached_gases[GAS_CO2])
+	if(cached_gases[GAS_AGENTB] && temperature > 900 && cached_gases[GAS_PLASMA] && cached_gases[GAS_CO2])
 		//agent b converts hot co2 to o2 (endothermic)
 		if(cached_gases[GAS_PLASMA][MOLES] > MINIMUM_HEAT_CAPACITY && cached_gases[GAS_CO2][MOLES] > MINIMUM_HEAT_CAPACITY)
-			var/reaction_rate = min(cached_gases[GAS_CO2][MOLES]*0.75, cached_gases[GAS_PLASMA][MOLES]*0.25, cached_gases["agent_b"][MOLES]*0.05)
+			var/reaction_rate = min(cached_gases[GAS_CO2][MOLES]*0.75, cached_gases[GAS_PLASMA][MOLES]*0.25, cached_gases[GAS_AGENTB][MOLES]*0.05)
 
 			cached_gases[GAS_CO2][MOLES] -= reaction_rate
 
 			assert_gas(GAS_O2) //only need to assert oxygen, as this reaction doesn't occur without the other gases existing
 			cached_gases[GAS_O2][MOLES] += reaction_rate
 
-			cached_gases["agent_b"][MOLES] -= reaction_rate*0.05
+			cached_gases[GAS_AGENTB][MOLES] -= reaction_rate*0.05
 
 			temperature -= (reaction_rate*20000)/heat_capacity()
 
