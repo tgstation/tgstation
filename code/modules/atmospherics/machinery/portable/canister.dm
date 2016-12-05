@@ -78,7 +78,7 @@
 	name = "n2o canister"
 	desc = "Nitrous oxide gas. Known to cause drowsiness."
 	icon_state = "redws"
-	gas_type = "n2o"
+	gas_type = GAS_N2O
 
 /obj/machinery/portable_atmospherics/canister/air
 	name = "air canister"
@@ -318,7 +318,7 @@
 				logmsg = "Valve was <b>opened</b> by [key_name(usr)], starting a transfer into \the [holding || "air"].<br>"
 				if(!holding)
 					var/plasma = air_contents.gases[GAS_PLASMA]
-					var/n2o = air_contents.gases["n2o"]
+					var/n2o = air_contents.gases[GAS_N2O]
 					var/bz = air_contents.gases["bz"]
 					var/freon = air_contents.gases[GAS_FREON]
 					if(n2o || plasma || bz || freon)
