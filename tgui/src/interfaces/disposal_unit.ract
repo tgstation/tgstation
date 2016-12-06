@@ -26,7 +26,7 @@
 				{{data.flush ? "Disengage" : "Engage" }}</ui-button>
     </ui-section>
 	<ui-section label='Eject'>
-		<ui-button icon='sign-out' action='eject'>Eject Contents</ui-button><br/>
+		<ui-button icon='sign-out' state='{{data.isai  ? 'disabled' : null}}' action='eject'>Eject Contents</ui-button><br/>
 	</ui-section>
 	<ui-section label='Power'>
 		<ui-button icon='power-off' state='{{data.mode == -1 ? 'disabled' : null}}' action='{{data.mode ? "pump-0" : "pump-1" }}' style='{{data.mode ? "selected" : null }}'></ui-button><br/>
