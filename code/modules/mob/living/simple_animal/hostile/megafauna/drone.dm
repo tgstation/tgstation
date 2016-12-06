@@ -10,11 +10,12 @@
 	icon_living = "drone"
 	friendly = "stares"
 	icon = 'icons/mob/lavaland/drone.dmi'
-	faction = list("boss") //asteroid mobs? get that shit out of my beautiful square house
+	faction = list("boss")
 	speak_emote = list("states")
 	armour_penetration = 50
 	melee_damage_lower = 10
 	melee_damage_upper = 10
+	see_in_dark = 20
 	speed = 1
 	move_to_delay = 10
 	ranged = 1
@@ -44,46 +45,58 @@
 	if(attack_type == null)
 		attack_type = rand(1, 4)
 	if(attack_type == 1)
-		move_to_delay = world.time + 40
 		ranged_cooldown = world.time + 40
 		homing_shots(20, src)
+		sleep(40)
 	else if(attack_type == 2)
-		move_to_delay = world.time + 12
 		ranged_cooldown = world.time + 12
 		laser_rain()
+		sleep(12)
 	else if(attack_type == 3)
-		move_to_delay = world.time + 40
 		ranged_cooldown = world.time + 40
 		homing_laser(20, src)
+		sleep(40)
 	else if(attack_type == 4)
-		move_to_delay = world.time + 20
-		ranged_cooldown = world.time + 20
+		ranged_cooldown = world.time + 50
 		smart_blast()
-	attack_type = null
-	..()
+		sleep(50)
+	if(client == null)
+		attack_type = null
 
 /mob/living/simple_animal/hostile/megafauna/megadrone/proc/smart_blast()
+	visible_message("<span class='boldwarning'>Drone releases wave of projectiles!</span>")
 	playsound(get_turf(src), 'sound/magic/clockwork/invoke_general.ogg', 200, 1, 2)
 	for(var/turf/turf in range(1,get_turf(src)))
 		shoot_cross_projectile(turf)
+		sleep(4)
 
 /mob/living/simple_animal/hostile/megafauna/megadrone/proc/homing_laser(var/timer, var/caster)
-	visible_message("<span class='boldwarning'>Homing laser rains from the sky!</span>")
+	visible_message("<span class='boldwarning'>Drone scans area!</span>")
+	visible_message("<span class='boldwarning'>Laser rains from the sky!</span>")
 	while(timer>0)
 		for(var/turf/turf in range(12,get_turf(src)))
 			for(var/mob/living/L in turf.contents - caster)
 				if( L.stat == DEAD)
 					continue
 				PoolOrNew(/obj/effect/overlay/temp/drone/laser_beacon, list(turf, src))
+			if(prob(1))
+				PoolOrNew(/obj/effect/overlay/temp/drone/laser_beacon, list(turf, src))
 		sleep(2)
 		timer--
+
+
+
+
 /mob/living/simple_animal/hostile/megafauna/megadrone/proc/homing_shots(var/timer, var/caster)
+	visible_message("<span class='boldwarning'>Drone scans area!</span>")
 	visible_message("<span class='boldwarning'>Drone starts shooting!</span>")
 	while(timer>0)
 		for(var/turf/turf in range(12,get_turf(src)))
 			for(var/mob/living/L in turf.contents - caster)
 				if( L.stat == DEAD)
 					continue
+				shoot_projectile(turf)
+			if(prob(1/10))
 				shoot_projectile(turf)
 		sleep(2)
 		timer--
@@ -98,7 +111,7 @@
 	if(!marker || marker == loc)
 		return
 	var/turf/startloc = get_turf(src)
-	var/obj/item/projectile/P = new /obj/item/projectile/drone_laser(startloc)
+	var/obj/item/projectile/P = new /obj/item/projectile/energy/drone_laser(startloc)
 	P.current = startloc
 	P.starting = startloc
 	P.firer = src
@@ -126,7 +139,7 @@
 		P.original = marker
 	P.fire()
 
-/obj/item/projectile/drone_laser
+/obj/item/projectile/energy/drone_laser
 	name ="drone laser"
 	icon = 'icons/mob/lavaland/related_to_drone.dmi'
 	icon_state= "drone_laser"
@@ -145,6 +158,10 @@
 /datum/action/innate/drone_attack/Activate()
 	var/mob/living/simple_animal/hostile/megafauna/megadrone/M = owner
 	M.attack_type = null
+	for(var/datum/action/innate/drone_attack/A in M.actions)
+		A.background_icon_state = "bg_default"
+		A.UpdateButtonIcon()
+	background_icon_state = "bg_default_on"
 
 /datum/action/innate/drone_attack/shots_homing
 	name = "Homing shots"
@@ -152,6 +169,11 @@
 /datum/action/innate/drone_attack/shots_homing/Activate()
 	var/mob/living/simple_animal/hostile/megafauna/megadrone/M = owner
 	M.attack_type = 1
+	for(var/datum/action/innate/drone_attack/A in M.actions)
+		A.background_icon_state = "bg_default"
+		A.UpdateButtonIcon()
+	background_icon_state = "bg_default_on"
+	UpdateButtonIcon()
 
 /datum/action/innate/drone_attack/rain
 	name = "Laser rain"
@@ -159,6 +181,11 @@
 /datum/action/innate/drone_attack/rain/Activate()
 	var/mob/living/simple_animal/hostile/megafauna/megadrone/M = owner
 	M.attack_type = 2
+	for(var/datum/action/innate/drone_attack/A in M.actions)
+		A.background_icon_state = "bg_default"
+		A.UpdateButtonIcon()
+	background_icon_state = "bg_default_on"
+	UpdateButtonIcon()
 
 /datum/action/innate/drone_attack/homing
 	name = "Homing laser"
@@ -166,6 +193,11 @@
 /datum/action/innate/drone_attack/homing/Activate()
 	var/mob/living/simple_animal/hostile/megafauna/megadrone/M = owner
 	M.attack_type = 3
+	for(var/datum/action/innate/drone_attack/A in M.actions)
+		A.background_icon_state = "bg_default"
+		A.UpdateButtonIcon()
+	background_icon_state = "bg_default_on"
+	UpdateButtonIcon()
 
 /datum/action/innate/drone_attack/burst
 	name = "Splitting laser"
@@ -173,6 +205,11 @@
 /datum/action/innate/drone_attack/burst/Activate()
 	var/mob/living/simple_animal/hostile/megafauna/megadrone/M = owner
 	M.attack_type = 4
+	for(var/datum/action/innate/drone_attack/A in M.actions)
+		A.background_icon_state = "bg_default"
+		A.UpdateButtonIcon()
+	background_icon_state = "bg_default_on"
+	UpdateButtonIcon()
 
 /obj/effect/overlay/temp/drone/laser
 	icon = 'icons/mob/lavaland/related_to_drone.dmi'
