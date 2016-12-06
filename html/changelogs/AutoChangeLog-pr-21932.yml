@@ -1,0 +1,4 @@
+author: "Swindly"
+delete-after: True
+changes: 
+  - rscadd: "Adds a new toxin: Anacea. It metabolizes very slowly and quickly purges medicines in the victim while dealing light toxin damage. Its recipe is 1 part Haloperidol, 1 part Impedrezene, 1 part Radium."
