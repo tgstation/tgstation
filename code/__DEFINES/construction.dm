@@ -20,3 +20,9 @@
 #define CANT_UNFASTEN 0
 #define FAILED_UNFASTEN 1
 #define SUCCESSFUL_UNFASTEN 2
+
+//disposal unit mode defines, which do double time as the construction defines
+#define PRESSURE_OFF 0
+#define PRESSURE_ON 1
+#define PRESSURE_MAXED 2
+#define SCREWS_OUT -1
