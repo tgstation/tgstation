@@ -1,0 +1,4 @@
+author: "Chnkr"
+delete-after: True
+changes: 
+  - rscadd: "Nuclear Operatives can now customize the message broadcast to the station when declaring war."
