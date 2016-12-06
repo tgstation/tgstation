@@ -5,6 +5,7 @@
 	else
 		var/component_to_generate = get_weighted_component_id()
 		clockwork_component_cache[component_to_generate]++
+	update_slab_info()
 
 //returns a chosen component id based on the lowest amount of that component in the global cache, the global cache plus the slab if there are caches, or the slab if there are no caches.
 /proc/get_weighted_component_id(obj/item/clockwork/slab/storage_slab)
