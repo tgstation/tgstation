@@ -363,9 +363,8 @@
 					if(!H.incapacitated())
 						H.visible_message("<span class='danger'>[H] steps in the broken glass!</span>", \
 								"<span class='userdanger'>You step in the broken glass!</span>")
-						cooldown = world.time
 					else
 						H.visible_message("<span class='danger'>[H] slides on the broken glass!</span>", \
 								"<span class='userdanger'>You slide on the broken glass!</span>")
 
-						cooldown = world.time
+					cooldown = world.time
