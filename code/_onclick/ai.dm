@@ -34,10 +34,11 @@
 	if(control_disabled || stat)
 		return
 	
-	if(!cameranet.checkTurfVis(get_turf_pixel(A) || get_turf(A)))
-		log_admin("[key_name_admin(src)] might be running a modified client! (failed checkTurfVis on AI click of [A]([COORD(A)])")
-		message_admins("[key_name_admin(src)] might be running a modified client! (failed checkTurfVis on AI click of [A]([ADMIN_COORDJMP(A)]))")
-		send2irc_adminless_only("NOCHEAT", "[key_name(src)] might be running a modified client! (failed checkTurfVis on AI click of [A]([COORD(A)]))")
+	var/turf/pixel_turf = get_turf_pixel(A)
+	if(pixel_turf && !cameranet.checkTurfVis(pixel_turf))
+		log_admin("[key_name_admin(src)] might be running a modified client! (failed checkTurfVis on AI click of [A]([COORD(pixel_turf)])")
+		message_admins("[key_name_admin(src)] might be running a modified client! (failed checkTurfVis on AI click of [A]([ADMIN_COORDJMP(pixel_turf)]))")
+		send2irc_adminless_only("NOCHEAT", "[key_name(src)] might be running a modified client! (failed checkTurfVis on AI click of [A]([COORD(pixel_turf)]))")
 		return
 
 	var/list/modifiers = params2list(params)
