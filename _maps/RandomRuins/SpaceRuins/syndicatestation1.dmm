@@ -1266,15 +1266,15 @@
 	dir = 8;
 	faction = "syndicate";
 	flavour_text = "<font size=3>You are a syndicate agent, employed in an asteroid station listening post. <b>Monitor enemy activity as best you can, and try to keep a low profile. Do not abandon the base without good cause.</b> Use the communication equipment to provide support to any field agents, and sow disinformation to throw Nanotrasen off your trail. Do not let the base fall into enemy hands!</b>";
-	has_id = 0;
+	has_id = 1;
 	icon_state = "sleeper_s";
-	id_access = null;
-	id_job = null;
+	id_access = "Syndicate";
+	id_job = "Operative";
 	implants = list(/obj/item/weapon/implant/weapons_auth);
 	layer = 4;
 	name = "Syndicate Agent";
 	pocket1 = /obj/item/weapon/kitchen/knife/combat/survival;
-	pocket2 = /obj/item/weapon/card/id/syndicate/anyone;
+	pocket2 = null;
 	r_hand = null;
 	suit = /obj/item/clothing/suit/armor/vest
 	},
@@ -1342,15 +1342,15 @@
 	dir = 4;
 	faction = "syndicate";
 	flavour_text = "<font size=3>You are a syndicate agent, employed in an asteroid station listening post. <b>Monitor enemy activity as best you can, and try to keep a low profile. Do not abandon the base without good cause.</b> Use the communication equipment to provide support to any field agents, and sow disinformation to throw Nanotrasen off your trail. Do not let the base fall into enemy hands!</b>";
-	has_id = 0;
+	has_id = 1;
 	icon_state = "sleeper_s";
-	id_access = null;
-	id_job = null;
+	id_access = "Syndicate";
+	id_job = "Operative";
 	implants = list(/obj/item/weapon/implant/weapons_auth);
 	layer = 4;
 	name = "Syndicate Agent";
 	pocket1 = /obj/item/weapon/kitchen/knife/combat/survival;
-	pocket2 = /obj/item/weapon/card/id/syndicate/anyone;
+	pocket2 = null;
 	r_hand = null;
 	suit = /obj/item/clothing/suit/armor/vest
 	},
@@ -1580,15 +1580,15 @@
 	dir = 8;
 	faction = "syndicate";
 	flavour_text = "<font size=3>You are a syndicate agent, employed in an asteroid station listening post. <b>Monitor enemy activity as best you can, and try to keep a low profile. Do not abandon the base without good cause.</b> Use the communication equipment to provide support to any field agents, and sow disinformation to throw Nanotrasen off your trail. Do not let the base fall into enemy hands!</b>";
-	has_id = 0;
+	has_id = 1;
 	icon_state = "sleeper_s";
-	id_access = null;
-	id_job = null;
+	id_access = "Syndicate";
+	id_job = "Operative";
 	implants = list(/obj/item/weapon/implant/weapons_auth);
 	layer = 4;
 	name = "Syndicate Agent";
 	pocket1 = /obj/item/weapon/kitchen/knife/combat/survival;
-	pocket2 = /obj/item/weapon/card/id/syndicate/anyone;
+	pocket2 = null;
 	r_hand = null;
 	suit = /obj/item/clothing/suit/armor/vest
 	},
