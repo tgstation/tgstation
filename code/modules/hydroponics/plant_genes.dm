@@ -174,8 +174,8 @@
 	examine_line = "<span class='info'>It has a lot of liquid contents inside.</span>"
 	origin_tech = list("biotech" = 5)
 
-/*/datum/plant_gene/trait/squash/on_slip(obj/item/weapon/reagent_containers/food/snacks/grown/G, mob/living/carbon/target)
-	G.squash(target)*/
+/datum/plant_gene/trait/squash/on_slip(obj/item/weapon/reagent_containers/food/snacks/grown/G, mob/living/carbon/target)
+	G.squash(target)
 
 
 /datum/plant_gene/trait/slip
