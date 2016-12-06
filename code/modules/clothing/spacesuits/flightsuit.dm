@@ -441,15 +441,10 @@
 	if((unmovablevictim == wearer) || crashing)
 		return FALSE
 	crashing = TRUE
-	var/V = ""
-	if(crashdir == NORTH || crashdir == SOUTH)
-		V = "y"
-	else if(crashdir == EAST || crashdir == WEST)
-		V = "x"
 	var/crashpower = 0
-	if(V == "y")
+	if(crashdir == NORTH || crashdir == SOUTH)
 		crashpower = momentum_speed_y
-	else if(V == "x")
+	else if(crashdir == EAST || crashdir == WEST)
 		crashpower = momentum_speed_x
 	if(!flight)
 		crashing = FALSE
