@@ -80,8 +80,10 @@
 			msg += reag_txt
 			msg += "<br><span class='info'>*---------*</span>"
 		user << msg
-		return
-	return
+	else
+		if(seed)
+			for(var/datum/plant_gene/trait/T in seed.genes)
+				T.on_attackby(src, O, user)
 
 
 // Various gene procs

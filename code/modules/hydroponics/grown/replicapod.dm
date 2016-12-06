@@ -41,7 +41,8 @@
 					user << "<span class='warning'>The seeds reject the sample!</span>"
 		else
 			user << "<span class='warning'>The seeds already contain a genetic sample!</span>"
-	..()
+	else
+		return ..()
 
 /obj/item/seeds/replicapod/get_analyzer_text()
 	var/text = ..()
