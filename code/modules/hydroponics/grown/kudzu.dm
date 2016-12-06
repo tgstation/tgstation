@@ -7,6 +7,7 @@
 	species = "kudzu"
 	plantname = "Kudzu"
 	product = /obj/item/weapon/reagent_containers/food/snacks/grown/kudzupod
+	genes = list(/datum/plant_gene/trait/repeated_harvest)
 	lifespan = 20
 	endurance = 10
 	yield = 4

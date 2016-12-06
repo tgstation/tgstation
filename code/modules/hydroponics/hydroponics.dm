@@ -895,7 +895,7 @@
 		user << "<span class='warning'>You fail to harvest anything useful!</span>"
 	else
 		user << "<span class='notice'>You harvest [myseed.getYield()] items from the [myseed.plantname].</span>"
-	if(myseed.oneharvest)
+	if(!myseed.get_gene(/datum/plant_gene/trait/repeated_harvest))
 		qdel(myseed)
 		myseed = null
 		dead = 0

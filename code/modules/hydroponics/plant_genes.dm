@@ -312,3 +312,13 @@
 /datum/plant_gene/trait/maxchem/on_new(obj/item/weapon/reagent_containers/food/snacks/grown/G, newloc)
 	..()
 	G.reagents.maximum_volume *= rate
+
+/datum/plant_gene/trait/repeated_harvest
+	name = "perennial growth"
+
+/datum/plant_gene/trait/repeated_harvest/can_add(obj/item/seeds/S)
+	if(!..())
+		return FALSE
+	if(istype(S, /obj/item/seeds/replicapod))
+		return FALSE
+	return TRUE

@@ -11,7 +11,6 @@
 	production = 1
 	yield = -1
 	potency = -1
-	oneharvest = 1
 	growthstages = 4
 	plant_type = PLANT_WEED
 
@@ -31,6 +30,7 @@
 	yield = 4
 	growthstages = 1
 	growing_icon = 'icons/obj/hydroponics/growing_vegetables.dmi'
+	genes = list(/datum/plant_gene/trait/repeated_harvest)
 	mutatelist = list(/obj/item/seeds/replicapod)
 	reagents_add = list("vitamin" = 0.04, "nutriment" = 0.1)
 
@@ -51,6 +51,7 @@
 	species = "sugarcane"
 	plantname = "Sugarcane"
 	product = /obj/item/weapon/reagent_containers/food/snacks/grown/sugarcane
+	genes = list(/datum/plant_gene/trait/repeated_harvest)
 	lifespan = 60
 	endurance = 50
 	maturation = 3
@@ -75,6 +76,7 @@
 	species = "gatfruit"
 	plantname = "gatfruit"
 	product = /obj/item/weapon/reagent_containers/food/snacks/grown/shell/gatfruit
+	genes = list(/datum/plant_gene/trait/repeated_harvest)
 	lifespan = 20
 	endurance = 20
 	maturation = 40

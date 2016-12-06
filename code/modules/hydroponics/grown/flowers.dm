@@ -10,7 +10,6 @@
 	maturation = 8
 	yield = 6
 	potency = 20
-	oneharvest = 1
 	growthstages = 3
 	growing_icon = 'icons/obj/hydroponics/growing_flowers.dmi'
 	icon_grow = "poppy-grow"
@@ -76,7 +75,6 @@
 	production = 1
 	yield = 2
 	potency = 30
-	oneharvest = 1
 	growthstages = 4
 	plant_type = PLANT_WEED
 	growing_icon = 'icons/obj/hydroponics/growing_flowers.dmi'
@@ -103,7 +101,6 @@
 	endurance = 20
 	production = 2
 	yield = 2
-	oneharvest = 1
 	growthstages = 3
 	growing_icon = 'icons/obj/hydroponics/growing_flowers.dmi'
 	icon_grow = "sunflower-grow"

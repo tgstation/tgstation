@@ -12,7 +12,6 @@
 	maturation = 10
 	production = 1
 	yield = 1 //seeds if there isn't a dna inside
-	oneharvest = 1
 	potency = 30
 	var/ckey = null
 	var/realName = null
@@ -106,8 +105,9 @@
 		var/seed_count = 1
 		if(prob(getYield() * 20))
 			seed_count++
+		var/output_loc = parent.Adjacent(user) ? user.loc : parent.loc //needed for TK
 		for(var/i=0,i<seed_count,i++)
 			var/obj/item/seeds/replicapod/harvestseeds = src.Copy()
-			harvestseeds.forceMove(parent.loc)
+			harvestseeds.forceMove(output_loc)
 
 	parent.update_tray()

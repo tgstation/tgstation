@@ -17,7 +17,6 @@
 	production = 5
 	yield = 4
 	potency = 15
-	oneharvest = 1
 	growthstages = 4
 	plant_type = PLANT_MUSHROOM
 	growing_icon = 'icons/obj/hydroponics/growing_mushrooms.dmi'
@@ -44,7 +43,6 @@
 	maturation = 10
 	production = 5
 	yield = 4
-	oneharvest = 1
 	growthstages = 3
 	plant_type = PLANT_MUSHROOM
 	growing_icon = 'icons/obj/hydroponics/growing_mushrooms.dmi'
@@ -73,7 +71,6 @@
 	production = 5
 	yield = 2
 	potency = 35
-	oneharvest = 1
 	growthstages = 3
 	plant_type = PLANT_MUSHROOM
 	growing_icon = 'icons/obj/hydroponics/growing_mushrooms.dmi'
@@ -101,7 +98,6 @@
 	production = 1
 	yield = 5
 	potency = 15
-	oneharvest = 1
 	growthstages = 3
 	plant_type = PLANT_MUSHROOM
 	growing_icon = 'icons/obj/hydroponics/growing_mushrooms.dmi'
@@ -127,7 +123,6 @@
 	production = 1
 	yield = 4
 	potency = 15
-	oneharvest = 1
 	growthstages = 3
 	plant_type = PLANT_MUSHROOM
 	growing_icon = 'icons/obj/hydroponics/growing_mushrooms.dmi'
@@ -194,7 +189,6 @@
 	production = 1
 	yield = 5
 	potency = 15
-	oneharvest = 1
 	growthstages = 3
 	plant_type = PLANT_MUSHROOM
 	growing_icon = 'icons/obj/hydroponics/growing_mushrooms.dmi'
@@ -222,7 +216,6 @@
 	production = 1
 	yield = 3 //-> spread
 	potency = 30 //-> brightness
-	oneharvest = 1
 	growthstages = 4
 	plant_type = PLANT_MUSHROOM
 	rarity = 20
