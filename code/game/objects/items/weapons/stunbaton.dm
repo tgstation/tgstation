@@ -13,6 +13,7 @@
 
 	var/stunforce = 7
 	var/status = 0
+	var/shitcurity = 0
 	var/obj/item/weapon/stock_parts/cell/high/bcell = null
 	var/hitcost = 1000
 	var/throw_hit_chance = 35
@@ -105,6 +106,10 @@
 	update_icon()
 	add_fingerprint(user)
 
+/obj/item/weapon/melee/baton/AltClick(mob/user)
+	shitcurity = !shitcurity
+	user << "<span class='notice'>You will [shitcurity ? "now" : "no longer"] strike terror into the hearts of criminals.</span>"
+
 /obj/item/weapon/melee/baton/attack(mob/M, mob/living/carbon/human/user)
 	if(status && user.disabilities & CLUMSY && prob(50))
 		user.visible_message("<span class='danger'>[user] accidentally hits themself with [src]!</span>", \
@@ -135,6 +140,9 @@
 	else
 		if(status)
 			baton_stun(L, user)
+			if(user.real_name == user.name && shitcurity) //only say it if you aren't disguised
+				user.say("[pick("STOP RESISTING ARREST", "YOU HAVE THE RIGHT TO REMAIN SILENT", "REACH FOR THE SKY", "DROP THE WEAPON", "IF YOU CAN'T DO THE TIME, DON'T DO THE CRIME", \
+			"I AM THE LAW", "SELF-DEFENSE", "I AM JUDGE, JURY, AND EXECUTIONER", "PEOPLE LIKE YOU ARE RUINING THIS STATION", "LIZARD LIVES DON'T MATTER")]!!")
 		..()
 
 
@@ -197,3 +205,6 @@
 /obj/item/weapon/melee/baton/cattleprod/baton_stun()
 	if(sparkler.activate())
 		..()
+
+/obj/item/weapon/melee/baton/cattleprod/AltClick(mob/user)
+	return
