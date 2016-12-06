@@ -106,18 +106,6 @@
 	AC.Grant(src)
 	AR.Grant(src)
 
-
-/mob/living/silicon/pai/proc/pai_ui_action(action)
-	if(istype(action, /datum/action/innate/pai/shell))
-		if(holoform)
-			fold_in(0)
-		else
-			fold_out()
-	if(istype(action, /datum/action/innate/pai/chassis))
-		choose_chassis()
-	if(istype(action, /datum/action/innate/pai/rest))
-		lay_down()
-
 /mob/living/silicon/pai/make_laws()
 	laws = new /datum/ai_laws/pai()
 	return TRUE
@@ -163,22 +151,41 @@
 	if(delold)
 		qdel(src)
 
+/datum/action/innate/pai
+	name = "PAI Action"
+	var/mob/living/silicon/pai/P
+
 /datum/action/innate/pai/Trigger()
-	if(ispAI(owner))
-		var/mob/living/silicon/pai/P = owner
-		P.pai_ui_action(src)
+	if(!ispAI(owner))
+		return 0
+	P = owner
 
 /datum/action/innate/pai/shell
 	name = "Toggle Holoform"
 	button_icon_state = "pai_holoform"
 	background_icon_state = "bg_tech"
 
+/datum/action/innate/pai/shell/Trigger()
+	..()
+	if(P.holoform)
+		P.fold_in(0)
+	else
+		P.fold_out()
+
 /datum/action/innate/pai/chassis
 	name = "Holochassis Appearence Composite"
 	button_icon_state = "pai_chassis"
 	background_icon_state = "bg_tech"
 
+/datum/action/innate/pai/chassis/Trigger()
+	..()
+	P.choose_chassis()
+
 /datum/action/innate/pai/rest
 	name = "Rest"
 	button_icon_state = "pai_rest"
 	background_icon_state = "bg_tech"
+
+/datum/action/innate/pai/rest/Trigger()
+	..()
+	P.lay_down()
