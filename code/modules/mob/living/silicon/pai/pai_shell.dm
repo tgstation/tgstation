@@ -20,14 +20,14 @@
 	addtimer(src, "emittercool", emittercd)
 	canmove = TRUE
 	density = TRUE
+	if(istype(card.loc, /obj/item/device/pda))
+		var/obj/item/device/pda/P = card.loc
+		P.pai = null
 	if(istype(card.loc, /mob/living))
 		var/mob/living/L = card.loc
 		if(!L.unEquip(card))
 			src << "<span class='warning'>Error: Unable to expand to mobile form. Chassis is restrained by some device or person.</span>"
 			return FALSE
-		else if(istype(card.loc, /obj/item/device/pda))
-			var/obj/item/device/pda/P = card.loc
-			P.pai = null
 	if(client)
 		client.perspective = EYE_PERSPECTIVE
 		client.eye = src
@@ -37,7 +37,7 @@
 	card.screen_loc = null
 	SetLuminosity(0)
 	icon_state = "[chassis]"
-	src.visible_message("<span class='boldnotice'>[src] folds out its holochassis emitter and forms a holoshell around itself!</span>")
+	visible_message("<span class='boldnotice'>[src] folds out its holochassis emitter and forms a holoshell around itself!</span>")
 	holoform = TRUE
 
 /mob/living/silicon/pai/proc/emittercool()
