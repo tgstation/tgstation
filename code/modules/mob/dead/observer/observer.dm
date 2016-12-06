@@ -745,8 +745,8 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	register_pai()
 
 /mob/dead/observer/proc/register_pai()
-	if(istype(usr, /mob/dead/observer))
+	if(istype(src, /mob/dead/observer))
 		if(SSpai)
-			SSpai.recruitWindow(client.mob)
+			SSpai.recruitWindow(src)
 	else
 		usr << "Can't become a pAI candidate while not dead!"

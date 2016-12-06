@@ -40,7 +40,7 @@
 	name = "pAI Candidate"
 	icon_state = "pai"
 
-/obj/screen/ghost/teleport/Click()
+/obj/screen/ghost/pai/Click()
 	var/mob/dead/observer/G = usr
 	G.register_pai()
 

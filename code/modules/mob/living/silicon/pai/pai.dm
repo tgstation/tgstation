@@ -88,7 +88,7 @@
 	card = P
 	sradio = new(src)
 	if(!radio)
-		radio = new /obj/item/device/radio/borg(src)
+		radio = new /obj/item/device/radio(src)
 
 	//PDA
 	pda = new(src)
@@ -123,11 +123,11 @@
 /mob/living/silicon/pai/Stat()
 	..()
 	if(statpanel("Status"))
-		if(src.silence_time)
+		if(silence_time)
 			var/timeleft = round((silence_time - world.timeofday)/10 ,1)
 			stat(null, "Communications system reboot in -[(timeleft / 60) % 60]:[add_zero(num2text(timeleft % 60), 2)]")
-		if(!src.stat)
-			stat(null, text("System integrity: [(src.health+100)/2]%"))
+		if(!stat)
+			stat(null, text("System integrity: [(health+100)/2]%"))
 		else
 			stat(null, text("Systems nonfunctional"))
 
@@ -145,8 +145,8 @@
 /mob/proc/makePAI(delold)
 	var/obj/item/device/paicard/card = new /obj/item/device/paicard(get_turf(src))
 	var/mob/living/silicon/pai/pai = new /mob/living/silicon/pai(card)
-	pai.key = src.key
-	pai.name = src.name
+	pai.key = key
+	pai.name = name
 	card.setPersonality(pai)
 	if(delold)
 		qdel(src)

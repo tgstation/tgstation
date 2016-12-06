@@ -32,8 +32,6 @@
 		client.perspective = EYE_PERSPECTIVE
 		client.eye = src
 	var/turf/T = get_turf(card.loc)
-	card.loc = T
-	loc = T
 	forceMove(T)
 	card.forceMove(src)
 	card.screen_loc = null
@@ -58,9 +56,7 @@
 		client.perspective = EYE_PERSPECTIVE
 		client.eye = card
 	var/turf/T = get_turf(src)
-	card.loc = T
 	card.forceMove(T)
-	loc = card
 	forceMove(card)
 	canmove = FALSE
 	density = FALSE
