@@ -256,8 +256,7 @@
 	ui_interact(user)
 	return TRUE
 
-/obj/item/clockwork/slab/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
-									datum/tgui/master_ui = null, datum/ui_state/state = inventory_state)
+/obj/item/clockwork/slab/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = inventory_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
 		ui = new(user, src, ui_key, "clockwork_slab", name, 800, 420, master_ui, state)
@@ -285,12 +284,12 @@
 
 //Guide to Serving Ratvar
 /obj/item/clockwork/slab/proc/recollection()
-	var/text = "If you're seeing this, file a bug report."
+	var/list/textlist = list("If you're seeing this, file a bug report.")
 	if(ratvar_awakens)
-		text = "<font color=#BE8700 size=3><b>"
+		textlist = list("<font color=#BE8700 size=3><b>")
 		for(var/i in 1 to 100)
-			text += "HONOR RATVAR "
-		text += "</b></font>"
+			textlist += "HONOR RATVAR "
+		textlist += "</b></font>"
 	else
 		var/servants = 0
 		var/production_time = SLAB_PRODUCTION_TIME
@@ -312,7 +311,7 @@
 		production_text += "</b>"
 		production_text += production_text_addon
 
-		text = "<font color=#BE8700 size=3><b><center>Chetr nyy hagehguf-naq-ubabe Ratvar.</center></b></font><br>\
+		textlist = list("<font color=#BE8700 size=3><b><center>Chetr nyy hagehguf-naq-ubabe Ratvar.</center></b></font><br>\
 		\
 		First and foremost, you serve Ratvar, the Clockwork Justicar, in any ways he sees fit. This is with no regard to your personal well-being, and you would do well to think of the larger \
 		scale of things than your life. Ratvar wishes retribution upon those that trapped him in Reebe - the Nar-Sian cultists - and you are to help him obtain it.<br><br>\
@@ -348,23 +347,24 @@
 		The second function of the clockwork slab is <b><font color=#BE8700>Recollection</font></b>, which will display this guide.<br><br>\
 		\
 		The third to fifth functions are three buttons in the top left while holding the slab.<br>From left to right, they are:<br>\
-		<b><font color=#DAAA18>Hierophant Network</font></b>, which allows communication to other Servants.<br>"
+		<b><font color=#DAAA18>Hierophant Network</font></b>, which allows communication to other Servants.<br>")
 		if(LAZYLEN(quickbound))
 			for(var/i in 1 to quickbound.len)
 				if(!quickbound[i])
 					continue
 				var/datum/clockwork_scripture/quickbind_slot = quickbound[i]
-				text += "A <b>Quickbind</b> slot, currently set to <b><font color=[get_component_color_brightalloy(initial(quickbind_slot.primary_component))]>[initial(quickbind_slot.name)]</font></b>.<br>"
-		text += "<br>\
+				textlist += "A <b>Quickbind</b> slot, currently set to <b><font color=[get_component_color_brightalloy(initial(quickbind_slot.primary_component))]>[initial(quickbind_slot.name)]</font></b>.<br>"
+		textlist += "<br>\
 		Examine the slab or swap to Recital to check the number of components it has available.<br><br>\
 		\
 		<font color=#BE8700 size=3><b><center>Purge all untruths and honor Ratvar.</center></b></font>"
-	return text
+	textlist = textlist.Join("")
+	return textlist
 
 /obj/item/clockwork/slab/ui_data(mob/user)
 	var/list/data = list()
 	data["components"] = stored_components.Copy()
-	var/temp_data = "<font color=#B18B25>"
+	var/list/temp_data = list("<font color=#B18B25>")
 	for(var/i in data["components"])
 		temp_data += "<font color=[get_component_color_brightalloy(i)]>[get_component_acronym(i)] <b>[data["components"][i]]</b></font>"
 		if(i != HIEROPHANT_ANSIBLE)
@@ -379,6 +379,7 @@
 	else
 		temp_data += "<b>NONE</b>"
 	temp_data += ")</font>"
+	temp_data = temp_data.Join("")
 	data["components"] = temp_data
 
 	data["selected"] = selected_scripture
@@ -392,7 +393,6 @@
 			var/scripture_color = get_component_color_brightalloy(S.primary_component)
 			var/list/temp_info = list("name" = "<font color=[scripture_color]><b>[S.name]</b></font>",
 			"descname" = "<font color=[scripture_color]>([S.descname])</font>",
-			"invokers" = " <font color=#B18B25>Invokers: <b>[S.invokers_required]</b></font>",
 			"tip" = "[S.desc]\n[S.usage_tip]",
 			"required" = list(BELLIGERENT_EYE = 0, VANGUARD_COGWHEEL = 0, GEIS_CAPACITOR = 0, REPLICANT_ALLOY = 0, HIEROPHANT_ANSIBLE = 0),
 			"type" = "[S.type]",
@@ -400,14 +400,15 @@
 			var/found = quickbound.Find(S.type)
 			if(found)
 				temp_info["bound"] = "<b>[found]</b>"
-			if(S.invokers_required <= 1)
-				temp_info["invokers"] = null
+			if(S.invokers_required > 1)
+				temp_info["invokers"] = "<font color=#B18B25>Invokers: <b>[S.invokers_required]</b></font>"
 			for(var/i in S.required_components)
 				temp_info["required"][i] += S.required_components[i]
-			var/really_temp_data = ""
+			var/list/really_temp_data = list()
 			for(var/i in temp_info["required"])
 				if(temp_info["required"][i])
 					really_temp_data += "<font color=[get_component_color_brightalloy(i)]>[get_component_acronym(i)] <b>[temp_info["required"][i]]</b></font> "
+			really_temp_data = really_temp_data.Join("")
 			temp_info["required"] = really_temp_data
 			data["scripture"] += list(temp_info)
 	data["recollection"] = recollecting
