@@ -1,0 +1,8 @@
+author: "XDTM"
+delete-after: True
+changes: 
+  - rscadd: "Quantum Pads are now buildable in R&D!"
+  - rscadd: "Quantum Pads, once built, can be linked to other Quantum Pads using a multitool. Using a Pad who has been linked will teleport everything on the sending pad to the linked pad!"
+  - rscadd: "Pads do not need to be linked in pairs: Pad A can lead to Pad B which can lead to pad C."
+  - rscadd: "Upgrading a Quantum Pad will reduce the cooldown, charge-up time, and power consumption."
+  - rscadd: "Quantum Pads require a bluespace crystal, a micro manipulator, a capacitor and a cable piece."

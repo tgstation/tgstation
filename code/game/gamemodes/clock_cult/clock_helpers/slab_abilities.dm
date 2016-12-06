@@ -76,8 +76,8 @@
 	name = "glowing ring"
 	desc = "A flickering, glowing purple ring around a target."
 	clockwork_desc = "A binding ring around a target, preventing them from taking action while they're being converted."
-	max_integrity = 30
-	obj_integrity = 30
+	max_integrity = 25
+	obj_integrity = 25
 	density = 0
 	icon = 'icons/effects/clockwork_effects.dmi'
 	icon_state = "geisbinding_full"
@@ -171,7 +171,7 @@
 		if(!resisting)
 			resisting = TRUE
 			user.visible_message("<span class='warning'>[user] starts struggling against [src]...</span>", "<span class='userdanger'>You start breaking out of [src]...</span>")
-			while(do_after(user, 7.5, target = src) && resisting && obj_integrity)
+			while(do_after(user, 10, target = src) && resisting && obj_integrity)
 				if(obj_integrity - 5 <= 0)
 					user.visible_message("<span class='warning'>[user] breaks [src]!</span>", "<span class='userdanger'>You break [src]!</span>")
 					take_damage(5)
