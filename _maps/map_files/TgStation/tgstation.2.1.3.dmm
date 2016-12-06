@@ -37068,15 +37068,16 @@
 /turf/open/floor/plasteel/white,
 /area/medical/sleeper)
 "bDX" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8";
-	pixel_y = 0
+/obj/docking_port/stationary{
+	dir = 1;
+	dwidth = 2;
+	height = 7;
+	id = "asteroid_syndicate_N";
+	name = "North of Station";
+	width = 5
 	},
-/mob/living/simple_animal/mouse,
-/turf/open/floor/plasteel/floorgrime,
-/area/toxins/storage)
+/turf/open/space,
+/area/space)
 "bDY" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -38774,13 +38775,16 @@
 	},
 /area/quartermaster/miningdock)
 "bHB" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
+/obj/docking_port/stationary{
+	dir = 1;
+	dwidth = 2;
+	height = 7;
+	id = "asteroid_syndicate_NE";
+	name = "North East of Station";
+	width = 5
 	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/mob/living/simple_animal/mouse,
-/turf/open/floor/plating,
-/area/maintenance/asmaint)
+/turf/open/space,
+/area/space)
 "bHC" = (
 /obj/effect/landmark{
 	name = "blobstart"
@@ -51205,14 +51209,16 @@
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "chU" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+/obj/docking_port/stationary{
+	dir = 1;
+	dwidth = 2;
+	height = 7;
+	id = "asteroid_syndicate_NW";
+	name = "North West of Station";
+	width = 5
 	},
-/mob/living/simple_animal/mouse,
-/turf/open/floor/plating,
-/area/maintenance/aft)
+/turf/open/space,
+/area/space)
 "chV" = (
 /turf/open/floor/plating/warnplate{
 	dir = 9
@@ -55963,8 +55969,13 @@
 /turf/open/floor/plating,
 /area/engine/engineering)
 "csh" = (
-/obj/structure/transit_tube{
-	icon_state = "D-SW"
+/obj/docking_port/stationary{
+	dir = 1;
+	dwidth = 2;
+	height = 7;
+	id = "asteroid_syndicate_SW";
+	name = "South West of Station";
+	width = 5
 	},
 /turf/open/space,
 /area/space)
@@ -56004,8 +56015,13 @@
 /turf/open/space,
 /area/space)
 "csp" = (
-/obj/structure/transit_tube{
-	icon_state = "E-W-Pass"
+/obj/docking_port/stationary{
+	dir = 1;
+	dwidth = 2;
+	height = 7;
+	id = "asteroid_syndicate_SE";
+	name = "South East of Station";
+	width = 5
 	},
 /turf/open/space,
 /area/space)
@@ -56190,8 +56206,13 @@
 /turf/open/floor/plating/airless,
 /area/engine/engineering)
 "csL" = (
-/obj/structure/transit_tube{
-	icon_state = "D-NE"
+/obj/docking_port/stationary{
+	dir = 1;
+	dwidth = 2;
+	height = 7;
+	id = "asteroid_syndicate_S";
+	name = "South of Station";
+	width = 5
 	},
 /turf/open/space,
 /area/space)
@@ -58859,6 +58880,14 @@
 	name = "SS13 Arrival Docking";
 	turf_type = /turf/open/space;
 	width = 35
+	},
+/obj/docking_port/stationary{
+	dir = 2;
+	dwidth = 2;
+	height = 7;
+	id = "asteroid_syndicate_DOCK4";
+	name = "Station Port Dock 4";
+	width = 5
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
@@ -74888,7 +74917,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+chU
 aaa
 aaa
 aaa
@@ -76585,7 +76614,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+csh
 aaa
 aaa
 aaa
@@ -89778,7 +89807,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+bDX
 aaa
 aaa
 aaa
@@ -92280,7 +92309,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+csL
 aaa
 aaa
 aaa
@@ -111638,7 +111667,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+bHB
 aaa
 aaa
 aaa
@@ -119516,7 +119545,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+csp
 aaa
 aaa
 aaa
