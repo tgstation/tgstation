@@ -360,6 +360,11 @@
 				H.apply_damage(5, BRUTE, picked_def_zone)
 				H.Weaken(3)
 				if(cooldown < world.time - 10) //cooldown to avoid message spam.
-					H.visible_message("<span class='danger'>[H] steps in the broken glass!</span>", \
-							"<span class='userdanger'>You step in the broken glass!</span>")
+					if(!H.incapacitated())
+						H.visible_message("<span class='danger'>[H] steps in the broken glass!</span>", \
+								"<span class='userdanger'>You step in the broken glass!</span>")
+					else
+						H.visible_message("<span class='danger'>[H] slides on the broken glass!</span>", \
+								"<span class='userdanger'>You slide on the broken glass!</span>")
+
 					cooldown = world.time
