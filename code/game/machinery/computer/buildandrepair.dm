@@ -132,7 +132,7 @@
 				transfer_fingerprints_to(B)
 				qdel(src)
 				return
-	if(user.a_intent == "harm")
+	if(user.a_intent == INTENT_HARM)
 		return ..()
 
 
@@ -153,7 +153,7 @@
 	item_state = "electronic"
 	origin_tech = "programming=2"
 	materials = list(MAT_GLASS=1000)
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	var/build_path = null
 
 /obj/item/weapon/circuitboard/computer/turbine_computer

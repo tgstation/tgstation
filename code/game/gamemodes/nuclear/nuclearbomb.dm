@@ -385,6 +385,9 @@ var/bomb_set
 		bomb_set = FALSE
 		detonation_timer = null
 		set_security_level(previous_level)
+		for(var/obj/item/weapon/pinpointer/syndicate/S in pinpointer_list)
+			S.switch_mode_to(initial(S.mode))
+			S.nuke_warning = FALSE
 		countdown.stop()
 	update_icon()
 
@@ -482,7 +485,7 @@ This is here to make the tiles around the station mininuke change when it's arme
 //==========DAT FUKKEN DISK===============
 /obj/item/weapon/disk
 	icon = 'icons/obj/module.dmi'
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 	item_state = "card-id"
 	icon_state = "datadisk0"
 

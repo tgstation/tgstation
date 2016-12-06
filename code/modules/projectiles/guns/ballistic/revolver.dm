@@ -32,10 +32,6 @@
 		update_icon()
 		chamber_round(0)
 
-	if(unique_rename)
-		if(istype(A, /obj/item/weapon/pen))
-			rename_weapon(user)
-
 /obj/item/weapon/gun/ballistic/revolver/attack_self(mob/living/user)
 	var/num_unloaded = 0
 	chambered = null
@@ -221,7 +217,7 @@
 /obj/item/weapon/gun/ballistic/revolver/russian/afterattack(atom/target, mob/living/user, flag, params)
 	if(flag)
 		if(!(target in user.contents) && ismob(target))
-			if(user.a_intent == "harm") // Flogging action
+			if(user.a_intent == INTENT_HARM) // Flogging action
 				return
 
 	if(isliving(user))
@@ -249,7 +245,7 @@
 				if(zone == "head" || zone == "eyes" || zone == "mouth")
 					shoot_self(user, affecting)
 				else
-					user.visible_message("<span class='danger'>[user.name] cowardly fires [src] at \his [affecting.name]!</span>", "<span class='userdanger'>You cowardly fire [src] at your [affecting.name]!</span>", "<span class='italics'>You hear a gunshot!</span>")
+					user.visible_message("<span class='danger'>[user.name] cowardly fires [src] at [user.p_their()] [affecting.name]!</span>", "<span class='userdanger'>You cowardly fire [src] at your [affecting.name]!</span>", "<span class='italics'>You hear a gunshot!</span>")
 				return
 
 		user.visible_message("<span class='danger'>*click*</span>")
@@ -257,7 +253,7 @@
 
 /obj/item/weapon/gun/ballistic/revolver/russian/proc/shoot_self(mob/living/carbon/human/user, affecting = "head")
 	user.apply_damage(300, BRUTE, affecting)
-	user.visible_message("<span class='danger'>[user.name] fires [src] at \his head!</span>", "<span class='userdanger'>You fire [src] at your head!</span>", "<span class='italics'>You hear a gunshot!</span>")
+	user.visible_message("<span class='danger'>[user.name] fires [src] at [user.p_their()] head!</span>", "<span class='userdanger'>You fire [src] at your head!</span>", "<span class='italics'>You hear a gunshot!</span>")
 
 /obj/item/weapon/gun/ballistic/revolver/russian/soul
 	name = "cursed russian revolver"
@@ -282,7 +278,7 @@
 	desc = "A true classic."
 	icon_state = "dshotgun"
 	item_state = "shotgun"
-	w_class = 4
+	w_class = WEIGHT_CLASS_BULKY
 	force = 10
 	flags = CONDUCT
 	slot_flags = SLOT_BACK
@@ -336,7 +332,7 @@
 	desc = "Essentially a tube that aims shotgun shells."
 	icon_state = "ishotgun"
 	item_state = "shotgun"
-	w_class = 4
+	w_class = WEIGHT_CLASS_BULKY
 	force = 10
 	slot_flags = null
 	mag_type = /obj/item/ammo_box/magazine/internal/shot/improvised

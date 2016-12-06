@@ -4,7 +4,7 @@
 	icon = 'icons/obj/lighting.dmi'
 	icon_state = "flashlight"
 	item_state = "flashlight"
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
 	materials = list(MAT_METAL=50, MAT_GLASS=20)
@@ -62,11 +62,9 @@
 
 		if(M == user)	//they're using it on themselves
 			if(M.flash_act(visual = 1))
-				M.visible_message("[M] directs [src] to \his eyes.", \
-									 "<span class='notice'>You wave the light in front of your eyes! Trippy!</span>")
+				M.visible_message("[M] directs [src] to [M.p_their()] eyes.", "<span class='notice'>You wave the light in front of your eyes! Trippy!</span>")
 			else
-				M.visible_message("[M] directs [src] to \his eyes.", \
-									 "<span class='notice'>You wave the light in front of your eyes.</span>")
+				M.visible_message("[M] directs [src] to [M.p_their()] eyes.", "<span class='notice'>You wave the light in front of your eyes.</span>")
 		else
 			user.visible_message("<span class='warning'>[user] directs [src] to [M]'s eyes.</span>", \
 								 "<span class='danger'>You direct [src] to [M]'s eyes.</span>")
@@ -147,7 +145,7 @@
 	icon_state = "lamp"
 	item_state = "lamp"
 	brightness_on = 5
-	w_class = 4
+	w_class = WEIGHT_CLASS_BULKY
 	flags = CONDUCT
 	materials = list()
 	on = 1
@@ -170,7 +168,7 @@
 		attack_self(usr)
 
 //Bananalamp
-obj/item/device/flashlight/lamp/bananalamp
+/obj/item/device/flashlight/lamp/bananalamp
 	name = "banana lamp"
 	desc = "Only a clown would think to make a ghetto banana-shaped lamp. Even has a goofy pullstring."
 	icon_state = "bananalamp"
@@ -181,7 +179,7 @@ obj/item/device/flashlight/lamp/bananalamp
 /obj/item/device/flashlight/flare
 	name = "flare"
 	desc = "A red Nanotrasen issued flare. There are instructions on the side, it reads 'pull cord, make light'."
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	brightness_on = 7 // Pretty bright.
 	icon_state = "flare"
 	item_state = "flare"
@@ -251,7 +249,7 @@ obj/item/device/flashlight/lamp/bananalamp
 /obj/item/device/flashlight/flare/torch
 	name = "torch"
 	desc = "A torch fashioned from some leaves and a log."
-	w_class = 4
+	w_class = WEIGHT_CLASS_BULKY
 	brightness_on = 4
 	icon_state = "torch"
 	item_state = "torch"
@@ -273,13 +271,13 @@ obj/item/device/flashlight/lamp/bananalamp
 	icon = 'icons/obj/lighting.dmi'
 	icon_state = "slime"
 	item_state = "slime"
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	slot_flags = SLOT_BELT
 	materials = list()
 	brightness_on = 6 //luminosity when on
 
 /obj/item/device/flashlight/emp
-	origin_tech = "magnets=3;syndicate=´1"
+	origin_tech = "magnets=3;syndicate=1"
 	var/emp_max_charges = 4
 	var/emp_cur_charges = 4
 	var/charge_tick = 0

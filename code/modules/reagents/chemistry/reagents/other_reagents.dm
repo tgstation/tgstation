@@ -300,7 +300,7 @@
 					if ("albino")
 						N.skin_tone = "caucasian1"
 
-			if(MUTCOLORS in N.dna.species.specflags) //take current alien color and darken it slightly
+			if(MUTCOLORS in N.dna.species.species_traits) //take current alien color and darken it slightly
 				var/newcolor = ""
 				var/len = length(N.dna.features["mcolor"])
 				for(var/i=1, i<=len, i+=1)
@@ -343,7 +343,7 @@
 			N.skin_tone = "orange"
 			N.hair_style = "Spiky"
 			N.hair_color = "000"
-		if(MUTCOLORS in N.dna.species.specflags) //Aliens with custom colors simply get turned orange
+		if(MUTCOLORS in N.dna.species.species_traits) //Aliens with custom colors simply get turned orange
 			N.dna.features["mcolor"] = "f80"
 		N.regenerate_icons()
 		if(prob(7))
@@ -994,6 +994,23 @@
 		T.atmos_spawn_air("co2=[reac_volume/5];TEMP=[T20C]")
 	return
 
+/datum/reagent/nitrous_oxide
+	name = "Nitrous Oxide"
+	id = "nitrous_oxide"
+	description = "A potent oxidizer used as fuel in rockets and as an anaesthetic during surgery."
+	reagent_state = LIQUID
+	color = "#808080"
+
+/datum/reagent/nitrous_oxide/reaction_obj(obj/O, reac_volume)
+	if((!O) || (!reac_volume))
+		return 0
+	O.atmos_spawn_air("n2o=[reac_volume/5];TEMP=[T20C]")
+
+/datum/reagent/nitrous_oxide/reaction_turf(turf/open/T, reac_volume)
+	if(istype(T))
+		T.atmos_spawn_air("n2o=[reac_volume/5];TEMP=[T20C]")
+	return
+
 
 
 /////////////////////////Coloured Crayon Powder////////////////////////////
@@ -1339,7 +1356,7 @@
 
 //Misc reagents
 
-datum/reagent/romerol
+/datum/reagent/romerol
 	name = "romerol"
 	// the REAL zombie powder
 	id = "romerol"

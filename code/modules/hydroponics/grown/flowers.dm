@@ -120,7 +120,7 @@
 	force = 0
 	slot_flags = SLOT_HEAD
 	throwforce = 0
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 	throw_speed = 1
 	throw_range = 3
 
@@ -170,7 +170,7 @@
 	force = 0
 	slot_flags = SLOT_HEAD
 	throwforce = 0
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 	throw_speed = 1
 	throw_range = 3
 	attack_verb = list("roasted", "scorched", "burned")

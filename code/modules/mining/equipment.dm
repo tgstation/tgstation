@@ -14,6 +14,7 @@
 	hoodtype = /obj/item/clothing/head/explorer
 	armor = list(melee = 30, bullet = 20, laser = 20, energy = 20, bomb = 50, bio = 100, rad = 50, fire = 50, acid = 50)
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/internals, /obj/item/weapon/resonator, /obj/item/device/mining_scanner, /obj/item/device/t_scanner/adv_mining_scanner, /obj/item/weapon/gun/energy/kinetic_accelerator, /obj/item/weapon/pickaxe)
+	resistance_flags = FIRE_PROOF
 
 /obj/item/clothing/head/explorer
 	name = "explorer hood"
@@ -25,6 +26,7 @@
 	min_cold_protection_temperature = FIRE_HELM_MIN_TEMP_PROTECT
 	max_heat_protection_temperature = FIRE_HELM_MAX_TEMP_PROTECT
 	armor = list(melee = 30, bullet = 20, laser = 20, energy = 20, bomb = 50, bio = 100, rad = 50, fire = 50, acid = 50)
+	resistance_flags = FIRE_PROOF
 
 /obj/item/clothing/mask/gas/explorer
 	name = "explorer gas mask"
@@ -35,13 +37,14 @@
 	visor_flags_cover = MASKCOVERSMOUTH
 	actions_types = list(/datum/action/item_action/adjust)
 	armor = list(melee = 10, bullet = 5, laser = 5, energy = 5, bomb = 0, bio = 50, rad = 0, fire = 20, acid = 40)
+	resistance_flags = FIRE_PROOF
 
 /obj/item/clothing/mask/gas/explorer/attack_self(mob/user)
 	adjustmask(user)
 
 /obj/item/clothing/mask/gas/explorer/adjustmask(user)
 	..()
-	w_class = mask_adjusted ? 3 : 2
+	w_class = mask_adjusted ? WEIGHT_CLASS_NORMAL : WEIGHT_CLASS_SMALL
 
 /obj/item/clothing/mask/gas/explorer/folded/New()
 	..()
@@ -59,7 +62,7 @@
 	icon_state = "Jaunter"
 	item_state = "electronic"
 	throwforce = 0
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	throw_speed = 3
 	throw_range = 5
 	origin_tech = "bluespace=2"
@@ -164,7 +167,7 @@
 	icon_state = "resonator"
 	item_state = "resonator"
 	desc = "A handheld device that creates small fields of energy that resonate until they detonate, crushing rock. It can also be activated without a target to create a field at the user's location, to act as a delayed time trap. It's more effective in a vacuum."
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 	force = 15
 	throwforce = 10
 	var/burst_time = 30
@@ -233,7 +236,7 @@
 	if(pressure < 50)
 		name = "strong resonance field"
 		resonance_damage = 60
-	addtimer(src, "burst", timetoburst, FALSE, proj_turf)
+	addtimer(src, "burst", timetoburst, TIMER_NORMAL, proj_turf)
 
 /obj/effect/resonance/Destroy()
 	if(res)
@@ -274,7 +277,7 @@
 	icon_state = "lazarus_hypo"
 	item_state = "hypo"
 	throwforce = 0
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	throw_speed = 3
 	throw_range = 5
 	var/loaded = 1
@@ -335,7 +338,7 @@
 	name = "manual mining scanner"
 	icon_state = "mining1"
 	item_state = "analyzer"
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
 	var/cooldown = 0
@@ -367,7 +370,7 @@
 	name = "advanced automatic mining scanner"
 	icon_state = "mining0"
 	item_state = "analyzer"
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
 	var/cooldown = 35
@@ -458,7 +461,7 @@
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle19"
 	desc = "Inject certain types of monster organs with this stabilizer to preserve their healing powers indefinitely."
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 	origin_tech = "biotech=3"
 
 /obj/item/weapon/hivelordstabilizer/afterattack(obj/item/organ/M, mob/user)
@@ -482,7 +485,7 @@
 	\n<span class='info'>Mark a mob with the destabilizing force, then hit them in melee to activate it for extra damage. Extra damage if backstabbed in this fashion. \
 	This weapon is only particularly effective against large creatures.</span>"
 	force = 20 //As much as a bone spear, but this is significantly more annoying to carry around due to requiring the use of both hands at all times
-	w_class = 4
+	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = SLOT_BACK
 	force_unwielded = 20 //It's never not wielded so these are the same
 	force_wielded = 20

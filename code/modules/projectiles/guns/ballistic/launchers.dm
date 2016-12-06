@@ -8,7 +8,7 @@
 	item_state = "gun"
 	mag_type = /obj/item/ammo_box/magazine/internal/grenadelauncher
 	fire_sound = 'sound/weapons/grenadelaunch.ogg'
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 	pin = /obj/item/device/firing_pin/implant/pindicate
 
 /obj/item/weapon/gun/ballistic/revolver/grenadelauncher/unrestricted
@@ -51,7 +51,7 @@
 	desc = "A weapon favored by carp hunters. Fires specialized spears using kinetic energy."
 	icon_state = "speargun"
 	item_state = "speargun"
-	w_class = 4
+	w_class = WEIGHT_CLASS_BULKY
 	origin_tech = "combat=4;engineering=4"
 	force = 10
 	can_suppress = 0
@@ -75,3 +75,26 @@
 		user << "<span class='notice'>You load [num_loaded] spear\s into \the [src].</span>"
 		update_icon()
 		chamber_round()
+
+/obj/item/weapon/gun/ballistic/automatic/atlauncher
+	desc = "A pre-loaded, single shot anti-armour launcher."
+	name = "anti-armour grenade launcher"
+	icon_state = "rocketlauncher"
+	item_state = "rocketlauncher"
+	mag_type = /obj/item/ammo_box/magazine/internal/rocketlauncher
+	fire_sound = 'sound/weapons/rocketlaunch.ogg'
+	w_class = WEIGHT_CLASS_BULKY
+	can_suppress = 0
+	burst_size = 1
+	fire_delay = 0
+	select = 0
+	actions_types = list()
+	casing_ejector = 0
+	weapon_weight = WEAPON_HEAVY
+
+/obj/item/weapon/gun/ballistic/automatic/atlauncher/attack_self()
+	return
+
+/obj/item/weapon/gun/ballistic/automatic/atlauncher/update_icon()
+	..()
+	icon_state = "rocketlauncher[magazine ? "-[get_ammo(1)]" : ""]"

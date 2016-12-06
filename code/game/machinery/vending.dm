@@ -420,8 +420,6 @@
 		if(shock(user, 100))
 			return
 
-	//user << browse(dat, "window=vending")
-	//onclose(user, "")
 	var/datum/browser/popup = new(user, "vending", (name))
 	popup.set_content(dat)
 	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
@@ -665,7 +663,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 					/obj/item/weapon/reagent_containers/food/drinks/bottle/vermouth = 5,/obj/item/weapon/reagent_containers/food/drinks/bottle/rum = 5,
 					/obj/item/weapon/reagent_containers/food/drinks/bottle/wine = 5,/obj/item/weapon/reagent_containers/food/drinks/bottle/cognac = 5,
 					/obj/item/weapon/reagent_containers/food/drinks/bottle/kahlua = 5,/obj/item/weapon/reagent_containers/food/drinks/bottle/hcider = 5,
-					/obj/item/weapon/reagent_containers/food/drinks/bottle/absinthe = 5,
+					/obj/item/weapon/reagent_containers/food/drinks/bottle/absinthe = 5, /obj/item/weapon/reagent_containers/food/drinks/bottle/grappa = 5,
 					/obj/item/weapon/reagent_containers/food/drinks/ale = 6,/obj/item/weapon/reagent_containers/food/drinks/bottle/orangejuice = 4,
 					/obj/item/weapon/reagent_containers/food/drinks/bottle/tomatojuice = 4,/obj/item/weapon/reagent_containers/food/drinks/bottle/limejuice = 4,
 					/obj/item/weapon/reagent_containers/food/drinks/bottle/cream = 4,/obj/item/weapon/reagent_containers/food/drinks/soda_cans/tonic = 8,
@@ -923,7 +921,10 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 					/obj/item/clothing/suit/hooded/ian_costume = 1,
 					/obj/item/clothing/suit/hooded/bee_costume = 1,
 					/obj/item/clothing/suit/snowman = 1,
-					/obj/item/clothing/head/snowman = 1)
+					/obj/item/clothing/head/snowman = 1,
+					/obj/item/clothing/mask/joy = 1,
+					/obj/item/clothing/head/cueball = 1,
+					/obj/item/clothing/under/scratch = 1)
 	contraband = list(/obj/item/clothing/suit/judgerobe = 1,/obj/item/clothing/head/powdered_wig = 1,/obj/item/weapon/gun/magic/wand = 2,/obj/item/clothing/glasses/sunglasses/garb = 2)
 	premium = list(/obj/item/clothing/suit/pirate/captain = 2, /obj/item/clothing/head/pirate/captain = 2, /obj/item/clothing/head/helmet/roman = 1, /obj/item/clothing/head/helmet/roman/legionaire = 1, /obj/item/clothing/under/roman = 1, /obj/item/clothing/shoes/roman = 1, /obj/item/weapon/shield/riot/roman = 1, /obj/item/weapon/skub = 1)
 	refill_canister = /obj/item/weapon/vending_refill/autodrobe

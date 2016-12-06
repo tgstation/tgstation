@@ -23,7 +23,7 @@
 	var/paused = FALSE //for suspending the projectile midair
 	var/p_x = 16
 	var/p_y = 16			// the pixel location of the tile that the player clicked. Default is the center
-	var/speed = 0.5			//Amount of deciseconds it takes for projectile to travel
+	var/speed = 0.8			//Amount of deciseconds it takes for projectile to travel
 	var/Angle = 0
 	var/spread = 0			//amount (in degrees) of projectile spread
 	var/legacy = 0			//legacy projectile system
@@ -108,7 +108,7 @@
 				playsound(loc, hitsound, volume, 1, -1)
 			L.visible_message("<span class='danger'>[L] is hit by \a [src][organ_hit_text]!</span>", \
 					"<span class='userdanger'>[L] is hit by \a [src][organ_hit_text]!</span>", null, COMBAT_MESSAGE_RANGE)
-		L.on_hit(type)
+		L.on_hit(src)
 
 	var/reagent_note
 	if(reagents && reagents.reagent_list)

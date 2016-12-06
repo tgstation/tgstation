@@ -94,7 +94,7 @@
 	if(iscarbon(M))
 		C = M
 		CHECK_DNA_AND_SPECIES(C)
-		if(NOBREATH in C.dna.species.specflags)
+		if(NOBREATH in C.dna.species.species_traits)
 			. = FALSE
 
 	if(.)
@@ -684,7 +684,23 @@
 			animate(whole_screen, transform = matrix(), time = 5, easing = QUAD_EASING)
 	..()
 
-
+/datum/reagent/toxin/anacea
+	name = "Anacea"
+	id = "anacea"
+	description = "A toxin that quickly purges medicines and metabolizes very slowly."
+	reagent_state = LIQUID
+	color = "#3C5133"
+	metabolization_rate = 0.08 * REAGENTS_METABOLISM
+	toxpwr = 0.15
+	
+/datum/reagent/toxin/anacea/on_mob_life(mob/living/M)
+	var/remove_amt = 5
+	if(holder.has_reagent("calomel") || holder.has_reagent("pen_acid"))
+		remove_amt = 0.5
+	for(var/datum/reagent/medicine/R in M.reagents.reagent_list)
+		M.reagents.remove_reagent(R.id,remove_amt)
+	return ..()
+	
 //ACID
 
 
@@ -741,8 +757,10 @@
 	metabolization_rate = 1.5 * REAGENTS_METABOLISM
 
 /datum/reagent/toxin/peaceborg/confuse/on_mob_life(mob/living/M)
-	M.confused += 1
-	M.Dizzy(1)
+	if(M.confused < 6)
+		M.confused = Clamp(M.confused + 3, 0, 5)
+	if(M.dizziness < 6)
+		M.dizziness = Clamp(M.dizziness + 3, 0, 5)
 	if(prob(20))
 		M << "You feel confused and disorientated."
 	..()
@@ -755,7 +773,8 @@
 	metabolization_rate = 1.5 * REAGENTS_METABOLISM
 
 /datum/reagent/toxin/peaceborg/tire/on_mob_life(mob/living/M)
-	if(M.staminaloss < 50)
+	var/healthcomp = (100 - M.health)	//DOES NOT ACCOUNT FOR ADMINBUS THINGS THAT MAKE YOU HAVE MORE THAN 200/210 HEALTH, OR SOMETHING OTHER THAN A HUMAN PROCESSING THIS.
+	if(M.staminaloss < (45 - healthcomp))	//At 50 health you would have 200 - 150 health meaning 50 compensation. 60 - 50 = 10, so would only do 10-19 stamina.)
 		M.adjustStaminaLoss(10)
 	if(prob(30))
 		M << "You should sit down and take a rest..."

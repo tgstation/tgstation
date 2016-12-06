@@ -24,7 +24,7 @@
 	var/use_overlays = FALSE
 
 	item_color = "red"
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 	attack_verb = list("attacked", "coloured")
 	var/paint_color = "#FF0000" //RGB
 
@@ -509,7 +509,7 @@
 	desc = "A box of crayons for all your rune drawing needs."
 	icon = 'icons/obj/crayons.dmi'
 	icon_state = "crayonbox"
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	storage_slots = 7
 	can_hold = list(
 		/obj/item/toy/crayon

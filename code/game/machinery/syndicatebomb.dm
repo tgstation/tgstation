@@ -15,6 +15,8 @@
 	var/timer_set = 60
 	var/maximum_timer = 60000
 
+	var/can_unanchor = TRUE
+
 	var/open_panel = FALSE 	//are the wires exposed?
 	var/active = FALSE		//is the bomb counting down?
 	var/defused = FALSE		//is the bomb capable of exploding?
@@ -98,7 +100,7 @@
 		. = timer_set
 
 /obj/machinery/syndicatebomb/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/weapon/wrench))
+	if(istype(I, /obj/item/weapon/wrench) && can_unanchor)
 		if(!anchored)
 			if(!isturf(loc) || isspaceturf(loc))
 				user << "<span class='notice'>The bomb must be placed on solid ground to attach it.</span>"
@@ -217,12 +219,12 @@
 	name = "training bomb"
 	icon_state = "training-bomb"
 	desc = "A salvaged syndicate device gutted of its explosives to be used as a training aid for aspiring bomb defusers."
-	payload = /obj/item/weapon/bombcore/training/
+	payload = /obj/item/weapon/bombcore/training
 
 /obj/machinery/syndicatebomb/badmin
 	name = "generic summoning badmin bomb"
 	desc = "Oh god what is in this thing?"
-	payload = /obj/item/weapon/bombcore/badmin/summon/
+	payload = /obj/item/weapon/bombcore/badmin/summon
 
 /obj/machinery/syndicatebomb/badmin/clown
 	name = "clown bomb"
@@ -232,7 +234,7 @@
 	beepsound = 'sound/items/bikehorn.ogg'
 
 /obj/machinery/syndicatebomb/badmin/varplosion
-	payload = /obj/item/weapon/bombcore/badmin/explosion/
+	payload = /obj/item/weapon/bombcore/badmin/explosion
 
 /obj/machinery/syndicatebomb/empty
 	name = "bomb"
@@ -254,7 +256,7 @@
 	icon = 'icons/obj/assemblies.dmi'
 	icon_state = "bombcore"
 	item_state = "eshield0"
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 	origin_tech = "syndicate=5;combat=6"
 	resistance_flags = FLAMMABLE //Burnable (but the casing isn't)
 	var/adminlog = null
@@ -331,7 +333,7 @@
 	qdel(B)
 	qdel(src)
 
-/obj/item/weapon/bombcore/badmin/summon/
+/obj/item/weapon/bombcore/badmin/summon
 	var/summon_path = /obj/item/weapon/reagent_containers/food/snacks/cookie
 	var/amt_summon = 1
 
@@ -350,10 +352,10 @@
 	..()
 
 /obj/item/weapon/bombcore/badmin/explosion
-	var/HeavyExplosion = 2
-	var/MediumExplosion = 5
-	var/LightExplosion = 11
-	var/Flames = 11
+	var/HeavyExplosion = 5
+	var/MediumExplosion = 10
+	var/LightExplosion = 20
+	var/Flames = 20
 
 /obj/item/weapon/bombcore/badmin/explosion/detonate()
 	explosion(get_turf(src), HeavyExplosion, MediumExplosion, LightExplosion, flame_range = Flames)
@@ -361,7 +363,7 @@
 
 /obj/item/weapon/bombcore/miniature
 	name = "small bomb core"
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/weapon/bombcore/miniature/detonate()
 	if(adminlog)
@@ -503,7 +505,7 @@
 	icon = 'icons/obj/assemblies.dmi'
 	icon_state = "bigred"
 	item_state = "electronic"
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 	origin_tech = "syndicate=3"
 	var/timer = 0
 	var/detonated =	0
@@ -529,5 +531,7 @@
 		detonated =	0
 		existant =	0
 		timer = world.time + BUTTON_COOLDOWN
+
+
 
 #undef BUTTON_COOLDOWN

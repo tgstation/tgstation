@@ -27,14 +27,14 @@
 		if(!is_servant_of_ratvar(C) && !C.null_rod_check() && number_legs) //you have legs right
 			C.apply_damage(noncultist_damage * 0.5, BURN, "l_leg")
 			C.apply_damage(noncultist_damage * 0.5, BURN, "r_leg")
-			if(C.m_intent != "walk")
+			if(C.m_intent != MOVE_INTENT_WALK)
 				if(!iscultist(C))
 					C << "<span class='warning'>Your leg[number_legs > 1 ? "s shiver":" shivers"] with pain!</span>"
 				else //Cultists take extra burn damage
 					C << "<span class='warning'>Your leg[number_legs > 1 ? "s burn":" burns"] with pain!</span>"
 					C.apply_damage(cultist_damage * 0.5, BURN, "l_leg")
 					C.apply_damage(cultist_damage * 0.5, BURN, "r_leg")
-				C.m_intent = "walk"
+				C.toggle_move_intent()
 
 
 //Judicial Visor: Creates a judicial visor, which can smite an area.
@@ -108,10 +108,10 @@
 
 //Geis: Grants a short-range binding that will immediately start chanting on binding a valid target.
 /datum/clockwork_scripture/ranged_ability/geis_prep
-	descname = "Convert Attack"
+	descname = "Melee Convert Attack"
 	name = "Geis"
 	desc = "Charges your slab with divine energy, allowing you to bind a nearby heretic for conversion. This is very obvious and will make your slab visible in-hand."
-	invocations = list("Divinity, grant me strength...", "...to enlighten the heathen!")
+	invocations = list("Divinity, grant...", "...me strength...", "...to enlighten...", "...the heathen!")
 	whispered = TRUE
 	channel_time = 20
 	required_components = list(GEIS_CAPACITOR = 1)
@@ -133,8 +133,10 @@
 	for(var/mob/living/M in living_mob_list)
 		if(is_servant_of_ratvar(M) && (ishuman(M) || issilicon(M)))
 			servants++
-	if(servants > 5)
+	if(servants > SCRIPT_SERVANT_REQ)
 		whispered = FALSE
+		servants -= SCRIPT_SERVANT_REQ
+		channel_time = min(channel_time + servants*3, 50)
 	return ..()
 
 //The scripture that does the converting.
@@ -160,9 +162,9 @@
 	for(var/mob/living/M in living_mob_list)
 		if(is_servant_of_ratvar(M) && (ishuman(M) || issilicon(M)))
 			servants++
-	if(servants > 5)
-		servants -= 5
-		channel_time = min(channel_time + servants*5, 100)
+	if(servants > SCRIPT_SERVANT_REQ)
+		servants -= SCRIPT_SERVANT_REQ
+		channel_time = min(channel_time + servants*7, 120)
 	if(target.buckled)
 		target.buckled.unbuckle_mob(target, TRUE)
 	binding = new(get_turf(target))
@@ -224,8 +226,8 @@
 	qdel(progbar)
 
 
-//Replicant: Creates a new clockwork slab. Doesn't use create_object because of its unique behavior.
-/datum/clockwork_scripture/replicant
+//Replicant: Creates a new clockwork slab.
+/datum/clockwork_scripture/create_object/replicant
 	descname = "New Clockwork Slab"
 	name = "Replicant"
 	desc = "Creates a new clockwork slab."
@@ -233,23 +235,20 @@
 	channel_time = 10
 	required_components = list(REPLICANT_ALLOY = 1)
 	whispered = TRUE
+	object_path = /obj/item/clockwork/slab
+	creator_message = "<span class='brass'>You copy a piece of replicant alloy and command it into a new slab.</span>"
 	usage_tip = "This is inefficient as a way to produce components, as the slab produced must be held by someone with no other slabs to produce components."
 	tier = SCRIPTURE_DRIVER
+	space_allowed = TRUE
 	primary_component = REPLICANT_ALLOY
 	sort_priority = 7
 	quickbind = TRUE
 	quickbind_desc = "Creates a new Clockwork Slab."
 
-/datum/clockwork_scripture/replicant/scripture_effects()
-	invoker <<  "<span class='brass'>You copy a piece of replicant alloy and command it into a new slab.</span>" //No visible message, for stealth purposes
-	var/obj/item/clockwork/slab/S = new(get_turf(invoker))
-	invoker.put_in_hands(S) //Put it in your hands if possible
-	return TRUE
-
 
 //Tinkerer's Cache: Creates a tinkerer's cache, allowing global component storage.
 /datum/clockwork_scripture/create_object/tinkerers_cache
-	descname = "Necessary, Shares Components"
+	descname = "Necessary Structure, Shares Components"
 	name = "Tinkerer's Cache"
 	desc = "Forms a cache that can store an infinite amount of components. All caches are linked and will provide components to slabs."
 	invocations = list("Constructing...", "...a cache!")
@@ -268,7 +267,7 @@
 	quickbind_desc = "Creates a Tinkerer's Cache, which stores components globally for slab access."
 
 /datum/clockwork_scripture/create_object/tinkerers_cache/New()
-	var/cache_cost_increase = min(round(clockwork_caches*0.2), 5)
+	var/cache_cost_increase = min(round(clockwork_caches*0.25), 5)
 	for(var/i in required_components)
 		if(i != REPLICANT_ALLOY)
 			required_components[i] += cache_cost_increase
@@ -298,7 +297,7 @@
 
 //Sigil of Transgression: Creates a sigil of transgression, which stuns the first nonservant to cross it.
 /datum/clockwork_scripture/create_object/sigil_of_transgression
-	descname = "Stun Trap"
+	descname = "Trap, Stunning"
 	name = "Sigil of Transgression"
 	desc = "Wards a tile with a sigil. The next person to cross the sigil will be smitten and unable to move. Nar-Sian cultists are stunned altogether."
 	invocations = list("Divinity, dazzle...", "...those who tresspass here!")

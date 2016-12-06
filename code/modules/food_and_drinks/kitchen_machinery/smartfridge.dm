@@ -124,7 +124,7 @@
 				user << "<span class='warning'>There is nothing in [O] to put in [src]!</span>"
 				return 0
 
-	if(user.a_intent != "harm")
+	if(user.a_intent != INTENT_HARM)
 		user << "<span class='warning'>\The [src] smartly refuses [O].</span>"
 		updateUsrDialog()
 		return 0
@@ -302,6 +302,8 @@
 		var/obj/item/weapon/reagent_containers/food/snacks/S = O
 		if(S.dried_type)
 			return 1
+	if(istype(O,/obj/item/stack/sheet/wetleather/))
+		return 1
 	return 0
 
 /obj/machinery/smartfridge/drying_rack/proc/toggle_drying(forceoff = 0)
@@ -323,6 +325,11 @@
 			var/dried = S.dried_type
 			new dried(src.loc)
 			qdel(S)
+		return 1
+	for(var/obj/item/stack/sheet/wetleather/WL in contents)
+		var/obj/item/stack/sheet/leather/L = new(loc)
+		L.amount = WL.amount
+		qdel(WL)
 		return 1
 	return 0
 

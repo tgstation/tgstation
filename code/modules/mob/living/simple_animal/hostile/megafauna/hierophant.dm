@@ -140,7 +140,7 @@ Difficulty: Hard
 /mob/living/simple_animal/hostile/megafauna/hierophant/AttackingTarget()
 	if(!blinking)
 		if(target && isliving(target))
-			addtimer(src, "melee_blast", 0, FALSE, get_turf(target)) //melee attacks on living mobs produce a 3x3 blast
+			addtimer(src, "melee_blast", 0, TIMER_NORMAL, get_turf(target)) //melee attacks on living mobs produce a 3x3 blast
 		..()
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/DestroySurroundings()
@@ -223,9 +223,9 @@ Difficulty: Hard
 						cross_counter--
 						var/delay = 6
 						if(prob(60))
-							addtimer(src, "cardinal_blasts", 0, FALSE, target)
+							addtimer(src, "cardinal_blasts", 0, TIMER_NORMAL, target)
 						else
-							addtimer(src, "diagonal_blasts", 0, FALSE, target)
+							addtimer(src, "diagonal_blasts", 0, TIMER_NORMAL, target)
 							delay = 5 //this one isn't so mean, so do the next one faster(if there is one)
 						sleep(delay)
 					animate(src, color = oldcolor, time = 8)
@@ -262,18 +262,18 @@ Difficulty: Hard
 	else if(prob(70 - anger_modifier)) //a cross blast of some type
 		if(prob(anger_modifier)) //at us?
 			if(prob(anger_modifier * 2) && health < maxHealth * 0.5) //we're super angry do it at all dirs
-				addtimer(src, "alldir_blasts", 0, FALSE, src)
+				addtimer(src, "alldir_blasts", 0, TIMER_NORMAL, src)
 			else if(prob(60))
-				addtimer(src, "cardinal_blasts", 0, FALSE, src)
+				addtimer(src, "cardinal_blasts", 0, TIMER_NORMAL, src)
 			else
-				addtimer(src, "diagonal_blasts", 0, FALSE, src)
+				addtimer(src, "diagonal_blasts", 0, TIMER_NORMAL, src)
 		else //at them?
 			if(prob(anger_modifier * 2) && health < maxHealth * 0.5 && !target_is_slow) //we're super angry do it at all dirs
-				addtimer(src, "alldir_blasts", 0, FALSE, target)
+				addtimer(src, "alldir_blasts", 0, TIMER_NORMAL, target)
 			else if(prob(60))
-				addtimer(src, "cardinal_blasts", 0, FALSE, target)
+				addtimer(src, "cardinal_blasts", 0, TIMER_NORMAL, target)
 			else
-				addtimer(src, "diagonal_blasts", 0, FALSE, target)
+				addtimer(src, "diagonal_blasts", 0, TIMER_NORMAL, target)
 	else if(chaser_cooldown < world.time) //if chasers are off cooldown, fire some!
 		var/obj/effect/overlay/temp/hierophant/chaser/C = PoolOrNew(/obj/effect/overlay/temp/hierophant/chaser, list(loc, src, target, chaser_speed, FALSE))
 		chaser_cooldown = world.time + initial(chaser_cooldown)
@@ -282,7 +282,7 @@ Difficulty: Hard
 			OC.moving = 4
 			OC.moving_dir = pick(cardinal - C.moving_dir)
 	else //just release a burst of power
-		addtimer(src, "burst", 0, FALSE, get_turf(src))
+		addtimer(src, "burst", 0, TIMER_NORMAL, get_turf(src))
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/proc/diagonal_blasts(mob/victim) //fire diagonal cross blasts with a delay
 	var/turf/T = get_turf(victim)
@@ -294,7 +294,7 @@ Difficulty: Hard
 	sleep(2)
 	PoolOrNew(/obj/effect/overlay/temp/hierophant/blast, list(T, src, FALSE))
 	for(var/d in diagonals)
-		addtimer(src, "blast_wall", 0, FALSE, T, d)
+		addtimer(src, "blast_wall", 0, TIMER_NORMAL, T, d)
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/proc/cardinal_blasts(mob/victim) //fire cardinal cross blasts with a delay
 	var/turf/T = get_turf(victim)
@@ -306,7 +306,7 @@ Difficulty: Hard
 	sleep(2)
 	PoolOrNew(/obj/effect/overlay/temp/hierophant/blast, list(T, src, FALSE))
 	for(var/d in cardinal)
-		addtimer(src, "blast_wall", 0, FALSE, T, d)
+		addtimer(src, "blast_wall", 0, TIMER_NORMAL, T, d)
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/proc/alldir_blasts(mob/victim) //fire alldir cross blasts with a delay
 	var/turf/T = get_turf(victim)
@@ -318,7 +318,7 @@ Difficulty: Hard
 	sleep(2)
 	PoolOrNew(/obj/effect/overlay/temp/hierophant/blast, list(T, src, FALSE))
 	for(var/d in alldirs)
-		addtimer(src, "blast_wall", 0, FALSE, T, d)
+		addtimer(src, "blast_wall", 0, TIMER_NORMAL, T, d)
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/proc/blast_wall(turf/T, dir) //make a wall of blasts beam_range tiles long
 	var/range = beam_range

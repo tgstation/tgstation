@@ -94,7 +94,7 @@
 	target = nTarget
 	update_text()
 
-/obj/item/weapon/paper/contract/infernal/
+/obj/item/weapon/paper/contract/infernal
 
 /obj/item/weapon/paper/contract/infernal/suicide_act(mob/user)
 	if(signed && (user == target.current) && istype(user,/mob/living/carbon/human/))
@@ -224,8 +224,8 @@
 			user.visible_message("<span class='notice'>With a sudden blaze, [H] stands back up.</span>")
 			H.fakefire()
 			FulfillContract(H, 1)//Revival contracts are always signed in blood
-			addtimer(H, "fakefireextinguish",5,TRUE)
-		addtimer(src,"resetcooldown",300,TRUE)
+			addtimer(H, "fakefireextinguish",5, TIMER_UNIQUE)
+		addtimer(src,"resetcooldown",300, TIMER_UNIQUE)
 	else
 		..()
 

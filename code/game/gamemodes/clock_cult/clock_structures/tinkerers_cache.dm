@@ -5,6 +5,7 @@
 	clockwork_desc = "A brass container capable of storing a large amount of components.\n\
 	Shares components with all other caches and will gradually generate components if near a Clockwork Wall."
 	icon_state = "tinkerers_cache"
+	unanchored_icon = "tinkerers_cache_unwrenched"
 	construction_value = 10
 	break_message = "<span class='warning'>The cache's fire winks out before it falls in on itself!</span>"
 	max_integrity = 80
@@ -17,8 +18,6 @@
 	START_PROCESSING(SSobj, src)
 	clockwork_caches++
 	SetLuminosity(2,1)
-	for(var/i in all_clockwork_mobs)
-		cache_check(i)
 
 /obj/structure/destructible/clockwork/cache/Destroy()
 	clockwork_caches--
@@ -26,20 +25,23 @@
 	if(linkedwall)
 		linkedwall.linkedcache = null
 		linkedwall = null
-	for(var/i in all_clockwork_mobs)
-		cache_check(i)
 	return ..()
 
 /obj/structure/destructible/clockwork/cache/process()
+	if(!anchored)
+		if(linkedwall)
+			linkedwall.linkedcache = null
+			linkedwall = null
+		return
 	for(var/turf/closed/wall/clockwork/C in range(4, src))
 		if(!C.linkedcache && !linkedwall)
 			C.linkedcache = src
 			linkedwall = C
-			wall_generation_cooldown = world.time + CACHE_PRODUCTION_TIME
+			wall_generation_cooldown = world.time + (CACHE_PRODUCTION_TIME * get_efficiency_mod(TRUE))
 			visible_message("<span class='warning'>[src] starts to whirr in the presence of [C]...</span>")
 			break
 	if(linkedwall && wall_generation_cooldown <= world.time)
-		wall_generation_cooldown = world.time + CACHE_PRODUCTION_TIME
+		wall_generation_cooldown = world.time + (CACHE_PRODUCTION_TIME * get_efficiency_mod(TRUE))
 		var/component_to_generate = get_weighted_component_id()
 		PoolOrNew(get_component_animation_type(component_to_generate), get_turf(src))
 		clockwork_component_cache[component_to_generate]++
@@ -51,23 +53,32 @@
 		return ..()
 	if(istype(I, /obj/item/clockwork/component))
 		var/obj/item/clockwork/component/C = I
-		clockwork_component_cache[C.component_id]++
-		user << "<span class='notice'>You add [C] to [src].</span>"
-		user.drop_item()
-		qdel(C)
+		if(!anchored)
+			user << "<span class='warning'>[src] needs to be secured to place [C] into it!</span>"
+		else
+			clockwork_component_cache[C.component_id]++
+			user << "<span class='notice'>You add [C] to [src].</span>"
+			user.drop_item()
+			qdel(C)
 		return 1
 	else if(istype(I, /obj/item/clockwork/slab))
 		var/obj/item/clockwork/slab/S = I
-		for(var/i in S.stored_components)
-			clockwork_component_cache[i] += S.stored_components[i]
-			S.stored_components[i] = 0
-		user.visible_message("<span class='notice'>[user] empties [S] into [src].</span>", "<span class='notice'>You offload your slab's components into [src].</span>")
+		if(!anchored)
+			user << "<span class='warning'>[src] needs to be secured to offload your slab's components into it!</span>"
+		else
+			for(var/i in S.stored_components)
+				clockwork_component_cache[i] += S.stored_components[i]
+				S.stored_components[i] = 0
+			user.visible_message("<span class='notice'>[user] empties [S] into [src].</span>", "<span class='notice'>You offload your slab's components into [src].</span>")
 		return 1
 	else
 		return ..()
 
 /obj/structure/destructible/clockwork/cache/attack_hand(mob/user)
 	if(!is_servant_of_ratvar(user))
+		return 0
+	if(!anchored)
+		user << "<span class='warning'>[src] needs to be secured to remove Replicant Alloy from it!</span>"
 		return 0
 	if(!clockwork_component_cache[REPLICANT_ALLOY])
 		user << "<span class='warning'>There is no Replicant Alloy in the global component cache!</span>"
@@ -82,7 +93,7 @@
 	..()
 	if(is_servant_of_ratvar(user) || isobserver(user))
 		if(linkedwall)
-			user << "<span class='brass'>It is linked and will generate components!</span>"
+			user << "<span class='brass'>It is linked and will generate a component every <b>[round((CACHE_PRODUCTION_TIME * 0.1) * get_efficiency_mod(TRUE), 0.1)]</b> seconds!</span>"
 		user << "<b>Stored components:</b>"
 		for(var/i in clockwork_component_cache)
 			user << "<span class='[get_component_span(i)]_small'><i>[get_component_name(i)][i != REPLICANT_ALLOY ? "s":""]:</i> <b>[clockwork_component_cache[i]]</b></span>"

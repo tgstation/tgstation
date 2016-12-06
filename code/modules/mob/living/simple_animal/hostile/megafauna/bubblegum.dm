@@ -200,7 +200,7 @@ Difficulty: Hard
 /mob/living/simple_animal/hostile/megafauna/bubblegum/proc/try_bloodattack()
 	var/list/targets = get_mobs_on_blood()
 	if(targets.len)
-		addtimer(src, "bloodattack", 0, FALSE, targets, prob(50))
+		addtimer(src, "bloodattack", 0, TIMER_NORMAL, targets, prob(50))
 
 		return TRUE
 	return FALSE
@@ -267,7 +267,7 @@ Difficulty: Hard
 			L.forceMove(targetturf)
 			playsound(targetturf, 'sound/magic/exit_blood.ogg', 100, 1, -1)
 			if(L.stat != CONSCIOUS)
-				addtimer(src, "devour", 2, FALSE, L)
+				addtimer(src, "devour", 2, TIMER_NORMAL, L)
 	sleep(1)
 
 /obj/effect/overlay/temp/bubblegum_hands

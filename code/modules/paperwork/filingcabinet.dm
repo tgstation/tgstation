@@ -59,7 +59,7 @@
 		if(do_after(user, 20, target = src))
 			user << "<span class='notice'>You successfully [anchored ? "wrench" : "unwrench"] [src].</span>"
 			anchored = !anchored
-	else if(user.a_intent != "harm")
+	else if(user.a_intent != INTENT_HARM)
 		user << "<span class='warning'>You can't put [P] in [src]!</span>"
 	else
 		return ..()

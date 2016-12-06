@@ -12,7 +12,7 @@
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
 	throwforce = 0
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	throw_speed = 3
 	throw_range = 5
 	materials = list(MAT_METAL=500)
@@ -228,7 +228,7 @@
 	icon_state = "handcuff"
 	flags = CONDUCT
 	throwforce = 0
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 	origin_tech = "engineering=3;combat=3"
 	slowdown = 7
 	breakouttime = 300	//Deciseconds = 30s = 0.5 minute
@@ -277,8 +277,10 @@
 						feedback_add_details("handcuffs","B") //Yes, I know they're legcuffs. Don't change this, no need for an extra variable. The "B" is used to tell them apart.
 			else if(isanimal(L))
 				var/mob/living/simple_animal/SA = L
-				if(!SA.flying && SA.mob_size > MOB_SIZE_TINY)
+				if(SA.mob_size > MOB_SIZE_TINY)
 					snap = 1
+			if(L.movement_type & FLYING)
+				snap = 0
 			if(snap)
 				armed = 0
 				icon_state = "[initial(icon_state)][armed]"
@@ -352,7 +354,7 @@
 	desc = "A specialized hard-light bola designed to ensnare fleeing criminals and aid in arrests."
 	icon_state = "ebola"
 	hitsound = 'sound/weapons/taserhit.ogg'
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	breakouttime = 60
 
 /obj/item/weapon/restraints/legcuffs/bola/energy/throw_impact(atom/hit_atom)

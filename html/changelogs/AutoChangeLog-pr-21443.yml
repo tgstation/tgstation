@@ -1,4 +1,0 @@
-author: "Cyberboss"
-delete-after: True
-changes: 
-  - bugfix: "Objects will no longer get stuck behind the recycler on Boxstation"

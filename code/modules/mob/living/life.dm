@@ -53,7 +53,6 @@
 	if(stat != DEAD)
 		return 1
 
-
 /mob/living/proc/handle_breathing()
 	return
 

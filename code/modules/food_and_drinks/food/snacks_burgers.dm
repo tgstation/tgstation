@@ -160,7 +160,7 @@
 	icon_state = "bigbiteburger"
 	bonus_reagents = list("vitamin" = 6)
 	list_reagents = list("nutriment" = 10, "vitamin" = 2)
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 
 /obj/item/weapon/reagent_containers/food/snacks/burger/jelly
 	name = "jelly burger"
@@ -181,7 +181,7 @@
 	icon_state = "superbiteburger"
 	bonus_reagents = list("vitamin" = 10)
 	list_reagents = list("nutriment" = 40, "vitamin" = 5)
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 	bitesize = 7
 	volume = 100
 

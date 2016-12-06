@@ -132,7 +132,7 @@
 	end_message = "<span class='notice'>The air seems to be cooling off again.</span>"
 
 	area_type = /area
-	protected_areas = list(/area/maintenance, /area/ai_monitored/turret_protected/ai_upload, /area/ai_monitored/turret_protected/ai_upload_foyer, /area/ai_monitored/turret_protected/ai)
+	protected_areas = list(/area/maintenance, /area/ai_monitored/turret_protected/ai_upload, /area/ai_monitored/turret_protected/ai_upload_foyer, /area/ai_monitored/turret_protected/ai, /area/storage/emergency, /area/storage/emergency2, /area/shuttle/labor)
 	target_z = ZLEVEL_STATION
 
 	immunity_type = "rad"
@@ -148,7 +148,7 @@
 		if(ishuman(L))
 			var/mob/living/carbon/human/H = L
 			if(H.dna && H.dna.species)
-				if(!(RADIMMUNE in H.dna.species.specflags))
+				if(!(RADIMMUNE in H.dna.species.species_traits))
 					if(prob(max(0,100-resist)))
 						H.randmuti()
 						if(prob(50))

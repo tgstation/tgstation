@@ -234,8 +234,8 @@
 
 	return
 
-/obj/item/clothing/head/helmet/ui_action_click(mob/user, actiontype)
-	if(actiontype == /datum/action/item_action/toggle_helmet_flashlight)
+/obj/item/clothing/head/helmet/ui_action_click(mob/user, action)
+	if(istype(action, /datum/action/item_action/toggle_helmet_flashlight))
 		toggle_helmlight()
 	else
 		..()

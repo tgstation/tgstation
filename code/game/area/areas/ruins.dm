@@ -1,6 +1,6 @@
 //Parent types
 
-/area/ruin/
+/area/ruin
 	name = "\improper Unexplored Location"
 	icon_state = "away"
 	has_gravity = 1
@@ -31,7 +31,8 @@
 /area/ruin/powered/golem_ship
 	name = "Free Golem Ship"
 
-
+/area/ruin/powered/syndicate_lava_base
+	name = "Secret Base"
 
 // Ruins of "onehalf" ship
 

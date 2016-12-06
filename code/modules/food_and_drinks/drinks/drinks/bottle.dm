@@ -53,7 +53,7 @@
 	if(!target)
 		return
 
-	if(user.a_intent != "harm" || !isGlass)
+	if(user.a_intent != INTENT_HARM || !isGlass)
 		return ..()
 
 
@@ -140,7 +140,7 @@
 	throwforce = 5
 	throw_speed = 3
 	throw_range = 5
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 	item_state = "beer"
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb = list("stabbed", "slashed", "attacked")
@@ -300,6 +300,12 @@
 	icon_state = "hcider"
 	volume = 50
 	list_reagents = list("hcider" = 50)
+
+/obj/item/weapon/reagent_containers/food/drinks/bottle/grappa
+	name = "Phillipes well-aged Grappa"
+	desc = "Bottle of Grappa."
+	icon_state = "grappabottle"
+	list_reagents = list("grappa" = 100)
 
 //////////////////////////JUICES AND STUFF ///////////////////////
 

@@ -45,11 +45,11 @@
 	return attack_hand(user)
 
 /mob/living/silicon/attack_larva(mob/living/carbon/alien/larva/L)
-	if(L.a_intent == "help")
+	if(L.a_intent == INTENT_HELP)
 		visible_message("[L.name] rubs its head against [src].")
 
 /mob/living/silicon/attack_hulk(mob/living/carbon/human/user, does_attack_animation = 0)
-	if(user.a_intent == "harm")
+	if(user.a_intent == INTENT_HARM)
 		..(user, 1)
 		adjustBruteLoss(rand(10, 15))
 		playsound(loc, "punch", 25, 1, -1)
@@ -92,6 +92,6 @@
 	Proj.on_hit(src)
 	return 2
 
-/mob/living/silicon/flash_act(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0, type = /obj/screen/fullscreen/flash/noise)
+/mob/living/silicon/flash_act(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0, type = /obj/screen/fullscreen/flash/static)
 	if(affect_silicon)
 		return ..()

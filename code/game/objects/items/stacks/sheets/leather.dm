@@ -104,7 +104,7 @@ var/global/list/datum/stack_recipe/xeno_recipes = list ( \
 
 /obj/item/stack/sheet/hairlesshide
 	name = "hairless hide"
-	desc = "This hide was stripped of it's hair, but still needs tanning."
+	desc = "This hide was stripped of its hair, but still needs washing and tanning."
 	singular_name = "hairless hide piece"
 	icon_state = "sheet-hairlesshide"
 	origin_tech = null
@@ -152,7 +152,7 @@ var/global/list/datum/stack_recipe/sinew_recipes = list ( \
 	icon_state = "goliath_hide"
 	singular_name = "hide plate"
 	flags = NOBLUDGEON
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 	layer = MOB_LAYER
 
 /obj/item/stack/sheet/animalhide/ashdrake
@@ -162,14 +162,14 @@ var/global/list/datum/stack_recipe/sinew_recipes = list ( \
 	icon_state = "dragon_hide"
 	singular_name = "drake plate"
 	flags = NOBLUDGEON
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 	layer = MOB_LAYER
 
 
 //Step one - dehairing.
 
 /obj/item/stack/sheet/animalhide/attackby(obj/item/weapon/W, mob/user, params)
-	if(is_sharp(W))
+	if(W.is_sharp())
 		playsound(loc, 'sound/weapons/slice.ogg', 50, 1, -1)
 		user.visible_message("[user] starts cutting hair off \the [src].", "<span class='notice'>You start cutting the hair off \the [src]...</span>", "<span class='italics'>You hear the sound of a knife rubbing against flesh.</span>")
 		if(do_after(user,50, target = src))

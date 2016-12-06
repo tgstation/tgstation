@@ -8,12 +8,12 @@
 /obj/item/weapon/storage
 	name = "storage"
 	icon = 'icons/obj/storage.dmi'
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 	var/silent = 0 // No message on putting items in
 	var/list/can_hold = new/list() //List of objects which this item can store (if set, it can't store anything else)
 	var/list/cant_hold = new/list() //List of objects which this item can't store (in effect only if can_hold isn't set)
 	var/list/is_seeing = new/list() //List of mobs which are currently seeing the contents of this item's storage
-	var/max_w_class = 2 //Max size of objects that this object can store (in effect only if can_hold isn't set)
+	var/max_w_class = WEIGHT_CLASS_SMALL //Max size of objects that this object can store (in effect only if can_hold isn't set)
 	var/max_combined_w_class = 14 //The sum of the w_classes of all the items in this storage item.
 	var/storage_slots = 7 //The number of storage slots in this container.
 	var/obj/screen/storage/boxes = null
@@ -24,6 +24,7 @@
 	var/allow_quick_gather	//Set this variable to allow the object to have the 'toggle mode' verb, which quickly collects all items from a tile.
 	var/collection_mode = 1;  //0 = pick one at a time, 1 = pick all on tile, 2 = pick all of a type
 	var/preposition = "in" // You put things 'in' a bag, but trays need 'on'.
+	var/rustle_jimmies = TRUE	//Play the rustle sound on insertion
 
 
 /obj/item/weapon/storage/MouseDrop(atom/over_object)
@@ -326,6 +327,8 @@
 					observe.client.screen -= W
 
 		add_fingerprint(usr)
+		if(rustle_jimmies)
+			playsound(src.loc, "rustle", 50, 1, -5)
 
 		if(!prevent_warning)
 			for(var/mob/M in viewers(usr, null))

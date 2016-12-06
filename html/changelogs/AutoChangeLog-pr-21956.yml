@@ -1,0 +1,4 @@
+author: "Shadowlight213"
+delete-after: True
+changes: 
+  - bugfix: "The lavaland syndicate agents, as well as the ID for all simple_animal syndicate corpses should have their ID actually have syndicate access on it now!"

@@ -11,8 +11,6 @@
 
 	var/blocks_air = 0
 
-	var/PathNode/PNode = null //associated PathNode in the A* algorithm
-
 	flags = CAN_BE_DIRTY
 
 	var/list/proximity_checkers
@@ -99,6 +97,8 @@
 	//slipping
 	if (istype(AM,/mob/living/carbon))
 		var/mob/living/carbon/M = AM
+		if(M.movement_type & FLYING)
+			return
 		switch(wet)
 			if(TURF_WET_WATER)
 				if(!M.slip(0, 3, null, NO_SLIP_WHEN_WALKING))
@@ -134,7 +134,7 @@
 		qdel(L)
 
 //Creates a new turf
-/turf/proc/ChangeTurf(path, defer_change = FALSE)
+/turf/proc/ChangeTurf(path, defer_change = FALSE,ignore_air = FALSE)
 	if(!path)
 		return
 	if(!use_preloader && path == type) // Don't no-op if the map loader requires it to be reconstructed
@@ -143,13 +143,14 @@
 
 	SSair.remove_from_active(src)
 
+	Destroy()	//❄
 	var/turf/W = new path(src)
 	if(!defer_change)
-		W.AfterChange()
+		W.AfterChange(ignore_air)
 	W.blueprint_data = old_blueprint_data
 	return W
 
-/turf/proc/AfterChange() //called after a turf has been replaced in ChangeTurf()
+/turf/proc/AfterChange(ignore_air = FALSE) //called after a turf has been replaced in ChangeTurf()
 	levelupdate()
 	CalculateAdjacentTurfs()
 

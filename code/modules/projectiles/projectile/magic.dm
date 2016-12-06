@@ -316,7 +316,7 @@
 
 	M.attack_log += text("\[[time_stamp()]\] <font color='orange'>[M.real_name] ([M.ckey]) became [new_mob.real_name].</font>")
 
-	new_mob.a_intent = "harm"
+	new_mob.a_intent = INTENT_HARM
 
 	M.wabbajack_act(new_mob)
 
@@ -374,3 +374,12 @@
 	flag = "magic"
 	dismemberment = 50
 	nodamage = 0
+
+/obj/item/projectile/magic/arcane_barrage
+	name = "arcane bolt"
+	icon_state = "arcane_barrage"
+	damage = 20
+	damage_type = BURN
+	nodamage = 0
+	armour_penetration = 0
+	flag = "magic"

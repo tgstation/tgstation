@@ -167,7 +167,7 @@ var/next_external_rsc = 0
 		src << "Required version to remove this message: [config.client_warn_version] or later"
 		src << "Visit http://www.byond.com/download/ to get the latest version of byond."
 
-	if (connection == "web")
+	if (connection == "web" && !holder)
 		if (!config.allowwebclient)
 			src << "Web client is disabled"
 			qdel(src)
@@ -316,6 +316,7 @@ var/next_external_rsc = 0
 
 	var/watchreason = check_watchlist(sql_ckey)
 	if(watchreason)
+		current_watchlist[sql_ckey] = watchreason
 		message_admins("<font color='red'><B>Notice: </B></font><font color='blue'>[key_name_admin(src)] is on the watchlist and has just connected - Reason: [watchreason]</font>")
 		send2irc_adminless_only("Watchlist", "[key_name(src)] is on the watchlist and has just connected - Reason: [watchreason]")
 
@@ -334,6 +335,8 @@ var/next_external_rsc = 0
 
 /client/proc/check_randomizer(topic)
 	. = FALSE
+	if (connection != "seeker")
+		return
 	topic = params2list(topic)
 	if (!config.check_randomizer)
 		return
@@ -351,11 +354,11 @@ var/next_external_rsc = 0
 				cidcheck_spoofckeys[ckey] = TRUE
 			cidcheck[ckey] = computer_id
 			tokens[ckey] = cid_check_reconnect()
-			
+
 			sleep(10) //browse is queued, we don't want them to disconnect before getting the browse() command.
 			qdel(src)
 			return TRUE
-				
+
 		if (oldcid != computer_id) //IT CHANGED!!!
 			cidcheck -= ckey //so they can try again after removing the cid randomizer.
 
@@ -369,7 +372,7 @@ var/next_external_rsc = 0
 				note_randomizer_user()
 
 			log_access("Failed Login: [key] [computer_id] [address] - CID randomizer confirmed (oldcid: [oldcid])")
-			
+
 			qdel(src)
 			return TRUE
 		else
@@ -393,11 +396,11 @@ var/next_external_rsc = 0
 		if (computer_id != lastcid)
 			cidcheck[ckey] = computer_id
 			tokens[ckey] = cid_check_reconnect()
-			
+
 			sleep(10) //browse is queued, we don't want them to disconnect before getting the browse() command.
 			qdel(src)
 			return TRUE
-			
+
 /client/proc/cid_check_reconnect()
 	var/token = md5("[rand(0,9999)][world.time][rand(0,9999)][ckey][rand(0,9999)][address][rand(0,9999)][computer_id][rand(0,9999)]")
 	. = token
@@ -487,3 +490,12 @@ var/next_external_rsc = 0
 //Like for /atoms, but clients are their own snowflake FUCK
 /client/proc/setDir(newdir)
 	dir = newdir
+
+/client/vv_edit_var(var_name, var_value)
+	switch (var_name)
+		if ("holder")
+			return FALSE
+		if ("ckey")
+			return FALSE
+		if ("key")
+			return FALSE

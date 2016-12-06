@@ -4,7 +4,7 @@
 	icon_state = "muzzle"
 	item_state = "blindfold"
 	flags_cover = MASKCOVERSMOUTH
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	gas_transfer_coefficient = 0.90
 	put_on_delay = 20
 
@@ -21,7 +21,7 @@
 	desc = "A sterile mask designed to help prevent the spread of diseases."
 	icon_state = "sterile"
 	item_state = "sterile"
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 	flags_inv = HIDEFACE
 	flags_cover = MASKCOVERSMOUTH
 	visor_flags_inv = HIDEFACE
@@ -40,13 +40,18 @@
 	icon_state = "fake-moustache"
 	flags_inv = HIDEFACE
 
+/obj/item/clothing/mask/joy
+	name = "joy mask"
+	desc = "Express your happiness or hide your sorrows with this laughing face with crying tears of joy cutout."
+	icon_state = "joy"
+
 /obj/item/clothing/mask/pig
 	name = "pig mask"
 	desc = "A rubber pig mask."
 	icon_state = "pig"
 	item_state = "pig"
 	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	actions_types = list(/datum/action/item_action/toggle_voice_box)
 	var/voicechange = 0
 
@@ -65,7 +70,7 @@
 	icon_state = "pig"
 	item_state = "pig"
 	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	var/voicechange = 1
 
 /obj/item/clothing/mask/spig/speechModification(message)
@@ -80,7 +85,7 @@
 	icon_state = "cowmask"
 	item_state = "cowmask"
 	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	var/voicechange = 1
 
 /obj/item/clothing/mask/cowmask/speechModification(message)
@@ -94,7 +99,7 @@
 	icon_state = "horsehead"
 	item_state = "horsehead"
 	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDEEYES|HIDEEARS
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	var/voicechange = 1
 
 /obj/item/clothing/mask/horsehead/speechModification(message)
@@ -105,7 +110,7 @@
 /obj/item/clothing/mask/bandana
 	name = "botany bandana"
 	desc = "A fine bandana with nanotech lining and a hydroponics pattern."
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 	flags_cover = MASKCOVERSMOUTH
 	flags_inv = HIDEFACE|HIDEFACIALHAIR
 	visor_flags_inv = HIDEFACE|HIDEFACIALHAIR

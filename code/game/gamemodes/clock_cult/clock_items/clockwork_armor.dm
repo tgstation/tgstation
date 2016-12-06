@@ -4,7 +4,7 @@
 	desc = "A heavy helmet made of brass."
 	icon = 'icons/obj/clothing/clockwork_garb.dmi'
 	icon_state = "clockwork_helmet"
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	armor = list(melee = 80, bullet = 70, laser = -25, energy = 0, bomb = 60, bio = 0, rad = 0, fire = 100, acid = 100)
 
@@ -31,7 +31,7 @@
 			user.emote("scream")
 			user.apply_damage(30, BRUTE, "head")
 			user.adjustBrainLoss(30)
-		addtimer(user, "unEquip", 1, FALSE, src, 1) //equipped happens before putting stuff on(but not before picking items up). thus, we need to wait for it to be on before forcing it off.
+		addtimer(user, "unEquip", 1, TIMER_NORMAL, src, 1) //equipped happens before putting stuff on(but not before picking items up). thus, we need to wait for it to be on before forcing it off.
 
 /obj/item/clothing/head/helmet/clockwork/mob_can_equip(mob/M, mob/equipper, slot, disable_warning = 0)
 	if(equipper && !is_servant_of_ratvar(equipper))
@@ -43,7 +43,7 @@
 	desc = "A bulky cuirass made of brass."
 	icon = 'icons/obj/clothing/clockwork_garb.dmi'
 	icon_state = "clockwork_cuirass"
-	w_class = 4
+	w_class = WEIGHT_CLASS_BULKY
 	body_parts_covered = CHEST|GROIN|LEGS
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	armor = list(melee = 80, bullet = 70, laser = -25, energy = 0, bomb = 60, bio = 0, rad = 0, fire = 100, acid = 100)
@@ -78,7 +78,7 @@
 			user.apply_damage(15, BURN, "chest")
 			user.adjust_fire_stacks(2)
 			user.IgniteMob()
-		addtimer(user, "unEquip", 1, FALSE, src, 1)
+		addtimer(user, "unEquip", 1, TIMER_NORMAL, src, 1)
 
 /obj/item/clothing/gloves/clockwork
 	name = "clockwork gauntlets"
@@ -123,14 +123,14 @@
 			user.emote("scream")
 			user.apply_damage(7, BRUTE, "l_arm")
 			user.apply_damage(7, BRUTE, "r_arm")
-		addtimer(user, "unEquip", 1, FALSE, src, 1)
+		addtimer(user, "unEquip", 1, TIMER_NORMAL, src, 1)
 
 /obj/item/clothing/shoes/clockwork
 	name = "clockwork treads"
 	desc = "Industrial boots made of brass. They're very heavy."
 	icon = 'icons/obj/clothing/clockwork_garb.dmi'
 	icon_state = "clockwork_treads"
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 	strip_delay = 50
 	put_on_delay = 30
 	resistance_flags = FIRE_PROOF | ACID_PROOF
@@ -163,4 +163,4 @@
 			user.emote("scream")
 			user.apply_damage(7, BURN, "l_leg")
 			user.apply_damage(7, BURN, "r_leg")
-		addtimer(user, "unEquip", 1, FALSE, src, 1)
+		addtimer(user, "unEquip", 1, TIMER_NORMAL, src, 1)

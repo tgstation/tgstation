@@ -38,7 +38,7 @@
 	status_flags = 0
 	wander = 0
 	density = 0
-	flying = 1
+	movement_type = FLYING
 	anchored = 1
 	mob_size = MOB_SIZE_TINY
 	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
@@ -186,7 +186,7 @@
 		adjustBruteLoss(25) //hella effective
 		inhibited = 1
 		update_action_buttons_icon()
-		addtimer(src, "reset_inhibit", 30, FALSE)
+		addtimer(src, "reset_inhibit", 30, TIMER_NORMAL)
 
 /mob/living/simple_animal/revenant/proc/reset_inhibit()
 	if(src)
@@ -323,7 +323,7 @@
 	desc = "A pile of fine blue dust. Small tendrils of violet mist swirl around it."
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "revenantEctoplasm"
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	var/essence = 75 //the maximum essence of the reforming revenant
 	var/reforming = 1
 	var/inert = 0
@@ -331,7 +331,7 @@
 
 /obj/item/weapon/ectoplasm/revenant/New()
 	..()
-	addtimer(src, "try_reform", 600, FALSE)
+	addtimer(src, "try_reform", 600, TIMER_NORMAL)
 
 /obj/item/weapon/ectoplasm/revenant/proc/try_reform()
 	if(src)

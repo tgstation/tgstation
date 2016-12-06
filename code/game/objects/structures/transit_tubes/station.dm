@@ -59,7 +59,7 @@
 
 /obj/structure/transit_tube/station/attack_hand(mob/user)
 	if(!pod_moving)
-		if(user.pulling && user.a_intent == "grab" && isliving(user.pulling))
+		if(user.pulling && user.a_intent == INTENT_GRAB && isliving(user.pulling))
 			if(open_status == STATION_TUBE_OPEN)
 				var/mob/living/GM = user.pulling
 				if(user.grab_state >= GRAB_AGGRESSIVE)

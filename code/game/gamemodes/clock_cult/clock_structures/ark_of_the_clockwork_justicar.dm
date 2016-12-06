@@ -52,7 +52,7 @@
 	if(objective_is_gateway)
 		hierophant_message("<span class='nzcrentr'>\"[text2ratvar("Engine, come forth")].\"</span>")
 	else
-		hierophant_message("<span class='nezbere'>\"[text2ratvar("We will show all Engine's power")].\"</span>")
+		hierophant_message("<span class='nzcrentr'>\"[text2ratvar("We will show all Engine's power")].\"</span>")
 	playsound(T, 'sound/magic/clockwork/invoke_general.ogg', 75, 0)
 	sleep(10)
 	playsound(T, 'sound/magic/clockwork/invoke_general.ogg', 100, 0)
@@ -86,7 +86,7 @@
 		send_to_playing_players(sound(null, 0, channel = 8))
 	var/was_stranded = SSshuttle.emergency.mode == SHUTTLE_STRANDED
 	SSshuttle.clearHostileEnvironment(src)
-	if(!was_stranded && !purpose_fulfilled)
+	if(!was_stranded && !purpose_fulfilled && second_sound_played)
 		priority_announce("Massive energy anomaly no longer on short-range scanners.","Anomaly Alert")
 	if(glow)
 		qdel(glow)
@@ -99,6 +99,7 @@
 /obj/structure/destructible/clockwork/massive/celestial_gateway/deconstruct(disassembled = TRUE)
 	if(!(flags & NODECONSTRUCT))
 		if(!disassembled)
+			resistance_flags |= INDESTRUCTIBLE
 			countdown.stop()
 			visible_message("<span class='userdanger'>The [src] begins to pulse uncontrollably... you might want to run!</span>")
 			send_to_playing_players(sound('sound/effects/clockcult_gateway_disrupted.ogg', 0, channel = 8, volume = 50))
@@ -194,7 +195,7 @@
 					sleep(3)
 					new/obj/structure/destructible/clockwork/massive/ratvar(startpoint)
 				else
-					addtimer(SSshuttle.emergency, "request", 0, FALSE, null, 0) //call the shuttle immediately
+					addtimer(SSshuttle.emergency, "request", 0, TIMER_NORMAL, null, 0) //call the shuttle immediately
 					sleep(3)
 					send_to_playing_players("<span class='ratvar'>\"[text2ratvar("Behold")]!\"</span>\n<span class='inathneq_large'>\"[text2ratvar("See Engine's mercy")]!\"</span>\n\
 					<span class='sevtug_large'>\"[text2ratvar("Observe Engine's design skills")]!\"</span>\n<span class='nezbere_large'>\"[text2ratvar("Behold Engine's light")]!!\"</span>\n\
@@ -213,6 +214,13 @@
 							dist = FALSE
 						T.ratvar_act(dist)
 						CHECK_TICK
+					for(var/mob/living/silicon/robot/R in silicon_mobs)
+						if(R && R.stat != DEAD && !is_servant_of_ratvar(R))
+							add_servant_of_ratvar(R)
+					for(var/i in ai_list)
+						var/mob/living/silicon/ai/A = i
+						if(A && A.stat != DEAD && !is_servant_of_ratvar(A))
+							add_servant_of_ratvar(A)
 					for(var/I in all_clockwork_mobs)
 						var/mob/M = I
 						if(M.stat == CONSCIOUS)
@@ -224,4 +232,4 @@
 	icon_state = "clockwork_gateway_charging"
 	pixel_x = -32
 	pixel_y = -32
-	layer = MASSIVE_OBJ_LAYER
+	layer = NOT_HIGH_OBJ_LAYER

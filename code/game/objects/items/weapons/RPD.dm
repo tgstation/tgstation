@@ -130,7 +130,7 @@ var/global/list/RPD_recipes=list(
 	throwforce = 10
 	throw_speed = 1
 	throw_range = 5
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 	materials = list(MAT_METAL=75000, MAT_GLASS=37500)
 	origin_tech = "engineering=4;materials=2"
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 50)

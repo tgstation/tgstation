@@ -3,9 +3,16 @@
 /turf/open/floor/plating/lava
 	name = "lava"
 	icon_state = "lava"
+	gender = PLURAL //"That's some lava."
 	baseturf = /turf/open/floor/plating/lava //lava all the way down
 	slowdown = 2
 	luminosity = 1
+	var/static/list/safeties_typecache = list(/obj/structure/lattice/catwalk)
+	//if anything matching this typecache is found in the lava, we don't burn things
+
+/turf/open/floor/plating/lava/New()
+	..()
+	safeties_typecache = typecacheof(safeties_typecache)
 
 /turf/open/floor/plating/lava/ex_act()
 	return
@@ -36,8 +43,18 @@
 
 /turf/open/floor/plating/lava/TakeTemperature(temp)
 
+
+/turf/open/floor/plating/lava/proc/is_safe()
+	var/list/found_safeties = typecache_filter_list(contents, safeties_typecache)
+	return LAZYLEN(found_safeties)
+
+
 /turf/open/floor/plating/lava/proc/burn_stuff(AM)
 	. = 0
+
+	if(is_safe())
+		return FALSE
+
 	var/thing_to_check = src
 	if (AM)
 		thing_to_check = list(AM)
@@ -55,10 +72,11 @@
 				O.armor["fire"] = 50
 			O.fire_act(10000, 1000)
 
-
 		else if (isliving(thing))
 			. = 1
 			var/mob/living/L = thing
+			if(L.movement_type & FLYING)
+				continue	//YOU'RE FLYING OVER IT
 			if("lava" in L.weather_immunities)
 				continue
 			if(L.buckled)

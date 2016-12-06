@@ -14,9 +14,9 @@
 	harm_intent_damage = 1
 	friendly = "nudges"
 	density = 0
-	flying = 1
+	movement_type = FLYING
 	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
-	ventcrawler = 2
+	ventcrawler = VENTCRAWLER_ALWAYS
 	mob_size = MOB_SIZE_TINY
 	gold_core_spawnable = 2
 	verb_say = "flutters"

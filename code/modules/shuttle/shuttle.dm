@@ -422,6 +422,9 @@
 //this is the main proc. It instantly moves our mobile port to stationary port S1
 //it handles all the generic behaviour, such as sanity checks, closing doors on the shuttle, stunning mobs, etc
 /obj/docking_port/mobile/proc/dock(obj/docking_port/stationary/S1, force=FALSE)
+	if(S1.get_docked() == src)
+		remove_ripples()
+		return
 	// Crashing this ship with NO SURVIVORS
 	if(!force)
 		if(!check_dock(S1))
@@ -598,6 +601,14 @@
 /obj/docking_port/mobile/proc/setTimer(wait)
 	timer = world.time + wait
 	last_timer_length = wait
+
+/obj/docking_port/mobile/proc/modTimer(multiple)
+	var/time_remaining = timer - world.time
+	if(time_remaining < 0 || !last_timer_length)
+		return
+	time_remaining *= multiple
+	last_timer_length *= multiple
+	setTimer(time_remaining)
 
 /obj/docking_port/mobile/proc/invertTimer()
 	if(!last_timer_length)

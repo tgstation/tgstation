@@ -162,27 +162,31 @@ Credit where due:
 		return 0
 	var/greeting_text = "<br><b><span class='large_brass'>You are a servant of Ratvar, the Clockwork Justiciar.</span>\n\
 	Rusting eternally in the Celestial Derelict, Ratvar has formed a covenant of mortals, with you as one of its members. As one of the Justiciar's servants, you are to work to the best of your \
-	ability to assist in completion of His agenda. You do not know the specifics of how to do so, but luckily you have a vessel to help you learn.</b>"
+	ability to assist in completion of His agenda. You may not know the specifics of how to do so, but luckily you have a vessel to help you learn.</b>"
 	M << greeting_text
 	return 1
 
 /datum/game_mode/proc/equip_servant(mob/living/L) //Grants a clockwork slab to the mob, with one of each component
 	if(!L || !istype(L))
-		return 0
+		return FALSE
+	var/obj/item/clockwork/slab/starter/S = new/obj/item/clockwork/slab/starter(null) //start it off in null
 	var/slot = "At your feet"
+	var/list/slots = list("In your left pocket" = slot_l_store, "In your right pocket" = slot_r_store, "In your backpack" = slot_in_backpack, "On your belt" = slot_belt)
 	if(ishuman(L))
 		var/mob/living/carbon/human/H = L
-		if(H.back && istype(H.back, /obj/item/weapon/storage/backpack))
-			var/obj/item/weapon/storage/backpack/B = H.back
-			new/obj/item/clockwork/slab/starter(B)
-			slot = "In your [B.name]"
+		slot = H.equip_in_one_of_slots(S, slots)
+		if(slot == "In your backpack")
+			slot = "In your [H.back.name]"
 	if(slot == "At your feet")
-		new/obj/item/clockwork/slab/starter(get_turf(L))
-	L << "<b>[slot] is a link to the halls of Reebe and your master. You may use it to perform many tasks, but also become oriented with the workings of Ratvar and how to best complete your \
-	tasks. This clockwork slab will be instrumental in your triumph. Remember: you can speak discreetly with your fellow servants by using the <span class='brass'>Hierophant Network</span> action button, \
-	and you can find a concise tutorial by using the slab in-hand and selecting Recollection.</b>"
-	L << "<i>Alternatively, check out the wiki page at </i><b>https://tgstation13.org/wiki/Clockwork_Cult</b><i>, which contains additional information.</i>"
-	return 1
+		if(!S.forceMove(get_turf(L)))
+			qdel(S)
+	if(S && !qdeleted(S))
+		L << "<b>[slot] is a link to the halls of Reebe and your master. You may use it to perform many tasks, but also become oriented with the workings of Ratvar and how to best complete your \
+		tasks. This clockwork slab will be instrumental in your triumph. Remember: you can speak discreetly with your fellow servants by using the <span class='brass'>Hierophant Network</span> action button, \
+		and you can find a concise tutorial by using the slab in-hand and selecting Recollection.</b>"
+		L << "<i>Alternatively, check out the wiki page at </i><b>https://tgstation13.org/wiki/Clockwork_Cult</b><i>, which contains additional information.</i>"
+		return TRUE
+	return FALSE
 
 /datum/game_mode/clockwork_cult/proc/present_tasks(mob/living/L) //Memorizes and displays the clockwork cult's objective
 	if(!L || !istype(L) || !L.mind)
@@ -201,27 +205,28 @@ Credit where due:
 					surviving_servants++
 			clockwork_explanation = "Ensure that [required_escapees] servant(s) of Ratvar escape from [station_name()].<br><i><b>[surviving_servants]</b> managed to escape!</i>"
 			if(surviving_servants >= required_escapees)
+				ticker.news_report = CULT_ESCAPE
 				return TRUE
-			return FALSE
 		if(CLOCKCULT_SILICONS)
 			var/total_silicons = 0
 			var/valid_silicons = 0
-			var/successful = FALSE
 			for(var/mob/living/silicon/S in mob_list) //Only check robots and AIs
 				if(isAI(S) || iscyborg(S))
 					total_silicons++
 					if(is_servant_of_ratvar(S) || S.stat == DEAD)
 						valid_silicons++
+			clockwork_explanation = "Ensure that all active silicon-based lifeforms on [station_name()] are servants of Ratvar and Application scripture is unlocked.<br>\
+			<i><b>[valid_silicons]/[total_silicons]</b> silicons were killed or converted!"
 			var/list/scripture_states = scripture_unlock_check()
 			if(valid_silicons >= total_silicons && scripture_states[SCRIPTURE_APPLICATION])
-				successful = TRUE
-			clockwork_explanation = "Ensure that all active silicon-based lifeforms on [station_name()] are servants of Ratvar and Application scripture is unlocked.<br>\
-			<i><b>[valid_silicons]/[total_silicons]</b> silicons were killed or converted!<br>\
-			Application scripture was <b>[scripture_states[SCRIPTURE_APPLICATION] ? "UNLOCKED":"LOCKED"]</b></i>"
-			return successful
+				ticker.news_report = CLOCK_SILICONS
+				return TRUE
 		if(CLOCKCULT_GATEWAY)
-			return ratvar_awakens
-	return FALSE //This shouldn't ever be reached, but just in case it is
+			if(ratvar_awakens)
+				ticker.news_report = CLOCK_SUMMON
+				return TRUE
+	ticker.news_report = CULT_FAILURE
+	return FALSE
 
 /datum/game_mode/clockwork_cult/declare_completion()
 	..()
@@ -246,9 +251,17 @@ Credit where due:
 			else
 				text += "<span class='userdanger'>Ratvar's servants have failed!</span>"
 				feedback_set_details("round_end_result", "loss - servants failed their objective ([clockwork_objective])")
-		text += "<br><b>The servants' objective was:</b> <br>[clockwork_explanation]<br>"
+		if(clockwork_gateway_activated && clockwork_objective != CLOCKCULT_GATEWAY)
+			ticker.news_report = CLOCK_PROSELYTIZATION
+		text += "<br><b>The servants' objective was:</b> <br>[clockwork_explanation]"
+		text += "<br>Ratvar's servants had <b>[clockwork_caches]</b> Tinkerer's Caches."
+		text += "<br><b>Construction Value(CV)</b> was: <b>[clockwork_construction_value]</b>"
+		var/list/scripture_states = scripture_unlock_check()
+		for(var/i in scripture_states)
+			if(i != SCRIPTURE_DRIVER)
+				text += "<br><b>[i] scripture</b> was: <b>[scripture_states[i] ? "UN":""]LOCKED</b>"
 	if(servants_of_ratvar.len)
-		text += "<b>Ratvar's servants were:</b>"
+		text += "<br><b>Ratvar's servants were:</b>"
 		for(var/datum/mind/M in servants_of_ratvar)
 			text += printplayer(M)
 	world << text

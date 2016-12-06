@@ -9,7 +9,7 @@
 	throwforce = 5
 	throw_speed = 2
 	throw_range = 5
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	var/charge = 0	// note %age conveted to actual charge in New
 	var/maxcharge = 1000
 	materials = list(MAT_METAL=700, MAT_GLASS=50)
@@ -30,13 +30,14 @@
 	STOP_PROCESSING(SSobj, src)
 	return ..()
 
-/obj/item/weapon/stock_parts/cell/on_varedit(modified_var)
-	if(modified_var == "self_recharge")
-		if(self_recharge)
-			START_PROCESSING(SSobj, src)
-		else
-			STOP_PROCESSING(SSobj, src)
-	..()
+/obj/item/weapon/stock_parts/cell/vv_edit_var(var_name, var_value)
+	switch(var_name)
+		if("self_recharge")
+			if(var_value)
+				START_PROCESSING(SSobj, src)
+			else
+				STOP_PROCESSING(SSobj, src)
+	. = ..()
 
 /obj/item/weapon/stock_parts/cell/process()
 	if(self_recharge)

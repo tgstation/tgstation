@@ -10,7 +10,7 @@
 	speak_chance = 1
 	icon = 'icons/mob/mob.dmi'
 	speed = 0
-	a_intent = "harm"
+	a_intent = INTENT_HARM
 	stop_automated_movement = 1
 	status_flags = CANPUSH
 	attack_sound = 'sound/weapons/punch1.ogg'
@@ -21,7 +21,7 @@
 	maxbodytemp = INFINITY
 	healable = 0
 	faction = list("cult")
-	flying = 1
+	movement_type = FLYING
 	pressure_resistance = 100
 	unique_name = 1
 	AIStatus = AI_OFF //normal constructs don't have AI

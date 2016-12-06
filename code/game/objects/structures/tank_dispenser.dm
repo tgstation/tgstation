@@ -53,7 +53,7 @@
 	else if(istype(I, /obj/item/weapon/wrench))
 		default_unfasten_wrench(user, I, time = 20)
 		return
-	else if(user.a_intent != "harm")
+	else if(user.a_intent != INTENT_HARM)
 		user << "<span class='notice'>[I] does not fit into [src].</span>"
 		return
 	else

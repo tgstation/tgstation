@@ -131,7 +131,7 @@
 		if(do_after(user,digTool.digspeed*(1+round(max_integrity*0.01)), target = src) && src)
 			user << "<span class='notice'>You finish digging.</span>"
 			deconstruct(TRUE)
-	else if(user.a_intent != "harm")
+	else if(user.a_intent != INTENT_HARM)
 		attack_hand(user)
 	else
 		return ..()

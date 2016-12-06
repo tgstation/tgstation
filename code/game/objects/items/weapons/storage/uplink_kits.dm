@@ -1,4 +1,4 @@
-/obj/item/weapon/storage/box/syndicate/
+/obj/item/weapon/storage/box/syndicate
 
 /obj/item/weapon/storage/box/syndicate/New()
 	..()
@@ -228,7 +228,7 @@
 /obj/item/weapon/storage/box/syndie_kit/space
 	name = "boxed space suit and helmet"
 	can_hold = list(/obj/item/clothing/suit/space/syndicate, /obj/item/clothing/head/helmet/space/syndicate)
-	max_w_class = 3
+	max_w_class = WEIGHT_CLASS_NORMAL
 
 /obj/item/weapon/storage/box/syndie_kit/space/New()
 	..()
@@ -268,15 +268,6 @@
 	new /obj/item/weapon/reagent_containers/glass/bottle/amanitin(src)
 	new /obj/item/weapon/reagent_containers/syringe(src)
 	return
-
-/obj/item/weapon/storage/box/syndie_kit/atmosgasgrenades
-	name = "Atmos Grenades"
-
-/obj/item/weapon/storage/box/syndie_kit/atmosgasgrenades/New()
-	..()
-	new /obj/item/weapon/grenade/clusterbuster/plasma(src)
-	new /obj/item/weapon/grenade/clusterbuster/n2o(src)
-	new /obj/item/weapon/grenade/clusterbuster/freon(src)
 
 /obj/item/weapon/storage/box/syndie_kit/nuke
 	name = "box"

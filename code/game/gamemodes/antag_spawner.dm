@@ -1,7 +1,7 @@
 /obj/item/weapon/antag_spawner
 	throw_speed = 1
 	throw_range = 5
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 	var/used = 0
 
 /obj/item/weapon/antag_spawner/proc/spawn_antag(client/C, turf/T, type = "")
@@ -89,7 +89,7 @@
 			M << "<B>Your service has not gone unrewarded, however. Studying under [wizard_name], you have learned reality bending mobility spells. You are able to cast teleport and ethereal jaunt."
 		if("healing")
 			M.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/charge(null))
-			M.mind.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/conjure/forcewall(null))
+			M.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/forcewall(null))
 			M.put_in_hands_or_del(new /obj/item/weapon/gun/magic/staff/healing(M))
 			M << "<B>Your service has not gone unrewarded, however. Studying under [wizard_name], you have learned livesaving survival spells. You are able to cast charge and forcewall."
 		if("robeless")

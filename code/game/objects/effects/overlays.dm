@@ -197,6 +197,13 @@
 	..()
 	animate(src, alpha = 0, time = duration)
 
+/obj/effect/overlay/temp/decoy/fading/fivesecond
+	duration = 50
+
+/obj/effect/overlay/temp/small_smoke
+	icon_state = "smoke"
+	duration = 50
+
 /obj/effect/overlay/temp/cult
 	randomdir = 0
 	duration = 10
@@ -298,6 +305,12 @@
 	layer = BELOW_MOB_LAYER
 	pixel_y = -16
 	pixel_x = -16
+
+/obj/effect/overlay/temp/ratvar/geis_binding
+	icon_state = "geisbinding"
+
+/obj/effect/overlay/temp/ratvar/geis_binding/top
+	icon_state = "geisbinding_top"
 
 /obj/effect/overlay/temp/ratvar/component
 	icon = 'icons/obj/clockwork_objects.dmi'

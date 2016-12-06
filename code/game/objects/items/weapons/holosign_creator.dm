@@ -5,7 +5,7 @@
 	icon_state = "signmaker"
 	item_state = "electronic"
 	force = 0
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	throwforce = 0
 	throw_speed = 3
 	throw_range = 7
@@ -77,7 +77,7 @@
 /obj/item/weapon/holosign_creator/cyborg
 	name = "Energy Barrier Projector"
 	desc = "A holographic projector that creates fragile energy fields"
-	creation_time = 5
+	creation_time = 15
 	max_signs = 9
 	holosign_type = /obj/structure/holosign/barrier/cyborg
 	var/shock = 0

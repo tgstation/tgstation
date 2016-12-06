@@ -32,7 +32,7 @@
 
 /mob/living/simple_animal/drone/attack_hand(mob/user)
 	if(ishuman(user))
-		if(stat == DEAD || status_flags & GODMODE)
+		if(stat == DEAD || status_flags & GODMODE || !can_be_held)
 			..()
 			return
 		if(user.get_active_held_item())
@@ -140,7 +140,7 @@
 		hacked = 1
 		mind.special_role = "hacked drone"
 		seeStatic = 0 //I MUST SEE THEIR TERRIFIED FACES
-		ventcrawler = 0 //Again, balance
+		ventcrawler = VENTCRAWLER_NONE //Again, balance
 		speed = 1 //gotta go slow
 		message_admins("[src] ([src.key]) became a hacked drone hellbent on [clockwork ? "serving Ratvar" : "destroying the station"]!")
 	else
