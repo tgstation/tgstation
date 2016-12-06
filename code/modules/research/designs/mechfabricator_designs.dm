@@ -716,7 +716,7 @@
 	id = "flightsuit"
 	build_type = MECHFAB
 	build_path = /obj/item/clothing/suit/space/hardsuit/flightsuit
-	materials = list(MAT_METAL=20000, MAT_GLASS = 10000, MAT_DIAMOND = 200, MAT_GOLD = 3000, MAT_SILVER = 3000, MAT_TITANIUM = 20000)	//This expensive enough for you?
+	materials = list(MAT_METAL=15000, MAT_GLASS = 10000, MAT_DIAMOND = 200, MAT_GOLD = 3000, MAT_SILVER = 3000, MAT_TITANIUM = 20000)	//This expensive enough for you?
 	construction_time = 250
 	category = list("Misc")
 
@@ -726,7 +726,7 @@
 	id = "flightpack"
 	build_type = MECHFAB
 	build_path = /obj/item/device/flightpack
-	materials = list(MAT_METAL=20000, MAT_GLASS = 10000, MAT_DIAMOND = 5000, MAT_GOLD = 15000, MAT_SILVER = 15000, MAT_URANIUM = 25000, MAT_PLASMA = 20000, MAT_TITANIUM = 20000)	//This expensive enough for you?
+	materials = list(MAT_METAL=15000, MAT_GLASS = 8000, MAT_DIAMOND = 4000, MAT_GOLD = 13000, MAT_SILVER = 13000, MAT_URANIUM = 15000, MAT_PLASMA = 15000, MAT_TITANIUM = 15000)	//This expensive enough for you?
 	construction_time = 250
 	category = list("Misc")
 
