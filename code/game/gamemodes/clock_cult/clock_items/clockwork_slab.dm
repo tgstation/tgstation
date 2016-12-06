@@ -358,7 +358,7 @@
 		Examine the slab or swap to Recital to check the number of components it has available.<br><br>\
 		\
 		<font color=#BE8700 size=3><b><center>Purge all untruths and honor Ratvar.</center></b></font>"
-	return textlist.Join("")
+	return textlist.Join()
 
 /obj/item/clockwork/slab/ui_data(mob/user)
 	var/list/data = list()
@@ -378,7 +378,7 @@
 	else
 		temp_data += "<b>NONE</b>"
 	temp_data += ")</font>"
-	temp_data = temp_data.Join("")
+	temp_data = temp_data.Join()
 	data["components"] = temp_data
 
 	data["selected"] = selected_scripture
@@ -407,7 +407,7 @@
 			for(var/i in temp_info["required"])
 				if(temp_info["required"][i])
 					really_temp_data += "<font color=[get_component_color_brightalloy(i)]>[get_component_acronym(i)] <b>[temp_info["required"][i]]</b></font> "
-			really_temp_data = really_temp_data.Join("")
+			really_temp_data = really_temp_data.Join()
 			temp_info["required"] = really_temp_data
 			data["scripture"] += list(temp_info)
 	data["recollection"] = recollecting
