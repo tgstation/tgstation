@@ -358,8 +358,7 @@
 		Examine the slab or swap to Recital to check the number of components it has available.<br><br>\
 		\
 		<font color=#BE8700 size=3><b><center>Purge all untruths and honor Ratvar.</center></b></font>"
-	textlist = textlist.Join("")
-	return textlist
+	return textlist.Join("")
 
 /obj/item/clockwork/slab/ui_data(mob/user)
 	var/list/data = list()
