@@ -182,11 +182,11 @@
 	icon_state = "hook"
 	icon = 'icons/obj/lavaland/artefacts.dmi'
 	pass_flags = PASSTABLE
-	damage = 25
+	damage = 15
 	armour_penetration = 100
 	damage_type = BRUTE
 	hitsound = 'sound/effects/splat.ogg'
-	weaken = 3
+	weaken = 0
 	var/chain
 
 /obj/item/projectile/hook/fire(setAngle)
