@@ -53874,16 +53874,10 @@
 /turf/open/floor/wood,
 /area/library)
 "bPb" = (
-/obj/machinery/firealarm{
-	dir = 4;
-	pixel_x = 24
-	},
-/obj/structure/table/wood,
-/obj/item/weapon/clipboard,
-/obj/item/device/taperecorder,
-/obj/item/device/tape,
-/turf/open/floor/wood,
-/area/library)
+/obj/structure/chair/stool/bar,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/turf/open/floor/plasteel/bar,
+/area/crew_quarters/bar)
 "bPc" = (
 /obj/structure/easel,
 /obj/item/weapon/canvas/twentythreeXtwentythree,
@@ -127653,7 +127647,7 @@ bDZ
 bFJ
 bHt
 bJi
-bDY
+bPb
 bMq
 bNX
 bPL
