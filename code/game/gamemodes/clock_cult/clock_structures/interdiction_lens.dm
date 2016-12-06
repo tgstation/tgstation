@@ -24,9 +24,9 @@
 		user << "<span class='neovgre_small'>If it fails to drain any electronics, it will disable itself for <b>[round(recharge_time/600, 1)]</b> minutes.</span>"
 
 /obj/structure/destructible/clockwork/powered/interdiction_lens/toggle(fast_process, mob/living/user)
-	..()
+	. = ..()
 	if(active)
-		SetLuminosity(4,2)
+		SetLuminosity(4, 2)
 	else
 		SetLuminosity(0)
 

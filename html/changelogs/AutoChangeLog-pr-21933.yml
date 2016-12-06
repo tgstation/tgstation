@@ -1,0 +1,6 @@
+author: "kilkun"
+delete-after: True
+changes: 
+  - rscadd: "New lore surrounding the various SWAT suits."
+  - tweak: "Captain's hardsuit/SWAT suit got a few buffs. It's now much more robust."
+  - bugfix: "Captain's space suit is now heat proof as well as fireproof. Long overlooked no longer."

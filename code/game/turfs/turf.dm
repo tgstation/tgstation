@@ -11,8 +11,6 @@
 
 	var/blocks_air = 0
 
-	var/PathNode/PNode = null //associated PathNode in the A* algorithm
-
 	flags = CAN_BE_DIRTY
 
 	var/list/proximity_checkers

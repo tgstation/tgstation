@@ -141,6 +141,62 @@ MIDROUND_ANTAG BLOB
 #MIDROUND_ANTAG  RAGINMAGES
 #MIDROUND_ANTAG  MONKEY
 
+## Uncomment for overrides of the minimum / maximum number of players in a round type. 
+## If you set any of these occasionally check to see if you still need them as the modes
+## will still be actively rebalanced around the SUGGESTED populations, not your overrides.
+## Notes: For maximum number of players a value of -1 means no maximum. Setting minimums to 
+## VERY low numbers (< 5) can lead to errors if the roundtypes were not designed for that.
+
+#MIN_POP TRAITOR 0
+#MAX_POP TRAITOR -1
+
+#MIN_POP TRAITORCHAN 15
+#MAX_POP TRAITORCHAN -1
+
+#MIN_POP DOUBLE_AGENTS 25
+#MAX_POP DOUBLE_AGENTS -1
+
+#MIN_POP NUCLEAR 0
+#MAX_POP NUCLEAR -1
+
+#MIN_POP REVOLUTION 20
+#MAX_POP REVOLUTION -1
+
+#MIN_POP GANG 20
+#MAX_POP GANG -1
+
+#MIN_POP CULT 24
+#MAX_POP CULT -1
+
+#MIN_POP CLOCKWORK_CULT 24
+#MAX_POP CLOCKWORK_CULT -1
+
+#MIN_POP CHANGELING 15
+#MAX_POP CHANGELING -1
+
+#MIN_POP WIZARD 20
+#MAX_POP WIZARD -1
+
+#MIN_POP BLOB 25
+#MAX_POP BLOB -1
+
+#MIN_POP MONKEY 20
+#MAX_POP MONKEY -1
+
+#MIN_POP METEOR 0
+#MAX_POP METEOR -1
+
+#MIN_POP DEVIL 0
+#MAX_POP DEVIL -1
+
+#MIN_POP DEVIL_AGENTS 25
+#MAX_POP DEVIL_AGENTS -1
+
+## Setting at least one mode to be playable at 0/1 players is required.
+#MIN_POP EXTENDED 0
+#MAX_POP EXTENDED -1
+
+
 
 ## The amount of time it takes for the emergency shuttle to be called, from round start.
 SHUTTLE_REFUEL_DELAY 12000
