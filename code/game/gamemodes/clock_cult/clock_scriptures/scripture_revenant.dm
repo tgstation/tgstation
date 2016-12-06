@@ -192,7 +192,7 @@
 /datum/clockwork_scripture/invoke_nzcrentr/scripture_effects()
 	new/obj/effect/clockwork/general_marker/nzcrentr(get_turf(invoker))
 	clockwork_generals_invoked["nzcrentr"] = world.time + CLOCKWORK_GENERAL_COOLDOWN
-	hierophant_message("<span class='nzcrentr_large'>[text2ratvar("Amperage: \"[invoker.real_name] has called forth my power. Hope they do not shatter under it!")]\"</span>", FALSE, invoker)
+	hierophant_message("<span class='nzcrentr_large'>[text2ratvar("Amperage: \"[invoker.real_name] has called forth my power. Hope [invoker.p_they()] [invoker.p_do()] not shatter under it!")]\"</span>", FALSE, invoker)
 	invoker.visible_message("<span class='warning'>[invoker] begins to radiate a blinding light!</span>", \
 	"<span class='nzcrentr'>\"[text2ratvar("The boss says it's okay to do this. Don't blame me if you die from it.")]\"</span>\n \
 	<span class='userdanger'>You feel limitless power surging through you!</span>")

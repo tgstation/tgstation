@@ -149,13 +149,13 @@
 	return
 
 /obj/machinery/door/attackby(obj/item/I, mob/user, params)
-	if(user.a_intent != "harm" && (istype(I, /obj/item/weapon/crowbar) || istype(I, /obj/item/weapon/twohanded/fireaxe)))
+	if(user.a_intent != INTENT_HARM && (istype(I, /obj/item/weapon/crowbar) || istype(I, /obj/item/weapon/twohanded/fireaxe)))
 		try_to_crowbar(I, user)
 		return 1
 	else if(istype(I, /obj/item/weapon/weldingtool))
 		try_to_weld(I, user)
 		return 1
-	else if(!(I.flags & NOBLUDGEON) && user.a_intent != "harm")
+	else if(!(I.flags & NOBLUDGEON) && user.a_intent != INTENT_HARM)
 		try_to_activate_door(user)
 		return 1
 	else

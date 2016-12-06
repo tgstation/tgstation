@@ -99,7 +99,7 @@
 	user << "<span class='notice'>\icon[src] You switch [scanning ? "on" : "off"] [src].</span>"
 
 /obj/item/device/geiger_counter/attack(mob/living/M, mob/user)
-	if(user.a_intent == "help")
+	if(user.a_intent == INTENT_HELP)
 		if(!emagged)
 			user.visible_message("<span class='notice'>[user] scans [M] with [src].</span>", "<span class='notice'>You scan [M]'s radiation levels with [src]...</span>")
 			if(!M.radiation)

@@ -82,7 +82,7 @@
 		M.apply_damage(10, STAMINA)
 		if(prob(5))
 			M.Weaken(3)
-			visible_message("<span class='danger'>[M] is knocked right off \his feet!</span>")
+			visible_message("<span class='danger'>[M] is knocked right off [M.p_their()] feet!</span>")
 
 //
 // Structures
@@ -102,7 +102,7 @@
 			visible_message("<span class='warning'> [user] dunks [W] into \the [src]!</span>")
 
 /obj/structure/holohoop/attack_hand(mob/user)
-	if(user.pulling && user.a_intent == "grab" && isliving(user.pulling))
+	if(user.pulling && user.a_intent == INTENT_GRAB && isliving(user.pulling))
 		var/mob/living/L = user.pulling
 		if(user.grab_state < GRAB_AGGRESSIVE)
 			user << "<span class='warning'>You need a better grip to do that!</span>"

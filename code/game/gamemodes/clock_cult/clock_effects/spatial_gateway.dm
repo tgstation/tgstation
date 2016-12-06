@@ -5,6 +5,7 @@
 	clockwork_desc = "A gateway in reality."
 	icon_state = "spatial_gateway"
 	density = 1
+	luminosity = 2
 	var/sender = TRUE //If this gateway is made for sending, not receiving
 	var/both_ways = FALSE
 	var/lifetime = 25 //How many deciseconds this portal will last
@@ -62,7 +63,7 @@
 /obj/effect/clockwork/spatial_gateway/attack_hand(mob/living/user)
 	if(!uses)
 		return FALSE
-	if(user.pulling && user.a_intent == "grab" && isliving(user.pulling))
+	if(user.pulling && user.a_intent == INTENT_GRAB && isliving(user.pulling))
 		var/mob/living/L = user.pulling
 		if(L.buckled || L.anchored || L.has_buckled_mobs())
 			return FALSE

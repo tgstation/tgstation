@@ -111,6 +111,7 @@
 		if(wires.is_cut(WIRE_CAMERA))
 			camera.status = 0
 	module = new /obj/item/weapon/robot_module(src)
+	module.rebuild_modules()
 	update_icons()
 	..()
 
@@ -326,7 +327,7 @@
 	return !cleared
 
 /mob/living/silicon/robot/attackby(obj/item/weapon/W, mob/user, params)
-	if(istype(W, /obj/item/weapon/weldingtool) && (user.a_intent != "harm" || user == src))
+	if(istype(W, /obj/item/weapon/weldingtool) && (user.a_intent != INTENT_HARM || user == src))
 		user.changeNext_move(CLICK_CD_MELEE)
 		var/obj/item/weapon/weldingtool/WT = W
 		if (!getBruteLoss())

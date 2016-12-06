@@ -3,6 +3,7 @@
 	desc = "Yummy."
 	icon = 'icons/obj/food/food.dmi'
 	icon_state = null
+	unique_rename = 1
 	var/bitesize = 2
 	var/bitecount = 0
 	var/trash = null
@@ -35,7 +36,7 @@
 
 
 /obj/item/weapon/reagent_containers/food/snacks/attack(mob/M, mob/user, def_zone)
-	if(user.a_intent == "harm")
+	if(user.a_intent == INTENT_HARM)
 		return ..()
 	if(!eatverb)
 		eatverb = pick("bite","chew","nibble","gnaw","gobble","chomp")

@@ -6,8 +6,8 @@
 	if(cell && cell.charge)
 		playsound(src, "sparks", 50, 1)
 		flick("apc-spark", src)
-		. += min(cell.charge, 500)
-		cell.charge = max(0, cell.charge - 500) //Better than a power sink!
+		. = min(cell.charge, 500)
+		cell.use(.) //Better than a power sink!
 		if(!cell.charge && !shorted)
 			shorted = 1
 			visible_message("<span class='warning'>The [name]'s screen blurs with static.</span>")
@@ -16,8 +16,8 @@
 
 /obj/machinery/power/smes/power_drain(clockcult_user)
 	if(charge)
-		. += min(charge, 500)
-		charge = max(0, charge - 50000)
+		. = min(charge, 500)
+		charge -= . * 50
 		if(!charge && !panel_open)
 			panel_open = TRUE
 			icon_state = "[initial(icon_state)]-o"
@@ -29,28 +29,26 @@
 
 /obj/item/weapon/stock_parts/cell/power_drain(clockcult_user)
 	if(charge)
-		. += min(charge, 500)
-		charge = use(max(0, charge - 500))
+		. = min(charge, 500)
+		charge = use(.)
 		updateicon()
 
 /obj/machinery/light/power_drain(clockcult_user)
 	if(on)
 		playsound(src, 'sound/effects/light_flicker.ogg', 50, 1)
-		flicker(2)
-		. += MIN_CLOCKCULT_POWER
-	else if(prob(50))
+		. = 500
 		burn_out()
 
 /mob/living/silicon/robot/power_drain(clockcult_user)
 	if((!clockcult_user || !is_servant_of_ratvar(src)) && cell && cell.charge)
-		. += min(cell.charge, 500)
-		cell.charge = max(0, cell.charge - 500)
+		. = min(cell.charge, 500)
+		cell.use(.)
 		src << "<span class='userdanger'>ERROR: Power loss detected!</span>"
 		spark_system.start()
 
 /obj/mecha/power_drain(clockcult_user)
 	if((!clockcult_user || !occupant || occupant && !is_servant_of_ratvar(occupant)) && cell && cell.charge)
-		. += min(cell.charge, 500)
-		cell.charge = max(0, cell.charge - 500)
+		. = min(cell.charge, 500)
+		cell.use(.)
 		occupant_message("<span class='userdanger'>Power loss detected!</span>")
 		spark_system.start()

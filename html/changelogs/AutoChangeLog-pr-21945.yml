@@ -1,0 +1,4 @@
+author: "Joan"
+delete-after: True
+changes: 
+  - tweak: "Geis now takes 5 seconds to resist."

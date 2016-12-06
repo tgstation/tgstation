@@ -23,7 +23,7 @@
 		swirlie.visible_message("<span class='danger'>[user] slams the toilet seat onto [swirlie]'s head!</span>", "<span class='userdanger'>[user] slams the toilet seat onto your head!</span>", "<span class='italics'>You hear reverberating porcelain.</span>")
 		swirlie.adjustBruteLoss(5)
 
-	else if(user.pulling && user.a_intent == "grab" && isliving(user.pulling))
+	else if(user.pulling && user.a_intent == INTENT_GRAB && isliving(user.pulling))
 		user.changeNext_move(CLICK_CD_MELEE)
 		var/mob/living/GM = user.pulling
 		if(user.grab_state >= GRAB_AGGRESSIVE)
@@ -80,7 +80,7 @@
 			update_icon()
 
 	else if(cistern)
-		if(user.a_intent != "harm")
+		if(user.a_intent != INTENT_HARM)
 			if(I.w_class > WEIGHT_CLASS_NORMAL)
 				user << "<span class='warning'>[I] does not fit!</span>"
 				return
@@ -118,7 +118,7 @@
 	hiddenitem = new /obj/item/weapon/reagent_containers/food/urinalcake
 
 /obj/structure/urinal/attack_hand(mob/user)
-	if(user.pulling && user.a_intent == "grab" && isliving(user.pulling))
+	if(user.pulling && user.a_intent == INTENT_GRAB && isliving(user.pulling))
 		var/mob/living/GM = user.pulling
 		if(user.grab_state >= GRAB_AGGRESSIVE)
 			if(GM.loc != get_turf(src))
@@ -491,7 +491,7 @@
 	if(O.flags & ABSTRACT) //Abstract items like grabs won't wash. No-drop items will though because it's still technically an item in your hand.
 		return
 
-	if(user.a_intent != "harm")
+	if(user.a_intent != INTENT_HARM)
 		user << "<span class='notice'>You start washing [O]...</span>"
 		busy = 1
 		if(!do_after(user, 40, target = src))

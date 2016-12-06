@@ -6,10 +6,15 @@
 	var/shuttle_id
 
 	var/description
+	var/prerequisites
 	var/admin_notes
 
 	var/credit_cost = INFINITY
 	var/can_be_bought = TRUE
+
+
+/datum/map_template/shuttle/proc/prerequisites_met()
+	return TRUE
 
 /datum/map_template/shuttle/New()
 	shuttle_id = "[port_id]_[suffix]"

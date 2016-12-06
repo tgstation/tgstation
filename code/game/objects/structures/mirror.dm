@@ -57,7 +57,7 @@
 	qdel(src)
 
 /obj/structure/mirror/attackby(obj/item/I, mob/living/user, params)
-	if(istype(I, /obj/item/weapon/weldingtool) && user.a_intent != "harm")
+	if(istype(I, /obj/item/weapon/weldingtool) && user.a_intent != INTENT_HARM)
 		var/obj/item/weapon/weldingtool/WT = I
 		if(broken)
 			user.changeNext_move(CLICK_CD_MELEE)

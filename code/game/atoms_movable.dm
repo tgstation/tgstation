@@ -149,14 +149,14 @@
 
 /mob/living/brain/forceMove(atom/destination)
 	if(container)
-		container.forceMove(destination)
+		return container.forceMove(destination)
 	else //something went very wrong.
 		CRASH("Brainmob without container.")
 
 
 /mob/living/silicon/pai/forceMove(atom/destination)
 	if(card)
-		card.forceMove(destination)
+		return card.forceMove(destination)
 	else //something went very wrong.
 		CRASH("pAI without card")
 

@@ -11,7 +11,7 @@
 	response_disarm = "shoves"
 	response_harm = "strikes"
 	status_flags = 0
-	a_intent = "harm"
+	a_intent = INTENT_HARM
 	var/throw_message = "bounces off of"
 	var/icon_aggro = null // for swapping to when we get aggressive
 	see_in_dark = 8
@@ -74,7 +74,7 @@
 	melee_damage_lower = 12
 	melee_damage_upper = 12
 	attacktext = "bites into"
-	a_intent = "harm"
+	a_intent = INTENT_HARM
 	speak_emote = list("chitters")
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	aggro_vision_range = 9
@@ -127,7 +127,7 @@
 	melee_damage_upper = 0
 	attacktext = "barrels into"
 	attack_sound = 'sound/weapons/punch1.ogg'
-	a_intent = "help"
+	a_intent = INTENT_HELP
 	speak_emote = list("screeches")
 	throw_message = "sinks in slowly, before being pushed out of "
 	deathmessage = "spits up the contents of its stomach before dying!"
@@ -709,7 +709,7 @@
 	melee_damage_lower = 15
 	melee_damage_upper = 15
 	attacktext = "impales"
-	a_intent = "harm"
+	a_intent = INTENT_HARM
 	speak_emote = list("telepathically cries")
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	stat_attack = 1
@@ -874,7 +874,7 @@
 	response_disarm = "gently pushes aside"
 	response_harm   = "squishes"
 	friendly = "pinches"
-	a_intent = "help"
+	a_intent = INTENT_HELP
 	ventcrawler = VENTCRAWLER_ALWAYS
 	gold_core_spawnable = 2
 	stat_attack = 1

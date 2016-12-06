@@ -45,7 +45,7 @@ Note: Must be placed within 3 tiles of the R&D Console
 	..()
 
 /obj/machinery/r_n_d/destructive_analyzer/Insert_Item(obj/item/O, mob/user)
-	if(user.a_intent != "harm")
+	if(user.a_intent != INTENT_HARM)
 		. = 1
 		if(!is_insertion_ready(user))
 			return

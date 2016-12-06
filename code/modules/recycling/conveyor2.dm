@@ -136,7 +136,7 @@
 			update_move_direction()
 			user << "<span class='notice'>You reverse [src]'s direction.</span>"
 
-	else if(user.a_intent != "harm")
+	else if(user.a_intent != INTENT_HARM)
 		if(user.drop_item())
 			I.loc = src.loc
 	else
