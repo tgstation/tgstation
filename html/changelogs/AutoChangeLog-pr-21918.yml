@@ -1,4 +1,0 @@
-author: "BASILMAN YOUR MAIN MAN"
-delete-after: True
-changes: 
-  - bugfix: "fixes people \"walking over the glass shard!\" when they're on the ground, changes message when incapacitated"
