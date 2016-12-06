@@ -87,7 +87,7 @@
 
 /turf/open/floor/carpet
 	name = "carpet"
-	desc = "Soft velvet carpeting. Feels good between your toes."
+	desc = "Soft velvet carpeting. Feels good between your toes. Looks super absorbant."
 	icon = 'icons/turf/floors/carpet.dmi'
 	icon_state = "carpet"
 	floor_tile = /obj/item/stack/tile/carpet
@@ -122,6 +122,14 @@
 /turf/open/floor/carpet/burn_tile()
 	burnt = 1
 	update_icon()
+
+/turf/open/floor/carpet/MakeSlippery(wet_setting = TURF_WET_WATER, min_wet_time = 0, wet_time_to_add = 0)
+	// Carpet is SUPER ABSORBANT, and never gets slippery.
+	// Still gets frozen though.
+	if(wet_setting == TURF_WET_WATER || wet_setting == TURF_WET_LUBE)
+		return
+	else
+		. = ..(wet_setting, min_wet_time, wet_time_to_add)
 
 /turf/open/floor/carpet/carpetsymbol
 	icon_state = "carpetsymbol"
