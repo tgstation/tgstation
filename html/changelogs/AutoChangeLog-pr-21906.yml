@@ -1,6 +1,0 @@
-author: "Incoming5643"
-delete-after: True
-changes: 
-  - bugfix: "The timer for shuttle calls/recalls now scales with the security level of the station (Code Red/Green, etc.). You no longer have to feel dumb if you forget to call Code Red before you call the shuttle!"
-  - rscadd: "Shuttles called in Code Green (the lowest level) now take 20 minutes to arrive, but may be recalled for up to 10 minutes. They also don't require a reason to be called."
-  - experiment: "That doesn't mean you should call a code green shuttle every round the moment it finishes refueling."

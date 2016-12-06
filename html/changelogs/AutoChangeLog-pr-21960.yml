@@ -1,4 +1,0 @@
-author: "Mervill"
-delete-after: True
-changes: 
-  - bugfix: "Examining now lists the neck slot"
