@@ -1,4 +1,4 @@
-
+/obj/item/weapon
 
 /obj/item/weapon/banhammer
 	desc = "A banhammer"
