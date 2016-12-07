@@ -25,7 +25,7 @@
 
 	levelupdate()
 	if(smooth)
-		smooth_icon(src)
+		queue_smooth(src)
 	visibilityChanged()
 
 	for(var/atom/movable/AM in src)
