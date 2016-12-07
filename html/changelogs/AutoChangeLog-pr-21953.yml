@@ -1,0 +1,4 @@
+author: "Incoming5643"
+delete-after: True
+changes: 
+  - rscadd: "Server owners that use the panic bunker feature can now optionally redirect new players to a different server. See config.txt for details."
