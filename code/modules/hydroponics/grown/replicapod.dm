@@ -57,19 +57,14 @@
 	var/ckey_holder = null
 	if(config.revival_pod_plants)
 		if(ckey)
-			world << "wazoo!!"
 			for(var/mob/M in player_list)
 				if(isobserver(M))
-					world << "wazoobserver!!"
 					var/mob/dead/observer/O = M
 					if(O.ckey == ckey && O.can_reenter_corpse)
-						world << "wazoobserver 2 podman is truuu!!"
 						make_podman = 1
 						break
 				else
-					world << "wazooperson!!"
 					if(M.ckey == ckey && M.stat == DEAD && !M.suiciding)
-						world << "wazooperson 2!! podman is truuuuu"
 						make_podman = 1
 						if(isliving(M))
 							var/mob/living/L = M
