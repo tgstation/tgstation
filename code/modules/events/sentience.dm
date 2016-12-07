@@ -32,7 +32,7 @@
 	SA.languages_understood |= HUMAN
 	SA.sentience_act()
 
-	SA.maxHealth = min(SA.maxHealth, 200)
+	SA.maxHealth = max(SA.maxHealth, 200)
 	SA.health = SA.maxHealth
 	SA.del_on_death = FALSE
 
