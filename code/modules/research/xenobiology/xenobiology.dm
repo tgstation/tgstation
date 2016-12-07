@@ -156,8 +156,8 @@
 	qdel(src)
 
 /obj/item/slimepotion/sentience
-	name = "sentience potion"
-	desc = "A miraculous chemical mix that can raise the intelligence of creatures to human levels. Unlike normal slime potions, it can be absorbed by any nonsentient being."
+	name = "cheridan potion"
+	desc = "A miraculous chemical mix that cheridanizes living beings."
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "potpink"
 	origin_tech = "biotech=6"
