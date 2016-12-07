@@ -62,7 +62,7 @@
 /obj/machinery/gibber/RefreshParts()
 	var/gib_time = 40
 	for(var/obj/item/weapon/stock_parts/matter_bin/B in component_parts)
-		meat_produced += 3 * B.rating
+		meat_produced += B.rating
 	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
 		gib_time -= 5 * M.rating
 		gibtime = gib_time
@@ -85,9 +85,8 @@
 /obj/machinery/gibber/attack_paw(mob/user)
 	return src.attack_hand(user)
 
-/obj/machinery/gibber/container_resist()
-	src.go_out()
-	return
+/obj/machinery/gibber/container_resist(mob/living/user)
+	go_out()
 
 /obj/machinery/gibber/attack_hand(mob/user)
 	if(stat & (NOPOWER|BROKEN))
@@ -96,7 +95,7 @@
 		user << "<span class='danger'>It's locked and running.</span>"
 		return
 
-	if(user.pulling && user.a_intent == "grab" && isliving(user.pulling))
+	if(user.pulling && user.a_intent == INTENT_GRAB && isliving(user.pulling))
 		var/mob/living/L = user.pulling
 		if(!iscarbon(L))
 			user << "<span class='danger'>This item is not suitable for the gibber!</span>"
@@ -204,10 +203,11 @@
 		var/obj/item/weapon/reagent_containers/food/snacks/meat/slab/newmeat = new typeofmeat
 		var/obj/item/stack/sheet/animalhide/newskin = new typeofskin
 		newmeat.name = "[sourcename] [newmeat.name]"
-		newmeat.subjectname = sourcename
-		if(sourcejob)
-			newmeat.subjectjob = sourcejob
-		newmeat.reagents.add_reagent ("nutriment", sourcenutriment / meat_produced) // Thehehe. Fat guys go first
+		if(istype(newmeat))
+			newmeat.subjectname = sourcename
+			newmeat.reagents.add_reagent ("nutriment", sourcenutriment / meat_produced) // Thehehe. Fat guys go first
+			if(sourcejob)
+				newmeat.subjectjob = sourcejob
 		src.occupant.reagents.trans_to (newmeat, round (sourcetotalreagents / meat_produced, 1)) // Transfer all the reagents from the
 		allmeat[i] = newmeat
 		allskin = newskin
@@ -228,7 +228,7 @@
 			var/obj/item/meatslab = allmeat[i]
 			meatslab.loc = src.loc
 			meatslab.throw_at_fast(pick(nearby_turfs),i,3)
-			for (var/turfs=1 to meat_produced*3)
+			for (var/turfs=1 to meat_produced)
 				var/turf/gibturf = pick(nearby_turfs)
 				if (!gibturf.density && src in view(gibturf))
 					new gibtype(gibturf,i)

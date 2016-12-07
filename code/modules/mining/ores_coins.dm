@@ -17,6 +17,30 @@
 			user << "<span class='info'>Not enough fuel to smelt [src].</span>"
 	..()
 
+/obj/item/weapon/ore/Crossed(atom/movable/AM)
+	var/obj/item/weapon/storage/bag/ore/OB
+	if(istype(loc, /turf/open/floor/plating/asteroid))
+		var/turf/open/floor/plating/asteroid/F = loc
+		if(ishuman(AM))
+			var/mob/living/carbon/human/H = AM
+			for(var/thing in H.get_storage_slots())
+				if(istype(thing, /obj/item/weapon/storage/bag/ore))
+					OB = thing
+					break
+			for(var/thing in H.held_items)
+				if(istype(thing, /obj/item/weapon/storage/bag/ore))
+					OB = thing
+					break
+		else if(issilicon(AM))
+			var/mob/living/silicon/robot/R = AM
+			for(var/thing in R.module_active)
+				if(istype(thing, /obj/item/weapon/storage/bag/ore))
+					OB = thing
+					break
+		if(OB)
+			F.attackby(OB, AM)
+	return ..()
+
 /obj/item/weapon/ore/uranium
 	name = "uranium ore"
 	icon_state = "Uranium ore"
@@ -40,7 +64,7 @@
 	points = 1
 	materials = list(MAT_GLASS=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/glass
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 
 /obj/item/weapon/ore/glass/attack_self(mob/living/user)
 	user << "<span class='notice'>You use the sand to make sandstone.</span>"
@@ -133,6 +157,14 @@
 	materials = list(MAT_BANANIUM=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/bananium
 
+/obj/item/weapon/ore/titanium
+	name = "titanium ore"
+	icon_state = "Titanium ore"
+	origin_tech = "materials=4"
+	points = 50
+	materials = list(MAT_TITANIUM=MINERAL_MATERIAL_AMOUNT)
+	refined_type = /obj/item/stack/sheet/mineral/titanium
+
 /obj/item/weapon/ore/slag
 	name = "slag"
 	desc = "Completely useless"
@@ -144,7 +176,7 @@
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "Gibtonite ore"
 	item_state = "Gibtonite ore"
-	w_class = 4
+	w_class = WEIGHT_CLASS_BULKY
 	throw_range = 0
 	var/primed = 0
 	var/det_time = 100
@@ -252,7 +284,7 @@
 	flags = CONDUCT
 	force = 1
 	throwforce = 2
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 	var/string_attached
 	var/list/sideslist = list("heads","tails")
 	var/cmineral = null

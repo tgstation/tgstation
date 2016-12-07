@@ -6,6 +6,7 @@
 	close_sound = 'sound/effects/bin_close.ogg'
 	anchored = TRUE
 	horizontal = FALSE
+	delivery_icon = null
 
 /obj/structure/closet/crate/bin/New()
 	..()

@@ -4,6 +4,8 @@
 	else
 		return "[pick(lizard_names_female)]-[pick(lizard_names_female)]"
 
+/proc/plasmaman_name()
+	return "[pick(plasmaman_names)] \Roman[rand(1,99)]"
 
 var/church_name = null
 /proc/church_name()
@@ -100,7 +102,7 @@ var/religion_name = null
 		if(2)
 			new_station_name += pick(greek_letters)
 		if(3)
-			new_station_name += pick(roman_numerals)
+			new_station_name += "\Roman[rand(1,99)]"
 		if(4)
 			new_station_name += pick(phonetic_alphabet)
 		if(5)

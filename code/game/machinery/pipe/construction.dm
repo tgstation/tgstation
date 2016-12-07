@@ -16,7 +16,7 @@ Buildable meters
 	icon = 'icons/obj/atmospherics/pipes/pipe_item.dmi'
 	icon_state = "simple"
 	item_state = "buildpipe"
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 	level = 2
 	var/flipped = 0
 	var/is_bent = 0
@@ -54,7 +54,7 @@ Buildable meters
 	if(make_from)
 		src.setDir(make_from.dir)
 		src.pipename = make_from.name
-		src.color = make_from.color
+		add_atom_colour(make_from.color, FIXED_COLOUR_PRIORITY)
 
 		if(make_from.type in pipe_types)
 			src.pipe_type = make_from.type
@@ -230,7 +230,7 @@ var/global/list/pipeID2State = list(
 	var/obj/machinery/atmospherics/components/trinary/T = A
 	if(istype(T))
 		T.flipped = flipped
-	A.construction(pipe_type, color)
+	A.on_construction(pipe_type, color)
 
 	playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 	user.visible_message( \
@@ -241,8 +241,8 @@ var/global/list/pipeID2State = list(
 	qdel(src)
 
 /obj/item/pipe/suicide_act(mob/user)
-	if (pipe_type in list(PIPE_PUMP, PIPE_PASSIVE_GATE, PIPE_VOLUME_PUMP))
-		user.visible_message("<span class='suicide'>[user] shoved the [src] in \his mouth and turned it on!  It looks like \he's trying to commit suicide.</span>")
+	if(pipe_type in list(PIPE_PUMP, PIPE_PASSIVE_GATE, PIPE_VOLUME_PUMP))
+		user.visible_message("<span class='suicide'>[user] shoves the [src] in [user.p_their()] mouth and turns it on!  It looks like [user.p_theyre()] trying to commit suicide!</span>")
 		if(istype(user, /mob/living/carbon))
 			var/mob/living/carbon/C = user
 			for(var/i=1 to 20)
@@ -259,7 +259,7 @@ var/global/list/pipeID2State = list(
 	icon = 'icons/obj/atmospherics/pipes/pipe_item.dmi'
 	icon_state = "meter"
 	item_state = "buildpipe"
-	w_class = 4
+	w_class = WEIGHT_CLASS_BULKY
 
 /obj/item/pipe_meter/attackby(obj/item/weapon/W, mob/user, params)
 	..()

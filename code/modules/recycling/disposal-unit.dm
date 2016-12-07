@@ -8,6 +8,10 @@
 	anchored = 1
 	density = 1
 	on_blueprints = TRUE
+	armor = list(melee = 25, bullet = 10, laser = 10, energy = 100, bomb = 0, bio = 100, rad = 100, fire = 90, acid = 30)
+	obj_integrity = 200
+	max_integrity = 200
+	resistance_flags = FIRE_PROOF
 	var/datum/gas_mixture/air_contents	// internal reservoir
 	var/mode = 1	// mode -1=screws removed 0=off 1=charging 2=charged
 	var/flush = 0	// true if flush handle is pulled
@@ -54,7 +58,7 @@
 
 /obj/machinery/disposal/singularity_pull(S, current_size)
 	if(current_size >= STAGE_FIVE)
-		Deconstruct()
+		deconstruct()
 
 /obj/machinery/disposal/initialize()
 	// this will get a copy of the air turf and take a SEND PRESSURE amount of air from it
@@ -91,10 +95,10 @@
 					if(!W.isOn())
 						return
 					user << "<span class='notice'>You slice the floorweld off \the [src].</span>"
-					Deconstruct()
+					deconstruct()
 			return
 
-	if(user.a_intent != "harm")
+	if(user.a_intent != INTENT_HARM)
 		if(!user.drop_item() || (I.flags & ABSTRACT))
 			return
 		place_item_in_disposal(I, user)
@@ -108,7 +112,6 @@
 	user.visible_message("[user.name] places \the [I] into \the [src].", \
 						"<span class='notice'>You place \the [I] into \the [src].</span>")
 
-
 // mouse drop another mob or self
 
 /obj/machinery/disposal/MouseDrop_T(mob/living/target, mob/living/user)
@@ -118,7 +121,7 @@
 /obj/machinery/disposal/proc/stuff_mob_in(mob/living/target, mob/living/user)
 	if(!iscarbon(user) && !user.ventcrawler) //only carbon and ventcrawlers can climb into disposal by themselves.
 		return
-	if(!istype(user.loc, /turf/)) //No magically doing it from inside closets
+	if(!isturf(user.loc)) //No magically doing it from inside closets
 		return
 	if(target.buckled || target.has_buckled_mobs())
 		return
@@ -146,16 +149,12 @@
 			target.LAssailant = user
 		update_icon()
 
-// can breath normally in the disposal
-/obj/machinery/disposal/alter_health()
-	return get_turf(src)
-
 /obj/machinery/disposal/relaymove(mob/user)
 	attempt_escape(user)
 
 // resist to escape the bin
-/obj/machinery/disposal/container_resist()
-	attempt_escape(usr)
+/obj/machinery/disposal/container_resist(mob/living/user)
+	attempt_escape(user)
 
 /obj/machinery/disposal/proc/attempt_escape(mob/user)
 	if(src.flushing)
@@ -170,7 +169,6 @@
 	user.reset_perspective(null)
 	update_icon()
 	return
-
 
 // monkeys and xenos can only pull the flush lever
 /obj/machinery/disposal/attack_paw(mob/user)
@@ -188,20 +186,7 @@
 	if(user && user.loc == src)
 		usr << "<span class='warning'>You cannot reach the controls from inside!</span>"
 		return
-	/*
-	if(mode==-1)
-		usr << "\red The disposal units power is disabled."
-		return
-	*/
 	interact(user, 0)
-
-// hostile mob escape from disposals
-/obj/machinery/disposal/attack_animal(mob/living/simple_animal/M)
-	if(M.environment_smash)
-		M.do_attack_animation(src)
-		visible_message("<span class='danger'>[M.name] smashes \the [src] apart!</span>")
-		qdel(src)
-	return
 
 // eject the contents of the disposal unit
 /obj/machinery/disposal/proc/eject()
@@ -247,7 +232,6 @@
 	update_icon()	// update icon
 	return
 
-
 // called when holder is expelled from a disposal
 // should usually only occur if the pipe network is modified
 /obj/machinery/disposal/proc/expel(obj/structure/disposalholder/H)
@@ -265,14 +249,15 @@
 		H.vent_gas(loc)
 		qdel(H)
 
-/obj/machinery/disposal/Deconstruct()
-	if(stored)
-		var/turf/T = loc
-		stored.loc = T
-		src.transfer_fingerprints_to(stored)
-		stored.anchored = 0
-		stored.density = 1
-		stored.update_icon()
+/obj/machinery/disposal/deconstruct(disassembled = TRUE)
+	if(!(flags & NODECONSTRUCT))
+		if(stored)
+			var/turf/T = loc
+			stored.loc = T
+			src.transfer_fingerprints_to(stored)
+			stored.anchored = 0
+			stored.density = 1
+			stored.update_icon()
 	..()
 
 //How disposal handles getting a storage dump from a storage object
@@ -283,7 +268,6 @@
 				return
 		src_object.remove_from_storage(I, src)
 	return 1
-
 
 // Disposal bin
 // Holds items for disposal into pipe system
@@ -297,7 +281,7 @@
 	desc = "A pneumatic waste disposal unit."
 	icon_state = "disposal"
 
-	// attack by item places it in to disposal
+// attack by item places it in to disposal
 /obj/machinery/disposal/bin/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/storage/bag/trash))
 		var/obj/item/weapon/storage/bag/trash/T = I
@@ -309,73 +293,52 @@
 	else
 		return ..()
 
-// user interaction
-/obj/machinery/disposal/bin/interact(mob/user, ai=0)
-	src.add_fingerprint(user)
-	if(stat & BROKEN)
-		user.unset_machine()
-		return
-
-	var/dat = "<head><title>Waste Disposal Unit</title></head><body><TT><B>Waste Disposal Unit</B><HR>"
-
-	if(!ai)  // AI can't pull flush handle
-		if(flush)
-			dat += "Disposal handle: <A href='?src=\ref[src];handle=0'>Disengage</A> <B>Engaged</B>"
-		else
-			dat += "Disposal handle: <B>Disengaged</B> <A href='?src=\ref[src];handle=1'>Engage</A>"
-
-		dat += "<BR><HR><A href='?src=\ref[src];eject=1'>Eject contents</A><HR>"
-
-	if(mode <= 0)
-		dat += "Pump: <B>Off</B> <A href='?src=\ref[src];pump=1'>On</A><BR>"
-	else if(mode == 1)
-		dat += "Pump: <A href='?src=\ref[src];pump=0'>Off</A> <B>On</B> (pressurizing)<BR>"
-	else
-		dat += "Pump: <A href='?src=\ref[src];pump=0'>Off</A> <B>On</B> (idle)<BR>"
-
-	var/per = Clamp(100* air_contents.return_pressure() / (SEND_PRESSURE), 0, 100)
-
-	dat += "Pressure: [round(per, 1)]%<BR></body>"
-
-
-	user.set_machine(src)
-	user << browse(dat, "window=disposal;size=360x170")
-	onclose(user, "disposal")
-
 // handle machine interaction
 
-/obj/machinery/disposal/bin/Topic(href, href_list)
+/obj/machinery/disposal/bin/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
+									datum/tgui/master_ui = null, datum/ui_state/state = default_state)
+	if(stat & BROKEN)
+		return
+	if(user.loc == src)
+		user << "<span class='warning'>You cannot reach the controls from inside!</span>"
+		return
+	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+	if(!ui)
+		ui = new(user, src, ui_key, "disposal_unit", name, 300, 200, master_ui, state)
+		ui.open()
+
+/obj/machinery/disposal/bin/ui_data(mob/user)
+	var/list/data = list()
+	data["flush"] = flush
+	data["mode"] = mode
+	var/per = Clamp(100* air_contents.return_pressure() / (SEND_PRESSURE), 0, 100)
+	data["per"] = round(per, 1)
+	data["si"] = isAI(user)
+	return data
+
+/obj/machinery/disposal/bin/ui_act(action, params)
 	if(..())
 		return
-	if(usr.loc == src)
-		usr << "<span class='warning'>You cannot reach the controls from inside!</span>"
-		return
-
-	if(mode==-1 && !href_list["eject"]) // only allow ejecting if mode is -1
-		usr << "<span class='danger'>\The [src]'s power is disabled.</span>"
-		return
-	..()
-	usr.set_machine(src)
-
-	if(href_list["close"])
-		usr.unset_machine()
-		usr << browse(null, "window=disposal")
-		return
-
-	if(href_list["pump"])
-		if(text2num(href_list["pump"]))
-			mode = 1
-		else
+	switch(action)
+		if("handle-0")
+			flush = 0
+			update_icon()
+			. = TRUE
+		if("handle-1")
+			flush = 1
+			update_icon()
+			. = TRUE
+		if("pump-0")
 			mode = 0
-		update_icon()
-
-	if(href_list["handle"])
-		flush = text2num(href_list["handle"])
-		update_icon()
-
-	if(href_list["eject"])
-		eject()
-	return
+			update_icon()
+			. = TRUE
+		if("pump-1")
+			mode = 1
+			update_icon()
+			. = TRUE
+		if("eject")
+			eject()
+			. = TRUE
 
 /obj/machinery/disposal/bin/CanPass(atom/movable/mover, turf/target, height=0)
 	if (istype(mover,/obj/item) && mover.throwing)
@@ -422,7 +385,6 @@
 		add_overlay(image('icons/obj/atmospherics/pipes/disposal.dmi', "dispover-charge"))
 	else if(mode == 2)
 		add_overlay(image('icons/obj/atmospherics/pipes/disposal.dmi', "dispover-ready"))
-
 
 // timed process
 // charge the gas reservoir and perform flush if ready
@@ -480,7 +442,6 @@
 	if(user.stat == DEAD || !(user.sight & (SEEOBJS|SEEMOBS)))
 		user.overlay_fullscreen("remote_view", /obj/screen/fullscreen/impaired, 2)
 
-
 //Delivery Chute
 
 /obj/machinery/disposal/deliveryChute
@@ -516,7 +477,7 @@
 		if(WEST)
 			if(AM.loc.x != loc.x-1) return
 
-	if(istype(AM, /obj))
+	if(isobj(AM))
 		var/obj/O = AM
 		O.loc = src
 	else if(istype(AM, /mob))
@@ -541,4 +502,3 @@
 
 /obj/machinery/disposal/deliveryChute/newHolderDestination(obj/structure/disposalholder/H)
 	H.destinationTag = 1
-

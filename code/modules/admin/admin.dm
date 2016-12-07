@@ -34,7 +34,7 @@ var/global/BSACooldown = 0
 		body += " played by <b>[M.client]</b> "
 		body += "\[<A href='?_src_=holder;editrights=rank;ckey=[M.ckey]'>[M.client.holder ? M.client.holder.rank : "Player"]</A>\]"
 
-	if(istype(M, /mob/new_player))
+	if(isnewplayer(M))
 		body += " <B>Hasn't Entered Game</B> "
 	else
 		body += " \[<A href='?_src_=holder;revive=\ref[M]'>Heal</A>\] "
@@ -91,7 +91,7 @@ var/global/BSACooldown = 0
 	body += "<A href='?_src_=holder;subtlemessage=\ref[M]'>Subtle message</A>"
 
 	if (M.client)
-		if(!istype(M, /mob/new_player))
+		if(!isnewplayer(M))
 			body += "<br><br>"
 			body += "<b>Transformation:</b>"
 			body += "<br>"
@@ -633,7 +633,8 @@ var/global/BSACooldown = 0
 		var/turf/T = get_turf(usr.loc)
 		T.ChangeTurf(chosen)
 	else
-		new chosen(usr.loc)
+		var/atom/A = new chosen(usr.loc)
+		A.admin_spawned = TRUE
 
 	log_admin("[key_name(usr)] spawned [chosen] at ([usr.x],[usr.y],[usr.z])")
 	feedback_add_details("admin_verb","SA") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
@@ -687,7 +688,7 @@ var/global/BSACooldown = 0
 		ai_number++
 		if(isAI(S))
 			usr << "<b>AI [key_name(S, usr)]'s laws:</b>"
-		else if(isrobot(S))
+		else if(iscyborg(S))
 			var/mob/living/silicon/robot/R = S
 			usr << "<b>CYBORG [key_name(S, usr)] [R.connected_ai?"(Slaved to: [R.connected_ai])":"(Independant)"]: laws:</b>"
 		else if (ispAI(S))
@@ -702,13 +703,19 @@ var/global/BSACooldown = 0
 	if(!ai_number)
 		usr << "<b>No AIs located</b>" //Just so you know the thing is actually working and not just ignoring you.
 
-/datum/admins/proc/output_devil_info()
+/datum/admins/proc/output_all_devil_info()
 	var/devil_number = 0
 	for(var/D in ticker.mode.devils)
 		devil_number++
 		usr << "Devil #[devil_number]:<br><br>" + ticker.mode.printdevilinfo(D)
 	if(!devil_number)
 		usr << "<b>No Devils located</b>" //Just so you know the thing is actually working and not just ignoring you.
+
+/datum/admins/proc/output_devil_info(mob/living/M)
+	if(istype(M) && M.mind && M.mind.devilinfo)
+		usr << ticker.mode.printdevilinfo(M.mind)
+	else
+		usr << "<b>[M] is not a devil."
 
 /datum/admins/proc/manage_free_slots()
 	if(!check_rights())
@@ -766,13 +773,13 @@ var/global/BSACooldown = 0
 /proc/kick_clients_in_lobby(message, kick_only_afk = 0)
 	var/list/kicked_client_names = list()
 	for(var/client/C in clients)
-		if(istype(C.mob, /mob/new_player))
-			if(kick_only_afk && !C.is_afk())	//Ignore clients who are not afk
+		if(isnewplayer(C.mob))
+			if(kick_only_afk && !C.is_afk()) //Ignore clients who are not afk
 				continue
 			if(message)
 				C << message
 			kicked_client_names.Add("[C.ckey]")
-			del(C)
+			qdel(C)
 	return kicked_client_names
 
 //returns 1 to let the dragdrop code know we are trapping this event

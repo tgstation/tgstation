@@ -12,8 +12,9 @@
 	heat_protection = CHEST|GROIN|LEGS|ARMS
 	hooded = 1
 	hoodtype = /obj/item/clothing/head/explorer
-	armor = list(melee = 30, bullet = 20, laser = 20, energy = 20, bomb = 50, bio = 100, rad = 50)
+	armor = list(melee = 30, bullet = 20, laser = 20, energy = 20, bomb = 50, bio = 100, rad = 50, fire = 50, acid = 50)
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/internals, /obj/item/weapon/resonator, /obj/item/device/mining_scanner, /obj/item/device/t_scanner/adv_mining_scanner, /obj/item/weapon/gun/energy/kinetic_accelerator, /obj/item/weapon/pickaxe)
+	resistance_flags = FIRE_PROOF
 
 /obj/item/clothing/head/explorer
 	name = "explorer hood"
@@ -24,7 +25,8 @@
 	flags_inv = HIDEHAIR|HIDEFACE|HIDEEARS
 	min_cold_protection_temperature = FIRE_HELM_MIN_TEMP_PROTECT
 	max_heat_protection_temperature = FIRE_HELM_MAX_TEMP_PROTECT
-	armor = list(melee = 30, bullet = 20, laser = 20, energy = 20, bomb = 50, bio = 100, rad = 50)
+	armor = list(melee = 30, bullet = 20, laser = 20, energy = 20, bomb = 50, bio = 100, rad = 50, fire = 50, acid = 50)
+	resistance_flags = FIRE_PROOF
 
 /obj/item/clothing/mask/gas/explorer
 	name = "explorer gas mask"
@@ -34,14 +36,15 @@
 	visor_flags_inv = HIDEFACIALHAIR
 	visor_flags_cover = MASKCOVERSMOUTH
 	actions_types = list(/datum/action/item_action/adjust)
-	armor = list(melee = 10, bullet = 5, laser = 5, energy = 5, bomb = 0, bio = 50, rad = 0)
+	armor = list(melee = 10, bullet = 5, laser = 5, energy = 5, bomb = 0, bio = 50, rad = 0, fire = 20, acid = 40)
+	resistance_flags = FIRE_PROOF
 
 /obj/item/clothing/mask/gas/explorer/attack_self(mob/user)
 	adjustmask(user)
 
 /obj/item/clothing/mask/gas/explorer/adjustmask(user)
 	..()
-	w_class = mask_adjusted ? 3 : 2
+	w_class = mask_adjusted ? WEIGHT_CLASS_NORMAL : WEIGHT_CLASS_SMALL
 
 /obj/item/clothing/mask/gas/explorer/folded/New()
 	..()
@@ -59,7 +62,7 @@
 	icon_state = "Jaunter"
 	item_state = "electronic"
 	throwforce = 0
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	throw_speed = 3
 	throw_range = 5
 	origin_tech = "bluespace=2"
@@ -81,7 +84,7 @@
 	var/list/destinations = list()
 
 	if(isgolem(user))
-		for(var/obj/item/device/radio/beacon/B in world)
+		for(var/obj/item/device/radio/beacon/B in teleportbeacons)
 			var/turf/T = get_turf(B)
 			if(istype(T.loc, /area/ruin/powered/golem_ship))
 				destinations += B
@@ -90,7 +93,7 @@
 	if(destinations.len)
 		return destinations
 
-	for(var/obj/item/device/radio/beacon/B in world)
+	for(var/obj/item/device/radio/beacon/B in teleportbeacons)
 		var/turf/T = get_turf(B)
 		if(T.z == ZLEVEL_STATION)
 			destinations += B
@@ -164,13 +167,13 @@
 	icon_state = "resonator"
 	item_state = "resonator"
 	desc = "A handheld device that creates small fields of energy that resonate until they detonate, crushing rock. It can also be activated without a target to create a field at the user's location, to act as a delayed time trap. It's more effective in a vacuum."
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 	force = 15
 	throwforce = 10
-	var/cooldown = 0
-	var/fieldsactive = 0
 	var/burst_time = 30
 	var/fieldlimit = 4
+	var/list/fields = list()
+	var/quick_burst_mod = 0.8
 	origin_tech = "magnets=3;engineering=3"
 
 /obj/item/weapon/resonator/upgraded
@@ -180,17 +183,19 @@
 	item_state = "resonator_u"
 	origin_tech = "materials=4;powerstorage=3;engineering=3;magnets=3"
 	fieldlimit = 6
+	quick_burst_mod = 1
 
 /obj/item/weapon/resonator/proc/CreateResonance(target, creator)
 	var/turf/T = get_turf(target)
-	if(locate(/obj/effect/resonance) in T)
+	var/obj/effect/resonance/R = locate(/obj/effect/resonance) in T
+	if(R)
+		R.resonance_damage *= quick_burst_mod
+		R.burst(T)
 		return
-	if(fieldsactive < fieldlimit)
+	if(fields.len < fieldlimit)
 		playsound(src,'sound/weapons/resonator_fire.ogg',50,1)
-		new /obj/effect/resonance(T, creator, burst_time)
-		fieldsactive++
-		spawn(burst_time)
-			fieldsactive--
+		var/obj/effect/resonance/RE = new /obj/effect/resonance(T, creator, burst_time, src)
+		fields += RE
 
 /obj/item/weapon/resonator/attack_self(mob/user)
 	if(burst_time == 50)
@@ -202,7 +207,9 @@
 
 /obj/item/weapon/resonator/afterattack(atom/target, mob/user, proximity_flag)
 	if(proximity_flag)
-		if(!check_allowed_items(target, 1)) return
+		if(!check_allowed_items(target, 1))
+			return
+		user.changeNext_move(CLICK_CD_MELEE)
 		CreateResonance(target, user)
 
 /obj/effect/resonance
@@ -211,37 +218,42 @@
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "shield1"
 	layer = ABOVE_ALL_MOB_LAYER
+	anchored = TRUE
 	mouse_opacity = 0
 	var/resonance_damage = 20
+	var/creator
+	var/obj/item/weapon/resonator/res
 
-/obj/effect/resonance/New(loc, var/creator = null, var/timetoburst)
+/obj/effect/resonance/New(loc, set_creator, timetoburst, set_resonator)
+	..()
+	creator = set_creator
+	res = set_resonator
 	var/turf/proj_turf = get_turf(src)
 	if(!istype(proj_turf))
 		return
-	if(istype(proj_turf, /turf/closed/mineral))
-		var/turf/closed/mineral/M = proj_turf
-		spawn(timetoburst)
-			playsound(src,'sound/weapons/resonator_blast.ogg',50,1)
-			M.gets_drilled(creator)
-			qdel(src)
-	else
-		var/datum/gas_mixture/environment = proj_turf.return_air()
-		var/pressure = environment.return_pressure()
-		if(pressure < 50)
-			name = "strong resonance field"
-			resonance_damage = 60
-		spawn(timetoburst)
-			playsound(src,'sound/weapons/resonator_blast.ogg',50,1)
-			if(creator)
-				for(var/mob/living/L in src.loc)
-					add_logs(creator, L, "used a resonator field on", "resonator")
-					L << "<span class='danger'>The [src.name] ruptured with you in it!</span>"
-					L.adjustBruteLoss(resonance_damage)
-			else
-				for(var/mob/living/L in src.loc)
-					L << "<span class='danger'>The [src.name] ruptured with you in it!</span>"
-					L.adjustBruteLoss(resonance_damage)
-			qdel(src)
+	var/datum/gas_mixture/environment = proj_turf.return_air()
+	var/pressure = environment.return_pressure()
+	if(pressure < 50)
+		name = "strong resonance field"
+		resonance_damage = 60
+	addtimer(src, "burst", timetoburst, TIMER_NORMAL, proj_turf)
+
+/obj/effect/resonance/Destroy()
+	if(res)
+		res.fields -= src
+	return ..()
+
+/obj/effect/resonance/proc/burst(turf/T)
+	playsound(src,'sound/weapons/resonator_blast.ogg',50,1)
+	if(ismineralturf(T))
+		var/turf/closed/mineral/M = T
+		M.gets_drilled(creator)
+	for(var/mob/living/L in T)
+		if(creator)
+			add_logs(creator, L, "used a resonator field on", "resonator")
+		L << "<span class='danger'>The [src.name] ruptured with you in it!</span>"
+		L.apply_damage(resonance_damage, BRUTE)
+	qdel(src)
 
 /**********************Facehugger toy**********************/
 
@@ -265,7 +277,7 @@
 	icon_state = "lazarus_hypo"
 	item_state = "hypo"
 	throwforce = 0
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	throw_speed = 3
 	throw_range = 5
 	var/loaded = 1
@@ -276,7 +288,7 @@
 /obj/item/weapon/lazarus_injector/afterattack(atom/target, mob/user, proximity_flag)
 	if(!loaded)
 		return
-	if(istype(target, /mob/living) && proximity_flag)
+	if(isliving(target) && proximity_flag)
 		if(istype(target, /mob/living/simple_animal))
 			var/mob/living/simple_animal/M = target
 			if(M.sentience_type != revive_type)
@@ -285,7 +297,7 @@
 			if(M.stat == DEAD)
 				M.faction = list("neutral")
 				M.revive(full_heal = 1, admin_revive = 1)
-				if(istype(target, /mob/living/simple_animal/hostile))
+				if(ishostile(target))
 					var/mob/living/simple_animal/hostile/H = M
 					if(malfunctioning)
 						H.faction |= list("lazarus", "\ref[user]")
@@ -326,7 +338,7 @@
 	name = "manual mining scanner"
 	icon_state = "mining1"
 	item_state = "analyzer"
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
 	var/cooldown = 0
@@ -358,7 +370,7 @@
 	name = "advanced automatic mining scanner"
 	icon_state = "mining0"
 	item_state = "analyzer"
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
 	var/cooldown = 35
@@ -408,6 +420,7 @@
 				for(var/turf/closed/mineral/M in minerals)
 					var/turf/F = get_turf(M)
 					var/image/I = image('icons/turf/smoothrocks.dmi', loc = F, icon_state = M.scan_state, layer = FLASH_LAYER)
+					I.plane = FULLSCREEN_PLANE
 					C.images += I
 					spawn(30)
 						if(C)
@@ -441,28 +454,6 @@
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "xeno_warning"
 
-/******************Hardsuit Jetpack Upgrade*******************/
-/obj/item/hardsuit_jetpack
-	name = "hardsuit jetpack upgrade"
-	icon_state = "jetpack_upgrade"
-	desc = "A modular, compact set of thrusters designed to integrate with a hardsuit. It is fueled by a tank inserted into the suit's storage compartment."
-	origin_tech = "materials=4;magnets=4;engineering=5"
-	// Same as jetpack implant minus biotech, makes sense.
-
-
-/obj/item/hardsuit_jetpack/afterattack(var/obj/item/clothing/suit/space/hardsuit/S, mob/user)
-	..()
-	if(!istype(S))
-		user << "<span class='warning'>This upgrade can only be applied to a hardsuit.</span>"
-	else if(S.jetpack)
-		user << "<span class='warning'>[S] already has a jetpack installed.</span>"
-	else if(S == user.get_item_by_slot(slot_wear_suit)) //Make sure the player is not wearing the suit before applying the upgrade.
-		user << "<span class='warning'>You cannot install the upgrade to [S] while wearing it.</span>"
-	else
-		S.jetpack = new /obj/item/weapon/tank/jetpack/suit(S)
-		user << "<span class='notice'>You successfully install the jetpack into [S].</span>"
-		qdel(src)
-
 /*********************Hivelord stabilizer****************/
 
 /obj/item/weapon/hivelordstabilizer
@@ -470,7 +461,7 @@
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle19"
 	desc = "Inject certain types of monster organs with this stabilizer to preserve their healing powers indefinitely."
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 	origin_tech = "biotech=3"
 
 /obj/item/weapon/hivelordstabilizer/afterattack(obj/item/organ/M, mob/user)
@@ -482,3 +473,111 @@
 	C.preserved()
 	user << "<span class='notice'>You inject the [M] with the stabilizer. It will no longer go inert.</span>"
 	qdel(src)
+
+/*********************Mining Hammer****************/
+/obj/item/weapon/twohanded/required/mining_hammer
+	icon = 'icons/obj/mining.dmi'
+	icon_state = "mining_hammer1"
+	item_state = "mining_hammer1"
+	name = "proto-kinetic crusher"
+	desc = "An early design of the proto-kinetic accelerator, it is little more than an combination of various mining tools cobbled together, forming a high-tech club. \
+	While it is an effective mining tool, it did little to aid any but the most skilled and/or suicidal miners against local fauna.\
+	\n<span class='info'>Mark a mob with the destabilizing force, then hit them in melee to activate it for extra damage. Extra damage if backstabbed in this fashion. \
+	This weapon is only particularly effective against large creatures.</span>"
+	force = 20 //As much as a bone spear, but this is significantly more annoying to carry around due to requiring the use of both hands at all times
+	w_class = WEIGHT_CLASS_BULKY
+	slot_flags = SLOT_BACK
+	force_unwielded = 20 //It's never not wielded so these are the same
+	force_wielded = 20
+	throwforce = 5
+	throw_speed = 4
+	luminosity = 4
+	armour_penetration = 10
+	materials = list(MAT_METAL=1150, MAT_GLASS=2075)
+	hitsound = 'sound/weapons/bladeslice.ogg'
+	attack_verb = list("smashed", "crushed", "cleaved", "chopped", "pulped")
+	sharpness = IS_SHARP
+	var/charged = 1
+	var/charge_time = 16
+	var/atom/mark = null
+	var/marked_image = null
+
+/obj/item/projectile/destabilizer
+	name = "destabilizing force"
+	icon_state = "pulse1"
+	damage = 0 //We're just here to mark people. This is still a melee weapon.
+	damage_type = BRUTE
+	flag = "bomb"
+	range = 6
+	var/obj/item/weapon/twohanded/required/mining_hammer/hammer_synced =  null
+	log_override = TRUE
+
+/obj/item/projectile/destabilizer/on_hit(atom/target, blocked = 0)
+	if(hammer_synced)
+		if(hammer_synced.mark == target)
+			return ..()
+		if(isliving(target))
+			if(hammer_synced.mark && hammer_synced.marked_image)
+				hammer_synced.mark.underlays -= hammer_synced.marked_image
+				hammer_synced.marked_image = null
+			var/mob/living/L = target
+			if(L.mob_size >= MOB_SIZE_LARGE)
+				hammer_synced.mark = L
+				var/image/I = image('icons/effects/effects.dmi', loc = L, icon_state = "shield2",pixel_y = (-L.pixel_y),pixel_x = (-L.pixel_x))
+				L.underlays += I
+				hammer_synced.marked_image = I
+		var/target_turf = get_turf(target)
+		if(ismineralturf(target_turf))
+			var/turf/closed/mineral/M = target_turf
+			PoolOrNew(/obj/effect/overlay/temp/kinetic_blast, M)
+			M.gets_drilled(firer)
+	..()
+
+/obj/item/weapon/twohanded/required/mining_hammer/afterattack(atom/target, mob/user, proximity_flag)
+	if(!proximity_flag && charged)//Mark a target, or mine a tile.
+		var/turf/proj_turf = get_turf(src)
+		if(!isturf(proj_turf))
+			return
+		var/datum/gas_mixture/environment = proj_turf.return_air()
+		var/pressure = environment.return_pressure()
+		if(pressure > 50)
+			playsound(user, 'sound/weapons/empty.ogg', 100, 1)
+			return
+		var/obj/item/projectile/destabilizer/D = new /obj/item/projectile/destabilizer(user.loc)
+		D.preparePixelProjectile(target,get_turf(target), user)
+		D.hammer_synced = src
+		playsound(user, 'sound/weapons/plasma_cutter.ogg', 100, 1)
+		D.fire()
+		charged = 0
+		icon_state = "mining_hammer1_uncharged"
+		addtimer(src, "Recharge", charge_time)
+		return
+	if(proximity_flag && target == mark && isliving(target))
+		var/mob/living/L = target
+		PoolOrNew(/obj/effect/overlay/temp/kinetic_blast, get_turf(L))
+		mark = 0
+		if(L.mob_size >= MOB_SIZE_LARGE)
+			L.underlays -= marked_image
+			qdel(marked_image)
+			marked_image = null
+			var/backstab = check_target_facings(user, L)
+			var/def_check = L.getarmor(type = "bomb")
+			if(backstab == FACING_INIT_FACING_TARGET_TARGET_FACING_PERPENDICULAR || backstab == FACING_SAME_DIR)
+				L.apply_damage(80, BRUTE, blocked = def_check)
+				playsound(user, 'sound/weapons/Kenetic_accel.ogg', 100, 1) //Seriously who spelled it wrong
+			else
+				L.apply_damage(50, BRUTE, blocked = def_check)
+
+/obj/item/weapon/twohanded/required/mining_hammer/proc/Recharge()
+	if(!charged)
+		charged = 1
+		icon_state = "mining_hammer1"
+		playsound(src.loc, 'sound/weapons/kenetic_reload.ogg', 60, 1)
+
+/obj/item/weapon/twohanded/required/mining_hammer/pickup(mob/user)
+	..()
+	user.AddLuminosity(luminosity)
+
+/obj/item/weapon/twohanded/required/mining_hammer/dropped(mob/user)
+	..()
+	user.AddLuminosity(-luminosity)

@@ -31,6 +31,7 @@ var/list/image/ghost_images_simple = list() //this is a list of all ghost images
 	var/image/ghostimage_simple = null //this mob with the simple white ghost sprite
 	var/ghostvision = 1 //is the ghost able to see things humans can't?
 	var/seedarkness = 1
+	var/mob/observetarget = null	//The target mob that the ghost is observing. Used as a reference in logout()
 	var/ghost_hud_enabled = 1 //did this ghost disable the on-screen HUD?
 	var/data_huds_on = 0 //Are data HUDs currently enabled?
 	var/list/datahuds = list(DATA_HUD_SECURITY_ADVANCED, DATA_HUD_MEDICAL_ADVANCED, DATA_HUD_DIAGNOSTIC) //list of data HUDs shown to ghosts.
@@ -57,10 +58,10 @@ var/list/image/ghost_images_simple = list() //this is a list of all ghost images
 
 /mob/dead/observer/New(mob/body)
 	verbs += /mob/dead/observer/proc/dead_tele
-	
+
 	if(global.cross_allowed)
 		verbs += /mob/dead/observer/proc/server_hop
-	
+
 	ghostimage = image(src.icon,src,src.icon_state)
 	if(icon_state in ghost_forms_with_directions_list)
 		ghostimage_default = image(src.icon,src,src.icon_state + "_nodir")
@@ -89,10 +90,10 @@ var/list/image/ghost_images_simple = list() //this is a list of all ghost images
 		mind = body.mind	//we don't transfer the mind but we keep a reference to it.
 		if(ishuman(body))
 			var/mob/living/carbon/human/body_human = body
-			if(HAIR in body_human.dna.species.specflags)
+			if(HAIR in body_human.dna.species.species_traits)
 				hair_style = body_human.hair_style
 				hair_color = brighten_color(body_human.hair_color)
-			if(FACEHAIR in body_human.dna.species.specflags)
+			if(FACEHAIR in body_human.dna.species.species_traits)
 				facial_hair_style = body_human.facial_hair_style
 				facial_hair_color = brighten_color(body_human.facial_hair_color)
 
@@ -117,11 +118,13 @@ var/list/image/ghost_images_simple = list() //this is a list of all ghost images
 	var/old_color = color
 	color = "#960000"
 	animate(src, color = old_color, time = 10)
+	addtimer(src, "update_atom_colour", 10)
 
 /mob/dead/observer/ratvar_act()
 	var/old_color = color
 	color = "#FAE48C"
 	animate(src, color = old_color, time = 10)
+	addtimer(src, "update_atom_colour", 10)
 
 /mob/dead/observer/Destroy()
 	ghost_images_full -= ghostimage
@@ -256,11 +259,6 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	set name = "Ghost"
 	set desc = "Relinquish your life and enter the land of the dead."
 
-	if(mental_dominator)
-		src << "<span class='warning'>This body's force of will is too strong! You can't break it enough to force them into a catatonic state.</span>"
-		if(mind_control_holder)
-			mind_control_holder << "<span class='userdanger'>Through tremendous force of will, you stop a catatonia attempt!</span>"
-		return 0
 	if(stat != DEAD)
 		succumb()
 	if(stat == DEAD)
@@ -302,11 +300,14 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	..()
 	if(statpanel("Status"))
 		stat(null, "Station Time: [worldtime2text()]")
-		if(ticker)
-			if(ticker.mode)
-				for(var/datum/gang/G in ticker.mode.gangs)
-					if(G.is_dominating)
-						stat(null, "[G.name] Gang Takeover: [max(G.domination_time_remaining(), 0)]")
+		if(ticker && ticker.mode)
+			for(var/datum/gang/G in ticker.mode.gangs)
+				if(G.is_dominating)
+					stat(null, "[G.name] Gang Takeover: [max(G.domination_time_remaining(), 0)]")
+			if(istype(ticker.mode, /datum/game_mode/blob))
+				var/datum/game_mode/blob/B = ticker.mode
+				if(B.message_sent)
+					stat(null, "Blobs to Blob Win: [blobs_legit.len]/[B.blobwincount]")
 
 /mob/dead/observer/verb/reenter_corpse()
 	set category = "Ghost"
@@ -336,9 +337,12 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 					A.icon = ui_style2icon(client.prefs.UI_style)
 				A.desc = message
 				var/old_layer = source.layer
+				var/old_plane = source.plane
 				source.layer = FLOAT_LAYER
+				source.plane = FLOAT_PLANE
 				A.add_overlay(source)
 				source.layer = old_layer
+				source.plane = old_plane
 	src << "<span class='ghostalert'><a href=?src=\ref[src];reenter=1>(Click to re-enter)</a></span>"
 	if(sound)
 		src << sound(sound)
@@ -347,7 +351,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	set category = "Ghost"
 	set name = "Teleport"
 	set desc= "Teleport to a location"
-	if(!istype(usr, /mob/dead/observer))
+	if(!isobserver(usr))
 		usr << "Not when you're not dead!"
 		return
 	var/A
@@ -385,7 +389,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	var/orbitsize = (I.Width()+I.Height())*0.5
 	orbitsize -= (orbitsize/world.icon_size)*(world.icon_size*0.25)
 
-	if(orbiting != target)
+	if(orbiting && orbiting.orbiting != target)
 		src << "<span class='notice'>Now orbiting [target].</span>"
 
 	var/rot_seg
@@ -405,20 +409,21 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	orbit(target,orbitsize, FALSE, 20, rot_seg)
 
 /mob/dead/observer/orbit()
-	setDir(2 )//reset dir so the right directional sprites show up
+	setDir(2)//reset dir so the right directional sprites show up
+	..()
+
+/mob/dead/observer/stop_orbit()
 	..()
 	//restart our floating animation after orbit is done.
-	sleep 2  //orbit sets up a 2ds animation when it finishes, so we wait for that to end
-	if (!orbiting) //make sure another orbit hasn't started
-		pixel_y = 0
-		animate(src, pixel_y = 2, time = 10, loop = -1)
+	pixel_y = 0
+	animate(src, pixel_y = 2, time = 10, loop = -1)
 
 /mob/dead/observer/verb/jumptomob() //Moves the ghost instead of just changing the ghosts's eye -Nodrak
 	set category = "Ghost"
 	set name = "Jump to Mob"
 	set desc = "Teleport to a mob"
 
-	if(istype(usr, /mob/dead/observer)) //Make sure they're an observer!
+	if(isobserver(usr)) //Make sure they're an observer!
 
 
 		var/list/dest = list() //List of possible destinations (mobs)
@@ -543,7 +548,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	if(!target)
 		return 0
 
-	if(istype (target, /mob/living/simple_animal/hostile/megafauna))
+	if(ismegafauna(target))
 		src << "<span class='warning'>This creature is too powerful for you to possess!</span>"
 		return 0
 
@@ -555,6 +560,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		return 0
 
 	target.key = key
+	target.faction = list("neutral")
 	return 1
 
 /mob/dead/observer/proc/server_hop()
@@ -563,7 +569,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	set desc= "Jump to the other server"
 	if (alert(src, "Jump to server running at [global.cross_address]?", "Server Hop", "Yes", "No") != "Yes")
 		return 0
-	if (client && global.cross_allowed) 
+	if (client && global.cross_allowed)
 		src << "<span class='notice'>Sending you to [global.cross_address].</span>"
 		winset(src, null, "command=.options") //other wise the user never knows if byond is downloading resources
 		client << link(global.cross_address)
@@ -656,10 +662,10 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	if(client.prefs.be_random_body)
 		client.prefs.random_character(gender)
 
-	if(HAIR in client.prefs.pref_species.specflags)
+	if(HAIR in client.prefs.pref_species.species_traits)
 		hair_style = client.prefs.hair_style
 		hair_color = brighten_color(client.prefs.hair_color)
-	if(FACEHAIR in client.prefs.pref_species.specflags)
+	if(FACEHAIR in client.prefs.pref_species.species_traits)
 		facial_hair_style = client.prefs.facial_hair_style
 		facial_hair_color = brighten_color(client.prefs.facial_hair_color)
 
@@ -673,7 +679,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 /mob/dead/observer/is_literate()
 	return 1
 
-/mob/dead/observer/on_varedit(var_name)
+/mob/dead/observer/vv_edit_var(var_name, var_value)
 	. = ..()
 	switch(var_name)
 		if("icon")
@@ -691,3 +697,42 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 			else
 				verbs -= /mob/dead/observer/verb/boo
 				verbs -= /mob/dead/observer/verb/possess
+
+/mob/dead/observer/reset_perspective(atom/A)
+	if(client)
+		if(ismob(client.eye) && (client.eye != src))
+			var/mob/target = client.eye
+			observetarget = null
+			if(target.observers)
+				target.observers -= src
+				UNSETEMPTY(target.observers)
+	if(..())
+		if(hud_used)
+			client.screen = list()
+			hud_used.show_hud(hud_used.hud_version)
+
+/mob/dead/observer/verb/observe()
+	set name = "Observe"
+	set category = "OOC"
+
+	var/list/creatures = getpois()
+
+	reset_perspective(null)
+
+	var/eye_name = null
+
+	eye_name = input("Please, select a player!", "Observe", null, null) as null|anything in creatures
+
+	if (!eye_name)
+		return
+
+	var/mob/mob_eye = creatures[eye_name]
+	//Istype so we filter out points of interest that are not mobs
+	if(client && mob_eye && istype(mob_eye))
+		client.eye = mob_eye
+		client.screen = list()
+		if(mob_eye.hud_used)
+			LAZYINITLIST(mob_eye.observers)
+			mob_eye.observers |= src
+			mob_eye.hud_used.show_hud(1,src)
+			observetarget = mob_eye

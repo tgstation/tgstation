@@ -24,7 +24,7 @@
 	var/use_overlays = FALSE
 
 	item_color = "red"
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 	attack_verb = list("attacked", "coloured")
 	var/paint_color = "#FF0000" //RGB
 
@@ -69,7 +69,7 @@
 	var/post_noise = FALSE
 
 /obj/item/toy/crayon/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is jamming the [src.name] up \his nose and into \his brain. It looks like \he's trying to commit suicide.</span>")
+	user.visible_message("<span class='suicide'>[user] is jamming [src] up [user.p_their()] nose and into [user.p_their()] brain. It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return (BRUTELOSS|OXYLOSS)
 
 /obj/item/toy/crayon/New()
@@ -129,22 +129,22 @@
 /obj/item/toy/crayon/proc/check_empty(mob/user)
 	// When eating a crayon, check_empty() can be called twice producing
 	// two messages unless we check for being deleted first
-	if(!qdeleted(src))
-		. = TRUE
+	if(qdeleted(src))
+		return TRUE
 
 	. = FALSE
 	// -1 is unlimited charges
 	if(charges == -1)
 		. = FALSE
 	else if(!charges_left)
-		user << "<span class='warning'>There is no more of [src.name] \
+		user << "<span class='warning'>There is no more of \the [src.name] \
 			left!</span>"
 		if(self_contained)
 			qdel(src)
 		. = TRUE
 
 /obj/item/toy/crayon/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = hands_state)
-	// god bless tgui and all of its arguments
+	// tgui is a plague upon this codebase
 
 	SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
@@ -241,7 +241,7 @@
 	update_icon()
 
 /obj/item/toy/crayon/proc/crayon_text_strip(text)
-	var/list/base = char_split(lowertext(text))
+	var/list/base = string2charlist(lowertext(text))
 	var/list/out = list()
 	for(var/a in base)
 		if(a in (letters|numerals))
@@ -337,6 +337,7 @@
 			if(!can_claim_for_gang(user, target))
 				return
 			tag_for_gang(user, target)
+			affected_turfs += target
 		else
 			switch(paint_mode)
 				if(PAINT_NORMAL)
@@ -379,6 +380,8 @@
 	if(edible && (M == user))
 		user << "You take a bite of the [src.name]. Delicious!"
 		var/eaten = use_charges(5)
+		if(check_empty(user)) //Prevents divsion by zero
+			return
 		var/fraction = min(eaten / reagents.total_volume, 1)
 		reagents.reaction(M, INGEST, fraction * volume_multiplier)
 		reagents.trans_to(M, eaten, volume_multiplier)
@@ -466,6 +469,11 @@
 	item_color = "purple"
 	reagent_contents = list("nutriment" = 1, "purplecrayonpowder" = 1)
 
+/obj/item/toy/crayon/black
+	icon_state = "crayonblack"
+	paint_color = "#1C1C1C" //Not completely black because total black looks bad. So Mostly Black.
+	item_color = "black"
+
 /obj/item/toy/crayon/white
 	icon_state = "crayonwhite"
 	paint_color = "#FFFFFF"
@@ -501,8 +509,8 @@
 	desc = "A box of crayons for all your rune drawing needs."
 	icon = 'icons/obj/crayons.dmi'
 	icon_state = "crayonbox"
-	w_class = 2
-	storage_slots = 6
+	w_class = WEIGHT_CLASS_SMALL
+	storage_slots = 7
 	can_hold = list(
 		/obj/item/toy/crayon
 	)
@@ -515,6 +523,7 @@
 	new /obj/item/toy/crayon/green(src)
 	new /obj/item/toy/crayon/blue(src)
 	new /obj/item/toy/crayon/purple(src)
+	new /obj/item/toy/crayon/black(src)
 	update_icon()
 
 /obj/item/weapon/storage/crayons/update_icon()
@@ -566,15 +575,11 @@
 /obj/item/toy/crayon/spraycan/suicide_act(mob/user)
 	var/mob/living/carbon/human/H = user
 	if(is_capped || !actually_paints)
-		user.visible_message("<span class='suicide'>[user] shakes up the \
-			[src] with a rattle and lifts it to their mouth, but nothing \
-			happens!</span>")
+		user.visible_message("<span class='suicide'>[user] shakes up [src] with a rattle and lifts it to [user.p_their()] mouth, but nothing happens!</span>")
 		user.say("MEDIOCRE!!")
 		return SHAME
 	else
-		user.visible_message("<span class='suicide'>[user] shakes up the \
-			[src] with a rattle and lifts it to their mouth, spraying \
-			paint across their teeth!</span>")
+		user.visible_message("<span class='suicide'>[user] shakes up [src] with a rattle and lifts it to [user.p_their()] mouth, spraying paint across [user.p_their()] teeth!</span>")
 		user.say("WITNESS ME!!")
 		if(pre_noise || post_noise)
 			playsound(loc, 'sound/effects/spray.ogg', 5, 1, 5)
@@ -633,7 +638,7 @@
 		if(C.client)
 			C.blur_eyes(3)
 			C.blind_eyes(1)
-		if(C.check_eye_prot() <= 0) // no eye protection? ARGH IT BURNS.
+		if(C.get_eye_protection() <= 0) // no eye protection? ARGH IT BURNS.
 			C.confused = max(C.confused, 3)
 			C.Weaken(3)
 		if(ishuman(C) && actually_paints)
@@ -651,7 +656,7 @@
 
 	if(istype(target, /obj/structure/window))
 		if(actually_paints)
-			target.color = paint_color
+			target.add_atom_colour(paint_color, WASHABLE_COLOUR_PRIORITY)
 			if(color_hex2num(paint_color) < 255)
 				target.SetOpacity(255)
 			else
@@ -703,7 +708,7 @@
 
 /obj/item/toy/crayon/spraycan/borg/afterattack(atom/target,mob/user,proximity)
 	var/diff = ..()
-	if(!isrobot(user))
+	if(!iscyborg(user))
 		user << "<span class='notice'>How did you get this?</span>"
 		qdel(src)
 		return FALSE

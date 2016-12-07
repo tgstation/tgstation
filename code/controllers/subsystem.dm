@@ -37,6 +37,10 @@
 // Used to initialize the subsystem BEFORE the map has loaded
 /datum/subsystem/New()
 
+//cleanup actions
+/datum/subsystem/proc/Shutdown()
+	return
+
 //previously, this would have been named 'process()' but that name is used everywhere for different things!
 //fire() seems more suitable. This is the procedure that gets called every 'wait' deciseconds.
 //fire(), and the procs it calls, SHOULD NOT HAVE ANY SLEEP OPERATIONS in them!
@@ -140,7 +144,7 @@
 		statclick = new/obj/effect/statclick/debug("Initializing...", src)
 
 	if(can_fire)
-		msg = "[round(cost*ticks,1)]ms|[round(tick_usage,1)]%|[round(ticks,0.1)]\t[msg]"
+		msg = "[round(cost,1)]ms|[round(tick_usage,1)]%|[round(ticks,0.1)]\t[msg]"
 	else
 		msg = "OFFLINE\t[msg]"
 
@@ -157,8 +161,12 @@
 /datum/subsystem/proc/Recover()
 
 //this is so the subsystem doesn't rapid fire to make up missed ticks causing more lag
-/datum/subsystem/on_varedit(edited_var)
-	if (edited_var == "can_fire" && can_fire)
-		next_fire = world.time + wait
-	..()
+/datum/subsystem/vv_edit_var(var_name, var_value)
+	switch (var_name)
+		if ("can_fire")
+			if (var_value)
+				next_fire = world.time + wait
+		if ("queued_priority") //editing this breaks things.
+			return 0
+	. = ..()
 

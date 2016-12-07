@@ -53,8 +53,14 @@
 	icon_state = "ion_trails"
 	anchored = 1
 
+/obj/effect/particle_effect/ion_trails/flight
+	icon_state = "ion_trails_flight"
+
 /datum/effect_system/trail_follow/ion
 	effect_type = /obj/effect/particle_effect/ion_trails
+	var/fadetype = "ion_fade"
+	var/fade = 1
+	var/nograv_required = 1
 
 /datum/effect_system/trail_follow/ion/start() //Whoever is responsible for this abomination of code should become an hero
 	if(!on)
@@ -66,11 +72,12 @@
 		processing = 0
 		var/turf/T = get_turf(holder)
 		if(T != oldposition)
-			if(!has_gravity(T))
+			if(!T.has_gravity() || !nograv_required)
 				var/obj/effect/particle_effect/ion_trails/I = PoolOrNew(effect_type, oldposition)
-				I.setDir(holder.dir)
-				flick("ion_fade", I)
-				I.icon_state = ""
+				set_dir(I)
+				if(fade)
+					flick(fadetype, I)
+					I.icon_state = ""
 				spawn(20)
 					qdel(I)
 			oldposition = T
@@ -79,7 +86,18 @@
 				processing = 1
 				start()
 
+/datum/effect_system/trail_follow/ion/proc/set_dir(obj/effect/particle_effect/ion_trails/I)
+	I.setDir(holder.dir)
 
+/datum/effect_system/trail_follow/ion/flight
+	effect_type = /obj/effect/particle_effect/ion_trails/flight
+	fadetype = "ion_fade_flight"
+	nograv_required = 0
+
+/datum/effect_system/trail_follow/ion/flight/set_dir(obj/effect/particle_effect/ion_trails/I)
+	if(istype(holder, /obj/item/device/flightpack))
+		var/obj/item/device/flightpack/F = holder
+		I.setDir(F.suit.user.dir)
 
 
 //Reagent-based explosion effect
@@ -105,7 +123,7 @@
 	if(explosion_message)
 		location.visible_message("<span class='danger'>The solution violently explodes!</span>", \
 								"<span class='italics'>You hear an explosion!</span>")
-	if (amount <= 2)
+	if (amount < 1)
 		var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 		s.set_up(2, 1, location)
 		s.start()
@@ -116,22 +134,4 @@
 				M.Weaken(rand(1,5))
 		return
 	else
-		var/devastation = -1
-		var/heavy = -1
-		var/light = -1
-		var/flash = -1
-
-		// Clamp all values to MAX_EXPLOSION_RANGE
-		if (round(amount/12) > 0)
-			devastation = min (MAX_EX_DEVESTATION_RANGE, devastation + round(amount/12))
-
-		if (round(amount/6) > 0)
-			heavy = min (MAX_EX_HEAVY_RANGE, heavy + round(amount/6))
-
-		if (round(amount/3) > 0)
-			light = min (MAX_EX_LIGHT_RANGE, light + round(amount/3))
-
-		if (flashing && flashing_factor)
-			flash += (round(amount/4) * flashing_factor)
-
-		explosion(location, devastation, heavy, light, flash)
+		dyn_explosion(location, amount, flashing_factor)

@@ -29,6 +29,7 @@
 	icon_state = "compressor"
 	anchored = 1
 	density = 1
+	resistance_flags = FIRE_PROOF
 	var/obj/machinery/power/turbine/turbine
 	var/datum/gas_mixture/gas_contained
 	var/turf/inturf
@@ -47,6 +48,7 @@
 	icon_state = "turbine"
 	anchored = 1
 	density = 1
+	resistance_flags = FIRE_PROOF
 	var/opened = 0
 	var/obj/machinery/power/compressor/compressor
 	var/turf/outturf
@@ -155,7 +157,7 @@
 
 // RPM function to include compression friction - be advised that too low/high of a compfriction value can make things screwy
 
-	rpm = max(0, rpm - (rpm*rpm)/(COMPFRICTION/efficiency))
+	rpm = max(0, rpm - (rpm*rpm)/(COMPFRICTION*efficiency))
 
 
 	if(starter && !(stat & NOPOWER))
@@ -291,7 +293,7 @@
 
 /obj/machinery/power/turbine/interact(mob/user)
 
-	if ( !Adjacent(user)  || (stat & (NOPOWER|BROKEN)) && (!istype(user, /mob/living/silicon)) )
+	if(!Adjacent(user)  || (stat & (NOPOWER|BROKEN)) && !issilicon(user))
 		user.unset_machine(src)
 		user << browse(null, "window=turbine")
 		return

@@ -1,17 +1,18 @@
 /obj/item/bodypart/head
 	name = "head"
 	desc = "Didn't make sense not to live for fun, your brain gets smart but your head gets dumb."
+	icon = 'icons/mob/human_parts.dmi'
+	icon_state = "default_human_head"
 	max_damage = 200
 	body_zone = "head"
 	body_part = HEAD
-	layer = ABOVE_MOB_LAYER //so it isn't hidden behind some objects when on the floor
-	w_class = 4 //Quite a hefty load
+	w_class = WEIGHT_CLASS_BULKY //Quite a hefty load
 	slowdown = 1 //Balancing measure
 	throw_range = 2 //No head bowling
 	px_x = 0
 	px_y = -8
 
-	var/mob/living/carbon/brain/brainmob = null //The current occupant.
+	var/mob/living/brain/brainmob = null //The current occupant.
 	var/obj/item/organ/brain/brain = null //The brain organ
 
 	//Limb appearance info:
@@ -31,7 +32,8 @@
 
 /obj/item/bodypart/head/drop_organs(mob/user)
 	var/turf/T = get_turf(src)
-	playsound(T, 'sound/misc/splort.ogg', 50, 1, -1)
+	if(status != BODYPART_ROBOTIC)
+		playsound(T, 'sound/misc/splort.ogg', 50, 1, -1)
 	for(var/obj/item/I in src)
 		if(I == brain)
 			if(user)
@@ -47,67 +49,77 @@
 		else
 			I.loc = T
 
-/obj/item/bodypart/head/update_limb(dropping_limb, mob/living/carbon/human/source)
-	var/mob/living/carbon/human/H
+/obj/item/bodypart/head/update_limb(dropping_limb, mob/living/carbon/source)
+	var/mob/living/carbon/C
 	if(source)
-		H = source
+		C = source
 	else
-		H = owner
-	if(!istype(H))
-		return
-	var/datum/species/S = H.dna.species
-	//First of all, name.
-	real_name = H.real_name
+		C = owner
 
-	//Facial hair
-	if(H.facial_hair_style && (FACEHAIR in S.specflags))
-		facial_hair_style = H.facial_hair_style
-		if(S.hair_color)
-			if(S.hair_color == "mutcolor")
-				facial_hair_color = H.dna.features["mcolor"]
-			else
-				facial_hair_color = S.hair_color
-		else
-			facial_hair_color = H.facial_hair_color
-		hair_alpha = S.hair_alpha
-	else
-		facial_hair_style = "Shaved"
-		facial_hair_color = "000"
-		hair_alpha = 255
-	//Hair
-	if(H.hair_style && (HAIR in S.specflags))
-		hair_style = H.hair_style
-		if(S.hair_color)
-			if(S.hair_color == "mutcolor")
-				hair_color = H.dna.features["mcolor"]
-			else
-				hair_color = S.hair_color
-		else
-			hair_color = H.hair_color
-		hair_alpha = S.hair_alpha
-	else
+	real_name = C.real_name
+	if(C.disabilities & HUSK)
+		real_name = "Unknown"
 		hair_style = "Bald"
-		hair_color = "000"
-		hair_alpha = initial(hair_alpha)
-	// lipstick
-	if(H.lip_style && (LIPS in S.specflags))
-		lip_style = H.lip_style
-		lip_color = H.lip_color
-	else
-		lip_style = null
-		lip_color = "white"
-	// eyes
-	if(EYECOLOR in S.specflags)
-		eyes = S.eyes
-		eye_color = H.eye_color
-	else
+		facial_hair_style = "Shaved"
 		eyes = "eyes"
 		eye_color = ""
+		lip_style = null
+
+	else if(!animal_origin)
+		var/mob/living/carbon/human/H = C
+		var/datum/species/S = H.dna.species
+
+		//Facial hair
+		if(H.facial_hair_style && (FACEHAIR in S.species_traits))
+			facial_hair_style = H.facial_hair_style
+			if(S.hair_color)
+				if(S.hair_color == "mutcolor")
+					facial_hair_color = H.dna.features["mcolor"]
+				else
+					facial_hair_color = S.hair_color
+			else
+				facial_hair_color = H.facial_hair_color
+			hair_alpha = S.hair_alpha
+		else
+			facial_hair_style = "Shaved"
+			facial_hair_color = "000"
+			hair_alpha = 255
+		//Hair
+		if(H.hair_style && (HAIR in S.species_traits))
+			hair_style = H.hair_style
+			if(S.hair_color)
+				if(S.hair_color == "mutcolor")
+					hair_color = H.dna.features["mcolor"]
+				else
+					hair_color = S.hair_color
+			else
+				hair_color = H.hair_color
+			hair_alpha = S.hair_alpha
+		else
+			hair_style = "Bald"
+			hair_color = "000"
+			hair_alpha = initial(hair_alpha)
+		// lipstick
+		if(H.lip_style && (LIPS in S.species_traits))
+			lip_style = H.lip_style
+			lip_color = H.lip_color
+		else
+			lip_style = null
+			lip_color = "white"
+		// eyes
+		if(EYECOLOR in S.species_traits)
+			eyes = S.eyes
+			eye_color = H.eye_color
+		else
+			eyes = "eyes"
+			eye_color = ""
+
 	..()
 
 /obj/item/bodypart/head/update_icon_dropped()
 	var/list/standing = get_limb_icon(1)
-	if(!standing)
+	if(!standing.len)
+		icon_state = initial(icon_state)//no overlays found, we default back to initial icon.
 		return
 	for(var/image/I in standing)
 		I.pixel_x = px_x
@@ -116,13 +128,11 @@
 
 /obj/item/bodypart/head/get_limb_icon(dropped)
 	cut_overlays()
-	var/image/I = ..()
-	var/list/standing = list()
-	standing += I
+	var/list/standing = ..()
 	if(dropped) //certain overlays only appear when the limb is being detached from its owner.
 		var/datum/sprite_accessory/S
 
-		if(status != ORGAN_ROBOTIC) //having a robotic head hides certain features.
+		if(status != BODYPART_ROBOTIC) //having a robotic head hides certain features.
 			//facial hair
 			if(facial_hair_style)
 				S = facial_hair_styles_list[facial_hair_style]
@@ -134,7 +144,12 @@
 
 			//Applies the debrained overlay if there is no brain
 			if(!brain)
-				standing	+= image("icon"='icons/mob/human_face.dmi', "icon_state" = "debrained_s", "layer" = -HAIR_LAYER, "dir"=SOUTH)
+				if(animal_origin == ALIEN_BODYPART)
+					standing += image("icon"='icons/mob/animal_parts.dmi', "icon_state" = "debrained_alien_s", "layer" = -HAIR_LAYER, "dir"=SOUTH)
+				else if(animal_origin == LARVA_BODYPART)
+					standing += image("icon"='icons/mob/animal_parts.dmi', "icon_state" = "debrained_larva_s", "layer" = -HAIR_LAYER, "dir"=SOUTH)
+				else if(!(NOBLOOD in species_flags_list))
+					standing += image("icon"='icons/mob/human_face.dmi', "icon_state" = "debrained_s", "layer" = -HAIR_LAYER, "dir"=SOUTH)
 			else
 				if(hair_style)
 					S = hair_styles_list[hair_style]
@@ -157,9 +172,32 @@
 			img_eyes_s.color = "#" + eye_color
 			standing += img_eyes_s
 
-	if(standing.len)
-		return standing
+	return standing
 
-/obj/item/bodypart/head/burn()
-	drop_organs()
-	..()
+/obj/item/bodypart/head/monkey
+	icon = 'icons/mob/animal_parts.dmi'
+	icon_state = "default_monkey_head"
+	animal_origin = MONKEY_BODYPART
+
+/obj/item/bodypart/head/alien
+	icon = 'icons/mob/animal_parts.dmi'
+	icon_state = "alien_head_s"
+	px_x = 0
+	px_y = 0
+	dismemberable = 0
+	max_damage = 500
+	animal_origin = ALIEN_BODYPART
+
+/obj/item/bodypart/head/devil
+	dismemberable = 0
+	max_damage = 5000
+	animal_origin = DEVIL_BODYPART
+
+/obj/item/bodypart/head/larva
+	icon = 'icons/mob/animal_parts.dmi'
+	icon_state = "larva_head_s"
+	px_x = 0
+	px_y = 0
+	dismemberable = 0
+	max_damage = 50
+	animal_origin = LARVA_BODYPART

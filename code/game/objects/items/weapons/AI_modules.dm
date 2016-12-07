@@ -14,7 +14,7 @@ AI MODULES
 	desc = "An AI Module for programming laws to an AI."
 	flags = CONDUCT
 	force = 5
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	throwforce = 0
 	throw_speed = 3
 	throw_range = 7
@@ -301,7 +301,7 @@ AI MODULES
 	var/subject = "human being"
 
 /obj/item/weapon/aiModule/core/full/asimov/attack_self(var/mob/user as mob)
-	var/targName = stripped_input(user, "Please enter a new subject that asimov is concerned with.", "Asimov to who?", subject, MAX_MESSAGE_LEN)
+	var/targName = stripped_input(user, "Please enter a new subject that asimov is concerned with.", "Asimov to whom?", subject, MAX_MESSAGE_LEN)
 	if(!targName)
 		return
 	subject = targName

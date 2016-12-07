@@ -57,6 +57,9 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 	var/obj/item/device/radio/Radio
 	var/emergency //If an emergency has been called by this device. Acts as both a cooldown and lets the responder know where it the emergency was triggered from
 	luminosity = 0
+	obj_integrity = 300
+	max_integrity = 300
+	armor = list(melee = 70, bullet = 30, laser = 30, energy = 30, bomb = 0, bio = 0, rad = 0, fire = 90, acid = 90)
 
 /obj/machinery/requests_console/power_change()
 	..()
@@ -245,9 +248,6 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 					dat += "Speaker <A href='?src=\ref[src];setSilent=0'>OFF</A>"
 				else
 					dat += "Speaker <A href='?src=\ref[src];setSilent=1'>ON</A>"
-
-		//user << browse("[dat]", "window=request_console")
-		//onclose(user, "req_console")
 		var/datum/browser/popup = new(user, "req_console", "[department] Requests Console", 450, 440)
 		popup.set_content(dat)
 		popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))

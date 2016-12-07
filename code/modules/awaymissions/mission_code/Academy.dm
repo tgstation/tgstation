@@ -1,32 +1,3 @@
-//Academy Areas
-
-/area/awaymission/academy
-	name = "Academy Asteroids"
-	icon_state = "away"
-
-/area/awaymission/academy/headmaster
-	name = "Academy Fore Block"
-	icon_state = "away1"
-
-/area/awaymission/academy/classrooms
-	name = "Academy Classroom Block"
-	icon_state = "away2"
-
-/area/awaymission/academy/academyaft
-	name = "Academy Ship Aft Block"
-	icon_state = "away3"
-
-/area/awaymission/academy/academygate
-	name = "Academy Gateway"
-	icon_state = "away4"
-
-/area/awaymission/academy/academycellar
-	name = "Academy Cellar"
-	icon_state = "away4"
-
-/area/awaymission/academy/academyengine
-	name = "Academy Engine"
-	icon_state = "away4"
 
 //Academy Items
 
@@ -57,16 +28,21 @@
 	icon = 'icons/obj/cult.dmi'
 	icon_state = "forge"
 	anchored = 1
-	var/health = 200
+	obj_integrity = 200
+	max_integrity = 200
 	var/mob/living/current_wizard = null
 	var/next_check = 0
 	var/cooldown = 600
 	var/faction = "wizard"
-	var/broken = 0
 	var/braindead_check = 0
 
 /obj/structure/academy_wizard_spawner/New()
 	START_PROCESSING(SSobj, src)
+
+/obj/structure/academy_wizard_spawner/Destroy()
+	if(!broken)
+		STOP_PROCESSING(SSobj, src)
+	return ..()
 
 /obj/structure/academy_wizard_spawner/process()
 	if(next_check < world.time)
@@ -91,7 +67,7 @@
 	if(!current_wizard)
 		return
 	spawn(0)
-		var/list/mob/dead/observer/candidates = pollCandidates("Do you want to play as Wizard Academy Defender?", "wizard", null, ROLE_WIZARD)
+		var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as Wizard Academy Defender?", "wizard", null, ROLE_WIZARD, current_wizard)
 		var/mob/dead/observer/chosen = null
 
 		if(candidates.len)
@@ -127,28 +103,12 @@
 
 	give_control()
 
-/obj/structure/academy_wizard_spawner/proc/update_status()
-	if(health<0)
+/obj/structure/academy_wizard_spawner/deconstruct(disassembled = TRUE)
+	if(!broken)
+		broken = 1
 		visible_message("<span class='warning'>[src] breaks down!</span>")
 		icon_state = "forge_off"
 		STOP_PROCESSING(SSobj, src)
-		broken = 1
-
-/obj/structure/academy_wizard_spawner/attackby(obj/item/weapon/W, mob/living/user, params)
-	add_fingerprint(user)
-	user.changeNext_move(CLICK_CD_MELEE)
-	if(!broken)
-		health -= W.force
-		update_status()
-	..()
-
-/obj/structure/academy_wizard_spawner/bullet_act(obj/item/projectile/Proj)
-	if(!broken)
-		if((Proj.damage_type == BRUTE || Proj.damage_type == BURN))
-			health -= Proj.damage
-			update_status()
-	..()
-	return
 
 /datum/outfit/wizard/academy
 	name = "Academy Wizard"
@@ -163,9 +123,9 @@
 	desc = "A die with twenty sides. You can feel unearthly energies radiating from it. Using this might be VERY risky."
 	icon_state = "d20"
 	sides = 20
+	can_be_rigged = FALSE
 	var/reusable = 1
 	var/used = 0
-	var/rigged = -1
 
 /obj/item/weapon/dice/d20/fate/one_use
 	reusable = 0
@@ -176,7 +136,7 @@
 		if(!ishuman(user) || !user.mind || (user.mind in ticker.mode.wizards))
 			user << "<span class='warning'>You feel the magic of the dice is restricted to ordinary humans!</span>"
 			return
-		if(rigged > 0)
+		if(rigged)
 			effect(user,rigged)
 		else
 			effect(user,result)
@@ -253,7 +213,7 @@
 						new /obj/item/weapon/coin/gold(M)
 		if(14)
 			//Free Gun
-			new /obj/item/weapon/gun/projectile/revolver/mateba(get_turf(src))
+			new /obj/item/weapon/gun/ballistic/revolver/mateba(get_turf(src))
 		if(15)
 			//Random One-use spellbook
 			new /obj/item/weapon/spellbook/oneuse/random(get_turf(src))
@@ -266,7 +226,7 @@
 			servant_mind.objectives += O
 			servant_mind.transfer_to(H)
 
-			var/list/mob/dead/observer/candidates = pollCandidates("Do you want to play as [user.real_name] Servant?", "wizard")
+			var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as [user.real_name] Servant?", "wizard", mob = H)
 			var/mob/dead/observer/chosen = null
 
 			if(candidates.len)

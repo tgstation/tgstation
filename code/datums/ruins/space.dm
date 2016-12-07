@@ -142,6 +142,13 @@
 		team manned by the syndicate. The caravan managed to send off a distress message before being surrounded, their video feed \
 		cutting off as the sound of gunfire and a parrot was heard."
 
+/datum/map_template/ruin/space/originalcontent
+	id = "paperwizard"
+	suffix = "originalcontent.dmm"
+	name = "A Giant Ball of Paper in Space"
+	description = "Sightings of a giant wad of paper hurling through the depths of space have been \
+		recently reported by multiple outposts near this sector. A giant wad of paper, really? Damn prank callers."
+
 /datum/map_template/ruin/space/mech_transport
 	id = "mech-transport"
 	suffix = "mechtransport.dmm"
@@ -269,3 +276,31 @@
 		teleporter suggests that it was once part of a larger structure, \
 		but what remains of said structure, if anything, can \
 		only be guessed at."
+
+/datum/map_template/ruin/space/vaporwave
+	id = "vaporwave"
+	suffix = "vaporwave.dmm"
+	name = "Aesthetic Outpost"
+	description = "Pause and remember-- You are unique.\
+		You are special. Every mistake, trial, and \
+		hardship has helped to sculpt your real \
+		beauty. Stop hating yourself and start \
+		appreciating and loving yourself!"
+
+/datum/map_template/ruin/space/bus
+	id = "bus"
+	suffix = "bus.dmm"
+	name = "Waylaid Buses"
+	description = "There seems to be a pair of buses that pulled over \
+		for repairs. What were they doing..? Their shipment sure  \
+		seems to be filled with a strange mix. Anyway, it looks like \
+		some people tried to fix it up for a long time \
+		but didn't really get anywhere..."
+
+
+/datum/map_template/ruin/space/miracle
+	id = "miracle"
+	suffix = "miracle.dmm"
+	name = "Ordinary Space Tile"
+	description = "Absolutely nothing strange going on here please \
+		move along, plenty more space to see right this way!"

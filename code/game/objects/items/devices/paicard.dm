@@ -3,7 +3,7 @@
 	icon = 'icons/obj/aicards.dmi'
 	icon_state = "pai"
 	item_state = "electronic"
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	slot_flags = SLOT_BELT
 	origin_tech = "programming=2"
 	var/obj/item/device/radio/radio
@@ -84,7 +84,6 @@
 					pai << "<span class='userdanger'>Your mental faculties leave you.</span>"
 					pai << "<span class='rose'>oblivion... </span>"
 					pai.death(0)
-				removePersonality()
 		if(href_list["wires"])
 			var/wire = text2num(href_list["wires"])
 			if(radio)

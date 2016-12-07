@@ -26,14 +26,15 @@ Note: Must be placed west/left of and R&D console to function.
 								"Electronics",
 								"Weapons",
 								"Ammo",
-								"Firing Pins"
+								"Firing Pins",
+								"Computer Parts"
 								)
 
 
 /obj/machinery/r_n_d/protolathe/New()
 	..()
 	create_reagents(0)
-	materials = new(src, list(MAT_METAL, MAT_GLASS, MAT_SILVER, MAT_GOLD, MAT_DIAMOND, MAT_PLASMA, MAT_URANIUM, MAT_BANANIUM))
+	materials = new(src, list(MAT_METAL, MAT_GLASS, MAT_SILVER, MAT_GOLD, MAT_DIAMOND, MAT_PLASMA, MAT_URANIUM, MAT_BANANIUM, MAT_TITANIUM))
 	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/protolathe(null)
 	B.apply_default_parts(src)
 
@@ -75,7 +76,7 @@ Note: Must be placed west/left of and R&D console to function.
 	return round(A / max(1, (all_materials[M]*efficiency_coeff)))
 
 //we eject the materials upon deconstruction.
-/obj/machinery/r_n_d/protolathe/deconstruction()
+/obj/machinery/r_n_d/protolathe/on_deconstruction()
 	for(var/obj/item/weapon/reagent_containers/glass/G in component_parts)
 		reagents.trans_to(G, G.reagents.maximum_volume)
 	materials.retrieve_all()
@@ -118,7 +119,7 @@ Note: Must be placed west/left of and R&D console to function.
 			busy = 0
 		updateUsrDialog()
 
-	else if(user.a_intent != "harm")
+	else if(user.a_intent != INTENT_HARM)
 		user << "<span class='warning'>You cannot insert this item into the [name]!</span>"
 		return 1
 	else

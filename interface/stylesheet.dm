@@ -28,8 +28,8 @@ em						{font-style: normal;	font-weight: bold;}
 .deadsay				{color: #5c00e6;}
 .radio					{color: #008000;}
 .sciradio				{color: #993399;}
-.comradio				{color: #aca82d;}
-.secradio				{color: #b22222;}
+.comradio				{color: #193a7a;}
+.secradio				{color: #a30000;}
 .medradio				{color: #337296;}
 .engradio				{color: #fb5613;}
 .suppradio				{color: #a8732b;}
@@ -70,6 +70,9 @@ h1.alert, h2.alert		{color: #000000;}
 .cultitalic				{color: #960000;	font-style: italic;}
 .cultlarge				{color: #960000; font-weight: bold; font-size: 3;}
 .narsie					{color: #960000; font-weight: bold; font-size: 15;}
+.colossus				{color: #7F282A; font-size: 5;}
+.hierophant				{color: #660099; font-weight: bold; font-size: 4;}
+.hierophant_warning		{color: #660099; font-weight: bold; font-style: italic;}
 .purple					{color: #5e2d79;}
 .holoparasite			{color: #35333a;}
 .holoparasitebold		{color: #35333a;	font-weight: bold;}
@@ -90,6 +93,7 @@ h1.alert, h2.alert		{color: #000000;}
 .heavy_brass			{color: #BE8700; font-weight: bold; font-style: italic;}
 .large_brass			{color: #BE8700; font-size: 3;}
 .big_brass				{color: #BE8700; font-size: 3; font-weight: bold; font-style: italic;}
+.ratvar					{color: #BE8700; font-size: 6; font-weight: bold; font-style: italic;}
 .alloy					{color: #42474D;}
 .heavy_alloy			{color: #42474D; font-weight: bold; font-style: italic;}
 .large_alloy			{color: #42474D; font-size: 3;}
@@ -115,6 +119,8 @@ h1.alert, h2.alert		{color: #000000;}
 .alien					{color: #543354;}
 .noticealien			{color: #00c000;}
 .alertalien				{color: #00c000;	font-weight: bold;}
+.borer					{color: #543354;	font-style: italic;}
+.changeling				{color: #800080;	font-style: italic;}
 
 .interface				{color: #330033;}
 

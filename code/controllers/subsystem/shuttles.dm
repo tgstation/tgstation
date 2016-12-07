@@ -24,6 +24,7 @@ var/datum/subsystem/shuttle/SSshuttle
 	var/emergencyEscapeTime = 1200	//time taken for emergency shuttle to reach a safe distance after leaving station (in deciseconds)
 	var/area/emergencyLastCallLoc
 	var/emergencyNoEscape
+	var/list/hostileEnvironments = list()
 
 		//supply shuttle stuff
 	var/obj/docking_port/mobile/supply/supply
@@ -38,6 +39,9 @@ var/datum/subsystem/shuttle/SSshuttle
 	var/list/orderhistory = list()
 
 	var/datum/round_event/shuttle_loan/shuttle_loan
+
+	var/shuttle_purchased = FALSE //If the station has purchased a replacement escape shuttle this round
+	var/list/shuttle_purchase_requirements_met = list() //For keeping track of ingame events that would unlock new shuttles, such as defeating a boss or discovering a secret item
 
 /datum/subsystem/shuttle/New()
 	NEW_SS_GLOBAL(SSshuttle)
@@ -65,6 +69,9 @@ var/datum/subsystem/shuttle/SSshuttle
 #endif
 
 /datum/subsystem/shuttle/proc/setup_transit_zone()
+	if(transit_markers.len == 0)
+		WARNING("No /obj/effect/landmark/transit placed on the map!")
+		return
 	// transit zone
 	var/turf/A = get_turf(transit_markers[1])
 	var/turf/B = get_turf(transit_markers[2])
@@ -76,12 +83,15 @@ var/datum/subsystem/shuttle/SSshuttle
 
 #ifdef HIGHLIGHT_DYNAMIC_TRANSIT
 /datum/subsystem/shuttle/proc/color_space()
+	if(transit_markers.len == 0)
+		WARNING("No /obj/effect/landmark/transit placed on the map!")
+		return
 	var/turf/A = get_turf(transit_markers[1])
 	var/turf/B = get_turf(transit_markers[2])
 	for(var/i in block(A, B))
 		var/turf/T = i
 		// Only dying the "pure" space, not the transit tiles
-		if(!(T.type == /turf/open/space))
+		if(istype(T, /turf/open/space/transit) || !isspaceturf(T))
 			continue
 		if((T.x == A.x) || (T.x == B.x) || (T.y == A.y) || (T.y == B.y))
 			T.color = "#ffff00"
@@ -188,16 +198,20 @@ var/datum/subsystem/shuttle/SSshuttle
 
 	call_reason = trim(html_encode(call_reason))
 
-	if(length(call_reason) < CALL_SHUTTLE_REASON_LENGTH)
+	if(length(call_reason) < CALL_SHUTTLE_REASON_LENGTH && seclevel2num(get_security_level()) > SEC_LEVEL_GREEN)
 		user << "You must provide a reason."
 		return
 
 	var/area/signal_origin = get_area(user)
 	var/emergency_reason = "\nNature of emergency:\n\n[call_reason]"
-	if(seclevel2num(get_security_level()) == SEC_LEVEL_RED) // There is a serious threat we gotta move no time to give them five minutes.
-		emergency.request(null, 0.5, signal_origin, html_decode(emergency_reason), 1)
-	else
-		emergency.request(null, 1, signal_origin, html_decode(emergency_reason), 0)
+	var/security_num = seclevel2num(get_security_level())
+	switch(security_num)
+		if(SEC_LEVEL_GREEN)
+			emergency.request(null, 2, signal_origin, html_decode(emergency_reason), 0)
+		if(SEC_LEVEL_BLUE)
+			emergency.request(null, 1, signal_origin, html_decode(emergency_reason), 0)
+		else
+			emergency.request(null, 0.5, signal_origin, html_decode(emergency_reason), 1) // There is a serious threat we gotta move no time to give them five minutes.
 
 	log_game("[key_name(user)] has called the shuttle.")
 	message_admins("[key_name_admin(user)] has called the shuttle.")
@@ -221,19 +235,24 @@ var/datum/subsystem/shuttle/SSshuttle
 		return
 	if(ticker.mode.name == "meteor")
 		return
-	if(seclevel2num(get_security_level()) == SEC_LEVEL_RED)
-		if(emergency.timeLeft(1) < emergencyCallTime * 0.25)
-			return
-	else
-		if(emergency.timeLeft(1) < emergencyCallTime * 0.5)
-			return
+	var/security_num = seclevel2num(get_security_level())
+	switch(security_num)
+		if(SEC_LEVEL_GREEN)
+			if(emergency.timeLeft(1) < emergencyCallTime)
+				return
+		if(SEC_LEVEL_BLUE)
+			if(emergency.timeLeft(1) < emergencyCallTime * 0.5)
+				return
+		else
+			if(emergency.timeLeft(1) < emergencyCallTime * 0.25)
+				return
 	return 1
 
 /datum/subsystem/shuttle/proc/autoEvac()
 	var/callShuttle = 1
 
 	for(var/thing in shuttle_caller_list)
-		if(istype(thing, /mob/living/silicon/ai))
+		if(isAI(thing))
 			var/mob/living/silicon/ai/AI = thing
 			if(AI.stat || !AI.client)
 				continue
@@ -252,6 +271,34 @@ var/datum/subsystem/shuttle/SSshuttle
 			emergency.request(null, 2.5)
 			log_game("There is no means of calling the shuttle anymore. Shuttle automatically called.")
 			message_admins("All the communications consoles were destroyed and all AIs are inactive. Shuttle called.")
+
+/datum/subsystem/shuttle/proc/registerHostileEnvironment(datum/bad)
+	hostileEnvironments[bad] = TRUE
+	checkHostileEnvironment()
+
+/datum/subsystem/shuttle/proc/clearHostileEnvironment(datum/bad)
+	hostileEnvironments -= bad
+	checkHostileEnvironment()
+
+/datum/subsystem/shuttle/proc/checkHostileEnvironment()
+	for(var/datum/d in hostileEnvironments)
+		if(!istype(d) || qdeleted(d))
+			hostileEnvironments -= d
+	emergencyNoEscape = hostileEnvironments.len
+
+	if(emergencyNoEscape && (emergency.mode == SHUTTLE_IGNITING))
+		emergency.mode = SHUTTLE_STRANDED
+		emergency.timer = null
+		emergency.sound_played = FALSE
+		priority_announce("Hostile environment detected. \
+			Departure has been postponed indefinitely pending \
+			conflict resolution.", null, 'sound/misc/notice1.ogg', "Priority")
+	if(!emergencyNoEscape && (emergency.mode == SHUTTLE_STRANDED))
+		emergency.mode = SHUTTLE_DOCKED
+		emergency.setTimer(emergencyDockTime)
+		priority_announce("Hostile environment resolved. \
+			You have 3 minutes to board the Emergency Shuttle.",
+			null, 'sound/AI/shuttledock.ogg', "Priority")
 
 //try to move/request to dockHome if possible, otherwise dockAway. Mainly used for admin buttons
 /datum/subsystem/shuttle/proc/toggleShuttle(shuttleId, dockHome, dockAway, timed)

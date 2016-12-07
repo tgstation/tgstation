@@ -6,7 +6,7 @@
 	item_state = "pen"
 	origin_tech = "materials=2;combat=4"
 	flags = CONDUCT
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 	attack_verb = list("poked")
 	var/emagged = 0
 	var/fail_message = "<span class='warning'>INVALID USER.</span>"
@@ -95,9 +95,11 @@
 	var/obj/item/weapon/implant/req_implant = null
 
 /obj/item/device/firing_pin/implant/pin_auth(mob/living/user)
-	for(var/obj/item/weapon/implant/I in user)
-		if(req_implant &&  I.imp_in == user && I.type == req_implant)
-			return 1
+	if(iscarbon(user))
+		var/mob/living/carbon/C = user
+		for(var/obj/item/weapon/implant/I in C.implants)
+			if(req_implant && I.type == req_implant)
+				return 1
 	return 0
 
 /obj/item/device/firing_pin/implant/mindshield
@@ -118,7 +120,7 @@
 /obj/item/device/firing_pin/clown
 	name = "hilarious firing pin"
 	desc = "Advanced clowntech that can convert any firearm into a far more useful object."
-	color = "yellow"
+	color = "#FFFF00"
 	fail_message = "<span class='warning'>HONK!</span>"
 	force_replace = 1
 

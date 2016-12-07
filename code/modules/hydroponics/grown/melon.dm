@@ -11,7 +11,7 @@
 	growing_icon = 'icons/obj/hydroponics/growing_fruits.dmi'
 	icon_dead = "watermelon-dead"
 	mutatelist = list(/obj/item/seeds/watermelon/holy)
-	reagents_add = list("vitamin" = 0.04, "nutriment" = 0.2)
+	reagents_add = list("water" = 0.2, "vitamin" = 0.04, "nutriment" = 0.2)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/watermelon
 	seed = /obj/item/seeds/watermelon
@@ -21,7 +21,7 @@
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/watermelonslice
 	slices_num = 5
 	dried_type = null
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 	filling_color = "#008000"
 	bitesize_mod = 3
 

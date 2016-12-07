@@ -130,7 +130,13 @@
 			update_move_direction()
 			user << "<span class='notice'>You rotate [src].</span>"
 
-	else if(user.a_intent != "harm")
+	else if(istype(I, /obj/item/weapon/screwdriver))
+		if(!(stat & BROKEN))
+			verted = verted * -1
+			update_move_direction()
+			user << "<span class='notice'>You reverse [src]'s direction.</span>"
+
+	else if(user.a_intent != INTENT_HARM)
 		if(user.drop_item())
 			I.loc = src.loc
 	else
@@ -286,7 +292,7 @@
 	icon_state = "conveyor0"
 	name = "conveyor belt assembly"
 	desc = "A conveyor belt assembly."
-	w_class = 4
+	w_class = WEIGHT_CLASS_BULKY
 	var/id = "" //inherited by the belt
 
 /obj/item/conveyor_construct/attackby(obj/item/I, mob/user, params)
@@ -297,7 +303,7 @@
 		id = C.id
 
 /obj/item/conveyor_construct/afterattack(atom/A, mob/user, proximity)
-	if(!proximity || user.stat || !istype(A, /turf/open/floor) || istype(A, /area/shuttle))
+	if(!proximity || user.stat || !isfloorturf(A) || istype(A, /area/shuttle))
 		return
 	var/cdir = get_dir(A, user)
 	if(A == user.loc)
@@ -313,7 +319,7 @@
 	desc = "A conveyor control switch assembly."
 	icon = 'icons/obj/recycling.dmi'
 	icon_state = "switch-off"
-	w_class = 4
+	w_class = WEIGHT_CLASS_BULKY
 	var/id = "" //inherited by the switch
 
 /obj/item/conveyor_switch_construct/New()
@@ -321,7 +327,7 @@
 	id = rand() //this couldn't possibly go wrong
 
 /obj/item/conveyor_switch_construct/afterattack(atom/A, mob/user, proximity)
-	if(!proximity || user.stat || !istype(A, /turf/open/floor) || istype(A, /area/shuttle))
+	if(!proximity || user.stat || !isfloorturf(A) || istype(A, /area/shuttle))
 		return
 	var/found = 0
 	for(var/obj/machinery/conveyor/C in view())

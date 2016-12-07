@@ -4,7 +4,7 @@
 	icon = 'icons/obj/pda.dmi'
 	icon_state = "cart"
 	item_state = "electronic"
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 
 	var/obj/item/radio/integrated/radio = null
 	var/access_security = 0
@@ -23,6 +23,7 @@
 	var/access_status_display = 0
 	var/access_quartermaster = 0
 	var/access_hydroponics = 0
+	var/access_dronephone = 0
 	var/bot_access_flags = 0 //Bit flags. Selection: SEC_BOT|MULE_BOT|FLOOR_BOT|CLEAN_BOT|MED_BOT
 	var/spam_enabled = 0 //Enables "Send to All" Option
 
@@ -45,12 +46,14 @@
 	name = "\improper Power-ON cartridge"
 	icon_state = "cart-e"
 	access_engine = 1
+	access_dronephone = 1
 	bot_access_flags = FLOOR_BOT
 
 /obj/item/weapon/cartridge/atmos
 	name = "\improper BreatheDeep cartridge"
 	icon_state = "cart-a"
 	access_atmos = 1
+	access_dronephone = 1
 	bot_access_flags = FLOOR_BOT
 
 /obj/item/weapon/cartridge/medical
@@ -84,6 +87,7 @@
 	desc = "The ultimate in clean-room design."
 	icon_state = "cart-j"
 	access_janitor = 1
+	access_dronephone = 1
 	bot_access_flags = CLEAN_BOT
 
 /obj/item/weapon/cartridge/lawyer
@@ -120,6 +124,7 @@
 	name = "\improper B.O.O.P. Remote Control cartridge"
 	desc = "Packed with heavy duty triple-bot interlink!"
 	bot_access_flags = FLOOR_BOT|CLEAN_BOT|MED_BOT
+	access_dronephone = 1
 
 /obj/item/weapon/cartridge/signal
 	name = "generic signaler cartridge"
@@ -161,6 +166,7 @@
 	access_security = 1
 	access_newscaster = 1
 	access_quartermaster = 1
+	access_dronephone = 1
 
 /obj/item/weapon/cartridge/hos
 	name = "\improper R.O.B.U.S.T. DELUXE cartridge"
@@ -178,6 +184,7 @@
 	access_status_display = 1
 	access_engine = 1
 	access_atmos = 1
+	access_dronephone = 1
 	bot_access_flags = FLOOR_BOT
 
 /obj/item/weapon/cartridge/cmo
@@ -196,6 +203,7 @@
 	access_status_display = 1
 	access_reagent_scanner = 1
 	access_atmos = 1
+	access_dronephone = 1
 	bot_access_flags = FLOOR_BOT|CLEAN_BOT|MED_BOT
 
 /obj/item/weapon/cartridge/rd/New()
@@ -216,6 +224,7 @@
 	access_newscaster = 1
 	access_quartermaster = 1
 	access_janitor = 1
+	access_dronephone = 1
 	bot_access_flags = SEC_BOT|MULE_BOT|FLOOR_BOT|CLEAN_BOT|MED_BOT
 	spam_enabled = 1
 

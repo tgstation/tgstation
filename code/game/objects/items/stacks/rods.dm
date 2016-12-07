@@ -11,7 +11,7 @@ var/global/list/datum/stack_recipe/rod_recipes = list ( \
 	icon_state = "rods"
 	item_state = "rods"
 	flags = CONDUCT
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 	force = 9
 	throwforce = 10
 	throw_speed = 3
@@ -49,7 +49,7 @@ var/global/list/datum/stack_recipe/rod_recipes = list ( \
 						 "<span class='italics'>You hear welding.</span>")
 			var/obj/item/stack/rods/R = src
 			src = null
-			var/replace = (user.get_inactive_hand()==R)
+			var/replace = (user.get_inactive_held_item()==R)
 			R.use(2)
 			if (!R && replace)
 				user.put_in_hands(new_item)
@@ -58,7 +58,7 @@ var/global/list/datum/stack_recipe/rod_recipes = list ( \
 		var/obj/item/weapon/reagent_containers/food/snacks/S = W
 		if(amount != 1)
 			user << "<span class='warning'>You must use a single rod!</span>"
-		else if(S.w_class > 2)
+		else if(S.w_class > WEIGHT_CLASS_SMALL)
 			user << "<span class='warning'>The ingredient is too big for [src]!</span>"
 		else
 			var/obj/item/weapon/reagent_containers/food/snacks/customizable/A = new/obj/item/weapon/reagent_containers/food/snacks/customizable/kebab(get_turf(src))
@@ -66,7 +66,7 @@ var/global/list/datum/stack_recipe/rod_recipes = list ( \
 	else
 		return ..()
 
-/obj/item/stack/rods/cyborg/
+/obj/item/stack/rods/cyborg
 	materials = list()
 	is_cyborg = 1
 	cost = 250

@@ -4,10 +4,11 @@
 	icon_state = "skeleton"
 	icon_living = "skeleton"
 	icon_dead = "skeleton"
+	gender = NEUTER
 	turns_per_move = 5
 	speak_emote = list("rattles")
 	emote_see = list("rattles")
-	a_intent = "harm"
+	a_intent = INTENT_HARM
 	maxHealth = 40
 	health = 40
 	speed = 1
@@ -21,7 +22,6 @@
 	attack_sound = 'sound/hallucinations/growl1.ogg'
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	unsuitable_atmos_damage = 10
-	environment_smash = 1
 	robust_searching = 1
 	stat_attack = 1
 	gold_core_spawnable = 1
@@ -63,13 +63,14 @@
 	speak_chance = 1
 	speak = list("THE GODS WILL IT!","DEUS VULT!","REMOVE KABAB!")
 	force_threshold = 10 //trying to simulate actually having armor
+	obj_damage = 50
 	melee_damage_lower = 25
 	melee_damage_upper = 30
 	deathmessage = "collapses into a pile of bones, its gear clanging as it hits the ground!"
 	loot = list(/obj/effect/decal/remains/human,
 				/obj/item/clothing/suit/armor/riot/knight/templar,
 				/obj/item/clothing/head/helmet/knight/templar,
-				/obj/item/weapon/claymore/hog{name = "holy sword"})
+				/obj/item/weapon/claymore/weak{name = "holy sword"})
 
 /mob/living/simple_animal/hostile/skeleton/ice
 	name = "ice skeleton"

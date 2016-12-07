@@ -1,84 +1,103 @@
 /obj/structure/transit_tube_pod
-	icon = 'icons/obj/atmospherics/pipes/transit_tube_pod.dmi'
+	icon = 'icons/obj/atmospherics/pipes/transit_tube.dmi'
 	icon_state = "pod"
 	animate_movement = FORWARD_STEPS
 	anchored = 1
 	density = 1
+	layer = BELOW_OBJ_LAYER
 	var/moving = 0
 	var/datum/gas_mixture/air_contents = new()
 
 
 /obj/structure/transit_tube_pod/New(loc)
-	..(loc)
-
+	..()
 	air_contents.assert_gases("o2", "n2")
 	air_contents.gases["o2"][MOLES] = MOLES_O2STANDARD * 2
 	air_contents.gases["n2"][MOLES] = MOLES_N2STANDARD
 	air_contents.temperature = T20C
 
-	// Give auto tubes time to align before trying to start moving
-	spawn(5)
-		follow_tube()
 
 /obj/structure/transit_tube_pod/Destroy()
-	for(var/atom/movable/AM in contents)
-		AM.loc = loc
-
+	empty_pod()
 	return ..()
+
+/obj/structure/transit_tube_pod/update_icon()
+	if(contents.len)
+		icon_state = "pod_occupied"
+	else
+		icon_state = "pod"
 
 /obj/structure/transit_tube_pod/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/crowbar))
 		if(!moving)
-			for(var/obj/structure/transit_tube/station/T in loc)
-				return
-			if(src.contents.len)
+			playsound(src.loc, I.usesound, 50, 1)
+			if(contents.len)
 				user.visible_message("[user] empties \the [src].", "<span class='notice'>You empty \the [src].</span>")
-				src.empty()
-				return
+				empty_pod()
 			else
-				user << "<span class='notice'>You free \the [src].</span>"
-				var/obj/structure/c_transit_tube_pod/R = new/obj/structure/c_transit_tube_pod(src.loc)
-				src.transfer_fingerprints_to(R)
-				R.add_fingerprint(user)
-				qdel(src)
+				deconstruct(TRUE, user)
 	else
 		return ..()
 
-/obj/structure/transit_tube_pod/container_resist()
-	var/mob/living/user = usr
+/obj/structure/transit_tube_pod/deconstruct(disassembled = TRUE, mob/user)
+	if(!(flags & NODECONSTRUCT))
+		var/atom/location = get_turf(src)
+		if(user)
+			location = user.loc
+			add_fingerprint(user)
+			user.visible_message("[user] removes [src].", "<span class='notice'>You remove [src].</span>")
+		var/obj/structure/c_transit_tube_pod/R = new/obj/structure/c_transit_tube_pod(location)
+		transfer_fingerprints_to(R)
+		R.setDir(dir)
+		empty_pod(location)
+	qdel(src)
+
+/obj/structure/transit_tube_pod/ex_act(severity, target)
+	..()
+	if(!qdeleted(src))
+		empty_pod()
+
+/obj/structure/transit_tube_pod/contents_explosion(severity, target)
+	for(var/atom/movable/AM in contents)
+		AM.ex_act(severity, target)
+
+/obj/structure/transit_tube_pod/singularity_pull(S, current_size)
+	if(current_size >= STAGE_FIVE)
+		deconstruct(FALSE)
+
+/obj/structure/transit_tube_pod/container_resist(mob/living/user)
 	if(!moving)
 		user.changeNext_move(CLICK_CD_BREAKOUT)
 		user.last_special = world.time + CLICK_CD_BREAKOUT
 		user << "<span class='notice'>You start trying to escape from the pod...</span>"
 		if(do_after(user, 600, target = src))
 			user << "<span class='notice'>You manage to open the pod.</span>"
-			src.empty()
+			empty_pod()
 
-/obj/structure/transit_tube_pod/proc/empty()
-	for(var/atom/movable/M in src.contents)
-		M.loc = src.loc
+/obj/structure/transit_tube_pod/proc/empty_pod(atom/location)
+	if(!location)
+		location = get_turf(src)
+	for(var/atom/movable/M in contents)
+		M.forceMove(location)
+	update_icon()
 
 /obj/structure/transit_tube_pod/Process_Spacemove()
 	if(moving) //No drifting while moving in the tubes
 		return 1
 	else return ..()
 
-/obj/structure/transit_tube_pod/proc/follow_tube(reverse_launch)
+/obj/structure/transit_tube_pod/proc/follow_tube()
 	set waitfor = 0
 	if(moving)
 		return
 
 	moving = 1
 
-
 	var/obj/structure/transit_tube/current_tube = null
 	var/next_dir
 	var/next_loc
 	var/last_delay = 0
 	var/exit_delay
-
-	if(reverse_launch)
-		setDir(turn(dir, 180) )// Back it up
 
 	for(var/obj/structure/transit_tube/tube in loc)
 		if(tube.has_exit(dir))
@@ -122,90 +141,38 @@
 	density = 1
 	moving = 0
 
+	var/obj/structure/transit_tube/TT = locate(/obj/structure/transit_tube) in loc
+	if(!TT || (!(dir in TT.tube_dirs) && !(turn(dir,180) in TT.tube_dirs)))	//landed on a turf without transit tube or not in our direction
+		deconstruct(FALSE)	//we automatically deconstruct the pod
 
-// Should I return a copy here? If the caller edits or del()s the returned
-//  datum, there might be problems if I don't...
 /obj/structure/transit_tube_pod/return_air()
-	var/datum/gas_mixture/GM = new()
-	GM.copy_from(air_contents)
-	return GM
+	return air_contents
 
-// For now, copying what I found in an unused FEA file (and almost identical in a
-//  used ZAS file). Means that assume_air and remove_air don't actually alter the
-//  air contents.
 /obj/structure/transit_tube_pod/assume_air(datum/gas_mixture/giver)
 	return air_contents.merge(giver)
 
 /obj/structure/transit_tube_pod/remove_air(amount)
 	return air_contents.remove(amount)
 
-
-
-// Called when a pod arrives at, and before a pod departs from a station,
-//  giving it a chance to mix its internal air supply with the turf it is
-//  currently on.
-/obj/structure/transit_tube_pod/proc/mix_air()
-	var/datum/gas_mixture/environment = loc.return_air()
-	var/env_pressure = environment.return_pressure()
-	var/int_pressure = air_contents.return_pressure()
-	var/total_pressure = env_pressure + int_pressure
-
-	if(total_pressure == 0)
-		return
-
-	// Math here: Completely made up, not based on realistic equasions.
-	//  Goal is to balance towards equal pressure, but ensure some gas
-	//  transfer in both directions regardless.
-	// Feel free to rip this out and replace it with something better,
-	//  I don't really know muhch about how gas transfer rates work in
-	//  SS13.
-	var/transfer_in = max(0.1, 0.5 * (env_pressure - int_pressure) / total_pressure)
-	var/transfer_out = max(0.1, 0.3 * (int_pressure - env_pressure) / total_pressure)
-
-	var/datum/gas_mixture/from_env = loc.remove_air(environment.total_moles() * transfer_in)
-	var/datum/gas_mixture/from_int = air_contents.remove(air_contents.total_moles() * transfer_out)
-
-	loc.assume_air(from_int)
-	air_contents.merge(from_env)
-
-
-
-// When the player moves, check if the pos is currently stopped at a station.
-//  if it is, check the direction. If the direction matches the direction of
-//  the station, try to exit. If the direction matches one of the station's
-//  tube directions, launch the pod in that direction.
 /obj/structure/transit_tube_pod/relaymove(mob/mob, direction)
-	if(istype(mob, /mob) && mob.client)
-		// If the pod is not in a tube at all, you can get out at any time.
-		if(!(locate(/obj/structure/transit_tube) in loc))
-			mob.loc = loc
-			mob.client.Move(get_step(loc, direction), direction)
-			mob.reset_perspective(null)
-
-			//if(moving && istype(loc, /turf/open/space))
-				// Todo: If you get out of a moving pod in space, you should move as well.
-				//  Same direction as pod? Direcion you moved? Halfway between?
-
+	if(istype(mob) && mob.client)
 		if(!moving)
 			for(var/obj/structure/transit_tube/station/station in loc)
-				if(dir in station.directions())
-					if(!station.pod_moving)
-						if(direction == station.dir)
-							if(station.icon_state == "open")
-								mob.loc = loc
-								mob.client.Move(get_step(loc, direction), direction)
-								mob.reset_perspective(null)
+				if(!station.pod_moving)
+					if(direction == turn(station.boarding_dir,180))
+						if(station.open_status == STATION_TUBE_OPEN)
+							mob.forceMove(loc)
+							update_icon()
+						else
+							station.open_animation()
 
-							else
-								station.open_animation()
+					else if(direction in station.tube_dirs)
+						setDir(direction)
+						station.launch_pod()
+				return
 
-						else if(direction in station.directions())
-							setDir(direction)
-							station.launch_pod()
-					return
-
-			for(var/obj/structure/transit_tube/tube in loc)
-				if(dir in tube.directions())
-					if(tube.has_exit(direction))
+			for(var/obj/structure/transit_tube/TT in loc)
+				if(dir in TT.tube_dirs)
+					if(TT.has_exit(direction))
 						setDir(direction)
 						return

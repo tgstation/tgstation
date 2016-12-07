@@ -51,7 +51,7 @@
 	CHECK_DNA_AND_SPECIES(src)
 
 	// how do species that don't breathe talk? magic, that's what.
-	if(!(NOBREATH in dna.species.specflags) && !getorganslot("lungs"))
+	if(!(NOBREATH in dna.species.species_traits) && !getorganslot("lungs"))
 		return 0
 	if(mind)
 		return !mind.miming

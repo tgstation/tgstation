@@ -5,7 +5,7 @@
 	desc = "A glowing bluespace crystal, not much is known about how they work. It looks very delicate."
 	icon = 'icons/obj/telescience.dmi'
 	icon_state = "bluespace_crystal"
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 	origin_tech = "bluespace=6;materials=3"
 	points = 50
 	var/blink_range = 8 // The teleport range when crushed/thrown at someone.
@@ -54,7 +54,7 @@
 	icon = 'icons/obj/telescience.dmi'
 	icon_state = "polycrystal"
 	desc = "A stable polycrystal, made of fused-together bluespace crystals. You could probably break one off."
-	origin_tech = "bluespace=6;minerals=3"
+	origin_tech = "bluespace=6;materials=3"
 	attack_verb = list("bluespace polybashed", "bluespace polybattered", "bluespace polybludgeoned", "bluespace polythrashed", "bluespace polysmashed")
 
 /obj/item/stack/sheet/bluespace_crystal/attack_self(mob/user) // to prevent the construction menu from ever happening
@@ -62,7 +62,7 @@
 	return
 
 /obj/item/stack/sheet/bluespace_crystal/attack_hand(mob/user)
-	if (user.get_inactive_hand() == src)
+	if (user.get_inactive_held_item() == src)
 		if(zero_amount()) // in this case, a sanity check
 			return
 		var/obj/item/weapon/ore/bluespace_crystal/BC = new(src)

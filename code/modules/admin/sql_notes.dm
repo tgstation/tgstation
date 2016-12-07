@@ -1,4 +1,4 @@
-/proc/add_note(target_ckey, notetext, timestamp, adminckey, logged = 1, server)
+/proc/add_note(target_ckey, notetext, timestamp, adminckey, logged = 1, server, secret)
 	if(!dbcon.IsConnected())
 		usr << "<span class='danger'>Failed to establish database connection.</span>"
 		return
@@ -13,12 +13,12 @@
 			log_game("SQL ERROR obtaining ckey from player table. Error : \[[err]\]\n")
 			return
 		if(!query_find_ckey.NextRow())
-			if(alert(usr, "[new_ckey] has not been seen before, are you sure you want to add them to the watchlist?", "Unknown ckey", "Yes", "No", "Cancel") != "Yes")
+			if(alert(usr, "[new_ckey] has not been seen before, are you sure you want to add a note for them?", "Unknown ckey", "Yes", "No", "Cancel") != "Yes")
 				return
 		target_ckey = new_ckey
 	var/target_sql_ckey = sanitizeSQL(target_ckey)
 	if(!notetext)
-		notetext = input(usr,"Write your Note","Add Note") as message
+		notetext = input(usr,"Write your Note","Add Note") as null|message
 		if(!notetext)
 			return
 	notetext = sanitizeSQL(notetext)
@@ -33,7 +33,15 @@
 		if (config && config.server_name)
 			server = config.server_name
 	server = sanitizeSQL(server)
-	var/DBQuery/query_noteadd = dbcon.NewQuery("INSERT INTO [format_table_name("notes")] (ckey, timestamp, notetext, adminckey, server) VALUES ('[target_sql_ckey]', '[timestamp]', '[notetext]', '[admin_sql_ckey]', '[server]')")
+	if(isnull(secret))
+		switch(alert("Hide note from being viewed by players?", "Secret Note?","Yes","No","Cancel"))
+			if("Yes")
+				secret = 1
+			if("No")
+				secret = 0
+			else
+				return
+	var/DBQuery/query_noteadd = dbcon.NewQuery("INSERT INTO [format_table_name("notes")] (ckey, timestamp, notetext, adminckey, server, secret) VALUES ('[target_sql_ckey]', '[timestamp]', '[notetext]', '[admin_sql_ckey]', '[server]', '[secret]')")
 	if(!query_noteadd.Execute())
 		var/err = query_noteadd.ErrorMsg()
 		log_game("SQL ERROR adding new note to table. Error : \[[err]\]\n")
@@ -89,7 +97,7 @@
 		target_ckey = query_find_note_edit.item[1]
 		var/old_note = query_find_note_edit.item[2]
 		var/adminckey = query_find_note_edit.item[3]
-		var/new_note = input("Input new note", "New Note", "[old_note]") as message
+		var/new_note = input("Input new note", "New Note", "[old_note]") as null|message
 		if(!new_note)
 			return
 		new_note = sanitizeSQL(new_note)
@@ -102,6 +110,33 @@
 			return
 		log_admin("[key_name(usr)] has edited [target_ckey]'s note made by [adminckey] from [old_note] to [new_note]")
 		message_admins("[key_name_admin(usr)] has edited [target_ckey]'s note made by [adminckey] from<br>[old_note]<br>to<br>[new_note]")
+		show_note(target_ckey)
+
+/proc/toggle_note_secrecy(note_id)
+	if(!dbcon.IsConnected())
+		usr << "<span class='danger'>Failed to establish database connection.</span>"
+		return
+	if(!note_id)
+		return
+	note_id = text2num(note_id)
+	var/DBQuery/query_find_note_secret = dbcon.NewQuery("SELECT ckey, adminckey, secret FROM [format_table_name("notes")] WHERE id = [note_id]")
+	if(!query_find_note_secret.Execute())
+		var/err = query_find_note_secret.ErrorMsg()
+		log_game("SQL ERROR obtaining ckey, adminckey, secret from notes table. Error : \[[err]\]\n")
+		return
+	if(query_find_note_secret.NextRow())
+		var/target_ckey = query_find_note_secret.item[1]
+		var/adminckey = query_find_note_secret.item[2]
+		var/secret = text2num(query_find_note_secret.item[3])
+		var/sql_ckey = sanitizeSQL(usr.ckey)
+		var/edit_text = "Made [secret ? "not secret" : "secret"] by [sql_ckey] on [SQLtime()]<hr>"
+		var/DBQuery/query_update_note = dbcon.NewQuery("UPDATE [format_table_name("notes")] SET secret = NOT secret, last_editor = '[sql_ckey]', edits = CONCAT(IFNULL(edits,''),'[edit_text]') WHERE id = [note_id]")
+		if(!query_update_note.Execute())
+			var/err = query_update_note.ErrorMsg()
+			log_game("SQL ERROR toggling note secrecy. Error : \[[err]\]\n")
+			return
+		log_admin("[key_name(usr)] has toggled [target_ckey]'s note made by [adminckey] to [secret ? "not secret" : "secret"]")
+		message_admins("[key_name_admin(usr)] has toggled [target_ckey]'s note made by [adminckey] to [secret ? "not secret" : "secret"]")
 		show_note(target_ckey)
 
 /proc/show_note(target_ckey, index, linkless = 0)
@@ -120,25 +155,31 @@
 		output = navbar
 	if(target_ckey)
 		var/target_sql_ckey = sanitizeSQL(target_ckey)
-		var/DBQuery/query_get_notes = dbcon.NewQuery("SELECT id, timestamp, notetext, adminckey, last_editor, server FROM [format_table_name("notes")] WHERE ckey = '[target_sql_ckey]' ORDER BY timestamp")
+		var/DBQuery/query_get_notes = dbcon.NewQuery("SELECT secret, timestamp, notetext, adminckey, last_editor, server, id FROM [format_table_name("notes")] WHERE ckey = '[target_sql_ckey]' ORDER BY timestamp")
 		if(!query_get_notes.Execute())
 			var/err = query_get_notes.ErrorMsg()
-			log_game("SQL ERROR obtaining ckey, notetext, adminckey, last_editor, server from notes table. Error : \[[err]\]\n")
+			log_game("SQL ERROR obtaining secret, timestamp, notetext, adminckey, last_editor, server, id from notes table. Error : \[[err]\]\n")
 			return
 		output += "<h2><center>Notes of [target_ckey]</center></h2>"
 		if(!linkless)
-			output += "<center><a href='?_src_=holder;addnote=[target_ckey]'>\[Add Note\]</a></center>"
+			output += "<center><a href='?_src_=holder;addnote=[target_ckey]'>\[Add Note\]</a>"
+			output += " <a href='?_src_=holder;shownoteckey=[target_ckey]'>\[Refresh Page\]</a></center>"
+		else
+			output += " <a href='?_src_=holder;shownoteckeylinkless=[target_ckey]'>\[Refresh Page\]</a></center>"
 		output += ruler
 		while(query_get_notes.NextRow())
-			var/id = query_get_notes.item[1]
+			var/secret = text2num(query_get_notes.item[1])
+			if(linkless && secret)
+				continue
 			var/timestamp = query_get_notes.item[2]
 			var/notetext = query_get_notes.item[3]
 			var/adminckey = query_get_notes.item[4]
 			var/last_editor = query_get_notes.item[5]
 			var/server = query_get_notes.item[6]
+			var/id = query_get_notes.item[7]
 			output += "<b>[timestamp] | [server] | [adminckey]</b>"
 			if(!linkless)
-				output += " <a href='?_src_=holder;removenote=[id]'>\[Remove Note\]</a> <a href='?_src_=holder;editnote=[id]'>\[Edit Note\]</a>"
+				output += " <a href='?_src_=holder;removenote=[id]'>\[Remove Note\]</a> <a href='?_src_=holder;secretnote=[id]'>[secret ? "<b>\[Secret\]</b>" : "\[Not Secret\]"]</a> <a href='?_src_=holder;editnote=[id]'>\[Edit Note\]</a>"
 				if(last_editor)
 					output += " <font size='2'>Last edit by [last_editor] <a href='?_src_=holder;noteedits=[id]'>(Click here to see edit log)</a></font>"
 			output += "<br>[notetext]<hr style='background:#000000; border:0; height:1px'>"
@@ -196,7 +237,7 @@
 		if(query_convert_time.NextRow())
 			timestamp = query_convert_time.item[1]
 		if(ckey && notetext && timestamp && adminckey && server)
-			add_note(ckey, notetext, timestamp, adminckey, 0, server)
+			add_note(ckey, notetext, timestamp, adminckey, 0, server, 1)
 	notesfile.cd = "/"
 	notesfile.dir.Remove(ckey)
 

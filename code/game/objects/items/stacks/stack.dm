@@ -78,12 +78,6 @@
 		var/title as text
 		var/can_build = 1
 		can_build = can_build && (max_multiplier>0)
-		/*
-		if (R.one_per_turf)
-			can_build = can_build && !(locate(R.result_type) in usr.loc)
-		if (R.on_floor)
-			can_build = can_build && istype(usr.loc, /turf/open/floor)
-		*/
 		if (R.res_amount>1)
 			title+= "[R.res_amount]x [R.title]\s"
 		else
@@ -111,7 +105,7 @@
 
 /obj/item/stack/Topic(href, href_list)
 	..()
-	if ((usr.restrained() || usr.stat || usr.get_active_hand() != src))
+	if (usr.restrained() || usr.stat || usr.get_active_held_item() != src)
 		return
 	if (href_list["make"])
 		if (src.get_amount() < 1) qdel(src) //Never should happen
@@ -137,6 +131,7 @@
 		if (R.max_res_amount > 1)
 			var/obj/item/stack/new_item = O
 			new_item.amount = R.res_amount*multiplier
+			new_item.update_icon()
 
 			if(new_item.amount <= 0)//if the stack is empty, i.e it has been merged with an existing stack and has been garbage collected
 				return
@@ -167,7 +162,7 @@
 	if (R.one_per_turf && (locate(R.result_type) in usr.loc))
 		usr << "<span class='warning'>There is another [R.title] here!</span>"
 		return 0
-	if (R.on_floor && !istype(usr.loc, /turf/open/floor))
+	if(R.on_floor && !isfloorturf(usr.loc))
 		usr << "<span class='warning'>\The [R.title] must be constructed on the floor!</span>"
 		return 0
 	return 1
@@ -200,6 +195,8 @@
 	update_icon()
 
 /obj/item/stack/proc/merge(obj/item/stack/S) //Merge src into S, as much as possible
+	if(S == src) //amusingly this can cause a stack to consume itself, let's not allow that.
+		return
 	var/transfer = get_amount()
 	if(S.is_cyborg)
 		transfer = min(transfer, round((S.source.max_energy - S.source.energy) / S.cost))
@@ -222,21 +219,43 @@
 	return ..()
 
 /obj/item/stack/attack_hand(mob/user)
-	if (user.get_inactive_hand() == src)
+	if (user.get_inactive_held_item() == src)
 		if(zero_amount())
 			return
-		var/obj/item/stack/F = new src.type(user, 1)
-		. = F
-		F.copy_evidences(src)
-		user.put_in_hands(F)
-		src.add_fingerprint(user)
-		F.add_fingerprint(user)
-		use(1)
-		if (src && usr.machine==src)
-			spawn(0) src.interact(usr)
+		change_stack(user,1)
 	else
 		..()
 	return
+
+/obj/item/stack/AltClick(mob/living/user)
+	if(!istype(user) || !user.canUseTopic(src))
+		user << "<span class='warning'>You can't do that right now!</span>"
+		return
+	if(!in_range(src, user))
+		return
+	else
+		if(zero_amount())
+			return
+		//get amount from user
+		var/min = 0
+		var/max = src.get_amount()
+		var/stackmaterial = input(user,"How many sheets do you wish to take out of this stack? (Maximum  [max]") as num
+		if(stackmaterial == null || stackmaterial <= min || stackmaterial >= src.get_amount())
+			return
+		else
+			change_stack(user,stackmaterial)
+			user << "<span class='notice'>You take [stackmaterial] sheets out of the stack</span>"
+
+/obj/item/stack/proc/change_stack(mob/user,amount)
+	var/obj/item/stack/F = new src.type(user, amount)
+	. = F
+	F.copy_evidences(src)
+	user.put_in_hands(F)
+	add_fingerprint(user)
+	F.add_fingerprint(user)
+	use(amount)
+
+
 
 /obj/item/stack/attackby(obj/item/W, mob/user, params)
 	if(istype(W, merge_type))
@@ -253,6 +272,10 @@
 	src.fingerprintslast  = from.fingerprintslast
 	//TODO bloody overlay
 
+/obj/item/stack/microwave_act(obj/machinery/microwave/M)
+	if(M && M.dirty < 100)
+		M.dirty += amount
+		
 /*
  * Recipe datum
  */

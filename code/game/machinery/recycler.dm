@@ -20,7 +20,7 @@ var/const/SAFETY_COOLDOWN = 100
 
 /obj/machinery/recycler/New()
 	..()
-	materials = new /datum/material_container(src, list(MAT_METAL, MAT_GLASS, MAT_PLASMA, MAT_SILVER, MAT_GOLD, MAT_DIAMOND, MAT_URANIUM, MAT_BANANIUM))
+	materials = new /datum/material_container(src, list(MAT_METAL, MAT_GLASS, MAT_PLASMA, MAT_SILVER, MAT_GOLD, MAT_DIAMOND, MAT_URANIUM, MAT_BANANIUM, MAT_TITANIUM))
 	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/recycler(null)
 	B.apply_default_parts(src)
 	update_icon()
@@ -116,9 +116,13 @@ var/const/SAFETY_COOLDOWN = 100
 
 	for(var/i in to_eat)
 		var/atom/movable/AM = i
-		if(isliving(AM))
+		var/obj/item/bodypart/head/as_head = AM
+		var/obj/item/device/mmi/as_mmi = AM
+		var/brain_holder = istype(AM, /obj/item/organ/brain) || (istype(as_head) && as_head.brain) || (istype(as_mmi) && as_mmi.brain)
+		if(isliving(AM) || brain_holder)
 			if(emagged)
-				crush_living(AM)
+				if(!brain_holder)
+					crush_living(AM)
 			else
 				emergency_stop(AM)
 		else if(istype(AM, /obj/item))

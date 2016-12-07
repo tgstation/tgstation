@@ -5,7 +5,7 @@
 	item_state = "cultblade"
 	flags = CONDUCT
 	sharpness = IS_SHARP
-	w_class = 4
+	w_class = WEIGHT_CLASS_BULKY
 	force = 30
 	throwforce = 10
 	hitsound = 'sound/weapons/bladeslice.ogg'
@@ -45,7 +45,7 @@
 	desc = "A strange dagger said to be used by sinister groups for \"preparing\" a corpse before sacrificing it to their dark gods."
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "render"
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	force = 15
 	throwforce = 25
 	embed_chance = 75
@@ -73,7 +73,7 @@
 	desc = "A torn, dust-caked hood. Strange letters line the inside."
 	flags_inv = HIDEFACE|HIDEHAIR|HIDEEARS
 	flags_cover = HEADCOVERSEYES
-	armor = list(melee = 30, bullet = 10, laser = 5,energy = 5, bomb = 0, bio = 0, rad = 0)
+	armor = list(melee = 30, bullet = 10, laser = 5,energy = 5, bomb = 0, bio = 0, rad = 0, fire = 10, acid = 10)
 	cold_protection = HEAD
 	min_cold_protection_temperature = HELMET_MIN_TEMP_PROTECT
 	heat_protection = HEAD
@@ -86,7 +86,7 @@
 	item_state = "cultrobes"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	allowed = list(/obj/item/weapon/tome,/obj/item/weapon/melee/cultblade)
-	armor = list(melee = 50, bullet = 30, laser = 50,energy = 20, bomb = 25, bio = 10, rad = 0)
+	armor = list(melee = 50, bullet = 30, laser = 50,energy = 20, bomb = 25, bio = 10, rad = 0, fire = 10, acid = 10)
 	flags_inv = HIDEJUMPSUIT
 	cold_protection = CHEST|GROIN|LEGS|ARMS
 	min_cold_protection_temperature = ARMOR_MIN_TEMP_PROTECT
@@ -113,7 +113,7 @@
 	item_state = "magus"
 	desc = "A helm worn by the followers of Nar-Sie."
 	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDEEARS|HIDEEYES
-	armor = list(melee = 30, bullet = 30, laser = 30,energy = 20, bomb = 0, bio = 0, rad = 0)
+	armor = list(melee = 30, bullet = 30, laser = 30,energy = 20, bomb = 0, bio = 0, rad = 0, fire = 10, acid = 10)
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 
 /obj/item/clothing/suit/magusred
@@ -123,7 +123,7 @@
 	item_state = "magusred"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	allowed = list(/obj/item/weapon/tome,/obj/item/weapon/melee/cultblade)
-	armor = list(melee = 50, bullet = 30, laser = 50,energy = 20, bomb = 25, bio = 10, rad = 0)
+	armor = list(melee = 50, bullet = 30, laser = 50,energy = 20, bomb = 25, bio = 10, rad = 0, fire = 10, acid = 10)
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 
 /obj/item/clothing/head/helmet/space/hardsuit/cult
@@ -131,7 +131,7 @@
 	desc = "A heavily-armored helmet worn by warriors of the Nar-Sien cult. It can withstand hard vacuum."
 	icon_state = "cult_helmet"
 	item_state = "cult_helmet"
-	armor = list(melee = 60, bullet = 50, laser = 30,energy = 15, bomb = 30, bio = 30, rad = 30)
+	armor = list(melee = 60, bullet = 50, laser = 30,energy = 15, bomb = 30, bio = 30, rad = 30, fire = 40, acid = 75)
 	brightness_on = 0
 	actions_types = list()
 
@@ -140,9 +140,9 @@
 	icon_state = "cult_armor"
 	item_state = "cult_armor"
 	desc = "A heavily-armored exosuit worn by warriors of the Nar-Sien cult. It can withstand hard vacuum."
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	allowed = list(/obj/item/weapon/tome,/obj/item/weapon/melee/cultblade,/obj/item/weapon/tank/internals/)
-	armor = list(melee = 70, bullet = 50, laser = 30,energy = 15, bomb = 30, bio = 30, rad = 30)
+	armor = list(melee = 70, bullet = 50, laser = 30,energy = 15, bomb = 30, bio = 30, rad = 30, fire = 40, acid = 75)
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/cult
 
 /obj/item/weapon/sharpener/cult
@@ -158,8 +158,8 @@
 	desc = "Empowered garb which creates a powerful shield around the user."
 	icon_state = "cult_armor"
 	item_state = "cult_armor"
-	w_class = 4
-	armor = list(melee = 50, bullet = 40, laser = 50,energy = 30, bomb = 50, bio = 30, rad = 30)
+	w_class = WEIGHT_CLASS_BULKY
+	armor = list(melee = 50, bullet = 40, laser = 50,energy = 30, bomb = 50, bio = 30, rad = 30, fire = 50, acid = 60)
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	allowed = list(/obj/item/weapon/tome,/obj/item/weapon/melee/cultblade)
 	var/current_charges = 3
@@ -170,7 +170,7 @@
 	name = "empowered cultist armor"
 	desc = "Empowered garb which creates a powerful shield around the user."
 	icon_state = "cult_hoodalt"
-	armor = list(melee = 50, bullet = 40, laser = 50,energy = 30, bomb = 50, bio = 30, rad = 30)
+	armor = list(melee = 50, bullet = 40, laser = 50,energy = 30, bomb = 50, bio = 30, rad = 30, fire = 50, acid = 50)
 	body_parts_covered = HEAD
 	flags = NODROP
 	flags_inv = HIDEHAIR|HIDEFACE|HIDEEARS
@@ -185,7 +185,7 @@
 			user.Dizzy(30)
 			user.Weaken(5)
 		else
-			user << "<span class='cultlarge'>\"Putting on things you don't own is bad, you know.\"</span>"
+			user << "<span class='cultlarge'>\"Trying to use things you don't own is bad, you know.\"</span>"
 			user << "<span class='userdanger'>The armor squeezes at your body!</span>"
 			user.emote("scream")
 			user.adjustBruteLoss(25)
@@ -215,7 +215,7 @@
 	flags_inv = HIDEJUMPSUIT
 	allowed = list(/obj/item/weapon/tome,/obj/item/weapon/melee/cultblade)
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
-	armor = list(melee = -100, bullet = -100, laser = -100,energy = -100, bomb = -100, bio = -100, rad = -100)
+	armor = list(melee = -50, bullet = -50, laser = -100,energy = -50, bomb = -50, bio = -50, rad = -50, fire = 0, acid = 0)
 	slowdown = -1
 	hooded = 1
 	hoodtype = /obj/item/clothing/head/berserkerhood
@@ -227,7 +227,7 @@
 	body_parts_covered = HEAD
 	flags = NODROP
 	flags_inv = HIDEHAIR|HIDEFACE|HIDEEARS
-	armor = list(melee = -100, bullet = -100, laser = -100,energy = -100, bomb = -100, bio = -100, rad = -100)
+	armor = list(melee = -50, bullet = -50, laser = -50, energy = -50, bomb = -50, bio = -50, rad = -50, fire = 0, acid = 0)
 
 /obj/item/clothing/suit/hooded/cultrobes/berserker/equipped(mob/living/user, slot)
 	..()
@@ -239,7 +239,7 @@
 			user.Dizzy(30)
 			user.Weaken(5)
 		else
-			user << "<span class='cultlarge'>\"Putting on things you don't own is bad, you know.\"</span>"
+			user << "<span class='cultlarge'>\"Trying to use things you don't own is bad, you know.\"</span>"
 			user << "<span class='userdanger'>The robes squeeze at your body!</span>"
 			user.emote("scream")
 			user.adjustBruteLoss(25)
@@ -286,7 +286,7 @@
 		user << "<span class='notice'>We have exhausted our ability to curse the shuttle.</span>"
 		return
 	if(SSshuttle.emergency.mode == SHUTTLE_CALL)
-		var/cursetime = 1500
+		var/cursetime = 1800
 		var/timer = SSshuttle.emergency.timeLeft(1) + cursetime
 		SSshuttle.emergency.setTimer(timer)
 		user << "<span class='danger'>You shatter the orb! A dark essence spirals into the air, then disappears.</span>"
@@ -295,12 +295,12 @@
 		sleep(20)
 		var/global/list/curses
 		if(!curses)
-			curses = list("A fuel technician just slit his own throat and begged for death. The shuttle will be delayed by two minutes.",
-			"The shuttle's navigation programming was replaced by a file containing two words, IT COMES. The shuttle will be delayed by two minutes.",
-			"The shuttle's custodian tore out his guts and began painting strange shapes on the floor. The shuttle will be delayed by two minutes.",
-			"A shuttle engineer began screaming 'DEATH IS NOT THE END' and ripped out wires until an arc flash seared off her flesh. The shuttle will be delayed by two minutes.",
-			"A shuttle inspector started laughing madly over the radio and then threw herself into an engine turbine. The shuttle will be delayed by two minutes.",
-			"The shuttle dispatcher was found dead with bloody symbols carved into their flesh. The shuttle will be delayed by two minutes.")
+			curses = list("A fuel technician just slit his own throat and begged for death. The shuttle will be delayed by three minutes.",
+			"The shuttle's navigation programming was replaced by a file containing two words, IT COMES. The shuttle will be delayed by three minutes.",
+			"The shuttle's custodian tore out his guts and began painting strange shapes on the floor. The shuttle will be delayed by three minutes.",
+			"A shuttle engineer began screaming 'DEATH IS NOT THE END' and ripped out wires until an arc flash seared off her flesh. The shuttle will be delayed by three minutes.",
+			"A shuttle inspector started laughing madly over the radio and then threw herself into an engine turbine. The shuttle will be delayed by three minutes.",
+			"The shuttle dispatcher was found dead with bloody symbols carved into their flesh. The shuttle will be delayed by three minutes.")
 		var/message = pick_n_take(curses)
 		priority_announce("[message]", "System Failure", 'sound/misc/notice1.ogg')
 		curselimit++
@@ -310,7 +310,7 @@
 	desc = "This relic teleports you forward a medium distance."
 	icon = 'icons/obj/cult.dmi'
 	icon_state ="shifter"
-	var/uses = 2
+	var/uses = 4
 
 /obj/item/device/cult_shift/examine(mob/user)
 	..()
@@ -333,7 +333,7 @@
 	if(!iscultist(user))
 		user.unEquip(src, 1)
 		step(src, pick(alldirs))
-		user << "<span class='warning'>\The [src] flickers out of your hands, too eager to move!</span>"
+		user << "<span class='warning'>\The [src] flickers out of your hands, your connection to this dimension is too strong!</span>"
 		return
 
 	var/mob/living/carbon/C = user
@@ -345,16 +345,67 @@
 		if(uses <= 0)
 			icon_state ="shifter_drained"
 		playsound(mobloc, "sparks", 50, 1)
-		PoolOrNew(/obj/effect/overlay/temp/cult/phase/out, list(mobloc, C.dir))
+		PoolOrNew(/obj/effect/overlay/temp/dir_setting/cult/phase/out, list(mobloc, C.dir))
 
 		var/atom/movable/pulled = handle_teleport_grab(destination, C)
 		C.forceMove(destination)
 		if(pulled)
 			C.start_pulling(pulled) //forcemove resets pulls, so we need to re-pull
 
-		PoolOrNew(/obj/effect/overlay/temp/cult/phase, list(destination, C.dir))
+		PoolOrNew(/obj/effect/overlay/temp/dir_setting/cult/phase, list(destination, C.dir))
 		playsound(destination, 'sound/effects/phasein.ogg', 25, 1)
 		playsound(destination, "sparks", 50, 1)
 
 	else
 		C << "<span class='danger'>The veil cannot be torn here!</span>"
+
+/obj/item/device/flashlight/flare/culttorch
+	name = "void torch"
+	desc = "Used by veteran cultists to instantly transport items to their needful bretheren."
+	w_class = WEIGHT_CLASS_SMALL
+	brightness_on = 1
+	icon_state = "torch-on"
+	item_state = "torch-on"
+	color = "#ff0000"
+	on_damage = 15
+	slot_flags = null
+	on = 1
+	var/charges = 3
+
+/obj/item/device/flashlight/flare/culttorch/afterattack(atom/movable/A, mob/user, proximity)
+	if(!proximity)
+		return
+
+	if(istype(A, /obj/item))
+
+		var/list/cultists = list()
+		for(var/datum/mind/M in ticker.mode.cult)
+			if(!(user) && M.current && M.current.stat != DEAD)
+				cultists |= M.current
+		var/mob/living/cultist_to_receive = input(user, "Who do you wish to call to [src]?", "Followers of the Geometer") as null|anything in cultists
+		if(!Adjacent(user) || !src || qdeleted(src) || user.incapacitated())
+			return
+		if(!cultist_to_receive)
+			user << "<span class='cultitalic'>You require a destination!</span>"
+			log_game("Void torch failed - no target")
+			return
+		if(cultist_to_receive.stat == DEAD)
+			user << "<span class='cultitalic'>[cultist_to_receive] has died!</span>"
+			log_game("Void torch failed  - target died")
+			return
+		if(!iscultist(cultist_to_receive))
+			user << "<span class='cultitalic'>[cultist_to_receive] is not a follower of the Geometer!</span>"
+			log_game("Void torch failed - target was deconverted")
+			return
+		user << "<span class='cultitalic'>You ignite [A] with \the [src], turning it to ash, but through the torch's flames you see that [A] has reached [cultist_to_receive]!"
+		user << "\The [src] now has [charges] charge\s."
+		cultist_to_receive.put_in_hands(A)
+		charges--
+		if(charges == 0)
+			qdel(src)
+
+	else
+		..()
+		user << "<span class='warning'>\The [src] can only transport items!</span>"
+		return
+

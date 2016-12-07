@@ -3,7 +3,7 @@
 	desc = "A device that can record to cassette tapes, and play them. It automatically translates the content in playback."
 	icon_state = "taperecorder_empty"
 	item_state = "analyzer"
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	flags = HEAR
 	slot_flags = SLOT_BELT
 	languages_spoken = ALL //this is a translator, after all.
@@ -47,14 +47,14 @@
 		mytape = null
 		update_icon()
 
-/obj/item/device/taperecorder/fire_act()
+/obj/item/device/taperecorder/fire_act(exposed_temperature, exposed_volume)
 	mytape.ruin() //Fires destroy the tape
-	return()
+	..()
 
 /obj/item/device/taperecorder/attack_hand(mob/user)
 	if(loc == user)
 		if(mytape)
-			if(user.l_hand != src && user.r_hand != src)
+			if(!user.is_holding(src))
 				..()
 				return
 			eject(user)
@@ -238,7 +238,7 @@
 	desc = "A magnetic tape that can hold up to ten minutes of content."
 	icon_state = "tape_white"
 	item_state = "analyzer"
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 	materials = list(MAT_METAL=20, MAT_GLASS=5)
 	force = 1
 	throwforce = 0
@@ -248,8 +248,9 @@
 	var/list/timestamp = list()
 	var/ruined = 0
 
-/obj/item/device/tape/fire_act()
+/obj/item/device/tape/fire_act(exposed_temperature, exposed_volume)
 	ruin()
+	..()
 
 /obj/item/device/tape/attack_self(mob/user)
 	if(!ruined)
@@ -258,7 +259,10 @@
 
 
 /obj/item/device/tape/proc/ruin()
-	add_overlay("ribbonoverlay")
+	//Lets not add infinite amounts of overlays when our fireact is called
+	//repeatedly
+	if(!ruined)
+		add_overlay("ribbonoverlay")
 	ruined = 1
 
 

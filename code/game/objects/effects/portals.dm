@@ -1,14 +1,10 @@
 
-/obj/effect
-	icon = 'icons/effects/effects.dmi'
-
 /obj/effect/portal
 	name = "portal"
 	desc = "Looks unstable. Best to test it with the clown."
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "portal"
 	density = 1
-	unacidable = 1//Can't destroy energy portals.
 	var/obj/item/target = null
 	var/creator = null
 	anchored = 1
@@ -61,7 +57,7 @@
 		qdel(src)
 		return
 	if (istype(M, /atom/movable))
-		if(istype(M, /mob/living/simple_animal/hostile/megafauna))
+		if(ismegafauna(M))
 			message_admins("[M] (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[M]'>FLW</A>) has teleported through [src].")
 		do_teleport(M, target, precision) ///You will appear adjacent to the beacon
 

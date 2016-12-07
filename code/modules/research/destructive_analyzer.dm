@@ -45,7 +45,7 @@ Note: Must be placed within 3 tiles of the R&D Console
 	..()
 
 /obj/machinery/r_n_d/destructive_analyzer/Insert_Item(obj/item/O, mob/user)
-	if(user.a_intent != "harm")
+	if(user.a_intent != INTENT_HARM)
 		. = 1
 		if(!is_insertion_ready(user))
 			return
@@ -61,7 +61,7 @@ Note: Must be placed within 3 tiles of the R&D Console
 			return
 		busy = 1
 		loaded_item = O
-		O.loc = src
+		O.forceMove(src)
 		user << "<span class='notice'>You add the [O.name] to the [src.name]!</span>"
 		flick("d_analyzer_la", src)
 		spawn(10)

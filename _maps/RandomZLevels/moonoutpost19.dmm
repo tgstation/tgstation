@@ -82,7 +82,7 @@
 /obj/structure/alien/weeds,
 /obj/structure/alien/weeds{
 	desc = "A large mottled egg.";
-	health = 100;
+	obj_integrity = 100;
 	icon_state = "egg_hatched";
 	name = "egg"
 	},
@@ -105,7 +105,7 @@
 	},
 /obj/structure/alien/weeds{
 	desc = "A large mottled egg.";
-	health = 100;
+	obj_integrity = 100;
 	icon_state = "egg_hatched";
 	name = "egg"
 	},
@@ -177,7 +177,7 @@
 	},
 /obj/structure/alien/weeds{
 	desc = "A large mottled egg.";
-	health = 100;
+	obj_integrity = 100;
 	icon_state = "egg_hatched";
 	name = "egg"
 	},
@@ -249,12 +249,8 @@
 /obj/structure/alien/weeds,
 /obj/structure/bed/nest,
 /obj/effect/decal/cleanable/blood/gibs,
-/obj/item/clothing/mask/facehugger{
-	icon_state = "facehugger_impregnated";
-	item_state = "facehugger_impregnated";
-	stat = 2
-	},
-/obj/item/weapon/gun/projectile/automatic/pistol,
+/obj/item/clothing/mask/facehugger/impregnated,
+/obj/item/weapon/gun/ballistic/automatic/pistol,
 /turf/open/floor/plating/asteroid{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	heat_capacity = 1e+006
@@ -462,11 +458,7 @@
 	},
 /obj/structure/bed/nest,
 /obj/effect/decal/cleanable/blood/gibs,
-/obj/item/clothing/mask/facehugger{
-	icon_state = "facehugger_impregnated";
-	item_state = "facehugger_impregnated";
-	stat = 2
-	},
+/obj/item/clothing/mask/facehugger/impregnated,
 /obj/item/clothing/under/rank/security,
 /obj/item/clothing/suit/armor/vest,
 /obj/item/weapon/melee/baton/loaded,
@@ -536,7 +528,7 @@
 	},
 /obj/structure/alien/weeds{
 	desc = "A large mottled egg.";
-	health = 100;
+	obj_integrity = 100;
 	icon_state = "egg_hatched";
 	name = "egg"
 	},
@@ -558,7 +550,7 @@
 /obj/structure/alien/weeds,
 /obj/structure/alien/weeds{
 	desc = "A large mottled egg.";
-	health = 100;
+	obj_integrity = 100;
 	icon_state = "egg_hatched";
 	name = "egg"
 	},
@@ -891,11 +883,7 @@
 /obj/structure/bed/nest,
 /obj/effect/decal/cleanable/blood/gibs,
 /obj/effect/decal/cleanable/blood,
-/obj/item/clothing/mask/facehugger{
-	icon_state = "facehugger_impregnated";
-	item_state = "facehugger_impregnated";
-	stat = 2
-	},
+/obj/item/clothing/mask/facehugger/impregnated,
 /obj/item/clothing/under/syndicate,
 /obj/item/clothing/glasses/night,
 /turf/open/floor/plating/asteroid{
@@ -1970,7 +1958,7 @@
 "cG" = (
 /obj/structure/grille{
 	density = 0;
-	destroyed = 1;
+	broken = 1;
 	icon_state = "brokengrille"
 	},
 /obj/item/stack/rods,
@@ -2911,11 +2899,7 @@
 /obj/item/clothing/suit/space/syndicate/orange,
 /obj/item/clothing/mask/gas,
 /obj/item/clothing/head/helmet/space/syndicate/orange,
-/obj/item/clothing/mask/facehugger{
-	icon_state = "facehugger_impregnated";
-	item_state = "facehugger_impregnated";
-	stat = 2
-	},
+/obj/item/clothing/mask/facehugger/impregnated,
 /turf/open/floor/plating/asteroid{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	heat_capacity = 1e+006
@@ -3117,15 +3101,13 @@
 /obj/machinery/door/poddoor/preopen{
 	desc = "A heavy duty blast door that opens mechanically. This one has been applied with an acid-proof coating.";
 	id = "Awaybiohazard";
-	name = "Acid-Proof biohazard containment door";
-	unacidable = 1
+	name = "Acid-Proof biohazard containment door"
 	},
 /obj/machinery/door/poddoor{
 	desc = "A heavy duty blast door that opens mechanically. This one has been applied with an acid-proof coating.";
 	id = "Awaybiohazard";
 	layer = 2.9;
-	name = "Acid-Proof biohazard containment door";
-	unacidable = 1
+	name = "Acid-Proof biohazard containment door"
 	},
 /obj/structure/window/reinforced/fulltile,
 /turf/open/floor/plating{
@@ -3287,7 +3269,7 @@
 /obj/structure/alien/weeds,
 /obj/structure/alien/weeds{
 	desc = "A large mottled egg.";
-	health = 100;
+	obj_integrity = 100;
 	icon_state = "egg_hatched";
 	name = "egg"
 	},
@@ -3306,8 +3288,7 @@
 	id = "awayxenobio";
 	name = "Acid-Proof mounted igniter";
 	pixel_x = 0;
-	pixel_y = 25;
-	unacidable = 1
+	pixel_y = 25
 	},
 /obj/structure/alien/weeds{
 	icon_state = "weeds1"
@@ -3330,11 +3311,7 @@
 /obj/structure/alien/weeds,
 /obj/structure/bed/nest,
 /obj/effect/decal/cleanable/blood/gibs,
-/obj/item/clothing/mask/facehugger{
-	icon_state = "facehugger_impregnated";
-	item_state = "facehugger_impregnated";
-	stat = 2
-	},
+/obj/item/clothing/mask/facehugger/impregnated,
 /turf/open/floor/engine,
 /area/awaycontent/a2{
 	has_gravity = 1;
@@ -3438,8 +3415,7 @@
 /obj/machinery/door/poddoor/preopen{
 	desc = "A heavy duty blast door that opens mechanically. This one has been applied with an acid-proof coating.";
 	id = "Awaylab";
-	name = "Acid-Proof containment chamber blast door";
-	unacidable = 1
+	name = "Acid-Proof containment chamber blast door"
 	},
 /obj/structure/cable,
 /obj/structure/grille,
@@ -3520,7 +3496,7 @@
 /obj/structure/alien/weeds,
 /obj/structure/alien/weeds{
 	desc = "A large mottled egg.";
-	health = 100;
+	obj_integrity = 100;
 	icon_state = "egg_hatched";
 	name = "egg"
 	},
@@ -3629,7 +3605,7 @@
 	},
 /obj/structure/alien/weeds{
 	desc = "A large mottled egg.";
-	health = 100;
+	obj_integrity = 100;
 	icon_state = "egg_hatched";
 	name = "egg"
 	},
@@ -3954,11 +3930,7 @@
 /obj/structure/alien/weeds{
 	icon_state = "weeds1"
 	},
-/obj/item/clothing/mask/facehugger{
-	icon_state = "facehugger_impregnated";
-	item_state = "facehugger_impregnated";
-	stat = 2
-	},
+/obj/item/clothing/mask/facehugger/impregnated,
 /obj/item/xenos_claw,
 /turf/open/floor/plasteel/floorgrime{
 	dir = 8;
@@ -4021,8 +3993,7 @@
 /obj/machinery/door/poddoor/preopen{
 	desc = "A heavy duty blast door that opens mechanically. This one has been applied with an acid-proof coating.";
 	id = "Awaylab";
-	name = "Acid-Proof containment chamber blast door";
-	unacidable = 1
+	name = "Acid-Proof containment chamber blast door"
 	},
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
@@ -4039,7 +4010,7 @@
 	},
 /obj/structure/alien/weeds{
 	desc = "A large mottled egg.";
-	health = 100;
+	obj_integrity = 100;
 	icon_state = "egg_hatched";
 	name = "egg"
 	},
@@ -4053,11 +4024,7 @@
 	icon_state = "weeds1"
 	},
 /obj/structure/bed/nest,
-/obj/item/clothing/mask/facehugger{
-	icon_state = "facehugger_impregnated";
-	item_state = "facehugger_impregnated";
-	stat = 2
-	},
+/obj/item/clothing/mask/facehugger/impregnated,
 /turf/open/floor/engine,
 /area/awaycontent/a2{
 	has_gravity = 1;
@@ -4280,8 +4247,7 @@
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	desc = "A one meter section of pipe. This one has been applied with an acid-proof coating.";
 	dir = 4;
-	name = "Acid-Proof Pipe";
-	unacidable = 1
+	name = "Acid-Proof Pipe"
 	},
 /obj/item/stack/rods,
 /obj/item/stack/cable_coil{
@@ -4302,14 +4268,12 @@
 /obj/machinery/door/poddoor/preopen{
 	desc = "A heavy duty blast door that opens mechanically. This one has been applied with an acid-proof coating.";
 	id = "Awaylab";
-	name = "Acid-Proof containment chamber blast door";
-	unacidable = 1
+	name = "Acid-Proof containment chamber blast door"
 	},
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	desc = "A one meter section of pipe. This one has been applied with an acid-proof coating.";
 	dir = 4;
-	name = "Acid-Proof Pipe";
-	unacidable = 1
+	name = "Acid-Proof Pipe"
 	},
 /obj/item/stack/rods,
 /obj/item/stack/cable_coil{
@@ -4333,8 +4297,7 @@
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	desc = "A one meter section of pipe. This one has been applied with an acid-proof coating.";
 	dir = 4;
-	name = "Acid-Proof Pipe";
-	unacidable = 1
+	name = "Acid-Proof Pipe"
 	},
 /obj/structure/alien/weeds{
 	icon_state = "weeds1"
@@ -4348,8 +4311,7 @@
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	desc = "A one meter section of pipe. This one has been applied with an acid-proof coating.";
 	dir = 4;
-	name = "Acid-Proof Pipe";
-	unacidable = 1
+	name = "Acid-Proof Pipe"
 	},
 /obj/structure/alien/weeds{
 	icon_state = "weeds1"
@@ -4364,8 +4326,7 @@
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	desc = "A one meter section of pipe. This one has been applied with an acid-proof coating.";
 	dir = 4;
-	name = "Acid-Proof Pipe";
-	unacidable = 1
+	name = "Acid-Proof Pipe"
 	},
 /obj/structure/alien/weeds{
 	icon_state = "weeds1"
@@ -4380,8 +4341,7 @@
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	desc = "A one meter section of pipe. This one has been applied with an acid-proof coating.";
 	dir = 4;
-	name = "Acid-Proof Pipe";
-	unacidable = 1
+	name = "Acid-Proof Pipe"
 	},
 /obj/structure/alien/weeds,
 /obj/structure/alien/resin/wall,
@@ -4396,8 +4356,7 @@
 	dir = 8;
 	icon_state = "on";
 	name = "Acid-Proof Air Injector";
-	on = 1;
-	unacidable = 1
+	on = 1
 	},
 /obj/structure/alien/weeds,
 /turf/open/floor/engine,
@@ -4667,8 +4626,7 @@
 /obj/machinery/door/poddoor/preopen{
 	desc = "A heavy duty blast door that opens mechanically. This one has been applied with an acid-proof coating.";
 	id = "Awaylab";
-	name = "Acid-Proof containment chamber blast door";
-	unacidable = 1
+	name = "Acid-Proof containment chamber blast door"
 	},
 /obj/item/stack/cable_coil/cut{
 	amount = 1;
@@ -4708,11 +4666,7 @@
 "ge" = (
 /obj/structure/alien/weeds,
 /obj/structure/bed/nest,
-/obj/item/clothing/mask/facehugger{
-	icon_state = "facehugger_impregnated";
-	item_state = "facehugger_impregnated";
-	stat = 2
-	},
+/obj/item/clothing/mask/facehugger/impregnated,
 /turf/open/floor/engine,
 /area/awaycontent/a2{
 	has_gravity = 1;
@@ -4889,8 +4843,7 @@
 /obj/structure/disposalpipe/trunk{
 	desc = "An underfloor disposal pipe. This one has been applied with an acid-proof coating.";
 	dir = 4;
-	name = "Acid-Proof disposal pipe";
-	unacidable = 1
+	name = "Acid-Proof disposal pipe"
 	},
 /obj/structure/alien/weeds,
 /turf/open/floor/plasteel/warning{
@@ -4909,14 +4862,12 @@
 /obj/structure/disposalpipe/segment{
 	desc = "An underfloor disposal pipe. This one has been applied with an acid-proof coating.";
 	dir = 4;
-	name = "Acid-Proof disposal pipe";
-	unacidable = 1
+	name = "Acid-Proof disposal pipe"
 	},
 /obj/machinery/door/poddoor/preopen{
 	desc = "A heavy duty blast door that opens mechanically. This one has been applied with an acid-proof coating.";
 	id = "Awaylab";
-	name = "Acid-Proof containment chamber blast door";
-	unacidable = 1
+	name = "Acid-Proof containment chamber blast door"
 	},
 /obj/structure/cable,
 /obj/structure/grille,
@@ -4932,8 +4883,7 @@
 /obj/structure/disposalpipe/segment{
 	desc = "An underfloor disposal pipe. This one has been applied with an acid-proof coating.";
 	dir = 4;
-	name = "Acid-Proof disposal pipe";
-	unacidable = 1
+	name = "Acid-Proof disposal pipe"
 	},
 /obj/structure/alien/weeds,
 /obj/structure/alien/resin/wall,
@@ -4947,8 +4897,7 @@
 	desc = "An underfloor disposal pipe. This one has been applied with an acid-proof coating.";
 	dir = 2;
 	icon_state = "pipe-c";
-	name = "Acid-Proof disposal pipe";
-	unacidable = 1
+	name = "Acid-Proof disposal pipe"
 	},
 /obj/structure/alien/weeds{
 	icon_state = "weeds2"
@@ -5062,7 +5011,7 @@
 "gE" = (
 /obj/structure/grille{
 	density = 0;
-	destroyed = 1;
+	broken = 1;
 	icon_state = "brokengrille"
 	},
 /obj/item/stack/rods,
@@ -5195,8 +5144,7 @@
 /obj/machinery/door/poddoor/preopen{
 	desc = "A heavy duty blast door that opens mechanically. This one has been applied with an acid-proof coating.";
 	id = "Awaylab";
-	name = "Acid-Proof containment chamber blast door";
-	unacidable = 1
+	name = "Acid-Proof containment chamber blast door"
 	},
 /obj/structure/cable{
 	icon_state = "0-2";
@@ -5214,8 +5162,7 @@
 "gM" = (
 /obj/structure/disposalpipe/segment{
 	desc = "An underfloor disposal pipe. This one has been applied with an acid-proof coating.";
-	name = "Acid-Proof disposal pipe";
-	unacidable = 1
+	name = "Acid-Proof disposal pipe"
 	},
 /obj/structure/alien/weeds{
 	icon_state = "weeds1"
@@ -5422,14 +5369,12 @@
 /obj/structure/disposaloutlet{
 	desc = "An outlet for the pneumatic disposal system. This one has been applied with an acid-proof coating.";
 	dir = 1;
-	name = "Acid-Proof disposal outlet";
-	unacidable = 1
+	name = "Acid-Proof disposal outlet"
 	},
 /obj/structure/disposalpipe/trunk{
 	desc = "An underfloor disposal pipe. This one has been applied with an acid-proof coating.";
 	dir = 1;
-	name = "Acid-Proof disposal pipe";
-	unacidable = 1
+	name = "Acid-Proof disposal pipe"
 	},
 /obj/structure/alien/weeds{
 	icon_state = "weeds1"
@@ -5465,8 +5410,7 @@
 	id = "awayxenobio";
 	name = "Acid-Proof mounted igniter";
 	pixel_x = 0;
-	pixel_y = -25;
-	unacidable = 1
+	pixel_y = -25
 	},
 /obj/structure/alien/weeds{
 	icon_state = "weeds2"
@@ -5671,7 +5615,7 @@
 	name = "research director's locker";
 	req_access_txt = "201"
 	},
-/obj/item/weapon/storage/backpack/satchel_tox,
+/obj/item/weapon/storage/backpack/satchel/tox,
 /obj/item/clothing/gloves/color/latex,
 /turf/open/floor/plasteel/cafeteria{
 	dir = 5
@@ -5768,7 +5712,7 @@
 "hx" = (
 /obj/structure/grille{
 	density = 0;
-	destroyed = 1;
+	broken = 1;
 	icon_state = "brokengrille"
 	},
 /obj/item/stack/rods,
@@ -5810,7 +5754,7 @@
 	pixel_x = -5;
 	pixel_y = -2
 	},
-/obj/item/robot_parts/l_arm,
+/obj/item/bodypart/l_arm/robot,
 /turf/open/floor/plasteel/white{
 	heat_capacity = 1e+006
 	},
@@ -5993,8 +5937,7 @@
 	desc = "A heavy duty blast door that opens mechanically. This one has been applied with an acid-proof coating.";
 	id = "Awaybiohazard";
 	layer = 2.9;
-	name = "Acid-Proof biohazard containment door";
-	unacidable = 1
+	name = "Acid-Proof biohazard containment door"
 	},
 /turf/open/floor/plasteel/delivery{
 	heat_capacity = 1e+006;
@@ -6319,7 +6262,7 @@
 	desc = "Oh no, seven years of bad luck!";
 	icon_state = "mirror_broke";
 	pixel_x = 28;
-	shattered = 1
+	broken = 1
 	},
 /turf/open/floor/plasteel/freezer{
 	heat_capacity = 1e+006
@@ -8081,7 +8024,7 @@
 /obj/item/stack/rods,
 /obj/structure/grille{
 	density = 0;
-	destroyed = 1;
+	broken = 1;
 	icon_state = "brokengrille"
 	},
 /obj/item/stack/rods,
@@ -8099,7 +8042,7 @@
 "kQ" = (
 /obj/structure/grille{
 	density = 0;
-	destroyed = 1;
+	broken = 1;
 	icon_state = "brokengrille"
 	},
 /obj/item/stack/rods,
@@ -8269,19 +8212,13 @@
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	heat_capacity = 1e+006
 	},
-/turf/closed/wall/shuttle{
-	icon_state = "swall_f6";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium/interior,
 /area/awaycontent/a1{
 	has_gravity = 1;
 	name = "MO19 Arrivals"
 	})
 "ld" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall12";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium,
 /area/awaycontent/a1{
 	has_gravity = 1;
 	name = "MO19 Arrivals"
@@ -8779,7 +8716,7 @@
 /obj/effect/decal/remains/human{
 	desc = "They look like human remains. The skeleton is sitting upright with its legs tucked in and hands still holding onto its arms."
 	},
-/obj/item/weapon/gun/projectile/shotgun/sc_pump,
+/obj/item/weapon/gun/ballistic/shotgun/sc_pump,
 /turf/open/floor/plasteel/showroomfloor{
 	heat_capacity = 1e+006;
 	temperature = 273.15
@@ -8789,11 +8726,8 @@
 	name = "MO19 Arrivals"
 	})
 "lV" = (
-/turf/open/floor/plasteel/shuttle,
-/turf/closed/wall/shuttle{
-	icon_state = "swall_f9";
-	dir = 2
-	},
+/turf/open/floor/mineral/titanium/blue,
+/turf/closed/wall/mineral/titanium/interior,
 /area/awaycontent/a1{
 	has_gravity = 1;
 	name = "MO19 Arrivals"
@@ -8801,7 +8735,7 @@
 "lW" = (
 /obj/structure/table,
 /obj/item/weapon/storage/lockbox,
-/turf/open/floor/plasteel/shuttle,
+/turf/open/floor/mineral/titanium/blue,
 /area/awaycontent/a1{
 	has_gravity = 1;
 	name = "MO19 Arrivals"
@@ -8809,7 +8743,7 @@
 "lX" = (
 /obj/structure/table,
 /obj/item/device/radio/off,
-/turf/open/floor/plasteel/shuttle/yellow,
+/turf/open/floor/mineral/titanium/yellow,
 /area/awaycontent/a1{
 	has_gravity = 1;
 	name = "MO19 Arrivals"
@@ -8828,7 +8762,7 @@
 	pixel_x = -32;
 	pixel_y = 0
 	},
-/turf/open/floor/plasteel/shuttle/yellow,
+/turf/open/floor/mineral/titanium/yellow,
 /area/awaycontent/a1{
 	has_gravity = 1;
 	name = "MO19 Arrivals"
@@ -8840,13 +8774,13 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/turf/open/floor/plasteel/shuttle,
+/turf/open/floor/mineral/titanium/blue,
 /area/awaycontent/a1{
 	has_gravity = 1;
 	name = "MO19 Arrivals"
 	})
 "mb" = (
-/turf/open/floor/plasteel/shuttle,
+/turf/open/floor/mineral/titanium/blue,
 /area/awaycontent/a1{
 	has_gravity = 1;
 	name = "MO19 Arrivals"
@@ -8855,7 +8789,7 @@
 /obj/structure/chair{
 	dir = 8
 	},
-/turf/open/floor/plasteel/shuttle,
+/turf/open/floor/mineral/titanium/blue,
 /area/awaycontent/a1{
 	has_gravity = 1;
 	name = "MO19 Arrivals"
@@ -8868,14 +8802,14 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/turf/open/floor/plasteel/shuttle,
+/turf/open/floor/mineral/titanium/blue,
 /area/awaycontent/a1{
 	has_gravity = 1;
 	name = "MO19 Arrivals"
 	})
 "me" = (
 /obj/structure/closet/emcloset,
-/turf/open/floor/plasteel/shuttle,
+/turf/open/floor/mineral/titanium/blue,
 /area/awaycontent/a1{
 	has_gravity = 1;
 	name = "MO19 Arrivals"
@@ -8947,7 +8881,7 @@
 	})
 "ml" = (
 /obj/structure/table,
-/obj/item/weapon/storage/backpack/satchel/withwallet,
+/obj/item/weapon/storage/backpack/satchel/leather/withwallet,
 /turf/open/floor/plasteel/black,
 /area/awaycontent/a1{
 	has_gravity = 1;
@@ -9013,7 +8947,7 @@
 "mp" = (
 /obj/structure/table,
 /obj/item/weapon/storage/box/donkpockets,
-/turf/open/floor/plasteel/shuttle,
+/turf/open/floor/mineral/titanium/blue,
 /area/awaycontent/a1{
 	has_gravity = 1;
 	name = "MO19 Arrivals"
@@ -9025,13 +8959,13 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/turf/open/floor/plasteel/shuttle/yellow,
+/turf/open/floor/mineral/titanium/yellow,
 /area/awaycontent/a1{
 	has_gravity = 1;
 	name = "MO19 Arrivals"
 	})
 "mr" = (
-/turf/open/floor/plasteel/shuttle/yellow,
+/turf/open/floor/mineral/titanium/yellow,
 /area/awaycontent/a1{
 	has_gravity = 1;
 	name = "MO19 Arrivals"
@@ -9040,7 +8974,7 @@
 /obj/effect/landmark{
 	name = "awaystart"
 	},
-/turf/open/floor/plasteel/shuttle,
+/turf/open/floor/mineral/titanium/blue,
 /area/awaycontent/a1{
 	has_gravity = 1;
 	name = "MO19 Arrivals"
@@ -9052,7 +8986,7 @@
 /obj/effect/landmark{
 	name = "awaystart"
 	},
-/turf/open/floor/plasteel/shuttle,
+/turf/open/floor/mineral/titanium/blue,
 /area/awaycontent/a1{
 	has_gravity = 1;
 	name = "MO19 Arrivals"
@@ -9064,7 +8998,7 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/turf/open/floor/plasteel/shuttle/yellow,
+/turf/open/floor/mineral/titanium/yellow,
 /area/awaycontent/a1{
 	has_gravity = 1;
 	name = "MO19 Arrivals"
@@ -9206,7 +9140,7 @@
 	})
 "mG" = (
 /obj/machinery/computer/shuttle,
-/turf/open/floor/plasteel/shuttle,
+/turf/open/floor/mineral/titanium/blue,
 /area/awaycontent/a1{
 	has_gravity = 1;
 	name = "MO19 Arrivals"
@@ -9215,7 +9149,7 @@
 /obj/machinery/door/airlock/shuttle{
 	name = "Shuttle Cockpit"
 	},
-/turf/open/floor/plasteel/shuttle/yellow,
+/turf/open/floor/mineral/titanium/yellow,
 /area/awaycontent/a1{
 	has_gravity = 1;
 	name = "MO19 Arrivals"
@@ -9224,7 +9158,7 @@
 /obj/effect/landmark{
 	name = "awaystart"
 	},
-/turf/open/floor/plasteel/shuttle/yellow,
+/turf/open/floor/mineral/titanium/yellow,
 /area/awaycontent/a1{
 	has_gravity = 1;
 	name = "MO19 Arrivals"
@@ -9239,7 +9173,7 @@
 /obj/effect/landmark{
 	name = "awaystart"
 	},
-/turf/open/floor/plasteel/shuttle/yellow,
+/turf/open/floor/mineral/titanium/yellow,
 /area/awaycontent/a1{
 	has_gravity = 1;
 	name = "MO19 Arrivals"
@@ -9248,7 +9182,7 @@
 /obj/machinery/door/airlock/shuttle{
 	name = "Shuttle Airlock"
 	},
-/turf/open/floor/plasteel/shuttle,
+/turf/open/floor/mineral/titanium/blue,
 /area/awaycontent/a1{
 	has_gravity = 1;
 	name = "MO19 Arrivals"
@@ -9410,7 +9344,7 @@
 /obj/structure/table,
 /obj/item/weapon/clipboard,
 /obj/item/weapon/pen,
-/turf/open/floor/plasteel/shuttle,
+/turf/open/floor/mineral/titanium/blue,
 /area/awaycontent/a1{
 	has_gravity = 1;
 	name = "MO19 Arrivals"
@@ -9420,7 +9354,7 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/turf/open/floor/plasteel/shuttle/yellow,
+/turf/open/floor/mineral/titanium/yellow,
 /area/awaycontent/a1{
 	has_gravity = 1;
 	name = "MO19 Arrivals"
@@ -9439,7 +9373,7 @@
 	dir = 4
 	},
 /obj/structure/window/reinforced,
-/turf/open/floor/plasteel/shuttle/yellow,
+/turf/open/floor/mineral/titanium/yellow,
 /area/awaycontent/a1{
 	has_gravity = 1;
 	name = "MO19 Arrivals"
@@ -9522,7 +9456,7 @@
 	})
 "nf" = (
 /obj/structure/filingcabinet,
-/turf/open/floor/plasteel/shuttle,
+/turf/open/floor/mineral/titanium/blue,
 /area/awaycontent/a1{
 	has_gravity = 1;
 	name = "MO19 Arrivals"
@@ -9532,7 +9466,7 @@
 	dir = 8
 	},
 /obj/machinery/light/small,
-/turf/open/floor/plasteel/shuttle,
+/turf/open/floor/mineral/titanium/blue,
 /area/awaycontent/a1{
 	has_gravity = 1;
 	name = "MO19 Arrivals"
@@ -9543,7 +9477,7 @@
 	pixel_y = -30
 	},
 /obj/machinery/light/small,
-/turf/open/floor/plasteel/shuttle,
+/turf/open/floor/mineral/titanium/blue,
 /area/awaycontent/a1{
 	has_gravity = 1;
 	name = "MO19 Arrivals"
@@ -9677,7 +9611,7 @@
 "ns" = (
 /obj/structure/grille{
 	density = 0;
-	destroyed = 1;
+	broken = 1;
 	icon_state = "brokengrille"
 	},
 /obj/item/stack/rods,
@@ -9746,7 +9680,7 @@
 	},
 /obj/structure/table,
 /obj/structure/bedsheetbin,
-/obj/item/clothing/tie/black,
+/obj/item/clothing/neck/tie/black,
 /obj/item/clothing/under/lawyer/blacksuit,
 /turf/open/floor/plasteel/barber{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
@@ -9835,7 +9769,7 @@
 "nD" = (
 /obj/structure/grille{
 	density = 0;
-	destroyed = 1;
+	broken = 1;
 	icon_state = "brokengrille"
 	},
 /obj/item/stack/rods,
@@ -9942,7 +9876,7 @@
 	name = "MO19 Arrivals"
 	})
 "nJ" = (
-/obj/effect/decal/cleanable/cobweb2,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/plating{
 	broken = 1;
 	heat_capacity = 1e+006;
@@ -10248,7 +10182,7 @@
 	})
 "of" = (
 /obj/item/weapon/shard,
-/turf/open/floor/plasteel/shuttle/white,
+/turf/open/floor/mineral/titanium,
 /area/awaycontent/a3{
 	always_unpowered = 1;
 	ambientsounds = list('sound/ambience/ambimine.ogg');
@@ -10263,7 +10197,7 @@
 /obj/item/weapon/shard{
 	icon_state = "medium"
 	},
-/turf/open/floor/plasteel/shuttle/white,
+/turf/open/floor/mineral/titanium,
 /area/awaycontent/a3{
 	always_unpowered = 1;
 	ambientsounds = list('sound/ambience/ambimine.ogg');
@@ -10278,7 +10212,7 @@
 /obj/item/weapon/shard{
 	icon_state = "small"
 	},
-/turf/open/floor/plasteel/shuttle/white,
+/turf/open/floor/mineral/titanium,
 /area/awaycontent/a3{
 	always_unpowered = 1;
 	ambientsounds = list('sound/ambience/ambimine.ogg');
@@ -10290,7 +10224,7 @@
 	poweralm = 0
 	})
 "oi" = (
-/turf/open/floor/plasteel/shuttle/white,
+/turf/open/floor/mineral/titanium,
 /area/awaycontent/a3{
 	always_unpowered = 1;
 	ambientsounds = list('sound/ambience/ambimine.ogg');
@@ -10304,10 +10238,10 @@
 "oj" = (
 /obj/structure/grille{
 	density = 0;
-	destroyed = 1;
+	broken = 1;
 	icon_state = "brokengrille"
 	},
-/turf/open/floor/plasteel/shuttle/white,
+/turf/open/floor/mineral/titanium,
 /area/awaycontent/a3{
 	always_unpowered = 1;
 	ambientsounds = list('sound/ambience/ambimine.ogg');
@@ -10320,7 +10254,7 @@
 	})
 "ok" = (
 /obj/item/stack/rods,
-/turf/open/floor/plasteel/shuttle/white,
+/turf/open/floor/mineral/titanium,
 /area/awaycontent/a3{
 	always_unpowered = 1;
 	ambientsounds = list('sound/ambience/ambimine.ogg');
@@ -10333,7 +10267,7 @@
 	})
 "ol" = (
 /obj/item/stack/cable_coil,
-/turf/open/floor/plasteel/shuttle/white,
+/turf/open/floor/mineral/titanium,
 /area/awaycontent/a3{
 	always_unpowered = 1;
 	ambientsounds = list('sound/ambience/ambimine.ogg');
@@ -10348,7 +10282,7 @@
 /obj/item/stack/cable_coil{
 	amount = 5
 	},
-/turf/open/floor/plasteel/shuttle/white,
+/turf/open/floor/mineral/titanium,
 /area/awaycontent/a3{
 	always_unpowered = 1;
 	ambientsounds = list('sound/ambience/ambimine.ogg');
@@ -10365,7 +10299,7 @@
 	icon_state = "coil_red2";
 	item_state = "coil_red2"
 	},
-/turf/open/floor/plasteel/shuttle/white,
+/turf/open/floor/mineral/titanium,
 /area/awaycontent/a3{
 	always_unpowered = 1;
 	ambientsounds = list('sound/ambience/ambimine.ogg');
@@ -10382,7 +10316,7 @@
 	icon_state = "coil_red1";
 	item_state = "coil_red1"
 	},
-/turf/open/floor/plasteel/shuttle/white,
+/turf/open/floor/mineral/titanium,
 /area/awaycontent/a3{
 	always_unpowered = 1;
 	ambientsounds = list('sound/ambience/ambimine.ogg');
@@ -10542,7 +10476,7 @@
 	poweralm = 0
 	})
 "oy" = (
-/turf/open/floor/plasteel/shuttle,
+/turf/open/floor/mineral/titanium/blue,
 /area/awaycontent/a3{
 	always_unpowered = 1;
 	ambientsounds = list('sound/ambience/ambimine.ogg');
@@ -10797,7 +10731,7 @@
 	poweralm = 0
 	})
 "oN" = (
-/turf/open/floor/plasteel/shuttle/yellow,
+/turf/open/floor/mineral/titanium/yellow,
 /area/awaycontent/a3{
 	always_unpowered = 1;
 	ambientsounds = list('sound/ambience/ambimine.ogg');
@@ -36013,7 +35947,7 @@ lc
 lA
 lA
 lA
-nd
+lc
 ba
 ba
 ba
@@ -36270,8 +36204,8 @@ lV
 mp
 mG
 mV
-ne
-nd
+lV
+lc
 ba
 ba
 ba
@@ -37036,13 +36970,13 @@ jS
 eI
 ba
 ba
-ly
-lY
-lC
+ld
+ld
+ld
 mH
-mX
-lY
-nn
+ld
+ld
+ld
 ba
 ba
 ba
@@ -37550,13 +37484,13 @@ fQ
 eJ
 hI
 ba
-lz
+ld
 ma
 mc
 mr
 mc
 ng
-lz
+ld
 ba
 ba
 ba
@@ -38064,13 +37998,13 @@ jU
 ku
 io
 ba
-lB
+ld
 mc
 mt
 mJ
 mt
 mc
-lB
+ld
 ba
 ba
 ba
@@ -38321,13 +38255,13 @@ jU
 kv
 io
 ba
-lz
+ld
 md
 ms
 mI
 ms
 nh
-lz
+ld
 ba
 ba
 ba
@@ -38835,14 +38769,14 @@ jV
 kw
 hI
 lc
-lC
+ld
 me
 mb
 mr
 mb
 me
-mX
-nd
+ld
+lc
 ba
 ba
 ba
@@ -39348,15 +39282,15 @@ jr
 jW
 kv
 io
-le
+lc
 lE
 mf
-lC
+ld
 mK
-mX
+ld
 lE
 mf
-nv
+lc
 ba
 ba
 ba

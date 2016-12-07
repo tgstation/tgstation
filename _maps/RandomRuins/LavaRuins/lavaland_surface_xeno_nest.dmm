@@ -53,7 +53,7 @@
 	},
 /obj/structure/alien/weeds{
 	desc = "A large mottled egg.";
-	health = 100;
+	obj_integrity = 100;
 	icon_state = "egg_hatched";
 	name = "egg"
 	},
@@ -141,7 +141,7 @@
 	},
 /obj/structure/alien/weeds{
 	desc = "A large mottled egg.";
-	health = 100;
+	obj_integrity = 100;
 	icon_state = "egg_hatched";
 	name = "egg"
 	},
@@ -206,7 +206,7 @@
 	item_state = "facehugger_impregnated";
 	stat = 2
 	},
-/obj/item/weapon/gun/projectile/automatic/pistol,
+/obj/item/weapon/gun/ballistic/automatic/pistol,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/awaycontent/a5{
 	always_unpowered = 1;
@@ -336,7 +336,7 @@
 /obj/structure/alien/weeds,
 /obj/structure/alien/weeds{
 	desc = "A large mottled egg.";
-	health = 100;
+	obj_integrity = 100;
 	icon_state = "egg_hatched";
 	name = "egg"
 	},
@@ -407,7 +407,7 @@
 	},
 /obj/structure/alien/weeds{
 	desc = "A large mottled egg.";
-	health = 100;
+	obj_integrity = 100;
 	icon_state = "egg_hatched";
 	name = "egg"
 	},
@@ -426,7 +426,7 @@
 /obj/structure/alien/weeds,
 /obj/structure/alien/weeds{
 	desc = "A large mottled egg.";
-	health = 100;
+	obj_integrity = 100;
 	icon_state = "egg_hatched";
 	name = "egg"
 	},
@@ -615,7 +615,15 @@
 "O" = (
 /obj/structure/alien/weeds/node,
 /turf/template_noop,
-/area/template_noop)
+/area/awaycontent/a5{
+	always_unpowered = 1;
+	has_gravity = 1;
+	name = "The Hive";
+	power_environ = 0;
+	power_equip = 0;
+	power_light = 0;
+	poweralm = 0
+	})
 "P" = (
 /obj/structure/alien/weeds{
 	icon_state = "weeds2"
@@ -644,13 +652,29 @@
 "R" = (
 /obj/structure/alien/weeds,
 /turf/template_noop,
-/area/template_noop)
+/area/awaycontent/a5{
+	always_unpowered = 1;
+	has_gravity = 1;
+	name = "The Hive";
+	power_environ = 0;
+	power_equip = 0;
+	power_light = 0;
+	poweralm = 0
+	})
 "S" = (
 /obj/structure/alien/weeds{
 	icon_state = "weeds2"
 	},
 /turf/template_noop,
-/area/template_noop)
+/area/awaycontent/a5{
+	always_unpowered = 1;
+	has_gravity = 1;
+	name = "The Hive";
+	power_environ = 0;
+	power_equip = 0;
+	power_light = 0;
+	poweralm = 0
+	})
 "T" = (
 /obj/structure/alien/weeds/node,
 /obj/structure/alien/resin/wall,
@@ -1468,7 +1492,7 @@ a
 a
 a
 a
-P
+c
 "}
 (26,1,1) = {"
 a
@@ -1499,8 +1523,8 @@ c
 a
 a
 a
-U
-N
+b
+h
 "}
 (27,1,1) = {"
 a
@@ -1529,10 +1553,10 @@ g
 q
 b
 c
-N
-P
-T
-R
+h
+c
+y
+g
 "}
 (28,1,1) = {"
 a
@@ -1563,8 +1587,8 @@ q
 b
 O
 R
-V
-S
+p
+q
 "}
 (29,1,1) = {"
 a
@@ -1595,8 +1619,8 @@ l
 b
 O
 S
-V
-R
+p
+g
 "}
 (30,1,1) = {"
 a
@@ -1625,10 +1649,10 @@ h
 c
 b
 c
-P
-T
-S
-V
+c
+y
+q
+p
 "}
 (31,1,1) = {"
 a
@@ -1658,9 +1682,9 @@ a
 a
 a
 a
-P
-R
-S
+c
+g
+q
 "}
 (32,1,1) = {"
 a
@@ -1690,9 +1714,9 @@ a
 a
 a
 a
-N
-V
-R
+h
+p
+g
 "}
 (33,1,1) = {"
 a
@@ -1721,9 +1745,9 @@ a
 a
 a
 a
-P
-P
-S
+c
+c
+q
 a
 "}
 (34,1,1) = {"
@@ -1753,7 +1777,7 @@ a
 a
 a
 a
-P
+c
 a
 a
 a

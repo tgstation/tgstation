@@ -22,7 +22,7 @@
 // Takes care blood loss and regeneration
 /mob/living/carbon/human/handle_blood()
 
-	if(NOBLOOD in dna.species.specflags)
+	if(NOBLOOD in dna.species.species_traits)
 		bleed_rate = 0
 		return
 
@@ -86,7 +86,7 @@
 				add_splatter_floor(src.loc, 1)
 
 /mob/living/carbon/human/bleed(amt)
-	if(!(NOBLOOD in dna.species.specflags))
+	if(!(NOBLOOD in dna.species.species_traits))
 		..()
 
 
@@ -188,7 +188,7 @@
 /mob/living/carbon/human/get_blood_id()
 	if(dna.species.exotic_blood)
 		return dna.species.exotic_blood
-	else if((NOBLOOD in dna.species.specflags) || (disabilities & NOCLONE))
+	else if((NOBLOOD in dna.species.species_traits) || (disabilities & NOCLONE))
 		return
 	return "blood"
 
@@ -252,7 +252,7 @@
 		B.blood_DNA |= temp_blood_DNA
 
 /mob/living/carbon/human/add_splatter_floor(turf/T, small_drip)
-	if(!(NOBLOOD in dna.species.specflags))
+	if(!(NOBLOOD in dna.species.species_traits))
 		..()
 
 /mob/living/carbon/alien/add_splatter_floor(turf/T, small_drip)

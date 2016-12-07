@@ -34,7 +34,7 @@ BONUS
 				M << "<span notice='warning'>[pick("You swallow excess mucus.", "You lightly cough.")]</span>"
 			else
 				M.emote("cough")
-				var/obj/item/I = M.get_active_hand()
-				if(I && I.w_class == 1)
+				var/obj/item/I = M.get_active_held_item()
+				if(I && I.w_class == WEIGHT_CLASS_TINY)
 					M.drop_item()
 	return

@@ -3,7 +3,7 @@
 /turf/template_noop,
 /area/template_noop)
 "b" = (
-/turf/open/floor/plasteel/cult{
+/turf/open/floor/engine/cult{
 	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
@@ -22,7 +22,7 @@
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered)
 "f" = (
-/obj/structure/cult/pylon,
+/obj/structure/destructible/cult/pylon,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered)
 "g" = (
@@ -36,14 +36,14 @@
 	sound = 'sound/hallucinations/turn_around1.ogg';
 	triggerer_only = 1
 	},
-/turf/open/floor/plasteel/cult{
+/turf/open/floor/engine/cult{
 	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/ruin/unpowered)
 "h" = (
 /obj/effect/decal/cleanable/blood/old,
-/turf/open/floor/plasteel/cult{
+/turf/open/floor/engine/cult{
 	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
@@ -51,7 +51,7 @@
 "i" = (
 /obj/effect/decal/remains/human,
 /obj/effect/decal/cleanable/blood/old,
-/turf/open/floor/plasteel/cult{
+/turf/open/floor/engine/cult{
 	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
@@ -68,7 +68,7 @@
 "k" = (
 /obj/effect/decal/remains/human,
 /obj/item/weapon/melee/cultblade,
-/turf/open/floor/plasteel/cult{
+/turf/open/floor/engine/cult{
 	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
@@ -77,14 +77,14 @@
 /obj/effect/decal/remains/human,
 /obj/item/clothing/shoes/cult,
 /obj/item/clothing/suit/cultrobes,
-/turf/open/floor/plasteel/cult{
+/turf/open/floor/engine/cult{
 	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/ruin/unpowered)
 "m" = (
 /obj/effect/decal/remains/human,
-/turf/open/floor/plasteel/cult{
+/turf/open/floor/engine/cult{
 	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
@@ -101,7 +101,7 @@
 	sound = 'sound/hallucinations/turn_around1.ogg';
 	triggerer_only = 1
 	},
-/turf/open/floor/plasteel/cult{
+/turf/open/floor/engine/cult{
 	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
@@ -124,7 +124,7 @@
 	message = "<span class='cultitalic'><b><span class='big'>You've made a grave mistake, haven't you?</span></b></span>";
 	name = "ohfuck"
 	},
-/turf/open/floor/plasteel/cult{
+/turf/open/floor/engine/cult{
 	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
@@ -141,7 +141,7 @@
 	sound = 'sound/hallucinations/turn_around1.ogg';
 	triggerer_only = 1
 	},
-/turf/open/floor/plasteel/cult{
+/turf/open/floor/engine/cult{
 	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
@@ -151,7 +151,7 @@
 /obj/item/clothing/shoes/cult,
 /obj/item/clothing/suit/cultrobes,
 /obj/effect/decal/cleanable/blood/old,
-/turf/open/floor/plasteel/cult{
+/turf/open/floor/engine/cult{
 	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
@@ -168,7 +168,7 @@
 	sound = 'sound/hallucinations/turn_around1.ogg';
 	triggerer_only = 1
 	},
-/turf/open/floor/plasteel/cult{
+/turf/open/floor/engine/cult{
 	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},

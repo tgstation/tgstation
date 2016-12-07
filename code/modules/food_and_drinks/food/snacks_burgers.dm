@@ -160,7 +160,7 @@
 	icon_state = "bigbiteburger"
 	bonus_reagents = list("vitamin" = 6)
 	list_reagents = list("nutriment" = 10, "vitamin" = 2)
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 
 /obj/item/weapon/reagent_containers/food/snacks/burger/jelly
 	name = "jelly burger"
@@ -181,7 +181,7 @@
 	icon_state = "superbiteburger"
 	bonus_reagents = list("vitamin" = 10)
 	list_reagents = list("nutriment" = 40, "vitamin" = 5)
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 	bitesize = 7
 	volume = 100
 
@@ -197,3 +197,15 @@
 	desc = "Pretty much what you'd expect..."
 	icon_state = "ratburger"
 	bonus_reagents = list("nutriment" = 1, "vitamin" = 1)
+
+/obj/item/weapon/reagent_containers/food/snacks/burger/baseball
+	name = "home run baseball burger"
+	desc = "It's still warm. The steam coming off of it looks like baseball."
+	icon_state = "baseball"
+	bonus_reagents = list("nutriment" = 1, "vitamin" = 1)
+
+/obj/item/weapon/reagent_containers/food/snacks/burger/baconburger
+	name = "bacon burger"
+	desc = "The perfect combination of all things American."
+	icon_state = "baconburger"
+	bonus_reagents = list("nutriment" = 8, "vitamin" = 1)

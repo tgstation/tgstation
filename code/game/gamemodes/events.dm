@@ -1,7 +1,7 @@
 /proc/power_failure()
 	priority_announce("Abnormal activity detected in [station_name()]'s powernet. As a precautionary measure, the station's power will be shut off for an indeterminate duration.", "Critical Power Failure", 'sound/AI/poweroff.ogg')
 	for(var/obj/machinery/power/smes/S in machines)
-		if(istype(get_area(S), /area/turret_protected) || S.z != ZLEVEL_STATION)
+		if(istype(get_area(S), /area/ai_monitored/turret_protected) || S.z != ZLEVEL_STATION)
 			continue
 		S.charge = 0
 		S.output_level = 0
@@ -9,7 +9,7 @@
 		S.update_icon()
 		S.power_change()
 
-	var/list/skipped_areas = list(/area/engine/engineering, /area/turret_protected/ai)
+	var/list/skipped_areas = list(/area/engine/engineering, /area/ai_monitored/turret_protected/ai)
 
 	for(var/area/A in world)
 		if( !A.requires_power || A.always_unpowered )
@@ -50,6 +50,7 @@
 	for(var/obj/machinery/power/apc/C in machines)
 		if(C.cell && C.z == ZLEVEL_STATION)
 			C.cell.charge = C.cell.maxcharge
+			C.failure_timer = 0
 	for(var/obj/machinery/power/smes/S in machines)
 		if(S.z != ZLEVEL_STATION)
 			continue

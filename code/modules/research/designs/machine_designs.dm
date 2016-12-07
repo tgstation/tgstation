@@ -82,6 +82,14 @@
 	build_path = /obj/item/weapon/circuitboard/machine/teleporter_hub
 	category = list ("Teleportation Machinery")
 
+/datum/design/board/quantumpad
+	name = "Machine Design (Quantum Pad Board)"
+	desc = "The circuit board for a quantum telepad."
+	id = "quantumpad"
+	req_tech = list("programming" = 4, "bluespace" = 4, "plasmatech" = 3, "engineering" = 4)
+	build_path = /obj/item/weapon/circuitboard/machine/quantumpad
+	category = list ("Teleportation Machinery")
+
 /datum/design/board/telepad
 	name = "Machine Design (Telepad Board)"
 	desc = "The circuit board for a telescience telepad."
@@ -386,3 +394,11 @@
 	req_tech = list("programming" = 4, "biotech" = 3)
 	build_path = /obj/item/weapon/circuitboard/machine/plantgenes
 	category = list ("Misc. Machinery")
+
+/datum/design/board/ntnet_relay
+	name = "Machine Design (NTNet Relay Board)"
+	desc = "The circuit board for a wireless network relay."
+	id = "ntnet_relay"
+	req_tech = list("programming" = 2, "engineering" = 2, "bluespace" = 2)
+	build_path = /obj/item/weapon/circuitboard/machine/ntnet_relay
+	category = list("Subspace Telecomms")

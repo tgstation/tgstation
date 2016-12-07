@@ -17,7 +17,7 @@ If you want to contribute the first thing you'll need to do is [set up Git](http
 
 We have a [list of guides on the wiki](http://www.tgstation13.org/wiki/index.php/Guides#Development_and_Contribution_Guides) which will help you get started contributing to /tg/station with git and Dream Maker. For beginners, it is recommended you work on small projects, at first. If you need help learning to program in BYOND check out this [repository of resources](http://www.byond.com/developer/articles/resources).
 
-There is an open list of approachable issues for [your inspiration here](https://github.com/tgstation/-tg-station/issues?q=is%3Aopen+is%3Aissue+label%3A%22Easy+Fix%22).
+There is an open list of approachable issues for [your inspiration here](https://github.com/tgstation/-tg-station/issues?q=is%3Aopen+is%3Aissue+label%3A%22Easy+Task%22).
 
 You can of course, as always, ask for help at [#coderbus](irc://irc.rizon.net/coderbus) on irc.rizon.net. We are just here to have fun and help so do not expect professional support please.
 
@@ -190,6 +190,13 @@ This prevents nesting levels from getting deeper then they need to be.
 
 * Where you have code that can cause large scale modification and *FUN* make sure you start it out locked behind one of the default admin roles - use common sense to determine which role fits the level of damage a function could do
 
+###Files
+* Because runtime errors do not give the full path, try to avoid having files with the same name across folders.
+
+* File names should not be mixed case, or contain spaces or any character that would require escaping in a uri.
+
+* Files and path accessed and referenced by code above simply being #included should be strictly lowercase to avoid issues on filesystems where case matters.
+
 ###Other Notes
 * Code should be modular where possible, if you are working on a new class then it is best if you put it in a new file.
 
@@ -280,12 +287,10 @@ There is no strict process when it comes to merging pull requests, pull requests
 
 * If your pull request is accepted, the code you add no longer belongs exclusively to you but to everyone; everyone is free to work on it, but you are also free to object to any changes being made, which will be noted by a Project Lead or Project Manager. It is a shame this has to be explicitly said, but there have been cases where this would've saved some trouble.
 
-####Merge tokens
-At the moment there is a system in place for feature/balance pull requests that intend to change gameplay in some form. This system works such that for every feature/balance pull request, you must have a valid bugfix. (Pull requests can have multiple bugfixes, so these pull requests would count as N tokens, instead of just one.) This system is in place indefinitely, it may be removed in the future if we take the number of bugs down to a reasonable number, or it may never be removed.
-
 ## Banned content
 Do not add any of the following in a Pull Request or risk getting the PR closed:
- - National Socialist Party of Germany content, National Socialist Party of Germany related content, or National Socialist Party of Germany references
+* National Socialist Party of Germany content, National Socialist Party of Germany related content, or National Socialist Party of Germany references
+* Code where one line of code is split across mutiple lines (except for strings and comments and in those cases existing longer lines must not be split up)
 
 ##A word on git
 Yes we know that the files have a tonne of mixed windows and linux line endings, attempts to fix this have been met with less than stellar success and as such we have decided to give up caring until such a time as it matters.

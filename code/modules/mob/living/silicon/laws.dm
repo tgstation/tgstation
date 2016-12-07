@@ -5,10 +5,15 @@
 	if (!laws)
 		make_laws()
 
+/mob/living/silicon/proc/set_law_sixsixsix(law)
+	throw_alert("newlaw", /obj/screen/alert/newlaw)
+	laws_sanity_check()
+	laws.set_law_sixsixsix(law)
+
 /mob/living/silicon/proc/set_zeroth_law(law, law_borg)
 	throw_alert("newlaw", /obj/screen/alert/newlaw)
-	src.laws_sanity_check()
-	src.laws.set_zeroth_law(law, law_borg)
+	laws_sanity_check()
+	laws.set_zeroth_law(law, law_borg)
 
 /mob/living/silicon/proc/add_inherent_law(law)
 	throw_alert("newlaw", /obj/screen/alert/newlaw)
@@ -47,10 +52,23 @@
 		if(1)
 			laws = new /datum/ai_laws/custom()
 		if(2)
-			var/datum/ai_laws/lawtype = pick(subtypesof(/datum/ai_laws/default))
+			var/list/randlaws = list()
+			for(var/lpath in subtypesof(/datum/ai_laws))
+				var/datum/ai_laws/L = lpath
+				if(initial(L.id) in config.lawids)
+					randlaws += lpath
+			var/datum/ai_laws/lawtype
+			if(randlaws.len)
+				lawtype = pick(randlaws)
+			else
+				lawtype = pick(subtypesof(/datum/ai_laws/default))
 			laws = new lawtype()
 	laws.associate(src)
 
 /mob/living/silicon/proc/clear_zeroth_law(force)
 	laws_sanity_check()
 	laws.clear_zeroth_law(force)
+
+/mob/living/silicon/proc/clear_law_sixsixsix(force)
+	laws_sanity_check()
+	laws.clear_law_sixsixsix(force)

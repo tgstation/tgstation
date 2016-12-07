@@ -74,7 +74,7 @@ Borg Hypospray
 	R.add_reagent(reagent, 30)
 
 /obj/item/weapon/reagent_containers/borghypo/proc/regenerate_reagents()
-	if(isrobot(src.loc))
+	if(iscyborg(src.loc))
 		var/mob/living/silicon/robot/R = src.loc
 		if(R && R.cell)
 			for(var/i in 1 to reagent_ids.len)
@@ -90,7 +90,7 @@ Borg Hypospray
 		return
 	if(!istype(M))
 		return
-	if(R.total_volume && M.can_inject(user, 1, bypass_protection))
+	if(R.total_volume && M.can_inject(user, 1, user.zone_selected,bypass_protection))
 		M << "<span class='warning'>You feel a tiny prick!</span>"
 		user << "<span class='notice'>You inject [M] with the injector.</span>"
 		var/fraction = min(amount_per_transfer_from_this/R.total_volume, 1)
@@ -162,7 +162,7 @@ Borg Shaker
 	return //Can't inject stuff with a shaker, can we? //not with that attitude
 
 /obj/item/weapon/reagent_containers/borghypo/borgshaker/regenerate_reagents()
-	if(isrobot(src.loc))
+	if(iscyborg(src.loc))
 		var/mob/living/silicon/robot/R = src.loc
 		if(R && R.cell)
 			for(var/i in modes) //Lots of reagents in this one, so it's best to regenrate them all at once to keep it from being tedious.

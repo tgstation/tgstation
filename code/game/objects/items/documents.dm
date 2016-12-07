@@ -5,11 +5,12 @@
 	icon_state = "docs_generic"
 	item_state = "paper"
 	throwforce = 0
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 	throw_range = 1
 	throw_speed = 1
 	layer = MOB_LAYER
-	pressure_resistance = 1
+	pressure_resistance = 2
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 
 /obj/item/documents/nanotrasen
 	desc = "\"Top Secret\" Nanotrasen documents, filled with complex diagrams and lists of names, dates and coordinates."

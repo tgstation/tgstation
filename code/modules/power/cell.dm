@@ -1,7 +1,6 @@
 /obj/item/weapon/stock_parts/cell
 	name = "power cell"
 	desc = "A rechargable electrochemical power cell."
-	var/ratingdesc
 	icon = 'icons/obj/power.dmi'
 	icon_state = "cell"
 	item_state = "cell"
@@ -10,33 +9,35 @@
 	throwforce = 5
 	throw_speed = 2
 	throw_range = 5
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	var/charge = 0	// note %age conveted to actual charge in New
 	var/maxcharge = 1000
 	materials = list(MAT_METAL=700, MAT_GLASS=50)
 	var/rigged = 0		// true if rigged to explode
 	var/chargerate = 100 //how much power is given every tick in a recharger
 	var/self_recharge = 0 //does it self recharge, over time, or not?
+	var/ratingdesc = TRUE
 
 /obj/item/weapon/stock_parts/cell/New()
 	..()
 	START_PROCESSING(SSobj, src)
 	charge = maxcharge
-	ratingdesc = " This one has a power rating of [maxcharge], and you should not swallow it."
-	desc = desc + ratingdesc
+	if(ratingdesc)
+		desc += " This one has a power rating of [maxcharge], and you should not swallow it."
 	updateicon()
 
 /obj/item/weapon/stock_parts/cell/Destroy()
 	STOP_PROCESSING(SSobj, src)
 	return ..()
 
-/obj/item/weapon/stock_parts/cell/on_varedit(modified_var)
-	if(modified_var == "self_recharge")
-		if(self_recharge)
-			START_PROCESSING(SSobj, src)
-		else
-			STOP_PROCESSING(SSobj, src)
-	..()
+/obj/item/weapon/stock_parts/cell/vv_edit_var(var_name, var_value)
+	switch(var_name)
+		if("self_recharge")
+			if(var_value)
+				START_PROCESSING(SSobj, src)
+			else
+				STOP_PROCESSING(SSobj, src)
+	. = ..()
 
 /obj/item/weapon/stock_parts/cell/process()
 	if(self_recharge)
@@ -87,7 +88,7 @@
 		user << "The charge meter reads [round(src.percent() )]%."
 
 /obj/item/weapon/stock_parts/cell/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is licking the electrodes of the [src.name]! It looks like \he's trying to commit suicide.</span>")
+	user.visible_message("<span class='suicide'>[user] is licking the electrodes of [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return (FIRELOSS)
 
 /obj/item/weapon/stock_parts/cell/attackby(obj/item/W, mob/user, params)
@@ -146,7 +147,7 @@
 					corrupt()
 
 
-/obj/item/weapon/stock_parts/cell/blob_act(obj/effect/blob/B)
+/obj/item/weapon/stock_parts/cell/blob_act(obj/structure/blob/B)
 	ex_act(1)
 
 /obj/item/weapon/stock_parts/cell/proc/get_electrocute_damage()
@@ -263,6 +264,20 @@
 
 /obj/item/weapon/stock_parts/cell/infinite/use()
 	return 1
+
+/obj/item/weapon/stock_parts/cell/infinite/abductor
+	name = "void core"
+	desc = "An alien power cell that produces energy seemingly out of nowhere."
+	icon = 'icons/obj/abductor.dmi'
+	icon_state = "cell"
+	origin_tech =  "abductor=5;powerstorage=8;engineering=6"
+	maxcharge = 50000
+	rating = 12
+	ratingdesc = FALSE
+
+/obj/item/weapon/stock_parts/cell/infinite/abductor/update_icon()
+	return
+
 
 /obj/item/weapon/stock_parts/cell/potato
 	name = "potato battery"

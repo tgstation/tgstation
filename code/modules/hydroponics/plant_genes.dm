@@ -174,8 +174,8 @@
 	examine_line = "<span class='info'>It has a lot of liquid contents inside.</span>"
 	origin_tech = list("biotech" = 5)
 
-/*/datum/plant_gene/trait/squash/on_slip(obj/item/weapon/reagent_containers/food/snacks/grown/G, mob/living/carbon/target)
-	G.squash(target)*/
+/datum/plant_gene/trait/squash/on_slip(obj/item/weapon/reagent_containers/food/snacks/grown/G, mob/living/carbon/target)
+	G.squash(target)
 
 
 /datum/plant_gene/trait/slip
@@ -276,7 +276,7 @@
 	if(isliving(target))
 		var/teleport_radius = max(round(G.seed.potency / 10), 1)
 		var/turf/T = get_turf(target)
-		new /obj/effect/decal/cleanable/molten_item(T) //Leave a pile of goo behind for dramatic effect...
+		new /obj/effect/decal/cleanable/molten_object(T) //Leave a pile of goo behind for dramatic effect...
 		do_teleport(target, T, teleport_radius)
 
 /datum/plant_gene/trait/teleport/on_slip(obj/item/weapon/reagent_containers/food/snacks/grown/G, mob/living/carbon/C)
@@ -287,7 +287,7 @@
 	if(prob(50))
 		do_teleport(G, T, teleport_radius)
 	else
-		new /obj/effect/decal/cleanable/molten_item(T) //Leave a pile of goo behind for dramatic effect...
+		new /obj/effect/decal/cleanable/molten_object(T) //Leave a pile of goo behind for dramatic effect...
 		qdel(G)
 
 

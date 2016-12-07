@@ -14,7 +14,7 @@ var/const/MAX_ACTIVE_TIME = 400
 	icon = 'icons/mob/alien.dmi'
 	icon_state = "facehugger"
 	item_state = "facehugger"
-	w_class = 1 //note: can be picked up by aliens unlike most other items of w_class below 4
+	w_class = WEIGHT_CLASS_TINY //note: can be picked up by aliens unlike most other items of w_class below 4
 	flags = MASKINTERNALS
 	throw_range = 5
 	tint = 3
@@ -32,6 +32,16 @@ var/const/MAX_ACTIVE_TIME = 400
 /obj/item/clothing/mask/facehugger/lamarr
 	name = "Lamarr"
 	sterile = 1
+
+/obj/item/clothing/mask/facehugger/dead
+	icon_state = "facehugger_dead"
+	item_state = "facehugger_inactive"
+	stat = DEAD
+
+/obj/item/clothing/mask/facehugger/impregnated
+	icon_state = "facehugger_impregnated"
+	item_state = "facehugger_impregnated"
+	stat = DEAD
 
 /obj/item/clothing/mask/facehugger/attack_alien(mob/user) //can be picked up by aliens
 	attack_hand(user)
@@ -68,7 +78,6 @@ var/const/MAX_ACTIVE_TIME = 400
 /obj/item/clothing/mask/facehugger/bullet_act(obj/item/projectile/P)
 	if(P.damage)
 		Die()
-	return
 
 /obj/item/clothing/mask/facehugger/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(exposed_temperature > 300)
@@ -92,7 +101,7 @@ var/const/MAX_ACTIVE_TIME = 400
 		return Attach(AM)
 	return 0
 
-/obj/item/clothing/mask/facehugger/throw_at(atom/target, range, speed, mob/thrower, spin)
+/obj/item/clothing/mask/facehugger/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0)
 	if(!..())
 		return
 	if(stat == CONSCIOUS)
@@ -110,7 +119,11 @@ var/const/MAX_ACTIVE_TIME = 400
 /obj/item/clothing/mask/facehugger/proc/Attach(mob/living/M)
 	if(!isliving(M))
 		return 0
-	if((!iscorgi(M) && !iscarbon(M)) || isalien(M))
+	var/Corgi = iscorgi(M)
+	if((!Corgi && !iscarbon(M)) || isalien(M))
+		return 0
+	var/mob/living/carbon/Carb = M
+	if(!Corgi && !Carb.head)
 		return 0
 	if(attached)
 		return 0
@@ -124,7 +137,7 @@ var/const/MAX_ACTIVE_TIME = 400
 		return 0
 	if(stat != CONSCIOUS)
 		return 0
-	if(!sterile) M.take_organ_damage(strength,0) //done here so that even borgs and humans in helmets take damage
+	if(!sterile) M.take_bodypart_damage(strength,0) //done here so that even borgs and humans in helmets take damage
 	M.visible_message("<span class='danger'>[src] leaps at [M]'s face!</span>", \
 						"<span class='userdanger'>[src] leaps at [M]'s face!</span>")
 	if(ishuman(M))
@@ -137,8 +150,6 @@ var/const/MAX_ACTIVE_TIME = 400
 	if(iscarbon(M))
 		var/mob/living/carbon/target = M
 		if(target.wear_mask)
-			if(prob(20))
-				return 0
 			var/obj/item/clothing/W = target.wear_mask
 			if(W.flags & NODROP)
 				return 0
@@ -182,7 +193,7 @@ var/const/MAX_ACTIVE_TIME = 400
 		icon_state = "[initial(icon_state)]_impregnated"
 
 		var/obj/item/bodypart/chest/LC = target.get_bodypart("chest")
-		if((!LC || LC.status != ORGAN_ROBOTIC) && !target.getorgan(/obj/item/organ/body_egg/alien_embryo))
+		if((!LC || LC.status != BODYPART_ROBOTIC) && !target.getorgan(/obj/item/organ/body_egg/alien_embryo))
 			new /obj/item/organ/body_egg/alien_embryo(target)
 
 		if(iscorgi(target))

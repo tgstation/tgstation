@@ -9,7 +9,7 @@
 	response_help = "passes through"
 	response_disarm = "shoves"
 	response_harm = "hits"
-	a_intent = "harm"
+	a_intent = INTENT_HARM
 	healable = 0
 	speed = 0
 	maxHealth = 40
@@ -27,8 +27,8 @@
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 	maxbodytemp = 1500
-	flying = 1
-	pressure_resistance = 200
+	movement_type = FLYING
+	pressure_resistance = 300
 	gold_core_spawnable = 0 //too spooky for science
 	var/ghost_hair_style
 	var/ghost_hair_color

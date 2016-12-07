@@ -19,7 +19,7 @@
 
 /datum/game_mode/abduction/announce()
 	world << "<B>The current game mode is - Abduction!</B>"
-	world << "There are alien <b>abductors</b> sent to [world.name] to perform nefarious experiments!"
+	world << "There are alien <b>abductors</b> sent to [station_name()] to perform nefarious experiments!"
 	world << "<b>Abductors</b> - kidnap the crew and replace their organs with experimental ones."
 	world << "<b>Crew</b> - don't get abducted and stop the abductors."
 
@@ -187,11 +187,7 @@
 	abductor.current << "<span class='notice'>With the help of your teammate, kidnap and experiment on station crew members!</span>"
 	abductor.current << "<span class='notice'>Use your stealth technology and equipment to incapacitate humans for your scientist to retrieve.</span>"
 
-	var/obj_count = 1
-	for(var/datum/objective/objective in abductor.objectives)
-		abductor.current << "<B>Objective #[obj_count]</B>: [objective.explanation_text]"
-		obj_count++
-	return
+	abductor.announce_objectives()
 
 /datum/game_mode/abduction/proc/greet_scientist(datum/mind/abductor,team_number)
 	abductor.objectives += team_objectives[team_number]
@@ -201,11 +197,7 @@
 	abductor.current << "<span class='notice'>With the help of your teammate, kidnap and experiment on station crew members!</span>"
 	abductor.current << "<span class='notice'>Use your tool and ship consoles to support the agent and retrieve human specimens.</span>"
 
-	var/obj_count = 1
-	for(var/datum/objective/objective in abductor.objectives)
-		abductor.current << "<B>Objective #[obj_count]</B>: [objective.explanation_text]"
-		obj_count++
-	return
+	abductor.announce_objectives()
 
 /datum/game_mode/abduction/proc/equip_common(mob/living/carbon/human/agent,team_number)
 	var/radio_freq = SYND_FREQ

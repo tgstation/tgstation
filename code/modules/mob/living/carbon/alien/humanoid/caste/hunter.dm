@@ -6,7 +6,7 @@
 	icon_state = "alienh_s"
 	var/obj/screen/leap_icon = null
 
-/mob/living/carbon/alien/humanoid/hunter/New()
+/mob/living/carbon/alien/humanoid/hunter/create_internal_organs()
 	internal_organs += new /obj/item/organ/alien/plasmavessel/small
 	..()
 
@@ -45,16 +45,18 @@
 	if(leaping || stat || buckled || lying)
 		return
 
-	if(!has_gravity(src) || !has_gravity(A))
+	if(!has_gravity() || !A.has_gravity())
 		src << "<span class='alertalien'>It is unsafe to leap without gravity!</span>"
 		//It's also extremely buggy visually, so it's balance+bugfix
 		return
 
 	else //Maybe uses plasma in the future, although that wouldn't make any sense...
 		leaping = 1
+		weather_immunities += "lava"
 		update_icons()
 		throw_at(A,MAX_ALIEN_LEAP_DIST,1, spin=0, diagonals_first = 1)
 		leaping = 0
+		weather_immunities -= "lava"
 		update_icons()
 
 /mob/living/carbon/alien/humanoid/hunter/throw_impact(atom/A)
@@ -63,18 +65,20 @@
 		return ..()
 
 	if(A)
-		if(istype(A, /mob/living))
+		if(isliving(A))
 			var/mob/living/L = A
 			var/blocked = 0
 			if(ishuman(A))
 				var/mob/living/carbon/human/H = A
-				if(H.check_shields(90, "the [name]", src, attack_type = THROWN_PROJECTILE_ATTACK))
+				if(H.check_shields(0, "the [name]", src, attack_type = LEAP_ATTACK))
 					blocked = 1
 			if(!blocked)
 				L.visible_message("<span class ='danger'>[src] pounces on [L]!</span>", "<span class ='userdanger'>[src] pounces on you!</span>")
 				L.Weaken(5)
 				sleep(2)//Runtime prevention (infinite bump() calls on hulks)
 				step_towards(src,L)
+			else
+				Weaken(2, 1, 1)
 
 			toggle_leap(0)
 			pounce_cooldown = !pounce_cooldown
@@ -82,7 +86,7 @@
 				pounce_cooldown = !pounce_cooldown
 		else if(A.density && !A.CanPass(src))
 			visible_message("<span class ='danger'>[src] smashes into [A]!</span>", "<span class ='alertalien'>[src] smashes into [A]!</span>")
-			weakened = 2
+			Weaken(2, 1, 1)
 
 		if(leaping)
 			leaping = 0

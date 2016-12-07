@@ -23,7 +23,7 @@
 		swirlie.visible_message("<span class='danger'>[user] slams the toilet seat onto [swirlie]'s head!</span>", "<span class='userdanger'>[user] slams the toilet seat onto your head!</span>", "<span class='italics'>You hear reverberating porcelain.</span>")
 		swirlie.adjustBruteLoss(5)
 
-	else if(user.pulling && user.a_intent == "grab" && isliving(user.pulling))
+	else if(user.pulling && user.a_intent == INTENT_GRAB && isliving(user.pulling))
 		user.changeNext_move(CLICK_CD_MELEE)
 		var/mob/living/GM = user.pulling
 		if(user.grab_state >= GRAB_AGGRESSIVE)
@@ -80,11 +80,11 @@
 			update_icon()
 
 	else if(cistern)
-		if(user.a_intent != "harm")
-			if(I.w_class > 3)
+		if(user.a_intent != INTENT_HARM)
+			if(I.w_class > WEIGHT_CLASS_NORMAL)
 				user << "<span class='warning'>[I] does not fit!</span>"
 				return
-			if(w_items + I.w_class > 5)
+			if(w_items + I.w_class > WEIGHT_CLASS_HUGE)
 				user << "<span class='warning'>The cistern is full!</span>"
 				return
 			if(!user.drop_item())
@@ -103,19 +103,22 @@
 	else
 		return ..()
 
-
-
 /obj/structure/urinal
 	name = "urinal"
-	desc = "The HU-452, an experimental urinal."
+	desc = "The HU-452, an experimental urinal. Comes complete with experimental urinal cake."
 	icon = 'icons/obj/watercloset.dmi'
 	icon_state = "urinal"
 	density = 0
 	anchored = 1
+	var/exposed = 0 // can you currently put an item inside
+	var/obj/item/hiddenitem = null // what's in the urinal
 
+/obj/structure/urinal/New()
+	..()
+	hiddenitem = new /obj/item/weapon/reagent_containers/food/urinalcake
 
 /obj/structure/urinal/attack_hand(mob/user)
-	if(user.pulling && user.a_intent == "grab" && isliving(user.pulling))
+	if(user.pulling && user.a_intent == INTENT_GRAB && isliving(user.pulling))
 		var/mob/living/GM = user.pulling
 		if(user.grab_state >= GRAB_AGGRESSIVE)
 			if(GM.loc != get_turf(src))
@@ -126,8 +129,49 @@
 			GM.adjustBruteLoss(8)
 		else
 			user << "<span class='warning'>You need a tighter grip!</span>"
+
+	else if(exposed)
+		if(!hiddenitem)
+			user << "<span class='notice'>There is nothing in the drain holder.</span>"
+		else
+			if(ishuman(user))
+				user.put_in_hands(hiddenitem)
+			else
+				hiddenitem.forceMove(get_turf(src))
+			user << "<span class='notice'>You fish [hiddenitem] out of the drain enclosure.</span>"
+			hiddenitem = null
 	else
 		..()
+
+/obj/structure/urinal/attackby(obj/item/I, mob/living/user, params)
+	if(istype(I, /obj/item/weapon/screwdriver))
+		user << "<span class='notice'>You start to [exposed ? "screw the cap back into place" : "unscrew the cap to the drain protector"]...</span>"
+		playsound(loc, 'sound/effects/stonedoor_openclose.ogg', 50, 1)
+		if(do_after(user, 20/I.toolspeed, target = src))
+			user.visible_message("[user] [exposed ? "screws the cap back into place" : "unscrew the cap to the drain protector"]!", "<span class='notice'>You [exposed ? "screw the cap back into place" : "unscrew the cap on the drain"]!</span>", "<span class='italics'>You hear metal and squishing noises.</span>")
+			exposed = !exposed
+	else if(exposed)
+		if (hiddenitem)
+			user << "<span class='warning'>There is already something in the drain enclosure.</span>"
+			return
+		if(I.w_class > 1)
+			user << "<span class='warning'>[I] is too large for the drain enclosure.</span>"
+			return
+		if(!user.drop_item())
+			user << "<span class='warning'>\[I] is stuck to your hand, you cannot put it in the drain enclosure!</span>"
+			return
+		I.forceMove(src)
+		hiddenitem = I
+		user << "<span class='notice'>You place [I] into the drain enclosure.</span>"
+
+
+/obj/item/weapon/reagent_containers/food/urinalcake
+	name = "urinal cake"
+	desc = "The noble urinal cake, protecting the station's pipes from the station's pee. Do not eat."
+	icon = 'icons/obj/items.dmi'
+	icon_state = "urinalcake"
+	w_class = WEIGHT_CLASS_TINY
+	list_reagents = list("chlorine" = 3, "ammonia" = 1)
 
 /obj/machinery/shower
 	name = "shower"
@@ -165,7 +209,7 @@
 			else
 				wash_obj(G)
 	else
-		if(istype(loc, /turf/open))
+		if(isopenturf(loc))
 			var/turf/open/tile = loc
 			tile.MakeSlippery(min_wet_time = 5, wet_time_to_add = 1)
 
@@ -231,6 +275,7 @@
 
 	if(istype(O,/obj/item))
 		var/obj/item/I = O
+		I.acid_level = 0
 		I.extinguish()
 
 
@@ -251,10 +296,8 @@
 		var/mob/living/carbon/M = L
 		. = 1
 		check_heat(M)
-		if(M.r_hand)
-			M.r_hand.clean_blood()
-		if(M.l_hand)
-			M.l_hand.clean_blood()
+		for(var/obj/item/I in M.held_items)
+			I.clean_blood()
 		if(M.back)
 			if(M.back.clean_blood())
 				M.update_inv_back(0)
@@ -291,7 +334,7 @@
 				if(H.w_uniform.clean_blood())
 					H.update_inv_w_uniform()
 			if(washgloves)
-				clean_blood()
+				H.clean_blood()
 			if(H.shoes && washshoes)
 				if(H.shoes.clean_blood())
 					H.update_inv_shoes()
@@ -330,6 +373,9 @@
 			else
 				wash_obj(G)
 
+/obj/machinery/shower/deconstruct(disassembled = TRUE)
+	new /obj/item/stack/sheet/metal (loc, 3)
+	qdel(src)
 
 /obj/machinery/shower/proc/check_heat(mob/living/carbon/C)
 	if(watertemp == "freezing")
@@ -376,7 +422,7 @@
 	var/washing_face = 0
 	if(selected_area in list("head", "mouth", "eyes"))
 		washing_face = 1
-	user.visible_message("<span class='notice'>[user] start washing their [washing_face ? "face" : "hands"]...</span>", \
+	user.visible_message("<span class='notice'>[user] starts washing their [washing_face ? "face" : "hands"]...</span>", \
 						"<span class='notice'>You start washing your [washing_face ? "face" : "hands"]...</span>")
 	busy = 1
 
@@ -445,7 +491,7 @@
 	if(O.flags & ABSTRACT) //Abstract items like grabs won't wash. No-drop items will though because it's still technically an item in your hand.
 		return
 
-	if(user.a_intent != "harm")
+	if(user.a_intent != INTENT_HARM)
 		user << "<span class='notice'>You start washing [O]...</span>"
 		busy = 1
 		if(!do_after(user, 40, target = src))
@@ -453,11 +499,17 @@
 			return 1
 		busy = 0
 		O.clean_blood()
+		O.acid_level = 0
 		user.visible_message("<span class='notice'>[user] washes [O] using [src].</span>", \
 							"<span class='notice'>You wash [O] using [src].</span>")
 		return 1
 	else
 		return ..()
+
+/obj/structure/sink/deconstruct(disassembled = TRUE)
+	new /obj/item/stack/sheet/metal (loc, 3)
+	qdel(src)
+
 
 
 /obj/structure/sink/kitchen
@@ -478,3 +530,57 @@
 	icon_state = "puddle-splash"
 	. = ..()
 	icon_state = "puddle"
+
+
+//Shower Curtains//
+//Defines used are pre-existing in layers.dm//
+
+
+/obj/structure/curtain
+	name = "curtain"
+	desc = "Contains less than 1% mercury."
+	icon = 'icons/obj/watercloset.dmi'
+	icon_state = "open"
+	color = "#ACD1E9" //Default color, didn't bother hardcoding other colors, mappers can and should easily change it.
+	alpha = 200 //Mappers can also just set this to 255 if they want curtains that can't be seen through
+	layer = WALL_OBJ_LAYER
+	anchored = 1
+	opacity = 0
+	density = 0
+	var/open = TRUE
+
+/obj/structure/curtain/proc/toggle()
+	open = !open
+	update_icon()
+
+/obj/structure/curtain/update_icon()
+	if(!open)
+		icon_state = "closed"
+		layer = WALL_OBJ_LAYER
+		density = 1
+		open = FALSE
+
+	else
+		icon_state = "open"
+		layer = SIGN_LAYER
+		density = 0
+		open = TRUE
+
+/obj/structure/curtain/attack_hand(mob/user)
+	playsound(loc, 'sound/effects/curtain.ogg', 50, 1)
+	toggle()
+	..()
+
+/obj/structure/curtain/deconstruct(disassembled = TRUE)
+	new /obj/item/stack/sheet/cloth (loc, 3)
+	qdel(src)
+
+/obj/structure/curtain/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
+	switch(damage_type)
+		if(BRUTE)
+			if(damage_amount)
+				playsound(src.loc, 'sound/weapons/slash.ogg', 80, 1)
+			else
+				playsound(loc, 'sound/weapons/tap.ogg', 50, 1)
+		if(BURN)
+			playsound(loc, 'sound/items/welder.ogg', 80, 1)

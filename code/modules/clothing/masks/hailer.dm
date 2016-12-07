@@ -8,7 +8,7 @@
 	icon_state = "sechailer"
 	flags = BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
 	flags_inv = HIDEFACIALHAIR|HIDEFACE
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	visor_flags = BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
 	visor_flags_inv = HIDEFACE
 	flags_cover = MASKCOVERSMOUTH
@@ -56,8 +56,8 @@
 	else
 		..()
 
-/obj/item/clothing/mask/gas/sechailer/ui_action_click(mob/user, actiontype)
-	if(actiontype == /datum/action/item_action/halt)
+/obj/item/clothing/mask/gas/sechailer/ui_action_click(mob/user, action)
+	if(istype(action, /datum/action/item_action/halt))
 		halt()
 	else
 		adjustmask(user)
@@ -69,7 +69,7 @@
 	set category = "Object"
 	set name = "HALT"
 	set src in usr
-	if(!istype(usr, /mob/living))
+	if(!isliving(usr))
 		return
 	if(!can_use(usr))
 		return

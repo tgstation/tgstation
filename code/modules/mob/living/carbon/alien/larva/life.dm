@@ -6,7 +6,7 @@
 
 	if (notransform)
 		return
-	if(..())
+	if(..()) //not dead
 		// GROW!
 		if(amount_grown < max_grown)
 			amount_grown++
@@ -20,7 +20,7 @@
 		if(health<= -maxHealth || !getorgan(/obj/item/organ/brain))
 			death()
 			return
-		if(paralysis || sleeping || getOxyLoss() > 50 || (status_flags & FAKEDEATH) || health <= config.health_threshold_crit)
+		if(paralysis || sleeping || getOxyLoss() > 50 || (status_flags & FAKEDEATH) || health <= HEALTH_THRESHOLD_CRIT)
 			if(stat == CONSCIOUS)
 				stat = UNCONSCIOUS
 				blind_eyes(1)

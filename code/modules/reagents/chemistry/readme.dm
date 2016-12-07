@@ -193,8 +193,9 @@ About Recipes:
 		name & id
 			Should be pretty obvious.
 
-		result
-			This var contains the id of the resulting reagent.
+		results
+			This var contains a list of the id(s) of the resulting reagents and their result amounts.
+			I recommend you set this to the total volume of all required reagent.
 
 		required_reagents
 			This is a list of ids of the required reagents.
@@ -207,10 +208,6 @@ About Recipes:
 			Functionally similar to required_reagents, it is a list of reagents that are required
 			for the reaction. However, unlike required_reagents, catalysts are NOT consumed.
 			They mearly have to be present in the container.
-
-		result_amount
-			This is the amount of the resulting reagent this recipe will produce.
-			I recommend you set this to the total volume of all required reagent.
 
 		required_container
 			The container the recipe has to take place in in order to happen. Leave this blank/null

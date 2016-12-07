@@ -10,6 +10,9 @@
 	icon = 'icons/turf/walls.dmi'
 	explosion_block = 50
 
+/turf/closed/indestructible/acid_act(acidpwr, acid_volume, acid_id)
+	return 0
+
 /turf/closed/indestructible/oldshuttle
 	name = "strange shuttle wall"
 	icon = 'icons/turf/shuttleold.dmi'
@@ -80,3 +83,17 @@
 	desc = "Extremely densely-packed sheets of ice and rock, forged over the years of the harsh cold."
 	icon = 'icons/turf/walls.dmi'
 	icon_state = "icerock"
+
+/turf/closed/indestructible/paper
+	name = "thick paper wall"
+	desc = "A wall layered with impenetrable sheets of paper."
+	icon = 'icons/turf/walls.dmi'
+	icon_state = "paperwall"
+
+/turf/closed/indestructible/necropolis
+	name = "necropolis wall"
+	desc = "A seemingly impenetrable wall."
+	icon = 'icons/turf/walls.dmi'
+	icon_state = "necro"
+	explosion_block = 50
+	baseturf = /turf/closed/indestructible/necropolis

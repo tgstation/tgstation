@@ -6,6 +6,8 @@
 	item_state = "utility"
 	slot_flags = SLOT_BELT
 	attack_verb = list("whipped", "lashed", "disciplined")
+	obj_integrity = 300
+	max_integrity = 300
 
 /obj/item/weapon/storage/belt/update_icon()
 	cut_overlays()
@@ -31,8 +33,26 @@
 		/obj/item/device/analyzer,
 		/obj/item/weapon/extinguisher/mini,
 		/obj/item/device/radio,
-		/obj/item/clothing/gloves/
+		/obj/item/clothing/gloves
 		)
+
+/obj/item/weapon/storage/belt/utility/chief
+	name = "Chief Engineer's toolbelt"
+	desc = "Holds tools, looks snazzy"
+	icon_state = "utilitybelt_ce"
+	item_state = "utility_ce"
+
+/obj/item/weapon/storage/belt/utility/chief/full/New()
+	..()
+	new /obj/item/weapon/screwdriver/power(src)
+	new /obj/item/weapon/crowbar/power(src)
+	new /obj/item/weapon/weldingtool/experimental(src)//This can be changed if this is too much
+	new /obj/item/device/multitool(src)
+	new /obj/item/stack/cable_coil(src,30,pick("red","yellow","orange"))
+	new /obj/item/weapon/extinguisher/mini(src)
+	new /obj/item/device/analyzer(src)
+	//much roomier now that we've managed to remove two tools
+
 
 /obj/item/weapon/storage/belt/utility/full/New()
 	..()
@@ -62,7 +82,7 @@
 	desc = "Can hold various medical equipment."
 	icon_state = "medicalbelt"
 	item_state = "medical"
-	max_w_class = 4
+	max_w_class = WEIGHT_CLASS_BULKY
 	can_hold = list(
 		/obj/item/device/healthanalyzer,
 		/obj/item/weapon/dnainjector,
@@ -94,7 +114,7 @@
 		/obj/item/weapon/cautery,
 		/obj/item/weapon/hemostat,
 		/obj/item/device/geiger_counter,
-		/obj/item/clothing/tie/stethoscope,
+		/obj/item/clothing/neck/stethoscope,
 		/obj/item/weapon/stamp,
 		/obj/item/clothing/glasses,
 		/obj/item/weapon/wrench/medical,
@@ -112,7 +132,7 @@
 	icon_state = "securitybelt"
 	item_state = "security"//Could likely use a better one.
 	storage_slots = 5
-	max_w_class = 3 //Because the baton wouldn't fit otherwise. - Neerti
+	max_w_class = WEIGHT_CLASS_NORMAL //Because the baton wouldn't fit otherwise. - Neerti
 	can_hold = list(
 		/obj/item/weapon/melee/baton,
 		/obj/item/weapon/melee/classic_baton,
@@ -140,6 +160,7 @@
 	new /obj/item/weapon/grenade/flashbang(src)
 	new /obj/item/device/assembly/flash/handheld(src)
 	new /obj/item/weapon/melee/baton/loaded(src)
+	update_icon()
 
 
 /obj/item/weapon/storage/belt/mining
@@ -148,8 +169,8 @@
 	icon_state = "explorer1"
 	item_state = "explorer1"
 	storage_slots = 6
-	w_class = 4
-	max_w_class = 4 //Pickaxes are big.
+	w_class = WEIGHT_CLASS_BULKY
+	max_w_class = WEIGHT_CLASS_BULKY //Pickaxes are big.
 	max_combined_w_class = 20 //Not an issue with this whitelist, probably.
 	can_hold = list(
 		/obj/item/weapon/crowbar,
@@ -182,7 +203,11 @@
 		/obj/item/weapon/reagent_containers/pill,
 		/obj/item/weapon/storage/pill_bottle,
 		/obj/item/weapon/ore,
-		/obj/item/weapon/reagent_containers/food/drinks
+		/obj/item/weapon/reagent_containers/food/drinks,
+		/obj/item/organ/hivelord_core,
+		/obj/item/device/wormhole_jaunter,
+		/obj/item/weapon/storage/bag/plants,
+
 		)
 
 
@@ -231,7 +256,7 @@
 	desc = "A syndicate belt designed to be used by boarding parties.  Its style is modeled after the hardsuits they wear."
 	icon_state = "militarybelt"
 	item_state = "military"
-	max_w_class = 2
+	max_w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/weapon/storage/belt/military/army
 	name = "army belt"
@@ -251,7 +276,7 @@
 	desc = "A belt for holding grenades."
 	icon_state = "grenadebeltnew"
 	item_state = "security"
-	max_w_class = 4
+	max_w_class = WEIGHT_CLASS_BULKY
 	storage_slots = 30
 	can_hold = list(
 		/obj/item/weapon/grenade,
@@ -321,7 +346,7 @@
 	icon_state = "janibelt"
 	item_state = "janibelt"
 	storage_slots = 6
-	max_w_class = 4 // Set to this so the  light replacer can fit.
+	max_w_class = WEIGHT_CLASS_BULKY // Set to this so the  light replacer can fit.
 	can_hold = list(
 		/obj/item/weapon/grenade/chem_grenade,
 		/obj/item/device/lightreplacer,
@@ -330,7 +355,7 @@
 		/obj/item/weapon/soap,
 		/obj/item/weapon/holosign_creator,
 		/obj/item/key/janitor,
-		/obj/item/clothing/gloves/
+		/obj/item/clothing/gloves
 		)
 
 /obj/item/weapon/storage/belt/bandolier
@@ -349,10 +374,10 @@
 	icon_state = "holster"
 	item_state = "holster"
 	storage_slots = 3
-	max_w_class = 3
+	max_w_class = WEIGHT_CLASS_NORMAL
 	can_hold = list(
-		/obj/item/weapon/gun/projectile/automatic/pistol,
-		/obj/item/weapon/gun/projectile/revolver,
+		/obj/item/weapon/gun/ballistic/automatic/pistol,
+		/obj/item/weapon/gun/ballistic/revolver,
 		/obj/item/ammo_box,
 		)
 	alternate_worn_layer = UNDER_SUIT_LAYER
@@ -363,7 +388,7 @@
 	icon_state = "fannypack_leather"
 	item_state = "fannypack_leather"
 	storage_slots = 3
-	max_w_class = 2
+	max_w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/weapon/storage/belt/fannypack/black
 	name = "black fannypack"
@@ -414,3 +439,49 @@
 	name = "yellow fannypack"
 	icon_state = "fannypack_yellow"
 	item_state = "fannypack_yellow"
+
+/obj/item/weapon/storage/belt/sabre
+	name = "sabre sheath"
+	desc = "An ornate sheath designed to hold an officer's blade."
+	icon_state = "sheath"
+	item_state = "sheath"
+	storage_slots = 1
+	w_class = WEIGHT_CLASS_BULKY
+	max_w_class = WEIGHT_CLASS_BULKY
+	can_hold = list(
+		/obj/item/weapon/melee/sabre
+		)
+
+/obj/item/weapon/storage/belt/sabre/examine(mob/user)
+	..()
+	if(contents.len)
+		user << "<span class='notice'>Alt-click it to quickly draw the blade.</span>"
+
+/obj/item/weapon/storage/belt/sabre/AltClick(mob/user)
+	if(!ishuman(user) || !user.canUseTopic(src, be_close=TRUE))
+		return
+	if(contents.len)
+		var/obj/item/I = contents[1]
+		user.visible_message("[user] takes [I] out of [src].", "<span class='notice'>You take [I] out of [src].</span>",\
+		)
+		user.put_in_hands(I)
+		update_icon()
+	else
+		user << "[src] is empty."
+
+/obj/item/weapon/storage/belt/sabre/update_icon()
+	icon_state = "sheath"
+	item_state = "sheath"
+	if(contents.len)
+		icon_state += "-sabre"
+		item_state += "-sabre"
+	if(loc && isliving(loc))
+		var/mob/living/L = loc
+		L.regenerate_icons()
+	..()
+
+
+/obj/item/weapon/storage/belt/sabre/New()
+	..()
+	new /obj/item/weapon/melee/sabre(src)
+	update_icon()

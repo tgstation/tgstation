@@ -37,7 +37,7 @@
 /obj/machinery/mecha_part_fabricator/New()
 	..()
 	files = new /datum/research(src) //Setup the research data holder.
-	materials = new(src, list(MAT_METAL, MAT_GLASS, MAT_SILVER, MAT_GOLD, MAT_DIAMOND, MAT_PLASMA, MAT_URANIUM, MAT_BANANIUM))
+	materials = new(src, list(MAT_METAL, MAT_GLASS, MAT_SILVER, MAT_GOLD, MAT_DIAMOND, MAT_PLASMA, MAT_URANIUM, MAT_BANANIUM, MAT_TITANIUM))
 	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/mechfab(null)
 	B.apply_default_parts(src)
 
@@ -143,7 +143,7 @@
 	return resources
 
 /obj/machinery/mecha_part_fabricator/proc/check_resources(datum/design/D)
-	if(D.reagents.len) // No reagents storage - no reagent designs.
+	if(D.reagents_list.len) // No reagents storage - no reagent designs.
 		return 0
 	if(materials.has_materials(get_resources_w_coeff(D)))
 		return 1
@@ -415,7 +415,7 @@
 	updateUsrDialog()
 	return
 
-/obj/machinery/mecha_part_fabricator/deconstruction()
+/obj/machinery/mecha_part_fabricator/on_deconstruction()
 	materials.retrieve_all()
 	..()
 

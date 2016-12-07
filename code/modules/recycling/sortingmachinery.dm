@@ -15,8 +15,12 @@
 /obj/structure/bigDelivery/Destroy()
 	var/turf/T = get_turf(src)
 	for(var/atom/movable/AM in contents)
-		AM.loc = T
+		AM.forceMove(T)
 	return ..()
+
+/obj/structure/bigDelivery/contents_explosion(severity, target)
+	for(var/atom/movable/AM in contents)
+		AM.ex_act()
 
 /obj/structure/bigDelivery/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/device/destTagger))
@@ -74,6 +78,9 @@
 	var/giftwrapped = 0
 	var/sortTag = 0
 
+/obj/item/smallDelivery/contents_explosion(severity, target)
+	for(var/atom/movable/AM in contents)
+		AM.ex_act()
 
 /obj/item/smallDelivery/attack_self(mob/user)
 	user.unEquip(src)
@@ -136,7 +143,7 @@
 	//If you don't want to fuck up disposals, add to this list, and don't change the order.
 	//If you insist on changing the order, you'll have to change every sort junction to reflect the new order. --Pete
 
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 	item_state = "electronic"
 	flags = CONDUCT
 	slot_flags = SLOT_BELT

@@ -5,10 +5,11 @@
 	icon_state = "moneybag"
 	force = 10
 	throwforce = 0
-	burn_state = FLAMMABLE
-	burntime = 20
-	w_class = 4
-	max_w_class = 3
+	resistance_flags = FLAMMABLE
+	obj_integrity = 100
+	max_integrity = 100
+	w_class = WEIGHT_CLASS_BULKY
+	max_w_class = WEIGHT_CLASS_NORMAL
 	storage_slots = 80
 	max_combined_w_class = 40
 	can_hold = list(/obj/item/weapon/coin, /obj/item/stack/spacecash)

@@ -1,8 +1,9 @@
-/mob/living/simple_animal/hostile/asteroid/
+/mob/living/simple_animal/hostile/asteroid
 	vision_range = 2
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	faction = list("mining")
 	weather_immunities = list("lava","ash")
+	obj_damage = 30
 	environment_smash = 2
 	minbodytemp = 0
 	maxbodytemp = INFINITY
@@ -10,11 +11,12 @@
 	response_disarm = "shoves"
 	response_harm = "strikes"
 	status_flags = 0
-	a_intent = "harm"
+	a_intent = INTENT_HARM
 	var/throw_message = "bounces off of"
 	var/icon_aggro = null // for swapping to when we get aggressive
 	see_in_dark = 8
 	see_invisible = SEE_INVISIBLE_MINIMUM
+	mob_size = MOB_SIZE_LARGE
 
 /mob/living/simple_animal/hostile/asteroid/Aggro()
 	..()
@@ -68,10 +70,11 @@
 	maxHealth = 200
 	health = 200
 	harm_intent_damage = 5
+	obj_damage = 60
 	melee_damage_lower = 12
 	melee_damage_upper = 12
 	attacktext = "bites into"
-	a_intent = "harm"
+	a_intent = INTENT_HARM
 	speak_emote = list("chitters")
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	aggro_vision_range = 9
@@ -91,7 +94,7 @@
 
 /mob/living/simple_animal/hostile/asteroid/basilisk/GiveTarget(new_target)
 	if(..()) //we have a target
-		if(isliving(target))
+		if(isliving(target) && !target.Adjacent(targets_from) && ranged_cooldown <= world.time)//No more being shot at point blank or spammed with RNG beams
 			OpenFire(target)
 
 /mob/living/simple_animal/hostile/asteroid/basilisk/ex_act(severity, target)
@@ -124,7 +127,7 @@
 	melee_damage_upper = 0
 	attacktext = "barrels into"
 	attack_sound = 'sound/weapons/punch1.ogg'
-	a_intent = "help"
+	a_intent = INTENT_HELP
 	speak_emote = list("screeches")
 	throw_message = "sinks in slowly, before being pushed out of "
 	deathmessage = "spits up the contents of its stomach before dying!"
@@ -209,6 +212,7 @@
 	throw_message = "falls right through the strange body of the"
 	ranged_cooldown = 0
 	ranged_cooldown_time = 20
+	obj_damage = 0
 	environment_smash = 0
 	retreat_distance = 3
 	minimum_distance = 3
@@ -219,11 +223,11 @@
 /mob/living/simple_animal/hostile/asteroid/hivelord/OpenFire(the_target)
 	if(world.time >= ranged_cooldown)
 		var/mob/living/simple_animal/hostile/asteroid/hivelordbrood/A = new brood_type(src.loc)
+		A.admin_spawned = admin_spawned
 		A.GiveTarget(target)
 		A.friends = friends
-		A.faction = faction
+		A.faction = faction.Copy()
 		ranged_cooldown = world.time + ranged_cooldown_time
-	return
 
 /mob/living/simple_animal/hostile/asteroid/hivelord/AttackingTarget()
 	OpenFire()
@@ -242,7 +246,6 @@
 	actions_types = list(/datum/action/item_action/organ_action/use)
 	var/inert = 0
 	var/preserved = 0
-	var/list/spawned_brood = list()
 
 /obj/item/organ/hivelord_core/New()
 	..()
@@ -272,36 +275,13 @@
 	update_icon()
 
 /obj/item/organ/hivelord_core/ui_action_click()
-	var/spawn_amount = 1
-	if(!inert)
-		spawn_amount++
-
-	for(var/a in spawned_brood)
-		if(!istype(a, /mob/living/simple_animal/hostile/asteroid/hivelordbrood) || qdeleted(a))
-			spawned_brood -= a
-			continue
-	spawn_amount -= spawned_brood.len
-
-	for(var/i = 1 to spawn_amount)
-		var/mob/living/simple_animal/hostile/asteroid/hivelordbrood/blood/B = new (owner.loc)
-		B.link_host(owner)
-		spawned_brood |= B
-
+	owner.revive(full_heal = 1)
+	qdel(src)
 
 /obj/item/organ/hivelord_core/on_life()
 	..()
-	if(owner)
-		owner.adjustBruteLoss(-1)
-		owner.adjustFireLoss(-1)
-		owner.adjustOxyLoss(-2)
-	if(ishuman(owner))
-		var/mob/living/carbon/human/H = owner
-		CHECK_DNA_AND_SPECIES(H)
-		if(NOBLOOD in H.dna.species.specflags)
-			return
-
-		if(H.blood_volume && H.blood_volume < BLOOD_VOLUME_NORMAL)
-			H.blood_volume += 2 // Fast blood regen
+	if(owner.health < HEALTH_THRESHOLD_CRIT)
+		ui_action_click()
 
 /obj/item/organ/hivelord_core/afterattack(atom/target, mob/user, proximity_flag)
 	if(proximity_flag && ishuman(target))
@@ -314,7 +294,7 @@
 				user << "<span class='notice'>[src] are useless on the dead.</span>"
 				return
 			if(H != user)
-				H.visible_message("[user] forces [H] to apply [src]... they quickly regenerate all injuries!")
+				H.visible_message("[user] forces [H] to apply [src]... [H.p_they()] quickly regenerate all injuries!")
 				feedback_add_details("hivelord_core","[src.type]|used|other")
 			else
 				user << "<span class='notice'>You start to smear [src] on yourself. It feels and smells disgusting, but you feel amazingly refreshed in mere moments.</span>"
@@ -342,7 +322,7 @@
 	speed = 3
 	maxHealth = 1
 	health = 1
-	flying = 1
+	movement_type = FLYING
 	harm_intent_damage = 5
 	melee_damage_lower = 2
 	melee_damage_upper = 2
@@ -350,6 +330,7 @@
 	speak_emote = list("telepathically cries")
 	attack_sound = 'sound/weapons/pierce.ogg'
 	throw_message = "falls right through the strange body of the"
+	obj_damage = 0
 	environment_smash = 0
 	pass_flags = PASSTABLE
 	del_on_death = 1
@@ -420,7 +401,8 @@
 /mob/living/simple_animal/hostile/asteroid/hivelordbrood/blood/proc/link_host(mob/living/carbon/C)
 	faction = list("\ref[src]", "\ref[C]") // Hostile to everyone except the host.
 	C.transfer_blood_to(src, 30)
-	color = mix_color_from_reagents(reagents.reagent_list)
+	var/newcolor = mix_color_from_reagents(reagents.reagent_list)
+	add_atom_colour(newcolor, FIXED_COLOUR_PRIORITY)
 
 /mob/living/simple_animal/hostile/asteroid/goliath
 	name = "goliath"
@@ -431,7 +413,6 @@
 	icon_aggro = "Goliath_alert"
 	icon_dead = "Goliath_dead"
 	icon_gib = "syndicate_gib"
-	attack_sound = 'sound/weapons/punch4.ogg'
 	mouse_opacity = 2
 	move_to_delay = 40
 	ranged = 1
@@ -443,6 +424,7 @@
 	maxHealth = 300
 	health = 300
 	harm_intent_damage = 0
+	obj_damage = 100
 	melee_damage_lower = 25
 	melee_damage_upper = 25
 	attacktext = "pulverizes"
@@ -451,7 +433,6 @@
 	aggro_vision_range = 9
 	idle_vision_range = 5
 	anchored = 1 //Stays anchored until death as to be unpullable
-	mob_size = MOB_SIZE_LARGE
 	var/pre_attack = 0
 	var/pre_attack_icon = "Goliath_preattack"
 	loot = list(/obj/item/stack/sheet/animalhide/goliath_hide)
@@ -478,7 +459,7 @@
 
 /mob/living/simple_animal/hostile/asteroid/goliath/OpenFire()
 	var/tturf = get_turf(target)
-	if(!(istype(tturf, /turf)))
+	if(!isturf(tturf))
 		return
 	if(get_dist(src, target) <= 7)//Screen range check, so you can't get tentacle'd offscreen
 		visible_message("<span class='warning'>The [src.name] digs its tentacles under [target.name]!</span>")
@@ -498,7 +479,7 @@
 	if(icon_state != icon_aggro)
 		icon_state = icon_aggro
 
-/obj/effect/goliath_tentacle/
+/obj/effect/goliath_tentacle
 	name = "Goliath tentacle"
 	icon = 'icons/mob/lavaland/lavaland_monsters.dmi'
 	icon_state = "Goliath_tentacle"
@@ -507,7 +488,7 @@
 
 /obj/effect/goliath_tentacle/New()
 	var/turftype = get_turf(src)
-	if(istype(turftype, /turf/closed/mineral))
+	if(ismineralturf(turftype))
 		var/turf/closed/mineral/M = turftype
 		M.gets_drilled()
 	addtimer(src, "Trip", 10)
@@ -544,7 +525,7 @@
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "goliath_hide"
 	flags = NOBLUDGEON
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 	layer = MOB_LAYER
 
 /obj/item/stack/sheet/animalhide/goliath_hide/afterattack(atom/target, mob/user, proximity_flag)
@@ -561,13 +542,11 @@
 				return
 		if(istype(target, /obj/mecha/working/ripley))
 			var/obj/mecha/working/ripley/D = target
-			var/list/damage_absorption = D.damage_absorption
 			if(D.hides < 3)
 				D.hides++
-				damage_absorption["brute"] = max(damage_absorption["brute"] - 0.1, 0.3)
-				damage_absorption["bullet"] = damage_absorption["bullet"] - 0.05
-				damage_absorption["fire"] = damage_absorption["fire"] - 0.05
-				damage_absorption["laser"] = damage_absorption["laser"] - 0.025
+				D.armor["melee"] = min(D.armor["melee"] + 10, 70)
+				D.armor["bullet"] = min(D.armor["bullet"] + 5, 50)
+				D.armor["laser"] = min(D.armor["laser"] + 5, 50)
 				user << "<span class='info'>You strengthen [target], improving its resistance against melee attacks.</span>"
 				D.update_icon()
 				if(D.hides == 3)
@@ -595,7 +574,6 @@
 	icon_aggro = "Fugu"
 	icon_dead = "Fugu_dead"
 	icon_gib = "syndicate_gib"
-	attack_sound = 'sound/weapons/punch4.ogg'
 	mouse_opacity = 2
 	move_to_delay = 5
 	friendly = "floats near"
@@ -605,6 +583,7 @@
 	maxHealth = 50
 	health = 50
 	harm_intent_damage = 5
+	obj_damage = 0
 	melee_damage_lower = 0
 	melee_damage_upper = 0
 	attacktext = "chomps"
@@ -649,6 +628,7 @@
 		return
 	wumbo = 1
 	icon_state = "Fugu_big"
+	obj_damage = 60
 	melee_damage_lower = 15
 	melee_damage_upper = 20
 	harm_intent_damage = 0
@@ -667,6 +647,7 @@
 		walk(src, 0)
 		wumbo = 0
 		icon_state = "Fugu"
+		obj_damage = 0
 		melee_damage_lower = 0
 		melee_damage_upper = 0
 		harm_intent_damage = 5
@@ -690,7 +671,7 @@
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "fugu_gland"
 	flags = NOBLUDGEON
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 	layer = MOB_LAYER
 	origin_tech = "biotech=6"
 	var/list/banned_mobs()
@@ -728,10 +709,11 @@
 	melee_damage_lower = 15
 	melee_damage_upper = 15
 	attacktext = "impales"
-	a_intent = "harm"
+	a_intent = INTENT_HARM
 	speak_emote = list("telepathically cries")
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	stat_attack = 1
+	movement_type = FLYING
 	robust_searching = 1
 	loot = list()
 	butcher_results = list(/obj/item/weapon/ore/diamond = 2, /obj/item/stack/sheet/sinew = 2, /obj/item/stack/sheet/bone = 1)
@@ -766,6 +748,7 @@
 	icon_aggro = "legion"
 	icon_dead = "legion"
 	icon_gib = "syndicate_gib"
+	obj_damage = 60
 	melee_damage_lower = 15
 	melee_damage_upper = 15
 	attacktext = "lashes out at"
@@ -816,18 +799,21 @@
 	robust_searching = 1
 
 /mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/Life()
-	if(isturf(src.loc))
+	if(isturf(loc))
 		for(var/mob/living/carbon/human/H in view(src,1)) //Only for corpse right next to/on same tile
 			if(H.stat == UNCONSCIOUS)
-				visible_message("<span class='warning'>[src.name] burrows into the flesh of [H]!</span>")
-				var/mob/living/simple_animal/hostile/asteroid/hivelord/legion/L = new(H.loc)
-				visible_message("<span class='warning'>[L] staggers to their feet!</span>")
-				H.death()
-				H.adjustBruteLoss(1000)
-				L.stored_mob = H
-				H.forceMove(L)
-				qdel(src)
+				infest(H)
 	..()
+
+/mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/proc/infest(mob/living/carbon/human/H)
+	visible_message("<span class='warning'>[name] burrows into the flesh of [H]!</span>")
+	var/mob/living/simple_animal/hostile/asteroid/hivelord/legion/L = new(H.loc)
+	visible_message("<span class='warning'>[L] staggers to their feet!</span>")
+	H.death()
+	H.adjustBruteLoss(1000)
+	L.stored_mob = H
+	H.forceMove(L)
+	qdel(src)
 
 /obj/item/organ/hivelord_core/legion
 	name = "legion's soul"
@@ -853,7 +839,7 @@
 	desc = "[src] has become inert, it crackles no more and is useless for \
 		healing injuries."
 
-/obj/item/organ/hivelord_core/legion/preserved()
+/obj/item/organ/hivelord_core/legion/preserved(implanted = 0)
 	..()
 	desc = "[src] has been stabilized. It no longer crackles with power, but it's healing properties are preserved indefinitely."
 
@@ -881,14 +867,15 @@
 	density = 0
 	speak_chance = 1
 	turns_per_move = 8
+	obj_damage = 0
 	environment_smash = 0
 	move_to_delay = 15
 	response_help  = "pets"
 	response_disarm = "gently pushes aside"
 	response_harm   = "squishes"
 	friendly = "pinches"
-	a_intent = "help"
-	ventcrawler = 2
+	a_intent = INTENT_HELP
+	ventcrawler = VENTCRAWLER_ALWAYS
 	gold_core_spawnable = 2
 	stat_attack = 1
 	gender = NEUTER
@@ -930,7 +917,7 @@
 		..()
 
 /mob/living/simple_animal/hostile/asteroid/gutlunch/AttackingTarget()
-	if(is_type_in_list(target,wanted_objects)) //we eats
+	if(is_type_in_typecache(target,wanted_objects)) //we eats
 		udder.generateMilk()
 		regenerate_icons()
 		visible_message("<span class='notice'>[src] slurps up [target].</span>")
@@ -959,7 +946,7 @@
 
 /mob/living/simple_animal/hostile/asteroid/gutlunch/gubbuck/New()
 	..()
-	color = pick("#E39FBB", "#D97D64", "#CF8C4A")
+	add_atom_colour(pick("#E39FBB", "#D97D64", "#CF8C4A"), FIXED_COLOUR_PRIORITY)
 	resize = 0.85
 	update_transform()
 
@@ -975,10 +962,10 @@
 		make_babies()
 
 /mob/living/simple_animal/hostile/asteroid/gutlunch/guthen/make_babies()
-	if(..())
+	. = ..()
+	if(.)
 		udder.reagents.clear_reagents()
 		regenerate_icons()
-
 
 //Nests
 /mob/living/simple_animal/hostile/spawner/lavaland
@@ -990,6 +977,7 @@
 	icon_dead = "tendril"
 	faction = list("mining")
 	weather_immunities = list("lava","ash")
+	luminosity = 1
 	health = 250
 	maxHealth = 250
 	max_mobs = 3
@@ -1005,15 +993,41 @@
 
 /mob/living/simple_animal/hostile/spawner/lavaland/New()
 	..()
+	for(var/F in RANGE_TURFS(1, src))
+		if(ismineralturf(F))
+			var/turf/closed/mineral/M = F
+			M.ChangeTurf(M.turf_type,FALSE,TRUE)
 	gps = new /obj/item/device/gps/internal(src)
 
 /mob/living/simple_animal/hostile/spawner/lavaland/Destroy()
 	qdel(gps)
 	. = ..()
 
+#define MEDAL_PREFIX "Tendril"
+/mob/living/simple_animal/hostile/spawner/lavaland/death()
+	var/last_tendril = TRUE
+	for(var/mob/living/simple_animal/hostile/spawner/lavaland/other in mob_list)
+		if(other != src)
+			last_tendril = FALSE
+			break
+	if(last_tendril && !admin_spawned)
+		if(global.medal_hub && global.medal_pass && global.medals_enabled)
+			for(var/mob/living/L in view(7,src))
+				if(L.stat)
+					continue
+				if(L.client)
+					var/client/C = L.client
+					var/suffixm = ALL_KILL_MEDAL
+					var/prefix = MEDAL_PREFIX
+					UnlockMedal("[prefix] [suffixm]",C)
+					SetScore(TENDRIL_CLEAR_SCORE,C,1)
+	..()
+#undef MEDAL_PREFIX
+
 /obj/effect/collapse
 	name = "collapsing necropolis tendril"
 	desc = "Get clear!"
+	luminosity = 1
 	layer = ABOVE_OPEN_TURF_LAYER
 	icon = 'icons/mob/nest.dmi'
 	icon_state = "tendril"

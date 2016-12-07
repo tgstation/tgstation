@@ -53,10 +53,13 @@
 	var/list/data = list()
 	var/can_reclaim = FALSE
 
+	if(allowed(user))
+		can_reclaim = TRUE
+
 	if(inserted_id)
 		data["id"] = inserted_id
-		data["id"]["name"] = inserted_id.registered_name
-		if(inserted_id.points >= inserted_id.goal || allowed(user))
+		data["id_name"] = inserted_id.registered_name
+		if(inserted_id.points >= inserted_id.goal)
 			can_reclaim = TRUE
 
 	var/list/mobs = list()
@@ -78,14 +81,14 @@
 	switch(action)
 		if("handle_id")
 			if(inserted_id)
-				if(!usr.get_active_hand())
+				if(!usr.get_active_held_item())
 					usr.put_in_hands(inserted_id)
 					inserted_id = null
 				else
 					inserted_id.forceMove(get_turf(src))
 					inserted_id = null
 			else
-				var/obj/item/I = usr.get_active_hand()
+				var/obj/item/I = usr.get_active_held_item()
 				if(istype(I, /obj/item/weapon/card/id/prisoner))
 					if(!usr.drop_item())
 						return

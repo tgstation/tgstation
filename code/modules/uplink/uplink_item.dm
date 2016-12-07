@@ -44,7 +44,9 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	var/category = "item category"
 	var/desc = "item description"
 	var/item = null // Path to the item to spawn.
+	var/refund_path = null // Alternative path for refunds, in case the item purchased isn't what is actually refunded (ie: holoparasites).
 	var/cost = 0
+	var/refund_amount = 0 // specified refund amount in case there needs to be a TC penalty for refunds.
 	var/refundable = FALSE
 	var/surplus = 100 // Chance of being included in the surplus crate.
 	var/list/include_modes = list() // Game modes to allow this item in.
@@ -138,13 +140,13 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	name = "Stechkin Pistol"
 	desc = "A small, easily concealable handgun that uses 10mm auto rounds in 8-round magazines and is compatible \
 			with suppressors."
-	item = /obj/item/weapon/gun/projectile/automatic/pistol
+	item = /obj/item/weapon/gun/ballistic/automatic/pistol
 	cost = 7
 
 /datum/uplink_item/dangerous/revolver
 	name = "Syndicate Revolver"
 	desc = "A brutally simple syndicate revolver that fires .357 Magnum rounds and has 7 chambers."
-	item = /obj/item/weapon/gun/projectile/revolver
+	item = /obj/item/weapon/gun/ballistic/revolver
 	cost = 13
 	surplus = 50
 
@@ -152,7 +154,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	name = "Bulldog Shotgun"
 	desc = "A fully-loaded semi-automatic drum-fed shotgun. Compatiable with all 12g rounds. Designed for close \
 			quarter anti-personel engagements."
-	item = /obj/item/weapon/gun/projectile/automatic/shotgun/bulldog
+	item = /obj/item/weapon/gun/ballistic/automatic/shotgun/bulldog
 	cost = 8
 	surplus = 40
 	include_modes = list(/datum/game_mode/nuclear)
@@ -161,20 +163,20 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	name = "C-20r Submachine Gun"
 	desc = "A fully-loaded Scarborough Arms bullpup submachine gun. The C-20r fires .45 rounds with a \
 			20-round magazine and is compatible with suppressors."
-	item = /obj/item/weapon/gun/projectile/automatic/c20r
+	item = /obj/item/weapon/gun/ballistic/automatic/c20r
 	cost = 10
 	surplus = 40
 	include_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/dangerous/smg/unrestricted
-	item = /obj/item/weapon/gun/projectile/automatic/c20r/unrestricted
+	item = /obj/item/weapon/gun/ballistic/automatic/c20r/unrestricted
 	include_modes = list(/datum/game_mode/gang)
 
 /datum/uplink_item/dangerous/machinegun
 	name = "L6 Squad Automatic Weapon"
 	desc = "A fully-loaded Aussec Armoury belt-fed machine gun. \
 			This deadly weapon has a massive 50-round magazine of devastating 5.56x45mm ammunition."
-	item = /obj/item/weapon/gun/projectile/automatic/l6_saw
+	item = /obj/item/weapon/gun/ballistic/automatic/l6_saw
 	cost = 18
 	surplus = 0
 	include_modes = list(/datum/game_mode/nuclear)
@@ -190,7 +192,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 /datum/uplink_item/dangerous/sniper
 	name = "Sniper Rifle"
 	desc = "Ranged fury, Syndicate style. guaranteed to cause shock and awe or your TC back!"
-	item = /obj/item/weapon/gun/projectile/automatic/sniper_rifle/syndicate
+	item = /obj/item/weapon/gun/ballistic/automatic/sniper_rifle/syndicate
 	cost = 16
 	surplus = 25
 	include_modes = list(/datum/game_mode/nuclear)
@@ -198,7 +200,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 /datum/uplink_item/dangerous/bolt_action
 	name = "Surplus Rifle"
 	desc = "A horribly outdated bolt action weapon. You've got to be desperate to use this."
-	item = /obj/item/weapon/gun/projectile/shotgun/boltaction
+	item = /obj/item/weapon/gun/ballistic/shotgun/boltaction
 	cost = 2
 	include_modes = list(/datum/game_mode/nuclear)
 
@@ -259,7 +261,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 /datum/uplink_item/dangerous/foamsmg
 	name = "Toy Submachine Gun"
 	desc = "A fully-loaded Donksoft bullpup submachine gun that fires riot grade rounds with a 20-round magazine."
-	item = /obj/item/weapon/gun/projectile/automatic/c20r/toy
+	item = /obj/item/weapon/gun/ballistic/automatic/c20r/toy
 	cost = 5
 	surplus = 0
 	include_modes = list(/datum/game_mode/nuclear)
@@ -268,7 +270,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	name = "Toy Machine Gun"
 	desc = "A fully-loaded Donksoft belt-fed machine gun. This weapon has a massive 50-round magazine of devastating \
 			riot grade darts, that can briefly incapacitate someone in just one volley."
-	item = /obj/item/weapon/gun/projectile/automatic/l6_saw/toy
+	item = /obj/item/weapon/gun/ballistic/automatic/l6_saw/toy
 	cost = 10
 	surplus = 0
 	include_modes = list(/datum/game_mode/nuclear)
@@ -319,10 +321,28 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 
 /datum/uplink_item/ammo/pistol
 	name = "10mm Handgun Magazine"
-	desc = "An additional 8-round 10mm magazine; compatible with the Stechkin Pistol. These subsonic rounds \
+	desc = "An additional 8-round 10mm magazine; compatible with the Stechkin Pistol. These rounds \
 			are dirt cheap but are half as effective as .357 rounds."
 	item = /obj/item/ammo_box/magazine/m10mm
 	cost = 1
+
+/datum/uplink_item/ammo/pistolap
+	name = "10mm Armour Piercing Magazine"
+	desc = "An additional 8-round 10mm magazine; compatible with the Stechkin Pistol. These rounds are less effective at injuring the target but penetrate protective gear."
+	item = /obj/item/ammo_box/magazine/m10mm/ap
+	cost = 2
+
+/datum/uplink_item/ammo/pistolfire
+	name = "10mm Incendiary Magazine"
+	desc = "An additional 8-round 10mm magazine; compatible with the Stechkin Pistol. Loaded with incendiary rounds which ignite the target."
+	item = /obj/item/ammo_box/magazine/m10mm/fire
+	cost = 2
+
+/datum/uplink_item/ammo/pistolhp
+	name = "10mm Hollow Point Magazine"
+	desc = "An additional 8-round 10mm magazine; compatible with the Stechkin Pistol. These rounds are more damaging but ineffective against armour."
+	item = /obj/item/ammo_box/magazine/m10mm/hp
+	cost = 3
 
 /datum/uplink_item/ammo/bolt_action
 	name = "Surplus Rifle Clip"
@@ -519,14 +539,23 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 			deflecting all ranged weapon fire, but you also refuse to use dishonorable ranged weaponry."
 	item = /obj/item/weapon/sleeping_carp_scroll
 	cost = 17
+	surplus = 0
 	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/gang)
+
+/datum/uplink_item/stealthy_weapons/cqc
+	name = "CQC Manual"
+	desc = "A manual that teaches a single user tactical Close-Quarters Combat before self-destructing."
+	item = /obj/item/weapon/cqc_manual
+	include_modes = list(/datum/game_mode/nuclear)
+	cost = 13
+	surplus = 0
 
 /datum/uplink_item/stealthy_weapons/throwingweapons
 	name = "Box of Throwing Weapons"
 	desc = "A box of shurikens and reinforced bolas from ancient Earth martial arts. They are highly effective \
 			 throwing weapons. The bolas can knock a target down and the shurikens will embed into limbs."
 	item = /obj/item/weapon/storage/box/syndie_kit/throwing_weapons
-	cost = 5
+	cost = 3
 
 /datum/uplink_item/stealthy_weapons/edagger
 	name = "Energy Dagger"
@@ -538,7 +567,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	name = "Toy Gun with Riot Darts"
 	desc = "An innocent-looking toy pistol designed to fire foam darts. Comes loaded with riot-grade \
 			darts effective at incapacitating a target."
-	item = /obj/item/weapon/gun/projectile/automatic/toy/pistol/riot
+	item = /obj/item/weapon/gun/ballistic/automatic/toy/pistol/riot
 	cost = 3
 	surplus = 10
 	exclude_modes = list(/datum/game_mode/gang)
@@ -687,8 +716,9 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 /datum/uplink_item/stealthy_tools/smugglersatchel
 	name = "Smuggler's Satchel"
 	desc = "This satchel is thin enough to be hidden in the gap between plating and tiling; great for stashing \
-			your stolen goods. Comes with a crowbar and a floor tile inside."
-	item = /obj/item/weapon/storage/backpack/satchel_flat
+			your stolen goods. Comes with a crowbar and a floor tile inside. Properly hidden satchels have been \
+			known to survive intact even beyond the current shift. "
+	item = /obj/item/weapon/storage/backpack/satchel/flat
 	cost = 2
 	surplus = 30
 
@@ -797,7 +827,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	name = "Military Belt"
 	desc = "A robust seven-slot red belt that is capable of holding all manner of tatical equipment."
 	item = /obj/item/weapon/storage/belt/military
-	cost = 3
+	cost = 1
 	exclude_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/device_tools/medkit
@@ -958,6 +988,13 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	cost = 4
 	include_modes = list(/datum/game_mode/nuclear)
 
+/datum/uplink_item/device_tools/telecrystal
+	name = "Raw Telecrystal"
+	desc = "A telecrystal in its rawest and purest form; can be utilized on active uplinks to increase their telecrystal count."
+	item = /obj/item/stack/telecrystal
+	cost = 1
+	surplus = 0
+
 // Implants
 /datum/uplink_item/implants
 	category = "Implants"
@@ -1109,7 +1146,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/gang)
 
 /datum/uplink_item/badass/surplus/spawn_item(turf/loc, obj/item/device/uplink/U)
-	var/list/uplink_items = get_uplink_items()
+	var/list/uplink_items = get_uplink_items(ticker.mode)
 
 	var/crate_value = 50
 	var/obj/structure/closet/crate/C = new(loc)
@@ -1136,7 +1173,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	cost = 0
 
 /datum/uplink_item/badass/random/spawn_item(turf/loc, obj/item/device/uplink/U)
-	var/list/uplink_items = get_uplink_items()
+	var/list/uplink_items = get_uplink_items(ticker.mode)
 	var/list/possible_items = list()
 	for(var/category in uplink_items)
 		for(var/item in uplink_items[category])

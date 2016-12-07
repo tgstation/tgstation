@@ -120,7 +120,7 @@
 	force = 0
 	slot_flags = SLOT_HEAD
 	throwforce = 0
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 	throw_speed = 1
 	throw_range = 3
 
@@ -170,7 +170,7 @@
 	force = 0
 	slot_flags = SLOT_HEAD
 	throwforce = 0
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 	throw_speed = 1
 	throw_range = 3
 	attack_verb = list("roasted", "scorched", "burned")
@@ -181,7 +181,7 @@
 
 /obj/item/weapon/grown/novaflower/attack(mob/living/carbon/M, mob/user)
 	if(!..()) return
-	if(istype(M, /mob/living))
+	if(isliving(M))
 		M << "<span class='danger'>You are lit on fire from the intense heat of the [name]!</span>"
 		M.adjust_fire_stacks(seed.potency / 20)
 		if(M.IgniteMob())

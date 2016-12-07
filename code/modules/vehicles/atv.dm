@@ -8,7 +8,7 @@
 	generic_pixel_y = 4
 	vehicle_move_delay = 1
 	var/static/image/atvcover = null
-
+	
 
 /obj/vehicle/atv/New()
 	..()
@@ -17,7 +17,7 @@
 		atvcover.layer = ABOVE_MOB_LAYER
 
 
-obj/vehicle/atv/post_buckle_mob(mob/living/M)
+/obj/vehicle/atv/post_buckle_mob(mob/living/M)
 	if(has_buckled_mobs())
 		add_overlay(atvcover)
 	else

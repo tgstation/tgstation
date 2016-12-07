@@ -25,16 +25,21 @@ var/const/GRAV_NEEDS_WRENCH = 3
 	anchored = 1
 	density = 1
 	use_power = 0
-	unacidable = 1
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	var/sprite_number = 0
 
 /obj/machinery/gravity_generator/ex_act(severity, target)
 	if(severity == 1) // Very sturdy.
 		set_broken()
 
-/obj/machinery/gravity_generator/blob_act(obj/effect/blob/B)
+/obj/machinery/gravity_generator/blob_act(obj/structure/blob/B)
 	if(prob(20))
 		set_broken()
+
+/obj/machinery/gravity_generator/tesla_act(power, explosive)
+	..()
+	if(explosive)
+		qdel(src)//like the singulo, tesla deletes it. stops it from exploding over and over
 
 /obj/machinery/gravity_generator/update_icon()
 	..()
@@ -186,7 +191,7 @@ var/const/GRAV_NEEDS_WRENCH = 3
 		if(GRAV_NEEDS_SCREWDRIVER)
 			if(istype(I, /obj/item/weapon/screwdriver))
 				user << "<span class='notice'>You secure the screws of the framework.</span>"
-				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+				playsound(src.loc, I.usesound, 50, 1)
 				broken_state++
 				update_icon()
 				return
@@ -204,7 +209,7 @@ var/const/GRAV_NEEDS_WRENCH = 3
 		if(GRAV_NEEDS_PLASTEEL)
 			if(istype(I, /obj/item/stack/sheet/plasteel))
 				var/obj/item/stack/sheet/plasteel/PS = I
-				if(PS.amount >= 10)
+				if(PS.get_amount() >= 10)
 					PS.use(10)
 					user << "<span class='notice'>You add the plating to the framework.</span>"
 					playsound(src.loc, 'sound/machines/click.ogg', 75, 1)
@@ -216,7 +221,7 @@ var/const/GRAV_NEEDS_WRENCH = 3
 		if(GRAV_NEEDS_WRENCH)
 			if(istype(I, /obj/item/weapon/wrench))
 				user << "<span class='notice'>You secure the plating to the framework.</span>"
-				playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
+				playsound(src.loc, I.usesound, 75, 1)
 				set_fix()
 				return
 	return ..()

@@ -4,7 +4,7 @@ var/list/GPS_list = list()
 	desc = "Helping lost spacemen find their way through the planets since 2016. Alt+click to toggle power."
 	icon = 'icons/obj/telescience.dmi'
 	icon_state = "gps-c"
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	slot_flags = SLOT_BELT
 	origin_tech = "materials=2;magnets=1;bluespace=2"
 	var/gpstag = "COM0"
@@ -118,6 +118,10 @@ var/list/GPS_list = list()
 	icon_state = "gps-m"
 	gpstag = "MINER"
 	desc = "A positioning system helpful for rescuing trapped or injured miners, keeping one on you at all times while mining might just save your life."
+
+/obj/item/device/gps/internal/base
+	gpstag = "NT_AUX"
+	desc = "A homing signal from Nanotrasen's mining base."
 
 /obj/item/device/gps/visible_debug
 	name = "visible GPS"

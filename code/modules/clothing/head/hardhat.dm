@@ -6,17 +6,14 @@
 	var/brightness_on = 4 //luminosity when on
 	var/on = 0
 	item_color = "yellow" //Determines used sprites: hardhat[on]_[item_color] and hardhat[on]_[item_color]2 (lying down sprite)
-	armor = list(melee = 15, bullet = 5, laser = 20,energy = 10, bomb = 20, bio = 10, rad = 20)
+	armor = list(melee = 15, bullet = 5, laser = 20,energy = 10, bomb = 20, bio = 10, rad = 20, fire = 100, acid = 50)
 	flags_inv = 0
 	actions_types = list(/datum/action/item_action/toggle_helmet_light)
-	burn_state = FIRE_PROOF
+	resistance_flags = FIRE_PROOF
 
 	dog_fashion = /datum/dog_fashion/head
 
 /obj/item/clothing/head/hardhat/attack_self(mob/user)
-	if(!isturf(user.loc))
-		user << "<span class='warning'>You cannot turn the light on while in this [user.loc]!</span>" //To prevent some lighting anomalities.
-		return
 	on = !on
 	icon_state = "hardhat[on]_[item_color]"
 	item_state = "hardhat[on]_[item_color]"

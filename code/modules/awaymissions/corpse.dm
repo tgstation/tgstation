@@ -27,6 +27,9 @@
 	if(!uses)
 		user << "<span class='warning'>This spawner is out of charges!</span>"
 		return
+	if(jobban_isbanned(user, "lavaland"))
+		user << "<span class='warning'>You are jobanned!</span>"
+		return
 	var/ghost_role = alert("Become [mob_name]? (Warning, You can no longer be cloned!)",,"Yes","No")
 	if(ghost_role == "No" || !loc)
 		return
@@ -106,6 +109,7 @@
 	var/radio = null
 	var/glasses = null
 	var/mask = null
+	var/neck = null
 	var/helmet = null
 	var/belt = null
 	var/pocket1 = null
@@ -114,6 +118,7 @@
 	var/has_id = 0     //Just set to 1 if you want them to have an ID
 	var/id_job = null // Needs to be in quotes, such as "Clown" or "Chef." This just determines what the ID reads as, not their access
 	var/id_access = null //This is for access. See access.dm for which jobs give what access. Again, put in quotes. Use "Captain" if you want it to be all access.
+	var/id_access_list = null //Allows you to manually add access to an ID card.
 	var/id_icon = null //For setting it to be a gold, silver, centcom etc ID
 	var/husk = null
 	var/outfit_type = null // Will start with this if exists then apply specific slots
@@ -140,6 +145,8 @@
 		H.equip_to_slot_or_del(new glasses(H), slot_glasses)
 	if(mask)
 		H.equip_to_slot_or_del(new mask(H), slot_wear_mask)
+	if(neck)
+		H.equip_to_slot_or_del(new neck(H), slot_neck)
 	if(helmet)
 		H.equip_to_slot_or_del(new helmet(H), slot_head)
 	if(belt)
@@ -151,9 +158,9 @@
 	if(back)
 		H.equip_to_slot_or_del(new back(H), slot_back)
 	if(l_hand)
-		H.equip_to_slot_or_del(new l_hand(H), slot_l_hand)
+		H.put_in_hands_or_del(new l_hand(H))
 	if(r_hand)
-		H.equip_to_slot_or_del(new r_hand(H), slot_r_hand)
+		H.put_in_hands_or_del(new r_hand(H))
 	if(has_id)
 		var/obj/item/weapon/card/id/W = new(H)
 		if(id_icon)
@@ -169,6 +176,10 @@
 				W.access = jobdatum.get_access()
 			else
 				W.access = list()
+			if(id_access_list)
+				if(!W.access)
+					W.access = list()
+				W.access |= id_access_list
 		if(id_job)
 			W.assignment = id_job
 		W.registered_name = H.real_name
@@ -255,7 +266,7 @@
 	back = /obj/item/weapon/storage/backpack
 	has_id = 1
 	id_job = "Operative"
-	id_access = "Syndicate"
+	id_access_list = list(access_syndicate)
 
 /obj/effect/mob_spawn/human/syndicatecommando
 	name = "Syndicate Commando"
@@ -270,7 +281,7 @@
 	pocket1 = /obj/item/weapon/tank/internals/emergency_oxygen
 	has_id = 1
 	id_job = "Operative"
-	id_access = "Syndicate"
+	id_access_list = list(access_syndicate)
 
 ///////////Civilians//////////////////////
 

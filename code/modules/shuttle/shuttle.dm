@@ -8,7 +8,7 @@
 	//icon = 'icons/dirsquare.dmi'
 	icon_state = "pinonfar"
 
-	unacidable = 1
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	anchored = 1
 
 	var/id
@@ -29,12 +29,16 @@
 	else
 		return QDEL_HINT_LETMELIVE
 
+/obj/docking_port/take_damage()
+	return
+
 /obj/docking_port/singularity_pull()
 	return
 /obj/docking_port/singularity_act()
 	return 0
 /obj/docking_port/shuttleRotate()
 	return //we don't rotate with shuttles via this code.
+
 //returns a list(x0,y0, x1,y1) where points 0 and 1 are bounding corners of the projected rectangle
 /obj/docking_port/proc/return_coords(_x, _y, _dir)
 	if(_dir == null)
@@ -184,7 +188,6 @@
 
 
 /obj/docking_port/mobile
-	icon_state = "mobile"
 	name = "shuttle"
 	icon_state = "pinonclose"
 
@@ -194,8 +197,8 @@
 	var/last_timer_length
 
 	var/mode = SHUTTLE_IDLE			//current shuttle mode
-	var/callTime = 150				//time spent in transit (deciseconds)
-	var/ignitionTime = 100			// time spent "starting the engines"
+	var/callTime = 100				//time spent in transit (deciseconds). Should not be lower then 10 seconds without editing the animation of the hyperspace ripples.
+	var/ignitionTime = 55			// time spent "starting the engines". Also rate limits how often we try to reserve transit space if its ever full of transiting shuttles.
 	var/roundstart_move				//id of port to send shuttle to at roundstart
 
 	// The direction the shuttle prefers to travel in
@@ -419,6 +422,9 @@
 //this is the main proc. It instantly moves our mobile port to stationary port S1
 //it handles all the generic behaviour, such as sanity checks, closing doors on the shuttle, stunning mobs, etc
 /obj/docking_port/mobile/proc/dock(obj/docking_port/stationary/S1, force=FALSE)
+	if(S1.get_docked() == src)
+		remove_ripples()
+		return
 	// Crashing this ship with NO SURVIVORS
 	if(!force)
 		if(!check_dock(S1))
@@ -472,7 +478,7 @@
 			areaInstance.contents += T1
 
 			//copy over air
-			if(istype(T1, /turf/open))
+			if(isopenturf(T1))
 				var/turf/open/Ts1 = T1
 				Ts1.copy_air_with_tile(T0)
 
@@ -514,7 +520,6 @@
 	name = "Shuttle Import"
 
 /obj/docking_port/mobile/proc/roadkill(list/L0, list/L1, dir)
-	var/list/hurt_mobs = list()
 	for(var/i in 1 to L0.len)
 		var/turf/T0 = L0[i]
 		var/turf/T1 = L1[i]
@@ -525,30 +530,27 @@
 		// The corresponding tile will not be changed, so no roadkill
 
 		for(var/atom/movable/AM in T1)
-			if(isliving(AM) && (!(AM in hurt_mobs)))
-				hurt_mobs |= AM
-				var/mob/living/M = AM
-				if(M.buckled)
-					M.buckled.unbuckle_mob(M, 1)
-				if(M.pulledby)
-					M.pulledby.stop_pulling()
-				M.stop_pulling()
-				M.visible_message("<span class='warning'>[M] is hit by \
-						a hyperspace ripple[M.anchored ? "":" and is thrown clear"]!</span>",
-						"<span class='userdanger'>You feel an immense \
-						crushing pressure as the space around you ripples.</span>")
-				if(M.anchored)
+			if(ismob(AM))
+				if(isliving(AM))
+					var/mob/living/M = AM
+					if(M.buckled)
+						M.buckled.unbuckle_mob(M, 1)
+					if(M.pulledby)
+						M.pulledby.stop_pulling()
+					M.stop_pulling()
+					M.visible_message("<span class='warning'>[M] is hit by \
+							a hyperspace ripple!</span>",
+							"<span class='userdanger'>You feel an immense \
+							crushing pressure as the space around you ripples.</span>")
 					M.gib()
-				else
-					M.Paralyse(10)
-					M.ex_act(2)
-					step(M, dir)
-				continue
 
-			if(!AM.anchored)
-				step(AM, dir)
-			else
-				qdel(AM)
+			else //non-living mobs shouldn't be affected by shuttles, which is why this is an else
+				if(istype(AM, /obj/singularity) && !istype(AM, /obj/singularity/narsie)) //it's a singularity but not a god, ignore it.
+					continue
+				if(!AM.anchored)
+					step(AM, dir)
+				else
+					qdel(AM)
 
 //used by shuttle subsystem to check timers
 /obj/docking_port/mobile/proc/check()
@@ -599,6 +601,14 @@
 /obj/docking_port/mobile/proc/setTimer(wait)
 	timer = world.time + wait
 	last_timer_length = wait
+
+/obj/docking_port/mobile/proc/modTimer(multiple)
+	var/time_remaining = timer - world.time
+	if(time_remaining < 0 || !last_timer_length)
+		return
+	time_remaining *= multiple
+	last_timer_length *= multiple
+	setTimer(time_remaining)
 
 /obj/docking_port/mobile/proc/invertTimer()
 	if(!last_timer_length)
@@ -661,23 +671,3 @@
 			dst = destination
 		. += " towards [dst ? dst.name : "unknown location"] ([timeLeft(600)] minutes)"
 #undef DOCKING_PORT_HIGHLIGHT
-
-
-/turf/proc/copyTurf(turf/T)
-	if(T.type != type)
-		var/obj/O
-		if(underlays.len)	//we have underlays, which implies some sort of transparency, so we want to a snapshot of the previous turf as an underlay
-			O = new()
-			O.underlays.Add(T)
-		T.ChangeTurf(type)
-		if(underlays.len)
-			T.underlays = O.underlays
-	if(T.icon_state != icon_state)
-		T.icon_state = icon_state
-	if(T.icon != icon)
-		T.icon = icon
-	if(T.color != color)
-		T.color = color
-	if(T.dir != dir)
-		T.setDir(dir)
-	return T

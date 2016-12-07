@@ -12,65 +12,63 @@ RSF
 	density = 0
 	anchored = 0
 	flags = NOBLUDGEON
+	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 0, acid = 0)
 	var/matter = 0
 	var/mode = 1
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 
-/obj/item/weapon/rsf/New()
-	desc = "A RSF. It currently holds [matter]/30 fabrication-units."
-	return
+/obj/item/weapon/rsf/examine(mob/user)
+	..()
+	user << "<span class='notice'>It currently holds [matter]/30 fabrication-units.</span>"
+
+/obj/item/weapon/rsf/cyborg
+	matter = 30
 
 /obj/item/weapon/rsf/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/rcd_ammo))
-		if ((matter + 10) > 30)
+		if((matter + 10) > 30)
 			user << "The RSF can't hold any more matter."
 			return
 		qdel(W)
 		matter += 10
 		playsound(src.loc, 'sound/machines/click.ogg', 10, 1)
 		user << "The RSF now holds [matter]/30 fabrication-units."
-		desc = "A RSF. It currently holds [matter]/30 fabrication-units."
 	else
 		return ..()
 
 /obj/item/weapon/rsf/attack_self(mob/user)
 	playsound(src.loc, 'sound/effects/pop.ogg', 50, 0)
-	if (mode == 1)
-		mode = 2
-		user << "Changed dispensing mode to 'Drinking Glass'"
-		return
-	if (mode == 2)
-		mode = 3
-		user << "Changed dispensing mode to 'Paper'"
-		return
-	if (mode == 3)
-		mode = 4
-		user << "Changed dispensing mode to 'Pen'"
-		return
-	if (mode == 4)
-		mode = 5
-		user << "Changed dispensing mode to 'Dice Pack'"
-		return
-	if (mode == 5)
-		mode = 6
-		user << "Changed dispensing mode to 'Cigarette'"
-		return
-	if (mode == 6)
-		mode = 1
-		user << "Changed dispensing mode to 'Dosh'"
-		return
+	switch(mode)
+		if(1)
+			mode = 2
+			user << "Changed dispensing mode to 'Drinking Glass'"
+		if(2)
+			mode = 3
+			user << "Changed dispensing mode to 'Paper'"
+		if(3)
+			mode = 4
+			user << "Changed dispensing mode to 'Pen'"
+		if(4)
+			mode = 5
+			user << "Changed dispensing mode to 'Dice Pack'"
+		if(5)
+			mode = 6
+			user << "Changed dispensing mode to 'Cigarette'"
+		if(6)
+			mode = 1
+			user << "Changed dispensing mode to 'Dosh'"
 	// Change mode
 
 /obj/item/weapon/rsf/afterattack(atom/A, mob/user, proximity)
 	if(!proximity)
 		return
-	if (!(istype(A, /obj/structure/table) || istype(A, /turf/open/floor)))
+	if (!(istype(A, /obj/structure/table) || isfloorturf(A)))
 		return
 
 	if(matter < 1)
 		user << "<span class='warning'>\The [src] doesn't have enough matter left.</span>"
 		return
-	if(isrobot(user))
+	if(iscyborg(user))
 		var/mob/living/silicon/robot/R = user
 		if(!R.cell || R.cell.charge < 200)
 			user << "<span class='warning'>You do not have enough power to use [src].</span>"
@@ -105,13 +103,12 @@ RSF
 			use_matter(10, user)
 
 /obj/item/weapon/rsf/proc/use_matter(charge, mob/user)
-	if (isrobot(user))
+	if (iscyborg(user))
 		var/mob/living/silicon/robot/R = user
 		R.cell.charge -= charge
 	else
 		matter--
 		user << "The RSF now holds [matter]/30 fabrication-units."
-		desc = "A RSF. It currently holds [matter]/30 fabrication-units."
 
 /obj/item/weapon/cookiesynth
 	name = "Cookie Synthesizer"
@@ -123,10 +120,11 @@ RSF
 	var/cooldown = 0
 	var/cooldowndelay = 10
 	var/emagged = 0
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 
-/obj/item/weapon/cookiesynth/New()
-	desc = "A self recharging cookie fabricator. It currently holds [matter]/10 cookie-units."
+/obj/item/weapon/cookiesynth/examine(mob/user)
+	..()
+	user << "<span class='notice'>It currently holds [matter]/10 cookie-units.</span>"
 
 /obj/item/weapon/cookiesynth/attackby()
 	return
@@ -141,7 +139,7 @@ RSF
 
 /obj/item/weapon/cookiesynth/attack_self(mob/user)
 	var/mob/living/silicon/robot/P = null
-	if(isrobot(user))
+	if(iscyborg(user))
 		P = user
 	if(emagged&&!toxin)
 		toxin = 1
@@ -154,7 +152,7 @@ RSF
 		user << "Cookie Synthesizer Reset"
 
 /obj/item/weapon/cookiesynth/process()
-	if (matter < 10)
+	if(matter < 10)
 		matter++
 
 /obj/item/weapon/cookiesynth/afterattack(atom/A, mob/user, proximity)
@@ -162,12 +160,12 @@ RSF
 		return
 	if(!proximity)
 		return
-	if (!(istype(A, /obj/structure/table) || istype(A, /turf/open/floor)))
+	if (!(istype(A, /obj/structure/table) || isfloorturf(A)))
 		return
 	if(matter < 1)
 		user << "<span class='warning'>The [src] doesn't have enough matter left. Wait for it to recharge!</span>"
 		return
-	if(isrobot(user))
+	if(iscyborg(user))
 		var/mob/living/silicon/robot/R = user
 		if(!R.cell || R.cell.charge < 400)
 			user << "<span class='warning'>You do not have enough power to use [src].</span>"
@@ -178,10 +176,9 @@ RSF
 	var/obj/item/weapon/reagent_containers/food/snacks/cookie/S = new /obj/item/weapon/reagent_containers/food/snacks/cookie(T)
 	if(toxin)
 		S.reagents.add_reagent("chloralhydrate2", 10)
-	if (isrobot(user))
+	if (iscyborg(user))
 		var/mob/living/silicon/robot/R = user
 		R.cell.charge -= 100
 	else
 		matter--
-		desc = "A self recharging cookie fabricator. It currently holds [matter]/10 cookie-units."
 	cooldown = world.time + cooldowndelay

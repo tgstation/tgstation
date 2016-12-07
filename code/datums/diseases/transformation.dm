@@ -45,16 +45,13 @@
 		if(affected_mob.notransform)
 			return
 		affected_mob.notransform = 1
-		for(var/obj/item/W in affected_mob)
-			if(istype(W, /obj/item/weapon/implant))
-				qdel(W)
-				continue
-			W.layer = initial(W.layer)
-			W.loc = affected_mob.loc
-			W.dropped(affected_mob)
+		for(var/obj/item/W in affected_mob.get_equipped_items())
+			affected_mob.unEquip(W)
+		for(var/obj/item/I in affected_mob.held_items)
+			affected_mob.unEquip(I)
 		var/mob/living/new_mob = new new_form(affected_mob.loc)
 		if(istype(new_mob))
-			new_mob.a_intent = "harm"
+			new_mob.a_intent = INTENT_HARM
 			if(affected_mob.mind)
 				affected_mob.mind.transfer_to(new_mob)
 			else

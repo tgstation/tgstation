@@ -35,6 +35,8 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 	var/init_time
 	var/tickdrift = 0
 
+	var/sleep_delta
+
 	var/make_runtime = 0
 
 	// Has round started? (So we know what subsystems to run)
@@ -64,6 +66,11 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 	..()
 	// Tell qdel() to Del() this object.
 	return QDEL_HINT_HARDDEL_NOW
+
+/datum/controller/master/proc/Shutdown()
+	processing = FALSE
+	for(var/datum/subsystem/ss in subsystems)
+		ss.Shutdown()
 
 // Returns 1 if we created a new mc, 0 if we couldn't due to a recent restart,
 //	-1 if we encountered a runtime trying to recreate it
@@ -165,8 +172,8 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 	message_admins("MC crashed or runtimed, restarting")
 	var/rtn2 = Recreate_MC()
 	if (rtn2 <= 0)
-		log_game("Failed to recreate MC (Error code: [rtn2]), its up to the failsafe now")
-		message_admins("Failed to recreate MC (Error code: [rtn2]), its up to the failsafe now")
+		log_game("Failed to recreate MC (Error code: [rtn2]), it's up to the failsafe now")
+		message_admins("Failed to recreate MC (Error code: [rtn2]), it's up to the failsafe now")
 		Failsafe.defcon = 2
 
 // Main loop.
@@ -280,6 +287,7 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 
 		iteration++
 		last_run = world.time
+		src.sleep_delta = MC_AVERAGE_FAST(src.sleep_delta, sleep_delta)
 		sleep(world.tick_lag * (processing + sleep_delta))
 
 

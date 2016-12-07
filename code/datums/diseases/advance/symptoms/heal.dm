@@ -26,99 +26,231 @@ Bonus
 
 /datum/symptom/heal/Activate(datum/disease/advance/A)
 	..()
-	if(prob(SYMPTOM_ACTIVATION_PROB * 10))
-		var/mob/living/M = A.affected_mob
-		switch(A.stage)
-			if(4, 5)
-				Heal(M, A)
+	 //100% chance to activate for slow but consistent healing
+	var/mob/living/M = A.affected_mob
+	switch(A.stage)
+		if(4, 5)
+			Heal(M, A)
 	return
 
 /datum/symptom/heal/proc/Heal(mob/living/M, datum/disease/advance/A)
-	var/get_damage = (sqrt(20+A.totalStageSpeed())*(1+rand()))
-	M.adjustToxLoss(-get_damage)
+	var/heal_amt = 0.5
+	if(M.toxloss > 0 && prob(20))
+		PoolOrNew(/obj/effect/overlay/temp/heal, list(get_turf(M), "#66FF99"))
+	M.adjustToxLoss(-heal_amt)
 	return 1
 
 /*
 //////////////////////////////////////
 
-Metabolism
+Apoptosis
 
-	Little bit hidden.
 	Lowers resistance.
 	Decreases stage speed.
-	Decreases transmittablity temrendously.
-	High Level.
+	Decreases transmittablity.
 
 Bonus
-	Cures all diseases (except itself) and creates anti-bodies for them until the symptom dies.
+	Heals toxins in the affected mob's blood stream faster.
 
 //////////////////////////////////////
 */
 
-/datum/symptom/heal/metabolism
+/datum/symptom/heal/plus
 
-	name = "Anti-Bodies Metabolism"
-	stealth = -1
-	resistance = -1
-	stage_speed = -1
-	transmittable = -4
-	level = 3
-	var/list/cured_diseases = list()
+	name = "Apoptoxin filter"
+	stealth = 0
+	resistance = -2
+	stage_speed = -2
+	transmittable = -2
+	level = 8
 
-/datum/symptom/heal/metabolism/Heal(mob/living/M, datum/disease/advance/A)
-	var/cured = 0
-	for(var/datum/disease/D in M.viruses)
-		if(D != A)
-			cured = 1
-			cured_diseases += D.GetDiseaseID()
-			D.cure()
-	if(cured)
-		M << "<span class='notice'>You feel much better.</span>"
-
-/datum/symptom/heal/metabolism/End(datum/disease/advance/A)
-	// Remove all the diseases we cured.
-	var/mob/living/M = A.affected_mob
-	if(istype(M))
-		if(cured_diseases.len)
-			for(var/res in M.resistances)
-				if(res in cured_diseases)
-					M.resistances -= res
-		M << "<span class='warning'>You feel weaker.</span>"
+/datum/symptom/heal/plus/Heal(mob/living/M, datum/disease/advance/A)
+	var/heal_amt = 1
+	if(M.toxloss > 0 && prob(20))
+		PoolOrNew(/obj/effect/overlay/temp/heal, list(get_turf(M), "#00FF00"))
+	M.adjustToxLoss(-heal_amt)
+	return 1
 
 /*
 //////////////////////////////////////
 
-Longevity
+Regeneration
 
-	Medium hidden boost.
-	Large resistance boost.
-	Large stage speed boost.
-	Large transmittablity boost.
-	High Level.
+	Little bit hidden.
+	Lowers resistance tremendously.
+	Decreases stage speed tremendously.
+	Decreases transmittablity temrendously.
+	Fatal Level.
 
 Bonus
-	After a certain amount of time the symptom will cure itself.
+	Heals brute damage slowly over time.
 
 //////////////////////////////////////
 */
 
-/datum/symptom/heal/longevity
+/datum/symptom/heal/brute
 
-	name = "Longevity"
-	stealth = 3
-	resistance = 4
-	stage_speed = 4
-	transmittable = 4
-	level = 3
-	var/longevity = 30
+	name = "Regeneration"
+	stealth = 1
+	resistance = -4
+	stage_speed = -4
+	transmittable = -4
+	level = 6
 
-/datum/symptom/heal/longevity/Heal(mob/living/M, datum/disease/advance/A)
-	longevity -= 1
-	if(!longevity)
-		A.cure()
+/datum/symptom/heal/brute/Heal(mob/living/carbon/M, datum/disease/advance/A)
+	var/heal_amt = 1
 
-/datum/symptom/heal/longevity/Start(datum/disease/advance/A)
-	longevity = rand(initial(longevity) - 5, initial(longevity) + 5)
+	var/list/parts = M.get_damaged_bodyparts(1,1) //1,1 because it needs inputs.
+
+	if(!parts.len)
+		return
+
+	for(var/obj/item/bodypart/L in parts)
+		if(L.heal_damage(heal_amt/parts.len, 0))
+			M.update_damage_overlays()
+
+	if(prob(20))
+		PoolOrNew(/obj/effect/overlay/temp/heal, list(get_turf(M), "#FF3333"))
+
+	return 1
+
+
+/*
+//////////////////////////////////////
+
+Flesh Mending
+
+	No resistance change.
+	Decreases stage speed.
+	Decreases transmittablity.
+	Fatal Level.
+
+Bonus
+	Heals brute damage over time. Turns cloneloss into burn damage.
+
+//////////////////////////////////////
+*/
+
+/datum/symptom/heal/brute/plus
+
+	name = "Flesh Mending"
+	stealth = 0
+	resistance = 0
+	stage_speed = -2
+	transmittable = -2
+	level = 8
+
+/datum/symptom/heal/brute/plus/Heal(mob/living/carbon/M, datum/disease/advance/A)
+	var/heal_amt = 2
+
+	var/list/parts = M.get_damaged_bodyparts(1,1) //1,1 because it needs inputs.
+
+	if(M.getCloneLoss() > 0)
+		M.adjustCloneLoss(-1)
+		M.take_bodypart_damage(0, 1) //Deals BURN damage, which is not cured by this symptom
+		PoolOrNew(/obj/effect/overlay/temp/heal, list(get_turf(M), "#33FFCC"))
+
+	if(!parts.len)
+		return
+
+	for(var/obj/item/bodypart/L in parts)
+		if(L.heal_damage(heal_amt/parts.len, 0))
+			M.update_damage_overlays()
+
+	if(prob(20))
+		PoolOrNew(/obj/effect/overlay/temp/heal, list(get_turf(M), "#CC1100"))
+
+	return 1
+
+/*
+//////////////////////////////////////
+
+Tissue Regrowth
+
+	Little bit hidden.
+	Lowers resistance tremendously.
+	Decreases stage speed tremendously.
+	Decreases transmittablity temrendously.
+	Fatal Level.
+
+Bonus
+	Heals burn damage slowly over time.
+
+//////////////////////////////////////
+*/
+
+/datum/symptom/heal/burn
+
+	name = "Tissue Regrowth"
+	stealth = 1
+	resistance = -4
+	stage_speed = -4
+	transmittable = -4
+	level = 6
+
+/datum/symptom/heal/burn/Heal(mob/living/carbon/M, datum/disease/advance/A)
+	var/heal_amt = 1
+
+	var/list/parts = M.get_damaged_bodyparts(1,1) //1,1 because it needs inputs.
+
+	if(!parts.len)
+		return
+
+	for(var/obj/item/bodypart/L in parts)
+		if(L.heal_damage(0, heal_amt/parts.len))
+			M.update_damage_overlays()
+
+	if(prob(20))
+		PoolOrNew(/obj/effect/overlay/temp/heal, list(get_turf(M), "#FF9933"))
+	return 1
+
+
+/*
+//////////////////////////////////////
+
+Heat Resistance //Needs a better name
+
+	No resistance change.
+	Decreases stage speed.
+	Decreases transmittablity.
+	Fatal Level.
+
+Bonus
+	Heals burn damage over time, and helps stabilize body temperature.
+
+//////////////////////////////////////
+*/
+
+/datum/symptom/heal/burn/plus
+
+	name = "Heat Resistance"
+	stealth = 0
+	resistance = 0
+	stage_speed = -2
+	transmittable = -2
+	level = 8
+
+/datum/symptom/heal/burn/plus/Heal(mob/living/carbon/M, datum/disease/advance/A)
+	var/heal_amt = 2
+
+	var/list/parts = M.get_damaged_bodyparts(1,1) //1,1 because it needs inputs.
+
+	if(M.bodytemperature > 310)
+		M.bodytemperature = max(310, M.bodytemperature - (10 * heal_amt * TEMPERATURE_DAMAGE_COEFFICIENT))
+	else if(M.bodytemperature < 311)
+		M.bodytemperature = min(310, M.bodytemperature + (10 * heal_amt * TEMPERATURE_DAMAGE_COEFFICIENT))
+
+	if(!parts.len)
+		return
+
+	for(var/obj/item/bodypart/L in parts)
+		if(L.heal_damage(0, heal_amt/parts.len))
+			M.update_damage_overlays()
+
+	if(prob(20))
+		PoolOrNew(/obj/effect/overlay/temp/heal, list(get_turf(M), "#CC6600"))
+	return 1
+
 
 /*
 //////////////////////////////////////
@@ -147,12 +279,10 @@ Bonus
 	level = 5
 
 /datum/symptom/heal/dna/Heal(mob/living/carbon/M, datum/disease/advance/A)
-	var/stage_speed = max( 20 + A.totalStageSpeed(), 0)
-	var/stealth_amount = max( 16 + A.totalStealth(), 0)
-	var/amt_healed = (sqrt(stage_speed*(3+rand())))-(sqrt(stealth_amount*rand()))
+	var/amt_healed = 1
 	M.adjustBrainLoss(-amt_healed)
 	//Non-power mutations, excluding race, so the virus does not force monkey -> human transformations.
 	var/list/unclean_mutations = (not_good_mutations|bad_mutations) - mutations_list[RACEMUT]
 	M.dna.remove_mutation_group(unclean_mutations)
-	M.radiation = max(M.radiation - 3, 0)
+	M.radiation = max(M.radiation - (2 * amt_healed), 0)
 	return 1

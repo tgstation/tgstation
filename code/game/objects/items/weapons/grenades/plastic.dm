@@ -60,7 +60,7 @@
 		nadeassembly.attack_self(user)
 		return
 	var/newtime = input(usr, "Please set the timer.", "Timer", 10) as num
-	if(user.get_active_hand() == src)
+	if(user.get_active_held_item() == src)
 		newtime = Clamp(newtime, 10, 60000)
 		det_time = newtime
 		user << "Timer set for [det_time] seconds."
@@ -78,8 +78,8 @@
 		src.target = AM
 		loc = null
 
-		message_admins("[key_name_admin(user)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[user]'>FLW</A>) planted [src.name] on [target.name] at ([target.x],[target.y],[target.z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[target.x];Y=[target.y];Z=[target.z]'>JMP</a>) with [det_time] second fuse",0,1)
-		log_game("[key_name(user)] planted [src.name] on [target.name] at ([target.x],[target.y],[target.z]) with [det_time] second fuse")
+		message_admins("[ADMIN_LOOKUPFLW(user)] planted [name] on [target.name] at [ADMIN_COORDJMP(target)] with [det_time] second fuse",0,1)
+		log_game("[key_name(user)] planted [name] on [target.name] at [COORD(src)] with [det_time] second fuse")
 
 		target.add_overlay(image_overlay, 1)
 		if(!nadeassembly)
@@ -87,9 +87,9 @@
 			addtimer(src, "prime", det_time*10)
 
 /obj/item/weapon/grenade/plastic/suicide_act(mob/user)
-	message_admins("[key_name_admin(user)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[user]'>FLW</A>) suicided with [src.name] at ([user.x],[user.y],[user.z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)",0,1)
-	message_admins("[key_name(user)] suicided with [src.name] at ([user.x],[user.y],[user.z])")
-	user.visible_message("<span class='suicide'>[user] activates the [src.name] and holds it above \his head! It looks like \he's going out with a bang!</span>")
+	message_admins("[key_name_admin(user)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[user]'>FLW</A>) suicided with [src] at ([user.x],[user.y],[user.z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)",0,1)
+	message_admins("[key_name(user)] suicided with [src] at ([user.x],[user.y],[user.z])")
+	user.visible_message("<span class='suicide'>[user] activates the [src] and holds it above [user.p_their()] head! It looks like [user.p_theyre()] going out with a bang!</span>")
 	var/message_say = "FOR NO RAISIN!"
 	if(user.mind)
 		if(user.mind.special_role)
@@ -105,10 +105,9 @@
 			else if(user.mind.gang_datum)
 				message_say = "[uppertext(user.mind.gang_datum.name)] RULES!"
 	user.say(message_say)
-	target = user
-	sleep(10)
-	prime()
-	user.gib(no_brain = 1)
+	explosion(user,0,2,0) //Cheap explosion imitation because putting prime() here causes runtimes
+	user.gib(1, 1)
+	qdel(src)
 
 /obj/item/weapon/grenade/plastic/update_icon()
 	if(nadeassembly)
@@ -122,7 +121,7 @@
 
 /obj/item/weapon/grenade/plastic/c4
 	name = "C4"
-	desc = "Used to put holes in specific areas without too much extra hole. A saboteurs favourite."
+	desc = "Used to put holes in specific areas without too much extra hole. A saboteur's favorite."
 
 /obj/item/weapon/grenade/plastic/c4/prime()
 	var/turf/location
@@ -147,7 +146,7 @@
 
 /obj/item/weapon/grenade/plastic/x4
 	name = "X4"
-	desc = "A specialized shaped high explosive breaching charge. Designed to be safer for the user, and less so, for the wall."
+	desc = "A shaped high-explosive breaching charge. Designed to ensure user safety and wall nonsafety."
 	var/aim_dir = NORTH
 	icon_state = "plasticx40"
 	item_state = "plasticx4"
@@ -162,9 +161,9 @@
 	else
 		location = get_turf(src)
 	if(location)
-		if(istype(loc, /obj/item/weapon/twohanded/spear))
+		if(istype(loc, /obj/item/weapon/twohanded/spear) || !target)
 			explosion(location, 0, 2, 3)
-		else if(target.density)
+		else if(target && target.density)
 			var/turf/T = get_step(location, aim_dir)
 			explosion(get_step(T, aim_dir),0,0,3)
 			explosion(T,0,2,0)

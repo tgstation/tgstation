@@ -1,12 +1,11 @@
-/obj/effect/proc_holder/spell/targeted/summon_pitchfork
+/obj/effect/proc_holder/spell/targeted/conjure_item/summon_pitchfork
 	name = "Summon Pitchfork"
 	desc = "A devil's weapon of choice.  Use this to summon/unsummon your pitchfork."
 	invocation_type = "none"
 	include_user = 1
 	range = -1
 	clothes_req = 0
-	var/obj/item/weapon/twohanded/pitchfork/demonic/pitchfork
-	var/pitchfork_type = /obj/item/weapon/twohanded/pitchfork/demonic/
+	item_type = /obj/item/weapon/twohanded/pitchfork/demonic
 
 	school = "conjuration"
 	charge_max = 150
@@ -14,25 +13,20 @@
 	action_icon_state = "pitchfork"
 	action_background_icon_state = "bg_demon"
 
-/obj/effect/proc_holder/spell/targeted/summon_pitchfork/cast(list/targets, mob/user = usr)
-	if (pitchfork)
-		qdel(pitchfork)
-	else
-		for(var/mob/living/carbon/C in targets)
-			if(C.drop_item())
-				pitchfork = new pitchfork_type
-				C.put_in_hands(pitchfork)
+/obj/effect/proc_holder/spell/targeted/conjure_item/summon_pitchfork/greater
+	item_type = /obj/item/weapon/twohanded/pitchfork/demonic/greater
 
-/obj/effect/proc_holder/spell/targeted/summon_pitchfork/Del()
-	if(pitchfork)
-		qdel(pitchfork)
+/obj/effect/proc_holder/spell/targeted/conjure_item/summon_pitchfork/ascended
+	item_type = /obj/item/weapon/twohanded/pitchfork/demonic/ascended
 
-/obj/effect/proc_holder/spell/targeted/summon_pitchfork/greater
-	pitchfork_type = /obj/item/weapon/twohanded/pitchfork/demonic/greater
-
-/obj/effect/proc_holder/spell/targeted/summon_pitchfork/ascended
-	pitchfork_type = /obj/item/weapon/twohanded/pitchfork/demonic/ascended
-
+/obj/effect/proc_holder/spell/targeted/conjure_item/violin
+	item_type = /obj/item/device/instrument/violin/golden
+	desc = "A devil's instrument of choice.  Use this to summon/unsummon your golden violin."
+	invocation_type = "whisper"
+	invocation = "I aint have this much fun since Georgia."
+	action_icon_state = "golden_violin"
+	name = "Summon golden violin"
+	action_background_icon_state = "bg_demon"
 
 /obj/effect/proc_holder/spell/targeted/summon_contract
 	name = "Summon infernal contract"
@@ -72,7 +66,7 @@
 						contract = new /obj/item/weapon/paper/contract/infernal/knowledge(C.loc, C.mind, user.mind)
 				C.put_in_hands(contract)
 		else
-			user << "<span class='notice'>[C] seems to not be sentient.  You cannot summon a contract for them.</span>"
+			user << "<span class='notice'>[C] seems to not be sentient.  You cannot summon a contract for [C.p_them()].</span>"
 
 
 /obj/effect/proc_holder/spell/fireball/hellish
@@ -93,7 +87,7 @@
 /obj/effect/proc_holder/spell/targeted/infernal_jaunt
 	name = "Infernal Jaunt"
 	desc = "Use hellfire to phase out of existence."
-	charge_max = 10
+	charge_max = 200
 	clothes_req = 0
 	selection_type = "range"
 	range = -1
@@ -108,12 +102,17 @@
 	if(istype(user))
 		if(istype(user.loc, /obj/effect/dummy/slaughter/))
 			var/continuing = 0
-			for(var/mob/living/C in orange(2, get_turf(user.loc)))
-				if (C.mind && C.mind.soulOwner == C.mind)
-					continuing = 1
-					break
+			if(istype(get_area(user), /area/shuttle/)) // Can always phase in in a shuttle.
+				continuing = 1
+			else
+				for(var/mob/living/C in orange(2, get_turf(user.loc))) //Can also phase in when nearby a potential buyer.
+					if (C.mind && C.mind.soulOwner == C.mind)
+						continuing = 1
+						break
 			if(continuing)
-				addtimer(user,"infernalphasein",150,TRUE)
+				user << "<span class='warning'>You are now phasing in.</span>"
+				if(do_mob(user,user,150))
+					user.infernalphasein()
 			else
 				user << "<span class='warning'>You can only re-appear near a potential signer."
 				revert_cast()
@@ -121,21 +120,23 @@
 		else
 			user.notransform = 1
 			user.fakefire()
-			addtimer(user, "infernalphaseout",150,TRUE,get_turf(user))
+			src << "<span class='warning'>You begin to phase back into sinful flames.</span>"
+			if(do_mob(user,user,150))
+				user.infernalphaseout()
+			else
+				user << "<span class='warning'>You must remain still while exiting.</span>"
+				user.ExtinguishMob()
 		start_recharge()
 		return
 	revert_cast()
 
 
-/mob/living/proc/infernalphaseout(var/turf/mobloc)
-	if(get_turf(src) != mobloc)
-		src << "<span class='warning'>You must remain still while exiting."
-		return
+/mob/living/proc/infernalphaseout()
 	dust_animation()
 	spawn_dust()
 	src.visible_message("<span class='warning'>[src] disappears in a flashfire!</span>")
 	playsound(get_turf(src), 'sound/magic/enter_blood.ogg', 100, 1, -1)
-	var/obj/effect/dummy/slaughter/holder = PoolOrNew(/obj/effect/dummy/slaughter,mobloc)
+	var/obj/effect/dummy/slaughter/holder = PoolOrNew(/obj/effect/dummy/slaughter,loc)
 	src.ExtinguishMob()
 	if(buckled)
 		buckled.unbuckle_mob(src,force=1)
@@ -159,20 +160,7 @@
 	src.client.eye = src
 	src.visible_message("<span class='warning'><B>[src] appears in a firey blaze!</B>")
 	playsound(get_turf(src), 'sound/magic/exit_blood.ogg', 100, 1, -1)
-	addtimer(src, "fakefireextinguish" ,15,TRUE,get_turf(src))
-
-/mob/living/proc/fakefire()
-	return
-
-/mob/living/carbon/fakefire(var/fire_icon = "Generic_mob_burning")
-	overlays_standing[FIRE_LAYER] = image("icon"='icons/mob/OnFire.dmi', "icon_state"= fire_icon, "layer"=-FIRE_LAYER)
-	apply_overlay(FIRE_LAYER)
-
-/mob/living/proc/fakefireextinguish()
-	return
-
-/mob/living/carbon/fakefireextinguish()
-	remove_overlay(FIRE_LAYER)
+	addtimer(src, "fakefireextinguish", 15, TIMER_UNIQUE)
 
 /obj/effect/proc_holder/spell/targeted/sintouch
 	name = "Sin Touch"
@@ -208,3 +196,56 @@
 		H.influenceSin()
 		H.Weaken(2)
 		H.Stun(2)
+
+
+/obj/effect/proc_holder/spell/targeted/summon_dancefloor
+	name = "Summon Dancefloor"
+	desc = "When what a Devil really needs is funk."
+	include_user = 1
+	range = -1
+	clothes_req = 0
+
+	school = "conjuration"
+	charge_max = 10
+	cooldown_min = 50 //5 seconds, so the smoke can't be spammed
+	action_icon_state = "funk"
+	action_background_icon_state = "bg_demon"
+
+	var/list/dancefloor_turfs
+	var/list/dancefloor_turfs_types
+	var/dancefloor_exists = FALSE
+	var/datum/effect_system/smoke_spread/transparent/dancefloor_devil/smoke
+
+
+/obj/effect/proc_holder/spell/targeted/summon_dancefloor/cast(list/targets, mob/user = usr)
+	LAZYINITLIST(dancefloor_turfs)
+	LAZYINITLIST(dancefloor_turfs_types)
+
+	if(!smoke)
+		smoke = new()
+	smoke.set_up(0, get_turf(user))
+	smoke.start()
+
+	if(dancefloor_exists)
+		dancefloor_exists = FALSE
+		for(var/i in 1 to dancefloor_turfs.len)
+			var/turf/T = dancefloor_turfs[i]
+			T.ChangeTurf(dancefloor_turfs_types[i])
+	else
+		dancefloor_exists = TRUE
+		var/i = 1
+		var/list/funky_turfs = RANGE_TURFS(1, user)
+		dancefloor_turfs.len = funky_turfs.len
+		dancefloor_turfs_types.len = funky_turfs.len
+		for(var/t in funky_turfs)
+			var/turf/T = t
+			dancefloor_turfs[i] = T
+			dancefloor_turfs_types[i] = T.type
+			T.ChangeTurf((i % 2 == 0) ? /turf/open/floor/light/colour_cycle/dancefloor_a : /turf/open/floor/light/colour_cycle/dancefloor_b)
+			i++
+
+/datum/effect_system/smoke_spread/transparent/dancefloor_devil
+	effect_type = /obj/effect/particle_effect/smoke/transparent/dancefloor_devil
+
+/obj/effect/particle_effect/smoke/transparent/dancefloor_devil
+	lifetime = 2

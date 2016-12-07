@@ -1,11 +1,12 @@
 /obj/structure/flora
-	burn_state = FLAMMABLE
-	burntime = 30
+	resistance_flags = FLAMMABLE
+	obj_integrity = 150
+	max_integrity = 150
+	anchored = 1
 
 //trees
 /obj/structure/flora/tree
 	name = "tree"
-	anchored = 1
 	density = 1
 	pixel_x = -16
 	layer = FLY_LAYER
@@ -17,14 +18,17 @@
 		if(W.sharpness && W.force > 0)
 			if(W.hitsound)
 				playsound(get_turf(src), W.hitsound, 100, 0, 0)
-			user.visible_message("<span class='notice'>[user] begins to cut down [src] with [W].</span>","<span class='notice'>You begin to cut down [src] with [W].</span>", "You hear the sound of cutting a tree.")
+			user.visible_message("<span class='notice'>[user] begins to cut down [src] with [W].</span>","<span class='notice'>You begin to cut down [src] with [W].</span>", "You hear the sound of sawing.")
 			if(do_after(user, 1000/W.force, target = user)) //5 seconds with 20 force, 8 seconds with a hatchet, 20 seconds with a shard.
 				if(cut)
 					return
-				user.visible_message("<span class='notice'>[user] falls [src] with the [W].</span>","<span class='notice'>You fall [src] with the [W].</span>", "You hear the sound of a tree falling.")
+				user.visible_message("<span class='notice'>[user] fells [src] with the [W].</span>","<span class='notice'>You fell [src] with the [W].</span>", "You hear the sound of a tree falling.")
 				playsound(get_turf(src), 'sound/effects/meteorimpact.ogg', 100 , 0, 0)
+				icon = 'icons/obj/flora/pinetrees.dmi'
 				icon_state = "tree_stump"
-				name = "stump"
+				density = 0
+				pixel_x = -16
+				name += " stump"
 				cut = TRUE
 				for(var/i=1 to log_amount)
 					new /obj/item/weapon/grown/log/tree(get_turf(src))
@@ -56,6 +60,15 @@
 	icon = 'icons/obj/flora/deadtrees.dmi'
 	icon_state = "tree_1"
 
+/obj/structure/flora/tree/palm
+	icon = 'icons/misc/beach2.dmi'
+	icon_state = "palm1"
+
+/obj/structure/flora/tree/palm/New()
+	..()
+	icon_state = pick("palm1","palm2")
+	pixel_x = 0
+
 /obj/structure/festivus
 	name = "festivus pole"
 	icon = 'icons/obj/flora/pinetrees.dmi'
@@ -71,7 +84,6 @@
 /obj/structure/flora/grass
 	name = "grass"
 	icon = 'icons/obj/flora/snowflora.dmi'
-	anchored = 1
 	gender = PLURAL	//"this is grass" not "this is a grass"
 
 /obj/structure/flora/grass/brown
@@ -114,7 +126,6 @@
 	name = "bush"
 	icon = 'icons/obj/flora/ausflora.dmi'
 	icon_state = "firstbush_1"
-	anchored = 1
 
 /obj/structure/flora/ausbushes/New()
 	if(icon_state == "firstbush_1")
@@ -230,13 +241,14 @@
 	name = "potted plant"
 	icon = 'icons/obj/flora/plants.dmi'
 	icon_state = "plant-01"
-	w_class = 5
+	layer = ABOVE_MOB_LAYER
+	w_class = WEIGHT_CLASS_HUGE
 	force = 10
 	throwforce = 13
 	throw_speed = 2
 	throw_range = 4
 
-/obj/item/weapon/twohanded/flora/kirbyplants/equipped(mob/living/user)
+/obj/item/weapon/twohanded/required/kirbyplants/equipped(mob/living/user)
 	var/image/I = image(icon = 'icons/obj/flora/plants.dmi' , icon_state = src.icon_state, loc = user)
 	I.override = 1
 	user.add_alt_appearance("sneaking_mission", I, player_list)
@@ -279,8 +291,7 @@
 	icon_state = "basalt"
 	desc = "A volcanic rock"
 	icon = 'icons/obj/flora/rocks.dmi'
-	anchored = 1
-	burn_state = FIRE_PROOF
+	resistance_flags = FIRE_PROOF
 	density = 1
 
 /obj/structure/flora/rock/New()

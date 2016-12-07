@@ -26,7 +26,6 @@
 	for(var/mat_type in subtypesof(/datum/material))
 		var/datum/material/MT = mat_type
 		possible_mats[initial(MT.id)] = mat_type
-
 	for(var/id in mat_list)
 		if(possible_mats[id])
 			var/mat_path = possible_mats[id]
@@ -138,6 +137,8 @@
 
 //For spawning mineral sheets; internal use only
 /datum/material_container/proc/retrieve(sheet_amt, datum/material/M)
+	if(!M.sheet_type)
+		return 0
 	if(sheet_amt > 0)
 		if(M.amount < (sheet_amt * MINERAL_MATERIAL_AMOUNT))
 			sheet_amt = round(M.amount / MINERAL_MATERIAL_AMOUNT)
@@ -264,3 +265,12 @@
 	id = MAT_BANANIUM
 	sheet_type = /obj/item/stack/sheet/mineral/bananium
 	coin_type = /obj/item/weapon/coin/clown
+
+/datum/material/titanium
+	name = "Titanium"
+	id = MAT_TITANIUM
+	sheet_type = /obj/item/stack/sheet/mineral/titanium
+
+/datum/material/biomass
+	name = "Biomass"
+	id = MAT_BIOMASS

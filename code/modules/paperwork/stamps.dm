@@ -5,7 +5,7 @@
 	icon_state = "stamp-ok"
 	item_state = "stamp"
 	throwforce = 0
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 	throw_speed = 3
 	throw_range = 7
 	materials = list(MAT_METAL=60)
@@ -14,7 +14,7 @@
 	attack_verb = list("stamped")
 
 /obj/item/weapon/stamp/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] stamps 'VOID' on \his forehead, then promptly falls over, dead.</span>")
+	user.visible_message("<span class='suicide'>[user] stamps 'VOID' on [user.p_their()] forehead, then promptly falls over, dead.</span>")
 	return (OXYLOSS)
 
 /obj/item/weapon/stamp/qm

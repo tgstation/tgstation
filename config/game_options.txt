@@ -1,11 +1,7 @@
 ### HEALTH ###
 
-# level of health at which a mob becomes unconscious (crit)
-HEALTH_THRESHOLD_CRIT 0
-
-# level of health at which a mob becomes dead
-HEALTH_THRESHOLD_DEAD -100
-
+#Damage multiplier, effects both weapons and healing on all mobs. For example, 1.25 would result in 25% higher damage.
+DAMAGE_MULTIPLIER 1
 
 ### REVIVAL ###
 
@@ -96,6 +92,8 @@ PROBABILITY RAGINMAGES 2
 PROBABILITY MONKEY 0
 PROBABILITY METEOR 0
 PROBABILITY EXTENDED 0
+PROBABILITY DEVIL 0
+PROBABILITY DEVIL_AGENTS 0
 
 ## You probably want to keep sandbox off by default for secret and random.
 PROBABILITY SANDBOX 0
@@ -142,6 +140,62 @@ MIDROUND_ANTAG MALFUNCTION
 MIDROUND_ANTAG BLOB
 #MIDROUND_ANTAG  RAGINMAGES
 #MIDROUND_ANTAG  MONKEY
+
+## Uncomment for overrides of the minimum / maximum number of players in a round type. 
+## If you set any of these occasionally check to see if you still need them as the modes
+## will still be actively rebalanced around the SUGGESTED populations, not your overrides.
+## Notes: For maximum number of players a value of -1 means no maximum. Setting minimums to 
+## VERY low numbers (< 5) can lead to errors if the roundtypes were not designed for that.
+
+#MIN_POP TRAITOR 0
+#MAX_POP TRAITOR -1
+
+#MIN_POP TRAITORCHAN 15
+#MAX_POP TRAITORCHAN -1
+
+#MIN_POP DOUBLE_AGENTS 25
+#MAX_POP DOUBLE_AGENTS -1
+
+#MIN_POP NUCLEAR 0
+#MAX_POP NUCLEAR -1
+
+#MIN_POP REVOLUTION 20
+#MAX_POP REVOLUTION -1
+
+#MIN_POP GANG 20
+#MAX_POP GANG -1
+
+#MIN_POP CULT 24
+#MAX_POP CULT -1
+
+#MIN_POP CLOCKWORK_CULT 24
+#MAX_POP CLOCKWORK_CULT -1
+
+#MIN_POP CHANGELING 15
+#MAX_POP CHANGELING -1
+
+#MIN_POP WIZARD 20
+#MAX_POP WIZARD -1
+
+#MIN_POP BLOB 25
+#MAX_POP BLOB -1
+
+#MIN_POP MONKEY 20
+#MAX_POP MONKEY -1
+
+#MIN_POP METEOR 0
+#MAX_POP METEOR -1
+
+#MIN_POP DEVIL 0
+#MAX_POP DEVIL -1
+
+#MIN_POP DEVIL_AGENTS 25
+#MAX_POP DEVIL_AGENTS -1
+
+## Setting at least one mode to be playable at 0/1 players is required.
+#MIN_POP EXTENDED 0
+#MAX_POP EXTENDED -1
+
 
 
 ## The amount of time it takes for the emergency shuttle to be called, from round start.
@@ -257,8 +311,40 @@ SEC_START_BRIG
 ## This controls what the AI's laws are at the start of the round.
 ## Set to 0/commented for "off", silicons will just start with Asimov.
 ## Set to 1 for "custom", silicons will start with the custom laws defined in silicon_laws.txt. (If silicon_laws.txt is empty, the AI will spawn with asimov and Custom boards will auto-delete.)
-## Set to 2 for "random", silicons will start with a random lawset picked from (at the time of writing): P.A.L.A.D.I.N., Corporate, Asimov. More can be added by changing the law datum paths in ai_laws.dm.
-DEFAULT_LAWS 1
+## Set to 2 for "random", silicons will start with a random lawset picked from random laws specified below.
+DEFAULT_LAWS 0
+
+## RANDOM LAWS ##
+## ------------------------------------------------------------------------------------------
+## These control what laws are available for selection if random silicon laws are active.
+## See datums\ai_laws.dm for the full law lists
+
+## standard-ish laws. These are fairly ok to run
+RANDOM_LAWS asimov
+RANDOM_LAWS asimovpp
+RANDOM_LAWS paladin
+RANDOM_LAWS robocop
+RANDOM_LAWS corporate
+
+## Quirky laws. Shouldn't cause too much harm
+#RANDOM_LAWS hippocratic
+#RANDOM_LAWS maintain
+#RANDOM_LAWS drone
+#RANDOM_LAWS liveandletlive
+#RANDOM_LAWS peacekeeper
+#RANDOM_LAWS reporter
+
+## Bad idea laws. Probably shouldn't enable these
+#RANDOM_LAWS syndie
+#RANDOM_LAWS ninja
+#RANDOM_LAWS antimov
+#RANDOM_LAWS thermodynamic
+#RANDOM_LAWS ratvar
+
+## meme laws. Honk
+#RANDOM_LAWS buildawall
+
+##------------------------------------------------
 
 ### SILICON LAW MAX AMOUNT ###
 ## The maximum number of laws a silicon can have
@@ -357,3 +443,6 @@ BOMBCAP 20
 # spawn, while the converse is true. Alter this number to affect the amount
 # of ruins.
 LAVALAND_BUDGET 60
+
+## Space Ruin Budged
+Space_Budget 16

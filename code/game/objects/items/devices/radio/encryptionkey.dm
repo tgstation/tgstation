@@ -1,10 +1,10 @@
 
-/obj/item/device/encryptionkey/
+/obj/item/device/encryptionkey
 	name = "standard encryption key"
 	desc = "An encryption key for a radio headset.  Has no special codes in it.  WHY DOES IT EXIST?  ASK NANOTRASEN."
 	icon = 'icons/obj/radio.dmi'
 	icon_state = "cypherkey"
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 	origin_tech = "engineering=2;bluespace=1"
 	var/translate_binary = 0
 	var/translate_hive = 0
@@ -13,7 +13,9 @@
 	var/list/channels = list()
 
 /obj/item/device/encryptionkey/syndicate
-	icon_state = "cypherkey"
+	name = "syndicate encryption key"
+	desc = "An encryption key for a radio headset. To access the syndicate channel, use :t."
+	icon_state = "syn_cypherkey"
 	channels = list("Syndicate" = 1)
 	origin_tech = "syndicate=1;engineering=3;bluespace=2"
 	syndie = 1//Signifies that it de-crypts Syndicate transmissions
@@ -21,7 +23,7 @@
 /obj/item/device/encryptionkey/binary
 	name = "binary translator key"
 	desc = "An encryption key for a radio headset.  To access the binary channel, use :b."
-	icon_state = "cypherkey"
+	icon_state = "bin_cypherkey"
 	translate_binary = 1
 	origin_tech = "syndicate=3;engineering=4;bluespace=3"
 
@@ -108,6 +110,12 @@
 	desc = "An encryption key for a radio headset.  To access the supply channel, use :u."
 	icon_state = "cargo_cypherkey"
 	channels = list("Supply" = 1)
+
+/obj/item/device/encryptionkey/headset_mining
+	name = "mining radio encryption key"
+	desc = "An encryption key for a radio headset.  To access the supply channel, use :u. For science, use :n."
+	icon_state = "cargo_cypherkey"
+	channels = list("Supply" = 1, "Science" = 1)
 
 /obj/item/device/encryptionkey/headset_service
 	name = "service radio encryption key"

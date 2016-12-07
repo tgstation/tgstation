@@ -20,7 +20,7 @@
 /area/awaymission/research/exterior)
 "ag" = (
 /turf/open/floor/plating/asteroid/airless,
-/turf/closed/wall/shuttle{
+/turf/closed/wall/mineral/plastitanium{
 	dir = 8;
 	icon_state = "diagonalWall3"
 	},
@@ -45,15 +45,13 @@
 /area/awaymission/research/interior/engineering)
 "ak" = (
 /turf/open/floor/plating/asteroid/airless,
-/turf/closed/wall/shuttle{
+/turf/closed/wall/mineral/plastitanium{
 	dir = 1;
 	icon_state = "diagonalWall3"
 	},
 /area/awaymission/research/interior/engineering)
 "al" = (
-/turf/closed/wall/shuttle{
-	icon_state = "wall3"
-	},
+/turf/closed/wall/mineral/plastitanium,
 /area/awaymission/research/interior/engineering)
 "am" = (
 /obj/structure/window/reinforced,
@@ -241,7 +239,7 @@
 /turf/open/floor/plasteel{
 	icon_state = "damaged4"
 	},
-/turf/closed/wall/shuttle{
+/turf/closed/wall/mineral/plastitanium{
 	icon_state = "diagonalWall3"
 	},
 /area/awaymission/research/interior/engineering)
@@ -253,7 +251,7 @@
 /turf/open/floor/plasteel{
 	icon_state = "damaged1"
 	},
-/turf/closed/wall/shuttle{
+/turf/closed/wall/mineral/plastitanium{
 	dir = 4;
 	icon_state = "diagonalWall3"
 	},
@@ -321,7 +319,7 @@
 /turf/open/floor/plasteel{
 	icon_state = "damaged5"
 	},
-/turf/closed/wall/shuttle{
+/turf/closed/wall/mineral/plastitanium{
 	icon_state = "diagonalWall3"
 	},
 /area/awaymission/research/interior/engineering)
@@ -341,7 +339,7 @@
 /turf/open/floor/plasteel{
 	icon_state = "damaged3"
 	},
-/turf/closed/wall/shuttle{
+/turf/closed/wall/mineral/plastitanium{
 	dir = 4;
 	icon_state = "diagonalWall3"
 	},
@@ -1435,8 +1433,8 @@
 /area/awaymission/research/interior/security)
 "dU" = (
 /obj/structure/rack,
-/obj/item/weapon/gun/projectile/automatic/wt550,
-/obj/item/weapon/gun/projectile/automatic/wt550,
+/obj/item/weapon/gun/ballistic/automatic/wt550,
+/obj/item/weapon/gun/ballistic/automatic/wt550,
 /obj/item/ammo_box/magazine/wt550m9,
 /obj/item/ammo_box/magazine/wt550m9,
 /turf/open/floor/plasteel/red,
@@ -1565,8 +1563,8 @@
 /area/awaymission/research/interior/security)
 "ep" = (
 /obj/structure/rack,
-/obj/item/weapon/gun/projectile/automatic/pistol/m1911,
-/obj/item/weapon/gun/projectile/automatic/pistol/m1911,
+/obj/item/weapon/gun/ballistic/automatic/pistol/m1911,
+/obj/item/weapon/gun/ballistic/automatic/pistol/m1911,
 /obj/item/ammo_box/magazine/m45,
 /obj/item/ammo_box/magazine/m45,
 /turf/open/floor/plasteel/red,
@@ -3533,10 +3531,10 @@
 "jp" = (
 /obj/structure/barricade/wooden{
 	desc = "A wooden table hastely flipped over for cover.";
-	health = 55;
+	obj_integrity = 55;
 	icon = 'icons/obj/smooth_structures/wood_table.dmi';
 	icon_state = "wood_table";
-	maxhealth = 55;
+	max_integrity = 55;
 	name = "flipped table"
 	},
 /turf/open/floor/plasteel/yellowsiding{
@@ -3650,10 +3648,10 @@
 "jG" = (
 /obj/structure/barricade/wooden{
 	desc = "A wooden table hastely flipped over for cover.";
-	health = 55;
+	obj_integrity = 55;
 	icon = 'icons/obj/smooth_structures/wood_table.dmi';
 	icon_state = "wood_table";
-	maxhealth = 55;
+	max_integrity = 55;
 	name = "flipped table"
 	},
 /turf/open/floor/plasteel,
@@ -3781,10 +3779,10 @@
 "kb" = (
 /obj/structure/barricade/wooden{
 	desc = "A wooden table hastely flipped over for cover.";
-	health = 55;
+	obj_integrity = 55;
 	icon = 'icons/obj/smooth_structures/wood_table.dmi';
 	icon_state = "wood_table";
-	maxhealth = 55;
+	max_integrity = 55;
 	name = "flipped table"
 	},
 /turf/open/floor/plasteel/yellowsiding,
@@ -3918,7 +3916,7 @@
 /turf/open/floor/wood,
 /area/awaymission/research/interior/dorm)
 "kt" = (
-/obj/item/weapon/gun/projectile/automatic/pistol/m1911,
+/obj/item/weapon/gun/ballistic/automatic/pistol/m1911,
 /turf/open/floor/plasteel,
 /area/awaymission/research/interior/dorm)
 "ku" = (
@@ -4559,10 +4557,7 @@
 /turf/open/floor/plating/asteroid,
 /area/awaymission/research/exterior)
 "me" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall12";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium,
 /area/awaymission/research/exterior)
 "mf" = (
 /turf/open/floor/plating/asteroid/airless,
@@ -4571,11 +4566,7 @@
 	icon_state = "propulsion";
 	dir = 8
 	},
-/turf/closed/wall/shuttle{
-	dir = 3;
-	icon_state = "swall_f10";
-	layer = 2
-	},
+/turf/closed/wall/mineral/titanium/interior,
 /area/awaymission/research/exterior)
 "mg" = (
 /obj/structure/closet/emcloset,
@@ -4685,10 +4676,7 @@
 /area/awaymission/research/interior/escapepods)
 "my" = (
 /turf/open/floor/plating/asteroid/airless,
-/turf/closed/wall/shuttle{
-	icon_state = "swall_f5";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium/interior,
 /area/awaymission/research/exterior)
 "mz" = (
 /turf/open/floor/plating/asteroid/airless,
@@ -4919,7 +4907,7 @@
 /turf/open/floor/mineral/plasma,
 /area/space)
 "nd" = (
-/obj/structure/divine/healingfountain/anyone,
+/obj/structure/healingfountain,
 /turf/open/floor/mineral/plasma,
 /area/space)
 "ne" = (
@@ -33351,7 +33339,7 @@ ad
 ad
 mf
 mt
-mz
+mf
 ae
 ae
 ae

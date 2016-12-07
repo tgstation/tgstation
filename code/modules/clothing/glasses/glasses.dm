@@ -1,6 +1,7 @@
 /obj/item/clothing/glasses
 	name = "glasses"
 	materials = list(MAT_GLASS = 250)
+	var/glass_colour_type = null //colors your vision when worn
 
 //called when thermal glasses are emped.
 /obj/item/clothing/glasses/proc/thermal_overload()
@@ -9,7 +10,7 @@
 		if(!(H.disabilities & BLIND))
 			if(H.glasses == src)
 				H << "<span class='danger'>The [src] overloads and blinds you!</span>"
-				H.flash_eyes(visual = 1)
+				H.flash_act(visual = 1)
 				H.blind_eyes(3)
 				H.blur_eyes(5)
 				H.adjust_eye_damage(5)
@@ -23,6 +24,7 @@
 	darkness_view = 2
 	vision_flags = SEE_TURFS
 	invis_view = SEE_INVISIBLE_MINIMUM
+	glass_colour_type = /datum/client_colour/glass_colour/lightgreen
 
 /obj/item/clothing/glasses/meson/night
 	name = "Night Vision Optical Meson Scanner"
@@ -31,6 +33,7 @@
 	item_state = "nvgmeson"
 	origin_tech = "magnets=4;engineering=5;plasmatech=4"
 	darkness_view = 8
+	glass_colour_type = /datum/client_colour/glass_colour/green
 
 /obj/item/clothing/glasses/meson/gar
 	name = "gar mesons"
@@ -52,6 +55,9 @@
 	origin_tech = "magnets=2;engineering=1"
 	scan_reagents = 1 //You can see reagents while wearing science goggles
 	actions_types = list(/datum/action/item_action/toggle_research_scanner)
+	glass_colour_type = /datum/client_colour/glass_colour/purple
+	resistance_flags = ACID_PROOF
+	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 80, acid = 100)
 
 /obj/item/clothing/glasses/science/item_action_slot_check(slot)
 	if(slot == slot_glasses)
@@ -65,6 +71,7 @@
 	origin_tech = "materials=4;magnets=4;plasmatech=4;engineering=4"
 	darkness_view = 8
 	invis_view = SEE_INVISIBLE_MINIMUM
+	glass_colour_type = /datum/client_colour/glass_colour/green
 
 /obj/item/clothing/glasses/eyepatch
 	name = "eyepatch"
@@ -85,6 +92,7 @@
 	item_state = "glasses"
 	origin_tech = "magnets=3;engineering=3"
 	vision_flags = SEE_OBJS
+	glass_colour_type = /datum/client_colour/glass_colour/lightblue
 
 /obj/item/clothing/glasses/material/mining
 	name = "Optical Material Scanner"
@@ -105,6 +113,7 @@
 	attack_verb = list("sliced")
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	sharpness = IS_SHARP
+	glass_colour_type = /datum/client_colour/glass_colour/lightgreen
 
 /obj/item/clothing/glasses/regular
 	name = "Prescription Glasses"
@@ -119,11 +128,7 @@
 	icon_state = "hipster_glasses"
 	item_state = "hipster_glasses"
 
-/obj/item/clothing/glasses/gglasses
-	name = "Green Glasses"
-	desc = "Forest green glasses, like the kind you'd wear when hatching a nasty scheme."
-	icon_state = "gglasses"
-	item_state = "gglasses"
+//Here lies green glasses, so ugly they died. RIP
 
 /obj/item/clothing/glasses/sunglasses
 	desc = "Strangely ancient technology used to help provide rudimentary eye cover. Enhanced shielding blocks many flashes."
@@ -133,7 +138,7 @@
 	darkness_view = 1
 	flash_protect = 1
 	tint = 1
-
+	glass_colour_type = /datum/client_colour/glass_colour/gray
 	dog_fashion = /datum/dog_fashion/head
 
 /obj/item/clothing/glasses/sunglasses/reagent
@@ -173,6 +178,7 @@
 	attack_verb = list("sliced")
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	sharpness = IS_SHARP
+	glass_colour_type = /datum/client_colour/glass_colour/orange
 
 /obj/item/clothing/glasses/sunglasses/gar/supergar
 	desc = "We evolve past the person we were a minute before. Little by little we advance with each turn. That's how a drill works!"
@@ -181,6 +187,7 @@
 	item_state = "gar"
 	force = 12
 	throwforce = 12
+	glass_colour_type = /datum/client_colour/glass_colour/red
 
 /obj/item/clothing/glasses/welding
 	name = "welding goggles"
@@ -193,6 +200,7 @@
 	tint = 2
 	flags_cover = GLASSESCOVERSEYES
 	visor_flags_inv = HIDEEYES
+	glass_colour_type = /datum/client_colour/glass_colour/gray
 
 
 /obj/item/clothing/glasses/welding/attack_self()
@@ -230,6 +238,7 @@
 	vision_flags = SEE_MOBS
 	invis_view = 2
 	flash_protect = 0
+	glass_colour_type = /datum/client_colour/glass_colour/red
 
 /obj/item/clothing/glasses/thermal/emp_act(severity)
 	thermal_overload()
@@ -273,12 +282,14 @@
 	desc = "A sweet pair of orange shades."
 	icon_state = "orangeglasses"
 	item_state = "orangeglasses"
+	glass_colour_type = /datum/client_colour/glass_colour/lightorange
 
 /obj/item/clothing/glasses/red
 	name = "red glasses"
 	desc = "A sweet pair of red shades."
 	icon_state = "redglasses"
 	item_state = "redglasses"
+	glass_colour_type = /datum/client_colour/glass_colour/red
 
 /obj/item/clothing/glasses/godeye
 	name = "eye of god"
@@ -290,6 +301,20 @@
 	scan_reagents = 1
 	flags = NODROP
 	invis_view = SEE_INVISIBLE_MINIMUM
+
+/obj/item/clothing/glasses/godeye/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
+	if(istype(W, src) && W != src && W.loc == user)
+		if(W.icon_state == "godeye")
+			W.icon_state = "doublegodeye"
+			W.item_state = "doublegodeye"
+			W.desc = "A pair of strange eyes, said to have been torn from an omniscient creature that used to roam the wastes. There's no real reason to have two, but that isn't stopping you."
+			if(iscarbon(user))
+				var/mob/living/carbon/C = user
+				C.update_inv_wear_mask()
+		else
+			user << "<span class='notice'>The eye winks at you and vanishes into the abyss, you feel really unlucky.</span>"
+		qdel(src)
+	..()
 
 /obj/item/clothing/glasses/proc/chameleon(var/mob/user)
 	var/input_glasses = input(user, "Choose a piece of eyewear to disguise as.", "Choose glasses style.") as null|anything in list("Sunglasses", "Medical HUD", "Mesons", "Science Goggles", "Glasses", "Security Sunglasses","Eyepatch","Welding","Gar")
@@ -342,3 +367,35 @@
 				icon_state = "gar"
 				item_state = "gar"
 
+
+/obj/item/clothing/glasses/AltClick(mob/user)
+	if(glass_colour_type && ishuman(user))
+		var/mob/living/carbon/human/H = user
+		if(H.client)
+			if(H.client.prefs)
+				if(src == H.glasses)
+					H.client.prefs.uses_glasses_colour = !H.client.prefs.uses_glasses_colour
+					if(H.client.prefs.uses_glasses_colour)
+						H << "You will now see glasses colors."
+					else
+						H << "You will no longer see glasses colors."
+					H.update_glasses_color(src, 1)
+	else
+		return ..()
+
+/obj/item/clothing/glasses/proc/change_glass_color(mob/living/carbon/human/H, datum/client_colour/glass_colour/new_color_type)
+	var/old_colour_type = glass_colour_type
+	if(!new_color_type || ispath(new_color_type)) //the new glass colour type must be null or a path.
+		glass_colour_type = new_color_type
+		if(H && H.glasses == src)
+			if(old_colour_type)
+				H.remove_client_colour(old_colour_type)
+			if(glass_colour_type)
+				H.update_glasses_color(src, 1)
+
+
+/mob/living/carbon/human/proc/update_glasses_color(obj/item/clothing/glasses/G, glasses_equipped)
+	if(client && client.prefs.uses_glasses_colour && glasses_equipped)
+		add_client_colour(G.glass_colour_type)
+	else
+		remove_client_colour(G.glass_colour_type)

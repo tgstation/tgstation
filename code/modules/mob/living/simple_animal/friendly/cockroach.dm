@@ -17,7 +17,7 @@
 	response_disarm = "shoos"
 	response_harm   = "splats"
 	density = 0
-	ventcrawler = 2
+	ventcrawler = VENTCRAWLER_ALWAYS
 	gold_core_spawnable = 2
 	var/squish_chance = 50
 	loot = list(/obj/effect/decal/cleanable/deadcockroach)
@@ -53,4 +53,3 @@
 	icon = 'icons/effects/blood.dmi'
 	icon_state = "xfloor1"
 	random_icon_states = list("xfloor1", "xfloor2", "xfloor3", "xfloor4", "xfloor5", "xfloor6", "xfloor7")
-	layer = ABOVE_OPEN_TURF_LAYER

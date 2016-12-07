@@ -195,7 +195,7 @@
 			if(href_list["getdna"])
 				var/mob/living/M = card.loc
 				var/count = 0
-				while(!istype(M, /mob/living))
+				while(!isliving(M))
 					if(!M || !M.loc) return 0 //For a runtime where M ends up in nullspace (similar to bluespace but less colourful)
 					M = M.loc
 					count++
@@ -372,7 +372,7 @@
 /mob/living/silicon/pai/proc/CheckDNA(mob/living/carbon/M, mob/living/silicon/pai/P)
 	var/answer = input(M, "[P] is requesting a DNA sample from you. Will you allow it to confirm your identity?", "[P] Check DNA", "No") in list("Yes", "No")
 	if(answer == "Yes")
-		M.visible_message("<span class='notice'>[M] presses \his thumb against [P].</span>",\
+		M.visible_message("<span class='notice'>[M] presses [M.p_their()] thumb against [P].</span>",\
 						"<span class='notice'>You press your thumb against [P].</span>",\
 						"<span class='notice'>[P] makes a sharp clicking sound as it extracts DNA material from [M].</span>")
 		if(!M.has_dna())
@@ -384,7 +384,7 @@
 		else
 			P << "<b>DNA does not match stored Master DNA.</b>"
 	else
-		P << "[M] does not seem like \he is going to provide a DNA sample willingly."
+		P << "[M] does not seem like [M.p_they()] [M.p_are()] going to provide a DNA sample willingly."
 
 // -=-=-=-= Software =-=-=-=-=- //
 
@@ -497,9 +497,9 @@
 				 <h4>Host Bioscan</h4><br>
 				"}
 		var/mob/living/M = card.loc
-		if(!istype(M, /mob/living))
-			while (!istype(M, /mob/living))
-				if(istype(M, /turf))
+		if(!isliving(M))
+			while(!isliving(M))
+				if(isturf(M))
 					src.temp = "Error: No biological host found. <br>"
 					src.subscreen = 0
 					return dat

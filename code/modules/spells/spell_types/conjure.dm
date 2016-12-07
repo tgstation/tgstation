@@ -38,7 +38,7 @@
 			for(var/varName in newVars)
 				if(varName in summoned_object.vars)
 					summoned_object.vars[varName] = newVars[varName]
-
+			summoned_object.admin_spawned = TRUE
 			if(summon_lifespan)
 				QDEL_IN(summoned_object, summon_lifespan)
 
@@ -50,3 +50,34 @@
 	summon_amt = 10
 	range = 3
 	newVars = list("emagged" = 2, "remote_disabled" = 1,"shoot_sound" = 'sound/weapons/laser.ogg',"projectile" = /obj/item/projectile/beam/laser, "declare_arrests" = 0,"name" = "Wizard's Justicebot")
+
+/obj/effect/proc_holder/spell/targeted/conjure_item
+	name = "Summon weapon"
+	desc = "A generic spell that should not exist.  This summons an instance of a specific type of item, or if one already exists, un-summons it.  Summons into hand if possible."
+	invocation_type = "none"
+	include_user = 1
+	range = -1
+	clothes_req = 0
+	var/obj/item/item
+	var/item_type = /obj/item/weapon/banhammer
+	school = "conjuration"
+	charge_max = 150
+	cooldown_min = 10
+
+/obj/effect/proc_holder/spell/targeted/conjure_item/cast(list/targets, mob/user = usr)
+	if (item && !qdeleted(item))
+		qdel(item)
+		item = null
+	else
+		for(var/mob/living/carbon/C in targets)
+			if(C.drop_item())
+				item = make_item()
+				C.put_in_hands(item)
+
+/obj/effect/proc_holder/spell/targeted/conjure_item/Destroy()
+	if(item)
+		qdel(item)
+	return ..()
+
+/obj/effect/proc_holder/spell/targeted/conjure_item/proc/make_item()
+	return new item_type

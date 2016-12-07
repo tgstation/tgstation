@@ -16,7 +16,10 @@
 	var/dat = "<html><head><title>[src.name]</title><style>h3 {margin: 0px; padding: 0px;}</style></head><body>"
 	if(screen == 0)
 		dat += "<h3>Tracking beacons data</h3>"
-		for(var/obj/item/mecha_parts/mecha_tracking/TR in world)
+		var/list/trackerlist = list()
+		for(var/obj/mecha/MC in mechas_list)
+			trackerlist += MC.trackers
+		for(var/obj/item/mecha_parts/mecha_tracking/TR in trackerlist)
 			var/answer = TR.get_mecha_info()
 			if(answer)
 				dat += {"<hr>[answer]<br/>
@@ -63,7 +66,7 @@
 	desc = "Device used to transmit exosuit data."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "motion2"
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	origin_tech = "programming=2;magnets=2"
 
 /obj/item/mecha_parts/mecha_tracking/proc/get_mecha_info()
@@ -72,7 +75,7 @@
 	var/obj/mecha/M = src.loc
 	var/cell_charge = M.get_charge()
 	var/answer = {"<b>Name:</b> [M.name]<br>
-						<b>Integrity:</b> [M.health/initial(M.health)*100]%<br>
+						<b>Integrity:</b> [M.obj_integrity/M.max_integrity*100]%<br>
 						<b>Cell charge:</b> [isnull(cell_charge)?"Not found":"[M.cell.percent()]%"]<br>
 						<b>Airtank:</b> [M.return_pressure()]kPa<br>
 						<b>Pilot:</b> [M.occupant||"None"]<br>
@@ -86,11 +89,13 @@
 
 /obj/item/mecha_parts/mecha_tracking/emp_act()
 	qdel(src)
-	return
 
-/obj/item/mecha_parts/mecha_tracking/ex_act()
-	qdel(src)
-	return
+/obj/item/mecha_parts/mecha_tracking/Destroy()
+	if(istype(loc, /obj/mecha))
+		var/obj/mecha/M = loc
+		if(src in M.trackers)
+			M.trackers -= src
+	return ..()
 
 /obj/item/mecha_parts/mecha_tracking/proc/in_mecha()
 	if(istype(src.loc, /obj/mecha))
@@ -104,7 +109,7 @@
 	qdel(src)
 
 /obj/item/mecha_parts/mecha_tracking/proc/get_mecha_log()
-	if(!src.in_mecha())
+	if(!istype(loc, /obj/mecha))
 		return 0
 	var/obj/mecha/M = src.loc
 	return M.get_log_html()

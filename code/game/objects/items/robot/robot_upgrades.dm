@@ -31,27 +31,7 @@
 	if(..())
 		return
 
-	R.notify_ai(2)
-
-	R.uneq_all()
-	R.hands.icon_state = "nomod"
-	R.icon_state = "robot"
-	qdel(R.module)
-	R.module = null
-
-	R.modtype = "robot"
-	R.designation = "Default"
-	R.updatename("Default")
-
-	R.update_icons()
-	R.update_headlamp()
-
-	R.speed = 0 // Remove upgrades.
-	R.ionpulse = FALSE
-	R.magpulse = FALSE
-	R.weather_immunities = initial(R.weather_immunities)
-
-	R.status_flags |= CANPUSH
+	R.ResetModule()
 
 	return 1
 
@@ -165,14 +145,14 @@
 	if(..())
 		return
 
-	for(var/obj/item/weapon/pickaxe/drill/cyborg/D in R.module.modules)
-		qdel(D)
-	for(var/obj/item/weapon/shovel/S in R.module.modules)
-		qdel(S)
+	for(var/obj/item/weapon/pickaxe/drill/cyborg/D in R.module)
+		R.module.remove_module(D, TRUE)
+	for(var/obj/item/weapon/shovel/S in R.module)
+		R.module.remove_module(S, TRUE)
 
-	R.module.modules += new /obj/item/weapon/pickaxe/drill/cyborg/diamond(R.module)
-	R.module.rebuild()
-
+	var/obj/item/weapon/pickaxe/drill/cyborg/diamond/DD = new /obj/item/weapon/pickaxe/drill/cyborg/diamond(R.module)
+	R.module.basic_modules += DD
+	R.module.add_module(DD, FALSE, TRUE)
 	return 1
 
 /obj/item/borg/upgrade/soh
@@ -187,32 +167,12 @@
 	if(..())
 		return
 
-	for(var/obj/item/weapon/storage/bag/ore/cyborg/S in R.module.modules)
-		qdel(S)
+	for(var/obj/item/weapon/storage/bag/ore/cyborg/S in R.module)
+		R.module.remove_module(S, TRUE)
 
-	R.module.modules += new /obj/item/weapon/storage/bag/ore/holding(R.module)
-	R.module.rebuild()
-
-	return 1
-
-/obj/item/borg/upgrade/hyperka
-	name = "mining cyborg hyper-kinetic accelerator"
-	desc = "A satchel of holding replacement for mining cyborg's ore satchel module."
-	icon_state = "cyborg_upgrade3"
-	require_module = 1
-	module_type = /obj/item/weapon/robot_module/miner
-	origin_tech = "materials=6;powerstorage=4;engineering=4;magnets=4;combat=4"
-
-/obj/item/borg/upgrade/hyperka/action(mob/living/silicon/robot/R)
-	if(..())
-		return
-
-	for(var/obj/item/weapon/gun/energy/kinetic_accelerator/cyborg/H in R.module.modules)
-		qdel(H)
-
-	R.module.modules += new /obj/item/weapon/gun/energy/kinetic_accelerator/hyper/cyborg(R.module)
-	R.module.rebuild()
-
+	var/obj/item/weapon/storage/bag/ore/holding/H = new /obj/item/weapon/storage/bag/ore/holding(R.module)
+	R.module.basic_modules += H
+	R.module.add_module(H, FALSE, TRUE)
 	return 1
 
 /obj/item/borg/upgrade/syndicate
@@ -237,6 +197,7 @@
 	name = "mining cyborg lavaproof tracks"
 	desc = "An upgrade kit to apply specialized coolant systems and insulation layers to mining cyborg tracks, enabling them to withstand exposure to molten rock."
 	icon_state = "ash_plating"
+	resistance_flags = LAVA_PROOF | FIRE_PROOF
 	require_module = 1
 	module_type = /obj/item/weapon/robot_module/miner
 	origin_tech = "engineering=4;materials=4;plasmatech=4"
