@@ -21,6 +21,9 @@
 /obj/item/weapon/gun_attachment/energy_bullet/stunner/on_fire(var/obj/item/weapon/gun/owner, var/obj/item/projectile/bullet)
 	..()
 	bullet.stun += 1
+	bullet.weaken += 1
+	bullet.stutter += 5
+	bullet.jitter += 10
 	if(bullet.damage >= 5)
 		bullet.damage -= 5
 	else

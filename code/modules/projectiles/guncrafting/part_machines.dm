@@ -60,11 +60,11 @@
 
 
 /obj/machinery/ammo_machine
-	name = "Part Fabricator"
+	name = "Ammo Fabricator"
 	desc = "our daddy taught us not to be ashamed of our guns"
 	icon = 'goon/icons/obj/machinery.dmi'
 	icon_state = "gunfab_machine"
-	var/list/ammos = list(/obj/item/ammo_box/magazine/pistolm9mm,/obj/item/ammo_box/magazine/smgm45)
+	var/list/ammos = list(/obj/item/ammo_box/magazine/pistolm9mm)
 	density = 1
 
 /obj/machinery/ammo_machine/attack_hand(mob/user)

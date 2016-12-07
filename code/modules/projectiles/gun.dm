@@ -307,6 +307,14 @@
 		attachments += AT
 
 /obj/item/weapon/gun/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/weapon/screwdriver))
+		if(customizable)
+			for(var/obj/item/weapon/gun_attachment/A in attachments)
+				user << "<span class='notice'>You unscrew [A] from [src].</span>"
+				A.on_remove(src)
+				A.forceMove(get_turf(src))
+				attachments -= A
+
 	if(istype(I, /obj/item/weapon/gun_attachment))
 		var/obj/item/weapon/gun_attachment/AT = I
 		if(customizable)
@@ -325,9 +333,11 @@
 			AT.on_attach(src)
 			AT.forceMove(src)
 			attachments += AT
+
 	if(can_flashlight)
 		if(istype(I, /obj/item/device/flashlight/seclite))
 			var/obj/item/device/flashlight/seclite/S = I
+			if(!gun_light)
 				if(!user.unEquip(I))
 					return
 				user << "<span class='notice'>You click [S] into place on [src].</span>"
@@ -354,13 +364,6 @@
 					verbs -= /obj/item/weapon/gun/proc/toggle_gunlight
 				for(var/datum/action/item_action/toggle_gunlight/TGL in actions)
 					qdel(TGL)
-		if(customizable)
-			for(var/obj/item/weapon/gun_attachment/A in attachments)
-				user << "<span class='notice'>You unscrew [A] from [src].</span>"
-				A.on_remove(src)
-				A.forceMove(get_turf(src))
-				attachments -= A
-
 
 
 /obj/item/weapon/gun/proc/toggle_gunlight()
