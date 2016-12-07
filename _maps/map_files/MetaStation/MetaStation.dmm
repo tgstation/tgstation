@@ -48972,16 +48972,16 @@
 /turf/open/floor/carpet,
 /area/library)
 "bGG" = (
-/obj/machinery/camera/autoname{
-	dir = 8;
-	network = list("SS13")
+/obj/docking_port/stationary{
+	dir = 1;
+	dwidth = 2;
+	height = 7;
+	id = "asteroid_syndicate_N";
+	name = "North of Station";
+	width = 5
 	},
-/obj/machinery/newscaster{
-	pixel_x = 29;
-	pixel_y = 1
-	},
-/turf/open/floor/carpet,
-/area/library)
+/turf/open/space,
+/area/space)
 "bGH" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 10
@@ -51098,9 +51098,16 @@
 /turf/open/floor/wood,
 /area/library)
 "bKc" = (
-/obj/structure/table/wood,
-/turf/open/floor/wood,
-/area/library)
+/obj/docking_port/stationary{
+	dir = 1;
+	dwidth = 2;
+	height = 7;
+	id = "asteroid_syndicate_NW";
+	name = "North West of Station";
+	width = 5
+	},
+/turf/open/space,
+/area/space)
 "bKd" = (
 /obj/structure/table/wood,
 /obj/item/weapon/paper_bin{
@@ -51989,33 +51996,27 @@
 /turf/open/floor/wood,
 /area/library)
 "bLK" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/item/device/radio/intercom{
-	freerange = 1;
-	frequency = 1459;
-	name = "Station Intercom (General)";
-	pixel_x = -30
+/obj/docking_port/stationary{
+	dir = 1;
+	dwidth = 2;
+	height = 7;
+	id = "asteroid_syndicate_NE";
+	name = "North East of Station";
+	width = 5
 	},
-/turf/open/floor/plasteel/neutral/corner{
-	dir = 8
-	},
-/area/hallway/primary/central)
+/turf/open/space,
+/area/space)
 "bLL" = (
-/obj/item/device/radio/intercom{
-	dir = 4;
-	name = "Station Intercom (General)";
-	pixel_x = 27
+/obj/docking_port/stationary{
+	dir = 1;
+	dwidth = 2;
+	height = 7;
+	id = "asteroid_syndicate_SE";
+	name = "South East of Station";
+	width = 5
 	},
-/obj/structure/table/wood,
-/obj/item/device/camera_film{
-	pixel_y = 9
-	},
-/obj/item/device/camera_film{
-	pixel_x = -3;
-	pixel_y = 5
-	},
-/turf/open/floor/wood,
-/area/library)
+/turf/open/space,
+/area/space)
 "bLM" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/extinguisher_cabinet{
@@ -52927,25 +52928,27 @@
 /turf/open/floor/wood,
 /area/library)
 "bNw" = (
-/obj/machinery/light_switch{
-	pixel_x = 28;
-	pixel_y = 0
+/obj/docking_port/stationary{
+	dir = 1;
+	dwidth = 2;
+	height = 7;
+	id = "asteroid_syndicate_SW";
+	name = "South West of Station";
+	width = 5
 	},
-/obj/machinery/libraryscanner,
-/turf/open/floor/wood,
-/area/library)
+/turf/open/space,
+/area/space)
 "bNx" = (
-/obj/structure/table/wood,
-/obj/structure/noticeboard{
-	desc = "A board for pinning important notices upon. Probably helpful for keeping track of requests.";
-	dir = 8;
-	name = "requests board";
-	pixel_x = 32;
-	pixel_y = 0
+/obj/docking_port/stationary{
+	dir = 1;
+	dwidth = 2;
+	height = 7;
+	id = "asteroid_syndicate_S";
+	name = "South of Station";
+	width = 5
 	},
-/obj/machinery/computer/libraryconsole/bookmanagement,
-/turf/open/floor/wood,
-/area/library)
+/turf/open/space,
+/area/space)
 "bNy" = (
 /obj/item/stack/sheet/rglass{
 	amount = 50
@@ -62361,6 +62364,14 @@
 	id = "whiteship_home";
 	name = "SS13: Auxiliary Dock, Station-Port";
 	width = 27
+	},
+/obj/docking_port/stationary{
+	dir = 2;
+	dwidth = 2;
+	height = 7;
+	id = "asteroid_syndicate_DOCK4";
+	name = "Station Port Dock 4";
+	width = 5
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
@@ -93804,8 +93815,8 @@
 	dir = 2;
 	dwidth = 5;
 	height = 24;
-	id = "syndicate_sw";
-	name = "southwest of station";
+	id = "syndicate_southmaint";
+	name = "south maintenance airlock";
 	turf_type = /turf/open/space;
 	width = 18
 	},
@@ -103662,7 +103673,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+bKc
 aaa
 aaa
 aaa
@@ -109990,7 +110001,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+bNw
 aaa
 aaa
 aaa
@@ -123951,7 +123962,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+bGG
 aaa
 aaa
 aaa
@@ -124671,7 +124682,7 @@ aaa
 aaa
 aaa
 aaa
-dfH
+aaa
 aaa
 aaa
 aaa
@@ -130831,7 +130842,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+dfH
 aaa
 aaa
 aaa
@@ -132887,7 +132898,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+bNx
 aaa
 aaa
 aaa
@@ -144422,7 +144433,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+bLL
 aaa
 aaa
 aaa
@@ -144528,7 +144539,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+bLK
 aaa
 aaa
 aaa

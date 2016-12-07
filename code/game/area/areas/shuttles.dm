@@ -56,3 +56,7 @@
 /area/shuttle/abandoned
 	name = "Abandoned Ship"
 	blob_allowed = FALSE
+
+/area/shuttle/syndicateasteroid
+	name = "Syndicate Asteroid Ship"
+	blob_allowed = FALSE

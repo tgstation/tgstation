@@ -304,3 +304,11 @@
 	name = "Ordinary Space Tile"
 	description = "Absolutely nothing strange going on here please \
 		move along, plenty more space to see right this way!"
+
+/datum/map_template/ruin/space/syndicatestation1
+	id = "syndicatestation1"
+	suffix = "syndicatestation1.dmm"
+	name = "Syndicate Asteroid Station"
+	description = "A small, undetected syndicate base built into an asteroid. \
+		It appears to act as a supply and communications relay for agents \
+		in the field."
