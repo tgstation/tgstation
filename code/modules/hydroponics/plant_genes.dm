@@ -157,15 +157,21 @@
 
 /datum/plant_gene/trait/proc/on_consume(obj/item/weapon/reagent_containers/food/snacks/grown/G, mob/living/carbon/target)
 	return
+
 /datum/plant_gene/trait/proc/on_cross(obj/item/weapon/reagent_containers/food/snacks/grown/G, atom/target)
 	return
+
 /datum/plant_gene/trait/proc/on_slip(obj/item/weapon/reagent_containers/food/snacks/grown/G, mob/living/carbon/target)
 	return
+
 /datum/plant_gene/trait/proc/on_squash(obj/item/weapon/reagent_containers/food/snacks/grown/G, atom/target)
 	return
+
 /datum/plant_gene/trait/proc/on_attackby(obj/item/weapon/reagent_containers/food/snacks/grown/G, obj/item/I, mob/user)
 	return
 
+/datum/plant_gene/trait/proc/on_throw_impact(obj/item/weapon/reagent_containers/food/snacks/grown/G, atom/target)
+	return
 
 /datum/plant_gene/trait/squash
 	// Allows the plant to be squashed when thrown or slipped on, leaving a colored mess and trash type item behind.
@@ -351,6 +357,19 @@
 		else
 			user << "<span class='warning'>You need five lengths of cable to make a [G] battery!</span>"
 
+
+/datum/plant_gene/trait/stinging
+	name = "hypodermic prickles"
+
+/datum/plant_gene/trait/stinging/on_throw_impact(obj/item/weapon/reagent_containers/food/snacks/grown/G, atom/target)
+	if(isliving(target) && G.reagents && G.reagents.total_volume)
+		var/mob/living/L = target
+		if(L.reagents && L.can_inject(null, 0))
+			var/injecting_amount = max(1, G.seed.potency*0.2) // Minimum of 1, max of 20
+			var/fraction = min(injecting_amount/G.reagents.total_volume, 1)
+			G.reagents.reaction(L, INJECT, fraction)
+			G.reagents.trans_to(L, injecting_amount)
+			target << "<span class='danger'>You are pricked by [G]!</span>"
 
 /datum/plant_gene/trait/plant_type // Parent type
 	name = "you shouldn't see this"

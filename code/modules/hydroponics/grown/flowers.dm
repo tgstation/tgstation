@@ -177,7 +177,8 @@
 	force = round((5 + seed.potency / 5), 1)
 
 /obj/item/weapon/grown/novaflower/attack(mob/living/carbon/M, mob/user)
-	if(!..()) return
+	if(!..())
+		return
 	if(isliving(M))
 		M << "<span class='danger'>You are lit on fire from the intense heat of the [name]!</span>"
 		M.adjust_fire_stacks(seed.potency / 20)

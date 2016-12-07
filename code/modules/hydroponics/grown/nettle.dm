@@ -23,6 +23,7 @@
 	endurance = 25
 	maturation = 8
 	yield = 2
+	genes = list(/datum/plant_gene/trait/repeated_harvest, /datum/plant_gene/trait/plant_type/weed_hardy, /datum/plant_gene/trait/stinging)
 	mutatelist = list()
 	reagents_add = list("facid" = 0.5, "sacid" = 0.5)
 	rarity = 20
@@ -97,7 +98,8 @@
 			user << "<span class='userdanger'>You are stunned by the Deathnettle when you try picking it up!</span>"
 
 /obj/item/weapon/grown/nettle/death/attack(mob/living/carbon/M, mob/user)
-	if(!..()) return
+	if(!..())
+		return
 	if(isliving(M))
 		M << "<span class='danger'>You are stunned by the powerful acid of the Deathnettle!</span>"
 		add_logs(user, M, "attacked", src)
