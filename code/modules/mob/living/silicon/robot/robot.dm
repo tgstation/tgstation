@@ -931,6 +931,12 @@
 
 	return 1
 
+/mob/living/silicon/robot/proc/has_module()
+	if(!module || module.type == /obj/item/weapon/robot_module)
+		. = FALSE
+	else
+		. = TRUE
+
 /mob/living/silicon/robot/proc/update_module_innate()
 	designation = module.name
 	if(hands)
