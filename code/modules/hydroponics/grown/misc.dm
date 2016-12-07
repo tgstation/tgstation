@@ -12,7 +12,7 @@
 	yield = -1
 	potency = -1
 	growthstages = 4
-	plant_type = PLANT_WEED
+	genes = list(/datum/plant_gene/trait/plant_type/weed_hardy)
 
 
 // Cabbage

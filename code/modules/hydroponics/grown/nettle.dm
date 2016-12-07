@@ -9,8 +9,7 @@
 	endurance = 40 // tuff like a toiger
 	yield = 4
 	growthstages = 5
-	plant_type = PLANT_WEED
-	genes = list(/datum/plant_gene/trait/repeated_harvest)
+	genes = list(/datum/plant_gene/trait/repeated_harvest, /datum/plant_gene/trait/plant_type/weed_hardy)
 	mutatelist = list(/obj/item/seeds/nettle/death)
 	reagents_add = list("sacid" = 0.5)
 

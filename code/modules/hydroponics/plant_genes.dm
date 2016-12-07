@@ -350,3 +350,17 @@
 			qdel(G)
 		else
 			user << "<span class='warning'>You need five lengths of cable to make a [G] battery!</span>"
+
+
+/datum/plant_gene/trait/plant_type // Parent type
+	name = "you shouldn't see this"
+	trait_id = "plant_type"
+
+/datum/plant_gene/trait/plant_type/weed_hardy
+	name = "Robust Species"
+
+/datum/plant_gene/trait/plant_type/fungal_metabolism
+	name = "Fungal Vitality"
+
+/datum/plant_gene/trait/plant_type/alien_properties
+	name ="?????"

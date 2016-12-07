@@ -18,7 +18,7 @@
 	yield = 4
 	potency = 15
 	growthstages = 4
-	plant_type = PLANT_MUSHROOM
+	genes = list(/datum/plant_gene/trait/plant_type/fungal_metabolism)
 	growing_icon = 'icons/obj/hydroponics/growing_mushrooms.dmi'
 	reagents_add = list("morphine" = 0.35, "charcoal" = 0.35, "nutriment" = 0)
 
@@ -44,7 +44,7 @@
 	production = 5
 	yield = 4
 	growthstages = 3
-	plant_type = PLANT_MUSHROOM
+	genes = list(/datum/plant_gene/trait/plant_type/fungal_metabolism)
 	growing_icon = 'icons/obj/hydroponics/growing_mushrooms.dmi'
 	mutatelist = list(/obj/item/seeds/angel)
 	reagents_add = list("mushroomhallucinogen" = 0.04, "amatoxin" = 0.35, "nutriment" = 0, "growthserum" = 0.1)
@@ -72,7 +72,7 @@
 	yield = 2
 	potency = 35
 	growthstages = 3
-	plant_type = PLANT_MUSHROOM
+	genes = list(/datum/plant_gene/trait/plant_type/fungal_metabolism)
 	growing_icon = 'icons/obj/hydroponics/growing_mushrooms.dmi'
 	reagents_add = list("mushroomhallucinogen" = 0.04, "amatoxin" = 0.1, "nutriment" = 0, "amanitin" = 0.2)
 	rarity = 30
@@ -99,7 +99,7 @@
 	yield = 5
 	potency = 15
 	growthstages = 3
-	plant_type = PLANT_MUSHROOM
+	genes = list(/datum/plant_gene/trait/plant_type/fungal_metabolism)
 	growing_icon = 'icons/obj/hydroponics/growing_mushrooms.dmi'
 	reagents_add = list("mushroomhallucinogen" = 0.25, "nutriment" = 0.02)
 
@@ -124,7 +124,7 @@
 	yield = 4
 	potency = 15
 	growthstages = 3
-	plant_type = PLANT_MUSHROOM
+	genes = list(/datum/plant_gene/trait/plant_type/fungal_metabolism)
 	growing_icon = 'icons/obj/hydroponics/growing_mushrooms.dmi'
 	mutatelist = list(/obj/item/seeds/plump/walkingmushroom)
 	reagents_add = list("vitamin" = 0.04, "nutriment" = 0.1)
@@ -190,7 +190,7 @@
 	yield = 5
 	potency = 15
 	growthstages = 3
-	plant_type = PLANT_MUSHROOM
+	genes = list(/datum/plant_gene/trait/plant_type/fungal_metabolism)
 	growing_icon = 'icons/obj/hydroponics/growing_mushrooms.dmi'
 	reagents_add = list("nutriment" = 0.1)
 
@@ -217,9 +217,8 @@
 	yield = 3 //-> spread
 	potency = 30 //-> brightness
 	growthstages = 4
-	plant_type = PLANT_MUSHROOM
 	rarity = 20
-	genes = list(/datum/plant_gene/trait/glow)
+	genes = list(/datum/plant_gene/trait/glow, /datum/plant_gene/trait/plant_type/fungal_metabolism)
 	growing_icon = 'icons/obj/hydroponics/growing_mushrooms.dmi'
 	mutatelist = list(/obj/item/seeds/glowshroom/glowcap)
 	reagents_add = list("radium" = 0.1, "phosphorus" = 0.1, "nutriment" = 0.04)
@@ -255,9 +254,8 @@
 	icon_grow = "glowshroom-grow"
 	icon_dead = "glowshroom-dead"
 	plantname = "Glowcaps"
-	plant_type = PLANT_MUSHROOM
 	product = /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/glowshroom/glowcap
-	genes = list(/datum/plant_gene/trait/glow, /datum/plant_gene/trait/cell_charge)
+	genes = list(/datum/plant_gene/trait/glow, /datum/plant_gene/trait/cell_charge, /datum/plant_gene/trait/plant_type/fungal_metabolism)
 	mutatelist = list()
 	reagents_add = list("teslium" = 0.1, "nutriment" = 0.04)
 	rarity = 30

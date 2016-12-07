@@ -76,7 +76,7 @@
 	yield = 2
 	potency = 30
 	growthstages = 4
-	plant_type = PLANT_WEED
+	genes = list(/datum/plant_gene/trait/plant_type/weed_hardy)
 	growing_icon = 'icons/obj/hydroponics/growing_flowers.dmi'
 	reagents_add = list("nutriment" = 0.04)
 
