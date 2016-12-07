@@ -116,7 +116,7 @@
 
 /datum/map_template/shuttle/emergency/fuck_shuttle
 	suffix = "fuck_shuttle"
-	name = "Fuck Shuttle \"Complete Edition\""
+	name = "Fuck Shuttle \"Bluespace Catastrophe Edition!\""
 	credit_cost = 2000
 	description = "After a Bluespace incident where several shuttles were \
 		'accidentally' fused with eachother, NanoTrasen has decided \
