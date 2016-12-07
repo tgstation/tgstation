@@ -1,3 +1,7 @@
+#define PROJECTILE "projectile"
+#define ENERGY "energy"
+#define BOTHTYPES "both"
+
 /obj/item/weapon/gun
 	name = "gun"
 	desc = "It's a gun. It's pretty terrible, though."
@@ -61,6 +65,14 @@
 	var/zoom_amt = 3 //Distance in TURFs to move the user's screen forward (the "zoom" effect)
 	var/datum/action/toggle_scope_zoom/azoom
 
+	// Guncrafting
+	var/customizable = FALSE
+	var/customizable_type = PROJECTILE
+	var/list/attachments = list()
+	var/obj/item/weapon/gun_attachment/barrel/barrel = null
+	var/obj/item/weapon/gun_attachment/base/base = null
+	var/obj/item/weapon/gun_attachment/handle/handle = null
+
 
 /obj/item/weapon/gun/New()
 	..()
@@ -70,6 +82,8 @@
 		verbs += /obj/item/weapon/gun/proc/toggle_gunlight
 		new /datum/action/item_action/toggle_gunlight(src)
 	build_zooming()
+	if(customizable)
+		START_PROCESSING(SSobj, src)
 
 
 /obj/item/weapon/gun/CheckParts(list/parts_list)
@@ -93,6 +107,10 @@
 	if(unique_rename)
 		user << "<span class='notice'>Use a pen on it to rename it.</span>"
 
+/obj/item/weapon/gun/process()
+	if(customizable)
+		for(var/obj/item/weapon/gun_attachment/A in attachments)
+			A.on_tick(src)
 
 /obj/item/weapon/gun/proc/process_chamber()
 	return 0
@@ -136,8 +154,13 @@
 
 
 /obj/item/weapon/gun/afterattack(atom/target, mob/living/user, flag, params)
+	if(customizable)
+		if(!barrel || !base || !handle)
+			return // not fully constructed yet
+
 	if(firing_burst)
 		return
+
 	if(flag) //It's adjacent, is the user, or is on the user's person
 		if(target in user.contents) //can't shoot stuff inside us.
 			return
@@ -211,7 +234,10 @@ obj/item/weapon/gun/proc/newshot()
 			recoil = 4 //one-handed kick
 		else
 			recoil = initial(recoil)
-
+	if(customizable)
+		for(var/obj/item/weapon/gun_attachment/A in attachments)
+			if(chambered && chambered.BB)
+				A.on_fire(src, chambered.BB)
 	if(burst_size > 1)
 		firing_burst = 1
 		for(var/i = 1 to burst_size)
@@ -273,7 +299,32 @@ obj/item/weapon/gun/proc/newshot()
 	else
 		return
 
+/obj/item/weapon/gun/proc/force_attach(obj/item/weapon/gun_attachment/AT)
+	if(istype(AT))
+		AT.on_attach(src)
+		AT.forceMove(src)
+		attachments += AT
+
 /obj/item/weapon/gun/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/weapon/gun_attachment))
+		var/obj/item/weapon/gun_attachment/AT = I
+		if(customizable)
+			if(attachments.len >= 6)
+				user << "[src] already has too many attachments!"
+				return
+			for(var/obj/item/weapon/gun_attachment/A in attachments)
+				if(istype(AT, A.type))
+					user << "[src] already has an attachment like [AT]!"
+					return
+			if(!AT.can_attach(src))
+				user << "You can't attach that to [src]."
+				return
+			user << "You attach [AT] to [src]."
+			user.drop_item()
+			AT.on_attach(src)
+			AT.forceMove(src)
+			attachments += AT
+
 	if(istype(I, /obj/item/device/flashlight/seclite))
 		var/obj/item/device/flashlight/seclite/S = I
 		if(can_flashlight)
@@ -304,6 +355,12 @@ obj/item/weapon/gun/proc/newshot()
 				verbs -= /obj/item/weapon/gun/proc/toggle_gunlight
 			for(var/datum/action/item_action/toggle_gunlight/TGL in actions)
 				qdel(TGL)
+		if(customizable)
+			for(var/obj/item/weapon/gun_attachment/A in attachments)
+				user << "<span class='notice'>You unscrew [A] from [src].</span>"
+				A.on_remove(src)
+				A.forceMove(get_turf(src))
+				attachments -= A
 
 	if(unique_rename)
 		if(istype(I, /obj/item/weapon/pen))

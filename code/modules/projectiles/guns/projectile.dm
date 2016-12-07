@@ -43,8 +43,10 @@
 	chamber_round()
 	return
 
-/obj/item/weapon/gun/projectile/proc/chamber_round()
-	if (chambered || !magazine)
+/obj/item/weapon/gun/projectile/proc/chamber_round(var/force = 0)
+	if(chambered && !force)
+		return
+	if(!magazine)
 		return
 	else if (magazine.ammo_count())
 		chambered = magazine.get_round()
