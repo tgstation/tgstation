@@ -157,14 +157,21 @@
 
 /datum/plant_gene/trait/proc/on_consume(obj/item/weapon/reagent_containers/food/snacks/grown/G, mob/living/carbon/target)
 	return
+
 /datum/plant_gene/trait/proc/on_cross(obj/item/weapon/reagent_containers/food/snacks/grown/G, atom/target)
 	return
+
 /datum/plant_gene/trait/proc/on_slip(obj/item/weapon/reagent_containers/food/snacks/grown/G, mob/living/carbon/target)
 	return
+
 /datum/plant_gene/trait/proc/on_squash(obj/item/weapon/reagent_containers/food/snacks/grown/G, atom/target)
 	return
 
+/datum/plant_gene/trait/proc/on_attackby(obj/item/weapon/reagent_containers/food/snacks/grown/G, obj/item/I, mob/user)
+	return
 
+/datum/plant_gene/trait/proc/on_throw_impact(obj/item/weapon/reagent_containers/food/snacks/grown/G, atom/target)
+	return
 
 /datum/plant_gene/trait/squash
 	// Allows the plant to be squashed when thrown or slipped on, leaving a colored mess and trash type item behind.
@@ -312,3 +319,67 @@
 /datum/plant_gene/trait/maxchem/on_new(obj/item/weapon/reagent_containers/food/snacks/grown/G, newloc)
 	..()
 	G.reagents.maximum_volume *= rate
+
+/datum/plant_gene/trait/repeated_harvest
+	name = "perennial growth"
+
+/datum/plant_gene/trait/repeated_harvest/can_add(obj/item/seeds/S)
+	if(!..())
+		return FALSE
+	if(istype(S, /obj/item/seeds/replicapod))
+		return FALSE
+	return TRUE
+
+/datum/plant_gene/trait/battery
+	name = "capacitive cellular production"
+
+/datum/plant_gene/trait/battery/on_attackby(obj/item/weapon/reagent_containers/food/snacks/grown/G, obj/item/I, mob/user)
+	if(istype(I, /obj/item/stack/cable_coil))
+		var/obj/item/stack/cable_coil/C = I
+		if(C.use(5))
+			user << "<span class='notice'>You add some cable to [G] and slide it inside the battery encasing.</span>"
+			var/obj/item/weapon/stock_parts/cell/potato/pocell = new /obj/item/weapon/stock_parts/cell/potato(user.loc)
+			pocell.icon_state = G.icon_state
+			pocell.maxcharge = G.seed.potency * 20
+
+			// The secret of potato supercells!
+			var/datum/plant_gene/trait/cell_charge/CG = G.seed.get_gene(/datum/plant_gene/trait/cell_charge)
+			if(CG) // 10x charge for deafult cell charge gene - 20 000 with 100 potency.
+				pocell.maxcharge *= CG.rate*1000
+			pocell.charge = pocell.maxcharge
+			pocell.name = "[G] battery"
+			pocell.desc = "A rechargable plant based power cell. This one has a power rating of [pocell.maxcharge], and you should not swallow it."
+
+			if(G.reagents.has_reagent("plasma", 2))
+				pocell.rigged = 1
+
+			qdel(G)
+		else
+			user << "<span class='warning'>You need five lengths of cable to make a [G] battery!</span>"
+
+
+/datum/plant_gene/trait/stinging
+	name = "hypodermic prickles"
+
+/datum/plant_gene/trait/stinging/on_throw_impact(obj/item/weapon/reagent_containers/food/snacks/grown/G, atom/target)
+	if(isliving(target) && G.reagents && G.reagents.total_volume)
+		var/mob/living/L = target
+		if(L.reagents && L.can_inject(null, 0))
+			var/injecting_amount = max(1, G.seed.potency*0.2) // Minimum of 1, max of 20
+			var/fraction = min(injecting_amount/G.reagents.total_volume, 1)
+			G.reagents.reaction(L, INJECT, fraction)
+			G.reagents.trans_to(L, injecting_amount)
+			target << "<span class='danger'>You are pricked by [G]!</span>"
+
+/datum/plant_gene/trait/plant_type // Parent type
+	name = "you shouldn't see this"
+	trait_id = "plant_type"
+
+/datum/plant_gene/trait/plant_type/weed_hardy
+	name = "Robust Species"
+
+/datum/plant_gene/trait/plant_type/fungal_metabolism
+	name = "Fungal Vitality"
+
+/datum/plant_gene/trait/plant_type/alien_properties
+	name ="?????"
