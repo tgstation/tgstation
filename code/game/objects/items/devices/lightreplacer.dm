@@ -67,8 +67,7 @@
 	var/shards_required = 4
 
 /obj/item/device/lightreplacer/New()
-	//uses = max_uses / 2
-	uses = max_uses
+	uses = max_uses / 2
 	failmsg = "The [name]'s refill light blinks red."
 	..()
 
