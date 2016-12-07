@@ -182,13 +182,11 @@ var/list/gaslist_cache = null
 	if(holder)
 		if(cached_gases["freon"])
 			if(cached_gases["freon"][MOLES] >= MOLES_PLASMA_VISIBLE)
-				if(holder.freon_gas_act())
-					cached_gases["freon"][MOLES] -= MOLES_PLASMA_VISIBLE
+				holder.freon_gas_act()
 
 		if(cached_gases["water_vapor"])
 			if(cached_gases["water_vapor"][MOLES] >= MOLES_PLASMA_VISIBLE)
-				if(holder.water_vapor_gas_act())
-					cached_gases["water_vapor"][MOLES] -= MOLES_PLASMA_VISIBLE
+				holder.water_vapor_gas_act()
 
 	fuel_burnt = 0
 	if(temperature > FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
