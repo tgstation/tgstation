@@ -97,6 +97,10 @@
 	s.set_up(5, 1, get_turf(src))
 	s.start()
 
+/obj/machinery/quantumpad/attack_ghost(mob/dead/observer/ghost)
+	if(linked_pad)
+		ghost.forceMove(get_turf(linked_pad))
+
 /obj/machinery/quantumpad/proc/doteleport(mob/user)
 	if(linked_pad)
 		if(teleport_speed > 20)
