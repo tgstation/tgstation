@@ -114,6 +114,16 @@
 		active GPS onboard labeled STV5."
 	credit_cost = -7500
 
+/datum/map_template/shuttle/emergency/fuck_shuttle
+	suffix = "fuck_shuttle"
+	name = "Fuck Shuttle \"Complete Edition\""
+	credit_cost = 2000
+	description = "After a Bluespace incident where several shuttles were \
+		'accidentally' fused with eachother, NanoTrasen has decided \
+		to adopt this shuttle design as one of its official shuttles. \
+		It is still unclear how this shuttle manages to fly without \
+		ripping itself apart."
+
 /datum/map_template/shuttle/emergency/meta
 	suffix = "meta"
 	name = "Meta Station Emergency Shuttle"
