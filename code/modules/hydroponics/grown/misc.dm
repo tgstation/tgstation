@@ -73,7 +73,7 @@
 	desc = "These seeds grow into .357 revolvers."
 	icon_state = "seed-gatfruit"
 	species = "gatfruit"
-	plantname = "gatfruit"
+	plantname = "Gatfruit Tree"
 	product = /obj/item/weapon/reagent_containers/food/snacks/grown/shell/gatfruit
 	lifespan = 20
 	endurance = 20

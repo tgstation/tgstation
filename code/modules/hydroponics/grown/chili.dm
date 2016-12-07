@@ -55,7 +55,7 @@
 	desc = "These seeds grow into a chili said to be the hottest in the galaxy."
 	icon_state = "seed-chilighost"
 	species = "chilighost"
-	plantname = "chilighost"
+	plantname = "Ghost Chili Plants"
 	product = /obj/item/weapon/reagent_containers/food/snacks/grown/ghost_chili
 	endurance = 10
 	maturation = 10
