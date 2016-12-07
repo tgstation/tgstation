@@ -44,10 +44,7 @@
 			break
 	if(linkedwall && wall_generation_cooldown <= world.time)
 		wall_generation_cooldown = world.time + (CACHE_PRODUCTION_TIME * get_efficiency_mod(TRUE))
-		var/component_to_generate = get_weighted_component_id()
-		PoolOrNew(get_component_animation_type(component_to_generate), get_turf(src))
-		clockwork_component_cache[component_to_generate]++
-		update_slab_info()
+		generate_cache_component(null, src)
 		playsound(linkedwall, 'sound/magic/clockwork/fellowship_armory.ogg', rand(15, 20), 1, -3, 1, 1)
 		visible_message("<span class='warning'>Something cl[pick("ank", "ink", "unk", "ang")]s around inside of [src]...</span>")
 

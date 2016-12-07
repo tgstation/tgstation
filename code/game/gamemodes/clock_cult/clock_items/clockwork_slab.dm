@@ -353,7 +353,7 @@
 				if(!quickbound[i])
 					continue
 				var/datum/clockwork_scripture/quickbind_slot = quickbound[i]
-				textlist += "A <b>Quickbind</b> slot, currently set to <b><font color=[get_component_color_brightalloy(initial(quickbind_slot.primary_component))]>[initial(quickbind_slot.name)]</font></b>.<br>"
+				textlist += "A <b>Quickbind</b> slot, currently set to <b><font color=[get_component_color_bright(initial(quickbind_slot.primary_component))]>[initial(quickbind_slot.name)]</font></b>.<br>"
 		textlist += "<br>\
 		Examine the slab or swap to Recital to check the number of components it has available.<br><br>\
 		\
@@ -365,14 +365,14 @@
 	data["components"] = stored_components.Copy()
 	var/list/temp_data = list("<font color=#B18B25>")
 	for(var/i in data["components"])
-		temp_data += "<font color=[get_component_color_brightalloy(i)]>[get_component_acronym(i)] <b>[data["components"][i]]</b></font>"
+		temp_data += "<font color=[get_component_color_bright(i)]>[get_component_acronym(i)] <b>[data["components"][i]]</b></font>"
 		if(i != HIEROPHANT_ANSIBLE)
 			temp_data += " "
 		else
 			temp_data += " ("
 	if(clockwork_caches)
 		for(var/i in clockwork_component_cache)
-			temp_data += "<font color=[get_component_color_brightalloy(i)]>[get_component_acronym(i)] <b>[data["components"][i] + clockwork_component_cache[i]]</b></font>"
+			temp_data += "<font color=[get_component_color_bright(i)]>[get_component_acronym(i)] <b>[data["components"][i] + clockwork_component_cache[i]]</b></font>"
 			if(i != HIEROPHANT_ANSIBLE)
 				temp_data += " "
 	else
@@ -389,7 +389,7 @@
 	for(var/s in all_scripture)
 		var/datum/clockwork_scripture/S = s
 		if(S.tier == selected_scripture)
-			var/scripture_color = get_component_color_brightalloy(S.primary_component)
+			var/scripture_color = get_component_color_bright(S.primary_component)
 			var/list/temp_info = list("name" = "<font color=[scripture_color]><b>[S.name]</b></font>",
 			"descname" = "<font color=[scripture_color]>([S.descname])</font>",
 			"tip" = "[S.desc]\n[S.usage_tip]",
@@ -406,7 +406,7 @@
 			var/list/really_temp_data = list()
 			for(var/i in temp_info["required"])
 				if(temp_info["required"][i])
-					really_temp_data += "<font color=[get_component_color_brightalloy(i)]>[get_component_acronym(i)] <b>[temp_info["required"][i]]</b></font> "
+					really_temp_data += "<font color=[get_component_color_bright(i)]>[get_component_acronym(i)] <b>[temp_info["required"][i]]</b></font> "
 			really_temp_data = really_temp_data.Join()
 			temp_info["required"] = really_temp_data
 			data["scripture"] += list(temp_info)
