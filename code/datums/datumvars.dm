@@ -1087,6 +1087,10 @@
 			if(!H)
 				usr << "Mob doesn't exist anymore"
 				return
+			
+			if(!H.client.prefs.unlock_content)
+				usr << "This player is not a BYOND Donator!"
+				return
 
 			var/success = purrbation_toggle(H)
 			if(success)
