@@ -22,6 +22,7 @@
 /obj/item/device/taperecorder/New()
 	mytape = new /obj/item/device/tape/random(src)
 	update_icon()
+	..()
 
 
 /obj/item/device/taperecorder/examine(mob/user)
@@ -282,3 +283,4 @@
 //Random colour tapes
 /obj/item/device/tape/random/New()
 	icon_state = "tape_[pick("white", "blue", "red", "yellow", "purple")]"
+	..()

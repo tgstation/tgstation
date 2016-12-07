@@ -201,6 +201,7 @@ var/obj/machinery/blackbox_recorder/blackbox
 	use_power = 1
 	idle_power_usage = 10
 	active_power_usage = 100
+	armor = list(melee = 25, bullet = 10, laser = 10, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 70)
 	var/list/messages = list()		//Stores messages of non-standard frequencies
 	var/list/messages_admin = list()
 
@@ -223,6 +224,7 @@ var/obj/machinery/blackbox_recorder/blackbox
 		if (istype(blackbox,/obj/machinery/blackbox_recorder))
 			qdel(src)
 	blackbox = src
+
 
 /obj/machinery/blackbox_recorder/Destroy()
 	var/turf/T = locate(1,1,2)

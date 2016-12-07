@@ -30,11 +30,11 @@
 			user << "<span class='notice'>The support rods have been <i>sliced through</i>, and the outer sheath is <b>connected loosely</b> to the girder.</span>"
 
 /turf/closed/wall/r_wall/break_wall()
-	builtin_sheet.loc = src
+	new sheet_type(loc)
 	return (new /obj/structure/girder/reinforced(src))
 
 /turf/closed/wall/r_wall/devastate_wall()
-	builtin_sheet.loc = src
+	new sheet_type(loc)
 	new /obj/item/stack/sheet/metal(src, 2)
 
 /turf/closed/wall/r_wall/attack_animal(mob/living/simple_animal/M)

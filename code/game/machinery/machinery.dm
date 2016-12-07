@@ -101,7 +101,6 @@ Class Procs:
 	pressure_resistance = 15
 	obj_integrity = 200
 	max_integrity = 200
-	armor = list(melee = 25, bullet = 10, laser = 10, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 70)
 
 	var/stat = 0
 	var/emagged = 0
@@ -126,6 +125,8 @@ Class Procs:
 	var/speed_process = 0 // Process as fast as possible?
 
 /obj/machinery/New()
+	if (!armor)
+		armor = list(melee = 25, bullet = 10, laser = 10, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 70)
 	..()
 	machines += src
 	if(!speed_process)
