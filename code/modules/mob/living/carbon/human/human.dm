@@ -47,7 +47,9 @@
 			internal_organs += new /obj/item/organ/lungs()
 	if(!(NOBLOOD in dna.species.specflags))
 		internal_organs += new /obj/item/organ/heart
-	internal_organs += new /obj/item/organ/brain
+	var/obj/item/organ/brain/B = new /obj/item/organ/brain
+	internal_organs += B
+	linked_brain = B
 	..()
 
 /mob/living/carbon/human/OpenCraftingMenu()

@@ -16,6 +16,7 @@
 /obj/item/organ/brain/Insert(mob/living/carbon/C, special = 0)
 	..()
 	name = "brain"
+	C.linked_brain = src
 	if(brainmob)
 		if(C.key)
 			C.ghostize()

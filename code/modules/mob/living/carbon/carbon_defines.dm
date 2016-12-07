@@ -6,6 +6,7 @@
 	var/list/internal_organs_slot	= list()	//Same as above, but stores "slot ID" - "organ" pairs for easy access.
 
 	var/list/implants = list()
+	var/obj/item/organ/brain/linked_brain = null //In case of decapitation, the body looks for the last brain it had.
 
 	var/silent = 0 		//Can't talk. Value goes down every life proc. //NOTE TO FUTURE CODERS: DO NOT INITIALIZE NUMERICAL VARS AS NULL OR I WILL MURDER YOU.
 
