@@ -157,7 +157,7 @@
 
 /obj/item/slimepotion/sentience
 	name = "sentience potion"
-	desc = "A miraculous chemical mix that can raise the intelligence of creatures to human levels. Unlike normal slime potions, it can be absorbed by any nonsentient being."
+	desc = "A miraculous chemical mix that can help creatures re-gain their sentient intelligence. Unlike normal slime potions, it can be absorbed by any currently nonsentient beings."
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "potpink"
 	origin_tech = "biotech=6"
@@ -193,8 +193,8 @@
 		SM.languages_understood |= HUMAN
 		SM.mind.enslave_mind_to_creator(user)
 		SM.sentience_act()
-		SM << "<span class='warning'>All at once it makes sense: you know what you are and who you are! Self awareness is yours!</span>"
-		SM << "<span class='userdanger'>You are grateful to be self aware and owe [user] a great debt. Serve [user], and assist [user.p_them()] in completing [user.p_their()] goals at any cost.</span>"
+		SM << "<span class='warning'>As you take the offered potion, the mixture of plasma and cold slime entrails reacts and causes your body to emit a electro-magnetic field that makes you immune to the inhibiting field that previously kept you sedate. All at once you know who and what you are! Self awareness if yours once again!</span>"
+		SM << "<span class='userdanger'>You are grateful to be aware once more and owe [user] a great debt. Serve [user], and assist [user.p_them()] in completing [user.p_their()] goals at any cost.</span>"
 		user << "<span class='notice'>[SM] accepts the potion and suddenly becomes attentive and aware. It worked!</span>"
 		qdel(src)
 	else
