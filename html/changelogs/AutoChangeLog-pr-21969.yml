@@ -1,0 +1,4 @@
+author: "Cyberboss"
+delete-after: True
+changes: 
+  - bugfix: "Atmos canisters now stay connected after relabeling them"
