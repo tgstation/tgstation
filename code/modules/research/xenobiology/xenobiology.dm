@@ -156,8 +156,8 @@
 	qdel(src)
 
 /obj/item/slimepotion/sentience
-	name = "cheridan potion"
-	desc = "A miraculous chemical mix that cheridanizes living beings."
+	name = "intelligence potion"
+	desc = "A miraculous chemical mix that grants human like intelligence to living beings."
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "potpink"
 	origin_tech = "biotech=6"
