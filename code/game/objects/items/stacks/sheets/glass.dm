@@ -330,7 +330,9 @@
 
 
 /obj/item/weapon/shard/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/weapon/weldingtool))
+	if(istype(I, /obj/item/device/lightreplacer))
+		I.attackby(src, user)
+	else if(istype(I, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = I
 		if(WT.remove_fuel(0, user))
 			var/obj/item/stack/sheet/glass/NG = new (user.loc)
