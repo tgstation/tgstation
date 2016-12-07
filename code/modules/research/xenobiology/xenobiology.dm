@@ -193,7 +193,7 @@
 		SM.languages_understood |= HUMAN
 		SM.mind.enslave_mind_to_creator(user)
 		SM.sentience_act()
-		SM << "<span class='warning'>As you take the offered potion, the mixture of plasma and cold slime entrails reacts and causes your body to emit a electro-magnetic field that makes you immune to the inhibiting field that previously kept you sedate. All at once you know who and what you are! Self awareness if yours once again!</span>"
+		SM << "<span class='warning'>As you take the offered potion, the mixture of plasma and cold slime entrails reacts and causes your body to emit a electro-magnetic field that makes you immune to the inhibiting field which previously kept you sedate. All at once you know who and what you are! Self awareness is yours once again!</span>"
 		SM << "<span class='userdanger'>You are grateful to be aware once more and owe [user] a great debt. Serve [user], and assist [user.p_them()] in completing [user.p_their()] goals at any cost.</span>"
 		user << "<span class='notice'>[SM] accepts the potion and suddenly becomes attentive and aware. It worked!</span>"
 		qdel(src)
