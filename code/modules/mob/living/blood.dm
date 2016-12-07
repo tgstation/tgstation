@@ -162,24 +162,12 @@
 		blood_data["trace_chem"] = list2params(temp_chem)
 		if(mind)
 			blood_data["mind"] = mind
+		else if(last_mind)
+			blood_data["mind"] = last_mind
 		if(ckey)
 			blood_data["ckey"] = ckey
-
-		if(!getorgan(/obj/item/organ/brain))
-			if(linked_brain)
-				if(istype(linked_brain.loc, /obj/item/bodypart/head))
-					var/obj/item/bodypart/head/H = linked_brain.loc
-					if(H.brainmob)
-						if(H.brainmob.mind)
-							blood_data["mind"] = H.brainmob.mind
-						if(H.brainmob.ckey)
-							blood_data["ckey"] = H.brainmob.ckey
-				else if(linked_brain.brainmob)
-					if(linked_brain.brainmob.mind)
-						blood_data["mind"] = linked_brain.brainmob.mind
-					if(linked_brain.brainmob.ckey)
-						blood_data["ckey"] = linked_brain.brainmob.ckey
-
+		else if(last_mind)
+			blood_data["ckey"] = ckey(last_mind.key)
 
 		if(!suiciding)
 			blood_data["cloneable"] = 1

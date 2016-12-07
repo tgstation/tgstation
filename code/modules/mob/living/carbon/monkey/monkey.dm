@@ -45,10 +45,8 @@
 	internal_organs += new /obj/item/organ/appendix
 	internal_organs += new /obj/item/organ/lungs
 	internal_organs += new /obj/item/organ/heart
+	internal_organs += new /obj/item/organ/brain
 	internal_organs += new /obj/item/organ/tongue
-	var/obj/item/organ/brain/B = new /obj/item/organ/brain
-	internal_organs += B
-	linked_brain = B
 	..()
 
 /mob/living/carbon/monkey/movement_delay()
