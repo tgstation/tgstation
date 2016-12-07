@@ -217,17 +217,11 @@
 /obj/machinery/power/apc/update_icon()
 	if (!status_overlays)
 		status_overlays = 1
-		status_overlays_lock = new
-		status_overlays_charging = new
-		status_overlays_equipment = new
-		status_overlays_lighting = new
-		status_overlays_environ = new
-
-		status_overlays_lock.len = 2
-		status_overlays_charging.len = 3
-		status_overlays_equipment.len = 4
-		status_overlays_lighting.len = 4
-		status_overlays_environ.len = 4
+		status_overlays_lock = new(2)
+		status_overlays_charging = new(3)
+		status_overlays_equipment = new(4)
+		status_overlays_lighting = new(4)
+		status_overlays_environ = new(4)
 
 		status_overlays_lock[1] = image(icon, "apcox-0")    // 0=blue 1=red
 		status_overlays_lock[2] = image(icon, "apcox-1")
@@ -281,18 +275,20 @@
 
 	if(!(update_state & UPSTATE_ALLGOOD))
 		if(overlays.len)
-			overlays = 0
+			cut_overlays()
 
 	if(update & 2)
 		if(overlays.len)
-			overlays.len = 0
+			cut_overlays()
 		if(!(stat & (BROKEN|MAINT)) && update_state & UPSTATE_ALLGOOD)
-			add_overlay(status_overlays_lock[locked+1])
-			add_overlay(status_overlays_charging[charging+1])
+			var/list/O = list(
+				status_overlays_lock[locked+1],
+				status_overlays_charging[charging+1])
 			if(operating)
-				add_overlay(status_overlays_equipment[equipment+1])
-				add_overlay(status_overlays_lighting[lighting+1])
-				add_overlay(status_overlays_environ[environ+1])
+				O += status_overlays_equipment[equipment+1]
+				O += status_overlays_lighting[lighting+1]
+				O += status_overlays_environ[environ+1]
+			add_overlay(O)
 
 
 /obj/machinery/power/apc/proc/check_updates()
