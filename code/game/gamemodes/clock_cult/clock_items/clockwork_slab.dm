@@ -381,6 +381,18 @@
 	temp_data = temp_data.Join()
 	data["components"] = temp_data
 
+	switch(selected_scripture)
+		if(SCRIPTURE_DRIVER)
+			data["tier_info"] = "<font color=#B18B25><i>These scriptures are always unlocked.</i></font>"
+		if(SCRIPTURE_SCRIPT)
+			data["tier_info"] = "<font color=#B18B25><i>These scriptures require at least <b>[SCRIPT_SERVANT_REQ]</b> Servants and <b>[SCRIPT_CACHE_REQ]</b> Tinkerer's Cache.</i></font>"
+		if(SCRIPTURE_APPLICATION)
+			data["tier_info"] = "<font color=#B18B25><i>These scriptures require at least <b>[APPLICATION_SERVANT_REQ]</b> Servants, <b>[APPLICATION_CACHE_REQ]</b> Tinkerer's Caches, and <b>[APPLICATION_CV_REQ]CV</b>.</i></font>"
+		if(SCRIPTURE_REVENANT)
+			data["tier_info"] = "<font color=#B18B25><i>These scriptures require at least <b>[REVENANT_SERVANT_REQ]</b> Servants, <b>[REVENANT_CACHE_REQ]</b> Tinkerer's Caches, and <b>[REVENANT_CV_REQ]CV</b>.</i></font>"
+		if(SCRIPTURE_JUDGEMENT)
+			data["tier_info"] = "<font color=#B18B25><i>This scripture requires at least <b>[JUDGEMENT_SERVANT_REQ]</b> Servants, <b>[JUDGEMENT_CACHE_REQ]</b> Tinkerer's Caches, and <b>[JUDGEMENT_CV_REQ]CV</b>.<br>In addition, there may not be any active non-Servant AIs.</i></font>"
+
 	data["selected"] = selected_scripture
 
 	generate_all_scripture()
