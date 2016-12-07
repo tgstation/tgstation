@@ -427,12 +427,6 @@ var/global/list/ghost_others_options = list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 #define TRIGGER_GUARD_NONE 0
 #define TRIGGER_GUARD_NORMAL 1
 
-// Plant types
-#define PLANT_NORMAL 0
-#define PLANT_WEED 1
-#define PLANT_MUSHROOM 2
-#define PLANT_ALIEN 3
-
 // Maploader bounds indices
 #define MAP_MINX 1
 #define MAP_MINY 2

@@ -11,6 +11,7 @@
 	growing_icon = 'icons/obj/hydroponics/growing_vegetables.dmi'
 	icon_grow = "eggplant-grow"
 	icon_dead = "eggplant-dead"
+	genes = list(/datum/plant_gene/trait/repeated_harvest)
 	mutatelist = list(/obj/item/seeds/eggplant/eggy)
 	reagents_add = list("vitamin" = 0.04, "nutriment" = 0.1)
 
