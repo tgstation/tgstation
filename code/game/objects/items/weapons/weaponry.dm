@@ -556,12 +556,14 @@ var/highlander_claymores = 0
 	var/list/strong_against
 
 /obj/item/weapon/melee/flyswatter/New()
+	..()
 	strong_against = typecacheof(list(
 					/mob/living/simple_animal/hostile/poison/bees/,
 					/mob/living/simple_animal/butterfly,
 					/mob/living/simple_animal/cockroach,
 					/obj/item/queen_bee
 	))
+
 
 /obj/item/weapon/melee/flyswatter/afterattack(atom/target, mob/user, proximity_flag)
 	if(proximity_flag)

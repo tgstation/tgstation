@@ -351,7 +351,7 @@ Difficulty: Hard
 		J = get_step(previousturf, targetdir)
 		PoolOrNew(/obj/effect/overlay/temp/dir_setting/bloodsplatter, list(previousturf, get_dir(previousturf, J)))
 		playsound(previousturf,'sound/effects/splat.ogg', 100, 1, -1)
-		if(!J || !previousturf.CanAtmosPass(J))
+		if(!J || !previousturf.atmos_adjacent_turfs || !previousturf.atmos_adjacent_turfs[J])
 			break
 		new /obj/effect/decal/cleanable/blood/bubblegum(J)
 		previousturf = J

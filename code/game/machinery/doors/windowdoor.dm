@@ -12,6 +12,7 @@
 	visible = 0
 	flags = ON_BORDER
 	opacity = 0
+	CanAtmosPass = ATMOS_PASS_PROC
 	var/obj/item/weapon/electronics/airlock/electronics = null
 	var/reinf = 0
 	var/shards = 2
