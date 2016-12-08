@@ -312,10 +312,6 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 			if(INTENT_NEXT)
 				switch (a_intent)
 					if(INTENT_HELP)
-						a_intent = INTENT_DISARM
-					if(INTENT_DISARM)
-						a_intent = INTENT_GRAB
-					if(INTENT_GRAB)
 						a_intent = INTENT_HARM
 					if(INTENT_HARM)
 						a_intent = INTENT_HELP
