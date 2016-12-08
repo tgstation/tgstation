@@ -208,6 +208,9 @@
 	if(wet_time > MAXIMUM_WET_TIME)
 		wet_time = MAXIMUM_WET_TIME
 	if(wet == TURF_WET_ICE && air.temperature > T0C)
+		for(var/obj/O in contents)
+			if(O.is_frozen)
+				O.make_unfrozen()
 		MakeDry(TURF_WET_ICE)
 		MakeSlippery(TURF_WET_WATER)
 	if(wet != TURF_WET_PERMAFROST)
@@ -228,6 +231,8 @@
 				wet_time = max(0, wet_time-10)
 			if(T0C + 100 to INFINITY)
 				wet_time = 0
+	else if (GetTemperature() > BODYTEMP_COLD_DAMAGE_LIMIT)	//seems like a good place
+		MakeDry(TURF_WET_PERMAFROST)
 	else
 		wet_time = max(0, wet_time-5)
 	if(wet && wet < TURF_WET_ICE && !wet_time)
