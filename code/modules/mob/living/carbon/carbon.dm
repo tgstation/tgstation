@@ -768,5 +768,5 @@
 	. = ..()
 	. += "---"
 	.["Make AI"] = "?_src_=vars;makeai=\ref[src]"
-	.["Modify bodypart"] = "<option value='?_src_=vars;editbodypart=\ref[src]'>Modify bodypart</option>"
+	.["Modify bodypart"] = "?_src_=vars;editbodypart=\ref[src]"
 	.["Modify organs"] = "?_src_=vars;editorgans=\ref[src]"
