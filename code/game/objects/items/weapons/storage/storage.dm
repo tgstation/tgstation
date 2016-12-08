@@ -367,10 +367,10 @@
 	W.plane = initial(W.plane)
 	W.loc = new_location
 
-	if(usr)
-		orient2hud(usr)
-		if(usr.s_active)
-			usr.s_active.show_to(usr)
+	for(var/mob/M in can_see_contents())
+		orient2hud(M)
+		show_to(M)
+
 	if(W.maptext)
 		W.maptext = ""
 	W.on_exit_storage(src)
