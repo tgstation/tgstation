@@ -143,8 +143,8 @@
 	clockwork_generals_invoked["nezbere"] = world.time + CLOCKWORK_GENERAL_COOLDOWN
 	playsound(invoker, 'sound/magic/clockwork/invoke_general.ogg', 50, 0)
 	for(var/obj/structure/destructible/clockwork/ocular_warden/W in all_clockwork_objects) //Ocular wardens have increased damage and radius
-		W.damage_per_tick *= 1.5
-		W.sight_range *= 2
+		W.damage_per_tick = 5
+		W.sight_range = 5
 	for(var/obj/item/clockwork/clockwork_proselytizer/P in all_clockwork_objects) //Proselytizers no longer require alloy
 		P.uses_alloy = FALSE
 	for(var/obj/structure/destructible/clockwork/powered/M in all_clockwork_objects) //Powered clockwork structures no longer need power
@@ -155,8 +155,10 @@
 			D.production_cooldown *= 0.5
 	spawn(600)
 		for(var/obj/structure/destructible/clockwork/ocular_warden/W in all_clockwork_objects)
-			W.damage_per_tick = initial(W.damage_per_tick)
-			W.sight_range = initial(W.sight_range)
+			if(W.damage_per_tick == 5)
+				W.damage_per_tick = initial(W.damage_per_tick)
+			if(W.sight_range == 5)
+				W.sight_range = initial(W.sight_range)
 		for(var/obj/item/clockwork/clockwork_proselytizer/P in all_clockwork_objects)
 			P.uses_alloy = initial(P.uses_alloy)
 		for(var/obj/structure/destructible/clockwork/powered/M in all_clockwork_objects)
