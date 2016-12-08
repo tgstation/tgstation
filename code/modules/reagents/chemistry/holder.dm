@@ -73,8 +73,7 @@ var/const/INJECT = 5 //injection
 
 
 /datum/reagents/proc/remove_any(amount = 1)
-	LAZYINITLIST(reagent_list)
-
+	if(!reagent_list) return
 	var/list/cached_reagents = reagent_list
 	var/total_transfered = 0
 	var/current_list_element = 1
@@ -98,11 +97,10 @@ var/const/INJECT = 5 //injection
 		update_total()
 
 	handle_reactions()
-	UNSETEMPTY(reagent_list)
 	return total_transfered
 
 /datum/reagents/proc/remove_all(amount = 1)
-	LAZYINITLIST(reagent_list)
+	if(!reagent_list) return
 	var/list/cached_reagents = reagent_list
 	if(total_volume > 0)
 		var/part = amount / total_volume
@@ -112,12 +110,10 @@ var/const/INJECT = 5 //injection
 
 		update_total()
 		handle_reactions()
-		UNSETEMPTY(reagent_list)
 		return amount
-	UNSETEMPTY(reagent_list)
 
 /datum/reagents/proc/get_master_reagent_name()
-	LAZYINITLIST(reagent_list)
+	if(!reagent_list) return
 	var/list/cached_reagents = reagent_list
 	var/name
 	var/max_volume = 0
@@ -126,11 +122,10 @@ var/const/INJECT = 5 //injection
 		if(R.volume > max_volume)
 			max_volume = R.volume
 			name = R.name
-	UNSETEMPTY(reagent_list)
 	return name
 
 /datum/reagents/proc/get_master_reagent_id()
-	LAZYINITLIST(reagent_list)
+	if(!reagent_list) return
 	var/list/cached_reagents = reagent_list
 	var/id
 	var/max_volume = 0
@@ -139,17 +134,14 @@ var/const/INJECT = 5 //injection
 		if(R.volume > max_volume)
 			max_volume = R.volume
 			id = R.id
-	UNSETEMPTY(reagent_list)
 	return id
 
 /datum/reagents/proc/trans_to(obj/target, amount=1, multiplier=1, preserve_data=1, no_react = 0)//if preserve_data=0, the reagents data will be lost. Usefull if you use data for some strange stuff and don't want it to be transferred.
-	LAZYINITLIST(reagent_list)
+	if(!reagent_list) return
 	var/list/cached_reagents = reagent_list
 	if(!target || !total_volume)
-		UNSETEMPTY(reagent_list)
 		return
 	if(amount < 0)
-		UNSETEMPTY(reagent_list)
 		return
 
 	var/datum/reagents/R
@@ -176,20 +168,16 @@ var/const/INJECT = 5 //injection
 	if(!no_react)
 		R.handle_reactions()
 		src.handle_reactions()
-	UNSETEMPTY(reagent_list)
 	return amount
 
 /datum/reagents/proc/copy_to(obj/target, amount=1, multiplier=1, preserve_data=1)
-	LAZYINITLIST(reagent_list)
+	if(!reagent_list) return
 	var/list/cached_reagents = reagent_list
 	if(!target)
-		UNSETEMPTY(reagent_list)
 		return
 	if(!target.reagents || src.total_volume<=0)
-		UNSETEMPTY(reagent_list)
 		return
 	if(amount < 0)
-		UNSETEMPTY(reagent_list)
 		return
 	var/datum/reagents/R = target.reagents
 	amount = min(min(amount, total_volume), R.maximum_volume-R.total_volume)
@@ -206,20 +194,16 @@ var/const/INJECT = 5 //injection
 	R.update_total()
 	R.handle_reactions()
 	src.handle_reactions()
-	UNSETEMPTY(reagent_list)
 	return amount
 
 /datum/reagents/proc/trans_id_to(obj/target, reagent, amount=1, preserve_data=1)//Not sure why this proc didn't exist before. It does now! /N
-	LAZYINITLIST(reagent_list)
+	if(!reagent_list) return
 	var/list/cached_reagents = reagent_list
 	if (!target)
-		UNSETEMPTY(reagent_list)
 		return
 	if (!target.reagents || src.total_volume<=0 || !src.get_reagent_amount(reagent))
-		UNSETEMPTY(reagent_list)
 		return
 	if(amount < 0)
-		UNSETEMPTY(reagent_list)
 		return
 
 	var/datum/reagents/R = target.reagents
@@ -239,7 +223,6 @@ var/const/INJECT = 5 //injection
 	src.update_total()
 	R.update_total()
 	R.handle_reactions()
-	UNSETEMPTY(reagent_list)
 	return amount
 
 /datum/reagents/proc/metabolize(mob/living/carbon/C, can_overdose = 0)
@@ -302,9 +285,8 @@ var/const/INJECT = 5 //injection
 		C.update_canmove()
 		C.update_stamina()
 	update_total()
-	UNSETEMPTY(reagent_list)
-	UNSETEMPTY(addiction_list)
 /datum/reagents/process()
+	if(!reagent_list) return
 	var/list/cached_reagents = reagent_list
 	if(flags & REAGENT_NOREACT)
 		STOP_PROCESSING(SSobj, src)
@@ -313,6 +295,7 @@ var/const/INJECT = 5 //injection
 	for(var/reagent in cached_reagents)
 		var/datum/reagent/R = reagent
 		R.on_tick()
+	UNSETEMPTY(reagent_list)
 
 /datum/reagents/proc/set_reacting(react = TRUE)
 	if(react)
@@ -325,6 +308,7 @@ var/const/INJECT = 5 //injection
 		flags |= REAGENT_NOREACT
 
 /datum/reagents/proc/conditional_update_move(atom/A, Running = 0)
+	if(!reagent_list) return
 	var/list/cached_reagents = reagent_list
 	for(var/reagent in cached_reagents)
 		var/datum/reagent/R = reagent
@@ -332,6 +316,7 @@ var/const/INJECT = 5 //injection
 	update_total()
 
 /datum/reagents/proc/conditional_update(atom/A)
+	if(!reagent_list) return
 	var/list/cached_reagents = reagent_list
 	for(var/reagent in cached_reagents)
 		var/datum/reagent/R = reagent
@@ -339,7 +324,7 @@ var/const/INJECT = 5 //injection
 	update_total()
 
 /datum/reagents/proc/handle_reactions()
-	LAZYINITLIST(reagent_list)
+	if(!reagent_list) return
 	var/list/cached_reagents = reagent_list
 	var/list/cached_reactions = chemical_reactions_list
 	var/datum/cached_my_atom = my_atom
@@ -389,7 +374,6 @@ var/const/INJECT = 5 //injection
 							matching_container = 1
 					if (isliving(cached_my_atom)) //Makes it so certain chemical reactions don't occur in mobs
 						if (C.mob_react)
-							UNSETEMPTY(reagent_list)
 							return
 					if(!C.required_other)
 						matching_other = 1
@@ -441,18 +425,16 @@ var/const/INJECT = 5 //injection
 
 	while(reaction_occurred)
 	update_total()
-	UNSETEMPTY(reagent_list)
 	return 0
 
 /datum/reagents/proc/isolate_reagent(reagent)
-	LAZYINITLIST(reagent_list)
+	if(!reagent_list) return
 	var/list/cached_reagents = reagent_list
 	for(var/_reagent in cached_reagents)
 		var/datum/reagent/R = _reagent
 		if(R.id != reagent)
 			del_reagent(R.id)
 			update_total()
-	UNSETEMPTY(reagent_list)
 
 /datum/reagents/proc/del_reagent(reagent)
 	LAZYINITLIST(reagent_list)
@@ -496,7 +478,7 @@ var/const/INJECT = 5 //injection
 			M.status_flags &= ~GOTTAGOREALLYFAST
 
 /datum/reagents/proc/update_total()
-	LAZYINITLIST(reagent_list)
+	if(!reagent_list) return
 	var/list/cached_reagents = reagent_list
 	total_volume = 0
 	for(var/reagent in cached_reagents)
@@ -505,20 +487,18 @@ var/const/INJECT = 5 //injection
 			del_reagent(R.id)
 		else
 			total_volume += R.volume
-	UNSETEMPTY(reagent_list)
 	return 0
 
 /datum/reagents/proc/clear_reagents()
-	LAZYINITLIST(reagent_list)
+	if(!reagent_list) return
 	var/list/cached_reagents = reagent_list
 	for(var/reagent in cached_reagents)
 		var/datum/reagent/R = reagent
 		del_reagent(R.id)
-	UNSETEMPTY(reagent_list)
 	return 0
 
 /datum/reagents/proc/reaction(atom/A, method = TOUCH, volume_modifier = 1, show_message = 1)
-	LAZYINITLIST(reagent_list)
+	if(!reagent_list) return
 	var/react_type
 	if(isliving(A))
 		react_type = "LIVING"
@@ -542,7 +522,6 @@ var/const/INJECT = 5 //injection
 				R.reaction_turf(A, R.volume * volume_modifier, show_message)
 			if("OBJ")
 				R.reaction_obj(A, R.volume * volume_modifier, show_message)
-	UNSETEMPTY(reagent_list)
 
 /datum/reagents/proc/add_reagent(reagent, amount, list/data=null, reagtemp = 300, no_react = 0)
 	LAZYINITLIST(reagent_list)
@@ -569,7 +548,6 @@ var/const/INJECT = 5 //injection
 			R.on_merge(data)
 			if(!no_react)
 				handle_reactions()
-			UNSETEMPTY(reagent_list)
 			return TRUE
 
 	var/datum/reagent/D = chemical_reagents_list[reagent]
@@ -588,12 +566,10 @@ var/const/INJECT = 5 //injection
 			my_atom.on_reagent_change()
 		if(!no_react)
 			handle_reactions()
-		UNSETEMPTY(reagent_list)
 		return TRUE
 
 	else
 		WARNING("[my_atom] attempted to add a reagent called ' [reagent] ' which doesn't exist. ([usr])")
-	UNSETEMPTY(reagent_list)
 	return FALSE
 
 /datum/reagents/proc/add_reagent_list(list/list_reagents, list/data=null) // Like add_reagent but you can enter a list. Format it like this: list("toxin" = 10, "beer" = 15)
@@ -601,22 +577,18 @@ var/const/INJECT = 5 //injection
 	for(var/r_id in list_reagents)
 		var/amt = list_reagents[r_id]
 		add_reagent(r_id, amt, data)
-	UNSETEMPTY(reagent_list)
 
 /datum/reagents/proc/remove_reagent(reagent, amount, safety)//Added a safety check for the trans_id_to
 	LAZYINITLIST(reagent_list)
 	if(isnull(amount))
 		amount = 0
 		throw EXCEPTION("null amount passed to reagent code")
-		UNSETEMPTY(reagent_list)
 		return FALSE
 
 	if(!isnum(amount))
-		UNSETEMPTY(reagent_list)
 		return FALSE
 
 	if(amount < 0)
-		UNSETEMPTY(reagent_list)
 		return FALSE
 
 	var/list/cached_reagents = reagent_list
@@ -635,53 +607,44 @@ var/const/INJECT = 5 //injection
 				my_atom.on_reagent_change()
 			UNSETEMPTY(reagent_list)
 			return TRUE
-	UNSETEMPTY(reagent_list)
 	return FALSE
 
 /datum/reagents/proc/has_reagent(reagent, amount = -1)
-	LAZYINITLIST(reagent_list)
+	if(!reagent_list) return
 	var/list/cached_reagents = reagent_list
 	for(var/_reagent in cached_reagents)
 		var/datum/reagent/R = _reagent
 		if (R.id == reagent)
 			if(!amount)
-				UNSETEMPTY(reagent_list)
 				return R
 			else
 				if(R.volume >= amount)
-					UNSETEMPTY(reagent_list)
 					return R
 				else
-					UNSETEMPTY(reagent_list)
 					return 0
-	UNSETEMPTY(reagent_list)
 	return 0
 
 /datum/reagents/proc/get_reagent_amount(reagent)
-	LAZYINITLIST(reagent_list)
+	if(!reagent_list) return
 	var/list/cached_reagents = reagent_list
 	for(var/_reagent in cached_reagents)
 		var/datum/reagent/R = _reagent
 		if (R.id == reagent)
-			UNSETEMPTY(reagent_list)
 			return R.volume
-	UNSETEMPTY(reagent_list)
 	return 0
 
 /datum/reagents/proc/get_reagents()
-	LAZYINITLIST(reagent_list)
+	if(!reagent_list) return
 	var/list/names = list()
 	var/list/cached_reagents = reagent_list
 	for(var/reagent in cached_reagents)
 		var/datum/reagent/R = reagent
 		names += R.name
-	UNSETEMPTY(reagent_list)
 	return jointext(names, ",")
 
 /datum/reagents/proc/remove_all_type(reagent_type, amount, strict = 0, safety = 1) // Removes all reagent of X type. @strict set to 1 determines whether the childs of the type are included.
-	LAZYINITLIST(reagent_list)
+	if(!reagent_list) return
 	if(!isnum(amount))
-		UNSETEMPTY(reagent_list)
 		return 1
 	var/list/cached_reagents = reagent_list
 	var/has_removed_reagent = 0
@@ -700,30 +663,26 @@ var/const/INJECT = 5 //injection
 		if(matches)
 			// Have our other proc handle removement
 			has_removed_reagent = remove_reagent(R.id, amount, safety)
-	UNSETEMPTY(reagent_list)
 	return has_removed_reagent
 
 //two helper functions to preserve data across reactions (needed for xenoarch)
 /datum/reagents/proc/get_data(reagent_id)
-	LAZYINITLIST(reagent_list)
+	if(!reagent_list) return
 	var/list/cached_reagents = reagent_list
 	for(var/reagent in cached_reagents)
 		var/datum/reagent/R = reagent
 		if(R.id == reagent_id)
 			//world << "proffering a data-carrying reagent ([reagent_id])"
-			UNSETEMPTY(reagent_list)
 			return R.data
-	UNSETEMPTY(reagent_list)
 
 /datum/reagents/proc/set_data(reagent_id, new_data)
-	LAZYINITLIST(reagent_list)
+	if(!reagent_list) return
 	var/list/cached_reagents = reagent_list
 	for(var/reagent in cached_reagents)
 		var/datum/reagent/R = reagent
 		if(R.id == reagent_id)
 			//world << "reagent data set ([reagent_id])"
 			R.data = new_data
-	UNSETEMPTY(reagent_list)
 
 /datum/reagents/proc/copy_data(datum/reagent/current_reagent)
 	if(!current_reagent || !current_reagent.data)

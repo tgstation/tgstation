@@ -50,7 +50,7 @@ var/list/gaslist_cache = null
 	last_share = 0
 	fuel_burnt = 0
 	create_reagents(1000)
-
+	reagents.set_reacting(FALSE) // no
 //listmos procs
 
 	//assert_gas(gas_id) - used to guarantee that the gas list for this id exists.
