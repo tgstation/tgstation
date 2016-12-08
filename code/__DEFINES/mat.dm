@@ -1,0 +1,11 @@
+// Material defines
+#define MAT_METAL    "$metal"
+#define MAT_GLASS    "$glass"
+#define MAT_SILVER   "$silver"
+#define MAT_GOLD     "$gold"
+#define MAT_DIAMOND  "$diamond"
+#define MAT_URANIUM  "$uranium"
+#define MAT_PLASMA   "$plasma"
+#define MAT_BANANIUM "$bananium"
+#define MAT_TITANIUM "$titanium"
+#define MAT_BIOMASS  "$biomass"
