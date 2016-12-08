@@ -26,6 +26,7 @@ var/const/GALOSHES_DONT_HELP = 4
 var/const/SLIDE_ICE = 8
 
 /mob/living/carbon/slip(s_amount, w_amount, obj/O, lube)
+	return
 	if(movement_type & FLYING)
 		return 0
 	if(!(lube&SLIDE_ICE))
