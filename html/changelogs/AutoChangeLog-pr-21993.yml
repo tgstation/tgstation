@@ -1,0 +1,6 @@
+author: "Mervill"
+delete-after: True
+changes: 
+  - rscadd: "The light replacer can now create bulbs from glass shards"
+  - rscadd: "Click a light replacer while holding a glass shard to add the shard to the replacer"
+  - rscadd: "Click a glass shard while holding a light replacer to consume the shard"
