@@ -19,6 +19,7 @@
 		user.put_in_hands(power_supply)
 		power_supply = I
 		I.forceMove(src)
+		update_icon()
 
 /obj/item/weapon/gun_attachment/frame/energy
 	hacky_as_fuck = /obj/item/weapon/gun/energy/frame
