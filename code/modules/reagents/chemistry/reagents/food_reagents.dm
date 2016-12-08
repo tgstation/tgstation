@@ -101,6 +101,7 @@
 	id = "capsaicin"
 	description = "This is what makes chilis hot."
 	color = "#B31008" // rgb: 179, 16, 8
+	metabolization_type = METABOLISM_CRYO
 
 /datum/reagent/consumable/capsaicin/on_mob_life(mob/living/M)
 	switch(current_cycle)
@@ -129,6 +130,7 @@
 	id = "frostoil"
 	description = "A special oil that noticably chills the body. Extracted from Icepeppers and slimes."
 	color = "#8BA6E9" // rgb: 139, 166, 233
+	metabolization_type = METABOLISM_CRYO
 
 /datum/reagent/consumable/frostoil/on_mob_life(mob/living/M)
 	switch(current_cycle)
@@ -281,6 +283,7 @@
 	description = "Made with love! And coco beans."
 	nutriment_factor = 3 * REAGENTS_METABOLISM
 	color = "#403010" // rgb: 64, 48, 16
+	metabolization_type = METABOLISM_CRYO
 
 /datum/reagent/consumable/hot_coco/on_mob_life(mob/living/M)
 	if (M.bodytemperature < 310)//310 is the normal bodytemp. 310.055
@@ -367,6 +370,7 @@
 	description = "The noodles are boiled, the flavors are artificial, just like being back in school."
 	nutriment_factor = 5 * REAGENTS_METABOLISM
 	color = "#302000" // rgb: 48, 32, 0
+	metabolization_type = METABOLISM_CRYO
 
 /datum/reagent/consumable/hot_ramen/on_mob_life(mob/living/M)
 	if (M.bodytemperature < 310)//310 is the normal bodytemp. 310.055
@@ -379,6 +383,7 @@
 	description = "The noodles are boiled, the flavors are artificial, just like being back in school."
 	nutriment_factor = 5 * REAGENTS_METABOLISM
 	color = "#302000" // rgb: 48, 32, 0
+	metabolization_type = METABOLISM_CRYO
 
 /datum/reagent/consumable/hell_ramen/on_mob_life(mob/living/M)
 	M.bodytemperature += 10 * TEMPERATURE_DAMAGE_COEFFICIENT

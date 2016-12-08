@@ -20,6 +20,7 @@
 	var/color = "#000000" // rgb: 0, 0, 0
 	var/can_synth = 1
 	var/metabolization_rate = REAGENTS_METABOLISM //how fast the reagent is metabolized by the mob
+	var/metabolization_type = METABOLISM_NORMAL
 	var/overrides_metab = 0
 	var/overdose_threshold = 0
 	var/addiction_threshold = 0

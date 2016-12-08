@@ -368,6 +368,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	description = "This thing is ON FIRE! CALL THE DAMN SHUTTLE!"
 	color = "#664300" // rgb: 102, 67, 0
 	boozepwr = 25
+	metabolization_type = METABOLISM_CRYO
 
 /datum/reagent/consumable/ethanol/toxins_special/on_mob_life(var/mob/living/M as mob)
 	if (M.bodytemperature < 330)
@@ -473,6 +474,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	description = "The ultimate refreshment. Not what it sounds like."
 	color = "#664300" // rgb: 102, 67, 0
 	boozepwr = 35
+	metabolization_type = METABOLISM_CRYO
 
 /datum/reagent/consumable/ethanol/antifreeze/on_mob_life(mob/living/M)
 	if (M.bodytemperature < 330)
@@ -549,6 +551,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	description = "A spicy Vodka! Might be a little hot for the little guys!"
 	color = "#664300" // rgb: 102, 67, 0
 	boozepwr = 70
+	metabolization_type = METABOLISM_CRYO
 
 /datum/reagent/consumable/ethanol/sbiten/on_mob_life(mob/living/M)
 	if (M.bodytemperature < 360)
@@ -576,6 +579,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	description = "A beer which is so cold the air around it freezes."
 	color = "#664300" // rgb: 102, 67, 0
 	boozepwr = 15
+	metabolization_type = METABOLISM_CRYO
 
 /datum/reagent/consumable/ethanol/iced_beer/on_mob_life(mob/living/M)
 	if(M.bodytemperature > 270)

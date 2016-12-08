@@ -8,6 +8,7 @@
 /datum/reagent/medicine
 	name = "Medicine"
 	id = "medicine"
+	metabolization_type = METABOLISM_CRYO
 
 /datum/reagent/medicine/on_mob_life(mob/living/M)
 	current_cycle++
