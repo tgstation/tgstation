@@ -321,16 +321,28 @@
 	var/amount_random_reagents = rand(lower, upper)
 	for(var/i in 1 to amount_random_reagents)
 		var/random_amount = rand(4, 15) * 0.01 // this must be multiplied by 0.01, otherwise, it will not properly associate
-		genes += new /datum/plant_gene/reagent(get_random_reagent_id(), random_amount)
+		var/datum/plant_gene/reagent/R = new(get_random_reagent_id(), random_amount)
+		if(R.can_add(src))
+			genes += R
+		else
+			qdel(R)
 	reagents_from_genes()
 
 /obj/item/seeds/proc/add_random_traits(lower = 0, upper = 2)
 	var/amount_random_traits = rand(lower, upper)
 	for(var/i in 1 to amount_random_traits)
-		var/datum/plant_gene/trait/trait = pick((subtypesof(/datum/plant_gene/trait)-typesof(/datum/plant_gene/trait/plant_type)))
-		genes += new trait
+		var/random_trait = pick((subtypesof(/datum/plant_gene/trait)-typesof(/datum/plant_gene/trait/plant_type)))
+		var/datum/plant_gene/trait/T = new random_trait
+		if(T.can_add(src))
+			genes += T
+		else
+			qdel(T)
 
 /obj/item/seeds/proc/add_random_plant_type(normal_plant_chance = 75)
 	if(prob(normal_plant_chance))
-		var/datum/plant_gene/trait/plant_type/plant_type = pick(subtypesof(/datum/plant_gene/trait/plant_type))
-		genes += new plant_type
+		var/random_plant_type = pick(subtypesof(/datum/plant_gene/trait/plant_type))
+		var/datum/plant_gene/trait/plant_type/P = new random_plant_type
+		if(P.can_add(src))
+			genes += P
+		else
+			qdel(P)
