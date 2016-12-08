@@ -1,0 +1,4 @@
+author: "PKPenguin321"
+delete-after: True
+changes: 
+  - tweak: "Swarmer beacons now have 750 health, down from 3000."

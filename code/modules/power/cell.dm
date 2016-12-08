@@ -17,6 +17,7 @@
 	var/chargerate = 100 //how much power is given every tick in a recharger
 	var/self_recharge = 0 //does it self recharge, over time, or not?
 	var/ratingdesc = TRUE
+	var/grown_battery = FALSE // If it's a grown that acts as a battery, add a wire overlay to it.
 
 /obj/item/weapon/stock_parts/cell/New()
 	..()
@@ -47,6 +48,8 @@
 
 /obj/item/weapon/stock_parts/cell/proc/updateicon()
 	cut_overlays()
+	if(grown_battery)
+		add_overlay(image('icons/obj/power.dmi', "grown_wires"))
 	if(charge < 0.01)
 		return
 	else if(charge/maxcharge >=0.995)
@@ -282,13 +285,14 @@
 /obj/item/weapon/stock_parts/cell/potato
 	name = "potato battery"
 	desc = "A rechargable starch based power cell."
-	icon = 'icons/obj/power.dmi' //'icons/obj/hydroponics/harvest.dmi'
-	icon_state = "potato_cell" //"potato_battery"
+	icon = 'icons/obj/hydroponics/harvest.dmi'
+	icon_state = "potato"
 	origin_tech = "powerstorage=1;biotech=1"
 	charge = 100
 	maxcharge = 300
 	materials = list()
 	rating = 1
+	grown_battery = TRUE //it has the overlays for wires
 
 /obj/item/weapon/stock_parts/cell/high/slime
 	name = "charged slime core"
