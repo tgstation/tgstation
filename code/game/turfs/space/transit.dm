@@ -62,10 +62,12 @@
 	return
 
 /turf/open/space/transit/New()
+	..()
 	update_icon()
 	for(var/atom/movable/AM in src)
 		throw_atom(AM)
-	..()
+
+
 
 /turf/open/space/transit/proc/update_icon()
 	var/p = 9
