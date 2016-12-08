@@ -4,7 +4,6 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 	name = "item"
 	icon = 'icons/obj/items.dmi'
 	var/item_state = null
-	var/lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
 	var/righthand_file = 'icons/mob/inhands/items_righthand.dmi'
 
 	//Dimensions of the icon file used when this item is worn, eg: hats.dmi
