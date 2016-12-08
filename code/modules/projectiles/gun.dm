@@ -1,6 +1,7 @@
 #define PROJECTILE "projectile"
 #define ENERGY "energy"
 #define BOTHTYPES "both"
+#define MAX_ATTACHMENTS 6
 
 /obj/item/weapon/gun
 	name = "gun"
@@ -64,8 +65,7 @@
 	var/datum/action/toggle_scope_zoom/azoom
 
 	// Guncrafting
-	var/customizable = FALSE
-	var/customizable_type = PROJECTILE
+	var/customizable_type = null
 	var/list/attachments = list()
 	var/obj/item/weapon/gun_attachment/barrel/barrel = null
 	var/obj/item/weapon/gun_attachment/base/base = null
@@ -80,7 +80,7 @@
 		verbs += /obj/item/weapon/gun/proc/toggle_gunlight
 		new /datum/action/item_action/toggle_gunlight(src)
 	build_zooming()
-	if(customizable)
+	if(customizable_type)
 		START_PROCESSING(SSobj, src)
 
 
@@ -102,9 +102,14 @@
 		user << "It doesn't have a firing pin installed, and won't fire."
 	if(unique_reskin && !current_skin)
 		user << "<span class='notice'>Alt-click it to reskin it.</span>"
+	if(customizable_type)
+		if(attachments.len)
+			user << "It has the following attachments:"
+			for(var/A in attachments)
+				user << "[A]"
 
 /obj/item/weapon/gun/process()
-	if(customizable)
+	if(customizable_type)
 		for(var/obj/item/weapon/gun_attachment/A in attachments)
 			A.on_tick(src)
 
@@ -143,7 +148,7 @@
 
 
 /obj/item/weapon/gun/afterattack(atom/target, mob/living/user, flag, params)
-	if(customizable)
+	if(customizable_type)
 		if(!barrel || !base || !handle)
 			return // not fully constructed yet
 
@@ -237,7 +242,7 @@
 	if(spread)
 		randomized_gun_spread =	rand(0,spread)
 	var/randomized_bonus_spread = rand(0, bonus_spread)
-	if(customizable)
+	if(customizable_type)
 		for(var/obj/item/weapon/gun_attachment/A in attachments)
 			if(chambered && chambered.BB)
 				A.on_fire(src, chambered.BB)
@@ -308,7 +313,7 @@
 
 /obj/item/weapon/gun/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/screwdriver))
-		if(customizable)
+		if(customizable_type)
 			for(var/obj/item/weapon/gun_attachment/A in attachments)
 				user << "<span class='notice'>You unscrew [A] from [src].</span>"
 				A.on_remove(src)
@@ -317,8 +322,8 @@
 
 	if(istype(I, /obj/item/weapon/gun_attachment))
 		var/obj/item/weapon/gun_attachment/AT = I
-		if(customizable)
-			if(attachments.len >= 6)
+		if(customizable_type)
+			if(attachments.len >= MAX_ATTACHMENTS)
 				user << "[src] already has too many attachments!"
 				return
 			for(var/obj/item/weapon/gun_attachment/A in attachments)

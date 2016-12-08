@@ -11,7 +11,6 @@
 	..()
 	bullet.range -= 2
 	bullet.damage += 5
-	return
 
 /obj/item/weapon/gun_attachment/bullet/polonium
 	name = "Polonium Rounds"
@@ -20,7 +19,6 @@
 	..()
 	bullet.irradiate += 10
 	bullet.damage -= 5
-	return
 
 /obj/item/weapon/gun_attachment/bullet/ap
 	name = "Armor Piercing Bullets"
@@ -29,4 +27,3 @@
 	..()
 	bullet.armour_penetration += 10
 	bullet.damage -= 3
-	return

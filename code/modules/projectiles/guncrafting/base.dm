@@ -20,7 +20,6 @@
 				energy_ref = new energy_casing
 				E.ammo_type += energy_ref
 			E.recharge_newshot()
-	return
 
 /obj/item/weapon/gun_attachment/base/on_remove(var/obj/item/weapon/gun/owner)
 	..()
@@ -33,4 +32,3 @@
 			E.ammo_type = list()
 			E.power_supply = new(E)
 	owner.base = null
-	return

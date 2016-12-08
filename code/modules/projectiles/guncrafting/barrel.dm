@@ -1,6 +1,6 @@
 /obj/item/weapon/gun_attachment/barrel
 	name = "barrel"
-	desc = "sfdahgfhgasfhgiahjfhajsdjkJA"
+	desc = "Lock, stock, and two smoking barrels."
 	var/range = 7
 	var/weapon_weight = WEAPON_LIGHT
 	var/gun_size = 1
@@ -12,7 +12,6 @@
 	owner.weapon_weight = weapon_weight
 	owner.barrel = src
 	owner.suppressed = silenced
-	return
 
 /obj/item/weapon/gun_attachment/barrel/on_remove(var/obj/item/weapon/gun/owner)
 	..()
@@ -20,13 +19,10 @@
 	owner.weapon_weight = initial(owner.weapon_weight)
 	owner.suppressed = initial(owner.suppressed)
 	owner.barrel = null
-	return
 
 /obj/item/weapon/gun_attachment/barrel/on_fire(var/obj/item/weapon/gun/owner, var/obj/item/projectile/bullet)
 	..()
 	bullet.range = range
-	return
 
 /obj/item/weapon/gun_attachment/barrel/on_tick(var/obj/item/weapon/gun/owner)
 	..()
-	return

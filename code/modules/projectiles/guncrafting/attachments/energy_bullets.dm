@@ -11,7 +11,6 @@
 	..()
 	bullet.range -= 3
 	bullet.damage += 10
-	return
 
 
 /obj/item/weapon/gun_attachment/energy_bullet/stunner
@@ -28,7 +27,6 @@
 		bullet.damage -= 5
 	else
 		bullet.damage = 0
-	return
 
 /obj/item/weapon/gun_attachment/energy_bullet/disorienter
 	name = "Energy Disorienter"
@@ -41,4 +39,3 @@
 		bullet.damage -= 5
 	else
 		bullet.damage = 0
-	return

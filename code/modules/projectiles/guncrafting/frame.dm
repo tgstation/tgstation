@@ -1,12 +1,25 @@
 /obj/item/weapon/gun/energy/frame
 	name = "energy gun frame"
 	desc = "A frame for constructing an Energy Gun."
-	customizable = TRUE
 	customizable_type = ENERGY
 	icon = 'icons/obj/guncrafting/main.dmi'
 	icon_state = "frame_energy"
 	charge_sections = 2
 	ammo_type = list()
+
+/obj/item/weapon/gun/energy/frame/testing
+	pin = /obj/item/device/firing_pin/test_range
+
+
+/obj/item/weapon/gun/energy/frame/attackby(obj/item/I, mob/user, params)
+	..()
+	if(istype(I, /obj/item/weapon/stock_parts/cell))
+		user << "You swap the battery in [src] for [I]."
+		user.drop_item()
+		user.put_in_hands(power_supply)
+		power_supply = I
+		I.forceMove(src)
+
 /obj/item/weapon/gun_attachment/frame/energy
 	hacky_as_fuck = /obj/item/weapon/gun/energy/frame
 
@@ -14,10 +27,12 @@
 /obj/item/weapon/gun/ballistic/frame
 	name = "projectile gun frame"
 	desc = "A frame for constructing an Projectile Gun."
-	customizable = TRUE
 	customizable_type = PROJECTILE
 	icon = 'icons/obj/guncrafting/main.dmi'
 	icon_state = "frame_projectile"
+
+/obj/item/weapon/gun/ballistic/frame/testing
+	pin = /obj/item/device/firing_pin/test_range
 
 /obj/item/weapon/gun_attachment/frame/ballistic
 	hacky_as_fuck = /obj/item/weapon/gun/ballistic/frame
@@ -30,7 +45,6 @@
 	..()
 	new hacky_as_fuck(get_turf(src))
 	qdel(src)
-	return
 
 
 // PRE MADE GUNS

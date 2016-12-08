@@ -6,7 +6,6 @@
 	owner.zoomable = TRUE
 	owner.zoom_amt = range
 	owner.build_zooming()
-	return
 
 /obj/item/weapon/gun_attachment/scope/on_remove(var/obj/item/weapon/gun/owner)
 	..()
@@ -14,7 +13,6 @@
 	owner.zoom_amt = initial(owner.zoom_amt)
 	qdel(owner.azoom)
 	owner.azoom = null
-	return
 
 /obj/item/weapon/gun_attachment/scope/reflex
 	name = "Reflex Sight"

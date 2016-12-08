@@ -188,3 +188,14 @@
 /obj/item/projectile/energy/tesla_revolver/Destroy()
 	qdel(chain)
 	return ..()
+
+
+/obj/item/projectile/energy/bee
+	name = "bee"
+	icon = 'icons/mob/bees.dmi'
+	icon_state = "queen_item"
+	nodamage = 1
+
+/obj/item/projectile/energy/bee/on_hit(atom/target, blocked = 0)
+	. = ..()
+	new /mob/living/simple_animal/hostile/poison/bees/toxin(get_turf(target))

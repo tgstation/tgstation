@@ -22,16 +22,6 @@
 	build_path = /obj/item/device/firing_pin/implant/mindshield
 	category = list("Firing Pins")
 
-/datum/design/stunrevolver
-	name = "Tesla Revolver"
-	desc = "A high-tech revolver that fires internal, reusable shock cartridges in a revolving cylinder. The cartridges can be recharged using conventional rechargers."
-	id = "stunrevolver"
-	req_tech = list("combat" = 4, "materials" = 4, "powerstorage" = 5)
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 10000, MAT_GLASS = 10000, MAT_SILVER = 10000)
-	build_path = /obj/item/weapon/gun/energy/tesla_revolver
-	category = list("Weapons")
-
 /datum/design/nuclear_gun
 	name = "Advanced Energy Gun"
 	desc = "An energy gun with an experimental miniaturized reactor."
@@ -147,26 +137,6 @@
 	build_path = /obj/item/weapon/grenade/chem_grenade/adv_release
 	category = list("Weapons")
 
-/datum/design/xray
-	name = "Xray Laser Gun"
-	desc = "Not quite as menacing as it sounds"
-	id = "xray"
-	req_tech = list("combat" = 7, "magnets" = 5, "biotech" = 5, "powerstorage" = 4)
-	build_type = PROTOLATHE
-	materials = list(MAT_GOLD = 5000,MAT_URANIUM = 8000, MAT_METAL = 5000, MAT_TITANIUM = 2000)
-	build_path = /obj/item/weapon/gun/energy/xray
-	category = list("Weapons")
-
-/datum/design/ioncarbine
-	name = "Ion Carbine"
-	desc = "How to dismantle a cyborg : The gun."
-	id = "ioncarbine"
-	req_tech = list("combat" = 5, "magnets" = 4)
-	build_type = PROTOLATHE
-	materials = list(MAT_SILVER = 6000, MAT_METAL = 8000, MAT_URANIUM = 2000)
-	build_path = /obj/item/weapon/gun/energy/ionrifle/carbine
-	category = list("Weapons")
-
 /datum/design/wormhole_projector
 	name = "Bluespace Wormhole Projector"
 	desc = "A projector that emits high density quantum-coupled bluespace beams."
@@ -239,16 +209,6 @@
 	materials = list(MAT_METAL = 1000, MAT_GLASS = 200)
 	build_path = /obj/item/ammo_casing/shotgun/techshell
 	category = list("Ammo")
-
-/datum/design/suppressor
-	name = "Universal Suppressor"
-	desc = "A reverse-engineered universal suppressor that fits on most small arms with threaded barrels."
-	id = "suppressor"
-	req_tech = list("combat" = 6, "engineering" = 5, "syndicate" = 3)
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 2000, MAT_SILVER = 500)
-	build_path = /obj/item/weapon/suppressor
-	category = list("Weapons")
 
 /datum/design/gravitygun
 	name = "one-point bluespace-gravitational manipulator"
