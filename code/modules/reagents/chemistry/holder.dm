@@ -576,34 +576,35 @@ var/const/INJECT = 5 //injection
 
 /datum/reagents/proc/remove_reagent(reagent, amount, safety)//Added a safety check for the trans_id_to
 	if(!reagent_list) return
-		if(isnull(amount))
-			amount = 0
-			throw EXCEPTION("null amount passed to reagent code")
-			return FALSE
-
-		if(!isnum(amount))
-			return FALSE
-
-		if(amount < 0)
-			return FALSE
-
-		var/list/cached_reagents = reagent_list
-
-		for(var/A in cached_reagents)
-			var/datum/reagent/R = A
-			if (R.id == reagent)
-				//clamp the removal amount to be between current reagent amount
-				//and zero, to prevent removing more than the holder has stored
-				amount = Clamp(amount, 0, R.volume)
-				R.volume -= amount
-				update_total()
-				if(!safety)//So it does not handle reactions when it need not to
-					handle_reactions()
-				if(my_atom)
-					my_atom.on_reagent_change()
-				return TRUE
-
+	if(isnull(amount))
+		amount = 0
+		throw EXCEPTION("null amount passed to reagent code")
 		return FALSE
+
+	if(!isnum(amount))
+		return FALSE
+
+	if(amount < 0)
+		return FALSE
+
+	var/list/cached_reagents = reagent_list
+
+	for(var/A in cached_reagents)
+		var/datum/reagent/R = A
+		if (R.id == reagent)
+			//clamp the removal amount to be between current reagent amount
+			//and zero, to prevent removing more than the holder has stored
+			amount = Clamp(amount, 0, R.volume)
+			R.volume -= amount
+			update_total()
+			if(!safety)//So it does not handle reactions when it need not to
+				handle_reactions()
+			if(my_atom)
+				my_atom.on_reagent_change()
+			UNSETEMPTY(reagent_list)
+			return TRUE
+	UNSETEMPTY(reagent_list)
+	return FALSE
 
 /datum/reagents/proc/has_reagent(reagent, amount = -1)
 	if(!reagent_list) return
