@@ -95,8 +95,8 @@
 			return
 		if(!user.unEquip(W))
 			return
-		user << "<span class='notice'>You insert the [W.name] into the [src.name]</span>"
-		AddShards(1, user)
+		AddUses(round(increment*0.75))
+		user << "<span class='notice'>You insert a shard of glass into the [src.name]. You have [uses] light\s remaining.</span>"
 		qdel(W)
 		return
 
