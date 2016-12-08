@@ -370,9 +370,9 @@ var/list/gaslist_cache = null
 	for(var/R in cached_reagents)
 		var/datum/reagent/RA = R
 		var/temp_id = RA.id
-		var/mathmemes = QUANTIZE((RA.volume / reagents.total_volume) * amount)
-		reagents.remove_reagent(temp_id, mathmemes)
-		removed.reagents.add_reagent(temp_id, mathmemes)
+		var/temp_int = QUANTIZE((RA.volume / reagents.total_volume) * amount)
+		reagents.remove_reagent(temp_id, temp_int)
+		removed.reagents.add_reagent(temp_id, temp_int)
 	garbage_collect()
 
 	return removed
@@ -397,9 +397,9 @@ var/list/gaslist_cache = null
 	for(var/R in cached_reagents)
 		var/datum/reagent/RA = R
 		var/temp_id = RA.id
-		var/mathmemes = QUANTIZE(RA.volume * ratio)
-		reagents.remove_reagent(temp_id, mathmemes)
-		removed.reagents.add_reagent(temp_id, mathmemes)
+		var/temp_int = QUANTIZE(RA.volume * ratio)
+		reagents.remove_reagent(temp_id, temp_int)
+		removed.reagents.add_reagent(temp_id, temp_int)
 
 	garbage_collect()
 
