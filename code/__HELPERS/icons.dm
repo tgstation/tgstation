@@ -1013,7 +1013,7 @@ var/list/freeze_item_icons = list()
 /atom/proc/freeze_icon_index()
 	return "\ref[initial(icon)]-[initial(icon_state)]"
 
-/obj/proc/make_frozen_visual
+/obj/proc/make_frozen_visual()
 	if(!is_frozen && (initial(icon) && initial(icon_state)))
 		var/index = freeze_icon_index()
 		var/icon/IC
@@ -1033,7 +1033,7 @@ var/list/freeze_item_icons = list()
 	return
 
 //Assumes already frozed
-obj/proc/make_unfrozen
+obj/proc/make_unfrozen()
 	icon = initial(icon)
 	name = replacetext(name, "frozen ", "")
 	is_frozen = FALSE
