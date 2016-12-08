@@ -18,7 +18,7 @@
 	response_disarm = "gently pushes aside"
 	response_harm   = "splats"
 	density = 0
-	ventcrawler = 2
+	ventcrawler = VENTCRAWLER_ALWAYS
 	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
 	mob_size = MOB_SIZE_TINY
 	var/body_color //brown, gray and white, leave blank for random

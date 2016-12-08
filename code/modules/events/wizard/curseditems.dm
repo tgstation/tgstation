@@ -1,7 +1,7 @@
 /datum/round_event_control/wizard/cursed_items //fashion disasters
 	name = "Cursed Items"
 	weight = 3
-	typepath = /datum/round_event/wizard/cursed_items/
+	typepath = /datum/round_event/wizard/cursed_items
 	max_occurrences = 3
 	earliest_start = 0
 
@@ -24,7 +24,7 @@
 		if("swords")
 			loadout[5] = /obj/item/weapon/katana/cursed
 		if("bigfatdoobie")
-			loadout[4] = /obj/item/clothing/mask/cigarette/rollie/trippy/
+			loadout[4] = /obj/item/clothing/mask/cigarette/rollie/trippy
 			ruins_spaceworthiness = 1
 		if("boxing")
 			loadout[4] = /obj/item/clothing/mask/luchador

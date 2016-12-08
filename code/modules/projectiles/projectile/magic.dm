@@ -316,7 +316,7 @@
 
 	M.attack_log += text("\[[time_stamp()]\] <font color='orange'>[M.real_name] ([M.ckey]) became [new_mob.real_name].</font>")
 
-	new_mob.a_intent = "harm"
+	new_mob.a_intent = INTENT_HARM
 
 	M.wabbajack_act(new_mob)
 

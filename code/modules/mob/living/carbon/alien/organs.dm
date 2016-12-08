@@ -31,7 +31,7 @@
 	name = "plasma vessel"
 	icon_state = "plasma"
 	origin_tech = "biotech=5;plasmatech=4"
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 	zone = "chest"
 	slot = "plasmavessel"
 	alien_powers = list(/obj/effect/proc_holder/alien/plant, /obj/effect/proc_holder/alien/transfer)
@@ -49,7 +49,7 @@
 /obj/item/organ/alien/plasmavessel/large
 	name = "large plasma vessel"
 	icon_state = "plasma_large"
-	w_class = 4
+	w_class = WEIGHT_CLASS_BULKY
 	storedPlasma = 200
 	max_plasma = 500
 	plasma_rate = 15
@@ -61,7 +61,7 @@
 /obj/item/organ/alien/plasmavessel/small
 	name = "small plasma vessel"
 	icon_state = "plasma_small"
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	storedPlasma = 100
 	max_plasma = 150
 	plasma_rate = 5
@@ -69,7 +69,7 @@
 /obj/item/organ/alien/plasmavessel/small/tiny
 	name = "tiny plasma vessel"
 	icon_state = "plasma_tiny"
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 	max_plasma = 100
 	alien_powers = list(/obj/effect/proc_holder/alien/transfer)
 
@@ -107,7 +107,7 @@
 	zone = "head"
 	slot = "hivenode"
 	origin_tech = "biotech=5;magnets=4;bluespace=3"
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 	var/recent_queen_death = 0 //Indicates if the queen died recently, aliens are heavily weakened while this is active.
 	alien_powers = list(/obj/effect/proc_holder/alien/whisper)
 
@@ -182,6 +182,6 @@
 	icon_state = "eggsac"
 	zone = "groin"
 	slot = "eggsac"
-	w_class = 4
+	w_class = WEIGHT_CLASS_BULKY
 	origin_tech = "biotech=6"
 	alien_powers = list(/obj/effect/proc_holder/alien/lay_egg)

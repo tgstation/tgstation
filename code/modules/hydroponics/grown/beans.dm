@@ -13,6 +13,7 @@
 	growing_icon = 'icons/obj/hydroponics/growing_vegetables.dmi'
 	icon_grow = "soybean-grow"
 	icon_dead = "soybean-dead"
+	genes = list(/datum/plant_gene/trait/repeated_harvest)
 	mutatelist = list(/obj/item/seeds/soya/koi)
 	reagents_add = list("vitamin" = 0.04, "nutriment" = 0.05)
 

@@ -9,7 +9,7 @@
 	icon_state = "dough"
 	cooked_type = /obj/item/weapon/reagent_containers/food/snacks/store/bread/plain
 	list_reagents = list("nutriment" = 6)
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 
 
 // Dough + rolling pin = flat dough
@@ -35,7 +35,7 @@
 	slices_num = 3
 	cooked_type = /obj/item/weapon/reagent_containers/food/snacks/pizzabread
 	list_reagents = list("nutriment" = 6)
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 
 /obj/item/weapon/reagent_containers/food/snacks/pizzabread
 	name = "pizza bread"
@@ -44,7 +44,7 @@
 	icon_state = "pizzabread"
 	custom_food_type = /obj/item/weapon/reagent_containers/food/snacks/customizable/pizza
 	list_reagents = list("nutriment" = 7)
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 
 
 /obj/item/weapon/reagent_containers/food/snacks/doughslice
@@ -72,7 +72,7 @@
 	icon_state = "cakebatter"
 	cooked_type = /obj/item/weapon/reagent_containers/food/snacks/store/cake/plain
 	list_reagents = list("nutriment" = 9)
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 
 // Cake batter + rolling pin = pie dough
 /obj/item/weapon/reagent_containers/food/snacks/cakebatter/attackby(obj/item/I, mob/user, params)
@@ -95,7 +95,7 @@
 	slices_num = 3
 	cooked_type = /obj/item/weapon/reagent_containers/food/snacks/pie/plain
 	list_reagents = list("nutriment" = 9)
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 
 /obj/item/weapon/reagent_containers/food/snacks/rawpastrybase
 	name = "raw pastry base"

@@ -124,11 +124,13 @@
 /datum/action/item_action/New(Target)
 	..()
 	var/obj/item/I = target
+	LAZYINITLIST(I.actions)
 	I.actions += src
 
 /datum/action/item_action/Destroy()
 	var/obj/item/I = target
 	I.actions -= src
+	UNSETEMPTY(I.actions)
 	return ..()
 
 /datum/action/item_action/Trigger()

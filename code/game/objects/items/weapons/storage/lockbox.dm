@@ -5,8 +5,8 @@
 	desc = "A locked box."
 	icon_state = "lockbox+l"
 	item_state = "syringe_kit"
-	w_class = 4
-	max_w_class = 3
+	w_class = WEIGHT_CLASS_BULKY
+	max_w_class = WEIGHT_CLASS_NORMAL
 	max_combined_w_class = 14 //The sum of the w_classes of all the items in this storage item.
 	storage_slots = 4
 	req_access = list(access_armory)
@@ -101,8 +101,8 @@
 	desc = "A locked box used to store medals of honor."
 	icon_state = "medalbox+l"
 	item_state = "syringe_kit"
-	w_class = 3
-	max_w_class = 2
+	w_class = WEIGHT_CLASS_NORMAL
+	max_w_class = WEIGHT_CLASS_SMALL
 	storage_slots = 10
 	req_access = list(access_captain)
 	icon_locked = "medalbox+l"

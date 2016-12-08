@@ -153,7 +153,7 @@ var/list/damaged_clothes_icons = list()
 //Ears: currently only used for headsets and earmuffs
 /obj/item/clothing/ears
 	name = "ears"
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 	throwforce = 0
 	slot_flags = SLOT_EARS
 	resistance_flags = 0
@@ -172,7 +172,7 @@ var/list/damaged_clothes_icons = list()
 /obj/item/clothing/glasses
 	name = "glasses"
 	icon = 'icons/obj/clothing/glasses.dmi'
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	flags_cover = GLASSESCOVERSEYES
 	slot_flags = SLOT_EYES
 	var/vision_flags = 0
@@ -200,7 +200,7 @@ BLIND     // can't see anything
 /obj/item/clothing/gloves
 	name = "gloves"
 	gender = PLURAL //Carn: for grammarically correct text-parsing
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	icon = 'icons/obj/clothing/gloves.dmi'
 	siemens_coefficient = 0.50
 	body_parts_covered = HANDS
@@ -436,7 +436,7 @@ BLIND     // can't see anything
 	desc = "A suit that protects against low pressure environments. Has a big 13 on the back."
 	icon_state = "spaceold"
 	item_state = "s_suit"
-	w_class = 4//bulky item
+	w_class = WEIGHT_CLASS_BULKY
 	gas_transfer_coefficient = 0.01
 	permeability_coefficient = 0.02
 	flags = STOPSPRESSUREDMAGE | THICKMATERIAL
@@ -513,7 +513,7 @@ BLIND     // can't see anything
 
 	if(mutantrace_variation && ishuman(user))
 		var/mob/living/carbon/human/H = user
-		if(DIGITIGRADE in H.dna.species.specflags)
+		if(DIGITIGRADE in H.dna.species.species_traits)
 			adjusted = DIGITIGRADE_STYLE
 		H.update_inv_w_uniform()
 

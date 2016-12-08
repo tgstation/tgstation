@@ -4,7 +4,7 @@
 	zone = "r_arm"
 	slot = "r_arm_device"
 	icon_state = "implant-toolkit"
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 	actions_types = list(/datum/action/item_action/organ_action/toggle)
 
 	var/list/items_list = list()
@@ -64,7 +64,7 @@
 	if(!holder || (holder in src))
 		return
 
-	owner.visible_message("<span class='notice'>[owner] retracts [holder] back into \his [zone == "r_arm" ? "right" : "left"] arm.</span>",
+	owner.visible_message("<span class='notice'>[owner] retracts [holder] back into [owner.p_their()] [zone == "r_arm" ? "right" : "left"] arm.</span>",
 		"<span class='notice'>[holder] snaps back into your [zone == "r_arm" ? "right" : "left"] arm.</span>",
 		"<span class='italics'>You hear a short mechanical noise.</span>")
 
@@ -86,7 +86,7 @@
 	holder.flags |= NODROP
 	holder.resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	holder.slot_flags = null
-	holder.w_class = 5
+	holder.w_class = WEIGHT_CLASS_HUGE
 	holder.materials = null
 
 	if(istype(holder, /obj/item/device/assembly/flash/armimplant))
@@ -110,7 +110,7 @@
 	// Activate the hand that now holds our item.
 	owner.swap_hand(result)//... or the 1st hand if the index gets lost somehow
 
-	owner.visible_message("<span class='notice'>[owner] extends [holder] from \his [zone == "r_arm" ? "right" : "left"] arm.</span>",
+	owner.visible_message("<span class='notice'>[owner] extends [holder] from [owner.p_their()] [zone == "r_arm" ? "right" : "left"] arm.</span>",
 		"<span class='notice'>You extend [holder] from your [zone == "r_arm" ? "right" : "left"] arm.</span>",
 		"<span class='italics'>You hear a short mechanical noise.</span>")
 	playsound(get_turf(owner), 'sound/mecha/mechmove03.ogg', 50, 1)

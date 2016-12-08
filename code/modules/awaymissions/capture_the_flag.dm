@@ -28,6 +28,7 @@
 	var/reset_path = /obj/effect/ctf/flag_reset
 
 /obj/item/weapon/twohanded/required/ctf/New()
+	..()
 	if(!reset)
 		reset = new reset_path(get_turf(src))
 

@@ -4,7 +4,7 @@
 	var/mob/living/carbon/owner = null
 	var/status = ORGAN_ORGANIC
 	origin_tech = "biotech=3"
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	throwforce = 0
 	var/zone = "chest"
 	var/slot
@@ -192,7 +192,7 @@
 	if(world.time > (last_pump + pump_delay))
 		if(ishuman(owner) && owner.client) //While this entire item exists to make people suffer, they can't control disconnects.
 			var/mob/living/carbon/human/H = owner
-			if(H.dna && !(NOBLOOD in H.dna.species.specflags))
+			if(H.dna && !(NOBLOOD in H.dna.species.species_traits))
 				H.blood_volume = max(H.blood_volume - blood_loss, 0)
 				H << "<span class = 'userdanger'>You have to keep pumping your blood!</span>"
 				if(add_colour)
@@ -225,7 +225,7 @@
 
 		var/mob/living/carbon/human/H = owner
 		if(istype(H))
-			if(H.dna && !(NOBLOOD in H.dna.species.specflags))
+			if(H.dna && !(NOBLOOD in H.dna.species.species_traits))
 				H.blood_volume = min(H.blood_volume + cursed_heart.blood_loss*0.5, BLOOD_VOLUME_MAXIMUM)
 				H.remove_client_colour(/datum/client_colour/cursed_heart_blood)
 				cursed_heart.add_colour = TRUE
@@ -254,7 +254,7 @@
 	zone = "chest"
 	slot = "lungs"
 	gender = PLURAL
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 	var/list/breathlevels = list("safe_oxygen_min" = 16,"safe_oxygen_max" = 0,"safe_co2_min" = 0,"safe_co2_max" = 10,
 	"safe_toxins_min" = 0,"safe_toxins_max" = 0.05,"SA_para_min" = 1,"SA_sleep_min" = 5,"BZ_trip_balls_min" = 1)
 
@@ -283,16 +283,16 @@
 	if((H.status_flags & GODMODE))
 		return
 
-	var/specflags = list()
-	if(H && H.dna && H.dna.species && H.dna.species.specflags)
-		specflags = H.dna.species.specflags
+	var/species_traits = list()
+	if(H && H.dna && H.dna.species && H.dna.species.species_traits)
+		species_traits = H.dna.species.species_traits
 
 	if(!breath || (breath.total_moles() == 0))
 		if(H.reagents.has_reagent("epinephrine"))
 			return
 		if(H.health >= HEALTH_THRESHOLD_CRIT)
 			H.adjustOxyLoss(HUMAN_MAX_OXYLOSS)
-		else if(!(NOCRITDAMAGE in specflags))
+		else if(!(NOCRITDAMAGE in species_traits))
 			H.adjustOxyLoss(HUMAN_CRIT_MAX_OXYLOSS)
 
 		H.failed_last_breath = 1
@@ -462,11 +462,11 @@
 /obj/item/organ/lungs/proc/handle_breath_temperature(datum/gas_mixture/breath, mob/living/carbon/human/H) // called by human/life, handles temperatures
 	if(abs(310.15 - breath.temperature) > 50)
 
-		var/specflags = list()
-		if(H && H.dna && H.dna.species && H.dna.species.specflags)
-			specflags = H.dna.species.specflags
+		var/species_traits = list()
+		if(H && H.dna && H.dna.species && H.dna.species.species_traits)
+			species_traits = H.dna.species.species_traits
 
-		if(!(mutations_list[COLDRES] in H.dna.mutations)) // COLD DAMAGE
+		if(!(mutations_list[COLDRES] in H.dna.mutations) && !(RESISTCOLD in species_traits)) // COLD DAMAGE
 			switch(breath.temperature)
 				if(-INFINITY to 120)
 					H.apply_damage(COLD_GAS_DAMAGE_LEVEL_3, BURN, "head")
@@ -475,7 +475,7 @@
 				if(200 to 260)
 					H.apply_damage(COLD_GAS_DAMAGE_LEVEL_1, BURN, "head")
 
-		if(!(RESISTTEMP in specflags)) // HEAT DAMAGE
+		if(!(RESISTHOT in species_traits)) // HEAT DAMAGE
 			switch(breath.temperature)
 				if(360 to 400)
 					H.apply_damage(HEAT_GAS_DAMAGE_LEVEL_1, BURN, "head")

@@ -85,7 +85,7 @@
 
 /mob/living/carbon/attackby(obj/item/I, mob/user, params)
 	if(lying && surgeries.len)
-		if(user != src && user.a_intent == "help")
+		if(user != src && user.a_intent == INTENT_HELP)
 			for(var/datum/surgery/S in surgeries)
 				if(S.next_step(user))
 					return 1
@@ -449,7 +449,7 @@
 	return ..()
 
 /mob/living/carbon/proc/vomit(var/lost_nutrition = 10, var/blood = 0, var/stun = 1, var/distance = 0, var/message = 1, var/toxic = 0)
-	if(dna && dna.species && NOHUNGER in dna.species.specflags)
+	if(dna && dna.species && NOHUNGER in dna.species.species_traits)
 		return 1
 
 	if(nutrition < 100 && !blood)
@@ -734,7 +734,7 @@
 					"<span class='userdanger'>[src] is attempting to devour you!</span>")
 	if(!do_mob(src, C, devour_time))
 		return
-	if(pulling && pulling == C && grab_state >= GRAB_AGGRESSIVE && a_intent == "grab")
+	if(pulling && pulling == C && grab_state >= GRAB_AGGRESSIVE && a_intent == INTENT_GRAB)
 		C.visible_message("<span class='danger'>[src] devours [C]!</span>", \
 						"<span class='userdanger'>[src] devours you!</span>")
 		C.forceMove(src)
@@ -763,3 +763,10 @@
 	for(var/X in internal_organs)
 		var/obj/item/organ/I = X
 		I.Insert(src)
+
+/mob/living/carbon/vv_get_dropdown()
+	. = ..()
+	. += "---"
+	.["Make AI"] = "?_src_=vars;makeai=\ref[src]"
+	.["Modify bodypart"] = "<option value='?_src_=vars;editbodypart=\ref[src]'>Modify bodypart</option>"
+	.["Modify organs"] = "?_src_=vars;editorgans=\ref[src]"

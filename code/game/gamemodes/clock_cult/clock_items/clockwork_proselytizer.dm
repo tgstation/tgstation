@@ -4,7 +4,7 @@
 	desc = "An odd, L-shaped device that hums with energy."
 	clockwork_desc = "A device that allows the replacing of mundane objects with Ratvarian variants. It requires liquified Replicant Alloy to function."
 	icon_state = "clockwork_proselytizer"
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 	force = 5
 	flags = NOBLUDGEON
 	var/stored_alloy = 0 //Requires this to function; each chunk of replicant alloy provides REPLICANT_ALLOY_UNIT
@@ -24,7 +24,7 @@
 	clockwork_desc = "A cogscarab's internal proselytizer. It can only be successfully used by a cogscarab and requires liquified Replicant Alloy to function."
 	metal_to_alloy = TRUE
 	item_state = "nothing"
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 	speed_multiplier = 0.5
 	var/debug = FALSE
 
@@ -88,7 +88,7 @@
 		user << "<span class='brass'>Can also form some objects into Brass sheets, as well as reform Clockwork Walls into Clockwork Floors, and vice versa.</span>"
 		if(uses_alloy)
 			if(metal_to_alloy)
-				user << "<span class='alloy'>It can convert Brass sheets to liquified replicant alloy at a rate of <b>1</b> sheet to <b>[REPLICANT_FLOOR]</b> alloy.</span>"
+				user << "<span class='alloy'>It can convert rods, metal, plasteel, and brass to liquified replicant alloy at rates of <b>1:1</b>, <b>1:2</b>, <b>1:5</b>, and <b>1:10</b>, respectively.</span>"
 			user << "<span class='alloy'>It has <b>[stored_alloy]/[max_alloy]</b> units of liquified alloy stored.</span>"
 			user << "<span class='alloy'>Use it on a Tinkerer's Cache, strike it with Replicant Alloy, or attack Replicant Alloy with it to add additional liquified alloy.</span>"
 			if(reform_alloy)
@@ -155,7 +155,6 @@
 	if(refueling)
 		user << "<span class='warning'>You are currently refueling [src]!</span>"
 		return FALSE
-	var/target_type = target.type
 	var/list/proselytize_values = target.proselytize_vals(user, src) //relevant values for proselytizing stuff, given as an associated list
 	if(!islist(proselytize_values))
 		if(proselytize_values != TRUE) //if we get true, fail, but don't send a message for whatever reason
@@ -176,19 +175,26 @@
 			user << "<span class='warning'>You have too much liquified alloy stored to proselytize [target]!</span>"
 		return FALSE
 
+	var/target_type = target.type
+
 	if(can_use_alloy(RATVAR_ALLOY_CHECK)) //Ratvar makes it faster
 		proselytize_values["operation_time"] *= 0.5
 
 	proselytize_values["operation_time"] *= speed_multiplier
 
-	user.visible_message("<span class='warning'>[user]'s [name] begins tearing apart [target]!</span>", "<span class='brass'>You begin proselytizing [target]...</span>")
+
 	playsound(target, 'sound/machines/click.ogg', 50, 1)
-	if(proselytize_values["operation_time"] && !do_after(user, proselytize_values["operation_time"], target = target))
-		return FALSE
+	if(proselytize_values["operation_time"])
+		user.visible_message("<span class='warning'>[user]'s [name] begins tearing apart [target]!</span>", "<span class='brass'>You begin proselytizing [target]...</span>")
+		if(!do_after(user, proselytize_values["operation_time"], target = target))
+			return FALSE
+		user.visible_message("<span class='warning'>[user]'s [name] disgorges a chunk of metal and shapes it over what's left of [target]!</span>", \
+		"<span class='brass'>You proselytize [target].</span>")
+	else
+		user.visible_message("<span class='warning'>[user]'s [name] tears apart [target], covering it in metal!</span>", "<span class='brass'>You proselytize [target].</span>")
 	if(repairing || refueling || !can_use_alloy(proselytize_values["alloy_cost"]) || !target || target.type != target_type) //Check again to prevent bypassing via spamclick
 		return FALSE
-	user.visible_message("<span class='warning'>[user]'s [name] disgorges a chunk of metal and shapes it over what's left of [target]!</span>", \
-	"<span class='brass'>You proselytize [target].</span>")
+
 	playsound(target, 'sound/items/Deconstruct.ogg', 50, 1)
 	var/new_thing_type = proselytize_values["new_obj_type"]
 	if(isturf(target))
@@ -200,6 +206,7 @@
 		else
 			var/atom/A = new new_thing_type(get_turf(target))
 			A.setDir(proselytize_values["spawn_dir"])
-		qdel(target)
+		if(!proselytize_values["no_target_deletion"])
+			qdel(target)
 	modify_stored_alloy(-proselytize_values["alloy_cost"])
 	return TRUE

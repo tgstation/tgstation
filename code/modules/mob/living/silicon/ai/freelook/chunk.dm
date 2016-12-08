@@ -114,7 +114,7 @@
 		var/turf/t = turf
 		if(obscuredTurfs[t])
 			if(!t.obscured)
-				t.obscured = image('icons/effects/cameravis.dmi', t, "black", 16)
+				t.obscured = image('icons/effects/cameravis.dmi', t, null, 16)
 
 			obscured += t.obscured
 			for(var/eye in seenby)

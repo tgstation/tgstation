@@ -299,12 +299,30 @@
 /obj/effect/overlay/temp/ratvar/window/single
 	icon_state = "ratvarwindowglow_s"
 
+/obj/effect/overlay/temp/ratvar/ocular_warden
+	name = "warden's gaze"
+	layer = ABOVE_MOB_LAYER
+	icon_state = "warden_gaze"
+	duration = 3
+
+/obj/effect/overlay/temp/ratvar/ocular_warden/New()
+	..()
+	pixel_x = rand(-8, 8)
+	pixel_y = rand(-10, 10)
+	animate(src, alpha = 0, time = 3, easing = EASE_OUT)
+
 /obj/effect/overlay/temp/ratvar/spearbreak
 	icon = 'icons/effects/64x64.dmi'
 	icon_state = "ratvarspearbreak"
 	layer = BELOW_MOB_LAYER
 	pixel_y = -16
 	pixel_x = -16
+
+/obj/effect/overlay/temp/ratvar/geis_binding
+	icon_state = "geisbinding"
+
+/obj/effect/overlay/temp/ratvar/geis_binding/top
+	icon_state = "geisbinding_top"
 
 /obj/effect/overlay/temp/ratvar/component
 	icon = 'icons/obj/clockwork_objects.dmi'

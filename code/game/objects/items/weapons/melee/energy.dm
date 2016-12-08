@@ -4,8 +4,8 @@
 	var/throwforce_on = 20
 	var/icon_state_on = "axe1"
 	var/list/attack_verb_on = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
-	w_class = 2
-	var/w_class_on = 4
+	w_class = WEIGHT_CLASS_SMALL
+	var/w_class_on = WEIGHT_CLASS_BULKY
 	heat = 3500
 	obj_integrity = 200
 	max_integrity = 200
@@ -33,8 +33,8 @@
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	throw_speed = 3
 	throw_range = 5
-	w_class = 3
-	w_class_on = 5
+	w_class = WEIGHT_CLASS_NORMAL
+	w_class_on = WEIGHT_CLASS_HUGE
 	flags = CONDUCT
 	armour_penetration = 100
 	origin_tech = "combat=4;magnets=3"
@@ -157,7 +157,7 @@
 	icon_state_on = "esaw_1"
 	hitcost = 75 //Costs more than a standard cyborg esword
 	item_color = null
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 	sharpness = IS_SHARP
 
 /obj/item/weapon/melee/energy/sword/cyborg/saw/New()
@@ -230,7 +230,7 @@
 	throwforce = 1//Throwing or dropping the item deletes it.
 	throw_speed = 3
 	throw_range = 1
-	w_class = 4//So you can't hide it in your pocket or some such.
+	w_class = WEIGHT_CLASS_BULKY//So you can't hide it in your pocket or some such.
 	var/datum/effect_system/spark_spread/spark_system
 	sharpness = IS_SHARP
 

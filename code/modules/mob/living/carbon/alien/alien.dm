@@ -10,7 +10,7 @@
 	gender = FEMALE //All xenos are girls!!
 	dna = null
 	faction = list("alien")
-	ventcrawler = 2
+	ventcrawler = VENTCRAWLER_ALWAYS
 	languages_spoken = ALIEN
 	languages_understood = ALIEN
 	sight = SEE_MOBS

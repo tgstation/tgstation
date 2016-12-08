@@ -27,10 +27,18 @@
 	//atom creation method that preloads variables at creation
 	if(use_preloader && (src.type == _preloader.target_path))//in case the instanciated atom is creating other atoms in New()
 		_preloader.load(src)
-
+	//atom color stuff
 	if(color)
 		add_atom_colour(color, FIXED_COLOUR_PRIORITY)
-	. = ..()
+
+	//lighting stuff
+	if(opacity && isturf(loc))
+		loc.UpdateAffectingLights()
+
+	if(luminosity)
+		light = new(src)
+
+	//. = ..() //uncomment if you are dumb enough to add a /datum/New() proc
 
 /atom/Destroy()
 	if(alternate_appearances)
@@ -45,6 +53,8 @@
 				AA.hide(list(src))
 	return ..()
 
+/atom/proc/CanPass(atom/movable/mover, turf/target, height=1.5)
+	return (!density || !height)
 
 /atom/proc/onCentcom()
 	var/turf/T = get_turf(src)
@@ -448,14 +458,6 @@ var/list/blood_splatter_icons = list()
 /atom/proc/setDir(newdir)
 	dir = newdir
 
-/atom/on_varedit(modified_var)
-	..()
-	if(!Debug2)
-		admin_spawned = TRUE
-	switch(modified_var)
-		if("color")
-			add_atom_colour(color, ADMIN_COLOUR_PRIORITY)
-
 /atom/proc/mech_melee_attack(obj/mecha/M)
 	return
 
@@ -517,4 +519,26 @@ var/list/blood_splatter_icons = list()
 		else if(C)
 			color = C
 			return
+
+/atom/vv_edit_var(var_name, var_value)
+	if(!Debug2)
+		admin_spawned = TRUE
+	switch(var_name)
+		if("luminosity")
+			src.SetLuminosity(var_value)
+			return//prevent normal setting of this value
+	. = ..()
+	switch(var_name)
+		if("color")
+			add_atom_colour(color, ADMIN_COLOUR_PRIORITY)
+
+/atom/vv_get_dropdown()
+	. = ..()
+	. += "---"
+	var/turf/curturf = get_turf(src)
+	if (curturf)
+		.["Jump to"] = "?_src_=holder;adminplayerobservecoodjump=1;X=[curturf.x];Y=[curturf.y];Z=[curturf.z]"
+	.["Add reagent"] = "?_src_=vars;addreagent=\ref[src]"
+	.["Trigger EM pulse"] = "?_src_=vars;emp=\ref[src]"
+	.["Trigger explosion"] = "?_src_=vars;explode=\ref[src]"
 

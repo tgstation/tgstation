@@ -1,10 +1,10 @@
-/obj/item/weapon/gun/magic/wand/
+/obj/item/weapon/gun/magic/wand
 	name = "wand of nothing"
 	desc = "It's not just a stick, it's a MAGIC stick!"
 	ammo_type = /obj/item/ammo_casing/magic
 	icon_state = "nothingwand"
 	item_state = "wand"
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	can_charge = 0
 	max_charges = 100 //100, 50, 50, 34 (max charge distribution by 25%ths)
 	var/variable_charges = 1

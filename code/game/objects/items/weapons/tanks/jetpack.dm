@@ -3,7 +3,7 @@
 	desc = "A tank of compressed gas for use as propulsion in zero-gravity areas. Use with caution."
 	icon_state = "jetpack"
 	item_state = "jetpack"
-	w_class = 4
+	w_class = WEIGHT_CLASS_BULKY
 	distribute_pressure = ONE_ATMOSPHERE * O2STANDARD
 	actions_types = list(/datum/action/item_action/set_internals, /datum/action/item_action/toggle_jetpack, /datum/action/item_action/jetpack_stabilization)
 	var/gas_type = "o2"
@@ -102,14 +102,14 @@
 	item_state = "jetpack-mini"
 	volume = 40
 	throw_range = 7
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 
 /obj/item/weapon/tank/jetpack/oxygen/captain
 	name = "\improper Captain's jetpack"
 	desc = "A compact, lightweight jetpack containing a high amount of compressed oxygen."
 	icon_state = "jetpack-captain"
 	item_state = "jetpack-captain"
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 	volume = 90
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF //steal objective items are hard to destroy.
 
@@ -128,7 +128,7 @@
 	origin_tech = "materials=4;magnets=4;engineering=5"
 	icon_state = "jetpack-upgrade"
 	item_state =  "jetpack-black"
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 	actions_types = list(/datum/action/item_action/toggle_jetpack, /datum/action/item_action/jetpack_stabilization)
 	volume = 1
 	slot_flags = null

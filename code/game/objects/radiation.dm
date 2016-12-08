@@ -32,10 +32,7 @@
 /mob/living/rad_act(amount, silent = 0)
 	if(amount)
 		var/blocked = getarmor(null, "rad")
-		if(iscarbon(src))
-			var/mob/living/carbon/C = src
-			if(C.dna && (RADIMMUNE in C.dna.species.specflags))
-				silent = TRUE
+
 		if(!silent)
 			src << "Your skin feels warm."
 
@@ -44,7 +41,7 @@
 			I.rad_act(amount)
 
 /mob/living/carbon/rad_act(amount, silent = 0)
-	if(dna && (RADIMMUNE in dna.species.specflags))
+	if(dna && (RADIMMUNE in dna.species.species_traits))
 		silent = TRUE
 	..()
 

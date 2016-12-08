@@ -349,7 +349,7 @@
 		if(A.pulling)
 			D.drop_all_held_items()
 			D.stop_pulling()
-			if(A.a_intent == "grab")
+			if(A.a_intent == INTENT_GRAB)
 				add_logs(A, D, "grabbed", addition="aggressively")
 				A.grab_state = GRAB_AGGRESSIVE //Instant aggressive grab
 			else
@@ -677,7 +677,7 @@
 	name = "bo staff"
 	desc = "A long, tall staff made of polished wood. Traditionally used in ancient old-Earth martial arts. Can be wielded to both kill and incapacitate."
 	force = 10
-	w_class = 4
+	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = SLOT_BACK
 	force_unwielded = 10
 	force_wielded = 24
@@ -711,7 +711,7 @@
 	if(C.stat)
 		user << "<span class='warning'>It would be dishonorable to attack a foe while they cannot retaliate.</span>"
 		return
-	if(user.a_intent == "disarm")
+	if(user.a_intent == INTENT_DISARM)
 		if(!wielded)
 			return ..()
 		if(!ishuman(target))

@@ -95,7 +95,7 @@
 		user << "<span class='danger'>It's locked and running.</span>"
 		return
 
-	if(user.pulling && user.a_intent == "grab" && isliving(user.pulling))
+	if(user.pulling && user.a_intent == INTENT_GRAB && isliving(user.pulling))
 		var/mob/living/L = user.pulling
 		if(!iscarbon(L))
 			user << "<span class='danger'>This item is not suitable for the gibber!</span>"

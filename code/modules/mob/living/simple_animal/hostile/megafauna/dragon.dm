@@ -171,7 +171,7 @@ Difficulty: Medium
 	var/range = 10
 	var/turf/previousturf = get_turf(src)
 	for(var/turf/J in getline(src,E))
-		if(!range || !previousturf.CanAtmosPass(J))
+		if(!range || !previousturf.atmos_adjacent_turfs || !previousturf.atmos_adjacent_turfs[J])
 			break
 		range--
 		PoolOrNew(/obj/effect/hotspot,J)

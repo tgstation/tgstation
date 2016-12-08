@@ -59,10 +59,10 @@
 /obj/item/bodypart/attack(mob/living/carbon/C, mob/user)
 	if(ishuman(C))
 		var/mob/living/carbon/human/H = C
-		if(EASYLIMBATTACHMENT in H.dna.species.specflags)
+		if(EASYLIMBATTACHMENT in H.dna.species.species_traits)
 			if(!H.get_bodypart(body_zone) && !animal_origin)
 				if(H == user)
-					H.visible_message("<span class='warning'>[H] jams [src] into \his empty socket!</span>",\
+					H.visible_message("<span class='warning'>[H] jams [src] into [H.p_their()] empty socket!</span>",\
 					"<span class='notice'>You force [src] into your empty socket, and it locks into place!</span>")
 				else
 					H.visible_message("<span class='warning'>[user] jams [src] into [H]'s empty socket!</span>",\
@@ -220,7 +220,7 @@
 
 		var/datum/species/S = H.dna.species
 		species_id = S.limbs_id
-		species_flags_list = H.dna.species.specflags
+		species_flags_list = H.dna.species.species_traits
 
 		if(S.use_skintones)
 			skin_tone = H.skin_tone
@@ -231,7 +231,7 @@
 		body_gender = H.gender
 		should_draw_gender = S.sexes
 
-		if(MUTCOLORS in S.specflags)
+		if(MUTCOLORS in S.species_traits)
 			if(S.fixed_mut_color)
 				species_color = S.fixed_mut_color
 			else

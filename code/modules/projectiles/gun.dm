@@ -7,7 +7,7 @@
 	flags =  CONDUCT
 	slot_flags = SLOT_BELT
 	materials = list(MAT_METAL=2000)
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 	throwforce = 5
 	throw_speed = 3
 	throw_range = 5
@@ -130,7 +130,7 @@
 	if(flag) //It's adjacent, is the user, or is on the user's person
 		if(target in user.contents) //can't shoot stuff inside us.
 			return
-		if(!ismob(target) || user.a_intent == "harm") //melee attack
+		if(!ismob(target) || user.a_intent == INTENT_HARM) //melee attack
 			return
 		if(target == user && user.zone_selected != "mouth") //so we can't shoot ourselves (unless mouth selected)
 			return
@@ -167,7 +167,7 @@
 	//DUAL (or more!) WIELDING
 	var/bonus_spread = 0
 	var/loop_counter = 0
-	if(ishuman(user) && user.a_intent == "harm")
+	if(ishuman(user) && user.a_intent == INTENT_HARM)
 		var/mob/living/carbon/human/H = user
 		for(var/obj/item/weapon/gun/G in H.held_items)
 			if(G == src || G.weapon_weight >= WEAPON_MEDIUM)
@@ -200,7 +200,7 @@
 		user << "<span class='warning'>[src]'s trigger is locked. This weapon doesn't have a firing pin installed!</span>"
 	return 0
 
-obj/item/weapon/gun/proc/recharge_newshot()
+/obj/item/weapon/gun/proc/recharge_newshot()
 	return
 
 /obj/item/weapon/gun/proc/process_fire(atom/target as mob|obj|turf, mob/living/user as mob|obj, message = 1, params, zone_override, bonus_spread = 0)
@@ -269,7 +269,7 @@ obj/item/weapon/gun/proc/recharge_newshot()
 	feedback_add_details("gun_fired","[src.type]")
 
 /obj/item/weapon/gun/attack(mob/M as mob, mob/user)
-	if(user.a_intent == "harm") //Flogging
+	if(user.a_intent == INTENT_HARM) //Flogging
 		..()
 	else
 		return

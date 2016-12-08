@@ -1,6 +1,6 @@
 var/global/static/ntnrc_uid = 0
 
-/datum/ntnet_conversation/
+/datum/ntnet_conversation
 	var/id = null
 	var/title = "Untitled Conversation"
 	var/datum/computer_file/program/chatclient/operator // "Administrator" of this channel. Creator starts as channel's operator,

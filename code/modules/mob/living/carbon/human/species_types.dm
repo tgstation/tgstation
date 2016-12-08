@@ -6,7 +6,7 @@
 	name = "Human"
 	id = "human"
 	default_color = "FFFFFF"
-	specflags = list(EYECOLOR,HAIR,FACEHAIR,LIPS)
+	species_traits = list(EYECOLOR,HAIR,FACEHAIR,LIPS)
 	mutant_bodyparts = list("tail_human", "ears", "wings")
 	default_features = list("mcolor" = "FFF", "tail_human" = "None", "ears" = "None", "wings" = "None")
 	use_skintones = 1
@@ -37,7 +37,7 @@
 	id = "lizard"
 	say_mod = "hisses"
 	default_color = "00FF00"
-	specflags = list(MUTCOLORS,EYECOLOR,LIPS)
+	species_traits = list(MUTCOLORS,EYECOLOR,LIPS)
 	mutant_bodyparts = list("tail_lizard", "snout", "spines", "horns", "frills", "body_markings", "legs")
 	mutant_organs = list(/obj/item/organ/tongue/lizard)
 	default_features = list("mcolor" = "0F0", "tail" = "Smooth", "snout" = "Round", "horns" = "None", "frills" = "None", "spines" = "None", "body_markings" = "None", "legs" = "Normal Legs")
@@ -71,7 +71,7 @@
 	name = "Ash Walker"
 	id = "ashlizard"
 	limbs_id = "lizard"
-	specflags = list(MUTCOLORS,EYECOLOR,LIPS,NOBREATH,NOGUNS,DIGITIGRADE)
+	species_traits = list(MUTCOLORS,EYECOLOR,LIPS,NOBREATH,NOGUNS,DIGITIGRADE)
 /*
  PODPEOPLE
 */
@@ -81,7 +81,7 @@
 	name = "Podperson"
 	id = "pod"
 	default_color = "59CE00"
-	specflags = list(MUTCOLORS,EYECOLOR)
+	species_traits = list(MUTCOLORS,EYECOLOR)
 	attack_verb = "slash"
 	attack_sound = 'sound/weapons/slice.ogg'
 	miss_sound = 'sound/weapons/slashmiss.ogg'
@@ -129,7 +129,7 @@
 			if(prob(15))
 				H.rad_act(rand(30,80))
 				H.Weaken(5)
-				H.visible_message("<span class='warning'>[H] writhes in pain as \his vacuoles boil.</span>", "<span class='userdanger'>You writhe in pain as your vacuoles boil!</span>", "<span class='italics'>You hear the crunching of leaves.</span>")
+				H.visible_message("<span class='warning'>[H] writhes in pain as [H.p_their()] vacuoles boil.</span>", "<span class='userdanger'>You writhe in pain as your vacuoles boil!</span>", "<span class='italics'>You hear the crunching of leaves.</span>")
 				if(prob(80))
 					H.randmutb()
 				else
@@ -155,7 +155,7 @@
 	blacklisted = 1
 	ignored_by = list(/mob/living/simple_animal/hostile/faithless)
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/shadow
-	specflags = list(NOBREATH,NOBLOOD,RADIMMUNE,VIRUSIMMUNE)
+	species_traits = list(NOBREATH,NOBLOOD,RADIMMUNE,VIRUSIMMUNE)
 	dangerous_existence = 1
 	var/datum/action/innate/shadow/darkvision/vision_toggle
 
@@ -208,7 +208,7 @@
 	default_color = "00FF90"
 	say_mod = "chirps"
 	eyes = "jelleyes"
-	specflags = list(MUTCOLORS,EYECOLOR,NOBLOOD,VIRUSIMMUNE,TOXINLOVER)
+	species_traits = list(MUTCOLORS,EYECOLOR,NOBLOOD,VIRUSIMMUNE,TOXINLOVER)
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/slime
 	exotic_blood = "slimejelly"
 	var/datum/action/innate/regenerate_limbs/regenerate_limbs
@@ -305,7 +305,7 @@
 	id = "slime"
 	default_color = "00FFFF"
 	darksight = 3
-	specflags = list(MUTCOLORS,EYECOLOR,HAIR,FACEHAIR,NOBLOOD,VIRUSIMMUNE, TOXINLOVER)
+	species_traits = list(MUTCOLORS,EYECOLOR,HAIR,FACEHAIR,NOBLOOD,VIRUSIMMUNE, TOXINLOVER)
 	say_mod = "says"
 	eyes = "eyes"
 	hair_color = "mutcolor"
@@ -543,7 +543,7 @@
 	// Animated beings of stone. They have increased defenses, and do not need to breathe. They're also slow as fuuuck.
 	name = "Golem"
 	id = "iron"
-	specflags = list(NOBREATH,RESISTTEMP,NOGUNS,NOBLOOD,RADIMMUNE,VIRUSIMMUNE,PIERCEIMMUNE,NODISMEMBER,MUTCOLORS)
+	species_traits = list(NOBREATH,RESISTHOT,RESISTCOLD,RESISTPRESSURE,NOFIRE,NOGUNS,NOBLOOD,RADIMMUNE,VIRUSIMMUNE,PIERCEIMMUNE,NODISMEMBER,MUTCOLORS)
 	speedmod = 2
 	armor = 55
 	siemens_coeff = 0
@@ -589,7 +589,10 @@
 	id = "plasma"
 	fixed_mut_color = "a3d"
 	meat = /obj/item/weapon/ore/plasma
+	//Can burn and takes damage from heat
+	species_traits = list(NOBREATH,RESISTCOLD,RESISTPRESSURE,NOGUNS,NOBLOOD,RADIMMUNE,VIRUSIMMUNE,PIERCEIMMUNE,NODISMEMBER,MUTCOLORS)
 	info_text = "As a <span class='danger'>Plasma Golem</span>, you explode on death!."
+	burnmod = 1.5
 
 /datum/species/golem/plasma/spec_death(gibbed, mob/living/carbon/human/H)
 	explosion(get_turf(H),0,1,2,flame_range = 5)
@@ -636,6 +639,8 @@
 	speedmod = 4 //pretty fucking slow
 	meat = /obj/item/weapon/ore/iron
 	info_text = "As a <span class='danger'>Plasteel Golem</span>, you are slower, but harder to stun, and hit very hard when punching."
+	attack_verb = "smash"
+	attack_sound = "sound/effects/meteorimpact.ogg" //hits pretty hard
 
 //Immune to ash storms
 /datum/species/golem/titanium
@@ -697,11 +702,11 @@
 	id = "wood"
 	fixed_mut_color = "49311c"
 	meat = /obj/item/stack/sheet/mineral/wood
-	specflags = list(NOBREATH,NOGUNS,NOBLOOD,RADIMMUNE,VIRUSIMMUNE,PIERCEIMMUNE,NODISMEMBER,MUTCOLORS) //No RESISTTEMP, can burn
+	//Can burn and take damage from heat
+	species_traits = list(NOBREATH,RESISTCOLD,RESISTPRESSURE,NOGUNS,NOBLOOD,RADIMMUNE,VIRUSIMMUNE,PIERCEIMMUNE,NODISMEMBER,MUTCOLORS)
 	armor = 30
 	burnmod = 1.25
 	heatmod = 1.5
-	coldmod = 0 //keep the golem cold immunity
 	info_text = "As a <span class='danger'>Wooden Golem</span>, you have plant-like traits: you take damage from extreme temperatures, can be set on fire, and have lower armor than a normal golem. You regenerate when in the light and wither in the darkness."
 
 /datum/species/golem/wood/on_species_gain(mob/living/carbon/C, datum/species/old_species)
@@ -768,6 +773,7 @@
 	burnmod = 3 //melts easily
 	brutemod = 0.25
 	info_text = "As a <span class='danger'>Sand Golem</span>, you are immune to physical bullets and take very little brute damage, but are extremely vulnerable to burn damage. You will also turn to sand when dying, preventing any form of recovery."
+	attack_sound = "sound/effects/shovel_dig.ogg"
 
 /datum/species/golem/sand/spec_death(gibbed, mob/living/carbon/human/H)
 	H.visible_message("<span class='danger'>[H] turns into a pile of sand!</span>")
@@ -796,6 +802,7 @@
 	brutemod = 3 //very fragile
 	burnmod = 0.25
 	info_text = "As a <span class='danger'>Glass Golem</span>, you reflect lasers and energy weapons, and are very resistant to burn damage, but you are extremely vulnerable to brute damage. On death, you'll shatter beyond any hope of recovery."
+	attack_sound = "sound/effects/Glassbr2.ogg"
 
 /datum/species/golem/glass/spec_death(gibbed, mob/living/carbon/human/H)
 	playsound(H, "shatter", 70, 1)
@@ -834,6 +841,8 @@
 	fixed_mut_color = "33f"
 	meat = /obj/item/weapon/ore/bluespace_crystal
 	info_text = "As a <span class='danger'>Bluespace Golem</span>, are spatially unstable: you will teleport when hit, and you can teleport manually at a long distance."
+	attack_verb = "bluespace punch"
+	attack_sound = "sound/effects/phasein.ogg"
 
 	var/datum/action/innate/unstable_teleport/unstable_teleport
 	var/teleport_cooldown = 100
@@ -858,7 +867,7 @@
 
 /datum/species/golem/bluespace/spec_attack_hand(mob/living/carbon/human/M, mob/living/carbon/human/H, datum/martial_art/attacker_style = M.martial_art)
 	..()
-	if(world.time > last_teleport + teleport_cooldown && M != H &&  M.a_intent != "help")
+	if(world.time > last_teleport + teleport_cooldown && M != H &&  M.a_intent != INTENT_HELP)
 		reactive_teleport(H)
 
 /datum/species/golem/bluespace/spec_attacked_by(obj/item/I, mob/living/user, obj/item/bodypart/affecting, intent, mob/living/carbon/human/H)
@@ -899,7 +908,7 @@
 	var/mob/living/carbon/human/H = owner
 	H.visible_message("<span class='warning'>[H] starts vibrating!</span>", "<span class='danger'>You start charging your bluespace core...</span>")
 	playsound(get_turf(H), 'sound/weapons/flash.ogg', 25, 1)
-	addtimer(src, "teleport", 15)
+	addtimer(src, "teleport", 15, TIMER_NORMAL, H)
 
 /datum/action/innate/unstable_teleport/proc/teleport(mob/living/carbon/human/H)
 	H.visible_message("<span class='warning'>[H] disappears in a shower of sparks!</span>", "<span class='danger'>You teleport!</span>")
@@ -925,6 +934,8 @@
 	punchstunthreshold = 2 //Harmless and can't stun
 	meat = /obj/item/weapon/ore/bananium
 	info_text = "As a <span class='danger'>Bananium Golem</span>, you are made for pranking. Your body emits natural honks, and you cannot hurt people when punching them. Your skin also emits bananas when damaged."
+	attack_verb = "honk"
+	attack_sound = "sound/items/AirHorn2.ogg"
 
 	var/last_honk = 0
 	var/honkooldown = 0
@@ -934,7 +945,7 @@
 
 /datum/species/golem/bananium/spec_attack_hand(mob/living/carbon/human/M, mob/living/carbon/human/H, datum/martial_art/attacker_style = M.martial_art)
 	..()
-	if(world.time > last_banana + banana_cooldown && M != H &&  M.a_intent != "help")
+	if(world.time > last_banana + banana_cooldown && M != H &&  M.a_intent != INTENT_HELP)
 		new/obj/item/weapon/grown/bananapeel/specialpeel(get_turf(H))
 		last_banana = world.time
 
@@ -1024,7 +1035,7 @@
 	blacklisted = 1
 	sexes = 0
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/skeleton
-	specflags = list(NOBREATH,RESISTTEMP,NOBLOOD,RADIMMUNE,VIRUSIMMUNE,PIERCEIMMUNE,NOHUNGER,EASYDISMEMBER,EASYLIMBATTACHMENT)
+	species_traits = list(NOBREATH,RESISTHOT,RESISTCOLD,RESISTPRESSURE,NOBLOOD,RADIMMUNE,VIRUSIMMUNE,PIERCEIMMUNE,NOHUNGER,EASYDISMEMBER,EASYLIMBATTACHMENT)
 	mutant_organs = list(/obj/item/organ/tongue/bone)
 	damage_overlay_type = ""//let's not show bloody wounds or burns over bones.
 
@@ -1040,7 +1051,7 @@
 	sexes = 0
 	blacklisted = 1
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/zombie
-	specflags = list(NOBREATH,RESISTTEMP,NOBLOOD,RADIMMUNE,NOZOMBIE,EASYDISMEMBER,EASYLIMBATTACHMENT,TOXINLOVER)
+	species_traits = list(NOBREATH,RESISTCOLD,RESISTPRESSURE,NOBLOOD,RADIMMUNE,NOZOMBIE,EASYDISMEMBER,EASYLIMBATTACHMENT,TOXINLOVER)
 	mutant_organs = list(/obj/item/organ/tongue/zombie)
 
 /datum/species/zombie/infectious
@@ -1053,7 +1064,7 @@
 
 /datum/species/zombie/infectious/spec_life(mob/living/carbon/C)
 	. = ..()
-	C.a_intent = "harm" // THE SUFFERING MUST FLOW
+	C.a_intent = INTENT_HARM // THE SUFFERING MUST FLOW
 	if(C.InCritical())
 		C.death()
 		// Zombies only move around when not in crit, they instantly
@@ -1095,7 +1106,7 @@
 	darksight = 3
 	say_mod = "gibbers"
 	sexes = 0
-	specflags = list(NOBLOOD,NOBREATH,VIRUSIMMUNE,NOGUNS)
+	species_traits = list(NOBLOOD,NOBREATH,VIRUSIMMUNE,NOGUNS)
 	mutant_organs = list(/obj/item/organ/tongue/abductor)
 	var/scientist = 0 // vars to not pollute spieces list with castes
 	var/agent = 0
@@ -1109,7 +1120,7 @@ var/global/image/plasmaman_on_fire = image("icon"='icons/mob/OnFire.dmi', "icon_
 	say_mod = "rattles"
 	sexes = 0
 	meat = /obj/item/stack/sheet/mineral/plasma
-	specflags = list(NOBLOOD,RADIMMUNE,NOTRANSSTING,VIRUSIMMUNE,NOHUNGER)
+	species_traits = list(NOBLOOD,RESISTCOLD,RADIMMUNE,NOTRANSSTING,VIRUSIMMUNE,NOHUNGER)
 	mutantlungs = /obj/item/organ/lungs/plasmaman
 	dangerous_existence = 1 //So so much
 	blacklisted = 1 //See above
@@ -1156,19 +1167,25 @@ var/global/image/plasmaman_on_fire = image("icon"='icons/mob/OnFire.dmi', "icon_
 	if(unique)
 		return random_unique_plasmaman_name()
 
+	var/randname = plasmaman_name()
+
+	if(lastname)
+		randname += " [lastname]"
+
+	return randname
 
 /datum/species/synth
 	name = "Synth" //inherited from the real species, for health scanners and things
 	id = "synth"
 	say_mod = "beep boops" //inherited from a user's real species
 	sexes = 0
-	specflags = list(NOTRANSSTING,NOBREATH,VIRUSIMMUNE,NODISMEMBER,NOHUNGER) //all of these + whatever we inherit from the real species
+	species_traits = list(NOTRANSSTING,NOBREATH,VIRUSIMMUNE,NODISMEMBER,NOHUNGER) //all of these + whatever we inherit from the real species
 	dangerous_existence = 1
 	blacklisted = 1
 	meat = null
 	damage_overlay_type = "synth"
 	limbs_id = "synth"
-	var/list/initial_specflags = list(NOTRANSSTING,NOBREATH,VIRUSIMMUNE,NODISMEMBER,NOHUNGER) //for getting these values back for assume_disguise()
+	var/list/initial_species_traits = list(NOTRANSSTING,NOBREATH,VIRUSIMMUNE,NODISMEMBER,NOHUNGER) //for getting these values back for assume_disguise()
 	var/disguise_fail_health = 75 //When their health gets to this level their synthflesh partially falls off
 	var/datum/species/fake_species = null //a species to do most of our work for us, unless we're damaged
 
@@ -1199,8 +1216,8 @@ var/global/image/plasmaman_on_fire = image("icon"='icons/mob/OnFire.dmi', "icon_
 		name = S.name
 		say_mod = S.say_mod
 		sexes = S.sexes
-		specflags = initial_specflags.Copy()
-		specflags.Add(S.specflags)
+		species_traits = initial_species_traits.Copy()
+		species_traits.Add(S.species_traits)
 		attack_verb = S.attack_verb
 		attack_sound = S.attack_sound
 		miss_sound = S.miss_sound
@@ -1218,7 +1235,7 @@ var/global/image/plasmaman_on_fire = image("icon"='icons/mob/OnFire.dmi', "icon_
 	else
 		name = initial(name)
 		say_mod = initial(say_mod)
-		specflags = initial_specflags.Copy()
+		species_traits = initial_species_traits.Copy()
 		attack_verb = initial(attack_verb)
 		attack_sound = initial(attack_sound)
 		miss_sound = initial(miss_sound)
@@ -1280,7 +1297,7 @@ var/global/image/plasmaman_on_fire = image("icon"='icons/mob/OnFire.dmi', "icon_
 	name = "Android"
 	id = "android"
 	say_mod = "states"
-	specflags = list(NOBREATH,RESISTTEMP,NOBLOOD,VIRUSIMMUNE,PIERCEIMMUNE,NOHUNGER,EASYLIMBATTACHMENT)
+	species_traits = list(NOBREATH,RESISTHOT,RESISTCOLD,RESISTPRESSURE,NOFIRE,NOBLOOD,VIRUSIMMUNE,PIERCEIMMUNE,NOHUNGER,EASYLIMBATTACHMENT)
 	meat = null
 	damage_overlay_type = "synth"
 	limbs_id = "synth"
@@ -1319,14 +1336,14 @@ SYNDICATE BLACK OPS
 	attack_sound = "sound/weapons/resonator_blast.ogg"
 	blacklisted = 1
 	use_skintones = 0
-	specflags = list(RADIMMUNE,VIRUSIMMUNE,NOBLOOD,PIERCEIMMUNE,EYECOLOR,NODISMEMBER,NOHUNGER)
+	species_traits = list(RADIMMUNE,VIRUSIMMUNE,NOBLOOD,PIERCEIMMUNE,EYECOLOR,NODISMEMBER,NOHUNGER)
 	sexes = 0
 
 /datum/species/angel
 	name = "Angel"
 	id = "angel"
 	default_color = "FFFFFF"
-	specflags = list(EYECOLOR,HAIR,FACEHAIR,LIPS)
+	species_traits = list(EYECOLOR,HAIR,FACEHAIR,LIPS)
 	mutant_bodyparts = list("tail_human", "ears", "wings")
 	default_features = list("mcolor" = "FFF", "tail_human" = "None", "ears" = "None", "wings" = "Angel")
 	use_skintones = 1

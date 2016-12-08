@@ -102,7 +102,7 @@
 	add_logs(A, D, "neck chopped")
 	return 1
 
-datum/martial_art/krav_maga/grab_act(var/mob/living/carbon/human/A, var/mob/living/carbon/human/D)
+/datum/martial_art/krav_maga/grab_act(var/mob/living/carbon/human/A, var/mob/living/carbon/human/D)
 	if(check_streak(A,D))
 		return 1
 	add_logs(A, D, "grabbed with krav maga")

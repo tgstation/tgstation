@@ -66,7 +66,7 @@
 	desc = "Device used to transmit exosuit data."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "motion2"
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	origin_tech = "programming=2;magnets=2"
 
 /obj/item/mecha_parts/mecha_tracking/proc/get_mecha_info()

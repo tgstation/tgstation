@@ -250,7 +250,7 @@
 						return 1
 				user << "<span class='warning'>You cannot add that to the machine!</span>"
 				return 0
-	if(user.a_intent == "harm")
+	if(user.a_intent == INTENT_HARM)
 		return ..()
 
 
