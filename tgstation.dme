@@ -1574,6 +1574,7 @@
 #include "code\modules\mob\living\simple_animal\hostile\mushroom.dm"
 #include "code\modules\mob\living\simple_animal\hostile\nanotrasen.dm"
 #include "code\modules\mob\living\simple_animal\hostile\pirate.dm"
+#include "code\modules\mob\living\simple_animal\hostile\remote_control.dm"
 #include "code\modules\mob\living\simple_animal\hostile\russian.dm"
 #include "code\modules\mob\living\simple_animal\hostile\skeleton.dm"
 #include "code\modules\mob\living\simple_animal\hostile\statue.dm"
