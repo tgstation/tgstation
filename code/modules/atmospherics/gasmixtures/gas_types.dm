@@ -87,7 +87,14 @@ var/list/hardcoded_gases = list("o2","n2","co2","plasma") //the main four gases,
 	specific_heat = 20
 	name = "BZ"
 
-/obj/effect/overlay/gas
+/datum/gas/chem_gas
+	id = "chem_gas"
+	specific_heat = 20
+	name = "Chemicals"
+	gas_overlay = "chem_gas"
+	moles_visible = MOLES_PLASMA_VISIBLE
+
+/obj/effect/overlay/gas/
 	icon = 'icons/effects/tile_effects.dmi'
 	mouse_opacity = 0
 	layer = FLY_LAYER
