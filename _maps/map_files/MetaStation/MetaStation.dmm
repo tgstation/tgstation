@@ -3471,16 +3471,10 @@
 /area/ai_monitored/security/armory)
 "agh" = (
 /obj/structure/rack,
-/obj/item/weapon/gun/energy/e_gun/advtaser{
-	pixel_x = -3;
-	pixel_y = 3
-	},
-/obj/item/weapon/gun/energy/e_gun/advtaser,
-/obj/item/weapon/gun/energy/e_gun/advtaser{
-	pixel_x = 3;
-	pixel_y = -3
-	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/item/weapon/gun/energy/frame/hybrid_taser,
+/obj/item/weapon/gun/energy/frame/hybrid_taser,
+/obj/item/weapon/gun/energy/frame/hybrid_taser,
 /turf/open/floor/plasteel/vault{
 	dir = 1
 	},
@@ -3490,15 +3484,9 @@
 /area/ai_monitored/security/armory)
 "agj" = (
 /obj/structure/rack,
-/obj/item/weapon/gun/energy/laser{
-	pixel_x = -3;
-	pixel_y = 3
-	},
-/obj/item/weapon/gun/energy/laser,
-/obj/item/weapon/gun/energy/laser{
-	pixel_x = 3;
-	pixel_y = -3
-	},
+/obj/item/weapon/gun/energy/frame/lasergun,
+/obj/item/weapon/gun/energy/frame/lasergun,
+/obj/item/weapon/gun/energy/frame/lasergun,
 /turf/open/floor/plasteel/vault{
 	dir = 4
 	},
@@ -3954,15 +3942,9 @@
 /area/ai_monitored/security/armory)
 "aha" = (
 /obj/structure/rack,
-/obj/item/weapon/gun/energy/e_gun{
-	pixel_x = -3;
-	pixel_y = 3
-	},
-/obj/item/weapon/gun/energy/e_gun,
-/obj/item/weapon/gun/energy/e_gun{
-	pixel_x = 3;
-	pixel_y = -3
-	},
+/obj/item/weapon/gun/energy/frame/egun,
+/obj/item/weapon/gun/energy/frame/egun,
+/obj/item/weapon/gun/energy/frame/egun,
 /turf/open/floor/plasteel/vault{
 	dir = 4
 	},

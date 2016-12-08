@@ -46856,31 +46856,16 @@
 /area/security/armory)
 "bPk" = (
 /obj/structure/rack,
-/obj/item/weapon/gun/energy/e_gun/advtaser{
-	pixel_x = -3;
-	pixel_y = 3
-	},
-/obj/item/weapon/gun/energy/e_gun/advtaser,
-/obj/item/weapon/gun/energy/e_gun/advtaser{
-	pixel_x = 3;
-	pixel_y = -3
-	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/item/weapon/gun/energy/frame/hybrid_taser,
+/obj/item/weapon/gun/energy/frame/hybrid_taser,
+/obj/item/weapon/gun/energy/frame/hybrid_taser,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
 /area/security/armory)
 "bPl" = (
 /obj/structure/rack,
-/obj/item/weapon/gun/energy/laser{
-	pixel_x = -3;
-	pixel_y = 3
-	},
-/obj/item/weapon/gun/energy/laser,
-/obj/item/weapon/gun/energy/laser{
-	pixel_x = 3;
-	pixel_y = -3
-	},
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
@@ -46888,21 +46873,18 @@
 	pixel_y = 0;
 	tag = ""
 	},
+/obj/item/weapon/gun/energy/frame/lasergun,
+/obj/item/weapon/gun/energy/frame/lasergun,
+/obj/item/weapon/gun/energy/frame/lasergun,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
 /area/security/armory)
 "bPm" = (
 /obj/structure/rack,
-/obj/item/weapon/gun/energy/e_gun{
-	pixel_x = -3;
-	pixel_y = 3
-	},
-/obj/item/weapon/gun/energy/e_gun,
-/obj/item/weapon/gun/energy/e_gun{
-	pixel_x = 3;
-	pixel_y = -3
-	},
+/obj/item/weapon/gun/energy/frame/egun,
+/obj/item/weapon/gun/energy/frame/egun,
+/obj/item/weapon/gun/energy/frame/egun,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
