@@ -36,7 +36,7 @@
 	req_tech = list("combat" = 1, "materials" = 1)
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 500, MAT_GLASS = 300)
-	build_path = /obj/item/weapon/gun_attachment/barrel/medium
+	build_path = /obj/item/weapon/gun_attachment/barrel/long
 	category = list("Guncrafting Parts")
 
 /datum/design/barrel_silencer
