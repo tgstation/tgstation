@@ -1,0 +1,4 @@
+author: "MrStonedOne"
+delete-after: True
+changes: 
+  - bugfix: "fixed the modify bodypart admin tool not working"
