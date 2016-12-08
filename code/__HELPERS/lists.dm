@@ -425,5 +425,6 @@
 
 #define UNSETEMPTY(L) if (L && !L.len) L = null
 #define LAZYREMOVE(L, I) if(L) {L -= I; UNSETEMPTY(L);}
+#define LAZYADD(L, I) if(!L) {L = list();} L += I;
 
 #define LAZYLEN(L) ( L ? L.len : 0 )
