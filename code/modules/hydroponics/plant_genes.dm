@@ -78,6 +78,22 @@
 	S.potency = value
 
 
+/datum/plant_gene/core/weed_rate
+	name = "Weed Growth Rate"
+	value = 1
+
+/datum/plant_gene/core/weed_rate/apply_stat(obj/item/seeds/S)
+	S.weed_rate = value
+
+
+/datum/plant_gene/core/weed_chance
+	name = "Weed Vulnerability"
+	value = 5
+
+/datum/plant_gene/core/weed_chance/apply_stat(obj/item/seeds/S)
+	S.weed_chance = value
+
+
 // Reagent genes store reagent ID and reagent ratio. Amount of reagent in the plant = 1 + (potency * rate)
 /datum/plant_gene/reagent
 	name = "Nutriment"

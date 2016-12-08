@@ -52,6 +52,8 @@
 	if(!nogenes) // not used on Copy()
 		genes += new /datum/plant_gene/core/lifespan(lifespan)
 		genes += new /datum/plant_gene/core/endurance(endurance)
+		genes += new /datum/plant_gene/core/weed_rate(weed_rate)
+		genes += new /datum/plant_gene/core/weed_chance(weed_chance)
 		if(yield != -1)
 			genes += new /datum/plant_gene/core/yield(yield)
 			genes += new /datum/plant_gene/core/production(production)
@@ -75,6 +77,8 @@
 	S.production = production
 	S.yield = yield
 	S.potency = potency
+	S.weed_rate = weed_rate
+	S.weed_chance = weed_chance
 	S.genes = list()
 	for(var/g in genes)
 		var/datum/plant_gene/G = g
@@ -90,12 +94,14 @@
 	for(var/datum/plant_gene/reagent/R in genes)
 		reagents_add[R.reagent_id] = R.rate
 
-/obj/item/seeds/proc/mutate(lifemut = 2, endmut = 5, productmut = 1, yieldmut = 2, potmut = 25, traitmut = 0)
+/obj/item/seeds/proc/mutate(lifemut = 2, endmut = 5, productmut = 1, yieldmut = 2, potmut = 25, wrmut = 2, wcmut = 5, traitmut = 0)
 	adjust_lifespan(rand(-lifemut,lifemut))
 	adjust_endurance(rand(-endmut,endmut))
 	adjust_production(rand(-productmut,productmut))
 	adjust_yield(rand(-yieldmut,yieldmut))
 	adjust_potency(rand(-potmut,potmut))
+	adjust_weed_rate(rand(-wrmut, wrmut))
+	adjust_weed_chance(rand(-wcmut, wcmut))
 	if(prob(traitmut))
 		add_random_traits(1, 1)
 
@@ -198,6 +204,18 @@
 		if(C)
 			C.value = potency
 
+/obj/item/seeds/proc/adjust_weed_rate(adjustamt)
+	weed_rate = Clamp(weed_rate + adjustamt, 0, 100)
+	var/datum/plant_gene/core/C = get_gene(/datum/plant_gene/core/weed_rate)
+	if(C)
+		C.value = weed_rate
+
+/obj/item/seeds/proc/adjust_weed_chance(adjustamt)
+	weed_chance = Clamp(weed_chance + adjustamt, 0, 100)
+	var/datum/plant_gene/core/C = get_gene(/datum/plant_gene/core/weed_chance)
+	if(C)
+		C.value = weed_chance
+
 //Directly setting stats
 
 /obj/item/seeds/proc/set_yield(adjustamt)
@@ -236,6 +254,18 @@
 		if(C)
 			C.value = potency
 
+/obj/item/seeds/proc/set_weed_rate(adjustamt)
+	weed_rate = Clamp(adjustamt, 0, 100)
+	var/datum/plant_gene/core/C = get_gene(/datum/plant_gene/core/weed_rate)
+	if(C)
+		C.value = weed_rate
+
+/obj/item/seeds/proc/set_weed_chance(adjustamt)
+	weed_chance = Clamp(adjustamt, 0, 100)
+	var/datum/plant_gene/core/C = get_gene(/datum/plant_gene/core/weed_chance)
+	if(C)
+		C.value = weed_chance
+
 
 /obj/item/seeds/proc/get_analyzer_text()  //in case seeds have something special to tell to the analyzer
 	var/text = ""
@@ -256,6 +286,8 @@
 		text += "- Production speed: [production]\n"
 	text += "- Endurance: [endurance]\n"
 	text += "- Lifespan: [lifespan]\n"
+	text += "- Weed Growth Rate: [weed_rate]\n"
+	text += "- Weed Vulnerability: [weed_chance]\n"
 	if(rarity)
 		text += "- Species Discovery Value: [rarity]\n"
 
