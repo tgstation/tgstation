@@ -4,7 +4,7 @@
 /obj/machinery/porta_turret
 	name = "turret"
 	icon = 'icons/obj/turrets.dmi'
-	icon_state = "grey_target_prism"
+	icon_state = "turretCover"
 	anchored = 1
 	layer = OBJ_LAYER
 	invisibility = INVISIBILITY_OBSERVER	//the turret is invisible if it's inside its cover
@@ -574,6 +574,7 @@
 	lethal_projectile = /obj/item/projectile/bullet
 	lethal_projectile_sound = 'sound/weapons/Gunshot.ogg'
 	stun_projectile_sound = 'sound/weapons/Gunshot.ogg'
+	icon_state = "syndie_off"
 	base_icon_state = "syndie"
 	faction = "syndicate"
 	emp_vunerable = 0
