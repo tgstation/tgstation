@@ -571,15 +571,6 @@
 //////////////Borg Upgrades//////////////
 /////////////////////////////////////////
 
-/datum/design/borg_upgrade_reset
-	name = "Cyborg Upgrade (Module Reset Board)"
-	id = "borg_upgrade_reset"
-	build_type = MECHFAB
-	build_path = /obj/item/borg/upgrade/reset
-	materials = list(MAT_METAL=10000)
-	construction_time = 120
-	category = list("Cyborg Upgrade Modules")
-
 /datum/design/borg_upgrade_rename
 	name = "Cyborg Upgrade (Rename Board)"
 	id = "borg_upgrade_rename"
