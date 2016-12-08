@@ -1031,3 +1031,9 @@ var/list/freeze_item_icons = list()
 		F.is_frozen = TRUE
 		return
 	return
+
+//Assumes already frozed
+obj/proc/make_unfrozen(obj/F)
+	F.icon = initial(F.icon)
+	F.name = replacetext(F.name, "frozen ", "")
+	F.is_frozen = FALSE
