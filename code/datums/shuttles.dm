@@ -114,9 +114,9 @@
 		active GPS onboard labeled STV5."
 	credit_cost = -7500
 
-/datum/map_template/shuttle/emergency/fuck_shuttle
-	suffix = "fuck_shuttle"
-	name = "Fuck Shuttle \"Bluespace Catastrophe Edition!\""
+/datum/map_template/shuttle/emergency/bluespace_catastrophe
+	suffix = "bluespace_catastrophe"
+	name = "The Bluespace Catastrophe!"
 	credit_cost = 2000
 	description = "After a Bluespace incident where several shuttles were \
 		'accidentally' fused with eachother, NanoTrasen has decided \
