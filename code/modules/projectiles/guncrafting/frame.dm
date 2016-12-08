@@ -10,17 +10,6 @@
 /obj/item/weapon/gun/energy/frame/testing
 	pin = /obj/item/device/firing_pin/test_range
 
-
-/obj/item/weapon/gun/energy/frame/attackby(obj/item/I, mob/user, params)
-	..()
-	if(istype(I, /obj/item/weapon/stock_parts/cell))
-		user << "You swap the battery in [src] for [I]."
-		user.drop_item()
-		user.put_in_hands(power_supply)
-		power_supply = I
-		I.forceMove(src)
-		update_icon()
-
 /obj/item/weapon/gun_attachment/frame/energy
 	hacky_as_fuck = /obj/item/weapon/gun/energy/frame
 
