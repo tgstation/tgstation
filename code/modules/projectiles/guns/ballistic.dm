@@ -123,7 +123,6 @@
 	else
 		user << "<span class='notice'>There's no magazine in \the [src].</span>"
 	update_icon()
-	return
 
 
 /obj/item/weapon/gun/ballistic/examine(mob/user)

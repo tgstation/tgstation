@@ -1,5 +1,5 @@
 /obj/item/weapon/gun_attachment/bullet
-	gun_type = PROJECTILE
+	gun_type = CUSTOMIZABLE_PROJECTILE
 	uses_overlay = FALSE
 	icon_state = "bullet"
 

@@ -1,5 +1,5 @@
 /obj/item/weapon/gun_attachment/energy_bullet
-	gun_type = ENERGY
+	gun_type = CUSTOMIZABLE_ENERGY
 	uses_overlay = FALSE
 	icon_state = "bullet"
 

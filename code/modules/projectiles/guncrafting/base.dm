@@ -8,12 +8,12 @@
 	..()
 	owner.base = src
 	switch(gun_type)
-		if(PROJECTILE)
+		if(CUSTOMIZABLE_PROJECTILE)
 			var/obj/item/weapon/gun/ballistic/O = owner
 			O.mag_type = mag_type
 			O.magazine = new mag_type(O)
 			O.chamber_round(1)
-		if(ENERGY)
+		if(CUSTOMIZABLE_ENERGY)
 			var/obj/item/weapon/gun/energy/E = owner
 			for(var/EN in energy_type)
 				var/obj/item/ammo_casing/energy/energy_casing = EN
@@ -24,10 +24,10 @@
 /obj/item/weapon/gun_attachment/base/on_remove(var/obj/item/weapon/gun/owner)
 	..()
 	switch(gun_type)
-		if(PROJECTILE)
+		if(CUSTOMIZABLE_PROJECTILE)
 			var/obj/item/weapon/gun/ballistic/O = owner
 			O.mag_type = null
-		if(ENERGY)
+		if(CUSTOMIZABLE_ENERGY)
 			var/obj/item/weapon/gun/energy/E = owner
 			E.ammo_type = list()
 			E.power_supply = new(E)

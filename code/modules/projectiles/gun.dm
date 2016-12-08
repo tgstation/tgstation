@@ -1,5 +1,5 @@
-#define PROJECTILE "projectile"
-#define ENERGY "energy"
+#define CUSTOMIZABLE_PROJECTILE "projectile"
+#define CUSTOMIZABLE_ENERGY "energy"
 #define BOTHTYPES "both"
 #define MAX_ATTACHMENTS 6
 

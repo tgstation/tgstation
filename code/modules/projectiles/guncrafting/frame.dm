@@ -1,7 +1,7 @@
 /obj/item/weapon/gun/energy/frame
 	name = "energy gun frame"
 	desc = "A frame for constructing an Energy Gun."
-	customizable_type = ENERGY
+	customizable_type = CUSTOMIZABLE_ENERGY
 	icon = 'icons/obj/guncrafting/main.dmi'
 	icon_state = "frame_energy"
 	charge_sections = 2
@@ -17,7 +17,7 @@
 /obj/item/weapon/gun/ballistic/frame
 	name = "projectile gun frame"
 	desc = "A frame for constructing an Projectile Gun."
-	customizable_type = PROJECTILE
+	customizable_type = CUSTOMIZABLE_PROJECTILE
 	icon = 'icons/obj/guncrafting/main.dmi'
 	icon_state = "frame_projectile"
 
