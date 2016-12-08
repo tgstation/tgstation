@@ -153,7 +153,6 @@
 
 		if(buckled_obj)
 			buckled_obj.unbuckle_mob(C)
-			C.slipping = TRUE
 			step(buckled_obj, olddir)
 		else if(lube&SLIDE)
 			C.slipping = TRUE
