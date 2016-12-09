@@ -16509,6 +16509,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
+/obj/machinery/portable_atmospherics/canister/chem_gas,
 /turf/open/floor/plasteel/floorgrime,
 /area/toxins/storage)
 "aFo" = (
@@ -16518,9 +16519,11 @@
 	scrub_N2O = 0;
 	scrub_Toxins = 0
 	},
+/obj/machinery/portable_atmospherics/canister/freon,
 /turf/open/floor/plasteel/floorgrime,
 /area/toxins/storage)
 "aFp" = (
+/obj/machinery/portable_atmospherics/canister/chem_gas,
 /turf/open/floor/plasteel/floorgrime,
 /area/toxins/storage)
 "aFq" = (
@@ -16535,6 +16538,7 @@
 /obj/machinery/light_switch{
 	pixel_x = 23
 	},
+/obj/machinery/portable_atmospherics/canister/freon,
 /turf/open/floor/plasteel/floorgrime,
 /area/toxins/storage)
 "aFr" = (
@@ -24246,6 +24250,7 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/machinery/portable_atmospherics/canister/chem_gas,
 /turf/open/floor/plasteel/caution{
 	dir = 1
 	},
@@ -24678,6 +24683,7 @@
 	dir = 8;
 	initialize_directions = 11
 	},
+/obj/machinery/portable_atmospherics/canister/chem_gas,
 /turf/open/floor/plasteel,
 /area/atmos)
 "aWd" = (
@@ -25263,6 +25269,7 @@
 	scrub_N2O = 0;
 	scrub_Toxins = 0
 	},
+/obj/machinery/portable_atmospherics/canister/freon,
 /turf/open/floor/plasteel,
 /area/atmos)
 "aXi" = (
@@ -25790,6 +25797,7 @@
 /turf/open/floor/plasteel/bot,
 /area/atmos)
 "aYj" = (
+/obj/machinery/portable_atmospherics/canister/freon,
 /turf/open/floor/plasteel/loadingarea{
 	dir = 1
 	},
@@ -55534,22 +55542,25 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "chF" = (
-/turf/closed/wall/mineral/titanium/overspace,
-/area/shuttle/pod_1)
+/obj/machinery/portable_atmospherics/canister/freon,
+/turf/open/floor/plasteel/floorgrime,
+/area/toxins/storage)
 "chG" = (
 /obj/structure/window/shuttle,
 /obj/structure/grille,
 /turf/open/floor/plating,
 /area/shuttle/pod_1)
 "chH" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall_s9";
-	dir = 2
-	},
-/area/shuttle/pod_1)
+/obj/machinery/portable_atmospherics/canister/chem_gas,
+/turf/open/floor/plasteel/white,
+/area/medical/chemistry)
 "chI" = (
-/turf/closed/wall/mineral/titanium/overspace,
-/area/shuttle/pod_2)
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/machinery/portable_atmospherics/canister/chem_gas,
+/turf/open/floor/plasteel/white,
+/area/medical/chemistry)
 "chJ" = (
 /obj/structure/window/shuttle,
 /obj/structure/grille,
@@ -84853,7 +84864,7 @@ aAx
 aBG
 aCQ
 aCQ
-aFp
+chF
 aGp
 aHJ
 aHJ
@@ -84862,8 +84873,8 @@ aLs
 aMI
 aOg
 aPn
-aQC
-aPn
+chI
+chH
 aSy
 aTJ
 aUE
@@ -85118,7 +85129,7 @@ aHK
 aLs
 aMJ
 aOh
-aPn
+chH
 aQD
 aRH
 aLr

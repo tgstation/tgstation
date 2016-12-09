@@ -5427,6 +5427,7 @@
 /obj/machinery/light{
 	dir = 1
 	},
+/obj/machinery/portable_atmospherics/canister/freon,
 /turf/open/floor/plasteel/white,
 /area/medical/research{
 	name = "Research Division"
@@ -5436,6 +5437,7 @@
 	dir = 2;
 	pixel_y = 24
 	},
+/obj/machinery/portable_atmospherics/canister/freon,
 /turf/open/floor/plasteel/white,
 /area/medical/research{
 	name = "Research Division"
@@ -5446,6 +5448,7 @@
 	pixel_x = -5;
 	pixel_y = 30
 	},
+/obj/machinery/portable_atmospherics/canister/chem_gas,
 /turf/open/floor/plasteel/white,
 /area/medical/research{
 	name = "Research Division"
@@ -6226,6 +6229,7 @@
 /obj/machinery/conveyor_switch{
 	id = "ToxinLoad"
 	},
+/obj/machinery/portable_atmospherics/canister/chem_gas,
 /turf/open/floor/plasteel/warnwhite/corner{
 	dir = 2
 	},
@@ -9724,6 +9728,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 5
 	},
+/obj/machinery/portable_atmospherics/canister/chem_gas,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay)
 "ve" = (
@@ -13528,12 +13533,18 @@
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/syndicate)
 "DZ" = (
-/obj/structure/lattice,
-/obj/structure/transit_tube{
-	icon_state = "N-S-Pass"
+/obj/structure/window/reinforced{
+	dir = 8
 	},
-/turf/open/space,
-/area/space)
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/machinery/conveyor{
+	id = "CanisterStore"
+	},
+/obj/machinery/portable_atmospherics/canister/chem_gas,
+/turf/open/floor/plasteel,
+/area/engine/engineering)
 "Ea" = (
 /turf/closed/wall,
 /area/tcommsat/computer)
@@ -13577,12 +13588,18 @@
 /turf/open/space,
 /area/space)
 "Ef" = (
-/obj/structure/transit_tube{
-	icon_state = "D-SW"
+/obj/structure/window/reinforced{
+	dir = 8
 	},
-/obj/structure/lattice,
-/turf/open/space,
-/area/space)
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/machinery/conveyor{
+	id = "CanisterStore"
+	},
+/obj/machinery/portable_atmospherics/canister/freon,
+/turf/open/floor/plasteel,
+/area/engine/engineering)
 "Eg" = (
 /obj/machinery/door/airlock/external{
 	name = "Telecomms Emergency Access";
@@ -13644,11 +13661,16 @@
 /turf/open/floor/plating/airless,
 /area/space)
 "Ep" = (
-/obj/structure/transit_tube{
-	icon_state = "D-NE"
+/obj/structure/window/reinforced{
+	dir = 4
 	},
-/turf/open/space,
-/area/space)
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/machinery/door/window/southright,
+/obj/machinery/portable_atmospherics/canister/freon,
+/turf/open/floor/plasteel/black,
+/area/engine/engineering)
 "Eq" = (
 /obj/structure/transit_tube/curved{
 	dir = 4
@@ -50664,10 +50686,10 @@ xV
 su
 Dy
 yA
-yJ
-yJ
-yJ
-zF
+DZ
+DZ
+Ef
+Ep
 Ac
 za
 AE

@@ -12708,6 +12708,7 @@
 	tag = "icon-manifold-r-f (NORTH)";
 	dir = 1
 	},
+/obj/machinery/portable_atmospherics/canister/freon,
 /turf/open/floor/plasteel/arrival{
 	dir = 1
 	},
@@ -12721,6 +12722,7 @@
 	scrub_N2O = 0;
 	scrub_Toxins = 0
 	},
+/obj/machinery/portable_atmospherics/canister/freon,
 /turf/open/floor/plasteel/blue/side{
 	dir = 1
 	},
@@ -12730,6 +12732,7 @@
 	dir = 2;
 	on = 1
 	},
+/obj/machinery/portable_atmospherics/canister/chem_gas,
 /turf/open/floor/plasteel/red/side{
 	tag = "icon-red (NORTH)";
 	dir = 1
@@ -12760,6 +12763,7 @@
 	pixel_x = 0;
 	pixel_y = 0
 	},
+/obj/machinery/portable_atmospherics/canister/chem_gas,
 /turf/open/floor/plasteel/escape{
 	tag = "icon-escape (NORTH)";
 	dir = 1
@@ -25582,6 +25586,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
+/obj/machinery/portable_atmospherics/canister/chem_gas,
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
 "bbo" = (
@@ -26295,6 +26300,7 @@
 	scrub_N2O = 0;
 	scrub_Toxins = 0
 	},
+/obj/machinery/portable_atmospherics/canister/chem_gas,
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
 "bcL" = (
@@ -67408,12 +67414,14 @@
 	dir = 4;
 	network = list("SS13","Sci")
 	},
+/obj/machinery/portable_atmospherics/canister/chem_gas,
 /turf/open/floor/plasteel/floorgrime,
 /area/toxins/storage)
 "cEh" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 6
 	},
+/obj/machinery/portable_atmospherics/canister/chem_gas,
 /turf/open/floor/plasteel/floorgrime,
 /area/toxins/storage)
 "cEi" = (
@@ -67422,6 +67430,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
+/obj/machinery/portable_atmospherics/canister/chem_gas,
 /turf/open/floor/plasteel/floorgrime,
 /area/toxins/storage)
 "cEj" = (
@@ -67944,6 +67953,7 @@
 	icon_state = "tube1";
 	dir = 8
 	},
+/obj/machinery/portable_atmospherics/canister/freon,
 /turf/open/floor/plasteel/floorgrime,
 /area/toxins/storage)
 "cFh" = (
@@ -67955,6 +67965,7 @@
 	dir = 1;
 	on = 1
 	},
+/obj/machinery/portable_atmospherics/canister/freon,
 /turf/open/floor/plasteel/floorgrime,
 /area/toxins/storage)
 "cFi" = (
@@ -67962,6 +67973,7 @@
 	tag = "icon-4-8";
 	icon_state = "4-8"
 	},
+/obj/machinery/portable_atmospherics/canister/freon,
 /turf/open/floor/plasteel/floorgrime,
 /area/toxins/storage)
 "cFj" = (
