@@ -441,13 +441,7 @@
 /mob/living/movement_delay(ignorewalk = 0)
 	. = ..()
 	if(isopenturf(loc) && !is_flying())
-		var/turf/open/T = loc
-		var/insulate = 0
-		for(var/obj/O in T.contents)
-			if(istype(O, /obj/structure/lattice/catwalk))
-				insulate = 1
-		if(!insulate)
-			. += T.slowdown
+		. += T.slowdown
 	if(ignorewalk)
 		. += config.run_speed
 	else
