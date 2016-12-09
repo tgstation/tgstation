@@ -146,16 +146,6 @@ EMAGGED FUNCTIONS - TODO
 		toggle_access(href_list["access"])
 	change_airlock_access(user)
 
-/obj/item/weapon/rtd/ui_action_click(owner, action)
-	if(user != owner)
-		user = owner
-	if(istype(action, /datum/action/item_action/rtd/gas))
-		toggle_gas_enrichment(owner)
-	if(istype(action, /datum/action/item_action/rtd/access))
-		change_airlock_access(owner)
-	if(istype(action, /datum/action/item_action/rtd/type))
-		change_airlock_setting(owner)
-
 /obj/item/weapon/rtd/proc/toggle_access(acc)
 	if (acc == "all")
 		conf_access = null
@@ -595,17 +585,40 @@ EMAGGED FUNCTIONS - TODO
 		user << NO_AMMO_MESSAGE
 	return .
 
+/datum/action/item_action/rtd
+	name = "RTD Action Generic"
+	var/obj/item/weapon/rtd/I
+
+/datum/action/item_action/rtd/Trigger()
+	if(target)
+		if(istype(target, /obj/item/weapon/rtd))
+			I = target
+	if(I.user != owner)
+		I.user = owner
+
 /datum/action/item_action/rtd/access
 	name = "RTD: Set Airlock Access"
 	button_icon_state = "rcd_access"
 	background_icon_state = "bg_default"
+
+/datum/action/item_action/rtd/access/Trigger()
+	..()
+	I.change_airlock_access(owner)
 
 /datum/action/item_action/rtd/type
 	name = "RTD: Set Airlock Type"
 	button_icon_state = "rcd_type"
 	background_icon_state = "bg_default"
 
+/datum/action/item_action/rtd/type/Trigger()
+	..()
+	I.change_airlock_setting(owner)
+
 /datum/action/item_action/rtd/gas
 	name = "RTD: Set O2 Concentration"
 	button_icon_state = "rtd_gas"
 	background_icon_state = "bg_default"
+
+/datum/action/item_action/rtd/gas/Trigger()
+	..()
+	I.toggle_gas_enrichment(owner)
