@@ -31,6 +31,8 @@
 		  action='freon_scrub' params='{"id_tag": "{{id_tag}}", "val": {{+!filter_freon}}}'>Freon</ui-button>
 		<ui-button icon='{{filter_water_vapor ? "check-square-o" : "square-o"}}' style='{{filter_water_vapor ? "selected" : null}}'
 		  action='water_vapor_scrub' params='{"id_tag": "{{id_tag}}", "val": {{+!filter_water_vapor}}}'>Water Vapor</ui-button>
+		<ui-button icon='{{filter_chem_gas ? "check-square-o" : "square-o"}}' style='{{filter_chem_gas ? "selected" : null}}'
+		  action='chem_gas_scrub' params='{"id_tag": "{{id_tag}}", "val": {{+!filter_chem_gas}}}'>Chemicals</ui-button>
       </ui-section>
     </ui-subdisplay>
   {{else}}
