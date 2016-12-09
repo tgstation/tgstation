@@ -48,6 +48,7 @@ EMAGGED FUNCTIONS - TODO
 	var/advanced_airlock_setting = 1
 	var/sheetmultiplier	= 8
 	var/plasteelmultiplier = 5
+	var/ironoreworth = 2.5
 	var/gas_amount = (MOLES_CELLSTANDARD * 2)
 	var/gas_regen_delay = 5
 
