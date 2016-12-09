@@ -440,7 +440,7 @@
 		if(A.parallax_movedir != 0)
 			var/movedir = A.parallax_movedir
 			parallax_movedir_in_area(A, 0)
-			parallax_launch_in_area(A, movedir, 1)
+			parallax_launch_in_area(A, -movedir, 1)
 
 	var/obj/docking_port/stationary/S0 = get_docked()
 	var/turf_type = /turf/open/space
