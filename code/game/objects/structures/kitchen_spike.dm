@@ -28,7 +28,7 @@
 			return
 		user << "<span class='notice'>You begin cutting \the [src] apart...</span>"
 		playsound(src.loc, "sound/items/Welder.ogg", 40, 1)
-		if(do_after(user, 40/WT.toolspeed, 1, target = src))
+		if(do_after(user, 40*WT.toolspeed, 1, target = src))
 			if(!WT.isOn())
 				return
 			playsound(src.loc, "sound/items/Welder.ogg", 50, 1)
@@ -62,7 +62,7 @@
 	if(istype(I, /obj/item/weapon/crowbar))
 		if(!has_buckled_mobs())
 			playsound(loc, 'sound/items/Crowbar.ogg', 100, 1)
-			if(do_after(user, 20/I.toolspeed, target = src))
+			if(do_after(user, 20*I.toolspeed, target = src))
 				user << "<span class='notice'>You pry the spikes out of the frame.</span>"
 				deconstruct(TRUE)
 		else

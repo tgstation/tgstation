@@ -135,7 +135,7 @@
 	if(istype(I, /obj/item/weapon/crowbar))
 		user.visible_message("<span class='notice'>[user] begins slowly prying up [src]...</span>", "<span class='notice'>You begin painstakingly prying up [src]...</span>")
 		playsound(src, 'sound/items/Crowbar.ogg', 20, 1)
-		if(!do_after(user, 70 / I.toolspeed, target = src))
+		if(!do_after(user, 70*I.toolspeed, target = src))
 			return 0
 		user.visible_message("<span class='notice'>[user] pries up [src]!</span>", "<span class='notice'>You pry up [src]!</span>")
 		playsound(src, 'sound/items/Crowbar.ogg', 80, 1)

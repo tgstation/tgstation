@@ -159,7 +159,7 @@
 
 		playsound(loc, pick('sound/items/Welder.ogg', 'sound/items/Welder2.ogg'), 50, 1)
 		user << "<span class='notice'>You start to cut the [src] apart...</span>"
-		if(do_after(user, 20/I.toolspeed, target = src))
+		if(do_after(user, 20*I.toolspeed, target = src))
 			if(!WT.isOn() || !WT.remove_fuel(5, user))
 				return
 			user << "<span class='notice'>You cut the [src] apart.</span>"

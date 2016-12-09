@@ -717,7 +717,7 @@ var/list/obj/machinery/newscaster/allCasters = list()
 	if(istype(I, /obj/item/weapon/wrench))
 		user << "<span class='notice'>You start [anchored ? "un" : ""]securing [name]...</span>"
 		playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
-		if(do_after(user, 60/I.toolspeed, target = src))
+		if(do_after(user, 60*I.toolspeed, target = src))
 			playsound(loc, 'sound/items/Deconstruct.ogg', 50, 1)
 			if(stat & BROKEN)
 				user << "<span class='warning'>The broken remains of [src] fall on the ground.</span>"
@@ -736,7 +736,7 @@ var/list/obj/machinery/newscaster/allCasters = list()
 								"<span class='notice'>You begin repairing [src]...</span>", \
 								"<span class='italics'>You hear welding.</span>")
 				playsound(loc, 'sound/items/Welder.ogg', 40, 1)
-				if(do_after(user,40/WT.toolspeed, 1, target = src))
+				if(do_after(user,40*WT.toolspeed, 1, target = src))
 					if(!WT.isOn() || !(stat & BROKEN))
 						return
 					user << "<span class='notice'>You repair [src].</span>"

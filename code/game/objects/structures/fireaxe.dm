@@ -31,7 +31,7 @@
 		if(obj_integrity < max_integrity && WT.remove_fuel(2, user))
 			user << "<span class='notice'>You begin repairing [src].</span>"
 			playsound(loc, 'sound/items/Welder.ogg', 40, 1)
-			if(do_after(user, 40/I.toolspeed, target = src))
+			if(do_after(user, 40*I.toolspeed, target = src))
 				obj_integrity = max_integrity
 				playsound(loc, 'sound/items/Welder2.ogg', 50, 1)
 				update_icon()

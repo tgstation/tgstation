@@ -41,7 +41,7 @@
 	if(istype(I, /obj/item/weapon/wrench) && !stored_extinguisher)
 		user << "<span class='notice'>You start unsecuring [name]...</span>"
 		playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
-		if(do_after(user, 60/I.toolspeed, target = src))
+		if(do_after(user, 60*I.toolspeed, target = src))
 			playsound(loc, 'sound/items/Deconstruct.ogg', 50, 1)
 			user << "<span class='notice'>You unsecure [name].</span>"
 			deconstruct(TRUE)

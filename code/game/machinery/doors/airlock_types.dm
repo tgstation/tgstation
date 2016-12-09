@@ -482,7 +482,7 @@
 		if(construction_state == GEAR_SECURE)
 			user.visible_message("<span class='notice'>[user] begins unfastening [src]'s cogwheel...</span>", "<span class='notice'>You begin unfastening [src]'s cogwheel...</span>")
 			playsound(src, I.usesound, 50, 1)
-			if(!do_after(user, 100 / I.toolspeed, target = src))
+			if(!do_after(user, 100*I.toolspeed, target = src))
 				return 1 //Returns 1 so as not to have extra interactions with the tools used (i.e. prying open)
 			user.visible_message("<span class='notice'>[user] unfastens [src]'s cogwheel!</span>", "<span class='notice'>[src]'s cogwheel shifts slightly with a pop.</span>")
 			playsound(src, 'sound/items/Screwdriver2.ogg', 50, 1)
@@ -490,7 +490,7 @@
 		else if(construction_state == GEAR_UNFASTENED)
 			user.visible_message("<span class='notice'>[user] begins fastening [src]'s cogwheel...</span>", "<span class='notice'>You begin fastening [src]'s cogwheel...</span>")
 			playsound(src, I.usesound, 50, 1)
-			if(!do_after(user, 75 / I.toolspeed, target = src))
+			if(!do_after(user, 75*I.toolspeed, target = src))
 				return 1
 			user.visible_message("<span class='notice'>[user] fastens [src]'s cogwheel!</span>", "<span class='notice'>[src]'s cogwheel shifts back into place.</span>")
 			playsound(src, 'sound/items/Screwdriver2.ogg', 50, 1)
@@ -505,7 +505,7 @@
 		else if(construction_state == GEAR_UNFASTENED)
 			user.visible_message("<span class='notice'>[user] begins loosening [src]'s cogwheel...</span>", "<span class='notice'>You begin loosening [src]'s cogwheel...</span>")
 			playsound(src, I.usesound, 50, 1)
-			if(!do_after(user, 100 / I.toolspeed, target = src))
+			if(!do_after(user, 100*I.toolspeed, target = src))
 				return 1
 			user.visible_message("<span class='notice'>[user] loosens [src]'s cogwheel!</span>", "<span class='notice'>[src]'s cogwheel pops off and dangles loosely.</span>")
 			playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
@@ -513,7 +513,7 @@
 		else if(construction_state == GEAR_LOOSE)
 			user.visible_message("<span class='notice'>[user] begins tightening [src]'s cogwheel...</span>", "<span class='notice'>You begin tightening [src]'s cogwheel into place...</span>")
 			playsound(src, I.usesound, 50, 1)
-			if(!do_after(user, 75 / I.toolspeed, target = src))
+			if(!do_after(user, 75*I.toolspeed, target = src))
 				return 1
 			user.visible_message("<span class='notice'>[user] tightens [src]'s cogwheel!</span>", "<span class='notice'>You firmly tighten [src]'s cogwheel into place.</span>")
 			playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
@@ -526,7 +526,7 @@
 		else if(construction_state == GEAR_LOOSE)
 			user.visible_message("<span class='notice'>[user] begins slowly lifting off [src]'s cogwheel...</span>", "<span class='notice'>You slowly begin lifting off [src]'s cogwheel...</span>")
 			playsound(src, I.usesound, 50, 1)
-			if(!do_after(user, 100 / I.toolspeed, target = src))
+			if(!do_after(user, 100*I.toolspeed, target = src))
 				return 1
 			user.visible_message("<span class='notice'>[user] lifts off [src]'s cogwheel, causing it to fall apart!</span>", \
 			"<span class='notice'>You lift off [src]'s cogwheel, causing it to fall apart!</span>")

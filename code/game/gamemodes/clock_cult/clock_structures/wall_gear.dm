@@ -31,7 +31,7 @@
 		else
 			playsound(src, I.usesound, 100, 1)
 			user.visible_message("<span class='warning'>[user] starts to disassemble [src].</span>", "<span class='notice'>You start to disassemble [src]...</span>")
-			if(do_after(user, 40/I.toolspeed, target = src) && !anchored)
+			if(do_after(user, 40*I.toolspeed, target = src) && !anchored)
 				user << "<span class='notice'>You disassemble [src].</span>"
 				deconstruct(TRUE)
 		return 1
