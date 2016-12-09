@@ -43,12 +43,12 @@
 	ChangeTurf(/turf/open/floor/plating)
 
 /turf/closed/wall/proc/break_wall()
-	var/obj/item/stack/sheet/builtin_sheet = new sheet_type(loc)
+	var/obj/item/stack/sheet/builtin_sheet = new sheet_type(src)
 	builtin_sheet.amount = 2
 	return (new /obj/structure/girder(src))
 
 /turf/closed/wall/proc/devastate_wall()
-	var/obj/item/stack/sheet/builtin_sheet = new sheet_type(loc)
+	var/obj/item/stack/sheet/builtin_sheet = new sheet_type(src)
 	builtin_sheet.amount = 2
 	new /obj/item/stack/sheet/metal(src)
 

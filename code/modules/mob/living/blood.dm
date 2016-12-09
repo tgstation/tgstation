@@ -162,8 +162,13 @@
 		blood_data["trace_chem"] = list2params(temp_chem)
 		if(mind)
 			blood_data["mind"] = mind
+		else if(last_mind)
+			blood_data["mind"] = last_mind
 		if(ckey)
 			blood_data["ckey"] = ckey
+		else if(last_mind)
+			blood_data["ckey"] = ckey(last_mind.key)
+
 		if(!suiciding)
 			blood_data["cloneable"] = 1
 		blood_data["blood_type"] = copytext(dna.blood_type,1,0)

@@ -121,7 +121,7 @@
 	return 1
 
 /turf/open/handle_slip(mob/living/carbon/C, s_amount, w_amount, obj/O, lube)
-	if(C.movement_type & FLYING)
+	if((C.movement_type & FLYING) || C.slipping)
 		return 0
 	if(has_gravity(src))
 		var/obj/buckled_obj
@@ -144,25 +144,29 @@
 			C.accident(I)
 
 		var/olddir = C.dir
-		if(!(lube&SLIDE_ICE))
+		if(!(lube & SLIDE_ICE))
 			C.Stun(s_amount)
 			C.Weaken(w_amount)
 			C.stop_pulling()
 		else
 			C.Stun(1)
+
 		if(buckled_obj)
 			buckled_obj.unbuckle_mob(C)
 			step(buckled_obj, olddir)
 		else if(lube&SLIDE)
+			C.slipping = TRUE
 			for(var/i=1, i<5, i++)
 				spawn (i)
+					if(i == 4)
+						C.slipping = FALSE
 					step(C, olddir)
 					C.spin(1,1)
 		else if(lube&SLIDE_ICE)
 			C.slipping = TRUE
 			spawn(1)
-				step(C, olddir)
 				C.slipping = FALSE
+				step(C, olddir)
 		return 1
 
 /turf/open/proc/MakeSlippery(wet_setting = TURF_WET_WATER, min_wet_time = 0, wet_time_to_add = 0) // 1 = Water, 2 = Lube, 3 = Ice, 4 = Permafrost, 5 = Slide

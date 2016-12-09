@@ -25,6 +25,7 @@
 	var/obj/item/ears = null //only used by humans.
 
 	var/datum/dna/dna = null//Carbon
+	var/datum/mind/last_mind = null //last mind to control this mob, for blood-based cloning
 
 	var/failed_last_breath = 0 //This is used to determine if the mob failed a breath. If they did fail a brath, they will attempt to breathe each tick, otherwise just once per 4 ticks.
 
