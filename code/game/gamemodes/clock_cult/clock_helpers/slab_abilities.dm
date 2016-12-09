@@ -273,6 +273,7 @@
 				(islist(LT.stun_absorption) && LT.stun_absorption["vanguard"] && LT.stun_absorption["vanguard"]["end_time"] > world.time))
 					continue
 				LT.apply_status_effect(STATUS_EFFECT_VANGUARD)
+				break
 		else
 			L.apply_status_effect(STATUS_EFFECT_VANGUARD)
 		ranged_ability_user.apply_status_effect(STATUS_EFFECT_VANGUARD)
