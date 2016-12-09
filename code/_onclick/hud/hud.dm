@@ -57,12 +57,12 @@
 	mymob = owner
 
 	ui_style_icon = ui_style
-	
+
 	hide_actions_toggle = new
 	hide_actions_toggle.InitialiseIcon(src)
-	
+
 	hand_slots = list()
-	
+
 	for(var/mytype in subtypesof(/obj/screen/plane_master))
 		var/obj/screen/plane_master/instance = new mytype()
 		plane_masters["[instance.plane]"] = instance
@@ -208,6 +208,7 @@
 	mymob.update_action_buttons(1)
 	reorganize_alerts()
 	mymob.reload_fullscreen()
+	create_parallax()
 
 
 /datum/hud/human/show_hud(version = 0,mob/viewmob)

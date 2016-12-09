@@ -48,6 +48,8 @@
 	var/area/master				// master area used for power calcluations
 	var/list/related			// the other areas of the same type as this
 
+	var/parallax_movedir = 0
+
 	var/global/global_uid = 0
 	var/uid
 	var/list/ambientsounds = list('sound/ambience/ambigen1.ogg','sound/ambience/ambigen3.ogg',\

@@ -30,6 +30,8 @@ var/datum/subsystem/mobs/SSmob
 		currentrun.len--
 		if(M)
 			M.Life(seconds)
+			if(M.client && M.hud_used)
+				M.hud_used.update_parallax_movingmob()
 		else
 			mob_list.Remove(M)
 		if (MC_TICK_CHECK)
