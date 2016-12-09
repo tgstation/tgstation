@@ -87,6 +87,7 @@
 			ckey = pilot.ckey
 
 /mob/living/simple_animal/hostile/remote_control/emp_act(severity)
+	src << "Bzzzzzzzzzt. Connection lost."
 	eject_pilot()
 
 /mob/living/simple_animal/hostile/remote_control/AltClick(mob/living/user)
