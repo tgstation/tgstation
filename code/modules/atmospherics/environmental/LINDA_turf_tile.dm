@@ -120,7 +120,7 @@
 		if(gas[GAS_META][META_GAS_OVERLAY] && gas[MOLES] > gas[GAS_META][META_GAS_MOLES_VISIBLE])
 			if(id == "chem_gas")
 				var/obj/effect/overlay/gas/G = gas[GAS_META][META_GAS_OVERLAY]
-				if(reagent_gas.len)
+				if(length(reagent_gas.len))
 					G.color = mix_color_from_reagents(reagent_gas)
 				. += G
 			else
