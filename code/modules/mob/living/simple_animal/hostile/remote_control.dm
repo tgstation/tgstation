@@ -86,6 +86,9 @@
 		else
 			ckey = pilot.ckey
 
+/mob/living/simple_animal/hostile/remote_control/emp_act(severity)
+	eject_pilot()
+
 /mob/living/simple_animal/hostile/remote_control/AltClick(mob/living/user)
 	if(user.canUseTopic(src))
 		assume_control(user)
