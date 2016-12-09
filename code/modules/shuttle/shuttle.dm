@@ -432,6 +432,16 @@
 		if(!canMove())
 			return -1
 
+	if(istype(S1.loc, /turf/open/space/transit))
+		var/new_movedir = turn(S1.loc.dir, 180)
+		parallax_movedir_in_area(get_area(src), new_movedir)
+	else
+		var/area/A = get_area(src)
+		if(A.parallax_movedir != 0)
+			var/movedir = A.parallax_movedir
+			parallax_movedir_in_area(A, 0)
+			parallax_launch_in_area(A, movedir, 1)
+
 	var/obj/docking_port/stationary/S0 = get_docked()
 	var/turf_type = /turf/open/space
 	var/area_type = /area/space
