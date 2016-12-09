@@ -1,5 +1,5 @@
 /datum/round_event_control/sentience
-	name = "Sentience"
+	name = "Random Human-level Intelligence"
 	typepath = /datum/round_event/ghost_role/sentience
 	weight = 5
 
@@ -36,7 +36,7 @@
 	SA.health = SA.maxHealth
 	SA.del_on_death = FALSE
 
+	SA << "<span class='userdanger'>Hello world!</span>"
 	SA << "<span class='warning'>Due to freak radiation and/or chemicals \
-		and/or lucky chance, you have gained sentience!</span>"
-	SA << "<span class='userdanger'>Hello world! What you do with your free \
-		will is up to you.</span>"
+		and/or lucky chance, you have gained human level intelligence \
+		and the ability to speak and understand human language!</span>"
