@@ -107,6 +107,7 @@
 	owner.throw_alert("clockinfo", /obj/screen/alert/clockwork/infodump)
 	if(!clockwork_gateway_activated)
 		owner.throw_alert("scripturereq", /obj/screen/alert/clockwork/scripture_reqs)
+	update_slab_info()
 	..()
 
 /datum/antagonist/clockcultist/remove_innate_effects()
@@ -133,6 +134,7 @@
 		R.module.rebuild_modules()
 	if(temp_owner)
 		temp_owner.update_action_buttons_icon() //because a few clockcult things are action buttons and we may be wearing/holding them, we need to update buttons
+	update_slab_info()
 
 /datum/antagonist/clockcultist/on_remove()
 	if(!silent_update)
