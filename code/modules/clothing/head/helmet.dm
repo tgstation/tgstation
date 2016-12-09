@@ -13,7 +13,6 @@
 	strip_delay = 60
 	resistance_flags = 0
 	flags_cover = HEADCOVERSEYES
-
 	dog_fashion = /datum/dog_fashion/head/helmet
 
 

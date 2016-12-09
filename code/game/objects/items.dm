@@ -91,6 +91,18 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 	var/block_chance = 0
 	var/hit_reaction_chance = 0 //If you want to have something unrelated to blocking/armour piercing etc. Maybe not needed, but trying to think ahead/allow more freedom
 
+	/* Species-specific sprites, concept stolen from Paradise//vg/.
+	ex:
+	sprite_sheets = list(
+		"Tajaran" = 'icons/cat/are/bad'
+		)
+	If index term exists and icon_override is not set, this sprite sheet will be used.
+	*/
+	var/list/sprite_sheets = null
+	var/icon_override = null  //Used to override hardcoded clothing dmis in human clothing proc.
+	var/sprite_sheets_obj = null //Used to override hardcoded clothing inventory object dmis in human clothing proc.
+	var/list/species_fit = null //This object has a different appearance when worn by these species
+
 	//The list of slots by priority. equip_to_appropriate_slot() uses this list. Doesn't matter if a mob type doesn't have a slot.
 	var/list/slot_equipment_priority = null // for default list, see /mob/proc/equip_to_appropriate_slot()
 
