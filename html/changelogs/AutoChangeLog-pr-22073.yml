@@ -1,0 +1,5 @@
+author: "optional name here"
+delete-after: True
+changes: 
+  - bugfix: "fixed ashdrake's flame wall."
+  - bugfix: "fixed walls decon spawning metal in a random location in the same room."
