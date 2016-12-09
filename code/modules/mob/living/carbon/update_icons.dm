@@ -75,11 +75,12 @@
 		if(!t_state)
 			t_state = I.icon_state
 
-		var/icon_file = I.lefthand_file
-		if(get_held_index_of_item(I) % 2 == 0)
-			icon_file = I.righthand_file
+		var/image/standing = I.build_worn_icon(state = t_state, default_layer = HANDS_LAYER, default_icon_file = I.righthand_file, isinhands = TRUE)
 
-		var/image/standing = I.build_worn_icon(state = t_state, default_layer = HANDS_LAYER, default_icon_file = icon_file, isinhands = TRUE)
+		if(get_held_index_of_item(I) % 2 == 1)
+			var/reflect = matrix(-1, 0, 0, 0, 1, 0)
+			standing.transform = reflect
+
 		hands += standing
 
 	overlays_standing[HANDS_LAYER] = hands

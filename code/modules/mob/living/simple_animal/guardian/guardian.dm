@@ -293,8 +293,10 @@ var/global/list/parasites = list() //all currently existing/living guardians
 		if(!l_state)
 			l_state = l_hand.icon_state
 
-		var/image/l_hand_image = l_hand.build_worn_icon(state = l_state, default_layer = GUARDIAN_HANDS_LAYER, default_icon_file = l_hand.lefthand_file, isinhands = TRUE)
+		var/image/l_hand_image = l_hand.build_worn_icon(state = l_state, default_layer = GUARDIAN_HANDS_LAYER, default_icon_file = l_hand.righthand_file, isinhands = TRUE)
 
+		var/reflect = matrix(-1, 0, 0, 0, 1, 0)
+		l_hand_image.transform = reflect
 		hands_overlays += l_hand_image
 
 		if(client && hud_used && hud_used.hud_version != HUD_STYLE_NOHUD)
