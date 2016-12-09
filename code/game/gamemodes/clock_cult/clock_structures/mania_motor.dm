@@ -18,14 +18,14 @@
 	var/convert_attempt_cost = 200
 	var/convert_cost = 200
 
-	var/mania_messages = list("Go nuts.", "Take a crack at crazy.", "Make a bid for insanity.", "Get kooky.", "Move towards mania.", "Become bewildered.", "Wax wild.", "Go round the bend.", \
-	"Land in lunacy.", "Try dementia.", "Strive to get a screw loose.")
-	var/compel_messages = list("Come closer.", "Approach the transmitter.", "Touch the antennae.", "I always have to deal with idiots. Move towards the mania motor.", \
+	var/static/list/mania_messages = list("Go nuts.", "Take a crack at crazy.", "Make a bid for insanity.", "Get kooky.", "Move towards mania.", "Become bewildered.", "Wax wild.", \
+	"Go round the bend.", "Land in lunacy.", "Try dementia.", "Strive to get a screw loose.")
+	var/static/list/compel_messages = list("Come closer.", "Approach the transmitter.", "Touch the antennae.", "I always have to deal with idiots. Move towards the mania motor.", \
 	"Advance forward and place your head between the antennae - that's all it's good for.", "If you were smarter, you'd be over here already.", "Move FORWARD, you fool.")
-	var/convert_messages = list("You won't do. Go to sleep while I tell these nitwits how to convert you.", "You are insufficient. I must instruct these idiots in the art of conversion.", \
+	var/static/list/convert_messages = list("You won't do. Go to sleep while I tell these nitwits how to convert you.", "You are insufficient. I must instruct these idiots in the art of conversion.", \
 	"Oh of course, someone we can't convert. These servants are fools.", "How hard is it to use a Sigil, anyway? All it takes is dragging someone onto it.", \
 	"How do they fail to use a Sigil of Accession, anyway?", "Why is it that all servants are this inept?", "It's quite likely you'll be stuck here for a while.")
-	var/close_messages = list("Well, you can't reach the motor from THERE, you moron.", "Interesting location. I'd prefer if you went somewhere you could ACTUALLY TOUCH THE ANTENNAE!", \
+	var/static/list/close_messages = list("Well, you can't reach the motor from THERE, you moron.", "Interesting location. I'd prefer if you went somewhere you could ACTUALLY TOUCH THE ANTENNAE!", \
 	"Amazing. You somehow managed to wedge yourself somewhere you can't actually reach the motor from.", "Such a show of idiocy is unparalleled. Perhaps I should put you on display?", \
 	"Did you do this on purpose? I can't imagine you doing so accidentally. Oh, wait, I can.", "How is it that such smart creatures can still do something AS STUPID AS THIS!")
 
