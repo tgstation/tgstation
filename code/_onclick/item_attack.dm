@@ -8,8 +8,7 @@
 	return
 
 /obj/attackby(obj/item/I, mob/living/user, params)
-	if(unique_rename)
-		if(istype(I, /obj/item/weapon/pen))
+	if(unique_rename && istype(I, /obj/item/weapon/pen))
 			var/penchoice = alert("What would you like to edit?", "Rename or change description?", "Rename", "Change description", "Cancel")
 			if(!qdeleted(src) && user.canUseTopic(src, BE_CLOSE))
 				if(penchoice == "Rename")
