@@ -1,4 +1,0 @@
-author: "Incoming5643"
-delete-after: True
-changes: 
-  - rscadd: "Server owners may now customize the population levels required to play various modes. Keep in mind that this does not preserve the balance of the mode if you change it drastically. See game_modes.txt for details."

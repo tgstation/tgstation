@@ -82,7 +82,11 @@
 		return
 
 	if(teleporting)
-		user << "<span class='warning'>[src] charging. Please wait.</span>"
+		user << "<span class='warning'>[src] is charging up. Please wait.</span>"
+		return
+
+	if(linked_pad.teleporting)
+		user << "<span class='warning'>Linked pad is busy. Please wait.</span>"
 		return
 
 	if(linked_pad.stat & NOPOWER)
@@ -99,9 +103,7 @@
 
 /obj/machinery/quantumpad/proc/doteleport(mob/user)
 	if(linked_pad)
-		if(teleport_speed > 20)
-			flick("qpad-beam", src)
-			playsound(get_turf(src), 'sound/weapons/flash.ogg', 25, 1)
+		playsound(get_turf(src), 'sound/weapons/flash.ogg', 25, 1)
 		teleporting = 1
 
 		spawn(teleport_speed)

@@ -9,7 +9,6 @@
 	maturation = 10
 	production = 1
 	yield = 5
-	oneharvest = 1
 	growthstages = 3
 	growing_icon = 'icons/obj/hydroponics/growing_vegetables.dmi'
 	mutatelist = list(/obj/item/seeds/carrot/parsnip)
@@ -65,7 +64,6 @@
 	lifespan = 60
 	endurance = 50
 	yield = 6
-	oneharvest = 1
 	growing_icon = 'icons/obj/hydroponics/growing_vegetables.dmi'
 	icon_dead = "whitebeet-dead"
 	mutatelist = list(/obj/item/seeds/redbeet)
@@ -90,9 +88,9 @@
 	lifespan = 60
 	endurance = 50
 	yield = 6
-	oneharvest = 1
 	growing_icon = 'icons/obj/hydroponics/growing_vegetables.dmi'
 	icon_dead = "whitebeet-dead"
+	genes = list(/datum/plant_gene/trait/maxchem)
 	reagents_add = list("vitamin" = 0.05, "nutriment" = 0.05)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/redbeet

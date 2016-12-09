@@ -301,6 +301,7 @@ var/global/chicken_count = 0
 	reagents = new(50)
 	reagents.my_atom = src
 	reagents.add_reagent("milk", 20)
+	..()
 
 /obj/item/udder/proc/generateMilk()
 	if(prob(5))

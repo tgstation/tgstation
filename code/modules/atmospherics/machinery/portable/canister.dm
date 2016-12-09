@@ -288,6 +288,9 @@
 				var/newtype = label2types[label]
 				if(newtype)
 					var/obj/machinery/portable_atmospherics/canister/replacement = new newtype(loc, air_contents)
+					if(connected_port)
+						replacement.connected_port = connected_port
+						replacement.connected_port.connected_device = replacement
 					replacement.interact(usr)
 					qdel(src)
 		if("pressure")

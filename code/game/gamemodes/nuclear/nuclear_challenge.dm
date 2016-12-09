@@ -17,17 +17,32 @@
 		return
 
 	declaring_war = 1
-	var/are_you_sure = alert(user, "Consult your team carefully before you declare war on [station_name()]]. Are you sure you want to alert the enemy crew?", "Declare war?", "Yes", "No")
+	var/are_you_sure = alert(user, "Consult your team carefully before you declare war on [station_name()]]. Are you sure you want to alert the enemy crew? You have [round((world.time-round_start_time - CHALLENGE_TIME_LIMIT)/10)] seconds to decide", "Declare war?", "Yes", "No")
 	declaring_war = 0
-	if(are_you_sure == "No")
-		user << "On second thought, the element of surprise isn't so bad after all."
-		return
+
 	if(!check_allowed(user))
 		return
 
-	declaring_war = 1
+	if(are_you_sure == "No")
+		user << "On second thought, the element of surprise isn't so bad after all."
+		return
+
 	var/war_declaration = "[user.real_name] has declared his intent to utterly destroy [station_name()] with a nuclear device, and dares the crew to try and stop them."
+	var/custom_threat = alert(user, "Do you want to customize your declaration?", "Customize?", "Yes", "No")
+
+	if(custom_threat == "No")
+		return
+
+	if(!check_allowed(user))
+		return
+
+	war_declaration = stripped_input(user, "Insert your custom declaration", "Declaration")
+
+	if(!check_allowed(user) && !war_declaration)
+		return
+
 	priority_announce(war_declaration, title = "Declaration of War", sound = 'sound/machines/Alarm.ogg')
+
 	user << "You've attracted the attention of powerful forces within the syndicate. A bonus bundle of telecrystals has been granted to your team. Great things await you if you complete the mission."
 
 	for(var/V in syndicate_shuttle_boards)
@@ -43,6 +58,7 @@
 
 /obj/item/device/nuclear_challenge/proc/check_allowed(mob/living/user)
 	if(declaring_war)
+		user << "You are already in the process of declaring war! Make your mind up."
 		return 0
 	if(player_list.len < CHALLENGE_MIN_PLAYERS)
 		user << "The enemy crew is too small to be worth declaring war on."
