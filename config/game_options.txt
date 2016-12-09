@@ -312,6 +312,7 @@ SEC_START_BRIG
 ## Set to 0/commented for "off", silicons will just start with Asimov.
 ## Set to 1 for "custom", silicons will start with the custom laws defined in silicon_laws.txt. (If silicon_laws.txt is empty, the AI will spawn with asimov and Custom boards will auto-delete.)
 ## Set to 2 for "random", silicons will start with a random lawset picked from random laws specified below.
+## Set to 3 for "weighted random", silicons will start with a random lawset, 80% of the time it will be standard-ish, and 20% of the time it will be quirky.
 DEFAULT_LAWS 0
 
 ## RANDOM LAWS ##

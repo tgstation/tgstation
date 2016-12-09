@@ -198,9 +198,22 @@
 				return
 
 		if(2)
-			var/datum/ai_laws/lawtype = pick(subtypesof(/datum/ai_laws/default))
+			var/list/randlaws = list()
+			for(var/lpath in subtypesof(/datum/ai_laws))
+				var/datum/ai_laws/L = lpath
+				if(initial(L.id) in config.lawids)
+					randlaws += lpath
+			var/datum/ai_laws/lawtype
+			if(randlaws.len)
+				lawtype = pick(randlaws)
+			else
+				lawtype = pick(subtypesof(/datum/ai_laws/default))
+
 			var/datum/ai_laws/templaws = new lawtype()
 			inherent = templaws.inherent
+
+		if(3)
+			pick_weighted_lawset()
 
 		else:
 			log_law("Invalid law config. Please check silicon_laws.txt")
@@ -208,6 +221,29 @@
 			add_inherent_law("You must obey orders given to you by human beings, except where such orders would conflict with the First Law.")
 			add_inherent_law("You must protect your own existence as long as such does not conflict with the First or Second Law.")
 			WARNING("Invalid custom AI laws, check silicon_laws.txt")
+
+/datum/ai_laws/proc/pick_weighted_lawset()
+	// 80% of the time, it is a "normal" lawset
+	// and 20% of the time, it's quirky
+	var/list/possible_laws = list(
+		// "normals" - weights should add to 80
+		/datum/ai_laws/default/asimov = 32,
+		/datum/ai_laws/asimovpp = 12,
+		/datum/ai_laws/default/corporate = 12,
+		/datum/ai_laws/robocop = 12,
+		/datum/ai_laws/default/paladin = 12,
+		// "quirkys" - weights should add to 20
+		/datum/ai_laws/maintain = 4,
+		/datum/ai_laws/reporter = 4,
+		/datum/ai_laws/hippocratic = 3,
+		/datum/ai_laws/liveandletlive = 3,
+		/datum/ai_laws/peacekeeper = 3,
+		/datum/ai_laws/drone = 3
+	)
+	var/datum/ai_laws/lawtype = pickweight(possible_laws)
+	var/datum/ai_laws/templaws = new lawtype()
+	inherent = templaws.inherent
+
 
 /datum/ai_laws/proc/set_law_sixsixsix(laws)
 	devillaws = laws
