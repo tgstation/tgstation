@@ -17,7 +17,7 @@
 	Therefore, the top right corner (except during admin shenanigans) is at "15,15"
 */
 
-//Lower left, persistant menu
+//Lower left, persistent menu
 #define ui_inventory "WEST:6,SOUTH:5"
 
 //Middle left indicators
@@ -28,7 +28,7 @@
 
 #define ui_devilsouldisplay "WEST:6,CENTER-1:15"
 
-//Lower center, persistant menu
+//Lower center, persistent menu
 #define ui_sstore1 "CENTER-5:10,SOUTH:5"
 #define ui_id "CENTER-4:12,SOUTH:5"
 #define ui_belt "CENTER-3:14,SOUTH:5"
@@ -77,7 +77,7 @@
 #define ui_drone_storage "CENTER-2:14,SOUTH:5"  //maintenance drones
 #define ui_drone_head "CENTER-3:14,SOUTH:5"     //maintenance drones
 
-//Lower right, persistant menu
+//Lower right, persistent menu
 #define ui_drop_throw "EAST-1:28,SOUTH+1:7"
 #define ui_pull_resist "EAST-2:26,SOUTH+1:7"
 #define ui_movi "EAST-2:26,SOUTH:5"
@@ -153,4 +153,3 @@
 #define ui_deityhealth "EAST-1:28,CENTER-2:13"
 #define ui_deitypower	"EAST-1:28,CENTER-1:15"
 #define ui_deityfollowers "EAST-1:28,CENTER:17"
-

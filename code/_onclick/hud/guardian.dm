@@ -77,7 +77,7 @@
 	using.screen_loc = ui_inventory
 	static_inventory += using
 
-/datum/hud/dextrous/guardian/persistant_inventory_update()
+/datum/hud/dextrous/guardian/persistent_inventory_update()
 	if(!mymob)
 		return
 	if(istype(mymob, /mob/living/simple_animal/hostile/guardian/dextrous))

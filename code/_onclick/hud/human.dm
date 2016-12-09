@@ -371,7 +371,7 @@
 
 
 
-/datum/hud/human/persistant_inventory_update(mob/viewer)
+/datum/hud/human/persistent_inventory_update(mob/viewer)
 	if(!mymob)
 		return
 	..()

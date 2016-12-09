@@ -46,7 +46,7 @@
 	infodisplay += devilsouldisplay
 
 
-/datum/hud/devil/persistant_inventory_update()
+/datum/hud/devil/persistent_inventory_update()
 	if(!mymob)
 		return
 	var/mob/living/carbon/true_devil/D = mymob
