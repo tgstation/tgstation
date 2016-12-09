@@ -290,6 +290,7 @@
 
 		beaker =  I
 		beaker.loc = src
+		LAZYINITLIST(beaker.reagents.reagent_list)
 		user << "<span class='notice'>You add the beaker to the machine.</span>"
 		updateUsrDialog()
 		icon_state = "mixer1"

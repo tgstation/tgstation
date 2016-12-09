@@ -64,6 +64,7 @@
 			return
 		beaker = I
 		I.loc = src
+		LAZYINITLIST(beaker.reagents.reagent_list)
 		user << "<span class='notice'>You add the beaker to the machine.</span>"
 		icon_state = "mixer1b"
 		return
