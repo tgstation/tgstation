@@ -132,7 +132,7 @@
 			if(TURF_WET_SLIDE)
 				M.slip(0, 4, null, (SLIDE|GALOSHES_DONT_HELP))
 	//melting
-	if(isobj(AM) && GetTemperature() > T0C)
+	if(isobj(AM) && air && air.temperature > T0C)
 		var/obj/O = AM
 		if(O.is_frozen)
 			O.make_unfrozen()
