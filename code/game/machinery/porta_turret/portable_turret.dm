@@ -542,6 +542,7 @@
 		A = new lethal_projectile(T)
 		playsound(loc, lethal_projectile_sound, 75, 1)
 
+	
 	//Shooting Code:
 	A.original = target
 	A.current = T
@@ -792,6 +793,7 @@
 	var/obj/item/ammo_box/mag = mag_type
 	var/obj/item/ammo_casing/primary_ammo = initial(mag.ammo_type)
 
+	.["base_icon_state"] = "syndie"
 	.["stun_projectile"] = initial(primary_ammo.projectile_type)
 	.["stun_projectile_sound"] = initial(primary_ammo.fire_sound)
 	.["lethal_projectile"] = .["stun_projectile"]
