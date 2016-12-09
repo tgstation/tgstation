@@ -48,7 +48,6 @@ EMAGGED FUNCTIONS - TODO
 	var/advanced_airlock_setting = 1
 	var/sheetmultiplier	= 8
 	var/plasteelmultiplier = 5
-	var/ironoreworth = 5
 	var/gas_amount = (MOLES_CELLSTANDARD * 2)
 	var/gas_regen_delay = 5
 
@@ -61,18 +60,18 @@ EMAGGED FUNCTIONS - TODO
 	COST| FUNCTION
 	10	|Asteroid walls to walls
 	5	|Lavaland floors to plating
-	5	|Builds catwalks on lava.
+	20	|Builds catwalks on lava.
 	SEPARATE FROM OTHERS - Blasts compressed air to pressurize areas
 	25	|Builds airlocks with higher health than normal airlocks, but the same security level.
-	15	|Catwalks over chasms
+	60	|Catwalks over chasms
 	2	|Build membrane barriers - Basically walls that will break in a single hit from just about anything and is best left for emergency usage.
 	0	|Remove Catwalks - Just incase antags get ahold of it or you really need a lava disposals bin. Honk.
 	*/
 
 	var/wallcost = 10
 	var/floorcost = 5
-	var/catwalkcost = 5
-	var/chasmcatwalkcost = 15
+	var/catwalkcost = 20
+	var/chasmcatwalkcost = 60
 	var/airlockcost = 25
 	var/membranecost = 2
 	var/removecatwalkcost = 0
