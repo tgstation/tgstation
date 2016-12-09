@@ -38,7 +38,6 @@
 	var/current_skin = null //the skin choice if we had a reskin
 	var/list/options = list()
 
-	lefthand_file = 'icons/mob/inhands/guns_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/guns_righthand.dmi'
 
 	var/obj/item/device/firing_pin/pin = /obj/item/device/firing_pin //standard firing pin for most guns

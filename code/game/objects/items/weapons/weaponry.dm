@@ -1,44 +1,5 @@
 /obj/item/weapon
 
-	var/unique_rename = 0 //allows renaming with a pen
-
-/obj/item/weapon/examine(mob/user)
-	..()
-	if(unique_rename)
-		user << "<span class='notice'>Use a pen on it to rename it or change its description.</span>"
-
-/obj/item/weapon/attackby(obj/item/I, mob/user, params)
-	if(unique_rename)
-		if(istype(I, /obj/item/weapon/pen))
-			var/penchoice = alert("What would you like to edit?", "Rename or change description?", "Rename", "Change description", "Cancel")
-			if(!qdeleted(src) && user.canUseTopic(src, BE_CLOSE))
-				if(penchoice == "Rename")
-					rename_weapon(user)
-				if(penchoice == "Change description")
-					redesc_weapon(user)
-	..()
-
-/obj/item/weapon/proc/rename_weapon(mob/M)
-	var/oldname = name
-	var/input = stripped_input(M,"What do you want to name /the [name]?", ,"", MAX_NAME_LEN)
-
-	if(!qdeleted(src) && M.canUseTopic(src, BE_CLOSE) && input != "")
-		name = input
-		M << "/The [oldname] has successfully been renamed to /the [input]."
-		return
-	else
-		return
-
-/obj/item/weapon/proc/redesc_weapon(mob/M)
-	var/input = stripped_input(M,"Describe your object here", ,"", 100)
-
-	if(!qdeleted(src) && M.canUseTopic(src, BE_CLOSE) && input != "")
-		desc = input
-		M << "You have successfully changed /the [name]'s description."
-		return
-	else
-		return
-
 /obj/item/weapon/banhammer
 	desc = "A banhammer"
 	name = "banhammer"
@@ -556,12 +517,14 @@ var/highlander_claymores = 0
 	var/list/strong_against
 
 /obj/item/weapon/melee/flyswatter/New()
+	..()
 	strong_against = typecacheof(list(
 					/mob/living/simple_animal/hostile/poison/bees/,
 					/mob/living/simple_animal/butterfly,
 					/mob/living/simple_animal/cockroach,
 					/obj/item/queen_bee
 	))
+
 
 /obj/item/weapon/melee/flyswatter/afterattack(atom/target, mob/user, proximity_flag)
 	if(proximity_flag)

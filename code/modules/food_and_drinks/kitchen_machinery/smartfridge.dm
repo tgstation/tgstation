@@ -33,6 +33,7 @@
 /obj/item/weapon/circuitboard/machine/smartfridge/New(loc, new_type)
 	if(new_type)
 		build_path = new_type
+	..()
 
 /obj/item/weapon/circuitboard/machine/smartfridge/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/screwdriver))

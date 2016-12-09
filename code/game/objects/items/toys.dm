@@ -43,6 +43,7 @@
 
 /obj/item/toy/balloon/New()
 	create_reagents(10)
+	..()
 
 /obj/item/toy/balloon/attack(mob/living/carbon/human/M, mob/user)
 	return
@@ -134,7 +135,6 @@
 	icon = 'icons/obj/guns/projectile.dmi'
 	icon_state = "revolver"
 	item_state = "gun"
-	lefthand_file = 'icons/mob/inhands/guns_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/guns_righthand.dmi'
 	flags =  CONDUCT
 	slot_flags = SLOT_BELT
@@ -648,9 +648,6 @@
 	var/card_throw_speed = 3
 	var/card_throw_range = 7
 	var/list/card_attack_verb = list("attacked")
-
-/obj/item/toy/cards/New()
-	..()
 
 /obj/item/toy/cards/proc/apply_card_vars(obj/item/toy/cards/newobj, obj/item/toy/cards/sourceobj) // Applies variables for supporting multiple types of card deck
 	if(!istype(sourceobj))
@@ -1178,6 +1175,7 @@
 
 /obj/item/toy/figure/New()
     desc = "A \"Space Life\" brand [src]."
+    ..()
 
 /obj/item/toy/figure/attack_self(mob/user as mob)
 	if(cooldown <= world.time)
