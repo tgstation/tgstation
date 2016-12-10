@@ -168,8 +168,8 @@
 			return FALSE
 		proselytize_values["alloy_cost"] = 0
 
-	var/turf/T = get_turf(user)
-	if(!T || (T.z != ZLEVEL_STATION && T.z != ZLEVEL_CENTCOM && T.z != ZLEVEL_MINING && T.z != ZLEVEL_LAVALAND))
+	var/turf/Y = get_turf(user)
+	if(!Y || (Y.z != ZLEVEL_STATION && Y.z != ZLEVEL_CENTCOM && Y.z != ZLEVEL_MINING && Y.z != ZLEVEL_LAVALAND))
 		proselytize_values["operation_time"] *= 2
 		if(proselytize_values["alloy_cost"] > 0)
 			proselytize_values["alloy_cost"] *= 2
