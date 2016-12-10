@@ -1,7 +1,8 @@
 
-#define MODE_FAIL 0
-#define MODE_NONDIAG 1
-#define MODE_DIAG 2
+#define A_BIG_NUMBER			9999999
+#define STATE_COUNT_NORMAL		4
+#define STATE_COUNT_DIAGONAL	7
+
 
 /mob/verb/ChooseDMI(dmi as file)
 	var/dmifile = file(dmi)
@@ -16,22 +17,20 @@
 	var/list/states = sourceIcon.IconStates()
 	world << "<B>[dmifile] - states: [states.len]</B>"
 
-	var/mode = MODE_FAIL
-
 	switch(states.len)
-		if(0 to 3)
-			world << "Insufficient states: [states.len], expected 4 (Non-Diagonal) or 5 (Diagonal)"
-		if(4)
+		if(0 to (STATE_COUNT_NORMAL - 1))
+			var/cont = alert(usr, "Too few states: [states.len],  expected [STATE_COUNT_NORMAL] (Non-Diagonal) or [STATE_COUNT_DIAGONAL] (Diagonal), Continue?", "Unexpected Amount of States", "Yes", "No")
+			if(cont == "No")
+				return
+		if(STATE_COUNT_NORMAL)
 			world << "4 States, running in Non-Diagonal mode"
-			mode = MODE_NONDIAG
-		if(5)
+		if(STATE_COUNT_DIAGONAL)
 			world << "5 States, running in Diagonal mode"
-			mode = MODE_DIAG
-		if(6 to 9999999)
-			world << "Too many states: [states.len], expected 4 (Non-Diagonal) or 5 (Diagonal)"
+		if((STATE_COUNT_DIAGONAL + 1) to A_BIG_NUMBER)
+			var/cont = alert(usr, "Too many states: [states.len],  expected [STATE_COUNT_NORMAL] (Non-Diagonal) or [STATE_COUNT_DIAGONAL] (Diagonal), Continue?", "Unexpected Amount of States", "Yes", "No")
+			if(cont == "No")
+				return
 
-	if(!mode)
-		return
 
 	var/icon/outputIcon = new /icon()
 
@@ -162,7 +161,66 @@
 				world << "Center8: \icon[center8] -> \icon[corner1f] \icon[corner2f] \icon[corner3f] \icon[corner4f]"
 
 			if("diag")
-				if(mode == MODE_NONDIAG)
-					continue
+				var/icon/diag = icon(sourceIcon, state)
+
+				var/icon/diagse = icon(diag) //No work
+				outputIcon.Insert(diagse, "d-se")
+
+				var/icon/diagsw = icon(diag)
+				diagsw.Turn(90)
+				outputIcon.Insert(diagsw, "d-sw")
+
+				var/icon/diagne = icon(diag)
+				diagne.Turn(-90)
+				outputIcon.Insert(diagne, "d-ne")
+
+				var/icon/diagnw = icon(diag)
+				diagnw.Turn(180)
+				outputIcon.Insert(diagnw, "d-nw")
+
+				world << "Diag: \icon[diag] -> \icon[diagse] \icon[diagsw] \icon[diagne] \icon[diagnw]"
+
+			if("diag_corner_a")
+				var/icon/diag_corner_a = icon(sourceIcon, state)
+
+				var/icon/diagse0 = icon(diag_corner_a) //No work
+				outputIcon.Insert(diagse0, "d-se-0")
+
+				var/icon/diagsw0 = icon(diag_corner_a)
+				diagsw0.Turn(90)
+				outputIcon.Insert(diagsw0, "d-sw-0")
+
+				var/icon/diagne0 = icon(diag_corner_a)
+				diagne0.Turn(-90)
+				outputIcon.Insert(diagne0, "d-ne-0")
+
+				var/icon/diagnw0 = icon(diag_corner_a)
+				diagnw0.Turn(180)
+				outputIcon.Insert(diagnw0, "d-nw-0")
+
+				world << "Diag_Corner_A: \icon[diag_corner_a] -> \icon[diagse0] \icon[diagsw0] \icon[diagne0] \icon[diagnw0]"
+
+			if("diag_corner_b")
+				var/icon/diag_corner_b = icon(sourceIcon, state)
+
+				var/icon/diagse1 = icon(diag_corner_b) //No work
+				outputIcon.Insert(diagse1, "d-se-0")
+
+				var/icon/diagsw1 = icon(diag_corner_b)
+				diagsw1.Turn(90)
+				outputIcon.Insert(diagsw1, "d-sw-0")
+
+				var/icon/diagne1 = icon(diag_corner_b)
+				diagne1.Turn(-90)
+				outputIcon.Insert(diagne1, "d-ne-0")
+
+				var/icon/diagnw1 = icon(diag_corner_b)
+				diagnw1.Turn(180)
+				outputIcon.Insert(diagnw1, "d-nw-0")
+
+				world << "Diag_Corner_B: \icon[diag_corner_b] -> \icon[diagse1] \icon[diagsw1] \icon[diagne1] \icon[diagnw1]"
+
+
 
 		fcopy(outputIcon, filename)	//Update output icon each iteration
+	world << "Finished [filename]!"
