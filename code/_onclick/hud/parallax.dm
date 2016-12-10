@@ -12,7 +12,7 @@
 	var/static/list/parallax_static_layers_tail = newlist(/obj/screen/parallax_pmaster, /obj/screen/parallax_space_whitifier, /obj/screen/parallax_fixer)
 	var/atom/movable/movingmob
 	var/turf/previous_turf
-	var/do_smoothing = 1
+	var/do_smoothing = TRUE
 	var/looping_mode = LOOP_NONE
 	var/last_parallax_shift //ds of last update
 	var/parallax_throttle = 0 //ds between updates
@@ -78,7 +78,7 @@
 	if(new_parallax_movedir == C.parallax_movedir)
 		return
 	. = TRUE
-	if(new_parallax_movedir == 0)
+	if(new_parallax_movedir == FALSE)
 		for(var/thing in C.parallax_layers)
 			var/obj/screen/parallax_layer/L = thing
 			animate(L)
@@ -94,7 +94,7 @@
 		for(var/thing in C.parallax_layers)
 			var/obj/screen/parallax_layer/L = thing
 
-			if(new_parallax_movedir == 1 || new_parallax_movedir == 2)
+			if(new_parallax_movedir == NORTH || new_parallax_movedir == SOUTH)
 				L.icon_state = "[initial(L.icon_state)]_vertical"
 			else
 				L.icon_state = "[initial(L.icon_state)]_horizontal"
@@ -185,13 +185,13 @@
 		L.screen_loc = "CENTER-7:[L.offset_x],CENTER-7:[L.offset_y]"
 
 // Plays the launch animation for parallax
-/datum/hud/proc/parallax_launch_anim(dir = 4, slowing = 0)
+/datum/hud/proc/parallax_launch_anim(dir = EAST, slowing = FALSE)
 	var/client/C = mymob.client
-	C.do_smoothing = 0
-	if(dir == 4 || dir == 1)
-		C.looping_mode = 1
+	C.do_smoothing = FALSE
+	if(dir == EAST || dir == NORTH)
+		C.looping_mode = LOOP_NORMAL
 	else
-		C.looping_mode = 2
+		C.looping_mode = LOOP_REVERSE
 	for(var/thing in C.parallax_layers)
 		var/obj/screen/parallax_layer/L = thing
 		animate(L) // Cancel the current animation
@@ -216,17 +216,17 @@
 		animate(L, transform = matrix(), time = 50, easing = QUAD_EASING | (slowing ? EASE_OUT : EASE_IN), flags = ANIMATION_END_NOW)
 	spawn(50)
 		if(C && slowing)
-			C.do_smoothing = 1
-			C.looping_mode = 0
+			C.do_smoothing = TRUE
+			C.looping_mode = LOOP_NONE
 
 
 // Helper global procs for performing shuttle animations
-/proc/parallax_launch_in_area(var/area/A, dir = 4, slowing = 0)
+/proc/parallax_launch_in_area(var/area/A, dir = EAST, slowing = FALSE)
 	for(var/mob/M in mob_list)
 		if(M.client && M.hud_used && length(M.client.parallax_layers) && get_area(M) == A)
 			M.hud_used.parallax_launch_anim(dir, slowing)
 
-/proc/parallax_movedir_in_area(var/area/A, dir = 4)
+/proc/parallax_movedir_in_area(var/area/A, dir = EAST)
 	A.parallax_movedir = dir
 	for(var/thing in mob_list)
 		var/mob/M = thing
@@ -281,7 +281,7 @@
 	appearance_flags = PLANE_MASTER
 	plane = PLANE_SPACE_PARALLAX
 	blend_mode = BLEND_MULTIPLY
-	mouse_opacity = 0
+	mouse_opacity = FALSE
 	screen_loc = "CENTER-7,CENTER-7"
 
 /obj/screen/parallax_space_whitifier
