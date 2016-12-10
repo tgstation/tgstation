@@ -10,7 +10,7 @@
 	verb_yell = "alarms"
 	see_in_dark = 8
 	bubble_icon = "machine"
-	weather_immunities = list("ash")
+	weather_immunities = list("ash", "rad")
 
 	var/syndicate = 0
 	var/datum/ai_laws/laws = null//Now... THEY ALL CAN ALL HAVE LAWS

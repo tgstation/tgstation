@@ -23,6 +23,7 @@
 	bubble_icon = "machine"
 
 	faction = list("neutral", "silicon")
+	weather_immunities = list("ash", "rad")
 
 	var/obj/machinery/bot_core/bot_core = null
 	var/bot_core_type = /obj/machinery/bot_core
