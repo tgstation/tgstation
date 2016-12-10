@@ -1,13 +1,3 @@
-/datum/design/frame_energy
-	name = "Gun Frame: Energy"
-	desc = "Comes with a testing firing pin."
-	id = "frame_energy"
-	req_tech = list("combat" = 1, "materials" = 1)
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 500, MAT_GLASS = 300)
-	build_path = /obj/item/weapon/gun/energy/frame/testing
-	category = list("Guncrafting Parts")
-
 // barrels
 /datum/design/barrel_short
 	name = "Gun Barrel: Short"
@@ -37,16 +27,6 @@
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 500, MAT_GLASS = 300)
 	build_path = /obj/item/weapon/gun_attachment/barrel/long
-	category = list("Guncrafting Parts")
-
-/datum/design/barrel_silencer
-	name = "Gun Barrel: Silenced"
-	desc = "A silenced barrel."
-	id = "barrel_silencer"
-	req_tech = list("combat" = 1, "materials" = 1)
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 500, MAT_GLASS = 300)
-	build_path = /obj/item/weapon/gun_attachment/barrel/silencer
 	category = list("Guncrafting Parts")
 
 // handles
@@ -150,16 +130,6 @@
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 500, MAT_GLASS = 300)
 	build_path = /obj/item/weapon/gun_attachment/energy_bullet/focuser
-	category = list("Guncrafting Parts")
-
-/datum/design/ebullet_stun
-	name = "Gun Energy Modifier: Stunner"
-	desc = "A stun mod."
-	id = "ebullet_stun"
-	req_tech = list("combat" = 1, "materials" = 1)
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 500, MAT_GLASS = 300)
-	build_path = /obj/item/weapon/gun_attachment/energy_bullet/stunner
 	category = list("Guncrafting Parts")
 
 /datum/design/ebullet_disorient

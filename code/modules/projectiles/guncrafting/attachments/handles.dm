@@ -17,7 +17,7 @@
 /obj/item/weapon/gun_attachment/handle/auto
 	name = "Automatic Handle"
 	icon_state = "handle_auto"
-	burst_size = 2
+	burst_size = 1
 	fire_delay = 0
 	recoil = 3
 	automatic = 1

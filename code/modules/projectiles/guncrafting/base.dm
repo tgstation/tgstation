@@ -20,6 +20,7 @@
 				energy_ref = new energy_casing
 				E.ammo_type += energy_ref
 			E.recharge_newshot()
+			E.fire_sound = E.chambered.fire_sound
 
 /obj/item/weapon/gun_attachment/base/on_remove(var/obj/item/weapon/gun/owner)
 	..()

@@ -15,10 +15,3 @@
 	icon_state = "barrel_long"
 	range = 14
 	gun_size = 3
-
-/obj/item/weapon/gun_attachment/barrel/silencer
-	name = "silenced barrel"
-	icon_state = "barrel_silenced"
-	range = 7
-	gun_size = 2
-	silenced = 1
