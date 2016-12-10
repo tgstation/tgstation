@@ -1029,8 +1029,6 @@ var/list/freeze_item_icons = list()
 		icon = P
 		name = "frozen [name]"
 		is_frozen = TRUE
-		return
-	return
 
 //Assumes already frozed
 obj/proc/make_unfrozen()
