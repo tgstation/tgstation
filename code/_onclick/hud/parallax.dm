@@ -1,125 +1,184 @@
+#define LOOP_NONE 0
+#define LOOP_NORMAL 1
+#define LOOP_REVERSE 2
 /client
-	var/list/parallax_layers = list()
-	var/obj/screen/parallax_pmaster/parallax_pmaster
-	var/obj/screen/parallax_space_whitifier/parallax_space_whitifier
-	var/obj/screen/parallax_fixer/parallax_fixer
+	var/list/parallax_layers
+	var/list/parallax_layers_cached
+	/*
+	var/static/obj/screen/parallax_pmaster/parallax_pmaster = new
+	var/static/obj/screen/parallax_space_whitifier/parallax_space_whitifier = new
+	var/static/obj/screen/parallax_fixer/parallax_fixer = new
+	*/
+	var/static/list/parallax_static_layers_tail = newlist(/obj/screen/parallax_pmaster, /obj/screen/parallax_space_whitifier, /obj/screen/parallax_fixer)
 	var/atom/movable/movingmob
 	var/turf/previous_turf
 	var/do_smoothing = 1
-	var/looping_mode = 0
-	var/last_parallax_shift
+	var/looping_mode = LOOP_NONE
+	var/last_parallax_shift //ds of last update
+	var/parallax_throttle = 0 //ds between updates
 	var/parallax_movedir = 0
+	var/parallax_layers_max = 3
 
 /datum/hud/proc/create_parallax()
 	var/client/C = mymob.client
-	if(!C.parallax_layers.len)
-		C.parallax_layers += new /obj/screen/parallax_layer/layer_1
-		C.parallax_layers += new /obj/screen/parallax_layer/layer_2
-		C.parallax_pmaster = new
-		C.parallax_space_whitifier = new
-		C.parallax_fixer = new
-	for(var/obj/O in C.parallax_layers)
-		C.screen |= O
-	C.screen |= C.parallax_pmaster
-	C.screen |= C.parallax_space_whitifier
-	C.screen |= C.parallax_fixer
+	if (!apply_parallax_pref())
+		return
 
-// This sets which way the current shuttle is moving
+	if(!length(C.parallax_layers_cached))
+		C.parallax_layers_cached = list()
+		C.parallax_layers_cached += new /obj/screen/parallax_layer/layer_1
+		C.parallax_layers_cached += new /obj/screen/parallax_layer/layer_2
+
+	C.parallax_layers = C.parallax_layers_cached.Copy()
+
+	if (length(C.parallax_layers) > C.parallax_layers_max)
+		C.parallax_layers.len = C.parallax_layers_max
+
+	C.screen |= (C.parallax_layers + C.parallax_static_layers_tail)
+
+/datum/hud/proc/remove_parallax()
+	var/client/C = mymob.client
+	C.screen -= (C.parallax_layers_cached + C.parallax_static_layers_tail)
+	C.parallax_layers = null
+
+/datum/hud/proc/apply_parallax_pref()
+	var/client/C = mymob.client
+	switch(C.prefs.parallax)
+		if (PARALLAX_INSANE)
+			C.parallax_throttle = FALSE
+			C.parallax_layers_max = 4
+			return TRUE
+
+		if (PARALLAX_MED)
+			C.parallax_throttle = PARALLAX_DELAY_MED
+			C.parallax_layers_max = 2
+			return TRUE
+
+		if (PARALLAX_LOW)
+			C.parallax_throttle = PARALLAX_DELAY_LOW
+			C.parallax_layers_max = 1
+			return TRUE
+
+		if (PARALLAX_DISABLE)
+			return FALSE
+
+		else
+			C.parallax_throttle = PARALLAX_DELAY_DEFAULT
+			C.parallax_layers_max = 3
+			return TRUE
+
+/datum/hud/proc/update_parallax_pref()
+	remove_parallax()
+	create_parallax()
+
+// This sets which way the current shuttle is moving (returns true if anything changed)
 /datum/hud/proc/set_parallax_movedir(new_parallax_movedir)
+	. = FALSE
 	var/client/C = mymob.client
 	if(new_parallax_movedir == C.parallax_movedir)
 		return
+	. = TRUE
 	if(new_parallax_movedir == 0)
-		for(var/obj/screen/parallax_layer/L in C.parallax_layers)
+		for(var/thing in C.parallax_layers)
+			var/obj/screen/parallax_layer/L = thing
 			animate(L)
 			L.transform = matrix()
 			L.icon_state = initial(L.icon_state)
 			L.update_o()
-		C.do_smoothing = 1
+		C.do_smoothing = TRUE
 	else
-		if(new_parallax_movedir == 4 || new_parallax_movedir == 1)
-			C.looping_mode = 1
+		if(new_parallax_movedir == EAST || new_parallax_movedir == NORTH)
+			C.looping_mode = LOOP_NORMAL
 		else
-			C.looping_mode = 2
-		for(var/obj/screen/parallax_layer/L in C.parallax_layers)
+			C.looping_mode = LOOP_REVERSE
+		for(var/thing in C.parallax_layers)
+			var/obj/screen/parallax_layer/L = thing
+
 			if(new_parallax_movedir == 1 || new_parallax_movedir == 2)
 				L.icon_state = "[initial(L.icon_state)]_vertical"
 			else
 				L.icon_state = "[initial(L.icon_state)]_horizontal"
+
 			L.update_o()
 			var/T = 50 / L.speed
 			var/matrix/newtransform
 			switch(new_parallax_movedir)
-				if(1)
+				if(NORTH)
 					newtransform = matrix(1, 0, 0, 0, 1, 480)
-				if(2)
+				if(SOUTH)
 					newtransform = matrix(1, 0, 0, 0, 1,-480)
-				if(4)
+				if(EAST)
 					newtransform = matrix(1, 0, 480, 0, 1, 0)
-				if(8)
+				if(WEST)
 					newtransform = matrix(1, 0,-480, 0, 1, 0)
 			L.transform = newtransform
+
 			animate(L, transform = matrix(), time = T, loop = -1, flags = ANIMATION_END_NOW)
-		C.do_smoothing = 0
+		C.do_smoothing = FALSE
 
 	C.parallax_movedir = new_parallax_movedir
 
 /datum/hud/proc/update_parallax()
 	var/client/C = mymob.client
-
 	var/turf/posobj = get_turf(C.eye)
 	var/area/areaobj = posobj.loc
-	set_parallax_movedir(areaobj.parallax_movedir) // Update the movement direction of the parallax if necessary
+
+	// Update the movement direction of the parallax if necessary (for shuttles)
+	var/force = set_parallax_movedir(areaobj.parallax_movedir)
+
+	if (!force && world.time < C.last_parallax_shift+C.parallax_throttle)
+		return
 
 	if(!C.previous_turf || (C.previous_turf.z != posobj.z))
 		C.previous_turf = posobj
+		force = TRUE
 
 	//Doing it this way prevents parallax layers from "jumping" when you change Z-Levels.
 	var/offset_x = posobj.x - C.previous_turf.x
 	var/offset_y = posobj.y - C.previous_turf.y
-
+	if(!offset_x && !offset_y && !force)
+		return
+	var/last_delay = world.time - C.last_parallax_shift
+	last_delay = min(last_delay, C.parallax_throttle)
 	C.previous_turf = posobj
+	C.last_parallax_shift = world.time
 
-	var/last_delay = 2
-	if(offset_x != 0 || offset_y != 0)
-		var/world_time = world.time
-		last_delay = world_time - C.last_parallax_shift
-		last_delay = min(last_delay, 2)
-		C.last_parallax_shift = world_time
+	for(var/thing in C.parallax_layers)
+		var/obj/screen/parallax_layer/L = thing
+		var/change_x = offset_x * L.speed
+		L.offset_x -= change_x
+		var/change_y = offset_y * L.speed
+		L.offset_y -= change_y
+		switch(C.looping_mode)
+			if(LOOP_NONE)
+				if(L.offset_x > 240)
+					L.offset_x -= 480
+				if(L.offset_x < -240)
+					L.offset_x += 480
+				if(L.offset_y > 240)
+					L.offset_y -= 480
+				if(L.offset_y < -240)
+					L.offset_y += 480
+			if(LOOP_NORMAL)
+				if(L.offset_x > 0)
+					L.offset_x -= 480
+				if(L.offset_x < -480)
+					L.offset_x += 480
+				if(L.offset_y > 0)
+					L.offset_y -= 480
+				if(L.offset_y < -480)
+					L.offset_y += 480
+			if(LOOP_REVERSE)
+				if(L.offset_x >= 480)
+					L.offset_x -= 480
+				if(L.offset_x < 0)
+					L.offset_x += 480
+				if(L.offset_y >= 480)
+					L.offset_y -= 480
+				if(L.offset_y < 0)
+					L.offset_y += 480
 
-	for(var/obj/screen/parallax_layer/L in C.parallax_layers)
-		L.offset_x -= offset_x * L.speed
-		L.offset_y -= offset_y * L.speed
-
-		if(C.looping_mode == 0)
-			if(L.offset_x > 240)
-				L.offset_x -= 480
-			if(L.offset_x < -240)
-				L.offset_x += 480
-			if(L.offset_y > 240)
-				L.offset_y -= 480
-			if(L.offset_y < -240)
-				L.offset_y += 480
-		else if(C.looping_mode == 1)
-			if(L.offset_x > 0)
-				L.offset_x -= 480
-			if(L.offset_x < -480)
-				L.offset_x += 480
-			if(L.offset_y > 0)
-				L.offset_y -= 480
-			if(L.offset_y < -480)
-				L.offset_y += 480
-		else if(C.looping_mode == 2)
-			if(L.offset_x >= 480)
-				L.offset_x -= 480
-			if(L.offset_x < 0)
-				L.offset_x += 480
-			if(L.offset_y >= 480)
-				L.offset_y -= 480
-			if(L.offset_y < 0)
-				L.offset_y += 480
-
-		if(C.do_smoothing && (offset_x != 0 || offset_y != 0) && (offset_x == 1 || offset_x == -1 || offset_y == 1 || offset_y == -1))
+		if(C.do_smoothing && (offset_x || offset_y) && abs(offset_x) <= max(C.parallax_throttle/world.tick_lag+1,1) && abs(offset_y) <= max(C.parallax_throttle/world.tick_lag+1,1) && (abs(change_x) > 1 || abs(change_y) > 1))
 			L.transform = matrix(1, 0, offset_x*L.speed, 0, 1, offset_y*L.speed)
 			animate(L, transform=matrix(), time = last_delay, flags = ANIMATION_END_NOW)
 
@@ -133,28 +192,30 @@
 		C.looping_mode = 1
 	else
 		C.looping_mode = 2
-	for(var/obj/screen/parallax_layer/L in C.parallax_layers)
+	for(var/thing in C.parallax_layers)
+		var/obj/screen/parallax_layer/L = thing
 		animate(L) // Cancel the current animation
 		var/M = L.speed * 240
 		var/O = -480 + M
 		switch(dir)
-			if(1)
+			if(NORTH)
 				L.transform = matrix(1, 0, 0, 0, 1, M)
 				L.offset_y += O
-			if(2)
+			if(SOUTH)
 				L.transform = matrix(1, 0, 0, 0, 1,-M)
 				L.offset_y -= O
-			if(4)
+			if(EAST)
 				L.transform = matrix(1, 0, M, 0, 1, 0)
 				L.offset_x += O
-			if(8)
+			if(WEST)
 				L.transform = matrix(1, 0,-M, 0, 1, 0)
 				L.offset_x -= O
 	update_parallax() // Adjust the layers, they should all now be in the appropriate corner.
-	for(var/obj/screen/parallax_layer/L in C.parallax_layers)
+	for(var/thing in C.parallax_layers)
+		var/obj/screen/parallax_layer/L = thing
 		animate(L, transform = matrix(), time = 50, easing = QUAD_EASING | (slowing ? EASE_OUT : EASE_IN), flags = ANIMATION_END_NOW)
 	spawn(50)
-		if(slowing)
+		if(C && slowing)
 			C.do_smoothing = 1
 			C.looping_mode = 0
 
@@ -162,38 +223,25 @@
 // Helper global procs for performing shuttle animations
 /proc/parallax_launch_in_area(var/area/A, dir = 4, slowing = 0)
 	for(var/mob/M in mob_list)
-		if(M.client && M.hud_used && get_area(M) == A)
+		if(M.client && M.hud_used && length(M.client.parallax_layers) && get_area(M) == A)
 			M.hud_used.parallax_launch_anim(dir, slowing)
 
 /proc/parallax_movedir_in_area(var/area/A, dir = 4)
 	A.parallax_movedir = dir
-	for(var/mob/M in mob_list)
-		if(M.client && M.hud_used && get_area(M) == A)
+	for(var/thing in mob_list)
+		var/mob/M = thing
+		if(M && M.client && M.hud_used && length(M.client.parallax_layers) && get_area(M) == A)
 			M.hud_used.update_parallax()
 
-/datum/hud/proc/update_parallax_movingmob()
-	var/client/C = mymob.client
-	var/atom/movable/A = C.eye
-	if(!A)
-		return
-	while(istype(A.loc, /atom/movable))
-		A = A.loc
-	if(A != C.movingmob)
-		if(C.movingmob != null)
-			C.movingmob.mobs_in_contents -= C.mob
-		if(!A.mobs_in_contents)
-			A.mobs_in_contents = list()
-		A.mobs_in_contents += C.mob
-		C.movingmob = A
-
 /atom/movable/proc/update_parallax_contents()
-	if(mobs_in_contents && mobs_in_contents.len) // This is 5x faster if the list is empty, which it is 99% of the time
-		for(var/mob/M in mobs_in_contents)
-			if(M.client && M.hud_used)
+	if(length(client_mobs_in_contents)) //this is even faster!
+		for(var/thing in client_mobs_in_contents)
+			var/mob/M = thing
+			if(M && M.client && M.hud_used && length(M.client.parallax_layers))
 				M.hud_used.update_parallax()
 
 /obj/screen/parallax_layer
-	icon = 'icons/mob/parallax.dmi'
+	icon = 'icons/effects/parallax.dmi'
 	var/speed = 1
 	var/offset_x = 0
 	var/offset_y = 0
@@ -252,3 +300,8 @@
 	plane = PLANE_SPACE
 	alpha = 0
 	screen_loc = "CENTER-7,CENTER-7"
+
+
+#undef LOOP_NONE
+#undef LOOP_NORMAL
+#undef LOOP_REVERSE
