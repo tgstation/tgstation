@@ -25,6 +25,8 @@
 	var/list/obj/item/projectile/prototype/projectiles = list()	//Tracks projectiles
 
 	var/energy_cost = 0	//Running total of energy costs
+	var/energy_max = 0	//All power module capacities combined
+	var/energy = 0	//Power module energy amounts combined
 
 /datum/gun/proc/process()
 	for(var/obj/item/device/guncrafting/module/M in processing_modules)
@@ -36,6 +38,8 @@
 		if(energy_needed <= 0)
 			return TRUE
 		energy_needed -= P.use_power(energy_needed)
+	if(!holder.can_fire())
+		return FALSE
 	return FALSE
 
 /datum/gun/proc/on_fire(atom/target, mob/living/user, params, distro, quiet, zone_override, spread)
@@ -63,6 +67,7 @@
 
 /datum/gun/proc/spread()
 	. = 0
+	. += holder.check_spread()
 	for(var/obj/item/device/guncrafting/module/M in modules)
 		. += M.check_spread()
 	return .
