@@ -58,7 +58,7 @@
 	var/canholo = TRUE
 	var/obj/item/weapon/card/id/access_card = null
 	var/chassis = "repairbot"
-	var/list/possible_chassis = list("cat", "mouse", "monkey", "corgi", "fox", "repairbot")
+	var/list/possible_chassis = list("cat", "mouse", "monkey", "corgi", "fox", "repairbot", "rabbit")
 
 	var/emitterhealth = 50
 	var/emittermaxhealth = 50
