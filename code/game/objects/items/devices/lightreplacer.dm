@@ -89,8 +89,18 @@
 		else
 			user << "<span class='warning'>You need one sheet of glass to replace lights!</span>"
 
+	if(istype(W, /obj/item/weapon/shard))
+		if(uses >= max_uses)
+			user << "<span class='warning'>[src.name] is full.</span>"
+			return
+		if(!user.unEquip(W))
+			return
+		AddUses(round(increment*0.75))
+		user << "<span class='notice'>You insert a shard of glass into the [src.name]. You have [uses] light\s remaining.</span>"
+		qdel(W)
+		return
+
 	if(istype(W, /obj/item/weapon/light))
-		var/new_bulbs = 0
 		var/obj/item/weapon/light/L = W
 		if(L.status == 0) // LIGHT OKAY
 			if(uses < max_uses)
@@ -101,11 +111,9 @@
 		else
 			if(!user.unEquip(W))
 				return
-			new_bulbs += AddShards(1)
+			user << "<span class='notice'>You insert the [L.name] into the [src.name]</span>"
+			AddShards(1, user)
 			qdel(L)
-		if(new_bulbs != 0)
-			playsound(src.loc, 'sound/machines/ding.ogg', 50, 1)
-		user << "<span class='notice'>You insert the [L.name] into the [src.name]. " + status_string() + "</span>"
 		return
 
 	if(istype(W, /obj/item/weapon/storage))
@@ -126,7 +134,7 @@
 
 				else if(L.status == LIGHT_BROKEN || L.status == LIGHT_BURNED)
 					replaced_something = TRUE
-					AddShards(1)
+					AddShards(1, user)
 					qdel(L)
 
 		if(!found_lightbulbs)
@@ -146,7 +154,6 @@
 /obj/item/device/lightreplacer/attack_self(mob/user)
 	user << status_string()
 
-
 /obj/item/device/lightreplacer/update_icon()
 	icon_state = "lightreplacer[emagged]"
 
@@ -154,7 +161,6 @@
 	return "It has [uses] light\s remaining (plus [bulb_shards] fragment\s)."
 
 /obj/item/device/lightreplacer/proc/Use(mob/user)
-
 	playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 	AddUses(-1)
 	return 1
@@ -163,12 +169,15 @@
 /obj/item/device/lightreplacer/proc/AddUses(amount = 1)
 	uses = Clamp(uses + amount, 0, max_uses)
 
-/obj/item/device/lightreplacer/proc/AddShards(amount = 1)
+/obj/item/device/lightreplacer/proc/AddShards(amount = 1, user)
 	bulb_shards += amount
 	var/new_bulbs = round(bulb_shards / shards_required)
 	if(new_bulbs > 0)
 		AddUses(new_bulbs)
 	bulb_shards = bulb_shards % shards_required
+	if(new_bulbs != 0)
+		user << "<span class='notice'>\The [src] has fabricated a new bulb from the broken glass it has stored. It now has [uses] uses.</span>"
+		playsound(src.loc, 'sound/machines/ding.ogg', 50, 1)
 	return new_bulbs
 
 /obj/item/device/lightreplacer/proc/Charge(var/mob/user)
@@ -185,11 +194,7 @@
 			U << "<span class='notice'>You replace the [target.fitting] with \the [src].</span>"
 
 			if(target.status != LIGHT_EMPTY)
-				var/new_bulbs = AddShards(1)
-				if(new_bulbs != 0)
-					U << "<span class='notice'>\The [src] has fabricated a new bulb from the broken bulbs it has stored. It now has [uses] uses.</span>"
-					playsound(src.loc, 'sound/machines/ding.ogg', 50, 1)
-
+				AddShards(1, U)
 				target.status = LIGHT_EMPTY
 				target.update()
 
@@ -223,11 +228,8 @@
 		name = initial(name)
 	update_icon()
 
-//Can you use it?
-
 /obj/item/device/lightreplacer/proc/CanUse(mob/living/user)
 	src.add_fingerprint(user)
-	//Not sure what else to check for. Maybe if clumsy?
 	if(uses > 0)
 		return 1
 	else

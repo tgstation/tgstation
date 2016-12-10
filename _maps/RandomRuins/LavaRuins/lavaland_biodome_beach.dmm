@@ -182,7 +182,8 @@
 /area/ruin/powered)
 "aF" = (
 /obj/machinery/vending/boozeomat{
-	emagged = 1
+	emagged = 1;
+	req_access_txt = "0"
 	},
 /turf/open/floor/wood,
 /area/ruin/powered)
@@ -315,7 +316,9 @@
 /turf/open/floor/wood,
 /area/ruin/powered)
 "bd" = (
-/obj/structure/closet/secure_closet/freezer/kitchen,
+/obj/structure/closet/secure_closet/freezer/kitchen{
+	req_access = null
+	},
 /turf/open/floor/wood,
 /area/ruin/powered)
 "be" = (
@@ -811,7 +814,7 @@ bU
 bU
 ab
 ab
-ab
+aa
 "}
 (8,1,1) = {"
 aa
@@ -843,7 +846,7 @@ bU
 bU
 bU
 ab
-ab
+aa
 "}
 (9,1,1) = {"
 aa
@@ -875,7 +878,7 @@ bU
 bU
 bU
 ab
-ab
+aa
 "}
 (10,1,1) = {"
 aa
@@ -907,7 +910,7 @@ bV
 bU
 bU
 ab
-ab
+aa
 "}
 (11,1,1) = {"
 aa
@@ -939,7 +942,7 @@ bU
 bU
 bU
 ab
-ab
+aa
 "}
 (12,1,1) = {"
 aa
@@ -971,7 +974,7 @@ bU
 bU
 bU
 ab
-ab
+aa
 "}
 (13,1,1) = {"
 aa
@@ -1003,7 +1006,7 @@ bU
 bU
 bU
 ab
-ab
+aa
 "}
 (14,1,1) = {"
 aa
@@ -1035,7 +1038,7 @@ bU
 bU
 bU
 ab
-ab
+aa
 "}
 (15,1,1) = {"
 aa
@@ -1067,7 +1070,7 @@ bU
 bU
 bU
 ab
-ab
+aa
 "}
 (16,1,1) = {"
 aa
@@ -1099,7 +1102,7 @@ bU
 bU
 bU
 ab
-ab
+aa
 "}
 (17,1,1) = {"
 aa
@@ -1131,7 +1134,7 @@ bU
 bU
 bU
 ab
-ab
+aa
 "}
 (18,1,1) = {"
 aa
@@ -1163,7 +1166,7 @@ bU
 bU
 bU
 ab
-ab
+aa
 "}
 (19,1,1) = {"
 aa
@@ -1195,7 +1198,7 @@ bU
 bU
 bU
 ab
-ab
+aa
 "}
 (20,1,1) = {"
 aa
@@ -1227,7 +1230,7 @@ bU
 bU
 bU
 ab
-ab
+aa
 "}
 (21,1,1) = {"
 aa
@@ -1259,7 +1262,7 @@ bU
 bU
 bU
 ab
-ab
+aa
 "}
 (22,1,1) = {"
 aa
@@ -1291,7 +1294,7 @@ bU
 bV
 bU
 ab
-ab
+aa
 "}
 (23,1,1) = {"
 aa
@@ -1323,7 +1326,7 @@ bU
 bU
 bU
 ab
-ab
+aa
 "}
 (24,1,1) = {"
 aa
@@ -1355,7 +1358,7 @@ bU
 bU
 ab
 ab
-ab
+aa
 "}
 (25,1,1) = {"
 aa

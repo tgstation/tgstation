@@ -243,7 +243,7 @@
 				if(host)
 					src << "<span class='userdanger'>The fatigue becomes too much!</span>"
 					src << "<span class='userdanger'>You retreat to [host] - you will have to wait before being deployed again.</span>"
-					host << "<span class='userdanger'>[true_name] is too fatigued to fight - you will need to wait until they are strong enough.</span>"
+					host << "<span class='userdanger'>[true_name] is too fatigued to fight - you will need to wait until [p_they()] [p_are()] strong enough.</span>"
 					recovering = TRUE
 					return_to_host()
 				else

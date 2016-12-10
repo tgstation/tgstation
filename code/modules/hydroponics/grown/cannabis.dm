@@ -7,12 +7,12 @@
 	plantname = "Cannabis Plant"
 	product = /obj/item/weapon/reagent_containers/food/snacks/grown/cannabis
 	maturation = 8
-	oneharvest = 0
 	potency = 20
 	growthstages = 1
 	growing_icon = 'goon/icons/obj/hydroponics.dmi'
 	icon_grow = "cannabis-grow" // Uses one growth icons set for all the subtypes
 	icon_dead = "cannabis-dead" // Same for the dead icon
+	genes = list(/datum/plant_gene/trait/repeated_harvest)
 	mutatelist = list(/obj/item/seeds/cannabis/rainbow,
 						/obj/item/seeds/cannabis/death,
 						/obj/item/seeds/cannabis/white,

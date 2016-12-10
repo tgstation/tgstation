@@ -132,7 +132,7 @@
 				transfer_fingerprints_to(B)
 				qdel(src)
 				return
-	if(user.a_intent == "harm")
+	if(user.a_intent == INTENT_HARM)
 		return ..()
 
 

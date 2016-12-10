@@ -272,28 +272,6 @@
 
 
 //Dark Blue
-/datum/chemical_reaction/slime/slimefreeze
-	name = "Slime Freeze"
-	id = "m_freeze"
-	required_reagents = list("plasma" = 1)
-	required_container = /obj/item/slime_extract/darkblue
-	required_other = 1
-
-/datum/chemical_reaction/slime/slimefreeze/on_reaction(datum/reagents/holder)
-	feedback_add_details("slime_cores_used","[type]")
-	var/turf/T = get_turf(holder.my_atom)
-	T.visible_message("<span class='danger'>The slime extract begins to vibrate adorably!</span>")
-	addtimer(src, "freeze", 50, TIMER_NORMAL, holder)
-	spawn(60)
-	..()
-
-/datum/chemical_reaction/slime/slimefreeze/proc/freeze(datum/reagents/holder)
-	if(holder && holder.my_atom)
-		var/turf/open/T = get_turf(holder.my_atom)
-		if(istype(T))
-			T.atmos_spawn_air("freon=50;TEMP=120")
-
-
 
 /datum/chemical_reaction/slime/slimefireproof
 	name = "Slime Fireproof"

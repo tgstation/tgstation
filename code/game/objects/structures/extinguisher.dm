@@ -59,7 +59,7 @@
 			update_icon()
 		else
 			toggle_cabinet(user)
-	else if(user.a_intent != "harm")
+	else if(user.a_intent != INTENT_HARM)
 		toggle_cabinet(user)
 	else
 		return ..()

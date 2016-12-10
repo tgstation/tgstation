@@ -684,9 +684,9 @@
 				return 0
 			return 1
 		if(slot_in_backpack)
-			if (H.back && istype(H.back, /obj/item/weapon/storage/backpack))
-				var/obj/item/weapon/storage/backpack/B = H.back
-				if(B.contents.len < B.storage_slots && I.w_class <= B.max_w_class)
+			if(H.back && istype(H.back, /obj/item/weapon/storage))
+				var/obj/item/weapon/storage/B = H.back
+				if(B.can_be_inserted(I, 1, H))
 					return 1
 			return 0
 	return 0 //Unsupported slot
@@ -1080,7 +1080,7 @@
 
 	if(!istype(M)) //sanity check for drones.
 		return
-	if((M != H) && M.a_intent != "help" && H.check_shields(0, M.name, attack_type = UNARMED_ATTACK))
+	if((M != H) && M.a_intent != INTENT_HELP && H.check_shields(0, M.name, attack_type = UNARMED_ATTACK))
 		add_logs(M, H, "attempted to touch")
 		H.visible_message("<span class='warning'>[M] attempted to touch [H]!</span>")
 		return 0

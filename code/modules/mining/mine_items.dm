@@ -421,6 +421,7 @@
 	var/arbitraryatmosblockingvar = TRUE
 	var/buildstacktype = /obj/item/stack/sheet/metal
 	var/buildstackamount = 5
+	CanAtmosPass = ATMOS_PASS_NO
 
 /obj/structure/fans/deconstruct()
 	if(!(flags & NODECONSTRUCT))
@@ -450,12 +451,10 @@
 	air_update_turf(1)
 
 /obj/structure/fans/Destroy()
-	arbitraryatmosblockingvar = FALSE
-	air_update_turf(1)
-	return ..()
+	var/turf/T = loc
+	. = ..()
+	T.air_update_turf(1)
 
-/obj/structure/fans/CanAtmosPass(turf/T)
-	return !arbitraryatmosblockingvar
 
 //Signs
 /obj/structure/sign/mining

@@ -198,7 +198,7 @@
 	qdel(src)
 
 /obj/machinery/portable_atmospherics/canister/attackby(obj/item/weapon/W, mob/user, params)
-	if(user.a_intent != "harm" && istype(W, /obj/item/weapon/weldingtool))
+	if(user.a_intent != INTENT_HARM && istype(W, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = W
 		if(stat & BROKEN)
 			if(!WT.remove_fuel(0, user))
@@ -288,6 +288,9 @@
 				var/newtype = label2types[label]
 				if(newtype)
 					var/obj/machinery/portable_atmospherics/canister/replacement = new newtype(loc, air_contents)
+					if(connected_port)
+						replacement.connected_port = connected_port
+						replacement.connected_port.connected_device = replacement
 					replacement.interact(usr)
 					qdel(src)
 		if("pressure")

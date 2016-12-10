@@ -26,6 +26,7 @@
 	create_reagents(100)
 	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/microwave(null)
 	B.apply_default_parts(src)
+	..()
 
 /obj/item/weapon/circuitboard/machine/microwave
 	name = "circuit board (Microwave)"
@@ -149,7 +150,7 @@
 			user << "<span class='notice'>You insert [loaded] items into [src].</span>"
 
 
-	else if(O.w_class <= WEIGHT_CLASS_NORMAL && !istype(O,/obj/item/weapon/storage) && user.a_intent == "help")
+	else if(O.w_class <= WEIGHT_CLASS_NORMAL && !istype(O,/obj/item/weapon/storage) && user.a_intent == INTENT_HELP)
 		if (contents.len>=max_n_of_items)
 			user << "<span class='warning'>[src] is full, you can't put anything in!</span>"
 			return 1

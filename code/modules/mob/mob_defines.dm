@@ -72,8 +72,8 @@
 	var/stunned = 0
 	var/weakened = 0
 	var/losebreath = 0//Carbon
-	var/a_intent = "help"//Living
-	var/m_intent = "run"//Living
+	var/a_intent = INTENT_HELP//Living
+	var/m_intent = MOVE_INTENT_RUN//Living
 	var/lastKnownIP = null
 	var/atom/movable/buckled = null//Living
 

@@ -25,6 +25,7 @@
 	power_channel = ENVIRON
 	var/detecting = 1
 	var/buildstage = 2 // 2 = complete, 1 = no wires, 0 = circuit gone
+	resistance_flags = FIRE_PROOF
 
 
 /obj/machinery/firealarm/New(loc, dir, building)

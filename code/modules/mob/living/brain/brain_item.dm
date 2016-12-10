@@ -95,9 +95,9 @@
 		if(!C.get_bodypart("head"))
 			return
 		user.drop_item()
-		var/msg = "[C] has [src] inserted into \his head by [user]."
+		var/msg = "[C] has [src] inserted into [C.p_their()] head by [user]."
 		if(C == user)
-			msg = "[user] inserts [src] into \his head!"
+			msg = "[user] inserts [src] into [user.p_their()] head!"
 
 		C.visible_message("<span class='danger'>[msg]</span>",
 						"<span class='userdanger'>[msg]</span>")

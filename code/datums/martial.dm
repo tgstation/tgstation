@@ -349,7 +349,7 @@
 		if(A.pulling)
 			D.drop_all_held_items()
 			D.stop_pulling()
-			if(A.a_intent == "grab")
+			if(A.a_intent == INTENT_GRAB)
 				add_logs(A, D, "grabbed", addition="aggressively")
 				A.grab_state = GRAB_AGGRESSIVE //Instant aggressive grab
 			else
@@ -711,7 +711,7 @@
 	if(C.stat)
 		user << "<span class='warning'>It would be dishonorable to attack a foe while they cannot retaliate.</span>"
 		return
-	if(user.a_intent == "disarm")
+	if(user.a_intent == INTENT_DISARM)
 		if(!wielded)
 			return ..()
 		if(!ishuman(target))

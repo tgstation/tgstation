@@ -55,6 +55,7 @@ other types of metals and chemistry for reagents).
 	var/max_blueprints = 1
 
 /obj/item/weapon/disk/design_disk/New()
+	..()
 	src.pixel_x = rand(-5, 5)
 	src.pixel_y = rand(-5, 5)
 	for(var/i in 1 to max_blueprints)
