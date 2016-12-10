@@ -139,6 +139,8 @@ var/list/crit_allowed_modes = list(MODE_WHISPER,MODE_CHANGELING,MODE_ALIEN)
 		deaf_type = 2 // Since you should be able to hear yourself without looking
 	if(!(message_langs & languages_understood) || force_compose) //force_compose is so AIs don't end up without their hrefs.
 		message = compose_message(speaker, message_langs, raw_message, radio_freq, spans)
+	if(mind && mind.special_role && mind.special_role == "traitor")
+		message = parse_for_code_words(message)
 	show_message(message, 2, deaf_message, deaf_type)
 	return message
 
