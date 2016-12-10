@@ -4,11 +4,6 @@
 /client
 	var/list/parallax_layers
 	var/list/parallax_layers_cached
-	/*
-	var/static/obj/screen/parallax_pmaster/parallax_pmaster = new
-	var/static/obj/screen/parallax_space_whitifier/parallax_space_whitifier = new
-	var/static/obj/screen/parallax_fixer/parallax_fixer = new
-	*/
 	var/static/list/parallax_static_layers_tail = newlist(/obj/screen/parallax_pmaster, /obj/screen/parallax_space_whitifier, /obj/screen/parallax_fixer)
 	var/atom/movable/movingmob
 	var/turf/previous_turf
