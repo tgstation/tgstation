@@ -530,6 +530,9 @@ var/global/list/datum/stack_recipe/cable_coil_recipes = list ( \
 		new_cable.item_color = item_color
 		new_cable.update_icon()
 
+/obj/item/stack/cable_coil/pre_throw_by_mob(mob/tosser)
+	return src
+
 //add cables to the stack
 /obj/item/stack/cable_coil/proc/give(extra)
 	if(amount + extra > max_amount)

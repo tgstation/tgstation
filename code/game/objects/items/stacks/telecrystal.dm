@@ -25,3 +25,6 @@
 			I.hidden_uplink.telecrystals += 1
 			use(1)
 			user << "<span class='notice'>You slot [src] into the [I] and charge its internal uplink.</span>"
+
+/obj/item/stack/telecrystal/pre_throw_by_mob(mob/tosser)
+	return src
