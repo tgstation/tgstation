@@ -137,6 +137,7 @@
 	icon_state = "0"
 	floor_tile = /obj/item/stack/tile/fakespace
 	broken_states = list("damaged")
+	plane = PLANE_SPACE
 
 /turf/open/floor/fakespace/New()
 	..()
