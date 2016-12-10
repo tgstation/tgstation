@@ -3,10 +3,12 @@
 	var/mag_type = /obj/item/ammo_box/magazine/m10mm
 	var/list/energy_type = list(/obj/item/ammo_casing/energy/laser)
 	var/obj/item/ammo_casing/energy/energy_ref
+	var/the_item_state = "laser"
 
 /obj/item/weapon/gun_attachment/base/on_attach(var/obj/item/weapon/gun/owner)
 	..()
 	owner.base = src
+	owner.icon_state = the_item_state
 	switch(gun_type)
 		if(CUSTOMIZABLE_PROJECTILE)
 			var/obj/item/weapon/gun/ballistic/O = owner
@@ -33,3 +35,4 @@
 			E.ammo_type = list()
 			E.power_supply = new(E)
 	owner.base = null
+	owner.icon_state = initial(owner.icon_state)
