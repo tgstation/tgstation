@@ -30,15 +30,25 @@
 	for(var/obj/item/device/guncrafting/module/M in processing_modules)
 		M.process()
 
+/datum/gun/proc/can_fire()
+	var/energy_needed = energy_cost
+	for(var/obj/item/device/guncrafting/module/power/P in power_modules)
+		if(energy_needed <= 0)
+			return TRUE
+		energy_needed -= P.use_power(energy_needed)
+	return FALSE
+
 /datum/gun/proc/on_fire(atom/target, mob/living/user, params, distro, quiet, zone_override, spread)
 	for(var/obj/item/device/guncrafting/module/M in modules)
-		M.on_fire(atom/target, mob/living/user, params, distro, quiet, zone_override, spread)
+		if(!M.on_fire(atom/target, mob/living/user, params, distro, quiet, zone_override, spread))
+			return FALSE
 	return TRUE
 
 /datum/gun/proc/on_range(turf/T)	//Return 1 to override deletion - DONT DO THIS UNLESS ABSOLUTELY NECESSARY
+	. = 0
 	for(var/obj/item/device/guncrafting/module/M in modules)
-		M.on_range(T)
-	return FALSE
+		. += M.on_range(T)
+	return .
 
 /datum/gun/proc/on_hit(atom/target, blocked)	//Return 0 to override hit effects defaults
 	for(var/obj/item/device/guncrafting/module/M in modules)
@@ -46,10 +56,14 @@
 	. = ..(target, blocked)
 
 /datum/gun/proc/volume()	//volume in percentages
-
-	return 100
+	. = 75
+	for(var/obj/item/device/guncrafting/module/M in modules)
+		. += M.check_volume()
+	return .
 
 /datum/gun/proc/spread()
-
-	return 0
+	. = 0
+	for(var/obj/item/device/guncrafting/module/M in modules)
+		. += M.check_spread()
+	return .
 
