@@ -12,6 +12,7 @@
 	max_integrity = 100
 	var/oreAmount = 7
 	var/material_drop_type = /obj/item/stack/sheet/metal
+	CanAtmosPass = ATMOS_PASS_DENSITY
 
 /obj/structure/statue/attackby(obj/item/weapon/W, mob/living/user, params)
 	add_fingerprint(user)
@@ -80,9 +81,6 @@
 	add_fingerprint(user)
 	user.visible_message("[user] rubs some dust off from the [name]'s surface.", \
 						 "<span class='notice'>You rub some dust off from the [name]'s surface.</span>")
-
-/obj/structure/statue/CanAtmosPass()
-	return !density
 
 /obj/structure/statue/deconstruct(disassembled = TRUE)
 	if(!(flags & NODECONSTRUCT))

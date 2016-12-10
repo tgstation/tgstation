@@ -12,6 +12,7 @@
 	growing_icon = 'icons/obj/hydroponics/growing_fruits.dmi'
 	icon_grow = "pumpkin-grow"
 	icon_dead = "pumpkin-dead"
+	genes = list(/datum/plant_gene/trait/repeated_harvest)
 	mutatelist = list(/obj/item/seeds/pumpkin/blumpkin)
 	reagents_add = list("vitamin" = 0.04, "nutriment" = 0.2)
 
@@ -24,12 +25,13 @@
 	bitesize_mod = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/pumpkin/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
-	..()
 	if(W.is_sharp())
 		user.show_message("<span class='notice'>You carve a face into [src]!</span>", 1)
 		new /obj/item/clothing/head/hardhat/pumpkinhead(user.loc)
 		qdel(src)
 		return
+	else
+		return ..()
 
 // Blumpkin
 /obj/item/seeds/pumpkin/blumpkin
@@ -40,7 +42,7 @@
 	plantname = "Blumpkin Vines"
 	product = /obj/item/weapon/reagent_containers/food/snacks/grown/blumpkin
 	mutatelist = list()
-	reagents_add = list("ammonia" = 0.2, "chlorine" = 0.2, "nutriment" = 0.2)
+	reagents_add = list("ammonia" = 0.2, "chlorine" = 0.1, "nutriment" = 0.2)
 	rarity = 20
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/blumpkin

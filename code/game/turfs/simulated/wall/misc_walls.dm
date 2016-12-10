@@ -3,7 +3,6 @@
 	desc = "A cold metal wall engraved with indecipherable symbols. Studying them causes your head to pound."
 	icon = 'icons/turf/walls/cult_wall.dmi'
 	icon_state = "cult"
-	builtin_sheet = null
 	canSmoothWith = null
 
 /turf/closed/wall/mineral/cult/New()
@@ -45,7 +44,7 @@
 	desc = "A huge chunk of warm metal. The clanging of machinery emanates from within."
 	explosion_block = 2
 	hardness = 10
-	sheet_type = /obj/item/stack/sheet/brass
+	sheet_type = /obj/item/stack/tile/brass
 	var/obj/effect/clockwork/overlay/wall/realappearence
 	var/obj/structure/destructible/clockwork/cache/linkedcache
 

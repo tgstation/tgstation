@@ -714,7 +714,7 @@ var/list/airlock_overlays = list()
 				H.Weaken(5)
 				H.apply_damage(10, BRUTE, "head")
 			else
-				visible_message("<span class='danger'>[user] headbutts the airlock. Good thing they're wearing a helmet.</span>")
+				visible_message("<span class='danger'>[user] headbutts the airlock. Good thing [user.p_theyre()] wearing a helmet.</span>")
 			return
 
 	if(panel_open)
@@ -1476,6 +1476,7 @@ var/list/airlock_overlays = list()
 		else
 			A = new /obj/structure/door_assembly/door_assembly_0(src.loc)
 			//If you come across a null assemblytype, it will produce the default assembly instead of disintegrating.
+		A.created_name = name
 
 		if(!disassembled)
 			if(A)

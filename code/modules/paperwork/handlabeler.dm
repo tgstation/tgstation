@@ -118,4 +118,4 @@
 	desc = "A roll of paper. Use it on a hand labeler to refill it."
 	icon_state = "labeler_refill"
 	item_state = "electropack"
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY

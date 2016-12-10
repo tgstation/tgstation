@@ -3,7 +3,7 @@
 	desc = "A traditional shotgun with wood furniture and a four-shell capacity underneath."
 	icon_state = "shotgun"
 	item_state = "shotgun"
-	w_class = 4
+	w_class = WEIGHT_CLASS_BULKY
 	force = 10
 	flags =  CONDUCT
 	slot_flags = SLOT_BACK
@@ -189,7 +189,7 @@
 	icon_state = "cshotgun"
 	origin_tech = "combat=6"
 	mag_type = /obj/item/ammo_box/magazine/internal/shot/com
-	w_class = 5
+	w_class = WEIGHT_CLASS_HUGE
 
 //Dual Feed Shotgun
 
@@ -199,7 +199,7 @@
 	icon_state = "cycler"
 	origin_tech = "combat=4;materials=2"
 	mag_type = /obj/item/ammo_box/magazine/internal/shot/tube
-	w_class = 5
+	w_class = WEIGHT_CLASS_HUGE
 	var/toggled = 0
 	var/obj/item/ammo_box/magazine/internal/shot/alternate_magazine
 

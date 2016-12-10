@@ -109,7 +109,7 @@
 			if(!(MM.movement_type & FLYING))
 				if(ishuman(AM))
 					var/mob/living/carbon/H = AM
-					if(H.m_intent == "run")
+					if(H.m_intent == MOVE_INTENT_RUN)
 						triggered(H)
 						H.visible_message("<span class='warning'>[H] accidentally steps on [src].</span>", \
 										  "<span class='warning'>You accidentally step on [src]</span>")

@@ -3,7 +3,7 @@
 	desc = "A spring loaded rifle designed to fit syringes, used to incapacitate unruly patients from a distance."
 	icon_state = "syringegun"
 	item_state = "syringegun"
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 	throw_speed = 3
 	throw_range = 7
 	force = 4
@@ -74,7 +74,7 @@
 	desc = "A small spring-loaded sidearm that functions identically to a syringe gun."
 	icon_state = "syringe_pistol"
 	item_state = "gun" //Smaller inhand
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	origin_tech = "combat=2;syndicate=2;biotech=3"
 	force = 2 //Also very weak because it's smaller
 	suppressed = 1 //Softer fire sound

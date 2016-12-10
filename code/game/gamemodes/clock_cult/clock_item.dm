@@ -6,7 +6,7 @@
 	var/clockwork_desc = "A fabled artifact from beyond the stars. Contains concentrated meme essence." //Shown to clockwork cultists instead of the normal description
 	icon = 'icons/obj/clockwork_objects.dmi'
 	icon_state = "rare_pepe"
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/clockwork/New()
 	..()

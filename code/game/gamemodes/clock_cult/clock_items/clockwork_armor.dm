@@ -4,7 +4,7 @@
 	desc = "A heavy helmet made of brass."
 	icon = 'icons/obj/clothing/clockwork_garb.dmi'
 	icon_state = "clockwork_helmet"
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	armor = list(melee = 80, bullet = 70, laser = -25, energy = 0, bomb = 60, bio = 0, rad = 0, fire = 100, acid = 100)
 
@@ -43,7 +43,7 @@
 	desc = "A bulky cuirass made of brass."
 	icon = 'icons/obj/clothing/clockwork_garb.dmi'
 	icon_state = "clockwork_cuirass"
-	w_class = 4
+	w_class = WEIGHT_CLASS_BULKY
 	body_parts_covered = CHEST|GROIN|LEGS
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	armor = list(melee = 80, bullet = 70, laser = -25, energy = 0, bomb = 60, bio = 0, rad = 0, fire = 100, acid = 100)
@@ -130,7 +130,7 @@
 	desc = "Industrial boots made of brass. They're very heavy."
 	icon = 'icons/obj/clothing/clockwork_garb.dmi'
 	icon_state = "clockwork_treads"
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 	strip_delay = 50
 	put_on_delay = 30
 	resistance_flags = FIRE_PROOF | ACID_PROOF

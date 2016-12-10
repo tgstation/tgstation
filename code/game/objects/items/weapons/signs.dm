@@ -3,7 +3,7 @@
 	name = "blank picket sign"
 	desc = "It's blank"
 	force = 5
-	w_class = 4
+	w_class = WEIGHT_CLASS_BULKY
 	attack_verb = list("bashed","smacked")
 	resistance_flags = FLAMMABLE
 

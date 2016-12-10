@@ -42,7 +42,7 @@
 	var/busy = 0
 	pass_flags = PASSTABLE
 	move_to_delay = 6
-	ventcrawler = 2
+	ventcrawler = VENTCRAWLER_ALWAYS
 	attacktext = "bites"
 	attack_sound = 'sound/weapons/bite.ogg'
 	unique_name = 1

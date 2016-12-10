@@ -250,7 +250,7 @@
 		user.visible_message("<span class='notice'>[user] [anchored ? "anchored" : "unanchored"] \the [src] [anchored ? "to" : "from"] the ground.</span>", \
 						"<span class='notice'>You [anchored ? "anchored" : "unanchored"] \the [src] [anchored ? "to" : "from"] the ground.</span>", \
 						"<span class='italics'>You hear a ratchet.</span>")
-	else if(user.a_intent != "harm" && !(W.flags & NOBLUDGEON))
+	else if(user.a_intent != INTENT_HARM && !(W.flags & NOBLUDGEON))
 		if(W.GetID() || !toggle(user))
 			togglelock(user)
 		return 1

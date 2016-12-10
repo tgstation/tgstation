@@ -1,10 +1,12 @@
 //generates a component in the global component cache, either random based on lowest or a specific component
-/proc/generate_cache_component(specific_component_id)
-	if(specific_component_id)
-		clockwork_component_cache[specific_component_id]++
-	else
-		var/component_to_generate = get_weighted_component_id()
-		clockwork_component_cache[component_to_generate]++
+/proc/generate_cache_component(specific_component_id, atom/A)
+	if(!specific_component_id)
+		specific_component_id = get_weighted_component_id()
+	clockwork_component_cache[specific_component_id]++
+	if(A)
+		PoolOrNew(get_component_animation_type(specific_component_id), get_turf(A))
+	update_slab_info()
+	return specific_component_id
 
 //returns a chosen component id based on the lowest amount of that component in the global cache, the global cache plus the slab if there are caches, or the slab if there are no caches.
 /proc/get_weighted_component_id(obj/item/clockwork/slab/storage_slab)
@@ -85,12 +87,15 @@
 		else
 			return "brass"
 
-//returns a component color from a component id, but with a brighter replicant alloy color
-/proc/get_component_color_brightalloy(id)
-	if(id == REPLICANT_ALLOY)
-		return "#5A6068"
-	else
-		return get_component_color(id)
+//returns a component color from a component id, but with brighter colors for the darkest
+/proc/get_component_color_bright(id)
+	switch(id)
+		if(BELLIGERENT_EYE)
+			return "#880020"
+		if(REPLICANT_ALLOY)
+			return "#5A6068"
+		else
+			return get_component_color(id)
 
 //returns a component color from a component id
 /proc/get_component_color(id)

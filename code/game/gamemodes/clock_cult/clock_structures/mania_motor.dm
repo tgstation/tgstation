@@ -135,3 +135,10 @@
 			user << "<span class='warning'>[src] needs more power to function!</span>"
 			return 0
 		toggle(0, user)
+
+/obj/structure/destructible/clockwork/powered/mania_motor/toggle(fast_process, mob/living/user)
+	. = ..()
+	if(active)
+		SetLuminosity(2, 1)
+	else
+		SetLuminosity(0)

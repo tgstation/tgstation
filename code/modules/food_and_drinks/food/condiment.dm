@@ -134,14 +134,17 @@
 	return (TOXLOSS)
 
 /obj/item/weapon/reagent_containers/food/condiment/saltshaker/afterattack(obj/target, mob/living/user, proximity)
-	if(!proximity || !isturf(target))
+	if(!proximity)
 		return
-	if(!reagents.has_reagent("sodiumchloride", 2))
-		user << "<span class='warning'>You don't have enough salt to make a pile!</span>"
+	if(isturf(target))
+		if(!reagents.has_reagent("sodiumchloride", 2))
+			user << "<span class='warning'>You don't have enough salt to make a pile!</span>"
+			return
+		user.visible_message("<span class='notice'>[user] shakes some salt onto [target].</span>", "<span class='notice'>You shake some salt onto [target].</span>")
+		reagents.remove_reagent("sodiumchloride", 2)
+		new/obj/effect/decal/cleanable/salt(target)
 		return
-	user.visible_message("<span class='notice'>[user] shakes some salt onto [target].</span>", "<span class='notice'>You shake some salt onto [target].</span>")
-	reagents.remove_reagent("sodiumchloride", 2)
-	new/obj/effect/decal/cleanable/salt(target)
+	..()
 
 /obj/item/weapon/reagent_containers/food/condiment/peppermill
 	name = "pepper mill"

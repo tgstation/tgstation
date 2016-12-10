@@ -71,7 +71,7 @@
 	icon_state = "drake_statue_falling"
 
 
-/obj/structure/fluff/bus/
+/obj/structure/fluff/bus
 	name = "bus"
 	desc = "GO TO SCHOOL. READ A BOOK."
 	icon = 'icons/obj/bus.dmi'

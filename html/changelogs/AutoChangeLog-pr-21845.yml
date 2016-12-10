@@ -1,4 +1,0 @@
-author: "PeopleAreStrange"
-delete-after: True
-changes: 
-  - tweak: "Changed F7 to buildmode, F8 to Invismin (again). Removed stealthmin toggle"

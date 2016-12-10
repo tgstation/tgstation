@@ -4,7 +4,7 @@
 	desc = "A generic brand of lipstick."
 	icon = 'icons/obj/items.dmi'
 	icon_state = "lipstick"
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 	var/colour = "red"
 	var/open = 0
 
@@ -27,8 +27,10 @@
 	name = "lipstick"
 
 /obj/item/weapon/lipstick/random/New()
+	..()
 	colour = pick("red","purple","lime","black","green","blue","white")
 	name = "[colour] lipstick"
+
 
 
 /obj/item/weapon/lipstick/attack_self(mob/user)
@@ -106,7 +108,7 @@
 	icon = 'icons/obj/items.dmi'
 	icon_state = "razor"
 	flags = CONDUCT
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 
 
 /obj/item/weapon/razor/proc/shave(mob/living/carbon/human/H, location = "mouth")

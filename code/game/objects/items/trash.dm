@@ -2,7 +2,7 @@
 /obj/item/trash
 	icon = 'icons/obj/janitor.dmi'
 	desc = "This is rubbish."
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 	resistance_flags = FLAMMABLE
 
 /obj/item/trash/raisins

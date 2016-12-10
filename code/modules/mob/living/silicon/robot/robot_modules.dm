@@ -2,7 +2,7 @@
 	name = "Default"
 	icon = 'icons/obj/module.dmi'
 	icon_state = "std_module"
-	w_class = 100
+	w_class = WEIGHT_CLASS_GIGANTIC
 	item_state = "electronic"
 	flags = CONDUCT
 
@@ -38,7 +38,6 @@
 		var/obj/item/I = new i(src)
 		ratvar_modules += I
 		ratvar_modules -= i
-	rebuild_modules()
 
 /obj/item/weapon/robot_module/Destroy()
 	basic_modules.Cut()
@@ -163,7 +162,8 @@
 	for(var/obj/item/I in added_modules)
 		add_module(I, FALSE, FALSE)
 	for(var/i in held_modules)
-		R.activate_module(i)
+		if(i)
+			R.activate_module(i)
 	if(R.hud_used)
 		R.hud_used.update_robot_modules_display()
 
@@ -174,6 +174,7 @@
 		qdel(RM)
 		return
 	R.module = RM
+	RM.rebuild_modules()
 	addtimer(RM, "do_transform_animation", 0)
 	qdel(src)
 	return RM

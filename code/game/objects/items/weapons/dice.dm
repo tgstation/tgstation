@@ -35,7 +35,7 @@
 	desc = "A die with six sides. Basic and servicable."
 	icon = 'icons/obj/dice.dmi'
 	icon_state = "d6"
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 	var/sides = 6
 	var/result = null
 	var/list/special_faces = list() //entries should match up to sides var if used
@@ -45,6 +45,7 @@
 /obj/item/weapon/dice/New()
 	result = rand(1, sides)
 	update_icon()
+	..()
 
 /obj/item/weapon/dice/d1
 	name = "d1"

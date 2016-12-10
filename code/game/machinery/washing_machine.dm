@@ -193,7 +193,7 @@
 		update_icon()
 		return
 
-	else if(user.a_intent != "harm")
+	else if(user.a_intent != INTENT_HARM)
 
 		if (!state_open)
 			user << "<span class='warning'>Open the door first!</span>"
@@ -224,7 +224,7 @@
 		user << "<span class='warning'>[src] is busy.</span>"
 		return
 
-	if(user.pulling && user.a_intent == "grab" && isliving(user.pulling))
+	if(user.pulling && user.a_intent == INTENT_GRAB && isliving(user.pulling))
 		var/mob/living/L = user.pulling
 		if(L.buckled || L.has_buckled_mobs())
 			return

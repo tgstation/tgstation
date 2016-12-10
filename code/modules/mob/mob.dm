@@ -302,6 +302,10 @@ var/next_mob_id = 0
 		return
 	if(AM.anchored || AM.throwing)
 		return
+	if(isliving(AM))
+		var/mob/living/L = AM
+		if(L.buckled && L.buckled.buckle_prevents_pull)
+			return
 	if(throwing || incapacitated())
 		return
 
@@ -326,7 +330,6 @@ var/next_mob_id = 0
 	update_pull_hud_icon()
 
 	if(ismob(AM))
-		changeNext_move(CLICK_CD_MELEE)
 		var/mob/M = AM
 		if(!supress_message)
 			visible_message("<span class='warning'>[src] has grabbed [M] passively!</span>")
