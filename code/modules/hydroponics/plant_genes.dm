@@ -317,7 +317,7 @@
 	G.reagents.maximum_volume *= rate
 
 /datum/plant_gene/trait/repeated_harvest
-	name = "perennial growth"
+	name = "Perennial Growth"
 
 /datum/plant_gene/trait/repeated_harvest/can_add(obj/item/seeds/S)
 	if(!..())
@@ -327,7 +327,7 @@
 	return TRUE
 
 /datum/plant_gene/trait/battery
-	name = "capacitive cellular production"
+	name = "Capacitive Cell Production"
 
 /datum/plant_gene/trait/battery/on_attackby(obj/item/weapon/reagent_containers/food/snacks/grown/G, obj/item/I, mob/user)
 	if(istype(I, /obj/item/stack/cable_coil))
@@ -355,7 +355,7 @@
 
 
 /datum/plant_gene/trait/stinging
-	name = "hypodermic prickles"
+	name = "Hypodermic Prickles"
 
 /datum/plant_gene/trait/stinging/on_throw_impact(obj/item/weapon/reagent_containers/food/snacks/grown/G, atom/target)
 	if(isliving(target) && G.reagents && G.reagents.total_volume)
@@ -372,7 +372,7 @@
 	trait_id = "plant_type"
 
 /datum/plant_gene/trait/plant_type/weed_hardy
-	name = "Robust Species"
+	name = "Weed Adaptation"
 
 /datum/plant_gene/trait/plant_type/fungal_metabolism
 	name = "Fungal Vitality"

@@ -225,7 +225,7 @@
 				pixel_x = pixel_x_offset
 				pixel_y = pixel_y_offset
 			else
-				animate(src, pixel_x = pixel_x_offset, pixel_y = pixel_y_offset, time = max(1, (delay <= 3 ? delay - 1 : delay)))
+				animate(src, pixel_x = pixel_x_offset, pixel_y = pixel_y_offset, time = max(1, (delay <= 3 ? delay - 1 : delay)), flags = ANIMATION_END_NOW)
 
 			if(original && (original.layer>=2.75) || ismob(original))
 				if(loc == get_turf(original))

@@ -39,6 +39,15 @@
 	time = 15
 	category = CAT_WEAPON
 
+/datum/crafting_recipe/strobeshield
+	name = "strobe shield"
+	result = /obj/item/device/assembly/flash/shield
+	reqs = list(/obj/item/wallframe/flasher = 1,
+				/obj/item/device/assembly/flash/handheld = 1,
+				/obj/item/weapon/shield/riot = 1)
+	time = 40
+	category = CAT_WEAPON
+
 /datum/crafting_recipe/molotov
 	name = "Molotov"
 	result = /obj/item/weapon/reagent_containers/food/drinks/bottle/molotov

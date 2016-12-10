@@ -1,4 +1,4 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
+
 
 /var/const/access_security = 1 // Security equipment
 /var/const/access_brig = 2 // Brig timers and permabrig
