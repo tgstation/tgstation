@@ -131,6 +131,11 @@
 				M.slip(0, 6, null, (SLIDE_ICE|GALOSHES_DONT_HELP))
 			if(TURF_WET_SLIDE)
 				M.slip(0, 4, null, (SLIDE|GALOSHES_DONT_HELP))
+	//melting
+	if(isobj(AM) && air && air.temperature > T0C)
+		var/obj/O = AM
+		if(O.is_frozen)
+			O.make_unfrozen()
 
 /turf/proc/is_plasteel_floor()
 	return 0

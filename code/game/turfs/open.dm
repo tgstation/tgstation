@@ -94,7 +94,7 @@
 /turf/open/freon_gas_act()
 	for(var/obj/I in contents)
 		if(!I.is_frozen) //let it go
-			I.make_frozen_visual(I)
+			I.make_frozen_visual()
 	for(var/mob/living/L in contents)
 		if(L.bodytemperature >= 10)
 			L.bodytemperature -= 10
@@ -197,6 +197,8 @@
 	spawn(rand(0,20))
 		if(wet == TURF_WET_PERMAFROST)
 			wet = TURF_WET_ICE
+		else if(wet == TURF_WET_ICE)
+			wet = TURF_WET_WATER	
 		else
 			wet = TURF_DRY
 			if(wet_overlay)
@@ -212,6 +214,9 @@
 	if(wet_time > MAXIMUM_WET_TIME)
 		wet_time = MAXIMUM_WET_TIME
 	if(wet == TURF_WET_ICE && air.temperature > T0C)
+		for(var/obj/O in contents)
+			if(O.is_frozen)
+				O.make_unfrozen()
 		MakeDry(TURF_WET_ICE)
 		MakeSlippery(TURF_WET_WATER)
 	if(wet != TURF_WET_PERMAFROST)
@@ -232,6 +237,8 @@
 				wet_time = max(0, wet_time-10)
 			if(T0C + 100 to INFINITY)
 				wet_time = 0
+	else if (GetTemperature() > BODYTEMP_COLD_DAMAGE_LIMIT)	//seems like a good place
+		MakeDry(TURF_WET_PERMAFROST)
 	else
 		wet_time = max(0, wet_time-5)
 	if(wet && wet < TURF_WET_ICE && !wet_time)
