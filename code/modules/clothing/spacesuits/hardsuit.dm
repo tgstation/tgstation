@@ -150,11 +150,6 @@
 	armor = list(melee = 30, bullet = 5, laser = 10, energy = 5, bomb = 10, bio = 100, rad = 75, fire = 100, acid = 75)
 	item_color = "engineering"
 	resistance_flags = FIRE_PROOF
-	species_fit = list("Lizardperson", "Ash Walker")
-	sprite_sheets = list(
-		"Lizardperson" = 'icons/mob/species/lizard/head.dmi',
-		"Ash Walker" = 'icons/mob/species/lizard/head.dmi'
-		)
 
 /obj/item/clothing/suit/space/hardsuit/engine
 	name = "engineering hardsuit"
@@ -164,11 +159,6 @@
 	armor = list(melee = 30, bullet = 5, laser = 10, energy = 5, bomb = 10, bio = 100, rad = 75, fire = 100, acid = 75)
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/engine
 	resistance_flags = FIRE_PROOF
-	species_fit = list("Lizardperson", "Ash Walker")
-	sprite_sheets = list(
-		"Lizardperson" = 'icons/mob/species/lizard/suit.dmi',
-		"Ash Walker" = 'icons/mob/species/lizard/suit.dmi'
-		)
 
 	//Atmospherics
 /obj/item/clothing/head/helmet/space/hardsuit/engine/atmos
@@ -227,11 +217,6 @@
 	armor = list(melee = 30, bullet = 5, laser = 10, energy = 5, bomb = 50, bio = 100, rad = 50, fire = 50, acid = 75)
 	brightness_on = 7
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/internals, /obj/item/weapon/resonator, /obj/item/device/mining_scanner, /obj/item/device/t_scanner/adv_mining_scanner, /obj/item/weapon/gun/energy/kinetic_accelerator)
-	species_fit = list("Lizardperson", "Ash Walker")
-	sprite_sheets = list(
-		"Lizardperson" = 'icons/mob/species/lizard/head.dmi',
-		"Ash Walker" = 'icons/mob/species/lizard/head.dmi'
-		)
 
 /obj/item/clothing/suit/space/hardsuit/mining
 	icon_state = "hardsuit-mining"
@@ -243,11 +228,6 @@
 	armor = list(melee = 30, bullet = 5, laser = 10, energy = 5, bomb = 50, bio = 100, rad = 50, fire = 50, acid = 75)
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/internals,/obj/item/weapon/storage/bag/ore,/obj/item/weapon/pickaxe)
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/mining
-	species_fit = list("Lizardperson", "Ash Walker")
-	sprite_sheets = list(
-		"Lizardperson" = 'icons/mob/species/lizard/suit.dmi',
-		"Ash Walker" = 'icons/mob/species/lizard/suit.dmi'
-		)
 
 	//Syndicate hardsuit
 /obj/item/clothing/head/helmet/space/hardsuit/syndi
@@ -263,11 +243,6 @@
 	actions_types = list(/datum/action/item_action/toggle_helmet_mode)
 	visor_flags_inv = HIDEMASK|HIDEEYES|HIDEFACE|HIDEFACIALHAIR
 	visor_flags = STOPSPRESSUREDMAGE
-	species_fit = list("Lizardperson", "Ash Walker")
-	sprite_sheets = list(
-		"Lizardperson" = 'icons/mob/species/lizard/head.dmi',
-		"Ash Walker" = 'icons/mob/species/lizard/head.dmi'
-		)
 
 /obj/item/clothing/head/helmet/space/hardsuit/syndi/update_icon()
 	icon_state = "hardsuit[on]-[item_color]"
@@ -344,11 +319,6 @@
 	allowed = list(/obj/item/weapon/gun,/obj/item/ammo_box,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/melee/energy/sword/saber,/obj/item/weapon/restraints/handcuffs,/obj/item/weapon/tank/internals)
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/syndi
 	jetpack = /obj/item/weapon/tank/jetpack/suit
-	species_fit = list("Lizardperson", "Ash Walker")
-	sprite_sheets = list(
-		"Lizardperson" = 'icons/mob/species/lizard/suit.dmi',
-		"Ash Walker" = 'icons/mob/species/lizard/suit.dmi'
-		)
 
 //Elite Syndie suit
 /obj/item/clothing/head/helmet/space/hardsuit/syndi/elite
@@ -364,8 +334,6 @@
 	visor_flags = 0
 	on = 0
 	resistance_flags = FIRE_PROOF | ACID_PROOF
-	species_fit = null
-	sprite_sheets = null
 
 
 /obj/item/clothing/suit/space/hardsuit/syndi/elite
@@ -379,8 +347,6 @@
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	max_heat_protection_temperature = FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT
 	resistance_flags = FIRE_PROOF | ACID_PROOF
-	species_fit = null
-	sprite_sheets = null
 
 //The Owl Hardsuit
 /obj/item/clothing/head/helmet/space/hardsuit/syndi/owl
@@ -393,8 +359,6 @@
 	visor_flags_inv = 0
 	visor_flags = 0
 	on = 0
-	species_fit = null
-	sprite_sheets = null
 
 /obj/item/clothing/suit/space/hardsuit/syndi/owl
 	name = "owl hardsuit"
@@ -404,8 +368,6 @@
 	item_state = "s_suit"
 	item_color = "owl"
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/syndi/owl
-	species_fit = null
-	sprite_sheets = null
 
 
 	//Wizard hardsuit
@@ -444,11 +406,6 @@
 	flash_protect = 0
 	armor = list(melee = 30, bullet = 5, laser = 10, energy = 5, bomb = 10, bio = 100, rad = 50, fire = 75, acid = 75)
 	scan_reagents = 1
-	species_fit = list("Lizardperson", "Ash Walker")
-	sprite_sheets = list(
-		"Lizardperson" = 'icons/mob/species/lizard/head.dmi',
-		"Ash Walker" = 'icons/mob/species/lizard/head.dmi'
-		)
 
 /obj/item/clothing/suit/space/hardsuit/medical
 	icon_state = "hardsuit-medical"
@@ -458,11 +415,6 @@
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/internals,/obj/item/weapon/storage/firstaid,/obj/item/device/healthanalyzer,/obj/item/stack/medical)
 	armor = list(melee = 30, bullet = 5, laser = 10, energy = 5, bomb = 10, bio = 100, rad = 50, fire = 75, acid = 75)
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/medical
-	species_fit = list("Lizardperson", "Ash Walker")
-	sprite_sheets = list(
-		"Lizardperson" = 'icons/mob/species/lizard/suit.dmi',
-		"Ash Walker" = 'icons/mob/species/lizard/suit.dmi'
-		)
 
 	//Research Director hardsuit
 /obj/item/clothing/head/helmet/space/hardsuit/rd
@@ -519,11 +471,6 @@
 	item_state = "sec_helm"
 	item_color = "sec"
 	armor = list(melee = 30, bullet = 15, laser = 30,energy = 10, bomb = 10, bio = 100, rad = 50, fire = 75, acid = 75)
-	species_fit = list("Lizardperson", "Ash Walker")
-	sprite_sheets = list(
-		"Lizardperson" = 'icons/mob/species/lizard/head.dmi',
-		"Ash Walker" = 'icons/mob/species/lizard/head.dmi'
-		)
 
 
 /obj/item/clothing/suit/space/hardsuit/security
@@ -534,11 +481,6 @@
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/internals, /obj/item/weapon/gun/energy,/obj/item/weapon/reagent_containers/spray/pepper,/obj/item/weapon/gun/ballistic,/obj/item/ammo_box,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/restraints/handcuffs)
 	armor = list(melee = 30, bullet = 15, laser = 30, energy = 10, bomb = 10, bio = 100, rad = 50, fire = 75, acid = 75)
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/security
-	species_fit = list("Lizardperson", "Ash Walker")
-	sprite_sheets = list(
-		"Lizardperson" = 'icons/mob/species/lizard/suit.dmi',
-		"Ash Walker" = 'icons/mob/species/lizard/suit.dmi'
-		)
 
 /obj/item/clothing/head/helmet/space/hardsuit/security/hos
 	name = "head of security's hardsuit helmet"
@@ -546,8 +488,6 @@
 	icon_state = "hardsuit0-hos"
 	item_color = "hos"
 	armor = list(melee = 45, bullet = 25, laser = 30,energy = 10, bomb = 25, bio = 100, rad = 50, fire = 95, acid = 95)
-	species_fit = null
-	sprite_sheets = null
 
 
 /obj/item/clothing/suit/space/hardsuit/security/hos
@@ -556,8 +496,6 @@
 	desc = "A special bulky suit that protects against hazardous, low pressure environments. Has an additional layer of armor."
 	armor = list(melee = 45, bullet = 25, laser = 30, energy = 10, bomb = 25, bio = 100, rad = 50, fire = 95, acid = 95)
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/security/hos
-	species_fit = null
-	sprite_sheets = null
 
 	//Captain
 /obj/item/clothing/head/helmet/space/hardsuit/captain
