@@ -168,6 +168,12 @@
 			return FALSE
 		proselytize_values["alloy_cost"] = 0
 
+	var/turf/T = get_turf(user)
+	if(!T || (T.z != ZLEVEL_STATION && T.z != ZLEVEL_CENTCOM && T.z != ZLEVEL_MINING && T.z != ZLEVEL_LAVALAND))
+		proselytize_values["operation_time"] *= 2
+		if(proselytize_values["alloy_cost"] > 0)
+			proselytize_values["alloy_cost"] *= 2
+
 	if(!can_use_alloy(proselytize_values["alloy_cost"]))
 		if(stored_alloy - proselytize_values["alloy_cost"] < 0)
 			user << "<span class='warning'>You need <b>[proselytize_values["alloy_cost"]]</b> liquified alloy to proselytize [target]!</span>"
@@ -181,7 +187,6 @@
 		proselytize_values["operation_time"] *= 0.5
 
 	proselytize_values["operation_time"] *= speed_multiplier
-
 
 	playsound(target, 'sound/machines/click.ogg', 50, 1)
 	if(proselytize_values["operation_time"])

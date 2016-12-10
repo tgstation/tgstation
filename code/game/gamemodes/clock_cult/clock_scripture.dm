@@ -130,23 +130,24 @@ Judgement: 12 servants, 5 caches, 300 CV, and any existing AIs are converted or 
 		switch(primary_component)
 			if(BELLIGERENT_EYE)
 				message = pick(neovgre_penalty)
-				ratvarian_prob = 80
+				ratvarian_prob = 55
 			if(VANGUARD_COGWHEEL)
 				message = pick(inathneq_penalty)
-				ratvarian_prob = 30
+				ratvarian_prob = 25
 			if(GEIS_CAPACITOR)
 				message = pick(sevtug_penalty)
-				ratvarian_prob = 50
+				ratvarian_prob = 40
 			if(REPLICANT_ALLOY)
 				message = pick(nezbere_penalty)
 				ratvarian_prob = 10
 			if(HIEROPHANT_ANSIBLE)
 				message = pick(nzcrentr_penalty)
-				ratvarian_prob = 100
+				ratvarian_prob = 70
 		if(message)
 			if(prob(ratvarian_prob))
 				message = text2ratvar(message)
-			invoker << "<span class='[get_component_span(primary_component)]'>\"[message]\"</span>"
+			invoker << "<span class='[get_component_span(primary_component)]_large'>\"[message]\"</span>"
+			invoker << 'sound/magic/clockwork/invoke_general.ogg'
 	return TRUE
 
 /datum/clockwork_scripture/proc/check_offstation_penalty()
