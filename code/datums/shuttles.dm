@@ -118,7 +118,7 @@
 	credit_cost = 1000
 	description = "Despite it's namesake, this shuttle is actually only slightly smaller than standard, and still complete with a brig and medbay."
 
-/datum/map_template/shuttle/emergency/fuck
+/datum/map_template/shuttle/emergency/scrapheap
 	suffix = "scrapheap"
 	name = "Standby Evacuation Vessel \"Scrapheap Challenge\""
 	credit_cost = -1000
