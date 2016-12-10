@@ -531,6 +531,9 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 	. = ..()
 	throw_speed = initial(throw_speed) //explosions change this.
 
+//Called before a mob throws something. Optionally return a replacement object to throw instead of src.
+/obj/item/proc/pre_throw_by_mob(mob/tosser)
+	return src
 
 /obj/item/proc/remove_item_from_storage(atom/newLoc) //please use this if you're going to snowflake an item out of a obj/item/weapon/storage
 	if(!newLoc)
