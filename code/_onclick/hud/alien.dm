@@ -125,7 +125,7 @@
 			inv_slots[inv.slot_id] = inv
 			inv.update_icon()
 
-/datum/hud/alien/persistant_inventory_update()
+/datum/hud/alien/persistent_inventory_update()
 	if(!mymob)
 		return
 	var/mob/living/carbon/alien/humanoid/H = mymob
