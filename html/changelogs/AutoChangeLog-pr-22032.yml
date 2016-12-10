@@ -1,4 +1,0 @@
-author: "Kor"
-delete-after: True
-changes: 
-  - imagedel: "Deleted all (3000+) left handed inhand icons. They are now automatically mirrored from the right hand, saving spriters a lot of tedious busywork."
