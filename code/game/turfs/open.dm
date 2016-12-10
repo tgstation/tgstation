@@ -193,6 +193,8 @@
 	spawn(rand(0,20))
 		if(wet == TURF_WET_PERMAFROST)
 			wet = TURF_WET_ICE
+		else if(wet = TURF_WET_ICE)
+			wet = TURF_WET_WATER	
 		else
 			wet = TURF_DRY
 			if(wet_overlay)
