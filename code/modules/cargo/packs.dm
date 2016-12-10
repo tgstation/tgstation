@@ -36,10 +36,10 @@
 
 /datum/supply_pack/emergency
 	group = "Emergency"
-	
+
 /datum/supply_pack/emergency/vehicle
 	name = "Biker Gang Kit" //TUNNEL SNAKES OWN THIS TOWN
-	cost = 2000 
+	cost = 2000
 	contraband = TRUE
 	contains = list(/obj/vehicle/atv,
 					/obj/item/key,
@@ -908,15 +908,6 @@
 	access_any = list(access_rd, access_atmospherics)
 	contains = list(/obj/machinery/portable_atmospherics/canister/bz)
 	crate_name = "bz canister crate"
-	crate_type = /obj/structure/closet/crate/secure
-	dangerous = TRUE
-
-/datum/supply_pack/science/freon_canister
-	name = "Freon Canister"
-	cost = 6000
-	access_any = list(access_rd, access_atmospherics)
-	contains = list(/obj/machinery/portable_atmospherics/canister/freon)
-	crate_name = "freon canister crate"
 	crate_type = /obj/structure/closet/crate/secure
 	dangerous = TRUE
 

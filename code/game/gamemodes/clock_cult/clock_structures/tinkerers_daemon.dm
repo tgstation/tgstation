@@ -148,8 +148,7 @@
 						component_to_generate = i
 						break
 		if(component_to_generate)
-			PoolOrNew(get_component_animation_type(component_to_generate), get_turf(src))
-			clockwork_component_cache[component_to_generate]++
+			generate_cache_component(component_to_generate, src)
 			production_time = world.time + (production_cooldown * get_efficiency_mod(TRUE)) //go on cooldown
 			visible_message("<span class='warning'>[src] hums as it produces a [get_component_name(component_to_generate)].</span>")
 		else

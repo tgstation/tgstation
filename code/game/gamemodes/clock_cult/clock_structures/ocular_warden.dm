@@ -66,6 +66,8 @@
 				var/obj/mecha/M = target
 				M.take_damage(damage_per_tick * get_efficiency_mod(), BURN, "melee", 1, get_dir(src, M))
 
+			PoolOrNew(/obj/effect/overlay/temp/ratvar/ocular_warden, get_turf(target))
+
 			setDir(get_dir(get_turf(src), get_turf(target)))
 	if(!target)
 		if(validtargets.len)

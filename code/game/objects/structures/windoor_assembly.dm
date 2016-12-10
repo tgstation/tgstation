@@ -26,6 +26,7 @@
 	var/facing = "l"	//Does the windoor open to the left or right?
 	var/secure = 0		//Whether or not this creates a secure windoor
 	var/state = "01"	//How far the door assembly has progressed
+	CanAtmosPass = ATMOS_PASS_PROC
 
 /obj/structure/windoor_assembly/examine(mob/user)
 	..()

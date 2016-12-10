@@ -1,4 +1,4 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
+
 
 var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 
@@ -160,7 +160,7 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 						return
 					if(SSshuttle.shuttle_purchased)
 						usr << "A replacement shuttle has already been purchased."
-					if(!S.prerequisites_met())
+					else if(!S.prerequisites_met())
 						usr << "You have not met the requirements for purchasing this shuttle."
 					else
 						if(SSshuttle.points >= S.credit_cost)
