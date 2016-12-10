@@ -20,9 +20,9 @@
 		C.parallax_fixer = new
 	for(var/obj/O in C.parallax_layers)
 		C.screen |= O
-		C.screen |= C.parallax_pmaster
-		C.screen |= C.parallax_space_whitifier
-		C.screen |= C.parallax_fixer
+	C.screen |= C.parallax_pmaster
+	C.screen |= C.parallax_space_whitifier
+	C.screen |= C.parallax_fixer
 
 // This sets which way the current shuttle is moving
 /datum/hud/proc/set_parallax_movedir(new_parallax_movedir)
