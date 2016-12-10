@@ -192,15 +192,17 @@
 	HandleWet()
 
 /turf/open/proc/MakeDry(wet_setting = TURF_WET_WATER)
+	addtimer(src, "actually_dry", rand(0, 20), TIMER_NORMAL, wet_setting)
+
+/turf/open/proc/actually_dry(wet_setting = TURF_WET_WATER)
 	if(wet > wet_setting || !wet)
 		return
-	spawn(rand(0,20))
-		if(wet == TURF_WET_PERMAFROST)
-			wet = TURF_WET_ICE
-		else
-			wet = TURF_DRY
-			if(wet_overlay)
-				overlays -= wet_overlay
+	if(wet == TURF_WET_PERMAFROST)
+		wet = TURF_WET_ICE
+	else
+		wet = TURF_DRY
+		if(wet_overlay)
+			overlays -= wet_overlay
 
 /turf/open/proc/HandleWet()
 	if(!wet)
