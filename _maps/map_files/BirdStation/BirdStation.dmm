@@ -17155,25 +17155,19 @@
 /area/toxins/xenobiology)
 "aQz" = (
 /obj/structure/rack,
-/obj/item/weapon/gun/energy/e_gun/advtaser,
-/obj/item/weapon/gun/energy/e_gun/advtaser{
-	pixel_x = 5;
-	pixel_y = -5
-	},
 /obj/machinery/light{
 	dir = 1
 	},
+/obj/item/weapon/gun/energy/frame/hybrid_taser,
+/obj/item/weapon/gun/energy/frame/hybrid_taser,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
 /area/security/warden)
 "aQA" = (
 /obj/structure/rack,
-/obj/item/weapon/gun/energy/laser,
-/obj/item/weapon/gun/energy/laser{
-	pixel_x = 5;
-	pixel_y = -5
-	},
+/obj/item/weapon/gun/energy/frame/lasergun,
+/obj/item/weapon/gun/energy/frame/lasergun,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
@@ -18677,13 +18671,8 @@
 /area/toxins/xenobiology)
 "aTX" = (
 /obj/structure/rack,
-/obj/item/weapon/gun/energy/disabler{
-	pixel_x = 0;
-	pixel_y = 5
-	},
-/obj/item/weapon/gun/energy/disabler{
-	pixel_x = 5
-	},
+/obj/item/weapon/gun/energy/frame/egun,
+/obj/item/weapon/gun/energy/frame/egun,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
@@ -18742,10 +18731,18 @@
 /area/security/warden)
 "aUe" = (
 /obj/structure/rack,
-/obj/item/clothing/suit/armor/laserproof,
-/obj/item/weapon/gun/energy/ionrifle,
+/obj/item/weapon/storage/box/rubbershot,
+/obj/item/weapon/storage/box/rubbershot,
+/obj/item/weapon/storage/box/rubbershot,
+/obj/item/weapon/storage/box/rubbershot,
+/obj/item/weapon/storage/box/rubbershot,
+/obj/item/weapon/gun/ballistic/shotgun/riot{
+	pixel_x = -5;
+	pixel_y = 5
+	},
+/obj/item/weapon/gun/ballistic/shotgun/riot,
 /turf/open/floor/plasteel/vault{
-	dir = 4
+	dir = 8
 	},
 /area/security/warden)
 "aUf" = (
@@ -23169,22 +23166,34 @@
 /area/toxins/xenobiology)
 "beI" = (
 /obj/structure/rack,
-/obj/item/weapon/gun/energy/e_gun/dragnet,
-/turf/open/floor/plasteel/bot,
+/obj/item/weapon/gun_attachment/barrel/long,
+/obj/item/weapon/gun_attachment/barrel/long,
+/obj/item/weapon/gun_attachment/barrel/long,
+/obj/item/weapon/gun_attachment/barrel/medium,
+/obj/item/weapon/gun_attachment/barrel/medium,
+/obj/item/weapon/gun_attachment/barrel/medium,
+/obj/item/weapon/gun_attachment/barrel/short,
+/obj/item/weapon/gun_attachment/barrel/short,
+/obj/item/weapon/gun_attachment/barrel/short,
+/obj/item/weapon/screwdriver,
+/turf/open/floor/plasteel/vault{
+	dir = 8
+	},
 /area/security/warden)
 "beJ" = (
 /obj/structure/rack,
-/obj/item/weapon/storage/box/rubbershot,
-/obj/item/weapon/storage/box/rubbershot,
-/obj/item/weapon/storage/box/rubbershot,
-/obj/item/weapon/storage/box/rubbershot,
-/obj/item/weapon/storage/box/rubbershot,
-/obj/item/weapon/gun/ballistic/shotgun/riot{
-	pixel_x = -5;
-	pixel_y = 5
+/obj/item/weapon/gun_attachment/handle/auto,
+/obj/item/weapon/gun_attachment/handle/auto,
+/obj/item/weapon/gun_attachment/handle/auto,
+/obj/item/weapon/gun_attachment/handle/burst,
+/obj/item/weapon/gun_attachment/handle/burst,
+/obj/item/weapon/gun_attachment/handle/burst,
+/obj/item/weapon/gun_attachment/handle/semiauto,
+/obj/item/weapon/gun_attachment/handle/semiauto,
+/obj/item/weapon/gun_attachment/handle/semiauto,
+/turf/open/floor/plasteel/vault{
+	dir = 8
 	},
-/obj/item/weapon/gun/ballistic/shotgun/riot,
-/turf/open/floor/plasteel/bot,
 /area/security/warden)
 "beK" = (
 /obj/structure/cable/cyan{
@@ -23218,6 +23227,8 @@
 	dir = 1;
 	network = list("SS13")
 	},
+/obj/item/clothing/suit/armor/laserproof,
+/obj/item/weapon/gun/energy/ionrifle,
 /turf/open/floor/plasteel/vault{
 	dir = 1
 	},

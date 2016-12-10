@@ -43334,18 +43334,10 @@
 /area/security/warden)
 "bIq" = (
 /obj/structure/rack,
-/obj/item/weapon/gun/energy/e_gun{
-	pixel_x = -3;
-	pixel_y = 3
-	},
-/obj/item/weapon/gun/energy/e_gun,
-/obj/item/weapon/gun/energy/e_gun{
-	pixel_x = 3;
-	pixel_y = -3
-	},
-/turf/open/floor/plasteel/bot{
-	dir = 2
-	},
+/obj/item/weapon/gun/energy/frame/egun,
+/obj/item/weapon/gun/energy/frame/egun,
+/obj/item/weapon/gun/energy/frame/egun,
+/turf/open/floor/plasteel,
 /area/security/warden)
 "bIr" = (
 /turf/open/floor/plasteel/warning{
@@ -43360,6 +43352,19 @@
 /obj/item/clothing/head/helmet/riot,
 /obj/item/clothing/head/helmet/riot,
 /obj/item/clothing/head/helmet/riot,
+/obj/item/weapon/shield/riot{
+	pixel_x = 3;
+	pixel_y = -3
+	},
+/obj/item/weapon/shield/riot{
+	pixel_x = 3;
+	pixel_y = -3
+	},
+/obj/item/weapon/shield/riot{
+	pixel_x = 3;
+	pixel_y = -3
+	},
+/obj/item/weapon/storage/box/teargas,
 /turf/open/floor/plasteel/black,
 /area/security/warden)
 "bIt" = (
@@ -43976,18 +43981,11 @@
 	dir = 1
 	},
 /obj/structure/rack,
-/obj/item/weapon/gun/energy/laser{
-	pixel_x = -3;
-	pixel_y = 3
-	},
-/obj/item/weapon/gun/energy/laser,
-/obj/item/weapon/gun/energy/laser{
-	pixel_x = 3;
-	pixel_y = -3
-	},
-/turf/open/floor/plasteel/bot{
-	dir = 2
-	},
+/obj/item/weapon/gun/energy/frame/hybrid_taser,
+/obj/item/weapon/gun/energy/frame/hybrid_taser,
+/obj/item/weapon/gun/energy/frame/hybrid_taser,
+/obj/item/weapon/screwdriver,
+/turf/open/floor/plasteel,
 /area/security/warden)
 "bJA" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
@@ -44662,33 +44660,24 @@
 	},
 /area/security/warden)
 "bKI" = (
-/obj/structure/rack,
-/obj/item/weapon/gun/energy/e_gun/advtaser{
-	pixel_x = -3;
-	pixel_y = 3
-	},
-/obj/item/weapon/gun/energy/e_gun/advtaser,
-/obj/item/weapon/gun/energy/e_gun/advtaser{
-	pixel_x = 3;
-	pixel_y = -3
-	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/open/floor/plasteel/bot{
-	dir = 2
-	},
+/obj/structure/rack,
+/obj/item/weapon/gun/energy/frame/lasergun,
+/obj/item/weapon/gun/energy/frame/lasergun,
+/obj/item/weapon/gun/energy/frame/lasergun,
+/turf/open/floor/plasteel,
 /area/security/warden)
 "bKJ" = (
 /obj/structure/rack,
-/obj/item/weapon/shield/riot{
-	pixel_x = -3;
-	pixel_y = 3
-	},
-/obj/item/weapon/shield/riot,
-/obj/item/weapon/shield/riot{
-	pixel_x = 3;
-	pixel_y = -3
-	},
-/obj/item/weapon/storage/box/teargas,
+/obj/item/weapon/gun_attachment/barrel/long,
+/obj/item/weapon/gun_attachment/barrel/long,
+/obj/item/weapon/gun_attachment/barrel/long,
+/obj/item/weapon/gun_attachment/barrel/medium,
+/obj/item/weapon/gun_attachment/barrel/medium,
+/obj/item/weapon/gun_attachment/barrel/short,
+/obj/item/weapon/gun_attachment/barrel/short,
+/obj/item/weapon/gun_attachment/barrel/short,
+/obj/item/weapon/gun_attachment/barrel/medium,
 /turf/open/floor/plasteel/black,
 /area/security/warden)
 "bKK" = (
@@ -55548,8 +55537,18 @@
 	},
 /area/shuttle/pod_1)
 "chI" = (
-/turf/closed/wall/mineral/titanium/overspace,
-/area/shuttle/pod_2)
+/obj/structure/rack,
+/obj/item/weapon/gun_attachment/handle/auto,
+/obj/item/weapon/gun_attachment/handle/auto,
+/obj/item/weapon/gun_attachment/handle/auto,
+/obj/item/weapon/gun_attachment/handle/burst,
+/obj/item/weapon/gun_attachment/handle/burst,
+/obj/item/weapon/gun_attachment/handle/burst,
+/obj/item/weapon/gun_attachment/handle/semiauto,
+/obj/item/weapon/gun_attachment/handle/semiauto,
+/obj/item/weapon/gun_attachment/handle/semiauto,
+/turf/open/floor/plasteel/black,
+/area/security/warden)
 "chJ" = (
 /obj/structure/window/shuttle,
 /obj/structure/grille,
@@ -88501,7 +88500,7 @@ bGV
 bIs
 bJB
 bKJ
-bGV
+chI
 bMZ
 bEj
 bPx

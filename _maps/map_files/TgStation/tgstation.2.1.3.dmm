@@ -416,12 +416,19 @@
 	},
 /area/ai_monitored/security/armory)
 "abn" = (
-/obj/structure/rack,
 /obj/machinery/firealarm{
 	pixel_y = 24
 	},
-/obj/item/weapon/gun/energy/e_gun/dragnet,
-/obj/item/weapon/gun/energy/e_gun/dragnet,
+/obj/structure/rack,
+/obj/item/weapon/gun_attachment/barrel/long,
+/obj/item/weapon/gun_attachment/barrel/long,
+/obj/item/weapon/gun_attachment/barrel/long,
+/obj/item/weapon/gun_attachment/barrel/medium,
+/obj/item/weapon/gun_attachment/barrel/medium,
+/obj/item/weapon/gun_attachment/barrel/medium,
+/obj/item/weapon/gun_attachment/barrel/short,
+/obj/item/weapon/gun_attachment/barrel/short,
+/obj/item/weapon/gun_attachment/barrel/short,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
@@ -605,41 +612,52 @@
 	pixel_x = 3;
 	pixel_y = -3
 	},
-/turf/open/floor/plasteel/vault{
-	dir = 8
+/obj/item/clothing/head/helmet/alt{
+	layer = 3.00001;
+	pixel_x = 3;
+	pixel_y = -3
 	},
-/area/ai_monitored/security/armory)
-"abJ" = (
-/obj/structure/rack,
-/obj/item/clothing/suit/armor/bulletproof{
-	pixel_x = -3;
-	pixel_y = 3
+/obj/item/clothing/head/helmet/alt{
+	layer = 3.00001;
+	pixel_x = 3;
+	pixel_y = -3
+	},
+/obj/item/clothing/head/helmet/alt{
+	layer = 3.00001;
+	pixel_x = 3;
+	pixel_y = -3
 	},
 /obj/item/clothing/suit/armor/bulletproof{
 	pixel_y = 0
 	},
 /obj/item/clothing/suit/armor/bulletproof{
-	pixel_x = 3;
-	pixel_y = -3
+	pixel_y = 0
 	},
-/obj/item/clothing/head/helmet/alt{
-	layer = 3.00001;
-	pixel_x = -3;
-	pixel_y = 3
+/obj/item/clothing/suit/armor/bulletproof{
+	pixel_y = 0
 	},
-/obj/item/clothing/head/helmet/alt{
-	layer = 3.00001
+/obj/item/weapon/gun/energy/e_gun/dragnet,
+/obj/item/weapon/gun/energy/e_gun/dragnet,
+/turf/open/floor/plasteel/vault{
+	dir = 8
 	},
-/obj/item/clothing/head/helmet/alt{
-	layer = 3.00001;
-	pixel_x = 3;
-	pixel_y = -3
-	},
+/area/ai_monitored/security/armory)
+"abJ" = (
 /obj/machinery/camera/motion{
 	c_tag = "Armory Motion Sensor";
 	dir = 2;
 	name = "motion-sensitive security camera"
 	},
+/obj/structure/rack,
+/obj/item/weapon/gun_attachment/handle/auto,
+/obj/item/weapon/gun_attachment/handle/auto,
+/obj/item/weapon/gun_attachment/handle/auto,
+/obj/item/weapon/gun_attachment/handle/burst,
+/obj/item/weapon/gun_attachment/handle/burst,
+/obj/item/weapon/gun_attachment/handle/burst,
+/obj/item/weapon/gun_attachment/handle/semiauto,
+/obj/item/weapon/gun_attachment/handle/semiauto,
+/obj/item/weapon/gun_attachment/handle/semiauto,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
@@ -1126,18 +1144,9 @@
 /area/ai_monitored/security/armory)
 "acM" = (
 /obj/structure/rack,
-/obj/item/weapon/gun/energy/e_gun{
-	pixel_x = -3;
-	pixel_y = 3
-	},
-/obj/item/weapon/gun/energy/e_gun,
-/obj/item/weapon/gun/energy/e_gun{
-	pixel_x = 3;
-	pixel_y = -3
-	},
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	on = 1
-	},
+/obj/item/weapon/gun/energy/frame/egun,
+/obj/item/weapon/gun/energy/frame/egun,
+/obj/item/weapon/gun/energy/frame/egun,
 /turf/open/floor/plasteel/bot{
 	dir = 2
 	},
@@ -1322,15 +1331,9 @@
 /area/ai_monitored/security/armory)
 "adj" = (
 /obj/structure/rack,
-/obj/item/weapon/gun/energy/e_gun/advtaser{
-	pixel_x = -3;
-	pixel_y = 3
-	},
-/obj/item/weapon/gun/energy/e_gun/advtaser,
-/obj/item/weapon/gun/energy/e_gun/advtaser{
-	pixel_x = 3;
-	pixel_y = -3
-	},
+/obj/item/weapon/gun/energy/frame/lasergun,
+/obj/item/weapon/gun/energy/frame/lasergun,
+/obj/item/weapon/gun/energy/frame/lasergun,
 /turf/open/floor/plasteel/bot{
 	dir = 2
 	},
@@ -54456,15 +54459,10 @@
 /area/shuttle/syndicate)
 "coS" = (
 /obj/structure/rack,
-/obj/item/weapon/gun/energy/laser{
-	pixel_x = -3;
-	pixel_y = 3
-	},
-/obj/item/weapon/gun/energy/laser,
-/obj/item/weapon/gun/energy/laser{
-	pixel_x = 3;
-	pixel_y = -3
-	},
+/obj/item/weapon/gun/energy/frame/hybrid_taser,
+/obj/item/weapon/gun/energy/frame/hybrid_taser,
+/obj/item/weapon/gun/energy/frame/hybrid_taser,
+/obj/item/weapon/screwdriver,
 /turf/open/floor/plasteel/bot{
 	dir = 2
 	},
