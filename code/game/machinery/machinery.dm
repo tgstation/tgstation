@@ -373,7 +373,7 @@ Class Procs:
 		playsound(loc, W.usesound, 50, 1)
 		var/prev_anchored = anchored
 		//as long as we're the same anchored state and we're either on a floor or are anchored, toggle our anchored state
-		if(do_after(user, time/W.toolspeed, target = src) && anchored == prev_anchored)
+		if(do_after(user, time*W.toolspeed, target = src) && anchored == prev_anchored)
 			can_be_unfasten = can_be_unfasten_wrench(user)
 			if(!can_be_unfasten || can_be_unfasten == FAILED_UNFASTEN)
 				return can_be_unfasten

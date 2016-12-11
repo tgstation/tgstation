@@ -33,14 +33,14 @@
 /obj/item/weapon/storage/secure/attackby(obj/item/weapon/W, mob/user, params)
 	if(locked)
 		if (istype(W, /obj/item/weapon/screwdriver))
-			if (do_after(user, 20/W.toolspeed, target = src))
+			if (do_after(user, 20*W.toolspeed, target = src))
 				src.open =! src.open
 				user.show_message("<span class='notice'>You [open ? "open" : "close"] the service panel.</span>", 1)
 			return
 		if ((istype(W, /obj/item/device/multitool)) && (src.open == 1)&& (!src.l_hacking))
 			user.show_message("<span class='danger'>Now attempting to reset internal memory, please hold.</span>", 1)
 			src.l_hacking = 1
-			if (do_after(usr, 100/W.toolspeed, target = src))
+			if (do_after(usr, 100*W.toolspeed, target = src))
 				if (prob(33))
 					src.l_setshort = 1
 					src.l_set = 0

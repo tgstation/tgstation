@@ -64,7 +64,7 @@
 			if(WT.remove_fuel(0, user))
 				user << "<span class='notice'>You begin repairing [src]...</span>"
 				playsound(src, 'sound/items/Welder.ogg', 100, 1)
-				if(do_after(user, 10/I.toolspeed, target = src))
+				if(do_after(user, 10*I.toolspeed, target = src))
 					if(!user || !WT || !WT.isOn())
 						return
 					user << "<span class='notice'>You repair [src].</span>"

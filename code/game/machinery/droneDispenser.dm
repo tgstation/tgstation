@@ -293,7 +293,7 @@
 			"<span class='notice'>You begin restoring the \
 				damage to [src]...</span>")
 
-		if(!do_after(user, 40/O.toolspeed, target = src))
+		if(!do_after(user, 40*O.toolspeed, target = src))
 			return
 		if(!src || !WT.remove_fuel(1, user))
 			return

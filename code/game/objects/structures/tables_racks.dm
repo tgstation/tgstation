@@ -301,13 +301,13 @@
 			playsound(src.loc, W.usesound, 50, 1)
 			if(deconstruction_ready)
 				user << "<span class='notice'>You start strengthening the reinforced table...</span>"
-				if (do_after(user, 50/W.toolspeed, target = src))
+				if (do_after(user, 50*W.toolspeed, target = src))
 					if(!src || !WT.isOn()) return
 					user << "<span class='notice'>You strengthen the table.</span>"
 					deconstruction_ready = 0
 			else
 				user << "<span class='notice'>You start weakening the reinforced table...</span>"
-				if (do_after(user, 50/W.toolspeed, target = src))
+				if (do_after(user, 50*W.toolspeed, target = src))
 					if(!src || !WT.isOn()) return
 					user << "<span class='notice'>You weaken the table.</span>"
 					deconstruction_ready = 1

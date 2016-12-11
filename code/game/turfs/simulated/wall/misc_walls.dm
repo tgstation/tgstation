@@ -85,7 +85,7 @@
 			return 0
 		playsound(src, 'sound/items/Welder.ogg', 100, 1)
 		user.visible_message("<span class='notice'>[user] begins slowly breaking down [src]...</span>", "<span class='notice'>You begin painstakingly destroying [src]...</span>")
-		if(!do_after(user, 120 / WT.toolspeed, target = src))
+		if(!do_after(user, 120*WT.toolspeed, target = src))
 			return 0
 		if(!WT.remove_fuel(1, user))
 			return 0

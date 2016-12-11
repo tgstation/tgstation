@@ -126,7 +126,7 @@
 		if(obj_integrity < max_integrity && WT.remove_fuel(5, user))
 			user << "<span class='notice'>You begin repairing [src].</span>"
 			playsound(loc, 'sound/items/Welder.ogg', 40, 1)
-			if(do_after(user, 40/W.toolspeed, target = src))
+			if(do_after(user, 40*W.toolspeed, target = src))
 				obj_integrity = max_integrity
 				playsound(loc, 'sound/items/Welder2.ogg', 50, 1)
 				update_icon()
@@ -143,7 +143,7 @@
 				qdel(src)
 		else
 			user << "<span class='notice'>You start to [open ? "close":"open"] the [src]</span>"
-			if(do_after(user, 20/W.toolspeed, target = src))
+			if(do_after(user, 20*W.toolspeed, target = src))
 				user <<  "<span class='notice'>You [open ? "close":"open"] the [src]</span>"
 				toggle_lock(user)
 	else if(open && !showpiece)
@@ -205,7 +205,7 @@
 	if(istype(I, /obj/item/weapon/wrench)) //The player can only deconstruct the wooden frame
 		user << "<span class='notice'>You start disassembling [src]...</span>"
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-		if(do_after(user, 30/I.toolspeed, target = src))
+		if(do_after(user, 30*I.toolspeed, target = src))
 			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 			new /obj/item/stack/sheet/mineral/wood(get_turf(src))
 			qdel(src)

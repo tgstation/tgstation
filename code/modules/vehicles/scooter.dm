@@ -7,7 +7,7 @@
 	if(istype(I, /obj/item/weapon/wrench))
 		user << "<span class='notice'>You begin to remove the handlebars...</span>"
 		playsound(get_turf(user), 'sound/items/Ratchet.ogg', 50, 1)
-		if(do_after(user, 40/I.toolspeed, target = src))
+		if(do_after(user, 40*I.toolspeed, target = src))
 			new /obj/vehicle/scooter/skateboard(get_turf(src))
 			new /obj/item/stack/rods(get_turf(src),2)
 			user << "<span class='notice'>You remove the handlebars from [src].</span>"

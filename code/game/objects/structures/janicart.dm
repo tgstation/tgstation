@@ -83,7 +83,7 @@
 		mybag.attackby(I, user)
 	else if(istype(I, /obj/item/weapon/crowbar))
 		user.visible_message("[user] begins to empty the contents of [src].", "<span class='notice'>You begin to empty the contents of [src]...</span>")
-		if(do_after(user, 30/I.toolspeed, target = src))
+		if(do_after(user, 30*I.toolspeed, target = src))
 			usr << "<span class='notice'>You empty the contents of [src]'s bucket onto the floor.</span>"
 			reagents.reaction(src.loc)
 			src.reagents.clear_reagents()

@@ -81,7 +81,7 @@
 		if (!anchored && !isinspace())
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 			user << "<span class='notice'>You begin to fasten \the [src] to the floor...</span>"
-			if (do_after(user, 40/W.toolspeed, target = src))
+			if (do_after(user, 40*W.toolspeed, target = src))
 				add_fingerprint(user)
 				user.visible_message( \
 					"[user] fastens \the [src].", \
@@ -94,7 +94,7 @@
 		else if(anchored)
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 			user << "<span class='notice'>You begin to unfasten \the [src] from the floor...</span>"
-			if (do_after(user, 20/W.toolspeed, target = src))
+			if (do_after(user, 20*W.toolspeed, target = src))
 				add_fingerprint(user)
 				user.visible_message( \
 					"[user] unfastens \the [src].", \

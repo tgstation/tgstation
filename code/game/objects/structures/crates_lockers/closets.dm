@@ -210,7 +210,7 @@
 				if(WT.remove_fuel(0, user))
 					user << "<span class='notice'>You begin cutting \the [src] apart...</span>"
 					playsound(loc, cutting_sound, 40, 1)
-					if(do_after(user, 40/WT.toolspeed, 1, target = src))
+					if(do_after(user, 40*WT.toolspeed, 1, target = src))
 						if(!opened || !WT.isOn())
 							return
 						playsound(loc, cutting_sound, 50, 1)
@@ -233,7 +233,7 @@
 			return
 		user << "<span class='notice'>You begin [welded ? "unwelding":"welding"] \the [src]...</span>"
 		playsound(loc, 'sound/items/Welder2.ogg', 40, 1)
-		if(do_after(user, 40/WT.toolspeed, 1, target = src))
+		if(do_after(user, 40*WT.toolspeed, 1, target = src))
 			if(opened || !WT.isOn())
 				return
 			playsound(loc, 'sound/items/welder.ogg', 50, 1)

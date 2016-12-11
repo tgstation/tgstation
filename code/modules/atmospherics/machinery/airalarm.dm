@@ -661,7 +661,7 @@
 				user.visible_message("[user.name] removes the electronics from [src.name].",\
 									"<span class='notice'>You start prying out the circuit...</span>")
 				playsound(src.loc, W.usesound, 50, 1)
-				if (do_after(user, 20/W.toolspeed, target = src))
+				if (do_after(user, 20*W.toolspeed, target = src))
 					if (buildstage == 1)
 						user <<"<span class='notice'>You remove the air alarm electronics.</span>"
 						new /obj/item/weapon/electronics/airalarm( src.loc )

@@ -824,7 +824,7 @@
 			user.visible_message("[user] begins to wrench [src] into place.", \
 								"<span class='notice'>You begin to wrench [src] in place...</span>")
 			playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
-			if (do_after(user, 20/O.toolspeed, target = src))
+			if (do_after(user, 20*O.toolspeed, target = src))
 				if(anchored)
 					return
 				anchored = 1
@@ -834,7 +834,7 @@
 			user.visible_message("[user] begins to unwrench [src].", \
 								"<span class='notice'>You begin to unwrench [src]...</span>")
 			playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
-			if (do_after(user, 20/O.toolspeed, target = src))
+			if (do_after(user, 20*O.toolspeed, target = src))
 				if(!anchored)
 					return
 				anchored = 0

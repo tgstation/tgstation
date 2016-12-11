@@ -52,7 +52,7 @@
 		playsound(get_turf(src), 'sound/items/Ratchet.ogg', 50, 1)
 		user.visible_message("<span class='notice'>[user] starts undoing [src]'s bolts...</span>", \
 							 "<span class='notice'>You start unfastening [src]'s floor bolts...</span>")
-		if(!do_after(user, 50/C.toolspeed, target = src))
+		if(!do_after(user, 50*C.toolspeed, target = src))
 			return
 		playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
 		user.visible_message("<span class='notice'>[user] unfastens [src]'s bolts.</span>", \
@@ -221,7 +221,7 @@
 				playsound(get_turf(src), 'sound/items/Crowbar.ogg', 50, 1)
 				user.visible_message("<span class='notice'>[user] starts prying something out from [src]...</span>", \
 									 "<span class='notice'>You begin prying out the wire cover...</span>")
-				if(!do_after(user, 50/C.toolspeed, target = src))
+				if(!do_after(user, 50*C.toolspeed, target = src))
 					return
 				if(constructionStep != CONSTRUCTION_PANEL_OPEN)
 					return
@@ -238,7 +238,7 @@
 				playsound(get_turf(src), 'sound/items/Ratchet.ogg', 50, 1)
 				user.visible_message("<span class='notice'>[user] starts bolting down [src]...</span>", \
 									 "<span class='notice'>You begin bolting [src]...</span>")
-				if(!do_after(user, 30/C.toolspeed, target = src))
+				if(!do_after(user, 30*C.toolspeed, target = src))
 					return
 				if(locate(/obj/machinery/door/firedoor) in get_turf(src))
 					return
@@ -277,7 +277,7 @@
 				playsound(get_turf(src), 'sound/items/Wirecutter.ogg', 50, 1)
 				user.visible_message("<span class='notice'>[user] starts cutting the wires from [src]...</span>", \
 									 "<span class='notice'>You begin removing [src]'s wires...</span>")
-				if(!do_after(user, 60/C.toolspeed, target = src))
+				if(!do_after(user, 60*C.toolspeed, target = src))
 					return
 				if(constructionStep != CONSTRUCTION_WIRES_EXPOSED)
 					return
@@ -294,7 +294,7 @@
 					playsound(get_turf(src), 'sound/items/Welder.ogg', 50, 1)
 					user.visible_message("<span class='notice'>[user] starts welding a metal plate into [src]...</span>", \
 										 "<span class='notice'>You begin welding the cover plate back onto [src]...</span>")
-					if(!do_after(user, 80/C.toolspeed, target = src))
+					if(!do_after(user, 80*C.toolspeed, target = src))
 						return
 					if(constructionStep != CONSTRUCTION_WIRES_EXPOSED)
 						return
@@ -309,7 +309,7 @@
 				user.visible_message("<span class='notice'>[user] begins removing the circuit board from [src]...</span>", \
 									 "<span class='notice'>You begin prying out the circuit board from [src]...</span>")
 				playsound(get_turf(src), 'sound/items/Crowbar.ogg', 50, 1)
-				if(!do_after(user, 50/C.toolspeed, target = src))
+				if(!do_after(user, 50*C.toolspeed, target = src))
 					return
 				if(constructionStep != CONSTRUCTION_GUTTED)
 					return
@@ -345,7 +345,7 @@
 					playsound(get_turf(src), 'sound/items/Welder.ogg', 50, 1)
 					user.visible_message("<span class='notice'>[user] begins cutting apart [src]'s frame...</span>", \
 										 "<span class='notice'>You begin slicing [src] apart...</span>")
-					if(!do_after(user, 80/C.toolspeed, target = src))
+					if(!do_after(user, 80*C.toolspeed, target = src))
 						return
 					if(constructionStep != CONSTRUCTION_NOCIRCUIT)
 						return
