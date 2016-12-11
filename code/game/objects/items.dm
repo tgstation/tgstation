@@ -337,8 +337,6 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 
 			else if(S.can_be_inserted(src))
 				S.handle_item_insertion(src)
-	else
-		..()
 
 
 // afterattack() and attack() prototypes moved to _onclick/item_attack.dm for consistency
