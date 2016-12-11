@@ -9,7 +9,7 @@
 	ventcrawler = 2
 	luminosity = 0
 	pass_flags = PASSTABLE | PASSMOB
-	mob_size = MOB_SIZE_SMALL
+	mob_size = MOB_SIZE_TINY
 	desc = "A generic pAI mobile hard-light holographics emitter. It seems to be deactivated."
 	weather_immunities = list("ash")
 	health = 500
@@ -123,11 +123,8 @@
 /mob/living/silicon/pai/Stat()
 	..()
 	if(statpanel("Status"))
-		if(silence_time)
-			var/timeleft = round((silence_time - world.timeofday)/10 ,1)
-			stat(null, "Communications system reboot in -[(timeleft / 60) % 60]:[add_zero(num2text(timeleft % 60), 2)]")
 		if(!stat)
-			stat(null, text("System integrity: [(health+100)/2]%"))
+			stat(null, text("Emitter Integrity: [emitterhealth * (100/emittermaxhealth)]"))
 		else
 			stat(null, text("Systems nonfunctional"))
 

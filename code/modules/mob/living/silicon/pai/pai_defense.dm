@@ -76,7 +76,10 @@
 	visible_message("<span class='warning'>[AM] flies clean through [src]'s holographic field, causing it to stutter and warp wildly!")
 	if(istype(AM, /obj))
 		var/obj/O = AM
-		take_holo_damage(O.throwforce)
+		if(O.throwforce)
+			take_holo_damage(O.throwforce)
+		else
+			take_holo_damage(5)
 	return FALSE
 
 /mob/living/silicon/pai/bullet_act(obj/item/projectile/Proj)
@@ -87,7 +90,6 @@
 	if(istype(AM, /obj/item/projectile))
 		var/obj/item/projectile/P = AM
 		take_holo_damage(P.damage)
-		return FALSE
 	return FALSE
 
 /mob/living/silicon/pai/stripPanelUnequip(obj/item/what, mob/who, where) //prevents stripping
