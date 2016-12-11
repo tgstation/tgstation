@@ -406,6 +406,7 @@
 	item_color = "medical"
 	flash_protect = 0
 	armor = list(melee = 30, bullet = 5, laser = 10, energy = 5, bomb = 10, bio = 100, rad = 50, fire = 75, acid = 75)
+	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEHAIR|HIDEFACIALHAIR //It's transparent, doesn't hide your identity. Makes you bald to prevent clipping.
 	scan_reagents = 1
 
 /obj/item/clothing/suit/space/hardsuit/medical
