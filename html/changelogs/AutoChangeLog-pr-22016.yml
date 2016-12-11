@@ -1,7 +1,0 @@
-author: "coiax"
-delete-after: True
-changes: 
-  - rscadd: "Cyborgs now have a reset module wire, that when pulsed, triggers
-the cyborg's reset module hardware."
-  - rscadd: "Cyborgs now eject all upgrades when reset, rather than the upgrades being destroyed."
-  - rscdel: "Removed redundant reset module."
