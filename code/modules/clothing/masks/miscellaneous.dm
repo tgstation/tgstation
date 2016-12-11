@@ -115,61 +115,47 @@
 	flags_inv = HIDEFACE
 	flags_cover = MASKCOVERSMOUTH
 
-/obj/item/clothing/mask/fox
+/obj/item/clothing/mask/rat/fox
 	name = "fox mask"
 	desc = "A mask made of soft vinyl and latex, representing the head of a fox."
 	icon_state = "fox"
 	item_state = "fox"
-	flags_inv = HIDEFACE
-	flags_cover = MASKCOVERSMOUTH
 
-/obj/item/clothing/mask/bee
+/obj/item/clothing/mask/rat/bee
 	name = "bee mask"
 	desc = "A mask made of soft vinyl and latex, representing the head of a bee."
 	icon_state = "bee"
 	item_state = "bee"
-	flags_inv = HIDEFACE
-	flags_cover = MASKCOVERSMOUTH
 
-/obj/item/clothing/mask/bear
+/obj/item/clothing/mask/rat/bear
 	name = "bear mask"
 	desc = "A mask made of soft vinyl and latex, representing the head of a bear."
 	icon_state = "bear"
 	item_state = "bear"
-	flags_inv = HIDEFACE
-	flags_cover = MASKCOVERSMOUTH
 
-/obj/item/clothing/mask/bat
+/obj/item/clothing/mask/rat/bat
 	name = "bat mask"
 	desc = "A mask made of soft vinyl and latex, representing the head of a bat."
 	icon_state = "bat"
 	item_state = "bat"
-	flags_inv = HIDEFACE
-	flags_cover = MASKCOVERSMOUTH
 
-/obj/item/clothing/mask/raven
+/obj/item/clothing/mask/rat/raven
 	name = "raven mask"
 	desc = "A mask made of soft vinyl and latex, representing the head of a raven."
 	icon_state = "raven"
 	item_state = "raven"
-	flags_inv = HIDEFACE
-	flags_cover = MASKCOVERSMOUTH
 
-/obj/item/clothing/mask/jackal
+/obj/item/clothing/mask/rat/jackal
 	name = "jackal mask"
 	desc = "A mask made of soft vinyl and latex, representing the head of a jackal."
 	icon_state = "jackal"
 	item_state = "jackal"
-	flags_inv = HIDEFACE
-	flags_cover = MASKCOVERSMOUTH
 
-/obj/item/clothing/mask/tribal
+/obj/item/clothing/mask/rat/tribal
 	name = "tribal mask"
 	desc = "A mask carved out of wood, detailed carefully by hand."
 	icon_state = "bumba"
 	item_state = "bumba"
-	flags_inv = HIDEFACE
-	flags_cover = MASKCOVERSMOUTH
 
 /obj/item/clothing/mask/bandana
 	name = "botany bandana"
