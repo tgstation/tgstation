@@ -242,7 +242,7 @@
 	. = ..()
 	T = get_turf(src)
 	for(var/atom/movable/A in range(T, power))
-		if(A == src || (firer && A == src.firer) || A.anchored)
+		if(A == src || (firer && A == src.firer) || (A.anchored && !ismob(A)))
 			continue
 		var/throwtarget = get_edge_target_turf(src, get_dir(src, get_step_away(A, src)))
 		A.throw_at_fast(throwtarget,power+1,1)
@@ -273,7 +273,7 @@
 	. = ..()
 	T = get_turf(src)
 	for(var/atom/movable/A in range(T, power))
-		if(A == src || (firer && A == src.firer) || A.anchored)
+		if(A == src || (firer && A == src.firer) || (A.anchored && !ismob(A)))
 			continue
 		A.throw_at_fast(T, power+1, 1)
 	for(var/turf/F in range(T,power))
@@ -303,7 +303,7 @@
 	. = ..()
 	T = get_turf(src)
 	for(var/atom/movable/A in range(T, power))
-		if(A == src|| (firer && A == src.firer) || A.anchored)
+		if(A == src|| (firer && A == src.firer) || (A.anchored && !ismob(A)))
 			continue
 		A.throw_at_fast(get_edge_target_turf(A, pick(cardinal)), power+1, 1)
 	for(var/turf/Z in range(T,power))
