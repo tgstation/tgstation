@@ -107,6 +107,70 @@
 		message = pick("NEEIIGGGHHHH!", "NEEEIIIIGHH!", "NEIIIGGHH!", "HAAWWWWW!", "HAAAWWW!")
 	return message
 
+/obj/item/clothing/mask/rat
+	name = "rat mask"
+	desc = "A mask made of soft vinyl and latex, representing the head of a rat."
+	icon_state = "rat"
+	item_state = "rat"
+	flags_inv = HIDEFACE
+	flags_cover = MASKCOVERSMOUTH
+
+/obj/item/clothing/mask/fox
+	name = "fox mask"
+	desc = "A mask made of soft vinyl and latex, representing the head of a fox."
+	icon_state = "fox"
+	item_state = "fox"
+	flags_inv = HIDEFACE
+	flags_cover = MASKCOVERSMOUTH
+
+/obj/item/clothing/mask/bee
+	name = "bee mask"
+	desc = "A mask made of soft vinyl and latex, representing the head of a bee."
+	icon_state = "bee"
+	item_state = "bee"
+	flags_inv = HIDEFACE
+	flags_cover = MASKCOVERSMOUTH
+
+/obj/item/clothing/mask/bear
+	name = "bear mask"
+	desc = "A mask made of soft vinyl and latex, representing the head of a bear."
+	icon_state = "bear"
+	item_state = "bear"
+	flags_inv = HIDEFACE
+	flags_cover = MASKCOVERSMOUTH
+
+/obj/item/clothing/mask/bat
+	name = "bat mask"
+	desc = "A mask made of soft vinyl and latex, representing the head of a bat."
+	icon_state = "bat"
+	item_state = "bat"
+	flags_inv = HIDEFACE
+	flags_cover = MASKCOVERSMOUTH
+
+/obj/item/clothing/mask/raven
+	name = "raven mask"
+	desc = "A mask made of soft vinyl and latex, representing the head of a raven."
+	icon_state = "raven"
+	item_state = "raven"
+	flags_inv = HIDEFACE
+	flags_cover = MASKCOVERSMOUTH
+
+/obj/item/clothing/mask/jackal
+	name = "jackal mask"
+	desc = "A mask made of soft vinyl and latex, representing the head of a jackal."
+	icon_state = "jackal"
+	item_state = "jackal"
+	flags_inv = HIDEFACE
+	flags_cover = MASKCOVERSMOUTH
+
+/obj/item/clothing/mask/tribal
+	name = "tribal mask"
+	desc = "A mask carved out of wood, detailed carefully by hand."
+	icon_state = "bumba"
+	item_state = "bumba"
+	flags_inv = HIDEFACE
+	flags_cover = MASKCOVERSMOUTH
+
 /obj/item/clothing/mask/bandana
 	name = "botany bandana"
 	desc = "A fine bandana with nanotech lining and a hydroponics pattern."

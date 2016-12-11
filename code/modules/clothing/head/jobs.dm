@@ -54,6 +54,21 @@
 	flags_inv = HIDEHAIR
 	flags_cover = HEADCOVERSEYES
 
+/obj/item/clothing/head/cage
+	name = "cage"
+	desc = "A cage that restrains the will of the self, allowing one to see the profane world for what it is."
+	icon_state = "cage"
+	item_state = "cage"
+	flags_inv = HIDEHAIR
+
+/obj/item/clothing/head/witchunter_hat
+	name = "witchunter hat"
+	desc = "This hat saw much use back in the day."
+	icon_state = "witchhunterhat"
+	item_state = "witchhunterhat"
+	flags_cover = HEADCOVERSEYES
+
+//Detective
 /obj/item/clothing/head/det_hat
 	name = "detective's fedora"
 	desc = "There's only one man who can sniff out the dirty stench of crime, and he's likely wearing this hat."
