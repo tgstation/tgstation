@@ -19,7 +19,7 @@
 		if(R.get_amount() >= 4)
 			R.use(4)
 			user << "<span class='notice'>You add spikes to the frame.</span>"
-			var/obj/F = new /obj/structure/kitchenspike(src.loc,)
+			var/obj/F = new /obj/structure/kitchenspike(src.loc)
 			transfer_fingerprints_to(F)
 			qdel(src)
 	else if(istype(I, /obj/item/weapon/weldingtool))
@@ -140,7 +140,7 @@
 
 /obj/structure/kitchenspike/deconstruct(disassembled = TRUE)
 	if(disassembled)
-		var/obj/F = new /obj/structure/kitchenspike_frame(src.loc,)
+		var/obj/F = new /obj/structure/kitchenspike_frame(src.loc)
 		transfer_fingerprints_to(F)
 	else
 		new /obj/item/stack/sheet/metal(src.loc, 4)

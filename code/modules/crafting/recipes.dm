@@ -194,8 +194,7 @@
 /datum/crafting_recipe/dragonsbreath
 	name = "Dragonsbreath Shell"
 	result = /obj/item/ammo_casing/shotgun/incendiary/dragonsbreath
-	reqs = list(/obj/item/ammo_casing/shotgun/techshell = 1,
-				/datum/reagent/phosphorus = 5,)
+	reqs = list(/obj/item/ammo_casing/shotgun/techshell = 1,/datum/reagent/phosphorus = 5)
 	tools = list(/obj/item/weapon/screwdriver)
 	time = 5
 	category = CAT_AMMO
@@ -206,7 +205,7 @@
 	reqs = list(/obj/item/ammo_casing/shotgun/techshell = 1,
 				/datum/reagent/glycerol = 5,
 				/datum/reagent/toxin/acid = 5,
-				/datum/reagent/toxin/acid/fluacid = 5,)
+				/datum/reagent/toxin/acid/fluacid = 5)
 	tools = list(/obj/item/weapon/screwdriver)
 	time = 5
 	category = CAT_AMMO
@@ -258,7 +257,7 @@
 	reqs = list(/obj/item/weaponcrafting/reciever = 1,
 				/obj/item/pipe = 1,
 				/obj/item/weaponcrafting/stock = 1,
-				/obj/item/stack/packageWrap = 5,)
+				/obj/item/stack/packageWrap = 5)
 	tools = list(/obj/item/weapon/screwdriver)
 	time = 100
 	category = CAT_WEAPON
