@@ -16,8 +16,8 @@
 /obj/structure/destructible/clockwork/massive/ratvar/New()
 	..()
 	ratvar_awakens++
-	for(var/obj/item/clockwork/ratvarian_spear/R in all_clockwork_objects)
-		R.update_force()
+	for(var/obj/O in all_clockwork_objects)
+		O.ratvar_act()
 	START_PROCESSING(SSobj, src)
 	send_to_playing_players("<span class='ratvar'>\"[text2ratvar("ONCE AGAIN MY LIGHT SHALL SHINE ACROSS THIS PATHETIC REALM")]!!\"</span>")
 	send_to_playing_players('sound/effects/ratvar_reveal.ogg')
@@ -28,8 +28,8 @@
 
 /obj/structure/destructible/clockwork/massive/ratvar/Destroy()
 	ratvar_awakens--
-	for(var/obj/item/clockwork/ratvarian_spear/R in all_clockwork_objects)
-		R.update_force()
+	for(var/obj/O in all_clockwork_objects)
+		O.ratvar_act()
 	STOP_PROCESSING(SSobj, src)
 	send_to_playing_players("<span class='heavy_brass'><font size=6>\"NO! I will not... be...</font> <font size=5>banished...</font> <font size=4>again...\"</font></span>")
 	return ..()
