@@ -74,6 +74,8 @@
 	var/updating = 0 //portable camera camerachunk update
 	hud_possible = list(ANTAG_HUD, DIAG_STAT_HUD, DIAG_HUD, DIAG_BATT_HUD)
 
+	var/list/upgrades = list()
+
 /mob/living/silicon/robot/New(loc)
 	spark_system = new /datum/effect_system/spark_spread()
 	spark_system.set_up(5, 0, src)
@@ -475,6 +477,7 @@
 			if(U.action(src))
 				user << "<span class='notice'>You apply the upgrade to [src].</span>"
 				U.loc = src
+				upgrades += U
 			else
 				user << "<span class='danger'>Upgrade error.</span>"
 
@@ -621,7 +624,6 @@
 	else
 		explosion(src.loc,-1,0,2)
 	gib()
-	return
 
 /mob/living/silicon/robot/proc/UnlinkSelf()
 	if(src.connected_ai)
@@ -926,10 +928,22 @@
 		hud_used.update_robot_modules_display()
 	module.transform_to(/obj/item/weapon/robot_module)
 
-	speed = 0 // Remove upgrades.
+	// Remove upgrades.
+	for(var/obj/item/I in upgrades)
+		I.forceMove(get_turf(src))
+
+	upgrades.Cut()
+
+	speed = 0
 	ionpulse = FALSE
 
 	return 1
+
+/mob/living/silicon/robot/proc/has_module()
+	if(!module || module.type == /obj/item/weapon/robot_module)
+		. = FALSE
+	else
+		. = TRUE
 
 /mob/living/silicon/robot/proc/update_module_innate()
 	designation = module.name
