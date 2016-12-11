@@ -141,6 +141,8 @@
 
 /mob/living/silicon/pai/process()
 	emitterhealth = Clamp((emitterhealth + emitterregen), -50, emittermaxhealth)
+	if(weakened > 0)
+		weakened -= 0.2
 
 /mob/proc/makePAI(delold)
 	var/obj/item/device/paicard/card = new /obj/item/device/paicard(get_turf(src))

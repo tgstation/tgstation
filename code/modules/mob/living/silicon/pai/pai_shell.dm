@@ -86,3 +86,4 @@
 		icon_state = "[chassis]"
 	if(loc != card)
 		visible_message("<span class='notice'>[src] [rest? "lays down for a moment..." : "perks up from the ground"]</span>")
+
