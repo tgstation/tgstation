@@ -64,15 +64,13 @@ EMAGGED FUNCTIONS - TODO
 	20	|Builds catwalks on lava.
 	SEPARATE FROM OTHERS - Blasts compressed air to pressurize areas
 	25	|Builds airlocks with higher health than normal airlocks, but the same security level.
-	60	|Catwalks over chasms
 	2	|Build membrane barriers - Basically walls that will break in a single hit from just about anything and is best left for emergency usage.
 	0	|Remove Catwalks - Just incase antags get ahold of it or you really need a lava disposals bin. Honk.
 	*/
 
 	var/wallcost = 10
 	var/floorcost = 5
-	var/catwalkcost = 20
-	var/chasmcatwalkcost = 60
+	var/catwalkcost = 30
 	var/airlockcost = 25
 	var/membranecost = 2
 	var/removecatwalkcost = 0
@@ -419,13 +417,6 @@ EMAGGED FUNCTIONS - TODO
 			if(islavaturf(A))
 				if(useResource(catwalkcost, user))
 					user << "<span class='notice'>You start to fabricate a catwalk over the lava...</span>"
-					activate(user)
-					new /obj/structure/lattice/catwalk/lava(get_turf(A))
-					return 1
-				return 0
-			if(ischasm(A))
-				if(useResource(chasmcatwalkcost, user))
-					user << "<span class='notice'>You start to fabricate a catwalk over the chasm...</span>"
 					activate(user)
 					new /obj/structure/lattice/catwalk/lava(get_turf(A))
 					return 1
