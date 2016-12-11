@@ -1,5 +1,5 @@
 /obj/item/ammo_casing/energy/prototype
-	name = "prototype energyn lens"
+	name = "prototype energy lens"
 	projectile_type = /obj/item/projectile/energy/prototype
 	e_cost = 0
 	var/datum/gun/GCdatum

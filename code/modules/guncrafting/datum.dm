@@ -14,10 +14,10 @@
 	var/list/obj/item/device/guncrafting/module/chassis/chassis_modules = list()	//Chassis modules
 	var/list/obj/item/device/guncrafting/module/effect/effect_modules = list()	//Effect modules
 	var/list/obj/item/device/guncrafting/module/barrel/barrel_modules	= list()	//Barrel modules
-	var/list/obj/item/device/guncrafting/module/cosmetic/stackable = list()	//Stackable cosmetic effects
-	var/obj/item/device/guncrafting/module/cosmetic/projectile	//Projectile icon
-	var/obj/item/device/guncrafting/module/cosmetic/chassis	//Chassis icon
-	var/obj/item/device/guncrafting/module/cosmetic/color	//Projectile color
+	var/list/obj/item/device/guncrafting/module/cosmetic/cosmetic_stackable/cosmetic_modules = list()	//Stackable cosmetic effects
+	var/obj/item/device/guncrafting/module/cosmetic/cosmetic_projectile	//Projectile icon
+	var/obj/item/device/guncrafting/module/cosmetic/cosmetic_chassis	//Chassis icon
+	var/obj/item/device/guncrafting/module/cosmetic/cosmetic_color	//Projectile color
 	var/list/obj/item/device/guncrafting/module/other_modules = list()	//Other modules
 
 	var/requires_processing = 0	//Fastprocess?

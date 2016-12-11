@@ -26,6 +26,7 @@
 	GCdatum = new /datum/gun
 	Pcasing.GCdatum = GCdatum
 	GCdatum.holder = src
+	GCdatum.weapon_weight = gun_class
 
 /obj/item/weapon/gun/energy/prototype/check_spread()
 	. = 0
@@ -118,12 +119,179 @@
 	max_other_modules = 4
 	gun_class = 4
 
-/obj/item/weapon/gun/energy/prototype/attackby(obj/item/I, mob/user)
-	if(istype(I, /obj/item/weapon/screwdriver))
+/obj/item/weapon/gun/energy/prototype/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/weapon/crowbar))
 		maint = !maint
 		user << "<span class='notice'>You [maint? "open" : "close"] the access panel on the weapon...</span>"
 	if(!maint)
 		user << "<span class='warning'>You have to open the weapon's panel before modifying it!</span>"
+		return ..(I, user, params)
+	if(istype(I, /obj/item/weapon/screwdriver))
+		var/choice = input(user, "What kind of module do you want to remove?", "Module Removal", null) as null|anything in GCdatum.modules
+		if(!choice)
+			return FALSE
+		detach_module(user, I)
+	if(istype(I, /obj/item/weapon/wrench))
+		user << "<span class='boldwarning'>You start removing all the modules in the gun..!</span>"
+		if(do_after(user, 30/I.toolspeed, target = src))
+			for(var/obj/item/device/guncrafting/module/M in GCdatum.modules)
+				detach_module(user, M)
 	if(istype(I, /obj/item/device/guncrafting/module))
+		var/obj/item/device/guncrafting/module/M = I
+		attach_module(M, user)
+	. = ..(I, user, params)
 
+/obj/item/weapon/gun/energy/prototype/proc/detach_module(mob/living/user, obj/item/device/guncrafting/module/M)
+	var/turf/T = get_turf(src)
+	if(user)
+		T = get_turf(user)
+	GCdatum.modules -= M
+	M.forceMove(T)
+	if(istype(M, /obj/item/device/guncrafting/module/trigger))
+		GCdatum.trigger_modules -= M
+	if(istype(M, /obj/item/device/guncrafting/module/effect))
+		GCdatum.effect_modules -= M
+	if(istype(M, /obj/item/device/guncrafting/module/power))
+		GCdatum.power_modules -= M
+	if(istype(M, /obj/item/device/guncrafting/module/projector/mod))
+		GCdatum.projector_modules -= M
+	if(istype(M, /obj/item/device/guncrafting/module/barrel))
+		GCdatum.barrel_modules -= M
+	if(istype(M, /obj/item/device/guncrafting/module/chassis))
+		GCdatum.chassis_modules -= M
+	if(istype(M, /obj/item/device/guncrafting/module/cosmetic/stackable))
+		GCdatum.cosmetic_modules -= M
+	if(istype(M, /obj/item/device/guncrafting/module/other))
+		GCdatum.other_modules -= M
+	if(istype(M, /obj/item/device/guncrafting/module/projector/base))
+		GCdatum.projector_base = null
+	if(istype(M, /obj/item/device/guncrafting/module/cosmetic/projectile))
+		GCdatum.cosmetic_projectile = null
+	if(istype(M, /obj/item/device/guncrafting/module/cosmetic/chassis))
+		GCdatum.cosmetic_chassis = null
+	if(istype(M, /obj/item/device/guncrafting/module/cosmetic/color))
+		GCdatum.cosmetic_color = null
+	GCdatum.update_modules()
 
+/obj/item/weapon/gun/energy/prototype/proc/attach_module(obj/item/device/guncrafting/module/M, mob/living/user, force = FALSE)
+	if(istype(M, /obj/item/device/guncrafting/module/trigger))
+		if((GCdatum.trigger_modules.len < max_trigger_modules) || force)
+			if((user && user.unEquip(M)) || force)
+				M.loc = src
+				GCdatum.modules += M
+				GCdatum.trigger_modules += M
+				if(user)
+					user << "<span class'notice'>You insert the [M] into the [src]!</span>"
+		else
+			user << "<span class='warning'>[M] won't fit in the [src]!</span>"
+	if(istype(M, /obj/item/device/guncrafting/module/projector/mod))
+		if((GCdatum.projector_modules.len < max_projector_mods) || force)
+			if((user && user.unEquip(M)) || force)
+				M.loc = src
+				GCdatum.modules += M
+				GCdatum.projector_modules += M
+				if(user)
+					user << "<span class'notice'>You insert the [M] into the [src]!</span>"
+		else
+			user << "<span class='warning'>[M] won't fit in the [src]!</span>"
+	if(istype(M, /obj/item/device/guncrafting/module/power))
+		if((GCdatum.power.len < max_power_modules) || force)
+			if((user && user.unEquip(M)) || force)
+				M.loc = src
+				GCdatum.modules += M
+				GCdatum.power_modules += M
+				if(user)
+					user << "<span class'notice'>You insert the [M] into the [src]!</span>"
+		else
+			user << "<span class='warning'>[M] won't fit in the [src]!</span>"
+	if(istype(M, /obj/item/device/guncrafting/module/chassis))
+		if((GCdatum.chassis_modules.len < max_chassis_modules) || force)
+			if((user && user.unEquip(M)) || force)
+				M.loc = src
+				GCdatum.modules += M
+				GCdatum.chassis_modules += M
+				if(user)
+					user << "<span class'notice'>You insert the [M] into the [src]!</span>"
+		else
+			user << "<span class='warning'>[M] won't fit in the [src]!</span>"
+	if(istype(M, /obj/item/device/guncrafting/module/barrel))
+		if((GCdatum.barrel.len < max_barrel_modules) || force)
+			if((user && user.unEquip(M)) || force)
+				M.loc = src
+				GCdatum.modules += M
+				GCdatum.barrel_modules += M
+				if(user)
+					user << "<span class'notice'>You insert the [M] into the [src]!</span>"
+		else
+			user << "<span class='warning'>[M] won't fit in the [src]!</span>"
+	if(istype(M, /obj/item/device/guncrafting/module/effect))
+		if((GCdatum.effect.len < max_effect_modules) || force)
+			if((user && user.unEquip(M)) || force)
+				M.loc = src
+				GCdatum.modules += M
+				GCdatum.effect_modules += M
+				if(user)
+					user << "<span class'notice'>You insert the [M] into the [src]!</span>"
+		else
+			user << "<span class='warning'>[M] won't fit in the [src]!</span>"
+	if(istype(M, /obj/item/device/guncrafting/module/cosmetic/stackable))
+		if((GCdatum.cosmetic_stackable.len < max_cosmetic_modules) || force)
+			if((user && user.unEquip(M)) || force)
+				M.loc = src
+				GCdatum.modules += M
+				GCdatum.barrel_modules += M
+				if(user)
+					user << "<span class'notice'>You insert the [M] into the [src]!</span>"
+		else
+			user << "<span class='warning'>[M] won't fit in the [src]!</span>"
+	if(istype(M, /obj/item/device/guncrafting/module/other))
+		if((GCdatum.other_modules.len < max_other_modules) || force)
+			if((user && user.unEquip(M)) || force)
+				M.loc = src
+				GCdatum.modules += M
+				GCdatum.barrel_modules += M
+				if(user)
+					user << "<span class'notice'>You insert the [M] into the [src]!</span>"
+		else
+			user << "<span class='warning'>[M] won't fit in the [src]!</span>"
+	if(istype(M, /obj/item/device/guncrafting/projector/base))
+		if(!GCdatum.projector_base)
+			if((user && user.unEquip(M)) || force)
+				M.loc = src
+				GCdatum.modules += M
+				GCdatum.projector_base = M
+				if(user)
+					user << "<span class'notice'>You insert the [M] into the [src]!</span>"
+		else
+			user << "<span class='warning'>[M] won't fit in the [src]!</span>"
+	if(istype(M, /obj/item/device/guncrafting/cosmetic/chassis))
+		if(!GCdatum.cosmetic_chassis)
+			if((user && user.unEquip(M)) || force)
+				M.loc = src
+				GCdatum.modules += M
+				GCdatum.cosmetic_chassis = M
+				if(user)
+					user << "<span class'notice'>You insert the [M] into the [src]!</span>"
+		else
+			user << "<span class='warning'>[M] won't fit in the [src]!</span>"
+	if(istype(M, /obj/item/device/guncrafting/cosmetic/projectile))
+		if(!GCdatum.cosmetic_projectile)
+			if((user && user.unEquip(M)) || force)
+				M.loc = src
+				GCdatum.modules += M
+				GCdatum.cosmetic_projectile = M
+				if(user)
+					user << "<span class'notice'>You insert the [M] into the [src]!</span>"
+		else
+			user << "<span class='warning'>[M] won't fit in the [src]!</span>"
+	if(istype(M, /obj/item/device/guncrafting/cosmetic/color))
+		if(!GCdatum.cosmetic_color)
+			if((user && user.unEquip(M)) || force)
+				M.loc = src
+				GCdatum.modules += M
+				GCdatum.cosmetic_color = M
+				if(user)
+					user << "<span class'notice'>You insert the [M] into the [src]!</span>"
+		else
+			user << "<span class='warning'>[M] won't fit in the [src]!</span>"
+	GCdatum.update_modules()
