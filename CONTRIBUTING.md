@@ -294,8 +294,8 @@ Do not add any of the following in a Pull Request or risk getting the PR closed:
 
 ##A note on races
 The following restrictions on races are in effect
-1)No new races unless they are really, really really unique and interesting (that means no ports of existing races)
-2)Cat people won't change from their current status quo as human mutation items for ears and tail
+* No new races unless they are really, really really unique and interesting (that means no ports of existing races)
+* Cat people won't change from their current status quo as human mutation items for ears and tail
 
 Can you please stop making these PR's now? That goes for all sides of the debate.
 
