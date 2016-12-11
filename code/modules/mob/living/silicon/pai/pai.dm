@@ -64,6 +64,7 @@
 	var/emittermaxhealth = 50
 	var/emitterregen = 1
 	var/emittercd = 10
+	var/emitteroverloadcd = 50
 	var/emittersemicd = FALSE
 
 	var/overload_ventcrawl = 0
