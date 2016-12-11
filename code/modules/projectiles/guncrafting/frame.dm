@@ -44,7 +44,7 @@
 
 /obj/item/weapon/gun/energy/frame/egun/New()
 	..()
-	var/obj/item/weapon/gun_attachment/barrel/B = new /obj/item/weapon/gun_attachment/barrel/medium
+	var/obj/item/weapon/gun_attachment/barrel/B = new /obj/item/weapon/gun_attachment/barrel/short
 	force_attach(B)
 	var/obj/item/weapon/gun_attachment/base/E = new /obj/item/weapon/gun_attachment/base/egun
 	force_attach(E)
@@ -57,7 +57,7 @@
 
 /obj/item/weapon/gun/energy/frame/lasergun/New()
 	..()
-	var/obj/item/weapon/gun_attachment/barrel/B = new /obj/item/weapon/gun_attachment/barrel/medium
+	var/obj/item/weapon/gun_attachment/barrel/B = new /obj/item/weapon/gun_attachment/barrel/short
 	force_attach(B)
 	var/obj/item/weapon/gun_attachment/base/E = new /obj/item/weapon/gun_attachment/base/laser
 	force_attach(E)
@@ -69,7 +69,7 @@
 
 /obj/item/weapon/gun/energy/frame/hybrid_taser/New()
 	..()
-	var/obj/item/weapon/gun_attachment/barrel/B = new /obj/item/weapon/gun_attachment/barrel/medium
+	var/obj/item/weapon/gun_attachment/barrel/B = new /obj/item/weapon/gun_attachment/barrel/short
 	force_attach(B)
 	var/obj/item/weapon/gun_attachment/base/E = new /obj/item/weapon/gun_attachment/base/htaser
 	force_attach(E)
