@@ -45,7 +45,10 @@
 
 /mob/living/silicon/pai/proc/fold_in(force = FALSE)
 	emittersemicd = TRUE
-	addtimer(src, "emittercool", emittercd)
+	if(!force)
+		addtimer(src, "emittercool", emittercd)
+	else
+		addtimer(src, "emittercool", emitteroverloadcd)
 	icon_state = "[chassis]"
 	if(!holoform)
 		. = fold_out(force)
