@@ -305,38 +305,47 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 
 // Due to storage type consolidation this should get used more now.
 // I have cleaned it up a little, but it could probably use more.  -Sayu
+// The lack of ..() is intentional, do not add one
 /obj/item/attackby(obj/item/weapon/W, mob/user, params)
-	if(istype(W,/obj/item/weapon/storage))
-		var/obj/item/weapon/storage/S = W
-		if(S.use_to_pickup)
-			if(S.collection_mode) //Mode is set to collect multiple items on a tile and we clicked on a valid one.
-				if(isturf(src.loc))
-					var/list/rejections = list()
-					var/success = 0
-					var/failure = 0
+	if(unique_rename && istype(I, /obj/item/weapon/pen))
+		var/penchoice = alert("What would you like to edit?", "Rename or change description?", "Rename", "Change description", "Cancel")
+		if(!qdeleted(src) && user.canUseTopic(src, BE_CLOSE))
+			if(penchoice == "Rename")
+				rename_obj(user)
+			if(penchoice == "Change description")
+				redesc_obj(user)
+	else
+		if(istype(W,/obj/item/weapon/storage))
+			var/obj/item/weapon/storage/S = W
+			if(S.use_to_pickup)
+				if(S.collection_mode) //Mode is set to collect multiple items on a tile and we clicked on a valid one.
+					if(isturf(src.loc))
+						var/list/rejections = list()
+						var/success = 0
+						var/failure = 0
 
-					for(var/obj/item/I in src.loc)
-						if(S.collection_mode == 2 && !istype(I,src.type)) // We're only picking up items of the target type
-							failure = 1
-							continue
-						if(I.type in rejections) // To limit bag spamming: any given type only complains once
-							continue
-						if(!S.can_be_inserted(I))	// Note can_be_inserted still makes noise when the answer is no
-							rejections += I.type	// therefore full bags are still a little spammy
-							failure = 1
-							continue
+						for(var/obj/item/I in src.loc)
+							if(S.collection_mode == 2 && !istype(I,src.type)) // We're only picking up items of the target type
+								failure = 1
+								continue
+							if(I.type in rejections) // To limit bag spamming: any given type only complains once
+								continue
+							if(!S.can_be_inserted(I))	// Note can_be_inserted still makes noise when the answer is no
+								rejections += I.type	// therefore full bags are still a little spammy
+								failure = 1
+								continue
 
-						success = 1
-						S.handle_item_insertion(I, 1)	//The 1 stops the "You put the [src] into [S]" insertion message from being displayed.
-					if(success && !failure)
-						user << "<span class='notice'>You put everything [S.preposition] [S].</span>"
-					else if(success)
-						user << "<span class='notice'>You put some things [S.preposition] [S].</span>"
-					else
-						user << "<span class='warning'>You fail to pick anything up with [S]!</span>"
+							success = 1
+							S.handle_item_insertion(I, 1)	//The 1 stops the "You put the [src] into [S]" insertion message from being displayed.
+						if(success && !failure)
+							user << "<span class='notice'>You put everything [S.preposition] [S].</span>"
+						else if(success)
+							user << "<span class='notice'>You put some things [S.preposition] [S].</span>"
+						else
+							user << "<span class='warning'>You fail to pick anything up with [S]!</span>"
 
-			else if(S.can_be_inserted(src))
-				S.handle_item_insertion(src)
+				else if(S.can_be_inserted(src))
+					S.handle_item_insertion(src)
 
 
 // afterattack() and attack() prototypes moved to _onclick/item_attack.dm for consistency
