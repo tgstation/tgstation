@@ -234,8 +234,6 @@
 		var/mob/living/carbon/human/H = user
 		H.dna.species.grab(H, src, H.martial_art)
 		H.next_click = world.time + CLICK_CD_MELEE
-	else 
-		..()
 /*
 	Alt click
 	Unused except for AI
