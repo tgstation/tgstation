@@ -8,7 +8,7 @@
 	hub_password = "kMZy3U5jJHSiBQjr"
 	name = "/tg/ Station 13"
 	fps = 20
-	visibility = 0
+	visibility = 1
 
 var/list/map_transition_config = MAP_TRANSITION_CONFIG
 

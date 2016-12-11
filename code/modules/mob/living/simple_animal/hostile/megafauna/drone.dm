@@ -24,8 +24,8 @@
 	aggro_vision_range = 23
 	loot = list(/obj/item/weapon/gun/energy/white_only/cross_laser)
 	wander = TRUE
-	score_type = BIRD_SCORE
 	del_on_death = TRUE
+	var/freeze = FALSE
 	var/datum/action/innate/drone_attack/shots_action = new/datum/action/innate/drone_attack/shots_homing()
 	var/datum/action/innate/drone_attack/rain_action = new/datum/action/innate/drone_attack/rain()
 	var/datum/action/innate/drone_attack/homing_action = new/datum/action/innate/drone_attack/homing()
@@ -33,6 +33,28 @@
 	var/attack_type = null
 	var/got_action = null
 	death_sound = 'sound/magic/Repulse.ogg'
+
+/obj/item/device/gps/internal/drone
+	icon_state = null
+	gpstag = "Drone beacon."
+	desc = "You better run."
+	invisibility = 100
+
+/mob/living/simple_animal/hostile/megafauna/megadrone/AttackingTarget()
+	if(!freeze)
+		..()
+
+/mob/living/simple_animal/hostile/megafauna/megadrone/DestroySurroundings()
+	if(!freeze)
+		..()
+
+/mob/living/simple_animal/hostile/megafauna/megadrone/Move()
+	if(!freeze)
+		..()
+
+/mob/living/simple_animal/hostile/megafauna/megadrone/Goto(target, delay, minimum_distance)
+	if(!freeze)
+		..()
 
 /mob/living/simple_animal/hostile/megafauna/megadrone/New()
 	shots_action.Grant(src)
@@ -42,26 +64,28 @@
 	..()
 
 /mob/living/simple_animal/hostile/megafauna/megadrone/OpenFire()
+	freeze = TRUE
 	if(attack_type == null)
 		attack_type = rand(1, 4)
 	if(attack_type == 1)
-		ranged_cooldown = world.time + 40
+		ranged_cooldown = world.time + 45
 		homing_shots(20, src)
-		sleep(40)
+		sleep(45)
 	else if(attack_type == 2)
-		ranged_cooldown = world.time + 12
+		ranged_cooldown = world.time + 15
 		laser_rain()
-		sleep(12)
+		sleep(15)
 	else if(attack_type == 3)
-		ranged_cooldown = world.time + 40
+		ranged_cooldown = world.time + 45
 		homing_laser(20, src)
-		sleep(40)
+		sleep(45)
 	else if(attack_type == 4)
 		ranged_cooldown = world.time + 50
 		smart_blast()
 		sleep(50)
 	if(client == null)
 		attack_type = null
+	freeze = FALSE
 
 /mob/living/simple_animal/hostile/megafauna/megadrone/proc/smart_blast()
 	visible_message("<span class='boldwarning'>Drone releases wave of projectiles!</span>")
