@@ -39,13 +39,13 @@
 /obj/item/weapon/wrench/cyborg
 	name = "automatic wrench"
 	desc = "An advanced robotic wrench. Can be found in construction cyborgs."
-	toolspeed = 0.75
+	toolspeed = 0.7
 
 /obj/item/weapon/wrench/brass
 	name = "brass wrench"
 	desc = "A brass wrench. It's faintly warm to the touch."
 	icon_state = "wrench_brass"
-	toolspeed = 0.6
+	toolspeed = 0.7
 
 /obj/item/weapon/wrench/power
 	name = "Hand Drill"
@@ -160,7 +160,7 @@
 	name = "brass screwdriver"
 	desc = "A screwdriver made of brass. The handle feels freezing cold."
 	icon_state = "screwdriver_brass"
-	toolspeed = 0.6
+	toolspeed = 0.7
 
 /obj/item/weapon/screwdriver/power
 	name = "Hand Drill"
@@ -194,7 +194,7 @@
 	name = "powered screwdriver"
 	desc = "An electrical screwdriver, designed to be both precise and quick."
 	usesound = 'sound/items/drill_use.ogg'
-	toolspeed = 0.75
+	toolspeed = 0.7
 
 /*
  * Wirecutters
@@ -245,12 +245,12 @@
 	name = "brass wirecutters"
 	desc = "A pair of wirecutters made of brass. The handle feels freezing cold to the touch."
 	icon_state = "cutters_brass"
-	toolspeed = 0.6
+	toolspeed = 0.7
 
 /obj/item/weapon/wirecutters/cyborg
 	name = "wirecutters"
 	desc = "This cuts wires."
-	toolspeed = 0.75
+	toolspeed = 0.7
 
 /obj/item/weapon/wirecutters/power
 	name = "Jaws of Life"
@@ -562,7 +562,7 @@
 /obj/item/weapon/weldingtool/largetank/cyborg
 	name = "integrated welding tool"
 	desc = "An advanced welder designed to be used in robotic systems."
-	toolspeed = 0.75
+	toolspeed = 0.7
 
 /obj/item/weapon/weldingtool/largetank/flamethrower_screwdriver()
 	return
@@ -602,7 +602,7 @@
 	change_icons = 0
 	can_off_process = 1
 	light_intensity = 1
-	toolspeed = 0.75
+	toolspeed = 0.7
 	var/nextrefueltick = 0
 
 /obj/item/weapon/weldingtool/experimental/brass
@@ -653,7 +653,7 @@
 	name = "brass crowbar"
 	desc = "A brass crowbar. It feels faintly warm to the touch."
 	icon_state = "crowbar_brass"
-	toolspeed = 0.6
+	toolspeed = 0.7
 
 /obj/item/weapon/crowbar/large
 	name = "crowbar"
@@ -665,14 +665,14 @@
 	materials = list(MAT_METAL=70)
 	icon_state = "crowbar_large"
 	item_state = "crowbar"
-	toolspeed = 0.75
+	toolspeed = 0.7
 
 /obj/item/weapon/crowbar/cyborg
 	name = "hydraulic crowbar"
 	desc = "A hydraulic prying tool, compact but powerful. Designed to replace crowbar in construction cyborgs."
 	usesound = 'sound/items/jaws_pry.ogg'
 	force = 10
-	toolspeed = 0.75
+	toolspeed = 0.7
 
 /obj/item/weapon/crowbar/power
 	name = "Jaws of Life"
