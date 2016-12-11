@@ -297,8 +297,6 @@ The following restrictions on races are in effect
 * No new races unless they are really, really really unique and interesting (that means no ports of existing races)
 * Cat people won't change from their current status quo as human mutation items for ears and tail
 
-Can you please stop making these PR's now? That goes for all sides of the debate.
-
 ##A word on git
 Yes we know that the files have a tonne of mixed windows and linux line endings, attempts to fix this have been met with less than stellar success and as such we have decided to give up caring until such a time as it matters.
 
