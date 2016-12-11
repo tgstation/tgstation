@@ -99,7 +99,8 @@
 
 	use(1)
 
-
+/obj/item/stack/medical/pre_throw_by_mob(mob/tosser)
+	return src
 
 /obj/item/stack/medical/bruise_pack
 	name = "bruise pack"

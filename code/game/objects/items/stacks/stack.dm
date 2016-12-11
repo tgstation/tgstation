@@ -272,10 +272,15 @@
 	src.fingerprintslast  = from.fingerprintslast
 	//TODO bloody overlay
 
+/obj/item/stack/pre_throw_by_mob(mob/tosser)
+	if(get_amount() > 1)
+		return change_stack(tosser, 1)
+	return src
+
 /obj/item/stack/microwave_act(obj/machinery/microwave/M)
 	if(M && M.dirty < 100)
 		M.dirty += amount
-		
+
 /*
  * Recipe datum
  */

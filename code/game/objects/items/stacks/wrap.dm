@@ -19,6 +19,8 @@
 		new /obj/item/weapon/c_tube(get_turf(src))
 	return ..()
 
+/obj/item/stack/wrapping_paper/pre_throw_by_mob(mob/tosser)
+	return src
 
 /*
  * Package Wrap
@@ -102,6 +104,9 @@
 	if(!amount)
 		new /obj/item/weapon/c_tube(get_turf(src))
 	return ..()
+
+/obj/item/stack/packageWrap/pre_throw_by_mob(mob/tosser)
+	return src
 
 /obj/item/weapon/c_tube
 	name = "cardboard tube"
