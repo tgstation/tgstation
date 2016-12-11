@@ -26,6 +26,7 @@
 	create_reagents(100)
 	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/microwave(null)
 	B.apply_default_parts(src)
+	..()
 
 /obj/item/weapon/circuitboard/machine/microwave
 	name = "circuit board (Microwave)"

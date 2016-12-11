@@ -11,7 +11,7 @@
 	obj_integrity = 350
 	max_integrity = 350
 	armor = list(melee = 30, bullet = 30, laser = 20, energy = 20, bomb = 10, bio = 100, rad = 100, fire = 80, acid = 70)
-
+	CanAtmosPass = ATMOS_PASS_DENSITY
 
 	var/secondsElectrified = 0
 	var/shockedby = list()
@@ -95,9 +95,6 @@
 /obj/machinery/door/CanPass(atom/movable/mover, turf/target, height=0)
 	if(istype(mover) && mover.checkpass(PASSGLASS))
 		return !opacity
-	return !density
-
-/obj/machinery/door/CanAtmosPass()
 	return !density
 
 /obj/machinery/door/proc/bumpopen(mob/user)

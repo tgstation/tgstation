@@ -404,3 +404,17 @@
 /obj/item/weapon/reagent_containers/food/snacks/gumball/cyborg/proc/spamcheck()
 	if(spamchecking)
 		qdel(src)
+
+/obj/item/weapon/reagent_containers/food/snacks/taco
+	name = "taco"
+	desc = "A traditional taco with meat, cheese, and lettuce."
+	icon_state = "taco"
+	bonus_reagents = list("nutriment" = 3, "vitamin" = 2)
+	list_reagents = list("nutriment" = 4, "vitamin" = 2)
+	filling_color = "F0D830"
+
+/obj/item/weapon/reagent_containers/food/snacks/taco/plain
+	desc = "A traditional taco with meat and cheese, minus the rabbit food."
+	icon_state = "taco_plain"
+	bonus_reagents = list("nutriment" = 2, "vitamin" = 2)
+	list_reagents = list("nutriment" = 3, "vitamin" = 1)

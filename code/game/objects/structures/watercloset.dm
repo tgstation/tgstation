@@ -14,6 +14,7 @@
 /obj/structure/toilet/New()
 	open = round(rand(0, 1))
 	update_icon()
+	..()
 
 
 /obj/structure/toilet/attack_hand(mob/living/user)

@@ -53,7 +53,7 @@
 
 		//only check this turf, if it didn't check us when it was initalized
 		if(enemy_tile.current_cycle < times_fired)
-			if(CanAtmosPass(enemy_tile))
+			if(CANATMOSPASS(src, enemy_tile))
 				LAZYINITLIST(atmos_adjacent_turfs)
 				LAZYINITLIST(enemy_tile.atmos_adjacent_turfs)
 				atmos_adjacent_turfs[enemy_tile] = TRUE
