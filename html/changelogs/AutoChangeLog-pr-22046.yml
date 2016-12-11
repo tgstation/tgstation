@@ -1,0 +1,4 @@
+author: "Joan"
+delete-after: True
+changes: 
+  - tweak: "Invoking Nezbere now increases ocular warden damage slightly more, but increases ocular warden range slightly less."
