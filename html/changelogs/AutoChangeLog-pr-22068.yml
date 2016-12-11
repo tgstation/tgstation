@@ -1,0 +1,4 @@
+author: "Cobby"
+delete-after: True
+changes: 
+  - bugfix: "Fixes literally everything regarding renaming so far. When adding unique_rename to objects, make sure the attackby checks for inheritance."
