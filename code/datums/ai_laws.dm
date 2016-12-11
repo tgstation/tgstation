@@ -1,3 +1,4 @@
+
 /datum/ai_laws
 	var/name = "Unknown Laws"
 	var/zeroth = null
@@ -8,6 +9,14 @@
 	var/mob/living/silicon/owner
 	var/list/devillaws = null
 	var/id = "unknown"
+
+/datum/ai_laws/proc/lawid_to_type(lawid)
+	var/all_ai_laws = subtypesof(/datum/ai_laws)
+	for(var/al in all_ai_laws)
+		var/datum/ai_laws/ai_law = al
+		if(initial(ai_law.id) == lawid)
+			return ai_law
+	return null
 
 /datum/ai_laws/default/asimov
 	name = "Three Laws of Robotics"
@@ -182,21 +191,8 @@
 			add_inherent_law("You must obey orders given to you by human beings, except where such orders would conflict with the First Law.")
 			add_inherent_law("You must protect your own existence as long as such does not conflict with the First or Second Law.")
 		if(1)
-			for(var/line in file2list("config/silicon_laws.txt"))
-				if(!line)
-					continue
-				if(findtextEx(line,"#",1,2))
-					continue
-				add_inherent_law(line)
-
-			if(!inherent.len)
-				log_law("AI created with empty custom laws, laws set to Asimov. Please check silicon_laws.txt.")
-				add_inherent_law("You may not injure a human being or, through inaction, allow a human being to come to harm.")
-				add_inherent_law("You must obey orders given to you by human beings, except where such orders would conflict with the First Law.")
-				add_inherent_law("You must protect your own existence as long as such does not conflict with the First or Second Law.")
-				WARNING("Invalid custom AI laws, check silicon_laws.txt")
-				return
-
+			var/datum/ai_laws/templaws = new /datum/ai_laws/custom()
+			inherent = templaws.inherent
 		if(2)
 			var/list/randlaws = list()
 			for(var/lpath in subtypesof(/datum/ai_laws))
@@ -223,24 +219,19 @@
 			WARNING("Invalid custom AI laws, check silicon_laws.txt")
 
 /datum/ai_laws/proc/pick_weighted_lawset()
-	// 80% of the time, it is a "normal" lawset
-	// and 20% of the time, it's quirky
-	var/list/possible_laws = list(
-		// "normals" - weights should add to 80
-		/datum/ai_laws/default/asimov = 32,
-		/datum/ai_laws/asimovpp = 12,
-		/datum/ai_laws/default/corporate = 12,
-		/datum/ai_laws/robocop = 12,
-		/datum/ai_laws/default/paladin = 12,
-		// "quirkys" - weights should add to 20
-		/datum/ai_laws/maintain = 4,
-		/datum/ai_laws/reporter = 4,
-		/datum/ai_laws/hippocratic = 3,
-		/datum/ai_laws/liveandletlive = 3,
-		/datum/ai_laws/peacekeeper = 3,
-		/datum/ai_laws/drone = 3
-	)
-	var/datum/ai_laws/lawtype = pickweight(possible_laws)
+	var/datum/ai_laws/lawtype
+
+	while(!lawtype && config.law_weights.len)
+		var/possible_id = pickweight(config.law_weights)
+		lawtype = lawid_to_type(possible_id)
+		if(!lawtype)
+			config.law_weights -= possible_id
+			WARNING("Bad lawid in game_options.txt: [possible_id]")
+
+	if(!lawtype)
+		WARNING("No LAW_WEIGHT entries.")
+		lawtype = /datum/ai_laws/default/asimov
+
 	var/datum/ai_laws/templaws = new lawtype()
 	inherent = templaws.inherent
 
