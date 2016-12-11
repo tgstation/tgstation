@@ -75,11 +75,11 @@
 			user << "<span class='caution'>\The [src] is now secured.</span>"
 	else if(istype(W, /obj/item/weapon/screwdriver))
 		if(stage == 0)
-			playsound(src, 'sound/items/Screwdriver.ogg', 50, 1)
+			playsound(src, W.usesound, 50, 1)
 			user << "<span class='caution'>You unscrew the telepad's tracking beacon.</span>"
 			stage = 1
 		else if(stage == 1)
-			playsound(src, 'sound/items/Screwdriver.ogg', 50, 1)
+			playsound(src, W.usesound, 50, 1)
 			user << "<span class='caution'>You screw in the telepad's tracking beacon.</span>"
 			stage = 0
 	else if(istype(W, /obj/item/weapon/weldingtool) && stage == 1)

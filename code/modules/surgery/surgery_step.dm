@@ -42,7 +42,7 @@
 		surgery.step_in_progress = 0
 		return
 
-	if(do_after(user, time, target = target))
+	if(do_after(user, time * tool.toolspeed, target = target))
 		var/advance = 0
 		var/prob_chance = 100
 

@@ -45,7 +45,7 @@
 	if(istype(W, /obj/item/weapon/wirecutters))
 		if(can_be_cut && icon_state == initial(icon_state))//only if not dyed
 			user << "<span class='notice'>You snip the fingertips off of [src].</span>"
-			playsound(user.loc,'sound/items/Wirecutter.ogg', rand(10,50), 1)
+			playsound(user.loc, W.usesound, rand(10,50), 1)
 			new /obj/item/clothing/gloves/fingerless(user.loc)
 			qdel(src)
 	..()

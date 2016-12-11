@@ -203,7 +203,7 @@
 		if(stat & BROKEN)
 			if(!WT.remove_fuel(0, user))
 				return
-			playsound(loc, 'sound/items/Welder.ogg', 40, 1)
+			playsound(loc, WT.usesound, 40, 1)
 			user << "<span class='notice'>You begin cutting [src] apart...</span>"
 			if(do_after(user, 30, target = src))
 				deconstruct(TRUE)
