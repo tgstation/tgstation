@@ -159,7 +159,7 @@
 		if(iswallturf(t))
 			var/turf/closed/wall/W = t
 			W.dismantle_wall()
-		else if(t && !is_blocked_turf(t))
+		else if(t && (isclosedturf(t) || !is_blocked_turf(t)))
 			var/turf/T = t
 			T.ChangeTurf(/turf/open/floor/clockwork)
 	for(var/obj/O in orange(1, src))
