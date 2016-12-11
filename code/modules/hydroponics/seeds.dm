@@ -345,9 +345,9 @@
 	set_production(rand(2, 10))
 	set_yield(rand(1, 10))
 	set_potency(rand(10, 35))
+	set_weed_rate(rand(1, 10))
+	set_weed_chance(rand(5, 100))
 	maturation = rand(6, 12)
-	weed_rate = rand(1, 10)
-	weed_chance = rand(5, 100)
 
 /obj/item/seeds/proc/add_random_reagents(lower = 0, upper = 2)
 	var/amount_random_reagents = rand(lower, upper)
