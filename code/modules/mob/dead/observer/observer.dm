@@ -368,6 +368,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		usr << "No area available."
 
 	usr.loc = pick(L)
+	update_parallax_contents()
 
 /mob/dead/observer/verb/follow()
 	set category = "Ghost"

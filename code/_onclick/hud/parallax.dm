@@ -1,10 +1,11 @@
 #define LOOP_NONE 0
 #define LOOP_NORMAL 1
 #define LOOP_REVERSE 2
+#define LOOP_TIME 50
 /client
 	var/list/parallax_layers
 	var/list/parallax_layers_cached
-	var/static/list/parallax_static_layers_tail = newlist(/obj/screen/parallax_pmaster, /obj/screen/parallax_space_whitifier, /obj/screen/parallax_fixer)
+	var/static/list/parallax_static_layers_tail = newlist(/obj/screen/parallax_pmaster, /obj/screen/parallax_space_whitifier)
 	var/atom/movable/movingmob
 	var/turf/previous_turf
 	var/do_smoothing = TRUE
@@ -88,14 +89,17 @@
 			C.looping_mode = LOOP_REVERSE
 		for(var/thing in C.parallax_layers)
 			var/obj/screen/parallax_layer/L = thing
-
+			var/newstate
 			if(new_parallax_movedir == NORTH || new_parallax_movedir == SOUTH)
-				L.icon_state = "[initial(L.icon_state)]_vertical"
+				newstate = "[initial(L.icon_state)]_vertical"
 			else
-				L.icon_state = "[initial(L.icon_state)]_horizontal"
+				newstate = "[initial(L.icon_state)]_horizontal"
+
+			if (newstate in icon_states(L.icon))
+				L.icon_state = newstate
 
 			L.update_o()
-			var/T = 50 / L.speed
+			var/T = max(LOOP_TIME / L.speed / 2, 2)
 			var/matrix/newtransform
 			switch(new_parallax_movedir)
 				if(NORTH)
@@ -173,11 +177,11 @@
 				if(L.offset_y < 0)
 					L.offset_y += 480
 
-		if(C.do_smoothing && (offset_x || offset_y) && abs(offset_x) <= max(C.parallax_throttle/world.tick_lag+1,1) && abs(offset_y) <= max(C.parallax_throttle/world.tick_lag+1,1) && (abs(change_x) > 1 || abs(change_y) > 1))
+		if(C.do_smoothing && (offset_x || offset_y) && abs(offset_x) <= max(C.parallax_throttle/world.tick_lag+1,1) && abs(offset_y) <= max(C.parallax_throttle/world.tick_lag+1,1) && (round(abs(change_x)) > 1 || round(abs(change_y)) > 1))
 			L.transform = matrix(1, 0, offset_x*L.speed, 0, 1, offset_y*L.speed)
 			animate(L, transform=matrix(), time = last_delay, flags = ANIMATION_END_NOW)
 
-		L.screen_loc = "CENTER-7:[L.offset_x],CENTER-7:[L.offset_y]"
+		L.screen_loc = "CENTER-7:[round(L.offset_x,1)],CENTER-7:[round(L.offset_y,1)]"
 
 // Plays the launch animation for parallax
 /datum/hud/proc/parallax_launch_anim(dir = EAST, slowing = FALSE)
@@ -190,7 +194,7 @@
 	for(var/thing in C.parallax_layers)
 		var/obj/screen/parallax_layer/L = thing
 		animate(L) // Cancel the current animation
-		var/M = L.speed * 240
+		var/M = L.speed * 480
 		var/O = -480 + M
 		switch(dir)
 			if(NORTH)
@@ -208,8 +212,8 @@
 	update_parallax() // Adjust the layers, they should all now be in the appropriate corner.
 	for(var/thing in C.parallax_layers)
 		var/obj/screen/parallax_layer/L = thing
-		animate(L, transform = matrix(), time = 50, easing = QUAD_EASING | (slowing ? EASE_OUT : EASE_IN), flags = ANIMATION_END_NOW)
-	spawn(50)
+		animate(L, transform = matrix(), time = LOOP_TIME, easing = QUAD_EASING | (slowing ? EASE_OUT : EASE_IN), flags = ANIMATION_END_NOW)
+	spawn(LOOP_TIME)
 		if(C && slowing)
 			C.do_smoothing = TRUE
 			C.looping_mode = LOOP_NONE
@@ -251,8 +255,8 @@
 
 /obj/screen/parallax_layer/proc/update_o()
 	var/list/new_overlays = list()
-	for(var/x in -1 to 1)
-		for(var/y in -1 to 1)
+	for(var/x in -2 to 2)
+		for(var/y in -2 to 2)
 			if(x == 0 && y == 0)
 				continue
 			var/image/I = image(icon, null, icon_state)
@@ -263,14 +267,13 @@
 
 /obj/screen/parallax_layer/layer_1
 	icon_state = "layer1"
-	speed = 1
-	layer = 10
-	blend_mode = BLEND_OVERLAY
+	speed = 0.6
+	layer = 1
 
 /obj/screen/parallax_layer/layer_2
 	icon_state = "layer2"
-	speed = 2
-	layer = 20
+	speed = 1
+	layer = 2
 
 /obj/screen/parallax_pmaster
 	appearance_flags = PLANE_MASTER
@@ -291,12 +294,8 @@
 		)
 	screen_loc = "CENTER-7,CENTER-7"
 
-/obj/screen/parallax_fixer
-	plane = PLANE_SPACE
-	alpha = 0
-	screen_loc = "CENTER-7,CENTER-7"
-
 
 #undef LOOP_NONE
 #undef LOOP_NORMAL
 #undef LOOP_REVERSE
+#undef LOOP_TIME

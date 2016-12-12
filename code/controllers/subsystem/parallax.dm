@@ -2,9 +2,9 @@ var/datum/subsystem/parallax/SSparallax
 
 /datum/subsystem/parallax
 	name = "parallax"
-	wait = 5
-	flags = SS_POST_FIRE_TIMING | SS_FIRE_IN_LOBBY | SS_BACKGROUND
-	priority = 100
+	wait = 2
+	flags = SS_POST_FIRE_TIMING | SS_FIRE_IN_LOBBY | SS_BACKGROUND | SS_NO_INIT
+	priority = 65
 	var/list/currentrun
 
 /datum/subsystem/parallax/New()
