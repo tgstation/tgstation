@@ -3,8 +3,8 @@
 
 #define CLICKCATCHER_PLANE -99
 
-#define PLANE_SPACE -10
-#define PLANE_SPACE_PARALLAX -9
+#define PLANE_SPACE -95
+#define PLANE_SPACE_PARALLAX -90
 
 #define GAME_PLANE 0
 //#define TURF_LAYER 2 //For easy recordkeeping; this is a byond define
