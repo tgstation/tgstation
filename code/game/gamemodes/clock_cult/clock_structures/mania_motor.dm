@@ -41,7 +41,7 @@
 		var/hum = get_sfx('sound/effects/screech.ogg') //like playsound, same sound for everyone affected
 		var/efficiency = get_efficiency_mod()
 		for(var/mob/living/carbon/human/H in view(1, src))
-			if(is_servant_of_ratvar(H))
+			if(is_servant_of_ratvar(H) || H.null_rod_check())
 				continue
 			if(H.Adjacent(src) && try_use_power(convert_attempt_cost))
 				if(is_eligible_servant(H) && try_use_power(convert_cost))
