@@ -27,6 +27,7 @@
 	var/mob/living/pilot
 	var/initial_pilot_health
 	var/requires_pilot = TRUE
+	var/object/item/device/drone_controller/remote
 
 /mob/living/simple_animal/hostile/remote_control/Login()
 	..()
@@ -88,8 +89,46 @@
 
 /mob/living/simple_animal/hostile/remote_control/emp_act(severity)
 	src << "Bzzzzzzzzzt. Connection lost."
+
 	eject_pilot()
 
 /mob/living/simple_animal/hostile/remote_control/AltClick(mob/living/user)
 	if(user.canUseTopic(src))
 		assume_control(user)
+
+
+
+/object/item/device/drone_controller
+	name = "remote controller"
+	desc = "A remote for steering robots."
+	icon_state = "gangtool-white"
+	item_state = "electronic"
+	icon = 'icons/obj/device.dmi'
+	var/mob/living/simple_animal/hostile/remote_control/RC
+
+
+/obj/item/weapon/door_remote
+	icon_state = "gangtool-white"
+	item_state = "electronic"
+	icon = 'icons/obj/device.dmi'
+	name = "control wand"
+	desc = "Remotely controls airlocks."
+	w_class = WEIGHT_CLASS_TINY
+	var/mode = WAND_OPEN
+	var/region_access = 1 //See access.dm
+	var/obj/item/weapon/card/id/ID
+
+/obj/item/weapon/door_remote/New()
+	..()
+	ID = new /obj/item/weapon/card/id
+	ID.access = get_region_accesses(region_access)
+
+/obj/item/weapon/door_remote/attack_self(mob/user)
+	switch(mode)
+		if(WAND_OPEN)
+			mode = WAND_BOLT
+		if(WAND_BOLT)
+			mode = WAND_EMERGENCY
+		if(WAND_EMERGENCY)
+			mode = WAND_OPEN
+	user << "Now in mode: [mode]."
