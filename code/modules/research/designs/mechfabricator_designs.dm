@@ -675,7 +675,7 @@
 	build_type = MECHFAB
 	build_path = /obj/item/borg/upgrade/hypospray/expanded
 	req_tech = list("programming" = 5, "engineering" = 4, "biotech" = 5)
-	materials = list(MAT_METAL=15000, MAT_GLASS=15000)
+	materials = list(MAT_METAL=15000, MAT_GLASS=15000, MAT_PLASMA=5000)
 	construction_time = 120
 	category = list("Cyborg Upgrade Modules")
 
@@ -685,7 +685,7 @@
 	build_type = MECHFAB
 	build_path = /obj/item/borg/upgrade/hypospray/high_strength
 	req_tech = list("programming" = 5, "engineering" = 5, "biotech" = 6)
-	materials = list(MAT_METAL=15000, MAT_GLASS=15000)
+	materials = list(MAT_METAL=15000, MAT_GLASS=15000, MAT_PLASMA=10000, MAT_URANIUM=5000
 	construction_time = 120
 	category = list("Cyborg Upgrade Modules")
 
@@ -695,7 +695,7 @@
 	build_type = MECHFAB
 	build_path = /obj/item/borg/upgrade/piercing_hypospray
 	req_tech = list("materials" = 5, "engineering" = 7, "combat" = 3)
-	materials = list(MAT_METAL=15000, MAT_GLASS=15000)
+	materials = list(MAT_METAL=15000, MAT_GLASS=15000, MAT_TITANIUM=10000, MAT_DIAMOND=5000)
 	construction_time = 120
 	category = list("Cyborg Upgrade Modules")
 
@@ -704,8 +704,8 @@
 	id = "borg_upgrade_defibrillator"
 	build_type = MECHFAB
 	build_path = /obj/item/borg/upgrade/defib
-	req_tech = list("programming" = 4, "engineering" = 6, "materials" = 5, "powerstorage" = 5, "biotech" = 5)
-	materials = list(MAT_METAL=15000, MAT_GLASS=15000)
+	req_tech = list("programming" = 4, "engineering" = 5, "materials" = 5, "powerstorage" = 5, "biotech" = 5)
+	materials = list(MAT_METAL=15000, MAT_GLASS=15000, MAT_SILVER=10000, MAT_GOLD=10000, MAT_TITANIUM=5000, MAT_DIAMOND=5000)
 	construction_time = 120
 	category = list("Cyborg Upgrade Modules")
 
