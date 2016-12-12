@@ -29761,7 +29761,7 @@
 /turf/open/floor/plating/warnplate{
 	dir = 2
 	},
-/area/engine/engineering)
+/area/maintenance/starboard)
 "aZT" = (
 /obj/structure/grille,
 /obj/structure/cable{
@@ -30647,7 +30647,7 @@
 /turf/open/floor/plating{
 	icon_state = "platingdmg3"
 	},
-/area/engine/engineering)
+/area/maintenance/starboard)
 "bbp" = (
 /obj/effect/landmark{
 	name = "tripai"
@@ -31869,7 +31869,7 @@
 /turf/open/floor/plating/warnplate{
 	dir = 4
 	},
-/area/engine/engineering)
+/area/maintenance/starboard)
 "bdi" = (
 /obj/machinery/door/airlock/external{
 	req_access_txt = "13"
@@ -91787,7 +91787,7 @@
 "dbC" = (
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/plating,
-/area/engine/engineering)
+/area/maintenance/starboard)
 "dbD" = (
 /obj/structure/table,
 /obj/item/device/radio/off{
@@ -91951,7 +91951,7 @@
 	},
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/plating,
-/area/engine/engineering)
+/area/maintenance/starboard)
 "dbU" = (
 /obj/machinery/sleeper{
 	dir = 4;
@@ -92066,12 +92066,12 @@
 /obj/structure/closet/firecloset,
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/plating,
-/area/engine/engineering)
+/area/maintenance/starboard)
 "dce" = (
 /obj/machinery/portable_atmospherics/canister/air,
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/plating,
-/area/engine/engineering)
+/area/maintenance/starboard)
 "dcf" = (
 /obj/structure/chair/office/light,
 /obj/effect/decal/cleanable/dirt{
@@ -136622,10 +136622,10 @@ aVe
 ayo
 aYd
 ayp
-ayo
-bdd
-bdf
-dcR
+atw
+aqy
+aqz
+aXQ
 bjR
 bjR
 bjR
@@ -136879,10 +136879,10 @@ ayo
 ayo
 bWI
 ayo
-ayo
-aKe
+atw
+apk
 dbT
-bjF
+atw
 bhI
 bjR
 bhH
@@ -137136,10 +137136,10 @@ dbt
 aaf
 aYe
 aZT
-ayo
+atw
 dbC
 dcd
-bjF
+atw
 bhJ
 bjS
 bhJ
@@ -137393,8 +137393,8 @@ aaf
 aoa
 azq
 ayr
-ayo
-bde
+atw
+atn
 dce
 brr
 bhK
@@ -137650,9 +137650,9 @@ aaf
 aWB
 aYf
 aZU
-ayo
-aKe
-aBZ
+atw
+apk
+alw
 brr
 bhK
 cWO
@@ -137907,9 +137907,9 @@ aaa
 aWC
 bVC
 ayr
-ayo
-bdf
-aBZ
+atw
+aqz
+alw
 aaa
 bhK
 bjV
@@ -138164,9 +138164,9 @@ aaa
 azq
 ayq
 azu
-ayo
+atw
 dbC
-aBZ
+alw
 aaf
 aaa
 cYF
@@ -138421,9 +138421,9 @@ aaa
 azq
 ayr
 ayo
-ayo
-aKe
-aBZ
+atw
+apk
+alw
 aaf
 aaf
 aaf
@@ -138679,8 +138679,8 @@ azq
 aYg
 ayo
 bbo
-aKe
-aBZ
+apk
+alw
 aaf
 aaa
 aaa
@@ -138935,9 +138935,9 @@ aaf
 azq
 ayr
 ayo
-ayo
-bdg
-aBZ
+atw
+avD
+alw
 aaf
 aaa
 aaa
@@ -139192,9 +139192,9 @@ aaa
 azq
 ayt
 aZT
-ayo
+atw
 dbC
-aDq
+alx
 aaf
 aaa
 aaa
@@ -139449,9 +139449,9 @@ aaa
 azq
 bVC
 ayr
-ayo
+atw
 bdh
-aBZ
+alw
 aaf
 aaf
 aaa
@@ -139706,10 +139706,10 @@ aaf
 aWB
 aYf
 azu
-ayo
-bdi
-aBZ
-aBZ
+atw
+atx
+alw
+alw
 aaf
 aaa
 aaa
@@ -139963,10 +139963,10 @@ aaf
 azq
 azq
 ayu
-ayo
-aKg
+atw
+avS
 aZS
-bdi
+atx
 acn
 acn
 aaf
@@ -140220,10 +140220,10 @@ aaf
 aWD
 ayu
 ayu
-ayo
-bdi
-aBZ
-aBZ
+atw
+atx
+alw
+alw
 aaf
 aaa
 aaa
