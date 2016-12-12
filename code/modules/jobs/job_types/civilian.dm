@@ -130,7 +130,7 @@ Librarian
 
 	belt = /obj/item/device/pda/librarian
 	uniform = /obj/item/clothing/under/rank/librarian
-	l_hand = /obj/item/weapon/storage/bag/books/curator
+	l_hand = /obj/item/weapon/storage/bag/books
 	r_pocket = /obj/item/weapon/barcodescanner
 	l_pocket = /obj/item/device/laser_pointer
 
