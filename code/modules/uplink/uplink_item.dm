@@ -754,7 +754,14 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	item = /obj/item/weapon/storage/box/syndie_kit/cutouts
 	cost = 1
 	surplus = 20
-
+	
+/datum/uplink_item/stealthy_tools/fakenucleardisk
+	name = "Decoy Nuclear Authentication Disk"
+	desc = "It's just a normal disk. Visually it's identical to the real deal, but it won't hold up under closer scrutiny. Don't try to give this to us to complete your objective, we know better!"
+	item = /obj/item/weapon/disk/fakenucleardisk
+	cost = 1
+	surplus = 10
+	
 //Space Suits and Hardsuits
 /datum/uplink_item/suits
 	category = "Space Suits and Hardsuits"
