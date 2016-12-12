@@ -87,7 +87,7 @@
 	},
 /area/ruin/unpowered)
 "p" = (
-/obj/machinery/door/airlock/shuttle,
+/obj/machinery/door/airlock/titanium,
 /turf/open/floor/mineral/plastitanium/brig{
 	baseturf = /turf/open/floor/plating/lava/smooth
 	},
@@ -99,7 +99,7 @@
 	},
 /area/lavaland/surface/outdoors)
 "r" = (
-/obj/machinery/door/airlock/shuttle,
+/obj/machinery/door/airlock/titanium,
 /turf/open/floor/plasteel/shuttle/red{
 	baseturf = /turf/open/floor/plating/lava/smooth;
 	initial_gas_mix = "o2=16;n2=23"

@@ -157,7 +157,7 @@
 /turf/open/floor/plasteel/black,
 /area/shuttle/escape)
 "E" = (
-/obj/machinery/door/airlock/shuttle,
+/obj/machinery/door/airlock/titanium,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "F" = (
@@ -176,7 +176,7 @@
 /turf/open/floor/plasteel/black,
 /area/shuttle/escape)
 "H" = (
-/obj/machinery/door/airlock/shuttle,
+/obj/machinery/door/airlock/titanium,
 /obj/docking_port/mobile/emergency{
 	dheight = 0;
 	dir = 8;

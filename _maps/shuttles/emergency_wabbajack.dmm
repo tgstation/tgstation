@@ -34,7 +34,7 @@
 /area/shuttle/escape)
 "aj" = (
 /obj/structure/barricade/wooden,
-/obj/machinery/door/airlock/shuttle,
+/obj/machinery/door/airlock/titanium,
 /turf/open/floor/plasteel/cult,
 /area/shuttle/escape)
 "ak" = (
@@ -113,7 +113,7 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "ax" = (
-/obj/machinery/door/airlock/shuttle{
+/obj/machinery/door/airlock/titanium{
 	name = "Emergency Shuttle Airlock";
 	req_access_txt = "2"
 	},
@@ -145,11 +145,11 @@
 /turf/open/floor/plasteel/shuttle,
 /area/shuttle/escape)
 "aC" = (
-/obj/machinery/door/airlock/shuttle,
+/obj/machinery/door/airlock/titanium,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "aD" = (
-/obj/machinery/door/airlock/shuttle{
+/obj/machinery/door/airlock/titanium{
 	name = "Emergency Shuttle Airlock"
 	},
 /obj/docking_port/mobile/emergency{
@@ -257,7 +257,7 @@
 /turf/open/floor/plasteel/shuttle,
 /area/shuttle/escape)
 "aV" = (
-/obj/machinery/door/airlock/shuttle{
+/obj/machinery/door/airlock/titanium{
 	name = "Emergency Shuttle Airlock"
 	},
 /turf/open/floor/plating,
