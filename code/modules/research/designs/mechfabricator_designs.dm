@@ -685,7 +685,7 @@
 	build_type = MECHFAB
 	build_path = /obj/item/borg/upgrade/hypospray/high_strength
 	req_tech = list("programming" = 5, "engineering" = 5, "biotech" = 6)
-	materials = list(MAT_METAL=15000, MAT_GLASS=15000, MAT_PLASMA=10000, MAT_URANIUM=5000
+	materials = list(MAT_METAL=15000, MAT_GLASS=15000, MAT_PLASMA=10000, MAT_URANIUM=5000)
 	construction_time = 120
 	category = list("Cyborg Upgrade Modules")
 
