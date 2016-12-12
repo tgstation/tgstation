@@ -316,3 +316,49 @@
 	else
 		user << "<font color=red>No associated computer found. Only local scans will function properly.</font>"
 	user << "\n"
+
+/obj/item/weapon/chisel
+	name = "chisel"
+	desc = "Leave informative messages for the crew, including the crew of future shifts!"
+	icon = 'icons/obj/items.dmi'
+	icon_state ="chisel"
+	throw_speed = 3
+	throw_range = 5
+	w_class = WEIGHT_CLASS_TINY
+
+/obj/item/weapon/chisel/afterattack(atom/target, mob/user, proximity)
+	if(!proximity)
+		return
+	if(istype(target, /turf/open/floor) || istype(target, /turf/closed/wall))
+		var/already_message = locate(/obj/structure/chisel_message) in target
+		if(!already_message)
+			var/message = stripped_input(user, "What would you like to engrave?", "Chisel Message")
+			if(!message)
+				user << "You decide not to chisel anything."
+				return
+			if(do_mob(user, user, 10))
+				user << "You chisel a message into [target]."
+				var/obj/structure/chisel_message/M = new(target)
+				M.hidden_message = message
+
+/obj/structure/chisel_message
+	name = "engraved message"
+	desc = "A message from a past traveler."
+	icon = 'icons/obj/stationobjs.dmi'
+	icon_state = "darksouls_messages"
+	density = 0
+	anchored = 1
+	var/hidden_message
+
+/obj/structure/chisel_message/examine(mob/user)
+	..()
+	user << "The message reads:"
+	user << hidden_message
+
+/obj/structure/chisel_message/New()
+	..()
+	SSpersistence.new_chisel_messages += src
+
+/obj/structure/chisel_message/Destroy()
+	SSpersistence.new_chisel_messages -= src
+	..()
