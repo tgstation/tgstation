@@ -7,6 +7,7 @@
 #define PTURRET_CLOSED  6
 #define PTURRET_START_EXTERNAL_ARMOUR  7
 #define PTURRET_EXTERNAL_ARMOUR_ON  8
+
 /obj/machinery/porta_turret_construct
 	name = "turret frame"
 	icon = 'icons/obj/turrets.dmi'
@@ -14,9 +15,7 @@
 	density = 1
 	var/build_step = PTURRET_UNSECURED //the current step in the building process
 	var/finish_name = "turret"	//the name applied to the product turret
-	var/installation = null		//the gun type installed
-	var/gun_charge = 0			//the gun charge of the gun type installed
-
+	var/obj/item/weapon/gun/installed_gun = null
 
 /obj/machinery/porta_turret_construct/attackby(obj/item/I, mob/user, params)
 	//this is a bit unwieldy but self-explanatory
@@ -86,11 +85,10 @@
 				var/obj/item/weapon/gun/energy/E = I
 				if(!user.drop_item())
 					return
-				installation = I.type
-				gun_charge = E.power_supply.charge //the gun's charge is stored in gun_charge
+				E.forceMove(src)
+				installed_gun = E
 				user << "<span class='notice'>You add [I] to the turret.</span>"
 				build_step = PTURRET_GUN_EQUIPPED
-				qdel(I)
 				return
 
 			else if(istype(I, /obj/item/weapon/wrench))
@@ -150,12 +148,16 @@
 					user << "<span class='notice'>You weld the turret's armor down.</span>"
 
 					//The final step: create a full turret
-					var/obj/machinery/porta_turret/turret = new/obj/machinery/porta_turret(loc)
-					turret.name = finish_name
-					turret.installation = installation
-					turret.gun_charge = gun_charge
-					turret.setup()
 
+					var/obj/machinery/porta_turret/turret
+					//fuck lasertag turrets
+					if(istype(installed_gun,/obj/item/weapon/gun/energy/laser/bluetag) || istype(installed_gun,/obj/item/weapon/gun/energy/laser/redtag))
+						turret = new/obj/machinery/porta_turret/lasertag(loc)
+					else
+						turret = new/obj/machinery/porta_turret(loc)
+					turret.name = finish_name
+					turret.installation = installed_gun.type
+					turret.setup(installed_gun)
 					qdel(src)
 
 			else if(istype(I, /obj/item/weapon/crowbar))
@@ -182,12 +184,9 @@
 		if(PTURRET_GUN_EQUIPPED)
 			build_step = PTURRET_INTERNAL_ARMOUR_ON
 
-			var/obj/item/weapon/gun/energy/EG = new installation(loc)
-			EG.power_supply.charge = gun_charge
-			EG.update_icon()
-			installation = null
-			gun_charge = 0
-			user << "<span class='notice'>You remove [EG] from the turret frame.</span>"
+			installed_gun.forceMove(loc)
+			user << "<span class='notice'>You remove [installed_gun] from the turret frame.</span>"
+			installed_gun = null
 
 		if(PTURRET_SENSORS_ON)
 			user << "<span class='notice'>You remove the prox sensor from the turret frame.</span>"
@@ -196,3 +195,9 @@
 
 /obj/machinery/porta_turret_construct/attack_ai()
 	return
+
+/obj/machinery/porta_turret_construct/Destroy()
+	if(installed_gun)
+		qdel(installed_gun)
+		installed_gun = null
+	. = ..()
