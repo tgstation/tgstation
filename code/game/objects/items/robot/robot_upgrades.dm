@@ -367,7 +367,7 @@
 	if(..())
 		return
 
-	var/obj/item/weapon/twohanded/shockpaddles/S = new(R.module)
+	var/obj/item/weapon/twohanded/shockpaddles/cyborg/S = new(R.module)
 	R.module.basic_modules += S
 	R.module.add_module(S, FALSE, TRUE)
 
