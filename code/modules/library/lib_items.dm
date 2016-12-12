@@ -318,10 +318,10 @@
 	user << "\n"
 
 /obj/item/weapon/chisel
-	name = "chisel"
+	name = "soapstone"
 	desc = "Leave informative messages for the crew, including the crew of future shifts!"
 	icon = 'icons/obj/items.dmi'
-	icon_state ="chisel"
+	icon_state ="soapstone"
 	throw_speed = 3
 	throw_range = 5
 	w_class = WEIGHT_CLASS_TINY
@@ -329,17 +329,21 @@
 /obj/item/weapon/chisel/afterattack(atom/target, mob/user, proximity)
 	if(!proximity)
 		return
-	if(istype(target, /turf/open/floor) || istype(target, /turf/closed/wall))
+	if(isfloorturf(target) || iswallturf(target))
 		var/already_message = locate(/obj/structure/chisel_message) in target
 		if(!already_message)
 			var/message = stripped_input(user, "What would you like to engrave?", "Chisel Message")
 			if(!message)
 				user << "You decide not to chisel anything."
 				return
+			if(!target.Adjacent(user) && !locate(/obj/structure/chisel_message) in target)
+				user << "You decide not to chisel anything."
+				return
 			if(do_mob(user, user, 10))
-				user << "You chisel a message into [target]."
-				var/obj/structure/chisel_message/M = new(target)
-				M.hidden_message = message
+				if(!target.Adjacent(user) && !locate(/obj/structure/chisel_message) in target)
+					user << "You chisel a message into [target]."
+					var/obj/structure/chisel_message/M = new(target)
+					M.hidden_message = message
 
 /obj/structure/chisel_message
 	name = "engraved message"
@@ -361,4 +365,4 @@
 
 /obj/structure/chisel_message/Destroy()
 	SSpersistence.new_chisel_messages -= src
-	..()
+	return ..()

@@ -1,4 +1,5 @@
 var/list/trophy_cases = list()
+var/list/types_added_this_shift = list()
 /obj/structure/displaycase
 	name = "display case"
 	icon = 'icons/obj/stationobjs.dmi'
@@ -131,11 +132,13 @@ var/list/trophy_cases = list()
 		if(is_type_in_typecache(W, blacklisted_cargo_types))
 			user << "You think putting [W] in would be a bad idea."
 			return
+		if(is_type_in_list(W, types_added_this_shift))
+			user << "One of these has already been added this shift! Try again next shift."
+			return
 		var/chosen_plaque = stripped_input(user, "What would you like the plaque to say?", "Trophy Plaque")
 		if(!chosen_plaque)
 			user << "You decide against putting [W] in."
 			return
-
 		if(showpiece)
 			user << "You press a button, and [showpiece] descends into the floor of the case."
 			SSpersistence.old_trophy_list += "[showpiece.type]|[trophy_message]#"
@@ -144,6 +147,7 @@ var/list/trophy_cases = list()
 		if(user.drop_item())
 			added_roundstart = 0
 			user << "You insert [W] into the case."
+			types_added_this_shift += W.type
 			W.loc = src
 			showpiece = W
 			trophy_message = chosen_plaque

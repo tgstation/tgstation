@@ -33807,14 +33807,12 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/structure/displaycase/trophy,
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
 /area/library)
 "bpF" = (
-/obj/structure/chair/office/dark{
-	dir = 1
-	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -55542,14 +55540,15 @@
 /turf/open/floor/plating,
 /area/shuttle/pod_1)
 "chH" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall_s9";
-	dir = 2
-	},
-/area/shuttle/pod_1)
+/obj/structure/displaycase/trophy,
+/turf/open/floor/plasteel/black,
+/area/library)
 "chI" = (
-/turf/closed/wall/mineral/titanium/overspace,
-/area/shuttle/pod_2)
+/obj/structure/displaycase/trophy,
+/turf/open/floor/plasteel/vault{
+	dir = 5
+	},
+/area/library)
 "chJ" = (
 /obj/structure/window/shuttle,
 /obj/structure/grille,
@@ -83077,9 +83076,9 @@ aZO
 aZO
 bcj
 bdn
-bdo
-bfi
-bdo
+chH
+bdp
+chH
 bhz
 bhT
 bhz
@@ -83334,9 +83333,9 @@ aZO
 aZO
 bcj
 bdo
-bef
-bfj
-bgm
+bdp
+bdo
+bdp
 bhz
 bhT
 bhz
@@ -83591,9 +83590,9 @@ aZO
 aZO
 bcj
 bdp
-bdo
-bfk
-bdo
+chH
+bdp
+chH
 bhA
 bhT
 bhz
@@ -84362,8 +84361,8 @@ aZO
 aZO
 bcj
 bdo
-bdp
-bfl
+chI
+bdo
 bpE
 bhD
 bhU
@@ -84619,8 +84618,8 @@ aZO
 aZO
 bcj
 bdr
-beg
-bfm
+bdo
+bdp
 bpF
 bhD
 bhU
@@ -84876,8 +84875,8 @@ aZO
 aZO
 bcj
 bds
-beh
-bfn
+chI
+bdo
 bpE
 bhD
 bhU

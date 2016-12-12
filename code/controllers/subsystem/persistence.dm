@@ -106,6 +106,8 @@ var/datum/subsystem/persistence/SSpersistence
 		M.y = text2num(chosen_chisel[2])
 		M.z = ZLEVEL_STATION
 		M.hidden_message = chosen_chisel[3]
+		if(!isfloorturf(get_turf(M)) && !iswallturf(get_turf(M)))
+			qdel(M)
 	return 1
 
 /datum/subsystem/persistence/proc/CollectSecretSatchels()

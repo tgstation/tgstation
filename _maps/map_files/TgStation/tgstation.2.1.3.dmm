@@ -21195,8 +21195,7 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/starboard)
 "aVP" = (
-/obj/structure/table/wood,
-/obj/item/weapon/paper,
+/obj/structure/displaycase/trophy,
 /turf/open/floor/wood,
 /area/library)
 "aVQ" = (
@@ -22704,6 +22703,7 @@
 	dir = 1;
 	pixel_y = -24
 	},
+/obj/structure/displaycase/trophy,
 /turf/open/floor/wood,
 /area/library)
 "aZe" = (
@@ -56190,11 +56190,9 @@
 /turf/open/floor/plating/airless,
 /area/engine/engineering)
 "csL" = (
-/obj/structure/transit_tube{
-	icon_state = "D-NE"
-	},
-/turf/open/space,
-/area/space)
+/obj/structure/displaycase/trophy,
+/turf/open/floor/carpet,
+/area/library)
 "csM" = (
 /obj/structure/lattice,
 /obj/machinery/atmospherics/pipe/simple/yellow/visible,
@@ -103476,7 +103474,7 @@ bbE
 aIr
 bav
 aLf
-aIt
+bas
 aNS
 aPb
 aQp
@@ -103997,10 +103995,10 @@ aYW
 aYW
 aYW
 aYW
-aYW
+csL
 aVY
 aYY
-bas
+aVP
 aFu
 aYV
 cBk
@@ -104257,7 +104255,7 @@ aOS
 aOS
 aWb
 aXU
-bau
+aIt
 aFu
 aYV
 aXq
@@ -104514,7 +104512,7 @@ aUC
 aVP
 aXu
 aYW
-bat
+aVP
 bbD
 aYV
 aXq
@@ -104771,7 +104769,7 @@ aIt
 aVQ
 aXu
 aYW
-aVQ
+aIt
 aFu
 aYV
 aXq
@@ -105025,10 +105023,10 @@ aQq
 aRP
 aIt
 aIt
-aIt
+aVP
 aWd
 aXV
-aIt
+aVP
 bbD
 aYV
 aXq
@@ -105285,7 +105283,7 @@ aUD
 aVS
 aYW
 aYW
-bax
+aIt
 aFu
 aYV
 aXq
@@ -105542,7 +105540,7 @@ aIt
 aVR
 aYW
 aYW
-aUD
+aVP
 bbD
 aYV
 aXq
@@ -105799,7 +105797,7 @@ aUF
 aLg
 aYW
 aYW
-aVQ
+aIt
 aFu
 aYV
 aXq

@@ -23262,6 +23262,17 @@
 /area/maintenance/fore{
 	name = "Security Maintenance"
 	})
+"ZyX" = (
+/obj/structure/displaycase/trophy,
+/turf/open/floor/wood,
+/area/library)
+"ZyY" = (
+/obj/structure/chair/wood/normal{
+	icon_state = "wooden_chair";
+	dir = 1
+	},
+/turf/open/floor/carpet,
+/area/library)
 "ZyZ" = (
 /obj/effect/landmark/xmastree/rdrod,
 /turf/open/floor/plasteel/warnwhite{
@@ -58626,10 +58637,10 @@ avb
 avK
 atV
 axj
-axV
+ZyX
 axm
 axm
-aAe
+ZyX
 aAl
 aBz
 aCg
@@ -58884,7 +58895,7 @@ avL
 atV
 axk
 axW
-axm
+ZyY
 axm
 axX
 aAl
@@ -59140,10 +59151,10 @@ avb
 avJ
 awx
 axl
-axX
+ZyX
 axm
 axm
-aAf
+ZyX
 aAl
 aBz
 aAl
