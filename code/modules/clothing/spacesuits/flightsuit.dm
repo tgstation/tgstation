@@ -50,12 +50,13 @@
 	var/momentum_impact_coeff = 0.5	//At this speed you'll start coliding with people resulting in momentum loss and them being knocked back, but no injuries or knockdowns
 	var/momentum_impact_loss = 50
 	var/momentum_crash_coeff = 0.8	//At this speed if you hit a dense object, you will careen out of control, while that object will be knocked flying.
-	var/momentum_drift_coeff = 0.13
+	var/momentum_drift_coeff = 0.04
 	var/momentum_speed = 0	//How fast we are drifting around
 	var/momentum_speed_x = 0
 	var/momentum_speed_y = 0
 	var/momentum_passive_loss = 7
 	var/momentum_gain = 20
+	var/drift_tolerance = 2
 
 	var/stabilizer = TRUE
 	var/stabilizer_decay_amount = 23
@@ -99,23 +100,27 @@
 	var/obj/item/weapon/stock_parts/matter_bin/part_bin = null
 
 	var/crashing = FALSE	//Are we currently getting wrecked?
+	var/selfprocess = FALSE
+	var/halt = FALSE
 
 
 //Start/Stop processing the item to use momentum and flight mechanics.
 /obj/item/device/flightpack/New()
-	START_PROCESSING(SSfastprocess, src)
-	..()
 	ion_trail = new
 	ion_trail.set_up(src)
+	spawn(2)
+		bullshit_processing_proc()
+	//START_PROCESSING(SSfastprocess, src)
+	..()
 
 /obj/item/device/flightpack/full/New()
-	..()
 	part_manip = new /obj/item/weapon/stock_parts/manipulator/pico(src)
 	part_scan = new /obj/item/weapon/stock_parts/scanning_module/phasic(src)
 	part_cap = new /obj/item/weapon/stock_parts/capacitor/super(src)
 	part_laser = new /obj/item/weapon/stock_parts/micro_laser/ultra(src)
 	part_bin = new /obj/item/weapon/stock_parts/matter_bin/super(src)
 	assembled = TRUE
+	..()
 
 /obj/item/device/flightpack/proc/update_parts()
 	boost_chargerate = initial(boost_chargerate)
@@ -155,13 +160,23 @@
 	qdel(part_cap)
 	qdel(part_laser)
 	qdel(part_bin)
-	STOP_PROCESSING(SSfastprocess, src)
+	halt = TRUE
+	sleep(2)
+	//STOP_PROCESSING(SSfastprocess, src)
 	part_manip = null
 	part_scan = null
 	part_cap = null
 	part_laser = null
 	part_bin = null
 	..()
+
+/obj/item/device/flightpack/proc/bullshit_processing_proc()
+	if(selfprocess)
+		return FALSE
+	selfprocess = TRUE
+	while(!halt)	//I'm so shit
+		process()
+		sleep(2)
 
 /obj/item/device/flightpack/emp_act(severity)
 	var/damage = 0
@@ -405,6 +420,7 @@
 		powersetting = 1
 	momentum_gain = powersetting * 10
 	usermessage("Engine output set to [momentum_gain].")
+	momentum_drift_coeff = ((100/momentum_max)*momentum_gain*((drift_tolerance*(((drift_tolerance*2)+1)/4))/drift_tolerance)*10)
 
 /obj/item/device/flightpack/proc/crash_damage(density, anchored, speed, victim_name)
 	var/crashmessagesrc = "<span class='userdanger'>[wearer] violently crashes into [victim_name], "
@@ -463,12 +479,17 @@
 		if(L.throwing || (L.pulledby == wearer))
 			crashing = FALSE
 			return FALSE
+		if(L.buckled)
+			wearer.visible_message("<span class='warning'>[wearer] reflexively flies over [L]!</span>")
+			crashing = FALSE
+			return FALSE
 		suit.user.forceMove(get_turf(unmovablevictim))
 		crashing = FALSE
 		mobknockback(L, crashpower, crashdir)
 		damage = FALSE
 		density = TRUE
 		anchored = FALSE
+	<<<<<<<<INSERT AIRLOCK, GRILL, AND WINDOW CHECKS HERE!!!>>>>>
 	else if(isclosedturf(unmovablevictim))
 		if(crashpower < 3)
 			crashing = FALSE
@@ -799,6 +820,7 @@
 /obj/item/clothing/shoes/flightshoes/Destroy()
 	if(suit)
 		suit.shoes = null
+	..()
 
 /obj/item/clothing/shoes/flightshoes/proc/toggle(toggle)
 	if(suit)
