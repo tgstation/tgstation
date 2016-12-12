@@ -50285,9 +50285,11 @@
 	dir = 8;
 	on = 1
 	},
+/obj/structure/displaycase/trophy,
 /turf/open/floor/wood,
 /area/library)
 "bIA" = (
+/obj/structure/displaycase/trophy,
 /turf/open/floor/wood{
 	icon_state = "wood-broken7"
 	},
@@ -52935,15 +52937,7 @@
 /turf/open/floor/wood,
 /area/library)
 "bNx" = (
-/obj/structure/table/wood,
-/obj/structure/noticeboard{
-	desc = "A board for pinning important notices upon. Probably helpful for keeping track of requests.";
-	dir = 8;
-	name = "requests board";
-	pixel_x = 32;
-	pixel_y = 0
-	},
-/obj/machinery/computer/libraryconsole/bookmanagement,
+/obj/structure/displaycase/trophy,
 /turf/open/floor/wood,
 /area/library)
 "bNy" = (
@@ -113251,9 +113245,9 @@ bwh
 bye
 bzZ
 bBI
-bDw
-bEZ
-bDw
+bNx
+bBI
+bNx
 bBI
 bJY
 bLH
@@ -114022,7 +114016,7 @@ bwh
 azv
 byh
 bIC
-bKa
+bNx
 byf
 bGF
 bIz
@@ -114279,7 +114273,7 @@ bwh
 bwh
 bwh
 bwh
-bDy
+bNx
 byf
 bGF
 bIA
@@ -114793,7 +114787,7 @@ bwh
 byj
 bAb
 bwh
-bDz
+bNx
 byf
 byf
 bBI
@@ -115567,7 +115561,7 @@ bwh
 bDA
 byf
 byf
-bDC
+bNx
 bwh
 bwh
 bwh

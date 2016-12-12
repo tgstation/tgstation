@@ -109,6 +109,8 @@ var/datum/subsystem/ticker/ticker
 				current_state = GAME_STATE_FINISHED
 				toggle_ooc(1) // Turn it on
 				declare_completion(force_ending)
+				//Collects persistence features
+				SSpersistence.CollectData()
 				spawn(50)
 					if(mode.station_was_nuked)
 						world.Reboot("Station destroyed by Nuclear Device.", "end_proper", "nuke")
@@ -489,9 +491,6 @@ var/datum/subsystem/ticker/ticker
 			dellog += "Path : [path] \n"
 			dellog += "Failures : [SSgarbage.didntgc[path]] \n"
 		world.log << dellog
-
-	//Collects persistence features
-	SSpersistence.CollectData()
 	return 1
 
 /datum/subsystem/ticker/proc/send_tip_of_the_round()

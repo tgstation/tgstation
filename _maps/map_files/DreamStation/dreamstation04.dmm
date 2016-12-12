@@ -71402,9 +71402,9 @@
 /turf/open/floor/plating,
 /area/maintenance/asmaint2)
 "cLD" = (
-/mob/living/simple_animal/mouse,
-/turf/open/floor/plating,
-/area/maintenance/asmaint2)
+/obj/structure/displaycase/trophy,
+/turf/open/floor/wood,
+/area/library)
 "cLE" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable/pink{
@@ -90045,13 +90045,13 @@ bwD
 bnS
 bAy
 bnS
-bAy
+cLD
 bnS
-bIM
+cLD
 bnS
-bIM
+cLD
 bNU
-bIM
+cLD
 bqg
 bTq
 bmt
@@ -90302,13 +90302,13 @@ bnS
 byD
 bAy
 byD
-bAy
+cLD
 bnS
-bIM
+cLD
 bnS
-bIM
+cLD
 bNU
-bIM
+cLD
 bqg
 bTr
 bmu

@@ -189,15 +189,16 @@
 "dG" = (/obj/machinery/door/airlock,/turf/open/floor/plasteel,/area/storage/primary)
 "dH" = (/obj/effect/landmark/start,/turf/open/floor/plasteel,/area/storage/primary)
 "dI" = (/obj/effect/landmark{name = "JoinLate"},/turf/open/floor/plasteel,/area/storage/primary)
-"dJ" = (/turf/open/floor/plasteel,/area/storage/primary)
-"dK" = (/turf/open/floor/plasteel/warning/corner{dir = 8},/area/construction)
-"dL" = (/turf/open/floor/plasteel/warning{dir = 1},/area/construction)
-"dM" = (/turf/open/floor/plasteel/warning/corner{dir = 4},/area/construction)
-"dN" = (/obj/structure/table,/turf/open/floor/plasteel,/area/storage/primary)
-"dO" = (/obj/structure/table,/obj/machinery/light,/obj/item/weapon/twohanded/fireaxe,/obj/item/weapon/extinguisher,/turf/open/floor/plasteel,/area/storage/primary)
-"dP" = (/obj/structure/table,/obj/item/device/lightreplacer,/turf/open/floor/plasteel,/area/storage/primary)
-"dQ" = (/obj/structure/table,/obj/item/weapon/storage/box/lights/mixed,/obj/item/weapon/storage/box/lights/tubes,/obj/machinery/light,/turf/open/floor/plasteel,/area/storage/primary)
-"dR" = (/obj/structure/table,/obj/item/device/flashlight{pixel_y = 5},/turf/open/floor/plasteel,/area/storage/primary)
+"dJ" = (/obj/structure/displaycase/trophy,/turf/open/floor/plasteel/warning{dir = 1},/area/storage/primary)
+"dK" = (/turf/open/floor/plasteel,/area/storage/primary)
+"dL" = (/turf/open/floor/plasteel/warning/corner{dir = 8},/area/construction)
+"dM" = (/turf/open/floor/plasteel/warning{dir = 1},/area/construction)
+"dN" = (/turf/open/floor/plasteel/warning/corner{dir = 4},/area/construction)
+"dO" = (/obj/structure/table,/turf/open/floor/plasteel,/area/storage/primary)
+"dP" = (/obj/structure/table,/obj/machinery/light,/obj/item/weapon/twohanded/fireaxe,/obj/item/weapon/extinguisher,/turf/open/floor/plasteel,/area/storage/primary)
+"dQ" = (/obj/structure/table,/obj/item/device/lightreplacer,/turf/open/floor/plasteel,/area/storage/primary)
+"dR" = (/obj/structure/table,/obj/item/weapon/storage/box/lights/mixed,/obj/item/weapon/storage/box/lights/tubes,/obj/machinery/light,/turf/open/floor/plasteel,/area/storage/primary)
+"dS" = (/obj/structure/table,/obj/item/device/flashlight{pixel_y = 5},/turf/open/floor/plasteel,/area/storage/primary)
 
 (1,1,1) = {"
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
@@ -236,9 +237,9 @@ aaaaaaaaaaaaaaaaabacadafcNdydndndndndndndndndndndzdGdldldcdHdHdHdHdHdHdHdkdldlcS
 aaaaaaaaaaaaaaaaabacadafcNdydndndndndndndndndndndzdGdldldcdIdIdIdIdIdIdIdkdldlcSafadacabaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaabacadafcNdydndndndndndndndndndndzcSdldldAdBdBdBdBdBdBdBdCdldlcSafadacabaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaabacadafcNdydndndndndndndndndndndzcSdldldldldldldldldldldldldlcSafadacabaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaabacadafcNdydndndndndndndndndndndzcSdldldDdEdEdEdEdEdEdEdFdldlcSafadacabaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaabacadafcNdmdndndndndndndndndndndocSdpdldcdJdJdJdJdJdJdJdkdldxcSafadacabaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaabacadafcNdKdLdLdLdLdLdLdLdLdLdLdMcSdldldcdNdOdNdNdPdQdRdkdldlcSafadacabaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaabacadafcNdydndndndndndndndndndndzcSdldldDdJdJdJdJdJdJdJdFdldlcSafadacabaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaabacadafcNdmdndndndndndndndndndndocSdpdldcdKdKdKdKdKdKdKdkdldxcSafadacabaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaabacadafcNdLdMdMdMdMdMdMdMdMdMdMdNcSdldldcdOdPdOdOdQdRdSdkdldlcSafadacabaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaabacadafcNcNcNcNcNcNcNcNcNcNcNcNcNcScScScScScScScScScScScScScScSafadacabaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaabacadafafafafafafafafafafafafafafafafafafafafafafafafafafafafafafadacabaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaabacadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadacabaaaaaaaaaaaaaaaa
