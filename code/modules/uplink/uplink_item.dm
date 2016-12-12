@@ -164,7 +164,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
        desc = "An advanced shotgun with two separate magazine tubes, allowing you to quickly toggle between ammo types."
        item = /obj/item/weapon/gun/ballistic/shotgun/automatic/dual_tube
        cost = 16
-       Surplus = 0
+       surplus = 0
        include_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/dangerous/smg
