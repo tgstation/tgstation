@@ -40,8 +40,8 @@
 	timid = 1;
 	width = 27
 	},
-/obj/machinery/door/airlock/shuttle{
-	name = "recovery shuttle external airlock"
+/obj/machinery/door/airlock/titanium{
+	name = "Recovery Shuttle External Airlock"
 	},
 /obj/effect/decal/cleanable/dirt{
 	desc = "A thin layer of dust coating the floor.";
@@ -50,8 +50,8 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
 "ah" = (
-/obj/machinery/door/airlock/shuttle{
-	name = "recovery shuttle external airlock"
+/obj/machinery/door/airlock/titanium{
+	name = "Recovery Shuttle External Airlock"
 	},
 /obj/effect/decal/cleanable/dirt{
 	desc = "A thin layer of dust coating the floor.";
@@ -333,12 +333,12 @@
 	},
 /area/shuttle/abandoned)
 "aG" = (
-/obj/machinery/door/airlock/shuttle{
-	name = "bathroom"
-	},
 /obj/effect/decal/cleanable/dirt{
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
+	},
+/obj/machinery/door/airlock/titanium{
+	name = "Bathroom"
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
@@ -399,12 +399,12 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
 "aM" = (
-/obj/machinery/door/airlock/shuttle{
-	name = "E.V.A. equipment"
-	},
 /obj/effect/decal/cleanable/dirt{
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
+	},
+/obj/machinery/door/airlock/titanium{
+	name = "E.V.A. Equipment"
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
@@ -424,8 +424,8 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
 "aO" = (
-/obj/machinery/door/airlock/shuttle{
-	name = "cargo bay"
+/obj/machinery/door/airlock/titanium{
+	name = "Cargo Bay"
 	},
 /turf/open/floor/plasteel/delivery{
 	dir = 1
@@ -597,13 +597,13 @@
 /turf/open/floor/plasteel/bot,
 /area/shuttle/abandoned)
 "bd" = (
-/obj/machinery/door/airlock/shuttle{
-	name = "bathroom"
-	},
 /obj/effect/decal/cleanable/blood/old,
 /obj/effect/decal/cleanable/dirt{
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
+	},
+/obj/machinery/door/airlock/titanium{
+	name = "Bathroom"
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
@@ -614,13 +614,13 @@
 	},
 /area/shuttle/abandoned)
 "bf" = (
-/obj/machinery/door/airlock/shuttle{
-	name = "dormitory"
-	},
 /obj/effect/decal/cleanable/blood/old,
 /obj/effect/decal/cleanable/dirt{
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
+	},
+/obj/machinery/door/airlock/titanium{
+	name = "Dormitory"
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
@@ -649,8 +649,8 @@
 	},
 /area/shuttle/abandoned)
 "bj" = (
-/obj/machinery/door/airlock/shuttle{
-	name = "recovery shuttle interior airlock"
+/obj/machinery/door/airlock/titanium{
+	name = "Recovery Shuttle Internal Airlock"
 	},
 /obj/effect/decal/cleanable/dirt{
 	desc = "A thin layer of dust coating the floor.";
@@ -669,12 +669,12 @@
 	},
 /area/shuttle/abandoned)
 "bl" = (
-/obj/machinery/door/airlock/shuttle{
-	name = "cargo bay"
-	},
 /obj/effect/decal/cleanable/dirt{
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
+	},
+/obj/machinery/door/airlock/titanium{
+	name = "Cargo Bay"
 	},
 /turf/open/floor/plasteel/delivery{
 	dir = 1
@@ -852,8 +852,8 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "bE" = (
-/obj/machinery/door/airlock/shuttle{
-	name = "recovery shuttle interior airlock"
+/obj/machinery/door/airlock/titanium{
+	name = "Recovery Shuttle Internal Airlock"
 	},
 /obj/effect/decal/cleanable/dirt{
 	desc = "A thin layer of dust coating the floor.";
@@ -916,12 +916,12 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "bK" = (
-/obj/machinery/door/airlock/shuttle{
-	name = "living quarters"
-	},
 /obj/effect/decal/cleanable/dirt{
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
+	},
+/obj/machinery/door/airlock/titanium{
+	name = "Living Quarters"
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
@@ -1014,12 +1014,12 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "bR" = (
-/obj/machinery/door/airlock/shuttle{
-	name = "bridge"
-	},
 /obj/effect/decal/cleanable/dirt{
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
+	},
+/obj/machinery/door/airlock/titanium{
+	name = "Bridge"
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
@@ -1201,32 +1201,32 @@
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/abandoned)
 "ck" = (
-/obj/machinery/door/airlock/shuttle{
-	name = "hydroponics"
-	},
 /obj/effect/decal/cleanable/dirt{
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
+	},
+/obj/machinery/door/airlock/titanium{
+	name = "Hydroponics"
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
 "cl" = (
-/obj/machinery/door/airlock/shuttle{
-	name = "kitchen"
-	},
 /obj/effect/decal/cleanable/dirt{
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
+	},
+/obj/machinery/door/airlock/titanium{
+	name = "Kitchen"
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
 "cm" = (
-/obj/machinery/door/airlock/shuttle{
-	name = "laboratory"
-	},
 /obj/effect/decal/cleanable/dirt{
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
+	},
+/obj/machinery/door/airlock/titanium{
+	name = "Laboratory"
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
@@ -1235,14 +1235,12 @@
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/abandoned)
 "co" = (
-/obj/machinery/door/airlock/shuttle{
-	icon_state = "door_closed";
-	name = "medbay";
-	welded = 0
-	},
 /obj/effect/decal/cleanable/dirt{
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
+	},
+/obj/machinery/door/airlock/titanium{
+	name = "Medbay"
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)

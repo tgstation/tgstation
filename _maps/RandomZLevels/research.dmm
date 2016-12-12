@@ -4645,9 +4645,7 @@
 /turf/open/floor/plasteel/shuttle,
 /area/awaymission/research/exterior)
 "mt" = (
-/obj/machinery/door/airlock/shuttle{
-	name = "Escape Pod Airlock"
-	},
+/obj/machinery/door/airlock/titanium,
 /turf/open/floor/plasteel/shuttle,
 /area/awaymission/research/exterior)
 "mu" = (

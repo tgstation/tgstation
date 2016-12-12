@@ -160,8 +160,8 @@
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/abandoned)
 "aaA" = (
-/obj/machinery/door/airlock/shuttle{
-	name = "recovery shuttle external airlock"
+/obj/machinery/door/airlock/titanium{
+	name = "Recovery Shuttle External Airlock"
 	},
 /obj/effect/decal/cleanable/dirt{
 	desc = "A thin layer of dust coating the floor.";
@@ -268,8 +268,8 @@
 	},
 /area/shuttle/abandoned)
 "aaQ" = (
-/obj/machinery/door/airlock/shuttle{
-	name = "recovery shuttle interior airlock"
+/obj/machinery/door/airlock/titanium{
+	name = "Recovery Shuttle Interior Airlock"
 	},
 /obj/effect/decal/cleanable/dirt{
 	desc = "A thin layer of dust coating the floor.";
@@ -592,8 +592,8 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
 "abB" = (
-/obj/machinery/door/airlock/shuttle{
-	name = "bathroom"
+/obj/machinery/door/airlock/titanium{
+	name = "Bathroom"
 	},
 /obj/effect/decal/cleanable/blood/old,
 /obj/effect/decal/cleanable/dirt{
@@ -615,8 +615,8 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
 "abD" = (
-/obj/machinery/door/airlock/shuttle{
-	name = "bathroom"
+/obj/machinery/door/airlock/titanium{
+	name = "Bathroom"
 	},
 /obj/effect/decal/cleanable/dirt{
 	desc = "A thin layer of dust coating the floor.";
@@ -719,12 +719,12 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "abN" = (
-/obj/machinery/door/airlock/shuttle{
-	name = "hydroponics"
-	},
 /obj/effect/decal/cleanable/dirt{
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
+	},
+/obj/machinery/door/airlock/titanium{
+	name = "Hydroponics"
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
@@ -902,8 +902,8 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
 "acf" = (
-/obj/machinery/door/airlock/shuttle{
-	name = "dormitory"
+/obj/machinery/door/airlock/titanium{
+	name = "Dormitory"
 	},
 /obj/effect/decal/cleanable/blood/old,
 /obj/effect/decal/cleanable/dirt{
@@ -1243,12 +1243,12 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
 "acJ" = (
-/obj/machinery/door/airlock/shuttle{
-	name = "kitchen"
-	},
 /obj/effect/decal/cleanable/dirt{
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
+	},
+/obj/machinery/door/airlock/titanium{
+	name = "Kitchen"
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
@@ -1532,12 +1532,12 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "adh" = (
-/obj/machinery/door/airlock/shuttle{
-	name = "living quarters"
-	},
 /obj/effect/decal/cleanable/dirt{
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
+	},
+/obj/machinery/door/airlock/titanium{
+	name = "Living Quarters"
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
@@ -1681,8 +1681,8 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
 "adv" = (
-/obj/machinery/door/airlock/shuttle{
-	name = "E.V.A. equipment"
+/obj/machinery/door/airlock/titanium{
+	name = "E.V.A. Equipment"
 	},
 /obj/effect/decal/cleanable/dirt{
 	desc = "A thin layer of dust coating the floor.";
@@ -2144,12 +2144,12 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
 "aeq" = (
-/obj/machinery/door/airlock/shuttle{
-	name = "laboratory"
-	},
 /obj/effect/decal/cleanable/dirt{
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
+	},
+/obj/machinery/door/airlock/titanium{
+	name = "Laboratory"
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
@@ -2169,8 +2169,8 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "aes" = (
-/obj/machinery/door/airlock/shuttle{
-	name = "recovery shuttle interior airlock"
+/obj/machinery/door/airlock/titanium{
+	name = "Recovery Shuttle Interior Airlock"
 	},
 /obj/effect/decal/cleanable/dirt{
 	desc = "A thin layer of dust coating the floor.";
@@ -2205,8 +2205,8 @@
 	port_angle = 180;
 	width = 27
 	},
-/obj/machinery/door/airlock/shuttle{
-	name = "recovery shuttle external airlock"
+/obj/machinery/door/airlock/titanium{
+	name = "Recovery Shuttle External Airlock"
 	},
 /obj/effect/decal/cleanable/dirt{
 	desc = "A thin layer of dust coating the floor.";
@@ -2729,8 +2729,8 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "afp" = (
-/obj/machinery/door/airlock/shuttle{
-	name = "cargo bay"
+/obj/machinery/door/airlock/titanium{
+	name = "Cargo Bay"
 	},
 /turf/open/floor/plasteel/delivery{
 	dir = 1
@@ -3315,8 +3315,8 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
 "agq" = (
-/obj/machinery/door/airlock/shuttle{
-	name = "medbay"
+/obj/machinery/door/airlock/titanium{
+	name = "Medbay"
 	},
 /obj/effect/decal/cleanable/dirt{
 	desc = "A thin layer of dust coating the floor.";
@@ -3325,8 +3325,8 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
 "agr" = (
-/obj/machinery/door/airlock/shuttle{
-	name = "cargo bay"
+/obj/machinery/door/airlock/titanium{
+	name = "Cargo Bay"
 	},
 /obj/effect/decal/cleanable/dirt{
 	desc = "A thin layer of dust coating the floor.";
@@ -3557,8 +3557,8 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "agN" = (
-/obj/machinery/door/airlock/shuttle{
-	name = "bridge"
+/obj/machinery/door/airlock/titanium{
+	name = "Bridge"
 	},
 /obj/effect/decal/cleanable/dirt{
 	desc = "A thin layer of dust coating the floor.";
@@ -24978,7 +24978,7 @@
 /turf/open/floor/plating,
 /area/shuttle/labor)
 "aWH" = (
-/obj/machinery/door/airlock/shuttle{
+/obj/machinery/door/airlock/titanium{
 	name = "Mining Shuttle Airlock";
 	req_access_txt = "48"
 	},
@@ -29911,7 +29911,7 @@
 /turf/open/floor/plating,
 /area/engine/break_room)
 "bhe" = (
-/obj/machinery/door/airlock/shuttle{
+/obj/machinery/door/airlock/titanium{
 	name = "Escape Pod Airlock"
 	},
 /obj/docking_port/mobile/pod{
@@ -35494,7 +35494,7 @@
 /turf/open/floor/plating/airless,
 /area/engine/engineering)
 "bta" = (
-/obj/machinery/door/airlock/shuttle{
+/obj/machinery/door/airlock/titanium{
 	name = "Supply Shuttle Airlock";
 	req_access_txt = "31"
 	},
@@ -44447,7 +44447,7 @@
 	name = "Chapel Maintenance"
 	})
 "bKn" = (
-/obj/machinery/door/airlock/shuttle{
+/obj/machinery/door/airlock/titanium{
 	name = "Supply Shuttle Airlock";
 	req_access_txt = "31"
 	},
@@ -52337,7 +52337,7 @@
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/pod_3)
 "caj" = (
-/obj/machinery/door/airlock/shuttle{
+/obj/machinery/door/airlock/titanium{
 	name = "Escape Pod Airlock"
 	},
 /obj/docking_port/mobile/pod{
@@ -53266,7 +53266,7 @@
 	name = "Arrivals"
 	})
 "ccp" = (
-/obj/machinery/door/airlock/shuttle{
+/obj/machinery/door/airlock/titanium{
 	name = "Arrivals Shuttle Airlock"
 	},
 /turf/open/floor/plating,
@@ -54475,7 +54475,7 @@
 	name = "\improper Departure Lounge"
 	})
 "cfe" = (
-/obj/machinery/door/airlock/shuttle{
+/obj/machinery/door/airlock/titanium{
 	name = "Arrivals Shuttle Airlock"
 	},
 /obj/docking_port/mobile{
@@ -54797,7 +54797,7 @@
 	},
 /area/shuttle/arrival)
 "cfG" = (
-/obj/machinery/door/airlock/shuttle{
+/obj/machinery/door/airlock/titanium{
 	name = "Arrivals Shuttle Airlock"
 	},
 /turf/open/floor/mineral/titanium/blue,
@@ -54920,7 +54920,7 @@
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "cfX" = (
-/obj/machinery/door/airlock/shuttle{
+/obj/machinery/door/airlock/titanium{
 	name = "Emergency Shuttle Airlock"
 	},
 /turf/open/floor/plating,
@@ -54952,14 +54952,14 @@
 	name = "emergency evac bay";
 	width = 32
 	},
-/obj/machinery/door/airlock/shuttle{
+/obj/machinery/door/airlock/titanium{
 	name = "Emergency Shuttle Airlock"
 	},
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "cgc" = (
-/obj/machinery/door/airlock/shuttle{
-	name = "Emergency Shuttle Airlock";
+/obj/machinery/door/airlock/titanium{
+	name = "Emergency Shuttle Brig Airlock";
 	req_access_txt = "2"
 	},
 /turf/open/floor/plating,
@@ -55096,7 +55096,7 @@
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/pod_1)
 "cgy" = (
-/obj/machinery/door/airlock/shuttle{
+/obj/machinery/door/airlock/titanium{
 	name = "Escape Pod Airlock"
 	},
 /obj/docking_port/mobile/pod{
@@ -55124,7 +55124,7 @@
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/pod_2)
 "cgB" = (
-/obj/machinery/door/airlock/shuttle{
+/obj/machinery/door/airlock/titanium{
 	name = "Escape Pod Airlock"
 	},
 /obj/docking_port/mobile/pod{
@@ -55346,7 +55346,7 @@
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
 "chh" = (
-/obj/machinery/door/airlock/shuttle{
+/obj/machinery/door/airlock/titanium{
 	name = "Emergency Shuttle Cargo"
 	},
 /turf/open/floor/mineral/titanium/blue,

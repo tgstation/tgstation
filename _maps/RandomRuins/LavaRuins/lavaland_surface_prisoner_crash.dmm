@@ -87,7 +87,7 @@
 	},
 /area/ruin/unpowered)
 "p" = (
-/obj/machinery/door/airlock/shuttle,
+/obj/machinery/door/airlock/titanium,
 /turf/open/floor/mineral/plastitanium/brig{
 	baseturf = /turf/open/floor/plating/lava/smooth
 	},

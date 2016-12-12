@@ -75,7 +75,7 @@
 	},
 /area/ruin/powered/golem_ship)
 "j" = (
-/obj/machinery/door/airlock/shuttle,
+/obj/machinery/door/airlock/titanium,
 /turf/open/floor/mineral/titanium/purple{
 	baseturf = /turf/open/floor/plating/lava/smooth
 	},
@@ -258,7 +258,7 @@
 /turf/closed/wall/mineral/titanium,
 /area/ruin/powered/golem_ship)
 "H" = (
-/obj/machinery/door/airlock/shuttle,
+/obj/machinery/door/airlock/titanium,
 /obj/structure/fans/tiny,
 /turf/open/floor/mineral/titanium/purple{
 	baseturf = /turf/open/floor/plating/lava/smooth
