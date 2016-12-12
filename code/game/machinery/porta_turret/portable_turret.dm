@@ -133,46 +133,6 @@
 	
 	update_icon()
 	return gun_properties
-		
-		/*
-		switch(E.type)
-			if(/obj/item/weapon/gun/energy/laser/bluetag)
-				eprojectile = /obj/item/projectile/beam/lasertag/bluetag
-				lasercolor = "b"
-
-			if(/obj/item/weapon/gun/energy/laser/redtag)
-				eprojectile = /obj/item/projectile/beam/lasertag/redtag
-				lasercolor = "r"
-
-			if(/obj/item/weapon/gun/energy/laser/practice)
-				active_state = "Laser"
-				eprojectile = /obj/item/projectile/beam
-
-			if(/obj/item/weapon/gun/energy/laser/retro)
-				active_state = "Laser"
-
-			if(/obj/item/weapon/gun/energy/laser/captain)
-				active_state = "Laser"
-
-			if(/obj/item/weapon/gun/energy/lasercannon)
-				active_state = "Laser"
-
-			if(/obj/item/weapon/gun/energy/e_gun/advtaser)
-				eprojectile = /obj/item/projectile/beam
-				eshot_sound = 'sound/weapons/Laser.ogg'
-
-			if(/obj/item/weapon/gun/energy/e_gun)
-				eprojectile = /obj/item/projectile/beam	//If it has, going to kill mode
-				eshot_sound = 'sound/weapons/Laser.ogg'
-
-			if(/obj/item/weapon/gun/energy/e_gun/nuclear)
-				eprojectile = /obj/item/projectile/beam	//If it has, going to kill mode
-				eshot_sound = 'sound/weapons/Laser.ogg'
-
-			if(/obj/item/weapon/gun/energy/e_gun/turret)
-				eprojectile = /obj/item/projectile/beam	//If it has, going to copypaste mode
-				eshot_sound = 'sound/weapons/Laser.ogg'
-		*/
 
 /obj/machinery/porta_turret/Destroy()
 	//deletes its own cover with it
