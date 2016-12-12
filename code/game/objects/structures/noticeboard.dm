@@ -74,13 +74,8 @@
 
 	if(href_list["read"])
 		var/obj/item/weapon/paper/P = locate(href_list["read"])
-		if((P && P.loc == src))
-			if(!ishuman(usr))
-				usr << browse("<HTML><HEAD><TITLE>[P.name]</TITLE></HEAD><BODY><TT>[stars(P.info)]</TT></BODY></HTML>", "window=[P.name]")
-				onclose(usr, "[P.name]")
-			else
-				usr << browse("<HTML><HEAD><TITLE>[P.name]</TITLE></HEAD><BODY><TT>[P.info]</TT></BODY></HTML>", "window=[P.name]")
-				onclose(usr, "[P.name]")
+		if(istype(P) && P.loc == src)
+			usr.examinate(P)
 
 /obj/structure/noticeboard/deconstruct(disassembled = TRUE)
 	if(!(flags & NODECONSTRUCT))
