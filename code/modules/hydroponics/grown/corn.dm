@@ -7,7 +7,6 @@
 	plantname = "Corn Stalks"
 	product = /obj/item/weapon/reagent_containers/food/snacks/grown/corn
 	maturation = 8
-	oneharvest = 1
 	potency = 20
 	growthstages = 3
 	growing_icon = 'icons/obj/hydroponics/growing_vegetables.dmi'
@@ -37,13 +36,14 @@
 	throw_range = 7
 
 /obj/item/weapon/grown/corncob/attackby(obj/item/weapon/grown/W, mob/user, params)
-	..()
 	if(W.is_sharp())
 		user << "<span class='notice'>You use [W] to fashion a pipe out of the corn cob!</span>"
 		new /obj/item/clothing/mask/cigarette/pipe/cobpipe (user.loc)
 		user.unEquip(src)
 		qdel(src)
 		return
+	else
+		return ..()
 
 // Snapcorn
 /obj/item/seeds/corn/snapcorn

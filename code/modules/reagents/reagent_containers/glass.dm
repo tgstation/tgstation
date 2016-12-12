@@ -20,7 +20,7 @@
 		return
 
 	if(istype(M))
-		if(user.a_intent == "harm")
+		if(user.a_intent == INTENT_HARM)
 			var/R
 			M.visible_message("<span class='danger'>[user] splashes the contents of [src] onto [M]!</span>", \
 							"<span class='userdanger'>[user] splashes the contents of [src] onto [M]!</span>")
@@ -79,7 +79,7 @@
 		user << "<span class='notice'>You transfer [trans] unit\s of the solution to [target].</span>"
 
 	else if(reagents.total_volume)
-		if(user.a_intent == "harm")
+		if(user.a_intent == INTENT_HARM)
 			user.visible_message("<span class='danger'>[user] splashes the contents of [src] onto [target]!</span>", \
 								"<span class='notice'>You splash the contents of [src] onto [target].</span>")
 			reagents.reaction(target, TOUCH)

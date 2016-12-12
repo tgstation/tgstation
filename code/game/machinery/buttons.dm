@@ -90,7 +90,7 @@
 		if(!device && !board && istype(W, /obj/item/weapon/wrench))
 			user << "<span class='notice'>You start unsecuring the button frame...</span>"
 			playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
-			if(do_after(user, 40/W.toolspeed, target = src))
+			if(do_after(user, 40*W.toolspeed, target = src))
 				user << "<span class='notice'>You unsecure the button frame.</span>"
 				transfer_fingerprints_to(new /obj/item/wallframe/button(get_turf(src)))
 				playsound(loc, 'sound/items/Deconstruct.ogg', 50, 1)
@@ -99,7 +99,7 @@
 		update_icon()
 		return
 
-	if(user.a_intent != "harm" && !(W.flags & NOBLUDGEON))
+	if(user.a_intent != INTENT_HARM && !(W.flags & NOBLUDGEON))
 		return src.attack_hand(user)
 	else
 		return ..()

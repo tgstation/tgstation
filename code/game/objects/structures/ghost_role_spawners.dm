@@ -37,7 +37,7 @@
 	icon_state = "large_egg"
 	mob_species = /datum/species/lizard/ashwalker
 	helmet = /obj/item/clothing/head/helmet/gladiator
-	uniform = /obj/item/clothing/under/gladiator
+	uniform = /obj/item/clothing/under/gladiator/ash_walker
 	roundstart = FALSE
 	death = FALSE
 	anchored = 0

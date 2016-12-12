@@ -14,21 +14,29 @@
 	w_class = WEIGHT_CLASS_BULKY
 	var/impale_cooldown = 50 //delay, in deciseconds, where you can't impale again
 	var/attack_cooldown = 10 //delay, in deciseconds, where you can't attack with the spear
+	var/timerid
 
 /obj/item/clockwork/ratvarian_spear/New()
 	..()
 	impale_cooldown = 0
-	update_force()
 
-/obj/item/clockwork/ratvarian_spear/proc/update_force()
+/obj/item/clockwork/ratvarian_spear/Destroy()
+	deltimer(timerid)
+	return ..()
+
+/obj/item/clockwork/ratvarian_spear/ratvar_act()
 	if(ratvar_awakens) //If Ratvar is alive, the spear is extremely powerful
 		force = 25
 		throwforce = 50
 		armour_penetration = 10
+		clockwork_desc = initial(clockwork_desc)
+		deltimer(timerid)
 	else
 		force = initial(force)
 		throwforce = initial(throwforce)
 		armour_penetration = 0
+		clockwork_desc = "A powerful spear of Ratvarian making. It's more effective against enemy cultists and silicons, though it won't last for long."
+		timerid = addtimer(src, "break_spear", 600, TIMER_NORMAL)
 
 /obj/item/clockwork/ratvarian_spear/examine(mob/user)
 	..()
@@ -74,7 +82,7 @@
 	add_fingerprint(user)
 
 	attack_verb = list("stabbed", "poked", "slashed")
-	update_force()
+	ratvar_act()
 	if(impaling)
 		impale_cooldown = world.time + initial(impale_cooldown)
 		attack_cooldown = world.time + initial(attack_cooldown)

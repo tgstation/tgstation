@@ -21,10 +21,8 @@
 	var/maturation = 6				// Used to determine which sprite to switch to when growing.
 	var/production = 6				// Changes the amount of time needed for a plant to become harvestable.
 	var/yield = 3					// Amount of growns created per harvest. If is -1, the plant/shroom/weed is never meant to be harvested.
-	var/oneharvest = 0				// If a plant is cleared from the tray after harvesting, e.g. a carrot.
 	var/potency = 10				// The 'power' of a plant. Generally effects the amount of reagent in a plant, also used in other ways.
 	var/growthstages = 6			// Amount of growth sprites the plant has.
-	var/plant_type = PLANT_NORMAL	// 0 = PLANT_NORMAL; 1 = PLANT_WEED; 2 = PLANT_MUSHROOM; 3 = PLANT_ALIEN
 	var/rarity = 0					// How rare the plant is. Used for giving points to cargo when shipping off to Centcom.
 	var/list/mutatelist = list()	// The type of plants that this plant can mutate into.
 	var/list/genes = list()			// Plant genes are stored here, see plant_genes.dm for more info.
@@ -48,7 +46,7 @@
 	if(!icon_dead)
 		icon_dead = "[species]-dead"
 
-	if(!icon_harvest && plant_type != PLANT_MUSHROOM && yield != -1)
+	if(!icon_harvest && !get_gene(/datum/plant_gene/trait/plant_type/fungal_metabolism) && yield != -1)
 		icon_harvest = "[species]-harvest"
 
 	if(!nogenes) // not used on Copy()
@@ -165,7 +163,7 @@
 	if(yield != -1) // Unharvestable shouldn't suddenly turn harvestable
 		yield = Clamp(yield + adjustamt, 0, 10)
 
-		if(yield <= 0 && plant_type == PLANT_MUSHROOM)
+		if(yield <= 0 && get_gene(/datum/plant_gene/trait/plant_type/fungal_metabolism))
 			yield = 1 // Mushrooms always have a minimum yield of 1.
 		var/datum/plant_gene/core/C = get_gene(/datum/plant_gene/core/yield)
 		if(C)
@@ -200,15 +198,14 @@
 
 /obj/item/seeds/proc/get_analyzer_text()  //in case seeds have something special to tell to the analyzer
 	var/text = ""
-	switch(plant_type)
-		if(PLANT_NORMAL)
-			text += "- Plant type: Normal plant\n"
-		if(PLANT_WEED)
-			text += "- Plant type: Weed. Can grow in nutrient-poor soil.\n"
-		if(PLANT_MUSHROOM)
-			text += "- Plant type: Mushroom. Can grow in dry soil.\n"
-		else
-			text += "- Plant type: <span class='warning'>UNKNOWN</span> \n"
+	if(!get_gene(/datum/plant_gene/trait/plant_type/weed_hardy) && !get_gene(/datum/plant_gene/trait/plant_type/fungal_metabolism) && !get_gene(/datum/plant_gene/trait/plant_type/alien_properties))
+		text += "- Plant type: Normal plant\n"
+	if(get_gene(/datum/plant_gene/trait/plant_type/weed_hardy))
+		text += "- Plant type: Weed. Can grow in nutrient-poor soil.\n"
+	if(get_gene(/datum/plant_gene/trait/plant_type/fungal_metabolism))
+		text += "- Plant type: Mushroom. Can grow in dry soil.\n"
+	if(get_gene(/datum/plant_gene/trait/plant_type/alien_properties))
+		text += "- Plant type: <span class='warning'>UNKNOWN</span> \n"
 	if(potency != -1)
 		text += "- Potency: [potency]\n"
 	if(yield != -1)

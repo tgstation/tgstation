@@ -87,7 +87,7 @@
 		if(WT.remove_fuel(0,user))
 			playsound(src.loc, 'sound/items/Welder2.ogg', 100, 1)
 			user << "<span class='notice'>You start disassembling [src]...</span>"
-			if(do_after(user,20/WT.toolspeed, target = src))
+			if(do_after(user,20*WT.toolspeed, target = src))
 				if(!WT.isOn())
 					return
 				user << "<span class='notice'>You disassemble [src].</span>"

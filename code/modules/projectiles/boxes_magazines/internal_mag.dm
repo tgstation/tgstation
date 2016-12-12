@@ -153,6 +153,7 @@
 
 /obj/item/ammo_box/magazine/internal/rus357/New()
 	stored_ammo += new ammo_type(src)
+	..()
 
 /obj/item/ammo_box/magazine/internal/boltaction
 	name = "bolt action rifle internal magazine"

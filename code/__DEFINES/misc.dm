@@ -427,12 +427,6 @@ var/global/list/ghost_others_options = list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 #define TRIGGER_GUARD_NONE 0
 #define TRIGGER_GUARD_NORMAL 1
 
-// Plant types
-#define PLANT_NORMAL 0
-#define PLANT_WEED 1
-#define PLANT_MUSHROOM 2
-#define PLANT_ALIEN 3
-
 // Maploader bounds indices
 #define MAP_MINX 1
 #define MAP_MINY 2
@@ -577,6 +571,10 @@ var/global/list/ghost_others_options = list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 // Examples of huge items: Shotgun, Two Handed Melee Weapons
 // Examples of gigantic items: Mech Parts, Safe
 
+// m_intent
+#define MOVE_INTENT_WALK "walk"
+#define MOVE_INTENT_RUN  "run"
+
 //Endgame Results
 
 #define NUKE_NEAR_MISS 1
@@ -612,3 +610,12 @@ var/global/list/ghost_others_options = list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 #define VENTCRAWLER_NONE   0
 #define VENTCRAWLER_NUDE   1
 #define VENTCRAWLER_ALWAYS 2
+
+// Intent
+#define INTENT_HELP   "help"
+#define INTENT_GRAB   "grab"
+#define INTENT_DISARM "disarm"
+#define INTENT_HARM   "harm"
+// NOTE: This is not a real intent! It's used to allow
+// the alternate intent selection stlye (clockwise)
+#define INTENT_NEXT   "next"

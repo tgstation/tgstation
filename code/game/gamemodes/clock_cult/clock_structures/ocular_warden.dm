@@ -43,14 +43,20 @@
 			return FAILED_UNFASTEN
 	return SUCCESSFUL_UNFASTEN
 
+/obj/structure/destructible/clockwork/ocular_warden/ratvar_act()
+	..()
+	if(ratvar_awakens)
+		damage_per_tick = 10
+		sight_range = 6
+	else
+		damage_per_tick = initial(damage_per_tick)
+		sight_range = initial(sight_range)
+
 /obj/structure/destructible/clockwork/ocular_warden/process()
 	if(!anchored)
 		lose_target()
 		return
 	var/list/validtargets = acquire_nearby_targets()
-	if(ratvar_awakens && (damage_per_tick == initial(damage_per_tick) || sight_range == initial(sight_range))) //Massive buff if Ratvar has returned
-		damage_per_tick = 10
-		sight_range = 5
 	if(target)
 		if(!(target in validtargets))
 			lose_target()
@@ -65,6 +71,8 @@
 			else if(istype(target,/obj/mecha))
 				var/obj/mecha/M = target
 				M.take_damage(damage_per_tick * get_efficiency_mod(), BURN, "melee", 1, get_dir(src, M))
+
+			PoolOrNew(/obj/effect/overlay/temp/ratvar/ocular_warden, get_turf(target))
 
 			setDir(get_dir(get_turf(src), get_turf(target)))
 	if(!target)

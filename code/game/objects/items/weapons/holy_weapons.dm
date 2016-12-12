@@ -24,7 +24,8 @@
 	var/obj/item/weapon/nullrod/holy_weapon
 
 	if(SSreligion.holy_weapon)
-		holy_weapon = SSreligion.holy_weapon
+		holy_weapon = new SSreligion.holy_weapon
+		M << "<span class='notice'>The null rod suddenly morphs into your religions already chosen holy weapon.</span>"
 	else
 		var/list/holy_weapons_list = typesof(/obj/item/weapon/nullrod)
 		var/list/display_names = list()

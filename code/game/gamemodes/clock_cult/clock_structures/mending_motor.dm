@@ -18,9 +18,9 @@
 	var/stored_alloy = 0
 	var/max_alloy = REPLICANT_ALLOY_POWER * 10
 	var/heal_attempts = 4
-	var/list/heal_finish_messages = list("There, all mended!", "Try not to get too damaged.", "No more dents and scratches for you!", "Champions never die.", "All patched up.", \
+	var/static/list/heal_finish_messages = list("There, all mended!", "Try not to get too damaged.", "No more dents and scratches for you!", "Champions never die.", "All patched up.", \
 	"Ah, child, it's okay now.")
-	var/list/heal_failure_messages = list("Pain is temporary.", "What you do for the Justiciar is eternal.", "Bear this for me.", "Be strong, child.", "Please, be careful!", \
+	var/static/list/heal_failure_messages = list("Pain is temporary.", "What you do for the Justiciar is eternal.", "Bear this for me.", "Be strong, child.", "Please, be careful!", \
 	"If you die, you will be remembered.")
 	var/static/list/mending_motor_typecache = typecacheof(list(
 	/obj/structure/destructible/clockwork,

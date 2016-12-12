@@ -27,7 +27,7 @@
 		if(!is_servant_of_ratvar(C) && !C.null_rod_check() && number_legs) //you have legs right
 			C.apply_damage(noncultist_damage * 0.5, BURN, "l_leg")
 			C.apply_damage(noncultist_damage * 0.5, BURN, "r_leg")
-			if(C.m_intent != "walk")
+			if(C.m_intent != MOVE_INTENT_WALK)
 				if(!iscultist(C))
 					C << "<span class='warning'>Your leg[number_legs > 1 ? "s shiver":" shivers"] with pain!</span>"
 				else //Cultists take extra burn damage
@@ -266,15 +266,16 @@
 	quickbind = TRUE
 	quickbind_desc = "Creates a Tinkerer's Cache, which stores components globally for slab access."
 
-/datum/clockwork_scripture/create_object/tinkerers_cache/New()
+/datum/clockwork_scripture/create_object/tinkerers_cache/creation_update()
 	var/cache_cost_increase = min(round(clockwork_caches*0.25), 5)
+	required_components = list(BELLIGERENT_EYE = 0, VANGUARD_COGWHEEL = 0, GEIS_CAPACITOR = 0, REPLICANT_ALLOY = 2, HIEROPHANT_ANSIBLE = 0)
+	consumed_components = list(BELLIGERENT_EYE = 0, VANGUARD_COGWHEEL = 0, GEIS_CAPACITOR = 0, REPLICANT_ALLOY = 1, HIEROPHANT_ANSIBLE = 0)
 	for(var/i in required_components)
 		if(i != REPLICANT_ALLOY)
 			required_components[i] += cache_cost_increase
 	for(var/i in consumed_components)
 		if(i != REPLICANT_ALLOY)
 			consumed_components[i] += cache_cost_increase
-	return ..()
 
 
 //Wraith Spectacles: Creates a pair of wraith spectacles, which grant xray vision but damage vision slowly.

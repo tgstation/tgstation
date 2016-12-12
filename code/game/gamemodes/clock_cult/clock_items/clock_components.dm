@@ -96,7 +96,7 @@
 
 /obj/item/clockwork/component/replicant_alloy/attack_self(mob/user)
 	if(is_servant_of_ratvar(user))
-		var/obj/item/stack/sheet/brass/B = new /obj/item/stack/sheet/brass(get_turf(src), 10)
+		var/obj/item/stack/tile/brass/B = new /obj/item/stack/tile/brass(get_turf(src), 10)
 		user.unEquip(src, TRUE)
 		user.put_in_hands(B)
 		user << "<span class='brass'>You shape the alloy into some brass sheets.</span>"

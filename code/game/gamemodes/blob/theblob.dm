@@ -31,6 +31,7 @@
 	..()
 	ConsumeTile()
 	if(atmosblock)
+		CanAtmosPass = ATMOS_PASS_NO
 		air_update_turf(1)
 
 /obj/structure/blob/proc/creation_action() //When it's created by the overmind, do this.
@@ -61,9 +62,6 @@
 					if(C)
 						result++
 		. -= result - 1
-
-/obj/structure/blob/CanAtmosPass(turf/T)
-	return !atmosblock
 
 /obj/structure/blob/BlockSuperconductivity()
 	return atmosblock

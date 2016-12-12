@@ -8,7 +8,7 @@
 #define PRESET_MEDIUM 3000
 #define PRESET_LONG 6000
 
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
+
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 // Brig Door control displays.

@@ -247,7 +247,7 @@
 		hud_used = new /datum/hud/robot(src)
 
 
-/datum/hud/robot/persistant_inventory_update(mob/viewer)
+/datum/hud/robot/persistent_inventory_update(mob/viewer)
 	if(!mymob)
 		return
 	var/mob/living/silicon/robot/R = mymob

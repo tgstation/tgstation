@@ -80,7 +80,7 @@
 				P.add_fingerprint(user)
 				update_icon()
 
-	else if(istype(O, /obj/item/weapon/weldingtool) && user.a_intent != "harm")
+	else if(istype(O, /obj/item/weapon/weldingtool) && user.a_intent != INTENT_HARM)
 		var/obj/item/weapon/weldingtool/WT = O
 		if(stat & BROKEN)
 			if(WT.remove_fuel(0,user))
@@ -88,7 +88,7 @@
 								"<span class='notice'>You begin repairing [src]...</span>", \
 								"<span class='italics'>You hear welding.</span>")
 				playsound(loc, 'sound/items/Welder.ogg', 40, 1)
-				if(do_after(user,40/WT.toolspeed, 1, target = src))
+				if(do_after(user,40*WT.toolspeed, 1, target = src))
 					if(!WT.isOn() || !(stat & BROKEN))
 						return
 					user << "<span class='notice'>You repair [src].</span>"

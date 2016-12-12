@@ -272,7 +272,7 @@
 			//If the turret is destroyed, you can remove it with a crowbar to
 			//try and salvage its components
 			user << "<span class='notice'>You begin prying the metal coverings off...</span>"
-			if(do_after(user, 20/I.toolspeed, target = src))
+			if(do_after(user, 20*I.toolspeed, target = src))
 				if(prob(70))
 					user << "<span class='notice'>You remove the turret and salvage some components.</span>"
 					if(installation)
