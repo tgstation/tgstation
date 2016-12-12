@@ -15,8 +15,8 @@
 	/obj/item/clockwork/alloy_shards/small = 3, \
 	/obj/item/clockwork/component/geis_capacitor/antennae = 1)
 	var/mania_cost = 200
-	var/convert_attempt_cost = 200
-	var/convert_cost = 200
+	var/convert_attempt_cost = 500
+	var/convert_cost = 500
 
 	var/static/list/mania_messages = list("Go nuts.", "Take a crack at crazy.", "Make a bid for insanity.", "Get kooky.", "Move towards mania.", "Become bewildered.", "Wax wild.", \
 	"Go round the bend.", "Land in lunacy.", "Try dementia.", "Strive to get a screw loose.")
@@ -48,6 +48,7 @@
 					H << "<span class='sevtug'>\"[text2ratvar("You are mine and his, now.")]\"</span>"
 					H.playsound_local(T, hum, 80, 1)
 					add_servant_of_ratvar(H)
+					H.Paralyse(5)
 				else if(!H.stat)
 					if(H.getBrainLoss() >= 100)
 						H.Paralyse(5)
