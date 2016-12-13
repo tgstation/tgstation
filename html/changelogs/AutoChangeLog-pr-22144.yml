@@ -1,0 +1,4 @@
+author: "Mindustry"
+delete-after: True
+changes: 
+  - bugfix: "Goliath meat can be cooked in lava again"
