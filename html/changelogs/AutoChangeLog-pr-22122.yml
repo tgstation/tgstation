@@ -1,0 +1,4 @@
+author: "Joan"
+delete-after: True
+changes: 
+  - rscadd: "The Ark of the Clockwork Justicar will now force objects away from it."

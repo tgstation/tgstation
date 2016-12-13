@@ -22,7 +22,7 @@
 	verb_yell = "alarms"
 	bubble_icon = "machine"
 
-	faction = list("neutral", "silicon")
+	faction = list("neutral", "silicon" , "turret")
 
 	var/obj/machinery/bot_core/bot_core = null
 	var/bot_core_type = /obj/machinery/bot_core
