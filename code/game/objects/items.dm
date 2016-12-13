@@ -308,12 +308,7 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 // The lack of ..() is intentional, do not add one
 /obj/item/attackby(obj/item/weapon/W, mob/user, params)
 	if(unique_rename && istype(W, /obj/item/weapon/pen))
-		var/penchoice = alert("What would you like to edit?", "Rename or change description?", "Rename", "Change description", "Cancel")
-		if(!qdeleted(src) && user.canUseTopic(src, BE_CLOSE))
-			if(penchoice == "Rename")
-				rename_obj(user)
-			if(penchoice == "Change description")
-				redesc_obj(user)
+		rename(user)
 	else
 		if(istype(W,/obj/item/weapon/storage))
 			var/obj/item/weapon/storage/S = W
