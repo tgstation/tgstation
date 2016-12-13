@@ -15,8 +15,7 @@
 		user << "<span class='[message_span]'>[cultist_message]</span>"
 		if(user.mind && user.mind.isholy)
 			user << "<span class='boldannounce'>[SSreligion.Bible_deity_name]'s voice thunders: BEGONE FALSE THING!</span>"
-			var//obj/item/weapon/ore/slag/wrath = new /obj/item/weapon/ore/slag
-			visible_message("<span class='danger'>The [src] dissolves into an unrecognisable mass!</span>")
+			var/obj/item/weapon/ore/slag/wrath = new /obj/item/weapon/ore/slag
 			user.unEquip(src)
 			user.put_in_active_hand(wrath)
 			qdel(src)
