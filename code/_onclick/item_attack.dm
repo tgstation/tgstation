@@ -9,7 +9,7 @@
 
 /obj/attackby(obj/item/I, mob/living/user, params)
 	if(unique_rename && istype(I, /obj/item/weapon/pen))
-		rename(user)
+		rewrite(user)
 	else
 		return I.attack_obj(src, user)
 

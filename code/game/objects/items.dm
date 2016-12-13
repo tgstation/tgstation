@@ -308,7 +308,7 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 // The lack of ..() is intentional, do not add one
 /obj/item/attackby(obj/item/weapon/W, mob/user, params)
 	if(unique_rename && istype(W, /obj/item/weapon/pen))
-		rename(user)
+		rewrite(user)
 	else
 		if(istype(W,/obj/item/weapon/storage))
 			var/obj/item/weapon/storage/S = W

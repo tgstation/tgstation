@@ -69,7 +69,7 @@
 	else
 		return null
 
-/obj/proc/rename(mob/user)
+/obj/proc/rewrite(mob/user)
 	var/penchoice = alert("What would you like to edit?", "Rename or change description?", "Rename", "Change description", "Cancel")
 	if(!qdeleted(src) && user.canUseTopic(src, BE_CLOSE))
 		if(penchoice == "Rename")
