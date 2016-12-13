@@ -26,8 +26,8 @@ Difficulty: Hard
 /mob/living/simple_animal/hostile/megafauna/bubblegum
 	name = "bubblegum"
 	desc = "In what passes for a heirarchy among slaughter demons, this one is king."
-	health = 2500
-	maxHealth = 2500
+	health = 940
+	maxHealth = 940
 	attacktext = "rends"
 	attack_sound = 'sound/magic/demon_attack1.ogg'
 	icon_state = "bubblegum"

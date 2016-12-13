@@ -33,8 +33,8 @@ Difficulty: Hard
 /mob/living/simple_animal/hostile/megafauna/hierophant
 	name = "Hierophant"
 	desc = "Stolen from Hyper Light Drifter."
-	health = 2500
-	maxHealth = 2500
+	health = 940
+	maxHealth = 940
 	attacktext = "clubs"
 	//attack_sound = 'sound/weapons/sonic_jackhammer.ogg'
 	attack_sound = "swing_hit"
