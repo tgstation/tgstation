@@ -1038,7 +1038,7 @@
 "tX" = (/obj/effect/landmark/error,/turf/open/floor/plating/ashplanet/wateryrock{initial_gas_mix = "o2=22;n2=82;TEMP=293.15";planetary_atmos = 0},/area/awaymission/errorroom)
 "tY" = (/obj/structure/signpost/salvation{icon = 'icons/obj/structures.dmi';icon_state = "ladder10";invisibility = 100},/turf/open/floor/plating/ashplanet/wateryrock{initial_gas_mix = "o2=22;n2=82;TEMP=293.15";planetary_atmos = 0},/area/awaymission/errorroom)
 "tZ" = (/obj/structure/lattice,/turf/open/space,/area/space)
-"ue" = (/obj/machinery/door/airlock/centcom{name = "Auxillary Dock";opacity = 1;req_access_txt = ""},/turf/closed/indestructible/fakeglass{icon_state = "fakewindows2";dir = 6},/area/syndicate_mothership)
+"ue" = (/obj/machinery/door/airlock/centcom{name = "Auxillary Dock";opacity = 1;req_access_txt = ""},/area/syndicate_mothership)
 "ud" = (/turf/closed/indestructible/fakeglass{icon_state = "fakewindows";dir = 1},/area/syndicate_mothership)
 "uc" = (/turf/open/floor/plating/warnplate{dir = 1},/area/syndicate_mothership)
 "ub" = (/obj/machinery/door/poddoor/shuttledock{checkdir = 1;name = "syndicate blast door"},/turf/open/floor/plating,/area/syndicate_mothership)
