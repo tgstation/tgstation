@@ -512,9 +512,14 @@
 	return SSshuttle.getDock(roundstart_move)
 
 /obj/docking_port/mobile/proc/dockRoundstart()
-	var/port = findRoundstartDock()
+	. = dock_id(roundstart_move)
+
+/obj/docking_port/mobile/proc/dock_id(id)
+	var/port = SSshuttle.getDock(id)
 	if(port)
-		return dock(port)
+		. = dock(port)
+	else
+		. = null
 
 /obj/effect/landmark/shuttle_import
 	name = "Shuttle Import"
