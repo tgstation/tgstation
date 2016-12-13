@@ -147,7 +147,7 @@
 	if((stat & (NOPOWER|BROKEN)))
 		return
 
-	if(device && device.cooldown)
+	if(device && device.next_activate > world.time)
 		return
 
 	if(!allowed(user))

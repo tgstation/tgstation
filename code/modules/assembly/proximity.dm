@@ -59,12 +59,11 @@
 
 
 /obj/item/device/assembly/prox_sensor/sense()
-	if((!secured)||(cooldown > 0))
+	if(!secured || next_activate > world.time)
 		return 0
 	pulse(0)
 	audible_message("\icon[src] *beep* *beep*", null, 3)
-	cooldown = 2
-	addtimer(src, "process_cooldown", 10)
+	next_activate = world.time + 30
 
 
 /obj/item/device/assembly/prox_sensor/process()

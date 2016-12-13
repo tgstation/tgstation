@@ -6,6 +6,7 @@
 	attachable = 1
 	var/id = null
 	var/can_change_id = 0
+	var/cooldown = 0//Door cooldowns
 
 /obj/item/device/assembly/control/examine(mob/user)
 	..()
