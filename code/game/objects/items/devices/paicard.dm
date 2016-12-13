@@ -6,16 +6,17 @@
 	w_class = WEIGHT_CLASS_SMALL
 	slot_flags = SLOT_BELT
 	origin_tech = "programming=2"
-	var/looking_for_personality = 0
 	var/mob/living/silicon/pai/pai
 	resistance_flags = FIRE_PROOF | ACID_PROOF | INDESTRUCTIBLE
 
 /obj/item/device/paicard/New()
 	..()
+	pai_card_list += src
 	add_overlay("pai-off")
 
 /obj/item/device/paicard/Destroy()
 	//Will stop people throwing friend pAIs into the singularity so they can respawn
+	pai_card_list -= src
 	if(!isnull(pai))
 		pai.death(0)
 	return ..()
@@ -44,10 +45,9 @@
 			dat += "<font color=red><i>Radio firmware not loaded. Please install a pAI personality to load firmware.</i></font><br>"
 		dat += "<A href='byond://?src=\ref[src];wipe=1'>\[Wipe current pAI personality\]</a><br>"
 	else
-		if(looking_for_personality)
-			dat += "No personality installed.<br>"
-			dat += "Searching for a personality..."
-			dat += "<A href='byond://?src=\ref[src];request=1'>\[View available personalities\]</a><br>"
+		dat += "No personality installed.<br>"
+		dat += "Searching for a personality... Press view available personalities to notify potential candidates."
+		dat += "<A href='byond://?src=\ref[src];request=1'>\[View available personalities\]</a><br>"
 	user << browse(dat, "window=paicard")
 	onclose(user, "paicard")
 	return
@@ -58,7 +58,6 @@
 		return
 
 	if(href_list["request"])
-		src.looking_for_personality = 1
 		SSpai.findPAI(src, usr)
 
 	if(pai)

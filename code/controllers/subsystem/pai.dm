@@ -1,4 +1,5 @@
 var/datum/subsystem/pai/SSpai
+var/list/obj/item/device/paicard/pai_card_list = list()
 
 /datum/subsystem/pai
 	name = "pAI"
@@ -6,6 +7,8 @@ var/datum/subsystem/pai/SSpai
 	flags = SS_NO_INIT|SS_NO_FIRE
 
 	var/list/candidates = list()
+	var/ghost_spam = FALSE
+	var/spam_delay = 100
 
 /datum/subsystem/pai/New()
 	NEW_SS_GLOBAL(SSpai)
@@ -26,7 +29,6 @@ var/datum/subsystem/pai/SSpai
 			pai.key = candidate.key
 
 			card.setPersonality(pai)
-			card.looking_for_personality = 0
 
 			ticker.mode.update_cult_icons_removed(card.pai.mind)
 			ticker.mode.update_rev_icons_removed(card.pai.mind)
@@ -73,8 +75,8 @@ var/datum/subsystem/pai/SSpai
 			if("submit")
 				if(candidate)
 					candidate.ready = 1
-					for(var/obj/item/device/paicard/p in world)
-						if(p.looking_for_personality == 1)
+					for(var/obj/item/device/paicard/p in pai_card_list)
+						if(!p.pai)
 							p.alertUpdate()
 				usr << browse(null, "window=paiRecruit")
 				return
@@ -131,7 +133,18 @@ var/datum/subsystem/pai/SSpai
 
 	M << browse(dat, "window=paiRecruit")
 
+/datum/subsystem/pai/proc/spam_again()
+	ghost_spam = FALSE
+
 /datum/subsystem/pai/proc/findPAI(obj/item/device/paicard/p, mob/user)
+	if(!ghost_spam)
+		ghost_spam = TRUE
+		deadchat_broadcast("<span class='ghostalert'>Someone is requesting a pAI personality! Use the pAI button to submit yourself as one.</span>")
+		for(var/mob/dead/observer/G in player_list)
+			if(!G.key || !G.client)
+				continue
+			G << 'sound/misc/server-ready.ogg' //Alerting them to their consideration
+		addtimer(src, "spam_again", spam_delay)
 	var/list/available = list()
 	for(var/datum/paiCandidate/c in SSpai.candidates)
 		if(c.ready)
