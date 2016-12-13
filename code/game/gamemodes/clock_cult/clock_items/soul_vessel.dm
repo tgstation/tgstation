@@ -77,17 +77,18 @@
 		return
 	playsound(H, 'sound/misc/splort.ogg', 60, 1, -1)
 	playsound(H, 'sound/magic/clockwork/anima_fragment_attack.ogg', 40, 1, -1)
+	var/prev_fakedeath = (H.status_flags & FAKEDEATH)
 	H.status_flags |= FAKEDEATH //we want to make sure they don't deathgasp and maybe possibly explode
 	H.death()
-	H.status_flags &= ~FAKEDEATH
+	if(!prev_fakedeath)
+		H.status_flags &= ~FAKEDEATH
 	picked_fluff_name = "Slave"
 	braintype = picked_fluff_name
-	brainmob.name = "[braintype] [H.real_name]"
-	brainmob.real_name = brainmob.name
 	brainmob.timeofhostdeath = H.timeofdeath
 	user.visible_message("<span class='warning'>[user] presses [src] to [H]'s head, ripping through the skull and carefully extracting the brain!</span>", \
 	"<span class='brass'>You extract [H]'s consciousness from [H.p_their()] body, trapping it in the soul vessel.</span>")
 	transfer_personality(H)
+	brainmob.fully_replace_character_name(null, "[braintype] [H.real_name]")
 	B.Remove(H)
 	qdel(B)
 	H.update_hair()
