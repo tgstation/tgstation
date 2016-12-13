@@ -24,10 +24,8 @@
 			user << "<span class='info'>You are not authorized to add notices</span>"
 			return
 		if(notices < 5)
-			if(!user.drop_item())
+			if(!user.unEquip(O))
 				return
-			O.add_fingerprint(user)
-			add_fingerprint(user)
 			O.loc = src
 			notices++
 			icon_state = "nboard0[notices]"
@@ -54,11 +52,10 @@
 	if(href_list["remove"])
 		if((usr.stat || usr.restrained()))	//For when a player is handcuffed while they have the notice window open
 			return
-		var/obj/item/P = locate(href_list["remove"])
-		if((P && P.loc == src))
-			P.loc = get_turf(src)	//dump paper on the floor because you're a clumsy fuck
-			P.add_fingerprint(usr)
-			add_fingerprint(usr)
+		var/obj/item/I = locate(href_list["remove"])
+		if(istype(I) && I.loc == src)
+			I.loc = usr.loc
+			usr.put_in_hands(I)
 			notices--
 			icon_state = "nboard0[notices]"
 
@@ -66,10 +63,9 @@
 		if((usr.stat || usr.restrained())) //For when a player is handcuffed while they have the notice window open
 			return
 		var/obj/item/P = locate(href_list["write"])
-
-		if((P && P.loc == src)) //ifthe paper's on the board
+		if(istype(P) && P.loc == src)
 			var/obj/item/I = usr.is_holding_item_of_type(/obj/item/weapon/pen)
-			if(I) //check hand for pen
+			if(I)
 				add_fingerprint(usr)
 				P.attackby(I, usr)
 			else
