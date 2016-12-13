@@ -100,17 +100,13 @@
 	var/obj/item/weapon/stock_parts/matter_bin/part_bin = null
 
 	var/crashing = FALSE	//Are we currently getting wrecked?
-	var/selfprocess = FALSE
-	var/halt = FALSE
 
 
 //Start/Stop processing the item to use momentum and flight mechanics.
 /obj/item/device/flightpack/New()
 	ion_trail = new
 	ion_trail.set_up(src)
-	spawn(2)
-		bullshit_processing_proc()
-	//START_PROCESSING(SSfastprocess, src)
+	START_PROCESSING(SSflightpacks, src)
 	..()
 
 /obj/item/device/flightpack/full/New()
@@ -160,23 +156,13 @@
 	qdel(part_cap)
 	qdel(part_laser)
 	qdel(part_bin)
-	halt = TRUE
-	sleep(2)
-	//STOP_PROCESSING(SSfastprocess, src)
+	STOP_PROCESSING(SSflightpacks, src)
 	part_manip = null
 	part_scan = null
 	part_cap = null
 	part_laser = null
 	part_bin = null
 	..()
-
-/obj/item/device/flightpack/proc/bullshit_processing_proc()
-	if(selfprocess)
-		return FALSE
-	selfprocess = TRUE
-	while(!halt)	//I'm so shit
-		process()
-		sleep(2)
 
 /obj/item/device/flightpack/emp_act(severity)
 	var/damage = 0
