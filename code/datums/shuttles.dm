@@ -206,8 +206,9 @@
 /datum/map_template/shuttle/cargo/birdboat
 	suffix = "birdboat"
 	name = "supply shuttle (Birdboat)"
+
 /datum/map_template/shuttle/emergency/delta
-	suffix = "airless"
+	suffix = "delta"
 	name = "Delta Station Emergency Shuttle"
 	description = "A large shuttle for a large station, this shuttle can comfortably fit all your overpopulation and crowding needs. Complete with all facilities plus additional equipment."
 	admin_notes = "Go big or go home."
