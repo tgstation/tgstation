@@ -29,7 +29,6 @@ var/list/obj/item/device/paicard/pai_card_list = list()
 			pai.key = candidate.key
 
 			card.setPersonality(pai)
-			card.looking_for_personality = 0
 
 			ticker.mode.update_cult_icons_removed(card.pai.mind)
 			ticker.mode.update_rev_icons_removed(card.pai.mind)
@@ -77,7 +76,7 @@ var/list/obj/item/device/paicard/pai_card_list = list()
 				if(candidate)
 					candidate.ready = 1
 					for(var/obj/item/device/paicard/p in pai_card_list)
-						if(p.looking_for_personality == 1)
+						if(!p.pai)
 							p.alertUpdate()
 				usr << browse(null, "window=paiRecruit")
 				return
