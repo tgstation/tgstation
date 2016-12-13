@@ -174,7 +174,7 @@ var/global/max_secret_rooms = 6
 	if(!T)
 		return 0
 
-	room = spawn_room(T,x_size,y_size,walltypes,floor,) //WE'RE FINALLY CREATING THE ROOM
+	room = spawn_room(T,x_size,y_size,walltypes,floor) //WE'RE FINALLY CREATING THE ROOM
 
 	if(room)//time to fill it with stuff
 		var/list/emptyturfs = room["floors"]

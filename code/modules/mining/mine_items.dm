@@ -361,7 +361,7 @@
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 		user.visible_message("<span class='warning'>[user] disassembles the gps.</span>", \
 						"<span class='notice'>You start to disassemble the gps...</span>", "You hear clanking and banging noises.")
-		if(do_after(user, 20/W.toolspeed, target = src))
+		if(do_after(user, 20*W.toolspeed, target = src))
 			new /obj/item/device/gps(src.loc)
 			qdel(src)
 			return ..()
@@ -434,7 +434,7 @@
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 		user.visible_message("<span class='warning'>[user] disassembles the fan.</span>", \
 						"<span class='notice'>You start to disassemble the fan...</span>", "You hear clanking and banging noises.")
-		if(do_after(user, 20/W.toolspeed, target = src))
+		if(do_after(user, 20*W.toolspeed, target = src))
 			deconstruct()
 			return ..()
 

@@ -210,7 +210,7 @@
 	if(!ratvar_awakens)
 		R.clockwork_desc = "A powerful spear of Ratvarian making. It's more effective against enemy cultists and silicons, though it won't last for long."
 		owner << "<span class='warning'>Your spear begins to break down in this plane of existence. You can't use it for long!</span>"
-		addtimer(R, "break_spear", base_cooldown, TIMER_NORMAL)
+		R.timerid = addtimer(R, "break_spear", base_cooldown, TIMER_NORMAL)
 	cooldown = base_cooldown + world.time
 	owner.update_action_buttons_icon()
 	addtimer(src, "update_actions", base_cooldown, TIMER_NORMAL)

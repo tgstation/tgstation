@@ -88,4 +88,4 @@
 /obj/item/device/multitool/cyborg
 	name = "multitool"
 	desc = "Optimised and stripped-down version of a regular multitool."
-	toolspeed = 2
+	toolspeed = 0.5

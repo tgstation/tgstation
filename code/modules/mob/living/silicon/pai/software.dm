@@ -125,21 +125,21 @@
 	switch(soft)
 		// Purchasing new software
 		if("buy")
-			if(src.subscreen == 1)
+			if(subscreen == 1)
 				var/target = href_list["buy"]
 				if(available_software.Find(target))
 					var/cost = src.available_software[target]
-					if(src.ram >= cost)
-						src.ram -= cost
-						src.software.Add(target)
+					if(ram >= cost)
+						ram -= cost
+						software.Add(target)
 					else
-						src.temp = "Insufficient RAM available."
+						temp = "Insufficient RAM available."
 				else
-					src.temp = "Trunk <TT> \"[target]\"</TT> not found."
+					temp = "Trunk <TT> \"[target]\"</TT> not found."
 
 		// Configuring onboard radio
 		if("radio")
-			src.card.radio.attack_self(src)
+			radio.attack_self(src)
 
 		if("image")
 			var/newImage = input("Select your new display image.", "Display Image", "Happy") in list("Happy", "Cat", "Extremely Happy", "Face", "Laugh", "Off", "Sad", "Angry", "What")
@@ -166,7 +166,7 @@
 					pID = 9
 				if("Null")
 					pID = 10
-			src.card.setEmotion(pID)
+			card.setEmotion(pID)
 
 		if("signaller")
 
@@ -265,7 +265,7 @@
 				src.hackdoor = null
 			if(href_list["cable"])
 				var/turf/T = get_turf(src.loc)
-				src.cable = new /obj/item/weapon/pai_cable(T)
+				cable = new /obj/item/weapon/pai_cable(T)
 				T.visible_message("<span class='warning'>A port on [src] opens to reveal [src.cable], which promptly falls to the floor.</span>", "<span class='italics'>You hear the soft click of something light and hard falling to the ground.</span>")
 	//src.updateUsrDialog()		We only need to account for the single mob this is intended for, and he will *always* be able to call this window
 	src.paiInterface()		 // So we'll just call the update directly rather than doing some default checks
@@ -356,7 +356,7 @@
 	dat += "<b>Prime Directive</b><br>"
 	dat += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[src.laws.zeroth]<br>"
 	dat += "<b>Supplemental Directives</b><br>"
-	for(var/slaws in src.laws.supplied)
+	for(var/slaws in laws.supplied)
 		dat += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[slaws]<br>"
 	dat += "<br>"
 	dat += {"<i><p>Recall, personality, that you are a complex thinking, sentient being. Unlike station AI models, you are capable of

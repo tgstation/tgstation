@@ -332,7 +332,7 @@
 			if("andalusia")
 				icon_state = "andalusia"
 				name = "Andalusia"
-				desc = "A nice, strange named drink."
+				desc = "A nice, strangely named drink."
 			if("sbiten")
 				icon_state = "sbitenglass"
 				name = "Sbiten"
@@ -340,11 +340,11 @@
 			if("red_mead")
 				icon_state = "red_meadglass"
 				name = "Red Mead"
-				desc = "A True Vikings Beverage, though its color is strange."
+				desc = "A True Viking's Beverage, though its color is strange."
 			if("mead")
 				icon_state = "meadglass"
 				name = "Mead"
-				desc = "A Vikings Beverage, though a cheap one."
+				desc = "A Viking's Beverage, though a cheap one."
 			if("iced_beer")
 				icon_state = "iced_beerglass"
 				name = "Iced Beer"
@@ -452,7 +452,7 @@
 			if("chocolatepudding")
 				icon_state = "chocolatepudding"
 				name = "Chocolate Pudding"
-				desc = ""
+				desc = "Tasty."
 			if("vanillapudding")
 				icon_state = "vanillapudding"
 				name = "Vanilla Pudding"
@@ -566,7 +566,7 @@
 			if("hcider")
 				icon_state = "shotglassbrown"
 				name = "shot of hard cider"
-				desc = "Not meant to be drinken from a shot glass."
+				desc = "Not meant to be drunk from a shot glass."
 			if("rum")
 				icon_state = "shotglassbrown"
 				name = "shot of rum"

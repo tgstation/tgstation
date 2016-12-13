@@ -41,7 +41,7 @@
 	name = "Moonshine"
 	id = "moonshine"
 	results = list("moonshine" = 10)
-	required_reagents = list("nutriment" = 10)
+	required_reagents = list("nutriment" = 5, "sugar" = 5)
 	required_catalysts = list("enzyme" = 5)
 
 /datum/chemical_reaction/wine

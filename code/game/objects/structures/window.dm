@@ -135,7 +135,7 @@
 			if(WT.remove_fuel(0,user))
 				user << "<span class='notice'>You begin repairing [src]...</span>"
 				playsound(loc, 'sound/items/Welder.ogg', 40, 1)
-				if(do_after(user, 40/I.toolspeed, target = src))
+				if(do_after(user, 40*I.toolspeed, target = src))
 					obj_integrity = max_integrity
 					playsound(loc, 'sound/items/Welder2.ogg', 50, 1)
 					update_nearby_icons()
@@ -155,7 +155,7 @@
 			else if(!reinf)
 				user << (anchored ? "<span class='notice'>You begin to unscrew the window from the floor...</span>" : "<span class='notice'>You begin to screw the window to the floor...</span>")
 
-			if(do_after(user, 30/I.toolspeed, target = src))
+			if(do_after(user, 30*I.toolspeed, target = src))
 				if(reinf && (state == 1 || state == 2))
 					//If state was unfastened, fasten it, else do the reverse
 					state = (state == 1 ? 2 : 1)
@@ -173,7 +173,7 @@
 		else if (istype(I, /obj/item/weapon/crowbar) && reinf && (state == 0 || state == 1))
 			user << (state == 0 ? "<span class='notice'>You begin to lever the window into the frame...</span>" : "<span class='notice'>You begin to lever the window out of the frame...</span>")
 			playsound(loc, I.usesound, 75, 1)
-			if(do_after(user, 40/I.toolspeed, target = src))
+			if(do_after(user, 40*I.toolspeed, target = src))
 				//If state was out of frame, put into frame, else do the reverse
 				state = (state == 0 ? 1 : 0)
 				user << (state == 1 ? "<span class='notice'>You pry the window into the frame.</span>" : "<span class='notice'>You pry the window out of the frame.</span>")
@@ -182,7 +182,7 @@
 		else if(istype(I, /obj/item/weapon/wrench) && !anchored)
 			playsound(loc, I.usesound, 75, 1)
 			user << "<span class='notice'> You begin to disassemble [src]...</span>"
-			if(do_after(user, 40/I.toolspeed, target = src))
+			if(do_after(user, 40*I.toolspeed, target = src))
 				if(qdeleted(src))
 					return
 

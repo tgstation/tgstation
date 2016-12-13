@@ -85,7 +85,7 @@
 			if(W.remove_fuel(0,user))
 				playsound(src.loc, 'sound/items/Welder2.ogg', 100, 1)
 				user << "<span class='notice'>You start slicing the floorweld off \the [src]...</span>"
-				if(do_after(user,20/I.toolspeed, target = src) && mode == SCREWS_OUT)
+				if(do_after(user,20*I.toolspeed, target = src) && mode == SCREWS_OUT)
 					if(!W.isOn())
 						return
 					user << "<span class='notice'>You slice the floorweld off \the [src].</span>"

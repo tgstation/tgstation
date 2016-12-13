@@ -14,7 +14,7 @@
 	var/recharge_time = 1200 //if it drains no power and affects no objects, it turns off for two minutes
 	var/disabled = FALSE //if it's actually usable
 	var/interdiction_range = 14 //how large an area it drains and disables in
-	var/list/rage_messages = list("...", "Disgusting.", "Die.", "Foul.", "Worthless.", "Mortal.", "Unfit.", "Weak.", "Fragile.", "Useless.", "Leave my sight!")
+	var/static/list/rage_messages = list("...", "Disgusting.", "Die.", "Foul.", "Worthless.", "Mortal.", "Unfit.", "Weak.", "Fragile.", "Useless.", "Leave my sight!")
 
 /obj/structure/destructible/clockwork/powered/interdiction_lens/examine(mob/user)
 	..()

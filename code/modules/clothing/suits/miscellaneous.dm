@@ -253,7 +253,7 @@
 	body_parts_covered = CHEST|GROIN|ARMS
 	//cold_protection = CHEST|GROIN|ARMS
 	//min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
-	allowed = list(,)
+	allowed = list()
 	hooded = 1
 	hoodtype = /obj/item/clothing/head/ian_hood
 	dog_fashion = /datum/dog_fashion/back
@@ -292,7 +292,7 @@
 	icon_state = "lingspacesuit"
 	item_state = "labcoat"
 	body_parts_covered = CHEST|GROIN|ARMS
-	allowed = list(,)
+	allowed = list()
 	hooded = 1
 	actions_types = list(/datum/action/item_action/toggle_human_head)
 	hoodtype = /obj/item/clothing/head/human_head

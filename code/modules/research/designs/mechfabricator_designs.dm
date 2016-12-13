@@ -571,15 +571,6 @@
 //////////////Borg Upgrades//////////////
 /////////////////////////////////////////
 
-/datum/design/borg_upgrade_reset
-	name = "Cyborg Upgrade (Module Reset Board)"
-	id = "borg_upgrade_reset"
-	build_type = MECHFAB
-	build_path = /obj/item/borg/upgrade/reset
-	materials = list(MAT_METAL=10000)
-	construction_time = 120
-	category = list("Cyborg Upgrade Modules")
-
 /datum/design/borg_upgrade_rename
 	name = "Cyborg Upgrade (Rename Board)"
 	id = "borg_upgrade_rename"
@@ -719,6 +710,7 @@
 	materials = list(MAT_METAL=16000, MAT_GLASS = 8000, MAT_DIAMOND = 200, MAT_GOLD = 3000, MAT_SILVER = 3000, MAT_TITANIUM = 16000)	//This expensive enough for you?
 	construction_time = 250
 	category = list("Misc")
+	req_tech = list("magnets" = 2, "combat" = 2, "plasmatech" = 2, "materials" = 4, "engineering" = 3, "powerstorage" = 2)
 
 /datum/design/flightpack
 	name = "Flight Pack"
@@ -729,7 +721,8 @@
 	materials = list(MAT_METAL=16000, MAT_GLASS = 8000, MAT_DIAMOND = 4000, MAT_GOLD = 12000, MAT_SILVER = 12000, MAT_URANIUM = 20000, MAT_PLASMA = 16000, MAT_TITANIUM = 16000)	//This expensive enough for you?
 	construction_time = 250
 	category = list("Misc")
-
+	req_tech = list("magnets" = 4, "combat" = 3, "plasmatech" = 4, "materials" = 5, "engineering" = 4, "powerstorage" = 4)
+	
 /datum/design/flightshoes
 	name = "Flight Shoes"
 	desc = "Flight shoes, attachable to a flight suit to provide additional functions."
@@ -739,3 +732,4 @@
 	materials = list(MAT_METAL = 5000, MAT_GLASS = 5000, MAT_GOLD = 1500, MAT_SILVER = 1500, MAT_PLASMA = 2000, MAT_TITANIUM = 2000)
 	construction_time = 100
 	category = list("Misc")
+	req_tech = list("magnets" = 2, "combat" = 2, "plasmatech" = 3, "materials" = 3, "engineering" = 2, "powerstorage" = 2)

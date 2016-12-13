@@ -375,13 +375,13 @@
 	visible_message("<span class='warning'>The [oldPlantName] is overtaken by some [myseed.plantname]!</span>")
 
 
-/obj/machinery/hydroponics/proc/mutate(lifemut = 2, endmut = 5, productmut = 1, yieldmut = 2, potmut = 25) // Mutates the current seed
+/obj/machinery/hydroponics/proc/mutate(lifemut = 2, endmut = 5, productmut = 1, yieldmut = 2, potmut = 25, wrmut = 2, wcmut = 5, traitmut = 0) // Mutates the current seed
 	if(!myseed)
 		return
-	myseed.mutate(lifemut, endmut, productmut, yieldmut, potmut)
+	myseed.mutate(lifemut, endmut, productmut, yieldmut, potmut, wrmut, wcmut, traitmut)
 
 /obj/machinery/hydroponics/proc/hardmutate()
-	mutate(4, 10, 2, 4, 50)
+	mutate(4, 10, 2, 4, 50, 4, 10, 3)
 
 
 /obj/machinery/hydroponics/proc/mutatespecie() // Mutagent produced a new plant!
@@ -824,7 +824,7 @@
 			user.visible_message("[user] begins to wrench [src] into place.", \
 								"<span class='notice'>You begin to wrench [src] in place...</span>")
 			playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
-			if (do_after(user, 20/O.toolspeed, target = src))
+			if (do_after(user, 20*O.toolspeed, target = src))
 				if(anchored)
 					return
 				anchored = 1
@@ -834,7 +834,7 @@
 			user.visible_message("[user] begins to unwrench [src].", \
 								"<span class='notice'>You begin to unwrench [src]...</span>")
 			playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
-			if (do_after(user, 20/O.toolspeed, target = src))
+			if (do_after(user, 20*O.toolspeed, target = src))
 				if(!anchored)
 					return
 				anchored = 0

@@ -300,7 +300,7 @@
 			return
 		playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
 		user << "<span class='warning'>You start [anchored ? "unwrenching" : "wrenching"] [src]...</span>"
-		if(do_after(user, 20/O.toolspeed, target = src))
+		if(do_after(user, 20*O.toolspeed, target = src))
 			if(qdeleted(src))
 				return
 			user << "<span class='notice'>You [anchored ? "unwrench" : "wrench"] [src].</span>"

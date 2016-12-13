@@ -93,6 +93,12 @@
 		slab_ability.remove_ranged_ability()
 	return ..()
 
+/obj/item/clockwork/slab/ratvar_act()
+	if(ratvar_awakens)
+		nonhuman_usable = TRUE
+	else
+		nonhuman_usable = initial(nonhuman_usable)
+
 /obj/item/clockwork/slab/dropped(mob/user)
 	. = ..()
 	addtimer(src, "check_on_mob", 1, TIMER_NORMAL, user) //dropped is called before the item is out of the slot, so we need to check slightly later

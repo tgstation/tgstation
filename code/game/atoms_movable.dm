@@ -153,14 +153,6 @@
 	else //something went very wrong.
 		CRASH("Brainmob without container.")
 
-
-/mob/living/silicon/pai/forceMove(atom/destination)
-	if(card)
-		return card.forceMove(destination)
-	else //something went very wrong.
-		CRASH("pAI without card")
-
-
 //Called whenever an object moves and by mobs when they attempt to move themselves through space
 //And when an object or action applies a force on src, see newtonian_move() below
 //Return 0 to have src start/keep drifting in a no-grav area and 1 to stop/not start drifting

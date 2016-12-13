@@ -286,7 +286,7 @@
 
 /obj/item/clothing/glasses/red
 	name = "red glasses"
-	desc = "A sweet pair of red shades."
+	desc = "Hey, you're looking good, senpai!"
 	icon_state = "redglasses"
 	item_state = "redglasses"
 	glass_colour_type = /datum/client_colour/glass_colour/red

@@ -22,7 +22,7 @@
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
 			user.visible_message("[user] is loosening the [name]'s bolts.", \
 								 "<span class='notice'>You are loosening the [name]'s bolts...</span>")
-			if(do_after(user,40/W.toolspeed, target = src))
+			if(do_after(user,40*W.toolspeed, target = src))
 				if(!src.loc || !anchored)
 					return
 				user.visible_message("[user] loosened the [name]'s bolts!", \
@@ -35,7 +35,7 @@
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
 			user.visible_message("[user] is securing the [name]'s bolts...", \
 								 "<span class='notice'>You are securing the [name]'s bolts...</span>")
-			if(do_after(user, 40/W.toolspeed, target = src))
+			if(do_after(user, 40*W.toolspeed, target = src))
 				if(!src.loc || anchored)
 					return
 				user.visible_message("[user] has secured the [name]'s bolts.", \
@@ -66,7 +66,7 @@
 		playsound(loc, 'sound/items/Welder.ogg', 40, 1)
 		user.visible_message("[user] is slicing apart the [name].", \
 							 "<span class='notice'>You are slicing apart the [name]...</span>")
-		if(do_after(user, 40/W.toolspeed, target = src))
+		if(do_after(user, 40*W.toolspeed, target = src))
 			if(!src.loc)
 				return
 			playsound(loc, 'sound/items/Welder2.ogg', 50, 1)
