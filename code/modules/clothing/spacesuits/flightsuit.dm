@@ -806,7 +806,7 @@
 /obj/item/clothing/shoes/flightshoes/Destroy()
 	if(suit)
 		suit.shoes = null
-	..()
+	return ..()
 
 /obj/item/clothing/shoes/flightshoes/proc/toggle(toggle)
 	if(suit)
