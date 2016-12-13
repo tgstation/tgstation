@@ -1359,7 +1359,7 @@
 	name = "Security Officer action figure"
 	icon_state = "secofficer"
 	toysay = "I am the law!"
-	toysound = 'sound/voice/complionator/dredd.ogg'
+	toysound = 'sound/voice/biamthelaw.ogg'
 
 /obj/item/toy/figure/virologist
 	name = "Virologist action figure"
