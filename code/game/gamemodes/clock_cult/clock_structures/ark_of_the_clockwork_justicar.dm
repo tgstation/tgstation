@@ -156,6 +156,18 @@
 				M << "<span class='warning'><b>You hear otherworldly sounds from the [dir2text(get_dir(get_turf(M), get_turf(src)))]...</span>"
 	if(!obj_integrity)
 		return 0
+	for(var/t in RANGE_TURFS(1, loc))
+		if(iswallturf(t))
+			var/turf/closed/wall/W = t
+			W.dismantle_wall()
+		else if(t && (isclosedturf(t) || !is_blocked_turf(t)))
+			var/turf/T = t
+			T.ChangeTurf(/turf/open/floor/clockwork)
+	for(var/obj/O in orange(1, src))
+		if(!istype(O, /obj/effect) && O.density)
+			if(!step_away(O, src, 2) || get_dist(O, src) < 2)
+				O.take_damage(50, BURN, "bomb")
+			O.update_icon()
 	progress_in_seconds += GATEWAY_SUMMON_RATE
 	switch(progress_in_seconds)
 		if(-INFINITY to GATEWAY_REEBE_FOUND)
@@ -233,4 +245,4 @@
 	icon_state = "clockwork_gateway_charging"
 	pixel_x = -32
 	pixel_y = -32
-	layer = NOT_HIGH_OBJ_LAYER
+	layer = BELOW_OPEN_DOOR_LAYER
