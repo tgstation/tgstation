@@ -283,7 +283,6 @@
 				break
 
 		L.apply_status_effect(STATUS_EFFECT_VANGUARD)
-		add_logs(ranged_ability_user, L, "granted Vanguard")
 		ranged_ability_user.apply_status_effect(STATUS_EFFECT_VANGUARD)
 
 		clockwork_say(ranged_ability_user, text2ratvar("Shield us from darkness!"))
