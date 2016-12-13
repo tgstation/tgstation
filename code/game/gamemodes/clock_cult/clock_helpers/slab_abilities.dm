@@ -35,6 +35,9 @@
 		if(target_is_binding)
 			var/obj/structure/destructible/clockwork/geis_binding/GB = target
 			GB.repair_and_interrupt()
+			for(var/m in GB.buckled_mobs)
+				if(m)
+					add_logs(ranged_ability_user, m, "rebound with Geis")
 			successful = TRUE
 		else
 			var/mob/living/L = target
@@ -49,11 +52,13 @@
 			if(istype(L.buckled, /obj/structure/destructible/clockwork/geis_binding)) //if they're already bound, just stun them
 				var/obj/structure/destructible/clockwork/geis_binding/GB = L.buckled
 				GB.repair_and_interrupt()
+				add_logs(ranged_ability_user, L, "rebound with Geis")
 				successful = TRUE
 			else
 				in_progress = TRUE
 				clockwork_say(ranged_ability_user, text2ratvar("Be bound, heathen!"))
 				remove_mousepointer(ranged_ability_user.client)
+				add_logs(ranged_ability_user, L, "bound with Geis")
 				if(slab.speed_multiplier >= 0.5) //excuse my debug...
 					ranged_ability_user.notransform = TRUE
 					addtimer(src, "reset_user_notransform", 5, TIMER_NORMAL, ranged_ability_user) //stop us moving for a little bit so we don't break the scripture following this
@@ -228,8 +233,10 @@
 			for(var/i in 1 to healseverity)
 				PoolOrNew(/obj/effect/overlay/temp/heal, list(targetturf, "#1E8CE1"))
 			clockwork_say(ranged_ability_user, text2ratvar("Mend wounded flesh!"))
+			add_logs(ranged_ability_user, L, "healed with Sentinel's Compromise")
 		else
 			clockwork_say(ranged_ability_user, text2ratvar("Purge foul darkness!"))
+			add_logs(ranged_ability_user, L, "purged of holy water with Sentinel's Compromise")
 		ranged_ability_user << "<span class='brass'>You bathe [L == ranged_ability_user ? "yourself":"[L]"] in Inath-neq's power!</span>"
 		L.visible_message("<span class='warning'>A blue light washes over [L], mending [L.p_their()] bruises and burns!</span>", \
 		"<span class='heavy_brass'>You feel Inath-neq's power healing your wounds, but a deep nausea overcomes you!</span>")
@@ -272,10 +279,11 @@
 				if(LT.stat == DEAD || !is_servant_of_ratvar(LT) || LT == ranged_ability_user || !(LT in view(7, get_turf(ranged_ability_user))) || \
 				(islist(LT.stun_absorption) && LT.stun_absorption["vanguard"] && LT.stun_absorption["vanguard"]["end_time"] > world.time))
 					continue
-				LT.apply_status_effect(STATUS_EFFECT_VANGUARD)
+				L = LT
 				break
-		else
-			L.apply_status_effect(STATUS_EFFECT_VANGUARD)
+
+		L.apply_status_effect(STATUS_EFFECT_VANGUARD)
+		add_logs(ranged_ability_user, L, "granted Vanguard")
 		ranged_ability_user.apply_status_effect(STATUS_EFFECT_VANGUARD)
 
 		clockwork_say(ranged_ability_user, text2ratvar("Shield us from darkness!"))
