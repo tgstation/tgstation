@@ -42,9 +42,9 @@
 	icon_state = "black"
 	
 /obj/item/clothing/shoes/sandal/magic
-        desc = "A pair of magical sandals imbued with magic"
-	name = "magical sandals
-	flags = NOSLIP
+	name = "magical sandals"
+	desc = "A pair of sandals imbued with magic"
+	resistance_flags = FIRE_PROOF |  ACID_PROOF
 	
 /obj/item/clothing/shoes/galoshes
 	desc = "A pair of yellow rubber boots, designed to prevent slipping on wet surfaces."
