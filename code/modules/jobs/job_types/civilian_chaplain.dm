@@ -34,7 +34,7 @@ Chaplain
 	if(visualsOnly)
 		return
 	
-	H.mind.isholy = 1
+	H.mind.isholy = TRUE
 
 	var/obj/item/weapon/storage/book/bible/B = new /obj/item/weapon/storage/book/bible/booze(H)
 
