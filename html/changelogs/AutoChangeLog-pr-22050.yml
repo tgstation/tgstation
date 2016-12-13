@@ -1,6 +1,0 @@
-author: "Fox McCloud"
-delete-after: True
-changes: 
-  - rscadd: "Adds in random botany seeds; never the same twice."
-  - rscadd: "Adds in new trait that makes a grown release smoke when squashed"
-  - rscadd: "Weed rates and chances are now core seed genes"
