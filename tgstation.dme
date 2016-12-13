@@ -1302,6 +1302,7 @@
 #include "code\modules\hydroponics\grown\nettle.dm"
 #include "code\modules\hydroponics\grown\potato.dm"
 #include "code\modules\hydroponics\grown\pumpkin.dm"
+#include "code\modules\hydroponics\grown\random.dm"
 #include "code\modules\hydroponics\grown\replicapod.dm"
 #include "code\modules\hydroponics\grown\root.dm"
 #include "code\modules\hydroponics\grown\tea_coffee.dm"
