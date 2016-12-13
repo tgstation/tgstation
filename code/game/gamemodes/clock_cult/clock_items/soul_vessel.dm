@@ -89,6 +89,7 @@
 	"<span class='brass'>You extract [H]'s consciousness from [H.p_their()] body, trapping it in the soul vessel.</span>")
 	transfer_personality(H)
 	brainmob.fully_replace_character_name(null, "[braintype] [H.real_name]")
+	name = "[initial(name)] ([brainmob.name])"
 	B.Remove(H)
 	qdel(B)
 	H.update_hair()
