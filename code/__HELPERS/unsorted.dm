@@ -801,8 +801,9 @@ var/global/list/common_tools = list(
 	if(is_pointed(W))
 		return 1
 
-	var/list/embed_items = list(\
-	/obj/item/stack/rods,\
+	var/list/embed_items = list(
+		/obj/item/stack/rods,
+		/obj/item/pipe
 	)
 
 	if(is_type_in_list(W, embed_items))
