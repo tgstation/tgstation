@@ -33,10 +33,9 @@
 	desc = "A pair of rather plain, wooden sandals."
 	name = "sandals"
 	icon_state = "wizard"
-	flags = NOSLIP
 	strip_delay = 50
 	put_on_delay = 50
-	resistance_flags = FIRE_PROOF | ACID_PROOF
+	resistance_flags = ACID_PROOF
 
 /obj/item/clothing/shoes/sandal/marisa
 	desc = "A pair of magic black shoes."
