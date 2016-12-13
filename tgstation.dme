@@ -1493,6 +1493,7 @@
 #include "code\modules\mob\living\silicon\pai\life.dm"
 #include "code\modules\mob\living\silicon\pai\pai.dm"
 #include "code\modules\mob\living\silicon\pai\pai_defense.dm"
+#include "code\modules\mob\living\silicon\pai\pai_shell.dm"
 #include "code\modules\mob\living\silicon\pai\personality.dm"
 #include "code\modules\mob\living\silicon\pai\say.dm"
 #include "code\modules\mob\living\silicon\pai\software.dm"

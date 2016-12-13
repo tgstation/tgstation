@@ -2,8 +2,8 @@ var/datum/subsystem/pai/SSpai
 
 /datum/subsystem/pai
 	name = "pAI"
-	init_order = 20
-	flags = SS_NO_FIRE|SS_NO_INIT
+
+	flags = SS_NO_INIT|SS_NO_FIRE
 
 	var/list/candidates = list()
 
@@ -132,7 +132,6 @@ var/datum/subsystem/pai/SSpai
 	M << browse(dat, "window=paiRecruit")
 
 /datum/subsystem/pai/proc/findPAI(obj/item/device/paicard/p, mob/user)
-	requestRecruits()
 	var/list/available = list()
 	for(var/datum/paiCandidate/c in SSpai.candidates)
 		if(c.ready)
@@ -176,12 +175,6 @@ var/datum/subsystem/pai/SSpai
 	dat += "</table>"
 
 	user << browse(dat, "window=findPai")
-
-/datum/subsystem/pai/proc/requestRecruits()
-	var/list/candidates = pollCandidates("Someone is requesting a pAI personality. Would you like to play as a personal AI?", ROLE_PAI, null, ROLE_PAI,300, ignore_category = POLL_IGNORE_PAI)
-	for(var/V in candidates)
-		recruitWindow(V)
-	return
 
 /datum/paiCandidate
 	var/name

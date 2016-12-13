@@ -6,9 +6,9 @@
 	w_class = WEIGHT_CLASS_SMALL
 	slot_flags = SLOT_BELT
 	origin_tech = "programming=2"
-	var/obj/item/device/radio/radio
 	var/looking_for_personality = 0
 	var/mob/living/silicon/pai/pai
+	resistance_flags = FIRE_PROOF | ACID_PROOF | INDESTRUCTIBLE
 
 /obj/item/device/paicard/New()
 	..()
@@ -35,22 +35,19 @@
 		dat += "<a href='byond://?src=\ref[src];setlaws=1'>Configure Directives</a><br>"
 		dat += "<br>"
 		dat += "<h3>Device Settings</h3><br>"
-		if(radio)
+		if(pai.radio)
 			dat += "<b>Radio Uplink</b><br>"
-			dat += "Transmit: <A href='byond://?src=\ref[src];wires=[WIRE_TX]'>[(radio.wires.is_cut(WIRE_TX)) ? "Disabled" : "Enabled"]</A><br>"
-			dat += "Receive: <A href='byond://?src=\ref[src];wires=[WIRE_RX]'>[(radio.wires.is_cut(WIRE_RX)) ? "Disabled" : "Enabled"]</A><br>"
+			dat += "Transmit: <A href='byond://?src=\ref[src];wires=[WIRE_TX]'>[(pai.radio.wires.is_cut(WIRE_TX)) ? "Disabled" : "Enabled"]</A><br>"
+			dat += "Receive: <A href='byond://?src=\ref[src];wires=[WIRE_RX]'>[(pai.radio.wires.is_cut(WIRE_RX)) ? "Disabled" : "Enabled"]</A><br>"
 		else
 			dat += "<b>Radio Uplink</b><br>"
 			dat += "<font color=red><i>Radio firmware not loaded. Please install a pAI personality to load firmware.</i></font><br>"
 		dat += "<A href='byond://?src=\ref[src];wipe=1'>\[Wipe current pAI personality\]</a><br>"
 	else
 		if(looking_for_personality)
+			dat += "No personality installed.<br>"
 			dat += "Searching for a personality..."
 			dat += "<A href='byond://?src=\ref[src];request=1'>\[View available personalities\]</a><br>"
-		else
-			dat += "No personality is installed.<br>"
-			dat += "<A href='byond://?src=\ref[src];request=1'>\[Request personal AI personality\]</a><br>"
-			dat += "Each time this button is pressed, a request will be sent out to any available personalities. Check back often and give a lot of time for personalities to respond. This process could take anywhere from 15 seconds to several minutes, depending on the available personalities' timeliness."
 	user << browse(dat, "window=paicard")
 	onclose(user, "paicard")
 	return
@@ -86,8 +83,8 @@
 					pai.death(0)
 		if(href_list["wires"])
 			var/wire = text2num(href_list["wires"])
-			if(radio)
-				radio.wires.cut(wire)
+			if(pai.radio)
+				pai.radio.wires.cut(wire)
 		if(href_list["setlaws"])
 			var/newlaws = copytext(sanitize(input("Enter any additional directives you would like your pAI personality to follow. Note that these directives will not override the personality's allegiance to its imprinted master. Conflicting directives will be ignored.", "pAI Directive Configuration", pai.laws.supplied[1]) as message),1,MAX_MESSAGE_LEN)
 			if(newlaws && pai)
