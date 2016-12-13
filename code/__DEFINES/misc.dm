@@ -600,6 +600,7 @@ var/global/list/ghost_others_options = list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 #define CLOCK_SUMMON 21
 #define CLOCK_SILICONS 22
 #define CLOCK_PROSELYTIZATION 23
+#define SHUTTLE_HIJACK 24
 
 //For SSTimer
 
