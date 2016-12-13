@@ -116,62 +116,81 @@ var/const/MAX_ACTIVE_TIME = 400
 		icon_state = "[initial(icon_state)]"
 		Attach(hit_atom)
 
-/obj/item/clothing/mask/facehugger/proc/Attach(mob/living/M)
-	// can't implant if we're not conscious
+/obj/item/clothing/mask/facehugger/proc/valid_to_attach(mob/living/M)
+	// valid targets: corgis, carbons except aliens and devils
+	// facehugger state early exit checks
 	if(stat != CONSCIOUS)
-		return 0
-	// categorical checks
-	if(!isliving(M) || !iscarbon(M) || isalien(M))
-		return 0
-	var/mob/living/carbon/target = M
-	// gotta have a head to be implanted (no changelings or sentient plants)
-	if(!target.get_bodypart("head"))
-		return 0
+		return FALSE
 	if(attached)
-		return 0
-	else
-		attached++
-		spawn(MAX_IMPREGNATION_TIME)
-			attached = 0
-	if(target.getorgan(/obj/item/organ/alien/hivenode) || target.getorgan(/obj/item/organ/body_egg/alien_embryo))
-		return 0
+		return FALSE
+	if(!iscorgi(M) && !iscarbon(M))
+		return FALSE
+	if(iscarbon(M))
+		// disallowed carbons
+		if(isalien(M) || isdevil(M))
+			return FALSE
+		var/mob/living/carbon/target = M
+		// gotta have a head to be implanted (no changelings or sentient plants)
+		if(!target.get_bodypart("head"))
+			return FALSE
+
+		if(target.getorgan(/obj/item/organ/alien/hivenode) || target.getorgan(/obj/item/organ/body_egg/alien_embryo))
+			return FALSE
+		// carbon, has head, not alien or devil, has no hivenode or embryo: valid
+		return TRUE
+	else if(iscorgi(M))
+		// corgi: valid
+		return TRUE
+
+/obj/item/clothing/mask/facehugger/proc/Attach(mob/living/M)
+	if(!valid_to_attach(M))
+		return FALSE
 	// passed initial checks - time to leap!
 	M.visible_message("<span class='danger'>[src] leaps at [M]'s face!</span>", \
 							"<span class='userdanger'>[src] leaps at [M]'s face!</span>")
-	if(!sterile)
-		M.take_bodypart_damage(strength,0) //done here so that even borgs and humans in helmets take damage
-		M.Paralyse(MAX_IMPREGNATION_TIME/6) //something like 25 ticks = 20 seconds with the default settings
-	if(ishuman(M))
-		var/mob/living/carbon/human/H = M
-		if(H.is_mouth_covered(head_only = 1))
-			H.visible_message("<span class='danger'>[src] smashes against [H]'s [H.head]!</span>", \
-								"<span class='userdanger'>[src] smashes against [H]'s [H.head]!</span>")
-			Die()
-			return 0
 
-	if(target.wear_mask)
-		var/obj/item/clothing/W = target.wear_mask
-		if(W.flags & NODROP)
-			return 0
-		target.unEquip(W)
-		target.visible_message("<span class='danger'>[src] tears [W] off of [target]'s face!</span>", \
-								"<span class='userdanger'>[src] tears [W] off of [target]'s face!</span>")
+	// probiscis-blocker handling
+	if(iscarbon(M))
+		var/mob/living/carbon/target = M
+		if(target.wear_mask)
+			var/obj/item/clothing/W = target.wear_mask
+			if(W.flags & NODROP)
+				return FALSE
+			target.unEquip(W)
+			target.visible_message("<span class='danger'>[src] tears [W] off of [target]'s face!</span>", \
+									"<span class='userdanger'>[src] tears [W] off of [target]'s face!</span>")
 
-	src.loc = target
-	target.equip_to_slot_if_possible(src, slot_wear_mask, 0, 1, 1)
-	//target.equip_to_slot(src, slot_wear_mask,,0)
+		if(ishuman(M))
+			var/mob/living/carbon/human/H = M
+			if(H.is_mouth_covered(head_only = 1))
+				H.visible_message("<span class='danger'>[src] smashes against [H]'s [H.head]!</span>", \
+									"<span class='userdanger'>[src] smashes against [H]'s [H.head]!</span>")
+				Die()
+				return FALSE
+		src.loc = target
+		target.equip_to_slot_if_possible(src, slot_wear_mask, 0, 1, 1)
+	// early returns and validity checks done: attach.
+	attached++
+	//ensure we detach once we no longer need to be attached
+	spawn(MAX_IMPREGNATION_TIME)
+		attached = 0
+
 	if (iscorgi(M))
 		var/mob/living/simple_animal/pet/dog/corgi/C = M
 		loc = C
 		C.facehugger = src
 		C.regenerate_icons()
 
+	if(!sterile)
+		M.take_bodypart_damage(strength,0) //done here so that humans in helmets take damage
+		M.Paralyse(MAX_IMPREGNATION_TIME/6) //something like 25 ticks = 20 seconds with the default settings
+
 	GoIdle() //so it doesn't jump the people that tear it off
 
 	spawn(rand(MIN_IMPREGNATION_TIME,MAX_IMPREGNATION_TIME))
 		Impregnate(M)
 
-	return 1
+	return TRUE // time for a smoke
 
 /obj/item/clothing/mask/facehugger/proc/Impregnate(mob/living/target)
 	if(!target || target.stat == DEAD) //was taken off or something
