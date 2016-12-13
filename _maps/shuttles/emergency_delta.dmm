@@ -38,7 +38,7 @@
 "aL" = (/obj/structure/bed/roller,/obj/machinery/iv_drip,/turf/open/floor/plasteel/whiteblue/side,/area/shuttle/escape)
 "aM" = (/turf/open/floor/plasteel/whiteblue/side,/area/shuttle/escape)
 "aN" = (/obj/structure/bed/roller,/obj/machinery/iv_drip,/obj/structure/extinguisher_cabinet{pixel_x = 26},/turf/open/floor/plasteel/whiteblue/side{dir = 6},/area/shuttle/escape)
-"aO" = (/obj/machinery/door/airlock/shuttle{name = "Emergency Shuttle Airlock"},/obj/docking_port/mobile/emergency{dheight = 0; dwidth = 9; height = 18; name = "Delta emergency shuttle"; timid = 0; width = 30},/turf/open/floor/plating,/area/shuttle/escape)
+"aO" = (/obj/machinery/door/airlock/shuttle{name = "Emergency Shuttle Airlock"; req_access_txt = "0"},/turf/open/floor/plasteel/warnwhite/side,/area/shuttle/escape)
 "aP" = (/obj/structure/sign/bluecross_2,/turf/closed/wall/mineral/titanium,/area/shuttle/escape)
 "aQ" = (/obj/machinery/sleeper{icon_state = "sleeper-open"; dir = 4},/turf/open/floor/plasteel/cmo,/area/shuttle/escape)
 "aR" = (/turf/open/floor/plasteel/cmo,/area/shuttle/escape)
@@ -46,7 +46,7 @@
 "aT" = (/obj/structure/sign/nanotrasen,/turf/closed/wall/mineral/titanium,/area/shuttle/escape)
 "aU" = (/turf/open/floor/plasteel/bot,/area/shuttle/escape)
 "aV" = (/obj/machinery/door/airlock/glass_medical{id_tag = null; name = "Escape Shuttle Infirmary"; req_access_txt = "0"},/turf/open/floor/plasteel/warning/side{tag = "icon-plasteel_warn_side (EAST)"; icon_state = "plasteel_warn_side"; dir = 4},/area/shuttle/escape)
-"aW" = (/obj/machinery/door/airlock/shuttle{name = "Emergency Shuttle Airlock"; req_access_txt = "0"},/turf/open/floor/plasteel/warnwhite/side,/area/shuttle/escape)
+"aW" = (/obj/machinery/door/airlock/shuttle{name = "Emergency Shuttle Airlock"},/obj/docking_port/mobile/emergency{dheight = 0; dwidth = 11; height = 18; name = "Delta emergency shuttle"; timid = 0; width = 30},/turf/open/floor/plating,/area/shuttle/escape)
 "aX" = (/obj/structure/flora/ausbushes/grassybush,/obj/structure/flora/ausbushes/lavendergrass,/obj/structure/flora/ausbushes/ppflowers,/obj/structure/flora/ausbushes/sunnybush,/obj/structure/window/shuttle,/turf/open/floor/grass,/area/shuttle/escape)
 "aY" = (/obj/structure/extinguisher_cabinet{pixel_x = -26},/obj/machinery/shieldgen,/turf/open/floor/plasteel/bot,/area/shuttle/escape)
 "aZ" = (/obj/structure/rack,/obj/item/weapon/storage/toolbox/electrical{pixel_x = -3; pixel_y = 1},/obj/item/weapon/storage/toolbox/mechanical{pixel_x = 0; pixel_y = -1},/obj/item/weapon/storage/toolbox/emergency{pixel_x = 3; pixel_y = -5},/turf/open/floor/plasteel/bot,/area/shuttle/escape)
@@ -145,7 +145,7 @@ agavaoawbeavaoawbeavaoawafbfbgbhbiag
 agavaoawaDavaoawbjavaoaEbkaEbgbhaUag
 agavaoawaXavaoawaXavaoaEbkaEbgbhaUag
 afanaoaoaoaoaoaoaoaoaoapafblbmbnahag
-aWaEbobobobobpboboboboahafbqbrbrbsaf
+aOaEbobobobobpboboboboahafbqbrbrbsaf
 afafbtafagafafagbubuagafafafafafafaf
 bvbwbwbxbxbyafbzaiaibAaTbBbCbDbCahag
 afbEbwbwbwbwbtbFaoaobGafbHbHbIbJbKbL
