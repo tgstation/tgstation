@@ -117,13 +117,15 @@ var/const/MAX_ACTIVE_TIME = 400
 		Attach(hit_atom)
 
 /obj/item/clothing/mask/facehugger/proc/Attach(mob/living/M)
-	if(!isliving(M))
+	// can't implant if we're not conscious
+	if(stat != CONSCIOUS)
 		return 0
-	var/Corgi = iscorgi(M)
-	if((!Corgi && !iscarbon(M)) || isalien(M))
+	// categorical checks
+	if(!isliving(M) || !iscarbon(M) || isalien(M))
 		return 0
-	var/mob/living/carbon/Carb = M
-	if(!Corgi && !Carb.head)
+	var/mob/living/carbon/target = M
+	// gotta have a head to be implanted (no changelings or sentient plants)
+	if(!target.get_bodypart("head"))
 		return 0
 	if(attached)
 		return 0
@@ -131,15 +133,14 @@ var/const/MAX_ACTIVE_TIME = 400
 		attached++
 		spawn(MAX_IMPREGNATION_TIME)
 			attached = 0
-	if(M.getorgan(/obj/item/organ/alien/hivenode))
+	if(target.getorgan(/obj/item/organ/alien/hivenode) || target.getorgan(/obj/item/organ/body_egg/alien_embryo))
 		return 0
-	if(M.getorgan(/obj/item/organ/body_egg/alien_embryo))
-		return 0
-	if(stat != CONSCIOUS)
-		return 0
-	if(!sterile) M.take_bodypart_damage(strength,0) //done here so that even borgs and humans in helmets take damage
+	// passed initial checks - time to leap!
 	M.visible_message("<span class='danger'>[src] leaps at [M]'s face!</span>", \
-						"<span class='userdanger'>[src] leaps at [M]'s face!</span>")
+							"<span class='userdanger'>[src] leaps at [M]'s face!</span>")
+	if(!sterile)
+		M.take_bodypart_damage(strength,0) //done here so that even borgs and humans in helmets take damage
+		M.Paralyse(MAX_IMPREGNATION_TIME/6) //something like 25 ticks = 20 seconds with the default settings
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		if(H.is_mouth_covered(head_only = 1))
@@ -147,22 +148,19 @@ var/const/MAX_ACTIVE_TIME = 400
 								"<span class='userdanger'>[src] smashes against [H]'s [H.head]!</span>")
 			Die()
 			return 0
-	if(iscarbon(M))
-		var/mob/living/carbon/target = M
-		if(target.wear_mask)
-			var/obj/item/clothing/W = target.wear_mask
-			if(W.flags & NODROP)
-				return 0
-			target.unEquip(W)
 
-			target.visible_message("<span class='danger'>[src] tears [W] off of [target]'s face!</span>", \
-									"<span class='userdanger'>[src] tears [W] off of [target]'s face!</span>")
+	if(target.wear_mask)
+		var/obj/item/clothing/W = target.wear_mask
+		if(W.flags & NODROP)
+			return 0
+		target.unEquip(W)
+		target.visible_message("<span class='danger'>[src] tears [W] off of [target]'s face!</span>", \
+								"<span class='userdanger'>[src] tears [W] off of [target]'s face!</span>")
 
-		src.loc = target
-		target.equip_to_slot(src, slot_wear_mask,,0)
-		if(!sterile)
-			M.Paralyse(MAX_IMPREGNATION_TIME/6) //something like 25 ticks = 20 seconds with the default settings
-	else if (iscorgi(M))
+	src.loc = target
+	target.equip_to_slot_if_possible(src, slot_wear_mask, 0, 1, 1)
+	//target.equip_to_slot(src, slot_wear_mask,,0)
+	if (iscorgi(M))
 		var/mob/living/simple_animal/pet/dog/corgi/C = M
 		loc = C
 		C.facehugger = src
