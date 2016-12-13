@@ -795,18 +795,17 @@ var/global/list/common_tools = list(
 
 //For objects that should embed, but make no sense being is_sharp or is_pointed()
 //e.g: rods
+var/list/can_embed_types = typecacheof(list(
+	/obj/item/stack/rods,
+	/obj/item/pipe))
+
 /proc/can_embed(obj/item/W)
 	if(W.is_sharp())
 		return 1
 	if(is_pointed(W))
 		return 1
 
-	var/list/embed_items = list(
-		/obj/item/stack/rods,
-		/obj/item/pipe
-	)
-
-	if(is_type_in_list(W, embed_items))
+	if(is_type_in_typecache(W, can_embed_types)
 		return 1
 
 
