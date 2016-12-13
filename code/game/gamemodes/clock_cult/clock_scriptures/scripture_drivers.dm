@@ -216,7 +216,7 @@
 		progbar = new(invoker, flee_time, invoker)
 		progbar.bar.color = "#AF0AAF"
 		animate(progbar.bar, color = initial(progbar.bar.color), time = flee_time+grace_period)
-		while(world.time < endtime)
+		while(world.time < endtime && invoker && slab && invoker.get_active_held_item() == slab)
 			sleep(1)
 			progbar.update(world.time - starttime)
 		qdel(progbar)
