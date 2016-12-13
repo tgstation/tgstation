@@ -1,0 +1,5 @@
+author: "Joan"
+delete-after: True
+changes: 
+  - experiment: "Clockwork proselytizers suffer doubled cost and proselytization time when not on the station, mining, or centcom."
+  - soundadd: "Trying to recite scripture offstation is more clearly disapproved of."
