@@ -16742,17 +16742,14 @@
 /obj/machinery/door/airlock/glass{
 	name = "Shuttle Airlock"
 	},
-/obj/docking_port/mobile{
+/obj/docking_port/mobile/white_ship{
 	dheight = 0;
 	dir = 8;
 	dwidth = 4;
 	height = 9;
-	id = "whiteship";
-	launch_status = 0;
 	name = "White Ship";
 	port_angle = 90;
 	preferred_direction = 1;
-	roundstart_move = "whiteship_away";
 	timid = null;
 	width = 9
 	},

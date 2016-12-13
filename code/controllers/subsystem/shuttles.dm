@@ -157,6 +157,13 @@ var/datum/subsystem/shuttle/SSshuttle
 			return S
 	WARNING("couldn't find dock with id: [id]")
 
+/datum/subsystem/shuttle/proc/getPrefixDocks(prefix)
+	var/list/matches = list()
+	for(var/obj/docking_port/stationary/S in stationary)
+		if(dd_hasprefix(S.id, prefix))
+			matches += S
+	return matches
+
 /datum/subsystem/shuttle/proc/requestEvac(mob/user, call_reason)
 	if(!emergency)
 		WARNING("requestEvac(): There is no emergency shuttle, but the \

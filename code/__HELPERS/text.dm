@@ -179,6 +179,7 @@
 
 //Checks the beginning of a string for a specified sub-string
 //Returns the position of the substring or 0 if it was not found
+//Also could be called `startswith`
 /proc/dd_hasprefix(text, prefix)
 	var/start = 1
 	var/end = length(prefix) + 1

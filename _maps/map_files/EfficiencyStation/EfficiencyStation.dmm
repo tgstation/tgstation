@@ -2194,14 +2194,12 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
 "aeu" = (
-/obj/docking_port/mobile{
+/obj/docking_port/mobile/white_ship{
 	dheight = 0;
 	dir = 8;
 	dwidth = 11;
 	height = 15;
-	id = "whiteship";
 	name = "NT Recovery White-Ship";
-	roundstart_move = "whiteship_away";
 	port_angle = 180;
 	width = 27
 	},
