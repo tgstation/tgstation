@@ -1,9 +1,10 @@
-/obj/structure/destructible/clockwork/massive/celestial_gateway //The gateway to Reebe, from which Ratvar emerges
+//The gateway to Reebe, from which Ratvar emerges.
+/obj/structure/destructible/clockwork/massive/celestial_gateway
 	name = "Gateway to the Celestial Derelict"
 	desc = "A massive, thrumming rip in spacetime."
 	clockwork_desc = "A portal to the Celestial Derelict. Massive and intimidating, it is the only thing that can both transport Ratvar and withstand the massive amount of energy he emits."
-	obj_integrity = 500
-	max_integrity = 500
+	obj_integrity = 600
+	max_integrity = 600
 	mouse_opacity = 2
 	icon = 'icons/effects/clockwork_effects.dmi'
 	icon_state = "nothing"
