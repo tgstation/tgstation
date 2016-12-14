@@ -29,7 +29,7 @@
 	build_path = /obj/machinery/smartfridge
 	origin_tech = "programming=1"
 	req_components = list(/obj/item/weapon/stock_parts/matter_bin = 1)
-	var/list/fridges = list(/obj/machinery/smartfridge = "plant produce",
+	var/static/list/fridges = list(/obj/machinery/smartfridge = "plant produce",
 							/obj/machinery/smartfridge/food = "food",
 							/obj/machinery/smartfridge/drinks = "drinks",
 							/obj/machinery/smartfridge/extract = "slimes",
