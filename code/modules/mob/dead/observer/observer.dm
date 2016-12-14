@@ -495,13 +495,18 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	updateghostimages()
 
 /proc/updateallghostimages()
+	remove_nulls(ghost_images_full)
+	remove_nulls(ghost_images_default)
+	remove_nulls(ghost_images_simple)
+	remove_nulls(ghost_darkness_images)
+	
 	for (var/mob/dead/observer/O in player_list)
 		O.updateghostimages()
 
 /mob/dead/observer/proc/updateghostimages()
 	if (!client)
 		return
-
+	
 	if(lastsetting)
 		switch(lastsetting) //checks the setting we last came from, for a little efficiency so we don't try to delete images from the client that it doesn't have anyway
 			if(GHOST_OTHERS_THEIR_SETTING)
