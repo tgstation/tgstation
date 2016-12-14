@@ -121,7 +121,7 @@ var/datum/subsystem/garbage_collector/SSgarbage
 			++totalgcs
 
 /datum/subsystem/garbage_collector/proc/QueueForQueuing(datum/A)
-	if (istype(A) && isnull(A.gc_destroyed))
+	if (istype(A) && A.gc_destroyed == GC_CURRENTLY_BEING_QDELETED)
 		tobequeued += A
 		A.gc_destroyed = GC_QUEUED_FOR_QUEUING
 
@@ -142,7 +142,7 @@ var/datum/subsystem/garbage_collector/SSgarbage
 	queue[refid] = gctime
 
 /datum/subsystem/garbage_collector/proc/HardQueue(datum/A)
-	if (istype(A) && isnull(A.gc_destroyed))
+	if (istype(A) && A.gc_destroyed == GC_CURRENTLY_BEING_QDELETED)
 		tobequeued += A
 		A.gc_destroyed = GC_QUEUED_FOR_HARD_DEL
 
@@ -163,6 +163,7 @@ var/datum/subsystem/garbage_collector/SSgarbage
 	if(!istype(D))
 		del(D)
 	else if(isnull(D.gc_destroyed))
+		D.gc_destroyed = GC_CURRENTLY_BEING_QDELETED
 		var/hint = D.Destroy(force) // Let our friend know they're about to get fucked up.
 		if(!D)
 			return
@@ -198,12 +199,22 @@ var/datum/subsystem/garbage_collector/SSgarbage
 					SSgarbage.noqdelhint["[D.type]"] = "[D.type]"
 					testing("WARNING: [D.type] is not returning a qdel hint. It is being placed in the queue. Further instances of this type will also be queued.")
 				SSgarbage.QueueForQueuing(D)
+	else if(D.gc_destroyed == GC_CURRENTLY_BEING_QDELETED)
+		throw EXCEPTION("[D.type] destroy proc was called multiple times, likely due to a qdel loop in the Destroy logic")
 
 // Returns 1 if the object has been queued for deletion.
 /proc/qdeleted(datum/D)
 	if(!istype(D))
 		return FALSE
 	if(D.gc_destroyed)
+		return TRUE
+	return FALSE
+
+// Returns true if the object's destroy has been called (set just before it is called)
+/proc/qdestroying(datum/D)
+	if(!istype(D))
+		return FALSE
+	if(D.gc_destroyed == GC_CURRENTLY_BEING_QDELETED)
 		return TRUE
 	return FALSE
 
