@@ -20,7 +20,7 @@
 //attaching papers!!
 /obj/structure/noticeboard/attackby(obj/item/weapon/O, mob/user, params)
 	if(istype(O, /obj/item/weapon/paper) || istype(O, /obj/item/weapon/photo))
-		if(!src.allowed(user))
+		if(!allowed(user))
 			user << "<span class='info'>You are not authorized to add notices</span>"
 			return
 		if(notices < 5)
@@ -36,7 +36,7 @@
 		return ..()
 
 /obj/structure/noticeboard/attack_hand(mob/user)
-	var/auth = src.allowed(user)
+	var/auth = allowed(user)
 	var/dat = "<B>[name]</B><BR>"
 	for(var/obj/item/P in src)
 		if(istype(P, /obj/item/weapon/paper))
