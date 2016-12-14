@@ -254,6 +254,10 @@
 	gun = tentacle_gun
 	..()
 
+/obj/item/ammo_casing/magic/tentacle/Destroy(obj/item/weapon/gun/magic/tentacle/tentacle_gun)
+	gun = null
+	..()
+
 /obj/item/projectile/tentacle
 	name = "tentacle"
 	icon_state = "tentacle_end"
@@ -353,6 +357,7 @@
 
 /obj/item/projectile/tentacle/Destroy()
 	qdel(chain)
+	source = null
 	return ..()
 
 
