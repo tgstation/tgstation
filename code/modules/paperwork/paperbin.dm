@@ -9,11 +9,23 @@
 	throw_speed = 3
 	throw_range = 7
 	pressure_resistance = 8
-	var/amount = 30					//How much paper is in the bin.
-	var/list/papers = list()	//List of papers put in the bin for reference.
+	var/total_paper = 30
+	var/list/papers = list()
+	var/obj/item/weapon/pen/bin_pen
+
+/obj/item/weapon/paper_bin/initialize()
+	var/obj/item/weapon/pen/P = locate(/obj/item/weapon/pen) in src.loc
+	if(P && !bin_pen)
+		P.loc = src
+		bin_pen = P
+		update_icon()
+		var/static/warned = FALSE
+		if(!warned)
+			warning("one or more paperbins ate a pen duing initialize()")
+			warned = TRUE
 
 /obj/item/weapon/paper_bin/fire_act(exposed_temperature, exposed_volume)
-	if(!amount)
+	if(!total_paper)
 		return
 	..()
 
@@ -25,8 +37,8 @@
 	. = ..()
 
 /obj/item/weapon/paper_bin/fire_act(exposed_temperature, exposed_volume)
-	if(amount)
-		amount = 0
+	if(total_paper)
+		total_paper = 0
 		update_icon()
 	..()
 
@@ -56,12 +68,19 @@
 	if(user.lying)
 		return
 	user.changeNext_move(CLICK_CD_MELEE)
-	if(amount >= 1)
-		amount--
+	if(bin_pen)
+		var/obj/item/weapon/pen/P = bin_pen
+		P.loc = user.loc
+		user.put_in_hands(P)
+		user << "<span class='notice'>You take [P] out of \the [src].</span>"
+		bin_pen = null
 		update_icon()
-
+	else if(total_paper >= 1)
+		total_paper--
+		update_icon()
+		// If there's any custom paper on the stack, use that instead of creating a new paper.
 		var/obj/item/weapon/paper/P
-		if(papers.len > 0)	//If there's any custom paper on the stack, use that instead of creating a new paper.
+		if(papers.len > 0)
 			P = papers[papers.len]
 			papers.Remove(P)
 		else
@@ -89,21 +108,32 @@
 		P.loc = src
 		user << "<span class='notice'>You put [P] in [src].</span>"
 		papers.Add(P)
-		amount++
+		total_paper++
+		update_icon()
+	else if(istype(I, /obj/item/weapon/pen))
+		var/obj/item/weapon/pen/P = I
+		if(!user.unEquip(P))
+			return
+		P.loc = src
+		user << "<span class='notice'>You put [P] in [src].</span>"
+		bin_pen = P
 		update_icon()
 	else
 		return ..()
 
 /obj/item/weapon/paper_bin/examine(mob/user)
 	..()
-	if(amount)
-		user << "It contains " + (amount > 1 ? "[amount] papers" : " one paper")+"."
+	if(total_paper)
+		user << "It contains " + (total_paper > 1 ? "[total_paper] papers" : " one paper")+"."
 	else
 		user << "It doesn't contain anything."
 
 
 /obj/item/weapon/paper_bin/update_icon()
-	if(amount < 1)
+	if(total_paper < 1)
 		icon_state = "paper_bin0"
 	else
 		icon_state = "paper_bin1"
+	cut_overlays()
+	if(bin_pen)
+		add_overlay(image(icon=bin_pen.icon,icon_state=bin_pen.icon_state))
