@@ -1406,7 +1406,7 @@
 	..()
 
 /datum/reagent/shrinkserum
-        name = "Shrink serum"
+	name = "Shrink serum"
 	id = "shrinkserum"
 	description = "A chemical to shrink you a few sizes down"
 	color = "#0000ff"//strong blue. rgb 0, 0, 255
