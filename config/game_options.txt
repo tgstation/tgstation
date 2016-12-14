@@ -312,6 +312,7 @@ SEC_START_BRIG
 ## Set to 0/commented for "off", silicons will just start with Asimov.
 ## Set to 1 for "custom", silicons will start with the custom laws defined in silicon_laws.txt. (If silicon_laws.txt is empty, the AI will spawn with asimov and Custom boards will auto-delete.)
 ## Set to 2 for "random", silicons will start with a random lawset picked from random laws specified below.
+## Set to 3 for "weighted random", using values in "silicon_weights.txt", a law will be selected, with weights specifed in that file.
 DEFAULT_LAWS 0
 
 ## RANDOM LAWS ##
@@ -343,6 +344,36 @@ RANDOM_LAWS corporate
 
 ## meme laws. Honk
 #RANDOM_LAWS buildawall
+
+## If weighted laws are selected (DEFAULT_LAWS = 3),
+## then an AI's starting laws will be determined by the weights of these values
+
+## Make sure there are no spaces between the law_id and the number.
+
+LAW_WEIGHT custom,0
+
+## standard-ish laws. These are fairly ok to run
+LAW_WEIGHT asimov,32
+LAW_WEIGHT asimovpp,12
+LAW_WEIGHT paladin,12
+LAW_WEIGHT robocop,12
+LAW_WEIGHT corporate,12
+
+## Quirky laws. Shouldn't cause too much harm
+LAW_WEIGHT hippocratic,3
+LAW_WEIGHT maintain,4
+LAW_WEIGHT drone,3
+LAW_WEIGHT liveandletlive,3
+LAW_WEIGHT peacekeeper,3
+LAW_WEIGHT reporter,4
+
+## Bad idea laws. Probably shouldn't enable these
+LAW_WEIGHT syndie,0
+LAW_WEIGHT ninja,0
+LAW_WEIGHT antimov,0
+LAW_WEIGHT thermodynamic,0
+LAW_WEIGHT ratvar,0
+LAW_WEIGHT buildawall,0
 
 ##------------------------------------------------
 

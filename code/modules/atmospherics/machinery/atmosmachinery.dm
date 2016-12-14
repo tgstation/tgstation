@@ -136,7 +136,7 @@ Pipelines + Other Objects -> Pipe network
 			var/unsafe_wrenching = FALSE
 			var/internal_pressure = int_air.return_pressure()-env_air.return_pressure()
 
-			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+			playsound(src.loc, W.usesound, 50, 1)
 			user << "<span class='notice'>You begin to unfasten \the [src]...</span>"
 			if (internal_pressure > 2*ONE_ATMOSPHERE)
 				user << "<span class='warning'>As you begin unwrenching \the [src] a gush of air blows in your face... maybe you should reconsider?</span>"
@@ -288,4 +288,3 @@ Pipelines + Other Objects -> Pipe network
 //Used for certain children of obj/machinery/atmospherics to not show pipe vision when mob is inside it.
 /obj/machinery/atmospherics/proc/can_see_pipes()
 	return 1
-

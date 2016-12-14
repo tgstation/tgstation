@@ -25390,9 +25390,8 @@
 /turf/closed/wall,
 /area/medical/chemistry)
 "bfG" = (
-/obj/structure/grille,
-/obj/structure/window/fulltile,
-/turf/open/floor/plating,
+/obj/structure/sign/nosmoking_1,
+/turf/closed/wall,
 /area/medical/medbay)
 "bfH" = (
 /obj/structure/sign/bluecross_2,
@@ -27917,9 +27916,15 @@
 /area/medical/medbay)
 "blj" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/paper_bin{
-	pixel_x = 1;
-	pixel_y = 9
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/item/device/flashlight/lamp{
+	pixel_x = 2;
+	pixel_y = -2
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay)
@@ -27934,12 +27939,20 @@
 /obj/item/weapon/folder/white,
 /obj/item/weapon/pen,
 /obj/item/weapon/reagent_containers/glass/bottle/epinephrine,
+/obj/machinery/door/window/northright{
+	name = "Medbay Lobby";
+	req_access_txt = "5"
+	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay)
 "blm" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/reagent_containers/food/drinks/britcup{
-	desc = "Kingston's personal cup."
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/item/weapon/paper_bin{
+	pixel_x = 1;
+	pixel_y = 0
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay)
@@ -27952,7 +27965,13 @@
 	pixel_x = 0;
 	pixel_y = 0
 	},
-/obj/machinery/cell_charger,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/item/weapon/reagent_containers/food/drinks/britcup{
+	desc = "Kingston's personal cup.";
+	pixel_y = -1
+	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay)
 "blo" = (
@@ -28646,6 +28665,9 @@
 /area/medical/medbay)
 "bmK" = (
 /obj/structure/table/reinforced,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay)
 "bmL" = (
@@ -29357,7 +29379,7 @@
 	},
 /area/medical/medbay)
 "boi" = (
-/obj/machinery/computer/med_data,
+/obj/machinery/computer/crew,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay)
 "boj" = (
@@ -30606,12 +30628,17 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "bqM" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/turf/open/floor/plating,
+/obj/machinery/door/airlock/glass_medical{
+	id_tag = null;
+	name = "Medbay Emergency Entrance";
+	req_access_txt = "5"
+	},
+/turf/open/floor/plasteel/warning{
+	dir = 5
+	},
 /area/medical/medbay)
 "bqN" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -30644,10 +30671,6 @@
 /turf/open/floor/plasteel/white,
 /area/medical/medbay)
 "bqR" = (
-/obj/structure/table,
-/obj/item/weapon/crowbar,
-/obj/item/clothing/neck/stethoscope,
-/obj/item/weapon/reagent_containers/spray/cleaner,
 /obj/structure/sign/nosmoking_2{
 	pixel_x = 0;
 	pixel_y = 30
@@ -31254,12 +31277,17 @@
 /turf/open/floor/plating,
 /area/crew_quarters/heads)
 "brV" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/turf/open/floor/plating,
+/obj/machinery/door/airlock/glass_medical{
+	id_tag = null;
+	name = "Medbay Emergency Entrance";
+	req_access_txt = "5"
+	},
+/turf/open/floor/plasteel/warning{
+	dir = 6
+	},
 /area/medical/medbay)
 "brW" = (
 /obj/structure/cable{
@@ -33532,13 +33560,17 @@
 /area/medical/sleeper)
 "bwF" = (
 /obj/structure/table/glass,
-/obj/item/weapon/reagent_containers/glass/beaker/cryoxadone{
-	pixel_x = 7;
-	pixel_y = 1
+/obj/item/weapon/storage/box/gloves{
+	pixel_x = 3;
+	pixel_y = 4
 	},
 /obj/item/weapon/reagent_containers/glass/beaker/cryoxadone{
-	pixel_x = 7;
-	pixel_y = 1
+	pixel_x = 2;
+	pixel_y = 2
+	},
+/obj/item/weapon/reagent_containers/glass/beaker/cryoxadone{
+	pixel_x = 2;
+	pixel_y = 2
 	},
 /turf/open/floor/plasteel,
 /area/medical/sleeper)
@@ -33548,6 +33580,7 @@
 /area/medical/sleeper)
 "bwH" = (
 /obj/structure/table,
+/obj/item/clothing/neck/stethoscope,
 /obj/machinery/cell_charger,
 /turf/open/floor/plasteel,
 /area/medical/sleeper)
@@ -33561,6 +33594,10 @@
 	c_tag = "Medbay Cryogenics";
 	dir = 2;
 	network = list("SS13");
+	pixel_x = 0;
+	pixel_y = 0
+	},
+/obj/item/weapon/storage/box/masks{
 	pixel_x = 0;
 	pixel_y = 0
 	},
@@ -35376,6 +35413,7 @@
 "bAt" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/wrench/medical,
+/obj/item/weapon/reagent_containers/spray/cleaner,
 /turf/open/floor/plasteel,
 /area/medical/sleeper)
 "bAu" = (
@@ -56190,11 +56228,9 @@
 /turf/open/floor/plating/airless,
 /area/engine/engineering)
 "csL" = (
-/obj/structure/transit_tube{
-	icon_state = "D-NE"
-	},
-/turf/open/space,
-/area/space)
+/obj/structure/sign/bluecross_2,
+/turf/closed/wall,
+/area/medical/chemistry)
 "csM" = (
 /obj/structure/lattice,
 /obj/machinery/atmospherics/pipe/simple/yellow/visible,
@@ -94247,10 +94283,10 @@ bfF
 bfF
 bfF
 bfF
-bfF
+csL
 bqM
 brV
-bof
+bfH
 bwv
 bvj
 bvj
@@ -94506,7 +94542,7 @@ bob
 bnB
 bfF
 bqR
-brX
+bqQ
 bof
 bwx
 bvj
@@ -96038,7 +96074,7 @@ bbx
 aYV
 aYV
 bet
-bfH
+bof
 bhf
 bhh
 bhh
@@ -96295,7 +96331,7 @@ bby
 aYV
 aYV
 bet
-bfG
+bof
 bhe
 bit
 bjS
@@ -96809,7 +96845,7 @@ aJC
 bcr
 aYV
 bet
-bfG
+bfH
 bhe
 bhh
 bjV
@@ -97334,7 +97370,7 @@ bpv
 bhh
 bsx
 btV
-bvh
+bvj
 bwF
 bxQ
 bxQ
@@ -97848,7 +97884,7 @@ bof
 bhh
 bsx
 btV
-bvh
+bvj
 bwH
 bxS
 bzh
@@ -98362,7 +98398,7 @@ bpx
 bpP
 brf
 bhh
-bvh
+bvj
 bwJ
 bxU
 bzi

@@ -552,7 +552,7 @@
 		user.visible_message("[user.name] welds [src].", \
 							"<span class='notice'>You start welding the APC frame...</span>", \
 							"<span class='italics'>You hear welding.</span>")
-		playsound(src.loc, 'sound/items/Welder.ogg', 50, 1)
+		playsound(src.loc, WT.usesound, 50, 1)
 		if(do_after(user, 50*W.toolspeed, target = src))
 			if(!src || !WT.remove_fuel(3, user)) return
 			if ((stat & BROKEN) || opened==2)

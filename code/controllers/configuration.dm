@@ -184,6 +184,8 @@
 	var/silicon_max_law_amount = 12
 	var/list/lawids = list()
 
+	var/list/law_weights = list()
+
 	var/assistant_cap = -1
 
 	var/starlight = 0
@@ -647,6 +649,16 @@
 				if("random_laws")
 					var/law_id = lowertext(value)
 					lawids += law_id
+				if("law_weight")
+					// Value is in the form "LAWID,NUMBER"
+					var/list/L = splittext(value, ",")
+					if(L.len != 2)
+						diary << "Invalid LAW_WEIGHT: " + t
+						continue
+					var/lawid = L[1]
+					var/weight = text2num(L[2])
+					law_weights[lawid] = weight
+
 				if("silicon_max_law_amount")
 					config.silicon_max_law_amount	= text2num(value)
 				if("join_with_mutant_race")

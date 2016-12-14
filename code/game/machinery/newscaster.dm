@@ -716,7 +716,7 @@ var/list/obj/machinery/newscaster/allCasters = list()
 /obj/machinery/newscaster/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/weapon/wrench))
 		user << "<span class='notice'>You start [anchored ? "un" : ""]securing [name]...</span>"
-		playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
+		playsound(loc, I.usesound, 50, 1)
 		if(do_after(user, 60*I.toolspeed, target = src))
 			playsound(loc, 'sound/items/Deconstruct.ogg', 50, 1)
 			if(stat & BROKEN)
@@ -735,7 +735,7 @@ var/list/obj/machinery/newscaster/allCasters = list()
 				user.visible_message("[user] is repairing [src].", \
 								"<span class='notice'>You begin repairing [src]...</span>", \
 								"<span class='italics'>You hear welding.</span>")
-				playsound(loc, 'sound/items/Welder.ogg', 40, 1)
+				playsound(loc, WT.usesound, 40, 1)
 				if(do_after(user,40*WT.toolspeed, 1, target = src))
 					if(!WT.isOn() || !(stat & BROKEN))
 						return

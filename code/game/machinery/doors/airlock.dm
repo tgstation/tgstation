@@ -1065,12 +1065,12 @@ var/list/airlock_overlays = list()
 					return
 			if(AIRLOCK_SECURITY_PLASTEEL)
 				if(istype(C, /obj/item/weapon/wirecutters))
-					var/obj/item/weapon/W = C
+					var/obj/item/weapon/wirecutters/W = C
 					if(src.hasPower() && src.shock(user, 60)) // Protective grille of wiring is electrified
 						return
-					user << "<span class='notice'>You started cutting through outer grille</span>"
+					user << "<span class='notice'>You start cutting through outer grille.</span>"
 					playsound(src, W.usesound, 100, 1)
-					if(do_after(user, 10, 1, target = src))
+					if(do_after(user, 10*W.toolspeed, 1, target = src))
 						if(!panel_open)
 							return
 						user.visible_message("<span class='notice'>[user] cut through \the [src]'s outer grille.</span>",
@@ -1119,7 +1119,7 @@ var/list/airlock_overlays = list()
 			user.visible_message("[user] is [welded ? "unwelding":"welding"] the airlock.", \
 							"<span class='notice'>You begin [welded ? "unwelding":"welding"] the airlock...</span>", \
 							"<span class='italics'>You hear welding.</span>")
-			playsound(loc, 'sound/items/Welder.ogg', 40, 1)
+			playsound(loc, W.usesound, 40, 1)
 			if(do_after(user,40*W.toolspeed, 1, target = src))
 				if(density && !operating)//Door must be closed to weld.
 					if(!user || !W || !W.isOn() || !user.loc )

@@ -1133,7 +1133,9 @@
 					/obj/item/seeds/amanita,
 					/obj/item/seeds/reishi,
 					/obj/item/seeds/banana,
-					/obj/item/seeds/eggplant/eggy)
+					/obj/item/seeds/eggplant/eggy,
+					/obj/item/seeds/random,
+					/obj/item/seeds/random)
 	crate_name = "exotic seeds crate"
 
 /datum/supply_pack/organic/hydroponics/beekeeping_fullkit

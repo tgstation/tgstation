@@ -91,14 +91,14 @@ field_generator power level display
 			if(FG_UNSECURED)
 				if(isinspace()) return
 				state = FG_SECURED
-				playsound(loc, 'sound/items/Ratchet.ogg', 75, 1)
+				playsound(loc, W.usesound, 75, 1)
 				user.visible_message("[user.name] secures [name] to the floor.", \
 					"<span class='notice'>You secure the external reinforcing bolts to the floor.</span>", \
 					"<span class='italics'>You hear ratchet.</span>")
 				anchored = 1
 			if(FG_SECURED)
 				state = FG_UNSECURED
-				playsound(loc, 'sound/items/Ratchet.ogg', 75, 1)
+				playsound(loc, W.usesound, 75, 1)
 				user.visible_message("[user.name] unsecures [name] reinforcing bolts from the floor.", \
 					"<span class='notice'>You undo the external reinforcing bolts.</span>", \
 					"<span class='italics'>You hear ratchet.</span>")

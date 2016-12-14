@@ -25,7 +25,7 @@
 /obj/structure/table_frame/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/wrench))
 		user << "<span class='notice'>You start disassembling [src]...</span>"
-		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+		playsound(src.loc, I.usesound, 50, 1)
 		if(do_after(user, 30*I.toolspeed, target = src))
 			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 			deconstruct(TRUE)
