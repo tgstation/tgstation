@@ -115,11 +115,13 @@
 	icon_state = "hoscap"
 	armor = list(melee = 40, bullet = 30, laser = 25, energy = 10, bomb = 25, bio = 10, rad = 0, fire = 50, acid = 60)
 	strip_delay = 80
+	dog_fashion = /datum/dog_fashion/head/hos
 
 /obj/item/clothing/head/HoS/beret
 	name = "head of security beret"
 	desc = "A robust beret for the Head of Security, for looking stylish while not sacrificing protection."
 	icon_state = "hosberetblack"
+	dog_fashion = null
 
 /obj/item/clothing/head/warden
 	name = "warden's police hat"
@@ -152,3 +154,4 @@
 /obj/item/clothing/head/beret/sec/navyofficer
 	desc = "A special beret with the security insignia emblazoned on it. For officers with class."
 	icon_state = "officerberet"
+	dog_fashion = null

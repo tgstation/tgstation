@@ -53,6 +53,9 @@
 	name = "Sous chef REAL_NAME"
 	desc = "Your food will be taste-tested.  All of it."
 
+/datum/dog_fashion/head/hos
+	name = "Commissar REAL_NAME"
+	desc = "Barking at the officers to get back in line."
 
 /datum/dog_fashion/head/captain
 	name = "Captain REAL_NAME"
