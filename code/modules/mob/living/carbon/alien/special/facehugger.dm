@@ -23,8 +23,8 @@ var/const/MAX_ACTIVE_TIME = 400
 
 	var/stat = CONSCIOUS //UNCONSCIOUS is the idle state in this case
 
-	var/sterile = 0
-	var/real = 1 //0 for the toy, 1 for real. Sure I could istype, but fuck that.
+	var/sterile = FALSE
+	var/real = TRUE //0 for the toy, 1 for real. Sure I could istype, but fuck that.
 	var/strength = 5
 
 	var/attached = 0
@@ -156,8 +156,9 @@ var/const/MAX_ACTIVE_TIME = 400
 			var/obj/item/clothing/W = target.wear_mask
 			if(W.flags & NODROP)
 				return FALSE
-			target.unEquip(W)
-			target.visible_message("<span class='danger'>[src] tears [W] off of [target]'s face!</span>", \
+			if(!istype(W,/obj/item/clothing/mask/facehugger))
+				target.unEquip(W)
+				target.visible_message("<span class='danger'>[src] tears [W] off of [target]'s face!</span>", \
 									"<span class='userdanger'>[src] tears [W] off of [target]'s face!</span>")
 
 		if(ishuman(M))
