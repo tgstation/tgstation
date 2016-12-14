@@ -16,12 +16,13 @@
 	var/beam_type = /obj/effect/ebeam //must be subtype
 
 
-/datum/beam/New(beam_origin,beam_target,beam_icon='icons/effects/beam.dmi',beam_icon_state="b_beam",time=50,maxdistance=10,btype = /obj/effect/ebeam)
+/datum/beam/New(beam_origin,beam_target,beam_icon='icons/effects/beam.dmi',beam_icon_state="b_beam",time=50,maxdistance=10,btype = /obj/effect/ebeam,beam_sleep_time=3)
 	endtime = world.time+time
 	origin = beam_origin
 	origin_oldloc =	get_turf(origin)
 	target = beam_target
 	target_oldloc = get_turf(target)
+	sleep_time = beam_sleep_time
 	if(origin_oldloc == origin && target_oldloc == target)
 		static_beam = 1
 	max_distance = maxdistance
@@ -128,8 +129,8 @@
 	return ..()
 
 
-/atom/proc/Beam(atom/BeamTarget,icon_state="b_beam",icon='icons/effects/beam.dmi',time=50, maxdistance=10,beam_type=/obj/effect/ebeam)
-	var/datum/beam/newbeam = new(src,BeamTarget,icon,icon_state,time,maxdistance,beam_type)
+/atom/proc/Beam(atom/BeamTarget,icon_state="b_beam",icon='icons/effects/beam.dmi',time=50, maxdistance=10,beam_type=/obj/effect/ebeam,beam_sleep_time = 3)
+	var/datum/beam/newbeam = new(src,BeamTarget,icon,icon_state,time,maxdistance,beam_type,beam_sleep_time)
 	spawn(0)
 		newbeam.Start()
 	return newbeam
