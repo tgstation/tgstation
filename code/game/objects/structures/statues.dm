@@ -313,6 +313,14 @@
 	icon = 'icons/obj/statuelarge.dmi'
 	icon_state = "venus"
 
+/obj/structure/statue/sandstone/venus/examine(mob/user)
+	..()
+	if(prob(1))
+		user << "There's a message enscribed in an orange glowing powder at the base. It reads:"
+		if(prob(50))
+			user << "Great chest ahead."
+		else
+			user << "Need holding with both hands."
 /////////////////////snow/////////////////////////////////////////
 
 /obj/structure/statue/snow
