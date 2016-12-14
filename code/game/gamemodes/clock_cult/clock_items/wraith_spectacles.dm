@@ -10,6 +10,7 @@
 	vision_flags = SEE_MOBS | SEE_TURFS | SEE_OBJS
 	invis_view = 2
 	darkness_view = 3
+	tint = 3 //this'll get reset, but it won't handle vision updates properly otherwise
 
 /obj/item/clothing/glasses/wraith_spectacles/New()
 	..()
@@ -22,23 +23,28 @@
 /obj/item/clothing/glasses/wraith_spectacles/attack_self()
 	weldingvisortoggle()
 
-/obj/item/clothing/glasses/wraith_spectacles/weldingvisortoggle()
+/obj/item/clothing/glasses/wraith_spectacles/visor_toggling()
 	..()
+	if(up)
+		tint = 0
+	else
+		if(is_servant_of_ratvar(loc))
+			tint = 0
+		else
+			tint = 3
+
+/obj/item/clothing/glasses/wraith_spectacles/weldingvisortoggle()
+	. = ..()
 	if(ishuman(loc))
 		var/mob/living/carbon/human/H = loc
-		if(up)
+		if(src == H.glasses && !up)
 			if(blind_cultist(H))
 				return
 			if(is_servant_of_ratvar(H))
-				tint = 0
 				H << "<span class='heavy_brass'>You push the spectacles down, and all is revealed to you.[ratvar_awakens ? "" : " Your eyes begin to itch - you cannot do this for long."]</span>"
 				H.apply_status_effect(STATUS_EFFECT_WRAITHSPECS)
 			else
-				tint = 3
 				H << "<span class='heavy_brass'>You push the spectacles down, but you can't see through the glass.</span>"
-		else
-			tint = 0
-		H.update_tint()
 
 /obj/item/clothing/glasses/wraith_spectacles/proc/blind_cultist(mob/living/victim)
 	if(iscultist(victim))

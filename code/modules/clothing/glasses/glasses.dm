@@ -3,6 +3,17 @@
 	materials = list(MAT_GLASS = 250)
 	var/glass_colour_type = null //colors your vision when worn
 
+/obj/item/clothing/glasses/visor_toggling()
+	..()
+	vision_flags ^= initial(vision_flags)
+	darkness_view ^= initial(darkness_view)
+	invis_view ^= initial(invis_view)
+
+/obj/item/clothing/glasses/weldingvisortoggle()
+	. = ..()
+	if(. && usr)
+		usr.update_sight()
+
 //called when thermal glasses are emped.
 /obj/item/clothing/glasses/proc/thermal_overload()
 	if(ishuman(src.loc))

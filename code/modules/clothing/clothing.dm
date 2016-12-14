@@ -685,10 +685,21 @@ BLIND     // can't see anything
 			body_parts_covered |= CHEST
 	return adjusted
 
-/obj/item/clothing/proc/weldingvisortoggle()			//Malk: proc to toggle welding visors on helmets, masks, goggles, etc.
+/obj/item/clothing/proc/weldingvisortoggle() //proc to toggle welding visors on helmets, masks, goggles, etc.
 	if(!can_use(usr))
-		return
+		return FALSE
 
+	visor_toggling()
+
+	if(istype(usr, /mob/living/carbon))
+		var/mob/living/carbon/C = usr
+		C.head_update(src, forced = 1)
+	for(var/X in actions)
+		var/datum/action/A = X
+		A.UpdateButtonIcon()
+	return TRUE
+
+/obj/item/clothing/proc/visor_toggling() //handles all the actual toggling of flags
 	up ^= 1
 	flags ^= visor_flags
 	flags_inv ^= visor_flags_inv
@@ -698,12 +709,6 @@ BLIND     // can't see anything
 	flash_protect ^= initial(flash_protect)
 	tint ^= initial(tint)
 
-	if(istype(usr, /mob/living/carbon))
-		var/mob/living/carbon/C = usr
-		C.head_update(src, forced = 1)
-	for(var/X in actions)
-		var/datum/action/A = X
-		A.UpdateButtonIcon()
 
 /obj/item/clothing/proc/can_use(mob/user)
 	if(user && ismob(user))
