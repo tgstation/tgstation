@@ -38,6 +38,9 @@
 			successful = TRUE
 		else
 			var/mob/living/L = target
+			if(L.null_rod_check())
+				ranged_ability_user << "<span class='sevtug'>\"A void weapon? Really, you expect me to be able to do anything?\"</span>"
+				return TRUE
 			if(is_servant_of_ratvar(L))
 				if(L != ranged_ability_user)
 					ranged_ability_user << "<span class='sevtug'>\"[L.p_they(TRUE)] already serve[L.p_s()] Ratvar. [text2ratvar("Perhaps [ranged_ability_user.p_theyre()] into bondage?")]\"</span>"

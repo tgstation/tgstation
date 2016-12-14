@@ -79,25 +79,19 @@
 		if(H.z == invoker.z && !is_servant_of_ratvar(H))
 			var/distance = 0
 			distance += get_dist(T, get_turf(H))
-			var/messaged = FALSE
 			var/visualsdistance = max(150 - distance, 5)
 			var/minordistance = max(200 - distance*2, 5)
 			var/majordistance = max(150 - distance*3, 5)
 			if(H.null_rod_check())
-				visualsdistance = round(visualsdistance * 0.25)
-				minordistance = round(minordistance * 0.25)
-				majordistance = round(majordistance * 0.25)
 				H << "<span class='sevtug'>[text2ratvar("Oh, a void weapon. How annoying, I may as well not bother.")]</span>\n\
-				<span class='warning'>Your holy weapon glows a faint orange in an attempt to defend your mind!</span>"
-				messaged = TRUE
-			if(H.isloyal())
+				<span class='warning'>Your holy weapon glows a faint orange, defending your mind!</span>"
+				continue
+			else if(H.isloyal())
 				visualsdistance = round(visualsdistance * 0.5) //half effect for shielded targets
 				minordistance = round(minordistance * 0.5)
 				majordistance = round(majordistance * 0.5)
-				if(!messaged)
-					H << "<span class='sevtug'>[text2ratvar("Oh, look, a mindshield. Cute, I suppose I'll humor it.")]</span>"
-					messaged = TRUE
-			if(!messaged && prob(visualsdistance))
+				H << "<span class='sevtug'>[text2ratvar("Oh, look, a mindshield. Cute, I suppose I'll humor it.")]</span>"
+			else if(prob(visualsdistance))
 				H << "<span class='sevtug'>[text2ratvar(pick(mindbreaksayings))]</span>"
 			H.playsound_local(T, hum, visualsdistance, 1)
 			flash_color(H, flash_color="#AF0AAF", flash_time=visualsdistance*10)
@@ -212,7 +206,7 @@
 			animate(invoker, color = oldcolor, time = 10)
 			addtimer(invoker, "update_atom_colour", 10)
 			for(var/mob/living/L in view(7, invoker))
-				if(is_servant_of_ratvar(L))
+				if(is_servant_of_ratvar(L) || L.null_rod_check())
 					continue
 				invoker.Beam(L, icon_state = "nzcrentrs_power", time = 10)
 				var/randdamage = rand(40, 60)
