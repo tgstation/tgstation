@@ -20,24 +20,29 @@
 	all_clockwork_objects -= src
 	return ..()
 
-/obj/item/clothing/glasses/wraith_spectacles/attack_self()
-	weldingvisortoggle()
+/obj/item/clothing/glasses/wraith_spectacles/attack_self(mob/user)
+	weldingvisortoggle(user)
 
 /obj/item/clothing/glasses/wraith_spectacles/visor_toggling()
 	..()
-	if(up)
-		tint = 0
-	else
+	invis_view = SEE_INVISIBLE_LIVING
+	tint = 0
+	if(!up)
 		if(is_servant_of_ratvar(loc))
-			tint = 0
+			invis_view = SEE_INVISIBLE_NOLIGHTING
+			vision_flags = SEE_MOBS | SEE_TURFS | SEE_OBJS
 		else
 			tint = 3
+			vision_flags = NONE
 
-/obj/item/clothing/glasses/wraith_spectacles/weldingvisortoggle()
+/obj/item/clothing/glasses/wraith_spectacles/weldingvisortoggle(mob/user)
 	. = ..()
 	if(ishuman(loc))
 		var/mob/living/carbon/human/H = loc
 		if(src == H.glasses && !up)
+			if(H.disabilities & BLIND)
+				H << "<span class='heavy_brass'>\"You're blind, idiot. Stop embarassing yourself.\"</span>"
+				return
 			if(blind_cultist(H))
 				return
 			if(is_servant_of_ratvar(H))
@@ -107,6 +112,11 @@
 			desc += "You will become blind at <font color=#DAAA18><b>[W.blind_breakpoint]</b></font> eye damage."
 	..()
 
+/datum/status_effect/wraith_spectacles/on_apply()
+	if(ishuman(owner))
+		var/mob/living/carbon/human/H = owner
+		apply_eye_damage(H)
+
 /datum/status_effect/wraith_spectacles/tick()
 	if(!ishuman(owner))
 		cancel_effect()
@@ -115,20 +125,7 @@
 	var/glasses_right = istype(H.glasses, /obj/item/clothing/glasses/wraith_spectacles)
 	var/obj/item/clothing/glasses/wraith_spectacles/WS = H.glasses
 	if(glasses_right && !WS.up && !ratvar_awakens)
-		if(H.disabilities & BLIND)
-			return
-		H.adjust_eye_damage(1)
-		eye_damage_done++
-		if(eye_damage_done >= 20)
-			H.adjust_blurriness(2)
-		if(eye_damage_done >= nearsight_breakpoint)
-			if(H.become_nearsighted())
-				H << "<span class='nzcrentr'>Your vision doubles, then trebles. Darkness begins to close in. You can't keep this up!</span>"
-		if(eye_damage_done >= blind_breakpoint)
-			if(H.become_blind())
-				H << "<span class='nzcrentr_large'>A piercing white light floods your vision. Suddenly, all goes dark!</span>"
-		if(prob(min(20, 5 + eye_damage_done)))
-			H << "<span class='nzcrentr_small'><i>Your eyes continue to burn.</i></span>"
+		apply_eye_damage(H)
 	else
 		if(ratvar_awakens)
 			H.cure_nearsighted()
@@ -140,3 +137,19 @@
 			eye_damage_done--
 		if(!eye_damage_done)
 			cancel_effect()
+
+/datum/status_effect/wraith_spectacles/proc/apply_eye_damage(mob/living/carbon/human/H)
+	if(H.disabilities & BLIND)
+		return
+	H.adjust_eye_damage(1)
+	eye_damage_done++
+	if(eye_damage_done >= 20)
+		H.adjust_blurriness(2)
+	if(eye_damage_done >= nearsight_breakpoint)
+		if(H.become_nearsighted())
+			H << "<span class='nzcrentr'>Your vision doubles, then trebles. Darkness begins to close in. You can't keep this up!</span>"
+	if(eye_damage_done >= blind_breakpoint)
+		if(H.become_blind())
+			H << "<span class='nzcrentr_large'>A piercing white light floods your vision. Suddenly, all goes dark!</span>"
+	if(prob(min(20, 5 + eye_damage_done)))
+		H << "<span class='nzcrentr_small'><i>Your eyes continue to burn.</i></span>"

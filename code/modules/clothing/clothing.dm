@@ -685,14 +685,16 @@ BLIND     // can't see anything
 			body_parts_covered |= CHEST
 	return adjusted
 
-/obj/item/clothing/proc/weldingvisortoggle() //proc to toggle welding visors on helmets, masks, goggles, etc.
-	if(!can_use(usr))
+/obj/item/clothing/proc/weldingvisortoggle(mob/user) //proc to toggle welding visors on helmets, masks, goggles, etc.
+	if(!can_use(user))
 		return FALSE
 
 	visor_toggling()
 
-	if(istype(usr, /mob/living/carbon))
-		var/mob/living/carbon/C = usr
+	user << "<span class='notice'>You adjust \the [src] [up ? "up" : "down"].</span>"
+
+	if(istype(user, /mob/living/carbon))
+		var/mob/living/carbon/C = user
 		C.head_update(src, forced = 1)
 	for(var/X in actions)
 		var/datum/action/A = X
@@ -700,12 +702,11 @@ BLIND     // can't see anything
 	return TRUE
 
 /obj/item/clothing/proc/visor_toggling() //handles all the actual toggling of flags
-	up ^= 1
+	up = !up
 	flags ^= visor_flags
 	flags_inv ^= visor_flags_inv
 	flags_cover ^= initial(flags_cover)
 	icon_state = "[initial(icon_state)][up ? "up" : ""]"
-	usr << "<span class='notice'>You adjust \the [src] [up ? "up" : "down"].</span>"
 	flash_protect ^= initial(flash_protect)
 	tint ^= initial(tint)
 

@@ -9,10 +9,10 @@
 	darkness_view ^= initial(darkness_view)
 	invis_view ^= initial(invis_view)
 
-/obj/item/clothing/glasses/weldingvisortoggle()
+/obj/item/clothing/glasses/weldingvisortoggle(mob/user)
 	. = ..()
-	if(. && usr)
-		usr.update_sight()
+	if(. && user)
+		user.update_sight()
 
 //called when thermal glasses are emped.
 /obj/item/clothing/glasses/proc/thermal_overload()
@@ -213,17 +213,8 @@
 	visor_flags_inv = HIDEEYES
 	glass_colour_type = /datum/client_colour/glass_colour/gray
 
-
-/obj/item/clothing/glasses/welding/attack_self()
-	toggle()
-
-
-/obj/item/clothing/glasses/welding/verb/toggle()
-	set category = "Object"
-	set name = "Adjust welding goggles"
-	set src in usr
-
-	weldingvisortoggle()
+/obj/item/clothing/glasses/welding/attack_self(mob/user)
+	weldingvisortoggle(user)
 
 
 /obj/item/clothing/glasses/sunglasses/blindfold
