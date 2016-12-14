@@ -46,7 +46,7 @@
 "aT" = (/obj/structure/sign/nanotrasen,/turf/closed/wall/mineral/titanium,/area/shuttle/escape)
 "aU" = (/turf/open/floor/plasteel/bot,/area/shuttle/escape)
 "aV" = (/obj/machinery/door/airlock/glass_medical{id_tag = null; name = "Escape Shuttle Infirmary"; req_access_txt = "0"},/turf/open/floor/plasteel/warning/side{tag = "icon-plasteel_warn_side (EAST)"; icon_state = "plasteel_warn_side"; dir = 4},/area/shuttle/escape)
-"aW" = (/obj/machinery/door/airlock/shuttle{name = "Emergency Shuttle Airlock"},/obj/docking_port/mobile/emergency{dheight = 0; dwidth = 11; height = 18; name = "Delta emergency shuttle"; timid = 0; width = 30},/turf/open/floor/plating,/area/shuttle/escape)
+"aW" = (/obj/machinery/door/airlock/shuttle{name = "Emergency Shuttle Airlock"},/obj/docking_port/mobile/emergency{dheight = 0; dwidth = 11; height = 18; name = "Delta emergency shuttle"; timid = 1; width = 30},/turf/open/floor/plating,/area/shuttle/escape)
 "aX" = (/obj/structure/flora/ausbushes/grassybush,/obj/structure/flora/ausbushes/lavendergrass,/obj/structure/flora/ausbushes/ppflowers,/obj/structure/flora/ausbushes/sunnybush,/obj/structure/window/shuttle,/turf/open/floor/grass,/area/shuttle/escape)
 "aY" = (/obj/structure/extinguisher_cabinet{pixel_x = -26},/obj/machinery/shieldgen,/turf/open/floor/plasteel/bot,/area/shuttle/escape)
 "aZ" = (/obj/structure/rack,/obj/item/weapon/storage/toolbox/electrical{pixel_x = -3; pixel_y = 1},/obj/item/weapon/storage/toolbox/mechanical{pixel_x = 0; pixel_y = -1},/obj/item/weapon/storage/toolbox/emergency{pixel_x = 3; pixel_y = -5},/turf/open/floor/plasteel/bot,/area/shuttle/escape)

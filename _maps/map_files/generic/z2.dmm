@@ -489,7 +489,7 @@
 "ju" = (/turf/open/floor/plasteel/darkwarning{tag = "icon-warndark (EAST)"; dir = 4},/area/centcom/ferry)
 "jv" = (/turf/open/floor/plasteel/delivery,/area/centcom/ferry)
 "jw" = (/obj/machinery/door/airlock/external{name = "Backup Emergency Escape Shuttle"},/turf/open/floor/plasteel/delivery,/area/centcom/ferry)
-"jx" = (/obj/machinery/door/airlock/shuttle,/obj/docking_port/stationary{dir = 4; dwidth = 3; height = 8; id = "backup_away"; name = "Backup Shuttle Dock"; width = 8},/obj/docking_port/mobile/emergency/backup{dwidth = 3},/turf/open/floor/plating,/area/shuttle/escape)
+"jx" = (/obj/machinery/door/airlock/shuttle,/obj/docking_port/stationary{dir = 4; dwidth = 2; height = 8; id = "backup_away"; name = "Backup Shuttle Dock"; width = 8},/obj/docking_port/mobile/emergency/backup,/turf/open/floor/plating,/area/shuttle/escape)
 "jy" = (/obj/structure/chair/office/light{dir = 4},/turf/open/floor/mineral/titanium,/area/shuttle/escape)
 "jz" = (/obj/structure/table/wood,/obj/item/weapon/paper{info = "Due to circumstances beyond our control, your Emergency Evacuation Shuttle is out of service.<br><br>We apologise for the inconvinience this may cause you.<br><br>Please enjoy the use of this complementary book.<br><br>Sincerely,<br>Centcom Operations Demolitions Examination Retribution Bugfixing Underlining Services"},/turf/open/floor/mineral/titanium,/area/shuttle/escape)
 "jA" = (/obj/structure/table/wood,/obj/item/weapon/book/manual/random,/turf/open/floor/mineral/titanium,/area/shuttle/escape)
