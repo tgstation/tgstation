@@ -37,17 +37,6 @@
 	acidpwr = min(acidpwr, 50) //we reduce the power so reinf floor never get melted.
 	. = ..()
 
-/turf/open/floor/engine/ex_act(severity, target)
-	contents_explosion(severity, target)
-	switch(severity)
-		if(1)
-			ChangeTurf(src.baseturf)
-		if(2)
-			if(prob(50))
-				ChangeTurf(src.baseturf)
-		else
-			return
-
 /turf/open/floor/engine/ex_act(severity,target)
 	var/shielded = is_shielded()
 	contents_explosion(severity, target)
