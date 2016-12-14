@@ -319,7 +319,7 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 				a_intent = INTENT_HELP
 			if(INTENT_HARM)
 				a_intent = INTENT_HARM
-			if(INTENT_HOTKEY_RIGHT)
+			if(INTENT_HOTKEY_RIGHT, INTENT_HOTKEY_LEFT)
 				switch (a_intent)
 					if(INTENT_HELP)
 						a_intent = INTENT_HARM
