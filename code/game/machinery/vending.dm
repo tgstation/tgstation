@@ -523,7 +523,7 @@
 		else
 			R.amount--
 
-		if(((last_reply + 200)) <= world.time) && vend_reply)
+		if(((last_reply + 200) <= world.time) && vend_reply)
 			speak(vend_reply)
 			last_reply = world.time
 
