@@ -60,7 +60,7 @@ var/datum/subsystem/timer/SStimer
 /datum/timedevent/Destroy()
 	SStimer.processing -= src
 	SStimer.hashes -= hash
-	return QDEL_HINT_IWILLGC
+	return QDEL_HINT_LETMELIVE
 
 /proc/addtimer(thingToCall, procToCall, wait, unique = TIMER_NORMAL, ...)
 	if (!thingToCall || !procToCall)
