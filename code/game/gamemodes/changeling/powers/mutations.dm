@@ -278,16 +278,16 @@
 		chain = firer.Beam(src, icon_state = "tentacle", time = INFINITY, maxdistance = INFINITY, beam_sleep_time = 1)
 	..()
 
-/obj/item/projectile/tentacle/reset_throw(mob/living/carbon/human/H)
+/obj/item/projectile/tentacle/proc/reset_throw(mob/living/carbon/human/H)
 	if(H.in_throw_mode)
 		H.throw_mode_off() //Don't annoy the changeling if he doesn't catch the item
 
-/obj/item/projectile/tentacle/tentacle_grab(mob/living/carbon/human/H, mob/living/carbon/C)
+/obj/item/projectile/tentacle/proc/tentacle_grab(mob/living/carbon/human/H, mob/living/carbon/C)
 	if(H.Adjacent(C))
 		C.grabbedby(H)
 		C.grippedby(H) //instant aggro grab
 
-/obj/item/projectile/tentacle/tentacle_stab(mob/living/carbon/human/H, mob/living/carbon/C)
+/obj/item/projectile/tentacle/proc/tentacle_stab(mob/living/carbon/human/H, mob/living/carbon/C)
 	if(H.Adjacent(C))
 		for(var/obj/item/I in H.held_items)
 			if(I.is_sharp())
