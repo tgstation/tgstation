@@ -1415,9 +1415,9 @@
 /datum/reagent/shrinkserum/on_mob_life(mob/living/carbon/H)
 	var/newsize = current_size
 	switch(volume)
-		if(50 to 99)
+		if(20 to 49)
 			newsize = 0.75
-		if(100 to INFINITY)
+		if(50 to INFINITY)
 			newsize = 0.50
 		
 	H.resize = newsize/current_size
