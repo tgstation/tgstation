@@ -26,13 +26,13 @@
 			user.visible_message("[user.name] secures [src.name] to the floor.", \
 				"<span class='notice'>You secure the [src.name] to the floor.</span>", \
 				"<span class='italics'>You hear a ratchet.</span>")
-			playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
+			playsound(src.loc, W.usesound, 75, 1)
 			anchored = 1
 		else if(anchored)
 			user.visible_message("[user.name] unsecures [src.name] from the floor.", \
 				"<span class='notice'>You unsecure the [src.name] from the floor.</span>", \
 				"<span class='italics'>You hear a ratchet.</span>")
-			playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
+			playsound(src.loc, W.usesound, 75, 1)
 			anchored = 0
 	else
 		return ..()

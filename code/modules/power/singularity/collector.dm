@@ -81,14 +81,14 @@ var/global/list/rad_collectors = list()
 			user << "<span class='warning'>Remove the plasma tank first!</span>"
 			return 1
 		if(!anchored && !isinspace())
-			playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
+			playsound(src.loc, W.usesound, 75, 1)
 			anchored = 1
 			user.visible_message("[user.name] secures the [src.name].", \
 				"<span class='notice'>You secure the external bolts.</span>", \
 				"<span class='italics'>You hear a ratchet.</span>")
 			connect_to_network()
 		else if(anchored)
-			playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
+			playsound(src.loc, W.usesound, 75, 1)
 			anchored = 0
 			user.visible_message("[user.name] unsecures the [src.name].", \
 				"<span class='notice'>You unsecure the external bolts.</span>", \
@@ -157,4 +157,3 @@ var/global/list/rad_collectors = list()
 		flick("ca_deactive", src)
 	update_icons()
 	return
-

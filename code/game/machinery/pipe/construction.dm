@@ -232,7 +232,7 @@ var/global/list/pipeID2State = list(
 		T.flipped = flipped
 	A.on_construction(pipe_type, color)
 
-	playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+	playsound(src.loc, W.usesound, 50, 1)
 	user.visible_message( \
 		"[user] fastens \the [src].", \
 		"<span class='notice'>You fasten \the [src].</span>", \
@@ -270,6 +270,6 @@ var/global/list/pipeID2State = list(
 		user << "<span class='warning'>You need to fasten it to a pipe!</span>"
 		return 1
 	new/obj/machinery/meter( src.loc )
-	playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+	playsound(src.loc, W.usesound, 50, 1)
 	user << "<span class='notice'>You fasten the meter to the pipe.</span>"
 	qdel(src)

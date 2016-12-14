@@ -32,7 +32,7 @@ var/list/doppler_arrays = list()
 			anchored = 0
 			power_change()
 			user << "<span class='notice'>You unfasten [src].</span>"
-		playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
+		playsound(loc, O.usesound, 50, 1)
 	else
 		return ..()
 

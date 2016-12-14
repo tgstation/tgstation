@@ -89,7 +89,7 @@
 
 		if(!device && !board && istype(W, /obj/item/weapon/wrench))
 			user << "<span class='notice'>You start unsecuring the button frame...</span>"
-			playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
+			playsound(loc, W.usesound, 50, 1)
 			if(do_after(user, 40*W.toolspeed, target = src))
 				user << "<span class='notice'>You unsecure the button frame.</span>"
 				transfer_fingerprints_to(new /obj/item/wallframe/button(get_turf(src)))
