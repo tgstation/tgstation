@@ -135,7 +135,7 @@
 	},
 /area/shuttle/escape)
 "aA" = (
-/obj/machinery/door/airlock/shuttle{
+/obj/machinery/door/airlock/titanium{
 	name = "Emergency Shuttle Airlock"
 	},
 /turf/open/floor/plating,
@@ -170,7 +170,7 @@
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
 "aF" = (
-/obj/machinery/door/airlock/shuttle{
+/obj/machinery/door/airlock/titanium{
 	name = "Emergency Shuttle Airlock"
 	},
 /obj/docking_port/mobile/emergency{

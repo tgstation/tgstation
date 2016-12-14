@@ -205,6 +205,13 @@
 	var/mineral = "wood"
 	assemblytype = /obj/structure/door_assembly/door_assembly_wood
 
+/obj/machinery/door/airlock/titanium
+	name = "shuttle airlock"
+	var/mineral = "titanium"
+	icon = 'icons/obj/doors/airlocks/shuttle/shuttle.dmi'
+	overlays_file = 'icons/obj/doors/airlocks/shuttle/overlays.dmi'
+	assemblytype = /obj/structure/door_assembly/door_assembly_titanium
+
 //////////////////////////////////
 /*
 	Station2 Airlocks
