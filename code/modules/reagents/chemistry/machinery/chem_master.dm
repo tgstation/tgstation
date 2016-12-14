@@ -116,6 +116,7 @@
 
 		beaker = I
 		beaker.loc = src
+		LAZYINITLIST(beaker.reagents.reagent_list)
 		user << "<span class='notice'>You add the beaker to the machine.</span>"
 		src.updateUsrDialog()
 		icon_state = "mixer1"
@@ -145,6 +146,8 @@
 
 /obj/machinery/chem_master/ui_data(mob/user)
 	var/list/data = list()
+	if(beaker)
+		LAZYINITLIST(beaker.reagents.reagent_list)
 	data["isBeakerLoaded"] = beaker ? 1 : 0
 	data["beakerCurrentVolume"] = beaker ? beaker.reagents.total_volume : null
 	data["beakerMaxVolume"] = beaker ? beaker.volume : null

@@ -209,7 +209,7 @@
 
 	if(reagents && is_open_container()) //is_open_container() isn't really the right proc for this, but w/e
 		user << "It contains:"
-		if(reagents.reagent_list.len)
+		if(length(reagents.reagent_list))
 			if(user.can_see_reagents()) //Show each individual reagent
 				for(var/datum/reagent/R in reagents.reagent_list)
 					user << "[R.volume] units of [R.name]"

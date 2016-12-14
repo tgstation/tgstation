@@ -90,13 +90,20 @@
 	desc = "Freon. Great for the atmosphere!"
 	icon_state = "freon"
 	gas_type = "freon"
-	starter_temp = 120
+	starter_temp = 30
 
 /obj/machinery/portable_atmospherics/canister/water_vapor
 	name = "water vapor canister"
 	desc = "Water Vapor. We get it, you vape."
 	icon_state = "water_vapor"
 	gas_type = "water_vapor"
+	filled = 1
+
+/obj/machinery/portable_atmospherics/canister/chem_gas
+	name = "chemical gas canister"
+	desc = "Chemical Gas. Hit this with a beaker with reagents to add the reagent to the gas."
+	icon_state = "black"
+	gas_type = "chem_gas"
 	filled = 1
 
 /obj/machinery/portable_atmospherics/canister/New(loc, datum/gas_mixture/existing_mixture)
@@ -210,6 +217,20 @@
 		else
 			user << "<span class='notice'>You cannot slice [src] apart when it isn't broken.</span>"
 		return 1
+	if(istype(W, /obj/item/weapon/reagent_containers/glass))
+		if(air_contents.gases["chem_gas"])
+			if(W.reagents.reagent_list)
+				user << "You scan the beaker with the canister."
+				for(var/R in W.reagents.reagent_list)
+					var/datum/reagent/RI = R
+					if(!air_contents.reagents.has_reagent(RI.id))
+						air_contents.reagents.add_reagent(RI.id, REAGENT_GAS_AMT)
+						say("Injected [RI.name].")
+				say("All new chemicals scanned and injected.")
+				return
+		else
+			say("ERROR: Does not contain chemical mixture gas.")
+			return
 	else
 		return ..()
 
@@ -324,7 +345,8 @@
 					var/n2o = air_contents.gases["n2o"]
 					var/bz = air_contents.gases["bz"]
 					var/freon = air_contents.gases["freon"]
-					if(n2o || plasma || bz || freon)
+					var/chem_gas = air_contents.gases["chem_gas"]
+					if(n2o || plasma || bz || freon || chem_gas)
 						message_admins("[key_name_admin(usr)] (<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[usr]'>FLW</A>) opened a canister that contains the following: (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)")
 						log_admin("[key_name(usr)] opened a canister that contains the following at [x], [y], [z]:")
 						if(plasma)
@@ -339,6 +361,9 @@
 						if(freon)
 							log_admin("Freon")
 							message_admins("Freon")
+						if(chem_gas)
+							log_admin("Chemicals")
+							message_admins("Chemicals")
 			else
 				logmsg = "Valve was <b>closed</b> by [key_name(usr)], stopping the transfer into \the [holding || "air"].<br>"
 			investigate_log(logmsg, "atmos")

@@ -27,5 +27,7 @@
       action='filter' params='{"mode": "freon"}'>Freon</ui-button>	
 	<ui-button state='{{data.filter_type == "water_vapor" ? "selected" : null}}'
       action='filter' params='{"mode": "water_vapor"}'>Water Vapor</ui-button>	
+	<ui-button state='{{data.filter_type == "chem_gas" ? "selected" : null}}'
+      action='filter' params='{"mode": "chem_gas"}'>Chemicals</ui-button>	
 	</ui-section>
 </ui-display>

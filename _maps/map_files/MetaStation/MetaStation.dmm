@@ -49942,6 +49942,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/machinery/portable_atmospherics/canister/freon,
 /turf/open/floor/plasteel/loadingarea{
 	dir = 4
 	},
@@ -49950,6 +49951,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/machinery/portable_atmospherics/canister/freon,
 /turf/open/floor/plasteel,
 /area/atmos)
 "bHP" = (
@@ -49957,6 +49959,7 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/machinery/portable_atmospherics/canister/chem_gas,
 /turf/open/floor/plasteel,
 /area/atmos)
 "bHQ" = (
@@ -49967,6 +49970,7 @@
 	dir = 2;
 	on = 1
 	},
+/obj/machinery/portable_atmospherics/canister/chem_gas,
 /turf/open/floor/plasteel/black/corner{
 	dir = 2
 	},
@@ -52927,25 +52931,16 @@
 /turf/open/floor/wood,
 /area/library)
 "bNw" = (
-/obj/machinery/light_switch{
-	pixel_x = 28;
-	pixel_y = 0
-	},
-/obj/machinery/libraryscanner,
-/turf/open/floor/wood,
-/area/library)
+/obj/structure/disposalpipe/segment,
+/obj/machinery/portable_atmospherics/canister/chem_gas,
+/turf/open/floor/plasteel/white,
+/area/medical/chemistry)
 "bNx" = (
-/obj/structure/table/wood,
-/obj/structure/noticeboard{
-	desc = "A board for pinning important notices upon. Probably helpful for keeping track of requests.";
-	dir = 8;
-	name = "requests board";
-	pixel_x = 32;
-	pixel_y = 0
+/obj/machinery/portable_atmospherics/canister/chem_gas,
+/turf/open/floor/plasteel/warning{
+	dir = 8
 	},
-/obj/machinery/computer/libraryconsole/bookmanagement,
-/turf/open/floor/wood,
-/area/library)
+/area/toxins/storage)
 "bNy" = (
 /obj/item/stack/sheet/rglass{
 	amount = 50
@@ -67492,6 +67487,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/machinery/portable_atmospherics/canister/chem_gas,
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
 "cmh" = (
@@ -73528,6 +73524,7 @@
 	dir = 1;
 	icon_state = "pipe-c"
 	},
+/obj/machinery/portable_atmospherics/canister/freon,
 /turf/open/floor/plasteel/warning{
 	dir = 8
 	},
@@ -74073,6 +74070,7 @@
 /turf/open/floor/plasteel/bot,
 /area/toxins/storage)
 "cxf" = (
+/obj/machinery/portable_atmospherics/canister/freon,
 /turf/open/floor/plasteel/warning{
 	dir = 8
 	},
@@ -75343,6 +75341,7 @@
 /obj/machinery/light_switch{
 	pixel_y = -23
 	},
+/obj/machinery/portable_atmospherics/canister/chem_gas,
 /turf/open/floor/plasteel/warning{
 	dir = 10
 	},
@@ -119700,7 +119699,7 @@ cgT
 cij
 cjo
 ckJ
-cmf
+bNw
 cmf
 coM
 cpU
@@ -127420,7 +127419,7 @@ cuf
 cvs
 cwj
 cxf
-cxf
+bNx
 czi
 cud
 cAT

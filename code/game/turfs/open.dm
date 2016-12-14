@@ -96,8 +96,6 @@
 		if(!I.is_frozen) //let it go
 			I.make_frozen_visual()
 	for(var/mob/living/L in contents)
-		if(L.bodytemperature >= 10)
-			L.bodytemperature -= 10
 		if(L.bodytemperature <= 50)
 			L.apply_status_effect(/datum/status_effect/freon)
 	MakeSlippery(TURF_WET_PERMAFROST, 5)
@@ -118,6 +116,12 @@
 	if(hotspot && !isspaceturf(src))
 		air.temperature = max(min(air.temperature-2000,air.temperature/2),0)
 		qdel(hotspot)
+	return 1
+
+/turf/open/chem_gas_act(var/datum/reagents/gas)
+	for(var/A in contents)
+		gas.reaction(A, VAPOR)
+	gas.reaction(src, VAPOR)
 	return 1
 
 /turf/open/handle_slip(mob/living/carbon/C, s_amount, w_amount, obj/O, lube)

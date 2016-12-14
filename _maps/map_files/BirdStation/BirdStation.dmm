@@ -14891,6 +14891,7 @@
 	name = "chemistry shutter button";
 	pixel_x = -24
 	},
+/obj/machinery/portable_atmospherics/canister/chem_gas,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay)
 "aKX" = (

@@ -112,7 +112,7 @@
 
 	var beakerContents[0]
 	var beakerCurrentVolume = 0
-	if(beaker && beaker.reagents && beaker.reagents.reagent_list.len)
+	if(beaker && beaker.reagents && length(beaker.reagents.reagent_list))
 		for(var/datum/reagent/R in beaker.reagents.reagent_list)
 			beakerContents.Add(list(list("name" = R.name, "volume" = R.volume))) // list in a list because Byond merges the first list...
 			beakerCurrentVolume += R.volume
@@ -182,6 +182,7 @@
 
 		beaker = B
 		beaker.loc = src
+		LAZYINITLIST(beaker.reagents.reagent_list)
 		user << "<span class='notice'>You add \the [B] to the machine.</span>"
 
 		if(!icon_beaker)
