@@ -402,3 +402,11 @@
 	req_tech = list("programming" = 2, "engineering" = 2, "bluespace" = 2)
 	build_path = /obj/item/weapon/circuitboard/machine/ntnet_relay
 	category = list("Subspace Telecomms")
+
+/datum/design/board/limbgrower
+	name = "Machine Design (Limb Grower Board)"
+	desc = "The circuit board for a limb grower."
+	id = "limbgrower"
+	req_tech = list("programming" = 3, "biotech" = 2)
+	build_path = /obj/item/weapon/circuitboard/machine/limbgrower
+	category = list("Medical Machinery")
