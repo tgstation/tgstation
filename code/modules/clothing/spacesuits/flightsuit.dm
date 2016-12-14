@@ -475,7 +475,25 @@
 		damage = FALSE
 		density = TRUE
 		anchored = FALSE
-	<<<<<<<<INSERT AIRLOCK, GRILL, AND WINDOW CHECKS HERE!!!>>>>>
+	else if(istype(unmovablevictim, /obj/structure/grille))
+		if(crashpower > 1)
+			var/obj/structure/grille/S = unmovablevictim
+			crash_grille(S)
+		crashing = FALSE
+		return FALSE
+	else if(istype(unmovablevictim, /obj/machinery/door))
+		var/obj/machinery/door/D = unmovablevictim
+		if(!airlock_hit(D))
+			crashing = FALSE
+			return FALSE
+		damage = TRUE
+		anchored = TRUE
+		density = FALSE
+	else if(istype(unmovablevictim, /obj/structure/mineral_door))
+		var/obj/structure/mineral_door/D = unmovablevictim
+		door_hit(D)
+		crashing = FALSE
+		return FALSE
 	else if(isclosedturf(unmovablevictim))
 		if(crashpower < 3)
 			crashing = FALSE
@@ -498,6 +516,22 @@
 		userknockback(density, anchored, momentum_speed, dir)
 		losecontrol(move = FALSE)
 	crashing = FALSE
+
+/obj/item/device/flightpack/proc/door_hit(obj/structure/mineral_door/door)
+	wearer.forceMove(door.loc)
+	door.Open()
+	wearer.visible_message("<span class='boldnotice'>[wearer] rolls to their sides and slips past [door]!</span>"
+
+/obj/item/device/flightpack/proc/crash_grille(obj/structure/grille/target)
+	wearer.forceMove(target.loc)
+	target.hitby(wearer)
+	target.take_damage(60, BRUTE, "melee", 1)
+	wearer.visible_message("<span class='warning'>[wearer] smashes straight past [target]!</span>"
+
+/obj/item/device/flightpack/proc/airlock_hit(obj/machinery/door/A)
+	. = 0
+	. += A.locked
+
 
 /obj/item/device/flightpack/proc/mobknockback(mob/living/victim, power, direction)
 	if(!ismob(victim))
