@@ -2,6 +2,8 @@
 //This file contains their code, plus code for applying and removing them.
 //When making a new status effect, add a define to status_effects.dm in __DEFINES for ease of use!
 
+var/global/list/all_status_effects = list() //a list of all status effects, if for some reason you need to remove all of them
+
 /datum/status_effect
 	var/id = "effect" //Used for screen alerts.
 	var/duration = -1 //How long the status effect lasts in SECONDS. Enter -1 for an effect that never ends unless removed through some means.
@@ -16,6 +18,7 @@
 		owner = new_owner
 	if(owner)
 		LAZYADD(owner.status_effects, src)
+	all_status_effects += src
 	addtimer(src, "start_ticking", 1) //Give us time to set any variables
 
 /datum/status_effect/Destroy()
@@ -24,6 +27,7 @@
 		owner.clear_alert(id)
 		on_remove()
 		LAZYREMOVE(owner.status_effects, src)
+	all_status_effects -= src
 	return ..()
 
 /datum/status_effect/proc/start_ticking()
@@ -33,8 +37,9 @@
 		qdel(src)
 		return
 	on_apply()
-	var/obj/screen/alert/status_effect/A = owner.throw_alert(id, alert_type)
-	A.attached_effect = src //so the alert can reference us, if it needs to
+	if(alert_type)
+		var/obj/screen/alert/status_effect/A = owner.throw_alert(id, alert_type)
+		A.attached_effect = src //so the alert can reference us, if it needs to
 	START_PROCESSING(SSprocessing, src)
 
 /datum/status_effect/process()
@@ -74,7 +79,7 @@
 	for(var/datum/status_effect/S in status_effects)
 		if(S.id == initial(S1.id) && initial(S1.unique))
 			return
-	S1 = new effect(owner)
+	S1 = new effect(src)
 	. = S1
 
 /mob/living/proc/remove_status_effect(effect) //removes all of a given status effect from this mob, returning TRUE if at least one was removed
