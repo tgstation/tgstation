@@ -71,7 +71,11 @@
 
 ///Attempts to select players for special roles the mode might have.
 /datum/game_mode/proc/pre_setup()
-	return 1
+	if(config.protect_roles_from_antagonist)
+		restricted_jobs += protected_jobs
+
+	if(config.protect_assistant_from_antagonist)
+		restricted_jobs += "Assistant"
 
 
 ///Everyone should now be on the station and have their normal gear.  This is the place to give the special roles extra things

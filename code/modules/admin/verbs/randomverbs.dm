@@ -347,6 +347,9 @@ Traitors and the like can also be revived with the previous role mostly intact.
 
 	new_character.name = new_character.real_name
 
+	for(var/datum/antagonist/A in G_found.mind.current.antag_datums)
+		A.transfer_to_new_body(new_character)
+
 	if(G_found.mind && !G_found.mind.active)
 		G_found.mind.transfer_to(new_character)	//be careful when doing stuff like this! I've already checked the mind isn't in use
 		new_character.mind.special_verbs = list()
@@ -370,8 +373,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	//Now for special roles and equipment.
 	switch(new_character.mind.special_role)
 		if("traitor")
-			SSjob.EquipRank(new_character, new_character.mind.assigned_role, 1)
-			ticker.mode.equip_traitor(new_character)
+			new_character.gain_antag_datum(/datum/antagonist/traitor/uplink)
 		if("Wizard")
 			new_character.loc = pick(wizardstart)
 			//ticker.mode.learn_basic_spells(new_character)
@@ -397,12 +399,14 @@ Traitors and the like can also be revived with the previous role mostly intact.
 			switch(new_character.mind.assigned_role)
 				if("Cyborg")//More rigging to make em' work and check if they're traitor.
 					new_character = new_character.Robotize()
-					if(new_character.mind.special_role=="traitor")
-						ticker.mode.add_law_zero(new_character)
+					var/datum/antagonist/traitor/T = new_character.has_antag_datum(/datum/antagonist/traitor)
+					if(T)
+						T.give_syndicate_laws()
 				if("AI")
 					new_character = new_character.AIize()
-					if(new_character.mind.special_role=="traitor")
-						ticker.mode.add_law_zero(new_character)
+					var/datum/antagonist/traitor/T = new_character.has_antag_datum(/datum/antagonist/traitor)
+					if(T)
+						T.give_syndicate_laws()
 				else
 					SSjob.EquipRank(new_character, new_character.mind.assigned_role, 1)//Or we simply equip them.
 

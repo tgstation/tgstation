@@ -345,7 +345,8 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 			if(A.laws && A.laws.zeroth && A.mind && A.mind.special_role)
 				return 1
 		return 0
-	if(M.mind && M.mind.special_role)//If they have a mind and special role, they are some type of traitor or antagonist.
+	var/mob/living/L = M
+	if(M.mind && (M.mind.special_role || L.antag_datums.len))//If they have a mind and special role or antag datum, they are some type of traitor or antagonist.
 		switch(ticker.mode.config_tag)
 			if("revolution")
 				if((M.mind in ticker.mode.head_revolutionaries) || (M.mind in ticker.mode.revolutionaries))

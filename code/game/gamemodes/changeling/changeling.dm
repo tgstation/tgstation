@@ -49,15 +49,7 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 
 	var/changeling_team_objective_type = null //If this is not null, we hand our this objective to all lings
 
-/datum/game_mode/changeling/pre_setup()
-
-	if(config.protect_roles_from_antagonist)
-		restricted_jobs += protected_jobs
-
-	if(config.protect_assistant_from_antagonist)
-		restricted_jobs += "Assistant"
-
-	var/num_changelings = 1
+/datum/game_mode/changeling/pre_setup()var/num_changelings = 1
 
 	if(config.changeling_scaling_coeff)
 		num_changelings = max(1, min( round(num_players()/(config.changeling_scaling_coeff*2))+2, round(num_players()/config.changeling_scaling_coeff) ))
@@ -70,7 +62,6 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 			var/datum/mind/changeling = pick(antag_candidates)
 			antag_candidates -= changeling
 			changelings += changeling
-			changeling.special_role = "Changeling"
 			changeling.restricted_roles = restricted_jobs
 		return 1
 	else

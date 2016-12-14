@@ -37,10 +37,10 @@
 			break
 		var/datum/mind/devil = pick(antag_candidates)
 		devils += devil
-		devil.special_role = traitor_name
+		devil.special_role = "Devil"
 		devil.restricted_roles = restricted_jobs
 
-		log_game("[devil.key] (ckey) has been selected as a [traitor_name]")
+		log_game("[devil.key] (ckey) has been selected as a devil")
 		antag_candidates.Remove(devil)
 
 	if(devils.len < required_enemies)
