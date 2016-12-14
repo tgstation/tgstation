@@ -18,7 +18,7 @@
 	The purpose of your existence is to further the goals of the servants and Ratvar himself. Above all else, serve Ratvar.</b>"
 	new_mob_message = "<span class='brass'>The soul vessel emits a jet of steam before its cogwheel smooths out.</span>"
 	dead_message = "<span class='deadsay'>Its cogwheel, scratched and dented, lies motionless.</span>"
-	fluff_names = list("Servant", "Guard", "Judge", "Smith", "Auger")
+	fluff_names = list("Judge", "Guard", "Servant", "Smith", "Auger")
 	clockwork = TRUE
 	autoping = FALSE
 	resistance_flags = FIRE_PROOF | ACID_PROOF
