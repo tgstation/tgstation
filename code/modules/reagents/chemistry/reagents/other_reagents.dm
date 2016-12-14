@@ -1404,3 +1404,7 @@
 	M.resize = 1/current_size
 	M.update_transform()
 	..()
+
+/datum/reagent/shrinkserum
+        name = "Shrink serum"
+	
