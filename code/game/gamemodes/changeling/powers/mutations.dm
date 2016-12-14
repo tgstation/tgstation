@@ -274,6 +274,29 @@
 		chain = firer.Beam(src, icon_state = "tentacle", time = INFINITY, maxdistance = INFINITY, beam_sleep_time = 1)
 	..()
 
+/obj/item/projectile/tentacle/reset_throw(mob/living/carbon/human/H)
+	if(H.in_throw_mode)
+		H.throw_mode_off() //Don't annoy the changeling if he doesn't catch the item
+
+/obj/item/projectile/tentacle/tentacle_grab(mob/living/carbon/human/H, mob/living/carbon/C)
+	if(H.Adjacent(C))
+		C.grabbedby(H)
+		C.grippedby(H) //instant aggro grab
+
+/obj/item/projectile/tentacle/tentacle_stab(mob/living/carbon/human/H, mob/living/carbon/C)
+	if(H.Adjacent(C))
+		for(var/obj/item/I in H.held_items)
+			if(I.is_sharp())
+				C.visible_message("<span class='danger'>[H] impales [C] with [H.p_their()] [I.name]!</span>", "<span class='userdanger'>[H] impales you with [H.p_their()] [I.name]!</span>")
+				C.apply_damage(I.force*2, BRUTE, "chest")
+				H.do_item_attack_animation(C, used_item = I)
+				H.add_mob_blood(C)
+				playsound(get_turf(H),I.hitsound,75,1)
+				C.Weaken(4)
+				return
+		C.visible_message("<span class='danger'>[C] falls at [H]'s feet!</span>", "<span class='userdanger'>You are thrown at [H]'s feet!</span>")
+		C.Weaken(2)
+
 /obj/item/projectile/tentacle/on_hit(atom/target, blocked = 0)
 	qdel(source.gun) //one tentacle only unless you miss
 	if(blocked >= 100)
@@ -286,9 +309,6 @@
 			H.throw_mode_on()
 			I.throw_at(H, 10, 2)
 			. = 1
-			spawn(10)
-				if(H.in_throw_mode)
-					H.throw_mode_off() //Don't annoy the changeling if he doesn't catch the item
 
 	else if(isliving(target))
 		var/mob/living/L = target
@@ -300,6 +320,7 @@
 						C.visible_message("<span class='danger'>[L] is pulled by [H]'s tentacle!</span>","<span class='userdanger'>A tentacle grabs you and pulls you towards [H]!</span>")
 						C.throw_at(get_step_towards(H,C), 8, 2)
 						return 1
+
 					if(INTENT_DISARM)
 						var/obj/item/I = C.get_active_held_item()
 						if(I)
@@ -313,32 +334,18 @@
 						else
 							firer << "<span class='danger'>[C] has nothing in hand to disarm!<span>"
 							return 0
+
 					if(INTENT_GRAB)
 						C.visible_message("<span class='danger'>[L] is grabbed by [H]'s tentacle!</span>","<span class='userdanger'>A tentacle grabs you and pulls you towards [H]!</span>")
 						C.throw_at(get_step_towards(H,C), 8, 2)
-						spawn(3)
-							if(H.Adjacent(C))
-								C.grabbedby(H)
-								C.grippedby(H) //instant aggro grab
+						addtimer(src, "tentacle_grab", 3, TIMER_NORMAL, H, C)
 						return 1
+
 					if(INTENT_HARM)
 						C.visible_message("<span class='danger'>[L] is thrown towards [H] by a tentacle!</span>","<span class='userdanger'>A tentacle grabs you and throws you towards [H]!</span>")
 						C.throw_at(get_step_towards(H,C), 8, 2)
-						spawn(3)
-							if(H.Adjacent(C))
-								for(var/obj/item/I in H.held_items)
-									if(I.is_sharp())
-										C.visible_message("<span class='danger'>[H] impales [C] with [H.p_their()] [I.name]!</span>", "<span class='userdanger'>[H] impales you with [H.p_their()] [I.name]!</span>")
-										C.apply_damage(I.force*2, BRUTE, "chest")
-										H.do_item_attack_animation(C, used_item = I)
-										H.add_mob_blood(C)
-										playsound(get_turf(H),I.hitsound,75,1)
-										C.Weaken(4)
-										return
-							C.visible_message("<span class='danger'>[C] falls at [H]'s feet!</span>", "<span class='userdanger'>You are thrown at [H]'s feet!</span>")
-							C.Weaken(2)
-							return 1
-
+						addtimer(src, "tentacle_stab", 3, TIMER_NORMAL, H, C)
+						return 1
 			else
 				L.visible_message("<span class='danger'>[L] is pulled by [H]'s tentacle!</span>","<span class='userdanger'>A tentacle grabs you and pulls you towards [H]!</span>")
 				L.throw_at(get_step_towards(H,L), 8, 2)
