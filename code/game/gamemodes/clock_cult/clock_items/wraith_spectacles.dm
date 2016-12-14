@@ -47,6 +47,9 @@
 				return
 			if(is_servant_of_ratvar(H))
 				H << "<span class='heavy_brass'>You push the spectacles down, and all is revealed to you.[ratvar_awakens ? "" : " Your eyes begin to itch - you cannot do this for long."]</span>"
+				var/datum/status_effect/wraith_spectacles/WS = H.has_status_effect(STATUS_EFFECT_WRAITHSPECS)
+				if(WS)
+					WS.apply_eye_damage(H)
 				H.apply_status_effect(STATUS_EFFECT_WRAITHSPECS)
 			else
 				H << "<span class='heavy_brass'>You push the spectacles down, but you can't see through the glass.</span>"
@@ -73,6 +76,9 @@
 	if(is_servant_of_ratvar(user))
 		tint = 0
 		user << "<span class='heavy_brass'>As you put on the spectacles, all is revealed to you.[ratvar_awakens ? "" : " Your eyes begin to itch - you cannot do this for long."]</span>"
+		var/datum/status_effect/wraith_spectacles/WS = user.has_status_effect(STATUS_EFFECT_WRAITHSPECS)
+		if(WS)
+			WS.apply_eye_damage(user)
 		user.apply_status_effect(STATUS_EFFECT_WRAITHSPECS)
 	else
 		tint = 3
@@ -119,7 +125,7 @@
 
 /datum/status_effect/wraith_spectacles/tick()
 	if(!ishuman(owner))
-		cancel_effect()
+		qdel(src)
 		return
 	var/mob/living/carbon/human/H = owner
 	var/glasses_right = istype(H.glasses, /obj/item/clothing/glasses/wraith_spectacles)
@@ -136,7 +142,7 @@
 			H.adjust_eye_damage(-1)
 			eye_damage_done--
 		if(!eye_damage_done)
-			cancel_effect()
+			qdel(src)
 
 /datum/status_effect/wraith_spectacles/proc/apply_eye_damage(mob/living/carbon/human/H)
 	if(H.disabilities & BLIND)
