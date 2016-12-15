@@ -109,6 +109,7 @@
 	if(emitterhealth < 0)
 		fold_in(force = TRUE)
 	src << "<span class='userdanger'>The impact degrades your holochassis!</span>"
+	hit_slowdown += amount
 
 /mob/living/silicon/pai/proc/fullstun(amount)
 	Weaken(amount)

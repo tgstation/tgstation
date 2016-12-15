@@ -140,9 +140,6 @@
 /mob/living/silicon/pai/canUseTopic(atom/movable/M)
 	return TRUE
 
-/mob/living/silicon/pai/process()
-	emitterhealth = Clamp((emitterhealth + emitterregen), -50, emittermaxhealth)
-
 /mob/proc/makePAI(delold)
 	var/obj/item/device/paicard/card = new /obj/item/device/paicard(get_turf(src))
 	var/mob/living/silicon/pai/pai = new /mob/living/silicon/pai(card)
@@ -191,21 +188,7 @@
 	..()
 	P.lay_down()
 
-/mob/living/silicon/pai/Life()
-	if(stat == DEAD)
-		return
-	if(cable)
-		if(get_dist(src, src.cable) > 1)
-			var/turf/T = get_turf(src.loc)
-			T.visible_message("<span class='warning'>[src.cable] rapidly retracts back into its spool.</span>", "<span class='italics'>You hear a click and the sound of wire spooling rapidly.</span>")
-			qdel(src.cable)
-			cable = null
-	silent = max(silent - 1, 0)
-	if(weakened > 0)
-		weakened -= 1
-
-/mob/living/silicon/pai/updatehealth()
-	if(status_flags & GODMODE)
-		return
-	health = maxHealth - getBruteLoss() - getFireLoss()
-	update_stat()
+/mob/living/silicon/pai/movement_delay()
+	. = ..()
+	if(hit_slowdown)
+		. += 2
