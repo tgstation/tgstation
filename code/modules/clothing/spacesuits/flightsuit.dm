@@ -534,8 +534,8 @@
 		pass += A.locked
 		pass += A.stat	//No power, no automatic open
 		pass += A.emagged
-		if(A.requiresID)
-			if((!A.allowed(user)) && !A.emergency)
+		if(A.requiresID())
+			if((!A.allowed(wearer)) && !A.emergency)
 				pass += 1
 	if(!pass)
 		A.open()
