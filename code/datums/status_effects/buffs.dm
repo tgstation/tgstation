@@ -133,7 +133,7 @@
 /datum/status_effect/cyborg_power_regen/tick()
 	var/mob/living/silicon/robot/cyborg = owner
 	if(!istype(cyborg) || !cyborg.cell)
-		cancel_effect()
+		qdel(src)
 		return
 	playsound(cyborg, 'sound/effects/light_flicker.ogg', 50, 1)
 	cyborg.cell.give(power_to_give)
