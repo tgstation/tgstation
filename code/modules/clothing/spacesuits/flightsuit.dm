@@ -529,8 +529,20 @@
 	wearer.visible_message("<span class='warning'>[wearer] smashes straight past [target]!</span>"
 
 /obj/item/device/flightpack/proc/airlock_hit(obj/machinery/door/A)
-	. = 0
-	. += A.locked
+	var/pass = 0
+	if(A.density)	//Is it closed?
+		pass += A.locked
+		pass += A.stat	//No power, no automatic open
+		pass += A.emagged
+		if(A.requiresID)))
+			if((!A.allowed(user)) && !A.emergency)
+				pass += 1
+	if(pass)
+		return pass
+	else
+		A.open()
+		wearer.visible_message("<span class='warning'>[wearer] rolls sideways and slips past [src]!</span>")
+
 
 
 /obj/item/device/flightpack/proc/mobknockback(mob/living/victim, power, direction)
