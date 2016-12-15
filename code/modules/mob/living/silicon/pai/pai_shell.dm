@@ -90,3 +90,5 @@
 	if(loc != card)
 		visible_message("<span class='notice'>[src] [rest? "lays down for a moment..." : "perks up from the ground"]</span>")
 
+/mob/living/silicon/pai/proc/start_pulling(atom/movable/AM)
+	return FALSE
