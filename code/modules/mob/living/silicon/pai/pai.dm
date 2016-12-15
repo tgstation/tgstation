@@ -69,8 +69,9 @@
 	var/overload_bulletblock = 0	//Why is this a good idea?
 	var/overload_maxhealth = 0
 	canmove = FALSE
+	var/silent = 0
 
-/mob/living/silicon/pai/Examine(mob/user)
+/mob/living/silicon/pai/examine(mob/user)
 	..()
 	user << "A personal AI in holochassis mode. Its master ID string seems to be [master]."
 
@@ -141,8 +142,6 @@
 
 /mob/living/silicon/pai/process()
 	emitterhealth = Clamp((emitterhealth + emitterregen), -50, emittermaxhealth)
-	if(weakened > 0)
-		weakened -= 0.2
 
 /mob/proc/makePAI(delold)
 	var/obj/item/device/paicard/card = new /obj/item/device/paicard(get_turf(src))
@@ -191,3 +190,22 @@
 /datum/action/innate/pai/rest/Trigger()
 	..()
 	P.lay_down()
+
+/mob/living/silicon/pai/Life()
+	if(stat == DEAD)
+		return
+	if(cable)
+		if(get_dist(src, src.cable) > 1)
+			var/turf/T = get_turf(src.loc)
+			T.visible_message("<span class='warning'>[src.cable] rapidly retracts back into its spool.</span>", "<span class='italics'>You hear a click and the sound of wire spooling rapidly.</span>")
+			qdel(src.cable)
+			cable = null
+	silent = max(silent - 1, 0)
+	if(weakened > 0)
+		weakened -= 1
+
+/mob/living/silicon/pai/updatehealth()
+	if(status_flags & GODMODE)
+		return
+	health = maxHealth - getBruteLoss() - getFireLoss()
+	update_stat()
