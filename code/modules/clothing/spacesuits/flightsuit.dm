@@ -537,13 +537,10 @@
 		if(A.requiresID)))
 			if((!A.allowed(user)) && !A.emergency)
 				pass += 1
-	if(pass)
-		return pass
-	else
+	if(!pass)
 		A.open()
 		wearer.visible_message("<span class='warning'>[wearer] rolls sideways and slips past [src]!</span>")
-		return pass
-
+	return pass
 
 
 /obj/item/device/flightpack/proc/mobknockback(mob/living/victim, power, direction)
