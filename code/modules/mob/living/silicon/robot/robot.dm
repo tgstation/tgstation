@@ -476,8 +476,11 @@
 				return
 			if(U.action(src))
 				user << "<span class='notice'>You apply the upgrade to [src].</span>"
-				U.loc = src
-				upgrades += U
+				if(U.one_use)
+					qdel(U)
+				else
+					U.loc = src
+					upgrades += U
 			else
 				user << "<span class='danger'>Upgrade error.</span>"
 

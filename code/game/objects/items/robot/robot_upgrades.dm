@@ -11,6 +11,9 @@
 	var/installed = 0
 	var/require_module = 0
 	var/module_type = null
+	// if true, is not stored in the robot to be ejected
+	// if module is reset
+	var/one_use = FALSE
 
 /obj/item/borg/upgrade/proc/action(mob/living/silicon/robot/R)
 	if(R.stat == DEAD)
@@ -26,6 +29,7 @@
 	desc = "Used to rename a cyborg."
 	icon_state = "cyborg_upgrade1"
 	var/heldname = "default name"
+	one_use = TRUE
 
 /obj/item/borg/upgrade/rename/attack_self(mob/user)
 	heldname = stripped_input(user, "Enter new robot name", "Cyborg Reclassification", heldname, MAX_NAME_LEN)
@@ -33,6 +37,12 @@
 /obj/item/borg/upgrade/rename/action(mob/living/silicon/robot/R)
 	if(..())
 		return
+
+	if(heldname == initial(heldname))
+		R << "<span class='error'>Rename error! No name specified!</span>"
+		usr << "<span class='error'>No name has been specified. \
+			Upgrade rejected.</span>"
+		return FALSE
 
 	R.fully_replace_character_name(R.name, heldname)
 
@@ -43,6 +53,7 @@
 	name = "cyborg emergency reboot module"
 	desc = "Used to force a reboot of a disabled-but-repaired cyborg, bringing it back online."
 	icon_state = "cyborg_upgrade1"
+	one_use = TRUE
 
 /obj/item/borg/upgrade/restart/action(mob/living/silicon/robot/R)
 	if(R.health < 0)
