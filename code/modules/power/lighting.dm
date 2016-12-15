@@ -339,7 +339,7 @@
 				s.set_up(3, 1, src)
 				s.start()
 				if (prob(75))
-					electrocute_mob(user, get_area(src), src, rand(0.7,1.0))
+					electrocute_mob(user, get_area(src), src, rand(0.7,1.0), TRUE)
 	else
 		return ..()
 
@@ -374,7 +374,7 @@
 	if(status == LIGHT_BROKEN || status == LIGHT_EMPTY)
 		if(on && (I.flags & CONDUCT))
 			if(prob(12))
-				electrocute_mob(user, get_area(src), src, 0.3)
+				electrocute_mob(user, get_area(src), src, 0.3, TRUE)
 
 /obj/machinery/light/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1)
 	. = ..()
