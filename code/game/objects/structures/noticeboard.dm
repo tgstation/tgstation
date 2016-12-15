@@ -52,7 +52,7 @@
 	if(href_list["remove"])
 		if((usr.stat || usr.restrained()))	//For when a player is handcuffed while they have the notice window open
 			return
-		var/obj/item/I = locate(href_list["remove"])
+		var/obj/item/I = locate(href_list["remove"]) in contents
 		if(istype(I) && I.loc == src)
 			I.loc = usr.loc
 			usr.put_in_hands(I)
@@ -62,7 +62,7 @@
 	if(href_list["write"])
 		if((usr.stat || usr.restrained())) //For when a player is handcuffed while they have the notice window open
 			return
-		var/obj/item/P = locate(href_list["write"])
+		var/obj/item/P = locate(href_list["write"]) in contents
 		if(istype(P) && P.loc == src)
 			var/obj/item/I = usr.is_holding_item_of_type(/obj/item/weapon/pen)
 			if(I)
@@ -72,7 +72,7 @@
 				usr << "<span class='notice'>You'll need something to write with!</span>"
 
 	if(href_list["read"])
-		var/obj/item/I = locate(href_list["read"])
+		var/obj/item/I = locate(href_list["read"]) in contents
 		if(istype(I) && I.loc == src)
 			usr.examinate(I)
 
