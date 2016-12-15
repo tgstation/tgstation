@@ -526,7 +526,7 @@
 	wearer.forceMove(target.loc)
 	target.hitby(wearer)
 	target.take_damage(60, BRUTE, "melee", 1)
-	wearer.visible_message("<span class='warning'>[wearer] smashes straight past [target]!</span>"
+	wearer.visible_message("<span class='warning'>[wearer] smashes straight past [target]!</span>")
 
 /obj/item/device/flightpack/proc/airlock_hit(obj/machinery/door/A)
 	var/pass = 0
