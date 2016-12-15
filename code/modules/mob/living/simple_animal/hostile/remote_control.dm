@@ -2,9 +2,8 @@
 	name = "remote control robot"
 	desc = "A simple robot. The pilot is probably nearby."
 	speak_emote = list("beeps")
-	icon = 'icons/obj/aibots.dmi'
-	icon_state = "mining_drone"
-	icon_living = "mining_drone"
+	icon_state = "remote_control"
+	icon_living = "remote_control"
 	ventcrawler = VENTCRAWLER_ALWAYS
 	gender = NEUTER
 	speed = 0
@@ -27,7 +26,7 @@
 	var/mob/living/pilot
 	var/initial_pilot_health
 	var/requires_pilot = TRUE
-	var/object/item/device/drone_controller/remote
+	var/obj/item/device/drone_controller/remote
 
 /mob/living/simple_animal/hostile/remote_control/Login()
 	..()
@@ -64,6 +63,9 @@
 	if(pilot.stat || pilot.incapacitated() || pilot.lying)
 		src << "You can't control [src] while you're incapacitated!"
 		return TRUE
+	if(remote.loc != pilot)
+		src << "You dropped the remote!"
+		return TRUE
 
 /mob/living/simple_animal/hostile/remote_control/proc/eject_pilot()
 	if(pilot)
@@ -89,16 +91,10 @@
 
 /mob/living/simple_animal/hostile/remote_control/emp_act(severity)
 	src << "Bzzzzzzzzzt. Connection lost."
-
 	eject_pilot()
 
-/mob/living/simple_animal/hostile/remote_control/AltClick(mob/living/user)
-	if(user.canUseTopic(src))
-		assume_control(user)
-
-
-
-/object/item/device/drone_controller
+//Remote
+/obj/item/device/drone_controller
 	name = "remote controller"
 	desc = "A remote for steering robots."
 	icon_state = "gangtool-white"
@@ -106,29 +102,38 @@
 	icon = 'icons/obj/device.dmi'
 	var/mob/living/simple_animal/hostile/remote_control/RC
 
-
-/obj/item/weapon/door_remote
-	icon_state = "gangtool-white"
-	item_state = "electronic"
-	icon = 'icons/obj/device.dmi'
-	name = "control wand"
-	desc = "Remotely controls airlocks."
-	w_class = WEIGHT_CLASS_TINY
-	var/mode = WAND_OPEN
-	var/region_access = 1 //See access.dm
-	var/obj/item/weapon/card/id/ID
-
-/obj/item/weapon/door_remote/New()
+/obj/item/device/drone_controller/afterattack(atom/A, mob/user,proximity)
+	if(!proximity)
+		return
+	if(RC && RC == A)
+		user << "[src] is already linked to [A]."
+		return
+	if(istype(A, /mob/living/simple_animal/hostile/remote_control))
+		var/mob/living/simple_animal/hostile/remote_control/takeover = A
+		if(takeover.remote || takeover.pilot)
+			user << "[takeover] is already under someone elses control. You attempt to reset it..."
+			if(do_after(user, 50, target = takeover))
+				takeover << "Someone has hacked [takeover]! Your remote has lost its link."
+				takeover.eject_pilot()
+				takeover.pilot = null
+				takeover.remote = null
+				user << "You've disconnected [takeover]. It is no longer linked to any remotes."
+		else
+			user << "You link [takeover] to your remote. You may now control it."
 	..()
-	ID = new /obj/item/weapon/card/id
-	ID.access = get_region_accesses(region_access)
 
-/obj/item/weapon/door_remote/attack_self(mob/user)
-	switch(mode)
-		if(WAND_OPEN)
-			mode = WAND_BOLT
-		if(WAND_BOLT)
-			mode = WAND_EMERGENCY
-		if(WAND_EMERGENCY)
-			mode = WAND_OPEN
-	user << "Now in mode: [mode]."
+
+/obj/item/device/drone_controller/attack_self(mob/user)
+	if(!RC)
+		user << "The remote isn't currently linked to anything. Use it on a controllable robot to sync the remote."
+		return
+	else
+		RC.assume_control(user)
+
+/obj/item/device/drone_controller/examine(mob/user)
+	..()
+	if(RC)
+		user << "It is currently synced with [RC]."
+		user << "[RC] Integrity: [RC.health]/[RC.maxHealth]"
+	else
+		user << "The remote is currently not synced with anything."
