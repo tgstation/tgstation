@@ -4,7 +4,7 @@
 	var/obj/machinery/camera/current = null
 	icon = 'icons/mob/pai.dmi'
 	icon_state = "repairbot"
-	mouse_opacity = 1
+	mouse_opacity = 2
 	density = 0
 	ventcrawler = 2
 	luminosity = 0
@@ -60,7 +60,7 @@
 
 	var/emitterhealth = 50
 	var/emittermaxhealth = 50
-	var/emitterregen = 1
+	var/emitterregen = 0.5
 	var/emittercd = 40
 	var/emitteroverloadcd = 100
 	var/emittersemicd = FALSE
@@ -192,4 +192,4 @@
 /mob/living/silicon/pai/movement_delay()
 	. = ..()
 	if(hit_slowdown)
-		. += 2
+		. += 1

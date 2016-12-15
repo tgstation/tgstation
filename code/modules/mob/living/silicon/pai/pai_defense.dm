@@ -49,13 +49,12 @@
 /mob/living/silicon/pai/attackby(obj/item/weapon/W, mob/living/user)
 	if(loc == card)
 		card.attackby(W, user)
-
 	user.do_attack_animation(src)
-
+	user.changeNext_move(CLICK_CD_MELEE)
 	if(!W.force)
 		user.visible_message("<span class='notice'>[user] strikes [src] harmlessly with [W], passing clean through its holographic projection.</span>")
 	else
-		visible_message("<span class='warning'>[user] strikes [src] with [W], the impact rippling through [W]'s holomatrix!</span>")
+		visible_message("<span class='warning'>[user] strikes [src] with [W], the impact rippling through [src]'s holomatrix!</span>")
 	take_holo_damage(W.force)
 
 /mob/living/silicon/pai/attack_hand(mob/living/carbon/human/user)
@@ -65,6 +64,7 @@
 		if("disarm")
 			visible_message("<span class='notice'>[user] boops [src] on the head!</span>")
 		if("harm")
+			user.do_attack_animation(src)
 			if (user.name == master)
 				visible_message("<span class='notice'>Responding to its master's touch, [src] disengages its holochassis emitter, rapidly losing coherence.</span>")
 				spawn(10)
@@ -73,7 +73,7 @@
 						user.visible_message("<span class='notice'>[user] promptly scoops up their pAI's card.</span>")
 			else
 				visible_message("<span class='danger'>[user] stomps on [src]!.</span>")
-				take_holo_damage(6)
+				take_holo_damage(8)
 
 
 /mob/living/silicon/pai/hitby(atom/movable/AM)
