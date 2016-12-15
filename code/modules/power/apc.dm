@@ -666,7 +666,7 @@
 		ui = new(user, src, ui_key, "apc", name, 535, 515, master_ui, state)
 		ui.open()
 	if(ui)
-		ui.set_autoupdate(state = (failure_timer ? 1 : 0))
+		ui.set_autoupdate(state = (failure_timer ? FALSE : TRUE))
 
 /obj/machinery/power/apc/ui_data(mob/user)
 	var/list/data = list(
