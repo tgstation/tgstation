@@ -25,6 +25,7 @@
 
 	SetLuminosity(initial(luminosity))
 	aSignal = new(src)
+	aSignal.name = "[name] core"
 	aSignal.code = rand(1,100)
 
 	aSignal.frequency = rand(1200, 1599)
