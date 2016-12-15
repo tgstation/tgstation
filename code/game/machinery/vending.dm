@@ -895,7 +895,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	req_access_txt = "46" //Theatre access needed, unless hacked.
 	product_slogans = "Dress for success!;Suited and booted!;It's show time!;Why leave style up to fate? Use AutoDrobe!"
 	vend_delay = 15
-	vend_reply = "Thank you for using AutoDrobe!"
+	vend_reply = "Thank you for using AutoDrobe!" //FUCKING READ THIS REMEMBER TO EDIT VENDING_ITEMS.DM IF YOU ADD ITEMS
 	products = list(/obj/item/clothing/suit/chickensuit = 1,/obj/item/clothing/head/chicken = 1,/obj/item/clothing/under/gladiator = 1,
 					/obj/item/clothing/head/helmet/gladiator = 1,/obj/item/clothing/under/gimmick/rank/captain/suit = 1,/obj/item/clothing/head/flatcap = 1,
 					/obj/item/clothing/suit/toggle/labcoat/mad = 1,/obj/item/clothing/shoes/jackboots = 1,
@@ -911,20 +911,13 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 					/obj/item/clothing/mask/gas/cyborg = 1,/obj/item/clothing/suit/holidaypriest = 1,/obj/item/clothing/head/wizard/marisa/fake = 1,
 					/obj/item/clothing/suit/wizrobe/marisa/fake = 1,/obj/item/clothing/under/sundress = 1,/obj/item/clothing/head/witchwig = 1,/obj/item/weapon/staff/broom = 1,
 					/obj/item/clothing/suit/wizrobe/fake = 1,/obj/item/clothing/head/wizard/fake = 1,/obj/item/weapon/staff = 3,/obj/item/clothing/mask/gas/sexyclown = 1,
-					/obj/item/clothing/under/rank/clown/sexy = 1,/obj/item/clothing/mask/gas/sexymime = 1,/obj/item/clothing/under/sexymime = 1,/obj/item/clothing/mask/rat/bat = 1,/obj/item/clothing/mask/rat/bee = 1,/obj/item/clothing/mask/rat/bear = 1,/obj/item/clothing/mask/rat/raven = 1,/obj/item/clothing/mask/rat/jackal = 1,/obj/item/clothing/mask/rat/fox = 1,/obj/item/clothing/mask/rat/tribal = 1,/obj/item/clothing/mask/rat = 1,/obj/item/clothing/suit/apron/overalls = 1,
-					/obj/item/clothing/head/rabbitears =1, /obj/item/clothing/head/sombrero = 1, /obj/item/clothing/head/sombrero/green = 1, /obj/item/clothing/suit/poncho = 1,
+					/obj/item/clothing/under/rank/clown/sexy = 1,/obj/item/clothing/mask/gas/sexymime = 1,/obj/item/clothing/under/sexymime = 1,/obj/item/clothing/mask/rat/bat = 1,/obj/item/clothing/mask/rat/bee = 1,
+					/obj/item/clothing/mask/rat/bear = 1,/obj/item/clothing/mask/rat/raven = 1,/obj/item/clothing/mask/rat/jackal = 1,/obj/item/clothing/mask/rat/fox = 1,/obj/item/clothing/mask/rat/tribal = 1,/obj/item/clothing/mask/rat = 1,/obj/item/clothing/suit/apron/overalls = 1,
+					/obj/item/clothing/head/rabbitears =1,/obj/item/clothing/head/sombrero = 1,/obj/item/clothing/head/sombrero/green = 1,/obj/item/clothing/suit/poncho = 1,
 					/obj/item/clothing/suit/poncho/green = 1, /obj/item/clothing/suit/poncho/red = 1,
-					/obj/item/clothing/under/maid = 1, /obj/item/clothing/under/janimaid = 1,/obj/item/clothing/glasses/cold=1,/obj/item/clothing/glasses/heat=1,
+					/obj/item/clothing/under/maid = 1,/obj/item/clothing/under/janimaid = 1,/obj/item/clothing/glasses/cold=1,/obj/item/clothing/glasses/heat=1,
 					/obj/item/clothing/suit/whitedress = 1,
-					/obj/item/clothing/under/jester = 1, /obj/item/clothing/head/jester = 1,
-					/obj/item/clothing/suit/hooded/carp_costume = 1,
-					/obj/item/clothing/suit/hooded/ian_costume = 1,
-					/obj/item/clothing/suit/hooded/bee_costume = 1,
-					/obj/item/clothing/suit/snowman = 1,
-					/obj/item/clothing/head/snowman = 1,
-					/obj/item/clothing/mask/joy = 1,
-					/obj/item/clothing/head/cueball = 1,
-					/obj/item/clothing/under/scratch = 1)
+					/obj/item/clothing/under/villain = 1,/obj/item/clothing/suit/hooded/bee_costume = 1,/obj/item/clothing/under/jester = 1,/obj/item/clothing/head/jester = 1,/obj/item/clothing/suit/hooded/carp_costume = 1,/obj/item/clothing/suit/hooded/ian_costume = 1,/obj/item/clothing/suit/snowman = 1,/obj/item/clothing/head/snowman = 1,/obj/item/clothing/mask/joy = 1,/obj/item/clothing/head/cueball = 1,/obj/item/clothing/under/scratch = 1)
 	contraband = list(/obj/item/clothing/suit/judgerobe = 1,/obj/item/clothing/head/powdered_wig = 1,/obj/item/weapon/gun/magic/wand = 2,/obj/item/clothing/glasses/sunglasses/garb = 2)
 	premium = list(/obj/item/clothing/suit/pirate/captain = 2, /obj/item/clothing/head/pirate/captain = 2, /obj/item/clothing/head/helmet/roman = 1, /obj/item/clothing/head/helmet/roman/legionaire = 1, /obj/item/clothing/under/roman = 1, /obj/item/clothing/shoes/roman = 1, /obj/item/weapon/shield/riot/roman = 1, /obj/item/weapon/skub = 1)
 	refill_canister = /obj/item/weapon/vending_refill/autodrobe
