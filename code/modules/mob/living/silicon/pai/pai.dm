@@ -30,8 +30,6 @@
 	var/master				// Name of the one who commands us
 	var/master_dna			// DNA string for owner verification
 
-	var/silence_time			// Timestamp when we were silenced (normally via EMP burst), set to null after silence has faded
-
 // Various software-specific vars
 
 	var/temp				// General error reporting text contained here will typically be shown once and cleared
@@ -63,14 +61,18 @@
 	var/emitterhealth = 50
 	var/emittermaxhealth = 50
 	var/emitterregen = 1
-	var/emittercd = 10
-	var/emitteroverloadcd = 50
+	var/emittercd = 40
+	var/emitteroverloadcd = 100
 	var/emittersemicd = FALSE
 
 	var/overload_ventcrawl = 0
 	var/overload_bulletblock = 0	//Why is this a good idea?
 	var/overload_maxhealth = 0
 	canmove = FALSE
+
+/mob/living/silicon/pai/Examine(mob/user)
+	..()
+	user << "A personal AI in holochassis mode. Its master ID string seems to be [master]."
 
 /mob/living/silicon/pai/Destroy()
 	pai_list -= src

@@ -5,6 +5,9 @@
 /mob/living/silicon/pai/emp_act(severity)
 	take_holo_damage(severity * 25)
 	fullstun(severity * 5)
+	silent = min(silent, 15)
+	if(holoform)
+		fold_in(force = TRUE)
 	//Need more effects that aren't instadeath or permanent law corruption.
 
 /mob/living/silicon/pai/ex_act(severity, target)
