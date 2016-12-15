@@ -86,7 +86,12 @@
 	return FALSE
 
 /mob/living/silicon/pai/bullet_act(obj/item/projectile/Proj)
-	take_holo_damage(Proj.damage)
+	if(Proj.damage_type == STAMINA)
+		take_holo_damage(Proj.damage/3)
+	else
+		take_holo_damage(Proj.damage)
+	if(Proj.stun)
+		fold_in(force = TRUE)
 	return FALSE
 
 /mob/living/silicon/pai/Crossed(atom/movable/AM) //cannot intercept projectiles

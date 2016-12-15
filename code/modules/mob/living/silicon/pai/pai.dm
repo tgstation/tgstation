@@ -70,6 +70,7 @@
 	var/overload_maxhealth = 0
 	canmove = FALSE
 	var/silent = 0
+	var/hit_slowdown = 0
 
 /mob/living/silicon/pai/examine(mob/user)
 	..()
