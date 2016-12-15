@@ -520,7 +520,7 @@
 /obj/item/device/flightpack/proc/door_hit(obj/structure/mineral_door/door)
 	wearer.forceMove(door.loc)
 	door.Open()
-	wearer.visible_message("<span class='boldnotice'>[wearer] rolls to their sides and slips past [door]!</span>"
+	wearer.visible_message("<span class='boldnotice'>[wearer] rolls to their sides and slips past [door]!</span>")
 
 /obj/item/device/flightpack/proc/crash_grille(obj/structure/grille/target)
 	wearer.forceMove(target.loc)
