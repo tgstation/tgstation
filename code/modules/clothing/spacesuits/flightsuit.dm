@@ -542,6 +542,7 @@
 	else
 		A.open()
 		wearer.visible_message("<span class='warning'>[wearer] rolls sideways and slips past [src]!</span>")
+		return pass
 
 
 
