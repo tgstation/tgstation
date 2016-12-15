@@ -83,6 +83,7 @@
 	new /obj/item/weapon/tank/internals/oxygen/red(src)
 	new /obj/item/weapon/extinguisher(src)
 	new /obj/item/clothing/head/hardhat/red(src)
+	new /obj/item/clothing/gloves/color/black(src)
 
 /*
  * Tool Closet
