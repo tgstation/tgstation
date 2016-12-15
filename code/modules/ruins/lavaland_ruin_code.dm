@@ -130,8 +130,7 @@
 	radio = /obj/item/device/radio/headset/syndicate/alt
 	back = /obj/item/weapon/storage/backpack
 	pocket1 = /obj/item/weapon/gun/ballistic/automatic/pistol
-	id_job = "Operative"
-	id_access_list = list(access_syndicate)
+	pocket2 = /obj/item/weapon/card/id/syndicate/anyone
 	roundstart = FALSE
 	death = FALSE
 	icon = 'icons/obj/Cryogenic2.dmi'
