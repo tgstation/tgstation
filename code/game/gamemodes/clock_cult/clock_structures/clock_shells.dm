@@ -14,15 +14,16 @@
 			return 0
 		var/obj/item/device/mmi/posibrain/soul_vessel/S = I
 		if(!S.brainmob)
-			user << "<span class='warning'>[S] hasn't trapped a spirit! Turn it on first.</span>"
+			user << "<span class='warning'>[S] is inactive! Turn it on or capture a mind first.</span>"
 			return 0
 		if(S.brainmob && (!S.brainmob.client || !S.brainmob.mind))
-			user << "<span class='warning'>[S]'s trapped spirit appears inactive!</span>"
+			user << "<span class='warning'>[S]'s trapped consciousness appears inactive!</span>"
 			return 0
 		user.visible_message("<span class='notice'>[user] places [S] in [src], where it fuses to the shell.</span>", "<span class='brass'>You place [S] in [src], fusing it to the shell.</span>")
 		var/mob/living/simple_animal/A = new mobtype(get_turf(src))
 		A.visible_message("<span class='brass'>[src][spawn_message]</span>")
 		S.brainmob.mind.transfer_to(A)
+		A.fully_replace_character_name(null, "[initial(A.name)] ([S.brainmob.name])")
 		user.drop_item()
 		qdel(S)
 		qdel(src)

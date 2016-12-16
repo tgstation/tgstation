@@ -143,7 +143,7 @@
 /datum/clockwork_scripture/geis
 	name = "Geis Conversion"
 	invocations = list("Enlighten this heathen!", "All are insects before Engine!", "Purge all untruths and honor Engine.")
-	channel_time = 50
+	channel_time = 49
 	tier = SCRIPTURE_PERIPHERAL
 	var/mob/living/target
 	var/obj/structure/destructible/clockwork/geis_binding/binding
@@ -216,7 +216,7 @@
 		progbar = new(invoker, flee_time, invoker)
 		progbar.bar.color = "#AF0AAF"
 		animate(progbar.bar, color = initial(progbar.bar.color), time = flee_time+grace_period)
-		while(world.time < endtime)
+		while(world.time < endtime && invoker && slab && invoker.get_active_held_item() == slab)
 			sleep(1)
 			progbar.update(world.time - starttime)
 		qdel(progbar)

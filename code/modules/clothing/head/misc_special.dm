@@ -28,16 +28,8 @@
 	visor_flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 	resistance_flags = FIRE_PROOF
 
-/obj/item/clothing/head/welding/attack_self()
-	toggle()
-
-
-/obj/item/clothing/head/welding/verb/toggle()
-	set category = "Object"
-	set name = "Adjust welding helmet"
-	set src in usr
-
-	weldingvisortoggle()
+/obj/item/clothing/head/welding/attack_self(mob/user)
+	weldingvisortoggle(user)
 
 
 /*

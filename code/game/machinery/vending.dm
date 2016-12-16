@@ -27,7 +27,6 @@
 	armor = list(melee = 20, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 70)
 	var/active = 1		//No sales pitches if off!
 	var/vend_ready = 1	//Are we ready to vend?? Is it time??
-	var/vend_delay = 10	//How long does it take to vend?
 
 	// To be filled out at compile time
 	var/list/products	= list()	//For each, use the following pattern:
@@ -461,14 +460,13 @@
 		vend_ready = 0
 		use_power(5)
 
-		spawn(vend_delay)
-			dish_quants[N] = max(dish_quants[N] - 1, 0)
-			for(var/obj/O in contents)
-				if(O.name == N)
-					O.loc = src.loc
-					break
-			vend_ready = 1
-			updateUsrDialog()
+		dish_quants[N] = max(dish_quants[N] - 1, 0)
+		for(var/obj/O in contents)
+			if(O.name == N)
+				O.loc = src.loc
+				break
+		vend_ready = 1
+		updateUsrDialog()
 		return
 
 	if((href_list["vend"]) && (vend_ready))
@@ -525,17 +523,16 @@
 		else
 			R.amount--
 
-		if(((last_reply + (vend_delay + 200)) <= world.time) && vend_reply)
+		if(((last_reply + 200) <= world.time) && vend_reply)
 			speak(vend_reply)
 			last_reply = world.time
 
 		use_power(5)
 		if(icon_vend) //Show the vending animation if needed
 			flick(icon_vend,src)
-		spawn(vend_delay)
-			new R.product_path(get_turf(src))
-			vend_ready = 1
-			return
+		new R.product_path(get_turf(src))
+		vend_ready = 1
+		return
 
 		updateUsrDialog()
 		return
@@ -634,7 +631,6 @@
 	desc = ""
 	icon = ''
 	icon_state = ""
-	vend_delay = 15
 	products = list()
 	contraband = list()
 	premium = list()
@@ -650,7 +646,6 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	icon_state = "dispenser"
 	product_paths = "/obj/item/weapon/tank/internals/oxygen;/obj/item/weapon/tank/internals/plasma;/obj/item/weapon/tank/internals/emergency_oxygen;/obj/item/weapon/tank/internals/emergency_oxygen/engi;/obj/item/clothing/mask/breath"
 	product_amounts = "10;10;10;5;25"
-	vend_delay = 0
 */
 
 /obj/machinery/vending/boozeomat
@@ -672,7 +667,6 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 					/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/shotglass = 12,
 					/obj/item/weapon/reagent_containers/food/drinks/flask = 3)
 	contraband = list(/obj/item/weapon/reagent_containers/food/drinks/mug/tea = 12)
-	vend_delay = 15
 	product_slogans = "I hope nobody asks me for a bloody cup o' tea...;Alcohol is humanity's friend. Would you abandon a friend?;Quite delighted to serve you!;Is nobody thirsty on this station?"
 	product_ads = "Drink up!;Booze is good for you!;Alcohol is humanity's best friend.;Quite delighted to serve you!;Care for a nice, cold beer?;Nothing cures you like booze!;Have a sip!;Have a drink!;Have a beer!;Beer is good for you!;Only the finest alcohol!;Best quality booze since 2053!;Award-winning wine!;Maximum alcohol!;Man loves beer.;A toast for progress!"
 	req_access_txt = "25"
@@ -692,7 +686,6 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	product_ads = "Have a drink!;Drink up!;It's good for you!;Would you like a hot joe?;I'd kill for some coffee!;The best beans in the galaxy.;Only the finest brew for you.;Mmmm. Nothing like a coffee.;I like coffee, don't you?;Coffee helps you work!;Try some tea.;We hope you like the best!;Try our new chocolate!;Admin conspiracies"
 	icon_state = "coffee"
 	icon_vend = "coffee-vend"
-	vend_delay = 34
 	products = list(/obj/item/weapon/reagent_containers/food/drinks/coffee = 25,/obj/item/weapon/reagent_containers/food/drinks/mug/tea = 25,/obj/item/weapon/reagent_containers/food/drinks/mug/coco = 25)
 	contraband = list(/obj/item/weapon/reagent_containers/food/drinks/ice = 12)
 	refill_canister = /obj/item/weapon/vending_refill/coffee
@@ -774,7 +767,6 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	desc = "If you want to get cancer, might as well do it in style"
 	product_slogans = "Space cigs taste good like a cigarette should.;I'd rather toolbox than switch.;Smoke!;Don't believe the reports - smoke today!"
 	product_ads = "Probably not bad for you!;Don't believe the scientists!;It's good for you!;Don't quit, buy more!;Smoke!;Nicotine heaven.;Best cigarettes since 2150.;Award-winning cigs."
-	vend_delay = 34
 	icon_state = "cigs"
 	products = list(/obj/item/weapon/storage/fancy/cigarettes = 5,
 					/obj/item/weapon/storage/fancy/cigarettes/cigpack_uplift = 3,
@@ -879,7 +871,6 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	desc = "A magic vending machine."
 	icon_state = "MagiVend"
 	product_slogans = "Sling spells the proper way with MagiVend!;Be your own Houdini! Use MagiVend!"
-	vend_delay = 15
 	vend_reply = "Have an enchanted evening!"
 	product_ads = "FJKLFJSD;AJKFLBJAKL;1234 LOONIES LOL!;>MFW;Kill them fuckers!;GET DAT FUKKEN DISK;HONK!;EI NATH;Destroy the station!;Admin conspiracies since forever!;Space-time bending hardware!"
 	products = list(/obj/item/clothing/head/wizard = 1,/obj/item/clothing/suit/wizrobe = 1,/obj/item/clothing/head/wizard/red = 1,/obj/item/clothing/suit/wizrobe/red = 1,/obj/item/clothing/head/wizard/yellow = 1,/obj/item/clothing/suit/wizrobe/yellow = 1,/obj/item/clothing/shoes/sandal = 1,/obj/item/weapon/staff = 2)
@@ -894,7 +885,6 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	icon_deny = "theater-deny"
 	req_access_txt = "46" //Theatre access needed, unless hacked.
 	product_slogans = "Dress for success!;Suited and booted!;It's show time!;Why leave style up to fate? Use AutoDrobe!"
-	vend_delay = 15
 	vend_reply = "Thank you for using AutoDrobe!"
 	products = list(/obj/item/clothing/suit/chickensuit = 1,/obj/item/clothing/head/chicken = 1,/obj/item/clothing/under/gladiator = 1,
 					/obj/item/clothing/head/helmet/gladiator = 1,/obj/item/clothing/under/gimmick/rank/captain/suit = 1,/obj/item/clothing/head/flatcap = 1,
@@ -1010,7 +1000,6 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	desc = "A vending machine for clothing."
 	icon_state = "clothes"
 	product_slogans = "Dress for success!;Prepare to look swagalicious!;Look at all this free swag!;Why leave style up to fate? Use the ClothesMate!"
-	vend_delay = 15
 	vend_reply = "Thank you for using the ClothesMate!"
 	products = list(/obj/item/clothing/head/that=2,/obj/item/clothing/head/fedora=1,/obj/item/clothing/glasses/monocle=1,
 	/obj/item/clothing/suit/jacket=2, /obj/item/clothing/suit/jacket/puffer/vest=2, /obj/item/clothing/suit/jacket/puffer=2,

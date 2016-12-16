@@ -246,22 +246,6 @@
 		qdel(spell_to_remove)
 		mind.spell_list -= spell_to_remove
 
-/*Checks if the wizard can cast spells.
-Made a proc so this is not repeated 14 (or more) times.*/
-/mob/proc/casting()
-//Removed the stat check because not all spells require clothing now.
-	if(!istype(usr:wear_suit, /obj/item/clothing/suit/wizrobe))
-		usr << "I don't feel strong enough without my robe."
-		return 0
-	if(!istype(usr:shoes, /obj/item/clothing/shoes/sandal))
-		usr << "I don't feel strong enough without my sandals."
-		return 0
-	if(!istype(usr:head, /obj/item/clothing/head/wizard))
-		usr << "I don't feel strong enough without my hat."
-		return 0
-	else
-		return 1
-
 //returns whether the mob is a wizard (or apprentice)
 /proc/iswizard(mob/living/M)
 	return istype(M) && M.mind && ticker && ticker.mode && ((M.mind in ticker.mode.wizards) || (M.mind in ticker.mode.apprentices))
