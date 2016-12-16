@@ -32,6 +32,21 @@
 	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
 	heat_protection = HANDS
 	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
+	transfer_prints = FALSE
+	resistance_flags = 0
+	var/can_be_cut = 1
+	
+/obj/item/clothing/gloves/color/black/fire
+	desc = "cheap made fire resistant gloves."
+	name = "Firefighting Gloves"
+	icon_state = "black"
+	item_state = "blackgloves"
+	item_color="black"
+	cold_protection = HANDS
+	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
+	heat_protection = HANDS
+	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
+	transfer_prints = TRUE
 	resistance_flags = 0
 	var/can_be_cut = 1
 
