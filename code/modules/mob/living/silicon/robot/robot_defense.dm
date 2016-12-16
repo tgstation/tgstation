@@ -1,6 +1,13 @@
 
 
 /mob/living/silicon/robot/attacked_by(obj/item/I, mob/living/user, def_zone)
+	if(hat_offset != INFINITY && user.a_intent == INTENT_HELP && I in wearable_hats)
+		if(do_after(user, 30, target = src))
+			user << "<span class='notice'>You begin to place [I] on [src]'s head.</span>"
+			src << "<span class='notice'>[user] is placing [I] on your head.</span>"
+			user.unEquip(I, 1)
+			place_on_head(I)
+			return
 	if(I.force && I.damtype != STAMINA && stat != DEAD) //only sparks if real damage is dealt.
 		spark_system.start()
 	return ..()

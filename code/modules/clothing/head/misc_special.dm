@@ -58,7 +58,7 @@
 
 /obj/item/clothing/head/hardhat/cakehat/process()
 	var/turf/location = src.loc
-	if(istype(location, /mob/))
+	if(ishuman(location))
 		var/mob/living/carbon/human/M = location
 		if(M.is_holding(src) || M.head == src)
 			location = M.loc

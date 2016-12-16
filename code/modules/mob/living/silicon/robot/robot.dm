@@ -16,6 +16,7 @@
 	var/obj/item/robot_suit/robot_suit = null //Used for deconstruction to remember what the borg was constructed out of..
 	var/obj/item/device/mmi/mmi = null
 
+
 //Hud stuff
 
 	var/obj/screen/inv1 = null
@@ -76,6 +77,12 @@
 
 	var/list/upgrades = list()
 
+	var/obj/item/hat
+	var/hat_offset = 3
+	var/list/equippable_hats = list(/obj/item/clothing/head/caphat, /obj/item/clothing/head/cakehat, /obj/item/clothing/head/centhat, /obj/item/clothing/head/hos, /obj/item/clothing/head/hop, /obj/item/clothing/head/sombrero, /obj/item/clothing/head/witchhunter_hat)
+
+
+
 /mob/living/silicon/robot/New(loc)
 	spark_system = new /datum/effect_system/spark_spread()
 	spark_system.set_up(5, 0, src)
@@ -130,6 +137,8 @@
 		mmi.brainmob.container = mmi
 
 	updatename()
+
+	equippable_hats = typecacheof(equippable_hats)
 
 	playsound(loc, 'sound/voice/liveagain.ogg', 75, 1)
 	aicamera = new/obj/item/device/camera/siliconcam/robot_camera(src)
@@ -563,7 +572,10 @@
 			add_overlay("ov-opencover +c")
 		else
 			add_overlay("ov-opencover -c")
-
+	if(hat)
+		var/image/head_overlay = hat.build_worn_icon(state = hat.icon_state, default_layer = 20, default_icon_file = 'icons/mob/head.dmi')
+		head_overlay.pixel_y += hat_offset
+		add_overlay(head_overlay)
 	update_fire()
 
 #define BORG_CAMERA_BUFFER 30
@@ -937,6 +949,8 @@
 	speed = 0
 	ionpulse = FALSE
 
+	hat_offset = -3
+
 	return 1
 
 /mob/living/silicon/robot/proc/has_module()
@@ -953,5 +967,16 @@
 		status_flags |= CANPUSH
 	else
 		status_flags &= ~CANPUSH
+
+	hat_offset = module.hat_offset
+
 	magpulse = module.magpulsing
 	updatename()
+
+
+/mob/living/silicon/robot/proc/place_on_head(obj/item/new_hat)
+	if(hat)
+		hat.forceMove(get_turf(src))
+	hat = new_hat
+	new_hat.forceMove(src)
+	update_icons()

@@ -24,6 +24,8 @@
 	var/did_feedback = FALSE
 	var/feedback_key
 
+	var/hat_offset = INFINITY //Can't wear hats because they are shaped too strangely
+
 /obj/item/weapon/robot_module/New()
 	..()
 	for(var/i in basic_modules)
@@ -220,6 +222,7 @@
 	ratvar_modules = list(/obj/item/clockwork/slab/cyborg, /obj/item/clockwork/ratvarian_spear)
 	moduleselect_icon = "standard"
 	feedback_key = "cyborg_standard"
+	hat_offset = -3
 
 /obj/item/weapon/robot_module/medical
 	name = "Medical"
@@ -235,6 +238,7 @@
 	moduleselect_icon = "medical"
 	feedback_key = "cyborg_medical"
 	can_be_pushed = FALSE
+	hat_offset = 3
 
 /obj/item/weapon/robot_module/engineering
 	name = "Engineering"
@@ -261,6 +265,7 @@
 	moduleselect_icon = "security"
 	feedback_key = "cyborg_security"
 	can_be_pushed = FALSE
+	hat_offset = 3
 
 /obj/item/weapon/robot_module/security/do_transform_animation()
 	..()
@@ -288,6 +293,7 @@
 	moduleselect_icon = "standard"
 	feedback_key = "cyborg_peacekeeper"
 	can_be_pushed = FALSE
+	hat_offset = -2
 
 /obj/item/weapon/robot_module/peacekeeper/do_transform_animation()
 	..()
@@ -303,6 +309,7 @@
 	cyborg_base_icon = "janitor"
 	moduleselect_icon = "janitor"
 	feedback_key = "cyborg_janitor"
+	hat_offset = -5
 
 /obj/item/weapon/reagent_containers/spray/cyborg_drying
 	name = "drying agent spray"
@@ -376,6 +383,7 @@
 	cyborg_base_icon = "miner"
 	moduleselect_icon = "miner"
 	feedback_key = "cyborg_miner"
+	hat_offset = 0
 
 /obj/item/weapon/robot_module/syndicate
 	name = "Syndicate Assault"
@@ -386,6 +394,7 @@
 	cyborg_base_icon = "synd_sec"
 	moduleselect_icon = "malf"
 	can_be_pushed = FALSE
+	hat_offset = 3
 
 /obj/item/weapon/robot_module/syndicate_medical
 	name = "Syndicate Medical"
@@ -397,6 +406,7 @@
 	cyborg_base_icon = "synd_medical"
 	moduleselect_icon = "malf"
 	can_be_pushed = FALSE
+	hat_offset = 3
 
 /datum/robot_energy_storage
 	var/name = "Generic energy storage"
