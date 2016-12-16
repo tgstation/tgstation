@@ -211,7 +211,7 @@
 				else if(href_list["ringer"])
 					pda.silent = !pda.silent
 				else if(href_list["target"])
-					if(silent > 0)
+					if(silent)
 						return alert("Communications circuits remain unitialized.")
 
 					var/target = locate(href_list["target"])
