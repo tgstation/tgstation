@@ -295,7 +295,7 @@
 				src << "<span class='warning'>Overloading machine circuitry...</span>"
 				spawn(50)
 					if(M)
-						explosion(get_turf(M), 0,1,3,0)
+						explosion(get_turf(M), 0,2,3,0)
 						qdel(M)
 			else src << "<span class='notice'>Out of uses.</span>"
 	else src << "<span class='notice'>That's not a machine.</span>"
