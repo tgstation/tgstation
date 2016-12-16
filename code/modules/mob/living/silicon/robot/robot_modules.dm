@@ -350,7 +350,7 @@
 	moduleselect_icon = "service"
 	special_light_key = "service"
 	feedback_key = "cyborg_service"
-	hat_offset = INFINITY // No hats
+	hat_offset = 0
 
 /obj/item/weapon/robot_module/butler/respawn_consumable(mob/living/silicon/robot/R, coeff = 1)
 	..()
@@ -373,9 +373,11 @@
 		if("Kent")
 			cyborg_base_icon = "kent"
 			special_light_key = "medical"
+			hat_offset = 3
 		if("Tophat")
 			cyborg_base_icon = "tophat"
 			special_light_key = null
+			hat_offset = INFINITY //He is already wearing a hat
 	return ..()
 
 /obj/item/weapon/robot_module/miner
