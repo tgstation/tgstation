@@ -61,7 +61,6 @@
 	throw_range = 2
 	w_class = WEIGHT_CLASS_TINY
 	resistance_flags = FLAMMABLE
-	var/value = 0
 	
 /obj/item/stack/spacecash/fake/c10
 	icon_state = "spacecash10"
