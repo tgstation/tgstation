@@ -127,55 +127,55 @@
 	name = "Fake c10 bill"
 	id ="fakec10"
 	build_type = BIOGENERATOR
-	Mmaterials = list(MAT_BIOMASS = 10)
+	materials = list(MAT_BIOMASS = 10)
 	build_path = /obj/item/stack/spacecash/fake/c10
 	category = list("initial","Leather and Cloth")
 
-/datum/design/fakec1
+/datum/design/fakec20
 	name = "Fake c20 bill"
-	id ="fakec10"
+	id ="fakec20"
 	build_type = BIOGENERATOR
-	Mmaterials = list(MAT_BIOMASS = 20)
+	materials = list(MAT_BIOMASS = 20)
 	build_path = /obj/item/stack/spacecash/fake/c20
 	category = list("initial","Leather and Cloth")
 	
-/datum/design/fakec1
+/datum/design/fakec50
 	name = "Fake c50 bill"
-	id ="fakec10"
+	id ="fakec50"
 	build_type = BIOGENERATOR
-	Mmaterials = list(MAT_BIOMASS = 50)
+	materials = list(MAT_BIOMASS = 50)
 	build_path = /obj/item/stack/spacecash/fake/c50
 	category = list("initial","Leather and Cloth")
 	
-/datum/design/fakec1
+/datum/design/fakec100
 	name = "Fake c100 bill"
-	id ="fakec10"
+	id ="fakec100"
 	build_type = BIOGENERATOR
-	Mmaterials = list(MAT_BIOMASS = 100)
+	materials = list(MAT_BIOMASS = 100)
 	build_path = /obj/item/stack/spacecash/fake/c100
 	category = list("initial","Leather and Cloth")
 	
-/datum/design/fakec1
+/datum/design/fakec200
 	name = "Fake c200 bill"
-	id ="fakec10"
+	id ="fakec200"
 	build_type = BIOGENERATOR
-	Mmaterials = list(MAT_BIOMASS = 200)
+	materials = list(MAT_BIOMASS = 200)
 	build_path = /obj/item/stack/spacecash/fake/c200
 	category = list("initial","Leather and Cloth")
 	
-/datum/design/fakec1
+/datum/design/fake500
 	name = "Fake c500 bill"
-	id ="fakec10"
+	id ="fakec500"
 	build_type = BIOGENERATOR
-	Mmaterials = list(MAT_BIOMASS = 500)
+	materials = list(MAT_BIOMASS = 500)
 	build_path = /obj/item/stack/spacecash/fake/c500
 	category = list("initial","Leather and Cloth")
 
-/datum/design/fakec1
+/datum/design/fakec1000
 	name = "Fake c1000 bill"
-	id ="fakec10"
+	id ="fakec1000"
 	build_type = BIOGENERATOR
-	Mmaterials = list(MAT_BIOMASS = 1000)
+	materials = list(MAT_BIOMASS = 1000)
 	build_path = /obj/item/stack/spacecash/fake/c1000
 	category = list("initial","Leather and Cloth")
 
