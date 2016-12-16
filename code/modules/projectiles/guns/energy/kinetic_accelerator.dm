@@ -20,12 +20,15 @@
 	var/max_mod_capacity = 100
 	var/list/modkits = list()
 
+	var/empty_state = "kineticgun_empty"
+
 /obj/item/weapon/gun/energy/kinetic_accelerator/examine(mob/user)
 	..()
-	user << "<b>[get_remaining_mod_capacity()]%</b> mod capacity remaining."
-	for(var/A in get_modkits())
-		var/obj/item/borg/upgrade/modkit/M = A
-		user << "<span class='notice'>There is a [M.name] mod installed, using <b>[M.cost]%</b> capacity.</span>"
+	if(max_mod_capacity)
+		user << "<b>[get_remaining_mod_capacity()]%</b> mod capacity remaining."
+		for(var/A in get_modkits())
+			var/obj/item/borg/upgrade/modkit/M = A
+			user << "<span class='notice'>There is a [M.name] mod installed, using <b>[M.cost]%</b> capacity.</span>"
 
 /obj/item/weapon/gun/energy/kinetic_accelerator/attackby(obj/item/A, mob/user)
 	if(istype(A, /obj/item/weapon/crowbar))
@@ -126,8 +129,8 @@
 
 /obj/item/weapon/gun/energy/kinetic_accelerator/update_icon()
 	cut_overlays()
-	if(!can_shoot())
-		add_overlay("kineticgun_empty")
+	if(empty_state && !can_shoot())
+		add_overlay(empty_state)
 
 	if(gun_light && can_flashlight)
 		var/iconF = "flight"
