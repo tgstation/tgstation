@@ -1,4 +1,4 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
+
 
 // Mulebot - carries crates around for Quartermaster
 // Navigates via floor navbeacons
@@ -20,7 +20,7 @@ var/global/mulebot_count = 0
 	health = 50
 	maxHealth = 50
 	damage_coeff = list(BRUTE = 0.5, BURN = 0.7, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
-	a_intent = "harm" //No swapping
+	a_intent = INTENT_HARM //No swapping
 	buckle_lying = 0
 	mob_size = MOB_SIZE_LARGE
 

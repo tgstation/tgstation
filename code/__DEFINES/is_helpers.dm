@@ -50,6 +50,8 @@
 
 #define isalienadult(A) (istype(A, /mob/living/carbon/alien/humanoid))
 
+#define isdevil(A) (istype(A, /mob/living/carbon/true_devil))
+
 //Silicon mobs
 #define issilicon(A) (istype(A, /mob/living/silicon))
 
@@ -113,6 +115,8 @@
 #define islimb(A) (istype(A, /obj/item/bodypart))
 
 #define is_cleanable(A) (istype(A, /obj/effect/decal/cleanable) || istype(A, /obj/effect/rune)) //if something is cleanable
+
+#define isorgan(A) (istype(A, /obj/item/organ))
 
 //Assemblies
 #define isassembly(O) (istype(O, /obj/item/device/assembly))

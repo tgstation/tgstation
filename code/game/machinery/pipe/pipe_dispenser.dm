@@ -79,9 +79,9 @@
 		return
 	else if (istype(W, /obj/item/weapon/wrench))
 		if (!anchored && !isinspace())
-			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+			playsound(src.loc, W.usesound, 50, 1)
 			user << "<span class='notice'>You begin to fasten \the [src] to the floor...</span>"
-			if (do_after(user, 40/W.toolspeed, target = src))
+			if (do_after(user, 40*W.toolspeed, target = src))
 				add_fingerprint(user)
 				user.visible_message( \
 					"[user] fastens \the [src].", \
@@ -92,9 +92,9 @@
 				if (usr.machine==src)
 					usr << browse(null, "window=pipedispenser")
 		else if(anchored)
-			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+			playsound(src.loc, W.usesound, 50, 1)
 			user << "<span class='notice'>You begin to unfasten \the [src] from the floor...</span>"
-			if (do_after(user, 20/W.toolspeed, target = src))
+			if (do_after(user, 20*W.toolspeed, target = src))
 				add_fingerprint(user)
 				user.visible_message( \
 					"[user] unfastens \the [src].", \

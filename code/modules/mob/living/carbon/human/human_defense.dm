@@ -185,7 +185,7 @@
 
 
 /mob/living/carbon/human/attack_hulk(mob/living/carbon/human/user, does_attack_animation = 0)
-	if(user.a_intent == "harm")
+	if(user.a_intent == INTENT_HARM)
 		var/hulk_verb = pick("smash","pummel")
 		if(check_shields(15, "the [hulk_verb]ing"))
 			return
@@ -209,7 +209,7 @@
 	var/obj/item/bodypart/affecting = get_bodypart(ran_zone(dam_zone))
 	if(!affecting)
 		affecting = get_bodypart("chest")
-	if(M.a_intent == "help")
+	if(M.a_intent == INTENT_HELP)
 		..() //shaking
 		return 0
 
@@ -232,7 +232,7 @@
 		return 0
 
 	if(..())
-		if(M.a_intent == "harm")
+		if(M.a_intent == INTENT_HARM)
 			if (w_uniform)
 				w_uniform.add_fingerprint(M)
 			var/damage = prob(90) ? 20 : 0
@@ -255,7 +255,7 @@
 			apply_damage(damage, BRUTE, affecting, armor_block)
 			damage_clothes(damage, BRUTE, "melee", affecting.body_zone)
 
-		if(M.a_intent == "disarm") //Always drop item in hand, if no item, get stunned instead.
+		if(M.a_intent == INTENT_DISARM) //Always drop item in hand, if no item, get stunned instead.
 			if(get_active_held_item() && drop_item())
 				playsound(loc, 'sound/weapons/slash.ogg', 25, 1, -1)
 				visible_message("<span class='danger'>[M] disarmed [src]!</span>", \
@@ -322,7 +322,7 @@
 
 /mob/living/carbon/human/mech_melee_attack(obj/mecha/M)
 
-	if(M.occupant.a_intent == "harm")
+	if(M.occupant.a_intent == INTENT_HARM)
 		M.do_attack_animation(src)
 		if(M.damtype == "brute")
 			step_away(src,M,15)

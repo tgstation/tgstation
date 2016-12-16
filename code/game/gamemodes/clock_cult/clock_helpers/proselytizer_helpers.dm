@@ -31,6 +31,10 @@
 	return list("operation_time" = 50, "new_obj_type" = /turf/open/floor/clockwork, "alloy_cost" = -REPLICANT_WALL_MINUS_FLOOR, "spawn_dir" = SOUTH)
 
 /turf/open/floor/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer)
+	if(floor_tile == /obj/item/stack/tile/plasteel)
+		PoolOrNew(floor_tile, src)
+		make_plating()
+		playsound(src, 'sound/items/Crowbar.ogg', 10, 1) //clink
 	return list("operation_time" = 30, "new_obj_type" = /turf/open/floor/clockwork, "alloy_cost" = REPLICANT_FLOOR, "spawn_dir" = SOUTH)
 
 /turf/open/floor/plating/asteroid/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer)
@@ -67,6 +71,34 @@
 	return FALSE
 
 //Metal conversion
+/obj/item/stack/tile/plasteel/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer)
+	if(source)
+		return FALSE
+	var/amount_temp = get_amount()
+	if(proselytizer.metal_to_alloy)
+		var/no_delete = FALSE
+		if(amount_temp < 2)
+			user << "<span class='warning'>You need at least <b>2</b> floor tiles to convert into alloy.</span>"
+			return TRUE
+		if(IsOdd(amount_temp))
+			amount_temp--
+			no_delete = TRUE
+			use(amount_temp)
+		amount_temp *= 0.5 //halve the alloy output; each tile is 0.5 alloy so this is 2 tiles to 1 alloy
+		return list("operation_time" = 0, "new_obj_type" = /obj/effect/overlay/temp/ratvar/beam/itemconsume, "alloy_cost" = -amount_temp, "spawn_dir" = SOUTH, "no_target_deletion" = no_delete)
+	if(amount_temp >= 20)
+		var/sheets_to_make = round(amount_temp * 0.05) //and 20 to 1 brass
+		var/used = sheets_to_make * 20
+		user.visible_message("<span class='warning'>[user]'s [proselytizer.name] rips into [src], converting it to brass!</span>", \
+		"<span class='brass'>You convert [get_amount() - used > 0 ? "part of ":""][src] into brass...</span>")
+		playsound(src, 'sound/machines/click.ogg', 50, 1)
+		playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
+		new /obj/item/stack/tile/brass(get_turf(src), sheets_to_make)
+		use(used)
+	else
+		user << "<span class='warning'>You need at least <b>20</b> floor tiles to convert into brass.</span>"
+	return TRUE
+
 /obj/item/stack/rods/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer)
 	if(source)
 		return FALSE
@@ -79,10 +111,10 @@
 		"<span class='brass'>You convert [get_amount() - used > 0 ? "part of ":""][src] into brass...</span>")
 		playsound(src, 'sound/machines/click.ogg', 50, 1)
 		playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
-		new /obj/item/stack/sheet/brass(get_turf(src), sheets_to_make)
+		new /obj/item/stack/tile/brass(get_turf(src), sheets_to_make)
 		use(used)
 	else
-		user << "<span class='warning'>You need at least 10 rods to convert into brass.</span>"
+		user << "<span class='warning'>You need at least <b>10</b> rods to convert into brass.</span>"
 	return TRUE
 
 /obj/item/stack/sheet/metal/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer)
@@ -97,10 +129,10 @@
 		"<span class='brass'>You convert [get_amount() - used > 0 ? "part of ":""][src] into brass...</span>")
 		playsound(src, 'sound/machines/click.ogg', 50, 1)
 		playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
-		new /obj/item/stack/sheet/brass(get_turf(src), sheets_to_make)
+		new /obj/item/stack/tile/brass(get_turf(src), sheets_to_make)
 		use(used)
 	else
-		user << "<span class='warning'>You need at least 5 sheets of metal to convert into brass.</span>"
+		user << "<span class='warning'>You need at least <b>5</b> sheets of metal to convert into brass.</span>"
 	return TRUE
 
 /obj/item/stack/sheet/plasteel/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer)
@@ -115,14 +147,14 @@
 		"<span class='brass'>You convert [get_amount() - used > 0 ? "part of ":""][src] into brass...</span>")
 		playsound(src, 'sound/machines/click.ogg', 50, 1)
 		playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
-		new /obj/item/stack/sheet/brass(get_turf(src), sheets_to_make)
+		new /obj/item/stack/tile/brass(get_turf(src), sheets_to_make)
 		use(used)
 	else
-		user << "<span class='warning'>You need at least 2 sheets of plasteel to convert into brass.</span>"
+		user << "<span class='warning'>You need at least <b>2</b> sheets of plasteel to convert into brass.</span>"
 	return TRUE
 
 //Brass directly to alloy; scarab only
-/obj/item/stack/sheet/brass/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer)
+/obj/item/stack/tile/brass/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer)
 	if(source)
 		return FALSE
 	if(!proselytizer.metal_to_alloy)

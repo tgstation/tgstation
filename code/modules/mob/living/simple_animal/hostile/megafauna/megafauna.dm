@@ -6,7 +6,7 @@
 	desc = "Attack the weak point for massive damage."
 	health = 1000
 	maxHealth = 1000
-	a_intent = "harm"
+	a_intent = INTENT_HARM
 	sentience_type = SENTIENCE_BOSS
 	environment_smash = 3
 	obj_damage = 400

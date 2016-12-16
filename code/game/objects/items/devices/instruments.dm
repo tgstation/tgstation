@@ -11,6 +11,7 @@
 /obj/item/device/instrument/New()
 	song = new(instrumentId, src)
 	song.instrumentExt = instrumentExt
+	..()
 
 /obj/item/device/instrument/Destroy()
 	qdel(song)

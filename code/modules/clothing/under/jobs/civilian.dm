@@ -8,7 +8,6 @@
 	item_color = "barman"
 	alt_covers_chest = 1
 
-
 /obj/item/clothing/under/rank/captain //Alright, technically not a 'civilian' but its better then giving a .dm file for a single define.
 	desc = "It's a blue jumpsuit with some gold markings denoting the rank of \"Captain\"."
 	name = "captain's jumpsuit"
@@ -16,14 +15,12 @@
 	item_state = "b_suit"
 	item_color = "captain"
 
-
 /obj/item/clothing/under/rank/cargo
 	name = "quartermaster's jumpsuit"
 	desc = "It's a jumpsuit worn by the quartermaster. It's specially designed to prevent back injuries caused by pushing paper."
 	icon_state = "qm"
 	item_state = "lb_suit"
 	item_color = "qm"
-
 
 /obj/item/clothing/under/rank/cargotech
 	name = "cargo technician's jumpsuit"
@@ -43,14 +40,12 @@
 	item_color = "chapblack"
 	can_adjust = 0
 
-
 /obj/item/clothing/under/rank/chef
 	name = "cook's suit"
 	desc = "A suit which is given only to the most <b>hardcore</b> cooks in space."
 	icon_state = "chef"
 	item_color = "chef"
 	alt_covers_chest = 1
-
 
 /obj/item/clothing/under/rank/clown
 	name = "clown suit"
@@ -73,7 +68,6 @@
 	item_color = "hop"
 	can_adjust = 0
 
-
 /obj/item/clothing/under/rank/hydroponics
 	desc = "It's a jumpsuit designed to protect against minor plant-related hazards."
 	name = "botanist's jumpsuit"
@@ -82,7 +76,6 @@
 	item_color = "hydroponics"
 	permeability_coefficient = 0.50
 
-
 /obj/item/clothing/under/rank/janitor
 	desc = "It's the official uniform of the station's janitor. It has minor protection from biohazards."
 	name = "janitor's jumpsuit"
@@ -90,36 +83,30 @@
 	item_color = "janitor"
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 10, rad = 0, fire = 0, acid = 0)
 
-
 /obj/item/clothing/under/lawyer
 	desc = "Slick threads."
 	name = "Lawyer suit"
 	can_adjust = 0
-
 
 /obj/item/clothing/under/lawyer/black
 	icon_state = "lawyer_black"
 	item_state = "lawyer_black"
 	item_color = "lawyer_black"
 
-
 /obj/item/clothing/under/lawyer/female
 	icon_state = "black_suit_fem"
 	item_state = "black_suit_fem"
 	item_color = "black_suit_fem"
-
 
 /obj/item/clothing/under/lawyer/red
 	icon_state = "lawyer_red"
 	item_state = "lawyer_red"
 	item_color = "lawyer_red"
 
-
 /obj/item/clothing/under/lawyer/blue
 	icon_state = "lawyer_blue"
 	item_state = "lawyer_blue"
 	item_color = "lawyer_blue"
-
 
 /obj/item/clothing/under/lawyer/bluesuit
 	name = "blue suit"
@@ -130,7 +117,6 @@
 	can_adjust = 1
 	alt_covers_chest = 1
 
-
 /obj/item/clothing/under/lawyer/purpsuit
 	name = "purple suit"
 	icon_state = "lawyer_purp"
@@ -139,7 +125,6 @@
 	fitted = NO_FEMALE_UNIFORM
 	can_adjust = 1
 	alt_covers_chest = 1
-
 
 /obj/item/clothing/under/lawyer/blacksuit
 	name = "black suit"
@@ -150,7 +135,6 @@
 	can_adjust = 1
 	alt_covers_chest = 1
 
-
 /obj/item/clothing/under/rank/librarian
 	name = "sensible suit"
 	desc = "It's very... sensible."
@@ -159,6 +143,12 @@
 	item_color = "red_suit"
 	can_adjust = 0
 
+/obj/item/clothing/under/rank/librarian/curator
+	name = "treasure hunter uniform"
+	desc = "A rugged uniform suitable for treasure hunting."
+	icon_state = "curator"
+	item_state = "curator"
+	item_color = "curator"
 
 /obj/item/clothing/under/rank/mime
 	name = "mime's outfit"
@@ -167,14 +157,12 @@
 	item_state = "mime"
 	item_color = "mime"
 
-
 /obj/item/clothing/under/rank/miner
 	desc = "It's a snappy jumpsuit with a sturdy set of overalls. It is very dirty."
 	name = "shaft miner's jumpsuit"
 	icon_state = "miner"
 	item_state = "miner"
 	item_color = "miner"
-
 
 /obj/item/clothing/under/rank/miner/lavaland
 	desc = "A green uniform for operating in hazardous environments."

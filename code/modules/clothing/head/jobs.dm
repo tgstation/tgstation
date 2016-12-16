@@ -54,6 +54,24 @@
 	flags_inv = HIDEHAIR
 	flags_cover = HEADCOVERSEYES
 
+/obj/item/clothing/head/cage
+	name = "cage"
+	desc = "A cage that restrains the will of the self, allowing one to see the profane world for what it is."
+	alternate_worn_icon = 'icons/mob/large-worn-icons/64x64/head.dmi'
+	icon_state = "cage"
+	item_state = "cage"
+	worn_x_dimension = 64
+	worn_y_dimension = 64
+
+
+/obj/item/clothing/head/witchunter_hat
+	name = "witchunter hat"
+	desc = "This hat saw much use back in the day."
+	icon_state = "witchhunterhat"
+	item_state = "witchhunterhat"
+	flags_cover = HEADCOVERSEYES
+
+//Detective
 /obj/item/clothing/head/det_hat
 	name = "detective's fedora"
 	desc = "There's only one man who can sniff out the dirty stench of crime, and he's likely wearing this hat."
@@ -134,3 +152,10 @@
 /obj/item/clothing/head/beret/sec/navyofficer
 	desc = "A special beret with the security insignia emblazoned on it. For officers with class."
 	icon_state = "officerberet"
+
+//Curator
+/obj/item/clothing/head/curator
+	name = "treasure hunter's fedora"
+	desc = "You got red text today kid, but it doesn't mean you have to like it."
+	icon_state = "curator"
+	armor = list(melee = 25, bullet = 5, laser = 25, energy = 10, bomb = 0, bio = 0, rad = 0, fire = 30, acid = 50)

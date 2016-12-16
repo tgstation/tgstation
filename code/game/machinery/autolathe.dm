@@ -115,7 +115,7 @@
 			wires.interact(user)
 			return 1
 
-	if(user.a_intent == "harm") //so we can hit the machine
+	if(user.a_intent == INTENT_HARM) //so we can hit the machine
 		return ..()
 
 	if(stat)

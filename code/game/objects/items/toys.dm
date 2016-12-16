@@ -43,6 +43,7 @@
 
 /obj/item/toy/balloon/New()
 	create_reagents(10)
+	..()
 
 /obj/item/toy/balloon/attack(mob/living/carbon/human/M, mob/user)
 	return
@@ -347,7 +348,7 @@
 /obj/item/toy/snappop/Crossed(H as mob|obj)
 	if(ishuman(H) || issilicon(H)) //i guess carp and shit shouldn't set them off
 		var/mob/living/carbon/M = H
-		if(issilicon(H) || M.m_intent == "run")
+		if(issilicon(H) || M.m_intent == MOVE_INTENT_RUN)
 			M << "<span class='danger'>You step on the snap pop!</span>"
 			pop_burst(2, 0)
 
@@ -649,9 +650,6 @@
 	var/card_throw_range = 7
 	var/list/card_attack_verb = list("attacked")
 
-/obj/item/toy/cards/New()
-	..()
-
 /obj/item/toy/cards/proc/apply_card_vars(obj/item/toy/cards/newobj, obj/item/toy/cards/sourceobj) // Applies variables for supporting multiple types of card deck
 	if(!istype(sourceobj))
 		return
@@ -822,7 +820,7 @@
 			C.apply_card_vars(C,O)
 			C.pickup(cardUser)
 			cardUser.put_in_hands(C)
-			cardUser.visible_message("<span class='notice'>[cardUser] draws a card from \his hand.</span>", "<span class='notice'>You take the [C.cardname] from your hand.</span>")
+			cardUser.visible_message("<span class='notice'>[cardUser] draws a card from [cardUser.p_their()] hand.</span>", "<span class='notice'>You take the [C.cardname] from your hand.</span>")
 
 			interact(cardUser)
 			if(src.currenthand.len < 3)
@@ -849,7 +847,7 @@
 		if(C.parentdeck == src.parentdeck)
 			src.currenthand += C.cardname
 			user.unEquip(C)
-			user.visible_message("[user] adds a card to their hand.", "<span class='notice'>You add the [C.cardname] to your hand.</span>")
+			user.visible_message("[user] adds a card to [user.p_their()] hand.", "<span class='notice'>You add the [C.cardname] to your hand.</span>")
 			interact(user)
 			if(currenthand.len > 4)
 				src.icon_state = "[deckstyle]_hand5"
@@ -890,7 +888,7 @@
 	if(ishuman(user))
 		var/mob/living/carbon/human/cardUser = user
 		if(cardUser.is_holding(src))
-			cardUser.visible_message("[cardUser] checks \his card.", "<span class='notice'>The card reads: [src.cardname]</span>")
+			cardUser.visible_message("[cardUser] checks [cardUser.p_their()] card.", "<span class='notice'>The card reads: [cardname]</span>")
 		else
 			cardUser << "<span class='warning'>You need to have the card in your hand to check it!</span>"
 
@@ -939,7 +937,7 @@
 		if(H.parentdeck == parentdeck)
 			H.currenthand += cardname
 			user.unEquip(src)
-			user.visible_message("[user] adds a card to \his hand.", "<span class='notice'>You add the [cardname] to your hand.</span>")
+			user.visible_message("[user] adds a card to [user.p_their()] hand.", "<span class='notice'>You add the [cardname] to your hand.</span>")
 			H.interact(user)
 			if(H.currenthand.len > 4)
 				H.icon_state = "[deckstyle]_hand5"
@@ -1178,6 +1176,7 @@
 
 /obj/item/toy/figure/New()
     desc = "A \"Space Life\" brand [src]."
+    ..()
 
 /obj/item/toy/figure/attack_self(mob/user as mob)
 	if(cooldown <= world.time)
@@ -1278,7 +1277,7 @@
 	toysay = "Smash!"
 
 /obj/item/toy/figure/hop
-	name = "Head of Personel action figure"
+	name = "Head of Personnel action figure"
 	icon_state = "hop"
 	toysay = "Giving out all access!"
 

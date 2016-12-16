@@ -30,7 +30,7 @@
 			else
 				user << "<span class='warning'>You need to expose [target]'s [parse_zone(target_zone)] to perform surgery on it!</span>"
 				return 1	//returns 1 so we don't stab the guy in the dick or wherever.
-	if(iscyborg(user) && user.a_intent != "harm") //to save asimov borgs a LOT of heartache
+	if(iscyborg(user) && user.a_intent != INTENT_HARM) //to save asimov borgs a LOT of heartache
 		return 1
 	return 0
 
@@ -42,7 +42,7 @@
 		surgery.step_in_progress = 0
 		return
 
-	if(do_after(user, time, target = target))
+	if(do_after(user, time * tool.toolspeed, target = target))
 		var/advance = 0
 		var/prob_chance = 100
 

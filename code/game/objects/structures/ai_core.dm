@@ -35,7 +35,7 @@
 		playsound(loc, P.usesound, 50, 1)
 		user.visible_message("[user] [anchored ? "fastens" : "unfastens"] [src].", \
 					 "<span class='notice'>You start to [anchored ? "unfasten [src] from" : "fasten [src] to"] the floor...</span>")
-		if(do_after(user, 20/P.toolspeed, target = src))
+		if(do_after(user, 20*P.toolspeed, target = src))
 			user << "<span class='notice'>You [anchored ? "unfasten [src] from" : "fasten [src] to"] the floor.</span>"
 			anchored = !anchored
 		return
@@ -48,9 +48,9 @@
 			if(!WT.isOn())
 				user << "<span class='warning'>The welder must be on for this task!</span>"
 				return
-			playsound(loc, 'sound/items/Welder.ogg', 50, 1)
+			playsound(loc, WT.usesound, 50, 1)
 			user << "<span class='notice'>You start to deconstruct the frame...</span>"
-			if(do_after(user, 20/P.toolspeed, target = src) && src && state == EMPTY_CORE && WT && WT.remove_fuel(0, user))
+			if(do_after(user, 20*P.toolspeed, target = src) && src && state == EMPTY_CORE && WT && WT.remove_fuel(0, user))
 				user << "<span class='notice'>You deconstruct the frame.</span>"
 				deconstruct(TRUE)
 			return

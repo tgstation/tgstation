@@ -36,10 +36,10 @@
 
 /datum/supply_pack/emergency
 	group = "Emergency"
-	
+
 /datum/supply_pack/emergency/vehicle
 	name = "Biker Gang Kit" //TUNNEL SNAKES OWN THIS TOWN
-	cost = 2000 
+	cost = 2000
 	contraband = TRUE
 	contains = list(/obj/vehicle/atv,
 					/obj/item/key,
@@ -119,7 +119,12 @@
 	contains = list(/obj/item/clothing/head/radiation,
 					/obj/item/clothing/head/radiation,
 					/obj/item/clothing/suit/radiation,
-					/obj/item/clothing/suit/radiation)
+					/obj/item/clothing/suit/radiation,
+					/obj/item/device/geiger_counter,
+					/obj/item/device/geiger_counter,
+					/obj/item/weapon/reagent_containers/food/drinks/bottle/vodka,
+					/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/shotglass,
+					/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/shotglass)
 	crate_name = "radiation protection crate"
 	crate_type = /obj/structure/closet/crate/radiation
 
@@ -911,15 +916,6 @@
 	crate_type = /obj/structure/closet/crate/secure
 	dangerous = TRUE
 
-/datum/supply_pack/science/freon_canister
-	name = "Freon Canister"
-	cost = 6000
-	access_any = list(access_rd, access_atmospherics)
-	contains = list(/obj/machinery/portable_atmospherics/canister/freon)
-	crate_name = "freon canister crate"
-	crate_type = /obj/structure/closet/crate/secure
-	dangerous = TRUE
-
 /datum/supply_pack/science/research
 	name = "Machine Prototype Crate"
 	cost = 8000
@@ -1142,7 +1138,9 @@
 					/obj/item/seeds/amanita,
 					/obj/item/seeds/reishi,
 					/obj/item/seeds/banana,
-					/obj/item/seeds/eggplant/eggy)
+					/obj/item/seeds/eggplant/eggy,
+					/obj/item/seeds/random,
+					/obj/item/seeds/random)
 	crate_name = "exotic seeds crate"
 
 /datum/supply_pack/organic/hydroponics/beekeeping_fullkit

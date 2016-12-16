@@ -27,13 +27,13 @@
 	return
 
 /obj/structure/barricade/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/weapon/weldingtool) && user.a_intent != "harm" && material == METAL)
+	if(istype(I, /obj/item/weapon/weldingtool) && user.a_intent != INTENT_HARM && material == METAL)
 		var/obj/item/weapon/weldingtool/WT = I
 		if(obj_integrity < max_integrity)
 			if(WT.remove_fuel(0,user))
 				user << "<span class='notice'>You begin repairing [src]...</span>"
-				playsound(loc, 'sound/items/Welder.ogg', 40, 1)
-				if(do_after(user, 40/I.toolspeed, target = src))
+				playsound(loc, WT.usesound, 40, 1)
+				if(do_after(user, 40*I.toolspeed, target = src))
 					obj_integrity = Clamp(obj_integrity + 20, 0, max_integrity)
 	else
 		return ..()

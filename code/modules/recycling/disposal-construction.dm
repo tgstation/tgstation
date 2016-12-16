@@ -224,7 +224,7 @@
 				level = 1 // We don't want disposal bins to disappear under the floors
 			density = 0
 			user << "<span class='notice'>You attach the [nicetype] to the underfloor.</span>"
-		playsound(loc, 'sound/items/Ratchet.ogg', 100, 1)
+		playsound(loc, I.usesound, 100, 1)
 		update_icon()
 
 	else if(istype(I, /obj/item/weapon/weldingtool))
@@ -233,7 +233,7 @@
 			if(W.remove_fuel(0,user))
 				playsound(loc, 'sound/items/Welder2.ogg', 100, 1)
 				user << "<span class='notice'>You start welding the [nicetype] in place...</span>"
-				if(do_after(user, 20/I.toolspeed, target = src))
+				if(do_after(user, 20*I.toolspeed, target = src))
 					if(!loc || !W.isOn())
 						return
 					user << "<span class='notice'>The [nicetype] has been welded in place.</span>"

@@ -6,7 +6,7 @@
 	return ..()
 
 /mob/living/silicon/robot/attack_alien(mob/living/carbon/alien/humanoid/M)
-	if (M.a_intent =="disarm")
+	if (M.a_intent == INTENT_DISARM)
 		if(!(lying))
 			M.do_attack_animation(src, ATTACK_EFFECT_DISARM)
 			if(get_active_held_item())

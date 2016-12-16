@@ -102,7 +102,7 @@ var/bomb_set
 			if(istype(I, /obj/item/weapon/screwdriver/nuke))
 				playsound(loc, I.usesound, 100, 1)
 				user << "<span class='notice'>You start removing [src]'s front panel's screws...</span>"
-				if(do_after(user, 60/I.toolspeed,target=src))
+				if(do_after(user, 60*I.toolspeed,target=src))
 					deconstruction_state = NUKESTATE_UNSCREWED
 					user << "<span class='notice'>You remove the screws from [src]'s front panel.</span>"
 					update_icon()
@@ -111,7 +111,7 @@ var/bomb_set
 			if(istype(I, /obj/item/weapon/crowbar))
 				user << "<span class='notice'>You start removing [src]'s front panel...</span>"
 				playsound(loc, I.usesound, 100, 1)
-				if(do_after(user,30/I.toolspeed,target=src))
+				if(do_after(user,30*I.toolspeed,target=src))
 					user << "<span class='notice'>You remove [src]'s front panel.</span>"
 					deconstruction_state = NUKESTATE_PANEL_REMOVED
 					update_icon()
@@ -122,7 +122,7 @@ var/bomb_set
 				playsound(loc, I.usesound, 100, 1)
 				user << "<span class='notice'>You start cutting [src]'s inner plate...</span>"
 				if(welder.remove_fuel(1,user))
-					if(do_after(user,80/I.toolspeed,target=src))
+					if(do_after(user,80*I.toolspeed,target=src))
 						user << "<span class='notice'>You cut [src]'s inner plate.</span>"
 						deconstruction_state = NUKESTATE_WELDED
 						update_icon()
@@ -131,7 +131,7 @@ var/bomb_set
 			if(istype(I, /obj/item/weapon/crowbar))
 				user << "<span class='notice'>You start prying off [src]'s inner plate...</span>"
 				playsound(loc, I.usesound, 100, 1)
-				if(do_after(user,50/I.toolspeed,target=src))
+				if(do_after(user,50*I.toolspeed,target=src))
 					user << "<span class='notice'>You pry off [src]'s inner plate. You can see the core's green glow!</span>"
 					deconstruction_state = NUKESTATE_CORE_EXPOSED
 					update_icon()

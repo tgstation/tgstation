@@ -62,7 +62,9 @@
 
 /obj/structure/destructible/clockwork/proc/get_efficiency_mod(increasing)
 	if(ratvar_awakens)
-		return 1
+		if(increasing)
+			return 0.5
+		return 2
 	. = max(sqrt(obj_integrity/max(max_integrity, 1)), 0.5)
 	if(increasing)
 		. *= min(max_integrity/max(obj_integrity, 1), 4)

@@ -306,7 +306,6 @@
 		loc = defib
 		busy = 0
 		update_icon()
-	return
 
 /obj/item/weapon/twohanded/shockpaddles/update_icon()
 	icon_state = "defibpaddles[wielded]"
@@ -373,7 +372,7 @@
 		return
 	var/mob/living/carbon/human/H = M
 
-	if(user.a_intent == "disarm")
+	if(user.a_intent == INTENT_DISARM)
 		if(req_defib && defib.safety)
 			return
 		if(!req_defib && !combat)
@@ -402,7 +401,7 @@
 		user << "<span class='warning'>You need to target your patient's \
 			chest with [src]!</span>"
 		return
-	if(user.a_intent == "harm")
+	if(user.a_intent == INTENT_HARM)
 		if(req_defib && defib.safety)
 			return
 		if(!req_defib && !combat)
@@ -557,11 +556,30 @@
 	busy = 0
 	update_icon()
 
-/obj/item/weapon/twohanded/shockpaddles/syndicate
-	name = "syndicate defibrillator paddles"
-	desc = "A pair of paddles used to revive deceased operatives. It possesses both the ability to penetrate armor and to deliver powerful shocks offensively."
-	combat = 1
+/obj/item/weapon/twohanded/shockpaddles/cyborg
+	name = "cyborg defibrillator paddles"
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "defibpaddles0"
 	item_state = "defibpaddles0"
-	req_defib = 0
+	req_defib = FALSE
+
+/obj/item/weapon/twohanded/shockpaddles/cyborg/attack(mob/M, mob/user)
+	if(iscyborg(user))
+		var/mob/living/silicon/robot/R = user
+		if(R.emagged)
+			combat = TRUE
+		else
+			combat = FALSE
+	else
+		combat = FALSE
+
+	. = ..()
+
+/obj/item/weapon/twohanded/shockpaddles/syndicate
+	name = "syndicate defibrillator paddles"
+	desc = "A pair of paddles used to revive deceased operatives. It possesses both the ability to penetrate armor and to deliver powerful shocks offensively."
+	combat = TRUE
+	icon = 'icons/obj/weapons.dmi'
+	icon_state = "defibpaddles0"
+	item_state = "defibpaddles0"
+	req_defib = FALSE

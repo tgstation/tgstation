@@ -339,9 +339,9 @@
 	if(istype(W, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = W
 		if(WT.remove_fuel(0,user))
-			playsound(loc, 'sound/items/Welder.ogg', 40, 1)
+			playsound(loc, WT.usesound, 40, 1)
 			user << "<span class='notice'>Now welding the scrubber.</span>"
-			if(do_after(user, 20/W.toolspeed, target = src))
+			if(do_after(user, 20*W.toolspeed, target = src))
 				if(!src || !WT.isOn())
 					return
 				playsound(src.loc, 'sound/items/Welder2.ogg', 50, 1)

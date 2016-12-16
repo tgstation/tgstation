@@ -16,8 +16,8 @@ Contains:
 
 	//Death squad armored space suits, not hardsuits!
 /obj/item/clothing/head/helmet/space/hardsuit/deathsquad
-	name = "deathsquad helmet"
-	desc = "That's not red paint. That's real blood."
+	name = "MK.III SWAT Helmet"
+	desc = "An advanced tactical space helmet."
 	icon_state = "deathsquad"
 	item_state = "deathsquad"
 	armor = list(melee = 80, bullet = 80, laser = 50, energy = 50, bomb = 100, bio = 100, rad = 100, fire = 100, acid = 100)
@@ -30,8 +30,8 @@ Contains:
 	return
 
 /obj/item/clothing/suit/space/hardsuit/deathsquad
-	name = "deathsquad suit"
-	desc = "A heavily armored, advanced space suit that protects against most forms of damage."
+	name = "MK.III SWAT Suit"
+	desc = "A prototype designed to replace the ageing MK.II SWAT suit. Based on the streamlined MK.II model, the traditional ceramic and graphene plate construction was replaced with plasteel, allowing superior armor against most threats. There's room for some kind of energy projection device on the back."
 	icon_state = "deathsquad"
 	item_state = "swat_suit"
 	allowed = list(/obj/item/weapon/gun,/obj/item/ammo_box,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/restraints/handcuffs,/obj/item/weapon/tank/internals,/obj/item/weapon/kitchen/knife/combat)
@@ -44,8 +44,8 @@ Contains:
 
 	//NEW SWAT suit
 /obj/item/clothing/suit/space/swat
-	name = "SWAT armor"
-	desc = "Space-proof tactical SWAT armor."
+	name = "MK.I SWAT Suit"
+	desc = "A tactical space suit first developed in a joint effort by the defunct IS-ERI and Nanotrasen in 20XX for military space operations. A tried and true workhorse, it is very difficult to move in but offers robust protection against all threats!"
 	icon_state = "heavy"
 	item_state = "swat_suit"
 	allowed = list(/obj/item/weapon/gun,/obj/item/ammo_box,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/restraints/handcuffs,/obj/item/weapon/tank/internals,/obj/item/weapon/kitchen/knife/combat)

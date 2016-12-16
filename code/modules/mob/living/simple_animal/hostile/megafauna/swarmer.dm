@@ -47,8 +47,8 @@ var/global/list/AISwarmerCapsByType = list(/mob/living/simple_animal/hostile/swa
 	desc = "That name is a bit of a mouthful, but stop paying attention to your mouth they're eating everything!"
 	icon = 'icons/mob/swarmer.dmi'
 	icon_state = "swarmer_console"
-	health = 3000
-	maxHealth = 3000 //low-ish HP because it's a passive boss, and the swarm itself is the real foe
+	health = 750
+	maxHealth = 750 //""""low-ish"""" HP because it's a passive boss, and the swarm itself is the real foe
 	medal_type = MEDAL_PREFIX
 	score_type = SWARMER_BEACON_SCORE
 	faction = list("mining", "boss", "swarmer")
@@ -156,7 +156,7 @@ var/global/list/AISwarmerCapsByType = list(/mob/living/simple_animal/hostile/swa
 /mob/living/simple_animal/hostile/swarmer/ai/proc/StartAction(deci = 0)
 	stop_automated_movement = TRUE
 	AIStatus = AI_OFF
-	addtimer(src, "EndAction", deci, FALSE)
+	addtimer(src, "EndAction", deci, TIMER_NORMAL)
 
 
 /mob/living/simple_animal/hostile/swarmer/ai/proc/EndAction()

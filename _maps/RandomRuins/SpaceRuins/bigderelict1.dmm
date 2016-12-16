@@ -69,7 +69,7 @@
 "bq" = (/obj/effect/mob_spawn/human/corpse/nanotrasensoldier{helmet = null; id_job = "Tradepost Officer"; name = "Tradeport Officer"; random = 1},/obj/item/weapon/paper/crumpled/snowdin{icon_state = "scrap_bloodied"; info = "If anyone finds this, please, don't let my kids know I died a coward.."},/obj/effect/decal/cleanable/blood/old{name = "dried blood splatter"; pixel_x = -29},/turf/open/floor/plasteel,/area/ruin/derelictoutpost/powerstorage)
 "br" = (/obj/machinery/power/terminal{icon_state = "term"; dir = 1},/turf/open/floor/plasteel,/area/ruin/derelictoutpost/powerstorage)
 "bs" = (/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"; pixel_y = 0},/turf/open/floor/plasteel,/area/ruin/derelictoutpost/powerstorage)
-"bt" = (/obj/machinery/door/airlock/shuttle,/turf/open/floor/mineral/titanium/blue,/area/ruin/derelictoutpost/dockedship)
+"bt" = (/obj/machinery/door/airlock/titanium,/turf/open/floor/mineral/titanium/blue,/area/ruin/derelictoutpost/dockedship)
 "bu" = (/turf/open/floor/mineral/titanium/blue,/area/ruin/derelictoutpost/dockedship)
 "bv" = (/obj/item/chair,/obj/effect/decal/cleanable/blood/old,/obj/structure/alien/weeds{color = "#4BAE56"; desc = "A thick gelatinous surface covers the floor.  Someone get the golashes."; name = "gelatinous floor"},/turf/open/floor/plasteel/shuttle,/area/ruin/derelictoutpost/dockedship)
 "bw" = (/obj/effect/decal/cleanable/blood/old{tag = "icon-trails_1 (NORTHEAST)"; name = "dried blood trail"; icon_state = "trails_1"; dir = 5},/obj/structure/alien/weeds{color = "#4BAE56"; desc = "A thick gelatinous surface covers the floor.  Someone get the golashes."; name = "gelatinous floor"},/turf/open/floor/plasteel/shuttle,/area/ruin/derelictoutpost/dockedship)

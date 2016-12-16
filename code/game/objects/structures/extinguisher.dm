@@ -40,8 +40,8 @@
 /obj/structure/extinguisher_cabinet/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/wrench) && !stored_extinguisher)
 		user << "<span class='notice'>You start unsecuring [name]...</span>"
-		playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
-		if(do_after(user, 60/I.toolspeed, target = src))
+		playsound(loc, I.usesound, 50, 1)
+		if(do_after(user, 60*I.toolspeed, target = src))
 			playsound(loc, 'sound/items/Deconstruct.ogg', 50, 1)
 			user << "<span class='notice'>You unsecure [name].</span>"
 			deconstruct(TRUE)
@@ -59,7 +59,7 @@
 			update_icon()
 		else
 			toggle_cabinet(user)
-	else if(user.a_intent != "harm")
+	else if(user.a_intent != INTENT_HARM)
 		toggle_cabinet(user)
 	else
 		return ..()

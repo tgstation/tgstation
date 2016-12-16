@@ -149,17 +149,9 @@
 
 /mob/living/brain/forceMove(atom/destination)
 	if(container)
-		container.forceMove(destination)
+		return container.forceMove(destination)
 	else //something went very wrong.
 		CRASH("Brainmob without container.")
-
-
-/mob/living/silicon/pai/forceMove(atom/destination)
-	if(card)
-		card.forceMove(destination)
-	else //something went very wrong.
-		CRASH("pAI without card")
-
 
 //Called whenever an object moves and by mobs when they attempt to move themselves through space
 //And when an object or action applies a force on src, see newtonian_move() below

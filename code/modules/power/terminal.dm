@@ -59,7 +59,7 @@
 								"<span class='notice'>You begin to cut the cables...</span>")
 
 			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
-			if(do_after(user, 50/W.toolspeed, target = src))
+			if(do_after(user, 50*W.toolspeed, target = src))
 				if(master && master.can_terminal_dismantle())
 					if(prob(50) && electrocute_mob(user, powernet, src))
 						var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread

@@ -73,6 +73,9 @@
 
 	var/check_randomizer = 0
 
+	var/allow_panic_bunker_bounce = 0 //Send new players somewhere else
+	var/panic_server_name = "somewhere else"
+
 	//IP Intel vars
 	var/ipintel_email
 	var/ipintel_rating_bad = 1
@@ -100,6 +103,8 @@
 	var/list/modes = list()				// allowed modes
 	var/list/votable_modes = list()		// votable modes
 	var/list/probabilities = list()		// relative probability of each mode
+	var/list/min_pop = list()			// overrides for acceptible player counts in a mode
+	var/list/max_pop = list()
 
 	var/humans_need_surnames = 0
 	var/allow_ai = 0					// allow ai job
@@ -178,6 +183,8 @@
 	var/default_laws = 0 //Controls what laws the AI spawns with.
 	var/silicon_max_law_amount = 12
 	var/list/lawids = list()
+
+	var/list/law_weights = list()
 
 	var/assistant_cap = -1
 
@@ -351,7 +358,7 @@
 				if("guest_ban")
 					guests_allowed = 0
 				if("usewhitelist")
-					config.usewhitelist = 1
+					config.usewhitelist = TRUE
 				if("allow_metadata")
 					config.allow_Metadata = 1
 				if("kick_inactive")
@@ -386,6 +393,12 @@
 						global.cross_allowed = 1
 				if("cross_comms_name")
 					cross_name = value
+				if("panic_server_name")
+					panic_server_name = value
+				if("panic_server_address")
+					global.panic_address = value
+					if(value != "byond:\\address:port")
+						allow_panic_bunker_bounce = 1
 				if("medal_hub_address")
 					global.medal_hub = value
 				if("medal_hub_password")
@@ -536,6 +549,34 @@
 					config.midround_antag_time_check = text2num(value)
 				if("midround_antag_life_check")
 					config.midround_antag_life_check = text2num(value)
+				if("min_pop")
+					var/pop_pos = findtext(value, " ")
+					var/mode_name = null
+					var/mode_value = null
+
+					if(pop_pos)
+						mode_name = lowertext(copytext(value, 1, pop_pos))
+						mode_value = copytext(value, pop_pos + 1)
+						if(mode_name in config.modes)
+							config.min_pop[mode_name] = text2num(mode_value)
+						else
+							diary << "Unknown minimum population configuration definition: [mode_name]."
+					else
+						diary << "Incorrect minimum population configuration definition: [mode_name]  [mode_value]."
+				if("max_pop")
+					var/pop_pos = findtext(value, " ")
+					var/mode_name = null
+					var/mode_value = null
+
+					if(pop_pos)
+						mode_name = lowertext(copytext(value, 1, pop_pos))
+						mode_value = copytext(value, pop_pos + 1)
+						if(mode_name in config.modes)
+							config.max_pop[mode_name] = text2num(mode_value)
+						else
+							diary << "Unknown maximum population configuration definition: [mode_name]."
+					else
+						diary << "Incorrect maximum population configuration definition: [mode_name]  [mode_value]."
 				if("shuttle_refuel_delay")
 					config.shuttle_refuel_delay     = text2num(value)
 				if("show_game_type_odds")
@@ -608,6 +649,16 @@
 				if("random_laws")
 					var/law_id = lowertext(value)
 					lawids += law_id
+				if("law_weight")
+					// Value is in the form "LAWID,NUMBER"
+					var/list/L = splittext(value, ",")
+					if(L.len != 2)
+						diary << "Invalid LAW_WEIGHT: " + t
+						continue
+					var/lawid = L[1]
+					var/weight = text2num(L[2])
+					law_weights[lawid] = weight
+
 				if("silicon_max_law_amount")
 					config.silicon_max_law_amount	= text2num(value)
 				if("join_with_mutant_race")
@@ -774,6 +825,10 @@
 		if(probabilities[M.config_tag]<=0)
 			qdel(M)
 			continue
+		if(min_pop[M.config_tag])
+			M.required_players = min_pop[M.config_tag]
+		if(max_pop[M.config_tag])
+			M.maximum_players = max_pop[M.config_tag]
 		if(M.can_start())
 			runnable_modes[M] = probabilities[M.config_tag]
 			//world << "DEBUG: runnable_mode\[[runnable_modes.len]\] = [M.config_tag]"
@@ -789,7 +844,13 @@
 		if(probabilities[M.config_tag]<=0)
 			qdel(M)
 			continue
+		if(min_pop[M.config_tag])
+			M.required_players = min_pop[M.config_tag]
+		if(max_pop[M.config_tag])
+			M.maximum_players = max_pop[M.config_tag]
 		if(M.required_players <= crew)
+			if(M.maximum_players >= 0 && M.maximum_players < crew)
+				continue
 			runnable_modes[M] = probabilities[M.config_tag]
 	return runnable_modes
 

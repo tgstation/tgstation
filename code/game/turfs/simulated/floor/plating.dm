@@ -12,10 +12,12 @@
 	name = "plating"
 	icon_state = "plating"
 	intact = 0
-	broken_states = list("platingdmg1", "platingdmg2", "platingdmg3")
-	burnt_states = list("panelscorched")
 
 /turf/open/floor/plating/New()
+	if (!broken_states)
+		broken_states = list("platingdmg1", "platingdmg2", "platingdmg3")
+	if (!burnt_states)
+		burnt_states = list("panelscorched")
 	..()
 	icon_plating = icon_state
 
@@ -63,7 +65,7 @@
 		if( welder.isOn() && (broken || burnt) )
 			if(welder.remove_fuel(0,user))
 				user << "<span class='danger'>You fix some dents on the broken plating.</span>"
-				playsound(src, 'sound/items/Welder.ogg', 80, 1)
+				playsound(src, welder.usesound, 80, 1)
 				icon_state = icon_plating
 				burnt = 0
 				broken = 0

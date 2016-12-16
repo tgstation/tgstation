@@ -131,7 +131,7 @@
 	back = /obj/item/weapon/storage/backpack
 	pocket1 = /obj/item/weapon/gun/ballistic/automatic/pistol
 	id_job = "Operative"
-	id_access = "syndicate"
+	id_access_list = list(access_syndicate)
 	roundstart = FALSE
 	death = FALSE
 	icon = 'icons/obj/Cryogenic2.dmi'

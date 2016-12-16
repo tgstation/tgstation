@@ -25,8 +25,8 @@
 /obj/structure/table_frame/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/wrench))
 		user << "<span class='notice'>You start disassembling [src]...</span>"
-		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-		if(do_after(user, 30/I.toolspeed, target = src))
+		playsound(src.loc, I.usesound, 50, 1)
+		if(do_after(user, 30*I.toolspeed, target = src))
 			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 			deconstruct(TRUE)
 	else if(istype(I, /obj/item/stack/sheet/plasteel))
@@ -130,7 +130,7 @@
 	desc = "Four pieces of brass arranged in a square. It's slightly warm to the touch."
 	icon_state = "brass_frame"
 	resistance_flags = FIRE_PROOF | ACID_PROOF
-	framestack = /obj/item/stack/sheet/brass
+	framestack = /obj/item/stack/tile/brass
 	framestackamount = 1
 
 /obj/structure/table_frame/brass/New()
@@ -142,8 +142,8 @@
 	return ..()
 
 /obj/structure/table_frame/brass/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/stack/sheet/brass))
-		var/obj/item/stack/sheet/brass/W = I
+	if(istype(I, /obj/item/stack/tile/brass))
+		var/obj/item/stack/tile/brass/W = I
 		if(W.get_amount() < 1)
 			user << "<span class='warning'>You need one brass sheet to do this!</span>"
 			return

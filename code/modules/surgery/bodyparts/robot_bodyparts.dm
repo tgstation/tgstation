@@ -128,7 +128,7 @@
 			user << "<span class='notice'>You insert the flash into the eye socket.</span>"
 	else if(istype(W, /obj/item/weapon/crowbar))
 		if(flash1 || flash2)
-			playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
+			playsound(src.loc, W.usesound, 50, 1)
 			user << "<span class='notice'>You remove the flash from [src].</span>"
 			if(flash1)
 				flash1.forceMove(user.loc)

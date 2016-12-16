@@ -495,13 +495,18 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	updateghostimages()
 
 /proc/updateallghostimages()
+	listclearnulls(ghost_images_full)
+	listclearnulls(ghost_images_default)
+	listclearnulls(ghost_images_simple)
+	listclearnulls(ghost_darkness_images)
+	
 	for (var/mob/dead/observer/O in player_list)
 		O.updateghostimages()
 
 /mob/dead/observer/proc/updateghostimages()
 	if (!client)
 		return
-
+	
 	if(lastsetting)
 		switch(lastsetting) //checks the setting we last came from, for a little efficiency so we don't try to delete images from the client that it doesn't have anyway
 			if(GHOST_OTHERS_THEIR_SETTING)
@@ -736,3 +741,17 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 			mob_eye.observers |= src
 			mob_eye.hud_used.show_hud(1,src)
 			observetarget = mob_eye
+
+/mob/dead/observer/verb/register_pai_candidate()
+	set category = "Ghost"
+	set name = "pAI Setup"
+	set desc = "Upload a fragment of your personality to the global pAI databanks"
+
+	register_pai()
+
+/mob/dead/observer/proc/register_pai()
+	if(istype(src, /mob/dead/observer))
+		if(SSpai)
+			SSpai.recruitWindow(src)
+	else
+		usr << "Can't become a pAI candidate while not dead!"

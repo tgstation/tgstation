@@ -2,7 +2,7 @@
 	name = "paper cutter"
 	desc = "Standard office equipment. Precisely cuts paper using a large blade."
 	icon = 'icons/obj/bureaucracy.dmi'
-	icon_state = "papercutter-cutter"
+	icon_state = "papercutter"
 	force = 5
 	throwforce = 5
 	w_class = WEIGHT_CLASS_NORMAL
@@ -15,6 +15,7 @@
 /obj/item/weapon/papercutter/New()
 	..()
 	storedcutter = new /obj/item/weapon/hatchet/cutterblade(src)
+	update_icon()
 
 
 /obj/item/weapon/papercutter/suicide_act(mob/user)
