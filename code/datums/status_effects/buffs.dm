@@ -61,6 +61,7 @@
 	..()
 
 /datum/status_effect/vanguard_shield/on_apply()
+	add_logs(owner, null, "gained Vanguard stun immunity")
 	owner.add_stun_absorption("vanguard", 200, 1, "'s yellow aura momentarily intensifies!", "Your ward absorbs the stun!", " radiating with a soft yellow light!")
 	owner.visible_message("<span class='warning'>[owner] begins to faintly glow!</span>", "<span class='brass'>You will absorb all stuns for the next twenty seconds.</span>")
 
@@ -82,8 +83,10 @@
 			message_to_owner = "<span class='boldwarning'>The weight of the Vanguard's protection crashes down upon you!</span>"
 			if(stuns_blocked >= 15)
 				message_to_owner += "\n<span class='userdanger'>You faint from the exertion!</span>"
-				owner.Paralyse(stuns_blocked * 2)
+				stuns_blocked *= 2
+				owner.Paralyse(stuns_blocked)
 		owner.visible_message("<span class='warning'>[owner]'s glowing aura fades!</span>", message_to_owner)
+		add_logs(owner, null, "lost Vanguard stun immunity[stuns_blocked ? "and been stunned for [stuns_blocked]":""]")
 
 
 
@@ -99,6 +102,7 @@
 	alerttooltipstyle = "clockcult"
 
 /datum/status_effect/inathneqs_endowment/on_apply()
+	add_logs(owner, null, "gained Inath-neq's invulnerability")
 	owner.visible_message("<span class='warning'>[owner] shines with azure light!</span>", "<span class='notice'>You feel Inath-neq's power flow through you! You're invincible!</span>")
 	var/oldcolor = owner.color
 	owner.color = "#1E8CE1"
@@ -110,6 +114,7 @@
 	playsound(owner, 'sound/magic/Ethereal_Enter.ogg', 50, 1)
 
 /datum/status_effect/inathneqs_endowment/on_remove()
+	add_logs(owner, null, "lost Inath-neq's invulnerability")
 	owner.visible_message("<span class='warning'>The light around [owner] flickers and dissipates!</span>", "<span class='boldwarning'>You feel Inath-neq's power fade from your body!</span>")
 	owner.status_flags &= ~GODMODE
 	playsound(owner, 'sound/magic/Ethereal_Exit.ogg', 50, 1)
@@ -128,7 +133,7 @@
 /datum/status_effect/cyborg_power_regen/tick()
 	var/mob/living/silicon/robot/cyborg = owner
 	if(!istype(cyborg) || !cyborg.cell)
-		cancel_effect()
+		qdel(src)
 		return
 	playsound(cyborg, 'sound/effects/light_flicker.ogg', 50, 1)
 	cyborg.cell.give(power_to_give)
