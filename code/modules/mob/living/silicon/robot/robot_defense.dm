@@ -2,9 +2,9 @@
 
 /mob/living/silicon/robot/attacked_by(obj/item/I, mob/living/user, def_zone)
 	if(hat_offset != INFINITY && user.a_intent == INTENT_HELP && is_type_in_typecache(I, equippable_hats))
+		user << "<span class='notice'>You begin to place [I] on [src]'s head...</span>"
+		src << "<span class='notice'>[user] is placing [I] on your head...</span>"
 		if(do_after(user, 30, target = src))
-			user << "<span class='notice'>You begin to place [I] on [src]'s head...</span>"
-			src << "<span class='notice'>[user] is placing [I] on your head...</span>"
 			user.unEquip(I, 1)
 			place_on_head(I)
 			return
