@@ -78,7 +78,7 @@
 	var/list/upgrades = list()
 
 	var/obj/item/hat
-	var/hat_offset = 3
+	var/hat_offset = -3
 	var/list/equippable_hats = list(/obj/item/clothing/head/caphat, /obj/item/clothing/head/hardhat/cakehat, /obj/item/clothing/head/centhat, /obj/item/clothing/head/HoS, /obj/item/clothing/head/hopcap, /obj/item/clothing/head/sombrero, /obj/item/clothing/head/witchunter_hat)
 
 
@@ -948,8 +948,6 @@
 
 	speed = 0
 	ionpulse = FALSE
-
-	hat_offset = -3
 
 	return 1
 

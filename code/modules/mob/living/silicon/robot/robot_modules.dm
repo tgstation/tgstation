@@ -24,7 +24,7 @@
 	var/did_feedback = FALSE
 	var/feedback_key
 
-	var/hat_offset = INFINITY //Can't wear hats because they are shaped too strangely
+	var/hat_offset = -3
 
 /obj/item/weapon/robot_module/New()
 	..()
@@ -257,6 +257,7 @@
 	moduleselect_icon = "engineer"
 	feedback_key = "cyborg_engineering"
 	magpulsing = TRUE
+	hat_offset = INFINITY // No hats
 
 /obj/item/weapon/robot_module/security
 	name = "Security"
@@ -349,6 +350,7 @@
 	moduleselect_icon = "service"
 	special_light_key = "service"
 	feedback_key = "cyborg_service"
+	hat_offset = INFINITY // No hats
 
 /obj/item/weapon/robot_module/butler/respawn_consumable(mob/living/silicon/robot/R, coeff = 1)
 	..()
