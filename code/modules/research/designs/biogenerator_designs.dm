@@ -167,7 +167,7 @@
 	name = "Fake c500 bill"
 	id ="fakec500"
 	build_type = BIOGENERATOR
-	materials = list(MAT_BIOMASS = 125)
+	materials = list(MAT_BIOMASS = 50)
 	build_path = /obj/item/stack/spacecash/fake/c500
 	category = list("initial","Leather and Cloth")
 
@@ -175,7 +175,7 @@
 	name = "Fake c1000 bill"
 	id ="fakec1000"
 	build_type = BIOGENERATOR
-	materials = list(MAT_BIOMASS = 250)
+	materials = list(MAT_BIOMASS = 50)
 	build_path = /obj/item/stack/spacecash/fake/c1000
 	category = list("initial","Leather and Cloth")
 
