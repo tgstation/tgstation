@@ -115,6 +115,70 @@
 	build_path = /obj/item/stack/sheet/cloth
 	category = list("initial","Leather and Cloth")
 
+/datum/design/paper
+	name = "Paper"
+	id = "paper"
+	build_type = BIOGENERATOR
+	materials = list(MAT_BIOMASS = 20)
+	build_path = /obj/item/weapon/paper
+	category = list("initial","Leather and Cloth")
+	
+/datum/design/fakec10
+	name = "Fake c10 bill"
+	id ="fakec10"
+	build_type = BIOGENERATOR
+	Mmaterials = list(MAT_BIOMASS = 10)
+	build_path = /obj/item/stack/spacecash/fake/c10
+	category = list("initial","Leather and Cloth")
+
+/datum/design/fakec1
+	name = "Fake c20 bill"
+	id ="fakec10"
+	build_type = BIOGENERATOR
+	Mmaterials = list(MAT_BIOMASS = 20)
+	build_path = /obj/item/stack/spacecash/fake/c20
+	category = list("initial","Leather and Cloth")
+	
+/datum/design/fakec1
+	name = "Fake c50 bill"
+	id ="fakec10"
+	build_type = BIOGENERATOR
+	Mmaterials = list(MAT_BIOMASS = 50)
+	build_path = /obj/item/stack/spacecash/fake/c50
+	category = list("initial","Leather and Cloth")
+	
+/datum/design/fakec1
+	name = "Fake c100 bill"
+	id ="fakec10"
+	build_type = BIOGENERATOR
+	Mmaterials = list(MAT_BIOMASS = 100)
+	build_path = /obj/item/stack/spacecash/fake/c100
+	category = list("initial","Leather and Cloth")
+	
+/datum/design/fakec1
+	name = "Fake c200 bill"
+	id ="fakec10"
+	build_type = BIOGENERATOR
+	Mmaterials = list(MAT_BIOMASS = 200)
+	build_path = /obj/item/stack/spacecash/fake/c200
+	category = list("initial","Leather and Cloth")
+	
+/datum/design/fakec1
+	name = "Fake c500 bill"
+	id ="fakec10"
+	build_type = BIOGENERATOR
+	Mmaterials = list(MAT_BIOMASS = 500)
+	build_path = /obj/item/stack/spacecash/fake/c500
+	category = list("initial","Leather and Cloth")
+
+/datum/design/fakec1
+	name = "Fake c1000 bill"
+	id ="fakec10"
+	build_type = BIOGENERATOR
+	Mmaterials = list(MAT_BIOMASS = 1000)
+	build_path = /obj/item/stack/spacecash/fake/c1000
+	category = list("initial","Leather and Cloth")
+
 /datum/design/wallet
 	name = "Wallet"
 	id = "wallet"
