@@ -193,6 +193,9 @@
 	var/obj/effect/overlay/temp/decoy/fading/fivesecond/ANM = PoolOrNew(/obj/effect/overlay/temp/decoy/fading/fivesecond, list(R.loc, R))
 	ANM.layer = R.layer - 0.01
 	PoolOrNew(/obj/effect/overlay/temp/small_smoke, R.loc)
+	if(R.hat)
+		R.hat.forceMove(get_turf(R))
+		R.hat = null
 	R.update_headlamp()
 	R.alpha = 0
 	animate(R, alpha = 255, time = 50)

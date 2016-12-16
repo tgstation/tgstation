@@ -79,7 +79,7 @@
 
 	var/obj/item/hat
 	var/hat_offset = 3
-	var/list/equippable_hats = list(/obj/item/clothing/head/caphat, /obj/item/clothing/head/hardhat/cakehat, /obj/item/clothing/head/centhat, /obj/item/clothing/head/hos, /obj/item/clothing/head/hop, /obj/item/clothing/head/sombrero, /obj/item/clothing/head/witchhunter_hat)
+	var/list/equippable_hats = list(/obj/item/clothing/head/caphat, /obj/item/clothing/head/hardhat/cakehat, /obj/item/clothing/head/centhat, /obj/item/clothing/head/HoS, /obj/item/clothing/head/hopcap, /obj/item/clothing/head/sombrero, /obj/item/clothing/head/witchunter_hat)
 
 
 
