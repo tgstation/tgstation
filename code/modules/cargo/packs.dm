@@ -119,7 +119,12 @@
 	contains = list(/obj/item/clothing/head/radiation,
 					/obj/item/clothing/head/radiation,
 					/obj/item/clothing/suit/radiation,
-					/obj/item/clothing/suit/radiation)
+					/obj/item/clothing/suit/radiation,
+					/obj/item/device/geiger_counter,
+					/obj/item/device/geiger_counter,
+					/obj/item/weapon/reagent_containers/food/drinks/bottle/vodka,
+					/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/shotglass,
+					/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/shotglass)
 	crate_name = "radiation protection crate"
 	crate_type = /obj/structure/closet/crate/radiation
 
