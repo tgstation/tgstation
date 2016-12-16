@@ -68,7 +68,7 @@
 			if(!user.can_speak_vocal())
 				user << "<span class='warning'>You cannot speak through the obelisk!</span>"
 				return
-			clockwork_say(user, text2ratvar("Hierophant Broadcast, activate! [html_decode(message)]"))
+			clockwork_say(user, text2ratvar("Hierophant Broadcast, activate! [html_decode(input)]"))
 			titled_hierophant_message(user, input, "big_brass", "large_brass")
 		if("Spatial Gateway")
 			if(active)
