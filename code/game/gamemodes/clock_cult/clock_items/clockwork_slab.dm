@@ -226,12 +226,15 @@
 		recite_scripture(quickbound[Q.scripture_index], user, FALSE)
 
 /obj/item/clockwork/slab/proc/show_hierophant(mob/living/user)
+	if(!user.can_speak_vocal())
+		user << "<span class='warning'>You cannot speak into the slab!</span>"
+		return FALSE
 	var/message = stripped_input(user, "Enter a message to send to your fellow servants.", "Hierophant")
-	if(!message || !user || !user.canUseTopic(src))
-		return 0
+	if(!message || !user || !user.canUseTopic(src) || !user.can_speak_vocal())
+		return FALSE
 	clockwork_say(user, text2ratvar("Servants, hear my words. [html_decode(message)]"), TRUE)
 	titled_hierophant_message(user, message)
-	return 1
+	return TRUE
 
 //Scripture Recital
 /obj/item/clockwork/slab/attack_self(mob/living/user)
