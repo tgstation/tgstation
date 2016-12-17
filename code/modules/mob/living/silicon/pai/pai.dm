@@ -72,8 +72,6 @@
 	var/silent = 0
 	var/hit_slowdown = 0
 	var/light_power = 5
-	var/ion_jet_cd = 30
-	var/ion_jet_semicd = FALSE
 
 /mob/living/silicon/pai/examine(mob/user)
 	..()
@@ -206,11 +204,9 @@
 	P.toggle_integrated_light()
 
 /mob/living/silicon/pai/Process_Spacemove(movement_dir = 0)
-	if(!ion_jet_semicd)
-		ion_jet_semicd = TRUE
-		addtimer(src, "ion_cool", ion_jet_cd)
+	. = ..()
+	if(!.)
+		slowdown = 2
 		return TRUE
-	return FALSE
-
-/mob/living/silicon/pai/proc/ion_cool()
-	ion_jet_semicd = FALSE
+	slowdown = initial(slowdown)
+	return TRUE

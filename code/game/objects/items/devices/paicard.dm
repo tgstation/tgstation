@@ -43,8 +43,10 @@
 		else
 			dat += "<b>Radio Uplink</b><br>"
 			dat += "<font color=red><i>Radio firmware not loaded. Please install a pAI personality to load firmware.</i></font><br>"
-		if(user.real_name == pai.master || user.dna.unique_enzymes == pai.master_dna)
-			dat += "<A href='byond://?src=\ref[src];toggle_holo=1'>\[[canholo? "Enable" : "Disable"] holomatrix projectors\]</a><br>"
+		if(ishuman(user))
+			var/mob/living/carbon/human/H = user
+			if(H.real_name == pai.master || H.dna.unique_enzymes == pai.master_dna)
+				dat += "<A href='byond://?src=\ref[src];toggle_holo=1'>\[[pai.canholo? "Disable" : "Enable"] holomatrix projectors\]</a><br>"
 		dat += "<A href='byond://?src=\ref[src];wipe=1'>\[Wipe current pAI personality\]</a><br>"
 	else
 		dat += "No personality installed.<br>"
@@ -96,13 +98,13 @@
 				for(var/slaws in pai.laws.supplied)
 					pai << "Supplemental Directives: <br>[slaws]"
 		if(href_list["toggle_holo"])
-			if(canholo)
+			if(pai.canholo)
 				pai << "<span class='userdanger'>Your owner has disabled your holomatrix projectors!</span>"
-				canholo = FALSE
+				pai.canholo = FALSE
 				usr << "<span class='warning'>You disable your pAI's holomatrix!</span>"
 			else
 				pai << "<span class='boldnotice'>Your owner has enabled your holomatrix projectors!</span>"
-				canholo = TRUE
+				pai.canholo = TRUE
 				usr << "<span class='notice'>You enable your pAI's holomatrix!</span>"
 
 	attack_self(usr)
