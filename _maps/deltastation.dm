@@ -4,7 +4,7 @@
 
 		#define MINETYPE "lavaland"
 
-		#include "map_files\DeltaStation\DeltaPlaytest.dmm"
+		#include "map_files\DeltaStation\DeltaStation2.dmm"
 		#include "map_files\generic\z2.dmm"
 		#include "map_files\generic\z3.dmm"
 		#include "map_files\generic\z4.dmm"
@@ -17,13 +17,13 @@
 		#include "map_files\generic\z11.dmm"
 
 		#define MAP_PATH "map_files/DeltaStation"
-		#define MAP_FILE "DeltaPlaytest.dmm"
-		#define MAP_NAME "DeltaPlaytest"
+		#define MAP_FILE "DeltaStation2.dmm"
+		#define MAP_NAME "Delta Station"
 
 		#define MAP_TRANSITION_CONFIG DEFAULT_MAP_TRANSITION_CONFIG
 
 #elif !defined(MAP_OVERRIDE)
 
-	#warn a map has already been included, ignoring MetaStation.
+	#warn a map has already been included, deltastation.
 
 #endif
