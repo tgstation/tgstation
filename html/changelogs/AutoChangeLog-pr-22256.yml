@@ -1,0 +1,5 @@
+author: "XDTM"
+delete-after: True
+changes: 
+  - bugfix: "Random golems now properly acquire the properties of the golem they pick."
+  - rscadd: "When becoming a random golem the user is informed of the properties of the picked golem."

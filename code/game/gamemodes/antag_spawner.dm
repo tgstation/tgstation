@@ -122,7 +122,7 @@
 /obj/item/weapon/antag_spawner/contract/equip_antag(mob/target)
 	target.equip_to_slot_or_del(new /obj/item/device/radio/headset(target), slot_ears)
 	target.equip_to_slot_or_del(new /obj/item/clothing/under/color/lightpurple(target), slot_w_uniform)
-	target.equip_to_slot_or_del(new /obj/item/clothing/shoes/sandal(target), slot_shoes)
+	target.equip_to_slot_or_del(new /obj/item/clothing/shoes/sandal/magic(target), slot_shoes)
 	target.equip_to_slot_or_del(new /obj/item/clothing/suit/wizrobe(target), slot_wear_suit)
 	target.equip_to_slot_or_del(new /obj/item/clothing/head/wizard(target), slot_head)
 	target.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack(target), slot_back)
