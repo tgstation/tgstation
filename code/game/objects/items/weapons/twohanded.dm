@@ -649,13 +649,6 @@
 	var/maxdist = 16
 	var/throw_cooldown = 5				//Should equate to half a second. Also should hardly come up because of the do_after.
 
-/obj/item/weapon/twohanded/skybulge/New()
-	..()
-	if (world.maxy > world.maxx)
-		maxdist = world.maxy
-	else
-		maxdist = world.maxx
-
 /obj/item/weapon/twohanded/skybulge/update_icon()
 	icon_state = "sky_bulge[wielded]"
 
@@ -674,7 +667,6 @@
 	var/turf/Source = get_turf(thrownby)
 
 	if(Source.z == ZLEVEL_STATION && Source.z == Target.z)	//On station + same z check
-		maxdist = stationdistlimit
 		if(get_dist(Target, Source) < maxdist)
 			..()
 			if(do_after(User, 5, target = src, progress = 0))
@@ -690,9 +682,9 @@
 			if(qdeleted(src))
 				return
 			var/turf/Landing = get_turf(src)
-		if (loc != Landing)
-			return
-		User.forceMove(Landing)
+			if (loc != Landing)
+				return
+			User.forceMove(Landing)
 	throw_cooldown = world.time + initial(throw_cooldown)
 	User.put_in_hands(src)
 	playsound(src, 'sound/weapons/laser2.ogg', 20, 1)
