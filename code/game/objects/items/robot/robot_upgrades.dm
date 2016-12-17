@@ -199,13 +199,28 @@
 	desc = "This module will repair the cyborg over time."
 	icon_state = "cyborg_upgrade5"
 	require_module = 1
-	var/repair_amount = -1
-	var/repair_tick = 1
+	var/repair_amount = 1
+	var/repair_amount_crit = 2.5
+	var/repair_delay = 1
+	var/repair_tick = 0
 	var/msg_cooldown = 0
 	var/on = 0
-	var/powercost = 10
+	var/powercost_normal = 10
+	var/powercost_crit = 30
+	var/powercost_passive = 5
+	var/power_threshold = 300
 	var/mob/living/silicon/robot/cyborg
 	var/datum/action/toggle_action
+
+/obj/item/borg/upgrade/selfrepair/peacekeeper
+	name = "repair swarm"
+	repair_amount = 2
+	repair_amount_crit = 5
+	power_threshold = 1000
+	repair_delay = 0
+	powercost_normal = 30
+	powercost_crit = 60
+	powercost_passive = 0
 
 /obj/item/borg/upgrade/selfrepair/action(mob/living/silicon/robot/R)
 	if(..())
@@ -256,35 +271,37 @@
 	update_icon()
 
 /obj/item/borg/upgrade/selfrepair/process()
-	if(!repair_tick)
-		repair_tick = 1
+	if(repair_tick)
+		repair_tick--
 		return
 
-	if(cyborg && (cyborg.stat != DEAD) && on)
+	if(cyborg && (cyborg.stat != DEAD) && on && !repair_tick)
 		if(!cyborg.cell)
 			cyborg << "<span class='warning'>Self-repair module deactivated. Please, insert the power cell.</span>"
 			deactivate()
 			return
 
-		if(cyborg.cell.charge < powercost * 2)
+		if(cyborg.cell.charge < power_threshold)
 			cyborg << "<span class='warning'>Self-repair module deactivated. Please recharge.</span>"
 			deactivate()
 			return
 
 		if(cyborg.health < cyborg.maxHealth)
+			var/powercost = 10
+			var/repair = 1
 			if(cyborg.health < 0)
-				repair_amount = -2.5
-				powercost = 30
+				repair = -repair_amount_crit
+				powercost = powercost_crit
 			else
-				repair_amount = -1
-				powercost = 10
-			cyborg.adjustBruteLoss(repair_amount)
-			cyborg.adjustFireLoss(repair_amount)
+				repair = -repair_amount
+				powercost = powercost_normal
+			cyborg.adjustBruteLoss(repair)
+			cyborg.adjustFireLoss(repair)
 			cyborg.updatehealth()
 			cyborg.cell.use(powercost)
 		else
-			cyborg.cell.use(5)
-		repair_tick = 0
+			cyborg.cell.use(powercost_passive)
+		repair_tick = repair_delay
 
 		if((world.time - 2000) > msg_cooldown )
 			var/msgmode = "standby"

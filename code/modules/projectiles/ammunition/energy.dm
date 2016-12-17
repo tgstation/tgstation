@@ -164,6 +164,15 @@
 	projectile_type = /obj/item/projectile/energy/trap
 	select_name = "snare"
 
+/obj/item/ammo_casing/energy/trap/cyborg
+	projectile_type = /obj/item/projectile/energy/cyborgtrap
+	e_cost = 150
+	delay = 30
+
+/obj/item/ammo_casing/energy/trap/cyborg/New()
+	..()
+	BB.speed = 1
+
 /obj/item/ammo_casing/energy/instakill
 	projectile_type = /obj/item/projectile/beam/instakill
 	e_cost = 0

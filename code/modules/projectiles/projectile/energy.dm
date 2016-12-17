@@ -109,28 +109,27 @@
 	new/obj/item/weapon/restraints/legcuffs/beartrap/energy(loc)
 	..()
 
-/obj/item/projectile/energy/trap/cyborg
+/obj/item/projectile/energy/cyborgtrap
 	name = "Energy Bola"
-	icon_state = "e_snare"
+	icon_state = "ebola"
 	nodamage = 1
 	weaken = 0
 	hitsound = 'sound/weapons/taserhit.ogg'
-	range = 10
+	range = 15
+	speed = 1
 
-/obj/item/projectile/energy/trap/cyborg/on_hit(atom/target, blocked = 0)
+/obj/item/projectile/energy/cyborgtrap/on_hit(atom/target, blocked = 0)
 	if(!ismob(target) || blocked >= 100)
 		var/datum/effect_system/spark_spread/sparks = new /datum/effect_system/spark_spread
 		sparks.set_up(1, 1, src)
 		sparks.start()
 		qdel(src)
 	if(iscarbon(target))
-		var/obj/item/weapon/restraints/legcuffs/beartrap/B = new /obj/item/weapon/restraints/legcuffs/beartrap/energy/cyborg(get_turf(target))
+		var/obj/item/weapon/restraints/legcuffs/beartrap/energy/cyborg/B = new /obj/item/weapon/restraints/legcuffs/beartrap/energy/cyborg(get_turf(target))
 		B.Crossed(target)
-	spawn(10)
-		qdel(src)
 	..()
 
-/obj/item/projectile/energy/trap/cyborg/on_range()
+/obj/item/projectile/energy/cyborgtrap/on_range()
 	var/datum/effect_system/spark_spread/sparks = new /datum/effect_system/spark_spread
 	sparks.set_up(1, 1, src)
 	sparks.start()
