@@ -44,7 +44,7 @@
 		active = FALSE
 
 /obj/structure/destructible/clockwork/powered/clockwork_obelisk/attack_hand(mob/living/user)
-	if(!is_servant_of_ratvar(user) || !total_accessable_power() >= hierophant_cost || !anchored)
+	if(!is_servant_of_ratvar(user) || total_accessable_power() < hierophant_cost || !anchored)
 		user << "<span class='warning'>You place your hand on the obelisk, but it doesn't react.</span>"
 		return
 	var/choice = alert(user,"You place your hand on the obelisk...",,"Hierophant Broadcast","Spatial Gateway","Cancel")
@@ -52,6 +52,9 @@
 		if("Hierophant Broadcast")
 			if(active)
 				user << "<span class='warning'>The obelisk is sustaining a gateway and cannot broadcast!</span>"
+				return
+			if(!user.can_speak_vocal())
+				user << "<span class='warning'>You cannot speak through the obelisk!</span>"
 				return
 			var/input = stripped_input(usr, "Please choose a message to send over the Hierophant Network.", "Hierophant Broadcast", "")
 			if(!is_servant_of_ratvar(user) || !input || !user.canUseTopic(src, !issilicon(user)))
@@ -62,7 +65,10 @@
 			if(!try_use_power(hierophant_cost))
 				user << "<span class='warning'>The obelisk lacks the power to broadcast!</span>"
 				return
-			clockwork_say(user, text2ratvar("Hierophant Broadcast, activate!"))
+			if(!user.can_speak_vocal())
+				user << "<span class='warning'>You cannot speak through the obelisk!</span>"
+				return
+			clockwork_say(user, text2ratvar("Hierophant Broadcast, activate! [html_decode(input)]"))
 			titled_hierophant_message(user, input, "big_brass", "large_brass")
 		if("Spatial Gateway")
 			if(active)
@@ -70,6 +76,9 @@
 				return
 			if(!try_use_power(gateway_cost))
 				user << "<span class='warning'>The obelisk lacks the power to open a gateway!</span>"
+				return
+			if(!user.can_speak_vocal())
+				user << "<span class='warning'>You need to be able to speak to open a gateway!</span>"
 				return
 			if(procure_gateway(user, round(100 * get_efficiency_mod(), 1), round(5 * get_efficiency_mod(), 1), 1) && !active)
 				clockwork_say(user, text2ratvar("Spatial Gateway, activate!"))
