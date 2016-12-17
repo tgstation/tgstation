@@ -38,10 +38,11 @@
 /obj/structure/destructible/clockwork/powered/mania_motor/forced_disable(bad_effects)
 	if(active)
 		if(bad_effects)
-			try_use_power(MIN_CLOCKCULT_POWER*5)
+			try_use_power(MIN_CLOCKCULT_POWER*2)
 		visible_message("<span class='warning'>[src] hums loudly, then the sockets at its base fall dark!</span>")
 		playsound(src, 'sound/effects/screech.ogg', 40, 1)
-		toggle(0)
+		toggle()
+		return TRUE
 
 /obj/structure/destructible/clockwork/powered/mania_motor/attack_hand(mob/living/user)
 	if(user.canUseTopic(src, !issilicon(user)) && is_servant_of_ratvar(user))

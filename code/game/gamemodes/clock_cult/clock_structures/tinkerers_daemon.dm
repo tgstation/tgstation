@@ -43,12 +43,13 @@
 /obj/structure/destructible/clockwork/powered/tinkerers_daemon/forced_disable(bad_effects)
 	if(active)
 		if(bad_effects)
-			try_use_power(MIN_CLOCKCULT_POWER*10)
+			try_use_power(MIN_CLOCKCULT_POWER*2)
 			visible_message("<span class='warning'>[src] shuts down with a horrible grinding noise!</span>")
 			playsound(src, 'sound/magic/clockwork/anima_fragment_attack.ogg', 50, 1)
 		else
 			visible_message("<span class='warning'>[src] shuts down!</span>")
 		toggle()
+		return TRUE
 
 /obj/structure/destructible/clockwork/powered/tinkerers_daemon/attack_hand(mob/living/user)
 	if(!is_servant_of_ratvar(user))

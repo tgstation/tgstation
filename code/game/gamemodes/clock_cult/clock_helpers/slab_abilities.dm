@@ -107,6 +107,7 @@
 	return
 
 /obj/structure/destructible/clockwork/geis_binding/emp_act(severity)
+	PoolOrNew(/obj/effect/overlay/temp/emp, loc)
 	qdel(src)
 
 /obj/structure/destructible/clockwork/geis_binding/post_buckle_mob(mob/living/M)
