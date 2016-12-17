@@ -671,18 +671,18 @@
 				U.forceMove(L)				//Warp.
 				U.put_in_hands(src) 		//And keep a hold of the Sky Bulge.
 			else
-			playsound(src, 'sound/weapons/laser2.ogg', 20, 1)
-			U.put_in_hands(src) 	//Just warp back to hands. You missed. No cheese 16+ tile returning spear for you. No ..() so no damage.
+				playsound(src, 'sound/weapons/laser2.ogg', 20, 1)
+				U.put_in_hands(src) 	//Just warp back to hands. You missed. No cheese 16+ tile returning spear for you. No ..() so no damage.
 
 		else					//If you are off the station, then warp. No warp limit.
-		..()				//Gotta hurt what you hit.
-		sleep(5)
-		var/turf/L = get_turf(src) 	//Same as above.
-		if (src.loc != L)			//Same, lance stolen, etc.
-			return
-		playsound(src, 'sound/weapons/laser2.ogg', 20, 1)
-		U.forceMove(L)	//Warp.
-		U.put_in_hands(src) //And keep a hold of the Sky Bulge.
+			..()				//Gotta hurt what you hit.
+			sleep(5)
+			var/turf/L = get_turf(src) 	//Same as above.
+			if (src.loc != L)			//Same, lance stolen, etc.
+				return
+			playsound(src, 'sound/weapons/laser2.ogg', 20, 1)
+			U.forceMove(L)	//Warp.
+			U.put_in_hands(src) //And keep a hold of the Sky Bulge.
 	else						//Not the same zlevel? Fuck you  no free pass to random areas of space THAT easy.
-	playsound(src, 'sound/weapons/laser2.ogg', 20, 1)
-	U.put_in_hands(src) //Just warp back to hands. You missed. Can't murder across zlevels because no ..()
+		playsound(src, 'sound/weapons/laser2.ogg', 20, 1)
+		U.put_in_hands(src) //Just warp back to hands. You missed. Can't murder across zlevels because no ..()
