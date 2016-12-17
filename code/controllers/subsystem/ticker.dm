@@ -388,7 +388,7 @@ var/datum/subsystem/ticker/ticker
 			world << "<BR>[TAB]Evacuation Rate: <B>[num_escapees] ([round((num_escapees/joined_player_list.len)*100, 0.1)]%)</B>"
 			news_report = STATION_EVACUATED
 			if(SSshuttle.emergency.is_hijacked())
-				news_report = SHUTTLE_HIJACKED
+				news_report = SHUTTLE_HIJACK
 		world << "<BR>[TAB]Survival Rate: <B>[num_survivors] ([round((num_survivors/joined_player_list.len)*100, 0.1)]%)</B>"
 	world << "<BR>"
 
