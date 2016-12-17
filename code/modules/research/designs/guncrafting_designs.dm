@@ -1,3 +1,24 @@
+/datum/design/guncrafting_frame_energy
+	name = "Gun Frame: Energy"
+	desc = "No pin included, have fun."
+	id = "guncrafting_frame_energy"
+	req_tech = list("combat" = 1, "materials" = 1)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 500, MAT_GLASS = 300)
+	build_path = /obj/item/weapon/gun/energy/frame/testing
+	category = list("Guncrafting Parts")
+
+/datum/design/guncrafting_frame_ballistic
+	name = "Gun Frame: Ballistic"
+	desc = "No pin included, have fun."
+	id = "guncrafting_frame_ballistic"
+	req_tech = list("combat" = 1, "materials" = 1)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 500, MAT_GLASS = 300)
+	build_path = /obj/item/weapon/gun/ballistic/frame/testing
+	category = list("Guncrafting Parts")
+
+
 // barrels
 /datum/design/barrel_short
 	name = "Gun Barrel: Short"
@@ -62,7 +83,7 @@
 
 // bases
 /datum/design/base_stun
-	name = "Gun Base: Stun"
+	name = "Gun Energy Base: Stun"
 	desc = "A stun base."
 	id = "base_stun"
 	req_tech = list("combat" = 1, "materials" = 1)
@@ -72,7 +93,7 @@
 	category = list("Guncrafting Parts")
 
 /datum/design/base_disable
-	name = "Gun Base: Disable"
+	name = "Gun Energy Base: Disable"
 	desc = "A disabler base."
 	id = "base_disable"
 	req_tech = list("combat" = 1, "materials" = 1)
@@ -82,7 +103,7 @@
 	category = list("Guncrafting Parts")
 
 /datum/design/base_laser
-	name = "Gun Base: Laser"
+	name = "Gun Energy Base: Laser"
 	desc = "A laser base."
 	id = "base_laser"
 	req_tech = list("combat" = 1, "materials" = 1)
@@ -92,7 +113,7 @@
 	category = list("Guncrafting Parts")
 
 /datum/design/base_ion
-	name = "Gun Base: Ion"
+	name = "Gun Energy Base: Ion"
 	desc = "An ion base."
 	id = "base_ion"
 	req_tech = list("combat" = 5, "magnets" = 4)
@@ -102,7 +123,7 @@
 	category = list("Guncrafting Parts")
 
 /datum/design/base_xray
-	name = "Gun Base: X-Ray"
+	name = "Gun Energy Base: X-Ray"
 	desc = "An X-Ray base."
 	id = "base_xray"
 	req_tech = list("combat" = 7, "magnets" = 5, "biotech" = 5, "powerstorage" = 4)
@@ -112,7 +133,7 @@
 	category = list("Guncrafting Parts")
 
 /datum/design/base_tesla
-	name = "Gun Base: Tesla"
+	name = "Gun Energy Base: Tesla"
 	desc = "A tesla base."
 	id = "base_tesla"
 	req_tech = list("combat" = 4, "materials" = 4, "powerstorage" = 5)
@@ -122,14 +143,14 @@
 	category = list("Guncrafting Parts")
 
 //energy bullets
-/datum/design/ebullet_focus
-	name = "Gun Energy Modifier: Focuser"
-	desc = "A focuser mod."
-	id = "ebullet_focus"
+/datum/design/ebullet_pen
+	name = "Gun Energy Modifier: Penetrator" // ;)
+	desc = "A Penetrator mod."
+	id = "ebullet_pen"
 	req_tech = list("combat" = 1, "materials" = 1)
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 500, MAT_GLASS = 300)
-	build_path = /obj/item/weapon/gun_attachment/energy_bullet/focuser
+	build_path = /obj/item/weapon/gun_attachment/energy_bullet/armor_pen
 	category = list("Guncrafting Parts")
 
 /datum/design/ebullet_disorient
@@ -140,6 +161,76 @@
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 500, MAT_GLASS = 300)
 	build_path = /obj/item/weapon/gun_attachment/energy_bullet/disorienter
+	category = list("Guncrafting Parts")
+
+/datum/design/ebullet_decloner
+	name = "Gun Energy Modifier: Decloner"
+	desc = "A decloner mod."
+	id = "ebullet_decloner"
+	req_tech = list("combat" = 1, "materials" = 1)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 500, MAT_GLASS = 300)
+	build_path = /obj/item/weapon/gun_attachment/energy_bullet/decloner
+	category = list("Guncrafting Parts")
+
+/datum/design/ebullet_speed
+	name = "Gun Energy Modifier: Speed"
+	desc = "A speed mod."
+	id = "ebullet_speed"
+	req_tech = list("combat" = 1, "materials" = 1)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 500, MAT_GLASS = 300)
+	build_path = /obj/item/weapon/gun_attachment/energy_bullet/speed
+	category = list("Guncrafting Parts")
+
+/datum/design/ebullet_invert
+	name = "Gun Energy Modifier: Invert"
+	desc = "A invert mod."
+	id = "ebullet_invert"
+	req_tech = list("combat" = 1, "materials" = 1)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 500, MAT_GLASS = 300)
+	build_path = /obj/item/weapon/gun_attachment/energy_bullet/invert
+	category = list("Guncrafting Parts")
+
+/datum/design/ebullet_big
+	name = "Gun Energy Modifier: Size" // matters
+	desc = "A big mod."
+	id = "ebullet_big"
+	req_tech = list("combat" = 1, "materials" = 1)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 500, MAT_GLASS = 300)
+	build_path = /obj/item/weapon/gun_attachment/energy_bullet/big
+	category = list("Guncrafting Parts")
+
+/datum/design/bullet_fmj
+	name = "Gun Bullet Modifier: Full Metal Jacket" // this is my rifle, this is my gun
+	desc = "A FMJ mod."
+	id = "bullet_fmj"
+	req_tech = list("combat" = 1, "materials" = 1)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 500, MAT_GLASS = 300)
+	build_path = /obj/item/weapon/gun_attachment/bullet/fmj
+	category = list("Guncrafting Parts")
+
+/datum/design/bullet_rad
+	name = "Gun Bullet Modifier: Polonium"
+	desc = "A polonium mod."
+	id = "bullet_rad"
+	req_tech = list("combat" = 1, "materials" = 1)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 500, MAT_GLASS = 300)
+	build_path = /obj/item/weapon/gun_attachment/bullet/polonium
+	category = list("Guncrafting Parts")
+
+/datum/design/bullet_ap
+	name = "Gun Bullet Modifier: Armor Piercing"
+	desc = "An AP mod."
+	id = "bullet_ap"
+	req_tech = list("combat" = 1, "materials" = 1)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 500, MAT_GLASS = 300)
+	build_path = /obj/item/weapon/gun_attachment/bullet/ap
 	category = list("Guncrafting Parts")
 
 //scopes
@@ -182,4 +273,25 @@
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 500, MAT_GLASS = 300)
 	build_path = /obj/item/weapon/gun_attachment/underbarrel/bayonet
+	category = list("Guncrafting Parts")
+
+// magazines
+/datum/design/mag_ar
+	name = "Gun Magazine: Assault Rifle"
+	desc = "see title"
+	id = "mag_ar"
+	req_tech = list("combat" = 1, "materials" = 1)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 4000)
+	build_path = /obj/item/ammo_box/magazine/guncrafting_ar
+	category = list("Guncrafting Parts")
+
+/datum/design/mag_pistol
+	name = "Gun Magazine: Pistol"
+	desc = "see title"
+	id = "mag_pistol"
+	req_tech = list("combat" = 1, "materials" = 1)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 4000)
+	build_path = /obj/item/ammo_box/magazine/guncrafting_pistol
 	category = list("Guncrafting Parts")

@@ -1,8 +1,14 @@
-/obj/item/weapon/gun_attachment/base/c9mm
+/obj/item/weapon/gun_attachment/base/assault
 	gun_type = CUSTOMIZABLE_PROJECTILE
-	name = "9mm Pistol Ballistic Base"
-	icon_state = "base_projectile_9mm"
-	mag_type = /obj/item/ammo_box/magazine/pistolm9mm
+	name = "Assault Rifle Ballistic Base"
+	icon_state = "base_projectile_assault"
+	mag_type = /obj/item/ammo_box/magazine/guncrafting_ar
+
+/obj/item/weapon/gun_attachment/base/pistol
+	gun_type = CUSTOMIZABLE_PROJECTILE
+	name = "Pistol Ballistic Base"
+	icon_state = "base_projectile_pistol"
+	mag_type = /obj/item/ammo_box/magazine/guncrafting_pistol
 
 /obj/item/weapon/gun_attachment/base/stun
 	gun_type = CUSTOMIZABLE_ENERGY
@@ -49,19 +55,19 @@
 /obj/item/weapon/gun_attachment/base/bee
 	gun_type = CUSTOMIZABLE_ENERGY
 	name = "It's Hip To Shoot Bees Energy Base"
-	icon_state = "base_energy_stun"
+	icon_state = "base_energy_bzzz"
 	energy_type = list(/obj/item/ammo_casing/energy/bee)
 
 /obj/item/weapon/gun_attachment/base/xray
 	gun_type = CUSTOMIZABLE_ENERGY
 	name = "X-Ray Energy Base"
-	icon_state = "base_energy_stun"
+	icon_state = "base_energy_xray"
 	energy_type = list(/obj/item/ammo_casing/energy/xray)
 	the_item_state = "xray0"
 
 /obj/item/weapon/gun_attachment/base/tesla
 	gun_type = CUSTOMIZABLE_ENERGY
 	name = "Tesla Energy Base"
-	icon_state = "base_energy_stun"
+	icon_state = "base_energy_ion"
 	energy_type = list(/obj/item/ammo_casing/energy/tesla_revolver)
 	the_item_state = "tesla"

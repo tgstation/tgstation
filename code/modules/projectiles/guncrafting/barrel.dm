@@ -5,6 +5,7 @@
 	var/weapon_weight = WEAPON_LIGHT
 	var/gun_size = 1
 	var/silenced = 0
+	not_okay = /obj/item/weapon/gun_attachment/barrel
 
 /obj/item/weapon/gun_attachment/barrel/on_attach(var/obj/item/weapon/gun/owner)
 	..()

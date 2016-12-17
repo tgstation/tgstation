@@ -1759,6 +1759,7 @@
 #include "code\modules\projectiles\guncrafting\base.dm"
 #include "code\modules\projectiles\guncrafting\frame.dm"
 #include "code\modules\projectiles\guncrafting\handle.dm"
+#include "code\modules\projectiles\guncrafting\magazines.dm"
 #include "code\modules\projectiles\guncrafting\attachments\barrels.dm"
 #include "code\modules\projectiles\guncrafting\attachments\bases.dm"
 #include "code\modules\projectiles\guncrafting\attachments\bullets.dm"

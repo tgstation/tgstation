@@ -4,6 +4,7 @@
 	var/list/energy_type = list(/obj/item/ammo_casing/energy/laser)
 	var/obj/item/ammo_casing/energy/energy_ref
 	var/the_item_state = "laser"
+	not_okay = /obj/item/weapon/gun_attachment/base
 
 /obj/item/weapon/gun_attachment/base/on_attach(var/obj/item/weapon/gun/owner)
 	..()

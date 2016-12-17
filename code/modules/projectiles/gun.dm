@@ -246,6 +246,7 @@
 		for(var/obj/item/weapon/gun_attachment/A in attachments)
 			if(chambered && chambered.BB)
 				A.on_fire(src, chambered.BB)
+	chambered.BB.firing_gun = src
 	if(burst_size > 1)
 		firing_burst = 1
 		for(var/i = 1 to burst_size)
@@ -327,7 +328,7 @@
 				user << "[src] already has too many attachments!"
 				return
 			for(var/obj/item/weapon/gun_attachment/A in attachments)
-				if(istype(AT, A.type))
+				if(istype(AT, A.not_okay))
 					user << "[src] already has an attachment like [AT]!"
 					return
 			if(!AT.can_attach(src))

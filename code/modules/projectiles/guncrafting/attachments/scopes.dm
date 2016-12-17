@@ -1,5 +1,6 @@
 /obj/item/weapon/gun_attachment/scope
 	var/range = 3
+	not_okay = /obj/item/weapon/gun_attachment/scope
 
 /obj/item/weapon/gun_attachment/scope/on_attach(var/obj/item/weapon/gun/owner)
 	..()
@@ -23,12 +24,12 @@
 /obj/item/weapon/gun_attachment/scope/red_dot
 	name = "Red Dot Sight"
 	desc = "A red dot sight."
-	icon_state = "attach_scope_red_dot"
+	icon_state = "attach_scope_reddot"
 	range = 5
 
 /obj/item/weapon/gun_attachment/scope/sniper
 	name = "Sniper Sight"
 	desc = "A sniper sight."
-	icon_state = "attach_scope_longrange"
+	icon_state = "attach_scope_sniper"
 	range = 7
 
