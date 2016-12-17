@@ -37,6 +37,28 @@
 	if(state_open && !panel_open)
 		..(target)
 
+/obj/machinery/abductor/experiment/relaymove(mob/user)
+	if(user.stat != CONSCIOUS)
+		return
+	container_resist(user)
+
+/obj/machinery/abductor/experiment/container_resist(mob/living/user)
+	var/breakout_time = 600
+	user.changeNext_move(CLICK_CD_BREAKOUT)
+	user.last_special = world.time + CLICK_CD_BREAKOUT
+	user << "<span class='notice'>You lean on the back of [src] and start pushing the door open... (this will take about a minute.)</span>"
+	user.visible_message("<span class='italics'>You hear a metallic creaking from [src]!</span>")
+
+	if(do_after(user,(breakout_time), target = src))
+		if(!user || user.stat != CONSCIOUS || user.loc != src || state_open)
+			return
+
+		visible_message("<span class='warning'>[user] successfully broke out of [src]!</span>")
+		user << "<span class='notice'>You successfully break out of [src]!</span>"
+
+		open_machine()
+
+
 /obj/machinery/abductor/experiment/proc/dissection_icon(mob/living/carbon/human/H)
 	var/icon/photo = null
 	var/g = (H.gender == FEMALE) ? "f" : "m"
