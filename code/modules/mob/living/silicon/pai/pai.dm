@@ -194,11 +194,6 @@
 	..()
 	P.lay_down()
 
-/mob/living/silicon/pai/movement_delay()
-	. = ..()
-	if(hit_slowdown)
-		. += 1
-
 /datum/action/innate/pai/light
 	name = "Toggle Integrated Lights"
 	button_icon_state = "emp"
