@@ -297,9 +297,10 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 					if (total_moles)
 						for(var/id in env_gases)
-							var/gas_level = env_gases[id][MOLES]/total_moles
-							if(gas_level > 0)
-								dat += "[env_gases[id][GAS_META][META_GAS_NAME]]: [round(gas_level*100, 0.01)]%<br>"
+							if(env_gases[id])
+								var/gas_level = env_gases[id][MOLES]/total_moles
+								if(gas_level > 0)
+									dat += "[env_gases[id][GAS_META][META_GAS_NAME]]: [round(gas_level*100, 0.01)]%<br>"
 
 					dat += "Temperature: [round(environment.temperature-T0C)]&deg;C<br>"
 				dat += "<br>"

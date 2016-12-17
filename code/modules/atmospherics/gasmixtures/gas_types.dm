@@ -105,6 +105,8 @@
 			return "freon"
 		if(GAS_AGENTB)
 			return "agent_b"
+		if(GAS_N2O)
+			return "n2o"
 
 
 /proc/shorthand2gasid(shorthand)
@@ -127,3 +129,5 @@
 			return GAS_FREON
 		if("agent_b")
 			return GAS_AGENTB
+		if("n2o")
+			return GAS_N2O

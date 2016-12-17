@@ -176,7 +176,7 @@
 		for(var/id in env_gases)
 			if(id == GAS_N2 || id == GAS_O2)
 				continue
-			if(env_gases[id][MOLES])
+			if(env_gases[id] && env_gases[id][MOLES])
 				should_we_scrub = TRUE
 				break
 		if(should_we_scrub)
@@ -197,37 +197,37 @@
 			if(scrub_Toxins && removed_gases[GAS_PLASMA])
 				filtered_out.assert_gas(GAS_PLASMA)
 				filtered_gases[GAS_PLASMA][MOLES] = removed_gases[GAS_PLASMA][MOLES]
-				removed.gases[GAS_PLASMA][MOLES] = 0
+				removed_gases[GAS_PLASMA][MOLES] = 0
 
 			if(scrub_CO2 && removed_gases[GAS_CO2])
 				filtered_out.assert_gas(GAS_CO2)
-				filtered_out.gases[GAS_CO2][MOLES] = removed_gases[GAS_CO2][MOLES]
-				removed.gases[GAS_CO2][MOLES] = 0
+				filtered_gases[GAS_CO2][MOLES] = removed_gases[GAS_CO2][MOLES]
+				removed_gases[GAS_CO2][MOLES] = 0
 
 			if(removed_gases[GAS_AGENTB])
 				filtered_out.assert_gas(GAS_AGENTB)
-				filtered_out.gases[GAS_AGENTB][MOLES] = removed_gases[GAS_AGENTB][MOLES]
-				removed.gases[GAS_AGENTB][MOLES] = 0
+				filtered_gases[GAS_AGENTB][MOLES] = removed_gases[GAS_AGENTB][MOLES]
+				removed_gases[GAS_AGENTB][MOLES] = 0
 
 			if(scrub_N2O && removed_gases[GAS_N2O])
 				filtered_out.assert_gas(GAS_N2O)
-				filtered_out.gases[GAS_N2O][MOLES] = removed_gases[GAS_N2O][MOLES]
-				removed.gases[GAS_N2O][MOLES] = 0
+				filtered_gases[GAS_N2O][MOLES] = removed_gases[GAS_N2O][MOLES]
+				removed_gases[GAS_N2O][MOLES] = 0
 
 			if(scrub_BZ && removed_gases[GAS_BZ])
 				filtered_out.assert_gas(GAS_BZ)
-				filtered_out.gases[GAS_BZ][MOLES] = removed_gases[GAS_BZ][MOLES]
-				removed.gases[GAS_BZ][MOLES] = 0
+				filtered_gases[GAS_BZ][MOLES] = removed_gases[GAS_BZ][MOLES]
+				removed_gases[GAS_BZ][MOLES] = 0
 
 			if(scrub_Freon && removed_gases[GAS_FREON])
 				filtered_out.assert_gas(GAS_FREON)
-				filtered_out.gases[GAS_FREON][MOLES] = removed_gases[GAS_FREON][MOLES]
-				removed.gases[GAS_FREON][MOLES] = 0
+				filtered_gases[GAS_FREON][MOLES] = removed_gases[GAS_FREON][MOLES]
+				removed_gases[GAS_FREON][MOLES] = 0
 
 			if(scrub_WaterVapor && removed_gases[GAS_WV])
 				filtered_out.assert_gas(GAS_WV)
-				filtered_out.gases[GAS_WV][MOLES] = removed_gases[GAS_WV][MOLES]
-				removed.gases[GAS_WV][MOLES] = 0
+				filtered_gases[GAS_WV][MOLES] = removed_gases[GAS_WV][MOLES]
+				removed_gases[GAS_WV][MOLES] = 0
 
 			removed.garbage_collect()
 

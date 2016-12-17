@@ -6,41 +6,47 @@ What are the archived variables for?
 #define MINIMUM_HEAT_CAPACITY	0.0003
 #define QUANTIZE(variable)		(round(variable,0.0000001))/*I feel the need to document what happens here. Basically this is used to catch most rounding errors, however it's previous value made it so that
 															once gases got hot enough, most procedures wouldnt occur due to the fact that the mole counts would get rounded away. Thus, we lowered it a few orders of magnititude */
-var/list/meta_gas_info = init_gaslists()
 
-var/list/gaslist_cache
-/proc/gaslist(id)
+var/list/meta_gas_info	//contains the static information of a gas type
+
+var/list/gaslist_cache	//pre initialized list of gases keyed by id, ONLY FOR COPYING
+
+/proc/gaslist(id)	//copies a clean gases entry for id
 	var/list/cached_gas = gaslist_cache[id]
 	return cached_gas.Copy()
 
-/proc/init_gaslist_cache(id)
-	if(!meta_gas_info[id])
-		CRASH("Gas [id] does not exist!")
-
+/proc/init_gaslist_cache(id)	//called once per gas type from init_space_and_gaslists
 	var/list/cached_gas = new(3)
-	gaslist_cache[id] = cached_gas
 
 	cached_gas[MOLES] = 0
 	cached_gas[ARCHIVE] = 0
 	cached_gas[GAS_META] = meta_gas_info[id]
 
-/proc/init_gaslists()
-	. = new /list
+	gaslist_cache[id] = cached_gas
 
-	gaslist_cache = new(meta_gas_info.len)
+/proc/init_space_and_gaslists()	//called once by the shitty global in space.dm
+								//the reason why is because that global depends on these lists but there is no way to set them up before it's called, so we do it DURING the call
+	var/list/gas_types = subtypesof(/datum/gas)
 
-	for(var/gas_path in subtypesof(/datum/gas))
+	gaslist_cache = new(gas_types.len)
+	meta_gas_info = new(gas_types.len)
+
+	for(var/gas_path in gas_types)
 		var/list/gas_info = new(4)
-		var/datum/gas/gas = gas_path
+		var/datum/gas/working_gas = gas_path
 
-		gas_info[META_GAS_SPECIFIC_HEAT] = initial(gas.specific_heat)
-		gas_info[META_GAS_NAME] = initial(gas.name)
-		gas_info[META_GAS_MOLES_VISIBLE] = initial(gas.moles_visible)
-		if(initial(gas.moles_visible) != null)
-			gas_info[META_GAS_OVERLAY] = new /obj/effect/overlay/gas(initial(gas.gas_overlay))
-		.[initial(gas.id)] = gas_info
+		gas_info[META_GAS_SPECIFIC_HEAT] = initial(working_gas.specific_heat)
+		gas_info[META_GAS_NAME] = initial(working_gas.name)
+		gas_info[META_GAS_MOLES_VISIBLE] = initial(working_gas.moles_visible)
 
-		init_gaslist_cache(initial(gas.id))
+		if(initial(working_gas.moles_visible) != null)
+			gas_info[META_GAS_OVERLAY] = new /obj/effect/overlay/gas(initial(working_gas.gas_overlay))
+
+		meta_gas_info[initial(working_gas.id)] = gas_info
+
+		init_gaslist_cache(initial(working_gas.id))
+
+	return new /datum/gas_mixture/space()	//Fuck everything
 
 /datum/gas_mixture
 	var/list/gases
@@ -53,7 +59,7 @@ var/list/gaslist_cache
 
 /datum/gas_mixture/New(volume = CELL_VOLUME)
 	..()
-	gases = new
+	gases = new(gaslist_cache.len)
 	temperature = 0
 	temperature_archived = 0
 	src.volume = volume
@@ -65,7 +71,7 @@ var/list/gaslist_cache
 	//assert_gas(gas_id) - used to guarantee that the gas list for this id exists.
 	//Must be used before adding to a gas. May be used before reading from a gas.
 /datum/gas_mixture/proc/assert_gas(gas_id)
-	var/cached_gases = gases
+	var/list/cached_gases = gases
 	if(cached_gases[gas_id])
 		return
 	cached_gases[gas_id] = gaslist(gas_id)
@@ -87,14 +93,13 @@ var/list/gaslist_cache
 		add_gas(id)
 
 	//garbage_collect() - removes any gas list which is empty.
-	//If called with a list as an argument, only removes gas lists with IDs from that list.
 	//Must be used after subtracting from a gas. Must be used after assert_gas()
 		//if assert_gas() was called only to read from the gas.
 	//By removing empty gases, processing speed is increased.
-/datum/gas_mixture/proc/garbage_collect(list/tocheck)
+/datum/gas_mixture/proc/garbage_collect()
 	var/list/cached_gases = gases
-	for(var/id in (tocheck || cached_gases))
-		if(cached_gases[id][MOLES] <= 0 && cached_gases[id][ARCHIVE] <= 0)
+	for(var/id in cached_gases)
+		if(cached_gases[id] && cached_gases[id][MOLES] <= 0 && cached_gases[id][ARCHIVE] <= 0)
 			cached_gases[id] = null
 
 	//PV = nRT
@@ -102,19 +107,22 @@ var/list/gaslist_cache
 	var/list/cached_gases = gases
 	. = 0
 	for(var/id in cached_gases)
-		. += cached_gases[id][MOLES] * cached_gases[id][GAS_META][META_GAS_SPECIFIC_HEAT]
+		if(cached_gases[id])
+			. += cached_gases[id][MOLES] * cached_gases[id][GAS_META][META_GAS_SPECIFIC_HEAT]
 
 /datum/gas_mixture/proc/heat_capacity_archived() //joules per kelvin
 	var/list/cached_gases = gases
 	. = 0
 	for(var/id in cached_gases)
-		. += cached_gases[id][ARCHIVE] * cached_gases[id][GAS_META][META_GAS_SPECIFIC_HEAT]
+		if(cached_gases[id])
+			. += cached_gases[id][ARCHIVE] * cached_gases[id][GAS_META][META_GAS_SPECIFIC_HEAT]
 
 /datum/gas_mixture/proc/total_moles() //moles
 	var/list/cached_gases = gases
 	. = 0
 	for(var/id in cached_gases)
-		. += cached_gases[id][MOLES]
+		if(cached_gases[id])
+			. += cached_gases[id][MOLES]
 
 /datum/gas_mixture/proc/return_pressure() //kilopascals
 	if(volume > 0) // to prevent division by zero
@@ -325,7 +333,8 @@ var/list/gaslist_cache
 
 	temperature_archived = temperature
 	for(var/id in cached_gases)
-		cached_gases[id][ARCHIVE] = cached_gases[id][MOLES]
+		if(cached_gases[id])
+			cached_gases[id][ARCHIVE] = cached_gases[id][MOLES]
 
 	return 1
 
@@ -345,8 +354,9 @@ var/list/gaslist_cache
 	var/list/giver_gases = giver.gases
 	//gas transfer
 	for(var/giver_id in giver_gases)
-		assert_gas(giver_id)
-		cached_gases[giver_id][MOLES] += giver_gases[giver_id][MOLES]
+		if(giver_gases[giver_id])
+			assert_gas(giver_id)
+			cached_gases[giver_id][MOLES] += giver_gases[giver_id][MOLES]
 
 	return 1
 
@@ -361,9 +371,10 @@ var/list/gaslist_cache
 
 	removed.temperature = temperature
 	for(var/id in cached_gases)
-		removed.add_gas(id)
-		removed_gases[id][MOLES] = QUANTIZE((cached_gases[id][MOLES] / sum) * amount)
-		cached_gases[id][MOLES] -= removed_gases[id][MOLES]
+		if(cached_gases[id])
+			removed.add_gas(id)
+			removed_gases[id][MOLES] = QUANTIZE((cached_gases[id][MOLES] / sum) * amount)
+			cached_gases[id][MOLES] -= removed_gases[id][MOLES]
 	garbage_collect()
 
 	return removed
@@ -379,9 +390,10 @@ var/list/gaslist_cache
 
 	removed.temperature = temperature
 	for(var/id in cached_gases)
-		removed.add_gas(id)
-		removed_gases[id][MOLES] = QUANTIZE(cached_gases[id][MOLES] * ratio)
-		cached_gases[id][MOLES] -= removed_gases[id][MOLES]
+		if(cached_gases[id])
+			removed.add_gas(id)
+			removed_gases[id][MOLES] = QUANTIZE(cached_gases[id][MOLES] * ratio)
+			cached_gases[id][MOLES] -= removed_gases[id][MOLES]
 
 	garbage_collect()
 
@@ -394,8 +406,9 @@ var/list/gaslist_cache
 
 	copy.temperature = temperature
 	for(var/id in cached_gases)
-		copy.add_gas(id)
-		copy_gases[id][MOLES] = cached_gases[id][MOLES]
+		if(cached_gases[id])
+			copy.add_gas(id)
+			copy_gases[id][MOLES] = cached_gases[id][MOLES]
 
 	return copy
 
@@ -405,8 +418,9 @@ var/list/gaslist_cache
 
 	temperature = sample.temperature
 	for(var/id in sample_gases)
-		assert_gas(id)
-		cached_gases[id][MOLES] = sample_gases[id][MOLES]
+		if(sample_gases[id])
+			assert_gas(id)
+			cached_gases[id][MOLES] = sample_gases[id][MOLES]
 
 	//remove all gases not in the sample
 	cached_gases &= sample_gases
@@ -424,16 +438,19 @@ var/list/gaslist_cache
 	return 1
 
 /datum/gas_mixture/parse_gas_string(gas_string)
-	var/list/gases = src.gases
+	var/list/cached_gases = gases
 	var/list/gas = params2list(gas_string)
 	if(gas["TEMP"])
 		temperature = text2num(gas["TEMP"])
 		gas -= "TEMP"
-	gases.Cut()
+
+	for(var/id2 in cached_gases)	//can't use Cut cause the nulls matter to us
+		cached_gases[id2] = null
+
 	for(var/shorthand in gas)
 		var/id = shorthand2gasid(shorthand)
 		add_gas(id)
-		gases[id][MOLES] = text2num(gas[id])
+		cached_gases[id][MOLES] = text2num(gas[shorthand])
 	return 1
 
 /datum/gas_mixture/share(datum/gas_mixture/sharer, atmos_adjacent_turfs = 4)
@@ -457,30 +474,37 @@ var/list/gaslist_cache
 
 	var/moved_moles = 0
 	var/abs_moved_moles = 0
+	var/unique_recieved_gases = FALSE
+	var/unique_sent_gases = FALSE
 
 	//GAS TRANSFER
-	for(var/id in sharer_gases - cached_gases) // create gases not in our cache
-		add_gas(id)
+	for(var/id in sharer_gases) // create gases not in our cache
+		if(sharer_gases[id] && !cached_gases[id])
+			add_gas(id)
+			unique_recieved_gases = TRUE
+
 	for(var/id in cached_gases) // transfer gases
-		if(!sharer_gases[id]) //checking here prevents an uneeded proc call if the check fails.
-			sharer.add_gas(id)
+		if(cached_gases[id])
+			if(!sharer_gases[id]) //checking here prevents an uneeded proc call if the check fails.
+				sharer.add_gas(id)
+				unique_sent_gases = TRUE
 
-		var/gas = cached_gases[id]
-		var/sharergas = sharer_gases[id]
+			var/gas = cached_gases[id]
+			var/sharergas = sharer_gases[id]
 
-		var/delta = QUANTIZE(gas[ARCHIVE] - sharergas[ARCHIVE])/(atmos_adjacent_turfs+1) //the amount of gas that gets moved between the mixtures
+			var/delta = QUANTIZE(gas[ARCHIVE] - sharergas[ARCHIVE])/(atmos_adjacent_turfs+1) //the amount of gas that gets moved between the mixtures
 
-		if(delta && abs_temperature_delta > MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER)
-			var/gas_heat_capacity = delta * gas[GAS_META][META_GAS_SPECIFIC_HEAT]
-			if(delta > 0)
-				heat_capacity_self_to_sharer += gas_heat_capacity
-			else
-				heat_capacity_sharer_to_self -= gas_heat_capacity //subtract here instead of adding the absolute value because we know that delta is negative. saves a proc call.
+			if(delta && abs_temperature_delta > MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER)
+				var/gas_heat_capacity = delta * gas[GAS_META][META_GAS_SPECIFIC_HEAT]
+				if(delta > 0)
+					heat_capacity_self_to_sharer += gas_heat_capacity
+				else
+					heat_capacity_sharer_to_self -= gas_heat_capacity //subtract here instead of adding the absolute value because we know that delta is negative. saves a proc call.
 
-		gas[MOLES]			-= delta
-		sharergas[MOLES]	+= delta
-		moved_moles			+= delta
-		abs_moved_moles		+= abs(delta)
+			gas[MOLES]			-= delta
+			sharergas[MOLES]	+= delta
+			moved_moles			+= delta
+			abs_moved_moles		+= abs(delta)
 
 	last_share = abs_moved_moles
 
@@ -501,10 +525,16 @@ var/list/gaslist_cache
 				if(abs(new_sharer_heat_capacity/old_sharer_heat_capacity - 1) < 0.10) // <10% change in sharer heat capacity
 					temperature_share(sharer, OPEN_HEAT_TRANSFER_COEFFICIENT)
 
-	var/list/unique_gases = cached_gases ^ sharer_gases
-	if(unique_gases.len) //if all gases were present in both mixtures, we know that no gases are 0
-		garbage_collect(cached_gases - sharer_gases) //any gases the sharer had, we are guaranteed to have. gases that it didn't have we are not.
-		sharer.garbage_collect(sharer_gases - cached_gases) //the reverse is equally true
+	if(unique_sent_gases || unique_recieved_gases) //if all gases were present in both mixtures, we know that no gases are 0
+		//if unique_sent_gases is false that means we only recieved new gases or gave away partial gases
+		//which means we can skip garbage collect
+		//instead of if(!unique_sent_gases) we use if(unique_recieved) gases because a not operation MAY be more expensive
+		//This is fine because if one is false and we are here that means the other must be true
+		if(unique_recieved_gases)
+			garbage_collect()
+		//vice versa for the sharer
+		if(unique_sent_gases)
+			sharer.garbage_collect() //the reverse is equally true
 	sharer.after_share(src, atmos_adjacent_turfs)
 	if(temperature_delta > MINIMUM_TEMPERATURE_TO_MOVE || abs(moved_moles) > MINIMUM_MOLES_DELTA_TO_MOVE)
 		var/delta_pressure = temperature_archived*(total_moles() + moved_moles) - sharer.temperature_archived*(sharer.total_moles() - moved_moles)
@@ -537,13 +567,17 @@ var/list/gaslist_cache
 	var/list/sample_gases = sample.gases //accessing datum vars is slower than proc vars
 	var/list/cached_gases = gases
 
-	for(var/id in cached_gases | sample_gases) // compare gases from either mixture
+	for(var/id in cached_gases) // compare gases from either mixture
+		//used to be cached_gases | sample_gases before Fastmos III.5
+		//not needed anymore because they will always both have entries for all gases
+		//they may be null though
 		var/gas_moles = cached_gases[id] ? cached_gases[id][datatype] : 0
 		var/sample_moles = sample_gases[id] ? sample_gases[id][datatype] : 0
-		var/delta = abs(gas_moles - sample_moles)/(adjacents+1)
-		if(delta > MINIMUM_MOLES_DELTA_TO_MOVE && \
-			delta > gas_moles * MINIMUM_AIR_RATIO_TO_MOVE)
-			return id
+		if(gas_moles || sample_moles)
+			var/delta = abs(gas_moles - sample_moles)/(adjacents+1)
+			if(delta > MINIMUM_MOLES_DELTA_TO_MOVE && \
+				delta > gas_moles * MINIMUM_AIR_RATIO_TO_MOVE)
+				return id
 
 	if(total_moles() > MINIMUM_MOLES_DELTA_TO_MOVE)
 		var/temp

@@ -137,7 +137,8 @@ var/pipenetwarnings = 10
 		var/member_gases = member.air_temporary.gases
 
 		for(var/id in member_gases)
-			member_gases[id][MOLES] *= member.volume/air.volume
+			if(member_gases[id])
+				member_gases[id][MOLES] *= member.volume/air.volume
 
 		member.air_temporary.temperature = air.temperature
 
@@ -241,5 +242,6 @@ var/pipenetwarnings = 10
 			G.copy_from(total_gas_mixture)
 			var/list/G_gases = G.gases
 			for(var/id in G_gases)
-				G_gases[id][MOLES] *= G.volume/total_gas_mixture.volume
+				if(G_gases[id])
+					G_gases[id][MOLES] *= G.volume/total_gas_mixture.volume
 

@@ -116,7 +116,7 @@
 	var/list/gases = air.gases
 	for(var/id in gases)
 		var/gas = gases[id]
-		if(gas[GAS_META][META_GAS_OVERLAY] && gas[MOLES] > gas[GAS_META][META_GAS_MOLES_VISIBLE])
+		if(gas && gas[GAS_META][META_GAS_OVERLAY] && gas[MOLES] > gas[GAS_META][META_GAS_MOLES_VISIBLE])
 			. += gas[GAS_META][META_GAS_OVERLAY]
 
 /////////////////////////////SIMULATION///////////////////////////////////
@@ -324,7 +324,8 @@
 		A.merge(T.air)
 
 	for(var/id in A_gases)
-		A_gases[id][MOLES] = A_gases[id][MOLES]/turflen
+		if(A_gases[id])
+			A_gases[id][MOLES] = A_gases[id][MOLES]/turflen
 
 	for(var/t in turf_list)
 		var/turf/open/T = t

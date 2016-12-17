@@ -90,14 +90,15 @@
 			WARNING("Wrong gas ID in [src]'s filter_type var. filter_type == [filter_type]")
 			filtering = FALSE
 
-		if(filtering && removed.gases[filter_type])
+		var/cached_gases = removed.gases
+		if(filtering && cached_gases[filter_type])
 			var/datum/gas_mixture/filtered_out = new
 
 			filtered_out.temperature = removed.temperature
 			filtered_out.assert_gas(filter_type)
-			filtered_out.gases[filter_type][MOLES] = removed.gases[filter_type][MOLES]
+			filtered_out.gases[filter_type][MOLES] = cached_gases[filter_type][MOLES]
 
-			removed.gases[filter_type][MOLES] = 0
+			cached_gases[filter_type][MOLES] = 0
 			removed.garbage_collect()
 
 			air2.merge(filtered_out)

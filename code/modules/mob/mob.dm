@@ -49,7 +49,7 @@ var/next_mob_id = 0
 	t +=	"<span class='danger'>Temperature: [environment.temperature] \n</span>"
 	for(var/id in environment.gases)
 		var/gas = environment.gases[id]
-		if(gas[MOLES])
+		if(gas && gas[MOLES])
 			t+="<span class='notice'>[gas[GAS_META][META_GAS_NAME]]: [gas[MOLES]] \n</span>"
 
 	usr << t

@@ -263,7 +263,7 @@ var/datum/subsystem/air/SSair
 		active_turfs -= T
 		if (T.blocks_air)
 			continue
-		T.Initalize_Atmos(times_fired)
+		T.Initialize_Atmos(times_fired)
 
 	if(active_turfs.len)
 		var/starting_ats = active_turfs.len

@@ -46,7 +46,7 @@ var/global/list/rad_collectors = list()
 			toggle_power()
 			user.visible_message("[user.name] turns the [src.name] [active? "on":"off"].", \
 			"<span class='notice'>You turn the [src.name] [active? "on":"off"].</span>")
-			investigate_log("turned [active?"<font color='green'>on</font>":"<font color='red'>off</font>"] by [user.key]. [loaded_tank?"Fuel: [round(loaded_tank.air_contents.gases[GAS_PLASMA][MOLES]/0.29)]%":"<font color='red'>It is empty</font>"].","singulo")
+			investigate_log("turned [active?"<font color='green'>on</font>":"<font color='red'>off</font>"] by [user.key]. [loaded_tank?"Fuel: [loaded_tank.air_contents.gases[GAS_PLASMA] ? round(loaded_tank.air_contents.gases[GAS_PLASMA][MOLES]/0.29) : 0]%":"<font color='red'>It is empty</font>"].","singulo")
 			return
 		else
 			user << "<span class='warning'>The controls are locked!</span>"

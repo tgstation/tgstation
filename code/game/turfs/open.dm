@@ -32,7 +32,7 @@
 		icon_state = "necro[rand(2,3)]"
 
 
-/turf/open/Initalize_Atmos(times_fired)
+/turf/open/Initialize_Atmos(times_fired)
 	excited = 0
 	update_visuals()
 
@@ -198,7 +198,7 @@
 		if(wet == TURF_WET_PERMAFROST)
 			wet = TURF_WET_ICE
 		else if(wet == TURF_WET_ICE)
-			wet = TURF_WET_WATER	
+			wet = TURF_WET_WATER
 		else
 			wet = TURF_DRY
 			if(wet_overlay)
