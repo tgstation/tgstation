@@ -7,17 +7,6 @@
 	charge_sections = 2
 	ammo_type = list()
 
-/obj/item/weapon/gun/energy/frame/attack_hand(mob/user)
-	if(user.ckey == "John Oxford")
-		user << "<span class = 'userdanger'>JOHN OXFORD ENDS HERE! *gavel smack*</span>"
-		if(istype(user, /mob/living/carbon/human))
-			var/mob/living/carbon/human/H = user
-			H.gib()
-		else
-			qdel(user)
-	else
-		..()
-
 /obj/item/weapon/gun/energy/frame/testing
 	pin = null
 
