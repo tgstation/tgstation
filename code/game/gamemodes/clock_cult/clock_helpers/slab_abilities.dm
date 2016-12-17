@@ -106,6 +106,9 @@
 /obj/structure/destructible/clockwork/geis_binding/attack_hand(mob/living/user)
 	return
 
+/obj/structure/destructible/clockwork/geis_binding/emp_act(severity)
+	qdel(src)
+
 /obj/structure/destructible/clockwork/geis_binding/post_buckle_mob(mob/living/M)
 	if(M.buckled == src)
 		desc = "A flickering, glowing purple ring around [M]."
