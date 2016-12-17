@@ -107,8 +107,9 @@
 	if(src.check_access(null))
 		return 1
 	if(issilicon(M))
-		//AI can do whatever it wants
-		return 1
+		if(ispAI(M))
+			return 0
+		return 1 //AI can do whatever it wants
 	if(IsAdminGhost(M))
 		//Access can't stop the abuse
 		return 1
