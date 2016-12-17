@@ -1252,6 +1252,10 @@ var/global/image/plasmaman_on_fire = image("icon"='icons/mob/OnFire.dmi', "icon_
 		fixed_mut_color = ""
 		hair_color = ""
 
+	for(var/X in H.bodyparts) //propagates the damage_overlay changes
+		var/obj/item/bodypart/BP = X
+		BP.update_limb()
+	H.update_body_parts() //to update limb icon cache with the new damage overlays
 
 //Proc redirects:
 //Passing procs onto the fake_species, to ensure we look as much like them as possible
