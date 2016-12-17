@@ -58,7 +58,8 @@
 
 /obj/item/clothing/attack_hand(mob/user)
 	if(pockets && pockets.priority && ismob(loc))
-		pockets.show_to(user)
+		pockets.loc = loc //Set the pocket's loc to ours so the player can access it like it's in the real inventory.
+		pockets.attack_hand(user)
 	else
 		return ..()
 
