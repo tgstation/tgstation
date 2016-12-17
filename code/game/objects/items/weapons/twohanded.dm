@@ -624,7 +624,7 @@
 	sharpness = IS_SHARP
 
 /obj/item/weapon/twohanded/bonespear/update_icon()
-		icon_state = "bone_spear[wielded]"
+	icon_state = "bone_spear[wielded]"
 
 /*
  * Sky Bulge (Gae Bolg, tradtional dragoon lance from many FF games.)
@@ -632,7 +632,7 @@
 /obj/item/weapon/twohanded/skybulge	//Copy+paste job from bonespear because no explosions.
 	icon_state = "sky_bulge0"
 	name = "Sky Bulge"
-	desc = "A legendary stick with a very pointy tip. Looks to be used for throwing. And jumping." //TODO: Be funnier.
+	desc = "A legendary stick with a very pointy tip. Looks to be used for throwing. And jumping. Can be stubborn if you throw too much." //TODO: Be funnier.
 	force = 10 //This thing aint for robusting.
 	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = SLOT_BACK
@@ -646,43 +646,53 @@
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb = list("attacked", "poked", "jabbed", "torn", "gored", "lanced") //Added lanced for flavour.
 	sharpness = IS_SHARP
+	var/maxdist = 16
+	var/throw_cooldown = 5				//Should equate to half a second. Also should hardly come up because of the do_after.
+
+/obj/item/weapon/twohanded/skybulge/New()
+	..()
+	if (world.maxy > world.maxx)
+		maxdist = world.maxy
+	else
+		maxdist = world.maxx
 
 /obj/item/weapon/twohanded/skybulge/update_icon()
-		icon_state = "sky_bulge[wielded]"
+	icon_state = "sky_bulge[wielded]"
 
-/obj/item/weapon/twohanded/skybulge/throw_at()  //Making sure of something.
+/obj/item/weapon/twohanded/skybulge/throw_at()  //Throw cooldown and offhand-proofing.
+	if(throw_cooldown > world.time)
+		var/mob/User = thrownby
+		User.put_in_hands(src)
+		User.visible_message("<span class='warning'>But it doesn't leave [User]'s hand!")	//Always let the user know input went through and all that.
+		return
 	unwield(src)
 	..()
 
 /obj/item/weapon/twohanded/skybulge/throw_impact(atom/target) //Praise be the ratvar spear for showing me how to use this proc.
-	var/turf/T = get_turf(target)  //T for target, U for user, S for source (also user), L for where it landed
-	var/mob/U = thrownby
-	var/turf/S = get_turf(thrownby)
+	var/turf/Target = get_turf(target)
+	var/mob/User = thrownby
+	var/turf/Source = get_turf(thrownby)
 
-	if (T.z == S.z)				//Are you and where the spear hit on the same Zlevel?
-		if (S.z == 1)			//And it's the staion? Well, gotta check your distance limits.
-			if (((T.x - S.x)**2)+((T.y - S.y)**2) < 256) //256 is the tile limit squared, other than that, pythagoras. So, are you within 16 tiles of where that lance hit?
-				..()			//Process bounce + damage
-				sleep(5)		//This value should be 5. If not, I forgot to change it back while testing. Should be adjusted based on theft feedback.
-				var/turf/L = get_turf(src) //Check right before use to ensure you're up to date.
-				if (src.loc != L)
-					return					//You just had your lance stolen. Either grabbed, dragged, whatever. It's just not where you left it, so it's not yours anymore.
-				playsound(src, 'sound/weapons/laser2.ogg', 20, 1)					//Vhwoomp. Thrower might not hear this, but it'll let anyone near the destination know. Probably.
-				U.forceMove(L)				//Warp.
-				U.put_in_hands(src) 		//And keep a hold of the Sky Bulge.
-			else
-				playsound(src, 'sound/weapons/laser2.ogg', 20, 1)
-				U.put_in_hands(src) 	//Just warp back to hands. You missed. No cheese 16+ tile returning spear for you. No ..() so no damage.
-
-		else					//If you are off the station, then warp. No warp limit.
-			..()				//Gotta hurt what you hit.
-			sleep(5)
-			var/turf/L = get_turf(src) 	//Same as above.
-			if (src.loc != L)			//Same, lance stolen, etc.
+	if(Source.z == ZLEVEL_STATION && Source.z == Target.z)	//On station + same z check
+		maxdist = stationdistlimit
+		if(get_dist(Target, Source) < maxdist)
+			..()
+			if(do_after(User, 5, target = src, progress = 0))
+				if(qdeleted(src))							//Saw this on the photocopier.
+					return
+				var/turf/Landing = get_turf(src)
+				if (loc != Landing)							//Has it somehow moved or been picked up?
+					return
+				User.forceMove(Landing)
+	if(Source.z != ZLEVEL_STATION && Source.z == Target.z)	//Off-station + same z check.
+		..()
+		if(do_after(User, 5, target = src, progress = 0))
+			if(qdeleted(src))
 				return
-			playsound(src, 'sound/weapons/laser2.ogg', 20, 1)
-			U.forceMove(L)	//Warp.
-			U.put_in_hands(src) //And keep a hold of the Sky Bulge.
-	else						//Not the same zlevel? Fuck you  no free pass to random areas of space THAT easy.
-		playsound(src, 'sound/weapons/laser2.ogg', 20, 1)
-		U.put_in_hands(src) //Just warp back to hands. You missed. Can't murder across zlevels because no ..()
+			var/turf/Landing = get_turf(src)
+		if (loc != Landing)
+			return
+		User.forceMove(Landing)
+	throw_cooldown = world.time + initial(throw_cooldown)
+	User.put_in_hands(src)
+	playsound(src, 'sound/weapons/laser2.ogg', 20, 1)
