@@ -1,0 +1,4 @@
+author: "Kor"
+delete-after: True
+changes: 
+  - rscadd: "Added the treasure hunter's hat, coat, uniform, and whip. These aren't available on the map yet, but will be available to the librarian soon."

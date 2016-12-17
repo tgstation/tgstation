@@ -47,6 +47,15 @@
 	icon_state = "wrench_brass"
 	toolspeed = 0.5
 
+/obj/item/weapon/wrench/abductor
+	name = "alien wrench"
+	desc = "A polarized wrench. It causes anything placed between the jaws to turn."
+	icon = 'icons/obj/abductor.dmi'
+	icon_state = "wrench"
+	usesound = 'sound/effects/EMPulse.ogg'
+	toolspeed = 0.1
+	origin_tech = "materials=5;engineering=5;abductor=3"
+
 /obj/item/weapon/wrench/power
 	name = "Hand Drill"
 	desc ="A simple powered drill with a bolt bit"
@@ -162,6 +171,14 @@
 	icon_state = "screwdriver_brass"
 	toolspeed = 0.5
 
+/obj/item/weapon/screwdriver/abductor
+	name = "alien screwdriver"
+	desc = "An ultrasonic screwdriver."
+	icon = 'icons/obj/abductor.dmi'
+	icon_state = "screwdriver"
+	usesound = 'sound/items/PSHOOM.ogg'
+	toolspeed = 0.1
+
 /obj/item/weapon/screwdriver/power
 	name = "Hand Drill"
 	desc = "A simple hand drill with a screwdriver bit attached."
@@ -238,7 +255,7 @@
 
 /obj/item/weapon/wirecutters/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is cutting at [user.p_their()] arteries with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
-	playsound(loc, 'sound/items/Wirecutter.ogg', 50, 1, -1)
+	playsound(loc, usesound, 50, 1, -1)
 	return (BRUTELOSS)
 
 /obj/item/weapon/wirecutters/brass
@@ -246,6 +263,14 @@
 	desc = "A pair of wirecutters made of brass. The handle feels freezing cold to the touch."
 	icon_state = "cutters_brass"
 	toolspeed = 0.5
+
+/obj/item/weapon/wirecutters/abductor
+	name = "alien wirecutters"
+	desc = "Extremely sharp wirecutters, made out of a silvery-green metal."
+	icon = 'icons/obj/abductor.dmi'
+	icon_state = "cutters"
+	toolspeed = 0.1
+	origin_tech = "materials=5;engineering=4;abductor=3"
 
 /obj/item/weapon/wirecutters/cyborg
 	name = "wirecutters"
@@ -386,7 +411,7 @@
 
 	if(affecting && affecting.status == BODYPART_ROBOTIC && user.a_intent != INTENT_HARM)
 		if(src.remove_fuel(1))
-			playsound(loc, 'sound/items/Welder.ogg', 50, 1)
+			playsound(loc, usesound, 50, 1)
 			user.visible_message("<span class='notice'>[user] starts to fix some of the dents on [H]'s [affecting.name].</span>", "<span class='notice'>You start fixing some of the dents on [H]'s [affecting.name].</span>")
 			if(!do_mob(user, H, 50))
 				return
@@ -580,6 +605,19 @@
 /obj/item/weapon/weldingtool/mini/flamethrower_screwdriver()
 	return
 
+/obj/item/weapon/weldingtool/abductor
+	name = "alien welding tool"
+	desc = "An alien welding tool. Whatever fuel it uses, it never runs out."
+	icon = 'icons/obj/abductor.dmi'
+	icon_state = "welder"
+	toolspeed = 0.1
+	light_intensity = 0
+	origin_tech = "plasmatech=5;engineering=5;abductor=3"
+
+/obj/item/weapon/weldingtool/abductor/process()
+	if(get_fuel() <= max_fuel)
+		reagents.add_reagent("welding_fuel", 1)
+	..()
 
 /obj/item/weapon/weldingtool/hugetank
 	name = "upgraded industrial welding tool"
@@ -654,6 +692,15 @@
 	desc = "A brass crowbar. It feels faintly warm to the touch."
 	icon_state = "crowbar_brass"
 	toolspeed = 0.5
+
+/obj/item/weapon/crowbar/abductor
+	name = "alien crowbar"
+	desc = "A hard-light crowbar. It appears to pry by itself, without any effort required."
+	icon = 'icons/obj/abductor.dmi'
+	usesound = 'sound/weapons/sonic_jackhammer.ogg'
+	icon_state = "crowbar"
+	toolspeed = 0.1
+	origin_tech = "combat=4;engineering=4;abductor=3"
 
 /obj/item/weapon/crowbar/large
 	name = "crowbar"

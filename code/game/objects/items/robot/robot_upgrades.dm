@@ -296,3 +296,79 @@
 			msg_cooldown = world.time
 	else
 		deactivate()
+
+/obj/item/borg/upgrade/hypospray
+	name = "medical cyborg hypospray advanced synthesiser"
+	desc = "An upgrade to the Medical module cyborg's hypospray, allowing it \
+		to produce more advanced and complex medical reagents."
+	icon_state = "cyborg_upgrade3"
+	require_module = 1
+	module_type = /obj/item/weapon/robot_module/medical
+	origin_tech = null
+	var/list/additional_reagents = list()
+
+/obj/item/borg/upgrade/hypospray/action(mob/living/silicon/robot/R)
+	if(..())
+		return
+	for(var/obj/item/weapon/reagent_containers/borghypo/H in R.module)
+		if(H.accepts_reagent_upgrades)
+			for(var/re in additional_reagents)
+				H.add_reagent(re)
+
+	return 1
+
+/obj/item/borg/upgrade/hypospray/expanded
+	name = "medical cyborg expanded hypospray"
+	desc = "An upgrade to the Medical module's hypospray, allowing it \
+		to treat a wider range of conditions and problems."
+	additional_reagents = list("mannitol", "oculine", "inacusiate",
+		"mutadone", "haloperidol")
+	origin_tech = "programming=5;engineering=4;biotech=5"
+
+/obj/item/borg/upgrade/hypospray/high_strength
+	name = "medical cyborg high-strength hypospray"
+	desc = "An upgrade to the Medical module's hypospray, containing \
+		stronger versions of existing chemicals."
+	additional_reagents = list("oxandrolone", "sal_acid", "rezadone",
+		"pen_acid")
+	origin_tech = "programming=5;engineering=5;biotech=6"
+
+/obj/item/borg/upgrade/piercing_hypospray
+	name = "cyborg piercing hypospray"
+	desc = "An upgrade to a cyborg's hypospray, allowing it to \
+		pierce armor and thick material."
+	origin_tech = "materials=5;engineering=7;combat=3"
+	icon_state = "cyborg_upgrade3"
+
+/obj/item/borg/upgrade/piercing_hypospray/action(mob/living/silicon/robot/R)
+	if(..())
+		return
+
+	var/found_hypo = FALSE
+	for(var/obj/item/weapon/reagent_containers/borghypo/H in R.module)
+		H.bypass_protection = TRUE
+		found_hypo = TRUE
+
+	if(!found_hypo)
+		return
+
+	return 1
+
+/obj/item/borg/upgrade/defib
+	name = "medical cyborg defibrillator"
+	desc = "An upgrade to the Medical module, installing a builtin \
+		defibrillator, for on the scene revival."
+	icon_state = "cyborg_upgrade3"
+	require_module = 1
+	module_type = /obj/item/weapon/robot_module/medical
+	origin_tech = "programming=4;engineering=6;materials=5;powerstorage=5;biotech=5"
+
+/obj/item/borg/upgrade/defib/action(mob/living/silicon/robot/R)
+	if(..())
+		return
+
+	var/obj/item/weapon/twohanded/shockpaddles/cyborg/S = new(R.module)
+	R.module.basic_modules += S
+	R.module.add_module(S, FALSE, TRUE)
+
+	return 1

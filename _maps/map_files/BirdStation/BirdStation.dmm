@@ -8052,7 +8052,7 @@
 /turf/open/floor/plasteel/shuttle/white,
 /area/shuttle/supply)
 "atI" = (
-/obj/machinery/door/airlock/shuttle{
+/obj/machinery/door/airlock/titanium{
 	name = "Supply Shuttle Airlock";
 	req_access_txt = "31"
 	},
@@ -8524,7 +8524,7 @@
 /turf/open/floor/plating,
 /area/maintenance/fsmaint)
 "auU" = (
-/obj/machinery/door/airlock/shuttle{
+/obj/machinery/door/airlock/titanium{
 	name = "Supply Shuttle Airlock";
 	req_access_txt = "31"
 	},
@@ -9736,7 +9736,7 @@
 /turf/open/floor/wood,
 /area/maintenance/fsmaint)
 "ayj" = (
-/obj/machinery/door/airlock/shuttle{
+/obj/machinery/door/airlock/titanium{
 	name = "Mining Shuttle Airlock";
 	req_access_txt = "0"
 	},
@@ -13652,7 +13652,7 @@
 /turf/open/floor/plasteel/black,
 /area/shuttle/escape)
 "aHX" = (
-/obj/machinery/door/airlock/shuttle,
+/obj/machinery/door/airlock/titanium,
 /turf/open/floor/plasteel/shuttle/white,
 /area/shuttle/escape)
 "aHY" = (
@@ -14019,7 +14019,7 @@
 /turf/open/floor/plasteel/black,
 /area/shuttle/escape)
 "aIP" = (
-/obj/machinery/door/airlock/shuttle,
+/obj/machinery/door/airlock/titanium,
 /obj/docking_port/mobile/emergency{
 	dheight = 0;
 	dir = 8;
@@ -22469,14 +22469,14 @@
 /turf/open/floor/plasteel/white,
 /area/maintenance/asmaint)
 "bdf" = (
-/obj/machinery/door/airlock/shuttle,
+/obj/machinery/door/airlock/titanium,
 /turf/open/floor/plasteel/shuttle,
 /area/shuttle/transport)
 "bdg" = (
 /turf/open/floor/plasteel/shuttle,
 /area/shuttle/transport)
 "bdh" = (
-/obj/machinery/door/airlock/shuttle,
+/obj/machinery/door/airlock/titanium,
 /obj/docking_port/mobile{
 	dir = 8;
 	dwidth = 2;
@@ -23022,7 +23022,7 @@
 	name = "\improper South Hallway"
 	})
 "bep" = (
-/obj/machinery/door/airlock/shuttle{
+/obj/machinery/door/airlock/titanium{
 	name = "Arrivals Shuttle Airlock"
 	},
 /turf/open/floor/plating,
