@@ -234,7 +234,8 @@
 	priority_announce("The emergency shuttle has been recalled.[SSshuttle.emergencyLastCallLoc ? " Recall signal traced. Results can be viewed on any communications console." : "" ]", null, 'sound/AI/shuttlerecalled.ogg', "Priority")
 
 /obj/docking_port/mobile/emergency/proc/is_hijacked()
-	. = TRUE
+	var/has_people = FALSE
+
 	for(var/mob/living/player in player_list)
 		if(player.mind)
 			if(player.stat != DEAD)
@@ -245,9 +246,12 @@
 				if(isbrain(player)) //also technically dead
 					continue
 				if(get_area(player) == areaInstance)
+					has_people = TRUE
 					var/location = get_turf(player.mind.current)
 					if(!player.mind.special_role && !istype(location, /turf/open/floor/plasteel/shuttle/red) && !istype(location, /turf/open/floor/mineral/plastitanium/brig))
 						return FALSE
+
+	return has_people
 
 /obj/docking_port/mobile/emergency/check()
 	if(!timer)
