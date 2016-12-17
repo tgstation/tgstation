@@ -72,6 +72,11 @@
 	var/silent = 0
 	var/hit_slowdown = 0
 	var/light_power = 5
+	var/slowdown = 0
+
+/mob/living/silicon/pai/movement_delay()
+	. = ..()
+	. += slowdown
 
 /mob/living/silicon/pai/examine(mob/user)
 	..()
