@@ -199,6 +199,7 @@
 	..()
 	P.lay_down()
 
+<<<<<<< HEAD
 /datum/action/innate/pai/light
 	name = "Toggle Integrated Lights"
 	button_icon_state = "emp"
@@ -215,3 +216,5 @@
 		return TRUE
 	slowdown = initial(slowdown)
 	return TRUE
+=======
+>>>>>>> refs/remotes/tgstation/master

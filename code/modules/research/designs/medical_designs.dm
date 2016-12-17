@@ -89,7 +89,7 @@
 	name = "Piercing Syringe"
 	desc = "A diamond-tipped syringe that pierces armor when launched at high velocity. It can hold up to 10 units."
 	id = "piercesyringe"
-	req_tech = list("materials" = 5, "combat" = 3, "engineering" = 7)
+	req_tech = list("materials" = 7, "combat" = 3, "engineering" = 5)
 	build_type = PROTOLATHE
 	materials = list(MAT_GLASS = 4000, MAT_DIAMOND = 1500)
 	build_path = /obj/item/weapon/reagent_containers/syringe/piercing

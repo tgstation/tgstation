@@ -19,7 +19,7 @@
 
 	switch(item_set)
 		if("wizardmimic")
-			loadout = list(/obj/item/clothing/suit/wizrobe, /obj/item/clothing/shoes/sandal, /obj/item/clothing/head/wizard)
+			loadout = list(/obj/item/clothing/suit/wizrobe, /obj/item/clothing/shoes/sandal/magic, /obj/item/clothing/head/wizard)
 			ruins_spaceworthiness = 1
 		if("swords")
 			loadout[5] = /obj/item/weapon/katana/cursed
