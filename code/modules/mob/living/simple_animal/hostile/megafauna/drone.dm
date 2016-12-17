@@ -34,6 +34,10 @@
 	var/got_action = null
 	death_sound = 'sound/magic/Repulse.ogg'
 
+/turf/open/floor/plating/asteroid/airless/cave
+	megafauna_spawn_list = list(/mob/living/simple_animal/hostile/megafauna/dragon = 4, /mob/living/simple_animal/hostile/megafauna/colossus = 2, \
+	/mob/living/simple_animal/hostile/megafauna/bubblegum = 6, /mob/living/simple_animal/hostile/megafauna/megadrone = 3)
+
 /obj/item/device/gps/internal/drone
 	icon_state = null
 	gpstag = "Drone beacon."
