@@ -71,6 +71,9 @@
 	canmove = FALSE
 	var/silent = 0
 	var/hit_slowdown = 0
+	var/light_power = 5
+	var/ion_jet_cd = 30
+	var/ion_jet_semicd = FALSE
 
 /mob/living/silicon/pai/examine(mob/user)
 	..()
@@ -107,9 +110,11 @@
 	var/datum/action/innate/pai/shell/AS = new /datum/action/innate/pai/shell
 	var/datum/action/innate/pai/chassis/AC = new /datum/action/innate/pai/chassis
 	var/datum/action/innate/pai/rest/AR = new /datum/action/innate/pai/rest
+	var/datum/action/innate/pai/light/AL = new /datum/action/innate/pai/light
 	AS.Grant(src)
 	AC.Grant(src)
 	AR.Grant(src)
+	AL.Grant(src)
 
 /mob/living/silicon/pai/make_laws()
 	laws = new /datum/ai_laws/pai()
@@ -193,3 +198,18 @@
 	. = ..()
 	if(hit_slowdown)
 		. += 1
+
+/datum/action/innate/pai/light
+	name = "Toggle Integrated Lights"
+	button_icon_state = "emp"
+	background_icon_state = "bg_tech"
+
+/mob/living/silicon/pai/Process_Spacemove(movement_dir = 0)
+	if(!ion_jet_semicd)
+		ion_jet_semicd = TRUE
+		addtimer(src, "ion_cool", ion_jet_cd)
+		return TRUE
+	return ..()
+
+/mob/living/silicon/pai/proc/ion_cool()
+	ion_jet_semicd = FALSE

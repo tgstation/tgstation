@@ -92,3 +92,11 @@
 
 /mob/living/silicon/pai/start_pulling(atom/movable/AM)
 	return FALSE
+
+/mob/living/silicon/pai/proc/toggle_integrated_light()
+	if(!luminosity)
+		luminosity = lamp_power
+		src << "<span class='notice'>You enable your integrated light.</span>"
+	else
+		luminosity = 0
+		src << "<span class='notice'>You disable your integrated light.</span>"
