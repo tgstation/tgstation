@@ -65,6 +65,7 @@
 	materials = list(MAT_GLASS=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/glass
 	w_class = WEIGHT_CLASS_TINY
+	var/cooldown = 0
 
 /obj/item/weapon/ore/glass/attack_self(mob/living/user)
 	user << "<span class='notice'>You use the sand to make sandstone.</span>"
@@ -90,18 +91,26 @@
 		return
 	var/mob/living/carbon/human/C = hit_atom
 	if(C.head && C.head.flags_cover & HEADCOVERSEYES)
-		visible_message("<span class='danger'>[C]'s headgear blocks the sand!</span>")
+		if(cooldown < world.time - 10)
+			visible_message("<span class='danger'>[C]'s headgear blocks the [src]!</span>")
+			cooldown = world.time
 		return
 	if(C.wear_mask && C.wear_mask.flags_cover & MASKCOVERSEYES)
-		visible_message("<span class='danger'>[C]'s mask blocks the sand!</span>")
-		return
+		if(cooldown < world.time - 10)
+			visible_message("<span class='danger'>[C]'s mask blocks the [src]!</span>")
+			cooldown = world.time
+			return
 	if(C.glasses && C.glasses.flags_cover & GLASSESCOVERSEYES)
-		visible_message("<span class='danger'>[C]'s glasses block the sand!</span>")
+		if(cooldown < world.time - 10)
+			visible_message("<span class='danger'>[C]'s glasses block the [src]!</span>")
+			cooldown = world.time
 		return
 	C.adjust_blurriness(6)
 	C.adjustStaminaLoss(15)//the pain from your eyes burning does stamina damage
 	C.confused += 5
-	C << "<span class='userdanger'>\The [src] gets into your eyes! The pain, it burns!</span>"
+	if(cooldown < world.time - 10)
+		C << "<span class='userdanger'>\The [src] gets into your eyes! The pain, it burns!</span>"
+		cooldown = world.time
 	qdel(src)
 
 /obj/item/weapon/ore/glass/basalt

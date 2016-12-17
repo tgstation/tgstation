@@ -167,7 +167,11 @@
 				. = TRUE
 
 /obj/machinery/chem_dispenser/attackby(obj/item/I, mob/user, params)
-	if(default_unfasten_wrench(user, I))
+	if(istype(I, /obj/item/weapon/wrench))
+		anchored = !anchored
+		power_change()
+		user << "<span class='notice'>You [anchored ? "attached" : "detached"] [src].</span>"
+		playsound(loc, I.usesound, 75, 1)
 		return
 
 	if(istype(I, /obj/item/weapon/reagent_containers) && (I.flags & OPENCONTAINER))
