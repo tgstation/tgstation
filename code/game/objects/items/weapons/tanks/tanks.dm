@@ -95,10 +95,7 @@
 /obj/item/weapon/tank/blob_act(obj/structure/blob/B)
 	if(B && B.loc == loc)
 		var/turf/location = get_turf(src)
-		if(!location)
-			qdel(src)
-
-		if(air_contents)
+		if(location && air_contents)
 			location.assume_air(air_contents)
 
 		qdel(src)

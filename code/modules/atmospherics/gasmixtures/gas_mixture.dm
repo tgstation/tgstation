@@ -66,6 +66,11 @@ var/list/gaslist_cache	//pre initialized list of gases keyed by id, ONLY FOR COP
 	last_share = 0
 	fuel_burnt = 0
 
+/datum/gas_mixture/Destroy()
+	gases = null
+	holder = null
+	return ..()
+
 //listmos procs
 
 	//assert_gas(gas_id) - used to guarantee that the gas list for this id exists.
@@ -285,10 +290,6 @@ var/list/gaslist_cache	//pre initialized list of gases keyed by id, ONLY FOR COP
 	//Update archived versions of variables
 	//Returns: 1 in all cases
 
-/datum/gas_mixture/proc/merge(datum/gas_mixture/giver)
-	//Merges all air from giver into self. Deletes giver.
-	//Returns: 1 if we are mutable, 0 otherwise
-
 /datum/gas_mixture/proc/remove(amount)
 	//Proportionally removes amount of gas from the gas_mixture
 	//Returns: gas_mixture with the gases removed
@@ -338,7 +339,10 @@ var/list/gaslist_cache	//pre initialized list of gases keyed by id, ONLY FOR COP
 
 	return 1
 
-/datum/gas_mixture/merge(datum/gas_mixture/giver)
+//Merges all air from giver into self. Deletes giver.
+//Returns: 1 if we are mutable, 0 otherwise
+//docs moved down here cause i don't fully understand the whole forward declaration thing in DM
+/datum/gas_mixture/proc/merge(datum/gas_mixture/giver, delete_after = TRUE)
 	if(!giver)
 		return 0
 
@@ -352,6 +356,11 @@ var/list/gaslist_cache	//pre initialized list of gases keyed by id, ONLY FOR COP
 
 	var/list/cached_gases = gases //accessing datum vars is slower than proc vars
 	var/list/giver_gases = giver.gases
+
+	//We hold the reference to giver's gases at this point. It's safe to qdel
+	if(delete_after)
+		qdel(giver)
+
 	//gas transfer
 	for(var/giver_id = 1 to GAS_LAST)
 		if(giver_gases[giver_id])
@@ -413,17 +422,16 @@ var/list/gaslist_cache	//pre initialized list of gases keyed by id, ONLY FOR COP
 	return copy
 
 /datum/gas_mixture/copy_from(datum/gas_mixture/sample)
-	var/list/cached_gases = gases //accessing datum vars is slower than proc vars
+	var/list/cached_gases = new(gaslist_cache.len) //new list to replace the old
+	gases = cached_gases
+
 	var/list/sample_gases = sample.gases
 
 	temperature = sample.temperature
 	for(var/id = 1 to GAS_LAST)
 		if(sample_gases[id])
-			assert_gas(id)
+			add_gas(id)
 			cached_gases[id][MOLES] = sample_gases[id][MOLES]
-
-	//remove all gases not in the sample
-	cached_gases &= sample_gases
 
 	return 1
 

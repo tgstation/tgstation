@@ -189,11 +189,10 @@
 	var/obj/item/weapon/tank/I = owner.internal
 	if(I && I.air_contents && I.air_contents.total_moles() > num)
 		var/datum/gas_mixture/removed = I.air_contents.remove(num)
-		if(removed.total_moles() > 0.005)
-			T.assume_air(removed)
+		var/moles = removed.total_moles()
+		T.assume_air(removed)
+		if(moles > 0.005)
 			return 1
-		else
-			T.assume_air(removed)
 
 	toggle(silent=1)
 	return 0

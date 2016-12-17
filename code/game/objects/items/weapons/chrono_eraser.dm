@@ -233,9 +233,6 @@
 	else
 		return 0
 
-/obj/effect/chrono_field/assume_air()
-	return 0
-
 /obj/effect/chrono_field/return_air() //we always have nominal air and temperature
 	var/datum/gas_mixture/GM = new
 	GM.assert_gases(GAS_O2,GAS_N2)

@@ -228,7 +228,7 @@ var/pipenetwarnings = 10
 		var/datum/gas_mixture/G = i
 		total_gas_mixture.volume += G.volume
 
-		total_gas_mixture.merge(G)
+		total_gas_mixture.merge(G, FALSE)	//don't delete G cause we're gonna reinit it in a moment
 
 		total_thermal_energy += G.thermal_energy()
 		total_heat_capacity += G.heat_capacity()

@@ -14,7 +14,9 @@
 /datum/gas_mixture/space/archive()
 	return 1 //nothing changes, so we do nothing and the archive is successful
 
-/datum/gas_mixture/space/merge()
+/datum/gas_mixture/space/merge(giver, delete_after = TRUE)
+	if(delete_after)
+		qdel(giver)
 	return 0 //we're immutable.
 
 /datum/gas_mixture/space/heat_capacity()
