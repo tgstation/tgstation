@@ -29,15 +29,9 @@
 	visor_flags_cover = MASKCOVERSEYES
 	resistance_flags = FIRE_PROOF
 
-/obj/item/clothing/mask/gas/welding/attack_self()
-	toggle()
+/obj/item/clothing/mask/gas/welding/attack_self(mob/user)
+	weldingvisortoggle(user)
 
-/obj/item/clothing/mask/gas/welding/verb/toggle()
-	set category = "Object"
-	set name = "Adjust welding mask"
-	set src in usr
-
-	weldingvisortoggle()
 
 // ********************************************************************
 
