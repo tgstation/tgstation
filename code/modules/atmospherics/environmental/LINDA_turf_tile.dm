@@ -321,7 +321,7 @@
 			space_in_group = 1
 			qdel(A)
 			A = new/datum/gas_mixture/space()
-		A.merge(T.air)
+		A.merge(T.air, FALSE) //don't delete, we will reinit
 
 	for(var/id = 1 to GAS_LAST)
 		if(A_gases[id])
