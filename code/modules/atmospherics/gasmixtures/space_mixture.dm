@@ -9,7 +9,7 @@
 	temperature_archived = TCMB
 
 /datum/gas_mixture/space/garbage_collect()
-	gases.Cut() //clever way of ensuring we always are empty.
+	gases = INIT_GASES
 
 /datum/gas_mixture/space/archive()
 	return 1 //nothing changes, so we do nothing and the archive is successful
@@ -34,11 +34,11 @@
 /datum/gas_mixture/space/share(datum/gas_mixture/sharer, atmos_adjacent_turfs = 4)
 	. = ..(sharer, 0)
 	temperature = TCMB
-	gases.Cut()
+	gases = INIT_GASES
 
 /datum/gas_mixture/space/after_share()
 	temperature = TCMB
-	gases.Cut()
+	gases = INIT_GASES
 
 /datum/gas_mixture/space/react()
 	return 0 //we're immutable.

@@ -6,6 +6,7 @@ What are the archived variables for?
 #define MINIMUM_HEAT_CAPACITY	0.0003
 #define QUANTIZE(variable)		(round(variable,0.0000001))/*I feel the need to document what happens here. Basically this is used to catch most rounding errors, however it's previous value made it so that
 															once gases got hot enough, most procedures wouldnt occur due to the fact that the mole counts would get rounded away. Thus, we lowered it a few orders of magnititude */
+#define INIT_GASES new(gaslist_cache.len)	//To be used to setup an empty gases var
 
 var/list/meta_gas_info	//contains the static information of a gas type
 
@@ -59,7 +60,7 @@ var/list/gaslist_cache	//pre initialized list of gases keyed by id, ONLY FOR COP
 
 /datum/gas_mixture/New(volume = CELL_VOLUME)
 	..()
-	gases = new(gaslist_cache.len)
+	gases = INIT_GASES
 	temperature = 0
 	temperature_archived = 0
 	src.volume = volume
@@ -422,7 +423,7 @@ var/list/gaslist_cache	//pre initialized list of gases keyed by id, ONLY FOR COP
 	return copy
 
 /datum/gas_mixture/copy_from(datum/gas_mixture/sample)
-	var/list/cached_gases = new(gaslist_cache.len) //new list to replace the old
+	var/list/cached_gases = INIT_GASES //new list to replace the old
 	gases = cached_gases
 
 	var/list/sample_gases = sample.gases
@@ -446,14 +447,13 @@ var/list/gaslist_cache	//pre initialized list of gases keyed by id, ONLY FOR COP
 	return 1
 
 /datum/gas_mixture/parse_gas_string(gas_string)
-	var/list/cached_gases = gases
+	var/list/cached_gases = INIT_GASES
+	gases = cached_gases
+
 	var/list/gas = params2list(gas_string)
 	if(gas["TEMP"])
 		temperature = text2num(gas["TEMP"])
 		gas -= "TEMP"
-
-	for(var/id2 = 1 to GAS_LAST)	//can't use Cut cause the nulls matter to us
-		cached_gases[id2] = null
 
 	for(var/shorthand in gas)
 		var/id = shorthand2gasid(shorthand)
