@@ -10,7 +10,6 @@
 	icon_living = "drone"
 	friendly = "stares"
 	icon = 'icons/mob/lavaland/drone.dmi'
-	faction = list("boss")
 	speak_emote = list("states")
 	armour_penetration = 50
 	melee_damage_lower = 10
