@@ -1,0 +1,46 @@
+"a" = (/turf/open/space,/area/space)
+"b" = (/obj/structure/grille,/turf/open/space,/area/space)
+"c" = (/obj/structure/lattice,/turf/open/space,/area/space)
+"d" = (/obj/item/weapon/ore/glass,/turf/open/space,/area/space)
+"e" = (/turf/closed/wall/mineral/iron,/area/ruin/unpowered)
+"f" = (/obj/structure/statue/silver/sec,/turf/open/floor/wood/airless,/area/ruin/unpowered)
+"g" = (/obj/structure/table/wood/fancy,/obj/item/weapon/twohanded/skybulge,/turf/open/floor/mineral/silver,/area/ruin/unpowered)
+"h" = (/obj/structure/statue/silver/secborg,/turf/open/floor/wood/airless,/area/ruin/unpowered)
+"i" = (/obj/item/weapon/reagent_containers/food/snacks/donkpocket,/turf/open/floor/mineral/silver,/area/ruin/unpowered)
+"j" = (/turf/open/floor/mineral/silver,/area/ruin/unpowered)
+"k" = (/obj/structure/rack,/obj/item/weapon/twohanded/spear,/turf/open/floor/mineral/silver,/area/ruin/unpowered)
+"l" = (/obj/structure/rack,/obj/item/weapon/dice/d20,/turf/open/floor/wood/airless,/area/ruin/unpowered)
+"m" = (/obj/structure/rack,/obj/item/weapon/dice/d00,/turf/open/floor/wood/airless,/area/ruin/unpowered)
+"n" = (/obj/structure/rack,/obj/item/weapon/twohanded/spear,/obj/item/clothing/head/cardborg,/turf/open/floor/mineral/silver,/area/ruin/unpowered)
+"o" = (/obj/structure/mineral_door/wood,/turf/open/floor/mineral/silver,/area/ruin/unpowered)
+"p" = (/obj/structure/statue/silver/secborg,/turf/open/floor/mineral/silver,/area/ruin/unpowered)
+"q" = (/obj/structure/rack,/obj/item/weapon/dice/d12,/turf/open/floor/wood/airless,/area/ruin/unpowered)
+"r" = (/obj/structure/rack,/obj/item/weapon/dice/d4,/turf/open/floor/wood/airless,/area/ruin/unpowered)
+"s" = (/obj/structure/statue/silver/sec,/turf/open/floor/mineral/silver,/area/ruin/unpowered)
+"t" = (/obj/item/weapon/wrench,/turf/open/floor/mineral/silver,/area/ruin/unpowered)
+"u" = (/obj/item/weapon/ore/silver,/obj/structure/grille,/turf/open/space,/area/space)
+"v" = (/obj/structure/rack,/obj/item/weapon/dice/d8,/turf/open/floor/wood/airless,/area/ruin/unpowered)
+"w" = (/obj/structure/rack,/obj/item/weapon/dice/d6,/turf/open/floor/wood/airless,/area/ruin/unpowered)
+"x" = (/obj/item/weapon/ore/glass,/obj/structure/grille,/turf/open/space,/area/space)
+"y" = (/obj/structure/lattice,/obj/item/weapon/ore/silver,/turf/open/space,/area/space)
+"z" = (/obj/structure/lattice,/obj/item/weapon/crowbar/red,/turf/open/space,/area/space)
+
+(1,1,1) = {"
+aaaaaaaaaaaaaaaaa
+aaabbbaaaaabbbaaa
+abccaaaaaaacaaaaa
+abacccacccccaaaba
+abaacbdcbbcccccba
+acccceeeeecbcaaba
+bcdcbefghecbcaaaa
+aceeeeijjeeeeaaab
+acekjeljmejnecccb
+ccejjojjjojjeacab
+acepjeqjrejsecccb
+abeeeejjteeeeaaab
+accbuevjwecxcaaaa
+acaaceeoeexbcabaa
+abaacyejecccccbaa
+abbccbeoebbababaa
+aaaaaazcaaaaaaaaa
+"}

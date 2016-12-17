@@ -625,3 +625,64 @@
 
 /obj/item/weapon/twohanded/bonespear/update_icon()
 		icon_state = "bone_spear[wielded]"
+
+/*
+ * Sky Bulge (Gae Bolg, tradtional dragoon lance from many FF games.)
+ */
+/obj/item/weapon/twohanded/skybulge	//Copy+paste job from bonespear because no explosions.
+	icon_state = "sky_bulge0"
+	name = "Sky Bulge"
+	desc = "A legendary stick with a very pointy tip. Looks to be used for throwing. And jumping." //TODO: Be funnier.
+	force = 10 //This thing aint for robusting.
+	w_class = WEIGHT_CLASS_BULKY
+	slot_flags = SLOT_BACK
+	force_unwielded = 10
+	force_wielded = 18					//Same as regular spear. This is a utility weapon.
+	throwforce = 24						//And that utility is throwing. 24 so it takes 5 hits instead of 4.
+	throw_speed = 4
+	embedded_impact_pain_multiplier = 0	//If you somehow embed this, it's not going to hurt.
+	armour_penetration = 15				//Same as Bone Spear
+	embed_chance = 0					//Would ruin the whole theme of the thing.
+	hitsound = 'sound/weapons/bladeslice.ogg'
+	attack_verb = list("attacked", "poked", "jabbed", "torn", "gored", "lanced") //Added lanced for flavour.
+	sharpness = IS_SHARP
+
+/obj/item/weapon/twohanded/skybulge/update_icon()
+		icon_state = "sky_bulge[wielded]"
+
+/obj/item/weapon/twohanded/skybulge/throw_at()  //Making sure of something.
+	unwield(src)
+	..()
+
+/obj/item/weapon/twohanded/skybulge/throw_impact(atom/target) //Praise be the ratvar spear for showing me how to use this proc.
+	var/turf/T = get_turf(target)  //T for target, U for user, S for source (also user), L for where it landed
+	var/mob/U = thrownby
+	var/turf/S = get_turf(thrownby)
+
+	if (T.z == S.z)				//Are you and where the spear hit on the same Zlevel?
+		if (S.z == 1)			//And it's the staion? Well, gotta check your distance limits.
+			if (((T.x - S.x)**2)+((T.y - S.y)**2) < 256) //256 is the tile limit squared, other than that, pythagoras. So, are you within 16 tiles of where that lance hit?
+				..()			//Process bounce + damage
+				sleep(5)		//This value should be 5. If not, I forgot to change it back while testing. Should be adjusted based on theft feedback.
+				var/turf/L = get_turf(src) //Check right before use to ensure you're up to date.
+				if (src.loc != L)
+					return					//You just had your lance stolen. Either grabbed, dragged, whatever. It's just not where you left it, so it's not yours anymore.
+				playsound(src, 'sound/weapons/laser2.ogg', 20, 1)					//Vhwoomp. Thrower might not hear this, but it'll let anyone near the destination know. Probably.
+				U.forceMove(L)				//Warp.
+				U.put_in_hands(src) 		//And keep a hold of the Sky Bulge.
+			else
+			playsound(src, 'sound/weapons/laser2.ogg', 20, 1)
+			U.put_in_hands(src) 	//Just warp back to hands. You missed. No cheese 16+ tile returning spear for you. No ..() so no damage.
+
+		else					//If you are off the station, then warp. No warp limit.
+		..()				//Gotta hurt what you hit.
+		sleep(5)
+		var/turf/L = get_turf(src) 	//Same as above.
+		if (src.loc != L)			//Same, lance stolen, etc.
+			return
+		playsound(src, 'sound/weapons/laser2.ogg', 20, 1)
+		U.forceMove(L)	//Warp.
+		U.put_in_hands(src) //And keep a hold of the Sky Bulge.
+	else						//Not the same zlevel? Fuck you  no free pass to random areas of space THAT easy.
+	playsound(src, 'sound/weapons/laser2.ogg', 20, 1)
+	U.put_in_hands(src) //Just warp back to hands. You missed. Can't murder across zlevels because no ..()
