@@ -61,38 +61,32 @@
 	throw_range = 2
 	w_class = WEIGHT_CLASS_TINY
 	resistance_flags = FLAMMABLE
+	value = 0
 	
 /obj/item/stack/spacecash/fake/c10
 	icon_state = "spacecash10"
 	desc = "It's worth 10 credits."
-	value = 0
 
 /obj/item/stack/spacecash/fake/c20
 	icon_state = "spacecash20"
 	desc = "It's worth 20 credits."
-	value = 0
 
 /obj/item/stack/spacecash/fake/c50
 	icon_state = "spacecash50"
 	desc = "It's worth 50 credits."
-	value = 0
 
 /obj/item/stack/spacecash/fake/c100
 	icon_state = "spacecash100"
 	desc = "It's worth 100 credits."
-	value = 0
 
 /obj/item/stack/spacecash/fake/c200
 	icon_state = "spacecash200"
 	desc = "It's worth 200 credits."
-	value = 0
 
 /obj/item/stack/spacecash/fake/c500
 	icon_state = "spacecash500"
 	desc = "It's worth 500 credits."
-	value = 0
 
 /obj/item/stack/spacecash/fake/c1000
 	icon_state = "spacecash1000"
 	desc = "It's worth 1000 credits."
-	value = 0
