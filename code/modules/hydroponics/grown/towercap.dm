@@ -26,7 +26,6 @@
 	product = /obj/item/weapon/grown/log/steel
 	mutatelist = list()
 	rarity = 20
-	reagents_add = list("iron"=0.25)
 
 
 
