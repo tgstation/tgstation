@@ -95,7 +95,7 @@
 
 /mob/living/silicon/pai/proc/toggle_integrated_light()
 	if(!luminosity)
-		luminosity = lamp_power
+		luminosity = light_power
 		src << "<span class='notice'>You enable your integrated light.</span>"
 	else
 		luminosity = 0

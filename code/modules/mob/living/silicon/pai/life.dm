@@ -8,7 +8,7 @@
 			qdel(src.cable)
 			cable = null
 	silent = max(silent - 1, 0)
-	weakened = max(weakened - 1, 0)
+	. = ..()
 
 /mob/living/silicon/pai/updatehealth()
 	if(status_flags & GODMODE)

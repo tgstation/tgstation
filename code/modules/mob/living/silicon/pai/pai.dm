@@ -61,8 +61,8 @@
 	var/emitterhealth = 50
 	var/emittermaxhealth = 50
 	var/emitterregen = 0.5
-	var/emittercd = 40
-	var/emitteroverloadcd = 100
+	var/emittercd = 20
+	var/emitteroverloadcd = 50
 	var/emittersemicd = FALSE
 
 	var/overload_ventcrawl = 0
@@ -115,6 +115,8 @@
 	AC.Grant(src)
 	AR.Grant(src)
 	AL.Grant(src)
+	emittersemicd = TRUE
+	addtimer(src, "emittercool", 600)
 
 /mob/living/silicon/pai/make_laws()
 	laws = new /datum/ai_laws/pai()
@@ -199,12 +201,16 @@
 	button_icon_state = "emp"
 	background_icon_state = "bg_tech"
 
+/datum/action/innate/pai/light/Trigger()
+	..()
+	P.toggle_integrated_light()
+
 /mob/living/silicon/pai/Process_Spacemove(movement_dir = 0)
 	if(!ion_jet_semicd)
 		ion_jet_semicd = TRUE
 		addtimer(src, "ion_cool", ion_jet_cd)
 		return TRUE
-	return ..()
+	return FALSE
 
 /mob/living/silicon/pai/proc/ion_cool()
 	ion_jet_semicd = FALSE
