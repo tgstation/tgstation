@@ -95,8 +95,8 @@
 
 /mob/living/silicon/pai/proc/toggle_integrated_light()
 	if(!luminosity)
-		setLuminosity(light_power)
+		setluminosity(light_power)
 		src << "<span class='notice'>You enable your integrated light.</span>"
 	else
-		setLuminosity(0)
+		setluminosity(0)
 		src << "<span class='notice'>You disable your integrated light.</span>"
