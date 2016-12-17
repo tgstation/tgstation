@@ -445,20 +445,23 @@ var/list/binary = list("0","1")
 //in the txt file and have it be reflected in the in game item/mob it came from.
 //(That's what things like savefiles are for) Note that this list is not shuffled.
 /proc/twitterize(list/proposed, filename, cullshort = 0, storemax = 1000)
-	if(!islist(proposed) || !filename || storemax > proposed.len)
+	if(!islist(proposed) || !filename || storemax < proposed.len)
 		return
 
-	var/list/nope = list("www.", "http", "@") //Note the ommission of #, hashtags are fine
+	var/list/nope = list("www.", "http", "@", ".com", ".org", ".net", ".edu") //Note the ommission of #, hashtags are fine
 	var/list/alphanumeric = list("a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9")
 	var/list/punct = list(".","!","?")
 	var/list/accepted = list()
 	for(var/string in proposed)
+		world << "Testing: [string]"
 		for(var/substring in nope) //first gate
-			if(substring in string)
+			if(substring in lowertext(string))
+				world << "[string] failed at first gate"
 				continue
 		var/buffer = ""
 		var/early_culling = TRUE
-		for(var/let in string)
+		for(var/pos = 1, pos != lentext(string), pos++)
+			var/let = copytext(string, pos, (pos + 1) % lentext(string))
 			if(early_culling && !(lowertext(let) in alphanumeric))
 				continue
 			early_culling = FALSE
@@ -466,14 +469,15 @@ var/list/binary = list("0","1")
 				buffer += " and "
 			else
 				buffer += let
-
+		world << buffer
 		var/punctbuffer = ""
 		var/cutoff = lentext(buffer)
 		for(var/pos = lentext(buffer), pos != 0, pos--)
-			if(string[pos] in alphanumeric)
+			var/let = copytext(buffer, pos, (pos + 1) % lentext(buffer))
+			if(let in alphanumeric)
 				break
-			if(string[pos] in punct)
-				punctbuffer = string[pos] + punctbuffer //Note this isn't the same thing as using +=
+			if(let in punct)
+				punctbuffer = let + punctbuffer //Note this isn't the same thing as using +=
 				cutoff = pos
 		if(punctbuffer) //We clip down excessive punctuation to get the letter count lower
 			if("!" in punctbuffer)
@@ -493,13 +497,18 @@ var/list/binary = list("0","1")
 				else
 					punctbuffer = "" //Grammer nazis be damned
 			buffer = copytext(buffer, 1, cutoff) + punctbuffer
-
-		var/understandability = 0
+		world << buffer
+		/*var/understandability = 0
 		var/list/common_symbols = list(",","\"","-","+","\\","/", "=")
-		for(var/let in buffer)
+		for(var/pos = 1, pos != lentext(buffer), pos++)
+			var/let = copytext(buffer, pos, (pos + 1) % lentext(buffer))
 			if(let in alphanumeric || let in punct || let in common_symbols)
 				understandability++
-		if(understandability / lentext(buffer) < 0.5 || lentext(buffer) > 140 || lentext(buffer) <= cullshort || buffer in accepted) //second to fourth gate
+		if(buffer)
+			world << "[buffer] understability [understandability / lentext(buffer)]%"*/
+
+		if(!buffer || /*understandability / lentext(buffer) < 0.5 ||*/ lentext(buffer) > 140 || lentext(buffer) <= cullshort || buffer in accepted) //second to fourth gate
+			world << "[buffer] failed at 2-4 gate"
 			continue
 
 		accepted += buffer
@@ -511,6 +520,7 @@ var/list/binary = list("0","1")
 		for(var/string in accepted) //The fifth and final gate
 			if(string in oldentries)
 				accepted -= string
+				world << "[string] failed at fifth gate"
 
 		if(!isemptylist(oldentries))
 			while(oldentries.len + accepted.len > storemax) //The top of the list represents the oldest strings, so we cull them first
