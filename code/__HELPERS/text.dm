@@ -438,3 +438,85 @@ var/list/binary = list("0","1")
 			ca -= 13
 		result += ascii2text(ca)
 	return jointext(result, "")
+
+//Takes a list of values, sanitizes it down for readability and character count,
+//then exports it as a plaintext file at data/npc_saves/[filename].txt.
+//As far as SS13 is concerned this is write only data. You can't change something
+//in the txt file and have it be reflected in the in game item/mob it came from.
+//(That's what things like savefiles are for) Note that this list is not shuffled.
+/proc/twitterize(list/proposed, filename, cullshort = 0, storemax = 1000)
+	if(!islist(proposed) || !filename || storemax > proposed.len)
+		return
+
+	var/list/nope = list("www.", "http", "@") //Note the ommission of #, hashtags are fine
+	var/list/alphanumeric = list("a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9")
+	var/list/punct = list(".","!","?")
+	var/list/accepted = list()
+	for(var/string in proposed)
+		for(var/substring in nope) //first gate
+			if(substring in string)
+				continue
+		var/buffer = ""
+		var/early_culling = TRUE
+		for(var/let in string)
+			if(early_culling && !(lowertext(let) in alphanumeric))
+				continue
+			early_culling = FALSE
+			if(let == "&") //here be dragons
+				buffer += " and "
+			else
+				buffer += let
+
+		var/punctbuffer = ""
+		var/cutoff = lentext(buffer)
+		for(var/pos = lentext(buffer), pos != 0, pos--)
+			if(string[pos] in alphanumeric)
+				break
+			if(string[pos] in punct)
+				punctbuffer = string[pos] + punctbuffer //Note this isn't the same thing as using +=
+				cutoff = pos
+		if(punctbuffer) //We clip down excessive punctuation to get the letter count lower
+			if("!" in punctbuffer)
+				if("?" in punctbuffer)
+					punctbuffer = "?!"
+				else
+					punctbuffer = "!"
+			else if("?" in punctbuffer)
+				punctbuffer = "?"
+			else if("." in punctbuffer)
+				var/periods = 0
+				for(var/p in punctbuffer)
+					if(p == ".")
+						periods++
+				if(periods >= 3)
+					punctbuffer = "..."
+				else
+					punctbuffer = "" //Grammer nazis be damned
+			buffer = copytext(buffer, 1, cutoff) + punctbuffer
+
+		var/understandability = 0
+		var/list/common_symbols = list(",","\"","-","+","\\","/", "=")
+		for(var/let in buffer)
+			if(let in alphanumeric || let in punct || let in common_symbols)
+				understandability++
+		if(understandability / lentext(buffer) < 0.5 || lentext(buffer) > 140 || lentext(buffer) <= cullshort || buffer in accepted) //second to fourth gate
+			continue
+
+		accepted += buffer
+
+	var/list/oldentries = list()
+	if(fexists("/data/npc_saves/[filename].txt"))
+		oldentries = file2list("/data/npc_saves/[filename].txt")
+
+		for(var/string in accepted) //The fifth and final gate
+			if(string in oldentries)
+				accepted -= string
+
+		if(!isemptylist(oldentries))
+			while(oldentries.len + accepted.len > storemax) //The top of the list represents the oldest strings, so we cull them first
+				oldentries -= oldentries[1]
+
+		fdel("/data/npc_saves/[filename].txt") //If this line ever shows up as changed in a PR be very careful you aren't being memed on
+
+	for(var/string in oldentries + accepted)
+		text2file(string,"/data/npc_saves/[filename].txt")
