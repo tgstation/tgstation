@@ -296,7 +296,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 					dat += "Air Pressure: [round(pressure,0.1)] kPa<br>"
 
 					if (total_moles)
-						for(var/id in env_gases)
+						for(var/id = 1 to GAS_LAST)
 							if(env_gases[id])
 								var/gas_level = env_gases[id][MOLES]/total_moles
 								if(gas_level > 0)

@@ -167,7 +167,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	var/list/env_gases = env.gases
 
 	var/t = ""
-	for(var/id in env_gases)
+	for(var/id = 1 to GAS_LAST)
 		if(env_gases[id] && env_gases[id][MOLES])
 			t+= "[env_gases[id][GAS_META][META_GAS_NAME]] : [env_gases[id][MOLES]]\n"
 

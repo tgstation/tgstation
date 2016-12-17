@@ -33,7 +33,7 @@
 		)
 		var/total_moles = air_sample.total_moles()
 		var/cached_gases = air_sample.gases
-		for(var/gas_id in cached_gases)
+		for(var/gas_id = 1 to GAS_LAST)
 			if(cached_gases[gas_id])
 				var/gas_name = cached_gases[gas_id][GAS_META][META_GAS_NAME]
 				signal.data["gases"][gas_name] = cached_gases[gas_id][MOLES] / total_moles * 100

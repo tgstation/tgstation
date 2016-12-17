@@ -875,7 +875,7 @@ var/list/WALLITEMS_INVERSE = typecacheof(list(
 
 		var/list/cached_gases = air_contents.gases
 
-		for(var/id in cached_gases)
+		for(var/id = 1 to GAS_LAST)
 			if(cached_gases[id])
 				var/gas_concentration = cached_gases[id][MOLES]/total_moles
 				if(gas_concentration > 0.001) //ensures the four primary gases are always shown.

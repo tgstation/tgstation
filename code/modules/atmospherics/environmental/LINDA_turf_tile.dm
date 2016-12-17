@@ -114,7 +114,7 @@
 /turf/open/proc/tile_graphic()
 	. = new /list
 	var/list/gases = air.gases
-	for(var/id in gases)
+	for(var/id = 1 to GAS_LAST)
 		var/gas = gases[id]
 		if(gas && gas[GAS_META][META_GAS_OVERLAY] && gas[MOLES] > gas[GAS_META][META_GAS_MOLES_VISIBLE])
 			. += gas[GAS_META][META_GAS_OVERLAY]
@@ -323,7 +323,7 @@
 			A = new/datum/gas_mixture/space()
 		A.merge(T.air)
 
-	for(var/id in A_gases)
+	for(var/id = 1 to GAS_LAST)
 		if(A_gases[id])
 			A_gases[id][MOLES] = A_gases[id][MOLES]/turflen
 

@@ -136,7 +136,7 @@ var/pipenetwarnings = 10
 		member.air_temporary.copy_from(air)
 		var/member_gases = member.air_temporary.gases
 
-		for(var/id in member_gases)
+		for(var/id = 1 to GAS_LAST)
 			if(member_gases[id])
 				member_gases[id][MOLES] *= member.volume/air.volume
 
@@ -241,7 +241,7 @@ var/pipenetwarnings = 10
 			var/datum/gas_mixture/G = i
 			G.copy_from(total_gas_mixture)
 			var/list/G_gases = G.gases
-			for(var/id in G_gases)
+			for(var/id = 1 to GAS_LAST)
 				if(G_gases[id])
 					G_gases[id][MOLES] *= G.volume/total_gas_mixture.volume
 

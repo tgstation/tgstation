@@ -204,7 +204,7 @@
 		if(!S.air)
 			continue
 		var/list/S_gases = S.air.gases
-		for(var/id in S_gases)
+		for(var/id = 1 to GAS_LAST)
 			if(S_gases[id])
 				total.assert_gas(id)
 				total_gases[id][MOLES] += S_gases[id][MOLES]
@@ -216,7 +216,7 @@
 		return
 
 	var/list/air_gases = air.gases
-	for(var/id in air_gases)
+	for(var/id = 1 to GAS_LAST)
 		if(air_gases[id])
 			air_gases[id][MOLES] /= turf_count //Averages contents of the turfs, ignoring walls and the like
 

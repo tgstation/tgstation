@@ -173,7 +173,6 @@
 
 //Gas Ids
 //NOTE: THESE ARE ALSO USED IN MAP FILES FOR SETTING filter_type ON ATMOS FILTERS
-//ALSO IN atmos_filter.ract IN TGUI
 //HOWEVER, THEY ARE PURELY NUMERIC THERE
 #define GAS_INVALID 0
 #define GAS_O2 1
@@ -186,3 +185,5 @@
 #define GAS_AGENTB 8
 #define GAS_VF 9
 #define GAS_BZ 10
+
+#define GAS_LAST 10 //UPDATE THIS
