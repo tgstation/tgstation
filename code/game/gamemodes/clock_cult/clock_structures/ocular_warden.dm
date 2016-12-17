@@ -64,6 +64,12 @@
 			if(isliving(target))
 				var/mob/living/L = target
 				if(!L.null_rod_check())
+					if(isrevenant(L))
+						var/mob/living/simple_animal/revenant/R = L
+						if(R.revealed)
+							R.unreveal_time += 2
+						else
+							R.reveal(10)
 					L.adjustFireLoss((!iscultist(L) ? damage_per_tick : damage_per_tick * 2) * get_efficiency_mod()) //Nar-Sian cultists take additional damage
 					if(ratvar_awakens && L)
 						L.adjust_fire_stacks(damage_per_tick)

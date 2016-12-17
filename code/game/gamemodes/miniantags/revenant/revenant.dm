@@ -150,9 +150,9 @@
 	log_say("[key_name(src)] : [message]")
 	var/rendered = "<span class='revennotice'><b>[src]</b> says, \"[message]\"</span>"
 	for(var/mob/M in mob_list)
-		if(istype(M, /mob/living/simple_animal/revenant))
+		if(isrevenant(M))
 			M << rendered
-		if(isobserver(M))
+		else if(isobserver(M))
 			var/link = FOLLOW_LINK(M, src)
 			M << "[link] [rendered]"
 	return
@@ -420,7 +420,7 @@
 	..()
 
 /datum/objective/revenant/check_completion()
-	if(!istype(owner.current, /mob/living/simple_animal/revenant))
+	if(!isrevenant(owner.current))
 		return 0
 	var/mob/living/simple_animal/revenant/R = owner.current
 	if(!R || R.stat == DEAD)
