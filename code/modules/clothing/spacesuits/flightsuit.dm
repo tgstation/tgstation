@@ -231,6 +231,7 @@
 	if(brake)
 		momentum_increment = 0
 	if(!gravity)
+		momentum_increment -= 20
 	switch(dir)
 		if(NORTH)
 			adjust_momentum(0, momentum_increment)
@@ -1241,6 +1242,9 @@
 	armor = list(melee = 20, bullet = 20, laser = 20, energy = 10, bomb = 30, bio = 100, rad = 75, fire = 100, acid = 100)
 	max_heat_protection_temperature = FIRE_HELM_MAX_TEMP_PROTECT
 	var/list/datahuds = list(DATA_HUD_SECURITY_ADVANCED, DATA_HUD_MEDICAL_ADVANCED, DATA_HUD_DIAGNOSTIC)
+	var/zoom_range = 14
+	var/zoom = FALSE
+	actions_types = list(/datum/action/item_action/toggle_helmet_light, /datum/action/item_action/flightpack/zoom)
 
 /obj/item/clothing/head/helmet/space/hardsuit/flightsuit/equipped(mob/living/carbon/human/wearer, slot)
 	..()
@@ -1253,7 +1257,22 @@
 	for(var/hudtype in datahuds)
 		var/datum/atom_hud/H = huds[hudtype]
 		H.remove_hud_from(wearer)
+	if(zoom)
+		toggle_zoom(wearer, TRUE)
 
+/obj/item/clothing/head/helmet/space/hardsuit/flightsuit/ui_action_click(owner, action)
+	if(istype(action, /datum/action/item_action/flightpack/zoom))
+		toggle_zoom(owner)
+
+/obj/item/clothing/head/helmet/space/hardsuit/flightsuit/toggle_zoom(mob/living/user, force_off = FALSE)
+	if(zoom || force_off)
+		user.client.view = world.view
+		user << "<span class='boldnotice'>Disabling smart zooming image enhancement...</span>"
+		return FALSE
+	else
+		user.client.view = zoom_range
+		user << "<span class='boldnotice'>Enabling smart zooming image enhancement!</span>"
+		return TRUE
 
 //ITEM actionS------------------------------------------------------------------------------------------------------------------------------------------------------
 //TODO: TOGGLED BUTTON SPRITES
@@ -1301,3 +1320,8 @@
 	name = "Toggle Airbrake"
 	button_icon_state = "flightpack_airbrake"
 	background_icon_state = "bg_tech_blue"
+
+/datum/action/item_action/flightpack/zoom
+	name = "Helmet Smart Zoom"
+	background_icon_state = "bg_tech_blue"
+	button_icon_state = "sniper_zoom"
