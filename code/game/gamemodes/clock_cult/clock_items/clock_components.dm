@@ -11,8 +11,15 @@
 
 /obj/item/clockwork/component/pickup(mob/living/user)
 	..()
-	if(iscultist(user) || (user.mind && user.mind.assigned_role == "Chaplain"))
+	if(iscultist(user) || (user.mind && user.mind.isholy == 1))
 		user << "<span class='[message_span]'>[cultist_message]</span>"
+		if(user.mind && user.mind.isholy == 1)
+			user << "<span class='boldannounce'>[SSreligion.Bible_deity_name]'s voice thunders: BEGONE FALSE THING!</span>"
+			var//obj/item/weapon/ore/slag/wrath = new /obj/item/weapon/ore/slag
+			visible_message("<span class='danger'>The [src] dissolves into an unrecognisable mass!</span>")
+			user.unEquip(src)
+			user.put_in_active_hand(wrath)
+			qdel(src)
 	if(is_servant_of_ratvar(user) && prob(20))
 		var/pickedmessage = pick(servant_of_ratvar_messages)
 		user << "<span class='[message_span]'>[servant_of_ratvar_messages[pickedmessage] ? "[text2ratvar(pickedmessage)]" : pickedmessage]</span>"
