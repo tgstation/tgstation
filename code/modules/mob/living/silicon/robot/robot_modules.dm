@@ -174,6 +174,7 @@
 		qdel(RM)
 		return
 	R.module = RM
+	R.update_module_innate()
 	RM.rebuild_modules()
 	addtimer(RM, "do_transform_animation", 0)
 	qdel(src)
@@ -205,7 +206,6 @@
 		R.SetLockdown(0)
 	R.anchored = FALSE
 	R.notify_ai(2)
-	R.update_module_innate()
 	if(R.hud_used)
 		R.hud_used.update_robot_modules_display()
 	if(feedback_key && !did_feedback)
