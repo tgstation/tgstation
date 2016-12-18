@@ -74,7 +74,7 @@
 		air.copy_from(copy)
 
 /turf/return_air()
-	var/datum/gas_mixture/GM = new
+	var/datum/gas_mixture/GM = PoolOrNew(/datum/gas_mixture)
 	GM.copy_from_turf(src)
 	return GM
 
@@ -188,7 +188,7 @@
 		/******************* GROUP HANDLING FINISH *********************************************************************/
 
 	if (planetary_atmos) //share our air with the "atmosphere" "above" the turf
-		var/datum/gas_mixture/G = new
+		var/datum/gas_mixture/G = PoolOrNew(/datum/gas_mixture)
 		G.copy_from_turf(src)
 		G.archive()
 		if(air.compare(G))
@@ -306,7 +306,7 @@
 
 //argument is so world start can clear out any turf differences quickly.
 /datum/excited_group/proc/self_breakdown(space_is_all_consuming = 0)
-	var/datum/gas_mixture/A = new
+	var/datum/gas_mixture/A = PoolOrNew(/datum/gas_mixture)
 
 	//make local for sanic speed
 	var/list/A_gases = A.gases
@@ -319,7 +319,7 @@
 		if (space_is_all_consuming && !space_in_group && istype(T.air, /datum/gas_mixture/space))
 			space_in_group = 1
 			qdel(A)
-			A = new/datum/gas_mixture/space()
+			A = PoolOrNew(/datum/gas_mixture/space)
 		A.merge(T.air, FALSE) //don't delete, we will reinit
 
 	for(var/gas in A_gases)
@@ -331,6 +331,8 @@
 		T.air.copy_from(A)
 		T.atmos_cooldown = 0
 		T.update_visuals()
+
+	qdel(A)
 
 	breakdown_cooldown = 0
 

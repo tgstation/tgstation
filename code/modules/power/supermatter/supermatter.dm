@@ -142,7 +142,7 @@
 		removed = env.remove(gasefficency * env.total_moles())
 	else
 		// Pass all the gas related code an empty gas container
-		removed = new()
+		removed = PoolOrNew(/datum/gas_mixture)
 
 	if(!removed || !removed.total_moles())
 		if(takes_damage)
@@ -198,6 +198,8 @@
 
 	if(produces_gas)
 		env.merge(removed)
+	else
+		qdel(removed)
 
 	for(var/mob/living/carbon/human/l in view(src, min(7, round(power ** 0.25)))) // If they can see it without mesons on.  Bad on them.
 		if(!istype(l.glasses, /obj/item/clothing/glasses/meson))

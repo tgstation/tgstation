@@ -47,7 +47,7 @@ var/list/gaslist_cache	//pre initialized list of gases keyed by id, ONLY FOR COP
 		meta_gas_info[gas_id] = gas_info
 		init_gaslist_cache(gas_id)
 
-	return new /datum/gas_mixture/space()	//Fuck everything
+	return PoolOrNew(/datum/gas_mixture/space)	//Fuck everything
 
 /datum/gas_mixture
 	var/list/gases
@@ -70,7 +70,8 @@ var/list/gaslist_cache	//pre initialized list of gases keyed by id, ONLY FOR COP
 /datum/gas_mixture/Destroy()
 	gases = null
 	holder = null
-	return ..()
+	. = QDEL_HINT_PUTINPOOL
+	..()
 
 //listmos procs
 
@@ -377,7 +378,7 @@ var/list/gaslist_cache	//pre initialized list of gases keyed by id, ONLY FOR COP
 	if(amount <= 0)
 		return null
 	var/cached_gases = gases
-	var/datum/gas_mixture/removed = new
+	var/datum/gas_mixture/removed = PoolOrNew(/datum/gas_mixture)
 	var/removed_gases = removed.gases //accessing datum vars is slower than proc vars
 
 	removed.temperature = temperature
@@ -399,7 +400,7 @@ var/list/gaslist_cache	//pre initialized list of gases keyed by id, ONLY FOR COP
 	ratio = min(ratio, 1)
 
 	var/cached_gases = gases
-	var/datum/gas_mixture/removed = new
+	var/datum/gas_mixture/removed = PoolOrNew(/datum/gas_mixture)
 	var/removed_gases = removed.gases //accessing datum vars is slower than proc vars
 
 	removed.temperature = temperature
@@ -418,7 +419,7 @@ var/list/gaslist_cache	//pre initialized list of gases keyed by id, ONLY FOR COP
 
 /datum/gas_mixture/copy()
 	var/cached_gases = gases
-	var/datum/gas_mixture/copy = new
+	var/datum/gas_mixture/copy = PoolOrNew(/datum/gas_mixture)
 	var/copy_gases = copy.gases
 
 	copy.temperature = temperature

@@ -1,7 +1,7 @@
 //"immutable" gas mixture used for space calculations
 //it can be changed, but any changes will ultimately be undone before they can have any effect
 #define SPACE_MIX_HEAT_CAP 7000
-#define GET_SPACE_MIX new /datum/gas_mixture/space
+#define GET_SPACE_MIX PoolOrNew(/datum/gas_mixture/space)
 
 /datum/gas_mixture/space
 

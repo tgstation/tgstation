@@ -36,7 +36,7 @@
 
 	trunk_check()
 
-	air_contents = new/datum/gas_mixture()
+	air_contents = PoolOrNew(/datum/gas_mixture)
 	//gas.volume = 1.05 * CELLSTANDARD
 	update_icon()
 
@@ -63,9 +63,10 @@
 /obj/machinery/disposal/initialize()
 	//this will get a copy of the air turf and take a SEND PRESSURE amount of air from it
 	var/atom/L = loc
-	var/datum/gas_mixture/env = new
+	var/datum/gas_mixture/env = PoolOrNew(/datum/gas_mixture)
 	env.copy_from(L.return_air())
 	var/datum/gas_mixture/removed = env.remove(SEND_PRESSURE + 1)
+	qdel(env)
 	air_contents.merge(removed)
 	trunk_check()
 
@@ -197,7 +198,7 @@
 	var/obj/structure/disposalholder/H = new()
 	newHolderDestination(H)
 	H.init(src)
-	air_contents = new()
+	air_contents = PoolOrNew(/datum/gas_mixture)
 	H.start(src)
 	flushing = 0
 	flush = 0

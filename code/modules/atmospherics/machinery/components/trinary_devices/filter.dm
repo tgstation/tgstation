@@ -100,7 +100,7 @@
 
 		var/cached_gases = removed.gases
 		if(filtering && cached_gases[filter_type])
-			var/datum/gas_mixture/filtered_out = new
+			var/datum/gas_mixture/filtered_out = PoolOrNew(/datum/gas_mixture)
 
 			filtered_out.temperature = removed.temperature
 			filtered_out.assert_gas(filter_type)

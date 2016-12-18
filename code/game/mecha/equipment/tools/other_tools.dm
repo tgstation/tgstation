@@ -428,7 +428,7 @@
 	var/turf/open/T = get_turf(src)
 	if(!istype(T))
 		return
-	var/datum/gas_mixture/GM = new
+	var/datum/gas_mixture/GM = PoolOrNew(/datum/gas_mixture)
 	GM.assert_gas(GAS_PLASMA)
 	if(prob(10))
 		GM.gases[GAS_PLASMA][MOLES] += 100

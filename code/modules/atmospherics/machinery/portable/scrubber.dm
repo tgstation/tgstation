@@ -39,7 +39,7 @@
 	var/transfer_moles = min(1, volume_rate / mixture.volume) * mixture.total_moles()
 
 	var/datum/gas_mixture/filtering = mixture.remove(transfer_moles) // Remove part of the mixture to filter.
-	var/datum/gas_mixture/filtered = new
+	var/datum/gas_mixture/filtered = PoolOrNew(/datum/gas_mixture)
 	if(!filtering)
 		return
 
