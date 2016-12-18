@@ -1268,10 +1268,12 @@
 	if(zoom || force_off)
 		user.client.view = world.view
 		user << "<span class='boldnotice'>Disabling smart zooming image enhancement...</span>"
+		zoom = FALSE
 		return FALSE
 	else
 		user.client.view = zoom_range
 		user << "<span class='boldnotice'>Enabling smart zooming image enhancement!</span>"
+		zoom = TRUE
 		return TRUE
 
 //ITEM actionS------------------------------------------------------------------------------------------------------------------------------------------------------
