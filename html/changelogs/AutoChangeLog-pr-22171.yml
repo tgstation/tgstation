@@ -1,0 +1,4 @@
+author: "Supermichael777"
+delete-after: True
+changes: 
+  - rscadd: "Clockwork components the chaplain picks up are now destroyed."
