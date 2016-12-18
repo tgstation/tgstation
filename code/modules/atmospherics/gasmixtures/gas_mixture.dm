@@ -497,22 +497,22 @@ var/list/gaslist_cache	//pre initialized list of gases keyed by id, ONLY FOR COP
 			sharer.add_gas(id)
 			unique_sent_gases = TRUE
 
-			var/gas = cached_gases[id]
-			var/sharergas = sharer_gases[id]
+		var/gas = cached_gases[id]
+		var/sharergas = sharer_gases[id]
 
-			var/delta = QUANTIZE(gas[ARCHIVE] - sharergas[ARCHIVE])/(atmos_adjacent_turfs+1) //the amount of gas that gets moved between the mixtures
+		var/delta = QUANTIZE(gas[ARCHIVE] - sharergas[ARCHIVE])/(atmos_adjacent_turfs+1) //the amount of gas that gets moved between the mixtures
 
-			if(delta && abs_temperature_delta > MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER)
-				var/gas_heat_capacity = delta * gas[GAS_META][META_GAS_SPECIFIC_HEAT]
-				if(delta > 0)
-					heat_capacity_self_to_sharer += gas_heat_capacity
-				else
-					heat_capacity_sharer_to_self -= gas_heat_capacity //subtract here instead of adding the absolute value because we know that delta is negative. saves a proc call.
+		if(delta && abs_temperature_delta > MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER)
+			var/gas_heat_capacity = delta * gas[GAS_META][META_GAS_SPECIFIC_HEAT]
+			if(delta > 0)
+				heat_capacity_self_to_sharer += gas_heat_capacity
+			else
+				heat_capacity_sharer_to_self -= gas_heat_capacity //subtract here instead of adding the absolute value because we know that delta is negative. saves a proc call.
 
-			gas[MOLES]			-= delta
-			sharergas[MOLES]	+= delta
-			moved_moles			+= delta
-			abs_moved_moles		+= abs(delta)
+		gas[MOLES]			-= delta
+		sharergas[MOLES]	+= delta
+		moved_moles			+= delta
+		abs_moved_moles		+= abs(delta)
 
 	last_share = abs_moved_moles
 
