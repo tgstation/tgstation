@@ -518,15 +518,16 @@
 	crashing = FALSE
 
 /obj/item/device/flightpack/proc/door_hit(obj/structure/mineral_door/door)
-	wearer.forceMove(door.loc)
 	door.Open()
+	wearer.forceMove(get_turf(door))
 	wearer.visible_message("<span class='boldnotice'>[wearer] rolls to their sides and slips past [door]!</span>")
 
+
 /obj/item/device/flightpack/proc/crash_grille(obj/structure/grille/target)
-	wearer.forceMove(target.loc)
 	target.hitby(wearer)
 	target.take_damage(60, BRUTE, "melee", 1)
-	wearer.visible_message("<span class='warning'>[wearer] smashes straight past [target]!</span>")
+	if(wearer.Move(target.loc))
+		wearer.visible_message("<span class='warning'>[wearer] smashes straight past [target]!</span>")
 
 /obj/item/device/flightpack/proc/airlock_hit(obj/machinery/door/A)
 	var/pass = 0
@@ -540,6 +541,7 @@
 	if(!pass)
 		A.open()
 		wearer.visible_message("<span class='warning'>[wearer] rolls sideways and slips past [src]!</span>")
+		wearer.forceMove(get_turf(A))
 	return pass
 
 
