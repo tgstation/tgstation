@@ -17,7 +17,7 @@
 	var/cooldown_special
 	var/recent_uses = 0
 	var/broken_hailer = 0
-	var/safety = 1
+	var/safety = TRUE
 
 /obj/item/clothing/mask/gas/sechailer/swat
 	name = "\improper SWAT mask"
@@ -67,7 +67,7 @@
 	halt()
 /obj/item/clothing/mask/gas/sechailer/emag_act(mob/user as mob)
 	if(safety)
-		safety = 0
+		safety = FALSE
 		user << "<span class='warning'>You silently fry [src]'s vocal circuit with the cryptographic sequencer."
 	else
 		return
