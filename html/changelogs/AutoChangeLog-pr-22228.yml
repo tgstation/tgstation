@@ -1,6 +1,0 @@
-author: "coiax"
-delete-after: True
-changes: 
-  - rscadd: "Whenever you automatically pick up ore with an ore satchel, if you
-are dragging a wooden ore box, the satchel automatically empties into
-the box."
