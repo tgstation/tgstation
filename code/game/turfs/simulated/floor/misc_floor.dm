@@ -211,7 +211,9 @@
 			ChangeTurf(src.baseturf)
 
 /turf/open/floor/vines/ChangeTurf(turf/open/floor/T)
-	for(var/obj/structure/spacevine/SV in src)
-		qdel(SV)
 	. = ..()
+	//Do this *after* the turf has changed as qdel in spacevines will call changeturf again if it hasn't
+	for(var/obj/structure/spacevine/SV in src)
+		if(!qdestroying(SV))//Helps avoid recursive loops
+			qdel(SV)
 	UpdateAffectingLights()
