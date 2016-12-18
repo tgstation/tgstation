@@ -86,9 +86,13 @@
 
 		var/filtering = filter_type ? TRUE : FALSE
 
-		if(filtering && istext(filter_type))
+		var/new_id = shorthand2gasid(filter_type)
+
+		if((filtering && !istext(filter_type)) || !new_id)
 			WARNING("Wrong gas ID in [src]'s filter_type var. filter_type == [filter_type]")
 			filtering = FALSE
+		else
+			filter_type = new_id
 
 		var/cached_gases = removed.gases
 		if(filtering && cached_gases[filter_type])
