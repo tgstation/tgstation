@@ -3,6 +3,7 @@
 /mob/living/simple_animal/hostile/flan
 	name = "Flan"
 	desc = "Definitely not a dessert."
+	var/casting = 0
 	icon_state = "flan"
 	icon_living = "flan"
 	turns_per_move = 5
@@ -25,7 +26,6 @@
 	ranged = 1
 	retreat_distance = 2
 	minimum_distance = 4
-	projectilesound = 'sound/weapons/sear.ogg'
 	AIStatus = AI_IDLE
 	ranged_message = "begins to cast something"
 	ranged_cooldown = 25
@@ -35,10 +35,16 @@
 	var/spelldamagetype = BRUTE
 	var/spelldamage = 20
 
+/mob/living/simple_animal/hostile/flan/New()
+	..()
+	icon_state = "[initial(icon_state)][casting]"
+
 /mob/living/simple_animal/hostile/flan/OpenFire(mob/living/A)		//Spellcasting!
-	if(istype(A,/mob/living))				//A is originally an atom, this is here to prevent that from fucking this up.
+	if(isliving(A))				//A is originally an atom, this is here to prevent that from fucking this up.
 		visible_message("<span class='danger'><b>[src]</b> [ranged_message] at [A]!</span>")
-		if(do_after(src, 15, target = A, progress = 0))
+		casting = 1
+		icon_state = "[initial(icon_state)][casting]"
+		if(do_after(src, 10, target = A, progress = 0))
 			if(qdeleted(src))
 				return
 			if((A in view(src)))
@@ -46,6 +52,15 @@
 				playsound(A, spellsound, 20, 1)
 				A.apply_damage(damage = spelldamage,damagetype = spelldamagetype, def_zone = null, blocked = 0)
 				visible_message("<span class='danger'><b>[A]</b> has been hit by [spellname]</span>")
-			else
-				return
 		ranged_cooldown = world.time + ranged_cooldown_time
+		casting = 0
+		icon_state = "[initial(icon_state)][casting]"
+
+/mob/living/simple_animal/hostile/flan/fire
+	name = "Flame Flan"
+	desc = "You'd think they'd be spicy, but nobody has ever tried."
+	icon_state = "fireflan"
+	icon_living = "fireflan"
+	spellname = "a Fire spell!"
+	spellsound = 'sound/effects/fuse.ogg'
+	spelldamagetype = BURN
