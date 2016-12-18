@@ -1,0 +1,6 @@
+author: "jughu"
+delete-after: True
+changes: 
+  - tweak: "sandals are not fireproof or acidproof anymore
+:add: Magical sandals for the wizard that are still fireproof/acid proof
+:tweak: makes the marisa boots acid and fire proof too"

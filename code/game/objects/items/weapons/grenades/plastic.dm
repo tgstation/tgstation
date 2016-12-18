@@ -35,7 +35,7 @@
 		update_icon()
 		return
 	if(nadeassembly && istype(I, /obj/item/weapon/wirecutters))
-		playsound(src, 'sound/items/Wirecutter.ogg', 20, 1)
+		playsound(src, I.usesound, 20, 1)
 		nadeassembly.loc = get_turf(src)
 		nadeassembly.master = null
 		nadeassembly = null

@@ -69,6 +69,14 @@
 	else
 		return null
 
+/obj/proc/rewrite(mob/user)
+	var/penchoice = alert("What would you like to edit?", "Rename or change description?", "Rename", "Change description", "Cancel")
+	if(!qdeleted(src) && user.canUseTopic(src, BE_CLOSE))
+		if(penchoice == "Rename")
+			rename_obj(user)
+		if(penchoice == "Change description")
+			redesc_obj(user)
+
 /obj/proc/handle_internal_lifeform(mob/lifeform_inside_me, breath_request)
 	//Return: (NONSTANDARD)
 	//		null if object handles breathing logic for lifeform

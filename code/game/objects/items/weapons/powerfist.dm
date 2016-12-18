@@ -43,7 +43,7 @@
 				fisto_setting = 3
 			if(3)
 				fisto_setting = 1
-		playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
+		playsound(loc, W.usesound, 50, 1)
 		user << "<span class='notice'>You tweak \the [src]'s piston valve to [fisto_setting].</span>"
 	else if(istype(W, /obj/item/weapon/screwdriver))
 		if(tank)

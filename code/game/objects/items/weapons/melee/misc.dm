@@ -261,3 +261,21 @@
 
 /obj/item/weapon/melee/supermatter_sword/add_blood(list/blood_dna)
 	return 0
+
+/obj/item/weapon/melee/curator_whip
+	name = "curator's whip"
+	desc = "Somewhat eccentric and outdated, it still stings like hell to be hit by."
+	icon_state = "whip"
+	item_state = "chain"
+	slot_flags = SLOT_BELT
+	force = 15
+	w_class = WEIGHT_CLASS_NORMAL
+	attack_verb = list("flogged", "whipped", "lashed", "disciplined")
+	hitsound = 'sound/weapons/chainhit.ogg'
+
+/obj/item/weapon/melee/curator_whip/afterattack(target, mob/user, proximity_flag)
+	if(ishuman(target) && proximity_flag)
+		var/mob/living/carbon/human/H = target
+		H.drop_all_held_items()
+		H.visible_message("<span class='danger'>[user] disarms [H]!</span>", "<span class='userdanger'>[user] disarmed you!</span>")
+	..()

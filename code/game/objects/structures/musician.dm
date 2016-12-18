@@ -348,7 +348,7 @@
 /obj/structure/piano/attackby(obj/item/O, mob/user, params)
 	if (istype(O, /obj/item/weapon/wrench))
 		if (!anchored && !isinspace())
-			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+			playsound(src.loc, O.usesound, 50, 1)
 			user << "<span class='notice'> You begin to tighten \the [src] to the floor...</span>"
 			if (do_after(user, 20*O.toolspeed, target = src))
 				user.visible_message( \
@@ -357,7 +357,7 @@
 					"<span class='italics'>You hear ratchet.</span>")
 				anchored = 1
 		else if(anchored)
-			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+			playsound(src.loc, O.usesound, 50, 1)
 			user << "<span class='notice'> You begin to loosen \the [src]'s casters...</span>"
 			if (do_after(user, 40*O.toolspeed, target = src))
 				user.visible_message( \

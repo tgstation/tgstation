@@ -9,8 +9,6 @@
 /datum/round_event/anomaly/anomaly_vortex
 	startWhen = 10
 	announceWhen = 3
-	endWhen = 95
-
 
 /datum/round_event/anomaly/anomaly_vortex/announce()
 	priority_announce("Localized high-intensity vortex anomaly detected on long range scanners. Expected location: [impact_area.name]", "Anomaly Alert")

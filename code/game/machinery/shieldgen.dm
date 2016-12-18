@@ -59,6 +59,9 @@
 	obj_integrity = 60
 	max_integrity = 60
 
+/obj/structure/emergency_shield/sanguine/emp_act(severity)
+	return
+
 /obj/structure/emergency_shield/invoker
 	name = "Invoker's Shield"
 	desc = "A weak shield summoned by cultists to protect them while they carry out delicate rituals"
@@ -66,6 +69,9 @@
 	obj_integrity = 20
 	max_integrity = 20
 	mouse_opacity = 0
+
+/obj/structure/emergency_shield/invoker/emp_act(severity)
+	return
 
 /obj/machinery/shieldgen
 	name = "anti-breach shielding projector"

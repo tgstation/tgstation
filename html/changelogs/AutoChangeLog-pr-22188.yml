@@ -1,0 +1,5 @@
+author: "Joan, Dagdammit"
+delete-after: True
+changes: 
+  - rscadd: "You can now push Wraith Spectacles up to avoid vision damage, but lose xray vision."
+  - wip: "Do note that flicking them on and off very quickly may cause you to lose vision rather quickly."

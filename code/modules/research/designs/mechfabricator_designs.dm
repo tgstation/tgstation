@@ -669,6 +669,46 @@
 	construction_time = 120
 	category = list("Cyborg Upgrade Modules")
 
+/datum/design/borg_upgrade_expandedsynthesiser
+	name = "Cyborg Upgrade (Hypospray Expanded Synthesiser)"
+	id = "borg_upgrade_expandedsynthesiser"
+	build_type = MECHFAB
+	build_path = /obj/item/borg/upgrade/hypospray/expanded
+	req_tech = list("programming" = 5, "engineering" = 4, "biotech" = 5)
+	materials = list(MAT_METAL=15000, MAT_GLASS=15000, MAT_PLASMA=5000)
+	construction_time = 120
+	category = list("Cyborg Upgrade Modules")
+
+/datum/design/borg_upgrade_highstrengthsynthesiser
+	name = "Cyborg Upgrade (Hypospray High-Strength Synthesiser)"
+	id = "borg_upgrade_highstrengthsynthesiser"
+	build_type = MECHFAB
+	build_path = /obj/item/borg/upgrade/hypospray/high_strength
+	req_tech = list("programming" = 5, "engineering" = 5, "biotech" = 6)
+	materials = list(MAT_METAL=15000, MAT_GLASS=15000, MAT_PLASMA=10000, MAT_URANIUM=5000)
+	construction_time = 120
+	category = list("Cyborg Upgrade Modules")
+
+/datum/design/borg_upgrade_piercinghypospray
+	name = "Cyborg Upgrade (Piercing Hypospray)"
+	id = "borg_upgrade_piercinghypospray"
+	build_type = MECHFAB
+	build_path = /obj/item/borg/upgrade/piercing_hypospray
+	req_tech = list("materials" = 5, "engineering" = 7, "combat" = 3)
+	materials = list(MAT_METAL=15000, MAT_GLASS=15000, MAT_TITANIUM=10000, MAT_DIAMOND=5000)
+	construction_time = 120
+	category = list("Cyborg Upgrade Modules")
+
+/datum/design/borg_upgrade_defibrillator
+	name = "Cyborg Upgrade (Defibrillator)"
+	id = "borg_upgrade_defibrillator"
+	build_type = MECHFAB
+	build_path = /obj/item/borg/upgrade/defib
+	req_tech = list("programming" = 4, "engineering" = 5, "materials" = 5, "powerstorage" = 5, "biotech" = 5)
+	materials = list(MAT_METAL=15000, MAT_GLASS=15000, MAT_SILVER=10000, MAT_GOLD=10000, MAT_TITANIUM=5000, MAT_DIAMOND=5000)
+	construction_time = 120
+	category = list("Cyborg Upgrade Modules")
+
 //Misc
 /datum/design/mecha_tracking
 	name = "Exosuit Tracking Beacon"
@@ -710,6 +750,7 @@
 	materials = list(MAT_METAL=16000, MAT_GLASS = 8000, MAT_DIAMOND = 200, MAT_GOLD = 3000, MAT_SILVER = 3000, MAT_TITANIUM = 16000)	//This expensive enough for you?
 	construction_time = 250
 	category = list("Misc")
+	req_tech = list("magnets" = 2, "combat" = 2, "plasmatech" = 2, "materials" = 4, "engineering" = 3, "powerstorage" = 2)
 
 /datum/design/flightpack
 	name = "Flight Pack"
@@ -720,7 +761,8 @@
 	materials = list(MAT_METAL=16000, MAT_GLASS = 8000, MAT_DIAMOND = 4000, MAT_GOLD = 12000, MAT_SILVER = 12000, MAT_URANIUM = 20000, MAT_PLASMA = 16000, MAT_TITANIUM = 16000)	//This expensive enough for you?
 	construction_time = 250
 	category = list("Misc")
-
+	req_tech = list("magnets" = 4, "combat" = 3, "plasmatech" = 4, "materials" = 5, "engineering" = 4, "powerstorage" = 4)
+	
 /datum/design/flightshoes
 	name = "Flight Shoes"
 	desc = "Flight shoes, attachable to a flight suit to provide additional functions."
@@ -730,3 +772,4 @@
 	materials = list(MAT_METAL = 5000, MAT_GLASS = 5000, MAT_GOLD = 1500, MAT_SILVER = 1500, MAT_PLASMA = 2000, MAT_TITANIUM = 2000)
 	construction_time = 100
 	category = list("Misc")
+	req_tech = list("magnets" = 2, "combat" = 2, "plasmatech" = 3, "materials" = 3, "engineering" = 2, "powerstorage" = 2)

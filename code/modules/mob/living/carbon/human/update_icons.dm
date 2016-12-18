@@ -86,6 +86,7 @@ There are several things that need to be remembered:
 		update_inv_back()
 		update_inv_wear_suit()
 		update_inv_pockets()
+		update_inv_neck()
 		update_transform()
 		//mutations
 		update_mutations_overlay()

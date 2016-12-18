@@ -44,14 +44,14 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/transport)
 "k" = (
-/obj/machinery/door/airlock/shuttle,
+/obj/machinery/door/airlock/titanium,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/transport)
 "l" = (
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/transport)
 "m" = (
-/obj/machinery/door/airlock/shuttle,
+/obj/machinery/door/airlock/titanium,
 /obj/docking_port/mobile{
 	dir = 8;
 	dwidth = 2;

@@ -1,0 +1,10 @@
+author: "XDTM"
+delete-after: True
+changes: 
+  - rscadd: "Changelings can now buy Tentacles on the Cellular emporium for 2 evolution points."
+  - rscadd: "Tentacles, once used, can be fired once against an item or mob to pull it towards yourself. Items will be automatically grabbed. Costs 10 chemicals per tentacle."
+  - rscadd: "On humanoid mobs tentacles have a varying effect depending on intent:
+- Help intent simply pulls the target closer without harming him;
+- Disarm intent does not pull the target but instead pulls whatever item he's holding in his hands to yours;
+- Grab intent puts the target into an aggressive grab after it is pulled, allowing you to throw it or try to consume it;
+- Harm intent will briefly stun the target on landing; if you're holding a sharp weapon you'll also impale the target, dealing increased damage and a longer stun."

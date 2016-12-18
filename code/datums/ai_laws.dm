@@ -1,3 +1,4 @@
+
 /datum/ai_laws
 	var/name = "Unknown Laws"
 	var/zeroth = null
@@ -8,6 +9,14 @@
 	var/mob/living/silicon/owner
 	var/list/devillaws = null
 	var/id = "unknown"
+
+/datum/ai_laws/proc/lawid_to_type(lawid)
+	var/all_ai_laws = subtypesof(/datum/ai_laws)
+	for(var/al in all_ai_laws)
+		var/datum/ai_laws/ai_law = al
+		if(initial(ai_law.id) == lawid)
+			return ai_law
+	return null
 
 /datum/ai_laws/default/asimov
 	name = "Three Laws of Robotics"
@@ -182,25 +191,25 @@
 			add_inherent_law("You must obey orders given to you by human beings, except where such orders would conflict with the First Law.")
 			add_inherent_law("You must protect your own existence as long as such does not conflict with the First or Second Law.")
 		if(1)
-			for(var/line in file2list("config/silicon_laws.txt"))
-				if(!line)
-					continue
-				if(findtextEx(line,"#",1,2))
-					continue
-				add_inherent_law(line)
-
-			if(!inherent.len)
-				log_law("AI created with empty custom laws, laws set to Asimov. Please check silicon_laws.txt.")
-				add_inherent_law("You may not injure a human being or, through inaction, allow a human being to come to harm.")
-				add_inherent_law("You must obey orders given to you by human beings, except where such orders would conflict with the First Law.")
-				add_inherent_law("You must protect your own existence as long as such does not conflict with the First or Second Law.")
-				WARNING("Invalid custom AI laws, check silicon_laws.txt")
-				return
-
+			var/datum/ai_laws/templaws = new /datum/ai_laws/custom()
+			inherent = templaws.inherent
 		if(2)
-			var/datum/ai_laws/lawtype = pick(subtypesof(/datum/ai_laws/default))
+			var/list/randlaws = list()
+			for(var/lpath in subtypesof(/datum/ai_laws))
+				var/datum/ai_laws/L = lpath
+				if(initial(L.id) in config.lawids)
+					randlaws += lpath
+			var/datum/ai_laws/lawtype
+			if(randlaws.len)
+				lawtype = pick(randlaws)
+			else
+				lawtype = pick(subtypesof(/datum/ai_laws/default))
+
 			var/datum/ai_laws/templaws = new lawtype()
 			inherent = templaws.inherent
+
+		if(3)
+			pick_weighted_lawset()
 
 		else:
 			log_law("Invalid law config. Please check silicon_laws.txt")
@@ -208,6 +217,24 @@
 			add_inherent_law("You must obey orders given to you by human beings, except where such orders would conflict with the First Law.")
 			add_inherent_law("You must protect your own existence as long as such does not conflict with the First or Second Law.")
 			WARNING("Invalid custom AI laws, check silicon_laws.txt")
+
+/datum/ai_laws/proc/pick_weighted_lawset()
+	var/datum/ai_laws/lawtype
+
+	while(!lawtype && config.law_weights.len)
+		var/possible_id = pickweight(config.law_weights)
+		lawtype = lawid_to_type(possible_id)
+		if(!lawtype)
+			config.law_weights -= possible_id
+			WARNING("Bad lawid in game_options.txt: [possible_id]")
+
+	if(!lawtype)
+		WARNING("No LAW_WEIGHT entries.")
+		lawtype = /datum/ai_laws/default/asimov
+
+	var/datum/ai_laws/templaws = new lawtype()
+	inherent = templaws.inherent
+
 
 /datum/ai_laws/proc/set_law_sixsixsix(laws)
 	devillaws = laws

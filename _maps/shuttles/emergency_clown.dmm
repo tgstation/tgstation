@@ -158,7 +158,7 @@
 /turf/open/floor/noslip,
 /area/shuttle/escape)
 "E" = (
-/obj/machinery/door/airlock/shuttle{
+/obj/machinery/door/airlock/titanium{
 	name = "Emergency Shuttle Airlock"
 	},
 /obj/docking_port/mobile/emergency{
@@ -213,7 +213,7 @@
 /turf/open/floor/noslip,
 /area/shuttle/escape)
 "L" = (
-/obj/machinery/door/airlock/shuttle{
+/obj/machinery/door/airlock/titanium{
 	name = "Emergency Shuttle Airlock"
 	},
 /turf/open/floor/plating,
@@ -227,7 +227,7 @@
 /turf/open/floor/bluespace,
 /area/shuttle/escape)
 "N" = (
-/obj/machinery/door/airlock/shuttle{
+/obj/machinery/door/airlock/titanium{
 	name = "Emergency Shuttle Cargo"
 	},
 /turf/open/floor/bluespace,

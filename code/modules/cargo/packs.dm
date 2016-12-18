@@ -119,7 +119,12 @@
 	contains = list(/obj/item/clothing/head/radiation,
 					/obj/item/clothing/head/radiation,
 					/obj/item/clothing/suit/radiation,
-					/obj/item/clothing/suit/radiation)
+					/obj/item/clothing/suit/radiation,
+					/obj/item/device/geiger_counter,
+					/obj/item/device/geiger_counter,
+					/obj/item/weapon/reagent_containers/food/drinks/bottle/vodka,
+					/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/shotglass,
+					/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/shotglass)
 	crate_name = "radiation protection crate"
 	crate_type = /obj/structure/closet/crate/radiation
 
@@ -1133,7 +1138,9 @@
 					/obj/item/seeds/amanita,
 					/obj/item/seeds/reishi,
 					/obj/item/seeds/banana,
-					/obj/item/seeds/eggplant/eggy)
+					/obj/item/seeds/eggplant/eggy,
+					/obj/item/seeds/random,
+					/obj/item/seeds/random)
 	crate_name = "exotic seeds crate"
 
 /datum/supply_pack/organic/hydroponics/beekeeping_fullkit

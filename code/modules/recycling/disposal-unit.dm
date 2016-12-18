@@ -77,7 +77,7 @@
 				mode = SCREWS_OUT
 			else
 				mode = PRESSURE_OFF
-			playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+			playsound(src.loc, I.usesound, 50, 1)
 			user << "<span class='notice'>You [mode == SCREWS_OUT ? "remove":"attach"] the screws around the power connection.</span>"
 			return
 		else if(istype(I,/obj/item/weapon/weldingtool) && mode == SCREWS_OUT)

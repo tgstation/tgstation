@@ -513,7 +513,7 @@
 			if (C.get_amount() >= 10 && !terminal && opened && has_electronics > 0)
 				var/turf/T = get_turf(src)
 				var/obj/structure/cable/N = T.get_cable_node()
-				if (prob(50) && electrocute_mob(usr, N, N))
+				if (prob(50) && electrocute_mob(usr, N, N, 1, TRUE))
 					var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 					s.set_up(5, 1, src)
 					s.start()
@@ -552,7 +552,7 @@
 		user.visible_message("[user.name] welds [src].", \
 							"<span class='notice'>You start welding the APC frame...</span>", \
 							"<span class='italics'>You hear welding.</span>")
-		playsound(src.loc, 'sound/items/Welder.ogg', 50, 1)
+		playsound(src.loc, WT.usesound, 50, 1)
 		if(do_after(user, 50*W.toolspeed, target = src))
 			if(!src || !WT.remove_fuel(3, user)) return
 			if ((stat & BROKEN) || opened==2)
@@ -1211,7 +1211,7 @@
 	s.start()
 	if(isalien(user))
 		return 0
-	if(electrocute_mob(user, src, src))
+	if(electrocute_mob(user, src, src, 1, TRUE))
 		return 1
 	else
 		return 0

@@ -1,0 +1,80 @@
+"a" = (/turf/open/space,/area/space)
+"b" = (/turf/open/floor/plating/asteroid/airless,/area/ruin/unpowered/no_grav)
+"c" = (/turf/closed/mineral/volcanic/lava_land_surface,/area/ruin/unpowered/no_grav)
+"d" = (/mob/living/simple_animal/hostile/flan,/turf/open/floor/plating/asteroid/airless,/area/ruin/unpowered/no_grav)
+"e" = (/mob/living/simple_animal/hostile/flan/fire,/turf/open/floor/plating/asteroid/airless,/area/ruin/unpowered/no_grav)
+"f" = (/obj/structure/lattice,/turf/open/space,/area/space)
+"g" = (/obj/item/weapon/bikehorn,/turf/open/floor/plating/asteroid/airless,/area/ruin/unpowered/no_grav)
+"h" = (/turf/closed/wall/mineral/iron,/area/ruin/unpowered/no_grav)
+"i" = (/obj/structure/rack,/obj/item/weapon/kitchen/knife/combat/survival,/turf/open/floor/plating/astplate,/area/ruin/unpowered/no_grav)
+"j" = (/turf/open/floor/plating/astplate,/area/ruin/unpowered/no_grav)
+"k" = (/obj/structure/rack,/obj/item/weapon/twohanded/spear,/turf/open/floor/plating/astplate,/area/ruin/unpowered/no_grav)
+"l" = (/obj/structure/rack,/obj/item/weapon/relic,/turf/open/floor/plating/astplate,/area/ruin/unpowered/no_grav)
+"m" = (/obj/structure/mineral_door/wood,/turf/open/floor/plating/astplate,/area/ruin/unpowered/no_grav)
+"n" = (/obj/structure/rack,/obj/item/weapon/dice/d4,/turf/open/floor/plating/astplate,/area/ruin/unpowered/no_grav)
+"o" = (/obj/structure/rack,/obj/item/weapon/dice/d8,/turf/open/floor/plating/astplate,/area/ruin/unpowered/no_grav)
+"p" = (/obj/structure/rack,/obj/item/weapon/dice/d12,/turf/open/floor/plating/astplate,/area/ruin/unpowered/no_grav)
+"q" = (/obj/structure/rack,/obj/item/weapon/dice/d00,/turf/open/floor/plating/astplate,/area/ruin/unpowered/no_grav)
+"r" = (/obj/structure/rack,/obj/item/weapon/dice/d20,/turf/open/floor/plating/astplate,/area/ruin/unpowered/no_grav)
+"s" = (/obj/structure/statue/silver/sec,/turf/open/floor/mineral/silver,/area/ruin/unpowered/no_grav)
+"t" = (/obj/structure/statue/silver/md,/turf/open/floor/mineral/silver,/area/ruin/unpowered/no_grav)
+"u" = (/obj/structure/table/wood/fancy,/obj/item/weapon/twohanded/skybulge,/turf/open/floor/mineral/silver,/area/ruin/unpowered/no_grav)
+"v" = (/turf/open/floor/mineral/silver,/area/ruin/unpowered/no_grav)
+"w" = (/obj/structure/mineral_door/silver,/turf/open/floor/mineral/silver,/area/ruin/unpowered/no_grav)
+"x" = (/obj/structure/closet/coffin,/obj/item/stack/sheet/bone,/turf/open/floor/mineral/silver,/area/ruin/unpowered/no_grav)
+"y" = (/mob/living/simple_animal/hostile/flan/fire,/turf/open/floor/plating/astplate,/area/ruin/unpowered/no_grav)
+"z" = (/obj/structure/statue/silver/secborg,/turf/open/floor/mineral/silver,/area/ruin/unpowered/no_grav)
+"A" = (/obj/structure/statue/silver/medborg,/turf/open/floor/mineral/silver,/area/ruin/unpowered/no_grav)
+"B" = (/obj/structure/table/wood/fancy,/obj/item/weapon/reagent_containers/food/snacks/donkpocket,/turf/open/floor/mineral/silver,/area/ruin/unpowered/no_grav)
+"C" = (/turf/open/floor/plating/astplate/warning{tag = "icon-astplate_warn (WEST)"; icon_state = "astplate_warn"; dir = 8},/area/ruin/unpowered/no_grav)
+"D" = (/turf/open/floor/plating/astplate/warning{tag = "icon-astplate_warn (EAST)"; icon_state = "astplate_warn"; dir = 4},/area/ruin/unpowered/no_grav)
+"E" = (/obj/item/weapon/dice/d10,/turf/open/floor/plating/asteroid/airless,/area/ruin/unpowered/no_grav)
+"F" = (/obj/structure/grille,/turf/open/space,/area/ruin/unpowered/no_grav)
+"G" = (/obj/item/weapon/dice/d100,/turf/open/floor/plating/asteroid/airless,/area/ruin/unpowered/no_grav)
+"H" = (/turf/open/floor/plating/astplate/warning{tag = "icon-astplate_warn (SOUTHWEST)"; icon_state = "astplate_warn"; dir = 10},/area/ruin/unpowered/no_grav)
+"I" = (/turf/open/floor/plating/astplate/warning{tag = "icon-astplate_warn (SOUTHEAST)"; icon_state = "astplate_warn"; dir = 6},/area/ruin/unpowered/no_grav)
+"J" = (/obj/item/weapon/crowbar/red,/turf/open/floor/plating/asteroid/airless,/area/ruin/unpowered/no_grav)
+"K" = (/obj/item/weapon/dice/d1,/turf/open/floor/plating/asteroid/airless,/area/ruin/unpowered/no_grav)
+
+(1,1,1) = {"
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaabccaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaabccccccccaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaabbcccccccccccbbaaaaaaaaaaaaaaaaaaa
+aaaaabbbcccccccccccbbbbaaaaaaaaaaaaaaaaa
+aaabbbbcccccccccccccbbbbbaaaaaaaaaaaaaaa
+aabbbbbccccbbbccccccbbbbbbbbbaaaaaaaaaaa
+aabbccbbccbdbbbcccccccccbbbbbbaaaaaaaaaa
+aaccccbbccbbbccccbccccccccccccccaaaaaaaa
+aaccccbbccbbebccbbcaccaccccaaccccaaaaaaa
+aacccccbccccbbbbdccafaaafafffcccccaaaaaa
+aaccccbbcccccbgbbcahhhhhhhhhacccccaaaaaa
+aaaccccdbbbbcccbbcahijkhljkhafaccccaaaaa
+aaacccccccbbbccbccahjjjhjjjhafaafacaaaaa
+aaaccccccccbbccccffhhmhhhmhhhhhhhhccaaaa
+aaacccccccccbcccccahnjopqjrhshthuhhccaaa
+aaccccccbbccbbccccahjjjjjjvwvvvvvxhccaaa
+aaccccbbbbcccbbcccfhjjjyjjjhzhAhBhhaccaa
+aacccbbbbbbccbbcccahhhCDhhhhhhhhhhffccaa
+aaccccccbbEccbbbccafaFCDFfaafaafaaaccbba
+aacccccccccccbbbbbccfFCDFcccccafaacccbba
+aabcccbcccbGccccbbbcccHIccbbbccfccccbbaa
+aabcccbbcccccccbbcbbccbbbbbcccccccccbbaa
+aabbcccbbbbbbccbcccbbJbbbbccbbcbbccbbaaa
+aaabccccbdccbbbccbbbbbbdcccbbdbbbbcbbaaa
+aaabcccbbccccbbbbbbbbccccbbbccccbbbbbaaa
+aaacccbbccccccccbbbcccbccccccbbcccbbbaaa
+aaaccccccccbbbbbbdbcccbbbccccccccbbcbbaa
+aaaccbbcccbbbcccbbbbccbbKccbbbbccbcccbba
+aaaacbcccbbcccccbcbbbcccccccccbbbbccccaa
+aaaacbccbbcccccbbcccbbbbbbccccbbccccccaa
+aaaacbbccccccccbbcccccccccccccbcccccccaa
+aaaaccccccbbcccbbccccccccbbbbbbccccccaaa
+aaaccccbbbbbcccbbbcccccccccdccccccccaaaa
+aaaccccccccccbbbbbbccccccccbcccccccaaaaa
+aaaccccccccccbbbbbbbbcccccbbcbbccccaaaaa
+aaaaaccacccbbaaaaaaabcaaccbbabaaccaaaaaa
+aaaaaaaaacabaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+"}

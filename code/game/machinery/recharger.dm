@@ -34,7 +34,7 @@
 		anchored = !anchored
 		power_change()
 		user << "<span class='notice'>You [anchored ? "attached" : "detached"] [src].</span>"
-		playsound(loc, 'sound/items/Ratchet.ogg', 75, 1)
+		playsound(loc, G.usesound, 75, 1)
 		return
 
 	var/allowed = is_type_in_list(G, allowed_devices)

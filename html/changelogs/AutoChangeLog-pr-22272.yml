@@ -1,0 +1,5 @@
+author: "Mervill"
+delete-after: True
+changes: 
+  - rscadd: "Added a credit deposit to pubbystation's vault"
+  - rscdel: "Removed a rather garish golden statue of the HoP from pubbystation's vault"

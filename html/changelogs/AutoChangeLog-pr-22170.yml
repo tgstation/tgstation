@@ -1,0 +1,4 @@
+author: "coiax"
+delete-after: True
+changes: 
+  - rscadd: "Loose atmospherics pipes are now dangerous to be hit by."
