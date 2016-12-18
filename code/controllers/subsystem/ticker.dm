@@ -387,6 +387,8 @@ var/datum/subsystem/ticker/ticker
 		if(station_evacuated)
 			world << "<BR>[TAB]Evacuation Rate: <B>[num_escapees] ([round((num_escapees/joined_player_list.len)*100, 0.1)]%)</B>"
 			news_report = STATION_EVACUATED
+			if(SSshuttle.emergency.is_hijacked())
+				news_report = SHUTTLE_HIJACK
 		world << "<BR>[TAB]Survival Rate: <B>[num_survivors] ([round((num_survivors/joined_player_list.len)*100, 0.1)]%)</B>"
 	world << "<BR>"
 
@@ -634,6 +636,8 @@ var/datum/subsystem/ticker/ticker
 			news_message = "The project started by [station_name()] to upgrade their silicon units with advanced equipment have been largely successful, though they have thus far refused to release schematics in a violation of company policy."
 		if(CLOCK_PROSELYTIZATION)
 			news_message = "The burst of energy released near [station_name()] has been confirmed as merely a test of a new weapon. However, due to an unexpected mechanical error, their communications system has been knocked offline."
+		if(SHUTTLE_HIJACK)
+			news_message = "During routine evacuation procedures, the emergency shuttle of [station_name()] had its navigation protocols corrupted and went off course, but was recovered shortly after."
 
 	if(news_message)
 		send2otherserver(news_source, news_message,"News_Report")
