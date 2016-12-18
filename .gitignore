@@ -163,7 +163,8 @@ $RECYCLE.BIN/
 .LSOverride
 
 # Icon must end with two \r
-Icon
+Icon
+
 
 # Thumbnails
 ._*
@@ -184,6 +185,3 @@ Temporary Items
 .apdisk
 
 *.before
-
-tgstation.dme
-_maps/RandomRuins/SpaceRuins/truedragoontomb.dmm
