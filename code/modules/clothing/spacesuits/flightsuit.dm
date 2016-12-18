@@ -108,6 +108,7 @@
 	ion_trail.set_up(src)
 	START_PROCESSING(SSflightpacks, src)
 	..()
+	update_parts()
 
 /obj/item/device/flightpack/full/New()
 	part_manip = new /obj/item/weapon/stock_parts/manipulator/pico(src)
@@ -518,7 +519,8 @@
 	crashing = FALSE
 
 /obj/item/device/flightpack/proc/door_hit(obj/structure/mineral_door/door)
-	door.Open()
+	spawn()
+		door.Open()
 	wearer.forceMove(get_turf(door))
 	wearer.visible_message("<span class='boldnotice'>[wearer] rolls to their sides and slips past [door]!</span>")
 
@@ -538,9 +540,12 @@
 		if(A.requiresID())
 			if((!A.allowed(wearer)) && !A.emergency)
 				pass += 1
+	else
+		return pass
 	if(!pass)
-		A.open()
-		wearer.visible_message("<span class='warning'>[wearer] rolls sideways and slips past [src]!</span>")
+		spawn()
+			A.open()
+		wearer.visible_message("<span class='warning'>[wearer] rolls sideways and slips past [A]</span>")
 		wearer.forceMove(get_turf(A))
 	return pass
 
