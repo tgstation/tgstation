@@ -5,7 +5,7 @@
 ||||These should never be instantiated. ||||
 ||||They exist only to make it easier   ||||
 ||||to add a new gas. They are accessed ||||
-||||only by meta_gas_list in gas_mixture||||
+||||only by helper procs                ||||
 \*||||||||||||||||||||||||||||||||||||||||*/
 
 //LOOK AT __DEFINES/atmospherics.dm FOR THE GAS IDs
