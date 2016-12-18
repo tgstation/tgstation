@@ -1,5 +1,7 @@
 //"immutable" gas mixture used for space calculations
 //it can be changed, but any changes will ultimately be undone before they can have any effect
+#define SPACE_MIX_HEAT_CAP 7000
+#define GET_SPACE_MIX new /datum/gas_mixture/space
 
 /datum/gas_mixture/space
 
@@ -20,16 +22,16 @@
 	return 0 //we're immutable.
 
 /datum/gas_mixture/space/heat_capacity()
-	. = 7000
+	. = SPACE_MIX_HEAT_CAP
 
 /datum/gas_mixture/space/heat_capacity_archived()
-	. = heat_capacity()
+	. = SPACE_MIX_HEAT_CAP
 
 /datum/gas_mixture/space/remove()
-	return copy() //we're immutable, so we can just return a copy.
+	return GET_SPACE_MIX //we're immutable, so we can just return a copy.
 
 /datum/gas_mixture/space/remove_ratio()
-	return copy() //we're immutable, so we can just return a copy.
+	return GET_SPACE_MIX //we're immutable, so we can just return a copy.
 
 /datum/gas_mixture/space/share(datum/gas_mixture/sharer, atmos_adjacent_turfs = 4)
 	. = ..(sharer, 0)
@@ -47,7 +49,7 @@
 	return 0 //we're immutable.
 
 /datum/gas_mixture/space/copy()
-	return new /datum/gas_mixture/space //we're immutable, so we can just return a new instance.
+	return GET_SPACE_MIX //we're immutable, so we can just return a new instance.
 
 /datum/gas_mixture/space/copy_from()
 	return 0 //we're immutable.
