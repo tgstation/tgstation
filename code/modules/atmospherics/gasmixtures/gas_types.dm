@@ -133,3 +133,11 @@
 		if("n2o")
 			return GAS_N2O
 	return FALSE
+
+/proc/is_valid_gasid(id)
+	var/list/gas_types = subtypesof(/datum/gas)
+	for(var/gas_path in gas_types)
+		var/datum/gas/working_gas = gas_path
+		if(initial(working_gas.id) == id)
+			return TRUE
+	return FALSE

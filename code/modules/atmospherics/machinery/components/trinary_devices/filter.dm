@@ -86,10 +86,14 @@
 
 		var/filtering = filter_type ? TRUE : FALSE
 
-		var/new_id = shorthand2gasid(filter_type)
+		var/new_id
+		if(istext(filter_type))
+			new_id = shorthand2gasid(filter_type)
+		else
+			new_id = filter_type
 
-		if((filtering && !istext(filter_type)) || !new_id)
-			WARNING("Wrong gas ID in [src]'s filter_type var. filter_type == [filter_type]")
+		if(filtering && !is_valid_gasid(new_id))
+			WARNING("Wrong gas ID in [src]'s filter_type var. filter_type == [filter_type] numerical id == [new_id]")
 			filtering = FALSE
 		else
 			filter_type = new_id
