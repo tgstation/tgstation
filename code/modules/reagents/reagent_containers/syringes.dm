@@ -60,6 +60,12 @@
 		if(!L.can_inject(user, 1))
 			return
 
+	// 20% chance of syringe retaliation
+	if(istype(target, /mob/living/carbon/monkey) && prob(20))
+		var/mob/living/carbon/monkey/M
+		M = target
+		M.retaliate(user)
+		
 	switch(mode)
 		if(SYRINGE_DRAW)
 
