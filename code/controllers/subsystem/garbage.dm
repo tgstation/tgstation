@@ -172,6 +172,7 @@ var/datum/subsystem/garbage_collector/SSgarbage
 				SSgarbage.QueueForQueuing(D)
 			if (QDEL_HINT_LETMELIVE, QDEL_HINT_IWILLGC)	//qdel should let the object live after calling destory.
 				if(!force)
+					D.gc_destroyed = null //clear the gc variable (important!)
 					return
 				// Returning LETMELIVE after being told to force destroy
 				// indicates the objects Destroy() does not respect force
