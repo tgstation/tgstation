@@ -28,7 +28,7 @@
 	name = "cyborg reclassification board"
 	desc = "Used to rename a cyborg."
 	icon_state = "cyborg_upgrade1"
-	var/heldname = "default name"
+	var/heldname = ""
 	one_use = TRUE
 
 /obj/item/borg/upgrade/rename/attack_self(mob/user)
@@ -38,11 +38,12 @@
 	if(..())
 		return
 
-	if(heldname == initial(heldname))
-		// Use cyborg name from settings or randomly generated
-		R.rename_self("cyborg")
-	else
-		R.fully_replace_character_name(R.name, heldname)
+	var/oldname = R.real_name
+
+	R.custom_name = heldname
+	R.updatename()
+	if(oldname == R.real_name)
+		R.notify_ai(3, oldname, R.realname)
 
 	return 1
 
