@@ -39,12 +39,10 @@
 		return
 
 	if(heldname == initial(heldname))
-		R << "<span class='error'>Rename error! No name specified!</span>"
-		usr << "<span class='error'>No name has been specified. \
-			Upgrade rejected.</span>"
-		return FALSE
-
-	R.fully_replace_character_name(R.name, heldname)
+		// Use cyborg name from settings or randomly generated
+		R.rename_self("cyborg")
+	else
+		R.fully_replace_character_name(R.name, heldname)
 
 	return 1
 

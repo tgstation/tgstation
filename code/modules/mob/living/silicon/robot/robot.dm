@@ -194,8 +194,11 @@
 	var/changed_name = ""
 	if(custom_name)
 		changed_name = custom_name
-	else
+	if(changed_name == "" && client)
+		changed_name = client.prefs.custom_names["cyborg"]
+	if(changed_name == "")
 		changed_name = "[(designation ? "[designation] " : "")][mmi.braintype]-[num2text(ident)]"
+
 	real_name = changed_name
 	name = real_name
 	if(camera)
@@ -479,7 +482,7 @@
 				if(U.one_use)
 					qdel(U)
 				else
-					U.loc = src
+					U.forceMove(src)
 					upgrades += U
 			else
 				user << "<span class='danger'>Upgrade error.</span>"
