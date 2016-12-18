@@ -201,7 +201,7 @@ var/datum/subsystem/garbage_collector/SSgarbage
 					testing("WARNING: [D.type] is not returning a qdel hint. It is being placed in the queue. Further instances of this type will also be queued.")
 				SSgarbage.QueueForQueuing(D)
 	else if(D.gc_destroyed == GC_CURRENTLY_BEING_QDELETED)
-		throw EXCEPTION("[D.type] destroy proc was called multiple times, likely due to a qdel loop in the Destroy logic")
+		CRASH("[D.type] destroy proc was called multiple times, likely due to a qdel loop in the Destroy logic")
 
 // Returns 1 if the object has been queued for deletion.
 /proc/qdeleted(datum/D)
