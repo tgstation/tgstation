@@ -54651,7 +54651,7 @@
 "chs" = (
 /obj/machinery/atmospherics/components/trinary/filter{
 	dir = 4;
-	filter_type = 2;
+	filter_type = "n2";
 	on = 1
 	},
 /turf/open/floor/plasteel,
