@@ -70,9 +70,7 @@ var/list/gaslist_cache	//pre initialized list of gases keyed by id, ONLY FOR COP
 /datum/gas_mixture/Destroy()
 	gases = null
 	holder = null
-	++SSair.count_gm_qdels
-	..()
-	return QDEL_HINT_PUTINPOOL
+	return ..()
 
 //listmos procs
 
