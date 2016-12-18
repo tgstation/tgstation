@@ -647,44 +647,34 @@
 	attack_verb = list("attacked", "poked", "jabbed", "torn", "gored", "lanced") //Added lanced for flavour.
 	sharpness = IS_SHARP
 	var/maxdist = 16
-	var/throw_cooldown = 5				//Should equate to half a second. Also should hardly come up because of the do_after.
+	var/throw_cooldown = 0				//Should equate to half a second. Not supposed to be varedited.
 
 /obj/item/weapon/twohanded/skybulge/update_icon()
 	icon_state = "sky_bulge[wielded]"
 
 /obj/item/weapon/twohanded/skybulge/throw_at()  //Throw cooldown and offhand-proofing.
 	if(throw_cooldown > world.time)
-		var/mob/User = thrownby
-		User.put_in_hands(src)
-		User.visible_message("<span class='warning'>But it doesn't leave [User]'s hand!")	//Always let the user know input went through and all that.
+		var/mob/user = thrownby
+		user.put_in_hands(src)
+		user.visible_message("<span class='warning'>But it doesn't leave [user]'s hand!")	//Always let the user know input went through and all that.
 		return
 	unwield(src)
 	..()
 
 /obj/item/weapon/twohanded/skybulge/throw_impact(atom/target) //Praise be the ratvar spear for showing me how to use this proc.
-	var/turf/Target = get_turf(target)
-	var/mob/User = thrownby
-	var/turf/Source = get_turf(thrownby)
+	var/turf/turfhit = get_turf(target)
+	var/mob/user = thrownby
+	var/turf/source = get_turf(thrownby)
 
-	if(Source.z == ZLEVEL_STATION && Source.z == Target.z)	//On station + same z check
-		if(get_dist(Target, Source) < maxdist)
-			..()
-			if(do_after(User, 5, target = src, progress = 0))
-				if(qdeleted(src))							//Saw this on the photocopier.
-					return
-				var/turf/Landing = get_turf(src)
-				if (loc != Landing)							//Has it somehow moved or been picked up?
-					return
-				User.forceMove(Landing)
-	if(Source.z != ZLEVEL_STATION && Source.z == Target.z)	//Off-station + same z check.
+	if(source.z == ZLEVEL_STATION && get_dist(turfhit, source) < maxdist || source.z != ZLEVEL_STATION)
 		..()
-		if(do_after(User, 5, target = src, progress = 0))
+		if(do_after_mob(user, src, 5, uninterruptible = 1, progress = 0))
 			if(qdeleted(src))
 				return
-			var/turf/Landing = get_turf(src)
-			if (loc != Landing)
+			var/turf/landing = get_turf(src)
+			if (loc != landing)
 				return
-			User.forceMove(Landing)
-	throw_cooldown = world.time + initial(throw_cooldown)
-	User.put_in_hands(src)
+			user.forceMove(landing)
+	throw_cooldown = world.time + 5				//Half a second between throws.
+	user.put_in_hands(src)
 	playsound(src, 'sound/weapons/laser2.ogg', 20, 1)
