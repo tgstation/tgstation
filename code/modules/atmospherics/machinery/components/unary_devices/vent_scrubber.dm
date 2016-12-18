@@ -173,7 +173,7 @@
 
 	if(scrubbing & SCRUBBING)
 		var/should_we_scrub = FALSE
-		for(var/id = 1 to GAS_LAST)
+		for(var/id in 1 to GAS_LAST)
 			if(id == GAS_N2 || id == GAS_O2)
 				continue
 			if(env_gases[id] && env_gases[id][MOLES])

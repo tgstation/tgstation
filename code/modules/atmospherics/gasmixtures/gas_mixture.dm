@@ -104,7 +104,7 @@ var/list/gaslist_cache	//pre initialized list of gases keyed by id, ONLY FOR COP
 	//By removing empty gases, processing speed is increased.
 /datum/gas_mixture/proc/garbage_collect()
 	var/list/cached_gases = gases
-	for(var/id = 1 to GAS_LAST)
+	for(var/id in 1 to GAS_LAST)
 		if(cached_gases[id] && cached_gases[id][MOLES] <= 0 && cached_gases[id][ARCHIVE] <= 0)
 			cached_gases[id] = null
 
@@ -112,23 +112,23 @@ var/list/gaslist_cache	//pre initialized list of gases keyed by id, ONLY FOR COP
 /datum/gas_mixture/proc/heat_capacity() //joules per kelvin
 	var/list/cached_gases = gases
 	. = 0
-	for(var/id = 1 to GAS_LAST)
-		if(cached_gases[id])
-			. += cached_gases[id][MOLES] * cached_gases[id][GAS_META][META_GAS_SPECIFIC_HEAT]
+	for(var/gas in cached_gases)
+		if(gas)
+			. += gas[MOLES] * gas[GAS_META][META_GAS_SPECIFIC_HEAT]
 
 /datum/gas_mixture/proc/heat_capacity_archived() //joules per kelvin
 	var/list/cached_gases = gases
 	. = 0
-	for(var/id = 1 to GAS_LAST)
-		if(cached_gases[id])
-			. += cached_gases[id][ARCHIVE] * cached_gases[id][GAS_META][META_GAS_SPECIFIC_HEAT]
+	for(var/gas in cached_gases)
+		if(gas)
+			. += gas[ARCHIVE] * gas[GAS_META][META_GAS_SPECIFIC_HEAT]
 
 /datum/gas_mixture/proc/total_moles() //moles
 	var/list/cached_gases = gases
 	. = 0
-	for(var/id = 1 to GAS_LAST)
-		if(cached_gases[id])
-			. += cached_gases[id][MOLES]
+	for(var/gas in cached_gases)
+		if(gas)
+			. += gas[MOLES]
 
 /datum/gas_mixture/proc/return_pressure() //kilopascals
 	if(volume > 0) // to prevent division by zero
@@ -334,9 +334,9 @@ var/list/gaslist_cache	//pre initialized list of gases keyed by id, ONLY FOR COP
 	var/list/cached_gases = gases
 
 	temperature_archived = temperature
-	for(var/id = 1 to GAS_LAST)
-		if(cached_gases[id])
-			cached_gases[id][ARCHIVE] = cached_gases[id][MOLES]
+	for(var/gas in cached_gases)
+		if(gas)
+			gas[ARCHIVE] = gas[MOLES]
 
 	return 1
 
@@ -363,7 +363,7 @@ var/list/gaslist_cache	//pre initialized list of gases keyed by id, ONLY FOR COP
 		qdel(giver)
 
 	//gas transfer
-	for(var/giver_id = 1 to GAS_LAST)
+	for(var/giver_id in 1 to GAS_LAST)
 		if(giver_gases[giver_id])
 			assert_gas(giver_id)
 			cached_gases[giver_id][MOLES] += giver_gases[giver_id][MOLES]
@@ -380,7 +380,7 @@ var/list/gaslist_cache	//pre initialized list of gases keyed by id, ONLY FOR COP
 	var/list/removed_gases = removed.gases //accessing datum vars is slower than proc vars
 
 	removed.temperature = temperature
-	for(var/id = 1 to GAS_LAST)
+	for(var/id in 1 to GAS_LAST)
 		if(cached_gases[id])
 			removed.add_gas(id)
 			removed_gases[id][MOLES] = QUANTIZE((cached_gases[id][MOLES] / sum) * amount)
@@ -399,7 +399,7 @@ var/list/gaslist_cache	//pre initialized list of gases keyed by id, ONLY FOR COP
 	var/list/removed_gases = removed.gases //accessing datum vars is slower than proc vars
 
 	removed.temperature = temperature
-	for(var/id = 1 to GAS_LAST)
+	for(var/id in 1 to GAS_LAST)
 		if(cached_gases[id])
 			removed.add_gas(id)
 			removed_gases[id][MOLES] = QUANTIZE(cached_gases[id][MOLES] * ratio)
@@ -415,7 +415,7 @@ var/list/gaslist_cache	//pre initialized list of gases keyed by id, ONLY FOR COP
 	var/list/copy_gases = copy.gases
 
 	copy.temperature = temperature
-	for(var/id = 1 to GAS_LAST)
+	for(var/id in 1 to GAS_LAST)
 		if(cached_gases[id])
 			copy.add_gas(id)
 			copy_gases[id][MOLES] = cached_gases[id][MOLES]
@@ -427,7 +427,7 @@ var/list/gaslist_cache	//pre initialized list of gases keyed by id, ONLY FOR COP
 	var/list/sample_gases = sample.gases
 
 	temperature = sample.temperature
-	for(var/id = 1 to GAS_LAST)
+	for(var/id in 1 to GAS_LAST)
 		if(sample_gases[id])
 			assert_gas(id)
 			cached_gases[id][MOLES] = sample_gases[id][MOLES]
@@ -486,7 +486,7 @@ var/list/gaslist_cache	//pre initialized list of gases keyed by id, ONLY FOR COP
 	var/unique_sent_gases = FALSE
 
 	//GAS TRANSFER
-	for(var/id = 1 to GAS_LAST) // create gases not in our cache
+	for(var/id in 1 to GAS_LAST) // create gases not in our cache
 		if(!(cached_gases[id] || sharer_gases[id])) //one of them needs it
 			continue
 
@@ -575,7 +575,7 @@ var/list/gaslist_cache	//pre initialized list of gases keyed by id, ONLY FOR COP
 	var/list/sample_gases = sample.gases //accessing datum vars is slower than proc vars
 	var/list/cached_gases = gases
 
-	for(var/id = 1 to GAS_LAST) // compare gases from either mixture
+	for(var/id in 1 to GAS_LAST) // compare gases from either mixture
 		//used to be cached_gases | sample_gases before Fastmos III.5
 		//not needed anymore because they will always both have entries for all gases
 		//they may be null though

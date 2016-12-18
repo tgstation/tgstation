@@ -33,10 +33,10 @@
 		)
 		var/total_moles = air_sample.total_moles()
 		var/cached_gases = air_sample.gases
-		for(var/gas_id = 1 to GAS_LAST)
-			if(cached_gases[gas_id])
-				var/gas_name = cached_gases[gas_id][GAS_META][META_GAS_NAME]
-				signal.data["gases"][gas_name] = cached_gases[gas_id][MOLES] / total_moles * 100
+		for(var/gas in cached_gases)
+			if(gas)
+				var/gas_name = gas[GAS_META][META_GAS_NAME]
+				signal.data["gases"][gas_name] = gas[MOLES] / total_moles * 100
 
 		radio_connection.post_signal(src, signal, filter = RADIO_ATMOSIA)
 

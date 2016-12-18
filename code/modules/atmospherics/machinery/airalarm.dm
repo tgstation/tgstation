@@ -201,7 +201,7 @@
 	var/total_moles = environment.total_moles()
 	var/cached_gases = environment.gases
 	var/partial_pressure = R_IDEAL_GAS_EQUATION * environment.temperature / environment.volume
-	for(var/gas_id = 1 to GAS_LAST)
+	for(var/gas_id in 1 to GAS_LAST)
 		if(cached_gases[gas_id])
 			var/shorthand = gasid2shorthand(gas_id)
 			if(!(shorthand in TLV)) // We're not interested in this gas, it seems.
@@ -577,7 +577,7 @@
 	var/temperature_dangerlevel = cur_tlv.get_danger_level(environment.temperature)
 
 	var/gas_dangerlevel = 0
-	for(var/gas_id = 1 to GAS_LAST)
+	for(var/gas_id in 1 to GAS_LAST)
 		if(env_gases[gas_id])
 			var/shorthand = gasid2shorthand(gas_id)
 			if(!(shorthand in TLV)) // We're not interested in this gas, it seems.
