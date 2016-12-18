@@ -33,12 +33,12 @@
 		machine.check_eye(src)
 
 	if(stat != DEAD)
-		handle_disabilities()	// eye, ear, brain damages
-		handle_status_effects()	//all special effects, stunned, weakened, jitteryness, hallucination, sleeping, etc
 		handle_breathing()	//Breathing, if applicable
 		handle_mutations_and_radiation()	//Mutations and radiation
 		handle_chemicals_in_body()	//Chemicals in the body
 		handle_random_events()	//Random events (vomiting etc)
+		handle_disabilities()	// eye, ear, brain damages
+		handle_status_effects()	//all special effects, stunned, weakened, jitteryness, hallucination, sleeping, etc
 		return 1
 
 /mob/living/proc/handle_breathing()
