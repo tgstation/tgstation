@@ -53508,7 +53508,7 @@
 "bOw" = (
 /obj/machinery/atmospherics/components/trinary/filter{
 	dir = 1;
-	filter_type = 7;
+	filter_type = "n2o";
 	on = 1
 	},
 /obj/structure/window/reinforced{
@@ -57094,7 +57094,7 @@
 "bUv" = (
 /obj/machinery/atmospherics/components/trinary/filter{
 	dir = 1;
-	filter_type = 4;
+	filter_type = "plasma";
 	on = 1
 	},
 /obj/structure/window/reinforced{
@@ -60065,7 +60065,7 @@
 "bZC" = (
 /obj/machinery/atmospherics/components/trinary/filter{
 	dir = 1;
-	filter_type = 3;
+	filter_type = "co2";
 	on = 1
 	},
 /obj/structure/window/reinforced{
@@ -62211,7 +62211,7 @@
 "cdp" = (
 /obj/machinery/atmospherics/components/trinary/filter{
 	dir = 4;
-	filter_type = 2;
+	filter_type = "n2";
 	on = 1
 	},
 /obj/structure/window/reinforced,
@@ -62269,7 +62269,7 @@
 /obj/structure/window/reinforced,
 /obj/machinery/atmospherics/components/trinary/filter{
 	dir = 4;
-	filter_type = 1;
+	filter_type = "o2";
 	on = 1
 	},
 /turf/open/floor/plasteel/blue,

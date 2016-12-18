@@ -14687,7 +14687,7 @@
 "up" = (
 /obj/machinery/atmospherics/components/trinary/filter{
 	dir = 4;
-	filter_type = 1;
+	filter_type = "o2";
 	on = 1;
 	req_access = null
 	},

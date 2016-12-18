@@ -14281,7 +14281,7 @@
 "aEb" = (
 /obj/machinery/atmospherics/components/trinary/filter{
 	dir = 1;
-	filter_type = 7;
+	filter_type = "n2o";
 	on = 1
 	},
 /turf/open/floor/plasteel/escape{
@@ -16939,7 +16939,7 @@
 "aJG" = (
 /obj/machinery/atmospherics/components/trinary/filter{
 	dir = 1;
-	filter_type = 4;
+	filter_type = "plasma";
 	on = 1
 	},
 /turf/open/floor/plasteel/purple/side{
@@ -19571,7 +19571,7 @@
 "aPk" = (
 /obj/machinery/atmospherics/components/trinary/filter{
 	dir = 1;
-	filter_type = 3;
+	filter_type = "co2";
 	on = 1
 	},
 /turf/open/floor/plasteel/caution{
@@ -20368,7 +20368,7 @@
 "aQS" = (
 /obj/machinery/atmospherics/components/trinary/filter{
 	dir = 4;
-	filter_type = 2;
+	filter_type = "n2";
 	on = 1
 	},
 /turf/open/floor/plasteel/red/side{
@@ -20417,7 +20417,7 @@
 "aQW" = (
 /obj/machinery/atmospherics/components/trinary/filter{
 	dir = 4;
-	filter_type = 1;
+	filter_type = "o2";
 	on = 1
 	},
 /turf/open/floor/plasteel/blue/side{
