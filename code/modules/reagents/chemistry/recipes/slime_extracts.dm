@@ -122,7 +122,9 @@
 	var/turf/T = get_turf(holder.my_atom)
 	T.visible_message("<span class='danger'>The slime extract begins to vibrate violently !</span>")
 	addtimer(src, "chemical_mob_spawn", 50, TIMER_NORMAL, holder, 5, "Gold Slime")
-	addtimer(src, "delete_extract", 55, TIMER_UNIQUE, holder)
+	var/obj/item/slime_extract/M = holder.my_atom
+	deltimer(M.qdel_timer)
+	M.qdel_timer = addtimer(src, "delete_extract", 55, TIMER_NORMAL, holder)
 
 /datum/chemical_reaction/slime/slimecritlesser
 	name = "Slime Crit Lesser"
@@ -136,7 +138,9 @@
 	var/turf/T = get_turf(holder.my_atom)
 	T.visible_message("<span class='danger'>The slime extract begins to vibrate violently !</span>")
 	addtimer(src, "chemical_mob_spawn", 50, TIMER_NORMAL, holder, 3, "Lesser Gold Slime", "neutral")
-	addtimer(src, "delete_extract", 55, TIMER_UNIQUE, holder)
+	var/obj/item/slime_extract/M = holder.my_atom
+	deltimer(M.qdel_timer)
+	M.qdel_timer = addtimer(src, "delete_extract", 55, TIMER_NORMAL, holder)
 
 /datum/chemical_reaction/slime/slimecritfriendly
 	name = "Slime Crit Friendly"
@@ -150,7 +154,9 @@
 	var/turf/T = get_turf(holder.my_atom)
 	T.visible_message("<span class='danger'>The slime extract begins to vibrate adorably !</span>")
 	addtimer(src, "chemical_mob_spawn", 50, TIMER_NORMAL, holder, 1, "Friendly Gold Slime", "neutral")
-	addtimer(src, "delete_extract", 55, TIMER_UNIQUE, holder)
+	var/obj/item/slime_extract/M = holder.my_atom
+	deltimer(M.qdel_timer)
+	M.qdel_timer = addtimer(src, "delete_extract", 55, TIMER_NORMAL, holder)
 
 //Silver
 /datum/chemical_reaction/slime/slimebork
@@ -311,7 +317,9 @@
 	var/turf/TU = get_turf(holder.my_atom)
 	TU.visible_message("<span class='danger'>The slime extract begins to vibrate adorably!</span>")
 	addtimer(src, "slime_burn", 50, TIMER_NORMAL, holder)
-	addtimer(src, "delete_extract", 55, TIMER_UNIQUE, holder)
+	var/obj/item/slime_extract/M = holder.my_atom
+	deltimer(M.qdel_timer)
+	M.qdel_timer = addtimer(src, "delete_extract", 55, TIMER_NORMAL, holder)
 
 /datum/chemical_reaction/slime/slimefire/proc/slime_burn(datum/reagents/holder)
 	if(holder && holder.my_atom)
@@ -521,7 +529,9 @@
 	log_game("Slime Explosion reaction started at [T.loc.name] ([T.x],[T.y],[T.z]). Last Fingerprint: [lastkey ? lastkey : "N/A"].")
 	T.visible_message("<span class='danger'>The slime extract begins to vibrate violently !</span>")
 	addtimer(src, "boom", 50, TIMER_NORMAL, holder)
-	addtimer(src, "delete_extract", 55, TIMER_UNIQUE, holder)
+	var/obj/item/slime_extract/M = holder.my_atom
+	deltimer(M.qdel_timer)
+	M.qdel_timer = addtimer(src, "delete_extract", 55, TIMER_NORMAL, holder)
 
 /datum/chemical_reaction/slime/slimeexplosion/proc/boom(datum/reagents/holder)
 	if(holder && holder.my_atom)
