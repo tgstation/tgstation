@@ -19,6 +19,12 @@
 
 #define ismineralturf(A) (istype(A, /turf/closed/mineral))
 
+#define islavaturf(A) (istype(A, /turf/open/floor/plating/lava))
+
+#define isminingturf(A) (istype(A, /turf/open/floor/plating/asteroid))
+
+#define ischasm(A) (istype(A, /turf/open/chasm))
+
 //Mobs
 #define isliving(A) (istype(A, /mob/living))
 

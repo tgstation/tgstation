@@ -341,6 +341,15 @@ RCD
 					return 1
 				return 0
 
+			if(islavaturf(A))
+				var/turf/open/floor/plating/lava/L = A
+				if(useResource(floorcost*10, user))
+					user << "<span class='notice'>You start fabricating plating over the lava...</span>"
+					activate()
+					L.ChangeTurf(/turf/open/floor/plating)
+					return 1
+				return 0
+
 			if(isfloorturf(A))
 				var/turf/open/floor/F = A
 				if(checkResource(wallcost, user))

@@ -51,10 +51,10 @@
 
 /turf/open/floor/plating/lava/proc/burn_stuff(AM)
 	. = 0
-
 	if(is_safe())
+		slowdown = 0
 		return FALSE
-
+	slowdown = initial(slowdown)
 	var/thing_to_check = src
 	if (AM)
 		thing_to_check = list(AM)

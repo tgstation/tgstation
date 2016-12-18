@@ -15,6 +15,7 @@
 	/turf/closed/wall,
 	/obj/structure/falsewall)
 	smooth = SMOOTH_MORE
+	var/can_decon
 	//	flags = CONDUCT
 
 /obj/structure/lattice/New()
@@ -33,7 +34,7 @@
 	return
 
 /obj/structure/lattice/attackby(obj/item/C, mob/user, params)
-	if(istype(C, /obj/item/weapon/weldingtool))
+	if((istype(C, /obj/item/weapon/weldingtool)) && can_decon)
 		var/obj/item/weapon/weldingtool/WT = C
 		if(WT.remove_fuel(0, user))
 			user << "<span class='notice'>Slicing [name] joints ...</span>"
@@ -72,3 +73,9 @@
 		C.deconstruct()
 	..()
 
+
+/obj/structure/lattice/catwalk/lava
+	name = "thermal shielded catwalk"
+	desc = "A reinforced catwalk with thermal shielding for protection from hostile terrain."
+	icon_state = "miningcatwalk"
+	can_decon = 0

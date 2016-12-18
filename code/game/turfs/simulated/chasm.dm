@@ -11,6 +11,11 @@
 	var/drop_x = 1
 	var/drop_y = 1
 	var/drop_z = 1
+	var/static/list/safeties_typecache = list(/obj/structure/lattice/catwalk)
+
+/turf/open/chasm/New()
+	..()
+	safeties_typecache = typecacheof(safeties_typecache)
 
 /turf/open/chasm/Entered(atom/movable/AM)
 	START_PROCESSING(SSobj, src)
@@ -22,6 +27,9 @@
 
 /turf/open/chasm/proc/drop_stuff(AM)
 	. = 0
+	for(var/obj/O in contents)
+		if(istype(O, /obj/structure/lattice/catwalk))
+			return FALSE
 	var/thing_to_check = src
 	if(AM)
 		thing_to_check = list(AM)
@@ -30,19 +38,25 @@
 			. = 1
 			addtimer(src, "drop", 0, TIMER_NORMAL, thing)
 
+/turf/open/chasm/proc/is_safe()
+	var/list/found_safeties = typecache_filter_list(contents, safeties_typecache)
+	return LAZYLEN(found_safeties)
+
 /turf/open/chasm/proc/droppable(atom/movable/AM)
+	if(is_safe())
+		return FALSE
 	if(!isliving(AM) && !isobj(AM))
-		return 0
+		return FALSE
 	if(istype(AM, /obj/singularity) || istype(AM, /obj/item/projectile) || AM.throwing)
-		return 0
+		return FALSE
 	if(istype(AM, /obj/effect/portal))
 		//Portals aren't affected by gravity. Probably.
-		return 0
+		return FALSE
 	//Flies right over the chasm
 	if(isliving(AM))
 		var/mob/MM = AM
 		if(MM.movement_type & FLYING)
-			return 0
+			return FALSE
 	if(ishuman(AM))
 		var/mob/living/carbon/human/H = AM
 		if(istype(H.belt, /obj/item/device/wormhole_jaunter))
@@ -50,8 +64,8 @@
 			//To freak out any bystanders
 			visible_message("<span class='boldwarning'>[H] falls into [src]!</span>")
 			J.chasm_react(H)
-			return 0
-	return 1
+			return FALSE
+	return TRUE
 
 /turf/open/chasm/proc/drop(atom/movable/AM)
 	//Make sure the item is still there after our sleep
