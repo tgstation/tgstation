@@ -230,6 +230,7 @@
 		momentum_increment = boost_power
 	if(brake)
 		momentum_increment = 0
+	if(!gravity)
 	switch(dir)
 		if(NORTH)
 			adjust_momentum(0, momentum_increment)
