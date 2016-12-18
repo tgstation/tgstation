@@ -4,12 +4,9 @@
 	name = "Flan"
 	desc = "Definitely not a dessert."
 	var/casting = 0
-	icon_state = "flan"
-	icon_living = "flan"
+	icon_state = "flan0"
+	icon_living = "flan0"
 	turns_per_move = 5
-	response_help = "pokes"
-	response_disarm = "shoves"
-	response_harm = "hits"
 	environment_smash = 0
 	speed = -2
 	maxHealth = 50
@@ -21,23 +18,18 @@
 	attack_sound = 'sound/weapons/punch1.ogg'
 	a_intent = INTENT_HARM
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
-	check_friendly_fire = 0			//Doesn't use projectiles, friendly fire impossible. Probably.
 	del_on_death = 1
 	ranged = 1
 	retreat_distance = 2
 	minimum_distance = 4
 	AIStatus = AI_IDLE
 	ranged_message = "begins to cast something"
-	ranged_cooldown = 25
+	ranged_cooldown_time = 5
 	var/spellname = "a Water spell!"
 	var/spellsound = 'sound/effects/spray3.ogg'
 	var/spellanimation = ATTACK_EFFECT_SMASH		//More in defines/misc.dm
 	var/spelldamagetype = BRUTE
 	var/spelldamage = 20
-
-/mob/living/simple_animal/hostile/flan/New()
-	..()
-	icon_state = "[initial(icon_state)][casting]"
 
 /mob/living/simple_animal/hostile/flan/OpenFire(mob/living/A)		//Spellcasting!
 	if(isliving(A))				//A is originally an atom, this is here to prevent that from fucking this up.

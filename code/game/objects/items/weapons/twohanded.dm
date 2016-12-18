@@ -656,7 +656,6 @@
 	if(throw_cooldown > world.time)
 		var/mob/user = thrownby
 		user.put_in_hands(src)
-		user.visible_message("<span class='warning'>But it doesn't leave [user]'s hand!")	//Always let the user know input went through and all that.
 		return
 	unwield(src)
 	..()
