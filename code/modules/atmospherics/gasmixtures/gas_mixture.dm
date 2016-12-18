@@ -430,8 +430,7 @@ var/list/gaslist_cache	//pre initialized list of gases keyed by id, ONLY FOR COP
 	return copy
 
 /datum/gas_mixture/copy_from(datum/gas_mixture/sample)
-	var/list/cached_gases = INIT_GASES
-	gases = cached_gases
+	var/cached_gases = gases
 	var/sample_gases = sample.gases
 
 	temperature = sample.temperature
