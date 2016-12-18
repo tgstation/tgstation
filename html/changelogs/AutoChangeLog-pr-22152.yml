@@ -1,0 +1,5 @@
+author: "Mervill"
+delete-after: True
+changes: 
+  - rscadd: "Notice boards can now have photographs pined to them"
+  - tweak: "Items removed from the notice board are placed in your hands"

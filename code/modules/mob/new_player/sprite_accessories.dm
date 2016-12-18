@@ -496,6 +496,10 @@
 	name = "Long Side Part"
 	icon_state = "hair_longsidepart"
 
+/datum/sprite_accessory/hair/sidecut
+	name = "Sidecut"
+	icon_state = "hair_sidecut"
+
 /////////////////////////////
 // Facial Hair Definitions //
 /////////////////////////////

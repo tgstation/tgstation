@@ -139,8 +139,8 @@
 	//Upgrade AI turrets around the world
 	for(var/obj/machinery/porta_turret/ai/turret in machines)
 		turret.obj_integrity += 30
-		turret.eprojectile = /obj/item/projectile/beam/laser/heavylaser //Once you see it, you will know what it means to FEAR.
-		turret.eshot_sound = 'sound/weapons/lasercannonfire.ogg'
+		turret.lethal_projectile = /obj/item/projectile/beam/laser/heavylaser //Once you see it, you will know what it means to FEAR.
+		turret.lethal_projectile_sound = 'sound/weapons/lasercannonfire.ogg'
 	src << "<span class='notice'>Turrets upgraded.</span>"
 
 /datum/AI_Module/large/lockdown

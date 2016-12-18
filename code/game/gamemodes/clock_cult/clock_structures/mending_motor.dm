@@ -78,8 +78,8 @@
 					break
 		else if(is_type_in_typecache(M, mending_motor_typecache))
 			T = get_turf(M)
-			var/obj/structure/C = M
-			if(C.obj_integrity == C.max_integrity)
+			var/obj/structure/destructible/clockwork/C = M
+			if(C.obj_integrity == C.max_integrity || (istype(C) && !C.can_be_repaired))
 				continue
 			for(var/i in 1 to heal_attempts)
 				if(C.obj_integrity < C.max_integrity)

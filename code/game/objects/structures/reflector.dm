@@ -45,7 +45,7 @@
 		if(anchored)
 			user << "Unweld the [src] first!"
 		if(do_after(user, 80*W.toolspeed, target = src))
-			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+			playsound(src.loc, W.usesound, 50, 1)
 			user << "You dismantle the [src]."
 			new framebuildstacktype(loc, framebuildstackamount)
 			new buildstacktype(loc, buildstackamount)

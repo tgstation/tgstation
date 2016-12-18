@@ -1,0 +1,4 @@
+author: "coiax"
+delete-after: True
+changes: 
+  - rscadd: "Anomalies now have observer-visible countdowns to their detonation."

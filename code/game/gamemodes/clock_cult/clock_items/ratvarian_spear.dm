@@ -63,9 +63,10 @@
 		playsound(loc, hitsound, get_clamped_volume(), 1, -1)
 	user.lastattacked = target
 	target.lastattacker = user
+	user.do_attack_animation(target)
 	if(!target.attacked_by(src, user)) //TODO MAKE ATTACK() USE PROPER RETURN VALUES
 		impaling = FALSE //if we got blocked, stop impaling
-	else
+	else if(!target.null_rod_check())
 		if(issilicon(target))
 			var/mob/living/silicon/S = target
 			if(S.stat != DEAD)
@@ -125,12 +126,13 @@
 			else
 				L.visible_message("<span class='warning'>[src] bounces off of [L], as if repelled by an unseen force!</span>")
 		else if(!..())
-			if(issilicon(L) || iscultist(L))
-				L.Stun(6)
-				L.Weaken(6)
-			else
-				L.Stun(2)
-				L.Weaken(2)
+			if(!L.null_rod_check())
+				if(issilicon(L) || iscultist(L))
+					L.Stun(6)
+					L.Weaken(6)
+				else
+					L.Stun(2)
+					L.Weaken(2)
 			break_spear(T)
 	else
 		..()

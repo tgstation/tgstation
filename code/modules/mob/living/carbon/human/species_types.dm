@@ -567,14 +567,13 @@
 	blacklisted = FALSE
 	dangerous_existence = FALSE
 
-/datum/species/golem/random/New()
-	. = ..()
+/datum/species/golem/random/on_species_gain(mob/living/carbon/C, datum/species/old_species)
+	..()
 	var/list/golem_types = typesof(/datum/species/golem) - src.type
 	var/datum/species/golem/golem_type = pick(golem_types)
-	name = initial(golem_type.name)
-	id = initial(golem_type.id)
-	meat = initial(golem_type.meat)
-	fixed_mut_color = initial(golem_type.fixed_mut_color)
+	var/mob/living/carbon/human/H = C
+	H.set_species(golem_type)
+	H << "[initial(golem_type.info_text)]"
 
 /datum/species/golem/adamantine
 	name = "Adamantine Golem"

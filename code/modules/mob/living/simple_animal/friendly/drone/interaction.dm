@@ -95,7 +95,7 @@
 	else if(istype(I, /obj/item/weapon/wrench) && user != src) //They aren't required to be hacked, because laws can change in other ways (i.e. admins)
 		user.visible_message("<span class='notice'>[user] starts resetting [src]...</span>", \
 							 "<span class='notice'>You press down on [src]'s factory reset control...</span>")
-		playsound(src, 'sound/items/Ratchet.ogg', 50, 1)
+		playsound(src, I.usesound, 50, 1)
 		if(!do_after(user, 50*I.toolspeed, target = src))
 			return
 		user.visible_message("<span class='notice'>[user] resets [src]!</span>", \
@@ -199,4 +199,3 @@
 	name = "Select Vision Filter"
 	button_icon_state = "drone_vision"
 	procname = /mob/living/simple_animal/drone/verb/toggle_statics
-

@@ -35,13 +35,18 @@
 	icon_state = "wizard"
 	strip_delay = 50
 	put_on_delay = 50
-	resistance_flags = FIRE_PROOF | ACID_PROOF
 
 /obj/item/clothing/shoes/sandal/marisa
 	desc = "A pair of magic black shoes."
 	name = "magic shoes"
 	icon_state = "black"
-
+	resistance_flags = FIRE_PROOF |  ACID_PROOF
+	
+/obj/item/clothing/shoes/sandal/magic
+	name = "magical sandals"
+	desc = "A pair of sandals imbued with magic"
+	resistance_flags = FIRE_PROOF |  ACID_PROOF
+	
 /obj/item/clothing/shoes/galoshes
 	desc = "A pair of yellow rubber boots, designed to prevent slipping on wet surfaces."
 	name = "galoshes"

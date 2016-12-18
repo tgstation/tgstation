@@ -559,6 +559,13 @@
 	item_color = "geisha"
 	can_adjust = 0
 
+/obj/item/clothing/under/villain
+	name = "villain suit"
+	desc = "A change of wardrobe is necessary if you ever want to catch a real superhero."
+	icon_state = "villain"
+	item_color = "villain"
+	can_adjust = 0
+
 /obj/item/clothing/under/plasmaman
 	name = "Plasma-man Jumpsuit"
 	desc = "A specially designed suit that allows Plasma based life forms to exist in an oxygenated environment."

@@ -32,7 +32,7 @@
 /turf/open/floor/plating,
 /area/shuttle/supply)
 "g" = (
-/obj/machinery/door/airlock/shuttle{
+/obj/machinery/door/airlock/titanium{
 	name = "Supply Shuttle Airlock";
 	req_access_txt = "31"
 	},
@@ -55,7 +55,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/supply)
 "i" = (
-/obj/machinery/door/airlock/shuttle{
+/obj/machinery/door/airlock/titanium{
 	name = "Supply Shuttle Airlock";
 	req_access_txt = "31"
 	},

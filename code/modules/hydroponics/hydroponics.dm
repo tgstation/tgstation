@@ -375,13 +375,13 @@
 	visible_message("<span class='warning'>The [oldPlantName] is overtaken by some [myseed.plantname]!</span>")
 
 
-/obj/machinery/hydroponics/proc/mutate(lifemut = 2, endmut = 5, productmut = 1, yieldmut = 2, potmut = 25) // Mutates the current seed
+/obj/machinery/hydroponics/proc/mutate(lifemut = 2, endmut = 5, productmut = 1, yieldmut = 2, potmut = 25, wrmut = 2, wcmut = 5, traitmut = 0) // Mutates the current seed
 	if(!myseed)
 		return
-	myseed.mutate(lifemut, endmut, productmut, yieldmut, potmut)
+	myseed.mutate(lifemut, endmut, productmut, yieldmut, potmut, wrmut, wcmut, traitmut)
 
 /obj/machinery/hydroponics/proc/hardmutate()
-	mutate(4, 10, 2, 4, 50)
+	mutate(4, 10, 2, 4, 50, 4, 10, 3)
 
 
 /obj/machinery/hydroponics/proc/mutatespecie() // Mutagent produced a new plant!
@@ -823,7 +823,7 @@
 		if(!anchored && !isinspace())
 			user.visible_message("[user] begins to wrench [src] into place.", \
 								"<span class='notice'>You begin to wrench [src] in place...</span>")
-			playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
+			playsound(loc, O.usesound, 50, 1)
 			if (do_after(user, 20*O.toolspeed, target = src))
 				if(anchored)
 					return
@@ -833,7 +833,7 @@
 		else if(anchored)
 			user.visible_message("[user] begins to unwrench [src].", \
 								"<span class='notice'>You begin to unwrench [src]...</span>")
-			playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
+			playsound(loc, O.usesound, 50, 1)
 			if (do_after(user, 20*O.toolspeed, target = src))
 				if(!anchored)
 					return
@@ -843,7 +843,7 @@
 
 	else if(istype(O, /obj/item/weapon/wirecutters) && unwrenchable)
 		using_irrigation = !using_irrigation
-		playsound(src, 'sound/items/Wirecutter.ogg', 50, 1)
+		playsound(src, O.usesound, 50, 1)
 		user.visible_message("<span class='notice'>[user] [using_irrigation ? "" : "dis"]connects [src]'s irrigation hoses.</span>", \
 		"<span class='notice'>You [using_irrigation ? "" : "dis"]connect [src]'s irrigation hoses.</span>")
 		for(var/obj/machinery/hydroponics/h in range(1,src))

@@ -122,7 +122,7 @@
 /obj/vehicle/scooter/skateboard/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/screwdriver))
 		user << "<span class='notice'>You begin to deconstruct and remove the wheels on [src]...</span>"
-		playsound(get_turf(user), 'sound/items/Screwdriver.ogg', 50, 1)
+		playsound(get_turf(user), I.usesound, 50, 1)
 		if(do_after(user, 20, target = src))
 			user << "<span class='notice'>You deconstruct the wheels on [src].</span>"
 			new /obj/item/stack/sheet/metal(get_turf(src),5)

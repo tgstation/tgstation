@@ -102,14 +102,14 @@
 		if(istype(I, /obj/item/weapon/screwdriver) && deconstruction_ready)
 			user << "<span class='notice'>You start disassembling [src]...</span>"
 			playsound(src.loc, I.usesound, 50, 1)
-			if(do_after(user, 20, target = src))
+			if(do_after(user, 20*I.toolspeed, target = src))
 				deconstruct(TRUE)
 			return
 
 		if(istype(I, /obj/item/weapon/wrench) && deconstruction_ready)
 			user << "<span class='notice'>You start deconstructing [src]...</span>"
 			playsound(src.loc, I.usesound, 50, 1)
-			if(do_after(user, 40, target = src))
+			if(do_after(user, 40*I.toolspeed, target = src))
 				playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 				deconstruct(TRUE, 1)
 			return

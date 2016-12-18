@@ -199,6 +199,9 @@
 	if(!R.module)
 		return
 
+	if(!R.client)
+		return
+
 	if(R.shown_robot_modules && screenmob.hud_used.hud_shown)
 		//Modules display is shown
 		screenmob.client.screen += module_store_icon	//"store" icon
