@@ -423,16 +423,16 @@ var/list/gaslist_cache	//pre initialized list of gases keyed by id, ONLY FOR COP
 	return copy
 
 /datum/gas_mixture/copy_from(datum/gas_mixture/sample)
-	var/list/cached_gases = INIT_GASES //new list to replace the old
-	gases = cached_gases
-
+	var/list/cached_gases = gases
 	var/list/sample_gases = sample.gases
 
 	temperature = sample.temperature
 	for(var/id = 1 to GAS_LAST)
 		if(sample_gases[id])
-			add_gas(id)
+			assert_gas(id)
 			cached_gases[id][MOLES] = sample_gases[id][MOLES]
+		else
+			cached_gases[id] = null
 
 	return 1
 
