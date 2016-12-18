@@ -284,8 +284,9 @@
 	var/turf/T = get_turf(holder.my_atom)
 	T.visible_message("<span class='danger'>The slime extract begins to vibrate adorably!</span>")
 	addtimer(src, "freeze", 50, TIMER_NORMAL, holder)
-	spawn(60)
-	..()
+	var/obj/item/slime_extract/M = holder.my_atom
+	deltimer(M.qdel_timer)
+	M.qdel_timer = addtimer(src, "delete_extract", 55, TIMER_NORMAL, holder)
 
 /datum/chemical_reaction/slime/slimefreeze/proc/freeze(datum/reagents/holder)
 	if(holder && holder.my_atom)
