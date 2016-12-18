@@ -1264,7 +1264,7 @@
 	if(istype(action, /datum/action/item_action/flightpack/zoom))
 		toggle_zoom(owner)
 
-/obj/item/clothing/head/helmet/space/hardsuit/flightsuit/toggle_zoom(mob/living/user, force_off = FALSE)
+/obj/item/clothing/head/helmet/space/hardsuit/flightsuit/proc/toggle_zoom(mob/living/user, force_off = FALSE)
 	if(zoom || force_off)
 		user.client.view = world.view
 		user << "<span class='boldnotice'>Disabling smart zooming image enhancement...</span>"
