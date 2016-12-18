@@ -137,6 +137,9 @@
 /mob/living/silicon/pai/canUseTopic(atom/movable/M)
 	return TRUE
 
+/mob/living/silicon/pai/start_pulling(atom/movable/AM)
+	return
+
 /mob/living/silicon/pai/process()
 	emitterhealth = Clamp((emitterhealth + emitterregen), -50, emittermaxhealth)
 	if(weakened > 0)
@@ -189,3 +192,4 @@
 /datum/action/innate/pai/rest/Trigger()
 	..()
 	P.lay_down()
+

@@ -859,7 +859,7 @@
 "qA" = (/obj/structure/rack,/obj/item/clothing/under/color/green,/obj/item/clothing/shoes/sneakers/brown,/obj/item/clothing/suit/armor/tdome/green,/obj/item/clothing/head/helmet/thunderdome,/obj/item/weapon/melee/baton/loaded,/obj/item/weapon/melee/energy/sword/saber/green,/turf/open/floor/plasteel/black,/area/tdome/arena)
 "qB" = (/turf/closed/indestructible/fakeglass{color = "#008000"; dir = 1; icon_state = "fakewindows"},/area/wizard_station)
 "qC" = (/obj/structure/destructible/cult/tome,/turf/open/floor/engine/cult,/area/wizard_station)
-"qD" = (/obj/structure/closet/crate{icon_state = "crateopen"; opened = 1},/obj/item/clothing/suit/wizrobe/red,/obj/item/clothing/head/wizard/red,/obj/item/weapon/staff,/obj/item/clothing/shoes/sandal,/turf/open/floor/engine/cult,/area/wizard_station)
+"qD" = (/obj/structure/closet/crate{icon_state = "crateopen"; opened = 1},/obj/item/clothing/suit/wizrobe/red,/obj/item/clothing/head/wizard/red,/obj/item/weapon/staff,/obj/item/clothing/shoes/sandal/magic,/turf/open/floor/engine/cult,/area/wizard_station)
 "qE" = (/turf/open/floor/grass,/area/wizard_station)
 "qF" = (/obj/item/weapon/reagent_containers/food/snacks/meat/slab/corgi,/turf/open/floor/grass,/area/wizard_station)
 "qG" = (/obj/structure/closet/syndicate/personal,/turf/open/floor/plasteel/darkwarning{dir = 1},/area/syndicate_mothership)
