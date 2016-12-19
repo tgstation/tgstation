@@ -345,7 +345,7 @@
 
 /datum/supply_pack/security/armory/ballistic
 	name = "Combat Shotguns Crate"
-	cost = 2000
+	cost = 2500
 	contains = list(/obj/item/weapon/gun/ballistic/shotgun/automatic/combat,
 					/obj/item/weapon/gun/ballistic/shotgun/automatic/combat,
 					/obj/item/weapon/gun/ballistic/shotgun/automatic/combat,
@@ -356,7 +356,7 @@
 
 /datum/supply_pack/security/armory/energy
 	name = "Energy Guns Crate"
-	cost = 2500
+	cost = 2000
 	contains = list(/obj/item/weapon/gun/energy/e_gun,
 					/obj/item/weapon/gun/energy/e_gun)
 	crate_name = "energy gun crate"
@@ -909,7 +909,7 @@
 
 /datum/supply_pack/science/bz_canister
 	name = "BZ Canister"
-	cost = 4000
+	cost = 2000
 	access_any = list(access_rd, access_atmospherics)
 	contains = list(/obj/machinery/portable_atmospherics/canister/bz)
 	crate_name = "bz canister crate"
@@ -1336,7 +1336,7 @@
 
 /datum/supply_pack/misc/lasertag/pins
 	name = "Laser Tag Firing Pins Crate"
-	cost = 2000
+	cost = 3000
 	contraband = TRUE
 	contains = list(/obj/item/weapon/storage/box/lasertagpins)
 	crate_name = "laser tag crate"
