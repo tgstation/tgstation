@@ -440,93 +440,89 @@ var/list/binary = list("0","1")
 	return jointext(result, "")
 
 //Takes a list of values, sanitizes it down for readability and character count,
-//then exports it as a plaintext file at data/npc_saves/[filename].txt.
+//then exports it as a plaintext file at data/npc_saves/[filename].log.
 //As far as SS13 is concerned this is write only data. You can't change something
-//in the txt file and have it be reflected in the in game item/mob it came from.
+//in the log file and have it be reflected in the in game item/mob it came from.
 //(That's what things like savefiles are for) Note that this list is not shuffled.
 /proc/twitterize(list/proposed, filename, cullshort = 0, storemax = 1000)
-	if(!islist(proposed) || !filename || storemax < proposed.len)
+	if(!islist(proposed) || !filename)
 		return
 
-	var/list/nope = list("www.", "http", "@", ".com", ".org", ".net", ".edu") //Note the ommission of #, hashtags are fine
-	var/list/alphanumeric = list("a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9")
-	var/list/punct = list(".","!","?")
+	//Regular expressions are, as usual, absolute magic
+	var/regex/is_website = new("http|www.|\[a-z0-9_-]+.(com|org|net|mil|edu)+", "i")
+	var/regex/is_email = new("\[a-z0-9_-]+@\[a-z0-9_-]+.\[a-z0-9_-]+", "i")
+	var/regex/alphanumeric = new("\[a-z0-9]+", "i")
+	var/regex/punctuation = new("\[.!?]+", "i")
+
 	var/list/accepted = list()
 	for(var/string in proposed)
-		world << "Testing: [string]"
-		for(var/substring in nope) //first gate
-			if(substring in lowertext(string))
-				world << "[string] failed at first gate"
-				continue
+		if(findtext(string,is_website) || findtext(string,is_email))
+			continue
 		var/buffer = ""
 		var/early_culling = TRUE
 		for(var/pos = 1, pos != lentext(string), pos++)
 			var/let = copytext(string, pos, (pos + 1) % lentext(string))
-			if(early_culling && !(lowertext(let) in alphanumeric))
+			if(early_culling && !findtext(let,alphanumeric))
 				continue
 			early_culling = FALSE
-			if(let == "&") //here be dragons
-				buffer += " and "
-			else
-				buffer += let
-		world << buffer
+			buffer += let
 		var/punctbuffer = ""
 		var/cutoff = lentext(buffer)
 		for(var/pos = lentext(buffer), pos != 0, pos--)
 			var/let = copytext(buffer, pos, (pos + 1) % lentext(buffer))
-			if(let in alphanumeric)
+			if(findtext(let,alphanumeric))
 				break
-			if(let in punct)
+			if(findtext(let,punctuation))
 				punctbuffer = let + punctbuffer //Note this isn't the same thing as using +=
 				cutoff = pos
-		if(punctbuffer) //We clip down excessive punctuation to get the letter count lower
-			if("!" in punctbuffer)
-				if("?" in punctbuffer)
+		if(punctbuffer) //We clip down excessive punctuation to get the letter count lower and reduce repeats
+			var/exclaim = FALSE
+			var/question = FALSE
+			var/periods = 0
+			for(var/pos = lentext(punctbuffer), pos != 0, pos--)
+				var/punct = copytext(buffer, pos, (pos + 1) % lentext(buffer))
+				if(!exclaim && punct == "!")
+					exclaim = TRUE
+				if(!question && punct == "?")
+					question = TRUE
+				if(!exclaim && !question && punct == ".")
+					periods += 1
+			if(exclaim)
+				if(question)
 					punctbuffer = "?!"
 				else
 					punctbuffer = "!"
-			else if("?" in punctbuffer)
+			else if(question)
 				punctbuffer = "?"
-			else if("." in punctbuffer)
-				var/periods = 0
-				for(var/p in punctbuffer)
-					if(p == ".")
-						periods++
+			else if(periods)
 				if(periods >= 3)
 					punctbuffer = "..."
 				else
 					punctbuffer = "" //Grammer nazis be damned
 			buffer = copytext(buffer, 1, cutoff) + punctbuffer
-		world << buffer
-		/*var/understandability = 0
-		var/list/common_symbols = list(",","\"","-","+","\\","/", "=")
-		for(var/pos = 1, pos != lentext(buffer), pos++)
-			var/let = copytext(buffer, pos, (pos + 1) % lentext(buffer))
-			if(let in alphanumeric || let in punct || let in common_symbols)
-				understandability++
-		if(buffer)
-			world << "[buffer] understability [understandability / lentext(buffer)]%"*/
 
-		if(!buffer || /*understandability / lentext(buffer) < 0.5 ||*/ lentext(buffer) > 140 || lentext(buffer) <= cullshort || buffer in accepted) //second to fourth gate
-			world << "[buffer] failed at 2-4 gate"
+		if(!buffer || lentext(buffer) > 140 || lentext(buffer) <= cullshort || buffer in accepted) //second to fourth gate
 			continue
 
 		accepted += buffer
 
-	var/list/oldentries = list()
-	if(fexists("/data/npc_saves/[filename].txt"))
-		oldentries = file2list("/data/npc_saves/[filename].txt")
-
+	var/log = file("data/npc_saves/[filename].log") //If this line ever shows up as changed in a PR be very careful you aren't being memed on
+	var/list/oldentries = file2list(log)
+	if(!isemptylist(oldentries))
 		for(var/string in accepted) //The fifth and final gate
-			if(string in oldentries)
-				accepted -= string
-				world << "[string] failed at fifth gate"
+			for(var/old in oldentries)
+				if(string == old)
+					oldentries.Remove(old) //Line's position in line is "refreshed" until it falls off the in game radar
+					break
 
-		if(!isemptylist(oldentries))
-			while(oldentries.len + accepted.len > storemax) //The top of the list represents the oldest strings, so we cull them first
-				oldentries -= oldentries[1]
+	var/list/finalized = list()
+	for(var/list/L in list(accepted, oldentries)) //we keep old and unreferenced phrases near the bottom for culling
+		finalized += listclearnulls(L.Copy())
 
-		fdel("/data/npc_saves/[filename].txt") //If this line ever shows up as changed in a PR be very careful you aren't being memed on
+	if(!isemptylist(finalized) && finalized.len > storemax)
+		finalized.Cut(storemax)
 
-	for(var/string in oldentries + accepted)
-		text2file(string,"/data/npc_saves/[filename].txt")
+	fdel(log)
+
+	for(var/entry in finalized)
+		log << entry

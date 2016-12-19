@@ -936,7 +936,6 @@
 	var/savefile/S = new /savefile("data/npc_saves/Poly.sav")
 	if(islist(speech_buffer))
 		S["phrases"] 			<< speech_buffer
-		twitterize(speech_buffer, "polytalk")
 	S["roundssurvived"]		<< rounds_survived
 	S["longestsurvival"]	<< longest_survival
 	S["longestdeathstreak"] << longest_deathstreak
