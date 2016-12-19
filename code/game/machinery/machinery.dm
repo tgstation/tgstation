@@ -169,13 +169,11 @@ Class Procs:
 
 /obj/machinery/proc/dropContents()
 	var/turf/T = get_turf(src)
-	for(var/mob/living/L in src)
-		L.forceMove(T)
-		L.update_canmove() //so the mob falls if he became unconscious inside the machine.
-		. += L
-
 	for(var/atom/movable/A in contents)
 		A.forceMove(T)
+		if(isliving(A))
+			var/mob/living/L = A
+			L.update_canmove()
 	occupant = null
 
 /obj/machinery/proc/close_machine(mob/living/target = null)
