@@ -41,12 +41,12 @@
 	name = "magic shoes"
 	icon_state = "black"
 	resistance_flags = FIRE_PROOF |  ACID_PROOF
-	
+
 /obj/item/clothing/shoes/sandal/magic
 	name = "magical sandals"
 	desc = "A pair of sandals imbued with magic"
 	resistance_flags = FIRE_PROOF |  ACID_PROOF
-	
+
 /obj/item/clothing/shoes/galoshes
 	desc = "A pair of yellow rubber boots, designed to prevent slipping on wet surfaces."
 	name = "galoshes"
@@ -201,3 +201,15 @@
 	usr.throw_at(target,jumpdistance,1, spin=0, diagonals_first = 1)
 	jumping = FALSE
 	recharging_time = world.time + recharging_rate
+
+/obj/item/clothing/shoes/ysing
+	name = "yellow performer's boots"
+	desc = "These boots were made for dancing."
+	icon_state = "ysing"
+	put_on_delay = 50
+
+/obj/item/clothing/shoes/bsing
+	name = "blue performer's boots"
+	desc = "These boots were made for dancing."
+	icon_state = "bsing"
+	put_on_delay = 50

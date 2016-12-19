@@ -535,6 +535,26 @@
 	can_adjust = 1
 	alt_covers_chest = 1
 
+/obj/item/clothing/under/singery
+	name = "yellow performer's outfit"
+	desc = "Just looking at this makes you want to sing."
+	icon_state = "ysing"
+	item_state = "ysing"
+	item_color = "ysing"
+	fitted = NO_FEMALE_UNIFORM
+	alternate_worn_layer = ABOVE_SHOES_LAYER
+	can_adjust = 0
+
+/obj/item/clothing/under/singerb
+	name = "blue performer's outfit"
+	desc = "Just looking at this makes you want to sing."
+	icon_state = "bsing"
+	item_state = "bsing"
+	item_color = "bsing"
+	alternate_worn_layer = ABOVE_SHOES_LAYER
+	fitted = NO_FEMALE_UNIFORM
+	can_adjust = 0
+
 /obj/item/clothing/under/plaid_skirt/green
 	name = "green plaid skirt"
 	desc = "A preppy green skirt with a white blouse."
