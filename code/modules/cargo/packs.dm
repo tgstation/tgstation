@@ -345,8 +345,8 @@
 
 /datum/supply_pack/security/armory/ballistic
 	name = "Combat Shotguns Crate"
-	cost = 2500
-	contains = list(/obj/item/weapon/gun/ballistic/shotgun/automatic/combat,
+	cost = 4000	
+contains = list(/obj/item/weapon/gun/ballistic/shotgun/automatic/combat,
 					/obj/item/weapon/gun/ballistic/shotgun/automatic/combat,
 					/obj/item/weapon/gun/ballistic/shotgun/automatic/combat,
 					/obj/item/weapon/storage/belt/bandolier,
