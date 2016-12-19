@@ -36,10 +36,6 @@ map birdstation
 	maxplayers 35
 endmap
 
-map dreamstation
-	friendlyname Dream Station
-endmap
-
 map pubbystation
 	friendlyname Pubby Station
 endmap
