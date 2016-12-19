@@ -261,6 +261,7 @@
 
 	var/old_lumcount = lighting_lumcount - initial(lighting_lumcount)
 	var/oldbaseturf = baseturf
+	var/old_starlight = starlight
 
 	var/list/our_lights //reset affecting_lights if needed
 	if(opacity != initial(path:opacity) && old_lumcount)
@@ -274,7 +275,8 @@
 	affecting_lights = our_lights
 
 	lighting_changed = 1 //Don't add ourself to SSlighting.changed_turfs
-	update_lumcount(old_lumcount)
+	update_lumcount(old_lumcount, LIGHTING_REGULAR)
+	starlight = old_starlight
 	baseturf = oldbaseturf
 	lighting_object = locate() in src
 
