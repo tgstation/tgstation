@@ -389,12 +389,10 @@
 
 /proc/is_ctf_target(atom/target)
 	. = FALSE
-	world << target
 	if(istype(target, /obj/structure/barricade/security/ctf))
 		. = TRUE
 	if(ishuman(target))
 		var/mob/living/carbon/human/H = target
-		world << H.wear_suit
 		if(istype(H.wear_suit, /obj/item/clothing/suit/space/hardsuit/shielded/ctf))
 			. = TRUE
 
