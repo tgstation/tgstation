@@ -106,14 +106,14 @@
 				user << "<span class='notice'>The bomb must be placed on solid ground to attach it.</span>"
 			else
 				user << "<span class='notice'>You firmly wrench the bomb to the floor.</span>"
-				playsound(loc, 'sound/items/ratchet.ogg', 50, 1)
+				playsound(loc, I.usesound, 50, 1)
 				anchored = 1
 				if(active)
 					user << "<span class='notice'>The bolts lock in place.</span>"
 		else
 			if(!active)
 				user << "<span class='notice'>You wrench the bomb from the floor.</span>"
-				playsound(loc, 'sound/items/ratchet.ogg', 50, 1)
+				playsound(loc, I.usesound, 50, 1)
 				anchored = 0
 			else
 				user << "<span class='warning'>The bolts are locked down!</span>"
@@ -157,7 +157,7 @@
 			user << "<span class='warning'>You need more fuel to complete this task!</span>"
 			return
 
-		playsound(loc, pick('sound/items/Welder.ogg', 'sound/items/Welder2.ogg'), 50, 1)
+		playsound(loc, WT.usesound, 50, 1)
 		user << "<span class='notice'>You start to cut the [src] apart...</span>"
 		if(do_after(user, 20*I.toolspeed, target = src))
 			if(!WT.isOn() || !WT.remove_fuel(5, user))
@@ -437,7 +437,7 @@
 
 /obj/item/weapon/bombcore/chemical/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/crowbar) && beakers.len > 0)
-		playsound(loc, 'sound/items/Crowbar.ogg', 50, 1)
+		playsound(loc, I.usesound, 50, 1)
 		for (var/obj/item/B in beakers)
 			B.loc = get_turf(src)
 			beakers -= B

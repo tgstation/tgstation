@@ -600,6 +600,7 @@ var/global/list/ghost_others_options = list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 #define CLOCK_SUMMON 21
 #define CLOCK_SILICONS 22
 #define CLOCK_PROSELYTIZATION 23
+#define SHUTTLE_HIJACK 24
 
 //For SSTimer
 
@@ -616,6 +617,7 @@ var/global/list/ghost_others_options = list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 #define INTENT_GRAB   "grab"
 #define INTENT_DISARM "disarm"
 #define INTENT_HARM   "harm"
-// NOTE: This is not a real intent! It's used to allow
-// the alternate intent selection stlye (clockwise)
-#define INTENT_NEXT   "next"
+// NOTE: INTENT_HOTKEY_* defines are not actual intents!
+// they are here to support hotkeys
+#define INTENT_HOTKEY_LEFT  "left"
+#define INTENT_HOTKEY_RIGHT "right"

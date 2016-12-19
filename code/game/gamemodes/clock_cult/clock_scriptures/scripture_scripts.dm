@@ -312,7 +312,7 @@
 				R.visible_message("<span class='warning'>[invoker] flares a brilliant orange!</span>", "<span class='brass'>You feel your cell charging.</span>")
 		else if(total_power_drained >= power_damage_threshhold)
 			var/power_damage = power_drained * 0.01
-			invoker.visible_message("<span class='warning'>[invoker] flares a brilliant orange!</span>", "<span class='warning'>You feel the warmth of electricity running into your body.</span>")
+			invoker.visible_message("<span class='warning'>[invoker] flares a brilliant orange!</span>", "<span class='userdanger'>You feel the heat of electricity running into your body.</span>")
 			if(ishuman(invoker))
 				var/mob/living/carbon/human/H = invoker
 				for(var/X in H.bodyparts)

@@ -12,7 +12,7 @@
 	},
 /area/shuttle/abandoned)
 "ad" = (
-/obj/machinery/door/airlock/shuttle,
+/obj/machinery/door/airlock/titanium,
 /obj/docking_port/mobile{
 	dheight = 0;
 	dir = 2;
@@ -35,7 +35,7 @@
 	},
 /area/shuttle/abandoned)
 "af" = (
-/obj/machinery/door/airlock/shuttle,
+/obj/machinery/door/airlock/titanium,
 /turf/open/floor/plasteel/shuttle/white,
 /area/shuttle/abandoned)
 "ag" = (
@@ -170,7 +170,7 @@
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/abandoned)
 "aD" = (
-/obj/machinery/door/airlock/shuttle,
+/obj/machinery/door/airlock/titanium,
 /turf/open/floor/plating,
 /area/shuttle/abandoned)
 "aE" = (
@@ -274,7 +274,7 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "aW" = (
-/obj/machinery/door/airlock/shuttle,
+/obj/machinery/door/airlock/titanium,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "aX" = (

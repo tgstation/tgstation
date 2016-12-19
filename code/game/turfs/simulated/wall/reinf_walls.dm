@@ -142,7 +142,7 @@
 				var/obj/item/weapon/weldingtool/WT = W
 				if(WT.remove_fuel(0,user))
 					user << "<span class='notice'>You begin welding the metal cover back to the frame...</span>"
-					playsound(src, 'sound/items/Welder.ogg', 100, 1)
+					playsound(src, WT.usesound, 100, 1)
 					if(do_after(user, 60*WT.toolspeed, target = src))
 						if(!istype(src, /turf/closed/wall/r_wall) || !WT || !WT.isOn() || d_state != CUT_COVER)
 							return 1
@@ -201,7 +201,7 @@
 
 			if(istype(W, /obj/item/weapon/wrench))
 				user << "<span class='notice'>You start tightening the bolts which secure the support rods to their frame...</span>"
-				playsound(src, 'sound/items/Ratchet.ogg', 100, 1)
+				playsound(src, W.usesound, 100, 1)
 				if(do_after(user, 40*W.toolspeed, target = src))
 					if(!istype(src, /turf/closed/wall/r_wall) || !W || d_state != SUPPORT_RODS)
 						return 1
@@ -225,7 +225,7 @@
 				var/obj/item/weapon/weldingtool/WT = W
 				if(WT.remove_fuel(0,user))
 					user << "<span class='notice'>You begin welding the support rods back together...</span>"
-					playsound(src, 'sound/items/Welder.ogg', 100, 1)
+					playsound(src, WT.usesound, 100, 1)
 					if(do_after(user, 100*WT.toolspeed, target = src))
 						if(!istype(src, /turf/closed/wall/r_wall) || !WT || !WT.isOn() || d_state != SHEATH)
 							return 1

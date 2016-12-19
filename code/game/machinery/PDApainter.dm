@@ -87,7 +87,7 @@
 				user.visible_message("[user] is repairing [src].", \
 								"<span class='notice'>You begin repairing [src]...</span>", \
 								"<span class='italics'>You hear welding.</span>")
-				playsound(loc, 'sound/items/Welder.ogg', 40, 1)
+				playsound(loc, WT.usesound, 40, 1)
 				if(do_after(user,40*WT.toolspeed, 1, target = src))
 					if(!WT.isOn() || !(stat & BROKEN))
 						return

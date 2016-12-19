@@ -265,6 +265,22 @@
 	state = 1
 	mineral = "sandstone"
 
+/obj/structure/door_assembly/door_assembly_titanium
+	name = "titanium airlock assembly"
+	icon = 'icons/obj/doors/airlocks/shuttle/shuttle.dmi'
+	overlays_file = 'icons/obj/doors/airlocks/shuttle/overlays.dmi'
+	typetext = "titanium"
+	icontext = "titanium"
+	glass_type = /obj/machinery/door/airlock/glass_titanium
+	airlock_type = /obj/machinery/door/airlock/titanium
+	anchored = 1
+	state = 1
+	mineral = "titanium"
+
+/obj/structure/door_assembly/door_assembly_titanium/glass
+	mineral = "glass"
+	material = "glass"
+
 /obj/structure/door_assembly/door_assembly_highsecurity // Borrowing this until WJohnston makes sprites for the assembly
 	name = "high security airlock assembly"
 	icon = 'icons/obj/doors/airlocks/highsec/highsec.dmi'

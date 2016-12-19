@@ -340,7 +340,7 @@
 		log_game("[user.ckey]([user]) used an emagged Cyborg Harm Alarm in ([user.x],[user.y],[user.z])")
 
 /obj/item/borg/lollipop
-	name = "Lollipop Fabricator"
+	name = "lollipop fabricator"
 	desc = "Reward good humans with this. Toggle in-module to switch between dispensing and high velocity ejection modes."
 	icon_state = "lollipop"
 	var/candy = 30

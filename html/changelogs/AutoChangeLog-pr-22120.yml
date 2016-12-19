@@ -1,5 +1,0 @@
-author: "Joan"
-delete-after: True
-changes: 
-  - rscdel: "The Ark of the Clockwork Justicar can no longer be repaired."
-  - tweak: "The Ark now has 20% more health."

@@ -217,7 +217,7 @@
 /turf/open/floor/plasteel/bar,
 /area/shuttle/escape)
 "aK" = (
-/obj/machinery/door/airlock/shuttle{
+/obj/machinery/door/airlock/titanium{
 	name = "Emergency Shuttle Airlock";
 	req_access_txt = "2"
 	},
@@ -276,7 +276,7 @@
 /turf/open/floor/plasteel/bar,
 /area/shuttle/escape)
 "aT" = (
-/obj/machinery/door/airlock/shuttle{
+/obj/machinery/door/airlock/titanium{
 	name = "Emergency Shuttle Airlock"
 	},
 /obj/docking_port/mobile/emergency{
@@ -350,7 +350,7 @@
 	},
 /area/shuttle/escape)
 "bg" = (
-/obj/machinery/door/airlock/shuttle{
+/obj/machinery/door/airlock/titanium{
 	name = "Emergency Shuttle Airlock"
 	},
 /turf/open/floor/plasteel/bar,
@@ -397,7 +397,7 @@
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "bo" = (
-/obj/machinery/door/airlock/shuttle{
+/obj/machinery/door/airlock/titanium{
 	name = "Emergency Shuttle Airlock"
 	},
 /turf/open/floor/plasteel/freezer,

@@ -20,7 +20,7 @@
 			S.remove_from_storage(O, src) //This will move the item to this item's contents
 		user << "<span class='notice'>You empty the ore in [S] into \the [src].</span>"
 	else if(istype(W, /obj/item/weapon/crowbar))
-		playsound(loc, 'sound/items/Crowbar.ogg', 50, 1)
+		playsound(loc, W.usesound, 50, 1)
 		var/obj/item/weapon/crowbar/C = W
 		if(do_after(user, 50*C.toolspeed, target = src))
 			user.visible_message("[user] pries \the [src] apart.", "<span class='notice'>You pry apart \the [src].</span>", "<span class='italics'>You hear splitting wood.</span>")

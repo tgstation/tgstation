@@ -1,0 +1,5 @@
+author: "Kor"
+delete-after: True
+changes: 
+  - rscadd: "You can put a variety of hats on cyborgs using help intent (the engiborg can't wear hats though, as it is shaped too oddly. Sorry!)"
+  - rscadd: "The complete list of currently equippable hats is as follows: Cakehat, Captains Hat, Centcomm Hat, Witch Hunter Hat, HoS Cap, HoP Cap, Sombrero, Wizard Hat, Nurse Hat."

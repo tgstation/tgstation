@@ -513,6 +513,10 @@
 				icon_state = "grappa"
 				name = "glass of grappa"
 				desc = "A fine drink originally made to prevent waste by using the leftovers from winemaking."
+			if("eggnog")
+				icon_state = "glass_yellow"
+				name = "Eggnog"
+				desc = "For enjoying the most wonderful time of the year."
 			else
 				icon_state ="glass_brown"
 				var/image/I = image(icon, "glassoverlay")

@@ -795,24 +795,24 @@ var/global/list/common_tools = list(
 
 //For objects that should embed, but make no sense being is_sharp or is_pointed()
 //e.g: rods
+var/list/can_embed_types = typecacheof(list(
+	/obj/item/stack/rods,
+	/obj/item/pipe))
+
 /proc/can_embed(obj/item/W)
 	if(W.is_sharp())
 		return 1
 	if(is_pointed(W))
 		return 1
 
-	var/list/embed_items = list(\
-	/obj/item/stack/rods,\
-	)
-
-	if(is_type_in_list(W, embed_items))
+	if(is_type_in_typecache(W, can_embed_types))
 		return 1
 
 
 /*
 Checks if that loc and dir has a item on the wall
 */
-var/list/WALLITEMS = list(
+var/list/WALLITEMS = typecacheof(list(
 	/obj/machinery/power/apc, /obj/machinery/airalarm, /obj/item/device/radio/intercom,
 	/obj/structure/extinguisher_cabinet, /obj/structure/reagent_dispensers/peppertank,
 	/obj/machinery/status_display, /obj/machinery/requests_console, /obj/machinery/light_switch, /obj/structure/sign,
@@ -820,22 +820,22 @@ var/list/WALLITEMS = list(
 	/obj/machinery/computer/security/telescreen, /obj/machinery/embedded_controller/radio/simple_vent_controller,
 	/obj/item/weapon/storage/secure/safe, /obj/machinery/door_timer, /obj/machinery/flasher, /obj/machinery/keycard_auth,
 	/obj/structure/mirror, /obj/structure/fireaxecabinet, /obj/machinery/computer/security/telescreen/entertainment
-	)
+	))
 
-var/list/WALLITEMS_EXTERNAL = list(
+var/list/WALLITEMS_EXTERNAL = typecacheof(list(
 	/obj/machinery/camera, /obj/structure/camera_assembly,
-	/obj/structure/light_construct, /obj/machinery/light)
+	/obj/structure/light_construct, /obj/machinery/light))
 
-var/list/WALLITEMS_INVERSE = list(
-	/obj/structure/light_construct, /obj/machinery/light)
+var/list/WALLITEMS_INVERSE = typecacheof(list(
+	/obj/structure/light_construct, /obj/machinery/light))
 
 
 /proc/gotwallitem(loc, dir, var/check_external = 0)
 	var/locdir = get_step(loc, dir)
 	for(var/obj/O in loc)
-		if(is_type_in_list(O, WALLITEMS) && check_external != 2)
+		if(is_type_in_typecache(O, WALLITEMS) && check_external != 2)
 			//Direction works sometimes
-			if(is_type_in_list(O, WALLITEMS_INVERSE))
+			if(is_type_in_typecache(O, WALLITEMS_INVERSE))
 				if(O.dir == turn(dir, 180))
 					return 1
 			else if(O.dir == dir)
@@ -846,8 +846,8 @@ var/list/WALLITEMS_INVERSE = list(
 			if(get_turf_pixel(O) == locdir)
 				return 1
 
-		if(is_type_in_list(O, WALLITEMS_EXTERNAL) && check_external)
-			if(is_type_in_list(O, WALLITEMS_INVERSE))
+		if(is_type_in_typecache(O, WALLITEMS_EXTERNAL) && check_external)
+			if(is_type_in_typecache(O, WALLITEMS_INVERSE))
 				if(O.dir == turn(dir, 180))
 					return 1
 			else if(O.dir == dir)
@@ -855,7 +855,7 @@ var/list/WALLITEMS_INVERSE = list(
 
 	//Some stuff is placed directly on the wallturf (signs)
 	for(var/obj/O in locdir)
-		if(is_type_in_list(O, WALLITEMS) && check_external != 2)
+		if(is_type_in_typecache(O, WALLITEMS) && check_external != 2)
 			if(O.pixel_x == 0 && O.pixel_y == 0)
 				return 1
 	return 0

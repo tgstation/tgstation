@@ -50,6 +50,8 @@
 
 #define isalienadult(A) (istype(A, /mob/living/carbon/alien/humanoid))
 
+#define isdevil(A) (istype(A, /mob/living/carbon/true_devil))
+
 //Silicon mobs
 #define issilicon(A) (istype(A, /mob/living/silicon))
 
@@ -61,6 +63,8 @@
 
 //Simple animals
 #define isanimal(A) (istype(A, /mob/living/simple_animal))
+
+#define isrevenant(A) (istype(A, /mob/living/simple_animal/revenant))
 
 #define isborer(A) (istype(A, /mob/living/simple_animal/borer))
 
