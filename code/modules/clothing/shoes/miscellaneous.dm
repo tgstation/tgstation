@@ -202,13 +202,13 @@
 	jumping = FALSE
 	recharging_time = world.time + recharging_rate
 
-/obj/item/clothing/shoes/ysing
+/obj/item/clothing/shoes/singery
 	name = "yellow performer's boots"
 	desc = "These boots were made for dancing."
 	icon_state = "ysing"
 	put_on_delay = 50
 
-/obj/item/clothing/shoes/bsing
+/obj/item/clothing/shoes/singerb
 	name = "blue performer's boots"
 	desc = "These boots were made for dancing."
 	icon_state = "bsing"
