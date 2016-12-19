@@ -45,7 +45,7 @@
 	maturation = 10
 	production = 10
 	mutatelist = list()
-	reagents_add = list("gold" = 0.15, "vitamin" = 0.04, "nutriment" = 0.1)
+	reagents_add = list("gold" = 0.2, "vitamin" = 0.04, "nutriment" = 0.1)
 	rarity = 40 // Alchemy!
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/apple/gold
