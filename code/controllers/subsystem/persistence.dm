@@ -8,6 +8,8 @@ var/datum/subsystem/persistence/SSpersistence
 	var/list/satchel_blacklist 		= list() //this is a typecache
 	var/list/new_secret_satchels 	= list() //these are objects
 	var/old_secret_satchels 		= ""
+	var/savefile/trophy_items
+	var/old_trophy_list				= ""
 
 /datum/subsystem/persistence/New()
 	NEW_SS_GLOBAL(SSpersistence)
@@ -27,6 +29,8 @@ var/datum/subsystem/persistence/SSpersistence
 	else
 		expanded_old_satchels.len = 0
 
+
+
 	var/list/free_satchels = list()
 	for(var/turf/T in shuffle(block(locate(TRANSITIONEDGE,TRANSITIONEDGE,ZLEVEL_STATION), locate(world.maxx-TRANSITIONEDGE,world.maxy-TRANSITIONEDGE,ZLEVEL_STATION)))) //Nontrivially expensive but it's roundstart only
 		if(isfloorturf(T) && !istype(T,/turf/open/floor/plating/))
@@ -34,10 +38,22 @@ var/datum/subsystem/persistence/SSpersistence
 			if(!isemptylist(free_satchels) && ((free_satchels.len + placed_satchels) >= (50 - expanded_old_satchels.len) * 0.1)) //up to six tiles, more than enough to kill anything that moves
 				break
 
+	//Trophies
+	trophy_items = new /savefile("data/npc_saves/TrophyItems.sav")
+	trophy_items >> old_trophy_list
+
+	var/list/expanded_trophy_items = list()
+
+	if(!isnull(old_trophy_list))
+		expanded_trophy_items = splittext(old_trophy_list,"#")
+		SetUpTrophies(expanded_trophy_items)
+	else
+		expanded_trophy_items.len = 0
 	..()
 
 /datum/subsystem/persistence/proc/CollectData()
 	CollectSecretSatchels()
+	CollectTrophies()
 
 /datum/subsystem/persistence/proc/PlaceSecretSatchel(list/expanded_old_satchels)
 	var/satchel_string
@@ -82,3 +98,33 @@ var/datum/subsystem/persistence/SSpersistence
 			continue
 		old_secret_satchels += "[F.x]|[F.y]|[pick(savable_obj)]#"
 	secret_satchels[MAP_NAME] << old_secret_satchels
+
+
+/datum/subsystem/persistence/proc/CollectTrophies()
+	for(var/A in trophy_cases)
+		var/obj/structure/displaycase/T = A
+		if(T.showpiece)
+			old_trophy_list += "[T.showpiece.type]|[T.trophy_message]#"
+	trophy_items << old_trophy_list
+
+/datum/subsystem/persistence/proc/SetUpTrophies(list/expanded_trophy_items)
+	for(var/A in trophy_cases)
+		var/obj/structure/displaycase/T = A
+		T.added_roundstart = 1
+
+		var/trophy_string = pick_n_take(expanded_trophy_items)
+
+		old_trophy_list = jointext(expanded_trophy_items,"#")
+		trophy_items << old_trophy_list
+
+		var/list/chosen_trophy = splittext(trophy_string,"|")
+		if(!chosen_trophy || isemptylist(chosen_trophy) || chosen_trophy.len != 2) //Malformed
+			continue
+
+		var/path = text2path(chosen_trophy[1]) //If the item no longer exist, this returns null
+		if(!path)
+			continue
+
+		T.showpiece = new path
+		T.trophy_message = chosen_trophy[2]
+		T.update_icon()

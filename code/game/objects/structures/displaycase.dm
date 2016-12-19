@@ -1,3 +1,4 @@
+var/list/trophy_cases = list()
 /obj/structure/displaycase
 	name = "display case"
 	icon = 'icons/obj/stationobjs.dmi'
@@ -15,11 +16,16 @@
 	var/open = 0
 	var/obj/item/weapon/electronics/airlock/electronics
 	var/start_showpiece_type = null //add type for items on display
+	var/is_trophy = 0
+	var/trophy_message = ""
+	var/added_roundstart = 0
 
 /obj/structure/displaycase/New()
 	..()
 	if(start_showpiece_type)
 		showpiece = new start_showpiece_type (src)
+	if(is_trophy)
+		trophy_cases += src
 	update_icon()
 
 /obj/structure/displaycase/Destroy()
@@ -29,12 +35,18 @@
 	if(showpiece)
 		qdel(showpiece)
 		showpiece = null
+	if(is_trophy)
+		trophy_cases -= src
 	return ..()
 
 /obj/structure/displaycase/examine(mob/user)
 	..()
 	if(showpiece)
 		user << "<span class='notice'>There's [showpiece] inside.</span>"
+		if(is_trophy)
+			user << "The plaque reads:"
+			user << trophy_message
+			user << "The case looks completely indestructible."
 	if(alert)
 		user << "<span class='notice'>Hooked up with an anti-theft system.</span>"
 
@@ -114,7 +126,31 @@
 	src.icon = I
 	return
 
-/obj/structure/displaycase/attackby(obj/item/weapon/W, mob/user, params)
+/obj/structure/displaycase/attackby(obj/item/W, mob/user, params)
+	if(is_trophy)
+		if(is_type_in_typecache(W, blacklisted_cargo_types))
+			user << "You think putting [W] in would be a bad idea."
+			return
+		if(!added_roundstart)
+			user << "You've already put something new in this case."
+		var/chosen_plaque = stripped_input(user, "What would you like the plaque to say?", "Trophy Plaque")
+		if(!chosen_plaque)
+			user << "You decide against putting [W] in."
+			return
+		if(showpiece)
+			user << "You press a button, and [showpiece] descends into the floor of the case."
+			SSpersistence.old_trophy_list += "[showpiece.type]|[trophy_message]#"
+			qdel(showpiece)
+			showpiece = null
+		if(user.drop_item())
+			added_roundstart = FALSE
+			user << "You insert [W] into the case."
+			W.forceMove(src)
+			showpiece = W
+			trophy_message = chosen_plaque
+			update_icon()
+		return
+
 	if(W.GetID() && !broken)
 		if(allowed(user))
 			user <<  "<span class='notice'>You [open ? "close":"open"] the [src]</span>"
@@ -125,7 +161,7 @@
 		var/obj/item/weapon/weldingtool/WT = W
 		if(obj_integrity < max_integrity && WT.remove_fuel(5, user))
 			user << "<span class='notice'>You begin repairing [src].</span>"
-			playsound(loc, WT.usesound, 40, 1)
+			playsound(loc, 'sound/items/Welder.ogg', 40, 1)
 			if(do_after(user, 40*W.toolspeed, target = src))
 				obj_integrity = max_integrity
 				playsound(loc, 'sound/items/Welder2.ogg', 50, 1)
@@ -204,7 +240,7 @@
 /obj/structure/displaycase_chassis/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/wrench)) //The player can only deconstruct the wooden frame
 		user << "<span class='notice'>You start disassembling [src]...</span>"
-		playsound(src.loc, I.usesound, 50, 1)
+		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 		if(do_after(user, 30*I.toolspeed, target = src))
 			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 			new /obj/item/stack/sheet/mineral/wood(get_turf(src))
@@ -212,7 +248,7 @@
 
 	else if(istype(I, /obj/item/weapon/electronics/airlock))
 		user << "<span class='notice'>You start installing the electronics into [src]...</span>"
-		playsound(src.loc, I.usesound, 50, 1)
+		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 		if(user.unEquip(I) && do_after(user, 30, target = src))
 			I.loc = src
 			electronics = I
@@ -250,3 +286,12 @@
 	desc = "A glass lab container for storing interesting creatures."
 	start_showpiece_type = /obj/item/clothing/mask/facehugger/lamarr
 	req_access = list(access_rd)
+
+/obj/structure/displaycase/trophy
+	name = "trophy display case"
+	desc = "Store your trophies of accomplishment in here, and they will stay forever."
+	obj_integrity = INFINITY // no
+	max_integrity = INFINITY
+	start_showpiece_type = null
+	req_access = list(access_cent_bar)
+	is_trophy = 1
