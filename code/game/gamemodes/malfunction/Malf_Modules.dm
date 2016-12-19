@@ -291,11 +291,11 @@
 		for(var/datum/AI_Module/small/overload_machine/overload in current_modules)
 			if(overload.uses > 0)
 				overload.uses --
-				audible_message("<span class='italics'>You hear a loud electrical buzzing sound!</span>")
+				audible_message("<span class='userdanger'>You hear a loud electrical buzzing sound coming from [M]!</span>")
 				src << "<span class='warning'>Overloading machine circuitry...</span>"
 				spawn(50)
 					if(M)
-						explosion(get_turf(M), 0,1,1,0)
+						explosion(get_turf(M), 0,2,3,0)
 						qdel(M)
 			else src << "<span class='notice'>Out of uses.</span>"
 	else src << "<span class='notice'>That's not a machine.</span>"
