@@ -590,7 +590,7 @@
 	meat = /obj/item/weapon/ore/plasma
 	//Can burn and takes damage from heat
 	species_traits = list(NOBREATH,RESISTCOLD,RESISTPRESSURE,NOGUNS,NOBLOOD,RADIMMUNE,VIRUSIMMUNE,PIERCEIMMUNE,NODISMEMBER,MUTCOLORS)
-	info_text = "As a <span class='danger'>Plasma Golem</span>, you explode on death!."
+	info_text = "As a <span class='danger'>Plasma Golem</span>, you explode on death!"
 	burnmod = 1.5
 
 /datum/species/golem/plasma/spec_death(gibbed, mob/living/carbon/human/H)
