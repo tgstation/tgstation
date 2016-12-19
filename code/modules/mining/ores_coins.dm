@@ -91,26 +91,18 @@
 		return
 	var/mob/living/carbon/human/C = hit_atom
 	if(C.head && C.head.flags_cover & HEADCOVERSEYES)
-		if(cooldown < world.time - 10)
-			visible_message("<span class='danger'>[C]'s headgear blocks the [src]!</span>")
-			cooldown = world.time
+		visible_message("<span class='danger'>[C]'s headgear blocks the sand!</span>")
 		return
 	if(C.wear_mask && C.wear_mask.flags_cover & MASKCOVERSEYES)
-		if(cooldown < world.time - 10)
-			visible_message("<span class='danger'>[C]'s mask blocks the [src]!</span>")
-			cooldown = world.time
-			return
+		visible_message("<span class='danger'>[C]'s mask blocks the sand!</span>")
+		return
 	if(C.glasses && C.glasses.flags_cover & GLASSESCOVERSEYES)
-		if(cooldown < world.time - 10)
-			visible_message("<span class='danger'>[C]'s glasses block the [src]!</span>")
-			cooldown = world.time
+		visible_message("<span class='danger'>[C]'s glasses block the sand!</span>")
 		return
 	C.adjust_blurriness(6)
 	C.adjustStaminaLoss(15)//the pain from your eyes burning does stamina damage
 	C.confused += 5
-	if(cooldown < world.time - 10)
-		C << "<span class='userdanger'>\The [src] gets into your eyes! The pain, it burns!</span>"
-		cooldown = world.time
+	C << "<span class='userdanger'>\The [src] gets into your eyes! The pain, it burns!</span>"
 	qdel(src)
 
 /obj/item/weapon/ore/glass/basalt
