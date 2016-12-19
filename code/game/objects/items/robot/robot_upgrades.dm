@@ -43,7 +43,7 @@
 	R.custom_name = heldname
 	R.updatename()
 	if(oldname == R.real_name)
-		R.notify_ai(3, oldname, R.realname)
+		R.notify_ai(3, oldname, R.real_name)
 
 	return 1
 
