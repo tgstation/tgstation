@@ -172,11 +172,12 @@ var/datum/subsystem/shuttle/SSshuttle
 			return
 		emergency = backup_shuttle
 
-	if(world.time - round_start_time < config.shuttle_refuel_delay)
-		user << "The emergency shuttle is refueling. Please wait another [abs(round(((world.time - round_start_time) - config.shuttle_refuel_delay)/600))] minutes before trying again."
-		return
+	var/precall = world.time - round_start_time < config.shuttle_refuel_delay
 
 	switch(emergency.mode)
+		if(SHUTTLE_PRECALL)
+			user << "The emergency shuttle is refueling, but will be on route."
+			return
 		if(SHUTTLE_RECALL)
 			user << "The emergency shuttle may not be called while returning to Centcom."
 			return
@@ -204,17 +205,28 @@ var/datum/subsystem/shuttle/SSshuttle
 
 	var/area/signal_origin = get_area(user)
 	var/emergency_reason = "\nNature of emergency:\n\n[call_reason]"
+	var/decoded_reason = html_decode(emergency_reason)
 	var/security_num = seclevel2num(get_security_level())
+	var/coefficient = 1
+	var/redAlert = FALSE
+
 	switch(security_num)
 		if(SEC_LEVEL_GREEN)
-			emergency.request(null, 2, signal_origin, html_decode(emergency_reason), 0)
+			coefficient = 2
 		if(SEC_LEVEL_BLUE)
-			emergency.request(null, 1, signal_origin, html_decode(emergency_reason), 0)
+			coefficient = 1
 		else
-			emergency.request(null, 0.5, signal_origin, html_decode(emergency_reason), 1) // There is a serious threat we gotta move no time to give them five minutes.
+			coefficient = 0.5
+			redAlert = TRUE
 
-	log_game("[key_name(user)] has called the shuttle.")
-	message_admins("[key_name_admin(user)] has called the shuttle.")
+	if(precall)
+		emergency.precall(decoded_reason)
+	else
+		emergency.request(coefficient, signal_origin, decoded_reason, redAlert)
+
+	var/called = "[precall ? "pre" : ""]called"
+	log_game("[key_name(user)] has [called] the shuttle.")
+	message_admins("[key_name_admin(user)] has [called] the shuttle.")
 
 // Called when an emergency shuttle mobile docking port is
 // destroyed, which will only happen with admin intervention
@@ -231,6 +243,8 @@ var/datum/subsystem/shuttle/SSshuttle
 		return 1
 
 /datum/subsystem/shuttle/proc/canRecall()
+	if(emergency.mode == SHUTTLE_PRECALL)
+		return TRUE
 	if(emergency.mode != SHUTTLE_CALL)
 		return
 	if(ticker.mode.name == "meteor")

@@ -202,12 +202,46 @@
 
 	. = ..()
 
-/obj/docking_port/mobile/emergency/request(obj/docking_port/stationary/S, coefficient=1, area/signalOrigin, reason, redAlert)
+/obj/docking_port/mobile/emergency/proc/precall(reason)
+	if(mode != SHUTTLE_IDLE)
+		return FALSE
+	var/refuel_time = config.shuttle_refuel_delay - (world.time - round_start_time)
+	if(refuel_time < 0)
+		return FALSE
+
+	mode = SHUTTLE_PRECALL
+	setTimer(refuel_time)
+
+	priority_announce("The emergency shuttle has been pre-called. Once it has \
+		finished refueling, it will automatically be called.",
+			"Shuttle Pre-call Alert")
+
+/obj/docking_port/mobile/emergency/proc/precall_fire()
+	if(mode != SHUTTLE_PRECALL)
+		return
+
+	var/coefficient = 1
+	var/redAlert = FALSE
+	var/security_num = seclevel2num(get_security_level())
+
+	switch(security_num)
+		if(SEC_LEVEL_GREEN)
+			coefficient = 2
+		if(SEC_LEVEL_BLUE)
+			coefficient = 1
+		else
+			coefficient = 0.5
+			redAlert = TRUE
+
+	var/reason = "\nThe shuttle has finished refueling and has now been called."
+	request(coefficient, null, reason, redAlert)
+
+/obj/docking_port/mobile/emergency/request(coefficient=1, area/signalOrigin, reason, redAlert)
 	var/call_time = SSshuttle.emergencyCallTime * coefficient
 	switch(mode)
 		// The shuttle can not normally be called while "recalling", so
 		// if this proc is called, it's via admin fiat
-		if(SHUTTLE_RECALL, SHUTTLE_IDLE, SHUTTLE_CALL)
+		if(SHUTTLE_RECALL, SHUTTLE_IDLE, SHUTTLE_CALL, SHUTTLE_PRECALL)
 			mode = SHUTTLE_CALL
 			setTimer(call_time)
 		else
@@ -221,6 +255,14 @@
 	priority_announce("The emergency shuttle has been called. [redAlert ? "Red Alert state confirmed: Dispatching priority shuttle. " : "" ]It will arrive in [timeLeft(600)] minutes.[reason][SSshuttle.emergencyLastCallLoc ? "\n\nCall signal traced. Results can be viewed on any communications console." : "" ]", null, 'sound/AI/shuttlecalled.ogg', "Priority")
 
 /obj/docking_port/mobile/emergency/cancel(area/signalOrigin)
+	if(mode == SHUTTLE_PRECALL)
+		timer = 0
+		mode = SHUTTLE_IDLE
+		priority_announce("The emergency shuttle's pre-call has been \
+			cancelled. It will no longer be called automatically upon \
+			refueling.", "Shuttle Pre-call Alert")
+		return
+
 	if(mode != SHUTTLE_CALL)
 		return
 
@@ -269,6 +311,9 @@
 		create_ripples(destination)
 
 	switch(mode)
+		if(SHUTTLE_PRECALL)
+			if(time_left <= 0)
+				precall_fire()
 		if(SHUTTLE_RECALL)
 			if(time_left <= 0)
 				mode = SHUTTLE_IDLE

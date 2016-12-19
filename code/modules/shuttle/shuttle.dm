@@ -645,6 +645,8 @@
 			return "RCL"
 		if(SHUTTLE_CALL)
 			return "ETA"
+		if(SHUTTLE_PRECALL)
+			return "PRE"
 		if(SHUTTLE_DOCKED)
 			return "ETD"
 		if(SHUTTLE_ESCAPE)
