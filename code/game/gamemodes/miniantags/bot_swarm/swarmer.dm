@@ -242,8 +242,12 @@
 	return TRUE
 
 /obj/machinery/door/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
-	S.DisIntegrate(src)
-	return TRUE
+	for(var/turf/T in range(1, src))
+		if(isspaceturf(T) || istype(T.loc, /area/space))
+			S << "<span class='warning'>Destroying this object has the potential to cause a hull breach. Aborting.</span>"
+			S.target = null
+			return TRUE
+	return ..()
 
 /obj/machinery/camera/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
 	S.DisIntegrate(src)
