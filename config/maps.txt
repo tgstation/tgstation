@@ -31,11 +31,6 @@ endmap
 	voteweight 0
 endmap
 
-map birdstation
-	friendlyname Bird Boat Station
-	maxplayers 35
-endmap
-
 map dreamstation
 	friendlyname Dream Station
 endmap
