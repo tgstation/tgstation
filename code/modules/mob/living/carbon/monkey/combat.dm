@@ -110,7 +110,7 @@
 		return TRUE
 
 	// have we been disarmed
-	if(!get_item_for_held_index(1) && !get_item_for_held_index(2))
+	if(!locate(/obj/item/weapon) in held_items)
 		best_force = 0
 
 	if(restrained() || blacklistItems[pickupTarget])
@@ -241,19 +241,15 @@
 
 			if(target && target.stat == CONSCIOUS)		// make sure target exists
 				if(Adjacent(target) && isturf(target.loc))	// if right next to perp
-					var/obj/item/weapon/Weapon = get_item_for_held_index(1)
-					if(!Weapon)
-						Weapon = get_item_for_held_index(2)
+					var/obj/item/weapon/Weapon = locate(/obj/item/weapon) in held_items
 
 					// attack with weapon if we have one
 					if(Weapon)
 
 						// if the target has a weapon, 50% change to disarm them
-						if((target.get_item_for_held_index(1) || target.get_item_for_held_index(2)) && prob(50))
+						if((locate(/obj/item/weapon) in target.held_items) && prob(50))
 
-							pickupTarget = target.get_item_for_held_index(1)
-							if(!pickupTarget)
-								pickupTarget = target.get_item_for_held_index(2)
+							pickupTarget = locate(/obj/item/weapon) in target.held_items
 
 							a_intent = INTENT_DISARM
 							target.attackby(Weapon, src)
@@ -266,11 +262,9 @@
 					else
 
 						// if the target has a weapon, 50% change to disarm them
-						if((target.get_item_for_held_index(1) || target.get_item_for_held_index(2)) && prob(50))
+						if((locate(/obj/item/weapon) in target.held_items) && prob(50))
 
-							pickupTarget = target.get_item_for_held_index(1)
-							if(!pickupTarget)
-								pickupTarget = target.get_item_for_held_index(2)
+							pickupTarget = locate(/obj/item/weapon) in target.held_items
 
 							a_intent = INTENT_DISARM
 							target.attack_paw(src)
