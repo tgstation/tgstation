@@ -1,4 +1,0 @@
-author: "spudboy"
-delete-after: True
-changes: 
-  - bugfix: "Fixed items not appearing in the detective's fedora."
