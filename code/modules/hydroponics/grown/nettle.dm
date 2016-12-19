@@ -11,7 +11,7 @@
 	growthstages = 5
 	genes = list(/datum/plant_gene/trait/repeated_harvest, /datum/plant_gene/trait/plant_type/weed_hardy)
 	mutatelist = list(/obj/item/seeds/nettle/death)
-	reagents_add = list("sacid" = 0.5)
+	reagents_add = list("sacid" = 0.1)
 
 /obj/item/seeds/nettle/death
 	name = "pack of death-nettle seeds"
