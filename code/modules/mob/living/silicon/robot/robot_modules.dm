@@ -24,6 +24,8 @@
 	var/did_feedback = FALSE
 	var/feedback_key
 
+	var/hat_offset = -3
+
 /obj/item/weapon/robot_module/New()
 	..()
 	for(var/i in basic_modules)
@@ -192,6 +194,9 @@
 	var/obj/effect/overlay/temp/decoy/fading/fivesecond/ANM = PoolOrNew(/obj/effect/overlay/temp/decoy/fading/fivesecond, list(R.loc, R))
 	ANM.layer = R.layer - 0.01
 	PoolOrNew(/obj/effect/overlay/temp/small_smoke, R.loc)
+	if(R.hat)
+		R.hat.forceMove(get_turf(R))
+		R.hat = null
 	R.update_headlamp()
 	R.alpha = 0
 	animate(R, alpha = 255, time = 50)
@@ -222,6 +227,7 @@
 	ratvar_modules = list(/obj/item/clockwork/slab/cyborg, /obj/item/clockwork/ratvarian_spear)
 	moduleselect_icon = "standard"
 	feedback_key = "cyborg_standard"
+	hat_offset = -3
 
 /obj/item/weapon/robot_module/medical
 	name = "Medical"
@@ -237,6 +243,7 @@
 	moduleselect_icon = "medical"
 	feedback_key = "cyborg_medical"
 	can_be_pushed = FALSE
+	hat_offset = 3
 
 /obj/item/weapon/robot_module/engineering
 	name = "Engineering"
@@ -252,6 +259,7 @@
 	moduleselect_icon = "engineer"
 	feedback_key = "cyborg_engineering"
 	magpulsing = TRUE
+	hat_offset = INFINITY // No hats
 
 /obj/item/weapon/robot_module/security
 	name = "Security"
@@ -263,6 +271,7 @@
 	moduleselect_icon = "security"
 	feedback_key = "cyborg_security"
 	can_be_pushed = FALSE
+	hat_offset = 3
 
 /obj/item/weapon/robot_module/security/do_transform_animation()
 	..()
@@ -290,6 +299,7 @@
 	moduleselect_icon = "standard"
 	feedback_key = "cyborg_peacekeeper"
 	can_be_pushed = FALSE
+	hat_offset = -2
 
 /obj/item/weapon/robot_module/peacekeeper/do_transform_animation()
 	..()
@@ -305,6 +315,7 @@
 	cyborg_base_icon = "janitor"
 	moduleselect_icon = "janitor"
 	feedback_key = "cyborg_janitor"
+	hat_offset = -5
 
 /obj/item/weapon/reagent_containers/spray/cyborg_drying
 	name = "drying agent spray"
@@ -341,6 +352,7 @@
 	moduleselect_icon = "service"
 	special_light_key = "service"
 	feedback_key = "cyborg_service"
+	hat_offset = 0
 
 /obj/item/weapon/robot_module/butler/respawn_consumable(mob/living/silicon/robot/R, coeff = 1)
 	..()
@@ -363,9 +375,11 @@
 		if("Kent")
 			cyborg_base_icon = "kent"
 			special_light_key = "medical"
+			hat_offset = 3
 		if("Tophat")
 			cyborg_base_icon = "tophat"
 			special_light_key = null
+			hat_offset = INFINITY //He is already wearing a hat
 	return ..()
 
 /obj/item/weapon/robot_module/miner
@@ -378,6 +392,7 @@
 	cyborg_base_icon = "miner"
 	moduleselect_icon = "miner"
 	feedback_key = "cyborg_miner"
+	hat_offset = 0
 
 /obj/item/weapon/robot_module/syndicate
 	name = "Syndicate Assault"
@@ -388,6 +403,7 @@
 	cyborg_base_icon = "synd_sec"
 	moduleselect_icon = "malf"
 	can_be_pushed = FALSE
+	hat_offset = 3
 
 /obj/item/weapon/robot_module/syndicate_medical
 	name = "Syndicate Medical"
@@ -399,6 +415,7 @@
 	cyborg_base_icon = "synd_medical"
 	moduleselect_icon = "malf"
 	can_be_pushed = FALSE
+	hat_offset = 3
 
 /datum/robot_energy_storage
 	var/name = "Generic energy storage"
