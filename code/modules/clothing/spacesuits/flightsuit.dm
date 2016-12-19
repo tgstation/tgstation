@@ -230,8 +230,8 @@
 		momentum_increment = boost_power
 	if(brake)
 		momentum_increment = 0
-	if(!gravity)
-		momentum_increment -= 20
+	if(!gravity && !pressure)
+		momentum_increment -= 10
 	switch(dir)
 		if(NORTH)
 			adjust_momentum(0, momentum_increment)
@@ -1263,6 +1263,7 @@
 /obj/item/clothing/head/helmet/space/hardsuit/flightsuit/ui_action_click(owner, action)
 	if(istype(action, /datum/action/item_action/flightpack/zoom))
 		toggle_zoom(owner)
+	. = ..()
 
 /obj/item/clothing/head/helmet/space/hardsuit/flightsuit/proc/toggle_zoom(mob/living/user, force_off = FALSE)
 	if(zoom || force_off)
