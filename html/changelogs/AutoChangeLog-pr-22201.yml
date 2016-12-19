@@ -1,4 +1,0 @@
-author: "Mervill"
-delete-after: True
-changes: 
-  - bugfix: "Intents can be cycled forward and backwards with hotkeys again"

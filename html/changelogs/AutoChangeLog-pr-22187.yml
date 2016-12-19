@@ -1,4 +1,0 @@
-author: "Joan"
-delete-after: True
-changes: 
-  - rscadd: "Adds Replicant and Tinkerer's Cache to the default slab quickbind."

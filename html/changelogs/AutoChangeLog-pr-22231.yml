@@ -1,4 +1,0 @@
-author: "karlnp"
-delete-after: True
-changes: 
-  - bugfix: "vendors, airlocks, etc now cannot shock at a distance"

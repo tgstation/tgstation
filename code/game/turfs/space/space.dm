@@ -54,7 +54,8 @@
 			if(isspaceturf(t))
 				//let's NOT update this that much pls
 				continue
-			SetLuminosity(4,1)
+			SetLuminosity(4,5)
+			light.mode = LIGHTING_STARLIGHT
 			return
 		SetLuminosity(0)
 
