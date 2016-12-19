@@ -161,7 +161,7 @@ var/list/trophy_cases = list()
 		var/obj/item/weapon/weldingtool/WT = W
 		if(obj_integrity < max_integrity && WT.remove_fuel(5, user))
 			user << "<span class='notice'>You begin repairing [src].</span>"
-			playsound(loc, 'sound/items/Welder.ogg', 40, 1)
+			playsound(loc, WT.usesound, 40, 1)
 			if(do_after(user, 40*W.toolspeed, target = src))
 				obj_integrity = max_integrity
 				playsound(loc, 'sound/items/Welder2.ogg', 50, 1)
@@ -240,7 +240,7 @@ var/list/trophy_cases = list()
 /obj/structure/displaycase_chassis/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/wrench)) //The player can only deconstruct the wooden frame
 		user << "<span class='notice'>You start disassembling [src]...</span>"
-		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+		playsound(src.loc, I.usesound, 50, 1)
 		if(do_after(user, 30*I.toolspeed, target = src))
 			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 			new /obj/item/stack/sheet/mineral/wood(get_turf(src))
@@ -248,7 +248,7 @@ var/list/trophy_cases = list()
 
 	else if(istype(I, /obj/item/weapon/electronics/airlock))
 		user << "<span class='notice'>You start installing the electronics into [src]...</span>"
-		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+		playsound(src.loc, I.usesound, 50, 1)
 		if(user.unEquip(I) && do_after(user, 30, target = src))
 			I.loc = src
 			electronics = I
