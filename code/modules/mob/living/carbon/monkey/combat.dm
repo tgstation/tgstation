@@ -399,17 +399,17 @@
 
 /mob/living/carbon/monkey/Crossed(atom/movable/AM)
 	if(!IsDeadOrIncap() && ismob(AM) && target)
-		var/mob/living/carbon/C = AM
-		if(!istype(C) || !C || in_range(src, target))
+		var/mob/living/carbon/monkey/M = AM
+		if(!istype(M) || !M)
 			return
-		C.visible_message("<span class='warning'>[pick( \
-						  "[C] dives out of [src]'s way!", \
-						  "[C] stumbles over [src]!", \
-						  "[C] jumps out of [src]'s path!", \
-						  "[C] trips over [src] and falls!", \
-						  "[C] topples over [src]!", \
-						  "[C] leaps out of [src]'s way!")]</span>")
-		C.Weaken(2)
+		M.visible_message("<span class='warning'>[pick( \
+						  "[M] dives out of [src]'s way!", \
+						  "[M] stumbles over [src]!", \
+						  "[M] jumps out of [src]'s path!", \
+						  "[M] trips over [src] and falls!", \
+						  "[M] topples over [src]!", \
+						  "[M] leaps out of [src]'s way!")]</span>")
+		M.Weaken(2)
 		return
 	..()
 
