@@ -8,6 +8,10 @@
 /datum/action/item_action/organ_action/colossus
 	name = "Voice of God"
 	var/next_command = null
+	var/cooldown_stun = 900
+	var/cooldown_damage = 750
+	var/cooldown_meme = 450
+	var/cooldown_none = 150
 
 /datum/action/item_action/organ_action/colossus/IsAvailable()
 	if(world.time < next_command)
@@ -41,79 +45,79 @@
 	if(findtext(command, "stop") || findtext(command, "wait") || findtext(command, "stand still") || findtext(command, "hold on"))
 		for(var/mob/living/L in listeners)
 			L.Stun(2)
-		next_command = world.time + 900
+		next_command = world.time + cooldown_stun
 
 	//WEAKEN
 	else if(findtext(command, "drop") || findtext(command, "fall"))
 		for(var/mob/living/L in listeners)
 			L.Weaken(2)
-		next_command = world.time + 900
+		next_command = world.time + cooldown_stun
 
-	//WEAKEN
+	//SILENCE
 	else if(findtext(command, "shut up") || findtext(command, "silence") || findtext(command, "ssh"))
 		for(var/mob/living/L in listeners)
 			if(iscarbon(L))
 				var/mob/living/carbon/C = L
 				C.silent += 10
-		next_command = world.time + 900
+		next_command = world.time + cooldown_stun
 
 	//BRUTE DAMAGE
 	else if(findtext(command, "die") || findtext(command, "bleed"))
 		for(var/mob/living/L in listeners)
 			L.apply_damage(10, def_zone = "chest")
-		next_command = world.time + 750
+		next_command = world.time + cooldown_damage
 
 	//FIRE
 	else if(findtext(command, "burn"))
 		for(var/mob/living/L in listeners)
 			L.adjust_fire_stacks(0.8)
 			L.IgniteMob()
-		next_command = world.time + 750
+		next_command = world.time + cooldown_damage
 
 	//HEAL
 	else if(findtext(command, "live") || findtext(command, "heal") || findtext(command, "survive"))
 		for(var/mob/living/L in listeners)
 			L.heal_overall_damage(10, 10, 0, 0)
-		next_command = world.time + 750
+		next_command = world.time + cooldown_damage
 
 	//REPULSE
 	else if(findtext(command, "shoo") || findtext(command, "go away") || findtext(command, "leave me alone"))
 		for(var/mob/living/L in listeners)
 			var/throwtarget = get_edge_target_turf(owner, get_dir(owner, get_step_away(L, owner)))
 			L.throw_at_fast(throwtarget, 3, 1)
-		next_command = world.time + 750
+		next_command = world.time + cooldown_damage
 
 	//FLIP
 	else if(findtext(command, "flip") || findtext(command, "rotate") || findtext(command, "revolve"))
 		for(var/mob/living/L in listeners)
 			L.emote("flip")
-		next_command = world.time + 450
+		next_command = world.time + cooldown_meme
 
 	//DANCE
 	else if(findtext(command, "dance"))
 		for(var/mob/living/L in listeners)
 			L.emote("dance")
-		next_command = world.time + 450
+		next_command = world.time + cooldown_meme
 
 	//JUMP
 	else if(findtext(command, "jump"))
 		for(var/mob/living/L in listeners)
 			L.say("HOW HIGH?!!")
 			L.emote("jump")
-		next_command = world.time + 450
+		next_command = world.time + cooldown_meme
 
 	//PLAY DEAD
 	else if(findtext(command, "play dead"))
 		for(var/mob/living/L in listeners)
 			L.emote("deathgasp")
-		next_command = world.time + 450
+		next_command = world.time + cooldown_meme
 
 	//PLEASE CLAP
 	else if(findtext(command, "please clap"))
 		for(var/mob/living/L in listeners)
 			L.emote("clap")
-		next_command = world.time + 450
+		next_command = world.time + cooldown_meme
 
 	else
-		next_command = world.time + 150
+		next_command = world.time + cooldown_none
 
