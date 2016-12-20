@@ -62334,17 +62334,14 @@
 	},
 /area/atmos)
 "cdy" = (
-/obj/docking_port/mobile{
+/obj/docking_port/mobile/white_ship{
 	dheight = 0;
 	dir = 2;
 	dwidth = 11;
 	height = 15;
-	id = "whiteship";
-	launch_status = 0;
 	name = "NT Recovery White-Ship";
 	port_angle = -90;
 	preferred_direction = 4;
-	roundstart_move = "whiteship_away";
 	width = 27
 	},
 /obj/machinery/door/airlock/titanium{

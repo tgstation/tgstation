@@ -13,15 +13,12 @@
 /area/shuttle/abandoned)
 "ad" = (
 /obj/machinery/door/airlock/titanium,
-/obj/docking_port/mobile{
+/obj/docking_port/mobile/white_ship{
 	dheight = 0;
 	dir = 2;
 	dwidth = 11;
 	height = 22;
-	id = "whiteship";
-	launch_status = 0;
 	name = "NT Medical Ship";
-	roundstart_move = "whiteship_away";
 	port_angle = 180;
 	width = 35;
 	timid = 1

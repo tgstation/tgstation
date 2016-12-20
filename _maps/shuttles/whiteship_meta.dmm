@@ -26,17 +26,14 @@
 	},
 /area/shuttle/abandoned)
 "ag" = (
-/obj/docking_port/mobile{
+/obj/docking_port/mobile/white_ship{
 	dheight = 0;
 	dir = 2;
 	dwidth = 11;
 	height = 15;
-	id = "whiteship";
-	launch_status = 0;
 	name = "NT Recovery White-Ship";
 	port_angle = 180;
 	preferred_direction = 1;
-	roundstart_move = "whiteship_away";
 	timid = 1;
 	width = 27
 	},
