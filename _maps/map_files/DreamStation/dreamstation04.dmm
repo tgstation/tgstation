@@ -45158,14 +45158,15 @@
 	},
 /area/security/armory)
 "bLJ" = (
-/obj/machinery/flasher/portable,
+/obj/structure/rack,
+/obj/item/weapon/gun_attachment/barrel/long,
+/obj/item/weapon/gun_attachment/barrel/long,
 /turf/open/floor/plasteel/vault{
 	tag = "icon-vault (WEST)";
 	dir = 8
 	},
 /area/security/armory)
 "bLK" = (
-/obj/machinery/flasher/portable,
 /obj/machinery/light/small{
 	dir = 1
 	},
@@ -45173,6 +45174,9 @@
 	c_tag = "Armory";
 	network = list("SS13","Brig")
 	},
+/obj/structure/rack,
+/obj/item/weapon/gun_attachment/barrel/medium,
+/obj/item/weapon/gun_attachment/barrel/medium,
 /turf/open/floor/plasteel/vault{
 	tag = "icon-vault (WEST)";
 	dir = 8
@@ -46855,32 +46859,14 @@
 /turf/open/floor/plasteel/black,
 /area/security/armory)
 "bPk" = (
-/obj/structure/rack,
-/obj/item/weapon/gun/energy/e_gun/advtaser{
-	pixel_x = -3;
-	pixel_y = 3
-	},
-/obj/item/weapon/gun/energy/e_gun/advtaser,
-/obj/item/weapon/gun/energy/e_gun/advtaser{
-	pixel_x = 3;
-	pixel_y = -3
-	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/open/floor/plasteel/vault{
-	dir = 8
-	},
+/obj/structure/rack,
+/obj/item/weapon/gun/energy/frame/egun,
+/obj/item/weapon/gun/energy/frame/egun,
+/obj/item/weapon/gun/energy/frame/egun,
+/turf/open/floor/plasteel/black,
 /area/security/armory)
 "bPl" = (
-/obj/structure/rack,
-/obj/item/weapon/gun/energy/laser{
-	pixel_x = -3;
-	pixel_y = 3
-	},
-/obj/item/weapon/gun/energy/laser,
-/obj/item/weapon/gun/energy/laser{
-	pixel_x = 3;
-	pixel_y = -3
-	},
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
@@ -46888,24 +46874,18 @@
 	pixel_y = 0;
 	tag = ""
 	},
-/turf/open/floor/plasteel/vault{
-	dir = 8
-	},
+/obj/structure/rack,
+/obj/item/weapon/gun/energy/frame/hybrid_taser,
+/obj/item/weapon/gun/energy/frame/hybrid_taser,
+/obj/item/weapon/gun/energy/frame/hybrid_taser,
+/turf/open/floor/plasteel/black,
 /area/security/armory)
 "bPm" = (
 /obj/structure/rack,
-/obj/item/weapon/gun/energy/e_gun{
-	pixel_x = -3;
-	pixel_y = 3
-	},
-/obj/item/weapon/gun/energy/e_gun,
-/obj/item/weapon/gun/energy/e_gun{
-	pixel_x = 3;
-	pixel_y = -3
-	},
-/turf/open/floor/plasteel/vault{
-	dir = 8
-	},
+/obj/item/weapon/gun/energy/frame/lasergun,
+/obj/item/weapon/gun/energy/frame/lasergun,
+/obj/item/weapon/gun/energy/frame/lasergun,
+/turf/open/floor/plasteel/black,
 /area/security/armory)
 "bPn" = (
 /obj/machinery/atmospherics/components/unary/vent_pump{
@@ -46915,14 +46895,12 @@
 /turf/open/floor/plasteel/black,
 /area/security/armory)
 "bPo" = (
-/obj/structure/closet/secure_closet{
-	name = "contraband locker";
-	req_access_txt = "3"
-	},
 /obj/machinery/light_switch{
 	pixel_x = 24;
 	tag = "e"
 	},
+/obj/structure/table,
+/obj/item/weapon/screwdriver,
 /turf/open/floor/plasteel/vault{
 	tag = "icon-vault (WEST)";
 	dir = 8
@@ -48783,7 +48761,10 @@
 	},
 /area/security/armory)
 "bST" = (
-/obj/item/weapon/grenade/barrier,
+/obj/structure/rack,
+/obj/item/weapon/gun_attachment/handle/auto,
+/obj/item/weapon/gun_attachment/handle/auto,
+/obj/item/weapon/gun_attachment/handle/auto,
 /turf/open/floor/plasteel/vault{
 	tag = "icon-vault (WEST)";
 	dir = 8
@@ -64071,11 +64052,14 @@
 /turf/open/floor/plating,
 /area/construction)
 "cxB" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/structure/disposalpipe/segment,
-/mob/living/simple_animal/mouse,
-/turf/open/floor/plating,
-/area/maintenance/fsmaint)
+/obj/structure/rack,
+/obj/item/weapon/gun_attachment/barrel/short,
+/obj/item/weapon/gun_attachment/barrel/short,
+/turf/open/floor/plasteel/vault{
+	tag = "icon-vault (WEST)";
+	dir = 8
+	},
+/area/security/armory)
 "cxC" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -67385,12 +67369,17 @@
 /turf/open/floor/plating,
 /area/maintenance/asmaint2)
 "cEe" = (
-/mob/living/simple_animal/mouse,
-/turf/open/floor/plating{
-	broken = 1;
-	icon_state = "platingdmg3"
+/obj/machinery/flasher/portable,
+/obj/machinery/flasher/portable,
+/obj/machinery/flasher/portable,
+/obj/item/weapon/grenade/barrier,
+/obj/item/weapon/grenade/barrier,
+/obj/item/weapon/grenade/barrier,
+/turf/open/floor/plasteel/vault{
+	tag = "icon-vault (WEST)";
+	dir = 8
 	},
-/area/maintenance/asmaint2)
+/area/security/armory)
 "cEf" = (
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/plating{
@@ -70826,9 +70815,14 @@
 /turf/open/floor/plating,
 /area/maintenance/apmaint)
 "cKv" = (
-/mob/living/simple_animal/mouse,
-/turf/open/floor/plating,
-/area/maintenance/apmaint)
+/obj/structure/rack,
+/obj/item/weapon/gun_attachment/handle/burst,
+/obj/item/weapon/gun_attachment/handle/burst,
+/turf/open/floor/plasteel/vault{
+	tag = "icon-vault (WEST)";
+	dir = 8
+	},
+/area/security/armory)
 "cKw" = (
 /obj/structure/chair/stool,
 /turf/open/floor/plating,
@@ -71402,9 +71396,14 @@
 /turf/open/floor/plating,
 /area/maintenance/asmaint2)
 "cLD" = (
-/mob/living/simple_animal/mouse,
-/turf/open/floor/plating,
-/area/maintenance/asmaint2)
+/obj/structure/rack,
+/obj/item/weapon/gun_attachment/handle/semiauto,
+/obj/item/weapon/gun_attachment/handle/semiauto,
+/turf/open/floor/plasteel/vault{
+	tag = "icon-vault (WEST)";
+	dir = 8
+	},
+/area/security/armory)
 "cLE" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable/pink{
@@ -124745,7 +124744,7 @@ bIl
 bJT
 bLE
 bNo
-bNt
+cEe
 bRd
 bSO
 bJT
@@ -126289,7 +126288,7 @@ bLK
 bNt
 bNt
 bNt
-bST
+cKv
 bJT
 aae
 aaa
@@ -126542,11 +126541,11 @@ bDN
 bGf
 bIs
 bJT
-bLJ
+cxB
 bNt
 bPo
 bNt
-bST
+cLD
 bJT
 aae
 aae

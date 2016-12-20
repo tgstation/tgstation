@@ -222,3 +222,7 @@
 
 /obj/item/ammo_casing/energy/plasma/adv
 	projectile_type = /obj/item/projectile/plasma/adv
+
+/obj/item/ammo_casing/energy/bee
+	projectile_type = /obj/item/projectile/energy/bee
+	select_name = "BEES"

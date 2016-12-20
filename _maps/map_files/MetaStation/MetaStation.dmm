@@ -3470,19 +3470,13 @@
 	},
 /area/ai_monitored/security/armory)
 "agh" = (
-/obj/structure/rack,
-/obj/item/weapon/gun/energy/e_gun/advtaser{
-	pixel_x = -3;
-	pixel_y = 3
-	},
-/obj/item/weapon/gun/energy/e_gun/advtaser,
-/obj/item/weapon/gun/energy/e_gun/advtaser{
-	pixel_x = 3;
-	pixel_y = -3
-	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/rack,
+/obj/item/weapon/gun/energy/frame/egun,
+/obj/item/weapon/gun/energy/frame/egun,
+/obj/item/weapon/gun/energy/frame/egun,
 /turf/open/floor/plasteel/vault{
-	dir = 1
+	dir = 4
 	},
 /area/ai_monitored/security/armory)
 "agi" = (
@@ -3490,15 +3484,9 @@
 /area/ai_monitored/security/armory)
 "agj" = (
 /obj/structure/rack,
-/obj/item/weapon/gun/energy/laser{
-	pixel_x = -3;
-	pixel_y = 3
-	},
-/obj/item/weapon/gun/energy/laser,
-/obj/item/weapon/gun/energy/laser{
-	pixel_x = 3;
-	pixel_y = -3
-	},
+/obj/item/weapon/gun/energy/frame/hybrid_taser,
+/obj/item/weapon/gun/energy/frame/hybrid_taser,
+/obj/item/weapon/gun/energy/frame/hybrid_taser,
 /turf/open/floor/plasteel/vault{
 	dir = 4
 	},
@@ -3905,12 +3893,15 @@
 /area/security/prison)
 "agW" = (
 /obj/structure/rack,
-/obj/item/clothing/suit/armor/bulletproof,
-/obj/item/clothing/head/helmet/alt,
-/obj/item/clothing/suit/armor/bulletproof,
-/obj/item/clothing/head/helmet/alt,
-/obj/item/clothing/suit/armor/bulletproof,
-/obj/item/clothing/head/helmet/alt,
+/obj/item/weapon/gun_attachment/barrel/long,
+/obj/item/weapon/gun_attachment/barrel/long,
+/obj/item/weapon/gun_attachment/barrel/long,
+/obj/item/weapon/gun_attachment/barrel/medium,
+/obj/item/weapon/gun_attachment/barrel/medium,
+/obj/item/weapon/gun_attachment/barrel/medium,
+/obj/item/weapon/gun_attachment/barrel/short,
+/obj/item/weapon/gun_attachment/barrel/short,
+/obj/item/weapon/gun_attachment/barrel/short,
 /turf/open/floor/plasteel/vault{
 	dir = 4
 	},
@@ -3954,15 +3945,9 @@
 /area/ai_monitored/security/armory)
 "aha" = (
 /obj/structure/rack,
-/obj/item/weapon/gun/energy/e_gun{
-	pixel_x = -3;
-	pixel_y = 3
-	},
-/obj/item/weapon/gun/energy/e_gun,
-/obj/item/weapon/gun/energy/e_gun{
-	pixel_x = 3;
-	pixel_y = -3
-	},
+/obj/item/weapon/gun/energy/frame/lasergun,
+/obj/item/weapon/gun/energy/frame/lasergun,
+/obj/item/weapon/gun/energy/frame/lasergun,
 /turf/open/floor/plasteel/vault{
 	dir = 4
 	},
@@ -4259,18 +4244,21 @@
 /turf/closed/wall,
 /area/security/warden)
 "ahI" = (
-/obj/structure/rack,
-/obj/item/clothing/suit/armor/riot,
-/obj/item/clothing/suit/armor/riot,
-/obj/item/clothing/suit/armor/riot,
-/obj/item/clothing/head/helmet/riot,
-/obj/item/clothing/head/helmet/riot,
-/obj/item/clothing/head/helmet/riot,
 /obj/machinery/firealarm{
 	dir = 4;
 	pixel_x = 28;
 	pixel_y = 0
 	},
+/obj/structure/rack,
+/obj/item/weapon/gun_attachment/handle/auto,
+/obj/item/weapon/gun_attachment/handle/auto,
+/obj/item/weapon/gun_attachment/handle/auto,
+/obj/item/weapon/gun_attachment/handle/burst,
+/obj/item/weapon/gun_attachment/handle/burst,
+/obj/item/weapon/gun_attachment/handle/burst,
+/obj/item/weapon/gun_attachment/handle/semiauto,
+/obj/item/weapon/gun_attachment/handle/semiauto,
+/obj/item/weapon/gun_attachment/handle/semiauto,
 /turf/open/floor/plasteel/vault{
 	dir = 4
 	},
@@ -4366,6 +4354,18 @@
 	pixel_y = 0;
 	req_access_txt = "3"
 	},
+/obj/item/clothing/head/helmet/riot,
+/obj/item/clothing/head/helmet/riot,
+/obj/item/clothing/suit/armor/riot,
+/obj/item/clothing/suit/armor/riot,
+/obj/item/clothing/suit/armor/riot,
+/obj/item/clothing/head/helmet/riot,
+/obj/item/clothing/head/helmet/alt,
+/obj/item/clothing/head/helmet/alt,
+/obj/item/clothing/head/helmet/alt,
+/obj/item/clothing/suit/armor/bulletproof,
+/obj/item/clothing/suit/armor/bulletproof,
+/obj/item/clothing/suit/armor/bulletproof,
 /turf/open/floor/plasteel/vault{
 	dir = 4
 	},

@@ -42,6 +42,8 @@
 /obj/item/weapon/gun/ballistic/proc/chamber_round()
 	if (chambered || !magazine)
 		return
+	if(!magazine)
+		return
 	else if (magazine.ammo_count())
 		chambered = magazine.get_round()
 		chambered.forceMove(src)
@@ -121,7 +123,6 @@
 	else
 		user << "<span class='notice'>There's no magazine in \the [src].</span>"
 	update_icon()
-	return
 
 
 /obj/item/weapon/gun/ballistic/examine(mob/user)

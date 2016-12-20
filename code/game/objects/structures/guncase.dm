@@ -105,4 +105,4 @@
 	desc = "A locker that holds energy guns."
 	icon_state = "ecase"
 	case_type = "egun"
-	gun_category = /obj/item/weapon/gun/energy/e_gun
+	gun_category = /obj/item/weapon/gun/energy/frame/egun

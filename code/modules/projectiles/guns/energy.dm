@@ -117,6 +117,9 @@
 
 /obj/item/weapon/gun/energy/update_icon()
 	cut_overlays()
+	if(customizable_type)
+		for(var/obj/item/weapon/gun_attachment/A in attachments)
+			overlays += A.my_overlay
 	var/ratio = Ceiling((power_supply.charge / power_supply.maxcharge) * charge_sections)
 	var/obj/item/ammo_casing/energy/shot = ammo_type[select]
 	var/iconState = "[icon_state]_charge"
