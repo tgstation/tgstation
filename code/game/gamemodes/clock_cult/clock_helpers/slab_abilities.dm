@@ -135,7 +135,6 @@
 		M.visible_message("<span class='warning'>[src] snaps into glowing pieces and dissipates!</span>")
 		for(var/obj/item/geis_binding/GB in M.held_items)
 			M.unEquip(GB, TRUE)
-		qdel(src)
 
 /obj/structure/destructible/clockwork/geis_binding/relaymove(mob/user, direction)
 	if(isliving(user))
