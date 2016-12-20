@@ -4,17 +4,16 @@
 	icon = 'icons/turf/walls/cult_wall.dmi'
 	icon_state = "cult"
 	canSmoothWith = null
+	sheet_type = /obj/item/stack/sheet/runed_metal
+	sheet_amount = 1
+	girder_type = /obj/structure/girder/cult
 
 /turf/closed/wall/mineral/cult/New()
 	PoolOrNew(/obj/effect/overlay/temp/cult/turf, src)
 	..()
 
-/turf/closed/wall/mineral/cult/break_wall()
-	new/obj/item/stack/sheet/runed_metal(get_turf(src), 1)
-	return (new /obj/structure/girder/cult(src))
-
 /turf/closed/wall/mineral/cult/devastate_wall()
-	new/obj/item/stack/sheet/runed_metal(get_turf(src), 1)
+	new sheet_type(get_turf(src), sheet_amount)
 
 /turf/closed/wall/mineral/cult/narsie_act()
 	return
@@ -45,6 +44,8 @@
 	explosion_block = 2
 	hardness = 10
 	sheet_type = /obj/item/stack/tile/brass
+	sheet_amount = 1
+	girder_type = /obj/structure/destructible/clockwork/wall_gear
 	var/obj/effect/clockwork/overlay/wall/realappearence
 	var/obj/structure/destructible/clockwork/cache/linkedcache
 
@@ -120,9 +121,6 @@
 		else
 			O.loc = src
 
-/turf/closed/wall/clockwork/break_wall()
-	new sheet_type(src)
-	return new/obj/structure/destructible/clockwork/wall_gear(src)
 
 /turf/closed/wall/clockwork/devastate_wall()
 	for(var/i in 1 to 2)
