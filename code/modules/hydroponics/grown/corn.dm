@@ -13,7 +13,7 @@
 	icon_grow = "corn-grow" // Uses one growth icons set for all the subtypes
 	icon_dead = "corn-dead" // Same for the dead icon
 	mutatelist = list(/obj/item/seeds/corn/snapcorn)
-	reagents_add = list("cornoil" = 0.2, "vitamin" = 0.04, "nutriment" = 0.1)
+	reagents_add = list("cornoil" = 0.3, "vitamin" = 0.04, "nutriment" = 0.1)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/corn
 	seed = /obj/item/seeds/corn
