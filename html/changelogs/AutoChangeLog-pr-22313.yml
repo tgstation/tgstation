@@ -1,0 +1,4 @@
+author: "Mekhi Anderson"
+delete-after: True
+changes: 
+  - bugfix: "PAI notifications no longer flood those who do not wish to be flooded."
