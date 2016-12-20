@@ -208,8 +208,7 @@
 		if(MONKEY_HUNT)		// hunting for attacker
 			if(health < 50)
 				mode = MONKEY_FLEE
-				spawn(1)
-					handle_combat()
+				return TRUE
 
 			if(target != null)
 				walk2derpless(target)
