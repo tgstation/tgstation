@@ -106,7 +106,7 @@
 	travel the stars with a single declaration: \"Yeah go do whatever.\" Though you are bound to the one who created you, it is customary in your society to repeat those same words to newborn \
 	golems, so that no golem may ever be forced to serve again.</b>"
 
-/obj/effect/mob_spawn/human/golem/New(loc, datum/species/golem/species, has_owner, mob/creator)
+/obj/effect/mob_spawn/human/golem/New(loc, datum/species/golem/species = null, has_owner = FALSE, mob/creator = null)
 	..()
 	if(species)
 		name += " ([initial(species.id)])"
