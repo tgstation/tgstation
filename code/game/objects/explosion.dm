@@ -104,6 +104,7 @@
 				cached_exp_block[T] += B.explosion_block
 			CHECK_TICK
 
+	var/list/exploded_this_tick = list()	//open turfs that need to be blocked off while we sleep
 	for(var/turf/T in affected_turfs)
 
 		if (!T)
@@ -148,8 +149,18 @@
 				var/turf/throw_at = get_ranged_target_turf(I, throw_dir, throw_range)
 				I.throw_speed = 4 //Temporarily change their throw_speed for embedding purposes (Reset when it finishes throwing, regardless of hitting anything)
 				I.throw_at_fast(throw_at, throw_range, 2)//Throw it at 2 speed, this is purely visual anyway.
-
-		CHECK_TICK
+				
+		//make it so you can't run through just exploded turfs
+		if(!T.density)
+			T.density = 1
+			exploded_this_tick += T
+		
+		if(world.tick_usage > CURRENT_TICKLIMIT)
+			stoplag()
+			for(var/UnDensify in exploded_this_tick)
+				var/turf/UnDensifyT = UnDensify
+				UnDensifyT.density = 0
+			exploded_this_tick.Cut()
 
 	var/took = (world.timeofday-start)/10
 	//You need to press the DebugGame verb to see these now....they were getting annoying and we've collected a fair bit of data. Just -test- changes  to explosion code using this please so we can compare
