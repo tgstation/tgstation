@@ -112,11 +112,15 @@
 
 		spawn(teleport_speed)
 			if(!src || qdeleted(src))
+				teleporting = 0
 				return
 			if(stat & NOPOWER)
+				user << "<span class='warning'>[src] is unpowered!</span>"
+				teleporting = 0
 				return
 			if(!linked_pad || qdeleted(linked_pad) || linked_pad.stat & NOPOWER)
 				user << "<span class='warning'>Linked pad is not responding to ping. Teleport aborted.</span>"
+				teleporting = 0
 				return
 
 			teleporting = 0
