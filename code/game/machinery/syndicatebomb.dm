@@ -33,6 +33,7 @@
 /obj/machinery/syndicatebomb/obj_break()
 	if((payload in src) && active && !defused)
 		payload.detonate()
+	. = ..()
 
 /obj/machinery/syndicatebomb/process()
 	if(!active)
