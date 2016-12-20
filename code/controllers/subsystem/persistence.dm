@@ -33,6 +33,9 @@ var/datum/subsystem/persistence/SSpersistence
 			free_satchels += new /obj/item/weapon/storage/backpack/satchel/flat/secret(T)
 			if(!isemptylist(free_satchels) && ((free_satchels.len + placed_satchels) >= (50 - expanded_old_satchels.len) * 0.1)) //up to six tiles, more than enough to kill anything that moves
 				break
+	for(var/mob/living/simple_animal/parrot/Poly/P in living_mob_list)
+		twitterize(P.speech_buffer, "polytalk")
+		break //Who's been duping the bird?!
 
 	..()
 
