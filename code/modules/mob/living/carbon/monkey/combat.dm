@@ -61,6 +61,10 @@
 	if(I.loc == src)
 		return TRUE
 
+	if(I.anchored)
+		blacklistItems[I] ++
+		return FALSE
+		
 	// WEAPONS
 	if(istype(I, /obj/item/weapon))
 		var/obj/item/weapon/W = I
