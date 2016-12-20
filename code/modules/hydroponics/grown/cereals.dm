@@ -70,6 +70,7 @@
 	plantname = "Meatwheat"
 	product = /obj/item/weapon/reagent_containers/food/snacks/grown/meatwheat
 	mutatelist = list()
+	genes = list(/datum/plant_gene/trait/smoke)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/meatwheat
 	name = "meatwheat"
