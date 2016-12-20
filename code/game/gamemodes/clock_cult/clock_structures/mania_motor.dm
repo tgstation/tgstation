@@ -35,6 +35,29 @@
 	if(is_servant_of_ratvar(user) || isobserver(user))
 		user << "<span class='sevtug_small'>It requires <b>[mania_cost]W</b> to run, and <b>[convert_attempt_cost + convert_cost]W</b> to convert humans adjecent to it.</span>"
 
+/obj/structure/destructible/clockwork/powered/mania_motor/forced_disable(bad_effects)
+	if(active)
+		if(bad_effects)
+			try_use_power(MIN_CLOCKCULT_POWER*2)
+		visible_message("<span class='warning'>[src] hums loudly, then the sockets at its base fall dark!</span>")
+		playsound(src, 'sound/effects/screech.ogg', 40, 1)
+		toggle()
+		return TRUE
+
+/obj/structure/destructible/clockwork/powered/mania_motor/attack_hand(mob/living/user)
+	if(user.canUseTopic(src, !issilicon(user)) && is_servant_of_ratvar(user))
+		if(!total_accessable_power() >= mania_cost)
+			user << "<span class='warning'>[src] needs more power to function!</span>"
+			return 0
+		toggle(0, user)
+
+/obj/structure/destructible/clockwork/powered/mania_motor/toggle(fast_process, mob/living/user)
+	. = ..()
+	if(active)
+		SetLuminosity(2, 1)
+	else
+		SetLuminosity(0)
+
 /obj/structure/destructible/clockwork/powered/mania_motor/process()
 	if(try_use_power(mania_cost))
 		var/turf/T = get_turf(src)
@@ -126,20 +149,4 @@
 						H.confused = min(H.confused + (5 * efficiency), 60)
 
 	else
-		visible_message("<span class='warning'>[src] hums loudly, then the sockets at its base fall dark!</span>")
-		playsound(src, 'sound/effects/screech.ogg', 40, 1)
-		toggle(0)
-
-/obj/structure/destructible/clockwork/powered/mania_motor/attack_hand(mob/living/user)
-	if(user.canUseTopic(src, !issilicon(user)) && is_servant_of_ratvar(user))
-		if(!total_accessable_power() >= mania_cost)
-			user << "<span class='warning'>[src] needs more power to function!</span>"
-			return 0
-		toggle(0, user)
-
-/obj/structure/destructible/clockwork/powered/mania_motor/toggle(fast_process, mob/living/user)
-	. = ..()
-	if(active)
-		SetLuminosity(2, 1)
-	else
-		SetLuminosity(0)
+		forced_disable(FALSE)
