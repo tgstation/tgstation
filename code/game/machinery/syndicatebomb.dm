@@ -30,6 +30,10 @@
 	var/detonation_timer
 	var/explode_now = FALSE
 
+/obj/machinery/syndicatebomb/obj_break()
+	if((payload in src) && active && !defused)
+		payload.detonate()
+
 /obj/machinery/syndicatebomb/process()
 	if(!active)
 		STOP_PROCESSING(SSfastprocess, src)
