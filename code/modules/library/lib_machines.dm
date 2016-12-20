@@ -306,7 +306,7 @@ var/global/list/datum/cachedbook/cachedbooks // List of our cached book datums
 		new /obj/item/clockwork/slab(T)
 
 	user << "<span class='warning'>Your sanity barely endures the seconds spent in the vault's browsing window. The only thing to remind you of this when you stop browsing is a [spook == "blood" ? "dusty old tome" : "strange metal tablet"] sitting on the desk. You don't really remember printing it.[spook == "brass" ? " And how did it print something made of metal?" : ""]</span>"
-	user.visible_message("[user] stares at the blank screen for a few moments, his expression frozen in fear. When he finally awakens from it, he looks a lot older.", 2)
+	user.visible_message("[user] stares at the blank screen for a few moments, \his expression frozen in fear. When \he finally awakens from it, \he looks a lot older.", 2)
 
 /obj/machinery/computer/libraryconsole/bookmanagement/proc/print_slab(mob/user)
 
