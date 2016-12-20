@@ -15,11 +15,12 @@
 	var/best_force = 0
 	var/martial_art = new/datum/martial_art
 	var/resisting = FALSE
+	var/pickpocketing = FALSE
 	var/obj/machinery/disposal/bodyDisposal = null
 
 // taken from /mob/living/carbon/human/interactive/
 /mob/living/carbon/monkey/proc/walk2derpless(target)
-	if(!target || resisting)
+	if(!target || resisting || pickpocketing)
 		return 0
 
 	if(myPath.len <= 0)
@@ -131,21 +132,26 @@
 			// on floor
 			if(isturf(pickupTarget.loc))
 				equip_item(pickupTarget)
+				pickupTarget = null
+				pickupTimer = 0
 
 			// in someones hand
 			else if(ismob(pickupTarget.loc))
 				var/mob/M = pickupTarget.loc
-				M.visible_message("[src] starts trying to take [pickupTarget] from [M]", "[src] tries to take [pickupTarget]!")
-				if(do_mob(src, M, 20) && pickupTarget)
-					for(var/obj/item/I in M.held_items)
-						if(I == pickupTarget)
-							M.visible_message("<span class='danger'>[src] snatches [pickupTarget] from [M].</span>", "<span class='userdanger'>[src] snatched [pickupTarget]!</span>")
-							M.unEquip(pickupTarget)
-							equip_item(pickupTarget)
-							return TRUE
+				if(!pickpocketing)
+					pickpocketing = TRUE
+					M.visible_message("[src] starts trying to take [pickupTarget] from [M]", "[src] tries to take [pickupTarget]!")
+					spawn(5)
+						if(do_mob(src, M, 20) && pickupTarget)
+							for(var/obj/item/I in M.held_items)
+								if(I == pickupTarget)
+									M.visible_message("<span class='danger'>[src] snatches [pickupTarget] from [M].</span>", "<span class='userdanger'>[src] snatched [pickupTarget]!</span>")
+									M.unEquip(pickupTarget)
+									equip_item(pickupTarget)
+						pickpocketing = FALSE
+						pickupTarget = null
+						pickupTimer = 0
 
-			pickupTarget = null
-			pickupTimer = 0
 		else
 			if(pickupTimer >= 8)
 				blacklistItems[pickupTarget] ++
@@ -203,7 +209,7 @@
 			if(!resisting)
 				walk_to(src,0)
 
-			return resisting
+			return resisting || pickpocketing
 
 		if(MONKEY_HUNT)		// hunting for attacker
 			if(health < 50)
@@ -335,7 +341,7 @@
 
 
 
-	return resisting
+	return resisting || pickpocketing
 
 /mob/living/carbon/monkey/proc/back_to_idle()
 	mode = MONKEY_IDLE
