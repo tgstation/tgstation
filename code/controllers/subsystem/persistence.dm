@@ -35,6 +35,7 @@ var/datum/subsystem/persistence/SSpersistence
 				break
 	for(var/mob/living/simple_animal/parrot/Poly/P in living_mob_list)
 		twitterize(P.speech_buffer, "polytalk")
+		break //Who's been duping the bird?!
 
 	..()
 

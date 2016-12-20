@@ -440,12 +440,12 @@ var/list/binary = list("0","1")
 	return jointext(result, "")
 
 //Takes a list of values, sanitizes it down for readability and character count,
-//then exports it as a plaintext file at data/npc_saves/[filename].log.
+//then exports it as a json file at data/npc_saves/[filename].json.
 //As far as SS13 is concerned this is write only data. You can't change something
-//in the log file and have it be reflected in the in game item/mob it came from.
+//in the json file and have it be reflected in the in game item/mob it came from.
 //(That's what things like savefiles are for) Note that this list is not shuffled.
 /proc/twitterize(list/proposed, filename, cullshort = 0, storemax = 1000)
-	if(!islist(proposed) || !filename)
+	if(!islist(proposed) || !filename || !config.log_twitter)
 		return
 
 	//Regular expressions are, as usual, absolute magic
@@ -453,10 +453,11 @@ var/list/binary = list("0","1")
 	var/regex/is_email = new("\[a-z0-9_-]+@\[a-z0-9_-]+.\[a-z0-9_-]+", "i")
 	var/regex/alphanumeric = new("\[a-z0-9]+", "i")
 	var/regex/punctuation = new("\[.!?]+", "i")
+	var/regex/all_invalid_symbols = new("\[^ -~]+")
 
 	var/list/accepted = list()
 	for(var/string in proposed)
-		if(findtext(string,is_website) || findtext(string,is_email))
+		if(findtext(string,is_website) || findtext(string,is_email) || findtext(string,all_invalid_symbols))
 			continue
 		var/buffer = ""
 		var/early_culling = TRUE
@@ -475,7 +476,7 @@ var/list/binary = list("0","1")
 			if(findtext(let,punctuation))
 				punctbuffer = let + punctbuffer //Note this isn't the same thing as using +=
 				cutoff = pos
-		if(punctbuffer) //We clip down excessive punctuation to get the letter count lower and reduce repeats
+		if(punctbuffer) //We clip down excessive punctuation to get the letter count lower and reduce repeats. It's not perfect but it helps.
 			var/exclaim = FALSE
 			var/question = FALSE
 			var/periods = 0
@@ -501,28 +502,29 @@ var/list/binary = list("0","1")
 					punctbuffer = "" //Grammer nazis be damned
 			buffer = copytext(buffer, 1, cutoff) + punctbuffer
 
-		if(!buffer || lentext(buffer) > 140 || lentext(buffer) <= cullshort || buffer in accepted) //second to fourth gate
+		if(!buffer || lentext(buffer) > 140 || lentext(buffer) <= cullshort || buffer in accepted)
 			continue
 
 		accepted += buffer
 
-	var/log = file("data/npc_saves/[filename].log") //If this line ever shows up as changed in a PR be very careful you aren't being memed on
-	var/list/oldentries = file2list(log)
+	var/log = file("data/npc_saves/[filename].json") //If this line ever shows up as changed in a PR be very careful you aren't being memed on
+	var/list/oldjson = list()
+	var/list/oldentries = list()
+	if(fexists(log))
+		oldjson = json_decode(file2text(log))
+		oldentries = oldjson["data"]
 	if(!isemptylist(oldentries))
-		for(var/string in accepted) //The fifth and final gate
+		for(var/string in accepted)
 			for(var/old in oldentries)
 				if(string == old)
 					oldentries.Remove(old) //Line's position in line is "refreshed" until it falls off the in game radar
 					break
 
 	var/list/finalized = list()
-	for(var/list/L in list(accepted, oldentries)) //we keep old and unreferenced phrases near the bottom for culling
-		finalized += listclearnulls(L.Copy())
-
+	finalized["data"] = accepted.Copy() + oldentries.Copy() //we keep old and unreferenced phrases near the bottom for culling
+	listclearnulls(finalized)
 	if(!isemptylist(finalized) && finalized.len > storemax)
-		finalized.Cut(storemax)
-
+		finalized.Cut(storemax + 1)
 	fdel(log)
 
-	for(var/entry in finalized)
-		log << entry
+	log << json_encode(finalized)
