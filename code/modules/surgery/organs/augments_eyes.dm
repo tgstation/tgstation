@@ -120,4 +120,3 @@
 
 /obj/item/organ/cyberimp/eyes/shield/emp_act(severity)
 	return
-
