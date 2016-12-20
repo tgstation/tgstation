@@ -101,7 +101,7 @@
 		if(species)
 			if(O.use(10))
 				user << "You finish up the golem shell with ten sheets of [O]."
-				new shell_type(get_turf(src), species, has_owner, user) //S.id is the mineral type
+				new shell_type(get_turf(src), species, has_owner, user)
 				qdel(src)
 			else
 				user << "You need at least ten sheets to finish a golem."
