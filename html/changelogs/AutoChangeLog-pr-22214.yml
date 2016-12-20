@@ -1,4 +1,0 @@
-author: "Mekhi Anderson"
-delete-after: True
-changes: 
-  - rscdel: "Fixes various PAI bugs, various tweaks and bullshit."

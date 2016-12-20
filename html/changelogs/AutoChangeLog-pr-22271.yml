@@ -1,4 +1,0 @@
-author: "MrPerson"
-delete-after: True
-changes: 
-  - rscadd: "Starlight will have more of a gradient and generally shine a more constant amount of light regardless of how many tiles are touching space. In dark places with long borders to space, starlight will be much darker."
