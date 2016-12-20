@@ -171,6 +171,8 @@
 			qdel(src)
 	else
 		. = ..()
+		if(active && (payload in src))
+			user << "<span class='warning'>That is a really bad idea!</span>"
 
 /obj/machinery/syndicatebomb/attack_hand(mob/user)
 	interact(user)
