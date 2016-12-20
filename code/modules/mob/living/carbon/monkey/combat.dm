@@ -413,14 +413,6 @@
 		return
 	..()
 
-/mob/living/carbon/monkey/proc/take_to_slot(obj/item/G)
-	var/list/slots = list ("left hand" = slot_hands,"right hand" = slot_hands)
-	G.loc = src
-	if(G.force && G.force > best_force)
-		best_force = G.force
-	equip_in_one_of_slots(G, slots)
-	// update_hands = 1
-
 /mob/living/carbon/monkey/proc/monkeyDrop(var/obj/item/A)
 	if(A)
 		unEquip(A)
