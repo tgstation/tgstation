@@ -1095,8 +1095,8 @@
 	desc = "A compact ball of snow. Good for throwing at people."
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "snowball"
-	throwforce = 12 //pelt your enemies to death with lumps of snow
-
+	throwforce = 0
+	
 /obj/item/toy/snowball/afterattack(atom/target as mob|obj|turf|area, mob/user)
 	user.drop_item()
 	src.throw_at(target, throw_range, throw_speed)
@@ -1105,6 +1105,9 @@
 	if(!..())
 		playsound(src, 'sound/effects/pop.ogg', 20, 1)
 		qdel(src)
+
+/obj/item/toy/snowball/rock
+	throwforce = 12 //pelt your enemies to death with lumps of snow...
 
 /*
  * Beach ball
