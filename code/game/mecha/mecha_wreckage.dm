@@ -5,7 +5,7 @@
 
 /obj/structure/mecha_wreckage
 	name = "exosuit wreckage"
-	desc = "Remains of some unfortunate mecha. Completely unrepairable."
+	desc = "Remains of some unfortunate mecha. Completely unrepairable, but perhaps something can be salvaged."
 	icon = 'icons/mecha/mecha.dmi'
 	density = 1
 	anchored = 0
@@ -31,6 +31,9 @@
 	..()
 	if(AI)
 		user << "<span class='notice'>The AI recovery beacon is active.</span>"
+
+/obj/structure/mecha_wreckage/examine_status() // it's wreckage what more do you need to know
+	..()
 
 /obj/structure/mecha_wreckage/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/weldingtool))
@@ -139,6 +142,7 @@
 	name = "\improper Reticence wreckage"
 	icon_state = "reticence-broken"
 	color = "#87878715"
+	desc = "..."
 
 /obj/structure/mecha_wreckage/ripley
 	name = "\improper Ripley wreckage"
@@ -185,6 +189,7 @@
 /obj/structure/mecha_wreckage/honker
 	name = "\improper H.O.N.K wreckage"
 	icon_state = "honker-broken"
+	desc = "All is right in the universe."
 
 /obj/structure/mecha_wreckage/honker/New()
 	..()
