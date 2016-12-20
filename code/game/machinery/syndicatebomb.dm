@@ -171,8 +171,9 @@
 			new /obj/item/stack/sheet/plasteel( loc, 5)
 			qdel(src)
 	else
+		var/old_integ = obj_integrity
 		. = ..()
-		if(active && (payload in src))
+		if((old_integ < obj_integrity) && active && !defused && (payload in src))
 			user << "<span class='warning'>That is a really bad idea!</span>"
 
 /obj/machinery/syndicatebomb/attack_hand(mob/user)
