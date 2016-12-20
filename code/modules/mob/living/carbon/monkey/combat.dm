@@ -359,6 +359,9 @@
 
 // handle de-aggro
 /mob/living/carbon/monkey/proc/attacked(mob/living/carbon/H)
+	if(!enemies[H])
+		return
+		
 	if(prob(25))
 		enemies[H] --
 
