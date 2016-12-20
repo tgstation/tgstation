@@ -421,14 +421,6 @@
 	equip_in_one_of_slots(G, slots)
 	// update_hands = 1
 
-/mob/living/carbon/monkey/proc/equip_in_one_of_slots(obj/item/I, list/slots, qdel_on_fail = 0)
-	for(var/slot in slots)
-		if(equip_to_slot_if_possible(I, slots[slot], qdel_on_fail = 0, disable_warning = TRUE))
-			return slot
-	if(qdel_on_fail)
-		qdel(I)
-	return null
-
 /mob/living/carbon/monkey/proc/monkeyDrop(var/obj/item/A)
 	if(A)
 		unEquip(A)
