@@ -26,7 +26,7 @@
 		qdel(circuit)
 		circuit = null
 	if(brain)
-		brain.forceMove(loc)
+		qdel(brain)
 		brain = null
 	return ..()
 
@@ -156,8 +156,6 @@
 					if(!user.drop_item())
 						return
 
-					ticker.mode.remove_antag_for_borging(M.brainmob.mind)
-					remove_servant_of_ratvar(M, TRUE)
 					M.forceMove(src)
 					brain = M
 					user << "<span class='notice'>Added a brain.</span>"
@@ -187,7 +185,9 @@
 				if(istype(P, /obj/item/weapon/screwdriver))
 					playsound(loc, P.usesound, 50, 1)
 					user << "<span class='notice'>You connect the monitor.</span>"
-					new /mob/living/silicon/ai (loc, laws, brain)
+					ticker.mode.remove_antag_for_borging(brain.brainmob.mind)
+					remove_servant_of_ratvar(brain.brainmob, TRUE)
+					new /mob/living/silicon/ai(loc, laws, brain)
 					feedback_inc("cyborg_ais_created",1)
 					qdel(src)
 					return
