@@ -16,11 +16,15 @@
 	var/martial_art = new/datum/martial_art
 	var/resisting = FALSE
 	var/pickpocketing = FALSE
+	var/disposing_body = FALSE
 	var/obj/machinery/disposal/bodyDisposal = null
 
+/mob/living/carbon/monkey/proc/IsStandingStill()
+	return resisting || pickpocketing || disposing_body
+	
 // taken from /mob/living/carbon/human/interactive/
 /mob/living/carbon/monkey/proc/walk2derpless(target)
-	if(!target || resisting || pickpocketing)
+	if(!target || IsStandingStill())
 		return 0
 
 	if(myPath.len <= 0)
@@ -209,7 +213,7 @@
 			if(!resisting)
 				walk_to(src,0)
 
-			return resisting || pickpocketing
+			return IsStandingStill()
 
 		if(MONKEY_HUNT)		// hunting for attacker
 			if(health < 50)
@@ -325,11 +329,15 @@
 					else
 						frustration = 0
 
-			else
+			else if(!disposing_body)
 				walk2derpless(bodyDisposal.loc)
 
 				if(Adjacent(bodyDisposal))
-					bodyDisposal.stuff_mob_in(target, src)
+					disposing_body = TRUE
+					spawn(5)
+						bodyDisposal.stuff_mob_in(target, src)
+						disposing_body = FALSE
+						
 				else
 					var/turf/olddist = get_dist(src, bodyDisposal)
 					if((get_dist(src, bodyDisposal)) >= (olddist))
@@ -341,7 +349,7 @@
 
 
 
-	return resisting || pickpocketing
+	return IsStandingStill()
 
 /mob/living/carbon/monkey/proc/back_to_idle()
 	mode = MONKEY_IDLE
