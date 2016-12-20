@@ -15,7 +15,6 @@ env:
     - DM_MAPFILE="ministation"
     - DM_MAPFILE="dreamstation"
     - DM_MAPFILE="birdstation"
-    - DM_MAPFILE="efficiencystation"
     - DM_MAPFILE="pubbystation"
     - DM_MAPFILE="templates"
 
