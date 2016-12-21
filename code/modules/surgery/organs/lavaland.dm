@@ -84,7 +84,7 @@
 		next_command = world.time + cooldown_damage
 
 	//BRUTE DAMAGE
-	else if(findtext(command, "die"))
+	else if(findtext(command, "die") || findtext(command, "suffer"))
 		for(var/mob/living/L in listeners)
 			L.apply_damage(15, def_zone = "chest")
 		next_command = world.time + cooldown_damage
@@ -116,7 +116,7 @@
 		next_command = world.time + cooldown_damage
 
 	//WHO ARE YOU?
-	else if(findtext(command, "who are you?") || findtext(command, "say your name") || findtext(command, "state your name"))
+	else if(findtext(command, "who are you?") || findtext(command, "say your name") || findtext(command, "state your name") || findtext(command, "identify"))
 		for(var/mob/living/L in listeners)
 			L.say("[L.real_name]")
 		next_command = world.time + cooldown_meme
@@ -171,7 +171,7 @@
 		next_command = world.time + cooldown_meme
 
 	//FLIP
-	else if(findtext(command, "flip") || findtext(command, "rotate") || findtext(command, "revolve") || findtext(command, "roll"))
+	else if(findtext(command, "flip") || findtext(command, "rotate") || findtext(command, "revolve") || findtext(command, "roll") || findtext(command, "somersault"))
 		for(var/mob/living/L in listeners)
 			L.emote("flip")
 		next_command = world.time + cooldown_meme
@@ -183,7 +183,7 @@
 		next_command = world.time + cooldown_meme
 
 	//GET UP
-	else if(findtext(command, "get up"))
+	else if(findtext(command, "get up") || findtext(command, "stand"))
 		for(var/mob/living/L in listeners)
 			L.resting = FALSE
 			L.SetWeakened(0)
@@ -231,7 +231,7 @@
 		next_command = world.time + cooldown_meme
 
 	//PLEASE CLAP
-	else if(findtext(command, "clap"))
+	else if(findtext(command, "clap") || findtext(command, "applaud"))
 		for(var/mob/living/L in listeners)
 			L.emote("clap")
 		next_command = world.time + cooldown_meme
