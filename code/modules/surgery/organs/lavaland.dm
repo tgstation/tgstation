@@ -9,8 +9,8 @@
 	name = "Voice of God"
 	var/next_command = null
 	var/cooldown_stun = 900
-	var/cooldown_damage = 750
-	var/cooldown_meme = 450
+	var/cooldown_damage = 600
+	var/cooldown_meme = 300
 	var/cooldown_none = 150
 	var/base_multiplier = 1
 
@@ -63,8 +63,10 @@
 
 	//WGW
 	if(findtext(command, "one day, while andy") || findtext(command, "one day while andy"))
-		owner.adjust_fire_stacks(20 * power_multiplier)
-		owner.IgniteMob()
+		if(isliving(owner))
+			var/mob/living/self = owner
+			self.adjust_fire_stacks(20 * power_multiplier)
+			self.IgniteMob()
 		next_command = world.time + cooldown_meme
 
 	//STUN
