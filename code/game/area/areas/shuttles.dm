@@ -11,6 +11,10 @@
 	valid_territory = 0
 	icon_state = "shuttle"
 
+/area/shuttle/transit
+	name = "Hyperspace"
+	desc = "Weeeeee"
+
 /area/shuttle/arrival
 	name = "Arrival Shuttle"
 

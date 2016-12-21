@@ -162,6 +162,7 @@
 	name = "In Transit"
 	turf_type = /turf/open/space/transit
 	var/list/turf/assigned_turfs = list()
+	var/area/shuttle/transit/assigned_area
 	var/obj/docking_port/mobile/owner
 
 /obj/docking_port/stationary/transit/New()
@@ -458,8 +459,10 @@
 			A0 = new area_type(null)
 		for(var/turf/T0 in L0)
 			A0.contents += T0
-
-
+	if (istype(S1, /obj/docking_port/stationary/transit))
+		areaInstance.parallax_movedir = preferred_direction
+	else
+		areaInstance.parallax_movedir = FALSE
 	remove_ripples()
 
 	//move or squish anything in the way ship at destination
@@ -559,7 +562,7 @@
 
 //used by shuttle subsystem to check timers
 /obj/docking_port/mobile/proc/check()
-	check_ripples()
+	check_effects()
 
 	if(mode == SHUTTLE_IGNITING)
 		check_transit_zone()
@@ -591,11 +594,27 @@
 	timer = 0
 	destination = null
 
-/obj/docking_port/mobile/proc/check_ripples()
+/obj/docking_port/mobile/proc/check_effects()
 	if(!ripples.len)
 		if((mode == SHUTTLE_CALL) || (mode == SHUTTLE_RECALL))
 			if(timeLeft(1) <= SHUTTLE_RIPPLE_TIME)
 				create_ripples(destination)
+
+	var/obj/docking_port/stationary/S0 = get_docked()
+	if(areaInstance.parallax_movedir && istype(S0, /obj/docking_port/stationary/transit) && timeLeft(1) <= PARALLAX_LOOP_TIME)
+		parallax_slowdown()
+
+/obj/docking_port/mobile/proc/parallax_slowdown()
+	areaInstance.parallax_movedir = FALSE
+	if(assigned_transit && assigned_transit.assigned_area)
+		assigned_transit.assigned_area.parallax_movedir = FALSE
+	var/list/L0 = return_ordered_turfs(x, y, z, dir, areaInstance)
+	for (var/thing in L0)
+		var/turf/T = thing
+		for (var/thing2 in T)
+			var/atom/movable/AM = thing2
+			if (length(AM.client_mobs_in_contents))
+				AM.update_parallax_contents()
 
 /obj/docking_port/mobile/proc/check_transit_zone()
 	if(assigned_transit)

@@ -341,9 +341,21 @@
 				launch_status = ENDGAME_LAUNCHED
 				setTimer(SSshuttle.emergencyEscapeTime)
 				priority_announce("The Emergency Shuttle has left the station. Estimate [timeLeft(600)] minutes until the shuttle docks at Central Command.", null, null, "Priority")
+
 		if(SHUTTLE_STRANDED)
 			SSshuttle.checkHostileEnvironment()
+
 		if(SHUTTLE_ESCAPE)
+			if(areaInstance.parallax_movedir && time_left <= PARALLAX_LOOP_TIME)
+				parallax_slowdown()
+				for(var/area/shuttle/escape/E in world)
+					E << 'sound/effects/hyperspace_end.ogg'
+				for(var/A in SSshuttle.mobile)
+					var/obj/docking_port/mobile/M = A
+					if(M.launch_status == ENDGAME_LAUNCHED)
+						if(istype(M, /obj/docking_port/mobile/pod))
+							M.parallax_slowdown()
+
 			if(time_left <= 0)
 				//move each escape pod to its corresponding escape dock
 				for(var/A in SSshuttle.mobile)
@@ -353,9 +365,6 @@
 							M.dock(SSshuttle.getDock("[M.id]_away")) //Escape pods dock at centcomm
 						else
 							continue //Mapping a new docking point for each ship mappers could potentially want docking with centcomm would take up lots of space, just let them keep flying off into the sunset for their greentext
-
-				for(var/area/shuttle/escape/E in world)
-					E << 'sound/effects/hyperspace_end.ogg'
 
 				// now move the actual emergency shuttle to centcomm
 				// unless the shuttle is "hijacked"
@@ -367,7 +376,6 @@
 						supervisor.", "SYSTEM ERROR:", alert=TRUE)
 
 				dock_id(destination_dock)
-
 				mode = SHUTTLE_ENDGAME
 				timer = 0
 
