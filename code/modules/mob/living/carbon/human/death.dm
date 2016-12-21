@@ -16,7 +16,7 @@
 /mob/living/carbon/human/death(gibbed)
 	if(stat == DEAD)
 		return
-	stat = DEAD
+
 	dizziness = 0
 	jitteriness = 0
 	heart_attack = 0
@@ -29,6 +29,7 @@
 	if(!gibbed)
 		emote("deathgasp") //let the world KNOW WE ARE DEAD
 
+	stat = DEAD
 	dna.species.spec_death(gibbed, src)
 
 	if(ticker && ticker.mode)
