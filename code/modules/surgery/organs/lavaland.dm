@@ -62,13 +62,13 @@
 			power_multiplier *= 0.5
 
 	//WGW
-	else if(findtext(command, "one day, while andy") || findtext(command, "one day while andy"))
+	if(findtext(command, "one day, while andy") || findtext(command, "one day while andy"))
 		owner.adjust_fire_stacks(20 * power_multiplier)
 		owner.IgniteMob()
 		next_command = world.time + cooldown_meme
 
 	//STUN
-	if(findtext(command, "stop") || findtext(command, "wait") || findtext(command, "stand still") || findtext(command, "hold on") || findtext(command, "halt"))
+	else if(findtext(command, "stop") || findtext(command, "wait") || findtext(command, "stand still") || findtext(command, "hold on") || findtext(command, "halt"))
 		for(var/mob/living/L in listeners)
 			L.Stun(3 * power_multiplier)
 		next_command = world.time + cooldown_stun
