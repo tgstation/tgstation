@@ -61,18 +61,14 @@
 
 	//VOMIT
 	else if(findtext(command, "vomit") || findtext(command, "throw up"))
-		for(var/mob/living/L in listeners)
-			if(iscarbon(L))
-				var/mob/living/carbon/C = L
-				C.vomit(10)
+		for(var/mob/living/carbon/C in listeners)
+			C.vomit(10)
 		next_command = world.time + cooldown_stun
 
 	//SILENCE
 	else if(findtext(command, "shut up") || findtext(command, "silence") || findtext(command, "ssh") || findtext(command, "quiet"))
-		for(var/mob/living/L in listeners)
-			if(iscarbon(L))
-				var/mob/living/carbon/C = L
-				C.silent += 10
+		for(var/mob/living/carbon/C in listeners)
+			C.silent += 10
 		next_command = world.time + cooldown_stun
 
 	//WAKE UP
@@ -89,10 +85,8 @@
 
 	//BLEED
 	else if(findtext(command, "bleed"))
-		for(var/mob/living/L in listeners)
-			if(ishuman(L))
-				var/mob/living/carbon/human/H = L
-				H.bleed_rate += 5
+		for(var/mob/living/carbon/human/H in listeners)
+			H.bleed_rate += 5
 		next_command = world.time + cooldown_damage
 
 	//FIRE
@@ -136,42 +130,32 @@
 
 	//HELP INTENT
 	else if(findtext(command, "help"))
-		for(var/mob/living/L in listeners)
-			if(ishuman(L))
-				var/mob/living/carbon/human/H = L
-				H.a_intent_change(INTENT_HELP)
+		for(var/mob/living/carbon/human/H in listeners)
+			H.a_intent_change(INTENT_HELP)
 		next_command = world.time + cooldown_meme
 
 	//DISARM INTENT
 	else if(findtext(command, "disarm"))
-		for(var/mob/living/L in listeners)
-			if(ishuman(L))
-				var/mob/living/carbon/human/H = L
-				H.a_intent_change(INTENT_DISARM)
+		for(var/mob/living/carbon/human/H in listeners)
+			H.a_intent_change(INTENT_DISARM)
 		next_command = world.time + cooldown_meme
 
 	//GRAB INTENT
 	else if(findtext(command, "grab"))
-		for(var/mob/living/L in listeners)
-			if(ishuman(L))
-				var/mob/living/carbon/human/H = L
-				H.a_intent_change(INTENT_GRAB)
+		for(var/mob/living/carbon/human/H in listeners)
+			H.a_intent_change(INTENT_GRAB)
 		next_command = world.time + cooldown_meme
 
 	//HARM INTENT
 	else if(findtext(command, "harm") || findtext(command, "fight"))
-		for(var/mob/living/L in listeners)
-			if(ishuman(L))
-				var/mob/living/carbon/human/H = L
-				H.a_intent_change(INTENT_HARM)
+		for(var/mob/living/carbon/human/H in listeners)
+			H.a_intent_change(INTENT_HARM)
 		next_command = world.time + cooldown_meme
 
 	//THROW/CATCH
 	else if(findtext(command, "throw") || findtext(command, "catch"))
-		for(var/mob/living/L in listeners)
-			if(iscarbon(L))
-				var/mob/living/carbon/C = L
-				C.throw_mode_on()
+		for(var/mob/living/carbon/C in listeners)
+			C.throw_mode_on()
 		next_command = world.time + cooldown_meme
 
 	//FLIP
@@ -230,10 +214,8 @@
 	else if(findtext(command, "honk"))
 		playsound(get_turf(owner), "sound/items/bikehorn.ogg", 300, 1)
 		if(owner.mind && owner.mind.assigned_role == "Clown")
-			for(var/mob/living/L in listeners)
-				if(iscarbon(L))
-					var/mob/living/carbon/C = L
-					C.slip(0,5)
+			for(var/mob/living/carbon/C in listeners)
+				C.slip(0,5)
 		next_command = world.time + cooldown_meme
 
 	//RIGHT ROUND
