@@ -71,7 +71,7 @@
 	if (!( ticker ))
 		return
 	var/mob/M = AM
-	if(M.restrained() || ((isdrone(M) || iscyborg(M)) && B.stat))
+	if(M.restrained() || ((isdrone(M) || iscyborg(M)) && M.stat))
 		return
 	bumpopen(M)
 
