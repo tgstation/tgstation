@@ -422,14 +422,7 @@
 		var/mob/living/carbon/monkey/M = AM
 		if(!istype(M) || !M)
 			return
-		M.visible_message("<span class='warning'>[pick( \
-						  "[M] dives out of [src]'s way!", \
-						  "[M] stumbles over [src]!", \
-						  "[M] jumps out of [src]'s path!", \
-						  "[M] trips over [src] and falls!", \
-						  "[M] topples over [src]!", \
-						  "[M] leaps out of [src]'s way!")]</span>")
-		M.Weaken(2)
+		knockOver(M)
 		return
 	..()
 
