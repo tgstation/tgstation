@@ -149,11 +149,11 @@
 /obj/effect/hotspot/Destroy()
 	SetLuminosity(0)
 	SSair.hotspots -= src
-	DestroyTurf()
 	if(isturf(loc))
 		var/turf/open/T = loc
 		if(T.active_hotspot == src)
 			T.active_hotspot = null
+	DestroyTurf()
 	loc = null
 	..()
 	return QDEL_HINT_PUTINPOOL
@@ -168,7 +168,6 @@
 			else
 				chance_of_deletion = 100
 			if(prob(chance_of_deletion))
-				T.active_hotspot = null	//prevent /turf/open/Destroy from trying to qdel us
 				T.ChangeTurf(T.baseturf)
 			else
 				T.to_be_destroyed = 0
