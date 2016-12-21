@@ -1,5 +1,0 @@
-author: "FTL13, yogstation, Iamgoofball, and MrStonedOne"
-delete-after: True
-changes: 
-  - rscadd: "Space is pretty."
-  - tweak: "You can configure how pretty space is in preferences, those of you on toasters should go to low to remove the need to do client side animations. (standard fanfare as job selection, left click to increase, right click to decrease) (Changes are applied immediately in most cases, on reconnect otherwise)"
