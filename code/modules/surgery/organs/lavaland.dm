@@ -192,7 +192,7 @@
 	//STAND UP
 	else if(findtext(command, "stand"))
 		for(var/mob/living/L in listeners)
-			if(L.buckled && istype(L.buckled, obj/structure/chair))
+			if(L.buckled && istype(L.buckled, /obj/structure/chair))
 				L.buckled.unbuckle_mob(L)
 		next_command = world.time + cooldown_meme
 
