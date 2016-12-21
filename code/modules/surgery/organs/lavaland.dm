@@ -71,6 +71,12 @@
 			C.silent += 10
 		next_command = world.time + cooldown_stun
 
+	//HALLUCINATE
+	else if(findtext(command, "see the truth") || findtext(command, "hallucinate"))
+		for(var/mob/living/L in listeners)
+			new /obj/effect/hallucination/delusion(get_turf(L),L,duration=150,skip_nearby=0)
+		next_command = world.time + cooldown_damage
+
 	//WAKE UP
 	else if(findtext(command, "wake up") || findtext(command, "awaken"))
 		for(var/mob/living/L in listeners)
@@ -108,6 +114,12 @@
 			var/throwtarget = get_edge_target_turf(owner, get_dir(owner, get_step_away(L, owner)))
 			L.throw_at_fast(throwtarget, 3, 1)
 		next_command = world.time + cooldown_damage
+
+	//WHO ARE YOU?
+	else if(findtext(command, "who are you?") || findtext(command, "say your name") || findtext(command, "state your name"))
+		for(var/mob/living/L in listeners)
+			L.say("[L.real_name]")
+		next_command = world.time + cooldown_meme
 
 	//MOVE
 	else if(findtext(command, "move"))
