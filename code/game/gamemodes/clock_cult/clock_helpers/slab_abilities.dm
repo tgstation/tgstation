@@ -234,7 +234,19 @@
 		if(totaldamage)
 			L.adjustBruteLoss(-brutedamage)
 			L.adjustFireLoss(-burndamage)
-			L.adjustToxLoss(totaldamage * 0.5)
+			var/swapdamage = FALSE
+			if(L.has_dna()) //if has_dna() is true they're at least carbon
+				var/mob/living/carbon/C = L
+				if(TOXINLOVER in C.dna.species.species_traits)
+					swapdamage = TRUE
+			else if(isanimal(L))
+				var/mob/living/simple_animal/A = L
+				if(A.damage_coeff[TOX] < 0)
+					swapdamage = TRUE
+			if(swapdamage) //they'd heal damage, we need to swap it
+				L.adjustToxLoss(-totaldamage * 0.5)
+			else
+				L.adjustToxLoss(totaldamage * 0.5)
 			var/healseverity = max(round(totaldamage*0.05, 1), 1) //shows the general severity of the damage you just healed, 1 glow per 20
 			for(var/i in 1 to healseverity)
 				PoolOrNew(/obj/effect/overlay/temp/heal, list(targetturf, "#1E8CE1"))

@@ -122,7 +122,7 @@
 			var/mob/living/carbon/C = L
 			if(TOXINLOVER in C.dna.species.species_traits)
 				swapdamage = TRUE
-		if(isanimal(L))
+		else if(isanimal(L))
 			var/mob/living/simple_animal/A = L
 			if(A.damage_coeff[TOX] < 0)
 				swapdamage = TRUE
