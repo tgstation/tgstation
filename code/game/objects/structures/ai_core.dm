@@ -128,6 +128,9 @@
 					return
 
 				if(istype(P, /obj/item/weapon/aiModule))
+					if(brain && brain.laws.id != DEFAULT_AI_LAWID)
+						user << "<span class='warning'>The installed [brain.name] already has set laws!</span>"
+						return
 					var/obj/item/weapon/aiModule/module = P
 					module.install(laws, user)
 					return
@@ -135,22 +138,22 @@
 				if(istype(P, /obj/item/device/mmi) && !brain)
 					var/obj/item/device/mmi/M = P
 					if(!M.brainmob)
-						user << "<span class='warning'>Sticking an empty MMI into the frame would sort of defeat the purpose!</span>"
+						user << "<span class='warning'>Sticking an empty [M.name] into the frame would sort of defeat the purpose!</span>"
 						return
 					if(M.brainmob.stat == DEAD)
-						user << "<span class='warning'>Sticking a dead brain into the frame would sort of defeat the purpose!</span>"
+						user << "<span class='warning'>Sticking a dead [M.name] into the frame would sort of defeat the purpose!</span>"
 						return
 
 					if(!M.brainmob.client)
-						user << "<span class='warning'>Sticking an inactive brain into the frame would sort of defeat the purpose.</span>"
+						user << "<span class='warning'>Sticking an inactive [M.name] into the frame would sort of defeat the purpose.</span>"
 						return
 
-					if((config) && (!config.allow_ai) || jobban_isbanned(M.brainmob, "AI") || M.hacked || M.clockwork)
-						user << "<span class='warning'>This MMI does not seem to fit!</span>"
+					if((config) && (!config.allow_ai) || jobban_isbanned(M.brainmob, "AI"))
+						user << "<span class='warning'>This [M.name] does not seem to fit!</span>"
 						return
 
 					if(!M.brainmob.mind)
-						user << "<span class='warning'>This MMI is mindless!</span>"
+						user << "<span class='warning'>This [M.name] is mindless!</span>"
 						return
 
 					if(!user.drop_item())
@@ -158,7 +161,7 @@
 
 					M.forceMove(src)
 					brain = M
-					user << "<span class='notice'>Added a brain.</span>"
+					user << "<span class='notice'>You add [M.name] to the frame.</span>"
 					icon_state = "3b"
 					return
 
@@ -185,8 +188,10 @@
 				if(istype(P, /obj/item/weapon/screwdriver))
 					playsound(loc, P.usesound, 50, 1)
 					user << "<span class='notice'>You connect the monitor.</span>"
-					ticker.mode.remove_antag_for_borging(brain.brainmob.mind)
-					remove_servant_of_ratvar(brain.brainmob, TRUE)
+					if(brain)
+						ticker.mode.remove_antag_for_borging(brain.brainmob.mind)
+						if(!istype(brain.laws, /datum/ai_laws/ratvar))
+							remove_servant_of_ratvar(brain.brainmob, TRUE)
 					new /mob/living/silicon/ai(loc, laws, brain)
 					feedback_inc("cyborg_ais_created",1)
 					qdel(src)
@@ -211,6 +216,10 @@
 	icon_state = "ai-empty"
 	anchored = 1
 	state = GLASS_CORE
+
+/obj/structure/AIcore/deactivated/New()
+	..()
+	circuit = new(src)
 
 /obj/structure/AIcore/deactivated/attackby(obj/item/A, mob/user, params)
 	if(istype(A, /obj/item/device/aicard) && state == GLASS_CORE)
