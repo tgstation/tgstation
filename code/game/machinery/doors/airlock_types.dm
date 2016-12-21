@@ -142,6 +142,7 @@
 	var/mineral = "diamond"
 	assemblytype = /obj/structure/door_assembly/door_assembly_diamond
 	normal_integrity = 1000
+	explosion_block = 2
 
 /obj/machinery/door/airlock/uranium
 	name = "uranium airlock"
@@ -246,6 +247,7 @@
 	icon = 'icons/obj/doors/airlocks/external/external.dmi'
 	overlays_file = 'icons/obj/doors/airlocks/external/overlays.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_ext
+	explosion_block = 1
 
 /obj/machinery/door/airlock/glass_external
 	name = "external airlock"
@@ -267,6 +269,7 @@
 	assemblytype = /obj/structure/door_assembly/door_assembly_centcom
 	normal_integrity = 1000
 	security_level = 6
+	explosion_block = 2
 
 //////////////////////////////////
 /*
