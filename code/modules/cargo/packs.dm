@@ -1345,7 +1345,7 @@
 
 /datum/supply_pack/misc/lasertag/pins
 	name = "Laser Tag Firing Pins Crate"
-	cost = 3000
+	cost = 10000
 	contraband = TRUE
 	contains = list(/obj/item/weapon/storage/box/lasertagpins)
 	crate_name = "laser tag crate"
