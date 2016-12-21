@@ -17,7 +17,7 @@
 	return dat
 
 
-/obj/item/weapon/implant/mindshield/implant(mob/living/carbon/target, mob/user, silent = 0)
+/obj/item/weapon/implant/mindshield/implant(mob/living/target, mob/user, silent = 0)
 	if(..())
 		if((target.mind in (ticker.mode.head_revolutionaries | ticker.mode.get_gang_bosses())))
 			if(!silent)
