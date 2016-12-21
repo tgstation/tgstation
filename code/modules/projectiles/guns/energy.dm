@@ -20,7 +20,7 @@
 
 /obj/item/weapon/gun/energy/emp_act(severity)
 	var/obj/item/ammo_casing/energy/EC = ammo_type[select]
-	if(EC.e_cost < 0) //just... don't bother if it's at or below 0
+	if(!EC || EC.e_cost < 0) //just... don't bother if it's at or below 0
 		return
 	var/shots_left = 0
 	var/temp_power = power_supply.charge
