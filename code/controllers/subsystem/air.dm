@@ -28,8 +28,8 @@ var/datum/subsystem/air/SSair
 	var/list/hotspots = list()
 	var/list/networks = list()
 	var/list/obj/machinery/atmos_machinery = list()
-
-	var/processing_tiles = FALSE	//did our last iteration of process_active_turfs not complete?
+	
+	
 
 	//Special functions lists
 	var/list/turf/active_super_conductivity = list()
@@ -206,7 +206,6 @@ var/datum/subsystem/air/SSair
 	//cache for sanic speed
 	var/fire_count = times_fired
 	if (!resumed)
-		processing_tiles = TRUE
 		src.currentrun = active_turfs.Copy()
 	//cache for sanic speed (lists are references anyways)
 	var/list/currentrun = src.currentrun
@@ -217,7 +216,6 @@ var/datum/subsystem/air/SSair
 			T.process_cell(fire_count)
 		if (MC_TICK_CHECK)
 			return
-	processing_tiles = FALSE
 
 /datum/subsystem/air/proc/process_excited_groups(resumed = 0)
 	if (!resumed)
@@ -239,7 +237,7 @@ var/datum/subsystem/air/SSair
 
 /datum/subsystem/air/proc/remove_from_active(turf/open/T)
 	active_turfs -= T
-	if(processing_tiles)
+	if(currentpart == SSAIR_ACTIVETURFS)
 		currentrun -= T
 	if(istype(T))
 		T.excited = 0
@@ -251,7 +249,7 @@ var/datum/subsystem/air/SSair
 	if(istype(T) && T.air)
 		T.excited = 1
 		active_turfs |= T
-		if(processing_tiles)
+		if(currentpart == SSAIR_ACTIVETURFS)
 			currentrun |= T
 		if(blockchanges && T.excited_group)
 			T.excited_group.garbage_collect()
