@@ -178,7 +178,7 @@
 				if(air.compare(enemy_tile.air)) //compare if
 					SSair.add_to_active(enemy_tile) //excite enemy
 					if(our_excited_group)
-						excited_group.add_turf(enemy_tile) //add enemy to group
+						our_excited_group.add_turf(enemy_tile) //add enemy to group
 					else
 						var/datum/excited_group/EG = new //generate new group
 						EG.add_turf(src)
