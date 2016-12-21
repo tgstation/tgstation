@@ -160,7 +160,7 @@
 		next_command = world.time + cooldown_meme
 
 	//HARM INTENT
-	else if(findtext(command, "harm"))
+	else if(findtext(command, "harm") || findtext(command, "fight"))
 		for(var/mob/living/L in listeners)
 			if(ishuman(L))
 				var/mob/living/carbon/human/H = L
@@ -185,7 +185,7 @@
 	else if(findtext(command, "sit"))
 		for(var/mob/living/L in listeners)
 			for(var/obj/structure/chair/chair in get_turf(L))
-				chair.buckle_mob(L, force=1)
+				chair.buckle_mob(L)
 				break
 		next_command = world.time + cooldown_meme
 
@@ -193,7 +193,7 @@
 	else if(findtext(command, "stand"))
 		for(var/mob/living/L in listeners)
 			if(L.buckled && istype(L.buckled, obj/structure/chair))
-				L.buckled.unbuckle_mob(L, force = 1)
+				L.buckled.unbuckle_mob(L)
 		next_command = world.time + cooldown_meme
 
 	//DANCE
