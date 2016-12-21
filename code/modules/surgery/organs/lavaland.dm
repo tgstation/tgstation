@@ -76,17 +76,9 @@
 		next_command = world.time + cooldown_stun
 
 	//WAKE UP
-	else if(findtext(command, "wake up"))
+	else if(findtext(command, "wake up") || findtext(command, "awaken"))
 		for(var/mob/living/L in listeners)
 			L.SetSleeping(0)
-		next_command = world.time + cooldown_damage
-
-	//UNSTUN
-	else if(findtext(command, "get up"))
-		for(var/mob/living/L in listeners)
-			L.SetStunned(0)
-			L.SetParalysis(0)
-			L.SetWeakened(0)
 		next_command = world.time + cooldown_damage
 
 	//BRUTE DAMAGE
@@ -123,8 +115,15 @@
 			L.throw_at_fast(throwtarget, 3, 1)
 		next_command = world.time + cooldown_damage
 
+	//MOVE
+	else if(findtext(command, "move"))
+		for(var/mob/living/L in listeners)
+			var/turf/T = get_step(L,pick(cardinal))
+			L.Move(T)
+		next_command = world.time + cooldown_meme
+
 	//WALK
-	else if(findtext(command, "walk"))
+	else if(findtext(command, "walk") || findtext(command, "slow down"))
 		for(var/mob/living/L in listeners)
 			L.m_intent = MOVE_INTENT_WALK
 		next_command = world.time + cooldown_meme
