@@ -243,7 +243,7 @@
 
 /datum/supply_pack/security/laser
 	name = "Lasers Crate"
-	cost = 1500
+	cost = 2000
 	contains = list(/obj/item/weapon/gun/energy/laser,
 					/obj/item/weapon/gun/energy/laser,
 					/obj/item/weapon/gun/energy/laser)
@@ -251,7 +251,7 @@
 
 /datum/supply_pack/security/taser
 	name = "Taser Crate"
-	cost = 1500
+	cost = 3000
 	contains = list(/obj/item/weapon/gun/energy/e_gun/advtaser,
 					/obj/item/weapon/gun/energy/e_gun/advtaser,
 					/obj/item/weapon/gun/energy/e_gun/advtaser)
@@ -259,7 +259,7 @@
 
 /datum/supply_pack/security/disabler
 	name = "Disabler Crate"
-	cost = 1000
+	cost = 1500
 	contains = list(/obj/item/weapon/gun/energy/disabler,
 					/obj/item/weapon/gun/energy/disabler,
 					/obj/item/weapon/gun/energy/disabler)
@@ -345,7 +345,7 @@
 
 /datum/supply_pack/security/armory/ballistic
 	name = "Combat Shotguns Crate"
-	cost = 2000
+	cost = 4000
 	contains = list(/obj/item/weapon/gun/ballistic/shotgun/automatic/combat,
 					/obj/item/weapon/gun/ballistic/shotgun/automatic/combat,
 					/obj/item/weapon/gun/ballistic/shotgun/automatic/combat,
@@ -428,7 +428,7 @@
 
 /datum/supply_pack/security/firingpins
 	name = "Standard Firing Pins Crate"
-	cost = 1000
+	cost = 2000
 	contains = list(/obj/item/weapon/storage/box/firingpins,
 					/obj/item/weapon/storage/box/firingpins)
 	crate_name = "firing pins crate"
@@ -909,7 +909,7 @@
 
 /datum/supply_pack/science/bz_canister
 	name = "BZ Canister"
-	cost = 4000
+	cost = 2000
 	access_any = list(access_rd, access_atmospherics)
 	contains = list(/obj/machinery/portable_atmospherics/canister/bz)
 	crate_name = "bz canister crate"
@@ -1345,7 +1345,7 @@
 
 /datum/supply_pack/misc/lasertag/pins
 	name = "Laser Tag Firing Pins Crate"
-	cost = 2000
+	cost = 3000
 	contraband = TRUE
 	contains = list(/obj/item/weapon/storage/box/lasertagpins)
 	crate_name = "laser tag crate"
