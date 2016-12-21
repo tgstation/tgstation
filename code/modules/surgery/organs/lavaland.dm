@@ -61,7 +61,7 @@
 		if(owner.mind.assigned_role == "Mime")
 			power_multiplier *= 0.5
 
-	for(var/mob/living/L in listeners)
+	for(var/L in listeners)
 		if(findtext(command, L.real_name))
 			listeners = list(L) //focus on a particular person
 			power_multiplier *= 2
@@ -77,19 +77,19 @@
 
 	//STUN
 	else if(findtext(command, "stop") || findtext(command, "wait") || findtext(command, "stand still") || findtext(command, "hold on") || findtext(command, "halt"))
-		for(var/mob/living/L in listeners)
+		for(var/L in listeners)
 			L.Stun(3 * power_multiplier)
 		next_command = world.time + cooldown_stun
 
 	//WEAKEN
 	else if(findtext(command, "drop") || findtext(command, "fall"))
-		for(var/mob/living/L in listeners)
+		for(var/L in listeners)
 			L.Weaken(3 * power_multiplier)
 		next_command = world.time + cooldown_stun
 
 	//SLEEP
 	else if(findtext(command, "sleep"))
-		for(var/mob/living/L in listeners)
+		for(var/L in listeners)
 			L.Sleeping(3 * power_multiplier)
 		next_command = world.time + cooldown_stun
 
@@ -107,25 +107,25 @@
 
 	//HALLUCINATE
 	else if(findtext(command, "see the truth") || findtext(command, "hallucinate"))
-		for(var/mob/living/L in listeners)
+		for(var/L in listeners)
 			new /obj/effect/hallucination/delusion(get_turf(L),L,duration=150,skip_nearby=0)
 		next_command = world.time + cooldown_damage
 
 	//WAKE UP
 	else if(findtext(command, "wake up") || findtext(command, "awaken"))
-		for(var/mob/living/L in listeners)
+		for(var/L in listeners)
 			L.SetSleeping(0)
 		next_command = world.time + cooldown_damage
 
 	//HEAL
 	else if(findtext(command, "live") || findtext(command, "heal") || findtext(command, "survive") || findtext(command, "mend") || findtext(command, "heroes never die"))
-		for(var/mob/living/L in listeners)
+		for(var/L in listeners)
 			L.heal_overall_damage(10 * power_multiplier, 10 * power_multiplier, 0, 0)
 		next_command = world.time + cooldown_damage
 
 	//BRUTE DAMAGE
 	else if(findtext(command, "die") || findtext(command, "suffer"))
-		for(var/mob/living/L in listeners)
+		for(var/L in listeners)
 			L.apply_damage(15 * power_multiplier, def_zone = "chest")
 		next_command = world.time + cooldown_damage
 
@@ -137,33 +137,33 @@
 
 	//FIRE
 	else if(findtext(command, "burn") || findtext(command, "ignite") || findtext(command, "hell"))
-		for(var/mob/living/L in listeners)
+		for(var/L in listeners)
 			L.adjust_fire_stacks(1 * power_multiplier)
 			L.IgniteMob()
 		next_command = world.time + cooldown_damage
 
 	//REPULSE
 	else if(findtext(command, "shoo") || findtext(command, "go away") || findtext(command, "leave me alone") || findtext(command, "begone") || findtext(command, "flee") || findtext(command, "fus ro dah"))
-		for(var/mob/living/L in listeners)
+		for(var/L in listeners)
 			var/throwtarget = get_edge_target_turf(owner, get_dir(owner, get_step_away(L, owner)))
 			L.throw_at_fast(throwtarget, 3 * power_multiplier, 1)
 		next_command = world.time + cooldown_damage
 
 	//WHO ARE YOU?
 	else if(findtext(command, "who are you?") || findtext(command, "say your name") || findtext(command, "state your name") || findtext(command, "identify"))
-		for(var/mob/living/L in listeners)
+		for(var/L in listeners)
 			L.say("[L.real_name]")
 		next_command = world.time + cooldown_meme
 
 	//SAY MY NAME
 	else if(findtext(command, "say my name"))
-		for(var/mob/living/L in listeners)
+		for(var/L in listeners)
 			L.say("[owner.name]!") //"Unknown!"
 		next_command = world.time + cooldown_meme
 
 	//KNOCK KNOCK
 	else if(findtext(command, "knock knock"))
-		for(var/mob/living/L in listeners)
+		for(var/L in listeners)
 			L.say("Who's there?")
 		next_command = world.time + cooldown_meme
 
@@ -175,19 +175,19 @@
 
 	//MOVE
 	else if(findtext(command, "move"))
-		for(var/mob/living/L in listeners)
+		for(var/L in listeners)
 			step(L, pick(cardinal))
 		next_command = world.time + cooldown_meme
 
 	//WALK
 	else if(findtext(command, "walk") || findtext(command, "slow down"))
-		for(var/mob/living/L in listeners)
+		for(var/L in listeners)
 			L.m_intent = MOVE_INTENT_WALK
 		next_command = world.time + cooldown_meme
 
 	//RUN
 	else if(findtext(command, "run"))
-		for(var/mob/living/L in listeners)
+		for(var/L in listeners)
 			L.m_intent = MOVE_INTENT_RUN
 		next_command = world.time + cooldown_meme
 
@@ -223,20 +223,20 @@
 
 	//FLIP
 	else if(findtext(command, "flip") || findtext(command, "rotate") || findtext(command, "revolve") || findtext(command, "roll") || findtext(command, "somersault"))
-		for(var/mob/living/L in listeners)
+		for(var/L in listeners)
 			L.emote("flip")
 		next_command = world.time + cooldown_meme
 
 	//REST
 	else if(findtext(command, "rest"))
-		for(var/mob/living/L in listeners)
+		for(var/L in listeners)
 			if(!L.resting)
 				L.lay_down()
 		next_command = world.time + cooldown_meme
 
 	//GET UP
 	else if(findtext(command, "get up"))
-		for(var/mob/living/L in listeners)
+		for(var/L in listeners)
 			if(L.resting)
 				L.lay_down() //aka get up
 			L.SetWeakened(0)
@@ -245,7 +245,7 @@
 
 	//SIT
 	else if(findtext(command, "sit"))
-		for(var/mob/living/L in listeners)
+		for(var/L in listeners)
 			for(var/obj/structure/chair/chair in get_turf(L))
 				chair.buckle_mob(L)
 				break
@@ -253,39 +253,39 @@
 
 	//STAND UP
 	else if(findtext(command, "stand"))
-		for(var/mob/living/L in listeners)
+		for(var/L in listeners)
 			if(L.buckled && istype(L.buckled, /obj/structure/chair))
 				L.buckled.unbuckle_mob(L)
 		next_command = world.time + cooldown_meme
 
 	//DANCE
 	else if(findtext(command, "dance"))
-		for(var/mob/living/L in listeners)
+		for(var/L in listeners)
 			L.emote("dance")
 		next_command = world.time + cooldown_meme
 
 	//JUMP
 	else if(findtext(command, "jump"))
-		for(var/mob/living/L in listeners)
+		for(var/L in listeners)
 			L.say("HOW HIGH?!!")
 			L.emote("jump")
 		next_command = world.time + cooldown_meme
 
 	//SALUTE
 	else if(findtext(command, "salute"))
-		for(var/mob/living/L in listeners)
+		for(var/L in listeners)
 			L.emote("salute")
 		next_command = world.time + cooldown_meme
 
 	//PLAY DEAD
 	else if(findtext(command, "play dead"))
-		for(var/mob/living/L in listeners)
+		for(var/L in listeners)
 			L.emote("deathgasp")
 		next_command = world.time + cooldown_meme
 
 	//PLEASE CLAP
 	else if(findtext(command, "clap") || findtext(command, "applaud"))
-		for(var/mob/living/L in listeners)
+		for(var/L in listeners)
 			L.emote("clap")
 		next_command = world.time + cooldown_meme
 
@@ -299,7 +299,7 @@
 
 	//RIGHT ROUND
 	else if(findtext(command, "like a record baby"))
-		for(var/mob/living/L in listeners)
+		for(var/L in listeners)
 			L.SpinAnimation(speed = 10, loops = 5)
 		next_command = world.time + cooldown_meme
 
