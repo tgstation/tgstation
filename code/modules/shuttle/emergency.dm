@@ -324,6 +324,7 @@
 				sound_played = 1 //Only rev them up once.
 				for(var/area/shuttle/escape/E in world)
 					E << 'sound/effects/hyperspace_begin.ogg'
+					parallax_launch_in_area(E, 1)
 
 			if(time_left <= 0 && !SSshuttle.emergencyNoEscape)
 				//move each escape pod (or applicable spaceship) to its corresponding transit dock
