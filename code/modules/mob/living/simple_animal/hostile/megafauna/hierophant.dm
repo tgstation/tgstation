@@ -131,9 +131,9 @@ Difficulty: Hard
 	if(. && target && !targets_the_same)
 		visible_message("<span class='hierophant'>\"[pick(target_phrases)]\"</span>")*/
 
-/mob/living/simple_animal/hostile/megafauna/hierophant/adjustHealth(amount)
+/mob/living/simple_animal/hostile/megafauna/hierophant/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
 	. = ..()
-	if(src && amount > 0 && !blinking)
+	if(src && . > 0 && !blinking)
 		wander = TRUE
 		did_reset = FALSE
 
