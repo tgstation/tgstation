@@ -385,6 +385,7 @@
 	luminosity = 8
 	max_n_of_items = 10
 	pixel_y = -4
+	flags = NODECONSTRUCT
 
 /obj/machinery/smartfridge/survival_pod/empty
 	name = "dusty survival pod storage"
