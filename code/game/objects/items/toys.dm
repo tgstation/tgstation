@@ -1106,9 +1106,6 @@
 		playsound(src, 'sound/effects/pop.ogg', 20, 1)
 		qdel(src)
 
-/obj/item/toy/snowball/rock
-	throwforce = 12 //pelt your enemies to death with lumps of snow...
-
 /*
  * Beach ball
  */
