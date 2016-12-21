@@ -14,6 +14,7 @@
 	var/obj/mecha = null //This does not appear to be used outside of reference in mecha.dm.
 	var/obj/item/organ/brain/brain = null //The actual brain
 	var/datum/ai_laws/laws = new()
+	var/force_replace_ai_name = FALSE
 
 /obj/item/device/mmi/update_icon()
 	if(brain)
@@ -134,6 +135,8 @@
 	update_icon()
 	return
 
+/obj/item/device/mmi/proc/replacement_ai_name()
+	return brainmob.name
 
 /obj/item/device/mmi/verb/Toggle_Listening()
 	set name = "Toggle Listening"

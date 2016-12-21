@@ -177,7 +177,9 @@
 						ticker.mode.remove_antag_for_borging(brain.brainmob.mind)
 						if(!istype(brain.laws, /datum/ai_laws/ratvar))
 							remove_servant_of_ratvar(brain.brainmob, TRUE)
-						new /mob/living/silicon/ai(loc, laws, brain)
+						var/mob/living/silicon/ai/A = new /mob/living/silicon/ai(loc, laws, brain.brainmob)
+						if(brain.force_replace_ai_name)
+							fully_replace_character_name(A.name, brain.replacement_ai_name())
 						feedback_inc("cyborg_ais_created",1)
 						qdel(src)
 					else

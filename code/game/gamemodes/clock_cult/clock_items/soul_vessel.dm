@@ -21,6 +21,7 @@
 	fluff_names = list("Judge", "Guard", "Servant", "Smith", "Auger")
 	autoping = FALSE
 	resistance_flags = FIRE_PROOF | ACID_PROOF
+	force_replace_ai_name = TRUE
 
 /obj/item/device/mmi/posibrain/soul_vessel/New()
 	..()
