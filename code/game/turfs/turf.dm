@@ -112,7 +112,7 @@
 		var/atom/B = A
 		B.HasProximity(AM)
 
-	if(explosion_level)
+	if(explosion_level && ismob(AM))
 		AM.ex_act(explosion_level)
 
 /turf/open/Entered(atom/movable/AM)
