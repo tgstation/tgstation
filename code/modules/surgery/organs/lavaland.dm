@@ -124,8 +124,7 @@
 	//MOVE
 	else if(findtext(command, "move"))
 		for(var/mob/living/L in listeners)
-			var/turf/T = get_step(L,pick(cardinal))
-			L.Move(T)
+			L.step(L, pick(cardinal))
 		next_command = world.time + cooldown_meme
 
 	//WALK
