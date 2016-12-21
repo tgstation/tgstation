@@ -122,9 +122,15 @@
 		next_command = world.time + cooldown_meme
 
 	//MOVE
+	else if(findtext(command, "state laws") || findtext(command, "state your laws"))
+		for(var/mob/living/silicon/S in listeners)
+			S.statelaws()
+		next_command = world.time + cooldown_meme
+
+	//MOVE
 	else if(findtext(command, "move"))
 		for(var/mob/living/L in listeners)
-			L.step(L, pick(cardinal))
+			step(L, pick(cardinal))
 		next_command = world.time + cooldown_meme
 
 	//WALK
@@ -182,7 +188,7 @@
 		next_command = world.time + cooldown_meme
 
 	//GET UP
-	else if(findtext(command, "get up") || findtext(command, "stand"))
+	else if(findtext(command, "get up"))
 		for(var/mob/living/L in listeners)
 			L.resting = FALSE
 			L.SetWeakened(0)
