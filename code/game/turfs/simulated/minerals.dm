@@ -118,6 +118,7 @@
 
 /turf/closed/mineral/ex_act(severity, target)
 	..()
+	. = src
 	switch(severity)
 		if(3)
 			if (prob(75))

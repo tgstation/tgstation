@@ -105,13 +105,13 @@
 /turf/closed/wall/clockwork/dismantle_wall(devastated=0, explode=0)
 	if(devastated)
 		devastate_wall()
-		ChangeTurf(/turf/open/floor/plating)
+		. = ChangeTurf(/turf/open/floor/plating)
 	else
 		playsound(src, 'sound/items/Welder.ogg', 100, 1)
 		var/newgirder = break_wall()
 		if(newgirder) //maybe we want a gear!
 			transfer_fingerprints_to(newgirder)
-		ChangeTurf(/turf/open/floor/clockwork)
+		. = ChangeTurf(/turf/open/floor/clockwork)
 
 	for(var/obj/O in src) //Eject contents!
 		if(istype(O,/obj/structure/sign/poster))
