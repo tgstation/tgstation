@@ -64,7 +64,7 @@
 		return
 	if(ismob(AM))
 		var/mob/B = AM
-		if(B.stat)
+		if(B.stat && istype(B, /mob/living/simple_animal/drone))
 			return
 		if(isliving(AM))
 			var/mob/living/M = AM
