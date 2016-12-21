@@ -32,7 +32,7 @@
 		return
 	var/mob/living/list/listeners = list()
 	for(var/mob/living/L in get_hearers_in_view(8, owner))
-		if(!L.ear_deaf && L != owner)
+		if(!L.ear_deaf && L != owner && L.stat != DEAD)
 			listeners += L
 	if(!IsAvailable())
 		owner << "<span class='notice'>You must wait [(next_command - world.time)/10] seconds before Speaking again.</span>"
@@ -68,17 +68,31 @@
 		next_command = world.time + cooldown_stun
 
 	//SILENCE
-	else if(findtext(command, "shut up") || findtext(command, "silence") || findtext(command, "ssh"))
+	else if(findtext(command, "shut up") || findtext(command, "silence") || findtext(command, "ssh") || findtext(command, "quiet"))
 		for(var/mob/living/L in listeners)
 			if(iscarbon(L))
 				var/mob/living/carbon/C = L
 				C.silent += 10
 		next_command = world.time + cooldown_stun
 
+	//WAKE UP
+	else if(findtext(command, "wake up"))
+		for(var/mob/living/L in listeners)
+			L.SetSleeping(0)
+		next_command = world.time + cooldown_damage
+
+	//UNSTUN
+	else if(findtext(command, "get up"))
+		for(var/mob/living/L in listeners)
+			L.SetStunned(0)
+			L.SetParalysis(0)
+			L.SetWeakened(0)
+		next_command = world.time + cooldown_damage
+
 	//BRUTE DAMAGE
 	else if(findtext(command, "die"))
 		for(var/mob/living/L in listeners)
-			L.apply_damage(10, def_zone = "chest")
+			L.apply_damage(15, def_zone = "chest")
 		next_command = world.time + cooldown_damage
 
 	//BLEED
@@ -90,7 +104,7 @@
 		next_command = world.time + cooldown_damage
 
 	//FIRE
-	else if(findtext(command, "burn"))
+	else if(findtext(command, "burn") || findtext(command, "ignite") || findtext(command, "hell"))
 		for(var/mob/living/L in listeners)
 			L.adjust_fire_stacks(0.8)
 			L.IgniteMob()
@@ -103,7 +117,7 @@
 		next_command = world.time + cooldown_damage
 
 	//REPULSE
-	else if(findtext(command, "shoo") || findtext(command, "go away") || findtext(command, "leave me alone"))
+	else if(findtext(command, "shoo") || findtext(command, "go away") || findtext(command, "leave me alone") || findtext(command, "begone") || findtext(command, "flee"))
 		for(var/mob/living/L in listeners)
 			var/throwtarget = get_edge_target_turf(owner, get_dir(owner, get_step_away(L, owner)))
 			L.throw_at_fast(throwtarget, 3, 1)
@@ -172,12 +186,13 @@
 		for(var/mob/living/L in listeners)
 			for(var/obj/structure/chair/chair in get_turf(L))
 				chair.buckle_mob(L, force=1)
+				break
 		next_command = world.time + cooldown_meme
 
 	//STAND UP
 	else if(findtext(command, "stand"))
 		for(var/mob/living/L in listeners)
-			if(L.buckled)
+			if(L.buckled && istype(L.buckled, obj/structure/chair))
 				L.buckled.unbuckle_mob(L, force = 1)
 		next_command = world.time + cooldown_meme
 
