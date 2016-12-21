@@ -61,6 +61,11 @@
 		if(owner.mind.assigned_role == "Mime")
 			power_multiplier *= 0.5
 
+	for(var/mob/living/L in listeners)
+		if(findtext(command, L.real_name))
+			listeners = list(L) //focus on a particular person
+			break
+
 	//WGW
 	if(findtext(command, "one day, while andy") || findtext(command, "one day while andy"))
 		if(isliving(owner))
@@ -224,13 +229,15 @@
 	//REST
 	else if(findtext(command, "rest"))
 		for(var/mob/living/L in listeners)
-			L.resting = TRUE
+			if(!L.resting)
+				L.lay_down()
 		next_command = world.time + cooldown_meme
 
 	//GET UP
 	else if(findtext(command, "get up"))
 		for(var/mob/living/L in listeners)
-			L.resting = FALSE
+			if(L.resting)
+				L.lay_down() //aka get up
 			L.SetWeakened(0)
 			L.SetParalysis(0)
 		next_command = world.time + cooldown_damage
