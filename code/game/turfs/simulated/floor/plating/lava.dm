@@ -15,7 +15,7 @@
 	safeties_typecache = typecacheof(safeties_typecache)
 
 /turf/open/floor/plating/lava/ex_act()
-	return
+	return src
 
 /turf/open/floor/plating/lava/airless
 	initial_gas_mix = "TEMP=2.7"

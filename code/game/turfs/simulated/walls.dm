@@ -40,7 +40,7 @@
 			var/obj/structure/sign/poster/P = O
 			P.roll_and_drop(src)
 
-	ChangeTurf(/turf/open/floor/plating)
+	return ChangeTurf(/turf/open/floor/plating)
 
 /turf/closed/wall/proc/break_wall()
 	var/obj/item/stack/sheet/builtin_sheet = new sheet_type(src)
@@ -54,21 +54,18 @@
 
 /turf/closed/wall/ex_act(severity, target)
 	if(target == src)
-		dismantle_wall(1,1)
-		return
+		return dismantle_wall(1,1)
 	switch(severity)
 		if(1)
-			//SN src = null
-			src.ChangeTurf(src.baseturf)
-			return
+			. = src.ChangeTurf(src.baseturf)
 		if(2)
 			if (prob(50))
-				dismantle_wall(0,1)
+				. = dismantle_wall(0,1)
 			else
-				dismantle_wall(1,1)
+				. = dismantle_wall(1,1)
 		if(3)
 			if (prob(hardness))
-				dismantle_wall(0,1)
+				. = dismantle_wall(0,1)
 	if(!density)
 		..()
 

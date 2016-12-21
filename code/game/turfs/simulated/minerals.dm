@@ -75,11 +75,9 @@
 		for (i=0;i<mineralAmt;i++)
 			new mineralType(src)
 		feedback_add_details("ore_mined","[mineralType]|[mineralAmt]")
-	ChangeTurf(turf_type, defer_change)
-	spawn(10)
-		AfterChange()
+	. = ChangeTurf(turf_type, defer_change)
+	addtimer(src, "AfterChange", TIMER_NORMAL, 10)
 	playsound(src, 'sound/effects/break_stone.ogg', 50, 1) //beautiful destruction
-	return
 
 /turf/closed/mineral/attack_animal(mob/living/simple_animal/user)
 	if(user.environment_smash >= 2)
@@ -123,13 +121,12 @@
 	switch(severity)
 		if(3)
 			if (prob(75))
-				src.gets_drilled(null, 1)
+				return src.gets_drilled(null, 1)
 		if(2)
 			if (prob(90))
-				src.gets_drilled(null, 1)
+				return src.gets_drilled(null, 1)
 		if(1)
-			src.gets_drilled(null, 1)
-	return
+			return src.gets_drilled(null, 1)
 
 /turf/closed/mineral/Spread(turf/T)
 	T.ChangeTurf(type)

@@ -41,21 +41,21 @@
 	var/shielded = is_shielded()
 	contents_explosion(severity, target)
 	if(severity != 1 && shielded && target != src)
-		return
+		return src
 	if(target == src)
-		src.ChangeTurf(src.baseturf)
-		return
+		return src.ChangeTurf(src.baseturf)
+	. = src
 	switch(severity)
 		if(1)
 			if(prob(80))
-				ReplaceWithLattice()
+				return ReplaceWithLattice()
 			else if(prob(50))
-				ChangeTurf(src.baseturf)
+				return ChangeTurf(src.baseturf)
 			else
-				make_plating(1)
+				return make_plating(1)
 		if(2)
 			if(prob(50))
-				make_plating(1)
+				return make_plating(1)
 
 /turf/open/floor/engine/singularity_pull(S, current_size)
 	if(current_size >= STAGE_FIVE)
