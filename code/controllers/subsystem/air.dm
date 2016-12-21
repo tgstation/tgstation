@@ -203,10 +203,10 @@ var/datum/subsystem/air/SSair
 			return
 
 /datum/subsystem/air/proc/process_active_turfs(resumed = 0)
-	processing_tiles = TRUE
 	//cache for sanic speed
 	var/fire_count = times_fired
 	if (!resumed)
+		processing_tiles = TRUE
 		src.currentrun = active_turfs.Copy()
 	//cache for sanic speed (lists are references anyways)
 	var/list/currentrun = src.currentrun
