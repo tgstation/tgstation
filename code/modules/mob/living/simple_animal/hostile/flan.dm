@@ -4,8 +4,9 @@
 	name = "Flan"
 	desc = "Definitely not a dessert."
 	var/casting = 0
-	icon_state = "flan0"
-	icon_living = "flan0"
+	icon_state = "flan"								//Required for the inheritance of casting animations.
+	icon_living = "flan"
+	icon_dead = "flan_dead"
 	turns_per_move = 5
 	environment_smash = 0
 	speed = -2
@@ -18,7 +19,6 @@
 	attack_sound = 'sound/weapons/punch1.ogg'
 	a_intent = INTENT_HARM
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
-	del_on_death = 1
 	ranged = 1
 	retreat_distance = 2
 	minimum_distance = 4
@@ -29,14 +29,19 @@
 	var/spellsound = 'sound/effects/spray3.ogg'
 	var/spellanimation = ATTACK_EFFECT_SMASH		//More in defines/misc.dm
 	var/spelldamagetype = BRUTE
-	var/spelldamage = 20
+	var/spelldamage = 15
+
+/mob/living/simple_animal/hostile/flan/New()		//Required for the inheritance of casting animations.
+	..()
+	casting = 0
+	icon_state = "[initial(icon_state)][casting]"
 
 /mob/living/simple_animal/hostile/flan/OpenFire(mob/living/A)		//Spellcasting!
 	if(isliving(A))				//A is originally an atom, this is here to prevent that from fucking this up.
 		visible_message("<span class='danger'><b>[src]</b> [ranged_message] at [A]!</span>")
 		casting = 1
 		icon_state = "[initial(icon_state)][casting]"
-		if(do_after(src, 10, target = A, progress = 0))
+		if(do_after_mob(src, A, 10, uninterruptible = 1, progress = 0))		//Break LOS to dodge.
 			if(qdeleted(src))
 				return
 			if((A in view(src)))
@@ -53,6 +58,7 @@
 	desc = "You'd think they'd be spicy, but nobody has ever tried."
 	icon_state = "fireflan"
 	icon_living = "fireflan"
+	icon_dead = "fireflan_dead"
 	spellname = "a Fire spell!"
 	spellsound = 'sound/effects/fuse.ogg'
 	spelldamagetype = BURN
