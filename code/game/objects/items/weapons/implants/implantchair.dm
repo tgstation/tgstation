@@ -68,7 +68,7 @@
 			implant(occupant,usr)
 			. = TRUE
 
-/obj/machinery/implantchair/proc/implant(mob/living/carbon/M,mob/user)
+/obj/machinery/implantchair/proc/implant(mob/living/M,mob/user)
 	if (!istype(M))
 		return
 	if(!ready_implants || !ready)
@@ -85,7 +85,7 @@
 		playsound(get_turf(src), 'sound/machines/buzz-sigh.ogg', 25, 1)
 	update_icon()
 
-/obj/machinery/implantchair/proc/implant_action(mob/living/carbon/M)
+/obj/machinery/implantchair/proc/implant_action(mob/living/M)
 	var/obj/item/weapon/implant/I = new implant_type
 	if(I.implant(M))
 		visible_message("<span class='warning'>[M] has been implanted by the [name].</span>")
@@ -133,7 +133,7 @@
 	container_resist(user)
 
 /obj/machinery/implantchair/MouseDrop_T(mob/target, mob/user)
-	if(user.stat || user.lying || !Adjacent(user) || !user.Adjacent(target) || !iscarbon(target) || !user.IsAdvancedToolUser())
+	if(user.stat || user.lying || !Adjacent(user) || !user.Adjacent(target) || !isliving(target) || !user.IsAdvancedToolUser())
 		return
 	close_machine(target)
 
