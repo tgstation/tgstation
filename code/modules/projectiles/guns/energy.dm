@@ -28,7 +28,7 @@
 		shots_left++
 		temp_power -= EC.e_cost
 	temp_power = round(EC.e_cost / severity)
-	while(shots_left > 3)
+	while(shots_left > 2)
 		power_supply.use(temp_power)
 		shots_left--
 	chambered = null //we empty the chamber
