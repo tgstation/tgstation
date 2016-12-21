@@ -168,6 +168,7 @@
 			else
 				chance_of_deletion = 100
 			if(prob(chance_of_deletion))
+				T.active_hotspot = null	//prevent /turf/open/Destroy from trying to qdel us
 				T.ChangeTurf(T.baseturf)
 			else
 				T.to_be_destroyed = 0
