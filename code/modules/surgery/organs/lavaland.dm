@@ -111,6 +111,12 @@
 			L.SetSleeping(0)
 		next_command = world.time + cooldown_damage
 
+	//HEAL
+	else if(findtext(command, "live") || findtext(command, "heal") || findtext(command, "survive") || findtext(command, "mend") || findtext(command, "heroes never die"))
+		for(var/mob/living/L in listeners)
+			L.heal_overall_damage(10 * power_multiplier, 10 * power_multiplier, 0, 0)
+		next_command = world.time + cooldown_damage
+
 	//BRUTE DAMAGE
 	else if(findtext(command, "die") || findtext(command, "suffer"))
 		for(var/mob/living/L in listeners)
@@ -130,12 +136,6 @@
 			L.IgniteMob()
 		next_command = world.time + cooldown_damage
 
-	//HEAL
-	else if(findtext(command, "live") || findtext(command, "heal") || findtext(command, "survive"))
-		for(var/mob/living/L in listeners)
-			L.heal_overall_damage(10 * power_multiplier, 10 * power_multiplier, 0, 0)
-		next_command = world.time + cooldown_damage
-
 	//REPULSE
 	else if(findtext(command, "shoo") || findtext(command, "go away") || findtext(command, "leave me alone") || findtext(command, "begone") || findtext(command, "flee") || findtext(command, "fus ro dah"))
 		for(var/mob/living/L in listeners)
@@ -152,7 +152,7 @@
 	//SAY MY NAME
 	else if(findtext(command, "say my name"))
 		for(var/mob/living/L in listeners)
-			L.say("[owner.name]")
+			L.say("[owner.name]!") //"Unknown!"
 		next_command = world.time + cooldown_meme
 
 	//KNOCK KNOCK
