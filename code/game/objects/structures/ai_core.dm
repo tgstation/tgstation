@@ -150,7 +150,7 @@
 					M.forceMove(src)
 					brain = M
 					user << "<span class='notice'>You add [M.name] to the frame.</span>"
-					update_icon()"
+					update_icon()
 					return
 
 				if(istype(P, /obj/item/weapon/crowbar) && brain)
