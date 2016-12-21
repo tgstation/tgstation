@@ -117,7 +117,7 @@
 		next_command = world.time + cooldown_damage
 
 	//REPULSE
-	else if(findtext(command, "shoo") || findtext(command, "go away") || findtext(command, "leave me alone") || findtext(command, "begone") || findtext(command, "flee"))
+	else if(findtext(command, "shoo") || findtext(command, "go away") || findtext(command, "leave me alone") || findtext(command, "begone") || findtext(command, "flee") || findtext(command, "fus ro dah"))
 		for(var/mob/living/L in listeners)
 			var/throwtarget = get_edge_target_turf(owner, get_dir(owner, get_step_away(L, owner)))
 			L.throw_at_fast(throwtarget, 3, 1)
