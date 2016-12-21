@@ -19,7 +19,18 @@
 	var/use_cyborg_cell = 0 //whether the gun's cell drains the cyborg user's cell to recharge
 
 /obj/item/weapon/gun/energy/emp_act(severity)
-	power_supply.use(round(power_supply.charge / severity))
+	var/obj/item/ammo_casing/energy/EC = ammo_type[select]
+	if(EC.e_cost < 0) //just... don't bother if it's at or below 0
+		return
+	var/shots_left = 0
+	var/temp_power = power_supply.charge
+	while(temp_power - EC.e_cost > 0)
+		shots_left++
+		temp_power -= EC.e_cost
+	temp_power = round(EC.e_cost / severity)
+	while(shots_left > 3)
+		power_supply.use(temp_power)
+		shots_left--
 	chambered = null //we empty the chamber
 	recharge_newshot() //and try to charge a new shot
 	update_icon()
