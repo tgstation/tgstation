@@ -20,6 +20,7 @@
 	glass = 1
 	var/nextstate = null
 	sub_door = 1
+	explosion_block = 1
 	safe = FALSE
 	closingLayer = CLOSED_FIREDOOR_LAYER
 	assemblytype = /obj/structure/firelock_frame
