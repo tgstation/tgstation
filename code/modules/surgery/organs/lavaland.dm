@@ -27,7 +27,7 @@
 
 /datum/action/item_action/organ_action/colossus/Trigger()
 	. = ..()
-	var/command = stripped_input(owner, "Speak with the Voice of God", "Command", max_length = 64)
+	var/command = stripped_input(owner, "Speak with the Voice of God", "Command", max_length = 140)
 	if(!command)
 		return
 	var/mob/living/list/listeners = list()
@@ -42,15 +42,29 @@
 	playsound(get_turf(owner), 'sound/magic/clockwork/invoke_general.ogg', 300, 1, 5)
 
 	//STUN
-	if(findtext(command, "stop") || findtext(command, "wait") || findtext(command, "stand still") || findtext(command, "hold on"))
+	if(findtext(command, "stop") || findtext(command, "wait") || findtext(command, "stand still") || findtext(command, "hold on") || findtext(command, "halt"))
 		for(var/mob/living/L in listeners)
-			L.Stun(2)
+			L.Stun(3)
 		next_command = world.time + cooldown_stun
 
 	//WEAKEN
 	else if(findtext(command, "drop") || findtext(command, "fall"))
 		for(var/mob/living/L in listeners)
-			L.Weaken(2)
+			L.Weaken(3)
+		next_command = world.time + cooldown_stun
+
+	//SLEEP
+	else if(findtext(command, "sleep"))
+		for(var/mob/living/L in listeners)
+			L.Sleeping(3)
+		next_command = world.time + cooldown_stun
+
+	//VOMIT
+	else if(findtext(command, "vomit") || findtext(command, "throw up"))
+		for(var/mob/living/L in listeners)
+			if(iscarbon(L))
+				var/mob/living/carbon/C = L
+				C.vomit(10)
 		next_command = world.time + cooldown_stun
 
 	//SILENCE
@@ -62,9 +76,17 @@
 		next_command = world.time + cooldown_stun
 
 	//BRUTE DAMAGE
-	else if(findtext(command, "die") || findtext(command, "bleed"))
+	else if(findtext(command, "die"))
 		for(var/mob/living/L in listeners)
 			L.apply_damage(10, def_zone = "chest")
+		next_command = world.time + cooldown_damage
+
+	//BLEED
+	else if(findtext(command, "bleed"))
+		for(var/mob/living/L in listeners)
+			if(ishuman(L))
+				var/mob/living/carbon/human/H = L
+				H.bleed_rate += 5
 		next_command = world.time + cooldown_damage
 
 	//FIRE
@@ -87,10 +109,76 @@
 			L.throw_at_fast(throwtarget, 3, 1)
 		next_command = world.time + cooldown_damage
 
+	//WALK
+	else if(findtext(command, "walk"))
+		for(var/mob/living/L in listeners)
+			L.m_intent = MOVE_INTENT_WALK
+		next_command = world.time + cooldown_meme
+
+	//RUN
+	else if(findtext(command, "run"))
+		for(var/mob/living/L in listeners)
+			L.m_intent = MOVE_INTENT_RUN
+		next_command = world.time + cooldown_meme
+
+	//HELP INTENT
+	else if(findtext(command, "help"))
+		for(var/mob/living/L in listeners)
+			if(ishuman(L))
+				var/mob/living/carbon/human/H = L
+				H.a_intent_change(INTENT_HELP)
+		next_command = world.time + cooldown_meme
+
+	//DISARM INTENT
+	else if(findtext(command, "disarm"))
+		for(var/mob/living/L in listeners)
+			if(ishuman(L))
+				var/mob/living/carbon/human/H = L
+				H.a_intent_change(INTENT_DISARM)
+		next_command = world.time + cooldown_meme
+
+	//GRAB INTENT
+	else if(findtext(command, "grab"))
+		for(var/mob/living/L in listeners)
+			if(ishuman(L))
+				var/mob/living/carbon/human/H = L
+				H.a_intent_change(INTENT_GRAB)
+		next_command = world.time + cooldown_meme
+
+	//HARM INTENT
+	else if(findtext(command, "harm"))
+		for(var/mob/living/L in listeners)
+			if(ishuman(L))
+				var/mob/living/carbon/human/H = L
+				H.a_intent_change(INTENT_HARM)
+		next_command = world.time + cooldown_meme
+
+	//THROW/CATCH
+	else if(findtext(command, "throw") || findtext(command, "catch"))
+		for(var/mob/living/L in listeners)
+			if(iscarbon(L))
+				var/mob/living/carbon/C = L
+				C.throw_mode_on()
+		next_command = world.time + cooldown_meme
+
 	//FLIP
-	else if(findtext(command, "flip") || findtext(command, "rotate") || findtext(command, "revolve"))
+	else if(findtext(command, "flip") || findtext(command, "rotate") || findtext(command, "revolve") || findtext(command, "roll"))
 		for(var/mob/living/L in listeners)
 			L.emote("flip")
+		next_command = world.time + cooldown_meme
+
+	//SIT
+	else if(findtext(command, "sit"))
+		for(var/mob/living/L in listeners)
+			for(var/obj/structure/chair/chair in get_turf(L))
+				chair.buckle_mob(L, force=1)
+		next_command = world.time + cooldown_meme
+
+	//STAND UP
+	else if(findtext(command, "stand"))
+		for(var/mob/living/L in listeners)
+			if(L.buckled)
+				L.buckled.unbuckle_mob(L, force = 1)
 		next_command = world.time + cooldown_meme
 
 	//DANCE
@@ -106,6 +194,12 @@
 			L.emote("jump")
 		next_command = world.time + cooldown_meme
 
+	//SALUTE
+	else if(findtext(command, "salute"))
+		for(var/mob/living/L in listeners)
+			L.emote("salute")
+		next_command = world.time + cooldown_meme
+
 	//PLAY DEAD
 	else if(findtext(command, "play dead"))
 		for(var/mob/living/L in listeners)
@@ -113,9 +207,25 @@
 		next_command = world.time + cooldown_meme
 
 	//PLEASE CLAP
-	else if(findtext(command, "please clap"))
+	else if(findtext(command, "clap"))
 		for(var/mob/living/L in listeners)
 			L.emote("clap")
+		next_command = world.time + cooldown_meme
+
+	//HONK
+	else if(findtext(command, "honk"))
+		playsound(get_turf(owner), "sound/items/bikehorn.ogg", 300, 1)
+		if(owner.mind && owner.mind.assigned_role == "Clown")
+			for(var/mob/living/L in listeners)
+				if(iscarbon(L))
+					var/mob/living/carbon/C = L
+					C.slip(0,5)
+		next_command = world.time + cooldown_meme
+
+	//RIGHT ROUND
+	else if(findtext(command, "like a record baby"))
+		for(var/mob/living/L in listeners)
+			L.SpinAnimation(speed = 10, loops = 5)
 		next_command = world.time + cooldown_meme
 
 	else
