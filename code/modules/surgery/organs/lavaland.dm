@@ -12,6 +12,7 @@
 	var/cooldown_damage = 750
 	var/cooldown_meme = 450
 	var/cooldown_none = 150
+	var/base_multiplier = 1
 
 /datum/action/item_action/organ_action/colossus/IsAvailable()
 	if(world.time < next_command)
@@ -35,43 +36,59 @@
 		if(!L.ear_deaf && L != owner && L.stat != DEAD)
 			listeners += L
 	if(!IsAvailable())
-		owner << "<span class='notice'>You must wait [(next_command - world.time)/10] seconds before Speaking again.</span>"
+		if(world.time < next_command)
+			owner << "<span class='notice'>You must wait [(next_command - world.time)/10] seconds before Speaking again.</span>"
 		return
+
 	var/spoken = uppertext(command)
 	owner.say(spoken, spans = list("colossus","yell"))
 	playsound(get_turf(owner), 'sound/magic/clockwork/invoke_general.ogg', 300, 1, 5)
+
 	if(!listeners.len)
 		next_command = world.time + cooldown_none
 		return
 
+	var/power_multiplier = base_multiplier
+
+	if(owner.mind)
+		//Chaplains are very good at speaking with the voice of god
+		if(owner.mind.assigned_role == "Chaplain")
+			power_multiplier *= 2
+		//Command staff has authority
+		if(owner.mind.assigned_role in command_positions)
+			power_multiplier *= 1.4
+		//Why are you speaking
+		if(owner.mind.assigned_role == "Mime")
+			power_multiplier *= 0.5
+
 	//STUN
 	if(findtext(command, "stop") || findtext(command, "wait") || findtext(command, "stand still") || findtext(command, "hold on") || findtext(command, "halt"))
 		for(var/mob/living/L in listeners)
-			L.Stun(3)
+			L.Stun(3 * power_multiplier)
 		next_command = world.time + cooldown_stun
 
 	//WEAKEN
 	else if(findtext(command, "drop") || findtext(command, "fall"))
 		for(var/mob/living/L in listeners)
-			L.Weaken(3)
+			L.Weaken(3 * power_multiplier)
 		next_command = world.time + cooldown_stun
 
 	//SLEEP
 	else if(findtext(command, "sleep"))
 		for(var/mob/living/L in listeners)
-			L.Sleeping(3)
+			L.Sleeping(3 * power_multiplier)
 		next_command = world.time + cooldown_stun
 
 	//VOMIT
 	else if(findtext(command, "vomit") || findtext(command, "throw up"))
 		for(var/mob/living/carbon/C in listeners)
-			C.vomit(10)
+			C.vomit(10 * power_multiplier)
 		next_command = world.time + cooldown_stun
 
 	//SILENCE
 	else if(findtext(command, "shut up") || findtext(command, "silence") || findtext(command, "ssh") || findtext(command, "quiet"))
 		for(var/mob/living/carbon/C in listeners)
-			C.silent += 10
+			C.silent += (10 * power_multiplier)
 		next_command = world.time + cooldown_stun
 
 	//HALLUCINATE
@@ -89,33 +106,33 @@
 	//BRUTE DAMAGE
 	else if(findtext(command, "die") || findtext(command, "suffer"))
 		for(var/mob/living/L in listeners)
-			L.apply_damage(15, def_zone = "chest")
+			L.apply_damage(15 * power_multiplier, def_zone = "chest")
 		next_command = world.time + cooldown_damage
 
 	//BLEED
 	else if(findtext(command, "bleed"))
 		for(var/mob/living/carbon/human/H in listeners)
-			H.bleed_rate += 5
+			H.bleed_rate += (5 * power_multiplier)
 		next_command = world.time + cooldown_damage
 
 	//FIRE
 	else if(findtext(command, "burn") || findtext(command, "ignite") || findtext(command, "hell"))
 		for(var/mob/living/L in listeners)
-			L.adjust_fire_stacks(0.8)
+			L.adjust_fire_stacks(1 * power_multiplier)
 			L.IgniteMob()
 		next_command = world.time + cooldown_damage
 
 	//HEAL
 	else if(findtext(command, "live") || findtext(command, "heal") || findtext(command, "survive"))
 		for(var/mob/living/L in listeners)
-			L.heal_overall_damage(10, 10, 0, 0)
+			L.heal_overall_damage(10 * power_multiplier, 10 * power_multiplier, 0, 0)
 		next_command = world.time + cooldown_damage
 
 	//REPULSE
 	else if(findtext(command, "shoo") || findtext(command, "go away") || findtext(command, "leave me alone") || findtext(command, "begone") || findtext(command, "flee") || findtext(command, "fus ro dah"))
 		for(var/mob/living/L in listeners)
 			var/throwtarget = get_edge_target_turf(owner, get_dir(owner, get_step_away(L, owner)))
-			L.throw_at_fast(throwtarget, 3, 1)
+			L.throw_at_fast(throwtarget, 3 * power_multiplier, 1)
 		next_command = world.time + cooldown_damage
 
 	//WHO ARE YOU?
