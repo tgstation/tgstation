@@ -76,7 +76,7 @@
 			new mineralType(src)
 		feedback_add_details("ore_mined","[mineralType]|[mineralAmt]")
 	. = ChangeTurf(turf_type, defer_change)
-	addtimer(src, "AfterChange", TIMER_NORMAL, 10)
+	addtimer(src, "AfterChange", 10)
 	playsound(src, 'sound/effects/break_stone.ogg', 50, 1) //beautiful destruction
 
 /turf/closed/mineral/attack_animal(mob/living/simple_animal/user)
