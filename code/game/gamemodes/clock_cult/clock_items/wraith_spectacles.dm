@@ -8,7 +8,7 @@
 	actions_types = list(/datum/action/item_action/toggle)
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	vision_flags = SEE_MOBS | SEE_TURFS | SEE_OBJS
-	invis_view = 2
+	invis_view = SEE_INVISIBLE_NOLIGHTING
 	darkness_view = 3
 	tint = 3 //this'll get reset, but it won't handle vision updates properly otherwise
 
@@ -25,15 +25,7 @@
 
 /obj/item/clothing/glasses/wraith_spectacles/visor_toggling()
 	..()
-	invis_view = SEE_INVISIBLE_LIVING
-	tint = 0
-	if(!up)
-		if(is_servant_of_ratvar(loc))
-			invis_view = SEE_INVISIBLE_NOLIGHTING
-			vision_flags = SEE_MOBS | SEE_TURFS | SEE_OBJS
-		else
-			tint = 3
-			vision_flags = NONE
+	set_vision_vars(FALSE)
 
 /obj/item/clothing/glasses/wraith_spectacles/weldingvisortoggle(mob/user)
 	. = ..()
@@ -64,6 +56,20 @@
 		victim.adjust_blindness(30)
 		return TRUE
 
+/obj/item/clothing/glasses/wraith_spectacles/proc/set_vision_vars(update_vision)
+	invis_view = SEE_INVISIBLE_LIVING
+	tint = 0
+	if(!up)
+		if(is_servant_of_ratvar(loc))
+			invis_view = SEE_INVISIBLE_NOLIGHTING
+			vision_flags = SEE_MOBS | SEE_TURFS | SEE_OBJS
+		else
+			tint = 3
+			vision_flags = NONE
+	if(update_vision && iscarbon(loc))
+		var/mob/living/carbon/C = loc
+		C.head_update(src, forced = 1)
+
 /obj/item/clothing/glasses/wraith_spectacles/equipped(mob/living/user, slot)
 	..()
 	if(slot != slot_glasses || up)
@@ -73,15 +79,14 @@
 		return
 	if(blind_cultist(user)) //Cultists instantly go blind
 		return
+	set_vision_vars(TRUE)
 	if(is_servant_of_ratvar(user))
-		tint = 0
 		user << "<span class='heavy_brass'>As you put on the spectacles, all is revealed to you.[ratvar_awakens ? "" : " Your eyes begin to itch - you cannot do this for long."]</span>"
 		var/datum/status_effect/wraith_spectacles/WS = user.has_status_effect(STATUS_EFFECT_WRAITHSPECS)
 		if(WS)
 			WS.apply_eye_damage(user)
 		user.apply_status_effect(STATUS_EFFECT_WRAITHSPECS)
 	else
-		tint = 3
 		user << "<span class='heavy_brass'>You put on the spectacles, but you can't see through the glass.</span>"
 
 //The effect that causes/repairs the damage the spectacles cause.
