@@ -40,6 +40,9 @@
 	var/spoken = uppertext(command)
 	owner.say(spoken, spans = list("colossus","yell"))
 	playsound(get_turf(owner), 'sound/magic/clockwork/invoke_general.ogg', 300, 1, 5)
+	if(!listeners.len)
+		next_command = world.time + cooldown_none
+		return
 
 	//STUN
 	if(findtext(command, "stop") || findtext(command, "wait") || findtext(command, "stand still") || findtext(command, "hold on") || findtext(command, "halt"))
