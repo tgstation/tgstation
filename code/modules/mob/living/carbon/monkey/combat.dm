@@ -319,7 +319,7 @@
 				back_to_idle()
 				return TRUE
 
-			if(target.pulledby != src)
+			if(target.pulledby != src && !istype(target.pulledby, /mob/living/carbon/monkey/))
 
 				walk2derpless(target.loc)
 
