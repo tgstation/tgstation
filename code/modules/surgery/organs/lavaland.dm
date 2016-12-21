@@ -164,6 +164,20 @@
 			L.emote("flip")
 		next_command = world.time + cooldown_meme
 
+	//REST
+	else if(findtext(command, "rest"))
+		for(var/mob/living/L in listeners)
+			L.resting = TRUE
+		next_command = world.time + cooldown_meme
+
+	//GET UP
+	else if(findtext(command, "get up"))
+		for(var/mob/living/L in listeners)
+			L.resting = FALSE
+			L.SetWeakened(0)
+			L.SetParalysis(0)
+		next_command = world.time + cooldown_damage
+
 	//SIT
 	else if(findtext(command, "sit"))
 		for(var/mob/living/L in listeners)
