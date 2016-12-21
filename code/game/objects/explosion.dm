@@ -132,13 +132,18 @@
 		else
 			dist = 0
 
-		//------- TURF FIRES -------
+		//------- EX_ACT AND TURF FIRES -------
 
 		if(T)
 			if(flame_dist && prob(40) && !isspaceturf(T) && !T.density)
 				PoolOrNew(/obj/effect/hotspot, T) //Mostly for ambience!
 			if(dist > 0)
-				T.ex_act(dist)
+				var/t_type = T.type
+				var/turf/NT = T.ex_act(dist)
+				if(!istype(NT))
+					stack_trace("Failed turf ex_act type [t_type]")
+				NT.explosion_level = dist	//explode things that Enter this turf when we sleep
+				exploded_this_tick += NT
 
 		//--- THROW ITEMS AROUND ---
 
@@ -149,17 +154,12 @@
 				var/turf/throw_at = get_ranged_target_turf(I, throw_dir, throw_range)
 				I.throw_speed = 4 //Temporarily change their throw_speed for embedding purposes (Reset when it finishes throwing, regardless of hitting anything)
 				I.throw_at_fast(throw_at, throw_range, 2)//Throw it at 2 speed, this is purely visual anyway.
-				
-		//make it so you can't run through just exploded turfs
-		if(!T.density)
-			T.density = 1
-			exploded_this_tick += T
-		
+
 		if(world.tick_usage > CURRENT_TICKLIMIT)
 			stoplag()
-			for(var/UnDensify in exploded_this_tick)
-				var/turf/UnDensifyT = UnDensify
-				UnDensifyT.density = 0
+			for(var/Unexplode in exploded_this_tick)
+				var/turf/UnexplodeT = Unexplode
+				UnexplodeT.explosion_level = 0
 			exploded_this_tick.Cut()
 
 	var/took = (world.timeofday-start)/10
