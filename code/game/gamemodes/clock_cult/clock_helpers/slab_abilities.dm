@@ -234,7 +234,7 @@
 		if(totaldamage)
 			L.adjustBruteLoss(-brutedamage)
 			L.adjustFireLoss(-burndamage)
-			L.adjustToxLoss(totaldamage * 0.5)
+			L.adjustToxLoss(totaldamage * 0.7)
 			var/healseverity = max(round(totaldamage*0.05, 1), 1) //shows the general severity of the damage you just healed, 1 glow per 20
 			for(var/i in 1 to healseverity)
 				PoolOrNew(/obj/effect/overlay/temp/heal, list(targetturf, "#1E8CE1"))
@@ -250,6 +250,7 @@
 
 		if(L.reagents && L.reagents.has_reagent("holywater"))
 			L.reagents.remove_reagent("holywater", 1000)
+			L.reagents.remove_reagent("unholywater", 1000)
 			L << "<span class='heavy_brass'>Ratvar's light flares, banishing the darkness. Your devotion remains intact!</span>"
 
 		remove_ranged_ability()
