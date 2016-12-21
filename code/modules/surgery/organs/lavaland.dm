@@ -141,6 +141,18 @@
 			L.say("[L.real_name]")
 		next_command = world.time + cooldown_meme
 
+	//SAY MY NAME
+	else if(findtext(command, "say my name"))
+		for(var/mob/living/L in listeners)
+			L.say("[owner.name]")
+		next_command = world.time + cooldown_meme
+
+	//KNOCK KNOCK
+	else if(findtext(command, "knock knock"))
+		for(var/mob/living/L in listeners)
+			L.say("Who's there?")
+		next_command = world.time + cooldown_meme
+
 	//MOVE
 	else if(findtext(command, "state laws") || findtext(command, "state your laws"))
 		for(var/mob/living/silicon/S in listeners)
