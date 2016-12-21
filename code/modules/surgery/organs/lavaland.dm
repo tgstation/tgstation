@@ -64,6 +64,7 @@
 	for(var/mob/living/L in listeners)
 		if(findtext(command, L.real_name))
 			listeners = list(L) //focus on a particular person
+			power_multiplier *= 2
 			break
 
 	//WGW
