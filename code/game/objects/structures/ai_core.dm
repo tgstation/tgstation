@@ -255,7 +255,7 @@ That prevents a few funky behaviors.
 
 
 /obj/structure/AIcore/transfer_ai(interaction, mob/user, mob/living/silicon/ai/AI, obj/item/device/aicard/card)
-	if(!..())
+	if(state != AI_READY_CORE || !..())
 		return
  //Transferring a carded AI to a core.
 	if(interaction == AI_TRANS_FROM_CARD)
