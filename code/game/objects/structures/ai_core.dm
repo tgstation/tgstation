@@ -1,9 +1,3 @@
-#define EMPTY_CORE 0
-#define CIRCUIT_CORE 1
-#define SCREWED_CORE 2
-#define CABLED_CORE 3
-#define GLASS_CORE 4
-
 /obj/structure/AIcore
 	density = 1
 	anchored = 0
@@ -32,13 +26,7 @@
 
 /obj/structure/AIcore/attackby(obj/item/P, mob/user, params)
 	if(istype(P, /obj/item/weapon/wrench))
-		playsound(loc, P.usesound, 50, 1)
-		user.visible_message("[user] [anchored ? "fastens" : "unfastens"] [src].", \
-					 "<span class='notice'>You start to [anchored ? "unfasten [src] from" : "fasten [src] to"] the floor...</span>")
-		if(do_after(user, 20*P.toolspeed, target = src))
-			user << "<span class='notice'>You [anchored ? "unfasten [src] from" : "fasten [src] to"] the floor.</span>"
-			anchored = !anchored
-		return
+		return default_unfasten_wrench(user, P, 20)
 	if(!anchored)
 		if(istype(P, /obj/item/weapon/weldingtool))
 			if(state != EMPTY_CORE)
@@ -62,7 +50,7 @@
 						return
 					playsound(loc, 'sound/items/Deconstruct.ogg', 50, 1)
 					user << "<span class='notice'>You place the circuit board inside the frame.</span>"
-					icon_state = "1"
+					update_icon()
 					state = CIRCUIT_CORE
 					circuit = P
 					P.forceMove(src)
@@ -72,13 +60,13 @@
 					playsound(loc, P.usesound, 50, 1)
 					user << "<span class='notice'>You screw the circuit board into place.</span>"
 					state = SCREWED_CORE
-					icon_state = "2"
+					update_icon()
 					return
 				if(istype(P, /obj/item/weapon/crowbar))
 					playsound(loc, P.usesound, 50, 1)
 					user << "<span class='notice'>You remove the circuit board.</span>"
 					state = EMPTY_CORE
-					icon_state = "0"
+					update_icon()
 					circuit.forceMove(loc)
 					circuit = null
 					return
@@ -87,7 +75,7 @@
 					playsound(loc, P.usesound, 50, 1)
 					user << "<span class='notice'>You unfasten the circuit board.</span>"
 					state = CIRCUIT_CORE
-					icon_state = "1"
+					update_icon()
 					return
 				if(istype(P, /obj/item/stack/cable_coil))
 					var/obj/item/stack/cable_coil/C = P
@@ -97,19 +85,19 @@
 						if(do_after(user, 20, target = src) && state == SCREWED_CORE && C.use(5))
 							user << "<span class='notice'>You add cables to the frame.</span>"
 							state = CABLED_CORE
-							icon_state = "3"
+							update_icon()
 					else
 						user << "<span class='warning'>You need five lengths of cable to wire the AI core!</span>"
 					return
 			if(CABLED_CORE)
 				if(istype(P, /obj/item/weapon/wirecutters))
-					if (brain)
-						user << "<span class='warning'>Get that brain out of there first!</span>"
+					if(brain)
+						user << "<span class='warning'>Get that [brain.name] out of there first!</span>"
 					else
 						playsound(loc, P.usesound, 50, 1)
 						user << "<span class='notice'>You remove the cables.</span>"
 						state = SCREWED_CORE
-						icon_state = "2"
+						update_icon()
 						var/obj/item/stack/cable_coil/A = new /obj/item/stack/cable_coil( loc )
 						A.amount = 5
 					return
@@ -122,7 +110,7 @@
 						if(do_after(user, 20, target = src) && state == CABLED_CORE && G.use(2))
 							user << "<span class='notice'>You put in the glass panel.</span>"
 							state = GLASS_CORE
-							icon_state = "4"
+							update_icon()
 					else
 						user << "<span class='warning'>You need two sheets of reinforced glass to insert them into the AI core!</span>"
 					return
@@ -162,7 +150,7 @@
 					M.forceMove(src)
 					brain = M
 					user << "<span class='notice'>You add [M.name] to the frame.</span>"
-					icon_state = "3b"
+					update_icon()"
 					return
 
 				if(istype(P, /obj/item/weapon/crowbar) && brain)
@@ -170,7 +158,7 @@
 					user << "<span class='notice'>You remove the brain.</span>"
 					brain.forceMove(loc)
 					brain = null
-					icon_state = "3"
+					update_icon()
 					return
 
 			if(GLASS_CORE)
@@ -178,10 +166,7 @@
 					playsound(loc, P.usesound, 50, 1)
 					user << "<span class='notice'>You remove the glass panel.</span>"
 					state = CABLED_CORE
-					if(brain)
-						icon_state = "3b"
-					else
-						icon_state = "3"
+					update_icon()
 					new /obj/item/stack/sheet/rglass(loc, 2)
 					return
 
@@ -192,12 +177,44 @@
 						ticker.mode.remove_antag_for_borging(brain.brainmob.mind)
 						if(!istype(brain.laws, /datum/ai_laws/ratvar))
 							remove_servant_of_ratvar(brain.brainmob, TRUE)
-					new /mob/living/silicon/ai(loc, laws, brain)
-					feedback_inc("cyborg_ais_created",1)
-					qdel(src)
+						new /mob/living/silicon/ai(loc, laws, brain)
+						feedback_inc("cyborg_ais_created",1)
+						qdel(src)
+					else
+						state = AI_READY_CORE
+						update_icon()
+					return
+
+			if(AI_READY_CORE)
+				if(istype(P, /obj/item/device/aicard))
+					P.transfer_ai("INACTIVE", "AICARD", src, user)
+					return
+
+				if(istype(P, /obj/item/weapon/screwdriver))
+					playsound(loc, P.usesound, 50, 1)
+					user << "<span class='notice'>You disconnect the monitor.</span>"
+					state = GLASS_CORE
+					update_icon()
 					return
 	return ..()
 
+/obj/structure/AIcore/update_icon()
+	switch(state)
+		if(EMPTY_CORE)
+			icon_state = "0"
+		if(CIRCUIT_CORE)
+			icon_state = "1"
+		if(SCREWED_CORE)
+			icon_state = "2"
+		if(CABLED_CORE)
+			if(brain)
+				icon_state = "3b"
+			else
+				icon_state = "3"
+		if(GLASS_CORE)
+			icon_state = "4"
+		if(AI_READY_CORE)
+			icon_state = "ai-empty"
 
 /obj/structure/AIcore/deconstruct(disassembled = TRUE)
 	if(state == GLASS_CORE)
@@ -212,20 +229,14 @@
 
 /obj/structure/AIcore/deactivated
 	name = "inactive AI"
-	icon = 'icons/mob/AI.dmi'
 	icon_state = "ai-empty"
 	anchored = 1
-	state = GLASS_CORE
+	state = AI_READY_CORE
 
 /obj/structure/AIcore/deactivated/New()
 	..()
 	circuit = new(src)
 
-/obj/structure/AIcore/deactivated/attackby(obj/item/A, mob/user, params)
-	if(istype(A, /obj/item/device/aicard) && state == GLASS_CORE)
-		A.transfer_ai("INACTIVE","AICARD",src,user)
-	else
-		return ..()
 
 /*
 This is a good place for AI-related object verbs so I'm sticking it here.
@@ -243,7 +254,7 @@ That prevents a few funky behaviors.
 	return 1
 
 
-/obj/structure/AIcore/deactivated/transfer_ai(interaction, mob/user, mob/living/silicon/ai/AI, obj/item/device/aicard/card)
+/obj/structure/AIcore/transfer_ai(interaction, mob/user, mob/living/silicon/ai/AI, obj/item/device/aicard/card)
 	if(!..())
 		return
  //Transferring a carded AI to a core.
