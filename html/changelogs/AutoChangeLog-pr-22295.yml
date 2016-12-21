@@ -1,6 +1,0 @@
-author: "Joan"
-delete-after: True
-changes: 
-  - rscdel: "Cogscarabs can no longer hold slabs to produce components."
-  - rscadd: "Slabs will now produce components even if in a box in your backpack inside of a bag of holding on your back; any depth you can hide the slab in will still produce components."
-  - bugfix: "Non-Servants in possession of clockwork slabs will also no longer produce components."
