@@ -31,6 +31,15 @@
 	if(prob(12))
 		icon_state = "necro[rand(2,3)]"
 
+/turf/open/indestructible/hierophant
+	icon = 'icons/turf/floors/hierophant_floor.dmi'
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	smooth = SMOOTH_TRUE
+
+/turf/open/indestructible/hierophant/New()
+	..()
+	if(smooth)
+		queue_smooth(src)
 
 /turf/open/Initalize_Atmos(times_fired)
 	excited = 0
@@ -198,7 +207,7 @@
 		if(wet == TURF_WET_PERMAFROST)
 			wet = TURF_WET_ICE
 		else if(wet == TURF_WET_ICE)
-			wet = TURF_WET_WATER	
+			wet = TURF_WET_WATER
 		else
 			wet = TURF_DRY
 			if(wet_overlay)
