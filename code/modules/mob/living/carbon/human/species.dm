@@ -898,7 +898,7 @@
 		else if(istype(T) && T.allow_thrust(0.01, H))
 			. -= 2
 		else if(flightpack && F.allow_thrust(0.01, src))
-			. -= 1
+			. -= 2
 
 	if(flightpack && F.boost)
 		. -= F.boost_speed

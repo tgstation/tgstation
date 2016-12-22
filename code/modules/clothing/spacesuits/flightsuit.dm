@@ -50,12 +50,13 @@
 	var/momentum_impact_coeff = 0.5	//At this speed you'll start coliding with people resulting in momentum loss and them being knocked back, but no injuries or knockdowns
 	var/momentum_impact_loss = 50
 	var/momentum_crash_coeff = 0.8	//At this speed if you hit a dense object, you will careen out of control, while that object will be knocked flying.
-	var/momentum_drift_coeff = 0.13
+	var/momentum_drift_coeff = 0.04
 	var/momentum_speed = 0	//How fast we are drifting around
 	var/momentum_speed_x = 0
 	var/momentum_speed_y = 0
 	var/momentum_passive_loss = 7
 	var/momentum_gain = 20
+	var/drift_tolerance = 2
 
 	var/stabilizer = TRUE
 	var/stabilizer_decay_amount = 23
@@ -103,19 +104,20 @@
 
 //Start/Stop processing the item to use momentum and flight mechanics.
 /obj/item/device/flightpack/New()
-	START_PROCESSING(SSfastprocess, src)
-	..()
 	ion_trail = new
 	ion_trail.set_up(src)
+	START_PROCESSING(SSflightpacks, src)
+	..()
+	update_parts()
 
 /obj/item/device/flightpack/full/New()
-	..()
 	part_manip = new /obj/item/weapon/stock_parts/manipulator/pico(src)
 	part_scan = new /obj/item/weapon/stock_parts/scanning_module/phasic(src)
 	part_cap = new /obj/item/weapon/stock_parts/capacitor/super(src)
 	part_laser = new /obj/item/weapon/stock_parts/micro_laser/ultra(src)
 	part_bin = new /obj/item/weapon/stock_parts/matter_bin/super(src)
 	assembled = TRUE
+	..()
 
 /obj/item/device/flightpack/proc/update_parts()
 	boost_chargerate = initial(boost_chargerate)
@@ -155,7 +157,7 @@
 	qdel(part_cap)
 	qdel(part_laser)
 	qdel(part_bin)
-	STOP_PROCESSING(SSfastprocess, src)
+	STOP_PROCESSING(SSflightpacks, src)
 	part_manip = null
 	part_scan = null
 	part_cap = null
@@ -228,6 +230,8 @@
 		momentum_increment = boost_power
 	if(brake)
 		momentum_increment = 0
+	if(!gravity && !pressure)
+		momentum_increment -= 10
 	switch(dir)
 		if(NORTH)
 			adjust_momentum(0, momentum_increment)
@@ -405,6 +409,7 @@
 		powersetting = 1
 	momentum_gain = powersetting * 10
 	usermessage("Engine output set to [momentum_gain].")
+	momentum_drift_coeff = ((100/momentum_max)*momentum_gain*((drift_tolerance*(((drift_tolerance*2)+1)/4))/drift_tolerance)*10)
 
 /obj/item/device/flightpack/proc/crash_damage(density, anchored, speed, victim_name)
 	var/crashmessagesrc = "<span class='userdanger'>[wearer] violently crashes into [victim_name], "
@@ -463,12 +468,35 @@
 		if(L.throwing || (L.pulledby == wearer))
 			crashing = FALSE
 			return FALSE
+		if(L.buckled)
+			wearer.visible_message("<span class='warning'>[wearer] reflexively flies over [L]!</span>")
+			crashing = FALSE
+			return FALSE
 		suit.user.forceMove(get_turf(unmovablevictim))
 		crashing = FALSE
 		mobknockback(L, crashpower, crashdir)
 		damage = FALSE
 		density = TRUE
 		anchored = FALSE
+	else if(istype(unmovablevictim, /obj/structure/grille))
+		if(crashpower > 1)
+			var/obj/structure/grille/S = unmovablevictim
+			crash_grille(S)
+		crashing = FALSE
+		return FALSE
+	else if(istype(unmovablevictim, /obj/machinery/door))
+		var/obj/machinery/door/D = unmovablevictim
+		if(!airlock_hit(D))
+			crashing = FALSE
+			return FALSE
+		damage = TRUE
+		anchored = TRUE
+		density = FALSE
+	else if(istype(unmovablevictim, /obj/structure/mineral_door))
+		var/obj/structure/mineral_door/D = unmovablevictim
+		door_hit(D)
+		crashing = FALSE
+		return FALSE
 	else if(isclosedturf(unmovablevictim))
 		if(crashpower < 3)
 			crashing = FALSE
@@ -491,6 +519,38 @@
 		userknockback(density, anchored, momentum_speed, dir)
 		losecontrol(move = FALSE)
 	crashing = FALSE
+
+/obj/item/device/flightpack/proc/door_hit(obj/structure/mineral_door/door)
+	spawn()
+		door.Open()
+	wearer.forceMove(get_turf(door))
+	wearer.visible_message("<span class='boldnotice'>[wearer] rolls to their sides and slips past [door]!</span>")
+
+
+/obj/item/device/flightpack/proc/crash_grille(obj/structure/grille/target)
+	target.hitby(wearer)
+	target.take_damage(60, BRUTE, "melee", 1)
+	if(wearer.Move(target.loc))
+		wearer.visible_message("<span class='warning'>[wearer] smashes straight past [target]!</span>")
+
+/obj/item/device/flightpack/proc/airlock_hit(obj/machinery/door/A)
+	var/pass = 0
+	if(A.density)	//Is it closed?
+		pass += A.locked
+		pass += A.stat	//No power, no automatic open
+		pass += A.emagged
+		if(A.requiresID())
+			if((!A.allowed(wearer)) && !A.emergency)
+				pass += 1
+	else
+		return pass
+	if(!pass)
+		spawn()
+			A.open()
+		wearer.visible_message("<span class='warning'>[wearer] rolls sideways and slips past [A]</span>")
+		wearer.forceMove(get_turf(A))
+	return pass
+
 
 /obj/item/device/flightpack/proc/mobknockback(mob/living/victim, power, direction)
 	if(!ismob(victim))
@@ -799,6 +859,7 @@
 /obj/item/clothing/shoes/flightshoes/Destroy()
 	if(suit)
 		suit.shoes = null
+	return ..()
 
 /obj/item/clothing/shoes/flightshoes/proc/toggle(toggle)
 	if(suit)
@@ -1181,6 +1242,9 @@
 	armor = list(melee = 20, bullet = 20, laser = 20, energy = 10, bomb = 30, bio = 100, rad = 75, fire = 100, acid = 100)
 	max_heat_protection_temperature = FIRE_HELM_MAX_TEMP_PROTECT
 	var/list/datahuds = list(DATA_HUD_SECURITY_ADVANCED, DATA_HUD_MEDICAL_ADVANCED, DATA_HUD_DIAGNOSTIC)
+	var/zoom_range = 14
+	var/zoom = FALSE
+	actions_types = list(/datum/action/item_action/toggle_helmet_light, /datum/action/item_action/flightpack/zoom)
 
 /obj/item/clothing/head/helmet/space/hardsuit/flightsuit/equipped(mob/living/carbon/human/wearer, slot)
 	..()
@@ -1193,7 +1257,25 @@
 	for(var/hudtype in datahuds)
 		var/datum/atom_hud/H = huds[hudtype]
 		H.remove_hud_from(wearer)
+	if(zoom)
+		toggle_zoom(wearer, TRUE)
 
+/obj/item/clothing/head/helmet/space/hardsuit/flightsuit/ui_action_click(owner, action)
+	if(istype(action, /datum/action/item_action/flightpack/zoom))
+		toggle_zoom(owner)
+	. = ..()
+
+/obj/item/clothing/head/helmet/space/hardsuit/flightsuit/proc/toggle_zoom(mob/living/user, force_off = FALSE)
+	if(zoom || force_off)
+		user.client.view = world.view
+		user << "<span class='boldnotice'>Disabling smart zooming image enhancement...</span>"
+		zoom = FALSE
+		return FALSE
+	else
+		user.client.view = zoom_range
+		user << "<span class='boldnotice'>Enabling smart zooming image enhancement!</span>"
+		zoom = TRUE
+		return TRUE
 
 //ITEM actionS------------------------------------------------------------------------------------------------------------------------------------------------------
 //TODO: TOGGLED BUTTON SPRITES
@@ -1241,3 +1323,8 @@
 	name = "Toggle Airbrake"
 	button_icon_state = "flightpack_airbrake"
 	background_icon_state = "bg_tech_blue"
+
+/datum/action/item_action/flightpack/zoom
+	name = "Helmet Smart Zoom"
+	background_icon_state = "bg_tech_blue"
+	button_icon_state = "sniper_zoom"
