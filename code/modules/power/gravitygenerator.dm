@@ -26,7 +26,6 @@ var/const/GRAV_NEEDS_WRENCH = 3
 	density = 1
 	use_power = 0
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
-	critical_machine = TRUE
 	var/sprite_number = 0
 
 /obj/machinery/gravity_generator/ex_act(severity, target)
