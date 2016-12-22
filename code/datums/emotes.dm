@@ -1,0 +1,90 @@
+#define EMOTE_VISIBLE 1
+#define EMOTE_AUDIBLE 2
+
+var/global/list/emote_list = list()
+
+/datum/emote
+	var/key //What calls the emote
+	var/key_third_person //This will also call the emote
+	var/message //Message displayed when emote is used
+	var/message_mime //Message displayed if the user is a mime
+	var/message_alien //Message displayed if the user is a grown alien
+	var/message_larva //Message displayed if the user is an alien larva
+	var/message_robot //Message displayed if the user is a robot
+	var/message_param //Message to display if a param was given
+	var/emote_type = EMOTE_VISIBLE //Whether the emote is visible or audible
+	var/restraint_check = FALSE //Checks if the mob is restrained before performing the emote
+	var/muzzle_ignore = FALSE //Will only work if the emote is EMOTE_AUDIBLE
+	var/list/mob_type_allowed_typecache = list() //Types that are allowed to use that emote
+	var/list/mob_type_blacklist_typecache = list() //Types that are NOT allowed to use that emote
+
+/datum/emote/New()
+	..()
+	if(key_third_person)
+		emote_list[key_third_person] = src
+	mob_type_allowed_typecache = typecacheof(mob_type_allowed_typecache)
+	mob_type_blacklist_typecache = typecacheof(mob_type_blacklist_typecache)
+
+/datum/emote/proc/run_emote(mob/user, params = null)
+	. = TRUE
+	if(!can_run_emote(user))
+		world << "Can't run"
+		return FALSE
+	var/msg = select_message_type(user)
+	world << msg
+	if(params && message_param)
+		msg = message_param
+		msg = replacetext(msg, "%t", params)
+		world << msg
+	if(findtext(msg, "their"))
+		msg = replacetext(msg, "their", user.p_their())
+	if(findtext(msg, "them"))
+		msg = replacetext(msg, "them", user.p_them())
+	if(iscarbon(user))
+		var/mob/living/carbon/C = user
+		for(var/obj/item/weapon/implant/I in C.implants)
+			I.trigger(key, C)
+	if(!msg)
+		world << "!msg"
+		return FALSE
+
+	msg = "<b>[user]</b> " + msg
+
+	for(var/mob/M in dead_mob_list)
+		if(!M.client || isnewplayer(M))
+			continue
+		var/T = get_turf(src)
+		if(M.stat == DEAD && M.client && (M.client.prefs.chat_toggles & CHAT_GHOSTSIGHT) && !(M in viewers(T, null)))
+			M.show_message(message)
+
+	if(emote_type == EMOTE_AUDIBLE)
+		user.audible_message(msg)
+	else
+		user.visible_message(msg)
+	//log_emote("[name]/[key] : [msg]")
+
+/datum/emote/proc/select_message_type(mob/user)
+	. = message
+	if(!muzzle_ignore && user.is_muzzled() && emote_type == EMOTE_AUDIBLE)
+		return "makes a [pick("strong ", "weak ", "")]noise"
+	if(user.mind && user.mind.miming && message_mime)
+		. = message_mime
+	if(isalienadult(user) && message_alien)
+		. = message_alien
+	else if(islarva(user) && message_larva)
+		. = message_larva
+	else if(issilicon(user) && message_robot)
+		. = message_robot
+
+
+/datum/emote/proc/can_run_emote(mob/user)
+	if(!is_type_in_typecache(user, mob_type_allowed_typecache))
+		world << "!is_allowed"
+		return FALSE
+	if(restraint_check && user.restrained())
+		world << "restraint"
+		return FALSE
+	if(is_type_in_typecache(user, mob_type_blacklist_typecache))
+		world << "blacklist"
+		return FALSE
+	return TRUE
