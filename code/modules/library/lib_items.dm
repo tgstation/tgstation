@@ -39,13 +39,13 @@
 	switch(state)
 		if(0)
 			if(istype(I, /obj/item/weapon/wrench))
-				playsound(loc, 'sound/items/Ratchet.ogg', 100, 1)
+				playsound(loc, I.usesound, 100, 1)
 				if(do_after(user, 20*I.toolspeed, target = src))
 					user << "<span class='notice'>You wrench the frame into place.</span>"
 					anchored = 1
 					state = 1
 			if(istype(I, /obj/item/weapon/crowbar))
-				playsound(loc, 'sound/items/Crowbar.ogg', 100, 1)
+				playsound(loc, I.usesound, 100, 1)
 				if(do_after(user, 20*I.toolspeed, target = src))
 					user << "<span class='notice'>You pry the frame apart.</span>"
 					deconstruct(TRUE)
@@ -59,7 +59,7 @@
 					state = 2
 					icon_state = "book-0"
 			if(istype(I, /obj/item/weapon/wrench))
-				playsound(loc, 'sound/items/Ratchet.ogg', 100, 1)
+				playsound(loc, I.usesound, 100, 1)
 				user << "<span class='notice'>You unwrench the frame.</span>"
 				anchored = 0
 				state = 0
@@ -87,7 +87,7 @@
 				if(contents.len)
 					user << "<span class='warning'>You need to remove the books first!</span>"
 				else
-					playsound(loc, 'sound/items/Crowbar.ogg', 100, 1)
+					playsound(loc, I.usesound, 100, 1)
 					user << "<span class='notice'>You pry the shelf out.</span>"
 					new /obj/item/stack/sheet/mineral/wood(loc, 2)
 					state = 1

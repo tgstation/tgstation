@@ -268,7 +268,7 @@
 
 	else if(istype(O, /obj/item/weapon/crowbar))
 		materials.retrieve_all()
-		playsound(loc, 'sound/items/Crowbar.ogg', 50, 1)
+		playsound(loc, O.usesound, 50, 1)
 		user << "<span class='notice'>You retrieve the materials from [src].</span>"
 
 	else if(istype(O, /obj/item/weapon/weldingtool))
@@ -286,7 +286,7 @@
 				complete this task!</span>"
 			return
 
-		playsound(src, 'sound/items/Welder.ogg', 50, 1)
+		playsound(src, WT.usesound, 50, 1)
 		user.visible_message(
 			"<span class='notice'>[user] begins patching up \
 				[src] with [WT].</span>",

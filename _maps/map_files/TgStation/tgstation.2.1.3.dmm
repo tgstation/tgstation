@@ -2347,7 +2347,7 @@
 /turf/open/floor/plating,
 /area/ai_monitored/security/armory)
 "afa" = (
-/obj/machinery/door/airlock/shuttle{
+/obj/machinery/door/airlock/titanium{
 	name = "Emergency Shuttle Airlock"
 	},
 /obj/docking_port/mobile/emergency{
@@ -2479,7 +2479,7 @@
 /turf/open/floor/plating,
 /area/security/main)
 "afp" = (
-/obj/machinery/door/airlock/shuttle{
+/obj/machinery/door/airlock/titanium{
 	name = "Escape Pod Airlock"
 	},
 /obj/docking_port/mobile/pod{
@@ -5441,7 +5441,7 @@
 /turf/open/floor/plating,
 /area/security/processing)
 "alo" = (
-/obj/machinery/door/airlock/shuttle{
+/obj/machinery/door/airlock/titanium{
 	name = "Labor Shuttle Airlock";
 	req_access_txt = "2"
 	},
@@ -5748,7 +5748,7 @@
 /turf/open/floor/plasteel,
 /area/atmos)
 "alY" = (
-/obj/machinery/door/airlock/shuttle{
+/obj/machinery/door/airlock/titanium{
 	name = "Labor Shuttle Airlock";
 	req_access_txt = "2"
 	},
@@ -6594,7 +6594,7 @@
 /turf/open/floor/plating,
 /area/security/processing)
 "anO" = (
-/obj/machinery/door/airlock/shuttle{
+/obj/machinery/door/airlock/titanium{
 	id_tag = "prisonshuttle";
 	name = "Labor Shuttle Airlock"
 	},
@@ -13173,7 +13173,7 @@
 	},
 /area/mining_construction)
 "aCU" = (
-/obj/machinery/door/airlock/shuttle{
+/obj/machinery/door/airlock/titanium{
 	name = "Arrivals Shuttle Airlock"
 	},
 /turf/open/floor/plating,
@@ -15342,7 +15342,7 @@
 /turf/open/space,
 /area/space)
 "aHs" = (
-/obj/machinery/door/airlock/shuttle{
+/obj/machinery/door/airlock/titanium{
 	name = "Arrivals Shuttle Airlock"
 	},
 /turf/open/floor/mineral/titanium/blue,
@@ -17094,7 +17094,7 @@
 /turf/open/floor/plasteel/black,
 /area/chapel/main)
 "aLs" = (
-/obj/machinery/door/airlock/shuttle{
+/obj/machinery/door/airlock/titanium{
 	name = "Arrivals Shuttle Airlock"
 	},
 /obj/docking_port/mobile{
@@ -39606,7 +39606,7 @@
 /turf/open/floor/plating,
 /area/quartermaster/miningdock)
 "bJc" = (
-/obj/machinery/door/airlock/shuttle{
+/obj/machinery/door/airlock/titanium{
 	name = "Mining Shuttle Airlock";
 	req_access_txt = "48"
 	},
@@ -54844,7 +54844,7 @@
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cpJ" = (
-/obj/machinery/door/airlock/shuttle{
+/obj/machinery/door/airlock/titanium{
 	name = "Escape Pod Airlock"
 	},
 /obj/docking_port/mobile/pod{
@@ -55175,7 +55175,7 @@
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cqq" = (
-/obj/machinery/door/airlock/shuttle{
+/obj/machinery/door/airlock/titanium{
 	name = "Escape Pod Airlock"
 	},
 /obj/docking_port/mobile/pod{
@@ -58485,7 +58485,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "cxg" = (
-/obj/machinery/door/airlock/shuttle{
+/obj/machinery/door/airlock/titanium{
 	name = "Emergency Shuttle Airlock";
 	req_access_txt = "2"
 	},
@@ -58640,11 +58640,11 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/transport)
 "cxD" = (
-/obj/machinery/door/airlock/shuttle,
+/obj/machinery/door/airlock/titanium,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/transport)
 "cxE" = (
-/obj/machinery/door/airlock/shuttle,
+/obj/machinery/door/airlock/titanium,
 /obj/docking_port/mobile{
 	dir = 8;
 	dwidth = 2;
@@ -58668,7 +58668,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/transport)
 "cxF" = (
-/obj/machinery/door/airlock/shuttle{
+/obj/machinery/door/airlock/titanium{
 	name = "Escape Pod Airlock"
 	},
 /obj/docking_port/mobile/pod{
@@ -58706,7 +58706,7 @@
 /turf/open/floor/plating,
 /area/security/processing)
 "cxK" = (
-/obj/machinery/door/airlock/shuttle{
+/obj/machinery/door/airlock/titanium{
 	name = "Emergency Shuttle Airlock"
 	},
 /turf/open/floor/plating,
@@ -58719,7 +58719,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "cxM" = (
-/obj/machinery/door/airlock/shuttle{
+/obj/machinery/door/airlock/titanium{
 	name = "Emergency Shuttle Cargo"
 	},
 /turf/open/floor/mineral/titanium/blue,
@@ -58836,7 +58836,7 @@
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/abandoned)
 "cyd" = (
-/obj/machinery/door/airlock/shuttle,
+/obj/machinery/door/airlock/titanium,
 /obj/docking_port/mobile{
 	dheight = 0;
 	dir = 2;
@@ -58863,7 +58863,7 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "cye" = (
-/obj/machinery/door/airlock/shuttle,
+/obj/machinery/door/airlock/titanium,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "cyf" = (
@@ -59047,7 +59047,7 @@
 /turf/open/floor/plating,
 /area/atmos)
 "cyH" = (
-/obj/machinery/door/airlock/shuttle,
+/obj/machinery/door/airlock/titanium,
 /turf/open/floor/plating,
 /area/shuttle/abandoned)
 "cyI" = (
@@ -59125,7 +59125,7 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "cyQ" = (
-/obj/machinery/door/airlock/shuttle{
+/obj/machinery/door/airlock/titanium{
 	name = "Supply Shuttle Airlock";
 	req_access_txt = "31"
 	},
@@ -59153,7 +59153,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/supply)
 "cyT" = (
-/obj/machinery/door/airlock/shuttle{
+/obj/machinery/door/airlock/titanium{
 	name = "Supply Shuttle Airlock";
 	req_access_txt = "31"
 	},
@@ -59273,7 +59273,7 @@
 /turf/open/floor/plating,
 /area/engine/engineering)
 "czi" = (
-/obj/machinery/door/airlock/shuttle,
+/obj/machinery/door/airlock/titanium,
 /turf/open/floor/plasteel/shuttle/white,
 /area/shuttle/abandoned)
 "czj" = (

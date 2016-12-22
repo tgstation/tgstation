@@ -130,7 +130,7 @@
 
 	else if(istype(I, /obj/item/weapon/wrench))
 		if(!(stat & BROKEN))
-			playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
+			playsound(loc, I.usesound, 50, 1)
 			setDir(turn(dir,-45))
 			update_move_direction()
 			user << "<span class='notice'>You rotate [src].</span>"

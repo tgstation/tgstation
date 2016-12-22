@@ -72,4 +72,6 @@
 	var/blood_volume = 0 //how much blood the mob has
 	var/obj/effect/proc_holder/ranged_ability //Any ranged ability the mob has, as a click override
 
+	var/list/status_effects //a list of all status effects the mob has
+
 	var/slipping = FALSE

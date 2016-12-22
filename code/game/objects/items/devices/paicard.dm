@@ -6,16 +6,17 @@
 	w_class = WEIGHT_CLASS_SMALL
 	slot_flags = SLOT_BELT
 	origin_tech = "programming=2"
-	var/looking_for_personality = 0
 	var/mob/living/silicon/pai/pai
 	resistance_flags = FIRE_PROOF | ACID_PROOF | INDESTRUCTIBLE
 
 /obj/item/device/paicard/New()
 	..()
+	pai_card_list += src
 	add_overlay("pai-off")
 
 /obj/item/device/paicard/Destroy()
 	//Will stop people throwing friend pAIs into the singularity so they can respawn
+	pai_card_list -= src
 	if(!isnull(pai))
 		pai.death(0)
 	return ..()
@@ -42,12 +43,15 @@
 		else
 			dat += "<b>Radio Uplink</b><br>"
 			dat += "<font color=red><i>Radio firmware not loaded. Please install a pAI personality to load firmware.</i></font><br>"
+		if(ishuman(user))
+			var/mob/living/carbon/human/H = user
+			if(H.real_name == pai.master || H.dna.unique_enzymes == pai.master_dna)
+				dat += "<A href='byond://?src=\ref[src];toggle_holo=1'>\[[pai.canholo? "Disable" : "Enable"] holomatrix projectors\]</a><br>"
 		dat += "<A href='byond://?src=\ref[src];wipe=1'>\[Wipe current pAI personality\]</a><br>"
 	else
-		if(looking_for_personality)
-			dat += "No personality installed.<br>"
-			dat += "Searching for a personality..."
-			dat += "<A href='byond://?src=\ref[src];request=1'>\[View available personalities\]</a><br>"
+		dat += "No personality installed.<br>"
+		dat += "Searching for a personality... Press view available personalities to notify potential candidates."
+		dat += "<A href='byond://?src=\ref[src];request=1'>\[View available personalities\]</a><br>"
 	user << browse(dat, "window=paicard")
 	onclose(user, "paicard")
 	return
@@ -58,7 +62,6 @@
 		return
 
 	if(href_list["request"])
-		src.looking_for_personality = 1
 		SSpai.findPAI(src, usr)
 
 	if(pai)
@@ -72,6 +75,7 @@
 				pai.master = M.real_name
 				pai.master_dna = M.dna.unique_enzymes
 				pai << "<span class='notice'>You have been bound to a new master.</span>"
+				pai.emittersemicd = FALSE
 		if(href_list["wipe"])
 			var/confirm = input("Are you CERTAIN you wish to delete the current personality? This action cannot be undone.", "Personality Wipe") in list("Yes", "No")
 			if(confirm == "Yes")
@@ -93,6 +97,16 @@
 				pai << "Prime Directive : <br>[pai.laws.zeroth]"
 				for(var/slaws in pai.laws.supplied)
 					pai << "Supplemental Directives: <br>[slaws]"
+		if(href_list["toggle_holo"])
+			if(pai.canholo)
+				pai << "<span class='userdanger'>Your owner has disabled your holomatrix projectors!</span>"
+				pai.canholo = FALSE
+				usr << "<span class='warning'>You disable your pAI's holomatrix!</span>"
+			else
+				pai << "<span class='boldnotice'>Your owner has enabled your holomatrix projectors!</span>"
+				pai.canholo = TRUE
+				usr << "<span class='notice'>You enable your pAI's holomatrix!</span>"
+
 	attack_self(usr)
 
 // 		WIRE_SIGNAL = 1

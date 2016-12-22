@@ -224,7 +224,7 @@
 				level = 1 // We don't want disposal bins to disappear under the floors
 			density = 0
 			user << "<span class='notice'>You attach the [nicetype] to the underfloor.</span>"
-		playsound(loc, 'sound/items/Ratchet.ogg', 100, 1)
+		playsound(loc, I.usesound, 100, 1)
 		update_icon()
 
 	else if(istype(I, /obj/item/weapon/weldingtool))

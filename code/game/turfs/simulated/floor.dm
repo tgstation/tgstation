@@ -147,7 +147,7 @@ var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","
 				if(floor_tile)
 					PoolOrNew(floor_tile, src)
 		make_plating()
-		playsound(src, 'sound/items/Crowbar.ogg', 80, 1)
+		playsound(src, C.usesound, 80, 1)
 		return 1
 	return 0
 
@@ -185,4 +185,3 @@ var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","
 
 /turf/open/floor/acid_melt()
 	ChangeTurf(baseturf)
-

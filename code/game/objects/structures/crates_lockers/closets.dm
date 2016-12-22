@@ -236,7 +236,7 @@
 		if(do_after(user, 40*WT.toolspeed, 1, target = src))
 			if(opened || !WT.isOn())
 				return
-			playsound(loc, 'sound/items/welder.ogg', 50, 1)
+			playsound(loc, WT.usesound, 50, 1)
 			welded = !welded
 			user.visible_message("<span class='notice'>[user] [welded ? "welds shut" : "unweldeds"] \the [src].</span>",
 							"<span class='notice'>You [welded ? "weld" : "unwelded"] \the [src] with \the [WT].</span>",
@@ -246,7 +246,7 @@
 		if(isinspace() && !anchored)
 			return
 		anchored = !anchored
-		playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
+		playsound(src.loc, W.usesound, 75, 1)
 		user.visible_message("<span class='notice'>[user] [anchored ? "anchored" : "unanchored"] \the [src] [anchored ? "to" : "from"] the ground.</span>", \
 						"<span class='notice'>You [anchored ? "anchored" : "unanchored"] \the [src] [anchored ? "to" : "from"] the ground.</span>", \
 						"<span class='italics'>You hear a ratchet.</span>")

@@ -34,6 +34,7 @@
 	var/log_adminchat = 0				// log admin chat messages
 	var/log_pda = 0						// log pda messages
 	var/log_hrefs = 0					// log all links clicked in-game. Could be used for debugging and tracking down exploits
+	var/log_twitter = 0					// log certain expliotable parrots and other such fun things in a JSON file of twitter valid phrases.
 	var/log_world_topic = 0				// log all world.Topic() calls
 	var/sql_enabled = 0					// for sql switching
 	var/allow_admin_ooccolor = 0		// Allows admins with relevant permissions to have their own ooc colour
@@ -184,6 +185,8 @@
 	var/silicon_max_law_amount = 12
 	var/list/lawids = list()
 
+	var/list/law_weights = list()
+
 	var/assistant_cap = -1
 
 	var/starlight = 0
@@ -313,6 +316,8 @@
 					config.log_pda = 1
 				if("log_hrefs")
 					config.log_hrefs = 1
+				if("log_twitter")
+					config.log_twitter = 1
 				if("log_world_topic")
 					config.log_world_topic = 1
 				if("allow_admin_ooccolor")
@@ -647,6 +652,16 @@
 				if("random_laws")
 					var/law_id = lowertext(value)
 					lawids += law_id
+				if("law_weight")
+					// Value is in the form "LAWID,NUMBER"
+					var/list/L = splittext(value, ",")
+					if(L.len != 2)
+						diary << "Invalid LAW_WEIGHT: " + t
+						continue
+					var/lawid = L[1]
+					var/weight = text2num(L[2])
+					law_weights[lawid] = weight
+
 				if("silicon_max_law_amount")
 					config.silicon_max_law_amount	= text2num(value)
 				if("join_with_mutant_race")

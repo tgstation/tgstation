@@ -71,7 +71,7 @@
 	if (!( ticker ))
 		return
 	var/mob/M = AM
-	if(!M.restrained())
+	if(!M.stat && !M.restrained())
 		bumpopen(M)
 	return
 

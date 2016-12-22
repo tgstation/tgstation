@@ -567,14 +567,13 @@
 	blacklisted = FALSE
 	dangerous_existence = FALSE
 
-/datum/species/golem/random/New()
-	. = ..()
+/datum/species/golem/random/on_species_gain(mob/living/carbon/C, datum/species/old_species)
+	..()
 	var/list/golem_types = typesof(/datum/species/golem) - src.type
 	var/datum/species/golem/golem_type = pick(golem_types)
-	name = initial(golem_type.name)
-	id = initial(golem_type.id)
-	meat = initial(golem_type.meat)
-	fixed_mut_color = initial(golem_type.fixed_mut_color)
+	var/mob/living/carbon/human/H = C
+	H.set_species(golem_type)
+	H << "[initial(golem_type.info_text)]"
 
 /datum/species/golem/adamantine
 	name = "Adamantine Golem"
@@ -591,7 +590,7 @@
 	meat = /obj/item/weapon/ore/plasma
 	//Can burn and takes damage from heat
 	species_traits = list(NOBREATH,RESISTCOLD,RESISTPRESSURE,NOGUNS,NOBLOOD,RADIMMUNE,VIRUSIMMUNE,PIERCEIMMUNE,NODISMEMBER,MUTCOLORS)
-	info_text = "As a <span class='danger'>Plasma Golem</span>, you explode on death!."
+	info_text = "As a <span class='danger'>Plasma Golem</span>, you explode on death!"
 	burnmod = 1.5
 
 /datum/species/golem/plasma/spec_death(gibbed, mob/living/carbon/human/H)
@@ -1252,6 +1251,10 @@ var/global/image/plasmaman_on_fire = image("icon"='icons/mob/OnFire.dmi', "icon_
 		fixed_mut_color = ""
 		hair_color = ""
 
+	for(var/X in H.bodyparts) //propagates the damage_overlay changes
+		var/obj/item/bodypart/BP = X
+		BP.update_limb()
+	H.update_body_parts() //to update limb icon cache with the new damage overlays
 
 //Proc redirects:
 //Passing procs onto the fake_species, to ensure we look as much like them as possible

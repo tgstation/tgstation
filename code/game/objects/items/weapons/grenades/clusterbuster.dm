@@ -126,3 +126,10 @@
 /obj/item/weapon/grenade/clusterbuster/clf3
 	name = "WELCOME TO HELL"
 	payload = /obj/item/weapon/grenade/chem_grenade/clf3
+
+
+//random clusterbuster spawner
+/obj/item/weapon/grenade/clusterbuster/random/New()
+	var/real_type = pick(subtypesof(/obj/item/weapon/grenade/clusterbuster))
+	new real_type(loc)
+	qdel(src)

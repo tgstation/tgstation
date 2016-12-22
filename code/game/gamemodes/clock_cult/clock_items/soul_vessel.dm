@@ -18,13 +18,14 @@
 	The purpose of your existence is to further the goals of the servants and Ratvar himself. Above all else, serve Ratvar.</b>"
 	new_mob_message = "<span class='brass'>The soul vessel emits a jet of steam before its cogwheel smooths out.</span>"
 	dead_message = "<span class='deadsay'>Its cogwheel, scratched and dented, lies motionless.</span>"
-	fluff_names = list("Servant")
+	fluff_names = list("Judge", "Guard", "Servant", "Smith", "Auger")
 	clockwork = TRUE
 	autoping = FALSE
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 
 /obj/item/device/mmi/posibrain/soul_vessel/New()
 	..()
+	braintype = picked_fluff_name
 	all_clockwork_objects += src
 
 /obj/item/device/mmi/posibrain/soul_vessel/Destroy()
@@ -47,7 +48,7 @@
 	if(!is_servant_of_ratvar(user) || !ishuman(target) || used || (brainmob && brainmob.key))
 		..()
 	if(is_servant_of_ratvar(target))
-		user << "<span class='heavy_alloy'>\"It would be more wise to revive your allies, friend.\"</span>"
+		user << "<span class='nezbere'>\"It would be more wise to revive your allies, friend.\"</span>"
 		return
 	var/mob/living/carbon/human/H = target
 	var/obj/item/bodypart/head/HE = H.get_bodypart("head")
@@ -76,15 +77,19 @@
 		return
 	playsound(H, 'sound/misc/splort.ogg', 60, 1, -1)
 	playsound(H, 'sound/magic/clockwork/anima_fragment_attack.ogg', 40, 1, -1)
+	var/prev_fakedeath = (H.status_flags & FAKEDEATH)
 	H.status_flags |= FAKEDEATH //we want to make sure they don't deathgasp and maybe possibly explode
 	H.death()
-	H.status_flags &= ~FAKEDEATH
-	brainmob.name = H.real_name
-	brainmob.real_name = H.real_name
+	if(!prev_fakedeath)
+		H.status_flags &= ~FAKEDEATH
+	picked_fluff_name = "Slave"
+	braintype = picked_fluff_name
 	brainmob.timeofhostdeath = H.timeofdeath
 	user.visible_message("<span class='warning'>[user] presses [src] to [H]'s head, ripping through the skull and carefully extracting the brain!</span>", \
 	"<span class='brass'>You extract [H]'s consciousness from [H.p_their()] body, trapping it in the soul vessel.</span>")
 	transfer_personality(H)
+	brainmob.fully_replace_character_name(null, "[braintype] [H.real_name]")
+	name = "[initial(name)] ([brainmob.name])"
 	B.Remove(H)
 	qdel(B)
 	H.update_hair()

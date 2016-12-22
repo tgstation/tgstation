@@ -9146,7 +9146,7 @@
 	name = "MO19 Arrivals"
 	})
 "mH" = (
-/obj/machinery/door/airlock/shuttle{
+/obj/machinery/door/airlock/titanium{
 	name = "Shuttle Cockpit"
 	},
 /turf/open/floor/mineral/titanium/yellow,
@@ -9179,7 +9179,7 @@
 	name = "MO19 Arrivals"
 	})
 "mK" = (
-/obj/machinery/door/airlock/shuttle{
+/obj/machinery/door/airlock/titanium{
 	name = "Shuttle Airlock"
 	},
 /turf/open/floor/mineral/titanium/blue,

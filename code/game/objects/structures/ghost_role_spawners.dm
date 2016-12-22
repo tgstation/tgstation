@@ -285,3 +285,13 @@
 	new/obj/structure/fluff/empty_sleeper/syndicate(get_turf(src))
 	..()
 
+/obj/effect/mob_spawn/derelict_drone
+	name = "dust-caked drone shell"
+	desc = "A long-forgotten drone shell."
+	flavour_text = "This station sure is a mess. It's time to get to work."
+	mob_name = "a derelict drone"
+	mob_type = /mob/living/simple_animal/drone
+	icon = 'icons/mob/drone.dmi'
+	icon_state = "drone_maint_hat"
+	death = FALSE
+	roundstart = FALSE

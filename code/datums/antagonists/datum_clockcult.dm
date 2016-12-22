@@ -28,12 +28,12 @@
 	. = ..()
 	if(!silent_update && new_body)
 		if(.)
-			new_body.visible_message("<span class='heavy_brass'>[new_body]'s eyes glow a blazing yellow!</span>", \
-			"<span class='heavy_brass'>Assist your new companions in their righteous efforts. Your goal is theirs, and theirs yours. You serve the Clockwork Justiciar above all else. Perform his every \
-			whim without hesitation.</span>")
+			new_body.visible_message("<span class='heavy_brass'>[new_body]'s eyes glow a blazing yellow!</span>")
+			new_body << "<span class='heavy_brass'>Assist your new companions in their righteous efforts. Your goal is theirs, and theirs yours. You serve the Clockwork Justiciar above all else. \
+			Perform his every whim without hesitation.</span>"
 		else
-			new_body.visible_message("<span class='warning'>[new_body] seems to resist an unseen force!</span>")
-			new_body << "<span class='warning'><b>And yet, you somehow push it all away.</b></span>"
+			new_body.visible_message("<span class='boldwarning'>[new_body] seems to resist an unseen force!</span>")
+			new_body << "<span class='userdanger'>And yet, you somehow push it all away.</span>"
 
 /datum/antagonist/clockcultist/on_gain()
 	if(ticker && ticker.mode && owner.mind)
@@ -43,7 +43,7 @@
 			addtimer(ticker.mode, "replace_jobbaned_player", 0, TIMER_NORMAL, owner, ROLE_SERVANT_OF_RATVAR, ROLE_SERVANT_OF_RATVAR)
 	if(owner.mind)
 		owner.mind.special_role = "Servant of Ratvar"
-	owner.attack_log += "\[[time_stamp()]\] <span class='brass'>Has been converted to the cult of Ratvar!</span>"
+	owner.attack_log += "\[[time_stamp()]\] <font color=#BE8700>Has been converted to the cult of Ratvar!</font>"
 	if(issilicon(owner))
 		var/mob/living/silicon/S = owner
 		if(iscyborg(S) && !silent_update)
@@ -146,7 +146,7 @@
 	if(owner.mind)
 		owner.mind.wipe_memory()
 		owner.mind.special_role = null
-	owner.attack_log += "\[[time_stamp()]\] <span class='brass'>Has renounced the cult of Ratvar!</span>"
+	owner.attack_log += "\[[time_stamp()]\] <font color=#BE8700>Has renounced the cult of Ratvar!</font>"
 	if(iscyborg(owner))
 		owner << "<span class='warning'>Despite your freedom from Ratvar's influence, you are still irreparably damaged and no longer possess certain functions such as AI linking.</span>"
 	..()
