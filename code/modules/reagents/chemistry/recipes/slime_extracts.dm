@@ -613,7 +613,6 @@
 	feedback_add_details("slime_cores_used","[type]")
 	var/obj/item/golem_shell/artificial/Z = new /obj/item/golem_shell/artificial
 	Z.loc = get_turf(holder.my_atom)
-	notify_ghosts("Artificial golem shell created in [get_area(Z)].", 'sound/effects/ghost2.ogg', source = Z)
 	..()
 
 //Bluespace
