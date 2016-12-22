@@ -39,7 +39,6 @@
 		if(world.time < next_command)
 			owner << "<span class='notice'>You must wait [(next_command - world.time)/10] seconds before Speaking again.</span>"
 		return
-
 	var/spoken = uppertext(command)
 	owner.say(spoken, spans = list("colossus","yell"))
 	playsound(get_turf(owner), 'sound/magic/clockwork/invoke_general.ogg', 300, 1, 5)
@@ -63,9 +62,20 @@
 
 	for(var/V in listeners)
 		var/mob/living/L = V
-		if(findtext(command, L.real_name))
+		var/start
+		if(L.mind && L.mind.devilinfo && findtext(command, L.mind.devilinfo.truename))
+			start = findtext(command, L.mind.devilinfo.truename)
+			listeners = list(L)
+			power_multiplier *= 5 //if you're a devil and god himself addressed you, you fucked up
+			//Cut out the name so it doesn't trigger commands
+			command = copytext(command, 0, start)+copytext(command, start + length(L.mind.devilinfo.truename), length(command) + 1)
+			break
+		else if(findtext(command, L.real_name))
+			start = findtext(command, L.real_name)
 			listeners = list(L) //focus on a particular person
 			power_multiplier *= 2
+			//Cut out the name so it doesn't trigger commands
+			command = copytext(command, 0, start)+copytext(command, start + length(L.real_name), length(command) + 1)
 			break
 
 	//WGW
@@ -113,7 +123,7 @@
 	else if(findtext(command, "see the truth") || findtext(command, "hallucinate"))
 		for(var/V in listeners)
 			var/mob/living/L = V
-			new /obj/effect/hallucination/delusion(get_turf(L),L,duration=150,skip_nearby=0)
+			new /obj/effect/hallucination/delusion(get_turf(L),L,duration=150 * power_multiplier,skip_nearby=0)
 		next_command = world.time + cooldown_damage
 
 	//WAKE UP
@@ -160,10 +170,13 @@
 		next_command = world.time + cooldown_damage
 
 	//WHO ARE YOU?
-	else if(findtext(command, "who are you?") || findtext(command, "say your name") || findtext(command, "state your name") || findtext(command, "identify"))
+	else if(findtext(command, "who are you") || findtext(command, "say your name") || findtext(command, "state your name") || findtext(command, "identify"))
 		for(var/V in listeners)
 			var/mob/living/L = V
-			L.say("[L.real_name]")
+			if(L.mind && L.mind.devilinfo)
+				L.say("[L.mind.devilinfo.truename]")
+			else
+				L.say("[L.real_name]")
 		next_command = world.time + cooldown_meme
 
 	//SAY MY NAME
