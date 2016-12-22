@@ -32995,7 +32995,7 @@
 "bvt" = (
 /obj/machinery/door/airlock/glass_research{
 	name = "Genetics Research";
-	req_access_txt = "5; 9"
+	req_access_txt = "5; 9; 68"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4

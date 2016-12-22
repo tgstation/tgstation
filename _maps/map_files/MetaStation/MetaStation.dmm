@@ -75982,7 +75982,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/glass_research{
 	name = "Genetics Lab";
-	req_access_txt = "5;9"
+	req_access_txt = "5; 9; 68"
 	},
 /obj/structure/cable/yellow{
 	d1 = 4;
