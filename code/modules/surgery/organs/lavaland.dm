@@ -78,16 +78,8 @@
 			command = copytext(command, 0, start)+copytext(command, start + length(L.real_name), length(command) + 1)
 			break
 
-	//WGW
-	if(findtext(command, "one day, while andy") || findtext(command, "one day while andy"))
-		if(isliving(owner))
-			var/mob/living/self = owner
-			self.adjust_fire_stacks(20 * power_multiplier)
-			self.IgniteMob()
-		next_command = world.time + cooldown_meme
-
 	//STUN
-	else if(findtext(command, "stop") || findtext(command, "wait") || findtext(command, "stand still") || findtext(command, "hold on") || findtext(command, "halt"))
+	if(findtext(command, "stop") || findtext(command, "wait") || findtext(command, "stand still") || findtext(command, "hold on") || findtext(command, "halt"))
 		for(var/V in listeners)
 			var/mob/living/L = V
 			L.Stun(3 * power_multiplier)
