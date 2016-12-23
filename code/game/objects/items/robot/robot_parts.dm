@@ -163,11 +163,11 @@
 
 			var/mob/living/brain/BM = M.brainmob
 			if(!BM.key || !BM.mind)
-				user << "<span class='warning'>The mmi indicates that their mind is completely unresponsive; there's no point!</span>"
+				user << "<span class='warning'>The MMI indicates that their mind is completely unresponsive; there's no point!</span>"
 				return
 
 			if(!BM.client) //braindead
-				user << "<span class='warning'>The mmi indicates that their mind is currently inactive; it might change!</span>"
+				user << "<span class='warning'>The MMI indicates that their mind is currently inactive; it might change!</span>"
 				return
 
 			if(BM.stat == DEAD || (M.brain && M.brain.damaged_brain))

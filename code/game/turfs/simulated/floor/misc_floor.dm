@@ -76,19 +76,12 @@
 	change_construction_value(1)
 
 /turf/open/floor/clockwork/Destroy()
-	be_removed()
-	return ..()
-
-/turf/open/floor/clockwork/ChangeTurf(path, defer_change = FALSE)
-	if(path != type)
-		be_removed()
-	return ..()
-
-/turf/open/floor/clockwork/proc/be_removed()
 	STOP_PROCESSING(SSobj, src)
 	change_construction_value(-1)
-	qdel(realappearence)
-	realappearence = null
+	if(realappearence)
+		qdel(realappearence)
+		realappearence = null
+	return ..()
 
 /turf/open/floor/clockwork/Entered(atom/movable/AM)
 	..()
@@ -211,7 +204,9 @@
 			ChangeTurf(src.baseturf)
 
 /turf/open/floor/vines/ChangeTurf(turf/open/floor/T)
-	for(var/obj/structure/spacevine/SV in src)
-		qdel(SV)
 	. = ..()
+	//Do this *after* the turf has changed as qdel in spacevines will call changeturf again if it hasn't
+	for(var/obj/structure/spacevine/SV in src)
+		if(!qdestroying(SV))//Helps avoid recursive loops
+			qdel(SV)
 	UpdateAffectingLights()

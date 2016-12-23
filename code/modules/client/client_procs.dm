@@ -262,6 +262,9 @@ var/next_external_rsc = 0
 		admins -= src
 	directory -= ckey
 	clients -= src
+	if(movingmob != null)
+		movingmob.client_mobs_in_contents -= mob
+		UNSETEMPTY(movingmob.client_mobs_in_contents)
 	return ..()
 
 /client/Destroy()

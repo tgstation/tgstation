@@ -101,12 +101,7 @@
 		if(species)
 			if(O.use(10))
 				user << "You finish up the golem shell with ten sheets of [O]."
-				var/obj/effect/mob_spawn/human/golem/G = new shell_type(get_turf(src))
-				G.mob_species = species
-				var/datum/species/golem/S = species
-				G.name += " ([initial(S.id)])"
-				if(has_owner)
-					G.owner = user
+				new shell_type(get_turf(src), species, has_owner, user)
 				qdel(src)
 			else
 				user << "You need at least ten sheets to finish a golem."
@@ -130,8 +125,7 @@
 	radio = /obj/item/device/radio/headset/syndicate/alt
 	back = /obj/item/weapon/storage/backpack
 	pocket1 = /obj/item/weapon/gun/ballistic/automatic/pistol
-	id_job = "Operative"
-	id_access_list = list(access_syndicate)
+	pocket2 = /obj/item/weapon/card/id/syndicate/anyone
 	roundstart = FALSE
 	death = FALSE
 	icon = 'icons/obj/Cryogenic2.dmi'

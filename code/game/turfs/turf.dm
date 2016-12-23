@@ -167,8 +167,13 @@
 
 	SSair.remove_from_active(src)
 
+	var/list/old_checkers = proximity_checkers
+
 	Destroy()	//❄
 	var/turf/W = new path(src)
+	W.proximity_checkers = old_checkers
+	
+	
 	if(!defer_change)
 		W.AfterChange(ignore_air)
 	W.blueprint_data = old_blueprint_data

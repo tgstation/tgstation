@@ -39,6 +39,12 @@
 					break
 		if(OB)
 			F.attackby(OB, AM)
+			// Then, if the user is dragging an ore box, empty the satchel
+			// into the box.
+			var/mob/living/L = AM
+			if(istype(L.pulling, /obj/structure/ore_box))
+				var/obj/structure/ore_box/box = L.pulling
+				box.attackby(OB, AM)
 	return ..()
 
 /obj/item/weapon/ore/uranium

@@ -74,6 +74,10 @@ LOG_LAW
 ## log all world.Topic() calls
 # LOG_WORLD_TOPIC
 
+## enables use of the proc twitterize() that lets you take a large list of strings and turn it into a JSON file of tweet sized strings.
+## As an example of how this could be """useful""" look towards Poly (https://twitter.com/Poly_the_Parrot)
+# LOG_TWITTER
+
 ## disconnect players who did nothing during 10 minutes
 # KICK_INACTIVE
 

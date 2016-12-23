@@ -26,6 +26,8 @@
 	luminosity = 4
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
+	critical_machine = TRUE
+
 	var/gasefficency = 0.125
 
 	var/base_icon_state = "darkmatter_shard"

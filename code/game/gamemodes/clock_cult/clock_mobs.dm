@@ -99,6 +99,12 @@
 /mob/living/simple_animal/hostile/clockwork/fragment/Process_Spacemove(movement_dir = 0)
 	return 1
 
+/mob/living/simple_animal/hostile/clockwork/fragment/emp_act(severity)
+	if(movement_delay_time > world.time)
+		movement_delay_time = movement_delay_time + (50/severity)
+	else
+		movement_delay_time = world.time + (50/severity)
+
 /mob/living/simple_animal/hostile/clockwork/fragment/movement_delay()
 	. = ..()
 	if(movement_delay_time > world.time && !ratvar_awakens)

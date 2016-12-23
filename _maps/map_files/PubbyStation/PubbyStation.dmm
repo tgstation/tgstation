@@ -8578,12 +8578,7 @@
 /turf/closed/wall,
 /area/bridge)
 "aro" = (
-/obj/structure/closet/secure_closet/freezer/money,
-/obj/item/weapon/reagent_containers/food/drinks/bottle/vodka/badminka,
-/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/shotglass,
-/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/shotglass,
-/obj/item/clothing/head/bearpelt,
-/obj/item/weapon/skub,
+/obj/machinery/computer/bank_machine,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
@@ -9906,8 +9901,13 @@
 /turf/open/floor/plating,
 /area/bridge)
 "aue" = (
+/obj/structure/closet/secure_closet/freezer/money,
+/obj/item/weapon/reagent_containers/food/drinks/bottle/vodka/badminka,
+/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/shotglass,
+/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/shotglass,
+/obj/item/clothing/head/bearpelt,
+/obj/item/weapon/skub,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/structure/statue/gold/hop,
 /turf/open/floor/plasteel/vault{
 	dir = 1
 	},
