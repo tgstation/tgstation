@@ -28,8 +28,8 @@ var/datum/subsystem/air/SSair
 	var/list/hotspots = list()
 	var/list/networks = list()
 	var/list/obj/machinery/atmos_machinery = list()
-	
-	
+
+
 
 	//Special functions lists
 	var/list/turf/active_super_conductivity = list()
@@ -315,8 +315,7 @@ var/datum/subsystem/air/SSair
 		var/ET_EG = ET.excited_group
 		if (ET_EG)
 			if (ET_EG != EG)
-				EG.merge_groups(ET_EG)
-				EG = excited_group //merge_groups() may decide to replace our current EG
+				EG = EG.merge_groups(ET_EG)
 		else
 			EG.add_turf(ET)
 		if (!ET.excited)

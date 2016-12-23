@@ -153,8 +153,7 @@
 					if(enemy_excited_group)
 						if(our_excited_group != enemy_excited_group)
 							//combine groups (this also handles updating the excited_group var of all involved turfs)
-							our_excited_group.merge_groups(enemy_excited_group)
-							our_excited_group = excited_group //update our cache
+							our_excited_group = our_excited_group.merge_groups(enemy_excited_group)
 						share_air(enemy_tile, fire_count, adjacent_turfs_length) //share
 					else
 						if((recently_active == 1 && enemy_tile.recently_active == 1) || air.compare(enemy_tile.air))
@@ -297,6 +296,7 @@
 			turf_list += T
 		reset_cooldowns()
 		qdel(E)
+		return src
 	else
 		SSair.excited_groups -= src
 		for(var/t in turf_list)
@@ -305,6 +305,7 @@
 			E.turf_list += T
 		E.reset_cooldowns()
 		qdel(src)
+		return E
 
 /datum/excited_group/proc/reset_cooldowns()
 	breakdown_cooldown = 0
