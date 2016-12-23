@@ -1,6 +1,3 @@
-
-
-
 /*
 field_generator power level display
    The icon used for the field_generator need to have 'num_power_levels' number of icon states
@@ -63,6 +60,24 @@ field_generator power level display
 /obj/machinery/field/generator/process()
 	if(active == FG_ONLINE)
 		calc_power()
+
+/obj/machinery/field/generator/attack_robot(mob/user)
+	attack_ai(user)
+
+/obj/machinery/field/generator/attack_ai(mob/user)
+	if(state != FG_WELDED)
+		user << "<span class='warning'>The [src] needs to be firmly secured to the floor first!</span>"
+		return
+
+	if(active >= FG_CHARGING)
+		user << "<span class='warning'>You are unable to turn off [src] once it is online!</span>"
+		return 1
+
+	user << "<span class='notice'>You turn on [src].</span>"
+	visible_message("[src] turns on.",
+		"<span class='italics'>You hear heavy droning.</span>")
+	turn_on()
+	investigate_log("<font color='green'>activated</font> by [user.key].","singulo")
 
 /obj/machinery/field/generator/attack_hand(mob/user)
 	if(state == FG_WELDED)
@@ -166,7 +181,7 @@ field_generator power level display
 
 /obj/machinery/field/generator/Destroy()
 	cleanup()
-	return ..()
+	. = ..()
 
 
 /obj/machinery/field/generator/proc/check_power_level()
@@ -177,22 +192,26 @@ field_generator power level display
 
 /obj/machinery/field/generator/proc/turn_off()
 	active = FG_OFFLINE
-	spawn(1)
-		cleanup()
-		while (warming_up>0 && !active)
-			sleep(50)
-			warming_up--
-			update_icon()
+	addtimer(src, "turn_off_spawn", 1)
+
+/obj/machinery/field/generator/proc/turn_off_spawn()
+	cleanup()
+	while(warming_up>0 && !active)
+		sleep(50)
+		warming_up--
+		update_icon()
 
 /obj/machinery/field/generator/proc/turn_on()
 	active = FG_CHARGING
-	spawn(1)
-		while (warming_up<3 && active)
-			sleep(50)
-			warming_up++
-			update_icon()
-			if(warming_up >= 3)
-				start_fields()
+	addtimer(src, "turn_on_spawn", 1)
+
+/obj/machinery/field/generator/proc/turn_on_spawn()
+	while(warming_up<3 && active)
+		sleep(50)
+		warming_up++
+		update_icon()
+		if(warming_up >= 3)
+			start_fields()
 
 
 /obj/machinery/field/generator/proc/calc_power(set_power_draw)
@@ -245,16 +264,14 @@ field_generator power level display
 	if(state != FG_WELDED || !anchored)
 		turn_off()
 		return
-	spawn(1)
-		setup_field(1)
-	spawn(2)
-		setup_field(2)
-	spawn(3)
-		setup_field(4)
-	spawn(4)
-		setup_field(8)
-	spawn(5)
-		active = FG_ONLINE
+	addtimer(src, "setup_field", 1, TIMER_NORMAL, NORTH)
+	addtimer(src, "setup_field", 2, TIMER_NORMAL, SOUTH)
+	addtimer(src, "setup_field", 3, TIMER_NORMAL, EAST)
+	addtimer(src, "setup_field", 4, TIMER_NORMAL, WEST)
+	addtimer(src, "set_online", 5)
+
+/obj/machinery/field/generator/proc/set_online()
+	active = FG_ONLINE
 
 
 /obj/machinery/field/generator/proc/setup_field(NSEW)
@@ -311,8 +328,10 @@ field_generator power level display
 
 /obj/machinery/field/generator/proc/cleanup()
 	clean_up = 1
-	for (var/F in fields)
+	for(var/F in fields)
 		qdel(F)
+
+	fields.Cut()
 
 	for(var/CG in connected_gens)
 		var/obj/machinery/field/generator/FG = CG

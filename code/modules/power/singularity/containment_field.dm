@@ -1,5 +1,3 @@
-
-
 /obj/machinery/field/containment
 	name = "containment field"
 	desc = "An energy field."

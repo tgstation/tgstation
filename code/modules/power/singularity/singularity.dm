@@ -399,22 +399,22 @@
 
 /obj/singularity/proc/mezzer()
 	for(var/mob/living/carbon/M in oviewers(8, src))
-		if(istype(M, /mob/living/brain)) //Ignore brains
+		if(M.stat != CONSCIOUS)
 			continue
-
-		if(M.stat == CONSCIOUS)
-			if (ishuman(M))
-				var/mob/living/carbon/human/H = M
-				if(istype(H.glasses, /obj/item/clothing/glasses/meson))
-					var/obj/item/clothing/glasses/meson/MS = H.glasses
-					if(MS.vision_flags == SEE_TURFS)
-						H << "<span class='notice'>You look directly into the [src.name], good thing you had your protective eyewear on!</span>"
-						return
+		if(ishuman(M))
+			var/mob/living/carbon/human/H = M
+			if(istype(H.glasses, /obj/item/clothing/glasses/meson))
+				var/obj/item/clothing/glasses/meson/MS = H.glasses
+				if(MS.vision_flags == SEE_TURFS)
+					H << "<span class='notice'>You look directly into \the \
+						[src], good thing you had your protective \
+						eyewear on!</span>"
+					continue
 
 		M.apply_effect(3, STUN)
-		M.visible_message("<span class='danger'>[M] stares blankly at the [src.name]!</span>", \
-						"<span class='userdanger'>You look directly into the [src.name] and feel weak.</span>")
-	return
+		M.visible_message("<span class='danger'>[M] stares blankly at \
+			[src]!</span>", "<span class='userdanger'>You look directly \
+			into [src] and feel weak.</span>")
 
 
 /obj/singularity/proc/emp_area()
