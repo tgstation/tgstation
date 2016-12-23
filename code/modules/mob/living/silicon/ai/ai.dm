@@ -502,7 +502,7 @@ var/list/ai_list = list()
 	src << "<span class='notice'>Sending command to bot...</span>"
 	call_bot_cooldown = world.time + CALL_BOT_COOLDOWN
 	Bot.call_bot(src, waypoint)
-	call_bot_cooldown = FALSE
+	call_bot_cooldown = 0
 	
 
 /mob/living/silicon/ai/triggerAlarm(class, area/A, O, obj/alarmsource)
