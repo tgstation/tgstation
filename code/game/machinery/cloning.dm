@@ -133,7 +133,7 @@
 			return FALSE
 	if(clonemind.damnation_type) //Can't clone the damned.
 		addtimer(src, "horrifyingsound", 0)
-		mess = 1
+		mess = TRUE
 		icon_state = "pod_g"
 		update_icon()
 		return FALSE
@@ -250,7 +250,8 @@
 		if(!check_access(W))
 			user << "<span class='danger'>Access Denied.</span>"
 			return
-		if(!occupant || !mess)
+		if(!(occupant || mess))
+			user << "<span class='danger'>Error: Pod has no occupant.</span>"
 			return
 		else
 			connected_message("Authorized Ejection")
@@ -282,14 +283,14 @@
 /obj/machinery/clonepod/proc/go_out()
 	countdown.stop()
 
-	if (mess) //Clean that mess and dump those gibs!
+	if(mess) //Clean that mess and dump those gibs!
 		mess = FALSE
 		new /obj/effect/gibspawner/generic(loc)
 		audible_message("<span class='italics'>You hear a splat.</span>")
 		icon_state = "pod_0"
 		return
 
-	if (!occupant)
+	if(!occupant)
 		return
 
 	if(grab_ghost_when == CLONER_MATURE_CLONE)
@@ -340,7 +341,7 @@
 /obj/machinery/clonepod/handle_atom_del(atom/A)
 	if(A == occupant)
 		occupant = null
-		go_out()
+		countdown.stop()
 
 /obj/machinery/clonepod/proc/horrifyingsound()
 	for(var/i in 1 to 5)
