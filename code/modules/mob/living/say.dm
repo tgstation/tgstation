@@ -240,19 +240,19 @@ var/list/crit_allowed_modes = list(MODE_WHISPER,MODE_CHANGELING,MODE_ALIEN)
 									M << "<i><font color=#800080>We can faintly sense another of our kind trying to communicate through the hivemind...</font></i>"
 			if(1)
 				src << "<i><font color=#800080>Our senses have not evolved enough to be able to communicate this way...</font></i>"
-		return 1
+		return TRUE
 	if(message_mode == MODE_ALIEN)
 		if(hivecheck())
 			alien_talk(message)
-		return 1
+		return TRUE
 	if(message_mode == MODE_VOCALCORDS)
 		if(iscarbon(src))
 			var/mob/living/carbon/C = src
 			var/obj/item/organ/vocal_cords/V = C.getorganslot("vocal_cords")
 			if(V && V.can_speak_with())
 				C.say(V.speak_with(message), spans = V.spans)
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 /mob/living/proc/treat_message(message)
 	if(getBrainLoss() >= 60)

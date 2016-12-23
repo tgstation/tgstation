@@ -22,15 +22,15 @@
 
 /datum/action/item_action/organ_action/colossus/IsAvailable()
 	if(world.time < cords.next_command)
-		return 0
+		return FALSE
 	if(!owner)
-		return 0
+		return FALSE
 	if(!owner.can_speak())
-		return 0
+		return FALSE
 	if(check_flags & AB_CHECK_CONSCIOUS)
 		if(owner.stat)
-			return 0
-	return 1
+			return FALSE
+	return TRUE
 
 /datum/action/item_action/organ_action/colossus/Trigger()
 	. = ..()
@@ -46,15 +46,15 @@
 /obj/item/organ/vocal_cords/colossus/can_speak_with()
 	if(world.time < next_command)
 		owner << "<span class='notice'>You must wait [(next_command - world.time)/10] seconds before Speaking again.</span>"
-		return 0
+		return FALSE
 	if(!owner)
-		return 0
+		return FALSE
 	if(!owner.can_speak())
 		owner << "<span class='warning'>You are unable to speak!</span>"
-		return 0
+		return FALSE
 	if(owner.stat)
-		return 0
-	return 1
+		return FALSE
+	return TRUE
 
 /obj/item/organ/vocal_cords/colossus/speak_with(message)
 	var/spoken = uppertext(message)
