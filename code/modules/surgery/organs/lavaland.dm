@@ -1,5 +1,5 @@
 /obj/item/organ/colossus
-	name = "Voice of God"
+	name = "divine vocal cords"
 	icon_state = "voice_of_god"
 	zone = "mouth"
 	slot = "vocal_cords"
@@ -108,6 +108,8 @@
 	//SILENCE
 	else if(findtext(command, "shut up") || findtext(command, "silence") || findtext(command, "ssh") || findtext(command, "quiet"))
 		for(var/mob/living/carbon/C in listeners)
+			if(owner.mind && (owner.mind.assigned_role == "Librarian" || owner.mind.assigned_role == "Mime")
+				power_multiplier *= 3
 			C.silent += (10 * power_multiplier)
 		next_command = world.time + cooldown_stun
 
@@ -263,8 +265,9 @@
 			var/mob/living/L = V
 			if(L.resting)
 				L.lay_down() //aka get up
+			L.SetStunned(0)
 			L.SetWeakened(0)
-			L.SetParalysis(0)
+			L.SetParalysis(0) //i said get up i don't care if you're being tazed
 		next_command = world.time + cooldown_damage
 
 	//SIT
@@ -325,7 +328,7 @@
 		playsound(get_turf(owner), "sound/items/bikehorn.ogg", 300, 1)
 		if(owner.mind && owner.mind.assigned_role == "Clown")
 			for(var/mob/living/carbon/C in listeners)
-				C.slip(0,5)
+				C.slip(0,7 * power_multiplier)
 		next_command = world.time + cooldown_meme
 
 	//RIGHT ROUND
