@@ -34,6 +34,7 @@
 /turf/open/indestructible/hierophant
 	icon = 'icons/turf/floors/hierophant_floor.dmi'
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	baseturf = /turf/open/indestructible/hierophant
 	smooth = SMOOTH_TRUE
 
 /turf/open/indestructible/hierophant/New()

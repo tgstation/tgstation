@@ -206,7 +206,7 @@
 
 /datum/action/item_action/toggle_unfriendly_fire
 	name = "Toggle Friendly Fire \[ON\]"
-	desc = "Toggles if the staff causes friendly fire."
+	desc = "Toggles if the club's blasts cause friendly fire."
 	button_icon_state = "vortex_ff_on"
 
 /datum/action/item_action/toggle_unfriendly_fire/Trigger()

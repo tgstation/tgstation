@@ -760,39 +760,40 @@
 //Hierophant
 
 /obj/item/weapon/hierophant_club
-	name = "Hierophant's sclub"
+	name = "Hierophant's club"
 	desc = "A large club with intense magic power infused into it."
-	icon_state = "hierophant_club"
-	item_state = "hierophant_club"
+	icon_state = "hierophant_club_ready_beacon"
+	item_state = "hierophant_club_ready_beacon"
 	icon = 'icons/obj/lavaland/artefacts.dmi'
+	lefthand_file = 'icons/mob/inhands/64x64_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/64x64_righthand.dmi'
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
 	slot_flags = SLOT_BACK
 	w_class = WEIGHT_CLASS_BULKY
 	force = 15
 	hitsound = 'sound/weapons/sonic_jackhammer.ogg'
 	actions_types = list(/datum/action/item_action/vortex_recall, /datum/action/item_action/toggle_unfriendly_fire)
 	var/cooldown_time = 20 //how long the cooldown between non-melee ranged attacks is
-	var/chaser_cooldown = 101 //how long the cooldown between firing chasers at mobs is
+	var/chaser_cooldown = 81 //how long the cooldown between firing chasers at mobs is
 	var/chaser_timer = 0 //what our current chaser cooldown is
+	var/chaser_speed = 0.8 //how fast our chasers are
 	var/timer = 0 //what our current cooldown is
-	var/blast_range = 3 //how long the cardinal blast's walls are
+	var/blast_range = 13 //how long the cardinal blast's walls are
 	var/obj/effect/hierophant/beacon //the associated beacon we teleport to
 	var/teleporting = FALSE //if we ARE teleporting
 	var/friendly_fire_check = FALSE //if the blasts we make will consider our faction against the faction of hit targets
-	var/icon_update_timer_id
 
 /obj/item/weapon/hierophant_club/examine(mob/user)
 	..()
 	user << "<span class='hierophant_warning'>The[beacon ? " beacon is not currently":"re is a beacon"] attached.</span>"
-
-/obj/item/weapon/hierophant_club/update_icon()
-	icon_state = "hierophant_club[timer <= world.time][beacon ? "0":"1"]"
-	item_state = icon_state
 
 /obj/item/weapon/hierophant_club/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	..()
 	var/turf/T = get_turf(target)
 	if(!T || timer > world.time)
 		return
+	calculate_anger_mod(user)
 	timer = world.time + CLICK_CD_MELEE //by default, melee attacks only cause melee blasts, and have an accordingly short cooldown
 	if(proximity_flag)
 		addtimer(src, "aoe_burst", 0, TIMER_NORMAL, T, user)
@@ -805,7 +806,7 @@
 			timer = world.time + cooldown_time
 			if(isliving(target) && chaser_timer <= world.time) //living and chasers off cooldown? fire one!
 				chaser_timer = world.time + chaser_cooldown
-				PoolOrNew(/obj/effect/overlay/temp/hierophant/chaser, list(get_turf(user), user, target, 1.5, friendly_fire_check))
+				PoolOrNew(/obj/effect/overlay/temp/hierophant/chaser, list(get_turf(user), user, target, chaser_speed, friendly_fire_check))
 				add_logs(user, target, "fired a chaser at", src)
 			else
 				addtimer(src, "cardinal_blasts", 0, TIMER_NORMAL, T, user) //otherwise, just do cardinal blast
@@ -813,13 +814,33 @@
 		else
 			user << "<span class='warning'>That target is out of range!</span>" //too far away
 			timer = world.time
-	prepare_icon_update()
+	addtimer(src, "prepare_icon_update", 0)
+
+/obj/item/weapon/hierophant_club/proc/calculate_anger_mod(mob/user) //we get stronger as the user loses health
+	chaser_cooldown = initial(chaser_cooldown)
+	cooldown_time = initial(cooldown_time)
+	chaser_speed = initial(chaser_speed)
+	blast_range = initial(blast_range)
+	if(isliving(user))
+		var/mob/living/L = user
+		var/health_percent = L.health / L.maxHealth
+		chaser_cooldown += round(health_percent * 20) //two tenths of a second for each missing 10% of health
+		cooldown_time += round(health_percent * 10) //one tenth of a second for each missing 10% of health
+		chaser_speed = max(chaser_speed += health_percent, 0.5) //one tenth of a second faster for each missing 10% of health
+		blast_range -= round(health_percent * 10) //one additional range for each missing 10% of health
+
+/obj/item/weapon/hierophant_club/update_icon()
+	icon_state = "hierophant_club[timer <= world.time ? "_ready":""][beacon ? "":"_beacon"]"
+	item_state = icon_state
+	if(ismob(loc))
+		var/mob/M = loc
+		M.update_inv_hands()
+		M.update_inv_back()
 
 /obj/item/weapon/hierophant_club/proc/prepare_icon_update()
 	update_icon()
-	if(timer > world.time)
-		deltimer(icon_update_timer_id)
-		icon_update_timer_id = addtimer(src, "update_icon", world.time - timer)
+	sleep(timer - world.time)
+	update_icon()
 
 /obj/item/weapon/hierophant_club/ui_action_click(mob/user, action)
 	if(istype(action, /datum/action/item_action/toggle_unfriendly_fire)) //toggle friendly fire...
@@ -833,10 +854,10 @@
 		return
 	if(!beacon)
 		if(isturf(user.loc))
-			user.visible_message("<span class='hierophant_warning'>[user] holds [src] carefully in front of [user.p_them()]...</span>", \
+			user.visible_message("<span class='hierophant_warning'>[user] starts fiddling with [src]'s pommel...</span>", \
 			"<span class='notice'>You start detaching the hierophant beacon...</span>")
 			timer = world.time + 51
-			prepare_icon_update()
+			addtimer(src, "prepare_icon_update", 0)
 			if(do_after(user, 50, target = user) && !beacon)
 				var/turf/T = get_turf(user)
 				playsound(T,'sound/magic/Blind.ogg', 200, 1, -4)
@@ -844,35 +865,40 @@
 				beacon = new/obj/effect/hierophant(T)
 				user.update_action_buttons_icon()
 				user.visible_message("<span class='hierophant_warning'>[user] places a strange machine beneath [user.p_their()] feet!</span>", \
-				"<span class='hierophant'>You detach the hierophant beacon, which you can teleport yourself and any allies to at any time!</span>\n\
+				"<span class='hierophant'>You detach the hierophant beacon, allowing you to teleport yourself and any allies to it at any time!</span>\n\
 				<span class='notice'>You can remove the beacon to place it again by striking it with the club.</span>")
 			else
 				timer = world.time
-				prepare_icon_update()
+				addtimer(src, "prepare_icon_update", 0)
 		else
 			user << "<span class='warning'>You need to be on solid ground to detach the beacon!</span>"
 		return
 	if(get_dist(user, beacon) <= 2) //beacon too close abort
 		user << "<span class='warning'>You are too close to the beacon to teleport to it!</span>"
 		return
-	if(is_blocked_turf(get_turf(beacon)))
+	if(is_blocked_turf(get_turf(beacon), TRUE))
 		user << "<span class='warning'>The beacon is blocked by something, preventing teleportation!</span>"
+		return
+	if(!isturf(user.loc))
+		user << "<span class='warning'>You don't have enough space to teleport from here!</span>"
 		return
 	teleporting = TRUE //start channel
 	user.update_action_buttons_icon()
 	user.visible_message("<span class='hierophant_warning'>[user] starts to glow faintly...</span>")
 	timer = world.time + 50
-	prepare_icon_update()
+	addtimer(src, "prepare_icon_update", 0)
 	beacon.icon_state = "hierophant_tele_on"
+	var/obj/effect/overlay/temp/hierophant/telegraph/edge/TE1 = PoolOrNew(/obj/effect/overlay/temp/hierophant/telegraph/edge, user.loc)
+	var/obj/effect/overlay/temp/hierophant/telegraph/edge/TE2 = PoolOrNew(/obj/effect/overlay/temp/hierophant/telegraph/edge, beacon.loc)
 	if(do_after(user, 40, target = user) && user && beacon)
 		var/turf/T = get_turf(beacon)
 		var/turf/source = get_turf(user)
-		if(is_blocked_turf(T))
+		if(is_blocked_turf(T, TRUE))
 			teleporting = FALSE
 			user << "<span class='warning'>The beacon is blocked by something, preventing teleportation!</span>"
 			user.update_action_buttons_icon()
 			timer = world.time
-			prepare_icon_update()
+			addtimer(src, "prepare_icon_update", 0)
 			beacon.icon_state = "hierophant_tele_off"
 			return
 		PoolOrNew(/obj/effect/overlay/temp/hierophant/telegraph, list(T, user))
@@ -884,16 +910,16 @@
 			if(user)
 				user.update_action_buttons_icon()
 			timer = world.time
-			prepare_icon_update()
+			addtimer(src, "prepare_icon_update", 0)
 			if(beacon)
 				beacon.icon_state = "hierophant_tele_off"
 			return
-		if(is_blocked_turf(T))
+		if(is_blocked_turf(T, TRUE))
 			teleporting = FALSE
 			user << "<span class='warning'>The beacon is blocked by something, preventing teleportation!</span>"
 			user.update_action_buttons_icon()
 			timer = world.time
-			prepare_icon_update()
+			addtimer(src, "prepare_icon_update", 0)
 			beacon.icon_state = "hierophant_tele_off"
 			return
 		add_logs(user, beacon, "teleported self from ([source.x],[source.y],[source.z]) to")
@@ -911,8 +937,10 @@
 		if(beacon)
 			beacon.icon_state = "hierophant_tele_off"
 	else
+		qdel(TE1)
+		qdel(TE2)
 		timer = world.time
-		prepare_icon_update()
+		addtimer(src, "prepare_icon_update", 0)
 	if(beacon)
 		beacon.icon_state = "hierophant_tele_off"
 	teleporting = FALSE
@@ -921,7 +949,7 @@
 
 /obj/item/weapon/hierophant_club/proc/teleport_mob(turf/source, mob/M, turf/target, mob/user)
 	var/turf/turf_to_teleport_to = get_step(target, get_dir(source, M)) //get position relative to caster
-	if(!turf_to_teleport_to || is_blocked_turf(turf_to_teleport_to))
+	if(!turf_to_teleport_to || is_blocked_turf(turf_to_teleport_to, TRUE))
 		return
 	animate(M, alpha = 0, time = 2, easing = EASE_OUT) //fade out
 	sleep(1)
