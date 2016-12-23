@@ -305,7 +305,7 @@ var/datum/subsystem/air/SSair
 	if (blocks_air || !air)
 		return
 	if (!EG)
-		EG = new
+		EG = PoolOrNew(/datum/excited_group)
 		EG.add_turf(src)
 
 	for (var/turf/open/ET in atmos_adjacent_turfs)
