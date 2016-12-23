@@ -227,7 +227,7 @@ Difficulty: Hard
 					animate(src, color = "#660099", time = 6)
 					while(health && target && cross_counter)
 						cross_counter--
-						var/delay = 6
+						var/delay = 7
 						if(prob(60))
 							addtimer(src, "cardinal_blasts", 0, TIMER_NORMAL, target)
 						else
@@ -249,7 +249,7 @@ Difficulty: Hard
 						var/mob/living/pickedtarget = pick(targets)
 						if(targets.len > 4)
 							pickedtarget = pick_n_take(targets)
-						if(pickedtarget.stat == DEAD)
+						if(!istype(pickedtarget) || pickedtarget.stat == DEAD)
 							pickedtarget = target
 						var/obj/effect/overlay/temp/hierophant/chaser/C = PoolOrNew(/obj/effect/overlay/temp/hierophant/chaser, list(loc, src, pickedtarget, chaser_speed, FALSE))
 						C.moving = 3
@@ -336,8 +336,7 @@ Difficulty: Hard
 	var/turf/T = get_turf(victim)
 	if(!istype(victim) || victim.stat == DEAD || !T || arena_cooldown > world.time)
 		return
-	var/area/A = get_area(T)
-	if(istype(A, /area/ruin/unpowered/hierophant) && victim != src)
+	if((istype(get_area(T), /area/ruin/unpowered/hierophant) || istype(get_area(src), /area/ruin/unpowered/hierophant)) && victim != src)
 		return
 	arena_cooldown = world.time + initial(arena_cooldown)
 	for(var/d in cardinal)
@@ -414,7 +413,7 @@ Difficulty: Hard
 		var/dist = get_dist(original, T)
 		if(dist > last_dist)
 			last_dist = dist
-			sleep(1 + (burst_range - last_dist) * 0.4) //gets faster as it gets further out
+			sleep(1 + min(burst_range - last_dist, 12) * 0.5) //gets faster as it gets further out
 		PoolOrNew(/obj/effect/overlay/temp/hierophant/blast, list(T, src, FALSE))
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/AltClickOn(atom/A) //player control handler(don't give this to a player holy fuck)
@@ -618,6 +617,9 @@ Difficulty: Hard
 	luminosity = 2
 	layer = LOW_OBJ_LAYER
 	anchored = TRUE
+
+/obj/effect/hierophant/ex_act()
+	return
 
 /obj/effect/hierophant/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/hierophant_club))
