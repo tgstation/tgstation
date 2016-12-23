@@ -318,3 +318,16 @@
 
 /obj/item/weapon/stock_parts/cell/emproof/corrupt()
 	return
+
+/obj/item/weapon/stock_parts/cell/beam_rifle
+	name = "beam rifle capacitor"
+	desc = "A high powered capacitor that can provide huge amounts of energy in an instant"
+	maxcharge = 50000
+	chargerate = 5000	//Extremely energy intensive
+	rating = 4
+
+/obj/item/weapon/stock_parts/cell/beam_rifle/corrupt()
+	return
+
+/obj/item/weapon/stock_parts/cell/beam_rifle/emp_act(severity)
+	charge = Clamp((charge-(10000/severity)),0,maxcharge)

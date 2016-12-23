@@ -1763,6 +1763,7 @@
 #include "code\modules\projectiles\boxes_magazines\external_mag.dm"
 #include "code\modules\projectiles\boxes_magazines\internal_mag.dm"
 #include "code\modules\projectiles\guns\ballistic.dm"
+#include "code\modules\projectiles\guns\beam_rifle.dm"
 #include "code\modules\projectiles\guns\energy.dm"
 #include "code\modules\projectiles\guns\grenade_launcher.dm"
 #include "code\modules\projectiles\guns\magic.dm"
