@@ -1,68 +1,59 @@
 /datum/emote/silicon
 	mob_type_allowed_typecache = list(/mob/living/silicon)
 	emote_type = EMOTE_AUDIBLE
-	var/sound //Sound file to play when you run the emote
 
-/datum/emote/silicon/run_emote(mob/user, params)
-	. = ..()
-	if(sound)
-		playsound(user.loc, sound, 50, 1)
-
-/datum/emote/silicon/beep
-	key = "beep"
-	key_third_person = "beeps"
-	message = "beeps."
-	message_param = "beeps at %t."
-	sound = 'sound/machines/twobeep.ogg'
-
-/datum/emote/silicon/buzz
-	key = "buzz"
-	key_third_person = "buzzes"
-	message = "buzzes."
-	message_param = "buzzes at %t."
-	sound = 'sound/machines/buzz-sigh.ogg'
-
-/datum/emote/silicon/buzz2
-	key = "buzz2"
-	message = "buzzes twice."
-	sound = 'sound/machines/buzz-two.ogg'
+/datum/emote/sound/silicon
+	mob_type_allowed_typecache = list(/mob/living/silicon)
+	emote_type = EMOTE_AUDIBLE
 
 /datum/emote/silicon/boop
 	key = "boop"
 	key_third_person = "boops"
 	message = "boops."
 
-/datum/emote/silicon/chime
+/datum/emote/sound/silicon/buzz
+	key = "buzz"
+	key_third_person = "buzzes"
+	message = "buzzes."
+	message_param = "buzzes at %t."
+	sound = 'sound/machines/buzz-sigh.ogg'
+
+/datum/emote/sound/silicon/buzz2
+	key = "buzz2"
+	message = "buzzes twice."
+	sound = 'sound/machines/buzz-two.ogg'
+
+/datum/emote/sound/silicon/chime
 	key = "chime"
 	key_third_person = "chimes"
 	message = "chimes."
 	sound = 'sound/machines/chime.ogg'
 
-/datum/emote/silicon/honk
+/datum/emote/sound/silicon/honk
 	key = "honk"
 	key_third_person = "honks"
 	message = "honks."
 	sound = 'sound/items/bikehorn.ogg'
 
-/datum/emote/silicon/ping
+/datum/emote/sound/silicon/ping
 	key = "ping"
 	key_third_person = "pings"
 	message = "pings."
 	message_param = "pings at %t."
 	sound = 'sound/machines/ping.ogg'
 
-/datum/emote/silicon/chime
+/datum/emote/sound/silicon/chime
 	key = "chime"
 	key_third_person = "chimes"
 	message = "chimes."
 	sound = 'sound/machines/chime.ogg'
 
-/datum/emote/silicon/sad
+/datum/emote/sound/silicon/sad
 	key = "sad"
 	message = "plays a sad trombone..."
 	sound = 'sound/misc/sadtrombone.ogg'
 
-/datum/emote/silicon/warn
+/datum/emote/sound/silicon/warn
 	key = "warn"
 	message = "blares an alarm!"
 	sound = 'sound/machines/warning-buzzer.ogg'

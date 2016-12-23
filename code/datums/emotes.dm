@@ -4,14 +4,15 @@
 var/global/list/emote_list = list()
 
 /datum/emote
-	var/key //What calls the emote
-	var/key_third_person //This will also call the emote
-	var/message //Message displayed when emote is used
-	var/message_mime //Message displayed if the user is a mime
-	var/message_alien //Message displayed if the user is a grown alien
-	var/message_larva //Message displayed if the user is an alien larva
-	var/message_robot //Message displayed if the user is a robot
-	var/message_param //Message to display if a param was given
+	var/key = "" //What calls the emote
+	var/key_third_person = "" //This will also call the emote
+	var/message = "" //Message displayed when emote is used
+	var/message_mime = "" //Message displayed if the user is a mime
+	var/message_alien = "" //Message displayed if the user is a grown alien
+	var/message_larva = "" //Message displayed if the user is an alien larva
+	var/message_robot = "" //Message displayed if the user is a robot
+	var/message_monkey = "" //Message displayed if the user is a monkey
+	var/message_param = "" //Message to display if a param was given
 	var/emote_type = EMOTE_VISIBLE //Whether the emote is visible or audible
 	var/restraint_check = FALSE //Checks if the mob is restrained before performing the emote
 	var/muzzle_ignore = FALSE //Will only work if the emote is EMOTE_AUDIBLE
@@ -75,9 +76,14 @@ var/global/list/emote_list = list()
 		. = message_larva
 	else if(issilicon(user) && message_robot)
 		. = message_robot
+	else if(ismonkey(user) && message_monkey)
+		. = message_monkey
 
 
 /datum/emote/proc/can_run_emote(mob/user)
+	. = TRUE
+	if((user.stat && key != "deathgasp") || (user.status_flags & FAKEDEATH))
+		return FALSE
 	if(!is_type_in_typecache(user, mob_type_allowed_typecache))
 		world << "!is_allowed"
 		return FALSE
@@ -87,4 +93,13 @@ var/global/list/emote_list = list()
 	if(is_type_in_typecache(user, mob_type_blacklist_typecache))
 		world << "blacklist"
 		return FALSE
-	return TRUE
+
+
+/datum/emote/sound
+	var/sound //Sound to play when emote is called
+	mob_type_allowed_typecache = list(/mob/living/brain, /mob/living/silicon)
+
+/datum/emote/sound/run_emote(mob/user, params)
+	. = ..()
+	if(.)
+		playsound(user.loc, sound, 50, 10)

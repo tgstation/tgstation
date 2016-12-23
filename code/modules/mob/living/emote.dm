@@ -88,6 +88,12 @@
 	message_robot = "memes up and die."
 	message_alien = "lets out a waning guttural screech, green blood bubbling from its maw..."
 	message_larva = "lets out a sickly hiss of air and falls limply to the floor..."
+	message_monkey = "lets out a faint chimper as it collapses and stops moving..."
+
+/datum/emote/living/deathgasp/run_emote(mob/user, params)
+	. = ..()
+	if(. && isalienadult(user))
+		playsound(user.loc, 'sound/voice/hiss6.ogg', 80, 1, 1)
 
 /datum/emote/living/drool
 	key = "drool"
@@ -362,27 +368,25 @@
 		. = FALSE
 
 /datum/emote/living/custom/run_emote(mob/user, params)
-	if(!params)
-		if(jobban_isbanned(user, "emote"))
-			user << "You cannot send custom emotes (banned)."
-		else if(user.client && user.client.prefs.muted & MUTE_IC)
-			user << "You cannot send IC messages (muted)."
-		else
-			var/custom_emote = copytext(sanitize(input("Choose an emote to display.") as text|null), 1, MAX_MESSAGE_LEN)
-			if(custom_emote && !check_invalid(custom_emote))
-				var/type = input("Is this a visible or hearable emote?") as null|anything in list("Visible", "Hearable")
-				switch(type)
-					if("Visible")
-						emote_type = EMOTE_VISIBLE
-					if("Hearable")
-						emote_type = EMOTE_AUDIBLE
-					else
-						alert("Unable to use this emote, must be either hearable or visible.")
-						return
-				message = custom_emote
+	if(jobban_isbanned(user, "emote"))
+		user << "You cannot send custom emotes (banned)."
+	else if(user.client && user.client.prefs.muted & MUTE_IC)
+		user << "You cannot send IC messages (muted)."
+	else if(!params)
+		var/custom_emote = copytext(sanitize(input("Choose an emote to display.") as text|null), 1, MAX_MESSAGE_LEN)
+		if(custom_emote && !check_invalid(custom_emote))
+			var/type = input("Is this a visible or hearable emote?") as null|anything in list("Visible", "Hearable")
+			switch(type)
+				if("Visible")
+					emote_type = EMOTE_VISIBLE
+				if("Hearable")
+					emote_type = EMOTE_AUDIBLE
+				else
+					alert("Unable to use this emote, must be either hearable or visible.")
+					return
+			message = custom_emote
 	else
 		message = params
-
 	. = ..()
 	message = null
 
@@ -392,3 +396,9 @@
 /datum/emote/living/help/run_emote(mob/user, params)
 	//to do
 
+/datum/emote/sound/beep
+	key = "beep"
+	key_third_person = "beeps"
+	message = "beeps."
+	message_param = "beeps at %t."
+	sound = 'sound/machines/twobeep.ogg'
