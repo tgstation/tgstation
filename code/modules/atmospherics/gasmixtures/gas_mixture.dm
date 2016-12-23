@@ -47,7 +47,7 @@ var/list/gaslist_cache	//pre initialized list of gases keyed by id, ONLY FOR COP
 		meta_gas_info[gas_id] = gas_info
 		init_gaslist_cache(gas_id)
 
-	return PoolOrNew(/datum/gas_mixture/space)	//Fuck everything
+	return new /datum/gas_mixture/space	//Using new here because this can be initialized before the pool
 
 /datum/gas_mixture
 	var/list/gases
