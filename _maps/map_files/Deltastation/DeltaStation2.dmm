@@ -50997,7 +50997,6 @@
 	req_access_txt = "56"
 	},
 /obj/machinery/light_switch{
-	pixel_w = 0;
 	pixel_x = 26;
 	pixel_y = 26
 	},
