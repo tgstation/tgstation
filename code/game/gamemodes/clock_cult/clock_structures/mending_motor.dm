@@ -92,20 +92,19 @@
 		var/turf/T
 		if(isclockmob(M) || istype(M, /mob/living/simple_animal/drone/cogscarab))
 			T = get_turf(M)
-			var/mob/living/simple_animal/hostile/clockwork/marauder/E = M
-			var/is_marauder = istype(E)
-			if(E.health == E.maxHealth || E.stat == DEAD || (is_marauder && !E.fatigue))
+			var/mob/living/simple_animal/S = M
+			if(S.health == S.maxHealth || S.stat == DEAD)
 				continue
 			for(var/i in 1 to heal_attempts)
-				if(E.health < E.maxHealth || (is_marauder && E.fatigue))
+				if(S.health < S.maxHealth)
 					if(try_use_power(MIN_CLOCKCULT_POWER))
-						E.adjustHealth(-(8 * efficiency))
+						S.adjustHealth(-(8 * efficiency))
 						PoolOrNew(/obj/effect/overlay/temp/heal, list(T, "#1E8CE1"))
 					else
-						E << "<span class='inathneq'>\"[text2ratvar(pick(heal_failure_messages))]\"</span>"
+						S << "<span class='inathneq'>\"[text2ratvar(pick(heal_failure_messages))]\"</span>"
 						break
 				else
-					E << "<span class='inathneq'>\"[text2ratvar(pick(heal_finish_messages))]\"</span>"
+					S << "<span class='inathneq'>\"[text2ratvar(pick(heal_finish_messages))]\"</span>"
 					break
 		else if(is_type_in_typecache(M, mending_motor_typecache))
 			T = get_turf(M)
