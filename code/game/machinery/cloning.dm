@@ -17,11 +17,9 @@
 	req_access = list(access_genetics) //For premature unlocking.
 	verb_say = "states"
 	var/heal_level = 90 //The clone is released once its health reaches this level.
-	var/locked = FALSE
 	var/obj/machinery/computer/cloning/connected = null //So we remember the connected clone machine.
 	var/mess = FALSE //Need to clean out it if it's full of exploded clone.
 	var/attempting = FALSE //One clone attempt at a time thanks
-	var/eject_wait = FALSE //Don't eject them as soon as they are created fuckkk
 	var/speed_coeff
 	var/efficiency
 
@@ -141,11 +139,7 @@
 		return FALSE
 
 	attempting = TRUE //One at a time!!
-	locked = TRUE
 	countdown.start()
-
-	eject_wait = TRUE
-	addtimer(src, "wait_complete", 30)
 
 	var/mob/living/carbon/human/H = new /mob/living/carbon/human(src)
 
@@ -194,24 +188,19 @@
 	attempting = FALSE
 	return TRUE
 
-/obj/machinery/clonepod/proc/wait_complete()
-	eject_wait = FALSE
-
 //Grow clones to maturity then kick them out.  FREELOADERS
 /obj/machinery/clonepod/process()
 
 	if(!is_operational()) //Autoeject if power is lost
 		if (occupant)
-			locked = FALSE
 			go_out()
 			connected_message("Clone Ejected: Loss of power.")
 
 	else if((occupant) && (occupant.loc == src))
 		if((occupant.stat == DEAD) || (occupant.suiciding) || occupant.hellbound)  //Autoeject corpses and suiciding dudes.
 			connected_message("Clone Rejected: Deceased.")
-			SPEAK("The cloning of <b>[occupant.real_name]</b> has been \
+			SPEAK("The cloning of [occupant.real_name] has been \
 				aborted due to unrecoverable tissue failure.")
-			locked = FALSE
 			go_out()
 
 		else if(occupant.cloneloss > (100 - heal_level))
@@ -235,21 +224,19 @@
 
 		else if((occupant.cloneloss <= (100 - heal_level)) && (!eject_wait))
 			connected_message("Cloning Process Complete.")
-			SPEAK("The cloning cycle of <b>[occupant]</b> is complete.")
-			locked = FALSE
+			SPEAK("The cloning cycle of [occupant.real_name] is \
+				complete.")
 			go_out()
 
 	else if ((!occupant) || (occupant.loc != src))
 		occupant = null
-		if (locked)
-			locked = FALSE
 		if (!mess && !panel_open)
 			icon_state = "pod_0"
 		use_power(200)
 
 //Let's unlock this early I guess.  Might be too early, needs tweaking.
 /obj/machinery/clonepod/attackby(obj/item/weapon/W, mob/user, params)
-	if(!(occupant || mess || locked))
+	if(!(occupant || mess))
 		if(default_deconstruction_screwdriver(user, "[icon_state]_maintenance", "[initial(icon_state)]",W))
 			return
 
@@ -259,27 +246,27 @@
 	if(default_deconstruction_crowbar(W))
 		return
 
-	if (W.GetID())
-		if (!check_access(W))
+	if(W.GetID())
+		if(!check_access(W))
 			user << "<span class='danger'>Access Denied.</span>"
 			return
-		if (!locked || !occupant)
-			return
-		if (occupant.health < -20 && occupant.stat != DEAD)
-			user << "<span class='danger'>Access Refused. Patient status still unstable.</span>"
+		if(!occupant || !mess)
 			return
 		else
-			locked = FALSE
-			user << "System unlocked."
+			connected_message("Authorized Ejection")
+			SPEAK("An authorized ejection of [occupant.real_name] has \
+				occurred.")
+			user << "<span class='notice'>You force an emergency \
+				ejection. </span>"
+			go_out()
 	else
 		return ..()
 
 /obj/machinery/clonepod/emag_act(mob/user)
-	if (isnull(occupant))
+	if(!occupant)
 		return
-	user << "<span class='notice'>You force an emergency ejection.</span>"
-	locked = FALSE
-	go_out()
+	user << "<span class='warning'>You corrupt the genetic compiler.</span>"
+	malfunction()
 
 //Put messages in the connected computer's temp var for display.
 /obj/machinery/clonepod/proc/connected_message(message)
@@ -291,18 +278,6 @@
 	connected.temp = message
 	connected.updateUsrDialog()
 	return TRUE
-
-/obj/machinery/clonepod/verb/eject()
-	set name = "Eject Cloner"
-	set category = "Object"
-	set src in oview(1)
-
-	if(!usr)
-		return
-	if(usr.stat || !usr.canmove || usr.restrained())
-		return
-	go_out()
-	add_fingerprint(usr)
 
 /obj/machinery/clonepod/proc/go_out()
 	if (locked)
@@ -329,7 +304,6 @@
 	var/turf/T = get_turf(src)
 	occupant.forceMove(T)
 	icon_state = "pod_0"
-	eject_wait = FALSE //If it's still set somehow.
 	occupant.domutcheck(1) //Waiting until they're out before possible monkeyizing. The 1 argument forces powers to manifest.
 	occupant = null
 
@@ -363,13 +337,11 @@
 /obj/machinery/clonepod/ex_act(severity, target)
 	..()
 	if(!qdeleted(src))
-		locked = FALSE
 		go_out()
 
 /obj/machinery/clonepod/handle_atom_del(atom/A)
 	if(A == occupant)
 		occupant = null
-		locked = FALSE
 		go_out()
 
 /obj/machinery/clonepod/proc/horrifyingsound()
@@ -381,7 +353,6 @@
 
 /obj/machinery/clonepod/deconstruct(disassembled = TRUE)
 	if(occupant)
-		locked = FALSE
 		go_out()
 	..()
 
