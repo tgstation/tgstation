@@ -1,5 +1,5 @@
 /obj/effect/accelerated_particle
-	name = "Accelerated Particles"
+	name = "accelerated particles"
 	desc = "Small things moving very fast."
 	icon = 'icons/obj/machines/particle_accelerator.dmi'
 	icon_state = "particle"

@@ -1,5 +1,3 @@
-
-
 /obj/singularity
 	name = "gravitational singularity"
 	desc = "A gravitational singularity."
@@ -14,6 +12,7 @@
 	var/allowed_size = 1
 	var/contained = 1 //Are we going to move around?
 	var/energy = 100 //How strong are we?
+	var/energy_counter = FALSE // Display our energy as maptext?
 	var/dissipate = 1 //Do we lose energy over time?
 	var/dissipate_delay = 10
 	var/dissipate_track = 0
@@ -40,7 +39,6 @@
 		if(singubeacon.active)
 			target = singubeacon
 			break
-	return
 
 /obj/singularity/Destroy()
 	STOP_PROCESSING(SSobj, src)
@@ -92,7 +90,6 @@
 			energy -= round(((energy+1)/3),1)
 		if(3)
 			energy -= round(((energy+1)/4),1)
-	return
 
 
 /obj/singularity/bullet_act(obj/item/projectile/P)
@@ -101,12 +98,10 @@
 
 /obj/singularity/Bump(atom/A)
 	consume(A)
-	return
 
 
 /obj/singularity/Bumped(atom/A)
 	consume(A)
-	return
 
 
 /obj/singularity/process()
@@ -119,8 +114,6 @@
 	dissipate()
 	check_energy()
 
-	return
-
 
 /obj/singularity/attack_ai() //to prevent ais from gibbing themselves when they click on one.
 	return
@@ -130,7 +123,7 @@
 	last_warning = world.time
 	var/count = locate(/obj/machinery/field/containment) in urange(30, src, 1)
 	if(!count)
-		message_admins("A singulo has been created without containment fields active ([x],[y],[z])",1)
+		message_admins("\A [name] has been created without containment fields active ([x],[y],[z])",1)
 	investigate_log("was created. [count?"":"<font color='red'>No containment fields were active</font>"]","singulo")
 
 /obj/singularity/proc/dissipate()
@@ -245,6 +238,8 @@
 				allowed_size = STAGE_FIVE
 	if(current_size != allowed_size)
 		expand()
+	if(energy_counter)
+		maptext = energy
 	return 1
 
 
@@ -266,18 +261,19 @@
 				else
 					consume(X)
 			CHECK_TICK
-	return
 
 
 /obj/singularity/proc/consume(atom/A)
 	var/gain = A.singularity_act(current_size, src)
 	src.energy += gain
 	if(istype(A, /obj/machinery/power/supermatter_shard) && !consumedSupermatter)
-		desc = "[initial(desc)] It glows fiercely with inner fire."
-		name = "supermatter-charged [initial(name)]"
-		consumedSupermatter = 1
-		luminosity = 10
-	return
+		supermatter_eat()
+		consumedSupermatter = TRUE
+
+/obj/singularity/proc/supermatter_eat()
+	desc = "[initial(desc)] It glows fiercely with inner fire."
+	name = "supermatter-charged [initial(name)]"
+	luminosity = 10
 
 
 /obj/singularity/proc/move(force_move = 0)
@@ -399,7 +395,6 @@
 						  "<span class='userdanger'>You feel an inner fire as your skin bursts into flames!</span>")
 		C.adjust_fire_stacks(5)
 		C.IgniteMob()
-	return
 
 
 /obj/singularity/proc/mezzer()
@@ -424,7 +419,6 @@
 
 /obj/singularity/proc/emp_area()
 	empulse(src, 8, 10)
-	return
 
 
 /obj/singularity/proc/pulse()
