@@ -736,8 +736,45 @@
 	loot = list()
 	stat_attack = 1
 	robust_searching = 1
+	var/is_baby = 0 //the only solution i can think of to 100 pup stacks
+	var/has_babies = 0 //whether this goliath is a mother or not
+
+/mob/living/simple_animal/hostile/asteroid/goliath/beast/New()
+	..()
+	if(prob(50) and !is_baby)
+		has_babies = 1
+	if(has_babies) //if the goliath has babies, set the baby's mother to this goliath.
+		var/mob/living/simple_animal/hostile/asteroid/goliath/beast/baby/B = new(get_turf(src))
+		B.mama = src
 
 
+
+//Goliath pup
+
+/mob/living/simple_animal/hostile/asteroid/goliath/beast/baby
+	name = "goliath pup"
+	desc = "A baby goliath, commonly seen following their mothers."
+	icon = 'icons/mob/lavaland/lavaland_monsters.dmi'
+	icon_state = "goliath_baby"
+	icon_living = "goliath_baby"
+	icon_aggro = "goliath_baby"
+	icon_dead = "goliath_dead"
+	melee_damage_lower = 0
+	melee_damage_upper = 0
+	attacktext = "bumps into"
+	throw_message = "bounces off the hide of the"
+	pre_attack_icon = "goliath_baby"
+	attack_sound = 'sound/weapons/tap.ogg'
+	var/mob/living/mama = null // which goliath is this particular baby's mom?
+	ventcrawler = VENTCRAWLER_ALWAYS
+	is_baby = 1
+	has_babies = 0 //to stop 100 goliath pup stacks of goliath
+	stop_automated_movement = 1
+
+/mob/living/simple_animal/hostile/asteroid/goliath/beast/baby/Life()
+	..()
+	if(mama && !Adjacent(mama))
+		walk_to(mama,0)
 
 //Legion
 
