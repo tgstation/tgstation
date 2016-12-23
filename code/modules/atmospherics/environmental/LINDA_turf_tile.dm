@@ -168,7 +168,7 @@
 							share_air(enemy_tile, fire_count, adjacent_turfs_length) //share
 					else
 						if((recently_active == 1 && enemy_tile.recently_active == 1) || air.compare(enemy_tile.air))
-							var/datum/excited_group/EG = new //generate new group
+							var/datum/excited_group/EG = PoolOrNew(/datum/excited_group) //generate new group
 							EG.add_turf(src)
 							EG.add_turf(enemy_tile)
 							our_excited_group = excited_group //update our cache
@@ -179,7 +179,7 @@
 					if(our_excited_group)
 						our_excited_group.add_turf(enemy_tile) //add enemy to group
 					else
-						var/datum/excited_group/EG = new //generate new group
+						var/datum/excited_group/EG = PoolOrNew(/datum/excited_group) //generate new group
 						EG.add_turf(src)
 						EG.add_turf(enemy_tile)
 						our_excited_group = excited_group //update our cache
@@ -193,7 +193,7 @@
 		G.archive()
 		if(air.compare(G))
 			if(!our_excited_group)
-				var/datum/excited_group/EG = new
+				var/datum/excited_group/EG = PoolOrNew(/datum/excited_group)
 				EG.add_turf(src)
 				our_excited_group = excited_group
 			air.share(G, adjacent_turfs_length)
@@ -278,6 +278,10 @@
 /datum/excited_group/New()
 	SSair.excited_groups += src
 
+/datum/excited_group/Destroy()
+	..()
+	return QDEL_HINT_PUTINPOOL
+
 /datum/excited_group/proc/add_turf(turf/open/T)
 	turf_list += T
 	T.excited_group = src
@@ -292,6 +296,7 @@
 			T.excited_group = src
 			turf_list += T
 		reset_cooldowns()
+		qdel(E)
 	else
 		SSair.excited_groups -= src
 		for(var/t in turf_list)
@@ -299,6 +304,7 @@
 			T.excited_group = E
 			E.turf_list += T
 		E.reset_cooldowns()
+		qdel(src)
 
 /datum/excited_group/proc/reset_cooldowns()
 	breakdown_cooldown = 0
@@ -351,6 +357,7 @@
 		T.excited_group = null
 	turf_list.Cut()
 	SSair.excited_groups -= src
+	qdel(src)
 
 ////////////////////////SUPERCONDUCTIVITY/////////////////////////////
 /turf/proc/conductivity_directions()
