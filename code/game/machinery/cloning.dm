@@ -222,7 +222,7 @@
 
 			use_power(7500) //This might need tweaking.
 
-		else if((occupant.cloneloss <= (100 - heal_level)) && (!eject_wait))
+		else if((occupant.cloneloss <= (100 - heal_level)))
 			connected_message("Cloning Process Complete.")
 			SPEAK("The cloning cycle of [occupant.real_name] is \
 				complete.")
@@ -280,8 +280,6 @@
 	return TRUE
 
 /obj/machinery/clonepod/proc/go_out()
-	if (locked)
-		return
 	countdown.stop()
 
 	if (mess) //Clean that mess and dump those gibs!
