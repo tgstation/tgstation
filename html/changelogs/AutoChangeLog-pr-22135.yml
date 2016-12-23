@@ -1,0 +1,11 @@
+author: "kevinz000"
+delete-after: True
+changes: 
+  - experiment: "Flightsuits now have their own subsystem!"
+  - bugfix: "Flightsuits properly account for power before calculating drifting"
+  - experiment: "Flightpack users will automatically fly over anyone buckled without crashing."
+  - experiment: "Flightpack users automatically slip through mineral doors"
+  - experiment: "Flightpack users will crash straight through grills at appropriate times"
+  - experiment: "Flightpack users automatically slip through unbolted airlocks"
+  - experiment: "Flightpacks are faster in space, but their space momentum decay has been upped significantly to compensate"
+  - experiment: "Flighthelmets now have a function to allow the wearer to zoom out to see further. Helps you not crash eh?"

@@ -41,7 +41,8 @@
 /area/ruin/unpowered)
 "i" = (
 /turf/open/floor/mineral/plastitanium/brig{
-	baseturf = /turf/open/floor/plating/lava/smooth
+	baseturf = /turf/open/floor/plating/lava/smooth;
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/lavaland/surface/outdoors)
 "j" = (
@@ -95,7 +96,8 @@
 "q" = (
 /obj/item/weapon/shard,
 /turf/open/floor/mineral/plastitanium/brig{
-	baseturf = /turf/open/floor/plating/lava/smooth
+	baseturf = /turf/open/floor/plating/lava/smooth;
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/lavaland/surface/outdoors)
 "r" = (

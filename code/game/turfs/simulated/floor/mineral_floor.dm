@@ -81,9 +81,15 @@
 	icon_state = "shuttlefloor"
 	icons = list("shuttlefloor","shuttlefloor_dam")
 
+/turf/open/floor/mineral/titanium/blue/airless
+	initial_gas_mix = "TEMP=2.7"
+
 /turf/open/floor/mineral/titanium/yellow
 	icon_state = "shuttlefloor2"
 	icons = list("shuttlefloor2","shuttlefloor2_dam")
+
+/turf/open/floor/mineral/titanium/yellow/airless
+	initial_gas_mix = "TEMP=2.7"
 
 /turf/open/floor/mineral/titanium
 	name = "shuttle floor"
@@ -91,9 +97,15 @@
 	floor_tile = /obj/item/stack/tile/mineral/titanium
 	icons = list("shuttlefloor3","shuttlefloor3_dam")
 
+/turf/open/floor/mineral/titanium/airless
+	initial_gas_mix = "TEMP=2.7"
+
 /turf/open/floor/mineral/titanium/purple
 	icon_state = "shuttlefloor5"
 	icons = list("shuttlefloor5","shuttlefloor5_dam")
+
+/turf/open/floor/mineral/titanium/purple/airless
+	initial_gas_mix = "TEMP=2.7"
 
 //PLASTITANIUM (syndieshuttle)
 /turf/open/floor/mineral/plastitanium

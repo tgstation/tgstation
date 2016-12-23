@@ -580,6 +580,10 @@ macro "robot-default"
 		command = "resist"
 		is-disabled = false
 	elem 
+		name = "CTRL+H"
+		command = "talk-wheel"
+		is-disabled = false
+	elem 
 		name = "CTRL+O"
 		command = "ooc"
 		is-disabled = false
@@ -792,6 +796,18 @@ macro "robot-hotkeys"
 	elem 
 		name = "CTRL+B"
 		command = "resist"
+		is-disabled = false	
+	elem 
+		name = "H"
+		command = "talk-wheel"
+		is-disabled = false
+	elem 
+		name = "CTRL+H"
+		command = "talk-wheel"
+		is-disabled = false
+	elem 
+		name = "M"
+		command = "me"
 		is-disabled = false
 	elem 
 		name = "O"

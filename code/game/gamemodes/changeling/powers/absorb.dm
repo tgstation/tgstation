@@ -71,14 +71,14 @@
 			for(var/spoken_memory in target.say_log)
 				if(recent_speech.len >= LING_ABSORB_RECENT_SPEECH)
 					break
-				recent_speech += spoken_memory
+				recent_speech[spoken_memory] = target.say_log[spoken_memory]
 
 		if(recent_speech.len)
 			user.mind.store_memory("<B>Some of [target]'s speech patterns, we should study these to better impersonate them!</B>")
 			user << "<span class='boldnotice'>Some of [target]'s speech patterns, we should study these to better impersonate them!</span>"
 			for(var/spoken_memory in recent_speech)
-				user.mind.store_memory("\"[spoken_memory]\"")
-				user << "<span class='notice'>\"[spoken_memory]\"</span>"
+				user.mind.store_memory("\"[recent_speech[spoken_memory]]\"")
+				user << "<span class='notice'>\"[recent_speech[spoken_memory]]\"</span>"
 			user.mind.store_memory("<B>We have no more knowledge of [target]'s speech patterns.</B>")
 			user << "<span class='boldnotice'>We have no more knowledge of [target]'s speech patterns.</span>"
 

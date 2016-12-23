@@ -76,19 +76,12 @@
 	change_construction_value(1)
 
 /turf/open/floor/clockwork/Destroy()
-	be_removed()
-	return ..()
-
-/turf/open/floor/clockwork/ChangeTurf(path, defer_change = FALSE)
-	if(path != type)
-		be_removed()
-	return ..()
-
-/turf/open/floor/clockwork/proc/be_removed()
 	STOP_PROCESSING(SSobj, src)
 	change_construction_value(-1)
-	qdel(realappearence)
-	realappearence = null
+	if(realappearence)
+		qdel(realappearence)
+		realappearence = null
+	return ..()
 
 /turf/open/floor/clockwork/Entered(atom/movable/AM)
 	..()

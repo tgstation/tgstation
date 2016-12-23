@@ -1,0 +1,4 @@
+author: "TehZombehz"
+delete-after: True
+changes: 
+  - tweak: "Observers can now orbit derelict station drone shells, much like current lavaland ghost role spawners, to make finding them easier. Regular drone shells are not affected by this."

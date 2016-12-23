@@ -1,0 +1,6 @@
+author: "coiax"
+delete-after: True
+changes: 
+  - rscadd: "Cyborg renaming boards cannot be used if no name has been entered."
+  - rscdel: "Cyborg rename and emergency reboot modules are destroyed upon use,
+and not stored inside the cyborg to be ejected if modules are reset."
