@@ -12,6 +12,7 @@
 	var/framebuildstackamount = 5
 	var/buildstacktype = /obj/item/stack/sheet/metal
 	var/buildstackamount = 0
+	var/can_reflect_PTL	= FALSE
 
 /obj/structure/reflector/bullet_act(obj/item/projectile/P)
 	var/turf/reflector_turf = get_turf(src)
