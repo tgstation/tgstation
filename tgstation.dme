@@ -570,6 +570,7 @@
 #include "code\game\mecha\mecha_parts.dm"
 #include "code\game\mecha\mecha_topic.dm"
 #include "code\game\mecha\mecha_wreckage.dm"
+#include "code\game\mecha\white_only.dm"
 #include "code\game\mecha\combat\combat.dm"
 #include "code\game\mecha\combat\durand.dm"
 #include "code\game\mecha\combat\gygax.dm"
