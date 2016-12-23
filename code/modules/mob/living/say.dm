@@ -249,7 +249,7 @@ var/list/crit_allowed_modes = list(MODE_WHISPER,MODE_CHANGELING,MODE_ALIEN)
 		if(iscarbon(src))
 			var/mob/living/carbon/C = src
 			var/obj/item/organ/vocal_cords/V = C.getorganslot("vocal_cords")
-			if(V.can_speak_with())
+			if(V && V.can_speak_with())
 				C.say(V.speak_with(message), spans = V.spans)
 		return 1
 	return 0
