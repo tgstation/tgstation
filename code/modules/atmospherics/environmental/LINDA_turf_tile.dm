@@ -38,7 +38,7 @@
 /turf/open/New()
 	..()
 	if(!blocks_air)
-		air = new
+		air = PoolOrNew(/datum/gas_mixture)
 		air.copy_from_turf(src)
 
 /turf/open/Destroy()
