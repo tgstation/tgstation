@@ -168,3 +168,20 @@
 				/obj/structure/closet/crate/secure/loot = 20,
 				"" = 80
 				)
+
+/obj/effect/spawner/lootdrop/organ_spawner
+	name = "organ spawner"
+	loot = list(
+		/obj/item/organ/heart/gland/bloody = 7,
+		/obj/item/organ/heart/gland/bodysnatch = 4,
+		/obj/item/organ/heart/gland/egg = 7,
+		/obj/item/organ/heart/gland/emp = 3,
+		/obj/item/organ/heart/gland/mindshock = 5,
+		/obj/item/organ/heart/gland/plasma = 7,
+		/obj/item/organ/heart/gland/pop = 5,
+		/obj/item/organ/heart/gland/slime = 4,
+		/obj/item/organ/heart/gland/spiderman = 5,
+		/obj/item/organ/heart/gland/ventcrawling = 1,
+		/obj/item/organ/body_egg/alien_embryo = 1,
+		/obj/item/organ/hivelord_core = 2)
+	lootcount = 3

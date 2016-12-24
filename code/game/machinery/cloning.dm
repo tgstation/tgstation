@@ -4,6 +4,7 @@
 //Potential replacement for genetics revives or something I dunno (?)
 
 #define CLONE_INITIAL_DAMAGE     190    //Clones in clonepods start with 190 cloneloss damage and 190 brainloss damage, thats just logical
+#define MINIMUM_HEAL_LEVEL 40
 
 #define SPEAK(message) radio.talk_into(src, message, radio_channel, get_spans())
 
@@ -16,7 +17,7 @@
 	icon_state = "pod_0"
 	req_access = list(access_genetics) //For premature unlocking.
 	verb_say = "states"
-	var/heal_level = 90 //The clone is released once its health reaches this level.
+	var/heal_level //The clone is released once its health reaches this level.
 	var/obj/machinery/computer/cloning/connected = null //So we remember the connected clone machine.
 	var/mess = FALSE //Need to clean out it if it's full of exploded clone.
 	var/attempting = FALSE //One clone attempt at a time thanks
@@ -71,6 +72,8 @@
 	for(var/obj/item/weapon/stock_parts/manipulator/P in component_parts)
 		speed_coeff += P.rating
 	heal_level = (efficiency * 15) + 10
+	if(heal_level < MINIMUM_HEAL_LEVEL)
+		heal_level = MINIMUM_HEAL_LEVEL
 	if(heal_level > 100)
 		heal_level = 100
 
@@ -218,14 +221,15 @@
 
 			 //Slowly get that clone healed and finished.
 			occupant.adjustCloneLoss(-((speed_coeff/2) * config.damage_multiplier))
-			// Cloneloss ranges from 190 to 0, and also indicates how much
-			// of the `unattached_flesh` is still waiting to be "spun"
 			var/progress = CLONE_INITIAL_DAMAGE - occupant.getCloneLoss()
+			// To avoid the default cloner making incomplete clones
+			progress += (100 - MINIMUM_HEAL_LEVEL)
 			var/milestone = CLONE_INITIAL_DAMAGE / flesh_number
+			var/installed = flesh_number - unattached_flesh.len
 
-			if((progress / milestone) > unattached_flesh.len)
-				// attack some flesh
-				var/obj/item/I = pop(unattached_flesh)
+			if((progress / milestone) >= installed)
+				// attach some flesh
+				var/obj/item/I = pick_n_take(unattached_flesh)
 				if(isorgan(I))
 					var/obj/item/organ/O = I
 					O.Insert(occupant)
@@ -374,6 +378,8 @@
 	..()
 
 /obj/machinery/clonepod/proc/maim_clone(mob/living/carbon/human/H)
+	for(var/fl in unattached_flesh)
+		qdel(fl)
 	unattached_flesh.Cut()
 
 	H.setCloneLoss(CLONE_INITIAL_DAMAGE)     //Yeah, clones start with very low health, not with random, because why would they start with random health
@@ -387,21 +393,14 @@
 		BP.forceMove(src)
 		unattached_flesh += BP
 
-	var/list/organs = list(
-		H.getorganslot("heart"),
-		H.getorganslot("lungs"),
-		H.getorganslot("appendix"),
-		H.getorganslot("tongue")
-	)
-	for(var/o in organs)
+	for(var/o in H.internal_organs)
 		var/obj/item/organ/organ = o
-		if(!istype(organ))
+		if(!istype(organ) || organ.vital)
 			continue
 		organ.Remove(H)
 		organ.forceMove(src)
 		unattached_flesh += organ
 
-	shuffle_inplace(unattached_flesh)
 	flesh_number = unattached_flesh.len
 
 /obj/machinery/clonepod/proc/check_brine()
@@ -455,3 +454,4 @@
 
 #undef CLONE_INITIAL_DAMAGE
 #undef SPEAK
+#undef MINIMUM_HEAL_LEVEL

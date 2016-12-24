@@ -21888,11 +21888,7 @@
 /turf/open/floor/plating,
 /area/maintenance/asmaint2)
 "bbD" = (
-/obj/effect/spawner/lootdrop{
-	loot = list(/obj/item/organ/gland/bloody = 7, /obj/item/organ/gland/bodysnatch = 4, /obj/item/organ/gland/egg = 7, /obj/item/organ/gland/emp = 3, /obj/item/organ/gland/mindshock = 5, /obj/item/organ/gland/plasma = 7, /obj/item/organ/gland/pop = 5, /obj/item/organ/gland/slime = 4, /obj/item/organ/gland/spiderman = 5, /obj/item/organ/gland/ventcrawling = 1, /obj/item/organ/body_egg/alien_embryo = 1, /obj/item/organ/hivelord_core = 2);
-	lootcount = 3;
-	name = "organ spawner"
-	},
+/obj/effect/spawner/lootdrop/organ_spawner,
 /obj/structure/closet/secure_closet{
 	name = "xenobiology research materials locker";
 	req_access_txt = "55"
