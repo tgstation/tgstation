@@ -741,9 +741,9 @@
 
 /mob/living/simple_animal/hostile/asteroid/goliath/beast/New()
 	..()
-	if(prob(25) && !is_baby)
+	if(prob(25) && !is_baby && !nest)
 		has_babies = 1
-	if(has_babies && !from_spawner) //if the goliath has babies, set the baby's mother to this goliath.
+	if(has_babies) //if the goliath has babies, set the baby's mother to this goliath.
 		var/mob/living/simple_animal/hostile/asteroid/goliath/beast/baby/B = new(get_turf(src))
 		B.mama = src
 
