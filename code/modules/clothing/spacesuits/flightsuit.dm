@@ -648,7 +648,7 @@
 	if(forced)
 		losecontrol(stun = TRUE)
 		return TRUE
-	if(momentum_speed < 1)
+	if(momentum_speed < 2)
 		momentum_x = 0
 		momentum_y = 0
 		usermessage("DISENGAGING FLIGHT ENGINES.")
