@@ -172,9 +172,12 @@ var/global/list/parasites = list() //all currently existing/living guardians
 		else
 			src << "<span class='holoparasite'>You moved out of range, and were pulled back! You can only move [range] meters from [summoner.real_name]!</span>"
 			visible_message("<span class='danger'>\The [src] jumps back to its user.</span>")
-			PoolOrNew(/obj/effect/overlay/temp/guardian/phase/out, get_turf(src))
-			forceMove(get_turf(summoner))
-			PoolOrNew(/obj/effect/overlay/temp/guardian/phase, get_turf(src))
+			if(istype(summoner.loc, /obj/effect/dummy))
+				Recall(TRUE)
+			else
+				PoolOrNew(/obj/effect/overlay/temp/guardian/phase/out, loc)
+				forceMove(summoner.loc)
+				PoolOrNew(/obj/effect/overlay/temp/guardian/phase, loc)
 
 /mob/living/simple_animal/hostile/guardian/canSuicide()
 	return 0
@@ -312,24 +315,24 @@ var/global/list/parasites = list() //all currently existing/living guardians
 
 //MANIFEST, RECALL, TOGGLE MODE/LIGHT, SHOW TYPE
 
-/mob/living/simple_animal/hostile/guardian/proc/Manifest()
-	if(cooldown > world.time)
-		return 0
+/mob/living/simple_animal/hostile/guardian/proc/Manifest(forced)
+	if(istype(summoner.loc, /obj/effect/dummy) || (cooldown > world.time && !forced))
+		return FALSE
 	if(loc == summoner)
-		forceMove(get_turf(summoner))
-		PoolOrNew(/obj/effect/overlay/temp/guardian/phase, get_turf(src))
+		forceMove(summoner.loc)
+		PoolOrNew(/obj/effect/overlay/temp/guardian/phase, loc)
 		cooldown = world.time + 10
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
-/mob/living/simple_animal/hostile/guardian/proc/Recall()
-	if(loc == summoner || cooldown > world.time)
-		return 0
-	PoolOrNew(/obj/effect/overlay/temp/guardian/phase/out, get_turf(src))
+/mob/living/simple_animal/hostile/guardian/proc/Recall(forced)
+	if(!summoner || loc == summoner || (cooldown > world.time && !forced))
+		return FALSE
+	PoolOrNew(/obj/effect/overlay/temp/guardian/phase/out, loc)
 
 	forceMove(summoner)
 	cooldown = world.time + 10
-	return 1
+	return TRUE
 
 /mob/living/simple_animal/hostile/guardian/proc/ToggleMode()
 	src << "<span class='danger'><B>You don't have another mode!</span></B>"
