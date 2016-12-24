@@ -631,7 +631,6 @@ var/global/list/parasites = list() //all currently existing/living guardians
 
 /obj/item/weapon/paper/guardian/wizard
 	name = "Guardian Guide"
-	icon_state = "paper_words"
 	info = {"<b>A list of Guardian Types</b><br>
 
  <br>
@@ -652,8 +651,6 @@ var/global/list/parasites = list() //all currently existing/living guardians
  <b>Ranged</b>: Has two modes. Ranged; which fires a constant stream of weak, armor-ignoring projectiles. Scout; Cannot attack, but can move through walls and is quite hard to see. Can lay surveillance snares, which alert it when crossed, in either mode.<br>
  <br>
  <b>Standard</b>: Devastating close combat attacks and high damage resist. Can smash through weak walls.<br>
- <br>
- <b>Support</b>: Has two modes. Combat; Medium power attacks and damage resist. Healer; Heals instead of attack, but has low damage resist and slow movement. Can deploy a bluespace beacon and warp targets to it (including you) in either mode.<br>
  <br>
 "}
 
