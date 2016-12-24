@@ -32,5 +32,5 @@ station.
 /obj/singularity/minature_star/Bumped(atom/A)
 
 /obj/singularity/minature_star/supermatter_eat()
-	desc = "[initial(desc)] The light it emits is confusing and hypnotising."
+	desc = "[initial(desc)]\nThe light it emits is confusing and hypnotising."
 	name = "supermatter-charged [initial(name)]
