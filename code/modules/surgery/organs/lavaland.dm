@@ -128,7 +128,7 @@
 		next_command = world.time + cooldown_stun
 
 	//SILENCE
-	else if(text_in_list(message, list("shut up","silence","ssh","quiet")))
+	else if(text_in_list(message, list("shut up","silence","ssh","quiet","hush")))
 		for(var/mob/living/carbon/C in listeners)
 			if(owner.mind && (owner.mind.assigned_role == "Librarian" || owner.mind.assigned_role == "Mime"))
 				power_multiplier *= 3
@@ -347,7 +347,7 @@
 
 	//HONK
 	else if(text_in_list(message, list("honk")))
-		playsound(get_turf(owner), "sound/items/bikehorn.ogg", 300, 1)
+		addtimer(GLOBAL_PROC, "playsound", 25, TIMER_NORMAL, get_turf(owner), "sound/items/bikehorn.ogg", 300, 1)
 		if(owner.mind && owner.mind.assigned_role == "Clown")
 			for(var/mob/living/carbon/C in listeners)
 				C.slip(0,7 * power_multiplier)
