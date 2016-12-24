@@ -489,9 +489,13 @@
 		if(!airlock_hit(D))
 			crashing = FALSE
 			return FALSE
+		if(momentum_speed < 3)
+			crashing = FALSE
+			return FALSE
+		crashing = TRUE
 		damage = TRUE
-		anchored = TRUE
 		density = FALSE
+		anchored = TRUE
 	else if(istype(unmovablevictim, /obj/structure/mineral_door))
 		var/obj/structure/mineral_door/D = unmovablevictim
 		door_hit(D)
@@ -502,7 +506,7 @@
 			crashing = FALSE
 			return FALSE
 		damage = TRUE
-		density = TRUE
+		density = FALSE
 		anchored = TRUE
 	else if(ismovableatom(unmovablevictim))
 		var/atom/movable/victim = unmovablevictim
