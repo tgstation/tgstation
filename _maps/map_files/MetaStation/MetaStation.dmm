@@ -14595,7 +14595,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/mining)
 "azA" = (
-/obj/item/weapon/ore/iron,
+/obj/item/stack/ore/iron,
 /turf/open/floor/plasteel/warning{
 	dir = 9
 	},
@@ -16257,8 +16257,8 @@
 	name = "\improper Warehouse"
 	})
 "aCj" = (
-/obj/item/weapon/ore/silver,
-/obj/item/weapon/ore/silver,
+/obj/item/stack/ore/silver,
+/obj/item/stack/ore/silver,
 /turf/open/floor/plasteel/warning{
 	dir = 10
 	},
@@ -16359,7 +16359,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/item/weapon/ore/glass,
+/obj/item/stack/ore/glass,
 /turf/open/floor/plasteel/floorgrime,
 /area/quartermaster/sorting{
 	name = "\improper Warehouse"
@@ -21829,8 +21829,8 @@
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 4
 	},
-/obj/item/weapon/ore/glass,
-/obj/item/weapon/ore/iron,
+/obj/item/stack/ore/glass,
+/obj/item/stack/ore/iron,
 /turf/open/floor/plasteel/bot,
 /area/quartermaster/storage)
 "aLL" = (
@@ -82862,7 +82862,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/item/weapon/ore/slag,
+/obj/item/stack/ore/slag,
 /obj/item/weapon/storage/box/lights/mixed,
 /turf/open/floor/plating,
 /area/maintenance/aft{

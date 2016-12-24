@@ -38763,7 +38763,7 @@
 	},
 /area/quartermaster/miningdock)
 "bHz" = (
-/obj/item/weapon/ore/iron,
+/obj/item/stack/ore/iron,
 /turf/open/floor/plasteel/warning{
 	dir = 9
 	},
@@ -40217,8 +40217,8 @@
 /turf/open/floor/plasteel/warning,
 /area/quartermaster/miningdock)
 "bKk" = (
-/obj/item/weapon/ore/silver,
-/obj/item/weapon/ore/silver,
+/obj/item/stack/ore/silver,
+/obj/item/stack/ore/silver,
 /turf/open/floor/plasteel/warning{
 	dir = 10
 	},

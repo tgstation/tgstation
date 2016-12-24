@@ -487,15 +487,15 @@
 /turf/open/floor/plasteel,
 /area/bridge)
 "bh" = (
-/obj/item/weapon/ore/iron{
+/obj/item/stack/ore/iron{
 	pixel_x = -1;
 	pixel_y = -4
 	},
-/obj/item/weapon/ore/iron{
+/obj/item/stack/ore/iron{
 	pixel_x = 2;
 	pixel_y = 4
 	},
-/obj/item/weapon/ore/iron,
+/obj/item/stack/ore/iron,
 /turf/open/floor/plating/airless,
 /area/quartermaster/storage)
 "bi" = (
@@ -2939,7 +2939,7 @@
 /obj/machinery/camera/autoname{
 	dir = 8
 	},
-/obj/item/weapon/ore/glass,
+/obj/item/stack/ore/glass,
 /obj/structure/closet/crate{
 	icon_state = "crateopen";
 	opened = 1
@@ -2992,7 +2992,7 @@
 /area/quartermaster/storage)
 "gD" = (
 /obj/structure/closet/crate,
-/obj/item/weapon/ore/slag,
+/obj/item/stack/ore/slag,
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/plasteel/bot,
 /area/quartermaster/storage)
@@ -3465,7 +3465,7 @@
 /area/medical/medbay)
 "hy" = (
 /obj/structure/closet/crate,
-/obj/item/weapon/ore/glass,
+/obj/item/stack/ore/glass,
 /obj/effect/spawner/lootdrop/maintenance{
 	lootcount = 2;
 	name = "2maintenance loot spawner"
@@ -3672,7 +3672,7 @@
 	name = "Research Division"
 	})
 "hY" = (
-/obj/item/weapon/ore/iron,
+/obj/item/stack/ore/iron,
 /obj/structure/closet/crate{
 	icon_state = "crateopen";
 	opened = 1
