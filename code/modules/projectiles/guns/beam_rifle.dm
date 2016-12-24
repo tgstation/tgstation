@@ -13,311 +13,161 @@
 	recoil = 5
 	zoomable = TRUE
 	zoom_amt = 20
+	weapon_weight = WEAPON_HEAVY
+	w_class = WEIGHT_CLASS_HUGE
+	ammo_type = list(/obj/item/ammo_casing/energy/beam_rifle)
 	var/impact_delay = 10
 	var/zoom_out_amt = 13
-	var/power =
-	var/maxpower =
+	var/power = 20
+	var/maxpower = 20
+	var/energy_coeff = 0.20
 	var/hipfire_inaccuracy = 7
-	var/hipfire_recoil = 10
-	var/scoped_inaccuracy = 0
-	var/scoped_recoil = 3
+	var/hipfire_recoil = 20
+	var/scoped_inaccuracy = 2
+	var/scoped_recoil = 5
+	var/scoped = FALSE
+	var/noscope = FALSE	//Can you fire this without a scope?
 	var/obj/item/weapon/stock_parts/capacitor/cap = new /obj/item/weapon/stock_parts/capacitor
 	var/obj/item/weapon/stock_parts/scanning_module/scan = new /obj/item/weapon/stock_parts/scanning_module
 	var/obj/item/weapon/stock_parts/manipulator/manip = new /obj/item/weapon/stock_parts/manipulator
 	var/obj/item/weapon/stock_parts/micro_laser/laser = new /obj/item/weapon/stock_parts/micro_laser
 	var/obj/item/weapon/stock_parts/matter_bin/bin = new /obj/item/weapon/stock_parts/matter_bin
 	cell_type = /obj/item/weapon/stock_parts/cell/beam_rifle
+	var/datum/action/item_action/beam_rifle_power/poweraction
 
-
-/obj/item/weapon/gun/attackby(obj/item/I, mob/user, params)
-	if(can_flashlight)
-		if(istype(I, /obj/item/device/flashlight/seclite))
-			var/obj/item/device/flashlight/seclite/S = I
-			if(!gun_light)
-				if(!user.unEquip(I))
-					return
-				user << "<span class='notice'>You click [S] into place on [src].</span>"
-				if(S.on)
-					SetLuminosity(0)
-				gun_light = S
-				I.loc = src
-				update_icon()
-				update_gunlight(user)
-				verbs += /obj/item/weapon/gun/proc/toggle_gunlight
-				var/datum/action/A = new /datum/action/item_action/toggle_gunlight(src)
-				if(loc == user)
-					A.Grant(user)
-
-		if(istype(I, /obj/item/weapon/screwdriver))
-			if(gun_light)
-				for(var/obj/item/device/flashlight/seclite/S in src)
-					user << "<span class='notice'>You unscrew the seclite from [src].</span>"
-					gun_light = null
-					S.forceMove(get_turf(user))
-					update_gunlight(user)
-					S.update_brightness(user)
-					update_icon()
-					verbs -= /obj/item/weapon/gun/proc/toggle_gunlight
-				for(var/datum/action/item_action/toggle_gunlight/TGL in actions)
-					qdel(TGL)
-	else
-		..()
-
-/obj/item/weapon/gun/pickup(mob/user)
+/obj/item/weapon/gun/energy/beam_rifle/New()
 	..()
-	if(gun_light)
-		if(gun_light.on)
-			user.AddLuminosity(gun_light.brightness_on)
-			SetLuminosity(0)
-	if(azoom)
-		azoom.Grant(user)
+	poweraction = new()
+	poweraction.gun = src
+
+/obj/item/weapon/gun/energy/beam_rifle/pickup(mob/user)
+	if(poweraction)
+		poweraction.Grant(user)
+	. = ..(user)
 
 /obj/item/weapon/gun/dropped(mob/user)
-	..()
-	if(gun_light)
-		if(gun_light.on)
-			user.AddLuminosity(-gun_light.brightness_on)
-			SetLuminosity(gun_light.brightness_on)
-	zoom(user,FALSE)
-	if(azoom)
-		azoom.Remove(user)
+	if(poweraction)
+		poweraction.Remove(user)
+	. = ..(user)
 
+/obj/item/weapon/gun/energy/beam_rifle/proc/update_stats()
+	maxpower = laser.rating*20
+	//ammo cost usage here
+	scoped_recoil = 5 - bin.rating
+	hipfire_recoil = 20 - bin.rating*2
+	scoped_inaccuracy = Clamp((3 - manip.rating), 0, 5)
+	hipfire_inaccuacy = Clamp((30 - (manip.rating * 5)), 0, 30)
 
-/obj/item/weapon/gun/energy
-	icon_state = "energy"
-	name = "energy gun"
-	desc = "A basic energy-based gun."
-	icon = 'icons/obj/guns/energy.dmi'
+/obj/item/weapon/gun/energy/beam_rifle/zoom(user, forced_zoom)
+	. = ..(user, forced_zoom)
+	scope(user, zoomed)
 
-	var/obj/item/weapon/stock_parts/cell/power_supply //What type of power cell this uses
-	var/cell_type = /obj/item/weapon/stock_parts/cell
-	var/modifystate = 0
-	var/list/ammo_type = list(/obj/item/ammo_casing/energy)
-	var/select = 1 //The state of the select fire switch. Determines from the ammo_type list what kind of shot is fired next.
-	var/can_charge = 1 //Can it be charged in a recharger?
-	var/charge_sections = 4
-	ammo_x_offset = 2
-	var/shaded_charge = 0 //if this gun uses a stateful charge bar for more detail
-	var/selfcharge = 0
-	var/charge_tick = 0
-	var/charge_delay = 4
-	var/use_cyborg_cell = 0 //whether the gun's cell drains the cyborg user's cell to recharge
-
-/obj/item/weapon/gun/energy/emp_act(severity)
-	power_supply.use(round(power_supply.charge / severity))
-	chambered = null //we empty the chamber
-	recharge_newshot() //and try to charge a new shot
-	update_icon()
-
-
-/obj/item/weapon/gun/energy/New()
-	..()
-	if(cell_type)
-		power_supply = new cell_type(src)
+/obj/item/weapon/gun/energy/beam_rifle/proc/scope(mob/user, forced)
+	var/scoping
+	switch(forced)
+		if(TRUE)
+			scoping = TRUE
+		if(FALSE)
+			scoping = FALSE
+		else
+			scoping = !scoped
+	if(scoping)
+		spread = scoped_inaccuracy
+		recoil = scoped_recoil
+		scoped = TRUE
+		user << "<span class='boldnotice'>You bring your [src] up and use its scope...</span>"
 	else
-		power_supply = new(src)
-	power_supply.give(power_supply.maxcharge)
-	update_ammo_types()
-	recharge_newshot(1)
-	if(selfcharge)
-		START_PROCESSING(SSobj, src)
-	update_icon()
+		spread = hipfire_inaccuracy
+		recoil = hipfire_recoil
+		scoped = FALSE
+		user << "<span class='boldnotice'>You lower your [src].</span>"
 
-/obj/item/weapon/gun/energy/proc/update_ammo_types()
-	var/obj/item/ammo_casing/energy/shot
-	for (var/i = 1, i <= ammo_type.len, i++)
-		var/shottype = ammo_type[i]
-		shot = new shottype(src)
-		ammo_type[i] = shot
-	shot = ammo_type[select]
-	fire_sound = shot.fire_sound
-	fire_delay = shot.delay
+/obj/item/weapon/gun/energy/beam_rifle/can_trigger_gun(var/mob/living/user)
+	if(!scoped && !noscope)
+		user << "<span class='userdanger'>This beam rifle can only be used while scoped!</span>"
+		return FALSE
+	. = ..(user)
 
-/obj/item/weapon/gun/energy/Destroy()
-	if(power_supply)
-		qdel(power_supply)
-		power_supply = null
-	STOP_PROCESSING(SSobj, src)
-	return ..()
+/obj/item/weapon/gun/energy/beam_rifle/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/weapon/stock_parts))
+		var/obj/item/weapon/stock_parts/S = I
+		if(istype(S, /obj/item/weapon/stock_parts/manipulator))
+			if((!manip) || (manip.rating < S.rating))
+				user << "<span class='boldnotice'>[I] has been sucessfully installed into systems. Accuracy increased.</span>"
+				if(user.unEquip(I))
+					I.loc = src
+					manip = I
+		if(istype(S, /obj/item/weapon/stock_parts/scanning_module))
+			if((!scan) || (scan.rating < S.rating))
+				user << "<span class='boldnotice'>[I] has been sucessfully installed into systems.</span>"
+				if(user.unEquip(I))
+					I.loc = src
+					scan = I
+		if(istype(S, /obj/item/weapon/stock_parts/micro_laser))
+			if((!laser) || (laser.rating < S.rating))
+				user << "<span class='boldnotice'>[I] has been sucessfully installed into systems. Power output increased.</span>"
+				if(user.unEquip(I))
+					I.loc = src
+					laser = I
+		if(istype(S, /obj/item/weapon/stock_parts/matter_bin))
+			if((!bin) || (bin.rating < S.rating))
+				user << "<span class='boldnotice'>[I] has been sucessfully installed into systems. Recoil compensators upgraded.</span>"
+				if(user.unEquip(I))
+					I.loc = src
+					bin = I
+		if(istype(S, /obj/item/weapon/stock_parts/capacitor))
+			if((!cap) || (cap.rating < S.rating))
+				user << "<span class='boldnotice'>[I] has been sucessfully installed into systems. Power efficiency upgraded.</span>"
+				if(user.unEquip(I))
+					I.loc = src
+					cap = I
+	. = (I, user, params)
 
-/obj/item/weapon/gun/energy/process()
-	if(selfcharge)
-		charge_tick++
-		if(charge_tick < charge_delay)
-			return
-		charge_tick = 0
-		if(!power_supply)
-			return
-		power_supply.give(100)
-		if(!chambered) //if empty chamber we try to charge a new shot
-			recharge_newshot(1)
-		update_icon()
-
-/obj/item/weapon/gun/energy/attack_self(mob/living/user as mob)
-	if(ammo_type.len > 1)
-		select_fire(user)
-		update_icon()
-
-/obj/item/weapon/gun/energy/can_shoot()
-	var/obj/item/ammo_casing/energy/shot = ammo_type[select]
-	return power_supply.charge >= shot.e_cost
-
-/obj/item/weapon/gun/energy/recharge_newshot(no_cyborg_drain)
-	if (!ammo_type || !power_supply)
-		return
-	if(use_cyborg_cell && !no_cyborg_drain)
-		if(iscyborg(loc))
-			var/mob/living/silicon/robot/R = loc
-			if(R.cell)
-				var/obj/item/ammo_casing/energy/shot = ammo_type[select] //Necessary to find cost of shot
-				if(R.cell.use(shot.e_cost)) 		//Take power from the borg...
-					power_supply.give(shot.e_cost)	//... to recharge the shot
-	if(!chambered)
-		var/obj/item/ammo_casing/energy/AC = ammo_type[select]
-		if(power_supply.charge >= AC.e_cost) //if there's enough power in the power_supply cell...
-			chambered = AC //...prepare a new shot based on the current ammo type selected
-			if(!chambered.BB)
-				chambered.newshot()
-
-/obj/item/weapon/gun/energy/process_chamber()
-	if(chambered && !chambered.BB) //if BB is null, i.e the shot has been fired...
-		var/obj/item/ammo_casing/energy/shot = chambered
-		power_supply.use(shot.e_cost)//... drain the power_supply cell
-	chambered = null //either way, released the prepared shot
-	recharge_newshot() //try to charge a new shot
-
-/obj/item/weapon/gun/energy/proc/select_fire(mob/living/user)
-	select++
-	if (select > ammo_type.len)
-		select = 1
-	var/obj/item/ammo_casing/energy/shot = ammo_type[select]
-	fire_sound = shot.fire_sound
-	fire_delay = shot.delay
-	if (shot.select_name)
-		user << "<span class='notice'>[src] is now set to [shot.select_name].</span>"
+/obj/item/weapon/gun/energy/beam_rifle/emp_act(severity)
 	chambered = null
-	recharge_newshot(1)
-	update_icon()
-	return
+	recharge_newshot()
+	return	//Energy drain handled by its cell.
 
-/obj/item/weapon/gun/energy/update_icon()
-	cut_overlays()
-	var/ratio = Ceiling((power_supply.charge / power_supply.maxcharge) * charge_sections)
-	var/obj/item/ammo_casing/energy/shot = ammo_type[select]
-	var/iconState = "[icon_state]_charge"
-	var/itemState = null
-	if(!initial(item_state))
-		itemState = icon_state
-	if (modifystate)
-		add_overlay("[icon_state]_[shot.select_name]")
-		iconState += "_[shot.select_name]"
-		if(itemState)
-			itemState += "[shot.select_name]"
-	if(power_supply.charge < shot.e_cost)
-		add_overlay("[icon_state]_empty")
-	else
-		if(!shaded_charge)
-			for(var/i = ratio, i >= 1, i--)
-				add_overlay(image(icon = icon, icon_state = iconState, pixel_x = ammo_x_offset * (i -1)))
-		else
-			add_overlay(image(icon = icon, icon_state = "[icon_state]_charge[ratio]"))
-	if(gun_light && can_flashlight)
-		var/iconF = "flight"
-		if(gun_light.on)
-			iconF = "flight_on"
-		add_overlay(image(icon = icon, icon_state = iconF, pixel_x = flight_x_offset, pixel_y = flight_y_offset))
-	if(itemState)
-		itemState += "[ratio]"
-		item_state = itemState
+/obj/item/weapon/gun/energy/beam_rifle/proc/select_power(mob/user)
+	var/powerpercent = 50
+	powerpercent = round(input("Set [src] to percentage power","Adjust power output", null) as num|null)
+	if(powerpercent)
+		power = ((100/maxpower) * powerpercent)
+		user << "<span class='boldnotice'>[src] set to [powerpercent]% power.</span>"
 
-/obj/item/weapon/gun/energy/ui_action_click()
-	toggle_gunlight()
+/datum/action/item_action/beam_rifle_power
+	name = "Adjust Power Output"
+	var/obj/item/weapon/gun/energy/beam_rifle/gun
+	button_icon_state = "
+	background_icon_state = "
 
-/obj/item/weapon/gun/energy/suicide_act(mob/user)
-	if (src.can_shoot())
-		user.visible_message("<span class='suicide'>[user] is putting the barrel of [src] in [user.p_their()] mouth.  It looks like [user.p_theyre()] trying to commit suicide!</span>")
-		sleep(25)
-		if(user.is_holding(src))
-			user.visible_message("<span class='suicide'>[user] melts [user.p_their()] face off with [src]!</span>")
-			playsound(loc, fire_sound, 50, 1, -1)
-			var/obj/item/ammo_casing/energy/shot = ammo_type[select]
-			power_supply.use(shot.e_cost)
-			update_icon()
-			return(FIRELOSS)
-		else
-			user.visible_message("<span class='suicide'>[user] panics and starts choking to death!</span>")
-			return(OXYLOSS)
-	else
-		user.visible_message("<span class='suicide'>[user] is pretending to blow [user.p_their()] brains out with [src]! It looks like [user.p_theyre()] trying to commit suicide!</b></span>")
-		playsound(loc, 'sound/weapons/empty.ogg', 50, 1, -1)
-		return (OXYLOSS)
-
-
-/obj/item/weapon/gun/energy/vv_edit_var(var_name, var_value)
-	switch(var_name)
-		if("selfcharge")
-			if(var_value)
-				START_PROCESSING(SSobj, src)
-			else
-				STOP_PROCESSING(SSobj, src)
+/datum/action/item_action/beam_rifle_power/Trigger()
+	gun.select_power(owner)
 	. = ..()
 
-/obj/item/projectile
-	name = "projectile"
-	icon = 'icons/obj/projectiles.dmi'
-	icon_state = "bullet"
-	density = 0
-	anchored = 1
-	flags = ABSTRACT
-	pass_flags = PASSTABLE
-	mouse_opacity = 0
-	hitsound = 'sound/weapons/pierce.ogg'
-	var/hitsound_wall = ""
+/obj/item/ammo_casing/energy/beam_rifle
+	name = "particle acceleration lens"
+	desc = "Don't look into barrel!"
+	projectile_type = /obj/item/projectile/energy/beam_rifle
+	e_cost = 2000
+	var/base_energy_multiplier = 100
+	var/hitscan_delay = 10
+	fire_sound = 'sound/'
+	firing_effect_type =
 
-	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
-	var/def_zone = ""	//Aiming at
-	var/mob/firer = null//Who shot it
-	var/suppressed = 0	//Attack message
-	var/yo = null
-	var/xo = null
-	var/current = null
-	var/atom/original = null // the original target clicked
-	var/turf/starting = null // the projectile's starting turf
-	var/list/permutated = list() // we've passed through these atoms, don't try to hit them again
-	var/paused = FALSE //for suspending the projectile midair
-	var/p_x = 16
-	var/p_y = 16			// the pixel location of the tile that the player clicked. Default is the center
-	var/speed = 0.8			//Amount of deciseconds it takes for projectile to travel
-	var/Angle = 0
-	var/spread = 0			//amount (in degrees) of projectile spread
-	var/legacy = 0			//legacy projectile system
-	animate_movement = 0	//Use SLIDE_STEPS in conjunction with legacy
+/obj/item/projectile/energy/beam_rifle
+	name = "particle beam"
+	icon = '
+	icon_state = "
+	hitsound = '
+	hitsound_wall = "
+	damage = 20
+	damage_type = BURN
+	flag = energy
+	range = 150
+	jitter = 10
+	impact_effect_type =
 
-	var/damage = 10
-	var/damage_type = BRUTE //BRUTE, BURN, TOX, OXY, CLONE are the only things that should be in here
-	var/nodamage = 0 //Determines if the projectile will skip any damage inflictions
-	var/flag = "bullet" //Defines what armor to use when it hits things.  Must be set to bullet, laser, energy,or bomb
-	var/projectile_type = /obj/item/projectile
-	var/range = 50 //This will de-increment every step. When 0, it will delete the projectile.
-		//Effects
-	var/stun = 0
-	var/weaken = 0
-	var/paralyze = 0
-	var/irradiate = 0
-	var/stutter = 0
-	var/slur = 0
-	var/eyeblur = 0
-	var/drowsy = 0
-	var/stamina = 0
-	var/jitter = 0
-	var/forcedodge = 0 //to pass through everything
-	var/dismemberment = 0 //The higher the number, the greater the bonus to dismembering. 0 will not dismember at all.
-	var/impact_effect_type //what type of impact effect to show when hitting something
-	var/log_override = FALSE //is this type spammed enough to not log? (KAs)
-
-/obj/item/projectile/New()
-	permutated = list()
-	return ..()
 
 /obj/item/projectile/proc/Range()
 	range--
@@ -430,9 +280,6 @@
 				picked_mob.bullet_act(src, def_zone)
 	qdel(src)
 
-/obj/item/projectile/Process_Spacemove(var/movement_dir = 0)
-	return 1 //Bullets don't drift in space
-
 /obj/item/projectile/proc/fire(setAngle, atom/direct_target)
 	if(!log_override && firer && original)
 		add_logs(firer, original, "fired at", src, " [get_area(src)]")
@@ -520,113 +367,3 @@
 			sleep(config.run_speed * 0.9)
 
 
-/obj/item/projectile/proc/preparePixelProjectile(atom/target, var/turf/targloc, mob/living/user, params, spread)
-	var/turf/curloc = get_turf(user)
-	src.loc = get_turf(user)
-	src.starting = get_turf(user)
-	src.current = curloc
-	src.yo = targloc.y - curloc.y
-	src.xo = targloc.x - curloc.x
-
-	if(params)
-		var/list/mouse_control = params2list(params)
-		if(mouse_control["icon-x"])
-			src.p_x = text2num(mouse_control["icon-x"])
-		if(mouse_control["icon-y"])
-			src.p_y = text2num(mouse_control["icon-y"])
-		if(mouse_control["screen-loc"])
-			//Split screen-loc up into X+Pixel_X and Y+Pixel_Y
-			var/list/screen_loc_params = splittext(mouse_control["screen-loc"], ",")
-
-			//Split X+Pixel_X up into list(X, Pixel_X)
-			var/list/screen_loc_X = splittext(screen_loc_params[1],":")
-
-			//Split Y+Pixel_Y up into list(Y, Pixel_Y)
-			var/list/screen_loc_Y = splittext(screen_loc_params[2],":")
-			// world << "X: [screen_loc_X[1]] PixelX: [screen_loc_X[2]] / Y: [screen_loc_Y[1]] PixelY: [screen_loc_Y[2]]"
-			var/x = text2num(screen_loc_X[1]) * 32 + text2num(screen_loc_X[2]) - 32
-			var/y = text2num(screen_loc_Y[1]) * 32 + text2num(screen_loc_Y[2]) - 32
-
-			//Calculate the "resolution" of screen based on client's view and world's icon size. This will work if the user can view more tiles than average.
-			var/screenview = (user.client.view * 2 + 1) * world.icon_size //Refer to http://www.byond.com/docs/ref/info.html#/client/var/view for mad maths
-
-			var/ox = round(screenview/2) //"origin" x
-			var/oy = round(screenview/2) //"origin" y
-			// world << "Pixel position: [x] [y]"
-			var/angle = Atan2(y - oy, x - ox)
-			// world << "Angle: [angle]"
-			src.Angle = angle
-	if(spread)
-		src.Angle += spread
-
-
-/obj/item/projectile/Crossed(atom/movable/AM) //A mob moving on a tile with a projectile is hit by it.
-	..()
-	if(isliving(AM) && AM.density && !checkpass(PASSMOB))
-		Bump(AM, 1)
-
-/obj/item/projectile/Destroy()
-	return ..()
-
-/obj/item/projectile/experience_pressure_difference()
-	return
-/obj/item/ammo_casing
-	name = "bullet casing"
-	desc = "A bullet casing."
-	icon = 'icons/obj/ammo.dmi'
-	icon_state = "s-casing"
-	flags = CONDUCT
-	slot_flags = SLOT_BELT
-	throwforce = 0
-	w_class = WEIGHT_CLASS_TINY
-	var/fire_sound = null						//What sound should play when this ammo is fired
-	var/caliber = null							//Which kind of guns it can be loaded into
-	var/projectile_type = null					//The bullet type to create when New() is called
-	var/obj/item/projectile/BB = null 			//The loaded bullet
-	var/pellets = 1								//Pellets for spreadshot
-	var/variance = 0							//Variance for inaccuracy fundamental to the casing
-	var/randomspread = 0						//Randomspread for automatics
-	var/delay = 0								//Delay for energy weapons
-	var/click_cooldown_override = 0				//Override this to make your gun have a faster fire rate, in tenths of a second. 4 is the default gun cooldown.
-	var/firing_effect_type = /obj/effect/overlay/temp/dir_setting/firing_effect	//the visual effect appearing when the ammo is fired.
-
-
-/obj/item/ammo_casing/New()
-	..()
-	if(projectile_type)
-		BB = new projectile_type(src)
-	pixel_x = rand(-10, 10)
-	pixel_y = rand(-10, 10)
-	setDir(pick(alldirs))
-	update_icon()
-
-/obj/item/ammo_casing/update_icon()
-	..()
-	icon_state = "[initial(icon_state)][BB ? "-live" : ""]"
-	desc = "[initial(desc)][BB ? "" : " This one is spent"]"
-
-//proc to magically refill a casing with a new projectile
-/obj/item/ammo_casing/proc/newshot() //For energy weapons, syringe gun, shotgun shells and wands (!).
-	if(!BB)
-		BB = new projectile_type(src)
-
-/obj/item/ammo_casing/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/ammo_box))
-		var/obj/item/ammo_box/box = I
-		if(isturf(loc))
-			var/boolets = 0
-			for(var/obj/item/ammo_casing/bullet in loc)
-				if (box.stored_ammo.len >= box.max_ammo)
-					break
-				if (bullet.BB)
-					if (box.give_round(bullet, 0))
-						boolets++
-				else
-					continue
-			if (boolets > 0)
-				box.update_icon()
-				user << "<span class='notice'>You collect [boolets] shell\s. [box] now contains [box.stored_ammo.len] shell\s.</span>"
-			else
-				user << "<span class='warning'>You fail to collect anything!</span>"
-	else
-		return ..()
