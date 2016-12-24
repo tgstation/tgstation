@@ -7,8 +7,6 @@
 		param = copytext(act, custom_param + 1, length(act) + 1)
 		act = copytext(act, 1, custom_param)
 
-	world << "[src]: emote([act], [param])"
-
 	var/datum/emote/E = emote_list[act]
 	if(!E)
 		src << "<span class='notice'>Unusable emote '[act]'. Say *help for a list.</span>"
@@ -394,7 +392,29 @@
 	key = "help"
 
 /datum/emote/living/help/run_emote(mob/user, params)
-	//to do
+	var/list/keys = list()
+	var/list/message = list("Available emotes, you can use them with say \"*emote\": ")
+
+	for(var/e in emote_list)
+		if(e in keys)
+			continue
+		var/datum/emote/E = emote_list[e]
+		if(E.can_run_emote(user))
+			keys += E.key
+
+	keys = sortList(keys)
+
+	for(var/emote in keys)
+		if(LAZYLEN(message) > 1)
+			message += ", [emote]"
+		else
+			message += "[emote]"
+
+	message += "."
+
+	message = jointext(message, "")
+
+	user << message
 
 /datum/emote/sound/beep
 	key = "beep"

@@ -29,14 +29,11 @@ var/global/list/emote_list = list()
 /datum/emote/proc/run_emote(mob/user, params = null)
 	. = TRUE
 	if(!can_run_emote(user))
-		world << "Can't run"
 		return FALSE
 	var/msg = select_message_type(user)
-	world << msg
 	if(params && message_param)
 		msg = message_param
 		msg = replacetext(msg, "%t", params)
-		world << msg
 	if(findtext(msg, "their"))
 		msg = replacetext(msg, "their", user.p_their())
 	if(findtext(msg, "them"))
@@ -46,7 +43,6 @@ var/global/list/emote_list = list()
 		for(var/obj/item/weapon/implant/I in C.implants)
 			I.trigger(key, C)
 	if(!msg)
-		world << "!msg"
 		return FALSE
 
 	msg = "<b>[user]</b> " + msg
@@ -62,7 +58,7 @@ var/global/list/emote_list = list()
 		user.audible_message(msg)
 	else
 		user.visible_message(msg)
-	//log_emote("[name]/[key] : [msg]")
+	log_emote("[key_name(user)] : [msg]")
 
 /datum/emote/proc/select_message_type(mob/user)
 	. = message
@@ -85,13 +81,10 @@ var/global/list/emote_list = list()
 	if((user.stat && key != "deathgasp") || (user.status_flags & FAKEDEATH))
 		return FALSE
 	if(!is_type_in_typecache(user, mob_type_allowed_typecache))
-		world << "!is_allowed"
 		return FALSE
 	if(restraint_check && user.restrained())
-		world << "restraint"
 		return FALSE
 	if(is_type_in_typecache(user, mob_type_blacklist_typecache))
-		world << "blacklist"
 		return FALSE
 
 
