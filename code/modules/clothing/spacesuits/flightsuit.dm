@@ -492,10 +492,9 @@
 		if(momentum_speed < 3)
 			crashing = FALSE
 			return FALSE
-		crashing = TRUE
+		anchored = TRUE
 		damage = TRUE
 		density = FALSE
-		anchored = TRUE
 	else if(istype(unmovablevictim, /obj/structure/mineral_door))
 		var/obj/structure/mineral_door/D = unmovablevictim
 		door_hit(D)
