@@ -330,6 +330,7 @@
 /obj/structure/spacevine/New()
 	..()
 	add_atom_colour("#ffffff", FIXED_COLOUR_PRIORITY)
+	qdel(src)
 
 /obj/structure/spacevine/examine(mob/user)
 	..()
