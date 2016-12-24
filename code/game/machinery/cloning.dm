@@ -397,7 +397,7 @@
 		var/obj/item/organ/organ = o
 		if(!istype(organ) || organ.vital)
 			continue
-		organ.Remove(H)
+		organ.Remove(H, special=TRUE)
 		organ.forceMove(src)
 		unattached_flesh += organ
 

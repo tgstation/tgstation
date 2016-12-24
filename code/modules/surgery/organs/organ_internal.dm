@@ -117,7 +117,8 @@
 
 /obj/item/organ/heart/Remove(mob/living/carbon/M, special = 0)
 	..()
-	addtimer(src, "stop_if_unowned", 120)
+	if(!special)
+		addtimer(src, "stop_if_unowned", 120)
 
 /obj/item/organ/heart/proc/stop_if_unowned()
 	if(!owner)

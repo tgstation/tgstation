@@ -1117,7 +1117,7 @@
 /datum/reagent/medicine/corazone
 	// Heart attack code will not do as damage if corazone is present
 	// because it's SPACE MAGIC ASPIRIN
-	name = "corazone"
+	name = "Corazone"
 	id = "corazone"
 	description = "A medication used to treat pain, fever, and inflammation, \
 		along with heart attacks."
