@@ -120,7 +120,7 @@
 		src << "<span class='danger'><B>You must be adjacent to your target!</span></B>"
 		return
 	if(A.anchored)
-		src << "<span class='danger'><B>Your target cannot be \anchored!</span></B>"
+		src << "<span class='danger'><B>Your target cannot be anchored!</span></B>"
 		return
 
 	var/turf/T = get_turf(A)
