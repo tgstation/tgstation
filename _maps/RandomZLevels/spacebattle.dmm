@@ -2120,11 +2120,11 @@
 /turf/open/floor/plating,
 /area/awaymission/spacebattle/cruiser)
 "gT" = (
-/obj/item/weapon/ore/bananium,
-/obj/item/weapon/ore/bananium,
-/obj/item/weapon/ore/bananium,
-/obj/item/weapon/ore/bananium,
-/obj/item/weapon/ore/bananium,
+/obj/item/stack/ore/bananium,
+/obj/item/stack/ore/bananium,
+/obj/item/stack/ore/bananium,
+/obj/item/stack/ore/bananium,
+/obj/item/stack/ore/bananium,
 /obj/structure/closet/crate,
 /turf/open/floor/plating,
 /area/awaymission/spacebattle/cruiser)

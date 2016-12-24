@@ -92,7 +92,7 @@
 /area/ruin/powered)
 "p" = (
 /obj/structure/table/wood/poker,
-/obj/item/weapon/ore/gold,
+/obj/item/stack/ore/gold,
 /turf/open/floor/engine/cult{
 	baseturf = /turf/open/floor/plating/lava/smooth
 	},

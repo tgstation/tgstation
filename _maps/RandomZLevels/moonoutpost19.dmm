@@ -663,7 +663,7 @@
 	name = "Syndicate Outpost"
 	})
 "aS" = (
-/obj/item/weapon/ore/iron{
+/obj/item/stack/ore/iron{
 	pixel_x = 7;
 	pixel_y = -6
 	},
@@ -2565,8 +2565,8 @@
 	name = "Syndicate Outpost"
 	})
 "dv" = (
-/obj/item/weapon/ore/iron,
-/obj/item/weapon/ore/iron{
+/obj/item/stack/ore/iron,
+/obj/item/stack/ore/iron{
 	pixel_x = -7;
 	pixel_y = -4
 	},
@@ -2631,7 +2631,7 @@
 	name = "Syndicate Outpost"
 	})
 "dz" = (
-/obj/item/weapon/ore/iron{
+/obj/item/stack/ore/iron{
 	pixel_x = -3;
 	pixel_y = 9
 	},
@@ -2871,7 +2871,7 @@
 	poweralm = 0
 	})
 "dN" = (
-/obj/item/weapon/ore/iron{
+/obj/item/stack/ore/iron{
 	pixel_x = -7;
 	pixel_y = -4
 	},
