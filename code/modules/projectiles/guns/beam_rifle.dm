@@ -71,6 +71,7 @@
 		BR.base_energy_multiplier = (BR.initial(base_energy_multiplier) * (1 - (scan.rating * 0.075)))
 		BR.e_cost = round((power * BR.base_energy_multiplier)*energy_coeff)
 		BR.update_damage(power)
+		BR.hitscan_delay = (BR.initial(hitscan_delay) - (scan.rating * 0.1))
 
 /obj/item/weapon/gun/energy/beam_rifle/zoom(user, forced_zoom)
 	. = ..(user, forced_zoom)
@@ -113,7 +114,7 @@
 					manip = I
 		if(istype(S, /obj/item/weapon/stock_parts/scanning_module))
 			if((!scan) || (scan.rating < S.rating))
-				user << "<span class='boldnotice'>[I] has been sucessfully installed into systems. Power usage decreased.</span>"
+				user << "<span class='boldnotice'>[I] has been sucessfully installed into systems. Power usage decreased. Firing cycle upgraded.</span>"
 				if(user.unEquip(I))
 					I.loc = src
 					scan = I
@@ -171,6 +172,7 @@
 	fire_sound = 'sound/weapons/beam_sniper.ogg'
 	firing_effect_type =
 	var/projectile_damage = 20
+	delay = 40
 
 /obj/item/ammo_casing/energy/beam_rifle/proc/update_damage(power)
 	projectile_damage = power
