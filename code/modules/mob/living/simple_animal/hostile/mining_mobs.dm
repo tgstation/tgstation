@@ -736,18 +736,16 @@
 	loot = list()
 	stat_attack = 1
 	robust_searching = 1
-	var/is_baby = 0 //the only solution i can think of to 100 pup stacks
+	var/is_baby = 0 //the only solution i can think of 100 pup stacks
 	var/has_babies = 0 //whether this goliath is a mother or not
 
 /mob/living/simple_animal/hostile/asteroid/goliath/beast/New()
 	..()
-	if(prob(50) and !is_baby)
+	if(prob(50) && !is_baby)
 		has_babies = 1
-	if(has_babies) //if the goliath has babies, set the baby's mother to this goliath.
+	if(has_babies && !from_spawner) //if the goliath has babies, set the baby's mother to this goliath.
 		var/mob/living/simple_animal/hostile/asteroid/goliath/beast/baby/B = new(get_turf(src))
 		B.mama = src
-
-
 
 //Goliath pup
 
@@ -758,23 +756,47 @@
 	icon_state = "goliath_baby"
 	icon_living = "goliath_baby"
 	icon_aggro = "goliath_baby"
-	icon_dead = "goliath_dead"
-	melee_damage_lower = 0
-	melee_damage_upper = 0
+	icon_dead = "goliath_baby_dead"
+	melee_damage_lower = 1
+	melee_damage_upper = 1
+	health = 50
 	attacktext = "bumps into"
 	throw_message = "bounces off the hide of the"
 	pre_attack_icon = "goliath_baby"
 	attack_sound = 'sound/weapons/tap.ogg'
-	var/mob/living/mama = null // which goliath is this particular baby's mom?
 	ventcrawler = VENTCRAWLER_ALWAYS
+	pass_flags = PASSTABLE | PASSMOB
 	is_baby = 1
-	has_babies = 0 //to stop 100 goliath pup stacks of goliath
-	stop_automated_movement = 1
+	has_babies = 0
+	var/amount_grown = 0 //to stop 100 goliath pup stacks of goliath
+	var/mob/living/mama = null // which goliath is this particular baby's mom?.
+
+/mob/living/simple_animal/hostile/asteroid/goliath/beast/baby/proc/mourn()
+	icon_state = "goliath_baby_cry"
+	visible_message(pick("[src] cries","[src] mourns its mother"))
+	mama = 0
+
+/mob/living/simple_animal/hostile/asteroid/goliath/beast/baby/proc/stop_mourn()
+	icon_state = "goliath_baby"
+	visible_message("[src] perks up from the ground, and by the time it does so, it seems older")
+	amount_grown += 30000
+	walk_to(src,0)
 
 /mob/living/simple_animal/hostile/asteroid/goliath/beast/baby/Life()
 	..()
-	if(mama && !Adjacent(mama))
-		walk_to(mama,0)
+	if(mama && !mama.stat &&!Adjacent(mama))
+		stop_automated_movement = TRUE
+		walk_to(src, mama)
+	if(!stat && !ckey)
+		amount_grown += (1)
+		if(amount_grown >= 500000)
+			new /mob/living/simple_animal/hostile/asteroid/goliath/beast(src.loc)
+			qdel(src)
+	if(mama && mama.stat == DEAD && Adjacent(mama))
+		mourn()
+		addtimer(src, "stop_mourn", 150)
+	if(!mama)
+		stop_automated_movement = FALSE
 
 //Legion
 
