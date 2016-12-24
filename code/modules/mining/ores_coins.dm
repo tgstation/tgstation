@@ -7,6 +7,11 @@
 	var/points = 0 //How many points this ore gets you from the ore redemption machine
 	var/refined_type = null //What this ore defaults to being refined into
 
+/obj/item/weapon/ore/ex_act(severity)
+	if(refined_type)
+		new refined_type(get_turf(src.loc))
+	qdel(src)
+
 /obj/item/weapon/ore/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/W = I
