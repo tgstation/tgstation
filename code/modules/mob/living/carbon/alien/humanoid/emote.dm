@@ -60,6 +60,26 @@
 				message = text("<span class='name'>[src]</span> signs[].", (text2num(param) ? text(" the number []", text2num(param)) : null))
 				m_type = 1
 
+		if ("special")	//visual emotes with their own special sprites - DO NOT BE BLIND LIKE A CERTAIN SOMEONE WHO SHOULD HAVE ASKED WHAT EACH SPRITE WAS
+			if (sprite_changed_for_emote)
+				src << "You are currently brimming with emotion!"
+			else
+				sprite_changed_for_emote = TRUE	//so we don't attempt to swap the sprite twice in proc/change_icon because I don't know what may happen if we do
+				if (caste == "h")	//for hunter xenos
+					var/list/sprites = list("Blush" = "blush",
+											"Dunno" = "dunno",
+											"Heart left half" = "heart_left", "Heart right half" = "heart_right",
+											"Sass" = "sass",
+											"The thinker" = "thinker",
+											"Waiting" = "waiting",
+											"You got it" = "you_got_it")
+
+					var/input = input("Select an emote!", "Emote", null, null) as null|anything in sprites
+
+					change_icon(sprites[input])
+				else	//for xenos without special, emotional sprites
+					src << "It seems you're incapable of advanced emotions."
+
 		if ("tail")
 			message = "<span class='name'>[src]</span> waves its tail."
 			m_type = 1
@@ -86,3 +106,17 @@
 		else
 			audible_message(message)
 	return
+
+/mob/living/carbon/alien/humanoid/proc/change_icon(icon_name)
+	var/original_icon = icon
+	var/original_icon_state = icon_state
+
+	//change the icon for fun
+	icon = 'icons/mob/alien_emotes.dmi'
+	icon_state = "[icon_name]"
+
+	//change the icon back after a while as fun is a precious resource
+	spawn(emote_length)
+		icon = original_icon
+		icon_state = original_icon_state
+		sprite_changed_for_emote = FALSE
