@@ -198,13 +198,14 @@
 
 /obj/item/weapon/emptysandbag/attackby(obj/item/W, mob/user, params)
 	if(istype(W,/obj/item/stack/ore/glass))
-		user << "<span class='notice'>You fill the sandbag.</span>"
-		var/obj/item/stack/sheet/mineral/sandbags/I = new /obj/item/stack/sheet/mineral/sandbags
-		user.unEquip(src)
-		user.put_in_hands(I)
-		qdel(W)
-		qdel(src)
-		return
+		var/obj/item/stack/ore/glass/O = W
+		if(O.use(1))
+			user << "<span class='notice'>You fill the sandbag.</span>"
+			var/obj/item/stack/sheet/mineral/sandbags/I = new /obj/item/stack/sheet/mineral/sandbags
+			user.unEquip(src)
+			user.put_in_hands(I)
+			qdel(src)
+			return
 	else
 		return ..()
 

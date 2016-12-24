@@ -391,36 +391,44 @@
 			if(n>10)
 				break
 			if (istype(O,/obj/item/stack/ore/iron))
-				ore_iron++;
-				O.loc = null
+				var/obj/item/stack/ore/S = O
+				ore_iron += S.amount
+				qdel(S)
 				continue
 			if (istype(O,/obj/item/stack/ore/glass))
-				ore_glass++;
-				O.loc = null
+				var/obj/item/stack/ore/S = O
+				ore_glass += S.amount
+				qdel(S)
 				continue
 			if (istype(O,/obj/item/stack/ore/diamond))
-				ore_diamond++;
-				O.loc = null
+				var/obj/item/stack/ore/S = O
+				ore_diamond += S.amount
+				qdel(S)
 				continue
 			if (istype(O,/obj/item/stack/ore/plasma))
-				ore_plasma++
-				O.loc = null
+				var/obj/item/stack/ore/S = O
+				ore_plasma += S.amount
+				qdel(S)
 				continue
 			if (istype(O,/obj/item/stack/ore/gold))
-				ore_gold++
-				O.loc = null
+				var/obj/item/stack/ore/S = O
+				ore_gold += S.amount
+				qdel(S)
 				continue
 			if (istype(O,/obj/item/stack/ore/silver))
-				ore_silver++
-				O.loc = null
+				var/obj/item/stack/ore/S = O
+				ore_silver += S.amount
+				qdel(S)
 				continue
 			if (istype(O,/obj/item/stack/ore/uranium))
-				ore_uranium++
-				O.loc = null
+				var/obj/item/stack/ore/S = O
+				ore_uranium += S.amount
+				qdel(S)
 				continue
 			if (istype(O,/obj/item/stack/ore/bananium))
-				ore_clown++
-				O.loc = null
+				var/obj/item/stack/ore/S = O
+				ore_clown += S.amount
+				qdel(S)
 				continue
 			unload_mineral(O)
 

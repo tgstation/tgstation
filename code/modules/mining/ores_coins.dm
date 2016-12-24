@@ -15,7 +15,8 @@
 		var/obj/item/weapon/weldingtool/W = I
 		if(W.remove_fuel(15) && refined_type)
 			new refined_type(get_turf(src.loc))
-			qdel(src)
+			use(1)
+			user << "<span class='notice'>You smelt a piece of [src].</span>"
 		else if(W.isOn())
 			user << "<span class='info'>Not enough fuel to smelt [src].</span>"
 	..()
@@ -76,23 +77,9 @@
 	w_class = WEIGHT_CLASS_TINY
 
 /obj/item/stack/ore/glass/attack_self(mob/living/user)
-	user << "<span class='notice'>You use the sand to make sandstone.</span>"
-	var/sandAmt = 1
-	for(var/obj/item/stack/ore/glass/G in user.loc) // The sand on the floor
-		sandAmt += 1
-		qdel(G)
-	while(sandAmt > 0)
-		var/obj/item/stack/sheet/mineral/sandstone/SS = new /obj/item/stack/sheet/mineral/sandstone(user.loc)
-		if(sandAmt >= SS.max_amount)
-			SS.amount = SS.max_amount
-		else
-			SS.amount = sandAmt
-			for(var/obj/item/stack/sheet/mineral/sandstone/SA in user.loc)
-				if(SA != SS && SA.amount < SA.max_amount)
-					SA.attackby(SS, user) //we try to transfer all old unfinished stacks to the new stack we created.
-		sandAmt -= SS.max_amount
-	qdel(src)
-	return
+	user << "<span class='notice'>You use some of the sand to make some sandstone.</span>"
+	use(1)
+	new /obj/item/stack/sheet/mineral/sandstone(get_turf(src))
 
 /obj/item/stack/ore/glass/throw_impact(atom/hit_atom)
 	if(..() || !ishuman(hit_atom))
@@ -111,7 +98,7 @@
 	C.adjustStaminaLoss(15)//the pain from your eyes burning does stamina damage
 	C.confused += 5
 	C << "<span class='userdanger'>\The [src] gets into your eyes! The pain, it burns!</span>"
-	qdel(src)
+	use(1)
 
 /obj/item/stack/ore/glass/basalt
 	name = "volcanic ash"

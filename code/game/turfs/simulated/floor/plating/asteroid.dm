@@ -86,8 +86,7 @@
 /turf/open/floor/plating/asteroid/proc/gets_dug()
 	if(dug)
 		return
-	for(var/i in 1 to 5)
-		new sand_type(src)
+	new sand_type(src, 5)
 	dug = 1
 	icon_plating = "[environment_type]_dug"
 	icon_state = "[environment_type]_dug"

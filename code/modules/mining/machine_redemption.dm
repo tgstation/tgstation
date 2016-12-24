@@ -56,11 +56,11 @@
 	var/obj/item/stack/sheet/processed_sheet = SmeltMineral(O)
 	if(processed_sheet)
 		if(!(processed_sheet in stack_list)) //It's the first of this sheet added
-			var/obj/item/stack/sheet/s = new processed_sheet(src,0)
+			var/obj/item/stack/sheet/s = new processed_sheet(src, 0)
 			s.amount = 0
 			stack_list[processed_sheet] = s
 		var/obj/item/stack/sheet/storage = stack_list[processed_sheet]
-		storage.amount += sheet_per_ore //Stack the sheets
+		storage.amount += (sheet_per_ore * O.amount) //Stack the sheets
 		O.loc = null //Let the old sheet...
 		qdel(O) //... garbage collect
 
@@ -132,7 +132,7 @@
 /obj/machinery/mineral/ore_redemption/proc/SmeltMineral(obj/item/stack/ore/O)
 	if(O.refined_type)
 		var/obj/item/stack/sheet/M = O.refined_type
-		points += O.points * point_upgrade
+		points += O.points * O.amount * point_upgrade
 		return M
 	qdel(O)//No refined type? Purge it.
 	return
