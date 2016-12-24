@@ -731,7 +731,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	metabolization_rate = 0.1 * REAGENTS_METABOLISM
 
 /datum/reagent/consumable/ethanol/fetching_fizz/on_mob_life(mob/living/M)
-	for(var/obj/item/weapon/ore/O in orange(3, M))
+	for(var/obj/item/stack/O in orange(3, M))
 		step_towards(O, get_turf(M))
 	return ..()
 

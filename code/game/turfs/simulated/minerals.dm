@@ -226,7 +226,7 @@
 
 
 /turf/closed/mineral/iron
-	mineralType = /obj/item/weapon/ore/iron
+	mineralType = /obj/item/stack/iron
 	spreadChance = 20
 	spread = 1
 	scan_state = "rock_Iron"
@@ -240,7 +240,7 @@
 
 
 /turf/closed/mineral/uranium
-	mineralType = /obj/item/weapon/ore/uranium
+	mineralType = /obj/item/stack/uranium
 	spreadChance = 5
 	spread = 1
 	scan_state = "rock_Uranium"
@@ -254,7 +254,7 @@
 
 
 /turf/closed/mineral/diamond
-	mineralType = /obj/item/weapon/ore/diamond
+	mineralType = /obj/item/stack/diamond
 	spreadChance = 0
 	spread = 1
 	scan_state = "rock_Diamond"
@@ -268,7 +268,7 @@
 
 
 /turf/closed/mineral/gold
-	mineralType = /obj/item/weapon/ore/gold
+	mineralType = /obj/item/stack/gold
 	spreadChance = 5
 	spread = 1
 	scan_state = "rock_Gold"
@@ -282,7 +282,7 @@
 
 
 /turf/closed/mineral/silver
-	mineralType = /obj/item/weapon/ore/silver
+	mineralType = /obj/item/stack/silver
 	spreadChance = 5
 	spread = 1
 	scan_state = "rock_Silver"
@@ -296,7 +296,7 @@
 
 
 /turf/closed/mineral/titanium
-	mineralType = /obj/item/weapon/ore/titanium
+	mineralType = /obj/item/stack/titanium
 	spreadChance = 5
 	spread = 1
 	scan_state = "rock_Titanium"
@@ -310,7 +310,7 @@
 
 
 /turf/closed/mineral/plasma
-	mineralType = /obj/item/weapon/ore/plasma
+	mineralType = /obj/item/stack/plasma
 	spreadChance = 8
 	spread = 1
 	scan_state = "rock_Plasma"
@@ -324,7 +324,7 @@
 
 
 /turf/closed/mineral/clown
-	mineralType = /obj/item/weapon/ore/bananium
+	mineralType = /obj/item/stack/bananium
 	mineralAmt = 3
 	spreadChance = 0
 	spread = 0
@@ -332,7 +332,7 @@
 
 
 /turf/closed/mineral/bscrystal
-	mineralType = /obj/item/weapon/ore/bluespace_crystal
+	mineralType = /obj/item/stack/bluespace_crystal
 	mineralAmt = 1
 	spreadChance = 0
 	spread = 0

@@ -1,6 +1,6 @@
 // Bluespace crystals, used in telescience and when crushed it will blink you to a random turf.
 
-/obj/item/weapon/ore/bluespace_crystal
+/obj/item/stack/bluespace_crystal
 	name = "bluespace crystal"
 	desc = "A glowing bluespace crystal, not much is known about how they work. It looks very delicate."
 	icon = 'icons/obj/telescience.dmi'
@@ -11,12 +11,12 @@
 	var/blink_range = 8 // The teleport range when crushed/thrown at someone.
 	refined_type = /obj/item/stack/sheet/bluespace_crystal
 
-/obj/item/weapon/ore/bluespace_crystal/New()
+/obj/item/stack/bluespace_crystal/New()
 	..()
 	pixel_x = rand(-5, 5)
 	pixel_y = rand(-5, 5)
 
-/obj/item/weapon/ore/bluespace_crystal/attack_self(mob/user)
+/obj/item/stack/bluespace_crystal/attack_self(mob/user)
 	user.visible_message("<span class='warning'>[user] crushes [src]!</span>", "<span class='danger'>You crush [src]!</span>")
 	PoolOrNew(/obj/effect/particle_effect/sparks, loc)
 	playsound(src.loc, "sparks", 50, 1)
@@ -24,10 +24,10 @@
 	user.unEquip(src)
 	qdel(src)
 
-/obj/item/weapon/ore/bluespace_crystal/proc/blink_mob(mob/living/L)
+/obj/item/stack/bluespace_crystal/proc/blink_mob(mob/living/L)
 	do_teleport(L, get_turf(L), blink_range, asoundin = 'sound/effects/phasein.ogg')
 
-/obj/item/weapon/ore/bluespace_crystal/throw_impact(atom/hit_atom)
+/obj/item/stack/bluespace_crystal/throw_impact(atom/hit_atom)
 	if(!..()) // not caught in mid-air
 		visible_message("<span class='notice'>[src] fizzles and disappears upon impact!</span>")
 		var/turf/T = get_turf(hit_atom)
@@ -39,7 +39,7 @@
 
 // Artifical bluespace crystal, doesn't give you much research.
 
-/obj/item/weapon/ore/bluespace_crystal/artificial
+/obj/item/stack/bluespace_crystal/artificial
 	name = "artificial bluespace crystal"
 	desc = "An artificially made bluespace crystal, it looks delicate."
 	origin_tech = "bluespace=3;plasmatech=4"
@@ -65,7 +65,7 @@
 	if (user.get_inactive_held_item() == src)
 		if(zero_amount()) // in this case, a sanity check
 			return
-		var/obj/item/weapon/ore/bluespace_crystal/BC = new(src)
+		var/obj/item/stack/bluespace_crystal/BC = new(src)
 		user.put_in_hands(BC)
 		amount--
 		if (amount == 0)

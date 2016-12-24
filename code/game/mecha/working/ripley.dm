@@ -22,7 +22,7 @@
 	if(. && (locate(/obj/item/mecha_parts/mecha_equipment/hydraulic_clamp) in equipment))
 		var/obj/structure/ore_box/ore_box = locate(/obj/structure/ore_box) in cargo
 		if(ore_box)
-			for(var/obj/item/weapon/ore/ore in get_turf(src))
+			for(var/obj/item/stack/ore in get_turf(src))
 				ore.Move(ore_box)
 	update_pressure()
 

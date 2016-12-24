@@ -128,7 +128,7 @@
 		/datum/reagent/water = 10,
 		/obj/item/weapon/reagent_containers/glass/bowl = 1,
 		/obj/item/weapon/reagent_containers/food/snacks/grown/banana = 1,
-		/obj/item/weapon/ore/bananium = 1
+		/obj/item/stack/bananium = 1
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/soup/clownstears
 	category = CAT_SOUP

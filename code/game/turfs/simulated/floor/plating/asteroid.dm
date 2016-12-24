@@ -12,7 +12,7 @@
 	var/environment_type = "asteroid"
 	var/turf_type = /turf/open/floor/plating/asteroid //Because caves do whacky shit to revert to normal
 	var/dug = 0       //0 = has not yet been dug, 1 = has already been dug
-	var/sand_type = /obj/item/weapon/ore/glass
+	var/sand_type = /obj/item/stack/glass
 	var/floor_variance = 20 //probability floor has a different icon state
 
 /turf/open/floor/plating/asteroid/New()
@@ -68,7 +68,7 @@
 	if(istype(W,/obj/item/weapon/storage/bag/ore))
 		var/obj/item/weapon/storage/bag/ore/S = W
 		if(S.collection_mode == 1)
-			for(var/obj/item/weapon/ore/O in src.contents)
+			for(var/obj/item/stack/O in src.contents)
 				O.attackby(W,user)
 				return
 
@@ -108,7 +108,7 @@
 	icon_state = "basalt"
 	icon_plating = "basalt"
 	environment_type = "basalt"
-	sand_type = /obj/item/weapon/ore/glass/basalt
+	sand_type = /obj/item/stack/glass/basalt
 	floor_variance = 15
 
 /turf/open/floor/plating/asteroid/basalt/lava //lava underneath

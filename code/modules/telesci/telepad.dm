@@ -20,11 +20,11 @@
 	build_path = /obj/machinery/telepad
 	origin_tech = "programming=4;engineering=3;plasmatech=4;bluespace=4"
 	req_components = list(
-							/obj/item/weapon/ore/bluespace_crystal = 2,
+							/obj/item/stack/bluespace_crystal = 2,
 							/obj/item/weapon/stock_parts/capacitor = 1,
 							/obj/item/stack/cable_coil = 1,
 							/obj/item/weapon/stock_parts/console_screen = 1)
-	def_components = list(/obj/item/weapon/ore/bluespace_crystal = /obj/item/weapon/ore/bluespace_crystal/artificial)
+	def_components = list(/obj/item/stack/bluespace_crystal = /obj/item/stack/bluespace_crystal/artificial)
 
 /obj/machinery/telepad/RefreshParts()
 	var/E

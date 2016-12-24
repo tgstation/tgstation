@@ -197,7 +197,7 @@
 	w_class = WEIGHT_CLASS_TINY
 
 /obj/item/weapon/emptysandbag/attackby(obj/item/W, mob/user, params)
-	if(istype(W,/obj/item/weapon/ore/glass))
+	if(istype(W,/obj/item/stack/glass))
 		user << "<span class='notice'>You fill the sandbag.</span>"
 		var/obj/item/stack/sheet/mineral/sandbags/I = new /obj/item/stack/sheet/mineral/sandbags
 		user.unEquip(src)

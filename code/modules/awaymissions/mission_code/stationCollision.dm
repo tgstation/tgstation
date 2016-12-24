@@ -129,7 +129,7 @@ var/sc_safecode5 = "[rand(0,9)]"
 	new /obj/item/device/soulstone(src)
 	new /obj/item/clothing/suit/space/hardsuit/cult(src)
 	//new /obj/item/weapon/teleportation_scroll(src)
-	new /obj/item/weapon/ore/diamond(src)
+	new /obj/item/stack/diamond(src)
 
 /*
  * Modified Nar-Sie
