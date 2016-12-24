@@ -570,7 +570,7 @@ Congratulations! You are now trained for xenobiology research!"}
 			qdel(src)
 		return
 	if(istype(I, /obj/item/stack/sheet/mineral/silver))
-		var/obj/item/stack/sheep/P = I
+		var/obj/item/stack/sheet/P = I
 		if(P.get_amount() < 1)
 			user << "<span class='warning'>You need one sheet of silver to do \
 				this!</span>"
