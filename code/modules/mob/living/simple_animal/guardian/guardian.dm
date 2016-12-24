@@ -577,7 +577,7 @@ var/global/list/parasites = list() //all currently existing/living guardians
 /obj/item/weapon/guardiancreator/choose/dextrous
 	possible_guardians = list("Assassin", "Chaos", "Charger", "Dextrous", "Explosive", "Lightning", "Protector", "Ranged", "Standard", "Support")
 
-/obj/item/weapon/guardiancreator/choose/dextrous/wizard
+/obj/item/weapon/guardiancreator/choose/wizard
 	possible_guardians = list("Assassin", "Chaos", "Charger", "Dextrous", "Explosive", "Lightning", "Protector", "Ranged", "Standard")
 	allowmultiple = TRUE
 
