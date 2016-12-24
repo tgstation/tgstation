@@ -1227,7 +1227,7 @@
 					 		"backkey"=/obj/item/weapon/crowbar,
 					 		"desc"="The bluespace crystal is installed."),
 					 //10
-					 list("key"=/obj/item/stack/bluespace_crystal,
+					 list("key"=/obj/item/weapon/ore/bluespace_crystal,
 					 		"backkey"=/obj/item/weapon/screwdriver,
 					 		"desc"="Super capacitor is secured."),
 					 //12
@@ -1423,7 +1423,7 @@
 				holder.icon_state = "phazon16"
 			else
 				user.visible_message("[user] removes the bluespace crystal from the [holder].", "<span class='notice'>You remove the bluespace crystal from the [holder].</span>")
-				new /obj/item/stack/bluespace_crystal(get_turf(holder))
+				new /obj/item/weapon/ore/bluespace_crystal(get_turf(holder))
 				holder.icon_state = "phazon14"
 		if(8)
 			if(diff==FORWARD)

@@ -145,7 +145,7 @@
 		power_supply.give(1000)
 		recharge_newshot(1)
 		user << "<span class='notice'>You insert [A] in [src], recharging it.</span>"
-	else if(istype(A, /obj/item/stack/plasma))
+	else if(istype(A, /obj/item/weapon/ore/plasma))
 		qdel(A)
 		power_supply.give(500)
 		recharge_newshot(1)

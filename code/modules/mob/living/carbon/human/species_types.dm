@@ -587,7 +587,7 @@
 	name = "Plasma Golem"
 	id = "plasma"
 	fixed_mut_color = "a3d"
-	meat = /obj/item/stack/plasma
+	meat = /obj/item/weapon/ore/plasma
 	//Can burn and takes damage from heat
 	species_traits = list(NOBREATH,RESISTCOLD,RESISTPRESSURE,NOGUNS,NOBLOOD,RADIMMUNE,VIRUSIMMUNE,PIERCEIMMUNE,NODISMEMBER,MUTCOLORS)
 	info_text = "As a <span class='danger'>Plasma Golem</span>, you explode on death!"
@@ -604,7 +604,7 @@
 	id = "diamond"
 	fixed_mut_color = "0ff"
 	armor = 70 //up from 55
-	meat = /obj/item/stack/diamond
+	meat = /obj/item/weapon/ore/diamond
 	info_text = "As a <span class='danger'>Diamond Golem</span>, you are more resistant than the average golem."
 
 //Faster but softer and less armoured
@@ -614,7 +614,7 @@
 	fixed_mut_color = "cc0"
 	speedmod = 1
 	armor = 25 //down from 55
-	meat = /obj/item/stack/gold
+	meat = /obj/item/weapon/ore/gold
 	info_text = "As a <span class='danger'>Gold Golem</span>, you are faster but less resistant than the average golem."
 
 //Heavier, thus higher chance of stunning when punching
@@ -623,7 +623,7 @@
 	id = "silver"
 	fixed_mut_color = "ddd"
 	punchstunthreshold = 9 //60% chance, from 40%
-	meat = /obj/item/stack/silver
+	meat = /obj/item/weapon/ore/silver
 	info_text = "As a <span class='danger'>Silver Golem</span>, your attacks are heavier and have a higher chance of stunning."
 
 //Harder to stun, deals more damage, but it's even slower
@@ -636,7 +636,7 @@
 	punchdamagehigh = 21
 	punchstunthreshold = 18 //still 40% stun chance
 	speedmod = 4 //pretty fucking slow
-	meat = /obj/item/stack/iron
+	meat = /obj/item/weapon/ore/iron
 	info_text = "As a <span class='danger'>Plasteel Golem</span>, you are slower, but harder to stun, and hit very hard when punching."
 	attack_verb = "smash"
 	attack_sound = "sound/effects/meteorimpact.ogg" //hits pretty hard
@@ -646,7 +646,7 @@
 	name = "Titanium Golem"
 	id = "titanium"
 	fixed_mut_color = "fff"
-	meat = /obj/item/stack/titanium
+	meat = /obj/item/weapon/ore/titanium
 	info_text = "As a <span class='danger'>Titanium Golem</span>, you are immune to ash storms, and slightly more resistant to burn damage."
 	burnmod = 0.9
 
@@ -663,7 +663,7 @@
 	name = "Plastitanium Golem"
 	id = "plastitanium"
 	fixed_mut_color = "888"
-	meat = /obj/item/stack/titanium
+	meat = /obj/item/weapon/ore/titanium
 	info_text = "As a <span class='danger'>Plastitanium Golem</span>, you are immune to both ash storms and lava, and slightly more resistant to burn damage."
 	burnmod = 0.8
 
@@ -747,7 +747,7 @@
 	name = "Uranium Golem"
 	id = "uranium"
 	fixed_mut_color = "7f0"
-	meat = /obj/item/stack/uranium
+	meat = /obj/item/weapon/ore/uranium
 	info_text = "As an <span class='danger'>Uranium Golem</span>, you emit radiation pulses every once in a while. It won't harm fellow golems, but organic lifeforms will be affected."
 
 	var/last_event = 0
@@ -767,7 +767,7 @@
 	name = "Sand Golem"
 	id = "sand"
 	fixed_mut_color = "ffdc8f"
-	meat = /obj/item/stack/glass //this is sand
+	meat = /obj/item/weapon/ore/glass //this is sand
 	armor = 0
 	burnmod = 3 //melts easily
 	brutemod = 0.25
@@ -779,7 +779,7 @@
 	for(var/obj/item/W in H)
 		H.unEquip(W)
 	for(var/i=1, i <= rand(3,5), i++)
-		new /obj/item/stack/glass(get_turf(H))
+		new /obj/item/weapon/ore/glass(get_turf(H))
 	qdel(H)
 
 /datum/species/golem/sand/bullet_act(obj/item/projectile/P, mob/living/carbon/human/H)
@@ -838,7 +838,7 @@
 	name = "Bluespace Golem"
 	id = "bluespace"
 	fixed_mut_color = "33f"
-	meat = /obj/item/stack/bluespace_crystal
+	meat = /obj/item/weapon/ore/bluespace_crystal
 	info_text = "As a <span class='danger'>Bluespace Golem</span>, are spatially unstable: you will teleport when hit, and you can teleport manually at a long distance."
 	attack_verb = "bluespace punch"
 	attack_sound = "sound/effects/phasein.ogg"
@@ -931,7 +931,7 @@
 	punchdamagelow = 0
 	punchdamagehigh = 1
 	punchstunthreshold = 2 //Harmless and can't stun
-	meat = /obj/item/stack/bananium
+	meat = /obj/item/weapon/ore/bananium
 	info_text = "As a <span class='danger'>Bananium Golem</span>, you are made for pranking. Your body emits natural honks, and you cannot hurt people when punching them. Your skin also emits bananas when damaged."
 	attack_verb = "honk"
 	attack_sound = "sound/items/AirHorn2.ogg"

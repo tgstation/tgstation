@@ -36,9 +36,9 @@
 	projectiletype = /obj/item/projectile/kinetic
 	projectilesound = 'sound/weapons/Gunshot4.ogg'
 	speak_emote = list("states")
-	wanted_objects = list(/obj/item/stack/diamond, /obj/item/stack/gold, /obj/item/stack/silver,
-						  /obj/item/stack/plasma,  /obj/item/stack/uranium,    /obj/item/stack/iron,
-						  /obj/item/stack/bananium, /obj/item/stack/titanium)
+	wanted_objects = list(/obj/item/weapon/ore/diamond, /obj/item/weapon/ore/gold, /obj/item/weapon/ore/silver,
+						  /obj/item/weapon/ore/plasma,  /obj/item/weapon/ore/uranium,    /obj/item/weapon/ore/iron,
+						  /obj/item/weapon/ore/bananium, /obj/item/weapon/ore/titanium)
 	healable = 0
 	var/mode = MINEDRONE_COLLECT
 	var/light_on = 0
@@ -126,13 +126,13 @@
 	src << "<span class='info'>You are set to attack mode. You can now attack from range.</span>"
 
 /mob/living/simple_animal/hostile/mining_drone/AttackingTarget()
-	if(istype(target, /obj/item/stack) && mode ==  MINEDRONE_COLLECT)
+	if(istype(target, /obj/item/weapon/ore) && mode ==  MINEDRONE_COLLECT)
 		CollectOre()
 		return
 	..()
 
 /mob/living/simple_animal/hostile/mining_drone/proc/CollectOre()
-	var/obj/item/stack/O
+	var/obj/item/weapon/ore/O
 	for(O in src.loc)
 		O.loc = src
 	for(var/dir in alldirs)
@@ -148,7 +148,7 @@
 		return
 	if(message)
 		src << "<span class='notice'>You dump your stored ore.</span>"
-	for(var/obj/item/stack/O in contents)
+	for(var/obj/item/weapon/ore/O in contents)
 		contents -= O
 		O.loc = src.loc
 	return

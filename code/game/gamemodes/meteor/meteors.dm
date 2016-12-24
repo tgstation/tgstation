@@ -100,7 +100,7 @@
 	var/threat = 0 // used for determining which meteors are most interesting
 	var/lifetime = DEFAULT_METEOR_LIFETIME
 
-	var/list/meteordrop = list(/obj/item/stack/iron)
+	var/list/meteordrop = list(/obj/item/weapon/ore/iron)
 	var/dropamt = 2
 
 /obj/effect/meteor/Move()
@@ -207,7 +207,7 @@
 	hits = 1
 	hitpwr = 3
 	meteorsound = 'sound/weapons/Gunshot_smg.ogg'
-	meteordrop = list(/obj/item/stack/glass)
+	meteordrop = list(/obj/item/weapon/ore/glass)
 	threat = 1
 
 //Medium-sized
@@ -240,7 +240,7 @@
 	hits = 5
 	heavy = 1
 	meteorsound = 'sound/effects/bamf.ogg'
-	meteordrop = list(/obj/item/stack/plasma)
+	meteordrop = list(/obj/item/weapon/ore/plasma)
 	threat = 20
 
 /obj/effect/meteor/flaming/meteor_effect()
@@ -252,7 +252,7 @@
 	name = "glowing meteor"
 	icon_state = "glowing"
 	heavy = 1
-	meteordrop = list(/obj/item/stack/uranium)
+	meteordrop = list(/obj/item/weapon/ore/uranium)
 	threat = 15
 
 
@@ -322,7 +322,7 @@
 	hitpwr = 1
 	heavy = 1
 	meteorsound = 'sound/effects/bamf.ogg'
-	meteordrop = list(/obj/item/stack/plasma)
+	meteordrop = list(/obj/item/weapon/ore/plasma)
 	threat = 50
 
 /obj/effect/meteor/tunguska/Move()
