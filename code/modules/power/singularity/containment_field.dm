@@ -12,10 +12,19 @@
 	var/obj/machinery/field/generator/FG1 = null
 	var/obj/machinery/field/generator/FG2 = null
 
+/obj/machinery/field/containment/New(new_loc, master1, master2)
+	..(new_loc)
+	FG1 = master1
+	FG2 = master2
+
 /obj/machinery/field/containment/Destroy()
-	FG1.fields -= src
-	FG2.fields -= src
-	return ..()
+	if(istype(FG1))
+		FG1.fields -= src
+		FG1 = null
+	if(istype(FG2))
+		FG2.fields -= src
+		FG2 = null
+	. = ..()
 
 /obj/machinery/field/containment/attack_hand(mob/user)
 	if(get_dist(src, user) > 1)
@@ -59,13 +68,6 @@
 /obj/machinery/field/containment/Crossed(obj/mover)
 	if(istype(mover, /obj/machinery) || istype(mover, /obj/structure) || istype(mover, /obj/mecha))
 		bump_field(mover)
-
-/obj/machinery/field/containment/proc/set_master(master1,master2)
-	if(!master1 || !master2)
-		return 0
-	FG1 = master1
-	FG2 = master2
-	return 1
 
 /obj/machinery/field/containment/shock(mob/living/user)
 	if(!FG1 || !FG2)

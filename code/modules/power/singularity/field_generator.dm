@@ -312,9 +312,7 @@ field_generator power level display
 		var/field_dir = get_dir(T,get_step(G.loc, NSEW))
 		T = get_step(T, NSEW)
 		if(!locate(/obj/machinery/field/containment) in T)
-			var/obj/machinery/field/containment/CF = new/obj/machinery/field/containment()
-			CF.set_master(src,G)
-			CF.loc = T
+			var/obj/machinery/field/containment/CF = new/obj/machinery/field/containment(T, src, G)
 			CF.setDir(field_dir)
 			fields += CF
 			G.fields += CF
