@@ -172,7 +172,7 @@ var/global/list/parasites = list() //all currently existing/living guardians
 		else
 			src << "<span class='holoparasite'>You moved out of range, and were pulled back! You can only move [range] meters from [summoner.real_name]!</span>"
 			visible_message("<span class='danger'>\The [src] jumps back to its user.</span>")
-			if(istype(summoner.loc, /obj/effect/dummy))
+			if(istype(summoner.loc, /obj/effect))
 				Recall(TRUE)
 			else
 				PoolOrNew(/obj/effect/overlay/temp/guardian/phase/out, loc)
@@ -316,7 +316,7 @@ var/global/list/parasites = list() //all currently existing/living guardians
 //MANIFEST, RECALL, TOGGLE MODE/LIGHT, SHOW TYPE
 
 /mob/living/simple_animal/hostile/guardian/proc/Manifest(forced)
-	if(istype(summoner.loc, /obj/effect/dummy) || (cooldown > world.time && !forced))
+	if(istype(summoner.loc, /obj/effect) || (cooldown > world.time && !forced))
 		return FALSE
 	if(loc == summoner)
 		forceMove(summoner.loc)
