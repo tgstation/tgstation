@@ -5,7 +5,7 @@
 	icon = 'icons/obj/guns/'
 	icon_state = ""
 	item_state = ""
-	fire_sound = ''
+	fire_sound = 'sound/weapons/beam_sniper.ogg'
 	slot_flags = SLOT_BACK
 	force = 15
 	materials = list()
@@ -50,13 +50,27 @@
 		poweraction.Remove(user)
 	. = ..(user)
 
+/obj/item/weapon/gun/energy/proc/update_ammo_types()
+	var/obj/item/ammo_casing/energy/shot
+	for (var/i = 1, i <= ammo_type.len, i++)
+		var/shottype = ammo_type[i]
+		shot = new shottype(src)
+		ammo_type[i] = shot
+	shot = ammo_type[select]
+	fire_sound = shot.fire_sound
+	fire_delay = shot.delay
+
 /obj/item/weapon/gun/energy/beam_rifle/proc/update_stats()
 	maxpower = laser.rating*20
-	//ammo cost usage here
+	energy_coeff = (1 - (capacitor*0.1875))
 	scoped_recoil = 5 - bin.rating
 	hipfire_recoil = 20 - bin.rating*2
 	scoped_inaccuracy = Clamp((3 - manip.rating), 0, 5)
 	hipfire_inaccuacy = Clamp((30 - (manip.rating * 5)), 0, 30)
+	for(var/obj/item/ammo_casing/energy/beam_rifle/BR in ammo_type)
+		BR.base_energy_multiplier = (BR.initial(base_energy_multiplier) * (1 - (scan.rating * 0.075)))
+		BR.e_cost = round((power * BR.base_energy_multiplier)*energy_coeff)
+		BR.update_damage(power)
 
 /obj/item/weapon/gun/energy/beam_rifle/zoom(user, forced_zoom)
 	. = ..(user, forced_zoom)
@@ -99,7 +113,7 @@
 					manip = I
 		if(istype(S, /obj/item/weapon/stock_parts/scanning_module))
 			if((!scan) || (scan.rating < S.rating))
-				user << "<span class='boldnotice'>[I] has been sucessfully installed into systems.</span>"
+				user << "<span class='boldnotice'>[I] has been sucessfully installed into systems. Power usage decreased.</span>"
 				if(user.unEquip(I))
 					I.loc = src
 					scan = I
@@ -134,6 +148,7 @@
 	if(powerpercent)
 		power = ((100/maxpower) * powerpercent)
 		user << "<span class='boldnotice'>[src] set to [powerpercent]% power.</span>"
+	update_stats()
 
 /datum/action/item_action/beam_rifle_power
 	name = "Adjust Power Output"
@@ -149,16 +164,25 @@
 	name = "particle acceleration lens"
 	desc = "Don't look into barrel!"
 	projectile_type = /obj/item/projectile/energy/beam_rifle
+	select_name = "narrow-beam"
 	e_cost = 2000
-	var/base_energy_multiplier = 100
+	var/base_energy_multiplier = 250
 	var/hitscan_delay = 10
-	fire_sound = 'sound/'
+	fire_sound = 'sound/weapons/beam_sniper.ogg'
 	firing_effect_type =
+	var/projectile_damage = 20
 
-/obj/item/projectile/energy/beam_rifle
+/obj/item/ammo_casing/energy/beam_rifle/proc/update_damage(power)
+	projectile_damage = power
+
+/obj/item/ammo_casing/energy/beam_rifle/ready_proj(atom/target, mob/living/user, quiet, zone_override)
+	BB.damage = projectile_damage
+	. = ..(target, user, quiet, zone_override)
+
+/obj/item/projectile/beam/beam_rifle
 	name = "particle beam"
-	icon = '
-	icon_state = "
+	icon = null
+	icon_state = null
 	hitsound = '
 	hitsound_wall = "
 	damage = 20
@@ -168,119 +192,7 @@
 	jitter = 10
 	impact_effect_type =
 
-
-/obj/item/projectile/proc/Range()
-	range--
-	if(range <= 0 && loc)
-		on_range()
-
-/obj/item/projectile/proc/on_range() //if we want there to be effects when they reach the end of their range
-	qdel(src)
-
-//to get the correct limb (if any) for the projectile hit message
-/mob/living/proc/check_limb_hit(hit_zone)
-	if(has_limbs)
-		return hit_zone
-
-/mob/living/carbon/check_limb_hit(hit_zone)
-	if(get_bodypart(hit_zone))
-		return hit_zone
-	else //when a limb is missing the damage is actually passed to the chest
-		return "chest"
-
-/obj/item/projectile/proc/prehit(atom/target)
-	return
-
-/obj/item/projectile/proc/on_hit(atom/target, blocked = 0)
-	var/turf/target_loca = get_turf(target)
-	if(!isliving(target))
-		if(impact_effect_type)
-			PoolOrNew(impact_effect_type, list(target_loca, target, src))
-		return 0
-	var/mob/living/L = target
-	if(blocked != 100) // not completely blocked
-		if(damage && L.blood_volume && damage_type == BRUTE)
-			var/splatter_dir = dir
-			if(starting)
-				splatter_dir = get_dir(starting, target_loca)
-			if(isalien(L))
-				PoolOrNew(/obj/effect/overlay/temp/dir_setting/bloodsplatter/xenosplatter, list(target_loca, splatter_dir))
-			else
-				PoolOrNew(/obj/effect/overlay/temp/dir_setting/bloodsplatter, list(target_loca, splatter_dir))
-			if(prob(33))
-				L.add_splatter_floor(target_loca)
-		else if(impact_effect_type)
-			PoolOrNew(impact_effect_type, list(target_loca, target, src))
-
-		var/organ_hit_text = ""
-		var/limb_hit = L.check_limb_hit(def_zone)//to get the correct message info.
-		if(limb_hit)
-			organ_hit_text = " in \the [parse_zone(limb_hit)]"
-		if(suppressed)
-			playsound(loc, hitsound, 5, 1, -1)
-			L << "<span class='userdanger'>You're shot by \a [src][organ_hit_text]!</span>"
-		else
-			if(hitsound)
-				var/volume = vol_by_damage()
-				playsound(loc, hitsound, volume, 1, -1)
-			L.visible_message("<span class='danger'>[L] is hit by \a [src][organ_hit_text]!</span>", \
-					"<span class='userdanger'>[L] is hit by \a [src][organ_hit_text]!</span>", null, COMBAT_MESSAGE_RANGE)
-		L.on_hit(src)
-
-	var/reagent_note
-	if(reagents && reagents.reagent_list)
-		reagent_note = " REAGENTS:"
-		for(var/datum/reagent/R in reagents.reagent_list)
-			reagent_note += R.id + " ("
-			reagent_note += num2text(R.volume) + ") "
-
-	add_logs(firer, L, "shot", src, reagent_note)
-	return L.apply_effects(stun, weaken, paralyze, irradiate, slur, stutter, eyeblur, drowsy, blocked, stamina, jitter)
-
-/obj/item/projectile/proc/vol_by_damage()
-	if(src.damage)
-		return Clamp((src.damage) * 0.67, 30, 100)// Multiply projectile damage by 0.67, then clamp the value between 30 and 100
-	else
-		return 50 //if the projectile doesn't do damage, play its hitsound at 50% volume
-
-/obj/item/projectile/Bump(atom/A, yes)
-	if(!yes) //prevents double bumps.
-		return
-	if(firer)
-		if(A == firer || (A == firer.loc && istype(A, /obj/mecha))) //cannot shoot yourself or your mech
-			loc = A.loc
-			return 0
-
-	var/distance = get_dist(get_turf(A), starting) // Get the distance between the turf shot from and the mob we hit and use that for the calculations.
-	def_zone = ran_zone(def_zone, max(100-(7*distance), 5)) //Lower accurancy/longer range tradeoff. 7 is a balanced number to use.
-
-	if(isturf(A) && hitsound_wall)
-		var/volume = Clamp(vol_by_damage() + 20, 0, 100)
-		if(suppressed)
-			volume = 5
-		playsound(loc, hitsound_wall, volume, 1, -1)
-
-	var/turf/target_turf = get_turf(A)
-
-	prehit(A)
-	var/permutation = A.bullet_act(src, def_zone) // searches for return value, could be deleted after run so check A isn't null
-	if(permutation == -1 || forcedodge)// the bullet passes through a dense object!
-		loc = target_turf
-		if(A)
-			permutated.Add(A)
-		return 0
-	else
-		if(A && A.density && !ismob(A) && !(A.flags & ON_BORDER)) //if we hit a dense non-border obj or dense turf then we also hit one of the mobs on that tile.
-			var/list/mobs_list = list()
-			for(var/mob/living/L in target_turf)
-				mobs_list += L
-			if(mobs_list.len)
-				var/mob/living/picked_mob = pick(mobs_list)
-				prehit(picked_mob)
-				picked_mob.bullet_act(src, def_zone)
-	qdel(src)
-
-/obj/item/projectile/proc/fire(setAngle, atom/direct_target)
+/obj/item/projectile/beam/beam_rifle/fire(setAngle, atom/direct_target)
 	if(!log_override && firer && original)
 		add_logs(firer, original, "fired at", src, " [get_area(src)]")
 	if(direct_target)
@@ -290,80 +202,73 @@
 		return
 	if(setAngle)
 		Angle = setAngle
-	if(!legacy) //new projectiles
-		set waitfor = 0
-		var/next_run = world.time
-		while(loc)
-			if(paused)
-				next_run = world.time
-				sleep(1)
-				continue
+	set waitfor = 0
+	var/next_run = world.time
+	while(loc)
+		if((!( current ) || loc == current))
+			current = locate(Clamp(x+xo,1,world.maxx),Clamp(y+yo,1,world.maxy),z)
+		if(!Angle)
+			Angle=round(Get_Angle(src,current))
+		if(spread)
+			Angle += (rand() - 0.5) * spread
+		var/matrix/M = new
+		M.Turn(Angle)
+		transform = M
+		var/obj/effect/overlay/temp/projectile_beam/tracer/T = new(loc, 5)
+		T.set_transform(M)
+		var/Pixel_x=round(sin(Angle)+16*sin(Angle)*2)
+		var/Pixel_y=round(cos(Angle)+16*cos(Angle)*2)
+		var/pixel_x_offset = pixel_x + Pixel_x
+		var/pixel_y_offset = pixel_y + Pixel_y
+		var/new_x = x
+		var/new_y = y
+		while(pixel_x_offset > 16)
+			pixel_x_offset -= 32
+			pixel_x -= 32
+			new_x++// x++
+		while(pixel_x_offset < -16)
+			pixel_x_offset += 32
+			pixel_x += 32
+			new_x--
+		while(pixel_y_offset > 16)
+			pixel_y_offset -= 32
+			pixel_y -= 32
+			new_y++
+		while(pixel_y_offset < -16)
+			pixel_y_offset += 32
+			pixel_y += 32
+			new_y--
+		step_towards(src, locate(new_x, new_y, z))
+		pixel_x = pixel_x_offset
+		pixel_y = pixel_y_offset
+		animate(src, pixel_x = pixel_x_offset, pixel_y = pixel_y_offset, time = max(1, (delay <= 3 ? delay - 1 : delay)), flags = ANIMATION_END_NOW)
+		if(original && (original.layer>=2.75) || ismob(original))
+			if(loc == get_turf(original))
+				if(!(original in permutated))
+					Bump(original, 1)
+		Range()
 
-			if((!( current ) || loc == current))
-				current = locate(Clamp(x+xo,1,world.maxx),Clamp(y+yo,1,world.maxy),z)
+/obj/item/projectile/beam/beam_rifle/on_hit(atom/target, blocked = 0)
+	. = ..(target, blocked)
+	if(isturf(target) || istype(target,/obj/structure/))
+		target.ex_act(2)
 
-			if(!Angle)
-				Angle=round(Get_Angle(src,current))
-			if(spread)
-				Angle += (rand() - 0.5) * spread
-			var/matrix/M = new
-			M.Turn(Angle)
-			transform = M
+/obj/effect/overlay/temp/projectile_beam
+	icon = 'icons/obj/projectiles.dmi'
+	layer = ABOVE_MOB_LAYER
+	anchored = 1
+	duration = 5
+	randomdir = FALSE
 
-			var/Pixel_x=round(sin(Angle)+16*sin(Angle)*2)
-			var/Pixel_y=round(cos(Angle)+16*cos(Angle)*2)
-			var/pixel_x_offset = pixel_x + Pixel_x
-			var/pixel_y_offset = pixel_y + Pixel_y
-			var/new_x = x
-			var/new_y = y
+/obj/effect/overlay/temp/projectile_beam/New(var/turf/location, duration1 = 5)
+	duration = duration1
+	if(istype(location))
+		loc = location
+	..()
 
-			while(pixel_x_offset > 16)
-				pixel_x_offset -= 32
-				pixel_x -= 32
-				new_x++// x++
-			while(pixel_x_offset < -16)
-				pixel_x_offset += 32
-				pixel_x += 32
-				new_x--
+/obj/effect/overlay/temp/projectile_beam/proc/set_transform(var/matrix/M)
+	if(istype(M))
+		transform = M
 
-			while(pixel_y_offset > 16)
-				pixel_y_offset -= 32
-				pixel_y -= 32
-				new_y++
-			while(pixel_y_offset < -16)
-				pixel_y_offset += 32
-				pixel_y += 32
-				new_y--
-
-			step_towards(src, locate(new_x, new_y, z))
-			next_run += max(world.tick_lag, speed)
-			var/delay = next_run - world.time
-			if(delay <= world.tick_lag*2)
-				pixel_x = pixel_x_offset
-				pixel_y = pixel_y_offset
-			else
-				animate(src, pixel_x = pixel_x_offset, pixel_y = pixel_y_offset, time = max(1, (delay <= 3 ? delay - 1 : delay)), flags = ANIMATION_END_NOW)
-
-			if(original && (original.layer>=2.75) || ismob(original))
-				if(loc == get_turf(original))
-					if(!(original in permutated))
-						Bump(original, 1)
-			Range()
-			if (delay > 0)
-				sleep(delay)
-
-	else //old projectile system
-		set waitfor = 0
-		while(loc)
-			if(!paused)
-				if((!( current ) || loc == current))
-					current = locate(Clamp(x+xo,1,world.maxx),Clamp(y+yo,1,world.maxy),z)
-				step_towards(src, current)
-				if(original && (original.layer>=2.75) || ismob(original))
-					if(loc == get_turf(original))
-						if(!(original in permutated))
-							Bump(original, 1)
-				Range()
-			sleep(config.run_speed * 0.9)
-
-
+/obj/effect/overlay/temp/projectile_beam/tracer
+	icon_state = "tracer_beam"
