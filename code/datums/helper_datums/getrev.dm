@@ -55,13 +55,15 @@ var/global/datum/getrev/revdata = new()
 		src <<"<b>Game Mode Odds at current population:</b>"
 		var/prob_sum = 0
 		var/list/probs = list()
-		var/list/modes = subtypesof(/datum/game_mode)
+		var/list/modes = config.gamemode_cache
 		for(var/mode in modes)
 			var/datum/game_mode/M = mode
 			var/ctag = initial(M.config_tag)
 			if(!(ctag in config.probabilities))
 				continue
 			if((config.min_pop[ctag] && (config.min_pop[ctag] > clients.len)) || (initial(M.required_players) > clients.len))
+				continue
+			if(config.max_pop[ctag] && (config.max_pop[ctag] < clients.len))
 				continue
 			probs[ctag] = 1
 			prob_sum += config.probabilities[ctag]
