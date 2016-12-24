@@ -147,7 +147,7 @@
 		user << "<span class='notice'>You insert [A] in [src], recharging it.</span>"
 	else if(istype(A, /obj/item/stack/ore/plasma))
 		var/obj/item/stack/ore/plasma/O = A
-		A.use(1)
+		O.use(1)
 		power_supply.give(500)
 		recharge_newshot(1)
 		user << "<span class='notice'>You insert [A] in [src], recharging it.</span>"

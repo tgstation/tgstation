@@ -69,7 +69,7 @@
 		if(ore_box)
 			for(var/obj/item/stack/ore/ore in range(1, chassis))
 				if(get_dir(chassis,ore)&chassis.dir)
-					ore.Move(ore_box)
+					ore_box.add_ore(ore)
 
 /obj/item/mecha_parts/mecha_equipment/drill/can_attach(obj/mecha/M as obj)
 	if(..())
