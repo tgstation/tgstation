@@ -424,7 +424,7 @@
 		return
 
 	// Cardiac arrest, unless asparin
-	if(reagents.get_reagent_amount("asparin"))
+	if(reagents.get_reagent_amount("corazone"))
 		return
 
 	if(we_breath)

@@ -32,6 +32,13 @@
 
 	var/obj/effect/countdown/clonepod/countdown
 
+	var/list/unattached_flesh = list()
+	var/flesh_number = 0
+
+	// The "brine" is the reagents that are automatically added in small
+	// amounts to the occupant.
+	var/list/brine_types = list("salbutamol", "bicaridine", "corazone")
+
 /obj/machinery/clonepod/New()
 	..()
 	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/clonepod(null)
@@ -51,6 +58,9 @@
 	radio = null
 	qdel(countdown)
 	countdown = null
+	for(var/i in unattached_flesh)
+		qdel(i)
+	unattached_flesh.Cut()
 	. = ..()
 
 /obj/machinery/clonepod/RefreshParts()
@@ -164,8 +174,8 @@
 
 	icon_state = "pod_1"
 	//Get the clone body ready
-	H.setCloneLoss(CLONE_INITIAL_DAMAGE)     //Yeah, clones start with very low health, not with random, because why would they start with random health
-	H.setBrainLoss(CLONE_INITIAL_DAMAGE)
+	maim_clone(H)
+	check_brine() // put in chemicals NOW to stop death via cardiac arrest
 	H.Paralyse(4)
 
 	if(grab_ghost_when == CLONER_FRESH_CLONE)
@@ -208,17 +218,25 @@
 
 			 //Slowly get that clone healed and finished.
 			occupant.adjustCloneLoss(-((speed_coeff/2) * config.damage_multiplier))
+			// Cloneloss ranges from 190 to 0, and also indicates how much
+			// of the `unattached_flesh` is still waiting to be "spun"
+			var/progress = CLONE_INITIAL_DAMAGE - occupant.getCloneLoss()
+			var/milestone = CLONE_INITIAL_DAMAGE / flesh_number
+
+			if((progress / milestone) > unattached_flesh.len)
+				// attack some flesh
+				var/obj/item/I = pop(unattached_flesh)
+				if(isorgan(I))
+					var/obj/item/organ/O = I
+					O.Insert(occupant)
+				else if(isbodypart(I))
+					var/obj/item/bodypart/BP = I
+					BP.attach_limb(occupant)
 
 			//Premature clones may have brain damage.
 			occupant.adjustBrainLoss(-((speed_coeff/2) * config.damage_multiplier))
 
-			//So clones don't die of oxyloss in a running pod.
-			if (occupant.reagents.get_reagent_amount("salbutamol") < 30)
-				occupant.reagents.add_reagent("salbutamol", 60)
-			// NOBREATH species will take brute damage in crit instead
-			// so heal that as well
-			if(occupant.reagents.get_reagent_amount("bicaridine") < 5)
-				occupant.reagents.add_reagent("bicaridine", 10)
+			check_brine()
 
 			use_power(7500) //This might need tweaking.
 
@@ -354,6 +372,44 @@
 	if(occupant)
 		go_out()
 	..()
+
+/obj/machinery/clonepod/proc/maim_clone(mob/living/carbon/human/H)
+	unattached_flesh.Cut()
+
+	H.setCloneLoss(CLONE_INITIAL_DAMAGE)     //Yeah, clones start with very low health, not with random, because why would they start with random health
+	H.setBrainLoss(CLONE_INITIAL_DAMAGE)
+	// In addition to being cellularly damaged and having barely any
+	// brain function, they also have no limbs or internal organs.
+	var/list/zones = list("r_arm", "l_arm", "r_leg", "l_leg")
+	for(var/zone in zones)
+		var/obj/item/bodypart/BP = H.get_bodypart(zone)
+		BP.drop_limb()
+		BP.forceMove(src)
+		unattached_flesh += BP
+
+	var/list/organs = list(
+		H.getorganslot("heart"),
+		H.getorganslot("lungs"),
+		H.getorganslot("appendix"),
+		H.getorganslot("tongue")
+	)
+	for(var/o in organs)
+		var/obj/item/organ/organ = o
+		if(!istype(organ))
+			continue
+		organ.Remove(H)
+		organ.forceMove(src)
+		unattached_flesh += organ
+
+	shuffle_inplace(unattached_flesh)
+	flesh_number = unattached_flesh.len
+
+/obj/machinery/clonepod/proc/check_brine()
+	// Clones are in a pickled bath of mild chemicals, keeping
+	// them alive, despite their lack of internal organs
+	for(var/bt in brine_types)
+		if(occupant.reagents.get_reagent_amount(bt) < 1)
+			occupant.reagents.add_reagent(bt, 1)
 
 
 /*

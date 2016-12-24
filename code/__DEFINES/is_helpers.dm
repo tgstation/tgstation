@@ -120,6 +120,8 @@
 
 #define isorgan(A) (istype(A, /obj/item/organ))
 
+#define isbodypart(A) (istype(A, /obj/item/bodypart))
+
 //Assemblies
 #define isassembly(O) (istype(O, /obj/item/device/assembly))
 

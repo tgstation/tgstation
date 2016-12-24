@@ -1,4 +1,6 @@
 //backpack item
+#define HALFWAYCRITDEATH ((HEALTH_THRESHOLD_CRIT + HEALTH_THRESHOLD_DEAD) / 2)
+
 /obj/item/weapon/defibrillator
 	name = "defibrillator"
 	desc = "A device that delivers powerful shocks to detachable paddles that resuscitate incapacitated patients."
@@ -244,7 +246,6 @@
 	paddles = make_paddles()
 	bcell = new(src)
 	update_icon()
-	return
 
 /obj/item/weapon/defibrillator/compact/combat
 	name = "combat defibrillator"
@@ -257,7 +258,6 @@
 	paddles = make_paddles()
 	bcell = new /obj/item/weapon/stock_parts/cell/infinite(src)
 	update_icon()
-	return
 
 /obj/item/weapon/defibrillator/compact/combat/loaded/attackby(obj/item/weapon/W, mob/user, params)
 	if(W == paddles)
@@ -344,7 +344,6 @@
 		return 1
 
 /obj/item/weapon/twohanded/shockpaddles/attack(mob/M, mob/user)
-	var/halfwaycritdeath = (HEALTH_THRESHOLD_CRIT + HEALTH_THRESHOLD_DEAD) / 2
 
 	if(busy)
 		return
@@ -366,7 +365,7 @@
 		return
 
 	if(user.a_intent == INTENT_DISARM)
-		do_disarm(M)
+		do_disarm(M, user)
 		return
 
 	if(!ishuman(M))
@@ -384,7 +383,7 @@
 		return
 
 	if(user.a_intent == INTENT_HARM)
-		do_harm(H)
+		do_harm(H, user)
 		return
 
 	if((!req_defib && grab_ghost) || (req_defib && defib.grab_ghost))
@@ -393,10 +392,10 @@
 	else if(!H.suiciding && !(H.disabilities & NOCLONE)&& !H.hellbound)
 		H.notify_ghost_cloning("Your heart is being defibrillated. Re-enter your corpse if you want to be revived!", source = src)
 
-	do_help(H)
+	do_help(H, user)
 
 
-/obj/item/weapon/twohanded/shockpaddles/proc/do_disarm(mob/living/M)
+/obj/item/weapon/twohanded/shockpaddles/proc/do_disarm(mob/living/M, mob/living/user)
 	if(req_defib && defib.safety)
 		return
 	if(!req_defib && !combat)
@@ -420,7 +419,7 @@
 	else
 		recharge(60)
 
-/obj/item/weapon/twohanded/shockpaddles/proc/do_harm(mob/living/carbon/human/H)
+/obj/item/weapon/twohanded/shockpaddles/proc/do_harm(mob/living/carbon/human/H, mob/living/user)
 	if(req_defib && defib.safety)
 		return
 	if(!req_defib && !combat)
@@ -429,7 +428,7 @@
 		"<span class='warning'>You overcharge the paddles and begin to place them onto [H]'s chest...</span>")
 	busy = 1
 	update_icon()
-	if(do_after(user, 30, target = M))
+	if(do_after(user, 30, target = H))
 		user.visible_message("<span class='notice'>[user] places [src] on [H]'s chest.</span>",
 			"<span class='warning'>You place [src] on [H]'s chest and begin to charge them.</span>")
 		var/turf/T = get_turf(defib)
@@ -452,10 +451,10 @@
 			user.visible_message("<span class='boldannounce'><i>[user] shocks [H] with \the [src]!</span>", "<span class='warning'>You shock [H] with \the [src]!</span>")
 			playsound(get_turf(src), 'sound/machines/defib_zap.ogg', 100, 1, -1)
 			playsound(loc, 'sound/weapons/Egloves.ogg', 100, 1, -1)
-			M.emote("scream")
+			H.emote("scream")
 			if(H.can_heartattack() && !H.undergoing_cardiac_arrest())
 				if(!H.stat)
-					H.visible_message("<span class='warning'>[M] thrashes wildly, clutching at their chest!</span>",
+					H.visible_message("<span class='warning'>[H] thrashes wildly, clutching at their chest!</span>",
 						"<span class='userdanger'>You feel a horrible agony in your chest!</span>")
 				H.set_heartattack(TRUE)
 			H.apply_damage(50, BURN, "chest")
@@ -474,7 +473,7 @@
 	busy = 0
 	update_icon()
 
-/obj/item/weapon/twohanded/shockpaddles/proc/do_help(mob/living/carbon/human/H)
+/obj/item/weapon/twohanded/shockpaddles/proc/do_help(mob/living/carbon/human/H, mob/living/user)
 	user.visible_message("<span class='warning'>[user] begins to place [src] on [H]'s chest.</span>", "<span class='warning'>You begin to place [src] on [H]'s chest...</span>")
 	busy = 1
 	update_icon()
@@ -530,15 +529,15 @@
 					playsound(get_turf(src), 'sound/machines/defib_failed.ogg', 50, 0)
 				else
 					//If the body has been fixed so that they would not be in crit when defibbed, give them oxyloss to put them back into crit
-					if (H.health > halfwaycritdeath)
-						H.adjustOxyLoss(H.health - halfwaycritdeath, 0)
+					if (H.health > HALFWAYCRITDEATH)
+						H.adjustOxyLoss(H.health - HALFWAYCRITDEATH, 0)
 					else
 						var/overall_damage = total_brute + total_burn + H.getToxLoss() + H.getOxyLoss()
 						var/mobhealth = H.health
-						H.adjustOxyLoss((mobhealth - halfwaycritdeath) * (H.getOxyLoss() / overall_damage), 0)
-						H.adjustToxLoss((mobhealth - halfwaycritdeath) * (H.getToxLoss() / overall_damage), 0)
-						H.adjustFireLoss((mobhealth - halfwaycritdeath) * (total_burn / overall_damage), 0)
-						H.adjustBruteLoss((mobhealth - halfwaycritdeath) * (total_brute / overall_damage), 0)
+						H.adjustOxyLoss((mobhealth - HALFWAYCRITDEATH) * (H.getOxyLoss() / overall_damage), 0)
+						H.adjustToxLoss((mobhealth - HALFWAYCRITDEATH) * (H.getToxLoss() / overall_damage), 0)
+						H.adjustFireLoss((mobhealth - HALFWAYCRITDEATH) * (total_burn / overall_damage), 0)
+						H.adjustBruteLoss((mobhealth - HALFWAYCRITDEATH) * (total_brute / overall_damage), 0)
 					user.visible_message("<span class='notice'>[req_defib ? "[defib]" : "[src]"] pings: Resuscitation successful.</span>")
 					playsound(get_turf(src), 'sound/machines/defib_success.ogg', 50, 0)
 					H.set_heartattack(FALSE)
@@ -546,7 +545,7 @@
 					H.emote("gasp")
 					if(tplus > tloss)
 						H.setBrainLoss( max(0, min(99, ((tlimit - tplus) / tlimit * 100))))
-					add_logs(user, M, "revived", defib)
+					add_logs(user, H, "revived", defib)
 				if(req_defib)
 					defib.deductcharge(revivecost)
 					cooldown = 1
@@ -597,3 +596,5 @@
 	icon_state = "defibpaddles0"
 	item_state = "defibpaddles0"
 	req_defib = FALSE
+
+#undef HALFWAYCRITDEATH
