@@ -49,7 +49,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 		A.category = "Discounted Gear"
 		A.name += " ([round(((initial(A.cost)-A.cost)/initial(A.cost))*100)]% off!)"
 		A.desc += " Normally costs [initial(A.cost)] TC. All sales final. [pick(disclaimer)]"
-		A.item == I.item
+		A.item = I.item
 
 		if(!filtered_uplink_items[A.category])
 			filtered_uplink_items[A.category] = list()
