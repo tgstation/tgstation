@@ -758,10 +758,9 @@
 	qdel(src)
 
 //Hierophant
-
 /obj/item/weapon/hierophant_club
-	name = "Hierophant's club"
-	desc = "A large club with intense magic power infused into it."
+	name = "hierophant club"
+	desc = "The strange technology of this large club allows various nigh-magical feats. It used to beat you, but now you can set the beat."
 	icon_state = "hierophant_club_ready_beacon"
 	item_state = "hierophant_club_ready_beacon"
 	icon = 'icons/obj/lavaland/artefacts.dmi'

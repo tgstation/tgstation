@@ -24,18 +24,18 @@ The Hierophant's attacks are as follows, and INTENSIFY at a random chance based 
 - IF TARGET IS OUTSIDE THE ARENA: Creates an arena around the target for 10 seconds, blinking to it if Hierophant is not in the arena.
 	The arena has a 20 second cooldown, giving people a small window to get the fuck out.
 
-Cross Blasts and the AoE burst gain additional range as the Hierophant loses health, while Chasers gain additional speed.
+Cross Blasts and the AoE burst gain additional range as Hierophant loses health, while Chasers gain additional speed.
 
-When The Hierophant dies, it leaves behind its staff, which, while much weaker than when wielded by The Hierophant itself, is still quite effective.
-- The staff can place a teleport beacon, allowing the user to teleport themself and their allies to the beacon.
+When Hierophant dies, it stops trying to murder you and shrinks into a small form, which, while much weaker, is still quite effective.
+- The smaller club can place a teleport beacon, allowing the user to teleport themself and their allies to the beacon.
 
 Difficulty: Hard
 
 */
 
 /mob/living/simple_animal/hostile/megafauna/hierophant
-	name = "Hierophant"
-	desc = "A massive machine holding an equally massive club."
+	name = "hierophant"
+	desc = "A massive metal club that hangs in the air as though waiting. It'll make you dance to its beat."
 	health = 2500
 	maxHealth = 2500
 	attacktext = "clubs"
@@ -43,7 +43,7 @@ Difficulty: Hard
 	icon_state = "hierophant"
 	icon_living = "hierophant"
 	friendly = "stares down"
-	icon = 'icons/mob/lavaland/hierophant.dmi'
+	icon = 'icons/mob/lavaland/hierophant_new.dmi'
 	faction = list("boss") //asteroid mobs? get that shit out of my beautiful square house
 	speak_emote = list("preaches")
 	armour_penetration = 50
@@ -52,7 +52,6 @@ Difficulty: Hard
 	speed = 1
 	move_to_delay = 10
 	ranged = 1
-	pixel_x = -16
 	ranged_cooldown_time = 40
 	aggro_vision_range = 21 //so it can see to one side of the arena to the other
 	loot = list(/obj/item/weapon/hierophant_club)
@@ -67,7 +66,7 @@ Difficulty: Hard
 	var/obj/effect/hierophant/spawned_beacon //the beacon we teleport back to
 	var/timeout_time = 15 //after this many Life() ticks with no target, we return to our beacon
 	var/did_reset = TRUE //if we timed out, returned to our beacon, and healed some
-	var/list/kill_phrases = list("Wsyvgi sj irivkc xettih. Vitemvmrk...", "Irivkc wsyvgi jsyrh. Vitemvmrk...", "Jyip jsyrh. Egxmzexmrk vitemv gcgpiw...")
+	var/list/kill_phrases = list("Wsyvgi sj irivkc xettih. Vitemvmrk...", "Irivkc wsyvgi jsyrh. Vitemvmrk...", "Jyip jsyrh. Egxmzexmrk vitemv gcgpiw...", "Kix fiex. Liepmrk...")
 	var/list/target_phrases = list("Xevkix psgexih.", "Iriqc jsyrh.", "Eguymvih xevkix.")
 	medal_type = MEDAL_PREFIX
 	score_type = BIRD_SCORE
@@ -103,11 +102,9 @@ Difficulty: Hard
 	else
 		stat = DEAD
 		blinking = TRUE //we do a fancy animation, release a huge burst(), and leave our staff.
-		animate(src, alpha = 0, color = "660099", time = 20, easing = EASE_OUT)
-		addtimer(src, "update_atom_colour", 20)
 		burst_range = 10
 		visible_message("<span class='hierophant'>\"Mrmxmexmrk wipj-hiwxvygx wiuyirgi...\"</span>")
-		visible_message("<span class='hierophant_warning'>[src] disappears in a massive burst of energy, leaving only its club.</span>")
+		visible_message("<span class='hierophant_warning'>[src] shrinks, releasing a massive burst of energy!</span>")
 		burst(get_turf(src))
 		..()
 
@@ -151,8 +148,11 @@ Difficulty: Hard
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/Move()
 	if(!blinking)
+		var/prevloc = loc
 		. = ..()
 		if(!stat && .)
+			var/obj/effect/overlay/temp/hierophant/squares/HS = PoolOrNew(/obj/effect/overlay/temp/hierophant/squares, prevloc)
+			HS.dir = dir
 			playsound(loc, 'sound/mecha/mechmove04.ogg', 150, 1, -4)
 			if(target)
 				arena_trap(target)
@@ -352,7 +352,7 @@ Difficulty: Hard
 	var/turf/previousturf = T
 	var/turf/J = get_step(previousturf, set_dir)
 	for(var/i in 1 to 10)
-		var/obj/effect/overlay/temp/hierophant/squares/HS = PoolOrNew(/obj/effect/overlay/temp/hierophant/squares, list(J))
+		var/obj/effect/overlay/temp/hierophant/squares/HS = PoolOrNew(/obj/effect/overlay/temp/hierophant/squares, J)
 		HS.dir = set_dir
 		previousturf = J
 		J = get_step(previousturf, set_dir)
