@@ -1,4 +1,7 @@
 import sys
+import subprocess
+
+tgm_header = "//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE"
 
 try:
     version = sys.version_info
@@ -18,8 +21,8 @@ def merge_map(newfile, backupfile, tgm):
     maxx = 1
     maxy = 1
 
-    new_map = parse_map(newfile)
-    old_map = parse_map(backupfile)
+    new_map = parse_map(get_map_raw_text(newfile))
+    old_map = parse_map(get_map_raw_text(backupfile))
 
     if new_map["key_length"] != old_map["key_length"]:
         if tgm:
@@ -115,7 +118,7 @@ def merge_map(newfile, backupfile, tgm):
 #write to file helpers#
 def write_dictionary_tgm(filename, dictionary): #write dictionary in tgm format
     with open(filename, "w") as output:
-        output.write("//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE \n")
+        output.write("{}\n".format(tgm_header))
         for key, list_ in dictionary.items():
             output.write("\"{}\" = (\n".format(key))
 
@@ -223,226 +226,227 @@ def sort_dictionary(dictionary):
 
 ############
 #map parser#
-def parse_map(map_file): #still does not support more than one z level per file, but should parse any format
-    with open(map_file, "r") as map_input:
-        characters = map_input.read()
+def get_map_raw_text(mapfile):
+    with open(mapfile, "r") as reading:
+        return reading.read()
 
-        in_quote_block = False
-        in_key_block = False
-        in_data_block = False
-        in_varedit_block = False
-        after_data_block = False
-        escaping = False
-        skip_whitespace = False
+def parse_map(map_raw_text): #still does not support more than one z level per file, but should parse any format
+    in_quote_block = False
+    in_key_block = False
+    in_data_block = False
+    in_varedit_block = False
+    after_data_block = False
+    escaping = False
+    skip_whitespace = False
 
-        dictionary = collections.OrderedDict()
-        curr_key = ""
-        curr_datum = ""
-        curr_data = list()
+    dictionary = collections.OrderedDict()
+    curr_key = ""
+    curr_datum = ""
+    curr_data = list()
 
-        in_map_block = False
-        in_coord_block = False
-        in_map_string = False
-        iter_x = 0
-        adjust_y = True
+    in_map_block = False
+    in_coord_block = False
+    in_map_string = False
+    iter_x = 0
+    adjust_y = True
 
-        curr_num = ""
-        reading_coord = "x"
+    curr_num = ""
+    reading_coord = "x"
 
-        key_length = 0
+    key_length = 0
         
-        maxx = 0
-        maxy = 0
+    maxx = 0
+    maxy = 0
         
-        curr_x = 0
-        curr_y = 0
-        curr_z = 1
-        grid = dict()
+    curr_x = 0
+    curr_y = 0
+    curr_z = 1
+    grid = dict()
 
-        for char in characters:
-    
-            if not in_map_block:
+    for char in map_raw_text:
 
-                if char == "\n" or char == "\t":
-                    continue
+        if not in_map_block:
 
-                if in_data_block:
+            if char == "\n" or char == "\t":
+                continue
 
-                    if in_varedit_block:
+            if in_data_block:
 
-                        if in_quote_block:
-                            if char == "\\":
-                                curr_datum = curr_datum + char
-                                escaping = True
-                                continue
+                if in_varedit_block:
 
-                            if escaping:
-                                curr_datum = curr_datum + char
-                                escaping = False
-                                continue
-                            
-                            if char == "\"":
-                                curr_datum = curr_datum + char
-                                in_quote_block = False
-                                continue
-
+                    if in_quote_block:
+                        if char == "\\":
                             curr_datum = curr_datum + char
+                            escaping = True
                             continue
 
-                        if skip_whitespace and char == " ":
-                            skip_whitespace = False
+                        if escaping:
+                            curr_datum = curr_datum + char
+                            escaping = False
                             continue
-                        skip_whitespace = False
-                            
+                        
                         if char == "\"":
                             curr_datum = curr_datum + char
-                            in_quote_block = True
-                            continue
-
-                        if char == ";":
-                            skip_whitespace = True
-                            curr_datum = curr_datum + char
-                            continue
-
-                        if char == "}":
-                            curr_datum = curr_datum + char
-                            in_varedit_block = False
+                            in_quote_block = False
                             continue
 
                         curr_datum = curr_datum + char
                         continue
 
-                    if char == "{":
+                    if skip_whitespace and char == " ":
+                        skip_whitespace = False
+                        continue
+                    skip_whitespace = False
+                        
+                    if char == "\"":
                         curr_datum = curr_datum + char
-                        in_varedit_block = True
+                        in_quote_block = True
                         continue
 
-                    if char == ",":
-                        curr_data.append(curr_datum)
-                        curr_datum = ""
+                    if char == ";":
+                        skip_whitespace = True
+                        curr_datum = curr_datum + char
                         continue
 
-                    if char == ")":
-                        curr_data.append(curr_datum)
-                        dictionary[curr_key] = tuple(curr_data)
-                        curr_data = list()
-                        curr_datum = ""
-                        curr_key = ""
-                        in_data_block = False
-                        after_data_block = True
+                    if char == "}":
+                        curr_datum = curr_datum + char
+                        in_varedit_block = False
                         continue
 
                     curr_datum = curr_datum + char
                     continue
-                                
-                if in_key_block:
-                    if char == "\"":
-                        in_key_block = False
-                        key_length = len(curr_key)
-                    else:
-                        curr_key = curr_key + char
-                    continue    
-                #else we're looking for a key block, a data block or the map block
 
+                if char == "{":
+                    curr_datum = curr_datum + char
+                    in_varedit_block = True
+                    continue
+
+                if char == ",":
+                    curr_data.append(curr_datum)
+                    curr_datum = ""
+                    continue
+
+                if char == ")":
+                    curr_data.append(curr_datum)
+                    dictionary[curr_key] = tuple(curr_data)
+                    curr_data = list()
+                    curr_datum = ""
+                    curr_key = ""
+                    in_data_block = False
+                    after_data_block = True
+                    continue
+
+                curr_datum = curr_datum + char
+                continue
+                            
+            if in_key_block:
                 if char == "\"":
-                    in_key_block = True
+                    in_key_block = False
+                    key_length = len(curr_key)
+                else:
+                    curr_key = curr_key + char
+                continue    
+            #else we're looking for a key block, a data block or the map block
+
+            if char == "\"":
+                in_key_block = True
+                after_data_block = False
+                continue
+
+            if char == "(":
+                if after_data_block:
+                    in_map_block = True
+                    in_coord_block = True
+                    after_data_block = False
+                    curr_key = ""
+                    continue
+                else:
+                    in_data_block = True
                     after_data_block = False
                     continue
+            
+        else:
 
-                if char == "(":
-                    if after_data_block:
-                        in_map_block = True
-                        in_coord_block = True
-                        after_data_block = False
-                        curr_key = ""
-                        continue
-                    else:
-                        in_data_block = True
-                        after_data_block = False
-                        continue
-                
-            else:
-
-                if in_coord_block:
-                    if char == ",":
-                        if reading_coord == "x":
-                            curr_x = string_to_num(curr_num)
-                            if curr_x > maxx:
-                                maxx = curr_x
-                            iter_x = 0
-                            curr_num = ""
-                            reading_coord = "y"
-                        elif reading_coord == "y":
-                            curr_y = string_to_num(curr_num)
-                            if curr_y > maxy:
-                                maxy = curr_y
-                            curr_num = ""
-                            reading_coord = "z"
-                        else:
-                            pass
-                        continue
-
-                    if char == ")":
-                        in_coord_block = False
-                        reading_coord = "x"
-                        curr_num = ""
-                        #read z here if needed
-                        continue
-
-                    curr_num = curr_num + char
-                    continue
-
-                if in_map_string:
-
-                    if char == "\"":
-                        in_map_string = False
-                        adjust_y = True
-                        curr_y -= 1
-                        continue
-
-                    if char == "\n":
-                        if adjust_y:
-                            adjust_y = False
-                        else:
-                            curr_y += 1
+            if in_coord_block:
+                if char == ",":
+                    if reading_coord == "x":
+                        curr_x = string_to_num(curr_num)
                         if curr_x > maxx:
                             maxx = curr_x
-                        if iter_x > 1:
-                            curr_x = 1
                         iter_x = 0
-                        continue
-
-                    
-                    curr_key = curr_key + char
-                    if len(curr_key) == key_length:
-                        iter_x += 1
-                        if iter_x > 1:
-                            curr_x += 1
-
-                        grid[curr_x, curr_y] = curr_key
-                        curr_key = ""
+                        curr_num = ""
+                        reading_coord = "y"
+                    elif reading_coord == "y":
+                        curr_y = string_to_num(curr_num)
+                        if curr_y > maxy:
+                            maxy = curr_y
+                        curr_num = ""
+                        reading_coord = "z"
+                    else:
+                        pass
                     continue
-                
 
-                #else look for coordinate block or a map string
-
-                if char == "(":
-                    in_coord_block = True
+                if char == ")":
+                    in_coord_block = False
+                    reading_coord = "x"
+                    curr_num = ""
+                    #read z here if needed
                     continue
+
+                curr_num = curr_num + char
+                continue
+
+            if in_map_string:
+
                 if char == "\"":
-                    in_map_string = True
+                    in_map_string = False
+                    adjust_y = True
+                    curr_y -= 1
                     continue
 
-        if curr_y > maxy:
-            maxy = curr_y
+                if char == "\n":
+                    if adjust_y:
+                        adjust_y = False
+                    else:
+                        curr_y += 1
+                    if curr_x > maxx:
+                        maxx = curr_x
+                    if iter_x > 1:
+                        curr_x = 1
+                    iter_x = 0
+                    continue
 
-        data = dict()
-        data["dictionary"] = dictionary
-        data["grid"] = grid
-        data["key_length"] = key_length
-        data["maxx"] = maxx
-        data["maxy"] = maxy
-        return data
+                
+                curr_key = curr_key + char
+                if len(curr_key) == key_length:
+                    iter_x += 1
+                    if iter_x > 1:
+                        curr_x += 1
+
+                    grid[curr_x, curr_y] = curr_key
+                    curr_key = ""
+                continue
+            
+
+            #else look for coordinate block or a map string
+
+            if char == "(":
+                in_coord_block = True
+                continue
+            if char == "\"":
+                in_map_string = True
+                continue
+
+    if curr_y > maxy:
+        maxy = curr_y
+
+    data = dict()
+    data["dictionary"] = dictionary
+    data["grid"] = grid
+    data["key_length"] = key_length
+    data["maxx"] = maxx
+    data["maxy"] = maxy
+    return data
 
 #############
 #key helpers#
@@ -540,3 +544,141 @@ def string_to_num(s):
         return int(s)
     except ValueError:
         return -1
+
+####################
+#map conflict fixer#
+
+MAP_FIX_DICTIONARY = 0
+MAP_FIX_FULL = 1
+MAP_FIX_PRIORITY_OURS = 0
+MAP_FIX_PRIORITY_THEIRS = 1
+
+def fix_map_git_conflicts(base_map, ours_map, theirs_map, mode, marker, priority, path): #attempts to fix git map conflicts automagically
+    #mode values:
+    # 0 - Dictionary mode, only fixes dictionary conflicts and fails at coordinate conflicts
+    # 1 - Full mode, fixes dictionary conflicts and will join both versions of a coordinate and adds a marker to each conflicted coordinate
+
+    if mode == MAP_FIX_FULL and not marker:
+        print("ERROR: Full fix mode selected but a marker wasn't provided.")
+        return False
+    
+    key_length = 1
+    maxx = 1
+    maxy = 1
+    
+    if ours_map["key_length"] != theirs_map["key_length"] or ours_map["key_length"] != base_map["key_length"]:
+        print("ERROR: Key length is different, I am not smart enough for this yet.")
+        return False
+    else:
+        key_length = ours_map["key_length"]
+
+    if ours_map["maxx"] != theirs_map["maxx"] or ours_map["maxy"] != theirs_map["maxy"] or ours_map["maxx"] != base_map["maxx"] or ours_map["maxy"] != base_map["maxy"]:
+        print("ERROR: Map size is different, I am not smart enough for this yet.")
+        return False
+    else:
+        maxx = ours_map["maxx"]
+        maxy = ours_map["maxy"]
+
+    base_dict = base_map["dictionary"]
+    base_grid = base_map["grid"]
+    ours_dict = ours_map["dictionary"]
+    ours_grid = ours_map["grid"]
+    theirs_dict = theirs_map["dictionary"]
+    theirs_grid = theirs_map["grid"]
+
+    merged_dict = collections.OrderedDict()
+    merged_grid = dict()
+
+    new_key = generate_new_key(base_dict)
+
+    grid_conflict_counter = 0
+
+    for y in range(1, maxy+1):
+        for x in range(1, maxx+1):
+            base_key = base_grid[x,y]
+            ours_key = ours_grid[x,y]
+            theirs_key = theirs_grid[x,y]
+
+            #case 1: everything is the same
+            if base_dict[base_key] == ours_dict[ours_key] and base_dict[base_key] == theirs_dict[theirs_key]:
+                merged_dict[base_key] = base_dict[base_key]
+                merged_grid[x,y] = base_key
+                continue
+
+            #case 2: ours is unchanged, theirs is different
+            if base_dict[base_key] == ours_dict[ours_key]:
+                some_key = search_key(base_dict, theirs_dict[theirs_key])
+                if some_key != None:
+                    merged_dict[some_key] = theirs_dict[theirs_key]
+                    merged_grid[x,y] = some_key
+                else:
+                    merged_dict[new_key] = theirs_dict[theirs_key]
+                    merged_grid[x,y] = new_key
+                    new_key = get_next_key(new_key, key_length)
+
+            #case 3: ours is different, theirs is unchanged
+            elif base_dict[base_key] == theirs_dict[theirs_key]:
+                some_key = search_key(base_dict, ours_dict[ours_key])
+                if some_key != None:
+                    merged_dict[some_key] = ours_dict[ours_key]
+                    merged_grid[x,y] = some_key
+                else:
+                    merged_dict[new_key] = ours_dict[ours_key]
+                    merged_grid[x,y] = new_key
+                    new_key = get_next_key(new_key, key_length)
+
+            #case 4: everything is different, grid conflict
+            else:
+                if mode != MAP_FIX_FULL:
+                    print("FAILED: Map fixing failed due to grid conflicts. Try fixing in full fix mode.")
+                    return False
+                else:
+                    combined_tile = combine_tiles(ours_dict[ours_key], theirs_dict[theirs_key], priority, marker)
+                    merged_dict[new_key] = combined_tile
+                    merged_grid[x,y] = new_key
+                    new_key = get_next_key(new_key, key_length)
+                    grid_conflict_counter += 1
+
+    merged_dict = sort_dictionary(merged_dict)
+    write_dictionary_tgm(path+".fixed.dmm", merged_dict)
+    write_grid_coord_small(path+".fixed.dmm", merged_grid, maxx, maxy)
+    if grid_conflict_counter > 0:
+        print("Counted {} conflicts.".format(grid_conflict_counter))
+    return True
+
+def combine_tiles(tile_A, tile_B, priority, marker):
+    new_tile = list()
+    turf_atom = None
+    area_atom = None
+
+    low_tile = None
+    high_tile = None
+    if priority == MAP_FIX_PRIORITY_OURS:
+        high_tile = tile_A
+        low_tile = tile_B
+    else:
+        high_tile = tile_B
+        low_tile = tile_A
+
+    new_tile.append(marker)
+    for atom in high_tile:
+        if atom[0:5] == "/turf":
+            turf_atom = atom
+        elif atom[0:5] == "/area":
+            area_atom = atom
+        else:
+            new_tile.append(atom)
+
+    for atom in low_tile:
+        if atom[0:5] == "/turf" or atom[0:5] == "/area":
+            continue
+        else:
+            new_tile.append(atom)
+
+    new_tile.append(turf_atom)
+    new_tile.append(area_atom)
+    return tuple(new_tile)
+            
+
+def run_shell_command(command):
+    return subprocess.run(command, shell=True, stdout=subprocess.PIPE, universal_newlines=True).stdout
