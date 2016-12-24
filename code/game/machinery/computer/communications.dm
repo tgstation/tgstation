@@ -20,6 +20,7 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 	var/aistate = STATE_DEFAULT
 	var/message_cooldown = 0
 	var/ai_message_cooldown = 0
+	var/borg_message_cooldown = 0
 	var/tmp_alertlevel = 0
 	var/const/STATE_DEFAULT = 1
 	var/const/STATE_CALLSHUTTLE = 2
@@ -33,7 +34,8 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 	var/const/STATE_TOGGLE_EMERGENCY = 10
 	var/const/STATE_PURCHASE = 11
 	var/const/COMMUNICATION_COOLDOWN = 600
-	var/const/COMMUNICATION_COOLDOWN_AI = 2400
+	var/const/COMMUNICATION_COOLDOWN_AI = 600
+	var/const/COMMUNICATION_COOLDOWN_BORG = 3600
 
 	var/status_display_freq = "1435"
 	var/stat_msg1
@@ -651,8 +653,8 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 	dat += "<BR><BR>\[ [(src.aistate != STATE_DEFAULT) ? "<A HREF='?src=\ref[src];operation=ai-main'>Main Menu</A> | " : ""]<A HREF='?src=\ref[user];mach_close=communications'>Close</A> \]"
 	return dat
 
-/obj/machinery/computer/communications/proc/make_announcement(mob/living/user, is_silicon)
-	if((is_silicon && ai_message_cooldown > world.time) || (!is_silicon && message_cooldown > world.time))
+/obj/machinery/computer/communications/proc/make_announcement(mob/living/user, is_silicon, is_cyborg)
+	if((is_silicon && ai_message_cooldown > world.time) || (!is_silicon && message_cooldown > world.time) || (is_cyborg && borg_message_cooldown > world.time))
 		user << "Intercomms recharging. Please stand by."
 		return
 	var/input = stripped_input(user, "Please choose a message to announce to the station crew.", "What?")
@@ -661,8 +663,15 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 	if(is_silicon)
 		if(ai_message_cooldown > world.time)
 			return
-		minor_announce(input,"[user.name] Announces:")
-		ai_message_cooldown = world.time + COMMUNICATION_COOLDOWN_AI
+		if(is_cyborg)
+			if(borg_message_cooldown > world.time)
+				return
+			else
+				minor_announce(input,"[user.name] Announces:")
+				borg_message_cooldown = world.time + COMMUNICATION_COOLDOWN_BORG
+		else
+			minor_announce(input,"[user.name] Announces:")
+			ai_message_cooldown = world.time + COMMUNICATION_COOLDOWN_AI
 	else
 		if(message_cooldown > world.time)
 			return
