@@ -64,6 +64,7 @@
 		if(CH.holder == src)
 			CH.on_remove(src)
 			CH.holder = null
+			all_components.Remove(CH.device_type)
 			qdel(CH)
 	physical = null
 	return ..()
