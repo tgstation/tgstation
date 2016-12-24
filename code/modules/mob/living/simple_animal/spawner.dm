@@ -46,7 +46,6 @@
 	spawned_mobs += L
 	L.nest = src
 	L.faction = src.faction
-	L.from_spawner = 1
 	visible_message("<span class='danger'>[L] [spawn_text] [src].</span>")
 
 /mob/living/simple_animal/hostile/spawner/syndicate

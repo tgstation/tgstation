@@ -741,7 +741,7 @@
 
 /mob/living/simple_animal/hostile/asteroid/goliath/beast/New()
 	..()
-	if(prob(50) && !is_baby)
+	if(prob(25) && !is_baby)
 		has_babies = 1
 	if(has_babies && !from_spawner) //if the goliath has babies, set the baby's mother to this goliath.
 		var/mob/living/simple_animal/hostile/asteroid/goliath/beast/baby/B = new(get_turf(src))
@@ -752,7 +752,6 @@
 /mob/living/simple_animal/hostile/asteroid/goliath/beast/baby
 	name = "goliath pup"
 	desc = "A baby goliath, commonly seen following their mothers."
-	icon = 'icons/mob/lavaland/lavaland_monsters.dmi'
 	icon_state = "goliath_baby"
 	icon_living = "goliath_baby"
 	icon_aggro = "goliath_baby"
@@ -761,7 +760,6 @@
 	melee_damage_upper = 1
 	health = 50
 	attacktext = "bumps into"
-	throw_message = "bounces off the hide of the"
 	pre_attack_icon = "goliath_baby"
 	attack_sound = 'sound/weapons/tap.ogg'
 	ventcrawler = VENTCRAWLER_ALWAYS
