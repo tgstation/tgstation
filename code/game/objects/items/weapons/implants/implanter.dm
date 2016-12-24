@@ -21,21 +21,21 @@
 		origin_tech = initial(origin_tech)
 
 
-/obj/item/weapon/implanter/attack(mob/living/carbon/M, mob/user)
-	if(!iscarbon(M))
+/obj/item/weapon/implanter/attack(mob/living/L, mob/user)
+	if(!istype(L))
 		return
 	if(user && imp)
-		if(M != user)
-			M.visible_message("<span class='warning'>[user] is attemping to implant [M].</span>")
+		if(L != user)
+			L.visible_message("<span class='warning'>[user] is attemping to implant [L].</span>")
 
-		var/turf/T = get_turf(M)
-		if(T && (M == user || do_after(user, 50)))
-			if(user && M && (get_turf(M) == T) && src && imp)
-				if(imp.implant(M, user))
-					if (M == user)
+		var/turf/T = get_turf(L)
+		if(T && (L == user || do_after(user, 50)))
+			if(user && L && (get_turf(L) == T) && src && imp)
+				if(imp.implant(L, user))
+					if (L == user)
 						user << "<span class='notice'>You implant yourself.</span>"
 					else
-						M.visible_message("[user] has implanted [M].", "<span class='notice'>[user] implants you.</span>")
+						L.visible_message("[user] has implanted [L].", "<span class='notice'>[user] implants you.</span>")
 					imp = null
 					update_icon()
 
@@ -55,8 +55,7 @@
 
 /obj/item/weapon/implanter/New()
 	..()
-	spawn(1)
-		update_icon()
+	update_icon()
 
 
 
