@@ -71,6 +71,7 @@
 	materials = list(MAT_GLASS=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/glass
 	w_class = WEIGHT_CLASS_TINY
+	var/cooldown = 0
 
 /obj/item/weapon/ore/glass/attack_self(mob/living/user)
 	user << "<span class='notice'>You use the sand to make sandstone.</span>"
