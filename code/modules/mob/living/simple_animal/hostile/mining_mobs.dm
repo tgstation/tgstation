@@ -774,7 +774,7 @@
 /mob/living/simple_animal/hostile/asteroid/goliath/beast/baby/proc/mourn()
 	icon_state = "goliath_baby_cry"
 	visible_message(pick("[src] cries","[src] mourns its mother"))
-	mama = 0
+	mama = null
 
 /mob/living/simple_animal/hostile/asteroid/goliath/beast/baby/proc/stop_mourn()
 	icon_state = "goliath_baby"
