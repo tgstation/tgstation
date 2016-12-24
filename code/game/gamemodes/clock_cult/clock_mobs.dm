@@ -129,8 +129,8 @@
 	name = "clockwork marauder"
 	desc = "A stalwart apparition of a soldier, blazing with crimson flames. It's armed with a gladius and shield."
 	icon_state = "clockwork_marauder"
-	health = 500
-	maxHealth = 500
+	health = 400
+	maxHealth = 400
 	speed = 1
 	obj_damage = 40
 	melee_damage_lower = 12
@@ -224,7 +224,7 @@
 	var/resulthealth = round((host.health / host.maxHealth) * 100, 0.5)
 	if(iscarbon(host))
 		resulthealth = round((abs(HEALTH_THRESHOLD_DEAD - host.health) / abs(HEALTH_THRESHOLD_DEAD - host.maxHealth)) * 100)
-	if(resulthealth <= MARAUDER_EMERGE_THRESHOLD)
+	if(ratvar_awakens || resulthealth <= MARAUDER_EMERGE_THRESHOLD)
 		PoolOrNew(/obj/effect/overlay/temp/heal, list(host.loc, "#AF0AAF"))
 		host.adjustBruteLoss(-1)
 		host.adjustFireLoss(-1)
