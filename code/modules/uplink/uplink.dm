@@ -18,7 +18,7 @@ var/global/list/uplinks = list()
 	var/datum/game_mode/gamemode = null
 	var/spent_telecrystals = 0
 	var/purchase_log = ""
-	var/list/uplink_items = list()
+	var/list/uplink_items
 
 /obj/item/device/uplink/New()
 	..()

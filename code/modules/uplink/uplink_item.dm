@@ -35,13 +35,13 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 			if(I.limited_stock < 0 && !I.cant_discount && I.item && I.cost > 1)
 				sale_items += I
 
-	for(var/i = 0, i < 3, i++)
+	for(var/i in 1 to 3)
 		var/datum/uplink_item/I = pick_n_take(sale_items)
 		var/datum/uplink_item/A = new I.type
 		var/discount = pick(4;0.75,2;0.5,1;0.25)
 		var/list/disclaimer = list("Void where prohibited.", "Not recommended for children.", "Contains small parts.", "Check local laws for legality in region.", "Do not taunt.", "Not responsible for direct, indirect, incidental or consequential damages resulting from any defect, error or failure to perform.", "Keep away from fire or flames.", "Product is provided \"as is\" without any implied or expressed warranties.", "As seen on TV.", "For recreational use only.", "Use only as directed.", "16% sales tax will be charged for orders originating within Space Nebraska.")
 		A.limited_stock = 1
-		I.refundable = FALSE //THIS MAN USES ONE WEIRD TRICK GAIN FREE TC, CODERS HATES HIM!
+		I.refundable = FALSE //THIS MAN USES ONE WEIRD TRICK TO GAIN FREE TC, CODERS HATES HIM!
 		A.refundable = FALSE
 		if(A.cost >= 20) //Tough love for nuke ops
 			discount *= 0.5
