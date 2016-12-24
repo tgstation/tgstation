@@ -6,7 +6,6 @@
 	icon_state = "repairbot"
 	mouse_opacity = 2
 	density = 0
-	ventcrawler = 2
 	luminosity = 0
 	pass_flags = PASSTABLE | PASSMOB
 	mob_size = MOB_SIZE_TINY
