@@ -280,9 +280,6 @@
 	pixel_x = rand(0,16)-8
 	pixel_y = rand(0,8)-8
 
-/obj/item/weapon/ore/ex_act()
-	return
-
 /*****************************Coin********************************/
 
 // The coin's value is a value of it's materials.
