@@ -34,7 +34,7 @@
 	floor_tile = /obj/item/stack/tile/grass
 	broken_states = list("sand")
 	flags = NONE
-	var/ore_type = /obj/item/weapon/ore/glass
+	var/ore_type = /obj/item/stack/ore/glass
 
 /turf/open/floor/grass/New()
 	..()
@@ -72,7 +72,7 @@
 	name = "volcanic floor"
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "basalt"
-	ore_type = /obj/item/weapon/ore/glass/basalt
+	ore_type = /obj/item/stack/ore/glass/basalt
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	slowdown = 0
 

@@ -375,7 +375,7 @@
 					ore_iron--
 				if (selected_clown == 1)
 					ore_clown--
-				generate_mineral(/obj/item/weapon/ore/slag)
+				generate_mineral(/obj/item/stack/ore/slag)
 				on = 0
 			else
 				on = 0
@@ -390,35 +390,35 @@
 			n++
 			if(n>10)
 				break
-			if (istype(O,/obj/item/weapon/ore/iron))
+			if (istype(O,/obj/item/stack/ore/iron))
 				ore_iron++;
 				O.loc = null
 				continue
-			if (istype(O,/obj/item/weapon/ore/glass))
+			if (istype(O,/obj/item/stack/ore/glass))
 				ore_glass++;
 				O.loc = null
 				continue
-			if (istype(O,/obj/item/weapon/ore/diamond))
+			if (istype(O,/obj/item/stack/ore/diamond))
 				ore_diamond++;
 				O.loc = null
 				continue
-			if (istype(O,/obj/item/weapon/ore/plasma))
+			if (istype(O,/obj/item/stack/ore/plasma))
 				ore_plasma++
 				O.loc = null
 				continue
-			if (istype(O,/obj/item/weapon/ore/gold))
+			if (istype(O,/obj/item/stack/ore/gold))
 				ore_gold++
 				O.loc = null
 				continue
-			if (istype(O,/obj/item/weapon/ore/silver))
+			if (istype(O,/obj/item/stack/ore/silver))
 				ore_silver++
 				O.loc = null
 				continue
-			if (istype(O,/obj/item/weapon/ore/uranium))
+			if (istype(O,/obj/item/stack/ore/uranium))
 				ore_uranium++
 				O.loc = null
 				continue
-			if (istype(O,/obj/item/weapon/ore/bananium))
+			if (istype(O,/obj/item/stack/ore/bananium))
 				ore_clown++
 				O.loc = null
 				continue

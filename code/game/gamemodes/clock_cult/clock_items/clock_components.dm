@@ -15,7 +15,7 @@
 		user << "<span class='[message_span]'>[cultist_message]</span>"
 		if(user.mind && user.mind.isholy)
 			user << "<span class='boldannounce'>The power of your faith melts away the [src]!</span>"
-			var/obj/item/weapon/ore/slag/wrath = new /obj/item/weapon/ore/slag
+			var/obj/item/stack/ore/slag/wrath = new /obj/item/stack/ore/slag
 			user.unEquip(src)
 			user.put_in_active_hand(wrath)
 			qdel(src)
