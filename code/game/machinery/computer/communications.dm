@@ -33,7 +33,7 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 	var/const/STATE_TOGGLE_EMERGENCY = 10
 	var/const/STATE_PURCHASE = 11
 	var/const/COMMUNICATION_COOLDOWN = 600
-	var/const/COMMUNICATION_COOLDOWN_AI = 600
+	var/const/COMMUNICATION_COOLDOWN_AI = 2400
 
 	var/status_display_freq = "1435"
 	var/stat_msg1
