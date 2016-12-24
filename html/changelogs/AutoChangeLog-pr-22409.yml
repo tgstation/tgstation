@@ -1,4 +1,0 @@
-author: "MrStonedOne"
-delete-after: True
-changes: 
-  - tweak: "AI's call bot command has been throttled to prevent edge cases causing lag. You will not be able to call another bot until the first bot has finished mapping out it's route."

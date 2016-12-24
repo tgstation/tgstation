@@ -1,5 +1,0 @@
-author: "coiax"
-delete-after: True
-changes: 
-  - rscadd: "Emagging the book management console and printing forbidden lore now has
-a chance of producing a clockwork slab rather than an arcane tome."

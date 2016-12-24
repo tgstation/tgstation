@@ -1,4 +1,0 @@
-author: "XDTM"
-delete-after: True
-changes: 
-  - rscadd: "Autolathes are now true to their name and can queue 5 or 10 copies of the same item."
