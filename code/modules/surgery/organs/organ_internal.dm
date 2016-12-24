@@ -128,7 +128,8 @@
 	..()
 	if(!beating)
 		visible_message("<span class='notice'>[user] squeezes [src] to \
-			make it beat again!</span>")
+			make it beat again!</span>", "<span class='notice'>You squeeze \
+			[src] to make it beat again!</span>")
 		Restart()
 		addtimer(src, "stop_if_unowned", 80)
 
