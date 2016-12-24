@@ -127,9 +127,8 @@ MASS SPECTROMETER
 		mob_status = "<span class='alert'>Deceased</span>"
 		oxy_loss = max(rand(1, 40), oxy_loss, (300 - (tox_loss + fire_loss + brute_loss))) // Random oxygen loss
 
-	if(ishuman(M))
-		var/mob/living/carbon/human/H = M
-		if(H.heart_attack && H.stat != DEAD)
+	if(ishuman(M) && H.can_heartattack())
+		if(H.undergoing_cardiac_arrest() && H.stat != DEAD)
 			user << "<span class='danger'>Subject suffering from heart attack: Apply defibrillator immediately!</span>"
 
 	if(iscarbon(M))

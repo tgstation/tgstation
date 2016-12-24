@@ -1,4 +1,4 @@
-/mob/living/New()
+emob/living/New()
 	. = ..()
 	generateStaticOverlay()
 	if(staticOverlays.len)
