@@ -144,7 +144,7 @@ var/list/obj/item/device/paicard/pai_card_list = list()
 				continue
 			if(!(ROLE_PAI in G.client.prefs.be_special))
 				continue
-			G << 'sound/misc/server-ready.ogg' //Alerting them to their consideration
+			//G << 'sound/misc/server-ready.ogg' //Alerting them to their consideration
 			G << "<span class='ghostalert'>Someone is requesting a pAI personality! Use the pAI button to submit yourself as one.</span>"
 		addtimer(src, "spam_again", spam_delay)
 	var/list/available = list()

@@ -101,12 +101,7 @@
 		if(species)
 			if(O.use(10))
 				user << "You finish up the golem shell with ten sheets of [O]."
-				var/obj/effect/mob_spawn/human/golem/G = new shell_type(get_turf(src))
-				G.mob_species = species
-				var/datum/species/golem/S = species
-				G.name += " ([initial(S.id)])"
-				if(has_owner)
-					G.owner = user
+				new shell_type(get_turf(src), species, has_owner, user)
 				qdel(src)
 			else
 				user << "You need at least ten sheets to finish a golem."

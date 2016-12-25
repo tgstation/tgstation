@@ -518,7 +518,7 @@
 	hoodtype = /obj/item/clothing/head/winterhood/hydro
 
 /obj/item/clothing/head/winterhood/hydro
-	item_state = "winterhood_hydro"
+	icon_state = "winterhood_hydro"
 
 /obj/item/clothing/suit/hooded/wintercoat/cargo
 	name = "cargo winter coat"

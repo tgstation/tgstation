@@ -898,7 +898,7 @@
 		else if(istype(T) && T.allow_thrust(0.01, H))
 			. -= 2
 		else if(flightpack && F.allow_thrust(0.01, src))
-			. -= 1
+			. -= 2
 
 	if(flightpack && F.boost)
 		. -= F.boost_speed
@@ -1234,7 +1234,6 @@
 			H.show_message("<span class='notice'>The radiation beam dissipates harmlessly through your body.</span>")
 		if(/obj/item/projectile/energy/florayield)
 			H.show_message("<span class='notice'>The radiation beam dissipates harmlessly through your body.</span>")
-	return
 
 /datum/species/proc/bullet_act(obj/item/projectile/P, mob/living/carbon/human/H)
 	// called before a projectile hit

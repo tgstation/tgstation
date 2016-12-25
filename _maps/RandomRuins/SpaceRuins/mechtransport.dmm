@@ -85,64 +85,64 @@
 "r" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/cobweb,
-/turf/open/floor/mineral/titanium,
+/turf/open/floor/mineral/titanium/airless,
 /area/ruin/powered/mechtransport)
 "s" = (
-/turf/open/floor/mineral/titanium,
+/turf/open/floor/mineral/titanium/airless,
 /area/ruin/powered/mechtransport)
 "t" = (
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/mineral/titanium,
+/turf/open/floor/mineral/titanium/airless,
 /area/ruin/powered/mechtransport)
 "u" = (
 /obj/effect/decal/cleanable/cobweb/cobweb2,
-/turf/open/floor/mineral/titanium,
+/turf/open/floor/mineral/titanium/airless,
 /area/ruin/powered/mechtransport)
 "v" = (
 /obj/structure/mecha_wreckage/phazon,
-/turf/open/floor/mineral/titanium/yellow,
+/turf/open/floor/mineral/titanium/yellow/airless,
 /area/ruin/powered/mechtransport)
 "w" = (
-/turf/open/floor/mineral/titanium/yellow,
+/turf/open/floor/mineral/titanium/yellow/airless,
 /area/ruin/powered/mechtransport)
 "x" = (
 /obj/structure/mecha_wreckage/ripley/firefighter,
-/turf/open/floor/mineral/titanium/yellow,
+/turf/open/floor/mineral/titanium/yellow/airless,
 /area/ruin/powered/mechtransport)
 "y" = (
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/mineral/titanium/yellow,
+/turf/open/floor/mineral/titanium/yellow/airless,
 /area/ruin/powered/mechtransport)
 "z" = (
 /obj/structure/mecha_wreckage/ripley,
-/turf/open/floor/mineral/titanium/yellow,
+/turf/open/floor/mineral/titanium/yellow/airless,
 /area/ruin/powered/mechtransport)
 "A" = (
 /obj/mecha/working/ripley,
-/turf/open/floor/mineral/titanium/yellow,
+/turf/open/floor/mineral/titanium/yellow/airless,
 /area/ruin/powered/mechtransport)
 "B" = (
 /obj/effect/decal/cleanable/oil,
-/turf/open/floor/mineral/titanium/yellow,
+/turf/open/floor/mineral/titanium/yellow/airless,
 /area/ruin/powered/mechtransport)
 "C" = (
 /obj/effect/decal/cleanable/robot_debris/up,
-/turf/open/floor/mineral/titanium/yellow,
+/turf/open/floor/mineral/titanium/yellow/airless,
 /area/ruin/powered/mechtransport)
 "D" = (
 /obj/machinery/door/poddoor{
 	id = "mechaship1";
 	name = "Cargo Bay Door"
 	},
-/turf/open/floor/mineral/titanium/yellow,
+/turf/open/floor/mineral/titanium/yellow/airless,
 /area/ruin/powered/mechtransport)
 "E" = (
 /obj/effect/decal/cleanable/robot_debris,
-/turf/open/floor/mineral/titanium/yellow,
+/turf/open/floor/mineral/titanium/yellow/airless,
 /area/ruin/powered/mechtransport)
 "F" = (
 /obj/structure/mecha_wreckage/durand,
-/turf/open/floor/mineral/titanium/yellow,
+/turf/open/floor/mineral/titanium/yellow/airless,
 /area/ruin/powered/mechtransport)
 "G" = (
 /obj/item/stack/tile/plasteel,
@@ -166,7 +166,7 @@
 "L" = (
 /obj/effect/decal/cleanable/robot_debris,
 /obj/item/stack/tile/plasteel,
-/turf/open/floor/mineral/titanium/yellow,
+/turf/open/floor/mineral/titanium/yellow/airless,
 /area/ruin/powered/mechtransport)
 "M" = (
 /turf/open/floor/plating/airless{
@@ -181,7 +181,7 @@
 /area/ruin/powered/mechtransport)
 "O" = (
 /obj/structure/mecha_wreckage/odysseus,
-/turf/open/floor/mineral/titanium/yellow,
+/turf/open/floor/mineral/titanium/yellow/airless,
 /area/ruin/powered/mechtransport)
 "P" = (
 /obj/item/stack/sheet/metal,
@@ -189,7 +189,7 @@
 /area/space)
 "Q" = (
 /obj/structure/mecha_wreckage/gygax,
-/turf/open/floor/mineral/titanium,
+/turf/open/floor/mineral/titanium/airless,
 /area/ruin/powered/mechtransport)
 "R" = (
 /turf/open/floor/plating/airless{

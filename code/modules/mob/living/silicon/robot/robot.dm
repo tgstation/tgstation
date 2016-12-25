@@ -211,12 +211,18 @@
 	var/changed_name = ""
 	if(custom_name)
 		changed_name = custom_name
-	else
-		changed_name = "[(designation ? "[designation] " : "")][mmi.braintype]-[num2text(ident)]"
+	if(changed_name == "" && client)
+		changed_name = client.prefs.custom_names["cyborg"]
+	if(changed_name == "")
+		changed_name = get_standard_name()
+
 	real_name = changed_name
 	name = real_name
 	if(camera)
 		camera.c_tag = real_name	//update the camera name too
+
+/mob/living/silicon/robot/proc/get_standard_name()
+	return "[(designation ? "[designation] " : "")][mmi.braintype]-[ident]"
 
 /mob/living/silicon/robot/verb/cmd_robot_alerts()
 	set category = "Robot Commands"
@@ -493,8 +499,11 @@
 				return
 			if(U.action(src))
 				user << "<span class='notice'>You apply the upgrade to [src].</span>"
-				U.loc = src
-				upgrades += U
+				if(U.one_use)
+					qdel(U)
+				else
+					U.forceMove(src)
+					upgrades += U
 			else
 				user << "<span class='danger'>Upgrade error.</span>"
 

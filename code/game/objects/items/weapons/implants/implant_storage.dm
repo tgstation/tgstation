@@ -29,8 +29,8 @@
 				storage.remove_from_storage(I, get_turf(source))
 		return 1
 
-/obj/item/weapon/implant/storage/implant(mob/living/carbon/source, mob/user, silent = 0)
-	for(var/X in source.implants)
+/obj/item/weapon/implant/storage/implant(mob/living/target, mob/user, silent = 0)
+	for(var/X in target.implants)
 		if(istype(X, type))
 			var/obj/item/weapon/implant/storage/imp_e = X
 			imp_e.storage.storage_slots += storage.storage_slots
@@ -38,7 +38,7 @@
 			imp_e.storage.contents += storage.contents
 
 			storage.close_all()
-			storage.show_to(source)
+			storage.show_to(target)
 
 			qdel(src)
 			return 1

@@ -62,9 +62,9 @@ Difficulty: Medium
 		return
 	..()
 
-/mob/living/simple_animal/hostile/megafauna/dragon/adjustHealth(amount)
-	if(swooping)
-		return 0
+/mob/living/simple_animal/hostile/megafauna/dragon/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
+	if(!forced && swooping)
+		return FALSE
 	return ..()
 
 /mob/living/simple_animal/hostile/megafauna/dragon/AttackingTarget()
