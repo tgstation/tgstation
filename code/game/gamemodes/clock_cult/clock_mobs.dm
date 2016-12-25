@@ -302,7 +302,7 @@
 			stat(null, "Counter Chance: [counterchance]%")
 		stat(null, "You do [melee_damage_upper] damage on melee attacks.")
 
-/mob/living/simple_animal/hostile/clockwork/marauder/adjustHealth(amount) //Fatigue damage
+/mob/living/simple_animal/hostile/clockwork/marauder/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
 	if(amount > 0)
 		combattimer = world.time + initial(combattimer)
 		for(var/mob/living/L in view(2, src))
@@ -311,7 +311,7 @@
 				amount *= 4 //if a wielded null rod is nearby, it takes four times the health damage
 				break
 	. = ..()
-	if(src)
+	if(src && updating_health)
 		update_health_hud()
 		update_stats()
 

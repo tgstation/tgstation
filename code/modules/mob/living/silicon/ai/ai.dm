@@ -1,3 +1,4 @@
+#define CALL_BOT_COOLDOWN 900
 var/list/ai_list = list()
 
 //Not sure why this is necessary...
@@ -69,6 +70,7 @@ var/list/ai_list = list()
 	var/last_announcement = "" // For AI VOX, if enabled
 	var/turf/waypoint //Holds the turf of the currently selected waypoint.
 	var/waypoint_mode = 0 //Waypoint mode is for selecting a turf via clicking.
+	var/call_bot_cooldown = 0 //time of next call bot command
 	var/apc_override = 0 //hack for letting the AI use its APC even when visionless
 	var/nuking = FALSE
 	var/obj/machinery/doomsday_device/doomsday_device
@@ -401,6 +403,9 @@ var/list/ai_list = list()
 			src << "Target is not on or near any active cameras on the station."
 		return
 	if(href_list["callbot"]) //Command a bot to move to a selected location.
+		if(call_bot_cooldown > world.time)
+			src << "<span class='danger'>Error: Your last call bot command is still processing, please wait for the bot to finish calculating a route.</span>"
+			return
 		Bot = locate(href_list["callbot"]) in living_mob_list
 		if(!Bot || Bot.remote_disabled || src.control_disabled)
 			return //True if there is no bot found, the bot is manually emagged, or the AI is carded with wireless off.
@@ -494,8 +499,11 @@ var/list/ai_list = list()
 	if(Bot.calling_ai && Bot.calling_ai != src) //Prevents an override if another AI is controlling this bot.
 		src << "<span class='danger'>Interface error. Unit is already in use.</span>"
 		return
-
+	src << "<span class='notice'>Sending command to bot...</span>"
+	call_bot_cooldown = world.time + CALL_BOT_COOLDOWN
 	Bot.call_bot(src, waypoint)
+	call_bot_cooldown = 0
+	
 
 /mob/living/silicon/ai/triggerAlarm(class, area/A, O, obj/alarmsource)
 	if(alarmsource.z != z)

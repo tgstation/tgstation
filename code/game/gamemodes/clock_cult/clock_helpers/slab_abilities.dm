@@ -234,7 +234,7 @@
 		if(totaldamage)
 			L.adjustBruteLoss(-brutedamage)
 			L.adjustFireLoss(-burndamage)
-			L.adjustToxLoss(totaldamage * 0.5)
+			L.adjustToxLoss(totaldamage * 0.5, TRUE, TRUE)
 			var/healseverity = max(round(totaldamage*0.05, 1), 1) //shows the general severity of the damage you just healed, 1 glow per 20
 			for(var/i in 1 to healseverity)
 				PoolOrNew(/obj/effect/overlay/temp/heal, list(targetturf, "#1E8CE1"))

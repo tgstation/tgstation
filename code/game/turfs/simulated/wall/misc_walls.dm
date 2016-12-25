@@ -63,21 +63,15 @@
 		user << "<span class='brass'>It is linked, generating components in a cache!</span>"
 
 /turf/closed/wall/clockwork/Destroy()
-	be_removed()
-	return ..()
-
-/turf/closed/wall/clockwork/ChangeTurf(path, defer_change = FALSE)
-	if(path != type)
-		be_removed()
-	return ..()
-
-/turf/closed/wall/clockwork/proc/be_removed()
 	if(linkedcache)
 		linkedcache.linkedwall = null
 		linkedcache = null
 	change_construction_value(-5)
-	qdel(realappearence)
-	realappearence = null
+	if(realappearence)
+		qdel(realappearence)
+		realappearence = null
+	return ..()
+
 
 /turf/closed/wall/clockwork/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/weapon/weldingtool))

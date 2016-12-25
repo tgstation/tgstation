@@ -45,8 +45,8 @@
 		return
 	timed_explosion()
 
-/obj/item/weapon/implant/explosive/implant(mob/living/carbon/source)
-	for(var/X in source.implants)
+/obj/item/weapon/implant/explosive/implant(mob/living/target)
+	for(var/X in target.implants)
 		if(istype(X, type))
 			var/obj/item/weapon/implant/explosive/imp_e = X
 			imp_e.heavy += heavy
@@ -86,12 +86,12 @@
 	heavy = 4
 	delay = 70
 
-/obj/item/weapon/implant/explosive/macro/implant(mob/living/carbon/source)
-	for(var/X in source.implants)
+/obj/item/weapon/implant/explosive/macro/implant(mob/living/target)
+	for(var/X in target.implants)
 		if(istype(X, type))
 			return 0
 
-	for(var/Y in source.implants)
+	for(var/Y in target.implants)
 		if(istype(Y, /obj/item/weapon/implant/explosive))
 			var/obj/item/weapon/implant/explosive/imp_e = Y
 			heavy += imp_e.heavy

@@ -98,8 +98,8 @@ var/list/crit_allowed_modes = list(MODE_WHISPER,MODE_CHANGELING,MODE_ALIEN)
 
 	spans += get_spans()
 
-	//Log of what we've said, plain message, no spans or junk
-	say_log += message
+	//Log what we've said with an associated timestamp, using the list's len for safety/to prevent overwriting messages
+	say_log["[LAZYLEN(say_log) + 1]\[[time_stamp()]\]"] = message
 
 	var/message_range = 7
 	var/radio_return = radio(message, message_mode, spans)
