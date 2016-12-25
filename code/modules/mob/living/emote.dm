@@ -1,5 +1,5 @@
 //The code execution of the emote datum is located at code/datums/emotes.dm
-/mob/living/emote(act, m_type=1, message = null)
+/mob/living/emote(act, m_type = null, message = null)
 	act = lowertext(act)
 	var/param = message
 	var/custom_param = findchar(act, " ")
@@ -11,7 +11,7 @@
 	if(!E)
 		src << "<span class='notice'>Unusable emote '[act]'. Say *help for a list.</span>"
 		return
-	E.run_emote(src, param)
+	E.run_emote(src, param, m_type)
 
 /* EMOTE DATUMS */
 /datum/emote/living
@@ -365,11 +365,13 @@
 	else
 		. = FALSE
 
-/datum/emote/living/custom/run_emote(mob/user, params)
+/datum/emote/living/custom/run_emote(mob/user, params, type_override = null)
 	if(jobban_isbanned(user, "emote"))
 		user << "You cannot send custom emotes (banned)."
+		return FALSE
 	else if(user.client && user.client.prefs.muted & MUTE_IC)
 		user << "You cannot send IC messages (muted)."
+		return FALSE
 	else if(!params)
 		var/custom_emote = copytext(sanitize(input("Choose an emote to display.") as text|null), 1, MAX_MESSAGE_LEN)
 		if(custom_emote && !check_invalid(custom_emote))
@@ -385,8 +387,11 @@
 			message = custom_emote
 	else
 		message = params
+		if(type_override)
+			emote_type = type_override
 	. = ..()
 	message = null
+	emote_type = EMOTE_VISIBLE
 
 /datum/emote/living/help
 	key = "help"

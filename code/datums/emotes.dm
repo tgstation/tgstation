@@ -26,7 +26,7 @@ var/global/list/emote_list = list()
 	mob_type_allowed_typecache = typecacheof(mob_type_allowed_typecache)
 	mob_type_blacklist_typecache = typecacheof(mob_type_blacklist_typecache)
 
-/datum/emote/proc/run_emote(mob/user, params = null)
+/datum/emote/proc/run_emote(mob/user, params = null, type_override = null)
 	. = TRUE
 	if(!can_run_emote(user))
 		return FALSE
@@ -38,10 +38,11 @@ var/global/list/emote_list = list()
 		msg = replacetext(msg, "their", user.p_their())
 	if(findtext(msg, "them"))
 		msg = replacetext(msg, "them", user.p_them())
-	if(iscarbon(user))
-		var/mob/living/carbon/C = user
-		for(var/obj/item/weapon/implant/I in C.implants)
-			I.trigger(key, C)
+
+	var/mob/living/L = user
+	for(var/obj/item/weapon/implant/I in L.implants)
+		I.trigger(key, L)
+
 	if(!msg)
 		return FALSE
 
@@ -63,7 +64,7 @@ var/global/list/emote_list = list()
 /datum/emote/proc/select_message_type(mob/user)
 	. = message
 	if(!muzzle_ignore && user.is_muzzled() && emote_type == EMOTE_AUDIBLE)
-		return "makes a [pick("strong ", "weak ", "")]noise"
+		return "makes a [pick("strong ", "weak ", "")]noise."
 	if(user.mind && user.mind.miming && message_mime)
 		. = message_mime
 	if(isalienadult(user) && message_alien)
