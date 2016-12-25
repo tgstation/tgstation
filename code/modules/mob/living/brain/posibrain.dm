@@ -99,7 +99,7 @@ var/global/posibrain_notif_cooldown = 0
 /obj/item/device/mmi/posibrain/proc/transfer_personality(mob/candidate)
 	if(used || (brainmob && brainmob.key)) //Prevents hostile takeover if two ghosts get the prompt or link for the same brain.
 		candidate << "This brain has already been taken! Please try your possesion again later!"
-		return
+		return FALSE
 	notified = 0
 	if(candidate.mind && !isobserver(candidate))
 		candidate.mind.transfer_to(brainmob)
@@ -111,12 +111,11 @@ var/global/posibrain_notif_cooldown = 0
 	brainmob.stat = CONSCIOUS
 	dead_mob_list -= brainmob
 	living_mob_list += brainmob
-	if(clockwork)
-		add_servant_of_ratvar(brainmob, TRUE)
 
 	visible_message(new_mob_message)
 	update_icon()
 	used = 1
+	return TRUE
 
 
 /obj/item/device/mmi/posibrain/examine()
