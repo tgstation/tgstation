@@ -119,80 +119,81 @@ var/agnoston = "agnoston"
 	var/maxmoney = 0
 	var/allowed_num_items = 10 //rel lox
 
-	New(ckey, money)
-		..()
-		ownerkey = ckey
-		src.money = money
-		maxmoney = money
-		donators[ckey] = src
+/datum/donator/New(ckey, money)
+	..()
+	ownerkey = ckey
+	src.money = money
+	maxmoney = money
+	donators[ckey] = src
 
-	proc/show()
-		var/dat = "<title>Donator panel</title>"
-		dat += "You have [money] / [maxmoney]<br>"
-		dat += "You can spawn [ allowed_num_items ? allowed_num_items : "no" ] more items.<br><br>"
+/datum/donator/proc/show()
+	var/dat = "<title>Donator panel</title>"
+	dat += "You have [money] / [maxmoney]<br>"
+	dat += "You can spawn [ allowed_num_items ? allowed_num_items : "no" ] more items.<br><br>"
 
-		if (allowed_num_items)
-			if (!prizes.len)
-				build_prizes_list()
+	if (allowed_num_items)
+		if (!prizes.len)
+			build_prizes_list()
 
-			var/cur_cat = "None"
+		var/cur_cat = "None"
 
-			for (var/i = 1, i<=prizes.len, i++)
-				var/datum/donator_prize/prize = prizes[i]
-				var/cat_name = prize.category
-				if (cur_cat != cat_name)
-					dat += "<hr><b>[cat_name]</b><br>"
-				cur_cat = cat_name
-				dat += "<a href='?src=\ref[src];itemid=[i]'>[prize.item_name] : [prize.cost]</a><br>"
-		usr << browse(dat, "window=donatorpanel;size=250x400")
+		for (var/i = 1, i<=prizes.len, i++)
+			var/datum/donator_prize/prize = prizes[i]
+			var/cat_name = prize.category
+			if (cur_cat != cat_name)
+				dat += "<hr><b>[cat_name]</b><br>"
+			cur_cat = cat_name
+			dat += "<a href='?src=\ref[src];itemid=[i]'>[prize.item_name] : [prize.cost]</a><br>"
+	usr << browse(dat, "window=donatorpanel;size=250x400")
 
-	Topic(href, href_list)
-		var/id = text2num(href_list["itemid"])
-		var/datum/donator_prize/prize = prizes[id]
+/datum/donator/Topic(href, href_list)
+	var/id = text2num(href_list["itemid"])
+	var/datum/donator_prize/prize = prizes[id]
+	var/mob/living/carbon/human/user = usr.client.mob
 
-		var/name = prize.item_name
-		var/cost = prize.cost
-		var/path = prize.path_to
-		var/mob/living/carbon/human/user = usr.client.mob
+	if(!istype(get_area(user), /area/shuttle/arrival))
+		usr << "<span class='warning'>You must be on arrival shuttle to spawn items.</span>"
+		return 0
 
-		var/list/slots = list (
-			"backpack" = slot_in_backpack,
-			"left pocket" = slot_l_store,
-			"right pocket" = slot_r_store,
-			"hand" = slot_generic_dextrous_storage
-		)
+	if(prize.cost > money)
+		usr << "<span class='warning'>You don't have enough funds.</span>"
+		return 0
 
-		if(cost > money)
-			usr << "<span class='warning'>You don't have enough funds.</span>"
-			return 0
+	if(!allowed_num_items)
+		usr << "<span class='warning'>You have reached maximum amount of spawned items.</span>"
+		return 0
 
-		if(!allowed_num_items)
-			usr << "<span class='warning'>You have reached maximum amount of spawned items.</span>"
-			return 0
+	if(!user)
+		user << "<span class='warning'>You must be a human to use this.</span>"
+		return 0
 
-		if(!user)
-			user << "<span class='warning'>You must be a human to use this.</span>"
-			return 0
+	if(!ispath(prize.path_to))
+		return 0
 
-		if(!ispath(path))
-			return 0
+	if(user.stat)
+		return 0
 
-		if(user.stat) return 0
 
-		var/obj/spawned = new path
+	var/list/slots = list (
+		"backpack" = slot_in_backpack,
+		"left pocket" = slot_l_store,
+		"right pocket" = slot_r_store,
+		"hand" = slot_generic_dextrous_storage
+	)
 
-		var/where = user.equip_in_one_of_slots(spawned, slots, qdel_on_fail=0)
+	var/obj/spawned = new prize.path_to
+	var/where = user.equip_in_one_of_slots(spawned, slots, qdel_on_fail=0)
 
-		if (!where)
-			spawned.loc = user.loc
-			usr << "<span class='info'>Your [name] has been spawned!</span>"
-		else
-			usr << "<span class='info'>Your [name] has been spawned in your [where]!</span>"
+	if (!where)
+		spawned.loc = user.loc
+		usr << "<span class='info'>Your [prize.item_name] has been spawned!</span>"
+	else
+		usr << "<span class='info'>Your [prize.item_name] has been spawned in your [where]!</span>"
 
-		money -= cost
-		allowed_num_items--
+	money -= prize.cost
+	allowed_num_items--
 
-		show()
+	show()
 
 /datum/donator_prize
 	var/item_name = "Nothing"
@@ -201,6 +202,10 @@ var/agnoston = "agnoston"
 	var/category = "Debug"
 
 proc/load_donator(ckey)
+	if(ckey == "account12") // for debug purpooooses
+		new /datum/donator(ckey, 100)
+		return 1
+
 	var/DBConnection/dbcon2 = new()
 	dbcon2.Connect("dbi:mysql:forum2:[sqladdress]:[sqlport]","[sqlfdbklogin]","[sqlfdbkpass]")
 
@@ -243,23 +248,15 @@ proc/build_prizes_list()
 		alert("Please wait until game setting up!")
 		return
 
-	if(!istype(get_area(mob), /area/shuttle/arrival))
-		return
-
-
-
 	if (!donators[ckey]) //It doesn't exist yet
-		if (load_donator(ckey))
-			var/datum/donator/D = donators[ckey]
-			if(D)
-				D.show()
-			else
-				usr << browse ("<b>You have not donated or the database is inaccessible.</b>", "window=donatorpanel")
-		else
-			usr << browse ("<b>You have not donated or the database is inaccessible.</b>", "window=donatorpanel")
-	else
-		var/datum/donator/D = donators[ckey]
+		load_donator(ckey)
+
+	var/datum/donator/D = donators[ckey]
+	if(D)
 		D.show()
+	else
+		usr << "<span class='warning'>You have not donated or donations database is inaccessible.</span>"
+
 
 //SPECIAL ITEMS
 /obj/item/weapon/reagent_containers/food/drinks/drinkingglass/threemileisland
