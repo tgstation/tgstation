@@ -32,9 +32,6 @@
 	if(AI)
 		user << "<span class='notice'>The AI recovery beacon is active.</span>"
 
-/obj/structure/mecha_wreckage/examine_status() // it's wreckage what more do you need to know
-	..()
-
 /obj/structure/mecha_wreckage/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/weldingtool))
 		if(salvage_num <= 0)
