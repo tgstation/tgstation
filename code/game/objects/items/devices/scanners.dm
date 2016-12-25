@@ -315,12 +315,11 @@ MASS SPECTROMETER
 			user << "<span class='info'>Plasma: [round(plasma_concentration*100, 0.01)] %</span>"
 
 
-		for(var/id in 1 to GAS_LAST)
-			if(env_gases[id])
-				if(id in always_show)
-					continue
-				var/gas_concentration = env_gases[id][MOLES]/total_moles
-				user << "<span class='alert'>[env_gases[id][GAS_META][META_GAS_NAME]]: [round(gas_concentration*100, 0.01)] %</span>"
+		for(var/gas in GAS_FOR(env_gases))
+			if(gas[GAS_META][META_GAS_ID] in always_show)
+				continue
+			var/gas_concentration = gas[MOLES]/total_moles
+			user << "<span class='alert'>[gas[GAS_META][META_GAS_NAME]]: [round(gas_concentration*100, 0.01)] %</span>"
 		user << "<span class='info'>Temperature: [round(environment.temperature-T0C)] &deg;C</span>"
 
 

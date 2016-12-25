@@ -195,12 +195,11 @@
 		var/list/A_gases = A.gases
 		var/trace_gases
 		var/list/ignored_gases = list(GAS_O2, GAS_N2, GAS_CO2)
-		for(var/id in 1 to GAS_LAST)
-			if(A_gases[id])
-				if(id in ignored_gases)
-					continue
-				trace_gases = TRUE
-				break
+		for(var/gas in GAS_FOR(A_gases))
+			if(gas[GAS_META][META_GAS_ID] in ignored_gases)
+				continue
+			trace_gases = TRUE
+			break
 
 		// Can most things breathe?
 		if(trace_gases)

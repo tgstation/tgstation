@@ -201,18 +201,17 @@
 	var/total_moles = environment.total_moles()
 	var/cached_gases = environment.gases
 	var/partial_pressure = R_IDEAL_GAS_EQUATION * environment.temperature / environment.volume
-	for(var/gas_id in 1 to GAS_LAST)
-		if(cached_gases[gas_id])
-			var/shorthand = gasid2shorthand(gas_id)
-			if(!(shorthand in TLV)) // We're not interested in this gas, it seems.
-				continue
-			cur_tlv = TLV[shorthand]
-			data["environment_data"] += list(list(
-									"name" = cached_gases[gas_id][GAS_META][META_GAS_NAME],
-									"value" = cached_gases[gas_id][MOLES] / total_moles * 100,
-									"unit" = "%",
-									"danger_level" = cur_tlv.get_danger_level(cached_gases[gas_id][MOLES] * partial_pressure)
-			))
+	for(var/gas in GAS_FOR(cached_gases))
+		var/shorthand = gasid2shorthand(gas[GAS_META][META_GAS_ID])
+		if(!(shorthand in TLV)) // We're not interested in this gas, it seems.
+			continue
+		cur_tlv = TLV[shorthand]
+		data["environment_data"] += list(list(
+								"name" = gas[GAS_META][META_GAS_NAME],
+								"value" = gas[MOLES] / total_moles * 100,
+								"unit" = "%",
+								"danger_level" = cur_tlv.get_danger_level(gas[MOLES] * partial_pressure)
+		))
 
 	if(!locked || user.has_unlimited_silicon_privilege)
 		data["vents"] = list()
@@ -577,13 +576,12 @@
 	var/temperature_dangerlevel = cur_tlv.get_danger_level(environment.temperature)
 
 	var/gas_dangerlevel = 0
-	for(var/gas_id in 1 to GAS_LAST)
-		if(env_gases[gas_id])
-			var/shorthand = gasid2shorthand(gas_id)
-			if(!(shorthand in TLV)) // We're not interested in this gas, it seems.
-				continue
-			cur_tlv = TLV[shorthand]
-			gas_dangerlevel = max(gas_dangerlevel, cur_tlv.get_danger_level(env_gases[gas_id][MOLES] * partial_pressure))
+	for(var/gas in GAS_FOR(env_gases))
+		var/shorthand = gasid2shorthand(gas[GAS_META][META_GAS_ID])
+		if(!(shorthand in TLV)) // We're not interested in this gas, it seems.
+			continue
+		cur_tlv = TLV[shorthand]
+		gas_dangerlevel = max(gas_dangerlevel, cur_tlv.get_danger_level(gas[MOLES] * partial_pressure))
 
 	var/old_danger_level = danger_level
 	danger_level = max(pressure_dangerlevel, temperature_dangerlevel, gas_dangerlevel)

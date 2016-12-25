@@ -209,10 +209,10 @@
 		if(!S.air)
 			continue
 		var/list/S_gases = S.air.gases
-		for(var/id in 1 to GAS_LAST)
-			if(S_gases[id])
-				total.assert_gas(id)
-				total_gases[id][MOLES] += S_gases[id][MOLES]
+		for(var/gas in GAS_FOR(S_gases))
+			var/id = gas[GAS_META][META_GAS_ID]
+			total.assert_gas(id)
+			total_gases[id][MOLES] += gas[MOLES]
 		total.temperature += S.air.temperature
 
 	air.copy_from(total)

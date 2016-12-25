@@ -36,17 +36,18 @@ var/list/null_gases	//for sanic loops
 	null_gases = new(gas_types.len)
 
 	for(var/gas_path in gas_types)
-		var/list/gas_info = new(4)
+		var/list/gas_info = new(5)
 		var/datum/gas/working_gas = gas_path
 
 		gas_info[META_GAS_SPECIFIC_HEAT] = initial(working_gas.specific_heat)
 		gas_info[META_GAS_NAME] = initial(working_gas.name)
 		gas_info[META_GAS_MOLES_VISIBLE] = initial(working_gas.moles_visible)
 
+		var/gas_id = initial(working_gas.id)
+		gas_info[META_GAS_ID] = gas_id
+
 		if(initial(working_gas.moles_visible) != null)
 			gas_info[META_GAS_OVERLAY] = new /obj/effect/overlay/gas(initial(working_gas.gas_overlay))
-
-		var/gas_id = initial(working_gas.id)
 		meta_gas_info[gas_id] = gas_info
 		init_gaslist_cache(gas_id)
 
@@ -108,10 +109,9 @@ var/list/null_gases	//for sanic loops
 	//By removing empty gases, processing speed is increased.
 /datum/gas_mixture/proc/garbage_collect()
 	var/cached_gases = gases
-	for(var/id in 1 to GAS_LAST)
-		var/gas = cached_gases[id]
-		if(gas && gas[MOLES] <= 0 && gas[ARCHIVE] <= 0)
-			cached_gases[id] = null
+	for(var/gas in GAS_FOR(cached_gases))
+		if(gas[MOLES] <= 0 && gas[ARCHIVE] <= 0)
+			cached_gases[gas[GAS_META][META_GAS_ID]] = null
 
 	//PV = nRT
 /datum/gas_mixture/proc/heat_capacity() //joules per kelvin
@@ -364,10 +364,10 @@ var/list/null_gases	//for sanic loops
 		qdel(giver)
 
 	//gas transfer
-	for(var/giver_id in 1 to GAS_LAST)
-		if(giver_gases[giver_id])
-			assert_gas(giver_id)
-			cached_gases[giver_id][MOLES] += giver_gases[giver_id][MOLES]
+	for(var/giver_gas in GAS_FOR(giver_gases))
+		var/giver_id = giver_gas[GAS_META][META_GAS_ID]
+		assert_gas(giver_id)
+		cached_gases[giver_id][MOLES] += giver_gas[MOLES]
 
 	return 1
 
@@ -381,14 +381,13 @@ var/list/null_gases	//for sanic loops
 	var/removed_gases = removed.gases //accessing datum vars is slower than proc vars
 
 	removed.temperature = temperature
-	for(var/id in 1 to GAS_LAST)
-		var/cgas = cached_gases[id]
-		if(cgas)
-			removed.add_gas(id)
-			var/cached_moles = cgas[MOLES]
-			var/removed_moles = QUANTIZE((cached_moles / sum) * amount)
-			removed_gases[id][MOLES] = removed_moles
-			cgas[MOLES] = cached_moles - removed_moles
+	for(var/cgas in GAS_FOR(cached_gases))
+		var/id = cgas[GAS_META][META_GAS_ID]
+		removed.add_gas(id)
+		var/cached_moles = cgas[MOLES]
+		var/removed_moles = QUANTIZE((cached_moles / sum) * amount)
+		removed_gases[id][MOLES] = removed_moles
+		cgas[MOLES] = cached_moles - removed_moles
 	garbage_collect()
 
 	return removed
@@ -403,14 +402,13 @@ var/list/null_gases	//for sanic loops
 	var/removed_gases = removed.gases //accessing datum vars is slower than proc vars
 
 	removed.temperature = temperature
-	for(var/id in 1 to GAS_LAST)
-		var/cgas = cached_gases[id]
-		if(cgas)
-			removed.add_gas(id)
-			var/cached_moles = cgas[MOLES]
-			var/removed_moles = QUANTIZE(cached_moles * ratio)
-			removed_gases[id][MOLES] = removed_moles
-			cgas[MOLES] = cached_moles - removed_moles
+	for(var/cgas in GAS_FOR(cached_gases))
+		var/id = cgas[GAS_META][META_GAS_ID]
+		removed.add_gas(id)
+		var/cached_moles = cgas[MOLES]
+		var/removed_moles = QUANTIZE(cached_moles * ratio)
+		removed_gases[id][MOLES] = removed_moles
+		cgas[MOLES] = cached_moles - removed_moles
 
 	garbage_collect()
 
@@ -422,10 +420,10 @@ var/list/null_gases	//for sanic loops
 	var/copy_gases = copy.gases
 
 	copy.temperature = temperature
-	for(var/id in 1 to GAS_LAST)
-		if(cached_gases[id])
-			copy.add_gas(id)
-			copy_gases[id][MOLES] = cached_gases[id][MOLES]
+	for(var/gas in GAS_FOR(cached_gases))
+		var/id = gas[GAS_META][META_GAS_ID]
+		copy.add_gas(id)
+		copy_gases[id][MOLES] = gas[MOLES]
 
 	return copy
 
@@ -493,18 +491,14 @@ var/list/null_gases	//for sanic loops
 	var/unique_recieved_gases = FALSE
 	var/unique_sent_gases = FALSE
 
+	for(var/gas in GAS_FOR(sharer_gases - cached_gases)) // create gases not in our cache
+		add_gas(gas[GAS_META][META_GAS_ID])
+		unique_recieved_gases = TRUE
+
 	//GAS TRANSFER
-	for(var/id in 1 to GAS_LAST) // create gases not in our cache
-		var/gas = cached_gases[id]
+	for(var/gas in GAS_FOR(cached_gases)) // create gases not in our cache
+		var/id = gas[GAS_META][META_GAS_ID]
 		var/sharergas = sharer_gases[id]
-
-		if(!(gas || sharergas)) //one of them needs it
-			continue
-
-		if(!gas)
-			add_gas(id)
-			gas = cached_gases[id]
-			unique_recieved_gases = TRUE
 		if(!sharergas) //checking here prevents an uneeded proc call if the check fails.
 			sharer.add_gas(id)
 			sharergas = sharer_gases[id]
@@ -585,17 +579,28 @@ var/list/null_gases	//for sanic loops
 	var/sample_gases = sample.gases //accessing datum vars is slower than proc vars
 	var/cached_gases = gases
 
-	for(var/id in 1 to GAS_LAST) // compare gases from either mixture
-		//used to be cached_gases | sample_gases before Fastmos III.5
-		//not needed anymore because they will always both have entries for all gases
-		//they may be null though
+	var/list/checkedids = new(null_gases.len)
+
+	for(var/gas in GAS_FOR(sample_gases))
+		var/id = gas[GAS_META][META_GAS_ID]
 		var/gas_moles = cached_gases[id] ? cached_gases[id][datatype] : 0
 		var/sample_moles = sample_gases[id] ? sample_gases[id][datatype] : 0
-		if(gas_moles || sample_moles)
-			var/delta = abs(gas_moles - sample_moles)/(adjacents+1)
-			if(delta > MINIMUM_MOLES_DELTA_TO_MOVE && \
-				delta > gas_moles * MINIMUM_AIR_RATIO_TO_MOVE)
-				return id
+
+		var/delta = abs(gas_moles - sample_moles)/(adjacents+1)
+		if(delta > MINIMUM_MOLES_DELTA_TO_MOVE && delta > gas_moles * MINIMUM_AIR_RATIO_TO_MOVE)
+			return id
+		checkedids[id] = TRUE
+
+	for(var/gas in GAS_FOR(cached_gases)) // compare gases from either mixture
+		var/id = gas[GAS_META][META_GAS_ID]
+		if(checkedids[id])
+			continue
+		var/gas_moles = cached_gases[id] ? cached_gases[id][datatype] : 0
+		var/sample_moles = sample_gases[id] ? sample_gases[id][datatype] : 0
+
+		var/delta = abs(gas_moles - sample_moles)/(adjacents+1)
+		if(delta > MINIMUM_MOLES_DELTA_TO_MOVE && delta > gas_moles * MINIMUM_AIR_RATIO_TO_MOVE)
+			return id
 
 	if(total_moles() > MINIMUM_MOLES_DELTA_TO_MOVE)
 		var/temp
