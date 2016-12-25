@@ -1389,6 +1389,7 @@
 #include "code\modules\mob\living\carbon\death.dm"
 #include "code\modules\mob\living\carbon\emote.dm"
 #include "code\modules\mob\living\carbon\examine.dm"
+#include "code\modules\mob\living\carbon\give.dm"
 #include "code\modules\mob\living\carbon\inventory.dm"
 #include "code\modules\mob\living\carbon\life.dm"
 #include "code\modules\mob\living\carbon\say.dm"
