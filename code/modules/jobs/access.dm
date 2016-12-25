@@ -105,29 +105,29 @@
 /obj/proc/allowed(mob/M)
 	//check if it doesn't require any access at all
 	if(src.check_access(null))
-		return 1
+		return TRUE
 	if(issilicon(M))
 		if(ispAI(M))
-			return 0
-		return 1 //AI can do whatever it wants
+			return FALSE
+		return TRUE	//AI can do whatever it wants
 	if(IsAdminGhost(M))
 		//Access can't stop the abuse
-		return 1
+		return TRUE
 	else if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		//if they are holding or wearing a card that has access, that works
 		if(check_access(H.get_active_held_item()) || src.check_access(H.wear_id))
-			return 1
+			return TRUE
 	else if(ismonkey(M) || isalienadult(M))
 		var/mob/living/carbon/george = M
 		//they can only hold things :(
 		if(check_access(george.get_active_held_item()))
-			return 1
+			return TRUE
 	else if(isanimal(M))
 		var/mob/living/simple_animal/A = M
 		if(check_access(A.get_active_held_item()) || check_access(A.access_card))
-			return 1
-	return 0
+			return TRUE
+	return FALSE
 
 /obj/item/proc/GetAccess()
 	return list()
@@ -160,44 +160,44 @@
 	gen_access()
 
 	if(!istype(src.req_access, /list)) //something's very wrong
-		return 1
+		return TRUE
 
 	var/list/L = src.req_access
 	if(!L.len && (!src.req_one_access || !src.req_one_access.len)) //no requirements
-		return 1
+		return TRUE
 	if(!I)
-		return 0
+		return FALSE
 	for(var/req in src.req_access)
 		if(!(req in I.GetAccess())) //doesn't have this access
-			return 0
+			return FALSE
 	if(src.req_one_access && src.req_one_access.len)
 		for(var/req in src.req_one_access)
 			if(req in I.GetAccess()) //has an access from the single access list
-				return 1
-		return 0
-	return 1
+				return TRUE
+		return FALSE
+	return TRUE
 
 
 /obj/proc/check_access_list(list/L)
 	if(!src.req_access  && !src.req_one_access)
-		return 1
+		return TRUE
 	if(!istype(src.req_access, /list))
-		return 1
+		return TRUE
 	if(!src.req_access.len && (!src.req_one_access || !src.req_one_access.len))
-		return 1
+		return TRUE
 	if(!L)
-		return 0
+		return FALSE
 	if(!istype(L, /list))
-		return 0
+		return FALSE
 	for(var/req in src.req_access)
 		if(!(req in L)) //doesn't have this access
-			return 0
+			return FALSE
 	if(src.req_one_access && src.req_one_access.len)
 		for(var/req in src.req_one_access)
 			if(req in L) //has an access from the single access list
-				return 1
-		return 0
-	return 1
+				return TRUE
+		return FALSE
+	return TRUE
 
 /proc/get_centcom_access(job)
 	switch(job)

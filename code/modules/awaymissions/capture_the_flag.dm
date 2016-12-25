@@ -334,6 +334,7 @@
 /obj/item/weapon/gun/ballistic/automatic/pistol/deagle/ctf
 	desc = "This looks like it could really hurt in melee."
 	force = 75
+	mag_type = /obj/item/ammo_box/magazine/m50/ctf
 
 /obj/item/weapon/gun/ballistic/automatic/pistol/deagle/ctf/dropped()
 	. = ..()
@@ -342,6 +343,20 @@
 /obj/item/weapon/gun/ballistic/automatic/pistol/deagle/ctf/proc/floor_vanish()
 	if(isturf(loc))
 		qdel(src)
+
+/obj/item/ammo_box/magazine/m50/ctf
+	ammo_type = /obj/item/ammo_casing/a50/ctf
+
+/obj/item/ammo_casing/a50/ctf
+	projectile_type = /obj/item/projectile/bullet/ctf
+
+/obj/item/projectile/bullet/ctf
+	damage = 0
+
+/obj/item/projectile/bullet/ctf/prehit(atom/target)
+	if(is_ctf_target(target))
+		damage = 60
+	. = ..()
 
 /obj/item/weapon/gun/ballistic/automatic/laser/ctf
 	mag_type = /obj/item/ammo_box/magazine/recharge/ctf
@@ -364,8 +379,22 @@
 	projectile_type = /obj/item/projectile/beam/ctf
 
 /obj/item/projectile/beam/ctf
-	damage = 150
+	damage = 0
 	icon_state = "omnilaser"
+
+/obj/item/projectile/beam/ctf/prehit(atom/target)
+	if(is_ctf_target(target))
+		damage = 150
+	. = ..()
+
+/proc/is_ctf_target(atom/target)
+	. = FALSE
+	if(istype(target, /obj/structure/barricade/security/ctf))
+		. = TRUE
+	if(ishuman(target))
+		var/mob/living/carbon/human/H = target
+		if(istype(H.wear_suit, /obj/item/clothing/suit/space/hardsuit/shielded/ctf))
+			. = TRUE
 
 // RED TEAM GUNS
 

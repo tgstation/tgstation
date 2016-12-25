@@ -113,7 +113,7 @@
 "ci" = (/obj/structure/lattice,/obj/structure/disposalpipe/broken{tag = "icon-pipe-b (EAST)"; icon_state = "pipe-b"; dir = 4},/obj/structure/disposalpipe/broken{tag = "icon-pipe-b (WEST)"; icon_state = "pipe-b"; dir = 8},/obj/item/stack/rods,/turf/open/space,/area/ruin/onehalf/hallway)
 "cj" = (/obj/structure/lattice,/obj/structure/disposalpipe/segment{dir = 4},/obj/item/weapon/shard{icon_state = "small"},/turf/open/space,/area/space)
 "ck" = (/obj/structure/grille,/obj/structure/window/reinforced/fulltile,/obj/structure/disposalpipe/segment{dir = 4},/obj/machinery/door/poddoor/preopen{id = "bridge_onehalf"; name = "bridge blast door"},/turf/open/floor/plating,/area/ruin/onehalf/bridge)
-"cl" = (/obj/structure/disposalpipe/segment{dir = 2; icon_state = "pipe-c"},/obj/structure/table/reinforced,/obj/item/weapon/paper_bin{amount = 12},/turf/open/floor/plasteel,/area/ruin/onehalf/bridge)
+"cl" = (/obj/structure/disposalpipe/segment{dir = 2; icon_state = "pipe-c"},/obj/structure/table/reinforced,/obj/item/weapon/paper_bin{total_paper = 12},/turf/open/floor/plasteel,/area/ruin/onehalf/bridge)
 "cm" = (/obj/structure/chair/office{dir = 8},/turf/open/floor/plasteel,/area/ruin/onehalf/bridge)
 "cn" = (/turf/open/floor/plasteel,/area/ruin/onehalf/bridge)
 "co" = (/obj/structure/chair/office{tag = "icon-chair (NORTH)"; icon_state = "chair"; dir = 1},/turf/open/floor/plasteel,/area/ruin/onehalf/bridge)
