@@ -34,3 +34,13 @@
 #define CABLED_CORE 3
 #define GLASS_CORE 4
 #define AI_READY_CORE 5
+
+//field generator construction defines
+#define FG_UNSECURED 0
+#define FG_SECURED 1
+#define FG_WELDED 2
+
+//emitter construction defines
+#define EM_UNSECURED 0
+#define EM_SECURED 1
+#define EM_WELDED 2
