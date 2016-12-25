@@ -92,7 +92,7 @@
 		else
 			new_id = filter_type
 						//validate gasid
-		if(filtering && gasid2shorthand(new_id))
+		if(filtering && !gasid2shorthand(new_id))
 			WARNING("Wrong gas ID in [src]'s filter_type var. filter_type == [filter_type] numerical id == [new_id]")
 			filtering = FALSE
 		else
