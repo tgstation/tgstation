@@ -315,7 +315,7 @@ MASS SPECTROMETER
 			user << "<span class='info'>Plasma: [round(plasma_concentration*100, 0.01)] %</span>"
 
 
-		for(var/id in env_gases)
+		for(var/id in 1 to GAS_LAST)
 			if(env_gases[id])
 				if(id in always_show)
 					continue

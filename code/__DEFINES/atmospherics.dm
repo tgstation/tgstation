@@ -185,3 +185,6 @@
 #define GAS_BZ 10
 
 #define GAS_LAST 10 //UPDATE THIS
+
+//Gas for helper
+#define GAS_FOR(X) X - null_gases

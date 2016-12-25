@@ -114,8 +114,8 @@
 /turf/open/proc/tile_graphic()
 	. = new /list
 	var/list/gases = air.gases
-	for(var/gas in gases)
-		if(gas && gas[GAS_META][META_GAS_OVERLAY] && gas[MOLES] > gas[GAS_META][META_GAS_MOLES_VISIBLE])
+	for(var/gas in GAS_FOR(gases))
+		if(gas[GAS_META][META_GAS_OVERLAY] && gas[MOLES] > gas[GAS_META][META_GAS_MOLES_VISIBLE])
 			. += gas[GAS_META][META_GAS_OVERLAY]
 
 /////////////////////////////SIMULATION///////////////////////////////////

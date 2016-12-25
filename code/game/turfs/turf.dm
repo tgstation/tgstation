@@ -172,8 +172,8 @@
 	Destroy()	//❄
 	var/turf/W = new path(src)
 	W.proximity_checkers = old_checkers
-	
-	
+
+
 	if(!defer_change)
 		W.AfterChange(ignore_air)
 	W.blueprint_data = old_blueprint_data
@@ -221,9 +221,8 @@
 		return
 
 	var/list/air_gases = air.gases
-	for(var/gas in air_gases)
-		if(gas)
-			gas[MOLES] /= turf_count //Averages contents of the turfs, ignoring walls and the like
+	for(var/gas in GAS_FOR(air_gases))
+		gas[MOLES] /= turf_count //Averages contents of the turfs, ignoring walls and the like
 
 	air.temperature /= turf_count
 	air.holder = src

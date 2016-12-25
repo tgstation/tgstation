@@ -12,6 +12,8 @@ var/list/meta_gas_info	//contains the static information of a gas type
 
 var/list/gaslist_cache	//pre initialized list of gases keyed by id, ONLY FOR COPYING
 
+var/list/null_gases	//for sanic loops
+
 /proc/gaslist(id)	//copies a clean gases entry for id
 	var/list/cached_gas = gaslist_cache[id]
 	return cached_gas.Copy()
@@ -31,6 +33,7 @@ var/list/gaslist_cache	//pre initialized list of gases keyed by id, ONLY FOR COP
 
 	gaslist_cache = new(gas_types.len)
 	meta_gas_info = new(gas_types.len)
+	null_gases = new(gas_types.len)
 
 	for(var/gas_path in gas_types)
 		var/list/gas_info = new(4)
@@ -114,23 +117,20 @@ var/list/gaslist_cache	//pre initialized list of gases keyed by id, ONLY FOR COP
 /datum/gas_mixture/proc/heat_capacity() //joules per kelvin
 	var/cached_gases = gases
 	. = 0
-	for(var/gas in cached_gases)
-		if(gas)
-			. += gas[MOLES] * gas[GAS_META][META_GAS_SPECIFIC_HEAT]
+	for(var/gas in GAS_FOR(cached_gases))
+		. += gas[MOLES] * gas[GAS_META][META_GAS_SPECIFIC_HEAT]
 
 /datum/gas_mixture/proc/heat_capacity_archived() //joules per kelvin
 	var/cached_gases = gases
 	. = 0
-	for(var/gas in cached_gases)
-		if(gas)
-			. += gas[ARCHIVE] * gas[GAS_META][META_GAS_SPECIFIC_HEAT]
+	for(var/gas in GAS_FOR(cached_gases))
+		. += gas[ARCHIVE] * gas[GAS_META][META_GAS_SPECIFIC_HEAT]
 
 /datum/gas_mixture/proc/total_moles() //moles
 	var/list/cached_gases = gases
 	. = 0
-	for(var/gas in cached_gases)
-		if(gas)
-			. += gas[MOLES]
+	for(var/gas in GAS_FOR(cached_gases))
+		. += gas[MOLES]
 
 /datum/gas_mixture/proc/return_pressure() //kilopascals
 	if(volume > 0) // to prevent division by zero
@@ -336,9 +336,8 @@ var/list/gaslist_cache	//pre initialized list of gases keyed by id, ONLY FOR COP
 	var/cached_gases = gases
 
 	temperature_archived = temperature
-	for(var/gas in cached_gases)
-		if(gas)
-			gas[ARCHIVE] = gas[MOLES]
+	for(var/gas in GAS_FOR(cached_gases))
+		gas[ARCHIVE] = gas[MOLES]
 
 	return 1
 

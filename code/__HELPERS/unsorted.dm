@@ -878,11 +878,10 @@ var/list/WALLITEMS_INVERSE = typecacheof(list(
 
 		var/list/cached_gases = air_contents.gases
 
-		for(var/gas in cached_gases)
-			if(gas)
-				var/gas_concentration = gas[MOLES]/total_moles
-				if(gas_concentration > 0.001)
-					user << "<span class='notice'>[gas[GAS_META][META_GAS_NAME]]: [round(gas_concentration*100, 0.01)] %</span>"
+		for(var/gas in GAS_FOR(cached_gases))
+			var/gas_concentration = gas[MOLES]/total_moles
+			if(gas_concentration > 0.001)
+				user << "<span class='notice'>[gas[GAS_META][META_GAS_NAME]]: [round(gas_concentration*100, 0.01)] %</span>"
 
 		user << "<span class='notice'>Temperature: [round(air_contents.temperature-T0C)] &deg;C</span>"
 	else
