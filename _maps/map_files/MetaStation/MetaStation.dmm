@@ -609,7 +609,7 @@
 	pixel_y = 29
 	},
 /obj/item/toy/beach_ball{
-	icon = 'icons/obj/basketball.dmi';
+	icon = 'icons/obj/items.dmi';
 	icon_state = "basketball";
 	item_state = "basketball";
 	name = "basket ball"
@@ -5543,7 +5543,7 @@
 /area/maintenance/fore)
 "ajV" = (
 /obj/item/toy/beach_ball{
-	icon = 'icons/obj/basketball.dmi';
+	icon = 'icons/obj/items.dmi';
 	icon_state = "basketball";
 	item_state = "basketball";
 	name = "basket ball"
