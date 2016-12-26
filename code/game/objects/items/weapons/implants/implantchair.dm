@@ -68,7 +68,7 @@
 			implant(occupant,usr)
 			. = TRUE
 
-/obj/machinery/implantchair/proc/implant(mob/living/carbon/M,mob/user)
+/obj/machinery/implantchair/proc/implant(mob/living/M,mob/user)
 	if (!istype(M))
 		return
 	if(!ready_implants || !ready)
@@ -85,7 +85,7 @@
 		playsound(get_turf(src), 'sound/machines/buzz-sigh.ogg', 25, 1)
 	update_icon()
 
-/obj/machinery/implantchair/proc/implant_action(mob/living/carbon/M)
+/obj/machinery/implantchair/proc/implant_action(mob/living/M)
 	var/obj/item/weapon/implant/I = new implant_type
 	if(I.implant(M))
 		visible_message("<span class='warning'>[M] has been implanted by the [name].</span>")
@@ -133,11 +133,11 @@
 	container_resist(user)
 
 /obj/machinery/implantchair/MouseDrop_T(mob/target, mob/user)
-	if(user.stat || user.lying || !Adjacent(user) || !user.Adjacent(target) || !iscarbon(target) || !user.IsAdvancedToolUser())
+	if(user.stat || user.lying || !Adjacent(user) || !user.Adjacent(target) || !isliving(target) || !user.IsAdvancedToolUser())
 		return
 	close_machine(target)
 
-/obj/machinery/implantchair/close_machine(mob/user)
+/obj/machinery/implantchair/close_machine(mob/living/user)
 	if((isnull(user) || istype(user)) && state_open)
 		..(user)
 		if(auto_inject && ready && ready_implants > 0)
@@ -171,8 +171,8 @@
 	var/objective = "Obey the law. Praise Nanotrasen."
 	var/custom = FALSE
 
-/obj/machinery/implantchair/brainwash/implant_action(mob/living/carbon/C,mob/user)
-	if(!istype(C) || !C.mind)
+/obj/machinery/implantchair/brainwash/implant_action(mob/living/C,mob/user)
+	if(!istype(C) || !C.mind) // I don't know how this makes any sense for silicons but laws trump objectives anyway.
 		return 0
 	if(custom)
 		if(!user || !user.Adjacent(src))

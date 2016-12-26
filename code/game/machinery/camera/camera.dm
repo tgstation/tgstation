@@ -154,7 +154,7 @@
 
 		else if(istype(W, /obj/item/weapon/weldingtool))
 			if(weld(W, user))
-				visible_message("<span class='warning'>[user] unwelds [src], leaving it as just a frame screwed to the wall.</span>", "<span class='warning'>You unweld [src], leaving it as just a frame screwed to the wall</span>")
+				visible_message("<span class='warning'>[user] unwelds [src], leaving it as just a frame bolted to the wall.</span>", "<span class='warning'>You unweld [src], leaving it as just a frame bolted to the wall</span>")
 				deconstruct(TRUE)
 			return
 

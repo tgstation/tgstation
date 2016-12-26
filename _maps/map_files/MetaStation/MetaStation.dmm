@@ -82810,7 +82810,8 @@
 /obj/structure/disposalpipe/segment,
 /obj/machinery/door/airlock/maintenance{
 	name = "Research Lab Maintenance";
-	req_access_txt = "7;29"
+	req_access_txt = "0";
+	req_one_access_txt = "7;29"
 	},
 /turf/open/floor/plating/warnplate{
 	dir = 1
