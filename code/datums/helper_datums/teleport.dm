@@ -174,7 +174,7 @@
 
 // Safe location finder
 
-/proc/find_safe_turf(zlevel = ZLEVEL_STATION, list/zlevels)
+/proc/find_safe_turf(zlevel = ZLEVEL_STATION, list/zlevels, extended_safety_checks = FALSE)
 	if(!zlevels)
 		zlevels = list(zlevel)
 	var/cycles = 1000
@@ -216,6 +216,12 @@
 		var/pressure = A.return_pressure()
 		if((pressure <= 20) || (pressure >= 550))
 			continue
+
+		if(extended_safety_checks)
+			if(istype(F, /turf/open/floor/plating/lava)) //chasms aren't /floor, and so are pre-filtered
+				var/turf/open/floor/plating/lava/L = F
+				if(!L.is_safe())
+					continue
 
 		// DING! You have passed the gauntlet, and are "probably" safe.
 		return F

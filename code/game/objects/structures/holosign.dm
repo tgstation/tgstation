@@ -49,7 +49,7 @@
 	obj_integrity = 20
 	max_integrity = 20
 	var/allow_walk = 1 //can we pass through it on walk intent
-	
+
 /obj/structure/holosign/barrier/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 	if(!density)
 		return 1
@@ -59,7 +59,7 @@
 		return 1
 	if(iscarbon(mover))
 		var/mob/living/carbon/C = mover
-		if(allow_walk && C.m_intent == "walk")
+		if(allow_walk && C.m_intent == MOVE_INTENT_WALK)
 			return 1
 
 /obj/structure/holosign/barrier/engineering

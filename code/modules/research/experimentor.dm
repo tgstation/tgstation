@@ -115,7 +115,7 @@
 	return TRUE
 
 /obj/machinery/r_n_d/experimentor/Insert_Item(obj/item/O, mob/user)
-	if(user.a_intent != "harm")
+	if(user.a_intent != INTENT_HARM)
 		. = 1
 		if(!is_insertion_ready(user))
 			return

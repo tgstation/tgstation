@@ -725,6 +725,7 @@ var/list/wall_runes = list()
 	invocation = "Khari'd! Eske'te tannin!"
 	icon_state = "1"
 	color = "#C80000"
+	CanAtmosPass = ATMOS_PASS_DENSITY
 	var/density_timer
 	var/recharging = FALSE
 
@@ -742,9 +743,6 @@ var/list/wall_runes = list()
 	wall_runes -= src
 	air_update_turf(1)
 	return ..()
-
-/obj/effect/rune/wall/CanAtmosPass(turf/T)
-	return !density
 
 /obj/effect/rune/wall/BlockSuperconductivity()
 	return density

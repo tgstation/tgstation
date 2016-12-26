@@ -453,7 +453,7 @@ var/global/list/datum/stack_recipe/cable_coil_recipes = list ( \
 	item_color = "red"
 	desc = "A coil of insulated power cable."
 	throwforce = 0
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	throw_speed = 3
 	throw_range = 5
 	materials = list(MAT_METAL=10, MAT_GLASS=5)

@@ -30,10 +30,14 @@ var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","
 	var/broken = 0
 	var/burnt = 0
 	var/floor_tile = null //tile that this floor drops
-	var/list/broken_states = list("damaged1", "damaged2", "damaged3", "damaged4", "damaged5")
-	var/list/burnt_states = list()
+	var/list/broken_states
+	var/list/burnt_states
 
 /turf/open/floor/New()
+	if (!broken_states)
+		broken_states = list("damaged1", "damaged2", "damaged3", "damaged4", "damaged5")
+	if (!burnt_states)
+		burnt_states = list()
 	..()
 	if(icon_state in icons_to_ignore_at_floor_init) //so damaged/burned tiles or plating icons aren't saved as the default
 		icon_regular_floor = "floor"
@@ -143,7 +147,7 @@ var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","
 				if(floor_tile)
 					PoolOrNew(floor_tile, src)
 		make_plating()
-		playsound(src, 'sound/items/Crowbar.ogg', 80, 1)
+		playsound(src, C.usesound, 80, 1)
 		return 1
 	return 0
 
@@ -181,4 +185,3 @@ var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","
 
 /turf/open/floor/acid_melt()
 	ChangeTurf(baseturf)
-

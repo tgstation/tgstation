@@ -9,7 +9,7 @@
 	response_help = "passes through"
 	response_disarm = "shoves"
 	response_harm = "hits"
-	a_intent = "harm"
+	a_intent = INTENT_HARM
 	healable = 0
 	speed = 0
 	maxHealth = 40

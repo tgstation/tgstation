@@ -579,10 +579,10 @@ Difficulty: Very Hard
 	..()
 	if(ready_to_deploy)
 		var/be_helper = alert("Become a Lightgeist? (Warning, You can no longer be cloned!)",,"Yes","No")
-		if(be_helper == "No")
-			return
-		var/mob/living/simple_animal/hostile/lightgeist/W = new /mob/living/simple_animal/hostile/lightgeist(get_turf(loc))
-		W.key = user.key
+		if(be_helper == "Yes" && !qdeleted(src) && isobserver(user))
+			var/mob/living/simple_animal/hostile/lightgeist/W = new /mob/living/simple_animal/hostile/lightgeist(get_turf(loc))
+			W.key = user.key
+
 
 /obj/machinery/anomalous_crystal/helpers/Topic(href, href_list)
 	if(href_list["ghostjoin"])
@@ -608,7 +608,7 @@ Difficulty: Very Hard
 	density = 0
 	movement_type = FLYING
 	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
-	ventcrawler = 2
+	ventcrawler = VENTCRAWLER_ALWAYS
 	mob_size = MOB_SIZE_TINY
 	gold_core_spawnable = 0
 	verb_say = "warps"

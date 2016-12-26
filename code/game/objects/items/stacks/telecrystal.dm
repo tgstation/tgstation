@@ -4,7 +4,7 @@
 	singular_name = "telecrystal"
 	icon = 'icons/obj/telescience.dmi'
 	icon_state = "telecrystal"
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 	max_amount = 50
 	flags = NOBLUDGEON
 	origin_tech = "materials=6;syndicate=1"
@@ -12,7 +12,7 @@
 /obj/item/stack/telecrystal/attack(mob/target, mob/user)
 	if(target == user) //You can't go around smacking people with crystals to find out if they have an uplink or not.
 		for(var/obj/item/weapon/implant/uplink/I in target)
-			if(I && I.implanted)
+			if(I && I.imp_in)
 				I.hidden_uplink.telecrystals += 1
 				use(1)
 				user << "<span class='notice'>You press [src] onto yourself and charge your hidden uplink.</span>"

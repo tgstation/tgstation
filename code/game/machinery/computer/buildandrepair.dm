@@ -11,7 +11,7 @@
 			if(istype(P, /obj/item/weapon/wrench))
 				playsound(src.loc, P.usesound, 50, 1)
 				user << "<span class='notice'>You start wrenching the frame into place...</span>"
-				if(do_after(user, 20/P.toolspeed, target = src))
+				if(do_after(user, 20*P.toolspeed, target = src))
 					user << "<span class='notice'>You wrench the frame into place.</span>"
 					anchored = 1
 					state = 1
@@ -24,7 +24,7 @@
 					return
 				playsound(src.loc, P.usesound, 50, 1)
 				user << "<span class='notice'>You start deconstructing the frame...</span>"
-				if(do_after(user, 20/P.toolspeed, target = src))
+				if(do_after(user, 20*P.toolspeed, target = src))
 					if(!src || !WT.isOn()) return
 					user << "<span class='notice'>You deconstruct the frame.</span>"
 					var/obj/item/stack/sheet/metal/M = new (loc, 5)
@@ -35,7 +35,7 @@
 			if(istype(P, /obj/item/weapon/wrench))
 				playsound(src.loc, P.usesound, 50, 1)
 				user << "<span class='notice'>You start to unfasten the frame...</span>"
-				if(do_after(user, 20/P.toolspeed, target = src))
+				if(do_after(user, 20*P.toolspeed, target = src))
 					user << "<span class='notice'>You unfasten the frame.</span>"
 					anchored = 0
 					state = 0
@@ -81,7 +81,7 @@
 				if(C.get_amount() >= 5)
 					playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 					user << "<span class='notice'>You start adding cables to the frame...</span>"
-					if(do_after(user, 20/P.toolspeed, target = src))
+					if(do_after(user, 20*P.toolspeed, target = src))
 						if(C.get_amount() >= 5 && state == 2)
 							C.use(5)
 							user << "<span class='notice'>You add cables to the frame.</span>"
@@ -132,7 +132,7 @@
 				transfer_fingerprints_to(B)
 				qdel(src)
 				return
-	if(user.a_intent == "harm")
+	if(user.a_intent == INTENT_HARM)
 		return ..()
 
 
@@ -153,7 +153,7 @@
 	item_state = "electronic"
 	origin_tech = "programming=2"
 	materials = list(MAT_GLASS=1000)
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	var/build_path = null
 
 /obj/item/weapon/circuitboard/computer/turbine_computer

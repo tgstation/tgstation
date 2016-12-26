@@ -6,7 +6,7 @@
 	item_state = "implantcase"
 	throw_speed = 2
 	throw_range = 5
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 	origin_tech = "materials=1;biotech=2"
 	materials = list(MAT_GLASS=500)
 	var/obj/item/weapon/implant/imp = null
@@ -37,7 +37,7 @@
 	else if(istype(W, /obj/item/weapon/implanter))
 		var/obj/item/weapon/implanter/I = W
 		if(I.imp)
-			if(imp || I.imp.implanted)
+			if(imp || I.imp.imp_in)
 				return
 			I.imp.loc = src
 			imp = I.imp

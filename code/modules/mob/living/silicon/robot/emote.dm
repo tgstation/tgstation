@@ -8,7 +8,7 @@
 	switch(act)//01000001011011000111000001101000011000010110001001100101011101000110100101111010011001010110010000100001 (Seriously please keep it that way.)
 		if ("aflap")
 			if (!src.restrained())
-				message = "<B>[src]</B> flaps \his wings ANGRILY!"
+				message = "<B>[src]</B> flaps [p_their()] wings ANGRILY!"
 				m_type = 2
 			m_type = 1
 
@@ -108,7 +108,7 @@
 
 		if ("flap","flaps")
 			if (!src.restrained())
-				message = "<B>[src]</B> flaps \his wings."
+				message = "<B>[src]</B> flaps [p_their()] wings."
 				m_type = 2
 
 		if ("glare","glares")

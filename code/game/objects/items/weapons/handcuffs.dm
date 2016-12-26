@@ -12,7 +12,7 @@
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
 	throwforce = 0
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	throw_speed = 3
 	throw_range = 5
 	materials = list(MAT_METAL=500)
@@ -228,7 +228,7 @@
 	icon_state = "handcuff"
 	flags = CONDUCT
 	throwforce = 0
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 	origin_tech = "engineering=3;combat=3"
 	slowdown = 7
 	breakouttime = 300	//Deciseconds = 30s = 0.5 minute
@@ -354,7 +354,7 @@
 	desc = "A specialized hard-light bola designed to ensnare fleeing criminals and aid in arrests."
 	icon_state = "ebola"
 	hitsound = 'sound/weapons/taserhit.ogg'
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	breakouttime = 60
 
 /obj/item/weapon/restraints/legcuffs/bola/energy/throw_impact(atom/hit_atom)

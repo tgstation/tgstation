@@ -143,7 +143,7 @@
 	//If you don't want to fuck up disposals, add to this list, and don't change the order.
 	//If you insist on changing the order, you'll have to change every sort junction to reflect the new order. --Pete
 
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 	item_state = "electronic"
 	flags = CONDUCT
 	slot_flags = SLOT_BELT

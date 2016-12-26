@@ -14,7 +14,7 @@
 	minbodytemp = 0
 	maxbodytemp = 360
 	unique_name = 1
-	a_intent = "harm"
+	a_intent = INTENT_HARM
 	var/mob/camera/blob/overmind = null
 	var/obj/structure/blob/factory/factory = null
 
@@ -250,9 +250,10 @@
 				I.color = overmind.blob_reagent_datum.complementary_color
 			flick_overlay(I, viewing, 8)
 
-/mob/living/simple_animal/hostile/blob/blobbernaut/adjustHealth(amount)
+/mob/living/simple_animal/hostile/blob/blobbernaut/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
 	. = ..()
-	update_health_hud()
+	if(updating_health)
+		update_health_hud()
 
 /mob/living/simple_animal/hostile/blob/blobbernaut/update_health_hud()
 	if(hud_used)

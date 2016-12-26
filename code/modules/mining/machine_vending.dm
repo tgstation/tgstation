@@ -55,7 +55,7 @@
 		new /datum/data/mining_equipment("Jump Boots",			/obj/item/clothing/shoes/bhop,											2500),
 		)
 
-/datum/data/mining_equipment/
+/datum/data/mining_equipment
 	var/equipment_name = "generic"
 	var/equipment_path = null
 	var/cost = 0
@@ -238,7 +238,7 @@
 	desc = "A token to redeem a piece of equipment. Use it on a mining equipment vendor."
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "mining_voucher"
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 
 /**********************Mining Point Card**********************/
 

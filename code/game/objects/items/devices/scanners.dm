@@ -14,7 +14,7 @@ MASS SPECTROMETER
 	icon_state = "t-ray0"
 	var/on = 0
 	slot_flags = SLOT_BELT
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	item_state = "electronic"
 	materials = list(MAT_METAL=150)
 	origin_tech = "magnets=1;engineering=1"
@@ -74,7 +74,7 @@ MASS SPECTROMETER
 	flags = CONDUCT | NOBLUDGEON
 	slot_flags = SLOT_BELT
 	throwforce = 3
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 	throw_speed = 3
 	throw_range = 7
 	materials = list(MAT_METAL=200)
@@ -253,7 +253,7 @@ MASS SPECTROMETER
 	name = "analyzer"
 	icon_state = "atmos"
 	item_state = "analyzer"
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	flags = CONDUCT | NOBLUDGEON
 	slot_flags = SLOT_BELT
 	throwforce = 0
@@ -327,7 +327,7 @@ MASS SPECTROMETER
 	name = "mass-spectrometer"
 	icon_state = "spectrometer"
 	item_state = "analyzer"
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	flags = CONDUCT | OPENCONTAINER
 	slot_flags = SLOT_BELT
 	throwforce = 0
@@ -388,7 +388,7 @@ MASS SPECTROMETER
 	icon_state = "adv_spectrometer"
 	item_state = "analyzer"
 	origin_tech = "biotech=2"
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	flags = CONDUCT
 	throwforce = 0
 	throw_speed = 3

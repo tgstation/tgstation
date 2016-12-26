@@ -1,6 +1,6 @@
 /var/global/list/mutations_list = list()
 
-/datum/mutation/
+/datum/mutation
 
 	var/name
 
@@ -624,7 +624,7 @@
 	return visual_indicators[1]
 
 /datum/mutation/human/laser_eyes/on_ranged_attack(mob/living/carbon/human/owner, atom/target)
-	if(owner.a_intent == "harm")
+	if(owner.a_intent == INTENT_HARM)
 		owner.LaserEyes(target)
 
 

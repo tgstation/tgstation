@@ -10,6 +10,7 @@ var/list/blacklisted_cargo_types = typecacheof(list(
 		/obj/machinery/teleport/station,
 		/obj/machinery/teleport/hub,
 		/obj/machinery/telepad,
+		/obj/machinery/quantumpad,
 		/obj/machinery/clonepod,
 		/obj/effect/mob_spawn
 	))

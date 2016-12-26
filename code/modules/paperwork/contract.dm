@@ -94,7 +94,7 @@
 	target = nTarget
 	update_text()
 
-/obj/item/weapon/paper/contract/infernal/
+/obj/item/weapon/paper/contract/infernal
 
 /obj/item/weapon/paper/contract/infernal/suicide_act(mob/user)
 	if(signed && (user == target.current) && istype(user,/mob/living/carbon/human/))

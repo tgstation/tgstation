@@ -46,6 +46,11 @@ Judgement: 12 servants, 5 caches, 300 CV, and any existing AIs are converted or 
 	var/static/list/nzcrentr_penalty = list("You'd be easy to hunt in that little hunk of metal.", "Boss says you need to get back to the beacon.", "Boss says I can kill you if you do this again.", \
 	"Sending you power is too difficult here.", "Boss says stop wasting time.")
 
+/datum/clockwork_scripture/New()
+	creation_update()
+
+/datum/clockwork_scripture/proc/creation_update() //updates any on-creation effects
+
 /datum/clockwork_scripture/proc/run_scripture()
 	if(can_recite() && has_requirements())
 		if(slab.busy)
@@ -64,6 +69,7 @@ Judgement: 12 servants, 5 caches, 300 CV, and any existing AIs are converted or 
 						else
 							clockwork_component_cache[i]--
 							used_cache_components[i]++
+			update_slab_info()
 		channel_time *= slab.speed_multiplier
 		if(!recital() || !check_special_requirements() || !scripture_effects()) //if we fail any of these, refund components used
 			for(var/i in used_slab_components)
@@ -75,6 +81,7 @@ Judgement: 12 servants, 5 caches, 300 CV, and any existing AIs are converted or 
 			for(var/i in used_cache_components)
 				if(used_cache_components[i])
 					clockwork_component_cache[i] += consumed_components[i]
+			update_slab_info()
 		else if(slab && !slab.no_cost && !ratvar_awakens) //if the slab exists and isn't debug and ratvar isn't up, log the scripture as being used
 			feedback_add_details("clockcult_scripture_recited", name)
 	if(slab)
@@ -83,7 +90,7 @@ Judgement: 12 servants, 5 caches, 300 CV, and any existing AIs are converted or 
 	return TRUE
 
 /datum/clockwork_scripture/proc/can_recite() //If the words can be spoken
-	if(!slab || !invoker)
+	if(!invoker || !slab || invoker.get_active_held_item() != slab)
 		return FALSE
 	if(!invoker.can_speak_vocal())
 		invoker << "<span class='warning'>You are unable to speak the words of the scripture!</span>"
@@ -123,23 +130,24 @@ Judgement: 12 servants, 5 caches, 300 CV, and any existing AIs are converted or 
 		switch(primary_component)
 			if(BELLIGERENT_EYE)
 				message = pick(neovgre_penalty)
-				ratvarian_prob = 80
+				ratvarian_prob = 55
 			if(VANGUARD_COGWHEEL)
 				message = pick(inathneq_penalty)
-				ratvarian_prob = 30
+				ratvarian_prob = 25
 			if(GEIS_CAPACITOR)
 				message = pick(sevtug_penalty)
-				ratvarian_prob = 50
+				ratvarian_prob = 40
 			if(REPLICANT_ALLOY)
 				message = pick(nezbere_penalty)
 				ratvarian_prob = 10
 			if(HIEROPHANT_ANSIBLE)
 				message = pick(nzcrentr_penalty)
-				ratvarian_prob = 100
+				ratvarian_prob = 70
 		if(message)
 			if(prob(ratvarian_prob))
 				message = text2ratvar(message)
-			invoker << "<span class='[get_component_span(primary_component)]'>\"[message]\"</span>"
+			invoker << "<span class='[get_component_span(primary_component)]_large'>\"[message]\"</span>"
+			invoker << 'sound/magic/clockwork/invoke_general.ogg'
 	return TRUE
 
 /datum/clockwork_scripture/proc/check_offstation_penalty()
@@ -243,7 +251,10 @@ Judgement: 12 servants, 5 caches, 300 CV, and any existing AIs are converted or 
 		invoker.visible_message(observer_message, creator_message)
 	else if(creator_message)
 		invoker << creator_message
-	new object_path (get_turf(invoker))
+	var/obj/O = new object_path (get_turf(invoker))
+	O.ratvar_act() //update the new object so it gets buffed if ratvar is alive
+	if(istype(O, /obj/item))
+		invoker.put_in_hands(O)
 	return TRUE
 
 //Uses a ranged slab ability, returning only when the ability no longer exists(ie, when interrupted) or finishes.

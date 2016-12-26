@@ -101,7 +101,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/kebab
 	trash = /obj/item/stack/rods
 	icon_state = "kebab"
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 	list_reagents = list("nutriment" = 8)
 
 /obj/item/weapon/reagent_containers/food/snacks/kebab/human

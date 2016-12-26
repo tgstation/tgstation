@@ -5,7 +5,7 @@
 	item_state = "cultblade"
 	flags = CONDUCT
 	sharpness = IS_SHARP
-	w_class = 4
+	w_class = WEIGHT_CLASS_BULKY
 	force = 30
 	throwforce = 10
 	hitsound = 'sound/weapons/bladeslice.ogg'
@@ -45,7 +45,7 @@
 	desc = "A strange dagger said to be used by sinister groups for \"preparing\" a corpse before sacrificing it to their dark gods."
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "render"
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	force = 15
 	throwforce = 25
 	embed_chance = 75
@@ -140,7 +140,7 @@
 	icon_state = "cult_armor"
 	item_state = "cult_armor"
 	desc = "A heavily-armored exosuit worn by warriors of the Nar-Sien cult. It can withstand hard vacuum."
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	allowed = list(/obj/item/weapon/tome,/obj/item/weapon/melee/cultblade,/obj/item/weapon/tank/internals/)
 	armor = list(melee = 70, bullet = 50, laser = 30,energy = 15, bomb = 30, bio = 30, rad = 30, fire = 40, acid = 75)
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/cult
@@ -158,7 +158,7 @@
 	desc = "Empowered garb which creates a powerful shield around the user."
 	icon_state = "cult_armor"
 	item_state = "cult_armor"
-	w_class = 4
+	w_class = WEIGHT_CLASS_BULKY
 	armor = list(melee = 50, bullet = 40, laser = 50,energy = 30, bomb = 50, bio = 30, rad = 30, fire = 50, acid = 60)
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	allowed = list(/obj/item/weapon/tome,/obj/item/weapon/melee/cultblade)
@@ -362,7 +362,7 @@
 /obj/item/device/flashlight/flare/culttorch
 	name = "void torch"
 	desc = "Used by veteran cultists to instantly transport items to their needful bretheren."
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	brightness_on = 1
 	icon_state = "torch-on"
 	item_state = "torch-on"

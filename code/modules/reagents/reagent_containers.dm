@@ -3,7 +3,7 @@
 	desc = "..."
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = null
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 	var/amount_per_transfer_from_this = 5
 	var/list/possible_transfer_amounts = list(5,10,15,20,25,30)
 	var/volume = 30
@@ -38,7 +38,7 @@
 				return
 
 /obj/item/weapon/reagent_containers/attack(mob/M, mob/user, def_zone)
-	if(user.a_intent == "harm")
+	if(user.a_intent == INTENT_HARM)
 		return ..()
 
 /obj/item/weapon/reagent_containers/afterattack(obj/target, mob/user , flag)

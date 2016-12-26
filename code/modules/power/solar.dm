@@ -60,7 +60,7 @@
 	if(istype(W, /obj/item/weapon/crowbar))
 		playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 		user.visible_message("[user] begins to take the glass off the solar panel.", "<span class='notice'>You begin to take the glass off the solar panel...</span>")
-		if(do_after(user, 50/W.toolspeed, target = src))
+		if(do_after(user, 50*W.toolspeed, target = src))
 			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 			user.visible_message("[user] takes the glass off the solar panel.", "<span class='notice'>You take the glass off the solar panel.</span>")
 			deconstruct(TRUE)
@@ -184,7 +184,7 @@
 	icon = 'icons/obj/power.dmi'
 	icon_state = "sp_base"
 	item_state = "electropack"
-	w_class = 4 // Pretty big!
+	w_class = WEIGHT_CLASS_BULKY // Pretty big!
 	anchored = 0
 	var/tracker = 0
 	var/glass_type = null
@@ -417,7 +417,7 @@
 /obj/machinery/power/solar_control/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/screwdriver))
 		playsound(src.loc, I.usesound, 50, 1)
-		if(do_after(user, 20/I.toolspeed, target = src))
+		if(do_after(user, 20*I.toolspeed, target = src))
 			if (src.stat & BROKEN)
 				user << "<span class='notice'>The broken glass falls out.</span>"
 				var/obj/structure/frame/computer/A = new /obj/structure/frame/computer( src.loc )
@@ -441,7 +441,7 @@
 				A.icon_state = "4"
 				A.anchored = 1
 				qdel(src)
-	else if(user.a_intent != "harm" && !(I.flags & NOBLUDGEON))
+	else if(user.a_intent != INTENT_HARM && !(I.flags & NOBLUDGEON))
 		src.attack_hand(user)
 	else
 		return ..()

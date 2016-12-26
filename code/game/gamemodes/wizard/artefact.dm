@@ -11,7 +11,7 @@
 	item_state = "render"
 	force = 15
 	throwforce = 10
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	var/charges = 1
 	var/spawn_type = /obj/singularity/wizard
@@ -128,7 +128,7 @@
 	icon_state = "necrostone"
 	item_state = "electronic"
 	origin_tech = "bluespace=4;materials=4"
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 	var/list/spooky_scaries = list()
 	var/unlimited = 0
 
@@ -159,7 +159,7 @@
 	M.revive(full_heal = 1, admin_revive = 1)
 	spooky_scaries |= M
 	M << "<span class='userdanger'>You have been revived by </span><B>[user.real_name]!</B>"
-	M << "<span class='userdanger'>They are your master now, assist them even if it costs you your new life!</span>"
+	M << "<span class='userdanger'>[user.p_they(TRUE)] [user.p_are()] your master now, assist them even if it costs you your new life!</span>"
 
 	equip_roman_skeleton(M)
 
@@ -209,7 +209,7 @@ var/global/list/multiverse = list()
 	sharpness = IS_SHARP
 	force = 20
 	throwforce = 10
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	var/faction = list("unassigned")
 	var/cooldown = 0
@@ -322,7 +322,7 @@ var/global/list/multiverse = list()
 		if("wizard")
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/color/lightpurple(M), slot_w_uniform)
 			M.equip_to_slot_or_del(new /obj/item/clothing/suit/wizrobe/red(M), slot_wear_suit)
-			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/sandal(M), slot_shoes)
+			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/sandal/magic(M), slot_shoes)
 			M.equip_to_slot_or_del(new /obj/item/device/radio/headset(M), slot_ears)
 			M.equip_to_slot_or_del(new /obj/item/clothing/head/wizard/red(M), slot_head)
 			M.put_in_hands_or_del(sword)
@@ -477,7 +477,7 @@ var/global/list/multiverse = list()
 		return
 
 	if(!link)
-		if(I.loc == user && istype(I) && I.w_class <= 2)
+		if(I.loc == user && istype(I) && I.w_class <= WEIGHT_CLASS_SMALL)
 			user.drop_item()
 			I.loc = src
 			link = I

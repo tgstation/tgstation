@@ -5,7 +5,7 @@ var/list/total_extraction_beacons = list()
 	desc = "A balloon that can be used to extract equipment or personnel to a Fulton Recovery Beacon. Anything not bolted down can be moved. Link the pack to a beacon by using the pack in hand."
 	icon = 'icons/obj/fulton.dmi'
 	icon_state = "extraction_pack"
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 	var/obj/structure/extraction_point/beacon
 	var/list/beacon_networks = list("station")
 	var/uses_left = 3

@@ -19,9 +19,9 @@
 	if(toggle)
 		visible_message("<span class='danger'>The explosion glances off [src]'s energy shielding!</span>")
 
-/mob/living/simple_animal/hostile/guardian/protector/adjustHealth(amount)
+/mob/living/simple_animal/hostile/guardian/protector/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
 	. = ..()
-	if(0 < . && toggle)
+	if(. > 0 && toggle)
 		var/list/viewing = list()
 		for(var/mob/M in viewers(src))
 			if(M.client)
@@ -61,7 +61,7 @@
 			return
 		else
 			summoner << "<span class='holoparasite'>You moved out of range, and were pulled back! You can only move [range] meters from <font color=\"[namedatum.colour]\"><b>[real_name]</b></font>!</span>"
-			summoner.visible_message("<span class='danger'>\The [summoner] jumps back to \his protector.</span>")
+			summoner.visible_message("<span class='danger'>\The [summoner] jumps back to [summoner.p_their()] protector.</span>")
 			PoolOrNew(/obj/effect/overlay/temp/guardian/phase/out, get_turf(summoner))
 			summoner.forceMove(get_turf(src))
 			PoolOrNew(/obj/effect/overlay/temp/guardian/phase, get_turf(summoner))

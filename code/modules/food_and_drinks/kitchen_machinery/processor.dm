@@ -216,7 +216,7 @@
 		O.loc = src
 		return 1
 	else
-		if(user.a_intent != "harm")
+		if(user.a_intent != INTENT_HARM)
 			user << "<span class='warning'>That probably won't blend!</span>"
 			return 1
 		else
@@ -228,7 +228,7 @@
 	if(src.processing)
 		user << "<span class='warning'>The processor is in the process of processing!</span>"
 		return 1
-	if(user.a_intent == "grab" && user.pulling && (isslime(user.pulling) || ismonkey(user.pulling)))
+	if(user.a_intent == INTENT_GRAB && user.pulling && (isslime(user.pulling) || ismonkey(user.pulling)))
 		if(user.grab_state < GRAB_AGGRESSIVE)
 			user << "<span class='warning'>You need a better grip to do that!</span>"
 			return

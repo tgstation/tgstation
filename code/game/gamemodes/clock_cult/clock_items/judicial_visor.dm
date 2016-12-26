@@ -158,19 +158,20 @@
 
 /obj/effect/clockwork/judicial_marker/New(loc, caster)
 	..()
+	SetLuminosity(4, 3)
 	user = caster
-	playsound(src, 'sound/magic/MAGIC_MISSILE.ogg', 50, 1, 1, 1)
-	flick("judicial_marker", src)
-	addtimer(src, "burstanim", 16, TIMER_NORMAL)
-
-/obj/effect/clockwork/judicial_marker/proc/burstanim()
-	layer = ABOVE_ALL_MOB_LAYER
-	flick("judicial_explosion", src)
-	addtimer(src, "judicialblast", 13, TIMER_NORMAL)
+	addtimer(src, "judicialblast", 0, TIMER_NORMAL)
 
 /obj/effect/clockwork/judicial_marker/proc/judicialblast()
+	playsound(src, 'sound/magic/MAGIC_MISSILE.ogg', 50, 1, 1, 1)
+	flick("judicial_marker", src)
+	sleep(16)
+	layer = ABOVE_ALL_MOB_LAYER
+	flick("judicial_explosion", src)
+	sleep(13)
 	var/targetsjudged = 0
 	playsound(src, 'sound/effects/explosionfar.ogg', 100, 1, 1, 1)
+	SetLuminosity(0)
 	for(var/mob/living/L in range(1, src))
 		if(is_servant_of_ratvar(L))
 			continue
@@ -196,7 +197,8 @@
 		L.adjustBruteLoss(10)
 		add_logs(user, L, "struck with a judicial blast")
 	user << "<span class='brass'><b>[targetsjudged ? "Successfully judged <span class='neovgre'>[targetsjudged]</span>":"Judged no"] heretic[!targetsjudged || targetsjudged > 1 ? "s":""].</b></span>"
-	QDEL_IN(src, 3) //so the animation completes properly
+	sleep(3) //so the animation completes properly
+	qdel(src)
 
 /obj/effect/clockwork/judicial_marker/ex_act(severity)
 	return

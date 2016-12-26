@@ -208,7 +208,7 @@
 			else
 				user << "<span class='warning'>You need two lengths of cable to fix this mech!</span>"
 		return
-	else if(istype(W, /obj/item/weapon/screwdriver) && user.a_intent != "harm")
+	else if(istype(W, /obj/item/weapon/screwdriver) && user.a_intent != INTENT_HARM)
 		if(internal_damage & MECHA_INT_TEMP_CONTROL)
 			clearInternalDamage(MECHA_INT_TEMP_CONTROL)
 			user << "<span class='notice'>You repair the damaged temperature controller.</span>"
@@ -239,7 +239,7 @@
 				user << "<span class='notice'>There's already a powercell installed.</span>"
 		return
 
-	else if(istype(W, /obj/item/weapon/weldingtool) && user.a_intent != "harm")
+	else if(istype(W, /obj/item/weapon/weldingtool) && user.a_intent != INTENT_HARM)
 		user.changeNext_move(CLICK_CD_MELEE)
 		var/obj/item/weapon/weldingtool/WT = W
 		if(obj_integrity<max_integrity)

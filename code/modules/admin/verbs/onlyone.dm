@@ -23,7 +23,7 @@ var/highlander = FALSE
 /mob/living/carbon/human/proc/make_scottish()
 	ticker.mode.traitors += mind
 	mind.special_role = "highlander"
-	dna.species.specflags |= NOGUNS //nice try jackass
+	dna.species.species_traits |= NOGUNS //nice try jackass
 
 	var/datum/objective/steal/steal_objective = new
 	steal_objective.owner = mind

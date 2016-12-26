@@ -1,6 +1,6 @@
 //Healer
 /mob/living/simple_animal/hostile/guardian/healer
-	a_intent = "harm"
+	a_intent = INTENT_HARM
 	friendly = "heals"
 	speed = 0
 	damage_coeff = list(BRUTE = 0.7, BURN = 0.7, TOX = 0.7, CLONE = 0.7, STAMINA = 0, OXY = 0.7)
@@ -46,7 +46,7 @@
 /mob/living/simple_animal/hostile/guardian/healer/ToggleMode()
 	if(src.loc == summoner)
 		if(toggle)
-			a_intent = "harm"
+			a_intent = INTENT_HARM
 			speed = 0
 			damage_coeff = list(BRUTE = 0.7, BURN = 0.7, TOX = 0.7, CLONE = 0.7, STAMINA = 0, OXY = 0.7)
 			melee_damage_lower = 15
@@ -54,7 +54,7 @@
 			src << "<span class='danger'><B>You switch to combat mode.</span></B>"
 			toggle = FALSE
 		else
-			a_intent = "help"
+			a_intent = INTENT_HELP
 			speed = 1
 			damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
 			melee_damage_lower = 0

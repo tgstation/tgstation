@@ -188,7 +188,7 @@
 			icon_beaker = image('icons/obj/chemical.dmi', src, "disp_beaker") //randomize beaker overlay position.
 		icon_beaker.pixel_x = rand(-10,5)
 		add_overlay(icon_beaker)
-	else if(user.a_intent != "harm" && !istype(I, /obj/item/weapon/card/emag))
+	else if(user.a_intent != INTENT_HARM && !istype(I, /obj/item/weapon/card/emag))
 		user << "<span class='warning'>You can't load \the [I] into the machine!</span>"
 	else
 		return ..()

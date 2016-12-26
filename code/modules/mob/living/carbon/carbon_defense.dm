@@ -77,7 +77,7 @@
 			ContractDisease(D)
 
 	if(lying && surgeries.len)
-		if(user.a_intent == "help")
+		if(user.a_intent == INTENT_HELP)
 			for(var/datum/surgery/S in surgeries)
 				if(S.next_step(user))
 					return 1
@@ -93,7 +93,7 @@
 		if(D.IsSpreadByTouch())
 			ContractDisease(D)
 
-	if(M.a_intent == "help")
+	if(M.a_intent == INTENT_HELP)
 		help_shake_act(M)
 		return 0
 

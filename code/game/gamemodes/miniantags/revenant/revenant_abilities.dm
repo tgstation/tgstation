@@ -15,7 +15,7 @@
 		src << "<span class='revenwarning'>You are already siphoning the essence of a soul!</span>"
 		return
 	if(!target.stat)
-		src << "<span class='revennotice'>This being's soul is too strong to harvest.</span>"
+		src << "<span class='revennotice'>[target.p_their(TRUE)] soul is too strong to harvest.</span>"
 		if(prob(10))
 			target << "You feel as if you are being watched."
 		return
@@ -24,13 +24,13 @@
 	src << "<span class='revennotice'>You search for the soul of [target].</span>"
 	if(do_after(src, rand(10, 20), 0, target)) //did they get deleted in that second?
 		if(target.ckey)
-			src << "<span class='revennotice'>Their soul burns with intelligence.</span>"
+			src << "<span class='revennotice'>[target.p_their(TRUE)] soul burns with intelligence.</span>"
 			essence_drained += rand(20, 30)
 		if(target.stat != DEAD)
-			src << "<span class='revennotice'>Their soul blazes with life!</span>"
+			src << "<span class='revennotice'>[target.p_their(TRUE)] soul blazes with life!</span>"
 			essence_drained += rand(40, 50)
 		else
-			src << "<span class='revennotice'>Their soul is weak and faltering.</span>"
+			src << "<span class='revennotice'>[target.p_their(TRUE)] soul is weak and faltering.</span>"
 		if(do_after(src, rand(15, 20), 0, target)) //did they get deleted NOW?
 			switch(essence_drained)
 				if(1 to 30)
@@ -43,7 +43,7 @@
 					src << "<span class='revenbignotice'>Ah, the perfect soul. [target] will yield massive amounts of essence to you.</span>"
 			if(do_after(src, rand(15, 25), 0, target)) //how about now
 				if(!target.stat)
-					src << "<span class='revenwarning'>They are now powerful enough to fight off your draining.</span>"
+					src << "<span class='revenwarning'>[target.p_they(TRUE)] [target.p_are()] now powerful enough to fight off your draining.</span>"
 					target << "<span class='boldannounce'>You feel something tugging across your body before subsiding.</span>"
 					draining = 0
 					essence_drained = 0
@@ -53,7 +53,7 @@
 					target << "<span class='warning'>You feel a horribly unpleasant draining sensation as your grip on life weakens...</span>"
 				reveal(46)
 				stun(46)
-				target.visible_message("<span class='warning'>[target] suddenly rises slightly into the air, their skin turning an ashy gray.</span>")
+				target.visible_message("<span class='warning'>[target] suddenly rises slightly into the air, [target.p_their()] skin turning an ashy gray.</span>")
 				var/datum/beam/B = Beam(target,icon_state="drain_life",time=46)
 				if(do_after(src, 46, 0, target)) //As one cannot prove the existance of ghosts, ghosts cannot prove the existance of the target they were draining.
 					qdel(B)
@@ -73,20 +73,13 @@
 				else
 					qdel(B)
 					src << "<span class='revenwarning'>[target ? "[target] has":"They have"] been drawn out of your grasp. The link has been broken.</span>"
-					draining = 0
-					essence_drained = 0
 					if(target) //Wait, target is WHERE NOW?
 						target.visible_message("<span class='warning'>[target] slumps onto the ground.</span>", \
 											   "<span class='revenwarning'>Violets lights, dancing in your vision, receding--</span>")
-					return
 			else
 				src << "<span class='revenwarning'>You are not close enough to siphon [target ? "[target]'s":"their"] soul. The link has been broken.</span>"
-				draining = 0
-				essence_drained = 0
-				return
 	draining = 0
 	essence_drained = 0
-	return
 
 //Toggle night vision: lets the revenant toggle its night vision
 /obj/effect/proc_holder/spell/targeted/night_vision/revenant

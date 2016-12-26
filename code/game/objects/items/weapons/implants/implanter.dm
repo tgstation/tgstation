@@ -6,7 +6,7 @@
 	item_state = "syringe_0"
 	throw_speed = 3
 	throw_range = 5
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	origin_tech = "materials=2;biotech=3"
 	materials = list(MAT_METAL=600, MAT_GLASS=200)
 	var/obj/item/weapon/implant/imp = null
@@ -21,8 +21,8 @@
 		origin_tech = initial(origin_tech)
 
 
-/obj/item/weapon/implanter/attack(mob/living/carbon/M, mob/user)
-	if(!iscarbon(M))
+/obj/item/weapon/implanter/attack(mob/living/M, mob/user)
+	if(!istype(M))
 		return
 	if(user && imp)
 		if(M != user)
@@ -55,8 +55,7 @@
 
 /obj/item/weapon/implanter/New()
 	..()
-	spawn(1)
-		update_icon()
+	update_icon()
 
 
 

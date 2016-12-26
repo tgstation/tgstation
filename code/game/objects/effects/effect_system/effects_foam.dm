@@ -187,6 +187,7 @@
 	gender = PLURAL
 	obj_integrity = 20
 	max_integrity = 20
+	CanAtmosPass = ATMOS_PASS_DENSITY
 
 /obj/structure/foamedmetal/New()
 	..()
@@ -218,9 +219,6 @@
 /obj/structure/foamedmetal/CanPass(atom/movable/mover, turf/target, height=1.5)
 	return !density
 
-
-/obj/structure/foamedmetal/CanAtmosPass()
-	return !density
 /obj/structure/foamedmetal/iron
 	obj_integrity = 50
 	max_integrity = 50

@@ -19,7 +19,7 @@
 <ui-display title={{data.name || "Empty Card"}} button>
   {{#partial button}}
     {{#if data.name}}
-      <ui-button icon='trash' state='{{data.wiping || data.isDead ? "disabled" : null}}' action='wipe'>Wipe AI</ui-button>
+      <ui-button icon='trash' state='{{data.isDead ? "disabled" : null}}' action='wipe'>{{data.wiping ? "Stop Wiping" : "Wipe"}} AI</ui-button>
     {{/if}}
   {{/partial}}
   {{#if data.name}}

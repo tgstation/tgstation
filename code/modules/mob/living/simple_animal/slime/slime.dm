@@ -9,7 +9,7 @@ var/list/slime_colours = list("rainbow", "grey", "purple", "metal", "orange",
 	icon = 'icons/mob/slimes.dmi'
 	icon_state = "grey baby slime"
 	pass_flags = PASSTABLE
-	ventcrawler = 2
+	ventcrawler = VENTCRAWLER_ALWAYS
 	gender = NEUTER
 	var/is_adult = 0
 	var/docile = 0
@@ -195,9 +195,10 @@ var/list/slime_colours = list("rainbow", "grey", "purple", "metal", "orange",
 			stat(null,"Power Level: [powerlevel]")
 
 
-/mob/living/simple_animal/slime/adjustFireLoss(amount)
-	..(-abs(amount)) // Heals them
-	return
+/mob/living/simple_animal/slime/adjustFireLoss(amount, updating_health = TRUE, forced = FALSE)
+	if(!forced)
+		amount = -abs(amount)
+	return ..() //Heals them
 
 /mob/living/simple_animal/slime/bullet_act(obj/item/projectile/Proj)
 	if(!Proj)
@@ -260,7 +261,7 @@ var/list/slime_colours = list("rainbow", "grey", "purple", "metal", "orange",
 		attacked += 10
 
 /mob/living/simple_animal/slime/attack_hulk(mob/living/carbon/human/user, does_attack_animation = 0)
-	if(user.a_intent == "harm")
+	if(user.a_intent == INTENT_HARM)
 		discipline_slime(user)
 		return ..()
 
@@ -292,7 +293,7 @@ var/list/slime_colours = list("rainbow", "grey", "purple", "metal", "orange",
 				discipline_slime(M)
 	else
 		if(stat == DEAD && surgeries.len)
-			if(M.a_intent == "help")
+			if(M.a_intent == INTENT_HELP)
 				for(var/datum/surgery/S in surgeries)
 					if(S.next_step(M))
 						return 1
@@ -307,7 +308,7 @@ var/list/slime_colours = list("rainbow", "grey", "purple", "metal", "orange",
 
 /mob/living/simple_animal/slime/attackby(obj/item/W, mob/living/user, params)
 	if(stat == DEAD && surgeries.len)
-		if(user.a_intent == "help")
+		if(user.a_intent == INTENT_HELP)
 			for(var/datum/surgery/S in surgeries)
 				if(S.next_step(user))
 					return 1

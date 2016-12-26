@@ -28,8 +28,8 @@
 	if(istype(O, /obj/item/weapon/wrench) && buildable_sign)
 		user.visible_message("<span class='notice'>[user] starts removing [src]...</span>", \
 							 "<span class='notice'>You start unfastening [src].</span>")
-		playsound(src, 'sound/items/Ratchet.ogg', 50, 1)
-		if(!do_after(user, 30/O.toolspeed, target = src))
+		playsound(src, O.usesound, 50, 1)
+		if(!do_after(user, 30*O.toolspeed, target = src))
 			return
 		playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
 		user.visible_message("<span class='notice'>[user] unfastens [src].</span>", \
@@ -94,7 +94,7 @@
 	desc = "A sign with adhesive backing."
 	icon = 'icons/obj/decals.dmi'
 	icon_state = "backing"
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 	resistance_flags = FLAMMABLE
 	var/sign_path = /obj/structure/sign/basic //the type of sign that will be created when placed on a turf
 
@@ -265,5 +265,3 @@
 	name = "escape arm"
 	desc = "A direction sign, pointing out which way the escape shuttle dock is."
 	icon_state = "direction_evac"
-
-

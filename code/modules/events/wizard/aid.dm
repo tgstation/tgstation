@@ -3,7 +3,7 @@
 /datum/round_event_control/wizard/robelesscasting //EI NUDTH!
 	name = "Robeless Casting"
 	weight = 2
-	typepath = /datum/round_event/wizard/robelesscasting/
+	typepath = /datum/round_event/wizard/robelesscasting
 	max_occurrences = 1
 	earliest_start = 0
 
@@ -24,7 +24,7 @@
 /datum/round_event_control/wizard/improvedcasting //blink x5 disintergrate x5 here I come!
 	name = "Improved Casting"
 	weight = 3
-	typepath = /datum/round_event/wizard/improvedcasting/
+	typepath = /datum/round_event/wizard/improvedcasting
 	max_occurrences = 4 //because that'd be max level spells
 	earliest_start = 0
 

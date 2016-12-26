@@ -5,6 +5,7 @@
 	clockwork_desc = "A gateway in reality."
 	icon_state = "spatial_gateway"
 	density = 1
+	luminosity = 2
 	var/sender = TRUE //If this gateway is made for sending, not receiving
 	var/both_ways = FALSE
 	var/lifetime = 25 //How many deciseconds this portal will last
@@ -62,7 +63,7 @@
 /obj/effect/clockwork/spatial_gateway/attack_hand(mob/living/user)
 	if(!uses)
 		return FALSE
-	if(user.pulling && user.a_intent == "grab" && isliving(user.pulling))
+	if(user.pulling && user.a_intent == INTENT_GRAB && isliving(user.pulling))
 		var/mob/living/L = user.pulling
 		if(L.buckled || L.anchored || L.has_buckled_mobs())
 			return FALSE
@@ -177,7 +178,7 @@
 		return FALSE
 	var/input_target_key = input(invoker, "Choose a target to form a rift to.", "Spatial Gateway") as null|anything in possible_targets
 	var/atom/movable/target = possible_targets[input_target_key]
-	if(!src || !target || !invoker || !invoker.canUseTopic(src, !issilicon(invoker)) || !is_servant_of_ratvar(invoker) || (istype(src, /obj/item) && invoker.get_active_held_item() != src))
+	if(!src || !target || !invoker || !invoker.canUseTopic(src, !issilicon(invoker)) || !is_servant_of_ratvar(invoker) || (istype(src, /obj/item) && invoker.get_active_held_item() != src) || !invoker.can_speak_vocal())
 		return FALSE //if any of the involved things no longer exist, the invoker is stunned, too far away to use the object, or does not serve ratvar, or if the object is an item and not in the mob's active hand, fail
 	if(isliving(target))
 		var/mob/living/L = target

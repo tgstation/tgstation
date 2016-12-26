@@ -16,7 +16,7 @@
 	desc = "A camera film cartridge. Insert it into a camera to reload it."
 	icon_state = "film"
 	item_state = "electropack"
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 	resistance_flags = FLAMMABLE
 
 /*
@@ -27,7 +27,7 @@
 	icon = 'icons/obj/items.dmi'
 	icon_state = "photo"
 	item_state = "paper"
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 	resistance_flags = FLAMMABLE
 	obj_integrity = 50
 	max_integrity = 50
@@ -106,7 +106,7 @@
 	desc = "A polaroid camera."
 	icon_state = "camera"
 	item_state = "electropack"
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
 	materials = list(MAT_METAL=2000)

@@ -242,7 +242,7 @@
 	icon = 'icons/obj/flora/plants.dmi'
 	icon_state = "plant-01"
 	layer = ABOVE_MOB_LAYER
-	w_class = 5
+	w_class = WEIGHT_CLASS_HUGE
 	force = 10
 	throwforce = 13
 	throw_speed = 2

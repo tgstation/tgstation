@@ -150,9 +150,9 @@
 	log_say("[key_name(src)] : [message]")
 	var/rendered = "<span class='revennotice'><b>[src]</b> says, \"[message]\"</span>"
 	for(var/mob/M in mob_list)
-		if(istype(M, /mob/living/simple_animal/revenant))
+		if(isrevenant(M))
 			M << rendered
-		if(isobserver(M))
+		else if(isobserver(M))
 			var/link = FOLLOW_LINK(M, src)
 			M << "[link] [rendered]"
 	return
@@ -193,12 +193,13 @@
 		inhibited = 0
 		update_action_buttons_icon()
 
-/mob/living/simple_animal/revenant/adjustHealth(amount)
-	if(!revealed)
-		return 0
+/mob/living/simple_animal/revenant/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
+	if(!forced && !revealed)
+		return FALSE
 	. = amount
 	essence = max(0, essence-amount)
-	update_health_hud()
+	if(updating_health)
+		update_health_hud()
 	if(essence == 0)
 		death()
 
@@ -323,7 +324,7 @@
 	desc = "A pile of fine blue dust. Small tendrils of violet mist swirl around it."
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "revenantEctoplasm"
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	var/essence = 75 //the maximum essence of the reforming revenant
 	var/reforming = 1
 	var/inert = 0
@@ -420,7 +421,7 @@
 	..()
 
 /datum/objective/revenant/check_completion()
-	if(!istype(owner.current, /mob/living/simple_animal/revenant))
+	if(!isrevenant(owner.current))
 		return 0
 	var/mob/living/simple_animal/revenant/R = owner.current
 	if(!R || R.stat == DEAD)

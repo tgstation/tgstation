@@ -11,7 +11,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 
 */
 
-/mob/living/carbon/
+/mob/living/carbon
 	var/image/halimage
 	var/image/halbody
 	var/obj/halitem

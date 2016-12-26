@@ -162,27 +162,31 @@ Credit where due:
 		return 0
 	var/greeting_text = "<br><b><span class='large_brass'>You are a servant of Ratvar, the Clockwork Justiciar.</span>\n\
 	Rusting eternally in the Celestial Derelict, Ratvar has formed a covenant of mortals, with you as one of its members. As one of the Justiciar's servants, you are to work to the best of your \
-	ability to assist in completion of His agenda. You do not know the specifics of how to do so, but luckily you have a vessel to help you learn.</b>"
+	ability to assist in completion of His agenda. You may not know the specifics of how to do so, but luckily you have a vessel to help you learn.</b>"
 	M << greeting_text
 	return 1
 
 /datum/game_mode/proc/equip_servant(mob/living/L) //Grants a clockwork slab to the mob, with one of each component
 	if(!L || !istype(L))
-		return 0
+		return FALSE
+	var/obj/item/clockwork/slab/starter/S = new/obj/item/clockwork/slab/starter(null) //start it off in null
 	var/slot = "At your feet"
+	var/list/slots = list("In your left pocket" = slot_l_store, "In your right pocket" = slot_r_store, "In your backpack" = slot_in_backpack, "On your belt" = slot_belt)
 	if(ishuman(L))
 		var/mob/living/carbon/human/H = L
-		if(H.back && istype(H.back, /obj/item/weapon/storage/backpack))
-			var/obj/item/weapon/storage/backpack/B = H.back
-			new/obj/item/clockwork/slab/starter(B)
-			slot = "In your [B.name]"
+		slot = H.equip_in_one_of_slots(S, slots)
+		if(slot == "In your backpack")
+			slot = "In your [H.back.name]"
 	if(slot == "At your feet")
-		new/obj/item/clockwork/slab/starter(get_turf(L))
-	L << "<b>[slot] is a link to the halls of Reebe and your master. You may use it to perform many tasks, but also become oriented with the workings of Ratvar and how to best complete your \
-	tasks. This clockwork slab will be instrumental in your triumph. Remember: you can speak discreetly with your fellow servants by using the <span class='brass'>Hierophant Network</span> action button, \
-	and you can find a concise tutorial by using the slab in-hand and selecting Recollection.</b>"
-	L << "<i>Alternatively, check out the wiki page at </i><b>https://tgstation13.org/wiki/Clockwork_Cult</b><i>, which contains additional information.</i>"
-	return 1
+		if(!S.forceMove(get_turf(L)))
+			qdel(S)
+	if(S && !qdeleted(S))
+		L << "<b>[slot] is a link to the halls of Reebe and your master. You may use it to perform many tasks, but also become oriented with the workings of Ratvar and how to best complete your \
+		tasks. This clockwork slab will be instrumental in your triumph. Remember: you can speak discreetly with your fellow servants by using the <span class='brass'>Hierophant Network</span> action button, \
+		and you can find a concise tutorial by using the slab in-hand and selecting Recollection.</b>"
+		L << "<i>Alternatively, check out the wiki page at </i><b>https://tgstation13.org/wiki/Clockwork_Cult</b><i>, which contains additional information.</i>"
+		return TRUE
+	return FALSE
 
 /datum/game_mode/clockwork_cult/proc/present_tasks(mob/living/L) //Memorizes and displays the clockwork cult's objective
 	if(!L || !istype(L) || !L.mind)

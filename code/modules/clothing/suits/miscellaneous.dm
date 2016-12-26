@@ -86,7 +86,7 @@
 	icon_state = "syndicate-black-red"
 	item_state = "syndicate-black-red"
 	desc = "A plastic replica of the Syndicate space suit. You'll look just like a real murderous Syndicate agent in this! This is a toy, it is not made for use in space!"
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/internals/emergency_oxygen,/obj/item/toy)
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 	resistance_flags = 0
@@ -253,7 +253,7 @@
 	body_parts_covered = CHEST|GROIN|ARMS
 	//cold_protection = CHEST|GROIN|ARMS
 	//min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
-	allowed = list(,)
+	allowed = list()
 	hooded = 1
 	hoodtype = /obj/item/clothing/head/ian_hood
 	dog_fashion = /datum/dog_fashion/back
@@ -292,7 +292,7 @@
 	icon_state = "lingspacesuit"
 	item_state = "labcoat"
 	body_parts_covered = CHEST|GROIN|ARMS
-	allowed = list(,)
+	allowed = list()
 	hooded = 1
 	actions_types = list(/datum/action/item_action/toggle_human_head)
 	hoodtype = /obj/item/clothing/head/human_head
@@ -518,7 +518,7 @@
 	hoodtype = /obj/item/clothing/head/winterhood/hydro
 
 /obj/item/clothing/head/winterhood/hydro
-	item_state = "winterhood_hydro"
+	icon_state = "winterhood_hydro"
 
 /obj/item/clothing/suit/hooded/wintercoat/cargo
 	name = "cargo winter coat"

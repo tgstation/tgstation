@@ -1,44 +1,62 @@
-// reference: /client/proc/modify_variables(var/atom/O, var/param_var_name = null, var/autodetect_class = 0)
-
-var/global/list/internal_byond_list_vars = list("contents" = TRUE, "verbs" = TRUE, "screen" = TRUE, "images" = TRUE)
-
 /datum
-	var/var_edited = 0 //Warrenty void if seal is broken
+	var/var_edited = FALSE //Warrenty void if seal is broken
 	var/datum/reagents/reagents = null
 	var/fingerprintslast = null
 
-/datum/proc/on_varedit(modified_var) //called whenever a var is edited
-	var_edited = 1
+/datum/proc/vv_edit_var(var_name, var_value) //called whenever a var is edited
+	switch(var_name)
+		if ("vars")
+			return FALSE
+		if ("var_edited")
+			return FALSE
+	var_edited = TRUE
+	vars[var_name] = var_value
+
+/datum/proc/vv_get_var(var_name)
+	switch(var_name)
+		if ("vars")
+			return debug_variable(var_name, list(), 0, src)
+	return debug_variable(var_name, vars[var_name], 0, src)
+
+//please call . = ..() first and append to the result, that way parent items are always at the top and child items are further down
+//add seperaters by doing . += "---"
+/datum/proc/vv_get_dropdown()
+	. = list()
+	. += "---"
+	.["Call Proc"] = "?_src_=vars;proc_call=\ref[src]"
+	.["Mark Object"] = "?_src_=vars;mark_object=\ref[src]"
+
 
 /datum/proc/on_reagent_change()
 	return
+
 
 /client/proc/debug_variables(datum/D in world)
 	set category = "Debug"
 	set name = "View Variables"
 	//set src in world
-
+	var/static/cookieoffset = rand(1, 9999) //to force cookies to reset after the round.
 
 	if(!usr.client || !usr.client.holder)
 		usr << "<span class='danger'>You need to be an administrator to access this.</span>"
 		return
 
-
-	var/title = ""
-	var/body = ""
-
 	if(!D)
 		return
-	if(istype(D, /atom))
-		var/atom/A = D
-		title = "[A.name] (\ref[A]) = [A.type]"
 
-		#ifdef VARSICON
-		if (A.icon)
-			body += debug_variable("icon", new/icon(A.icon, A.icon_state, A.dir), 0)
-		#endif
+	var/islist = islist(D)
+	if (!islist && !istype(D))
+		return
 
+	var/title = ""
+	var/refid = "\ref[D]"
 	var/icon/sprite
+
+	var/type = /list
+	if (!islist)
+		type = D.type
+
+
 
 	if(istype(D,/atom))
 		var/atom/AT = D
@@ -46,175 +64,40 @@ var/global/list/internal_byond_list_vars = list("contents" = TRUE, "verbs" = TRU
 			sprite = new /icon(AT.icon, AT.icon_state)
 			usr << browse_rsc(sprite, "view_vars_sprite.png")
 
-	title = "[D] (\ref[D]) = [D.type]"
+	title = "[D] (\ref[D]) = [type]"
 
-	body += {"<script type="text/javascript">
-
-				function updateSearch(){
-					var filter_text = document.getElementById('filter');
-					var filter = filter_text.value.toLowerCase();
-
-					if(event.keyCode == 13){	//Enter / return
-						var vars_ol = document.getElementById('vars');
-						var lis = vars_ol.getElementsByTagName("li");
-						for ( var i = 0; i < lis.length; ++i )
-						{
-							try{
-								var li = lis\[i\];
-								if ( li.style.backgroundColor == "#ffee88" )
-								{
-									alist = lis\[i\].getElementsByTagName("a")
-									if(alist.length > 0){
-										location.href=alist\[0\].href;
-									}
-								}
-							}catch(err) {   }
-						}
-						return
-					}
-
-					if(event.keyCode == 38){	//Up arrow
-						var vars_ol = document.getElementById('vars');
-						var lis = vars_ol.getElementsByTagName("li");
-						for ( var i = 0; i < lis.length; ++i )
-						{
-							try{
-								var li = lis\[i\];
-								if ( li.style.backgroundColor == "#ffee88" )
-								{
-									if( (i-1) >= 0){
-										var li_new = lis\[i-1\];
-										li.style.backgroundColor = "white";
-										li_new.style.backgroundColor = "#ffee88";
-										return
-									}
-								}
-							}catch(err) {  }
-						}
-						return
-					}
-
-					if(event.keyCode == 40){	//Down arrow
-						var vars_ol = document.getElementById('vars');
-						var lis = vars_ol.getElementsByTagName("li");
-						for ( var i = 0; i < lis.length; ++i )
-						{
-							try{
-								var li = lis\[i\];
-								if ( li.style.backgroundColor == "#ffee88" )
-								{
-									if( (i+1) < lis.length){
-										var li_new = lis\[i+1\];
-										li.style.backgroundColor = "white";
-										li_new.style.backgroundColor = "#ffee88";
-										return
-									}
-								}
-							}catch(err) {  }
-						}
-						return
-					}
-
-					//This part here resets everything to how it was at the start so the filter is applied to the complete list. Screw efficiency, it's client-side anyway and it only looks through 200 or so variables at maximum anyway (mobs).
-					if(complete_list != null && complete_list != ""){
-						var vars_ol1 = document.getElementById("vars");
-						vars_ol1.innerHTML = complete_list
-					}
-
-					if(filter.value == ""){
-						return;
-					}else{
-						var vars_ol = document.getElementById('vars');
-						var lis = vars_ol.getElementsByTagName("li");
-
-						for ( var i = 0; i < lis.length; ++i )
-						{
-							try{
-								var li = lis\[i\];
-								if ( li.innerText.toLowerCase().indexOf(filter) == -1 )
-								{
-									vars_ol.removeChild(li);
-									i--;
-								}
-							}catch(err) {   }
-						}
-					}
-					var lis_new = vars_ol.getElementsByTagName("li");
-					for ( var j = 0; j < lis_new.length; ++j )
-					{
-						var li1 = lis\[j\];
-						if (j == 0){
-							li1.style.backgroundColor = "#ffee88";
-						}else{
-							li1.style.backgroundColor = "white";
-						}
-					}
-				}
-
-
-
-				function selectTextField(){
-					var filter_text = document.getElementById('filter');
-					filter_text.focus();
-					filter_text.select();
-
-				}
-
-				function loadPage(list) {
-
-					if(list.options\[list.selectedIndex\].value == ""){
-						return;
-					}
-
-					location.href=list.options\[list.selectedIndex\].value;
-
-				}
-			</script> "}
-
-	body += "<body onload='selectTextField(); updateSearch()' onkeyup='updateSearch()'>"
-
-	body += "<div align='center'><table width='100%'><tr><td width='50%'>"
-
+	var/sprite_text
 	if(sprite)
-		body += "<table align='center' width='100%'><tr><td><img src='view_vars_sprite.png'></td><td>"
-	else
-		body += "<table align='center' width='100%'><tr><td>"
-
-	body += "<div align='center'>"
+		sprite_text = "<img src='view_vars_sprite.png'></td><td>"
+	var/list/atomsnowflake = list()
 
 	if(istype(D,/atom))
 		var/atom/A = D
 		if(isliving(A))
-			body += "<a href='?_src_=vars;rename=\ref[D]'><b>[D]</b></a>"
+			atomsnowflake += "<a href='?_src_=vars;rename=[refid]'><b>[D]</b></a>"
 			if(A.dir)
-				body += "<br><font size='1'><a href='?_src_=vars;rotatedatum=\ref[D];rotatedir=left'><<</a> <a href='?_src_=vars;datumedit=\ref[D];varnameedit=dir'>[dir2text(A.dir)]</a> <a href='?_src_=vars;rotatedatum=\ref[D];rotatedir=right'>>></a></font>"
+				atomsnowflake += "<br><font size='1'><a href='?_src_=vars;rotatedatum=[refid];rotatedir=left'><<</a> <a href='?_src_=vars;datumedit=[refid];varnameedit=dir'>[dir2text(A.dir)]</a> <a href='?_src_=vars;rotatedatum=[refid];rotatedir=right'>>></a></font>"
 			var/mob/living/M = A
-			body += "<br><font size='1'><a href='?_src_=vars;datumedit=\ref[D];varnameedit=ckey'>[M.ckey ? M.ckey : "No ckey"]</a> / <a href='?_src_=vars;datumedit=\ref[D];varnameedit=real_name'>[M.real_name ? M.real_name : "No real name"]</a></font>"
-			body += {"
-			<br><font size='1'>
-			BRUTE:<font size='1'><a href='?_src_=vars;mobToDamage=\ref[D];adjustDamage=brute'>[M.getBruteLoss()]</a>
-			FIRE:<font size='1'><a href='?_src_=vars;mobToDamage=\ref[D];adjustDamage=fire'>[M.getFireLoss()]</a>
-			TOXIN:<font size='1'><a href='?_src_=vars;mobToDamage=\ref[D];adjustDamage=toxin'>[M.getToxLoss()]</a>
-			OXY:<font size='1'><a href='?_src_=vars;mobToDamage=\ref[D];adjustDamage=oxygen'>[M.getOxyLoss()]</a>
-			CLONE:<font size='1'><a href='?_src_=vars;mobToDamage=\ref[D];adjustDamage=clone'>[M.getCloneLoss()]</a>
-			BRAIN:<font size='1'><a href='?_src_=vars;mobToDamage=\ref[D];adjustDamage=brain'>[M.getBrainLoss()]</a>
-			STAMINA:<font size='1'><a href='?_src_=vars;mobToDamage=\ref[D];adjustDamage=stamina'>[M.getStaminaLoss()]</a>
-			</font>
-
-
+			atomsnowflake += {"
+				<br><font size='1'><a href='?_src_=vars;datumedit=[refid];varnameedit=ckey'>[M.ckey ? M.ckey : "No ckey"]</a> / <a href='?_src_=vars;datumedit=[refid];varnameedit=real_name'>[M.real_name ? M.real_name : "No real name"]</a></font>
+				<br><font size='1'>
+					BRUTE:<font size='1'><a href='?_src_=vars;mobToDamage=[refid];adjustDamage=brute'>[M.getBruteLoss()]</a>
+					FIRE:<font size='1'><a href='?_src_=vars;mobToDamage=[refid];adjustDamage=fire'>[M.getFireLoss()]</a>
+					TOXIN:<font size='1'><a href='?_src_=vars;mobToDamage=[refid];adjustDamage=toxin'>[M.getToxLoss()]</a>
+					OXY:<font size='1'><a href='?_src_=vars;mobToDamage=[refid];adjustDamage=oxygen'>[M.getOxyLoss()]</a>
+					CLONE:<font size='1'><a href='?_src_=vars;mobToDamage=[refid];adjustDamage=clone'>[M.getCloneLoss()]</a>
+					BRAIN:<font size='1'><a href='?_src_=vars;mobToDamage=[refid];adjustDamage=brain'>[M.getBrainLoss()]</a>
+					STAMINA:<font size='1'><a href='?_src_=vars;mobToDamage=[refid];adjustDamage=stamina'>[M.getStaminaLoss()]</a>
+				</font>
 			"}
 		else
-			body += "<a href='?_src_=vars;datumedit=\ref[D];varnameedit=name'><b>[D]</b></a>"
+			atomsnowflake += "<a href='?_src_=vars;datumedit=[refid];varnameedit=name'><b>[D]</b></a>"
 			if(A.dir)
-				body += "<br><font size='1'><a href='?_src_=vars;rotatedatum=\ref[D];rotatedir=left'><<</a> <a href='?_src_=vars;datumedit=\ref[D];varnameedit=dir'>[dir2text(A.dir)]</a> <a href='?_src_=vars;rotatedatum=\ref[D];rotatedir=right'>>></a></font>"
+				atomsnowflake += "<br><font size='1'><a href='?_src_=vars;rotatedatum=[refid];rotatedir=left'><<</a> <a href='?_src_=vars;datumedit=[refid];varnameedit=dir'>[dir2text(A.dir)]</a> <a href='?_src_=vars;rotatedatum=[refid];rotatedir=right'>>></a></font>"
 	else
-		body += "<b>[D]</b>"
+		atomsnowflake += "<b>[D]</b>"
 
-	body += "</div>"
-
-	body += "</tr></td></table>"
-
-	var/formatted_type = text("[D.type]")
+	var/formatted_type = "[type]"
 	if(length(formatted_type) > 25)
 		var/middle_point = length(formatted_type) / 2
 		var/splitpoint = findtext(formatted_type,"/",middle_point)
@@ -223,146 +106,298 @@ var/global/list/internal_byond_list_vars = list("contents" = TRUE, "verbs" = TRU
 		else
 			formatted_type = "Type too long" //No suitable splitpoint (/) found.
 
-	body += "<div align='center'><b><font size='1'>[formatted_type]</font></b>"
+	var/marked
+	if(holder.marked_datum && holder.marked_datum == D)
+		marked = "<br><font size='1' color='red'><b>Marked Object</b></font>"
+	var/varedited_line = ""
+	if(!islist && D.var_edited)
+		varedited_line = "<br><font size='1' color='red'><b>Var Edited</b></font>"
 
-	if(src.holder && src.holder.marked_datum && src.holder.marked_datum == D)
-		body += "<br><font size='1' color='red'><b>Marked Object</b></font>"
-
-	if(D.var_edited)
-		body += "<br><font size='1' color='red'><b>Var Edited</b></font>"
-	body += "</div>"
-
-	body += "</div></td>"
-
-	body += "<td width='50%'><div align='center'><a href='?_src_=vars;datumrefresh=\ref[D]'>Refresh</a>"
-
-	//if(ismob(D))
-	//	body += "<br><a href='?_src_=vars;mob_player_panel=\ref[D]'>Show player panel</a></div></td></tr></table></div><hr>"
-
-	body += {"	<form>
-				<select name="file" size="1"
-				onchange="loadPage(this.form.elements\[0\])"
-				target="_parent._top"
-				onmouseclick="this.focus()"
-				style="background-color:#ffffff">
-			"}
-
-	body += {"	<option value>Select option</option>
-				<option value> </option>
-			"}
-
-
-	body += "<option value='?_src_=vars;mark_object=\ref[D]'>Mark Object</option>"
-	body += "<option value='?_src_=vars;proc_call=\ref[D]'>Call Proc</option>"
-	if(ismob(D))
-		body += "<option value='?_src_=vars;mob_player_panel=\ref[D]'>Show player panel</option>"
-	if(istype(D, /atom/movable))
-		body += "<option value='?_src_=holder;adminplayerobservefollow=\ref[D]'>Follow</option>"
+	var/list/dropdownoptions = list()
+	if (islist)
+		dropdownoptions = list(
+			"---",
+			"Add Item" = "?_src_=vars;listadd=[refid]",
+			"Remove Nulls" = "?_src_=vars;listnulls=[refid]",
+			"Remove Dupes" = "?_src_=vars;listdupes=[refid]",
+			"Set len" = "?_src_=vars;listlen=[refid]",
+			"Shuffle" = "?_src_=vars;listshuffle=[refid]"
+			)
 	else
-		var/atom/A = D
-		if(istype(A))
-			body += "<option value='?_src_=holder;adminplayerobservecoodjump=1;X=[A.x];Y=[A.y];Z=[A.z]'>Jump to</option>"
+		dropdownoptions = D.vv_get_dropdown()
+	var/list/dropdownoptions_html = list()
 
-	body += "<option value>---</option>"
-
-	if(ismob(D))
-		body += "<option value='?_src_=vars;give_spell=\ref[D]'>Give Spell</option>"
-		body += "<option value='?_src_=vars;remove_spell=\ref[D]'>Remove Spell</option>"
-		body += "<option value='?_src_=vars;give_disease=\ref[D]'>Give Disease</option>"
-		body += "<option value='?_src_=vars;ninja=\ref[D]'>Make Space Ninja</option>"
-		body += "<option value='?_src_=vars;godmode=\ref[D]'>Toggle Godmode</option>"
-		body += "<option value='?_src_=vars;build_mode=\ref[D]'>Toggle Build Mode</option>"
-		body += "<option value='?_src_=vars;direct_control=\ref[D]'>Assume Direct Control</option>"
-		body += "<option value='?_src_=vars;drop_everything=\ref[D]'>Drop Everything</option>"
-		body += "<option value='?_src_=vars;regenerateicons=\ref[D]'>Regenerate Icons</option>"
-		body += "<option value='?_src_=vars;offer_control=\ref[D]'>Offer Control to Ghosts</option>"
-		if(iscarbon(D))
-			body += "<option value>---</option>"
-			body += "<option value='?_src_=vars;editorgans=\ref[D]'>Modify organs</option>"
-			body += "<option value='?_src_=vars;editbodypart=\ref[D]'>Modify bodypart</option>"
-			body += "<option value='?_src_=vars;makeai=\ref[D]'>Make AI</option>"
-		if(ishuman(D))
-			body += "<option value='?_src_=vars;makemonkey=\ref[D]'>Make monkey</option>"
-			body += "<option value='?_src_=vars;setspecies=\ref[D]'>Set Species</option>"
-			body += "<option value='?_src_=vars;makerobot=\ref[D]'>Make cyborg</option>"
-			body += "<option value='?_src_=vars;makealien=\ref[D]'>Make alien</option>"
-			body += "<option value='?_src_=vars;makeslime=\ref[D]'>Make slime</option>"
-			body += "<option value='?_src_=vars;purrbation=\ref[D]'>Toggle Purrbation</option>"
-		body += "<option value>---</option>"
-		body += "<option value='?_src_=vars;gib=\ref[D]'>Gib</option>"
-	if(isobj(D))
-		body += "<option value='?_src_=vars;delall=\ref[D]'>Delete all of type</option>"
-	if(isobj(D) || ismob(D) || isturf(D))
-		body += "<option value='?_src_=vars;addreagent=\ref[D]'>Add reagent</option>"
-		body += "<option value='?_src_=vars;explode=\ref[D]'>Trigger explosion</option>"
-		body += "<option value='?_src_=vars;emp=\ref[D]'>Trigger EM pulse</option>"
-
-	body += "</select></form>"
-
-	body += "</div></td></tr></table></div><hr>"
-
-	body += "<font size='1'><b>E</b> - Edit, tries to determine the variable type by itself.<br>"
-	body += "<b>C</b> - Change, asks you for the var type first.<br>"
-	body += "<b>M</b> - Mass modify: changes this variable for all objects of this type.</font><br>"
-
-	body += "<hr><table width='100%'><tr><td width='20%'><div align='center'><b>Search:</b></div></td><td width='80%'><input type='text' id='filter' name='filter_text' value='' style='width:100%;'></td></tr></table><hr>"
-
-	body += "<ol id='vars'>"
+	for (var/name in dropdownoptions)
+		var/link = dropdownoptions[name]
+		if (link)
+			dropdownoptions_html += "<option value='[link]'>[name]</option>"
+		else
+			dropdownoptions_html += "<option value>[name]</option>"
 
 	var/list/names = list()
-	for (var/V in D.vars)
-		names += V
+	if (!islist)
+		for (var/V in D.vars)
+			names += V
 	sleep(1)//For some reason, without this sleep, VVing will cause client to disconnect on certain objects.
 
-	names = sortList(names)
+	var/list/variable_html = list()
+	if (islist)
+		var/list/L = D
+		for (var/i in 1 to L.len)
+			var/key = L[i]
+			var/value
+			if (IS_NORMAL_LIST(L) && !isnum(key))
+				value = L[key]
+			variable_html += debug_variable(i, value, 0, D)
+	else
 
-	for (var/V in names)
-		body += debug_variable(V, D.vars[V], 0, D)
+		names = sortList(names)
+		for (var/V in names)
+			variable_html += D.vv_get_var(V)
 
-	body += "</ol>"
+	var/html = {"
+<html>
+	<head>
+		<title>[title]</title>
+		<style>
+			body {
+				font-family: Verdana, sans-serif;
+				font-size: 9pt;
+			}
+			.value {
+				font-family: "Courier New", monospace;
+				font-size: 8pt;
+			}
+		</style>
+	</head>
+	<body onload='selectTextField(); updateSearch()' onkeydown='return checkreload()' onkeyup='updateSearch()'>
+		<script type="text/javascript">
+			function checkreload() {
+				if(event.keyCode == 116){	//F5 (to refresh properly)
+					document.getElementById("refresh_link").click();
+					event.preventDefault ? event.preventDefault() : (event.returnValue = false)
+					return false;
+				}
+				return true;
+			}
+			function updateSearch(){
+				var filter_text = document.getElementById('filter');
+				var filter = filter_text.value.toLowerCase();
+				if(event.keyCode == 13){	//Enter / return
+					var vars_ol = document.getElementById('vars');
+					var lis = vars_ol.getElementsByTagName("li");
+					for ( var i = 0; i < lis.length; ++i )
+					{
+						try{
+							var li = lis\[i\];
+							if ( li.style.backgroundColor == "#ffee88" )
+							{
+								alist = lis\[i\].getElementsByTagName("a")
+								if(alist.length > 0){
+									location.href=alist\[0\].href;
+								}
+							}
+						}catch(err) {   }
+					}
+					return
+				}
+				if(event.keyCode == 38){	//Up arrow
+					var vars_ol = document.getElementById('vars');
+					var lis = vars_ol.getElementsByTagName("li");
+					for ( var i = 0; i < lis.length; ++i )
+					{
+						try{
+							var li = lis\[i\];
+							if ( li.style.backgroundColor == "#ffee88" )
+							{
+								if( (i-1) >= 0){
+									var li_new = lis\[i-1\];
+									li.style.backgroundColor = "white";
+									li_new.style.backgroundColor = "#ffee88";
+									return
+								}
+							}
+						}catch(err) {  }
+					}
+					return
+				}
+				if(event.keyCode == 40){	//Down arrow
+					var vars_ol = document.getElementById('vars');
+					var lis = vars_ol.getElementsByTagName("li");
+					for ( var i = 0; i < lis.length; ++i )
+					{
+						try{
+							var li = lis\[i\];
+							if ( li.style.backgroundColor == "#ffee88" )
+							{
+								if( (i+1) < lis.length){
+									var li_new = lis\[i+1\];
+									li.style.backgroundColor = "white";
+									li_new.style.backgroundColor = "#ffee88";
+									return
+								}
+							}
+						}catch(err) {  }
+					}
+					return
+				}
 
-	var/html = "<html><head>"
-	if (title)
-		html += "<title>[title]</title>"
-	html += {"<style>
-body
-{
-	font-family: Verdana, sans-serif;
-	font-size: 9pt;
-}
-.value
-{
-	font-family: "Courier New", monospace;
-	font-size: 8pt;
-}
-</style>"}
-	html += "</head><body>"
-	html += body
+				//This part here resets everything to how it was at the start so the filter is applied to the complete list. Screw efficiency, it's client-side anyway and it only looks through 200 or so variables at maximum anyway (mobs).
+				if(complete_list != null && complete_list != ""){
+					var vars_ol1 = document.getElementById("vars");
+					vars_ol1.innerHTML = complete_list
+				}
+				document.cookie="[refid][cookieoffset]search="+encodeURIComponent(filter);
+				if(filter == ""){
+					return;
+				}else{
+					var vars_ol = document.getElementById('vars');
+					var lis = vars_ol.getElementsByTagName("li");
+					for ( var i = 0; i < lis.length; ++i )
+					{
+						try{
+							var li = lis\[i\];
+							if ( li.innerText.toLowerCase().indexOf(filter) == -1 )
+							{
+								vars_ol.removeChild(li);
+								i--;
+							}
+						}catch(err) {   }
+					}
+				}
+				var lis_new = vars_ol.getElementsByTagName("li");
+				for ( var j = 0; j < lis_new.length; ++j )
+				{
+					var li1 = lis\[j\];
+					if (j == 0){
+						li1.style.backgroundColor = "#ffee88";
+					}else{
+						li1.style.backgroundColor = "white";
+					}
+				}
+			}
+			function selectTextField() {
+				var filter_text = document.getElementById('filter');
+				filter_text.focus();
+				filter_text.select();
+				var lastsearch = getCookie("[refid][cookieoffset]search");
+				if (lastsearch) {
+					filter_text.value = lastsearch;
+					updateSearch();
+				}
+			}
+			function loadPage(list) {
+				if(list.options\[list.selectedIndex\].value == ""){
+					return;
+				}
+				location.href=list.options\[list.selectedIndex\].value;
+			}
+			function getCookie(cname) {
+				var name = cname + "=";
+				var ca = document.cookie.split(';');
+				for(var i=0; i<ca.length; i++) {
+					var c = ca\[i\];
+					while (c.charAt(0)==' ') c = c.substring(1,c.length);
+					if (c.indexOf(name)==0) return c.substring(name.length,c.length);
+				}
+				return "";
+			}
 
-	html += {"
+		</script>
+		<div align='center'>
+			<table width='100%'>
+				<tr>
+					<td width='50%'>
+						<table align='center' width='100%'>
+							<tr>
+								<td>
+									[sprite_text]
+									<div align='center'>
+										[atomsnowflake.Join()]
+									</div>
+								</td>
+							</tr>
+						</table>
+						<div align='center'>
+							<b><font size='1'>[formatted_type]</font></b>
+							[marked]
+							[varedited_line]
+						</div>
+					</td>
+					<td width='50%'>
+						<div align='center'>
+							<a id='refresh_link' href='?_src_=vars;datumrefresh=[refid]'>Refresh</a>
+							<form>
+								<select name="file" size="1"
+									onchange="loadPage(this.form.elements\[0\])"
+									target="_parent._top"
+									onmouseclick="this.focus()"
+									style="background-color:#ffffff">
+									<option value>Select option</option>
+									[dropdownoptions_html.Join()]
+								</select>
+							</form>
+						</div>
+					</td>
+				</tr>
+			</table>
+		</div>
+		<hr>
+		<font size='1'>
+			<b>E</b> - Edit, tries to determine the variable type by itself.<br>
+			<b>C</b> - Change, asks you for the var type first.<br>
+			<b>M</b> - Mass modify: changes this variable for all objects of this type.<br>
+		</font>
+		<hr>
+		<table width='100%'>
+			<tr>
+				<td width='20%'>
+					<div align='center'>
+						<b>Search:</b>
+					</div>
+				</td>
+				<td width='80%'>
+					<input type='text' id='filter' name='filter_text' value='' style='width:100%;'>
+				</td>
+			</tr>
+		</table>
+		<hr>
+		<ol id='vars'>
+			[variable_html.Join()]
+		</ol>
 		<script type='text/javascript'>
 			var vars_ol = document.getElementById("vars");
 			var complete_list = vars_ol.innerHTML;
 		</script>
-	"}
+	</body>
+</html>
+"}
 
-	html += "</body></html>"
+	usr << browse(html, "window=variables[refid];size=475x650")
 
-	usr << browse(html, "window=variables\ref[D];size=475x650")
 
-/client/proc/debug_variable(name, value, level, datum/DA = null)
-	var/html = ""
-
+#define VV_HTML_ENCODE(thing) ( sanitize ? html_encode(thing) : thing )
+/proc/debug_variable(name, value, level, datum/DA = null, sanitize = TRUE)
+	var/header
 	if(DA)
-		html += "<li style='backgroundColor:white'>(<a href='?_src_=vars;datumedit=\ref[DA];varnameedit=[name]'>E</a>) (<a href='?_src_=vars;datumchange=\ref[DA];varnamechange=[name]'>C</a>) (<a href='?_src_=vars;datummass=\ref[DA];varnamemass=[name]'>M</a>) "
+		if (istype(DA, /list))
+			var/index = name
+			if (value)
+				name = DA[name] //name is really the index until this line
+			else
+				value = DA[name]
+			header = "<li style='backgroundColor:white'>(<a href='?_src_=vars;listedit=\ref[DA];index=[index]'>E</a>) (<a href='?_src_=vars;listchange=\ref[DA];index=[index]'>C</a>) (<a href='?_src_=vars;listremove=\ref[DA];index=[index]'>-</a>) "
+		else
+			header = "<li style='backgroundColor:white'>(<a href='?_src_=vars;datumedit=\ref[DA];varnameedit=[name]'>E</a>) (<a href='?_src_=vars;datumchange=\ref[DA];varnamechange=[name]'>C</a>) (<a href='?_src_=vars;datummass=\ref[DA];varnamemass=[name]'>M</a>) "
 	else
-		html += "<li>"
+		header = "<li>"
 
+	var/item
 	if (isnull(value))
-		html += "[html_encode(name)] = <span class='value'>null</span>"
+		item = "[VV_HTML_ENCODE(name)] = <span class='value'>null</span>"
 
 	else if (istext(value))
-		html += "[html_encode(name)] = <span class='value'>\"[html_encode(value)]\"</span>"
+		item = "[VV_HTML_ENCODE(name)] = <span class='value'>\"[VV_HTML_ENCODE(value)]\"</span>"
 
 	else if (isicon(value))
 		#ifdef VARSICON
@@ -370,9 +405,9 @@ body
 		var/rnd = rand(1,10000)
 		var/rname = "tmp\ref[I][rnd].png"
 		usr << browse_rsc(I, rname)
-		html += "[html_encode(name)] = (<span class='value'>[value]</span>) <img class=icon src=\"[rname]\">"
+		item = "[VV_HTML_ENCODE(name)] = (<span class='value'>[value]</span>) <img class=icon src=\"[rname]\">"
 		#else
-		html += "[html_encode(name)] = /icon (<span class='value'>[value]</span>)"
+		item = "[VV_HTML_ENCODE(name)] = /icon (<span class='value'>[value]</span>)"
 		#endif
 
 /*		else if (istype(value, /image))
@@ -387,53 +422,47 @@ body
 		#endif
 */
 	else if (isfile(value))
-		html += "[html_encode(name)] = <span class='value'>'[value]'</span>"
+		item = "[VV_HTML_ENCODE(name)] = <span class='value'>'[value]'</span>"
 
-	else if (istype(value, /client))
-		var/client/C = value
-		html += "<a href='?_src_=vars;Vars=\ref[value]'>[html_encode(name)] \ref[value]</a> = [C] [C.type]"
+	//else if (istype(value, /client))
+	//	var/client/C = value
+	//	item = "<a href='?_src_=vars;Vars=\ref[value]'>[VV_HTML_ENCODE(name)] \ref[value]</a> = [C] [C.type]"
 
 	else if (istype(value, /datum))
 		var/datum/D = value
-		html += "<a href='?_src_=vars;Vars=\ref[value]'>[html_encode(name)] \ref[value]</a> = [D.type]"
+		if ("[D]" != "[D.type]") //if the thing as a name var, lets use it.
+			item = "<a href='?_src_=vars;Vars=\ref[value]'>[VV_HTML_ENCODE(name)] \ref[value]</a> = [D] [D.type]"
+		else
+			item = "<a href='?_src_=vars;Vars=\ref[value]'>[VV_HTML_ENCODE(name)] \ref[value]</a> = [D.type]"
 
 	else if (istype(value, /list))
 		var/list/L = value
-		html += "[html_encode(name)] = /list ([L.len])"
+		var/list/items = list()
 
-		if (L.len > 0 && !(name == "underlays" || name == "overlays" || name == "vars" || L.len > 500))
-			name = "[name]"	//Needs to be a string or it will go out of bounds in the internal_byond_list_vars array
-			html += "<ul>"
-			var/index = 1
-			for(var/entry in L)
-				var/state = "INDEX"
-				var/val = null
-				if(isnum(entry) || internal_byond_list_vars[name])
-					state = "INDEX"
-				else
-					val = L[entry]
-					if(!isnull(val))
-						state = "ASSOC"
-					if(isnull(L[index]))
-						state = "ASSOC"
+		if (L.len > 0 && !(name == "underlays" || name == "overlays" || L.len > 500))
+			for (var/i in 1 to L.len)
+				var/key = L[i]
+				var/val
+				if (IS_NORMAL_LIST(L) && !isnum(key))
+					val = L[key]
+				if (!val)
+					val = key
+					key = i
 
-				switch(state)
-					if("INDEX")
-						html += debug_variable(index, L[index], level + 1)
-					if("ASSOC")
-						html += debug_variable(entry, val, level + 1)
-				index++
-			html += "</ul>"
+				items += debug_variable(key, val, level + 1, sanitize = sanitize)
+
+			item = "<a href='?_src_=vars;Vars=\ref[value]'>[VV_HTML_ENCODE(name)] = /list ([L.len])</a><ul>[items.Join()]</ul>"
+		else
+			item = "<a href='?_src_=vars;Vars=\ref[value]'>[VV_HTML_ENCODE(name)] = /list ([L.len])</a>"
 
 	else
-		html += "[html_encode(name)] = <span class='value'>[html_encode(value)]</span>"
+		item = "[VV_HTML_ENCODE(name)] = <span class='value'>[VV_HTML_ENCODE(value)]</span>"
 
-	html += "</li>"
+	return "[header][item]</li>"
 
-	return html
+#undef VV_HTML_ENCODE
 
 /client/proc/view_var_Topic(href, href_list, hsrc)
-	//This should all be moved over to datum/admins/Topic() or something ~Carn
 	if( (usr.client != src) || !src.holder )
 		return
 	if(href_list["Vars"])
@@ -550,12 +579,110 @@ body
 			if(!check_rights(0))
 				return
 
-			var/atom/A = locate(href_list["datummass"])
-			if(!istype(A))
-				usr << "This can only be used on instances of type /atom"
+			var/datum/D = locate(href_list["datummass"])
+			if(!istype(D))
+				usr << "This can only be used on instances of type /datum"
 				return
 
-			cmd_mass_modify_object_variables(A, href_list["varnamemass"])
+			cmd_mass_modify_object_variables(D, href_list["varnamemass"])
+
+		else if(href_list["listedit"] && href_list["index"])
+			var/index = text2num(href_list["index"])
+			if (!index)
+				return
+
+			var/list/L = locate(href_list["listedit"])
+			if (!istype(L))
+				usr << "This can only be used on instances of type /list"
+				return
+
+			mod_list(L, null, "list", "contents", index, autodetect_class = TRUE)
+
+		else if(href_list["listchange"] && href_list["index"])
+			var/index = text2num(href_list["index"])
+			if (!index)
+				return
+
+			var/list/L = locate(href_list["listchange"])
+			if (!istype(L))
+				usr << "This can only be used on instances of type /list"
+				return
+
+			mod_list(L, null, "list", "contents", index, autodetect_class = FALSE)
+
+		else if(href_list["listremove"] && href_list["index"])
+			var/index = text2num(href_list["index"])
+			if (!index)
+				return
+
+			var/list/L = locate(href_list["listremove"])
+			if (!istype(L))
+				usr << "This can only be used on instances of type /list"
+				return
+
+			var/variable = L[index]
+			var/prompt = alert("Do you want to remove item number [index] from list?", "Confirm", "Yes", "No")
+			if (prompt != "Yes")
+				return
+			L.Cut(index, index+1)
+			world.log << "### ListVarEdit by [src]: /list's contents: REMOVED=[html_encode("[variable]")]"
+			log_admin("[key_name(src)] modified list's contents: REMOVED=[variable]")
+			message_admins("[key_name_admin(src)] modified list's contents: REMOVED=[variable]")
+
+		else if(href_list["listadd"])
+			var/list/L = locate(href_list["listadd"])
+			if (!istype(L))
+				usr << "This can only be used on instances of type /list"
+				return
+
+			mod_list_add(L, null, "list", "contents")
+
+		else if(href_list["listdupes"])
+			var/list/L = locate(href_list["listdupes"])
+			if (!istype(L))
+				usr << "This can only be used on instances of type /list"
+				return
+
+			uniqueList_inplace(L)
+			world.log << "### ListVarEdit by [src]: /list contents: CLEAR DUPES"
+			log_admin("[key_name(src)] modified list's contents: CLEAR DUPES")
+			message_admins("[key_name_admin(src)] modified list's contents: CLEAR DUPES")
+
+		else if(href_list["listnulls"])
+			var/list/L = locate(href_list["listnulls"])
+			if (!istype(L))
+				usr << "This can only be used on instances of type /list"
+				return
+
+			listclearnulls(L)
+			world.log << "### ListVarEdit by [src]: /list contents: CLEAR NULLS"
+			log_admin("[key_name(src)] modified list's contents: CLEAR NULLS")
+			message_admins("[key_name_admin(src)] modified list's contents: CLEAR NULLS")
+
+		else if(href_list["listlen"])
+			var/list/L = locate(href_list["listlen"])
+			if (!istype(L))
+				usr << "This can only be used on instances of type /list"
+				return
+			var/value = vv_get_value(VV_NUM)
+			if (value["class"] != VV_NUM)
+				return
+
+			L.len = value["value"]
+			world.log << "### ListVarEdit by [src]: /list len: [L.len]"
+			log_admin("[key_name(src)] modified list's len: [L.len]")
+			message_admins("[key_name_admin(src)] modified list's len: [L.len]")
+
+		else if(href_list["listshuffle"])
+			var/list/L = locate(href_list["listshuffle"])
+			if (!istype(L))
+				usr << "This can only be used on instances of type /list"
+				return
+
+			shuffle_inplace(L)
+			world.log << "### ListVarEdit by [src]: /list contents: SHUFFLE"
+			log_admin("[key_name(src)] modified list's contents: SHUFFLE")
+			message_admins("[key_name_admin(src)] modified list's contents: SHUFFLE")
 
 		else if(href_list["give_spell"])
 			if(!check_rights(0))

@@ -1,0 +1,4 @@
+author: "XDTM"
+delete-after: True
+changes: 
+  - bugfix: "Organ Manipulation surgery now properly heals on the cautery step."

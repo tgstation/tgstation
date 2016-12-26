@@ -8,7 +8,7 @@
 	icon_living = "human_male"
 	icon_dead = "human_male"
 	gender = NEUTER
-	a_intent = "harm"
+	a_intent = INTENT_HARM
 
 	response_help = "touches"
 	response_disarm = "pushes"

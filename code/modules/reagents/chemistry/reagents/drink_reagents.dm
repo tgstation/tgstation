@@ -5,7 +5,7 @@
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /datum/reagent/consumable/orangejuice
-	name = "Orange juice"
+	name = "Orange Juice"
 	id = "orangejuice"
 	description = "Both delicious AND rich in Vitamin C, what more do you need?"
 	color = "#E78108" // rgb: 231, 129, 8
@@ -41,7 +41,7 @@
 	..()
 
 /datum/reagent/consumable/carrotjuice
-	name = "Carrot juice"
+	name = "Carrot Juice"
 	id = "carrotjuice"
 	description = "It is just like a carrot but without crunching."
 	color = "#973800" // rgb: 151, 56, 0
@@ -148,7 +148,7 @@
 	color = "#302000" // rgb: 48, 32, 0
 
 /datum/reagent/consumable/grapejuice
-	name = "Grape juice"
+	name = "Grape Juice"
 	id = "grapejuice"
 	description = "The juice of a bunch of grapes. Guaranteed non-alcoholic."
 	color = "#290029" // dark purple
@@ -270,7 +270,7 @@
 /datum/reagent/consumable/icetea
 	name = "Iced Tea"
 	id = "icetea"
-	description = "No relation to a certain rap artist/ actor."
+	description = "No relation to a certain rap artist/actor."
 	color = "#104038" // rgb: 16, 64, 56
 	nutriment_factor = 0
 

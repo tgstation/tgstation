@@ -25,6 +25,7 @@
 	power_channel = ENVIRON
 	var/detecting = 1
 	var/buildstage = 2 // 2 = complete, 1 = no wires, 0 = circuit gone
+	resistance_flags = FIRE_PROOF
 
 
 /obj/machinery/firealarm/New(loc, dir, building)
@@ -176,7 +177,7 @@
 					playsound(src.loc, W.usesound, 50, 1)
 					user.visible_message("[user.name] removes the electronics from [src.name].", \
 										"<span class='notice'>You start prying out the circuit...</span>")
-					if(do_after(user, 20/W.toolspeed, target = src))
+					if(do_after(user, 20*W.toolspeed, target = src))
 						if(buildstage == 1)
 							if(stat & BROKEN)
 								user << "<span class='notice'>You remove the destroyed circuit.</span>"

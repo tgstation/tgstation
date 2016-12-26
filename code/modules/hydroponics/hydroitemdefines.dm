@@ -5,7 +5,7 @@
 	icon = 'icons/obj/device.dmi'
 	icon_state = "hydro"
 	item_state = "analyzer"
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 	slot_flags = SLOT_BELT
 	origin_tech = "magnets=2;biotech=2"
 	materials = list(MAT_METAL=30, MAT_GLASS=20)
@@ -24,7 +24,7 @@
 	flags = OPENCONTAINER
 	slot_flags = SLOT_BELT
 	throwforce = 0
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	throw_speed = 3
 	throw_range = 10
 
@@ -46,7 +46,7 @@
 	flags = OPENCONTAINER
 	slot_flags = SLOT_BELT
 	throwforce = 0
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	throw_speed = 3
 	throw_range = 10
 
@@ -68,7 +68,7 @@
 	flags = CONDUCT
 	force = 5
 	throwforce = 7
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	materials = list(MAT_METAL=50)
 	attack_verb = list("slashed", "sliced", "cut", "clawed")
 	hitsound = 'sound/weapons/bladeslice.ogg'
@@ -80,7 +80,7 @@
 	icon_state = "hatchet"
 	flags = CONDUCT
 	force = 12
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 	throwforce = 15
 	throw_speed = 3
 	throw_range = 4
@@ -103,7 +103,7 @@
 	throwforce = 5
 	throw_speed = 2
 	throw_range = 3
-	w_class = 4
+	w_class = WEIGHT_CLASS_BULKY
 	flags = CONDUCT
 	armour_penetration = 20
 	slot_flags = SLOT_BACK
@@ -131,7 +131,7 @@
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle16"
 	volume = 50
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(1,2,5,10,15,25,50)
 
@@ -181,7 +181,7 @@
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle16"
 	volume = 50
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(1,2,5,10,15,25,50)
 

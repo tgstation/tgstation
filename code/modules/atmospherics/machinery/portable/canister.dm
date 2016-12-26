@@ -198,12 +198,12 @@
 	qdel(src)
 
 /obj/machinery/portable_atmospherics/canister/attackby(obj/item/weapon/W, mob/user, params)
-	if(user.a_intent != "harm" && istype(W, /obj/item/weapon/weldingtool))
+	if(user.a_intent != INTENT_HARM && istype(W, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = W
 		if(stat & BROKEN)
 			if(!WT.remove_fuel(0, user))
 				return
-			playsound(loc, 'sound/items/Welder.ogg', 40, 1)
+			playsound(loc, WT.usesound, 40, 1)
 			user << "<span class='notice'>You begin cutting [src] apart...</span>"
 			if(do_after(user, 30, target = src))
 				deconstruct(TRUE)
@@ -288,6 +288,9 @@
 				var/newtype = label2types[label]
 				if(newtype)
 					var/obj/machinery/portable_atmospherics/canister/replacement = new newtype(loc, air_contents)
+					if(connected_port)
+						replacement.connected_port = connected_port
+						replacement.connected_port.connected_device = replacement
 					replacement.interact(usr)
 					qdel(src)
 		if("pressure")

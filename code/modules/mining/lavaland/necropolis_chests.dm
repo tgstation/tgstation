@@ -274,7 +274,7 @@
 	name = "paradox bag"
 	desc = "Somehow, it's in two places at once."
 	max_combined_w_class = 60
-	max_w_class = 3
+	max_w_class = WEIGHT_CLASS_NORMAL
 
 
 //External
@@ -369,7 +369,7 @@
 	item_state = "rods"
 	desc = "Not to be confused with the kind Research hassles you for."
 	force = 12
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 	resistance_flags = LAVA_PROOF | FIRE_PROOF
 
 /datum/crafting_recipe/oar
@@ -481,7 +481,7 @@
 	item_state = "spectral"
 	flags = CONDUCT
 	sharpness = IS_SHARP
-	w_class = 4
+	w_class = WEIGHT_CLASS_BULKY
 	force = 1
 	throwforce = 1
 	hitsound = 'sound/effects/ghost2.ogg'
@@ -626,7 +626,7 @@
 	item_state = "staffofstorms"
 	icon = 'icons/obj/guns/magic.dmi'
 	slot_flags = SLOT_BACK
-	w_class = 4
+	w_class = WEIGHT_CLASS_BULKY
 	force = 25
 	damtype = BURN
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
@@ -766,7 +766,7 @@
 	item_state = "hierophant_staff"
 	icon = 'icons/obj/guns/magic.dmi'
 	slot_flags = SLOT_BACK
-	w_class = 4
+	w_class = WEIGHT_CLASS_BULKY
 	force = 20
 	hitsound = "swing_hit"
 	//hitsound = 'sound/weapons/sonic_jackhammer.ogg'

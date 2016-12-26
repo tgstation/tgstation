@@ -41,7 +41,7 @@
 				return
 			user.visible_message("[user] starts to deattach \the [src].", "<span class='notice'>You start to deattach the [name]...</span>")
 			playsound(src.loc, W.usesound, 50, 1)
-			if(do_after(user, 35/W.toolspeed, target = src))
+			if(do_after(user, 35*W.toolspeed, target = src))
 				user << "<span class='notice'>You deattach the [name].</span>"
 				var/obj/structure/c_transit_tube/R = new tube_construction(loc)
 				R.setDir(dir)

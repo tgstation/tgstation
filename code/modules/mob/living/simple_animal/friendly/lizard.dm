@@ -14,7 +14,7 @@
 	response_help  = "pets"
 	response_disarm = "shoos"
 	response_harm   = "stomps on"
-	ventcrawler = 2
+	ventcrawler = VENTCRAWLER_ALWAYS
 	density = 0
 	pass_flags = PASSTABLE | PASSMOB
 	mob_size = MOB_SIZE_SMALL

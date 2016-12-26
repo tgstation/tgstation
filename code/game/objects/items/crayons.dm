@@ -24,7 +24,7 @@
 	var/use_overlays = FALSE
 
 	item_color = "red"
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 	attack_verb = list("attacked", "coloured")
 	var/paint_color = "#FF0000" //RGB
 
@@ -370,7 +370,8 @@
 		cost = 5
 	. = use_charges(cost)
 	var/fraction = min(1, . / reagents.maximum_volume)
-	fraction /= affected_turfs.len
+	if(affected_turfs.len)
+		fraction /= affected_turfs.len
 	for(var/t in affected_turfs)
 		reagents.reaction(t, TOUCH, fraction * volume_multiplier)
 		reagents.trans_to(t, ., volume_multiplier)
@@ -509,7 +510,7 @@
 	desc = "A box of crayons for all your rune drawing needs."
 	icon = 'icons/obj/crayons.dmi'
 	icon_state = "crayonbox"
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	storage_slots = 7
 	can_hold = list(
 		/obj/item/toy/crayon

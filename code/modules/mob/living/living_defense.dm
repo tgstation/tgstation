@@ -92,7 +92,7 @@
 
 
 /mob/living/mech_melee_attack(obj/mecha/M)
-	if(M.occupant.a_intent == "harm")
+	if(M.occupant.a_intent == INTENT_HARM)
 		M.do_attack_animation(src)
 		if(M.damtype == "brute")
 			step_away(src,M,15)
@@ -146,7 +146,7 @@
 				"<span class='userdanger'>[user] starts to tighten [user.p_their()] grip on you!</span>")
 			if(!do_mob(user, src, grab_upgrade_time))
 				return 0
-			if(!user.pulling || user.pulling != src || user.grab_state != old_grab_state || user.a_intent != "grab")
+			if(!user.pulling || user.pulling != src || user.grab_state != old_grab_state || user.a_intent != INTENT_GRAB)
 				return 0
 		user.grab_state++
 		switch(user.grab_state)
@@ -208,7 +208,7 @@
 		M << "No attacking people at spawn, you jackass."
 		return 0
 
-	if (M.a_intent == "harm")
+	if (M.a_intent == INTENT_HARM)
 		if(M.is_muzzled() || (M.wear_mask && M.wear_mask.flags_cover & MASKCOVERSMOUTH))
 			M << "<span class='warning'>You can't bite with your mouth covered!</span>"
 			return 0

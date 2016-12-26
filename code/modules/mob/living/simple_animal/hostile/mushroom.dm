@@ -24,7 +24,7 @@
 	stat_attack = 2
 	mouse_opacity = 1
 	speed = 1
-	ventcrawler = 2
+	ventcrawler = VENTCRAWLER_ALWAYS
 	robust_searching = 1
 	unique_name = 1
 	speak_emote = list("squeaks")
@@ -62,7 +62,7 @@
 	health = maxHealth
 	..()
 
-/mob/living/simple_animal/hostile/mushroom/adjustHealth(damage)//Possibility to flee from a fight just to make it more visually interesting
+/mob/living/simple_animal/hostile/mushroom/adjustHealth(amount, updating_health = TRUE, forced = FALSE) //Possibility to flee from a fight just to make it more visually interesting
 	if(!retreat_distance && prob(33))
 		retreat_distance = 5
 		addtimer(src, "stop_retreat", 30)
@@ -145,7 +145,7 @@
 
 /mob/living/simple_animal/hostile/mushroom/attack_hand(mob/living/carbon/human/M)
 	..()
-	if(M.a_intent == "harm")
+	if(M.a_intent == INTENT_HARM)
 		Bruise()
 
 /mob/living/simple_animal/hostile/mushroom/hitby(atom/movable/AM)

@@ -5,7 +5,7 @@
 	implant_overlay = "eye_implant_overlay"
 	slot = "eye_sight"
 	zone = "eyes"
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 
 	var/sight_flags = 0
 	var/dark_view = 0

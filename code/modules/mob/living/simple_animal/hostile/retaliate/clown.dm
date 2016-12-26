@@ -12,7 +12,7 @@
 	speak = list("HONK", "Honk!", "Welcome to clown planet!")
 	emote_see = list("honks", "squeaks")
 	speak_chance = 1
-	a_intent = "harm"
+	a_intent = INTENT_HARM
 	maxHealth = 75
 	health = 75
 	speed = 0

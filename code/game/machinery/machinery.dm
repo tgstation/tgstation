@@ -101,7 +101,6 @@ Class Procs:
 	pressure_resistance = 15
 	obj_integrity = 200
 	max_integrity = 200
-	armor = list(melee = 25, bullet = 10, laser = 10, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 70)
 
 	var/stat = 0
 	var/emagged = 0
@@ -126,6 +125,8 @@ Class Procs:
 	var/speed_process = 0 // Process as fast as possible?
 
 /obj/machinery/New()
+	if (!armor)
+		armor = list(melee = 25, bullet = 10, laser = 10, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 70)
 	..()
 	machines += src
 	if(!speed_process)
@@ -168,13 +169,11 @@ Class Procs:
 
 /obj/machinery/proc/dropContents()
 	var/turf/T = get_turf(src)
-	for(var/mob/living/L in src)
-		L.forceMove(T)
-		L.update_canmove() //so the mob falls if he became unconscious inside the machine.
-		. += L
-
 	for(var/atom/movable/A in contents)
 		A.forceMove(T)
+		if(isliving(A))
+			var/mob/living/L = A
+			L.update_canmove()
 	occupant = null
 
 /obj/machinery/proc/close_machine(mob/living/target = null)
@@ -242,7 +241,7 @@ Class Procs:
 
 
 /obj/machinery/attack_paw(mob/living/user)
-	if(user.a_intent != "harm")
+	if(user.a_intent != INTENT_HARM)
 		return attack_hand(user)
 	else
 		user.changeNext_move(CLICK_CD_MELEE)
@@ -372,7 +371,7 @@ Class Procs:
 		playsound(loc, W.usesound, 50, 1)
 		var/prev_anchored = anchored
 		//as long as we're the same anchored state and we're either on a floor or are anchored, toggle our anchored state
-		if(do_after(user, time/W.toolspeed, target = src) && anchored == prev_anchored)
+		if(do_after(user, time*W.toolspeed, target = src) && anchored == prev_anchored)
 			can_be_unfasten = can_be_unfasten_wrench(user)
 			if(!can_be_unfasten || can_be_unfasten == FAILED_UNFASTEN)
 				return can_be_unfasten

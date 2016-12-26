@@ -136,7 +136,7 @@ var/next_external_rsc = 0
 		admins |= src
 		holder.owner = src
 
-	//preferences datum - also holds some persistant data for the client (because we may as well keep these datums to a minimum)
+	//preferences datum - also holds some persistent data for the client (because we may as well keep these datums to a minimum)
 	prefs = preferences_datums[ckey]
 	if(!prefs)
 		prefs = new /datum/preferences(src)
@@ -167,7 +167,7 @@ var/next_external_rsc = 0
 		src << "Required version to remove this message: [config.client_warn_version] or later"
 		src << "Visit http://www.byond.com/download/ to get the latest version of byond."
 
-	if (connection == "web")
+	if (connection == "web" && !holder)
 		if (!config.allowwebclient)
 			src << "Web client is disabled"
 			qdel(src)
@@ -196,6 +196,10 @@ var/next_external_rsc = 0
 			log_access("Failed Login: [key] - New account attempting to connect during panic bunker")
 			message_admins("<span class='adminnotice'>Failed Login: [key] - New account attempting to connect during panic bunker</span>")
 			src << "Sorry but the server is currently not accepting connections from never before seen players."
+			if(config.allow_panic_bunker_bounce && tdata != "redirect")
+				src << "<span class='notice'>Sending you to [config.panic_server_name].</span>"
+				winset(src, null, "command=.options")
+				src << link("[global.panic_address]?redirect")
 			qdel(src)
 			return 0
 
@@ -258,6 +262,9 @@ var/next_external_rsc = 0
 		admins -= src
 	directory -= ckey
 	clients -= src
+	if(movingmob != null)
+		movingmob.client_mobs_in_contents -= mob
+		UNSETEMPTY(movingmob.client_mobs_in_contents)
 	return ..()
 
 /client/Destroy()
@@ -335,6 +342,8 @@ var/next_external_rsc = 0
 
 /client/proc/check_randomizer(topic)
 	. = FALSE
+	if (connection != "seeker")
+		return
 	topic = params2list(topic)
 	if (!config.check_randomizer)
 		return
@@ -488,3 +497,12 @@ var/next_external_rsc = 0
 //Like for /atoms, but clients are their own snowflake FUCK
 /client/proc/setDir(newdir)
 	dir = newdir
+
+/client/vv_edit_var(var_name, var_value)
+	switch (var_name)
+		if ("holder")
+			return FALSE
+		if ("ckey")
+			return FALSE
+		if ("key")
+			return FALSE

@@ -16,6 +16,7 @@
 	var/obj/item/robot_suit/robot_suit = null //Used for deconstruction to remember what the borg was constructed out of..
 	var/obj/item/device/mmi/mmi = null
 
+
 //Hud stuff
 
 	var/obj/screen/inv1 = null
@@ -74,6 +75,22 @@
 	var/updating = 0 //portable camera camerachunk update
 	hud_possible = list(ANTAG_HUD, DIAG_STAT_HUD, DIAG_HUD, DIAG_BATT_HUD)
 
+	var/list/upgrades = list()
+
+	var/obj/item/hat
+	var/hat_offset = -3
+	var/list/equippable_hats = list(/obj/item/clothing/head/caphat,
+	/obj/item/clothing/head/hardhat/cakehat,
+	/obj/item/clothing/head/centhat,
+	/obj/item/clothing/head/HoS,
+	/obj/item/clothing/head/hopcap,
+	/obj/item/clothing/head/wizard,
+	/obj/item/clothing/head/nursehat,
+	/obj/item/clothing/head/sombrero,
+	/obj/item/clothing/head/witchunter_hat)
+
+
+
 /mob/living/silicon/robot/New(loc)
 	spark_system = new /datum/effect_system/spark_spread()
 	spark_system.set_up(5, 0, src)
@@ -111,6 +128,7 @@
 		if(wires.is_cut(WIRE_CAMERA))
 			camera.status = 0
 	module = new /obj/item/weapon/robot_module(src)
+	module.rebuild_modules()
 	update_icons()
 	..()
 
@@ -127,6 +145,8 @@
 		mmi.brainmob.container = mmi
 
 	updatename()
+
+	equippable_hats = typecacheof(equippable_hats)
 
 	playsound(loc, 'sound/voice/liveagain.ogg', 75, 1)
 	aicamera = new/obj/item/device/camera/siliconcam/robot_camera(src)
@@ -191,12 +211,18 @@
 	var/changed_name = ""
 	if(custom_name)
 		changed_name = custom_name
-	else
-		changed_name = "[(designation ? "[designation] " : "")][mmi.braintype]-[num2text(ident)]"
+	if(changed_name == "" && client)
+		changed_name = client.prefs.custom_names["cyborg"]
+	if(changed_name == "")
+		changed_name = get_standard_name()
+
 	real_name = changed_name
 	name = real_name
 	if(camera)
 		camera.c_tag = real_name	//update the camera name too
+
+/mob/living/silicon/robot/proc/get_standard_name()
+	return "[(designation ? "[designation] " : "")][mmi.braintype]-[ident]"
 
 /mob/living/silicon/robot/verb/cmd_robot_alerts()
 	set category = "Robot Commands"
@@ -326,7 +352,7 @@
 	return !cleared
 
 /mob/living/silicon/robot/attackby(obj/item/weapon/W, mob/user, params)
-	if(istype(W, /obj/item/weapon/weldingtool) && (user.a_intent != "harm" || user == src))
+	if(istype(W, /obj/item/weapon/weldingtool) && (user.a_intent != INTENT_HARM || user == src))
 		user.changeNext_move(CLICK_CD_MELEE)
 		var/obj/item/weapon/weldingtool/WT = W
 		if (!getBruteLoss())
@@ -415,9 +441,9 @@
 			spark_system.start()
 			return
 		else
-			playsound(src, 'sound/items/Ratchet.ogg', 50, 1)
+			playsound(src, W.usesound, 50, 1)
 			user << "<span class='notice'>You start to unfasten [src]'s securing bolts...</span>"
-			if(do_after(user, 50/W.toolspeed, target = src) && !cell)
+			if(do_after(user, 50*W.toolspeed, target = src) && !cell)
 				user.visible_message("[user] deconstructs [src]!", "<span class='notice'>You unfasten the securing bolts, and [src] falls to pieces!</span>")
 				deconstruct()
 
@@ -473,7 +499,11 @@
 				return
 			if(U.action(src))
 				user << "<span class='notice'>You apply the upgrade to [src].</span>"
-				U.loc = src
+				if(U.one_use)
+					qdel(U)
+				else
+					U.forceMove(src)
+					upgrades += U
 			else
 				user << "<span class='danger'>Upgrade error.</span>"
 
@@ -559,7 +589,10 @@
 			add_overlay("ov-opencover +c")
 		else
 			add_overlay("ov-opencover -c")
-
+	if(hat)
+		var/image/head_overlay = hat.build_worn_icon(state = hat.icon_state, default_layer = 20, default_icon_file = 'icons/mob/head.dmi')
+		head_overlay.pixel_y += hat_offset
+		add_overlay(head_overlay)
 	update_fire()
 
 #define BORG_CAMERA_BUFFER 30
@@ -620,7 +653,6 @@
 	else
 		explosion(src.loc,-1,0,2)
 	gib()
-	return
 
 /mob/living/silicon/robot/proc/UnlinkSelf()
 	if(src.connected_ai)
@@ -925,10 +957,22 @@
 		hud_used.update_robot_modules_display()
 	module.transform_to(/obj/item/weapon/robot_module)
 
-	speed = 0 // Remove upgrades.
+	// Remove upgrades.
+	for(var/obj/item/I in upgrades)
+		I.forceMove(get_turf(src))
+
+	upgrades.Cut()
+
+	speed = 0
 	ionpulse = FALSE
 
 	return 1
+
+/mob/living/silicon/robot/proc/has_module()
+	if(!module || module.type == /obj/item/weapon/robot_module)
+		. = FALSE
+	else
+		. = TRUE
 
 /mob/living/silicon/robot/proc/update_module_innate()
 	designation = module.name
@@ -938,5 +982,16 @@
 		status_flags |= CANPUSH
 	else
 		status_flags &= ~CANPUSH
+
+	hat_offset = module.hat_offset
+
 	magpulse = module.magpulsing
 	updatename()
+
+
+/mob/living/silicon/robot/proc/place_on_head(obj/item/new_hat)
+	if(hat)
+		hat.forceMove(get_turf(src))
+	hat = new_hat
+	new_hat.forceMove(src)
+	update_icons()

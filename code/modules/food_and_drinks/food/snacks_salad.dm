@@ -4,7 +4,7 @@
 	icon = 'icons/obj/food/soupsalad.dmi'
 	trash = /obj/item/weapon/reagent_containers/glass/bowl
 	bitesize = 3
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 	list_reagents = list("nutriment" = 7, "vitamin" = 2)
 
 /obj/item/weapon/reagent_containers/food/snacks/salad/New()

@@ -13,10 +13,10 @@
 	var/destination_y
 
 	var/global/datum/gas_mixture/space/space_gas = new
-
+	plane = PLANE_SPACE
 
 /turf/open/space/New()
-	update_icon()
+	icon_state = SPACE_ICON_STATE
 	air = space_gas
 
 /turf/open/space/Destroy(force)
@@ -54,7 +54,8 @@
 			if(isspaceturf(t))
 				//let's NOT update this that much pls
 				continue
-			SetLuminosity(4,1)
+			SetLuminosity(4,5)
+			light.mode = LIGHTING_STARLIGHT
 			return
 		SetLuminosity(0)
 
@@ -167,9 +168,6 @@
 	if(locate(/obj/structure/lattice/catwalk, src))
 		return 1
 	return 0
-
-/turf/open/space/proc/update_icon()
-	icon_state = SPACE_ICON_STATE
 
 /turf/open/space/is_transition_turf()
 	if(destination_x || destination_y || destination_z)

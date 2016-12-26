@@ -67,6 +67,7 @@ var/list/announcement_systems = list()
 		overlays -= errorlight
 
 /obj/machinery/announcement_system/Destroy()
+	qdel(radio)
 	announcement_systems -= src //"OH GOD WHY ARE THERE 100,000 LISTED ANNOUNCEMENT SYSTEMS?!!"
 	return ..()
 

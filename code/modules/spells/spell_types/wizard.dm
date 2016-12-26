@@ -402,7 +402,7 @@
 	desc = "Some birdseed wrapped in cloth that somehow crackles with electricity."
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "snappop"
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 
 /obj/item/spellpacket/lightningbolt/throw_impact(atom/hit_atom)
 	if(!..())

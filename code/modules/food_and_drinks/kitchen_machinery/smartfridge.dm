@@ -29,25 +29,30 @@
 	build_path = /obj/machinery/smartfridge
 	origin_tech = "programming=1"
 	req_components = list(/obj/item/weapon/stock_parts/matter_bin = 1)
+	var/static/list/fridges = list(/obj/machinery/smartfridge = "plant produce",
+							/obj/machinery/smartfridge/food = "food",
+							/obj/machinery/smartfridge/drinks = "drinks",
+							/obj/machinery/smartfridge/extract = "slimes",
+							/obj/machinery/smartfridge/chemistry = "chems",
+							/obj/machinery/smartfridge/chemistry/virology = "viruses")
 
 /obj/item/weapon/circuitboard/machine/smartfridge/New(loc, new_type)
 	if(new_type)
 		build_path = new_type
+	..()
 
 /obj/item/weapon/circuitboard/machine/smartfridge/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/screwdriver))
-		var/list/fridges = list(/obj/machinery/smartfridge = "default",
-								/obj/machinery/smartfridge/drinks = "drinks",
-								/obj/machinery/smartfridge/extract = "slimes",
-								/obj/machinery/smartfridge/chemistry = "chems",
-								/obj/machinery/smartfridge/chemistry/virology = "viruses")
-
 		var/position = fridges.Find(build_path, fridges)
 		position = (position == fridges.len) ? 1 : (position + 1)
 		build_path = fridges[position]
 		user << "<span class='notice'>You set the board to [fridges[build_path]].</span>"
 	else
 		return ..()
+
+/obj/item/weapon/circuitboard/machine/smartfridge/examine/(mob/user)
+	..()
+	user << "<span class='info'>[src] is set to [fridges[build_path]]. You can use a screwdriver to reconfigure it.</span>"
 
 /obj/machinery/smartfridge/RefreshParts()
 	for(var/obj/item/weapon/stock_parts/matter_bin/B in component_parts)
@@ -124,7 +129,7 @@
 				user << "<span class='warning'>There is nothing in [O] to put in [src]!</span>"
 				return 0
 
-	if(user.a_intent != "harm")
+	if(user.a_intent != INTENT_HARM)
 		user << "<span class='warning'>\The [src] smartly refuses [O].</span>"
 		updateUsrDialog()
 		return 0
@@ -230,6 +235,7 @@
 // ----------------------------
 /obj/machinery/smartfridge/drying_rack
 	name = "drying rack"
+	desc = "A wooden contraption, used to dry plant products, food and leather."
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "drying_rack_on"
 	use_power = 1
@@ -351,6 +357,16 @@
 	if(istype(O,/obj/item/weapon/reagent_containers/glass) || istype(O,/obj/item/weapon/reagent_containers/food/drinks) || istype(O,/obj/item/weapon/reagent_containers/food/condiment))
 		return 1
 
+// ----------------------------
+//  Food smartfridge
+// ----------------------------
+/obj/machinery/smartfridge/food
+	desc = "A refrigerated storage unit for food."
+
+/obj/machinery/smartfridge/food/accept_check(obj/item/O)
+	if(istype(O,/obj/item/weapon/reagent_containers/food/snacks/))
+		return 1
+	return 0
 
 // -------------------------------------
 // Xenobiology Slime-Extract Smartfridge

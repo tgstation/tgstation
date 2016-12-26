@@ -16,11 +16,11 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 /*-----------------------------------------------------------------------------*/
 
-/area/engine/
+/area/engine
 
 /area/ai_monitored	//stub defined ai_monitored.dm
 
-/area/ai_monitored/turret_protected/
+/area/ai_monitored/turret_protected
 
 /area/arrival
 	requires_power = 0
@@ -43,7 +43,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	power_environ = 0
 	valid_territory = 0
 	outdoors = 1
-	ambientsounds = list('sound/ambience/ambispace.ogg','sound/ambience/title2.ogg',)
+	ambientsounds = list('sound/ambience/ambispace.ogg','sound/ambience/title2.ogg')
 	blob_allowed = 0 //Eating up space doesn't count for victory as a blob.
 
 /area/space/nearstation
@@ -642,7 +642,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Mech Bay"
 	icon_state = "yellow"
 
-/area/janitor/
+/area/janitor
 	name = "Custodial Closet"
 	icon_state = "janitor"
 	flags = NONE
@@ -798,7 +798,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	icon_state = "storage"
 
 
-/area/ai_monitored/turret_protected/
+/area/ai_monitored/turret_protected
 	ambientsounds = list('sound/ambience/ambimalf.ogg')
 
 /area/ai_monitored/turret_protected/ai_upload

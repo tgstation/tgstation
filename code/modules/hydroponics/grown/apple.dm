@@ -12,6 +12,7 @@
 	growing_icon = 'icons/obj/hydroponics/growing_fruits.dmi'
 	icon_grow = "apple-grow"
 	icon_dead = "apple-dead"
+	genes = list(/datum/plant_gene/trait/repeated_harvest)
 	mutatelist = list(/obj/item/seeds/apple/gold)
 	reagents_add = list("vitamin" = 0.04, "nutriment" = 0.1)
 

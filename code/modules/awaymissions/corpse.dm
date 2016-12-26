@@ -118,6 +118,7 @@
 	var/has_id = 0     //Just set to 1 if you want them to have an ID
 	var/id_job = null // Needs to be in quotes, such as "Clown" or "Chef." This just determines what the ID reads as, not their access
 	var/id_access = null //This is for access. See access.dm for which jobs give what access. Again, put in quotes. Use "Captain" if you want it to be all access.
+	var/id_access_list = null //Allows you to manually add access to an ID card.
 	var/id_icon = null //For setting it to be a gold, silver, centcom etc ID
 	var/husk = null
 	var/outfit_type = null // Will start with this if exists then apply specific slots
@@ -175,6 +176,10 @@
 				W.access = jobdatum.get_access()
 			else
 				W.access = list()
+			if(id_access_list)
+				if(!W.access)
+					W.access = list()
+				W.access |= id_access_list
 		if(id_job)
 			W.assignment = id_job
 		W.registered_name = H.real_name
@@ -206,9 +211,7 @@
 	var/A = locate(/mob/living/silicon/ai) in loc
 	if(A)
 		return
-	var/L = new /datum/ai_laws/default/asimov
-	var/B = new /obj/item/device/mmi
-	var/mob/living/silicon/ai/M = new(src.loc, L, B, 1) //spawn new AI at landmark as var M
+	var/mob/living/silicon/ai/spawned/M = new(loc) //spawn new AI at landmark as var M
 	M.name = src.name
 	M.real_name = src.name
 	M.aiPDA.toff = 1 //turns the AI's PDA messenger off, stopping it showing up on player PDAs
@@ -261,7 +264,7 @@
 	back = /obj/item/weapon/storage/backpack
 	has_id = 1
 	id_job = "Operative"
-	id_access = "Syndicate"
+	id_access_list = list(access_syndicate)
 
 /obj/effect/mob_spawn/human/syndicatecommando
 	name = "Syndicate Commando"
@@ -276,7 +279,7 @@
 	pocket1 = /obj/item/weapon/tank/internals/emergency_oxygen
 	has_id = 1
 	id_job = "Operative"
-	id_access = "Syndicate"
+	id_access_list = list(access_syndicate)
 
 ///////////Civilians//////////////////////
 

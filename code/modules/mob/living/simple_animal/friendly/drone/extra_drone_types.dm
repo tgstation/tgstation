@@ -104,14 +104,14 @@
 	harm_intent_damage = 5
 	density = TRUE
 	speed = 1
-	ventcrawler = 0
+	ventcrawler = VENTCRAWLER_NONE
 	faction = list("ratvar")
 	speak_emote = list("clanks", "clinks", "clunks", "clangs")
 	verb_ask = "requests"
 	verb_exclaim = "proclaims"
 	verb_yell = "harangues"
 	bubble_icon = "clock"
-	heavy_emp_damage = 10
+	heavy_emp_damage = 0
 	laws = "0. Purge all untruths and honor Ratvar."
 	default_storage = /obj/item/weapon/storage/toolbox/brass/prefilled
 	seeStatic = 0

@@ -208,7 +208,7 @@
 	variance = 25
 
 
-/obj/item/ammo_casing/shotgun/improvised/overload/
+/obj/item/ammo_casing/shotgun/improvised/overload
 	name = "overloaded improvised shell"
 	desc = "An extremely weak shotgun shell with multiple small pellets made out of metal shards. This one has been packed with even more \
 	propellant. It's like playing russian roulette, with a shotgun."

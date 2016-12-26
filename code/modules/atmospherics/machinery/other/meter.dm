@@ -98,9 +98,9 @@
 
 /obj/machinery/meter/attackby(obj/item/weapon/W, mob/user, params)
 	if (istype(W, /obj/item/weapon/wrench))
-		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+		playsound(src.loc, W.usesound, 50, 1)
 		user << "<span class='notice'>You begin to unfasten \the [src]...</span>"
-		if (do_after(user, 40/W.toolspeed, target = src))
+		if (do_after(user, 40*W.toolspeed, target = src))
 			user.visible_message( \
 				"[user] unfastens \the [src].", \
 				"<span class='notice'>You unfasten \the [src].</span>", \
@@ -141,4 +141,3 @@
 /obj/machinery/meter/turf/initialize()
 	if (!target)
 		src.target = loc
-

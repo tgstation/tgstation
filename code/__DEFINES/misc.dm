@@ -427,12 +427,6 @@ var/global/list/ghost_others_options = list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 #define TRIGGER_GUARD_NONE 0
 #define TRIGGER_GUARD_NORMAL 1
 
-// Plant types
-#define PLANT_NORMAL 0
-#define PLANT_WEED 1
-#define PLANT_MUSHROOM 2
-#define PLANT_ALIEN 3
-
 // Maploader bounds indices
 #define MAP_MINX 1
 #define MAP_MINY 2
@@ -503,6 +497,7 @@ var/global/list/ghost_others_options = list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 #define BUBBLEGUM_SCORE "Bubblegum Killed"
 #define DRAKE_SCORE "Drakes Killed"
 #define BIRD_SCORE "Hierophants Killed"
+#define SWARMER_BEACON_SCORE "Swarmer Beacons Killed"
 #define BOSS_SCORE "Bosses Killed"
 #define TENDRIL_CLEAR_SCORE "Tendrils Killed"
 
@@ -551,6 +546,7 @@ var/global/list/ghost_others_options = list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 #define ATTACK_EFFECT_BITE		"bite"
 #define ATTACK_EFFECT_MECHFIRE	"mech_fire"
 #define ATTACK_EFFECT_MECHTOXIN	"mech_toxin"
+#define ATTACK_EFFECT_BOOP "boop"	//Honk
 
 
 //different types of atom colorations
@@ -560,6 +556,24 @@ var/global/list/ghost_others_options = list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 #define FIXED_COLOUR_PRIORITY 		4 //color inherent to the atom (e.g. blob color)
 #define COLOUR_PRIORITY_AMOUNT 4 //how many priority levels there are.
 
+// w_class (weight class)
+#define WEIGHT_CLASS_TINY     1 // Usually items smaller then a human hand
+#define WEIGHT_CLASS_SMALL    2 // Pockets can hold small and tiny items
+#define WEIGHT_CLASS_NORMAL   3 // Standard backpacks can carry tiny, small & normal items
+#define WEIGHT_CLASS_BULKY    4 // Items that can be weilded or equipped but not stored in an inventory
+#define WEIGHT_CLASS_HUGE     5 // Usually represents objects that require two hands to operate
+#define WEIGHT_CLASS_GIGANTIC 6 // Essentially means it cannot be picked up or placed in an inventory
+
+// Examples of tiny items: Playing Cards, Lighter, Scalpel, Coins/Money
+// Examples of small items: Flashlight, Multitool, Grenades, GPS Device
+// Examples of normal items: Fire extinguisher, Stunbaton, Gas Mask, Metal Sheets
+// Examples of bulky items: Defibrillator, Backpack, Space Suits
+// Examples of huge items: Shotgun, Two Handed Melee Weapons
+// Examples of gigantic items: Mech Parts, Safe
+
+// m_intent
+#define MOVE_INTENT_WALK "walk"
+#define MOVE_INTENT_RUN  "run"
 
 //Endgame Results
 
@@ -586,8 +600,26 @@ var/global/list/ghost_others_options = list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 #define CLOCK_SUMMON 21
 #define CLOCK_SILICONS 22
 #define CLOCK_PROSELYTIZATION 23
+#define SHUTTLE_HIJACK 24
 
 //For SSTimer
 
 #define TIMER_NORMAL "normal"
 #define TIMER_UNIQUE "unique"
+
+// Ventcrawling
+#define VENTCRAWLER_NONE   0
+#define VENTCRAWLER_NUDE   1
+#define VENTCRAWLER_ALWAYS 2
+
+// Intent
+#define INTENT_HELP   "help"
+#define INTENT_GRAB   "grab"
+#define INTENT_DISARM "disarm"
+#define INTENT_HARM   "harm"
+// NOTE: INTENT_HOTKEY_* defines are not actual intents!
+// they are here to support hotkeys
+#define INTENT_HOTKEY_LEFT  "left"
+#define INTENT_HOTKEY_RIGHT "right"
+
+#define DEFAULT_AI_LAWID "default"

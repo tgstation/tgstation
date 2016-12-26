@@ -23,7 +23,7 @@
 			return 1
 
 /mob/living/simple_animal/attack_hulk(mob/living/carbon/human/user, does_attack_animation = 0)
-	if(user.a_intent == "harm")
+	if(user.a_intent == INTENT_HARM)
 		..(user, 1)
 		playsound(loc, "punch", 25, 1, -1)
 		visible_message("<span class='danger'>[user] has punched [src]!</span>", \
@@ -37,7 +37,7 @@
 			var/damage = rand(1, 3)
 			attack_threshold_check(damage)
 			return 1
-	if (M.a_intent == "help")
+	if (M.a_intent == INTENT_HELP)
 		if (health > 0)
 			visible_message("<span class='notice'>[M.name] [response_help] [src].</span>")
 			playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
@@ -45,7 +45,7 @@
 
 /mob/living/simple_animal/attack_alien(mob/living/carbon/alien/humanoid/M)
 	if(..()) //if harm or disarm intent.
-		if(M.a_intent == "disarm")
+		if(M.a_intent == INTENT_DISARM)
 			playsound(loc, 'sound/weapons/pierce.ogg', 25, 1, -1)
 			visible_message("<span class='danger'>[M] [response_disarm] [name]!</span>", \
 					"<span class='userdanger'>[M] [response_disarm] [name]!</span>", null, COMBAT_MESSAGE_RANGE)

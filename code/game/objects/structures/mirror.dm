@@ -42,6 +42,10 @@
 
 		H.update_hair()
 
+/obj/structure/mirror/examine_status()
+	if(broken)
+		return // no message spam
+	..()
 
 /obj/structure/mirror/obj_break(damage_flag)
 	if(!broken && !(flags & NODECONSTRUCT))
@@ -57,14 +61,14 @@
 	qdel(src)
 
 /obj/structure/mirror/attackby(obj/item/I, mob/living/user, params)
-	if(istype(I, /obj/item/weapon/weldingtool) && user.a_intent != "harm")
+	if(istype(I, /obj/item/weapon/weldingtool) && user.a_intent != INTENT_HARM)
 		var/obj/item/weapon/weldingtool/WT = I
 		if(broken)
 			user.changeNext_move(CLICK_CD_MELEE)
 			if(WT.remove_fuel(0, user))
 				user << "<span class='notice'>You begin repairing [src]...</span>"
 				playsound(src, 'sound/items/Welder.ogg', 100, 1)
-				if(do_after(user, 10/I.toolspeed, target = src))
+				if(do_after(user, 10*I.toolspeed, target = src))
 					if(!user || !WT || !WT.isOn())
 						return
 					user << "<span class='notice'>You repair [src].</span>"
@@ -151,7 +155,7 @@
 					H.skin_tone = new_s_tone
 					H.dna.update_ui_block(DNA_SKIN_TONE_BLOCK)
 
-			if(MUTCOLORS in H.dna.species.specflags)
+			if(MUTCOLORS in H.dna.species.species_traits)
 				var/new_mutantcolor = input(user, "Choose your skin color:", "Race change") as color|null
 				if(new_mutantcolor)
 					var/temp_hsv = RGBtoHSV(new_mutantcolor)

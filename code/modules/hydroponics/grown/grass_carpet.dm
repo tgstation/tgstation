@@ -14,6 +14,7 @@
 	growthstages = 2
 	icon_grow = "grass-grow"
 	icon_dead = "grass-dead"
+	genes = list(/datum/plant_gene/trait/repeated_harvest)
 	mutatelist = list(/obj/item/seeds/grass/carpet)
 	reagents_add = list("nutriment" = 0.02, "hydrogen" = 0.05)
 

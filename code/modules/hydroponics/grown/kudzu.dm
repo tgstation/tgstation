@@ -7,11 +7,11 @@
 	species = "kudzu"
 	plantname = "Kudzu"
 	product = /obj/item/weapon/reagent_containers/food/snacks/grown/kudzupod
+	genes = list(/datum/plant_gene/trait/repeated_harvest, /datum/plant_gene/trait/plant_type/weed_hardy)
 	lifespan = 20
 	endurance = 10
 	yield = 4
 	growthstages = 4
-	plant_type = PLANT_WEED
 	rarity = 30
 	var/list/mutations = list()
 	reagents_add = list("charcoal" = 0.04, "nutriment" = 0.02)
@@ -57,6 +57,7 @@
 		if(prob(20))
 			mutations.Remove(pick(temp_mut_list))
 		temp_mut_list.Cut()
+
 	if(S.has_reagent("welding_fuel", 5))
 		for(var/datum/spacevine_mutation/SM in mutations)
 			if(SM.quality == POSITIVE)
@@ -64,20 +65,26 @@
 		if(prob(20))
 			mutations.Remove(pick(temp_mut_list))
 		temp_mut_list.Cut()
+
 	if(S.has_reagent("phenol", 5))
 		for(var/datum/spacevine_mutation/SM in mutations)
 			if(SM.quality == MINOR_NEGATIVE)
 				temp_mut_list += SM
 		if(prob(20))
 			mutations.Remove(pick(temp_mut_list))
+		temp_mut_list.Cut()
+
 	if(S.has_reagent("blood", 15))
-		production += rand(15, -5)
+		production = Clamp(production + rand(15, -5),1,10)
+
 	if(S.has_reagent("amatoxin", 5))
-		production += rand(5, -15)
+		production = Clamp(production + rand(5, -15),1,10)
+
 	if(S.has_reagent("plasma", 5))
-		potency += rand(5, -15)
+		potency = Clamp(potency + rand(5, -15),0,100)
+
 	if(S.has_reagent("holywater", 10))
-		potency += rand(15, -5)
+		potency = Clamp(potency + rand(15, -5),0,100)
 
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/kudzupod

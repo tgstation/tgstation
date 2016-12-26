@@ -19,7 +19,7 @@
 					"<span class='userdanger'>[M] has attempted to kick [src]!</span>", null, COMBAT_MESSAGE_RANGE)
 
 /mob/living/carbon/alien/larva/attack_hulk(mob/living/carbon/human/user, does_attack_animation = 0)
-	if(user.a_intent == "harm")
+	if(user.a_intent == INTENT_HARM)
 		..(user, 1)
 		adjustBruteLoss(5 + rand(1,9))
 		spawn()

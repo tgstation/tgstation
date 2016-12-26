@@ -169,7 +169,7 @@
 				feedback_add_details("slime_babies_born","slimebirth_[replacetext(M.colour," ","_")]")
 
 			var/mob/living/simple_animal/slime/new_slime = pick(babies)
-			new_slime.a_intent = "harm"
+			new_slime.a_intent = INTENT_HARM
 			new_slime.languages_spoken = languages_spoken
 			new_slime.languages_understood = languages_understood
 			if(src.mind)

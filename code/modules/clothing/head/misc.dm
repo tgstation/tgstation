@@ -24,7 +24,7 @@
 
 /obj/item/clothing/head/canada
 	name = "striped red tophat"
-	desc = " It feels sticky, like maple syrup - <i>il se sent collante, comme le sirop d'érable</i>"
+	desc = " It feels sticky, like maple syrup - <i>il se sent collante, comme le sirop d'Ã©rable</i>"
 	icon_state = "canada"
 	item_state = "canada"
 
@@ -228,7 +228,7 @@
 	throwforce = 3
 	throw_speed = 2
 	throw_range = 5
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	attack_verb = list("warned", "cautioned", "smashed")
 	resistance_flags = 0
 

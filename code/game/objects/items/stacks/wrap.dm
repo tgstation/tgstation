@@ -109,6 +109,6 @@
 	icon = 'icons/obj/items.dmi'
 	icon_state = "c_tube"
 	throwforce = 0
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 	throw_speed = 3
 	throw_range = 5

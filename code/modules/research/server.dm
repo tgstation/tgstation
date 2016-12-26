@@ -226,7 +226,7 @@
 
 	else if(href_list["reset_tech"])
 		var/choice = alert("Technology Data Reset", "Are you sure you want to reset this technology to its default data? Data lost cannot be recovered.", "Continue", "Cancel")
-		if(choice == "Continue")
+		if(choice == "Continue" && usr.canUseTopic(src))
 			var/datum/tech/T = temp_server.files.known_tech[href_list["reset_tech"]]
 			if(T)
 				T.level = 1
@@ -234,7 +234,7 @@
 
 	else if(href_list["reset_design"])
 		var/choice = alert("Design Data Deletion", "Are you sure you want to delete this design? Data lost cannot be recovered.", "Continue", "Cancel")
-		if(choice == "Continue")
+		if(choice == "Continue" && usr.canUseTopic(src))
 			var/datum/design/D = temp_server.files.known_designs[href_list["reset_design"]]
 			if(D)
 				temp_server.files.known_designs -= D.id

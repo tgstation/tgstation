@@ -1,7 +1,6 @@
 /obj/structure
 	icon = 'icons/obj/structures.dmi'
 	pressure_resistance = 8
-	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 50)
 	obj_integrity = 300
 	max_integrity = 300
 	var/climb_time = 20
@@ -11,6 +10,8 @@
 	var/broken = 0 //similar to machinery's stat BROKEN
 
 /obj/structure/New()
+	if (!armor)
+		armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 50)
 	..()
 	if(smooth)
 		queue_smooth(src)

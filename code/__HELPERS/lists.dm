@@ -223,11 +223,29 @@
 
 	return L
 
+//same, but returns nothing and acts on list in place
+/proc/shuffle_inplace(list/L)
+	if(!L)
+		return
+
+	for(var/i=1, i<L.len, ++i)
+		L.Swap(i,rand(i,L.len))
+
 //Return a list with no duplicate entries
 /proc/uniqueList(list/L)
 	. = list()
 	for(var/i in L)
 		. |= i
+
+//same, but returns nothing and acts on list in place (also handles associated values properly)
+/proc/uniqueList_inplace(list/L)
+	var/temp = L.Copy()
+	L.len = 0
+	for(var/key in temp)
+		if (isnum(key))
+			L |= key
+		else
+			L[key] = temp[key]
 
 //for sorting clients or mobs by ckey
 /proc/sortKey(list/L, order=1)
@@ -406,5 +424,7 @@
 #define LAZYINITLIST(L) if (!L) L = list()
 
 #define UNSETEMPTY(L) if (L && !L.len) L = null
-
-#define LAZYLEN(L) ( L ? L.len : 0 )
+#define LAZYREMOVE(L, I) if(L) { L -= I; if(!L.len) { L = null; } }
+#define LAZYADD(L, I) if(!L) { L = list(); } L += I;
+#define LAZYACCESS(L, I) (L ? (isnum(I) ? (I > 0 && I <= L.len ? L[I] : null) : L[I]) : null)
+#define LAZYLEN(L) length(L)

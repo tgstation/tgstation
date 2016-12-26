@@ -23,7 +23,7 @@
 	attack_sound = 'sound/weapons/bite.ogg'
 	obj_damage = 0
 	environment_smash = 0
-	ventcrawler = 2
+	ventcrawler = VENTCRAWLER_ALWAYS
 	mob_size = MOB_SIZE_TINY
 	movement_type = FLYING
 	speak_emote = list("squeaks")

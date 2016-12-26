@@ -55,7 +55,7 @@
 
 	var/smoke_delay = 0 //used to prevent spam with smoke reagent reaction on mob.
 
-	var/list/say_log = list() //a log of what we've said, plain text, no spans or junk, essentially just each individual "message"
+	var/list/say_log = list() //a log of what we've said, with a timestamp as the key for each message
 
 	var/bubble_icon = "default" //what icon the mob uses for speechbubbles
 
@@ -72,4 +72,8 @@
 	var/blood_volume = 0 //how much blood the mob has
 	var/obj/effect/proc_holder/ranged_ability //Any ranged ability the mob has, as a click override
 
+	var/list/status_effects //a list of all status effects the mob has
+
 	var/slipping = FALSE
+
+	var/list/implants = null
