@@ -38,7 +38,7 @@
 		target_turf = new_turf
 		if(new_turf.density)
 			break
-	throw_at_fast(target_turf, throw_range, throw_speed)
+	throw_at(target_turf, throw_range, throw_speed)
 	return 1
 
 

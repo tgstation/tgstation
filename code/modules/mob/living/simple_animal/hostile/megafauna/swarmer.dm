@@ -147,7 +147,7 @@ var/global/list/AISwarmerCapsByType = list(/mob/living/simple_animal/hostile/swa
 					return FALSE
 
 			if(istype(newloc, /turf/open/chasm) && !throwing)
-				throw_at_fast(get_edge_target_turf(src, get_dir(src, newloc)), 7 , 3, spin = FALSE) //my planet needs me
+				throw_at(get_edge_target_turf(src, get_dir(src, newloc)), 7 , 3, spin = FALSE) //my planet needs me
 				return FALSE
 
 		return ..()

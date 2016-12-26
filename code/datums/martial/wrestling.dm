@@ -182,9 +182,8 @@
 		if (T && isturf(T))
 			if (!D.stat)
 				D.emote("scream")
-			D.throw_at(T, 10, 4)
+			D.throw_at(T, 10, 4, callback = CALLBACK(D, /mob/living/carbon/human/.Weaken, 2))
 			D.Weaken(2)
-
 	add_logs(A, D, "has thrown with wrestling")
 	return 0
 
