@@ -237,13 +237,13 @@
 			bodytemperature += diff
 
 	if(!environment_is_safe(environment))
-		adjustHealth(-unsuitable_atmos_damage)
+		adjustHealth(unsuitable_atmos_damage)
 
 	handle_temperature_damage()
 
 /mob/living/simple_animal/proc/handle_temperature_damage()
 	if((bodytemperature < minbodytemp) || (bodytemperature > maxbodytemp))
-		adjustHealth(-unsuitable_atmos_damage)
+		adjustHealth(unsuitable_atmos_damage)
 
 /mob/living/simple_animal/gib()
 	if(butcher_results)

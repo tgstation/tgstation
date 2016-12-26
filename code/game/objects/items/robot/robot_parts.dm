@@ -24,22 +24,35 @@
 
 /obj/item/robot_suit/New()
 	..()
-	src.updateicon()
+	updateicon()
+
+/obj/item/robot_suit/prebuilt/New()
+	l_arm = new(src)
+	r_arm = new(src)
+	l_leg = new(src)
+	r_leg = new(src)
+	head = new(src)
+	head.flash1 = new(head)
+	head.flash2 = new(head)
+	chest = new(src)
+	chest.wired = TRUE
+	chest.cell = new /obj/item/weapon/stock_parts/cell/high/plus(chest)
+	..()
 
 /obj/item/robot_suit/proc/updateicon()
-	src.cut_overlays()
-	if(src.l_arm)
-		src.add_overlay("l_arm+o")
-	if(src.r_arm)
-		src.add_overlay("r_arm+o")
-	if(src.chest)
-		src.add_overlay("chest+o")
-	if(src.l_leg)
-		src.add_overlay("l_leg+o")
-	if(src.r_leg)
-		src.add_overlay("r_leg+o")
-	if(src.head)
-		src.add_overlay("head+o")
+	cut_overlays()
+	if(l_arm)
+		add_overlay("l_arm+o")
+	if(r_arm)
+		add_overlay("r_arm+o")
+	if(chest)
+		add_overlay("chest+o")
+	if(l_leg)
+		add_overlay("l_leg+o")
+	if(r_leg)
+		add_overlay("r_leg+o")
+	if(head)
+		add_overlay("head+o")
 
 /obj/item/robot_suit/proc/check_completion()
 	if(src.l_arm && src.r_arm)
@@ -155,10 +168,10 @@
 		var/obj/item/device/mmi/M = W
 		if(check_completion())
 			if(!isturf(loc))
-				user << "<span class='warning'>You can't put the MMI in, the frame has to be standing on the ground to be perfectly precise!</span>"
+				user << "<span class='warning'>You can't put [M] in, the frame has to be standing on the ground to be perfectly precise!</span>"
 				return
 			if(!M.brainmob)
-				user << "<span class='warning'>Sticking an empty MMI into the frame would sort of defeat the purpose!</span>"
+				user << "<span class='warning'>Sticking an empty [M.name] into the frame would sort of defeat the purpose!</span>"
 				return
 
 			var/mob/living/brain/BM = M.brainmob
@@ -175,7 +188,7 @@
 				return
 
 			if(jobban_isbanned(BM, "Cyborg"))
-				user << "<span class='warning'>This MMI does not seem to fit!</span>"
+				user << "<span class='warning'>This [M.name] does not seem to fit!</span>"
 				return
 
 			if(!user.unEquip(W))
@@ -185,16 +198,11 @@
 			if(!O)
 				return
 
-			if(M.hacked || M.clockwork)
+			if(M.laws && M.laws.id != DEFAULT_AI_LAWID)
 				aisync = 0
 				lawsync = 0
-				var/datum/ai_laws/L
-				if(M.clockwork)
-					L = new/datum/ai_laws/ratvar
-				else
-					L = new/datum/ai_laws/syndicate_override
-				O.laws = L
-				L.associate(O)
+				O.laws = M.laws
+				M.laws.associate(O)
 
 			O.invisibility = 0
 			//Transfer debug settings to new mob
@@ -209,12 +217,10 @@
 					O.connected_ai = forced_ai
 			if(!lawsync)
 				O.lawupdate = 0
-				if(!M.hacked && !M.clockwork)
+				if(M.laws.id == DEFAULT_AI_LAWID)
 					O.make_laws()
 
 			ticker.mode.remove_antag_for_borging(BM.mind)
-			if(!M.clockwork)
-				remove_servant_of_ratvar(BM, TRUE)
 			BM.mind.transfer_to(O)
 
 			if(O.mind && O.mind.special_role)

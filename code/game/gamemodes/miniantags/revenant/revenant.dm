@@ -193,12 +193,13 @@
 		inhibited = 0
 		update_action_buttons_icon()
 
-/mob/living/simple_animal/revenant/adjustHealth(amount)
-	if(!revealed)
-		return 0
+/mob/living/simple_animal/revenant/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
+	if(!forced && !revealed)
+		return FALSE
 	. = amount
 	essence = max(0, essence-amount)
-	update_health_hud()
+	if(updating_health)
+		update_health_hud()
 	if(essence == 0)
 		death()
 

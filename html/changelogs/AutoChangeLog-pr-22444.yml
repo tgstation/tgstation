@@ -1,0 +1,4 @@
+author: "XDTM"
+delete-after: True
+changes: 
+  - bugfix: "HUD implants now properly allow you to modify the records of those you examine, like HUD glasses do."
