@@ -21,8 +21,8 @@
 		origin_tech = initial(origin_tech)
 
 
-/obj/item/weapon/implanter/attack(mob/living/carbon/M, mob/user)
-	if(!iscarbon(M))
+/obj/item/weapon/implanter/attack(mob/living/M, mob/user)
+	if(!istype(M))
 		return
 	if(user && imp)
 		if(M != user)
@@ -55,8 +55,7 @@
 
 /obj/item/weapon/implanter/New()
 	..()
-	spawn(1)
-		update_icon()
+	update_icon()
 
 
 

@@ -250,9 +250,10 @@
 				I.color = overmind.blob_reagent_datum.complementary_color
 			flick_overlay(I, viewing, 8)
 
-/mob/living/simple_animal/hostile/blob/blobbernaut/adjustHealth(amount)
+/mob/living/simple_animal/hostile/blob/blobbernaut/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
 	. = ..()
-	update_health_hud()
+	if(updating_health)
+		update_health_hud()
 
 /mob/living/simple_animal/hostile/blob/blobbernaut/update_health_hud()
 	if(hud_used)

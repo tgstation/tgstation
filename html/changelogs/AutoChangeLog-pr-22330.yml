@@ -1,4 +1,0 @@
-author: "F-OS"
-delete-after: True
-changes: 
-  - bugfix: "swarmers can no longer destroy airlocks."

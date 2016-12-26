@@ -78,8 +78,7 @@
 				A.ai_restore_power()
 			if(A.eyeobj)
 				A.eyeobj.relay_speech = TRUE
-			for(var/C in A.connected_robots)
-				var/mob/living/silicon/robot/R = C
+			for(var/mob/living/silicon/robot/R in A.connected_robots)
 				if(R.connected_ai == A)
 					R.visible_message("<span class='heavy_brass'>[R]'s eyes glow a blazing yellow!</span>", \
 					"<span class='heavy_brass'>Assist your new companions in their righteous efforts. Your goal is theirs, and theirs yours. You serve the Clockwork Justiciar above all else. Perform his every \
