@@ -1109,7 +1109,7 @@
 	mutant_organs = list(/obj/item/organ/tongue/abductor)
 	var/scientist = 0 // vars to not pollute spieces list with castes
 	var/agent = 0
-	var/team = 1
+	var/team = 0 // ayys are default "teamless" turning on their telepathy
 
 var/global/image/plasmaman_on_fire = image("icon"='icons/mob/OnFire.dmi', "icon_state"="plasmaman")
 
