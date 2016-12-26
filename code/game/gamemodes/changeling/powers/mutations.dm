@@ -217,7 +217,7 @@
 	name = "tentacle"
 	desc = "A fleshy tentacle that can stretch out and grab things or people."
 	icon = 'icons/obj/weapons.dmi'
-	icon_state = "proboscis"
+	icon_state = "tentacle"
 	item_state = null
 	flags = ABSTRACT | NODROP | DROPDEL | NOBLUDGEON
 	w_class = WEIGHT_CLASS_HUGE
@@ -298,8 +298,6 @@
 				playsound(get_turf(H),I.hitsound,75,1)
 				C.Weaken(4)
 				return
-		C.visible_message("<span class='danger'>[C] falls at [H]'s feet!</span>", "<span class='userdanger'>You are thrown at [H]'s feet!</span>")
-		C.Weaken(2)
 
 /obj/item/projectile/tentacle/on_hit(atom/target, blocked = 0)
 	qdel(source.gun) //one tentacle only unless you miss
@@ -347,6 +345,7 @@
 
 					if(INTENT_HARM)
 						C.visible_message("<span class='danger'>[L] is thrown towards [H] by a tentacle!</span>","<span class='userdanger'>A tentacle grabs you and throws you towards [H]!</span>")
+						C.Weaken(3)
 						C.throw_at(get_step_towards(H,C), 8, 2)
 						addtimer(src, "tentacle_stab", 3, TIMER_NORMAL, H, C)
 						return 1
