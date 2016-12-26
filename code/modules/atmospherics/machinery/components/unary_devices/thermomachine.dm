@@ -34,6 +34,7 @@
 							/obj/item/weapon/stock_parts/console_screen = 1)
 
 /obj/item/weapon/circuitboard/machine/thermomachine/New()
+	..()
 	if(prob(50))
 		name = "circuit board (Freezer)"
 		build_path = /obj/machinery/atmospherics/components/unary/thermomachine/freezer
