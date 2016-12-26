@@ -64,6 +64,11 @@
 	if(H)
 		H.endTailWag()
 
+/datum/species/lizard/qualifies_for_rank(rank, list/features)
+	if(rank == "Janitor")
+		return TRUE
+	return FALSE
+
 /*
  Lizard subspecies: ASHWALKERS
 */
