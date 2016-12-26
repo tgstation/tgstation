@@ -92,7 +92,7 @@ var/datum/subsystem/throwing/SSthrowing
 			return
 		dist_travelled++
 
-		if (dist_travelled > MAX_THROWING_DIST) //safety to prevent infinite while loop.
+		if (dist_travelled > MAX_THROWING_DIST)
 			finialize(hit = FALSE)
 			return
 
