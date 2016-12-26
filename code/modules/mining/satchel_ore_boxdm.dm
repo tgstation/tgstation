@@ -12,8 +12,7 @@
 
 /obj/structure/ore_box/attackby(obj/item/weapon/W, mob/user, params)
 	if (istype(W, /obj/item/stack/ore))
-		if(!user.drop_item())
-			return FALSE
+		user.unEquip(W)
 		add_ore(W)
 	else if (istype(W, /obj/item/weapon/storage))
 		var/obj/item/weapon/storage/S = W
@@ -30,13 +29,14 @@
 	else
 		return ..()
 
-/obj/structure/ore_box/proc/add_ore(obj/item/stack/ore/O)
-	if(!(O in stack_list))
-		var/obj/item/stack/ore/S = new O(src, 0)
-		S.amount = 0
-		stack_list[O] = S
-	var/obj/item/stack/ore/I = stack_list[O]
-	I.amount += O.amount
+/obj/structure/ore_box/proc/add_ore(obj/item/stack/ore/O)	//Muh copypasta
+	var/obj/item/stack/ore/O2 = O.type
+	if(!(O2 in stack_list))
+		var/obj/item/stack/ore/O3 = new O2(src)
+		O3.amount = 0
+		stack_list[O2] = O3
+	var/obj/item/stack/ore/storage = stack_list[O2]
+	storage.amount += O.amount
 	qdel(O)
 
 /obj/structure/ore_box/attack_hand(mob/user)
