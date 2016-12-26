@@ -14232,6 +14232,7 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/glass_security{
+	cyclelinkeddir = 2;
 	id_tag = "innerbrig";
 	name = "Brig";
 	req_access_txt = "63"
@@ -14252,6 +14253,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/door/airlock/glass_security{
+	cyclelinkeddir = 2;
 	id_tag = "innerbrig";
 	name = "Brig";
 	req_access_txt = "63"
@@ -16521,6 +16523,7 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/glass_security{
+	cyclelinkeddir = 1;
 	id_tag = "outerbrig";
 	name = "Brig";
 	req_access_txt = "63"
@@ -16556,6 +16559,7 @@
 	pixel_x = 25
 	},
 /obj/machinery/door/airlock/glass_security{
+	cyclelinkeddir = 1;
 	id_tag = "outerbrig";
 	name = "Brig";
 	req_access_txt = "63"
@@ -77667,6 +77671,7 @@
 /obj/structure/disposalpipe/segment,
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/research{
+	cyclelinkeddir = 2;
 	id_tag = "ResearchExt";
 	name = "Research Division";
 	req_access_txt = "0";
@@ -79074,6 +79079,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/research{
+	cyclelinkeddir = 2;
 	id_tag = "ResearchExt";
 	name = "Research Division";
 	req_access_txt = "0";
@@ -93863,6 +93869,7 @@
 /obj/structure/disposalpipe/segment,
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/research{
+	cyclelinkeddir = 1;
 	id_tag = "ResearchInt";
 	name = "Research Division";
 	req_access_txt = "0";
@@ -93881,6 +93888,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/research{
+	cyclelinkeddir = 1;
 	id_tag = "ResearchInt";
 	name = "Research Division";
 	req_access_txt = "0";
