@@ -340,7 +340,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/lollipop
 	name = "lollipop"
-	desc = "A delicious lollipop. Makes for a great Valentine's present."
+	desc = "A delicious lollipop. See how many licks it takes to get to the center."
 	icon = 'icons/obj/lollipop.dmi'
 	icon_state = "lollipop_stick"
 	list_reagents = list("nutriment" = 1, "vitamin" = 1, "iron" = 10, "sugar" = 5, "omnizine" = 2)	//Honk
