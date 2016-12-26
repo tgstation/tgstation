@@ -489,6 +489,9 @@
 		if(!airlock_hit(D))
 			crashing = FALSE
 			return FALSE
+		else if(momentum_speed < 3)
+			crashing = FALSE
+			return FALSE
 		damage = TRUE
 		anchored = TRUE
 		density = FALSE
