@@ -798,7 +798,7 @@
 			usermessage("[I] has been sucessfully installed into systems.")
 			if(user.unEquip(I))
 				if(part_manip)
-					part_manip.force_move(get_turf(src))
+					part_manip.forceMove(get_turf(src))
 					part_manip = null
 				I.loc = src
 				part_manip = I
@@ -806,7 +806,7 @@
 			usermessage("[I] has been sucessfully installed into systems.")
 			if(user.unEquip(I))
 				if(part_scan)
-					part_scan.force_move(get_turf(src))
+					part_scan.forceMove(get_turf(src))
 					part_scan = null
 				I.loc = src
 				part_scan = I
@@ -814,7 +814,7 @@
 			usermessage("[I] has been sucessfully installed into systems.")
 			if(user.unEquip(I))
 				if(part_laser)
-					part_laser.force_move(get_turf(src))
+					part_laser.forceMove(get_turf(src))
 					part_laser = null
 				I.loc = src
 				part_laser = I
@@ -822,7 +822,7 @@
 			usermessage("[I] has been sucessfully installed into systems.")
 			if(user.unEquip(I))
 				if(part_bin)
-					part_bin.force_move(get_turf(src))
+					part_bin.forceMove(get_turf(src))
 					part_bin = null
 				I.loc = src
 				part_bin = I
@@ -830,7 +830,7 @@
 			usermessage("[I] has been sucessfully installed into systems.")
 			if(user.unEquip(I))
 				if(part_cap)
-					part_cap.force_move(get_turf(src))
+					part_cap.forceMove(get_turf(src))
 					part_cap = null
 				I.loc = src
 				part_cap = I
