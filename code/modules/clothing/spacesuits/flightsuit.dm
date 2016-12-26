@@ -409,8 +409,8 @@
 		powersetting = 1
 	momentum_gain = powersetting * 10
 	usermessage("Engine output set to [momentum_gain].")
-	momentum_drift_coeff = ((100/momentum_max)*momentum_gain*((drift_tolerance*(((drift_tolerance*2)+1)/4))/drift_tolerance)*10)
-
+	momentum_drift_coeff = (((momentum_gain)*(drift_tolerance*1.1))/momentum_max)
+	
 /obj/item/device/flightpack/proc/crash_damage(density, anchored, speed, victim_name)
 	var/crashmessagesrc = "<span class='userdanger'>[wearer] violently crashes into [victim_name], "
 	var/userdamage = 10
