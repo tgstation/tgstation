@@ -98,6 +98,8 @@
 		take_bodypart_damage(10)
 	if(iscarbon(hit_atom))
 		var/mob/living/carbon/victim = hit_atom
+		if(victim.movement_type & FLYING)
+			return
 		victim.Weaken(1)
 		Weaken(1)
 		victim.take_bodypart_damage(10)
