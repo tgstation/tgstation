@@ -484,7 +484,7 @@
 			crash_grille(S)
 		crashing = FALSE
 		return FALSE
-	else if((istype(unmovablevictim, /obj/machinery/door)) && (!istype(unmovablevictim, /obj/machinery/door/poddoor))
+	else if((istype(unmovablevictim, /obj/machinery/door)) && (!istype(unmovablevictim, /obj/machinery/door/poddoor)))
 		var/obj/machinery/door/D = unmovablevictim
 		if(!airlock_hit(D))
 			crashing = FALSE
