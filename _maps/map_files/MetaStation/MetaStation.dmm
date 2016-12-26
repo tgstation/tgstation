@@ -1,4 +1,4 @@
-//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aaa" = (
 /turf/open/space,
 /area/space)
@@ -61855,16 +61855,24 @@
 /obj/machinery/button/door{
 	id = "Biohazard";
 	name = "Biohazard Shutter Control";
-	pixel_x = 0;
-	pixel_y = 7;
+	pixel_x = -7;
+	pixel_y = 0;
 	req_access_txt = "47"
 	},
 /obj/machinery/button/door{
-	desc = "A remote control switch for the medbay foyer.";
-	id = "ResearchFoyer";
-	name = "Research Door Button";
+	desc = "A remote control switch for the research airlock.";
+	id = "ResearchExt";
+	name = "Research Exterior Airlock";
 	normaldoorcontrol = 1;
-	pixel_x = 0;
+	pixel_x = 7;
+	pixel_y = 7
+	},
+/obj/machinery/button/door{
+	desc = "A remote control switch for the research airlock.";
+	id = "ResearchInt";
+	name = "Research Interior Airlock";
+	normaldoorcontrol = 1;
+	pixel_x = 7;
 	pixel_y = -2
 	},
 /turf/open/floor/plasteel/red/side{
@@ -77659,6 +77667,7 @@
 /obj/structure/disposalpipe/segment,
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/research{
+	id_tag = "ResearchExt";
 	name = "Research Division";
 	req_access_txt = "0";
 	req_one_access_txt = "47"
@@ -79065,6 +79074,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/research{
+	id_tag = "ResearchExt";
 	name = "Research Division";
 	req_access_txt = "0";
 	req_one_access_txt = "47"
@@ -93847,6 +93857,38 @@
 	icon_state = "diagonalWall3"
 	},
 /area/shuttle/syndicate)
+"dfL" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/disposalpipe/segment,
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/research{
+	id_tag = "ResearchInt";
+	name = "Research Division";
+	req_access_txt = "0";
+	req_one_access_txt = "47"
+	},
+/turf/open/floor/plasteel/delivery,
+/area/medical/research{
+	name = "Research Division"
+	})
+"dfM" = (
+/obj/structure/cable/yellow{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/research{
+	id_tag = "ResearchInt";
+	name = "Research Division";
+	req_access_txt = "0";
+	req_one_access_txt = "47"
+	},
+/turf/open/floor/plasteel/delivery,
+/area/medical/research{
+	name = "Research Division"
+	})
 
 (1,1,1) = {"
 aaa
@@ -123814,7 +123856,7 @@ cCY
 ckT
 cmq
 cnR
-cCY
+dfL
 cqk
 crv
 csO
@@ -124071,7 +124113,7 @@ cFt
 ckU
 cmr
 cnS
-cFt
+dfM
 cql
 crw
 csP
