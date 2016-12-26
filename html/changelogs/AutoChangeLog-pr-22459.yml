@@ -1,0 +1,4 @@
+author: "XDTM"
+delete-after: True
+changes: 
+  - bugfix: "The maintenance door adjacent to R&D in metastation is now accessible to scientists, instead of requiring both science and robotics access."
