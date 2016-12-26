@@ -272,3 +272,4 @@
 	item_state = null
 	icon_state = "gravity_gun"
 	var/power = 4
+	pin = /obj/item/device/firing_pin
