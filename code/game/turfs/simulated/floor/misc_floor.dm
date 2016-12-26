@@ -76,19 +76,12 @@
 	change_construction_value(1)
 
 /turf/open/floor/clockwork/Destroy()
-	be_removed()
-	return ..()
-
-/turf/open/floor/clockwork/ChangeTurf(path, defer_change = FALSE)
-	if(path != type)
-		be_removed()
-	return ..()
-
-/turf/open/floor/clockwork/proc/be_removed()
 	STOP_PROCESSING(SSobj, src)
 	change_construction_value(-1)
-	qdel(realappearence)
-	realappearence = null
+	if(realappearence)
+		qdel(realappearence)
+		realappearence = null
+	return ..()
 
 /turf/open/floor/clockwork/Entered(atom/movable/AM)
 	..()
@@ -116,20 +109,7 @@
 			if(M.client && (is_servant_of_ratvar(M) || isobserver(M) || M.stat == DEAD))
 				viewing += M.client
 		flick_overlay(I, viewing, 8)
-
-		var/swapdamage = FALSE
-		if(L.has_dna()) //if has_dna() is true they're at least carbon
-			var/mob/living/carbon/C = L
-			if(TOXINLOVER in C.dna.species.species_traits)
-				swapdamage = TRUE
-		if(isanimal(L))
-			var/mob/living/simple_animal/A = L
-			if(A.damage_coeff[TOX] < 0)
-				swapdamage = TRUE
-		if(swapdamage) //they'd take damage, we need to swap it
-			L.adjustToxLoss(3)
-		else
-			L.adjustToxLoss(-3)
+		L.adjustToxLoss(-3, TRUE, TRUE)
 
 /turf/open/floor/clockwork/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/weapon/crowbar))

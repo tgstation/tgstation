@@ -99,14 +99,20 @@
 /mob/living/simple_animal/hostile/clockwork/fragment/Process_Spacemove(movement_dir = 0)
 	return 1
 
+/mob/living/simple_animal/hostile/clockwork/fragment/emp_act(severity)
+	if(movement_delay_time > world.time)
+		movement_delay_time = movement_delay_time + (50/severity)
+	else
+		movement_delay_time = world.time + (50/severity)
+
 /mob/living/simple_animal/hostile/clockwork/fragment/movement_delay()
 	. = ..()
 	if(movement_delay_time > world.time && !ratvar_awakens)
 		. += min((movement_delay_time - world.time) * 0.1, 10) //the more delay we have, the slower we go
 
-/mob/living/simple_animal/hostile/clockwork/fragment/adjustHealth(amount)
+/mob/living/simple_animal/hostile/clockwork/fragment/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
 	. = ..()
-	if(!ratvar_awakens && amount > 0) //if ratvar is up we ignore movement delay
+	if(!ratvar_awakens && . > 0) //if ratvar is up we ignore movement delay
 		if(movement_delay_time > world.time)
 			movement_delay_time = movement_delay_time + amount*2.5
 		else
@@ -285,7 +291,7 @@
 			stat(null, "Counter Chance: [counterchance]%")
 		stat(null, "You do [melee_damage_upper] damage on melee attacks.")
 
-/mob/living/simple_animal/hostile/clockwork/marauder/adjustHealth(amount) //Fatigue damage
+/mob/living/simple_animal/hostile/clockwork/marauder/adjustHealth(amount, updating_health = TRUE, forced = FALSE) //Fatigue damage
 	var/fatiguedamage = adjust_fatigue(amount)
 	if(amount > 0)
 		combattimer = world.time + initial(combattimer)
@@ -295,7 +301,7 @@
 				amount *= 4 //if a wielded null rod is nearby, it takes four times the health damage
 				break
 	. = ..() + fatiguedamage
-	if(src)
+	if(src && updating_health)
 		update_health_hud()
 
 /mob/living/simple_animal/hostile/clockwork/marauder/proc/adjust_fatigue(amount) //Adds or removes the given amount of fatigue

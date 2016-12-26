@@ -13,7 +13,7 @@
 	var/destination_y
 
 	var/global/datum/gas_mixture/space/space_gas = new
-
+	plane = PLANE_SPACE
 
 /turf/open/space/New()
 	icon_state = SPACE_ICON_STATE
@@ -54,7 +54,8 @@
 			if(isspaceturf(t))
 				//let's NOT update this that much pls
 				continue
-			SetLuminosity(4,1)
+			SetLuminosity(4,5)
+			light.mode = LIGHTING_STARLIGHT
 			return
 		SetLuminosity(0)
 

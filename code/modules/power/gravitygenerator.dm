@@ -64,9 +64,10 @@ var/const/GRAV_NEEDS_WRENCH = 3
 	stat &= ~BROKEN
 
 /obj/machinery/gravity_generator/part/Destroy()
-	set_broken()
 	if(main_part)
 		qdel(main_part)
+		return QDEL_HINT_LETMELIVE
+	set_broken()
 	return ..()
 
 //

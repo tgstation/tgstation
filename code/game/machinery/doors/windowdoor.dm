@@ -71,9 +71,9 @@
 	if (!( ticker ))
 		return
 	var/mob/M = AM
-	if(!M.restrained())
-		bumpopen(M)
-	return
+	if(M.restrained() || ((isdrone(M) || iscyborg(M)) && M.stat))
+		return
+	bumpopen(M)
 
 /obj/machinery/door/window/bumpopen(mob/user)
 	if( operating || !src.density )

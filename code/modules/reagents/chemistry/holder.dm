@@ -561,7 +561,7 @@ var/const/INJECT = 5 //injection
 
 	if(isnull(amount))
 		amount = 0
-		throw EXCEPTION("null amount passed to reagent code")
+		CRASH("null amount passed to reagent code")
 		return FALSE
 
 	if(!isnum(amount))

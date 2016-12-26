@@ -2,6 +2,9 @@
 /datum/chemical_reaction/slime
 
 /datum/chemical_reaction/slime/on_reaction(datum/reagents/holder)
+	delete_extract(holder)
+
+/datum/chemical_reaction/slime/proc/delete_extract(datum/reagents/holder)
 	var/obj/item/slime_extract/M = holder.my_atom
 	if(M.Uses <= 0)
 		if (!results.len) //if the slime doesn't output chemicals
@@ -119,8 +122,9 @@
 	var/turf/T = get_turf(holder.my_atom)
 	T.visible_message("<span class='danger'>The slime extract begins to vibrate violently !</span>")
 	addtimer(src, "chemical_mob_spawn", 50, TIMER_NORMAL, holder, 5, "Gold Slime")
-	spawn(60)
-	..()
+	var/obj/item/slime_extract/M = holder.my_atom
+	deltimer(M.qdel_timer)
+	M.qdel_timer = addtimer(src, "delete_extract", 55, TIMER_NORMAL, holder)
 
 /datum/chemical_reaction/slime/slimecritlesser
 	name = "Slime Crit Lesser"
@@ -134,8 +138,9 @@
 	var/turf/T = get_turf(holder.my_atom)
 	T.visible_message("<span class='danger'>The slime extract begins to vibrate violently !</span>")
 	addtimer(src, "chemical_mob_spawn", 50, TIMER_NORMAL, holder, 3, "Lesser Gold Slime", "neutral")
-	spawn(60)
-	..()
+	var/obj/item/slime_extract/M = holder.my_atom
+	deltimer(M.qdel_timer)
+	M.qdel_timer = addtimer(src, "delete_extract", 55, TIMER_NORMAL, holder)
 
 /datum/chemical_reaction/slime/slimecritfriendly
 	name = "Slime Crit Friendly"
@@ -149,8 +154,9 @@
 	var/turf/T = get_turf(holder.my_atom)
 	T.visible_message("<span class='danger'>The slime extract begins to vibrate adorably !</span>")
 	addtimer(src, "chemical_mob_spawn", 50, TIMER_NORMAL, holder, 1, "Friendly Gold Slime", "neutral")
-	spawn(60)
-	..()
+	var/obj/item/slime_extract/M = holder.my_atom
+	deltimer(M.qdel_timer)
+	M.qdel_timer = addtimer(src, "delete_extract", 55, TIMER_NORMAL, holder)
 
 //Silver
 /datum/chemical_reaction/slime/slimebork
@@ -272,6 +278,29 @@
 
 
 //Dark Blue
+/datum/chemical_reaction/slime/slimefreeze
+	name = "Slime Freeze"
+	id = "m_freeze"
+	required_reagents = list("plasma" = 1)
+	required_container = /obj/item/slime_extract/darkblue
+	required_other = 1
+
+/datum/chemical_reaction/slime/slimefreeze/on_reaction(datum/reagents/holder)
+	feedback_add_details("slime_cores_used","[type]")
+	var/turf/T = get_turf(holder.my_atom)
+	T.visible_message("<span class='danger'>The slime extract begins to vibrate adorably!</span>")
+	addtimer(src, "freeze", 50, TIMER_NORMAL, holder)
+	var/obj/item/slime_extract/M = holder.my_atom
+	deltimer(M.qdel_timer)
+	M.qdel_timer = addtimer(src, "delete_extract", 55, TIMER_NORMAL, holder)
+
+/datum/chemical_reaction/slime/slimefreeze/proc/freeze(datum/reagents/holder)
+	if(holder && holder.my_atom)
+		var/turf/open/T = get_turf(holder.my_atom)
+		if(istype(T))
+			T.atmos_spawn_air("freon=50;TEMP=120")
+
+
 
 /datum/chemical_reaction/slime/slimefireproof
 	name = "Slime Fireproof"
@@ -311,8 +340,9 @@
 	var/turf/TU = get_turf(holder.my_atom)
 	TU.visible_message("<span class='danger'>The slime extract begins to vibrate adorably!</span>")
 	addtimer(src, "slime_burn", 50, TIMER_NORMAL, holder)
-	spawn(60)
-	..()
+	var/obj/item/slime_extract/M = holder.my_atom
+	deltimer(M.qdel_timer)
+	M.qdel_timer = addtimer(src, "delete_extract", 55, TIMER_NORMAL, holder)
 
 /datum/chemical_reaction/slime/slimefire/proc/slime_burn(datum/reagents/holder)
 	if(holder && holder.my_atom)
@@ -522,8 +552,9 @@
 	log_game("Slime Explosion reaction started at [T.loc.name] ([T.x],[T.y],[T.z]). Last Fingerprint: [lastkey ? lastkey : "N/A"].")
 	T.visible_message("<span class='danger'>The slime extract begins to vibrate violently !</span>")
 	addtimer(src, "boom", 50, TIMER_NORMAL, holder)
-	spawn(60)
-	..()
+	var/obj/item/slime_extract/M = holder.my_atom
+	deltimer(M.qdel_timer)
+	M.qdel_timer = addtimer(src, "delete_extract", 55, TIMER_NORMAL, holder)
 
 /datum/chemical_reaction/slime/slimeexplosion/proc/boom(datum/reagents/holder)
 	if(holder && holder.my_atom)
@@ -582,7 +613,6 @@
 	feedback_add_details("slime_cores_used","[type]")
 	var/obj/item/golem_shell/artificial/Z = new /obj/item/golem_shell/artificial
 	Z.loc = get_turf(holder.my_atom)
-	notify_ghosts("Artificial golem shell created in [get_area(Z)].", 'sound/effects/ghost2.ogg', source = Z)
 	..()
 
 //Bluespace

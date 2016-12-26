@@ -612,6 +612,7 @@
 	icon_state = "welder"
 	toolspeed = 0.1
 	light_intensity = 0
+	change_icons = 0
 	origin_tech = "plasmatech=5;engineering=5;abductor=3"
 
 /obj/item/weapon/weldingtool/abductor/process()

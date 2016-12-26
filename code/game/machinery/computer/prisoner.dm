@@ -36,7 +36,7 @@
 			Tr = get_turf(C)
 			if((Tr) && (Tr.z != src.z))
 				continue//Out of range
-			if(!C.implanted)
+			if(!C.imp_in)
 				continue
 			dat += "ID: [C.imp_in.name] | Remaining Units: [C.reagents.total_volume] <BR>"
 			dat += "| Inject: "
@@ -47,8 +47,6 @@
 		dat += "<HR>Tracking Implants<BR>"
 		for(var/obj/item/weapon/implant/tracking/T in tracked_implants)
 			if(!iscarbon(T.imp_in))
-				continue
-			if(!T.implanted)
 				continue
 			Tr = get_turf(T)
 			if((Tr) && (Tr.z != src.z))
