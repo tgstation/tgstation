@@ -69,8 +69,8 @@
 	throw_message = "does nothing against the hard shell of"
 	vision_range = 2
 	speed = 3
-	maxHealth = 200
-	health = 200
+	maxHealth = 75
+	health = 75
 	harm_intent_damage = 5
 	obj_damage = 60
 	melee_damage_lower = 12
@@ -203,8 +203,8 @@
 	aggro_vision_range = 9
 	idle_vision_range = 5
 	speed = 3
-	maxHealth = 75
-	health = 75
+	maxHealth = 45
+	health = 45
 	harm_intent_damage = 5
 	melee_damage_lower = 0
 	melee_damage_upper = 0
@@ -423,8 +423,8 @@
 	speak_emote = list("bellows")
 	vision_range = 4
 	speed = 3
-	maxHealth = 300
-	health = 300
+	maxHealth = 110
+	health = 110
 	harm_intent_damage = 0
 	obj_damage = 100
 	melee_damage_lower = 25
