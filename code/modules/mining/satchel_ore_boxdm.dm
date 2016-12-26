@@ -49,22 +49,20 @@
 
 /obj/structure/ore_box/proc/show_contents(mob/user)
 	var/dat = text("<b>The contents of the ore box reveal...</b><br>")
-	for(var/obj/item/stack/ore/S in stack_list)
-		dat += "[capitalize(S)]: [S.amount]<br>"
+	for(var/obj/item/stack/ore/S in contents)
+		dat += "[S.name]: [S.amount]<br>"
 	dat += text("<br><br><A href='?src=\ref[src];removeall=1'>Empty box</A>")
 	user << browse(dat, "window=orebox")
 
 /obj/structure/ore_box/proc/dump_box_contents()
-	for(var/obj/item/stack/ore/S in stack_list)
+	for(var/obj/item/stack/ore/S in contents)
 		while(S.amount > 0)
 			if(S.amount >= 50)
-				new S(get_turf(src), 50)
-				S.use(50)
+				new S.type(get_turf(src), 50)
+				S.amount -= 50
 			else
-				new S(get_turf(src), S.amount)
-				S.use(S.amount)
-		if(S)
-			qdel(S)
+				new S.type(get_turf(src), S.amount)
+				S.amount = 0
 
 /obj/structure/ore_box/Topic(href, href_list)
 	if(..())
