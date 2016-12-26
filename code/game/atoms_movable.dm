@@ -247,7 +247,9 @@
 		SpinAnimation(5, 1)
 
 	SSthrowing.processing[src] = TT
-	TT.tick() //do the first move now
+	if (SSthrowing.paused && length(SSthrowing.currentrun))
+		SSthrowing.currentrun[src] = TT
+
 
 /atom/movable/proc/handle_buckled_mob_movement(newloc,direct)
 	for(var/m in buckled_mobs)

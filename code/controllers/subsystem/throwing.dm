@@ -1,4 +1,5 @@
 #define MAX_THROWING_DIST 2048 // 8 z-levels on default width
+#define MAX_TICKS_TO_MAKE_UP 2 //how many missed ticks will we attempt to make up for this run.
 var/datum/subsystem/throwing/SSthrowing
 
 /datum/subsystem/throwing
@@ -69,7 +70,8 @@ var/datum/subsystem/throwing/SSthrowing
 		return
 
 	var/atom/step
-	var/tilestomove = round((((world.time - start_time) * speed) - (dist_travelled ? dist_travelled : -1)) * (world.tick_lag * SSthrowing.wait))
+	//calculate how many tiles to move, making up for any missed ticks.
+	var/tilestomove = round(min((((world.time - start_time) * speed) - (dist_travelled ? dist_travelled : -1)), speed*MAX_TICKS_TO_MAKE_UP) * (world.tick_lag * SSthrowing.wait))
 	while (tilestomove-- > 0)
 		if ((dist_travelled >= maxrange || thrownthing.loc == target_turf) && thrownthing.has_gravity(thrownthing.loc))
 			finialize(hit = FALSE)
@@ -94,6 +96,8 @@ var/datum/subsystem/throwing/SSthrowing
 
 		if (dist_travelled > MAX_THROWING_DIST)
 			finialize(hit = FALSE)
+			return
+		if (world.tick_usage > CURRENT_TICKLIMIT)
 			return
 
 /datum/thrownthing/proc/finialize(hit = TRUE)
