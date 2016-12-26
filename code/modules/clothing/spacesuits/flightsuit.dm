@@ -37,12 +37,12 @@
 	var/override_safe = FALSE
 
 	var/boost = FALSE
-	var/boost_maxcharge = 50	//Vroom! If you hit someone while boosting they'll likely be knocked flying. Fun.
-	var/boost_charge = 50
+	var/boost_maxcharge = 30	//Vroom! If you hit someone while boosting they'll likely be knocked flying. Fun.
+	var/boost_charge = 30
 	var/boost_speed = 2
 	var/boost_power = 50
-	var/boost_chargerate = 0.5
-	var/boost_drain = 10	//Keep in mind it charges and drains at the same time, so drain realistically is drain-charge=change
+	var/boost_chargerate = 0.3
+	var/boost_drain = 6	//Keep in mind it charges and drains at the same time, so drain realistically is drain-charge=change
 
 	var/momentum_x = 0		//Realistic physics. No more "Instant stopping while barreling down a hallway at Mach 1".
 	var/momentum_y = 0
@@ -59,7 +59,7 @@
 	var/drift_tolerance = 2
 
 	var/stabilizer = TRUE
-	var/stabilizer_decay_amount = 12.5
+	var/stabilizer_decay_amount = 11
 	var/gravity = TRUE
 	var/gravity_decay_amount = 3
 	var/pressure = TRUE
@@ -78,7 +78,7 @@
 	var/emp_damage = 0	//One hit should make it hard to control, continuous hits will cripple it and then simply shut it off/make it crash. Direct hits count more.
 	var/emp_strong_damage = 1.5
 	var/emp_weak_damage = 1
-	var/emp_heal_amount = 0.1		//How much emp damage to heal per process.
+	var/emp_heal_amount = 0.06		//How much emp damage to heal per process.
 	var/emp_disable_threshold = 3	//3 weak ion, 2 strong ion hits.
 	var/emp_disabled = FALSE
 
@@ -86,7 +86,7 @@
 	var/crash_damage_low = 1
 	var/crash_damage_high = 2.5
 	var/crash_disable_threshold = 5
-	var/crash_heal_amount = 0.1
+	var/crash_heal_amount = 0.06
 	var/crash_disabled = FALSE
 	var/crash_dampening = 0
 
@@ -346,7 +346,6 @@
 		return FALSE
 	if(wearer)
 		wearer.float(TRUE)
-
 
 /obj/item/device/flightpack/proc/handle_damage()
 	if(crash_damage)
