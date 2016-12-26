@@ -409,7 +409,7 @@
 		powersetting = 1
 	momentum_gain = powersetting * 10
 	usermessage("Engine output set to [momentum_gain].")
-	momentum_drift_coeff = (((momentum_gain)*(drift_tolerance*1.1))/momentum_max)
+	momentum_drift_coeff = ((momentum_gain)*(drift_tolerance*1.1))/momentum_max
 
 /obj/item/device/flightpack/proc/crash_damage(density, anchored, speed, victim_name)
 	var/crashmessagesrc = "<span class='userdanger'>[wearer] violently crashes into [victim_name], "
@@ -520,7 +520,7 @@
 	if(damage)
 		crash_damage(density, anchored, momentum_speed, unmovablevictim.name)
 		userknockback(density, anchored, momentum_speed, dir)
-		losecontrol(move = FALSE)
+		losecontrol(stun = FALSE, move = FALSE)
 	crashing = FALSE
 
 /obj/item/device/flightpack/proc/door_hit(obj/structure/mineral_door/door)
@@ -614,6 +614,10 @@
 		O.take_damage(damage)
 
 /obj/item/device/flightpack/proc/losecontrol(stun = FALSE, move = TRUE)
+	if(!move)
+		momentum_x = 0
+		momentum_y = 0
+		calculate_momentum_speed()
 	usermessage("Warning: Control system not responding. Deactivating!", 3)
 	wearer.visible_message("<span class='warning'>[wearer]'s flight suit abruptly shuts off and they lose control!</span>")
 	if(wearer)
@@ -629,7 +633,7 @@
 	momentum_x = 0
 	momentum_y = 0
 	if(flight)
-		disable_flight()
+		disable_flight(FALSE)
 
 /obj/item/device/flightpack/proc/enable_flight(forced = FALSE)
 	if(!suit)
