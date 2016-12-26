@@ -56,6 +56,16 @@
 	hitsound = 'sound/weapons/tap.ogg'
 	eyeblur = 0
 	impact_effect_type = /obj/effect/overlay/temp/impact_effect/blue_laser
+	
+/obj/item/projectile/beam/pulse_disabler
+	name = "pulse disabler beam"
+	icon_state = "u_laser"
+	damage = 42
+	damage_type = STAMINA
+	flag = "energy"
+	hitsound = 'sound/weapons/tap.ogg'
+	eyeblur = 0
+	impact_effect_type = /obj/effect/overlay/temp/impact_effect/blue_laser
 
 /obj/item/projectile/beam/pulse
 	name = "pulse"
