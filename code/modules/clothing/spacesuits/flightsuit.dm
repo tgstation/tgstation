@@ -54,19 +54,19 @@
 	var/momentum_speed = 0	//How fast we are drifting around
 	var/momentum_speed_x = 0
 	var/momentum_speed_y = 0
-	var/momentum_passive_loss = 7
+	var/momentum_passive_loss = 4
 	var/momentum_gain = 20
 	var/drift_tolerance = 2
 
 	var/stabilizer = TRUE
-	var/stabilizer_decay_amount = 23
+	var/stabilizer_decay_amount = 12.5
 	var/gravity = TRUE
-	var/gravity_decay_amount = 5
+	var/gravity_decay_amount = 3
 	var/pressure = TRUE
-	var/pressure_decay_amount = 5
+	var/pressure_decay_amount = 3
 	var/pressure_threshold = 30
 	var/brake = FALSE
-	var/airbrake_decay_amount = 60
+	var/airbrake_decay_amount = 30
 
 	var/resync = FALSE	//Used to resync the flight-suit every 30 seconds or so.
 
@@ -145,8 +145,8 @@
 	powersetting_high = Clamp(laser, 0, 3)
 	emp_disable_threshold = bin*1.25
 	crash_disable_threshold = bin*2
-	stabilizer_decay_amount = scan*5.75
-	airbrake_decay_amount = manip*15
+	stabilizer_decay_amount = scan*3.5
+	airbrake_decay_amount = manip*8
 	crash_dampening = bin
 
 /obj/item/device/flightpack/Destroy()
@@ -655,7 +655,7 @@
 	if(forced)
 		losecontrol(stun = TRUE)
 		return TRUE
-	if(momentum_speed < 3)
+	if(momentum_speed <= 1)
 		momentum_x = 0
 		momentum_y = 0
 		usermessage("DISENGAGING FLIGHT ENGINES.")
@@ -795,35 +795,45 @@
 	if(istype(I, /obj/item/weapon/stock_parts))
 		var/obj/item/weapon/stock_parts/S = I
 		if(istype(S, /obj/item/weapon/stock_parts/manipulator))
-			if((!part_manip) || (part_manip.rating < S.rating))
-				usermessage("[I] has been sucessfully installed into systems.")
-				if(user.unEquip(I))
-					I.loc = src
-					part_manip = I
+			usermessage("[I] has been sucessfully installed into systems.")
+			if(user.unEquip(I))
+				if(part_manip)
+					part_manip.force_move(get_turf(src))
+					part_manip = null
+				I.loc = src
+				part_manip = I
 		if(istype(S, /obj/item/weapon/stock_parts/scanning_module))
-			if((!part_scan) || (part_scan.rating < S.rating))
-				usermessage("[I] has been sucessfully installed into systems.")
-				if(user.unEquip(I))
-					I.loc = src
-					part_scan = I
+			usermessage("[I] has been sucessfully installed into systems.")
+			if(user.unEquip(I))
+				if(part_scan)
+					part_scan.force_move(get_turf(src))
+					part_scan = null
+				I.loc = src
+				part_scan = I
 		if(istype(S, /obj/item/weapon/stock_parts/micro_laser))
-			if((!part_laser) || (part_laser.rating < S.rating))
-				usermessage("[I] has been sucessfully installed into systems.")
-				if(user.unEquip(I))
-					I.loc = src
-					part_laser = I
+			usermessage("[I] has been sucessfully installed into systems.")
+			if(user.unEquip(I))
+				if(part_laser)
+					part_laser.force_move(get_turf(src))
+					part_laser = null
+				I.loc = src
+				part_laser = I
 		if(istype(S, /obj/item/weapon/stock_parts/matter_bin))
-			if((!part_bin) || (part_bin.rating < S.rating))
-				usermessage("[I] has been sucessfully installed into systems.")
-				if(user.unEquip(I))
-					I.loc = src
-					part_bin = I
+			usermessage("[I] has been sucessfully installed into systems.")
+			if(user.unEquip(I))
+				if(part_bin)
+					part_bin.force_move(get_turf(src))
+					part_bin = null
+				I.loc = src
+				part_bin = I
 		if(istype(S, /obj/item/weapon/stock_parts/capacitor))
-			if((!part_cap) || (part_cap.rating < S.rating))
-				usermessage("[I] has been sucessfully installed into systems.")
-				if(user.unEquip(I))
-					I.loc = src
-					part_cap = I
+			usermessage("[I] has been sucessfully installed into systems.")
+			if(user.unEquip(I))
+				if(part_cap)
+					part_cap.force_move(get_turf(src))
+					part_cap = null
+				I.loc = src
+				part_cap = I
 	update_parts()
 	..()
 
