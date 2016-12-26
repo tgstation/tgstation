@@ -115,7 +115,7 @@
 
 /datum/species/golem/titanium/on_species_loss(mob/living/carbon/C)
 	. = ..()
-	C.weather_immunities |= "ash"
+	C.weather_immunities -= "ash"
 
 //Immune to ash storms and lava
 /datum/species/golem/plastitanium
@@ -133,8 +133,8 @@
 
 /datum/species/golem/plastitanium/on_species_loss(mob/living/carbon/C)
 	. = ..()
-	C.weather_immunities |= "ash"
-	C.weather_immunities |= "lava"
+	C.weather_immunities -= "ash"
+	C.weather_immunities -= "lava"
 
 //Fast and regenerates... but can only speak like an abductor
 /datum/species/golem/alloy
