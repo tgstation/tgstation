@@ -52,7 +52,7 @@
 	playsound(M.loc,'sound/items/drink.ogg', rand(10,50), 1)
 	return 1
 
-/obj/item/weapon/reagent_containers/food/condiment/afterattack(obj/target, mob/user , proximity)
+/obj/item/weapon/reagent_containers/food/condiment/afterattack(obj/target, mob/user, proximity)
 	if(!proximity) return
 	if(istype(target, /obj/structure/reagent_dispensers)) //A dispenser. Transfer FROM it TO us.
 

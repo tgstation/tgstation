@@ -1099,6 +1099,10 @@
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/zombie
 	mutant_organs = list(/obj/item/organ/tongue/zombie)
 
+/*
+ Aliens [and Robots I guess]
+*/
+
 /datum/species/abductor
 	name = "Abductor"
 	id = "abductor"
