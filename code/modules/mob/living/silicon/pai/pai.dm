@@ -83,9 +83,8 @@
 	user << "A personal AI in holochassis mode. Its master ID string seems to be [master]."
 
 /mob/living/silicon/pai/Destroy()
-	if(card)
+	if(card.pai)
 		card.pai = null
-		qdel(card)
 	pai_list -= src
 	..()
 
