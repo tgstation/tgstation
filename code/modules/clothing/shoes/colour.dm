@@ -98,6 +98,8 @@
 	..()
 	// Note: not using istype here because we want to ignore all subtypes
 	if (H.type == /obj/item/weapon/restraints/handcuffs && !chained)
+		if (src.icon_state != "orange")
+			return
 		qdel(H)
 		src.chained = 1
 		src.slowdown = 15
