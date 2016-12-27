@@ -99,7 +99,7 @@
 	harvest = /obj/item/weapon/reagent_containers/food/snacks/ash_flora/mushroom_cap
 	harvest_amount_high = 4
 	harvest_time = 50
-	harvest_message_low = "You slice the cap off of a mushroom."
+	harvest_message_low = "You slice the cap off a mushroom."
 	harvest_message_med = "You slice off a few conks from the larger mushrooms."
 	harvest_message_high = "You slice off a number of caps and conks from these mushrooms."
 	regrowth_time_low = 3000
@@ -115,7 +115,7 @@
 	harvest = /obj/item/weapon/reagent_containers/food/snacks/ash_flora/mushroom_stem
 	harvest_amount_high = 4
 	harvest_time = 40
-	harvest_message_low = "You pick and slice the cap off of a mushroom, leaving the stem."
+	harvest_message_low = "You pick and slice the cap off a mushroom, leaving the stem."
 	harvest_message_med = "You pick and decapitate several mushrooms for their stems."
 	harvest_message_high = "You acquire a number of stems from these mushrooms."
 	regrowth_time_low = 3000

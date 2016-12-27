@@ -234,14 +234,14 @@
 	else if ((disk_rescued || SSshuttle.emergency.mode != SHUTTLE_ENDGAME) && are_operatives_dead())
 		feedback_set_details("round_end_result","loss - evacuation - disk secured - syndi team dead")
 		world << "<FONT size = 3><B>Crew Major Victory!</B></FONT>"
-		world << "<B>The Research Staff has saved the disc and killed the [syndicate_name()] Operatives</B>"
+		world << "<B>The Research Staff has saved the disk and killed the [syndicate_name()] Operatives</B>"
 
 		ticker.news_report = OPERATIVES_KILLED
 
 	else if (disk_rescued)
 		feedback_set_details("round_end_result","loss - evacuation - disk secured")
 		world << "<FONT size = 3><B>Crew Major Victory</B></FONT>"
-		world << "<B>The Research Staff has saved the disc and stopped the [syndicate_name()] Operatives!</B>"
+		world << "<B>The Research Staff has saved the disk and stopped the [syndicate_name()] Operatives!</B>"
 
 		ticker.news_report = OPERATIVES_KILLED
 
@@ -255,7 +255,7 @@
 	else if (!disk_rescued &&  crew_evacuated)
 		feedback_set_details("round_end_result","halfwin - detonation averted")
 		world << "<FONT size = 3><B>Syndicate Minor Victory!</B></FONT>"
-		world << "<B>[syndicate_name()] operatives recovered the abandoned authentication disk but detonation of [station_name()] was averted.</B> Next time, don't lose the disk!"
+		world << "<B>[syndicate_name()] operatives survived the assault but failed to secure the disk or detonate [station_name()].</B> Next time, don't lose the disk!"
 
 		ticker.news_report = OPERATIVE_SKIRMISH
 
