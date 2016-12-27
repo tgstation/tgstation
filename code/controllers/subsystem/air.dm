@@ -28,8 +28,8 @@ var/datum/subsystem/air/SSair
 	var/list/hotspots = list()
 	var/list/networks = list()
 	var/list/obj/machinery/atmos_machinery = list()
-	
-	
+
+
 
 	//Special functions lists
 	var/list/turf/active_super_conductivity = list()
@@ -268,7 +268,7 @@ var/datum/subsystem/air/SSair
 		active_turfs -= T
 		if (T.blocks_air)
 			continue
-		T.Initalize_Atmos(times_fired)
+		T.Initialize_Atmos(times_fired)
 
 	if(active_turfs.len)
 		var/starting_ats = active_turfs.len
@@ -305,7 +305,7 @@ var/datum/subsystem/air/SSair
 	if (blocks_air || !air)
 		return
 	if (!EG)
-		EG = new
+		EG = PoolOrNew(/datum/excited_group)
 		EG.add_turf(src)
 
 	for (var/turf/open/ET in atmos_adjacent_turfs)
@@ -315,8 +315,7 @@ var/datum/subsystem/air/SSair
 		var/ET_EG = ET.excited_group
 		if (ET_EG)
 			if (ET_EG != EG)
-				EG.merge_groups(ET_EG)
-				EG = excited_group //merge_groups() may decide to replace our current EG
+				EG = EG.merge_groups(ET_EG)
 		else
 			EG.add_turf(ET)
 		if (!ET.excited)

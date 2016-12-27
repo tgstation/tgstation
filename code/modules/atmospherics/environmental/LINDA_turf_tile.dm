@@ -38,7 +38,7 @@
 /turf/open/New()
 	..()
 	if(!blocks_air)
-		air = new
+		air = PoolOrNew(/datum/gas_mixture)
 		air.copy_from_turf(src)
 
 /turf/open/Destroy()
@@ -74,7 +74,7 @@
 		air.copy_from(copy)
 
 /turf/return_air()
-	var/datum/gas_mixture/GM = new
+	var/datum/gas_mixture/GM = PoolOrNew(/datum/gas_mixture)
 	GM.copy_from_turf(src)
 	return GM
 
@@ -114,8 +114,7 @@
 /turf/open/proc/tile_graphic()
 	. = new /list
 	var/list/gases = air.gases
-	for(var/id in gases)
-		var/gas = gases[id]
+	for(var/gas in GAS_FOR(gases))
 		if(gas[GAS_META][META_GAS_OVERLAY] && gas[MOLES] > gas[GAS_META][META_GAS_MOLES_VISIBLE])
 			. += gas[GAS_META][META_GAS_OVERLAY]
 
@@ -154,8 +153,7 @@
 					if(enemy_excited_group)
 						if(our_excited_group != enemy_excited_group)
 							//combine groups (this also handles updating the excited_group var of all involved turfs)
-							our_excited_group.merge_groups(enemy_excited_group)
-							our_excited_group = excited_group //update our cache
+							our_excited_group = our_excited_group.merge_groups(enemy_excited_group)
 						share_air(enemy_tile, fire_count, adjacent_turfs_length) //share
 					else
 						if((recently_active == 1 && enemy_tile.recently_active == 1) || air.compare(enemy_tile.air))
@@ -169,7 +167,7 @@
 							share_air(enemy_tile, fire_count, adjacent_turfs_length) //share
 					else
 						if((recently_active == 1 && enemy_tile.recently_active == 1) || air.compare(enemy_tile.air))
-							var/datum/excited_group/EG = new //generate new group
+							var/datum/excited_group/EG = PoolOrNew(/datum/excited_group) //generate new group
 							EG.add_turf(src)
 							EG.add_turf(enemy_tile)
 							our_excited_group = excited_group //update our cache
@@ -180,7 +178,7 @@
 					if(our_excited_group)
 						our_excited_group.add_turf(enemy_tile) //add enemy to group
 					else
-						var/datum/excited_group/EG = new //generate new group
+						var/datum/excited_group/EG = PoolOrNew(/datum/excited_group) //generate new group
 						EG.add_turf(src)
 						EG.add_turf(enemy_tile)
 						our_excited_group = excited_group //update our cache
@@ -189,12 +187,12 @@
 		/******************* GROUP HANDLING FINISH *********************************************************************/
 
 	if (planetary_atmos) //share our air with the "atmosphere" "above" the turf
-		var/datum/gas_mixture/G = new
+		var/datum/gas_mixture/G = PoolOrNew(/datum/gas_mixture)
 		G.copy_from_turf(src)
 		G.archive()
 		if(air.compare(G))
 			if(!our_excited_group)
-				var/datum/excited_group/EG = new
+				var/datum/excited_group/EG = PoolOrNew(/datum/excited_group)
 				EG.add_turf(src)
 				our_excited_group = excited_group
 			air.share(G, adjacent_turfs_length)
@@ -279,6 +277,10 @@
 /datum/excited_group/New()
 	SSair.excited_groups += src
 
+/datum/excited_group/Destroy()
+	..()
+	return QDEL_HINT_PUTINPOOL
+
 /datum/excited_group/proc/add_turf(turf/open/T)
 	turf_list += T
 	T.excited_group = src
@@ -293,6 +295,8 @@
 			T.excited_group = src
 			turf_list += T
 		reset_cooldowns()
+		qdel(E)
+		return src
 	else
 		SSair.excited_groups -= src
 		for(var/t in turf_list)
@@ -300,6 +304,8 @@
 			T.excited_group = E
 			E.turf_list += T
 		E.reset_cooldowns()
+		qdel(src)
+		return E
 
 /datum/excited_group/proc/reset_cooldowns()
 	breakdown_cooldown = 0
@@ -307,7 +313,7 @@
 
 //argument is so world start can clear out any turf differences quickly.
 /datum/excited_group/proc/self_breakdown(space_is_all_consuming = 0)
-	var/datum/gas_mixture/A = new
+	var/datum/gas_mixture/A = PoolOrNew(/datum/gas_mixture)
 
 	//make local for sanic speed
 	var/list/A_gases = A.gases
@@ -320,17 +326,20 @@
 		if (space_is_all_consuming && !space_in_group && istype(T.air, /datum/gas_mixture/space))
 			space_in_group = 1
 			qdel(A)
-			A = new/datum/gas_mixture/space()
-		A.merge(T.air)
+			A = PoolOrNew(/datum/gas_mixture/space)
+		A.merge(T.air, FALSE) //don't delete, we will reinit
 
-	for(var/id in A_gases)
-		A_gases[id][MOLES] = A_gases[id][MOLES]/turflen
+	for(var/gas in A_gases)
+		if(gas)
+			gas[MOLES] = gas[MOLES]/turflen
 
 	for(var/t in turf_list)
 		var/turf/open/T = t
 		T.air.copy_from(A)
 		T.atmos_cooldown = 0
 		T.update_visuals()
+
+	qdel(A)
 
 	breakdown_cooldown = 0
 
@@ -349,6 +358,7 @@
 		T.excited_group = null
 	turf_list.Cut()
 	SSair.excited_groups -= src
+	qdel(src)
 
 ////////////////////////SUPERCONDUCTIVITY/////////////////////////////
 /turf/proc/conductivity_directions()

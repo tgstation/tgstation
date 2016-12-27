@@ -233,14 +233,11 @@
 	else
 		return 0
 
-/obj/effect/chrono_field/assume_air()
-	return 0
-
 /obj/effect/chrono_field/return_air() //we always have nominal air and temperature
-	var/datum/gas_mixture/GM = new
-	GM.assert_gases("o2","n2")
-	GM.gases["o2"][MOLES] = MOLES_O2STANDARD
-	GM.gases["n2"][MOLES] = MOLES_N2STANDARD
+	var/datum/gas_mixture/GM = PoolOrNew(/datum/gas_mixture)
+	GM.assert_gases(GAS_O2,GAS_N2)
+	GM.gases[GAS_O2][MOLES] = MOLES_O2STANDARD
+	GM.gases[GAS_N2][MOLES] = MOLES_N2STANDARD
 	GM.temperature = T20C
 	return GM
 

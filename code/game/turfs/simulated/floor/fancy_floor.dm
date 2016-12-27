@@ -38,8 +38,9 @@
 
 /turf/open/floor/grass/New()
 	..()
-	spawn(1)
-		update_icon()
+
+/turf/open/floor/grass/initialize()
+	update_icon()
 
 /turf/open/floor/grass/attackby(obj/item/C, mob/user, params)
 	if(istype(C, /obj/item/weapon/shovel) && params)
@@ -98,8 +99,9 @@
 
 /turf/open/floor/carpet/New()
 	..()
-	spawn(1)
-		update_icon()
+
+/turf/open/floor/carpet/initialize()
+	update_icon()
 
 /turf/open/floor/carpet/update_icon()
 	if(!..())

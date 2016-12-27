@@ -199,16 +199,18 @@
 							"danger_level" = cur_tlv.get_danger_level(temperature)
 	))
 	var/total_moles = environment.total_moles()
+	var/cached_gases = environment.gases
 	var/partial_pressure = R_IDEAL_GAS_EQUATION * environment.temperature / environment.volume
-	for(var/gas_id in environment.gases)
-		if(!(gas_id in TLV)) // We're not interested in this gas, it seems.
+	for(var/gas in GAS_FOR(cached_gases))
+		var/shorthand = gasid2shorthand(gas[GAS_META][META_GAS_ID])
+		if(!(shorthand in TLV)) // We're not interested in this gas, it seems.
 			continue
-		cur_tlv = TLV[gas_id]
+		cur_tlv = TLV[shorthand]
 		data["environment_data"] += list(list(
-								"name" = environment.gases[gas_id][GAS_META][META_GAS_NAME],
-								"value" = environment.gases[gas_id][MOLES] / total_moles * 100,
+								"name" = gas[GAS_META][META_GAS_NAME],
+								"value" = gas[MOLES] / total_moles * 100,
 								"unit" = "%",
-								"danger_level" = cur_tlv.get_danger_level(environment.gases[gas_id][MOLES] * partial_pressure)
+								"danger_level" = cur_tlv.get_danger_level(gas[MOLES] * partial_pressure)
 		))
 
 	if(!locked || user.has_unlimited_silicon_privilege)
@@ -279,9 +281,10 @@
 		thresholds[thresholds.len]["settings"] += list(list("env" = "temperature", "val" = "max2", "selected" = selected.max2))
 
 		for(var/gas_id in meta_gas_info)
-			if(!(gas_id in TLV)) // We're not interested in this gas, it seems.
+			var/shorthand = gasid2shorthand(gas_id)
+			if(!(shorthand in TLV)) // We're not interested in this gas, it seems.
 				continue
-			selected = TLV[gas_id]
+			selected = TLV[shorthand]
 			thresholds += list(list("name" = meta_gas_info[gas_id][META_GAS_NAME], "settings" = list()))
 			thresholds[thresholds.len]["settings"] += list(list("env" = gas_id, "val" = "min2", "selected" = selected.min2))
 			thresholds[thresholds.len]["settings"] += list(list("env" = gas_id, "val" = "min1", "selected" = selected.min1))
@@ -573,13 +576,12 @@
 	var/temperature_dangerlevel = cur_tlv.get_danger_level(environment.temperature)
 
 	var/gas_dangerlevel = 0
-	for(var/gas_id in env_gases)
-		if(!(gas_id in TLV)) // We're not interested in this gas, it seems.
+	for(var/gas in GAS_FOR(env_gases))
+		var/shorthand = gasid2shorthand(gas[GAS_META][META_GAS_ID])
+		if(!(shorthand in TLV)) // We're not interested in this gas, it seems.
 			continue
-		cur_tlv = TLV[gas_id]
-		gas_dangerlevel = max(gas_dangerlevel, cur_tlv.get_danger_level(env_gases[gas_id][MOLES] * partial_pressure))
-
-	environment.garbage_collect()
+		cur_tlv = TLV[shorthand]
+		gas_dangerlevel = max(gas_dangerlevel, cur_tlv.get_danger_level(gas[MOLES] * partial_pressure))
 
 	var/old_danger_level = danger_level
 	danger_level = max(pressure_dangerlevel, temperature_dangerlevel, gas_dangerlevel)

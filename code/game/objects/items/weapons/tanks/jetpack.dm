@@ -6,7 +6,7 @@
 	w_class = WEIGHT_CLASS_BULKY
 	distribute_pressure = ONE_ATMOSPHERE * O2STANDARD
 	actions_types = list(/datum/action/item_action/set_internals, /datum/action/item_action/toggle_jetpack, /datum/action/item_action/jetpack_stabilization)
-	var/gas_type = "o2"
+	var/gas_type = GAS_O2
 	var/on = FALSE
 	var/stabilizers = FALSE
 	var/datum/effect_system/trail_follow/ion/ion_trail
@@ -119,7 +119,7 @@
 	icon_state = "jetpack-black"
 	item_state =  "jetpack-black"
 	distribute_pressure = 0
-	gas_type = "co2"
+	gas_type = GAS_CO2
 
 
 /obj/item/weapon/tank/jetpack/suit

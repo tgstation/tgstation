@@ -106,16 +106,17 @@
 			return
 		else if(occupant.stat == DEAD) // We don't bother with dead people.
 			return
-		if(air1.gases.len)
+		if(air1.total_moles())
 			if(occupant.bodytemperature < T0C) // Sleepytime. Why? More cryo magic.
 				occupant.Sleeping((occupant.bodytemperature / sleep_factor) * 100)
 				occupant.Paralyse((occupant.bodytemperature / paralyze_factor) * 100)
 
-			if(beaker)
+			var/cached_gases = air1.gases
+			if(beaker && cached_gases[GAS_O2])
 				if(reagent_transfer == 0) // Magically transfer reagents. Because cryo magic.
 					beaker.reagents.trans_to(occupant, 1, 10 * efficiency) // Transfer reagents, multiplied because cryo magic.
 					beaker.reagents.reaction(occupant, VAPOR)
-					air1.gases["o2"][MOLES] -= 2 / efficiency // Lets use gas for this.
+					cached_gases[GAS_O2][MOLES] -= 2 / efficiency // Lets use gas for this.
 				if(++reagent_transfer >= 10 * efficiency) // Throttle reagent transfer (higher efficiency will transfer the same amount but consume less from the beaker).
 					reagent_transfer = 0
 	return 1
@@ -125,7 +126,8 @@
 	if(!on)
 		return
 	var/datum/gas_mixture/air1 = AIR1
-	if(!NODE1 || !AIR1 || !air1.gases.len || air1.gases["o2"][MOLES] < 5) // Turn off if the machine won't work.
+	var/cached_gases = air1.gases
+	if(!NODE1 || !air1 || !air1.total_moles() || !(cached_gases[GAS_O2] && cached_gases[GAS_O2][MOLES] >= 5)) // Turn off if the machine won't work.
 		on = FALSE
 		update_icon()
 		return
@@ -144,7 +146,7 @@
 			air1.temperature = max(air1.temperature - heat / air_heat_capacity, TCMB)
 			occupant.bodytemperature = max(occupant.bodytemperature + heat / heat_capacity, TCMB)
 
-		air1.gases["o2"][MOLES] -= 0.5 / efficiency // Magically consume gas? Why not, we run on cryo magic.
+		cached_gases[GAS_O2][MOLES] -= 0.5 / efficiency // Magically consume gas? Why not, we run on cryo magic.
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/power_change()
 	..()

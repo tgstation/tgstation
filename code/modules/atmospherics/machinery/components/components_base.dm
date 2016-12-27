@@ -16,7 +16,7 @@ On top of that, now people can add component-speciic procs/vars if they want!
 	..()
 
 	for(DEVICE_TYPE_LOOP)
-		var/datum/gas_mixture/A = new
+		var/datum/gas_mixture/A = PoolOrNew(/datum/gas_mixture)
 		A.volume = 200
 		AIR_I = A
 /*

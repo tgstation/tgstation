@@ -14,8 +14,9 @@
 #define GAS_META		3
 #define META_GAS_SPECIFIC_HEAT	1
 #define META_GAS_NAME			2
-#define META_GAS_OVERLAY		4
 #define META_GAS_MOLES_VISIBLE	3
+#define META_GAS_OVERLAY		4
+#define META_GAS_ID				5
 
 //stuff you should probably leave well alone!
 //ATMOS
@@ -170,3 +171,21 @@
 #define ATMOS_PASS_PROC -1 //ask CanAtmosPass()
 #define ATMOS_PASS_DENSITY -2 //just check density
 #define CANATMOSPASS(A, O) ( A.CanAtmosPass == ATMOS_PASS_PROC ? A.CanAtmosPass(O) : ( A.CanAtmosPass == ATMOS_PASS_DENSITY ? !A.density : A.CanAtmosPass ) )
+
+//Gas Ids
+#define GAS_INVALID 0
+#define GAS_O2 1
+#define GAS_N2 2
+#define GAS_CO2 3
+#define GAS_PLASMA 4
+#define GAS_WV 5
+#define GAS_FREON 6
+#define GAS_N2O 7
+#define GAS_AGENTB 8
+#define GAS_VF 9
+#define GAS_BZ 10
+
+#define GAS_LAST 10 //UPDATE THIS
+
+//Gas for helper
+#define GAS_FOR(X) (X) - null_gases

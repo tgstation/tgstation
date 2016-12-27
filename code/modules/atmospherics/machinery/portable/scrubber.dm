@@ -7,7 +7,7 @@
 	var/volume_rate = 1000
 	volume = 1000
 
-	var/list/scrubbing = list("plasma", "co2", "n2o", "agent_b", "bz", "freon", "water_vapor")
+	var/list/scrubbing = list(GAS_PLASMA, GAS_CO2, GAS_N2O, GAS_AGENTB, GAS_BZ, GAS_FREON, GAS_WV)
 
 /obj/machinery/portable_atmospherics/scrubber/Destroy()
 	var/turf/T = get_turf(src)
@@ -39,15 +39,16 @@
 	var/transfer_moles = min(1, volume_rate / mixture.volume) * mixture.total_moles()
 
 	var/datum/gas_mixture/filtering = mixture.remove(transfer_moles) // Remove part of the mixture to filter.
-	var/datum/gas_mixture/filtered = new
+	var/datum/gas_mixture/filtered = PoolOrNew(/datum/gas_mixture)
 	if(!filtering)
 		return
 
 	filtered.temperature = filtering.temperature
-	for(var/gas in filtering.gases & scrubbing)
-		filtered.add_gas(gas)
-		filtered.gases[gas][MOLES] = filtering.gases[gas][MOLES] // Shuffle the "bad" gasses to the filtered mixture.
-		filtering.gases[gas][MOLES] = 0
+	for(var/gas in scrubbing)
+		if(filtering.gases[gas])
+			filtered.add_gas(gas)
+			filtered.gases[gas][MOLES] = filtering.gases[gas][MOLES] // Shuffle the "bad" gasses to the filtered mixture.
+			filtering.gases[gas][MOLES] = 0
 	filtering.garbage_collect() // Now that the gasses are set to 0, clean up the mixture.
 
 	air_contents.merge(filtered) // Store filtered out gasses.

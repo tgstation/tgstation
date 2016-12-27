@@ -118,11 +118,11 @@
 	var/breath_pressure = (breath.total_moles()*R_IDEAL_GAS_EQUATION*breath.temperature)/BREATH_VOLUME
 
 	var/list/breath_gases = breath.gases
-	breath.assert_gases("o2","plasma","co2","n2o", "bz")
+	breath.assert_gases(GAS_O2,GAS_PLASMA,GAS_CO2,GAS_N2O, GAS_BZ)
 
-	var/O2_partialpressure = (breath_gases["o2"][MOLES]/breath.total_moles())*breath_pressure
-	var/Toxins_partialpressure = (breath_gases["plasma"][MOLES]/breath.total_moles())*breath_pressure
-	var/CO2_partialpressure = (breath_gases["co2"][MOLES]/breath.total_moles())*breath_pressure
+	var/O2_partialpressure = (breath_gases[GAS_O2][MOLES]/breath.total_moles())*breath_pressure
+	var/Toxins_partialpressure = (breath_gases[GAS_PLASMA][MOLES]/breath.total_moles())*breath_pressure
+	var/CO2_partialpressure = (breath_gases[GAS_CO2][MOLES]/breath.total_moles())*breath_pressure
 
 
 	//OXYGEN
@@ -133,7 +133,7 @@
 			var/ratio = safe_oxy_min/O2_partialpressure
 			adjustOxyLoss(min(5*ratio, 3))
 			failed_last_breath = 1
-			oxygen_used = breath_gases["o2"][MOLES]*ratio
+			oxygen_used = breath_gases[GAS_O2][MOLES]*ratio
 		else
 			adjustOxyLoss(3)
 			failed_last_breath = 1
@@ -143,11 +143,11 @@
 		failed_last_breath = 0
 		if(oxyloss)
 			adjustOxyLoss(-5)
-		oxygen_used = breath_gases["o2"][MOLES]
+		oxygen_used = breath_gases[GAS_O2][MOLES]
 		clear_alert("oxy")
 
-	breath_gases["o2"][MOLES] -= oxygen_used
-	breath_gases["co2"][MOLES] += oxygen_used
+	breath_gases[GAS_O2][MOLES] -= oxygen_used
+	breath_gases[GAS_CO2][MOLES] += oxygen_used
 
 	//CARBON DIOXIDE
 	if(CO2_partialpressure > safe_co2_max)
@@ -166,16 +166,16 @@
 
 	//TOXINS/PLASMA
 	if(Toxins_partialpressure > safe_tox_max)
-		var/ratio = (breath_gases["plasma"][MOLES]/safe_tox_max) * 10
+		var/ratio = (breath_gases[GAS_PLASMA][MOLES]/safe_tox_max) * 10
 		if(reagents)
-			reagents.add_reagent("plasma", Clamp(ratio, MIN_PLASMA_DAMAGE, MAX_PLASMA_DAMAGE))
+			reagents.add_reagent(GAS_PLASMA, Clamp(ratio, MIN_PLASMA_DAMAGE, MAX_PLASMA_DAMAGE))
 		throw_alert("tox_in_air", /obj/screen/alert/tox_in_air)
 	else
 		clear_alert("tox_in_air")
 
 	//NITROUS OXIDE
-	if(breath_gases["n2o"])
-		var/SA_partialpressure = (breath_gases["n2o"][MOLES]/breath.total_moles())*breath_pressure
+	if(breath_gases[GAS_N2O])
+		var/SA_partialpressure = (breath_gases[GAS_N2O][MOLES]/breath.total_moles())*breath_pressure
 		if(SA_partialpressure > SA_para_min)
 			Paralyse(3)
 			if(SA_partialpressure > SA_sleep_min)
@@ -185,8 +185,8 @@
 				emote(pick("giggle","laugh"))
 
 	//BZ (Facepunch port of their Agent B)
-	if(breath_gases["bz"])
-		var/bz_partialpressure = (breath_gases["bz"][MOLES]/breath.total_moles())*breath_pressure
+	if(breath_gases[GAS_BZ])
+		var/bz_partialpressure = (breath_gases[GAS_BZ][MOLES]/breath.total_moles())*breath_pressure
 		if(bz_partialpressure > 1)
 			hallucination += 20
 		else if(bz_partialpressure > 0.01)

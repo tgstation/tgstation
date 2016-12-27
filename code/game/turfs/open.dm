@@ -45,7 +45,7 @@
 /turf/open/indestructible/hierophant/two
 
 
-/turf/open/Initalize_Atmos(times_fired)
+/turf/open/Initialize_Atmos(times_fired)
 	excited = 0
 	update_visuals()
 

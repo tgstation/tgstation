@@ -191,12 +191,12 @@
 		var/turf/open/ST = src.loc
 		if(ST.air)
 			var/ST_gases = ST.air.gases
-			ST.air.assert_gases(arglist(hardcoded_gases))
+			ST.air.assert_gases(GAS_PLASMA, GAS_O2, GAS_N2, GAS_CO2)
 
-			var/tox = ST_gases["plasma"][MOLES]
-			var/oxy = ST_gases["o2"][MOLES]
-			var/n2  = ST_gases["n2"][MOLES]
-			var/co2 = ST_gases["co2"][MOLES]
+			var/tox = ST_gases[GAS_PLASMA][MOLES]
+			var/oxy = ST_gases[GAS_O2][MOLES]
+			var/n2  = ST_gases[GAS_N2][MOLES]
+			var/co2 = ST_gases[GAS_CO2][MOLES]
 
 			ST.air.garbage_collect()
 

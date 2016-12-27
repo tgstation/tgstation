@@ -43,7 +43,7 @@ var/pipenetwarnings = 10
 	else
 		addMachineryMember(base)
 	if(!air)
-		air = new
+		air = PoolOrNew(/datum/gas_mixture)
 		air.holder = src
 	var/list/possible_expansions = list(base)
 	while(possible_expansions.len>0)
@@ -131,13 +131,13 @@ var/pipenetwarnings = 10
 	//Update individual gas_mixtures by volume ratio
 
 	for(var/obj/machinery/atmospherics/pipe/member in members)
-		member.air_temporary = new
+		member.air_temporary = PoolOrNew(/datum/gas_mixture)
 		member.air_temporary.volume = member.volume
 		member.air_temporary.copy_from(air)
 		var/member_gases = member.air_temporary.gases
 
-		for(var/id in member_gases)
-			member_gases[id][MOLES] *= member.volume/air.volume
+		for(var/gas in GAS_FOR(member_gases))
+			gas[MOLES] *= member.volume/air.volume
 
 		member.air_temporary.temperature = air.temperature
 
@@ -221,13 +221,13 @@ var/pipenetwarnings = 10
 
 	var/total_thermal_energy = 0
 	var/total_heat_capacity = 0
-	var/datum/gas_mixture/total_gas_mixture = new(0)
+	var/datum/gas_mixture/total_gas_mixture = PoolOrNew(/datum/gas_mixture, 0)
 
 	for(var/i in GL)
 		var/datum/gas_mixture/G = i
 		total_gas_mixture.volume += G.volume
 
-		total_gas_mixture.merge(G)
+		total_gas_mixture.merge(G, FALSE)	//don't delete G cause we're gonna reinit it in a moment
 
 		total_thermal_energy += G.thermal_energy()
 		total_heat_capacity += G.heat_capacity()
@@ -240,6 +240,6 @@ var/pipenetwarnings = 10
 			var/datum/gas_mixture/G = i
 			G.copy_from(total_gas_mixture)
 			var/list/G_gases = G.gases
-			for(var/id in G_gases)
-				G_gases[id][MOLES] *= G.volume/total_gas_mixture.volume
+			for(var/gas in GAS_FOR(G_gases))
+				gas[MOLES] *= G.volume/total_gas_mixture.volume
 

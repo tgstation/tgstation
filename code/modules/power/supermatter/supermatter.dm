@@ -144,7 +144,7 @@
 		removed = env.remove(gasefficency * env.total_moles())
 	else
 		// Pass all the gas related code an empty gas container
-		removed = new()
+		removed = PoolOrNew(/datum/gas_mixture)
 
 	if(!removed || !removed.total_moles())
 		if(takes_damage)
@@ -158,12 +158,12 @@
 	//Ok, 100% oxygen atmosphere = best reaction
 	//Maxes out at 100% oxygen pressure
 	var/removed_nitrogen = 0
-	if(removed.gases["n2"])
-		removed_nitrogen = (removed.gases["n2"][MOLES] * NITROGEN_RETARDATION_FACTOR)
+	if(removed.gases[GAS_N2])
+		removed_nitrogen = (removed.gases[GAS_N2][MOLES] * NITROGEN_RETARDATION_FACTOR)
 
-	removed.assert_gases("o2", "plasma")
+	removed.assert_gases(GAS_O2, GAS_PLASMA)
 
-	oxygen = max(min((removed.gases["o2"][MOLES] - removed_nitrogen) / MOLES_CELLSTANDARD, 1), 0)
+	oxygen = max(min((removed.gases[GAS_O2][MOLES] - removed_nitrogen) / MOLES_CELLSTANDARD, 1), 0)
 
 	var/temp_factor = 50
 
@@ -194,12 +194,14 @@
 	removed.temperature = max(0, min(removed.temperature, 2500))
 
 	//Calculate how much gas to release
-	removed.gases["plasma"][MOLES] += max(device_energy / PLASMA_RELEASE_MODIFIER, 0)
+	removed.gases[GAS_PLASMA][MOLES] += max(device_energy / PLASMA_RELEASE_MODIFIER, 0)
 
-	removed.gases["o2"][MOLES] += max((device_energy + removed.temperature - T0C) / OXYGEN_RELEASE_MODIFIER, 0)
+	removed.gases[GAS_O2][MOLES] += max((device_energy + removed.temperature - T0C) / OXYGEN_RELEASE_MODIFIER, 0)
 
 	if(produces_gas)
 		env.merge(removed)
+	else
+		qdel(removed)
 
 	for(var/mob/living/carbon/human/l in view(src, min(7, round(power ** 0.25)))) // If they can see it without mesons on.  Bad on them.
 		if(!istype(l.glasses, /obj/item/clothing/glasses/meson))

@@ -116,7 +116,7 @@
 	if(!text || !air)
 		return
 
-	var/datum/gas_mixture/G = new
+	var/datum/gas_mixture/G = PoolOrNew(/datum/gas_mixture)
 	G.parse_gas_string(text)
 
 	air.merge(G)

@@ -12,7 +12,7 @@
 	var/destination_x
 	var/destination_y
 
-	var/global/datum/gas_mixture/space/space_gas = new
+	var/global/datum/gas_mixture/space/space_gas = init_space_and_gaslists()
 	plane = PLANE_SPACE
 
 /turf/open/space/New()
@@ -30,7 +30,7 @@
 		var/turf/T = locate(destination_x, destination_y, destination_z)
 		user.forceMove(T)
 
-/turf/open/space/Initalize_Atmos(times_fired)
+/turf/open/space/Initialize_Atmos(times_fired)
 	return
 
 /turf/open/space/ChangeTurf(path)

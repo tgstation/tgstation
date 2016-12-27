@@ -138,7 +138,7 @@
 		var/turf/open/O = loc
 		if(O.air)
 			var/G = O.air.gases
-			if(G["o2"][MOLES] > 16)
+			if(G[GAS_O2] && G[GAS_O2][MOLES] > 16)
 				return 1
 	return 0
 

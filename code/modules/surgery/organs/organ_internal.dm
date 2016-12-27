@@ -308,12 +308,12 @@
 
 	var/list/breath_gases = breath.gases
 
-	breath.assert_gases("o2", "plasma", "co2", "n2o", "bz")
+	breath.assert_gases(GAS_O2, GAS_PLASMA, GAS_CO2, GAS_N2O, GAS_BZ)
 
 	//Partial pressures in our breath
-	var/O2_pp = breath.get_breath_partial_pressure(breath_gases["o2"][MOLES])
-	var/Toxins_pp = breath.get_breath_partial_pressure(breath_gases["plasma"][MOLES])
-	var/CO2_pp = breath.get_breath_partial_pressure(breath_gases["co2"][MOLES])
+	var/O2_pp = breath.get_breath_partial_pressure(breath_gases[GAS_O2][MOLES])
+	var/Toxins_pp = breath.get_breath_partial_pressure(breath_gases[GAS_PLASMA][MOLES])
+	var/CO2_pp = breath.get_breath_partial_pressure(breath_gases[GAS_CO2][MOLES])
 
 
 	//-- OXY --//
@@ -321,7 +321,7 @@
 	//Too much oxygen! //Yes, some species may not like it.
 	if(safe_oxygen_max)
 		if(O2_pp > safe_oxygen_max)
-			var/ratio = (breath_gases["o2"][MOLES]/safe_oxygen_max) * 10
+			var/ratio = (breath_gases[GAS_O2][MOLES]/safe_oxygen_max) * 10
 			H.adjustOxyLoss(Clamp(ratio,oxy_breath_dam_min,oxy_breath_dam_max))
 			H.throw_alert("too_much_oxy", /obj/screen/alert/too_much_oxy)
 		else
@@ -330,18 +330,18 @@
 	//Too little oxygen!
 	if(safe_oxygen_min)
 		if(O2_pp < safe_oxygen_min)
-			gas_breathed = handle_too_little_breath(H,O2_pp,safe_oxygen_min,breath_gases["o2"][MOLES])
+			gas_breathed = handle_too_little_breath(H,O2_pp,safe_oxygen_min,breath_gases[GAS_O2][MOLES])
 			H.throw_alert("oxy", /obj/screen/alert/oxy)
 		else
 			H.failed_last_breath = 0
 			if(H.getOxyLoss())
 				H.adjustOxyLoss(-5)
-			gas_breathed = breath_gases["o2"][MOLES]
+			gas_breathed = breath_gases[GAS_O2][MOLES]
 			H.clear_alert("oxy")
 
 	//Exhale
-	breath_gases["o2"][MOLES] -= gas_breathed
-	breath_gases["co2"][MOLES] += gas_breathed
+	breath_gases[GAS_O2][MOLES] -= gas_breathed
+	breath_gases[GAS_CO2][MOLES] += gas_breathed
 	gas_breathed = 0
 
 
@@ -368,17 +368,17 @@
 	//Too little CO2!
 	if(breathlevels["safe_co2_min"])
 		if(CO2_pp < safe_co2_min)
-			gas_breathed = handle_too_little_breath(H,CO2_pp, safe_co2_min,breath_gases["co2"][MOLES])
+			gas_breathed = handle_too_little_breath(H,CO2_pp, safe_co2_min,breath_gases[GAS_CO2][MOLES])
 			H.throw_alert("not_enough_co2", /obj/screen/alert/not_enough_co2)
 		else
 			H.failed_last_breath = 0
 			H.adjustOxyLoss(-5)
-			gas_breathed = breath_gases["co2"][MOLES]
+			gas_breathed = breath_gases[GAS_CO2][MOLES]
 			H.clear_alert("not_enough_co2")
 
 	//Exhale
-	breath_gases["co2"][MOLES] -= gas_breathed
-	breath_gases["o2"][MOLES] += gas_breathed
+	breath_gases[GAS_CO2][MOLES] -= gas_breathed
+	breath_gases[GAS_O2][MOLES] += gas_breathed
 	gas_breathed = 0
 
 
@@ -387,7 +387,7 @@
 	//Too much toxins!
 	if(safe_toxins_max)
 		if(Toxins_pp > safe_toxins_max)
-			var/ratio = (breath_gases["plasma"][MOLES]/safe_toxins_max) * 10
+			var/ratio = (breath_gases[GAS_PLASMA][MOLES]/safe_toxins_max) * 10
 			if(H.reagents)
 				H.reagents.add_reagent("plasma", Clamp(ratio, tox_breath_dam_min, tox_breath_dam_max))
 			H.throw_alert("tox_in_air", /obj/screen/alert/tox_in_air)
@@ -398,17 +398,17 @@
 	//Too little toxins!
 	if(safe_toxins_min)
 		if(Toxins_pp < safe_toxins_min)
-			gas_breathed = handle_too_little_breath(H,Toxins_pp, safe_toxins_min, breath_gases["plasma"][MOLES])
+			gas_breathed = handle_too_little_breath(H,Toxins_pp, safe_toxins_min, breath_gases[GAS_PLASMA][MOLES])
 			H.throw_alert("not_enough_tox", /obj/screen/alert/not_enough_tox)
 		else
 			H.failed_last_breath = 0
 			H.adjustOxyLoss(-5)
-			gas_breathed = breath_gases["plasma"][MOLES]
+			gas_breathed = breath_gases[GAS_PLASMA][MOLES]
 			H.clear_alert("not_enough_tox")
 
 	//Exhale
-	breath_gases["plasma"][MOLES] -= gas_breathed
-	breath_gases["co2"][MOLES] += gas_breathed
+	breath_gases[GAS_PLASMA][MOLES] -= gas_breathed
+	breath_gases[GAS_CO2][MOLES] += gas_breathed
 	gas_breathed = 0
 
 
@@ -418,7 +418,7 @@
 
 	// N2O
 
-		var/SA_pp = breath.get_breath_partial_pressure(breath_gases["n2o"][MOLES])
+		var/SA_pp = breath.get_breath_partial_pressure(breath_gases[GAS_N2O][MOLES])
 		if(SA_pp > SA_para_min) // Enough to make us paralysed for a bit
 			H.Paralyse(3) // 3 gives them one second to wake up and run away a bit!
 			if(SA_pp > SA_sleep_min) // Enough to make us sleep as well
@@ -429,7 +429,7 @@
 
 	// BZ
 
-		var/bz_pp = breath.get_breath_partial_pressure(breath_gases["bz"][MOLES])
+		var/bz_pp = breath.get_breath_partial_pressure(breath_gases[GAS_BZ][MOLES])
 		if(bz_pp > BZ_trip_balls_min)
 			H.hallucination += 20
 			if(prob(33))

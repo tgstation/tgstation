@@ -12,8 +12,8 @@
 	if(!air_contents)
 		return 0
 
-	var/oxy = air_contents.gases["o2"] ? air_contents.gases["o2"][MOLES] : 0
-	var/tox = air_contents.gases["plasma"] ? air_contents.gases["plasma"][MOLES] : 0
+	var/oxy = air_contents.gases[GAS_O2] ? air_contents.gases[GAS_O2][MOLES] : 0
+	var/tox = air_contents.gases[GAS_PLASMA] ? air_contents.gases[GAS_PLASMA][MOLES] : 0
 
 	if(active_hotspot)
 		if(soh)
@@ -112,7 +112,7 @@
 		qdel(src)
 		return
 
-	if(!(location.air) || !location.air.gases["plasma"] || !location.air.gases["o2"] || location.air.gases["plasma"][MOLES] < 0.5 || location.air.gases["o2"][MOLES] < 0.5)
+	if(!(location.air) || !location.air.gases[GAS_PLASMA] || !location.air.gases[GAS_O2] || location.air.gases[GAS_PLASMA][MOLES] < 0.5 || location.air.gases[GAS_O2][MOLES] < 0.5)
 		qdel(src)
 		return
 

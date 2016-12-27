@@ -54648,6 +54648,14 @@
 /obj/item/weapon/storage/toolbox/mechanical,
 /turf/open/floor/plating,
 /area/maintenance/aft)
+"chs" = (
+/obj/machinery/atmospherics/components/trinary/filter{
+	dir = 4;
+	filter_type = "n2";
+	on = 1
+	},
+/turf/open/floor/plasteel,
+/area/atmos)
 
 (1,1,1) = {"
 aaa
@@ -89762,7 +89770,7 @@ bKJ
 bGI
 bMc
 bGI
-bNu
+chs
 bNU
 bOA
 bPe

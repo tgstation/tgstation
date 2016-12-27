@@ -14,7 +14,7 @@
 
 	volume = 1000
 	var/filled = 0.5
-	var/gas_type = ""
+	var/gas_type = GAS_INVALID
 	var/release_pressure = ONE_ATMOSPHERE
 
 	armor = list(melee = 50, bullet = 50, laser = 50, energy = 100, bomb = 10, bio = 100, rad = 100, fire = 80, acid = 50)
@@ -43,42 +43,42 @@
 	name = "n2 canister"
 	desc = "Nitrogen gas. Reportedly useful for something."
 	icon_state = "red"
-	gas_type = "n2"
+	gas_type = GAS_N2
 
 /obj/machinery/portable_atmospherics/canister/oxygen
 	name = "o2 canister"
 	desc = "Oxygen. Necessary for human life."
 	icon_state = "blue"
-	gas_type = "o2"
+	gas_type = GAS_O2
 
 /obj/machinery/portable_atmospherics/canister/carbon_dioxide
 	name = "co2 canister"
 	desc = "Carbon dioxide. What the fuck is carbon dioxide?"
 	icon_state = "black"
-	gas_type = "co2"
+	gas_type = GAS_CO2
 
 /obj/machinery/portable_atmospherics/canister/toxins
 	name = "plasma canister"
 	desc = "Plasma gas. The reason YOU are here. Highly toxic."
 	icon_state = "orange"
-	gas_type = "plasma"
+	gas_type = GAS_PLASMA
 
 /obj/machinery/portable_atmospherics/canister/agent_b
 	name = "agent b canister"
 	desc = "Oxygen Agent B. You're not quite sure what it does."
-	gas_type = "agent_b"
+	gas_type = GAS_AGENTB
 
 /obj/machinery/portable_atmospherics/canister/bz
 	name = "BZ canister"
 	desc = "BZ, a powerful hallucinogenic nerve agent."
 	icon_state = "purple"
-	gas_type = "bz"
+	gas_type = GAS_BZ
 
 /obj/machinery/portable_atmospherics/canister/nitrous_oxide
 	name = "n2o canister"
 	desc = "Nitrous oxide gas. Known to cause drowsiness."
 	icon_state = "redws"
-	gas_type = "n2o"
+	gas_type = GAS_N2O
 
 /obj/machinery/portable_atmospherics/canister/air
 	name = "air canister"
@@ -89,14 +89,14 @@
 	name = "freon canister"
 	desc = "Freon. Great for the atmosphere!"
 	icon_state = "freon"
-	gas_type = "freon"
+	gas_type = GAS_FREON
 	starter_temp = 120
 
 /obj/machinery/portable_atmospherics/canister/water_vapor
 	name = "water vapor canister"
 	desc = "Water Vapor. We get it, you vape."
 	icon_state = "water_vapor"
-	gas_type = "water_vapor"
+	gas_type = GAS_WV
 	filled = 1
 
 /obj/machinery/portable_atmospherics/canister/New(loc, datum/gas_mixture/existing_mixture)
@@ -126,9 +126,9 @@
 		if(starter_temp)
 			air_contents.temperature = starter_temp
 /obj/machinery/portable_atmospherics/canister/air/create_gas()
-	air_contents.add_gases("o2","n2")
-	air_contents.gases["o2"][MOLES] = (O2STANDARD * maximum_pressure * filled) * air_contents.volume / (R_IDEAL_GAS_EQUATION * air_contents.temperature)
-	air_contents.gases["n2"][MOLES] = (N2STANDARD * maximum_pressure * filled) * air_contents.volume / (R_IDEAL_GAS_EQUATION * air_contents.temperature)
+	air_contents.add_gases(GAS_O2,GAS_N2)
+	air_contents.gases[GAS_O2][MOLES] = (O2STANDARD * maximum_pressure * filled) * air_contents.volume / (R_IDEAL_GAS_EQUATION * air_contents.temperature)
+	air_contents.gases[GAS_N2][MOLES] = (N2STANDARD * maximum_pressure * filled) * air_contents.volume / (R_IDEAL_GAS_EQUATION * air_contents.temperature)
 
 #define HOLDING 1
 #define CONNECTED 2
@@ -320,10 +320,10 @@
 			if(valve_open)
 				logmsg = "Valve was <b>opened</b> by [key_name(usr)], starting a transfer into \the [holding || "air"].<br>"
 				if(!holding)
-					var/plasma = air_contents.gases["plasma"]
-					var/n2o = air_contents.gases["n2o"]
-					var/bz = air_contents.gases["bz"]
-					var/freon = air_contents.gases["freon"]
+					var/plasma = air_contents.gases[GAS_PLASMA]
+					var/n2o = air_contents.gases[GAS_N2O]
+					var/bz = air_contents.gases[GAS_BZ]
+					var/freon = air_contents.gases[GAS_FREON]
 					if(n2o || plasma || bz || freon)
 						message_admins("[key_name_admin(usr)] (<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[usr]'>FLW</A>) opened a canister that contains the following: (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)")
 						log_admin("[key_name(usr)] opened a canister that contains the following at [x], [y], [z]:")

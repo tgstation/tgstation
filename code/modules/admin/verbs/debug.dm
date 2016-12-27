@@ -167,9 +167,9 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	var/list/env_gases = env.gases
 
 	var/t = ""
-	for(var/id in env_gases)
-		if(id in hardcoded_gases || env_gases[id][MOLES])
-			t+= "[env_gases[id][GAS_META][META_GAS_NAME]] : [env_gases[id][MOLES]]\n"
+	for(var/gas in GAS_FOR(env_gases))
+		if(gas[MOLES])
+			t+= "[gas[GAS_META][META_GAS_NAME]] : [gas[MOLES]]\n"
 
 	usr << t
 	feedback_add_details("admin_verb","ASL") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
@@ -638,8 +638,8 @@ var/list/TYPES_SHORTCUTS = list(
 		if(Rad.anchored)
 			if(!Rad.loaded_tank)
 				var/obj/item/weapon/tank/internals/plasma/Plasma = new/obj/item/weapon/tank/internals/plasma(Rad)
-				Plasma.air_contents.assert_gas("plasma")
-				Plasma.air_contents.gases["plasma"][MOLES] = 70
+				Plasma.air_contents.assert_gas(GAS_PLASMA)
+				Plasma.air_contents.gases[GAS_PLASMA][MOLES] = 70
 				Rad.drainratio = 0
 				Rad.loaded_tank = Plasma
 				Plasma.loc = Rad

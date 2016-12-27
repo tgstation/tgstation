@@ -100,8 +100,8 @@
 		if("power")
 			on = !on
 			if(on && !holding)
-				var/plasma = air_contents.gases["plasma"]
-				var/n2o = air_contents.gases["n2o"]
+				var/plasma = air_contents.gases[GAS_PLASMA]
+				var/n2o = air_contents.gases[GAS_N2O]
 				if(n2o || plasma)
 					message_admins("[key_name_admin(usr)] (<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[usr]'>FLW</A>) turned on a pump that contains [n2o ? "N2O" : ""][n2o && plasma ? " & " : ""][plasma ? "Plasma" : ""]! (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)")
 					log_admin("[key_name(usr)] turned on a pump that contains [n2o ? "N2O" : ""][n2o && plasma ? " & " : ""][plasma ? "Plasma" : ""] at [x], [y], [z]")

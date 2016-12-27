@@ -5,7 +5,7 @@
 	can_unwrench = 1
 	var/on = 0
 	var/target_pressure = ONE_ATMOSPHERE
-	var/filter_type = ""
+	var/filter_type = GAS_INVALID
 	var/frequency = 0
 	var/datum/radio_frequency/radio_connection
 
@@ -83,21 +83,30 @@
 
 		if(!removed)
 			return
-		
+
 		var/filtering = filter_type ? TRUE : FALSE
-		
-		if(filtering && !istext(filter_type))
-			WARNING("Wrong gas ID in [src]'s filter_type var. filter_type == [filter_type]")
+
+		var/new_id
+		if(istext(filter_type))
+			new_id = shorthand2gasid(filter_type)
+		else
+			new_id = filter_type
+						//validate gasid
+		if(filtering && !gasid2shorthand(new_id))
+			WARNING("Wrong gas ID in [src]'s filter_type var. filter_type == [filter_type] numerical id == [new_id]")
 			filtering = FALSE
-		
-		if(filtering && removed.gases[filter_type])
-			var/datum/gas_mixture/filtered_out = new
-			
+		else
+			filter_type = new_id
+
+		var/cached_gases = removed.gases
+		if(filtering && cached_gases[filter_type])
+			var/datum/gas_mixture/filtered_out = PoolOrNew(/datum/gas_mixture)
+
 			filtered_out.temperature = removed.temperature
 			filtered_out.assert_gas(filter_type)
-			filtered_out.gases[filter_type][MOLES] = removed.gases[filter_type][MOLES]
-			
-			removed.gases[filter_type][MOLES] = 0
+			filtered_out.gases[filter_type][MOLES] = cached_gases[filter_type][MOLES]
+
+			cached_gases[filter_type][MOLES] = 0
 			removed.garbage_collect()
 
 			air2.merge(filtered_out)

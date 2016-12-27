@@ -31,7 +31,7 @@
 	for(var/atom/movable/AM in src)
 		Entered(AM)
 
-/turf/proc/Initalize_Atmos(times_fired)
+/turf/proc/Initialize_Atmos(times_fired)
 	CalculateAdjacentTurfs()
 
 /turf/Destroy()
@@ -172,8 +172,8 @@
 	Destroy()	//❄
 	var/turf/W = new path(src)
 	W.proximity_checkers = old_checkers
-	
-	
+
+
 	if(!defer_change)
 		W.AfterChange(ignore_air)
 	W.blueprint_data = old_blueprint_data
@@ -209,9 +209,10 @@
 		if(!S.air)
 			continue
 		var/list/S_gases = S.air.gases
-		for(var/id in S_gases)
+		for(var/gas in GAS_FOR(S_gases))
+			var/id = gas[GAS_META][META_GAS_ID]
 			total.assert_gas(id)
-			total_gases[id][MOLES] += S_gases[id][MOLES]
+			total_gases[id][MOLES] += gas[MOLES]
 		total.temperature += S.air.temperature
 
 	air.copy_from(total)
@@ -220,8 +221,8 @@
 		return
 
 	var/list/air_gases = air.gases
-	for(var/id in air_gases)
-		air_gases[id][MOLES] /= turf_count //Averages contents of the turfs, ignoring walls and the like
+	for(var/gas in GAS_FOR(air_gases))
+		gas[MOLES] /= turf_count //Averages contents of the turfs, ignoring walls and the like
 
 	air.temperature /= turf_count
 	air.holder = src
