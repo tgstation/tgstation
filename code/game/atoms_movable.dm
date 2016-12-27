@@ -81,11 +81,28 @@
 
 //Called after a successful Move(). By this point, we've already moved
 /atom/movable/proc/Moved(atom/OldLoc, Dir)
+	//Objects with opacity will trigger nearby lights of the old location to update at next SSlighting fire
+	if(opacity)
+		if (isturf(OldLoc))
+			OldLoc.UpdateAffectingLights()
+		if (isturf(loc))
+			loc.UpdateAffectingLights()
+	else
+		if(light)
+			light.changed()
+
 	if (!inertia_moving)
 		inertia_next_move = world.time + inertia_move_delay
 		newtonian_move(Dir)
 	if (length(client_mobs_in_contents))
 		update_parallax_contents()
+
+	if (orbiters)
+		for (var/thing in orbiters)
+			var/datum/orbit/O = thing
+			O.Check()
+	if (orbiting)
+		orbiting.Check()
 	return 1
 
 /atom/movable/Destroy()
