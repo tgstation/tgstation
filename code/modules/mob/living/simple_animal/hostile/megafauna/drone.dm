@@ -49,7 +49,7 @@
 	..()
 /turf/open/floor/plating/asteroid/airless/cave
 	megafauna_spawn_list = list(/mob/living/simple_animal/hostile/megafauna/dragon = 4, /mob/living/simple_animal/hostile/megafauna/colossus = 2, \
-	/mob/living/simple_animal/hostile/megafauna/bubblegum = 6, /mob/living/simple_animal/hostile/megafauna/megadrone = 3)
+	/mob/living/simple_animal/hostile/megafauna/bubblegum = 6, /mob/living/simple_animal/hostile/megafauna/megadrone = 1)
 
 /obj/item/device/gps/internal/drone
 	icon_state = null
@@ -205,7 +205,7 @@
 /mob/living/simple_animal/hostile/megafauna/megadrone/proc/laser_rain()
 	visible_message("<span class='boldwarning'>Laser rains from the sky!</span>")
 	for(var/turf/turf in view(12,src))
-		if(prob(55))
+		if(prob(50))
 			PoolOrNew(/obj/effect/overlay/temp/drone/laser_beacon, list(turf, src))
 
 /mob/living/simple_animal/hostile/megafauna/megadrone/proc/laser_rain_green()
