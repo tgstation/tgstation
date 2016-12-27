@@ -82,6 +82,14 @@
 		if(owner.mind.assigned_role == "Mime")
 			power_multiplier *= 0.5
 
+	//Cultists are closer to their gods and are more powerful, but they'll give themselves away
+	if(iscultist(owner))
+		power_multiplier *= 2
+		spans = list("narsie")
+	else if (is_servant_of_ratvar(owner))
+		power_multiplier *= 2
+		spans = list("ratvar")
+
 	for(var/V in listeners)
 		var/mob/living/L = V
 		var/start
