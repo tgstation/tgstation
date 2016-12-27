@@ -1,0 +1,4 @@
+author: "Incoming5643"
+delete-after: True
+changes: 
+  - bugfix: "The charge spell will no longer bilk you on wand charges, and wands that are dead won't show up as charged."
