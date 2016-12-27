@@ -125,8 +125,8 @@
 	var/obj/structure/alien/weeds/node/linked_node = null
 	canSmoothWith = list(/obj/structure/alien/weeds, /turf/closed/wall)
 	smooth = SMOOTH_MORE
-
-var/list/blacklisted_weed_turfs = typecacheof(list(/turf/open/floor/plating/lava))
+	var/static/list/blacklisted_turfs = typecacheof(list(/turf/open/floor/plating/lava,
+	                                                     /turf/open/space))
 
 
 /obj/structure/alien/weeds/New(pos, node)
@@ -164,10 +164,10 @@ var/list/blacklisted_weed_turfs = typecacheof(list(/turf/open/floor/plating/lava
 
 	for(var/turf/T in U.GetAtmosAdjacentTurfs())
 
-		if (locate(/obj/structure/alien/weeds) in T || isspaceturf(T))
+		if (locate(/obj/structure/alien/weeds) in T)
 			continue
 
-		if(is_type_in_typecache(T, blacklisted_weed_turfs))
+		if(is_type_in_typecache(T, blacklisted_turfs))
 			continue
 
 		new /obj/structure/alien/weeds(T, linked_node)
