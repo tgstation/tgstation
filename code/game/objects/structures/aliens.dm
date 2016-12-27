@@ -165,6 +165,9 @@
 		if (locate(/obj/structure/alien/weeds) in T || isspaceturf(T))
 			continue
 
+		if(istype(T, /turf/open/floor/plating/lava))
+			continue
+
 		new /obj/structure/alien/weeds(T, linked_node)
 
 
