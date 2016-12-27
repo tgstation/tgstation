@@ -10,20 +10,20 @@
 	var/allow_tabling
 	var/spin
 															//as fast as ssfastprocess
-/datum/forced_movement/New(mob/victim, atom/movable/target, steps_per_tick = 0.5, allow_tabling = FALSE, spin = FALSE)
-	src.victim = victim
-	src.target = target
-	src.steps_per_tick = steps_per_tick
-	src.allow_tabling = allow_tabling
-	src.spin = spin
+/datum/forced_movement/New(mob/avictim, atom/movable/atarget, asteps_per_tick = 0.5, aallow_tabling = FALSE, aspin = FALSE)
+	victim = avictim
+	target = atarget
+	steps_per_tick = asteps_per_tick
+	allow_tabling = aallow_tabling
+	spin = aspin
 
 	last_processed = world.time
 	moved_y_last = FALSE
 
 	. = ..()
 
-	if(!victim.force_moving)
-		victim.force_moving = src
+	if(!avictim.force_moving)
+		avictim.force_moving = src
 		START_PROCESSING(SSfastprocess, src)
 	else
 		qdel(src)	//caller can check qdeleted(us) if they wanna know
