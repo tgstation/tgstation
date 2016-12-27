@@ -623,3 +623,6 @@ var/global/list/ghost_others_options = list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 #define INTENT_HOTKEY_RIGHT "right"
 
 #define DEFAULT_AI_LAWID "default"
+
+#define COMMUNICATION_COOLDOWN 600
+#define COMMUNICATION_COOLDOWN_AI 600
