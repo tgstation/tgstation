@@ -23,6 +23,7 @@
 	glide_size = 8
 	appearance_flags = TILE_BOUND
 
+	var/datum/forced_movement/force_moving = null
 
 
 /atom/movable/Move(atom/newloc, direct = 0)
