@@ -83,6 +83,7 @@
 	message_alien = "lets out a waning guttural screech, green blood bubbling from its maw..."
 	message_larva = "lets out a sickly hiss of air and falls limply to the floor..."
 	message_monkey = "lets out a faint chimper as it collapses and stops moving..."
+	stat_allowed = UNCONSCIOUS
 
 /datum/emote/living/deathgasp/run_emote(mob/user, params)
 	. = ..()
@@ -113,7 +114,7 @@
 
 /datum/emote/living/flap/run_emote(mob/user, params)
 	. = ..()
-	if(ishuman(user))
+	if(. && ishuman(user))
 		var/mob/living/carbon/human/H = user
 		var/open = FALSE
 		if(H.dna.features["wings"] != "None")
@@ -155,6 +156,7 @@
 	key_third_person = "gasps"
 	message = "gasps!"
 	emote_type = EMOTE_AUDIBLE
+	stat_allowed = UNCONSCIOUS
 
 /datum/emote/living/giggle
 	key = "giggle"
@@ -311,7 +313,7 @@
 
 /datum/emote/living/surrender/run_emote(mob/user, params)
 	. = ..()
-	if(!user.sleeping)
+	if(.)
 		user.Weaken(20)
 
 /datum/emote/living/sway

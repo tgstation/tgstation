@@ -64,11 +64,6 @@
 	key_third_person = "shrugs"
 	message = "shrugs."
 
-/datum/emote/living/carbon/human/signal
-	key = "signal"
-	key_third_person = "signals"
-	message_param = "raises %t fingers."
-
 /datum/emote/living/carbon/human/wag
 	key = "wag"
 	key_third_person = "wags"

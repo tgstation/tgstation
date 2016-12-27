@@ -28,9 +28,3 @@
 	. = ..()
 	if(. && isalienadult(user))
 		playsound(user.loc, 'sound/voice/hiss5.ogg', 40, 1, 1)
-
-/datum/emote/living/alien/sign
-	key = "sign"
-	key_third_person = "signs"
-	message = "signs."
-	message_param = "signs the number %t."

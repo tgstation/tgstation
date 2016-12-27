@@ -33,8 +33,7 @@ var/global/list/emote_list = list()
 		return FALSE
 	var/msg = select_message_type(user)
 	if(params && message_param)
-		msg = message_param
-		msg = replacetext(msg, "%t", params)
+		msg = select_param(user, params)
 	if(findtext(msg, "their"))
 		msg = replacetext(msg, "their", user.p_their())
 	if(findtext(msg, "them"))
@@ -77,6 +76,8 @@ var/global/list/emote_list = list()
 	else if(ismonkey(user) && message_monkey)
 		. = message_monkey
 
+/datum/emote/proc/select_param(mob/user, params)
+	return replacetext(message_param, "%t", params)
 
 /datum/emote/proc/can_run_emote(mob/user)
 	. = TRUE

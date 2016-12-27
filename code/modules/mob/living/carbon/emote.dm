@@ -53,6 +53,23 @@
 	message = "screeches."
 	mob_type_allowed_typecache = list(/mob/living/carbon/monkey, /mob/living/carbon/alien)
 
+/datum/emote/living/carbon/sign
+	key = "sign"
+	key_third_person = "signs"
+	message_param = "signs the number %t."
+	mob_type_allowed_typecache = list(/mob/living/carbon/monkey, /mob/living/carbon/alien)
+
+/datum/emote/living/carbon/sign/select_param(mob/user, params)
+	. = ..()
+	if(!isnum(text2num(params)))
+		return message
+
+/datum/emote/living/carbon/sign/signal
+	key = "signal"
+	key_third_person = "signals"
+	message_param = "raises %t fingers."
+	mob_type_allowed_typecache = list(/mob/living/carbon/human)
+
 /datum/emote/living/carbon/tail
 	key = "tail"
 	message = "waves their tail."
