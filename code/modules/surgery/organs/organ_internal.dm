@@ -693,16 +693,3 @@
 	if(inflamed)
 		S.reagents.add_reagent("????", 5)
 	return S
-
-/obj/item/organ/vocal_cords //organs that are activated through speech with the :x channel
-	name = "vocal cords"
-	icon_state = "appendix"
-	zone = "mouth"
-	slot = "vocal_cords"
-	var/list/spans = null
-
-/obj/item/organ/vocal_cords/proc/can_speak_with() //if there is any limitation to speaking with these cords
-	return TRUE
-
-/obj/item/organ/vocal_cords/proc/speak_with(message) //do what the organ does and modify speech if needed
-	return message

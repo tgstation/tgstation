@@ -8,7 +8,7 @@ var/static/regex/wakeup_words = regex("wake up|awaken")
 var/static/regex/heal_words = regex("live|heal|survive|mend|heroes never die")
 var/static/regex/hurt_words = regex("die|suffer")
 var/static/regex/bleed_words = regex("bleed")
-var/static/regex/burn_words = regex("burn|ignite|hell")
+var/static/regex/burn_words = regex("burn|ignite")
 var/static/regex/repulse_words = regex("shoo|go away|leave me alone|begone|flee|fus ro dah")
 var/static/regex/whoareyou_words = regex("who are you|say your name|state your name|identify")
 var/static/regex/saymyname_words = regex("say my name")
@@ -32,11 +32,27 @@ var/static/regex/jump_words = regex("jump")
 var/static/regex/salute_words = regex("salute")
 var/static/regex/deathgasp_words = regex("play dead")
 var/static/regex/clap_words = regex("clap|applaud")
-var/static/regex/honk_words = regex("honk")
+var/static/regex/honk_words = regex("ho+nk") //hooooooonk
 var/static/regex/multispin_words = regex("like a record baby")
 
+/obj/item/organ/vocal_cords //organs that are activated through speech with the :x channel
+	name = "vocal cords"
+	icon_state = "appendix"
+	zone = "mouth"
+	slot = "vocal_cords"
+	var/list/spans = null
+
+/obj/item/organ/vocal_cords/proc/can_speak_with() //if there is any limitation to speaking with these cords
+	return TRUE
+
+/obj/item/organ/vocal_cords/proc/speak_with(message) //do what the organ does and modify speech if needed
+	return message
+
+
+//Colossus drop, forces the listeners to obey certain commands
 /obj/item/organ/vocal_cords/colossus
 	name = "divine vocal cords"
+	description = "They carry the voice of an ancient god."
 	icon_state = "voice_of_god"
 	zone = "mouth"
 	slot = "vocal_cords"
