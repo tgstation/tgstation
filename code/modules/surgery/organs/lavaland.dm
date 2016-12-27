@@ -1,3 +1,40 @@
+var/static/regex/stun_words = regex("stop|wait|stand still|hold on|halt")
+var/static/regex/weaken_words = regex("drop|fall|trip")
+var/static/regex/sleep_words = regex("sleep|slumber")
+var/static/regex/vomit_words = regex("vomit|throw up")
+var/static/regex/silence_words = regex("shut up|silence|ssh|quiet|hush")
+var/static/regex/hallucinate_words = regex("see the truth|hallucinate")
+var/static/regex/wakeup_words = regex("wake up|awaken")
+var/static/regex/heal_words = regex("live|heal|survive|mend|heroes never die")
+var/static/regex/hurt_words = regex("die|suffer")
+var/static/regex/bleed_words = regex("bleed")
+var/static/regex/burn_words = regex("burn|ignite|hell")
+var/static/regex/repulse_words = regex("shoo|go away|leave me alone|begone|flee|fus ro dah")
+var/static/regex/whoareyou_words = regex("who are you|say your name|state your name|identify")
+var/static/regex/saymyname_words = regex("say my name")
+var/static/regex/knockknock_words = regex("knock knock")
+var/static/regex/statelaws_words = regex("state laws|state your laws")
+var/static/regex/move_words = regex("move")
+var/static/regex/walk_words = regex("walk|slow down")
+var/static/regex/run_words = regex("run")
+var/static/regex/helpintent_words = regex("help")
+var/static/regex/disarmintent_words = regex("disarm")
+var/static/regex/grabintent_words = regex("grab")
+var/static/regex/harmintent_words = regex("harm|fight")
+var/static/regex/throwmode_words = regex("throw|catch")
+var/static/regex/flip_words = regex("flip|rotate|revolve|roll|somersault")
+var/static/regex/rest_words = regex("rest")
+var/static/regex/getup_words = regex("get up")
+var/static/regex/sit_words = regex("sit")
+var/static/regex/stand_words = regex("stand")
+var/static/regex/dance_words = regex("dance")
+var/static/regex/jump_words = regex("jump")
+var/static/regex/salute_words = regex("salute")
+var/static/regex/deathgasp_words = regex("play dead")
+var/static/regex/clap_words = regex("clap|applaud")
+var/static/regex/honk_words = regex("honk")
+var/static/regex/multispin_words = regex("like a record baby")
+
 /obj/item/organ/vocal_cords/colossus
 	name = "divine vocal cords"
 	icon_state = "voice_of_god"
@@ -70,7 +107,7 @@
 		return
 
 	var/power_multiplier = base_multiplier
-	spans = initial(spans) //reset spans, just in case someone gets deculted or the cords change owner
+	spans = list("colossus","yell") //reset spans, just in case someone gets deculted or the cords change owner
 
 	if(owner.mind)
 		//Chaplains are very good at speaking with the voice of god
@@ -110,34 +147,34 @@
 			break
 
 	//STUN
-	if(text_in_list(message, list("stop","wait","stand still","hold on","halt")))
+	if(findtext(message, stun_words))
 		for(var/V in listeners)
 			var/mob/living/L = V
 			L.Stun(3 * power_multiplier)
 		next_command = world.time + cooldown_stun
 
 	//WEAKEN
-	else if(text_in_list(message, list("drop","fall")))
+	else if(findtext(message, weaken_words))
 		for(var/V in listeners)
 			var/mob/living/L = V
 			L.Weaken(3 * power_multiplier)
 		next_command = world.time + cooldown_stun
 
 	//SLEEP
-	else if(text_in_list(message, list("sleep")))
+	else if((findtext(message, sleep_words)))
 		for(var/V in listeners)
 			var/mob/living/L = V
 			L.Sleeping(3 * power_multiplier)
 		next_command = world.time + cooldown_stun
 
 	//VOMIT
-	else if(text_in_list(message, list("vomit","throw up")))
+	else if((findtext(message, vomit_words)))
 		for(var/mob/living/carbon/C in listeners)
 			C.vomit(10 * power_multiplier)
 		next_command = world.time + cooldown_stun
 
 	//SILENCE
-	else if(text_in_list(message, list("shut up","silence","ssh","quiet","hush")))
+	else if((findtext(message, silence_words)))
 		for(var/mob/living/carbon/C in listeners)
 			if(owner.mind && (owner.mind.assigned_role == "Librarian" || owner.mind.assigned_role == "Mime"))
 				power_multiplier *= 3
@@ -145,41 +182,41 @@
 		next_command = world.time + cooldown_stun
 
 	//HALLUCINATE
-	else if(text_in_list(message, list("see the truth","hallucinate")))
+	else if((findtext(message, hallucinate_words)))
 		for(var/V in listeners)
 			var/mob/living/L = V
 			new /obj/effect/hallucination/delusion(get_turf(L),L,duration=150 * power_multiplier,skip_nearby=0)
 		next_command = world.time + cooldown_damage
 
 	//WAKE UP
-	else if(text_in_list(message, list("wake up","awaken")))
+	else if((findtext(message, wakeup_words)))
 		for(var/V in listeners)
 			var/mob/living/L = V
 			L.SetSleeping(0)
 		next_command = world.time + cooldown_damage
 
 	//HEAL
-	else if(text_in_list(message, list("live","heal","survive","mend","heroes never die")))
+	else if((findtext(message, heal_words)))
 		for(var/V in listeners)
 			var/mob/living/L = V
 			L.heal_overall_damage(10 * power_multiplier, 10 * power_multiplier, 0, 0)
 		next_command = world.time + cooldown_damage
 
 	//BRUTE DAMAGE
-	else if(text_in_list(message, list("die","suffer")))
+	else if((findtext(message, hurt_words)))
 		for(var/V in listeners)
 			var/mob/living/L = V
 			L.apply_damage(15 * power_multiplier, def_zone = "chest")
 		next_command = world.time + cooldown_damage
 
 	//BLEED
-	else if(text_in_list(message, list("bleed")))
+	else if((findtext(message, bleed_words)))
 		for(var/mob/living/carbon/human/H in listeners)
 			H.bleed_rate += (5 * power_multiplier)
 		next_command = world.time + cooldown_damage
 
 	//FIRE
-	else if(text_in_list(message, list("burn","ignite","hell")))
+	else if((findtext(message, burn_words)))
 		for(var/V in listeners)
 			var/mob/living/L = V
 			L.adjust_fire_stacks(1 * power_multiplier)
@@ -187,7 +224,7 @@
 		next_command = world.time + cooldown_damage
 
 	//REPULSE
-	else if(text_in_list(message, list("shoo","go away","leave me alone","begone","flee","fus ro dah")))
+	else if((findtext(message, repulse_words)))
 		for(var/V in listeners)
 			var/mob/living/L = V
 			var/throwtarget = get_edge_target_turf(owner, get_dir(owner, get_step_away(L, owner)))
@@ -195,7 +232,7 @@
 		next_command = world.time + cooldown_damage
 
 	//WHO ARE YOU?
-	else if(text_in_list(message, list("who are you","say your name","state your name","identify")))
+	else if((findtext(message, whoareyou_words)))
 		for(var/V in listeners)
 			var/mob/living/L = V
 			if(L.mind && L.mind.devilinfo)
@@ -205,85 +242,85 @@
 		next_command = world.time + cooldown_meme
 
 	//SAY MY NAME
-	else if(text_in_list(message, list("say my name")))
+	else if((findtext(message, saymyname_words)))
 		for(var/V in listeners)
 			var/mob/living/L = V
 			L.say("[owner.name]!") //"Unknown!"
 		next_command = world.time + cooldown_meme
 
 	//KNOCK KNOCK
-	else if(text_in_list(message, list("knock knock")))
+	else if((findtext(message, knockknock_words)))
 		for(var/V in listeners)
 			var/mob/living/L = V
 			L.say("Who's there?")
 		next_command = world.time + cooldown_meme
 
 	//STATE LAWS
-	else if(text_in_list(message, list("state laws","state your laws")))
+	else if((findtext(message, statelaws_words)))
 		for(var/mob/living/silicon/S in listeners)
 			S.statelaws()
 		next_command = world.time + cooldown_meme
 
 	//MOVE
-	else if(text_in_list(message, list("move")))
+	else if((findtext(message, move_words)))
 		for(var/V in listeners)
 			var/mob/living/L = V
 			step(L, pick(cardinal))
 		next_command = world.time + cooldown_meme
 
 	//WALK
-	else if(text_in_list(message, list("walk","slow down")))
+	else if((findtext(message, walk_words)))
 		for(var/V in listeners)
 			var/mob/living/L = V
 			L.m_intent = MOVE_INTENT_WALK
 		next_command = world.time + cooldown_meme
 
 	//RUN
-	else if(text_in_list(message, list("run")))
+	else if((findtext(message, run_words)))
 		for(var/V in listeners)
 			var/mob/living/L = V
 			L.m_intent = MOVE_INTENT_RUN
 		next_command = world.time + cooldown_meme
 
 	//HELP INTENT
-	else if(text_in_list(message, list("help")))
+	else if((findtext(message, helpintent_words)))
 		for(var/mob/living/carbon/human/H in listeners)
 			H.a_intent_change(INTENT_HELP)
 		next_command = world.time + cooldown_meme
 
 	//DISARM INTENT
-	else if(text_in_list(message, list("disarm")))
+	else if((findtext(message, disarmintent_words)))
 		for(var/mob/living/carbon/human/H in listeners)
 			H.a_intent_change(INTENT_DISARM)
 		next_command = world.time + cooldown_meme
 
 	//GRAB INTENT
-	else if(text_in_list(message, list("grab")))
+	else if((findtext(message, grabintent_words)))
 		for(var/mob/living/carbon/human/H in listeners)
 			H.a_intent_change(INTENT_GRAB)
 		next_command = world.time + cooldown_meme
 
 	//HARM INTENT
-	else if(text_in_list(message, list("harm","fight")))
+	else if((findtext(message, harmintent_words)))
 		for(var/mob/living/carbon/human/H in listeners)
 			H.a_intent_change(INTENT_HARM)
 		next_command = world.time + cooldown_meme
 
 	//THROW/CATCH
-	else if(text_in_list(message, list("throw","catch")))
+	else if((findtext(message, throwmode_words)))
 		for(var/mob/living/carbon/C in listeners)
 			C.throw_mode_on()
 		next_command = world.time + cooldown_meme
 
 	//FLIP
-	else if(text_in_list(message, list("flip","rotate","revolve","roll","somersault")))
+	else if((findtext(message, flip_words)))
 		for(var/V in listeners)
 			var/mob/living/L = V
 			L.emote("flip")
 		next_command = world.time + cooldown_meme
 
 	//REST
-	else if(text_in_list(message, list("rest")))
+	else if((findtext(message, rest_words)))
 		for(var/V in listeners)
 			var/mob/living/L = V
 			if(!L.resting)
@@ -291,7 +328,7 @@
 		next_command = world.time + cooldown_meme
 
 	//GET UP
-	else if(text_in_list(message, list("get up")))
+	else if((findtext(message, getup_words)))
 		for(var/V in listeners)
 			var/mob/living/L = V
 			if(L.resting)
@@ -302,7 +339,7 @@
 		next_command = world.time + cooldown_damage
 
 	//SIT
-	else if(text_in_list(message, list("sit")))
+	else if((findtext(message, sit_words)))
 		for(var/V in listeners)
 			var/mob/living/L = V
 			for(var/obj/structure/chair/chair in get_turf(L))
@@ -311,7 +348,7 @@
 		next_command = world.time + cooldown_meme
 
 	//STAND UP
-	else if(text_in_list(message, list("stand")))
+	else if((findtext(message, stand_words)))
 		for(var/V in listeners)
 			var/mob/living/L = V
 			if(L.buckled && istype(L.buckled, /obj/structure/chair))
@@ -319,14 +356,14 @@
 		next_command = world.time + cooldown_meme
 
 	//DANCE
-	else if(text_in_list(message, list("dance")))
+	else if((findtext(message, dance_words)))
 		for(var/V in listeners)
 			var/mob/living/L = V
 			L.emote("dance")
 		next_command = world.time + cooldown_meme
 
 	//JUMP
-	else if(text_in_list(message, list("jump")))
+	else if((findtext(message, jump_words)))
 		for(var/V in listeners)
 			var/mob/living/L = V
 			L.say("HOW HIGH?!!")
@@ -334,28 +371,28 @@
 		next_command = world.time + cooldown_meme
 
 	//SALUTE
-	else if(text_in_list(message, list("salute")))
+	else if((findtext(message, salute_words)))
 		for(var/V in listeners)
 			var/mob/living/L = V
 			L.emote("salute")
 		next_command = world.time + cooldown_meme
 
 	//PLAY DEAD
-	else if(text_in_list(message, list("play dead")))
+	else if((findtext(message, deathgasp_words)))
 		for(var/V in listeners)
 			var/mob/living/L = V
 			L.emote("deathgasp")
 		next_command = world.time + cooldown_meme
 
 	//PLEASE CLAP
-	else if(text_in_list(message, list("clap","applaud")))
+	else if((findtext(message, clap_words)))
 		for(var/V in listeners)
 			var/mob/living/L = V
 			L.emote("clap")
 		next_command = world.time + cooldown_meme
 
 	//HONK
-	else if(text_in_list(message, list("honk")))
+	else if((findtext(message, honk_words)))
 		addtimer(GLOBAL_PROC, "playsound", 25, TIMER_NORMAL, get_turf(owner), "sound/items/bikehorn.ogg", 300, 1)
 		if(owner.mind && owner.mind.assigned_role == "Clown")
 			for(var/mob/living/carbon/C in listeners)
@@ -363,7 +400,7 @@
 		next_command = world.time + cooldown_meme
 
 	//RIGHT ROUND
-	else if(text_in_list(message, list("like a record baby")))
+	else if((findtext(message, multispin_words)))
 		for(var/V in listeners)
 			var/mob/living/L = V
 			L.SpinAnimation(speed = 10, loops = 5)
