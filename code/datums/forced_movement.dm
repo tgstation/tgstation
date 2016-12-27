@@ -18,8 +18,8 @@
 
 	. = ..()
 
-	if(!avictim.force_moving)
-		avictim.force_moving = src
+	if(!_victim.force_moving)
+		_victim.force_moving = src
 		START_PROCESSING(SSfastprocess, src)
 	else
 		qdel(src)	//if you want to overwrite the current forced movement, call qdel(victim.force_moving) before creating this
