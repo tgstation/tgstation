@@ -97,9 +97,7 @@
 /obj/item/clothing/shoes/sneakers/orange/attackby(obj/H, loc, params)
 	..()
 	// Note: not using istype here because we want to ignore all subtypes
-	if (H.type == /obj/item/weapon/restraints/handcuffs && !chained)
-		if (src.icon_state != "orange")
-			return
+	if (H.type == /obj/item/weapon/restraints/handcuffs && !chained && icon_state == "orange")
 		qdel(H)
 		src.chained = 1
 		src.slowdown = 15
