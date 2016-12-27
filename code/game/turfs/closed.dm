@@ -43,7 +43,6 @@
 	..()
 	if(smooth)
 		queue_smooth(src)
-		icon_state = ""
 
 /turf/closed/indestructible/riveted/uranium
 	icon = 'icons/turf/walls/uranium_wall.dmi'
@@ -97,3 +96,10 @@
 	icon_state = "necro"
 	explosion_block = 50
 	baseturf = /turf/closed/indestructible/necropolis
+
+/turf/closed/indestructible/riveted/hierophant
+	name = "wall"
+	desc = "A wall made out of a strange metal. The squares on it pulse in a predictable pattern."
+	icon = 'icons/turf/walls/hierophant_wall.dmi'
+	icon_state = "wall"
+	smooth = SMOOTH_TRUE

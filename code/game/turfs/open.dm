@@ -31,6 +31,19 @@
 	if(prob(12))
 		icon_state = "necro[rand(2,3)]"
 
+/turf/open/indestructible/hierophant
+	icon = 'icons/turf/floors/hierophant_floor.dmi'
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	baseturf = /turf/open/indestructible/hierophant
+	smooth = SMOOTH_TRUE
+
+/turf/open/indestructible/hierophant/New()
+	..()
+	if(smooth)
+		queue_smooth(src)
+
+/turf/open/indestructible/hierophant/two
+
 
 /turf/open/Initalize_Atmos(times_fired)
 	excited = 0
