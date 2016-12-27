@@ -1,5 +1,4 @@
-//usage new /datum/forced_movement(victim, target, steps_per_tick, allow_tabling, spin)
-
+//Just new and forget
 /datum/forced_movement
 	var/atom/movable/victim
 	var/atom/target
@@ -10,7 +9,7 @@
 	var/allow_tabling
 	var/spin
 															//as fast as ssfastprocess
-/datum/forced_movement/New(mob/avictim, atom/movable/atarget, asteps_per_tick = 0.5, aallow_tabling = FALSE, aspin = FALSE)
+/datum/forced_movement/New(atom/movable/avictim, atom/atarget, asteps_per_tick = 0.5, aallow_tabling = FALSE, aspin = FALSE)
 	victim = avictim
 	target = atarget
 	steps_per_tick = asteps_per_tick
@@ -52,32 +51,38 @@
 	var/atom/movable/vic = victim	//sanic
 	var/atom/tar = target
 
-	if(iscarbon(vic))
-		var/mob/living/carbon/C = vic
-		if(spin)
-			C.spin(1,1)
+	if(!recursive)
+		if(iscarbon(vic))
+			var/mob/living/carbon/C = vic
+			if(spin)
+				C.spin(1,1)
 
-	moved_y_last = !moved_y_last
+		. = step_towards(vic, tar)
 
-	if(moved_y_last)
+	//shit way for getting around some corners
+	if(!.)
 		if(tar.x > vic.x)
 			if(step(vic, EAST))
-				return TRUE
+				. = TRUE
 		else if(tar.x < vic.x)
 			if(step(vic, WEST))
-				return TRUE
-	else
-		if(tar.y > vic.y)
-			if(step(vic, NORTH))
-				return TRUE
-		else if(tar.y < vic.y)
-			if(step(vic, SOUTH))
-				return TRUE
+				. = TRUE
 
-	if(recursive)
-		return FALSE
-	else
-		return TryMove(TRUE)
+		if(!.)
+			if(tar.y > vic.y)
+				if(step(vic, NORTH))
+					. = TRUE
+			else if(tar.y < vic.y)
+				if(step(vic, SOUTH))
+					. = TRUE
+
+			if(!.)
+				if(recursive)
+					return FALSE
+				else
+					. = TryMove(TRUE)
+
+	. = . && vic.loc != tar.loc
 
 /mob/Bump(atom/A)
 	. = ..()
