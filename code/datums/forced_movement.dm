@@ -8,12 +8,12 @@
 	var/allow_tabling
 	var/spin
 															//as fast as ssfastprocess
-/datum/forced_movement/New(atom/movable/avictim, atom/atarget, asteps_per_tick = 0.5, aallow_tabling = FALSE, aspin = FALSE)
-	victim = avictim
-	target = atarget
-	steps_per_tick = asteps_per_tick
-	allow_tabling = aallow_tabling
-	spin = aspin
+/datum/forced_movement/New(atom/movable/_victim, atom/_target, _steps_per_tick = 0.5, _allow_tabling = FALSE, _spin = FALSE)
+	victim = _victim
+	target = _target
+	steps_per_tick = _steps_per_tick
+	allow_tabling = _allow_tabling
+	spin = _spin
 
 	last_processed = world.time
 
