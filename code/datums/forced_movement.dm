@@ -81,7 +81,7 @@
 				else
 					. = TryMove(TRUE)
 
-	. = . && vic.loc != tar.loc
+	. = . && (vic.loc != tar.loc)
 
 /mob/Bump(atom/A)
 	. = ..()
