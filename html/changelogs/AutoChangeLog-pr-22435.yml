@@ -1,0 +1,5 @@
+author: "Joan"
+delete-after: True
+changes: 
+  - rscadd: "Wizards can now buy magic guardians for 2 points. They are not limited to one guardian, meaning they can have up to 5. If that's wise is an entirely different question."
+  - experiment: "Wizards cannot buy support guardians, but can buy dexterous guardians, which can hold items."
