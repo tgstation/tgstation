@@ -18,11 +18,6 @@
 	mob_type_allowed_typecache = list(/mob/living)
 	mob_type_blacklist_typecache = list(/mob/living/simple_animal/slime, /mob/living/brain)
 
-/datum/emote/living/aflap
-	key = "aflap"
-	message = "flaps their wings ANGRILY!"
-	restraint_check = TRUE
-
 /datum/emote/living/blush
 	key = "blush"
 	key_third_person = "blushes"
@@ -65,7 +60,8 @@
 
 /datum/emote/living/collapse/run_emote(mob/user, params)
 	. = ..()
-	user.Paralyse(2)
+	if(.)
+		user.Paralyse(2)
 
 /datum/emote/living/cough
 	key = "cough"
@@ -113,14 +109,26 @@
 	key_third_person = "flaps"
 	message = "flaps their wings."
 	restraint_check = TRUE
+	var/wing_time = 20
 
 /datum/emote/living/flap/run_emote(mob/user, params)
 	. = ..()
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
-		if((H.dna.features["wings"] != "None") && !("wings" in H.dna.species.mutant_bodyparts))
-			H.OpenWings()
-			addtimer(H, "CloseWings", 20)
+		var/open = FALSE
+		if(H.dna.features["wings"] != "None")
+			if("wingsopen" in H.dna.species.mutant_bodyparts)
+				open = TRUE
+				H.CloseWings()
+			else
+				H.OpenWings()
+			addtimer(H, "[open ? "Open" : "Close"]Wings", wing_time)
+
+/datum/emote/living/flap/aflap
+	key = "aflap"
+	key_third_person = "aflaps"
+	message = "flaps their wings ANGRILY!"
+	wing_time = 10
 
 /datum/emote/living/flip
 	key = "flip"
@@ -128,7 +136,7 @@
 
 /datum/emote/living/flip/run_emote(mob/user, params)
 	. = ..()
-	if(!user.restrained() || !user.sleeping)
+	if(!user.sleeping)
 		user.SpinAnimation(7,1)
 
 /datum/emote/living/frown

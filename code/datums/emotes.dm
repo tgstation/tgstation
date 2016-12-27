@@ -18,6 +18,7 @@ var/global/list/emote_list = list()
 	var/muzzle_ignore = FALSE //Will only work if the emote is EMOTE_AUDIBLE
 	var/list/mob_type_allowed_typecache = list() //Types that are allowed to use that emote
 	var/list/mob_type_blacklist_typecache = list() //Types that are NOT allowed to use that emote
+	var/stat_allowed = CONSCIOUS
 
 /datum/emote/New()
 	..()
@@ -79,7 +80,7 @@ var/global/list/emote_list = list()
 
 /datum/emote/proc/can_run_emote(mob/user)
 	. = TRUE
-	if((user.stat && key != "deathgasp") || (user.status_flags & FAKEDEATH))
+	if(user.stat > stat_allowed  || (user.status_flags & FAKEDEATH))
 		return FALSE
 	if(!is_type_in_typecache(user, mob_type_allowed_typecache))
 		return FALSE

@@ -78,10 +78,8 @@
 	. = ..()
 	var/mob/living/carbon/human/H = user
 	if(.)
-		world << ". if"
 		H.startTailWag()
 	else
-		world << "end"
 		H.endTailWag()
 
 /datum/emote/living/carbon/human/wag/can_run_emote(mob/user)
@@ -105,11 +103,12 @@
 
 /datum/emote/living/carbon/human/wing/run_emote(mob/user, params)
 	. = ..()
-	var/mob/living/carbon/human/H = user
-	if(findtext(select_message_type(user), "open"))
-		H.OpenWings()
-	else
-		H.CloseWings()
+	if(.)
+		var/mob/living/carbon/human/H = user
+		if(findtext(select_message_type(user), "open"))
+			H.OpenWings()
+		else
+			H.CloseWings()
 
 /datum/emote/living/carbon/human/wing/select_message_type(mob/user)
 	. = ..()
@@ -155,7 +154,6 @@
 	update_body()
 
 /mob/living/carbon/human/proc/OpenWings()
-	world << "open wings being called"
 	if(!dna || !dna.species)
 		return
 	if("wings" in dna.species.mutant_bodyparts)
@@ -164,7 +162,6 @@
 	update_body()
 
 /mob/living/carbon/human/proc/CloseWings()
-	world << "close wings being called"
 	if(!dna || !dna.species)
 		return
 	if("wingsopen" in dna.species.mutant_bodyparts)
