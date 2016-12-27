@@ -1,41 +1,41 @@
-/obj/mecha/combat/sec_ripley
+/obj/mecha/working/sec_ripley
 	desc = "Autonomous Power Security Unit. This newer model is refitted with powerful armour against the dangers of the criminal scum."
 	name = "\improper APSU \"Security Ripley\""
-	icon = 'icons/mecha/white_only.dmi'
+	icon = 'icons/mecha/white_dev.dmi'
 	icon_state = "sec_ripley"
 	step_in = 6
 	max_temperature = 20000
-	obj_integrity = 240
-	max_integrity = 240
+	obj_integrity = 300
+	max_integrity = 300
 	lights_power = 10
 	deflect_chance = 15
-	facing_modifiers = list(FRONT_ARMOUR = 2.5, SIDE_ARMOUR = 0.5, BACK_ARMOUR = 0.25)
-	armor = list(melee = 35, bullet = 30, laser = 15, energy = 15, bomb = 40, bio = 0, rad = 0, fire = 100, acid = 100)
+	facing_modifiers = list(FRONT_ARMOUR = 3.0, SIDE_ARMOUR = 0.5, BACK_ARMOUR = 0.1)
+	armor = list(melee = 30, bullet = 30, laser = 15, energy = 15, bomb = 40, bio = 0, rad = 0, fire = 100, acid = 100)
 	max_equip = 3
 	force = 15
 	wreckage = /obj/structure/mecha_wreckage/sec_ripley
 
 /obj/structure/mecha_wreckage/sec_ripley
 	name = "\improper Security Ripley wreckage"
-	icon = 'icons/mecha/white_only.dmi'
+	icon = 'icons/mecha/white_dev.dmi'
 	icon_state = "sec_ripley-broken"
 
 
-/obj/mecha/combat/sec_ripley/New()
+/obj/mecha/working/sec_ripley/New()
 	..()
-	var/obj/item/mecha_parts/mecha_equipment/weapon/energy/taser/T = new /obj/item/mecha_parts/mecha_equipment/weapon/energy/taser
-	var/obj/item/mecha_parts/mecha_equipment/pepper/P = new /obj/item/mecha_parts/mecha_equipment/pepper
-	var/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/flashbang/F = new /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/flashbang
-	T.attach(src)
+	var/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/flashbang/security/FS = new /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/flashbang/security
+	var/obj/item/mecha_parts/mecha_equipment/weapon/pepper/P = new /obj/item/mecha_parts/mecha_equipment/weapon/pepper
+	var/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/teargas/T = new /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/teargas
+	FS.attach(src)
 	P.attach(src)
-	F.attach(src)
+	T.attach(src)
 	return
 
 
-/obj/item/mecha_parts/mecha_equipment/pepper
+/obj/item/mecha_parts/mecha_equipment/weapon/pepper
 	name = "exosuit pepper spray"
 	desc = "Equipment for security exosuits. A rapid-firing high capacity pepper spray."
-	icon = 'icons/mecha/white_only.dmi'
+	icon = 'icons/mecha/white_dev.dmi'
 	icon_state = "mecha_pepper"
 	equip_cooldown = 5
 	energy_drain = 0
@@ -45,14 +45,14 @@
 
 
 
-/obj/item/mecha_parts/mecha_equipment/pepper/New()
+/obj/item/mecha_parts/mecha_equipment/weapon/pepper/New()
 	create_reagents(1000)
 	reagents.add_reagent("condensedcapsaicin", 1000)
 	START_PROCESSING(SSobj, src)
 	..()
 	return
 
-/obj/item/mecha_parts/mecha_equipment/pepper/action(atom/A) //copypasted from extinguisher. TODO: Rewrite from scratch.
+/obj/item/mecha_parts/mecha_equipment/weapon/pepper/action(atom/A) //copypasted from extinguisher. TODO: Rewrite from scratch.
 	if(!action_checks(A) || get_dist(chassis, A)>3)
 		return
 
@@ -103,29 +103,65 @@
 				qdel(D)
 	return 1
 
-/obj/item/mecha_parts/mecha_equipment/pepper/get_equip_info()
+/obj/item/mecha_parts/mecha_equipment/weapon/pepper/get_equip_info()
 	return "[..()] \[[src.reagents.total_volume]\]"
 
-/obj/item/mecha_parts/mecha_equipment/pepper/on_reagent_change()
+/obj/item/mecha_parts/mecha_equipment/weapon/pepper/on_reagent_change()
 	return
 
-/obj/item/mecha_parts/mecha_equipment/pepper/can_attach(obj/mecha/combat/M as obj)
-	if(..())
-		if(istype(M))
-			return 1
+/obj/item/mecha_parts/mecha_equipment/weapon/pepper/can_attach(obj/mecha/M as obj)
+	if((M.equipment.len<M.max_equip) && (istype(M, /obj/mecha/combat) || istype(M, /obj/mecha/working/sec_ripley)))
+		return 1
 	return 0
 
-/obj/item/mecha_parts/mecha_equipment/pepper/process()
+/obj/item/mecha_parts/mecha_equipment/weapon/pepper/process()
 	if(reagents.total_volume >= reagents.maximum_volume || !chassis.has_charge(energy_drain))
 		return
 	reagents.add_reagent("condensedcapsaicin", 25)
 	chassis.use_power(25)
 	update_equip_info()
 
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/teargas
+	name = "\improper SGL-6 teargas grenade launcher"
+	desc = "A weapon for combat exosuits. Launches primed teargas grenades."
+	icon_state = "mecha_grenadelnchr"
+	origin_tech = "combat=4;engineering=4"
+	projectile = /obj/item/weapon/grenade/chem_grenade/teargas
+	fire_sound = 'sound/weapons/grenadelaunch.ogg'
+	projectiles = 4
+	missile_speed = 1
+	projectile_energy_cost = 1000
+	equip_cooldown = 100
+	var/det_time = 10
+
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/teargas/proj_init(var/obj/item/weapon/grenade/chem_grenade/teargas/TG)
+	var/turf/T = get_turf(src)
+	message_admins("[key_name(chassis.occupant, chassis.occupant.client)](<A HREF='?_src_=holder;adminmoreinfo=\ref[chassis.occupant]'>?</A>) fired a [src] in ([T.x],[T.y],[T.z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>JMP</a>)",0,1)
+	log_game("[key_name(chassis.occupant)] fired a [src] ([T.x],[T.y],[T.z])")
+	addtimer(TG, "prime", det_time)
+
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/teargas/can_attach(obj/mecha/M as obj)
+	if((M.equipment.len<M.max_equip) && (istype(M, /obj/mecha/combat) || istype(M, /obj/mecha/working/sec_ripley)))
+		return 1
+	return 0
+
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/flashbang/security
+	name = "\improper SGL-6 flashbang grenade launcher"
+	projectiles = 4
+	missile_speed = 1
+	projectile_energy_cost = 1000
+	equip_cooldown = 100
+	det_time = 10
+
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/flashbang/security/can_attach(obj/mecha/M as obj)
+	if((M.equipment.len<M.max_equip) && (istype(M, /obj/mecha/combat) || istype(M, /obj/mecha/working/sec_ripley)))
+		return 1
+	return 0
+
 /*/obj/vehicle/secway/New()
 	var/first = TRUE
 	if(first == TRUE)
-		var/obj/mecha/combat/sec_ripley/SR = new /obj/mecha/combat/sec_ripley
+		var/obj/mecha/working/sec_ripley/SR = new /obj/mecha/working/sec_ripley
 		SR.loc = src.loc
 		qdel(src)
 		first = FALSE
