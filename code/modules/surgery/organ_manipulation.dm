@@ -103,6 +103,8 @@
 	if(current_type == "mend")
 		user.visible_message("[user] mends the incision in [target]'s [parse_zone(target_zone)].",
 			"<span class='notice'>You mend the incision in [target]'s [parse_zone(target_zone)].</span>")
+		if(locate(/datum/surgery_step/saw) in surgery.steps)
+			target.heal_bodypart_damage(45,0)
 		return 1
 	else if(current_type == "insert")
 		I = tool
