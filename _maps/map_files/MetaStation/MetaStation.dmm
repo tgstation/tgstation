@@ -75936,8 +75936,7 @@
 /obj/machinery/door/airlock/glass_medical{
 	id_tag = "CloningDoor";
 	name = "Cloning Lab";
-	req_access_txt = "0";
-	req_one_access_txt = "5"
+	req_access_txt = "5; 68"
 	},
 /turf/open/floor/plasteel/whiteblue,
 /area/medical/genetics_cloning)
@@ -75985,7 +75984,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/glass_research{
 	name = "Genetics Lab";
-	req_access_txt = "5;9"
+	req_access_txt = "5; 9; 68"
 	},
 /obj/structure/cable/yellow{
 	d1 = 4;
