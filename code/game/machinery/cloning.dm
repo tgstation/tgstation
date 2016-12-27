@@ -3,12 +3,22 @@
 
 //Potential replacement for genetics revives or something I dunno (?)
 
+/obj/machinery/cloning
+	name = "generic cloning machinery"
+	desc = "It looks generic and related to cloning somehow."
+
+	var/obj/machinery/computer/computer // Attached computer for operation.
+
+/obj/machinery/cloning/Destroy()
+	computer = null
+	. = ..()
+
 #define CLONE_INITIAL_DAMAGE     190    //Clones in clonepods start with 190 cloneloss damage and 190 brainloss damage, thats just logical
 #define MINIMUM_HEAL_LEVEL 40
 
 #define SPEAK(message) radio.talk_into(src, message, radio_channel, get_spans())
 
-/obj/machinery/clonepod
+/obj/machinery/cloning/pod
 	anchored = 1
 	name = "cloning pod"
 	desc = "An electronically-lockable pod for growing organic tissue."
@@ -18,7 +28,6 @@
 	req_access = list(access_genetics) //For premature unlocking.
 	verb_say = "states"
 	var/heal_level //The clone is released once its health reaches this level.
-	var/obj/machinery/computer/cloning/connected = null //So we remember the connected clone machine.
 	var/mess = FALSE //Need to clean out it if it's full of exploded clone.
 	var/attempting = FALSE //One clone attempt at a time thanks
 	var/speed_coeff
@@ -40,7 +49,7 @@
 	// amounts to the occupant.
 	var/list/brine_types = list("salbutamol", "bicaridine", "corazone")
 
-/obj/machinery/clonepod/New()
+/obj/machinery/cloning/pod/New()
 	..()
 	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/clonepod(null)
 	B.apply_default_parts(src)
@@ -53,7 +62,7 @@
 	radio.canhear_range = 0
 	radio.recalculateChannels()
 
-/obj/machinery/clonepod/Destroy()
+/obj/machinery/cloning/pod/Destroy()
 	go_out()
 	qdel(radio)
 	radio = null
@@ -64,7 +73,7 @@
 	unattached_flesh.Cut()
 	. = ..()
 
-/obj/machinery/clonepod/RefreshParts()
+/obj/machinery/cloning/pod/RefreshParts()
 	speed_coeff = 0
 	efficiency = 0
 	for(var/obj/item/weapon/stock_parts/scanning_module/S in component_parts)
@@ -79,7 +88,7 @@
 
 /obj/item/weapon/circuitboard/machine/clonepod
 	name = "circuit board (Clone Pod)"
-	build_path = /obj/machinery/clonepod
+	build_path = /obj/machinery/cloning/pod
 	origin_tech = "programming=2;biotech=2"
 	req_components = list(
 							/obj/item/stack/cable_coil = 2,
@@ -112,21 +121,21 @@
 
 //Clonepod
 
-/obj/machinery/clonepod/examine(mob/user)
+/obj/machinery/cloning/pod/examine(mob/user)
 	..()
 	if(mess)
 		user << "It's filled with blood and viscera. You swear you can see it moving..."
 	if (is_operational() && (!isnull(occupant)) && (occupant.stat != DEAD))
 		user << "Current clone cycle is [round(get_completion())]% complete."
 
-/obj/machinery/clonepod/proc/get_completion()
+/obj/machinery/cloning/pod/proc/get_completion()
 	. = (100 * ((occupant.health + 100) / (heal_level + 100)))
 
-/obj/machinery/clonepod/attack_ai(mob/user)
+/obj/machinery/cloning/pod/attack_ai(mob/user)
 	return examine(user)
 
 //Start growing a human clone in the pod!
-/obj/machinery/clonepod/proc/growclone(ckey, clonename, ui, se, mindref, datum/species/mrace, list/features, factions)
+/obj/machinery/cloning/pod/proc/growclone(ckey, clonename, ui, se, mindref, datum/species/mrace, list/features, factions)
 	if(panel_open)
 		return FALSE
 	if(mess || attempting)
@@ -202,7 +211,7 @@
 	return TRUE
 
 //Grow clones to maturity then kick them out.  FREELOADERS
-/obj/machinery/clonepod/process()
+/obj/machinery/cloning/pod/process()
 
 	if(!is_operational()) //Autoeject if power is lost
 		if (occupant)
@@ -257,7 +266,7 @@
 		use_power(200)
 
 //Let's unlock this early I guess.  Might be too early, needs tweaking.
-/obj/machinery/clonepod/attackby(obj/item/weapon/W, mob/user, params)
+/obj/machinery/cloning/pod/attackby(obj/item/weapon/W, mob/user, params)
 	if(!(occupant || mess))
 		if(default_deconstruction_screwdriver(user, "[icon_state]_maintenance", "[initial(icon_state)]",W))
 			return
@@ -285,24 +294,24 @@
 	else
 		return ..()
 
-/obj/machinery/clonepod/emag_act(mob/user)
+/obj/machinery/cloning/pod/emag_act(mob/user)
 	if(!occupant)
 		return
 	user << "<span class='warning'>You corrupt the genetic compiler.</span>"
 	malfunction()
 
 //Put messages in the connected computer's temp var for display.
-/obj/machinery/clonepod/proc/connected_message(message)
-	if ((isnull(connected)) || (!istype(connected, /obj/machinery/computer/cloning)))
+/obj/machinery/cloning/pod/proc/connected_message(message)
+	if ((isnull(computer)) || (!istype(connected, /obj/machinery/computer/cloning)))
 		return FALSE
 	if (!message)
 		return FALSE
 
-	connected.temp = message
-	connected.updateUsrDialog()
+	computer.temp = message
+	computer.updateUsrDialog()
 	return TRUE
 
-/obj/machinery/clonepod/proc/go_out()
+/obj/machinery/cloning/pod/proc/go_out()
 	countdown.stop()
 
 	if(mess) //Clean that mess and dump those gibs!
@@ -328,7 +337,7 @@
 	occupant.domutcheck(1) //Waiting until they're out before possible monkeyizing. The 1 argument forces powers to manifest.
 	occupant = null
 
-/obj/machinery/clonepod/proc/malfunction()
+/obj/machinery/cloning/pod/proc/malfunction()
 	if(occupant)
 		connected_message("Critical Error!")
 		SPEAK("Critical error! Please contact a Thinktronic Systems \
@@ -346,38 +355,38 @@
 		occupant << sound('sound/hallucinations/veryfar_noise.ogg',0,1,50)
 		QDEL_IN(occupant, 40)
 
-/obj/machinery/clonepod/relaymove(mob/user)
+/obj/machinery/cloning/pod/relaymove(mob/user)
 	if(user.stat == CONSCIOUS)
 		go_out()
 
-/obj/machinery/clonepod/emp_act(severity)
+/obj/machinery/cloning/pod/emp_act(severity)
 	if(prob(100/(severity*efficiency)))
 		malfunction()
 	..()
 
-/obj/machinery/clonepod/ex_act(severity, target)
+/obj/machinery/cloning/pod/ex_act(severity, target)
 	..()
 	if(!qdeleted(src))
 		go_out()
 
-/obj/machinery/clonepod/handle_atom_del(atom/A)
+/obj/machinery/cloning/pod/handle_atom_del(atom/A)
 	if(A == occupant)
 		occupant = null
 		countdown.stop()
 
-/obj/machinery/clonepod/proc/horrifyingsound()
+/obj/machinery/cloning/pod/proc/horrifyingsound()
 	for(var/i in 1 to 5)
 		playsound(loc,pick('sound/hallucinations/growl1.ogg','sound/hallucinations/growl2.ogg','sound/hallucinations/growl3.ogg'), 100, rand(0.95,1.05))
 		sleep(1)
 	sleep(10)
 	playsound(loc,'sound/hallucinations/wail.ogg',100,1)
 
-/obj/machinery/clonepod/deconstruct(disassembled = TRUE)
+/obj/machinery/cloning/pod/deconstruct(disassembled = TRUE)
 	if(occupant)
 		go_out()
 	..()
 
-/obj/machinery/clonepod/proc/maim_clone(mob/living/carbon/human/H)
+/obj/machinery/cloning/pod/proc/maim_clone(mob/living/carbon/human/H)
 	for(var/fl in unattached_flesh)
 		qdel(fl)
 	unattached_flesh.Cut()
@@ -403,7 +412,7 @@
 
 	flesh_number = unattached_flesh.len
 
-/obj/machinery/clonepod/proc/check_brine()
+/obj/machinery/cloning/pod/proc/check_brine()
 	// Clones are in a pickled bath of mild chemicals, keeping
 	// them alive, despite their lack of internal organs
 	for(var/bt in brine_types)

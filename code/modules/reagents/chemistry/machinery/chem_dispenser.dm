@@ -104,7 +104,7 @@
 		ui.open()
 
 /obj/machinery/chem_dispenser/ui_data()
-	var/data = list()
+	var/list/data = list()
 	data["amount"] = amount
 	data["energy"] = energy
 	data["maxEnergy"] = max_energy
