@@ -22855,7 +22855,7 @@
 /turf/open/floor/wood,
 /area/lawoffice)
 "aNP" = (
-/obj/structure/filingcabinet/chestdrawer,
+/obj/structure/filingcabinet/employment,
 /obj/machinery/airalarm{
 	dir = 8;
 	icon_state = "alarm0";
