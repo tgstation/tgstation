@@ -33,3 +33,8 @@ endmap
 map pubbystation
 	friendlyname Pubby Station
 endmap
+
+map omegastation
+	friendlyname Omega Station
+	maxplayers 35
+endmap
