@@ -16,7 +16,7 @@
 		usr << "<span class='warning'>You don't have anything in your active hand to give to [src].</span>"
 		return
 
-	if((I.flags&ABSTRACT) || (I.flags&NODROP))
+	if(!usr.canUnEquip(I))
 		return
 
 	var/list/empty_hands = get_empty_held_indexes()
@@ -48,11 +48,13 @@
 				usr << "<span class='warning'>Their hands are full.</span>"
 				return
 
+			if(!usr.unEquip(I))
+				return
+
 			if(!put_in_hands(I))
 				src << "<span class='warning'>You can't take [I], so [usr] gave up!</span>"
 				usr << "<span class='warning'>[src] can't take [I]!</span>"
 				return
-
 
 			src.visible_message("<span class='notice'>[usr] handed [I] to [src].</span>")
 		if("No")
