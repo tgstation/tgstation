@@ -23,7 +23,7 @@
 		avictim.force_moving = src
 		START_PROCESSING(SSfastprocess, src)
 	else
-		qdel(src)	//caller can check qdeleted(us) if they wanna know
+		qdel(src)	//caller can check avictim.force_moving to see if the new worked
 
 /datum/forced_movement/Destroy()
 	victim = null
