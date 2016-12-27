@@ -33,6 +33,15 @@
 							/obj/item/stack/cable_coil = 1,
 							/obj/item/weapon/stock_parts/console_screen = 1)
 
+/obj/item/weapon/circuitboard/machine/thermomachine/New()
+	..()
+	if(prob(50))
+		name = "circuit board (Freezer)"
+		build_path = /obj/machinery/atmospherics/components/unary/thermomachine/freezer
+	else
+		name = "circuit board (Heater)"
+		build_path = /obj/machinery/atmospherics/components/unary/thermomachine/heater
+
 /obj/item/weapon/circuitboard/machine/thermomachine/attackby(obj/item/I, mob/user, params)
 	var/obj/item/weapon/circuitboard/machine/freezer = /obj/item/weapon/circuitboard/machine/thermomachine/freezer
 	var/obj/item/weapon/circuitboard/machine/heater = /obj/item/weapon/circuitboard/machine/thermomachine/heater
