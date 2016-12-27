@@ -608,12 +608,7 @@
 /obj/structure/holohoop{
 	pixel_y = 29
 	},
-/obj/item/toy/beach_ball{
-	icon = 'icons/obj/basketball.dmi';
-	icon_state = "basketball";
-	item_state = "basketball";
-	name = "basket ball"
-	},
+/obj/item/toy/beach_ball/holoball,
 /turf/open/floor/plating{
 	icon_state = "platingdmg1"
 	},
@@ -5542,12 +5537,7 @@
 /turf/open/floor/plating,
 /area/maintenance/fore)
 "ajV" = (
-/obj/item/toy/beach_ball{
-	icon = 'icons/obj/basketball.dmi';
-	icon_state = "basketball";
-	item_state = "basketball";
-	name = "basket ball"
-	},
+/obj/item/toy/beach_ball/holoball,
 /turf/open/floor/plating,
 /area/maintenance/fore)
 "ajW" = (
