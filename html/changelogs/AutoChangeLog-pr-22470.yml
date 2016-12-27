@@ -1,0 +1,5 @@
+author: "XDTM"
+delete-after: True
+changes: 
+  - tweak: "Armblades now go slash slash instead of thwack thwack"
+  - imageadd: "Tentacles have some fancier sprites"
