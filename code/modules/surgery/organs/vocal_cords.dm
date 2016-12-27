@@ -139,7 +139,7 @@ var/static/regex/multispin_words = regex("like a record baby")
 	//Cultists are closer to their gods and are more powerful, but they'll give themselves away
 	if(iscultist(owner))
 		power_multiplier *= 2
-		spans = list("narsie")
+		spans = list("narsiesmall")
 	else if (is_servant_of_ratvar(owner))
 		power_multiplier *= 2
 		spans = list("ratvar")
