@@ -47,6 +47,8 @@
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/lizard
 	skinned_type = /obj/item/stack/sheet/animalhide/lizard
 	exotic_bloodtype = "L"
+	blacklisted = 1
+	dangerous_existence = 1
 
 /datum/species/lizard/random_name(gender,unique,lastname)
 	if(unique)
