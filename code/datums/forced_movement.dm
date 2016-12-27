@@ -40,7 +40,7 @@
 		return
 	var/steps_to_take = round(steps_per_tick * (world.time - last_processed))
 	if(steps_to_take)
-		for(var/i in 0 to steps_to_take)
+		for(var/i in 1 to steps_to_take)
 			if(!TryMove())
 				victim.force_moving = null
 				victim.forceMove(victim.loc)	//get the side effects of moving here that require us to currently not be force_moving aka reslipping on ice
