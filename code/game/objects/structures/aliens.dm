@@ -189,7 +189,8 @@
 /obj/structure/alien/weeds/node/process()
 	for(var/obj/structure/alien/weeds/W in range(node_range, src))
 		if(W.last_expand <= world.time)
-			W.expand()
+			if(W.expand())
+				W.last_expand = world.time + rand(growth_cooldown_low, growth_cooldown_high)
 
 #undef NODERANGE
 
