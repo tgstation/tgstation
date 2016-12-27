@@ -1,0 +1,7 @@
+author: "Joan"
+delete-after: True
+changes: 
+  - rscadd: "The Hierophant boss will now create an arena if you try to leave its arena."
+  - imageadd: "The Hierophant boss, its arena, and the weapon it drops all have new sprites."
+  - soundadd: "And new sounds."
+  - wip: "And new text."
