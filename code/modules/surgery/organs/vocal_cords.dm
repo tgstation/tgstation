@@ -52,7 +52,7 @@ var/static/regex/multispin_words = regex("like a record baby")
 //Colossus drop, forces the listeners to obey certain commands
 /obj/item/organ/vocal_cords/colossus
 	name = "divine vocal cords"
-	description = "They carry the voice of an ancient god."
+	desc = "They carry the voice of an ancient god."
 	icon_state = "voice_of_god"
 	zone = "mouth"
 	slot = "vocal_cords"
