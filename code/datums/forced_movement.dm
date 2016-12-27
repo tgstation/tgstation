@@ -1,5 +1,4 @@
-//usage new /datum/forced_movement(victim, target, steps_per_tick, allow_tabling)
-
+//Just new and forget
 /datum/forced_movement
 	var/atom/movable/victim
 	var/atom/target
@@ -10,7 +9,7 @@
 	var/allow_tabling
 	var/spin
 															//as fast as ssfastprocess
-/datum/forced_movement/New(mob/victim, atom/movable/target, steps_per_tick = 0.5, allow_tabling = FALSE, spin = FALSE)
+/datum/forced_movement/New(atom/movable/victim, atom/target, steps_per_tick = 0.5, allow_tabling = FALSE, spin = FALSE)
 	src.victim = victim
 	src.target = target
 	src.steps_per_tick = steps_per_tick
