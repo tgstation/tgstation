@@ -5,7 +5,6 @@
 	var/stunned
 	var/last_processed
 	var/steps_per_tick
-	var/moved_y_last
 	var/allow_tabling
 	var/spin
 															//as fast as ssfastprocess
@@ -17,7 +16,6 @@
 	spin = aspin
 
 	last_processed = world.time
-	moved_y_last = FALSE
 
 	. = ..()
 
@@ -59,7 +57,7 @@
 
 		. = step_towards(vic, tar)
 
-	//shit way for getting around some corners
+	//shit way for getting around corners
 	if(!.)
 		if(tar.x > vic.x)
 			if(step(vic, EAST))
