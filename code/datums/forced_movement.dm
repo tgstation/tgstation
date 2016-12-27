@@ -58,7 +58,7 @@
 
 	moved_y_last = !moved_y_last
 
-	if(!moved_y_last)
+	if(moved_y_last)
 		if(tar.x > vic.x)
 			if(step(vic, EAST))
 				return TRUE
