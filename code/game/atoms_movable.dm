@@ -22,8 +22,8 @@
 	var/list/client_mobs_in_contents // This contains all the client mobs within this container
 	glide_size = 8
 	appearance_flags = TILE_BOUND
-
 	var/datum/forced_movement/force_moving = null
+
 
 
 /atom/movable/Move(atom/newloc, direct = 0)

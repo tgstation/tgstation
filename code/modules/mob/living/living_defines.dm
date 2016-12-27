@@ -74,6 +74,4 @@
 
 	var/list/status_effects //a list of all status effects the mob has
 
-	var/slipping = FALSE
-
 	var/list/implants = null
