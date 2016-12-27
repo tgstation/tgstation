@@ -61,9 +61,9 @@
 
 	if(R.mind)
 		R.mind.grab_ghost()
+		playsound(loc, 'sound/voice/liveagain.ogg', 75, 1)
 
 	R.revive()
-	playsound(loc, 'sound/voice/liveagain.ogg', 75, 1)
 
 	return 1
 
