@@ -70,6 +70,7 @@
 		return
 
 	var/power_multiplier = base_multiplier
+	spans = initial(spans) //reset spans, just in case someone gets deculted or the cords change owner
 
 	if(owner.mind)
 		//Chaplains are very good at speaking with the voice of god
