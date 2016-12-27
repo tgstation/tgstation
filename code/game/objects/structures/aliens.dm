@@ -126,6 +126,8 @@
 	canSmoothWith = list(/obj/structure/alien/weeds, /turf/closed/wall)
 	smooth = SMOOTH_MORE
 
+var/list/blacklisted_weed_turfs = typecacheof(list(/turf/open/floor/plating/lava))
+
 
 /obj/structure/alien/weeds/New(pos, node)
 	pixel_x = -4
@@ -165,7 +167,7 @@
 		if (locate(/obj/structure/alien/weeds) in T || isspaceturf(T))
 			continue
 
-		if(istype(T, /turf/open/floor/plating/lava))
+		if(is_type_in_typecache(T, blacklisted_weed_turfs))
 			continue
 
 		new /obj/structure/alien/weeds(T, linked_node)
