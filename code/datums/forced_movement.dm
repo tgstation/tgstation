@@ -5,14 +5,14 @@
 	var/stunned
 	var/last_processed
 	var/steps_per_tick
-	var/allow_tabling
+	var/allow_climbing
 	var/spin
 															//as fast as ssfastprocess
-/datum/forced_movement/New(atom/movable/_victim, atom/_target, _steps_per_tick = 0.5, _allow_tabling = FALSE, _spin = FALSE)
+/datum/forced_movement/New(atom/movable/_victim, atom/_target, _steps_per_tick = 0.5, _allow_climbing = FALSE, _spin = FALSE)
 	victim = _victim
 	target = _target
 	steps_per_tick = _steps_per_tick
-	allow_tabling = _allow_tabling
+	allow_climbing = _allow_climbing
 	spin = _spin
 
 	last_processed = world.time
@@ -85,7 +85,7 @@
 
 /mob/Bump(atom/A)
 	. = ..()
-	if(force_moving && force_moving.allow_tabling && istype(A,/obj/structure))
+	if(force_moving && force_moving.allow_climbing && istype(A,/obj/structure))
 		var/obj/structure/S = A
 		if(S.climbable)
 			S.do_climb(src)
