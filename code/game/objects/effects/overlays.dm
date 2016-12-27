@@ -40,6 +40,9 @@
 
 	timerid = QDEL_IN(src, duration)
 
+/obj/effect/overlay/temp/ex_act()
+	return
+
 /obj/effect/overlay/temp/dir_setting
 	randomdir = FALSE
 
