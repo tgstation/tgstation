@@ -172,6 +172,10 @@
 	name = "circuit board (Security Cameras)"
 	build_path = /obj/machinery/computer/security
 	origin_tech = "programming=2;combat=2"
+/obj/item/weapon/circuitboard/computer/xenobiology
+	name = "circuit board (Xenobiology Console)"
+	build_path = /obj/machinery/computer/camera_advanced/xenobio
+	origin_tech = "programming=3;bio=3"
 
 /obj/item/weapon/circuitboard/computer/aiupload
 	name = "circuit board (AI Upload)"
