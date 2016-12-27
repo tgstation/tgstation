@@ -37,7 +37,8 @@
 	return ..()
 
 /mob/living/simple_animal/hostile/guardian/beam/Manifest()
-	if(..())
+	. = ..()
+	if(.)
 		if(summoner)
 			summonerchain = Beam(summoner, "lightning[rand(1,12)]", time=INFINITY, maxdistance=INFINITY, beam_type=/obj/effect/ebeam/chain)
 		while(loc != summoner)
@@ -48,7 +49,8 @@
 			sleep(3)
 
 /mob/living/simple_animal/hostile/guardian/beam/Recall()
-	if(..())
+	. = ..()
+	if(.)
 		removechains()
 
 /mob/living/simple_animal/hostile/guardian/beam/proc/shockallchains()

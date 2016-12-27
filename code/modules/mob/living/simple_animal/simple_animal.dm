@@ -162,9 +162,9 @@
 					else
 						randomValue -= speak.len
 						if(emote_see && randomValue <= emote_see.len)
-							emote("me", 1, pick(emote_see))
+							emote("me [pick(emote_see)]", 1)
 						else
-							emote("me", 2, pick(emote_hear))
+							emote("me [pick(emote_hear)]", 2)
 				else
 					say(pick(speak))
 			else
@@ -237,13 +237,13 @@
 			bodytemperature += diff
 
 	if(!environment_is_safe(environment))
-		adjustHealth(-unsuitable_atmos_damage)
+		adjustHealth(unsuitable_atmos_damage)
 
 	handle_temperature_damage()
 
 /mob/living/simple_animal/proc/handle_temperature_damage()
 	if((bodytemperature < minbodytemp) || (bodytemperature > maxbodytemp))
-		adjustHealth(-unsuitable_atmos_damage)
+		adjustHealth(unsuitable_atmos_damage)
 
 /mob/living/simple_animal/gib()
 	if(butcher_results)

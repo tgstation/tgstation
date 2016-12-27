@@ -621,3 +621,5 @@ var/global/list/ghost_others_options = list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 // they are here to support hotkeys
 #define INTENT_HOTKEY_LEFT  "left"
 #define INTENT_HOTKEY_RIGHT "right"
+
+#define DEFAULT_AI_LAWID "default"

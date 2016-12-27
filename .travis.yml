@@ -12,7 +12,6 @@ env:
     - BUILD_TOOLS=true
     - DM_MAPFILE="tgstation2"
     - DM_MAPFILE="metastation"
-    - DM_MAPFILE="ministation"
     - DM_MAPFILE="birdstation"
     - DM_MAPFILE="pubbystation"
     - DM_MAPFILE="templates"

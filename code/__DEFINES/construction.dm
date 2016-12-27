@@ -26,3 +26,11 @@
 #define PRESSURE_ON 1
 #define PRESSURE_MAXED 2
 #define SCREWS_OUT -1
+
+//ai core defines
+#define EMPTY_CORE 0
+#define CIRCUIT_CORE 1
+#define SCREWED_CORE 2
+#define CABLED_CORE 3
+#define GLASS_CORE 4
+#define AI_READY_CORE 5

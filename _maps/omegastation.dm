@@ -30,6 +30,6 @@
 
 #elif !defined(MAP_OVERRIDE)
 
-	#warn a map has already been included, ignoring PubbyStation.
+	#warn a map has already been included, ignoring OmegaStation.
 
 #endif
