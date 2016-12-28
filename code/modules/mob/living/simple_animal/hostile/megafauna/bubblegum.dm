@@ -58,14 +58,14 @@ Difficulty: Hard
 	desc = "You're not quite sure how a signal can be bloody."
 	invisibility = 100
 
-/mob/living/simple_animal/hostile/megafauna/bubblegum/adjustBruteLoss(amount)
-	if(amount > 0 && prob(25))
+/mob/living/simple_animal/hostile/megafauna/bubblegum/adjustBruteLoss(amount, updating_health = TRUE, forced = FALSE)
+	. = ..()
+	if(. > 0 && prob(25))
 		var/obj/effect/decal/cleanable/blood/gibs/bubblegum/B = new /obj/effect/decal/cleanable/blood/gibs/bubblegum(loc)
 		if(prob(40))
 			step(B, pick(cardinal))
 		else
 			B.setDir(pick(cardinal))
-	. = ..()
 
 /obj/effect/decal/cleanable/blood/gibs/bubblegum
 	name = "thick blood"

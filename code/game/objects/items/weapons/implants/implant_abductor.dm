@@ -23,11 +23,11 @@
 		if(cooldown == initial(cooldown))
 			STOP_PROCESSING(SSobj, src)
 
-/obj/item/weapon/implant/abductor/implant(var/mob/source, var/mob/user)
+/obj/item/weapon/implant/abductor/implant(mob/living/target, mob/user)
 	if(..())
 		var/obj/machinery/abductor/console/console
-		if(ishuman(source))
-			var/mob/living/carbon/human/H = source
+		if(ishuman(target))
+			var/mob/living/carbon/human/H = target
 			if(H.dna.species.id == "abductor")
 				var/datum/species/abductor/S = H.dna.species
 				console = get_team_console(S.team)

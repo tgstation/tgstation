@@ -211,9 +211,7 @@
 	var/A = locate(/mob/living/silicon/ai) in loc
 	if(A)
 		return
-	var/L = new /datum/ai_laws/default/asimov
-	var/B = new /obj/item/device/mmi
-	var/mob/living/silicon/ai/M = new(src.loc, L, B, 1) //spawn new AI at landmark as var M
+	var/mob/living/silicon/ai/spawned/M = new(loc) //spawn new AI at landmark as var M
 	M.name = src.name
 	M.real_name = src.name
 	M.aiPDA.toff = 1 //turns the AI's PDA messenger off, stopping it showing up on player PDAs

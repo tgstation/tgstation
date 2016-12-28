@@ -7,6 +7,7 @@
 	use_power = 1
 	idle_power_usage = 200
 	active_power_usage = 5000
+	unique_rename = 1
 	var/teleport_cooldown = 400 //30 seconds base due to base parts
 	var/teleport_speed = 50
 	var/last_teleport //to handle the cooldown
@@ -112,11 +113,15 @@
 
 		spawn(teleport_speed)
 			if(!src || qdeleted(src))
+				teleporting = 0
 				return
 			if(stat & NOPOWER)
+				user << "<span class='warning'>[src] is unpowered!</span>"
+				teleporting = 0
 				return
 			if(!linked_pad || qdeleted(linked_pad) || linked_pad.stat & NOPOWER)
 				user << "<span class='warning'>Linked pad is not responding to ping. Teleport aborted.</span>"
+				teleporting = 0
 				return
 
 			teleporting = 0

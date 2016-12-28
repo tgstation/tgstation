@@ -21,6 +21,9 @@
 	..()
 	PoolOrNew(/obj/effect/overlay/temp/ratvar/gear, get_turf(src))
 
+/obj/structure/destructible/clockwork/wall_gear/emp_act(severity)
+	return
+
 /obj/structure/destructible/clockwork/wall_gear/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/wrench))
 		default_unfasten_wrench(user, I, 10)

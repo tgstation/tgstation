@@ -96,7 +96,7 @@
 	sleep(5)
 
 	use_power(5000) // Use a lot of power.
-	var/mob/living/silicon/robot/R = H.Robotize(1) // Delete the items or they'll all pile up in a single tile and lag
+	var/mob/living/silicon/robot/R = H.Robotize()
 
 	R.cell.maxcharge = robot_cell_charge
 	R.cell.charge = robot_cell_charge

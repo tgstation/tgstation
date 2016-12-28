@@ -31,17 +31,14 @@
 		return FAILED_UNFASTEN
 	return ..()
 
-/obj/structure/destructible/clockwork/powered/clockwork_obelisk/process()
-	if(!anchored)
-		return
-	if(locate(/obj/effect/clockwork/spatial_gateway) in loc)
-		icon_state = active_icon
-		density = 0
-		active = TRUE
-	else
-		icon_state = inactive_icon
-		density = 1
-		active = FALSE
+/obj/structure/destructible/clockwork/powered/clockwork_obelisk/forced_disable(bad_effects)
+	var/affected = 0
+	for(var/obj/effect/clockwork/spatial_gateway/SG in loc)
+		SG.ex_act(1)
+		affected++
+	if(bad_effects)
+		affected += try_use_power(MIN_CLOCKCULT_POWER*2)
+	return affected
 
 /obj/structure/destructible/clockwork/powered/clockwork_obelisk/attack_hand(mob/living/user)
 	if(!is_servant_of_ratvar(user) || total_accessable_power() < hierophant_cost || !anchored)
@@ -84,3 +81,15 @@
 				clockwork_say(user, text2ratvar("Spatial Gateway, activate!"))
 			else
 				return_power(gateway_cost)
+
+/obj/structure/destructible/clockwork/powered/clockwork_obelisk/process()
+	if(!anchored)
+		return
+	if(locate(/obj/effect/clockwork/spatial_gateway) in loc)
+		icon_state = active_icon
+		density = 0
+		active = TRUE
+	else
+		icon_state = inactive_icon
+		density = 1
+		active = FALSE

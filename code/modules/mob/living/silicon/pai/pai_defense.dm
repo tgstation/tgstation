@@ -54,7 +54,7 @@
 	src << "<span class='warning'>Your holochassis stutters and warps intensely as you attempt to interact with the object, forcing you to cease lest the field fail.</span>"
 
 /mob/living/silicon/pai/IgniteMob(var/mob/living/silicon/pai/P)
-	return FALSE	//No we're not flammable
+	return FALSE //No we're not flammable
 
 /mob/living/silicon/pai/proc/take_holo_damage(amount)
 	emitterhealth = Clamp((emitterhealth - amount), -50, emittermaxhealth)
@@ -62,23 +62,24 @@
 		fold_in(force = TRUE)
 	src << "<span class='userdanger'>The impact degrades your holochassis!</span>"
 	hit_slowdown += amount
+	return amount
 
 /mob/living/silicon/pai/proc/fullstun(amount)
 	Weaken(amount)
 
-/mob/living/silicon/pai/adjustBruteLoss(amount)
-	take_holo_damage(amount)
+/mob/living/silicon/pai/adjustBruteLoss(amount, updating_health = TRUE, forced = FALSE)
+	return take_holo_damage(amount)
 
-/mob/living/silicon/pai/adjustFireLoss(amount)
-	take_holo_damage(amount)
+/mob/living/silicon/pai/adjustFireLoss(amount, updating_health = TRUE, forced = FALSE)
+	return take_holo_damage(amount)
 
-/mob/living/silicon/pai/adjustToxLoss(amount)
+/mob/living/silicon/pai/adjustToxLoss(amount, updating_health = TRUE, forced = FALSE)
 	return FALSE
 
-/mob/living/silicon/pai/adjustOxyLoss(amount)
+/mob/living/silicon/pai/adjustOxyLoss(amount, updating_health = TRUE, forced = FALSE)
 	return FALSE
 
-/mob/living/silicon/pai/adjustCloneLoss(amount)
+/mob/living/silicon/pai/adjustCloneLoss(amount, updating_health = TRUE, forced = FALSE)
 	return FALSE
 
 /mob/living/silicon/pai/adjustStaminaLoss(amount)

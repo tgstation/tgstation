@@ -79,15 +79,25 @@
 /obj/structure/destructible/clockwork/attackby(obj/item/I, mob/user, params)
 	if(is_servant_of_ratvar(user) && istype(I, /obj/item/weapon/wrench) && unanchored_icon)
 		if(default_unfasten_wrench(user, I, 50) == SUCCESSFUL_UNFASTEN)
-			if(anchored)
-				icon_state = initial(icon_state)
-			else
-				icon_state = unanchored_icon
-				playsound(src, break_sound, 10 * get_efficiency_mod(TRUE), 1)
-				take_damage(round(max_integrity * 0.25, 1), BRUTE)
-				user << "<span class='warning'>As you unsecure [src] from the floor, you see cracks appear in its surface!</span>"
+			update_anchored(user, TRUE)
 		return 1
 	return ..()
+
+/obj/structure/destructible/clockwork/proc/update_anchored(mob/user, do_damage)
+	if(anchored)
+		icon_state = initial(icon_state)
+	else
+		icon_state = unanchored_icon
+		if(do_damage)
+			playsound(src, break_sound, 10 * get_efficiency_mod(TRUE), 1)
+			take_damage(round(max_integrity * 0.25, 1), BRUTE)
+		user << "<span class='warning'>As you unsecure [src] from the floor, you see cracks appear in its surface!</span>"
+
+/obj/structure/destructible/clockwork/emp_act(severity)
+	if(anchored && unanchored_icon)
+		anchored = FALSE
+		update_anchored(null, obj_integrity > max_integrity * 0.25)
+		PoolOrNew(/obj/effect/overlay/temp/emp, loc)
 
 
 //for the ark and Ratvar
@@ -166,6 +176,13 @@
 			STOP_PROCESSING(SSobj, src)
 	return TRUE
 
+/obj/structure/destructible/clockwork/powered/proc/forced_disable(bad_effects)
+	if(active)
+		toggle()
+
+/obj/structure/destructible/clockwork/powered/emp_act(severity)
+	if(forced_disable(TRUE))
+		PoolOrNew(/obj/effect/overlay/temp/emp, loc)
 
 /obj/structure/destructible/clockwork/powered/proc/total_accessable_power() //how much power we have and can use
 	if(!needs_power || ratvar_awakens)

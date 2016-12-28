@@ -105,6 +105,7 @@ Admin:
 
 
 /mob/proc/hotkey_help()
+	//h = talk-wheel has a nonsense tag in it because \th is an escape sequence in BYOND.
 	var/hotkey_mode = {"<font color='purple'>
 Hotkey-Mode: (hotkey-mode must be on)
 \tTAB = toggle hotkey-mode
@@ -117,6 +118,7 @@ Hotkey-Mode: (hotkey-mode must be on)
 \tr = throw
 \tm = me
 \tt = say
+\t<B></B>h = talk-wheel
 \to = OOC
 \tb = resist
 \tx = swap-hand
@@ -140,6 +142,7 @@ Any-Mode: (hotkey doesn't need to be on)
 \tCtrl+e = equip
 \tCtrl+r = throw
 \tCtrl+b = resist
+\tCtrl+h = talk-wheel
 \tCtrl+o = OOC
 \tCtrl+x = swap-hand
 \tCtrl+z = activate held object (or Ctrl+y)
@@ -162,6 +165,7 @@ Any-Mode: (hotkey doesn't need to be on)
 	src << other
 
 /mob/living/silicon/robot/hotkey_help()
+	//h = talk-wheel has a nonsense tag in it because \th is an escape sequence in BYOND.
 	var/hotkey_mode = {"<font color='purple'>
 Hotkey-Mode: (hotkey-mode must be on)
 \tTAB = toggle hotkey-mode
@@ -170,7 +174,9 @@ Hotkey-Mode: (hotkey-mode must be on)
 \td = right
 \tw = up
 \tq = unequip active module
+\tm = me
 \tt = say
+\t<B></B>h = talk-wheel
 \to = OOC
 \tx = cycle active modules
 \tb = resist
@@ -192,6 +198,7 @@ Any-Mode: (hotkey doesn't need to be on)
 \tCtrl+q = unequip active module
 \tCtrl+x = cycle active modules
 \tCtrl+b = resist
+\tCtrl+h = talk-wheel
 \tCtrl+o = OOC
 \tCtrl+z = activate held object (or Ctrl+y)
 \tCtrl+f = cycle-intents-left

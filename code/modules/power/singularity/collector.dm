@@ -53,6 +53,19 @@ var/global/list/rad_collectors = list()
 			return
 ..()
 
+/obj/machinery/power/rad_collector/can_be_unfasten_wrench(mob/user)
+	if(loaded_tank)
+		user << "<span class='warning'>Remove the plasma tank first!</span>"
+		return FAILED_UNFASTEN
+	return ..()
+
+/obj/machinery/power/rad_collector/default_unfasten_wrench(mob/user, obj/item/weapon/wrench/W, time = 20)
+	. = ..()
+	if(. == SUCCESSFUL_UNFASTEN)
+		if(anchored)
+			connect_to_network()
+		else
+			disconnect_from_network()
 
 /obj/machinery/power/rad_collector/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/device/multitool))
@@ -70,30 +83,15 @@ var/global/list/rad_collectors = list()
 		if(!user.drop_item())
 			return 1
 		loaded_tank = W
-		W.loc = src
+		W.forceMove(src)
 		update_icons()
 	else if(istype(W, /obj/item/weapon/crowbar))
-		if(loaded_tank && !src.locked)
+		if(loaded_tank && !locked)
 			eject()
 			return 1
 	else if(istype(W, /obj/item/weapon/wrench))
-		if(loaded_tank)
-			user << "<span class='warning'>Remove the plasma tank first!</span>"
-			return 1
-		if(!anchored && !isinspace())
-			playsound(src.loc, W.usesound, 75, 1)
-			anchored = 1
-			user.visible_message("[user.name] secures the [src.name].", \
-				"<span class='notice'>You secure the external bolts.</span>", \
-				"<span class='italics'>You hear a ratchet.</span>")
-			connect_to_network()
-		else if(anchored)
-			playsound(src.loc, W.usesound, 75, 1)
-			anchored = 0
-			user.visible_message("[user.name] unsecures the [src.name].", \
-				"<span class='notice'>You unsecure the external bolts.</span>", \
-				"<span class='italics'>You hear a ratchet.</span>")
-			disconnect_from_network()
+		default_unfasten_wrench(user, W, 0)
+		return 1
 	else if(W.GetID())
 		if(allowed(user))
 			if(active)

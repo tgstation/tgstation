@@ -701,7 +701,7 @@ BLIND     // can't see anything
 
 	user << "<span class='notice'>You adjust \the [src] [up ? "up" : "down"].</span>"
 
-	if(istype(user, /mob/living/carbon))
+	if(iscarbon(user))
 		var/mob/living/carbon/C = user
 		C.head_update(src, forced = 1)
 	for(var/X in actions)

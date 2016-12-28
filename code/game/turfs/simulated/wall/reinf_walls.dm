@@ -9,6 +9,8 @@
 	var/d_state = INTACT
 	hardness = 10
 	sheet_type = /obj/item/stack/sheet/plasteel
+	sheet_amount = 1
+	girder_type = /obj/structure/girder/reinforced
 	explosion_block = 2
 
 /turf/closed/wall/r_wall/examine(mob/user)
@@ -29,12 +31,8 @@
 		if(SHEATH)
 			user << "<span class='notice'>The support rods have been <i>sliced through</i>, and the outer sheath is <b>connected loosely</b> to the girder.</span>"
 
-/turf/closed/wall/r_wall/break_wall()
-	new sheet_type(src)
-	return (new /obj/structure/girder/reinforced(src))
-
 /turf/closed/wall/r_wall/devastate_wall()
-	new sheet_type(src)
+	new sheet_type(src, sheet_amount)
 	new /obj/item/stack/sheet/metal(src, 2)
 
 /turf/closed/wall/r_wall/attack_animal(mob/living/simple_animal/M)

@@ -13,7 +13,7 @@
 	var/destination_y
 
 	var/global/datum/gas_mixture/space/space_gas = new
-
+	plane = PLANE_SPACE
 
 /turf/open/space/New()
 	icon_state = SPACE_ICON_STATE

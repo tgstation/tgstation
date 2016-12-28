@@ -4,7 +4,8 @@
 	icon_state = "hydrotray"
 	density = 1
 	anchored = 1
-	pixel_y=8
+	pixel_y = 8
+	unique_rename = 1
 	var/waterlevel = 100	//The amount of water in the tray (max 100)
 	var/maxwater = 100		//The maximum amount of water in the tray
 	var/nutrilevel = 10		//The amount of nutrient in the tray (max 10)

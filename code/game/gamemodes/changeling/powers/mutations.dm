@@ -29,7 +29,7 @@
 
 /obj/effect/proc_holder/changeling/weapon/proc/check_weapon(mob/user, obj/item/hand_item)
 	if(istype(hand_item, weapon_type))
-		qdel(hand_item)
+		user.unEquip(hand_item, 1) //DROPDEL will delete the item
 		if(!silent)
 			playsound(user, 'sound/effects/blobattack.ogg', 30, 1)
 			user.visible_message("<span class='warning'>With a sickening crunch, [user] reforms their [weapon_name_simple] into an arm!</span>", "<span class='notice'>We assimilate the [weapon_name_simple] back into our body.</span>", "<span class='italics>You hear organic matter ripping and tearing!</span>")
@@ -156,6 +156,8 @@
 	throwforce = 0 //Just to be on the safe side
 	throw_range = 0
 	throw_speed = 0
+	hitsound = 'sound/weapons/bladeslice.ogg'
+	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	sharpness = IS_SHARP
 
 /obj/item/weapon/melee/arm_blade/New(location,silent)
@@ -217,7 +219,7 @@
 	name = "tentacle"
 	desc = "A fleshy tentacle that can stretch out and grab things or people."
 	icon = 'icons/obj/weapons.dmi'
-	icon_state = "proboscis"
+	icon_state = "tentacle"
 	item_state = null
 	flags = ABSTRACT | NODROP | DROPDEL | NOBLUDGEON
 	w_class = WEIGHT_CLASS_HUGE
@@ -298,14 +300,12 @@
 				playsound(get_turf(H),I.hitsound,75,1)
 				C.Weaken(4)
 				return
-		C.visible_message("<span class='danger'>[C] falls at [H]'s feet!</span>", "<span class='userdanger'>You are thrown at [H]'s feet!</span>")
-		C.Weaken(2)
 
 /obj/item/projectile/tentacle/on_hit(atom/target, blocked = 0)
-	qdel(source.gun) //one tentacle only unless you miss
+	var/mob/living/carbon/human/H = firer
+	H.unEquip(source.gun,1) //Unequip thus delete the tentacle on hit
 	if(blocked >= 100)
 		return 0
-	var/mob/living/carbon/human/H = firer
 	if(istype(target, /obj/item))
 		var/obj/item/I = target
 		if(!I.anchored)
@@ -347,6 +347,7 @@
 
 					if(INTENT_HARM)
 						C.visible_message("<span class='danger'>[L] is thrown towards [H] by a tentacle!</span>","<span class='userdanger'>A tentacle grabs you and throws you towards [H]!</span>")
+						C.Weaken(3)
 						C.throw_at(get_step_towards(H,C), 8, 2)
 						addtimer(src, "tentacle_stab", 3, TIMER_NORMAL, H, C)
 						return 1

@@ -859,9 +859,9 @@
 		return
 	if(src.z != 1)
 		return
-	occupier = new /mob/living/silicon/ai(src,malf.laws,null,1) //DEAR GOD WHY?
+	occupier = new /mob/living/silicon/ai(src, malf.laws, malf) //DEAR GOD WHY?
 	occupier.adjustOxyLoss(malf.getOxyLoss())
-	if(!findtext(occupier.name,"APC Copy"))
+	if(!findtext(occupier.name, "APC Copy"))
 		occupier.name = "[malf.name] APC Copy"
 	if(malf.parent)
 		occupier.parent = malf.parent
@@ -879,13 +879,12 @@
 /obj/machinery/power/apc/proc/malfvacate(forced)
 	if(!occupier)
 		return
-	if(occupier.parent && occupier.parent.stat != 2)
+	if(occupier.parent && occupier.parent.stat != DEAD)
 		occupier.mind.transfer_to(occupier.parent)
 		occupier.parent.shunted = 0
-		occupier.parent.adjustOxyLoss(occupier.getOxyLoss())
+		occupier.parent.setOxyLoss(occupier.getOxyLoss())
 		occupier.parent.cancel_camera()
 		qdel(occupier)
-
 	else
 		occupier << "<span class='danger'>Primary core damaged, unable to return core processes.</span>"
 		if(forced)

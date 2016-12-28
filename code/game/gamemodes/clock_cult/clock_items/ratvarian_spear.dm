@@ -38,11 +38,22 @@
 		clockwork_desc = "A powerful spear of Ratvarian making. It's more effective against enemy cultists and silicons, though it won't last for long."
 		timerid = addtimer(src, "break_spear", 600, TIMER_NORMAL)
 
+/obj/item/clockwork/ratvarian_spear/cyborg/ratvar_act() //doesn't break!
+	if(ratvar_awakens)
+		force = 25
+		throwforce = 50
+		armour_penetration = 10
+	else
+		force = initial(force)
+		throwforce = initial(throwforce)
+		armour_penetration = 0
+
 /obj/item/clockwork/ratvarian_spear/examine(mob/user)
 	..()
 	if(is_servant_of_ratvar(user) || isobserver(user))
 		user << "<span class='brass'>Stabbing a human you are pulling or have grabbed with the spear will impale them, doing massive damage and stunning.</span>"
-		user << "<span class='brass'>Throwing the spear will do massive damage, break the spear, and stun the target.</span>"
+		if(!iscyborg(user))
+			user << "<span class='brass'>Throwing the spear will do massive damage, break the spear, and stun the target.</span>"
 
 /obj/item/clockwork/ratvarian_spear/attack(mob/living/target, mob/living/carbon/human/user)
 	var/impaling = FALSE
