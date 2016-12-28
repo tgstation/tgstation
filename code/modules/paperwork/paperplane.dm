@@ -104,7 +104,7 @@
 		H.emote("scream")
 
 /obj/item/weapon/paper/AltClick(mob/living/carbon/user, obj/item/I)
-	if((!in_range(src, user)) || usr.stat || usr.restrained())
+	if((!in_range(src, user)) || usr.stat || usr.restrained() || (issilicon(user)) )
 		return
 	user << "<span class='notice'>You fold [src] into the shape of a plane!</span>"
 	user.unEquip(src)
