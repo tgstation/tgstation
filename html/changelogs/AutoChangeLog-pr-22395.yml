@@ -1,0 +1,6 @@
+author: "Erwgd"
+delete-after: True
+changes: 
+  - rscadd: "A new access level is available, named \"Cloning Room\". Medical Doctors, Geneticists and CMOs start with it."
+  - tweak: "On Box Station and on Meta Station, the cloning lab doors require Cloning Room access in addition to each door's previous requirements."
+  - tweak: "Cloning pods are now unlocked with Cloning Room access only."

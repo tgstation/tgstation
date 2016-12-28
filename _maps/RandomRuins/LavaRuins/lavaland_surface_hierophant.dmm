@@ -1,64 +1,604 @@
-"a" = (/turf/closed/indestructible/riveted/hierophant,/area/ruin/unpowered/hierophant)
-"b" = (/obj/effect/decal/cleanable/blood/tracks,/turf/open/indestructible/hierophant,/area/ruin/unpowered/hierophant)
-"c" = (/obj/effect/decal/cleanable/cobweb,/turf/open/indestructible/hierophant,/area/ruin/unpowered/hierophant)
-"d" = (/turf/open/indestructible/hierophant,/area/ruin/unpowered/hierophant)
-"e" = (/obj/effect/gibspawner/human,/turf/open/indestructible/hierophant,/area/ruin/unpowered/hierophant)
-"f" = (/obj/effect/decal/cleanable/blood/gibs/limb,/obj/effect/decal/cleanable/blood,/turf/open/indestructible/hierophant,/area/ruin/unpowered/hierophant)
-"g" = (/obj/effect/light_emitter{set_cap = 3; set_luminosity = 7},/turf/open/indestructible/hierophant,/area/ruin/unpowered/hierophant)
-"h" = (/obj/effect/decal/cleanable/blood/tracks{tag = "icon-tracks (EAST)"; icon_state = "tracks"; dir = 4},/turf/open/indestructible/hierophant,/area/ruin/unpowered/hierophant)
-"i" = (/obj/effect/decal/cleanable/blood/old,/obj/effect/decal/cleanable/blood/tracks{tag = "icon-tracks (EAST)"; icon_state = "tracks"; dir = 4},/turf/open/indestructible/hierophant,/area/ruin/unpowered/hierophant)
-"j" = (/obj/effect/decal/cleanable/blood/old,/obj/effect/decal/remains/human,/obj/effect/light_emitter{set_cap = 3; set_luminosity = 5},/turf/open/indestructible/hierophant,/area/ruin/unpowered/hierophant)
-"k" = (/obj/effect/decal/cleanable/blood/tracks{tag = "icon-tracks (SOUTHWEST)"; icon_state = "tracks"; dir = 10},/obj/effect/decal/cleanable/blood,/turf/open/indestructible/hierophant,/area/ruin/unpowered/hierophant)
-"l" = (/obj/effect/light_emitter{set_cap = 3; set_luminosity = 5},/turf/open/indestructible/hierophant,/area/ruin/unpowered/hierophant)
-"m" = (/obj/effect/gibspawner/generic,/turf/open/indestructible/hierophant,/area/ruin/unpowered/hierophant)
-"n" = (/obj/effect/decal/cleanable/blood,/turf/open/indestructible/hierophant,/area/ruin/unpowered/hierophant)
-"o" = (/obj/effect/decal/cleanable/blood/tracks{tag = "icon-tracks (NORTHEAST)"; icon_state = "tracks"; dir = 5},/turf/open/indestructible/hierophant,/area/ruin/unpowered/hierophant)
-"p" = (/obj/effect/light_emitter,/turf/open/indestructible/hierophant,/area/ruin/unpowered/hierophant)
-"q" = (/obj/effect/decal/cleanable/blood/old,/turf/open/indestructible/hierophant,/area/ruin/unpowered/hierophant)
-"r" = (/obj/effect/decal/cleanable/blood/tracks{tag = "icon-tracks (NORTHWEST)"; icon_state = "tracks"; dir = 9},/turf/open/indestructible/hierophant,/area/ruin/unpowered/hierophant)
-"s" = (/obj/effect/decal/cleanable/blood/gibs/limb,/turf/open/indestructible/hierophant,/area/ruin/unpowered/hierophant)
-"t" = (/obj/effect/decal/cleanable/ash,/turf/open/indestructible/hierophant,/area/ruin/unpowered/hierophant)
-"u" = (/obj/effect/decal/cleanable/blood/tracks{tag = "icon-tracks (SOUTHWEST)"; icon_state = "tracks"; dir = 10},/turf/open/indestructible/hierophant,/area/ruin/unpowered/hierophant)
-"v" = (/obj/effect/decal/remains/human,/obj/effect/decal/cleanable/blood,/obj/effect/decal/cleanable/blood/tracks{tag = "icon-tracks (NORTHEAST)"; icon_state = "tracks"; dir = 5},/turf/open/indestructible/hierophant,/area/ruin/unpowered/hierophant)
-"w" = (/obj/effect/gibspawner/human,/obj/effect/decal/cleanable/blood/tracks{tag = "icon-tracks (SOUTHEAST)"; icon_state = "tracks"; dir = 6},/turf/open/indestructible/hierophant,/area/ruin/unpowered/hierophant)
-"x" = (/obj/effect/decal/cleanable/blood/tracks{tag = "icon-tracks (WEST)"; icon_state = "tracks"; dir = 8},/turf/open/indestructible/hierophant,/area/ruin/unpowered/hierophant)
-"y" = (/obj/effect/decal/cleanable/blood/tracks{tag = "icon-tracks (WEST)"; icon_state = "tracks"; dir = 8},/obj/effect/light_emitter{set_cap = 3; set_luminosity = 7},/turf/open/indestructible/hierophant,/area/ruin/unpowered/hierophant)
-"z" = (/obj/effect/decal/cleanable/blood/tracks{tag = "icon-tracks (NORTHWEST)"; icon_state = "tracks"; dir = 9},/obj/effect/decal/cleanable/blood,/turf/open/indestructible/hierophant,/area/ruin/unpowered/hierophant)
-"A" = (/obj/effect/decal/cleanable/blood/tracks{tag = "icon-tracks (SOUTHEAST)"; icon_state = "tracks"; dir = 6},/turf/open/indestructible/hierophant,/area/ruin/unpowered/hierophant)
-"B" = (/mob/living/simple_animal/hostile/megafauna/hierophant,/turf/open/indestructible/hierophant,/area/ruin/unpowered/hierophant)
-"C" = (/obj/effect/decal/cleanable/blood,/obj/effect/decal/cleanable/blood/tracks{tag = "icon-tracks (WEST)"; icon_state = "tracks"; dir = 8},/turf/open/indestructible/hierophant,/area/ruin/unpowered/hierophant)
-"D" = (/obj/effect/decal/remains/human,/obj/effect/decal/cleanable/blood,/turf/open/indestructible/hierophant,/area/ruin/unpowered/hierophant)
-"E" = (/obj/effect/decal/cleanable/blood/gibs/up,/turf/open/indestructible/hierophant,/area/ruin/unpowered/hierophant)
-"F" = (/obj/effect/decal/cleanable/blood/old,/obj/effect/decal/remains/human,/turf/open/indestructible/hierophant,/area/ruin/unpowered/hierophant)
-"G" = (/obj/effect/decal/cleanable/blood/gibs/core,/turf/open/indestructible/hierophant,/area/ruin/unpowered/hierophant)
-"H" = (/obj/effect/decal/cleanable/blood,/obj/effect/decal/cleanable/blood/tracks{tag = "icon-tracks (SOUTHWEST)"; icon_state = "tracks"; dir = 10},/turf/open/indestructible/hierophant,/area/ruin/unpowered/hierophant)
-"I" = (/obj/effect/gibspawner/human,/obj/effect/light_emitter{set_cap = 3; set_luminosity = 5},/turf/open/indestructible/hierophant,/area/ruin/unpowered/hierophant)
-"J" = (/obj/effect/decal/cleanable/blood/gibs/down,/turf/open/indestructible/hierophant,/area/ruin/unpowered/hierophant)
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
+"a" = (
+/turf/closed/indestructible/riveted/hierophant,
+/area/ruin/unpowered/hierophant)
+"b" = (
+/turf/open/indestructible/hierophant,
+/area/ruin/unpowered/hierophant)
+"c" = (
+/obj/effect/light_emitter{
+	set_cap = 3;
+	set_luminosity = 5
+	},
+/turf/open/indestructible/hierophant,
+/area/ruin/unpowered/hierophant)
+"d" = (
+/mob/living/simple_animal/hostile/megafauna/hierophant,
+/turf/open/indestructible/hierophant/two,
+/area/ruin/unpowered/hierophant)
+"f" = (
+/obj/effect/light_emitter{
+	set_cap = 3;
+	set_luminosity = 5
+	},
+/turf/open/indestructible/hierophant/two,
+/area/ruin/unpowered/hierophant)
+"e" = (
+/turf/open/indestructible/hierophant/two,
+/area/ruin/unpowered/hierophant)
 
 (1,1,1) = {"
-aaaaaaaaaaaabaaaaaaaaaaaa
-acdddddddddddddddddddddda
-adeddfddddddgdddhhhdiddda
-addjddddddddkhhddddddldda
-adddadddaaaaaaaaadddaddda
-addddmhdhddddddddddmddnda
-adddddgdddddddddddgddodda
-addddddddkdopddfdddbdddda
-adqdadddddadddaddddbaddda
-adddadddddrdddddddddaddda
-adstadddadudhhdvadhwabdda
-adddadrxxmddddduddddaddda
-xxyoazApddddBddddpddadyxC
-addbabddddddddtdddddaddda
-addbabddadDdEdddadddafdda
-adddabddddddndddddqdaddda
-adddabddddadddadddddadnda
-adqedbddsdddpddddddddddda
-addddAgddddeddddddgFdddGa
-addddmdddddHdehddxdedddda
-adddadddaaaaaaaaadddaddda
-addlddddddddrdddddAddIdda
-adddddJdddddgdddqddddddda
-adnddddddFddbdddddddnddda
-aaaaaaaaaaaabaaaaaaaaaaaa
+a
+a
+a
+b
+b
+b
+b
+a
+a
+a
+a
+a
+a
+a
+a
+a
+b
+b
+b
+b
+a
+a
+a
+"}
+(2,1,1) = {"
+a
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+c
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+a
+"}
+(3,1,1) = {"
+a
+b
+b
+b
+c
+c
+b
+b
+b
+a
+b
+b
+b
+a
+b
+b
+b
+c
+c
+b
+b
+b
+a
+"}
+(4,1,1) = {"
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+"}
+(5,1,1) = {"
+b
+b
+c
+b
+a
+a
+b
+c
+b
+b
+b
+c
+b
+b
+b
+c
+b
+a
+a
+b
+c
+b
+b
+"}
+(6,1,1) = {"
+b
+b
+c
+b
+a
+a
+b
+c
+b
+b
+b
+c
+b
+b
+b
+c
+b
+a
+a
+b
+c
+b
+b
+"}
+(7,1,1) = {"
+b
+b
+b
+b
+b
+b
+e
+e
+e
+e
+e
+e
+e
+e
+e
+e
+e
+b
+b
+b
+b
+b
+b
+"}
+(8,1,1) = {"
+a
+b
+b
+b
+c
+c
+e
+e
+e
+a
+e
+e
+e
+a
+e
+e
+e
+c
+c
+b
+b
+b
+a
+"}
+(9,1,1) = {"
+a
+b
+b
+b
+b
+b
+e
+e
+e
+e
+e
+f
+e
+e
+e
+e
+e
+b
+b
+b
+b
+b
+a
+"}
+(10,1,1) = {"
+a
+b
+a
+b
+b
+b
+e
+a
+e
+e
+e
+e
+e
+e
+e
+a
+e
+b
+b
+b
+a
+b
+a
+"}
+(11,1,1) = {"
+a
+b
+b
+b
+b
+b
+e
+e
+e
+e
+e
+e
+e
+e
+e
+e
+e
+b
+b
+b
+b
+b
+a
+"}
+(12,1,1) = {"
+a
+c
+b
+b
+c
+c
+e
+e
+f
+e
+e
+d
+e
+e
+f
+e
+e
+c
+c
+b
+b
+c
+a
+"}
+(13,1,1) = {"
+a
+b
+b
+b
+b
+b
+e
+e
+e
+e
+e
+e
+e
+e
+e
+e
+e
+b
+b
+b
+b
+b
+a
+"}
+(14,1,1) = {"
+a
+b
+a
+b
+b
+b
+e
+a
+e
+e
+e
+e
+e
+e
+e
+a
+e
+b
+b
+b
+a
+b
+a
+"}
+(15,1,1) = {"
+a
+b
+b
+b
+b
+b
+e
+e
+e
+e
+e
+f
+e
+e
+e
+e
+e
+b
+b
+b
+b
+b
+a
+"}
+(16,1,1) = {"
+a
+b
+b
+b
+c
+c
+e
+e
+e
+a
+e
+e
+e
+a
+e
+e
+e
+c
+c
+b
+b
+b
+a
+"}
+(17,1,1) = {"
+b
+b
+b
+b
+b
+b
+e
+e
+e
+e
+e
+e
+e
+e
+e
+e
+e
+b
+b
+b
+b
+b
+b
+"}
+(18,1,1) = {"
+b
+b
+c
+b
+a
+a
+b
+c
+b
+b
+b
+c
+b
+b
+b
+c
+b
+a
+a
+b
+c
+b
+b
+"}
+(19,1,1) = {"
+b
+b
+c
+b
+a
+a
+b
+c
+b
+b
+b
+c
+b
+b
+b
+c
+b
+a
+a
+b
+c
+b
+b
+"}
+(20,1,1) = {"
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+"}
+(21,1,1) = {"
+a
+b
+b
+b
+c
+c
+b
+b
+b
+a
+b
+b
+b
+a
+b
+b
+b
+c
+c
+b
+b
+b
+a
+"}
+(22,1,1) = {"
+a
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+c
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+a
+"}
+(23,1,1) = {"
+a
+a
+a
+b
+b
+b
+b
+a
+a
+a
+a
+a
+a
+a
+a
+a
+b
+b
+b
+b
+a
+a
+a
 "}

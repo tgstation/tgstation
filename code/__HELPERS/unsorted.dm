@@ -536,12 +536,12 @@ Turf and target are seperate in case you want to teleport some distance from a t
 
 	return 1
 
-/proc/is_blocked_turf(turf/T)
+/proc/is_blocked_turf(turf/T, exclude_mobs)
 	if(T.density)
 		return 1
 	for(var/i in T)
 		var/atom/A = i
-		if(A.density)
+		if(A.density && (!exclude_mobs || !ismob(A)))
 			return 1
 	return 0
 

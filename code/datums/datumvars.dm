@@ -51,24 +51,27 @@
 	var/title = ""
 	var/refid = "\ref[D]"
 	var/icon/sprite
-
+	var/hash
+	
 	var/type = /list
 	if (!islist)
 		type = D.type
 
 
-
+	
 	if(istype(D,/atom))
 		var/atom/AT = D
 		if(AT.icon && AT.icon_state)
 			sprite = new /icon(AT.icon, AT.icon_state)
-			usr << browse_rsc(sprite, "view_vars_sprite.png")
+			hash = md5(AT.icon)
+			hash = md5(hash + AT.icon_state)
+			usr << browse_rsc(sprite, "vv[hash].png")
 
 	title = "[D] (\ref[D]) = [type]"
 
 	var/sprite_text
 	if(sprite)
-		sprite_text = "<img src='view_vars_sprite.png'></td><td>"
+		sprite_text = "<img src='vv[hash].png'></td><td>"
 	var/list/atomsnowflake = list()
 
 	if(istype(D,/atom))
