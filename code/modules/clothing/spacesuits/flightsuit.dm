@@ -409,7 +409,7 @@
 		powersetting = 1
 	momentum_gain = powersetting * 10
 	usermessage("Engine output set to [momentum_gain].")
-	momentum_drift_coeff = ((100/momentum_max)*momentum_gain*((drift_tolerance*(((drift_tolerance*2)+1)/4))/drift_tolerance)*10)
+	momentum_drift_coeff = (((momentum_gain)*(drift_tolerance*1.1))/momentum_max)
 
 /obj/item/device/flightpack/proc/crash_damage(density, anchored, speed, victim_name)
 	var/crashmessagesrc = "<span class='userdanger'>[wearer] violently crashes into [victim_name], "
@@ -484,13 +484,16 @@
 			crash_grille(S)
 		crashing = FALSE
 		return FALSE
-	else if(istype(unmovablevictim, /obj/machinery/door))
+	else if((istype(unmovablevictim, /obj/machinery/door)) && (!istype(unmovablevictim, /obj/machinery/door/poddoor)))
 		var/obj/machinery/door/D = unmovablevictim
 		if(!airlock_hit(D))
 			crashing = FALSE
 			return FALSE
-		damage = TRUE
+		if(momentum_speed < 3)
+			crashing = FALSE
+			return FALSE
 		anchored = TRUE
+		damage = TRUE
 		density = FALSE
 	else if(istype(unmovablevictim, /obj/structure/mineral_door))
 		var/obj/structure/mineral_door/D = unmovablevictim
@@ -502,7 +505,7 @@
 			crashing = FALSE
 			return FALSE
 		damage = TRUE
-		density = TRUE
+		density = FALSE
 		anchored = TRUE
 	else if(ismovableatom(unmovablevictim))
 		var/atom/movable/victim = unmovablevictim
@@ -648,7 +651,7 @@
 	if(forced)
 		losecontrol(stun = TRUE)
 		return TRUE
-	if(abs(momentum_x) <= 20 && abs(momentum_y) <= 20)
+	if(momentum_speed < 2)
 		momentum_x = 0
 		momentum_y = 0
 		usermessage("DISENGAGING FLIGHT ENGINES.")
@@ -687,14 +690,6 @@
 	..()
 
 /obj/item/device/flightpack/proc/calculate_momentum_speed()
-	if(momentum_x == 0 && momentum_y == 0)	//Calculate total
-		momentum_speed = 0
-	else if((abs(momentum_x) >= (momentum_crash_coeff*momentum_max))||(abs(momentum_y) >= (momentum_crash_coeff*momentum_max)))
-		momentum_speed = 3
-	else if((abs(momentum_x) >= (momentum_impact_coeff*momentum_max))||(abs(momentum_y) >= (momentum_impact_coeff*momentum_max)))
-		momentum_speed = 2
-	else if((abs(momentum_x) >= (momentum_drift_coeff*momentum_max))||(abs(momentum_y) >= (momentum_drift_coeff*momentum_max)))
-		momentum_speed = 1
 	if(abs(momentum_x) >= (momentum_crash_coeff*momentum_max))	//Calculate X
 		momentum_speed_x = 3
 	else if(abs(momentum_x) >= (momentum_impact_coeff*momentum_max))
@@ -711,6 +706,7 @@
 		momentum_speed_y = 1
 	else
 		momentum_speed_y = 0
+	momentum_speed = max(momentum_speed_x, momentum_speed_y)
 
 /obj/item/device/flightpack/item_action_slot_check(slot)
 	if(slot == slot_back)
