@@ -400,7 +400,7 @@
 				if("panic_server_name")
 					panic_server_name = value
 				if("panic_server_address")
-					global.panic_address = value
+					panic_address = value
 					if(value != "byond:\\address:port")
 						allow_panic_bunker_bounce = 1
 				if("medal_hub_address")
