@@ -53,7 +53,7 @@ var/global/list/emote_list = list()
 			continue
 		var/T = get_turf(src)
 		if(M.stat == DEAD && M.client && (M.client.prefs.chat_toggles & CHAT_GHOSTSIGHT) && !(M in viewers(T, null)))
-			M.show_message(message)
+			M.show_message(msg)
 
 	if(emote_type == EMOTE_AUDIBLE)
 		user.audible_message(msg)
