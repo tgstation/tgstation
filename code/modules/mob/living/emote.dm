@@ -75,7 +75,6 @@
 	key_third_person = "dances"
 	message = "dances around happily."
 	restraint_check = TRUE
-	restraint_check = TRUE
 
 /datum/emote/living/deathgasp
 	key = "deathgasp"
