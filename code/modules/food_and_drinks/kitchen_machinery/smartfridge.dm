@@ -275,7 +275,8 @@
 	..()
 	if(href_list["dry"])
 		toggle_drying()
-	src.updateUsrDialog()
+	updateUsrDialog()
+	update_icon()
 
 /obj/machinery/smartfridge/drying_rack/power_change()
 	if(powered() && anchored)
@@ -291,7 +292,7 @@
 
 /obj/machinery/smartfridge/drying_rack/update_icon()
 	..()
-	overlays = 0
+	cut_overlays()
 	if(drying)
 		add_overlay("drying_rack_drying")
 	if(contents.len)
