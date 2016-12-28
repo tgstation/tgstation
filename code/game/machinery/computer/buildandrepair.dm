@@ -359,6 +359,10 @@
 /obj/item/weapon/circuitboard/computer/cargo/request
 	name = "circuit board (Supply Request Console)"
 	build_path = /obj/machinery/computer/cargo/request
+/obj/item/weapon/circuitboard/computer/stockexchange
+	name = "circuit board (Stock Exchange Console)"
+	build_path = /obj/machinery/computer/stockexchange
+	origin_tech = "programming=3"
 
 /obj/item/weapon/circuitboard/computer/operating
 	name = "circuit board (Operating Computer)"
