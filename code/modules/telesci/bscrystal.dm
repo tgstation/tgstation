@@ -14,6 +14,7 @@
 /obj/item/weapon/ore/bluespace_crystal/refined
 	name = "refined bluespace crystal"
 	points = 0
+	refined_type = null
 
 /obj/item/weapon/ore/bluespace_crystal/New()
 	..()
