@@ -293,7 +293,7 @@
 				back_to_idle()
 
 		if(MONKEY_FLEE)
-			var/list/around = view(src, vision_range)
+			var/list/around = view(src, vision_range/2)
 			target = null
 			for(var/mob/living/carbon/C in around)
 				if(enemies[C] && C.stat == CONSCIOUS)
