@@ -11,6 +11,11 @@
 	var/blink_range = 8 // The teleport range when crushed/thrown at someone.
 	refined_type = /obj/item/stack/sheet/bluespace_crystal
 
+/obj/item/weapon/ore/bluespace_crystal/refined
+	name = "refined bluespace crystal"
+	points = 0
+	refined_type = null
+
 /obj/item/weapon/ore/bluespace_crystal/New()
 	..()
 	pixel_x = rand(-5, 5)
@@ -56,6 +61,7 @@
 	desc = "A stable polycrystal, made of fused-together bluespace crystals. You could probably break one off."
 	origin_tech = "bluespace=6;materials=3"
 	attack_verb = list("bluespace polybashed", "bluespace polybattered", "bluespace polybludgeoned", "bluespace polythrashed", "bluespace polysmashed")
+	var/crystal_type = /obj/item/weapon/ore/bluespace_crystal/refined
 
 /obj/item/stack/sheet/bluespace_crystal/attack_self(mob/user) // to prevent the construction menu from ever happening
 	user << "<span class='warning'>You cannot crush the polycrystal in-hand, try breaking one off.</span>"
@@ -65,7 +71,7 @@
 	if (user.get_inactive_held_item() == src)
 		if(zero_amount()) // in this case, a sanity check
 			return
-		var/obj/item/weapon/ore/bluespace_crystal/BC = new(src)
+		var/BC = new crystal_type(src)
 		user.put_in_hands(BC)
 		amount--
 		if (amount == 0)
