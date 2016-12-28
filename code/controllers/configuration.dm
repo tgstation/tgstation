@@ -76,6 +76,7 @@
 
 	var/allow_panic_bunker_bounce = 0 //Send new players somewhere else
 	var/panic_server_name = "somewhere else"
+	var/panic_address = "byond://" //Reconnect a player this linked server if this server isn't accepting new players
 
 	//IP Intel vars
 	var/ipintel_email
