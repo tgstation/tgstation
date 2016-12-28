@@ -21,7 +21,7 @@
 
 /mob/living/carbon/monkey/proc/IsStandingStill()
 	return resisting || pickpocketing || disposing_body
-	
+
 // taken from /mob/living/carbon/human/interactive/
 /mob/living/carbon/monkey/proc/walk2derpless(target)
 	if(!target || IsStandingStill())
@@ -46,8 +46,6 @@
 		return 1
 	if(health <= 0 && checkDead)
 		return 1
-//	if(restrained())
-//		return 1
 	if(paralysis)
 		return 1
 	if(stunned)
@@ -64,7 +62,7 @@
 	if(I.anchored)
 		blacklistItems[I] ++
 		return FALSE
-		
+
 	// WEAPONS
 	if(istype(I, /obj/item/weapon))
 		var/obj/item/weapon/W = I
@@ -177,10 +175,6 @@
 			pulledby.attack_paw(src)
 			retaliate(pulledby)
 			return TRUE
-
-	// nrrr, RARRRGH
-//	if(buckled)
-//		resist_buckle()
 
 	switch(mode)
 
@@ -341,7 +335,7 @@
 					spawn(5)
 						bodyDisposal.stuff_mob_in(target, src)
 						disposing_body = FALSE
-						
+
 				else
 					var/turf/olddist = get_dist(src, bodyDisposal)
 					if((get_dist(src, bodyDisposal)) >= (olddist))
@@ -365,7 +359,7 @@
 /mob/living/carbon/monkey/proc/attacked(mob/living/carbon/H)
 	if(!enemies[H])
 		return
-		
+
 	if(prob(25))
 		enemies[H] --
 
