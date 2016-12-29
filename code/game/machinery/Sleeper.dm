@@ -16,6 +16,7 @@
 	var/efficiency = 1
 	var/min_health = -25
 	var/list/available_chems
+	var/mob/living/simple_animal/ambush_inside = null //whether there is a boogeyman hiding in your sleeper and what type of boogeyman is it.
 	var/controls_inside = FALSE
 	var/list/possible_chems = list(
 		list("epinephrine", "morphine", "salbutamol", "bicaridine", "kelotane"),
@@ -60,6 +61,14 @@
 	if(state_open)
 		icon_state += "-open"
 
+/obj/machinery/sleeper/proc/trigger_ambush()
+	if(ambush_inside)
+		ambush_inside.forceMove(get_turf(src))
+		if(ambush_inside.ambush_sound)
+			playsound(loc,ambush_inside.ambush_sound, 50, 1) //ambush is activated when you try to put yourself or someone else in the sleeper
+		ambush_inside = null
+
+
 /obj/machinery/sleeper/container_resist(mob/living/user)
 	visible_message("<span class='notice'>[occupant] emerges from [src]!</span>",
 		"<span class='notice'>You climb out of [src]!</span>")
@@ -71,12 +80,14 @@
 /obj/machinery/sleeper/open_machine()
 	if(!state_open && !panel_open)
 		..()
+	trigger_ambush()
 
 /obj/machinery/sleeper/close_machine(mob/user)
 	if((isnull(user) || istype(user)) && state_open && !panel_open)
 		..(user)
 		if(occupant && occupant.stat != DEAD)
 			occupant << "<span class='notice'><b>You feel cool air surround you. You go numb as your senses turn inward.</b></span>"
+	trigger_ambush()
 
 /obj/machinery/sleeper/emp_act(severity)
 	if(is_operational() && occupant)

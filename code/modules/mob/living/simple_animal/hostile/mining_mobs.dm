@@ -736,8 +736,18 @@
 	loot = list()
 	stat_attack = 1
 	robust_searching = 1
+	buckle_lying = 0
 	var/is_baby = 0 //the only solution i can think of 100 pup stacks
 	var/has_babies = 0 //whether this goliath is a mother or not
+	var/tamed = 0
+	var/saddled = 0
+/mob/living/simple_animal/hostile/asteroid/goliath/beast/Life()
+	..()
+	if(saddled)
+		add_overlay("goliath_saddled")
+	if(tamed)
+		faction = list("neutral")
+
 
 /mob/living/simple_animal/hostile/asteroid/goliath/beast/New()
 	..()
@@ -746,6 +756,14 @@
 	if(has_babies) //if the goliath has babies, set the baby's mother to this goliath.
 		var/mob/living/simple_animal/hostile/asteroid/goliath/beast/baby/B = new(get_turf(src))
 		B.mama = src
+		if(tamed)
+			B.tamed = 1
+
+/mob/living/simple_animal/hostile/asteroid/goliath/beast/attackby(obj/item/O, mob/user, params)
+	if(stat == CONSCIOUS && istype(O, /obj/item/weapon/saddle) && !saddled && !is_baby && tamed)
+		saddled = 1
+		regenerate_icons()
+		qdel(O)
 
 //Goliath pup
 
@@ -764,10 +782,24 @@
 	attack_sound = 'sound/weapons/tap.ogg'
 	ventcrawler = VENTCRAWLER_ALWAYS
 	pass_flags = PASSTABLE | PASSMOB
+	anchored = 0
+	stop_automated_movement_when_pulled = 1
 	is_baby = 1
 	has_babies = 0
+	wanted_objects = list(/obj/item/weapon/reagent_containers/food/snacks, /obj/effect/decal/cleanable/blood/gibs/)
+	search_objects = TRUE
+	saddled = 0
 	var/amount_grown = 0 //to stop 100 goliath pup stacks of goliath
 	var/mob/living/mama = null // which goliath is this particular baby's mom?.
+	var/taming_progress = 0 //how tame this goliath is
+	var/feed_verb = null
+
+/mob/living/simple_animal/hostile/asteroid/goliath/beast/baby/AttackingTarget()
+	if(is_type_in_typecache(target,wanted_objects))
+		visible_message("<span class='notice'>[src] munches up [target].</span>")
+		qdel(target)
+		taming_progress += 10 //you have to throw food for them first instead of trying to feed them.
+	..()
 
 /mob/living/simple_animal/hostile/asteroid/goliath/beast/baby/proc/mourn()
 	icon_state = "goliath_baby_cry"
@@ -777,24 +809,60 @@
 /mob/living/simple_animal/hostile/asteroid/goliath/beast/baby/proc/stop_mourn()
 	icon_state = "goliath_baby"
 	visible_message("[src] perks up from the ground, and by the time it does so, it seems older")
-	amount_grown += 30000
+	amount_grown += 100
+	taming_progress = 10
 	walk_to(src,0)
+
+/mob/living/simple_animal/hostile/asteroid/goliath/beast/baby/proc/grow()
+	var/mob/living/simple_animal/hostile/asteroid/goliath/beast/G = new(src.loc)
+	if(tamed)
+		G.tamed = 1
+		qdel(src)
 
 /mob/living/simple_animal/hostile/asteroid/goliath/beast/baby/Life()
 	..()
-	if(mama && !mama.stat &&!Adjacent(mama))
+	if(!stat && mama && !mama.stat &&!Adjacent(mama))
 		stop_automated_movement = TRUE
 		walk_to(src, mama)
-	if(!stat && !ckey)
+	if(!stat && !ckey && src)
 		amount_grown += (1)
-		if(amount_grown >= 500000)
-			new /mob/living/simple_animal/hostile/asteroid/goliath/beast(src.loc)
-			qdel(src)
-	if(mama && mama.stat == DEAD && Adjacent(mama))
+		if(amount_grown >= 20)
+			grow()
+
+	if(!stat && mama && mama.stat == DEAD && Adjacent(mama))
 		mourn()
 		addtimer(src, "stop_mourn", 150)
 	if(!mama)
 		stop_automated_movement = FALSE
+
+
+/mob/living/simple_animal/hostile/asteroid/goliath/beast/baby/proc/revert_to_wild()
+	if(!tamed)
+		faction = list("mining")
+		taming_progress = 10
+
+/mob/living/simple_animal/hostile/asteroid/goliath/beast/baby/attackby(obj/item/O, mob/user, params)
+	if(stat == CONSCIOUS && istype(O, /obj/item/weapon/reagent_containers/food/snacks))
+		if(!taming_progress)
+			visible_message("[src] growls angrily.")
+
+		else
+			if(taming_progress < 25)
+				feed_verb = "reluctantly"
+			if(taming_progress > 50)
+				feed_verb = "quickly"
+			if(taming_progress > 75)
+				feed_verb = "eagerly"
+			if(taming_progress > 100)
+				feed_verb = "happily"
+			visible_message("[src] eats the [O] [feed_verb]")
+			qdel(O)
+			taming_progress += 15
+			faction = list("neutral")
+			addtimer(src, "revert_to_wild", 700)
+	if(stat == CONSCIOUS && istype(O, /obj/item/weapon/saddle) && tamed)
+		saddled = 1
+
 
 //Legion
 
@@ -972,8 +1040,12 @@
 	if(stat == CONSCIOUS && istype(O, /obj/item/weapon/reagent_containers/glass))
 		udder.milkAnimal(O, user)
 		regenerate_icons()
+	if(seedify(O,-1, src, user))
+		user << "<span class='notice'>You feed [src] some plants, and it vomits up some seeds.</span>"
 	else
 		..()
+
+
 
 /mob/living/simple_animal/hostile/asteroid/gutlunch/AttackingTarget()
 	if(is_type_in_typecache(target,wanted_objects)) //we eats
@@ -1025,6 +1097,61 @@
 	if(.)
 		udder.reagents.clear_reagents()
 		regenerate_icons()
+
+/mob/living/simple_animal/hostile/poison/gutshank
+	name = "gutshank"
+	desc = "A wild, very dangerous cousin of the domesticated gutlunch. Instead of a milk udder, it has evolved a poison gland."
+	health = 35
+	harm_intent_damage = 5
+	melee_damage_lower = 9
+	melee_damage_upper = 9
+	obj_damage = 0
+	attacktext = "bites"
+	vision_range = 10
+	poison_per_bite = 5
+	poison_type = null
+	icon = 'icons/mob/lavaland/lavaland_monsters.dmi'
+	icon_state = "gutlunch" //placeholder
+	icon_living = "gutlunch"
+	icon_dead = "gutlunch"
+	faction = list("mining")
+	speak_emote = list("rattles")
+	emote_hear = list("rattles")
+	speak_chance = 5
+	turns_per_move = 5
+	see_in_dark = 10
+	environment_smash = 0
+
+	ambush_sound = 'sound/creatures/rattle.ogg'
+	del_on_death = TRUE
+	search_objects = TRUE
+	loot = list(/obj/effect/decal/cleanable/blood/gibs)
+
+
+/mob/living/simple_animal/hostile/poison/gutshank/New()
+	..()
+	add_atom_colour(pick("#E39FBB", "#D97D64", "#CF8C4A"), FIXED_COLOUR_PRIORITY)
+	poison_type = pick("rotatium", "amatoxin", "lexorin")
+
+/mob/living/simple_animal/hostile/poison/gutshank/proc/prepare_ambush(var/obj/machinery/sleeper/S,var/mob/living/carbon/human/H)
+	for(H in range(vision_range, src))
+		if(!H.stat)
+			return
+
+	if(isturf(loc))
+		for(S in view(src,vision_range))
+			walk_to(src, S)
+			if(Adjacent(S)) //if there's no human around, get to a sleeper in range and hide in it
+				S.ambush_inside = src
+				visible_message("<span class='boldannounce'>[src] crawls under the [S]...</span>")
+				S.state_open = FALSE
+				S.update_icon()
+				forceMove(S)
+
+/mob/living/simple_animal/hostile/poison/gutshank/Life()
+	..()
+	prepare_ambush()
+
 
 //Nests
 /mob/living/simple_animal/hostile/spawner/lavaland

@@ -17,3 +17,11 @@
 	icon_state = "skub"
 	w_class = WEIGHT_CLASS_BULKY
 	attack_verb = list("skubbed")
+
+/obj/item/weapon/saddle
+	desc = "A saddle composed of sinew wrapped tightly around bone."
+	name = "goliath saddle"
+	icon = 'icons/obj/mining.dmi'
+	icon_state = "goliath_saddle"
+	w_class = WEIGHT_CLASS_NORMAL
+	attack_verb = list("saddled up")
