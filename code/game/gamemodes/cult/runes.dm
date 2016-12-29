@@ -1,5 +1,6 @@
-/var/list/sacrificed = list() //a mixed list of minds and mobs
+var/list/sacrificed = list() //a mixed list of minds and mobs
 var/list/non_revealed_runes = (subtypesof(/obj/effect/rune) - /obj/effect/rune/malformed)
+var/list/runes = list()
 
 /*
 
@@ -43,6 +44,11 @@ To draw a rune, use an arcane tome.
 	..()
 	if(set_keyword)
 		keyword = set_keyword
+	runes += src
+
+/obj/effect/rune/Destroy()
+	runes -= src
+	return ..()
 
 /obj/effect/rune/examine(mob/user)
 	..()
