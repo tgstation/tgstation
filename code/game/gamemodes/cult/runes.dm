@@ -870,8 +870,7 @@ var/list/wall_runes = list()
 	visible_message("<span class='warning'>[src] turns a bright, glowing orange!</span>")
 	SetLuminosity(6)
 	color = "#FC9B54"
-	for(var/M in invokers)
-		var/mob/living/L = M
+	for(var/mob/living/L in invokers)
 		L.apply_damage(10, BRUTE, pick("l_arm", "r_arm"))
 		L << "<span class='cultitalic'>[src] saps your strength!</span>"
 	for(var/mob/living/L in viewers(T))
