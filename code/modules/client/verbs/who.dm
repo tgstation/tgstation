@@ -52,6 +52,14 @@
 		msg += "[line]\n"
 
 	msg += "<b>Total Players: [length(Lines)]</b>"
+	if (check_rights(R_ADMIN,0))
+		var/hearcount = 0
+		var/totalcount = 0
+		for(var/client/C in clients)
+			if(C.prefs && (C.prefs.toggles & SOUND_MIDI))
+				hearcount++
+			totalcount++
+		msg += "<b>[hearcount]/[totalcount] of players have admin MIDIs enabled.</b>"
 	src << msg
 
 /client/verb/adminwho()
