@@ -138,13 +138,9 @@
 			if(flame_dist && prob(40) && !isspaceturf(T) && !T.density)
 				PoolOrNew(/obj/effect/hotspot, T) //Mostly for ambience!
 			if(dist > 0)
-				var/t_type = T.type
 				var/turf/NT = T.ex_act(dist)
-				if(!istype(NT))
-					WARNING("Turf ex_act for type [t_type] did not return the new turf")
-				else
-					NT.explosion_level = dist	//explode things that Enter this turf when we sleep
-					exploded_this_tick += NT
+				NT.explosion_level = dist	//explode things that Enter this turf when we sleep
+				exploded_this_tick += NT
 
 		//--- THROW ITEMS AROUND ---
 
