@@ -140,6 +140,8 @@
 			if(dist > 0)
 				var/t_type = T.type
 				var/turf/NT = T.ex_act(dist)
+				if(!istype(NT))
+					stack_trace("Failed turf ex_act type [t_type]")
 				NT.explosion_level = dist	//explode things that Enter this turf when we sleep
 				exploded_this_tick += NT
 
