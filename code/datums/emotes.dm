@@ -11,6 +11,7 @@ var/global/list/emote_list = list()
 	var/message_alien = "" //Message displayed if the user is a grown alien
 	var/message_larva = "" //Message displayed if the user is an alien larva
 	var/message_robot = "" //Message displayed if the user is a robot
+	var/message_AI = "" //Message displayed if the user is an AI
 	var/message_monkey = "" //Message displayed if the user is a monkey
 	var/message_param = "" //Message to display if a param was given
 	var/emote_type = EMOTE_VISIBLE //Whether the emote is visible or audible
@@ -38,6 +39,8 @@ var/global/list/emote_list = list()
 		msg = replacetext(msg, "their", user.p_their())
 	if(findtext(msg, "them"))
 		msg = replacetext(msg, "them", user.p_them())
+	if(findtext(msg, "%s"))
+		msg = replacetext(msg, "%s", user.p_s())
 
 	var/mob/living/L = user
 	for(var/obj/item/weapon/implant/I in L.implants)
@@ -71,24 +74,27 @@ var/global/list/emote_list = list()
 		. = message_alien
 	else if(islarva(user) && message_larva)
 		. = message_larva
-	else if(issilicon(user) && message_robot)
+	else if(iscyborg(user) && message_robot)
 		. = message_robot
+	else if(isAI(user) && message_AI)
+		. = message_AI
 	else if(ismonkey(user) && message_monkey)
 		. = message_monkey
 
 /datum/emote/proc/select_param(mob/user, params)
 	return replacetext(message_param, "%t", params)
 
-/datum/emote/proc/can_run_emote(mob/user)
+/datum/emote/proc/can_run_emote(mob/user, help_check)
 	. = TRUE
-	if(user.stat > stat_allowed  || (user.status_flags & FAKEDEATH))
-		return FALSE
 	if(!is_type_in_typecache(user, mob_type_allowed_typecache))
-		return FALSE
-	if(restraint_check && user.restrained())
 		return FALSE
 	if(is_type_in_typecache(user, mob_type_blacklist_typecache))
 		return FALSE
+	if(!help_check)
+		if(user.stat > stat_allowed  || (user.status_flags & FAKEDEATH))
+			return FALSE
+		if(restraint_check && user.restrained())
+			return FALSE
 
 
 /datum/emote/sound

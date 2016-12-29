@@ -45,6 +45,7 @@
 	key = "cross"
 	key_third_person = "crosses"
 	message = "crosses their arms."
+	restraint_check = TRUE
 
 /datum/emote/living/chuckle
 	key = "chuckle"
@@ -79,7 +80,8 @@
 	key = "deathgasp"
 	key_third_person = "deathgasps"
 	message = "seizes up and falls limp, their eyes dead and lifeless..."
-	message_robot = "memes up and die."
+	message_robot = "shudders violently for a moment before falling still, its eyes slowly darkening."
+	message_AI = "lets out a flurry of sparks, its screen flickering as its systems slowly halt."
 	message_alien = "lets out a waning guttural screech, green blood bubbling from its maw..."
 	message_larva = "lets out a sickly hiss of air and falls limply to the floor..."
 	message_monkey = "lets out a faint chimper as it collapses and stops moving..."
@@ -102,14 +104,13 @@
 
 /datum/emote/living/faint/run_emote(mob/user, params)
 	. = ..()
-	if(!user.sleeping)
+	if(.)
 		user.SetSleeping(10)
 
 /datum/emote/living/flap
 	key = "flap"
 	key_third_person = "flaps"
 	message = "flaps their wings."
-	restraint_check = TRUE
 	var/wing_time = 20
 
 /datum/emote/living/flap/run_emote(mob/user, params)
@@ -134,10 +135,11 @@
 /datum/emote/living/flip
 	key = "flip"
 	key_third_person = "flips"
+	restraint_check = TRUE
 
 /datum/emote/living/flip/run_emote(mob/user, params)
 	. = ..()
-	if(!user.sleeping)
+	if(!.)
 		user.SpinAnimation(7,1)
 
 /datum/emote/living/frown
@@ -192,6 +194,7 @@
 	key = "jump"
 	key_third_person = "jumps"
 	message = "jumps!"
+	restraint_check = TRUE
 
 /datum/emote/living/kiss
 	key = "kiss"
@@ -222,6 +225,7 @@
 	key = "point"
 	key_third_person = "points"
 	message = "points."
+	message_param = "points at %t."
 	restraint_check = TRUE
 
 /datum/emote/living/pout
@@ -263,7 +267,7 @@
 /datum/emote/living/smile
 	key = "smile"
 	key_third_person = "smiles"
-	message = "smiles;"
+	message = "smiles."
 
 /datum/emote/living/sneeze
 	key = "sneeze"
@@ -274,7 +278,7 @@
 /datum/emote/living/smug
 	key = "smug"
 	key_third_person = "smugs"
-	message = "grims smugly."
+	message = "grins smugly."
 
 /datum/emote/living/sniff
 	key = "sniff"
@@ -308,7 +312,7 @@
 /datum/emote/living/surrender
 	key = "surrender"
 	key_third_person = "surrenders"
-	message = "puts their hands o their head and falls to the ground, they surrender%s!"
+	message = "puts their hands on their head and falls to the ground, they surrender%s!"
 	emote_type = EMOTE_AUDIBLE
 
 /datum/emote/living/surrender/run_emote(mob/user, params)
@@ -362,16 +366,16 @@
 	key_third_person = "custom"
 	message = null
 
-/datum/emote/living/custom/proc/check_invalid(input)
+/datum/emote/living/custom/proc/check_invalid(mob/user, input)
 	. = TRUE
 	if(copytext(input,1,5) == "says")
-		src << "<span class='danger'>Invalid emote.</span>"
+		user << "<span class='danger'>Invalid emote.</span>"
 	else if(copytext(input,1,9) == "exclaims")
-		src << "<span class='danger'>Invalid emote.</span>"
+		user << "<span class='danger'>Invalid emote.</span>"
 	else if(copytext(input,1,6) == "yells")
-		src << "<span class='danger'>Invalid emote.</span>"
+		user << "<span class='danger'>Invalid emote.</span>"
 	else if(copytext(input,1,5) == "asks")
-		src << "<span class='danger'>Invalid emote.</span>"
+		user << "<span class='danger'>Invalid emote.</span>"
 	else
 		. = FALSE
 
@@ -384,7 +388,7 @@
 		return FALSE
 	else if(!params)
 		var/custom_emote = copytext(sanitize(input("Choose an emote to display.") as text|null), 1, MAX_MESSAGE_LEN)
-		if(custom_emote && !check_invalid(custom_emote))
+		if(custom_emote && !check_invalid(user, custom_emote))
 			var/type = input("Is this a visible or hearable emote?") as null|anything in list("Visible", "Hearable")
 			switch(type)
 				if("Visible")
@@ -414,7 +418,7 @@
 		if(e in keys)
 			continue
 		var/datum/emote/E = emote_list[e]
-		if(E.can_run_emote(user))
+		if(E.can_run_emote(user, TRUE))
 			keys += E.key
 
 	keys = sortList(keys)

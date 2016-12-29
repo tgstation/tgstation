@@ -28,6 +28,7 @@
 	key = "handshake"
 	message = "shakes their own hands."
 	message_param = "shakes hands with %t."
+	restraint_check = TRUE
 	emote_type = EMOTE_AUDIBLE
 
 /datum/emote/living/carbon/human/hug
@@ -35,6 +36,7 @@
 	key_third_person = "hugs"
 	message = "hugs themself."
 	message_param = "hugs %t."
+	restraint_check = TRUE
 	emote_type = EMOTE_AUDIBLE
 
 /datum/emote/living/carbon/human/mumble
@@ -58,6 +60,7 @@
 	key_third_person = "salutes"
 	message = "salutes."
 	message_param = "salutes to %t."
+	restraint_check = TRUE
 
 /datum/emote/living/carbon/human/shrug
 	key = "shrug"
@@ -94,7 +97,6 @@
 	key = "wing"
 	key_third_person = "wings"
 	message = "their wings."
-	restraint_check = TRUE
 
 /datum/emote/living/carbon/human/wing/run_emote(mob/user, params)
 	. = ..()
