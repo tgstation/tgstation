@@ -107,8 +107,8 @@ structure_check() searches for nearby cultist structures required for the invoca
 	var/list/invokers = list() //people eligible to invoke the rune
 	var/list/chanters = list() //people who will actually chant the rune when passed to invoke()
 	if(user)
-		chanters |= user
-		invokers |= user
+		chanters += user
+		invokers += user
 	if(req_cultists > 1 || allow_excess_invokers)
 		for(var/mob/living/L in range(1, src))
 			if(iscultist(L))
@@ -120,16 +120,17 @@ structure_check() searches for nearby cultist structures required for the invoca
 						continue
 				if(L.stat)
 					continue
-				invokers |= L
+				invokers += L
 		if(invokers.len >= req_cultists)
+			invokers -= user
 			if(allow_excess_invokers)
-				chanters |= invokers
+				chanters += invokers
 			else
-				invokers -= user
 				shuffle(invokers)
-				for(var/i in 0 to req_cultists)
+				for(var/i in 1 to req_cultists)
 					var/L = pick_n_take(invokers)
-					chanters |= L
+					if(L)
+						chanters += L
 	return chanters
 
 /obj/effect/rune/proc/invoke(var/list/invokers)
@@ -870,7 +871,8 @@ var/list/wall_runes = list()
 	visible_message("<span class='warning'>[src] turns a bright, glowing orange!</span>")
 	SetLuminosity(6)
 	color = "#FC9B54"
-	for(var/mob/living/L in invokers)
+	for(var/M in invokers)
+		var/mob/living/L = M
 		L.apply_damage(10, BRUTE, pick("l_arm", "r_arm"))
 		L << "<span class='cultitalic'>[src] saps your strength!</span>"
 	for(var/mob/living/L in viewers(T))
