@@ -4,6 +4,7 @@
 	var/gun_type = BOTHTYPES
 	var/image/my_overlay
 	var/uses_overlay = TRUE
+	var/not_okay = /obj/item/weapon/gun_attachment
 
 /obj/item/weapon/gun_attachment/proc/can_attach(var/obj/item/weapon/gun/owning_gun) // Sorry but if I don't put a var in front of these it gives me duplicate definition errors pointing to here
 	return (owning_gun.customizable_type == gun_type || gun_type == BOTHTYPES)
@@ -22,4 +23,7 @@
 	return
 
 /obj/item/weapon/gun_attachment/proc/on_tick(var/obj/item/weapon/gun/owning_gun)
+	return
+
+/obj/item/weapon/gun_attachment/proc/on_hit(var/mob/target, var/mob/firer)
 	return

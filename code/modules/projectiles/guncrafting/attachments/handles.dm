@@ -5,6 +5,7 @@
 	fire_delay = 0
 	recoil = 1
 	automatic = 0
+	spread = 0
 
 /obj/item/weapon/gun_attachment/handle/burst
 	name = "Burst Handle"
@@ -13,11 +14,13 @@
 	fire_delay = 2
 	recoil = 2
 	automatic = 0
+	spread = 5
 
 /obj/item/weapon/gun_attachment/handle/auto
 	name = "Automatic Handle"
 	icon_state = "handle_auto"
 	burst_size = 1
-	fire_delay = 0
+	fire_delay = 1
 	recoil = 3
 	automatic = 1
+	spread = 10

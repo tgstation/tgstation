@@ -1,3 +1,6 @@
+/obj/item/weapon/gun_attachment/underbarrel
+	not_okay = /obj/item/weapon/gun_attachment/underbarrel
+
 /obj/item/weapon/gun_attachment/underbarrel/bayonet
 	name = "Bayonet"
 	desc = "Great for stabbing."
