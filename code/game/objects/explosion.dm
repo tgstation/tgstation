@@ -140,7 +140,6 @@ var/explosionid = 1
 			if(flame_dist && prob(40) && !isspaceturf(T) && !T.density)
 				PoolOrNew(/obj/effect/hotspot, T) //Mostly for ambience!
 			if(dist > 0)
-				LAZYADD(T.acted_explosions, id)	//no need to call ex_check, no way we've acted on this before
 				T.explosion_level = max(T.explosion_level, dist)	//let the bigger one have it
 				T.explosion_id = id
 				T.ex_act(dist)
