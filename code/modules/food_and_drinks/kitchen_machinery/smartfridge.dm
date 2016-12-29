@@ -243,7 +243,7 @@
 	active_power_usage = 200
 	icon_on = "drying_rack_on"
 	icon_off = "drying_rack"
-	var/drying = 0
+	var/drying = FALSE
 
 /obj/machinery/smartfridge/drying_rack/New()
 	..()
@@ -274,15 +274,16 @@
 /obj/machinery/smartfridge/drying_rack/Topic(href, list/href_list)
 	..()
 	if(href_list["dry"])
-		toggle_drying()
-	src.updateUsrDialog()
+		toggle_drying(FALSE)
+	updateUsrDialog()
+	update_icon()
 
 /obj/machinery/smartfridge/drying_rack/power_change()
 	if(powered() && anchored)
 		stat &= ~NOPOWER
 	else
 		stat |= NOPOWER
-		toggle_drying(1)
+		toggle_drying(TRUE)
 	update_icon()
 
 /obj/machinery/smartfridge/drying_rack/load() //For updating the filled overlay
@@ -291,7 +292,7 @@
 
 /obj/machinery/smartfridge/drying_rack/update_icon()
 	..()
-	overlays = 0
+	cut_overlays()
 	if(drying)
 		add_overlay("drying_rack_drying")
 	if(contents.len)
@@ -307,17 +308,17 @@
 	if(istype(O,/obj/item/weapon/reagent_containers/food/snacks/))
 		var/obj/item/weapon/reagent_containers/food/snacks/S = O
 		if(S.dried_type)
-			return 1
+			return TRUE
 	if(istype(O,/obj/item/stack/sheet/wetleather/))
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
-/obj/machinery/smartfridge/drying_rack/proc/toggle_drying(forceoff = 0)
+/obj/machinery/smartfridge/drying_rack/proc/toggle_drying(forceoff)
 	if(drying || forceoff)
-		drying = 0
+		drying = FALSE
 		use_power = 1
 	else
-		drying = 1
+		drying = TRUE
 		use_power = 2
 	update_icon()
 
@@ -325,19 +326,19 @@
 	for(var/obj/item/weapon/reagent_containers/food/snacks/S in contents)
 		if(S.dried_type == S.type)//if the dried type is the same as the object's type, don't bother creating a whole new item...
 			S.add_atom_colour("#ad7257", FIXED_COLOUR_PRIORITY)
-			S.dry = 1
+			S.dry = TRUE
 			S.loc = get_turf(src)
 		else
 			var/dried = S.dried_type
 			new dried(src.loc)
 			qdel(S)
-		return 1
+		return TRUE
 	for(var/obj/item/stack/sheet/wetleather/WL in contents)
 		var/obj/item/stack/sheet/leather/L = new(loc)
 		L.amount = WL.amount
 		qdel(WL)
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 /obj/machinery/smartfridge/drying_rack/emp_act(severity)
 	..()
