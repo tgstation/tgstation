@@ -152,6 +152,7 @@
 	return
 
 /atom/proc/emp_act(severity)
+	set waitfor = 0
 	return
 
 /atom/proc/bullet_act(obj/item/projectile/P, def_zone)
