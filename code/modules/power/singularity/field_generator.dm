@@ -40,6 +40,7 @@ field_generator power level display
 	var/list/obj/machinery/field/containment/fields
 	var/list/obj/machinery/field/generator/connected_gens
 	var/list/obj/machinery/field/generator/generator_network
+	var/list/turf/field_zone
 	var/clean_up = 0
 
 /obj/machinery/field/generator/update_icon()
@@ -57,6 +58,7 @@ field_generator power level display
 	fields = list()
 	connected_gens = list()
 	generator_network = list(src)
+	field_zone = list()
 
 
 /obj/machinery/field/generator/process()
@@ -185,6 +187,7 @@ field_generator power level display
 	network_cleanup()
 	// The cleanup readds src to generator_network, so we clear it again
 	generator_network.Cut()
+	field_zone.Cut()
 	. = ..()
 
 
@@ -320,6 +323,64 @@ field_generator power level display
 	for(var/G in generator_network)
 		var/obj/machinery/field/generator/FG = G
 		FG.generator_network |= other_gen.generator_network
+
+/obj/machinery/field/generator/proc/check_zone()
+	/* Determine what turfs are encompassed by the field generators and
+	   fields. */
+	if(generator_network.len < 2)
+		return
+
+	var/obj/machinery/field/generator/topleft
+	var/obj/machinery/field/generator/bottomright
+
+	var/list/turf/network_field_turfs = list()
+
+	for(var/G in generator_network)
+		var/obj/machinery/field/generator/FG = G
+
+		network_field_turfs |= get_turf(FG)
+		for(var/f in FG.fields)
+			network_field_turfs |= get_turf(f)
+
+		if(!topleft || FG.x < topleft.x || FG.y < topleft.y)
+			topleft = FG
+			continue
+		if(!bottomright || FG.x > bottomright.x || FG.y > bottomright.y)
+			bottomright = FG
+			continue
+
+
+	topleft.add_atom_colour("#ff0000", ADMIN_COLOUR_PRIORITY)
+	bottomright.add_atom_colour("#00ff00", ADMIN_COLOUR_PRIORITY)
+
+	var/list/possible_turfs = block(
+		locate(topleft.x + 1, topleft.y + 1, topleft.z),
+		locate(bottomright.x - 1, bottomright.y -1, bottomright.z))
+
+	var/list/contained_turfs = list()
+
+	// For each turf, move in each of the four directions, and if you hit
+	// a network field turf before leaving the box, for each direction,
+	// then the turf is contained.
+	// No doubt there is a better way of doing this, please replace when
+	// you've thought of one.
+
+	turf_check:
+		for(var/t in possible_turfs)
+			var/turf/tested_turf = t
+			var/turf/T = t
+			next_dir:
+				for(var/dir in list(NORTH, SOUTH, EAST, WEST))
+					while(T.x >= topleft.x && T.y >= topleft.y && T.x <= bottomright.x && T.y <= bottomright.y)
+						T = get_step(T, dir)
+						if(T in network_field_turfs)
+							continue next_dir
+					continue turf_check
+			contained_turfs |= tested_turf
+
+	for(var/t in contained_turfs)
+		var/turf/T = t
+		T.add_atom_colour("#0000ff", ADMIN_COLOUR_PRIORITY)
 
 /obj/machinery/field/generator/proc/network_cleanup()
 	// this list includes src
