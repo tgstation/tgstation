@@ -55,7 +55,6 @@
 /turf/closed/wall/ex_act(severity, target)
 	if(target == src)
 		return dismantle_wall(1,1)
-	. = src
 	switch(severity)
 		if(1)
 			. = src.ChangeTurf(src.baseturf)
