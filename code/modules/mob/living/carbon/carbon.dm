@@ -98,6 +98,8 @@
 		take_bodypart_damage(10)
 	if(iscarbon(hit_atom))
 		var/mob/living/carbon/victim = hit_atom
+		if(victim.movement_type & FLYING)
+			return
 		victim.Weaken(1)
 		Weaken(1)
 		victim.take_bodypart_damage(10)
@@ -768,5 +770,5 @@
 	. = ..()
 	. += "---"
 	.["Make AI"] = "?_src_=vars;makeai=\ref[src]"
-	.["Modify bodypart"] = "<option value='?_src_=vars;editbodypart=\ref[src]'>Modify bodypart</option>"
+	.["Modify bodypart"] = "?_src_=vars;editbodypart=\ref[src]"
 	.["Modify organs"] = "?_src_=vars;editorgans=\ref[src]"

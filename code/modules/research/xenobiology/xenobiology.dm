@@ -13,6 +13,7 @@
 	throw_range = 6
 	origin_tech = "biotech=3"
 	var/Uses = 1 // uses before it goes inert
+	var/qdel_timer = null // deletion timer, for delayed reactions
 
 /obj/item/slime_extract/attackby(obj/item/O, mob/user)
 	if(istype(O, /obj/item/slimepotion/enhancer))
@@ -156,8 +157,8 @@
 	qdel(src)
 
 /obj/item/slimepotion/sentience
-	name = "sentience potion"
-	desc = "A miraculous chemical mix that can raise the intelligence of creatures to human levels. Unlike normal slime potions, it can be absorbed by any nonsentient being."
+	name = "intelligence potion"
+	desc = "A miraculous chemical mix that grants human like intelligence to living beings."
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "potpink"
 	origin_tech = "biotech=6"

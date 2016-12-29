@@ -111,7 +111,7 @@
 	name = "Space Wizard"
 	uniform = /obj/item/clothing/under/color/lightpurple
 	suit = /obj/item/clothing/suit/wizrobe
-	shoes = /obj/item/clothing/shoes/sandal
+	shoes = /obj/item/clothing/shoes/sandal/magic
 	helmet = /obj/item/clothing/head/wizard
 
 

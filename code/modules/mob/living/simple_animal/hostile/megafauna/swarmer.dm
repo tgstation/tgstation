@@ -47,8 +47,8 @@ var/global/list/AISwarmerCapsByType = list(/mob/living/simple_animal/hostile/swa
 	desc = "That name is a bit of a mouthful, but stop paying attention to your mouth they're eating everything!"
 	icon = 'icons/mob/swarmer.dmi'
 	icon_state = "swarmer_console"
-	health = 3000
-	maxHealth = 3000 //low-ish HP because it's a passive boss, and the swarm itself is the real foe
+	health = 750
+	maxHealth = 750 //""""low-ish"""" HP because it's a passive boss, and the swarm itself is the real foe
 	medal_type = MEDAL_PREFIX
 	score_type = SWARMER_BEACON_SCORE
 	faction = list("mining", "boss", "swarmer")
@@ -84,9 +84,9 @@ var/global/list/AISwarmerCapsByType = list(/mob/living/simple_animal/hostile/swa
 			new createtype(loc)
 
 
-/mob/living/simple_animal/hostile/megafauna/swarmer_swarm_beacon/adjustHealth(damage)
+/mob/living/simple_animal/hostile/megafauna/swarmer_swarm_beacon/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
 	. = ..()
-	if(damage > 0 && world.time > call_help_cooldown)
+	if(. > 0 && world.time > call_help_cooldown)
 		call_help_cooldown = world.time + call_help_cooldown_amt
 		summon_backup(25) //long range, only called max once per 15 seconds, so it's not deathlag
 

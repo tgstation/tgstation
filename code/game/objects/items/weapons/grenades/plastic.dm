@@ -35,7 +35,7 @@
 		update_icon()
 		return
 	if(nadeassembly && istype(I, /obj/item/weapon/wirecutters))
-		playsound(src, 'sound/items/Wirecutter.ogg', 20, 1)
+		playsound(src, I.usesound, 20, 1)
 		nadeassembly.loc = get_turf(src)
 		nadeassembly.master = null
 		nadeassembly = null
@@ -68,7 +68,7 @@
 /obj/item/weapon/grenade/plastic/afterattack(atom/movable/AM, mob/user, flag)
 	if (!flag)
 		return
-	if (istype(AM, /mob/living/carbon))
+	if (ismob(AM))
 		return
 	user << "<span class='notice'>You start planting the [src]. The timer is set to [det_time]...</span>"
 

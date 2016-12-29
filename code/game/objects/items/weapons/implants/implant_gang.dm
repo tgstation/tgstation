@@ -22,7 +22,7 @@
 				<b>Integrity:</b> Implant's EMP function will destroy itself in the process."}
 	return dat
 
-/obj/item/weapon/implant/gang/implant(mob/living/carbon/target, mob/user, silent = 0)
+/obj/item/weapon/implant/gang/implant(mob/living/target, mob/user, silent = 0)
 	if(..())
 		for(var/obj/item/weapon/implant/I in target.implants)
 			if(I != src)

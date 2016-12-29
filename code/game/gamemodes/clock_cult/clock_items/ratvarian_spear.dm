@@ -14,14 +14,32 @@
 	w_class = WEIGHT_CLASS_BULKY
 	var/impale_cooldown = 50 //delay, in deciseconds, where you can't impale again
 	var/attack_cooldown = 10 //delay, in deciseconds, where you can't attack with the spear
+	var/timerid
 
 /obj/item/clockwork/ratvarian_spear/New()
 	..()
 	impale_cooldown = 0
-	update_force()
 
-/obj/item/clockwork/ratvarian_spear/proc/update_force()
+/obj/item/clockwork/ratvarian_spear/Destroy()
+	deltimer(timerid)
+	return ..()
+
+/obj/item/clockwork/ratvarian_spear/ratvar_act()
 	if(ratvar_awakens) //If Ratvar is alive, the spear is extremely powerful
+		force = 25
+		throwforce = 50
+		armour_penetration = 10
+		clockwork_desc = initial(clockwork_desc)
+		deltimer(timerid)
+	else
+		force = initial(force)
+		throwforce = initial(throwforce)
+		armour_penetration = 0
+		clockwork_desc = "A powerful spear of Ratvarian making. It's more effective against enemy cultists and silicons, though it won't last for long."
+		timerid = addtimer(src, "break_spear", 600, TIMER_NORMAL)
+
+/obj/item/clockwork/ratvarian_spear/cyborg/ratvar_act() //doesn't break!
+	if(ratvar_awakens)
 		force = 25
 		throwforce = 50
 		armour_penetration = 10
@@ -34,7 +52,8 @@
 	..()
 	if(is_servant_of_ratvar(user) || isobserver(user))
 		user << "<span class='brass'>Stabbing a human you are pulling or have grabbed with the spear will impale them, doing massive damage and stunning.</span>"
-		user << "<span class='brass'>Throwing the spear will do massive damage, break the spear, and stun the target.</span>"
+		if(!iscyborg(user))
+			user << "<span class='brass'>Throwing the spear will do massive damage, break the spear, and stun the target.</span>"
 
 /obj/item/clockwork/ratvarian_spear/attack(mob/living/target, mob/living/carbon/human/user)
 	var/impaling = FALSE
@@ -55,9 +74,10 @@
 		playsound(loc, hitsound, get_clamped_volume(), 1, -1)
 	user.lastattacked = target
 	target.lastattacker = user
+	user.do_attack_animation(target)
 	if(!target.attacked_by(src, user)) //TODO MAKE ATTACK() USE PROPER RETURN VALUES
 		impaling = FALSE //if we got blocked, stop impaling
-	else
+	else if(!target.null_rod_check())
 		if(issilicon(target))
 			var/mob/living/silicon/S = target
 			if(S.stat != DEAD)
@@ -74,7 +94,7 @@
 	add_fingerprint(user)
 
 	attack_verb = list("stabbed", "poked", "slashed")
-	update_force()
+	ratvar_act()
 	if(impaling)
 		impale_cooldown = world.time + initial(impale_cooldown)
 		attack_cooldown = world.time + initial(attack_cooldown)
@@ -117,12 +137,13 @@
 			else
 				L.visible_message("<span class='warning'>[src] bounces off of [L], as if repelled by an unseen force!</span>")
 		else if(!..())
-			if(issilicon(L) || iscultist(L))
-				L.Stun(6)
-				L.Weaken(6)
-			else
-				L.Stun(2)
-				L.Weaken(2)
+			if(!L.null_rod_check())
+				if(issilicon(L) || iscultist(L))
+					L.Stun(6)
+					L.Weaken(6)
+				else
+					L.Stun(2)
+					L.Weaken(2)
 			break_spear(T)
 	else
 		..()

@@ -330,7 +330,6 @@ var/next_mob_id = 0
 	update_pull_hud_icon()
 
 	if(ismob(AM))
-		changeNext_move(CLICK_CD_MELEE)
 		var/mob/M = AM
 		if(!supress_message)
 			visible_message("<span class='warning'>[src] has grabbed [M] passively!</span>")
@@ -468,7 +467,8 @@ var/next_mob_id = 0
 			else
 				what = get_item_by_slot(slot)
 			if(what)
-				usr.stripPanelUnequip(what,src,slot)
+				if(!(what.flags & ABSTRACT))
+					usr.stripPanelUnequip(what,src,slot)
 			else
 				usr.stripPanelEquip(what,src,slot)
 
@@ -645,7 +645,7 @@ var/next_mob_id = 0
 		if(layer == LYING_MOB_LAYER)
 			layer = initial(layer)
 	update_transform()
-	update_action_buttons_icon()
+	update_action_buttons_icon(status_only=TRUE)
 	if(isliving(src))
 		var/mob/living/L = src
 		if(L.has_status_effect(/datum/status_effect/freon))

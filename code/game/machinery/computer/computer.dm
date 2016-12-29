@@ -84,7 +84,7 @@
 	if(istype(I, /obj/item/weapon/screwdriver) && circuit && !(flags&NODECONSTRUCT))
 		playsound(src.loc, I.usesound, 50, 1)
 		user << "<span class='notice'> You start to disconnect the monitor...</span>"
-		if(do_after(user, 20/I.toolspeed, target = src))
+		if(do_after(user, 20*I.toolspeed, target = src))
 			deconstruct(TRUE, user)
 	else
 		return ..()

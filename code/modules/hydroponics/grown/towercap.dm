@@ -11,11 +11,10 @@
 	production = 1
 	yield = 5
 	potency = 50
-	oneharvest = 1
 	growthstages = 3
 	growing_icon = 'icons/obj/hydroponics/growing_mushrooms.dmi'
 	icon_dead = "towercap-dead"
-	plant_type = PLANT_MUSHROOM
+	genes = list(/datum/plant_gene/trait/plant_type/fungal_metabolism)
 	mutatelist = list(/obj/item/seeds/tower/steel)
 
 /obj/item/seeds/tower/steel
@@ -53,7 +52,6 @@
 
 
 /obj/item/weapon/grown/log/attackby(obj/item/weapon/W, mob/user, params)
-	..()
 	if(W.sharpness)
 		user.show_message("<span class='notice'>You make [plank_name] out of \the [src]!</span>", 1)
 		var/obj/item/stack/plank = new plank_type(user.loc, 1 + round(seed.potency / 25))
@@ -77,6 +75,8 @@
 			return
 		else
 			usr << "<span class ='warning'>You must dry this first!</span>"
+	else
+		return ..()
 
 /obj/item/weapon/grown/log/tree
 	seed = null

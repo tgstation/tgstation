@@ -25,7 +25,7 @@
 
 	levelupdate()
 	if(smooth)
-		smooth_icon(src)
+		queue_smooth(src)
 	visibilityChanged()
 
 	for(var/atom/movable/AM in src)
@@ -53,6 +53,25 @@
 		return 1
 
 	return 0
+
+/turf/CanPass(atom/movable/mover, turf/target, height=1.5)
+	if(!target) return 0
+
+	if(istype(mover)) // turf/Enter(...) will perform more advanced checks
+		return !density
+
+	else // Now, doing more detailed checks for air movement and air group formation
+		if(target.blocks_air||blocks_air)
+			return 0
+
+		for(var/obj/obstacle in src)
+			if(!obstacle.CanPass(mover, target, height))
+				return 0
+		for(var/obj/obstacle in target)
+			if(!obstacle.CanPass(mover, src, height))
+				return 0
+
+		return 1
 
 /turf/Enter(atom/movable/mover as mob|obj, atom/forget as mob|obj|turf|area)
 	if (!mover)
@@ -112,6 +131,11 @@
 				M.slip(0, 6, null, (SLIDE_ICE|GALOSHES_DONT_HELP))
 			if(TURF_WET_SLIDE)
 				M.slip(0, 4, null, (SLIDE|GALOSHES_DONT_HELP))
+	//melting
+	if(isobj(AM) && air && air.temperature > T0C)
+		var/obj/O = AM
+		if(O.is_frozen)
+			O.make_unfrozen()
 
 /turf/proc/is_plasteel_floor()
 	return 0
@@ -143,8 +167,13 @@
 
 	SSair.remove_from_active(src)
 
+	var/list/old_checkers = proximity_checkers
+
 	Destroy()	//❄
 	var/turf/W = new path(src)
+	W.proximity_checkers = old_checkers
+	
+	
 	if(!defer_change)
 		W.AfterChange(ignore_air)
 	W.blueprint_data = old_blueprint_data

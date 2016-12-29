@@ -62,9 +62,9 @@ Difficulty: Medium
 		return
 	..()
 
-/mob/living/simple_animal/hostile/megafauna/dragon/adjustHealth(amount)
-	if(swooping)
-		return 0
+/mob/living/simple_animal/hostile/megafauna/dragon/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
+	if(!forced && swooping)
+		return FALSE
 	return ..()
 
 /mob/living/simple_animal/hostile/megafauna/dragon/AttackingTarget()
@@ -171,7 +171,7 @@ Difficulty: Medium
 	var/range = 10
 	var/turf/previousturf = get_turf(src)
 	for(var/turf/J in getline(src,E))
-		if(!range || !previousturf.CanAtmosPass(J))
+		if(!range || (J != previousturf && (!previousturf.atmos_adjacent_turfs || !previousturf.atmos_adjacent_turfs[J])))
 			break
 		range--
 		PoolOrNew(/obj/effect/hotspot,J)

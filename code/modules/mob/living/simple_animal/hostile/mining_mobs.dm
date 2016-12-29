@@ -25,6 +25,8 @@
 
 /mob/living/simple_animal/hostile/asteroid/LoseAggro()
 	..()
+	if(stat == DEAD)
+		return
 	icon_state = icon_living
 
 /mob/living/simple_animal/hostile/asteroid/bullet_act(obj/item/projectile/P)//Reduces damage from most projectiles to curb off-screen kills
@@ -181,7 +183,7 @@
 	visible_message("<span class='danger'>The [P.name] was repelled by [src.name]'s girth!</span>")
 	return
 
-/mob/living/simple_animal/hostile/asteroid/goldgrub/adjustHealth(damage)
+/mob/living/simple_animal/hostile/asteroid/goldgrub/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
 	idle_vision_range = 9
 	. = ..()
 
@@ -468,7 +470,7 @@
 		icon_state = icon_aggro
 		pre_attack = 0
 
-/mob/living/simple_animal/hostile/asteroid/goliath/adjustHealth(damage)
+/mob/living/simple_animal/hostile/asteroid/goliath/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
 	ranged_cooldown -= 10
 	handle_preattack()
 	. = ..()
@@ -604,9 +606,9 @@
 		Inflate()
 	..()
 
-/mob/living/simple_animal/hostile/asteroid/fugu/adjustHealth(var/damage)
-	if(wumbo)
-		return 0
+/mob/living/simple_animal/hostile/asteroid/fugu/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
+	if(!forced && wumbo)
+		return FALSE
 	. = ..()
 
 /mob/living/simple_animal/hostile/asteroid/fugu/Aggro()

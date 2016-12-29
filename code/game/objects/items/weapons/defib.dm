@@ -306,7 +306,6 @@
 		loc = defib
 		busy = 0
 		update_icon()
-	return
 
 /obj/item/weapon/twohanded/shockpaddles/update_icon()
 	icon_state = "defibpaddles[wielded]"
@@ -499,7 +498,7 @@
 				if (H.suiciding || (H.disabilities & NOCLONE))
 					failed = "<span class='warning'>[req_defib ? "[defib]" : "[src]"] buzzes: Resuscitation failed - Recovery of patient impossible. Further attempts futile.</span>"
 				else if (H.hellbound)
-					failed = "<span class='warning'>[req_defib ? "[defib]" : "[src]"] buzzes: Resuscitation failed - Patient's soul appears to be on another plane of existance.  Further attempts futile.</span>"
+					failed = "<span class='warning'>[req_defib ? "[defib]" : "[src]"] buzzes: Resuscitation failed - Patient's soul appears to be on another plane of existence.  Further attempts futile.</span>"
 				else if (tplus > tlimit)
 					failed = "<span class='warning'>[req_defib ? "[defib]" : "[src]"] buzzes: Resuscitation failed - Body has decayed for too long. Further attempts futile.</span>"
 				else if (!H.getorgan(/obj/item/organ/heart))
@@ -557,11 +556,30 @@
 	busy = 0
 	update_icon()
 
-/obj/item/weapon/twohanded/shockpaddles/syndicate
-	name = "syndicate defibrillator paddles"
-	desc = "A pair of paddles used to revive deceased operatives. It possesses both the ability to penetrate armor and to deliver powerful shocks offensively."
-	combat = 1
+/obj/item/weapon/twohanded/shockpaddles/cyborg
+	name = "cyborg defibrillator paddles"
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "defibpaddles0"
 	item_state = "defibpaddles0"
-	req_defib = 0
+	req_defib = FALSE
+
+/obj/item/weapon/twohanded/shockpaddles/cyborg/attack(mob/M, mob/user)
+	if(iscyborg(user))
+		var/mob/living/silicon/robot/R = user
+		if(R.emagged)
+			combat = TRUE
+		else
+			combat = FALSE
+	else
+		combat = FALSE
+
+	. = ..()
+
+/obj/item/weapon/twohanded/shockpaddles/syndicate
+	name = "syndicate defibrillator paddles"
+	desc = "A pair of paddles used to revive deceased operatives. It possesses both the ability to penetrate armor and to deliver powerful shocks offensively."
+	combat = TRUE
+	icon = 'icons/obj/weapons.dmi'
+	icon_state = "defibpaddles0"
+	item_state = "defibpaddles0"
+	req_defib = FALSE

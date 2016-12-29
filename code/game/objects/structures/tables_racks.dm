@@ -102,14 +102,14 @@
 		if(istype(I, /obj/item/weapon/screwdriver) && deconstruction_ready)
 			user << "<span class='notice'>You start disassembling [src]...</span>"
 			playsound(src.loc, I.usesound, 50, 1)
-			if(do_after(user, 20, target = src))
+			if(do_after(user, 20*I.toolspeed, target = src))
 				deconstruct(TRUE)
 			return
 
 		if(istype(I, /obj/item/weapon/wrench) && deconstruction_ready)
 			user << "<span class='notice'>You start deconstructing [src]...</span>"
 			playsound(src.loc, I.usesound, 50, 1)
-			if(do_after(user, 40, target = src))
+			if(do_after(user, 40*I.toolspeed, target = src))
 				playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 				deconstruct(TRUE, 1)
 			return
@@ -301,13 +301,13 @@
 			playsound(src.loc, W.usesound, 50, 1)
 			if(deconstruction_ready)
 				user << "<span class='notice'>You start strengthening the reinforced table...</span>"
-				if (do_after(user, 50/W.toolspeed, target = src))
+				if (do_after(user, 50*W.toolspeed, target = src))
 					if(!src || !WT.isOn()) return
 					user << "<span class='notice'>You strengthen the table.</span>"
 					deconstruction_ready = 0
 			else
 				user << "<span class='notice'>You start weakening the reinforced table...</span>"
-				if (do_after(user, 50/W.toolspeed, target = src))
+				if (do_after(user, 50*W.toolspeed, target = src))
 					if(!src || !WT.isOn()) return
 					user << "<span class='notice'>You weaken the table.</span>"
 					deconstruction_ready = 1

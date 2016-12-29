@@ -55,7 +55,7 @@
 		updateUsrDialog()
 	else if(istype(P, /obj/item/weapon/wrench))
 		user << "<span class='notice'>You begin to [anchored ? "wrench" : "unwrench"] [src].</span>"
-		playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
+		playsound(loc, P.usesound, 50, 1)
 		if(do_after(user, 20, target = src))
 			user << "<span class='notice'>You successfully [anchored ? "wrench" : "unwrench"] [src].</span>"
 			anchored = !anchored

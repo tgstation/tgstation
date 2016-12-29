@@ -14,7 +14,7 @@
 	var/recharge_time = 1200 //if it drains no power and affects no objects, it turns off for two minutes
 	var/disabled = FALSE //if it's actually usable
 	var/interdiction_range = 14 //how large an area it drains and disables in
-	var/list/rage_messages = list("...", "Disgusting.", "Die.", "Foul.", "Worthless.", "Mortal.", "Unfit.", "Weak.", "Fragile.", "Useless.", "Leave my sight!")
+	var/static/list/rage_messages = list("...", "Disgusting.", "Die.", "Foul.", "Worthless.", "Mortal.", "Unfit.", "Weak.", "Fragile.", "Useless.", "Leave my sight!")
 
 /obj/structure/destructible/clockwork/powered/interdiction_lens/examine(mob/user)
 	..()
@@ -36,6 +36,19 @@
 			user << "<span class='warning'>As you place your hand on the gemstone, cold tendrils of black matter crawl up your arm. You quickly pull back.</span>"
 			return 0
 		toggle(0, user)
+
+/obj/structure/destructible/clockwork/powered/interdiction_lens/forced_disable(bad_effects)
+	if(disabled)
+		return FALSE
+	if(!active)
+		toggle(0)
+	visible_message("<span class='warning'>The gemstone suddenly turns horribly dark, writhing tendrils covering it!</span>")
+	recharging = world.time + recharge_time
+	flick("interdiction_lens_discharged", src)
+	icon_state = "interdiction_lens_inactive"
+	SetLuminosity(2,1)
+	disabled = TRUE
+	return TRUE
 
 /obj/structure/destructible/clockwork/powered/interdiction_lens/process()
 	. = ..()
@@ -104,9 +117,4 @@
 			playsound(src, 'sound/items/PSHOOM.ogg', 50 * efficiency, 1, interdiction_range-7, 1)
 
 		if(!successfulprocess)
-			visible_message("<span class='warning'>The gemstone suddenly turns horribly dark, writhing tendrils covering it!</span>")
-			recharging = world.time + recharge_time
-			flick("interdiction_lens_discharged", src)
-			icon_state = "interdiction_lens_inactive"
-			SetLuminosity(2,1)
-			disabled = TRUE
+			forced_disable()

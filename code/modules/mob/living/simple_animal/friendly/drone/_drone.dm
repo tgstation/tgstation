@@ -45,7 +45,7 @@
 	staticOverlays = list()
 	hud_possible = list(DIAG_STAT_HUD, DIAG_HUD, ANTAG_HUD)
 	unique_name = TRUE
-	faction = list("neutral","silicon")
+	faction = list("neutral","silicon","turret")
 	dextrous = TRUE
 	dextrous_hud_type = /datum/hud/dextrous/drone
 	var/staticChoice = "static"

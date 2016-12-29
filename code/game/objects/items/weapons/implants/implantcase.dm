@@ -37,7 +37,7 @@
 	else if(istype(W, /obj/item/weapon/implanter))
 		var/obj/item/weapon/implanter/I = W
 		if(I.imp)
-			if(imp || I.imp.implanted)
+			if(imp || I.imp.imp_in)
 				return
 			I.imp.loc = src
 			imp = I.imp

@@ -7,6 +7,7 @@
 	use_power = 1
 	idle_power_usage = 200
 	active_power_usage = 5000
+	unique_rename = 1
 	var/teleport_cooldown = 400 //30 seconds base due to base parts
 	var/teleport_speed = 50
 	var/last_teleport //to handle the cooldown
@@ -82,7 +83,11 @@
 		return
 
 	if(teleporting)
-		user << "<span class='warning'>[src] charging. Please wait.</span>"
+		user << "<span class='warning'>[src] is charging up. Please wait.</span>"
+		return
+
+	if(linked_pad.teleporting)
+		user << "<span class='warning'>Linked pad is busy. Please wait.</span>"
 		return
 
 	if(linked_pad.stat & NOPOWER)
@@ -97,20 +102,26 @@
 	s.set_up(5, 1, get_turf(src))
 	s.start()
 
+/obj/machinery/quantumpad/attack_ghost(mob/dead/observer/ghost)
+	if(linked_pad)
+		ghost.forceMove(get_turf(linked_pad))
+
 /obj/machinery/quantumpad/proc/doteleport(mob/user)
 	if(linked_pad)
-		if(teleport_speed > 20)
-			flick("qpad-beam", src)
-			playsound(get_turf(src), 'sound/weapons/flash.ogg', 25, 1)
+		playsound(get_turf(src), 'sound/weapons/flash.ogg', 25, 1)
 		teleporting = 1
 
 		spawn(teleport_speed)
 			if(!src || qdeleted(src))
+				teleporting = 0
 				return
 			if(stat & NOPOWER)
+				user << "<span class='warning'>[src] is unpowered!</span>"
+				teleporting = 0
 				return
 			if(!linked_pad || qdeleted(linked_pad) || linked_pad.stat & NOPOWER)
 				user << "<span class='warning'>Linked pad is not responding to ping. Teleport aborted.</span>"
+				teleporting = 0
 				return
 
 			teleporting = 0

@@ -22,6 +22,7 @@
 /obj/item/device/taperecorder/New()
 	mytape = new /obj/item/device/tape/random(src)
 	update_icon()
+	..()
 
 
 /obj/item/device/taperecorder/examine(mob/user)
@@ -274,7 +275,7 @@
 /obj/item/device/tape/attackby(obj/item/I, mob/user, params)
 	if(ruined && istype(I, /obj/item/weapon/screwdriver))
 		user << "<span class='notice'>You start winding the tape back in...</span>"
-		if(do_after(user, 120/I.toolspeed, target = src))
+		if(do_after(user, 120*I.toolspeed, target = src))
 			user << "<span class='notice'>You wound the tape back in.</span>"
 			fix()
 
@@ -282,3 +283,4 @@
 //Random colour tapes
 /obj/item/device/tape/random/New()
 	icon_state = "tape_[pick("white", "blue", "red", "yellow", "purple")]"
+	..()

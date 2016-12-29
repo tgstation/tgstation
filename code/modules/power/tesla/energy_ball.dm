@@ -145,7 +145,7 @@ var/list/blacklisted_tesla_types = typecacheof(list(/obj/machinery/atmospherics,
 		orbitingball.orbiting_balls -= src
 		orbitingball.dissipate_strength = orbitingball.orbiting_balls.len
 	..()
-	if (!loc)
+	if (!loc && !qdeleted(src))
 		qdel(src)
 
 

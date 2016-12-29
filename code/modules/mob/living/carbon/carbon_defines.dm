@@ -5,8 +5,6 @@
 	var/list/internal_organs		= list()	//List of /obj/item/organ in the mob. They don't go in the contents for some reason I don't want to know.
 	var/list/internal_organs_slot	= list()	//Same as above, but stores "slot ID" - "organ" pairs for easy access.
 
-	var/list/implants = list()
-
 	var/silent = 0 		//Can't talk. Value goes down every life proc. //NOTE TO FUTURE CODERS: DO NOT INITIALIZE NUMERICAL VARS AS NULL OR I WILL MURDER YOU.
 
 	var/obj/item/handcuffed = null //Whether or not the mob is handcuffed
@@ -25,6 +23,7 @@
 	var/obj/item/ears = null //only used by humans.
 
 	var/datum/dna/dna = null//Carbon
+	var/datum/mind/last_mind = null //last mind to control this mob, for blood-based cloning
 
 	var/failed_last_breath = 0 //This is used to determine if the mob failed a breath. If they did fail a brath, they will attempt to breathe each tick, otherwise just once per 4 ticks.
 

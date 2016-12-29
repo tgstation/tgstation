@@ -557,7 +557,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 //EXTRA FUNCTIONS===================================
 
 	if (mode == 2||mode == 21)//To clear message overlays.
-		cut_overlays()
+		update_icon()
 
 	if ((honkamt > 0) && (prob(60)))//For clown virus.
 		honkamt--
@@ -651,7 +651,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	if(L && L.stat != UNCONSCIOUS)
 		L << "\icon[src] <b>Message from [source.owner] ([source.ownjob]), </b>\"[msg.message]\"[msg.get_photo_ref()] (<a href='byond://?src=\ref[src];choice=Message;skiprefresh=1;target=\ref[source]'>Reply</a>)"
 
-	cut_overlays()
+	update_icon()
 	add_overlay(image(icon, icon_alert))
 
 /obj/item/device/pda/proc/show_to_ghosts(mob/living/user, datum/data_pda_msg/msg,multiple = 0)

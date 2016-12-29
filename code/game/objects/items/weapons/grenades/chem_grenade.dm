@@ -21,7 +21,7 @@
 /obj/item/weapon/grenade/chem_grenade/New()
 	create_reagents(1000)
 	stage_change() // If no argument is set, it will change the stage to the current stage, useful for stock grenades that start READY.
-
+	..()
 
 /obj/item/weapon/grenade/chem_grenade/examine(mob/user)
 	display_timer = (stage == READY && !nadeassembly)	//show/hide the timer based on assembly state
@@ -54,7 +54,7 @@
 			if(beakers.len)
 				stage_change(READY)
 				user << "<span class='notice'>You lock the [initial(name)] assembly.</span>"
-				playsound(loc, 'sound/items/Screwdriver.ogg', 25, -3)
+				playsound(loc, I.usesound, 25, -3)
 			else
 				user << "<span class='warning'>You need to add at least one beaker before locking the [initial(name)] assembly!</span>"
 		else if(stage == READY && !nadeassembly)

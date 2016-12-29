@@ -78,6 +78,22 @@
 	S.potency = value
 
 
+/datum/plant_gene/core/weed_rate
+	name = "Weed Growth Rate"
+	value = 1
+
+/datum/plant_gene/core/weed_rate/apply_stat(obj/item/seeds/S)
+	S.weed_rate = value
+
+
+/datum/plant_gene/core/weed_chance
+	name = "Weed Vulnerability"
+	value = 5
+
+/datum/plant_gene/core/weed_chance/apply_stat(obj/item/seeds/S)
+	S.weed_chance = value
+
+
 // Reagent genes store reagent ID and reagent ratio. Amount of reagent in the plant = 1 + (potency * rate)
 /datum/plant_gene/reagent
 	name = "Nutriment"
@@ -157,14 +173,21 @@
 
 /datum/plant_gene/trait/proc/on_consume(obj/item/weapon/reagent_containers/food/snacks/grown/G, mob/living/carbon/target)
 	return
+
 /datum/plant_gene/trait/proc/on_cross(obj/item/weapon/reagent_containers/food/snacks/grown/G, atom/target)
 	return
+
 /datum/plant_gene/trait/proc/on_slip(obj/item/weapon/reagent_containers/food/snacks/grown/G, mob/living/carbon/target)
 	return
+
 /datum/plant_gene/trait/proc/on_squash(obj/item/weapon/reagent_containers/food/snacks/grown/G, atom/target)
 	return
 
+/datum/plant_gene/trait/proc/on_attackby(obj/item/weapon/reagent_containers/food/snacks/grown/G, obj/item/I, mob/user)
+	return
 
+/datum/plant_gene/trait/proc/on_throw_impact(obj/item/weapon/reagent_containers/food/snacks/grown/G, atom/target)
+	return
 
 /datum/plant_gene/trait/squash
 	// Allows the plant to be squashed when thrown or slipped on, leaving a colored mess and trash type item behind.
@@ -173,10 +196,6 @@
 	name = "Liquid Contents"
 	examine_line = "<span class='info'>It has a lot of liquid contents inside.</span>"
 	origin_tech = list("biotech" = 5)
-
-/datum/plant_gene/trait/squash/on_slip(obj/item/weapon/reagent_containers/food/snacks/grown/G, mob/living/carbon/target)
-	G.squash(target)
-
 
 /datum/plant_gene/trait/slip
 	// Makes plant slippery, unless it has a grown-type trash. Then the trash gets slippery.
@@ -312,3 +331,79 @@
 /datum/plant_gene/trait/maxchem/on_new(obj/item/weapon/reagent_containers/food/snacks/grown/G, newloc)
 	..()
 	G.reagents.maximum_volume *= rate
+
+/datum/plant_gene/trait/repeated_harvest
+	name = "Perennial Growth"
+
+/datum/plant_gene/trait/repeated_harvest/can_add(obj/item/seeds/S)
+	if(!..())
+		return FALSE
+	if(istype(S, /obj/item/seeds/replicapod))
+		return FALSE
+	return TRUE
+
+/datum/plant_gene/trait/battery
+	name = "Capacitive Cell Production"
+
+/datum/plant_gene/trait/battery/on_attackby(obj/item/weapon/reagent_containers/food/snacks/grown/G, obj/item/I, mob/user)
+	if(istype(I, /obj/item/stack/cable_coil))
+		var/obj/item/stack/cable_coil/C = I
+		if(C.use(5))
+			user << "<span class='notice'>You add some cable to [G] and slide it inside the battery encasing.</span>"
+			var/obj/item/weapon/stock_parts/cell/potato/pocell = new /obj/item/weapon/stock_parts/cell/potato(user.loc)
+			pocell.icon_state = G.icon_state
+			pocell.maxcharge = G.seed.potency * 20
+
+			// The secret of potato supercells!
+			var/datum/plant_gene/trait/cell_charge/CG = G.seed.get_gene(/datum/plant_gene/trait/cell_charge)
+			if(CG) // 10x charge for deafult cell charge gene - 20 000 with 100 potency.
+				pocell.maxcharge *= CG.rate*1000
+			pocell.charge = pocell.maxcharge
+			pocell.name = "[G] battery"
+			pocell.desc = "A rechargable plant based power cell. This one has a power rating of [pocell.maxcharge], and you should not swallow it."
+
+			if(G.reagents.has_reagent("plasma", 2))
+				pocell.rigged = 1
+
+			qdel(G)
+		else
+			user << "<span class='warning'>You need five lengths of cable to make a [G] battery!</span>"
+
+
+/datum/plant_gene/trait/stinging
+	name = "Hypodermic Prickles"
+
+/datum/plant_gene/trait/stinging/on_throw_impact(obj/item/weapon/reagent_containers/food/snacks/grown/G, atom/target)
+	if(isliving(target) && G.reagents && G.reagents.total_volume)
+		var/mob/living/L = target
+		if(L.reagents && L.can_inject(null, 0))
+			var/injecting_amount = max(1, G.seed.potency*0.2) // Minimum of 1, max of 20
+			var/fraction = min(injecting_amount/G.reagents.total_volume, 1)
+			G.reagents.reaction(L, INJECT, fraction)
+			G.reagents.trans_to(L, injecting_amount)
+			target << "<span class='danger'>You are pricked by [G]!</span>"
+
+/datum/plant_gene/trait/smoke
+	name = "gaseous decomposition"
+
+/datum/plant_gene/trait/smoke/on_squash(obj/item/weapon/reagent_containers/food/snacks/grown/G, atom/target)
+	var/datum/effect_system/smoke_spread/chem/S = new
+	var/splat_location = get_turf(target)
+	var/smoke_amount = round(sqrt(G.seed.potency * 0.1), 1)
+	S.attach(splat_location)
+	S.set_up(G.reagents, smoke_amount, splat_location, 0)
+	S.start()
+	G.reagents.clear_reagents()
+
+/datum/plant_gene/trait/plant_type // Parent type
+	name = "you shouldn't see this"
+	trait_id = "plant_type"
+
+/datum/plant_gene/trait/plant_type/weed_hardy
+	name = "Weed Adaptation"
+
+/datum/plant_gene/trait/plant_type/fungal_metabolism
+	name = "Fungal Vitality"
+
+/datum/plant_gene/trait/plant_type/alien_properties
+	name ="?????"

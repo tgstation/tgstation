@@ -340,7 +340,7 @@
 		log_game("[user.ckey]([user]) used an emagged Cyborg Harm Alarm in ([user.x],[user.y],[user.z])")
 
 /obj/item/borg/lollipop
-	name = "Lollipop Fabricator"
+	name = "lollipop fabricator"
 	desc = "Reward good humans with this. Toggle in-module to switch between dispensing and high velocity ejection modes."
 	icon_state = "lollipop"
 	var/candy = 30
@@ -391,7 +391,7 @@
 
 /obj/item/borg/lollipop/proc/shootL(atom/target, mob/living/user, params)
 	if(candy <= 0)
-		user << "<span class='warning'>Not enough gumballs left!</span>"
+		user << "<span class='warning'>Not enough lollipops left!</span>"
 		return FALSE
 	candy--
 	var/obj/item/ammo_casing/caseless/lollipop/A = new /obj/item/ammo_casing/caseless/lollipop(src)

@@ -322,7 +322,7 @@
 	desc = "The former skull of a damned human, filled with goliath meat. It has a decorative lava pool made of ketchup and hotsauce."
 	icon_state = "stuffed_legion"
 	bonus_reagents = list("vitamin" = 3, "capsaicin" = 1, "tricordrazine" = 5)
-	list_reagents = list("nutriment" = 5, "vitamin" = 5, "capsaicin" = 2, "tricordrazine" = 10,)
+	list_reagents = list("nutriment" = 5, "vitamin" = 5, "capsaicin" = 2, "tricordrazine" = 10)
 
 
 /obj/item/weapon/reagent_containers/food/snacks/powercrepe
@@ -404,3 +404,17 @@
 /obj/item/weapon/reagent_containers/food/snacks/gumball/cyborg/proc/spamcheck()
 	if(spamchecking)
 		qdel(src)
+
+/obj/item/weapon/reagent_containers/food/snacks/taco
+	name = "taco"
+	desc = "A traditional taco with meat, cheese, and lettuce."
+	icon_state = "taco"
+	bonus_reagents = list("nutriment" = 3, "vitamin" = 2)
+	list_reagents = list("nutriment" = 4, "vitamin" = 2)
+	filling_color = "F0D830"
+
+/obj/item/weapon/reagent_containers/food/snacks/taco/plain
+	desc = "A traditional taco with meat and cheese, minus the rabbit food."
+	icon_state = "taco_plain"
+	bonus_reagents = list("nutriment" = 2, "vitamin" = 2)
+	list_reagents = list("nutriment" = 3, "vitamin" = 1)

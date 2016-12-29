@@ -15,17 +15,17 @@
 	/obj/item/clockwork/alloy_shards/small = 3, \
 	/obj/item/clockwork/component/geis_capacitor/antennae = 1)
 	var/mania_cost = 200
-	var/convert_attempt_cost = 200
-	var/convert_cost = 200
+	var/convert_attempt_cost = 500
+	var/convert_cost = 500
 
-	var/mania_messages = list("Go nuts.", "Take a crack at crazy.", "Make a bid for insanity.", "Get kooky.", "Move towards mania.", "Become bewildered.", "Wax wild.", "Go round the bend.", \
-	"Land in lunacy.", "Try dementia.", "Strive to get a screw loose.")
-	var/compel_messages = list("Come closer.", "Approach the transmitter.", "Touch the antennae.", "I always have to deal with idiots. Move towards the mania motor.", \
+	var/static/list/mania_messages = list("Go nuts.", "Take a crack at crazy.", "Make a bid for insanity.", "Get kooky.", "Move towards mania.", "Become bewildered.", "Wax wild.", \
+	"Go round the bend.", "Land in lunacy.", "Try dementia.", "Strive to get a screw loose.")
+	var/static/list/compel_messages = list("Come closer.", "Approach the transmitter.", "Touch the antennae.", "I always have to deal with idiots. Move towards the mania motor.", \
 	"Advance forward and place your head between the antennae - that's all it's good for.", "If you were smarter, you'd be over here already.", "Move FORWARD, you fool.")
-	var/convert_messages = list("You won't do. Go to sleep while I tell these nitwits how to convert you.", "You are insufficient. I must instruct these idiots in the art of conversion.", \
+	var/static/list/convert_messages = list("You won't do. Go to sleep while I tell these nitwits how to convert you.", "You are insufficient. I must instruct these idiots in the art of conversion.", \
 	"Oh of course, someone we can't convert. These servants are fools.", "How hard is it to use a Sigil, anyway? All it takes is dragging someone onto it.", \
 	"How do they fail to use a Sigil of Accession, anyway?", "Why is it that all servants are this inept?", "It's quite likely you'll be stuck here for a while.")
-	var/close_messages = list("Well, you can't reach the motor from THERE, you moron.", "Interesting location. I'd prefer if you went somewhere you could ACTUALLY TOUCH THE ANTENNAE!", \
+	var/static/list/close_messages = list("Well, you can't reach the motor from THERE, you moron.", "Interesting location. I'd prefer if you went somewhere you could ACTUALLY TOUCH THE ANTENNAE!", \
 	"Amazing. You somehow managed to wedge yourself somewhere you can't actually reach the motor from.", "Such a show of idiocy is unparalleled. Perhaps I should put you on display?", \
 	"Did you do this on purpose? I can't imagine you doing so accidentally. Oh, wait, I can.", "How is it that such smart creatures can still do something AS STUPID AS THIS!")
 
@@ -35,19 +35,43 @@
 	if(is_servant_of_ratvar(user) || isobserver(user))
 		user << "<span class='sevtug_small'>It requires <b>[mania_cost]W</b> to run, and <b>[convert_attempt_cost + convert_cost]W</b> to convert humans adjecent to it.</span>"
 
+/obj/structure/destructible/clockwork/powered/mania_motor/forced_disable(bad_effects)
+	if(active)
+		if(bad_effects)
+			try_use_power(MIN_CLOCKCULT_POWER*2)
+		visible_message("<span class='warning'>[src] hums loudly, then the sockets at its base fall dark!</span>")
+		playsound(src, 'sound/effects/screech.ogg', 40, 1)
+		toggle()
+		return TRUE
+
+/obj/structure/destructible/clockwork/powered/mania_motor/attack_hand(mob/living/user)
+	if(user.canUseTopic(src, !issilicon(user)) && is_servant_of_ratvar(user))
+		if(!total_accessable_power() >= mania_cost)
+			user << "<span class='warning'>[src] needs more power to function!</span>"
+			return 0
+		toggle(0, user)
+
+/obj/structure/destructible/clockwork/powered/mania_motor/toggle(fast_process, mob/living/user)
+	. = ..()
+	if(active)
+		SetLuminosity(2, 1)
+	else
+		SetLuminosity(0)
+
 /obj/structure/destructible/clockwork/powered/mania_motor/process()
 	if(try_use_power(mania_cost))
 		var/turf/T = get_turf(src)
 		var/hum = get_sfx('sound/effects/screech.ogg') //like playsound, same sound for everyone affected
 		var/efficiency = get_efficiency_mod()
 		for(var/mob/living/carbon/human/H in view(1, src))
-			if(is_servant_of_ratvar(H))
+			if(is_servant_of_ratvar(H) || H.null_rod_check())
 				continue
 			if(H.Adjacent(src) && try_use_power(convert_attempt_cost))
 				if(is_eligible_servant(H) && try_use_power(convert_cost))
 					H << "<span class='sevtug'>\"[text2ratvar("You are mine and his, now.")]\"</span>"
 					H.playsound_local(T, hum, 80, 1)
 					add_servant_of_ratvar(H)
+					H.Paralyse(5)
 				else if(!H.stat)
 					if(H.getBrainLoss() >= 100)
 						H.Paralyse(5)
@@ -125,20 +149,4 @@
 						H.confused = min(H.confused + (5 * efficiency), 60)
 
 	else
-		visible_message("<span class='warning'>[src] hums loudly, then the sockets at its base fall dark!</span>")
-		playsound(src, 'sound/effects/screech.ogg', 40, 1)
-		toggle(0)
-
-/obj/structure/destructible/clockwork/powered/mania_motor/attack_hand(mob/living/user)
-	if(user.canUseTopic(src, !issilicon(user)) && is_servant_of_ratvar(user))
-		if(!total_accessable_power() >= mania_cost)
-			user << "<span class='warning'>[src] needs more power to function!</span>"
-			return 0
-		toggle(0, user)
-
-/obj/structure/destructible/clockwork/powered/mania_motor/toggle(fast_process, mob/living/user)
-	. = ..()
-	if(active)
-		SetLuminosity(2, 1)
-	else
-		SetLuminosity(0)
+		forced_disable(FALSE)

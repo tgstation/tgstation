@@ -89,5 +89,4 @@
 		return
 	var/turf/T = get_turf(B)
 	log_game("\A [B] was detonated via boom wire at [COORD(T)].")
-	message_admins("A [B.name] was detonated via boom wire at \
-		[ADMIN_COORDJMP(T)].")
+	message_admins("A [B.name] was detonated via boom wire at [ADMIN_COORDJMP(T)].")

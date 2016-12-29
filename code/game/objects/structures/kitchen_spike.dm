@@ -19,7 +19,7 @@
 		if(R.get_amount() >= 4)
 			R.use(4)
 			user << "<span class='notice'>You add spikes to the frame.</span>"
-			var/obj/F = new /obj/structure/kitchenspike(src.loc,)
+			var/obj/F = new /obj/structure/kitchenspike(src.loc)
 			transfer_fingerprints_to(F)
 			qdel(src)
 	else if(istype(I, /obj/item/weapon/weldingtool))
@@ -27,11 +27,11 @@
 		if(!WT.remove_fuel(0, user))
 			return
 		user << "<span class='notice'>You begin cutting \the [src] apart...</span>"
-		playsound(src.loc, "sound/items/Welder.ogg", 40, 1)
-		if(do_after(user, 40/WT.toolspeed, 1, target = src))
+		playsound(src.loc, WT.usesound, 40, 1)
+		if(do_after(user, 40*WT.toolspeed, 1, target = src))
 			if(!WT.isOn())
 				return
-			playsound(src.loc, "sound/items/Welder.ogg", 50, 1)
+			playsound(src.loc, WT.usesound, 50, 1)
 			visible_message("<span class='notice'>[user] slices apart \the [src].</span>",
 							"<span class='notice'>You cut \the [src] apart with \the [WT].</span>",
 							"<span class='italics'>You hear welding.</span>")
@@ -61,8 +61,8 @@
 /obj/structure/kitchenspike/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/crowbar))
 		if(!has_buckled_mobs())
-			playsound(loc, 'sound/items/Crowbar.ogg', 100, 1)
-			if(do_after(user, 20/I.toolspeed, target = src))
+			playsound(loc, I.usesound, 100, 1)
+			if(do_after(user, 20*I.toolspeed, target = src))
 				user << "<span class='notice'>You pry the spikes out of the frame.</span>"
 				deconstruct(TRUE)
 		else
@@ -140,7 +140,7 @@
 
 /obj/structure/kitchenspike/deconstruct(disassembled = TRUE)
 	if(disassembled)
-		var/obj/F = new /obj/structure/kitchenspike_frame(src.loc,)
+		var/obj/F = new /obj/structure/kitchenspike_frame(src.loc)
 		transfer_fingerprints_to(F)
 	else
 		new /obj/item/stack/sheet/metal(src.loc, 4)

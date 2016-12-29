@@ -14,6 +14,7 @@
 
 /obj/item/weapon/clipboard/New()
 	update_icon()
+	..()
 
 
 /obj/item/weapon/clipboard/update_icon()

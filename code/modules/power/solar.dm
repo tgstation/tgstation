@@ -60,7 +60,7 @@
 	if(istype(W, /obj/item/weapon/crowbar))
 		playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 		user.visible_message("[user] begins to take the glass off the solar panel.", "<span class='notice'>You begin to take the glass off the solar panel...</span>")
-		if(do_after(user, 50/W.toolspeed, target = src))
+		if(do_after(user, 50*W.toolspeed, target = src))
 			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 			user.visible_message("[user] takes the glass off the solar panel.", "<span class='notice'>You take the glass off the solar panel.</span>")
 			deconstruct(TRUE)
@@ -417,7 +417,7 @@
 /obj/machinery/power/solar_control/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/screwdriver))
 		playsound(src.loc, I.usesound, 50, 1)
-		if(do_after(user, 20/I.toolspeed, target = src))
+		if(do_after(user, 20*I.toolspeed, target = src))
 			if (src.stat & BROKEN)
 				user << "<span class='notice'>The broken glass falls out.</span>"
 				var/obj/structure/frame/computer/A = new /obj/structure/frame/computer( src.loc )

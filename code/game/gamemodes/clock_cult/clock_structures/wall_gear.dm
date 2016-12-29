@@ -21,6 +21,9 @@
 	..()
 	PoolOrNew(/obj/effect/overlay/temp/ratvar/gear, get_turf(src))
 
+/obj/structure/destructible/clockwork/wall_gear/emp_act(severity)
+	return
+
 /obj/structure/destructible/clockwork/wall_gear/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/wrench))
 		default_unfasten_wrench(user, I, 10)
@@ -31,7 +34,7 @@
 		else
 			playsound(src, I.usesound, 100, 1)
 			user.visible_message("<span class='warning'>[user] starts to disassemble [src].</span>", "<span class='notice'>You start to disassemble [src]...</span>")
-			if(do_after(user, 40/I.toolspeed, target = src) && !anchored)
+			if(do_after(user, 40*I.toolspeed, target = src) && !anchored)
 				user << "<span class='notice'>You disassemble [src].</span>"
 				deconstruct(TRUE)
 		return 1

@@ -24,6 +24,24 @@
 	for(var/i in .)
 		if(.[i] != previous_states[i])
 			hierophant_message("<span class='large_brass'><i>Hierophant Network:</i> <b>[i] Scripture has been [.[i] ? "un":""]locked.</b></span>")
+			update_slab_info()
+
+/proc/update_slab_info(obj/item/clockwork/slab/set_slab)
+	generate_all_scripture()
+	for(var/s in all_scripture)
+		var/datum/clockwork_scripture/S = s
+		S.creation_update()
+	if(!set_slab)
+		for(var/obj/item/clockwork/slab/S in all_clockwork_objects)
+			SStgui.update_uis(S)
+	else
+		SStgui.update_uis(set_slab)
+
+/proc/generate_all_scripture()
+	if(!all_scripture.len)
+		for(var/V in sortList(subtypesof(/datum/clockwork_scripture), /proc/cmp_clockscripture_priority))
+			var/datum/clockwork_scripture/S = new V
+			all_scripture += S
 
 //changes construction value
 /proc/change_construction_value(amount)
