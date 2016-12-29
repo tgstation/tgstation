@@ -20,7 +20,7 @@
 				"}
 	return dat
 
-/obj/item/weapon/implant/explosive/trigger(emote, mob/source)
+/obj/item/weapon/implant/explosive/trigger(emote, mob/living/source)
 	if(emote == "deathgasp")
 		activate("death")
 
