@@ -61,7 +61,7 @@
 	desc = "A stable polycrystal, made of fused-together bluespace crystals. You could probably break one off."
 	origin_tech = "bluespace=6;materials=3"
 	attack_verb = list("bluespace polybashed", "bluespace polybattered", "bluespace polybludgeoned", "bluespace polythrashed", "bluespace polysmashed")
-	var/crystal_type = /obj/item/weapon/ore/bluespace_crystal/refined
+	var/crystal_type = /obj/item/stack/ore/bluespace_crystal/refined
 
 /obj/item/stack/sheet/bluespace_crystal/attack_self(mob/user) // to prevent the construction menu from ever happening
 	user << "<span class='warning'>You cannot crush the polycrystal in-hand, try breaking one off.</span>"
