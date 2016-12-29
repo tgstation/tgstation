@@ -288,14 +288,16 @@ var/static/regex/multispin_words = regex("like a record baby")
 	else if((findtext(message, walk_words)))
 		for(var/V in listeners)
 			var/mob/living/L = V
-			L.m_intent = MOVE_INTENT_WALK
+			if(L.m_intent != MOVE_INTENT_WALK)
+				L.toggle_move_intent()
 		next_command = world.time + cooldown_meme
 
 	//RUN
 	else if((findtext(message, run_words)))
 		for(var/V in listeners)
 			var/mob/living/L = V
-			L.m_intent = MOVE_INTENT_RUN
+			if(L.m_intent = MOVE_INTENT_RUN)
+				L.toggle_move_intent()
 		next_command = world.time + cooldown_meme
 
 	//HELP INTENT
