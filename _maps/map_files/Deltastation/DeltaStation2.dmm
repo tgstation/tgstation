@@ -51700,11 +51700,15 @@
 /area/ai_monitored/security/armory)
 "bOW" = (
 /obj/structure/rack,
-/obj/item/weapon/gun/ballistic/automatic/wt550{
+/obj/item/weapon/gun/energy/laser{
 	pixel_x = -3;
 	pixel_y = 3
 	},
-/obj/item/weapon/gun/ballistic/automatic/wt550,
+/obj/item/weapon/gun/energy/laser,
+/obj/item/weapon/gun/energy/laser{
+	pixel_x = 3;
+	pixel_y = -3
+	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/bot,
 /area/ai_monitored/security/armory)
