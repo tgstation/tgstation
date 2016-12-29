@@ -1,0 +1,4 @@
+author: "Mervill"
+delete-after: True
+changes: 
+  - bugfix: "Drying rack sprite updates properly when things are removed without drying"
