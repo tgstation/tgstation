@@ -142,6 +142,26 @@
 	build_path = /obj/item/weapon/gun_attachment/base/tesla
 	category = list("Guncrafting Parts")
 
+/datum/design/base_ar
+	name = "Gun Ballistic Base: Assault Rifle"
+	desc = "An assault rifle base."
+	id = "base_ar"
+	req_tech = list("combat" = 1, "materials" = 1)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 500, MAT_GLASS = 300)
+	build_path = /obj/item/weapon/gun_attachment/base/assault
+	category = list("Guncrafting Parts")
+
+/datum/design/base_pistol
+	name = "Gun Ballistic Base: Pistol"
+	desc = "A pistol base."
+	id = "base_pistol"
+	req_tech = list("combat" = 1, "materials" = 1)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 500, MAT_GLASS = 300)
+	build_path = /obj/item/weapon/gun_attachment/base/pistol
+	category = list("Guncrafting Parts")
+
 //energy bullets
 /datum/design/ebullet_pen
 	name = "Gun Energy Modifier: Penetrator" // ;)
