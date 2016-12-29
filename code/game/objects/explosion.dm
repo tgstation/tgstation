@@ -111,7 +111,8 @@ var/explosionid = 1
 
 		if (!T)
 			continue
-		var/dist = cheap_hypotenuse(T.x, T.y, x0, y0)
+		var/init_dist = cheap_hypotenuse(T.x, T.y, x0, y0)
+		var/dist = init_dist
 
 		if(config.reactionary_explosions)
 			var/turf/Trajectory = T
@@ -157,10 +158,13 @@ var/explosionid = 1
 
 		if(world.tick_usage > CURRENT_TICKLIMIT)
 			stoplag()
-			for(var/Unexplode in exploded_this_tick)
-				var/turf/UnexplodeT = Unexplode
-				UnexplodeT.explosion_level = 0
-			exploded_this_tick.Cut()
+
+			var/circumference = (PI * init_dist * 4) + 8 //+8 to prevent shit gaps
+			if(exploded_this_tick.len > circumference)	//only do this every revolution
+				for(var/Unexplode in exploded_this_tick)
+					var/turf/UnexplodeT = Unexplode
+					UnexplodeT.explosion_level = 0
+				exploded_this_tick.Cut()
 
 	var/took = (world.timeofday-start)/10
 	//You need to press the DebugGame verb to see these now....they were getting annoying and we've collected a fair bit of data. Just -test- changes  to explosion code using this please so we can compare

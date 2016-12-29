@@ -411,8 +411,10 @@
 	.["Follow"] = "?_src_=holder;adminplayerobservefollow=\ref[src]"
 
 /atom/movable/proc/ex_check(ex_id)
+	if(!ex_id)
+		return TRUE
 	LAZYINITLIST(acted_explosions)
-	if(ex_id && ex_id in acted_explosions)
+	if(ex_id in acted_explosions)
 		return FALSE
 	acted_explosions += ex_id
 	return TRUE

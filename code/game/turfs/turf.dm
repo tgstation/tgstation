@@ -19,8 +19,8 @@
 
 	var/list/image/blueprint_data //for the station blueprints, images of objects eg: pipes
 
-	var/explosion_level	//for preventing explosion dodging
-	var/explosion_id
+	var/explosion_level = 0	//for preventing explosion dodging
+	var/explosion_id = 0
 
 /turf/New()
 	..()
@@ -173,12 +173,17 @@
 	SSair.remove_from_active(src)
 
 	var/list/old_checkers = proximity_checkers
+	var/old_ex_level = explosion_level
+	var/old_ex_id = explosion_id
 
 	Destroy()	//❄
 	var/turf/W = new path(src)
+
 	W.proximity_checkers = old_checkers
-	
-	
+	W.explosion_level = old_ex_level
+	W.explosion_id = old_ex_id
+
+
 	if(!defer_change)
 		W.AfterChange(ignore_air)
 	W.blueprint_data = old_blueprint_data
