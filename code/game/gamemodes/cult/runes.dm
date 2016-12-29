@@ -45,6 +45,9 @@ To draw a rune, use an arcane tome.
 	if(set_keyword)
 		keyword = set_keyword
 	runes += src
+	for(var/a in ai_list)
+		var/mob/living/silicon/ai/AI = a
+		AI.invisify_rune(src)
 
 /obj/effect/rune/Destroy()
 	runes -= src
