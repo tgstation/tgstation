@@ -1819,7 +1819,7 @@
 			return
 
 		message_admins("[src.owner] has started answering [key_name(H)]'s Centcomm request.")
-		var/input = input(src.owner, "Please enter a message to reply to [key_name(H)] via their headset.","Outgoing message from Centcom", "")
+		var/input = sanitize(input(src.owner, "Please enter a message to reply to [key_name(H)] via their headset.","Outgoing message from Centcom", ""))
 		if(!input)
 			message_admins("[src.owner] decided not to answer [key_name(H)]'s Centcomm request.")
 			return
