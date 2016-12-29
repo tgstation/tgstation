@@ -39,6 +39,7 @@ field_generator power level display
 	var/warming_up = 0
 	var/list/obj/machinery/field/containment/fields
 	var/list/obj/machinery/field/generator/connected_gens
+	var/list/obj/machinery/field/generator/generator_network
 	var/clean_up = 0
 
 /obj/machinery/field/generator/update_icon()
@@ -55,6 +56,7 @@ field_generator power level display
 	..()
 	fields = list()
 	connected_gens = list()
+	generator_network = list(src)
 
 
 /obj/machinery/field/generator/process()
@@ -180,7 +182,9 @@ field_generator power level display
 
 
 /obj/machinery/field/generator/Destroy()
-	cleanup()
+	network_cleanup()
+	// The cleanup readds src to generator_network, so we clear it again
+	generator_network.Cut()
 	. = ..()
 
 
@@ -195,7 +199,7 @@ field_generator power level display
 	addtimer(src, "turn_off_spawn", 1)
 
 /obj/machinery/field/generator/proc/turn_off_spawn()
-	cleanup()
+	network_cleanup()
 	while(warming_up>0 && !active)
 		sleep(50)
 		warming_up--
@@ -209,9 +213,9 @@ field_generator power level display
 	while(warming_up<3 && active)
 		sleep(50)
 		warming_up++
-		update_icon()
 		if(warming_up >= 3)
 			start_fields()
+		update_icon()
 
 
 /obj/machinery/field/generator/proc/calc_power(set_power_draw)
@@ -230,35 +234,19 @@ field_generator power level display
 		check_power_level()
 		return 0
 
-//This could likely be better, it tends to start loopin if you have a complex generator loop setup.  Still works well enough to run the engine fields will likely recode the field gens and fields sometime -Mport
-/obj/machinery/field/generator/proc/draw_power(draw = 0, failsafe = 0, obj/machinery/field/generator/G = null, obj/machinery/field/generator/last = null)
-	if((G && (G == src)) || (failsafe >= 8))//Loopin, set fail
-		return 0
-	else
-		failsafe++
+/obj/machinery/field/generator/proc/draw_power(draw = 0)
+	for(var/G in generator_network)
+		// first generator in `generator_network` is src
+		var/obj/machinery/field/generator/FG = G
+		if(FG.power >= draw)
+			FG.power -= draw
+			return TRUE
+		else
+			draw -= FG.power
+			FG.power = 0
 
-	if(power >= draw)//We have enough power
-		power -= draw
-		return 1
-
-	else//Need more power
-		draw -= power
-		power = 0
-		for(var/CG in connected_gens)
-			var/obj/machinery/field/generator/FG = CG
-			if(FG == last)//We just asked you
-				continue
-			if(G)//Another gen is askin for power and we dont have it
-				if(FG.draw_power(draw,failsafe,G,src))//Can you take the load
-					return 1
-				else
-					return 0
-			else//We are askin another for power
-				if(FG.draw_power(draw,failsafe,src,src))
-					return 1
-				else
-					return 0
-
+	if(draw)
+		return FALSE
 
 /obj/machinery/field/generator/proc/start_fields()
 	if(state != FG_WELDED || !anchored)
@@ -272,6 +260,7 @@ field_generator power level display
 
 /obj/machinery/field/generator/proc/set_online()
 	active = FG_ONLINE
+	update_icon()
 
 
 /obj/machinery/field/generator/proc/setup_field(NSEW)
@@ -312,7 +301,7 @@ field_generator power level display
 		var/field_dir = get_dir(T,get_step(G.loc, NSEW))
 		T = get_step(T, NSEW)
 		if(!locate(/obj/machinery/field/containment) in T)
-			var/obj/machinery/field/containment/CF = new/obj/machinery/field/containment(T, src, G)
+			var/obj/machinery/field/containment/CF = new(T, src, G)
 			CF.setDir(field_dir)
 			fields += CF
 			G.fields += CF
@@ -321,37 +310,42 @@ field_generator power level display
 
 	connected_gens |= G
 	G.connected_gens |= src
+
+	add_to_network(G)
+	G.add_to_network(src)
+
 	update_icon()
 
+/obj/machinery/field/generator/proc/add_to_network(var/obj/machinery/field/generator/other_gen)
+	for(var/G in generator_network)
+		var/obj/machinery/field/generator/FG = G
+		FG.generator_network |= other_gen.generator_network
+
+/obj/machinery/field/generator/proc/network_cleanup()
+	// this list includes src
+	for(var/G in generator_network)
+		var/obj/machinery/field/generator/FG = G
+		FG.cleanup()
+
+	check_loose_goose()
 
 /obj/machinery/field/generator/proc/cleanup()
-	clean_up = 1
 	for(var/F in fields)
 		qdel(F)
 
 	fields.Cut()
+	connected_gens.Cut()
 
-	for(var/CG in connected_gens)
-		var/obj/machinery/field/generator/FG = CG
-		FG.connected_gens -= src
-		if(!FG.clean_up)//Makes the other gens clean up as well
-			FG.cleanup()
-		connected_gens -= FG
-	clean_up = 0
+	generator_network.Cut()
+	generator_network += src
+
 	update_icon()
 
-	//This is here to help fight the "hurr durr, release singulo cos nobody will notice before the
-	//singulo eats the evidence". It's not fool-proof but better than nothing.
-	//I want to avoid using global variables.
-	spawn(1)
-		var/temp = 1 //stops spam
-		for(var/obj/singularity/O in world)
-			if(O.last_warning && temp)
-				if((world.time - O.last_warning) > 50) //to stop message-spam
-					temp = 0
-					message_admins("A singulo exists and a containment field has failed.",1)
-					investigate_log("has <font color='red'>failed</font> whilst a singulo exists.","singulo")
-			O.last_warning = world.time
+/obj/machinery/field/generator/proc/check_loose_goose()
+	// TODO get the area the field generator network covered, and check
+	// for singularities
+	message_admins("A singulo exists and a containment field has failed.",1)
+	investigate_log("has <font color='red'>failed</font> whilst a singulo exists.","singulo")
 
 /obj/machinery/field/generator/shock(mob/living/user)
 	if(fields.len)
