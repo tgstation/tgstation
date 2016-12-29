@@ -127,8 +127,9 @@ By design, d1 is the smallest direction and d2 is the highest
 	if(T.intact)
 		return
 	if(istype(W, /obj/item/weapon/wirecutters) || W.is_sharp())
-		if (shock(user, 50))
-			return
+		if (W.flags & CONDUCT)
+			if (shock(user, 50))
+				return
 		user.visible_message("[user] cuts the cable.", "<span class='notice'>You cut the cable.</span>")
 		stored.add_fingerprint(user)
 		investigate_log("was cut by [key_name(usr, usr.client)] in [user.loc.loc]","wires")

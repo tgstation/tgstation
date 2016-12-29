@@ -651,6 +651,7 @@
 	icon_state = "sky_bulge0"
 	name = "Sky Bulge"
 	desc = "A legendary stick with a very pointy tip. Looks to be used for throwing. And jumping. Can be stubborn if you throw too much." //TODO: Be funnier.
+	flags = CONDUCT
 	force = 10 //This thing aint for robusting.
 	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = SLOT_BACK
