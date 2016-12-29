@@ -498,7 +498,7 @@ var/list/ai_list = list()
 	call_bot_cooldown = world.time + CALL_BOT_COOLDOWN
 	Bot.call_bot(src, waypoint)
 	call_bot_cooldown = 0
-	
+
 
 /mob/living/silicon/ai/triggerAlarm(class, area/A, O, obj/alarmsource)
 	if(alarmsource.z != z)
@@ -868,6 +868,11 @@ var/list/ai_list = list()
 		src << "Hack complete. \The [apc] is now under your \
 			exclusive control."
 		apc.update_icon()
+
+/mob/living/silicon/ai/proc/invisify_rune(obj/effect/rune/rune)
+	var/image/blood = image(loc = rune)
+	blood.override = 1
+	client.images += blood
 
 /mob/living/silicon/ai/spawned/New(loc, datum/ai_laws/L, mob/target_ai)
 	if(!target_ai)
