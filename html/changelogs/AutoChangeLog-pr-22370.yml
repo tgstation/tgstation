@@ -1,6 +1,0 @@
-author: "XDTM"
-delete-after: True
-changes: 
-  - rscadd: "Colossi now drop the Voice of God, a mouth organ that, if implanted, allows you to speak in a HEAVY TONE. This voice can compel hearers to briefly obey certain codewords, such as \"STOP\". Using these codewords will severely increase this ability's cooldown, and only one will be used per sentence."
-  - rscadd: "Use .x, :x, or #x as a prefix to use Voice of God or any future vocal cord organs."
-  - rscadd: "Chaplains, being closer to the gods, and command staff, being used to giving orders, gain an increased effect when using the Voice of God. The mime, not being used to speaking, has a reduced effect."

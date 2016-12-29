@@ -1,4 +1,0 @@
-author: "Mervill"
-delete-after: True
-changes: 
-  - bugfix: "Clothing without a casual variant will no longer say it can be worn differently when examined"
