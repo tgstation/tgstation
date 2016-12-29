@@ -1,6 +1,0 @@
-author: "Joan"
-delete-after: True
-changes: 
-  - rscdel: "Clockwork Marauders no longer have Fatigue. It was difficult to balance and made them too easy to force into recalling. This means they just have health; they aren't forced to recall by anything, but can accordingly die much more easily."
-  - rscadd: "Accordingly Clockwork Marauders now have more health, do slightly more damage, block slightly more often, and have to go slightly further from their host to take damage."
-  - rscadd: "Marauders that are not recovering(from recalling while the host's health is too high to emerge) and are inside their host, or are within a tile of their host, will gradually heal their host until their host is above the health threshold to emerge."

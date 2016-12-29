@@ -120,7 +120,7 @@
 	real_name = "laughter demon"
 	desc = "A large, adorable creature covered in armor with pink bows."
 	speak_emote = list("giggles","titters","chuckles")
-	emote_hear = list("gaffaws","laughs")
+	emote_hear = list("guffaws","laughs")
 	response_help  = "hugs"
 	attacktext = "wildly tickles"
 

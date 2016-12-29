@@ -59,10 +59,9 @@
 		usr << "<span class='warning'>You have to repair the cyborg before using this module!</span>"
 		return 0
 
-	if(!R.key)
-		for(var/mob/dead/observer/ghost in player_list)
-			if(ghost.mind && ghost.mind.current == R)
-				R.key = ghost.key
+	if(R.mind)
+		R.mind.grab_ghost()
+		playsound(loc, 'sound/voice/liveagain.ogg', 75, 1)
 
 	R.revive()
 

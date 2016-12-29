@@ -580,10 +580,11 @@ BLIND     // can't see anything
 
 /obj/item/clothing/under/examine(mob/user)
 	..()
-	if(adjusted == ALT_STYLE)
-		user << "Alt-click on [src] to wear it normally."
-	else
-		user << "Alt-click on [src] to wear it casually."
+	if(can_adjust)
+		if(adjusted == ALT_STYLE)
+			user << "Alt-click on [src] to wear it normally."
+		else
+			user << "Alt-click on [src] to wear it casually."
 	switch(sensor_mode)
 		if(0)
 			user << "Its sensors appear to be disabled."

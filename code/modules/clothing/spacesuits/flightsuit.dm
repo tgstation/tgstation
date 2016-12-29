@@ -37,12 +37,12 @@
 	var/override_safe = FALSE
 
 	var/boost = FALSE
-	var/boost_maxcharge = 50	//Vroom! If you hit someone while boosting they'll likely be knocked flying. Fun.
-	var/boost_charge = 50
+	var/boost_maxcharge = 30	//Vroom! If you hit someone while boosting they'll likely be knocked flying. Fun.
+	var/boost_charge = 30
 	var/boost_speed = 2
 	var/boost_power = 50
-	var/boost_chargerate = 0.5
-	var/boost_drain = 10	//Keep in mind it charges and drains at the same time, so drain realistically is drain-charge=change
+	var/boost_chargerate = 0.3
+	var/boost_drain = 6	//Keep in mind it charges and drains at the same time, so drain realistically is drain-charge=change
 
 	var/momentum_x = 0		//Realistic physics. No more "Instant stopping while barreling down a hallway at Mach 1".
 	var/momentum_y = 0
@@ -54,19 +54,19 @@
 	var/momentum_speed = 0	//How fast we are drifting around
 	var/momentum_speed_x = 0
 	var/momentum_speed_y = 0
-	var/momentum_passive_loss = 7
+	var/momentum_passive_loss = 4
 	var/momentum_gain = 20
 	var/drift_tolerance = 2
 
 	var/stabilizer = TRUE
-	var/stabilizer_decay_amount = 23
+	var/stabilizer_decay_amount = 11
 	var/gravity = TRUE
-	var/gravity_decay_amount = 5
+	var/gravity_decay_amount = 3
 	var/pressure = TRUE
-	var/pressure_decay_amount = 5
+	var/pressure_decay_amount = 3
 	var/pressure_threshold = 30
 	var/brake = FALSE
-	var/airbrake_decay_amount = 60
+	var/airbrake_decay_amount = 30
 
 	var/resync = FALSE	//Used to resync the flight-suit every 30 seconds or so.
 
@@ -78,7 +78,7 @@
 	var/emp_damage = 0	//One hit should make it hard to control, continuous hits will cripple it and then simply shut it off/make it crash. Direct hits count more.
 	var/emp_strong_damage = 1.5
 	var/emp_weak_damage = 1
-	var/emp_heal_amount = 0.1		//How much emp damage to heal per process.
+	var/emp_heal_amount = 0.06		//How much emp damage to heal per process.
 	var/emp_disable_threshold = 3	//3 weak ion, 2 strong ion hits.
 	var/emp_disabled = FALSE
 
@@ -86,7 +86,7 @@
 	var/crash_damage_low = 1
 	var/crash_damage_high = 2.5
 	var/crash_disable_threshold = 5
-	var/crash_heal_amount = 0.1
+	var/crash_heal_amount = 0.06
 	var/crash_disabled = FALSE
 	var/crash_dampening = 0
 
@@ -145,8 +145,8 @@
 	powersetting_high = Clamp(laser, 0, 3)
 	emp_disable_threshold = bin*1.25
 	crash_disable_threshold = bin*2
-	stabilizer_decay_amount = scan*5.75
-	airbrake_decay_amount = manip*15
+	stabilizer_decay_amount = scan*3.5
+	airbrake_decay_amount = manip*8
 	crash_dampening = bin
 
 /obj/item/device/flightpack/Destroy()
@@ -347,7 +347,6 @@
 	if(wearer)
 		wearer.float(TRUE)
 
-
 /obj/item/device/flightpack/proc/handle_damage()
 	if(crash_damage)
 		crash_damage = Clamp(crash_damage-crash_heal_amount, 0, crash_disable_threshold*10)
@@ -409,7 +408,7 @@
 		powersetting = 1
 	momentum_gain = powersetting * 10
 	usermessage("Engine output set to [momentum_gain].")
-	momentum_drift_coeff = ((100/momentum_max)*momentum_gain*((drift_tolerance*(((drift_tolerance*2)+1)/4))/drift_tolerance)*10)
+	momentum_drift_coeff = ((momentum_gain)*(drift_tolerance*1.1))/momentum_max
 
 /obj/item/device/flightpack/proc/crash_damage(density, anchored, speed, victim_name)
 	var/crashmessagesrc = "<span class='userdanger'>[wearer] violently crashes into [victim_name], "
@@ -484,9 +483,12 @@
 			crash_grille(S)
 		crashing = FALSE
 		return FALSE
-	else if(istype(unmovablevictim, /obj/machinery/door))
+	else if((istype(unmovablevictim, /obj/machinery/door)) && (!istype(unmovablevictim, /obj/machinery/door/poddoor)))
 		var/obj/machinery/door/D = unmovablevictim
 		if(!airlock_hit(D))
+			crashing = FALSE
+			return FALSE
+		else if(momentum_speed < 3)
 			crashing = FALSE
 			return FALSE
 		damage = TRUE
@@ -517,7 +519,7 @@
 	if(damage)
 		crash_damage(density, anchored, momentum_speed, unmovablevictim.name)
 		userknockback(density, anchored, momentum_speed, dir)
-		losecontrol(move = FALSE)
+		losecontrol(stun = FALSE, move = FALSE)
 	crashing = FALSE
 
 /obj/item/device/flightpack/proc/door_hit(obj/structure/mineral_door/door)
@@ -611,6 +613,10 @@
 		O.take_damage(damage)
 
 /obj/item/device/flightpack/proc/losecontrol(stun = FALSE, move = TRUE)
+	if(!move)
+		momentum_x = 0
+		momentum_y = 0
+		calculate_momentum_speed()
 	usermessage("Warning: Control system not responding. Deactivating!", 3)
 	wearer.visible_message("<span class='warning'>[wearer]'s flight suit abruptly shuts off and they lose control!</span>")
 	if(wearer)
@@ -626,7 +632,7 @@
 	momentum_x = 0
 	momentum_y = 0
 	if(flight)
-		disable_flight()
+		disable_flight(FALSE)
 
 /obj/item/device/flightpack/proc/enable_flight(forced = FALSE)
 	if(!suit)
@@ -648,7 +654,7 @@
 	if(forced)
 		losecontrol(stun = TRUE)
 		return TRUE
-	if(abs(momentum_x) <= 20 && abs(momentum_y) <= 20)
+	if(momentum_speed <= 1)
 		momentum_x = 0
 		momentum_y = 0
 		usermessage("DISENGAGING FLIGHT ENGINES.")
@@ -687,14 +693,6 @@
 	..()
 
 /obj/item/device/flightpack/proc/calculate_momentum_speed()
-	if(momentum_x == 0 && momentum_y == 0)	//Calculate total
-		momentum_speed = 0
-	else if((abs(momentum_x) >= (momentum_crash_coeff*momentum_max))||(abs(momentum_y) >= (momentum_crash_coeff*momentum_max)))
-		momentum_speed = 3
-	else if((abs(momentum_x) >= (momentum_impact_coeff*momentum_max))||(abs(momentum_y) >= (momentum_impact_coeff*momentum_max)))
-		momentum_speed = 2
-	else if((abs(momentum_x) >= (momentum_drift_coeff*momentum_max))||(abs(momentum_y) >= (momentum_drift_coeff*momentum_max)))
-		momentum_speed = 1
 	if(abs(momentum_x) >= (momentum_crash_coeff*momentum_max))	//Calculate X
 		momentum_speed_x = 3
 	else if(abs(momentum_x) >= (momentum_impact_coeff*momentum_max))
@@ -711,6 +709,7 @@
 		momentum_speed_y = 1
 	else
 		momentum_speed_y = 0
+	momentum_speed = max(momentum_speed_x, momentum_speed_y)
 
 /obj/item/device/flightpack/item_action_slot_check(slot)
 	if(slot == slot_back)
@@ -795,35 +794,45 @@
 	if(istype(I, /obj/item/weapon/stock_parts))
 		var/obj/item/weapon/stock_parts/S = I
 		if(istype(S, /obj/item/weapon/stock_parts/manipulator))
-			if((!part_manip) || (part_manip.rating < S.rating))
-				usermessage("[I] has been sucessfully installed into systems.")
-				if(user.unEquip(I))
-					I.loc = src
-					part_manip = I
+			usermessage("[I] has been sucessfully installed into systems.")
+			if(user.unEquip(I))
+				if(part_manip)
+					part_manip.forceMove(get_turf(src))
+					part_manip = null
+				I.loc = src
+				part_manip = I
 		if(istype(S, /obj/item/weapon/stock_parts/scanning_module))
-			if((!part_scan) || (part_scan.rating < S.rating))
-				usermessage("[I] has been sucessfully installed into systems.")
-				if(user.unEquip(I))
-					I.loc = src
-					part_scan = I
+			usermessage("[I] has been sucessfully installed into systems.")
+			if(user.unEquip(I))
+				if(part_scan)
+					part_scan.forceMove(get_turf(src))
+					part_scan = null
+				I.loc = src
+				part_scan = I
 		if(istype(S, /obj/item/weapon/stock_parts/micro_laser))
-			if((!part_laser) || (part_laser.rating < S.rating))
-				usermessage("[I] has been sucessfully installed into systems.")
-				if(user.unEquip(I))
-					I.loc = src
-					part_laser = I
+			usermessage("[I] has been sucessfully installed into systems.")
+			if(user.unEquip(I))
+				if(part_laser)
+					part_laser.forceMove(get_turf(src))
+					part_laser = null
+				I.loc = src
+				part_laser = I
 		if(istype(S, /obj/item/weapon/stock_parts/matter_bin))
-			if((!part_bin) || (part_bin.rating < S.rating))
-				usermessage("[I] has been sucessfully installed into systems.")
-				if(user.unEquip(I))
-					I.loc = src
-					part_bin = I
+			usermessage("[I] has been sucessfully installed into systems.")
+			if(user.unEquip(I))
+				if(part_bin)
+					part_bin.forceMove(get_turf(src))
+					part_bin = null
+				I.loc = src
+				part_bin = I
 		if(istype(S, /obj/item/weapon/stock_parts/capacitor))
-			if((!part_cap) || (part_cap.rating < S.rating))
-				usermessage("[I] has been sucessfully installed into systems.")
-				if(user.unEquip(I))
-					I.loc = src
-					part_cap = I
+			usermessage("[I] has been sucessfully installed into systems.")
+			if(user.unEquip(I))
+				if(part_cap)
+					part_cap.forceMove(get_turf(src))
+					part_cap = null
+				I.loc = src
+				part_cap = I
 	update_parts()
 	..()
 

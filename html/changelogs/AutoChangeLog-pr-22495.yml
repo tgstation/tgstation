@@ -1,0 +1,4 @@
+author: "Mervill"
+delete-after: True
+changes: 
+  - bugfix: "Patched an exploit related to pulling a vehicle as its driver while in space"

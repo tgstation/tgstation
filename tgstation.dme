@@ -1972,6 +1972,7 @@
 #include "code\modules\surgery\organs\autoimplanter.dm"
 #include "code\modules\surgery\organs\helpers.dm"
 #include "code\modules\surgery\organs\organ_internal.dm"
+#include "code\modules\surgery\organs\vocal_cords.dm"
 #include "code\modules\telesci\bscrystal.dm"
 #include "code\modules\telesci\gps.dm"
 #include "code\modules\telesci\telepad.dm"

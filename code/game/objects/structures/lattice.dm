@@ -60,6 +60,11 @@
 	smooth = SMOOTH_TRUE
 	canSmoothWith = null
 
+/obj/structure/lattice/catwalk/New()
+	..()
+	stored.amount++
+	stored.update_icon()
+
 /obj/structure/lattice/catwalk/Move()
 	var/turf/T = loc
 	for(var/obj/structure/cable/C in T)

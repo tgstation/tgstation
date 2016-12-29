@@ -1,0 +1,4 @@
+author: "Mervill"
+delete-after: True
+changes: 
+  - bugfix: "Fixed evidence bags not displaying their contents when held"
