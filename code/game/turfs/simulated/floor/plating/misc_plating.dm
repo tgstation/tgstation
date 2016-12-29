@@ -84,7 +84,6 @@
 
 /turf/open/floor/plating/beach/ex_act(severity, target)
 	contents_explosion(severity, target)
-	return src
 
 /turf/open/floor/plating/beach/sand
 	name = "sand"

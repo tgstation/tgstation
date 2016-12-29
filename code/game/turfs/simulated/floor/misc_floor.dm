@@ -197,9 +197,9 @@
 	return
 
 /turf/open/floor/vines/ex_act(severity, target)
-	. = ..()
+	..()
 	if(severity < 3 || target == src)
-		return ChangeTurf(src.baseturf)
+		ChangeTurf(src.baseturf)
 
 /turf/open/floor/vines/narsie_act()
 	if(prob(20))

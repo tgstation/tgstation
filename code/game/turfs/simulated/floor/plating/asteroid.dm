@@ -26,9 +26,10 @@
 	return
 
 /turf/open/floor/plating/asteroid/ex_act(severity, target)
-	. = src
 	contents_explosion(severity, target)
 	switch(severity)
+		if(3)
+			return
 		if(2)
 			if(prob(20))
 				src.gets_dug()

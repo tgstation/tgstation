@@ -227,7 +227,7 @@
 	SSair.add_to_active(src)
 
 /turf/proc/ReplaceWithLattice()
-	. = ChangeTurf(baseturf)
+	ChangeTurf(baseturf)
 	new /obj/structure/lattice(locate(x, y, z))
 
 /turf/proc/ReplaceWithCatwalk()
@@ -298,11 +298,6 @@
 /turf/proc/burn_tile()
 
 /turf/proc/is_shielded()
-
-//must return new turf if changed
-/turf/ex_act()
-	..()
-	return src
 
 /turf/contents_explosion(severity, target)
 	var/affecting_level

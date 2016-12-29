@@ -48,26 +48,25 @@ var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","
 	var/shielded = is_shielded()
 	..()
 	if(severity != 1 && shielded && target != src)
-		return src
+		return
 	if(target == src)
-		return src.ChangeTurf(src.baseturf)
+		src.ChangeTurf(src.baseturf)
 	if(target != null)
 		severity = 3
 
-	. = src
 	switch(severity)
 		if(1)
-			return src.ChangeTurf(src.baseturf)
+			src.ChangeTurf(src.baseturf)
 		if(2)
 			switch(pick(1,2;75,3))
 				if(1)
+					src.ReplaceWithLattice()
 					if(prob(33)) new /obj/item/stack/sheet/metal(src)
-					return src.ReplaceWithLattice()
 				if(2)
-					return src.ChangeTurf(src.baseturf)
+					src.ChangeTurf(src.baseturf)
 				if(3)
 					if(prob(80))
-						. = src.break_tile_to_plating()
+						src.break_tile_to_plating()
 					else
 						src.break_tile()
 					src.hotspot_expose(1000,CELL_VOLUME)
@@ -98,7 +97,6 @@ var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","
 /turf/open/floor/proc/break_tile_to_plating()
 	var/turf/open/floor/plating/T = make_plating()
 	T.break_tile()
-	return T
 
 /turf/open/floor/proc/break_tile()
 	if(broken)
