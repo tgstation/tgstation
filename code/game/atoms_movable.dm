@@ -19,6 +19,7 @@
 	var/inertia_move_delay = 5
 	var/pass_flags = 0
 	var/moving_diagonally = 0 //0: not doing a diagonal move. 1 and 2: doing the first/second step of the diagonal move
+	var/list/acted_explosions	//for explosion dodging
 	glide_size = 8
 	appearance_flags = TILE_BOUND
 
@@ -405,3 +406,10 @@
 	. = ..()
 	. -= "Jump to"
 	.["Follow"] = "?_src_=holder;adminplayerobservefollow=\ref[src]"
+
+/atom/movable/proc/ex_check(ex_id)
+	LAZYINITLIST(acted_explosions)
+	if(ex_id && ex_id in acted_explosions)
+		return FALSE
+	acted_explosions += ex_id
+	return TRUE

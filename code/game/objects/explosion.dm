@@ -1,4 +1,5 @@
 //TODO: Flash range does nothing currently
+var/explosionid = 1
 
 /proc/explosion(turf/epicenter, devastation_range, heavy_impact_range, light_impact_range, flash_range, adminlog = 1, ignorecap = 0, flame_range = 0 ,silent = 0, smoke = 1)
 	set waitfor = 0
@@ -29,6 +30,7 @@
 	//and somethings expect us to ex_act them so they can qdel()
 	sleep(1) //tldr, let the calling proc call qdel(src) before we explode
 
+	var/id = explosionid++
 	var/start = world.timeofday
 
 	var/max_range = max(devastation_range, heavy_impact_range, light_impact_range, flame_range)
@@ -138,12 +140,11 @@
 			if(flame_dist && prob(40) && !isspaceturf(T) && !T.density)
 				PoolOrNew(/obj/effect/hotspot, T) //Mostly for ambience!
 			if(dist > 0)
-				var/t_type = T.type
-				var/turf/NT = T.ex_act(dist)
-				if(!istype(NT))
-					stack_trace("Failed turf ex_act type [t_type]")
-				NT.explosion_level = dist	//explode things that Enter this turf when we sleep
-				exploded_this_tick += NT
+				LAZYADD(T.acted_explosions, id)	//no need to call ex_check, no way we've acted on this before
+				T.explosion_level = max(T.explosion_level, dist)	//let the bigger one have it
+				T.explosion_id = id
+				T.ex_act(dist)
+				exploded_this_tick += T
 
 		//--- THROW ITEMS AROUND ---
 

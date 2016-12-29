@@ -19,7 +19,8 @@
 
 	var/list/image/blueprint_data //for the station blueprints, images of objects eg: pipes
 
-	var/explosion_level = 0	//for preventing explosion dodging
+	var/explosion_level	//for preventing explosion dodging
+	var/explosion_id
 
 /turf/New()
 	..()
@@ -112,7 +113,7 @@
 		var/atom/B = A
 		B.HasProximity(AM)
 
-	if(explosion_level && ismob(AM))
+	if(explosion_level && AM.ex_check(explosion_id))
 		AM.ex_act(explosion_level)
 
 /turf/open/Entered(atom/movable/AM)
@@ -313,6 +314,10 @@
 	for(var/V in contents)
 		var/atom/A = V
 		if(A.level >= affecting_level)
+			if(istype(A,/atom/movable))
+				var/atom/movable/AM = A
+				if(!AM.ex_check(explosion_id))
+					continue
 			A.ex_act(severity, target)
 			CHECK_TICK
 
