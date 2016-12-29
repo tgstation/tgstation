@@ -28,12 +28,12 @@
 	. = ..()
 	if(!silent_update && new_body)
 		if(.)
-			new_body.visible_message("<span class='heavy_brass'>[new_body]'s eyes glow a blazing yellow!</span>", \
-			"<span class='heavy_brass'>Assist your new companions in their righteous efforts. Your goal is theirs, and theirs yours. You serve the Clockwork Justiciar above all else. Perform his every \
-			whim without hesitation.</span>")
+			new_body.visible_message("<span class='heavy_brass'>[new_body]'s eyes glow a blazing yellow!</span>")
+			new_body << "<span class='heavy_brass'>Assist your new companions in their righteous efforts. Your goal is theirs, and theirs yours. You serve the Clockwork Justiciar above all else. \
+			Perform his every whim without hesitation.</span>"
 		else
-			new_body.visible_message("<span class='warning'>[new_body] seems to resist an unseen force!</span>")
-			new_body << "<span class='warning'><b>And yet, you somehow push it all away.</b></span>"
+			new_body.visible_message("<span class='boldwarning'>[new_body] seems to resist an unseen force!</span>")
+			new_body << "<span class='userdanger'>And yet, you somehow push it all away.</span>"
 
 /datum/antagonist/clockcultist/on_gain()
 	if(ticker && ticker.mode && owner.mind)
@@ -78,8 +78,7 @@
 				A.ai_restore_power()
 			if(A.eyeobj)
 				A.eyeobj.relay_speech = TRUE
-			for(var/C in A.connected_robots)
-				var/mob/living/silicon/robot/R = C
+			for(var/mob/living/silicon/robot/R in A.connected_robots)
 				if(R.connected_ai == A)
 					R.visible_message("<span class='heavy_brass'>[R]'s eyes glow a blazing yellow!</span>", \
 					"<span class='heavy_brass'>Assist your new companions in their righteous efforts. Your goal is theirs, and theirs yours. You serve the Clockwork Justiciar above all else. Perform his every \

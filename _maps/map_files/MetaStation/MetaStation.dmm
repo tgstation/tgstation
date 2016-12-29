@@ -608,12 +608,7 @@
 /obj/structure/holohoop{
 	pixel_y = 29
 	},
-/obj/item/toy/beach_ball{
-	icon = 'icons/obj/basketball.dmi';
-	icon_state = "basketball";
-	item_state = "basketball";
-	name = "basket ball"
-	},
+/obj/item/toy/beach_ball/holoball,
 /turf/open/floor/plating{
 	icon_state = "platingdmg1"
 	},
@@ -5542,12 +5537,7 @@
 /turf/open/floor/plating,
 /area/maintenance/fore)
 "ajV" = (
-/obj/item/toy/beach_ball{
-	icon = 'icons/obj/basketball.dmi';
-	icon_state = "basketball";
-	item_state = "basketball";
-	name = "basket ball"
-	},
+/obj/item/toy/beach_ball/holoball,
 /turf/open/floor/plating,
 /area/maintenance/fore)
 "ajW" = (
@@ -8280,7 +8270,7 @@
 	pixel_x = 28
 	},
 /obj/structure/closet/secure_closet/warden,
-/obj/item/weapon/gun/ballistic/automatic/wt550,
+/obj/item/weapon/gun/energy/laser,
 /turf/open/floor/plasteel/showroomfloor,
 /area/security/warden)
 "aoH" = (
@@ -14232,6 +14222,7 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/glass_security{
+	cyclelinkeddir = 2;
 	id_tag = "innerbrig";
 	name = "Brig";
 	req_access_txt = "63"
@@ -14252,6 +14243,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/door/airlock/glass_security{
+	cyclelinkeddir = 2;
 	id_tag = "innerbrig";
 	name = "Brig";
 	req_access_txt = "63"
@@ -16521,6 +16513,7 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/glass_security{
+	cyclelinkeddir = 1;
 	id_tag = "outerbrig";
 	name = "Brig";
 	req_access_txt = "63"
@@ -16556,6 +16549,7 @@
 	pixel_x = 25
 	},
 /obj/machinery/door/airlock/glass_security{
+	cyclelinkeddir = 1;
 	id_tag = "outerbrig";
 	name = "Brig";
 	req_access_txt = "63"
@@ -22855,7 +22849,7 @@
 /turf/open/floor/wood,
 /area/lawoffice)
 "aNP" = (
-/obj/structure/filingcabinet/chestdrawer,
+/obj/structure/filingcabinet/employment,
 /obj/machinery/airalarm{
 	dir = 8;
 	icon_state = "alarm0";
@@ -61855,16 +61849,24 @@
 /obj/machinery/button/door{
 	id = "Biohazard";
 	name = "Biohazard Shutter Control";
-	pixel_x = 0;
-	pixel_y = 7;
+	pixel_x = -7;
+	pixel_y = 0;
 	req_access_txt = "47"
 	},
 /obj/machinery/button/door{
-	desc = "A remote control switch for the medbay foyer.";
-	id = "ResearchFoyer";
-	name = "Research Door Button";
+	desc = "A remote control switch for the research division entryway.";
+	id = "ResearchExt";
+	name = "Research Exterior Airlock";
 	normaldoorcontrol = 1;
-	pixel_x = 0;
+	pixel_x = 7;
+	pixel_y = 7
+	},
+/obj/machinery/button/door{
+	desc = "A remote control switch for the research division entryway.";
+	id = "ResearchInt";
+	name = "Research Interior Airlock";
+	normaldoorcontrol = 1;
+	pixel_x = 7;
 	pixel_y = -2
 	},
 /turf/open/floor/plasteel/red/side{
@@ -75934,8 +75936,7 @@
 /obj/machinery/door/airlock/glass_medical{
 	id_tag = "CloningDoor";
 	name = "Cloning Lab";
-	req_access_txt = "0";
-	req_one_access_txt = "5"
+	req_access_txt = "5; 68"
 	},
 /turf/open/floor/plasteel/whiteblue,
 /area/medical/genetics_cloning)
@@ -75983,7 +75984,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/glass_research{
 	name = "Genetics Lab";
-	req_access_txt = "5;9"
+	req_access_txt = "5; 9; 68"
 	},
 /obj/structure/cable/yellow{
 	d1 = 4;
@@ -77659,6 +77660,8 @@
 /obj/structure/disposalpipe/segment,
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/research{
+	cyclelinkeddir = 2;
+	id_tag = "ResearchExt";
 	name = "Research Division";
 	req_access_txt = "0";
 	req_one_access_txt = "47"
@@ -79065,6 +79068,8 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/research{
+	cyclelinkeddir = 2;
+	id_tag = "ResearchExt";
 	name = "Research Division";
 	req_access_txt = "0";
 	req_one_access_txt = "47"
@@ -82810,7 +82815,8 @@
 /obj/structure/disposalpipe/segment,
 /obj/machinery/door/airlock/maintenance{
 	name = "Research Lab Maintenance";
-	req_access_txt = "7;29"
+	req_access_txt = "0";
+	req_one_access_txt = "7;29"
 	},
 /turf/open/floor/plating/warnplate{
 	dir = 1
@@ -93847,6 +93853,40 @@
 	icon_state = "diagonalWall3"
 	},
 /area/shuttle/syndicate)
+"dfL" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/disposalpipe/segment,
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/research{
+	cyclelinkeddir = 1;
+	id_tag = "ResearchInt";
+	name = "Research Division";
+	req_access_txt = "0";
+	req_one_access_txt = "47"
+	},
+/turf/open/floor/plasteel/delivery,
+/area/medical/research{
+	name = "Research Division"
+	})
+"dfM" = (
+/obj/structure/cable/yellow{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/research{
+	cyclelinkeddir = 1;
+	id_tag = "ResearchInt";
+	name = "Research Division";
+	req_access_txt = "0";
+	req_one_access_txt = "47"
+	},
+/turf/open/floor/plasteel/delivery,
+/area/medical/research{
+	name = "Research Division"
+	})
 
 (1,1,1) = {"
 aaa
@@ -123814,7 +123854,7 @@ cCY
 ckT
 cmq
 cnR
-cCY
+dfL
 cqk
 crv
 csO
@@ -124071,7 +124111,7 @@ cFt
 ckU
 cmr
 cnS
-cFt
+dfM
 cql
 crw
 csP

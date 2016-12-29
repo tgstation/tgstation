@@ -16,6 +16,7 @@
 	var/obj/item/robot_suit/robot_suit = null //Used for deconstruction to remember what the borg was constructed out of..
 	var/obj/item/device/mmi/mmi = null
 
+
 //Hud stuff
 
 	var/obj/screen/inv1 = null
@@ -76,6 +77,20 @@
 
 	var/list/upgrades = list()
 
+	var/obj/item/hat
+	var/hat_offset = -3
+	var/list/equippable_hats = list(/obj/item/clothing/head/caphat,
+	/obj/item/clothing/head/hardhat/cakehat,
+	/obj/item/clothing/head/centhat,
+	/obj/item/clothing/head/HoS,
+	/obj/item/clothing/head/hopcap,
+	/obj/item/clothing/head/wizard,
+	/obj/item/clothing/head/nursehat,
+	/obj/item/clothing/head/sombrero,
+	/obj/item/clothing/head/witchunter_hat)
+
+
+
 /mob/living/silicon/robot/New(loc)
 	spark_system = new /datum/effect_system/spark_spread()
 	spark_system.set_up(5, 0, src)
@@ -130,6 +145,8 @@
 		mmi.brainmob.container = mmi
 
 	updatename()
+
+	equippable_hats = typecacheof(equippable_hats)
 
 	playsound(loc, 'sound/voice/liveagain.ogg', 75, 1)
 	aicamera = new/obj/item/device/camera/siliconcam/robot_camera(src)
@@ -194,12 +211,18 @@
 	var/changed_name = ""
 	if(custom_name)
 		changed_name = custom_name
-	else
-		changed_name = "[(designation ? "[designation] " : "")][mmi.braintype]-[num2text(ident)]"
+	if(changed_name == "" && client)
+		changed_name = client.prefs.custom_names["cyborg"]
+	if(changed_name == "")
+		changed_name = get_standard_name()
+
 	real_name = changed_name
 	name = real_name
 	if(camera)
 		camera.c_tag = real_name	//update the camera name too
+
+/mob/living/silicon/robot/proc/get_standard_name()
+	return "[(designation ? "[designation] " : "")][mmi.braintype]-[ident]"
 
 /mob/living/silicon/robot/verb/cmd_robot_alerts()
 	set category = "Robot Commands"
@@ -476,8 +499,11 @@
 				return
 			if(U.action(src))
 				user << "<span class='notice'>You apply the upgrade to [src].</span>"
-				U.loc = src
-				upgrades += U
+				if(U.one_use)
+					qdel(U)
+				else
+					U.forceMove(src)
+					upgrades += U
 			else
 				user << "<span class='danger'>Upgrade error.</span>"
 
@@ -563,7 +589,10 @@
 			add_overlay("ov-opencover +c")
 		else
 			add_overlay("ov-opencover -c")
-
+	if(hat)
+		var/image/head_overlay = hat.build_worn_icon(state = hat.icon_state, default_layer = 20, default_icon_file = 'icons/mob/head.dmi')
+		head_overlay.pixel_y += hat_offset
+		add_overlay(head_overlay)
 	update_fire()
 
 #define BORG_CAMERA_BUFFER 30
@@ -953,5 +982,16 @@
 		status_flags |= CANPUSH
 	else
 		status_flags &= ~CANPUSH
+
+	hat_offset = module.hat_offset
+
 	magpulse = module.magpulsing
 	updatename()
+
+
+/mob/living/silicon/robot/proc/place_on_head(obj/item/new_hat)
+	if(hat)
+		hat.forceMove(get_turf(src))
+	hat = new_hat
+	new_hat.forceMove(src)
+	update_icons()

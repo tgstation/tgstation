@@ -139,7 +139,7 @@ var/global/list/bibleitemstates =	list("bible", "koran", "scrapbook", "bible", "
 /obj/item/weapon/storage/book/bible/attack(mob/living/M, mob/living/carbon/human/user)
 
 	var/chaplain = 0
-	if(user.mind && (user.mind.assigned_role == "Chaplain"))
+	if(user.mind && (user.mind.isholy))
 		chaplain = 1
 
 
@@ -189,10 +189,10 @@ var/global/list/bibleitemstates =	list("bible", "koran", "scrapbook", "bible", "
 		return
 	if(isfloorturf(A))
 		user << "<span class='notice'>You hit the floor with the bible.</span>"
-		if(user.mind && (user.mind.assigned_role == "Chaplain"))
+		if(user.mind && (user.mind.isholy))
 			for(var/obj/effect/rune/R in orange(2,user))
 				R.invisibility = 0
-	if(user.mind && (user.mind.assigned_role == "Chaplain"))
+	if(user.mind && (user.mind.isholy))
 		if(A.reagents && A.reagents.has_reagent("water")) //blesses all the water in the holder
 			user << "<span class='notice'>You bless [A].</span>"
 			var/water2holy = A.reagents.get_reagent_amount("water")

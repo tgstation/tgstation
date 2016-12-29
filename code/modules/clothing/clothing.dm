@@ -58,7 +58,15 @@
 
 /obj/item/clothing/attack_hand(mob/user)
 	if(pockets && pockets.priority && ismob(loc))
-		pockets.show_to(user)
+		//If we already have the pockets open, close them.
+		if (user.s_active == pockets)
+			pockets.close(user)
+		//Close whatever the user has open and show them the pockets.
+		else
+			if (user.s_active)
+				user.s_active.close(user)
+			pockets.orient2hud(user)
+			pockets.show_to(user)
 	else
 		return ..()
 
@@ -572,10 +580,11 @@ BLIND     // can't see anything
 
 /obj/item/clothing/under/examine(mob/user)
 	..()
-	if(adjusted == ALT_STYLE)
-		user << "Alt-click on [src] to wear it normally."
-	else
-		user << "Alt-click on [src] to wear it casually."
+	if(can_adjust)
+		if(adjusted == ALT_STYLE)
+			user << "Alt-click on [src] to wear it normally."
+		else
+			user << "Alt-click on [src] to wear it casually."
 	switch(sensor_mode)
 		if(0)
 			user << "Its sensors appear to be disabled."
@@ -693,7 +702,7 @@ BLIND     // can't see anything
 
 	user << "<span class='notice'>You adjust \the [src] [up ? "up" : "down"].</span>"
 
-	if(istype(user, /mob/living/carbon))
+	if(iscarbon(user))
 		var/mob/living/carbon/C = user
 		C.head_update(src, forced = 1)
 	for(var/X in actions)

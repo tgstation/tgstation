@@ -1,5 +1,0 @@
-author: "dannno"
-delete-after: True
-changes: 
-  - rscadd: "Adds a villain costume to the autodrobe."
-  - bugfix: "Fixes autodrobe failing to stock items."

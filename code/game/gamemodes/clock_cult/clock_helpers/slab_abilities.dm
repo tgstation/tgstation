@@ -106,6 +106,10 @@
 /obj/structure/destructible/clockwork/geis_binding/attack_hand(mob/living/user)
 	return
 
+/obj/structure/destructible/clockwork/geis_binding/emp_act(severity)
+	PoolOrNew(/obj/effect/overlay/temp/emp, loc)
+	qdel(src)
+
 /obj/structure/destructible/clockwork/geis_binding/post_buckle_mob(mob/living/M)
 	if(M.buckled == src)
 		desc = "A flickering, glowing purple ring around [M]."
@@ -135,7 +139,6 @@
 		M.visible_message("<span class='warning'>[src] snaps into glowing pieces and dissipates!</span>")
 		for(var/obj/item/geis_binding/GB in M.held_items)
 			M.unEquip(GB, TRUE)
-		qdel(src)
 
 /obj/structure/destructible/clockwork/geis_binding/relaymove(mob/user, direction)
 	if(isliving(user))
@@ -231,7 +234,7 @@
 		if(totaldamage)
 			L.adjustBruteLoss(-brutedamage)
 			L.adjustFireLoss(-burndamage)
-			L.adjustToxLoss(totaldamage * 0.5)
+			L.adjustToxLoss(totaldamage * 0.5, TRUE, TRUE)
 			var/healseverity = max(round(totaldamage*0.05, 1), 1) //shows the general severity of the damage you just healed, 1 glow per 20
 			for(var/i in 1 to healseverity)
 				PoolOrNew(/obj/effect/overlay/temp/heal, list(targetturf, "#1E8CE1"))
