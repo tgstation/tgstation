@@ -6,6 +6,7 @@
 	icon_state = "frame_energy"
 	charge_sections = 2
 	ammo_type = list()
+	unique_rename = 1
 
 /obj/item/weapon/gun/energy/frame/testing
 	pin = null
@@ -20,6 +21,7 @@
 	customizable_type = CUSTOMIZABLE_PROJECTILE
 	icon = 'icons/obj/guncrafting/main.dmi'
 	icon_state = "frame_projectile"
+	unique_rename = 1
 
 /obj/item/weapon/gun/ballistic/frame/testing
 	pin = null
