@@ -43,6 +43,7 @@
 	desc = "A huge chunk of warm metal. The clanging of machinery emanates from within."
 	explosion_block = 2
 	hardness = 10
+	slicing_duration = 120
 	sheet_type = /obj/item/stack/tile/brass
 	sheet_amount = 1
 	girder_type = /obj/structure/destructible/clockwork/wall_gear
@@ -72,23 +73,6 @@
 		realappearence = null
 	return ..()
 
-
-/turf/closed/wall/clockwork/attackby(obj/item/I, mob/living/user, params)
-	if(istype(I, /obj/item/weapon/weldingtool))
-		var/obj/item/weapon/weldingtool/WT = I
-		if(!WT.remove_fuel(0,user))
-			return 0
-		playsound(src, WT.usesound, 100, 1)
-		user.visible_message("<span class='notice'>[user] begins slowly breaking down [src]...</span>", "<span class='notice'>You begin painstakingly destroying [src]...</span>")
-		if(!do_after(user, 120*WT.toolspeed, target = src))
-			return 0
-		if(!WT.remove_fuel(1, user))
-			return 0
-		user.visible_message("<span class='notice'>[user] breaks apart [src]!</span>", "<span class='notice'>You break apart [src]!</span>")
-		dismantle_wall()
-		return 1
-	return ..()
-
 /turf/closed/wall/clockwork/narsie_act()
 	..()
 	if(istype(src, /turf/closed/wall/clockwork)) //if we haven't changed type
@@ -114,7 +98,6 @@
 			P.roll_and_drop(src)
 		else
 			O.loc = src
-
 
 /turf/closed/wall/clockwork/devastate_wall()
 	for(var/i in 1 to 2)
