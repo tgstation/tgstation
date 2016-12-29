@@ -1046,7 +1046,7 @@
 		playsound(get_turf(src),'sound/effects/explosionfar.ogg', 200, 1)
 		visible_message("<span class='boldannounce'>The tendril falls inward, the ground around it widening into a yawning chasm!</span>")
 		for(var/turf/T in range(2,src))
-			if(!T.density)
+			if(!T.density && !istype(T,/turf/open/indestructible))
 				T.ChangeTurf(/turf/open/chasm/straight_down/lava_land_surface)
 		qdel(src)
 
