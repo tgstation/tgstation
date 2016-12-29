@@ -56,11 +56,11 @@
 	animate(alert, transform = matrix(), time = 2.5, easing = CUBIC_EASING)
 
 	if(alert.timeout)
-		addtimer(src, "alert_timeout", alert.timeout, TIMER_NORMAL, alert)
+		addtimer(src, "alert_timeout", alert.timeout, TIMER_NORMAL, alert, category)
 		alert.timeout = world.time + alert.timeout - world.tick_lag
 	return alert
 
-/mob/proc/alert_timeout(alert)
+/mob/proc/alert_timeout(alert, category)
 	if(alert.timeout && alerts[category] == alert && world.time >= alert.timeout)
 		clear_alert(category)
 
