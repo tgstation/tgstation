@@ -17,6 +17,7 @@
 	var/assemblyattacher
 	var/ignition_temp = 10 // The amount of heat added to the reagents when this grenade goes off.
 	var/threatscale = 1 // Used by advanced grenades to make them slightly more worthy.
+	unique_rename = 1
 
 /obj/item/weapon/grenade/chem_grenade/New()
 	create_reagents(1000)
