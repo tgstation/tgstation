@@ -17154,26 +17154,15 @@
 /turf/open/floor/plating,
 /area/toxins/xenobiology)
 "aQz" = (
-/obj/structure/rack,
-/obj/item/weapon/gun/energy/e_gun/advtaser,
-/obj/item/weapon/gun/energy/e_gun/advtaser{
-	pixel_x = 5;
-	pixel_y = -5
-	},
-/obj/machinery/light{
-	dir = 1
-	},
+/obj/machinery/computer/rdconsole/guncrafting,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
 /area/security/warden)
 "aQA" = (
-/obj/structure/rack,
-/obj/item/weapon/gun/energy/laser,
-/obj/item/weapon/gun/energy/laser{
-	pixel_x = 5;
-	pixel_y = -5
-	},
+/obj/machinery/r_n_d/protolathe/gunlathe,
+/obj/item/stack/sheet/metal/fifty,
+/obj/item/stack/sheet/glass/fifty,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
@@ -18676,14 +18665,17 @@
 	},
 /area/toxins/xenobiology)
 "aTX" = (
-/obj/structure/rack,
-/obj/item/weapon/gun/energy/disabler{
-	pixel_x = 0;
-	pixel_y = 5
+/obj/structure/table,
+/obj/machinery/light{
+	dir = 1
 	},
-/obj/item/weapon/gun/energy/disabler{
-	pixel_x = 5
-	},
+/obj/item/device/firing_pin,
+/obj/item/device/firing_pin,
+/obj/item/device/firing_pin,
+/obj/item/device/firing_pin,
+/obj/item/device/firing_pin,
+/obj/item/device/firing_pin,
+/obj/item/weapon/screwdriver,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
