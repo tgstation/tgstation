@@ -17,8 +17,8 @@
 
 /turf/open/floor/engine/make_plating(force = 0)
 	if(force)
-		return ..()
-	return src//unplateable
+		..()
+	return //unplateable
 
 /turf/open/floor/engine/attackby(obj/item/weapon/C, mob/user, params)
 	if(!C || !user)
