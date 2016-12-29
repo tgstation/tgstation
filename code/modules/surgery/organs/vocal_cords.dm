@@ -245,7 +245,7 @@ var/static/regex/multispin_words = regex("like a record baby")
 		for(var/V in listeners)
 			var/mob/living/L = V
 			var/throwtarget = get_edge_target_turf(owner, get_dir(owner, get_step_away(L, owner)))
-			L.throw_at_fast(throwtarget, 3 * power_multiplier, 1)
+			L.throw_at(throwtarget, 3 * power_multiplier, 1)
 		next_command = world.time + cooldown_damage
 
 	//WHO ARE YOU?
