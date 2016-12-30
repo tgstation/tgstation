@@ -52,7 +52,15 @@
 	set desc = "Report an issue"
 	set hidden = 1
 	if(config.githuburl)
-		if(alert("This will open the Github issue reporter in your browser. Are you sure?",,"Yes","No")=="No")
+		var/message = "This will open the Github issue reporter in your browser"
+		var/first = TRUE
+		for(var/line in revdata.testmerge)
+			if(line)
+				if(first)
+					first = FALSE
+					message += ". Do note the following PR testmerges are active and bugs caused by them should not be reported:"	
+				message += " <a href='[config.githuburl]/pull/[line]'>#[line]</a>"
+		if(alert(message + ". Are you sure?",,"Yes","No")=="No")
 			return
 		src << link("[config.githuburl]/issues/new")
 	else
