@@ -58,7 +58,7 @@
 			if(line)
 				if(first)
 					first = FALSE
-					message += ". Do note the following PR testmerges are active and bugs caused by them should not be reported:"	
+					message += ". Do note the following PR testmerges are active and bugs caused by them should be reported in their respective threads, not the issue tracker:"	
 				message += " <a href='[config.githuburl]/pull/[line]'>#[line]</a>"
 		if(alert(message + ". Are you sure?",,"Yes","No")=="No")
 			return
