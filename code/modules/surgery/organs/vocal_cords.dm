@@ -45,7 +45,10 @@ var/static/regex/multispin_words = regex("like a record baby")
 /obj/item/organ/vocal_cords/proc/can_speak_with() //if there is any limitation to speaking with these cords
 	return TRUE
 
-/obj/item/organ/vocal_cords/proc/speak_with(message) //do what the organ does and modify speech if needed
+/obj/item/organ/vocal_cords/proc/speak_with(message) //do what the organ does
+	return
+
+/obj/item/organ/vocal_cords/proc/handle_speech(message) //change the message
 	return message
 
 
@@ -91,7 +94,7 @@ var/static/regex/multispin_words = regex("like a record baby")
 		if(world.time < cords.next_command)
 			owner << "<span class='notice'>You must wait [(cords.next_command - world.time)/10] seconds before Speaking again.</span>"
 		return
-	var/command = stripped_input(owner, "Speak with the Voice of God", "Command", max_length = 140)
+	var/command = input(owner, "Speak with the Voice of God", "Command")
 	if(!command)
 		return
 	owner.say(".x[command]")
@@ -109,8 +112,11 @@ var/static/regex/multispin_words = regex("like a record baby")
 		return FALSE
 	return TRUE
 
+/obj/item/organ/vocal_cords/colossus/handle_speech(message)
+	return uppertext(message)
+
 /obj/item/organ/vocal_cords/colossus/speak_with(message)
-	var/spoken = uppertext(message)
+	message = lowertext(message)
 	playsound(get_turf(owner), 'sound/magic/clockwork/invoke_general.ogg', 300, 1, 5)
 
 	var/mob/living/list/listeners = list()
@@ -274,8 +280,9 @@ var/static/regex/multispin_words = regex("like a record baby")
 	//STATE LAWS
 	else if((findtext(message, statelaws_words)))
 		for(var/mob/living/silicon/S in listeners)
-			S.statelaws()
-		next_command = world.time + cooldown_meme
+			S.checklaws()
+			S.statelaws(force = 1)
+		next_command = world.time + cooldown_stun
 
 	//MOVE
 	else if((findtext(message, move_words)))
@@ -288,14 +295,16 @@ var/static/regex/multispin_words = regex("like a record baby")
 	else if((findtext(message, walk_words)))
 		for(var/V in listeners)
 			var/mob/living/L = V
-			L.m_intent = MOVE_INTENT_WALK
+			if(L.m_intent != MOVE_INTENT_WALK)
+				L.toggle_move_intent()
 		next_command = world.time + cooldown_meme
 
 	//RUN
 	else if((findtext(message, run_words)))
 		for(var/V in listeners)
 			var/mob/living/L = V
-			L.m_intent = MOVE_INTENT_RUN
+			if(L.m_intent != MOVE_INTENT_RUN)
+				L.toggle_move_intent()
 		next_command = world.time + cooldown_meme
 
 	//HELP INTENT
@@ -413,7 +422,9 @@ var/static/regex/multispin_words = regex("like a record baby")
 		if(owner.mind && owner.mind.assigned_role == "Clown")
 			for(var/mob/living/carbon/C in listeners)
 				C.slip(0,7 * power_multiplier)
-		next_command = world.time + cooldown_meme
+			next_command = world.time + cooldown_stun
+		else
+			next_command = world.time + cooldown_meme
 
 	//RIGHT ROUND
 	else if((findtext(message, multispin_words)))
@@ -424,6 +435,4 @@ var/static/regex/multispin_words = regex("like a record baby")
 
 	else
 		next_command = world.time + cooldown_none
-
-	return spoken
 
