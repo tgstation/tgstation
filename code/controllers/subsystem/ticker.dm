@@ -207,31 +207,38 @@ var/datum/subsystem/ticker/ticker
 
 	return 1
 
+/datum/subsystem/ticker/proc/station_explosion_detonation(atom/bomb)
+	if(bomb)	//BOOM
+		var/turf/epi = bomb.loc
+		qdel(bomb)
+		explosion(epi, 255, 255, 255, 255, TRUE, TRUE, 0, TRUE)
+
 //Plus it provides an easy way to make cinematics for other events. Just use this as a template
-/datum/subsystem/ticker/proc/station_explosion_cinematic(station_missed=0, override = null)
+/datum/subsystem/ticker/proc/station_explosion_cinematic(station_missed=0, override = null, bomb = null)
 	if( cinematic )
 		return	//already a cinematic in progress!
 
 	for (var/datum/html_interface/hi in html_interfaces)
 		hi.closeAll()
+	SStgui.close_all_uis()
+
 	//initialise our cinematic screen object
 	cinematic = new /obj/screen{icon='icons/effects/station_explosion.dmi';icon_state="station_intact";layer=21;mouse_opacity=0;screen_loc="1,0";}(src)
 
-	if(station_missed)
-		for(var/mob/M in mob_list)
-			M.notransform = TRUE //stop everything moving
-			if(M.client)
-				M.client.screen += cinematic	//show every client the cinematic
-	else	//nuke kills everyone on z-level 1 to prevent "hurr-durr I survived"
-		for(var/mob/M in mob_list)
-			if(M.client)
-				M.client.screen += cinematic
-			if(M.stat != DEAD)
-				var/turf/T = get_turf(M)
-				if(T && T.z==1)
-					M.death(0) //no mercy
-				else
-					M.notransform=TRUE //no moving for you
+	//Turn off the shuttles, there's no escape now
+	if(!station_missed && bomb)
+		SSshuttle.registerHostileEnvironment(src)
+		SSshuttle.lockdown = TRUE
+
+	for(var/mob/M in mob_list)
+		if(!station_missed && M.stat != DEAD && M.z == ZLEVEL_STATION)
+			if(bomb)
+				M.nuked = TRUE
+			else
+				M.death(0)
+		M.notransform = TRUE //stop everything moving
+		if(M.client)
+			M.client.screen += cinematic	//show every client the cinematic
 
 	//Now animate the cinematic
 	switch(station_missed)
@@ -243,6 +250,7 @@ var/datum/subsystem/ticker/ticker
 					flick("intro_nuke",cinematic)
 					sleep(35)
 					world << sound('sound/effects/explosionfar.ogg')
+					station_explosion_detonation(bomb)
 					flick("station_intact_fade_red",cinematic)
 					cinematic.icon_state = "summary_nukefail"
 				if("gang war") //Gang Domination (just show the override screen)
@@ -258,12 +266,14 @@ var/datum/subsystem/ticker/ticker
 					flick("intro_nuke",cinematic)
 					sleep(35)
 					world << sound('sound/effects/explosionfar.ogg')
+					station_explosion_detonation(bomb)
 					//flick("end",cinematic)
 
 
 		if(NUKE_MISS_STATION || NUKE_SYNDICATE_BASE)	//nuke was nowhere nearby	//TODO: a really distant explosion animation
 			sleep(50)
 			world << sound('sound/effects/explosionfar.ogg')
+			station_explosion_detonation(bomb)
 		else	//station was destroyed
 			if( mode && !override )
 				override = mode.name
@@ -273,20 +283,25 @@ var/datum/subsystem/ticker/ticker
 					sleep(35)
 					flick("station_explode_fade_red",cinematic)
 					world << sound('sound/effects/explosionfar.ogg')
+					station_explosion_detonation(bomb)
 					cinematic.icon_state = "summary_nukewin"
 				if("AI malfunction") //Malf (screen,explosion,summary)
 					flick("intro_malf",cinematic)
 					sleep(76)
 					flick("station_explode_fade_red",cinematic)
 					world << sound('sound/effects/explosionfar.ogg')
+					station_explosion_detonation(bomb)	//TODO: If we ever decide to actually detonate the vault bomb
 					cinematic.icon_state = "summary_malf"
 				if("blob") //Station nuked (nuke,explosion,summary)
 					flick("intro_nuke",cinematic)
 					sleep(35)
 					flick("station_explode_fade_red",cinematic)
 					world << sound('sound/effects/explosionfar.ogg')
+					station_explosion_detonation(bomb)	//TODO: no idea what this case could be
 					cinematic.icon_state = "summary_selfdes"
 				if("no_core") //Nuke failed to detonate as it had no core
+					if(!station_missed)
+						stack_trace("Non-missing station explosion without a core! Everyone may have died")
 					flick("intro_nuke",cinematic)
 					sleep(35)
 					flick("station_intact",cinematic)
@@ -303,6 +318,7 @@ var/datum/subsystem/ticker/ticker
 					sleep(35)
 					flick("station_explode_fade_red", cinematic)
 					world << sound('sound/effects/explosionfar.ogg')
+					station_explosion_detonation(bomb)
 					cinematic.icon_state = "summary_selfdes"
 	//If its actually the end of the round, wait for it to end.
 	//Otherwise if its a verb it will continue on afterwards.
@@ -311,7 +327,12 @@ var/datum/subsystem/ticker/ticker
 			qdel(cinematic)		//end the cinematic
 		for(var/mob/M in mob_list)
 			M.notransform = FALSE //gratz you survived
-	return
+
+	if(mode)
+		mode.explosion_in_progress = 0
+		world << "<B>The station was destoyed by the nuclear blast!</B>"
+		mode.station_was_nuked = (station_missed<2)	//station_missed==1 is a draw. the station becomes irradiated and needs to be evacuated.
+														//kinda shit but I couldn't  get permission to do what I wanted to do.
 
 
 

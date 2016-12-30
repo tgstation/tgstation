@@ -8,5 +8,4 @@
 /datum/round_event/wizard/fake_explosion/start()
 	for(var/mob/M in player_list)
 		M << 'sound/machines/Alarm.ogg'
-	spawn(100)
-		ticker.station_explosion_cinematic(1,"fake") //:o)
+	addtimer(ticker, "station_explosion_cinematic", 100, TIMER_NORMAL, 1, "fake") //:o)
