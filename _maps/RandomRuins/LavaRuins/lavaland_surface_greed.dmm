@@ -124,7 +124,7 @@
 "t" = (
 /obj/machinery/door/airlock/gold,
 /turf/open/floor/engine/cult{
-	baseturf = /turf/open/floor/plating/lava/smooth;
+	baseturf = /turf/open/floor/plating/lava/smooth
 	},
 /obj/structure/fans/tiny/invisible,
 /area/ruin/powered)
