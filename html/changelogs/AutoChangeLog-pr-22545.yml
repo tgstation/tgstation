@@ -1,0 +1,4 @@
+author: "hyena"
+delete-after: True
+changes: 
+  - bugfix: "fixes caps suit fire immunity"
