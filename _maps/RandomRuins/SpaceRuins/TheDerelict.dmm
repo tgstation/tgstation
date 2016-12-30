@@ -586,7 +586,7 @@
 "ln" = (/obj/item/weapon/stock_parts/manipulator{pixel_x = -15; pixel_y = 10},/obj/item/weapon/stock_parts/manipulator,/turf/open/floor/plating/airless,/area/derelict/hallway/primary)
 "lo" = (/obj/structure/closet,/obj/effect/spawner/lootdrop/maintenance{lootcount = 3; name = "3maintenance loot spawner"},/turf/open/floor/plating/airless,/area/derelict/hallway/primary)
 "lp" = (/obj/structure/chair/stool,/obj/effect/decal/remains/human,/obj/effect/decal/cleanable/blood/old,/turf/open/floor/plasteel/airless,/area/derelict/hallway/primary)
-"lq" = (/obj/structure/table,/obj/item/weapon/reagent_containers/glass/beaker{list_reagents = list("sacid" = 50)},/obj/item/weapon/paper/crumpled/bloody{desc = "Looks like someone started shakily writing a will in space common, but were interrupted by something bloody..."; info = "I, Victor Belyakov, do hereby leave my _- "; name = "unifinished paper scrap"},/obj/item/weapon/pen,/turf/open/floor/plasteel/airless,/area/derelict/hallway/primary)
+"lq" = (/obj/structure/table,/obj/item/weapon/reagent_containers/glass/beaker{list_reagents = list("sacid" = 50)},/obj/item/weapon/paper/crumpled/bloody{desc = "Looks like someone started shakily writing a will in space common, but were interrupted by something bloody..."; info = "I, Victor Belyakov, do hereby leave my _- "; name = "unfinished paper scrap"},/obj/item/weapon/pen,/turf/open/floor/plasteel/airless,/area/derelict/hallway/primary)
 "lr" = (/obj/structure/table,/turf/open/floor/plasteel/airless,/area/derelict/hallway/primary)
 "ls" = (/turf/open/floor/plasteel/airless,/area/derelict/atmospherics)
 "lt" = (/turf/open/floor/plating/airless,/area/derelict/atmospherics)
