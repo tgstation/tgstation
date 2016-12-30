@@ -11,7 +11,7 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	var/silent = 0 // No message on putting items in
 	var/list/can_hold = new/list() //Typecache of objects which this item can store (if set, it can't store anything else)
-	var/list/cant_hold = new/list() //Typecache of objects which this item can't store (in effect only if can_hold isn't set)
+	var/list/cant_hold = new/list() //Typecache of objects which this item can't store
 	var/list/is_seeing = new/list() //List of mobs which are currently seeing the contents of this item's storage
 	var/max_w_class = WEIGHT_CLASS_SMALL //Max size of objects that this object can store (in effect only if can_hold isn't set)
 	var/max_combined_w_class = 14 //The sum of the w_classes of all the items in this storage item.
@@ -263,11 +263,11 @@
 			if(!stop_messages)
 				usr << "<span class='warning'>[src] cannot hold [W]!</span>"
 			return 0
-	else
-		if(is_type_in_typecache(W, cant_hold)) //Check for specific items which this container can't hold.
-			if(!stop_messages)
-				usr << "<span class='warning'>[src] cannot hold [W]!</span>"
-			return 0
+
+	if(is_type_in_typecache(W, cant_hold)) //Check for specific items which this container can't hold.
+		if(!stop_messages)
+			usr << "<span class='warning'>[src] cannot hold [W]!</span>"
+		return 0
 
 	if(W.w_class > max_w_class)
 		if(!stop_messages)
