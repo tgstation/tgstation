@@ -44,6 +44,10 @@
 
 /turf/open/indestructible/hierophant/two
 
+/turf/open/indestructible/paper
+	name = "notebook floor"
+	desc = "A floor made of invulnerable notebook paper."
+	icon_state = "paperfloor"
 
 /turf/open/Initalize_Atmos(times_fired)
 	excited = 0
