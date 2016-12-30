@@ -3,7 +3,7 @@
 var/datum/subsystem/throwing/SSthrowing
 
 /datum/subsystem/throwing
-	name = "throwing"
+	name = "Throwing"
 	priority = 25
 	wait = 1
 	flags = SS_NO_INIT|SS_KEEP_TIMING|SS_TICKER
