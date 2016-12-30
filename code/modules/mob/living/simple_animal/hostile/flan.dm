@@ -26,13 +26,13 @@
 	minimum_distance = 4
 	AIStatus = AI_IDLE
 	ranged_message = "begins to cast something"
-	ranged_cooldown_time = 5
+	ranged_cooldown_time = 15
 	var/spellname = "a generic spell!"
 	var/spellsound = 'sound/effects/spray3.ogg'
 	var/spellanimation = ATTACK_EFFECT_SMASH		//More in defines/misc.dm
 	var/spelldamagetype = BRUTE
 	var/spelldamage = 15
-	var/spellcasttime = 15
+	var/spellcasttime = 15							//if you varedit this also varedit ranged_cooldown_time else the mob will attack again before the spell hits, looking weird but still working
 
 /mob/living/simple_animal/hostile/flan/New()		//Required for the inheritance of casting animations.
 	..()
@@ -75,7 +75,6 @@
 /mob/living/simple_animal/hostile/flan/fire/spellaftereffects(mob/living/A)
 	A.adjust_fire_stacks(2)
 	A.IgniteMob()
-	return
 
 /mob/living/simple_animal/hostile/flan/water
 	name = "Water Flan"
@@ -86,6 +85,5 @@
 	spellname = "a Water spell!"
 	spelldamage = 10			//Basic flan, learn the dance with em.
 
-/mob/living/simple_animal/hostile/flan/fire/spellaftereffects(mob/living/A)
+/mob/living/simple_animal/hostile/flan/water/spellaftereffects(mob/living/A)
 	A.ExtinguishMob()
-	return
