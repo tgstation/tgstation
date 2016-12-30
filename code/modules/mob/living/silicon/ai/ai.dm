@@ -870,12 +870,12 @@ var/list/ai_list = list()
 		apc.update_icon()
 
 /mob/living/silicon/ai/proc/invisify_rune(obj/effect/rune/rune)
-	//get an icon from a null spatter
-	var/obj/effect/decal/cleanable/blood/splatter/s = new(loc)
-	var/image/blood = image(s.icon, icon_state = s.icon_state, loc = rune)
-	qdel(s)
-	blood.override = 1
-	client.images += blood
+	if(client)
+		client.images += rune.ai_image
+
+/mob/living/silicon/ai/proc/uninvisify_rune(obj/effect/rune/rune)
+	if(client)
+		client.images -= rune.ai_image
 
 /mob/living/silicon/ai/spawned/New(loc, datum/ai_laws/L, mob/target_ai)
 	if(!target_ai)
