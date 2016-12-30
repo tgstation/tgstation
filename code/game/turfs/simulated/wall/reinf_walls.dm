@@ -189,7 +189,7 @@
 			if(istype(W, /obj/item/weapon/gun/energy/plasmacutter))
 				user << "<span class='notice'>You begin slicing through the support rods...</span>"
 				playsound(src, 'sound/items/Welder.ogg', 100, 1)
-				if(do_after(user, 70*W.toolspeed, target = src))
+				if(do_after(user, 100*W.toolspeed, target = src))
 					if(!istype(src, /turf/closed/wall/r_wall) || !W || d_state != SUPPORT_RODS)
 						return 1
 					d_state = SHEATH
