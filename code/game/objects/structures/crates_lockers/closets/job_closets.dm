@@ -73,6 +73,7 @@
 	new /obj/item/clothing/shoes/galoshes(src)
 	new /obj/item/weapon/watertank/janitor(src)
 	new /obj/item/weapon/storage/belt/janitor(src)
+	new /obj/item/weapon/paint/paint_remover(src)
 
 
 /obj/structure/closet/lawcloset
