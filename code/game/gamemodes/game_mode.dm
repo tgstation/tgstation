@@ -484,7 +484,9 @@
 /datum/game_mode/proc/printplayer(datum/mind/ply, fleecheck)
 	var/text = "<br><b>[ply.key]</b> was <b>[ply.name]</b> the <b>[ply.assigned_role]</b> and"
 	if(ply.current)
-		if(ply.current.stat == DEAD)
+		if(ply.current.nuked)
+			text += " <span class='boldannounce'>was vaporized in a nuclear blast</span>"
+		else if(ply.current.stat == DEAD)
 			text += " <span class='boldannounce'>died</span>"
 		else
 			text += " <span class='greenannounce'>survived</span>"
