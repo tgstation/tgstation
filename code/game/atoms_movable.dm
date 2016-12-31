@@ -271,12 +271,7 @@
 			slept = 1
 			next_sleep += speed
 			sleep(1)
-		if(!slept)
-			var/ticks_slept = TICK_CHECK
-			if(ticks_slept)
-				slept = 1
-				next_sleep += speed*(ticks_slept*world.tick_lag) //delay the next normal sleep
-
+		
 		if(slept && hitcheck()) //to catch sneaky things moving on our tile while we slept
 			hit = 1
 			break
