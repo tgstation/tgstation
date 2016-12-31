@@ -33,7 +33,7 @@
 
 /obj/item/projectile/bullet/pellet
 	name = "pellet"
-	damage = 15
+	damage = rand(20,35)
 
 /obj/item/projectile/bullet/pellet/weak/New()
 	damage = 6
@@ -169,7 +169,7 @@
 
 
 /obj/item/projectile/bullet/mime
-	damage = 20
+	damage = 30
 
 /obj/item/projectile/bullet/mime/on_hit(atom/target, blocked = 0)
 	. = ..()
