@@ -202,6 +202,7 @@ var/list/sec_departments = list("engineering", "supply", "medical", "science")
 	uniform = /obj/item/clothing/under/rank/security
 	gloves = /obj/item/clothing/gloves/color/black
 	head = /obj/item/clothing/head/helmet/sec
+	glasses = /obj/item/clothing/glasses/hud/security/sunglasses
 	suit = /obj/item/clothing/suit/armor/vest/alt
 	shoes = /obj/item/clothing/shoes/jackboots
 	l_pocket = /obj/item/weapon/restraints/handcuffs
