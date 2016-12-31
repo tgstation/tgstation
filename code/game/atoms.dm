@@ -210,7 +210,7 @@ atom/proc/is_semi_open_container()
 	// *****RM
 	//user << "[name]: Dn:[density] dir:[dir] cont:[contents] icon:[icon] is:[icon_state] loc:[loc]"
 
-	if(reagents && is_open_container() || reagents && is_semi_open_container()) //is_open_container() isn't really the right proc for this, but w/e
+	if(reagents && (is_open_container() || is_semi_open_container())) //is_open_container() isn't really the right proc for this, but w/e
 		user << "It contains:"
 		if(reagents.reagent_list.len)
 			if(user.can_see_reagents()) //Show each individual reagent
