@@ -200,8 +200,7 @@
 	id = "coffee"
 	description = "Coffee is a brewed drink prepared from roasted seeds, commonly called coffee beans, of the coffee plant."
 	color = "#482000" // rgb: 72, 32, 0
-	nutriment_factor = 0
-	overdose_threshold = 80
+	nutriment_factor = 1
 
 /datum/reagent/consumable/coffee/overdose_process(mob/living/M)
 	M.Jitter(5)
@@ -215,6 +214,10 @@
 		M.bodytemperature = min(310, M.bodytemperature + (25 * TEMPERATURE_DAMAGE_COEFFICIENT))
 	if(holder.has_reagent("frostoil"))
 		holder.remove_reagent("frostoil", 5)
+	if(!(M.mind && M.mind.assigned_role == "Barista"))
+		M.adjustToxLoss(-0.5, 0)
+		M.adjustOxyLoss(-0.5, 0)
+
 	..()
 	. = 1
 
