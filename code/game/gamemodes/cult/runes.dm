@@ -25,7 +25,6 @@ To draw a rune, use an arcane tome.
 	var/obj/effect/decal/cleanable/blood/splatter/s = new(_loc)
 	ai_image = image(s.icon, icon_state = s.icon_state, loc = _loc)
 	qdel(s)
-	ai_image.override = 1
 
 	for(var/a in ai_list)
 		var/mob/living/silicon/ai/AI = a
