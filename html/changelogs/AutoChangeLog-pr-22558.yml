@@ -1,4 +1,0 @@
-author: "kevinz000"
-delete-after: True
-changes: 
-  - bugfix: "Machine overloads/overrides aren't as bullshit as you'll actually be able to dodge it now."
