@@ -27,14 +27,6 @@
 		internalPaper = new /obj/item/weapon/paper(src)
 	update_icon()
 
-/obj/item/weapon/paperplane/suicide_act(mob/user)
-	user.Stun(10)
-	user.visible_message("<span class='suicide'>[user] jams the [src] in [user.p_their()] nose. It looks like [user.p_theyre()] trying to commit suicide!</span>")
-	user.adjust_blurriness(6)
-	user.adjust_eye_damage(rand(6,8))
-	sleep(10)
-	return (BRUTELOSS)
-
 /obj/item/weapon/paperplane/update_icon()
 	cut_overlays()
 	if(!stamped)
@@ -45,9 +37,8 @@
 			var/image/stampoverlay = image('icons/obj/bureaucracy.dmi', "paperplane_[initial(stamp.icon_state)]")
 			add_overlay(stampoverlay)
 
-/obj/item/weapon/paperplane/attack_self(mob/user)
-	user << "<span class='notice'>You unfold [src].</span>"
-	user.unEquip(src)
+/obj/item/weapon/paperplane/equipped(mob/user)
+	user.unEquip(src) //hacky since we're midway through equipping by this point
 	user.put_in_hands(internalPaper)
 	qdel(src)
 
@@ -103,10 +94,6 @@
 		H.Weaken(2)
 		H.emote("scream")
 
-/obj/item/weapon/paper/AltClick(mob/living/carbon/user, obj/item/I)
-	if((!in_range(src, user)) || usr.stat || usr.restrained())
-		return
-	user << "<span class='notice'>You fold [src] into the shape of a plane!</span>"
-	user.unEquip(src)
-	I = new /obj/item/weapon/paperplane(loc, src)
-	user.put_in_hands(I)
+/obj/item/weapon/paper/pre_throw_by_mob(mob/tosser)
+	tosser.unEquip(src, 1)
+	return new /obj/item/weapon/paperplane(tosser.loc, src)

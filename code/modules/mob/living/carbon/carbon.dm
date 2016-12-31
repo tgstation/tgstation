@@ -156,6 +156,7 @@
 					add_logs(src, throwable_mob, "thrown", addition="from [start_T_descriptor] with the target [end_T_descriptor]")
 
 	else if(!(I.flags & (NODROP|ABSTRACT)))
+		I = I.pre_throw_by_mob(src) || I
 		thrown_thing = I
 		unEquip(I)
 
