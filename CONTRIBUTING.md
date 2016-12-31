@@ -150,7 +150,10 @@ Make these #defines with a name that more clearly states what it's for.
 ###Control statements:
 (if,while,for,etc)
 
+* All control statements must have a space before the expression (eg: `if (blah)` not `if(blah)`)
 * All control statements must not contain code on the same line as the statement (`if (blah) return`)
+* All control statements that mix the use of && and || must use nested parentheses to make it clear to the reader the order it is parsed.
+* for loops should use ; not , to separate expressions (eg: `for (var/i=1; i < 10; i++)` not `for (var/i=1,i < 10,i++)`)
 * All control statements comparing a variable to a number should use the formula of `thing` `operator` `number`, not the reverse (eg: `if (count <= 10)` not `if (10 >= count)`)
 
 ###Use early return.
