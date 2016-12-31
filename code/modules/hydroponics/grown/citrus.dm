@@ -115,9 +115,7 @@
 	if(iscarbon(user))
 		var/mob/living/carbon/C = user
 		C.throw_mode_on()
-	icon_state = "firelemon_active"
-	playsound(loc, 'sound/weapons/armbomb.ogg', 75, 1, -3)
-	addtimer(src, "prime", rand(10, 60))
+	prime()
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/firelemon/burn()
 	prime()
@@ -132,6 +130,8 @@
 	qdel(src) //Ensuring that it's deleted by its own explosion
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/firelemon/proc/prime()
+	icon_state = "firelemon_active"
+	playsound(loc, 'sound/weapons/armbomb.ogg', 75, 1, -3)
 	switch(seed.potency) //Combustible lemons are alot like IEDs, lots of flame, very little bang.
 		if(0 to 30)
 			update_mob()
