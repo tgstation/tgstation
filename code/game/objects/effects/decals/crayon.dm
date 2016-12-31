@@ -8,6 +8,10 @@
 	var/datum/ai_fake_rune/ai_hidden = null
 
 /obj/effect/decal/cleanable/crayon/New(location, main = "#FFFFFF", var/type = "rune1", var/e_name = "rune", var/rotation = 0, var/alt_icon = null)
+	if(name == "rune")
+		ai_hidden = new(location)
+		invisibility = INVISIBILITY_AI
+
 	..()
 	loc = location
 
@@ -26,9 +30,6 @@
 		src.transform = M
 
 	add_atom_colour(main, FIXED_COLOUR_PRIORITY)
-
-	if(name == "rune")
-		ai_hidden = new(loc)
 
 /obj/effect/decal/cleanable/crayon/Destroy()
 	qdel(ai_hidden)

@@ -51,6 +51,8 @@ To draw a rune, use an arcane tome.
 	layer = ABOVE_NORMAL_TURF_LAYER
 	color = "#FF0000"
 
+	invisibility = INVISIBILITY_AI
+
 	var/invocation = "Aiy ele-mayo!" //This is said by cultists when the rune is invoked.
 	var/req_cultists = 1 //The amount of cultists required around the rune to invoke it. If only 1, any cultist can invoke it.
 	var/req_cultists_text //if we have a description override for required cultists to invoke
