@@ -5,7 +5,10 @@
 
 #define INVISIBILITY_LIGHTING 20
 
+#define SEE_INVISIBLE_AI 24
+
 #define SEE_INVISIBLE_LIVING 25
+#define INVISIBILITY_AI 25
 
 #define SEE_INVISIBLE_LEVEL_ONE 35 //currently unused
 #define INVISIBILITY_LEVEL_ONE 35 //currently unused

@@ -28,6 +28,9 @@ var/list/ai_list = list()
 	med_hud = DATA_HUD_MEDICAL_BASIC
 	sec_hud = DATA_HUD_SECURITY_BASIC
 	mob_size = MOB_SIZE_LARGE
+
+	see_invisible = SEE_INVISIBLE_AI
+
 	var/list/network = list("SS13")
 	var/obj/machinery/camera/current = null
 	var/list/connected_robots = list()
