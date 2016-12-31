@@ -259,10 +259,8 @@
 /obj/structure/destructible/clockwork/powered/proc/return_power(amount) //returns a given amount of power to all nearby sigils or if there are no sigils, to the APC
 	if(amount <= 0)
 		return FALSE
-	var/list/sigils_in_range = list()
-	for(var/obj/effect/clockwork/sigil/transmission/T in range(1, src))
-		sigils_in_range |= T
-	if(!sigils_in_range.len && (!target_apc || !target_apc.cell))
+	var/list/sigils_in_range = check_apc_and_sigils()
+	if(!istype(sigils_in_range))
 		return FALSE
 	if(sigils_in_range.len)
 		while(amount >= MIN_CLOCKCULT_POWER)
@@ -277,3 +275,10 @@
 		target_apc.update_icon()
 		target_apc.updateUsrDialog()
 	return TRUE
+
+/obj/structure/destructible/clockwork/powered/proc/check_apc_and_sigils() //checks for sigils and an APC, returning FALSE if it finds neither, and a list of sigils otherwise
+	. = list()
+	for(var/obj/effect/clockwork/sigil/transmission/T in range(1, src))
+		. |= T
+	if(!..len && (!target_apc || !target_apc.cell))
+		return FALSE
