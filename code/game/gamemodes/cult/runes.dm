@@ -23,7 +23,7 @@ To draw a rune, use an arcane tome.
 	ai_hidden_runes += src
 
 	var/obj/effect/decal/cleanable/blood/splatter/s = new(_loc)
-	ai_image = image(s.icon, icon_state = s.icon_state, loc = _loc)
+	ai_image = image(s.icon, icon_state = s.icon_state, loc = _loc, layer = TURF_LAYER)
 	qdel(s)
 
 	for(var/a in ai_list)
