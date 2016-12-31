@@ -1,6 +1,6 @@
 var/list/sacrificed = list() //a mixed list of minds and mobs
 var/list/non_revealed_runes = (subtypesof(/obj/effect/rune) - /obj/effect/rune/malformed)
-var/list/runes = list()
+var/list/ai_hidden_runes = list()
 
 /*
 
@@ -13,6 +13,31 @@ Runes can either be invoked by one's self or with many different cultists. Each 
 To draw a rune, use an arcane tome.
 
 */
+
+//for hiding from the ai
+/datum/ai_fake_rune
+	var/image/ai_image
+
+/datum/ai_fake_rune/New(_loc)
+	. = ..()
+	ai_hidden_runes += src
+
+	var/obj/effect/decal/cleanable/blood/splatter/s = new(_loc)
+	ai_image = image(s.icon, icon_state = s.icon_state, loc = _loc)
+	qdel(s)
+	ai_image.override = 1
+
+	for(var/a in ai_list)
+		var/mob/living/silicon/ai/AI = a
+		AI.invisify_rune(src)
+
+/datum/ai_fake_rune/Destroy()
+	ai_hidden_runes -= src
+	for(var/a in ai_list)
+		var/mob/living/silicon/ai/AI = a
+		AI.uninvisify_rune(src)
+	qdel(ai_image)
+	return ..()
 
 /obj/effect/rune
 	name = "rune"
@@ -39,29 +64,16 @@ To draw a rune, use an arcane tome.
 
 	var/req_keyword = 0 //If the rune requires a keyword - go figure amirite
 	var/keyword //The actual keyword for the rune
-	var/image/ai_image
+	var/datum/ai_fake_rune/ai_hidden
 
 /obj/effect/rune/New(loc, set_keyword)
-	..()
+	. = ..()
+	ai_hidden = new(loc)
 	if(set_keyword)
 		keyword = set_keyword
-	runes += src
-
-	var/obj/effect/decal/cleanable/blood/splatter/s = new(loc)
-	ai_image = image(s.icon, icon_state = s.icon_state, loc = src.loc)
-	qdel(s)
-	ai_image.override = 1
-
-	for(var/a in ai_list)
-		var/mob/living/silicon/ai/AI = a
-		AI.invisify_rune(src)
 
 /obj/effect/rune/Destroy()
-	runes -= src
-	for(var/a in ai_list)
-		var/mob/living/silicon/ai/AI = a
-		AI.uninvisify_rune(src)
-	qdel(ai_image)
+	qdel(ai_hidden)
 	return ..()
 
 /obj/effect/rune/examine(mob/user)

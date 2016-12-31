@@ -869,11 +869,11 @@ var/list/ai_list = list()
 			exclusive control."
 		apc.update_icon()
 
-/mob/living/silicon/ai/proc/invisify_rune(obj/effect/rune/rune)
+/mob/living/silicon/ai/proc/invisify_rune(datum/ai_fake_rune/rune)
 	if(client)
 		client.images += rune.ai_image
 
-/mob/living/silicon/ai/proc/uninvisify_rune(obj/effect/rune/rune)
+/mob/living/silicon/ai/proc/uninvisify_rune(datum/ai_fake_rune/rune)
 	if(client)
 		client.images -= rune.ai_image
 

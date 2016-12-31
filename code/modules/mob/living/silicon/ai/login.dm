@@ -1,6 +1,6 @@
 /mob/living/silicon/ai/Login()
 	..()
-	for(var/r in runes)
+	for(var/r in ai_hidden_runes)
 		invisify_rune(r)
 
 	if(stat != DEAD)
