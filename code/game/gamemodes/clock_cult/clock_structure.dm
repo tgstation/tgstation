@@ -280,5 +280,6 @@
 	. = list()
 	for(var/obj/effect/clockwork/sigil/transmission/T in range(1, src))
 		. |= T
-	if(!..len && (!target_apc || !target_apc.cell))
+	var/list/L = .
+	if(!L.len && (!target_apc || !target_apc.cell))
 		return FALSE
