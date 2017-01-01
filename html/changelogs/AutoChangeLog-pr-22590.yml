@@ -1,4 +1,0 @@
-author: "A whole bunch of spiders in a SWAT suit"
-delete-after: True
-changes: 
-  - bugfix: "spiders can't wrap anchored things"
