@@ -10,7 +10,7 @@
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "floor"
 
-/turf/open/indestructible/ForcedTurfChange(path, defer_change = FALSE, ignore_air = FALSE)
+/turf/open/indestructible/TerraformTurf(path, defer_change = FALSE, ignore_air = FALSE)
 	return
 
 /turf/open/indestructible/sound
