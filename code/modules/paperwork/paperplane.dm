@@ -104,9 +104,12 @@
 		H.emote("scream")
 
 /obj/item/weapon/paper/AltClick(mob/living/carbon/user, obj/item/I)
-	if((!in_range(src, user)) || usr.stat || usr.restrained())
-		return
-	user << "<span class='notice'>You fold [src] into the shape of a plane!</span>"
-	user.unEquip(src)
-	I = new /obj/item/weapon/paperplane(loc, src)
-	user.put_in_hands(I)
+	if ( istype(user) )
+		if( (!in_range(src, user)) || user.stat || user.restrained() )
+			return
+		user << "<span class='notice'>You fold [src] into the shape of a plane!</span>"
+		user.unEquip(src)
+		I = new /obj/item/weapon/paperplane(loc, src)
+		user.put_in_hands(I)
+	else
+		user << "<span class='notice'> You lack the dexterity to fold \the [src]. </span>"
