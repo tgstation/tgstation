@@ -10,6 +10,9 @@
 	icon = 'icons/turf/walls.dmi'
 	explosion_block = 50
 
+/turf/closed/indestructible/ForcedTurfChange(path, defer_change = FALSE, ignore_air = FALSE)
+	return
+
 /turf/closed/indestructible/acid_act(acidpwr, acid_volume, acid_id)
 	return 0
 
