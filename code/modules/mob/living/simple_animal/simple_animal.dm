@@ -53,13 +53,16 @@
 	var/ambush_sound = null
 	var/friendly = "nuzzles" //If the mob does no damage with it's attack
 	var/environment_smash = 0 //Set to 1 to allow breaking of crates,lockers,racks,tables; 2 for walls; 3 for Rwalls
-
+	var/list/wanted_objects = list() //A typecache of objects types that will be checked against to attack, should we have search_objects enabled (the attackingtarget proc determines the reaction)
 	var/speed = 1 //LETS SEE IF I CAN SET SPEEDS FOR SIMPLE MOBS WITHOUT DESTROYING EVERYTHING. Higher speed is slower, negative speed is faster
 
 	//Hot simple_animal baby making vars
 	var/list/childtype = null
 	var/next_scan_time = 0
 	var/animal_species //Sorry, no spider+corgi buttbabies.
+
+	//will it blend
+	var/can_tame = 0
 
 	//simple_animal access
 	var/obj/item/weapon/card/id/access_card = null	//innate access uses an internal ID card
@@ -83,6 +86,14 @@
 	var/dextrous_hud_type = /datum/hud/dextrous
 	var/datum/personal_crafting/handcrafting
 
+	//mob riding vars
+	var/next_ride_move = 0 //used for move delays
+	var/ride_move_delay = 2 //tick delay between movements, lower = faster, higher = slower
+
+	//Pixels
+	var/generic_pixel_x = 0 //All dirs show this pixel_x/y for the driver
+	var/generic_pixel_y = 0
+	var/view_range = 7
 
 /mob/living/simple_animal/New()
 	..()
@@ -396,6 +407,68 @@
 		return
 	else
 		..()
+//mob riding, it's this or a complicated fucking datum, adding vars to atom or mindswap fuckery.
+
+
+/mob/living/simple_animal/proc/handle_mob_layer()
+	if(dir = SOUTH)
+		layer = ABOVE_MOB_LAYER
+	else
+		layer = BELOW_MOB_LAYER
+
+/mob/living/simple_animal/unbuckle_mob(mob/living/buckled_mob,force = 0)
+	if(istype(buckled_mob))
+		buckled_mob.pixel_x = 0
+		buckled_mob.pixel_y = 0
+		if(buckled_mob.client)
+			buckled_mob.client.view = world.view
+	. = ..()
+
+
+/mob/living/simple_animal/user_buckle_mob(mob/living/M, mob/user)
+	if(user.incapacitated())
+		return
+	for(var/atom/movable/A in get_turf(src))
+		if(A.density)
+			if(A != src && A != M)
+				return
+	M.loc = get_turf(src)
+	..()
+	handle_mob_offsets()
+	if(user.client)
+		user.client.view = view_range
+
+
+//Override this to set your vehicle's various pixel offsets. if they differ between directions, otherwise use the generic variables
+/mob/living/simple_animal/proc/handle_mob_offsets()
+	if(has_buckled_mobs())
+		for(var/m in buckled_mobs)
+			var/mob/living/buckled_mob = m
+			buckled_mob.setDir(dir)
+			buckled_mob.pixel_x = generic_pixel_x
+			buckled_mob.pixel_y = generic_pixel_y
+
+/mob/living/simple_animal/relaymove(mob/user, direction)
+	if(user.incapacitated())
+		unbuckle_mob(user)
+		return
+
+	if(world.time < next_ride_move)
+		return
+	next_ride_move = world.time + ride_move_delay
+	if(!Process_Spacemove(direction) || !isturf(loc))
+		return
+
+	step(src, direction)
+
+	handle_mob_layer()
+	handle_mob_offsets()
+
+/mob/living/simple_animal/Move(NewLoc,Dir,step_x=0,step_y=0)
+	. = ..()
+	handle_mob_layer()
+	handle_mob_offsets()
+
 
 /mob/living/simple_animal/update_canmove()
 	if(paralysis || stunned || weakened || stat || resting)

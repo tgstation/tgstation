@@ -25,3 +25,15 @@
 	icon_state = "goliath_saddle"
 	w_class = WEIGHT_CLASS_NORMAL
 	attack_verb = list("saddled up")
+
+/obj/item/weapon/saddle/afterattack(mob/living/simple_animal/S, mob/user, proximity)
+	if(!proximity)
+		return
+
+	if(S.stat == CONSCIOUS	&& S.can_buckle && S.can_tame)
+		S.add_overlay("[S.name]_saddled")
+		S.can_buckle = 1
+		S.buckle_lying = 0 //Override for resting buckles
+		S.regenerate_icons()
+		qdel(S)
+
