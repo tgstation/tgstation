@@ -57,38 +57,27 @@
 		master = null
 	return ..()
 
-/obj/structure/particle_accelerator/verb/rotate()
-	set name = "Rotate Clockwise"
-	set category = "Object"
-	set src in oview(1)
-
-	if(usr.stat || !usr.canmove || usr.restrained())
-		return
-	if (anchored)
-		usr << "It is fastened to the floor!"
-		return 0
-	setDir(turn(dir, -90))
-	return 1
-
 /obj/structure/particle_accelerator/AltClick(mob/user)
 	..()
-	if(user.incapacitated())
+	if(user.incapacitated() || usr.stat || !usr.canmove || usr.restrained())
 		user << "<span class='warning'>You can't do that right now!</span>"
 		return
 	if(!in_range(src, user))
 		return
-	else
-		rotate()
+	if(anchored)
+		user << "It is fastened to the floor!"
+		return 0
+	setDir(turn(dir, -90))
+	return 1
 
-/obj/structure/particle_accelerator/verb/rotateccw()
-	set name = "Rotate Counter Clockwise"
-	set category = "Object"
-	set src in oview(1)
-
-	if(usr.stat || !usr.canmove || usr.restrained())
+/obj/structure/particle_accelerator/CtrlClick(mob/user)
+	..()
+	if(user.incapacitated() || user.stat || !user.canmove || user.restrained())
+		return
+	if(!in_range(src, user))
 		return
 	if (anchored)
-		usr << "It is fastened to the floor!"
+		user << "It is fastened to the floor!"
 		return 0
 	setDir(turn(dir, 90))
 	return 1

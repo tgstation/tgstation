@@ -122,18 +122,15 @@
 				return
 			storedpda.icon_state = P.icon_state
 			storedpda.desc = P.desc
-			ejectpda()
+			AltClick(user)
 
 		else
 			user << "<span class='notice'>\The [src] is empty.</span>"
 
 
-/obj/machinery/pdapainter/verb/ejectpda()
-	set name = "Eject PDA"
-	set category = "Object"
-	set src in oview(1)
-
-	if(usr.stat || usr.restrained() || !usr.canmove)
+/obj/machinery/pdapainter/AltClick(mob/user)
+	..()
+	if(user.stat || user.restrained() || !user.canmove)
 		return
 
 	if(storedpda)
@@ -141,7 +138,7 @@
 		storedpda = null
 		update_icon()
 	else
-		usr << "<span class='notice'>The [src] is empty.</span>"
+		user << "<span class='notice'>The [src] is empty.</span>"
 
 
 /obj/machinery/pdapainter/power_change()

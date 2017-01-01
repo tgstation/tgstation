@@ -58,28 +58,18 @@
 		power_usage -= 50 * M.rating
 	active_power_usage = power_usage
 
-/obj/machinery/power/emitter/verb/rotate()
-	set name = "Rotate"
-	set category = "Object"
-	set src in oview(1)
-
-	if(usr.stat || !usr.canmove || usr.restrained())
-		return
-	if (src.anchored)
-		usr << "<span class='warning'>It is fastened to the floor!</span>"
-		return 0
-	src.setDir(turn(src.dir, 270))
-	return 1
-
 /obj/machinery/power/emitter/AltClick(mob/user)
 	..()
-	if(user.incapacitated())
+	if(user.incapacitated() || user.stat || !user.canmove || user.restrained())
 		user << "<span class='warning'>You can't do that right now!</span>"
 		return
 	if(!in_range(src, user))
 		return
-	else
-		rotate()
+	if (src.anchored)
+		user << "<span class='warning'>It is fastened to the floor!</span>"
+		return 0
+	src.setDir(turn(src.dir, 270))
+	return 1
 
 /obj/machinery/power/emitter/initialize()
 	..()

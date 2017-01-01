@@ -266,15 +266,12 @@
 	src.processing = 0
 	src.visible_message("\the [src] finishes processing.")
 
-/obj/machinery/processor/verb/eject()
-	set category = "Object"
-	set name = "Eject Contents"
-	set src in oview(1)
-
-	if(usr.stat || !usr.canmove || usr.restrained())
+/obj/machinery/processor/AltClick(mob/user)
+	..()
+	if(user.stat || !user.canmove || user.restrained())
 		return
 	src.empty()
-	add_fingerprint(usr)
+	add_fingerprint(user)
 	return
 
 /obj/machinery/processor/proc/empty()

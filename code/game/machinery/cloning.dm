@@ -292,17 +292,14 @@
 	connected.updateUsrDialog()
 	return TRUE
 
-/obj/machinery/clonepod/verb/eject()
-	set name = "Eject Cloner"
-	set category = "Object"
-	set src in oview(1)
-
-	if(!usr)
+/obj/machinery/clonepod/AltClick(mob/user)
+	..()
+	if(!user)
 		return
-	if(usr.stat || !usr.canmove || usr.restrained())
+	if(user.stat || !user.canmove || user.restrained())
 		return
 	go_out()
-	add_fingerprint(usr)
+	add_fingerprint(user)
 
 /obj/machinery/clonepod/proc/go_out()
 	if (locked)

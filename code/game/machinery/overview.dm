@@ -1,16 +1,14 @@
 //#define AMAP
 
-/obj/machinery/computer/security/verb/station_map()
-	set name = ".map"
-	set category = "Object"
-	set src in view(1)
-	usr.set_machine(src)
+/obj/machinery/computer/security/AltClick(mob/user)
+	..()
+	user.set_machine(src)
 	if(!mapping)
 		return
 
-	log_game("[usr]([usr.key]) used station map L[z] in [src.loc.loc]")
+	log_game("[user]([user.key]) used station map L[z] in [src.loc.loc]")
 
-	src.drawmap(usr)
+	src.drawmap(user)
 
 /obj/machinery/computer/security/proc/drawmap(mob/user)
 

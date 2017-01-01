@@ -51,7 +51,6 @@
 				return 0
 			O.loc = src
 			beaker = O
-			src.verbs += /obj/machinery/juicer/verb/detach
 			update_icon()
 			src.updateUsrDialog()
 			return 0
@@ -128,18 +127,19 @@
 	src.updateUsrDialog()
 	return
 
-/obj/machinery/juicer/verb/detach()
-	set category = "Object"
-	set name = "Detach container from the juicer"
-	set src in oview(1)
+/obj/machinery/juicer/proc/detach()
 	if(usr.stat || !usr.canmove || usr.restrained())
 		return
 	if (!beaker)
 		return
-	src.verbs -= /obj/machinery/juicer/verb/detach
 	beaker.loc = src.loc
 	beaker = null
 	update_icon()
+
+/obj/machinery/juicer/AltClick(mob/user)
+	..()
+	detach()
+
 
 /obj/machinery/juicer/proc/get_juice_id(obj/item/weapon/reagent_containers/food/snacks/grown/O)
 	for (var/i in allowed_items)
