@@ -123,14 +123,6 @@
 	burnt = 1
 	update_icon()
 
-/turf/open/floor/carpet/carpetsymbol
-	icon_state = "carpetsymbol"
-	smooth = SMOOTH_FALSE
-
-/turf/open/floor/carpet/carpetsymbol2
-	icon_state = "carpetstar"
-	smooth = SMOOTH_FALSE
-
 
 /turf/open/floor/fakespace
 	icon = 'icons/turf/space.dmi'
