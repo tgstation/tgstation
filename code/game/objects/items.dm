@@ -325,7 +325,9 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 								continue
 							if(I.type in rejections) // To limit bag spamming: any given type only complains once
 								continue
-							if(!S.can_be_inserted(I))	// Note can_be_inserted still makes noise when the answer is no
+							if(!S.can_be_inserted(I, stop_messages = 1))	// Note can_be_inserted still makes noise when the answer is no
+								if(S.contents.len >= S.storage_slots)
+									break
 								rejections += I.type	// therefore full bags are still a little spammy
 								failure = 1
 								continue
