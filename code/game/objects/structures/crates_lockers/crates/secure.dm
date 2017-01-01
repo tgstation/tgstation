@@ -35,6 +35,10 @@
 	for(var/atom/movable/AM in src)
 		qdel(AM)
 	explosion(get_turf(src), 0, 1, 5, 5)
+	var/message = "[ADMIN_LOOKUPFLW(user)] has detonated [src.name]."
+	bombers += message
+	message_admins(message)
+	log_game("[key_name(user)] has detonated a [src.name].")
 	qdel(src)
 
 /obj/structure/closet/crate/secure/weapon
