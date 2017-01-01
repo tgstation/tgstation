@@ -12,6 +12,10 @@
 /obj/item/weapon/storage/book/attack_self(mob/user)
 		user << "<span class='notice'>The pages of [title] have been cut out!</span>"
 
+var/global/list/biblenames      = list("Bible", "Quran", "Scrapbook", "Burning Bible", "Clown Bible", "Banana Bible", "Creeper Bible", "White Bible", "Holy Light",  "The God Delusion", "Tome",        "The King in Yellow", "Ithaqua", "Scientology", "Melted Bible", "Necronomicon")
+var/global/list/biblestates     = list("bible", "koran", "scrapbook", "burning",       "honk1",       "honk2",        "creeper",       "white",       "holylight",   "atheist",          "tome",        "kingyellow",         "ithaqua", "scientology", "melted",       "necronomicon")
+var/global/list/bibleitemstates = list("bible", "koran", "scrapbook", "bible",         "bible",       "bible",        "syringe_kit",   "syringe_kit", "syringe_kit", "syringe_kit",      "syringe_kit", "kingyellow",         "ithaqua", "scientology", "melted",       "necronomicon")
+
 /obj/item/weapon/storage/book/bible
 	name = "bible"
 	desc = "Apply to head repeatedly."
@@ -23,23 +27,6 @@
 /obj/item/weapon/storage/book/bible/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is offering [user.p_them()]self to [deity_name]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return (BRUTELOSS)
-
-/obj/item/weapon/storage/book/bible/booze
-	name = "bible"
-	desc = "To be applied to the head repeatedly."
-	icon_state ="bible"
-
-/obj/item/weapon/storage/book/bible/booze/New()
-	..()
-	new /obj/item/weapon/reagent_containers/food/drinks/beer(src)
-	new /obj/item/weapon/reagent_containers/food/drinks/beer(src)
-	new /obj/item/stack/spacecash(src)
-	new /obj/item/stack/spacecash(src)
-	new /obj/item/stack/spacecash(src)
-
-var/global/list/biblenames      = list("Bible", "Quran", "Scrapbook", "Burning Bible", "Clown Bible", "Banana Bible", "Creeper Bible", "White Bible", "Holy Light",  "The God Delusion", "Tome",        "The King in Yellow", "Ithaqua", "Scientology", "Melted Bible", "Necronomicon")
-var/global/list/biblestates     = list("bible", "koran", "scrapbook", "burning",       "honk1",       "honk2",        "creeper",       "white",       "holylight",   "atheist",          "tome",        "kingyellow",         "ithaqua", "scientology", "melted",       "necronomicon")
-var/global/list/bibleitemstates = list("bible", "koran", "scrapbook", "bible",         "bible",       "bible",        "syringe_kit",   "syringe_kit", "syringe_kit", "syringe_kit",      "syringe_kit", "kingyellow",         "ithaqua", "scientology", "melted",       "necronomicon")
 
 /obj/item/weapon/storage/book/bible/attack_self(mob/living/carbon/human/H)
 	if(!istype(H))
@@ -163,3 +150,14 @@ var/global/list/bibleitemstates = list("bible", "koran", "scrapbook", "bible",  
 			var/unholy2clean = A.reagents.get_reagent_amount("unholywater")
 			A.reagents.del_reagent("unholywater")
 			A.reagents.add_reagent("holywater",unholy2clean)
+
+/obj/item/weapon/storage/book/bible/booze
+	desc = "To be applied to the head repeatedly."
+
+/obj/item/weapon/storage/book/bible/booze/New()
+	..()
+	new /obj/item/weapon/reagent_containers/food/drinks/beer(src)
+	new /obj/item/weapon/reagent_containers/food/drinks/beer(src)
+	new /obj/item/stack/spacecash(src)
+	new /obj/item/stack/spacecash(src)
+	new /obj/item/stack/spacecash(src)
