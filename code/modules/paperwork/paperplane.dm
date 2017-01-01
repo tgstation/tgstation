@@ -104,7 +104,7 @@
 		H.emote("scream")
 
 /obj/item/weapon/paper/AltClick(mob/living/carbon/user, obj/item/I)
-	if ( iscarbon(user) )
+	if ( is_type(user) )
 		if( (!in_range(src, user)) || user.stat || user.restrained() )
 			return
 		user << "<span class='notice'>You fold [src] into the shape of a plane!</span>"
