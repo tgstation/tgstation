@@ -1,3 +1,6 @@
+#define COMMUNICATION_COOLDOWN 600
+#define COMMUNICATION_COOLDOWN_AI 600
+
 var/datum/subsystem/communications/SScommunications
 
 /datum/subsystem/communications
@@ -29,3 +32,6 @@ var/datum/subsystem/communications/SScommunications
 		nonsilicon_message_cooldown = world.time + COMMUNICATION_COOLDOWN
 	log_say("[key_name(user)] has made a priority announcement: [input]")
 	message_admins("[key_name_admin(user)] has made a priority announcement.")
+
+#undef COMMUNICATION_COOLDOWN
+#undef COMMUNICATION_COOLDOWN_AI
