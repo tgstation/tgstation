@@ -132,7 +132,7 @@
 /atom/proc/is_open_container()
 	return flags & OPENCONTAINER
 
-atom/proc/is_transparet()
+atom/proc/is_transparent()
 	return flags & TRANSPARENT
 
 /*//Convenience proc to see whether a container can be accessed in a certain way.
