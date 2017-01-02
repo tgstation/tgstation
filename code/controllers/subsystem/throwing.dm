@@ -37,55 +37,7 @@ var/datum/subsystem/throwing/SSthrowing
 				return
 			continue
 
-		if (!isturf(AM.loc) || !AM.throwing)
-			TT.finialize()
-			if (MC_TICK_CHECK)
-				return
-			continue
-
-		if (TT.dist_travelled && TT.hitcheck()) //to catch sneaky things moving on our tile while we slept
-			TT.finialize()
-			if (MC_TICK_CHECK)
-				return
-			continue
-
-		var/atom/step
-
-		//calculate how many tiles to move, making up for any missed ticks.
-		var/tilestomove = round(min((((world.time - TT.start_time) * TT.speed) - (TT.dist_travelled ? TT.dist_travelled : -1)), TT.speed*MAX_TICKS_TO_MAKE_UP) * (world.tick_lag * wait))
-		while (tilestomove-- > 0)
-			if ((TT.dist_travelled >= TT.maxrange || AM.loc == TT.target_turf) && AM.has_gravity(AM.loc))
-				TT.finialize(hit = FALSE)
-				break
-
-			if (TT.dist_travelled <= max(TT.dist_x, TT.dist_y)) //if we haven't reached the target yet we home in on it, otherwise we use the initial direction
-				step = get_step(AM, get_dir(AM, TT.target_turf))
-			else
-				step = get_step(AM, TT.init_dir)
-
-			if (!TT.pure_diagonal && !TT.diagonals_first) // not a purely diagonal trajectory and we don't want all diagonal moves to be done first
-				if (TT.diagonal_error >= 0 && max(TT.dist_x,TT.dist_y) - TT.dist_travelled != 1) //we do a step forward unless we're right before the target
-					step = get_step(AM, TT.dx)
-				TT.diagonal_error += (TT.diagonal_error < 0) ? TT.dist_x/2 : -TT.dist_y
-
-			if (!step) // going off the edge of the map makes get_step return null, don't let things go off the edge
-				TT.finialize(hit = FALSE)
-				break
-
-			AM.Move(step, get_dir(AM, step))
-
-			if (!AM.throwing) // we hit something during our move
-				TT.finialize()
-				break
-
-			TT.dist_travelled++
-
-			if (TT.dist_travelled > MAX_THROWING_DIST)
-				TT.finialize(hit = FALSE)
-				break
-
-			if (MC_TICK_CHECK)
-				return
+		TT.tick()
 
 		if (MC_TICK_CHECK)
 			return
@@ -111,8 +63,52 @@ var/datum/subsystem/throwing/SSthrowing
 	var/diagonal_error
 	var/datum/callback/callback
 
+/datum/thrownthing/proc/tick()
+	var/atom/movable/AM = thrownthing
+	if (!isturf(AM.loc) || !AM.throwing)
+		finialize()
+		return
 
-/datum/thrownthing/proc/finialize(hit = TRUE)
+	if (dist_travelled && hitcheck()) //to catch sneaky things moving on our tile while we slept
+		finialize()
+		return
+
+	var/atom/step
+
+	//calculate how many tiles to move, making up for any missed ticks.
+	var/tilestomove = round(min(((((world.time+world.tick_lag) - start_time) * speed) - (dist_travelled ? dist_travelled : -1)), speed*MAX_TICKS_TO_MAKE_UP) * (world.tick_lag * SSthrowing.wait))
+	while (tilestomove-- > 0)
+		if ((dist_travelled >= maxrange || AM.loc == target_turf) && AM.has_gravity(AM.loc))
+			finialize()
+			return
+
+		if (dist_travelled <= max(dist_x, dist_y)) //if we haven't reached the target yet we home in on it, otherwise we use the initial direction
+			step = get_step(AM, get_dir(AM, target_turf))
+		else
+			step = get_step(AM, init_dir)
+
+		if (!pure_diagonal && !diagonals_first) // not a purely diagonal trajectory and we don't want all diagonal moves to be done first
+			if (diagonal_error >= 0 && max(dist_x,dist_y) - dist_travelled != 1) //we do a step forward unless we're right before the target
+				step = get_step(AM, dx)
+			diagonal_error += (diagonal_error < 0) ? dist_x/2 : -dist_y
+
+		if (!step) // going off the edge of the map makes get_step return null, don't let things go off the edge
+			finialize()
+			return
+
+		AM.Move(step, get_dir(AM, step))
+
+		if (!AM.throwing) // we hit something during our move
+			finialize(hit = TRUE)
+			return
+
+		dist_travelled++
+
+		if (dist_travelled > MAX_THROWING_DIST)
+			finialize()
+			return
+
+/datum/thrownthing/proc/finialize(hit = FALSE)
 	set waitfor = 0
 	SSthrowing.processing -= thrownthing
 	//done throwing, either because it hit something or it finished moving

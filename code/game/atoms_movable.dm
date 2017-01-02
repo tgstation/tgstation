@@ -266,6 +266,7 @@
 	SSthrowing.processing[src] = TT
 	if (SSthrowing.paused && length(SSthrowing.currentrun))
 		SSthrowing.currentrun[src] = TT
+	TT.tick()
 
 
 /atom/movable/proc/handle_buckled_mob_movement(newloc,direct)
