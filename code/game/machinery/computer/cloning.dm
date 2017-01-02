@@ -28,39 +28,19 @@
 	network.Cut()
 	. = ..()
 
-/obj/machinery/computer/cloning/can_clone(datum/data/record/R)
-	var/ckey = R.fields["ckey"]
-	var/datum/mind/clonemind = locate(R.fields["mind"])
-	// Not a mind
-	if(!istype(clonemind))
-		return FALSE
-	// Not (currently) dead
-	if(clonemind.current && clonemind.current.stat != DEAD)
-		return FALSE
-	// Mind is being used by someone
-	if(clonemind.active && ckey(clonemind.key) != ckey)
-		return FALSE
-	// If they're unable to reenter their body
-	if(!clonemind.get_ghost())
-		return FALSE
-
 /obj/machinery/computer/cloning/process()
-	for(var/obj/machinery/cloning/dna_scanner/scanner in network)
+	for(var/obj/machinery/cloning/scanner/scanner in network)
 		if(scanner.autoscan && scanner.occupant)
 			scan_mob(scanner.occupant)
 
 	var/list/clonables = list()
-	for(var/datum/data/record/R in records)
+	for(var/datum/cloning_record/R in records)
+		if(R.can_clone())
+			clonables += R
 
 	for(var/obj/machinery/cloning/pod/pod in network)
-		if(!pod.autoclone)
-			continue
-
-	if(!(pod1.occupant || pod1.mess) && (pod1.efficiency > 5))
-		for(var/datum/data/record/R in records)
-			if(!(pod1.occupant || pod1.mess))
-				if(pod1.growclone(R.fields["ckey"], R.fields["name"], R.fields["UI"], R.fields["SE"], R.fields["mind"], R.fields["mrace"], R.fields["features"], R.fields["factions"]))
-					records -= R
+		if(pod.ready_to_clone() && pod.autoclone)
+			pod.growclone(popleft(cloneables))
 
 /obj/machinery/computer/cloning/proc/update_network()
 	network = list()
@@ -133,7 +113,7 @@
 		playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
 		return
 
-	var/datum/data/record/R = new()
+	var/datum/cloning_record/R = new()
 	if(subject.dna.species)
 		// We store the instance rather than the path, because some
 		// species (abductors, slimepeople) store state in their

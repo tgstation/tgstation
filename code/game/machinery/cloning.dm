@@ -13,6 +13,36 @@
 	computer = null
 	. = ..()
 
+/datum/cloning_record
+	var/ckey
+	var/clonename
+	var/ui
+	var/se
+	var/datum/mind/mind
+	var/datum/species/mrace
+	var/list/features
+	var/list/factions
+
+/datum/cloning_record/proc/is_complete()
+	if(ckey && clonename && ui && se && istype(mind) && istype(mrace) && istype(features) && istype(factions))
+		. = TRUE
+	else
+		. = FALSE
+
+/datum/cloning_record/proc/can_clone()
+	if(!is_complete())
+		return FALSE
+	// Not (currently) dead
+	if(mind.current && mind.current.stat != DEAD)
+		return FALSE
+	// Mind is being used by someone
+	if(mind.active && ckey(mind.key) != ckey)
+		return FALSE
+	// If they're unable to reenter their body
+	if(!mind.get_ghost())
+		return FALSE
+	return TRUE
+
 #define CLONE_INITIAL_DAMAGE     190    //Clones in clonepods start with 190 cloneloss damage and 190 brainloss damage, thats just logical
 #define MINIMUM_HEAL_LEVEL 40
 
@@ -32,6 +62,7 @@
 	var/attempting = FALSE //One clone attempt at a time thanks
 	var/speed_coeff
 	var/efficiency
+	var/autoclone = FALSE
 
 	var/datum/mind/clonemind
 	var/grab_ghost_when = CLONER_MATURE_CLONE
@@ -86,6 +117,19 @@
 	if(heal_level > 100)
 		heal_level = 100
 
+/obj/machinery/cloning/pod/assume_air()
+	return FALSE
+
+/obj/machinery/cloning/pod/return_air()
+	// The clone is pickled in non-reactive liquid, so we'll simulate this
+	// with normal air pressure nitrogen. They breathe through the brine
+	// we supply them anyway.
+	var/datum/gas_mixture_GM = new
+	GM.assert_gases("n2")
+	GM.gases["n2"][MOLES] = MOLES_N2STANDARD + MOLES_O2STANDARD
+	GM.temperature = T20C
+	. = GM
+
 /obj/item/weapon/circuitboard/machine/clonepod
 	name = "circuit board (Clone Pod)"
 	build_path = /obj/machinery/cloning/pod
@@ -132,40 +176,30 @@
 	. = (100 * ((occupant.health + 100) / (heal_level + 100)))
 
 /obj/machinery/cloning/pod/attack_ai(mob/user)
-	return examine(user)
+	. = examine(user)
+
+/obj/machinery/cloning/pod/proc/ready_to_clone()
+	if(panel_open || mess || attempting || occupant)
+		. = FALSE
+	else
+		. = TRUE
 
 //Start growing a human clone in the pod!
-/obj/machinery/cloning/pod/proc/growclone(ckey, clonename, ui, se, mindref, datum/species/mrace, list/features, factions)
-	if(panel_open)
+/obj/machinery/cloning/pod/proc/growclone(datum/cloning_record/record)
+	if(!ready_to_clone())
 		return FALSE
-	if(mess || attempting)
+	if(!record.can_clone())
 		return FALSE
-	clonemind = locate(mindref)
-	if(!istype(clonemind))	//not a mind
-		return FALSE
-	if( clonemind.current && clonemind.current.stat != DEAD )	//mind is associated with a non-dead body
-		return FALSE
-	if(clonemind.active)	//somebody is using that mind
-		if( ckey(clonemind.key)!=ckey )
-			return FALSE
-	else
-		// get_ghost() will fail if they're unable to reenter their body
-		var/mob/dead/observer/G = clonemind.get_ghost()
-		if(!G)
-			return FALSE
-	if(clonemind.damnation_type) //Can't clone the damned.
-		addtimer(src, "horrifyingsound", 0)
-		mess = TRUE
-		icon_state = "pod_g"
-		update_icon()
-		return FALSE
+
+	clonemind = record.mind
 
 	attempting = TRUE //One at a time!!
 	countdown.start()
 
 	var/mob/living/carbon/human/H = new /mob/living/carbon/human(src)
 
-	H.hardset_dna(ui, se, H.real_name, null, mrace, features)
+	H.hardset_dna(record.ui, record.se, H.real_name, null, record.mrace,
+		record.features)
 
 	if(efficiency > 2)
 		var/list/unclean_mutations = (not_good_mutations|bad_mutations)
@@ -182,7 +216,7 @@
 
 	if(!clonename)	//to prevent null names
 		clonename = "clone ([rand(0,999)])"
-	H.real_name = clonename
+	H.real_name = record.clonename
 
 	icon_state = "pod_1"
 	//Get the clone body ready
@@ -192,7 +226,7 @@
 
 	if(grab_ghost_when == CLONER_FRESH_CLONE)
 		clonemind.transfer_to(H)
-		H.ckey = ckey
+		H.ckey = record.ckey
 		H << "<span class='notice'><b>Consciousness slowly creeps over you \
 			as your body regenerates.</b><br><i>So this is what cloning \
 			feels like?</i></span>"
@@ -202,7 +236,7 @@
 			become conscious when it is complete.</span>"
 
 	if(H)
-		H.faction |= factions
+		H.faction |= record.factions
 
 		H.set_cloned_appearance()
 
@@ -212,11 +246,14 @@
 
 //Grow clones to maturity then kick them out.  FREELOADERS
 /obj/machinery/cloning/pod/process()
-
 	if(!is_operational()) //Autoeject if power is lost
-		if (occupant)
+		if(occupant)
 			go_out()
 			connected_message("Clone Ejected: Loss of power.")
+	else if(occupant.hellbound || clonemind.damnation_type)
+		addtimer(src, "horrifyingsound", 0)
+		malfunction()
+		return FALSE
 
 	else if((occupant) && (occupant.loc == src))
 		if((occupant.stat == DEAD) || (occupant.suiciding) || occupant.hellbound)  //Autoeject corpses and suiciding dudes.
@@ -259,9 +296,9 @@
 				complete.")
 			go_out()
 
-	else if ((!occupant) || (occupant.loc != src))
+	else if((!occupant) || (occupant.loc != src))
 		occupant = null
-		if (!mess && !panel_open)
+		if(!mess && !panel_open)
 			icon_state = "pod_0"
 		use_power(200)
 
