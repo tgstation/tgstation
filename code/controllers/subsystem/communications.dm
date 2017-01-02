@@ -2,7 +2,6 @@ var/datum/subsystem/communications/SScommunications
 
 /datum/subsystem/communications
 	name = "Communications"
-	priority = 50
 	flags = SS_NO_INIT | SS_NO_FIRE
 
 	var/silicon_message_cooldown
