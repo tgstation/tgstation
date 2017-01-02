@@ -36,7 +36,7 @@
 	if(browse)
 		watchlist_show(target_sql_ckey)
 
-	add_note(target_ckey, "Added to Watchlist - [reason]", null, usr.ckey, 0, null, 0)
+	add_note(target_ckey, "Added to Watchlist - [reason]", null, usr.ckey, 0, null, 1)
 
 /client/proc/watchlist_remove(target_ckey, browse = 0)
 	var/target_sql_ckey = sanitizeSQL(target_ckey)
