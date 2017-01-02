@@ -1,0 +1,5 @@
+author: "MrStonedOne"
+delete-after: True
+changes: 
+  - tweak: "Throwing was refactored to cause less lag and be more precise"
+  - rscadd: "Item throwing now imparts the momentum of the user throwing. Throwing in the direction you are moving throws the item faster, throwing away from the direction you are moving throws the item slower. This should make hitting yourself with floor tiles less likely."
