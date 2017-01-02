@@ -166,6 +166,12 @@ var/explosionid = 1
 					UnexplodeT.explosion_level = 0
 				exploded_this_tick.Cut()
 
+	//unfuck the shit
+	for(var/Unexplode in exploded_this_tick)
+		var/turf/UnexplodeT = Unexplode
+		UnexplodeT.explosion_level = 0
+	exploded_this_tick.Cut()
+
 	var/took = (world.timeofday-start)/10
 	//You need to press the DebugGame verb to see these now....they were getting annoying and we've collected a fair bit of data. Just -test- changes  to explosion code using this please so we can compare
 	if(Debug2)
