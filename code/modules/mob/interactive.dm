@@ -388,8 +388,6 @@
 /mob/living/carbon/human/interactive/New()
 	..()
 
-	set_species(/datum/species/synth)
-
 	random()
 
 	doSetup()
