@@ -26,6 +26,7 @@
 	var/facing = "l"	//Does the windoor open to the left or right?
 	var/secure = 0		//Whether or not this creates a secure windoor
 	var/state = "01"	//How far the door assembly has progressed
+	CanAtmosPass = ATMOS_PASS_PROC
 
 /obj/structure/windoor_assembly/examine(mob/user)
 	..()
@@ -83,7 +84,7 @@
 					user.visible_message("[user] disassembles the windoor assembly.", "<span class='notice'>You start to disassemble the windoor assembly...</span>")
 					playsound(loc, 'sound/items/Welder2.ogg', 50, 1)
 
-					if(do_after(user, 40/W.toolspeed, target = src))
+					if(do_after(user, 40*W.toolspeed, target = src))
 						if(!src || !WT.isOn()) return
 						user << "<span class='notice'>You disassemble the windoor assembly.</span>"
 						var/obj/item/stack/sheet/rglass/RG = new (get_turf(src), 5)
@@ -104,7 +105,7 @@
 				playsound(loc, W.usesound, 100, 1)
 				user.visible_message("[user] secures the windoor assembly to the floor.", "<span class='notice'>You start to secure the windoor assembly to the floor...</span>")
 
-				if(do_after(user, 40/W.toolspeed, target = src))
+				if(do_after(user, 40*W.toolspeed, target = src))
 					if(!src || anchored)
 						return
 					for(var/obj/machinery/door/window/WD in loc)
@@ -123,7 +124,7 @@
 				playsound(loc, W.usesound, 100, 1)
 				user.visible_message("[user] unsecures the windoor assembly to the floor.", "<span class='notice'>You start to unsecure the windoor assembly to the floor...</span>")
 
-				if(do_after(user, 40/W.toolspeed, target = src))
+				if(do_after(user, 40*W.toolspeed, target = src))
 					if(!src || !anchored)
 						return
 					user << "<span class='notice'>You unsecure the windoor assembly.</span>"
@@ -180,7 +181,7 @@
 				playsound(loc, W.usesound, 100, 1)
 				user.visible_message("[user] cuts the wires from the airlock assembly.", "<span class='notice'>You start to cut the wires from airlock assembly...</span>")
 
-				if(do_after(user, 40/W.toolspeed, target = src))
+				if(do_after(user, 40*W.toolspeed, target = src))
 					if(!src || state != "02")
 						return
 
@@ -218,7 +219,7 @@
 				playsound(loc, W.usesound, 100, 1)
 				user.visible_message("[user] removes the electronics from the airlock assembly.", "<span class='notice'>You start to uninstall electronics from the airlock assembly...</span>")
 
-				if(do_after(user, 40/W.toolspeed, target = src))
+				if(do_after(user, 40*W.toolspeed, target = src))
 					if(!src || !electronics)
 						return
 					user << "<span class='notice'>You remove the airlock electronics.</span>"
@@ -248,7 +249,7 @@
 				playsound(loc, W.usesound, 100, 1)
 				user.visible_message("[user] pries the windoor into the frame.", "<span class='notice'>You start prying the windoor into the frame...</span>")
 
-				if(do_after(user, 40/W.toolspeed, target = src))
+				if(do_after(user, 40*W.toolspeed, target = src))
 
 					if(loc && electronics)
 

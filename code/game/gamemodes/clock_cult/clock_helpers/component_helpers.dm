@@ -1,10 +1,12 @@
 //generates a component in the global component cache, either random based on lowest or a specific component
-/proc/generate_cache_component(specific_component_id)
-	if(specific_component_id)
-		clockwork_component_cache[specific_component_id]++
-	else
-		var/component_to_generate = get_weighted_component_id()
-		clockwork_component_cache[component_to_generate]++
+/proc/generate_cache_component(specific_component_id, atom/A)
+	if(!specific_component_id)
+		specific_component_id = get_weighted_component_id()
+	clockwork_component_cache[specific_component_id]++
+	if(A)
+		PoolOrNew(get_component_animation_type(specific_component_id), get_turf(A))
+	update_slab_info()
+	return specific_component_id
 
 //returns a chosen component id based on the lowest amount of that component in the global cache, the global cache plus the slab if there are caches, or the slab if there are no caches.
 /proc/get_weighted_component_id(obj/item/clockwork/slab/storage_slab)
@@ -28,8 +30,8 @@
 			return "Belligerent Eye"
 		if(VANGUARD_COGWHEEL)
 			return "Vanguard Cogwheel"
-		if(GUVAX_CAPACITOR)
-			return "Guvax Capacitor"
+		if(GEIS_CAPACITOR)
+			return "Geis Capacitor"
 		if(REPLICANT_ALLOY)
 			return "Replicant Alloy"
 		if(HIEROPHANT_ANSIBLE)
@@ -44,7 +46,7 @@
 			return "BE"
 		if(VANGUARD_COGWHEEL)
 			return "VC"
-		if(GUVAX_CAPACITOR)
+		if(GEIS_CAPACITOR)
 			return "GC"
 		if(REPLICANT_ALLOY)
 			return "RA"
@@ -60,8 +62,8 @@
 			return BELLIGERENT_EYE
 		if("Vanguard Cogwheel")
 			return VANGUARD_COGWHEEL
-		if("Guvax Capacitor")
-			return GUVAX_CAPACITOR
+		if("Geis Capacitor")
+			return GEIS_CAPACITOR
 		if("Replicant Alloy")
 			return REPLICANT_ALLOY
 		if("Hierophant Ansible")
@@ -76,21 +78,24 @@
 			return "neovgre"
 		if(VANGUARD_COGWHEEL)
 			return "inathneq"
-		if(GUVAX_CAPACITOR)
+		if(GEIS_CAPACITOR)
 			return "sevtug"
 		if(REPLICANT_ALLOY)
 			return "nezbere"
 		if(HIEROPHANT_ANSIBLE)
 			return "nzcrentr"
 		else
-			return null
+			return "brass"
 
-//returns a component color from a component id, but with a brighter replicant alloy color
-/proc/get_component_color_brightalloy(id)
-	if(id == REPLICANT_ALLOY)
-		return "#5A6068"
-	else
-		return get_component_color(id)
+//returns a component color from a component id, but with brighter colors for the darkest
+/proc/get_component_color_bright(id)
+	switch(id)
+		if(BELLIGERENT_EYE)
+			return "#880020"
+		if(REPLICANT_ALLOY)
+			return "#5A6068"
+		else
+			return get_component_color(id)
 
 //returns a component color from a component id
 /proc/get_component_color(id)
@@ -99,7 +104,7 @@
 			return "#6E001A"
 		if(VANGUARD_COGWHEEL)
 			return "#1E8CE1"
-		if(GUVAX_CAPACITOR)
+		if(GEIS_CAPACITOR)
 			return "#AF0AAF"
 		if(REPLICANT_ALLOY)
 			return "#42474D"
@@ -115,7 +120,7 @@
 			return /obj/effect/overlay/temp/ratvar/component
 		if(VANGUARD_COGWHEEL)
 			return /obj/effect/overlay/temp/ratvar/component/cogwheel
-		if(GUVAX_CAPACITOR)
+		if(GEIS_CAPACITOR)
 			return /obj/effect/overlay/temp/ratvar/component/capacitor
 		if(REPLICANT_ALLOY)
 			return /obj/effect/overlay/temp/ratvar/component/alloy
@@ -131,8 +136,8 @@
 			return /obj/item/clockwork/component/belligerent_eye
 		if(VANGUARD_COGWHEEL)
 			return /obj/item/clockwork/component/vanguard_cogwheel
-		if(GUVAX_CAPACITOR)
-			return /obj/item/clockwork/component/guvax_capacitor
+		if(GEIS_CAPACITOR)
+			return /obj/item/clockwork/component/geis_capacitor
 		if(REPLICANT_ALLOY)
 			return /obj/item/clockwork/component/replicant_alloy
 		if(HIEROPHANT_ANSIBLE)

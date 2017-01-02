@@ -481,7 +481,7 @@ var/list/admin_verbs_hideable = list(
 			holder.fakekey = new_key
 			createStealthKey()
 			if(isobserver(mob))
-				mob.invisibility = INVISIBILITY_ABSTRACT //JUST IN CASE
+				mob.invisibility = INVISIBILITY_MAXIMUM //JUST IN CASE
 				mob.alpha = 0 //JUUUUST IN CASE
 				mob.name = " "
 				mob.mouse_opacity = 0

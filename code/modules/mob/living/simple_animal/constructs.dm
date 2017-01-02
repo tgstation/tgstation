@@ -10,7 +10,7 @@
 	speak_chance = 1
 	icon = 'icons/mob/mob.dmi'
 	speed = 0
-	a_intent = "harm"
+	a_intent = INTENT_HARM
 	stop_automated_movement = 1
 	status_flags = CANPUSH
 	attack_sound = 'sound/weapons/punch1.ogg'
@@ -21,7 +21,7 @@
 	maxbodytemp = INFINITY
 	healable = 0
 	faction = list("cult")
-	flying = 1
+	movement_type = FLYING
 	pressure_resistance = 100
 	unique_name = 1
 	AIStatus = AI_OFF //normal constructs don't have AI
@@ -82,6 +82,8 @@
 /mob/living/simple_animal/hostile/construct/narsie_act()
 	return
 
+/mob/living/simple_animal/hostile/construct/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, safety = 0, tesla_shock = 0, illusion = 0)
+	return 0
 
 
 /////////////////Juggernaut///////////////

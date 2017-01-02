@@ -24,7 +24,7 @@
 /datum/surgery_step/handle_cavity/success(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	var/obj/item/bodypart/chest/CH = target.get_bodypart("chest")
 	if(tool)
-		if(IC || tool.w_class > 3 || (NODROP in tool.flags) || istype(tool, /obj/item/organ))
+		if(IC || tool.w_class > WEIGHT_CLASS_NORMAL || (NODROP in tool.flags) || istype(tool, /obj/item/organ))
 			user << "<span class='warning'>You can't seem to fit [tool] in [target]'s [target_zone]!</span>"
 			return 0
 		else

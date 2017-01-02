@@ -4,6 +4,7 @@
 	desc = "A large brass eye with tendrils trailing below it and a wide red iris."
 	clockwork_desc = "A fragile turret that will deal sustained damage to any non-faithful it sees."
 	icon_state = "ocular_warden"
+	unanchored_icon = "ocular_warden_unwrenched"
 	obj_integrity = 25
 	max_integrity = 25
 	construction_value = 15
@@ -31,11 +32,31 @@
 /obj/structure/destructible/clockwork/ocular_warden/hulk_damage()
 	return 25
 
-/obj/structure/destructible/clockwork/ocular_warden/process()
-	var/list/validtargets = acquire_nearby_targets()
-	if(ratvar_awakens && (damage_per_tick == initial(damage_per_tick) || sight_range == initial(sight_range))) //Massive buff if Ratvar has returned
+/obj/structure/destructible/clockwork/ocular_warden/can_be_unfasten_wrench(mob/user)
+	if(anchored)
+		if(obj_integrity <= max_integrity * 0.25)
+			user << "<span class='warning'>[src] is too damaged to unsecure!</span>"
+			return FAILED_UNFASTEN
+	else
+		for(var/obj/structure/destructible/clockwork/ocular_warden/W in orange(3, src))
+			user << "<span class='neovgre'>You sense another ocular warden too near this location. Activating this one this close would cause them to fight.</span>"
+			return FAILED_UNFASTEN
+	return SUCCESSFUL_UNFASTEN
+
+/obj/structure/destructible/clockwork/ocular_warden/ratvar_act()
+	..()
+	if(ratvar_awakens)
 		damage_per_tick = 10
-		sight_range = 5
+		sight_range = 6
+	else
+		damage_per_tick = initial(damage_per_tick)
+		sight_range = initial(sight_range)
+
+/obj/structure/destructible/clockwork/ocular_warden/process()
+	if(!anchored)
+		lose_target()
+		return
+	var/list/validtargets = acquire_nearby_targets()
 	if(target)
 		if(!(target in validtargets))
 			lose_target()
@@ -43,13 +64,21 @@
 			if(isliving(target))
 				var/mob/living/L = target
 				if(!L.null_rod_check())
-					L.adjustFireLoss(!iscultist(L) ? damage_per_tick : damage_per_tick * 2) //Nar-Sian cultists take additional damage
+					if(isrevenant(L))
+						var/mob/living/simple_animal/revenant/R = L
+						if(R.revealed)
+							R.unreveal_time += 2
+						else
+							R.reveal(10)
+					L.adjustFireLoss((!iscultist(L) ? damage_per_tick : damage_per_tick * 2) * get_efficiency_mod()) //Nar-Sian cultists take additional damage
 					if(ratvar_awakens && L)
 						L.adjust_fire_stacks(damage_per_tick)
 						L.IgniteMob()
 			else if(istype(target,/obj/mecha))
 				var/obj/mecha/M = target
-				M.take_damage(damage_per_tick, BURN, "melee", 1, get_dir(src, M)) //does about half of standard damage to mechs * whatever their fire armor is
+				M.take_damage(damage_per_tick * get_efficiency_mod(), BURN, "melee", 1, get_dir(src, M))
+
+			PoolOrNew(/obj/effect/overlay/temp/ratvar/ocular_warden, get_turf(target))
 
 			setDir(get_dir(get_turf(src), get_turf(target)))
 	if(!target)
@@ -78,7 +107,7 @@
 			for(var/obj/item/weapon/storage/book/bible/BI in L.GetAllContents())
 				if(!(BI.resistance_flags & ON_FIRE))
 					BI.fire_act()
-		else if(!is_servant_of_ratvar(L) && !L.stat && L.mind && !L.restrained() && !(L.buckled && (L.lying || istype(L.buckled, /obj/structure/destructible/clockwork/guvax_binding))) && \
+		else if(!is_servant_of_ratvar(L) && !L.stat && L.mind && !L.restrained() && !(L.buckled && (L.lying || istype(L.buckled, /obj/structure/destructible/clockwork/geis_binding))) && \
 		!(L.disabilities & BLIND) && !L.null_rod_check())
 			. += L
 	for(var/N in mechas_list)

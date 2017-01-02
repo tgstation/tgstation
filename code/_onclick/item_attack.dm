@@ -8,11 +8,14 @@
 	return
 
 /obj/attackby(obj/item/I, mob/living/user, params)
-	return I.attack_obj(src, user)
+	if(unique_rename && istype(I, /obj/item/weapon/pen))
+		rewrite(user)
+	else
+		return I.attack_obj(src, user)
 
 /mob/living/attackby(obj/item/I, mob/user, params)
 	user.changeNext_move(CLICK_CD_MELEE)
-	if(user.a_intent == "harm" && stat == DEAD && butcher_results) //can we butcher it?
+	if(user.a_intent == INTENT_HARM && stat == DEAD && butcher_results) //can we butcher it?
 		var/sharpness = I.is_sharp()
 		if(sharpness)
 			user << "<span class='notice'>You begin to butcher [src]...</span>"
@@ -48,8 +51,6 @@
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.do_attack_animation(O)
 	O.attacked_by(src, user)
-
-
 
 /atom/movable/proc/attacked_by()
 	return

@@ -20,18 +20,21 @@
 	var/max_mod_capacity = 100
 	var/list/modkits = list()
 
+	var/empty_state = "kineticgun_empty"
+
 /obj/item/weapon/gun/energy/kinetic_accelerator/examine(mob/user)
 	..()
-	user << "<b>[get_remaining_mod_capacity()]%</b> mod capacity remaining."
-	for(var/A in get_modkits())
-		var/obj/item/borg/upgrade/modkit/M = A
-		user << "<span class='notice'>There is a [M.name] mod installed, using <b>[M.cost]%</b> capacity.</span>"
+	if(max_mod_capacity)
+		user << "<b>[get_remaining_mod_capacity()]%</b> mod capacity remaining."
+		for(var/A in get_modkits())
+			var/obj/item/borg/upgrade/modkit/M = A
+			user << "<span class='notice'>There is a [M.name] mod installed, using <b>[M.cost]%</b> capacity.</span>"
 
 /obj/item/weapon/gun/energy/kinetic_accelerator/attackby(obj/item/A, mob/user)
 	if(istype(A, /obj/item/weapon/crowbar))
 		if(modkits.len)
 			user << "<span class='notice'>You pry the modifications out.</span>"
-			playsound(loc, 'sound/items/Crowbar.ogg', 100, 1)
+			playsound(loc, A.usesound, 100, 1)
 			for(var/obj/item/borg/upgrade/modkit/M in modkits)
 				M.uninstall(src)
 		else
@@ -126,8 +129,8 @@
 
 /obj/item/weapon/gun/energy/kinetic_accelerator/update_icon()
 	cut_overlays()
-	if(!can_shoot())
-		add_overlay("kineticgun_empty")
+	if(empty_state && !can_shoot())
+		add_overlay(empty_state)
 
 	if(gun_light && can_flashlight)
 		var/iconF = "flight"
@@ -168,6 +171,8 @@
 	damage_type = BRUTE
 	flag = "bomb"
 	range = 3
+	log_override = TRUE
+
 	var/pressure_decrease = 0.25
 	var/turf_aoe = FALSE
 	var/mob_aoe = 0
@@ -224,7 +229,7 @@
 
 /obj/item/borg/upgrade/modkit/attackby(obj/item/A, mob/user)
 	if(istype(A, /obj/item/weapon/gun/energy/kinetic_accelerator) && !issilicon(user))
-		install(A)
+		install(A, user)
 	else
 		..()
 
@@ -296,7 +301,8 @@
 	modifier = 2.5
 
 /obj/item/borg/upgrade/modkit/cooldown/install(obj/item/weapon/gun/energy/kinetic_accelerator/KA, mob/user)
-	if(..())
+	. = ..()
+	if(.)
 		KA.overheat_time -= modifier
 
 /obj/item/borg/upgrade/modkit/cooldown/uninstall(obj/item/weapon/gun/energy/kinetic_accelerator/KA)
@@ -353,9 +359,11 @@
 	name = "modified trigger guard"
 	desc = "Allows creatures normally incapable of firing guns to operate the weapon when installed."
 	cost = 20
+	denied_type = /obj/item/borg/upgrade/modkit/trigger_guard
 
 /obj/item/borg/upgrade/modkit/trigger_guard/install(obj/item/weapon/gun/energy/kinetic_accelerator/KA, mob/user)
-	if(..())
+	. = ..()
+	if(.)
 		KA.trigger_guard = TRIGGER_GUARD_ALLOW_ALL
 
 /obj/item/borg/upgrade/modkit/trigger_guard/uninstall(obj/item/weapon/gun/energy/kinetic_accelerator/KA)
@@ -373,7 +381,8 @@
 	var/chassis_icon = "kineticgun_u"
 
 /obj/item/borg/upgrade/modkit/chassis_mod/install(obj/item/weapon/gun/energy/kinetic_accelerator/KA, mob/user)
-	if(..())
+	. = ..()
+	if(.)
 		KA.icon_state = chassis_icon
 
 /obj/item/borg/upgrade/modkit/chassis_mod/uninstall(obj/item/weapon/gun/energy/kinetic_accelerator/KA)

@@ -1,10 +1,11 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:33
+
 
 var/list/preferences_datums = list()
 
 
 
 /datum/preferences
+	var/client/parent
 	//doohickeys for savefiles
 	var/path
 	var/default_slot = 1				//Holder so it doesn't default to slot 1, rather the last one used
@@ -94,7 +95,10 @@ var/list/preferences_datums = list()
 
 	var/clientfps = 0
 
+	var/parallax = PARALLAX_HIGH
+
 /datum/preferences/New(client/C)
+	parent = C
 	custom_names["ai"] = pick(ai_names)
 	custom_names["cyborg"] = pick(ai_names)
 	custom_names["clown"] = pick(clown_names)
@@ -207,7 +211,7 @@ var/list/preferences_datums = list()
 
 				dat += "</td>"
 
-			if(HAIR in pref_species.specflags)
+			if(HAIR in pref_species.species_traits)
 
 				dat += "<td valign='top' width='21%'>"
 
@@ -228,7 +232,7 @@ var/list/preferences_datums = list()
 
 				dat += "</td>"
 
-			if(EYECOLOR in pref_species.specflags)
+			if(EYECOLOR in pref_species.species_traits)
 
 				dat += "<td valign='top' width='21%'>"
 
@@ -240,7 +244,7 @@ var/list/preferences_datums = list()
 
 			if(config.mutant_races) //We don't allow mutant bodyparts for humans either unless this is true.
 
-				if((MUTCOLORS in pref_species.specflags) || (MUTCOLORS_PARTSONLY in pref_species.specflags))
+				if((MUTCOLORS in pref_species.species_traits) || (MUTCOLORS_PARTSONLY in pref_species.species_traits))
 
 					dat += "<td valign='top' width='14%'>"
 
@@ -346,7 +350,7 @@ var/list/preferences_datums = list()
 		if (1) // Game Preferences
 			dat += "<table><tr><td width='340px' height='300px' valign='top'>"
 			dat += "<h2>General Settings</h2>"
-			dat += "<b>UI Style:</b> <a href='?_src_=prefs;preference=ui'>[UI_style]</a><br>"
+			dat += "<b>UI Style:</b> <a href='?_src_=prefs;task=input;preference=ui'>[UI_style]</a><br>"
 			dat += "<b>Keybindings:</b> <a href='?_src_=prefs;preference=hotkeys'>[(hotkeys) ? "Hotkeys" : "Default"]</a><br>"
 			dat += "<b>tgui Style:</b> <a href='?_src_=prefs;preference=tgui_fancy'>[(tgui_fancy) ? "Fancy" : "No Frills"]</a><br>"
 			dat += "<b>tgui Monitors:</b> <a href='?_src_=prefs;preference=tgui_lock'>[(tgui_lock) ? "Primary" : "All"]</a><br>"
@@ -411,9 +415,23 @@ var/list/preferences_datums = list()
 							p_map = VM.friendlyname
 					else
 						p_map += " (No longer exists)"
-				dat += "<b>Preferred Map:</b> <a href='?_src_=prefs;preference=preferred_map;task=input'>[p_map]</a>"
+				dat += "<b>Preferred Map:</b> <a href='?_src_=prefs;preference=preferred_map;task=input'>[p_map]</a><br>"
 
-			dat += "<b>FPS:</b> <a href='?_src_=prefs;preference=clientfps;task=input'>[clientfps]</a>"
+			dat += "<b>FPS:</b> <a href='?_src_=prefs;preference=clientfps;task=input'>[clientfps]</a><br>"
+
+			dat += "<b>Parallax (Fancy Space):</b> <a href='?_src_=prefs;preference=parallaxdown' oncontextmenu='window.location.href=\"?_src_=prefs;preference=parallaxup\";return false;'>"
+			switch (parallax)
+				if (PARALLAX_LOW)
+					dat += "Low"
+				if (PARALLAX_MED)
+					dat += "Medium"
+				if (PARALLAX_INSANE)
+					dat += "Insane"
+				if (PARALLAX_DISABLE)
+					dat += "Disabled"
+				else
+					dat += "High"
+			dat += "</a><br>"
 
 			dat += "</td><td width='300px' height='300px' valign='top'>"
 
@@ -450,7 +468,6 @@ var/list/preferences_datums = list()
 	dat += "<a href='?_src_=prefs;preference=reset_all'>Reset Setup</a>"
 	dat += "</center>"
 
-	//user << browse(dat, "window=preferences;size=560x560")
 	var/datum/browser/popup = new(user, "preferences", "<div align='center'>Character Setup</div>", 640, 750)
 	popup.set_content(dat)
 	popup.open(0)
@@ -471,7 +488,7 @@ var/list/preferences_datums = list()
 		HTML += "The job ticker is not yet finished creating jobs, please try again later"
 		HTML += "<center><a href='?_src_=prefs;preference=job;task=close'>Done</a></center><br>" // Easier to press up here.
 
-	else 
+	else
 		HTML += "<b>Choose occupation chances</b><br>"
 		HTML += "<div align='center'>Left-click to raise an occupation preference, right-click to lower it.<br></div>"
 		HTML += "<center><a href='?_src_=prefs;preference=job;task=close'>Done</a></center><br>" // Easier to press up here.
@@ -577,7 +594,6 @@ var/list/preferences_datums = list()
 		HTML += "<center><a href='?_src_=prefs;preference=job;task=reset'>Reset Preferences</a></center>"
 
 	user << browse(null, "window=preferences")
-	//user << browse(HTML, "window=mob_occupation;size=[width]x[height]")
 	var/datum/browser/popup = new(user, "mob_occupation", "<div align='center'>Occupation Preferences</div>", width, height)
 	popup.set_window_options("can_close=0")
 	popup.set_content(HTML)
@@ -936,7 +952,7 @@ var/list/preferences_datums = list()
 						pref_species = new newtype()
 						//Now that we changed our species, we must verify that the mutant colour is still allowed.
 						var/temp_hsv = RGBtoHSV(features["mcolor"])
-						if(features["mcolor"] == "#000" || (!(MUTCOLORS_PARTSONLY in pref_species.specflags) && ReadHSV(temp_hsv)[3] < ReadHSV("#7F7F7F")[3]))
+						if(features["mcolor"] == "#000" || (!(MUTCOLORS_PARTSONLY in pref_species.species_traits) && ReadHSV(temp_hsv)[3] < ReadHSV("#7F7F7F")[3]))
 							features["mcolor"] = pref_species.default_color
 				if("mutant_color")
 					var/new_mutantcolor = input(user, "Choose your character's alien/mutant color:", "Character Preference") as color|null
@@ -944,7 +960,7 @@ var/list/preferences_datums = list()
 						var/temp_hsv = RGBtoHSV(new_mutantcolor)
 						if(new_mutantcolor == "#000000")
 							features["mcolor"] = pref_species.default_color
-						else if((MUTCOLORS_PARTSONLY in pref_species.specflags) || ReadHSV(temp_hsv)[3] >= ReadHSV("#7F7F7F")[3]) // mutantcolors must be bright, but only if they affect the skin
+						else if((MUTCOLORS_PARTSONLY in pref_species.species_traits) || ReadHSV(temp_hsv)[3] >= ReadHSV("#7F7F7F")[3]) // mutantcolors must be bright, but only if they affect the skin
 							features["mcolor"] = sanitize_hexcolor(new_mutantcolor)
 						else
 							user << "<span class='danger'>Invalid color. Your color is not bright enough.</span>"
@@ -1091,7 +1107,10 @@ var/list/preferences_datums = list()
 						clientfps = desiredfps
 						if (world.byond_version >= 511 && user.client && user.client.byond_version >= 511)
 							user.client.vars["fps"] = clientfps
-
+				if("ui")
+					var/pickedui = input(user, "Choose your UI style.", "Character Preference")  as null|anything in list("Midnight", "Plasmafire", "Retro", "Slimecore", "Operative", "Clockwork")
+					if(pickedui)
+						UI_style = pickedui
 
 
 		else
@@ -1109,19 +1128,6 @@ var/list/preferences_datums = list()
 					socks = random_socks()
 					facial_hair_style = random_facial_hair_style(gender)
 					hair_style = random_hair_style(gender)
-
-				if("ui")
-					switch(UI_style)
-						if("Midnight")
-							UI_style = "Plasmafire"
-						if("Plasmafire")
-							UI_style = "Retro"
-						if("Retro")
-							UI_style = "Slimecore"
-						if("Slimecore")
-							UI_style = "Operative"
-						else
-							UI_style = "Midnight"
 
 				if("hotkeys")
 					hotkeys = !hotkeys
@@ -1179,6 +1185,16 @@ var/list/preferences_datums = list()
 
 				if("allow_midround_antag")
 					toggles ^= MIDROUND_ANTAG
+
+				if("parallaxup")
+					parallax = Wrap(parallax + 1, PARALLAX_INSANE, PARALLAX_DISABLE + 1)
+					if (parent && parent.mob && parent.mob.hud_used)
+						parent.mob.hud_used.update_parallax_pref()
+
+				if("parallaxdown")
+					parallax = Wrap(parallax - 1, PARALLAX_INSANE, PARALLAX_DISABLE + 1)
+					if (parent && parent.mob && parent.mob.hud_used)
+						parent.mob.hud_used.update_parallax_pref()
 
 				if("save")
 					save_preferences()

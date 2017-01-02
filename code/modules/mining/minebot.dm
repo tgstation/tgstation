@@ -9,10 +9,9 @@
 	icon_state = "mining_drone"
 	icon_living = "mining_drone"
 	status_flags = CANSTUN|CANWEAKEN|CANPUSH
-	stop_automated_movement_when_pulled = 1
 	mouse_opacity = 1
 	faction = list("neutral")
-	a_intent = "harm"
+	a_intent = INTENT_HARM
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 	wander = 0
@@ -94,7 +93,7 @@
 	return
 
 /mob/living/simple_animal/hostile/mining_drone/attack_hand(mob/living/carbon/human/M)
-	if(M.a_intent == "help")
+	if(M.a_intent == INTENT_HELP)
 		toggle_mode()
 		switch(mode)
 			if(MINEDRONE_COLLECT)

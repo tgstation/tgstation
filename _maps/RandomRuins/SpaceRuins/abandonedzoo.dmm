@@ -725,10 +725,7 @@
 /turf/open/floor/plating/airless,
 /area/ruin/abandonedzoo)
 "bD" = (
-/obj/item/clothing/mask/facehugger{
-	icon_state = "facehugger_dead";
-	stat = 2
-	},
+/obj/item/clothing/mask/facehugger/dead,
 /turf/open/floor/plating/airless,
 /area/ruin/abandonedzoo)
 "bE" = (

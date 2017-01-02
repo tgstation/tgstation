@@ -7,7 +7,7 @@
 	hitsound = 'sound/weapons/smash.ogg'
 	flags = CONDUCT
 	throwforce = 10
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 	throw_speed = 2
 	throw_range = 7
 	force = 10
@@ -31,7 +31,7 @@
 	hitsound = null	//it is much lighter, after all.
 	flags = null //doesn't CONDUCT
 	throwforce = 2
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	force = 3
 	materials = list()
 	max_water = 30
@@ -51,11 +51,8 @@
 	return
 
 /obj/item/weapon/extinguisher/attack(mob/M, mob/user)
-	if(user.a_intent == "help")
-		// If we're in help intent, don't bash anyone with the
-		// extinguisher
-		user.visible_message("[user] targets [M] with \the [src]", "<span class='info'>You target [M] with \the [src].</span>")
-		return 0
+	if(user.a_intent == INTENT_HELP && !safety) //If we're on help intent and going to spray people, don't bash them.
+		return FALSE
 	else
 		return ..()
 

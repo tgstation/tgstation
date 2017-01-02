@@ -16,8 +16,9 @@
 var/global/list/allDevils = list()
 var/global/list/lawlorify = list (
 		LORE = list(
-			OBLIGATION_FOOD = "This devil seems to always offer it's victims food before slaughtering them.",
+			OBLIGATION_FOOD = "This devil seems to always offer its victims food before slaughtering them.",
 			OBLIGATION_FIDDLE = "This devil will never turn down a musical challenge.",
+			OBLIGATION_DANCEOFF = "This devil will never turn down a dance off.",
 			OBLIGATION_GREET = "This devil seems to only be able to converse with people it knows the name of.",
 			OBLIGATION_PRESENCEKNOWN = "This devil seems to be unable to attack from stealth.",
 			OBLIGATION_SAYNAME = "He will always chant his name upon killing someone.",
@@ -37,17 +38,18 @@ var/global/list/lawlorify = list (
 			BAN_STRIKEUNCONCIOUS = "This devil only shows interest in those who are awake.",
 			BAN_HURTLIZARD = "This devil will not strike a lizardman first.",
 			BAN_HURTANIMAL = "This devil avoids hurting animals.",
-			BANISH_WATER = "To banish the devil, you must infuse it's body with holy water.",
-			BANISH_COFFIN = "This devil will return to life if it's remains are not placed within a coffin.",
-			BANISH_FORMALDYHIDE = "To banish the devil, you must inject it's lifeless body with embalming fluid.",
-			BANISH_RUNES = "This devil will resurrect after death, unless it's remains are within a rune.",
+			BANISH_WATER = "To banish the devil, you must infuse its body with holy water.",
+			BANISH_COFFIN = "This devil will return to life if its remains are not placed within a coffin.",
+			BANISH_FORMALDYHIDE = "To banish the devil, you must inject its lifeless body with embalming fluid.",
+			BANISH_RUNES = "This devil will resurrect after death, unless its remains are within a rune.",
 			BANISH_CANDLES = "A large number of nearby lit candles will prevent it from resurrecting.",
-			BANISH_DESTRUCTION = "It's corpse must be utterly destroyed to prevent resurrection.",
+			BANISH_DESTRUCTION = "Its corpse must be utterly destroyed to prevent resurrection.",
 			BANISH_FUNERAL_GARB = "If clad in funeral garments, this devil will be unable to resurrect.  Should the clothes not fit, lay them gently on top of the devil's corpse."
 		),
 		LAW = list(
 			OBLIGATION_FOOD = "When not acting in self defense, you must always offer your victim food before harming them.",
 			OBLIGATION_FIDDLE = "When not in immediate danger, if you are challenged to a musical duel, you must accept it.  You are not obligated to duel the same person twice.",
+			OBLIGATION_DANCEOFF = "When not in immediate danger, if you are challenged to a dance off, you must accept it. You are not obligated to face off with the same person twice.",
 			OBLIGATION_GREET = "You must always greet other people by their last name before talking with them.",
 			OBLIGATION_PRESENCEKNOWN = "You must always make your presence known before attacking.",
 			OBLIGATION_SAYNAME = "You must always say your true name after you kill someone.",
@@ -60,7 +62,7 @@ var/global/list/lawlorify = list (
 			BAN_STRIKEUNCONCIOUS = "You must never strike an unconcious person.",
 			BAN_HURTLIZARD = "You must never harm a lizardman outside of self defense.",
 			BAN_HURTANIMAL = "You must never harm a non-sentient creature or robot outside of self defense.",
-			BANE_SILVER = "Silver, in all of it's forms shall be your downfall.",
+			BANE_SILVER = "Silver, in all of its forms shall be your downfall.",
 			BANE_SALT = "Salt will disrupt your magical abilities.",
 			BANE_LIGHT = "Blinding lights will prevent you from using offensive powers for a time.",
 			BANE_IRON = "Cold wrought iron shall act as poison to you.",
@@ -77,7 +79,7 @@ var/global/list/lawlorify = list (
 		)
 	)
 
-/datum/devilinfo/
+/datum/devilinfo
 	var/datum/mind/owner = null
 	var/obligation
 	var/ban
@@ -88,6 +90,16 @@ var/global/list/lawlorify = list (
 	var/reviveNumber = 0
 	var/form = BASIC_DEVIL
 	var/exists = 0
+	var/static/list/dont_remove_spells = list(
+	/obj/effect/proc_holder/spell/targeted/summon_contract,
+	/obj/effect/proc_holder/spell/targeted/conjure_item/violin,
+	/obj/effect/proc_holder/spell/targeted/summon_dancefloor)
+
+
+/datum/devilinfo/New()
+	..()
+	dont_remove_spells = typecacheof(dont_remove_spells)
+
 
 /proc/randomDevilInfo(name = randomDevilName())
 	var/datum/devilinfo/devil = new
@@ -128,7 +140,7 @@ var/global/list/lawlorify = list (
 	return preTitle + title + mainName + suffix
 
 /proc/randomdevilobligation()
-	return pick(OBLIGATION_FOOD, OBLIGATION_FIDDLE, OBLIGATION_GREET, OBLIGATION_PRESENCEKNOWN, OBLIGATION_SAYNAME, OBLIGATION_ANNOUNCEKILL, OBLIGATION_ANSWERTONAME)
+	return pick(OBLIGATION_FOOD, OBLIGATION_FIDDLE, OBLIGATION_DANCEOFF, OBLIGATION_GREET, OBLIGATION_PRESENCEKNOWN, OBLIGATION_SAYNAME, OBLIGATION_ANNOUNCEKILL, OBLIGATION_ANSWERTONAME)
 
 /proc/randomdevilban()
 	return pick(BAN_HURTWOMAN, BAN_CHAPEL, BAN_HURTPRIEST, BAN_AVOIDWATER, BAN_STRIKEUNCONCIOUS, BAN_HURTLIZARD, BAN_HURTANIMAL)
@@ -289,7 +301,7 @@ var/global/list/lawlorify = list (
 /datum/devilinfo/proc/remove_spells()
 	for(var/X in owner.spell_list)
 		var/obj/effect/proc_holder/spell/S = X
-		if(!istype(S, /obj/effect/proc_holder/spell/targeted/summon_contract) && !istype(S, /obj/effect/proc_holder/spell/targeted/conjure_item/violin))
+		if(!is_type_in_typecache(S, dont_remove_spells))
 			owner.RemoveSpell(S)
 
 /datum/devilinfo/proc/give_summon_contract()
@@ -302,8 +314,10 @@ var/global/list/lawlorify = list (
 	owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/conjure_item/summon_pitchfork(null))
 	if(give_summon_contract)
 		give_summon_contract()
-		if (obligation == OBLIGATION_FIDDLE)
+		if(obligation == OBLIGATION_FIDDLE)
 			owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/conjure_item/violin(null))
+		if(obligation == OBLIGATION_DANCEOFF)
+			owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/summon_dancefloor(null))
 
 /datum/devilinfo/proc/give_lizard_spells()
 	remove_spells()

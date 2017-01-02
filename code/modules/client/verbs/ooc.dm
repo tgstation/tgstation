@@ -8,6 +8,7 @@
 
 	if(!mob)
 		return
+
 	if(IsGuestKey(key))
 		src << "Guests may not use OOC."
 		return

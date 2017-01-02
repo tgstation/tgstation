@@ -36,9 +36,10 @@ var/const/GRAV_NEEDS_WRENCH = 3
 	if(prob(20))
 		set_broken()
 
-/obj/machinery/gravity_generator/tesla_act(var/power)
+/obj/machinery/gravity_generator/tesla_act(power, explosive)
 	..()
-	qdel(src)//like the singulo, tesla deletes it. stops it from exploding over and over
+	if(explosive)
+		qdel(src)//like the singulo, tesla deletes it. stops it from exploding over and over
 
 /obj/machinery/gravity_generator/update_icon()
 	..()
@@ -63,9 +64,10 @@ var/const/GRAV_NEEDS_WRENCH = 3
 	stat &= ~BROKEN
 
 /obj/machinery/gravity_generator/part/Destroy()
-	set_broken()
 	if(main_part)
 		qdel(main_part)
+		return QDEL_HINT_LETMELIVE
+	set_broken()
 	return ..()
 
 //

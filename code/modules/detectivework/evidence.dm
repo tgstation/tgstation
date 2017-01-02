@@ -6,7 +6,7 @@
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "evidenceobj"
 	item_state = ""
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 
 /obj/item/weapon/evidencebag/afterattack(obj/item/I, mob/user,proximity)
 	if(!proximity || loc == I)
@@ -25,7 +25,7 @@
 		user << "<span class='notice'>You find putting an evidence bag in another evidence bag to be slightly absurd.</span>"
 		return 1 //now this is podracing
 
-	if(I.w_class > 3)
+	if(I.w_class > WEIGHT_CLASS_NORMAL)
 		user << "<span class='notice'>[I] won't fit in [src].</span>"
 		return
 
@@ -52,6 +52,7 @@
 	I.pixel_x = 0		//then remove it so it'll stay within the evidence bag
 	I.pixel_y = 0
 	var/image/img = image("icon"=I, "layer"=FLOAT_LAYER)	//take a snapshot. (necessary to stop the underlays appearing under our inventory-HUD slots ~Carn
+	img.plane = FLOAT_PLANE
 	I.pixel_x = xx		//and then return it
 	I.pixel_y = yy
 	add_overlay(img)
@@ -69,7 +70,7 @@
 		"<span class='italics'>You hear someone rustle around in a plastic bag, and remove something.</span>")
 		cut_overlays()	//remove the overlays
 		user.put_in_hands(I)
-		w_class = 1
+		w_class = WEIGHT_CLASS_TINY
 		icon_state = "evidenceobj"
 		desc = "An empty evidence bag."
 

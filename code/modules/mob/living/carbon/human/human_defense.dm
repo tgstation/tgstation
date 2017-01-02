@@ -3,12 +3,11 @@
 	var/organnum = 0
 
 	if(def_zone)
-		//Can pass in a bodypart or zone, so lets shortcut that handling
 		if(islimb(def_zone))
 			return checkarmor(def_zone, type)
-		//Note the check_zone call, this changes UI target values to bodypart zones
-		var/obj/item/bodypart/affecting = get_bodypart(check_zone(def_zone))
+		var/obj/item/bodypart/affecting = get_bodypart(ran_zone(def_zone))
 		return checkarmor(affecting, type)
+		//If a specific bodypart is targetted, check how that bodypart is protected and return the value.
 
 	//If you don't specify a bodypart, it checks ALL your bodyparts for protection, and averages out the values
 	for(var/X in bodyparts)
@@ -51,17 +50,22 @@
 	if((ears && (ears.flags & EARBANGPROTECT)) || (head && (head.flags & HEADBANGPROTECT)))
 		return 1
 
-/mob/living/carbon/human/on_hit(proj_type)
-	dna.species.on_hit(proj_type, src)
+/mob/living/carbon/human/on_hit(obj/item/projectile/P)
+	dna.species.on_hit(P, src)
 
 
 /mob/living/carbon/human/bullet_act(obj/item/projectile/P, def_zone)
+	var/spec_return = dna.species.bullet_act(P, src)
+	if(spec_return)
+		return spec_return
+
 	if(martial_art && martial_art.deflection_chance) //Some martial arts users can deflect projectiles!
 		if(prob(martial_art.deflection_chance))
 			if(!lying && dna && !dna.check_mutation(HULK)) //But only if they're not lying down, and hulks can't do it
-				visible_message("<span class='danger'>[src] deflects the projectile; they can't be hit with ranged weapons!</span>", "<span class='userdanger'>You deflect the projectile!</span>")
+				visible_message("<span class='danger'>[src] deflects the projectile; [p_they()] can't be hit with ranged weapons!</span>", "<span class='userdanger'>You deflect the projectile!</span>")
 				playsound(src, pick("sound/weapons/bulletflyby.ogg","sound/weapons/bulletflyby2.ogg","sound/weapons/bulletflyby3.ogg"), 75, 1)
 				return 0
+
 	if(!(P.original == src && P.firer == src)) //can't block or reflect when shooting yourself
 		if(istype(P, /obj/item/projectile/energy) || istype(P, /obj/item/projectile/beam))
 			if(check_reflect(def_zone)) // Checks if you've passed a reflection% check
@@ -117,8 +121,17 @@
 			return 1
 	return 0
 
+/mob/living/carbon/human/proc/check_block()
+	if(martial_art && martial_art.block_chance \
+	&& prob(martial_art.block_chance) && in_throw_mode \
+	&& !stat && !weakened && !stunned)
+		return TRUE
+	return FALSE
 
 /mob/living/carbon/human/hitby(atom/movable/AM, skipcatch = 0, hitpush = 1, blocked = 0)
+	var/spec_return = dna.species.spec_hitby(AM, src)
+	if(spec_return)
+		return spec_return
 	var/obj/item/I
 	var/throwpower = 30
 	if(istype(AM, /obj/item))
@@ -133,7 +146,7 @@
 	else if(I)
 		if(I.throw_speed >= EMBED_THROWSPEED_THRESHOLD)
 			if(can_embed(I))
-				if(prob(I.embed_chance) && !(dna && (PIERCEIMMUNE in dna.species.specflags)))
+				if(prob(I.embed_chance) && !(dna && (PIERCEIMMUNE in dna.species.species_traits)))
 					throw_alert("embeddedobject", /obj/screen/alert/embeddedobject)
 					var/obj/item/bodypart/L = pick(bodyparts)
 					L.embedded_objects |= I
@@ -172,12 +185,15 @@
 
 
 /mob/living/carbon/human/attack_hulk(mob/living/carbon/human/user, does_attack_animation = 0)
-	if(user.a_intent == "harm")
+	if(user.a_intent == INTENT_HARM)
+		var/hulk_verb = pick("smash","pummel")
+		if(check_shields(15, "the [hulk_verb]ing"))
+			return
 		..(user, 1)
 		playsound(loc, user.dna.species.attack_sound, 25, 1, -1)
-		var/hulk_verb = pick("smash","pummel")
-		visible_message("<span class='danger'>[user] has [hulk_verb]ed [src]!</span>", \
-								"<span class='userdanger'>[user] has [hulk_verb]ed [src]!</span>")
+		var/message = "[user] has [hulk_verb]ed [src]!"
+		visible_message("<span class='danger'>[message]</span>", \
+								"<span class='userdanger'>[message]</span>")
 		adjustBruteLoss(15)
 		damage_clothes(15, BRUTE, "melee")
 		return 1
@@ -193,7 +209,7 @@
 	var/obj/item/bodypart/affecting = get_bodypart(ran_zone(dam_zone))
 	if(!affecting)
 		affecting = get_bodypart("chest")
-	if(M.a_intent == "help")
+	if(M.a_intent == INTENT_HELP)
 		..() //shaking
 		return 0
 
@@ -203,6 +219,8 @@
 	if(can_inject(M, 1, affecting))//Thick suits can stop monkey bites.
 		if(..()) //successful monkey bite, this handles disease contraction.
 			var/damage = rand(1, 3)
+			if(check_shields(damage))
+				return 0
 			if(stat != DEAD)
 				apply_damage(damage, BRUTE, affecting, run_armor_check(affecting, "melee"))
 				damage_clothes(damage, BRUTE, "melee", affecting.body_zone)
@@ -214,7 +232,7 @@
 		return 0
 
 	if(..())
-		if(M.a_intent == "harm")
+		if(M.a_intent == INTENT_HARM)
 			if (w_uniform)
 				w_uniform.add_fingerprint(M)
 			var/damage = prob(90) ? 20 : 0
@@ -237,7 +255,7 @@
 			apply_damage(damage, BRUTE, affecting, armor_block)
 			damage_clothes(damage, BRUTE, "melee", affecting.body_zone)
 
-		if(M.a_intent == "disarm") //Always drop item in hand, if no item, get stunned instead.
+		if(M.a_intent == INTENT_DISARM) //Always drop item in hand, if no item, get stunned instead.
 			if(get_active_held_item() && drop_item())
 				playsound(loc, 'sound/weapons/slash.ogg', 25, 1, -1)
 				visible_message("<span class='danger'>[M] disarmed [src]!</span>", \
@@ -304,7 +322,7 @@
 
 /mob/living/carbon/human/mech_melee_attack(obj/mecha/M)
 
-	if(M.occupant.a_intent == "harm")
+	if(M.occupant.a_intent == INTENT_HARM)
 		M.do_attack_animation(src)
 		if(M.damtype == "brute")
 			step_away(src,M,15)

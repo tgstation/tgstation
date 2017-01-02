@@ -26,6 +26,8 @@
 			#define MAP_OVERRIDE_FILES
 			#include "map_files\PubbyStation\job\job_changes.dm"
 			#include "map_files\PubbyStation\job\removed_jobs.dm"
+			#include "map_files\PubbyStation\monastery_shuttle.dm"
+			#include "map_files\PubbyStation\areas.dm"
 		#endif
 
 #elif !defined(MAP_OVERRIDE)

@@ -9,7 +9,7 @@
 
 /obj/item/weapon/gun/energy/tesla_revolver
 	name = "tesla gun"
-	desc = "An experimental gun based on an experimental engine, it's about as likely to kill it's operator as it is the target."
+	desc = "An experimental gun based on an experimental engine, it's about as likely to kill its operator as it is the target."
 	icon_state = "tesla"
 	item_state = "tesla"
 	ammo_type = list(/obj/item/ammo_casing/energy/tesla_revolver)
@@ -37,7 +37,8 @@
 	name = "disabler"
 	desc = "A self-defense weapon that exhausts organic targets, weakening them until they collapse."
 	icon_state = "disabler"
-	item_state = "combat=3"
+	item_state = "disabler"
+	origin_tech = "combat=3"
 	ammo_type = list(/obj/item/ammo_casing/energy/disabler)
 	ammo_x_offset = 3
 

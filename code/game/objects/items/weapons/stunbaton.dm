@@ -6,7 +6,7 @@
 	slot_flags = SLOT_BELT
 	force = 10
 	throwforce = 7
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 	var/mob/foundmob = ""
 	origin_tech = "combat=2"
 	attack_verb = list("beaten")
@@ -40,14 +40,14 @@
 
 /obj/item/weapon/melee/baton/proc/deductcharge(chrgdeductamt)
 	if(bcell)
+		//Note this value returned is significant, as it will determine
+		//if a stun is applied or not
 		. = bcell.use(chrgdeductamt)
-		if(bcell.charge >= hitcost) // If after the deduction the baton doesn't have enough charge for a stun hit it turns off.
-			return
-	if(status)
-		status = 0
-		update_icon()
-		playsound(loc, "sparks", 75, 1, -1)
-	return 0
+		if(status && bcell.charge < hitcost)
+			//we're below minimum, turn off
+			status = 0
+			update_icon()
+			playsound(loc, "sparks", 75, 1, -1)
 
 
 /obj/item/weapon/melee/baton/update_icon()
@@ -138,22 +138,23 @@
 		..()
 		return
 
-	if(!isliving(M))
-		return
 
-	var/mob/living/L = M
+	if(ishuman(M))
+		var/mob/living/carbon/human/L = M
+		if(check_martial_counter(L, user))
+			return
 
-	if(user.a_intent != "harm")
+	if(user.a_intent != INTENT_HARM)
 		if(status)
-			if(baton_stun(L, user))
-				user.do_attack_animation(L)
+			if(baton_stun(M, user))
+				user.do_attack_animation(M)
 				return
 		else
-			L.visible_message("<span class='warning'>[user] has prodded [L] with [src]. Luckily it was off.</span>", \
+			M.visible_message("<span class='warning'>[user] has prodded [M] with [src]. Luckily it was off.</span>", \
 							"<span class='warning'>[user] has prodded you with [src]. Luckily it was off</span>")
 	else
 		if(status)
-			baton_stun(L, user)
+			baton_stun(M, user)
 		..()
 
 
@@ -200,7 +201,7 @@
 	desc = "An improvised stun baton."
 	icon_state = "stunprod_nocell"
 	item_state = "prod"
-	w_class = 4
+	w_class = WEIGHT_CLASS_BULKY
 	force = 3
 	throwforce = 5
 	stunforce = 5

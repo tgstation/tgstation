@@ -411,9 +411,9 @@
 	var/mob/living/carbon/human/M = target
 	if(target)
 		if(health > 0)
-			if(M.a_intent == "help")
+			if(M.a_intent == INTENT_HELP)
 				chatter()
-			if(M.a_intent == "harm")
+			if(M.a_intent == INTENT_HARM)
 				retal = 1
 				retal_target = target
 
@@ -626,7 +626,7 @@
 
 	if(pulledby)
 		if(Adjacent(pulledby))
-			a_intent = "disarm"
+			a_intent = INTENT_DISARM
 			pulledby.attack_hand(src)
 			inactivity_period = 10
 
@@ -1469,17 +1469,17 @@
 	if(canmove)
 		if((graytide || (TRAITS & TRAIT_MEAN)) || retal)
 			interest += targetInterestShift
-			a_intent = "harm"
+			a_intent = INTENT_HARM
 			zone_selected = pick("chest","r_leg","l_leg","r_arm","l_arm","head")
 			doing |= FIGHTING
 			if(retal)
 				TARGET = retal_target
 			else
 				var/mob/living/M = locate(/mob/living) in oview(7,src)
-				if(M != src && !compareFaction(M.faction))
-					TARGET = M
 				if(!M)
 					doing = doing & ~FIGHTING
+				else if(M != src && !compareFaction(M.faction))
+					TARGET = M
 
 	//no infighting
 	if(retal)
@@ -1589,7 +1589,7 @@
 						tryWalk(TARGET)
 					else
 						if(Adjacent(TARGET))
-							a_intent = pick("disarm","harm")
+							a_intent = pick(INTENT_DISARM, INTENT_HARM)
 							M.attack_hand(src)
 			timeout++
 		else if(timeout >= 10 || !(targetRange(M) > 14))

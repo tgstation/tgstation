@@ -19,6 +19,7 @@
 	var/inertia_move_delay = 5
 	var/pass_flags = 0
 	var/moving_diagonally = 0 //0: not doing a diagonal move. 1 and 2: doing the first/second step of the diagonal move
+	var/list/client_mobs_in_contents // This contains all the client mobs within this container
 	glide_size = 8
 	appearance_flags = TILE_BOUND
 
@@ -83,6 +84,8 @@
 	if (!inertia_moving)
 		inertia_next_move = world.time + inertia_move_delay
 		newtonian_move(Dir)
+	if (length(client_mobs_in_contents))
+		update_parallax_contents()
 	return 1
 
 /atom/movable/Destroy()
@@ -149,17 +152,9 @@
 
 /mob/living/brain/forceMove(atom/destination)
 	if(container)
-		container.forceMove(destination)
+		return container.forceMove(destination)
 	else //something went very wrong.
 		CRASH("Brainmob without container.")
-
-
-/mob/living/silicon/pai/forceMove(atom/destination)
-	if(card)
-		card.forceMove(destination)
-	else //something went very wrong.
-		CRASH("pAI without card")
-
 
 //Called whenever an object moves and by mobs when they attempt to move themselves through space
 //And when an object or action applies a force on src, see newtonian_move() below
@@ -350,7 +345,6 @@
 	return
 
 
-
 /atom/movable/proc/do_attack_animation(atom/A, visual_effect_icon, obj/item/used_item, no_effect, end_pixel_y)
 	if(!no_effect && (visual_effect_icon || used_item))
 		do_item_attack_animation(A, visual_effect_icon, used_item)
@@ -409,3 +403,8 @@
 
 	// And animate the attack!
 	animate(I, alpha = 175, pixel_x = 0, pixel_y = 0, pixel_z = 0, time = 3)
+
+/atom/movable/vv_get_dropdown()
+	. = ..()
+	. -= "Jump to"
+	.["Follow"] = "?_src_=holder;adminplayerobservefollow=\ref[src]"

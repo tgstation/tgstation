@@ -124,7 +124,7 @@
 		if("teleport")
 			if(!teleporter || !beacon)
 				return
-			addtimer(src, "teleport", 5, FALSE, usr)
+			addtimer(src, "teleport", 5, TIMER_NORMAL, usr)
 
 /obj/machinery/computer/gulag_teleporter_computer/proc/scan_machinery()
 	teleporter = findteleporter()

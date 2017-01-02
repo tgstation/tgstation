@@ -7,8 +7,13 @@
 	luminosity = 1
 	lighting_use_dynamic = DYNAMIC_LIGHTING_ENABLED
 	has_gravity = 1
+	always_unpowered = 0
 	valid_territory = 0
 	icon_state = "shuttle"
+
+/area/shuttle/transit
+	name = "Hyperspace"
+	desc = "Weeeeee"
 
 /area/shuttle/arrival
 	name = "Arrival Shuttle"

@@ -1,10 +1,10 @@
 
-/obj/item/device/encryptionkey/
+/obj/item/device/encryptionkey
 	name = "standard encryption key"
 	desc = "An encryption key for a radio headset.  Has no special codes in it.  WHY DOES IT EXIST?  ASK NANOTRASEN."
 	icon = 'icons/obj/radio.dmi'
 	icon_state = "cypherkey"
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 	origin_tech = "engineering=2;bluespace=1"
 	var/translate_binary = 0
 	var/translate_hive = 0
@@ -110,6 +110,12 @@
 	desc = "An encryption key for a radio headset.  To access the supply channel, use :u."
 	icon_state = "cargo_cypherkey"
 	channels = list("Supply" = 1)
+
+/obj/item/device/encryptionkey/headset_mining
+	name = "mining radio encryption key"
+	desc = "An encryption key for a radio headset.  To access the supply channel, use :u. For science, use :n."
+	icon_state = "cargo_cypherkey"
+	channels = list("Supply" = 1, "Science" = 1)
 
 /obj/item/device/encryptionkey/headset_service
 	name = "service radio encryption key"

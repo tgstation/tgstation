@@ -79,7 +79,8 @@
 
 /*Cabin's forest*/
 /datum/mapGenerator/snowy
-	modules = list(/datum/mapGeneratorModule/snow/pineTrees, \
+	modules = list(/datum/mapGeneratorModule/bottomlayer/snow, \
+	/datum/mapGeneratorModule/snow/pineTrees, \
 	/datum/mapGeneratorModule/snow/deadTrees, \
 	/datum/mapGeneratorModule/snow/randBushes, \
 	/datum/mapGeneratorModule/snow/randIceRocks, \
@@ -89,6 +90,9 @@
 	if(istype(T,/turf/open/floor/plating/asteroid/snow))
 		return ..(T)
 	return 0
+	
+/datum/mapGeneratorModule/bottomlayer/snow
+	spawnableTurfs = list(/turf/open/floor/plating/asteroid/snow/atmosphere = 100)
 
 /datum/mapGeneratorModule/snow/pineTrees
 	spawnableAtoms = list(/obj/structure/flora/tree/pine = 30)

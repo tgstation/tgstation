@@ -35,7 +35,7 @@
 
 /obj/structure/chair/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/wrench) && !(flags&NODECONSTRUCT))
-		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+		playsound(src.loc, W.usesound, 50, 1)
 		deconstruct()
 	else if(istype(W, /obj/item/assembly/shock_kit))
 		if(!user.drop_item())
@@ -211,7 +211,7 @@
 	icon = 'icons/obj/chairs.dmi'
 	icon_state = "chair_toppled"
 	item_state = "chair"
-	w_class = 5
+	w_class = WEIGHT_CLASS_HUGE
 	force = 8
 	throwforce = 10
 	throw_range = 3

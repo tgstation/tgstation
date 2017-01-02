@@ -1,4 +1,4 @@
-datum/supply_pack
+/datum/supply_pack
 	var/name = "Crate"
 	var/group = ""
 	var/hidden = FALSE
@@ -44,8 +44,10 @@ datum/supply_pack
 	contains = list(/obj/vehicle/atv,
 					/obj/item/key,
 					/obj/item/clothing/suit/jacket/leather/overcoat,
+					/obj/item/clothing/gloves/color/black,
+					/obj/item/clothing/head/soft,
 					/obj/item/clothing/mask/bandana/skull)//so you can properly #cargoniabikergang
-	crate_name = "ATV crate"
+	crate_name = "Biker Kit"
 	crate_type = /obj/structure/closet/crate/large
 
 /datum/supply_pack/emergency/equipment
@@ -117,7 +119,12 @@ datum/supply_pack
 	contains = list(/obj/item/clothing/head/radiation,
 					/obj/item/clothing/head/radiation,
 					/obj/item/clothing/suit/radiation,
-					/obj/item/clothing/suit/radiation)
+					/obj/item/clothing/suit/radiation,
+					/obj/item/device/geiger_counter,
+					/obj/item/device/geiger_counter,
+					/obj/item/weapon/reagent_containers/food/drinks/bottle/vodka,
+					/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/shotglass,
+					/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/shotglass)
 	crate_name = "radiation protection crate"
 	crate_type = /obj/structure/closet/crate/radiation
 
@@ -236,7 +243,7 @@ datum/supply_pack
 
 /datum/supply_pack/security/laser
 	name = "Lasers Crate"
-	cost = 1500
+	cost = 2000
 	contains = list(/obj/item/weapon/gun/energy/laser,
 					/obj/item/weapon/gun/energy/laser,
 					/obj/item/weapon/gun/energy/laser)
@@ -244,7 +251,7 @@ datum/supply_pack
 
 /datum/supply_pack/security/taser
 	name = "Taser Crate"
-	cost = 1500
+	cost = 3000
 	contains = list(/obj/item/weapon/gun/energy/e_gun/advtaser,
 					/obj/item/weapon/gun/energy/e_gun/advtaser,
 					/obj/item/weapon/gun/energy/e_gun/advtaser)
@@ -252,7 +259,7 @@ datum/supply_pack
 
 /datum/supply_pack/security/disabler
 	name = "Disabler Crate"
-	cost = 1000
+	cost = 1500
 	contains = list(/obj/item/weapon/gun/energy/disabler,
 					/obj/item/weapon/gun/energy/disabler,
 					/obj/item/weapon/gun/energy/disabler)
@@ -338,7 +345,7 @@ datum/supply_pack
 
 /datum/supply_pack/security/armory/ballistic
 	name = "Combat Shotguns Crate"
-	cost = 2000
+	cost = 4000
 	contains = list(/obj/item/weapon/gun/ballistic/shotgun/automatic/combat,
 					/obj/item/weapon/gun/ballistic/shotgun/automatic/combat,
 					/obj/item/weapon/gun/ballistic/shotgun/automatic/combat,
@@ -421,7 +428,7 @@ datum/supply_pack
 
 /datum/supply_pack/security/firingpins
 	name = "Standard Firing Pins Crate"
-	cost = 1000
+	cost = 2000
 	contains = list(/obj/item/weapon/storage/box/firingpins,
 					/obj/item/weapon/storage/box/firingpins)
 	crate_name = "firing pins crate"
@@ -902,7 +909,7 @@ datum/supply_pack
 
 /datum/supply_pack/science/bz_canister
 	name = "BZ Canister"
-	cost = 4000
+	cost = 2000
 	access_any = list(access_rd, access_atmospherics)
 	contains = list(/obj/machinery/portable_atmospherics/canister/bz)
 	crate_name = "bz canister crate"
@@ -1140,7 +1147,9 @@ datum/supply_pack
 					/obj/item/seeds/amanita,
 					/obj/item/seeds/reishi,
 					/obj/item/seeds/banana,
-					/obj/item/seeds/eggplant/eggy)
+					/obj/item/seeds/eggplant/eggy,
+					/obj/item/seeds/random,
+					/obj/item/seeds/random)
 	crate_name = "exotic seeds crate"
 
 /datum/supply_pack/organic/hydroponics/beekeeping_fullkit
@@ -1265,7 +1274,7 @@ datum/supply_pack
 			/obj/item/device/t_scanner/adv_mining_scanner/lesser,
 			/obj/item/device/radio/headset/headset_cargo/mining,
 			/obj/item/weapon/storage/bag/ore,
-			/obj/item/clothing/suit/space/hardsuit/mining,
+			/obj/item/clothing/suit/hooded/explorer,
 			/obj/item/clothing/mask/gas/explorer)
 	crate_name = "shaft miner starter kit"
 	crate_type = /obj/structure/closet/crate/secure
@@ -1336,7 +1345,7 @@ datum/supply_pack
 
 /datum/supply_pack/misc/lasertag/pins
 	name = "Laser Tag Firing Pins Crate"
-	cost = 2000
+	cost = 3000
 	contraband = TRUE
 	contains = list(/obj/item/weapon/storage/box/lasertagpins)
 	crate_name = "laser tag crate"

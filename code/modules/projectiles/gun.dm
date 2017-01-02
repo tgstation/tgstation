@@ -7,7 +7,7 @@
 	flags =  CONDUCT
 	slot_flags = SLOT_BELT
 	materials = list(MAT_METAL=2000)
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 	throwforce = 5
 	throw_speed = 3
 	throw_range = 5
@@ -119,12 +119,6 @@
 			else
 				user.visible_message("<span class='danger'>[user] fires [src]!</span>", null, null, COMBAT_MESSAGE_RANGE)
 
-	if(weapon_weight >= WEAPON_MEDIUM)
-		if(user.get_inactive_held_item())
-			if(prob(15))
-				if(user.drop_item())
-					user.visible_message("<span class='danger'>[src] flies out of [user]'s hands!</span>", "<span class='userdanger'>[src] kicks out of your grip!</span>")
-
 /obj/item/weapon/gun/emp_act(severity)
 	for(var/obj/O in contents)
 		O.emp_act(severity)
@@ -136,7 +130,7 @@
 	if(flag) //It's adjacent, is the user, or is on the user's person
 		if(target in user.contents) //can't shoot stuff inside us.
 			return
-		if(!ismob(target) || user.a_intent == "harm") //melee attack
+		if(!ismob(target) || user.a_intent == INTENT_HARM) //melee attack
 			return
 		if(target == user && user.zone_selected != "mouth") //so we can't shoot ourselves (unless mouth selected)
 			return
@@ -170,7 +164,21 @@
 		user << "<span class='userdanger'>You need both hands free to fire [src]!</span>"
 		return
 
-	process_fire(target,user,1,params)
+	//DUAL (or more!) WIELDING
+	var/bonus_spread = 0
+	var/loop_counter = 0
+	if(ishuman(user) && user.a_intent == INTENT_HARM)
+		var/mob/living/carbon/human/H = user
+		for(var/obj/item/weapon/gun/G in H.held_items)
+			if(G == src || G.weapon_weight >= WEAPON_MEDIUM)
+				continue
+			else if(G.can_trigger_gun(user))
+				bonus_spread += 24 * G.weapon_weight
+				loop_counter++
+				spawn(loop_counter)
+					G.process_fire(target,user,1,params, null, bonus_spread)
+
+	process_fire(target,user,1,params, null, bonus_spread)
 
 
 
@@ -192,20 +200,20 @@
 		user << "<span class='warning'>[src]'s trigger is locked. This weapon doesn't have a firing pin installed!</span>"
 	return 0
 
-obj/item/weapon/gun/proc/recharge_newshot()
+/obj/item/weapon/gun/proc/recharge_newshot()
 	return
 
-/obj/item/weapon/gun/proc/process_fire(atom/target as mob|obj|turf, mob/living/user as mob|obj, message = 1, params, zone_override)
+/obj/item/weapon/gun/proc/process_fire(atom/target as mob|obj|turf, mob/living/user as mob|obj, message = 1, params, zone_override, bonus_spread = 0)
 	add_fingerprint(user)
 
 	if(semicd)
 		return
 
-	if(weapon_weight)
-		if(user.get_inactive_held_item())
-			recoil = 4 //one-handed kick
-		else
-			recoil = initial(recoil)
+	var/sprd = 0
+	var/randomized_gun_spread = 0
+	if(spread)
+		randomized_gun_spread =	rand(0,spread)
+	var/randomized_bonus_spread = rand(0, bonus_spread)
 
 	if(burst_size > 1)
 		firing_burst = 1
@@ -216,11 +224,10 @@ obj/item/weapon/gun/proc/recharge_newshot()
 				if( i>1 && !(user.is_holding(src))) //for burst firing
 					break
 			if(chambered && chambered.BB)
-				var/sprd = 0
 				if(randomspread)
-					sprd = round((rand() - 0.5) * spread)
+					sprd = round((rand() - 0.5) * (randomized_gun_spread + randomized_bonus_spread))
 				else //Smart spread
-					sprd = round((i / burst_size - 0.5) * spread)
+					sprd = round((i / burst_size - 0.5) * (randomized_gun_spread + randomized_bonus_spread))
 
 				if(!chambered.fire_casing(target, user, params, ,suppressed, zone_override, sprd))
 					shoot_with_empty_chamber(user)
@@ -239,7 +246,8 @@ obj/item/weapon/gun/proc/recharge_newshot()
 		firing_burst = 0
 	else
 		if(chambered)
-			if(!chambered.fire_casing(target, user, params, , suppressed, zone_override, spread))
+			sprd = round((pick(1,-1)) * (randomized_gun_spread + randomized_bonus_spread))
+			if(!chambered.fire_casing(target, user, params, , suppressed, zone_override, sprd))
 				shoot_with_empty_chamber(user)
 				return
 			else
@@ -261,7 +269,7 @@ obj/item/weapon/gun/proc/recharge_newshot()
 	feedback_add_details("gun_fired","[src.type]")
 
 /obj/item/weapon/gun/attack(mob/M as mob, mob/user)
-	if(user.a_intent == "harm") //Flogging
+	if(user.a_intent == INTENT_HARM) //Flogging
 		..()
 	else
 		return
@@ -297,6 +305,8 @@ obj/item/weapon/gun/proc/recharge_newshot()
 					verbs -= /obj/item/weapon/gun/proc/toggle_gunlight
 				for(var/datum/action/item_action/toggle_gunlight/TGL in actions)
 					qdel(TGL)
+	else
+		..()
 
 
 

@@ -21,6 +21,7 @@
 	can_be_unanchored = 1
 	resistance_flags = ACID_PROOF
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 80, acid = 100)
+	CanAtmosPass = ATMOS_PASS_PROC
 
 /obj/structure/window/examine(mob/user)
 	..()
@@ -128,13 +129,13 @@
 		return 1 //skip the afterattack
 
 	add_fingerprint(user)
-	if(istype(I, /obj/item/weapon/weldingtool) && user.a_intent == "help")
+	if(istype(I, /obj/item/weapon/weldingtool) && user.a_intent == INTENT_HELP)
 		var/obj/item/weapon/weldingtool/WT = I
 		if(obj_integrity < max_integrity)
 			if(WT.remove_fuel(0,user))
 				user << "<span class='notice'>You begin repairing [src]...</span>"
-				playsound(loc, 'sound/items/Welder.ogg', 40, 1)
-				if(do_after(user, 40/I.toolspeed, target = src))
+				playsound(loc, WT.usesound, 40, 1)
+				if(do_after(user, 40*I.toolspeed, target = src))
 					obj_integrity = max_integrity
 					playsound(loc, 'sound/items/Welder2.ogg', 50, 1)
 					update_nearby_icons()
@@ -154,7 +155,7 @@
 			else if(!reinf)
 				user << (anchored ? "<span class='notice'>You begin to unscrew the window from the floor...</span>" : "<span class='notice'>You begin to screw the window to the floor...</span>")
 
-			if(do_after(user, 30/I.toolspeed, target = src))
+			if(do_after(user, 30*I.toolspeed, target = src))
 				if(reinf && (state == 1 || state == 2))
 					//If state was unfastened, fasten it, else do the reverse
 					state = (state == 1 ? 2 : 1)
@@ -172,7 +173,7 @@
 		else if (istype(I, /obj/item/weapon/crowbar) && reinf && (state == 0 || state == 1))
 			user << (state == 0 ? "<span class='notice'>You begin to lever the window into the frame...</span>" : "<span class='notice'>You begin to lever the window out of the frame...</span>")
 			playsound(loc, I.usesound, 75, 1)
-			if(do_after(user, 40/I.toolspeed, target = src))
+			if(do_after(user, 40*I.toolspeed, target = src))
 				//If state was out of frame, put into frame, else do the reverse
 				state = (state == 0 ? 1 : 0)
 				user << (state == 1 ? "<span class='notice'>You pry the window into the frame.</span>" : "<span class='notice'>You pry the window out of the frame.</span>")
@@ -181,7 +182,7 @@
 		else if(istype(I, /obj/item/weapon/wrench) && !anchored)
 			playsound(loc, I.usesound, 75, 1)
 			user << "<span class='notice'> You begin to disassemble [src]...</span>"
-			if(do_after(user, 40/I.toolspeed, target = src))
+			if(do_after(user, 40*I.toolspeed, target = src))
 				if(qdeleted(src))
 					return
 
@@ -440,7 +441,7 @@
 	max_integrity = 100
 	armor = list(melee = 60, bullet = 25, laser = 0, energy = 0, bomb = 25, bio = 100, rad = 100, fire = 80, acid = 100)
 	explosion_block = 2 //fancy AND hard to destroy. the most useful combination.
-	glass_type = /obj/item/stack/sheet/brass
+	glass_type = /obj/item/stack/tile/brass
 	glass_amount = 1
 	var/made_glow = FALSE
 
@@ -478,7 +479,6 @@
 /obj/structure/window/reinforced/clockwork/ratvar_act()
 	obj_integrity = max_integrity
 	update_icon()
-	return 0
 
 /obj/structure/window/reinforced/clockwork/narsie_act()
 	take_damage(rand(25, 75), BRUTE)

@@ -29,7 +29,7 @@ var/datum/subsystem/weather/SSweather
 		var/datum/weather/W = pickweight(possible_weather_for_this_z)
 		run_weather(W.name, Z)
 		eligible_zlevels -= Z
-		addtimer(src, "make_z_eligible", rand(3000, 6000) + W.weather_duration_upper, TRUE, Z) //Around 5-10 minutes between weathers
+		addtimer(src, "make_z_eligible", rand(3000, 6000) + W.weather_duration_upper, TIMER_UNIQUE, Z) //Around 5-10 minutes between weathers
 
 /datum/subsystem/weather/Initialize(start_timeofday)
 	..()

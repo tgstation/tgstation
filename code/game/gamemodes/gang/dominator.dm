@@ -53,7 +53,7 @@
 			if(!warned && (time_remaining < 180))
 				warned = 1
 				var/area/domloc = get_area(loc)
-				gang.message_gangtools("Less than 3 minutes remain in hostile takeover. Defend your dominator at [domloc.map_name]!")
+				gang.message_gangtools("Less than 3 minutes remains in hostile takeover. Defend your dominator at [domloc.map_name]!")
 				for(var/datum/gang/G in ticker.mode.gangs)
 					if(G != gang)
 						G.message_gangtools("WARNING: [gang.name] Gang takeover imminent. Their dominator at [domloc.map_name] must be destroyed!",1,1)

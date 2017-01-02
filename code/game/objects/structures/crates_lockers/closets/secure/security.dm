@@ -10,7 +10,7 @@
 		new /obj/item/weapon/storage/backpack/captain(src)
 	else
 		new /obj/item/weapon/storage/backpack/satchel/cap(src)
-	new /obj/item/clothing/suit/cloak/cap(src)
+	new /obj/item/clothing/neck/cloak/cap(src)
 	new /obj/item/weapon/storage/backpack/dufflebag/captain(src)
 	new /obj/item/clothing/head/crown/fancy(src)
 	new /obj/item/clothing/suit/captunic(src)
@@ -60,7 +60,7 @@
 
 /obj/structure/closet/secure_closet/hos/New()
 	..()
-	new /obj/item/clothing/suit/cloak/hos(src)
+	new /obj/item/clothing/neck/cloak/hos(src)
 	new /obj/item/weapon/cartridge/hos(src)
 	new /obj/item/device/radio/headset/heads/hos(src)
 	new /obj/item/clothing/under/hosparadefem(src)
@@ -104,6 +104,7 @@
 	new /obj/item/device/flashlight/seclite(src)
 	new /obj/item/clothing/gloves/krav_maga/sec(src)
 	new /obj/item/weapon/door_remote/head_of_security(src)
+	new /obj/item/weapon/gun/ballistic/shotgun/automatic/dual_tube(src)
 
 /obj/structure/closet/secure_closet/security
 	name = "security officer's locker"

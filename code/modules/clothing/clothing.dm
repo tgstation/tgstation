@@ -58,7 +58,15 @@
 
 /obj/item/clothing/attack_hand(mob/user)
 	if(pockets && pockets.priority && ismob(loc))
-		pockets.show_to(user)
+		//If we already have the pockets open, close them.
+		if (user.s_active == pockets)
+			pockets.close(user)
+		//Close whatever the user has open and show them the pockets.
+		else
+			if (user.s_active)
+				user.s_active.close(user)
+			pockets.orient2hud(user)
+			pockets.show_to(user)
 	else
 		return ..()
 
@@ -153,7 +161,7 @@ var/list/damaged_clothes_icons = list()
 //Ears: currently only used for headsets and earmuffs
 /obj/item/clothing/ears
 	name = "ears"
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 	throwforce = 0
 	slot_flags = SLOT_EARS
 	resistance_flags = 0
@@ -172,7 +180,7 @@ var/list/damaged_clothes_icons = list()
 /obj/item/clothing/glasses
 	name = "glasses"
 	icon = 'icons/obj/clothing/glasses.dmi'
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	flags_cover = GLASSESCOVERSEYES
 	slot_flags = SLOT_EYES
 	var/vision_flags = 0
@@ -200,7 +208,7 @@ BLIND     // can't see anything
 /obj/item/clothing/gloves
 	name = "gloves"
 	gender = PLURAL //Carn: for grammarically correct text-parsing
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	icon = 'icons/obj/clothing/gloves.dmi'
 	siemens_coefficient = 0.50
 	body_parts_covered = HANDS
@@ -436,7 +444,7 @@ BLIND     // can't see anything
 	desc = "A suit that protects against low pressure environments. Has a big 13 on the back."
 	icon_state = "spaceold"
 	item_state = "s_suit"
-	w_class = 4//bulky item
+	w_class = WEIGHT_CLASS_BULKY
 	gas_transfer_coefficient = 0.01
 	permeability_coefficient = 0.02
 	flags = STOPSPRESSUREDMAGE | THICKMATERIAL
@@ -513,7 +521,7 @@ BLIND     // can't see anything
 
 	if(mutantrace_variation && ishuman(user))
 		var/mob/living/carbon/human/H = user
-		if(DIGITIGRADE in H.dna.species.specflags)
+		if(DIGITIGRADE in H.dna.species.species_traits)
 			adjusted = DIGITIGRADE_STYLE
 		H.update_inv_w_uniform()
 
@@ -572,10 +580,11 @@ BLIND     // can't see anything
 
 /obj/item/clothing/under/examine(mob/user)
 	..()
-	if(adjusted == ALT_STYLE)
-		user << "Alt-click on [src] to wear it normally."
-	else
-		user << "Alt-click on [src] to wear it casually."
+	if(can_adjust)
+		if(adjusted == ALT_STYLE)
+			user << "Alt-click on [src] to wear it normally."
+		else
+			user << "Alt-click on [src] to wear it casually."
 	switch(sensor_mode)
 		if(0)
 			user << "Its sensors appear to be disabled."
@@ -685,25 +694,31 @@ BLIND     // can't see anything
 			body_parts_covered |= CHEST
 	return adjusted
 
-/obj/item/clothing/proc/weldingvisortoggle()			//Malk: proc to toggle welding visors on helmets, masks, goggles, etc.
-	if(!can_use(usr))
-		return
+/obj/item/clothing/proc/weldingvisortoggle(mob/user) //proc to toggle welding visors on helmets, masks, goggles, etc.
+	if(!can_use(user))
+		return FALSE
 
-	up ^= 1
-	flags ^= visor_flags
-	flags_inv ^= visor_flags_inv
-	flags_cover ^= initial(flags_cover)
-	icon_state = "[initial(icon_state)][up ? "up" : ""]"
-	usr << "<span class='notice'>You adjust \the [src] [up ? "up" : "down"].</span>"
-	flash_protect ^= initial(flash_protect)
-	tint ^= initial(tint)
+	visor_toggling()
 
-	if(istype(usr, /mob/living/carbon))
-		var/mob/living/carbon/C = usr
+	user << "<span class='notice'>You adjust \the [src] [up ? "up" : "down"].</span>"
+
+	if(iscarbon(user))
+		var/mob/living/carbon/C = user
 		C.head_update(src, forced = 1)
 	for(var/X in actions)
 		var/datum/action/A = X
 		A.UpdateButtonIcon()
+	return TRUE
+
+/obj/item/clothing/proc/visor_toggling() //handles all the actual toggling of flags
+	up = !up
+	flags ^= visor_flags
+	flags_inv ^= visor_flags_inv
+	flags_cover ^= initial(flags_cover)
+	icon_state = "[initial(icon_state)][up ? "up" : ""]"
+	flash_protect ^= initial(flash_protect)
+	tint ^= initial(tint)
+
 
 /obj/item/clothing/proc/can_use(mob/user)
 	if(user && ismob(user))

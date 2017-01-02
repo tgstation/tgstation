@@ -74,7 +74,6 @@ var/list/global_modular_computers = list()
 /obj/machinery/modular_computer/proc/eject_id()
 	set name = "Eject ID"
 	set category = "Object"
-	set src in view(1)
 
 	if(cpu)
 		cpu.eject_id()
@@ -83,10 +82,17 @@ var/list/global_modular_computers = list()
 /obj/machinery/modular_computer/proc/eject_disk()
 	set name = "Eject Data Disk"
 	set category = "Object"
-	set src in view(1)
 
 	if(cpu)
 		cpu.eject_disk()
+
+/obj/machinery/modular_computer/proc/eject_card()
+	set name = "Eject Intellicard"
+	set category = "Object"
+	set src in view(1)
+
+	if(cpu)
+		cpu.eject_card()
 
 /obj/machinery/modular_computer/AltClick(mob/user)
 	if(cpu)

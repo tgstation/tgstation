@@ -22,7 +22,7 @@ var/list/blacklisted_glowshroom_turfs = typecacheof(list(
 	var/generation = 1
 	var/spreadIntoAdjacentChance = 60
 
-obj/structure/glowshroom/glowcap
+/obj/structure/glowshroom/glowcap
 	name = "glowcap"
 	icon_state = "glowcap"
 

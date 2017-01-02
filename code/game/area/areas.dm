@@ -48,6 +48,8 @@
 	var/area/master				// master area used for power calcluations
 	var/list/related			// the other areas of the same type as this
 
+	var/parallax_movedir = 0
+
 	var/global/global_uid = 0
 	var/uid
 	var/list/ambientsounds = list('sound/ambience/ambigen1.ogg','sound/ambience/ambigen3.ogg',\
@@ -255,7 +257,7 @@ var/list/teleportlocs = list()
 	for (var/mob/living/silicon/SILICON in player_list)
 		if(SILICON.triggerAlarm("Burglar", src, cameras, trigger))
 			//Cancel silicon alert after 1 minute
-			addtimer(SILICON, "cancelAlarm", 600, FALSE,"Burglar",src,trigger)
+			addtimer(SILICON, "cancelAlarm", 600, TIMER_NORMAL,"Burglar",src,trigger)
 
 /area/proc/set_fire_alarm_effect()
 	fire = 1

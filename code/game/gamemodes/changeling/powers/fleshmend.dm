@@ -36,7 +36,7 @@
 			by quick repeated use!</span>"
 
 	recent_uses++
-	addtimer(src, "fleshmend", 0, FALSE, user)
+	addtimer(src, "fleshmend", 0, TIMER_NORMAL, user)
 
 	feedback_add_details("changeling_powers","RR")
 	return 1

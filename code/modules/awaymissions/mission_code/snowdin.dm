@@ -40,7 +40,7 @@
 	shipment of supplies. The snow has really kicked up recently, shits almost like a constant blizzard right now. Maybe it'll drop down soon so we can get a word in.<br><br>
 	<i>The rest of the paper seems to be a mixture of scribbles and smudged ink.</i> "}
 
-obj/item/weapon/paper/snowdin/secnotice
+/obj/item/weapon/paper/snowdin/secnotice
 	name = "Security Notice"
 	info = {"You have been assigned a position on a listening outpost. Here you'll be watching over several crewmembers assigned to watching signals of the general area.
 	 As not much is expected in terms of issues, we've only assigned one guard per outpost. Crewmembers are expected to keep to their regulated work schedules and may be
@@ -48,23 +48,23 @@ obj/item/weapon/paper/snowdin/secnotice
 	 should be punished severely as to prevent future incidients. Mutiny and/or rioting should be reported to central and dealt with swiftly. You're here to secure and protect
 	 Nanotrasen assets, not be a police officer. Do what you must, but make sure it's not messy."}
 
-obj/item/weapon/paper/snowdin/syndienotice
+/obj/item/weapon/paper/snowdin/syndienotice
 	name = "Assignment Notice"
 	info = {"You've been assigned as an agent to listen in on Nanotrasen activities from passing ships and nearby stations. The outpost you've been assigned to is under lays of solid
 	ice and we've supplied you with a scrambler to help avoid Nanotrasen discovery, as they've recently built a listening post of their own aboveground. Get aquainted with your new
 	crewmates, because you're gonna be here for awhile. Enjoy the free syndicakes."}
 
-obj/item/weapon/paper/crumpled/snowdin/syndielava
+/obj/item/weapon/paper/crumpled/snowdin/syndielava
 	name = "scribbled note"
 	info = {"Some cracks in the ice nearby have exposed some sort of hidden magma stream under all this shit ice. I don't know whats worse at this point honestly; freezing to death or
 	burning alive."}
 
-obj/item/weapon/paper/crumpled/snowdin/lootstructures
+/obj/item/weapon/paper/crumpled/snowdin/lootstructures
 	name = "scribbled note"
 	info = {"From what we've seen so far, theres a ton of iced-over ruins down here in the caves. We sent a few men out to check things out and they never came back, so we decided to
 	border up majority of the ruins. We've heard some weird shit coming out of these caves and I'm not gonna find out the hard way myself."}
 
-obj/item/weapon/paper/crumpled/snowdin/shovel
+/obj/item/weapon/paper/crumpled/snowdin/shovel
 	name = "shoveling duties"
 	info = {"Snow piles up bad here all-year round, even worse during the winter months. Keeping a constant rotation of shoveling that shit out of the way of the airlocks and keeping the paths decently clear
 	is a good step towards not getting stuck walking through knee-deep snow."}
@@ -184,7 +184,7 @@ obj/item/weapon/paper/crumpled/snowdin/shovel
 	hidden_uplink.name = "dusty radio"
 	hidden_uplink.telecrystals = 10
 
-obj/effect/mob_spawn/human/syndicatesoldier/coldres
+/obj/effect/mob_spawn/human/syndicatesoldier/coldres
 	name = "Syndicate Snow Operative"
 	uniform = /obj/item/clothing/under/syndicate/coldres
 	shoes = /obj/item/clothing/shoes/combat/coldres
@@ -193,7 +193,7 @@ obj/effect/mob_spawn/human/syndicatesoldier/coldres
 	pocket2 = /obj/item/weapon/card/id/syndicate
 	has_id = 0
 
-obj/effect/mob_spawn/human/syndicatesoldier/coldres/alive
+/obj/effect/mob_spawn/human/syndicatesoldier/coldres/alive
 	name = "sleeper"
 	mob_name = "Syndicate Snow Operative"
 	icon = 'icons/obj/Cryogenic2.dmi'
@@ -205,7 +205,7 @@ obj/effect/mob_spawn/human/syndicatesoldier/coldres/alive
 	flavour_text = {"You are a syndicate operative recently awoken from cyrostatis in an underground outpost. Monitor Nanotrasen communications and record infomation. All intruders should be
 	disposed of swirfly to assure no gathered infomation is stolen or lost. Try not to wander too far from the outpost as the caves can be a deadly place even for a trained operative such as yourself."}
 
-obj/effect/mob_spawn/human/syndicatesoldier/coldres/alive/female
+/obj/effect/mob_spawn/human/syndicatesoldier/coldres/alive/female
 	mob_gender = FEMALE
 
 //mobs//--

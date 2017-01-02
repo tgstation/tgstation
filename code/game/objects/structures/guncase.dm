@@ -46,7 +46,7 @@
 			update_icon()
 			return
 
-	else if(user.a_intent != "harm")
+	else if(user.a_intent != INTENT_HARM)
 		open = !open
 		update_icon()
 	else

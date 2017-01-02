@@ -7,7 +7,7 @@
 	throwforce = 5
 	throw_speed = 3
 	throw_range = 7
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 	attack_verb = list("mopped", "bashed", "bludgeoned", "whacked")
 	resistance_flags = FLAMMABLE
 	var/mopping = 0
@@ -20,7 +20,7 @@
 	create_reagents(mopcap)
 
 
-obj/item/weapon/mop/proc/clean(turf/A)
+/obj/item/weapon/mop/proc/clean(turf/A)
 	if(reagents.has_reagent("water", 1) || reagents.has_reagent("holywater", 1) || reagents.has_reagent("vodka", 1) || reagents.has_reagent("cleaner", 1))
 		A.clean_blood()
 		for(var/obj/effect/O in A)
@@ -68,7 +68,7 @@ obj/item/weapon/mop/proc/clean(turf/A)
 	return
 
 /obj/item/weapon/mop/advanced
-	desc = "The most advanced tool in a custodian's arsenal. Just think of all the viscera you will clean up with this!"
+	desc = "The most advanced tool in a custodian's arsenal, complete with a condenser for self-wetting! Just think of all the viscera you will clean up with this!"
 	name = "advanced mop"
 	mopcap = 10
 	icon_state = "advmop"
@@ -78,3 +78,33 @@ obj/item/weapon/mop/proc/clean(turf/A)
 	throwforce = 8
 	throw_range = 4
 	mopspeed = 20
+	var/refill_enabled = TRUE //Self-refill toggle for when a janitor decides to mop with something other than water.
+	var/refill_rate = 1 //Rate per process() tick mop refills itself
+	var/refill_reagent = "water" //Determins what reagent to use for refilling, just in case someone wanted to make a HOLY MOP OF PURGING
+
+/obj/item/weapon/mop/advanced/New()
+	..()
+	START_PROCESSING(SSobj, src)
+
+/obj/item/weapon/mop/advanced/attack_self(mob/user)
+	refill_enabled = !refill_enabled
+	if(refill_enabled)
+		START_PROCESSING(SSobj, src)
+	else
+		STOP_PROCESSING(SSobj,src)
+	user << "<span class='notice'>You set the condenser switch to the '[refill_enabled ? "ON" : "OFF"]' position.</span>"
+	playsound(user, 'sound/machines/click.ogg', 30, 1)
+
+/obj/item/weapon/mop/advanced/process()
+
+	if(reagents.total_volume < mopcap)
+		reagents.add_reagent(refill_reagent, refill_rate)
+
+/obj/item/weapon/mop/advanced/examine(mob/user)
+	..()
+	user << "<span class='notice'>The condenser switch is set to <b>[refill_enabled ? "ON" : "OFF"]</b>.</span>"
+
+/obj/item/weapon/mop/advanced/Destroy()
+	if(refill_enabled)
+		STOP_PROCESSING(SSobj, src)
+	return ..()

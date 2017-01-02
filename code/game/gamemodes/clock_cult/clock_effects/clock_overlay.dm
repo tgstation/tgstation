@@ -30,7 +30,7 @@
 /obj/effect/clockwork/overlay/wall/New()
 	..()
 	queue_smooth_neighbors(src)
-	addtimer(GLOBAL_PROC, "queue_smooth", 1, FALSE, src)
+	addtimer(GLOBAL_PROC, "queue_smooth", 1, TIMER_NORMAL, src)
 
 /obj/effect/clockwork/overlay/wall/Destroy()
 	queue_smooth_neighbors(src)

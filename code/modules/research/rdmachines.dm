@@ -1,4 +1,4 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:33
+
 
 //All devices that link into the R&D console fall into thise type for easy identification and some shared procs.
 
@@ -33,7 +33,7 @@
 	var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 	s.set_up(5, 1, src)
 	s.start()
-	if (electrocute_mob(user, get_area(src), src, 0.7))
+	if (electrocute_mob(user, get_area(src), src, 0.7, TRUE))
 		return 1
 	else
 		return 0

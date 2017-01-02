@@ -6,6 +6,7 @@
 	attachable = 1
 	var/id = null
 	var/can_change_id = 0
+	var/cooldown = 0//Door cooldowns
 
 /obj/item/device/assembly/control/examine(mob/user)
 	..()
@@ -71,7 +72,7 @@
 				D.safe = !D.safe
 
 	for(var/D in open_or_close)
-		addtimer(D, doors_need_closing ? "close" : "open",0,FALSE)
+		addtimer(D, doors_need_closing ? "close" : "open",0, TIMER_NORMAL)
 
 	sleep(10)
 	cooldown = 0

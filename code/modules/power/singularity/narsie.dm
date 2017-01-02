@@ -25,8 +25,8 @@
 
 /obj/singularity/narsie/large/New()
 	..()
-	world << "<span class='narsie'>NAR-SIE HAS RISEN</span>"
-	world << pick('sound/hallucinations/im_here1.ogg', 'sound/hallucinations/im_here2.ogg')
+	send_to_playing_players("<span class='narsie'>NAR-SIE HAS RISEN</span>")
+	send_to_playing_players(pick('sound/hallucinations/im_here1.ogg', 'sound/hallucinations/im_here2.ogg'))
 
 	var/area/A = get_area(src)
 	if(A)

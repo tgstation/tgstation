@@ -4,17 +4,30 @@
 	desc = "A heavy helmet made of brass."
 	icon = 'icons/obj/clothing/clockwork_garb.dmi'
 	icon_state = "clockwork_helmet"
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 	resistance_flags = FIRE_PROOF | ACID_PROOF
-	armor = list(melee = 80, bullet = 50, laser = -15, energy = 0, bomb = 35, bio = 0, rad = 0, fire = 100, acid = 100)
+	armor = list(melee = 80, bullet = 70, laser = -25, energy = 0, bomb = 60, bio = 0, rad = 0, fire = 100, acid = 100)
 
 /obj/item/clothing/head/helmet/clockwork/New()
 	..()
+	ratvar_act()
 	all_clockwork_objects += src
 
 /obj/item/clothing/head/helmet/clockwork/Destroy()
 	all_clockwork_objects -= src
 	return ..()
+
+/obj/item/clothing/head/helmet/clockwork/ratvar_act()
+	if(ratvar_awakens)
+		armor = list(melee = 100, bullet = 100, laser = 100, energy = 100, bomb = 100, bio = 100, rad = 100, fire = 100, acid = 100)
+		flags |= STOPSPRESSUREDMAGE
+		max_heat_protection_temperature = FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT
+		min_cold_protection_temperature = SPACE_HELM_MIN_TEMP_PROTECT
+	else
+		armor = list(melee = 80, bullet = 70, laser = -25, energy = 0, bomb = 60, bio = 0, rad = 0, fire = 100, acid = 100)
+		flags &= STOPSPRESSUREDMAGE
+		max_heat_protection_temperature = initial(max_heat_protection_temperature)
+		min_cold_protection_temperature = initial(min_cold_protection_temperature)
 
 /obj/item/clothing/head/helmet/clockwork/equipped(mob/living/user, slot)
 	..()
@@ -31,7 +44,7 @@
 			user.emote("scream")
 			user.apply_damage(30, BRUTE, "head")
 			user.adjustBrainLoss(30)
-		addtimer(user, "unEquip", 1, FALSE, src, 1) //equipped happens before putting stuff on(but not before picking items up). thus, we need to wait for it to be on before forcing it off.
+		addtimer(user, "unEquip", 1, TIMER_NORMAL, src, 1) //equipped happens before putting stuff on(but not before picking items up). thus, we need to wait for it to be on before forcing it off.
 
 /obj/item/clothing/head/helmet/clockwork/mob_can_equip(mob/M, mob/equipper, slot, disable_warning = 0)
 	if(equipper && !is_servant_of_ratvar(equipper))
@@ -43,19 +56,34 @@
 	desc = "A bulky cuirass made of brass."
 	icon = 'icons/obj/clothing/clockwork_garb.dmi'
 	icon_state = "clockwork_cuirass"
-	w_class = 4
+	w_class = WEIGHT_CLASS_BULKY
 	body_parts_covered = CHEST|GROIN|LEGS
+	cold_protection = CHEST|GROIN|LEGS
+	heat_protection = CHEST|GROIN|LEGS
 	resistance_flags = FIRE_PROOF | ACID_PROOF
-	armor = list(melee = 80, bullet = 50, laser = -15, energy = 0, bomb = 35, bio = 0, rad = 0, fire = 100, acid = 100)
+	armor = list(melee = 80, bullet = 70, laser = -25, energy = 0, bomb = 60, bio = 0, rad = 0, fire = 100, acid = 100)
 	allowed = list(/obj/item/clockwork, /obj/item/clothing/glasses/wraith_spectacles, /obj/item/clothing/glasses/judicial_visor, /obj/item/device/mmi/posibrain/soul_vessel)
 
 /obj/item/clothing/suit/armor/clockwork/New()
 	..()
+	ratvar_act()
 	all_clockwork_objects += src
 
 /obj/item/clothing/suit/armor/clockwork/Destroy()
 	all_clockwork_objects -= src
 	return ..()
+
+/obj/item/clothing/suit/armor/clockwork/ratvar_act()
+	if(ratvar_awakens)
+		armor = list(melee = 100, bullet = 100, laser = 100, energy = 100, bomb = 100, bio = 100, rad = 100, fire = 100, acid = 100)
+		flags |= STOPSPRESSUREDMAGE
+		max_heat_protection_temperature = FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT
+		min_cold_protection_temperature = SPACE_HELM_MIN_TEMP_PROTECT
+	else
+		armor = list(melee = 80, bullet = 70, laser = -25, energy = 0, bomb = 60, bio = 0, rad = 0, fire = 100, acid = 100)
+		flags &= STOPSPRESSUREDMAGE
+		max_heat_protection_temperature = initial(max_heat_protection_temperature)
+		min_cold_protection_temperature = initial(min_cold_protection_temperature)
 
 /obj/item/clothing/suit/armor/clockwork/mob_can_equip(mob/M, mob/equipper, slot, disable_warning = 0)
 	if(equipper && !is_servant_of_ratvar(equipper))
@@ -78,7 +106,7 @@
 			user.apply_damage(15, BURN, "chest")
 			user.adjust_fire_stacks(2)
 			user.IgniteMob()
-		addtimer(user, "unEquip", 1, FALSE, src, 1)
+		addtimer(user, "unEquip", 1, TIMER_NORMAL, src, 1)
 
 /obj/item/clothing/gloves/clockwork
 	name = "clockwork gauntlets"
@@ -90,19 +118,33 @@
 	strip_delay = 50
 	put_on_delay = 30
 	body_parts_covered = ARMS
-	resistance_flags = 0
+	cold_protection = ARMS
+	heat_protection = ARMS
 	siemens_coefficient = 0
 	permeability_coefficient = 0.05
 	resistance_flags = FIRE_PROOF | ACID_PROOF
-	armor = list(melee = 80, bullet = 50, laser = -15, energy = 0, bomb = 35, bio = 0, rad = 0, fire = 100, acid = 100)
+	armor = list(melee = 80, bullet = 70, laser = -25, energy = 0, bomb = 60, bio = 0, rad = 0, fire = 100, acid = 100)
 
 /obj/item/clothing/gloves/clockwork/New()
 	..()
+	ratvar_act()
 	all_clockwork_objects += src
 
 /obj/item/clothing/gloves/clockwork/Destroy()
 	all_clockwork_objects -= src
 	return ..()
+
+/obj/item/clothing/gloves/clockwork/ratvar_act()
+	if(ratvar_awakens)
+		armor = list(melee = 100, bullet = 100, laser = 100, energy = 100, bomb = 100, bio = 100, rad = 100, fire = 100, acid = 100)
+		flags |= STOPSPRESSUREDMAGE
+		max_heat_protection_temperature = FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT
+		min_cold_protection_temperature = SPACE_HELM_MIN_TEMP_PROTECT
+	else
+		armor = list(melee = 80, bullet = 70, laser = -25, energy = 0, bomb = 60, bio = 0, rad = 0, fire = 100, acid = 100)
+		flags &= STOPSPRESSUREDMAGE
+		max_heat_protection_temperature = initial(max_heat_protection_temperature)
+		min_cold_protection_temperature = initial(min_cold_protection_temperature)
 
 /obj/item/clothing/gloves/clockwork/mob_can_equip(mob/M, mob/equipper, slot, disable_warning = 0)
 	if(equipper && !is_servant_of_ratvar(equipper))
@@ -124,25 +166,32 @@
 			user.emote("scream")
 			user.apply_damage(7, BRUTE, "l_arm")
 			user.apply_damage(7, BRUTE, "r_arm")
-		addtimer(user, "unEquip", 1, FALSE, src, 1)
+		addtimer(user, "unEquip", 1, TIMER_NORMAL, src, 1)
 
 /obj/item/clothing/shoes/clockwork
 	name = "clockwork treads"
 	desc = "Industrial boots made of brass. They're very heavy."
 	icon = 'icons/obj/clothing/clockwork_garb.dmi'
 	icon_state = "clockwork_treads"
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 	strip_delay = 50
 	put_on_delay = 30
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 
 /obj/item/clothing/shoes/clockwork/New()
 	..()
+	ratvar_act()
 	all_clockwork_objects += src
 
 /obj/item/clothing/shoes/clockwork/Destroy()
 	all_clockwork_objects -= src
 	return ..()
+
+/obj/item/clothing/shoes/clockwork/ratvar_act()
+	if(ratvar_awakens)
+		flags |= NOSLIP
+	else
+		flags &= NOSLIP
 
 /obj/item/clothing/shoes/clockwork/mob_can_equip(mob/M, mob/equipper, slot, disable_warning = 0)
 	if(equipper && !is_servant_of_ratvar(equipper))
@@ -164,4 +213,4 @@
 			user.emote("scream")
 			user.apply_damage(7, BURN, "l_leg")
 			user.apply_damage(7, BURN, "r_leg")
-		addtimer(user, "unEquip", 1, FALSE, src, 1)
+		addtimer(user, "unEquip", 1, TIMER_NORMAL, src, 1)

@@ -4,14 +4,12 @@
 /obj/machinery/door/airlock/command
 	icon = 'icons/obj/doors/airlocks/station/command.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_com
-	obj_integrity = 450
-	max_integrity = 450
+	normal_integrity = 450
 
 /obj/machinery/door/airlock/security
 	icon = 'icons/obj/doors/airlocks/station/security.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_sec
-	obj_integrity = 450
-	max_integrity = 450
+	normal_integrity = 450
 
 /obj/machinery/door/airlock/engineering
 	icon = 'icons/obj/doors/airlocks/station/engineering.dmi'
@@ -25,8 +23,7 @@
 	name = "maintenance access"
 	icon = 'icons/obj/doors/airlocks/station/maintenance.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_mai
-	obj_integrity = 250
-	max_integrity = 250
+	normal_integrity = 250
 
 /obj/machinery/door/airlock/mining
 	name = "mining airlock"
@@ -65,8 +62,7 @@
 	opacity = 0
 	assemblytype = /obj/structure/door_assembly/door_assembly_com/glass
 	glass = 1
-	obj_integrity = 400
-	max_integrity = 400
+	normal_integrity = 400
 
 /obj/machinery/door/airlock/glass_engineering
 	icon = 'icons/obj/doors/airlocks/station/engineering.dmi'
@@ -79,8 +75,7 @@
 	opacity = 0
 	assemblytype = /obj/structure/door_assembly/door_assembly_sec/glass
 	glass = 1
-	obj_integrity = 400
-	max_integrity = 400
+	normal_integrity = 400
 
 /obj/machinery/door/airlock/glass_medical
 	icon = 'icons/obj/doors/airlocks/station/medical.dmi'
@@ -146,8 +141,7 @@
 	icon = 'icons/obj/doors/airlocks/station/diamond.dmi'
 	var/mineral = "diamond"
 	assemblytype = /obj/structure/door_assembly/door_assembly_diamond
-	obj_integrity = 1000
-	max_integrity = 1000
+	normal_integrity = 1000
 
 /obj/machinery/door/airlock/uranium
 	name = "uranium airlock"
@@ -211,6 +205,24 @@
 	var/mineral = "wood"
 	assemblytype = /obj/structure/door_assembly/door_assembly_wood
 
+/obj/machinery/door/airlock/titanium
+	name = "shuttle airlock"
+	var/mineral = "titanium"
+	icon = 'icons/obj/doors/airlocks/shuttle/shuttle.dmi'
+	overlays_file = 'icons/obj/doors/airlocks/shuttle/overlays.dmi'
+	assemblytype = /obj/structure/door_assembly/door_assembly_titanium
+	normal_integrity = 400
+
+/obj/machinery/door/airlock/glass_titanium
+	name = "shuttle airlock"
+	var/mineral = "titanium"
+	icon = 'icons/obj/doors/airlocks/shuttle/shuttle.dmi'
+	overlays_file = 'icons/obj/doors/airlocks/shuttle/overlays.dmi'
+	opacity = 0
+	assemblytype = /obj/structure/door_assembly/door_assembly_titanium/glass
+	glass = 1
+	normal_integrity = 350
+
 //////////////////////////////////
 /*
 	Station2 Airlocks
@@ -253,8 +265,8 @@
 	overlays_file = 'icons/obj/doors/airlocks/centcom/overlays.dmi'
 	opacity = 1
 	assemblytype = /obj/structure/door_assembly/door_assembly_centcom
-	obj_integrity = 1000
-	max_integrity = 1000
+	normal_integrity = 1000
+	security_level = 6
 
 //////////////////////////////////
 /*
@@ -268,8 +280,8 @@
 	opacity = 1
 	assemblytype = /obj/structure/door_assembly/door_assembly_vault
 	explosion_block = 2
-	obj_integrity = 600
-	max_integrity = 600
+	normal_integrity = 400 // reverse engieneerd: 400 * 1.5 (sec lvl 6) = 600 = original
+	security_level = 6
 
 //////////////////////////////////
 /*
@@ -301,8 +313,8 @@
 	overlays_file = 'icons/obj/doors/airlocks/highsec/overlays.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_highsecurity
 	explosion_block = 2
-	obj_integrity = 500
-	max_integrity = 500
+	normal_integrity = 500
+	security_level = 1
 	damage_deflection = 30
 
 //////////////////////////////////
@@ -327,8 +339,8 @@
 	explosion_block = 3
 	hackProof = 1
 	aiControlDisabled = 1
-	obj_integrity = 700
-	max_integrity = 700
+	normal_integrity = 700
+	security_level = 1
 
 //////////////////////////////////
 /*
@@ -415,8 +427,7 @@
 	use_power = FALSE
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	damage_deflection = 30
-	obj_integrity = 400
-	max_integrity = 400
+	normal_integrity = 400
 	var/construction_state = GEAR_SECURE //Pinion airlocks have custom deconstruction
 
 /obj/machinery/door/airlock/clockwork/New()
@@ -476,7 +487,7 @@
 	if(!(flags & NODECONSTRUCT))
 		var/turf/T = get_turf(src)
 		if(disassembled)
-			new/obj/item/stack/sheet/brass(T, 4)
+			new/obj/item/stack/tile/brass(T, 4)
 		else
 			new/obj/item/clockwork/alloy_shards(T)
 		new/obj/item/clockwork/component/vanguard_cogwheel/pinion_lock(T)
@@ -489,7 +500,7 @@
 		if(construction_state == GEAR_SECURE)
 			user.visible_message("<span class='notice'>[user] begins unfastening [src]'s cogwheel...</span>", "<span class='notice'>You begin unfastening [src]'s cogwheel...</span>")
 			playsound(src, I.usesound, 50, 1)
-			if(!do_after(user, 100 / I.toolspeed, target = src))
+			if(!do_after(user, 100*I.toolspeed, target = src))
 				return 1 //Returns 1 so as not to have extra interactions with the tools used (i.e. prying open)
 			user.visible_message("<span class='notice'>[user] unfastens [src]'s cogwheel!</span>", "<span class='notice'>[src]'s cogwheel shifts slightly with a pop.</span>")
 			playsound(src, 'sound/items/Screwdriver2.ogg', 50, 1)
@@ -497,7 +508,7 @@
 		else if(construction_state == GEAR_UNFASTENED)
 			user.visible_message("<span class='notice'>[user] begins fastening [src]'s cogwheel...</span>", "<span class='notice'>You begin fastening [src]'s cogwheel...</span>")
 			playsound(src, I.usesound, 50, 1)
-			if(!do_after(user, 75 / I.toolspeed, target = src))
+			if(!do_after(user, 75*I.toolspeed, target = src))
 				return 1
 			user.visible_message("<span class='notice'>[user] fastens [src]'s cogwheel!</span>", "<span class='notice'>[src]'s cogwheel shifts back into place.</span>")
 			playsound(src, 'sound/items/Screwdriver2.ogg', 50, 1)
@@ -512,7 +523,7 @@
 		else if(construction_state == GEAR_UNFASTENED)
 			user.visible_message("<span class='notice'>[user] begins loosening [src]'s cogwheel...</span>", "<span class='notice'>You begin loosening [src]'s cogwheel...</span>")
 			playsound(src, I.usesound, 50, 1)
-			if(!do_after(user, 100 / I.toolspeed, target = src))
+			if(!do_after(user, 100*I.toolspeed, target = src))
 				return 1
 			user.visible_message("<span class='notice'>[user] loosens [src]'s cogwheel!</span>", "<span class='notice'>[src]'s cogwheel pops off and dangles loosely.</span>")
 			playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
@@ -520,7 +531,7 @@
 		else if(construction_state == GEAR_LOOSE)
 			user.visible_message("<span class='notice'>[user] begins tightening [src]'s cogwheel...</span>", "<span class='notice'>You begin tightening [src]'s cogwheel into place...</span>")
 			playsound(src, I.usesound, 50, 1)
-			if(!do_after(user, 75 / I.toolspeed, target = src))
+			if(!do_after(user, 75*I.toolspeed, target = src))
 				return 1
 			user.visible_message("<span class='notice'>[user] tightens [src]'s cogwheel!</span>", "<span class='notice'>You firmly tighten [src]'s cogwheel into place.</span>")
 			playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
@@ -533,7 +544,7 @@
 		else if(construction_state == GEAR_LOOSE)
 			user.visible_message("<span class='notice'>[user] begins slowly lifting off [src]'s cogwheel...</span>", "<span class='notice'>You slowly begin lifting off [src]'s cogwheel...</span>")
 			playsound(src, I.usesound, 50, 1)
-			if(!do_after(user, 100 / I.toolspeed, target = src))
+			if(!do_after(user, 100*I.toolspeed, target = src))
 				return 1
 			user.visible_message("<span class='notice'>[user] lifts off [src]'s cogwheel, causing it to fall apart!</span>", \
 			"<span class='notice'>You lift off [src]'s cogwheel, causing it to fall apart!</span>")

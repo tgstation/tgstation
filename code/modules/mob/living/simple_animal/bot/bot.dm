@@ -22,7 +22,7 @@
 	verb_yell = "alarms"
 	bubble_icon = "machine"
 
-	faction = list("neutral", "silicon")
+	faction = list("neutral", "silicon" , "turret")
 
 	var/obj/machinery/bot_core/bot_core = null
 	var/bot_core_type = /obj/machinery/bot_core
@@ -193,7 +193,7 @@
 	else
 		user << "[src] is in pristine condition."
 
-/mob/living/simple_animal/bot/adjustHealth(amount)
+/mob/living/simple_animal/bot/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
 	if(amount>0 && prob(10))
 		new /obj/effect/decal/cleanable/oil(loc)
 	. = ..()
@@ -226,7 +226,7 @@
 
 
 /mob/living/simple_animal/bot/attack_hand(mob/living/carbon/human/H)
-	if(H.a_intent == "help")
+	if(H.a_intent == INTENT_HELP)
 		interact(H)
 	else
 		return ..()
@@ -271,7 +271,7 @@
 					ejectpai(user)
 	else
 		user.changeNext_move(CLICK_CD_MELEE)
-		if(istype(W, /obj/item/weapon/weldingtool) && user.a_intent != "harm")
+		if(istype(W, /obj/item/weapon/weldingtool) && user.a_intent != INTENT_HARM)
 			if(health >= maxHealth)
 				user << "<span class='warning'>[src] does not need a repair!</span>"
 				return

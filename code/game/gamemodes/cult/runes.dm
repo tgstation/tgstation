@@ -107,8 +107,8 @@ structure_check() searches for nearby cultist structures required for the invoca
 	var/list/invokers = list() //people eligible to invoke the rune
 	var/list/chanters = list() //people who will actually chant the rune when passed to invoke()
 	if(user)
-		chanters |= user
-		invokers |= user
+		chanters += user
+		invokers += user
 	if(req_cultists > 1 || allow_excess_invokers)
 		for(var/mob/living/L in range(1, src))
 			if(iscultist(L))
@@ -120,16 +120,17 @@ structure_check() searches for nearby cultist structures required for the invoca
 						continue
 				if(L.stat)
 					continue
-				invokers |= L
+				invokers += L
 		if(invokers.len >= req_cultists)
+			invokers -= user
 			if(allow_excess_invokers)
-				chanters |= invokers
+				chanters += invokers
 			else
-				invokers -= user
 				shuffle(invokers)
-				for(var/i in 0 to req_cultists)
+				for(var/i in 1 to req_cultists)
 					var/L = pick_n_take(invokers)
-					chanters |= L
+					if(L)
+						chanters += L
 	return chanters
 
 /obj/effect/rune/proc/invoke(var/list/invokers)
@@ -500,7 +501,7 @@ var/list/teleport_runes = list()
 	//BEGIN THE SUMMONING
 	used = 1
 	..()
-	world << 'sound/effects/dimensional_rend.ogg' //There used to be a message for this but every time it was changed it got edgier so I removed it
+	send_to_playing_players('sound/effects/dimensional_rend.ogg') //There used to be a message for this but every time it was changed it got edgier so I removed it
 	var/turf/T = get_turf(src)
 	sleep(40)
 	if(src)
@@ -595,7 +596,7 @@ var/list/teleport_runes = list()
 		log_game("Raise Dead rune failed - revival target moved")
 		return 0
 	var/mob/dead/observer/ghost = target_mob.get_ghost(TRUE)
-	if(!ghost)
+	if(!ghost && (!target_mob.mind || !target_mob.mind.active))
 		user << "<span class='cultitalic'>The corpse to revive has no spirit!</span>"
 		fail_invoke()
 		log_game("Raise Dead rune failed - revival target has no ghost")
@@ -725,6 +726,7 @@ var/list/wall_runes = list()
 	invocation = "Khari'd! Eske'te tannin!"
 	icon_state = "1"
 	color = "#C80000"
+	CanAtmosPass = ATMOS_PASS_DENSITY
 	var/density_timer
 	var/recharging = FALSE
 
@@ -742,9 +744,6 @@ var/list/wall_runes = list()
 	wall_runes -= src
 	air_update_turf(1)
 	return ..()
-
-/obj/effect/rune/wall/CanAtmosPass(turf/T)
-	return !density
 
 /obj/effect/rune/wall/BlockSuperconductivity()
 	return density
@@ -779,14 +778,13 @@ var/list/wall_runes = list()
 		density = FALSE
 		update_state()
 		var/oldcolor = color
-		color = "#696969"
-		animate(src, oldcolor, time = 50, easing = EASE_IN)
-		addtimer(src, "update_atom_colour", 50)
+		add_atom_colour("#696969", FIXED_COLOUR_PRIORITY)
+		animate(src, color = oldcolor, time = 50, easing = EASE_IN)
 		addtimer(src, "recharge", 50)
 
 /obj/effect/rune/wall/proc/recharge()
 	recharging = FALSE
-	color = initial(color)
+	add_atom_colour("#C80000", FIXED_COLOUR_PRIORITY)
 
 /obj/effect/rune/wall/proc/update_state()
 	deltimer(density_timer)
@@ -797,10 +795,10 @@ var/list/wall_runes = list()
 		I.alpha = 60
 		I.color = "#701414"
 		add_overlay(I)
-		color = "#FF0000"
+		add_atom_colour("#FF0000", FIXED_COLOUR_PRIORITY)
 	else
 		cut_overlays()
-		color = "#C80000"
+		add_atom_colour("#C80000", FIXED_COLOUR_PRIORITY)
 
 //Rite of Joined Souls: Summons a single cultist.
 /obj/effect/rune/summon

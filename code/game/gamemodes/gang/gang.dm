@@ -168,16 +168,18 @@ var/list/gang_colors_pool = list("red","orange","yellow","green","blue","purple"
 			carbon_mob.silent = max(carbon_mob.silent, 5)
 			carbon_mob.flash_act(1, 1)
 		gangster_mind.current.Stun(5)
-	gangster_mind.current << "<FONT size=3 color=red><B>You are now a member of the [G.name] Gang!</B></FONT>"
-	gangster_mind.current << "<font color='red'>Help your bosses take over the station by claiming territory with <b>special spraycans</b> only they can provide. Simply spray on any unclaimed area of the station.</font>"
-	gangster_mind.current << "<font color='red'>Their ultimate objective is to take over the station with a Dominator machine.</font>"
-	gangster_mind.current << "<font color='red'>You can identify your bosses by their <b>large, bright [G.color] \[G\] icon</b>.</font>"
+	if(G.is_deconvertible)
+		gangster_mind.current << "<FONT size=3 color=red><B>You are now a member of the [G.name] Gang!</B></FONT>"
+		gangster_mind.current << "<font color='red'>Help your bosses take over the station by claiming territory with <b>special spraycans</b> only they can provide. Simply spray on any unclaimed area of the station.</font>"
+		gangster_mind.current << "<font color='red'>Their ultimate objective is to take over the station with a Dominator machine.</font>"
+		gangster_mind.current << "<font color='red'>You can identify your bosses by their <b>large, bright [G.color] \[G\] icon</b>.</font>"
+		gangster_mind.store_memory("You are a member of the [G.name] Gang!")
 	gangster_mind.current.attack_log += "\[[time_stamp()]\] <font color='red'>Has been converted to the [G.name] Gang!</font>"
 	gangster_mind.special_role = "[G.name] Gangster"
-	gangster_mind.store_memory("You are a member of the [G.name] Gang!")
+
 	G.add_gang_hud(gangster_mind)
 	if(jobban_isbanned(gangster_mind.current, ROLE_GANG))
-		addtimer(src, "replace_jobbaned_player", 0, FALSE, gangster_mind.current, ROLE_GANG, ROLE_GANG)
+		addtimer(src, "replace_jobbaned_player", 0, TIMER_NORMAL, gangster_mind.current, ROLE_GANG, ROLE_GANG)
 	return 2
 ////////////////////////////////////////////////////////////////////
 //Deals with players reverting to neutral (Not a gangster anymore)//
@@ -190,6 +192,8 @@ var/list/gang_colors_pool = list("red","orange","yellow","green","blue","purple"
 	var/removed
 
 	for(var/datum/gang/G in gangs)
+		if(!G.is_deconvertible && !remove_bosses)
+			return 0
 		if(gangster_mind in G.gangsters)
 			G.gangsters -= gangster_mind
 			removed = 1
@@ -251,13 +255,18 @@ var/list/gang_colors_pool = list("red","orange","yellow","green","blue","purple"
 //////////////////////////////////////////////////////////////////////
 
 /datum/game_mode/proc/auto_declare_completion_gang(datum/gang/winner)
-	if(gangs.len)
-		if(!winner)
-			world << "<span class='redtext'>The station was [station_was_nuked ? "destroyed!" : "evacuated before a gang could claim it! The station wins!"]</span><br>"
-			feedback_set_details("round_end_result","loss - gangs failed takeover")
-		else
-			world << "<span class='redtext'>The [winner.name] Gang successfully performed a hostile takeover of the station!</span><br>"
-			feedback_set_details("round_end_result","win - gang domination complete")
+	if(!gangs.len)
+		return
+	if(!winner)
+		world << "<span class='redtext'>The station was [station_was_nuked ? "destroyed!" : "evacuated before a gang could claim it! The station wins!"]</span><br>"
+		feedback_set_details("round_end_result","loss - gangs failed takeover")
+
+		ticker.news_report = GANG_LOSS
+	else
+		world << "<span class='redtext'>The [winner.name] Gang successfully performed a hostile takeover of the station!</span><br>"
+		feedback_set_details("round_end_result","win - gang domination complete")
+
+		ticker.news_report = GANG_TAKEOVER
 
 	for(var/datum/gang/G in gangs)
 		var/text = "<b>The [G.name] Gang was [winner==G ? "<span class='greenannounce'>victorious</span>" : "<span class='boldannounce'>defeated</span>"] with [round((G.territory.len/start_state.num_territories)*100, 1)]% control of the station!</b>"

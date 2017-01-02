@@ -9,14 +9,6 @@
 	if(head && (head.flags & HEADBANGPROTECT))
 		return 1
 
-//Overridden so we can handle when it hits a limb that doesn't exist
-mob/living/carbon/bullet_act(obj/item/projectile/P, def_zone)
-	var/obj/item/bodypart/affecting = get_bodypart(def_zone)
-	if(!affecting) //that zone is dismembered
-		. = bullet_act(P, "chest")//act on chest instead
-	else
-		. = ..()//Proceed with standard handling
-
 /mob/living/carbon/check_projectile_dismemberment(obj/item/projectile/P, def_zone)
 	var/obj/item/bodypart/affecting = get_bodypart(def_zone)
 	if(affecting && affecting.dismemberable && affecting.get_damage() >= (affecting.max_damage - P.dismemberment))
@@ -85,7 +77,7 @@ mob/living/carbon/bullet_act(obj/item/projectile/P, def_zone)
 			ContractDisease(D)
 
 	if(lying && surgeries.len)
-		if(user.a_intent == "help")
+		if(user.a_intent == INTENT_HELP)
 			for(var/datum/surgery/S in surgeries)
 				if(S.next_step(user))
 					return 1
@@ -101,7 +93,7 @@ mob/living/carbon/bullet_act(obj/item/projectile/P, def_zone)
 		if(D.IsSpreadByTouch())
 			ContractDisease(D)
 
-	if(M.a_intent == "help")
+	if(M.a_intent == INTENT_HELP)
 		help_shake_act(M)
 		return 0
 
@@ -212,11 +204,11 @@ mob/living/carbon/bullet_act(obj/item/projectile/P, def_zone)
 	if(health >= 0 && !(status_flags & FAKEDEATH))
 
 		if(lying)
-			M.visible_message("<span class='notice'>[M] shakes [src] trying to get them up!</span>", \
-							"<span class='notice'>You shake [src] trying to get them up!</span>")
+			M.visible_message("<span class='notice'>[M] shakes [src] trying to get [p_them()] up!</span>", \
+							"<span class='notice'>You shake [src] trying to get [p_them()] up!</span>")
 		else
-			M.visible_message("<span class='notice'>[M] hugs [src] to make them feel better!</span>", \
-						"<span class='notice'>You hug [src] to make them feel better!</span>")
+			M.visible_message("<span class='notice'>[M] hugs [src] to make [p_them()] feel better!</span>", \
+						"<span class='notice'>You hug [src] to make [p_them()] feel better!</span>")
 		AdjustSleeping(-5)
 		AdjustParalysis(-3)
 		AdjustStunned(-3)

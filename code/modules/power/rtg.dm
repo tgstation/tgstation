@@ -61,7 +61,7 @@
 	return ..()
 
 /obj/machinery/power/rtg/attack_hand(mob/user)
-	if(can_buckle && isliving(user.pulling) && user.a_intent == "grab" && !has_buckled_mobs())
+	if(can_buckle && isliving(user.pulling) && user.a_intent == INTENT_GRAB && !has_buckled_mobs())
 		var/mob/living/L = user.pulling
 		if(L.buckled)
 			return
@@ -124,7 +124,7 @@
 		"<span class='italics'>You hear a loud electrical crack!</span>")
 	playsound(src.loc, 'sound/magic/LightningShock.ogg', 100, 1, extrarange = 5)
 	tesla_zap(src, 5, power_gen * 0.05)
-	addtimer(GLOBAL_PROC, "explosion", 100, FALSE, get_turf(src), 2, 3, 4, 8) // Not a normal explosion.
+	addtimer(GLOBAL_PROC, "explosion", 100, TIMER_NORMAL, get_turf(src), 2, 3, 4, 8) // Not a normal explosion.
 
 /obj/machinery/power/rtg/abductor/bullet_act(obj/item/projectile/Proj)
 	..()

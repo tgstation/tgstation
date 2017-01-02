@@ -154,7 +154,7 @@
 	actions_types = list(/datum/action/item_action/stickmen)
 
 
-/obj/item/clothing/suit/wizrobe/paper/ui_action_click(mob/user, actiontype)
+/obj/item/clothing/suit/wizrobe/paper/ui_action_click(mob/user, action)
 	stickmen()
 
 

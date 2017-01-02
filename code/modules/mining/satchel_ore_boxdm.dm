@@ -20,10 +20,9 @@
 			S.remove_from_storage(O, src) //This will move the item to this item's contents
 		user << "<span class='notice'>You empty the ore in [S] into \the [src].</span>"
 	else if(istype(W, /obj/item/weapon/crowbar))
-		playsound(loc, 'sound/items/Crowbar.ogg', 50, 1)
+		playsound(loc, W.usesound, 50, 1)
 		var/obj/item/weapon/crowbar/C = W
-		var/time = 50
-		if(do_after(user, time/C.toolspeed, target = src))
+		if(do_after(user, 50*C.toolspeed, target = src))
 			user.visible_message("[user] pries \the [src] apart.", "<span class='notice'>You pry apart \the [src].</span>", "<span class='italics'>You hear splitting wood.</span>")
 			deconstruct(TRUE, user)
 	else
@@ -46,7 +45,7 @@
 		var/obj/item/weapon/ore/T = locate(i) in contents
 		dat += "[capitalize(T.name)]: [count_by_type(contents, T.type)]<br>"
 	dat += text("<br><br><A href='?src=\ref[src];removeall=1'>Empty box</A>")
-	user << browse("[dat]", "window=orebox")
+	user << browse(dat, "window=orebox")
 
 /obj/structure/ore_box/proc/dump_box_contents()
 	for(var/obj/item/weapon/ore/O in contents)

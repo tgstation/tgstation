@@ -1,4 +1,4 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:32
+
 
 /*
 CONTAINS:
@@ -17,7 +17,7 @@ RCD
 	throwforce = 10
 	throw_speed = 3
 	throw_range = 5
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 	materials = list(MAT_METAL=100000)
 	origin_tech = "engineering=4;materials=2"
 	req_access_txt = "11"
@@ -179,6 +179,7 @@ RCD
 	set category = "Object"
 	set src in usr
 
+	airlockcost = initial(airlockcost)
 	var airlockcat = input(usr, "Select whether the airlock is solid or glass.") in list("Solid", "Glass")
 	switch(airlockcat)
 		if("Solid")
@@ -207,6 +208,7 @@ RCD
 						airlock_type = /obj/machinery/door/airlock/external
 					if("High Security")
 						airlock_type = /obj/machinery/door/airlock/highsecurity
+						airlockcost += 2 * sheetmultiplier	//extra cost
 			else
 				airlock_type = /obj/machinery/door/airlock
 

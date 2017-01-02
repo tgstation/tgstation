@@ -208,7 +208,7 @@ var/next_mob_id = 0
 
 //This is just a commonly used configuration for the equip_to_slot_if_possible() proc, used to equip people when the rounds tarts and when events happen and such.
 /mob/proc/equip_to_slot_or_del(obj/item/W, slot)
-	equip_to_slot_if_possible(W, slot, 1, 1, 0)
+	return equip_to_slot_if_possible(W, slot, 1, 1, 0)
 
 //puts the item "W" into an appropriate slot in a human's inventory
 //returns 0 if it cannot, 1 if successful
@@ -258,20 +258,6 @@ var/next_mob_id = 0
 			clear_fullscreen("remote_view", 0)
 		update_pipe_vision()
 
-/mob/dead/reset_perspective(atom/A)
-	if(client)
-		if(ismob(client.eye) && (client.eye != src))
-			var/mob/target = client.eye
-			if(target.observers)
-				target.observers -= src
-				var/list/L = target.observers
-				if(!L.len)
-					target.observers = null
-	if(..())
-		if(hud_used)
-			client.screen = list()
-			hud_used.show_hud(hud_used.hud_version)
-
 /mob/proc/show_inv(mob/user)
 	return
 
@@ -316,6 +302,10 @@ var/next_mob_id = 0
 		return
 	if(AM.anchored || AM.throwing)
 		return
+	if(isliving(AM))
+		var/mob/living/L = AM
+		if(L.buckled && L.buckled.buckle_prevents_pull)
+			return
 	if(throwing || incapacitated())
 		return
 
@@ -449,36 +439,7 @@ var/next_mob_id = 0
 //	M.Login()	//wat
 	return
 
-/mob/verb/observe()
-	set name = "Observe"
-	set category = "OOC"
 
-	if(stat != DEAD || isnewplayer(src))
-		usr << "<span class='notice'>You must be observing to use this!</span>"
-		return
-
-	var/list/creatures = getpois()
-
-	reset_perspective(null)
-
-	var/eye_name = null
-
-	eye_name = input("Please, select a player!", "Observe", null, null) as null|anything in creatures
-
-	if (!eye_name)
-		return
-
-	var/mob/mob_eye = creatures[eye_name]
-	//Istype so we filter out points of interest that are not mobs
-	if(client && mob_eye && istype(mob_eye))
-		client.eye = mob_eye
-		if(isobserver(src))
-			src.client.screen = list()
-			if(mob_eye.hud_used)
-				if(!mob_eye.observers)
-					mob_eye.observers = list()
-				mob_eye.observers |= src
-				mob_eye.hud_used.show_hud(1,src)
 
 /mob/verb/cancel_camera()
 	set name = "Cancel Camera View"
@@ -507,7 +468,8 @@ var/next_mob_id = 0
 			else
 				what = get_item_by_slot(slot)
 			if(what)
-				usr.stripPanelUnequip(what,src,slot)
+				if(!(what.flags & ABSTRACT))
+					usr.stripPanelUnequip(what,src,slot)
 			else
 				usr.stripPanelEquip(what,src,slot)
 
@@ -564,6 +526,7 @@ var/next_mob_id = 0
 			stat(null, "Next Map: [nextmap.friendlyname]")
 		stat(null, "Server Time: [time2text(world.realtime, "YYYY-MM-DD hh:mm")]")
 		if(SSshuttle.emergency)
+			stat(null, "Current Shuttle: [SSshuttle.emergency.name]")
 			var/ETA = SSshuttle.emergency.getModeStr()
 			if(ETA)
 				stat(null, "[ETA] [SSshuttle.emergency.getTimerStr()]")
@@ -683,7 +646,7 @@ var/next_mob_id = 0
 		if(layer == LYING_MOB_LAYER)
 			layer = initial(layer)
 	update_transform()
-	update_action_buttons_icon()
+	update_action_buttons_icon(status_only=TRUE)
 	if(isliving(src))
 		var/mob/living/L = src
 		if(L.has_status_effect(/datum/status_effect/freon))
@@ -895,31 +858,40 @@ var/next_mob_id = 0
 /mob/proc/update_health_hud()
 	return
 
-/mob/living/on_varedit(modified_var)
-	switch(modified_var)
+/mob/living/vv_edit_var(var_name, var_value)
+	switch(var_name)
+		if("stat")
+			if((stat == DEAD) && (var_value < DEAD))//Bringing the dead back to life
+				dead_mob_list -= src
+				living_mob_list += src
+			if((stat < DEAD) && (var_value == DEAD))//Kill he
+				living_mob_list -= src
+				dead_mob_list += src
+	. = ..()
+	switch(var_name)
 		if("weakened")
-			SetWeakened(weakened)
+			SetWeakened(var_value)
 		if("stunned")
-			SetStunned(stunned)
+			SetStunned(var_value)
 		if("paralysis")
-			SetParalysis(paralysis)
+			SetParalysis(var_value)
 		if("sleeping")
-			SetSleeping(sleeping)
+			SetSleeping(var_value)
 		if("eye_blind")
-			set_blindness(eye_blind)
+			set_blindness(var_value)
 		if("eye_damage")
-			set_eye_damage(eye_damage)
+			set_eye_damage(var_value)
 		if("eye_blurry")
-			set_blurriness(eye_blurry)
+			set_blurriness(var_value)
 		if("ear_deaf")
-			setEarDamage(-1, ear_deaf)
+			setEarDamage(-1, var_value)
 		if("ear_damage")
-			setEarDamage(ear_damage, -1)
+			setEarDamage(var_value, -1)
 		if("maxHealth")
 			updatehealth()
 		if("resize")
 			update_transform()
-	..()
+
 
 /mob/proc/is_literate()
 	return 0
@@ -929,3 +901,25 @@ var/next_mob_id = 0
 
 /mob/proc/get_idcard()
 	return
+
+/mob/vv_get_dropdown()
+	. = ..()
+	. += "---"
+	.["Gib"] = "?_src_=vars;gib=\ref[src]"
+	.["Give Spell"] = "?_src_=vars;give_spell=\ref[src]"
+	.["Remove Spell"] = "?_src_=vars;remove_spell=\ref[src]"
+	.["Give Disease"] = "?_src_=vars;give_disease=\ref[src]"
+	.["Toggle Godmode"] = "?_src_=vars;godmode=\ref[src]"
+	.["Drop Everything"] = "?_src_=vars;drop_everything=\ref[src]"
+	.["Regenerate Icons"] = "?_src_=vars;regenerateicons=\ref[src]"
+	.["Make Space Ninja"] = "?_src_=vars;ninja=\ref[src]"
+	.["Show player panel"] = "?_src_=vars;mob_player_panel=\ref[src]"
+	.["Toggle Build Mode"] = "?_src_=vars;build_mode=\ref[src]"
+	.["Assume Direct Control"] = "?_src_=vars;direct_control=\ref[src]"
+	.["Offer Control to Ghosts"] = "?_src_=vars;offer_control=\ref[src]"
+
+/mob/vv_get_var(var_name)
+	switch(var_name)
+		if ("attack_log")
+			return debug_variable(var_name, attack_log, 0, src, FALSE)
+	. = ..()

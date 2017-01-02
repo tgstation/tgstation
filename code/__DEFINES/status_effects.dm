@@ -14,6 +14,8 @@
 #define STATUS_EFFECT_INATHNEQS_ENDOWMENT /datum/status_effect/inathneqs_endowment //A 15-second invulnerability and stun absorption, granted by Inath-neq.
 #define STATUS_EFFECT_WRAITHSPECS /datum/status_effect/wraith_spectacles
 
+#define STATUS_EFFECT_POWERREGEN /datum/status_effect/cyborg_power_regen //Regenerates power on a given cyborg over time
+
 /////////////
 // DEBUFFS //
 /////////////

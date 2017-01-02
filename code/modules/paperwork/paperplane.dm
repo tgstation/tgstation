@@ -6,7 +6,7 @@
 	throw_range = 7
 	throw_speed = 1
 	throwforce = 0
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 	resistance_flags = FLAMMABLE
 	obj_integrity = 50
 	max_integrity = 50
@@ -103,10 +103,13 @@
 		H.Weaken(2)
 		H.emote("scream")
 
-/obj/item/weapon/paper/AltClick(mob/living/carbon/user, obj/item/I,)
-	if((!in_range(src, user)) || usr.stat || usr.restrained())
-		return
-	user << "<span class='notice'>You fold [src] into the shape of a plane!</span>"
-	user.unEquip(src)
-	I = new /obj/item/weapon/paperplane(loc, src)
-	user.put_in_hands(I)
+/obj/item/weapon/paper/AltClick(mob/living/carbon/user, obj/item/I)
+	if ( istype(user) )
+		if( (!in_range(src, user)) || user.stat || user.restrained() )
+			return
+		user << "<span class='notice'>You fold [src] into the shape of a plane!</span>"
+		user.unEquip(src)
+		I = new /obj/item/weapon/paperplane(loc, src)
+		user.put_in_hands(I)
+	else
+		user << "<span class='notice'> You lack the dexterity to fold \the [src]. </span>"

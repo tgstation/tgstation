@@ -72,7 +72,7 @@
 /obj/mecha/attack_animal(mob/living/simple_animal/user)
 	log_message("Attack by simple animal. Attacker - [user].",1)
 	if(!user.melee_damage_upper && !user.obj_damage)
-		user.emote("[user.friendly] [src]")
+		user.emote("custom", message = "[user.friendly] [src]")
 		return 0
 	else
 		var/play_soundeffect = 1
@@ -208,7 +208,7 @@
 			else
 				user << "<span class='warning'>You need two lengths of cable to fix this mech!</span>"
 		return
-	else if(istype(W, /obj/item/weapon/screwdriver) && user.a_intent != "harm")
+	else if(istype(W, /obj/item/weapon/screwdriver) && user.a_intent != INTENT_HARM)
 		if(internal_damage & MECHA_INT_TEMP_CONTROL)
 			clearInternalDamage(MECHA_INT_TEMP_CONTROL)
 			user << "<span class='notice'>You repair the damaged temperature controller.</span>"
@@ -239,7 +239,7 @@
 				user << "<span class='notice'>There's already a powercell installed.</span>"
 		return
 
-	else if(istype(W, /obj/item/weapon/weldingtool) && user.a_intent != "harm")
+	else if(istype(W, /obj/item/weapon/weldingtool) && user.a_intent != INTENT_HARM)
 		user.changeNext_move(CLICK_CD_MELEE)
 		var/obj/item/weapon/weldingtool/WT = W
 		if(obj_integrity<max_integrity)
@@ -282,6 +282,9 @@
 
 
 /obj/mecha/mech_melee_attack(obj/mecha/M)
+	if(!has_charge(melee_energy_drain))
+		return 0
+	use_power(melee_energy_drain)
 	if(M.damtype == BRUTE || M.damtype == BURN)
 		add_logs(M.occupant, src, "attacked", M, "(INTENT: [uppertext(M.occupant.a_intent)]) (DAMTYPE: [uppertext(M.damtype)])")
 		. = ..()

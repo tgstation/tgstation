@@ -47,7 +47,15 @@
 /mob/living/silicon/ai/proc/lacks_power()
 	var/turf/T = get_turf(src)
 	var/area/A = get_area(src)
-	return !T || !A || ((!A.master.power_equip || isspaceturf(T)) && !is_type_in_list(loc, list(/obj/item, /obj/mecha)))
+	switch(requires_power)
+		if(POWER_REQ_NONE)
+			return FALSE
+		if(POWER_REQ_ALL)
+			return !T || !A || ((!A.master.power_equip || isspaceturf(T)) && !is_type_in_list(loc, list(/obj/item, /obj/mecha)))
+		if(POWER_REQ_CLOCKCULT)
+			for(var/obj/effect/clockwork/sigil/transmission/ST in range(src, 1))
+				return FALSE
+			return !T || !A || (!istype(T, /turf/open/floor/clockwork) && (!A.master.power_equip || isspaceturf(T)) && !is_type_in_list(loc, list(/obj/item, /obj/mecha)))
 
 /mob/living/silicon/ai/updatehealth()
 	if(status_flags & GODMODE)

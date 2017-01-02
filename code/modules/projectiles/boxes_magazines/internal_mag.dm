@@ -132,13 +132,19 @@
 	caliber = "40mm"
 	max_ammo = 1
 
+/obj/item/ammo_box/magazine/internal/rocketlauncher
+	name = "grenade launcher internal magazine"
+	ammo_type = /obj/item/ammo_casing/caseless/a84mm
+	caliber = "84mm"
+	max_ammo = 1
+
 /obj/item/ammo_box/magazine/internal/speargun
 	name = "speargun internal magazine"
 	ammo_type = /obj/item/ammo_casing/caseless/magspear
 	caliber = "speargun"
 	max_ammo = 1
 
-/obj/item/ammo_box/magazine/internal/rus357
+/obj/item/ammo_box/magazine/internal/cylinder/rus357
 	name = "russian revolver cylinder"
 	ammo_type = /obj/item/ammo_casing/a357
 	caliber = "357"
@@ -147,6 +153,7 @@
 
 /obj/item/ammo_box/magazine/internal/rus357/New()
 	stored_ammo += new ammo_type(src)
+	..()
 
 /obj/item/ammo_box/magazine/internal/boltaction
 	name = "bolt action rifle internal magazine"
@@ -157,9 +164,11 @@
 	multiload = 1
 
 /obj/item/ammo_box/magazine/internal/boltaction/enchanted
-	max_ammo =1
+	max_ammo = 1
 	ammo_type = /obj/item/ammo_casing/a762/enchanted
 
+/obj/item/ammo_box/magazine/internal/boltaction/enchanted/arcane_barrage
+	ammo_type = /obj/item/ammo_casing/magic/arcane_barrage
 
 /obj/item/ammo_box/magazine/internal/shot/toy
 	ammo_type = /obj/item/ammo_casing/caseless/foam_dart

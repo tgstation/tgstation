@@ -307,10 +307,12 @@ research holder datum.
 	var/max_tech_stored = 1
 
 /obj/item/weapon/disk/tech_disk/New()
+	..()
 	src.pixel_x = rand(-5, 5)
 	src.pixel_y = rand(-5, 5)
 	for(var/i in 1 to max_tech_stored)
 		tech_stored += null
+
 
 /obj/item/weapon/disk/tech_disk/adv
 	name = "advanced technology disk"

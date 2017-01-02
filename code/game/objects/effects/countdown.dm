@@ -18,6 +18,10 @@
 	. = ..()
 	attach(A)
 
+/obj/effect/countdown/examine(mob/user)
+	. = ..()
+	user << "This countdown is displaying: [displayed_text]"
+
 /obj/effect/countdown/proc/attach(atom/A)
 	attached_to = A
 	loc = get_turf(A)
@@ -135,10 +139,22 @@
 
 /obj/effect/countdown/doomsday
 	name = "doomsday countdown"
+	text_size = 3
 
 /obj/effect/countdown/doomsday/get_value()
 	var/obj/machinery/doomsday_device/DD = attached_to
 	if(!istype(DD))
 		return
 	else if(DD.timing)
-		. = DD.seconds_remaining()
+		return "<div align='center' valign='middle' style='position:relative; top:0px; left:0px'>[DD.seconds_remaining()]</div>"
+
+/obj/effect/countdown/anomaly
+	name = "anomaly countdown"
+
+/obj/effect/countdown/anomaly/get_value()
+	var/obj/effect/anomaly/A = attached_to
+	if(!istype(A))
+		return
+	else
+		var/time_left = max(0, (A.death_time - world.time) / 10)
+		return round(time_left)

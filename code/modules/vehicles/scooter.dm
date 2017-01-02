@@ -7,7 +7,7 @@
 	if(istype(I, /obj/item/weapon/wrench))
 		user << "<span class='notice'>You begin to remove the handlebars...</span>"
 		playsound(get_turf(user), 'sound/items/Ratchet.ogg', 50, 1)
-		if(do_after(user, 40/I.toolspeed, target = src))
+		if(do_after(user, 40*I.toolspeed, target = src))
 			new /obj/vehicle/scooter/skateboard(get_turf(src))
 			new /obj/item/stack/rods(get_turf(src),2)
 			user << "<span class='notice'>You remove the handlebars from [src].</span>"
@@ -95,7 +95,7 @@
 	desc = "A metal frame for building a scooter. Looks like you'll need to add some metal to make wheels."
 	icon = 'icons/obj/vehicles.dmi'
 	icon_state = "scooter_frame"
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 
 /obj/item/scooter_frame/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/wrench))
@@ -122,7 +122,7 @@
 /obj/vehicle/scooter/skateboard/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/screwdriver))
 		user << "<span class='notice'>You begin to deconstruct and remove the wheels on [src]...</span>"
-		playsound(get_turf(user), 'sound/items/Screwdriver.ogg', 50, 1)
+		playsound(get_turf(user), I.usesound, 50, 1)
 		if(do_after(user, 20, target = src))
 			user << "<span class='notice'>You deconstruct the wheels on [src].</span>"
 			new /obj/item/stack/sheet/metal(get_turf(src),5)

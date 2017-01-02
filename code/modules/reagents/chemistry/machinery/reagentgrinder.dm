@@ -161,7 +161,7 @@
 				return 1
 
 		if (!is_type_in_list(I, blend_items) && !is_type_in_list(I, juice_items))
-				if(user.a_intent == "harm")
+				if(user.a_intent == INTENT_HARM)
 						return ..()
 				else
 						user << "<span class='warning'>Cannot refine into a reagent!</span>"

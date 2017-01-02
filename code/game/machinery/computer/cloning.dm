@@ -80,6 +80,7 @@
 			W.loc = src
 			src.diskette = W
 			user << "<span class='notice'>You insert [W].</span>"
+			playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
 			src.updateUsrDialog()
 	else
 		return ..()
@@ -209,8 +210,6 @@
 			dat += "<b><a href='byond://?src=\ref[src];menu=3'>Cancel</a></b>"
 
 
-	//user << browse(dat, "window=cloning")
-	//onclose(user, "cloning")
 	var/datum/browser/popup = new(user, "cloning", "Cloning System Control")
 	popup.set_content(dat)
 	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
@@ -227,30 +226,38 @@
 		switch(href_list["task"])
 			if("autoprocess")
 				autoprocess = 1
+				playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
 			if("stopautoprocess")
 				autoprocess = 0
+				playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
 
 	else if ((href_list["scan"]) && !isnull(scanner) && scanner.is_operational())
 		scantemp = ""
 
 		loading = 1
 		src.updateUsrDialog()
+		playsound(src, 'sound/machines/terminal_prompt.ogg', 50, 0)
+		say("Initiating scan...")
 
 		spawn(20)
 			src.scan_mob(scanner.occupant)
 
 			loading = 0
 			src.updateUsrDialog()
+			playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
 
 
 		//No locking an open scanner.
 	else if ((href_list["lock"]) && !isnull(scanner) && scanner.is_operational())
 		if ((!scanner.locked) && (scanner.occupant))
 			scanner.locked = 1
+			playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
 		else
 			scanner.locked = 0
+			playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
 
 	else if(href_list["view_rec"])
+		playsound(src, "terminal_type", 25, 0)
 		src.active_record = find_record("id", href_list["view_rec"], records)
 		if(active_record)
 			if(!active_record.fields["ckey"])
@@ -268,6 +275,7 @@
 		if (src.menu == 3) //If we are viewing a record, confirm deletion
 			src.temp = "Delete record?"
 			src.menu = 4
+			playsound(src, 'sound/machines/terminal_prompt.ogg', 50, 0)
 
 		else if (src.menu == 4)
 			var/obj/item/weapon/card/id/C = usr.get_active_held_item()
@@ -276,9 +284,11 @@
 					src.temp = "[src.active_record.fields["name"]] => Record deleted."
 					src.records.Remove(active_record)
 					active_record = null
+					playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
 					src.menu = 2
 				else
 					src.temp = "<font class='bad'>Access Denied.</font>"
+					playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
 
 	else if (href_list["disk"]) //Load or eject.
 		switch(href_list["disk"])
@@ -286,33 +296,40 @@
 				if (!diskette || !istype(diskette.fields) || !diskette.fields["name"] || !diskette.fields)
 					src.temp = "<font class='bad'>Load error.</font>"
 					src.updateUsrDialog()
+					playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
 					return
 				if (!src.active_record)
 					src.temp = "<font class='bad'>Record error.</font>"
 					src.menu = 1
 					src.updateUsrDialog()
+					playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
 					return
 
 				for(var/key in diskette.fields)
 					src.active_record.fields[key] = diskette.fields[key]
 				src.temp = "Load successful."
+				playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
 
 			if("eject")
 				if(src.diskette)
 					src.diskette.loc = src.loc
 					src.diskette = null
+					playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
 			if("save")
 				if(!diskette || diskette.read_only || !active_record || !active_record.fields)
 					src.temp = "<font class='bad'>Save error.</font>"
 					src.updateUsrDialog()
+					playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
 					return
 
 				diskette.fields = active_record.fields.Copy()
 				diskette.name = "data disk - '[src.diskette.fields["name"]]'"
 				src.temp = "Save successful."
+				playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
 
 	else if (href_list["refresh"])
 		src.updateUsrDialog()
+		playsound(src, "terminal_type", 25, 0)
 
 	else if (href_list["clone"])
 		var/datum/data/record/C = find_record("id", href_list["clone"], records)
@@ -321,26 +338,34 @@
 			//Can't clone without someone to clone.  Or a pod.  Or if the pod is busy. Or full of gibs.
 			if(!pod1)
 				temp = "<font class='bad'>No Clonepod detected.</font>"
+				playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
 			else if(pod1.occupant)
 				temp = "<font class='bad'>Clonepod is currently occupied.</font>"
+				playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
 			else if(pod1.mess)
 				temp = "<font class='bad'>Clonepod malfunction.</font>"
+				playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
 			else if(!config.revival_cloning)
 				temp = "<font class='bad'>Unable to initiate cloning cycle.</font>"
+				playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
 			else if(pod1.growclone(C.fields["ckey"], C.fields["name"], C.fields["UI"], C.fields["SE"], C.fields["mind"], C.fields["mrace"], C.fields["features"], C.fields["factions"]))
 				temp = "[C.fields["name"]] => <font class='good'>Cloning cycle in progress...</font>"
+				playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
 				records.Remove(C)
 				if(active_record == C)
 					active_record = null
 				menu = 1
 			else
 				temp = "[C.fields["name"]] => <font class='bad'>Initialisation failure.</font>"
+				playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
 
 		else
 			temp = "<font class='bad'>Data corruption.</font>"
+			playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
 
 	else if (href_list["menu"])
 		src.menu = text2num(href_list["menu"])
+		playsound(src, "terminal_type", 25, 0)
 
 	src.add_fingerprint(usr)
 	src.updateUsrDialog()
@@ -349,21 +374,27 @@
 /obj/machinery/computer/cloning/proc/scan_mob(mob/living/carbon/human/subject)
 	if (!istype(subject))
 		scantemp = "<font class='bad'>Unable to locate valid genetic data.</font>"
+		playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
 		return
 	if (!subject.getorgan(/obj/item/organ/brain))
 		scantemp = "<font class='bad'>No signs of intelligence detected.</font>"
+		playsound(src, 'sound/machines/terminal_alert.ogg', 50, 0)
 		return
 	if (subject.suiciding == 1 || subject.hellbound)
 		scantemp = "<font class='bad'>Subject's brain is not responding to scanning stimuli.</font>"
+		playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
 		return
 	if ((subject.disabilities & NOCLONE) && (src.scanner.scan_level < 2))
 		scantemp = "<font class='bad'>Subject no longer contains the fundamental materials required to create a living clone.</font>"
+		playsound(src, 'sound/machines/terminal_alert.ogg', 50, 0)
 		return
 	if ((!subject.ckey) || (!subject.client))
 		scantemp = "<font class='bad'>Mental interface failure.</font>"
+		playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
 		return
 	if (find_record("ckey", subject.ckey, records))
 		scantemp = "<font class='average'>Subject already in database.</font>"
+		playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
 		return
 
 	var/datum/data/record/R = new()
@@ -400,3 +431,4 @@
 
 	src.records += R
 	scantemp = "Subject successfully scanned."
+	playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)

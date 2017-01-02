@@ -260,7 +260,7 @@ var/global/datum/crewmonitor/crewmonitor = new
 		return ..()
 
 /datum/crewmonitor/proc/queueUpdate(z)
-	addtimer(crewmonitor, "update", 5, TRUE, z)
+	addtimer(crewmonitor, "update", 5, TIMER_UNIQUE, z)
 
 /datum/crewmonitor/proc/sendResources(var/client/client)
 	send_asset(client, "crewmonitor.js")

@@ -87,7 +87,6 @@
 
 /datum/hud/human/New(mob/living/carbon/human/owner, ui_style = 'icons/mob/screen_midnight.dmi')
 	..()
-
 	var/obj/screen/using
 	var/obj/screen/inventory/inv_box
 
@@ -111,7 +110,7 @@
 
 	using = new /obj/screen/mov_intent()
 	using.icon = ui_style
-	using.icon_state = (mymob.m_intent == "run" ? "running" : "walking")
+	using.icon_state = (mymob.m_intent == MOVE_INTENT_RUN ? "running" : "walking")
 	using.screen_loc = ui_movi
 	static_inventory += using
 
@@ -372,7 +371,7 @@
 
 
 
-/datum/hud/human/persistant_inventory_update(mob/viewer)
+/datum/hud/human/persistent_inventory_update(mob/viewer)
 	if(!mymob)
 		return
 	..()

@@ -66,17 +66,17 @@
 	var/endx
 	switch(startSide)
 		if(NORTH)
-			endy = TRANSITIONEDGE
-			endx = rand(TRANSITIONEDGE, world.maxx-TRANSITIONEDGE)
+			endy = (TRANSITIONEDGE+1)
+			endx = rand((TRANSITIONEDGE+1), world.maxx-(TRANSITIONEDGE+1))
 		if(EAST)
-			endy = rand(TRANSITIONEDGE, world.maxy-TRANSITIONEDGE)
-			endx = TRANSITIONEDGE
+			endy = rand((TRANSITIONEDGE+1), world.maxy-(TRANSITIONEDGE+1))
+			endx = (TRANSITIONEDGE+1)
 		if(SOUTH)
-			endy = world.maxy-TRANSITIONEDGE
-			endx = rand(TRANSITIONEDGE, world.maxx-TRANSITIONEDGE)
+			endy = world.maxy-(TRANSITIONEDGE+1)
+			endx = rand((TRANSITIONEDGE+1), world.maxx-(TRANSITIONEDGE+1))
 		if(WEST)
-			endy = rand(TRANSITIONEDGE,world.maxy-TRANSITIONEDGE)
-			endx = world.maxx-TRANSITIONEDGE
+			endy = rand((TRANSITIONEDGE+1),world.maxy-(TRANSITIONEDGE+1))
+			endx = world.maxx-(TRANSITIONEDGE+1)
 	. = locate(endx, endy, Z)
 
 ///////////////////////
@@ -317,8 +317,7 @@
 /obj/effect/meteor/tunguska
 	name = "tunguska meteor"
 	icon_state = "flaming"
-	desc = "Your life briefly passes before your eyes the moment you lay \
-		them on this monstrosity."
+	desc = "Your life briefly passes before your eyes the moment you lay them on this monstrosity."
 	hits = 30
 	hitpwr = 1
 	heavy = 1

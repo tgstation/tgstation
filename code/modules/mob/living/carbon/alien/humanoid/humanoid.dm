@@ -106,7 +106,7 @@
 	..()
 
 //For alien evolution/promotion/queen finder procs. Checks for an active alien of that type
-proc/get_alien_type(var/alienpath)
+/proc/get_alien_type(var/alienpath)
 	for(var/mob/living/carbon/alien/humanoid/A in living_mob_list)
 		if(!istype(A, alienpath))
 			continue

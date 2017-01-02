@@ -65,9 +65,11 @@
 			put_in_hands(I)
 			update_inv_hands()
 		if(slot_in_backpack)
-			if(I == get_active_held_item())
-				unEquip(I)
-			I.loc = back
+			var/obj/item/weapon/storage/B = back
+			var/prev_jimmies = B.rustle_jimmies
+			B.rustle_jimmies = FALSE //don't conspicously rustle
+			B.handle_item_insertion(I, 1, src)
+			B.rustle_jimmies = prev_jimmies
 		else
 			not_handled = TRUE
 

@@ -211,14 +211,6 @@ macro "default"
 		name = "F12"
 		command = "F12"
 		is-disabled = false
-	elem 
-		name = "SHIFT"
-		command = "toggle-walk-run"
-		is-disabled = false
-	elem 
-		name = "SHIFT+UP"
-		command = "toggle-walk-run"
-		is-disabled = false
 
 macro "hotkeys"
 	elem 
@@ -517,14 +509,6 @@ macro "hotkeys"
 		name = "F12"
 		command = "F12"
 		is-disabled = false
-	elem 
-		name = "SHIFT"
-		command = "toggle-walk-run"
-		is-disabled = false
-	elem 
-		name = "SHIFT+UP"
-		command = "toggle-walk-run"
-		is-disabled = false
 
 macro "robot-default"
 	elem 
@@ -612,6 +596,10 @@ macro "robot-default"
 		command = "resist"
 		is-disabled = false
 	elem 
+		name = "CTRL+O"
+		command = "ooc"
+		is-disabled = false
+	elem 
 		name = "CTRL+D+REP"
 		command = ".moveright"
 		is-disabled = false
@@ -622,10 +610,6 @@ macro "robot-default"
 	elem 
 		name = "CTRL+G"
 		command = "a-intent right"
-		is-disabled = false
-	elem 
-		name = "CTRL+O"
-		command = "ooc"
 		is-disabled = false
 	elem 
 		name = "CTRL+Q"
@@ -832,6 +816,18 @@ macro "robot-hotkeys"
 	elem 
 		name = "CTRL+B"
 		command = "resist"
+		is-disabled = false	
+	elem 
+		name = "H"
+		command = "talk-wheel"
+		is-disabled = false
+	elem 
+		name = "CTRL+H"
+		command = "talk-wheel"
+		is-disabled = false
+	elem 
+		name = "M"
+		command = "me"
 		is-disabled = false
 	elem 
 		name = "D+REP"

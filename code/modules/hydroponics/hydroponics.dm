@@ -4,7 +4,8 @@
 	icon_state = "hydrotray"
 	density = 1
 	anchored = 1
-	pixel_y=8
+	pixel_y = 8
+	unique_rename = 1
 	var/waterlevel = 100	//The amount of water in the tray (max 100)
 	var/maxwater = 100		//The maximum amount of water in the tray
 	var/nutrilevel = 10		//The amount of nutrient in the tray (max 10)
@@ -143,7 +144,7 @@
 				adjustNutri(-1 / rating)
 
 			// Lack of nutrients hurts non-weeds
-			if(nutrilevel <= 0 && myseed.plant_type != PLANT_WEED)
+			if(nutrilevel <= 0 && !myseed.get_gene(/datum/plant_gene/trait/plant_type/weed_hardy))
 				adjustHealth(-rand(1,3))
 
 //Photosynthesis/////////////////////////////////////////////////////////
@@ -151,7 +152,7 @@
 			if(isturf(loc))
 				var/turf/currentTurf = loc
 				var/lightAmt = currentTurf.lighting_lumcount
-				if(myseed.plant_type == PLANT_MUSHROOM)
+				if(myseed.get_gene(/datum/plant_gene/trait/plant_type/fungal_metabolism))
 					if(lightAmt < 2)
 						adjustHealth(-1 / rating)
 				else // Non-mushroom
@@ -163,7 +164,7 @@
 			adjustWater(-rand(1,6) / rating)
 
 			// If the plant is dry, it loses health pretty fast, unless mushroom
-			if(waterlevel <= 10 && myseed.plant_type != PLANT_MUSHROOM)
+			if(waterlevel <= 10 && !myseed.get_gene(/datum/plant_gene/trait/plant_type/fungal_metabolism))
 				adjustHealth(-rand(0,1) / rating)
 				if(waterlevel <= 0)
 					adjustHealth(-rand(0,2) / rating)
@@ -192,7 +193,7 @@
 				adjustHealth(-1 / rating)
 
 			// If it's a weed, it doesn't stunt the growth
-			if(weedlevel >= 5 && myseed.plant_type != PLANT_WEED)
+			if(weedlevel >= 5 && !myseed.get_gene(/datum/plant_gene/trait/plant_type/weed_hardy))
 				adjustHealth(-1 / rating)
 
 //Health & Age///////////////////////////////////////////////////////////
@@ -222,7 +223,7 @@
 		// Weeeeeeeeeeeeeeedddssss
 		if(weedlevel >= 10 && prob(50)) // At this point the plant is kind of fucked. Weeds can overtake the plant spot.
 			if(myseed)
-				if(myseed.plant_type == PLANT_NORMAL) // If a normal plant
+				if(!myseed.get_gene(/datum/plant_gene/trait/plant_type/weed_hardy) && !myseed.get_gene(/datum/plant_gene/trait/plant_type/fungal_metabolism)) // If a normal plant
 					weedinvasion()
 			else
 				weedinvasion() // Weed invasion into empty tray
@@ -375,13 +376,13 @@
 	visible_message("<span class='warning'>The [oldPlantName] is overtaken by some [myseed.plantname]!</span>")
 
 
-/obj/machinery/hydroponics/proc/mutate(lifemut = 2, endmut = 5, productmut = 1, yieldmut = 2, potmut = 25) // Mutates the current seed
+/obj/machinery/hydroponics/proc/mutate(lifemut = 2, endmut = 5, productmut = 1, yieldmut = 2, potmut = 25, wrmut = 2, wcmut = 5, traitmut = 0) // Mutates the current seed
 	if(!myseed)
 		return
-	myseed.mutate(lifemut, endmut, productmut, yieldmut, potmut)
+	myseed.mutate(lifemut, endmut, productmut, yieldmut, potmut, wrmut, wcmut, traitmut)
 
 /obj/machinery/hydroponics/proc/hardmutate()
-	mutate(4, 10, 2, 4, 50)
+	mutate(4, 10, 2, 4, 50, 4, 10, 3)
 
 
 /obj/machinery/hydroponics/proc/mutatespecie() // Mutagent produced a new plant!
@@ -684,6 +685,8 @@
 			return
 		if(alert(user, "This will make [src] self-sustaining but consume [O] forever. Are you sure?", "[name]", "I'm Sure", "Abort") == "Abort" || !user)
 			return
+		if(!O || qdeleted(O))
+			return
 		if(!Adjacent(user))
 			return
 		if(self_sustaining)
@@ -821,8 +824,8 @@
 		if(!anchored && !isinspace())
 			user.visible_message("[user] begins to wrench [src] into place.", \
 								"<span class='notice'>You begin to wrench [src] in place...</span>")
-			playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
-			if (do_after(user, 20/O.toolspeed, target = src))
+			playsound(loc, O.usesound, 50, 1)
+			if (do_after(user, 20*O.toolspeed, target = src))
 				if(anchored)
 					return
 				anchored = 1
@@ -831,8 +834,8 @@
 		else if(anchored)
 			user.visible_message("[user] begins to unwrench [src].", \
 								"<span class='notice'>You begin to unwrench [src]...</span>")
-			playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
-			if (do_after(user, 20/O.toolspeed, target = src))
+			playsound(loc, O.usesound, 50, 1)
+			if (do_after(user, 20*O.toolspeed, target = src))
 				if(!anchored)
 					return
 				anchored = 0
@@ -841,7 +844,7 @@
 
 	else if(istype(O, /obj/item/weapon/wirecutters) && unwrenchable)
 		using_irrigation = !using_irrigation
-		playsound(src, 'sound/items/Wirecutter.ogg', 50, 1)
+		playsound(src, O.usesound, 50, 1)
 		user.visible_message("<span class='notice'>[user] [using_irrigation ? "" : "dis"]connects [src]'s irrigation hoses.</span>", \
 		"<span class='notice'>You [using_irrigation ? "" : "dis"]connect [src]'s irrigation hoses.</span>")
 		for(var/obj/machinery/hydroponics/h in range(1,src))
@@ -893,7 +896,7 @@
 		user << "<span class='warning'>You fail to harvest anything useful!</span>"
 	else
 		user << "<span class='notice'>You harvest [myseed.getYield()] items from the [myseed.plantname].</span>"
-	if(myseed.oneharvest)
+	if(!myseed.get_gene(/datum/plant_gene/trait/repeated_harvest))
 		qdel(myseed)
 		myseed = null
 		dead = 0

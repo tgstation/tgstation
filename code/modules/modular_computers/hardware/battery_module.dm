@@ -21,7 +21,7 @@
 		return FALSE
 
 	if(battery)
-		user << "<span class='warning'>You try to connect \the [I] to \the [src], but it's connectors are occupied.</span>"
+		user << "<span class='warning'>You try to connect \the [I] to \the [src], but its connectors are occupied.</span>"
 		return FALSE
 
 	if(I.w_class > holder.max_hardware_size)
@@ -38,7 +38,7 @@
 	return TRUE
 
 
-/obj/item/weapon/computer_hardware/battery/try_eject(slot=0, mob/living/user = null)
+/obj/item/weapon/computer_hardware/battery/try_eject(slot=0, mob/living/user = null, forced = 0)
 	if(!battery)
 		user << "<span class='warning'>There is no power cell connected to \the [src].</span>"
 		return FALSE
@@ -66,7 +66,7 @@
 	icon = 'icons/obj/module.dmi'
 	icon_state = "cell_mini"
 	origin_tech = "powerstorage=2;engineering=1"
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 	maxcharge = 750
 
 
@@ -75,7 +75,7 @@
 	desc = "An advanced power cell, often used in most laptops. It is too large to be fitted into smaller devices."
 	icon_state = "cell"
 	origin_tech = "powerstorage=2;engineering=2"
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	maxcharge = 1500
 
 /obj/item/weapon/stock_parts/cell/computer/super
@@ -83,7 +83,7 @@
 	desc = "An advanced power cell, often used in high-end laptops."
 	icon_state = "cell"
 	origin_tech = "powerstorage=3;engineering=3"
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	maxcharge = 2000
 
 /obj/item/weapon/stock_parts/cell/computer/micro

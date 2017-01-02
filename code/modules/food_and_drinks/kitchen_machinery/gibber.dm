@@ -85,9 +85,8 @@
 /obj/machinery/gibber/attack_paw(mob/user)
 	return src.attack_hand(user)
 
-/obj/machinery/gibber/container_resist()
-	src.go_out()
-	return
+/obj/machinery/gibber/container_resist(mob/living/user)
+	go_out()
 
 /obj/machinery/gibber/attack_hand(mob/user)
 	if(stat & (NOPOWER|BROKEN))
@@ -96,7 +95,7 @@
 		user << "<span class='danger'>It's locked and running.</span>"
 		return
 
-	if(user.pulling && user.a_intent == "grab" && isliving(user.pulling))
+	if(user.pulling && user.a_intent == INTENT_GRAB && isliving(user.pulling))
 		var/mob/living/L = user.pulling
 		if(!iscarbon(L))
 			user << "<span class='danger'>This item is not suitable for the gibber!</span>"

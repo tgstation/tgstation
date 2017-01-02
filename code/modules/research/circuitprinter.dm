@@ -113,7 +113,7 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 			user << "<span class='notice'>You add [amount_inserted] sheets to the [src.name].</span>"
 		updateUsrDialog()
 
-	else if(user.a_intent != "harm")
+	else if(user.a_intent != INTENT_HARM)
 		user << "<span class='warning'>You cannot insert this item into the [name]!</span>"
 		return 1
 	else

@@ -39,6 +39,12 @@
 					break
 		if(OB)
 			F.attackby(OB, AM)
+			// Then, if the user is dragging an ore box, empty the satchel
+			// into the box.
+			var/mob/living/L = AM
+			if(istype(L.pulling, /obj/structure/ore_box))
+				var/obj/structure/ore_box/box = L.pulling
+				box.attackby(OB, AM)
 	return ..()
 
 /obj/item/weapon/ore/uranium
@@ -64,7 +70,7 @@
 	points = 1
 	materials = list(MAT_GLASS=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/glass
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 
 /obj/item/weapon/ore/glass/attack_self(mob/living/user)
 	user << "<span class='notice'>You use the sand to make sandstone.</span>"
@@ -176,7 +182,7 @@
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "Gibtonite ore"
 	item_state = "Gibtonite ore"
-	w_class = 4
+	w_class = WEIGHT_CLASS_BULKY
 	throw_range = 0
 	var/primed = 0
 	var/det_time = 100
@@ -284,7 +290,7 @@
 	flags = CONDUCT
 	force = 1
 	throwforce = 2
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 	var/string_attached
 	var/list/sideslist = list("heads","tails")
 	var/cmineral = null

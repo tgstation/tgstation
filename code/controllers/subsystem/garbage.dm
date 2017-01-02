@@ -70,7 +70,7 @@ var/datum/subsystem/garbage_collector/SSgarbage
 		Queue(ref)
 		tobequeued.Cut(1, 2)
 
-/datum/subsystem/garbage_collector/proc/HandleQueue(time_to_stop)
+/datum/subsystem/garbage_collector/proc/HandleQueue()
 	delslasttick = 0
 	gcedlasttick = 0
 	var/time_to_kill = world.time - collection_timeout // Anything qdel() but not GC'd BEFORE this time needs to be manually del()
@@ -121,7 +121,7 @@ var/datum/subsystem/garbage_collector/SSgarbage
 			++totalgcs
 
 /datum/subsystem/garbage_collector/proc/QueueForQueuing(datum/A)
-	if (istype(A) && isnull(A.gc_destroyed))
+	if (istype(A) && A.gc_destroyed == GC_CURRENTLY_BEING_QDELETED)
 		tobequeued += A
 		A.gc_destroyed = GC_QUEUED_FOR_QUEUING
 
@@ -142,7 +142,7 @@ var/datum/subsystem/garbage_collector/SSgarbage
 	queue[refid] = gctime
 
 /datum/subsystem/garbage_collector/proc/HardQueue(datum/A)
-	if (istype(A) && isnull(A.gc_destroyed))
+	if (istype(A) && A.gc_destroyed == GC_CURRENTLY_BEING_QDELETED)
 		tobequeued += A
 		A.gc_destroyed = GC_QUEUED_FOR_HARD_DEL
 
@@ -158,11 +158,12 @@ var/datum/subsystem/garbage_collector/SSgarbage
 	if(!D)
 		return
 #ifdef TESTING
-	SSgarbage.qdel_list += "[A.type]"
+	SSgarbage.qdel_list += "[D.type]"
 #endif
 	if(!istype(D))
 		del(D)
 	else if(isnull(D.gc_destroyed))
+		D.gc_destroyed = GC_CURRENTLY_BEING_QDELETED
 		var/hint = D.Destroy(force) // Let our friend know they're about to get fucked up.
 		if(!D)
 			return
@@ -171,6 +172,7 @@ var/datum/subsystem/garbage_collector/SSgarbage
 				SSgarbage.QueueForQueuing(D)
 			if (QDEL_HINT_LETMELIVE, QDEL_HINT_IWILLGC)	//qdel should let the object live after calling destory.
 				if(!force)
+					D.gc_destroyed = null //clear the gc variable (important!)
 					return
 				// Returning LETMELIVE after being told to force destroy
 				// indicates the objects Destroy() does not respect force
@@ -191,19 +193,29 @@ var/datum/subsystem/garbage_collector/SSgarbage
 			if (QDEL_HINT_FINDREFERENCE)//qdel will, if TESTING is enabled, display all references to this object, then queue the object for deletion.
 				SSgarbage.QueueForQueuing(D)
 				#ifdef TESTING
-				A.find_references()
+				D.find_references()
 				#endif
 			else
 				if(!SSgarbage.noqdelhint["[D.type]"])
 					SSgarbage.noqdelhint["[D.type]"] = "[D.type]"
 					testing("WARNING: [D.type] is not returning a qdel hint. It is being placed in the queue. Further instances of this type will also be queued.")
 				SSgarbage.QueueForQueuing(D)
+	else if(D.gc_destroyed == GC_CURRENTLY_BEING_QDELETED)
+		CRASH("[D.type] destroy proc was called multiple times, likely due to a qdel loop in the Destroy logic")
 
 // Returns 1 if the object has been queued for deletion.
 /proc/qdeleted(datum/D)
 	if(!istype(D))
 		return FALSE
 	if(D.gc_destroyed)
+		return TRUE
+	return FALSE
+
+// Returns true if the object's destroy has been called (set just before it is called)
+/proc/qdestroying(datum/D)
+	if(!istype(D))
+		return FALSE
+	if(D.gc_destroyed == GC_CURRENTLY_BEING_QDELETED)
 		return TRUE
 	return FALSE
 
@@ -217,15 +229,18 @@ var/datum/subsystem/garbage_collector/SSgarbage
 /datum/var/gc_destroyed //Time when this object was destroyed.
 
 #ifdef TESTING
-/client/var/running_find_references
 /datum/var/running_find_references
 
-/datum/verb/find_references()
+/datum/verb/find_refs()
 	set category = "Debug"
 	set name = "Find References"
 	set background = 1
 	set src in world
 
+	find_references(FALSE)
+
+/datum/proc/find_references(skip_alert)
+	set background = 1
 	running_find_references = type
 	if(usr && usr.client)
 		if(usr.client.running_find_references)
@@ -237,9 +252,10 @@ var/datum/subsystem/garbage_collector/SSgarbage
 			SSgarbage.next_fire = world.time + world.tick_lag
 			return
 
-		if(alert("Running this will create a lot of lag until it finishes.  You can cancel it by running it again.  Would you like to begin the search?", "Find References", "Yes", "No") == "No")
-			running_find_references = null
-			return
+		if(!skip_alert)
+			if(alert("Running this will lock everything up for about 5 minutes.  Would you like to begin the search?", "Find References", "Yes", "No") == "No")
+				running_find_references = null
+				return
 
 	//this keeps the garbage collector from failing to collect objects being searched for in here
 	SSgarbage.can_fire = 0
@@ -248,13 +264,7 @@ var/datum/subsystem/garbage_collector/SSgarbage
 		usr.client.running_find_references = type
 
 	testing("Beginning search for references to a [type].")
-	var/list/things = list()
-	for(var/client/thing)
-		things |= thing
-	for(var/datum/thing)
-		things |= thing
-	testing("Collected list of things in search for references to a [type]. ([things.len] Thing\s)")
-	for(var/datum/thing in things)
+	for(var/datum/thing in world)
 		if(usr && usr.client && !usr.client.running_find_references) return
 		for(var/varname in thing.vars)
 			var/variable = thing.vars[varname]
@@ -290,7 +300,7 @@ var/datum/subsystem/garbage_collector/SSgarbage
 
 	qdel(src)
 	if(!running_find_references)
-		find_references()
+		find_references(TRUE)
 
 /client/verb/show_qdeleted()
 	set category = "Debug"

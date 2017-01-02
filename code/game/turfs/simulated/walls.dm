@@ -11,7 +11,8 @@
 	var/hardness = 40 //lower numbers are harder. Used to determine the probability of a hulk smashing through.
 	var/slicing_duration = 100  //default time taken to slice the wall
 	var/sheet_type = /obj/item/stack/sheet/metal
-	var/obj/item/stack/sheet/builtin_sheet = null
+	var/sheet_amount = 2
+	var/girder_type = /obj/structure/girder
 
 	canSmoothWith = list(
 	/turf/closed/wall,
@@ -23,10 +24,6 @@
 	/turf/closed/wall/r_wall/rust,
 	/turf/closed/wall/clockwork)
 	smooth = SMOOTH_TRUE
-
-/turf/closed/wall/New()
-	..()
-	builtin_sheet = new sheet_type
 
 /turf/closed/wall/attack_tk()
 	return
@@ -48,13 +45,11 @@
 	ChangeTurf(/turf/open/floor/plating)
 
 /turf/closed/wall/proc/break_wall()
-	builtin_sheet.amount = 2
-	builtin_sheet.loc = src
-	return (new /obj/structure/girder(src))
+	new sheet_type(src, sheet_amount)
+	return new girder_type(src)
 
 /turf/closed/wall/proc/devastate_wall()
-	builtin_sheet.amount = 2
-	builtin_sheet.loc = src
+	new sheet_type(src, sheet_amount)
 	new /obj/item/stack/sheet/metal(src)
 
 /turf/closed/wall/ex_act(severity, target)
@@ -178,7 +173,7 @@
 		if( WT.remove_fuel(0,user) )
 			user << "<span class='notice'>You begin slicing through the outer plating...</span>"
 			playsound(src, W.usesound, 100, 1)
-			if(do_after(user, slicing_duration/W.toolspeed, target = src))
+			if(do_after(user, slicing_duration*W.toolspeed, target = src))
 				if(!iswallturf(src) || !user || !WT || !WT.isOn() || !T)
 					return 1
 				if( user.loc == T && user.get_active_held_item() == WT )
@@ -188,7 +183,7 @@
 	else if( istype(W, /obj/item/weapon/gun/energy/plasmacutter) )
 		user << "<span class='notice'>You begin slicing through the outer plating...</span>"
 		playsound(src, 'sound/items/Welder.ogg', 100, 1)
-		if(do_after(user, slicing_duration*0.6, target = src))  // plasma cutter is faster than welding tool
+		if(do_after(user, slicing_duration*W.toolspeed, target = src))
 			if(!iswallturf(src) || !user || !W || !T)
 				return 1
 			if( user.loc == T && user.get_active_held_item() == W )
@@ -256,13 +251,9 @@
 		ChangeTurf(/turf/closed/wall/mineral/cult)
 
 /turf/closed/wall/ratvar_act(force)
-	var/converted = (prob(40) || force)
-	if(converted)
+	. = ..()
+	if(.)
 		ChangeTurf(/turf/closed/wall/clockwork)
-	for(var/I in src)
-		var/atom/A = I
-		if(ismob(A) || converted)
-			A.ratvar_act()
 
 /turf/closed/wall/storage_contents_dump_act(obj/item/weapon/storage/src_object, mob/user)
 	return 0

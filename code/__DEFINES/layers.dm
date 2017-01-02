@@ -3,6 +3,9 @@
 
 #define CLICKCATCHER_PLANE -99
 
+#define PLANE_SPACE -95
+#define PLANE_SPACE_PARALLAX -90
+
 #define GAME_PLANE 0
 //#define TURF_LAYER 2 //For easy recordkeeping; this is a byond define
 #define MID_TURF_LAYER 2.02
@@ -29,7 +32,8 @@
 #define ABOVE_OBJ_LAYER 3.2
 #define ABOVE_WINDOW_LAYER 3.3
 #define SIGN_LAYER 3.4
-#define HIGH_OBJ_LAYER 3.5
+#define NOT_HIGH_OBJ_LAYER 3.5
+#define HIGH_OBJ_LAYER 3.6
 
 #define BELOW_MOB_LAYER 3.7
 #define LYING_MOB_LAYER 3.8

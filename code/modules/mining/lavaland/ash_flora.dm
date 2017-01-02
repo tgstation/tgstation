@@ -99,7 +99,7 @@
 	harvest = /obj/item/weapon/reagent_containers/food/snacks/ash_flora/mushroom_cap
 	harvest_amount_high = 4
 	harvest_time = 50
-	harvest_message_low = "You slice the cap off of a mushroom."
+	harvest_message_low = "You slice the cap off a mushroom."
 	harvest_message_med = "You slice off a few conks from the larger mushrooms."
 	harvest_message_high = "You slice off a number of caps and conks from these mushrooms."
 	regrowth_time_low = 3000
@@ -115,7 +115,7 @@
 	harvest = /obj/item/weapon/reagent_containers/food/snacks/ash_flora/mushroom_stem
 	harvest_amount_high = 4
 	harvest_time = 40
-	harvest_message_low = "You pick and slice the cap off of a mushroom, leaving the stem."
+	harvest_message_low = "You pick and slice the cap off a mushroom, leaving the stem."
 	harvest_message_med = "You pick and decapitate several mushrooms for their stems."
 	harvest_message_high = "You acquire a number of stems from these mushrooms."
 	regrowth_time_low = 3000
@@ -143,20 +143,20 @@
 		if(!H.shoes && !H.lying) //ouch, my feet.
 			var/picked_def_zone = pick("l_leg", "r_leg")
 			var/obj/item/bodypart/O = H.get_bodypart(picked_def_zone)
-			if(!istype(O) || (PIERCEIMMUNE in H.dna.species.specflags))
+			if(!istype(O) || (PIERCEIMMUNE in H.dna.species.species_traits))
 				return
 			H.apply_damage(rand(3, 6), BRUTE, picked_def_zone)
 			H.Weaken(2)
 			H.visible_message("<span class='danger'>[H] steps on a cactus!</span>", \
 				"<span class='userdanger'>You step on a cactus!</span>")
 
-/obj/item/weapon/reagent_containers/food/snacks/ash_flora/
+/obj/item/weapon/reagent_containers/food/snacks/ash_flora
 	name = "mushroom shavings"
 	desc = "Some shavings from a tall mushroom. With enough, might serve as a bowl."
 	icon = 'icons/obj/lavaland/ash_flora.dmi'
 	icon_state = "mushroom_shavings"
 	list_reagents = list("sugar" = 3, "ethanol" = 2, "stabilizing_agent" = 3, "minttoxin" = 2)
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 	resistance_flags = FLAMMABLE
 	obj_integrity = 100
 	max_integrity = 100
@@ -204,7 +204,7 @@
 	desc = "A bowl made out of mushrooms. Not food, though it might have contained some at some point."
 	icon = 'icons/obj/lavaland/ash_flora.dmi'
 	icon_state = "mushroom_bowl"
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	resistance_flags = FLAMMABLE
 	obj_integrity = 200
 	max_integrity = 200

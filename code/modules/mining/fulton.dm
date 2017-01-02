@@ -5,7 +5,7 @@ var/list/total_extraction_beacons = list()
 	desc = "A balloon that can be used to extract equipment or personnel to a Fulton Recovery Beacon. Anything not bolted down can be moved. Link the pack to a beacon by using the pack in hand."
 	icon = 'icons/obj/fulton.dmi'
 	icon_state = "extraction_pack"
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 	var/obj/structure/extraction_point/beacon
 	var/list/beacon_networks = list("station")
 	var/uses_left = 3
@@ -24,7 +24,7 @@ var/list/total_extraction_beacons = list()
 			possible_beacons += EP
 
 	if(!possible_beacons.len)
-		user << "There are no extraction beacons in existance!"
+		user << "There are no extraction beacons in existence!"
 		return
 
 	else
@@ -139,7 +139,7 @@ var/list/total_extraction_beacons = list()
 
 /obj/item/fulton_core
 	name = "extraction beacon signaller"
-	desc = "Emits a signal which fulton recovery devices can lock on to. Activate in hand to create a beacon."
+	desc = "Emits a signal which fulton recovery devices can lock onto. Activate in hand to create a beacon."
 	icon = 'icons/obj/stock_parts.dmi'
 	icon_state = "subspace_amplifier"
 

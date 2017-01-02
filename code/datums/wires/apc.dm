@@ -29,14 +29,14 @@
 		if(WIRE_POWER1, WIRE_POWER2) // Short for a long while.
 			if(!A.shorted)
 				A.shorted = TRUE
-				addtimer(A, "reset", 1200, FALSE, wire)
+				addtimer(A, "reset", 1200, TIMER_NORMAL, wire)
 		if(WIRE_IDSCAN) // Unlock for a little while.
 			A.locked = FALSE
-			addtimer(A, "reset", 300, FALSE, wire)
+			addtimer(A, "reset", 300, TIMER_NORMAL, wire)
 		if(WIRE_AI) // Disable AI control for a very short time.
 			if(!A.aidisabled)
 				A.aidisabled = TRUE
-				addtimer(A, "reset", 10, FALSE, wire)
+				addtimer(A, "reset", 10, TIMER_NORMAL, wire)
 
 /datum/wires/apc/on_cut(index, mend)
 	var/obj/machinery/power/apc/A = holder

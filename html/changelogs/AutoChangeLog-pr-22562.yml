@@ -1,0 +1,5 @@
+author: "XDTM"
+delete-after: True
+changes: 
+  - bugfix: "Storage bags should now cause less lag when picking up large amounts of items."
+  - bugfix: "Storage bags now don't send an error message for every single item they fail to pick up."

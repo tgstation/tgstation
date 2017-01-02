@@ -20,7 +20,7 @@
 	var/override = 0
 
 	for(var/datum/mutation/human/HM in dna.mutations)
-		override += HM.on_attack_hand(src, A)
+		override += HM.on_attack_hand(src, A, proximity)
 
 	if(override)
 		return
@@ -82,7 +82,7 @@
 /mob/living/carbon/monkey/RestrainedClickOn(atom/A)
 	if(..())
 		return
-	if(a_intent != "harm" || !ismob(A))
+	if(a_intent != INTENT_HARM || !ismob(A))
 		return
 	if(is_muzzled())
 		return

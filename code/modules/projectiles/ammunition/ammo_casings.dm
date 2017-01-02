@@ -27,6 +27,15 @@
 	caliber = "10mm"
 	projectile_type = /obj/item/projectile/bullet/midbullet3
 
+/obj/item/ammo_casing/c10mm/ap
+	projectile_type = /obj/item/projectile/bullet/midbullet3/ap
+
+/obj/item/ammo_casing/c10mm/fire
+	projectile_type = /obj/item/projectile/bullet/midbullet3/fire
+
+/obj/item/ammo_casing/c10mm/hp
+	projectile_type = /obj/item/projectile/bullet/midbullet3/hp
+
 /obj/item/ammo_casing/c9mm
 	desc = "A 9mm bullet casing."
 	caliber = "9mm"
@@ -199,7 +208,7 @@
 	variance = 25
 
 
-/obj/item/ammo_casing/shotgun/improvised/overload/
+/obj/item/ammo_casing/shotgun/improvised/overload
 	name = "overloaded improvised shell"
 	desc = "An extremely weak shotgun shell with multiple small pellets made out of metal shards. This one has been packed with even more \
 	propellant. It's like playing russian roulette, with a shotgun."

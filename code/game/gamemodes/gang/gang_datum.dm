@@ -16,6 +16,7 @@
 	var/dom_attempts = 2
 	var/points = 15
 	var/datum/atom_hud/antag/gang/ganghud
+	var/is_deconvertible = TRUE //Can you deconvert normal gangsters from the gang
 
 	var/domination_timer
 	var/is_dominating
@@ -135,7 +136,6 @@
 /datum/gang/proc/income()
 	if(!bosses.len)
 		return
-
 	var/added_names = ""
 	var/lost_names = ""
 
@@ -214,3 +214,19 @@
 	//Increase outfit stock
 	for(var/obj/item/device/gangtool/tool in gangtools)
 		tool.outfits = min(tool.outfits+1,5)
+
+
+//Multiverse
+
+/datum/gang/multiverse
+	dom_attempts = 0
+	points = 0
+	fighting_style = "multiverse"
+	is_deconvertible = FALSE
+
+/datum/gang/multiverse/New(loc, multiverse_override)
+	name = multiverse_override
+	ganghud = new()
+
+/datum/gang/multiverse/income()
+	return

@@ -14,7 +14,10 @@
 	required_components = list(BELLIGERENT_EYE = 1)
 	usage_tip = "Useful for crowd control in a populated area and disrupting mass movement."
 	tier = SCRIPTURE_DRIVER
+	primary_component = BELLIGERENT_EYE
 	sort_priority = 1
+	quickbind = TRUE
+	quickbind_desc = "Forces nearby non-Servants to walk, doing minor damage with each chant.<br><b>Maximum 15 chants.</b>"
 	var/noncultist_damage = 2 //damage per chant to noncultists
 	var/cultist_damage = 8 //damage per chant to non-walking cultists
 
@@ -24,14 +27,14 @@
 		if(!is_servant_of_ratvar(C) && !C.null_rod_check() && number_legs) //you have legs right
 			C.apply_damage(noncultist_damage * 0.5, BURN, "l_leg")
 			C.apply_damage(noncultist_damage * 0.5, BURN, "r_leg")
-			if(C.m_intent != "walk")
+			if(C.m_intent != MOVE_INTENT_WALK)
 				if(!iscultist(C))
 					C << "<span class='warning'>Your leg[number_legs > 1 ? "s shiver":" shivers"] with pain!</span>"
 				else //Cultists take extra burn damage
 					C << "<span class='warning'>Your leg[number_legs > 1 ? "s burn":" burns"] with pain!</span>"
 					C.apply_damage(cultist_damage * 0.5, BURN, "l_leg")
 					C.apply_damage(cultist_damage * 0.5, BURN, "r_leg")
-				C.m_intent = "walk"
+				C.toggle_move_intent()
 
 
 //Judicial Visor: Creates a judicial visor, which can smite an area.
@@ -50,6 +53,7 @@
 	usage_tip = "The visor has a thirty-second cooldown once used, and the marker it creates has a delay of 3 seconds before exploding."
 	tier = SCRIPTURE_DRIVER
 	space_allowed = TRUE
+	primary_component = BELLIGERENT_EYE
 	sort_priority = 2
 
 
@@ -64,7 +68,10 @@
 	required_components = list(VANGUARD_COGWHEEL = 1)
 	usage_tip = "You cannot reactivate Vanguard while still shielded by it."
 	tier = SCRIPTURE_DRIVER
+	primary_component = VANGUARD_COGWHEEL
 	sort_priority = 3
+	quickbind = TRUE
+	quickbind_desc = "Allows you to temporarily absorb stuns. All stuns absorbed will affect you when disabled."
 
 /datum/clockwork_scripture/vanguard/check_special_requirements()
 	if(islist(invoker.stun_absorption) && invoker.stun_absorption["vanguard"] && invoker.stun_absorption["vanguard"]["end_time"] > world.time)
@@ -88,7 +95,10 @@
 	consumed_components = list(VANGUARD_COGWHEEL = 1)
 	usage_tip = "The Compromise is very fast to invoke, and will remove holy water from the target Servant."
 	tier = SCRIPTURE_DRIVER
+	primary_component = VANGUARD_COGWHEEL
 	sort_priority = 4
+	quickbind = TRUE
+	quickbind_desc = "Allows you to convert a Servant's brute and burn damage to half toxin damage.<br><b>Click your slab to disable.</b>"
 	slab_icon = "compromise"
 	ranged_type = /obj/effect/proc_holder/slab/compromise
 	ranged_message = "<span class='inathneq_small'><i>You charge the clockwork slab with healing power.</i>\n\
@@ -96,60 +106,66 @@
 	Click your slab to cancel.</b></span>"
 
 
-//Guvax: Grants a short-range binding that will immediately start chanting on binding a valid target.
-/datum/clockwork_scripture/ranged_ability/guvax_prep
-	descname = "Convert Attack"
-	name = "Guvax"
+//Geis: Grants a short-range binding that will immediately start chanting on binding a valid target.
+/datum/clockwork_scripture/ranged_ability/geis_prep
+	descname = "Melee Convert Attack"
+	name = "Geis"
 	desc = "Charges your slab with divine energy, allowing you to bind a nearby heretic for conversion. This is very obvious and will make your slab visible in-hand."
-	invocations = list("Divinity, grant me strength...", "...to enlighten the heathen!")
+	invocations = list("Divinity, grant...", "...me strength...", "...to enlighten...", "...the heathen!")
 	whispered = TRUE
 	channel_time = 20
-	required_components = list(GUVAX_CAPACITOR = 1)
+	required_components = list(GEIS_CAPACITOR = 1)
 	usage_tip = "Is melee range and does not penetrate mindshield implants. Much more efficient than a Sigil of Submission at low Servant amounts."
 	tier = SCRIPTURE_DRIVER
+	primary_component = GEIS_CAPACITOR
 	sort_priority = 5
-	slab_icon = "guvax"
-	ranged_type = /obj/effect/proc_holder/slab/guvax
+	quickbind = TRUE
+	quickbind_desc = "Allows you to bind and start converting an adjacent target non-Servant.<br><b>Click your slab to disable.</b>"
+	slab_icon = "geis"
+	ranged_type = /obj/effect/proc_holder/slab/geis
 	ranged_message = "<span class='sevtug_small'><i>You charge the clockwork slab with divine energy.</i>\n\
 	<b>Left-click a target within melee range to convert!\n\
 	Click your slab to cancel.</b></span>"
 	timeout_time = 100
 
-/datum/clockwork_scripture/ranged_ability/guvax_prep/run_scripture()
+/datum/clockwork_scripture/ranged_ability/geis_prep/run_scripture()
 	var/servants = 0
 	for(var/mob/living/M in living_mob_list)
 		if(is_servant_of_ratvar(M) && (ishuman(M) || issilicon(M)))
 			servants++
-	if(servants > 5)
+	if(servants > SCRIPT_SERVANT_REQ)
 		whispered = FALSE
+		servants -= SCRIPT_SERVANT_REQ
+		channel_time = min(channel_time + servants*3, 50)
 	return ..()
 
 //The scripture that does the converting.
-/datum/clockwork_scripture/guvax
-	name = "Guvax Conversion"
+/datum/clockwork_scripture/geis
+	name = "Geis Conversion"
 	invocations = list("Enlighten this heathen!", "All are insects before Engine!", "Purge all untruths and honor Engine.")
-	channel_time = 50
+	channel_time = 49
 	tier = SCRIPTURE_PERIPHERAL
 	var/mob/living/target
-	var/obj/structure/destructible/clockwork/guvax_binding/binding
+	var/obj/structure/destructible/clockwork/geis_binding/binding
 
-/datum/clockwork_scripture/guvax/Destroy()
-	qdel(binding)
+/datum/clockwork_scripture/geis/Destroy()
+	if(binding && !qdeleted(binding))
+		qdel(binding)
 	return ..()
 
-/datum/clockwork_scripture/guvax/can_recite()
+/datum/clockwork_scripture/geis/can_recite()
 	if(!target)
 		return FALSE
 	return ..()
 
-/datum/clockwork_scripture/guvax/run_scripture()
+/datum/clockwork_scripture/geis/run_scripture()
 	var/servants = 0
 	for(var/mob/living/M in living_mob_list)
 		if(is_servant_of_ratvar(M) && (ishuman(M) || issilicon(M)))
 			servants++
-	if(servants > 5)
-		servants -= 5
-		channel_time = min(channel_time + servants*5, 100)
+	if(servants > SCRIPT_SERVANT_REQ)
+		servants -= SCRIPT_SERVANT_REQ
+		channel_time = min(channel_time + servants*7, 120)
 	if(target.buckled)
 		target.buckled.unbuckle_mob(target, TRUE)
 	binding = new(get_turf(target))
@@ -157,10 +173,10 @@
 	binding.buckle_mob(target, TRUE)
 	return ..()
 
-/datum/clockwork_scripture/guvax/check_special_requirements()
+/datum/clockwork_scripture/geis/check_special_requirements()
 	return target && binding && target.buckled == binding && !is_servant_of_ratvar(target) && target.stat != DEAD
 
-/datum/clockwork_scripture/guvax/scripture_effects()
+/datum/clockwork_scripture/geis/scripture_effects()
 	return add_servant_of_ratvar(target)
 
 
@@ -172,11 +188,14 @@
 	chant_invocations = list("Hostiles on my back!", "Enemies on my trail!", "Gonna try and shake my tail.", "Bogeys on my six!")
 	chant_amount = 5
 	chant_interval = 10
-	required_components = list(GUVAX_CAPACITOR = 2)
-	consumed_components = list(GUVAX_CAPACITOR = 1)
+	required_components = list(GEIS_CAPACITOR = 2)
+	consumed_components = list(GEIS_CAPACITOR = 1)
 	usage_tip = "Useful for fleeing attackers, as few will be able to follow someone using this scripture."
 	tier = SCRIPTURE_DRIVER
+	primary_component = GEIS_CAPACITOR
 	sort_priority = 6
+	quickbind = TRUE
+	quickbind_desc = "Weakens, confuses, and dizzies nearby non-servants, then allows some movement.<br><b>Maximum 5 chants.</b>"
 	var/flee_time = 47 //allow fleeing for 5 seconds
 	var/grace_period = 3 //very short grace period so you don't have to stop immediately
 	var/datum/progressbar/progbar
@@ -198,7 +217,7 @@
 		progbar = new(invoker, flee_time, invoker)
 		progbar.bar.color = "#AF0AAF"
 		animate(progbar.bar, color = initial(progbar.bar.color), time = flee_time+grace_period)
-		while(world.time < endtime)
+		while(world.time < endtime && invoker && slab && invoker.get_active_held_item() == slab)
 			sleep(1)
 			progbar.update(world.time - starttime)
 		qdel(progbar)
@@ -208,8 +227,8 @@
 	qdel(progbar)
 
 
-//Replicant: Creates a new clockwork slab. Doesn't use create_object because of its unique behavior.
-/datum/clockwork_scripture/replicant
+//Replicant: Creates a new clockwork slab.
+/datum/clockwork_scripture/create_object/replicant
 	descname = "New Clockwork Slab"
 	name = "Replicant"
 	desc = "Creates a new clockwork slab."
@@ -217,43 +236,47 @@
 	channel_time = 10
 	required_components = list(REPLICANT_ALLOY = 1)
 	whispered = TRUE
+	object_path = /obj/item/clockwork/slab
+	creator_message = "<span class='brass'>You copy a piece of replicant alloy and command it into a new slab.</span>"
 	usage_tip = "This is inefficient as a way to produce components, as the slab produced must be held by someone with no other slabs to produce components."
 	tier = SCRIPTURE_DRIVER
+	space_allowed = TRUE
+	primary_component = REPLICANT_ALLOY
 	sort_priority = 7
-
-/datum/clockwork_scripture/replicant/scripture_effects()
-	invoker <<  "<span class='brass'>You copy a piece of replicant alloy and command it into a new slab.</span>" //No visible message, for stealth purposes
-	var/obj/item/clockwork/slab/S = new(get_turf(invoker))
-	invoker.put_in_hands(S) //Put it in your hands if possible
-	return TRUE
+	quickbind = TRUE
+	quickbind_desc = "Creates a new Clockwork Slab."
 
 
 //Tinkerer's Cache: Creates a tinkerer's cache, allowing global component storage.
 /datum/clockwork_scripture/create_object/tinkerers_cache
-	descname = "Necessary, Shares Components"
+	descname = "Necessary Structure, Shares Components"
 	name = "Tinkerer's Cache"
 	desc = "Forms a cache that can store an infinite amount of components. All caches are linked and will provide components to slabs."
 	invocations = list("Constructing...", "...a cache!")
 	channel_time = 50
-	required_components = list(BELLIGERENT_EYE = 0, VANGUARD_COGWHEEL = 0, GUVAX_CAPACITOR = 0, REPLICANT_ALLOY = 2, HIEROPHANT_ANSIBLE = 0)
-	consumed_components = list(BELLIGERENT_EYE = 0, VANGUARD_COGWHEEL = 0, GUVAX_CAPACITOR = 0, REPLICANT_ALLOY = 1, HIEROPHANT_ANSIBLE = 0)
+	required_components = list(BELLIGERENT_EYE = 0, VANGUARD_COGWHEEL = 0, GEIS_CAPACITOR = 0, REPLICANT_ALLOY = 2, HIEROPHANT_ANSIBLE = 0)
+	consumed_components = list(BELLIGERENT_EYE = 0, VANGUARD_COGWHEEL = 0, GEIS_CAPACITOR = 0, REPLICANT_ALLOY = 1, HIEROPHANT_ANSIBLE = 0)
 	object_path = /obj/structure/destructible/clockwork/cache
 	creator_message = "<span class='brass'>You form a tinkerer's cache, which is capable of storing components, which will automatically be used by slabs.</span>"
 	observer_message = "<span class='warning'>A hollow brass spire rises and begins to blaze!</span>"
 	usage_tip = "Slabs will draw components from the global cache after the slab's own repositories, making caches very efficient."
 	tier = SCRIPTURE_DRIVER
 	one_per_tile = TRUE
+	primary_component = REPLICANT_ALLOY
 	sort_priority = 8
+	quickbind = TRUE
+	quickbind_desc = "Creates a Tinkerer's Cache, which stores components globally for slab access."
 
-/datum/clockwork_scripture/create_object/tinkerers_cache/New()
-	var/cache_cost_increase = min(round(clockwork_caches*0.2), 5)
+/datum/clockwork_scripture/create_object/tinkerers_cache/creation_update()
+	var/cache_cost_increase = min(round(clockwork_caches*0.25), 5)
+	required_components = list(BELLIGERENT_EYE = 0, VANGUARD_COGWHEEL = 0, GEIS_CAPACITOR = 0, REPLICANT_ALLOY = 2, HIEROPHANT_ANSIBLE = 0)
+	consumed_components = list(BELLIGERENT_EYE = 0, VANGUARD_COGWHEEL = 0, GEIS_CAPACITOR = 0, REPLICANT_ALLOY = 1, HIEROPHANT_ANSIBLE = 0)
 	for(var/i in required_components)
 		if(i != REPLICANT_ALLOY)
 			required_components[i] += cache_cost_increase
 	for(var/i in consumed_components)
 		if(i != REPLICANT_ALLOY)
 			consumed_components[i] += cache_cost_increase
-	return ..()
 
 
 //Wraith Spectacles: Creates a pair of wraith spectacles, which grant xray vision but damage vision slowly.
@@ -270,12 +293,13 @@
 	usage_tip = "\"True sight\" means that you are able to see through walls and in darkness."
 	tier = SCRIPTURE_DRIVER
 	space_allowed = TRUE
+	primary_component = HIEROPHANT_ANSIBLE
 	sort_priority = 9
 
 
 //Sigil of Transgression: Creates a sigil of transgression, which stuns the first nonservant to cross it.
 /datum/clockwork_scripture/create_object/sigil_of_transgression
-	descname = "Stun Trap"
+	descname = "Trap, Stunning"
 	name = "Sigil of Transgression"
 	desc = "Wards a tile with a sigil. The next person to cross the sigil will be smitten and unable to move. Nar-Sian cultists are stunned altogether."
 	invocations = list("Divinity, dazzle...", "...those who tresspass here!")
@@ -288,4 +312,7 @@
 	usage_tip = "The sigil, while fairly powerful in its stun, does not induce muteness in its victim."
 	tier = SCRIPTURE_DRIVER
 	one_per_tile = TRUE
+	primary_component = HIEROPHANT_ANSIBLE
 	sort_priority = 10
+	quickbind = TRUE
+	quickbind_desc = "Creates a Sigil of Transgression, which will stun the first non-Servant to cross it."

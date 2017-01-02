@@ -121,7 +121,7 @@
 	implant_overlay = null
 	implant_color = null
 	actions_types = list(/datum/action/item_action/organ_action/toggle)
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 	var/on = 0
 	var/datum/effect_system/trail_follow/ion/ion_trail
 

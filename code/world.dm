@@ -165,6 +165,8 @@ var/last_irc_status = 0
 				minor_announce(input["message"], "Incoming message from [input["message_sender"]]")
 				for(var/obj/machinery/computer/communications/CM in machines)
 					CM.overrideCooldown()
+			if(input["crossmessage"] == "News_Report")
+				minor_announce(input["message"], "Breaking Update From [input["message_sender"]]")
 
 	else if("adminmsg" in input)
 		if(!key_valid)
@@ -249,6 +251,7 @@ var/last_irc_status = 0
 		else
 			world << sound(pick('sound/AI/newroundsexy.ogg','sound/misc/apcdestroyed.ogg','sound/misc/bangindonk.ogg','sound/misc/leavingtg.ogg', 'sound/misc/its_only_game.ogg')) // random end sounds!! - LastyBatsy
 	sleep(soundwait)
+	Master.Shutdown()	//run SS shutdowns
 	for(var/thing in clients)
 		var/client/C = thing
 		if (!C)

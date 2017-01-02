@@ -35,12 +35,17 @@
 	icon_state = "wizard"
 	strip_delay = 50
 	put_on_delay = 50
-	resistance_flags = FIRE_PROOF | ACID_PROOF
 
 /obj/item/clothing/shoes/sandal/marisa
 	desc = "A pair of magic black shoes."
 	name = "magic shoes"
 	icon_state = "black"
+	resistance_flags = FIRE_PROOF |  ACID_PROOF
+
+/obj/item/clothing/shoes/sandal/magic
+	name = "magical sandals"
+	desc = "A pair of sandals imbued with magic"
+	resistance_flags = FIRE_PROOF |  ACID_PROOF
 
 /obj/item/clothing/shoes/galoshes
 	desc = "A pair of yellow rubber boots, designed to prevent slipping on wet surfaces."
@@ -167,16 +172,17 @@
 	name = "jump boots"
 	desc = "A specialized pair of combat boots with a built-in propulsion system for rapid foward movement."
 	icon_state = "jetboots"
-	item_state = "jackboots"
+	item_state = "jetboots"
 	item_color = "hosred"
 	resistance_flags = FIRE_PROOF
+	pockets = /obj/item/weapon/storage/internal/pocket/shoes
 	actions_types = list(/datum/action/item_action/bhop)
 	var/jumpdistance = 5 //-1 from to see the actual distance, e.g 4 goes over 3 tiles
 	var/recharging_rate = 60 //default 6 seconds between each dash
 	var/recharging_time = 0 //time until next dash
 	var/jumping = FALSE //are we mid-jump?
 
-/obj/item/clothing/shoes/bhop/ui_action_click(mob/user, actiontype)
+/obj/item/clothing/shoes/bhop/ui_action_click(mob/user, action)
 	if(!isliving(usr))
 		return
 
@@ -195,3 +201,15 @@
 	usr.throw_at(target,jumpdistance,1, spin=0, diagonals_first = 1)
 	jumping = FALSE
 	recharging_time = world.time + recharging_rate
+
+/obj/item/clothing/shoes/singery
+	name = "yellow performer's boots"
+	desc = "These boots were made for dancing."
+	icon_state = "ysing"
+	put_on_delay = 50
+
+/obj/item/clothing/shoes/singerb
+	name = "blue performer's boots"
+	desc = "These boots were made for dancing."
+	icon_state = "bsing"
+	put_on_delay = 50

@@ -46,6 +46,7 @@
 	new /obj/item/weapon/shovel(src)
 	new /obj/item/weapon/pickaxe/mini(src)
 	new /obj/item/device/radio/headset/headset_cargo/mining(src)
+	new /obj/item/device/flashlight/seclite(src)
 	new /obj/item/weapon/storage/bag/plants(src)
 	new /obj/item/weapon/storage/bag/ore(src)
 	new /obj/item/device/t_scanner/adv_mining_scanner/lesser(src)
@@ -84,7 +85,7 @@
 	force = 15
 	throwforce = 10
 	item_state = "pickaxe"
-	w_class = 4
+	w_class = WEIGHT_CLASS_BULKY
 	materials = list(MAT_METAL=2000) //one sheet, but where can you make them?
 	var/digspeed = 40
 	var/list/digsound = list('sound/effects/picaxe1.ogg','sound/effects/picaxe2.ogg','sound/effects/picaxe3.ogg')
@@ -98,7 +99,7 @@
 	force = 10
 	throwforce = 7
 	slot_flags = SLOT_BELT
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 	materials = list(MAT_METAL=1000)
 
 /obj/item/weapon/pickaxe/proc/playDigSound()
@@ -173,7 +174,7 @@
 	var/digspeed = 20
 	throwforce = 4
 	item_state = "shovel"
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 	materials = list(MAT_METAL=50)
 	origin_tech = "materials=2;engineering=2"
 	attack_verb = list("bashed", "bludgeoned", "thrashed", "whacked")
@@ -186,14 +187,14 @@
 	item_state = "spade"
 	force = 5
 	throwforce = 7
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/weapon/emptysandbag
 	name = "empty sandbag"
 	desc = "A bag to be filled with sand."
 	icon = 'icons/obj/items.dmi'
 	icon_state = "sandbag"
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 
 /obj/item/weapon/emptysandbag/attackby(obj/item/W, mob/user, params)
 	if(istype(W,/obj/item/weapon/ore/glass))
@@ -228,7 +229,7 @@
 	desc = "An emergency shelter stored within a pocket of bluespace."
 	icon_state = "capsule"
 	icon = 'icons/obj/mining.dmi'
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 	origin_tech = "engineering=3;bluespace=3"
 	var/template_id = "shelter_alpha"
 	var/datum/map_template/shelter/template
@@ -357,10 +358,10 @@
 
 /obj/item/device/gps/computer/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/wrench) && !(flags&NODECONSTRUCT))
-		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+		playsound(src.loc, W.usesound, 50, 1)
 		user.visible_message("<span class='warning'>[user] disassembles the gps.</span>", \
 						"<span class='notice'>You start to disassemble the gps...</span>", "You hear clanking and banging noises.")
-		if(do_after(user, 20/W.toolspeed, target = src))
+		if(do_after(user, 20*W.toolspeed, target = src))
 			new /obj/item/device/gps(src.loc)
 			qdel(src)
 			return ..()
@@ -384,6 +385,7 @@
 	luminosity = 8
 	max_n_of_items = 10
 	pixel_y = -4
+	flags = NODECONSTRUCT
 
 /obj/machinery/smartfridge/survival_pod/empty
 	name = "dusty survival pod storage"
@@ -420,6 +422,7 @@
 	var/arbitraryatmosblockingvar = TRUE
 	var/buildstacktype = /obj/item/stack/sheet/metal
 	var/buildstackamount = 5
+	CanAtmosPass = ATMOS_PASS_NO
 
 /obj/structure/fans/deconstruct()
 	if(!(flags & NODECONSTRUCT))
@@ -429,10 +432,10 @@
 
 /obj/structure/fans/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/wrench) && !(flags&NODECONSTRUCT))
-		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+		playsound(src.loc, W.usesound, 50, 1)
 		user.visible_message("<span class='warning'>[user] disassembles the fan.</span>", \
 						"<span class='notice'>You start to disassemble the fan...</span>", "You hear clanking and banging noises.")
-		if(do_after(user, 20/W.toolspeed, target = src))
+		if(do_after(user, 20*W.toolspeed, target = src))
 			deconstruct()
 			return ..()
 
@@ -449,12 +452,10 @@
 	air_update_turf(1)
 
 /obj/structure/fans/Destroy()
-	arbitraryatmosblockingvar = FALSE
-	air_update_turf(1)
-	return ..()
+	var/turf/T = loc
+	. = ..()
+	T.air_update_turf(1)
 
-/obj/structure/fans/CanAtmosPass(turf/T)
-	return !arbitraryatmosblockingvar
 
 //Signs
 /obj/structure/sign/mining
@@ -532,7 +533,7 @@ interface with the mining shuttle at the landing site if a mobile beacon is also
 	item_state = "electronic"
 	icon = 'icons/obj/device.dmi'
 	desc = "Deploy to designate the landing zone of the auxillary base."
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	shuttle_id = "colony_drop"
 	var/setting = FALSE
 	var/no_restrictions = FALSE //Badmin variable to let you drop the colony ANYWHERE.
