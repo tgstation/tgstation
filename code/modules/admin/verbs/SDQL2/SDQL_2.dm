@@ -246,42 +246,48 @@
 		return out
 
 	type = text2path(type)
-
+	var/typecache = typecacheof(type)
+	
 	if(ispath(type, /mob))
 		for(var/mob/d in location)
-			if(istype(d, type))
+			if(typecache[d.type])
 				out += d
 			CHECK_TICK
 
 	else if(ispath(type, /turf))
 		for(var/turf/d in location)
-			if(istype(d, type))
+			if(typecache[d.type])
 				out += d
 			CHECK_TICK
 
 	else if(ispath(type, /obj))
 		for(var/obj/d in location)
-			if(istype(d, type))
+			if(typecache[d.type])
 				out += d
 			CHECK_TICK
 
 	else if(ispath(type, /area))
 		for(var/area/d in location)
-			if(istype(d, type))
+			if(typecache[d.type])
 				out += d
 			CHECK_TICK
 
 	else if(ispath(type, /atom))
 		for(var/atom/d in location)
-			if(istype(d, type))
+			if(typecache[d.type])
 				out += d
 			CHECK_TICK
-
-	else
-		for(var/datum/d in location)
-			if(istype(d, type))
-				out += d
-			CHECK_TICK
+	else if(ispath(type, /datum))
+		if(location == world) //snowflake for byond shortcut
+			for(var/datum/d) //stupid byond trick to have it not return atoms to make this less laggy
+				if(typecache[d.type])
+					out += d
+				CHECK_TICK
+		else
+			for(var/datum/d in location)
+				if(typecache[d.type])
+					out += d
+				CHECK_TICK
 
 	return out
 
