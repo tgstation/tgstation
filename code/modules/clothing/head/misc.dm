@@ -24,7 +24,7 @@
 
 /obj/item/clothing/head/canada
 	name = "striped red tophat"
-	desc = "it smells like fresh Timbits / <i>il sent comme Timbits frais</i>"
+	desc = "it smells like fresh donut holes / <i>il sent comme des trous de beignets frais</i>"
 	icon_state = "canada"
 	item_state = "canada"
 
