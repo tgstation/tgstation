@@ -2024,7 +2024,6 @@
 #include "code\orphaned_procs\dbcore.dm"
 #include "code\orphaned_procs\priority_announce.dm"
 #include "code\orphaned_procs\statistics.dm"
-#include "code\textfiles\golem.dm"
 #include "interface\interface.dm"
 #include "interface\stylesheet.dm"
 #include "interface\skin.dmf"
