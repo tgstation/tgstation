@@ -207,12 +207,12 @@
 	..()
 	if (!alternate_magazine)
 		alternate_magazine = new mag_type(src)
+	pump()
 
 /obj/item/weapon/gun/ballistic/shotgun/automatic/dual_tube/attack_self(mob/living/user)
+	toggle_tube(user)
 	if(!chambered && magazine.contents.len)
 		pump()
-	else
-		toggle_tube(user)
 
 /obj/item/weapon/gun/ballistic/shotgun/automatic/dual_tube/proc/toggle_tube(mob/living/user)
 	var/current_mag = magazine
