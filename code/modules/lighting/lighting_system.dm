@@ -156,17 +156,6 @@
 		loc.UpdateAffectingLights()
 	return ..()
 
-//Objects with opacity will trigger nearby lights of the old location to update at next SSlighting fire
-/atom/movable/Moved(atom/OldLoc, Dir)
-	if(opacity)
-		if (isturf(OldLoc))
-			OldLoc.UpdateAffectingLights()
-		if (isturf(loc))
-			loc.UpdateAffectingLights()
-	else
-		if(light)
-			light.changed()
-	return ..()
 
 //Sets our luminosity.
 //If we have no light it will create one.

@@ -438,7 +438,7 @@
 		angle -= 360
 	dir = angle2dir(angle)
 	var/turf/target = get_edge_target_turf(get_turf(wearer), dir)
-	wearer.throw_at_fast(target, (speed+density+anchored), 2, wearer)
+	wearer.throw_at(target, (speed+density+anchored), 2, wearer)
 	wearer.visible_message("[wearer] is knocked flying by the impact!")
 
 /obj/item/device/flightpack/proc/flight_impact(atom/unmovablevictim, crashdir)	//Yes, victim.
@@ -579,7 +579,7 @@
 	for(var/i in 1 to (knockback-1))
 		target = get_step(target, throwdir)
 	wearer.visible_message(knockmessage)
-	victim.throw_at_fast(target, knockback, 1)
+	victim.throw_at(target, knockback, 1)
 	victim.Weaken(stun)
 
 /obj/item/device/flightpack/proc/victimknockback(atom/movable/victim, power, direction)
@@ -607,7 +607,7 @@
 	for(var/i in 1 to knockback/3)
 		target = get_step(target, pick(alldirs))
 	if(knockback)
-		victim.throw_at_fast(target, knockback, part_manip.rating)
+		victim.throw_at(target, knockback, part_manip.rating)
 	if(isobj(victim))
 		var/obj/O = victim
 		O.take_damage(damage)
