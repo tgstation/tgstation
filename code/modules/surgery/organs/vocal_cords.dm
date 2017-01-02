@@ -150,23 +150,33 @@ var/static/regex/multispin_words = regex("like a record baby")
 		power_multiplier *= 2
 		spans = list("ratvar")
 
+	//Try to check if the speaker specified a name or a job to focus on
+	var/list/specific_listeners = list()
+	var/found_string = null
+
 	for(var/V in listeners)
 		var/mob/living/L = V
-		var/start
 		if(L.mind && L.mind.devilinfo && findtext(message, L.mind.devilinfo.truename))
-			start = findtext(message, L.mind.devilinfo.truename)
-			listeners = list(L)
+			var/start = findtext(message, L.mind.devilinfo.truename)
+			listeners = list(L) //let's be honest you're never going to find two devils with the same name
 			power_multiplier *= 5 //if you're a devil and god himself addressed you, you fucked up
 			//Cut out the name so it doesn't trigger commands
 			message = copytext(message, 0, start)+copytext(message, start + length(L.mind.devilinfo.truename), length(message) + 1)
 			break
-		else if(findtext(message, L.real_name))
-			start = findtext(message, L.real_name)
-			listeners = list(L) //focus on a particular person
-			power_multiplier *= 2
+		else if(findtext(message, L.real_name) == 1)
+			specific_listeners += L //focus on those with the specified name
 			//Cut out the name so it doesn't trigger commands
-			message = copytext(message, 0, start)+copytext(message, start + length(L.real_name), length(message) + 1)
-			break
+			found_string = L.real_name
+
+		else if(L.mind && findtext(message, L.mind.assigned_role) == 1)
+			specific_listeners += L //focus on those with the specified job
+			//Cut out the job so it doesn't trigger commands
+			found_string = L.mind.assigned_role
+
+	if(specific_listeners.len)
+		listeners = specific_listeners
+		power_multiplier *= (1 + (1/specific_listeners.len)) //2x on a single guy, 1.5x on two and so on
+		message = copytext(message, 0, 1)+copytext(message, 1 + length(found_string), length(message) + 1)
 
 	//STUN
 	if(findtext(message, stun_words))
@@ -186,7 +196,7 @@ var/static/regex/multispin_words = regex("like a record baby")
 	else if((findtext(message, sleep_words)))
 		for(var/V in listeners)
 			var/mob/living/L = V
-			L.Sleeping(3 * power_multiplier)
+			L.Sleeping(2 * power_multiplier)
 		next_command = world.time + cooldown_stun
 
 	//VOMIT
@@ -208,7 +218,7 @@ var/static/regex/multispin_words = regex("like a record baby")
 		for(var/V in listeners)
 			var/mob/living/L = V
 			new /obj/effect/hallucination/delusion(get_turf(L),L,duration=150 * power_multiplier,skip_nearby=0)
-		next_command = world.time + cooldown_damage
+		next_command = world.time + cooldown_meme
 
 	//WAKE UP
 	else if((findtext(message, wakeup_words)))
