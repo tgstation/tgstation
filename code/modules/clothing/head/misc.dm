@@ -24,7 +24,7 @@
 
 /obj/item/clothing/head/canada
 	name = "striped red tophat"
-	desc = " It feels sticky, like maple syrup - <i>il se sent collante, comme le sirop d'érable</i>"
+	desc = "it smells like fresh Timbits / <i>il sent comme Timbits frais</i>"
 	icon_state = "canada"
 	item_state = "canada"
 
