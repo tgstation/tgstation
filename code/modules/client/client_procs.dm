@@ -199,7 +199,7 @@ var/next_external_rsc = 0
 			if(config.allow_panic_bunker_bounce && tdata != "redirect")
 				src << "<span class='notice'>Sending you to [config.panic_server_name].</span>"
 				winset(src, null, "command=.options")
-				src << link("[global.panic_address]?redirect")
+				src << link("[config.panic_address]?redirect")
 			qdel(src)
 			return 0
 

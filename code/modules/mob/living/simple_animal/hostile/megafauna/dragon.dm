@@ -233,7 +233,7 @@ Difficulty: Medium
 				if(L.loc == loc)
 					throw_dir = pick(alldirs)
 				var/throwtarget = get_edge_target_turf(src, throw_dir)
-				L.throw_at_fast(throwtarget, 3)
+				L.throw_at(throwtarget, 3)
 				visible_message("<span class='warning'>[L] is thrown clear of [src]!</span>")
 
 	for(var/mob/M in range(7, src))

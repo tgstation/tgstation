@@ -245,7 +245,7 @@
 		if(A == src || (firer && A == src.firer) || A.anchored)
 			continue
 		var/throwtarget = get_edge_target_turf(src, get_dir(src, get_step_away(A, src)))
-		A.throw_at_fast(throwtarget,power+1,1)
+		A.throw_at(throwtarget,power+1,1)
 	for(var/turf/F in range(T,power))
 		var/obj/effect/overlay/gravfield = new /obj/effect/overlay{icon='icons/effects/effects.dmi'; icon_state="shieldsparkles"; mouse_opacity=0; density=0}()
 		F.overlays += gravfield
@@ -275,7 +275,7 @@
 	for(var/atom/movable/A in range(T, power))
 		if(A == src || (firer && A == src.firer) || A.anchored)
 			continue
-		A.throw_at_fast(T, power+1, 1)
+		A.throw_at(T, power+1, 1)
 	for(var/turf/F in range(T,power))
 		var/obj/effect/overlay/gravfield = new /obj/effect/overlay{icon='icons/effects/effects.dmi'; icon_state="shieldsparkles"; mouse_opacity=0; density=0}()
 		F.overlays += gravfield
@@ -305,7 +305,7 @@
 	for(var/atom/movable/A in range(T, power))
 		if(A == src|| (firer && A == src.firer) || A.anchored)
 			continue
-		A.throw_at_fast(get_edge_target_turf(A, pick(cardinal)), power+1, 1)
+		A.throw_at(get_edge_target_turf(A, pick(cardinal)), power+1, 1)
 	for(var/turf/Z in range(T,power))
 		var/obj/effect/overlay/gravfield = new /obj/effect/overlay{icon='icons/effects/effects.dmi'; icon_state="shieldsparkles"; mouse_opacity=0; density=0}()
 		Z.overlays += gravfield

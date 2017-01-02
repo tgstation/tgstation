@@ -475,7 +475,7 @@
 			new /obj/item/weapon/dragons_blood(src)
 
 /obj/item/weapon/melee/ghost_sword
-	name = "spectral blade"
+	name = "\improper spectral blade"
 	desc = "A rusted and dulled blade. It doesn't look like it'd do much damage. It glows weakly."
 	icon_state = "spectral"
 	item_state = "spectral"

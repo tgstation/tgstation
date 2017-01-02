@@ -1,6 +1,6 @@
 /obj/machinery/abductor/experiment
 	name = "experimentation machine"
-	desc = "A large man-sized tube sporting a complex array of surgical apparatus."
+	desc = "A large man-sized tube sporting a complex array of surgical machinery."
 	icon = 'icons/obj/abductor.dmi'
 	icon_state = "experiment-open"
 	density = 0
@@ -199,7 +199,7 @@
 			playsound(src.loc, 'sound/machines/buzz-sigh.ogg', 50, 1)
 			return "<span class='bad'>Experiment failed! No replacement organ detected.</span>"
 	else
-		say("Brain activity nonexistant - disposing sample...")
+		say("Brain activity nonexistent - disposing sample...")
 		open_machine()
 		SendBack(H)
 		return "<span class='bad'>Specimen braindead - disposed.</span>"

@@ -158,7 +158,8 @@ Difficulty: Hard
 	var/obj/effect/overlay/temp/decoy/D = PoolOrNew(/obj/effect/overlay/temp/decoy, list(loc,src))
 	animate(D, alpha = 0, color = "#FF0000", transform = matrix()*2, time = 5)
 	sleep(5)
-	throw_at(T, get_dist(src, T), 1, src, 0)
+	throw_at(T, get_dist(src, T), 1, src, 0, callback = CALLBACK(src, .charge_end))
+/mob/living/simple_animal/hostile/megafauna/bubblegum/proc/charge_end()
 	charging = 0
 	try_bloodattack()
 	if(target)
@@ -184,7 +185,7 @@ Difficulty: Hard
 		shake_camera(L, 4, 3)
 		shake_camera(src, 2, 3)
 		var/throwtarget = get_edge_target_turf(src, get_dir(src, get_step_away(L, src)))
-		L.throw_at_fast(throwtarget, 3)
+		L.throw_at(throwtarget, 3)
 
 	charging = 0
 

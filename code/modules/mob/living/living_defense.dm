@@ -324,7 +324,7 @@
 
 
 /mob/living/ratvar_act()
-	if(!is_servant_of_ratvar(src) && !add_servant_of_ratvar(src))
+	if(stat != DEAD && !is_servant_of_ratvar(src) && !add_servant_of_ratvar(src))
 		src << "<span class='userdanger'>A blinding light boils you alive! <i>Run!</i></span>"
 		adjustFireLoss(35)
 		if(src)

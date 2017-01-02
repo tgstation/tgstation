@@ -333,7 +333,7 @@
 /datum/reagent/consumable/dr_gibb
 	name = "Dr. Gibb"
 	id = "dr_gibb"
-	description = "A delicious blend of 42 different flavours"
+	description = "A delicious blend of 42 different flavours."
 	color = "#102000" // rgb: 16, 32, 0
 
 /datum/reagent/consumable/dr_gibb/on_mob_life(mob/living/M)
@@ -494,7 +494,7 @@
 /datum/reagent/consumable/gibbfloats
 	name = "Gibb Floats"
 	id = "gibbfloats"
-	description = "Icecream on top of a Dr. Gibb glass."
+	description = "Ice cream on top of a Dr. Gibb glass."
 	color = "#B22222"
 	nutriment_factor = 3 * REAGENTS_METABOLISM
 

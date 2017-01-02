@@ -68,7 +68,7 @@
 	icon = 'icons/mob/human_face.dmi'	  // default icon for all hairs
 
 /datum/sprite_accessory/hair/short
-	name = "Short Hair"	  // try to capatilize the names please~
+	name = "Short Hair"	  // try to capatilize the names please~ // try to spell
 	icon_state = "hair_a" // you do not need to define _s or _l sub-states, game automatically does this for you
 
 /datum/sprite_accessory/hair/shorthair2
@@ -313,7 +313,7 @@
 	icon_state = "hair_spiky2"
 
 /datum/sprite_accessory/hair/protagonist
-	name = "Slightly long"
+	name = "Slightly Long"
 	icon_state = "hair_protagonist"
 
 /datum/sprite_accessory/hair/kusangi
@@ -972,7 +972,7 @@
 	gender = NEUTER
 
 /datum/sprite_accessory/undershirt/nano
-	name = "Nanotransen Shirt"
+	name = "Nanotrasen Shirt"
 	icon_state = "shirt_nano"
 	gender = NEUTER
 

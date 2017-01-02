@@ -21,7 +21,7 @@
 	user << "<span class='[recharging > world.time ? "neovgre_small":"brass"]'>Its gemstone [recharging > world.time ? "has been breached by writhing tendrils of blackness that cover the totem" \
 	: "vibrates in place and thrums with power"].</span>"
 	if(is_servant_of_ratvar(user) || isobserver(user))
-		user << "<span class='neovgre_small'>If it fails to drain any electronics, it will disable itself for <b>[round(recharge_time/600, 1)]</b> minutes.</span>"
+		user << "<span class='neovgre_small'>If it fails to drain any electronics or has nothing to return power to, it will disable itself for <b>[round(recharge_time/600, 1)]</b> minutes.</span>"
 
 /obj/structure/destructible/clockwork/powered/interdiction_lens/toggle(fast_process, mob/living/user)
 	. = ..()
@@ -60,6 +60,9 @@
 		disabled = FALSE
 		toggle(0)
 	else
+		if(!check_apc_and_sigils())
+			forced_disable()
+			return
 		var/successfulprocess = FALSE
 		var/power_drained = 0
 		var/list/atoms_to_test = list()

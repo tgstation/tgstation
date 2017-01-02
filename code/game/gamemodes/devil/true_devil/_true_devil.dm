@@ -82,9 +82,9 @@
 	if(stat == DEAD)
 		msg += "<span class='deadsay'>The hellfire seems to have been extinguished, for now at least.</span>\n"
 	else if(health < (maxHealth/10))
-		msg += "<span class='warning'>You can see hellfire inside of its gaping wounds.</span>\n"
+		msg += "<span class='warning'>You can see hellfire inside its gaping wounds.</span>\n"
 	else if(health < (maxHealth/2))
-		msg += "<span class='warning'>You can see hellfire inside of its wounds.</span>\n"
+		msg += "<span class='warning'>You can see hellfire inside its wounds.</span>\n"
 	msg += "*---------*</span>"
 	user << msg
 

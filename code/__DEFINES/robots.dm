@@ -1,5 +1,8 @@
-//Bot defines, placed here so they can be read by other things!
+/*ALL DEFINES FOR AIS, CYBORGS, AND SIMPLE ANIMAL BOTS*/
 
+#define DEFAULT_AI_LAWID "default"
+
+//Bot defines, placed here so they can be read by other things!
 #define BOT_STEP_DELAY 4 //Delay between movemements
 #define BOT_STEP_MAX_RETRIES 5 //Maximum times a bot will retry to step from its position
 
@@ -24,3 +27,10 @@
 #define BOT_NAV				15	// computing navigation
 #define BOT_WAIT_FOR_NAV	16	// waiting for nav computation
 #define BOT_NO_ROUTE		17	// no destination beacon found (or no route)
+
+//Bot types
+#define SEC_BOT				1	// Secutritrons (Beepsky) and ED-209s
+#define MULE_BOT			2	// MULEbots
+#define FLOOR_BOT			4	// Floorbots
+#define CLEAN_BOT			8	// Cleanbots
+#define MED_BOT				16	// Medibots

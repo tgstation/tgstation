@@ -119,7 +119,7 @@
 	name = "offhand"
 	icon_state = "offhand"
 	w_class = WEIGHT_CLASS_HUGE
-	flags = ABSTRACT
+	flags = ABSTRACT | NODROP
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
 /obj/item/weapon/twohanded/offhand/unwield()
@@ -670,7 +670,7 @@
 /obj/item/weapon/twohanded/skybulge/update_icon()
 	icon_state = "sky_bulge[wielded]"
 
-/obj/item/weapon/twohanded/skybulge/throw_at()  //Throw cooldown and offhand-proofing.
+/obj/item/weapon/twohanded/skybulge/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback)  //Throw cooldown and offhand-proofing.
 	if(throw_cooldown > world.time)
 		var/mob/user = thrownby
 		user.put_in_hands(src)
