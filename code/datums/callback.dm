@@ -2,9 +2,9 @@
 	USAGE:
 
 		var/datum/callback/C = new(object|null, /proc/type/path|"procstring", arg1, arg2, ... argn)
-		var/timerid = addtimer(CALLBACK(C, time, timertype)
+		var/timerid = addtimer(C, time, timertype)
 		OR
-		var/timerid = addtimer(CALLBACK(CALLBACK(object|null, /proc/type/path|procstring, arg1, arg2, ... argn), time, timertype)
+		var/timerid = addtimer(CALLBACK(object|null, /proc/type/path|procstring, arg1, arg2, ... argn), time, timertype)
 
 		Note: proc strings can only be given for datum proc calls, global procs must be proc paths
 		Also proc strings are strongly advised against because they don't compile error if the proc stops existing
