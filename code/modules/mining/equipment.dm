@@ -155,7 +155,7 @@
 				L.Weaken(3)
 				if(ishuman(L))
 					shake_camera(L, 20, 1)
-					addtimer(CALLBACK(L,  /mob/living/carbon.proc/vomit), 20)
+					addtimer(CALLBACK(L, /mob/living/carbon.proc/vomit), 20)
 
 /**********************Resonator**********************/
 
@@ -234,7 +234,7 @@
 	if(pressure < 50)
 		name = "strong resonance field"
 		resonance_damage = 60
-	addtimer(CALLBACK(src,  .proc/burst, proj_turf), timetoburst)
+	addtimer(CALLBACK(src, .proc/burst, proj_turf), timetoburst)
 
 /obj/effect/resonance/Destroy()
 	if(res)
@@ -548,7 +548,7 @@
 		D.fire()
 		charged = 0
 		icon_state = "mining_hammer1_uncharged"
-		addtimer(CALLBACK(src,  .proc/Recharge), charge_time)
+		addtimer(CALLBACK(src, .proc/Recharge), charge_time)
 		return
 	if(proximity_flag && target == mark && isliving(target))
 		var/mob/living/L = target

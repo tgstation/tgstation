@@ -162,8 +162,8 @@
 	for(var/obj/machinery/door/D in airlocks)
 		if(D.z != ZLEVEL_STATION)
 			continue
-		addtimer(CALLBACK(D,  /obj/machinery/door.proc/hostile_lockdown, src), 0)
-		addtimer(CALLBACK(D,  /obj/machinery/door.proc/disable_lockdown), 900)
+		addtimer(CALLBACK(D, /obj/machinery/door.proc/hostile_lockdown, src), 0)
+		addtimer(CALLBACK(D, /obj/machinery/door.proc/disable_lockdown), 900)
 
 	var/obj/machinery/computer/communications/C = locate() in machines
 	if(C)
@@ -172,7 +172,7 @@
 	verbs -= /mob/living/silicon/ai/proc/lockdown
 	minor_announce("Hostile runtime detected in door controllers. Isolation Lockdown protocols are now in effect. Please remain calm.","Network Alert:", 1)
 	src << "<span class = 'warning'>Lockdown Initiated. Network reset in 90 seconds.</span>"
-	addtimer(CALLBACK(GLOBAL_PROC,  .proc/minor_announce,
+	addtimer(CALLBACK(GLOBAL_PROC, .proc/minor_announce,
 		"Automatic system reboot complete. Have a secure day.",
 		"Network reset:"), 900)
 

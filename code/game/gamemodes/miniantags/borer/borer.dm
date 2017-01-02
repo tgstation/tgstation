@@ -41,7 +41,7 @@
 	B.victim << "<span class='danger'>You feel the captive mind of [src] begin to resist your control.</span>"
 
 	var/delay = rand(150,250) + B.victim.brainloss
-	addtimer(CALLBACK(src,  .proc/return_control, src.loc), delay)
+	addtimer(CALLBACK(src, .proc/return_control, src.loc), delay)
 
 /mob/living/captive_brain/proc/return_control(mob/living/simple_animal/borer/B)
     if(!B || !B.controlling)

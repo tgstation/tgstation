@@ -17,7 +17,7 @@
 		return FALSE
 
 	emittersemicd = TRUE
-	addtimer(CALLBACK(src,  .proc/emittercool), emittercd)
+	addtimer(CALLBACK(src, .proc/emittercool), emittercd)
 	canmove = TRUE
 	density = TRUE
 	if(istype(card.loc, /obj/item/device/pda))
@@ -46,9 +46,9 @@
 /mob/living/silicon/pai/proc/fold_in(force = FALSE)
 	emittersemicd = TRUE
 	if(!force)
-		addtimer(CALLBACK(src,  .proc/emittercool), emittercd)
+		addtimer(CALLBACK(src, .proc/emittercool), emittercd)
 	else
-		addtimer(CALLBACK(src,  .proc/emittercool), emitteroverloadcd)
+		addtimer(CALLBACK(src, .proc/emittercool), emitteroverloadcd)
 	icon_state = "[chassis]"
 	if(!holoform)
 		. = fold_out(force)

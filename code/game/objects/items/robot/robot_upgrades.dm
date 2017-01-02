@@ -232,7 +232,7 @@
 	return 1
 
 /obj/item/borg/upgrade/selfrepair/dropped()
-	addtimer(CALLBACK(src,  .proc/check_dropped), 1)
+	addtimer(CALLBACK(src, .proc/check_dropped), 1)
 
 /obj/item/borg/upgrade/selfrepair/proc/check_dropped()
 	if(loc != cyborg)

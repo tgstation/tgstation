@@ -103,7 +103,7 @@
 
  	// So he can't jump out the gate right away.
 	R.SetLockdown()
-	addtimer(CALLBACK(src,  .proc/unlock_new_robot, R), 50)
+	addtimer(CALLBACK(src, .proc/unlock_new_robot, R), 50)
 
 /obj/machinery/transformer/proc/unlock_new_robot(mob/living/silicon/robot/R)
 	playsound(src.loc, 'sound/machines/ping.ogg', 50, 0)

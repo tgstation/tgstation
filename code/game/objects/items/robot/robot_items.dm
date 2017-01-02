@@ -363,7 +363,7 @@
 	if(charging)
 		return
 	if(candy < candymax)
-		addtimer(CALLBACK(src,  .proc/charge_lollipops), charge_delay)
+		addtimer(CALLBACK(src, .proc/charge_lollipops), charge_delay)
 		charging = TRUE
 
 /obj/item/borg/lollipop/proc/charge_lollipops()
