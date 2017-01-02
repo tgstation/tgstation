@@ -3,7 +3,7 @@
 	var/last_move = null
 	var/anchored = 0
 	var/throwing = 0
-	var/throw_speed = 2
+	var/throw_speed = 2 //How many tiles to move per ds when being thrown. Float values are fully supported
 	var/throw_range = 7
 	var/mob/pulledby = null
 	var/languages_spoken = 0 //For say() and Hear()
@@ -218,10 +218,35 @@
 	..()
 
 /atom/movable/proc/throw_at(atom/target, range, speed, mob/thrower, spin=TRUE, diagonals_first = FALSE, var/datum/callback/callback)
-	if (!target || (flags & NODROP))
+	if (!target || (flags & NODROP) || speed <= 0)
 		return
+
 	if (pulledby)
 		pulledby.stop_pulling()
+
+	//They are moving! Wouldn't it be cool if we calculated their momentum and added it to the throw?
+	if (thrower && thrower.last_move && thrower.client && thrower.client.move_delay >= world.time + world.tick_lag*2)
+		var/user_momentum = thrower.movement_delay()
+		if (!user_momentum) //no movement_delay, this means they move once per byond tick, lets calculate from that instead.
+			user_momentum = world.tick_lag
+
+		user_momentum = 1 / user_momentum // convert from ds to the tiles per ds that throw_at uses.
+
+		if (get_dir(thrower, target) & last_move)
+			user_momentum = user_momentum //basically a noop, but needed
+		else if (get_dir(target, thrower) & last_move)
+			user_momentum = -user_momentum //we are moving away from the target, lets slowdown the throw accordingly
+		else
+			user_momentum = 0
+
+
+		if (user_momentum)
+			//first lets add that momentum to range.
+			range *= (user_momentum / speed) + 1
+			//then lets add it to speed
+			speed += user_momentum
+			if (speed <= 0)
+				return //no throw speed, the user was moving too fast.
 
 	var/datum/thrownthing/TT = new()
 	TT.thrownthing = src

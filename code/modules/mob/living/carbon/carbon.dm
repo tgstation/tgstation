@@ -159,41 +159,10 @@
 		thrown_thing = I
 		unEquip(I)
 
-	if(!thrown_thing)
-		return
-
-	visible_message("<span class='danger'>[src] has thrown [thrown_thing].</span>")
-	newtonian_move(get_dir(target, src))
-
-	var/throw_speed = thrown_thing.throw_speed
-	var/throw_range = thrown_thing.throw_range
-
-	if (throw_speed <= 0) //this way they basically just drop it.
-		return
-
-	//They are moving! Wouldn't it be cool if we calculated their momentum and added it to the throw?
-	if (last_move && client && client.move_delay >= world.time + world.tick_lag*2)
-		var/user_momentum = movement_delay()
-		if (!user_momentum) //no movement_delay, this means they move once per byond tick, lets calculate from that instead.
-			user_momentum = world.tick_lag
-
-		user_momentum = 1 / user_momentum // convert from ds to the tiles per ds that throw_at uses.
-
-		if (get_dir(src, target) & last_move)
-			user_momentum = user_momentum //basically a noop, but needed
-		else if (get_dir(target, src) & last_move)
-			user_momentum = -user_momentum
-		else
-			user_momentum = 0
-
-
-		if (user_momentum)
-			throw_speed += user_momentum
-			//now lets add that momentum to throw_range as well.
-			throw_range *= (user_momentum / throw_speed) + 1
-			if (throw_speed <= 0)
-				return
-	thrown_thing.throw_at(target, throw_range, throw_speed, src)
+	if(thrown_thing)
+		visible_message("<span class='danger'>[src] has thrown [thrown_thing].</span>")
+		newtonian_move(get_dir(target, src))
+		thrown_thing.throw_at(target, thrown_thing.throw_range, thrown_thing.throw_speed, src)
 
 /mob/living/carbon/restrained(ignore_grab)
 	. = (handcuffed || (!ignore_grab && pulledby && pulledby.grab_state >= GRAB_AGGRESSIVE))
