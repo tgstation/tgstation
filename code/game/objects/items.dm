@@ -530,9 +530,14 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 
 /obj/item/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback)
 	thrownby = thrower
-	. = ..()
-	throw_speed = initial(throw_speed) //explosions change this.
+	callback = CALLBACK(src, .proc/after_throw, callback) //replace their callback with our own
+	. = ..(target, range, speed, thrower, spin, diagonals_first, callback)
 
+
+/obj/item/proc/after_throw(datum/callback/callback)
+	if (callback) //call the original callback
+		. = callback.Invoke()
+	throw_speed = initial(throw_speed) //explosions change this.
 
 /obj/item/proc/remove_item_from_storage(atom/newLoc) //please use this if you're going to snowflake an item out of a obj/item/weapon/storage
 	if(!newLoc)
