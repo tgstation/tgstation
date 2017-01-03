@@ -3465,35 +3465,27 @@
 	},
 /area/ai_monitored/security/armory)
 "agh" = (
-/obj/structure/rack,
-/obj/item/weapon/gun/energy/e_gun/advtaser{
-	pixel_x = -3;
-	pixel_y = 3
-	},
-/obj/item/weapon/gun/energy/e_gun/advtaser,
-/obj/item/weapon/gun/energy/e_gun/advtaser{
-	pixel_x = 3;
-	pixel_y = -3
-	},
+/obj/structure/table,
+/obj/item/device/firing_pin,
+/obj/item/device/firing_pin,
+/obj/item/device/firing_pin,
+/obj/item/device/firing_pin,
+/obj/item/device/firing_pin,
+/obj/item/device/firing_pin,
+/obj/item/weapon/screwdriver,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/item/device/firing_pin,
+/obj/item/device/firing_pin,
+/obj/item/device/firing_pin,
 /turf/open/floor/plasteel/vault{
-	dir = 1
+	dir = 4
 	},
 /area/ai_monitored/security/armory)
 "agi" = (
 /turf/open/floor/plasteel/black,
 /area/ai_monitored/security/armory)
 "agj" = (
-/obj/structure/rack,
-/obj/item/weapon/gun/energy/laser{
-	pixel_x = -3;
-	pixel_y = 3
-	},
-/obj/item/weapon/gun/energy/laser,
-/obj/item/weapon/gun/energy/laser{
-	pixel_x = 3;
-	pixel_y = -3
-	},
+/obj/machinery/computer/rdconsole/guncrafting,
 /turf/open/floor/plasteel/vault{
 	dir = 4
 	},
@@ -3948,16 +3940,9 @@
 	},
 /area/ai_monitored/security/armory)
 "aha" = (
-/obj/structure/rack,
-/obj/item/weapon/gun/energy/e_gun{
-	pixel_x = -3;
-	pixel_y = 3
-	},
-/obj/item/weapon/gun/energy/e_gun,
-/obj/item/weapon/gun/energy/e_gun{
-	pixel_x = 3;
-	pixel_y = -3
-	},
+/obj/machinery/r_n_d/protolathe/gunlathe,
+/obj/item/stack/sheet/glass/fifty,
+/obj/item/stack/sheet/metal/fifty,
 /turf/open/floor/plasteel/vault{
 	dir = 4
 	},

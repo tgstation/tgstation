@@ -1,4 +1,4 @@
-//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aaa" = (
 /turf/open/space,
 /area/space)
@@ -51699,17 +51699,18 @@
 	},
 /area/ai_monitored/security/armory)
 "bOW" = (
-/obj/structure/rack,
-/obj/item/weapon/gun/energy/laser{
-	pixel_x = -3;
-	pixel_y = 3
-	},
-/obj/item/weapon/gun/energy/laser,
-/obj/item/weapon/gun/energy/laser{
-	pixel_x = 3;
-	pixel_y = -3
-	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/table,
+/obj/item/weapon/screwdriver,
+/obj/item/device/firing_pin,
+/obj/item/device/firing_pin,
+/obj/item/device/firing_pin,
+/obj/item/device/firing_pin,
+/obj/item/device/firing_pin,
+/obj/item/device/firing_pin,
+/obj/item/device/firing_pin,
+/obj/item/device/firing_pin,
+/obj/item/device/firing_pin,
 /turf/open/floor/plasteel/bot,
 /area/ai_monitored/security/armory)
 "bOX" = (
@@ -53082,17 +53083,10 @@
 	},
 /area/ai_monitored/security/armory)
 "bRc" = (
-/obj/structure/rack,
-/obj/item/weapon/gun/energy/e_gun/advtaser{
-	pixel_x = -3;
-	pixel_y = 3
-	},
-/obj/item/weapon/gun/energy/e_gun/advtaser,
-/obj/item/weapon/gun/energy/e_gun/advtaser{
-	pixel_x = 3;
-	pixel_y = -3
-	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/machinery/r_n_d/protolathe/gunlathe,
+/obj/item/stack/sheet/metal/fifty,
+/obj/item/stack/sheet/glass/fifty,
 /turf/open/floor/plasteel/bot,
 /area/ai_monitored/security/armory)
 "bRd" = (
@@ -54511,16 +54505,6 @@
 	},
 /area/ai_monitored/security/armory)
 "bTu" = (
-/obj/structure/rack,
-/obj/item/weapon/gun/energy/e_gun{
-	pixel_x = -3;
-	pixel_y = 3
-	},
-/obj/item/weapon/gun/energy/e_gun,
-/obj/item/weapon/gun/energy/e_gun{
-	pixel_x = 3;
-	pixel_y = -3
-	},
 /obj/structure/cable/white{
 	tag = "icon-4-8";
 	icon_state = "4-8"
@@ -54530,6 +54514,7 @@
 	icon_state = "intact";
 	dir = 9
 	},
+/obj/machinery/computer/rdconsole/guncrafting,
 /turf/open/floor/plasteel/bot,
 /area/ai_monitored/security/armory)
 "bTv" = (
@@ -116621,254 +116606,6 @@
 	dir = 5
 	},
 /area/chapel/main)
-"ebF" = (
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/warning/end{
-	tag = "icon-plasteel_warn_end (WEST)";
-	icon_state = "plasteel_warn_end";
-	dir = 8
-	},
-/area/toxins/mixing{
-	name = "\improper Toxins Lab"
-	})
-"ebE" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
-	},
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
-	},
-/obj/structure/lattice/catwalk,
-/turf/open/space,
-/area/solar/starboard)
-"ebD" = (
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
-	},
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
-	},
-/obj/structure/lattice/catwalk,
-/turf/open/space,
-/area/solar/starboard)
-"ebC" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
-	},
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
-	},
-/obj/structure/lattice/catwalk,
-/turf/open/space,
-/area/solar/auxport)
-"ebB" = (
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
-	},
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
-	},
-/obj/structure/lattice/catwalk,
-/turf/open/space,
-/area/solar/auxport)
-"ebA" = (
-/obj/machinery/computer/shuttle/ferry/request,
-/turf/open/floor/plasteel/warnwhite/end,
-/area/space)
-"ebz" = (
-/obj/structure/chair/office/light,
-/turf/open/floor/plasteel/warnwhite/end{
-	tag = "icon-white_warn_end (NORTH)";
-	icon_state = "white_warn_end";
-	dir = 1
-	},
-/area/space)
-"eby" = (
-/obj/structure/closet/crate,
-/turf/open/floor/plasteel/bot,
-/area/space)
-"ebx" = (
-/turf/open/floor/plasteel/warnwhite/end,
-/area/space)
-"ebw" = (
-/obj/structure/chair{
-	dir = 8
-	},
-/obj/machinery/ai_status_display{
-	pixel_x = 32
-	},
-/turf/open/floor/plasteel/bot,
-/area/space)
-"ebv" = (
-/obj/structure/chair{
-	dir = 4
-	},
-/obj/machinery/status_display{
-	pixel_x = -32
-	},
-/turf/open/floor/plasteel/bot,
-/area/space)
-"ebu" = (
-/obj/structure/chair{
-	dir = 8
-	},
-/obj/machinery/status_display{
-	pixel_x = 32
-	},
-/turf/open/floor/plasteel/bot,
-/area/space)
-"ebt" = (
-/obj/structure/chair{
-	dir = 4
-	},
-/obj/machinery/ai_status_display{
-	pixel_x = -32
-	},
-/turf/open/floor/plasteel/bot,
-/area/space)
-"ebs" = (
-/obj/structure/chair{
-	dir = 8
-	},
-/turf/open/floor/plasteel/bot,
-/area/space)
-"ebr" = (
-/turf/open/floor/plasteel/warnwhite/side,
-/area/space)
-"ebq" = (
-/obj/structure/chair{
-	dir = 4
-	},
-/turf/open/floor/plasteel/bot,
-/area/space)
-"ebp" = (
-/obj/structure/sign/nanotrasen,
-/turf/closed/wall/mineral/titanium,
-/area/space)
-"ebo" = (
-/obj/machinery/door/airlock/shuttle{
-	name = "Transport Shuttle Airlock";
-	req_access_txt = "0"
-	},
-/turf/open/floor/plasteel/warnwhite/side,
-/area/space)
-"ebn" = (
-/turf/open/floor/plasteel/warnwhite/end{
-	tag = "icon-white_warn_end (NORTH)";
-	icon_state = "white_warn_end";
-	dir = 1
-	},
-/area/space)
-"ebm" = (
-/obj/structure/window/shuttle,
-/obj/structure/grille,
-/turf/open/floor/plating,
-/area/space)
-"ebl" = (
-/obj/machinery/recharger,
-/obj/machinery/vending/wallmed{
-	name = "Emergency NanoMed";
-	pixel_x = 26;
-	pixel_y = 0;
-	req_access_txt = "0";
-	use_power = 0
-	},
-/obj/structure/table/reinforced,
-/turf/open/floor/plasteel/bot,
-/area/space)
-"ebk" = (
-/obj/machinery/recharger,
-/obj/structure/extinguisher_cabinet{
-	pixel_x = -26
-	},
-/obj/structure/table/reinforced,
-/turf/open/floor/plasteel/bot,
-/area/space)
-"ebj" = (
-/turf/closed/wall/mineral/titanium,
-/area/space)
-"ebi" = (
-/turf/open/floor/plasteel/delivery,
-/area/space)
-"ebh" = (
-/turf/closed/wall/mineral/titanium/nodiagonal,
-/area/space)
-"ebg" = (
-/obj/structure/chair/office/dark{
-	dir = 4
-	},
-/obj/machinery/airalarm{
-	dir = 1;
-	icon_state = "alarm0";
-	pixel_y = -22
-	},
-/turf/open/floor/plating/warnplate,
-/area/maintenance/auxsolarstarboard)
-"ebf" = (
-/obj/machinery/door/airlock/shuttle{
-	name = "Transport Shuttle Airlock";
-	req_access_txt = "0"
-	},
-/turf/open/floor/plasteel/warnwhite/side{
-	tag = "icon-white_warn_side (EAST)";
-	icon_state = "white_warn_side";
-	dir = 4
-	},
-/area/space)
-"ebe" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/space)
-"ebd" = (
-/obj/structure/window/reinforced,
-/obj/structure/shuttle/engine/heater{
-	tag = "icon-heater (NORTH)";
-	icon_state = "heater";
-	dir = 1
-	},
-/turf/open/floor/plating/warnplate{
-	dir = 1
-	},
-/area/space)
-"ebc" = (
-/obj/structure/shuttle/engine/propulsion{
-	tag = "icon-propulsion (NORTH)";
-	icon_state = "propulsion";
-	dir = 1
-	},
-/turf/open/floor/plating/warnplate{
-	dir = 1
-	},
-/area/space)
-"ebb" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
-	},
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
-	},
-/obj/structure/lattice/catwalk,
-/turf/open/space,
-/area/solar/auxstarboard)
 "eba" = (
 /obj/structure/cable{
 	d1 = 2;
@@ -116883,6 +116620,254 @@
 /obj/structure/lattice/catwalk,
 /turf/open/space,
 /area/solar/auxstarboard)
+"ebb" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/obj/structure/lattice/catwalk,
+/turf/open/space,
+/area/solar/auxstarboard)
+"ebc" = (
+/obj/structure/shuttle/engine/propulsion{
+	tag = "icon-propulsion (NORTH)";
+	icon_state = "propulsion";
+	dir = 1
+	},
+/turf/open/floor/plating/warnplate{
+	dir = 1
+	},
+/area/space)
+"ebd" = (
+/obj/structure/window/reinforced,
+/obj/structure/shuttle/engine/heater{
+	tag = "icon-heater (NORTH)";
+	icon_state = "heater";
+	dir = 1
+	},
+/turf/open/floor/plating/warnplate{
+	dir = 1
+	},
+/area/space)
+"ebe" = (
+/turf/closed/wall/mineral/plastitanium,
+/area/space)
+"ebf" = (
+/obj/machinery/door/airlock/shuttle{
+	name = "Transport Shuttle Airlock";
+	req_access_txt = "0"
+	},
+/turf/open/floor/plasteel/warnwhite/side{
+	tag = "icon-white_warn_side (EAST)";
+	icon_state = "white_warn_side";
+	dir = 4
+	},
+/area/space)
+"ebg" = (
+/obj/structure/chair/office/dark{
+	dir = 4
+	},
+/obj/machinery/airalarm{
+	dir = 1;
+	icon_state = "alarm0";
+	pixel_y = -22
+	},
+/turf/open/floor/plating/warnplate,
+/area/maintenance/auxsolarstarboard)
+"ebh" = (
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/space)
+"ebi" = (
+/turf/open/floor/plasteel/delivery,
+/area/space)
+"ebj" = (
+/turf/closed/wall/mineral/titanium,
+/area/space)
+"ebk" = (
+/obj/machinery/recharger,
+/obj/structure/extinguisher_cabinet{
+	pixel_x = -26
+	},
+/obj/structure/table/reinforced,
+/turf/open/floor/plasteel/bot,
+/area/space)
+"ebl" = (
+/obj/machinery/recharger,
+/obj/machinery/vending/wallmed{
+	name = "Emergency NanoMed";
+	pixel_x = 26;
+	pixel_y = 0;
+	req_access_txt = "0";
+	use_power = 0
+	},
+/obj/structure/table/reinforced,
+/turf/open/floor/plasteel/bot,
+/area/space)
+"ebm" = (
+/obj/structure/window/shuttle,
+/obj/structure/grille,
+/turf/open/floor/plating,
+/area/space)
+"ebn" = (
+/turf/open/floor/plasteel/warnwhite/end{
+	tag = "icon-white_warn_end (NORTH)";
+	icon_state = "white_warn_end";
+	dir = 1
+	},
+/area/space)
+"ebo" = (
+/obj/machinery/door/airlock/shuttle{
+	name = "Transport Shuttle Airlock";
+	req_access_txt = "0"
+	},
+/turf/open/floor/plasteel/warnwhite/side,
+/area/space)
+"ebp" = (
+/obj/structure/sign/nanotrasen,
+/turf/closed/wall/mineral/titanium,
+/area/space)
+"ebq" = (
+/obj/structure/chair{
+	dir = 4
+	},
+/turf/open/floor/plasteel/bot,
+/area/space)
+"ebr" = (
+/turf/open/floor/plasteel/warnwhite/side,
+/area/space)
+"ebs" = (
+/obj/structure/chair{
+	dir = 8
+	},
+/turf/open/floor/plasteel/bot,
+/area/space)
+"ebt" = (
+/obj/structure/chair{
+	dir = 4
+	},
+/obj/machinery/ai_status_display{
+	pixel_x = -32
+	},
+/turf/open/floor/plasteel/bot,
+/area/space)
+"ebu" = (
+/obj/structure/chair{
+	dir = 8
+	},
+/obj/machinery/status_display{
+	pixel_x = 32
+	},
+/turf/open/floor/plasteel/bot,
+/area/space)
+"ebv" = (
+/obj/structure/chair{
+	dir = 4
+	},
+/obj/machinery/status_display{
+	pixel_x = -32
+	},
+/turf/open/floor/plasteel/bot,
+/area/space)
+"ebw" = (
+/obj/structure/chair{
+	dir = 8
+	},
+/obj/machinery/ai_status_display{
+	pixel_x = 32
+	},
+/turf/open/floor/plasteel/bot,
+/area/space)
+"ebx" = (
+/turf/open/floor/plasteel/warnwhite/end,
+/area/space)
+"eby" = (
+/obj/structure/closet/crate,
+/turf/open/floor/plasteel/bot,
+/area/space)
+"ebz" = (
+/obj/structure/chair/office/light,
+/turf/open/floor/plasteel/warnwhite/end{
+	tag = "icon-white_warn_end (NORTH)";
+	icon_state = "white_warn_end";
+	dir = 1
+	},
+/area/space)
+"ebA" = (
+/obj/machinery/computer/shuttle/ferry/request,
+/turf/open/floor/plasteel/warnwhite/end,
+/area/space)
+"ebB" = (
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/obj/structure/lattice/catwalk,
+/turf/open/space,
+/area/solar/auxport)
+"ebC" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/obj/structure/lattice/catwalk,
+/turf/open/space,
+/area/solar/auxport)
+"ebD" = (
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/obj/structure/lattice/catwalk,
+/turf/open/space,
+/area/solar/starboard)
+"ebE" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/obj/structure/lattice/catwalk,
+/turf/open/space,
+/area/solar/starboard)
+"ebF" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel/warning/end{
+	tag = "icon-plasteel_warn_end (WEST)";
+	icon_state = "plasteel_warn_end";
+	dir = 8
+	},
+/area/toxins/mixing{
+	name = "\improper Toxins Lab"
+	})
 
 (1,1,1) = {"
 aaa

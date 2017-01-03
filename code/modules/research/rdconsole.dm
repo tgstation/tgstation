@@ -52,7 +52,14 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	var/selected_category
 	var/list/datum/design/matching_designs = list() //for the search function
 	var/disk_slot_selected = 0
+	var/guncrafting = 0
 
+
+/obj/machinery/computer/rdconsole/guncrafting
+	name = "Guncrafting Console"
+	icon_screen = "guncrafting"
+	req_access = list(access_armory)
+	guncrafting = 1
 
 /proc/CallTechName(ID) //A simple helper proc to find the name of a tech with a given ID.
 	if(tech_list[ID])
@@ -74,18 +81,24 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	for(var/obj/machinery/r_n_d/D in oview(3,src))
 		if(D.linked_console != null || D.disabled || D.panel_open)
 			continue
-		if(istype(D, /obj/machinery/r_n_d/destructive_analyzer))
-			if(linked_destroy == null)
-				linked_destroy = D
-				D.linked_console = src
-		else if(istype(D, /obj/machinery/r_n_d/protolathe))
-			if(linked_lathe == null)
-				linked_lathe = D
-				D.linked_console = src
-		else if(istype(D, /obj/machinery/r_n_d/circuit_imprinter))
-			if(linked_imprinter == null)
-				linked_imprinter = D
-				D.linked_console = src
+		if(!guncrafting)
+			if(istype(D, /obj/machinery/r_n_d/destructive_analyzer))
+				if(linked_destroy == null)
+					linked_destroy = D
+					D.linked_console = src
+			else if(istype(D, /obj/machinery/r_n_d/protolathe))
+				if(linked_lathe == null)
+					linked_lathe = D
+					D.linked_console = src
+			else if(istype(D, /obj/machinery/r_n_d/circuit_imprinter))
+				if(linked_imprinter == null)
+					linked_imprinter = D
+					D.linked_console = src
+		else
+			if(istype(D, /obj/machinery/r_n_d/protolathe))
+				if(linked_lathe == null)
+					linked_lathe = D
+					D.linked_console = src
 	first_use = 0
 
 //Have it automatically push research to the centcom server so wild griffins can't fuck up R&D's work --NEO
@@ -661,18 +674,24 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				dat += "<A href='?src=\ref[src];menu=1.4'>Disk Operations</A><BR>"
 			else
 				dat += "<span class='linkOff'>Disk Operations</span><BR>"
-			if(linked_destroy)
-				dat += "<A href='?src=\ref[src];menu=2.2'>Destructive Analyzer Menu</A><BR>"
+			if(!guncrafting)
+				if(linked_destroy)
+					dat += "<A href='?src=\ref[src];menu=2.2'>Destructive Analyzer Menu</A><BR>"
+				else
+					dat += "<span class='linkOff'>Destructive Analyzer Menu</span><BR>"
+				if(linked_lathe)
+					dat += "<A href='?src=\ref[src];menu=3.1'>Protolathe Construction Menu</A><BR>"
+				else
+					dat += "<span class='linkOff'>Protolathe Construction Menu</span><BR>"
+				if(linked_imprinter)
+					dat += "<A href='?src=\ref[src];menu=4.1'>Circuit Construction Menu</A><BR>"
+				else
+					dat += "<span class='linkOff'>Circuit Construction Menu</span><BR>"
 			else
-				dat += "<span class='linkOff'>Destructive Analyzer Menu</span><BR>"
-			if(linked_lathe)
-				dat += "<A href='?src=\ref[src];menu=3.1'>Protolathe Construction Menu</A><BR>"
-			else
-				dat += "<span class='linkOff'>Protolathe Construction Menu</span><BR>"
-			if(linked_imprinter)
-				dat += "<A href='?src=\ref[src];menu=4.1'>Circuit Construction Menu</A><BR>"
-			else
-				dat += "<span class='linkOff'>Circuit Construction Menu</span><BR>"
+				if(linked_lathe)
+					dat += "<A href='?src=\ref[src];menu=3.1'>Gunlathe Construction Menu</A><BR>"
+				else
+					dat += "<span class='linkOff'>Gunlathe Construction Menu</span><BR>"
 			dat += "<A href='?src=\ref[src];menu=1.6'>Settings</A>"
 			dat += "</div>"
 
@@ -768,18 +787,24 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			dat += "<h3>R&D Console Device Linkage Menu:</h3><BR>"
 			dat += "<A href='?src=\ref[src];find_device=1'>Re-sync with Nearby Devices</A><BR><BR>"
 			dat += "<h3>Linked Devices:</h3><BR>"
-			if(linked_destroy)
-				dat += "* Destructive Analyzer <A href='?src=\ref[src];disconnect=destroy'>Disconnect</A><BR>"
+			if(!guncrafting)
+				if(linked_destroy)
+					dat += "* Destructive Analyzer <A href='?src=\ref[src];disconnect=destroy'>Disconnect</A><BR>"
+				else
+					dat += "* No Destructive Analyzer Linked<BR>"
+				if(linked_lathe)
+					dat += "* Protolathe <A href='?src=\ref[src];disconnect=lathe'>Disconnect</A><BR>"
+				else
+					dat += "* No Protolathe Linked<BR>"
+				if(linked_imprinter)
+					dat += "* Circuit Imprinter <A href='?src=\ref[src];disconnect=imprinter'>Disconnect</A><BR>"
+				else
+					dat += "* No Circuit Imprinter Linked<BR>"
 			else
-				dat += "* No Destructive Analyzer Linked<BR>"
-			if(linked_lathe)
-				dat += "* Protolathe <A href='?src=\ref[src];disconnect=lathe'>Disconnect</A><BR>"
-			else
-				dat += "* No Protolathe Linked<BR>"
-			if(linked_imprinter)
-				dat += "* Circuit Imprinter <A href='?src=\ref[src];disconnect=imprinter'>Disconnect</A><BR>"
-			else
-				dat += "* No Circuit Imprinter Linked<BR>"
+				if(linked_lathe)
+					dat += "* Gunlathe <A href='?src=\ref[src];disconnect=lathe'>Disconnect</A><BR>"
+				else
+					dat += "* No Gunlathe Linked<BR>"
 			dat += "</div>"
 
 		////////////////////DESTRUCTIVE ANALYZER SCREENS////////////////////////////
