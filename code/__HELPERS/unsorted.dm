@@ -1367,3 +1367,20 @@ proc/pick_closest_path(value, list/matches = get_fancy_list_of_atom_types())
 	animate(src, pixel_x = pixel_x + shiftx, pixel_y = pixel_y + shifty, time = 0.2, loop = duration)
 	pixel_x = initialpixelx
 	pixel_y = initialpixely
+
+/proc/weightclass2text(var/w_class)
+	switch(w_class)
+		if(WEIGHT_CLASS_TINY)
+			. = "tiny"
+		if(WEIGHT_CLASS_SMALL)
+			. = "small"
+		if(WEIGHT_CLASS_NORMAL)
+			. = "normal-sized"
+		if(WEIGHT_CLASS_BULKY)
+			. = "bulky"
+		if(WEIGHT_CLASS_HUGE)
+			. = "huge"
+		if(WEIGHT_CLASS_GIGANTIC)
+			. = "gigantic"
+		else
+			. = ""
