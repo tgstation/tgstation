@@ -444,6 +444,8 @@
 	attack_hand(user)
 
 /obj/structure/rack/attack_hand(mob/living/user)
+	if(user.weakened || user.resting || user.lying || user.get_num_legs() < 2)
+		return
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.do_attack_animation(src, ATTACK_EFFECT_KICK)
 	user.visible_message("<span class='danger'>[user] kicks [src].</span>", null, null, COMBAT_MESSAGE_RANGE)
