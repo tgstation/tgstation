@@ -606,10 +606,10 @@ RCD
 	icon_state = "rcd"
 	item_state = "rcdammo"
 	origin_tech = "materials=3"
-	materials = list(MAT_METAL=3000, MAT_GLASS=2000)
+	materials = list(MAT_METAL=12000, MAT_GLASS=8000)
 	var/ammoamt = 40
 
 /obj/item/weapon/rcd_ammo/large
 	origin_tech = "materials=4"
-	materials = list(MAT_METAL=12000, MAT_GLASS=8000)
+	materials = list(MAT_METAL=48000, MAT_GLASS=32000)
 	ammoamt = 160
