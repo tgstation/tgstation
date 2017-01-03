@@ -10,7 +10,7 @@
 	icon = 'icons/obj/machines/limbgrower.dmi'
 	icon_state = "limbgrower_idleoff"
 	density = 1
-	flags = OPENCONTAINER
+	container_type = OPENCONTAINER
 
 	var/operating = 0
 	anchored = 1

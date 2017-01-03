@@ -47,7 +47,7 @@
 
 
 
-/obj/machinery/r_n_d/attackby(obj/item/O, mob/user, params)
+/obj/machinery/r_n_d/attackby(obj/O, mob/user, params)
 	if (shocked)
 		if(shock(user,50))
 			return 1
@@ -59,7 +59,7 @@
 		return
 	if(default_deconstruction_crowbar(O))
 		return
-	if((flags & OPENCONTAINER) && O.is_open_container())
+	if((O.container_type & OPENCONTAINER) && O.is_open_container())
 		return 0 //inserting reagents into the machine
 	if(Insert_Item(O, user))
 		return 1
