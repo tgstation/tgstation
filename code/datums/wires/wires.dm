@@ -163,7 +163,7 @@ var/list/wire_name_directory = list()
 	var/remaining_pulses = MAXIMUM_EMP_WIRES
 
 	for(var/wire in possible_wires)
-		if(prob(10))
+		if(prob(33))
 			pulse(wire)
 		remaining_pulses--
 		if(remaining_pulses >= 0)
