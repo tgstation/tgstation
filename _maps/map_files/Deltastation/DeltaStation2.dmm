@@ -1159,7 +1159,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/door/airlock/engineering{
 	name = "Auxiliary Construction Storage";
-	req_access_txt = "32;47;48"
+	req_one_access_txt = "32;47;48"
 	},
 /turf/open/floor/plasteel/warning/side{
 	tag = "icon-plasteel_warn_side (WEST)";
@@ -1566,7 +1566,7 @@
 	id = "construction";
 	name = "Auxiliary Construction Shutters";
 	pixel_x = -26;
-	req_access_txt = "32;47;48"
+	req_one_access_txt = "32;47;48"
 	},
 /obj/machinery/light_switch{
 	pixel_x = -38
@@ -1985,7 +1985,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/engineering{
 	name = "Auxiliary Construction Zone";
-	req_access_txt = "32;47;48"
+	req_one_access_txt = "32;47;48"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -2064,7 +2064,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/engineering{
 	name = "Auxiliary Construction Zone";
-	req_access_txt = "32;47;48"
+	req_one_access_txt = "32;47;48"
 	},
 /turf/open/floor/plasteel/warning/side,
 /area/mining_construction)
