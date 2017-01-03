@@ -1,4 +1,4 @@
-//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aaa" = (
 /turf/open/space,
 /area/space)
@@ -42905,7 +42905,6 @@
 	dir = 2;
 	network = list("SS13")
 	},
-/obj/item/weapon/circuitboard/computer/shuttle/monastery_shuttle,
 /turf/open/floor/plasteel/black,
 /area/storage/tech)
 "bHQ" = (
@@ -44964,11 +44963,12 @@
 /turf/open/floor/plasteel,
 /area/atmos)
 "bMf" = (
-/obj/effect/decal/remains/human,
 /turf/closed/mineral,
-/area/chapel/asteroid{
+/obj/effect/decal/remains/human,
+/turf/open/floor/plasteel/recharge_floor/asteroid{
 	name = "Monastery Asteroid"
-	})
+	},
+/area/space)
 "bMg" = (
 /obj/structure/table/wood,
 /obj/machinery/computer/libraryconsole/bookmanagement{
@@ -45296,11 +45296,12 @@
 /turf/open/floor/plasteel,
 /area/atmos)
 "bMM" = (
-/obj/item/weapon/pickaxe/mini,
 /turf/closed/mineral,
-/area/chapel/asteroid{
+/obj/item/weapon/pickaxe/mini,
+/turf/open/floor/plasteel/recharge_floor/asteroid{
 	name = "Monastery Asteroid"
-	})
+	},
+/area/space)
 "bMN" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
@@ -49726,7 +49727,6 @@
 /turf/open/floor/plating/warnplate,
 /area/crew_quarters/sleep)
 "bWv" = (
-/obj/machinery/computer/shuttle/monastery_shuttle,
 /obj/structure/sign/pods{
 	pixel_y = 32
 	},
@@ -51344,13 +51344,13 @@
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
 /turf/open/floor/plating,
-/area/chapel/dock)
+/area/ruin/hotel/dock)
 "caq" = (
 /obj/machinery/door/airlock/external{
 	name = "Pod Docking Bay"
 	},
 /turf/open/floor/plating,
-/area/chapel/dock)
+/area/ruin/hotel/dock)
 "car" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/on{
 	dir = 2
@@ -51369,7 +51369,7 @@
 /area/maintenance/aft)
 "cat" = (
 /turf/open/floor/plating,
-/area/chapel/dock)
+/area/ruin/hotel/dock)
 "cau" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
@@ -51377,7 +51377,7 @@
 	dir = 6
 	},
 /turf/open/floor/plating,
-/area/chapel/dock)
+/area/ruin/hotel/dock)
 "cav" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
@@ -51385,7 +51385,7 @@
 	dir = 9
 	},
 /turf/open/floor/plating,
-/area/chapel/dock)
+/area/ruin/hotel/dock)
 "caw" = (
 /obj/structure/window/reinforced{
 	dir = 8
@@ -51422,7 +51422,7 @@
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
 /turf/closed/wall,
-/area/chapel/dock)
+/area/ruin/hotel/dock)
 "caC" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
@@ -51436,13 +51436,12 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plating,
-/area/chapel/dock)
+/area/ruin/hotel/dock)
 "caD" = (
-/obj/machinery/computer/shuttle/monastery_shuttle,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
-/area/chapel/dock)
+/area/ruin/hotel/dock)
 "caE" = (
 /obj/machinery/atmospherics/components/unary/tank/air{
 	dir = 2
@@ -51450,7 +51449,7 @@
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
-/area/chapel/dock)
+/area/ruin/hotel/dock)
 "caF" = (
 /obj/structure/window/reinforced{
 	dir = 8
@@ -51479,7 +51478,7 @@
 /area/space)
 "caJ" = (
 /turf/closed/wall/r_wall,
-/area/chapel/dock)
+/area/ruin/hotel/dock)
 "caK" = (
 /obj/machinery/airalarm{
 	dir = 4;
@@ -51487,7 +51486,7 @@
 	pixel_x = -22
 	},
 /turf/open/floor/plasteel/black,
-/area/chapel/dock)
+/area/ruin/hotel/dock)
 "caL" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/cable{
@@ -51497,7 +51496,7 @@
 	tag = ""
 	},
 /turf/open/floor/plasteel/black,
-/area/chapel/dock)
+/area/ruin/hotel/dock)
 "caM" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -51505,7 +51504,7 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/black,
-/area/chapel/dock)
+/area/ruin/hotel/dock)
 "caN" = (
 /obj/machinery/power/apc{
 	dir = 4;
@@ -51518,7 +51517,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/black,
-/area/chapel/dock)
+/area/ruin/hotel/dock)
 "caO" = (
 /obj/structure/window/reinforced{
 	dir = 8
@@ -51552,12 +51551,13 @@
 /turf/open/space,
 /area/space)
 "caT" = (
+/turf/open/floor/plating,
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
-/turf/open/floor/plating,
-/area/chapel/asteroid{
+/turf/open/floor/plasteel/recharge_floor/asteroid{
 	name = "Monastery Asteroid"
-	})
+	},
+/area/space)
 "caU" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
@@ -51577,7 +51577,7 @@
 /turf/open/floor/plasteel/vault{
 	dir = 4
 	},
-/area/chapel/dock)
+/area/ruin/hotel/dock)
 "caV" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 9
@@ -51589,10 +51589,10 @@
 	pixel_y = 0
 	},
 /turf/open/floor/plasteel/black,
-/area/chapel/dock)
+/area/ruin/hotel/dock)
 "caW" = (
 /turf/open/floor/plasteel/black,
-/area/chapel/dock)
+/area/ruin/hotel/dock)
 "caX" = (
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 1;
@@ -51607,7 +51607,7 @@
 /turf/open/floor/plasteel/vault{
 	dir = 1
 	},
-/area/chapel/dock)
+/area/ruin/hotel/dock)
 "caY" = (
 /obj/machinery/atmospherics/pipe/simple/cyan/visible{
 	dir = 4
@@ -51637,12 +51637,13 @@
 /area/space)
 "cbb" = (
 /turf/open/floor/plating/asteroid,
-/area/chapel/asteroid{
+/turf/open/floor/plasteel/recharge_floor/asteroid{
 	name = "Monastery Asteroid"
-	})
+	},
+/area/space)
 "cbc" = (
 /turf/closed/wall,
-/area/chapel/dock)
+/area/ruin/hotel/dock)
 "cbd" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -51650,10 +51651,10 @@
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/vault,
-/area/chapel/dock)
+/area/ruin/hotel/dock)
 "cbe" = (
 /turf/open/floor/plasteel/vault,
-/area/chapel/dock)
+/area/ruin/hotel/dock)
 "cbf" = (
 /turf/open/floor/plasteel/darkwarning{
 	dir = 10
@@ -51702,7 +51703,7 @@
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
-/area/chapel/dock)
+/area/ruin/hotel/dock)
 "cbm" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Chapel";
@@ -51711,7 +51712,7 @@
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
-/area/chapel/dock)
+/area/ruin/hotel/dock)
 "cbn" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -51742,60 +51743,66 @@
 /turf/closed/wall,
 /area/atmos)
 "cbq" = (
+/turf/open/floor/plating/asteroid,
 /obj/machinery/camera{
 	c_tag = "Monastery Asteroid Dock Port";
 	dir = 4;
 	network = list("SS13","Monastery")
 	},
-/turf/open/floor/plating/asteroid,
-/area/chapel/asteroid{
+/turf/open/floor/plasteel/recharge_floor/asteroid{
 	name = "Monastery Asteroid"
-	})
+	},
+/area/space)
 "cbr" = (
+/turf/open/floor/plating/asteroid,
 /obj/structure/flora/ausbushes/leafybush,
 /obj/structure/flora/ausbushes/reedbush,
-/turf/open/floor/plating/asteroid,
-/area/chapel/asteroid{
+/turf/open/floor/plasteel/recharge_floor/asteroid{
 	name = "Monastery Asteroid"
-	})
+	},
+/area/space)
 "cbs" = (
+/turf/open/floor/plating/asteroid,
 /obj/item/device/flashlight/lantern{
 	on = 1
 	},
-/turf/open/floor/plating/asteroid,
-/area/chapel/asteroid{
+/turf/open/floor/plasteel/recharge_floor/asteroid{
 	name = "Monastery Asteroid"
-	})
+	},
+/area/space)
 "cbt" = (
+/turf/open/floor/plasteel/asteroid{
+	icon_plating = "asteroid"
+	},
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2";
 	pixel_y = 0
 	},
-/turf/open/floor/plasteel/asteroid{
-	icon_plating = "asteroid"
-	},
-/area/chapel/asteroid{
+/turf/open/floor/plasteel/recharge_floor/asteroid{
 	name = "Monastery Asteroid"
-	})
+	},
+/area/space)
 "cbu" = (
 /turf/open/floor/plasteel/asteroid{
 	icon_plating = "asteroid"
 	},
-/area/chapel/asteroid{
+/turf/open/floor/plasteel/recharge_floor/asteroid{
 	name = "Monastery Asteroid"
-	})
+	},
+/area/space)
 "cbv" = (
+/turf/open/floor/plating/asteroid,
 /obj/machinery/camera{
 	c_tag = "Monastery Asteroid Dock Staboard";
 	dir = 8;
 	network = list("SS13","Monastery")
 	},
-/turf/open/floor/plating/asteroid,
-/area/chapel/asteroid{
+/turf/open/floor/plasteel/recharge_floor/asteroid{
 	name = "Monastery Asteroid"
-	})
+	},
+/area/space)
 "cbw" = (
 /turf/open/floor/plasteel/darkwarning/corner,
 /area/engine/gravity_generator)
@@ -51834,11 +51841,12 @@
 	},
 /area/storage/tech)
 "cbD" = (
-/obj/structure/flora/ausbushes,
 /turf/open/floor/plating/asteroid,
-/area/chapel/asteroid{
+/obj/structure/flora/ausbushes,
+/turf/open/floor/plasteel/recharge_floor/asteroid{
 	name = "Monastery Asteroid"
-	})
+	},
+/area/space)
 "cbE" = (
 /obj/machinery/disposal/bin,
 /obj/structure/disposalpipe/trunk{
@@ -51922,11 +51930,12 @@
 	},
 /area/maintenance/aft)
 "cbR" = (
-/obj/structure/flora/ausbushes/fernybush,
 /turf/open/floor/plating/asteroid,
-/area/chapel/asteroid{
+/obj/structure/flora/ausbushes/fernybush,
+/turf/open/floor/plasteel/recharge_floor/asteroid{
 	name = "Monastery Asteroid"
-	})
+	},
+/area/space)
 "cbS" = (
 /obj/structure/lattice,
 /obj/structure/disposalpipe/segment{
@@ -52005,6 +52014,7 @@
 /turf/open/space,
 /area/space)
 "ccd" = (
+/turf/open/floor/plating/asteroid,
 /obj/structure/flora/ausbushes/leafybush,
 /obj/structure/flora/ausbushes/reedbush,
 /obj/machinery/camera{
@@ -52012,10 +52022,10 @@
 	dir = 1;
 	network = list("SS13","Monastery")
 	},
-/turf/open/floor/plating/asteroid,
-/area/chapel/asteroid{
+/turf/open/floor/plasteel/recharge_floor/asteroid{
 	name = "Monastery Asteroid"
-	})
+	},
+/area/space)
 "cce" = (
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 1;
@@ -52034,16 +52044,17 @@
 /turf/open/floor/plating,
 /area/atmos)
 "ccg" = (
+/turf/open/floor/plating/asteroid,
 /obj/structure/flora/ausbushes,
 /obj/machinery/camera{
 	c_tag = "Monastery Asteroid Port Fore";
 	dir = 1;
 	network = list("SS13","Monastery")
 	},
-/turf/open/floor/plating/asteroid,
-/area/chapel/asteroid{
+/turf/open/floor/plasteel/recharge_floor/asteroid{
 	name = "Monastery Asteroid"
-	})
+	},
+/area/space)
 "cch" = (
 /turf/closed/wall,
 /area/chapel/main{
@@ -52073,6 +52084,7 @@
 	name = "Monastery"
 	})
 "cck" = (
+/turf/open/floor/plating,
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
 /obj/structure/sign/securearea{
@@ -52083,10 +52095,10 @@
 	pixel_x = 0;
 	pixel_y = 0
 	},
-/turf/open/floor/plating,
-/area/chapel/asteroid{
+/turf/open/floor/plasteel/recharge_floor/asteroid{
 	name = "Monastery Asteroid"
-	})
+	},
+/area/space)
 "ccl" = (
 /obj/structure/lattice,
 /obj/structure/window/reinforced{
@@ -52171,29 +52183,32 @@
 	name = "Monastery"
 	})
 "ccv" = (
+/turf/open/floor/plating,
 /obj/machinery/door/airlock/external{
 	cyclelinkeddir = 4
 	},
-/turf/open/floor/plating,
-/area/chapel/asteroid{
+/turf/open/floor/plasteel/recharge_floor/asteroid{
 	name = "Monastery Asteroid"
-	})
+	},
+/area/space)
 "ccw" = (
+/turf/open/floor/plating,
 /obj/machinery/light/small{
 	dir = 1
 	},
-/turf/open/floor/plating,
-/area/chapel/asteroid{
+/turf/open/floor/plasteel/recharge_floor/asteroid{
 	name = "Monastery Asteroid"
-	})
+	},
+/area/space)
 "ccx" = (
+/turf/open/floor/plating,
 /obj/machinery/door/airlock/external{
 	cyclelinkeddir = 8
 	},
-/turf/open/floor/plating,
-/area/chapel/asteroid{
+/turf/open/floor/plasteel/recharge_floor/asteroid{
 	name = "Monastery Asteroid"
-	})
+	},
+/area/space)
 "ccy" = (
 /obj/machinery/door/airlock/external{
 	cyclelinkeddir = 4;
@@ -52385,21 +52400,23 @@
 	name = "\improper Monastery Garden"
 	})
 "ccV" = (
+/turf/open/floor/plating/asteroid,
 /obj/machinery/camera{
 	c_tag = "Monastery Asteroid Port";
 	dir = 1;
 	network = list("SS13","Monastery")
 	},
-/turf/open/floor/plating/asteroid,
-/area/chapel/asteroid{
+/turf/open/floor/plasteel/recharge_floor/asteroid{
 	name = "Monastery Asteroid"
-	})
+	},
+/area/space)
 "ccW" = (
-/obj/structure/flora/ausbushes/palebush,
 /turf/open/floor/plating/asteroid,
-/area/chapel/asteroid{
+/obj/structure/flora/ausbushes/palebush,
+/turf/open/floor/plasteel/recharge_floor/asteroid{
 	name = "Monastery Asteroid"
-	})
+	},
+/area/space)
 "ccX" = (
 /turf/closed/wall,
 /area/chapel/office)
@@ -52410,9 +52427,10 @@
 /area/chapel/office)
 "ccZ" = (
 /turf/closed/wall,
-/area/chapel/asteroid{
+/turf/open/floor/plasteel/recharge_floor/asteroid{
 	name = "Monastery Asteroid"
-	})
+	},
+/area/space)
 "cda" = (
 /obj/machinery/light/small{
 	dir = 1
@@ -52452,22 +52470,24 @@
 	name = "Monastery"
 	})
 "cdf" = (
+/turf/open/floor/plating/asteroid,
 /obj/structure/flora/ausbushes/pointybush,
 /obj/machinery/camera{
 	c_tag = "Monastery Asteroid Starboard";
 	dir = 1;
 	network = list("SS13","Monastery")
 	},
-/turf/open/floor/plating/asteroid,
-/area/chapel/asteroid{
+/turf/open/floor/plasteel/recharge_floor/asteroid{
 	name = "Monastery Asteroid"
-	})
+	},
+/area/space)
 "cdg" = (
-/obj/structure/flora/ausbushes/genericbush,
 /turf/open/floor/plating/asteroid,
-/area/chapel/asteroid{
+/obj/structure/flora/ausbushes/genericbush,
+/turf/open/floor/plasteel/recharge_floor/asteroid{
 	name = "Monastery Asteroid"
-	})
+	},
+/area/space)
 "cdh" = (
 /obj/structure/closet{
 	name = "chaplain closet"
@@ -52587,11 +52607,12 @@
 	name = "Monastery"
 	})
 "cds" = (
-/obj/structure/flora/ausbushes/pointybush,
 /turf/open/floor/plating/asteroid,
-/area/chapel/asteroid{
+/obj/structure/flora/ausbushes/pointybush,
+/turf/open/floor/plasteel/recharge_floor/asteroid{
 	name = "Monastery Asteroid"
-	})
+	},
+/area/space)
 "cdt" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
@@ -52792,11 +52813,12 @@
 	name = "Monastery"
 	})
 "cdL" = (
-/obj/structure/chair,
 /turf/open/floor/plating/asteroid,
-/area/chapel/asteroid{
+/obj/structure/chair,
+/turf/open/floor/plasteel/recharge_floor/asteroid{
 	name = "Monastery Asteroid"
-	})
+	},
+/area/space)
 "cdM" = (
 /obj/structure/closet/crate/bin,
 /obj/machinery/newscaster{
@@ -52960,13 +52982,14 @@
 	name = "Monastery"
 	})
 "cec" = (
+/turf/open/floor/plating/asteroid,
 /obj/structure/table,
 /obj/item/trash/plate,
 /obj/item/weapon/kitchen/fork,
-/turf/open/floor/plating/asteroid,
-/area/chapel/asteroid{
+/turf/open/floor/plasteel/recharge_floor/asteroid{
 	name = "Monastery Asteroid"
-	})
+	},
+/area/space)
 "ced" = (
 /obj/machinery/field/generator,
 /obj/machinery/camera{
@@ -53079,13 +53102,14 @@
 	name = "Monastery"
 	})
 "ceo" = (
+/turf/open/floor/plating/asteroid,
 /obj/structure/chair{
 	dir = 1
 	},
-/turf/open/floor/plating/asteroid,
-/area/chapel/asteroid{
+/turf/open/floor/plasteel/recharge_floor/asteroid{
 	name = "Monastery Asteroid"
-	})
+	},
+/area/space)
 "cep" = (
 /obj/structure/bodycontainer/crematorium{
 	id = "foo"
@@ -53401,32 +53425,39 @@
 	})
 "ceZ" = (
 /turf/open/floor/plasteel/asteroid,
-/area/chapel/asteroid{
+/turf/open/floor/plasteel/recharge_floor/asteroid{
 	name = "Monastery Asteroid"
-	})
+	},
+/area/space)
 "cfa" = (
+/turf/open/floor/plasteel/asteroid,
 /obj/structure/flora/ausbushes/fernybush,
 /obj/machinery/camera{
 	c_tag = "Monastery Asteroid Starboard Aft";
 	dir = 1;
 	network = list("SS13","Monastery")
 	},
-/turf/open/floor/plasteel/asteroid,
-/area/chapel/asteroid{
+/turf/open/floor/plasteel/recharge_floor/asteroid{
 	name = "Monastery Asteroid"
-	})
+	},
+/area/space)
 "cfb" = (
-/obj/structure/flora/ausbushes,
 /turf/open/floor/plasteel/asteroid,
-/area/chapel/asteroid{
+/obj/structure/flora/ausbushes,
+/turf/open/floor/plasteel/recharge_floor/asteroid{
 	name = "Monastery Asteroid"
-	})
+	},
+/area/space)
 "cfc" = (
 /turf/closed/mineral,
-/area/chapel/asteroid{
+/turf/open/floor/plasteel/recharge_floor/asteroid{
 	name = "Monastery Asteroid"
-	})
+	},
+/area/space)
 "cfd" = (
+/turf/open/floor/plasteel/asteroid{
+	icon_plating = "asteroid"
+	},
 /obj/structure/cable{
 	icon_state = "0-2";
 	d2 = 2
@@ -53436,12 +53467,10 @@
 	name = "Monastery External APC";
 	pixel_x = 24
 	},
-/turf/open/floor/plasteel/asteroid{
-	icon_plating = "asteroid"
-	},
-/area/chapel/asteroid{
+/turf/open/floor/plasteel/recharge_floor/asteroid{
 	name = "Monastery Asteroid"
-	})
+	},
+/area/space)
 "cfe" = (
 /obj/machinery/airalarm{
 	pixel_y = 22
@@ -53560,17 +53589,18 @@
 	name = "\improper Monastery Garden"
 	})
 "cfq" = (
+/turf/open/floor/plasteel/asteroid{
+	icon_plating = "asteroid"
+	},
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 4;
 	icon_state = "1-4"
 	},
-/turf/open/floor/plasteel/asteroid{
-	icon_plating = "asteroid"
-	},
-/area/chapel/asteroid{
+/turf/open/floor/plasteel/recharge_floor/asteroid{
 	name = "Monastery Asteroid"
-	})
+	},
+/area/space)
 "cfr" = (
 /obj/machinery/door/airlock/external{
 	cyclelinkeddir = 4
@@ -53970,16 +54000,17 @@
 	},
 /area/maintenance/aft)
 "cgc" = (
+/turf/open/floor/plating/asteroid,
 /obj/structure/flora/ausbushes/leafybush,
 /obj/machinery/camera{
 	c_tag = "Monastery Asteroid Port Aft";
 	dir = 8;
 	network = list("SS13","Monastery")
 	},
-/turf/open/floor/plating/asteroid,
-/area/chapel/asteroid{
+/turf/open/floor/plasteel/recharge_floor/asteroid{
 	name = "Monastery Asteroid"
-	})
+	},
+/area/space)
 "cgd" = (
 /obj/structure/table,
 /obj/machinery/microwave,
@@ -54111,16 +54142,18 @@
 /turf/closed/mineral{
 	baseturf = /turf/open/floor/plating/asteroid
 	},
-/area/chapel/asteroid{
+/turf/open/floor/plasteel/recharge_floor/asteroid{
 	name = "Monastery Asteroid"
-	})
+	},
+/area/space)
 "cgr" = (
+/turf/open/floor/plating/asteroid,
 /obj/structure/flora/ausbushes/leafybush,
 /obj/structure/flora/ausbushes/fernybush,
-/turf/open/floor/plating/asteroid,
-/area/chapel/asteroid{
+/turf/open/floor/plasteel/recharge_floor/asteroid{
 	name = "Monastery Asteroid"
-	})
+	},
+/area/space)
 "cgs" = (
 /obj/item/weapon/phone,
 /turf/open/floor/plating,
@@ -94561,7 +94594,7 @@ alj
 aaa
 aaa
 amz
-ank
+anL
 anL
 anL
 anL
