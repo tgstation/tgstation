@@ -573,6 +573,9 @@
 	validSurfaces = list(/turf/open/floor,/turf/closed/wall)
 	reagent_contents = list("welding_fuel" = 1, "ethanol" = 1)
 
+	pre_noise = TRUE
+	post_noise = TRUE
+
 /obj/item/toy/crayon/spraycan/suicide_act(mob/user)
 	var/mob/living/carbon/human/H = user
 	if(is_capped || !actually_paints)
@@ -628,7 +631,7 @@
 
 	if(iscarbon(target))
 		if(pre_noise || post_noise)
-			playsound(user.loc, 'sound/effects/spray.ogg', 5, 1, 5)
+			playsound(user.loc, 'sound/effects/spray.ogg', 25, 1, 5)
 
 		var/mob/living/carbon/C = target
 		user.visible_message("<span class='danger'>[user] sprays [src] \
