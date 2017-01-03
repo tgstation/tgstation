@@ -51,7 +51,6 @@ var/static/regex/multispin_words = regex("like a record baby")
 /obj/item/organ/vocal_cords/proc/handle_speech(message) //change the message
 	return message
 
-
 //Colossus drop, forces the listeners to obey certain commands
 /obj/item/organ/vocal_cords/colossus
 	name = "divine vocal cords"
