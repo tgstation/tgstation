@@ -1,4 +1,4 @@
-//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aaa" = (
 /turf/open/space,
 /area/space)
@@ -19836,13 +19836,7 @@
 	name = "\improper South Hallway"
 	})
 "aWF" = (
-/turf/open/floor/plating/asteroid{
-	name = "dirt"
-	},
-/turf/closed/wall/shuttle{
-	icon_state = "swall_f6";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium/interior,
 /area/shuttle/arrival)
 "aWG" = (
 /turf/closed/wall/mineral/titanium,
@@ -22390,7 +22384,7 @@
 	icon_state = "propulsion";
 	dir = 4
 	},
-/turf/closed/wall/mineral/titanium/overspace,
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/transport)
 "bcP" = (
 /turf/closed/wall/mineral/titanium,
@@ -22446,10 +22440,7 @@
 /turf/open/floor/plating,
 /area/maintenance/asmaint2)
 "bda" = (
-/turf/open/floor/plasteel/shuttle,
-/turf/closed/wall/shuttle/interior{
-	icon_state = "swall_f9"
-	},
+/turf/closed/wall/mineral/titanium/interior,
 /area/shuttle/transport)
 "bdb" = (
 /obj/structure/chair{
@@ -52252,7 +52243,7 @@ aaa
 bcO
 bda
 bdg
-bdp
+bda
 bcO
 aaa
 aaa
@@ -54819,11 +54810,11 @@ bce
 aPH
 aaa
 aay
-bcS
+bcP
 bcQ
 bdh
 bcQ
-bdu
+bcP
 aay
 aaa
 aay
@@ -64056,12 +64047,12 @@ aTF
 aUr
 aUr
 aWF
-aXi
+aWG
 bep
 aWI
 bep
-aXi
-aZO
+aWG
+aWF
 aTK
 bew
 baZ
@@ -66111,13 +66102,13 @@ aUr
 aUr
 aUr
 aUr
-aWJ
-aXi
-aXi
-aXi
-aXi
-aXi
-aZR
+aWF
+aWG
+aWG
+aWG
+aWG
+aWG
+aWF
 aTK
 beA
 beA
