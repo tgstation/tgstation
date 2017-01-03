@@ -28,6 +28,9 @@ var/list/ai_list = list()
 	med_hud = DATA_HUD_MEDICAL_BASIC
 	sec_hud = DATA_HUD_SECURITY_BASIC
 	mob_size = MOB_SIZE_LARGE
+
+	see_invisible = SEE_INVISIBLE_AI
+
 	var/list/network = list("SS13")
 	var/obj/machinery/camera/current = null
 	var/list/connected_robots = list()
@@ -498,7 +501,7 @@ var/list/ai_list = list()
 	call_bot_cooldown = world.time + CALL_BOT_COOLDOWN
 	Bot.call_bot(src, waypoint)
 	call_bot_cooldown = 0
-	
+
 
 /mob/living/silicon/ai/triggerAlarm(class, area/A, O, obj/alarmsource)
 	if(alarmsource.z != z)
@@ -868,6 +871,14 @@ var/list/ai_list = list()
 		src << "Hack complete. \The [apc] is now under your \
 			exclusive control."
 		apc.update_icon()
+
+/mob/living/silicon/ai/proc/invisify_rune(datum/ai_fake_rune/rune)
+	if(client)
+		client.images += rune.ai_image
+
+/mob/living/silicon/ai/proc/uninvisify_rune(datum/ai_fake_rune/rune)
+	if(client)
+		client.images -= rune.ai_image
 
 /mob/living/silicon/ai/spawned/New(loc, datum/ai_laws/L, mob/target_ai)
 	if(!target_ai)
