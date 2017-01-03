@@ -304,7 +304,6 @@
 		if(op != "")
 			switch(op)
 				if("+")
-					//Before you consider doing += here, see pr #22627
 					result = (result + val)
 				if("-")
 					result = (result - val)
