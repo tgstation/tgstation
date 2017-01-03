@@ -10,6 +10,9 @@
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "floor"
 
+/turf/open/indestructible/TerraformTurf(path, defer_change = FALSE, ignore_air = FALSE)
+	return
+
 /turf/open/indestructible/sound
 	name = "squeeky floor"
 	var/sound

@@ -665,21 +665,22 @@
 			user.visible_message("<span class='danger'>[user] points [src] at [T]!</span>")
 			timer = world.time + create_delay + 1
 			if(do_after(user, create_delay, target = T))
-				user.visible_message("<span class='danger'>[user] turns \the [T] into [transform_string]!</span>")
-				message_admins("[key_name_admin(user)] fired the lava staff at [get_area(target)]. [ADMIN_COORDJMP(T)]")
-				log_game("[key_name(user)] fired the lava staff at [get_area(target)] [COORD(T)].")
-				T.ChangeTurf(turf_type)
-				timer = world.time + create_cooldown
-				qdel(L)
+				var/old_name = T.name
+				if(T.TerraformTurf(turf_type))
+					user.visible_message("<span class='danger'>[user] turns \the [old_name] into [transform_string]!</span>")
+					message_admins("[key_name_admin(user)] fired the lava staff at [get_area(target)]. [ADMIN_COORDJMP(T)]")
+					log_game("[key_name(user)] fired the lava staff at [get_area(target)] [COORD(T)].")
+					timer = world.time + create_cooldown
+					playsound(T,'sound/magic/Fireball.ogg', 200, 1)
 			else
 				timer = world.time
-				qdel(L)
-				return
+			qdel(L)
 		else
-			user.visible_message("<span class='danger'>[user] turns \the [T] into [reset_string]!</span>")
-			T.ChangeTurf(reset_turf_type)
-			timer = world.time + reset_cooldown
-		playsound(T,'sound/magic/Fireball.ogg', 200, 1)
+			var/old_name = T.name
+			if(T.TerraformTurf(reset_turf_type))
+				user.visible_message("<span class='danger'>[user] turns \the [old_name] into [reset_string]!</span>")
+				timer = world.time + reset_cooldown
+				playsound(T,'sound/magic/Fireball.ogg', 200, 1)
 
 /obj/effect/overlay/temp/lavastaff
 	icon_state = "lavastaff_warn"
