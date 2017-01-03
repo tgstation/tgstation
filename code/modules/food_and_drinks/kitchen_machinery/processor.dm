@@ -211,7 +211,7 @@
 	var/datum/food_processor_process/P = select_recipe(O)
 	if(P)
 		user.visible_message("[user] put [O] into [src].", \
-			"You put the [O] into [src].")
+			"You put [O] into [src].")
 		user.drop_item()
 		O.loc = src
 		return 1
@@ -264,7 +264,7 @@
 		P.process_food(src.loc, O, src)
 	pixel_x = initial(pixel_x) //return to its spot after shaking
 	src.processing = 0
-	src.visible_message("\the [src] finishes processing.")
+	src.visible_message("\The [src] finishes processing.")
 
 /obj/machinery/processor/verb/eject()
 	set category = "Object"
