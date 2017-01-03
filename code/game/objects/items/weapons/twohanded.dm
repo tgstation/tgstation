@@ -91,7 +91,7 @@
 	if(user)
 		var/obj/item/weapon/twohanded/O = user.get_inactive_held_item()
 		if(istype(O))
-			O.unwield(user, FALSE)
+			qdel(O)							//This was O.unwield(user, FALSE), but this is a slightly more definitive solution.
 	unwield(user)
 
 /obj/item/weapon/twohanded/update_icon()
@@ -123,14 +123,20 @@
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
 /obj/item/weapon/twohanded/offhand/unwield()
-	if(wielded)//Only delete if we're wielded
+	if(wielded && !qdeleted(src))//Only delete if we're wielded
 		wielded = FALSE
 		qdel(src)
 
 /obj/item/weapon/twohanded/offhand/wield()
-	if(wielded)//Only delete if we're wielded
+	if(wielded && !qdeleted(src))//Only delete if we're wielded
 		wielded = FALSE
 		qdel(src)
+
+/obj/item/weapon/twohanded/offhand/attack_self(mob/living/carbon/user)		//You should never be able to do this in standard use of two handed items. This is a backup for lingering offhands.
+	var/obj/item/weapon/twohanded/O = user.get_inactive_held_item()
+	if (istype(O) && !istype(O, /obj/item/weapon/twohanded/offhand/))		//If you have a proper item in your other hand that the offhand is for, do nothing. This should never happen.
+		return
+	qdel(src)																//If it's another offhand, or literally anything else, qdel. If I knew how to add logging messages I'd put one here.
 
 ///////////Two hand required objects///////////////
 //This is for objects that require two hands to even pick up
@@ -670,7 +676,7 @@
 /obj/item/weapon/twohanded/skybulge/update_icon()
 	icon_state = "sky_bulge[wielded]"
 
-/obj/item/weapon/twohanded/skybulge/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback)  //Throw cooldown and offhand-proofing.
+/obj/item/weapon/twohanded/skybulge/throw_at()  //Throw cooldown and offhand-proofing.
 	if(throw_cooldown > world.time)
 		var/mob/user = thrownby
 		user.put_in_hands(src)
