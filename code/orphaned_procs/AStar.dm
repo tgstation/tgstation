@@ -36,14 +36,18 @@ Actual Adjacent procs :
 	var/g		//A* movement cost variable
 	var/h		//A* heuristic variable
 	var/nt		//count the number of Nodes traversed
+	var/x		//x value
+	var/y		//y value
 
-/PathNode/New(s,p,pg,ph,pnt)
+/PathNode/New(s,p,pg,ph,pnt,nx,ny)
 	source = s
 	prevNode = p
 	g = pg
 	h = ph
 	f = g + h
 	nt = pnt
+	x = nx
+	y = ny
 
 /PathNode/proc/calc_f()
 	f = g + h
@@ -62,7 +66,7 @@ Actual Adjacent procs :
 
 //wrapper that returns an empty list if A* failed to find a path
 /proc/get_path_to(caller, end, dist, maxnodes, maxnodedepth = 30, mintargetdist, adjacent = /turf/proc/reachableAdjacentTurfs, id=null, turf/exclude=null, simulated_only = 1)
-	var/list/path = AStar(caller, end, dist, maxnodes, maxnodedepth, mintargetdist, adjacent,id, exclude, simulated_only)
+	var/list/path = trace_pathfind(caller, end, dist, maxnodes, maxnodedepth, mintargetdist, adjacent,id, exclude, simulated_only)
 	if(!path)
 		path = list()
 	return path
