@@ -304,19 +304,19 @@
 		if(op != "")
 			switch(op)
 				if("+")
-					result += val
+					result = (result + val)
 				if("-")
-					result -= val
+					result = (result - val)
 				if("*")
-					result *= val
+					result = (result * val)
 				if("/")
-					result /= val
+					result = (result / val)
 				if("&")
-					result &= val
+					result = (result & val)
 				if("|")
-					result |= val
+					result = (result | val)
 				if("^")
-					result ^= val
+					result = (result ^ val)
 				if("=", "==")
 					result = (result == val)
 				if("!=", "<>")
