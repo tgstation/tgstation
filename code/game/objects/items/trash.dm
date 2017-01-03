@@ -76,5 +76,5 @@
 
 /obj/item/trash/coal/burn()
 	visible_message("[src] fuses into a diamond! Someone wasn't so naughty after all...")
-	new /obj/item/weapon/ore/diamond(loc)
+	new /obj/item/stack/ore/diamond(loc)
 	qdel(src)

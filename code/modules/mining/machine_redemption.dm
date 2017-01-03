@@ -52,15 +52,15 @@
 	point_upgrade = point_upgrade_temp
 	sheet_per_ore = sheet_per_ore_temp
 
-/obj/machinery/mineral/ore_redemption/proc/process_sheet(obj/item/weapon/ore/O)
+/obj/machinery/mineral/ore_redemption/proc/process_sheet(obj/item/stack/ore/O)
 	var/obj/item/stack/sheet/processed_sheet = SmeltMineral(O)
 	if(processed_sheet)
 		if(!(processed_sheet in stack_list)) //It's the first of this sheet added
-			var/obj/item/stack/sheet/s = new processed_sheet(src,0)
+			var/obj/item/stack/sheet/s = new processed_sheet(src, 0)
 			s.amount = 0
 			stack_list[processed_sheet] = s
 		var/obj/item/stack/sheet/storage = stack_list[processed_sheet]
-		storage.amount += sheet_per_ore //Stack the sheets
+		storage.amount += (sheet_per_ore * O.amount) //Stack the sheets
 		O.loc = null //Let the old sheet...
 		qdel(O) //... garbage collect
 
@@ -69,7 +69,7 @@
 		var/turf/T = get_step(src, input_dir)
 		var/i = 0
 		if(T)
-			for(var/obj/item/weapon/ore/O in T)
+			for(var/obj/item/stack/ore/O in T)
 				if (i >= ore_pickup_rate)
 					break
 				else if (!O || !O.refined_type)
@@ -80,7 +80,7 @@
 		else
 			var/obj/structure/ore_box/B = locate() in T
 			if(B)
-				for(var/obj/item/weapon/ore/O in B.contents)
+				for(var/obj/item/stack/ore/O in B.contents)
 					if (i >= ore_pickup_rate)
 						break
 					else if (!O || !O.refined_type)
@@ -129,10 +129,10 @@
 /obj/machinery/mineral/ore_redemption/on_deconstruction()
 	empty_content()
 
-/obj/machinery/mineral/ore_redemption/proc/SmeltMineral(obj/item/weapon/ore/O)
+/obj/machinery/mineral/ore_redemption/proc/SmeltMineral(obj/item/stack/ore/O)
 	if(O.refined_type)
 		var/obj/item/stack/sheet/M = O.refined_type
-		points += O.points * point_upgrade
+		points += O.points * O.amount * point_upgrade
 		return M
 	qdel(O)//No refined type? Purge it.
 	return

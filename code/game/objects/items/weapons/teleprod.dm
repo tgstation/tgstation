@@ -27,17 +27,17 @@
 				do_teleport(M, get_turf(M), 15)
 
 /obj/item/weapon/melee/baton/cattleprod/attackby(obj/item/I, mob/user, params)//handles sticking a crystal onto a stunprod to make a teleprod
-	if(istype(I, /obj/item/weapon/ore/bluespace_crystal))
-		if(!bcell)
-			var/obj/item/weapon/melee/baton/cattleprod/teleprod/S = new /obj/item/weapon/melee/baton/cattleprod/teleprod
-			if(!remove_item_from_storage(user))
-				user.unEquip(src)
-			user.unEquip(I)
-			user.put_in_hands(S)
-			user << "<span class='notice'>You place the bluespace crystal firmly into the igniter.</span>"
-			qdel(I)
-			qdel(src)
-		else
-			user.visible_message("<span class='warning'>You can't put the crystal onto the stunprod while it has a power cell installed!</span>")
+	if(istype(I, /obj/item/stack/ore/bluespace_crystal))
+		var/obj/item/stack/ore/bluespace_crystal/B = I
+		if(B.use(1))
+			if(!bcell)
+				var/obj/item/weapon/melee/baton/cattleprod/teleprod/S = new /obj/item/weapon/melee/baton/cattleprod/teleprod
+				if(!remove_item_from_storage(user))
+					user.unEquip(src)
+				user.put_in_hands(S)
+				user << "<span class='notice'>You place the bluespace crystal firmly into the igniter.</span>"
+				qdel(src)
+			else
+				user.visible_message("<span class='warning'>You can't put the crystal onto the stunprod while it has a power cell installed!</span>")
 	else
 		return ..()

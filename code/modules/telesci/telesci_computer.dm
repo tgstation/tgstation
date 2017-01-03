@@ -48,22 +48,22 @@
 /obj/machinery/computer/telescience/initialize()
 	..()
 	for(var/i = 1; i <= starting_crystals; i++)
-		crystals += new /obj/item/weapon/ore/bluespace_crystal/artificial(null) // starting crystals
+		crystals += new /obj/item/stack/ore/bluespace_crystal/artificial(null) // starting crystals
 
 /obj/machinery/computer/telescience/attack_paw(mob/user)
 	user << "<span class='warning'>You are too primitive to use this computer!</span>"
 	return
 
 /obj/machinery/computer/telescience/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/weapon/ore/bluespace_crystal))
+	if(istype(W, /obj/item/stack/ore/bluespace_crystal))
+		var/obj/item/stack/ore/bluespace_crystal/B = W
 		if(crystals.len >= max_crystals)
 			user << "<span class='warning'>There are not enough crystal slots.</span>"
 			return
-		if(!user.drop_item())
+		if(!B.use(1))
 			return
 		crystals += W
-		W.loc = null
-		user.visible_message("[user] inserts [W] into \the [src]'s crystal slot.", "<span class='notice'>You insert [W] into \the [src]'s crystal slot.</span>")
+		user.visible_message("[user] slots a piece of [W] into \the [src]'s crystal slot.", "<span class='notice'>You insert [W] into \the [src]'s crystal slot.</span>")
 		updateDialog()
 	else if(istype(W, /obj/item/device/gps))
 		if(!inserted_gps)

@@ -87,7 +87,7 @@
 	storage_slots = 50
 	max_combined_w_class = 200 //Doesn't matter what this is, so long as it's more or equal to storage_slots * ore.w_class
 	max_w_class = WEIGHT_CLASS_NORMAL
-	can_hold = list(/obj/item/weapon/ore)
+	can_hold = list(/obj/item/stack/ore)
 
 /obj/item/weapon/storage/bag/ore/cyborg
 	name = "cyborg mining satchel"
@@ -99,6 +99,56 @@
 	max_combined_w_class = INFINITY
 	origin_tech = "bluespace=4;materials=3;engineering=3"
 	icon_state = "satchel_bspace"
+
+/obj/item/weapon/storage/bag/ore/can_be_inserted(obj/item/W, stop_messages = 0)	//MUH COPYPASTA
+	if(!istype(W, /obj/item/stack/ore))
+		if(!stop_messages)
+			usr << "The [W] does not fit."
+		return FALSE
+	var/current = 0
+	for(var/obj/item/stack/ore/O in contents)
+		current += O.amount
+	if(current >= storage_slots)
+		if(!stop_messages)
+			usr << "<span class='danger'>The [src] is full!</span>"
+		return FALSE
+	return TRUE
+
+/obj/item/weapon/storage/bag/ore/handle_item_insertion(obj/item/W, prevent_warning = 0)
+	var/obj/item/stack/ore/O = W
+	if(!istype(O))
+		return FALSE
+	var/amount
+	var/inserted = 0
+	var/current = 0
+	for(var/obj/item/stack/ore/O2 in contents)
+		current += O2.amount
+	if(storage_slots < (current + O.amount))
+		amount = storage_slots - current
+	else
+		amount = O.amount
+	for(var/obj/item/stack/ore/O3 in contents)
+		if(O.type == O3.type)
+			O3.amount += amount
+			O.amount -= amount
+			inserted = 1
+			break
+	if(!inserted || !O.amount)
+		usr.unEquip(O)
+		if(usr.client && usr.s_active != src)
+			usr.client.screen -= O
+		O.dropped(usr)
+		if(!O.amount)
+			qdel(O)
+		else
+			if(O.pulledby)
+				O.pulledby.stop_pulling()
+			O.loc = src
+	orient2hud(usr)
+	if(usr.s_active)
+		usr.s_active.show_to(usr)
+	update_icon()
+	return TRUE
 
 // -----------------------------
 //          Plant bag

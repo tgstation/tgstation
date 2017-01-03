@@ -34,7 +34,7 @@
 	floor_tile = /obj/item/stack/tile/grass
 	broken_states = list("sand")
 	flags = NONE
-	var/ore_type = /obj/item/weapon/ore/glass
+	var/ore_type = /obj/item/stack/ore/glass
 
 /turf/open/floor/grass/New()
 	..()
@@ -43,8 +43,7 @@
 
 /turf/open/floor/grass/attackby(obj/item/C, mob/user, params)
 	if(istype(C, /obj/item/weapon/shovel) && params)
-		new ore_type(src)
-		new ore_type(src) //Make some sand if you shovel grass
+		new ore_type(src, 2)
 		user.visible_message("<span class='notice'>[user] digs up [src].</span>", "<span class='notice'>You uproot [src].</span>")
 		playsound(src, 'sound/effects/shovel_dig.ogg', 50, 1)
 		make_plating()
@@ -72,7 +71,7 @@
 	name = "volcanic floor"
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "basalt"
-	ore_type = /obj/item/weapon/ore/glass/basalt
+	ore_type = /obj/item/stack/ore/glass/basalt
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	slowdown = 0
 

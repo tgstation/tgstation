@@ -82,8 +82,8 @@
 	aggro_vision_range = 9
 	idle_vision_range = 2
 	turns_per_move = 5
-	loot = list(/obj/item/weapon/ore/diamond{layer = ABOVE_MOB_LAYER},
-				/obj/item/weapon/ore/diamond{layer = ABOVE_MOB_LAYER})
+	loot = list(/obj/item/stack/ore/diamond{layer = ABOVE_MOB_LAYER},
+				/obj/item/stack/ore/diamond{layer = ABOVE_MOB_LAYER})
 
 /obj/item/projectile/temp/basilisk
 	name = "freezing blast"
@@ -135,8 +135,8 @@
 	deathmessage = "spits up the contents of its stomach before dying!"
 	status_flags = CANPUSH
 	search_objects = 1
-	wanted_objects = list(/obj/item/weapon/ore/diamond, /obj/item/weapon/ore/gold, /obj/item/weapon/ore/silver,
-						  /obj/item/weapon/ore/uranium)
+	wanted_objects = list(/obj/item/stack/ore/diamond, /obj/item/stack/ore/gold, /obj/item/stack/ore/silver,
+						  /obj/item/stack/ore/uranium)
 
 	var/chase_time = 100
 	var/will_burrow = TRUE
@@ -145,13 +145,13 @@
 	..()
 	var/i = rand(1,3)
 	while(i)
-		loot += pick(/obj/item/weapon/ore/silver, /obj/item/weapon/ore/gold, /obj/item/weapon/ore/uranium, /obj/item/weapon/ore/diamond)
+		loot += pick(/obj/item/stack/ore/silver, /obj/item/stack/ore/gold, /obj/item/stack/ore/uranium, /obj/item/stack/ore/diamond)
 		i--
 
 /mob/living/simple_animal/hostile/asteroid/goldgrub/GiveTarget(new_target)
 	target = new_target
 	if(target != null)
-		if(istype(target, /obj/item/weapon/ore) && loot.len < 10)
+		if(istype(target, /obj/item/stack/ore) && loot.len < 10)
 			visible_message("<span class='notice'>The [src.name] looks at [target.name] with hungry eyes.</span>")
 		else if(isliving(target))
 			Aggro()
@@ -162,13 +162,13 @@
 				addtimer(src, "Burrow", chase_time)
 
 /mob/living/simple_animal/hostile/asteroid/goldgrub/AttackingTarget()
-	if(istype(target, /obj/item/weapon/ore))
+	if(istype(target, /obj/item/stack/ore))
 		EatOre(target)
 		return
 	..()
 
 /mob/living/simple_animal/hostile/asteroid/goldgrub/proc/EatOre(atom/targeted_ore)
-	for(var/obj/item/weapon/ore/O in targeted_ore.loc)
+	for(var/obj/item/stack/ore/O in targeted_ore.loc)
 		if(loot.len < 10)
 			loot += O.type
 			qdel(O)
@@ -718,7 +718,7 @@
 	movement_type = FLYING
 	robust_searching = 1
 	loot = list()
-	butcher_results = list(/obj/item/weapon/ore/diamond = 2, /obj/item/stack/sheet/sinew = 2, /obj/item/stack/sheet/bone = 1)
+	butcher_results = list(/obj/item/stack/ore/diamond = 2, /obj/item/stack/sheet/sinew = 2, /obj/item/stack/sheet/bone = 1)
 
 //Goliath
 

@@ -4,7 +4,7 @@
 	var/material_id = null
 	export_types = list(
 		/obj/item/stack/sheet/mineral, /obj/item/stack/tile/mineral,
-		/obj/item/weapon/ore, /obj/item/weapon/coin)
+		/obj/item/stack/ore, /obj/item/weapon/coin)
 // Yes, it's a base type containing export_types.
 // But it has no material_id, so any applies_to check will return false, and these types reduce amount of copypasta a lot
 
@@ -22,8 +22,8 @@
 	if(istype(I, /obj/item/stack))
 		var/obj/item/stack/S = I
 		amount *= S.amount
-	else if(istype(I, /obj/item/weapon/ore))
-		amount *= 0.8 // Station's ore redemption equipment is really goddamn good.
+		if(istype(I, /obj/item/stack/ore))
+			amount *= 0.8 // Station's ore redemption equipment is really goddamn good.
 
 	return round(amount)
 
@@ -85,11 +85,11 @@
 	material_id = MAT_METAL
 	export_types = list(
 		/obj/item/stack/sheet/metal, /obj/item/stack/tile/plasteel,
-		/obj/item/stack/rods, /obj/item/weapon/ore, /obj/item/weapon/coin)
+		/obj/item/stack/rods, /obj/item/stack/ore, /obj/item/weapon/coin)
 
 // Glass. Common building material.
 /datum/export/material/glass
 	message = "cm3 of glass"
 	material_id = MAT_GLASS
-	export_types = list(/obj/item/stack/sheet/glass, /obj/item/weapon/ore,
+	export_types = list(/obj/item/stack/sheet/glass, /obj/item/stack/ore,
 		/obj/item/weapon/shard)

@@ -71,9 +71,7 @@
 
 /turf/closed/mineral/proc/gets_drilled()
 	if (mineralType && (src.mineralAmt > 0) && (src.mineralAmt < 11))
-		var/i
-		for (i=0;i<mineralAmt;i++)
-			new mineralType(src)
+		new mineralType(src, mineralAmt)
 		feedback_add_details("ore_mined","[mineralType]|[mineralAmt]")
 	ChangeTurf(turf_type, defer_change)
 	spawn(10)
@@ -227,7 +225,7 @@
 
 
 /turf/closed/mineral/iron
-	mineralType = /obj/item/weapon/ore/iron
+	mineralType = /obj/item/stack/ore/iron
 	spreadChance = 20
 	spread = 1
 	scan_state = "rock_Iron"
@@ -241,7 +239,7 @@
 
 
 /turf/closed/mineral/uranium
-	mineralType = /obj/item/weapon/ore/uranium
+	mineralType = /obj/item/stack/ore/uranium
 	spreadChance = 5
 	spread = 1
 	scan_state = "rock_Uranium"
@@ -255,7 +253,7 @@
 
 
 /turf/closed/mineral/diamond
-	mineralType = /obj/item/weapon/ore/diamond
+	mineralType = /obj/item/stack/ore/diamond
 	spreadChance = 0
 	spread = 1
 	scan_state = "rock_Diamond"
@@ -269,7 +267,7 @@
 
 
 /turf/closed/mineral/gold
-	mineralType = /obj/item/weapon/ore/gold
+	mineralType = /obj/item/stack/ore/gold
 	spreadChance = 5
 	spread = 1
 	scan_state = "rock_Gold"
@@ -283,7 +281,7 @@
 
 
 /turf/closed/mineral/silver
-	mineralType = /obj/item/weapon/ore/silver
+	mineralType = /obj/item/stack/ore/silver
 	spreadChance = 5
 	spread = 1
 	scan_state = "rock_Silver"
@@ -297,7 +295,7 @@
 
 
 /turf/closed/mineral/titanium
-	mineralType = /obj/item/weapon/ore/titanium
+	mineralType = /obj/item/stack/ore/titanium
 	spreadChance = 5
 	spread = 1
 	scan_state = "rock_Titanium"
@@ -311,7 +309,7 @@
 
 
 /turf/closed/mineral/plasma
-	mineralType = /obj/item/weapon/ore/plasma
+	mineralType = /obj/item/stack/ore/plasma
 	spreadChance = 8
 	spread = 1
 	scan_state = "rock_Plasma"
@@ -325,7 +323,7 @@
 
 
 /turf/closed/mineral/clown
-	mineralType = /obj/item/weapon/ore/bananium
+	mineralType = /obj/item/stack/ore/bananium
 	mineralAmt = 3
 	spreadChance = 0
 	spread = 0
@@ -333,7 +331,7 @@
 
 
 /turf/closed/mineral/bscrystal
-	mineralType = /obj/item/weapon/ore/bluespace_crystal
+	mineralType = /obj/item/stack/ore/bluespace_crystal
 	mineralAmt = 1
 	spreadChance = 0
 	spread = 0

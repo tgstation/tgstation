@@ -45,7 +45,7 @@ Difficulty: Medium
 	ranged = 1
 	pixel_x = -16
 	loot = list(/obj/structure/closet/crate/necropolis/dragon)
-	butcher_results = list(/obj/item/weapon/ore/diamond = 5, /obj/item/stack/sheet/sinew = 5, /obj/item/stack/sheet/animalhide/ashdrake = 10, /obj/item/stack/sheet/bone = 30)
+	butcher_results = list(/obj/item/stack/ore/diamond = 5, /obj/item/stack/sheet/sinew = 5, /obj/item/stack/sheet/animalhide/ashdrake = 10, /obj/item/stack/sheet/bone = 30)
 	var/swooping = 0
 	var/swoop_cooldown = 0
 	medal_type = MEDAL_PREFIX
