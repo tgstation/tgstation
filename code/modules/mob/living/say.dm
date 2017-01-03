@@ -60,7 +60,7 @@ var/list/department_radio_keys = list(
 
 var/list/crit_allowed_modes = list(MODE_WHISPER,MODE_CHANGELING,MODE_ALIEN)
 
-/mob/living/say(message, bubble_type,var/list/spans = list(), sanitize = 1)
+/mob/living/say(message, bubble_type,var/list/spans = list(), sanitize = TRUE)
 	if(sanitize)
 		message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
 	if(!message || message == "")
@@ -251,7 +251,7 @@ var/list/crit_allowed_modes = list(MODE_WHISPER,MODE_CHANGELING,MODE_ALIEN)
 			var/mob/living/carbon/C = src
 			var/obj/item/organ/vocal_cords/V = C.getorganslot("vocal_cords")
 			if(V && V.can_speak_with())
-				C.say(V.handle_speech(message), spans = V.spans, sanitize = 0)
+				C.say(V.handle_speech(message), spans = V.spans, sanitize = FALSE)
 				V.speak_with(message) //words come before actions
 		return TRUE
 	return FALSE
