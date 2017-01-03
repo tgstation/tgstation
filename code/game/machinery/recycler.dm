@@ -26,7 +26,7 @@ var/const/SAFETY_COOLDOWN = 100
 	update_icon()
 
 /obj/item/weapon/circuitboard/machine/recycler
-	name = "circuit board (Recycler)"
+	name = "Recycler (Machine Board)"
 	build_path = /obj/machinery/recycler
 	origin_tech = "programming=2;engineering=2"
 	req_components = list(

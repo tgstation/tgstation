@@ -24,7 +24,7 @@
 	..()
 
 /obj/item/weapon/circuitboard/machine/chem_master
-	name = "circuit board (ChemMaster 3000)"
+	name = "ChemMaster 3000 (Machine Board)"
 	build_path = /obj/machinery/chem_master
 	origin_tech = "materials=3;programming=2;biotech=3"
 	req_components = list(
@@ -42,7 +42,7 @@
 			new_path = /obj/machinery/chem_master/condimaster
 
 		build_path = new_path
-		name = "circuit board ([new_name] 3000)"
+		name = "[new_name] 3000 (Machine Board)"
 		user << "<span class='notice'>You change the circuit board setting to \"[new_name]\".</span>"
 	else
 		return ..()
@@ -361,5 +361,5 @@
 	condi = 1
 
 /obj/item/weapon/circuitboard/machine/chem_master/condi
-	name = "circuit board (CondiMaster 3000)"
+	name = "CondiMaster 3000 (Machine Board)"
 	build_path = /obj/machinery/chem_master/condimaster

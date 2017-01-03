@@ -39,7 +39,7 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 	return ..()
 
 /obj/item/weapon/circuitboard/machine/circuit_imprinter
-	name = "circuit board (Circuit Imprinter)"
+	name = "Circuit Imprinter (Machine Board)"
 	build_path = /obj/machinery/r_n_d/circuit_imprinter
 	origin_tech = "engineering=2;programming=2"
 	req_components = list(

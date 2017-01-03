@@ -21,7 +21,7 @@
 	B.apply_default_parts(src)
 
 /obj/item/weapon/circuitboard/machine/processor
-	name = "circuit board (Food Processor)"
+	name = "Food Processor (Machine Board)"
 	build_path = /obj/machinery/processor
 	origin_tech = "programming=1"
 	req_components = list(
@@ -29,17 +29,17 @@
 							/obj/item/weapon/stock_parts/manipulator = 1)
 
 /obj/item/weapon/circuitboard/machine/processor
-	name = "circuit board (Food Processor)"
+	name = "Food Processor (Machine Board)"
 	build_path = /obj/machinery/processor
 
 /obj/item/weapon/circuitboard/machine/processor/attackby(obj/item/I, mob/user, params)
 	if(istype(I,/obj/item/weapon/screwdriver))
 		if(build_path == /obj/machinery/processor)
-			name = "circuit board (slime Processor)"
+			name = "Slime Processor (Machine Board)"
 			build_path = /obj/machinery/processor/slime
 			user << "<span class='notice'>Name protocols successfully updated.</span>"
 		else
-			name = "circuit board (Food Processor)"
+			name = "Food Processor (Machine Board)"
 			build_path = /obj/machinery/processor
 			user << "<span class='notice'>Defaulting name protocols.</span>"
 	else
@@ -294,5 +294,5 @@
 	B.apply_default_parts(src)
 
 /obj/item/weapon/circuitboard/machine/processor/slime
-	name = "circuit board (Slime Processor)"
+	name = "Slime Processor (Machine Board)"
 	build_path = /obj/machinery/processor/slime

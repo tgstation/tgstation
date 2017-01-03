@@ -76,7 +76,7 @@
 	power_change()
 
 /obj/item/weapon/circuitboard/machine/vendor
-	name = "circuit board (Booze-O-Mat Vendor)"
+	name = "Booze-O-Mat Vendor (Machine Board)"
 	build_path = /obj/machinery/vending/boozeomat
 	origin_tech = "programming=1"
 	req_components = list(
@@ -103,7 +103,7 @@
 
 /obj/item/weapon/circuitboard/machine/vendor/proc/set_type(var/obj/machinery/vending/typepath)
 	build_path = typepath
-	name = "circuit board ([names_paths[build_path]] Vendor)"
+	name = "[names_paths[build_path]] Vendor (Machine Board)"
 	req_components = list(initial(typepath.refill_canister) = 3)
 
 /obj/item/weapon/circuitboard/machine/vendor/apply_default_parts(obj/machinery/M)
