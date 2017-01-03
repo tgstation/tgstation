@@ -26,6 +26,10 @@
 	icon_state = "none"
 	anchored = 0
 	density = 1
+	obj_integrity = 500
+	max_integrity = 500
+	armor = list(melee = 30, bullet = 20, laser = 20, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 90, acid = 80)
+
 	var/obj/machinery/particle_accelerator/control_box/master = null
 	var/construction_state = PA_CONSTRUCTION_UNSECURED
 	var/reference = null
@@ -63,7 +67,7 @@
 	if (anchored)
 		usr << "It is fastened to the floor!"
 		return 0
-	dir = turn(dir, -90)
+	setDir(turn(dir, -90))
 	return 1
 
 /obj/structure/particle_accelerator/AltClick(mob/user)
@@ -86,7 +90,7 @@
 	if (anchored)
 		usr << "It is fastened to the floor!"
 		return 0
-	dir = turn(dir, 90)
+	setDir(turn(dir, 90))
 	return 1
 
 /obj/structure/particle_accelerator/attackby(obj/item/W, mob/user, params)
@@ -95,7 +99,7 @@
 	switch(construction_state)
 		if(PA_CONSTRUCTION_UNSECURED)
 			if(istype(W, /obj/item/weapon/wrench) && !isinspace())
-				playsound(loc, 'sound/items/Ratchet.ogg', 75, 1)
+				playsound(loc, W.usesound, 75, 1)
 				anchored = 1
 				user.visible_message("[user.name] secures the [name] to the floor.", \
 					"You secure the external bolts.")
@@ -103,7 +107,7 @@
 				did_something = TRUE
 		if(PA_CONSTRUCTION_UNWIRED)
 			if(istype(W, /obj/item/weapon/wrench))
-				playsound(loc, 'sound/items/Ratchet.ogg', 75, 1)
+				playsound(loc, W.usesound, 75, 1)
 				anchored = 0
 				user.visible_message("[user.name] detaches the [name] from the floor.", \
 					"You remove the external bolts.")
@@ -140,18 +144,19 @@
 		update_icon()
 		return
 
-	..()
+	return ..()
 
+
+/obj/structure/particle_accelerator/deconstruct(disassembled = TRUE)
+	if(!(flags & NODECONSTRUCT))
+		new /obj/item/stack/sheet/metal (loc, 5)
+	qdel(src)
 
 /obj/structure/particle_accelerator/Move()
 	..()
 	if(master && master.active)
 		master.toggle_power()
 		investigate_log("was moved whilst active; it <font color='red'>powered down</font>.","singulo")
-
-/obj/structure/particle_accelerator/blob_act()
-	if(prob(50))
-		qdel(src)
 
 
 /obj/structure/particle_accelerator/update_icon()
@@ -165,7 +170,6 @@
 				icon_state="[reference]p[strength]"
 			else
 				icon_state="[reference]c"
-	return
 
 /obj/structure/particle_accelerator/proc/update_state()
 	if(master)

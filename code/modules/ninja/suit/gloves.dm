@@ -31,6 +31,7 @@
 	heat_protection = HANDS
 	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
 	strip_delay = 120
+	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	var/draining = 0
 	var/candrain = 0
 	var/mindrain = 200
@@ -40,7 +41,7 @@
 /obj/item/clothing/gloves/space_ninja/Touch(atom/A,proximity)
 	if(!candrain || draining)
 		return 0
-	if(!istype(loc, /mob/living/carbon/human))
+	if(!ishuman(loc))
 		return 0 //Only works while worn
 
 	var/mob/living/carbon/human/H = loc

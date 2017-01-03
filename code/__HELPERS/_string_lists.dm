@@ -3,7 +3,7 @@
 #define json_load(FILE) (json_decode(file2text(FILE)))
 
 var/global/list/string_cache
-var/global/list/string_filename_current_key
+var/global/string_filename_current_key
 
 
 /proc/strings_replacement(filename, key)

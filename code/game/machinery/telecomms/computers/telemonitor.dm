@@ -16,7 +16,7 @@
 	var/network = "NULL"		// the network to probe
 
 	var/temp = ""				// temporary feedback messages
-	circuit = "/obj/item/weapon/circuitboard/comm_monitor"
+	circuit = /obj/item/weapon/circuitboard/computer/comm_monitor
 
 /obj/machinery/computer/telecomms/monitor/attack_hand(mob/user)
 	if(..())
@@ -123,6 +123,5 @@
 	return
 
 /obj/machinery/computer/telecomms/monitor/attackby()
-	..()
-	src.updateUsrDialog()
-	return
+	. = ..()
+	updateUsrDialog()

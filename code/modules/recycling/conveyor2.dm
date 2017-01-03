@@ -16,6 +16,7 @@
 	var/list/affecting	// the list of all items that will be moved this ptick
 	var/id = ""			// the control ID	- must match controller ID
 	var/verted = 1		// set to -1 to have the conveyour belt be inverted, so you can use the other corner icons
+	speed_process = 1
 
 /obj/machinery/conveyor/centcom_auto
 	id = "round_end_belt"
@@ -45,7 +46,7 @@
 /obj/machinery/conveyor/New(loc, newdir)
 	..(loc)
 	if(newdir)
-		dir = newdir
+		setDir(newdir)
 	update_move_direction()
 
 /obj/machinery/conveyor/proc/update_move_direction()
@@ -105,41 +106,46 @@
 	use_power(100)
 
 	affecting = loc.contents - src		// moved items will be all in loc
-	sleep(1)	// slight delay to prevent infinite propagation due to map order
-	var/items_moved = 0
+	sleep(1)
 	for(var/atom/movable/A in affecting)
 		if(!A.anchored)
 			if(A.loc == src.loc) // prevents the object from being affected if it's not currently here.
 				step(A,movedir)
-				items_moved++
-		if(items_moved >= 10)
-			break
+		CHECK_TICK
 
 // attack with item, place item on conveyor
 /obj/machinery/conveyor/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/crowbar))
+		user.visible_message("<span class='notice'>[user] struggles to pry up \the [src] with \the [I].</span>", \
+		"<span class='notice'>You struggle to pry up \the [src] with \the [I].</span>")
+		if(do_after(user, 40*I.toolspeed, target = src))
+			if(qdeleted(src))
+				return //prevent multiple decontructs
+			if(!(stat & BROKEN))
+				var/obj/item/conveyor_construct/C = new/obj/item/conveyor_construct(src.loc)
+				C.id = id
+				transfer_fingerprints_to(C)
+			user << "<span class='notice'>You remove the conveyor belt.</span>"
+			qdel(src)
+
+	else if(istype(I, /obj/item/weapon/wrench))
 		if(!(stat & BROKEN))
-			var/obj/item/conveyor_construct/C = new/obj/item/conveyor_construct(src.loc)
-			C.id = id
-			transfer_fingerprints_to(C)
-		user << "<span class='notice'>You remove the conveyor belt.</span>"
-		qdel(src)
-		return
-	if(istype(I, /obj/item/weapon/wrench))	
-		if(!(stat & BROKEN))
-			playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
-			dir = turn(dir,-45)
+			playsound(loc, I.usesound, 50, 1)
+			setDir(turn(dir,-45))
 			update_move_direction()
 			user << "<span class='notice'>You rotate [src].</span>"
-			return
-	if(isrobot(user))
-		return //Carn: fix for borgs dropping their modules on conveyor belts
-	if(!user.drop_item())
-		user << "<span class='warning'>\The [I] is stuck to your hand, you cannot place it on the conveyor!</span>"
-		return
-	if(I && I.loc)
-		I.loc = src.loc
-	return
+
+	else if(istype(I, /obj/item/weapon/screwdriver))
+		if(!(stat & BROKEN))
+			verted = verted * -1
+			update_move_direction()
+			user << "<span class='notice'>You reverse [src]'s direction.</span>"
+
+	else if(user.a_intent != INTENT_HARM)
+		if(user.drop_item())
+			I.loc = src.loc
+	else
+		return ..()
 
 // attack with hand, move pulled object onto conveyor
 /obj/machinery/conveyor/attack_hand(mob/user)
@@ -203,6 +209,7 @@
 
 	var/list/conveyors		// the list of converyors that are controlled by this switch
 	anchored = 1
+	speed_process = 1
 
 
 
@@ -240,6 +247,7 @@
 	for(var/obj/machinery/conveyor/C in conveyors)
 		C.operating = position
 		C.update_move_direction()
+		CHECK_TICK
 
 // attack with hand, switch position
 /obj/machinery/conveyor_switch/attack_hand(mob/user)
@@ -266,6 +274,7 @@
 		if(S.id == src.id)
 			S.position = position
 			S.update()
+		CHECK_TICK
 
 /obj/machinery/conveyor_switch/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/crowbar))
@@ -288,7 +297,7 @@
 	icon_state = "conveyor0"
 	name = "conveyor belt assembly"
 	desc = "A conveyor belt assembly."
-	w_class = 4
+	w_class = WEIGHT_CLASS_BULKY
 	var/id = "" //inherited by the belt
 
 /obj/item/conveyor_construct/attackby(obj/item/I, mob/user, params)
@@ -299,7 +308,7 @@
 		id = C.id
 
 /obj/item/conveyor_construct/afterattack(atom/A, mob/user, proximity)
-	if(!proximity || user.stat || !istype(A, /turf/simulated/floor) || istype(A, /area/shuttle))
+	if(!proximity || user.stat || !isfloorturf(A) || istype(A, /area/shuttle))
 		return
 	var/cdir = get_dir(A, user)
 	if(A == user.loc)
@@ -315,7 +324,7 @@
 	desc = "A conveyor control switch assembly."
 	icon = 'icons/obj/recycling.dmi'
 	icon_state = "switch-off"
-	w_class = 4
+	w_class = WEIGHT_CLASS_BULKY
 	var/id = "" //inherited by the switch
 
 /obj/item/conveyor_switch_construct/New()
@@ -323,7 +332,7 @@
 	id = rand() //this couldn't possibly go wrong
 
 /obj/item/conveyor_switch_construct/afterattack(atom/A, mob/user, proximity)
-	if(!proximity || user.stat || !istype(A, /turf/simulated/floor) || istype(A, /area/shuttle))
+	if(!proximity || user.stat || !isfloorturf(A) || istype(A, /area/shuttle))
 		return
 	var/found = 0
 	for(var/obj/machinery/conveyor/C in view())

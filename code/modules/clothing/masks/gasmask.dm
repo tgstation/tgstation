@@ -4,12 +4,12 @@
 	icon_state = "gas_alt"
 	flags = BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
 	flags_inv = HIDEEARS|HIDEEYES|HIDEFACE|HIDEFACIALHAIR
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 	item_state = "gas_alt"
 	gas_transfer_coefficient = 0.01
 	permeability_coefficient = 0.01
 	flags_cover = MASKCOVERSEYES | MASKCOVERSMOUTH
-	burn_state = FIRE_PROOF
+	resistance_flags = 0
 
 // **** Welding gas mask ****
 
@@ -20,22 +20,18 @@
 	materials = list(MAT_METAL=4000, MAT_GLASS=2000)
 	flash_protect = 2
 	tint = 2
-	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
-	origin_tech = "materials=2;engineering=2"
+	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 55)
+	origin_tech = "materials=2;engineering=3"
 	actions_types = list(/datum/action/item_action/toggle)
 	flags_inv = HIDEEARS|HIDEEYES|HIDEFACE
 	flags_cover = MASKCOVERSEYES
 	visor_flags_inv = HIDEEYES
+	visor_flags_cover = MASKCOVERSEYES
+	resistance_flags = FIRE_PROOF
 
-/obj/item/clothing/mask/gas/welding/attack_self()
-	toggle()
+/obj/item/clothing/mask/gas/welding/attack_self(mob/user)
+	weldingvisortoggle(user)
 
-/obj/item/clothing/mask/gas/welding/verb/toggle()
-	set category = "Object"
-	set name = "Adjust welding mask"
-	set src in usr
-
-	weldingvisortoggle()
 
 // ********************************************************************
 
@@ -45,7 +41,7 @@
 	desc = "A modernised version of the classic design, this mask will not only filter out toxins but it can also be connected to an air supply."
 	icon_state = "plaguedoctor"
 	item_state = "gas_mask"
-	armor = list(melee = 0, bullet = 0, laser = 2,energy = 2, bomb = 0, bio = 75, rad = 0)
+	armor = list(melee = 0, bullet = 0, laser = 2,energy = 2, bomb = 0, bio = 75, rad = 0, fire = 0, acid = 0)
 
 /obj/item/clothing/mask/gas/syndicate
 	name = "syndicate mask"
@@ -60,12 +56,14 @@
 	icon_state = "clown"
 	item_state = "clown_hat"
 	flags_cover = MASKCOVERSEYES
-	burn_state = FLAMMABLE
+	resistance_flags = FLAMMABLE
+	actions_types = list(/datum/action/item_action/adjust)
+	dog_fashion = /datum/dog_fashion/head/clown
 
-/obj/item/clothing/mask/gas/clown_hat/AltClick(mob/living/user)
+/obj/item/clothing/mask/gas/clown_hat/ui_action_click(mob/user)
 	if(!istype(user) || user.incapacitated())
 		return
-	
+
 	var/list/options = list()
 	options["True Form"] = "clown"
 	options["The Feminist"] = "sexyclown"
@@ -74,8 +72,12 @@
 
 	var/choice = input(user,"To what form do you wish to Morph this mask?","Morph Mask") in options
 
-	if(src && choice && !user.stat && in_range(user,src))
+	if(src && choice && !user.incapacitated() && in_range(user,src))
 		icon_state = options[choice]
+		user.update_inv_wear_mask()
+		for(var/X in actions)
+			var/datum/action/A = X
+			A.UpdateButtonIcon()
 		user << "<span class='notice'>Your Clown Mask has now morphed into [choice], all praise the Honkmother!</span>"
 		return 1
 
@@ -86,7 +88,7 @@
 	icon_state = "sexyclown"
 	item_state = "sexyclown"
 	flags_cover = MASKCOVERSEYES
-	burn_state = FLAMMABLE
+	resistance_flags = FLAMMABLE
 
 /obj/item/clothing/mask/gas/mime
 	name = "mime mask"
@@ -95,11 +97,11 @@
 	icon_state = "mime"
 	item_state = "mime"
 	flags_cover = MASKCOVERSEYES
-	burn_state = FLAMMABLE
+	resistance_flags = FLAMMABLE
 	actions_types = list(/datum/action/item_action/adjust)
 
 /obj/item/clothing/mask/gas/mime/attack_self(mob/user)
-	cycle_mask(usr)
+	cycle_mask(user)
 
 /obj/item/clothing/mask/gas/mime/proc/cycle_mask(mob/user)
 	switch(icon_state)
@@ -112,6 +114,9 @@
 		if("sexymime")
 			icon_state = "mime"
 	user.update_inv_wear_mask()
+	for(var/X in actions)
+		var/datum/action/A = X
+		A.UpdateButtonIcon()
 	user << "<span class='notice'>You adjust your mask to portray a different emotion.</span>"
 	return 1
 
@@ -122,7 +127,7 @@
 	icon_state = "monkeymask"
 	item_state = "monkeymask"
 	flags_cover = MASKCOVERSEYES
-	burn_state = FLAMMABLE
+	resistance_flags = FLAMMABLE
 
 /obj/item/clothing/mask/gas/sexymime
 	name = "sexy mime mask"
@@ -131,7 +136,7 @@
 	icon_state = "sexymime"
 	item_state = "sexymime"
 	flags_cover = MASKCOVERSEYES
-	burn_state = FLAMMABLE
+	resistance_flags = FLAMMABLE
 
 /obj/item/clothing/mask/gas/death_commando
 	name = "Death Commando Mask"
@@ -142,7 +147,7 @@
 	name = "cyborg visor"
 	desc = "Beep boop."
 	icon_state = "death"
-	burn_state = FLAMMABLE
+	resistance_flags = FLAMMABLE
 
 /obj/item/clothing/mask/gas/owl_mask
 	name = "owl mask"
@@ -150,7 +155,7 @@
 	icon_state = "owl"
 	flags = MASKINTERNALS
 	flags_cover = MASKCOVERSEYES
-	burn_state = FLAMMABLE
+	resistance_flags = FLAMMABLE
 
 /obj/item/clothing/mask/gas/carp
 	name = "carp mask"

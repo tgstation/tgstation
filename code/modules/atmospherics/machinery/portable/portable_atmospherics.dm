@@ -2,6 +2,10 @@
 	name = "portable_atmospherics"
 	icon = 'icons/obj/atmos.dmi'
 	use_power = 0
+	obj_integrity = 250
+	max_integrity = 250
+	armor = list(melee = 0, bullet = 0, laser = 0, energy = 100, bomb = 0, bio = 100, rad = 100, fire = 60, acid = 30)
+
 
 	var/datum/gas_mixture/air_contents
 	var/obj/machinery/atmospherics/components/unary/portables_connector/connected_port
@@ -18,6 +22,7 @@
 	air_contents = new
 	air_contents.volume = volume
 	air_contents.temperature = T20C
+	air_contents.holder = src
 
 	return 1
 
@@ -57,6 +62,11 @@
 	anchored = 1 //Prevent movement
 	return 1
 
+/obj/machinery/portable_atmospherics/Move()
+	. = ..()
+	if(.)
+		disconnect()
+
 /obj/machinery/portable_atmospherics/proc/disconnect()
 	if(!connected_port)
 		return 0
@@ -69,38 +79,48 @@
 	return air_contents
 
 /obj/machinery/portable_atmospherics/attackby(obj/item/weapon/W, mob/user, params)
-	if(istype(W, /obj/item/weapon/tank) && !(stat & BROKEN))
-		var/obj/item/weapon/tank/T = W
-		if(holding || !user.drop_item())
-			return
-		T.loc = src
-		holding = T
-		update_icon()
-	else if(istype(W, /obj/item/weapon/wrench) && !(stat & BROKEN))
-		if(connected_port)
-			disconnect()
-			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-			user.visible_message( \
-				"[user] disconnects [src].", \
-				"<span class='notice'>You unfasten [src] from the port.</span>", \
-				"<span class='italics'>You hear a ratchet.</span>")
-			update_icon()
-			return
-		else
-			var/obj/machinery/atmospherics/components/unary/portables_connector/possible_port = locate(/obj/machinery/atmospherics/components/unary/portables_connector) in loc
-			if(!possible_port)
-				user << "<span class='notice'>Nothing happens.</span>"
+	if(istype(W, /obj/item/weapon/tank))
+		if(!(stat & BROKEN))
+			var/obj/item/weapon/tank/T = W
+			if(holding || !user.drop_item())
 				return
-			if(!connect(possible_port))
-				user << "<span class='notice'>[name] failed to connect to the port.</span>"
-				return
-			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-			user.visible_message( \
-				"[user] connects [src].", \
-				"<span class='notice'>You fasten [src] to the port.</span>", \
-				"<span class='italics'>You hear a ratchet.</span>")
+			T.loc = src
+			holding = T
 			update_icon()
-	else if((istype(W, /obj/item/device/analyzer)) && Adjacent(user))
+	else if(istype(W, /obj/item/weapon/wrench))
+		if(!(stat & BROKEN))
+			if(connected_port)
+				disconnect()
+				playsound(src.loc, W.usesound, 50, 1)
+				user.visible_message( \
+					"[user] disconnects [src].", \
+					"<span class='notice'>You unfasten [src] from the port.</span>", \
+					"<span class='italics'>You hear a ratchet.</span>")
+				update_icon()
+				return
+			else
+				var/obj/machinery/atmospherics/components/unary/portables_connector/possible_port = locate(/obj/machinery/atmospherics/components/unary/portables_connector) in loc
+				if(!possible_port)
+					user << "<span class='notice'>Nothing happens.</span>"
+					return
+				if(!connect(possible_port))
+					user << "<span class='notice'>[name] failed to connect to the port.</span>"
+					return
+				playsound(src.loc, W.usesound, 50, 1)
+				user.visible_message( \
+					"[user] connects [src].", \
+					"<span class='notice'>You fasten [src] to the port.</span>", \
+					"<span class='italics'>You hear a ratchet.</span>")
+				update_icon()
+	else if(istype(W, /obj/item/device/analyzer) && Adjacent(user))
 		atmosanalyzer_scan(air_contents, user)
 	else
+		return ..()
+
+/obj/machinery/portable_atmospherics/attacked_by(obj/item/I, mob/user)
+	if(I.force < 10 && !(stat & BROKEN))
+		take_damage(0)
+	else
+		investigate_log("was smacked with \a [I] by [key_name(user)].", "atmos")
+		add_fingerprint(user)
 		..()

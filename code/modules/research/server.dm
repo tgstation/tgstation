@@ -3,7 +3,7 @@
 	icon = 'icons/obj/machines/research.dmi'
 	icon_state = "server"
 	var/datum/research/files
-	var/health = 100
+	var/heat_health = 100
 	var/list/id_with_upload = list()		//List of R&D consoles with upload to server access.
 	var/list/id_with_download = list()	//List of R&D consoles with download from server access.
 	var/id_with_upload_string = ""		//String versions for easy editing in map editor.
@@ -16,13 +16,17 @@
 
 /obj/machinery/r_n_d/server/New()
 	..()
-	component_parts = list()
-	component_parts += new /obj/item/weapon/circuitboard/rdserver(null)
-	component_parts += new /obj/item/weapon/stock_parts/scanning_module(null)
-	component_parts += new /obj/item/stack/cable_coil(null, 1)
-	component_parts += new /obj/item/stack/cable_coil(null, 1)
-	RefreshParts()
-	initialize(); //Agouri
+	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/rdserver(null)
+	B.apply_default_parts(src)
+	initialize() //Agouri
+
+/obj/item/weapon/circuitboard/machine/rdserver
+	name = "circuit board (R&D Server)"
+	build_path = /obj/machinery/r_n_d/server
+	origin_tech = "programming=3"
+	req_components = list(
+							/obj/item/stack/cable_coil = 2,
+							/obj/item/weapon/stock_parts/scanning_module = 1)
 
 /obj/machinery/r_n_d/server/Destroy()
 	griefProtection()
@@ -52,12 +56,12 @@
 	var/datum/gas_mixture/environment = loc.return_air()
 	switch(environment.temperature)
 		if(0 to T0C)
-			health = min(100, health + 1)
+			heat_health = min(100, heat_health + 1)
 		if(T0C to (T20C + 20))
-			health = Clamp(health, 0, 100)
+			heat_health = Clamp(heat_health, 0, 100)
 		if((T20C + 20) to (T0C + 70))
-			health = max(0, health - 1)
-	if(health <= 0)
+			heat_health = max(0, heat_health - 1)
+	if(heat_health <= 0)
 		/*griefProtection() This seems to get called twice before running any code that deletes/damages the server or it's files anwyay.
 							refreshParts and the hasReq procs that get called by this are laggy and do not need to be called by every server on the map every tick */
 		var/updateRD = 0
@@ -80,17 +84,9 @@
 	griefProtection()
 	..()
 
-
 /obj/machinery/r_n_d/server/ex_act(severity, target)
 	griefProtection()
 	..()
-
-
-/obj/machinery/r_n_d/server/blob_act()
-	griefProtection()
-	..()
-
-
 
 //Backup files to centcom to help admins recover data after greifer attacks
 /obj/machinery/r_n_d/server/proc/griefProtection()
@@ -105,7 +101,7 @@
 
 /obj/machinery/r_n_d/server/proc/produce_heat(heat_amt)
 	if(!(stat & (NOPOWER|BROKEN))) //Blatently stolen from space heater.
-		var/turf/simulated/L = loc
+		var/turf/L = loc
 		if(istype(L))
 			var/datum/gas_mixture/env = L.return_air()
 			if(env.temperature < (heat_amt+T0C))
@@ -124,20 +120,10 @@
 				env.merge(removed)
 				air_update_turf()
 
-/obj/machinery/r_n_d/server/attackby(obj/item/O, mob/user, params)
-	if (disabled)
-		return
-	if (shocked)
-		shock(user,50)
-	if (default_deconstruction_screwdriver(user, "server_o", "server", O))
-		return
-	if(exchange_parts(user, O))
-		return
-	if (panel_open)
-		if(istype(O, /obj/item/weapon/crowbar))
-			griefProtection()
-			default_deconstruction_crowbar(O)
-			return 1
+//called when the server is deconstructed.
+/obj/machinery/r_n_d/server/on_deconstruction()
+	griefProtection()
+	..()
 
 /obj/machinery/r_n_d/server/attack_hand(mob/user as mob) // I guess only exists to stop ninjas or hell does it even work I dunno.  See also ninja gloves.
 	if (disabled)
@@ -187,7 +173,7 @@
 	var/list/servers = list()
 	var/list/consoles = list()
 	var/badmin = 0
-	circuit = /obj/item/weapon/circuitboard/rdservercontrol
+	circuit = /obj/item/weapon/circuitboard/computer/rdservercontrol
 
 /obj/machinery/computer/rdservercontrol/Topic(href, href_list)
 	if(..())
@@ -240,15 +226,15 @@
 
 	else if(href_list["reset_tech"])
 		var/choice = alert("Technology Data Reset", "Are you sure you want to reset this technology to its default data? Data lost cannot be recovered.", "Continue", "Cancel")
-		if(choice == "Continue")
+		if(choice == "Continue" && usr.canUseTopic(src))
 			var/datum/tech/T = temp_server.files.known_tech[href_list["reset_tech"]]
 			if(T)
 				T.level = 1
 		temp_server.files.RefreshResearch()
 
 	else if(href_list["reset_design"])
-		var/choice = alert("Design Data Deletion", "Are you sure you want to delete this design? If you still have the prerequisites for the design, it'll reset to its base reliability. Data lost cannot be recovered.", "Continue", "Cancel")
-		if(choice == "Continue")
+		var/choice = alert("Design Data Deletion", "Are you sure you want to delete this design? Data lost cannot be recovered.", "Continue", "Cancel")
+		if(choice == "Continue" && usr.canUseTopic(src))
 			var/datum/design/D = temp_server.files.known_designs[href_list["reset_design"]]
 			if(D)
 				temp_server.files.known_designs -= D.id
@@ -323,9 +309,8 @@
 	return
 
 /obj/machinery/computer/rdservercontrol/attackby(obj/item/weapon/D, mob/user, params)
-	..()
+	. = ..()
 	src.updateUsrDialog()
-	return
 
 /obj/machinery/computer/rdservercontrol/emag_act(mob/user)
 	if(!emagged)

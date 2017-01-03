@@ -4,7 +4,7 @@
 	icon_state = "signaller"
 	item_state = "signaler"
 	materials = list(MAT_METAL=400, MAT_GLASS=120)
-	origin_tech = "magnets=1"
+	origin_tech = "magnets=1;bluespace=1"
 	wires = WIRE_RECEIVE | WIRE_PULSE | WIRE_RADIO_PULSE | WIRE_RADIO_RECEIVE
 	attachable = 1
 
@@ -25,14 +25,10 @@
 	return ..()
 
 /obj/item/device/assembly/signaler/activate()
-	if(cooldown > 0)
-		return 0
-	cooldown = 2
-	spawn(10)
-		process_cooldown()
-
+	if(!..())//cooldown processing
+		return FALSE
 	signal()
-	return 1
+	return TRUE
 
 /obj/item/device/assembly/signaler/update_icon()
 	if(holder)

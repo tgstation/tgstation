@@ -3,7 +3,7 @@
 	desc = "Used for scanning and alerting when someone enters a certain proximity."
 	icon_state = "prox"
 	materials = list(MAT_METAL=800, MAT_GLASS=200)
-	origin_tech = "magnets=1"
+	origin_tech = "magnets=1;engineering=1"
 	attachable = 1
 
 	var/scanning = 0
@@ -21,7 +21,7 @@
 
 /obj/item/device/assembly/prox_sensor/New()
 	..()
-	SSobj.processing |= src
+	START_PROCESSING(SSobj, src)
 	oldloc = loc
 
 /obj/item/device/assembly/prox_sensor/describe()
@@ -59,13 +59,11 @@
 
 
 /obj/item/device/assembly/prox_sensor/sense()
-	if((!secured)||(cooldown > 0))
+	if(!secured || next_activate > world.time)
 		return 0
 	pulse(0)
 	audible_message("\icon[src] *beep* *beep*", null, 3)
-	cooldown = 2
-	spawn(10)
-		process_cooldown()
+	next_activate = world.time + 30
 
 
 /obj/item/device/assembly/prox_sensor/process()
@@ -80,9 +78,11 @@
 /obj/item/device/assembly/prox_sensor/dropped()
 	..()
 	if(scanning)
-		spawn(0)
-			sense()
+		addtimer(src, "sense", 0)
 
+/obj/item/device/assembly/prox_sensor/Destroy()
+	remove_from_proximity_list(src, sensitivity)
+	return ..()
 
 /obj/item/device/assembly/prox_sensor/toggle_scan(scan)
 	if(!secured)
@@ -102,13 +102,13 @@
 	sensitivity = sense
 
 /obj/item/device/assembly/prox_sensor/update_icon()
-	overlays.Cut()
+	cut_overlays()
 	attached_overlays = list()
 	if(timing)
-		overlays += "prox_timing"
+		add_overlay("prox_timing")
 		attached_overlays += "prox_timing"
 	if(scanning)
-		overlays += "prox_scanning"
+		add_overlay("prox_scanning")
 		attached_overlays += "prox_scanning"
 	if(holder)
 		holder.update_icon()

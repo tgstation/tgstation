@@ -32,9 +32,9 @@ var/list/doppler_arrays = list()
 			anchored = 0
 			power_change()
 			user << "<span class='notice'>You unfasten [src].</span>"
-		playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
+		playsound(loc, O.usesound, 50, 1)
 	else
-		..()
+		return ..()
 
 /obj/machinery/doppler_array/verb/rotate()
 	set name = "Rotate Tachyon-doppler Dish"
@@ -45,7 +45,7 @@ var/list/doppler_arrays = list()
 		return
 	if(usr.stat || usr.restrained() || !usr.canmove)
 		return
-	src.dir = turn(src.dir, 90)
+	src.setDir(turn(src.dir, 90))
 	return
 
 /obj/machinery/doppler_array/AltClick(mob/living/user)

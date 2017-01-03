@@ -5,17 +5,18 @@
 
 /obj/structure/closet/secure_closet/engineering_chief/New()
 	..()
-	new /obj/item/clothing/suit/cloak/ce(src)
+	new /obj/item/clothing/neck/cloak/ce(src)
 	new /obj/item/clothing/under/rank/chief_engineer(src)
 	new /obj/item/clothing/head/hardhat/white(src)
 	new /obj/item/clothing/head/welding(src)
 	new /obj/item/clothing/gloves/color/yellow(src)
 	new /obj/item/clothing/shoes/sneakers/brown(src)
+	new /obj/item/weapon/tank/jetpack/suit(src)
 	new /obj/item/weapon/cartridge/ce(src)
 	new /obj/item/device/radio/headset/heads/ce(src)
 	new /obj/item/weapon/storage/toolbox/mechanical(src)
 	new /obj/item/clothing/suit/hazardvest(src)
-	new /obj/item/weapon/storage/box/permits(src)
+	new /obj/item/device/megaphone/command(src)
 	new /obj/item/areaeditor/blueprints(src)
 	new /obj/item/weapon/airlock_painter(src)
 	new /obj/item/weapon/holosign_creator/engineering(src)
@@ -69,6 +70,7 @@
 	new /obj/item/weapon/holosign_creator/engineering(src)
 	new /obj/item/clothing/mask/gas(src)
 	new /obj/item/clothing/glasses/meson/engine(src)
+	new /obj/item/weapon/storage/box/emptysandbags(src)
 
 
 /obj/structure/closet/secure_closet/atmospherics

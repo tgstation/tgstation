@@ -3,9 +3,9 @@
 	name = "blank picket sign"
 	desc = "It's blank"
 	force = 5
-	w_class = 4
+	w_class = WEIGHT_CLASS_BULKY
 	attack_verb = list("bashed","smacked")
-	burn_state = FLAMMABLE
+	resistance_flags = FLAMMABLE
 
 	var/label = ""
 	var/last_wave = 0
@@ -17,7 +17,8 @@
 			label = txt
 			src.name = "[label] sign"
 			desc =	"It reads: [label]"
-	..()
+	else
+		return ..()
 
 /obj/item/weapon/picket_sign/attack_self(mob/living/carbon/human/user)
 	if( last_wave + 20 < world.time )
@@ -28,7 +29,7 @@
 			user.visible_message("<span class='warning'>[user] waves around blank sign.</span>")
 		user.changeNext_move(CLICK_CD_MELEE)
 
-/datum/table_recipe/picket_sign
+/datum/crafting_recipe/picket_sign
 	name = "Picket Sign"
 	result = /obj/item/weapon/picket_sign
 	reqs = list(/obj/item/stack/rods = 1,

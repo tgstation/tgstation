@@ -10,6 +10,9 @@
 	icon_state = "sheater-off"
 	name = "space heater"
 	desc = "Made by Space Amish using traditional space techniques, this heater/cooler is guaranteed not to set the station on fire."
+	obj_integrity = 250
+	max_integrity = 250
+	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 100, rad = 100, fire = 80, acid = 10)
 	var/obj/item/weapon/stock_parts/cell/cell
 	var/on = FALSE
 	var/mode = HEATER_MODE_STANDBY
@@ -24,22 +27,27 @@
 /obj/machinery/space_heater/New()
 	..()
 	cell = new(src)
-	component_parts = list()
-	component_parts += new /obj/item/weapon/circuitboard/space_heater(null)
-	component_parts += new /obj/item/weapon/stock_parts/capacitor(null)
-	component_parts += new /obj/item/weapon/stock_parts/micro_laser(null)
-	component_parts += new /obj/item/stack/cable_coil(null, 3)
-	RefreshParts()
+	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/space_heater(null)
+	B.apply_default_parts(src)
 	update_icon()
 
-/obj/machinery/space_heater/construction()
+/obj/item/weapon/circuitboard/machine/space_heater
+	name = "circuit board (Space Heater)"
+	build_path = /obj/machinery/space_heater
+	origin_tech = "programming=2;engineering=2;plasmatech=2"
+	req_components = list(
+							/obj/item/weapon/stock_parts/micro_laser = 1,
+							/obj/item/weapon/stock_parts/capacitor = 1,
+							/obj/item/stack/cable_coil = 3)
+
+/obj/machinery/space_heater/on_construction()
 	qdel(cell)
 	cell = null
 	panel_open = TRUE
 	update_icon()
 	return ..()
 
-/obj/machinery/space_heater/deconstruction()
+/obj/machinery/space_heater/on_deconstruction()
 	if(cell)
 		component_parts += cell
 		cell = null
@@ -59,16 +67,16 @@
 	else
 		icon_state = "sheater-off"
 
-	overlays.Cut()
+	cut_overlays()
 	if(panel_open)
-		overlays += "sheater-open"
+		add_overlay("sheater-open")
 
 /obj/machinery/space_heater/process()
 	if(!on || !is_operational())
 		return
 
 	if(cell && cell.charge > 0)
-		var/turf/simulated/L = loc
+		var/turf/L = loc
 		if(!istype(L))
 			if(mode != HEATER_MODE_STANDBY)
 				mode = HEATER_MODE_STANDBY
@@ -142,7 +150,7 @@
 				return
 			else
 				// insert cell
-				var/obj/item/weapon/stock_parts/cell/C = usr.get_active_hand()
+				var/obj/item/weapon/stock_parts/cell/C = usr.get_active_held_item()
 				if(istype(C))
 					if(!user.drop_item())
 						return
@@ -164,7 +172,7 @@
 	else if(exchange_parts(user, I) || default_deconstruction_crowbar(I))
 		return
 	else
-		..()
+		return ..()
 
 /obj/machinery/space_heater/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
 										datum/tgui/master_ui = null, datum/ui_state/state = physical_state)
@@ -185,7 +193,7 @@
 	data["minTemp"] = max(settableTemperatureMedian - settableTemperatureRange - T0C, TCMB)
 	data["maxTemp"] = settableTemperatureMedian + settableTemperatureRange - T0C
 
-	var/turf/simulated/L = get_turf(loc)
+	var/turf/L = get_turf(loc)
 	var/curTemp
 	if(istype(L))
 		var/datum/gas_mixture/env = L.return_air()
@@ -219,6 +227,7 @@
 			if(target == "input")
 				target = input("New target temperature:", name, round(targetTemperature - T0C, 1)) as num|null
 				if(!isnull(target) && !..())
+					target += T0C
 					. = TRUE
 			else if(adjust)
 				target = targetTemperature + adjust

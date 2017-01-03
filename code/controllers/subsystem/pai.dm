@@ -1,13 +1,14 @@
 var/datum/subsystem/pai/SSpai
+var/list/obj/item/device/paicard/pai_card_list = list()
 
 /datum/subsystem/pai
 	name = "pAI"
-	priority = 20
 
-	var/askDelay = 600
-	var/const/NEVER_FOR_THIS_ROUND = -1
+	flags = SS_NO_INIT|SS_NO_FIRE
+
 	var/list/candidates = list()
-	var/list/asked = list()
+	var/ghost_spam = FALSE
+	var/spam_delay = 100
 
 /datum/subsystem/pai/New()
 	NEW_SS_GLOBAL(SSpai)
@@ -28,7 +29,6 @@ var/datum/subsystem/pai/SSpai
 			pai.key = candidate.key
 
 			card.setPersonality(pai)
-			card.looking_for_personality = 0
 
 			ticker.mode.update_cult_icons_removed(card.pai.mind)
 			ticker.mode.update_rev_icons_removed(card.pai.mind)
@@ -75,8 +75,8 @@ var/datum/subsystem/pai/SSpai
 			if("submit")
 				if(candidate)
 					candidate.ready = 1
-					for(var/obj/item/device/paicard/p in world)
-						if(p.looking_for_personality == 1)
+					for(var/obj/item/device/paicard/p in pai_card_list)
+						if(!p.pai)
 							p.alertUpdate()
 				usr << browse(null, "window=paiRecruit")
 				return
@@ -133,8 +133,20 @@ var/datum/subsystem/pai/SSpai
 
 	M << browse(dat, "window=paiRecruit")
 
+/datum/subsystem/pai/proc/spam_again()
+	ghost_spam = FALSE
+
 /datum/subsystem/pai/proc/findPAI(obj/item/device/paicard/p, mob/user)
-	requestRecruits()
+	if(!ghost_spam)
+		ghost_spam = TRUE
+		for(var/mob/dead/observer/G in player_list)
+			if(!G.key || !G.client)
+				continue
+			if(!(ROLE_PAI in G.client.prefs.be_special))
+				continue
+			//G << 'sound/misc/server-ready.ogg' //Alerting them to their consideration
+			G << "<span class='ghostalert'>Someone is requesting a pAI personality! Use the pAI button to submit yourself as one.</span>"
+		addtimer(src, "spam_again", spam_delay)
 	var/list/available = list()
 	for(var/datum/paiCandidate/c in SSpai.candidates)
 		if(c.ready)
@@ -178,36 +190,6 @@ var/datum/subsystem/pai/SSpai
 	dat += "</table>"
 
 	user << browse(dat, "window=findPai")
-
-/datum/subsystem/pai/proc/requestRecruits()
-	for(var/mob/dead/observer/O in player_list)
-		if(jobban_isbanned(O, ROLE_PAI))
-			continue
-		if(asked[O.ckey])
-			if(world.time < asked[O.ckey] + askDelay || asked[O.ckey] == NEVER_FOR_THIS_ROUND)
-				continue
-			else
-				asked.Remove(O.ckey)
-		if(O.client)
-			var/hasSubmitted = 0
-			for(var/datum/paiCandidate/c in SSpai.candidates)
-				if(c.key == O.key)
-					hasSubmitted = 1
-			if(!hasSubmitted && (ROLE_PAI in O.client.prefs.be_special))
-				question(O.client)
-
-/datum/subsystem/pai/proc/question(client/C)
-	set waitfor = 0
-	if(!C)
-		return
-	asked[C.ckey] = world.time
-	var/response = tgalert(C, "Someone is requesting a pAI personality. Would you like to play as a personal AI?", "pAI Request", "Yes", "No", "Never for this round", StealFocus=0, Timeout=askDelay)
-	if(!C)
-		return		//handle logouts that happen whilst the alert is waiting for a response.
-	if(response == "Yes")
-		recruitWindow(C.mob)
-	else if (response == "Never for this round")
-		asked[C.ckey] = NEVER_FOR_THIS_ROUND
 
 /datum/paiCandidate
 	var/name

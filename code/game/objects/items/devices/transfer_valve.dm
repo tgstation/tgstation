@@ -10,6 +10,7 @@
 	var/mob/attacher = null
 	var/valve_open = 0
 	var/toggle = 1
+	origin_tech = "materials=1;engineering=1"
 
 /obj/item/device/transfer_valve/IsAssemblyHolder()
 	return 1
@@ -84,16 +85,16 @@
 			tank_one.loc = get_turf(src)
 			tank_one = null
 			update_icon()
-			if((!tank_two || tank_two.w_class < 4) && (w_class > 3))
-				w_class = 3
+			if((!tank_two || tank_two.w_class < WEIGHT_CLASS_BULKY) && (w_class > WEIGHT_CLASS_NORMAL))
+				w_class = WEIGHT_CLASS_NORMAL
 		else if(tank_two && href_list["tanktwo"])
 			split_gases()
 			valve_open = 0
 			tank_two.loc = get_turf(src)
 			tank_two = null
 			update_icon()
-			if((!tank_one || tank_one.w_class < 4) && (w_class > 3))
-				w_class = 3
+			if((!tank_one || tank_one.w_class < WEIGHT_CLASS_BULKY) && (w_class > WEIGHT_CLASS_NORMAL))
+				w_class = WEIGHT_CLASS_NORMAL
 		else if(href_list["open"])
 			toggle_valve()
 		else if(attached_device)
@@ -118,7 +119,7 @@
 			toggle = 1
 
 /obj/item/device/transfer_valve/update_icon()
-	overlays.Cut()
+	cut_overlays()
 	underlays = null
 
 	if(!tank_one && !tank_two && !attached_device)
@@ -127,13 +128,13 @@
 	icon_state = "valve"
 
 	if(tank_one)
-		overlays += "[tank_one.icon_state]"
+		add_overlay("[tank_one.icon_state]")
 	if(tank_two)
 		var/icon/J = new(icon, icon_state = "[tank_two.icon_state]")
 		J.Shift(WEST, 13)
 		underlays += J
 	if(attached_device)
-		overlays += "device"
+		add_overlay("device")
 
 /obj/item/device/transfer_valve/proc/merge_gases()
 	tank_two.air_contents.volume += tank_one.air_contents.volume

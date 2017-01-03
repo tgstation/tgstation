@@ -5,7 +5,7 @@
 	desc = "An angled mirror for reflecting lasers. This one does so at a 90 degree angle."
 	anchored = 0
 	density = 1
-	layer = 2.9
+	layer = BELOW_OBJ_LAYER
 	var/finished = 0
 	var/admin = 0 //Can't be rotated or deconstructed
 	var/framebuildstacktype = /obj/item/stack/sheet/metal
@@ -44,13 +44,13 @@
 	if(istype(W, /obj/item/weapon/wrench))
 		if(anchored)
 			user << "Unweld the [src] first!"
-		if(do_after(user, 80/W.toolspeed, target = src))
-			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+		if(do_after(user, 80*W.toolspeed, target = src))
+			playsound(src.loc, W.usesound, 50, 1)
 			user << "You dismantle the [src]."
 			new framebuildstacktype(loc, framebuildstackamount)
 			new buildstacktype(loc, buildstackamount)
 			qdel(src)
-	if(istype(W, /obj/item/weapon/weldingtool))
+	else if(istype(W, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = W
 		switch(anchored)
 			if(0)
@@ -59,7 +59,7 @@
 					user.visible_message("[user.name] starts to weld the [src.name] to the floor.", \
 						"<span class='notice'>You start to weld \the [src] to the floor...</span>", \
 						"<span class='italics'>You hear welding.</span>")
-					if (do_after(user,20/W.toolspeed, target = src))
+					if (do_after(user,20*W.toolspeed, target = src))
 						if(!src || !WT.isOn())
 							return
 						anchored = 1
@@ -70,13 +70,13 @@
 					user.visible_message("[user.name] starts to cut the [src.name] free from the floor.", \
 						"<span class='notice'>You start to cut \the [src] free from the floor...</span>", \
 						"<span class='italics'>You hear welding.</span>")
-					if (do_after(user,20/W.toolspeed, target = src))
+					if (do_after(user,20*W.toolspeed, target = src))
 						if(!src || !WT.isOn())
 							return
 						anchored  = 0
 						user << "<span class='notice'>You cut \the [src] free from the floor.</span>"
 	//Finishing the frame
-	if(istype(W,/obj/item/stack/sheet))
+	else if(istype(W,/obj/item/stack/sheet))
 		if(finished)
 			return
 		var/obj/item/stack/sheet/S = W
@@ -101,6 +101,8 @@
 				S.use(1)
 				new /obj/structure/reflector/box (src.loc)
 				qdel(src)
+	else
+		return ..()
 
 /obj/structure/reflector/proc/get_reflection(srcdir,pdir)
 	return 0
@@ -116,16 +118,14 @@
 	if (src.anchored)
 		usr << "<span class='warning'>It is fastened to the floor!</span>"
 		return 0
-	src.dir = turn(src.dir, 270)
+	src.setDir(turn(src.dir, 270))
 	return 1
 
 
 /obj/structure/reflector/AltClick(mob/user)
 	..()
-	if(!user.canUseTopic(user))
+	if(!user.canUseTopic(src, be_close=TRUE))
 		user << "<span class='warning'>You can't do that right now!</span>"
-		return
-	if(!in_range(src, user))
 		return
 	else
 		rotate()

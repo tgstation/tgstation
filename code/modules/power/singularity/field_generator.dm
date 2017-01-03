@@ -1,4 +1,4 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:33
+
 
 
 /*
@@ -14,22 +14,22 @@ field_generator power level display
 
 #define field_generator_max_power 250
 
-#define FG_UNSECURED 0
-#define FG_SECURED 1
-#define FG_WELDED 2
-
 #define FG_OFFLINE 0
 #define FG_CHARGING 1
 #define FG_ONLINE 2
 
 /obj/machinery/field/generator
-	name = "Field Generator"
+	name = "field generator"
 	desc = "A large thermal battery that projects a high amount of energy when powered."
 	icon = 'icons/obj/machines/field_generator.dmi'
 	icon_state = "Field_Gen"
 	anchored = 0
 	density = 1
 	use_power = 0
+	obj_integrity = 500
+	max_integrity = 500
+	//100% immune to lasers and energy projectiles since it absorbs their energy.
+	armor = list(melee = 25, bullet = 10, laser = 100, energy = 100, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 70)
 	var/const/num_power_levels = 6	// Total number of power level icon has
 	var/power_level = 0
 	var/active = FG_OFFLINE
@@ -41,13 +41,13 @@ field_generator power level display
 	var/clean_up = 0
 
 /obj/machinery/field/generator/update_icon()
-	overlays.Cut()
+	cut_overlays()
 	if(warming_up)
-		overlays += "+a[warming_up]"
+		add_overlay("+a[warming_up]")
 	if(fields.len)
-		overlays += "+on"
+		add_overlay("+on")
 	if(power_level)
-		overlays += "+p[power_level]"
+		add_overlay("+p[power_level]")
 
 
 /obj/machinery/field/generator/New()
@@ -77,30 +77,26 @@ field_generator power level display
 	else
 		user << "<span class='warning'>The [src] needs to be firmly secured to the floor first!</span>"
 
+/obj/machinery/field/generator/can_be_unfasten_wrench(mob/user)
+	if(state == FG_WELDED)
+		user  << "<span class='warning'>[src] is welded to the floor!</span>"
+		return FAILED_UNFASTEN
+	return ..()
+
+/obj/machinery/field/generator/default_unfasten_wrench(mob/user, obj/item/weapon/wrench/W, time = 20)
+	. = ..()
+	if(. == SUCCESSFUL_UNFASTEN)
+		if(anchored)
+			state = FG_SECURED
+		else
+			state = FG_UNSECURED
 
 /obj/machinery/field/generator/attackby(obj/item/W, mob/user, params)
 	if(active)
-		user << "<span class='warning'>The [src] needs to be off!</span>"
+		user << "<span class='warning'>[src] needs to be off!</span>"
 		return
 	else if(istype(W, /obj/item/weapon/wrench))
-		switch(state)
-			if(FG_UNSECURED)
-				if(isinspace()) return
-				state = FG_SECURED
-				playsound(loc, 'sound/items/Ratchet.ogg', 75, 1)
-				user.visible_message("[user.name] secures [name] to the floor.", \
-					"<span class='notice'>You secure the external reinforcing bolts to the floor.</span>", \
-					"<span class='italics'>You hear ratchet.</span>")
-				anchored = 1
-			if(FG_SECURED)
-				state = FG_UNSECURED
-				playsound(loc, 'sound/items/Ratchet.ogg', 75, 1)
-				user.visible_message("[user.name] unsecures [name] reinforcing bolts from the floor.", \
-					"<span class='notice'>You undo the external reinforcing bolts.</span>", \
-					"<span class='italics'>You hear ratchet.</span>")
-				anchored = 0
-			if(FG_WELDED)
-				user << "<span class='warning'>The [name] needs to be unwelded from the floor!</span>"
+		default_unfasten_wrench(user, W, 0)
 
 	else if(istype(W, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = W
@@ -110,35 +106,42 @@ field_generator power level display
 
 			if(FG_SECURED)
 				if (WT.remove_fuel(0,user))
-					playsound(loc, 'sound/items/Welder2.ogg', 50, 1)
+					playsound(loc, WT.usesound, 50, 1)
 					user.visible_message("[user.name] starts to weld the [name] to the floor.", \
 						"<span class='notice'>You start to weld \the [src] to the floor...</span>", \
 						"<span class='italics'>You hear welding.</span>")
-					if (do_after(user,20/W.toolspeed, target = src))
-						if(!src || !WT.isOn()) return
+					if(do_after(user,20*W.toolspeed, target = src) && state == FG_SECURED && WT.isOn())
 						state = FG_WELDED
 						user << "<span class='notice'>You weld the field generator to the floor.</span>"
 
 			if(FG_WELDED)
 				if (WT.remove_fuel(0,user))
-					playsound(loc, 'sound/items/Welder2.ogg', 50, 1)
+					playsound(loc, WT.usesound, 50, 1)
 					user.visible_message("[user.name] starts to cut the [name] free from the floor.", \
 						"<span class='notice'>You start to cut \the [src] free from the floor...</span>", \
 						"<span class='italics'>You hear welding.</span>")
-					if (do_after(user,20/W.toolspeed, target = src))
-						if(!src || !WT.isOn()) return
+					if(do_after(user,20*W.toolspeed, target = src) && state == FG_WELDED && WT.isOn())
 						state = FG_SECURED
 						user << "<span class='notice'>You cut \the [src] free from the floor.</span>"
 
 	else
-		..()
+		return ..()
 
+/obj/machinery/field/generator/attack_animal(mob/living/simple_animal/M)
+	if(M.environment_smash >= 3 && active == FG_OFFLINE && state != FG_UNSECURED)
+		state = FG_UNSECURED
+		anchored = FALSE
+		M.visible_message("<span class='warning'>[M] rips [src] free from its moorings!</span>")
+	else
+		..()
+	if(!anchored)
+		step(src, get_dir(M, src))
 
 /obj/machinery/field/generator/emp_act()
 	return 0
 
 
-/obj/machinery/field/generator/blob_act()
+/obj/machinery/field/generator/blob_act(obj/structure/blob/B)
 	if(active)
 		return 0
 	else
@@ -148,7 +151,7 @@ field_generator power level display
 	if(Proj.flag != "bullet")
 		power = min(power + Proj.damage, field_generator_max_power)
 		check_power_level()
-	return 0
+	..()
 
 
 /obj/machinery/field/generator/Destroy()
@@ -182,8 +185,10 @@ field_generator power level display
 				start_fields()
 
 
-/obj/machinery/field/generator/proc/calc_power()
+/obj/machinery/field/generator/proc/calc_power(set_power_draw)
 	var/power_draw = 2 + fields.len
+	if(set_power_draw)
+		power_draw = set_power_draw
 
 	if(draw_power(round(power_draw/2,1)))
 		check_power_level()
@@ -238,7 +243,8 @@ field_generator power level display
 		setup_field(4)
 	spawn(4)
 		setup_field(8)
-	active = FG_ONLINE
+	spawn(5)
+		active = FG_ONLINE
 
 
 /obj/machinery/field/generator/proc/setup_field(NSEW)
@@ -282,7 +288,7 @@ field_generator power level display
 			var/obj/machinery/field/containment/CF = new/obj/machinery/field/containment()
 			CF.set_master(src,G)
 			CF.loc = T
-			CF.dir = field_dir
+			CF.setDir(field_dir)
 			fields += CF
 			G.fields += CF
 			for(var/mob/living/L in T)

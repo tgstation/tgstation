@@ -2,6 +2,7 @@
 	name = "Construct"
 	real_name = "Construct"
 	desc = ""
+	gender = NEUTER
 	speak_emote = list("hisses")
 	response_help  = "thinks better of touching"
 	response_disarm = "flails at"
@@ -9,7 +10,7 @@
 	speak_chance = 1
 	icon = 'icons/mob/mob.dmi'
 	speed = 0
-	a_intent = "harm"
+	a_intent = INTENT_HARM
 	stop_automated_movement = 1
 	status_flags = CANPUSH
 	attack_sound = 'sound/weapons/punch1.ogg'
@@ -20,10 +21,13 @@
 	maxbodytemp = INFINITY
 	healable = 0
 	faction = list("cult")
-	flying = 1
-	pressure_resistance = 200
+	movement_type = FLYING
+	pressure_resistance = 100
 	unique_name = 1
 	AIStatus = AI_OFF //normal constructs don't have AI
+	loot = list(/obj/item/weapon/ectoplasm)
+	del_on_death = 1
+	deathmessage = "collapses in a shattered heap."
 	var/list/construct_spells = list()
 	var/playstyle_string = "<b>You are a generic construct! Your job is to not exist, and you should probably adminhelp this.</b>"
 
@@ -33,22 +37,21 @@
 	for(var/spell in construct_spells)
 		AddSpell(new spell(null))
 
-/mob/living/simple_animal/hostile/construct/death()
-	..(1)
-	new /obj/item/weapon/ectoplasm (src.loc)
-	visible_message("<span class='danger'>[src] collapses in a shattered heap.</span>")
-	ghostize()
-	qdel(src)
-	return
+/mob/living/simple_animal/hostile/construct/Login()
+	..()
+	src << playstyle_string
 
 /mob/living/simple_animal/hostile/construct/examine(mob/user)
-	var/msg = "<span cass='info'>*---------*\nThis is \icon[src] \a <b>[src]</b>!\n"
-	if (src.health < src.maxHealth)
+	var/t_He = p_they(TRUE)
+	var/t_s = p_s()
+	var/msg = "<span class='cult'>*---------*\nThis is \icon[src] \a <b>[src]</b>!\n"
+	msg += "[desc]\n"
+	if(health < maxHealth)
 		msg += "<span class='warning'>"
-		if (src.health >= src.maxHealth/2)
-			msg += "It looks slightly dented.\n"
+		if(health >= maxHealth/2)
+			msg += "[t_He] look[t_s] slightly dented.\n"
 		else
-			msg += "<b>It looks severely dented!</b>\n"
+			msg += "<b>[t_He] look[t_s] severely dented!</b>\n"
 		msg += "</span>"
 	msg += "*---------*</span>"
 
@@ -59,15 +62,15 @@
 		if(health < maxHealth)
 			adjustHealth(-5)
 			if(src != M)
-				Beam(M,icon_state="sendbeam",icon='icons/effects/effects.dmi',time=4)
+				Beam(M,icon_state="sendbeam",time=4)
 				M.visible_message("<span class='danger'>[M] repairs some of \the <b>[src]'s</b> dents.</span>", \
 						   "<span class='cult'>You repair some of <b>[src]'s</b> dents, leaving <b>[src]</b> at <b>[health]/[maxHealth]</b> health.</span>")
 			else
-				M.visible_message("<span class='danger'>[M] repairs some of its own dents.</span>", \
+				M.visible_message("<span class='danger'>[M] repairs some of [p_their()] own dents.</span>", \
 						   "<span class='cult'>You repair some of your own dents, leaving you at <b>[M.health]/[M.maxHealth]</b> health.</span>")
 		else
 			if(src != M)
-				M << "<span class='cult'>You cannot repair <b>[src]'s</b> dents, as it has none!</span>"
+				M << "<span class='cult'>You cannot repair <b>[src]'s</b> dents, as [p_they()] [p_have()] none!</span>"
 			else
 				M << "<span class='cult'>You cannot repair your own dents, as you have none!</span>"
 	else if(src != M)
@@ -79,6 +82,8 @@
 /mob/living/simple_animal/hostile/construct/narsie_act()
 	return
 
+/mob/living/simple_animal/hostile/construct/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, safety = 0, tesla_shock = 0, illusion = 0)
+	return 0
 
 
 /////////////////Juggernaut///////////////
@@ -92,6 +97,7 @@
 	health = 250
 	response_harm = "harmlessly punches"
 	harm_intent_damage = 0
+	obj_damage = 90
 	melee_damage_lower = 30
 	melee_damage_upper = 30
 	attacktext = "smashes their armored gauntlet into"
@@ -170,6 +176,7 @@
 	health = 50
 	response_harm = "viciously beats"
 	harm_intent_damage = 5
+	obj_damage = 60
 	melee_damage_lower = 5
 	melee_damage_upper = 5
 	retreat_distance = 10
@@ -183,12 +190,12 @@
 							/obj/effect/proc_holder/spell/aoe_turf/conjure/construct/lesser,
 							/obj/effect/proc_holder/spell/targeted/projectile/magic_missile/lesser)
 	playstyle_string = "<b>You are an Artificer. You are incredibly weak and fragile, but you are able to construct fortifications, \
-						use magic missile, repair allied constructs (by clicking on them), \
+						use magic missile, repair allied constructs, shades, and yourself (by clicking on them), \
 						<i>and, most important of all,</i> create new constructs by producing soulstones to capture souls, \
 						and shells to place those soulstones into.</b>"
 
 /mob/living/simple_animal/hostile/construct/builder/Found(atom/A) //what have we found here?
-	if(istype(A, /mob/living/simple_animal/hostile/construct)) //is it a construct?
+	if(isconstruct(A)) //is it a construct?
 		var/mob/living/simple_animal/hostile/construct/C = A
 		if(C.health < C.maxHealth) //is it hurt? let's go heal it if it is
 			return 1
@@ -207,7 +214,7 @@
 	..()
 	if(isliving(target))
 		var/mob/living/L = target
-		if(istype(L, /mob/living/simple_animal/hostile/construct) && L.health >= L.maxHealth) //is this target an unhurt construct? stop trying to heal it
+		if(isconstruct(L) && L.health >= L.maxHealth) //is this target an unhurt construct? stop trying to heal it
 			LoseTarget()
 			return 0
 		if(L.health <= melee_damage_lower+melee_damage_upper) //ey bucko you're hurt as fuck let's go hit you
@@ -216,7 +223,7 @@
 
 /mob/living/simple_animal/hostile/construct/builder/Aggro()
 	..()
-	if(istype(target, /mob/living/simple_animal/hostile/construct)) //oh the target is a construct no need to flee
+	if(isconstruct(target)) //oh the target is a construct no need to flee
 		retreat_distance = null
 		minimum_distance = 1
 
@@ -228,11 +235,6 @@
 /mob/living/simple_animal/hostile/construct/builder/hostile //actually hostile, will move around, hit things, heal other constructs
 	AIStatus = AI_ON
 	environment_smash = 1 //only token destruction, don't smash the cult wall NO STOP
-
-
-
-
-
 
 /////////////////////////////Non-cult Artificer/////////////////////////
 /mob/living/simple_animal/hostile/construct/builder/noncult

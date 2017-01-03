@@ -1,6 +1,6 @@
 #define PUMP_OUT "out"
 #define PUMP_IN "in"
-#define PUMP_MAX_PRESSURE (ONE_ATMOSPHERE * 10)
+#define PUMP_MAX_PRESSURE (ONE_ATMOSPHERE * 30)
 #define PUMP_MIN_PRESSURE (ONE_ATMOSPHERE / 10)
 #define PUMP_DEFAULT_PRESSURE (ONE_ATMOSPHERE)
 
@@ -33,11 +33,11 @@
 /obj/machinery/portable_atmospherics/pump/update_icon()
 	icon_state = "psiphon:[on]"
 
-	overlays.Cut()
+	cut_overlays()
 	if(holding)
-		overlays += "siphon-open"
+		add_overlay("siphon-open")
 	if(connected_port)
-		overlays += "siphon-connector"
+		add_overlay("siphon-connector")
 
 /obj/machinery/portable_atmospherics/pump/process_atmos()
 	..()

@@ -15,7 +15,8 @@
 	gender = PLURAL
 	icon = 'icons/obj/items.dmi'
 	icon_state = "soap"
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
+	flags = NOBLUDGEON
 	throwforce = 0
 	throw_speed = 3
 	throw_range = 7
@@ -42,7 +43,7 @@
 
 /obj/item/weapon/soap/suicide_act(mob/user)
 	user.say(";FFFFFFFFFFFFFFFFUUUUUUUDGE!!")
-	user.visible_message("<span class='suicide'>[user] lifts the [src.name] to their mouth and gnaws on it furiously, producing a thick froth! They'll never get that BB gun now!")
+	user.visible_message("<span class='suicide'>[user] lifts [src] to their mouth and gnaws on it furiously, producing a thick froth! [user.p_they(TRUE)]'ll never get that BB gun now!")
 	PoolOrNew(/obj/effect/particle_effect/foam, loc)
 	return (TOXLOSS)
 
@@ -64,13 +65,16 @@
 			user << "<span class='notice'>You scrub \the [target.name] out.</span>"
 			qdel(target)
 	else if(ishuman(target) && user.zone_selected == "mouth")
+		var/mob/living/carbon/human/H = user
 		user.visible_message("<span class='warning'>\the [user] washes \the [target]'s mouth out with [src.name]!</span>", "<span class='notice'>You wash \the [target]'s mouth out with [src.name]!</span>") //washes mouth out with soap sounds better than 'the soap' here
+		H.lip_style = null //removes lipstick
+		H.update_body()
 		return
 	else if(istype(target, /obj/structure/window))
 		user.visible_message("[user] begins to clean \the [target.name] with [src]...", "<span class='notice'>You begin to clean \the [target.name] with [src]...</span>")
 		if(do_after(user, src.cleanspeed, target = target))
 			user << "<span class='notice'>You clean \the [target.name].</span>"
-			target.color = initial(target.color)
+			target.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
 			target.SetOpacity(initial(target.opacity))
 	else
 		user.visible_message("[user] begins to clean \the [target.name] with [src]...", "<span class='notice'>You begin to clean \the [target.name] with [src]...</span>")
@@ -78,7 +82,9 @@
 			user << "<span class='notice'>You clean \the [target.name].</span>"
 			var/obj/effect/decal/cleanable/C = locate() in target
 			qdel(C)
+			target.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
 			target.clean_blood()
+			target.wash_cream()
 	return
 
 
@@ -95,7 +101,7 @@
 	item_state = "bike_horn"
 	throwforce = 0
 	hitsound = null //To prevent tap.ogg playing, as the item lacks of force
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 	throw_speed = 3
 	throw_range = 7
 	attack_verb = list("HONKED")
@@ -104,7 +110,7 @@
 	var/cooldowntime = 20
 
 /obj/item/weapon/bikehorn/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] solemnly points the horn at \his temple! It looks like \he's trying to commit suicide..</span>")
+	user.visible_message("<span class='suicide'>[user] solemnly points the horn at [user.p_their()] temple! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	playsound(src.loc, honksound, 50, 1)
 	return (BRUTELOSS)
 
@@ -133,3 +139,34 @@
 	icon_state = "air_horn"
 	honksound = 'sound/items/AirHorn2.ogg'
 	cooldowntime = 50
+	origin_tech = "materials=4;engineering=4"
+
+/obj/item/weapon/bikehorn/golden
+	name = "golden bike horn"
+	desc = "Golden? Clearly, it's made with bananium! Honk!"
+	icon_state = "gold_horn"
+	item_state = "gold_horn"
+
+/obj/item/weapon/bikehorn/golden/attack()
+	flip_mobs()
+	return ..()
+
+/obj/item/weapon/bikehorn/golden/attack_self(mob/user)
+	flip_mobs()
+	..()
+
+/obj/item/weapon/bikehorn/golden/proc/flip_mobs(mob/living/carbon/M, mob/user)
+	if (!spam_flag)
+		var/turf/T = get_turf(src)
+		for(M in ohearers(7, T))
+			if(ishuman(M))
+				var/mob/living/carbon/human/H = M
+				if((istype(H.ears, /obj/item/clothing/ears/earmuffs)) || H.ear_deaf)
+					continue
+			M.emote("flip")
+
+/obj/item/weapon/reagent_containers/food/drinks/soda_cans/canned_laughter
+	name = "Canned Laughter"
+	desc = "Just looking at this makes you want to giggle."
+	icon_state = "laughter"
+	list_reagents = list("laughter" = 50)

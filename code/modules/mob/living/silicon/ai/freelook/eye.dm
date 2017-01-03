@@ -6,7 +6,7 @@
 /mob/camera/aiEye
 	name = "Inactive AI Eye"
 
-	invisibility = 100
+	invisibility = INVISIBILITY_MAXIMUM
 	var/list/visibleCameraChunks = list()
 	var/mob/living/silicon/ai/ai = null
 	var/relay_speech = FALSE
@@ -24,9 +24,10 @@
 		cameranet.visibility(src)
 		if(ai.client)
 			ai.client.eye = src
+		update_parallax_contents()
 		//Holopad
-		if(istype(ai.current, /obj/machinery/hologram/holopad))
-			var/obj/machinery/hologram/holopad/H = ai.current
+		if(istype(ai.current, /obj/machinery/holopad))
+			var/obj/machinery/holopad/H = ai.current
 			H.move_hologram(ai)
 
 /mob/camera/aiEye/Move()
@@ -42,7 +43,7 @@
 	return ..()
 
 /atom/proc/move_camera_by_click()
-	if(istype(usr, /mob/living/silicon/ai))
+	if(isAI(usr))
 		var/mob/living/silicon/ai/AI = usr
 		if(AI.eyeobj && AI.client.eye == AI.eyeobj)
 			AI.cameraFollow = null
@@ -76,7 +77,7 @@
 
 	//user.unset_machine() //Uncomment this if it causes problems.
 	//user.lightNearbyCamera()
-	if (user.camera_light_on)
+	if(user.camera_light_on)
 		user.light_cameras()
 
 // Return to the Core.
@@ -86,13 +87,11 @@
 	cameraFollow = null
 	unset_machine()
 
-	if(src.eyeobj && src.loc)
-		src.eyeobj.loc = src.loc
-	else
+	if(!eyeobj || !eyeobj.loc || qdeleted(eyeobj))
 		src << "ERROR: Eyeobj not found. Creating new eye..."
-		src.eyeobj = new(src.loc)
-		src.eyeobj.ai = src
-		src.eyeobj.name = "[src.name] (AI Eye)" // Give it a name
+		eyeobj = new(loc)
+		eyeobj.ai = src
+		eyeobj.name = "[src.name] (AI Eye)" // Give it a name
 
 	eyeobj.setLoc(loc)
 

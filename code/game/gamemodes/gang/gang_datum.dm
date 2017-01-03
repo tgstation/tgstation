@@ -13,10 +13,13 @@
 	var/list/territory = list()
 	var/list/territory_new = list()
 	var/list/territory_lost = list()
-	var/dom_timer = "OFFLINE"
 	var/dom_attempts = 2
 	var/points = 15
-	var/datum/atom_hud/antag/ganghud
+	var/datum/atom_hud/antag/gang/ganghud
+	var/is_deconvertible = TRUE //Can you deconvert normal gangsters from the gang
+
+	var/domination_timer
+	var/is_dominating
 
 /datum/gang/New(loc,gangname)
 	if(!gang_colors_pool.len)
@@ -44,6 +47,7 @@
 	gang_name_pool -= name
 
 	ganghud = new()
+	ganghud.color = color_hex
 	log_game("The [name] Gang has been created. Their gang color is [color].")
 
 /datum/gang/proc/add_gang_hud(datum/mind/recruit_mind)
@@ -55,10 +59,16 @@
 	ticker.mode.set_antag_hud(defector_mind.current, null)
 
 /datum/gang/proc/domination(modifier=1)
-	dom_timer = get_domination_time(src) * modifier
+	set_domination_time(determine_domination_time(src) * modifier)
+	is_dominating = TRUE
 	set_security_level("delta")
-	SSshuttle.emergencyNoEscape = 1
 
+/datum/gang/proc/set_domination_time(d)
+	domination_timer = world.time + (10 * d)
+
+/datum/gang/proc/domination_time_remaining()
+	var/diff = domination_timer - world.time
+	return diff / 10
 //////////////////////////////////////////// OUTFITS
 
 
@@ -97,7 +107,7 @@
 
 		if(outfit_path)
 			var/obj/item/clothing/outfit = new outfit_path(user.loc)
-			outfit.armor = list(melee = 20, bullet = 30, laser = 10, energy = 10, bomb = 20, bio = 0, rad = 0)
+			outfit.armor = list(melee = 20, bullet = 30, laser = 10, energy = 10, bomb = 20, bio = 0, rad = 0, fire = 30, acid = 30)
 			outfit.desc += " Tailored for the [name] Gang to offer the wearer moderate protection against ballistics and physical trauma."
 			outfit.gang = src
 			user.put_in_hands(outfit)
@@ -117,8 +127,7 @@
 		if(mob && mob.mind && mob.stat == CONSCIOUS)
 			if(mob.mind.gang_datum == src)
 				mob << "<span class='[warning ? "warning" : "notice"]'>\icon[tool] [message]</span>"
-				if(beep)
-					playsound(mob.loc, 'sound/machines/twobeep.ogg', 50, 1)
+			return
 
 
 //////////////////////////////////////////// INCOME
@@ -127,7 +136,6 @@
 /datum/gang/proc/income()
 	if(!bosses.len)
 		return
-
 	var/added_names = ""
 	var/lost_names = ""
 
@@ -170,12 +178,13 @@
 
 	//Calculate and report influence growth
 	var/message = "<b>[src] Gang Status Report:</b><BR>*---------*<br>"
-	if(isnum(dom_timer))
-		var/new_time = max(180,dom_timer - (uniformed * 4) - (territory.len * 2))
-		if(new_time < dom_timer)
-			message += "Takeover shortened by [dom_timer - new_time] seconds for defending [territory.len] territories and [uniformed] uniformed gangsters.<BR>"
-			dom_timer = new_time
-		message += "<b>[dom_timer] seconds remain</b> in hostile takeover.<BR>"
+	if(is_dominating)
+		var/seconds_remaining = domination_time_remaining()
+		var/new_time = max(180, seconds_remaining - (uniformed * 4) - (territory.len * 2))
+		if(new_time < seconds_remaining)
+			message += "Takeover shortened by [seconds_remaining - new_time] seconds for defending [territory.len] territories and [uniformed] uniformed gangsters.<BR>"
+			set_domination_time(new_time)
+		message += "<b>[seconds_remaining] seconds remain</b> in hostile takeover.<BR>"
 	else
 		var/points_new = min(999,points + 15 + (uniformed * 2) + territory.len)
 		if(points_new != points)
@@ -205,3 +214,19 @@
 	//Increase outfit stock
 	for(var/obj/item/device/gangtool/tool in gangtools)
 		tool.outfits = min(tool.outfits+1,5)
+
+
+//Multiverse
+
+/datum/gang/multiverse
+	dom_attempts = 0
+	points = 0
+	fighting_style = "multiverse"
+	is_deconvertible = FALSE
+
+/datum/gang/multiverse/New(loc, multiverse_override)
+	name = multiverse_override
+	ganghud = new()
+
+/datum/gang/multiverse/income()
+	return

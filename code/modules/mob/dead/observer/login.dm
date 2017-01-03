@@ -1,13 +1,16 @@
 /mob/dead/observer/Login()
 	..()
 
-	if(check_rights(R_ADMIN, 0))
+	ghost_accs = client.prefs.ghost_accs
+	ghost_others = client.prefs.ghost_others
+	var/preferred_form = null
+
+	if(IsAdminGhost(src))
 		has_unlimited_silicon_privilege = 1
 
 	if(client.prefs.unlock_content)
-		icon_state = client.prefs.ghost_form
-		if (ghostimage)
-			ghostimage.icon_state = src.icon_state
+		preferred_form = client.prefs.ghost_form
 		ghost_orbit = client.prefs.ghost_orbit
 
+	update_icon(preferred_form)
 	updateghostimages()

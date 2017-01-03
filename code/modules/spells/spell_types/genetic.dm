@@ -28,5 +28,3 @@
 				for(var/A in mutations)
 					target.dna.remove_mutation(A)
 				target.disabilities &= ~disabilities
-
-	return

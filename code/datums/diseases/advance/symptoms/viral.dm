@@ -63,3 +63,45 @@ BONUS
 				M << "<span class='notice'>You feel better, but no different from before.</span>"
 			if(5)
 				M << "<span class='notice'>You feel off, but nothing interesting happens.</span>"
+
+/*
+//////////////////////////////////////
+
+Viral aggressive metabolism (ex-Longevity)
+
+	No stealth.
+	Small resistance boost.
+	Reduced stage speed.
+	Large transmittablity boost.
+	High Level.
+
+Bonus
+	The virus starts at stage 5 and decrease over time until it self cures.
+	Stages still increase naturally with stage speed.
+
+//////////////////////////////////////
+*/
+
+/datum/symptom/viralreverse
+
+	name = "Viral aggressive metabolism"
+	stealth = 0
+	resistance = 1
+	stage_speed = -2
+	transmittable = 3
+	level = 3
+
+/datum/symptom/viralreverse/Activate(datum/disease/advance/A)
+	..()
+	if(prob(SYMPTOM_ACTIVATION_PROB))
+		var/mob/living/M = A.affected_mob
+		Heal(M, A)
+	return
+
+/datum/symptom/viralreverse/proc/Heal(mob/living/M, datum/disease/advance/A)
+	A.stage -= 1
+	if(A.stage < 2)
+		A.cure()
+
+/datum/symptom/viralreverse/Start(datum/disease/advance/A)
+	A.stage = 5

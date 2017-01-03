@@ -4,7 +4,7 @@
 	icon = 'icons/obj/doors/airlocks/station2/glass.dmi'
 	overlays_file = 'icons/obj/doors/airlocks/station2/overlays.dmi'
 	opacity = 0
-	doortype = /obj/structure/door_assembly/door_assembly_glass
+	assemblytype = /obj/structure/door_assembly/door_assembly_glass
 	glass = 1
 
 	var/datum/radio_frequency/air_connection

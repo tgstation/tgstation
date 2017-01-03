@@ -8,7 +8,7 @@
 	icon = 'icons/obj/device.dmi'
 	name = "control wand"
 	desc = "Remotely controls airlocks."
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 	var/mode = WAND_OPEN
 	var/region_access = 1 //See access.dm
 	var/obj/item/weapon/card/id/ID
@@ -37,7 +37,7 @@
 	if(!D.requiresID())
 		user << "<span class='danger'>[D]'s ID scan is disabled!</span>"
 		return
-	if(D.check_access(src.ID))
+	if(D.check_access(ID) && D.canAIControl(user))
 		switch(mode)
 			if(WAND_OPEN)
 				if(D.density)

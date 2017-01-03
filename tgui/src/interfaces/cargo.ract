@@ -16,7 +16,7 @@
       <span>{{data.location}}</span>
     {{/if}}
   </ui-section>
-  <ui-section label='Points'>
+  <ui-section label='Credits'>
     <span>{{Math.floor(adata.points)}}</span>
   </ui-section>
   <ui-section label='Centcom Message'>
@@ -25,7 +25,9 @@
   {{#if data.loan && !data.requestonly}}
     <ui-section label='Loan'>
       {{#if !data.loan_dispatched}}
-        <ui-button action='loan'>Loan Shuttle</ui-button>
+        <ui-button
+         state='{{data.away && data.docked ? null : "disabled"}}'
+         action='loan'>Loan Shuttle</ui-button>
       {{else}}
         <span class='bad'>Loaned to Centcom</span>
       {{/if}}
@@ -41,7 +43,7 @@
       <ui-section candystripe nowrap>
         <div class='content'>#{{id}}</div>
         <div class='content'>{{object}}</div>
-        <div class='content'>{{cost}} Points</div>
+        <div class='content'>{{cost}} Credits</div>
         <div class='content'>
           <ui-button icon='minus' action='remove' params='{"id": "{{id}}"}'/>
         </div>
@@ -61,7 +63,7 @@
     <ui-section candystripe nowrap>
       <div class='content'>#{{id}}</div>
       <div class='content'>{{object}}</div>
-      <div class='content'>{{cost}} Points</div>
+      <div class='content'>{{cost}} Credits</div>
       <div class='content'>By {{orderer}}</div>
       <div class='content'>Comment: {{reason}}</div>
       {{#if !data.requestonly}}
@@ -80,7 +82,7 @@
     <tab name='{{name}}'>
       {{#each packs}}
         <ui-section label='{{name}}' candystripe right>
-          <ui-button action='add' params='{"id": "{{id}}"}'>{{cost}} Points</ui-button>
+          <ui-button action='add' params='{"id": "{{id}}"}'>{{cost}} Credits</ui-button>
         </ui-section>
       {{/each}}
     </tab>

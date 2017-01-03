@@ -1,4 +1,4 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:33
+
 
 /* new portable generator - work in progress
 
@@ -42,7 +42,7 @@ display round(lastgen) and plasmatank amount
 //Baseline portable generator. Has all the default handling. Not intended to be used on it's own (since it generates unlimited power).
 /obj/machinery/power/port_gen
 	name = "portable generator"
-	desc = "A portable generator for emergency backup power"
+	desc = "A portable generator for emergency backup power."
 	icon = 'icons/obj/power.dmi'
 	icon_state = "portgen0"
 	density = 1
@@ -94,7 +94,7 @@ display round(lastgen) and plasmatank amount
 	var/max_sheets = 100
 	var/sheet_name = ""
 	var/sheet_path = /obj/item/stack/sheet/mineral/plasma
-	var/board_path = "/obj/item/weapon/circuitboard/pacman"
+	var/board_path = /obj/item/weapon/circuitboard/machine/pacman
 	var/sheet_left = 0 // How much is left of the sheet
 	var/time_per_sheet = 260
 	var/current_heat = 0
@@ -106,16 +106,31 @@ display round(lastgen) and plasmatank amount
 
 /obj/machinery/power/port_gen/pacman/New()
 	..()
-	component_parts = list()
-	component_parts += new /obj/item/weapon/stock_parts/matter_bin(src)
-	component_parts += new /obj/item/weapon/stock_parts/micro_laser(src)
-	component_parts += new /obj/item/stack/cable_coil(src, 1)
-	component_parts += new /obj/item/stack/cable_coil(src, 1)
-	component_parts += new /obj/item/weapon/stock_parts/capacitor(src)
-	component_parts += new board_path(src)
+	var/obj/item/weapon/circuitboard/machine/B = new board_path(null)
+	B.apply_default_parts(src)
+
 	var/obj/sheet = new sheet_path(null)
 	sheet_name = sheet.name
-	RefreshParts()
+
+/obj/item/weapon/circuitboard/machine/pacman
+	name = "circuit board (PACMAN-type Generator)"
+	build_path = /obj/machinery/power/port_gen/pacman
+	origin_tech = "programming=2;powerstorage=3;plasmatech=3;engineering=3"
+	req_components = list(
+							/obj/item/weapon/stock_parts/matter_bin = 1,
+							/obj/item/weapon/stock_parts/micro_laser = 1,
+							/obj/item/stack/cable_coil = 2,
+							/obj/item/weapon/stock_parts/capacitor = 1)
+
+/obj/item/weapon/circuitboard/machine/pacman/super
+	name = "circuit board (SUPERPACMAN-type Generator)"
+	build_path = /obj/machinery/power/port_gen/pacman/super
+	origin_tech = "programming=3;powerstorage=4;engineering=4"
+
+/obj/item/weapon/circuitboard/machine/pacman/mrs
+	name = "circuit board (MRSPACMAN-type Generator)"
+	build_path = "/obj/machinery/power/port_gen/pacman/mrs"
+	origin_tech = "programming=3;powerstorage=4;engineering=4;plasmatech=4"
 
 /obj/machinery/power/port_gen/pacman/Destroy()
 	DropFuel()
@@ -223,16 +238,18 @@ display round(lastgen) and plasmatank amount
 				anchored = 0
 
 			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
-
+			return
 		else if(istype(O, /obj/item/weapon/screwdriver))
 			panel_open = !panel_open
-			playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+			playsound(src.loc, O.usesound, 50, 1)
 			if(panel_open)
 				user << "<span class='notice'>You open the access panel.</span>"
 			else
 				user << "<span class='notice'>You close the access panel.</span>"
-		else if(istype(O, /obj/item/weapon/crowbar) && panel_open)
-			default_deconstruction_crowbar(O)
+			return
+		else if(default_deconstruction_crowbar(O))
+			return
+	return ..()
 
 /obj/machinery/power/port_gen/pacman/emag_act(mob/user)
 	if(!emagged)
@@ -254,7 +271,7 @@ display round(lastgen) and plasmatank amount
 
 /obj/machinery/power/port_gen/pacman/interact(mob/user)
 	if (get_dist(src, user) > 1 )
-		if (!istype(user, /mob/living/silicon/ai))
+		if(!isAI(user))
 			user.unset_machine()
 			user << browse(null, "window=port_gen")
 			return
@@ -273,7 +290,7 @@ display round(lastgen) and plasmatank amount
 	dat += text("Power current: [(powernet == null ? "Unconnected" : "[avail()]")]<br>")
 	dat += text("Heat: [current_heat]<br>")
 	dat += "<br><A href='?src=\ref[src];action=close'>Close</A>"
-	user << browse("[dat]", "window=port_gen")
+	user << browse(dat, "window=port_gen")
 	onclose(user, "port_gen")
 
 /obj/machinery/power/port_gen/pacman/Topic(href, href_list)
@@ -314,9 +331,10 @@ display round(lastgen) and plasmatank amount
 	sheet_path = /obj/item/stack/sheet/mineral/uranium
 	power_gen = 15000
 	time_per_sheet = 85
-	board_path = "/obj/item/weapon/circuitboard/pacman/super"
-	overheat()
-		explosion(src.loc, 3, 3, 3, -1)
+	board_path = /obj/item/weapon/circuitboard/machine/pacman/super
+
+/obj/machinery/power/port_gen/pacman/super/overheat()
+	explosion(src.loc, 3, 3, 3, -1)
 
 /obj/machinery/power/port_gen/pacman/mrs
 	name = "\improper M.R.S.P.A.C.M.A.N.-type portable generator"
@@ -324,6 +342,7 @@ display round(lastgen) and plasmatank amount
 	sheet_path = /obj/item/stack/sheet/mineral/diamond
 	power_gen = 40000
 	time_per_sheet = 80
-	board_path = "/obj/item/weapon/circuitboard/pacman/mrs"
-	overheat()
-		explosion(src.loc, 4, 4, 4, -1)
+	board_path = /obj/item/weapon/circuitboard/machine/pacman/mrs
+
+/obj/machinery/power/port_gen/pacman/mrs/overheat()
+	explosion(src.loc, 4, 4, 4, -1)

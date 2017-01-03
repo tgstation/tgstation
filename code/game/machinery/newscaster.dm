@@ -175,8 +175,10 @@ var/list/obj/machinery/newscaster/allCasters = list()
 	verb_say = "beeps"
 	verb_ask = "beeps"
 	verb_exclaim = "beeps"
-	var/isbroken = 0
-	var/ispowered = 1
+	armor = list(melee = 50, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 30)
+	obj_integrity = 200
+	max_integrity = 200
+	integrity_failure = 50
 	var/screen = 0
 	var/paper_remaining = 15
 	var/securityCaster = 0
@@ -188,7 +190,6 @@ var/list/obj/machinery/newscaster/allCasters = list()
 	var/obj/item/weapon/photo/photo = null
 	var/channel_name = ""
 	var/c_locked=0
-	var/hitstaken = 0
 	var/datum/newscaster/feed_channel/viewing_channel = null
 	var/allow_comments = 1
 	luminosity = 0
@@ -201,7 +202,7 @@ var/list/obj/machinery/newscaster/allCasters = list()
 /obj/machinery/newscaster/New(loc, ndir, building)
 	..()
 	if(building)
-		dir = ndir
+		setDir(ndir)
 		pixel_x = (dir & 3)? 0 : (dir == 4 ? -32 : 32)
 		pixel_y = (dir & 3)? (dir ==1 ? -32 : 32) : 0
 
@@ -217,64 +218,57 @@ var/list/obj/machinery/newscaster/allCasters = list()
 	return ..()
 
 /obj/machinery/newscaster/update_icon()
-	if(!ispowered || isbroken)
+	cut_overlays()
+	if(stat & (NOPOWER|BROKEN))
 		icon_state = "newscaster_off"
-		if(isbroken)
-			overlays.Cut()
-			overlays += image(icon, "crack3")
-		return
-	overlays.Cut()
-	if(news_network.wanted_issue.active)
-		icon_state = "newscaster_wanted"
-		return
-	if(alert)
-		overlays += "newscaster_alert"
-	if(hitstaken > 0)
-		overlays += image(icon, "crack[hitstaken]")
-	icon_state = "newscaster_normal"
+	else
+		if(news_network.wanted_issue.active)
+			icon_state = "newscaster_wanted"
+		else
+			icon_state = "newscaster_normal"
+			if(alert)
+				add_overlay("newscaster_alert")
+	var/hp_percent = obj_integrity * 100 /max_integrity
+	switch(hp_percent)
+		if(75 to 100)
+			return
+		if(50 to 75)
+			add_overlay("crack1")
+		if(25 to 50)
+			add_overlay("crack2")
+		else
+			add_overlay("crack3")
+
 
 /obj/machinery/newscaster/power_change()
-	if(isbroken)
+	if(stat & BROKEN)
 		return
 	if(powered())
-		ispowered = 1
 		stat &= ~NOPOWER
 		update_icon()
 	else
 		spawn(rand(0, 15))
-			ispowered = 0
 			stat |= NOPOWER
 			update_icon()
 
-/obj/machinery/newscaster/ex_act(severity, target)
-	switch(severity)
-		if(1)
-			qdel(src)
-		if(2)
-			isbroken=1
-			if(prob(50))
-				qdel(src)
-			else
-				update_icon()
-		else
-			if(prob(50))
-				isbroken=1
-			update_icon()
+/obj/machinery/newscaster/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
+	. = ..()
+	update_icon()
 
 /obj/machinery/newscaster/attack_ai(mob/user)
 	return attack_hand(user)
 
 /obj/machinery/newscaster/attack_hand(mob/user)
-	if(!ispowered || isbroken)
+	if(stat & (NOPOWER|BROKEN))
 		return
-	if(istype(user, /mob/living/carbon/human) || istype(user,/mob/living/silicon) )
+	if(ishuman(user) || issilicon(user))
 		var/mob/living/human_or_robot_user = user
 		var/dat
 		scan_user(human_or_robot_user)
 		switch(screen)
 			if(0)
 				dat += "Welcome to Newscasting Unit #[unit_no].<BR> Interface & News networks Operational."
-				dat += "<BR><FONT SIZE=1>Property of Nanotransen Inc</FONT>"
+				dat += "<BR><FONT SIZE=1>Property of Nanotrasen Inc</FONT>"
 				if(news_network.wanted_issue.active)
 					dat+= "<HR><A href='?src=\ref[src];view_wanted=1'>Read Wanted Issue</A>"
 				dat+= "<HR><BR><A href='?src=\ref[src];create_channel=1'>Create Feed Channel</A>"
@@ -327,11 +321,11 @@ var/list/obj/machinery/newscaster/allCasters = list()
 			if(6)
 				dat+="<B><FONT COLOR='maroon'>ERROR: Could not submit Feed story to Network.</B></FONT><HR><BR>"
 				if(channel_name=="")
-					dat+="<FONT COLOR='maroon'>•Invalid receiving channel name.</FONT><BR>"
+					dat+="<FONT COLOR='maroon'>Invalid receiving channel name.</FONT><BR>"
 				if(scanned_user=="Unknown")
-					dat+="<FONT COLOR='maroon'>•Channel author unverified.</FONT><BR>"
+					dat+="<FONT COLOR='maroon'>Channel author unverified.</FONT><BR>"
 				if(msg == "" || msg == "\[REDACTED\]")
-					dat+="<FONT COLOR='maroon'>•Invalid message body.</FONT><BR>"
+					dat+="<FONT COLOR='maroon'>Invalid message body.</FONT><BR>"
 				dat+="<BR><A href='?src=\ref[src];setScreen=[3]'>Return</A><BR>"
 			if(7)
 				dat+="<B><FONT COLOR='maroon'>ERROR: Could not submit Feed Channel to Network.</B></FONT><HR><BR>"
@@ -342,18 +336,18 @@ var/list/obj/machinery/newscaster/allCasters = list()
 					else
 						existing_authors += FC.author
 				if(scanned_user in existing_authors)
-					dat+="<FONT COLOR='maroon'>•There already exists a Feed channel under your name.</FONT><BR>"
+					dat+="<FONT COLOR='maroon'>There is already a Feed channel under your name.</FONT><BR>"
 				if(channel_name=="" || channel_name == "\[REDACTED\]")
-					dat+="<FONT COLOR='maroon'>•Invalid channel name.</FONT><BR>"
+					dat+="<FONT COLOR='maroon'>Invalid channel name.</FONT><BR>"
 				var/check = 0
 				for(var/datum/newscaster/feed_channel/FC in news_network.network_channels)
 					if(FC.channel_name == channel_name)
 						check = 1
 						break
 				if(check)
-					dat+="<FONT COLOR='maroon'>•Channel name already in use.</FONT><BR>"
+					dat+="<FONT COLOR='maroon'>Channel name already in use.</FONT><BR>"
 				if(scanned_user=="Unknown")
-					dat+="<FONT COLOR='maroon'>•Channel author unverified.</FONT><BR>"
+					dat+="<FONT COLOR='maroon'>Channel author unverified.</FONT><BR>"
 				dat+="<BR><A href='?src=\ref[src];setScreen=[2]'>Return</A><BR>"
 			if(8)
 				var/total_num=length(news_network.network_channels)
@@ -472,11 +466,11 @@ var/list/obj/machinery/newscaster/allCasters = list()
 			if(16)
 				dat+="<B><FONT COLOR='maroon'>ERROR: Wanted Issue rejected by Network.</B></FONT><HR><BR>"
 				if(channel_name=="" || channel_name == "\[REDACTED\]")
-					dat+="<FONT COLOR='maroon'>•Invalid name for person wanted.</FONT><BR>"
+					dat+="<FONT COLOR='maroon'>Invalid name for person wanted.</FONT><BR>"
 				if(scanned_user=="Unknown")
-					dat+="<FONT COLOR='maroon'>•Issue author unverified.</FONT><BR>"
+					dat+="<FONT COLOR='maroon'>Issue author unverified.</FONT><BR>"
 				if(msg == "" || msg == "\[REDACTED\]")
-					dat+="<FONT COLOR='maroon'>•Invalid description.</FONT><BR>"
+					dat+="<FONT COLOR='maroon'>Invalid description.</FONT><BR>"
 				dat+="<BR><A href='?src=\ref[src];setScreen=[0]'>Return</A><BR>"
 			if(17)
 				dat+="<B>Wanted Issue successfully deleted from Circulation</B><BR>"
@@ -512,7 +506,7 @@ var/list/obj/machinery/newscaster/allCasters = list()
 /obj/machinery/newscaster/Topic(href, href_list)
 	if(..())
 		return
-	if ((usr.contents.Find(src) || ((get_dist(src, usr) <= 1) && istype(loc, /turf))) || (istype(usr, /mob/living/silicon)))
+	if ((usr.contents.Find(src) || ((get_dist(src, usr) <= 1) && isturf(loc))) || issilicon(usr))
 		usr.set_machine(src)
 		scan_user(usr)
 		if(href_list["set_channel_name"])
@@ -604,7 +598,7 @@ var/list/obj/machinery/newscaster/allCasters = list()
 			channel_name = trim(stripped_input(usr, "Provide the name of the Wanted person", "Network Security Handler"))
 			updateUsrDialog()
 		else if(href_list["set_wanted_desc"])
-			msg = trim(stripped_input(usr, "Provide the a description of the Wanted person and any other details you deem important", "Network Security Handler"))
+			msg = trim(stripped_input(usr, "Provide a description of the Wanted person and any other details you deem important", "Network Security Handler"))
 			updateUsrDialog()
 		else if(href_list["submit_wanted"])
 			var/input_param = text2num(href_list["submit_wanted"])
@@ -722,41 +716,69 @@ var/list/obj/machinery/newscaster/allCasters = list()
 /obj/machinery/newscaster/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/weapon/wrench))
 		user << "<span class='notice'>You start [anchored ? "un" : ""]securing [name]...</span>"
-		playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
-		if(do_after(user, 60/I.toolspeed, target = src))
-			user << "<span class='notice'>You [anchored ? "un" : ""]secure [name].</span>"
-			new /obj/item/wallframe/newscaster(loc)
+		playsound(loc, I.usesound, 50, 1)
+		if(do_after(user, 60*I.toolspeed, target = src))
 			playsound(loc, 'sound/items/Deconstruct.ogg', 50, 1)
-			qdel(src)
-		return
-	if(isbroken)
-		playsound(loc, 'sound/effects/hit_on_shattered_glass.ogg', 100, 1)
-		audible_message("<span class='danger'>[user.name] further abuses the shattered [name].</span>", null, 5 )
-	else
-		if(istype(I, /obj/item/weapon))
-			user.do_attack_animation(src)
-			var/obj/item/weapon/W = I
-			if(W.damtype == STAMINA)
-				return
-			if(W.force <15)
-				audible_message("<span class='danger'>[user.name] hits the [name] with the [W.name] with no visible effect.</span>", null , 5 )
-				playsound(loc, 'sound/effects/Glasshit.ogg', 100, 1)
+			if(stat & BROKEN)
+				user << "<span class='warning'>The broken remains of [src] fall on the ground.</span>"
+				new /obj/item/stack/sheet/metal(loc, 5)
+				new /obj/item/weapon/shard(loc)
+				new /obj/item/weapon/shard(loc)
 			else
-				hitstaken++
-				if(hitstaken==3)
-					audible_message("<span class='danger'>[user.name] smashes the [name]!</span>", null, 5 )
-					isbroken=1
-					playsound(loc, 'sound/effects/Glassbr3.ogg', 100, 1)
-				else
-					audible_message("<span class='danger'>[user.name] forcefully slams the [name] with the [I.name]!</span>", null, 5 )
-					playsound(loc, 'sound/effects/Glasshit.ogg', 100, 1)
+				user << "<span class='notice'>You [anchored ? "un" : ""]secure [name].</span>"
+				new /obj/item/wallframe/newscaster(loc)
+			qdel(src)
+	else if(istype(I, /obj/item/weapon/weldingtool) && user.a_intent != INTENT_HARM)
+		var/obj/item/weapon/weldingtool/WT = I
+		if(stat & BROKEN)
+			if(WT.remove_fuel(0,user))
+				user.visible_message("[user] is repairing [src].", \
+								"<span class='notice'>You begin repairing [src]...</span>", \
+								"<span class='italics'>You hear welding.</span>")
+				playsound(loc, WT.usesound, 40, 1)
+				if(do_after(user,40*WT.toolspeed, 1, target = src))
+					if(!WT.isOn() || !(stat & BROKEN))
+						return
+					user << "<span class='notice'>You repair [src].</span>"
+					playsound(loc, 'sound/items/Welder2.ogg', 50, 1)
+					obj_integrity = max_integrity
+					stat &= ~BROKEN
+					update_icon()
 		else
-			user << "<span class='warning'>This does nothing!</span>"
-	update_icon()
+			user << "<span class='notice'>[src] does not need repairs.</span>"
+	else
+		return ..()
+
+/obj/machinery/newscaster/play_attack_sound(damage, damage_type = BRUTE, damage_flag = 0)
+	switch(damage_type)
+		if(BRUTE)
+			if(stat & BROKEN)
+				playsound(loc, 'sound/effects/hit_on_shattered_glass.ogg', 100, 1)
+			else
+				playsound(loc, 'sound/effects/Glasshit.ogg', 90, 1)
+		if(BURN)
+			playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
+
+
+/obj/machinery/newscaster/deconstruct(disassembled = TRUE)
+	if(!(flags & NODECONSTRUCT))
+		new /obj/item/stack/sheet/metal(loc, 2)
+		new /obj/item/weapon/shard(loc)
+		new /obj/item/weapon/shard(loc)
+	qdel(src)
+
+/obj/machinery/newscaster/obj_break()
+	if(!(stat & BROKEN) && !(flags & NODECONSTRUCT))
+		stat |= BROKEN
+		playsound(loc, 'sound/effects/Glassbr3.ogg', 100, 1)
+		update_icon()
+
 
 /obj/machinery/newscaster/attack_paw(mob/user)
-	user << "<span class='warning'>The newscaster controls are far too complicated for your tiny brain!</span>"
-	return
+	if(user.a_intent != INTENT_HARM)
+		user << "<span class='warning'>The newscaster controls are far too complicated for your tiny brain!</span>"
+	else
+		take_damage(5, BRUTE, "melee")
 
 /obj/machinery/newscaster/proc/AttachPhoto(mob/user)
 	if(photo)
@@ -767,20 +789,20 @@ var/list/obj/machinery/newscaster/allCasters = list()
 		else
 			qdel(photo)
 		photo = null
-	if(istype(user.get_active_hand(), /obj/item/weapon/photo))
-		photo = user.get_active_hand()
+	if(istype(user.get_active_held_item(), /obj/item/weapon/photo))
+		photo = user.get_active_held_item()
 		if(!user.drop_item())
 			return
 		photo.loc = src
-	if(istype(user,/mob/living/silicon))
+	if(issilicon(user))
 		var/list/nametemp = list()
 		var/find
 		var/datum/picture/selection
 		var/obj/item/device/camera/siliconcam/targetcam = null
-		if(istype(user,/mob/living/silicon/ai))
+		if(isAI(user))
 			var/mob/living/silicon/ai/R = user
 			targetcam = R.aicamera
-		else if(istype(user,/mob/living/silicon/robot))
+		else if(iscyborg(user))
 			var/mob/living/silicon/robot/R = user
 			if(R.connected_ai)
 				targetcam = R.connected_ai.aicamera
@@ -821,7 +843,7 @@ var/list/obj/machinery/newscaster/allCasters = list()
 				scanned_user ="Unknown"
 		else
 			scanned_user ="Unknown"
-	else if(istype(user,/mob/living/silicon))
+	else if(issilicon(user))
 		var/mob/living/silicon/ai_user = user
 		scanned_user = "[ai_user.name] ([ai_user.job])"
 	else
@@ -862,7 +884,7 @@ var/list/obj/machinery/newscaster/allCasters = list()
 	desc = "An issue of The Griffon, the newspaper circulating aboard Nanotrasen Space Stations."
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "newspaper"
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	attack_verb = list("bapped")
 	var/screen = 0
 	var/pages = 0
@@ -877,7 +899,7 @@ var/list/obj/machinery/newscaster/allCasters = list()
 	var/creationTime
 
 /obj/item/weapon/newspaper/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is focusing intently on [src]! It looks like they're trying to commit sudoku... until their eyes light up with realization!</span>")
+	user.visible_message("<span class='suicide'>[user] is focusing intently on [src]! It looks like [user.p_theyre()] trying to commit sudoku... until [user.p_their()] eyes light up with realization!</span>")
 	user.say(";JOURNALISM IS MY CALLING! EVERYBODY APPRECIATES UNBIASED REPORTI-GLORF")
 	var/mob/living/carbon/human/H = user
 	var/obj/W = new /obj/item/weapon/reagent_containers/food/drinks/bottle/whiskey(H.loc)
@@ -895,7 +917,7 @@ var/list/obj/machinery/newscaster/allCasters = list()
 		switch(screen)
 			if(0) //Cover
 				dat+="<DIV ALIGN='center'><B><FONT SIZE=6>The Griffon</FONT></B></div>"
-				dat+="<DIV ALIGN='center'><FONT SIZE=2>Nanotrasen-standard newspaper, for use on Nanotrasen© Space Facilities</FONT></div><HR>"
+				dat+="<DIV ALIGN='center'><FONT SIZE=2>Nanotrasen-standard newspaper, for use on Nanotrasen? Space Facilities</FONT></div><HR>"
 				if(isemptylist(news_content))
 					if(wantedAuthor)
 						dat+="Contents:<BR><ul><B><FONT COLOR='red'>**</FONT>Important Security Announcement<FONT COLOR='red'>**</FONT></B> <FONT SIZE=2>\[page [pages+2]\]</FONT><BR></ul>"
@@ -958,7 +980,7 @@ var/list/obj/machinery/newscaster/allCasters = list()
 					else
 						dat+="None"
 				else
-					dat+="<I>Apart from some uninteresting Classified ads, there's nothing on this page...</I>"
+					dat+="<I>Apart from some uninteresting classified ads, there's nothing on this page...</I>"
 				if(scribble_page==curr_page)
 					dat+="<BR><I>There is a small scribble near the end of this page... It reads: \"[scribble]\"</I>"
 				dat+= "<HR><DIV STYLE='float:left;'><A href='?src=\ref[src];prev_page=1'>Previous Page</A></DIV>"
@@ -966,7 +988,7 @@ var/list/obj/machinery/newscaster/allCasters = list()
 		human_user << browse(dat, "window=newspaper_main;size=300x400")
 		onclose(human_user, "newspaper_main")
 	else
-		user << "The paper is full of intelligible symbols!"
+		user << "The paper is full of unintelligible symbols!"
 
 /obj/item/weapon/newspaper/proc/notContent(list/L)
 	if(!L.len)
@@ -985,7 +1007,7 @@ var/list/obj/machinery/newscaster/allCasters = list()
 /obj/item/weapon/newspaper/Topic(href, href_list)
 	var/mob/living/U = usr
 	..()
-	if ((src in U.contents) || ( istype(loc, /turf) && in_range(src, U) ))
+	if((src in U.contents) || (isturf(loc) && in_range(src, U)))
 		U.set_machine(src)
 		if(href_list["next_page"])
 			if(curr_page == pages+1)
@@ -1023,3 +1045,5 @@ var/list/obj/machinery/newscaster/allCasters = list()
 			scribble_page = curr_page
 			scribble = s
 			attack_self(user)
+	else
+		return ..()

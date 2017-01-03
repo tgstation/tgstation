@@ -10,6 +10,7 @@
 	throw_speed = 1
 	throw_range = 4
 	actions_types = list(/datum/action/item_action/set_internals)
+	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 10, bio = 0, rad = 0, fire = 80, acid = 30)
 	var/datum/gas_mixture/air_contents = null
 	var/distribute_pressure = ONE_ATMOSPHERE
 	var/integrity = 3
@@ -53,14 +54,14 @@
 	air_contents = new(volume) //liters
 	air_contents.temperature = T20C
 
-	SSobj.processing |= src
+	START_PROCESSING(SSobj, src)
 
 /obj/item/weapon/tank/Destroy()
 	if(air_contents)
 		qdel(air_contents)
 
-	SSobj.processing -= src
-	return ..()
+	STOP_PROCESSING(SSobj, src)
+	. = ..()
 
 /obj/item/weapon/tank/examine(mob/user)
 	var/obj/icon = src
@@ -91,20 +92,29 @@
 
 	user << "<span class='notice'>It feels [descriptive].</span>"
 
-/obj/item/weapon/tank/blob_act()
-	if(prob(50))
-		var/turf/location = src.loc
-		if (!( istype(location, /turf) ))
+/obj/item/weapon/tank/blob_act(obj/structure/blob/B)
+	if(B && B.loc == loc)
+		var/turf/location = get_turf(src)
+		if(!location)
 			qdel(src)
 
-		if(src.air_contents)
+		if(air_contents)
 			location.assume_air(air_contents)
 
 		qdel(src)
 
+/obj/item/weapon/tank/deconstruct(disassembled = TRUE)
+	if(!disassembled)
+		var/turf/T = get_turf(src)
+		if(T)
+			T.assume_air(air_contents)
+			air_update_turf()
+		playsound(src.loc, 'sound/effects/spray.ogg', 10, 1, -3)
+	qdel(src)
+
 /obj/item/weapon/tank/suicide_act(mob/user)
 	var/mob/living/carbon/human/H = user
-	user.visible_message("<span class='suicide'>[user] is putting the [src]'s valve to their lips! I don't think they're gonna stop!</span>")
+	user.visible_message("<span class='suicide'>[user] is putting [src]'s valve to [user.p_their()] lips! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	playsound(loc, 'sound/effects/spray.ogg', 10, 1, -3)
 	if (H && !qdeleted(H))
 		for(var/obj/item/W in H)
@@ -113,24 +123,21 @@
 				step(W, pick(alldirs))
 		H.hair_style = "Bald"
 		H.update_hair()
-		H.blood_max = 5
-		gibs(H.loc, H.viruses, H.dna)
+		H.bleed_rate = 5
+		new /obj/effect/gibspawner/generic(H.loc, H.viruses, H.dna)
 		H.adjustBruteLoss(1000) //to make the body super-bloody
 
 	return (BRUTELOSS)
 
 /obj/item/weapon/tank/attackby(obj/item/weapon/W, mob/user, params)
-	..()
-
 	add_fingerprint(user)
-	if(istype(src.loc, /obj/item/assembly))
-		icon = src.loc
-
 	if((istype(W, /obj/item/device/analyzer)) && get_dist(user, src) <= 1)
 		atmosanalyzer_scan(air_contents, user)
 
-	if(istype(W, /obj/item/device/assembly_holder))
+	else if(istype(W, /obj/item/device/assembly_holder))
 		bomb_assemble(W,user)
+	else
+		. = ..()
 
 /obj/item/weapon/tank/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
 									datum/tgui/master_ui = null, datum/ui_state/state = hands_state)
@@ -244,7 +251,7 @@
 	else if(pressure > TANK_RUPTURE_PRESSURE)
 		//world << "\blue[x],[y] tank is rupturing: [pressure] kPa, integrity [integrity]"
 		if(integrity <= 0)
-			var/turf/simulated/T = get_turf(src)
+			var/turf/T = get_turf(src)
 			if(!T)
 				return
 			T.assume_air(air_contents)
@@ -256,7 +263,7 @@
 	else if(pressure > TANK_LEAK_PRESSURE)
 		//world << "\blue[x],[y] tank is leaking: [pressure] kPa, integrity [integrity]"
 		if(integrity <= 0)
-			var/turf/simulated/T = get_turf(src)
+			var/turf/T = get_turf(src)
 			if(!T)
 				return
 			var/datum/gas_mixture/leaked_gas = air_contents.remove_ratio(0.25)

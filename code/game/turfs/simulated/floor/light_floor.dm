@@ -1,24 +1,22 @@
-/turf/simulated/floor/light
-	name = "Light floor"
+/turf/open/floor/light
+	name = "light floor"
+	desc = "A wired glass tile embedded into the floor."
 	luminosity = 5
 	icon_state = "light_on"
 	floor_tile = /obj/item/stack/tile/light
 	broken_states = list("light_broken")
 	var/on = 1
-	var/state //0 = fine, 1 = flickering, 2 = breaking, 3 = broken
+	var/state = 0//0 = fine, 1 = flickering, 2 = breaking, 3 = broken
 	var/list/coloredlights = list("g", "r", "y", "b", "p", "w", "s","o","g")
 	var/currentcolor = 1
+	var/can_modify_colour = TRUE
 
 
-/turf/simulated/floor/light/New()
+/turf/open/floor/light/New()
 	..()
-	spawn(5) //needed because when placing a light floor tile it will take a short while before setting state
-		if(istype(builtin_tile, /obj/item/stack/tile/light))
-			var/obj/item/stack/tile/light/L = builtin_tile
-			L.state = state
 	update_icon()
 
-/turf/simulated/floor/light/update_icon()
+/turf/open/floor/light/update_icon()
 	..()
 	if(on)
 		switch(state)
@@ -40,11 +38,13 @@
 		icon_state = "light_off"
 
 
-/turf/simulated/floor/light/ChangeTurf(turf/T)
+/turf/open/floor/light/ChangeTurf(turf/T)
 	SetLuminosity(0)
 	..()
 
-/turf/simulated/floor/light/attack_hand(mob/user)
+/turf/open/floor/light/attack_hand(mob/user)
+	if(!can_modify_colour)
+		return
 	if(!on)
 		on = 1
 		currentcolor = 1
@@ -56,10 +56,10 @@
 	update_icon()
 	..()  //I am not sure what the parent procs have for attack_hand, best to check later.
 
-/turf/simulated/floor/light/attack_ai(mob/user)
+/turf/open/floor/light/attack_ai(mob/user)
 	attack_hand(user)
 
-/turf/simulated/floor/light/attackby(obj/item/C, mob/user, params)
+/turf/open/floor/light/attackby(obj/item/C, mob/user, params)
 	if(..())
 		return
 	if(istype(C,/obj/item/weapon/light/bulb)) //only for light tiles
@@ -70,3 +70,23 @@
 			user << "<span class='notice'>You replace the light bulb.</span>"
 		else
 			user << "<span class='notice'>The lightbulb seems fine, no need to replace it.</span>"
+
+
+//Cycles through all of the colours
+/turf/open/floor/light/colour_cycle
+	coloredlights = list("cycle_all")
+	can_modify_colour = FALSE
+
+
+
+//Two different "dancefloor" types so that you can have a checkered pattern
+// (also has a longer delay than colour_cycle between cycling colours)
+/turf/open/floor/light/colour_cycle/dancefloor_a
+	name = "dancefloor"
+	desc = "Funky floor."
+	coloredlights = list("dancefloor_A")
+
+/turf/open/floor/light/colour_cycle/dancefloor_b
+	name = "dancefloor"
+	desc = "Funky floor."
+	coloredlights = list("dancefloor_B")

@@ -18,6 +18,8 @@
 				if (!ckey)
 					return
 				ckey = ckey(ckey)
+			ban["ckey"] = ckey
+
 			if (get_stickyban_from_ckey(ckey))
 				usr << "<span class='adminnotice'>Error: Can not add a stickyban: User already has a current sticky ban</span>"
 
@@ -125,9 +127,37 @@
 			log_admin("[key_name(usr)] has edited [ckey]'s sticky ban reason from [oldreason] to [reason]")
 			message_admins("<span class='adminnotice'>[key_name_admin(usr)] has edited [ckey]'s sticky ban reason from [oldreason] to [reason]</span>")
 
+		if ("revert")
+			if (!data["ckey"])
+				return
+			var/ckey = data["ckey"]
+			if (alert("Are you sure you want to revert the sticky ban on [ckey] to its state at round start?","Are you sure","Yes","No") == "No")
+				return
+			var/ban = get_stickyban_from_ckey(ckey)
+			if (!ban)
+				usr << "<span class='adminnotice'>Error: No sticky ban for [ckey] found!"
+				return
+			var/cached_ban = SSstickyban.cache[ckey]
+			if (!cached_ban)
+				usr << "<span class='adminnotice'>Error: No cached sticky ban for [ckey] found!"
+			world.SetConfig("ban",ckey,null)
+
+			log_admin("[key_name(usr)] has reverted [ckey]'s sticky ban to it's state at round start.")
+			message_admins("<span class='adminnotice'>[key_name_admin(usr)] has reverted [ckey]'s sticky ban to it's state at round start.</span>")
+			//revert is mostly used when shit goes rouge, so we have to set it to null
+			//	and wait a byond tick before assigning it to ensure byond clears its shit.
+			sleep(world.tick_lag)
+			world.SetConfig("ban",ckey,list2stickyban(cached_ban))
+
+
 /datum/admins/proc/stickyban_gethtml(ckey, ban)
-	. = "<a href='?_src_=holder;stickyban=remove&ckey=[ckey]'>\[-\]</a><b>[ckey]</b><br />"
-	. += "[ban["message"]] <b><a href='?_src_=holder;stickyban=edit&ckey=[ckey]'>\[Edit\]</a></b><br />"
+	. = {"
+		<a href='?_src_=holder;stickyban=remove&ckey=[ckey]'>\[-\]</a>
+		<a href='?_src_=holder;stickyban=revert&ckey=[ckey]'>\[revert\]</a>
+		<b>[ckey]</b>
+		<br />"
+		[ban["message"]] <b><a href='?_src_=holder;stickyban=edit&ckey=[ckey]'>\[Edit\]</a></b><br />
+	"}
 	if (ban["admin"])
 		. += "[ban["admin"]]<br />"
 	else
@@ -175,7 +205,13 @@
 	if (!ban)
 		return null
 	. = params2list(ban)
-	.["keys"] = splittext(.["keys"], ",")
+	if (.["keys"])
+		var/keys = splittext(.["keys"], ",")
+		var/ckeys = list()
+		for (var/key in keys)
+			var/ckey = ckey(key)
+			ckeys[ckey] = ckey //to make searching faster.
+		.["keys"] = ckeys
 	.["type"] = splittext(.["type"], ",")
 	.["IP"] = splittext(.["IP"], ",")
 	.["computer_id"] = splittext(.["computer_id"], ",")
@@ -189,10 +225,18 @@
 		.["keys"] = jointext(.["keys"], ",")
 	if (.["type"])
 		.["type"] = jointext(.["type"], ",")
-	if (.["IP"])
-		.["IP"] = jointext(.["IP"], ",")
-	if (.["computer_id"])
-		.["computer_id"] = jointext(.["computer_id"], ",")
+
+	//internal tracking only, shouldn't be stored
+	. -= "existing_user_matches_this_round"
+	. -= "admin_matches_this_round"
+	. -= "matches_this_round"
+	. -= "reverting"
+
+	//storing these can sometimes cause sticky bans to start matching everybody
+	//	and isn't even needed for sticky ban matching, as the hub tracks these seperately
+	. -= "IP"
+	. -= "computer_id"
+
 	. = list2params(.)
 
 

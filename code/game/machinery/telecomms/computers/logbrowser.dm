@@ -1,4 +1,4 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
+
 
 /obj/machinery/computer/telecomms/server
 	name = "telecommunications server monitoring console"
@@ -14,7 +14,7 @@
 	var/universal_translate = 0 // set to 1 if it can translate nonhuman speech
 
 	req_access = list(access_tcomsat)
-	circuit = "/obj/item/weapon/circuitboard/comm_server"
+	circuit = /obj/item/weapon/circuitboard/computer/comm_server
 
 /obj/machinery/computer/telecomms/server/attack_hand(mob/user)
 	if(..())
@@ -72,7 +72,7 @@
 					var/language = "Human" // MMIs, pAIs, Cyborgs and humans all speak Human
 					var/mobtype = C.parameters["mobtype"]
 
-					var/list/humans = typesof(/mob/living/carbon/human, /mob/living/carbon/brain)
+					var/list/humans = typesof(/mob/living/carbon/human, /mob/living/brain)
 					var/list/monkeys = typesof(/mob/living/carbon/monkey)
 					var/list/silicons = typesof(/mob/living/silicon)
 					var/list/slimes = typesof(/mob/living/simple_animal/slime)
@@ -94,7 +94,7 @@
 						race = "Artificial Life"
 						language = "Humanoid" //Ais and borgs speak human, and binary isnt picked up.
 
-					else if(istype(mobtype, /obj))
+					else if(isobj(mobtype))
 						race = "Machinery"
 						language = race
 
@@ -221,6 +221,5 @@
 	return
 
 /obj/machinery/computer/telecomms/server/attackby()
-	..()
-	src.updateUsrDialog()
-	return
+	. = ..()
+	updateUsrDialog()

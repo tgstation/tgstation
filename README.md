@@ -1,10 +1,10 @@
 ##/tg/station v1.0.1
 
-[![Build Status](https://travis-ci.org/tgstation/-tg-station.png)](https://travis-ci.org/tgstation/-tg-station)
+[![Build Status](https://travis-ci.org/tgstation/tgstation.png)](https://travis-ci.org/tgstation/tgstation)
 
 
 **Website:** http://www.tgstation13.org <BR>
-**Code:** https://github.com/tgstation/-tg-station <BR>
+**Code:** https://github.com/tgstation/tgstation <BR>
 **Wiki** http://tgstation13.org/wiki/Main_Page <BR>
 **IRC:** irc://irc.rizon.net/coderbus or if you dont have an IRC client, you can click  [here](https://kiwiirc.com/client/irc.rizon.net:6667/?&theme=cli#coderbus).<BR>
 
@@ -19,11 +19,11 @@ Follow this: http://www.tgstation13.org/wiki/Setting_up_git
 Option 2:
 Install GitHub::windows from http://windows.github.com/
 It handles most of the setup and configuraton of Git for you.
-Then you simply search for the -tg-station repository and click the big clone
+Then you simply search for the tgstation repository and click the big clone
 button.
 
 Option 3: Download the source code as a zip by clicking the ZIP button in the
-code tab of https://github.com/tgstation/-tg-station
+code tab of https://github.com/tgstation/tgstation
 (note: this will use a lot of bandwidth if you wish to update and is a lot of
 hassle if you want to make any changes at all, so it's not recommended.)
 
@@ -73,10 +73,6 @@ specified in the config.txt, and set the Security box to 'Safe'.  Then press GO
 and the server should start up and be ready to join. It is also recommended that
 you set up the SQL backend (see below).
 
-###HOSTING ON LINUX
-If you're not using BYOND version 510, BYGEX will be used for some text replacement related code. Unfortunately, we only have a windows dll included right now. You can find a version known to compile on linux, along with some basic install instructions here:
-https://github.com/optimumtact/byond-regex
-
 ##UPDATING
 
 To update an existing installation, first back up your /config and /data folders
@@ -114,7 +110,7 @@ Anytime you want to make changes to a map it's imperative you use the [Map Mergi
 
 Map files for away missions are located in the _maps/RandomZLevels directory. Each away mission includes it's own code definitions located in /code/modules/awaymissions/mission_code. These files must be included and compiled with the server beforehand otherwise the server will crash upon trying to load away missions that lack their code.
 
-To enable an away mission open fileList.txt in the _maps/RandomZLevels directory and uncomment one of the .dmm lines by removing the #. If more than one away mission is uncommented then the away mission loader will randomly select one the enabled ones to load.
+To enable an away mission open `config/awaymissionconfig.txt` and uncomment one of the .dmm lines by removing the #. If more than one away mission is uncommented then the away mission loader will randomly select one the enabled ones to load.
 
 ##SQL SETUP
 
@@ -131,18 +127,20 @@ Please see [CONTRIBUTING.md](CONTRIBUTING.md)
 
 ##LICENSE
 
-All code after commit 333c566b88108de218d882840e61928a9b759d8f on 2014/31/12 at 4:38 PM PST (https://github.com/tgstation/-tg-station/commit/333c566b88108de218d882840e61928a9b759d8f) is licensed under GNU AGPL v3 (http://www.gnu.org/licenses/agpl-3.0.html).
+All code after commit 333c566b88108de218d882840e61928a9b759d8f on 2014/31/12 at 4:38 PM PST (https://github.com/tgstation/tgstation/commit/333c566b88108de218d882840e61928a9b759d8f) is licensed under GNU AGPL v3 (http://www.gnu.org/licenses/agpl-3.0.html).
 
-All code before commit 333c566b88108de218d882840e61928a9b759d8f on 2014/31/12 at 4:38 PM PST (https://github.com/tgstation/-tg-station/commit/333c566b88108de218d882840e61928a9b759d8f) is licensed under GNU GPL v3 (https://www.gnu.org/licenses/gpl-3.0.html).
+All code before commit 333c566b88108de218d882840e61928a9b759d8f on 2014/31/12 at 4:38 PM PST (https://github.com/tgstation/tgstation/commit/333c566b88108de218d882840e61928a9b759d8f) is licensed under GNU GPL v3 (https://www.gnu.org/licenses/gpl-3.0.html).
 (Including tools unless their readme specifies otherwise.)
 
 See LICENSE-AGPLv3.txt and LICENSE-GPLv3.txt for more details.
 
 tgui clientside is licensed as a subproject under the MIT license.
+Font Awesome font files, used by tgui, are licensed under the SIL Open Font License v1.1
 tgui assets are licensed under a Creative Commons Attribution-ShareAlike 4.0 International License
 (http://creativecommons.org/licenses/by-sa/4.0/).
 
-See tgui/LICENSE.md for more details.
+See tgui/LICENSE.md for the MIT license.
+See tgui/assets/fonts/SIL-OFL-1.1-LICENSE.md for the SIL Open Font License.
 
 All assets including icons and sound are under a Creative Commons 3.0 BY-SA
 license (http://creativecommons.org/licenses/by-sa/3.0/) unless otherwise indicated.

@@ -7,18 +7,8 @@
 	density = 1
 	anchored = 0
 
-/obj/effect/mark
-	var/mark = ""
-	icon = 'icons/misc/mark.dmi'
-	icon_state = "blank"
-	anchored = 1
-	layer = 99
-	mouse_opacity = 0
-	unacidable = 1//Just to be sure.
-
 /obj/effect/beam
 	name = "beam"
-	unacidable = 1//Just to be sure.
 	var/def_zone
 	pass_flags = PASSTABLE
 

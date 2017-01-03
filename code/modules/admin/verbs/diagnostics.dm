@@ -8,15 +8,14 @@
 	var/datum/gas_mixture/GM = target.return_air()
 	var/list/GM_gases
 	var/burning = 0
-	if(istype(target, /turf/simulated))
-		var/turf/simulated/T = target
+	if(isopenturf(target))
+		var/turf/open/T = target
 		if(T.active_hotspot)
 			burning = 1
 
 	usr << "<span class='adminnotice'>@[target.x],[target.y]: [GM.temperature] Kelvin, [GM.return_pressure()] kPa [(burning)?("\red BURNING"):(null)]</span>"
 	for(var/id in GM_gases)
-		if(id in hardcoded_gases || GM_gases[id][MOLES])
-			usr << "[GM_gases[id][GAS_META][META_GAS_NAME]]: [GM_gases[id][MOLES]]"
+		usr << "[GM_gases[id][GAS_META][META_GAS_NAME]]: [GM_gases[id][MOLES]]"
 	feedback_add_details("admin_verb","DAST") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/fix_next_move()
@@ -98,6 +97,6 @@
 	if(confirm !="Yes")
 		return
 
-	message_admins("[key_name_admin(usr)] manually reloaded admins")
 	load_admins()
 	feedback_add_details("admin_verb","RLDA") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	message_admins("[key_name_admin(usr)] manually reloaded admins")

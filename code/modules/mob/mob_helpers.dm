@@ -1,11 +1,13 @@
 
 // see _DEFINES/is_helpers.dm for mob type checks
 
-/proc/isloyal(A) //Checks to see if the person contains a loyalty implant, then checks that the implant is actually inside of them
-	for(var/obj/item/weapon/implant/loyalty/L in A)
-		if(L && L.implanted)
-			return 1
+/mob/proc/isloyal() //Checks to see if the person contains a mindshield implant, then checks that the implant is actually inside of them
 	return 0
+
+/mob/living/carbon/isloyal()
+	for(var/obj/item/weapon/implant/mindshield/L in implants)
+		return 1
+
 
 /proc/check_zone(zone)
 	if(!zone)
@@ -127,7 +129,7 @@
 		if(rand(1,2)==2)
 			if(lowertext(newletter)=="o")
 				newletter="u"
-			if(lowertext(newletter)=="s")
+			if(lowertext(newletter)=="t")
 				newletter="ch"
 			if(lowertext(newletter)=="a")
 				newletter="ah"
@@ -135,15 +137,15 @@
 				newletter="oo"
 			if(lowertext(newletter)=="c")
 				newletter=" NAR "
-			if(lowertext(newletter)=="t")
+			if(lowertext(newletter)=="s")
 				newletter=" SIE "
 		if(rand(1,4)==4)
 			if(newletter==" ")
-				newletter=" GLORY "
+				newletter=" no hope... "
 			if(newletter=="H")
-				newletter=" HAIL "
+				newletter=" IT COMES... "
 
-		switch(rand(1,10))
+		switch(rand(1,15))
 			if(1)
 				newletter="'"
 			if(2)
@@ -152,6 +154,8 @@
 				newletter="fth"
 			if(4)
 				newletter="nglu"
+			if(5)
+				newletter="glor"
 		newphrase+="[newletter]";counter-=1
 	return newphrase
 
@@ -270,34 +274,11 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 			return M
 	return 0
 
-
 /mob/proc/abiotic(full_body = 0)
-	if(l_hand && !l_hand.flags&ABSTRACT || r_hand && !r_hand.flags&ABSTRACT)
-		return 1
+	for(var/obj/item/I in held_items)
+		if(!(I.flags & NODROP))
+			return 1
 	return 0
-
-//converts intent-strings into numbers and back
-/proc/intent_numeric(argument)
-	if(istext(argument))
-		switch(argument)
-			if("help")
-				return 0
-			if("disarm")
-				return 1
-			if("grab")
-				return 2
-			else
-				return 3
-	else
-		switch(argument)
-			if(0)
-				return "help"
-			if(1)
-				return "disarm"
-			if(2)
-				return "grab"
-			else
-				return "harm"
 
 //change a mob's act-intent. Input the intent as a string such as "help" or use "right"/"left
 /mob/verb/a_intent_change(input as text)
@@ -306,24 +287,44 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 
 	if(ishuman(src) || isalienadult(src) || isbrain(src))
 		switch(input)
-			if("help", "disarm", "grab", "harm")
+			if(INTENT_HELP, INTENT_DISARM, INTENT_GRAB, INTENT_HARM)
 				a_intent = input
-			if("right")
-				a_intent = intent_numeric((intent_numeric(a_intent) + 1) % 4)
-			if("left")
-				a_intent = intent_numeric((intent_numeric(a_intent) + 3) % 4)
+			if(INTENT_HOTKEY_RIGHT)
+				switch (a_intent)
+					if(INTENT_HELP)
+						a_intent = INTENT_DISARM
+					if(INTENT_DISARM)
+						a_intent = INTENT_GRAB
+					if(INTENT_GRAB)
+						a_intent = INTENT_HARM
+					if(INTENT_HARM)
+						a_intent = INTENT_HELP
+			if(INTENT_HOTKEY_LEFT)
+				switch (a_intent)
+					if(INTENT_HELP)
+						a_intent = INTENT_HARM
+					if(INTENT_DISARM)
+						a_intent = INTENT_HELP
+					if(INTENT_GRAB)
+						a_intent = INTENT_DISARM
+					if(INTENT_HARM)
+						a_intent = INTENT_GRAB
 
 		if(hud_used && hud_used.action_intent)
 			hud_used.action_intent.icon_state = "[a_intent]"
 
-	else if(isrobot(src) || ismonkey(src) || islarva(src))
+	else if(iscyborg(src) || ismonkey(src) || islarva(src))
 		switch(input)
-			if("help")
-				a_intent = "help"
-			if("harm")
-				a_intent = "harm"
-			if("right","left")
-				a_intent = intent_numeric(intent_numeric(a_intent) - 3)
+			if(INTENT_HELP)
+				a_intent = INTENT_HELP
+			if(INTENT_HARM)
+				a_intent = INTENT_HARM
+			if(INTENT_HOTKEY_RIGHT, INTENT_HOTKEY_LEFT)
+				switch (a_intent)
+					if(INTENT_HELP)
+						a_intent = INTENT_HARM
+					if(INTENT_HARM)
+						a_intent = INTENT_HELP
 
 		if(hud_used && hud_used.action_intent)
 			hud_used.action_intent.icon_state = "[a_intent]"
@@ -340,16 +341,15 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 	if(!istype(M))
 		return 0
 	if(issilicon(M))
-		if(isrobot(M)) //For cyborgs, returns 1 if the cyborg has a law 0 and special_role. Returns 0 if the borg is merely slaved to an AI traitor.
+		if(iscyborg(M)) //For cyborgs, returns 1 if the cyborg has a law 0 and special_role. Returns 0 if the borg is merely slaved to an AI traitor.
 			var/mob/living/silicon/robot/R = M
-			if(R.emagged || R.syndicate) //Count as antags
-				return 1
-			if(R.mind && R.mind.special_role && R.laws && R.laws.zeroth).
-				if(R.connected_ai)
-					if(is_special_character(R.connected_ai) && R.connected_ai.laws && (R.connected_ai.laws.zeroth_borg == R.laws.zeroth || R.connected_ai.laws.zeroth == R.laws.zeroth))
-						return 0 //AI is the real traitor here, so the borg itself is not a traitor
-					return 1 //Slaved but also a traitor
-				return 1 //Unslaved, traitor
+			if(R.mind && R.mind.special_role)
+				if(R.laws && R.laws.zeroth && R.syndicate)
+					if(R.connected_ai)
+						if(is_special_character(R.connected_ai) && R.connected_ai.laws && (R.connected_ai.laws.zeroth_borg == R.laws.zeroth || R.connected_ai.laws.zeroth == R.laws.zeroth))
+							return 0 //AI is the real traitor here, so the borg itself is not a traitor
+						return 1 //Slaved but also a traitor
+					return 1 //Unslaved, traitor
 		else if(isAI(M))
 			var/mob/living/silicon/ai/A = M
 			if(A.laws && A.laws.zeroth && A.mind && A.mind.special_role)
@@ -384,58 +384,56 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 		return 1
 	return 0
 
-/proc/get_both_hands(mob/living/carbon/M)
-	var/list/hands = list(M.l_hand, M.r_hand)
-	return hands
-
 /mob/proc/reagent_check(datum/reagent/R) // utilized in the species code
 	return 1
 
-/proc/notify_ghosts(var/message, var/ghost_sound = null, var/enter_link = null, var/atom/source = null, var/image/alert_overlay = null, var/attack_not_jump = 0) //Easy notification of ghosts.
+/proc/notify_ghosts(var/message, var/ghost_sound = null, var/enter_link = null, var/atom/source = null, var/image/alert_overlay = null, var/action = NOTIFY_JUMP) //Easy notification of ghosts.
 	for(var/mob/dead/observer/O in player_list)
 		if(O.client)
 			O << "<span class='ghostalert'>[message][(enter_link) ? " [enter_link]" : ""]<span>"
 			if(ghost_sound)
 				O << sound(ghost_sound)
 			if(source)
-				var/obj/screen/alert/notify_jump/A = O.throw_alert("\ref[source]_notify_jump", /obj/screen/alert/notify_jump)
+				var/obj/screen/alert/notify_action/A = O.throw_alert("\ref[source]_notify_action", /obj/screen/alert/notify_action)
 				if(A)
+					if(O.client.prefs && O.client.prefs.UI_style)
+						A.icon = ui_style2icon(O.client.prefs.UI_style)
 					A.desc = message
-					A.attack_not_jump = attack_not_jump
-					A.jump_target = source
+					A.action = action
+					A.target = source
 					if(!alert_overlay)
 						var/old_layer = source.layer
+						var/old_plane = source.plane
 						source.layer = FLOAT_LAYER
-						A.overlays += source
+						source.plane = FLOAT_PLANE
+						A.add_overlay(source)
 						source.layer = old_layer
+						source.plane = old_plane
 					else
 						alert_overlay.layer = FLOAT_LAYER
-						A.overlays += alert_overlay
+						alert_overlay.plane = FLOAT_PLANE
+						A.add_overlay(alert_overlay)
 
-/proc/item_heal_robotic(mob/living/carbon/human/H, mob/user, brute, burn)
-	var/obj/item/organ/limb/affecting = H.get_organ(check_zone(user.zone_selected))
-
-	var/dam //changes repair text based on how much brute/burn was supplied
-
-	if(brute > burn)
-		dam = 1
-	else
-		dam = 0
-
-	if(affecting.status == ORGAN_ROBOTIC)
-		if(brute > 0 && affecting.brute_dam > 0 || burn > 0 && affecting.burn_dam > 0)
-			affecting.heal_damage(brute,burn,1)
-			H.update_damage_overlays(0)
-			H.updatehealth()
-			user.visible_message("[user] has fixed some of the [dam ? "dents on" : "burnt wires in"] [H]'s [affecting.getDisplayName()].", "<span class='notice'>You fix some of the [dam ? "dents on" : "burnt wires in"] [H]'s [affecting.getDisplayName()].</span>")
-			return
+/proc/item_heal_robotic(mob/living/carbon/human/H, mob/user, brute_heal, burn_heal)
+	var/obj/item/bodypart/affecting = H.get_bodypart(check_zone(user.zone_selected))
+	if(affecting && affecting.status == BODYPART_ROBOTIC)
+		var/dam //changes repair text based on how much brute/burn was supplied
+		if(brute_heal > burn_heal)
+			dam = 1
 		else
-			user << "<span class='warning'>[H]'s [affecting.getDisplayName()] is already in good condition!</span>"
-			return
-	else
-		return
+			dam = 0
+		if((brute_heal > 0 && affecting.brute_dam > 0) || (burn_heal > 0 && affecting.burn_dam > 0))
+			if(affecting.heal_damage(brute_heal, burn_heal, 1, 0))
+				H.update_damage_overlays()
+			user.visible_message("[user] has fixed some of the [dam ? "dents on" : "burnt wires in"] [H]'s [affecting].", "<span class='notice'>You fix some of the [dam ? "dents on" : "burnt wires in"] [H]'s [affecting].</span>")
+			return 1 //successful heal
+		else
+			user << "<span class='warning'>[H]'s [affecting] is already in good condition!</span>"
+
 
 /proc/IsAdminGhost(var/mob/user)
+	if(!user)		//Are they a mob? Auto interface updates call this with a null src
+		return
 	if(!user.client) // Do they have a client?
 		return
 	if(!isobserver(user)) // Are they a ghost?
@@ -445,3 +443,45 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 	if(!user.client.AI_Interact) // Do they have it enabled?
 		return
 	return TRUE
+
+/proc/offer_control(mob/M)
+	M << "Control of your mob has been offered to dead players."
+	if(usr)
+		log_admin("[key_name(usr)] has offered control of ([key_name(M)]) to ghosts.")
+		message_admins("[key_name_admin(usr)] has offered control of ([key_name_admin(M)]) to ghosts")
+	var/poll_message = "Do you want to play as [M.real_name]?"
+	if(M.mind && M.mind.assigned_role)
+		poll_message = "[poll_message] Job:[M.mind.assigned_role]."
+	if(M.mind && M.mind.special_role)
+		poll_message = "[poll_message] Status:[M.mind.special_role]."
+	var/list/mob/dead/observer/candidates = pollCandidatesForMob(poll_message, "pAI", null, FALSE, 100, M)
+	var/mob/dead/observer/theghost = null
+
+	if(candidates.len)
+		theghost = pick(candidates)
+		M << "Your mob has been taken over by a ghost!"
+		message_admins("[key_name_admin(theghost)] has taken control of ([key_name_admin(M)])")
+		M.ghostize(0)
+		M.key = theghost.key
+		return TRUE
+	else
+		M << "There were no ghosts willing to take control."
+		message_admins("No ghosts were willing to take control of [key_name_admin(M)])")
+		return FALSE
+
+//toggles the talk wheel
+/mob/verb/toggle_talk_wheel()
+	set name = "talk-wheel"
+	set hidden = 1
+
+	if(isliving(src))
+		var/mob/living/L = src
+		if(L.hud_used)
+			for(var/obj/screen/wheel/talk/TW in L.hud_used.wheels)
+				TW.Click()
+
+/mob/proc/is_flying(mob/M = src)
+	if(M.movement_type & FLYING)
+		return 1
+	else
+		return 0

@@ -20,7 +20,7 @@
 	back = /obj/item/weapon/storage/backpack
 	has_id = 1
 	id_job = "Operative"
-	id_access = "Syndicate"
+	id_access_list = list(access_syndicate)
 
 /obj/effect/mob_spawn/human/corpse/syndicatecommando
 	name = "Syndicate Commando"
@@ -35,7 +35,7 @@
 	pocket1 = /obj/item/weapon/tank/internals/emergency_oxygen
 	has_id = 1
 	id_job = "Operative"
-	id_access = "Syndicate"
+	id_access_list = list(access_syndicate)
 
 /obj/effect/mob_spawn/human/corpse/syndicatestormtrooper
 	name = "Syndicate Stormtrooper"
@@ -49,7 +49,7 @@
 	back = /obj/item/weapon/tank/jetpack/oxygen/harness
 	has_id = 1
 	id_job = "Operative"
-	id_access = "Syndicate"
+	id_access_list = list(access_syndicate)
 
 
 
@@ -111,7 +111,7 @@
 	name = "Space Wizard"
 	uniform = /obj/item/clothing/under/color/lightpurple
 	suit = /obj/item/clothing/suit/wizrobe
-	shoes = /obj/item/clothing/shoes/sandal
+	shoes = /obj/item/clothing/shoes/sandal/magic
 	helmet = /obj/item/clothing/head/wizard
 
 

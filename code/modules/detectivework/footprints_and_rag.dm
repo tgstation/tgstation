@@ -1,27 +1,25 @@
 
 /mob
 	var/bloody_hands = 0
-	var/mob/living/carbon/human/bloody_hands_mob
 
 /obj/item/clothing/gloves
 	var/transfer_blood = 0
-	var/mob/living/carbon/human/bloody_hands_mob
 
 
 /obj/item/weapon/reagent_containers/glass/rag
 	name = "damp rag"
 	desc = "For cleaning up messes, you suppose."
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "rag"
+	flags = OPENCONTAINER | NOBLUDGEON
 	amount_per_transfer_from_this = 5
 	possible_transfer_amounts = list()
 	volume = 5
 	spillable = 0
 
 /obj/item/weapon/reagent_containers/glass/rag/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] ties the [src.name] around their head and groans! It looks like--</span>")
-	user.say("MY BRAIN HURTS!!")
+	user.visible_message("<span class='suicide'>[user] is smothering [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return (OXYLOSS)
 
 /obj/item/weapon/reagent_containers/glass/rag/afterattack(atom/A as obj|turf|area, mob/user,proximity)
@@ -29,7 +27,7 @@
 		return
 	if(iscarbon(A) && A.reagents && reagents.total_volume)
 		var/mob/living/carbon/C = A
-		if(user.a_intent == "harm" && !C.is_mouth_covered())
+		if(user.a_intent == INTENT_HARM && !C.is_mouth_covered())
 			reagents.reaction(C, INGEST)
 			reagents.trans_to(C, reagents.total_volume)
 			C.visible_message("<span class='danger'>[user] has smothered \the [C] with \the [src]!</span>", "<span class='userdanger'>[user] has smothered you with \the [src]!</span>", "<span class='italics'>You hear some struggling and muffled cries of surprise.</span>")
@@ -46,4 +44,5 @@
 		if(do_after(user,30, target = A))
 			user.visible_message("[user] finishes wiping off the [A]!", "<span class='notice'>You finish wiping off the [A].</span>")
 			A.clean_blood()
+			A.wash_cream()
 	return

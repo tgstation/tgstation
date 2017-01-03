@@ -1,8 +1,8 @@
 
 /mob/living/carbon/alien/humanoid/update_icons()
-	overlays.Cut()
+	cut_overlays()
 	for(var/image/I in overlays_standing)
-		overlays += I
+		add_overlay(I)
 
 	if(stat == DEAD)
 		//If we mostly took damage from fire
@@ -20,8 +20,12 @@
 		icon_state = "alien[caste]_sleep"
 	else if(mob_size == MOB_SIZE_LARGE)
 		icon_state = "alien[caste]"
+		if(drooling)
+			add_overlay("alienspit_[caste]")
 	else
 		icon_state = "alien[caste]_s"
+		if(drooling)
+			add_overlay("alienspit_s")
 
 	if(leaping)
 		if(alt_icon == initial(alt_icon))
@@ -50,28 +54,40 @@
 	..()
 	update_icons()
 
+/mob/living/carbon/alien/humanoid/update_inv_handcuffed()
+	remove_overlay(HANDCUFF_LAYER)
+	var/cuff_icon = "aliencuff_s"
+	var/dmi_file = 'icons/mob/alien.dmi'
+
+	if(mob_size == MOB_SIZE_LARGE)
+		cuff_icon = "aliencuff_[caste]"
+		dmi_file = 'icons/mob/alienqueen.dmi'
+
+	if(handcuffed)
+		overlays_standing[HANDCUFF_LAYER] = image(dmi_file,icon_state= cuff_icon, layer =-HANDCUFF_LAYER)
+		apply_overlay(HANDCUFF_LAYER)
+
 //Royals have bigger sprites, so inhand things must be handled differently.
-/mob/living/carbon/alien/humanoid/royal/update_inv_r_hand()
+/mob/living/carbon/alien/humanoid/royal/update_inv_hands()
 	..()
-	remove_overlay(R_HAND_LAYER)
-	if(r_hand)
-		var/itm_state = r_hand.item_state
-		if(!itm_state)
-			itm_state = r_hand.icon_state
+	remove_overlay(HANDS_LAYER)
+	var/list/hands = list()
 
-		var/image/I = image("icon" = alt_inhands_file , "icon_state"="[itm_state][caste]_r", "layer"=-R_HAND_LAYER)
-		overlays_standing[R_HAND_LAYER] = I
-
-		apply_overlay(R_HAND_LAYER)
-
-/mob/living/carbon/alien/humanoid/royal/update_inv_l_hand()
-	..()
-	remove_overlay(L_HAND_LAYER)
+	var/obj/item/l_hand = get_item_for_held_index(1)
 	if(l_hand)
 		var/itm_state = l_hand.item_state
 		if(!itm_state)
 			itm_state = l_hand.icon_state
+		var/image/I = image("icon" = alt_inhands_file , "icon_state"="[itm_state][caste]_l", "layer"=-HANDS_LAYER)
+		hands += I
 
-		var/image/I = image("icon" = alt_inhands_file , "icon_state"="[itm_state][caste]_l", "layer"=-L_HAND_LAYER)
-		overlays_standing[L_HAND_LAYER] = I
-		apply_overlay(L_HAND_LAYER)
+	var/obj/item/r_hand = get_item_for_held_index(2)
+	if(r_hand)
+		var/itm_state = r_hand.item_state
+		if(!itm_state)
+			itm_state = r_hand.icon_state
+		var/image/I = image("icon" = alt_inhands_file , "icon_state"="[itm_state][caste]_r", "layer"=-HANDS_LAYER)
+		hands += I
+
+	overlays_standing[HANDS_LAYER] = hands
+	apply_overlay(HANDS_LAYER)

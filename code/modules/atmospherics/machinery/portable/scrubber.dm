@@ -7,7 +7,7 @@
 	var/volume_rate = 1000
 	volume = 1000
 
-	var/list/scrubbing = list("plasma", "co2", "n2o", "agent_b")
+	var/list/scrubbing = list("plasma", "co2", "n2o", "agent_b", "bz", "freon", "water_vapor")
 
 /obj/machinery/portable_atmospherics/scrubber/Destroy()
 	var/turf/T = get_turf(src)
@@ -18,11 +18,11 @@
 /obj/machinery/portable_atmospherics/scrubber/update_icon()
 	icon_state = "pscrubber:[on]"
 
-	overlays.Cut()
+	cut_overlays()
 	if(holding)
-		overlays += "scrubber-open"
+		add_overlay("scrubber-open")
 	if(connected_port)
-		overlays += "scrubber-connector"
+		add_overlay("scrubber-connector")
 
 /obj/machinery/portable_atmospherics/scrubber/process_atmos()
 	..()
@@ -124,7 +124,7 @@
 	..()
 	if(!holding)
 		var/turf/T = get_turf(src)
-		for(var/turf/simulated/AT in T.GetAtmosAdjacentTurfs(alldir = TRUE))
+		for(var/turf/AT in T.GetAtmosAdjacentTurfs(alldir = TRUE))
 			scrub(AT.return_air())
 
 /obj/machinery/portable_atmospherics/scrubber/huge/attackby(obj/item/weapon/W, mob/user)
@@ -132,4 +132,4 @@
 		if(!movable)
 			on = FALSE
 	else
-		..()
+		return ..()

@@ -2,7 +2,7 @@
 	name = "firearms authentication implant"
 	desc = "Lets you shoot your guns"
 	icon_state = "auth"
-	origin_tech = "materials=2;magnets=2;programming=2;biotech=5;syndicate=5"
+	origin_tech = "magnets=2;programming=7;biotech=5;syndicate=5"
 	activated = 0
 
 /obj/item/weapon/implant/weapons_auth/get_data()
@@ -53,7 +53,7 @@
 	name = "emp implant"
 	desc = "Triggers an EMP."
 	icon_state = "emp"
-	origin_tech = "materials=2;biotech=3;magnets=4;syndicate=4"
+	origin_tech = "biotech=3;magnets=4;syndicate=1"
 	uses = 3
 
 /obj/item/weapon/implant/emp/activate()
@@ -61,3 +61,22 @@
 	empulse(imp_in, 3, 5)
 	if(!uses)
 		qdel(src)
+
+
+//Health Tracker Implant
+
+/obj/item/weapon/implant/health
+	name = "health implant"
+	activated = 0
+	var/healthstring = ""
+
+/obj/item/weapon/implant/health/proc/sensehealth()
+	if (!imp_in)
+		return "ERROR"
+	else
+		if(isliving(imp_in))
+			var/mob/living/L = imp_in
+			healthstring = "<small>Oxygen Deprivation Damage => [round(L.getOxyLoss())]<br />Fire Damage => [round(L.getFireLoss())]<br />Toxin Damage => [round(L.getToxLoss())]<br />Brute Force Damage => [round(L.getBruteLoss())]</small>"
+		if (!healthstring)
+			healthstring = "ERROR"
+		return healthstring

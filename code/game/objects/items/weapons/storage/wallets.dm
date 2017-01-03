@@ -3,8 +3,8 @@
 	desc = "It can hold a few small and personal things."
 	storage_slots = 4
 	icon_state = "wallet"
-	w_class = 2
-	burn_state = FLAMMABLE
+	w_class = WEIGHT_CLASS_SMALL
+	resistance_flags = FLAMMABLE
 	can_hold = list(
 		/obj/item/stack/spacecash,
 		/obj/item/weapon/card,
@@ -51,28 +51,16 @@
 		combined_access |= I.access
 
 /obj/item/weapon/storage/wallet/handle_item_insertion(obj/item/W, prevent_warning = 0)
-	. = ..(W, prevent_warning)
+	. = ..()
 	if(.)
 		if(istype(W, /obj/item/weapon/card/id))
 			refreshID()
 
 /obj/item/weapon/storage/wallet/update_icon()
-
-	if(front_id)
-		switch(front_id.icon_state)
-			if("id")
-				icon_state = "walletid"
-				return
-			if("silver")
-				icon_state = "walletid_silver"
-				return
-			if("gold")
-				icon_state = "walletid_gold"
-				return
-			if("centcom")
-				icon_state = "walletid_centcom"
-				return
 	icon_state = "wallet"
+	if(front_id)
+		icon_state = "wallet_[front_id.icon_state]"
+
 
 
 /obj/item/weapon/storage/wallet/GetID()

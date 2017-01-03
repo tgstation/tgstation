@@ -1,5 +1,3 @@
-
-
 /obj/machinery/particle_accelerator/control_box
 	name = "Particle Accelerator Control Console"
 	desc = "This controls the density of the particles."
@@ -10,7 +8,7 @@
 	use_power = 0
 	idle_power_usage = 500
 	active_power_usage = 10000
-	dir = 1
+	dir = NORTH
 	var/strength_upper_limit = 2
 	var/interface_control = 1
 	var/list/obj/structure/particle_accelerator/connected_parts
@@ -19,6 +17,7 @@
 	var/active = 0
 	var/strength = 0
 	var/powered = 0
+	mouse_opacity = 2
 
 /obj/machinery/particle_accelerator/control_box/New()
 	wires = new /datum/wires/particle_accelerator/control_box(src)
@@ -160,12 +159,13 @@
 	var/turf/T = loc
 
 	assembled = 0
+	critical_machine = FALSE
 
 	var/obj/structure/particle_accelerator/fuel_chamber/F = locate() in orange(1,src)
 	if(!F)
 		return 0
 
-	dir = F.dir
+	setDir(F.dir)
 	connected_parts.Cut()
 
 	T = get_step(T,rdir)
@@ -190,6 +190,7 @@
 		return 0
 
 	assembled = 1
+	critical_machine = TRUE	//Only counts if the PA is actually assembled.
 	return 1
 
 /obj/machinery/particle_accelerator/control_box/proc/check_part(turf/T, type)
@@ -203,7 +204,7 @@
 
 /obj/machinery/particle_accelerator/control_box/proc/toggle_power()
 	active = !active
-	investigate_log("turned [active?"<font color='red'>ON</font>":"<font color='green'>OFF</font>"] by [usr ? key_name(usr) : "outside forces"]","singulo")
+	investigate_log("turned [active?"<font color='green'>ON</font>":"<font color='red'>OFF</font>"] by [usr ? key_name(usr) : "outside forces"]","singulo")
 	message_admins("PA Control Computer turned [active ?"ON":"OFF"] by [usr ? key_name_admin(usr) : "outside forces"](<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[usr]'>FLW</A>) in ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
 	log_game("PA Control Computer turned [active ?"ON":"OFF"] by [usr ? "[key_name(usr)]" : "outside forces"] in ([x],[y],[z])")
 	if(active)
@@ -225,7 +226,7 @@
 
 /obj/machinery/particle_accelerator/control_box/interact(mob/user)
 	if((get_dist(src, user) > 1) || (stat & (BROKEN|NOPOWER)))
-		if(!istype(user, /mob/living/silicon))
+		if(!issilicon(user))
 			user.unset_machine()
 			user << browse(null, "window=pacontrol")
 			return
@@ -248,8 +249,6 @@
 		dat += "Particle Strength: [strength] "
 		dat += "<A href='?src=\ref[src];strengthdown=1'>--</A>|<A href='?src=\ref[src];strengthup=1'>++</A><BR><BR>"
 
-	//user << browse(dat, "window=pacontrol;size=420x500")
-	//onclose(user, "pacontrol")
 	var/datum/browser/popup = new(user, "pacontrol", name, 420, 300)
 	popup.set_content(dat)
 	popup.set_title_image(user.browse_rsc_icon(icon, icon_state))
@@ -272,7 +271,7 @@
 	switch(construction_state)
 		if(PA_CONSTRUCTION_UNSECURED)
 			if(istype(W, /obj/item/weapon/wrench) && !isinspace())
-				playsound(loc, 'sound/items/Ratchet.ogg', 75, 1)
+				playsound(loc, W.usesound, 75, 1)
 				anchored = 1
 				user.visible_message("[user.name] secures the [name] to the floor.", \
 					"You secure the external bolts.")
@@ -280,7 +279,7 @@
 				did_something = TRUE
 		if(PA_CONSTRUCTION_UNWIRED)
 			if(istype(W, /obj/item/weapon/wrench))
-				playsound(loc, 'sound/items/Ratchet.ogg', 75, 1)
+				playsound(loc, W.usesound, 75, 1)
 				anchored = 0
 				user.visible_message("[user.name] detaches the [name] from the floor.", \
 					"You remove the external bolts.")
@@ -319,7 +318,7 @@
 
 	..()
 
-/obj/machinery/particle_accelerator/control_box/blob_act()
+/obj/machinery/particle_accelerator/control_box/blob_act(obj/structure/blob/B)
 	if(prob(50))
 		qdel(src)
 

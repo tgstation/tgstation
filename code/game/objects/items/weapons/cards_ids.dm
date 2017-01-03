@@ -15,9 +15,9 @@
 	name = "card"
 	desc = "Does card things."
 	icon = 'icons/obj/card.dmi'
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 
-	var/list/files = list(  )
+	var/list/files = list()
 
 /obj/item/weapon/card/data
 	name = "data disk"
@@ -43,16 +43,6 @@
 	src.add_fingerprint(usr)
 	return
 
-/obj/item/weapon/card/data/clown
-	name = "\proper the coordinates to clown planet"
-	icon_state = "data"
-	item_state = "card-id"
-	layer = 3
-	level = 2
-	desc = "This card contains coordinates to the fabled Clown Planet. Handle with care."
-	function = "teleporter"
-	data = "Clown Land"
-
 /*
  * ID CARDS
  */
@@ -63,13 +53,21 @@
 	item_state = "card-id"
 	origin_tech = "magnets=2;syndicate=2"
 	flags = NOBLUDGEON
+	var/prox_check = TRUE //If the emag requires you to be in range
+
+/obj/item/weapon/card/emag/bluespace
+	name = "bluespace cryptographic sequencer"
+	desc = "It's a blue card with a magnetic strip attached to some circuitry. It appears to have some sort of transmitter attached to it."
+	color = rgb(40, 130, 255)
+	origin_tech = "bluespace=4;magnets=4;syndicate=5"
+	prox_check = FALSE
 
 /obj/item/weapon/card/emag/attack()
 	return
 
 /obj/item/weapon/card/emag/afterattack(atom/target, mob/user, proximity)
 	var/atom/A = target
-	if(!proximity)
+	if(!proximity && prox_check)
 		return
 	A.emag_act(user)
 
@@ -78,11 +76,12 @@
 	desc = "A card used to provide ID and determine access across the station."
 	icon_state = "id"
 	item_state = "card-id"
+	slot_flags = SLOT_ID
+	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 100)
+	resistance_flags = FIRE_PROOF | ACID_PROOF
 	var/mining_points = 0 //For redeeming at mining equipment vendors
 	var/list/access = list()
 	var/registered_name = null // The name registered_name on the card
-	slot_flags = SLOT_ID
-
 	var/assignment = null
 	var/dorm = 0		// determines if this ID has claimed a dorm already
 
@@ -133,7 +132,8 @@ update_label("John Doe", "Clowny")
 /obj/item/weapon/card/id/syndicate
 	name = "agent card"
 	access = list(access_maint_tunnels, access_syndicate)
-	origin_tech = "syndicate=3"
+	origin_tech = "syndicate=1"
+	var/anyone = FALSE //Can anyone forge the ID or just syndicate?
 
 /obj/item/weapon/card/id/syndicate/New()
 	..()
@@ -148,13 +148,13 @@ update_label("John Doe", "Clowny")
 	if(istype(O, /obj/item/weapon/card/id))
 		var/obj/item/weapon/card/id/I = O
 		src.access |= I.access
-		if(istype(user, /mob/living) && user.mind)
+		if(isliving(user) && user.mind)
 			if(user.mind.special_role)
 				usr << "<span class='notice'>The card's microscanners activate as you pass it over the ID, copying its access.</span>"
 
 /obj/item/weapon/card/id/syndicate/attack_self(mob/user)
-	if(istype(user, /mob/living) && user.mind)
-		if(user.mind.special_role)
+	if(isliving(user) && user.mind)
+		if(user.mind.special_role || anyone)
 			if(alert(user, "Action", "Agent ID", "Show", "Forge") == "Forge")
 				var t = copytext(sanitize(input(user, "What name would you like to put on this card?", "Agent card name", registered_name ? registered_name : (ishuman(user) ? user.real_name : user.name))as text | null),1,26)
 				if(!t || t == "Unknown" || t == "floor" || t == "wall" || t == "r-wall") //Same as mob/new_player/prefrences.dm
@@ -172,6 +172,9 @@ update_label("John Doe", "Clowny")
 				user << "<span class='notice'>You successfully forge the ID card.</span>"
 				return
 	..()
+
+/obj/item/weapon/card/id/syndicate/anyone
+	anyone = TRUE
 
 /obj/item/weapon/card/id/syndicate_command
 	name = "syndicate ID card"
@@ -275,3 +278,21 @@ update_label("John Doe", "Clowny")
 /obj/item/weapon/card/id/prisoner/seven
 	name = "Prisoner #13-007"
 	registered_name = "Prisoner #13-007"
+
+/obj/item/weapon/card/id/mining
+	name = "mining ID"
+	access = list(access_mining, access_mining_station, access_mineral_storeroom)
+
+/obj/item/weapon/card/id/away
+	name = "a perfectly generic identification card"
+	desc = "A perfectly generic identification card. Looks like it could use some flavor."
+	access = list(access_away_general)
+
+/obj/item/weapon/card/id/away/hotel
+	name = "Staff ID"
+	desc = "A staff ID used to access the hotel's doors."
+	access = list(access_away_general, access_away_maint)
+
+/obj/item/weapon/card/id/away/hotel/securty
+	name = "Officer ID"
+	access = list(access_away_general, access_away_maint, access_away_sec)

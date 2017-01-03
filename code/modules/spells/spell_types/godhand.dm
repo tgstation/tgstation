@@ -8,7 +8,7 @@
 	icon_state = "syndballoon"
 	item_state = null
 	flags = ABSTRACT | NODROP
-	w_class = 5
+	w_class = WEIGHT_CLASS_HUGE
 	force = 0
 	throwforce = 0
 	throw_range = 0
@@ -65,12 +65,12 @@
 	item_state = "fleshtostone"
 
 /obj/item/weapon/melee/touch_attack/fleshtostone/afterattack(atom/target, mob/living/carbon/user, proximity)
-	if(!proximity || target == user || !ismob(target) || !iscarbon(user) || user.lying || user.handcuffed) //getting hard after touching yourself would also be bad
+	if(!proximity || target == user || !isliving(target) || !iscarbon(user) || user.lying || user.handcuffed) //getting hard after touching yourself would also be bad
 		return
 	if(user.lying || user.handcuffed)
 		user << "<span class='warning'>You can't reach out!</span>"
 		return
-	var/mob/M = target
+	var/mob/living/M = target
 	M.Stun(2)
-	new /obj/structure/closet/statue(M.loc, M)
+	M.petrify()
 	..()

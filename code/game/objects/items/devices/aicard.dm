@@ -4,12 +4,12 @@
 	icon = 'icons/obj/aicards.dmi'
 	icon_state = "aicard" // aicard-full
 	item_state = "electronic"
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	slot_flags = SLOT_BELT
 	flags = NOBLUDGEON
 	var/flush = FALSE
 	var/mob/living/silicon/ai/AI
-	origin_tech = "programming=4;materials=4"
+	origin_tech = "programming=3;materials=3"
 
 /obj/item/device/aicard/afterattack(atom/target, mob/user, proximity)
 	..()
@@ -30,12 +30,12 @@
 		else
 			icon_state = "aicard-full"
 		if(!AI.control_disabled)
-			overlays += image('icons/obj/aicards.dmi', "aicard-on")
+			add_overlay(image('icons/obj/aicards.dmi', "aicard-on"))
 		AI.cancel_camera()
 	else
 		name = initial(name)
 		icon_state = initial(icon_state)
-		overlays.Cut()
+		cut_overlays()
 
 /obj/item/device/aicard/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
 									datum/tgui/master_ui = null, datum/ui_state/state = hands_state)
@@ -53,7 +53,7 @@
 		data["wireless"] = !AI.control_disabled //todo disabled->enabled
 		data["radio"] = AI.radio_enabled
 		data["isDead"] = AI.stat == DEAD
-		data["isBraindead"] = AI.client ? TRUE : FALSE
+		data["isBraindead"] = AI.client ? FALSE : TRUE
 	data["wiping"] = flush
 	return data
 
@@ -62,17 +62,19 @@
 		return
 	switch(action)
 		if("wipe")
-			var/confirm = alert("Are you sure you want to wipe this card's memory? This cannot be undone once started.", name, "Yes", "No")
-			if(confirm == "Yes" && !..())
-				flush = TRUE
-				if(AI && AI.loc == src)
-					AI.suiciding = TRUE
-					AI << "Your core files are being wiped!"
-					while(AI.stat != DEAD)
-						AI.adjustOxyLoss(2)
-						AI.updatehealth()
-						sleep(10)
-					flush = FALSE
+			if(flush)
+				flush = FALSE
+			else
+				var/confirm = alert("Are you sure you want to wipe this card's memory?", name, "Yes", "No")
+				if(confirm == "Yes" && !..())
+					flush = TRUE
+					if(AI && AI.loc == src)
+						AI << "Your core files are being wiped!"
+						while(AI.stat != DEAD && flush)
+							AI.adjustOxyLoss(1)
+							AI.updatehealth()
+							sleep(5)
+						flush = FALSE
 			. = TRUE
 		if("wireless")
 			AI.control_disabled = !AI.control_disabled

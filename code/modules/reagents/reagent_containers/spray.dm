@@ -7,7 +7,7 @@
 	flags = OPENCONTAINER | NOBLUDGEON
 	slot_flags = SLOT_BELT
 	throwforce = 0
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	throw_speed = 3
 	throw_range = 7
 	var/stream_mode = 0 //whether we use the more focused mode
@@ -17,15 +17,11 @@
 	var/stream_amount = 10 //the amount of reagents transfered when in stream mode.
 	amount_per_transfer_from_this = 5
 	volume = 250
-	possible_transfer_amounts = list()
+	possible_transfer_amounts = list(5,10,15,20,25,30,50,100)
 
 
 /obj/item/weapon/reagent_containers/spray/afterattack(atom/A as mob|obj, mob/user)
-	if(istype(A, /obj/item/weapon/storage) || istype(A, /obj/structure/table) || istype(A, /obj/structure/rack) || istype(A, /obj/structure/closet) \
-	|| istype(A, /obj/item/weapon/reagent_containers) || istype(A, /obj/structure/sink) || istype(A, /obj/structure/janitorialcart) || istype(A, /obj/machinery/hydroponics))
-		return
-
-	if(istype(A, /obj/effect/proc_holder/spell))
+	if(istype(A, /obj/item/weapon/reagent_containers) || istype(A, /obj/structure/sink) || istype(A, /obj/structure/janitorialcart) || istype(A, /obj/machinery/hydroponics))
 		return
 
 	if(istype(A, /obj/structure/reagent_dispensers) && get_dist(src,A) <= 1) //this block copypasted from reagent_containers/glass, for lack of a better solution
@@ -121,7 +117,6 @@
 	user << "<span class='notice'>You switch the nozzle setting to [stream_mode ? "\"stream\"":"\"spray\""]. You'll now use [amount_per_transfer_from_this] units per use.</span>"
 
 /obj/item/weapon/reagent_containers/spray/verb/empty()
-
 	set name = "Empty Spray Bottle"
 	set category = "Object"
 	set src in usr
@@ -139,6 +134,27 @@
 	name = "space cleaner"
 	desc = "BLAM!-brand non-foaming space cleaner!"
 	list_reagents = list("cleaner" = 250)
+
+//spray tan
+/obj/item/weapon/reagent_containers/spray/spraytan
+	name = "spray tan"
+	volume = 50
+	desc = "Gyaro brand spray tan. Do not spray near eyes or other orifices."
+	list_reagents = list("spraytan" = 50)
+
+
+/obj/item/weapon/reagent_containers/spray/medical
+	name = "medical spray"
+	icon = 'icons/obj/chemical.dmi'
+	icon_state = "medspray"
+	volume = 100
+
+
+/obj/item/weapon/reagent_containers/spray/medical/sterilizer
+	name = "sterilizer spray"
+	desc = "Spray bottle loaded with non-toxic sterilizer. Useful in preparation for surgery."
+	list_reagents = list("sterilizine" = 100)
+
 
 //pepperspray
 /obj/item/weapon/reagent_containers/spray/pepper
@@ -174,7 +190,7 @@
 	icon_state = "chemsprayer"
 	item_state = "chemsprayer"
 	throwforce = 0
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 	stream_mode = 1
 	current_range = 7
 	spray_range = 4

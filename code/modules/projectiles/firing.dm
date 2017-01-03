@@ -1,21 +1,26 @@
-/obj/item/ammo_casing/proc/fire(atom/target as mob|obj|turf, mob/living/user as mob|obj, params, distro, quiet, zone_override = "")
+/obj/item/ammo_casing/proc/fire_casing(atom/target, mob/living/user, params, distro, quiet, zone_override, spread)
 	distro += variance
 	for (var/i = max(1, pellets), i > 0, i--)
-		var/curloc = user.loc
 		var/targloc = get_turf(target)
 		ready_proj(target, user, quiet, zone_override)
-		if(distro)
-			targloc = spread(targloc, curloc, distro)
-		if(!throw_proj(target, targloc, user, params))
+		if(distro) //We have to spread a pixel-precision bullet. throw_proj was called before so angles should exist by now...
+			if(randomspread)
+				spread = round((rand() - 0.5) * distro)
+			else //Smart spread
+				spread = round((i / pellets - 0.5) * distro)
+		if(!throw_proj(target, targloc, user, params, spread))
 			return 0
 		if(i > 1)
 			newshot()
-	user.changeNext_move(CLICK_CD_RANGE)
+	if(click_cooldown_override)
+		user.changeNext_move(click_cooldown_override)
+	else
+		user.changeNext_move(CLICK_CD_RANGE)
 	user.newtonian_move(get_dir(target, user))
 	update_icon()
 	return 1
 
-/obj/item/ammo_casing/proc/ready_proj(atom/target, mob/living/user, quiet, zone_override = "")
+/obj/item/ammo_casing/proc/ready_proj(atom/target, mob/living/user, quiet, zone_override)
 	if (!BB)
 		return
 	BB.original = target
@@ -30,30 +35,24 @@
 		reagents.trans_to(BB, reagents.total_volume) //For chemical darts/bullets
 		qdel(reagents)
 
-/obj/item/ammo_casing/proc/throw_proj(atom/target, turf/targloc, mob/living/user, params)
-	var/turf/curloc = user.loc
+/obj/item/ammo_casing/proc/throw_proj(atom/target, turf/targloc, mob/living/user, params, spread)
+	var/turf/curloc = get_turf(user)
 	if (!istype(targloc) || !istype(curloc) || !BB)
 		return 0
-	if(targloc == curloc)
-		if(target) //if the target is right on our location we go straight to bullet_act()
-			target.bullet_act(BB, BB.def_zone)
-		qdel(BB)
-		BB = null
-		return 1
-	BB.loc = get_turf(user)
-	BB.starting = get_turf(user)
-	BB.current = curloc
-	BB.yo = targloc.y - curloc.y
-	BB.xo = targloc.x - curloc.x
 
-	if(params)
-		var/list/mouse_control = params2list(params)
-		if(mouse_control["icon-x"])
-			BB.p_x = text2num(mouse_control["icon-x"])
-		if(mouse_control["icon-y"])
-			BB.p_y = text2num(mouse_control["icon-y"])
-	if(BB)
-		BB.fire()
+	var/firing_dir
+	if(BB.firer)
+		firing_dir = BB.firer.dir
+	if(!BB.suppressed && firing_effect_type)
+		PoolOrNew(firing_effect_type, list(get_turf(src), firing_dir))
+
+	var/direct_target
+	if(targloc == curloc)
+		if(target) //if the target is right on our location we'll skip the travelling code in the proj's fire()
+			direct_target = target
+	if(!direct_target)
+		BB.preparePixelProjectile(target, targloc, user, params, spread)
+	BB.fire(null, direct_target)
 	BB = null
 	return 1
 
@@ -61,5 +60,3 @@
 	var/dx = abs(target.x - current.x)
 	var/dy = abs(target.y - current.y)
 	return locate(target.x + round(gaussian(0, distro) * (dy+2)/8, 1), target.y + round(gaussian(0, distro) * (dx+2)/8, 1), target.z)
-
-//	gaussian(0, distro)

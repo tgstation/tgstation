@@ -19,7 +19,6 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 	machinetype = 5
 	/*heatgen = 0
 	delay = 7*/
-	circuitboard = "/obj/item/weapon/circuitboard/telecomms/broadcaster"
 
 /obj/machinery/telecomms/broadcaster/receive_information(datum/signal/signal, obj/machinery/telecomms/machine_from)
 	// Don't broadcast rejected signals
@@ -95,16 +94,19 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 
 /obj/machinery/telecomms/broadcaster/New()
 	..()
-	component_parts = list()
-	component_parts += new /obj/item/weapon/circuitboard/telecomms/broadcaster(null)
-	component_parts += new /obj/item/weapon/stock_parts/subspace/filter(null)
-	component_parts += new /obj/item/weapon/stock_parts/subspace/crystal(null)
-	component_parts += new /obj/item/weapon/stock_parts/micro_laser/high(null)
-	component_parts += new /obj/item/weapon/stock_parts/micro_laser/high(null)
-	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
-	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
-	component_parts += new /obj/item/stack/cable_coil(null, 1)
-	RefreshParts()
+	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/telecomms/broadcaster(null)
+	B.apply_default_parts(src)
+
+/obj/item/weapon/circuitboard/machine/telecomms/broadcaster
+	name = "circuit board (Subspace Broadcaster)"
+	build_path = /obj/machinery/telecomms/broadcaster
+	origin_tech = "programming=2;engineering=2;bluespace=1"
+	req_components = list(
+							/obj/item/weapon/stock_parts/manipulator = 2,
+							/obj/item/stack/cable_coil = 1,
+							/obj/item/weapon/stock_parts/subspace/filter = 1,
+							/obj/item/weapon/stock_parts/subspace/crystal = 1,
+							/obj/item/weapon/stock_parts/micro_laser = 2)
 
 /obj/machinery/telecomms/broadcaster/Destroy()
 	// In case message_delay is left on 1, otherwise it won't reset the list and people can't say the same thing twice anymore.
@@ -129,3 +131,6 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 	id = "Broadcaster B"
 	network = "tcommsat"
 	autolinkers = list("broadcasterB")
+
+/obj/machinery/telecomms/broadcaster/preset_left/birdstation
+	name = "Broadcaster"

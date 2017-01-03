@@ -75,13 +75,27 @@ Bonus
 
 /datum/symptom/visionaid/Activate(datum/disease/advance/A)
 	..()
-	if(prob(SYMPTOM_ACTIVATION_PROB * 5))
-		var/mob/living/M = A.affected_mob
-		switch(A.stage)
-			if(4, 5)
-				if (M.reagents.get_reagent_amount("oculine") < 20)
-					M.reagents.add_reagent("oculine", 20)
-			else
-				if(prob(SYMPTOM_ACTIVATION_PROB * 5))
-					M << "<span class='notice'>[pick("Your eyes feel great.", "You are now blinking manually.", "You don't feel the need to blink.")]</span>"
+	var/mob/living/M = A.affected_mob
+	switch(A.stage)
+		if(4, 5) //basically oculine
+			if(M.disabilities & BLIND)
+				if(prob(20))
+					M << "<span class='warning'>Your vision slowly returns...</span>"
+					M.cure_blind()
+					M.cure_nearsighted()
+					M.blur_eyes(35)
+
+				else if(M.disabilities & NEARSIGHT)
+					M << "<span class='warning'>The blackness in your peripheral vision fades.</span>"
+					M.cure_nearsighted()
+					M.blur_eyes(10)
+
+				else if(M.eye_blind || M.eye_blurry)
+					M.set_blindness(0)
+					M.set_blurriness(0)
+				else if(M.eye_damage > 0)
+					M.adjust_eye_damage(-1)
+		else
+			if(prob(SYMPTOM_ACTIVATION_PROB * 3))
+				M << "<span class='notice'>[pick("Your eyes feel great.", "You are now blinking manually.", "You don't feel the need to blink.")]</span>"
 	return

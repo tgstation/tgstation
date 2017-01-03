@@ -4,6 +4,7 @@
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "labeler1"
 	item_state = "flight"
+	flags = NOBLUDGEON
 	var/list/modes = list(
 		"grey"		= rgb(255,255,255),
 		"red"			= rgb(255,0,0),
@@ -19,16 +20,15 @@
 
 /obj/item/device/pipe_painter/afterattack(atom/A, mob/user, proximity_flag)
 	//Make sure we only paint adjacent items
-	if(proximity_flag!= 1)
+	if(!proximity_flag)
 		return
 
-	if(!istype(A,/obj/machinery/atmospherics/pipe/simple) && !istype(A,/obj/machinery/atmospherics/pipe/manifold) && !istype(A,/obj/machinery/atmospherics/pipe/manifold4w))
+	if(!istype(A,/obj/machinery/atmospherics/pipe))
 		return
 
 	var/obj/machinery/atmospherics/pipe/P = A
-	P.color = modes[mode]
+	P.add_atom_colour(modes[mode], FIXED_COLOUR_PRIORITY)
 	P.pipe_color = modes[mode]
-	P.stored.color = modes[mode]
 	user.visible_message("<span class='notice'>[user] paints \the [P] [mode].</span>","<span class='notice'>You paint \the [P] [mode].</span>")
 	P.update_node_icon() //updates the neighbors
 

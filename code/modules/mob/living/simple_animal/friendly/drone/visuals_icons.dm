@@ -9,7 +9,7 @@
 /mob/living/simple_animal/drone/proc/apply_overlay(cache_index)
 	var/image/I = drone_overlays[cache_index]
 	if(I)
-		overlays += I
+		add_overlay(I)
 
 
 /mob/living/simple_animal/drone/proc/remove_overlay(cache_index)
@@ -18,9 +18,12 @@
 		drone_overlays[cache_index] = null
 
 
-/mob/living/simple_animal/drone/proc/update_inv_hands()
+/mob/living/simple_animal/drone/update_inv_hands()
 	remove_overlay(DRONE_HANDS_LAYER)
 	var/list/hands_overlays = list()
+
+	var/obj/item/l_hand = get_item_for_held_index(1)
+	var/obj/item/r_hand = get_item_for_held_index(2)
 
 	var/y_shift = getItemPixelShiftY()
 
@@ -37,8 +40,9 @@
 		hands_overlays += r_hand_image
 
 		if(client && hud_used && hud_used.hud_version != HUD_STYLE_NOHUD)
-			r_hand.layer = 20
-			r_hand.screen_loc = ui_rhand
+			r_hand.layer = ABOVE_HUD_LAYER
+			r_hand.plane = ABOVE_HUD_PLANE
+			r_hand.screen_loc = ui_hand_position(get_held_index_of_item(r_hand))
 			client.screen |= r_hand
 
 	if(l_hand)
@@ -54,8 +58,9 @@
 		hands_overlays += l_hand_image
 
 		if(client && hud_used && hud_used.hud_version != HUD_STYLE_NOHUD)
-			l_hand.layer = 20
-			l_hand.screen_loc = ui_lhand
+			l_hand.layer = ABOVE_HUD_LAYER
+			l_hand.plane = ABOVE_HUD_PLANE
+			l_hand.screen_loc = ui_hand_position(get_held_index_of_item(l_hand))
 			client.screen |= l_hand
 
 
@@ -87,18 +92,15 @@
 
 	apply_overlay(DRONE_HEAD_LAYER)
 
-
-//These procs serve as redirection so that the drone updates as expected when other things call these procs
-/mob/living/simple_animal/drone/update_inv_l_hand()
-	update_inv_hands()
-
-
-/mob/living/simple_animal/drone/update_inv_r_hand()
-	update_inv_hands()
-
-
 /mob/living/simple_animal/drone/update_inv_wear_mask()
 	update_inv_head()
+
+/mob/living/simple_animal/drone/regenerate_icons()
+	// Drones only have 4 slots, which in this specific instance
+	// is a small blessing.
+	update_inv_hands()
+	update_inv_head()
+	update_inv_internal_storage()
 
 
 /mob/living/simple_animal/drone/proc/pickVisualAppearence()
@@ -135,9 +137,7 @@
 	switch(visualAppearence)
 		if(MAINTDRONE)
 			. = 0
-		if(REPAIRDRONE)
-			. = -6
-		if(SCOUTDRONE)
+		if(REPAIRDRONE,SCOUTDRONE,CLOCKDRONE)
 			. = -6
 
 /mob/living/simple_animal/drone/proc/updateSeeStaticMobs()

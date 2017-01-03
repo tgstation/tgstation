@@ -9,6 +9,7 @@
 	icon_state = "basic"
 	icon_living = "basic"
 	icon_dead = "basic"
+	gender = NEUTER
 	health = 15
 	maxHealth = 15
 	healable = 0
@@ -48,6 +49,7 @@
 	name = "strong hivebot"
 	desc = "A robot, this one is armed and looks tough!"
 	health = 80
+	maxHealth = 80
 	ranged = 1
 
 /mob/living/simple_animal/hostile/hivebot/death(gibbed)

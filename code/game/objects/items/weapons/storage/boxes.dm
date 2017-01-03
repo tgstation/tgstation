@@ -15,6 +15,8 @@
  *		Handcuff, mousetrap, and pillbottle boxes,
  *		Snap-pops and matchboxes,
  *		Replacement light boxes.
+ *		Action Figure Boxes
+ *		Various paper bags.
  *
  *		For syndicate call-ins see uplink_kits.dm
  */
@@ -24,7 +26,7 @@
 	desc = "It's just an ordinary box."
 	icon_state = "box"
 	item_state = "syringe_kit"
-	burn_state = FLAMMABLE
+	resistance_flags = FLAMMABLE
 	var/foldable = /obj/item/stack/sheet/cardboard
 
 
@@ -46,8 +48,7 @@
 	var/obj/item/I = new foldable(get_turf(src))
 	user.drop_item()
 	user.put_in_hands(I)
-	user.update_inv_l_hand()
-	user.update_inv_r_hand()
+	user.update_inv_hands()
 	qdel(src)
 
 /obj/item/weapon/storage/box/attackby(obj/item/W, mob/user, params)
@@ -56,35 +57,52 @@
 	return ..()
 
 
-/obj/item/weapon/storage/box/survival
-
+// Ordinary survival box
 /obj/item/weapon/storage/box/survival/New()
 	..()
-	contents = list()
 	new /obj/item/clothing/mask/breath(src)
 	new /obj/item/weapon/tank/internals/emergency_oxygen(src)
 	new /obj/item/weapon/reagent_containers/hypospray/medipen(src)
-	return
 
-/obj/item/weapon/storage/box/engineer
+/obj/item/weapon/storage/box/survival/radio/New()
+	..()
+	new /obj/item/device/radio/off(src)
 
+/obj/item/weapon/storage/box/survival_mining/New()
+	..()
+	new /obj/item/clothing/mask/gas/explorer(src)
+	new /obj/item/weapon/tank/internals/emergency_oxygen/engi(src)
+	new /obj/item/weapon/crowbar/red(src)
+	new /obj/item/weapon/reagent_containers/hypospray/medipen(src)
+
+
+// Engineer survival box
 /obj/item/weapon/storage/box/engineer/New()
 	..()
-	contents = list()
 	new /obj/item/clothing/mask/breath(src)
 	new /obj/item/weapon/tank/internals/emergency_oxygen/engi(src)
 	new /obj/item/weapon/reagent_containers/hypospray/medipen(src)
-	return
 
-/obj/item/weapon/storage/box/security
+/obj/item/weapon/storage/box/engineer/radio/New()
+	..()
+	new /obj/item/device/radio/off(src)
 
+// Syndie survival box
+/obj/item/weapon/storage/box/syndie/New()
+	..()
+	new /obj/item/clothing/mask/gas/syndicate(src)
+	new /obj/item/weapon/tank/internals/emergency_oxygen/engi(src)
+
+// Security survival box
 /obj/item/weapon/storage/box/security/New()
 	..()
-	contents = list()
 	new /obj/item/clothing/mask/gas/sechailer(src)
 	new /obj/item/weapon/tank/internals/emergency_oxygen(src)
 	new /obj/item/weapon/reagent_containers/hypospray/medipen(src)
-	return
+
+/obj/item/weapon/storage/box/security/radio/New()
+	..()
+	new /obj/item/device/radio/off(src)
 
 /obj/item/weapon/storage/box/gloves
 	name = "box of latex gloves"
@@ -109,7 +127,6 @@
 /obj/item/weapon/storage/box/syringes
 	name = "box of syringes"
 	desc = "A box full of syringes."
-	desc = "A biohazard alert warning is printed on the box"
 	icon_state = "syringe"
 
 /obj/item/weapon/storage/box/syringes/New()
@@ -148,7 +165,7 @@
 
 /obj/item/weapon/storage/box/injectors
 	name = "box of DNA injectors"
-	desc = "This box contains injectors it seems."
+	desc = "This box contains injectors, it seems."
 
 /obj/item/weapon/storage/box/injectors/New()
 	..()
@@ -176,6 +193,25 @@
 	..()
 	for(var/i in 1 to 6)
 		new /obj/item/device/assembly/flash/handheld(src)
+
+/obj/item/weapon/storage/box/wall_flash
+	name = "wall-mounted flash kit"
+	desc = "This box contains everything necessary to build a wall-mounted flash. <B>WARNING: Flashes can cause serious eye damage, protective eyewear is required.</B>"
+	icon_state = "flashbang"
+
+/obj/item/weapon/storage/box/wall_flash/New()
+	..()
+	var/id = rand(1000, 9999)
+
+	new /obj/item/wallframe/button(src)
+	new /obj/item/weapon/electronics/airlock(src)
+	var/obj/item/device/assembly/control/flasher/remote = new(src)
+	remote.id = id
+	var/obj/item/wallframe/flasher/frame = new(src)
+	frame.id = id
+	new /obj/item/device/assembly/flash/handheld(src)
+	new /obj/item/weapon/screwdriver(src)
+
 
 /obj/item/weapon/storage/box/teargas
 	name = "box of tear gas grenades (WARNING)"
@@ -205,6 +241,19 @@
 /obj/item/weapon/storage/box/trackimp/New()
 	..()
 	for(var/i in 1 to 4)
+		new /obj/item/weapon/implantcase/tracking(src)
+	new /obj/item/weapon/implanter(src)
+	new /obj/item/weapon/implantpad(src)
+	new /obj/item/weapon/locator(src)
+
+/obj/item/weapon/storage/box/minertracker
+	name = "boxed tracking implant kit"
+	desc = "For finding those who have died on the accursed lavaworld."
+	icon_state = "implant"
+
+/obj/item/weapon/storage/box/minertracker/New()
+	..()
+	for(var/i in 1 to 3)
 		new /obj/item/weapon/implantcase/tracking(src)
 	new /obj/item/weapon/implanter(src)
 	new /obj/item/weapon/implantpad(src)
@@ -291,19 +340,7 @@
 /obj/item/weapon/storage/box/monkeycubes/New()
 	..()
 	for(var/i = 1; i <= 5; i++)
-		new /obj/item/weapon/reagent_containers/food/snacks/monkeycube/wrapped(src)
-
-
-/obj/item/weapon/storage/box/permits
-	name = "box of construction permits"
-	desc = "A box for containing construction permits, used to officially declare built rooms as additions to the station."
-	icon_state = "id"
-
-/obj/item/weapon/storage/box/permits/New() //There's only a few, so blueprints are still useful beyond setting every room's name to PRIMARY FART STORAGE
-	..()
-	for(var/i in 1 to 3)
-		new /obj/item/areaeditor/permit(src)
-
+		new /obj/item/weapon/reagent_containers/food/snacks/monkeycube(src)
 
 /obj/item/weapon/storage/box/ids
 	name = "box of spare IDs"
@@ -358,8 +395,19 @@
 
 /obj/item/weapon/storage/box/firingpins/New()
 	..()
-	for(var/i in 1 to 7)
+	for(var/i in 1 to 5)
 		new /obj/item/device/firing_pin(src)
+
+/obj/item/weapon/storage/box/lasertagpins
+	name = "box of laser tag firing pins"
+	desc = "A box full of laser tag firing pins, to allow newly-developed firearms to require wearing brightly coloured plastic armor before being able to be used."
+	icon_state = "id"
+
+/obj/item/weapon/storage/box/lasertagpins/New()
+	..()
+	for(var/i in 1 to 3)
+		new /obj/item/device/firing_pin/tag/red(src)
+		new /obj/item/device/firing_pin/tag/blue(src)
 
 /obj/item/weapon/storage/box/handcuffs
 	name = "box of spare handcuffs"
@@ -441,7 +489,7 @@
 	icon_state = "matchbox"
 	item_state = "zippo"
 	storage_slots = 10
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 	slot_flags = SLOT_BELT
 	can_hold = list(/obj/item/weapon/match)
 
@@ -503,7 +551,7 @@
 
 /obj/item/weapon/storage/box/metalfoam
 	name = "box of metal foam grenades"
-	desc = "To be used to rapidly seal hull breaches"
+	desc = "To be used to rapidly seal hull breaches."
 	icon_state = "flashbang"
 
 /obj/item/weapon/storage/box/metalfoam/New()
@@ -518,7 +566,7 @@
 	foldable = null
 
 /obj/item/weapon/storage/box/hug/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] clamps the box of hugs on \his jugular! Guess it wasn't such a hugbox after all..</span>")
+	user.visible_message("<span class='suicide'>[user] clamps the box of hugs on [user.p_their()] jugular! Guess it wasn't such a hugbox after all..</span>")
 	return (BRUTELOSS)
 
 /obj/item/weapon/storage/box/hug/attack_self(mob/user)
@@ -561,6 +609,11 @@
 	new /obj/item/ammo_casing/shotgun/buckshot(src)
 	new /obj/item/ammo_casing/shotgun/buckshot(src)
 
+/obj/item/weapon/storage/box/beanbag
+	name = "box of beanbags"
+	desc = "A box full of beanbag shells."
+	icon_state = "rubbershot_box"
+
 /obj/item/weapon/storage/box/beanbag/New()
 	..()
 	new /obj/item/ammo_casing/shotgun/beanbag(src)
@@ -569,3 +622,258 @@
 	new /obj/item/ammo_casing/shotgun/beanbag(src)
 	new /obj/item/ammo_casing/shotgun/beanbag(src)
 	new /obj/item/ammo_casing/shotgun/beanbag(src)
+
+
+/obj/item/weapon/storage/box/actionfigure
+	name = "box of action figures"
+	desc = "The latest set of collectable action figures."
+	icon_state = "box"
+
+/obj/item/weapon/storage/box/actionfigure/New()
+	..()
+	for(var/i in 1 to 4)
+		var/randomFigure = pick(subtypesof(/obj/item/toy/figure))
+		new randomFigure(src)
+
+#define NODESIGN "None"
+#define NANOTRASEN "NanotrasenStandard"
+#define SYNDI "SyndiSnacks"
+#define HEART "Heart"
+#define SMILE "SmileyFace"
+
+/obj/item/weapon/storage/box/papersack
+	name = "paper sack"
+	desc = "A sack neatly crafted out of paper."
+	icon_state = "paperbag_None"
+	item_state = "paperbag_None"
+	resistance_flags = FLAMMABLE
+	foldable = null
+	var/design = NODESIGN
+
+/obj/item/weapon/storage/box/papersack/update_icon()
+	if(contents.len == 0)
+		icon_state = "[item_state]"
+	else icon_state = "[item_state]_closed"
+
+/obj/item/weapon/storage/box/papersack/attackby(obj/item/weapon/W, mob/user, params)
+	if(istype(W, /obj/item/weapon/pen))
+		//if a pen is used on the sack, dialogue to change its design appears
+		if(contents.len)
+			user << "<span class='warning'>You can't modify this [src] with items still inside!</span>"
+			return
+		var/list/designs = list(NODESIGN, NANOTRASEN, SYNDI, HEART, SMILE, "Cancel")
+		var/switchDesign = input("Select a Design:", "Paper Sack Design", designs[1]) in designs
+		if(get_dist(usr, src) > 1)
+			usr << "<span class='warning'>You have moved too far away!</span>"
+			return
+		var/choice = designs.Find(switchDesign)
+		if(design == designs[choice] || designs[choice] == "Cancel")
+			return 0
+		usr << "<span class='notice'>You make some modifications to the [src] using your pen.</span>"
+		design = designs[choice]
+		icon_state = "paperbag_[design]"
+		item_state = "paperbag_[design]"
+		switch(designs[choice])
+			if(NODESIGN)
+				desc = "A sack neatly crafted out of paper."
+			if(NANOTRASEN)
+				desc = "A standard Nanotrasen paper lunch sack for loyal employees on the go."
+			if(SYNDI)
+				desc = "The design on this paper sack is a remnant of the notorious 'SyndieSnacks' program."
+			if(HEART)
+				desc = "A paper sack with a heart etched onto the side."
+			if(SMILE)
+				desc = "A paper sack with a crude smile etched onto the side."
+		return 0
+	else if(W.is_sharp())
+		if(!contents.len)
+			if(item_state == "paperbag_None")
+				user.show_message("<span class='notice'>You cut eyeholes into the [src].</span>", 1)
+				new /obj/item/clothing/head/papersack(user.loc)
+				qdel(src)
+				return 0
+			else if(item_state == "paperbag_SmileyFace")
+				user.show_message("<span class='notice'>You cut eyeholes into the [src] and modify the design.</span>", 1)
+				new /obj/item/clothing/head/papersack/smiley(user.loc)
+				qdel(src)
+				return 0
+	return ..()
+
+#undef NODESIGN
+#undef NANOTRASEN
+#undef SYNDI
+#undef HEART
+#undef SMILE
+
+/obj/item/weapon/storage/box/ingredients //This box is for the randomely chosen version the chef spawns with, it shouldn't actually exist.
+	name = "ingredients box"
+	icon_state = "donk_kit"
+	item_state = null
+
+/obj/item/weapon/storage/box/ingredients/wildcard
+	item_state = "wildcard"
+
+/obj/item/weapon/storage/box/ingredients/wildcard/New()
+	..()
+	for(var/i in 1 to 7)
+		var/randomFood = pick(/obj/item/weapon/reagent_containers/food/snacks/grown/chili,
+							  /obj/item/weapon/reagent_containers/food/snacks/grown/tomato,
+							  /obj/item/weapon/reagent_containers/food/snacks/grown/carrot,
+							  /obj/item/weapon/reagent_containers/food/snacks/grown/potato,
+							  /obj/item/weapon/reagent_containers/food/snacks/grown/potato/sweet,
+							  /obj/item/weapon/reagent_containers/food/snacks/grown/apple,
+							  /obj/item/weapon/reagent_containers/food/snacks/chocolatebar,
+							  /obj/item/weapon/reagent_containers/food/snacks/grown/cherries,
+							  /obj/item/weapon/reagent_containers/food/snacks/grown/banana,
+							  /obj/item/weapon/reagent_containers/food/snacks/grown/cabbage,
+							  /obj/item/weapon/reagent_containers/food/snacks/grown/soybeans,
+							  /obj/item/weapon/reagent_containers/food/snacks/grown/corn,
+							  /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/plumphelmet,
+							  /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/chanterelle)
+		new randomFood(src)
+
+/obj/item/weapon/storage/box/ingredients/fiesta
+	item_state = "fiesta"
+
+/obj/item/weapon/storage/box/ingredients/fiesta/New()
+	..()
+	new /obj/item/weapon/reagent_containers/food/snacks/tortilla(src)
+	for(var/i in 1 to 2)
+		new /obj/item/weapon/reagent_containers/food/snacks/grown/corn(src)
+		new /obj/item/weapon/reagent_containers/food/snacks/grown/soybeans(src)
+		new /obj/item/weapon/reagent_containers/food/snacks/grown/chili(src)
+
+/obj/item/weapon/storage/box/ingredients/italian
+	item_state = "italian"
+
+/obj/item/weapon/storage/box/ingredients/italian/New()
+	..()
+	for(var/i in 1 to 3)
+		new /obj/item/weapon/reagent_containers/food/snacks/grown/tomato(src)
+		new /obj/item/weapon/reagent_containers/food/snacks/faggot(src)
+	new /obj/item/weapon/reagent_containers/food/drinks/bottle/wine(src)
+
+/obj/item/weapon/storage/box/ingredients/vegetarian
+	item_state = "vegetarian"
+
+/obj/item/weapon/storage/box/ingredients/vegetarian/New()
+	..()
+	for(var/i in 1 to 2)
+		new /obj/item/weapon/reagent_containers/food/snacks/grown/carrot(src)
+	new /obj/item/weapon/reagent_containers/food/snacks/grown/eggplant(src)
+	new /obj/item/weapon/reagent_containers/food/snacks/grown/potato(src)
+	new /obj/item/weapon/reagent_containers/food/snacks/grown/apple(src)
+	new /obj/item/weapon/reagent_containers/food/snacks/grown/corn(src)
+	new /obj/item/weapon/reagent_containers/food/snacks/grown/tomato(src)
+
+/obj/item/weapon/storage/box/ingredients/american
+	item_state = "american"
+
+/obj/item/weapon/storage/box/ingredients/american/New()
+	..()
+	for(var/i in 1 to 2)
+		new /obj/item/weapon/reagent_containers/food/snacks/grown/potato(src)
+		new /obj/item/weapon/reagent_containers/food/snacks/grown/tomato(src)
+		new /obj/item/weapon/reagent_containers/food/snacks/grown/corn(src)
+	new /obj/item/weapon/reagent_containers/food/snacks/faggot(src)
+
+/obj/item/weapon/storage/box/ingredients/fruity
+	item_state = "fruity"
+
+/obj/item/weapon/storage/box/ingredients/fruity/New()
+	..()
+	for(var/i in 1 to 2)
+		new /obj/item/weapon/reagent_containers/food/snacks/grown/apple(src)
+		new /obj/item/weapon/reagent_containers/food/snacks/grown/citrus/orange(src)
+	new /obj/item/weapon/reagent_containers/food/snacks/grown/citrus/lemon(src)
+	new /obj/item/weapon/reagent_containers/food/snacks/grown/citrus/lime(src)
+	new /obj/item/weapon/reagent_containers/food/snacks/grown/watermelon(src)
+
+/obj/item/weapon/storage/box/ingredients/sweets
+	item_state = "sweets"
+
+/obj/item/weapon/storage/box/ingredients/sweets/New()
+	..()
+	for(var/i in 1 to 2)
+		new /obj/item/weapon/reagent_containers/food/snacks/grown/cherries(src)
+		new /obj/item/weapon/reagent_containers/food/snacks/grown/banana(src)
+	new /obj/item/weapon/reagent_containers/food/snacks/chocolatebar(src)
+	new /obj/item/weapon/reagent_containers/food/snacks/grown/cocoapod(src)
+	new /obj/item/weapon/reagent_containers/food/snacks/grown/apple(src)
+
+/obj/item/weapon/storage/box/ingredients/delights
+	item_state = "delights"
+
+/obj/item/weapon/storage/box/ingredients/delights/New()
+	..()
+	for(var/i in 1 to 2)
+		new /obj/item/weapon/reagent_containers/food/snacks/grown/potato/sweet(src)
+		new /obj/item/weapon/reagent_containers/food/snacks/grown/bluecherries(src)
+	new /obj/item/weapon/reagent_containers/food/snacks/grown/vanillapod(src)
+	new /obj/item/weapon/reagent_containers/food/snacks/grown/cocoapod(src)
+	new /obj/item/weapon/reagent_containers/food/snacks/grown/berries(src)
+
+/obj/item/weapon/storage/box/ingredients/grains
+	item_state = "grains"
+
+/obj/item/weapon/storage/box/ingredients/grains/New()
+	..()
+	for(var/i in 1 to 3)
+		new /obj/item/weapon/reagent_containers/food/snacks/grown/oat(src)
+	new /obj/item/weapon/reagent_containers/food/snacks/grown/wheat(src)
+	new /obj/item/weapon/reagent_containers/food/snacks/grown/cocoapod(src)
+	new /obj/item/weapon/reagent_containers/honeycomb(src)
+	new /obj/item/seeds/poppy(src)
+
+/obj/item/weapon/storage/box/ingredients/carnivore
+	item_state = "carnivore"
+
+/obj/item/weapon/storage/box/ingredients/carnivore/New()
+	..()
+	new /obj/item/weapon/reagent_containers/food/snacks/meat/slab/bear(src)
+	new /obj/item/weapon/reagent_containers/food/snacks/meat/slab/spider(src)
+	new /obj/item/weapon/reagent_containers/food/snacks/spidereggs(src)
+	new /obj/item/weapon/reagent_containers/food/snacks/carpmeat(src)
+	new /obj/item/weapon/reagent_containers/food/snacks/meat/slab/xeno(src)
+	new /obj/item/weapon/reagent_containers/food/snacks/meat/slab/corgi(src)
+	new /obj/item/weapon/reagent_containers/food/snacks/faggot(src)
+
+/obj/item/weapon/storage/box/ingredients/exotic
+	item_state = "exotic"
+
+/obj/item/weapon/storage/box/ingredients/exotic/New()
+	..()
+	for(var/i in 1 to 2)
+		new /obj/item/weapon/reagent_containers/food/snacks/carpmeat(src)
+		new /obj/item/weapon/reagent_containers/food/snacks/grown/soybeans(src)
+		new /obj/item/weapon/reagent_containers/food/snacks/grown/cabbage(src)
+	new /obj/item/weapon/reagent_containers/food/snacks/grown/chili(src)
+
+/obj/item/weapon/storage/box/ingredients/New()
+	..()
+	if(item_state)
+		desc = "A box containing supplementary ingredients for the aspiring chef. This box's theme is '[item_state]'."
+
+/obj/item/weapon/storage/box/emptysandbags
+	name = "box of empty sandbags"
+
+/obj/item/weapon/storage/box/emptysandbags/New()
+	..()
+	new /obj/item/weapon/emptysandbag(src)
+	new /obj/item/weapon/emptysandbag(src)
+	new /obj/item/weapon/emptysandbag(src)
+	new /obj/item/weapon/emptysandbag(src)
+	new /obj/item/weapon/emptysandbag(src)
+	new /obj/item/weapon/emptysandbag(src)
+	new /obj/item/weapon/emptysandbag(src)
+
+/obj/item/weapon/storage/box/rndboards
+	name = "\proper the liberator's legacy"
+	desc = "A box containing a gift for worthy golems."
+
+/obj/item/weapon/storage/box/rndboards/New()
+	..()
+	new /obj/item/weapon/circuitboard/machine/protolathe(src)
+	new /obj/item/weapon/circuitboard/machine/destructive_analyzer(src)
+	new /obj/item/weapon/circuitboard/machine/circuit_imprinter(src)
+	new /obj/item/weapon/circuitboard/computer/rdconsole(src)

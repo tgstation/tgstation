@@ -7,12 +7,12 @@ On top of that, now people can add component-speciic procs/vars if they want!
 	var/welded = 0 //Used on pumps and scrubbers
 	var/showpipe = 0
 
-	var/list/datum/pipeline/parents = list()
-	var/list/datum/gas_mixture/airs = list()
+	var/list/datum/pipeline/parents
+	var/list/datum/gas_mixture/airs
 
 /obj/machinery/atmospherics/components/New()
-	parents.len = device_type
-	airs.len = device_type
+	parents = new(device_type)
+	airs = new(device_type)
 	..()
 
 	for(DEVICE_TYPE_LOOP)
@@ -72,7 +72,7 @@ Pipenet stuff; housekeeping
 		qdel(AIR_I)
 		AIR_I = null
 
-/obj/machinery/atmospherics/components/construction()
+/obj/machinery/atmospherics/components/on_construction()
 	..()
 	update_parents()
 

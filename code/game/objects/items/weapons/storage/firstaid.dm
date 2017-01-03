@@ -103,7 +103,7 @@
 	name = "combat medical kit"
 	desc = "I hope you've got insurance."
 	icon_state = "bezerk"
-	max_w_class = 3
+	max_w_class = WEIGHT_CLASS_NORMAL
 
 /obj/item/weapon/storage/firstaid/tactical/New()
 	..()
@@ -127,7 +127,7 @@
 	icon_state = "pill_canister"
 	icon = 'icons/obj/chemical.dmi'
 	item_state = "contsolid"
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	can_hold = list(/obj/item/weapon/reagent_containers/pill,/obj/item/weapon/dice)
 	allow_quick_gather = 1
 	use_to_pickup = 1
@@ -138,14 +138,11 @@
 		var/mob/M = usr
 		if(!istype(over_object, /obj/screen) || !Adjacent(M))
 			return ..()
-		if((!( M.restrained() ) && !( M.stat ) /*&& M.pocket == src*/))
-			switch(over_object.name)
-				if("r_hand")
-					M.unEquip(src)
-					M.put_in_r_hand(src)
-				if("l_hand")
-					M.unEquip(src)
-					M.put_in_l_hand(src)
+		if(!M.restrained() && !M.stat && istype(over_object, /obj/screen/inventory/hand))
+			var/obj/screen/inventory/hand/H = over_object
+			if(!M.unEquip(src))
+				return
+			M.put_in_hand(src,H.held_index)
 			src.add_fingerprint(usr)
 			return
 		if(over_object == usr && in_range(src, usr) || usr.contents.Find(src))
@@ -163,7 +160,7 @@
 	..()
 	for(var/i in 1 to 7)
 		new /obj/item/weapon/reagent_containers/pill/patch/silver_sulf(src)
-	
+
 /obj/item/weapon/storage/pill_bottle/charcoal
 	name = "bottle of charcoal pills"
 	desc = "Contains pills used to counter toxins."
@@ -172,7 +169,7 @@
 	..()
 	for(var/i in 1 to 7)
 		new /obj/item/weapon/reagent_containers/pill/charcoal(src)
-	
+
 /obj/item/weapon/storage/pill_bottle/epinephrine
 	name = "bottle of epinephrine pills"
 	desc = "Contains pills used to stabilize patients."
@@ -181,7 +178,7 @@
 	..()
 	for(var/i in 1 to 7)
 		new /obj/item/weapon/reagent_containers/pill/epinephrine(src)
-	
+
 /obj/item/weapon/storage/pill_bottle/mutadone
 	name = "bottle of mutadone pills"
 	desc = "Contains pills used to treat genetic abnormalities."
@@ -190,7 +187,7 @@
 	..()
 	for(var/i in 1 to 7)
 		new /obj/item/weapon/reagent_containers/pill/mutadone(src)
-	
+
 /obj/item/weapon/storage/pill_bottle/mannitol
 	name = "bottle of mannitol pills"
 	desc = "Contains pills used to treat brain damage."
@@ -199,7 +196,7 @@
 	..()
 	for(var/i in 1 to 7)
 		new /obj/item/weapon/reagent_containers/pill/mannitol(src)
-	
+
 /obj/item/weapon/storage/pill_bottle/stimulant
 	name = "bottle of stimulant pills"
 	desc = "Guaranteed to give you that extra burst of energy during a long shift!"
@@ -208,3 +205,13 @@
 	..()
 	for(var/i in 1 to 5)
 		new /obj/item/weapon/reagent_containers/pill/stimulant(src)
+
+/obj/item/weapon/storage/pill_bottle/mining
+	name = "box of patches"
+	desc = "Contains patches used to treat brute and burn damage."
+
+/obj/item/weapon/storage/pill_bottle/mining/New()
+	..()
+	new /obj/item/weapon/reagent_containers/pill/patch/silver_sulf(src)
+	for(var/i in 1 to 3)
+		new /obj/item/weapon/reagent_containers/pill/patch/styptic(src)

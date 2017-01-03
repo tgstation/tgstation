@@ -1,7 +1,3 @@
-#define FULLSCREEN_LAYER 18
-#define DAMAGE_LAYER FULLSCREEN_LAYER + 0.1
-#define BLIND_LAYER DAMAGE_LAYER + 0.1
-#define CRIT_LAYER BLIND_LAYER + 0.1
 
 /mob
 	var/list/screens = list()
@@ -64,6 +60,7 @@
 	icon_state = "default"
 	screen_loc = "CENTER-7,CENTER-7"
 	layer = FULLSCREEN_LAYER
+	plane = FULLSCREEN_PLANE
 	mouse_opacity = 0
 	var/severity = 0
 
@@ -74,19 +71,23 @@
 
 /obj/screen/fullscreen/brute
 	icon_state = "brutedamageoverlay"
-	layer = DAMAGE_LAYER
+	layer = UI_DAMAGE_LAYER
+	plane = FULLSCREEN_PLANE
 
 /obj/screen/fullscreen/oxy
 	icon_state = "oxydamageoverlay"
-	layer = DAMAGE_LAYER
+	layer = UI_DAMAGE_LAYER
+	plane = FULLSCREEN_PLANE
 
 /obj/screen/fullscreen/crit
 	icon_state = "passage"
 	layer = CRIT_LAYER
+	plane = FULLSCREEN_PLANE
 
 /obj/screen/fullscreen/blind
 	icon_state = "blackimageoverlay"
 	layer = BLIND_LAYER
+	plane = FULLSCREEN_PLANE
 
 /obj/screen/fullscreen/impaired
 	icon_state = "impairedoverlay"
@@ -101,7 +102,7 @@
 	screen_loc = "WEST,SOUTH to EAST,NORTH"
 	icon_state = "flash"
 
-/obj/screen/fullscreen/flash/noise
+/obj/screen/fullscreen/flash/static
 	icon = 'icons/mob/screen_gen.dmi'
 	screen_loc = "WEST,SOUTH to EAST,NORTH"
 	icon_state = "noise"
@@ -111,7 +112,17 @@
 	screen_loc = "WEST,SOUTH to EAST,NORTH"
 	icon_state = "druggy"
 
-#undef FULLSCREEN_LAYER
-#undef BLIND_LAYER
-#undef DAMAGE_LAYER
-#undef CRIT_LAYER
+/obj/screen/fullscreen/color_vision
+	icon = 'icons/mob/screen_gen.dmi'
+	screen_loc = "WEST,SOUTH to EAST,NORTH"
+	icon_state = "flash"
+	alpha = 80
+
+/obj/screen/fullscreen/color_vision/green
+	color = "#00ff00"
+
+/obj/screen/fullscreen/color_vision/red
+	color = "#ff0000"
+
+/obj/screen/fullscreen/color_vision/blue
+	color = "#0000ff"

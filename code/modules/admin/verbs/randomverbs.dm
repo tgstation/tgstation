@@ -70,7 +70,7 @@
 		return
 
 	if(!M)
-		M = input("Direct narrate to who?", "Active Players") as null|anything in player_list
+		M = input("Direct narrate to whom?", "Active Players") as null|anything in player_list
 
 	if(!M)
 		return
@@ -439,7 +439,8 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	var/show_log = alert(src, "Show ion message?", "Message", "Yes", "No")
 	var/announce_ion_laws = (show_log == "Yes" ? 1 : -1)
 
-	new /datum/round_event/ion_storm(0, announce_ion_laws, input)
+	var/datum/round_event/ion_storm/ion = new(0, announce_ion_laws, input)
+	ion.start()
 
 	feedback_add_details("admin_verb","IONC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
@@ -583,8 +584,8 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		src << "Only administrators may use this command."
 		return
 
-	var/confirm = alert(src, "You sure?", "Confirm", "Yes", "No")
-	if(confirm != "Yes")
+	var/confirm = alert(src, "Drop a brain?", "Confirm", "Yes", "No","Cancel")
+	if(confirm == "Cancel")
 		return
 	//Due to the delay here its easy for something to have happened to the mob
 	if(!M)
@@ -593,11 +594,13 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	log_admin("[key_name(usr)] has gibbed [key_name(M)]")
 	message_admins("[key_name_admin(usr)] has gibbed [key_name_admin(M)]")
 
-	if(istype(M, /mob/dead/observer))
-		gibs(M.loc, M.viruses)
+	if(isobserver(M))
+		new /obj/effect/gibspawner/generic(M.loc, M.viruses)
 		return
-
-	M.gib()
+	if(confirm == "Yes")
+		M.gib()
+	else
+		M.gib(1)
 	feedback_add_details("admin_verb","GIB") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/cmd_admin_gib_self()
@@ -606,14 +609,10 @@ Traitors and the like can also be revived with the previous role mostly intact.
 
 	var/confirm = alert(src, "You sure?", "Confirm", "Yes", "No")
 	if(confirm == "Yes")
-		if (istype(mob, /mob/dead/observer)) // so they don't spam gibs everywhere
-			return
-		else
-			mob.gib()
-
 		log_admin("[key_name(usr)] used gibself.")
 		message_admins("<span class='adminnotice'>[key_name_admin(usr)] used gibself.</span>")
 		feedback_add_details("admin_verb","GIBS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+		mob.gib(1, 1, 1)
 
 /client/proc/cmd_admin_check_contents(mob/living/M in mob_list)
 	set category = "Special Verbs"
@@ -644,7 +643,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	set category = "Admin"
 	set name = "Call Shuttle"
 
-	if(SSshuttle.emergency.mode >= SHUTTLE_DOCKED)
+	if(EMERGENCY_AT_LEAST_DOCKED)
 		return
 
 	if (!holder)
@@ -669,7 +668,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	if(alert(src, "You sure?", "Confirm", "Yes", "No") != "Yes")
 		return
 
-	if(SSshuttle.emergency.mode >= SHUTTLE_DOCKED)
+	if(EMERGENCY_AT_LEAST_DOCKED)
 		return
 
 	SSshuttle.emergency.cancel()
@@ -761,15 +760,15 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		return
 
 	if(!N.timing)
-		var/newtime = input(usr, "Set activation timer.", "Activate Nuke", "[N.timeleft]") as num
+		var/newtime = input(usr, "Set activation timer.", "Activate Nuke", "[N.timer_set]") as num
 		if(!newtime)
 			return
-		N.timeleft = newtime
+		N.timer_set = newtime
 	N.set_safety()
 	N.set_active()
 
 	log_admin("[key_name(usr)] [N.timing ? "activated" : "deactivated"] a nuke at ([N.x],[N.y],[N.z]).")
-	message_admins("[key_name_admin(usr)] (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[usr]'>FLW</A>) [N.timing ? "activated" : "deactivated"] a nuke at ([N.x],[N.y],[N.z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[N.x];Y=[N.y];Z=[N.z]'>JMP</a>).")
+	message_admins("[ADMIN_LOOKUPFLW(usr)] [N.timing ? "activated" : "deactivated"] a nuke at [ADMIN_COORDJMP(N)].")
 	feedback_add_details("admin_verb","TN") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/reset_latejoin_spawns()
@@ -777,6 +776,9 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	set name = "Remove Latejoin Spawns"
 
 	if(!check_rights(R_DEBUG))
+		return
+	var/confirm = alert(src, "Disable Latejoin spawns??", "Message", "Yes", "No")
+	if(confirm != "Yes")
 		return
 
 	latejoin.Cut()
@@ -970,13 +972,13 @@ var/list/datum/outfit/custom_outfits = list() //Admin created outfits
 
 	if(!holder) return
 
-	var/datum/atom_hud/A = huds[DATA_HUD_SECURITY_ADVANCED]
+	var/datum/atom_hud/A = huds[ANTAG_HUD_TRAITOR]
 	var/adding_hud = (usr in A.hudusers) ? 0 : 1
 
 	for(var/datum/atom_hud/H in huds)
-		if(istype(H, /datum/atom_hud/antag) || istype(H, /datum/atom_hud/data/human/security/advanced))
+		if(istype(H, /datum/atom_hud/antag))
 			(adding_hud) ? H.add_hud_to(usr) : H.remove_hud_from(usr)
-	
+
 	for(var/datum/gang/G in ticker.mode.gangs)
 		var/datum/atom_hud/antag/H = G.ganghud
 		(adding_hud) ? H.add_hud_to(usr) : H.remove_hud_from(usr)
@@ -985,3 +987,186 @@ var/list/datum/outfit/custom_outfits = list() //Admin created outfits
 	message_admins("[key_name_admin(usr)] toggled their admin antag HUD [adding_hud ? "ON" : "OFF"].")
 	log_admin("[key_name(usr)] toggled their admin antag HUD [adding_hud ? "ON" : "OFF"].")
 	feedback_add_details("admin_verb","TAH") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
+/client/proc/open_shuttle_manipulator()
+	set category = "Admin"
+	set name = "Shuttle Manipulator"
+	set desc = "Opens the shuttle manipulator UI."
+
+	for(var/obj/machinery/shuttle_manipulator/M in machines)
+		M.ui_interact(usr)
+
+/client/proc/mass_zombie_infection()
+	set category = "Fun"
+	set name = "Mass Zombie Infection"
+	set desc = "Infects all humans with a latent organ that will zombify \
+		them on death."
+
+	if(!holder)
+		return
+
+	var/confirm = alert(src, "Please confirm you want to add latent zombie organs in all humans?", "Confirm Zombies", "Yes", "No")
+	if(confirm != "Yes")
+		return
+
+	for(var/mob/living/carbon/human/H in mob_list)
+		new /obj/item/organ/body_egg/zombie_infection(H)
+
+	message_admins("[key_name_admin(usr)] added a latent zombie infection to all humans.")
+	log_admin("[key_name(usr)] added a latent zombie infection to all humans.")
+	feedback_add_details("admin_verb","MZI")
+
+/client/proc/mass_zombie_cure()
+	set category = "Fun"
+	set name = "Mass Zombie Cure"
+	set desc = "Removes the zombie infection from all humans, returning them to normal."
+	if(!holder)
+		return
+
+	var/confirm = alert(src, "Please confirm you want to cure all zombies?", "Confirm Zombie Cure", "Yes", "No")
+	if(confirm != "Yes")
+		return
+
+	for(var/obj/item/organ/body_egg/zombie_infection/I in zombie_infection_list)
+		qdel(I)
+
+	message_admins("[key_name_admin(usr)] cured all zombies.")
+	log_admin("[key_name(usr)] cured all zombies.")
+	feedback_add_details("admin_verb","MZC")
+
+/client/proc/polymorph_all()
+	set category = "Fun"
+	set name = "Polymorph All"
+	set desc = "Applies the effects of the bolt of change to every single mob."
+
+	if(!holder)
+		return
+
+	var/confirm = alert(src, "Please confirm you want polymorph all mobs?", "Confirm Polymorph", "Yes", "No")
+	if(confirm != "Yes")
+		return
+
+	var/list/mobs = shuffle(living_mob_list.Copy()) // might change while iterating
+	var/who_did_it = key_name_admin(usr)
+
+	message_admins("[key_name_admin(usr)] started polymorphed all living mobs.")
+	log_admin("[key_name(usr)] polymorphed all living mobs.")
+	feedback_add_details("admin_verb","MASSWABBAJACK")
+
+	for(var/mob/living/M in mobs)
+		CHECK_TICK
+
+		if(!M)
+			continue
+
+		M.audible_message("<span class='italics'>...wabbajack...wabbajack...</span>")
+		playsound(M.loc, 'sound/magic/Staff_Change.ogg', 50, 1, -1)
+
+		wabbajack(M)
+
+	message_admins("Mass polymorph started by [who_did_it] is complete.")
+
+
+/client/proc/show_tip()
+	set category = "Admin"
+	set name = "Show Tip"
+	set desc = "Sends a tip (that you specify) to all players. After all \
+		you're the experienced player here."
+
+	if(!holder)
+		return
+
+	var/input = input(usr, "Please specify your tip that you want to send to the players.", "Tip", "") as message|null
+	if(!input)
+		return
+
+	if(!ticker)
+		return
+
+	ticker.selected_tip = input
+
+	// If we've already tipped, then send it straight away.
+	if(ticker.tipped)
+		ticker.send_tip_of_the_round()
+
+
+	message_admins("[key_name_admin(usr)] sent a tip of the round.")
+	log_admin("[key_name(usr)] sent \"[input]\" as the Tip of the Round.")
+	feedback_add_details("admin_verb","TIP")
+
+#define ON_PURRBATION(H) (!(H.dna.features["tail_human"] == "None" && H.dna.features["ears"] == "None"))
+
+/proc/mass_purrbation()
+	for(var/M in mob_list)
+		if(ishumanbasic(M))
+			purrbation_apply(M)
+		CHECK_TICK
+
+/proc/mass_remove_purrbation()
+	for(var/M in mob_list)
+		if(ishumanbasic(M))
+			purrbation_remove(M)
+		CHECK_TICK
+
+/proc/purrbation_toggle(mob/living/carbon/human/H)
+	if(!ishumanbasic(H))
+		return
+	if(!ON_PURRBATION(H))
+		purrbation_apply(H)
+		. = TRUE
+	else
+		purrbation_remove(H)
+		. = FALSE
+
+/proc/purrbation_apply(mob/living/carbon/human/H)
+	if(!ishuman(H))
+		return
+	if(ON_PURRBATION(H))
+		return
+	H << "Something is nya~t right."
+	H.dna.features["tail_human"] = "Cat"
+	H.dna.features["ears"] = "Cat"
+	H.regenerate_icons()
+	playsound(get_turf(H), 'sound/effects/meow1.ogg', 50, 1, -1)
+
+/proc/purrbation_remove(mob/living/carbon/human/H)
+	if(!ishuman(H))
+		return
+	if(!ON_PURRBATION(H))
+		return
+	H << "You are no longer a cat."
+	H.dna.features["tail_human"] = "None"
+	H.dna.features["ears"] = "None"
+	H.regenerate_icons()
+
+#undef ON_PURRBATION
+
+/client/proc/modify_goals()
+	set category = "Debug"
+	set name = "Modify goals"
+
+	if(!check_rights(R_ADMIN))
+		return
+
+	holder.modify_goals()
+
+/datum/admins/proc/modify_goals()
+	var/dat = ""
+	for(var/datum/station_goal/S in ticker.mode.station_goals)
+		dat += "[S.name] - <a href='?src=\ref[S];announce=1'>Announce</a> | <a href='?src=\ref[S];remove=1'>Remove</a><br>"
+	dat += "<br><a href='?src=\ref[src];add_station_goal=1'>Add New Goal</a>"
+	usr << browse(dat, "window=goals;size=400x400")
+
+
+/client/proc/toggle_hub()
+	set category = "Server"
+	set name = "Toggle Hub"
+
+	world.visibility = (!world.visibility)
+
+	log_admin("[key_name(usr)] has toggled the server's hub status for the round, it is now [(world.visibility?"on":"off")] the hub.")
+	message_admins("[key_name_admin(usr)] has toggled the server's hub status for the round, it is now [(world.visibility?"on":"off")] the hub.")
+	if (world.visibility && !world.reachable)
+		message_admins("WARNING: The server will not show up on the hub because byond is detecting that a filewall is blocking incoming connections.")
+
+	feedback_add_details("admin_verb","HUB") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!

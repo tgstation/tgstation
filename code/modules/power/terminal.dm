@@ -8,10 +8,9 @@
 	icon_state = "term"
 	desc = "It's an underfloor wiring terminal for power equipment."
 	level = 1
-	layer = TURF_LAYER
 	var/obj/machinery/power/master = null
 	anchored = 1
-	layer = 2.6 // a bit above wires
+	layer = WIRE_TERMINAL_LAYER //a bit above wires
 
 
 /obj/machinery/power/terminal/New()
@@ -27,7 +26,7 @@
 
 /obj/machinery/power/terminal/hide(i)
 	if(i)
-		invisibility = 101
+		invisibility = INVISIBILITY_MAXIMUM
 		icon_state = "term-f"
 	else
 		invisibility = 0
@@ -39,7 +38,7 @@
 
 /obj/machinery/power/apc/can_terminal_dismantle()
 	. = 0
-	if(opened && has_electronics != 2)
+	if(opened)
 		. = 1
 
 /obj/machinery/power/smes/can_terminal_dismantle()
@@ -48,9 +47,9 @@
 		. = 1
 
 
-/obj/machinery/power/terminal/proc/dismantle(mob/living/user)
-	if(istype(loc, /turf/simulated))
-		var/turf/simulated/T = loc
+/obj/machinery/power/terminal/proc/dismantle(mob/living/user, obj/item/W)
+	if(isturf(loc))
+		var/turf/T = loc
 		if(T.intact)
 			user << "<span class='warning'>You must first expose the power terminal!</span>"
 			return
@@ -60,9 +59,9 @@
 								"<span class='notice'>You begin to cut the cables...</span>")
 
 			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
-			if(do_after(user, 50, target = src))
+			if(do_after(user, 50*W.toolspeed, target = src))
 				if(master && master.can_terminal_dismantle())
-					if(prob(50) && electrocute_mob(user, powernet, src))
+					if(prob(50) && electrocute_mob(user, powernet, src, 1, TRUE))
 						var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 						s.set_up(5, 1, master)
 						s.start()
@@ -74,7 +73,6 @@
 
 /obj/machinery/power/terminal/attackby(obj/item/W, mob/living/user, params)
 	if(istype(W, /obj/item/weapon/wirecutters))
-		dismantle(user)
-		return
-
-	..()
+		dismantle(user, W)
+	else
+		return ..()

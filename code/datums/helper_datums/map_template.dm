@@ -9,6 +9,7 @@
 /datum/map_template/New(path = null, map = null, rename = null)
 	if(path)
 		mappath = path
+	if(mappath)
 		preload_size(mappath)
 	if(map)
 		mapfile = map
@@ -16,35 +17,19 @@
 		name = rename
 
 /datum/map_template/proc/preload_size(path)
-	var/quote = ascii2text(34)
-	var/map_file = file2text(path)
-	var/key_len = length(copytext(map_file,2,findtext(map_file,quote,2,0)))
-	//assuming one map per file since more makes no sense for templates anyway
-	var/mapstart = findtext(map_file,"\n(1,1,") //todo replace with something saner
-	var/content = copytext(map_file,findtext(map_file,quote+"\n",mapstart,0)+2,findtext(map_file,"\n"+quote,mapstart,0)+1)
-	var/line_len = length(copytext(content,1,findtext(content,"\n",2,0)))
+	var/bounds = maploader.load_map(file(path), 1, 1, 1, cropMap=FALSE, measureOnly=TRUE)
+	if(bounds)
+		width = bounds[MAP_MAXX] // Assumes all templates are rectangular, have a single Z level, and begin at 1,1,1
+		height = bounds[MAP_MAXY]
+	return bounds
 
-	width = line_len/key_len
-	height = length(content)/(line_len+1)
-
-/datum/map_template/proc/load(turf/T, centered = FALSE)
-	if(centered)
-		T = locate(T.x - round(width/2) , T.y - round(height/2) , T.z)
-	if(!T)
-		return
-	if(T.x+width > world.maxx)
-		return
-	if(T.y+height > world.maxy)
-		return
-
-	maploader.load_map(get_file(), T.x-1, T.y-1, T.z)
-
-	//initialize things that are normally initialized after map load
+/proc/initTemplateBounds(var/list/bounds)
 	var/list/obj/machinery/atmospherics/atmos_machines = list()
 	var/list/obj/structure/cable/cables = list()
 	var/list/atom/atoms = list()
 
-	for(var/L in block(T,locate(T.x+width-1, T.y+height-1, T.z)))
+	for(var/L in block(locate(bounds[MAP_MINX], bounds[MAP_MINY], bounds[MAP_MINZ]),
+	                   locate(bounds[MAP_MAXX], bounds[MAP_MAXY], bounds[MAP_MAXZ])))
 		var/turf/B = L
 		for(var/A in B)
 			atoms += A
@@ -59,14 +44,34 @@
 	SSmachine.setup_template_powernets(cables)
 	SSair.setup_template_machinery(atmos_machines)
 
+/datum/map_template/proc/load(turf/T, centered = FALSE)
+	if(centered)
+		T = locate(T.x - round(width/2) , T.y - round(height/2) , T.z)
+	if(!T)
+		return
+	if(T.x+width > world.maxx)
+		return
+	if(T.y+height > world.maxy)
+		return
+
+	var/list/bounds = maploader.load_map(get_file(), T.x, T.y, T.z, cropMap=TRUE)
+	if(!bounds)
+		return 0
+
+	//initialize things that are normally initialized after map load
+	initTemplateBounds(bounds)
+
 	log_game("[name] loaded at at [T.x],[T.y],[T.z]")
+	return 1
 
 /datum/map_template/proc/get_file()
 	if(mapfile)
-		return mapfile
-	if(mappath)
-		mapfile = file(mappath)
-		return mapfile
+		. = mapfile
+	else if(mappath)
+		. = file(mappath)
+
+	if(!.)
+		world.log << "The file of [src] appears to be empty/non-existent."
 
 /datum/map_template/proc/get_affected_turfs(turf/T, centered = FALSE)
 	var/turf/placement = T
@@ -84,14 +89,54 @@
 		map_templates[T.name] = T
 
 	preloadRuinTemplates()
+	preloadShuttleTemplates()
+	preloadShelterTemplates()
 
 /proc/preloadRuinTemplates()
-	var/list/potentialSpaceRuins = generateMapList(filename = "config/spaceRuinConfig.txt")
-	for(var/ruin in potentialSpaceRuins)
-		var/datum/map_template/T = new(path = "[ruin]", rename = "[ruin]")
-		space_ruins_templates[T.name] = T
+	// Still supporting bans by filename
+	var/list/banned = generateMapList("config/lavaruinblacklist.txt")
+	banned += generateMapList("config/spaceruinblacklist.txt")
 
-	var/list/potentialLavaRuins = generateMapList(filename = "config/lavaRuinConfig.txt")
-	for(var/ruin in potentialLavaRuins)
-		var/datum/map_template/T = new(path = "[ruin]", rename = "[ruin]")
-		lava_ruins_templates[T.name] = T
+	for(var/item in subtypesof(/datum/map_template/ruin))
+		var/datum/map_template/ruin/ruin_type = item
+		// screen out the abstract subtypes
+		if(!initial(ruin_type.id))
+			continue
+		var/datum/map_template/ruin/R = new ruin_type()
+
+		if(banned.Find(R.mappath))
+			continue
+
+		map_templates[R.name] = R
+		ruins_templates[R.name] = R
+
+		if(istype(R, /datum/map_template/ruin/lavaland))
+			lava_ruins_templates[R.name] = R
+		else if(istype(R, /datum/map_template/ruin/space))
+			space_ruins_templates[R.name] = R
+
+
+/proc/preloadShuttleTemplates()
+	var/list/unbuyable = generateMapList("config/unbuyableshuttles.txt")
+
+	for(var/item in subtypesof(/datum/map_template/shuttle))
+		var/datum/map_template/shuttle/shuttle_type = item
+		if(!(initial(shuttle_type.suffix)))
+			continue
+
+		var/datum/map_template/shuttle/S = new shuttle_type()
+		if(unbuyable.Find(S.mappath))
+			S.can_be_bought = FALSE
+
+		shuttle_templates[S.shuttle_id] = S
+		map_templates[S.shuttle_id] = S
+
+/proc/preloadShelterTemplates()
+	for(var/item in subtypesof(/datum/map_template/shelter))
+		var/datum/map_template/shelter/shelter_type = item
+		if(!(initial(shelter_type.mappath)))
+			continue
+		var/datum/map_template/shelter/S = new shelter_type()
+
+		shelter_templates[S.shelter_id] = S
+		map_templates[S.shelter_id] = S

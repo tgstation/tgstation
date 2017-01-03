@@ -8,7 +8,7 @@
 	icon_living = "human_male"
 	icon_dead = "human_male"
 	gender = NEUTER
-	a_intent = "harm"
+	a_intent = INTENT_HARM
 
 	response_help = "touches"
 	response_disarm = "pushes"
@@ -18,7 +18,8 @@
 	health = 50000
 	healable = 0
 
-	harm_intent_damage = 70
+	harm_intent_damage = 10
+	obj_damage = 100
 	melee_damage_lower = 68
 	melee_damage_upper = 83
 	attacktext = "claws"
@@ -31,6 +32,7 @@
 	move_to_delay = 0 // Very fast
 
 	animate_movement = NO_STEPS // Do not animate movement, you jump around as you're a scary statue.
+	hud_possible = list(ANTAG_HUD)
 
 	see_in_dark = 13
 	vision_range = 12
@@ -63,6 +65,12 @@
 	// Set creator
 	if(creator)
 		src.creator = creator
+
+/mob/living/simple_animal/hostile/statue/med_hud_set_health()
+	return //we're a statue we're invincible
+
+/mob/living/simple_animal/hostile/statue/med_hud_set_status()
+	return //we're a statue we're invincible
 
 /mob/living/simple_animal/hostile/statue/Move(turf/NewLoc)
 	if(can_be_seen(NewLoc))
@@ -133,8 +141,8 @@
 
 // Turn to dust when gibbed
 
-/mob/living/simple_animal/hostile/statue/gib(animation = 0)
-	dust(animation)
+/mob/living/simple_animal/hostile/statue/gib()
+	dust()
 
 
 // Stop attacking clientless mobs
@@ -200,7 +208,7 @@
 
 /obj/effect/proc_holder/spell/targeted/night_vision/cast(list/targets,mob/user = usr)
 	for(var/mob/living/target in targets)
-		if(istype(target, /mob/living/carbon/human))
+		if(ishuman(target))
 			var/mob/living/carbon/human/H = target
 			if(H.dna.species.invis_sight == SEE_INVISIBLE_LIVING)
 				H.dna.species.invis_sight = SEE_INVISIBLE_NOLIGHTING
@@ -221,7 +229,7 @@
 /mob/living/simple_animal/hostile/statue/sentience_act()
 	faction -= "neutral"
 
-/mob/living/simple_animal/hostile/statue/restrained()
+/mob/living/simple_animal/hostile/statue/restrained(ignore_grab)
 	. = ..()
 	if(can_be_seen(loc))
 		return 1

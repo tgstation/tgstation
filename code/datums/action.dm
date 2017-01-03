@@ -3,23 +3,29 @@
 #define AB_CHECK_LYING 4
 #define AB_CHECK_CONSCIOUS 8
 
-
 /datum/action
 	var/name = "Generic Action"
+	var/desc = null
 	var/obj/target = null
 	var/check_flags = 0
 	var/processing = 0
 	var/obj/screen/movable/action_button/button = null
 	var/button_icon = 'icons/mob/actions.dmi'
+	var/background_icon_state = ACTION_BUTTON_DEFAULT_BACKGROUND
+	var/buttontooltipstyle = ""
+
+	var/icon_icon = 'icons/mob/actions.dmi'
 	var/button_icon_state = "default"
-	var/background_icon_state = "bg_default"
-	var/mob/living/owner
+	var/mob/owner
 
 /datum/action/New(Target)
 	target = Target
 	button = new
 	button.linked_action = src
 	button.name = name
+	button.actiontooltipstyle = buttontooltipstyle
+	if(desc)
+		button.desc = desc
 
 /datum/action/Destroy()
 	if(owner)
@@ -29,24 +35,27 @@
 	button = null
 	return ..()
 
-/datum/action/proc/Grant(mob/living/L)
-	if(owner)
-		if(owner == L)
-			return
+/datum/action/proc/Grant(mob/M)
+	if(M)
+		if(owner)
+			if(owner == M)
+				return
+		owner = M
+		M.actions += src
+		if(M.client)
+			M.client.screen += button
+		M.update_action_buttons()
+	else
 		Remove(owner)
-	owner = L
-	L.actions += src
-	if(L.client)
-		L.client.screen += button
-	L.update_action_buttons()
 
-/datum/action/proc/Remove(mob/living/L)
-	if(L.client)
-		L.client.screen -= button
-	button.moved = FALSE //so the button appears in its normal position when given to another owner.
-	L.actions -= src
-	L.update_action_buttons()
+/datum/action/proc/Remove(mob/M)
+	if(M)
+		if(M.client)
+			M.client.screen -= button
+		M.actions -= src
+		M.update_action_buttons()
 	owner = null
+	button.moved = FALSE //so the button appears in its normal position when given to another owner.
 
 /datum/action/proc/Trigger()
 	if(!IsAvailable())
@@ -73,12 +82,24 @@
 			return 0
 	return 1
 
-/datum/action/proc/UpdateButtonIcon()
+/datum/action/proc/UpdateButtonIcon(status_only = FALSE)
 	if(button)
-		button.icon = button_icon
-		button.icon_state = background_icon_state
+		if(!status_only)
+			button.name = name
+			button.desc = desc
+			if(owner && owner.hud_used && background_icon_state == ACTION_BUTTON_DEFAULT_BACKGROUND)
+				var/list/settings = owner.hud_used.get_action_buttons_icons()
+				if(button.icon != settings["bg_icon"])
+					button.icon = settings["bg_icon"]
+				if(button.icon_state != settings["bg_state"])
+					button.icon_state = settings["bg_state"]
+			else
+				if(button.icon != button_icon)
+					button.icon = button_icon
+				if(button.icon_state != background_icon_state)
+					button.icon_state = background_icon_state
 
-		ApplyIcon(button)
+			ApplyIcon(button)
 
 		if(!IsAvailable())
 			button.color = rgb(128,0,0,128)
@@ -87,28 +108,32 @@
 			return 1
 
 /datum/action/proc/ApplyIcon(obj/screen/movable/action_button/current_button)
-	current_button.overlays.Cut()
-	if(button_icon && button_icon_state)
+	if(icon_icon && button_icon_state && current_button.button_icon_state != button_icon_state)
 		var/image/img
-		img = image(button_icon, current_button, button_icon_state)
+		img = image(icon_icon, current_button, button_icon_state)
 		img.pixel_x = 0
 		img.pixel_y = 0
-		current_button.overlays += img
-
+		current_button.overlays = list(img)
+		current_button.button_icon_state = button_icon_state
 
 
 //Presets for item actions
 /datum/action/item_action
 	check_flags = AB_CHECK_RESTRAINED|AB_CHECK_STUNNED|AB_CHECK_LYING|AB_CHECK_CONSCIOUS
+	button_icon_state = null
+	// If you want to override the normal icon being the item
+	// then change this to an icon state
 
 /datum/action/item_action/New(Target)
 	..()
 	var/obj/item/I = target
+	LAZYINITLIST(I.actions)
 	I.actions += src
 
 /datum/action/item_action/Destroy()
 	var/obj/item/I = target
 	I.actions -= src
+	UNSETEMPTY(I.actions)
 	return ..()
 
 /datum/action/item_action/Trigger()
@@ -116,17 +141,24 @@
 		return 0
 	if(target)
 		var/obj/item/I = target
-		I.ui_action_click(owner, src.type)
+		I.ui_action_click(owner, src)
 	return 1
 
 /datum/action/item_action/ApplyIcon(obj/screen/movable/action_button/current_button)
-	current_button.overlays.Cut()
-	if(target)
+	if(button_icon && button_icon_state)
+		// If set, use the custom icon that we set instead
+		// of the item appearence
+		..(current_button)
+	else if(target && current_button.appearance_cache != target.appearance) //replace with /ref comparison if this is not valid.
 		var/obj/item/I = target
-		var/old = I.layer
+		current_button.appearance_cache = I.appearance
+		var/old_layer = I.layer
+		var/old_plane = I.plane
 		I.layer = FLOAT_LAYER //AAAH
-		current_button.overlays += I
-		I.layer = old
+		I.plane = FLOAT_PLANE //^ what that guy said
+		current_button.overlays = list(I)
+		I.layer = old_layer
+		I.plane = old_plane
 
 /datum/action/item_action/toggle_light
 	name = "Toggle Light"
@@ -158,12 +190,12 @@
 /datum/action/item_action/set_internals
 	name = "Set Internals"
 
-/datum/action/item_action/set_internals/UpdateButtonIcon()
+/datum/action/item_action/set_internals/UpdateButtonIcon(status_only = FALSE)
 	if(..()) //button available
 		if(iscarbon(owner))
 			var/mob/living/carbon/C = owner
 			if(target == C.internal)
-				button.icon_state = "bg_default_on"
+				button.icon_state = "template_active"
 
 /datum/action/item_action/toggle_mister
 	name = "Toggle Mister"
@@ -173,6 +205,70 @@
 
 /datum/action/item_action/toggle_helmet_light
 	name = "Toggle Helmet Light"
+
+/datum/action/item_action/toggle_unfriendly_fire
+	name = "Toggle Friendly Fire \[ON\]"
+	desc = "Toggles if the club's blasts cause friendly fire."
+	button_icon_state = "vortex_ff_on"
+
+/datum/action/item_action/toggle_unfriendly_fire/Trigger()
+	if(..())
+		UpdateButtonIcon()
+
+/datum/action/item_action/toggle_unfriendly_fire/UpdateButtonIcon(status_only = FALSE)
+	if(istype(target, /obj/item/weapon/hierophant_club))
+		var/obj/item/weapon/hierophant_club/H = target
+		if(H.friendly_fire_check)
+			button_icon_state = "vortex_ff_off"
+			name = "Toggle Friendly Fire \[OFF\]"
+		else
+			button_icon_state = "vortex_ff_on"
+			name = "Toggle Friendly Fire \[ON\]"
+	..()
+
+/datum/action/item_action/vortex_recall
+	name = "Vortex Recall"
+	desc = "Recall yourself, and anyone nearby, to an attuned hierophant beacon at any time.<br>If the beacon is still attached, will detach it."
+	button_icon_state = "vortex_recall"
+
+/datum/action/item_action/vortex_recall/IsAvailable()
+	if(istype(target, /obj/item/weapon/hierophant_club))
+		var/obj/item/weapon/hierophant_club/H = target
+		if(H.teleporting)
+			return 0
+	return ..()
+
+/datum/action/item_action/clock
+	background_icon_state = "bg_clock"
+	buttontooltipstyle = "clockcult"
+
+/datum/action/item_action/clock/IsAvailable()
+	if(!is_servant_of_ratvar(owner))
+		return 0
+	return ..()
+
+/datum/action/item_action/clock/toggle_visor
+	name = "Create Judicial Marker"
+	desc = "Allows you to create a stunning Judicial Marker at any location in view. Click again to disable."
+
+/datum/action/item_action/clock/toggle_visor/IsAvailable()
+	if(!is_servant_of_ratvar(owner))
+		return 0
+	if(istype(target, /obj/item/clothing/glasses/judicial_visor))
+		var/obj/item/clothing/glasses/judicial_visor/V = target
+		if(V.recharging)
+			return 0
+	return ..()
+
+/datum/action/item_action/clock/hierophant
+	name = "Hierophant Network"
+	desc = "Allows you to communicate with other Servants."
+	button_icon_state = "hierophant_slab"
+
+/datum/action/item_action/clock/quickbind
+	name = "Quickbind"
+	desc = "If you're seeing this, file a bug report."
+	var/scripture_index = 0 //the index of the scripture we're associated with
 
 /datum/action/item_action/toggle_helmet_flashlight
 	name = "Toggle Helmet Flashlight"
@@ -248,30 +344,34 @@
 		owner << "<span class='notice'>Research analyzer is now [owner.research_scanner ? "active" : "deactivated"].</span>"
 		return 1
 
-/datum/action/item_action/toggle_research_scanner/Remove(mob/living/L)
+/datum/action/item_action/toggle_research_scanner/Remove(mob/M)
 	if(owner)
 		owner.research_scanner = 0
 	..()
 
 /datum/action/item_action/toggle_research_scanner/ApplyIcon(obj/screen/movable/action_button/current_button)
+	current_button.cut_overlays()
 	if(button_icon && button_icon_state)
 		var/image/img = image(button_icon, current_button, "scan_mode")
-		current_button.overlays += img
+		current_button.add_overlay(img)
 
 /datum/action/item_action/organ_action
 	check_flags = AB_CHECK_CONSCIOUS
 
 /datum/action/item_action/organ_action/IsAvailable()
-	var/obj/item/organ/internal/I = target
+	var/obj/item/organ/I = target
 	if(!I.owner)
 		return 0
 	return ..()
 
-/datum/action/item_action/organ_action/toggle
-
 /datum/action/item_action/organ_action/toggle/New(Target)
 	..()
 	name = "Toggle [target.name]"
+	button.name = name
+
+/datum/action/item_action/organ_action/use/New(Target)
+	..()
+	name = "Use [target.name]"
 	button.name = name
 
 
@@ -309,13 +409,9 @@
 	if(!target)
 		return 0
 	var/obj/effect/proc_holder/spell/spell = target
-
-	if(usr)
-		return spell.can_cast(usr)
-	else
-		if(owner)
-			return spell.can_cast(owner)
-	return 1
+	if(owner)
+		return spell.can_cast(owner)
+	return 0
 
 
 /datum/action/spell_action/alien
@@ -324,13 +420,9 @@
 	if(!target)
 		return 0
 	var/obj/effect/proc_holder/alien/ab = target
-
-	if(usr)
-		return ab.cost_check(ab.check_turf,usr,1)
-	else
-		if(owner)
-			return ab.cost_check(ab.check_turf,owner,1)
-	return 1
+	if(owner)
+		return ab.cost_check(ab.check_turf,owner,1)
+	return 0
 
 
 
@@ -354,8 +446,6 @@
 /datum/action/innate/proc/Deactivate()
 	return
 
-
-
 //Preset for action that call specific procs (consider innate).
 /datum/action/generic
 	check_flags = 0
@@ -367,3 +457,15 @@
 	if(target && procname)
 		call(target, procname)(usr)
 	return 1
+
+//Stickmemes
+/datum/action/item_action/stickmen
+	name = "Summon Stick Minions"
+	desc = "Allows you to summon faithful stickmen allies to aide you in battle."
+	button_icon_state = "art_summon"
+
+//surf_ss13
+/datum/action/item_action/bhop
+	name = "Activate Jump Boots"
+	desc = "Activates the jump boot's internal propulsion system, allowing the user to dash over 4-wide gaps."
+	button_icon_state = "jetboot"

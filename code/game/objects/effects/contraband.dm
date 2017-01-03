@@ -103,7 +103,7 @@ list(name = "- Carbon Dioxide", desc = " This informational poster teaches the v
 	desc = "You probably shouldn't be holding this."
 	icon = 'icons/obj/contraband.dmi'
 	force = 0
-	burn_state = FLAMMABLE
+	resistance_flags = FLAMMABLE
 	var/serial_number = 0
 	var/obj/structure/sign/poster/resulting_poster = null //The poster that will be created is initialised and stored through contraband/poster's constructor
 	var/official = 0
@@ -142,11 +142,11 @@ list(name = "- Carbon Dioxide", desc = " This informational poster teaches the v
 	..()*/
 
 /*/obj/item/weapon/contraband/poster/attack(atom/A, mob/user as mob) //This shit is handled through the wall's attackby()
-	if(istype(A, /turf/simulated/wall))
+	if(istype(A, /turf/closed/wall))
 		if(resulting_poster == null)
 			return
 		else
-			var/turf/simulated/wall/W = A
+			var/turf/closed/wall/W = A
 			var/check = 0
 			var/stuff_on_wall = 0
 			for(var/obj/O in W.contents) //Let's see if it already has a poster on it or too much stuff
@@ -201,14 +201,13 @@ list(name = "- Carbon Dioxide", desc = " This informational poster teaches the v
 
 /obj/structure/sign/poster/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/wirecutters))
-		playsound(loc, 'sound/items/Wirecutter.ogg', 100, 1)
+		playsound(loc, I.usesound, 100, 1)
 		if(ruined)
 			user << "<span class='notice'>You remove the remnants of the poster.</span>"
 			qdel(src)
 		else
 			user << "<span class='notice'>You carefully remove the poster from the wall.</span>"
 			roll_and_drop(user.loc, official)
-		return
 
 
 /obj/structure/sign/poster/attack_hand(mob/user)
@@ -243,7 +242,7 @@ list(name = "- Carbon Dioxide", desc = " This informational poster teaches the v
 
 
 //seperated to reduce code duplication. Moved here for ease of reference and to unclutter r_wall/attackby()
-/turf/simulated/wall/proc/place_poster(obj/item/weapon/poster/P, mob/user)
+/turf/closed/wall/proc/place_poster(obj/item/weapon/poster/P, mob/user)
 	if(!P.resulting_poster)
 		return
 
@@ -273,8 +272,7 @@ list(name = "- Carbon Dioxide", desc = " This informational poster teaches the v
 		if(!D)
 			return
 
-		if(istype(src,/turf/simulated/wall) && user && user.loc == temp_loc)	//Let's check if everything is still there
+		if(iswallturf(src) && user && user.loc == temp_loc)	//Let's check if everything is still there
 			user << "<span class='notice'>You place the poster!</span>"
 		else
 			D.roll_and_drop(temp_loc,D.official)
-		return

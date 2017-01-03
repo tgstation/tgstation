@@ -6,7 +6,7 @@
 	item_state = "electropack"
 	flags = CONDUCT
 	slot_flags = SLOT_BACK
-	w_class = 5
+	w_class = WEIGHT_CLASS_HUGE
 	materials = list(MAT_METAL=10000, MAT_GLASS=2500)
 	var/on = 1
 	var/code = 2
@@ -14,12 +14,17 @@
 	var/shock_cooldown = 0
 
 /obj/item/device/electropack/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] hooks \himself to the electropack and spams the trigger! It looks like \he's trying to commit suicide..</span>")
+	user.visible_message("<span class='suicide'>[user] hooks [user.p_them()]self to the electropack and spams the trigger! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return (FIRELOSS)
 
 /obj/item/device/electropack/initialize()
 	if(SSradio)
 		SSradio.add_object(src, frequency, RADIO_CHAT)
+
+/obj/item/device/electropack/New()
+	if(SSradio)
+		SSradio.add_object(src, frequency, RADIO_CHAT)
+	..()
 
 /obj/item/device/electropack/Destroy()
 	if(SSradio)
@@ -35,13 +40,12 @@
 	..()
 
 /obj/item/device/electropack/attackby(obj/item/weapon/W, mob/user, params)
-	..()
 	if(istype(W, /obj/item/clothing/head/helmet))
 		var/obj/item/assembly/shock_kit/A = new /obj/item/assembly/shock_kit( user )
 		A.icon = 'icons/obj/assemblies.dmi'
 
 		if(!user.unEquip(W))
-			user << "<span class='warning'>\the [W] is stuck to your hand, you cannot attach it to \the [src]!</span>"
+			user << "<span class='warning'>[W] is stuck to your hand, you cannot attach it to [src]!</span>"
 			return
 		W.loc = A
 		W.master = A
@@ -56,13 +60,15 @@
 		A.add_fingerprint(user)
 		if(src.flags & NODROP)
 			A.flags |= NODROP
+	else
+		return ..()
 
 /obj/item/device/electropack/Topic(href, href_list)
 	//..()
 	var/mob/living/carbon/C = usr
 	if(usr.stat || usr.restrained() || C.back == src)
 		return
-	if(((istype(usr, /mob/living/carbon/human) && ((!( ticker ) || (ticker && ticker.mode != "monkey")) && usr.contents.Find(src))) || (usr.contents.Find(master) || (in_range(src, usr) && istype(loc, /turf)))))
+	if((ishuman(usr) && usr.contents.Find(src)) || usr.contents.Find(master) || (in_range(src, usr) && isturf(loc)))
 		usr.set_machine(src)
 		if(href_list["freq"])
 			SSradio.remove_object(src, frequency)
@@ -123,7 +129,7 @@
 
 /obj/item/device/electropack/attack_self(mob/user)
 
-	if(!istype(user, /mob/living/carbon/human))
+	if(!ishuman(user))
 		return
 	user.set_machine(src)
 	var/dat = {"<TT>Turned [on ? "On" : "Off"] -

@@ -134,7 +134,7 @@
 								vals += v
 								vals[v] = SDQL_expression(d, set_list[v])
 
-						if(istype(d, /turf))
+						if(isturf(d))
 							for(var/v in vals)
 								if(v == "x" || v == "y" || v == "z")
 									continue

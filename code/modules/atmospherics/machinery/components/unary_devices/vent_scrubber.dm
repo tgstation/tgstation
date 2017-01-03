@@ -19,10 +19,14 @@
 	var/scrub_CO2 = 1
 	var/scrub_Toxins = 0
 	var/scrub_N2O = 0
+	var/scrub_BZ = 0
+	var/scrub_Freon = 0
+	var/scrub_WaterVapor = 0
+
 
 	var/volume_rate = 200
 	var/widenet = 0 //is this scrubber acting on the 3x3 area around it.
-	var/list/turf/simulated/adjacent_turfs = list()
+	var/list/turf/adjacent_turfs = list()
 
 	var/frequency = 1439
 	var/datum/radio_frequency/radio_connection
@@ -60,24 +64,30 @@
 	var/amount = idle_power_usage
 
 	if(scrubbing & SCRUBBING)
-		if (scrub_CO2)
+		if(scrub_CO2)
 			amount += idle_power_usage
-		if (scrub_Toxins)
+		if(scrub_Toxins)
 			amount += idle_power_usage
-		if (scrub_N2O)
+		if(scrub_N2O)
+			amount += idle_power_usage
+		if(scrub_BZ)
+			amount += idle_power_usage
+		if(scrub_Freon)
+			amount += idle_power_usage
+		if(scrub_WaterVapor)
 			amount += idle_power_usage
 	else //scrubbing == SIPHONING
 		amount = active_power_usage
 
-	if (widenet)
+	if(widenet)
 		amount += amount * (adjacent_turfs.len * (adjacent_turfs.len / 2))
 	use_power(amount, power_channel)
 	return 1
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/update_icon_nopipes()
-	overlays.Cut()
+	cut_overlays()
 	if(showpipe)
-		overlays += getpipeimage('icons/obj/atmospherics/components/unary_devices.dmi', "scrub_cap", initialize_directions)
+		add_overlay(getpipeimage('icons/obj/atmospherics/components/unary_devices.dmi', "scrub_cap", initialize_directions))
 
 	if(welded)
 		icon_state = "scrub_welded"
@@ -115,6 +125,9 @@
 		"filter_co2" = scrub_CO2,
 		"filter_toxins" = scrub_Toxins,
 		"filter_n2o" = scrub_N2O,
+		"filter_bz" = scrub_BZ,
+		"filter_freon" = scrub_Freon,
+		"filter_water_vapor" = scrub_WaterVapor,
 		"sigtype" = "status"
 	)
 
@@ -147,10 +160,10 @@
 		return 0
 	scrub(loc)
 	if(widenet)
-		for (var/turf/simulated/tile in adjacent_turfs)
+		for (var/turf/tile in adjacent_turfs)
 			scrub(tile)
 
-/obj/machinery/atmospherics/components/unary/vent_scrubber/proc/scrub(var/turf/simulated/tile)
+/obj/machinery/atmospherics/components/unary/vent_scrubber/proc/scrub(var/turf/tile)
 	if (!istype(tile))
 		return 0
 
@@ -171,9 +184,10 @@
 
 			//Take a gas sample
 			var/datum/gas_mixture/removed = tile.remove_air(transfer_moles)
-			var/list/removed_gases = removed.gases
-			if (isnull(removed)) //in space
+			//Nothing left to remove from the tile
+			if (isnull(removed))
 				return
+			var/list/removed_gases = removed.gases
 
 			//Filter it
 			var/datum/gas_mixture/filtered_out = new
@@ -199,6 +213,21 @@
 				filtered_out.assert_gas("n2o")
 				filtered_out.gases["n2o"][MOLES] = removed_gases["n2o"][MOLES]
 				removed.gases["n2o"][MOLES] = 0
+
+			if(scrub_BZ && removed_gases["bz"])
+				filtered_out.assert_gas("bz")
+				filtered_out.gases["bz"][MOLES] = removed_gases["bz"][MOLES]
+				removed.gases["bz"][MOLES] = 0
+
+			if(scrub_Freon && removed_gases["freon"])
+				filtered_out.assert_gas("freon")
+				filtered_out.gases["freon"][MOLES] = removed_gases["freon"][MOLES]
+				removed.gases["freon"][MOLES] = 0
+
+			if(scrub_WaterVapor && removed_gases["water_vapor"])
+				filtered_out.assert_gas("water_vapor")
+				filtered_out.gases["water_vapor"][MOLES] = removed_gases["water_vapor"][MOLES]
+				removed.gases["water_vapor"][MOLES] = 0
 
 			removed.garbage_collect()
 
@@ -275,6 +304,21 @@
 	if("toggle_n2o_scrub" in signal.data)
 		scrub_N2O = !scrub_N2O
 
+	if("bz_scrub" in signal.data)
+		scrub_BZ = text2num(signal.data["bz_scrub"])
+	if("toggle_bz_scrub" in signal.data)
+		scrub_BZ = !scrub_BZ
+
+	if("freon_scrub" in signal.data)
+		scrub_Freon = text2num(signal.data["freon_scrub"])
+	if("toggle_freon_scrub" in signal.data)
+		scrub_Freon = !scrub_Freon
+
+	if("water_vapor_scrub" in signal.data)
+		scrub_WaterVapor = text2num(signal.data["water_vapor_scrub"])
+	if("toggle_water_vapor_scrub" in signal.data)
+		scrub_WaterVapor = !scrub_WaterVapor
+
 	if("init" in signal.data)
 		name = signal.data["init"]
 		return
@@ -295,9 +339,9 @@
 	if(istype(W, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = W
 		if(WT.remove_fuel(0,user))
-			playsound(loc, 'sound/items/Welder.ogg', 40, 1)
+			playsound(loc, WT.usesound, 40, 1)
 			user << "<span class='notice'>Now welding the scrubber.</span>"
-			if(do_after(user, 20/W.toolspeed, target = src))
+			if(do_after(user, 20*W.toolspeed, target = src))
 				if(!src || !WT.isOn())
 					return
 				playsound(src.loc, 'sound/items/Welder2.ogg', 50, 1)
@@ -308,17 +352,33 @@
 					user.visible_message("[user] unwelds the scrubber.", "You unweld the scrubber.", "You hear welding.")
 					welded = 0
 				update_icon()
-				pipe_vision_img = image(src, loc, layer = 20, dir = dir)
+				pipe_vision_img = image(src, loc, layer = ABOVE_HUD_LAYER, dir = dir)
+				pipe_vision_img.plane = ABOVE_HUD_PLANE
 			return 0
-	if (!istype(W, /obj/item/weapon/wrench))
+	else
 		return ..()
-	if (!(stat & NOPOWER) && on)
-		user << "<span class='warning'>You cannot unwrench this [src], turn it off first!</span>"
-		return 1
-	return ..()
+
+/obj/machinery/atmospherics/components/unary/vent_scrubber/can_unwrench(mob/user)
+	if(..())
+		if (!(stat & NOPOWER) && on)
+			user << "<span class='warning'>You cannot unwrench this [src], turn it off first!</span>"
+		else
+			return 1
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/can_crawl_through()
 	return !welded
+
+/obj/machinery/atmospherics/components/unary/vent_scrubber/attack_alien(mob/user)
+	if(!welded || !(do_after(user, 20, target = src)))
+		return
+	user.visible_message("[user] furiously claws at [src]!", "You manage to clear away the stuff blocking the scrubber.", "You hear loud scraping noises.")
+	welded = 0
+	update_icon()
+	pipe_vision_img = image(src, loc, layer = ABOVE_HUD_LAYER, dir = dir)
+	pipe_vision_img.plane = ABOVE_HUD_PLANE
+	playsound(loc, 'sound/weapons/bladeslice.ogg', 100, 1)
+
+
 
 #undef SIPHONING
 #undef SCRUBBING

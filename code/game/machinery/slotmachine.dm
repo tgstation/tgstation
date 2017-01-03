@@ -21,7 +21,7 @@
 	density = 1
 	use_power = 1
 	idle_power_usage = 50
-	circuit = /obj/item/weapon/circuitboard/slot_machine
+	circuit = /obj/item/weapon/circuitboard/computer/slot_machine
 	var/money = 3000 //How much money it has CONSUMED
 	var/plays = 0
 	var/working = 0
@@ -48,6 +48,11 @@
 		var/obj/item/weapon/coin/C = new cointype(src)
 		coinvalues["[cointype]"] = C.value
 		qdel(C)
+
+/obj/machinery/computer/slot_machine/Destroy()
+	if(balance)
+		give_coins(balance)
+	return ..()
 
 /obj/machinery/computer/slot_machine/process()
 	. = ..() //Sanity checks.
@@ -91,11 +96,8 @@
 			user << "<span class='notice'>You insert a [C.cmineral] coin into [src]'s slot!</span>"
 			balance += C.value
 			qdel(C)
-
-		return
-
-	else if(!balance) //to prevent coins from magically disappearing
-		..()
+	else
+		return ..()
 
 /obj/machinery/computer/slot_machine/emag_act()
 	if(!emagged)

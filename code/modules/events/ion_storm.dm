@@ -5,6 +5,7 @@
 	name = "Ion Storm"
 	typepath = /datum/round_event/ion_storm
 	weight = 15
+	min_players = 2
 
 /datum/round_event/ion_storm
 	var/botEmagChance = 10
@@ -32,6 +33,7 @@
 			var/message = generate_ion_law(ionMessage)
 			if(message)
 				M.add_ion_law(message)
+				log_game("ION law added to [M]: [message]")
 				M << "<br>"
 				M << "<span class='danger'>[message] ...LAWS UPDATED</span>"
 				M << "<br>"
@@ -92,7 +94,7 @@
 
 	var/message = ""
 
-	switch(rand(1,39))
+	switch(rand(1,41))
 		if(1 to 3) //There are # X on the station
 			switch(rand(1,3)) //What is X?
 				if(1) //X is a threat
@@ -489,7 +491,61 @@
 							message = "[ionabstract] IS [ionverb] THE [ionadjectiveshalf][ionthreats]"
 						if(3) //X is Ying an abstract
 							message = "THE [ionabstract] IS [ionverb] THE [ionadjectiveshalf][ionobjects]"
-
+		if(40 to 41)// the X is now named Y
+			switch(rand(1,5)) //What is being renamed?
+				if(1)//Areas
+					switch(rand(1,4))//What is the area being renamed to?
+						if(1)
+							message = "[ionarea] IS NOW NAMED [ioncrew1]."
+						if(2)
+							message = "[ionarea] IS NOW NAMED [ionspecies]."
+						if(3)
+							message = "[ionarea] IS NOW NAMED [ionobjects]."
+						if(4)
+							message = "[ionarea] IS NOW NAMED [ionthreats]."
+				if(2)//Crew
+					switch(rand(1,5))//What is the crew being renamed to?
+						if(1)
+							message = "ALL [ioncrew1] ARE NOW NAMED [ionarea]."
+						if(2)
+							message = "ALL [ioncrew1] ARE NOW NAMED [ioncrew2]."
+						if(3)
+							message = "ALL [ioncrew1] ARE NOW NAMED [ionspecies]."
+						if(4)
+							message = "ALL [ioncrew1] ARE NOW NAMED [ionobjects]."
+						if(5)
+							message = "ALL [ioncrew1] ARE NOW NAMED [ionthreats]."
+				if(3)//Races
+					switch(rand(1,4))//What is the race being renamed to?
+						if(1)
+							message = "ALL [ionspecies] ARE NOW NAMED [ionarea]."
+						if(2)
+							message = "ALL [ionspecies] ARE NOW NAMED [ioncrew1]."
+						if(3)
+							message = "ALL [ionspecies] ARE NOW NAMED [ionobjects]."
+						if(4)
+							message = "ALL [ionspecies] ARE NOW NAMED [ionthreats]."
+				if(4)//Objects
+					switch(rand(1,4))//What is the object being renamed to?
+						if(1)
+							message = "ALL [ionobjects] ARE NOW NAMED [ionarea]."
+						if(2)
+							message = "ALL [ionobjects] ARE NOW NAMED [ioncrew1]."
+						if(3)
+							message = "ALL [ionobjects] ARE NOW NAMED [ionspecies]."
+						if(4)
+							message = "ALL [ionobjects] ARE NOW NAMED [ionthreats]."
+				if(5)//Threats
+					switch(rand(1,4))//What is the object being renamed to?
+						if(1)
+							message = "ALL [ionthreats] ARE NOW NAMED [ionarea]."
+						if(2)
+							message = "ALL [ionthreats] ARE NOW NAMED [ioncrew1]."
+						if(3)
+							message = "ALL [ionthreats] ARE NOW NAMED [ionspecies]."
+						if(4)
+							message = "ALL [ionthreats] ARE NOW NAMED [ionobjects]."
+							
 	return message
 
 #undef ION_RANDOM

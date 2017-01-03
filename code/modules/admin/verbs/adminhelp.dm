@@ -1,4 +1,4 @@
-/proc/keywords_lookup(msg)
+/proc/keywords_lookup(msg,irc)
 
 	//This is a list of words which are ignored by the parser when comparing message contents for names. MUST BE IN LOWER CASE!
 	var/list/adminhelp_ignored_words = list("unknown","the","a","an","of","monkey","alien","as", "i")
@@ -10,6 +10,7 @@
 	var/list/surnames = list()
 	var/list/forenames = list()
 	var/list/ckeys = list()
+	var/founds = ""
 	for(var/mob/M in mob_list)
 		var/list/indexing = list(M.real_name, M.name)
 		if(M.mind)
@@ -56,9 +57,16 @@
 							var/is_antag = 0
 							if(found.mind && found.mind.special_role)
 								is_antag = 1
+							founds += "Name: [found.name]([found.real_name]) Ckey: [found.ckey] [is_antag ? "(Antag)" : null] "
 							msg += "[original_word]<font size='1' color='[is_antag ? "red" : "black"]'>(<A HREF='?_src_=holder;adminmoreinfo=\ref[found]'>?</A>|<A HREF='?_src_=holder;adminplayerobservefollow=\ref[found]'>F</A>)</font> "
 							continue
 		msg += "[original_word] "
+	if(irc)
+		if(founds == "")
+			return "Search Failed"
+		else
+			return founds
+
 	return msg
 
 
@@ -92,7 +100,7 @@
 
 	//remove our adminhelp verb temporarily to prevent spamming of admins.
 	src.verbs -= /client/verb/adminhelp
-	adminhelptimerid = addtimer(src, "giveadminhelpverb", 1200, FALSE) //2 minute cooldown of admin helps
+	adminhelptimerid = addtimer(src, "giveadminhelpverb", 1200, TIMER_NORMAL) //2 minute cooldown of admin helps
 
 	msg = keywords_lookup(msg)
 
@@ -108,6 +116,7 @@
 	for(var/client/X in admins)
 		if(X.prefs.toggles & SOUND_ADMINHELP)
 			X << 'sound/effects/adminhelp.ogg'
+		window_flash(X)
 		X << msg
 
 
@@ -137,12 +146,42 @@
 	var/list/adm = get_admin_counts(requiredflags)
 	. = adm["present"]
 	if(. <= 0)
+		var/final = ""
 		if(!adm["afk"] && !adm["stealth"] && !adm["noflags"])
-			send2irc(source, "[msg] - No admins online")
+			final = "[msg] - No admins online"
 		else
-			send2irc(source, "[msg] - All admins AFK ([adm["afk"]]/[adm["total"]]), stealthminned ([adm["stealth"]]/[adm["total"]]), or lack[rights2text(requiredflags, " ")] ([adm["noflags"]]/[adm["total"]])")
+			final = "[msg] - All admins AFK ([adm["afk"]]/[adm["total"]]), stealthminned ([adm["stealth"]]/[adm["total"]]), or lack[rights2text(requiredflags, " ")] ([adm["noflags"]]/[adm["total"]])"
+		send2irc(source,final)
+		send2otherserver(source,final)
+
 
 /proc/send2irc(msg,msg2)
 	if(config.useircbot)
 		shell("python nudge.py [msg] [msg2]")
 	return
+
+/proc/send2otherserver(source,msg,type = "Ahelp")
+	if(global.cross_allowed)
+		var/list/message = list()
+		message["message_sender"] = source
+		message["message"] = msg
+		message["source"] = "([config.cross_name])"
+		message["key"] = global.comms_key
+		message["crossmessage"] = type
+
+		world.Export("[global.cross_address]?[list2params(message)]")
+
+
+/proc/ircadminwho()
+	var/msg = "Admins: "
+	for(var/client/C in admins)
+		msg += "[C] "
+
+		if(C.holder.fakekey)
+			msg += "(Stealth)"
+
+		if(C.is_afk())
+			msg += "(AFK)"
+		msg += ", "
+
+	return msg

@@ -1,5 +1,3 @@
-
-
 //PIMP-CART
 /obj/vehicle/janicart
 	name = "janicart (pimpin' ride)"
@@ -9,10 +7,15 @@
 	var/obj/item/weapon/storage/bag/trash/mybag = null
 	var/floorbuffer = 0
 
+/obj/vehicle/janicart/Destroy()
+	if(mybag)
+		qdel(mybag)
+		mybag = null
+	return ..()
 
 /obj/vehicle/janicart/handle_vehicle_offsets()
 	..()
-	if(buckled_mobs.len)
+	if(has_buckled_mobs())
 		for(var/m in buckled_mobs)
 			var/mob/living/buckled_mob = m
 			switch(buckled_mob.dir)
@@ -40,6 +43,7 @@
 	desc = "An upgrade for mobile janicarts."
 	icon = 'icons/obj/vehicles.dmi'
 	icon_state = "upgrade"
+	origin_tech = "materials=3;engineering=4"
 
 
 /obj/vehicle/janicart/Moved(atom/OldLoc, Dir)
@@ -50,6 +54,7 @@
 			for(var/A in tile)
 				if(is_cleanable(A))
 					qdel(A)
+	. = ..()
 
 
 /obj/vehicle/janicart/examine(mob/user)
@@ -60,28 +65,30 @@
 
 /obj/vehicle/janicart/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/storage/bag/trash))
-		if(keytype == /obj/item/key/janitor)
-			if(!user.drop_item())
-				return
-			user << "<span class='notice'>You hook the trashbag onto \the [name].</span>"
-			I.loc = src
-			mybag = I
+		if(mybag)
+			user << "<span class='warning'>[src] already has a trashbag hooked!</span>"
+			return
+		if(!user.drop_item())
+			return
+		user << "<span class='notice'>You hook the trashbag onto \the [name].</span>"
+		I.loc = src
+		mybag = I
+		update_icon()
 	else if(istype(I, /obj/item/janiupgrade))
-		if(keytype == /obj/item/key/janitor)
-			floorbuffer = 1
-			qdel(I)
-			user << "<span class='notice'>You upgrade \the [name] with the floor buffer.</span>"
-	update_icon()
-
-	..()
+		floorbuffer = 1
+		qdel(I)
+		user << "<span class='notice'>You upgrade \the [name] with the floor buffer.</span>"
+		update_icon()
+	else
+		return ..()
 
 
 /obj/vehicle/janicart/update_icon()
-	overlays.Cut()
+	cut_overlays()
 	if(mybag)
-		overlays += "cart_garbage"
+		add_overlay("cart_garbage")
 	if(floorbuffer)
-		overlays += "cart_buffer"
+		add_overlay("cart_buffer")
 
 
 /obj/vehicle/janicart/attack_hand(mob/user)
@@ -92,4 +99,3 @@
 		user.put_in_hands(mybag)
 		mybag = null
 		update_icon()
-

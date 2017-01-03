@@ -13,19 +13,43 @@ var/global/list/uplinks = list()
 	var/active = FALSE
 	var/lockable = TRUE
 	var/telecrystals = 20
-
+	var/selected_cat = null
 	var/owner = null
 	var/datum/game_mode/gamemode = null
 	var/spent_telecrystals = 0
 	var/purchase_log = ""
+	var/list/uplink_items
 
 /obj/item/device/uplink/New()
 	..()
 	uplinks += src
+	uplink_items = get_uplink_items(gamemode)
 
 /obj/item/device/uplink/Destroy()
 	uplinks -= src
 	return ..()
+
+/obj/item/device/uplink/attackby(obj/item/I, mob/user, params)
+	for(var/item in subtypesof(/datum/uplink_item))
+		var/datum/uplink_item/UI = item
+		var/path = null
+		if(initial(UI.refund_path))
+			path = initial(UI.refund_path)
+		else
+			path = initial(UI.item)
+		var/cost = 0
+		if(initial(UI.refund_amount))
+			cost = initial(UI.refund_amount)
+		else
+			cost = initial(UI.cost)
+		var/refundable = initial(UI.refundable)
+		if(I.type == path && refundable && I.check_uplink_validity())
+			telecrystals += cost
+			spent_telecrystals -= cost
+			user << "<span class='notice'>[I] refunded.</span>"
+			qdel(I)
+			return
+	..()
 
 /obj/item/device/uplink/interact(mob/user)
 	active = TRUE
@@ -45,22 +69,24 @@ var/global/list/uplinks = list()
 	data["telecrystals"] = telecrystals
 	data["lockable"] = lockable
 
-	var/list/uplink_items = get_uplink_items(gamemode)
 	data["categories"] = list()
 	for(var/category in uplink_items)
 		var/list/cat = list(
 			"name" = category,
-			"items" = list(),
-		)
-		for(var/item in uplink_items[category])
-			var/datum/uplink_item/I = uplink_items[category][item]
-			cat["items"] += list(list(
-				"name" = I.name,
-				"cost" = I.cost,
-				"desc" = I.desc,
-			))
+			"items" = (category == selected_cat ? list() : null))
+		if(category == selected_cat)
+			for(var/item in uplink_items[category])
+				var/datum/uplink_item/I = uplink_items[category][item]
+				if(I.limited_stock == 0)
+					continue
+				cat["items"] += list(list(
+					"name" = I.name,
+					"cost" = I.cost,
+					"desc" = I.desc,
+				))
 		data["categories"] += list(cat)
 	return data
+
 
 /obj/item/device/uplink/ui_act(action, params)
 	if(!active)
@@ -70,7 +96,6 @@ var/global/list/uplinks = list()
 		if("buy")
 			var/item = params["item"]
 
-			var/list/uplink_items = get_uplink_items(gamemode)
 			var/list/buyable_items = list()
 			for(var/category in uplink_items)
 				buyable_items += uplink_items[category]
@@ -82,6 +107,9 @@ var/global/list/uplinks = list()
 		if("lock")
 			active = FALSE
 			SStgui.close_uis(src)
+		if("select")
+			selected_cat = params["category"]
+	return 1
 
 
 /obj/item/device/uplink/ui_host()
@@ -89,18 +117,7 @@ var/global/list/uplinks = list()
 
 // Refund certain items by hitting the uplink with it.
 /obj/item/device/radio/uplink/attackby(obj/item/I, mob/user, params)
-	for(var/item in subtypesof(/datum/uplink_item))
-		var/datum/uplink_item/UI = item
-		var/path = initial(UI.item)
-		var/cost = initial(UI.cost)
-		var/refundable = initial(UI.refundable)
-		if(I.type == path && refundable)
-			hidden_uplink.telecrystals += cost
-			hidden_uplink.spent_telecrystals -= cost
-			user << "<span class='notice'>[I] refunded.</span>"
-			qdel(I)
-			return
-	..()
+	return hidden_uplink.attackby(I, user, params)
 
 // A collection of pre-set uplinks, for admin spawns.
 /obj/item/device/radio/uplink/New()

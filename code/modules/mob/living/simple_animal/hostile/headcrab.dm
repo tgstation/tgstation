@@ -6,6 +6,7 @@
 	icon_state = "headcrab"
 	icon_living = "headcrab"
 	icon_dead = "headcrab_dead"
+	gender = NEUTER
 	health = 50
 	maxHealth = 50
 	melee_damage_lower = 5
@@ -15,21 +16,22 @@
 	faction = list("creature")
 	robust_searching = 1
 	stat_attack = 2
+	obj_damage = 0
 	environment_smash = 0
 	speak_emote = list("squeaks")
-	ventcrawler = 2
+	ventcrawler = VENTCRAWLER_ALWAYS
 	var/datum/mind/origin
 	var/egg_lain = 0
 	gold_core_spawnable = 1 //are you sure about this??
 
 /mob/living/simple_animal/hostile/headcrab/proc/Infect(mob/living/carbon/victim)
-	var/obj/item/organ/internal/body_egg/changeling_egg/egg = new(victim)
+	var/obj/item/organ/body_egg/changeling_egg/egg = new(victim)
 	egg.Insert(victim)
 	if(origin)
 		egg.origin = origin
 	else if(mind) // Let's make this a feature
 		egg.origin = mind
-	for(var/obj/item/organ/internal/I in src)
+	for(var/obj/item/organ/I in src)
 		I.loc = egg
 	visible_message("<span class='warning'>[src] plants something in [victim]'s flesh!</span>", \
 					"<span class='danger'>We inject our egg into [victim]'s body!</span>")
@@ -56,14 +58,14 @@
 
 
 
-/obj/item/organ/internal/body_egg/changeling_egg
+/obj/item/organ/body_egg/changeling_egg
 	name = "changeling egg"
 	desc = "Twitching and disgusting."
 	origin_tech = "biotech=7" // You need to be really lucky to obtain it.
 	var/datum/mind/origin
 	var/time
 
-/obj/item/organ/internal/body_egg/changeling_egg/egg_process()
+/obj/item/organ/body_egg/changeling_egg/egg_process()
 	// Changeling eggs grow in dead people
 	time++
 	if(time >= EGG_INCUBATION_TIME)
@@ -71,11 +73,11 @@
 		Remove(owner)
 		qdel(src)
 
-/obj/item/organ/internal/body_egg/changeling_egg/proc/Pop()
+/obj/item/organ/body_egg/changeling_egg/proc/Pop()
 	var/mob/living/carbon/monkey/M = new(owner)
 	owner.stomach_contents += M
 
-	for(var/obj/item/organ/internal/I in src)
+	for(var/obj/item/organ/I in src)
 		I.Insert(M, 1)
 
 	if(origin && origin.current && (origin.current.stat == DEAD))

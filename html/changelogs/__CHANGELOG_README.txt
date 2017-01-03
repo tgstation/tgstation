@@ -4,6 +4,8 @@ Changelogs are included with commits as text .yml files created individually by 
 
 TO MAKE A CHANGELOG .YML ENTRRY
 
+0. Consider carefully if a change you make really needs a changelog, and if it does how many lines should be dedicated to it. A set of changes with no forward facing player effects like a refactor almost certainly doesn't need a changelog, nor does something that makes itself obvious during the normal course of play like adding an action button to an item players already commonly pick up. Likewise if you DO need a changelog consider packaging similar changes under a generalized line instead of listing out every little change as its own thing. Only you can prevent changelog clutter.
+
 1. Make a copy of the file example.yml in html/changelogs and rename it to [YOUR USERNAME]-PR-[YOUR PR NUMBER].yml (the pr and pr number are organizational and can be ignored if you so wish)
 
 2. Change the author to yourself

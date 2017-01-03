@@ -14,7 +14,7 @@
 	if(NODE1)
 		icon_state = "he_intact"
 		var/obj/machinery/atmospherics/node = NODE1
-		color = node.color
+		add_atom_colour(node.color, FIXED_COLOUR_PRIORITY)
 	else
 		icon_state = "he_exposed"
 

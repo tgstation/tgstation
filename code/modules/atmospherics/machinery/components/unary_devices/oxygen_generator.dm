@@ -14,9 +14,9 @@
 
 /obj/machinery/atmospherics/components/unary/oxygen_generator/update_icon_nopipes()
 
-	overlays.Cut()
+	cut_overlays()
 	if(showpipe)
-		overlays += getpipeimage('icons/obj/atmospherics/components/unary_devices.dmi', "scrub_cap", initialize_directions) //it works for now
+		add_overlay(getpipeimage('icons/obj/atmospherics/components/unary_devices.dmi', "scrub_cap", initialize_directions)) //it works for now
 
 	if(!NODE1 || !on || stat & BROKEN)
 		icon_state = "o2gen_off"

@@ -23,11 +23,11 @@
 /datum/surgery_step/manipulate_organs
 	time = 64
 	name = "manipulate organs"
-	implements = list(/obj/item/organ/internal = 100, /obj/item/weapon/reagent_containers/food/snacks/organ = 0)
+	implements = list(/obj/item/organ = 100, /obj/item/weapon/reagent_containers/food/snacks/organ = 0)
 	var/implements_extract = list(/obj/item/weapon/hemostat = 100, /obj/item/weapon/crowbar = 55)
 	var/implements_mend = list(/obj/item/weapon/cautery = 100, /obj/item/weapon/weldingtool = 70, /obj/item/weapon/lighter = 45, /obj/item/weapon/match = 20)
 	var/current_type
-	var/obj/item/organ/internal/I = null
+	var/obj/item/organ/I = null
 
 /datum/surgery_step/manipulate_organs/New()
 	..()
@@ -67,17 +67,22 @@
 	else if(implement_type in implements_extract)
 		current_type = "extract"
 		var/list/organs = target.getorganszone(target_zone)
+		var/mob/living/simple_animal/borer/B = target.has_brain_worms()
+		if(target.has_brain_worms())
+			user.visible_message("[user] begins to extract [B] from [target]'s [parse_zone(target_zone)].",
+					"<span class='notice'>You begin to extract [B] from [target]'s [parse_zone(target_zone)]...</span>")
+			return TRUE
 		if(!organs.len)
 			user << "<span class='notice'>There is no removeable organs in [target]'s [parse_zone(target_zone)]!</span>"
 			return -1
 		else
-			for(var/obj/item/organ/internal/O in organs)
+			for(var/obj/item/organ/O in organs)
 				O.on_find(user)
 				organs -= O
 				organs[O.name] = O
 
 			I = input("Remove which organ?", "Surgery", null, null) as null|anything in organs
-			if(I && user && target && user.Adjacent(target) && user.get_active_hand() == tool)
+			if(I && user && target && user.Adjacent(target) && user.get_active_held_item() == tool)
 				I = organs[I]
 				if(!I) return -1
 				user.visible_message("[user] begins to extract [I] from [target]'s [parse_zone(target_zone)].",
@@ -98,6 +103,8 @@
 	if(current_type == "mend")
 		user.visible_message("[user] mends the incision in [target]'s [parse_zone(target_zone)].",
 			"<span class='notice'>You mend the incision in [target]'s [parse_zone(target_zone)].</span>")
+		if(locate(/datum/surgery_step/saw) in surgery.steps)
+			target.heal_bodypart_damage(45,0)
 		return 1
 	else if(current_type == "insert")
 		I = tool
@@ -107,6 +114,13 @@
 			"<span class='notice'>You insert [tool] into [target]'s [parse_zone(target_zone)].</span>")
 
 	else if(current_type == "extract")
+		var/mob/living/simple_animal/borer/B = target.has_brain_worms()
+		if(B && B.victim == target)
+			user.visible_message("[user] successfully extracts [B] from [target]'s [parse_zone(target_zone)]!",
+				"<span class='notice'>You successfully extract [B] from [target]'s [parse_zone(target_zone)].</span>")
+			add_logs(user, target, "surgically removed [B] from", addition="INTENT: [uppertext(user.a_intent)]")
+			B.leave_victim()
+			return FALSE
 		if(I && I.owner == target)
 			user.visible_message("[user] successfully extracts [I] from [target]'s [parse_zone(target_zone)]!",
 				"<span class='notice'>You successfully extract [I] from [target]'s [parse_zone(target_zone)].</span>")

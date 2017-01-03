@@ -6,6 +6,7 @@
 	var/hud_type = null
 
 /obj/item/clothing/glasses/hud/equipped(mob/living/carbon/human/user, slot)
+	..()
 	if(hud_type && slot == slot_glasses)
 		var/datum/atom_hud/H = huds[hud_type]
 		H.add_hud_to(user)
@@ -31,36 +32,45 @@
 	name = "Health Scanner HUD"
 	desc = "A heads-up display that scans the humans in view and provides accurate data about their health status."
 	icon_state = "healthhud"
+	origin_tech = "magnets=3;biotech=2"
 	hud_type = DATA_HUD_MEDICAL_ADVANCED
+	glass_colour_type = /datum/client_colour/glass_colour/lightblue
 
 /obj/item/clothing/glasses/hud/health/night
 	name = "Night Vision Health Scanner HUD"
 	desc = "An advanced medical head-up display that allows doctors to find patients in complete darkness."
 	icon_state = "healthhudnight"
 	item_state = "glasses"
+	origin_tech = "magnets=4;biotech=4;plasmatech=4;engineering=5"
 	darkness_view = 8
 	invis_view = SEE_INVISIBLE_MINIMUM
+	glass_colour_type = /datum/client_colour/glass_colour/green
 
 /obj/item/clothing/glasses/hud/diagnostic
 	name = "Diagnostic HUD"
 	desc = "A heads-up display capable of analyzing the integrity and status of robotics and exosuits."
 	icon_state = "diagnostichud"
+	origin_tech = "magnets=2;engineering=2"
 	hud_type = DATA_HUD_DIAGNOSTIC
+	glass_colour_type = /datum/client_colour/glass_colour/lightorange
 
 /obj/item/clothing/glasses/hud/diagnostic/night
 	name = "Night Vision Diagnostic HUD"
 	desc = "A robotics diagnostic HUD fitted with a light amplifier."
 	icon_state = "diagnostichudnight"
 	item_state = "glasses"
+	origin_tech = "magnets=4;powerstorage=4;plasmatech=4;engineering=5"
 	darkness_view = 8
 	invis_view = SEE_INVISIBLE_MINIMUM
-
+	glass_colour_type = /datum/client_colour/glass_colour/green
 
 /obj/item/clothing/glasses/hud/security
 	name = "Security HUD"
 	desc = "A heads-up display that scans the humans in view and provides accurate data about their ID status and security records."
 	icon_state = "securityhud"
+	origin_tech = "magnets=3;combat=2"
 	hud_type = DATA_HUD_SECURITY_ADVANCED
+	glass_colour_type = /datum/client_colour/glass_colour/red
 
 /obj/item/clothing/glasses/hud/security/chameleon
 	name = "Chamleon Security HUD"
@@ -80,16 +90,20 @@
 	name = "HUDSunglasses"
 	desc = "Sunglasses with a HUD."
 	icon_state = "sunhud"
+	origin_tech = "magnets=3;combat=3;engineering=3"
 	darkness_view = 1
 	flash_protect = 1
 	tint = 1
+	glass_colour_type = /datum/client_colour/glass_colour/darkred
 
 /obj/item/clothing/glasses/hud/security/night
 	name = "Night Vision Security HUD"
 	desc = "An advanced heads-up display which provides id data and vision in complete darkness."
 	icon_state = "securityhudnight"
+	origin_tech = "magnets=4;combat=4;plasmatech=4;engineering=5"
 	darkness_view = 8
 	invis_view = SEE_INVISIBLE_MINIMUM
+	glass_colour_type = /datum/client_colour/glass_colour/green
 
 /obj/item/clothing/glasses/hud/security/sunglasses/gars
 	name = "HUD gar glasses"
@@ -145,16 +159,20 @@
 	hud_type = DATA_HUD_SECURITY_ADVANCED
 	vision_flags = SEE_MOBS
 	invis_view = 2
+	glass_colour_type = /datum/client_colour/glass_colour/red
 
 /obj/item/clothing/glasses/hud/toggle/thermal/attack_self(mob/user)
 	..()
 	switch (hud_type)
 		if (DATA_HUD_MEDICAL_ADVANCED)
 			icon_state = "meson"
+			change_glass_color(user, /datum/client_colour/glass_colour/green)
 		if (DATA_HUD_SECURITY_ADVANCED)
 			icon_state = "thermal"
+			change_glass_color(user, /datum/client_colour/glass_colour/red)
 		else
 			icon_state = "purple"
+			change_glass_color(user, /datum/client_colour/glass_colour/purple)
 	user.update_inv_glasses()
 
 /obj/item/clothing/glasses/hud/toggle/thermal/emp_act(severity)

@@ -8,14 +8,13 @@
 	icon_state = initial(C.icon_state)
 	item_state = initial(C.item_state)
 	item_color = initial(C.item_color)
-	suit_color = initial(C.item_color)
 
 /obj/item/clothing/under/color/black
 	name = "black jumpsuit"
 	icon_state = "black"
 	item_state = "bl_suit"
 	item_color = "black"
-	burn_state = FIRE_PROOF
+	resistance_flags = 0
 
 /obj/item/clothing/under/color/grey
 	name = "grey jumpsuit"

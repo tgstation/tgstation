@@ -14,7 +14,7 @@ MASS SPECTROMETER
 	icon_state = "t-ray0"
 	var/on = 0
 	slot_flags = SLOT_BELT
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	item_state = "electronic"
 	materials = list(MAT_METAL=150)
 	origin_tech = "magnets=1;engineering=1"
@@ -25,7 +25,7 @@ MASS SPECTROMETER
 	icon_state = copytext(icon_state, 1, length(icon_state))+"[on]"
 
 	if(on)
-		SSobj.processing |= src
+		START_PROCESSING(SSobj, src)
 
 /obj/item/device/t_scanner/proc/flick_sonar(obj/pipe)
 	var/image/I = image('icons/effects/effects.dmi', pipe, "blip", pipe.layer+1)
@@ -38,7 +38,7 @@ MASS SPECTROMETER
 
 /obj/item/device/t_scanner/process()
 	if(!on)
-		SSobj.processing.Remove(src)
+		STOP_PROCESSING(SSobj, src)
 		return null
 	scan()
 
@@ -52,7 +52,7 @@ MASS SPECTROMETER
 
 			var/mob/living/L = locate() in O
 
-			if(O.invisibility == 101)
+			if(O.invisibility == INVISIBILITY_MAXIMUM)
 				O.invisibility = 0
 				if(L)
 					flick_sonar(O)
@@ -60,7 +60,7 @@ MASS SPECTROMETER
 					if(O && O.loc)
 						var/turf/U = O.loc
 						if(U.intact)
-							O.invisibility = 101
+							O.invisibility = INVISIBILITY_MAXIMUM
 			else
 				if(L)
 					flick_sonar(O)
@@ -71,25 +71,25 @@ MASS SPECTROMETER
 	icon_state = "health"
 	item_state = "analyzer"
 	desc = "A hand-held body scanner able to distinguish vital signs of the subject."
-	flags = CONDUCT
+	flags = CONDUCT | NOBLUDGEON
 	slot_flags = SLOT_BELT
 	throwforce = 3
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 	throw_speed = 3
 	throw_range = 7
 	materials = list(MAT_METAL=200)
 	origin_tech = "magnets=1;biotech=1"
 	var/mode = 1
-	var/scanchems = 0
+	var/scanmode = 0
 
 /obj/item/device/healthanalyzer/attack_self(mob/user)
-	if(!scanchems)
+	if(!scanmode)
 		user << "<span class='notice'>You switch the health analyzer to scan chemical contents.</span>"
-		scanchems = 1
+		scanmode = 1
 	else
 		user << "<span class='notice'>You switch the health analyzer to check physical health.</span>"
-		scanchems = 0
-	return
+		scanmode = 0
+
 /obj/item/device/healthanalyzer/attack(mob/living/M, mob/living/carbon/human/user)
 
 	// Clumsiness/brain damage check
@@ -104,17 +104,17 @@ MASS SPECTROMETER
 
 	user.visible_message("<span class='notice'>[user] has analyzed [M]'s vitals.</span>")
 
-	if(!scanchems)
+	if(scanmode == 0)
 		healthscan(user, M, mode)
-	else
+	else if(scanmode == 1)
 		chemscan(user, M)
 
-	src.add_fingerprint(user)
-	return
+	add_fingerprint(user)
+
 
 // Used by the PDA medical scanner too
 /proc/healthscan(mob/living/user, mob/living/M, mode = 1)
-	if(user.stat || user.eye_blind)
+	if(user.incapacitated() || user.eye_blind)
 		return
 	//Damage specifics
 	var/oxy_loss = M.getOxyLoss()
@@ -131,6 +131,12 @@ MASS SPECTROMETER
 		var/mob/living/carbon/human/H = M
 		if(H.heart_attack && H.stat != DEAD)
 			user << "<span class='danger'>Subject suffering from heart attack: Apply defibrillator immediately!</span>"
+
+	if(iscarbon(M))
+		var/mob/living/carbon/C = M
+		if(C.has_brain_worms())
+			user << "<span class='danger'>Foreign organism detected in subject's cranium. Recommended treatment: Dosage of sucrose solution and removal of object via surgery.</span>"
+
 	user << "<span class='info'>Analyzing results for [M]:\n\tOverall status: [mob_status]</span>"
 
 	// Damage descriptions
@@ -148,21 +154,21 @@ MASS SPECTROMETER
 		user << "\t<span class='alert'>Subject appears to have [M.getCloneLoss() > 30 ? "severe" : "minor"] cellular damage.</span>"
 	if (M.reagents && M.reagents.get_reagent_amount("epinephrine"))
 		user << "\t<span class='info'>Bloodstream analysis located [M.reagents:get_reagent_amount("epinephrine")] units of rejuvenation chemicals.</span>"
-	if (M.getBrainLoss() >= 100 || !M.getorgan(/obj/item/organ/internal/brain))
-		user << "\t<span class='alert'>Subject brain function is non-existant.</span>"
+	if (M.getBrainLoss() >= 100 || !M.getorgan(/obj/item/organ/brain))
+		user << "\t<span class='alert'>Subject brain function is non-existent.</span>"
 	else if (M.getBrainLoss() >= 60)
 		user << "\t<span class='alert'>Severe brain damage detected. Subject likely to have mental retardation.</span>"
 	else if (M.getBrainLoss() >= 10)
 		user << "\t<span class='alert'>Brain damage detected. Subject may have had a concussion.</span>"
 
 	// Organ damage report
-	if(istype(M, /mob/living/carbon/human) && mode == 1)
-		var/mob/living/carbon/human/H = M
-		var/list/damaged = H.get_damaged_organs(1,1)
+	if(iscarbon(M) && mode == 1)
+		var/mob/living/carbon/C = M
+		var/list/damaged = C.get_damaged_bodyparts(1,1)
 		if(length(damaged)>0 || oxy_loss>0 || tox_loss>0 || fire_loss>0)
 			user << "<span class='info'>\tDamage: <span class='info'><font color='red'>Brute</font></span>-<font color='#FF8000'>Burn</font>-<font color='green'>Toxin</font>-<font color='blue'>Suffocation</font>\n\t\tSpecifics: <font color='red'>[brute_loss]</font>-<font color='#FF8000'>[fire_loss]</font>-<font color='green'>[tox_loss]</font>-<font color='blue'>[oxy_loss]</font></span>"
-			for(var/obj/item/organ/limb/org in damaged)
-				user << "\t\t<span class='info'>[capitalize(org.getDisplayName())]: [(org.brute_dam > 0) ? "<font color='red'>[org.brute_dam]</font></span>" : "<font color='red'>0</font>"]-[(org.burn_dam > 0) ? "<font color='#FF8000'>[org.burn_dam]</font>" : "<font color='#FF8000'>0</font>"]"
+			for(var/obj/item/bodypart/org in damaged)
+				user << "\t\t<span class='info'>[capitalize(org.name)]: [(org.brute_dam > 0) ? "<font color='red'>[org.brute_dam]</font></span>" : "<font color='red'>0</font>"]-[(org.burn_dam > 0) ? "<font color='#FF8000'>[org.burn_dam]</font>" : "<font color='#FF8000'>0</font>"]"
 
 	// Species and body temperature
 	if(ishuman(M))
@@ -173,35 +179,42 @@ MASS SPECTROMETER
 	// Time of death
 	if(M.tod && (M.stat == DEAD || (M.status_flags & FAKEDEATH)))
 		user << "<span class='info'>Time of Death:</span> [M.tod]"
+		var/tdelta = round(world.time - M.timeofdeath)
+		if(tdelta < (DEFIB_TIME_LIMIT * 10))
+			user << "<span class='danger'>Subject died [tdelta / 10] seconds \
+				ago, defibrillation may be possible!</span>"
 
 	for(var/datum/disease/D in M.viruses)
 		if(!(D.visibility_flags & HIDDEN_SCANNER))
 			user << "<span class='alert'><b>Warning: [D.form] detected</b>\nName: [D.name].\nType: [D.spread_text].\nStage: [D.stage]/[D.max_stages].\nPossible Cure: [D.cure_text]</span>"
 
 	// Blood Level
-	if(ishuman(M))
-		var/mob/living/carbon/human/H = M
-		if(H.vessel)
-			if(H.blood_max)
-				user << "<span class='danger'>Subject is bleeding!</span>"
-			var/blood_volume = round(H.vessel.get_reagent_amount("blood"))
-			var/blood_percent =  round((blood_volume / 560),0.01)
-			var/blood_type = H.dna.blood_type
-			blood_percent *= 100
-			if(blood_volume <= 500 && blood_volume > 336)
-				user << "<span class='danger'>LOW blood level [blood_percent] %, [blood_volume] cl,</span> <span class='info'>type: [blood_type]</span>"
-			else if(blood_volume <= 336)
-				user << "<span class='danger'>CRITICAL blood level CRITICAL [blood_percent] %, [blood_volume] cl,</span> <span class='info'>type: [blood_type]</span>"
+	if(M.has_dna())
+		var/mob/living/carbon/C = M
+		var/blood_id = C.get_blood_id()
+		if(blood_id)
+			if(ishuman(C))
+				var/mob/living/carbon/human/H = C
+				if(H.bleed_rate)
+					user << "<span class='danger'>Subject is bleeding!</span>"
+			var/blood_percent =  round((C.blood_volume / BLOOD_VOLUME_NORMAL)*100)
+			var/blood_type = C.dna.blood_type
+			if(blood_id != "blood")//special blood substance
+				blood_type = blood_id
+			if(C.blood_volume <= BLOOD_VOLUME_SAFE && C.blood_volume > BLOOD_VOLUME_OKAY)
+				user << "<span class='danger'>LOW blood level [blood_percent] %, [C.blood_volume] cl,</span> <span class='info'>type: [blood_type]</span>"
+			else if(C.blood_volume <= BLOOD_VOLUME_OKAY)
+				user << "<span class='danger'>CRITICAL blood level [blood_percent] %, [C.blood_volume] cl,</span> <span class='info'>type: [blood_type]</span>"
 			else
-				user << "<span class='info'>Blood level [blood_percent] %, [blood_volume] cl, type: [blood_type]</span>"
+				user << "<span class='info'>Blood level [blood_percent] %, [C.blood_volume] cl, type: [blood_type]</span>"
 
-		var/implant_detect
-		for(var/obj/item/organ/internal/cyberimp/CI in H.internal_organs)
+		var/cyberimp_detect
+		for(var/obj/item/organ/cyberimp/CI in C.internal_organs)
 			if(CI.status == ORGAN_ROBOTIC)
-				implant_detect += "[H.name] is modified with a [CI.name].<br>"
-		if(implant_detect)
+				cyberimp_detect += "[C.name] is modified with a [CI.name].<br>"
+		if(cyberimp_detect)
 			user << "<span class='notice'>Detected cybernetic modifications:</span>"
-			user << "<span class='notice'>[implant_detect]</span>"
+			user << "<span class='notice'>[cyberimp_detect]</span>"
 
 /proc/chemscan(mob/living/user, mob/living/M)
 	if(ishuman(M))
@@ -240,8 +253,8 @@ MASS SPECTROMETER
 	name = "analyzer"
 	icon_state = "atmos"
 	item_state = "analyzer"
-	w_class = 2
-	flags = CONDUCT
+	w_class = WEIGHT_CLASS_SMALL
+	flags = CONDUCT | NOBLUDGEON
 	slot_flags = SLOT_BELT
 	throwforce = 0
 	throw_speed = 3
@@ -281,28 +294,31 @@ MASS SPECTROMETER
 		environment.garbage_collect()
 
 		if(abs(n2_concentration - N2STANDARD) < 20)
-			user << "<span class='info'>Nitrogen: [round(n2_concentration*100)] %</span>"
+			user << "<span class='info'>Nitrogen: [round(n2_concentration*100, 0.01)] %</span>"
 		else
-			user << "<span class='alert'>Nitrogen: [round(n2_concentration*100)] %</span>"
+			user << "<span class='alert'>Nitrogen: [round(n2_concentration*100, 0.01)] %</span>"
 
 		if(abs(o2_concentration - O2STANDARD) < 2)
-			user << "<span class='info'>Oxygen: [round(o2_concentration*100)] %</span>"
+			user << "<span class='info'>Oxygen: [round(o2_concentration*100, 0.01)] %</span>"
 		else
-			user << "<span class='alert'>Oxygen: [round(o2_concentration*100)] %</span>"
+			user << "<span class='alert'>Oxygen: [round(o2_concentration*100, 0.01)] %</span>"
 
 		if(co2_concentration > 0.01)
-			user << "<span class='alert'>CO2: [round(co2_concentration*100)] %</span>"
+			user << "<span class='alert'>CO2: [round(co2_concentration*100, 0.01)] %</span>"
 		else
-			user << "<span class='info'>CO2: [round(co2_concentration*100)] %</span>"
+			user << "<span class='info'>CO2: [round(co2_concentration*100, 0.01)] %</span>"
 
-		if(plasma_concentration > 0.01)
-			user << "<span class='info'>Plasma: [round(plasma_concentration*100)] %</span>"
+		if(plasma_concentration > 0.005)
+			user << "<span class='alert'>Plasma: [round(plasma_concentration*100, 0.01)] %</span>"
+		else
+			user << "<span class='info'>Plasma: [round(plasma_concentration*100, 0.01)] %</span>"
+
 
 		for(var/id in env_gases)
 			if(id in hardcoded_gases)
 				continue
 			var/gas_concentration = env_gases[id][MOLES]/total_moles
-			user << "<span class='alert'>[env_gases[id][GAS_META][META_GAS_NAME]]: [round(gas_concentration*100)] %</span>"
+			user << "<span class='alert'>[env_gases[id][GAS_META][META_GAS_NAME]]: [round(gas_concentration*100, 0.01)] %</span>"
 		user << "<span class='info'>Temperature: [round(environment.temperature-T0C)] &deg;C</span>"
 
 
@@ -311,16 +327,15 @@ MASS SPECTROMETER
 	name = "mass-spectrometer"
 	icon_state = "spectrometer"
 	item_state = "analyzer"
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	flags = CONDUCT | OPENCONTAINER
 	slot_flags = SLOT_BELT
 	throwforce = 0
 	throw_speed = 3
 	throw_range = 7
-	materials = list(MAT_METAL=30, MAT_GLASS=20)
-	origin_tech = "magnets=2;biotech=2"
+	materials = list(MAT_METAL=150, MAT_GLASS=100)
+	origin_tech = "magnets=2;biotech=1;plasmatech=2"
 	var/details = 0
-	var/recent_fail = 0
 
 /obj/item/device/mass_spectrometer/New()
 	..()
@@ -334,9 +349,6 @@ MASS SPECTROMETER
 
 /obj/item/device/mass_spectrometer/attack_self(mob/user)
 	if (user.stat || user.eye_blind)
-		return
-	if (crit_fail)
-		user << "<span class='warning'>This device has critically failed and is no longer functional!</span>"
 		return
 	if (!user.IsAdvancedToolUser())
 		user << "<span class='warning'>You don't have the dexterity to do this!</span>"
@@ -356,20 +368,9 @@ MASS SPECTROMETER
 			dat += "<br>None"
 		else
 			for(var/R in blood_traces)
-				if(prob(reliability))
-					dat += "<br>[chemical_reagents_list[R]]"
-
-					if(details)
-						dat += " ([blood_traces[R]] units)"
-
-					recent_fail = 0
-				else
-					if(recent_fail)
-						crit_fail = 1
-						reagents.clear_reagents()
-						return
-					else
-						recent_fail = 1
+				dat += "<br>[chemical_reagents_list[R]]"
+				if(details)
+					dat += " ([blood_traces[R]] units)"
 		dat += "</i>"
 		user << dat
 		reagents.clear_reagents()
@@ -379,15 +380,15 @@ MASS SPECTROMETER
 	name = "advanced mass-spectrometer"
 	icon_state = "adv_spectrometer"
 	details = 1
-	origin_tech = "magnets=4;biotech=2"
+	origin_tech = "magnets=4;biotech=3;plasmatech=3"
 
 /obj/item/device/slime_scanner
 	name = "slime scanner"
 	desc = "A device that analyzes a slime's internal composition and measures its stats."
 	icon_state = "adv_spectrometer"
 	item_state = "analyzer"
-	origin_tech = "biotech=1"
-	w_class = 2
+	origin_tech = "biotech=2"
+	w_class = WEIGHT_CLASS_SMALL
 	flags = CONDUCT
 	throwforce = 0
 	throw_speed = 3

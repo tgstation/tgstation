@@ -1,0 +1,571 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
+"a" = (
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"b" = (
+/turf/closed/mineral/volcanic/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"c" = (
+/turf/open/floor/plating/lava/smooth/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"d" = (
+/turf/closed/wall/mineral/cult{
+	baseturf = /turf/open/floor/plating/lava/smooth
+	},
+/area/ruin/powered)
+"e" = (
+/obj/structure/table/wood/poker,
+/obj/item/weapon/gun/ballistic/revolver/russian/soul,
+/turf/open/floor/carpet{
+	baseturf = /turf/open/floor/plating/lava/smooth;
+	icon_state = "carpetsymbol"
+	},
+/area/ruin/powered)
+"f" = (
+/obj/structure/cursed_slot_machine,
+/turf/open/floor/carpet{
+	baseturf = /turf/open/floor/plating/lava/smooth;
+	icon_state = "carpetsymbol"
+	},
+/area/ruin/powered)
+"g" = (
+/obj/structure/table/wood/poker,
+/obj/item/weapon/coin/mythril,
+/turf/open/floor/carpet{
+	baseturf = /turf/open/floor/plating/lava/smooth;
+	icon_state = "carpetsymbol"
+	},
+/area/ruin/powered)
+"h" = (
+/obj/structure/table/wood/poker,
+/obj/item/weapon/coin/diamond,
+/turf/open/floor/carpet{
+	baseturf = /turf/open/floor/plating/lava/smooth;
+	icon_state = "carpetsymbol"
+	},
+/area/ruin/powered)
+"i" = (
+/turf/open/floor/carpet{
+	baseturf = /turf/open/floor/plating/lava/smooth;
+	icon_state = "carpetsymbol"
+	},
+/area/ruin/powered)
+"j" = (
+/obj/structure/table/wood/poker,
+/obj/item/weapon/coin/adamantine,
+/turf/open/floor/carpet{
+	baseturf = /turf/open/floor/plating/lava/smooth;
+	icon_state = "carpetsymbol"
+	},
+/area/ruin/powered)
+"k" = (
+/obj/machinery/computer/arcade/battle{
+	emagged = 1
+	},
+/turf/open/floor/engine/cult{
+	baseturf = /turf/open/floor/plating/lava/smooth
+	},
+/area/ruin/powered)
+"l" = (
+/obj/item/weapon/coin/gold,
+/turf/open/floor/engine/cult{
+	baseturf = /turf/open/floor/plating/lava/smooth
+	},
+/area/ruin/powered)
+"m" = (
+/turf/open/floor/engine/cult{
+	baseturf = /turf/open/floor/plating/lava/smooth
+	},
+/area/ruin/powered)
+"n" = (
+/obj/structure/table/wood/poker,
+/obj/item/stack/spacecash/c1000,
+/turf/open/floor/engine/cult{
+	baseturf = /turf/open/floor/plating/lava/smooth
+	},
+/area/ruin/powered)
+"o" = (
+/obj/item/weapon/storage/bag/money,
+/turf/open/floor/engine/cult{
+	baseturf = /turf/open/floor/plating/lava/smooth
+	},
+/area/ruin/powered)
+"p" = (
+/obj/structure/table/wood/poker,
+/obj/item/weapon/ore/gold,
+/turf/open/floor/engine/cult{
+	baseturf = /turf/open/floor/plating/lava/smooth
+	},
+/area/ruin/powered)
+"q" = (
+/obj/structure/table/wood/poker,
+/obj/item/stack/spacecash/c20,
+/obj/item/stack/spacecash/c50,
+/turf/open/floor/engine/cult{
+	baseturf = /turf/open/floor/plating/lava/smooth
+	},
+/area/ruin/powered)
+"r" = (
+/obj/structure/table/wood/poker,
+/obj/item/stack/spacecash/c500,
+/obj/item/stack/spacecash/c100,
+/obj/item/stack/spacecash/c1000,
+/turf/open/floor/engine/cult{
+	baseturf = /turf/open/floor/plating/lava/smooth
+	},
+/area/ruin/powered)
+"s" = (
+/obj/structure/table/wood/poker,
+/obj/item/stack/spacecash/c200,
+/turf/open/floor/engine/cult{
+	baseturf = /turf/open/floor/plating/lava/smooth
+	},
+/area/ruin/powered)
+"t" = (
+/obj/machinery/door/airlock/gold,
+/turf/open/floor/engine/cult{
+	baseturf = /turf/open/floor/plating/lava/smooth
+	},
+/obj/structure/fans/tiny/invisible,
+/area/ruin/powered)
+
+(1,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+b
+b
+a
+a
+a
+a
+a
+a
+a
+a
+b
+"}
+(2,1,1) = {"
+a
+b
+b
+a
+a
+a
+a
+a
+a
+b
+b
+b
+a
+a
+a
+a
+a
+b
+b
+b
+"}
+(3,1,1) = {"
+a
+b
+b
+b
+b
+b
+a
+a
+a
+b
+a
+a
+a
+a
+a
+a
+b
+b
+b
+b
+"}
+(4,1,1) = {"
+a
+a
+b
+b
+b
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+b
+b
+b
+b
+"}
+(5,1,1) = {"
+a
+a
+a
+b
+b
+a
+a
+c
+c
+c
+c
+c
+c
+c
+a
+a
+a
+a
+b
+a
+"}
+(6,1,1) = {"
+b
+a
+a
+a
+a
+a
+c
+c
+d
+d
+d
+d
+d
+c
+a
+a
+a
+a
+b
+a
+"}
+(7,1,1) = {"
+b
+a
+a
+a
+c
+c
+c
+d
+d
+n
+q
+s
+d
+c
+c
+c
+c
+a
+a
+a
+"}
+(8,1,1) = {"
+a
+a
+a
+a
+c
+d
+d
+d
+k
+o
+l
+m
+d
+d
+d
+d
+c
+a
+a
+a
+"}
+(9,1,1) = {"
+a
+a
+b
+a
+c
+d
+e
+h
+l
+m
+m
+m
+l
+m
+l
+d
+d
+a
+a
+a
+"}
+(10,1,1) = {"
+b
+b
+b
+a
+c
+d
+f
+i
+m
+l
+m
+o
+m
+m
+m
+m
+t
+a
+a
+a
+"}
+(11,1,1) = {"
+a
+a
+b
+a
+c
+d
+g
+j
+l
+m
+m
+l
+m
+l
+o
+d
+d
+a
+a
+a
+"}
+(12,1,1) = {"
+a
+a
+a
+a
+c
+d
+d
+d
+k
+o
+m
+l
+d
+d
+d
+d
+c
+a
+a
+a
+"}
+(13,1,1) = {"
+a
+a
+a
+a
+c
+c
+c
+d
+d
+p
+r
+r
+d
+c
+c
+c
+c
+a
+a
+a
+"}
+(14,1,1) = {"
+b
+b
+a
+a
+a
+a
+c
+c
+d
+d
+d
+d
+d
+c
+a
+a
+a
+a
+a
+a
+"}
+(15,1,1) = {"
+b
+b
+a
+a
+a
+a
+a
+c
+c
+c
+c
+c
+c
+c
+a
+a
+a
+a
+a
+a
+"}
+(16,1,1) = {"
+b
+b
+b
+b
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+b
+b
+"}
+(17,1,1) = {"
+a
+a
+b
+b
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+b
+b
+"}
+(18,1,1) = {"
+a
+a
+a
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+a
+a
+b
+b
+b
+b
+b
+"}
+(19,1,1) = {"
+a
+a
+a
+b
+b
+b
+b
+a
+a
+a
+b
+b
+b
+b
+a
+b
+b
+b
+b
+b
+"}
+(20,1,1) = {"
+a
+a
+a
+a
+b
+b
+a
+a
+a
+a
+a
+a
+b
+b
+b
+b
+b
+b
+b
+b
+"}

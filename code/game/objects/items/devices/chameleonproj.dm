@@ -1,13 +1,13 @@
 /obj/item/device/chameleon
 	name = "chameleon-projector"
 	icon_state = "shield0"
-	flags = CONDUCT
+	flags = CONDUCT | NOBLUDGEON
 	slot_flags = SLOT_BELT
 	item_state = "electronic"
 	throwforce = 5
 	throw_speed = 3
 	throw_range = 5
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	origin_tech = "syndicate=4;magnets=4"
 	var/can_use = 1
 	var/obj/effect/dummy/chameleon/active_dummy = null
@@ -23,6 +23,7 @@
 	disrupt()
 
 /obj/item/device/chameleon/equipped()
+	..()
 	disrupt()
 
 /obj/item/device/chameleon/attack_self()
@@ -37,6 +38,7 @@
 			var/obj/temp = new/obj()
 			temp.appearance = target.appearance
 			temp.layer = initial(target.layer) // scanning things in your inventory
+			temp.plane = initial(target.plane)
 			saved_appearance = temp.appearance
 
 /obj/item/device/chameleon/proc/toggle()
@@ -105,7 +107,8 @@
 /obj/effect/dummy/chameleon/attack_alien()
 	master.disrupt()
 
-/obj/effect/dummy/chameleon/ex_act() //ok now THATS some serious protection against explosions right here
+/obj/effect/dummy/chameleon/ex_act(S, T)
+	contents_explosion(S, T)
 	master.disrupt()
 
 /obj/effect/dummy/chameleon/bullet_act()
@@ -113,7 +116,7 @@
 	master.disrupt()
 
 /obj/effect/dummy/chameleon/relaymove(mob/user, direction)
-	if(istype(loc, /turf/space) || !direction)
+	if(isspaceturf(loc) || !direction)
 		return //No magical space movement!
 
 	if(can_move)

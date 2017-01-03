@@ -10,15 +10,16 @@ LINEN BINS
 	icon = 'icons/obj/bedsheets.dmi'
 	icon_state = "sheetwhite"
 	item_state = "bedsheet"
-	slot_flags = SLOT_BACK
-	layer = 4
+	slot_flags = SLOT_NECK
+	layer = MOB_LAYER
 	throwforce = 0
 	throw_speed = 1
 	throw_range = 2
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 	item_color = "white"
-	burn_state = FLAMMABLE
+	resistance_flags = FLAMMABLE
 
+	dog_fashion = /datum/dog_fashion/head/ghost
 
 /obj/item/weapon/bedsheet/attack(mob/living/M, mob/user)
 	if(!attempt_initiate_surgery(src, M, user))
@@ -27,18 +28,23 @@ LINEN BINS
 /obj/item/weapon/bedsheet/attack_self(mob/user)
 	user.drop_item()
 	if(layer == initial(layer))
-		layer = 5
+		layer = ABOVE_MOB_LAYER
+		user << "<span class='notice'>You cover yourself with [src].</span>"
 	else
 		layer = initial(layer)
+		user << "<span class='notice'>You smooth [src] out beneath you.</span>"
 	add_fingerprint(user)
 	return
 
 /obj/item/weapon/bedsheet/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/weapon/wirecutters) || istype(I, /obj/item/weapon/shard))
-		new /obj/item/stack/medical/gauze/improvised(src.loc)
+	if(istype(I, /obj/item/weapon/wirecutters) || I.is_sharp())
+		var/obj/item/stack/sheet/cloth/C = new (get_turf(src), 3)
+		transfer_fingerprints_to(C)
+		C.add_fingerprint(user)
 		qdel(src)
 		user << "<span class='notice'>You tear [src] up.</span>"
-	..()
+	else
+		return ..()
 
 /obj/item/weapon/bedsheet/blue
 	icon_state = "sheetblue"
@@ -140,6 +146,10 @@ LINEN BINS
 	icon_state = "sheetbrown"
 	item_color = "cargo"
 
+/obj/item/weapon/bedsheet/black
+	icon_state = "sheetblack"
+	item_color = "black"
+
 /obj/item/weapon/bedsheet/centcom
 	name = "\improper Centcom bedsheet"
 	desc = "Woven with advanced nanothread for warmth as well as being very decorated, essential for all officials."
@@ -164,10 +174,30 @@ LINEN BINS
 	icon_state = "sheetwiz"
 	item_color = "wiz"
 
+/obj/item/weapon/bedsheet/nanotrasen
+	name = "nanotrasen bedsheet"
+	desc = "It has the Nanotrasen logo on it and has an aura of duty."
+	icon_state = "sheetNT"
+	item_color = "nanotrasen"
+
 /obj/item/weapon/bedsheet/ian
 	icon_state = "sheetian"
 	item_color = "ian"
 
+
+/obj/item/weapon/bedsheet/random
+	icon_state = "sheetrainbow"
+	item_color = "rainbow"
+	name = "random bedsheet"
+	desc = "If you're reading this description ingame, something has gone wrong! Honk!"
+
+/obj/item/weapon/bedsheet/random/New()
+	var/obj/item/weapon/bedsheet/B = pick(subtypesof(/obj/item/weapon/bedsheet) - /obj/item/weapon/bedsheet/random)
+	name = initial(B.name)
+	desc = initial(B.desc)
+	icon_state = initial(B.icon_state)
+	item_state = initial(B.item_state)
+	item_color = initial(B.item_color)
 
 /obj/structure/bedsheetbin
 	name = "linen bin"
@@ -175,8 +205,9 @@ LINEN BINS
 	icon = 'icons/obj/structures.dmi'
 	icon_state = "linenbin-full"
 	anchored = 1
-	burn_state = FLAMMABLE
-	burntime = 20
+	resistance_flags = FLAMMABLE
+	obj_integrity = 70
+	max_integrity = 70
 	var/amount = 10
 	var/list/sheets = list()
 	var/obj/item/hidden = null
@@ -201,16 +232,11 @@ LINEN BINS
 		else
 			icon_state = "linenbin-full"
 
-/obj/structure/bedsheetbin/fire_act()
-	if(!amount)
-		return
+/obj/structure/bedsheetbin/fire_act(exposed_temperature, exposed_volume)
+	if(amount)
+		amount = 0
+		update_icon()
 	..()
-
-/obj/structure/bedsheetbin/burn()
-	amount = 0
-	extinguish()
-	update_icon()
-	return
 
 /obj/structure/bedsheetbin/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/bedsheet))
@@ -221,7 +247,7 @@ LINEN BINS
 		amount++
 		user << "<span class='notice'>You put [I] in [src].</span>"
 		update_icon()
-	else if(amount && !hidden && I.w_class < 4)	//make sure there's sheets to hide it among, make sure nothing else is hidden in there.
+	else if(amount && !hidden && I.w_class < WEIGHT_CLASS_BULKY)	//make sure there's sheets to hide it among, make sure nothing else is hidden in there.
 		if(!user.drop_item())
 			user << "<span class='warning'>\The [I] is stuck to your hand, you cannot hide it among the sheets!</span>"
 			return

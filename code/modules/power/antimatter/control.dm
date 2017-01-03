@@ -3,7 +3,7 @@
 	desc = "This device injects antimatter into connected shielding units, the more antimatter injected the more power produced.  Wrench the device to set it up."
 	icon = 'icons/obj/machines/antimatter.dmi'
 	icon_state = "control"
-	anchored = 1
+	anchored = 0
 	density = 1
 	use_power = 1
 	idle_power_usage = 100
@@ -37,7 +37,10 @@
 
 /obj/machinery/power/am_control_unit/Destroy()//Perhaps damage and run stability checks rather than just del on the others
 	for(var/obj/machinery/am_shielding/AMS in linked_shielding)
+		AMS.control_unit = null
 		qdel(AMS)
+	qdel(fueljar)
+	fueljar = null
 	return ..()
 
 
@@ -56,7 +59,7 @@
 
 	if(!fueljar)//No fuel but we are on, shutdown
 		toggle_power()
-		//Angry buzz or such here
+		playsound(src.loc, 'sound/machines/buzz-two.ogg', 50, 0)
 		return
 
 	add_avail(stored_power)
@@ -127,15 +130,23 @@
 
 
 /obj/machinery/power/am_control_unit/bullet_act(obj/item/projectile/Proj)
+	. = ..()
 	if(Proj.flag != "bullet")
 		stability -= Proj.force
-	return 0
+		check_stability()
 
 
 /obj/machinery/power/am_control_unit/power_change()
 	..()
-	if(stat & NOPOWER && active)
-		toggle_power()
+	if(stat & NOPOWER)
+		if(active)
+			toggle_power(1)
+		else
+			use_power = 0
+
+	else if(!stat && anchored)
+		use_power = 1
+
 	return
 
 
@@ -149,50 +160,58 @@
 /obj/machinery/power/am_control_unit/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/wrench))
 		if(!anchored)
-			playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
+			playsound(src.loc, W.usesound, 75, 1)
 			user.visible_message("[user.name] secures the [src.name] to the floor.", \
 				"<span class='notice'>You secure the anchor bolts to the floor.</span>", \
 				"<span class='italics'>You hear a ratchet.</span>")
 			src.anchored = 1
 			connect_to_network()
 		else if(!linked_shielding.len > 0)
-			playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
+			playsound(src.loc, W.usesound, 75, 1)
 			user.visible_message("[user.name] unsecures the [src.name].", \
-				"Y<span class='notice'>You remove the anchor bolts.</span>", \
+				"<span class='notice'>You remove the anchor bolts.</span>", \
 				"<span class='italics'>You hear a ratchet.</span>")
 			src.anchored = 0
 			disconnect_from_network()
 		else
 			user << "<span class='warning'>Once bolted and linked to a shielding unit it the [src.name] is unable to be moved!</span>"
-		return
 
-	if(istype(W, /obj/item/weapon/am_containment))
+	else if(istype(W, /obj/item/weapon/am_containment))
 		if(fueljar)
 			user << "<span class='warning'>There is already a [fueljar] inside!</span>"
 			return
+
+		if(!user.unEquip(W))
+			return
 		fueljar = W
-		W.loc = src
-		if(user.client)
-			user.client.screen -= W
-		user.unEquip(W)
-		user.update_icons()
+		W.forceMove(src)
 		user.visible_message("[user.name] loads an [W.name] into the [src.name].", \
 				"<span class='notice'>You load an [W.name].</span>", \
 				"<span class='italics'>You hear a thunk.</span>")
-		return
+	else
+		return ..()
 
-	if(W.force >= 20)
-		stability -= W.force/2
+
+/obj/machinery/power/am_control_unit/take_damage(damage, damage_type = BRUTE, sound_effect = 1)
+	switch(damage_type)
+		if(BRUTE)
+			if(sound_effect)
+				if(damage)
+					playsound(loc, 'sound/weapons/smash.ogg', 50, 1)
+				else
+					playsound(loc, 'sound/weapons/tap.ogg', 50, 1)
+		if(BURN)
+			if(sound_effect)
+				playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
+		else
+			return
+	if(damage >= 20)
+		stability -= damage/2
 		check_stability()
-	..()
-
-
 
 /obj/machinery/power/am_control_unit/attack_hand(mob/user)
 	if(anchored)
 		interact(user)
-	return
-
 
 /obj/machinery/power/am_control_unit/proc/add_shielding(obj/machinery/am_shielding/AMS, AMS_linking = 0)
 	if(!istype(AMS))
@@ -222,13 +241,13 @@
 	return
 
 
-/obj/machinery/power/am_control_unit/proc/toggle_power()
+/obj/machinery/power/am_control_unit/proc/toggle_power(powerfail = 0)
 	active = !active
 	if(active)
 		use_power = 2
 		visible_message("The [src.name] starts up.")
 	else
-		use_power = 1
+		use_power = !powerfail
 		visible_message("The [src.name] shuts down.")
 	update_icon()
 	return
@@ -270,7 +289,7 @@
 
 /obj/machinery/power/am_control_unit/interact(mob/user)
 	if((get_dist(src, user) > 1) || (stat & (BROKEN|NOPOWER)))
-		if(!istype(user, /mob/living/silicon/ai))
+		if(!isAI(user))
 			user.unset_machine()
 			user << browse(null, "window=AMcontrol")
 			return

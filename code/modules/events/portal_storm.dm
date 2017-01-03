@@ -2,6 +2,7 @@
 	name = "Portal Storm: Syndicate Shocktroops"
 	typepath = /datum/round_event/portal_storm/syndicate_shocktroop
 	weight = 2
+	min_players = 15
 	earliest_start = 18000
 
 /datum/round_event/portal_storm/syndicate_shocktroop
@@ -10,15 +11,15 @@
 						/mob/living/simple_animal/hostile/syndicate/ranged/space/noloot = 2)
 
 /datum/round_event_control/portal_storm_narsie
-	name = "Portal Storm: Nar-sie"
+	name = "Portal Storm: Constructs"
 	typepath = /datum/round_event/portal_storm/portal_storm_narsie
 	weight = 0
 	max_occurrences = 0
 
 /datum/round_event/portal_storm/portal_storm_narsie
-	boss_types = list(/obj/singularity/narsie/large = 1)
-	hostile_types = list(/mob/living/simple_animal/hostile/construct/armored/hostile = 10,\
-						/mob/living/simple_animal/hostile/construct/wraith/hostile = 10)
+	boss_types = list(/mob/living/simple_animal/hostile/construct/builder = 6)
+	hostile_types = list(/mob/living/simple_animal/hostile/construct/armored/hostile = 8,\
+						/mob/living/simple_animal/hostile/construct/wraith/hostile = 6)
 
 /datum/round_event/portal_storm
 	startWhen = 7
@@ -69,7 +70,7 @@
 	set waitfor = 0
 	playsound_global('sound/magic/lightning_chargeup.ogg', repeat=0, channel=1, volume=100)
 	sleep(80)
-	priority_announce("Attention personnel of [world.name]: incoming portal storm!")
+	priority_announce("Massive bluespace anomaly detected en route to [station_name()]. Brace for impact.")
 	sleep(20)
 	playsound_global('sound/magic/lightningbolt.ogg', repeat=0, channel=1, volume=100)
 

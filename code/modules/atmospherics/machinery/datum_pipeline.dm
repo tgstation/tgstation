@@ -1,13 +1,16 @@
 /datum/pipeline
 	var/datum/gas_mixture/air
-	var/list/datum/gas_mixture/other_airs = list()
+	var/list/datum/gas_mixture/other_airs
 
-	var/list/obj/machinery/atmospherics/pipe/members = list()
-	var/list/obj/machinery/atmospherics/components/other_atmosmch = list()
+	var/list/obj/machinery/atmospherics/pipe/members
+	var/list/obj/machinery/atmospherics/components/other_atmosmch
 
 	var/update = 1
 
 /datum/pipeline/New()
+	other_airs = list()
+	members = list()
+	other_atmosmch = list()
 	SSair.networks += src
 
 /datum/pipeline/Destroy()
@@ -41,6 +44,7 @@ var/pipenetwarnings = 10
 		addMachineryMember(base)
 	if(!air)
 		air = new
+		air.holder = src
 	var/list/possible_expansions = list(base)
 	while(possible_expansions.len>0)
 		for(var/obj/machinery/atmospherics/borderline in possible_expansions)
@@ -140,27 +144,32 @@ var/pipenetwarnings = 10
 /datum/pipeline/proc/temperature_interact(turf/target, share_volume, thermal_conductivity)
 	var/total_heat_capacity = air.heat_capacity()
 	var/partial_heat_capacity = total_heat_capacity*(share_volume/air.volume)
+	var/target_temperature
+	var/target_heat_capacity
 
-	if(istype(target, /turf/simulated))
-		var/turf/simulated/modeled_location = target
+	if(isopenturf(target))
+
+		var/turf/open/modeled_location = target
+		target_temperature = modeled_location.GetTemperature()
+		target_heat_capacity = modeled_location.GetHeatCapacity()
 
 		if(modeled_location.blocks_air)
 
 			if((modeled_location.heat_capacity>0) && (partial_heat_capacity>0))
-				var/delta_temperature = air.temperature - modeled_location.temperature
+				var/delta_temperature = air.temperature - target_temperature
 
 				var/heat = thermal_conductivity*delta_temperature* \
-					(partial_heat_capacity*modeled_location.heat_capacity/(partial_heat_capacity+modeled_location.heat_capacity))
+					(partial_heat_capacity*target_heat_capacity/(partial_heat_capacity+target_heat_capacity))
 
 				air.temperature -= heat/total_heat_capacity
-				modeled_location.temperature += heat/modeled_location.heat_capacity
+				modeled_location.TakeTemperature(heat/target_heat_capacity)
 
 		else
 			var/delta_temperature = 0
 			var/sharer_heat_capacity = 0
 
-			delta_temperature = (air.temperature - modeled_location.air.temperature)
-			sharer_heat_capacity = modeled_location.air.heat_capacity()
+			delta_temperature = (air.temperature - target_temperature)
+			sharer_heat_capacity = target_heat_capacity
 
 			var/self_temperature_delta = 0
 			var/sharer_temperature_delta = 0
@@ -175,9 +184,7 @@ var/pipenetwarnings = 10
 				return 1
 
 			air.temperature += self_temperature_delta
-
-			modeled_location.air.temperature += sharer_temperature_delta
-			modeled_location.air_update_turf()
+			modeled_location.TakeTemperature(sharer_temperature_delta)
 
 
 	else
@@ -190,6 +197,12 @@ var/pipenetwarnings = 10
 			air.temperature -= heat/total_heat_capacity
 	update = 1
 
+/datum/pipeline/proc/return_air()
+	. = other_airs + air
+	if(null in .)
+		stack_trace("[src] has one or more null gas mixtures, which may cause bugs. Null mixtures will not be considered in reconcile_air().")
+		return removeNullsFromList(.)
+
 /datum/pipeline/proc/reconcile_air()
 	var/list/datum/gas_mixture/GL = list()
 	var/list/datum/pipeline/PL = list()
@@ -197,8 +210,7 @@ var/pipenetwarnings = 10
 
 	for(var/i = 1; i <= PL.len; i++) //can't do a for-each here because we may add to the list within the loop
 		var/datum/pipeline/P = PL[i]
-		GL += P.air
-		GL += P.other_airs
+		GL += P.return_air()
 		for(var/obj/machinery/atmospherics/components/binary/valve/V in P.other_atmosmch)
 			if(V.open)
 				PL |= V.PARENT1

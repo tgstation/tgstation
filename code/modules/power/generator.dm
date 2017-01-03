@@ -58,14 +58,14 @@
 /obj/machinery/power/generator/update_icon()
 
 	if(stat & (NOPOWER|BROKEN))
-		overlays.Cut()
+		cut_overlays()
 	else
-		overlays.Cut()
+		cut_overlays()
 
 		if(lastgenlev != 0)
-			overlays += image('icons/obj/power.dmi', "teg-op[lastgenlev]")
+			add_overlay(image('icons/obj/power.dmi', "teg-op[lastgenlev]"))
 
-		overlays += image('icons/obj/power.dmi', "teg-oc[lastcirc]")
+		add_overlay(image('icons/obj/power.dmi', "teg-oc[lastcirc]"))
 
 
 #define GENRATE 800		// generator output coefficient from Q
@@ -173,10 +173,6 @@
 /obj/machinery/power/generator/interact(mob/user)
 
 	user.set_machine(src)
-
-	//user << browse(t, "window=teg;size=460x300")
-	//onclose(user, "teg")
-
 	var/datum/browser/popup = new(user, "teg", "Thermo-Electric Generator", 460, 300)
 	popup.set_content(get_menu())
 	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))

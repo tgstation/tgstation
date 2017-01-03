@@ -1,5 +1,3 @@
-
-
 /mob/living/simple_animal/cockroach
 	name = "cockroach"
 	desc = "This station is just crawling with bugs."
@@ -16,11 +14,15 @@
 	response_help  = "pokes"
 	response_disarm = "shoos"
 	response_harm   = "splats"
+	speak_emote = list("chitters")
 	density = 0
-	ventcrawler = 2
+	ventcrawler = VENTCRAWLER_ALWAYS
 	gold_core_spawnable = 2
+	verb_say = "chitters"
+	verb_ask = "chitters inquisitively"
+	verb_exclaim = "chitters loudly"
+	verb_yell = "chitters loudly"
 	var/squish_chance = 50
-	loot = list(/obj/effect/decal/cleanable/deadcockroach)
 	del_on_death = 1
 
 /mob/living/simple_animal/cockroach/death(gibbed)
@@ -28,21 +30,25 @@
 		return
 	..()
 
+/mob/living/simple_animal/cockroach/proc/squish()
+	adjustBruteLoss(1) // kills a normal cockroach
+	new /obj/effect/decal/cleanable/deadcockroach(get_turf(src))
+
 /mob/living/simple_animal/cockroach/Crossed(var/atom/movable/AM)
 	if(ismob(AM))
 		if(isliving(AM))
 			var/mob/living/A = AM
-			if(A.mob_size > MOB_SIZE_TINY)
+			if(A.mob_size > MOB_SIZE_SMALL)
 				if(prob(squish_chance))
 					A.visible_message("<span class='notice'>\The [A] squashed \the [name].</span>", "<span class='notice'>You squashed \the [name].</span>")
-					death()
+					squish()
 				else
 					visible_message("<span class='notice'>\The [name] avoids getting crushed.</span>")
 	else
 		if(isobj(AM))
 			if(istype(AM,/obj/structure))
 				visible_message("<span class='notice'>As \the [AM] moved over \the [name], it was crushed.</span>")
-				death()
+				squish()
 
 /mob/living/simple_animal/cockroach/ex_act() //Explosions are a terrible way to handle a cockroach.
 	return
@@ -53,4 +59,3 @@
 	icon = 'icons/effects/blood.dmi'
 	icon_state = "xfloor1"
 	random_icon_states = list("xfloor1", "xfloor2", "xfloor3", "xfloor4", "xfloor5", "xfloor6", "xfloor7")
-	layer = 2

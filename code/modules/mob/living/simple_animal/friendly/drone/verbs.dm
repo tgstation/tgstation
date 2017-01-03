@@ -16,9 +16,9 @@
 	set category = "Drone"
 	set name = "Toggle drone light"
 	if(light_on)
-		AddLuminosity(-4)
+		AddLuminosity(-8)
 	else
-		AddLuminosity(4)
+		AddLuminosity(8)
 
 	light_on = !light_on
 
@@ -51,3 +51,4 @@
 		staticChoice = selectedStatic
 
 	updateSeeStaticMobs()
+

@@ -20,7 +20,7 @@
  
 //Github lets you have it sign the message with a secret that you can validate. This prevents people from faking events.
 //This var should match the secret you configured for this webhook on github.
-//set to NULL (no quotes) to disable validation.
+//This is required as otherwise somebody could trick the script into leaking the api key.
 $hookSecret = '08ajh0qj93209qj90jfq932j32r';
 
 //Api key for pushing changelogs.
@@ -49,21 +49,22 @@ set_exception_handler(function($e) {
 	die();
 });
 $rawPost = NULL;
-if ($hookSecret !== NULL) {
-	if (!isset($_SERVER['HTTP_X_HUB_SIGNATURE'])) {
-		throw new \Exception("HTTP header 'X-Hub-Signature' is missing.");
-	} elseif (!extension_loaded('hash')) {
-		throw new \Exception("Missing 'hash' extension to check the secret code validity.");
-	}
-	list($algo, $hash) = explode('=', $_SERVER['HTTP_X_HUB_SIGNATURE'], 2) + array('', '');
-	if (!in_array($algo, hash_algos(), TRUE)) {
-		throw new \Exception("Hash algorithm '$algo' is not supported.");
-	}
-	$rawPost = file_get_contents('php://input');
-	if ($hash !== hash_hmac($algo, $rawPost, $hookSecret)) {
-		throw new \Exception('Hook secret does not match.');
-	}
+if (!$hookSecret || $hookSecret == '08ajh0qj93209qj90jfq932j32r')
+	throw new \Exception("Hook secret is required and can not be default");
+if (!isset($_SERVER['HTTP_X_HUB_SIGNATURE'])) {
+	throw new \Exception("HTTP header 'X-Hub-Signature' is missing.");
+} elseif (!extension_loaded('hash')) {
+	throw new \Exception("Missing 'hash' extension to check the secret code validity.");
 }
+list($algo, $hash) = explode('=', $_SERVER['HTTP_X_HUB_SIGNATURE'], 2) + array('', '');
+if (!in_array($algo, hash_algos(), TRUE)) {
+	throw new \Exception("Hash algorithm '$algo' is not supported.");
+}
+$rawPost = file_get_contents('php://input');
+if ($hash !== hash_hmac($algo, $rawPost, $hookSecret)) {
+	throw new \Exception('Hook secret does not match.');
+}
+
 $contenttype = null;
 //apache and nginx/fastcgi/phpfpm call this two different things.
 if (!isset($_SERVER['HTTP_CONTENT_TYPE'])) {
@@ -154,14 +155,14 @@ function checkchangelog($payload, $merge = false) {
 	$foundcltag = false;
 	foreach ($body as $line) {
 		$line = trim($line);
-		if (substr($line,0,4) == ':cl:') {
+		if (substr($line,0,4) == ':cl:' || substr($line,0,4) == '🆑') {
 			$incltag = true;
 			$foundcltag = true;
 			$pos = strpos($line, " ");
 			if ($pos)
 				$username = substr($line, $pos+1);
 			continue;
-		} else if (substr($line,0,5) == '/:cl:' || substr($line,0,6) == '/ :cl:' || substr($line,0,5) == ':/cl:') {
+		} else if (substr($line,0,5) == '/:cl:' || substr($line,0,6) == '/ :cl:' || substr($line,0,5) == ':/cl:' || substr($line,0,5) == '/🆑' || substr($line,0,6) == '/ 🆑' ) {
 			$incltag = false;
 			$changelogbody = array_merge($changelogbody, $currentchangelogblock);
 			continue;
@@ -250,7 +251,7 @@ function checkchangelog($payload, $merge = false) {
 	if (!count($changelogbody))
 		return;
 
-	$file = 'author: '.$username."\n";
+	$file = 'author: "'.trim(str_replace(array("\\", '"'), array("\\\\", "\\\""), $username)).'"'."\n";
 	$file .= "delete-after: True\n";
 	$file .= "changes: \n";
 	foreach ($changelogbody as $changelogitem) {
@@ -260,8 +261,9 @@ function checkchangelog($payload, $merge = false) {
 		$file .= "\n";
 	}
 	$content = array (
-		'message' 	=> 'Automatic changelog generation for PR #'.$payload['pull_request']['number'],
-		'content'	=> base64_encode($file)
+		'branch' 	=> $payload['pull_request']['base']['ref'],
+		'message' 	=> 'Automatic changelog generation for PR #'.$payload['pull_request']['number'].' [ci skip]',
+		'content' 	=> base64_encode($file)
 	);
 	$scontext = array('http' => array(
         'method'	=> 'PUT',

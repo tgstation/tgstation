@@ -5,13 +5,13 @@
 	name = "power sink"
 	icon_state = "powersink0"
 	item_state = "electronic"
-	w_class = 4
+	w_class = WEIGHT_CLASS_BULKY
 	flags = CONDUCT
 	throwforce = 5
 	throw_speed = 1
 	throw_range = 2
 	materials = list(MAT_METAL=750)
-	origin_tech = "powerstorage=3;syndicate=5"
+	origin_tech = "powerstorage=5;syndicate=5"
 	var/drain_rate = 1600000	// amount of power to drain per tick
 	var/power_drained = 0 		// has drained this much power
 	var/max_power = 1e10		// maximum power that can be drained before exploding
@@ -34,20 +34,20 @@
 		if(DISCONNECTED)
 			attached = null
 			if(mode == OPERATING)
-				SSobj.processing.Remove(src)
+				STOP_PROCESSING(SSobj, src)
 			anchored = 0
 
 		if(CLAMPED_OFF)
 			if(!attached)
 				return
 			if(mode == OPERATING)
-				SSobj.processing.Remove(src)
+				STOP_PROCESSING(SSobj, src)
 			anchored = 1
 
 		if(OPERATING)
 			if(!attached)
 				return
-			SSobj.processing |= src
+			START_PROCESSING(SSobj, src)
 			anchored = 1
 
 	mode = value
@@ -77,7 +77,7 @@
 				"<span class='notice'>You detach \the [src] from the cable.</span>",
 				"<span class='italics'>You hear some wires being disconnected from something.</span>")
 	else
-		..()
+		return ..()
 
 /obj/item/device/powersink/attack_paw()
 	return
@@ -140,6 +140,6 @@
 		playsound(src, 'sound/effects/screech.ogg', 100, 1, 1)
 
 	if(power_drained >= max_power)
-		SSobj.processing.Remove(src)
+		STOP_PROCESSING(SSobj, src)
 		explosion(src.loc, 4,8,16,32)
 		qdel(src)

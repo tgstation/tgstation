@@ -10,8 +10,8 @@
 	throwforce = 10
 	throw_speed = 1
 	throw_range = 7
-	w_class = 4
-
+	w_class = WEIGHT_CLASS_BULKY
+	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 70, acid = 30)
 	var/charges = list(0, 0, 0)	//how many restocking "charges" the refill has for standard/contraband/coin products
 	var/init_charges = list(0, 0, 0)
 
@@ -25,7 +25,7 @@
 /obj/item/weapon/vending_refill/examine(mob/user)
 	..()
 	if(charges[1] > 0)
-		user << "It can restock [charges[1]] item(s)."
+		user << "It can restock [charges[1]+charges[2]+charges[3]] item(s)."
 	else
 		user << "It's empty!"
 
@@ -34,8 +34,8 @@
 /obj/item/weapon/vending_refill/boozeomat
 	machine_name = "Booze-O-Mat"
 	icon_state = "refill_booze"
-	charges = list(52, 4, 0)//of 156 standard, 12 contraband
-	init_charges = list(52, 4, 0)
+	charges = list(54, 4, 0)//of 159 standard, 12 contraband
+	init_charges = list(54, 4, 0)
 
 /obj/item/weapon/vending_refill/coffee
 	machine_name = "Solar's Best Hot Drinks"
@@ -57,17 +57,17 @@
 /obj/item/weapon/vending_refill/cigarette
 	machine_name = "ShadyCigs Deluxe"
 	icon_state = "refill_smoke"
-	charges = list(12, 1, 2)// of 36 standard, 3 contraband, 6 premium
-	init_charges = list(12, 1, 2)
+	charges = list(12, 3, 2)// of 36 standard, 9 contraband, 6 premium
+	init_charges = list(12, 3, 2)
 
 /obj/item/weapon/vending_refill/autodrobe
 	machine_name = "AutoDrobe"
 	icon_state = "refill_costume"
-	charges = list(27, 2, 3)// of 75 standard, 6 contraband, 9 premium
+	charges = list(31, 2, 3)// of 94 standard, 6 contraband, 9 premium
 	init_charges = list(27, 2, 3)
 
 /obj/item/weapon/vending_refill/clothing
 	machine_name = "ClothesMate"
 	icon_state = "refill_clothes"
-	charges = list(30, 2, 3)// of 86 standard, 6 contraband, 9 premium
-	init_charges = list(30, 2, 3)
+	charges = list(31, 4, 4)// of 101 standard, 12 contraband, 10 premium(?)
+	init_charges = list(31, 4, 4)

@@ -52,7 +52,15 @@
 	set desc = "Report an issue"
 	set hidden = 1
 	if(config.githuburl)
-		if(alert("This will open the Github issue reporter in your browser. Are you sure?",,"Yes","No")=="No")
+		var/message = "This will open the Github issue reporter in your browser. Are you sure?"
+		var/first = TRUE
+		for(var/line in revdata.testmerge)
+			if(line)
+				if(first)
+					first = FALSE
+					message += ". The following experimental changes are active and are probably the cause of any new or sudden issues you may experience. If possible, please try to find a specific thread for your issue instead of posting to the general issue tracker:"	
+				message += " <a href='[config.githuburl]/pull/[line]'>#[line]</a>"
+		if(tgalert(src, message, "Report Issue","Yes","No")=="No")
 			return
 		src << link("[config.githuburl]/issues/new")
 	else
@@ -105,6 +113,7 @@ Admin:
 
 
 /mob/proc/hotkey_help()
+	//h = talk-wheel has a nonsense tag in it because \th is an escape sequence in BYOND.
 	var/hotkey_mode = {"<font color='purple'>
 Hotkey-Mode: (hotkey-mode must be on)
 \tTAB = toggle hotkey-mode
@@ -117,6 +126,7 @@ Hotkey-Mode: (hotkey-mode must be on)
 \tr = throw
 \tm = me
 \tt = say
+\t<B></B>h = talk-wheel
 \to = OOC
 \tb = resist
 \tx = swap-hand
@@ -127,6 +137,7 @@ Hotkey-Mode: (hotkey-mode must be on)
 \t2 = disarm-intent
 \t3 = grab-intent
 \t4 = harm-intent
+\tNumpad = Body target selection (Press 8 repeatedly for Head->Eyes->Mouth)
 </font>"}
 
 	var/other = {"<font color='purple'>
@@ -139,7 +150,8 @@ Any-Mode: (hotkey doesn't need to be on)
 \tCtrl+e = equip
 \tCtrl+r = throw
 \tCtrl+b = resist
-\tCtrl+O = OOC
+\tCtrl+h = talk-wheel
+\tCtrl+o = OOC
 \tCtrl+x = swap-hand
 \tCtrl+z = activate held object (or Ctrl+y)
 \tCtrl+f = cycle-intents-left
@@ -154,12 +166,14 @@ Any-Mode: (hotkey doesn't need to be on)
 \tPGUP = swap-hand
 \tPGDN = activate held object
 \tEND = throw
+\tCtrl+Numpad = Body target selection (Press 8 repeatedly for Head->Eyes->Mouth)
 </font>"}
 
 	src << hotkey_mode
 	src << other
 
 /mob/living/silicon/robot/hotkey_help()
+	//h = talk-wheel has a nonsense tag in it because \th is an escape sequence in BYOND.
 	var/hotkey_mode = {"<font color='purple'>
 Hotkey-Mode: (hotkey-mode must be on)
 \tTAB = toggle hotkey-mode
@@ -168,7 +182,9 @@ Hotkey-Mode: (hotkey-mode must be on)
 \td = right
 \tw = up
 \tq = unequip active module
+\tm = me
 \tt = say
+\t<B></B>h = talk-wheel
 \to = OOC
 \tx = cycle active modules
 \tb = resist
@@ -190,6 +206,7 @@ Any-Mode: (hotkey doesn't need to be on)
 \tCtrl+q = unequip active module
 \tCtrl+x = cycle active modules
 \tCtrl+b = resist
+\tCtrl+h = talk-wheel
 \tCtrl+o = OOC
 \tCtrl+z = activate held object (or Ctrl+y)
 \tCtrl+f = cycle-intents-left

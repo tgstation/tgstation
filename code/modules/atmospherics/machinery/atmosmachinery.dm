@@ -14,36 +14,38 @@ Pipelines + Other Objects -> Pipe network
 	idle_power_usage = 0
 	active_power_usage = 0
 	power_channel = ENVIRON
+	on_blueprints = TRUE
+	layer = GAS_PIPE_LAYER //under wires
+	resistance_flags = FIRE_PROOF
+	obj_integrity = 200
+	max_integrity = 200
 	var/nodealert = 0
 	var/can_unwrench = 0
 	var/initialize_directions = 0
 	var/pipe_color
-	var/obj/item/pipe/stored
+
 	var/global/list/iconsetids = list()
 	var/global/list/pipeimages = list()
 
 	var/image/pipe_vision_img = null
 
 	var/device_type = 0
-	var/list/obj/machinery/atmospherics/nodes = list()
+	var/list/obj/machinery/atmospherics/nodes
 
 /obj/machinery/atmospherics/New(loc, process = TRUE)
-	nodes.len = device_type
+	nodes = new(device_type)
+	if (!armor)
+		armor = list(melee = 25, bullet = 10, laser = 10, energy = 100, bomb = 0, bio = 100, rad = 100, fire = 100, acid = 70)
 	..()
 	if(process)
 		SSair.atmos_machinery += src
 	SetInitDirections()
-	if(can_unwrench)
-		stored = new(src, make_from=src)
 
 /obj/machinery/atmospherics/Destroy()
 	for(DEVICE_TYPE_LOOP)
 		nullifyNode(I)
 
 	SSair.atmos_machinery -= src
-	if(stored)
-		qdel(stored)
-		stored = null
 
 	dropContents()
 	if(pipe_vision_img)
@@ -121,39 +123,41 @@ Pipelines + Other Objects -> Pipe network
 	return
 
 /obj/machinery/atmospherics/attackby(obj/item/weapon/W, mob/user, params)
-	if(can_unwrench && istype(W, /obj/item/weapon/wrench))
-		var/turf/T = get_turf(src)
-		if (level==1 && isturf(T) && T.intact)
-			user << "<span class='warning'>You must remove the plating first!</span>"
-			return 1
-		var/datum/gas_mixture/int_air = return_air()
-		var/datum/gas_mixture/env_air = loc.return_air()
-		add_fingerprint(user)
+	if(istype(W, /obj/item/weapon/wrench))
+		if(can_unwrench(user))
+			var/turf/T = get_turf(src)
+			if (level==1 && isturf(T) && T.intact)
+				user << "<span class='warning'>You must remove the plating first!</span>"
+				return 1
+			var/datum/gas_mixture/int_air = return_air()
+			var/datum/gas_mixture/env_air = loc.return_air()
+			add_fingerprint(user)
 
-		var/unsafe_wrenching = FALSE
-		var/internal_pressure = int_air.return_pressure()-env_air.return_pressure()
+			var/unsafe_wrenching = FALSE
+			var/internal_pressure = int_air.return_pressure()-env_air.return_pressure()
 
-		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-		user << "<span class='notice'>You begin to unfasten \the [src]...</span>"
-		if (internal_pressure > 2*ONE_ATMOSPHERE)
-			user << "<span class='warning'>As you begin unwrenching \the [src] a gush of air blows in your face... maybe you should reconsider?</span>"
-			unsafe_wrenching = TRUE //Oh dear oh dear
+			playsound(src.loc, W.usesound, 50, 1)
+			user << "<span class='notice'>You begin to unfasten \the [src]...</span>"
+			if (internal_pressure > 2*ONE_ATMOSPHERE)
+				user << "<span class='warning'>As you begin unwrenching \the [src] a gush of air blows in your face... maybe you should reconsider?</span>"
+				unsafe_wrenching = TRUE //Oh dear oh dear
 
-		if (do_after(user, 20/W.toolspeed, target = src) && !qdeleted(src))
-			user.visible_message( \
-				"[user] unfastens \the [src].", \
-				"<span class='notice'>You unfasten \the [src].</span>", \
-				"<span class='italics'>You hear ratchet.</span>")
-			investigate_log("was <span class='warning'>REMOVED</span> by [key_name(usr)]", "atmos")
+			if (do_after(user, 20*W.toolspeed, target = src) && !qdeleted(src))
+				user.visible_message( \
+					"[user] unfastens \the [src].", \
+					"<span class='notice'>You unfasten \the [src].</span>", \
+					"<span class='italics'>You hear ratchet.</span>")
+				investigate_log("was <span class='warning'>REMOVED</span> by [key_name(usr)]", "atmos")
 
-			//You unwrenched a pipe full of pressure? Let's splat you into the wall, silly.
-			if(unsafe_wrenching)
-				unsafe_pressure_release(user, internal_pressure)
-			Deconstruct()
-
+				//You unwrenched a pipe full of pressure? Let's splat you into the wall, silly.
+				if(unsafe_wrenching)
+					unsafe_pressure_release(user, internal_pressure)
+				deconstruct(TRUE)
 	else
 		return ..()
 
+/obj/machinery/atmospherics/proc/can_unwrench(mob/user)
+	return can_unwrench
 
 // Throws the user when they unwrench a pipe with a major difference between the internal and environmental pressure.
 /obj/machinery/atmospherics/proc/unsafe_pressure_release(mob/user, pressures = null)
@@ -174,13 +178,14 @@ Pipelines + Other Objects -> Pipe network
 	user.visible_message("<span class='danger'>[user] is sent flying by pressure!</span>","<span class='userdanger'>The pressure sends you flying!</span>")
 	user.throw_at(target, range, speed)
 
-/obj/machinery/atmospherics/Deconstruct()
-	if(can_unwrench)
-		stored.loc = src.loc
-		transfer_fingerprints_to(stored)
-		stored = null
-
-	qdel(src)
+/obj/machinery/atmospherics/deconstruct(disassembled = TRUE)
+	if(!(flags & NODECONSTRUCT))
+		if(can_unwrench)
+			var/obj/item/pipe/stored = new(loc, make_from=src)
+			if(!disassembled)
+				stored.obj_integrity = stored.max_integrity * 0.5
+			transfer_fingerprints_to(stored)
+	..()
 
 /obj/machinery/atmospherics/proc/getpipeimage(iconset, iconstate, direction, col=rgb(255,255,255))
 
@@ -203,13 +208,10 @@ Pipelines + Other Objects -> Pipe network
 
 	return img
 
-/obj/machinery/atmospherics/construction(pipe_type, obj_color)
+/obj/machinery/atmospherics/on_construction(pipe_type, obj_color)
 	if(can_unwrench)
-		color = obj_color
+		add_atom_colour(obj_color, FIXED_COLOUR_PRIORITY)
 		pipe_color = obj_color
-		stored.dir = src.dir		  //need to define them here, because the obj directions...
-		stored.pipe_type = pipe_type  //... were not set at the time the stored pipe was created
-		stored.color = obj_color
 	var/turf/T = loc
 	level = T.intact ? 2 : 1
 	atmosinit()
@@ -221,7 +223,7 @@ Pipelines + Other Objects -> Pipe network
 
 /obj/machinery/atmospherics/singularity_pull(S, current_size)
 	if(current_size >= STAGE_FIVE)
-		Deconstruct()
+		deconstruct(FALSE)
 
 
 //Find a connecting /obj/machinery/atmospherics in specified direction
@@ -278,7 +280,10 @@ Pipelines + Other Objects -> Pipe network
 	return list()
 
 /obj/machinery/atmospherics/update_remote_sight(mob/user)
-	user.sight |= (SEE_TURFS|BLIND)
+	if(isborer(user))
+		user.sight |= (SEE_PIXELS)
+	else
+		user.sight |= (SEE_TURFS|BLIND)
 
 //Used for certain children of obj/machinery/atmospherics to not show pipe vision when mob is inside it.
 /obj/machinery/atmospherics/proc/can_see_pipes()

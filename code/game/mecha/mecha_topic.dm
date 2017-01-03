@@ -52,12 +52,12 @@
 /obj/mecha/proc/report_internal_damage()
 	. = ""
 	var/list/dam_reports = list(
-										"[MECHA_INT_FIRE]" = "<span class='userdanger'>INTERNAL FIRE</span>",
-										"[MECHA_INT_TEMP_CONTROL]" = "<span class='userdanger'>LIFE SUPPORT SYSTEM MALFUNCTION</span>",
-										"[MECHA_INT_TANK_BREACH]" = "<span class='userdanger'>GAS TANK BREACH</span>",
-										"[MECHA_INT_CONTROL_LOST]" = "<span class='userdanger'>COORDINATION SYSTEM CALIBRATION FAILURE</span> - <a href='?src=\ref[src];repair_int_control_lost=1'>Recalibrate</a>",
-										"[MECHA_INT_SHORT_CIRCUIT]" = "<span class='userdanger'>SHORT CIRCUIT</span>"
-										)
+		"[MECHA_INT_FIRE]" = "<span class='userdanger'>INTERNAL FIRE</span>",
+		"[MECHA_INT_TEMP_CONTROL]" = "<span class='userdanger'>LIFE SUPPORT SYSTEM MALFUNCTION</span>",
+		"[MECHA_INT_TANK_BREACH]" = "<span class='userdanger'>GAS TANK BREACH</span>",
+		"[MECHA_INT_CONTROL_LOST]" = "<span class='userdanger'>COORDINATION SYSTEM CALIBRATION FAILURE</span> - <a href='?src=\ref[src];repair_int_control_lost=1'>Recalibrate</a>",
+		"[MECHA_INT_SHORT_CIRCUIT]" = "<span class='userdanger'>SHORT CIRCUIT</span>"
+								)
 	for(var/tflag in dam_reports)
 		var/intdamflag = text2num(tflag)
 		if(internal_damage & intdamflag)
@@ -69,7 +69,7 @@
 
 
 /obj/mecha/proc/get_stats_part()
-	var/integrity = health/initial(health)*100
+	var/integrity = obj_integrity/max_integrity*100
 	var/cell_charge = get_charge()
 	var/datum/gas_mixture/int_tank_air = internal_tank.return_air()
 	var/tank_pressure = internal_tank ? round(int_tank_air.return_pressure(),0.01) : "None"
@@ -130,7 +130,8 @@
 		. += {"<div class='wr'>
 						<div class='header'>Equipment</div>
 						<div class='links'>"}
-		for(var/obj/item/mecha_parts/mecha_equipment/W in equipment)
+		for(var/X in equipment)
+			var/obj/item/mecha_parts/mecha_equipment/W = X
 			. += "[W.name] <a href='?src=\ref[W];detach=1'>Detach</a><br>"
 		. += "<b>Available equipment slots:</b> [max_equip-equipment.len]"
 		. += "</div></div>"
@@ -175,7 +176,8 @@
 		var/a_name = get_access_desc(a)
 		if(!a_name) continue //there's some strange access without a name
 		. += "[a_name] - <a href='?src=\ref[src];add_req_access=[a];user=\ref[user];id_card=\ref[id_card]'>Add</a><br>"
-	. += "<hr><a href='?src=\ref[src];finish_req_access=1;user=\ref[user]'>Finish</a> <span class='danger'>(Warning! The ID upload panel will be locked. It can be unlocked only through Exosuit Interface.)</span>"
+	. += "<hr><a href='?src=\ref[src];finish_req_access=1;user=\ref[user]'>Finish</a> "
+	. += "<span class='danger'>(Warning! The ID upload panel will be locked. It can be unlocked only through Exosuit Interface.)</span>"
 	. += "</body></html>"
 	user << browse(., "window=exosuit_add_access")
 	onclose(user, "exosuit_add_access")
@@ -261,7 +263,7 @@
 
 	if(href_list["select_equip"])
 		var/obj/item/mecha_parts/mecha_equipment/equip = filter.getObj("select_equip")
-		if(equip)
+		if(equip && equip.selectable)
 			src.selected = equip
 			src.occupant_message("You switch to [equip]")
 			src.visible_message("[src] raises [equip]")

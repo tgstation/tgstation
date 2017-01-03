@@ -1,4 +1,4 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
+
 
 /obj/machinery/computer/upload
 	var/mob/living/silicon/current = null //The target of future law uploads
@@ -23,7 +23,7 @@
 			return
 		M.install(current.laws, user)
 	else
-		..()
+		return ..()
 
 /obj/machinery/computer/upload/proc/can_upload_to(mob/living/silicon/S)
 	if(S.stat == DEAD || S.syndicate)
@@ -33,7 +33,7 @@
 /obj/machinery/computer/upload/ai
 	name = "\improper AI upload console"
 	desc = "Used to upload laws to the AI."
-	circuit = /obj/item/weapon/circuitboard/aiupload
+	circuit = /obj/item/weapon/circuitboard/computer/aiupload
 
 /obj/machinery/computer/upload/ai/attack_hand(mob/user)
 	if(..())
@@ -57,7 +57,7 @@
 /obj/machinery/computer/upload/borg
 	name = "cyborg upload console"
 	desc = "Used to upload laws to Cyborgs."
-	circuit = /obj/item/weapon/circuitboard/borgupload
+	circuit = /obj/item/weapon/circuitboard/computer/borgupload
 
 /obj/machinery/computer/upload/borg/attack_hand(mob/user)
 	if(..())
@@ -71,7 +71,7 @@
 		user << "[src.current.name] selected for law changes."
 
 /obj/machinery/computer/upload/borg/can_upload_to(mob/living/silicon/robot/B)
-	if(!B || !isrobot(B))
+	if(!B || !iscyborg(B))
 		return 0
 	if(B.scrambledcodes || B.emagged)
 		return 0

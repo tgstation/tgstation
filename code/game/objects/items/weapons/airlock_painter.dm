@@ -5,17 +5,18 @@
 	icon_state = "paint sprayer"
 	item_state = "paint sprayer"
 
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 
 	materials = list(MAT_METAL=50, MAT_GLASS=50)
-	origin_tech = "engineering=1"
+	origin_tech = "engineering=2"
 
-	flags = CONDUCT
+	flags = CONDUCT | NOBLUDGEON
 	slot_flags = SLOT_BELT
 
 	var/obj/item/device/toner/ink = null
 
 /obj/item/weapon/airlock_painter/New()
+	..()
 	ink = new /obj/item/device/toner(src)
 
 //This proc doesn't just check if the painter can be used, but also uses it.
@@ -33,18 +34,65 @@
 //because you're expecting user input.
 /obj/item/weapon/airlock_painter/proc/can_use(mob/user)
 	if(!ink)
-		user << "<span class='notice'>There is no toner cardridge installed installed in \the [name]!</span>"
+		user << "<span class='notice'>There is no toner cartridge installed in [src]!</span>"
 		return 0
 	else if(ink.charges < 1)
-		user << "<span class='notice'>\The [name] is out of ink!</span>"
+		user << "<span class='notice'>[src] is out of ink!</span>"
 		return 0
 	else
 		return 1
 
+/obj/item/weapon/airlock_painter/suicide_act(mob/user)
+	var/obj/item/organ/lungs/L = user.getorganslot("lungs")
+
+	if(can_use(user) && L)
+		user.visible_message("<span class='suicide'>[user] is inhaling toner from [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+		use(user)
+
+		// Once you've inhaled the toner, you throw up your lungs
+		// and then die.
+
+		// Find out if there is an open turf in front of us,
+		// and if not, pick the turf we are standing on.
+		var/turf/T = get_step(get_turf(src), user.dir)
+		if(!isopenturf(T))
+			T = get_turf(src)
+
+		// they managed to lose their lungs between then and
+		// now. Good job.
+		if(!L)
+			return OXYLOSS
+
+		L.Remove(user)
+
+		// make some colorful reagent, and apply it to the lungs
+		L.create_reagents(10)
+		L.reagents.add_reagent("colorful_reagent", 10)
+		L.reagents.reaction(L, TOUCH, 1)
+
+		// TODO maybe add some colorful vomit?
+
+		user.visible_message("<span class='suicide'>[user] vomits out their [L]!</span>")
+		playsound(user.loc, 'sound/effects/splat.ogg', 50, 1)
+
+		L.forceMove(T)
+
+		return (TOXLOSS|OXYLOSS)
+	else if(can_use(user) && !L)
+		user.visible_message("<span class='suicide'>[user] is spraying toner on [user.p_them()]self from [src]! It looks like [user.p_theyre()] trying to commit suicide.</span>")
+		user.reagents.add_reagent("colorful_reagent", 1)
+		user.reagents.reaction(user, TOUCH, 1)
+		return TOXLOSS
+
+	else
+		user.visible_message("<span class='suicide'>[user] is trying to inhale toner from [src]! It might be a suicide attempt if [src] had any toner.</span>")
+		return SHAME
+
+
 /obj/item/weapon/airlock_painter/examine(mob/user)
 	..()
 	if(!ink)
-		user << "<span class='notice'>It doesn't have a toner cardridge installed.</span>"
+		user << "<span class='notice'>It doesn't have a toner cartridge installed.</span>"
 		return
 	var/ink_level = "high"
 	if(ink.charges < 1)
@@ -57,23 +105,23 @@
 
 
 /obj/item/weapon/airlock_painter/attackby(obj/item/weapon/W, mob/user, params)
-	..()
 	if(istype(W, /obj/item/device/toner))
 		if(ink)
-			user << "<span class='notice'>\the [name] already contains \a [ink].</span>"
+			user << "<span class='notice'>[src] already contains \a [ink].</span>"
 			return
 		if(!user.unEquip(W))
 			return
 		W.loc = src
-		user << "<span class='notice'>You install \the [W] into \the [name].</span>"
+		user << "<span class='notice'>You install [W] into [src].</span>"
 		ink = W
 		playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
-
+	else
+		return ..()
 
 /obj/item/weapon/airlock_painter/attack_self(mob/user)
 	if(ink)
 		playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 		ink.loc = user.loc
 		user.put_in_hands(ink)
-		user << "<span class='notice'>You remove \the [ink] from \the [name].</span>"
+		user << "<span class='notice'>You remove [ink] from [src].</span>"
 		ink = null

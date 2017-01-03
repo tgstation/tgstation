@@ -17,7 +17,7 @@
 		var/list/turfs = new/list()
 		for(var/turf/T in range(target,outer_tele_radius))
 			if(T in range(target,inner_tele_radius)) continue
-			if(istype(T,/turf/space) && !include_space) continue
+			if(istype(T,/turf/open/space) && !include_space) continue
 			if(T.density && !include_dense) continue
 			if(T.x>world.maxx-outer_tele_radius || T.x<outer_tele_radius)
 				continue	//putting them at the edge is dumb
@@ -40,7 +40,7 @@
 		if(!target.Move(picked))
 			if(target.buckled)
 				target.buckled.unbuckle_mob(target,force=1)
-			if(target.buckled_mobs.len)
+			if(target.has_buckled_mobs())
 				target.unbuckle_all_mobs(force=1)
 			target.loc = picked
 			playsound(get_turf(user), sound2, 50,1)

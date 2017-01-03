@@ -3,8 +3,7 @@
 	icon = 'icons/obj/iv_drip.dmi'
 	icon_state = "iv_drip"
 	anchored = 0
-	density = 1
-	var/mob/living/carbon/human/attached = null
+	var/mob/living/carbon/attached = null
 	var/mode = 1 // 1 is injecting, 0 is taking blood.
 	var/obj/item/weapon/reagent_containers/beaker = null
 
@@ -29,9 +28,9 @@
 
 	if(beaker)
 		if(attached)
-			overlays += "beakeractive"
+			add_overlay("beakeractive")
 		else
-			overlays += "beakeridle"
+			add_overlay("beakeridle")
 		if(beaker.reagents.total_volume)
 			var/image/filling = image('icons/obj/iv_drip.dmi', src, "reagent")
 
@@ -53,7 +52,7 @@
 					filling.icon_state = "reagent100"
 
 			filling.icon += mix_color_from_reagents(beaker.reagents.reagent_list)
-			overlays += filling
+			add_overlay(filling)
 
 /obj/machinery/iv_drip/MouseDrop(mob/living/target)
 	if(!ishuman(usr) || !usr.canUseTopic(src,BE_CLOSE))
@@ -65,15 +64,15 @@
 		update_icon()
 		return
 
-	if(!ishuman(target))
-		usr << "<span class='danger'>The drip beeps: Warning, human patients only!</span>"
+	if(!target.has_dna())
+		usr << "<span class='danger'>The drip beeps: Warning, incompatible creature!</span>"
 		return
 
 	if(Adjacent(target) && usr.Adjacent(target))
 		if(beaker)
 			usr.visible_message("<span class='warning'>[usr] attaches \the [src] to \the [target].</span>", "<span class='notice'>You attach \the [src] to \the [target].</span>")
 			attached = target
-			SSmachine.processing.Add(src)
+			START_PROCESSING(SSmachine, src)
 			update_icon()
 		else
 			usr << "<span class='warning'>There's nothing attached to the IV drip!</span>"
@@ -95,6 +94,10 @@
 	else
 		return ..()
 
+/obj/machinery/iv_drip/deconstruct(disassembled = TRUE)
+	if(!(flags & NODECONSTRUCT))
+		new /obj/item/stack/sheet/metal(loc)
+	qdel(src)
 
 /obj/machinery/iv_drip/process()
 	if(!attached)
@@ -129,32 +132,15 @@
 				if(prob(5)) visible_message("\The [src] pings.")
 				return
 
-			var/mob/living/carbon/human/T = attached
-
-			if(!istype(T))
-				return
-
-			if(T.disabilities & NOCLONE)
-				return
-
-			if(NOBLOOD in T.dna.species.specflags)
-				return
-
 			// If the human is losing too much blood, beep.
-			if(T.vessel.get_reagent_amount("blood") < BLOOD_VOLUME_SAFE) if(prob(5))
+			if(attached.blood_volume < BLOOD_VOLUME_SAFE && prob(5))
 				visible_message("\The [src] beeps loudly.")
 				playsound(loc, 'sound/machines/twobeep.ogg', 50, 1)
-			var/datum/reagent/B = T.take_blood(beaker,amount)
-
-			if (B)
-				beaker.reagents.reagent_list |= B
-				beaker.reagents.update_total()
-				beaker.on_reagent_change()
-				beaker.reagents.handle_reactions()
-				update_icon()
+			attached.transfer_blood_to(beaker, amount)
+			update_icon()
 
 /obj/machinery/iv_drip/attack_hand(mob/user)
-	if (!ishuman(user))
+	if(!ishuman(user))
 		return
 	if(attached)
 		visible_message("[attached] is detached from \the [src]")
@@ -171,7 +157,7 @@
 	set name = "Remove IV Container"
 	set src in view(1)
 
-	if(!istype(usr, /mob/living))
+	if(!isliving(usr))
 		usr << "<span class='warning'>You can't do that!</span>"
 		return
 
@@ -188,7 +174,7 @@
 	set name = "Toggle Mode"
 	set src in view(1)
 
-	if(!istype(usr, /mob/living))
+	if(!isliving(usr))
 		usr << "<span class='warning'>You can't do that!</span>"
 		return
 

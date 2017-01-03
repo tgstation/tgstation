@@ -36,7 +36,15 @@
 	var/mob/dead/observer/G = usr
 	G.dead_tele()
 
-/datum/hud/ghost/New(mob/owner)
+/obj/screen/ghost/pai
+	name = "pAI Candidate"
+	icon_state = "pai"
+
+/obj/screen/ghost/pai/Click()
+	var/mob/dead/observer/G = usr
+	G.register_pai()
+
+/datum/hud/ghost/New(mob/owner, ui_style = 'icons/mob/screen_midnight.dmi')
 	..()
 	var/mob/dead/observer/G = mymob
 	if(!G.client.prefs.ghost_hud)
@@ -61,14 +69,19 @@
 	using.screen_loc = ui_ghost_teleport
 	static_inventory += using
 
+	using = new /obj/screen/ghost/pai()
+	using.screen_loc = ui_ghost_pai
+	static_inventory += using
+
 
 /datum/hud/ghost/show_hud()
 	var/mob/dead/observer/G = mymob
 	mymob.client.screen = list()
-	if(!G.client.prefs.ghost_hud)
-		return
-	mymob.client.screen += static_inventory
+	create_parallax()
+	if(G.client.prefs.ghost_hud)
+		mymob.client.screen += static_inventory
+
 
 /mob/dead/observer/create_mob_hud()
 	if(client && !hud_used)
-		hud_used = new /datum/hud/ghost(src)
+		hud_used = new /datum/hud/ghost(src, ui_style2icon(client.prefs.UI_style))

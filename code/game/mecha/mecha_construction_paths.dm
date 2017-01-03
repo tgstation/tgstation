@@ -10,13 +10,16 @@
 		else
 			return 0
 	else if(istype(used_atom, /obj/item/weapon/wrench))
-		playsound(holder, 'sound/items/Ratchet.ogg', 50, 1)
+		var/obj/item/weapon/W = used_atom
+		playsound(holder, W.usesound, 50, 1)
 
 	else if(istype(used_atom, /obj/item/weapon/screwdriver))
-		playsound(holder, 'sound/items/Screwdriver.ogg', 50, 1)
+		var/obj/item/weapon/W = used_atom
+		playsound(holder, W.usesound, 50, 1)
 
 	else if(istype(used_atom, /obj/item/weapon/wirecutters))
-		playsound(holder, 'sound/items/Wirecutter.ogg', 50, 1)
+		var/obj/item/weapon/W = used_atom
+		playsound(holder, W.usesound, 50, 1)
 
 	else if(istype(used_atom, /obj/item/stack/cable_coil))
 		var/obj/item/stack/cable_coil/C = used_atom
@@ -27,7 +30,7 @@
 			return 0
 	else if(istype(used_atom, /obj/item/stack))
 		var/obj/item/stack/S = used_atom
-		if(S.amount < 5)
+		if(S.get_amount() < 5)
 			user << ("<span class='warning'>There's not enough material in this stack!</span>")
 			return 0
 		else
@@ -42,13 +45,16 @@
 		else
 			return 0
 	else if(istype(used_atom, /obj/item/weapon/wrench))
-		playsound(holder, 'sound/items/Ratchet.ogg', 50, 1)
+		var/obj/item/weapon/W = used_atom
+		playsound(holder, W.usesound, 50, 1)
 
 	else if(istype(used_atom, /obj/item/weapon/screwdriver))
-		playsound(holder, 'sound/items/Screwdriver.ogg', 50, 1)
+		var/obj/item/weapon/W = used_atom
+		playsound(holder, W.usesound, 50, 1)
 
 	else if(istype(used_atom, /obj/item/weapon/wirecutters))
-		playsound(holder, 'sound/items/Wirecutter.ogg', 50, 1)
+		var/obj/item/weapon/W = used_atom
+		playsound(holder, W.usesound, 50, 1)
 
 	else if(istype(used_atom, /obj/item/stack/cable_coil))
 		var/obj/item/stack/cable_coil/C = used_atom
@@ -59,7 +65,7 @@
 			return 0
 	else if(istype(used_atom, /obj/item/stack))
 		var/obj/item/stack/S = used_atom
-		if(S.amount < 5)
+		if(S.get_amount() < 5)
 			user << ("<span class='warning'>There's not enough material in this stack!</span>")
 			return 0
 		else
@@ -77,7 +83,7 @@
 
 /datum/construction/mecha/ripley_chassis/custom_action(step, atom/used_atom, mob/user)
 	user.visible_message("[user] has connected [used_atom] to the [holder].", "<span class='notice'>You connect [used_atom] to the [holder].</span>")
-	holder.overlays += used_atom.icon_state+"+o"
+	holder.add_overlay(used_atom.icon_state+"+o")
 	qdel(used_atom)
 	return 1
 
@@ -287,7 +293,7 @@
 
 /datum/construction/mecha/gygax_chassis/custom_action(step, atom/used_atom, mob/user)
 	user.visible_message("[user] has connected [used_atom] to the [holder].", "<span class='notice'>You connect [used_atom] to the [holder].</span>")
-	holder.overlays += used_atom.icon_state+"+o"
+	holder.add_overlay(used_atom.icon_state+"+o")
 	qdel(used_atom)
 	return 1
 
@@ -574,7 +580,7 @@
 
 /datum/construction/mecha/firefighter_chassis/custom_action(step, atom/used_atom, mob/user)
 	user.visible_message("[user] has connected [used_atom] to the [holder].", "<span class='notice'>You connect [used_atom] to the [holder].</span>")
-	holder.overlays += used_atom.icon_state+"+o"
+	holder.add_overlay(used_atom.icon_state+"+o")
 	qdel(used_atom)
 	return 1
 
@@ -801,7 +807,7 @@
 
 /datum/construction/mecha/honker_chassis/custom_action(step, atom/used_atom, mob/user)
 	user.visible_message("[user] has connected [used_atom] to the [holder].", "<span class='notice'>You connect [used_atom] to the [holder].</span>")
-	holder.overlays += used_atom.icon_state+"+o"
+	holder.add_overlay(used_atom.icon_state+"+o")
 	qdel(used_atom)
 	return 1
 
@@ -874,7 +880,7 @@
 
 /datum/construction/mecha/durand_chassis/custom_action(step, atom/used_atom, mob/user)
 	user.visible_message("[user] has connected [used_atom] to the [holder].", "You connect [used_atom] to the [holder]")
-	holder.overlays += used_atom.icon_state+"+o"
+	holder.add_overlay(used_atom.icon_state+"+o")
 	qdel(used_atom)
 	return 1
 
@@ -1164,7 +1170,7 @@
 
 /datum/construction/mecha/phazon_chassis/custom_action(step, atom/used_atom, mob/user)
 	user.visible_message("[user] has connected [used_atom] to the [holder].", "<span class='notice'>You connect [used_atom] to the [holder].</span>")
-	holder.overlays += used_atom.icon_state+"+o"
+	holder.add_overlay(used_atom.icon_state+"+o")
 	qdel(used_atom)
 	return 1
 
@@ -1497,7 +1503,7 @@
 
 /datum/construction/mecha/odysseus_chassis/custom_action(step, atom/used_atom, mob/user)
 	user.visible_message("[user] has connected [used_atom] to the [holder].", "<span class='notice'>You connect [used_atom] to the [holder].</span>")
-	holder.overlays += used_atom.icon_state+"+o"
+	holder.add_overlay(used_atom.icon_state+"+o")
 	qdel(used_atom)
 	return 1
 

@@ -5,11 +5,11 @@
 	icon_state = "gangtool-white"
 	item_state = "walkietalkie"
 	throwforce = 0
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 	throw_speed = 3
 	throw_range = 7
 	flags = CONDUCT
-	origin_tech = "programming=3;bluespace=2;syndicate=5"
+	origin_tech = "programming=5;bluespace=2;syndicate=5"
 	var/datum/gang/gang //Which gang uses this?
 	var/recalling = 0
 	var/outfits = 3
@@ -41,8 +41,8 @@
 		else
 			dat += "This device is not authorized to promote.<br>"
 	else
-		if(isnum(gang.dom_timer))
-			dat += "<center><font color='red'>Takeover In Progress:<br><B>[gang.dom_timer] seconds remain</B></font></center>"
+		if(gang.is_dominating)
+			dat += "<center><font color='red'>Takeover In Progress:<br><B>[gang.domination_time_remaining()] seconds remain</B></font></center>"
 
 		var/isboss = (user.mind == gang.bosses[1])
 		var/points = gang.points
@@ -157,7 +157,7 @@
 				dat += "<a href='?src=\ref[src];purchase=dominator'><b>Station Dominator</b></a><br>"
 			else
 				dat += "<b>Station Dominator</b><br>"
-			dat += "<i>(Estimated Takeover Time: [round(get_domination_time(gang)/60,0.1)] minutes)</i><br>"
+			dat += "<i>(Estimated Takeover Time: [round(determine_domination_time(gang)/60,0.1)] minutes)</i><br>"
 
 	dat += "<br>"
 	dat += "<a href='?src=\ref[src];choice=refresh'>Refresh</a><br>"
@@ -194,11 +194,11 @@
 					pointcost = 10
 			if("necklace")
 				if(gang.points >=1)
-					item_type = /obj/item/clothing/tie/dope_necklace
+					item_type = /obj/item/clothing/neck/necklace/dope
 					pointcost = 1
 			if("pistol")
 				if(gang.points >= 25)
-					item_type = /obj/item/weapon/gun/projectile/automatic/pistol
+					item_type = /obj/item/weapon/gun/ballistic/automatic/pistol
 					pointcost = 25
 			if("10mmammo")
 				if(gang.points >= 10)
@@ -206,7 +206,7 @@
 					pointcost = 10
 			if("uzi")
 				if(gang.points >= 60)
-					item_type = /obj/item/weapon/gun/projectile/automatic/mini_uzi
+					item_type = /obj/item/weapon/gun/ballistic/automatic/mini_uzi
 					pointcost = 60
 			if("9mmammo")
 				if(gang.points >= 40)
@@ -228,7 +228,7 @@
 					pointcost = 10
 			if("C4")
 				if(gang.points >= 10)
-					item_type = /obj/item/weapon/c4
+					item_type = /obj/item/weapon/grenade/plastic/c4
 					pointcost = 10
 			if("pen")
 				if((gang.points >= 50) || free_pen)
@@ -250,7 +250,7 @@
 						if(gang.bosses.len < 3)
 							usr << "<span class='notice'><b>Gangtools</b> allow you to promote a gangster to be your Lieutenant, enabling them to recruit and purchase items like you. Simply have them register the gangtool. You may promote up to [3-gang.bosses.len] more Lieutenants</span>"
 					else
-						item_type = /obj/item/device/gangtool/spare/
+						item_type = /obj/item/device/gangtool/spare
 					pointcost = 10
 			if("dominator")
 				if(!gang.dom_attempts)
@@ -258,7 +258,7 @@
 
 				var/area/usrarea = get_area(usr.loc)
 				var/usrturf = get_turf(usr.loc)
-				if(initial(usrarea.name) == "Space" || istype(usrturf,/turf/space) || usr.z != 1)
+				if(initial(usrarea.name) == "Space" || isspaceturf(usrturf) || usr.z != 1)
 					usr << "<span class='warning'>You can only use this on the station!</span>"
 					return
 
@@ -334,7 +334,8 @@
 			if(ganger.current && (ganger.current.z <= 2) && (ganger.current.stat == CONSCIOUS))
 				ganger.current << ping
 		for(var/mob/M in dead_mob_list)
-			M << "<a href='?src=\ref[M];follow=\ref[user]'>(F)</a> [ping]"
+			var/link = FOLLOW_LINK(M, user)
+			M << "[link] [ping]"
 		log_game("[key_name(user)] Messaged [gang.name] Gang: [message].")
 
 

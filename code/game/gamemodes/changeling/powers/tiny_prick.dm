@@ -23,7 +23,7 @@
 	user << "<span class='warning'>We retract our sting, we can't sting anyone for now.</span>"
 	user.mind.changeling.chosen_sting = null
 	user.hud_used.lingstingdisplay.icon_state = null
-	user.hud_used.lingstingdisplay.invisibility = 101
+	user.hud_used.lingstingdisplay.invisibility = INVISIBILITY_ABSTRACT
 
 /mob/living/carbon/proc/unset_sting()
 	if(mind && mind.changeling && mind.changeling.chosen_sting)
@@ -74,7 +74,7 @@
 	selected_dna = changeling.select_dna("Select the target DNA: ", "Target DNA")
 	if(!selected_dna)
 		return
-	if(NOTRANSSTING in selected_dna.dna.species.specflags)
+	if(NOTRANSSTING in selected_dna.dna.species.species_traits)
 		user << "<span class = 'notice'>That DNA is not compatible with changeling retrovirus!"
 		return
 	..()
@@ -97,7 +97,7 @@
 		var/mob/living/carbon/C = target
 		if(C.status_flags & CANWEAKEN)
 			C.do_jitter_animation(500)
-			C.take_organ_damage(20, 0) //The process is extremely painful
+			C.take_bodypart_damage(20, 0) //The process is extremely painful
 
 		target.visible_message("<span class='danger'>[target] begins to violenty convulse!</span>","<span class='userdanger'>You feel a tiny prick and a begin to uncontrollably convulse!</span>")
 		spawn(10)
@@ -138,7 +138,7 @@
 	add_logs(user, target, "stung", object="falso armblade sting")
 
 	if(!target.drop_item())
-		user << "<span class='warning'>The [target.get_active_hand()] is stuck to their hand, you cannot grow a false armblade over it!</span>"
+		user << "<span class='warning'>The [target.get_active_held_item()] is stuck to their hand, you cannot grow a false armblade over it!</span>"
 		return
 
 	if(ismonkey(target))
@@ -149,16 +149,20 @@
 	target.visible_message("<span class='warning'>A grotesque blade forms around [target.name]\'s arm!</span>", "<span class='userdanger'>Your arm twists and mutates, transforming into a horrific monstrosity!</span>", "<span class='italics'>You hear organic matter ripping and tearing!</span>")
 	playsound(target, 'sound/effects/blobattack.ogg', 30, 1)
 
-	spawn(600)
-		playsound(target, 'sound/effects/blobattack.ogg', 30, 1)
-		target.visible_message("<span class='warning'>With a sickening crunch, [target] reforms their [blade.name] into an arm!</span>", "<span class='warning'>[blade] reforms back to normal.</span>", "<span class='italics>You hear organic matter ripping and tearing!</span>")
-		qdel(blade)
-		user.update_inv_l_hand()
-		user.update_inv_r_hand()
+	addtimer(src, "remove_fake", 600, TIMER_NORMAL, target, blade)
 
 	feedback_add_details("changeling_powers","AS")
 	return 1
 
+/obj/effect/proc_holder/changeling/sting/false_armblade/proc/remove_fake(mob/target, obj/item/weapon/melee/arm_blade/false/blade)
+	playsound(target, 'sound/effects/blobattack.ogg', 30, 1)
+	target.visible_message("<span class='warning'>With a sickening crunch, \
+	[target] reforms their [blade.name] into an arm!</span>",
+	"<span class='warning'>[blade] reforms back to normal.</span>",
+	"<span class='italics>You hear organic matter ripping and tearing!</span>")
+
+	qdel(blade)
+	target.update_inv_hands()
 
 /obj/effect/proc_holder/changeling/sting/extract_dna
 	name = "Extract DNA Sting"
@@ -220,11 +224,13 @@
 
 /obj/effect/proc_holder/changeling/sting/LSD/sting_action(mob/user, mob/living/carbon/target)
 	add_logs(user, target, "stung", "LSD sting")
-	spawn(rand(300,600))
-		if(target)
-			target.hallucination = max(400, target.hallucination)
+	addtimer(src, "hallucination_time", rand(300,600), TIMER_NORMAL, target)
 	feedback_add_details("changeling_powers","HS")
 	return 1
+
+/obj/effect/proc_holder/changeling/sting/LSD/proc/hallucination_time(mob/living/carbon/target)
+	if(target)
+		target.hallucination = max(400, target.hallucination)
 
 /obj/effect/proc_holder/changeling/sting/cryo
 	name = "Cryogenic Sting"

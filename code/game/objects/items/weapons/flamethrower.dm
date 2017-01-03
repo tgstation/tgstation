@@ -9,9 +9,10 @@
 	throwforce = 10
 	throw_speed = 1
 	throw_range = 5
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 	materials = list(MAT_METAL=500)
-	origin_tech = "combat=1;plasmatech=1"
+	origin_tech = "combat=1;plasmatech=2;engineering=2"
+	resistance_flags = FIRE_PROOF
 	var/status = 0
 	var/throw_amount = 100
 	var/lit = 0	//on or off
@@ -34,12 +35,12 @@
 
 /obj/item/weapon/flamethrower/process()
 	if(!lit)
-		SSobj.processing.Remove(src)
+		STOP_PROCESSING(SSobj, src)
 		return null
 	var/turf/location = loc
 	if(istype(location, /mob/))
 		var/mob/M = location
-		if(M.l_hand == src || M.r_hand == src)
+		if(M.is_holding(src))
 			location = M.loc
 	if(isturf(location)) //start a fire if possible
 		location.hotspot_expose(700, 2)
@@ -47,13 +48,13 @@
 
 
 /obj/item/weapon/flamethrower/update_icon()
-	overlays.Cut()
+	cut_overlays()
 	if(igniter)
-		overlays += "+igniter[status]"
+		add_overlay("+igniter[status]")
 	if(ptank)
-		overlays += "+ptank"
+		add_overlay("+ptank")
 	if(lit)
-		overlays += "+lit"
+		add_overlay("+lit")
 		item_state = "flamethrower_1"
 	else
 		item_state = "flamethrower_0"
@@ -62,16 +63,14 @@
 /obj/item/weapon/flamethrower/afterattack(atom/target, mob/user, flag)
 	if(flag) return // too close
 	// Make sure our user is still holding us
-	if(user && user.get_active_hand() == src)
+	if(user && user.get_active_held_item() == src)
 		var/turf/target_turf = get_turf(target)
 		if(target_turf)
 			var/turflist = getline(user, target_turf)
-			add_logs(user, target, "flamethrowered", src, "at [target.x],[target.y],[target.z]")
+			add_logs(user, target, "flamethrowered", src)
 			flame_turf(turflist)
 
 /obj/item/weapon/flamethrower/attackby(obj/item/W, mob/user, params)
-	if(user.stat || user.restrained() || user.lying)
-		return
 	if(istype(W, /obj/item/weapon/wrench) && !status)//Taking this apart
 		var/turf/T = get_turf(src)
 		if(weldtool)
@@ -87,13 +86,13 @@
 		qdel(src)
 		return
 
-	if(istype(W, /obj/item/weapon/screwdriver) && igniter && !lit)
+	else if(istype(W, /obj/item/weapon/screwdriver) && igniter && !lit)
 		status = !status
 		user << "<span class='notice'>[igniter] is now [status ? "secured" : "unsecured"]!</span>"
 		update_icon()
 		return
 
-	if(isigniter(W))
+	else if(isigniter(W))
 		var/obj/item/device/assembly/igniter/I = W
 		if(I.secured)
 			return
@@ -106,9 +105,9 @@
 		update_icon()
 		return
 
-	if(istype(W,/obj/item/weapon/tank/internals/plasma))
+	else if(istype(W,/obj/item/weapon/tank/internals/plasma))
 		if(ptank)
-			user << "<span class='notice'>There appears to already be a plasma tank loaded in [src]!</span>"
+			user << "<span class='notice'>There is already a plasma tank loaded in [src]!</span>"
 			return
 		if(!user.unEquip(W))
 			return
@@ -117,10 +116,10 @@
 		update_icon()
 		return
 
-	if(istype(W, /obj/item/device/analyzer) && ptank)
+	else if(istype(W, /obj/item/device/analyzer) && ptank)
 		atmosanalyzer_scan(ptank.air_contents, user)
-	..()
-	return
+	else
+		return ..()
 
 
 /obj/item/weapon/flamethrower/attack_self(mob/user)
@@ -151,7 +150,7 @@
 			return
 		lit = !lit
 		if(lit)
-			SSobj.processing |= src
+			START_PROCESSING(SSobj, src)
 			if(!warned_admins)
 				message_admins("[key_name_admin(usr)]<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A> (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[usr]'>FLW</A>) has lit a flamethrower.")
 				warned_admins = 1
@@ -172,7 +171,8 @@
 	update_icon()
 	return
 
-/obj/item/weapon/flamethrower/CheckParts()
+/obj/item/weapon/flamethrower/CheckParts(list/parts_list)
+	..()
 	weldtool = locate(/obj/item/weapon/weldingtool) in contents
 	igniter = locate(/obj/item/device/assembly/igniter) in contents
 	weldtool.status = 0
@@ -186,12 +186,10 @@
 		return
 	operating = 1
 	var/turf/previousturf = get_turf(src)
-	for(var/turf/simulated/T in turflist)
-		if(!T.air)
-			break
+	for(var/turf/T in turflist)
 		if(T == previousturf)
 			continue	//so we don't burn the tile we be standin on
-		if(!T.CanAtmosPass(previousturf))
+		if(!T.atmos_adjacent_turfs || !T.atmos_adjacent_turfs[previousturf])
 			break
 		ignite_turf(T)
 		sleep(1)

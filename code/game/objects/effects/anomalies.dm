@@ -4,32 +4,59 @@
 	name = "anomaly"
 	desc = "A mysterious anomaly, seen commonly only in the region of space that the station orbits..."
 	icon_state = "bhole3"
-	unacidable = 1
 	density = 0
 	anchored = 1
 	luminosity = 3
 	var/movechance = 70
 	var/obj/item/device/assembly/signaler/anomaly/aSignal = null
+	var/area/impact_area
+
+	var/lifespan = 990
+	var/death_time
+
+	var/countdown_colour
+	var/obj/effect/countdown/anomaly/countdown
 
 /obj/effect/anomaly/New()
 	..()
 	poi_list |= src
+	START_PROCESSING(SSobj, src)
+	impact_area = get_area(src)
+
 	SetLuminosity(initial(luminosity))
 	aSignal = new(src)
+	aSignal.name = "[name] core"
 	aSignal.code = rand(1,100)
 
 	aSignal.frequency = rand(1200, 1599)
 	if(IsMultiple(aSignal.frequency, 2))//signaller frequencies are always uneven!
 		aSignal.frequency++
 
+	death_time = world.time + lifespan
+	countdown = new(src)
+	if(countdown_colour)
+		countdown.color = countdown_colour
+	countdown.start()
+
+/obj/effect/anomaly/process()
+	anomalyEffect()
+	if(death_time < world.time)
+		if(loc)
+			detonate()
+		qdel(src)
+
 /obj/effect/anomaly/Destroy()
 	poi_list.Remove(src)
+	STOP_PROCESSING(SSobj, src)
+	qdel(countdown)
 	return ..()
 
 /obj/effect/anomaly/proc/anomalyEffect()
 	if(prob(movechance))
 		step(src,pick(alldirs))
 
+/obj/effect/anomaly/proc/detonate()
+	return
 
 /obj/effect/anomaly/ex_act(severity, target)
 	if(severity == 1)
@@ -58,7 +85,7 @@
 
 /obj/effect/anomaly/grav/New()
 	..()
-	aSignal.origin_tech = "magnets=5;powerstorage=4"
+	aSignal.origin_tech = "magnets=7"
 
 /obj/effect/anomaly/grav/anomalyEffect()
 	..()
@@ -91,7 +118,6 @@
 		var/atom/target = get_edge_target_turf(A, get_dir(src, get_step_away(A, src)))
 		A.throw_at(target, 5, 1)
 		boing = 0
-		return
 
 /////////////////////
 
@@ -104,7 +130,7 @@
 
 /obj/effect/anomaly/flux/New()
 	..()
-	aSignal.origin_tech = "powerstorage=6;programming=4;plasmatech=4"
+	aSignal.origin_tech = "powerstorage=7"
 
 /obj/effect/anomaly/flux/anomalyEffect()
 	..()
@@ -136,6 +162,10 @@
 		"<span class='userdanger'>You feel a powerful shock coursing through your body!</span>", \
 		"<span class='italics'>You hear a heavy electrical crack.</span>")
 
+/obj/effect/anomaly/flux/detonate()
+	explosion(src, 1, 4, 16, 18) //Low devastation, but hits a lot of stuff.
+
+
 /////////////////////
 
 /obj/effect/anomaly/bluespace
@@ -146,7 +176,7 @@
 
 /obj/effect/anomaly/bluespace/New()
 	..()
-	aSignal.origin_tech = "bluespace=5;magnets=5;powerstorage=3"
+	aSignal.origin_tech = "bluespace=7"
 
 /obj/effect/anomaly/bluespace/anomalyEffect()
 	..()
@@ -156,23 +186,89 @@
 /obj/effect/anomaly/bluespace/Bumped(atom/A)
 	if(isliving(A))
 		do_teleport(A, locate(A.x, A.y, A.z), 8)
-	return
+
+/obj/effect/anomaly/bluespace/detonate()
+	var/turf/T = safepick(get_area_turfs(impact_area))
+	if(T)
+			// Calculate new position (searches through beacons in world)
+		var/obj/item/device/radio/beacon/chosen
+		var/list/possible = list()
+		for(var/obj/item/device/radio/beacon/W in teleportbeacons)
+			possible += W
+
+		if(possible.len > 0)
+			chosen = pick(possible)
+
+		if(chosen)
+				// Calculate previous position for transition
+
+			var/turf/FROM = T // the turf of origin we're travelling FROM
+			var/turf/TO = get_turf(chosen) // the turf of origin we're travelling TO
+
+			playsound(TO, 'sound/effects/phasein.ogg', 100, 1)
+			priority_announce("Massive bluespace translocation detected.", "Anomaly Alert")
+
+			var/list/flashers = list()
+			for(var/mob/living/carbon/C in viewers(TO, null))
+				if(C.flash_act())
+					flashers += C
+
+			var/y_distance = TO.y - FROM.y
+			var/x_distance = TO.x - FROM.x
+			for (var/atom/movable/A in urange(12, FROM )) // iterate thru list of mobs in the area
+				if(istype(A, /obj/item/device/radio/beacon)) continue // don't teleport beacons because that's just insanely stupid
+				if(A.anchored) continue
+
+				var/turf/newloc = locate(A.x + x_distance, A.y + y_distance, TO.z) // calculate the new place
+				if(!A.Move(newloc) && newloc) // if the atom, for some reason, can't move, FORCE them to move! :) We try Move() first to invoke any movement-related checks the atom needs to perform after moving
+					A.loc = newloc
+
+				spawn()
+					if(ismob(A) && !(A in flashers)) // don't flash if we're already doing an effect
+						var/mob/M = A
+						if(M.client)
+							var/obj/blueeffect = new /obj(src)
+							blueeffect.screen_loc = "WEST,SOUTH to EAST,NORTH"
+							blueeffect.icon = 'icons/effects/effects.dmi'
+							blueeffect.icon_state = "shieldsparkles"
+							blueeffect.layer = FLASH_LAYER
+							blueeffect.plane = FULLSCREEN_PLANE
+							blueeffect.mouse_opacity = 0
+							M.client.screen += blueeffect
+							sleep(20)
+							M.client.screen -= blueeffect
+							qdel(blueeffect)
 
 /////////////////////
 
 /obj/effect/anomaly/pyro
 	name = "pyroclastic anomaly"
 	icon_state = "mustard"
+	var/ticks = 0
 
 /obj/effect/anomaly/pyro/New()
 	..()
-	aSignal.origin_tech = "plasmatech=5;powerstorage=4;biotech=6"
+	aSignal.origin_tech = "plasmatech=7"
 
 /obj/effect/anomaly/pyro/anomalyEffect()
 	..()
-	var/turf/simulated/T = get_turf(src)
+	ticks++
+	if(ticks < 5)
+		return
+	else
+		ticks = 0
+	var/turf/open/T = get_turf(src)
 	if(istype(T))
-		T.atmos_spawn_air(SPAWN_HEAT | SPAWN_TOXINS | SPAWN_OXYGEN, 15)
+		T.atmos_spawn_air("o2=5;plasma=5;TEMP=1000")
+
+/obj/effect/anomaly/pyro/detonate()
+	var/turf/open/T = get_turf(src)
+	if(istype(T))
+		T.atmos_spawn_air("o2=500;plasma=500;TEMP=1000") //Make it hot and burny for the new slime
+
+	var/mob/living/simple_animal/slime/S = new/mob/living/simple_animal/slime(T)
+	S.colour = pick("red", "orange")
+	S.rabid = 1
 
 /////////////////////
 
@@ -183,7 +279,7 @@
 
 /obj/effect/anomaly/bhole/New()
 	..()
-	aSignal.origin_tech = "materials=5;combat=4;engineering=4"
+	aSignal.origin_tech = "engineering=7"
 
 /obj/effect/anomaly/bhole/anomalyEffect()
 	..()
@@ -210,7 +306,6 @@
 		affect_coord(x-t, y+r, ex_act_force, pull_chance, turf_removal_chance)
 		affect_coord(x+r, y+t, ex_act_force, pull_chance, turf_removal_chance)
 		affect_coord(x-r, y-t, ex_act_force, pull_chance, turf_removal_chance)
-	return
 
 /obj/effect/anomaly/bhole/proc/affect_coord(x, y, ex_act_force, pull_chance, turf_removal_chance)
 	//Get turf at coordinate
@@ -229,6 +324,5 @@
 			step_towards(M,src)
 
 	//Damaging the turf
-	if( T && istype(T,/turf/simulated) && prob(turf_removal_chance) )
+	if( T && prob(turf_removal_chance) )
 		T.ex_act(ex_act_force)
-	return

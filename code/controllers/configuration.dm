@@ -18,6 +18,7 @@
 	var/server_suffix = 0				// generate numeric suffix based on server port
 	var/lobby_countdown = 120			// In between round countdown.
 	var/round_end_countdown = 25		// Post round murder death kill countdown
+	var/hub = 0
 
 	var/log_ooc = 0						// log OOC channel
 	var/log_access = 0					// log login/logout
@@ -32,7 +33,9 @@
 	var/log_attack = 0					// log attack messages
 	var/log_adminchat = 0				// log admin chat messages
 	var/log_pda = 0						// log pda messages
-	var/log_hrefs = 0					// logs all links clicked in-game. Could be used for debugging and tracking down exploits
+	var/log_hrefs = 0					// log all links clicked in-game. Could be used for debugging and tracking down exploits
+	var/log_twitter = 0					// log certain expliotable parrots and other such fun things in a JSON file of twitter valid phrases.
+	var/log_world_topic = 0				// log all world.Topic() calls
 	var/sql_enabled = 0					// for sql switching
 	var/allow_admin_ooccolor = 0		// Allows admins with relevant permissions to have their own ooc colour
 	var/allow_vote_restart = 0 			// allow votes to restart
@@ -44,7 +47,7 @@
 	var/del_new_on_log = 1				// del's new players if they log before they spawn in
 	var/allow_Metadata = 0				// Metadata is supported.
 	var/popup_admin_pm = 0				//adminPMs to non-admins show in a pop-up 'reply' window when set to 1.
-	var/fps = 10
+	var/fps = 20
 	var/allow_holidays = 0				//toggles whether holiday-specific content should be used
 
 	var/hostedby = null
@@ -69,9 +72,23 @@
 	var/forbid_singulo_possession = 0
 	var/useircbot = 0
 
+	var/check_randomizer = 0
+
+	var/allow_panic_bunker_bounce = 0 //Send new players somewhere else
+	var/panic_server_name = "somewhere else"
+	var/panic_address = "byond://" //Reconnect a player this linked server if this server isn't accepting new players
+
+	//IP Intel vars
+	var/ipintel_email
+	var/ipintel_rating_bad = 1
+	var/ipintel_save_good = 12
+	var/ipintel_save_bad = 1
+	var/ipintel_domain = "check.getipintel.net"
+
 	var/admin_legacy_system = 0	//Defines whether the server uses the legacy admin system with admins.txt or the SQL system. Config option in config.txt
 	var/ban_legacy_system = 0	//Defines whether the server uses the legacy banning system with the files in /data or the SQL system. Config option in config.txt
 	var/use_age_restriction_for_jobs = 0 //Do jobs use account age restrictions? --requires database
+	var/use_account_age_for_jobs = 0	//Uses the time they made the account for the job restriction stuff. New player joining alerts should be unaffected.
 	var/see_own_notes = 0 //Can players see their own admin notes (read-only)? Config option in config.txt
 
 	//Population cap vars
@@ -88,11 +105,13 @@
 	var/list/modes = list()				// allowed modes
 	var/list/votable_modes = list()		// votable modes
 	var/list/probabilities = list()		// relative probability of each mode
+	var/list/min_pop = list()			// overrides for acceptible player counts in a mode
+	var/list/max_pop = list()
 
 	var/humans_need_surnames = 0
-	var/allow_random_events = 0			// enables random events mid-round when set to 1
 	var/allow_ai = 0					// allow ai job
 	var/forbid_secborg = 0				// disallow secborg module to be chosen.
+	var/forbid_peaceborg = 0
 	var/panic_bunker = 0				// prevents new people it hasn't seen before from connecting
 	var/notify_new_player_age = 0		// how long do we notify admins of a new player
 	var/irc_first_connection_alert = 0	// do we notify the irc channel when somebody is connecting for the first time?
@@ -115,7 +134,6 @@
 	var/show_game_type_odds = 0			//if set this allows players to see the odds of each roundtype on the get revision screen
 	var/mutant_races = 0				//players can choose their mutant race before joining the game
 	var/list/roundstart_races = list()	//races you can play as from the get go. If left undefined the game's roundstart var for species is used
-	var/cleared_default_races = 0		//used for sanity in clearing the old default list, not actually a config option
 	var/mutant_humans = 0				//players can pick mutant bodyparts for humans before joining the game
 
 	var/no_summon_guns		//No
@@ -129,9 +147,6 @@
 	var/alert_desc_red_upto = "There is an immediate serious threat to the station. Security may have weapons unholstered at all times. Random searches are allowed and advised."
 	var/alert_desc_red_downto = "The station's destruction has been averted. There is still however an immediate serious threat to the station. Security may have weapons unholstered at all times, random searches are allowed and advised."
 	var/alert_desc_delta = "Destruction of the station is imminent. All crew are instructed to obey all instructions given by heads of staff. Any violations of these orders can be punished by death. This is not a drill."
-
-	var/health_threshold_crit = 0
-	var/health_threshold_dead = -100
 
 	var/revival_pod_plants = 1
 	var/revival_cloning = 1
@@ -160,6 +175,8 @@
 	var/silent_ai = 0
 	var/silent_borg = 0
 
+	var/damage_multiplier = 1 //Modifier for damage to all mobs. Impacts healing as well.
+
 	var/allowwebclient = 0
 	var/webclientmembersonly = 0
 
@@ -167,12 +184,18 @@
 
 	var/default_laws = 0 //Controls what laws the AI spawns with.
 	var/silicon_max_law_amount = 12
+	var/list/lawids = list()
+
+	var/list/law_weights = list()
 
 	var/assistant_cap = -1
 
 	var/starlight = 0
 	var/generate_minimaps = 0
 	var/grey_assistants = 0
+
+	var/lavaland_budget = 60
+	var/space_budget = 16
 
 	var/aggressive_changelog = 0
 
@@ -188,13 +211,29 @@
 	var/maprotation = 1
 	var/maprotatechancedelta = 0.75
 
+	// Enables random events mid-round when set to 1
+	var/allow_random_events = 0
+
+	// Multipliers for random events minimal starting time and minimal players amounts
+	var/events_min_time_mul = 1
+	var/events_min_players_mul = 1
+
 	// The object used for the clickable stat() button.
 	var/obj/effect/statclick/statclick
 
+	var/client_warn_version = 0
+	var/client_warn_message = "Your version of byond may have issues or be blocked from accessing this server in the future."
+	var/client_error_version = 0
+	var/client_error_message = "Your version of byond is too old, may have issues, and is blocked from accessing this server."
+
+	var/cross_name = "Other server"
+	var/showircname = 0
+
+	var/list/gamemode_cache = null
 
 /datum/configuration/New()
-	var/list/L = subtypesof(/datum/game_mode)
-	for(var/T in L)
+	gamemode_cache = typecacheof(/datum/game_mode,TRUE)
+	for(var/T in gamemode_cache)
 		// I wish I didn't have to instance the game modes in order to look up
 		// their information, but it is the only way (at least that I know of).
 		var/datum/game_mode/M = new T()
@@ -238,12 +277,16 @@
 
 		if(type == "config")
 			switch(name)
+				if("hub")
+					config.hub = 1
 				if("admin_legacy_system")
 					config.admin_legacy_system = 1
 				if("ban_legacy_system")
 					config.ban_legacy_system = 1
 				if("use_age_restriction_for_jobs")
 					config.use_age_restriction_for_jobs = 1
+				if("use_account_age_for_jobs")
+					config.use_account_age_for_jobs = 1
 				if("lobby_countdown")
 					config.lobby_countdown = text2num(value)
 				if("round_end_countdown")
@@ -276,6 +319,10 @@
 					config.log_pda = 1
 				if("log_hrefs")
 					config.log_hrefs = 1
+				if("log_twitter")
+					config.log_twitter = 1
+				if("log_world_topic")
+					config.log_world_topic = 1
 				if("allow_admin_ooccolor")
 					config.allow_admin_ooccolor = 1
 				if("allow_vote_restart")
@@ -317,7 +364,7 @@
 				if("guest_ban")
 					guests_allowed = 0
 				if("usewhitelist")
-					config.usewhitelist = 1
+					config.usewhitelist = TRUE
 				if("allow_metadata")
 					config.allow_Metadata = 1
 				if("kick_inactive")
@@ -346,6 +393,24 @@
 					global.comms_key = value
 					if(value != "default_pwd" && length(value) > 6) //It's the default value or less than 6 characters long, warn badmins
 						global.comms_allowed = 1
+				if("cross_server_address")
+					global.cross_address = value
+					if(value != "byond:\\address:port")
+						global.cross_allowed = 1
+				if("cross_comms_name")
+					cross_name = value
+				if("panic_server_name")
+					panic_server_name = value
+				if("panic_server_address")
+					panic_address = value
+					if(value != "byond:\\address:port")
+						allow_panic_bunker_bounce = 1
+				if("medal_hub_address")
+					global.medal_hub = value
+				if("medal_hub_password")
+					global.medal_pass = value
+				if("show_irc_name")
+					config.showircname = 1
 				if("see_own_notes")
 					config.see_own_notes = 1
 				if("soft_popcap")
@@ -366,6 +431,19 @@
 					config.notify_new_player_age = text2num(value)
 				if("irc_first_connection_alert")
 					config.irc_first_connection_alert = 1
+				if("check_randomizer")
+					config.check_randomizer = 1
+				if("ipintel_email")
+					if (value != "ch@nge.me")
+						config.ipintel_email = value
+				if("ipintel_rating_bad")
+					config.ipintel_rating_bad = text2num(value)
+				if("ipintel_domain")
+					config.ipintel_domain = value
+				if("ipintel_save_good")
+					config.ipintel_save_good = text2num(value)
+				if("ipintel_save_bad")
+					config.ipintel_save_bad = text2num(value)
 				if("aggressive_changelog")
 					config.aggressive_changelog = 1
 				if("log_runtimes")
@@ -393,15 +471,22 @@
 						protected_config.autoadmin_rank = ckeyEx(value)
 				if("generate_minimaps")
 					config.generate_minimaps = 1
+				if("client_warn_version")
+					config.client_warn_version = text2num(value)
+				if("client_warn_message")
+					config.client_warn_message = value
+				if("client_error_version")
+					config.client_error_version = text2num(value)
+				if("client_error_message")
+					config.client_error_message = value
+
 				else
 					diary << "Unknown setting in configuration: '[name]'"
 
 		else if(type == "game_options")
 			switch(name)
-				if("health_threshold_crit")
-					config.health_threshold_crit	= text2num(value)
-				if("health_threshold_dead")
-					config.health_threshold_dead	= text2num(value)
+				if("damage_multiplier")
+					config.damage_multiplier		= text2num(value)
 				if("revival_pod_plants")
 					config.revival_pod_plants		= text2num(value)
 				if("revival_cloning")
@@ -470,6 +555,34 @@
 					config.midround_antag_time_check = text2num(value)
 				if("midround_antag_life_check")
 					config.midround_antag_life_check = text2num(value)
+				if("min_pop")
+					var/pop_pos = findtext(value, " ")
+					var/mode_name = null
+					var/mode_value = null
+
+					if(pop_pos)
+						mode_name = lowertext(copytext(value, 1, pop_pos))
+						mode_value = copytext(value, pop_pos + 1)
+						if(mode_name in config.modes)
+							config.min_pop[mode_name] = text2num(mode_value)
+						else
+							diary << "Unknown minimum population configuration definition: [mode_name]."
+					else
+						diary << "Incorrect minimum population configuration definition: [mode_name]  [mode_value]."
+				if("max_pop")
+					var/pop_pos = findtext(value, " ")
+					var/mode_name = null
+					var/mode_value = null
+
+					if(pop_pos)
+						mode_name = lowertext(copytext(value, 1, pop_pos))
+						mode_value = copytext(value, pop_pos + 1)
+						if(mode_name in config.modes)
+							config.max_pop[mode_name] = text2num(mode_value)
+						else
+							diary << "Unknown maximum population configuration definition: [mode_name]."
+					else
+						diary << "Incorrect maximum population configuration definition: [mode_name]  [mode_value]."
 				if("shuttle_refuel_delay")
 					config.shuttle_refuel_delay     = text2num(value)
 				if("show_game_type_odds")
@@ -511,6 +624,12 @@
 					config.allow_latejoin_antagonists	= 1
 				if("allow_random_events")
 					config.allow_random_events		= 1
+
+				if("events_min_time_mul")
+					config.events_min_time_mul		= text2num(value)
+				if("events_min_players_mul")
+					config.events_min_players_mul	= text2num(value)
+
 				if("minimal_access_threshold")
 					config.minimal_access_threshold	= text2num(value)
 				if("jobs_have_minimal_access")
@@ -523,6 +642,8 @@
 					config.allow_ai					= 1
 				if("disable_secborg")
 					config.forbid_secborg			= 1
+				if("disable_peaceborg")
+					config.forbid_peaceborg			= 1
 				if("silent_ai")
 					config.silent_ai 				= 1
 				if("silent_borg")
@@ -531,17 +652,28 @@
 					config.sandbox_autoclose		= 1
 				if("default_laws")
 					config.default_laws				= text2num(value)
+				if("random_laws")
+					var/law_id = lowertext(value)
+					lawids += law_id
+				if("law_weight")
+					// Value is in the form "LAWID,NUMBER"
+					var/list/L = splittext(value, ",")
+					if(L.len != 2)
+						diary << "Invalid LAW_WEIGHT: " + t
+						continue
+					var/lawid = L[1]
+					var/weight = text2num(L[2])
+					law_weights[lawid] = weight
+
 				if("silicon_max_law_amount")
 					config.silicon_max_law_amount	= text2num(value)
 				if("join_with_mutant_race")
 					config.mutant_races				= 1
 				if("roundstart_races")
-					if(!cleared_default_races)
-						roundstart_species = list()
-						cleared_default_races = 1
 					var/race_id = lowertext(value)
 					for(var/species_id in species_list)
 						if(species_id == race_id)
+							roundstart_races += species_list[species_id]
 							roundstart_species[species_id] = species_list[species_id]
 				if("join_with_mutant_humans")
 					config.mutant_humans			= 1
@@ -551,6 +683,10 @@
 					config.starlight			= 1
 				if("grey_assistants")
 					config.grey_assistants			= 1
+				if("lavaland_budget")
+					config.lavaland_budget			= text2num(value)
+				if("space_budget")
+					config.space_budget			= text2num(value)
 				if("no_summon_guns")
 					config.no_summon_guns			= 1
 				if("no_summon_magic")
@@ -677,7 +813,7 @@
 /datum/configuration/proc/pick_mode(mode_name)
 	// I wish I didn't have to instance the game modes in order to look up
 	// their information, but it is the only way (at least that I know of).
-	for(var/T in subtypesof(/datum/game_mode))
+	for(var/T in gamemode_cache)
 		var/datum/game_mode/M = new T()
 		if(M.config_tag && M.config_tag == mode_name)
 			return M
@@ -686,7 +822,7 @@
 
 /datum/configuration/proc/get_runnable_modes()
 	var/list/datum/game_mode/runnable_modes = new
-	for(var/T in subtypesof(/datum/game_mode))
+	for(var/T in gamemode_cache)
 		var/datum/game_mode/M = new T()
 		//world << "DEBUG: [T], tag=[M.config_tag], prob=[probabilities[M.config_tag]]"
 		if(!(M.config_tag in modes))
@@ -695,6 +831,10 @@
 		if(probabilities[M.config_tag]<=0)
 			qdel(M)
 			continue
+		if(min_pop[M.config_tag])
+			M.required_players = min_pop[M.config_tag]
+		if(max_pop[M.config_tag])
+			M.maximum_players = max_pop[M.config_tag]
 		if(M.can_start())
 			runnable_modes[M] = probabilities[M.config_tag]
 			//world << "DEBUG: runnable_mode\[[runnable_modes.len]\] = [M.config_tag]"
@@ -702,7 +842,7 @@
 
 /datum/configuration/proc/get_runnable_midround_modes(crew)
 	var/list/datum/game_mode/runnable_modes = new
-	for(var/T in (subtypesof(/datum/game_mode) - ticker.mode.type))
+	for(var/T in (gamemode_cache - ticker.mode.type))
 		var/datum/game_mode/M = new T()
 		if(!(M.config_tag in modes))
 			qdel(M)
@@ -710,7 +850,13 @@
 		if(probabilities[M.config_tag]<=0)
 			qdel(M)
 			continue
+		if(min_pop[M.config_tag])
+			M.required_players = min_pop[M.config_tag]
+		if(max_pop[M.config_tag])
+			M.maximum_players = max_pop[M.config_tag]
 		if(M.required_players <= crew)
+			if(M.maximum_players >= 0 && M.maximum_players < crew)
+				continue
 			runnable_modes[M] = probabilities[M.config_tag]
 	return runnable_modes
 

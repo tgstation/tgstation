@@ -54,7 +54,7 @@
 
 /obj/structure/closet/secure_closet/CMO/New()
 	..()
-	new /obj/item/clothing/suit/cloak/cmo(src)
+	new /obj/item/clothing/neck/cloak/cmo(src)
 	new /obj/item/weapon/storage/backpack/dufflebag/med(src)
 	new /obj/item/clothing/suit/bio_suit/cmo(src)
 	new /obj/item/clothing/head/bio_hood/cmo(src)
@@ -63,12 +63,13 @@
 	new /obj/item/clothing/shoes/sneakers/brown	(src)
 	new /obj/item/weapon/cartridge/cmo(src)
 	new /obj/item/device/radio/headset/heads/cmo(src)
+	new /obj/item/device/megaphone/command(src)
 	new /obj/item/weapon/defibrillator/compact/loaded(src)
 	new /obj/item/clothing/gloves/color/latex/nitrile(src)
 	new /obj/item/weapon/storage/belt/medical(src)
 	new /obj/item/device/assembly/flash/handheld(src)
 	new /obj/item/weapon/reagent_containers/hypospray/CMO(src)
-	new /obj/item/organ/internal/cyberimp/eyes/hud/medical(src)
+	new /obj/item/device/autoimplanter/cmo(src)
 	new /obj/item/weapon/door_remote/chief_medical_officer(src)
 
 /obj/structure/closet/secure_closet/animal

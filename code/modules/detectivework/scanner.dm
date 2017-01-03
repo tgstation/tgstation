@@ -6,13 +6,13 @@
 	name = "forensic scanner"
 	desc = "Used to remotely scan objects and biomass for DNA and fingerprints. Can print a report of the findings."
 	icon_state = "forensicnew"
-	w_class = 3
+	w_class = WEIGHT_CLASS_SMALL
 	item_state = "electronic"
 	flags = CONDUCT | NOBLUDGEON
 	slot_flags = SLOT_BELT
 	var/scanning = 0
 	var/list/log = list()
-	origin_tech = "engineering=3;biotech=2"
+	origin_tech = "engineering=4;biotech=2;programming=5"
 
 /obj/item/device/detective_scanner/attack_self(mob/user)
 	if(log.len && !scanning)

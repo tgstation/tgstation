@@ -1,0 +1,13 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
+"a" = (
+/obj/item/weapon/storage/backpack/satchel/flat/secret{
+	reward_all_of_these = list(/obj/item/weapon/gun/energy/pulse/prize)
+	},
+/turf/open/floor/fakespace{
+	initial_gas_mix = "TEMP=2.7"
+	},
+/area/ruin/fakespace)
+
+(1,1,1) = {"
+a
+"}

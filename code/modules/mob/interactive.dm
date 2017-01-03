@@ -68,9 +68,13 @@
 	var/list/functions = list("nearbyscan","combat","shitcurity","chatter")
 	var/restrictedJob = 0
 	var/shouldUseDynamicProc = 0 // switch to make the AI control it's own proccessing
-	var/alternateProcessing = 0
+	var/alternateProcessing = 1
 	var/forceProcess = 0
-	var/processTime = 10
+	var/processTime = 8
+	var/lastProc = 0
+	var/walkdebug = 0	//causes sparks in our path target. used for debugging
+	var/debugexamine = 0 //If we show debug info in our examine
+	var/showexaminetext = 1	//If we show our telltale examine text
 
 	var/list/knownStrings = list()
 
@@ -131,16 +135,17 @@
 	myjob.apply_fingerprints(src)
 
 /mob/living/carbon/human/interactive/attacked_by(obj/item/I, mob/living/user, def_zone)
-	..()
+	. = ..()
 	retal = 1
 	retal_target = user
 
-/mob/living/carbon/human/interactive/bullet_act(var/obj/item/projectile/P)
+/mob/living/carbon/human/interactive/bullet_act(obj/item/projectile/P, def_zone)
 	var/potentialAssault = locate(/mob/living) in view(2,P.starting)
 	if(potentialAssault)
 		retal = 1
 		retal_target = potentialAssault
 	..()
+
 
 /client/proc/resetSNPC(var/mob/A in SSnpc.botPool_l)
 	set name = "Reset SNPC"
@@ -188,47 +193,82 @@
 		if(!istype(A,/mob/living/carbon/human/interactive))
 			return
 		var/mob/living/carbon/human/interactive/T = A
-		var/cjob = input("Choose Job") as null|anything in SSjob.occupations
 
-		if(cjob)
-			T.myjob = cjob
-			T.job = T.myjob.title
-			for(var/obj/item/W in T)
-				qdel(W)
-			T.myjob.equip(T)
-			T.myjob.apply_fingerprints(T)
-			T.doSetup()
-
-		var/shouldDoppel = input("Do you want the SNPC to disguise themself as a crewmember?") as null|anything in list("Yes","No")
-		if(shouldDoppel)
-			if(shouldDoppel == "Yes")
-				var/list/validchoices = list()
-				for(var/mob/living/carbon/human/M in mob_list)
-					validchoices += M
-
-				var/mob/living/carbon/human/chosen = input("Which crewmember?") as null|anything in validchoices
-
-				if(chosen)
+		var/choice = input("Customization Choices") as null|anything in list("Service NPC","Security NPC","Random","Custom")
+		if(choice)
+			if(choice == "Service NPC" || choice == "Security NPC")
+				var/job = choice == "Service NPC" ? pick("Bartender","Cook","Botanist","Janitor") : pick("Warden","Detective","Security Officer")
+				for(var/j in SSjob.occupations)
+					var/datum/job/J = j
+					if(J.title == job)
+						T.myjob = J
+						T.job = T.myjob.title
+						for(var/obj/item/W in T)
+							qdel(W)
+						T.myjob.equip(T)
+						T.myjob.apply_fingerprints(T)
+						T.doSetup()
+						break
+			if(choice == "Random")
+				T.myjob = pick(SSjob.occupations)
+				T.job = T.myjob.title
+				for(var/obj/item/W in T)
+					qdel(W)
+				T.myjob.equip(T)
+				T.myjob.apply_fingerprints(T)
+				T.doSetup()
+				if(prob(25))
+					var/list/validchoices = list()
+					for(var/mob/living/carbon/human/M in mob_list)
+						validchoices += M
+					var/mob/living/carbon/human/chosen = pick(validchoices)
 					var/datum/dna/toDoppel = chosen.dna
-
 					T.real_name = toDoppel.real_name
 					toDoppel.transfer_identity(T, transfer_SE=1)
 					T.updateappearance(mutcolor_update=1)
 					T.domutcheck()
-
-		var/doTrait = input("Do you want the SNPC to be a traitor?") as null|anything in list("Yes","No")
-		if(doTrait)
-			if(doTrait == "Yes")
-				var/list/tType = list("Brute" = SNPC_BRUTE, "Stealth" = SNPC_STEALTH, "Martyr" = SNPC_MARTYR, "Psycho" = SNPC_PSYCHO)
-				var/cType = input("Choose the traitor personality.") as null|anything in tType
-				if(cType)
-					var/value = tType[cType]
-					T.makeTraitor(value)
-
-		var/doTele = input("Place the SNPC in their department?") as null|anything in list("Yes","No")
-		if(doTele)
-			if(doTele == "Yes")
+				if(prob(25))
+					var/cType = pick(list(SNPC_BRUTE,SNPC_STEALTH,SNPC_MARTYR,SNPC_PSYCHO))
+					T.makeTraitor(cType)
 				T.loc = pick(get_area_turfs(T.job2area(T.myjob)))
+			if(choice == "Custom")
+				var/cjob = input("Choose Job") as null|anything in SSjob.occupations
+				if(cjob)
+					T.myjob = cjob
+					T.job = T.myjob.title
+					for(var/obj/item/W in T)
+						qdel(W)
+					T.myjob.equip(T)
+					T.myjob.apply_fingerprints(T)
+					T.doSetup()
+				var/shouldDoppel = input("Do you want the SNPC to disguise themself as a crewmember?") as null|anything in list("Yes","No")
+				if(shouldDoppel)
+					if(shouldDoppel == "Yes")
+						var/list/validchoices = list()
+						for(var/mob/living/carbon/human/M in mob_list)
+							validchoices += M
+
+						var/mob/living/carbon/human/chosen = input("Which crewmember?") as null|anything in validchoices
+
+						if(chosen)
+							var/datum/dna/toDoppel = chosen.dna
+
+							T.real_name = toDoppel.real_name
+							toDoppel.transfer_identity(T, transfer_SE=1)
+							T.updateappearance(mutcolor_update=1)
+							T.domutcheck()
+				var/doTrait = input("Do you want the SNPC to be a traitor?") as null|anything in list("Yes","No")
+				if(doTrait)
+					if(doTrait == "Yes")
+						var/list/tType = list("Brute" = SNPC_BRUTE, "Stealth" = SNPC_STEALTH, "Martyr" = SNPC_MARTYR, "Psycho" = SNPC_PSYCHO)
+						var/cType = input("Choose the traitor personality.") as null|anything in tType
+						if(cType)
+							var/value = tType[cType]
+							T.makeTraitor(value)
+				var/doTele = input("Place the SNPC in their department?") as null|anything in list("Yes","No")
+				if(doTele)
+					if(doTele == "Yes")
+						T.loc = pick(get_area_turfs(T.job2area(T.myjob)))
 
 /mob/living/carbon/human/interactive/proc/doSetup()
 	Path_ID = new /obj/item/weapon/card/id(src)
@@ -256,41 +296,12 @@
 	equip_to_slot_or_del(MYPDA, slot_belt)
 	zone_selected = "chest"
 	//arms
-	if(prob((FUZZY_CHANCE_LOW+FUZZY_CHANCE_HIGH)/4))
-		var/obj/item/organ/limb/r_arm/R = locate(/obj/item/organ/limb/r_arm) in organs
-		qdel(R)
-		organs += new /obj/item/organ/limb/robot/r_arm
-	else
-		var/obj/item/organ/limb/l_arm/L = locate(/obj/item/organ/limb/l_arm) in organs
-		qdel(L)
-		organs += new /obj/item/organ/limb/robot/l_arm
-	//legs
-	if(prob((FUZZY_CHANCE_LOW+FUZZY_CHANCE_HIGH)/4))
-		var/obj/item/organ/limb/r_leg/R = locate(/obj/item/organ/limb/r_leg) in organs
-		qdel(R)
-		organs += new /obj/item/organ/limb/robot/r_leg
-	else
-		var/obj/item/organ/limb/l_leg/L = locate(/obj/item/organ/limb/l_leg) in organs
-		qdel(L)
-		organs += new /obj/item/organ/limb/robot/l_leg
-	//chest and head
-	if(prob((FUZZY_CHANCE_LOW+FUZZY_CHANCE_HIGH)/4))
-		var/obj/item/organ/limb/chest/R = locate(/obj/item/organ/limb/chest) in organs
-		qdel(R)
-		organs += new /obj/item/organ/limb/robot/chest
-	else
-		var/obj/item/organ/limb/head/L = locate(/obj/item/organ/limb/head) in organs
-		qdel(L)
-		organs += new /obj/item/organ/limb/robot/head
-	for(var/LIMB in organs)
-		if(LIMB) // prevents a runtime
-			var/obj/item/organ/limb/L = LIMB
-			L.owner = src
+	for(var/X in bodyparts)
+		var/obj/item/bodypart/BP = X
+		if(prob((FUZZY_CHANCE_LOW+FUZZY_CHANCE_HIGH)/4))
+			BP.change_bodypart_status(BODYPART_ROBOTIC)
 	update_icons()
-	update_damage_overlays(0)
-	update_augments()
-
-	hand = 0
+	update_damage_overlays()
 	functions = list("nearbyscan","combat","shitcurity","chatter") // stop customize adding multiple copies of a function
 	//job specific favours
 	switch(myjob.title)
@@ -321,6 +332,8 @@
 		if("Clown")
 			favoured_types = list(/obj/item/weapon/soap, /obj/item/weapon/reagent_containers/food/snacks/grown/banana,/obj/item/weapon/grown/bananapeel)
 			functions += "clowning"
+		if("Mime")
+			functions -= "chatter"
 		if("Botanist")
 			favoured_types = list(/obj/machinery/hydroponics,  /obj/item/weapon/reagent_containers, /obj/item/weapon)
 			functions += "botany"
@@ -363,8 +376,8 @@
 			var/datum/objective_item/steal/S = new A
 			traitorTarget = locate(S.targetitem) in world
 		if(SNPC_MARTYR) // MY LIFE FOR SPESZUL
-			var/targetType = pick(/obj/structure/particle_accelerator,/obj/machinery/gravity_generator/main,/obj/machinery/power/smes)
-			traitorTarget = locate(targetType) in world
+			var/targetType = pick(/obj/machinery/gravity_generator/main/station,/obj/machinery/power/smes/engineering,/obj/machinery/telecomms/hub)
+			traitorTarget = locate(targetType) in machines
 		if(SNPC_PSYCHO) // YOU'RE LIKE A FLESH BICYLE AND I WANT TO DISMANTLE YOU
 			traitorTarget = null
 
@@ -375,9 +388,7 @@
 /mob/living/carbon/human/interactive/New()
 	..()
 
-	src.set_species(/datum/species/synth)
-	var/datum/species/synth/mSyn = dna.species
-	mSyn.assume_disguise(new/datum/species/human,src)
+	set_species(/datum/species/synth)
 
 	random()
 
@@ -400,9 +411,9 @@
 	var/mob/living/carbon/human/M = target
 	if(target)
 		if(health > 0)
-			if(M.a_intent == "help")
+			if(M.a_intent == INTENT_HELP)
 				chatter()
-			if(M.a_intent == "harm")
+			if(M.a_intent == INTENT_HARM)
 				retal = 1
 				retal_target = target
 
@@ -413,10 +424,6 @@
 	var/mob/living/carbon/C = locate(/mob/living/carbon) in view(MIN_RANGE_FIND,src)
 	if(C)
 		retalTarget(C)
-
-/mob/living/carbon/human/interactive/bullet_act(obj/item/projectile/P, def_zone)
-	..(P,def_zone)
-	retalTarget(P.firer)
 
 /mob/living/carbon/human/interactive/attack_hand(mob/living/carbon/human/M)
 	..(M)
@@ -481,28 +488,35 @@
 	if(other_hand)
 		if(other_hand.loc != src)
 			other_hand = null
-	if(hand)
-		if(!l_hand)
+
+	var/obj/item/L = get_item_for_held_index(1) //just going to hardcode SNPCs to 2 hands, for now.
+	var/obj/item/R = get_item_for_held_index(2) //they're just VERY assume-y about 2 hands.
+	if(active_hand_index == 1)
+		if(!L)
 			main_hand = null
-			if(r_hand)
+			if(R)
 				swap_hands()
 	else
-		if(!r_hand)
+		if(!R)
 			main_hand = null
-			if(l_hand)
+			if(L)
 				swap_hands()
 
+
 /mob/living/carbon/human/interactive/proc/swap_hands()
-	hand = !hand
-	var/obj/item/T = other_hand
-	main_hand = other_hand
-	other_hand = T
+	var/oindex = active_hand_index
+	if(active_hand_index == 1)
+		active_hand_index = 2
+	else
+		active_hand_index = 1
+	main_hand = get_active_held_item()
+	other_hand = get_item_for_held_index(oindex)
 	update_hands = 1
 
 /mob/living/carbon/human/interactive/proc/take_to_slot(obj/item/G, var/hands=0)
-	var/list/slots = list ("left pocket" = slot_l_store,"right pocket" = slot_r_store,"left hand" = slot_l_hand,"right hand" = slot_r_hand)
+	var/list/slots = list ("left pocket" = slot_l_store,"right pocket" = slot_r_store,"left hand" = slot_hands,"right hand" = slot_hands)
 	if(hands)
-		slots = list ("left hand" = slot_l_hand,"right hand" = slot_r_hand)
+		slots = list ("left hand" = slot_hands,"right hand" = slot_hands)
 	G.loc = src
 	if(G.force && G.force > best_force)
 		best_force = G.force
@@ -510,7 +524,7 @@
 	update_hands = 1
 
 /mob/living/carbon/human/interactive/proc/insert_into_backpack()
-	var/list/slots = list ("left pocket" = slot_l_store,"right pocket" = slot_r_store,"left hand" = slot_l_hand,"right hand" = slot_r_hand)
+	var/list/slots = list ("left pocket" = slot_l_store,"right pocket" = slot_r_store,"left hand" = slot_hands,"right hand" = slot_hands)
 	var/obj/item/I = get_item_by_slot(pick(slots))
 	var/obj/item/weapon/storage/BP = get_item_by_slot(slot_back)
 	if(back && BP && I)
@@ -527,7 +541,7 @@
 	..()
 	if(ticker.current_state == GAME_STATE_FINISHED)
 		saveVoice()
-	if(!alternateProcessing || forceProcess)
+	if(!alternateProcessing || forceProcess || world.time > lastProc + processTime)
 		doProcess()
 
 /mob/living/carbon/human/interactive/death()
@@ -540,7 +554,9 @@
 	..()
 
 /mob/living/carbon/human/interactive/proc/doProcess()
+	set waitfor = 0
 	forceProcess = 0
+	lastProc = world.time
 
 	if(shouldUseDynamicProc)
 		var/isSeen = 0
@@ -567,53 +583,52 @@
 	//VIEW FUNCTIONS
 
 	//doorscan is now integrated into life and runs before all other procs
-	spawn(0)
-		for(var/dir in alldirs)
-			var/turf/T = get_step(src,dir)
-			if(T)
-				for(var/obj/machinery/door/D in T.contents)
-					if(!istype(D,/obj/machinery/door/poddoor) && D.density)
-						spawn(0)
-							if(istype(D,/obj/machinery/door/airlock))
-								var/obj/machinery/door/airlock/AL = D
-								if(!AL.CanAStarPass(RPID)) // only crack open doors we can't get through
-									AL.p_open = 1
-									AL.update_icon()
-									AL.shock(src,(100 - smartness)/2)
-									sleep(5)
-									AL.unbolt()
-									if(!AL.wires.is_cut(WIRE_BOLTS))
-										AL.wires.cut(WIRE_BOLTS)
-									if(!AL.wires.is_cut(WIRE_POWER1))
-										AL.wires.cut(WIRE_POWER1)
-									if(!AL.wires.is_cut(WIRE_POWER2))
-										AL.wires.cut(WIRE_POWER2)
-									sleep(5)
-									AL.p_open = 0
-									AL.update_icon()
-							D.open()
+	for(var/dir in alldirs)
+		var/turf/T = get_step(src,dir)
+		if(T)
+			for(var/obj/machinery/door/D in T.contents)
+				if(!istype(D,/obj/machinery/door/poddoor) && D.density)
+					if(istype(D,/obj/machinery/door/airlock))
+						var/obj/machinery/door/airlock/AL = D
+						if(!AL.CanAStarPass(RPID)) // only crack open doors we can't get through
+							AL.panel_open = 1
+							AL.update_icon()
+							AL.shock(src,(100 - smartness)/2)
+							sleep(5)
+							AL.unbolt()
+							if(!AL.wires.is_cut(WIRE_BOLTS))
+								AL.wires.cut(WIRE_BOLTS)
+							if(!AL.wires.is_cut(WIRE_POWER1))
+								AL.wires.cut(WIRE_POWER1)
+							if(!AL.wires.is_cut(WIRE_POWER2))
+								AL.wires.cut(WIRE_POWER2)
+							sleep(5)
+							AL.panel_open = 0
+							AL.update_icon()
+					D.open()
 
 	if(update_hands)
+		var/obj/item/l_hand = get_item_for_held_index(1)
+		var/obj/item/r_hand = get_item_for_held_index(2)
 		if(l_hand || r_hand)
 			if(l_hand)
-				hand = 1
+				active_hand_index = 1
 				main_hand = l_hand
 				if(r_hand)
 					other_hand = r_hand
 			else if(r_hand)
-				hand = 0
+				active_hand_index = 2
 				main_hand = r_hand
 				if(l_hand) //this technically shouldnt occur, but its a redundancy
 					other_hand = l_hand
 			update_icons()
 		update_hands = 0
 
-	if(grabbed_by.len > 0)
-		for(var/obj/item/weapon/grab/G in grabbed_by)
-			if(Adjacent(G))
-				a_intent = "disarm"
-				G.assailant.attack_hand(src)
-				inactivity_period = 10
+	if(pulledby)
+		if(Adjacent(pulledby))
+			a_intent = INTENT_DISARM
+			pulledby.attack_hand(src)
+			inactivity_period = 10
 
 	if(buckled)
 		resist()
@@ -639,7 +654,7 @@
 			var/obj/machinery/door/D = TARGET
 			if(D.check_access(MYID) && !istype(D,/obj/machinery/door/poddoor))
 				D.open()
-				sleep(15)
+				//sleep(15)
 				var/turf/T = get_step(get_step(D.loc,dir),dir) //recursion yo
 				tryWalk(T)
 		//THIEVING SKILLS
@@ -650,12 +665,12 @@
 				if(istype(TARGET, /obj/item/weapon))
 					var/obj/item/weapon/W = TARGET
 					if(W.force >= best_force || prob((FUZZY_CHANCE_LOW+FUZZY_CHANCE_HIGH)/2))
-						if(!l_hand || !r_hand)
+						if(!get_item_for_held_index(1) || !get_item_for_held_index(2))
 							put_in_hands(W)
 						else
 							insert_into_backpack()
 				else
-					if(!l_hand || !r_hand)
+					if(!get_item_for_held_index(1) || !get_item_for_held_index(2))
 						put_in_hands(TARGET)
 					else
 						insert_into_backpack()
@@ -711,10 +726,7 @@
 	//this is boring, lets move
 	if(!doing && !IsDeadOrIncap() && !TARGET)
 		doing |= TRAVEL
-		if(nearby.len > 4)
-			//i'm crowded, time to leave
-			TARGET = pick(target_filter(urange(MAX_RANGE_FIND,src,1)))
-		else
+		if(!isTraitor || !traitorTarget)
 			var/choice = rand(1,50)
 			switch(choice)
 				if(1 to 30)
@@ -726,11 +738,12 @@
 					TARGET = pick(target_filter(favouredObjIn(urange(MAX_RANGE_FIND,src,1))))
 				if(46 to 50)
 					TARGET = pick(target_filter(oview(MIN_RANGE_FIND,src)))
+		else if(isTraitor && traitorTarget)
+			TARGET = traitorTarget
 		tryWalk(TARGET)
 	LAST_TARGET = TARGET
 	if(alternateProcessing)
-		spawn(processTime)
-			doProcess()
+		addtimer(src, "doProcess", processTime)
 
 /mob/living/carbon/human/interactive/proc/favouredObjIn(var/list/inList)
 	var/list/outList = list()
@@ -747,8 +760,8 @@
 	spawn(0)
 		call(src,Proc)(src)
 
-/mob/living/carbon/human/interactive/proc/tryWalk(turf/inTarget)
-	if(restrictedJob) // we're a job that has to stay in our home
+/mob/living/carbon/human/interactive/proc/tryWalk(turf/inTarget, override = 0)
+	if(restrictedJob && !override) // we're a job that has to stay in our home
 		if(!(get_turf(inTarget) in get_area_turfs(job2area(myjob))))
 			TARGET = null
 			return
@@ -789,6 +802,13 @@
 	set background = 1
 	if(!target)
 		return 0
+
+	if(walkdebug)
+		var/datum/effect_system/spark_spread/spark_system = new /datum/effect_system/spark_spread
+		spark_system.set_up(5, 0, target)
+		spark_system.attach(target)
+		spark_system.start()
+
 
 	if(myPath.len <= 0)
 		myPath = get_path_to(src, get_turf(target), /turf/proc/Distance, MAX_RANGE_FIND + 1, 250,1, id=Path_ID)
@@ -861,7 +881,7 @@
 	if(prob(10)) // 10% chance to broadcast it over the radio
 		chatmsg = ";"
 
-	if(prob(35) || knownStrings.len < 10) // say a generic phrase, otherwise draw from our strings.
+	if(prob(chattyness) || knownStrings.len < 10) // say a generic phrase, otherwise draw from our strings.
 		if(doing & INTERACTING)
 			if(prob(chattyness))
 				chatmsg += pick("This [nouns_objects] is a little [adjective_objects].",
@@ -875,7 +895,7 @@
 		else if(doing & FIGHTING)
 			if(prob(chattyness))
 				chatmsg += pick("I'm going to [verbs_use] you, you [adjective_insult] [nouns_insult]!",
-				"Rend and [verbs_touch], Rend and [verbs_use]!",
+				"Rend and [verbs_touch], rend and [verbs_use]!",
 				"You [nouns_insult], I'm going to [verbs_use] you right in the [nouns_body]. JUST YOU WAIT!")
 		if(prob(chattyness/2))
 			chatmsg = ";"
@@ -895,7 +915,7 @@
 						curse_words = pick_list(NPC_SPEAK_FILE,"curse_words")
 						toSay += "[curse_words] "
 					chatmsg += "Hey [nouns_generic], why dont you go [toSay], you [nouns_insult]!"
-	else
+	else if(prob(chattyness))
 		chatmsg += pick(knownStrings)
 		if(prob(25)) // cut out some phrases now and then to make sure we're fresh and new
 			knownStrings -= pick(chatmsg)
@@ -1059,27 +1079,27 @@
 					if(change)
 						HP.attackby(internalBeaker,src)
 
-	var/obj/item/weapon/reagent_containers/food/snacks/grown/GF = locate(/obj/item/weapon/reagent_containers/food/snacks/grown) in view(12,src)
-	if(GF)
-		if(!Adjacent(GF))
-			tryWalk(get_turf(GF))
-		else
-			GF.attackby(internalBag,src)
+		var/obj/item/weapon/reagent_containers/food/snacks/grown/GF = locate(/obj/item/weapon/reagent_containers/food/snacks/grown) in view(12,src)
+		if(GF)
+			if(!Adjacent(GF))
+				tryWalk(get_turf(GF))
+			else
+				GF.attackby(internalBag,src)
 
-	if(internalBag.contents.len > 0)
-		var/obj/machinery/smartfridge/SF = locate(/obj/machinery/smartfridge) in range(12,src)
-		if(!Adjacent(SF))
-			tryWalk(get_turf(SF))
-		else
-			customEmote("[src] [pick("gibbers","drools","slobbers","claps wildly","spits")], upending the [internalBag]'s contents all over the [SF]!")
-			//smartfridges call updateUsrDialog when you call attackby, so we're going to have to cheese-magic-space this
-			for(var/obj/toLoad in internalBag.contents)
-				if(contents.len >= SF.max_n_of_items)
-					break
-				if(SF.accept_check(toLoad))
-					SF.load(toLoad)
-				else
-					qdel(toLoad) // destroy everything we dont need
+		if(internalBag.contents.len > 0)
+			var/obj/machinery/smartfridge/SF = locate(/obj/machinery/smartfridge) in range(12,src)
+			if(!Adjacent(SF))
+				tryWalk(get_turf(SF), 1)
+			else
+				customEmote("[src] [pick("gibbers","drools","slobbers","claps wildly","spits")], upending the [internalBag]'s contents all over the [SF]!")
+				//smartfridges call updateUsrDialog when you call attackby, so we're going to have to cheese-magic-space this
+				for(var/obj/toLoad in internalBag.contents)
+					if(contents.len >= SF.max_n_of_items)
+						break
+					if(SF.accept_check(toLoad))
+						SF.load(toLoad)
+					else
+						qdel(toLoad) // destroy everything we dont need
 
 /mob/living/carbon/human/interactive/proc/bartend(obj)
 	if(shouldModulePass())
@@ -1115,6 +1135,14 @@
 /mob/living/carbon/human/interactive/proc/shitcurity(obj)
 	var/list/allContents = getAllContents()
 
+	for(var/mob/living/carbon/human/C in nearby)
+		var/perpname = C.get_face_name(C.get_id_name())
+		var/datum/data/record/R = find_record("name", perpname, data_core.security)
+		if(R && R.fields["criminal"])
+			switch(R.fields["criminal"])
+				if("*Arrest*")
+					retalTarget(C)
+
 	if(retal && TARGET)
 		for(var/obj/item/I in allContents)
 			if(istype(I,/obj/item/weapon/restraints))
@@ -1130,15 +1158,15 @@
 	var/mob/living/carbon/human/clownTarget
 	var/list/clownPriority = list()
 
-	var/obj/item/weapon/reagent_containers/spray/S
-	if(!locate(/obj/item/weapon/reagent_containers/spray) in allContents)
-		new/obj/item/weapon/reagent_containers/spray(src)
-	else
-		S = locate(/obj/item/weapon/reagent_containers/spray) in allContents
+	var/obj/item/weapon/reagent_containers/spray/S = locate(/obj/item/weapon/reagent_containers/spray) in allContents
+
+	if(!S)
+		S = new/obj/item/weapon/reagent_containers/spray(src)
+		S.amount_per_transfer_from_this = 10
 
 	for(var/mob/living/carbon/human/C in rangeCheck)
 		var/pranksNearby = 100
-		for(var/turf/simulated/T in orange(1,C))
+		for(var/turf/open/T in orange(1,C))
 			for(var/obj/item/A in T)
 				if(istype(A,/obj/item/weapon/soap) || istype(A,/obj/item/weapon/reagent_containers/food/snacks/grown/banana) || istype(A,/obj/item/weapon/grown/bananapeel))
 					pranksNearby--
@@ -1197,27 +1225,25 @@
 
 	if(shouldTryHeal == 1)
 		for(var/mob/living/carbon/human/C in nearby)
-			if(istype(C,/mob/living/carbon/human)) //I haven't the foggiest clue why this is turning up non-carbons but sure here whatever
-				if(C.health <= 75)
-					if(get_dist(src,C) <= 2)
-						src.say("Wait, [C], let me heal you!")
-						M.attack(C,src)
-						sleep(25)
-					else
-						tryWalk(get_turf(C))
+			if(C.health <= 75)
+				if(get_dist(src,C) <= 2)
+					src.say("Wait, [C], let me heal you!")
+					M.attack(C,src)
+					sleep(25)
+				else
+					tryWalk(get_turf(C))
 	else if(shouldTryHeal == 2)
 		if(HPS)
 			if(HPS.reagents.total_volume <= 0)
 				HPS.reagents.add_reagent("tricordrazine",30)
 			for(var/mob/living/carbon/human/C in nearby)
-				if(istype(C,/mob/living/carbon/human))
-					if(C.health <= 75 && C.reagents.get_reagent_amount("tricordrazine") <= 0) // make sure they wont be overdosing
-						if(get_dist(src,C) <= 2)
-							src.say("Wait, [C], let me heal you!")
-							HPS.attack(C,src)
-							sleep(25)
-						else
-							tryWalk(get_turf(C))
+				if(C.health <= 75 && C.reagents.get_reagent_amount("tricordrazine") <= 0) // make sure they wont be overdosing
+					if(get_dist(src,C) <= 2)
+						src.say("Wait, [C], let me heal you!")
+						HPS.attack(C,src)
+						sleep(25)
+					else
+						tryWalk(get_turf(C))
 
 
 /mob/living/carbon/human/interactive/proc/dojanitor(obj)
@@ -1246,8 +1272,7 @@
 				sleep(25)
 
 /mob/living/carbon/human/interactive/proc/customEmote(var/text)
-	for(var/mob/living/carbon/M in view(src))
-		M.show_message("<span class='notice'>[text]</span>", 2)
+	visible_message("<span class='notice'>[text]</span>")
 
 // START COOKING MODULE
 /mob/living/carbon/human/interactive/proc/cookingwithmagic(var/obj/item/weapon/reagent_containers/food/snacks/target)
@@ -1304,7 +1329,7 @@
 		if(SF)
 			if(SF.contents.len > 0)
 				if(!Adjacent(SF))
-					tryWalk(get_turf(SF))
+					tryWalk(get_turf(SF),1)
 				else
 					customEmote("[src] [pick("gibbers","drools","slobbers","claps wildly","spits")], grabbing various foodstuffs from [SF] and sticking them in it's mouth!")
 					for(var/obj/item/A in SF.contents)
@@ -1440,22 +1465,21 @@
 	return hasSame
 
 /mob/living/carbon/human/interactive/proc/combat(obj)
-	set background = 1
 	enforce_hands()
 	if(canmove)
 		if((graytide || (TRAITS & TRAIT_MEAN)) || retal)
 			interest += targetInterestShift
-			a_intent = "harm"
+			a_intent = INTENT_HARM
 			zone_selected = pick("chest","r_leg","l_leg","r_arm","l_arm","head")
 			doing |= FIGHTING
 			if(retal)
 				TARGET = retal_target
 			else
 				var/mob/living/M = locate(/mob/living) in oview(7,src)
-				if(M != src && !compareFaction(M.faction))
-					TARGET = M
 				if(!M)
 					doing = doing & ~FIGHTING
+				else if(M != src && !compareFaction(M.faction))
+					TARGET = M
 
 	//no infighting
 	if(retal)
@@ -1496,7 +1520,7 @@
 
 	if((TARGET && (doing & FIGHTING))) // this is a redundancy check
 		var/mob/living/M = TARGET
-		if(istype(M,/mob/living))
+		if(isliving(M))
 			if(M.health > 1)
 				//THROWING OBJECTS
 				for(var/A in allContents)
@@ -1523,8 +1547,8 @@
 						if(istype(main_hand,/obj/item/weapon/gun))
 							var/obj/item/weapon/gun/G = main_hand
 							if(G.can_trigger_gun(src))
-								if(istype(main_hand,/obj/item/weapon/gun/projectile))
-									var/obj/item/weapon/gun/projectile/P = main_hand
+								if(istype(main_hand,/obj/item/weapon/gun/ballistic))
+									var/obj/item/weapon/gun/ballistic/P = main_hand
 									if(!P.chambered)
 										P.chamber_round()
 										P.update_icon()
@@ -1565,7 +1589,7 @@
 						tryWalk(TARGET)
 					else
 						if(Adjacent(TARGET))
-							a_intent = pick("disarm","harm")
+							a_intent = pick(INTENT_DISARM, INTENT_HARM)
 							M.attack_hand(src)
 			timeout++
 		else if(timeout >= 10 || !(targetRange(M) > 14))
@@ -1608,4 +1632,12 @@
 	targetInterestShift = 2 // likewise
 	faction += "bot_grey"
 	graytide = 1
+	..()
+
+//Walk softly and carry a big stick
+/mob/living/carbon/human/interactive/robust/New()
+	TRAITS |= TRAIT_FRIENDLY
+	TRAITS |= TRAIT_ROBUST
+	TRAITS |= TRAIT_SMART
+	faction += "bot_power"
 	..()

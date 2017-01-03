@@ -40,14 +40,22 @@ var/global/list/GlobalPool = list()
 	if(!get_type)
 		return
 
+	if(SSpool)
+		INCREMENT_TALLY(SSpool.stats_pooled_or_newed, get_type)
+
 	. = GetFromPool(get_type,second_arg)
 
 	if(!.)
+		if(SSpool)
+			INCREMENT_TALLY(SSpool.stats_created_new, get_type)
 		if(ispath(get_type))
 			if(islist(second_arg))
 				. = new get_type (arglist(second_arg))
 			else
 				. = new get_type (second_arg)
+	else
+		if(SSpool)
+			INCREMENT_TALLY(SSpool.stats_reused, get_type)
 
 
 /proc/GetFromPool(get_type,second_arg)
@@ -62,6 +70,8 @@ var/global/list/GlobalPool = list()
 
 	var/datum/pooled = pop(GlobalPool[get_type])
 	if(pooled)
+		pooled.gc_destroyed = null
+
 		var/atom/movable/AM
 		if(istype(pooled, /atom/movable))
 			AM = pooled
@@ -86,17 +96,22 @@ var/global/list/GlobalPool = list()
 	if(diver in GlobalPool[diver.type])
 		return
 
+	if(SSpool)
+		INCREMENT_TALLY(SSpool.stats_placed_in_pool, diver.type)
+
 	if(!GlobalPool[diver.type])
 		GlobalPool[diver.type] = list()
 
 	GlobalPool[diver.type] |= diver
 
-	if (destroy)
+	if(destroy)
 		diver.Destroy()
+
+	diver.gc_destroyed = 1
 
 	diver.ResetVars()
 
-var/list/exclude = list("animate_movement", "contents", "loc", "locs", "parent_type", "vars", "verbs", "type")
+var/list/exclude = list("animate_movement", "contents", "loc", "locs", "parent_type", "vars", "verbs", "type", "gc_destroyed")
 var/list/pooledvariables = list()
 //thanks to clusterfack @ /vg/station for these two procs
 /datum/proc/createVariables()

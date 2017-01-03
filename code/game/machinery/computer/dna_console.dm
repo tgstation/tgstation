@@ -22,7 +22,7 @@
 	icon_screen = "dna"
 	icon_keyboard = "med_key"
 	density = 1
-	circuit = /obj/item/weapon/circuitboard/scan_consolenew
+	circuit = /obj/item/weapon/circuitboard/computer/scan_consolenew
 	var/radduration = 2
 	var/radstrength = 1
 
@@ -49,8 +49,7 @@
 			src.updateUsrDialog()
 			return
 	else
-		..()
-	return
+		return ..()
 
 /obj/machinery/computer/scan_consolenew/New()
 	..()
@@ -73,7 +72,7 @@
 /obj/machinery/computer/scan_consolenew/proc/ShowInterface(mob/user, last_change)
 	if(!user) return
 	var/datum/browser/popup = new(user, "scannernew", "DNA Modifier Console", 800, 630) // Set up the popup browser window
-	if(!( in_range(src, user) || istype(user, /mob/living/silicon) ))
+	if(!(in_range(src, user) || issilicon(user)))
 		popup.close()
 		return
 	popup.add_stylesheet("scannernew", 'html/browser/scannernew.css')
@@ -97,7 +96,7 @@
 				occupant_status += "</div></div>"
 				occupant_status += "<div class='line'><div class='statusLabel'>Health:</div><div class='progressBar'><div style='width: [viable_occupant.health]%;' class='progressFill good'></div></div><div class='statusValue'>[viable_occupant.health] %</div></div>"
 				occupant_status += "<div class='line'><div class='statusLabel'>Radiation Level:</div><div class='progressBar'><div style='width: [viable_occupant.radiation]%;' class='progressFill bad'></div></div><div class='statusValue'>[viable_occupant.radiation] %</div></div>"
-				var/rejuvenators = viable_occupant.reagents.get_reagent_amount("epinephrine")
+				var/rejuvenators = viable_occupant.reagents.get_reagent_amount("potass_iodide")
 				occupant_status += "<div class='line'><div class='statusLabel'>Rejuvenators:</div><div class='progressBar'><div style='width: [round((rejuvenators / REJUVENATORS_MAX) * 100)]%;' class='progressFill highlight'></div></div><div class='statusValue'>[rejuvenators] units</div></div>"
 				occupant_status += "<div class='line'><div class='statusLabel'>Unique Enzymes :</div><div class='statusValue'><span class='highlight'>[viable_occupant.dna.unique_enzymes]</span></div></div>"
 				occupant_status += "<div class='line'><div class='statusLabel'>Last Operation:</div><div class='statusValue'>[last_change ? last_change : "----"]</div></div>"
@@ -317,7 +316,7 @@
 		return
 	if(!isturf(usr.loc))
 		return
-	if(!( (isturf(loc) && in_range(src, usr)) || istype(usr, /mob/living/silicon) ))
+	if(!((isturf(loc) && in_range(src, usr)) || issilicon(usr)))
 		return
 	if(current_screen == "working")
 		return
@@ -351,9 +350,9 @@
 			current_screen = href_list["text"]
 		if("rejuv")
 			if(viable_occupant && viable_occupant.reagents)
-				var/epinephrine_amount = viable_occupant.reagents.get_reagent_amount("epinephrine")
-				var/can_add = max(min(REJUVENATORS_MAX - epinephrine_amount, REJUVENATORS_INJECT), 0)
-				viable_occupant.reagents.add_reagent("epinephrine", can_add)
+				var/potassiodide_amount = viable_occupant.reagents.get_reagent_amount("potass_iodide")
+				var/can_add = max(min(REJUVENATORS_MAX - potassiodide_amount, REJUVENATORS_INJECT), 0)
+				viable_occupant.reagents.add_reagent("potass_iodide", can_add)
 		if("setbufferlabel")
 			var/text = sanitize(input(usr, "Input a new label:", "Input an Text", null) as text|null)
 			if(num && text)
@@ -399,11 +398,17 @@
 						if("se")
 							if(buffer_slot["SE"])
 								I = new /obj/item/weapon/dnainjector/timed(loc)
+								var/powers = 0
 								for(var/datum/mutation/human/HM in good_mutations + bad_mutations + not_good_mutations)
 									if(HM.check_block_string(buffer_slot["SE"]))
 										I.add_mutations.Add(HM)
+										if(HM in good_mutations)
+											powers += 1
+										if(HM in bad_mutations + not_good_mutations)
+											powers -= 1 //To prevent just unlocking everything to get all powers to a syringe for max tech
 									else
 										I.remove_mutations.Add(HM)
+								I.origin_tech = "biotech=2;engineering=[max(1,min(6,powers))]" //With 6 powers available this tech level will be 1-6, also safety check if new powers get added
 								var/time_coeff
 								for(var/datum/mutation/human/HM in I.add_mutations)
 									if(!time_coeff)

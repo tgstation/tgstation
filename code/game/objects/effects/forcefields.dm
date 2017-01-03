@@ -5,10 +5,7 @@
 	anchored = 1
 	opacity = 0
 	density = 1
-	unacidable = 1
-
-/obj/effect/forcefield/CanAtmosPass(turf/T)
-	return !density
+	CanAtmosPass = ATMOS_PASS_DENSITY
 
 /obj/effect/forcefield/cult
 	desc = "An unholy shield that blocks all attacks."
@@ -22,15 +19,7 @@
 	name = "invisible wall"
 	desc = "You have a bad feeling about this."
 	var/timeleft = 300
-	var/last_process = 0
 
 /obj/effect/forcefield/mime/New()
 	..()
-	last_process = world.time
-	SSobj.processing |= src
-
-/obj/effect/forcefield/mime/process()
-	timeleft -= (world.time - last_process)
-	if(timeleft <= 0)
-		SSobj.processing.Remove(src)
-		qdel(src)
+	QDEL_IN(src, timeleft)

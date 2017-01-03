@@ -2,8 +2,9 @@
 
 /obj/item/clothing/suit/hooded
 	actions_types = list(/datum/action/item_action/toggle_hood)
-	var/obj/item/clothing/head/hood
-	var/hoodtype = /obj/item/clothing/head/winterhood //so the chaplain hoodie or other hoodies can override this
+	var/obj/item/clothing/head/hooded/hood
+	var/hoodtype = /obj/item/clothing/head/hooded/winterhood //so the chaplain hoodie or other hoodies can override this
+	hooded = 1
 
 /obj/item/clothing/suit/hooded/New()
 	MakeHood()
@@ -15,7 +16,8 @@
 
 /obj/item/clothing/suit/hooded/proc/MakeHood()
 	if(!hood)
-		var/obj/item/clothing/head/W = new hoodtype(src)
+		var/obj/item/clothing/head/hooded/W = new hoodtype(src)
+		W.suit = src
 		hood = W
 
 /obj/item/clothing/suit/hooded/ui_action_click()
@@ -56,8 +58,7 @@
 			if(H.head)
 				H << "<span class='warning'>You're already wearing something on your head!</span>"
 				return
-			else
-				H.equip_to_slot_if_possible(hood,slot_head,0,0,1)
+			else if(H.equip_to_slot_if_possible(hood,slot_head,0,0,1))
 				suittoggled = 1
 				src.icon_state = "[initial(icon_state)]_t"
 				H.update_inv_wear_suit()
@@ -67,14 +68,28 @@
 	else
 		RemoveHood()
 
+/obj/item/clothing/head/hooded
+	var/obj/item/clothing/suit/hooded/suit
+
+/obj/item/clothing/head/hooded/dropped()
+	..()
+	if(suit)
+		suit.RemoveHood()
+
+/obj/item/clothing/head/hooded/equipped(mob/user, slot)
+	..()
+	if(slot != slot_head)
+		if(suit)
+			suit.RemoveHood()
+		else
+			qdel(src)
+
 //Toggle exosuits for different aesthetic styles (hoodies, suit jacket buttons, etc)
 
 /obj/item/clothing/suit/toggle/AltClick(mob/user)
 	..()
-	if(!user.canUseTopic(user))
+	if(!user.canUseTopic(src, be_close=TRUE))
 		user << "<span class='warning'>You can't do that right now!</span>"
-		return
-	if(!in_range(src, user))
 		return
 	else
 		suit_toggle(user)
@@ -172,9 +187,8 @@
 			if(H.head)
 				H << "<span class='warning'>You're already wearing something on your head!</span>"
 				return
-			else
+			else if(H.equip_to_slot_if_possible(helmet,slot_head,0,0,1))
 				H << "<span class='notice'>You engage the helmet on the hardsuit.</span>"
-				H.equip_to_slot_if_possible(helmet,slot_head,0,0,1)
 				suittoggled = 1
 				H.update_inv_wear_suit()
 				playsound(src.loc, 'sound/mecha/mechmove03.ogg', 50, 1)

@@ -4,6 +4,9 @@
 ## Station name: The name of the station as it is referred to in-game. If commented out, the game will generate a random name instead.
 STATIONNAME Space Station 13
 
+## Put on byond hub: uncomment this to put your server on the byond hub.
+#HUB
+
 # Lobby time: This is the amount of time between rounds that players have to setup their characters and be ready.
 LOBBY_COUNTDOWN 120
 
@@ -22,6 +25,9 @@ BAN_LEGACY_SYSTEM
 ## NOTE: If you have just set-up the database keep this DISABLED, as player age is determined from the first time they connect to the server with the database up. If you just set it up, it means
 ## you have noone older than 0 days, since noone has been logged yet. Only turn this on once you have had the database up for 30 days.
 #USE_AGE_RESTRICTION_FOR_JOBS
+
+# Uncomment this to have the job system use the player's account creation date, rather than the when they first joined the server for job timers.
+#USE_ACCOUNT_AGE_FOR_JOBS
 
 ## log OOC channel
 LOG_OOC
@@ -64,6 +70,13 @@ LOG_LAW
 
 ## log all Topic() calls (for use by coders in tracking down Topic issues)
 # LOG_HREFS
+
+## log all world.Topic() calls
+# LOG_WORLD_TOPIC
+
+## enables use of the proc twitterize() that lets you take a large list of strings and turn it into a JSON file of tweet sized strings.
+## As an example of how this could be """useful""" look towards Poly (https://twitter.com/Poly_the_Parrot)
+# LOG_TWITTER
 
 ## disconnect players who did nothing during 10 minutes
 # KICK_INACTIVE
@@ -108,6 +121,22 @@ HOSTEDBY Yournamehere
 ## Uncomment this to stop people connecting to your server without a registered ckey. (i.e. guest-* are all blocked from connecting)
 GUEST_BAN
 
+## Comment to disable checking for the cid randomizer dll. (disabled if database isn't enabled or connected)
+CHECK_RANDOMIZER
+
+### IPINTEL:
+### This allows you to detect likely proxies by checking ips against getipintel.net
+## Rating to warn at: (0.90 is good, 1 is 100% likely to be a spammer/proxy, 0.8 is 80%, etc) anything equal to or higher then this number triggers an admin warning
+#IPINTEL_RATING_BAD 0.90
+## Contact email, (required to use the service, leaving blank or default disables IPINTEL)
+#IPINTEL_EMAIL ch@nge.me
+## How long to save good matches (ipintel rate limits to 15 per minute and 500 per day. so this shouldn't be too low, getipintel.net suggests 6 hours, time is in hours) (Your ip will get banned if you go over 500 a day too many times)
+#IPINTEL_SAVE_GOOD 12
+## How long to save bad matches (these numbers can change as ips change hands, best not to save these for too long in case somebody gets a new ip used by a spammer/proxy before.)
+#IPINTEL_SAVE_BAD 3
+## Domain name to query (leave commented out for the default, only needed if you pay getipintel.net for more querys)
+#IPINTEL_DOMAIN check.getipintel.net
+
 ## Uncomment to allow web client connections
 #ALLOW_WEBCLIENT
 
@@ -116,9 +145,8 @@ GUEST_BAN
 ## byond membership starts at $10 for 3 months, so to use the webclient to evade, they would have sink 10 bucks in each evade.
 #WEBCLIENT_ONLY_BYOND_MEMBERS
 
-## Set to jobban everyone who's key is not listed in data/whitelist.txt from Captain, HoS, HoP, CE, RD, CMO, Warden, Security, Detective, and AI positions.
-## Uncomment to 1 to jobban, leave commented out to allow these positions for everyone (but see GUEST_JOBBAN above and regular jobbans)
-# USEWHITELIST
+## Set to prevent anyone but those ckeys listed in config/whitelist.txt and config/admins.txt from joining your server
+#USEWHITELIST
 
 ## set a server location for world reboot. Don't include the byond://, just give the address and port.
 # Don't set this to the same server, BYOND will automatically restart players to the server when it has restarted.
@@ -156,14 +184,30 @@ ALLOW_HOLIDAYS
 ##Remove the # mark if you are going to use the SVN irc bot to relay adminhelps
 #USEIRCBOT
 
+##Uncomment to show the names of the admin sending a pm from IRC instead of showing as a stealthmin.
+#SHOW_IRC_NAME
+
 ##Defines the ticklag for the world.  0.9 is the normal one, 0.5 is smoother.
-TICKLAG 0.9
+TICKLAG 0.5
 
 ## Comment this out to disable automuting
 #AUTOMUTE_ON
 
 ## Communication key for receiving data through world/Topic(), you don't want to give this out
 #COMMS_KEY default_pwd
+
+## World address and port for server recieving cross server messages
+#CROSS_SERVER_ADDRESS byond:\\address:port
+
+## Name that the server calls itself in communications
+#CROSS_COMMS_NAME
+
+## Hub address for tracking stats
+## example: Hubmakerckey.Hubname
+#MEDAL_HUB_ADDRESS 
+
+## Password for the hub page
+#MEDAL_HUB_PASSWORD
 
 ## Uncomment this to let players see their own notes (they can still be set by admins only)
 #SEE_OWN_NOTES
@@ -200,6 +244,13 @@ NOTIFY_NEW_PLAYER_AGE 0
 ##	Requires database
 #PANIC_BUNKER
 
+## If panic bunker is on and a player is rejected (see above), attempt to send them to this connected server (see below) instead.
+##	You probably want this to be the same as CROSS_SERVER_ADDRESS
+PANIC_SERVER_ADDRESS byond://address:port
+
+##Name of the place to send people rejected by the bunker
+PANIC_SERVER_NAME [Put the name here]
+
 ## Uncomment to have the changelog file automatically open when a user connects and hasn't seen the latest changelog
 #AGGRESSIVE_CHANGELOG
 
@@ -233,3 +284,12 @@ ANNOUNCE_ADMIN_LOGOUT
 ## GENERATE_MINIMAPS
 ## Generating minimaps(For crew monitor) is slow and bogs down testing, so its disabled by default and must be enabled by uncommenting this config if you are running a production server.
 #GENERATE_MINIMAPS
+
+## CLIENT VERSION CONTROL
+## This allows you to configure the minimum required client version, as well as a warning version, and message for both.
+## These trigger for any version below (non-inclusive) the given version, so 510 triggers on 509 or lower.
+## These messages will be followed by one stating the clients current version and the required version for clarity.
+#CLIENT_WARN_VERSION 510
+#CLIENT_WARN_MESSAGE Byond is really close to releasing 510 beta as the stable release, please take this time to try it out. Reports are that the client preforms better then the version you are using, and also handles network lag better. Shortly after it's release we will end up using 510 client features and you will be forced to update.
+#CLIENT_ERROR_VERSION 509
+#CLIENT_ERROR_MESSAGE Your version of byond is not supported. Please upgrade.

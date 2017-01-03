@@ -1,4 +1,4 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
+
 
 /*
  * GAMEMODES (by Rastaf0)
@@ -25,6 +25,7 @@
 	var/list/restricted_jobs = list()	// Jobs it doesn't make sense to be.  I.E chaplain or AI cultist
 	var/list/protected_jobs = list()	// Jobs that can't be traitors because
 	var/required_players = 0
+	var/maximum_players = -1 // -1 is no maximum, positive numbers limit the selection of a mode on overstaffed stations
 	var/required_enemies = 0
 	var/recommended_enemies = 0
 	var/antag_flag = null //preferences flag such as BE_WIZARD that need to be turned on for players to be antag
@@ -35,15 +36,20 @@
 	var/continuous_sanity_checked	//Catches some cases where config options could be used to suggest that modes without antagonists should end when all antagonists die
 	var/enemy_minimum_age = 7 //How many days must players have been playing before they can play this antagonist
 
+	var/announce_span = "warning" //The gamemode's name will be in this span during announcement.
+	var/announce_text = "This gamemode forgot to set a descriptive text! Uh oh!" //Used to describe a gamemode when it's announced.
+
 	var/const/waittime_l = 600
 	var/const/waittime_h = 1800 // started at 1800
 
-
-/datum/game_mode/proc/announce() //to be calles when round starts
-	world << "<B>Notice</B>: [src] did not define announce()"
+	var/list/datum/station_goal/station_goals = list()
 
 
-///can_start()
+/datum/game_mode/proc/announce() //Shows the gamemode's name and a fast description.
+	world << "<b>The gamemode is: <span class='[announce_span]'>[name]</span>!</b>"
+	world << "<b>[announce_text]</b>"
+
+
 ///Checks to see if the game can be setup and ran with the current number of players or whatnot.
 /datum/game_mode/proc/can_start()
 	var/playerC = 0
@@ -51,7 +57,7 @@
 		if((player.client)&&(player.ready))
 			playerC++
 	if(!Debug2)
-		if(playerC < required_players)
+		if(playerC < required_players || (maximum_players >= 0 && playerC > maximum_players))
 			return 0
 	antag_candidates = get_players_for_role(antag_flag)
 	if(!Debug2)
@@ -59,17 +65,15 @@
 			return 0
 		return 1
 	else
-		world << "<span class='notice'>DEBUG: GAME STARTING WITHOUT PLAYER NUMBER CHECKS, THIS WILL PROBABLY BREAK SHIT."
+		message_admins("<span class='notice'>DEBUG: GAME STARTING WITHOUT PLAYER NUMBER CHECKS, THIS WILL PROBABLY BREAK SHIT.</span>")
 		return 1
 
 
-///pre_setup()
 ///Attempts to select players for special roles the mode might have.
 /datum/game_mode/proc/pre_setup()
 	return 1
 
 
-///post_setup()
 ///Everyone should now be on the station and have their normal gear.  This is the place to give the special roles extra things
 /datum/game_mode/proc/post_setup(report=0) //Gamemodes can override the intercept report. Passing a 1 as the argument will force a report.
 	if(!report)
@@ -86,18 +90,19 @@
 	if(report)
 		spawn (rand(waittime_l, waittime_h))
 			send_intercept(0)
+	generate_station_goals()
 	start_state = new /datum/station_state()
 	start_state.count(1)
 	return 1
 
-///make_antag_chance()
+
 ///Handles late-join antag assignments
 /datum/game_mode/proc/make_antag_chance(mob/living/carbon/human/character)
 	if(replacementmode && round_converted == 2)
 		replacementmode.make_antag_chance(character)
 	return
 
-///convert_roundtype()
+
 ///Allows rounds to basically be "rerolled" should the initial premise fall through
 /datum/game_mode/proc/convert_roundtype()
 	var/list/living_crew = list()
@@ -160,10 +165,10 @@
 		for(var/mob/living/carbon/human/H in antag_canadates)
 			replacementmode.make_antag_chance(H)
 		round_converted = 2
-		message_admins("The roundtype has been converted, antagonists may have been created")
+		message_admins("-- IMPORTANT: The roundtype has been converted to [replacementmode.name], antagonists may have been created! --")
 	return 1
 
-///process()
+
 ///Called by the gameticker
 /datum/game_mode/process()
 	return 0
@@ -172,8 +177,10 @@
 /datum/game_mode/proc/check_finished() //to be called by ticker
 	if(replacementmode && round_converted == 2)
 		return replacementmode.check_finished()
-	if(SSshuttle.emergency.mode >= SHUTTLE_ENDGAME || station_was_nuked)
-		return 1
+	if(SSshuttle.emergency && (SSshuttle.emergency.mode == SHUTTLE_ENDGAME))
+		return TRUE
+	if(station_was_nuked)
+		return TRUE
 	if(!round_converted && (!config.continuous[config_tag] || (config.continuous[config_tag] && config.midround_antag[config_tag]))) //Non-continuous or continous with replacement antags
 		if(!continuous_sanity_checked) //make sure we have antags to be checking in the first place
 			for(var/mob/Player in mob_list)
@@ -185,7 +192,7 @@
 				message_admins("The roundtype ([config_tag]) has no antagonists, continuous round has been defaulted to on and midround_antag has been defaulted to off.")
 				config.continuous[config_tag] = 1
 				config.midround_antag[config_tag] = 0
-				SSshuttle.emergencyNoEscape = 0
+				SSshuttle.clearHostileEnvironment(src)
 				return 0
 
 
@@ -259,31 +266,31 @@
 
 
 /datum/game_mode/proc/send_intercept()
-	var/intercepttext = "<FONT size = 3><B>Centcom Update</B> Requested status information:</FONT><HR>"
-	intercepttext += "<B> Centcom has recently been contacted by the following syndicate affiliated organisations in your area, please investigate any information you may have:</B>"
-
+	var/intercepttext = "<b><i>Central Command Status Summary</i></b><hr>"
+	intercepttext += "<b>Central Command has intercepted and partially decoded a Syndicate transmission with vital information regarding their movements. The following report outlines the most \
+	likely threats to appear in your sector.</b>"
 	var/list/possible_modes = list()
-	possible_modes.Add("revolution", "wizard", "nuke", "traitor", "malf", "changeling", "cult", "gang")
-	possible_modes -= "[ticker.mode]" //remove current gamemode to prevent it from being randomly deleted, it will be readded later
+	possible_modes.Add("blob", "changeling", "clock_cult", "cult", "extended", "gang", "malf", "nuclear", "revolution", "traitor", "wizard")
+	possible_modes -= name //remove the current gamemode to prevent it from being randomly deleted, it will be readded later
 
-	var/number = pick(1, 2)
-	var/i = 0
-	for(i = 0, i < number, i++) //remove 1 or 2 possibles modes from the list
-		possible_modes.Remove(pick(possible_modes))
+	for(var/i in 1 to 6) //Remove a few modes to leave four
+		possible_modes -= pick(possible_modes)
 
-	possible_modes[rand(1, possible_modes.len)] = "[ticker.mode]" //replace a random game mode with the current one
-
-	possible_modes = shuffle(possible_modes) //shuffle the list to prevent meta
+	possible_modes |= name //Re-add the actual gamemode - the intercept will thus always have the correct mode in its list
+	possible_modes = shuffle(possible_modes) //Meta prevention
 
 	var/datum/intercept_text/i_text = new /datum/intercept_text
-	for(var/A in possible_modes)
-		if(modePlayer.len == 0)
-			intercepttext += i_text.build(A)
-		else
-			intercepttext += i_text.build(A, pick(modePlayer))
+	for(var/V in possible_modes)
+		intercepttext += i_text.build(V)
 
-	print_command_report(intercepttext,"Centcom Status Summary")
-	priority_announce("Summary downloaded and printed out at all communications consoles.", "Enemy communication intercept. Security Level Elevated.", 'sound/AI/intercept.ogg')
+	if(station_goals.len)
+		intercepttext += "<hr><b>Special Orders for [station_name()]:</b>"
+		for(var/datum/station_goal/G in station_goals)
+			G.on_report()
+			intercepttext += G.get_report()
+
+	print_command_report(intercepttext, "Central Command Status Summary")
+	priority_announce("A summary has been copied and printed to all communications consoles.", "Enemy communication intercepted. Security level elevated.", 'sound/AI/intercept.ogg')
 	if(security_level < SEC_LEVEL_BLUE)
 		set_security_level(SEC_LEVEL_BLUE)
 
@@ -520,7 +527,7 @@
 	return max(0, enemy_minimum_age - C.player_age)
 
 /datum/game_mode/proc/replace_jobbaned_player(mob/living/M, role_type, pref)
-	var/list/mob/dead/observer/candidates = pollCandidates("Do you want to play as a [role_type]?", "[role_type]", null, pref, 100)
+	var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as a [role_type]?", "[role_type]", null, pref, 50, M)
 	var/mob/dead/observer/theghost = null
 	if(candidates.len)
 		theghost = pick(candidates)
@@ -530,7 +537,25 @@
 		M.key = theghost.key
 
 /datum/game_mode/proc/remove_antag_for_borging(datum/mind/newborgie)
-	ticker.mode.remove_cultist(newborgie, 0)
+	ticker.mode.remove_cultist(newborgie, 0, 0)
 	ticker.mode.remove_revolutionary(newborgie, 0)
 	ticker.mode.remove_gangster(newborgie, 0, remove_bosses=1)
-	ticker.mode.remove_hog_follower(newborgie, 0)
+
+/datum/game_mode/proc/generate_station_goals()
+	var/list/possible = list()
+	for(var/T in subtypesof(/datum/station_goal))
+		var/datum/station_goal/G = T
+		if(config_tag in initial(G.gamemode_blacklist))
+			continue
+		possible += T
+	var/goal_weights = 0
+	while(possible.len && goal_weights < STATION_GOAL_BUDGET)
+		var/datum/station_goal/picked = pick_n_take(possible)
+		goal_weights += initial(picked.weight)
+		station_goals += new picked
+
+
+/datum/game_mode/proc/declare_station_goal_completion()
+	for(var/V in station_goals)
+		var/datum/station_goal/G = V
+		G.print_result()

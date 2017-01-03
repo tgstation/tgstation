@@ -7,12 +7,14 @@
 	hitsound = 'sound/weapons/smash.ogg'
 	flags = CONDUCT
 	throwforce = 10
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 	throw_speed = 2
 	throw_range = 7
 	force = 10
 	materials = list(MAT_METAL=90)
 	attack_verb = list("slammed", "whacked", "bashed", "thunked", "battered", "bludgeoned", "thrashed")
+	dog_fashion = /datum/dog_fashion/back
+	resistance_flags = FIRE_PROOF
 	var/max_water = 50
 	var/last_use = 1
 	var/safety = 1
@@ -29,13 +31,15 @@
 	hitsound = null	//it is much lighter, after all.
 	flags = null //doesn't CONDUCT
 	throwforce = 2
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	force = 3
 	materials = list()
 	max_water = 30
 	sprite_name = "miniFE"
+	dog_fashion = null
 
 /obj/item/weapon/extinguisher/New()
+	..()
 	create_reagents(max_water)
 	reagents.add_reagent("water", max_water)
 
@@ -45,6 +49,12 @@
 	src.desc = "The safety is [safety ? "on" : "off"]."
 	user << "The safety is [safety ? "on" : "off"]."
 	return
+
+/obj/item/weapon/extinguisher/attack(mob/M, mob/user)
+	if(user.a_intent == INTENT_HELP && !safety) //If we're on help intent and going to spray people, don't bash them.
+		return FALSE
+	else
+		return ..()
 
 /obj/item/weapon/extinguisher/examine(mob/user)
 	..()
@@ -77,8 +87,6 @@
 
 /obj/item/weapon/extinguisher/afterattack(atom/target, mob/user , flag)
 	//TODO; Add support for reagents in water.
-	if(target.loc == user || !check_allowed_items(target)) //No more spraying yourself when putting your extinguisher away
-		return
 	var/Refill = AttemptRefill(target, user)
 	if(Refill)
 		return
@@ -87,7 +95,7 @@
 			usr << "<span class='warning'>\The [src] is empty!</span>"
 			return
 
-		if (world.time < src.last_use + 20)
+		if (world.time < src.last_use + 12)
 			return
 
 		src.last_use = world.time
@@ -96,9 +104,9 @@
 
 		var/direction = get_dir(src,target)
 
-		if(usr.buckled && isobj(usr.buckled) && !usr.buckled.anchored)
+		if(user.buckled && isobj(user.buckled) && !user.buckled.anchored)
 			spawn(0)
-				var/obj/B = usr.buckled
+				var/obj/B = user.buckled
 				var/movementdirection = turn(direction,180)
 				step(B, movementdirection)
 				sleep(1)
@@ -160,5 +168,10 @@
 /obj/item/weapon/extinguisher/proc/EmptyExtinguisher(var/mob/user)
 	if(loc == user && reagents.total_volume)
 		reagents.clear_reagents()
+
+		var/turf/T = get_turf(loc)
+		if(isopenturf(T))
+			var/turf/open/theturf = T
+			theturf.MakeSlippery(min_wet_time = 10, wet_time_to_add = 5)
+
 		user.visible_message("[user] empties out \the [src] onto the floor using the release valve.", "<span class='info'>You quietly empty out \the [src] using its release valve.</span>")
-	return

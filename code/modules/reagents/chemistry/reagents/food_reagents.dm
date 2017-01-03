@@ -27,8 +27,12 @@
 
 /datum/reagent/consumable/nutriment/on_mob_life(mob/living/M)
 	if(prob(50))
-		M.heal_organ_damage(1,0, 0)
+		M.heal_bodypart_damage(1,0, 0)
 		. = 1
+	if(iscarbon(M))
+		var/mob/living/carbon/C = M
+		if(C.blood_volume < BLOOD_VOLUME_NORMAL)
+			C.blood_volume += 0.4
 	..()
 
 /datum/reagent/consumable/vitamin
@@ -40,10 +44,14 @@
 
 /datum/reagent/consumable/vitamin/on_mob_life(mob/living/M)
 	if(prob(50))
-		M.heal_organ_damage(1,1, 0)
+		M.heal_bodypart_damage(1,1, 0)
 		. = 1
 	if(M.satiety < 600)
 		M.satiety += 30
+	if(iscarbon(M))
+		var/mob/living/carbon/C = M
+		if(C.blood_volume < BLOOD_VOLUME_NORMAL)
+			C.blood_volume += 0.5
 	..()
 
 /datum/reagent/consumable/sugar
@@ -119,7 +127,7 @@
 /datum/reagent/consumable/frostoil
 	name = "Frost Oil"
 	id = "frostoil"
-	description = "A special oil that noticably chills the body. Extraced from Icepeppers."
+	description = "A special oil that noticably chills the body. Extracted from Icepeppers and slimes."
 	color = "#8BA6E9" // rgb: 139, 166, 233
 
 /datum/reagent/consumable/frostoil/on_mob_life(mob/living/M)
@@ -148,12 +156,15 @@
 				M.bodytemperature -= rand(20,25)
 	..()
 
-/datum/reagent/consumable/frostoil/reaction_turf(turf/simulated/T, reac_volume)
+/datum/reagent/consumable/frostoil/reaction_turf(turf/T, reac_volume)
 	if(reac_volume >= 5)
 		for(var/mob/living/simple_animal/slime/M in T)
 			M.adjustToxLoss(rand(15,30))
-		//if(istype(T))
-		//	T.atmos_spawn_air(SPAWN_COLD)
+	if(reac_volume >= 1) // Make Freezy Foam and anti-fire grenades!
+		if(isopenturf(T))
+			var/turf/open/OT = T
+			OT.MakeSlippery(wet_setting=TURF_WET_ICE, min_wet_time=10, wet_time_to_add=reac_volume) // Is less effective in high pressure/high heat capacity environments. More effective in low pressure.
+			OT.air.temperature -= MOLES_CELLSTANDARD*100*reac_volume/OT.air.heat_capacity() // reduces environment temperature by 5K per unit.
 
 /datum/reagent/consumable/condensedcapsaicin
 	name = "Condensed Capsaicin"
@@ -162,7 +173,7 @@
 	color = "#B31008" // rgb: 179, 16, 8
 
 /datum/reagent/consumable/condensedcapsaicin/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
-	if(!istype(M, /mob/living/carbon/human) && !istype(M, /mob/living/carbon/monkey))
+	if(!ishuman(M) && !ismonkey(M))
 		return
 
 	var/mob/living/carbon/victim = M
@@ -182,7 +193,7 @@
 				safe_thing = victim.wear_mask
 
 		//only humans can have helmets and glasses
-		if(istype(victim, /mob/living/carbon/human))
+		if(ishuman(victim))
 			var/mob/living/carbon/human/H = victim
 			if( H.head )
 				if ( H.head.flags_cover & MASKCOVERSEYES )
@@ -235,6 +246,19 @@
 	description = "A salt made of sodium chloride. Commonly used to season food."
 	reagent_state = SOLID
 	color = "#FFFFFF" // rgb: 255,255,255
+
+/datum/reagent/consumable/sodiumchloride/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
+	if(!istype(M))
+		return
+	if(M.has_bane(BANE_SALT))
+		M.mind.disrupt_spells(-200)
+
+/datum/reagent/consumable/sodiumchloride/reaction_turf(turf/T, reac_volume) //Creates an umbra-blocking salt pile
+	if(!istype(T))
+		return
+	if(reac_volume < 1)
+		return
+	new/obj/effect/decal/cleanable/salt(T)
 
 /datum/reagent/consumable/blackpepper
 	name = "Black Pepper"
@@ -300,8 +324,8 @@
 	color = "#FF00FF" // rgb: 255, 0, 255
 
 /datum/reagent/consumable/sprinkles/on_mob_life(mob/living/M)
-	if(istype(M, /mob/living/carbon/human) && M.job in list("Security Officer", "Head of Security", "Detective", "Warden"))
-		M.heal_organ_damage(1,1, 0)
+	if(ishuman(M) && M.job in list("Security Officer", "Head of Security", "Detective", "Warden"))
+		M.heal_bodypart_damage(1,1, 0)
 		. = 1
 	..()
 
@@ -312,11 +336,10 @@
 	nutriment_factor = 20 * REAGENTS_METABOLISM
 	color = "#302000" // rgb: 48, 32, 0
 
-/datum/reagent/consumable/cornoil/reaction_turf(turf/simulated/T, reac_volume)
+/datum/reagent/consumable/cornoil/reaction_turf(turf/open/T, reac_volume)
 	if (!istype(T))
 		return
-	if(reac_volume >= 3)
-		T.MakeSlippery()
+	T.MakeSlippery(min_wet_time = 10, wet_time_to_add = reac_volume*2)
 	var/obj/effect/hotspot/hotspot = (locate(/obj/effect/hotspot) in T)
 	if(hotspot)
 		var/datum/gas_mixture/lowertemp = T.remove_air( T:air:total_moles() )
@@ -369,7 +392,7 @@
 	color = "#FFFFFF" // rgb: 0, 0, 0
 
 /datum/reagent/consumable/flour/reaction_turf(turf/T, reac_volume)
-	if(!istype(T, /turf/space))
+	if(!isspaceturf(T))
 		var/obj/effect/decal/cleanable/reagentdecal = new/obj/effect/decal/cleanable/flour(T)
 		reagentdecal.reagents.add_reagent("flour", reac_volume)
 
@@ -422,4 +445,65 @@
 
 /datum/reagent/consumable/corn_syrup/on_mob_life(mob/living/M)
 	holder.add_reagent("sugar", 3)
+	..()
+
+/datum/reagent/consumable/honey
+	name = "honey"
+	id = "honey"
+	description = "Sweet sweet honey, decays into sugar."
+	color = "#d3a308"
+	nutriment_factor = 15 * REAGENTS_METABOLISM
+
+/datum/reagent/consumable/honey/on_mob_life(mob/living/M)
+	M.reagents.add_reagent("sugar",3)
+	if(prob(20))
+		M.heal_bodypart_damage(3,1)
+	..()
+
+
+////Lavaland Flora Reagents////
+
+
+/datum/reagent/consumable/entpoly
+	name = "Entropic Polypnium"
+	id = "entpoly"
+	description = "An ichor, derived from a certain mushroom, makes for a bad time."
+	color = "#1d043d"
+/datum/reagent/consumable/entpoly/on_mob_life(mob/living/M)
+	if(current_cycle >= 10)
+		M.Paralyse(2, 0)
+		. = 1
+	if(prob(20))
+		M.losebreath += 4
+		M.adjustBrainLoss(2*REM)
+		M.adjustToxLoss(3*REM,0)
+		M.adjustStaminaLoss(10*REM,0)
+		M.blur_eyes(5)
+		. = TRUE
+	..()
+
+/datum/reagent/consumable/tinlux
+	name = "Tinea Luxor"
+	id = "tinlux"
+	description = "A stimulating ichor which causes luminescent fungi to grow on the skin. "
+	color = "#b5a213"
+
+/datum/reagent/consumable/tinlux/reaction_mob(mob/living/M)
+	M.AddLuminosity(2)
+
+/datum/reagent/consumable/tinlux/on_mob_delete(mob/living/M)
+	M.AddLuminosity(-2)
+
+/datum/reagent/consumable/vitfro
+	name = "Vitrium Froth"
+	id = "vitfro"
+	description = "A bubbly paste that heals wounds of the skin."
+	color = "#d3a308"
+	nutriment_factor = 3 * REAGENTS_METABOLISM
+
+/datum/reagent/consumable/vitfro/on_mob_life(mob/living/M)
+	if(prob(80))
+		M.adjustBruteLoss(-1*REM, 0)
+		M.adjustFireLoss(-1*REM, 0)
+		. = TRUE
 	..()

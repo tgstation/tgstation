@@ -16,11 +16,10 @@
 		return 0
 
 	user.drop_item()
-	target.internal_organs += tool
 	tool.loc = target
 
 	var/datum/action/item_action/hands_free/activate_pill/P = new
-	P.button_icon_state = tool.icon_state
+	P.button.name = "Activate [tool.name]"
 	P.target = tool
 	P.Grant(target)
 
@@ -33,7 +32,7 @@
 /datum/action/item_action/hands_free/activate_pill/Trigger()
 	if(!..())
 		return 0
-	owner << "<span class='caution'>You grit your teeth and burst the implanted [target]!</span>"
+	owner << "<span class='caution'>You grit your teeth and burst the implanted [target.name]!</span>"
 	add_logs(owner, null, "swallowed an implanted pill", target)
 	if(target.reagents.total_volume)
 		target.reagents.reaction(owner, INGEST)

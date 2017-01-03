@@ -21,7 +21,7 @@
 
 /datum/surgery_step/clamp_bleeders/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	if(locate(/datum/surgery_step/saw) in surgery.steps)
-		target.heal_organ_damage(20,0)
+		target.heal_bodypart_damage(20,0)
 	return ..()
 
 
@@ -39,7 +39,7 @@
 //close incision
 /datum/surgery_step/close
 	name = "mend incision"
-	implements = list(/obj/item/weapon/cautery = 100, /obj/item/weapon/weldingtool = 70, /obj/item/weapon/lighter = 45, /obj/item/weapon/match = 20)
+	implements = list(/obj/item/weapon/cautery = 100, /obj/item/weapon/gun/energy/laser = 90, /obj/item/weapon/weldingtool = 70, /obj/item/weapon/lighter = 45, /obj/item/weapon/match = 20)
 	time = 24
 
 /datum/surgery_step/close/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
@@ -69,7 +69,7 @@
 
 /datum/surgery_step/close/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	if(locate(/datum/surgery_step/saw) in surgery.steps)
-		target.heal_organ_damage(45,0)
+		target.heal_bodypart_damage(45,0)
 	return ..()
 
 
@@ -84,9 +84,7 @@
 	user.visible_message("[user] begins to saw through the bone in [target]'s [parse_zone(target_zone)].", "<span class='notice'>You begin to saw through the bone in [target]'s [parse_zone(target_zone)]...</span>")
 
 /datum/surgery_step/saw/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	if(ishuman(target))
-		var/mob/living/carbon/human/H = target
-		H.apply_damage(50,"brute","[target_zone]")
+	target.apply_damage(50,"brute","[target_zone]")
 
 	user.visible_message("[user] saws [target]'s [parse_zone(target_zone)] open!", "<span class='notice'>You saw [target]'s [parse_zone(target_zone)] open.</span>")
 	return 1

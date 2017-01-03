@@ -47,10 +47,10 @@
 		return UI_INTERACTIVE
 	return UI_CLOSE
 
-/mob/living/simple_animal/drone/default_can_use_topic(src_object)
+/mob/living/simple_animal/default_can_use_topic(src_object)
 	. = shared_ui_interaction(src_object)
 	if(. > UI_CLOSE)
-		. = min(., shared_living_ui_distance(src_object)) // Drones can only use things they're near.
+		. = min(., shared_living_ui_distance(src_object)) //simple animals can only use things they're near.
 
 /mob/living/silicon/pai/default_can_use_topic(src_object)
 	// pAIs can only use themselves and the owner's radio.

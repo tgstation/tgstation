@@ -49,8 +49,8 @@ research holder datum.
 											//Datum/tech go here.
 	var/list/possible_tech = list()			//List of all tech in the game that players have access to (barring special events).
 	var/list/known_tech = list()			//List of locally known tech.
-	var/list/possible_designs = list()		//List of all designs (at base reliability).
-	var/list/known_designs = list()			//List of available designs (at base reliability).
+	var/list/possible_designs = list()		//List of all designs.
+	var/list/known_designs = list()			//List of available designs.
 
 /datum/research/New()		//Insert techs into possible_tech here. Known_tech automatically updated.
 	for(var/T in subtypesof(/datum/tech))
@@ -93,13 +93,10 @@ research holder datum.
 
 /datum/research/proc/AddDesign2Known(datum/design/D)
 	if(known_designs[D.id])
-		var/datum/design/known = known_designs[D.id]
-		if(D.reliability > known.reliability)
-			known.reliability = D.reliability
 		return
 	known_designs[D.id] = D
 
-//Refreshes known_tech and known_designs list. Then updates the reliability vars of the designs in the known_designs list.
+//Refreshes known_tech and known_designs list.
 //Input/Output: n/a
 /datum/research/proc/RefreshResearch()
 	for(var/datum/tech/PT in possible_tech)
@@ -113,30 +110,24 @@ research holder datum.
 	for(var/v in known_tech)
 		var/datum/tech/T = known_tech[v]
 		T.level = Clamp(T.level, 0, 20)
-
-	for(var/v in known_designs)
-		var/datum/design/D = known_designs[v]
-		D.CalcReliability(known_tech)
 	return
 
 //Refreshes the levels of a given tech.
 //Input: Tech's ID and Level; Output: null
 /datum/research/proc/UpdateTech(ID, level)
 	var/datum/tech/KT = known_tech[ID]
+	if(KT && KT.level <= level)
+		KT.level = max(KT.level + 1, level)
+
+//Checks if the origin level can raise current tech levels
+//Input: Tech's ID and Level; Output: TRUE for yes, FALSE for no
+/datum/research/proc/IsTechHigher(ID, level)
+	var/datum/tech/KT = known_tech[ID]
 	if(KT)
 		if(KT.level <= level)
-			KT.level = max((KT.level + 1), (level - 1))
-
-/datum/research/proc/UpdateDesigns(obj/item/I, list/temp_tech)
-	for(var/v in known_designs)
-		var/datum/design/D = known_designs[v]
-		var/shared_tech = length(temp_tech & D.req_tech)
-		if(shared_tech)
-			D.reliability = min(100, D.reliability + shared_tech)
-			if(D.build_path == I.type)
-				D.reliability = min(100, D.reliability + shared_tech * rand(1,3))
-				if(I.crit_fail)
-					D.reliability = min(100, D.reliability + shared_tech * rand(3, 5))
+			return TRUE
+		else
+			return FALSE
 
 /datum/research/proc/FindDesignByID(id)
 	return known_designs[id]
@@ -152,10 +143,36 @@ research holder datum.
 		if((D.build_type & AUTOLATHE) && ("initial" in D.category))  //autolathe starts without hacked designs
 			AddDesign2Known(D)
 
+//Limb Grower files
+/datum/research/limbgrower/New()
+	for(var/T in (subtypesof(/datum/tech)))
+		possible_tech += new T(src)
+	for(var/path in subtypesof(/datum/design))
+		var/datum/design/D = new path(src)
+		possible_designs += D
+		if((D.build_type & LIMBGROWER) && ("initial" in D.category))
+			AddDesign2Known(D)
+
 /datum/research/autolathe/AddDesign2Known(datum/design/D)
 	if(!(D.build_type & AUTOLATHE))
 		return
 	..()
+
+//Biogenerator files
+/datum/research/biogenerator/New()
+	for(var/T in (subtypesof(/datum/tech)))
+		possible_tech += new T(src)
+	for(var/path in subtypesof(/datum/design))
+		var/datum/design/D = new path(src)
+		possible_designs += D
+		if((D.build_type & BIOGENERATOR) && ("initial" in D.category))
+			AddDesign2Known(D)
+
+/datum/research/biogenerator/AddDesign2Known(datum/design/D)
+	if(!(D.build_type & BIOGENERATOR))
+		return
+	..()
+
 
 /***************************************************************
 **						Technology Datums					  **
@@ -180,12 +197,12 @@ research holder datum.
 
 /datum/tech/engineering
 	name = "Engineering Research"
-	desc = "Development of new and improved engineering parts and."
+	desc = "Development of new and improved engineering parts and tools."
 	id = "engineering"
 
 /datum/tech/plasmatech
 	name = "Plasma Research"
-	desc = "Research into the mysterious substance colloqually known as 'plasma'."
+	desc = "Research into the mysterious substance colloqually known as \"plasma\"."
 	id = "plasmatech"
 	rare = 3
 
@@ -195,8 +212,8 @@ research holder datum.
 	id = "powerstorage"
 
 /datum/tech/bluespace
-	name = "'Blue-space' Research"
-	desc = "Research into the sub-reality known as 'blue-space'"
+	name = "\"Blue-space\" Research"
+	desc = "Research into the sub-reality known as \"blue-space\"."
 	id = "bluespace"
 	rare = 2
 
@@ -226,6 +243,9 @@ research holder datum.
 	id = "syndicate"
 	rare = 4
 
+
+//Secret Technologies (hidden by default, require rare items to reveal)
+
 /datum/tech/abductor
 	name = "Alien Technologies Research"
 	desc = "The study of technologies used by the advanced alien race known as Abductors."
@@ -233,13 +253,14 @@ research holder datum.
 	rare = 5
 	level = 0
 
-/*
 /datum/tech/arcane
 	name = "Arcane Research"
-	desc = "Research into the occult and arcane field for use in practical science"
+	desc = "When sufficiently analyzed, any magic becomes indistinguishable from technology."
 	id = "arcane"
-	level = 0 //It didn't become "secret" as advertised.
+	rare = 5
+	level = 0
 
+/*
 //Branch Techs
 /datum/tech/explosives
 	name = "Explosives Research"
@@ -273,17 +294,49 @@ research holder datum.
 	for(var/i=current_level+1, i<=level, i++)
 		if(i == initial(level))
 			continue
-		cost += i*5*rare
+		cost += i*rare
 
 	return cost
 
 /obj/item/weapon/disk/tech_disk
-	name = "Technology Disk"
+	name = "technology disk"
 	desc = "A disk for storing technology data for further research."
 	icon_state = "datadisk0"
-	materials = list(MAT_METAL=30, MAT_GLASS=10)
-	var/datum/tech/stored
+	materials = list(MAT_METAL=300, MAT_GLASS=100)
+	var/list/tech_stored = list()
+	var/max_tech_stored = 1
 
 /obj/item/weapon/disk/tech_disk/New()
+	..()
 	src.pixel_x = rand(-5, 5)
 	src.pixel_y = rand(-5, 5)
+	for(var/i in 1 to max_tech_stored)
+		tech_stored += null
+
+
+/obj/item/weapon/disk/tech_disk/adv
+	name = "advanced technology disk"
+	desc = "A disk for storing technology data for further research. This one has extra storage space."
+	materials = list(MAT_METAL=300, MAT_GLASS=100, MAT_SILVER=50)
+	max_tech_stored = 5
+
+/obj/item/weapon/disk/tech_disk/super_adv
+	name = "quantum technology disk"
+	desc = "A disk for storing technology data for further research. This one has extremely large storage space."
+	materials = list(MAT_METAL=300, MAT_GLASS=100, MAT_SILVER=100, MAT_GOLD=100)
+	max_tech_stored = 10
+
+/obj/item/weapon/disk/tech_disk/debug
+	name = "centcomm technology disk"
+	desc = "A debug item for research"
+	materials = list()
+	max_tech_stored = 0
+
+/obj/item/weapon/disk/tech_disk/debug/New()
+	..()
+	var/list/techs = subtypesof(/datum/tech)
+	max_tech_stored = techs.len
+	for(var/V in techs)
+		var/datum/tech/T = new V()
+		tech_stored += T
+		T.level = 8

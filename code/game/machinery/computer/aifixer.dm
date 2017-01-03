@@ -4,7 +4,7 @@
 	req_access = list(access_captain, access_robotics, access_heads)
 	var/mob/living/silicon/ai/occupier = null
 	var/active = 0
-	circuit = /obj/item/weapon/circuitboard/aifixer
+	circuit = /obj/item/weapon/circuitboard/computer/aifixer
 	icon_keyboard = "tech_key"
 	icon_screen = "ai-fixer"
 
@@ -14,9 +14,8 @@
 			user << "<span class='warning'>The screws on [name]'s screen won't budge.</span>"
 		else
 			user << "<span class='warning'>The screws on [name]'s screen won't budge and it emits a warning beep.</span>"
-		return
 	else
-		..()
+		return ..()
 
 /obj/machinery/computer/aifixer/attack_hand(mob/user)
 	if(..())
@@ -65,9 +64,6 @@
 		else
 			dat += "<br><br>Reconstruction in process, please wait.<br>"
 	dat += {"<br><A href='?src=\ref[user];mach_close=computer'>Close</A>"}
-
-	//user << browse(dat, "window=computer;size=400x500")
-	//onclose(user, "computer")
 	var/datum/browser/popup = new(user, "computer", "AI System Integrity Restorer", 400, 500)
 	popup.set_content(dat)
 	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
@@ -83,6 +79,8 @@
 	if(..())
 		return
 	if(href_list["fix"])
+		usr << "<span class='notice'>Reconstruction in progress. This will take several minutes.</span>"
+		playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 25, 0)
 		active = 1
 		while (occupier.health < 100)
 			occupier.adjustOxyLoss(-1, 0)
@@ -107,15 +105,15 @@
 		return
 	else
 		if(active)
-			overlays += "ai-fixer-on"
+			add_overlay("ai-fixer-on")
 		if (occupier)
 			switch (occupier.stat)
 				if (0)
-					overlays += "ai-fixer-full"
+					add_overlay("ai-fixer-full")
 				if (2)
-					overlays += "ai-fixer-404"
+					add_overlay("ai-fixer-404")
 		else
-			overlays += "ai-fixer-empty"
+			add_overlay("ai-fixer-empty")
 
 /obj/machinery/computer/aifixer/transfer_ai(interaction, mob/user, mob/living/silicon/ai/AI, obj/item/device/aicard/card)
 	if(!..())

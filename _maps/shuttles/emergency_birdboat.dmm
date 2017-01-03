@@ -1,0 +1,552 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
+"a" = (
+/turf/open/space,
+/area/space)
+"b" = (
+/turf/closed/wall/mineral/titanium/overspace,
+/area/shuttle/escape)
+"c" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/escape)
+"d" = (
+/obj/structure/grille,
+/obj/structure/window/shuttle,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"e" = (
+/obj/structure/table,
+/obj/item/weapon/scalpel,
+/obj/item/weapon/retractor{
+	pixel_x = 0;
+	pixel_y = 5
+	},
+/obj/item/weapon/hemostat,
+/turf/open/floor/plasteel/white,
+/area/shuttle/escape)
+"f" = (
+/obj/structure/table,
+/obj/item/weapon/cautery,
+/obj/item/weapon/surgicaldrill,
+/obj/item/weapon/circular_saw{
+	pixel_y = 9
+	},
+/turf/open/floor/plasteel/white,
+/area/shuttle/escape)
+"g" = (
+/turf/open/floor/plasteel/white,
+/area/shuttle/escape)
+"h" = (
+/obj/structure/shuttle/engine/propulsion{
+	icon_state = "propulsion_r";
+	dir = 8
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/escape)
+"i" = (
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/shuttle/escape)
+"j" = (
+/obj/machinery/computer/emergency_shuttle,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"k" = (
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"l" = (
+/obj/item/weapon/twohanded/required/kirbyplants{
+	icon_state = "plant-22"
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"m" = (
+/obj/structure/chair,
+/turf/open/floor/mineral/plastitanium/brig,
+/area/shuttle/escape)
+"n" = (
+/obj/structure/table/optable,
+/obj/item/weapon/surgical_drapes,
+/turf/open/floor/plasteel/white,
+/area/shuttle/escape)
+"o" = (
+/obj/structure/shuttle/engine/propulsion{
+	icon_state = "propulsion";
+	dir = 8
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/escape)
+"p" = (
+/obj/machinery/computer/communications,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"q" = (
+/obj/structure/chair{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"r" = (
+/obj/machinery/door/airlock/glass_command{
+	name = "bridge door";
+	req_access_txt = "19"
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"s" = (
+/turf/open/floor/mineral/plastitanium/brig,
+/area/shuttle/escape)
+"t" = (
+/obj/structure/shuttle/engine/propulsion{
+	icon_state = "propulsion_l";
+	dir = 8
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/escape)
+"u" = (
+/obj/structure/extinguisher_cabinet{
+	pixel_y = -32
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"v" = (
+/obj/structure/table,
+/obj/machinery/recharger{
+	active_power_usage = 0;
+	idle_power_usage = 0;
+	pixel_y = 4;
+	use_power = 0
+	},
+/turf/open/floor/mineral/plastitanium/brig,
+/area/shuttle/escape)
+"w" = (
+/obj/structure/table,
+/obj/item/weapon/storage/box/handcuffs,
+/turf/open/floor/mineral/plastitanium/brig,
+/area/shuttle/escape)
+"x" = (
+/obj/machinery/door/airlock/glass_security{
+	name = "security airlock";
+	req_access_txt = "63"
+	},
+/turf/open/floor/mineral/plastitanium/brig,
+/area/shuttle/escape)
+"y" = (
+/obj/machinery/door/airlock/glass,
+/turf/open/floor/plasteel/white,
+/area/shuttle/escape)
+"z" = (
+/obj/item/weapon/twohanded/required/kirbyplants{
+	icon_state = "plant-21";
+	layer = 4.1
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"A" = (
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"B" = (
+/turf/open/floor/plasteel/black,
+/area/shuttle/escape)
+"C" = (
+/obj/structure/chair{
+	dir = 4
+	},
+/turf/open/floor/plasteel/black,
+/area/shuttle/escape)
+"D" = (
+/obj/structure/table,
+/turf/open/floor/plasteel/black,
+/area/shuttle/escape)
+"E" = (
+/obj/machinery/door/airlock/titanium,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"F" = (
+/obj/structure/chair{
+	dir = 8
+	},
+/turf/open/floor/plasteel/black,
+/area/shuttle/escape)
+"G" = (
+/obj/structure/table,
+/obj/item/weapon/reagent_containers/food/snacks/boiledspaghetti{
+	name = "pasghetti";
+	pixel_x = 4;
+	pixel_y = 7
+	},
+/turf/open/floor/plasteel/black,
+/area/shuttle/escape)
+"H" = (
+/obj/machinery/door/airlock/titanium,
+/obj/docking_port/mobile/emergency{
+	dheight = 0;
+	dir = 8;
+	dwidth = 6;
+	height = 18;
+	port_angle = 90;
+	width = 14;
+	timid = 1;
+	name = "Birdboat emergency escape shuttle"
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"I" = (
+/obj/structure/table,
+/obj/item/weapon/reagent_containers/food/snacks/chocolatebar,
+/turf/open/floor/plasteel/black,
+/area/shuttle/escape)
+"J" = (
+/obj/structure/chair{
+	dir = 1
+	},
+/obj/structure/window/reinforced,
+/turf/open/floor/plasteel/black,
+/area/shuttle/escape)
+"K" = (
+/obj/structure/chair,
+/obj/structure/window/reinforced{
+	dir = 1;
+	pixel_y = 2
+	},
+/turf/open/floor/plasteel/black,
+/area/shuttle/escape)
+"L" = (
+/obj/structure/extinguisher_cabinet{
+	pixel_x = -27
+	},
+/turf/open/floor/plasteel/white,
+/area/shuttle/escape)
+"M" = (
+/obj/structure/table/glass,
+/obj/item/weapon/storage/firstaid/fire{
+	pixel_x = 5;
+	pixel_y = 5
+	},
+/obj/item/weapon/storage/firstaid/toxin,
+/turf/open/floor/plasteel/white,
+/area/shuttle/escape)
+"N" = (
+/obj/structure/chair{
+	dir = 1
+	},
+/turf/open/floor/plasteel/black,
+/area/shuttle/escape)
+"O" = (
+/obj/structure/table/glass,
+/obj/item/weapon/storage/firstaid/brute{
+	pixel_x = 5;
+	pixel_y = 5
+	},
+/obj/item/weapon/storage/firstaid/brute,
+/turf/open/floor/plasteel/white,
+/area/shuttle/escape)
+"P" = (
+/obj/structure/extinguisher_cabinet{
+	pixel_y = -32
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"Q" = (
+/obj/structure/chair,
+/turf/open/floor/plasteel/black,
+/area/shuttle/escape)
+"R" = (
+/obj/machinery/sleeper{
+	icon_state = "sleeper-open";
+	dir = 1
+	},
+/turf/open/floor/plasteel/white,
+/area/shuttle/escape)
+"S" = (
+/obj/structure/table/glass,
+/obj/item/weapon/defibrillator/loaded,
+/turf/open/floor/plasteel/white,
+/area/shuttle/escape)
+
+(1,1,1) = {"
+a
+a
+c
+c
+d
+c
+d
+d
+d
+d
+d
+c
+a
+a
+"}
+(2,1,1) = {"
+a
+c
+i
+p
+l
+d
+z
+F
+F
+F
+z
+i
+c
+a
+"}
+(3,1,1) = {"
+a
+c
+j
+q
+k
+r
+A
+A
+A
+A
+A
+N
+c
+a
+"}
+(4,1,1) = {"
+a
+d
+k
+k
+k
+c
+B
+B
+D
+A
+A
+N
+c
+a
+"}
+(5,1,1) = {"
+a
+d
+k
+k
+u
+c
+C
+C
+I
+A
+A
+N
+c
+a
+"}
+(6,1,1) = {"
+a
+c
+l
+k
+l
+c
+D
+G
+D
+A
+A
+N
+i
+c
+"}
+(7,1,1) = {"
+a
+c
+c
+r
+d
+c
+A
+A
+A
+A
+A
+A
+z
+c
+"}
+(8,1,1) = {"
+a
+c
+m
+s
+s
+d
+z
+A
+A
+A
+A
+A
+P
+c
+"}
+(9,1,1) = {"
+a
+c
+m
+s
+s
+x
+A
+A
+J
+K
+A
+A
+Q
+d
+"}
+(10,1,1) = {"
+a
+c
+m
+s
+s
+d
+A
+A
+J
+K
+A
+A
+Q
+d
+"}
+(11,1,1) = {"
+a
+c
+m
+s
+v
+c
+A
+A
+J
+K
+A
+A
+Q
+d
+"}
+(12,1,1) = {"
+a
+c
+m
+s
+w
+c
+A
+A
+J
+K
+A
+A
+z
+c
+"}
+(13,1,1) = {"
+c
+c
+c
+c
+c
+i
+A
+A
+c
+c
+y
+d
+c
+c
+"}
+(14,1,1) = {"
+c
+e
+n
+g
+g
+y
+A
+A
+y
+L
+g
+g
+R
+c
+"}
+(15,1,1) = {"
+c
+f
+g
+g
+g
+y
+A
+A
+y
+g
+g
+g
+g
+c
+"}
+(16,1,1) = {"
+c
+g
+g
+g
+c
+c
+E
+E
+c
+c
+M
+O
+S
+c
+"}
+(17,1,1) = {"
+c
+c
+c
+c
+c
+c
+A
+A
+c
+c
+c
+c
+c
+c
+"}
+(18,1,1) = {"
+c
+h
+o
+t
+c
+c
+E
+H
+c
+c
+h
+o
+t
+c
+"}

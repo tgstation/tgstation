@@ -3,7 +3,7 @@
 	desc = "..."
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = null
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 	var/amount_per_transfer_from_this = 5
 	var/list/possible_transfer_amounts = list(5,10,15,20,25,30)
 	var/volume = 30
@@ -38,7 +38,8 @@
 				return
 
 /obj/item/weapon/reagent_containers/attack(mob/M, mob/user, def_zone)
-	return
+	if(user.a_intent == INTENT_HARM)
+		return ..()
 
 /obj/item/weapon/reagent_containers/afterattack(obj/target, mob/user , flag)
 	return
@@ -61,7 +62,7 @@
 	else if(C.is_mouth_covered(mask_only = 1))
 		covered = "mask"
 	if(covered)
-		var/who = (isnull(user) || eater == user) ? "your" : "their"
+		var/who = (isnull(user) || eater == user) ? "your" : "[eater.p_their()]"
 		user << "<span class='warning'>You have to remove [who] [covered] first!</span>"
 		return 0
 	return 1
@@ -70,9 +71,10 @@
 	if(reagents)
 		for(var/datum/reagent/R in reagents.reagent_list)
 			R.on_ex_act()
-	..()
+	if(!qdeleted(src))
+		..()
 
-/obj/item/weapon/reagent_containers/fire_act()
+/obj/item/weapon/reagent_containers/fire_act(exposed_temperature, exposed_volume)
 	reagents.chem_temp += 30
 	reagents.handle_reactions()
 	..()
@@ -108,3 +110,9 @@
 			return
 
 	reagents.clear_reagents()
+
+/obj/item/weapon/reagent_containers/microwave_act(obj/machinery/microwave/M)
+	if(is_open_container())
+		reagents.chem_temp = max(reagents.chem_temp, 1000)
+		reagents.handle_reactions()
+	..()

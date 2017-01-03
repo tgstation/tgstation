@@ -41,15 +41,24 @@
 
 		else if(istype(I, /obj/item/weapon/disk/tech_disk))//If it's a data disk, we want to copy the research on to the suit.
 			var/obj/item/weapon/disk/tech_disk/TD = I
-			if(TD.stored)//If it has something on it.
+			var/has_research = 0
+			for(var/V in  TD.tech_stored)
+				if(V)
+					has_research = 1
+					break
+			if(has_research)//If it has something on it.
 				U << "Research information detected, processing..."
 				if(do_after(U,s_delay, target = src))
-					for(var/datum/tech/current_data in stored_research)
-						if(current_data.id==TD.stored.id)
-							if(current_data.level<TD.stored.level)
-								current_data.level=TD.stored.level
-							break
-					TD.stored = null
+					for(var/V1 in 1 to TD.max_tech_stored)
+						var/datum/tech/new_data = TD.tech_stored[V1]
+						TD.tech_stored[V1] = null
+						if(!new_data)
+							continue
+						for(var/V2 in stored_research)
+							var/datum/tech/current_data = V2
+							if(current_data.id == new_data.id)
+								current_data.level = max(current_data.level, new_data.level)
+								break
 					U << "<span class='notice'>Data analyzed and updated. Disk erased.</span>"
 				else
 					U << "<span class='userdanger'>ERROR</span>: Procedure interrupted. Process terminated."

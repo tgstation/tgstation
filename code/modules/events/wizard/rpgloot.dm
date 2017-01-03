@@ -1,7 +1,7 @@
 /datum/round_event_control/wizard/rpgloot //its time to minmax your shit
 	name = "RPG Loot"
 	weight = 3
-	typepath = /datum/round_event/wizard/rpgloot/
+	typepath = /datum/round_event/wizard/rpgloot
 	max_occurrences = 1
 	earliest_start = 0
 
@@ -30,7 +30,7 @@
 
 		if(istype(I,/obj/item/weapon/storage))
 			var/obj/item/weapon/storage/S = I
-			if(prob(upgrade_scroll_chance) && S.contents.len < S.storage_slots)
+			if(prob(upgrade_scroll_chance) && S.contents.len < S.storage_slots && !S.invisibility)
 				var/obj/item/upgradescroll/scroll = new
 				S.handle_item_insertion(scroll,1)
 				upgrade_scroll_chance = max(0,upgrade_scroll_chance-100)
@@ -41,7 +41,7 @@
 	desc = "Somehow, this piece of paper can be applied to items to make them \"better\". Apparently there's a risk of losing the item if it's already \"too good\". <i>This all feels so arbitrary...</i>"
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "scroll"
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 
 /obj/item/upgradescroll/afterattack(obj/item/target, mob/user , proximity)
 	if(!proximity || !istype(target))
@@ -49,8 +49,9 @@
 	var/quality = target.force - initial(target.force)
 	if(quality > 9 && prob((quality - 9)*10))
 		user << "<span class='danger'>[target] catches fire!</span>"
-		if(target.burn_state == -1)
-			target.burn_state = 0
+		if(target.resistance_flags & (LAVA_PROOF|FIRE_PROOF))
+			target.resistance_flags &= ~(LAVA_PROOF|FIRE_PROOF)
+			target.resistance_flags |= FLAMMABLE
 		target.fire_act()
 		qdel(src)
 		return

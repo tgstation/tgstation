@@ -7,7 +7,7 @@
 	icon_state = "director"
 	item_state = "lb_suit"
 	item_color = "director"
-	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 10, bio = 10, rad = 0)
+	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 10, bio = 10, rad = 0, fire = 0, acid = 35)
 	can_adjust = 0
 
 /obj/item/clothing/under/rank/research_director/alt
@@ -16,7 +16,7 @@
 	icon_state = "rdwhimsy"
 	item_state = "rdwhimsy"
 	item_color = "rdwhimsy"
-	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 10, bio = 10, rad = 0)
+	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 10, bio = 10, rad = 0, fire = 0, acid = 0)
 	can_adjust = 1
 	alt_covers_chest = 1
 
@@ -26,7 +26,7 @@
 	icon_state = "rdturtle"
 	item_state = "p_suit"
 	item_color = "rdturtle"
-	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 10, bio = 10, rad = 0)
+	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 10, bio = 10, rad = 0, fire = 0, acid = 0)
 	can_adjust = 1
 	alt_covers_chest = 1
 
@@ -37,7 +37,7 @@
 	item_state = "w_suit"
 	item_color = "toxinswhite"
 	permeability_coefficient = 0.50
-	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 10, bio = 0, rad = 0)
+	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 10, bio = 0, rad = 0, fire = 0, acid = 0)
 
 
 /obj/item/clothing/under/rank/chemist
@@ -47,7 +47,7 @@
 	item_state = "w_suit"
 	item_color = "chemistrywhite"
 	permeability_coefficient = 0.50
-	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 10, rad = 0)
+	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 10, rad = 0, fire = 50, acid = 65)
 
 /*
  * Medical
@@ -59,7 +59,7 @@
 	item_state = "w_suit"
 	item_color = "cmo"
 	permeability_coefficient = 0.50
-	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 10, rad = 0)
+	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 10, rad = 0, fire = 0, acid = 0)
 
 /obj/item/clothing/under/rank/geneticist
 	desc = "It's made of a special fiber that gives special protection against biohazards. It has a genetics rank stripe on it."
@@ -68,7 +68,7 @@
 	item_state = "w_suit"
 	item_color = "geneticswhite"
 	permeability_coefficient = 0.50
-	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 10, rad = 0)
+	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 10, rad = 0, fire = 0, acid = 0)
 
 /obj/item/clothing/under/rank/virologist
 	desc = "It's made of a special fiber that gives special protection against biohazards. It has a virologist rank stripe on it."
@@ -77,7 +77,7 @@
 	item_state = "w_suit"
 	item_color = "virologywhite"
 	permeability_coefficient = 0.50
-	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 10, rad = 0)
+	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 10, rad = 0, fire = 0, acid = 0)
 
 /obj/item/clothing/under/rank/nursesuit
 	desc = "It's a jumpsuit commonly worn by nursing staff in the medical department."
@@ -86,7 +86,7 @@
 	item_state = "w_suit"
 	item_color = "nursesuit"
 	permeability_coefficient = 0.50
-	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 10, rad = 0)
+	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 10, rad = 0, fire = 0, acid = 0)
 	fitted = NO_FEMALE_UNIFORM
 	can_adjust = 0
 
@@ -97,7 +97,7 @@
 	item_state = "w_suit"
 	item_color = "medical"
 	permeability_coefficient = 0.50
-	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 10, rad = 0)
+	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 10, rad = 0, fire = 0, acid = 0)
 
 /obj/item/clothing/under/rank/medical/blue
 	name = "medical scrubs"

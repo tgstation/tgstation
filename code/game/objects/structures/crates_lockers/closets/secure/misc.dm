@@ -13,11 +13,11 @@
 	if(prob(50))
 		new /obj/item/ammo_box/magazine/m50(src)
 		new /obj/item/ammo_box/magazine/m50(src)
-		new /obj/item/weapon/gun/projectile/automatic/pistol/deagle(src)
+		new /obj/item/weapon/gun/ballistic/automatic/pistol/deagle(src)
 	else
 		new /obj/item/ammo_box/a357(src)
 		new /obj/item/ammo_box/a357(src)
-		new /obj/item/weapon/gun/projectile/revolver/mateba(src)
+		new /obj/item/weapon/gun/ballistic/revolver/mateba(src)
 
 /obj/structure/closet/secure_closet/ertSec
 	name = "security closet"
@@ -60,7 +60,8 @@
 	new /obj/item/stack/sheet/plasteel(src, 50)
 	new /obj/item/stack/sheet/metal(src, 50)
 	new /obj/item/stack/sheet/glass(src, 50)
+	new /obj/item/stack/sheet/mineral/sandbags(src, 30)
 	new /obj/item/clothing/shoes/magboots(src)
 	new /obj/item/weapon/storage/box/metalfoam(src)
-	for(var/i in 1 to 3)	
+	for(var/i in 1 to 3)
 		new /obj/item/weapon/rcd_ammo/large(src)

@@ -6,23 +6,32 @@
 	name = "Unknown"
 	var/mob_type = null
 	var/mob_name = ""
-	var/mob_gender = MALE
+	var/mob_gender = null
 	var/death = TRUE //Kill the mob
 	var/roundstart = TRUE //fires on initialize
 	var/instant = FALSE	//fires on New
 	var/flavour_text = "The mapper forgot to set this!"
 	var/faction = null
+	var/permanent = FALSE	//If true, the spawner will not disappear upon running out of uses.
+	var/random = FALSE		//Don't set a name or gender, just go random
 	var/objectives = null
+	var/uses = 1			//how many times can we spawn from it. set to -1 for infinite.
 	var/brute_damage = 0
 	var/oxy_damage = 0
 	density = 1
 	anchored = 1
 
 /obj/effect/mob_spawn/attack_ghost(mob/user)
-	if(ticker.current_state != GAME_STATE_PLAYING)
+	if(ticker.current_state != GAME_STATE_PLAYING || !loc)
+		return
+	if(!uses)
+		user << "<span class='warning'>This spawner is out of charges!</span>"
+		return
+	if(jobban_isbanned(user, "lavaland"))
+		user << "<span class='warning'>You are jobanned!</span>"
 		return
 	var/ghost_role = alert("Become [mob_name]? (Warning, You can no longer be cloned!)",,"Yes","No")
-	if(ghost_role == "No")
+	if(ghost_role == "No" || !loc)
 		return
 	log_game("[user.ckey] became [mob_name]")
 	create(ckey = user.ckey)
@@ -48,7 +57,7 @@
 
 /obj/effect/mob_spawn/Destroy()
 	poi_list.Remove(src)
-	..()
+	. = ..()
 
 /obj/effect/mob_spawn/proc/special(mob/M)
 	return
@@ -57,9 +66,12 @@
 	return
 
 /obj/effect/mob_spawn/proc/create(ckey)
-	var/mob/living/M = new mob_type(loc) //living mobs only
-	M.real_name = mob_name ? mob_name : M.name
-	M.gender = mob_gender
+	var/mob/living/M = new mob_type(get_turf(src)) //living mobs only
+	if(!random)
+		M.real_name = mob_name ? mob_name : M.name
+		if(!mob_gender)
+			mob_gender = pick(MALE, FEMALE)
+		M.gender = mob_gender
 	if(faction)
 		M.faction = list(faction)
 	if(death)
@@ -72,12 +84,16 @@
 	if(ckey)
 		M.ckey = ckey
 		M << "[flavour_text]"
+		var/datum/mind/MM = M.mind
 		if(objectives)
-			var/datum/mind/MM = M.mind
 			for(var/objective in objectives)
 				MM.objectives += new/datum/objective(objective)
 		special(M)
-	qdel(src)
+		MM.name = M.real_name
+	if(uses > 0)
+		uses--
+	if(!permanent && !uses)
+		qdel(src)
 
 // Base version - place these on maps/templates.
 /obj/effect/mob_spawn/human
@@ -85,12 +101,15 @@
 	//Human specific stuff.
 	var/mob_species = null //Set to make them a mutant race such as lizard or skeleton. Uses the datum typepath instead of the ID.
 	var/uniform = null //Set this to an object path to have the slot filled with said object on the corpse.
+	var/r_hand = null
+	var/l_hand = null
 	var/suit = null
 	var/shoes = null
 	var/gloves = null
 	var/radio = null
 	var/glasses = null
 	var/mask = null
+	var/neck = null
 	var/helmet = null
 	var/belt = null
 	var/pocket1 = null
@@ -99,6 +118,7 @@
 	var/has_id = 0     //Just set to 1 if you want them to have an ID
 	var/id_job = null // Needs to be in quotes, such as "Clown" or "Chef." This just determines what the ID reads as, not their access
 	var/id_access = null //This is for access. See access.dm for which jobs give what access. Again, put in quotes. Use "Captain" if you want it to be all access.
+	var/id_access_list = null //Allows you to manually add access to an ID card.
 	var/id_icon = null //For setting it to be a gold, silver, centcom etc ID
 	var/husk = null
 	var/outfit_type = null // Will start with this if exists then apply specific slots
@@ -125,6 +145,8 @@
 		H.equip_to_slot_or_del(new glasses(H), slot_glasses)
 	if(mask)
 		H.equip_to_slot_or_del(new mask(H), slot_wear_mask)
+	if(neck)
+		H.equip_to_slot_or_del(new neck(H), slot_neck)
 	if(helmet)
 		H.equip_to_slot_or_del(new helmet(H), slot_head)
 	if(belt)
@@ -135,6 +157,10 @@
 		H.equip_to_slot_or_del(new pocket2(H), slot_l_store)
 	if(back)
 		H.equip_to_slot_or_del(new back(H), slot_back)
+	if(l_hand)
+		H.put_in_hands_or_del(new l_hand(H))
+	if(r_hand)
+		H.put_in_hands_or_del(new r_hand(H))
 	if(has_id)
 		var/obj/item/weapon/card/id/W = new(H)
 		if(id_icon)
@@ -150,6 +176,10 @@
 				W.access = jobdatum.get_access()
 			else
 				W.access = list()
+			if(id_access_list)
+				if(!W.access)
+					W.access = list()
+				W.access |= id_access_list
 		if(id_job)
 			W.assignment = id_job
 		W.registered_name = H.real_name
@@ -181,9 +211,7 @@
 	var/A = locate(/mob/living/silicon/ai) in loc
 	if(A)
 		return
-	var/L = new /datum/ai_laws/default/asimov
-	var/B = new /obj/item/device/mmi
-	var/mob/living/silicon/ai/M = new(src.loc, L, B, 1) //spawn new AI at landmark as var M
+	var/mob/living/silicon/ai/spawned/M = new(loc) //spawn new AI at landmark as var M
 	M.name = src.name
 	M.real_name = src.name
 	M.aiPDA.toff = 1 //turns the AI's PDA messenger off, stopping it showing up on player PDAs
@@ -205,6 +233,22 @@
 	O.Die() //call the facehugger's death proc
 	qdel(src)
 
+/obj/effect/mob_spawn/mouse
+	name = "sleeper"
+	mob_type = 	/mob/living/simple_animal/mouse
+	death = FALSE
+	roundstart = FALSE
+	icon = 'icons/obj/Cryogenic2.dmi'
+	icon_state = "sleeper"
+
+/obj/effect/mob_spawn/cow
+	name = "sleeper"
+	mob_type = 	/mob/living/simple_animal/cow
+	death = FALSE
+	roundstart = FALSE
+	mob_gender = FEMALE
+	icon = 'icons/obj/Cryogenic2.dmi'
+	icon_state = "sleeper"
 
 // I'll work on making a list of corpses people request for maps, or that I think will be commonly used. Syndicate operatives for example.
 
@@ -220,7 +264,7 @@
 	back = /obj/item/weapon/storage/backpack
 	has_id = 1
 	id_job = "Operative"
-	id_access = "Syndicate"
+	id_access_list = list(access_syndicate)
 
 /obj/effect/mob_spawn/human/syndicatecommando
 	name = "Syndicate Commando"
@@ -235,7 +279,7 @@
 	pocket1 = /obj/item/weapon/tank/internals/emergency_oxygen
 	has_id = 1
 	id_job = "Operative"
-	id_access = "Syndicate"
+	id_access_list = list(access_syndicate)
 
 ///////////Civilians//////////////////////
 
@@ -263,6 +307,18 @@
 	has_id = 1
 	id_job = "Medical Doctor"
 	id_access = "Medical Doctor"
+
+/obj/effect/mob_spawn/human/doctor/alive
+	death = FALSE
+	roundstart = FALSE
+	random = TRUE
+	radio = null
+	back = null
+	name = "sleeper"
+	icon = 'icons/obj/Cryogenic2.dmi'
+	icon_state = "sleeper"
+	flavour_text = "You are a space doctor!"
+
 
 /obj/effect/mob_spawn/human/engineer
 	name = "Engineer"
@@ -305,9 +361,9 @@
 	id_access = "Scientist"
 
 /obj/effect/mob_spawn/human/miner
-	radio = /obj/item/device/radio/headset/headset_cargo
+	radio = /obj/item/device/radio/headset/headset_cargo/mining
 	uniform = /obj/item/clothing/under/rank/miner
-	gloves = /obj/item/clothing/gloves/fingerless
+	gloves = /obj/item/clothing/gloves/color/black
 	back = /obj/item/weapon/storage/backpack/industrial
 	shoes = /obj/item/clothing/shoes/sneakers/black
 	has_id = 1
@@ -318,6 +374,13 @@
 	suit = /obj/item/clothing/suit/space/hardsuit/mining
 	mask = /obj/item/clothing/mask/breath
 
+/obj/effect/mob_spawn/human/miner/explorer
+	uniform = /obj/item/clothing/under/rank/miner/lavaland
+	back = /obj/item/weapon/storage/backpack/explorer
+	shoes = /obj/item/clothing/shoes/workboots/mining
+	suit = /obj/item/clothing/suit/hooded/explorer
+	mask = /obj/item/clothing/mask/gas/explorer
+	belt = /obj/item/weapon/gun/energy/kinetic_accelerator
 
 /obj/effect/mob_spawn/human/plasmaman
 	mob_species = /datum/species/plasmaman
@@ -341,11 +404,26 @@
 /obj/effect/mob_spawn/human/bartender/alive
 	death = FALSE
 	roundstart = FALSE
-	mob_name = "Space Bartender"
-	name = "sleeper"
+	random = TRUE
+	name = "bartender sleeper"
 	icon = 'icons/obj/Cryogenic2.dmi'
 	icon_state = "sleeper"
 	flavour_text = "You are a space bartender!"
+
+/obj/effect/mob_spawn/human/beach
+	glasses = /obj/item/clothing/glasses/sunglasses
+	uniform = /obj/item/clothing/under/shorts/red
+	pocket1 = /obj/item/weapon/storage/wallet/random
+
+/obj/effect/mob_spawn/human/beach/alive
+	death = FALSE
+	roundstart = FALSE
+	random = TRUE
+	mob_name = "Beach Bum"
+	name = "beach bum sleeper"
+	icon = 'icons/obj/Cryogenic2.dmi'
+	icon_state = "sleeper"
+	flavour_text = "You are a beach bum!"
 
 /////////////////Officers+Nanotrasen Security//////////////////////
 
@@ -363,7 +441,7 @@
 /obj/effect/mob_spawn/human/commander
 	name = "Commander"
 	uniform = /obj/item/clothing/under/rank/centcom_commander
-	suit = /obj/item/clothing/suit/armor
+	suit = /obj/item/clothing/suit/armor/bulletproof
 	radio = /obj/item/device/radio/headset/heads/captain
 	glasses = /obj/item/clothing/glasses/eyepatch
 	mask = /obj/item/clothing/mask/cigarette/cigar/cohiba
@@ -432,21 +510,22 @@
 	uniform = /obj/item/clothing/under/color/grey
 	shoes = /obj/item/clothing/shoes/combat
 
-///Prisoner
+//For ghost bar.
+/obj/effect/mob_spawn/human/alive/space_bar_patron
+	name = "Bar cryogenics"
+	mob_name = "Bar patron"
+	random = TRUE
+	permanent = TRUE
+	uses = -1
+	uniform = /obj/item/clothing/under/rank/bartender
+	back = /obj/item/weapon/storage/backpack
+	shoes = /obj/item/clothing/shoes/sneakers/black
+	suit = /obj/item/clothing/suit/armor/vest
+	glasses = /obj/item/clothing/glasses/sunglasses/reagent
 
-/obj/effect/mob_spawn/human/prisoner_transport
-	name = "prisoner sleeper"
-	icon = 'icons/obj/Cryogenic2.dmi'
-	icon_state = "sleeper"
-	uniform = /obj/item/clothing/under/rank/prisoner
-	mask = /obj/item/clothing/mask/breath
-	shoes = /obj/item/clothing/shoes/sneakers/orange
-	pocket1 = /obj/item/weapon/tank/internals/emergency_oxygen
-	roundstart = FALSE
-	death = FALSE
-	flavour_text = {"You were a prisoner, sentenced to hard labour in one of Nanotrasen's harsh gulags, but judging by the explosive crash you just survived, fate may have other plans for. First thing is first though: Find a way to survive this mess."}
-
-/obj/effect/mob_spawn/human/prisoner_transport/special(mob/living/new_spawn)
-	var/crime = pick("distribution of contraband" , "unauthorized erotic action on duty", "embezzlement", "piloting under the influence", "dereliction of duty", "syndicate collaboration", "mutiny", "multiple homicides", "corporate espionage", "recieving bribes", "malpractice", "worship of prohbited life forms", "possession of profane texts", "murder", "arson", "insulting your manager", "grand theft", "conspiracy", "attempting to unionize", "vandalism", "gross incompetence")
-	new_spawn << "You were convincted of: [crime]."
-
+/obj/effect/mob_spawn/human/alive/space_bar_patron/attack_hand(mob/user)
+	var/despawn = alert("Return to cryosleep? (Warning, Your mob will be deleted!)",,"Yes","No")
+	if(despawn == "No" || !loc || !Adjacent(user))
+		return
+	user.visible_message("<span class='notice'>[user.name] climbs back into cryosleep...</span>")
+	qdel(user)

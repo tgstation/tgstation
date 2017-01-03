@@ -15,35 +15,48 @@
 
 	var/datum/plant_gene/target
 	var/operation = ""
-	var/rating = 0 // TODO: add failures, make it useful
+	var/rating = 0
+	var/max_extract_pot = 50
+	// The cap on potency gene extraction.
+	// This number is for T1, each upgraded part adds 5% for a tech level above T1.
+	// At T4, it reaches 95%.
 
 /obj/machinery/plantgenes/New()
 	..()
-	component_parts = list()
-	component_parts += new /obj/item/weapon/circuitboard/plantgenes(src)
-	component_parts += new /obj/item/weapon/stock_parts/console_screen(src)
-	component_parts += new /obj/item/weapon/stock_parts/scanning_module(src)
-	component_parts += new /obj/item/weapon/stock_parts/micro_laser(src)
-	component_parts += new /obj/item/weapon/stock_parts/micro_laser(src)
-	component_parts += new /obj/item/weapon/stock_parts/manipulator(src)
-	RefreshParts()
+	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/plantgenes(null)
+	B.apply_default_parts(src)
+
+/obj/item/weapon/circuitboard/machine/plantgenes
+	name = "circuit board (Plant DNA Manipulator)"
+	build_path = /obj/machinery/plantgenes
+	origin_tech = "programming=3;biotech=3"
+	req_components = list(
+							/obj/item/weapon/stock_parts/manipulator = 1,
+							/obj/item/weapon/stock_parts/micro_laser = 1,
+							/obj/item/weapon/stock_parts/console_screen = 1,
+							/obj/item/weapon/stock_parts/scanning_module = 1)
 
 /obj/machinery/plantgenes/RefreshParts()
 	rating = 0
-	for(var/obj/item/weapon/stock_parts/S in component_parts)
-		rating += S.rating-1
+	for(var/I in component_parts)
+		if(istype(I, /obj/item/weapon/stock_parts))
+			var/obj/item/weapon/stock_parts/S = I
+			rating += S.rating-1
+		else if(istype(I, /obj/item/weapon/circuitboard/machine/plantgenes/vault))
+			rating += 5 // Having original alien board is +25%
+	max_extract_pot = initial(max_extract_pot) + rating*5
 
 /obj/machinery/plantgenes/update_icon()
 	..()
-	overlays.Cut()
+	cut_overlays()
 	if((stat & (BROKEN|NOPOWER)))
 		icon_state = "dnamod-off"
 	else
 		icon_state = "dnamod"
 	if(seed)
-		overlays += "dnamod-dna"
+		add_overlay("dnamod-dna")
 	if(panel_open)
-		overlays += "dnamod-open"
+		add_overlay("dnamod-open")
 
 /obj/machinery/plantgenes/attackby(obj/item/I, mob/user, params)
 	if(default_deconstruction_screwdriver(user, "dnamod", "dnamod", I))
@@ -53,7 +66,7 @@
 		return
 	if(default_deconstruction_crowbar(I))
 		return
-	if(isrobot(user))
+	if(iscyborg(user))
 		return
 
 	if(istype(I, /obj/item/seeds))
@@ -90,8 +103,8 @@
 	if(!user)
 		return
 
-	var/datum/browser/popup = new(user, "plantdna", "Plant DNA Manipulator", 450, 600) // Set up the popup browser window
-	if(!( in_range(src, user) || istype(user, /mob/living/silicon) ))
+	var/datum/browser/popup = new(user, "plantdna", "Plant DNA Manipulator", 450, 600)
+	if(!(in_range(src, user) || issilicon(user)))
 		popup.close()
 		return
 
@@ -114,16 +127,18 @@
 		switch(operation)
 			if("remove")
 				dat += "<span class='highlight'>[target.get_name()]</span> gene from \the <span class='highlight'>[seed]</span>?<br>"
-//				dat += "<span class='bad'>Failure may damage or destroy the sample!</span>" // No failures yet. TODO: add failures
 			if("extract")
 				dat += "<span class='highlight'>[target.get_name()]</span> gene from \the <span class='highlight'>[seed]</span>?<br>"
 				dat += "<span class='bad'>The sample will be destroyed in process!</span>"
+				if(istype(target, /datum/plant_gene/core/potency))
+					var/datum/plant_gene/core/gene = target
+					if(gene.value > max_extract_pot)
+						dat += "<br><br>This device's extraction capabilities are currently limited to [max_extract_pot] potency. "
+						dat += "Target gene will be degraded to [max_extract_pot] potency on extraction."
 			if("replace")
 				dat += "<span class='highlight'>[target.get_name()]</span> gene with <span class='highlight'>[disk.gene.get_name()]</span>?<br>"
-//				dat += "<span class='bad'>Failure may damage or destroy the sample!</span>" // No failures yet. TODO: add failures
 			if("insert")
 				dat += "<span class='highlight'>[disk.gene.get_name()]</span> gene into \the <span class='highlight'>[seed]</span>?<br>"
-//				dat += "<span class='bad'>Failure may damage or destroy the sample!</span>" // No failures yet. TODO: add failures
 		dat += "</div><div class='line'><a href='?src=\ref[src];gene=\ref[target];op=[operation]'>Confirm</a> "
 		dat += "<a href='?src=\ref[src];abort=1'>Abort</a></div>"
 		popup.set_content(dat)
@@ -219,7 +234,7 @@
 			update_genes()
 			update_icon()
 		else
-			var/obj/item/I = usr.get_active_hand()
+			var/obj/item/I = usr.get_active_held_item()
 			if (istype(I, /obj/item/seeds))
 				if(!usr.drop_item())
 					return
@@ -233,7 +248,7 @@
 			disk = null
 			update_genes()
 		else
-			var/obj/item/I = usr.get_active_hand()
+			var/obj/item/I = usr.get_active_held_item()
 			if(istype(I, /obj/item/weapon/disk/plantgene))
 				if(!usr.drop_item())
 					return
@@ -274,6 +289,9 @@
 				if("extract")
 					if(disk && !disk.read_only)
 						disk.gene = G
+						if(istype(G, /datum/plant_gene/core/potency))
+							var/datum/plant_gene/core/gene = G
+							gene.value = min(gene.value, max_extract_pot)
 						disk.update_name()
 						qdel(seed)
 						seed = null
@@ -320,7 +338,9 @@
 			/datum/plant_gene/core/yield,
 			/datum/plant_gene/core/production,
 			/datum/plant_gene/core/endurance,
-			/datum/plant_gene/core/lifespan
+			/datum/plant_gene/core/lifespan,
+			/datum/plant_gene/core/weed_rate,
+			/datum/plant_gene/core/weed_chance
 			)
 		for(var/a in gene_paths)
 			core_genes += seed.get_gene(a)
@@ -339,6 +359,23 @@
 	seed.icon_state = "seed-x"
 
 
+
+// Gene modder for seed vault ship, built with high tech alien parts.
+/obj/machinery/plantgenes/seedvault/New()
+	..()
+	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/plantgenes/vault(null)
+	B.apply_default_parts(src)
+
+/obj/item/weapon/circuitboard/machine/plantgenes/vault
+	name = "alien board (Plant DNA Manipulator)"
+	icon_state = "abductor_mod"
+	origin_tech = "programming=5;biotech=5"
+	// It wasn't made by actual abductors race, so no abductor tech here.
+	def_components = list(
+		/obj/item/weapon/stock_parts/manipulator = /obj/item/weapon/stock_parts/manipulator/femto,
+		/obj/item/weapon/stock_parts/micro_laser = /obj/item/weapon/stock_parts/micro_laser/quadultra,
+		/obj/item/weapon/stock_parts/scanning_module = /obj/item/weapon/stock_parts/scanning_module/triphasic)
+
 /*
  *  Plant DNA disk
  */
@@ -353,7 +390,7 @@
 
 /obj/item/weapon/disk/plantgene/New()
 	..()
-	overlays += "datadisk_gene"
+	add_overlay("datadisk_gene")
 	src.pixel_x = rand(-5, 5)
 	src.pixel_y = rand(-5, 5)
 
@@ -361,7 +398,7 @@
 	..()
 	if(istype(W, /obj/item/weapon/pen))
 		var/t = stripped_input(user, "What would you like the label to be?", name, null)
-		if(user.get_active_hand() != W)
+		if(user.get_active_held_item() != W)
 			return
 		if(!in_range(src, user) && loc != user)
 			return

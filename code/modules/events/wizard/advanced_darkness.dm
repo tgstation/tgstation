@@ -13,5 +13,4 @@
 /datum/round_event/wizard/darkness/start()
 	if(!started)
 		started = TRUE
-		var/datum/weather/advanced_darkness/darkness = new
-		darkness.weather_start_up()
+		SSweather.run_weather("advanced darkness")

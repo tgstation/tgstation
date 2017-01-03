@@ -1,5 +1,3 @@
-
-
 /datum/reagent/drug
 	name = "Drug"
 	id = "drug"
@@ -14,7 +12,7 @@
 
 /datum/reagent/drug/space_drugs/on_mob_life(mob/living/M)
 	M.set_drugginess(15)
-	if(isturf(M.loc) && !istype(M.loc, /turf/space))
+	if(isturf(M.loc) && !isspaceturf(M.loc))
 		if(M.canmove)
 			if(prob(10)) step(M, pick(cardinal))
 	if(prob(7))
@@ -42,7 +40,9 @@
 	if(prob(1))
 		var/smoke_message = pick("You feel relaxed.", "You feel calmed.","You feel alert.","You feel rugged.")
 		M << "<span class='notice'>[smoke_message]</span>"
+	M.AdjustParalysis(-1, 0)
 	M.AdjustStunned(-1, 0)
+	M.AdjustWeakened(-1, 0)
 	M.adjustStaminaLoss(-0.5*REM, 0)
 	..()
 	. = 1
@@ -52,7 +52,7 @@
 	id = "crank"
 	description = "Reduces stun times by about 200%. If overdosed or addicted it will deal significant Toxin, Brute and Brain damage."
 	reagent_state = LIQUID
-	color = "#60A584" // rgb: 96, 165, 132
+	color = "#FA00C8"
 	overdose_threshold = 20
 	addiction_threshold = 10
 
@@ -62,7 +62,7 @@
 		M << "<span class='notice'>[high_message]</span>"
 	M.AdjustParalysis(-1, 0)
 	M.AdjustStunned(-1, 0)
-	M.AdjustWeakened(-1, 0, 0)
+	M.AdjustWeakened(-1, 0)
 	..()
 	. = 1
 
@@ -99,7 +99,7 @@
 	id = "krokodil"
 	description = "Cools and calms you down. If overdosed it will deal significant Brain and Toxin damage. If addicted it will begin to deal fatal amounts of Brute damage as the subject's skin falls off."
 	reagent_state = LIQUID
-	color = "#60A584" // rgb: 96, 165, 132
+	color = "#0064B4"
 	overdose_threshold = 20
 	addiction_threshold = 15
 
@@ -135,10 +135,11 @@
 	. = 1
 
 /datum/reagent/drug/krokodil/addiction_act_stage4(mob/living/carbon/human/M)
-	if(M.has_dna() && M.dna.species.id != "zombie")
+	CHECK_DNA_AND_SPECIES(M)
+	if(!istype(M.dna.species, /datum/species/krokodil_addict))
 		M << "<span class='userdanger'>Your skin falls off easily!</span>"
 		M.adjustBruteLoss(50*REM, 0) // holy shit your skin just FELL THE FUCK OFF
-		M.set_species(/datum/species/cosmetic_zombie)
+		M.set_species(/datum/species/krokodil_addict)
 	else
 		M.adjustBruteLoss(5*REM, 0)
 	..()
@@ -149,7 +150,7 @@
 	id = "methamphetamine"
 	description = "Reduces stun times by about 300%, speeds the user up, and allows the user to quickly recover stamina while dealing a small amount of Brain damage. If overdosed the subject will move randomly, laugh randomly, drop items and suffer from Toxin and Brain damage. If addicted the subject will constantly jitter and drool, before becoming dizzy and losing motor control and eventually suffer heavy toxin damage."
 	reagent_state = LIQUID
-	color = "#60A584" // rgb: 96, 165, 132
+	color = "#FAFAFA"
 	overdose_threshold = 20
 	addiction_threshold = 10
 	metabolization_rate = 0.75 * REAGENTS_METABOLISM
@@ -160,7 +161,7 @@
 		M << "<span class='notice'>[high_message]</span>"
 	M.AdjustParalysis(-2, 0)
 	M.AdjustStunned(-2, 0)
-	M.AdjustWeakened(-2, 0, 0)
+	M.AdjustWeakened(-2, 0)
 	M.adjustStaminaLoss(-2, 0)
 	M.status_flags |= GOTTAGOREALLYFAST
 	M.Jitter(2)
@@ -172,13 +173,13 @@
 
 /datum/reagent/drug/methamphetamine/overdose_process(mob/living/M)
 	if(M.canmove && !istype(M.loc, /atom/movable))
-		for(var/i = 0, i < 4, i++)
+		for(var/i in 1 to 4)
 			step(M, pick(cardinal))
 	if(prob(20))
 		M.emote("laugh")
 	if(prob(33))
 		M.visible_message("<span class='danger'>[M]'s hands flip out and flail everywhere!</span>")
-		var/obj/item/I = M.get_active_hand()
+		var/obj/item/I = M.get_active_held_item()
 		if(I)
 			M.drop_item()
 	..()
@@ -226,7 +227,7 @@
 	id = "bath_salts"
 	description = "Makes you nearly impervious to stuns and grants a stamina regeneration buff, but you will be a nearly uncontrollable tramp-bearded raving lunatic."
 	reagent_state = LIQUID
-	color = "#60A584" // rgb: 96, 165, 132
+	color = "#FAFAFA"
 	overdose_threshold = 20
 	addiction_threshold = 10
 
@@ -237,7 +238,7 @@
 		M << "<span class='notice'>[high_message]</span>"
 	M.AdjustParalysis(-3, 0)
 	M.AdjustStunned(-3, 0)
-	M.AdjustWeakened(-3, 0, 0)
+	M.AdjustWeakened(-3, 0)
 	M.adjustStaminaLoss(-5, 0)
 	M.adjustBrainLoss(0.5)
 	M.adjustToxLoss(0.1, 0)
@@ -251,12 +252,12 @@
 /datum/reagent/drug/bath_salts/overdose_process(mob/living/M)
 	M.hallucination += 10
 	if(M.canmove && !istype(M.loc, /atom/movable))
-		for(var/i = 0, i < 8, i++)
+		for(var/i in 1 to 8)
 			step(M, pick(cardinal))
 	if(prob(20))
 		M.emote(pick("twitch","drool","moan"))
 	if(prob(33))
-		var/obj/item/I = M.get_active_hand()
+		var/obj/item/I = M.get_active_held_item()
 		if(I)
 			M.drop_item()
 	..()
@@ -315,7 +316,7 @@
 	id = "aranesp"
 	description = "Amps you up and gets you going, fixes all stamina damage you might have but can cause toxin and oxygen damage.."
 	reagent_state = LIQUID
-	color = "#60A584" // rgb: 96, 165, 132
+	color = "#78FFF0"
 
 /datum/reagent/drug/aranesp/on_mob_life(mob/living/M)
 	var/high_message = pick("You feel amped up.", "You feel ready.", "You feel like you can push it to the limit.")

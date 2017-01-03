@@ -5,10 +5,14 @@
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "waterbackpack"
 	item_state = "waterbackpack"
-	w_class = 4
+	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = SLOT_BACK
 	slowdown = 1
 	actions_types = list(/datum/action/item_action/toggle_mister)
+	obj_integrity = 200
+	max_integrity = 200
+	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 30)
+	resistance_flags = FIRE_PROOF
 
 	var/obj/item/weapon/noz
 	var/on = 0
@@ -81,26 +85,19 @@
 
 /obj/item/weapon/watertank/MouseDrop(obj/over_object)
 	var/mob/M = src.loc
-	if(istype(M))
-		switch(over_object.name)
-			if("r_hand")
-				if(M.r_hand)
-					return
-				if(!M.unEquip(src))
-					return
-				M.put_in_r_hand(src)
-			if("l_hand")
-				if(M.l_hand)
-					return
-				if(!M.unEquip(src))
-					return
-				M.put_in_l_hand(src)
+	if(istype(M) && istype(over_object, /obj/screen/inventory/hand))
+		var/obj/screen/inventory/hand/H = over_object
+		if(!M.unEquip(src))
+			return
+		M.put_in_hand(src, H.held_index)
+
 
 /obj/item/weapon/watertank/attackby(obj/item/W, mob/user, params)
 	if(W == noz)
 		remove_noz()
-		return
-	..()
+		return 1
+	else
+		return ..()
 
 // This mister item is intended as an extension of the watertank and always attached to it.
 // Therefore, it's designed to be "locked" to the player's hands or extended back onto
@@ -112,11 +109,12 @@
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "mister"
 	item_state = "mister"
-	w_class = 4
+	w_class = WEIGHT_CLASS_BULKY
 	amount_per_transfer_from_this = 50
 	possible_transfer_amounts = list(25,50,100)
 	volume = 500
 	flags = NODROP | OPENCONTAINER | NOBLUDGEON
+	slot_flags = 0
 
 	var/obj/item/weapon/watertank/tank
 
@@ -151,7 +149,7 @@
 		loc = tank.loc
 
 /obj/item/weapon/reagent_containers/spray/mister/afterattack(obj/target, mob/user, proximity)
-	if(target.loc == loc || target == tank) //Safety check so you don't fill your mister with mutagen or something and then blast yourself in the face with it putting it away
+	if(target.loc == loc) //Safety check so you don't fill your mister with mutagen or something and then blast yourself in the face with it
 		return
 	..()
 
@@ -220,7 +218,7 @@
 	power = 8
 	precision = 1
 	cooling_power = 5
-	w_class = 5
+	w_class = WEIGHT_CLASS_HUGE
 	flags = NODROP //Necessary to ensure that the nozzle and tank never seperate
 	var/obj/item/weapon/watertank/tank
 	var/nozzle_mode = 0
@@ -228,12 +226,13 @@
 	var/nanofrost_cooldown = 0
 
 /obj/item/weapon/extinguisher/mini/nozzle/New(parent_tank)
+	..()
 	if(check_tank_exists(parent_tank, src))
 		tank = parent_tank
 		reagents = tank.reagents
 		max_water = tank.volume
 		loc = tank
-	return
+
 
 /obj/item/weapon/extinguisher/mini/nozzle/Move()
 	..()
@@ -297,7 +296,7 @@
 				nanofrost_cooldown = 0
 		return
 	if(nozzle_mode == METAL_FOAM)
-		if(!Adj|| !istype(target, /turf))
+		if(!Adj|| !isturf(target))
 			return
 		if(metal_synthesis_cooldown < 5)
 			var/obj/effect/particle_effect/foam/metal/F = PoolOrNew(/obj/effect/particle_effect/foam/metal, get_turf(target))
@@ -322,7 +321,7 @@
 	S.set_up(2, src.loc, blasting=1)
 	S.start()
 	var/obj/effect/decal/cleanable/flour/F = new /obj/effect/decal/cleanable/flour(src.loc)
-	F.color = "#B2FFFF"
+	F.add_atom_colour("#B2FFFF", FIXED_COLOUR_PRIORITY)
 	F.name = "nanofrost residue"
 	F.desc = "Residue left behind from a nanofrost detonation. Perhaps there was a fire here?"
 	playsound(src,'sound/effects/bamf.ogg',100,1)
@@ -338,7 +337,7 @@
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "waterbackpackatmos"
 	item_state = "waterbackpackatmos"
-	w_class = 4
+	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = SLOT_BACK
 	slowdown = 1
 	actions_types = list(/datum/action/item_action/activate_injector)
@@ -373,7 +372,7 @@
 
 //Todo : cache these.
 /obj/item/weapon/reagent_containers/chemtank/proc/update_filling()
-	overlays.Cut()
+	cut_overlays()
 
 	if(reagents.total_volume)
 		var/image/filling = image('icons/obj/reagentfillings.dmi',icon_state = "backpack-10")
@@ -388,7 +387,7 @@
 				filling.icon_state = "backpack100"
 
 		filling.color = mix_color_from_reagents(reagents.reagent_list)
-		overlays += filling
+		add_overlay(filling)
 
 /obj/item/weapon/reagent_containers/chemtank/worn_overlays(var/isinhands = FALSE) //apply chemcolor and level
 	. = list()
@@ -410,18 +409,18 @@
 
 /obj/item/weapon/reagent_containers/chemtank/proc/turn_on()
 	on = 1
-	SSobj.processing |= src
+	START_PROCESSING(SSobj, src)
 	if(ismob(loc))
 		loc << "<span class='notice'>[src] turns on.</span>"
 
 /obj/item/weapon/reagent_containers/chemtank/proc/turn_off()
 	on = 0
-	SSobj.processing.Remove(src)
+	STOP_PROCESSING(SSobj, src)
 	if(ismob(loc))
 		loc << "<span class='notice'>[src] turns off.</span>"
 
 /obj/item/weapon/reagent_containers/chemtank/process()
-	if(!istype(loc,/mob/living/carbon/human))
+	if(!ishuman(loc))
 		turn_off()
 		return
 	if(!reagents.total_volume)
@@ -449,7 +448,7 @@
 	desc = "A New Russian backpack spray for systematic cleansing of carbon lifeforms."
 	icon_state = "waterbackpackjani"
 	item_state = "waterbackpackjani"
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 	volume = 2000
 	slowdown = 0
 
@@ -469,7 +468,7 @@
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "misterjani"
 	item_state = "misterjani"
-	w_class = 4
+	w_class = WEIGHT_CLASS_BULKY
 	amount_per_transfer_from_this = 100
 	possible_transfer_amounts = list(75,100,150)
 

@@ -26,7 +26,7 @@
 			if(prob(1))
 				affected_mob << "<span class='danger'>Your muscles ache.</span>"
 				if(prob(20))
-					affected_mob.take_organ_damage(1)
+					affected_mob.take_bodypart_damage(1)
 			if(prob(1))
 				affected_mob << "<span class='danger'>Your stomach hurts.</span>"
 				if(prob(20))
@@ -45,7 +45,7 @@
 			if(prob(1))
 				affected_mob << "<span class='danger'>Your muscles ache.</span>"
 				if(prob(20))
-					affected_mob.take_organ_damage(1)
+					affected_mob.take_bodypart_damage(1)
 			if(prob(1))
 				affected_mob << "<span class='danger'>Your stomach hurts.</span>"
 				if(prob(20))

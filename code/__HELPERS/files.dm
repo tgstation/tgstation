@@ -49,7 +49,7 @@
 	It is just a timer that only permits a download every [FTPDELAY] ticks.
 	This can be changed by modifying FTPDELAY's value above.
 
-	PLEASE USE RESPONSIBLY, Some log files canr each sizes of 4MB!	*/
+	PLEASE USE RESPONSIBLY, Some log files can reach sizes of 4MB!	*/
 /client/proc/file_spam_check()
 	var/time_to_wait = fileaccess_timer - world.time
 	if(time_to_wait > 0)
@@ -58,3 +58,21 @@
 	fileaccess_timer = world.time + FTPDELAY
 	return 0
 #undef FTPDELAY
+
+/proc/pathwalk(path)
+	var/list/jobs = list(path)
+	var/list/filenames = list()
+
+	while(jobs.len)
+		var/current_dir = pop(jobs)
+		var/list/new_filenames = flist(current_dir)
+		for(var/new_filename in new_filenames)
+			// if filename ends in / it is a directory, append to currdir
+			if(findtext(new_filename, "/", -1))
+				jobs += current_dir + new_filename
+			else
+				filenames += current_dir + new_filename
+	return filenames
+
+/proc/pathflatten(path)
+	return replacetext(path, "/", "_")

@@ -34,7 +34,7 @@
 				return
 
 /client/proc/create_poll_function()
-	var/polltype = input("Choose poll type.","Poll Type") in list("Single Option","Text Reply","Rating","Multiple Choice")
+	var/polltype = input("Choose poll type.","Poll Type") in list("Single Option","Text Reply","Rating","Multiple Choice", "Instant Runoff Voting")|null
 	var/choice_amount = 0
 	switch(polltype)
 		if("Single Option")
@@ -48,6 +48,10 @@
 			choice_amount = input("How many choices should be allowed?","Select choice amount") as num|null
 			if(!choice_amount)
 				return
+		if ("Instant Runoff Voting")
+			polltype = POLLTYPE_IRV
+		else
+			return 0
 	var/starttime = SQLtime()
 	var/endtime = input("Set end time for poll as format YYYY-MM-DD HH:MM:SS. All times in server time. HH:MM:SS is optional and 24-hour. Must be later than starting time for obvious reasons.", "Set end time", SQLtime()) as text
 	if(!endtime)
@@ -81,12 +85,20 @@
 			adminonly = 0
 		else
 			return
+	var/dontshow
+	switch(alert("Hide poll results from tracking until completed?",,"Yes","No","Cancel"))
+		if("Yes")
+			dontshow = 1
+		if("No")
+			dontshow = 0
+		else
+			return
 	var/sql_ckey = sanitizeSQL(ckey)
 	var/question = input("Write your question","Question") as message|null
 	if(!question)
 		return
 	question = sanitizeSQL(question)
-	var/DBQuery/query_polladd_question = dbcon.NewQuery("INSERT INTO [format_table_name("poll_question")] (polltype, starttime, endtime, question, adminonly, multiplechoiceoptions, createdby_ckey, createdby_ip) VALUES ('[polltype]', '[starttime]', '[endtime]', '[question]', '[adminonly]', '[choice_amount]', '[sql_ckey]', '[address]')")
+	var/DBQuery/query_polladd_question = dbcon.NewQuery("INSERT INTO [format_table_name("poll_question")] (polltype, starttime, endtime, question, adminonly, multiplechoiceoptions, createdby_ckey, createdby_ip, dontshow) VALUES ('[polltype]', '[starttime]', '[endtime]', '[question]', '[adminonly]', '[choice_amount]', '[sql_ckey]', '[address]', '[dontshow]')")
 	if(!query_polladd_question.Execute())
 		var/err = query_polladd_question.ErrorMsg()
 		log_game("SQL ERROR adding new poll question to table. Error : \[[err]\]\n")
@@ -109,14 +121,15 @@
 		if(!option)
 			return pollid
 		option = sanitizeSQL(option)
-		var/percentagecalc
-		switch(alert("Calculate option results as percentage?",,"Yes","No","Cancel"))
-			if("Yes")
-				percentagecalc = 1
-			if("No")
-				percentagecalc = 0
-			else
-				return pollid
+		var/percentagecalc = 1
+		if (polltype != POLLTYPE_IRV)
+			switch(alert("Calculate option results as percentage?",,"Yes","No","Cancel"))
+				if("Yes")
+					percentagecalc = 1
+				if("No")
+					percentagecalc = 0
+				else
+					return pollid
 		var/minval = 0
 		var/maxval = 0
 		var/descmin = ""
@@ -152,9 +165,11 @@
 			var/err = query_polladd_option.ErrorMsg()
 			log_game("SQL ERROR adding new poll option to table. Error : \[[err]\]\n")
 			return pollid
-		switch(alert(" ",,"Add option","Finish"))
+		switch(alert(" ",,"Add option","Finish", "Cancel"))
 			if("Add option")
 				add_option = 1
 			if("Finish")
 				add_option = 0
+			else
+				return 0
 	return pollid

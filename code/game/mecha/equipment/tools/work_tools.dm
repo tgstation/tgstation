@@ -31,7 +31,7 @@
 		return
 	if(!cargo_holder)
 		return
-	if(istype(target,/obj))
+	if(isobj(target))
 		var/obj/O = target
 		if(!O.anchored)
 			if(cargo_holder.cargo.len < cargo_holder.cargo_capacity)
@@ -50,10 +50,10 @@
 		else
 			occupant_message("<span class='warning'>[target] is firmly secured!</span>")
 
-	else if(istype(target,/mob/living))
+	else if(isliving(target))
 		var/mob/living/M = target
 		if(M.stat == DEAD) return
-		if(chassis.occupant.a_intent == "harm")
+		if(chassis.occupant.a_intent == INTENT_HARM)
 			M.take_overall_damage(dam_force)
 			if(!M)
 				return
@@ -78,9 +78,11 @@
 	energy_drain = 0
 
 /obj/item/mecha_parts/mecha_equipment/hydraulic_clamp/kill/action(atom/target)
-	if(!action_checks(target)) return
-	if(!cargo_holder) return
-	if(istype(target,/obj))
+	if(!action_checks(target))
+		return
+	if(!cargo_holder)
+		return
+	if(isobj(target))
 		var/obj/O = target
 		if(!O.anchored)
 			if(cargo_holder.cargo.len < cargo_holder.cargo_capacity)
@@ -99,13 +101,13 @@
 		else
 			occupant_message("<span class='warning'>[target] is firmly secured!</span>")
 
-	else if(istype(target,/mob/living))
+	else if(isliving(target))
 		var/mob/living/M = target
 		if(M.stat == DEAD) return
-		if(chassis.occupant.a_intent == "harm")
+		if(chassis.occupant.a_intent == INTENT_HARM)
 			target.visible_message("<span class='danger'>[chassis] destroys [target] in an unholy fury.</span>", \
 								"<span class='userdanger'>[chassis] destroys [target] in an unholy fury.</span>")
-		if(chassis.occupant.a_intent == "disarm")
+		if(chassis.occupant.a_intent == INTENT_DISARM)
 			target.visible_message("<span class='danger'>[chassis] rips [target]'s arms off.</span>", \
 								"<span class='userdanger'>[chassis] rips [target]'s arms off.</span>")
 		else
@@ -190,7 +192,7 @@
 	name = "mounted RCD"
 	desc = "An exosuit-mounted Rapid Construction Device."
 	icon_state = "mecha_rcd"
-	origin_tech = "materials=4;bluespace=3;magnets=4;powerstorage=4"
+	origin_tech = "materials=4;bluespace=3;magnets=4;powerstorage=4;engineering=4"
 	equip_cooldown = 10
 	energy_drain = 250
 	range = MELEE|RANGED
@@ -205,10 +207,10 @@
  	..()
 
 /obj/item/mecha_parts/mecha_equipment/rcd/action(atom/target)
-	if(istype(target, /turf/space/transit))//>implying these are ever made -Sieve
+	if(istype(target, /turf/open/space/transit))//>implying these are ever made -Sieve
 		return
 
-	if(!istype(target, /turf) && !istype(target, /obj/machinery/door/airlock))
+	if(!isturf(target) && !istype(target, /obj/machinery/door/airlock))
 		target = get_turf(target)
 	if(!action_checks(target) || get_dist(chassis, target)>3)
 		return
@@ -216,15 +218,15 @@
 
 	switch(mode)
 		if(0)
-			if (istype(target, /turf/simulated/wall))
-				var/turf/simulated/wall/W = target
+			if(iswallturf(target))
+				var/turf/closed/wall/W = target
 				occupant_message("Deconstructing [W]...")
 				if(do_after_cooldown(W))
 					chassis.spark_system.start()
-					W.ChangeTurf(/turf/simulated/floor/plating)
+					W.ChangeTurf(/turf/open/floor/plating)
 					playsound(W, 'sound/items/Deconstruct.ogg', 50, 1)
-			else if (istype(target, /turf/simulated/floor))
-				var/turf/simulated/floor/F = target
+			else if(isfloorturf(target))
+				var/turf/open/floor/F = target
 				occupant_message("Deconstructing [F]...")
 				if(do_after_cooldown(target))
 					chassis.spark_system.start()
@@ -237,22 +239,22 @@
 					qdel(target)
 					playsound(target, 'sound/items/Deconstruct.ogg', 50, 1)
 		if(1)
-			if(istype(target, /turf/space))
-				var/turf/space/S = target
+			if(isspaceturf(target))
+				var/turf/open/space/S = target
 				occupant_message("Building Floor...")
 				if(do_after_cooldown(S))
-					S.ChangeTurf(/turf/simulated/floor/plating)
+					S.ChangeTurf(/turf/open/floor/plating)
 					playsound(S, 'sound/items/Deconstruct.ogg', 50, 1)
 					chassis.spark_system.start()
-			else if(istype(target, /turf/simulated/floor))
-				var/turf/simulated/floor/F = target
+			else if(isfloorturf(target))
+				var/turf/open/floor/F = target
 				occupant_message("Building Wall...")
 				if(do_after_cooldown(F))
-					F.ChangeTurf(/turf/simulated/wall)
+					F.ChangeTurf(/turf/closed/wall)
 					playsound(F, 'sound/items/Deconstruct.ogg', 50, 1)
 					chassis.spark_system.start()
 		if(2)
-			if(istype(target, /turf/simulated/floor))
+			if(isfloorturf(target))
 				occupant_message("Building Airlock...")
 				if(do_after_cooldown(target))
 					chassis.spark_system.start()
@@ -319,7 +321,8 @@
 	return ..()
 
 /obj/item/mecha_parts/mecha_equipment/cable_layer/Destroy()
-	chassis.events.clearEvent("onMove",event)
+	if(chassis)
+		chassis.events.clearEvent("onMove",event)
 	return ..()
 
 /obj/item/mecha_parts/mecha_equipment/cable_layer/action(var/obj/item/stack/cable_coil/target)
@@ -385,9 +388,9 @@
 	last_piece = null
 
 /obj/item/mecha_parts/mecha_equipment/cable_layer/proc/dismantleFloor(var/turf/new_turf)
-	if(istype(new_turf, /turf/simulated/floor))
-		var/turf/simulated/floor/T = new_turf
-		if(!istype(T, /turf/simulated/floor/plating))
+	if(isfloorturf(new_turf))
+		var/turf/open/floor/T = new_turf
+		if(!istype(T, /turf/open/floor/plating))
 			if(!T.broken && !T.burnt)
 				new T.floor_tile(T)
 			T.make_plating()

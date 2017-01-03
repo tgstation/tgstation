@@ -8,8 +8,11 @@
 	name = "navigation beacon"
 	desc = "A radio beacon used for bot navigation."
 	level = 1		// underfloor
-	layer = 2.5
+	layer = LOW_OBJ_LAYER
 	anchored = 1
+	obj_integrity = 500
+	max_integrity = 500
+	armor = list(melee = 70, bullet = 70, laser = 70, energy = 70, bomb = 0, bio = 0, rad = 0, fire = 80, acid = 80)
 
 	var/open = 0		// true if cover is open
 	var/locked = 1		// true if controls are locked
@@ -62,7 +65,7 @@
 // called when turf state changes
 // hide the object if turf is intact
 /obj/machinery/navbeacon/hide(intact)
-	invisibility = intact ? 101 : 0
+	invisibility = intact ? INVISIBILITY_MAXIMUM : 0
 	updateicon()
 
 // update the icon_state
@@ -97,7 +100,8 @@
 			updateDialog()
 		else
 			user << "<span class='warning'>You must open the cover first!</span>"
-	return
+	else
+		return ..()
 
 /obj/machinery/navbeacon/attack_ai(mob/user)
 	interact(user, 1)

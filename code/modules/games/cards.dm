@@ -9,26 +9,29 @@
 /obj/item/weapon/deck
 	name = "deck of cards"
 	desc = "A simple deck of playing cards."
-	icon = 'playing_cards.dmi'
+	icon = 'icons/obj/playing_cards.dmi'
 	icon_state = "deck"
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
+	flags = NOBLUDGEON
 
 	var/list/cards = list()
 
 /obj/item/weapon/deck/New()
 	. = ..()
 
-	var/color
+	var/cardcolor
 	var/datum/playingcard/card
 
 	for (var/suit in list("spades", "clubs", "diamonds", "hearts"))
-		if (suit == "spades" || suit == "clubs") color = "black_"
-		else                                     color = "red_"
+		if (suit == "spades" || suit == "clubs")
+			cardcolor = "black_"
+		else
+			cardcolor = "red_"
 
 		for (var/number in list("ace", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten"))
 			card               = new()
 			card.name          = "[number] of [suit]"
-			card.card_icon     = "[color]num"
+			card.card_icon     = "[cardcolor]num"
 			card.suit          = suit
 			card.number        = number
 
@@ -37,7 +40,7 @@
 		for (var/number in list("jack", "queen", "king"))
 			card               = new()
 			card.name          = "[number] of [suit]"
-			card.card_icon     = "[color]col"
+			card.card_icon     = "[cardcolor]col"
 			card.suit          = suit
 			card.number        = number
 
@@ -80,7 +83,7 @@
 	if(flag)
 		return //It's adjacent, is the user, or is on the user's person
 
-	if (istype(A, /mob/living))
+	if(isliving(A))
 		src.dealTo(A, user)
 	else
 		return ..()
@@ -116,13 +119,15 @@
 /obj/item/weapon/hand
 	name           = "hand of cards"
 	desc           = "Some playing cards."
-	icon           = 'playing_cards.dmi'
+	icon = 'icons/obj/playing_cards.dmi'
 	icon_state     = "empty"
-	w_class        = 1
+	w_class        = WEIGHT_CLASS_TINY
 
 	var/concealed  = 0
+	var/blank = 0
 	var/list/cards = list()
 	var/datum/html_interface/hi
+	resistance_flags = FLAMMABLE
 
 /obj/item/weapon/hand/New(loc)
 	. = ..()
@@ -137,7 +142,17 @@
 	return ..()
 
 /obj/item/weapon/hand/attackby(obj/O, mob/user)
-	if(istype(O,/obj/item/weapon/hand))
+	if(cards.len == 1 && istype(O, /obj/item/weapon/pen))
+		var/datum/playingcard/P = cards[1]
+		if(!blank)
+			user << "You cannot write on that card."
+			return
+		var/cardtext = sanitize(input(user, "What do you wish to write on the card?", "Card Writing") as text|null, 50)
+		if(!cardtext)
+			return
+		P.name = cardtext
+		blank = 0
+	else if(istype(O,/obj/item/weapon/hand))
 		var/obj/item/weapon/hand/H = O
 
 		for(var/datum/playingcard/P in src.cards) H.cards.Add(P)
@@ -251,9 +266,8 @@
 	if (istype(hclient))
 		switch (href_list["action"])
 			if ("play_card")
-				var/datum/playingcard/card = locate(href_list["card"])
-
-				if (card in src.cards)
+				var/datum/playingcard/card = locate(href_list["card"]) in cards
+				if (card && istype(card))
 					src.discard(card)
 			if ("toggle_conceal")
 				src.toggle_conceal()

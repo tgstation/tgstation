@@ -6,11 +6,13 @@
 	icon_state = "mirror"
 	density = 0
 	anchored = 1
-	var/shattered = 0
+	obj_integrity = 200
+	max_integrity = 200
+	integrity_failure = 100
 
 
 /obj/structure/mirror/attack_hand(mob/user)
-	if(shattered)
+	if(broken || !Adjacent(user))
 		return
 
 	if(ishuman(user))
@@ -40,97 +42,55 @@
 
 		H.update_hair()
 
-
-/obj/structure/mirror/proc/shatter()
-	if(shattered)
-		return
-	shattered = 1
-	icon_state = "mirror_broke"
-	playsound(src, "shatter", 70, 1)
-	desc = "Oh no, seven years of bad luck!"
-
-
-/obj/structure/mirror/bullet_act(obj/item/projectile/Proj)
-	if(prob(Proj.damage * 2))
-		if((Proj.damage_type == BRUTE || Proj.damage_type == BURN))
-			if(!shattered)
-				shatter()
-			else
-				playsound(src, 'sound/effects/hit_on_shattered_glass.ogg', 70, 1)
+/obj/structure/mirror/examine_status()
+	if(broken)
+		return // no message spam
 	..()
 
+/obj/structure/mirror/obj_break(damage_flag)
+	if(!broken && !(flags & NODECONSTRUCT))
+		icon_state = "mirror_broke"
+		playsound(src, "shatter", 70, 1)
+		desc = "Oh no, seven years of bad luck!"
+		broken = 1
+
+/obj/structure/mirror/deconstruct(disassembled = TRUE)
+	if(!(flags & NODECONSTRUCT))
+		if(!disassembled)
+			new /obj/item/weapon/shard( src.loc )
+	qdel(src)
 
 /obj/structure/mirror/attackby(obj/item/I, mob/living/user, params)
-	user.changeNext_move(CLICK_CD_MELEE)
-	user.do_attack_animation(src)
-	if(I.damtype == STAMINA)
-		return
-	if(shattered)
-		if(istype(I, /obj/item/weapon/weldingtool))
-			var/obj/item/weapon/weldingtool/WT = I
+	if(istype(I, /obj/item/weapon/weldingtool) && user.a_intent != INTENT_HARM)
+		var/obj/item/weapon/weldingtool/WT = I
+		if(broken)
+			user.changeNext_move(CLICK_CD_MELEE)
 			if(WT.remove_fuel(0, user))
 				user << "<span class='notice'>You begin repairing [src]...</span>"
 				playsound(src, 'sound/items/Welder.ogg', 100, 1)
-				if(do_after(user, 10/I.toolspeed, target = src))
+				if(do_after(user, 10*I.toolspeed, target = src))
 					if(!user || !WT || !WT.isOn())
 						return
 					user << "<span class='notice'>You repair [src].</span>"
-					shattered = 0
+					broken = 0
 					icon_state = initial(icon_state)
 					desc = initial(desc)
-				return
-		playsound(src.loc, 'sound/effects/hit_on_shattered_glass.ogg', 70, 1)
-		return
-
-	if(prob(I.force * 2))
-		visible_message("<span class='warning'>[user] smashes [src] with [I].</span>")
-		shatter()
 	else
-		visible_message("<span class='warning'>[user] hits [src] with [I]!</span>")
-		playsound(src.loc, 'sound/effects/Glasshit.ogg', 70, 1)
+		return ..()
 
+/obj/structure/mirror/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
+	switch(damage_type)
+		if(BRUTE)
+			playsound(src.loc, 'sound/effects/hit_on_shattered_glass.ogg', 70, 1)
+		if(BURN)
+			playsound(src.loc, 'sound/effects/hit_on_shattered_glass.ogg', 70, 1)
 
-/obj/structure/mirror/attack_alien(mob/living/user)
-	user.changeNext_move(CLICK_CD_MELEE)
-	user.do_attack_animation(src)
-	if(islarva(user))
-		return
-	if(shattered)
-		playsound(src.loc, 'sound/effects/hit_on_shattered_glass.ogg', 70, 1)
-		return
-	user.visible_message("<span class='danger'>[user] smashes [src]!</span>")
-	shatter()
-
-
-/obj/structure/mirror/attack_animal(mob/living/user)
-	if(!isanimal(user))
-		return
-	var/mob/living/simple_animal/M = user
-	if(M.melee_damage_upper <= 0)
-		return
-	user.changeNext_move(CLICK_CD_MELEE)
-	M.do_attack_animation(src)
-	if(shattered)
-		playsound(src.loc, 'sound/effects/hit_on_shattered_glass.ogg', 70, 1)
-		return
-	user.visible_message("<span class='danger'>[user] smashes [src]!</span>")
-	shatter()
-
-
-/obj/structure/mirror/attack_slime(mob/living/user)
-	user.changeNext_move(CLICK_CD_MELEE)
-	user.do_attack_animation(src)
-	if(shattered)
-		playsound(src.loc, 'sound/effects/hit_on_shattered_glass.ogg', 70, 1)
-		return
-	user.visible_message("<span class='danger'>[user] smashes [src]!</span>")
-	shatter()
 
 /obj/structure/mirror/magic
 	name = "magic mirror"
 	desc = "Turn and face the strange... face."
 	icon_state = "magic_mirror"
-	var/list/races_blacklist = list("skeleton","agent")
+	var/list/races_blacklist = list("skeleton", "agent", "angel", "military_synth")
 	var/list/choosable_races = list()
 
 /obj/structure/mirror/magic/New()
@@ -195,7 +155,7 @@
 					H.skin_tone = new_s_tone
 					H.dna.update_ui_block(DNA_SKIN_TONE_BLOCK)
 
-			if(MUTCOLORS in H.dna.species.specflags)
+			if(MUTCOLORS in H.dna.species.species_traits)
 				var/new_mutantcolor = input(user, "Choose your skin color:", "Race change") as color|null
 				if(new_mutantcolor)
 					var/temp_hsv = RGBtoHSV(new_mutantcolor)
@@ -208,7 +168,7 @@
 
 			H.update_body()
 			H.update_hair()
-			H.update_mutcolor()
+			H.update_body_parts()
 			H.update_mutations_overlay() // no hulk lizard
 
 		if("gender")

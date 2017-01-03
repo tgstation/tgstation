@@ -1,0 +1,508 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
+"a" = (
+/turf/open/space,
+/area/space)
+"b" = (
+/turf/open/space,
+/turf/closed/indestructible/oldshuttle/corner{
+	tag = "icon-corner (WEST)";
+	icon_state = "corner";
+	dir = 8
+	},
+/area/ruin/powered)
+"c" = (
+/turf/closed/indestructible/oldshuttle,
+/area/ruin/powered)
+"d" = (
+/obj/machinery/door/airlock/glass,
+/turf/open/floor/oldshuttle{
+	baseturf = /turf/open/space;
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/ruin/powered)
+"e" = (
+/turf/open/space,
+/turf/closed/indestructible/oldshuttle/corner,
+/area/ruin/powered)
+"f" = (
+/turf/open/floor/oldshuttle{
+	baseturf = /turf/open/space;
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/turf/closed/indestructible/oldshuttle/corner{
+	tag = "icon-corner (NORTH)";
+	icon_state = "corner";
+	dir = 1
+	},
+/area/ruin/powered)
+"g" = (
+/turf/open/floor/oldshuttle{
+	baseturf = /turf/open/space;
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/ruin/powered)
+"h" = (
+/turf/open/floor/oldshuttle{
+	baseturf = /turf/open/space;
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/turf/closed/indestructible/oldshuttle/corner{
+	tag = "icon-corner (EAST)";
+	icon_state = "corner";
+	dir = 4
+	},
+/area/ruin/powered)
+"i" = (
+/obj/structure/closet{
+	icon_state = "oldcloset";
+	name = "strange closet"
+	},
+/turf/open/floor/oldshuttle{
+	baseturf = /turf/open/space;
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/ruin/powered)
+"j" = (
+/obj/structure/shuttle/engine/propulsion/burst{
+	tag = "icon-propulsion (NORTH)";
+	icon_state = "propulsion";
+	dir = 1
+	},
+/turf/open/space,
+/area/ruin/powered)
+"k" = (
+/mob/living/simple_animal/hostile/retaliate/spaceman,
+/turf/open/floor/oldshuttle{
+	baseturf = /turf/open/space;
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/ruin/powered)
+"l" = (
+/turf/closed/indestructible/oldshuttle{
+	tag = "icon-orange";
+	icon_state = "orange"
+	},
+/area/ruin/powered)
+"m" = (
+/obj/structure/chair/old{
+	tag = "icon-chairold (NORTH)";
+	icon_state = "chairold";
+	dir = 1
+	},
+/turf/open/floor/oldshuttle{
+	baseturf = /turf/open/space;
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/ruin/powered)
+"n" = (
+/obj/structure/chair/old{
+	tag = "icon-chairold (NORTH)";
+	icon_state = "chairold";
+	dir = 1
+	},
+/obj/item/weapon/crowbar/large{
+	desc = "It's a big crowbar. It doesn't fit in your pockets, because it's big. It feels oddly heavy..";
+	force = 20;
+	name = "heavy crowbar"
+	},
+/turf/open/floor/oldshuttle{
+	baseturf = /turf/open/space;
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/ruin/powered)
+"o" = (
+/obj/structure/chair/old{
+	tag = "icon-chairold (NORTH)";
+	icon_state = "chairold";
+	dir = 1
+	},
+/mob/living/simple_animal/hostile/retaliate/spaceman,
+/turf/open/floor/oldshuttle{
+	baseturf = /turf/open/space;
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/ruin/powered)
+"p" = (
+/turf/open/floor/oldshuttle{
+	baseturf = /turf/open/space;
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/turf/closed/indestructible/oldshuttle/corner{
+	tag = "icon-corner (WEST)";
+	icon_state = "corner";
+	dir = 8
+	},
+/area/ruin/powered)
+"q" = (
+/turf/open/floor/oldshuttle{
+	baseturf = /turf/open/space;
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/turf/closed/indestructible/oldshuttle/corner,
+/area/ruin/powered)
+"r" = (
+/turf/open/space,
+/turf/closed/indestructible/oldshuttle/corner{
+	tag = "icon-corner (NORTH)";
+	icon_state = "corner";
+	dir = 1
+	},
+/area/ruin/powered)
+"s" = (
+/turf/open/space,
+/turf/closed/indestructible/oldshuttle/corner{
+	tag = "icon-corner (EAST)";
+	icon_state = "corner";
+	dir = 4
+	},
+/area/ruin/powered)
+"t" = (
+/obj/machinery/power/generator,
+/turf/open/floor/oldshuttle{
+	baseturf = /turf/open/space;
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/ruin/powered)
+"u" = (
+/obj/machinery/power/smes,
+/turf/open/floor/oldshuttle{
+	baseturf = /turf/open/space;
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/ruin/powered)
+"v" = (
+/obj/structure/shuttle/engine/propulsion/burst/left,
+/turf/open/space,
+/area/ruin/powered)
+"w" = (
+/obj/structure/shuttle/engine/propulsion/burst/right,
+/turf/open/space,
+/area/ruin/powered)
+"x" = (
+/obj/structure/shuttle/engine/propulsion/burst,
+/turf/open/space,
+/area/ruin/powered)
+
+(1,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+b
+c
+l
+v
+a
+"}
+(2,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+b
+c
+c
+f
+g
+l
+l
+x
+"}
+(3,1,1) = {"
+a
+a
+a
+a
+a
+b
+d
+f
+g
+g
+g
+g
+l
+l
+x
+"}
+(4,1,1) = {"
+a
+a
+a
+a
+j
+l
+g
+g
+g
+g
+p
+d
+l
+w
+a
+"}
+(5,1,1) = {"
+a
+a
+a
+a
+b
+c
+g
+g
+g
+p
+r
+a
+a
+a
+a
+"}
+(6,1,1) = {"
+a
+a
+b
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+s
+a
+"}
+(7,1,1) = {"
+a
+b
+f
+i
+c
+i
+i
+i
+i
+i
+i
+c
+u
+c
+s
+"}
+(8,1,1) = {"
+b
+f
+i
+i
+c
+m
+m
+m
+o
+m
+m
+c
+g
+q
+c
+"}
+(9,1,1) = {"
+c
+g
+g
+g
+g
+m
+m
+m
+m
+m
+p
+c
+g
+g
+c
+"}
+(10,1,1) = {"
+d
+g
+g
+g
+k
+g
+g
+g
+g
+g
+c
+t
+g
+g
+d
+"}
+(11,1,1) = {"
+c
+g
+g
+g
+g
+m
+m
+m
+m
+m
+q
+c
+g
+g
+c
+"}
+(12,1,1) = {"
+e
+h
+i
+i
+c
+n
+m
+m
+o
+m
+m
+c
+g
+p
+c
+"}
+(13,1,1) = {"
+a
+e
+h
+i
+c
+i
+i
+i
+i
+i
+i
+c
+u
+c
+r
+"}
+(14,1,1) = {"
+a
+a
+e
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+r
+a
+"}
+(15,1,1) = {"
+a
+a
+a
+a
+e
+c
+g
+g
+g
+q
+s
+a
+a
+a
+a
+"}
+(16,1,1) = {"
+a
+a
+a
+a
+j
+l
+g
+g
+g
+g
+q
+d
+l
+v
+a
+"}
+(17,1,1) = {"
+a
+a
+a
+a
+a
+e
+d
+h
+g
+g
+g
+g
+l
+l
+x
+"}
+(18,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+e
+c
+c
+h
+g
+l
+l
+x
+"}
+(19,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+e
+c
+l
+w
+a
+"}

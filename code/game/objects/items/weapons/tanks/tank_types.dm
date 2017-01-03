@@ -16,6 +16,7 @@
 	icon_state = "oxygen"
 	distribute_pressure = TANK_DEFAULT_RELEASE_PRESSURE
 	force = 10
+	dog_fashion = /datum/dog_fashion/back
 
 
 /obj/item/weapon/tank/internals/oxygen/New()
@@ -28,10 +29,12 @@
 /obj/item/weapon/tank/internals/oxygen/yellow
 	desc = "A tank of oxygen, this one is yellow."
 	icon_state = "oxygen_f"
+	dog_fashion = null
 
 /obj/item/weapon/tank/internals/oxygen/red
 	desc = "A tank of oxygen, this one is red."
 	icon_state = "oxygen_fr"
+	dog_fashion = null
 
 
 /*
@@ -59,7 +62,7 @@
 	desc = "Mixed anyone?"
 	icon_state = "oxygen"
 	force = 10
-
+	dog_fashion = /datum/dog_fashion/back
 
 /obj/item/weapon/tank/internals/air/New()
 	..()
@@ -88,9 +91,7 @@
 	return
 
 /obj/item/weapon/tank/internals/plasma/attackby(obj/item/weapon/W, mob/user, params)
-	..()
-
-	if (istype(W, /obj/item/weapon/flamethrower))
+	if(istype(W, /obj/item/weapon/flamethrower))
 		var/obj/item/weapon/flamethrower/F = W
 		if ((!F.status)||(F.ptank))
 			return
@@ -99,7 +100,8 @@
 		user.unEquip(src)
 		src.loc = F
 		F.update_icon()
-	return
+	else
+		return ..()
 
 /obj/item/weapon/tank/internals/plasma/full/New()
 	..()
@@ -156,7 +158,7 @@
 	icon_state = "emergency"
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	force = 4
 	distribute_pressure = TANK_DEFAULT_RELEASE_PRESSURE
 	volume = 3 //Tiny. Real life equivalents only have 21 breaths of oxygen in them. They're EMERGENCY tanks anyway -errorage (dangercon 2011)

@@ -77,17 +77,21 @@ Shaft Miner
 	name = "Shaft Miner"
 
 	belt = /obj/item/device/pda/shaftminer
-	ears = /obj/item/device/radio/headset/headset_cargo
-	uniform = /obj/item/clothing/under/rank/miner
-	l_pocket = /obj/item/weapon/reagent_containers/pill/patch/styptic
-	backpack_contents = list(/obj/item/weapon/crowbar=1,\
+	ears = /obj/item/device/radio/headset/headset_cargo/mining
+	shoes = /obj/item/clothing/shoes/workboots/mining
+	gloves = /obj/item/clothing/gloves/color/black
+	uniform = /obj/item/clothing/under/rank/miner/lavaland
+	l_pocket = /obj/item/weapon/reagent_containers/hypospray/medipen/survival
+	r_pocket = /obj/item/device/flashlight/seclite
+	backpack_contents = list(
 		/obj/item/weapon/storage/bag/ore=1,\
+		/obj/item/weapon/kitchen/knife/combat/survival=1,\
 		/obj/item/weapon/mining_voucher=1)
 
-	backpack = /obj/item/weapon/storage/backpack/industrial
-	satchel = /obj/item/weapon/storage/backpack/satchel_eng
-	dufflebag = /obj/item/weapon/storage/backpack/dufflebag/engineering
-	box = /obj/item/weapon/storage/box/engineer
+	backpack = /obj/item/weapon/storage/backpack/explorer
+	satchel = /obj/item/weapon/storage/backpack/satchel/explorer
+	dufflebag = /obj/item/weapon/storage/backpack/dufflebag
+	box = /obj/item/weapon/storage/box/survival_mining
 
 /*
 Bartender
@@ -148,6 +152,7 @@ Cook
 	uniform = /obj/item/clothing/under/rank/chef
 	suit = /obj/item/clothing/suit/toggle/chef
 	head = /obj/item/clothing/head/chefhat
+	backpack_contents = list(/obj/item/weapon/sharpener = 1)
 
 /datum/outfit/job/cook/pre_equip(mob/living/carbon/human/H)
 	..()
@@ -158,6 +163,12 @@ Cook
 			suit = /obj/item/clothing/suit/apron/chef
 			head = /obj/item/clothing/head/soft/mime
 
+/datum/outfit/job/cook/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+    ..()
+    var/list/possible_boxes = subtypesof(/obj/item/weapon/storage/box/ingredients)
+    var/chosen_box = pick(possible_boxes)
+    var/obj/item/weapon/storage/box/I = new chosen_box(src)
+    H.equip_to_slot_or_del(I,slot_in_backpack)
 
 /*
 Botanist
@@ -186,10 +197,10 @@ Botanist
 	uniform = /obj/item/clothing/under/rank/hydroponics
 	suit = /obj/item/clothing/suit/apron
 	gloves  =/obj/item/clothing/gloves/botanic_leather
-	suit_store = /obj/item/device/analyzer/plant_analyzer
+	suit_store = /obj/item/device/plant_analyzer
 
 	backpack = /obj/item/weapon/storage/backpack/botany
-	satchel = /obj/item/weapon/storage/backpack/satchel_hyd
+	satchel = /obj/item/weapon/storage/backpack/satchel/hyd
 
 
 /*
@@ -218,3 +229,4 @@ Janitor
 	belt = /obj/item/device/pda/janitor
 	ears = /obj/item/device/radio/headset/headset_srv
 	uniform = /obj/item/clothing/under/rank/janitor
+	backpack_contents = list(/obj/item/device/modular_computer/tablet/preset/advanced=1)

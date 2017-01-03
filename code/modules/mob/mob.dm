@@ -2,13 +2,22 @@
 	mob_list -= src
 	dead_mob_list -= src
 	living_mob_list -= src
+	all_clockwork_mobs -= src
+	if(observers && observers.len)
+		for(var/M in observers)
+			var/mob/dead/observe = M
+			observe.reset_perspective(null)
 	qdel(hud_used)
 	if(mind && mind.current == src)
 		spellremove(src)
 	for(var/infection in viruses)
 		qdel(infection)
+	for(var/cc in client_colours)
+		qdel(cc)
+	client_colours = null
 	ghostize()
-	return ..()
+	..()
+	return QDEL_HINT_HARDDEL
 
 var/next_mob_id = 0
 /mob/New()
@@ -22,8 +31,11 @@ var/next_mob_id = 0
 	..()
 
 /atom/proc/prepare_huds()
+	hud_list = list()
 	for(var/hud in hud_possible)
-		hud_list[hud] = image('icons/mob/hud.dmi', src, "")
+		var/image/I = image('icons/mob/hud.dmi', src, "")
+		I.appearance_flags = RESET_COLOR|RESET_TRANSFORM
+		hud_list[hud] = I
 
 /mob/proc/Cell()
 	set category = "Admin"
@@ -72,61 +84,43 @@ var/next_mob_id = 0
 	else
 		src << msg
 
-// Show a message the src mob and to all player mobs who sees the src mob
-// This would be for visible actions by the src mob
-// message is the message output to anyone who can see e.g. "[src] does something!"
+// Show a message to all player mobs who sees this atom
+// Show a message to the src mob (if the src is a mob)
+// Use for atoms performing visible actions
+// message is output to anyone who can see, e.g. "The [src] does something!"
 // self_message (optional) is what the src mob sees e.g. "You do something!"
 // blind_message (optional) is what blind people will hear e.g. "You hear something!"
+// vision_distance (optional) define how many tiles away the message can be seen.
+// ignored_mob (optional) doesn't show any message to a given mob if TRUE.
 
-/mob/visible_message(message, self_message, blind_message)
+/atom/proc/visible_message(message, self_message, blind_message, vision_distance, ignored_mob)
 	var/turf/T = get_turf(src)
 	if(!T)
 		return
-	for(var/mob/M in get_hearers_in_view(7, src))
+	var/range = 7
+	if(vision_distance)
+		range = vision_distance
+	for(var/mob/M in get_hearers_in_view(range, src))
 		if(!M.client)
+			continue
+		if(M == ignored_mob)
 			continue
 		var/msg = message
 		if(M == src) //the src always see the main message or self message
 			if(self_message)
 				msg = self_message
 		else
-			if(M.see_invisible<invisibility || T != loc) //if src is inside something or invisible to us,
+			if(M.see_invisible<invisibility || (T != loc && T != src))//if src is invisible to us or is inside something (and isn't a turf),
 				if(blind_message) // then people see blind message if there is one, otherwise nothing.
 					msg = blind_message
 				else
 					continue
 			else if(T.lighting_object)
-				if(T.lighting_object.invisibility <= M.see_invisible && !T.lighting_object.luminosity)
-					if(blind_message) //if the light object is dark and not invisible to us, we see blind_message/nothing
+				if(T.lighting_object.invisibility <= M.see_invisible && !T.lighting_object.luminosity) //the light object is dark and not invisible to us
+					if(blind_message)
 						msg = blind_message
 					else
 						continue
-		M.show_message(msg,1,blind_message,2)
-
-// Show a message to all player mobs who sees this atom
-// Use for objects performing visible actions
-// message is output to anyone who can see, e.g. "The [src] does something!"
-// blind_message (optional) is what blind people will hear e.g. "You hear something!"
-
-/atom/proc/visible_message(message, blind_message)
-	var/turf/T = get_turf(src)
-	if(!T)
-		return
-	for(var/mob/M in get_hearers_in_view(7, src))
-		if(!M.client)
-			continue
-		var/msg = message
-		if(M.see_invisible<invisibility || (T != loc && T != src))//if src is invisible to us or is inside something (and isn't a turf),
-			if(blind_message) // then people see blind message if there is one, otherwise nothing.
-				msg = blind_message
-			else
-				continue
-		else if(T.lighting_object)
-			if(T.lighting_object.invisibility <= M.see_invisible && !T.lighting_object.luminosity) //the light object is dark and not invisible to us
-				if(blind_message)
-					msg = blind_message
-				else
-					continue
 		M.show_message(msg,1,blind_message,2)
 
 // Show a message to all mobs in earshot of this one
@@ -167,56 +161,17 @@ var/next_mob_id = 0
 	return
 
 /mob/proc/get_item_by_slot(slot_id)
-	switch(slot_id)
-		if(slot_l_hand)
-			return l_hand
-		if(slot_r_hand)
-			return r_hand
 	return null
 
-/mob/proc/ret_grab(obj/effect/list_container/mobl/L, flag)
-	if ((!( istype(l_hand, /obj/item/weapon/grab) ) && !( istype(r_hand, /obj/item/weapon/grab) )))
-		if (!( L ))
-			return null
-		else
-			return L.container
-	else
-		if (!( L ))
-			L = new /obj/effect/list_container/mobl( null )
-			L.container += src
-			L.master = src
-		if (istype(l_hand, /obj/item/weapon/grab))
-			var/obj/item/weapon/grab/G = l_hand
-			if (!( L.container.Find(G.affecting) ))
-				L.container += G.affecting
-				if (G.affecting)
-					G.affecting.ret_grab(L, 1)
-		if (istype(r_hand, /obj/item/weapon/grab))
-			var/obj/item/weapon/grab/G = r_hand
-			if (!( L.container.Find(G.affecting) ))
-				L.container += G.affecting
-				if (G.affecting)
-					G.affecting.ret_grab(L, 1)
-		if (!( flag ))
-			if (L.master == src)
-				var/list/temp = list(  )
-				temp += L.container
-				//L = null
-				qdel(L)
-				return temp
-			else
-				return L.container
+/mob/proc/restrained(ignore_grab)
 	return
 
-/mob/proc/restrained()
-	return
-
-/mob/proc/incapacitated()
+/mob/proc/incapacitated(ignore_restraints, ignore_grab)
 	return
 
 //This proc is called whenever someone clicks an inventory ui slot.
 /mob/proc/attack_ui(slot)
-	var/obj/item/W = get_active_hand()
+	var/obj/item/W = get_active_held_item()
 
 	if(istype(W))
 		if(equip_to_slot_if_possible(W, slot,0,0,0))
@@ -230,13 +185,13 @@ var/next_mob_id = 0
 
 	return 0
 
-//This is a SAFE proc. Use this instead of equip_to_splot()!
+//This is a SAFE proc. Use this instead of equip_to_slot()!
 //set qdel_on_fail to have it delete W if it fails to equip
 //set disable_warning to disable the 'you are unable to equip that' warning.
 //unset redraw_mob to prevent the mob from being redrawn at the end.
 /mob/proc/equip_to_slot_if_possible(obj/item/W, slot, qdel_on_fail = 0, disable_warning = 0, redraw_mob = 1)
 	if(!istype(W)) return 0
-	if(!W.mob_can_equip(src, slot, disable_warning))
+	if(!W.mob_can_equip(src, null, slot, disable_warning))
 		if(qdel_on_fail)
 			qdel(W)
 		else
@@ -253,15 +208,28 @@ var/next_mob_id = 0
 
 //This is just a commonly used configuration for the equip_to_slot_if_possible() proc, used to equip people when the rounds tarts and when events happen and such.
 /mob/proc/equip_to_slot_or_del(obj/item/W, slot)
-	equip_to_slot_if_possible(W, slot, 1, 1, 0)
+	return equip_to_slot_if_possible(W, slot, 1, 1, 0)
 
 //puts the item "W" into an appropriate slot in a human's inventory
 //returns 0 if it cannot, 1 if successful
 /mob/proc/equip_to_appropriate_slot(obj/item/W)
 	if(!istype(W)) return 0
+	var/slot_priority = W.slot_equipment_priority
 
-	for(var/slot in W.slot_equipment_priority)
-		if(equip_to_slot_if_possible(W, slot, 0, 1, 1)) //qdel_on_fail = 0; disable_warning = 0; redraw_mob = 1
+	if(!slot_priority)
+		slot_priority = list( \
+			slot_back, slot_wear_id,\
+			slot_w_uniform, slot_wear_suit,\
+			slot_wear_mask, slot_head, slot_neck,\
+			slot_shoes, slot_gloves,\
+			slot_ears, slot_glasses,\
+			slot_belt, slot_s_store,\
+			slot_l_store, slot_r_store,\
+			slot_generic_dextrous_storage\
+		)
+
+	for(var/slot in slot_priority)
+		if(equip_to_slot_if_possible(W, slot, 0, 1, 1)) //qdel_on_fail = 0; disable_warning = 1; redraw_mob = 1
 			return 1
 
 	return 0
@@ -290,7 +258,6 @@ var/next_mob_id = 0
 			clear_fullscreen("remote_view", 0)
 		update_pipe_vision()
 
-
 /mob/proc/show_inv(mob/user)
 	return
 
@@ -316,28 +283,30 @@ var/next_mob_id = 0
 
 	if(!src || !isturf(src.loc) || !(A in view(src.loc)))
 		return 0
-	if(istype(A, /obj/effect/decal/point))
+	if(istype(A, /obj/effect/overlay/temp/point))
 		return 0
 
 	var/tile = get_turf(A)
 	if (!tile)
 		return 0
 
-	var/obj/P = new /obj/effect/decal/point(tile)
-	P.invisibility = invisibility
-	spawn (20)
-		if(P)
-			qdel(P)
+	PoolOrNew(/obj/effect/overlay/temp/point, list(A,invisibility))
 
 	return 1
 
 //this and stop_pulling really ought to be /mob/living procs
-/mob/proc/start_pulling(atom/movable/AM)
+/mob/proc/start_pulling(atom/movable/AM, supress_message = 0)
 	if(!AM || !src)
 		return
 	if(AM == src || !isturf(AM.loc))
 		return
-	if(AM.anchored)
+	if(AM.anchored || AM.throwing)
+		return
+	if(isliving(AM))
+		var/mob/living/L = AM
+		if(L.buckled && L.buckled.buckle_prevents_pull)
+			return
+	if(throwing || incapacitated())
 		return
 
 	AM.add_fingerprint(src)
@@ -349,13 +318,21 @@ var/next_mob_id = 0
 			return
 		stop_pulling()
 
+	changeNext_move(CLICK_CD_GRABBING)
+
+	if(AM.pulledby)
+		visible_message("<span class='danger'>[src] has pulled [AM] from [AM.pulledby]'s grip.</span>")
+		AM.pulledby.stop_pulling() //an object can't be pulled by two mobs at once.
+
 	pulling = AM
 	AM.pulledby = src
-
+	playsound(src.loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 	update_pull_hud_icon()
 
 	if(ismob(AM))
 		var/mob/M = AM
+		if(!supress_message)
+			visible_message("<span class='warning'>[src] has grabbed [M] passively!</span>")
 		if(!iscarbon(src))
 			M.LAssailant = null
 		else
@@ -367,11 +344,15 @@ var/next_mob_id = 0
 
 	if(pulling)
 		pulling.pulledby = null
+		if(ismob(pulling))
+			var/mob/M = pulling
+			M.update_canmove()// mob gets up if it was lyng down in a chokehold
 		pulling = null
+		grab_state = 0
 		update_pull_hud_icon()
 
 /mob/proc/update_pull_hud_icon()
-	if(client && hud_used)
+	if(hud_used)
 		if(hud_used.pull_icon)
 			hud_used.pull_icon.update_icon(src)
 
@@ -386,16 +367,11 @@ var/next_mob_id = 0
 	if(incapacitated())
 		return
 
-	if(hand)
-		var/obj/item/W = l_hand
-		if (W)
-			W.attack_self(src)
-			update_inv_l_hand()
-	else
-		var/obj/item/W = r_hand
-		if (W)
-			W.attack_self(src)
-			update_inv_r_hand()
+	var/obj/item/I = get_active_held_item()
+	if(I)
+		I.attack_self(src)
+		update_inv_hands()
+
 
 /*
 /mob/verb/dump_source()
@@ -411,10 +387,11 @@ var/next_mob_id = 0
 /mob/verb/memory()
 	set name = "Notes"
 	set category = "IC"
+	set desc = "View your character's notes memory."
 	if(mind)
 		mind.show_memory(src)
 	else
-		src << "The game appears to have misplaced your mind datum, so we can't show you your notes."
+		src << "You don't have a mind datum for some reason, so you can't look at your notes, if you had any."
 
 /mob/verb/add_memory(msg as message)
 	set name = "Add Note"
@@ -426,21 +403,7 @@ var/next_mob_id = 0
 	if(mind)
 		mind.store_memory(msg)
 	else
-		src << "The game appears to have misplaced your mind datum, so we can't show you your notes."
-
-/mob/proc/store_memory(msg as message, popup, sane = 1)
-	msg = copytext(msg, 1, MAX_MESSAGE_LEN)
-
-	if (sane)
-		msg = sanitize(msg)
-
-	if (length(memory) == 0)
-		memory += msg
-	else
-		memory += "<BR>[msg]"
-
-	if (popup)
-		memory()
+		src << "You don't have a mind datum for some reason, so you can't add a note to it."
 
 /mob/verb/abandon_mob()
 	set name = "Respawn"
@@ -475,36 +438,7 @@ var/next_mob_id = 0
 //	M.Login()	//wat
 	return
 
-/mob/verb/observe()
-	set name = "Observe"
-	set category = "OOC"
-	var/is_admin = 0
 
-	if(check_rights_for(client,R_ADMIN))
-		is_admin = 1
-	else if(stat != DEAD || istype(src, /mob/new_player))
-		usr << "<span class='notice'>You must be observing to use this!</span>"
-		return
-
-	if(is_admin && stat == DEAD)
-		is_admin = 0
-
-	var/list/creatures = getpois()
-
-	client.perspective = EYE_PERSPECTIVE
-
-	var/eye_name = null
-
-	var/ok = "[is_admin ? "Admin Observe" : "Observe"]"
-	eye_name = input("Please, select a player!", ok, null, null) as null|anything in creatures
-
-	if (!eye_name)
-		return
-
-	var/mob/mob_eye = creatures[eye_name]
-
-	if(client && mob_eye)
-		client.eye = mob_eye
 
 /mob/verb/cancel_camera()
 	set name = "Cancel Camera View"
@@ -525,10 +459,16 @@ var/next_mob_id = 0
 	if(usr.canUseTopic(src, BE_CLOSE, NO_DEXTERY))
 		if(href_list["item"])
 			var/slot = text2num(href_list["item"])
-			var/obj/item/what = get_item_by_slot(slot)
-
+			var/hand_index = text2num(href_list["hand_index"])
+			var/obj/item/what
+			if(hand_index)
+				what = get_item_for_held_index(hand_index)
+				slot = list(slot,hand_index)
+			else
+				what = get_item_by_slot(slot)
 			if(what)
-				usr.stripPanelUnequip(what,src,slot)
+				if(!(what.flags & ABSTRACT))
+					usr.stripPanelUnequip(what,src,slot)
 			else
 				usr.stripPanelEquip(what,src,slot)
 
@@ -556,7 +496,7 @@ var/next_mob_id = 0
 		return
 	if(!Adjacent(usr))
 		return
-	if(istype(M, /mob/living/silicon/ai))
+	if(isAI(M))
 		return
 	show_inv(usr)
 
@@ -581,24 +521,14 @@ var/next_mob_id = 0
 
 	if(statpanel("Status"))
 		stat(null, "Map: [MAP_NAME]")
-		if (nextmap && istype(nextmap))
+		if(nextmap && istype(nextmap))
 			stat(null, "Next Map: [nextmap.friendlyname]")
 		stat(null, "Server Time: [time2text(world.realtime, "YYYY-MM-DD hh:mm")]")
-		var/ETA
-		switch(SSshuttle.emergency.mode)
-			if(SHUTTLE_RECALL)
-				ETA = "RCL"
-			if(SHUTTLE_CALL)
-				ETA = "ETA"
-			if(SHUTTLE_DOCKED)
-				ETA = "ETD"
-			if(SHUTTLE_ESCAPE)
-				ETA = "ESC"
-			if(SHUTTLE_STRANDED)
-				ETA = "ERR"
-		if(ETA)
-			var/timeleft = SSshuttle.emergency.timeLeft()
-			stat(null, "[ETA]-[(timeleft / 60) % 60]:[add_zero(num2text(timeleft % 60), 2)]")
+		if(SSshuttle.emergency)
+			stat(null, "Current Shuttle: [SSshuttle.emergency.name]")
+			var/ETA = SSshuttle.emergency.getModeStr()
+			if(ETA)
+				stat(null, "[ETA] [SSshuttle.emergency.getTimerStr()]")
 
 
 	if(client && client.holder)
@@ -617,7 +547,6 @@ var/next_mob_id = 0
 			else
 				stat("Failsafe Controller:", "ERROR")
 			if(Master)
-				stat("Subsystems:", "[round(Master.subsystem_cost, 0.01)]ds")
 				stat(null)
 				for(var/datum/subsystem/SS in Master.subsystems)
 					SS.stat_entry()
@@ -631,7 +560,7 @@ var/next_mob_id = 0
 			var/list/overrides = list()
 			for(var/image/I in client.images)
 				if(I.loc && I.loc.loc == listed_turf && I.override)
-					overrides = I.loc
+					overrides += I.loc
 			for(var/atom/A in listed_turf)
 				if(!A.mouse_opacity)
 					continue
@@ -687,44 +616,52 @@ var/next_mob_id = 0
 //Robots, animals and brains have their own version so don't worry about them
 /mob/proc/update_canmove()
 	var/ko = weakened || paralysis || stat || (status_flags & FAKEDEATH)
+	var/chokehold = pulledby && pulledby.grab_state >= GRAB_NECK
 	var/buckle_lying = !(buckled && !buckled.buckle_lying)
-	if(ko || resting || stunned)
-		drop_r_hand()
-		drop_l_hand()
+	var/has_legs = get_num_legs()
+	var/has_arms = get_num_arms()
+	var/ignore_legs = get_leg_ignore()
+	if(ko || resting || stunned || chokehold)
+		drop_all_held_items()
 		unset_machine()
 		if(pulling)
 			stop_pulling()
-	else
+	else if(has_legs || ignore_legs)
 		lying = 0
-		canmove = 1
+
 	if(buckled)
 		lying = 90*buckle_lying
-	else
-		if((ko || resting) && !lying)
-			fall(ko)
-	canmove = !(ko || resting || stunned || buckled)
+	else if(!lying)
+		if(resting)
+			fall()
+		else if(ko || (!has_legs && !ignore_legs) || chokehold)
+			fall(forced = 1)
+	canmove = !(ko || resting || stunned || chokehold || buckled || (!has_legs && !ignore_legs && !has_arms))
 	density = !lying
 	if(lying)
 		if(layer == initial(layer)) //to avoid special cases like hiding larvas.
-			layer = MOB_LAYER - 0.2 //so mob lying always appear behind standing mobs
+			layer = LYING_MOB_LAYER //so mob lying always appear behind standing mobs
 	else
-		if(layer == MOB_LAYER - 0.2)
+		if(layer == LYING_MOB_LAYER)
 			layer = initial(layer)
 	update_transform()
-	update_action_buttons_icon()
+	update_action_buttons_icon(status_only=TRUE)
+	if(isliving(src))
+		var/mob/living/L = src
+		if(L.has_status_effect(/datum/status_effect/freon))
+			canmove = 0
 	lying_prev = lying
 	return canmove
 
 
 /mob/proc/fall(forced)
-	drop_l_hand()
-	drop_r_hand()
+	drop_all_held_items()
 
 /mob/verb/eastface()
 	set hidden = 1
 	if(!canface())
 		return 0
-	dir = EAST
+	setDir(EAST)
 	client.move_delay += movement_delay()
 	return 1
 
@@ -733,7 +670,7 @@ var/next_mob_id = 0
 	set hidden = 1
 	if(!canface())
 		return 0
-	dir = WEST
+	setDir(WEST)
 	client.move_delay += movement_delay()
 	return 1
 
@@ -742,7 +679,7 @@ var/next_mob_id = 0
 	set hidden = 1
 	if(!canface())
 		return 0
-	dir = NORTH
+	setDir(NORTH)
 	client.move_delay += movement_delay()
 	return 1
 
@@ -751,7 +688,7 @@ var/next_mob_id = 0
 	set hidden = 1
 	if(!canface())
 		return 0
-	dir = SOUTH
+	setDir(SOUTH)
 	client.move_delay += movement_delay()
 	return 1
 
@@ -765,130 +702,16 @@ var/next_mob_id = 0
 /mob/proc/activate_hand(selhand)
 	return
 
-/mob/proc/Jitter(amount)
-	jitteriness = max(jitteriness,amount,0)
-
-/mob/proc/Dizzy(amount)
-	dizziness = max(dizziness,amount,0)
-
-/mob/proc/Stun(amount, updating_canmove = 1)
-	if(status_flags & CANSTUN)
-		stunned = max(max(stunned,amount),0) //can't go below 0, getting a low amount of stun doesn't lower your current stun
-		if(updating_canmove)
-			update_canmove()
-
-/mob/proc/SetStunned(amount, updating_canmove = 1) //if you REALLY need to set stun to a set amount without the whole "can't go below current stunned"
-	if(status_flags & CANSTUN)
-		stunned = max(amount,0)
-		if(updating_canmove)
-			update_canmove()
-
-/mob/proc/AdjustStunned(amount, updating_canmove = 1)
-	if(status_flags & CANSTUN)
-		stunned = max(stunned + amount,0)
-		if(updating_canmove)
-			update_canmove()
-
-/mob/proc/Weaken(amount, ignore_canweaken = 0, updating_canmove = 1)
-	if((status_flags & CANWEAKEN) || ignore_canweaken)
-		weakened = max(max(weakened,amount),0)
-		if(updating_canmove)
-			update_canmove()	//updates lying, canmove and icons
-
-/mob/proc/SetWeakened(amount, updating_canmove = 1)
-	if(status_flags & CANWEAKEN)
-		weakened = max(amount,0)
-		if(updating_canmove)
-			update_canmove()	//updates lying, canmove and icons
-
-/mob/proc/AdjustWeakened(amount, ignore_canweaken = 0, updating_canmove = 1)
-	if((status_flags & CANWEAKEN) || ignore_canweaken)
-		weakened = max(weakened + amount,0)
-		if(updating_canmove)
-			update_canmove()	//updates lying, canmove and icons
-
-/mob/proc/Paralyse(amount, updating_stat = 1)
-	if(status_flags & CANPARALYSE)
-		var/old_paralysis = paralysis
-		paralysis = max(max(paralysis,amount),0)
-		if((!old_paralysis && paralysis) || (old_paralysis && !paralysis))
-			if(updating_stat)
-				update_stat()
-
-/mob/proc/SetParalysis(amount, updating_stat = 1)
-	if(status_flags & CANPARALYSE)
-		var/old_paralysis = paralysis
-		paralysis = max(amount,0)
-		if((!old_paralysis && paralysis) || (old_paralysis && !paralysis))
-			if(updating_stat)
-				update_stat()
-
-/mob/proc/AdjustParalysis(amount, updating_stat = 1)
-	if(status_flags & CANPARALYSE)
-		var/old_paralysis = paralysis
-		paralysis = max(paralysis + amount,0)
-		if((!old_paralysis && paralysis) || (old_paralysis && !paralysis))
-			if(updating_stat)
-				update_stat()
-
-/mob/proc/Sleeping(amount, updating_stat = 1)
-	var/old_sleeping = sleeping
-	sleeping = max(max(sleeping,amount),0)
-	if(!old_sleeping && sleeping)
-		throw_alert("asleep", /obj/screen/alert/asleep)
-		if(updating_stat)
-			update_stat()
-	else if(old_sleeping && !sleeping)
-		clear_alert("asleep")
-		if(updating_stat)
-			update_stat()
-
-/mob/proc/SetSleeping(amount, updating_stat = 1)
-	var/old_sleeping = sleeping
-	sleeping = max(amount,0)
-	if(!old_sleeping && sleeping)
-		throw_alert("asleep", /obj/screen/alert/asleep)
-		if(updating_stat)
-			update_stat()
-	else if(old_sleeping && !sleeping)
-		clear_alert("asleep")
-		if(updating_stat)
-			update_stat()
-
-/mob/proc/AdjustSleeping(amount, updating_stat = 1)
-	var/old_sleeping = sleeping
-	sleeping = max(sleeping + amount,0)
-	if(!old_sleeping && sleeping)
-		throw_alert("asleep", /obj/screen/alert/asleep)
-		if(updating_stat)
-			update_stat()
-	else if(old_sleeping && !sleeping)
-		clear_alert("asleep")
-		if(updating_stat)
-			update_stat()
-
-/mob/proc/Resting(amount)
-	resting = max(max(resting,amount),0)
-	update_canmove()
-
-/mob/proc/SetResting(amount)
-	resting = max(amount,0)
-	update_canmove()
-
-/mob/proc/AdjustResting(amount)
-	resting = max(resting + amount,0)
-	update_canmove()
-
 /mob/proc/assess_threat() //For sec bot threat assessment
 	return
 
 /mob/proc/get_ghost(even_if_they_cant_reenter = 0)
 	if(mind)
-		for(var/mob/dead/observer/G in dead_mob_list)
-			if(G.mind == mind)
-				if(G.can_reenter_corpse || even_if_they_cant_reenter)
-					return G
-				break
+		return mind.get_ghost(even_if_they_cant_reenter)
+
+/mob/proc/grab_ghost(force)
+	if(mind)
+		return mind.grab_ghost(force = force)
 
 /mob/proc/notify_ghost_cloning(var/message = "Someone is trying to revive you. Re-enter your corpse if you want to be revived!", var/sound = 'sound/effects/genetics.ogg', var/atom/source = null)
 	var/mob/dead/observer/ghost = get_ghost()
@@ -896,21 +719,13 @@ var/next_mob_id = 0
 		ghost.notify_cloning(message, sound, source)
 		return ghost
 
-
-
-/mob/proc/adjustEarDamage()
-	return
-
-/mob/proc/setEarDamage()
-	return
-
 /mob/proc/AddSpell(obj/effect/proc_holder/spell/S)
 	mob_spell_list += S
 	S.action.Grant(src)
 
 //override to avoid rotating pixel_xy on mobs
 /mob/shuttleRotate(rotation)
-	dir = angle2dir(rotation+dir2angle(dir))
+	setDir(angle2dir(rotation+dir2angle(dir)))
 
 //You can buckle on mobs if you're next to them since most are dense
 /mob/buckle_mob(mob/living/M, force = 0)
@@ -1042,27 +857,68 @@ var/next_mob_id = 0
 /mob/proc/update_health_hud()
 	return
 
-/mob/living/on_varedit(modified_var)
-	switch(modified_var)
+/mob/living/vv_edit_var(var_name, var_value)
+	switch(var_name)
+		if("stat")
+			if((stat == DEAD) && (var_value < DEAD))//Bringing the dead back to life
+				dead_mob_list -= src
+				living_mob_list += src
+			if((stat < DEAD) && (var_value == DEAD))//Kill he
+				living_mob_list -= src
+				dead_mob_list += src
+	. = ..()
+	switch(var_name)
 		if("weakened")
-			SetWeakened(weakened)
+			SetWeakened(var_value)
 		if("stunned")
-			SetStunned(stunned)
+			SetStunned(var_value)
 		if("paralysis")
-			SetParalysis(paralysis)
+			SetParalysis(var_value)
 		if("sleeping")
-			SetSleeping(sleeping)
+			SetSleeping(var_value)
 		if("eye_blind")
-			set_blindness(eye_blind)
+			set_blindness(var_value)
 		if("eye_damage")
-			set_eye_damage(eye_damage)
+			set_eye_damage(var_value)
 		if("eye_blurry")
-			set_blurriness(eye_blurry)
+			set_blurriness(var_value)
 		if("ear_deaf")
-			setEarDamage(-1, ear_deaf)
+			setEarDamage(-1, var_value)
 		if("ear_damage")
-			setEarDamage(ear_damage, -1)
+			setEarDamage(var_value, -1)
 		if("maxHealth")
 			updatehealth()
 		if("resize")
 			update_transform()
+
+
+/mob/proc/is_literate()
+	return 0
+
+/mob/proc/can_hold_items()
+	return FALSE
+
+/mob/proc/get_idcard()
+	return
+
+/mob/vv_get_dropdown()
+	. = ..()
+	. += "---"
+	.["Gib"] = "?_src_=vars;gib=\ref[src]"
+	.["Give Spell"] = "?_src_=vars;give_spell=\ref[src]"
+	.["Remove Spell"] = "?_src_=vars;remove_spell=\ref[src]"
+	.["Give Disease"] = "?_src_=vars;give_disease=\ref[src]"
+	.["Toggle Godmode"] = "?_src_=vars;godmode=\ref[src]"
+	.["Drop Everything"] = "?_src_=vars;drop_everything=\ref[src]"
+	.["Regenerate Icons"] = "?_src_=vars;regenerateicons=\ref[src]"
+	.["Make Space Ninja"] = "?_src_=vars;ninja=\ref[src]"
+	.["Show player panel"] = "?_src_=vars;mob_player_panel=\ref[src]"
+	.["Toggle Build Mode"] = "?_src_=vars;build_mode=\ref[src]"
+	.["Assume Direct Control"] = "?_src_=vars;direct_control=\ref[src]"
+	.["Offer Control to Ghosts"] = "?_src_=vars;offer_control=\ref[src]"
+
+/mob/vv_get_var(var_name)
+	switch(var_name)
+		if ("attack_log")
+			return debug_variable(var_name, attack_log, 0, src, FALSE)
+	. = ..()

@@ -1,4 +1,4 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:33
+
 
 /obj/singularity
 	name = "gravitational singularity"
@@ -7,9 +7,9 @@
 	icon_state = "singularity_s1"
 	anchored = 1
 	density = 1
-	layer = 6
+	layer = MASSIVE_OBJ_LAYER
 	luminosity = 6
-	unacidable = 1 //Don't comment this out.
+	appearance_flags = 0
 	var/current_size = 1
 	var/allowed_size = 1
 	var/contained = 1 //Are we going to move around?
@@ -26,7 +26,7 @@
 	var/last_failed_movement = 0//Will not move in the same dir if it couldnt before, will help with the getting stuck on fields thing
 	var/last_warning
 	var/consumedSupermatter = 0 //If the singularity has eaten a supermatter shard and can go to stage six
-	burn_state = LAVA_PROOF
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
 /obj/singularity/New(loc, var/starting_energy = 50, var/temp = 0)
 	//CARN: admin-alert for chuckle-fuckery.
@@ -34,7 +34,7 @@
 
 	src.energy = starting_energy
 	..()
-	SSobj.processing |= src
+	START_PROCESSING(SSobj, src)
 	poi_list |= src
 	for(var/obj/machinery/power/singularity_beacon/singubeacon in machines)
 		if(singubeacon.active)
@@ -43,7 +43,7 @@
 	return
 
 /obj/singularity/Destroy()
-	SSobj.processing.Remove(src)
+	STOP_PROCESSING(SSobj, src)
 	poi_list.Remove(src)
 	return ..()
 
@@ -60,10 +60,23 @@
 	consume(user)
 	return 1
 
+/obj/singularity/attack_paw(mob/user)
+	consume(user)
+
+/obj/singularity/attack_alien(mob/user)
+	consume(user)
+
+/obj/singularity/attack_animal(mob/user)
+	consume(user)
+
+/obj/singularity/attackby(obj/item/weapon/W, mob/user, params)
+	consume(user)
+	return 1
+
 /obj/singularity/Process_Spacemove() //The singularity stops drifting for no man!
 	return 0
 
-/obj/singularity/blob_act(severity)
+/obj/singularity/blob_act(obj/structure/blob/B)
 	return
 
 /obj/singularity/ex_act(severity, target)
@@ -148,17 +161,18 @@
 			dissipate_delay = 10
 			dissipate_track = 0
 			dissipate_strength = 1
-		if(STAGE_TWO)//1 to 3 does not check for the turfs if you put the gens right next to a 1x1 then its going to eat them
-			current_size = STAGE_TWO
-			icon = 'icons/effects/96x96.dmi'
-			icon_state = "singularity_s3"
-			pixel_x = -32
-			pixel_y = -32
-			grav_pull = 6
-			consume_range = 1
-			dissipate_delay = 5
-			dissipate_track = 0
-			dissipate_strength = 5
+		if(STAGE_TWO)
+			if((check_turfs_in(1,1))&&(check_turfs_in(2,1))&&(check_turfs_in(4,1))&&(check_turfs_in(8,1)))
+				current_size = STAGE_TWO
+				icon = 'icons/effects/96x96.dmi'
+				icon_state = "singularity_s3"
+				pixel_x = -32
+				pixel_y = -32
+				grav_pull = 6
+				consume_range = 1
+				dissipate_delay = 5
+				dissipate_track = 0
+				dissipate_strength = 5
 		if(STAGE_THREE)
 			if((check_turfs_in(1,2))&&(check_turfs_in(2,2))&&(check_turfs_in(4,2))&&(check_turfs_in(8,2)))
 				current_size = STAGE_THREE
@@ -236,20 +250,21 @@
 
 /obj/singularity/proc/eat()
 	set background = BACKGROUND_ENABLED
-	for(var/tile in spiral_range_turfs(grav_pull, src, 1))
+	for(var/tile in spiral_range_turfs(grav_pull, src))
 		var/turf/T = tile
-		if(!T)
+		if(!T || !isturf(loc))
 			continue
 		if(get_dist(T, src) > consume_range)
 			T.singularity_pull(src, current_size)
 		else
 			consume(T)
 		for(var/thing in T)
-			var/atom/movable/X = thing
-			if(get_dist(X, src) > consume_range)
-				X.singularity_pull(src, current_size)
-			else
-				consume(X)
+			if(isturf(loc) && thing != src)
+				var/atom/movable/X = thing
+				if(get_dist(X, src) > consume_range)
+					X.singularity_pull(src, current_size)
+				else
+					consume(X)
 			CHECK_TICK
 	return
 
@@ -389,11 +404,11 @@
 
 /obj/singularity/proc/mezzer()
 	for(var/mob/living/carbon/M in oviewers(8, src))
-		if(istype(M, /mob/living/carbon/brain)) //Ignore brains
+		if(istype(M, /mob/living/brain)) //Ignore brains
 			continue
 
 		if(M.stat == CONSCIOUS)
-			if (istype(M,/mob/living/carbon/human))
+			if (ishuman(M))
 				var/mob/living/carbon/human/H = M
 				if(istype(H.glasses, /obj/item/clothing/glasses/meson))
 					var/obj/item/clothing/glasses/meson/MS = H.glasses
@@ -413,11 +428,9 @@
 
 
 /obj/singularity/proc/pulse()
-
 	for(var/obj/machinery/power/rad_collector/R in rad_collectors)
-		if(get_dist(R, src) <= 15) // Better than using orange() every process
+		if(R.z == z && get_dist(R, src) <= 15) // Better than using orange() every process
 			R.receive_pulse(energy)
-	return
 
 /obj/singularity/singularity_act()
 	var/gain = (energy/2)

@@ -9,6 +9,7 @@
 	antag_flag = ROLE_ABDUCTOR
 	recommended_enemies = 2
 	required_players = 15
+	maximum_players = 50
 	var/max_teams = 4
 	abductor_teams = 1
 	var/list/datum/mind/scientists = list()
@@ -19,7 +20,7 @@
 
 /datum/game_mode/abduction/announce()
 	world << "<B>The current game mode is - Abduction!</B>"
-	world << "There are alien <b>abductors</b> sent to [world.name] to perform nefarious experiments!"
+	world << "There are alien <b>abductors</b> sent to [station_name()] to perform nefarious experiments!"
 	world << "<b>Abductors</b> - kidnap the crew and replace their organs with experimental ones."
 	world << "<b>Crew</b> - don't get abducted and stop the abductors."
 
@@ -187,11 +188,7 @@
 	abductor.current << "<span class='notice'>With the help of your teammate, kidnap and experiment on station crew members!</span>"
 	abductor.current << "<span class='notice'>Use your stealth technology and equipment to incapacitate humans for your scientist to retrieve.</span>"
 
-	var/obj_count = 1
-	for(var/datum/objective/objective in abductor.objectives)
-		abductor.current << "<B>Objective #[obj_count]</B>: [objective.explanation_text]"
-		obj_count++
-	return
+	abductor.announce_objectives()
 
 /datum/game_mode/abduction/proc/greet_scientist(datum/mind/abductor,team_number)
 	abductor.objectives += team_objectives[team_number]
@@ -201,11 +198,7 @@
 	abductor.current << "<span class='notice'>With the help of your teammate, kidnap and experiment on station crew members!</span>"
 	abductor.current << "<span class='notice'>Use your tool and ship consoles to support the agent and retrieve human specimens.</span>"
 
-	var/obj_count = 1
-	for(var/datum/objective/objective in abductor.objectives)
-		abductor.current << "<B>Objective #[obj_count]</B>: [objective.explanation_text]"
-		obj_count++
-	return
+	abductor.announce_objectives()
 
 /datum/game_mode/abduction/proc/equip_common(mob/living/carbon/human/agent,team_number)
 	var/radio_freq = SYND_FREQ
@@ -237,9 +230,10 @@
 		V.flags |= NODROP
 	agent.equip_to_slot_or_del(V, slot_wear_suit)
 	agent.equip_to_slot_or_del(new /obj/item/weapon/abductor_baton(agent), slot_in_backpack)
-	agent.equip_to_slot_or_del(new /obj/item/weapon/gun/energy/alien(agent), slot_belt)
+	agent.equip_to_slot_or_del(new /obj/item/weapon/gun/energy/alien(agent), slot_in_backpack)
 	agent.equip_to_slot_or_del(new /obj/item/device/abductor/silencer(agent), slot_in_backpack)
 	agent.equip_to_slot_or_del(new /obj/item/clothing/head/helmet/abductor(agent), slot_head)
+	agent.equip_to_slot_or_del(new /obj/item/weapon/storage/belt/military/abductor/full(agent), slot_belt)
 
 
 /datum/game_mode/abduction/proc/equip_scientist(var/mob/living/carbon/human/scientist,var/team_number)
@@ -275,7 +269,7 @@
 		var/datum/objective/objective = team_objectives[team_number]
 		var/team_name = team_names[team_number]
 		if(console.experiment.points >= objective.target_amount)
-			world << "<span class='greenannounce'>[team_name] team fullfilled its mission!</span>"
+			world << "<span class='greenannounce'>[team_name] team fulfilled its mission!</span>"
 		else
 			world << "<span class='boldannounce'>[team_name] team failed its mission.</span>"
 	..()

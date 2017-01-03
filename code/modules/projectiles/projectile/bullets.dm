@@ -5,6 +5,8 @@
 	damage_type = BRUTE
 	nodamage = 0
 	flag = "bullet"
+	hitsound_wall = "ricochet"
+	impact_effect_type = /obj/effect/overlay/temp/impact_effect
 
 /obj/item/projectile/bullet/weakbullet //beanbag, heavy stamina damage
 	damage = 5
@@ -69,6 +71,20 @@
 /obj/item/projectile/bullet/midbullet3
 	damage = 30
 
+/obj/item/projectile/bullet/midbullet3/hp
+	damage = 40
+	armour_penetration = -50
+
+/obj/item/projectile/bullet/midbullet3/ap
+	damage = 27
+	armour_penetration = 40
+
+/obj/item/projectile/bullet/midbullet3/fire/on_hit(atom/target, blocked = 0)
+	if(..(target, blocked))
+		var/mob/living/M = target
+		M.adjust_fire_stacks(1)
+		M.IgniteMob()
+
 /obj/item/projectile/bullet/heavybullet
 	damage = 35
 
@@ -125,6 +141,21 @@
 	weaken = 4
 	stun = 4
 
+/obj/item/projectile/bullet/honker
+	damage = 0
+	weaken = 3
+	stun = 3
+	forcedodge = 1
+	nodamage = 1
+	hitsound = 'sound/items/bikehorn.ogg'
+	icon = 'icons/obj/hydroponics/harvest.dmi'
+	icon_state = "banana"
+	range = 200
+
+/obj/item/projectile/bullet/honker/New()
+	..()
+	SpinAnimation()
+
 /obj/item/projectile/bullet/meteorshot/on_hit(atom/target, blocked = 0)
 	. = ..()
 	if(istype(target, /atom/movable))
@@ -151,18 +182,20 @@
 	name = "dart"
 	icon_state = "cbbolt"
 	damage = 6
+	var/piercing = 0
 
 /obj/item/projectile/bullet/dart/New()
 	..()
-	flags |= NOREACT
 	create_reagents(50)
+	reagents.set_reacting(FALSE)
 
-/obj/item/projectile/bullet/dart/on_hit(atom/target, blocked = 0, hit_zone)
+/obj/item/projectile/bullet/dart/on_hit(atom/target, blocked = 0)
 	if(iscarbon(target))
 		var/mob/living/carbon/M = target
 		if(blocked != 100) // not completely blocked
-			if(M.can_inject(null,0,hit_zone)) // Pass the hit zone to see if it can inject by whether it hit the head or the body.
+			if(M.can_inject(null, 0, def_zone, piercing)) // Pass the hit zone to see if it can inject by whether it hit the head or the body.
 				..()
+				reagents.reaction(M, INJECT)
 				reagents.trans_to(M, reagents.total_volume)
 				return 1
 			else
@@ -170,8 +203,8 @@
 				target.visible_message("<span class='danger'>The [name] was deflected!</span>", \
 									   "<span class='userdanger'>You were protected against the [name]!</span>")
 
-	..(target, blocked, hit_zone)
-	flags &= ~NOREACT
+	..(target, blocked)
+	reagents.set_reacting(TRUE)
 	reagents.handle_reactions()
 	return 1
 
@@ -184,7 +217,6 @@
 //This one is for future syringe guns update
 /obj/item/projectile/bullet/dart/syringe
 	name = "syringe"
-	icon = 'icons/obj/chemical.dmi'
 	icon_state = "syringeproj"
 
 /obj/item/projectile/bullet/neurotoxin
@@ -199,3 +231,107 @@
 		weaken = 0
 		nodamage = 1
 	. = ..() // Execute the rest of the code.
+
+
+
+//// SNIPER BULLETS
+
+/obj/item/projectile/bullet/sniper
+	speed = 0		//360 alwaysscope.
+	damage = 70
+	stun = 5
+	weaken = 5
+	dismemberment = 50
+	armour_penetration = 50
+	var/breakthings = TRUE
+
+/obj/item/projectile/bullet/sniper/on_hit(atom/target, blocked = 0)
+	if((blocked != 100) && (!ismob(target) && breakthings))
+		target.ex_act(rand(1,2))
+	return ..()
+
+
+/obj/item/projectile/bullet/sniper/soporific
+	armour_penetration = 0
+	nodamage = 1
+	stun = 0
+	dismemberment = 0
+	weaken = 0
+	breakthings = FALSE
+
+/obj/item/projectile/bullet/sniper/soporific/on_hit(atom/target, blocked = 0)
+	if((blocked != 100) && isliving(target))
+		var/mob/living/L = target
+		L.Sleeping(20)
+	return ..()
+
+
+/obj/item/projectile/bullet/sniper/haemorrhage
+	armour_penetration = 15
+	damage = 15
+	stun = 0
+	dismemberment = 0
+	weaken = 0
+	breakthings = FALSE
+
+/obj/item/projectile/bullet/sniper/haemorrhage/on_hit(atom/target, blocked = 0)
+	if((blocked != 100) && iscarbon(target))
+		var/mob/living/carbon/C = target
+		C.bleed(100)
+	return ..()
+
+
+/obj/item/projectile/bullet/sniper/penetrator
+	icon_state = "gauss"
+	name = "penetrator round"
+	damage = 60
+	forcedodge = 1
+	dismemberment = 0 //It goes through you cleanly.
+	stun = 0
+	weaken = 0
+	breakthings = FALSE
+
+
+
+//// SAW BULLETS
+
+
+/obj/item/projectile/bullet/saw
+	damage = 45
+	armour_penetration = 5
+
+/obj/item/projectile/bullet/saw/bleeding
+	damage = 20
+	armour_penetration = 0
+
+/obj/item/projectile/bullet/saw/bleeding/on_hit(atom/target, blocked = 0)
+	. = ..()
+	if((blocked != 100) && iscarbon(target))
+		var/mob/living/carbon/C = target
+		C.bleed(35)
+
+/obj/item/projectile/bullet/saw/hollow
+	damage = 60
+	armour_penetration = -10
+
+/obj/item/projectile/bullet/saw/ap
+	damage = 40
+	armour_penetration = 75
+
+/obj/item/projectile/bullet/saw/incen
+	damage = 7
+	armour_penetration = 0
+
+/obj/item/projectile/bullet/saw/incen/Move()
+	..()
+	var/turf/location = get_turf(src)
+	if(location)
+		PoolOrNew(/obj/effect/hotspot, location)
+		location.hotspot_expose(700, 50, 1)
+
+/obj/item/projectile/bullet/saw/incen/on_hit(atom/target, blocked = 0)
+	. = ..()
+	if(iscarbon(target))
+		var/mob/living/carbon/M = target
+		M.adjust_fire_stacks(3)
+		M.IgniteMob()

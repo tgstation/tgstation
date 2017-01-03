@@ -7,6 +7,10 @@
 #define MELEE 1
 #define RANGED 2
 
+#define FRONT_ARMOUR 1
+#define SIDE_ARMOUR 2
+#define BACK_ARMOUR 3
+
 
 /obj/mecha
 	name = "mecha"
@@ -15,8 +19,8 @@
 	density = 1 //Dense. To raise the heat.
 	opacity = 1 ///opaque. Menacing.
 	anchored = 1 //no pulling around.
-	unacidable = 1 //and no deleting hoomans inside
-	layer = MOB_LAYER - 0.2//icon draw layer
+	resistance_flags = FIRE_PROOF | ACID_PROOF
+	layer = BELOW_MOB_LAYER//icon draw layer
 	infra_luminosity = 15 //byond implementation is bugged.
 	force = 5
 	flags = HEAR
@@ -25,12 +29,15 @@
 	var/step_in = 10 //make a step in step_in/10 sec.
 	var/dir_in = 2//What direction will the mech face when entered/powered on? Defaults to South.
 	var/step_energy_drain = 10
-	var/health = 300 //health is health
+	var/melee_energy_drain = 15
+	obj_integrity = 300 //obj_integrity is health
+	max_integrity = 300
 	var/deflect_chance = 10 //chance to deflect the incoming projectiles, hits, or lesser the effect of ex_act.
-	//the values in this list show how much damage will pass through, not how much will be absorbed.
-	var/list/damage_absorption = list("brute"=0.8,"fire"=1.2,"bullet"=0.9,"laser"=1,"energy"=1,"bomb"=1)
+	armor = list(melee = 20, bullet = 10, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 100)
+	var/list/facing_modifiers = list(FRONT_ARMOUR = 1.5, SIDE_ARMOUR = 1, BACK_ARMOUR = 0.5)
 	var/obj/item/weapon/stock_parts/cell/cell
 	var/state = 0
+	var/cell_power_remaining = 1 // 0 - no power, 1 - 100% power in cell. Starts as 1 so putting any cell into empty mech doesn't deplete charge from it
 	var/list/log = new
 	var/last_message = 0
 	var/add_req_access = 1
@@ -42,6 +49,8 @@
 	var/lights_power = 6
 	var/last_user_hud = 1 // used to show/hide the mecha hud while preserving previous preference
 
+
+	var/bumpsmash = 0 //Whether or not the mech destroys walls by running into it.
 	//inner atmos
 	var/use_internal_tank = 0
 	var/internal_tank_valve = ONE_ATMOSPHERE
@@ -50,6 +59,7 @@
 	var/obj/machinery/atmospherics/components/unary/portables_connector/connected_port = null
 
 	var/obj/item/device/radio/radio = null
+	var/list/trackers = list()
 
 	var/max_temperature = 25000
 	var/internal_damage_threshold = 50 //health percentage below which internal damage is possible
@@ -85,13 +95,14 @@
 	var/datum/action/innate/mecha/mech_zoom/zoom_action = new
 	var/datum/action/innate/mecha/mech_switch_damtype/switch_damtype_action = new
 	var/datum/action/innate/mecha/mech_toggle_phasing/phasing_action = new
+	var/datum/action/innate/mecha/strafe/strafing_action = new
 
 	//Action vars
 	var/thrusters_active = FALSE
 	var/defence_mode = FALSE
 	var/defence_mode_deflect_chance = 35
 	var/leg_overload_mode = FALSE
-	var/leg_overload_coeff = 2
+	var/leg_overload_coeff = 100
 	var/zoom_mode = FALSE
 	var/smoke = 5
 	var/smoke_ready = 1
@@ -99,8 +110,10 @@
 	var/phasing = FALSE
 	var/phasing_energy_drain = 200
 	var/phase_state = "" //icon_state when phasing
+	var/strafe = FALSE //If we are strafing
 
-
+	var/nextsmash = 0
+	var/smashcooldown = 3	//deciseconds
 
 	var/occupant_sight_flags = 0 //sight flags to give to the occupant (e.g. mech mining scanner gives meson-like vision)
 
@@ -119,7 +132,7 @@
 	smoke_system.set_up(3, src)
 	smoke_system.attach(src)
 	add_cell()
-	SSobj.processing |= src
+	START_PROCESSING(SSobj, src)
 	poi_list |= src
 	log_message("[src.name] created.")
 	mechas_list += src //global mech list
@@ -130,13 +143,14 @@
 	diag_hud_set_mechcell()
 	diag_hud_set_mechstat()
 
-	return
 
 /obj/mecha/Destroy()
 	go_out()
+	var/mob/living/silicon/ai/AI
 	for(var/mob/M in src) //Let's just be ultra sure
 		if(isAI(M))
-			M.gib() //AIs are loaded into the mech computer itself. When the mech dies, so does the AI. Forever.
+			occupant = null
+			AI = M //AIs are loaded into the mech computer itself. When the mech dies, so does the AI. They can be recovered with an AI card from the wreck.
 		else
 			M.forceMove(loc)
 
@@ -144,13 +158,12 @@
 		explosion(get_turf(loc), 0, 0, 1, 3)
 
 	if(wreckage)
-		var/obj/structure/mecha_wreckage/WR = new wreckage(loc)
+		var/obj/structure/mecha_wreckage/WR = new wreckage(loc, AI)
 		for(var/obj/item/mecha_parts/mecha_equipment/E in equipment)
 			if(E.salvageable && prob(30))
 				WR.crowbar_salvage += E
 				E.detach(WR) //detaches from src into WR
 				E.equip_ready = 1
-				E.reliability = round(rand(E.reliability/3,E.reliability))
 			else
 				E.detach(loc)
 				qdel(E)
@@ -169,7 +182,9 @@
 			qdel(cell)
 		if(internal_tank)
 			qdel(internal_tank)
-	SSobj.processing -= src
+		if(AI)
+			AI.gib() //No wreck, no AI to recover
+	STOP_PROCESSING(SSobj, src)
 	poi_list.Remove(src)
 	equipment.Cut()
 	cell = null
@@ -233,7 +248,7 @@
 
 /obj/mecha/examine(mob/user)
 	..()
-	var/integrity = health/initial(health)*100
+	var/integrity = obj_integrity*100/max_integrity
 	switch(integrity)
 		if(85 to 100)
 			user << "It's fully intact."
@@ -249,8 +264,6 @@
 		user << "It's equipped with:"
 		for(var/obj/item/mecha_parts/mecha_equipment/ME in equipment)
 			user << "\icon[ME] [ME]"
-	return
-
 
 //processing internal damage, temperature, air regulation, alert updates, lights power use.
 /obj/mecha/process()
@@ -269,7 +282,7 @@
 			if(cabin_air && cabin_air.return_volume()>0)
 				cabin_air.temperature = min(6000+T0C, cabin_air.return_temperature()+rand(10,15))
 				if(cabin_air.return_temperature() > max_temperature/2)
-					take_damage(4/round(max_temperature/cabin_air.return_temperature(),0.1),"fire")
+					take_damage(4/round(max_temperature/cabin_air.return_temperature(),0.1), BURN, 0, 0)
 
 		if(internal_damage & MECHA_INT_TEMP_CONTROL)
 			internal_temp_regulation = 0
@@ -335,7 +348,7 @@
 				else
 					occupant.throw_alert("charge",/obj/screen/alert/emptycell)
 
-		var/integrity = health/initial(health)*100
+		var/integrity = obj_integrity/max_integrity*100
 		switch(integrity)
 			if(30 to 45)
 				occupant.throw_alert("mech damage", /obj/screen/alert/low_mech_integrity, 1)
@@ -376,14 +389,13 @@
 				speech_bubble_recipients.Add(M.client)
 		spawn(0)
 			flick_overlay(image('icons/mob/talk.dmi', src, "machine[say_test(raw_message)]",MOB_LAYER+1), speech_bubble_recipients, 30)
-	return
 
 ////////////////////////////
 ///// Action processing ////
 ////////////////////////////
 
 
-/obj/mecha/proc/click_action(atom/target,mob/user)
+/obj/mecha/proc/click_action(atom/target,mob/user,params)
 	if(!occupant || occupant != user )
 		return
 	if(!locate(/turf) in list(target,target.loc)) // Prevents inventory from being drilled
@@ -401,7 +413,7 @@
 	if(src == target)
 		return
 	var/dir_to_target = get_dir(src,target)
-	if(dir_to_target && !(dir_to_target & src.dir))//wrong direction
+	if(dir_to_target && !(dir_to_target & dir))//wrong direction
 		return
 	if(internal_damage & MECHA_INT_CONTROL_LOST)
 		target = safepick(view(3,target))
@@ -409,10 +421,10 @@
 			return
 	if(!target.Adjacent(src))
 		if(selected && selected.is_ranged())
-			if(selected.action(target))
+			if(selected.action(target,params))
 				selected.start_cooldown()
 	else if(selected && selected.is_melee())
-		if(selected.action(target))
+		if(selected.action(target,params))
 			selected.start_cooldown()
 	else
 		if(internal_damage & MECHA_INT_CONTROL_LOST)
@@ -423,7 +435,6 @@
 		melee_can_hit = 0
 		spawn(melee_cooldown)
 			melee_can_hit = 1
-	return
 
 
 /obj/mecha/proc/range_action(atom/target)
@@ -457,13 +468,13 @@
 /obj/mecha/relaymove(mob/user,direction)
 	if(!direction)
 		return
-	if(user != src.occupant) //While not "realistic", this piece is player friendly.
+	if(user != occupant) //While not "realistic", this piece is player friendly.
 		user.forceMove(get_turf(src))
 		user << "<span class='notice'>You climb out from [src].</span>"
 		return 0
 	if(connected_port)
 		if(world.time - last_message > 20)
-			src.occupant_message("<span class='warning'>Unable to move while connected to the air system port!</span>")
+			occupant_message("<span class='warning'>Unable to move while connected to the air system port!</span>")
 			last_message = world.time
 		return 0
 	if(state)
@@ -492,7 +503,7 @@
 	var/move_result = 0
 	if(internal_damage & MECHA_INT_CONTROL_LOST)
 		move_result = mechsteprand()
-	else if(src.dir!=direction)
+	else if(dir != direction && !strafe)
 		move_result = mechturn(direction)
 	else
 		move_result = mechstep(direction)
@@ -501,25 +512,21 @@
 		can_move = 0
 		spawn(step_in)
 			can_move = 1
-		if(leg_overload_mode)
-			health--
-			if(health < initial(health) - initial(health)/3)
-				leg_overload_mode = 0
-				step_in = initial(step_in)
-				step_energy_drain = initial(step_energy_drain)
-				occupant_message("<span class='danger'>Leg actuators damage threshold exceded. Disabling overload.</span>")
 		return 1
 	return 0
 
 
 /obj/mecha/proc/mechturn(direction)
-	dir = direction
+	setDir(direction)
 	if(turnsound)
 		playsound(src,turnsound,40,1)
 	return 1
 
 /obj/mecha/proc/mechstep(direction)
+	var/current_dir = dir
 	var/result = step(src,direction)
+	if(strafe)
+		setDir(current_dir)
 	if(result && stepsound)
 		playsound(src,stepsound,40,1)
 	return result
@@ -545,7 +552,13 @@
 		if(yes)
 			if(..()) //mech was thrown
 				return
-			if(istype(obstacle, /obj))
+			if(bumpsmash && occupant) //Need a pilot to push the PUNCH button.
+				if(nextsmash < world.time)
+					obstacle.mech_melee_attack(src)
+					if(!obstacle || !obstacle.density)
+						step(src,dir)
+					nextsmash = world.time + smashcooldown
+			if(isobj(obstacle))
 				var/obj/O = obstacle
 				if(!O.anchored)
 					step(obstacle, dir)
@@ -563,7 +576,7 @@
 /obj/mecha/proc/check_for_internal_damage(list/possible_int_damage,ignore_threshold=null)
 	if(!islist(possible_int_damage) || isemptylist(possible_int_damage)) return
 	if(prob(20))
-		if(ignore_threshold || health*100/initial(health) < internal_damage_threshold)
+		if(ignore_threshold || obj_integrity*100/max_integrity < internal_damage_threshold)
 			for(var/T in possible_int_damage)
 				if(internal_damage & T)
 					possible_int_damage -= T
@@ -571,7 +584,7 @@
 			if(int_dam_flag)
 				setInternalDamage(int_dam_flag)
 	if(prob(5))
-		if(ignore_threshold || src.health*100/initial(src.health)<src.internal_damage_threshold)
+		if(ignore_threshold || obj_integrity*100/max_integrity < internal_damage_threshold)
 			var/obj/item/mecha_parts/mecha_equipment/ME = safepick(equipment)
 			if(ME)
 				qdel(ME)
@@ -606,10 +619,10 @@
 	//Allows the Malf to scan a mech's status and loadout, helping it to decide if it is a worthy chariot.
 	if(user.can_dominate_mechs)
 		examine(user) //Get diagnostic information!
-		var/obj/item/mecha_parts/mecha_tracking/B = locate(/obj/item/mecha_parts/mecha_tracking) in src
-		if(B) //Beacons give the AI more detailed mech information.
+		for(var/obj/item/mecha_parts/mecha_tracking/B in trackers)
 			user << "<span class='danger'>Warning: Tracking Beacon detected. Enter at your own risk. Beacon Data:"
 			user << "[B.get_mecha_info()]"
+			break
 		//Nothing like a big, red link to make the player feel powerful!
 		user << "<a href='?src=\ref[user];ai_take_control=\ref[src]'><span class='userdanger'>ASSUME DIRECT CONTROL?</span></a><br>"
 
@@ -627,13 +640,10 @@
 			if(!AI || !isAI(occupant)) //Mech does not have an AI for a pilot
 				user << "<span class='warning'>No AI detected in the [name] onboard computer.</span>"
 				return
-			if(AI.mind.special_role) //Malf AIs cannot leave mechs. Except through death.
-				user << "<span class='boldannounce'>ACCESS DENIED.</span>"
-				return
 			AI.ai_restore_power()//So the AI initially has power.
 			AI.control_disabled = 1
 			AI.radio_enabled = 0
-			AI.loc = card
+			AI.forceMove(card)
 			card.AI = AI
 			occupant = null
 			AI.controlled_mech = null
@@ -670,7 +680,7 @@
 //Hack and From Card interactions share some code, so leave that here for both to use.
 /obj/mecha/proc/ai_enter_mech(mob/living/silicon/ai/AI, interaction)
 	AI.ai_restore_power()
-	AI.loc = src
+	AI.forceMove(src)
 	occupant = AI
 	icon_state = initial(icon_state)
 	playsound(src, 'sound/machines/windowdoor.ogg', 50, 1)
@@ -681,9 +691,9 @@
 	AI.remote_control = src
 	AI.canmove = 1 //Much easier than adding AI checks! Be sure to set this back to 0 if you decide to allow an AI to leave a mech somehow.
 	AI.can_shunt = 0 //ONE AI ENTERS. NO AI LEAVES.
-	AI << "[interaction == AI_MECH_HACK ? "<span class='announce'>Takeover of [name] complete! You are now permanently loaded onto the onboard computer. Do not attempt to leave the station sector!</span>" \
+	AI << "[interaction == AI_MECH_HACK ? "<span class='announce'>Takeover of [name] complete! You are now loaded onto the onboard computer. Do not attempt to leave the station sector!</span>" \
 	: "<span class='notice'>You have been uploaded to a mech's onboard computer."]"
-	AI << "<span class='boldnotice'>Use Middle-Mouse to activate mech functions and equipment. Click normally for AI interactions.</span>"
+	AI << "<span class='reallybig boldnotice'>Use Middle-Mouse to activate mech functions and equipment. Click normally for AI interactions.</span>"
 	GrantActions(AI)
 
 
@@ -741,7 +751,7 @@
 		return 0
 
 	//Make sure are close enough for a valid connection
-	if(new_port.loc != src.loc)
+	if(new_port.loc != loc)
 		return 0
 
 	//Perform the connection
@@ -759,7 +769,7 @@
 
 	connected_port.connected_device = null
 	connected_port = null
-	src.log_message("Disconnected from gas port.")
+	log_message("Disconnected from gas port.")
 	return 1
 
 /obj/mecha/portableConnectorReturnAir()
@@ -792,20 +802,20 @@
 		user << "<span class='warning'>You are currently buckled and cannot move.</span>"
 		log_append_to_last("Permission denied.")
 		return
-	if(user.buckled_mobs.len) //mob attached to us
+	if(user.has_buckled_mobs()) //mob attached to us
 		user << "<span class='warning'>You can't enter the exosuit with other creatures attached to you!</span>"
 		return
 
-	visible_message("[user] starts to climb into [src.name].")
+	visible_message("[user] starts to climb into [name].")
 
 	if(do_after(user, 40, target = src))
-		if(health <= 0)
-			user << "<span class='warning'>You cannot get in the [src.name], it has been destroyed!</span>"
+		if(obj_integrity <= 0)
+			user << "<span class='warning'>You cannot get in the [name], it has been destroyed!</span>"
 		else if(occupant)
-			user << "<span class='danger'>[src.occupant] was faster! Try better next time, loser.</span>"
+			user << "<span class='danger'>[occupant] was faster! Try better next time, loser.</span>"
 		else if(user.buckled)
 			user << "<span class='warning'>You can't enter the exosuit while buckled.</span>"
-		else if(user.buckled_mobs.len)
+		else if(user.has_buckled_mobs())
 			user << "<span class='warning'>You can't enter the exosuit with other creatures attached to you!</span>"
 		else
 			moved_inside(user)
@@ -822,7 +832,7 @@
 		forceMove(loc)
 		log_append_to_last("[H] moved in as pilot.")
 		icon_state = initial(icon_state)
-		dir = dir_in
+		setDir(dir_in)
 		playsound(src, 'sound/machines/windowdoor.ogg', 50, 1)
 		if(!internal_damage)
 			occupant << sound('sound/mecha/nominal.ogg',volume=50)
@@ -840,11 +850,11 @@
 	else if(occupant)
 		user << "<span class='warning'>Occupant detected!</span>"
 		return 0
-	else if(dna_lock && (!mmi_as_oc.brainmob.dna || dna_lock!=mmi_as_oc.brainmob.dna.unique_enzymes))
+	else if(dna_lock && (!mmi_as_oc.brainmob.stored_dna || dna_lock!=mmi_as_oc.brainmob.stored_dna.unique_enzymes))
 		user << "<span class='warning'>Access denied. [name] is secured with a DNA lock.</span>"
 		return 0
 
-	visible_message("<span class='notice'>[user] starts to insert an MMI into [src.name].</span>")
+	visible_message("<span class='notice'>[user] starts to insert an MMI into [name].</span>")
 
 	if(do_after(user, 40, target = src))
 		if(!occupant)
@@ -874,7 +884,7 @@
 		mmi_as_oc.loc = src
 		mmi_as_oc.mecha = src
 		icon_state = initial(icon_state)
-		dir = dir_in
+		setDir(dir_in)
 		log_message("[mmi_as_oc] moved in as pilot.")
 		if(!internal_damage)
 			occupant << sound('sound/mecha/nominal.ogg',volume=50)
@@ -883,7 +893,7 @@
 	else
 		return 0
 
-/obj/mecha/container_resist()
+/obj/mecha/container_resist(mob/living/user)
 	go_out()
 
 
@@ -900,8 +910,8 @@
 	if(ishuman(occupant))
 		mob_container = occupant
 		RemoveActions(occupant, human_occupant=1)
-	else if(istype(occupant, /mob/living/carbon/brain))
-		var/mob/living/carbon/brain/brain = occupant
+	else if(istype(occupant, /mob/living/brain))
+		var/mob/living/brain/brain = occupant
 		RemoveActions(brain)
 		mob_container = brain.container
 	else if(isAI(occupant) && forced) //This should only happen if there are multiple AIs in a round, and at least one is Malf.
@@ -926,7 +936,7 @@
 			mmi.update_icon()
 			L.canmove = 0
 		icon_state = initial(icon_state)+"-open"
-		dir = dir_in
+		setDir(dir_in)
 
 	if(L && L.client)
 		L.client.view = world.view
@@ -954,8 +964,8 @@
 
 /obj/mecha/proc/occupant_message(message as text)
 	if(message)
-		if(src.occupant && src.occupant.client)
-			src.occupant << "\icon[src] [message]"
+		if(occupant && occupant.client)
+			occupant << "\icon[src] [message]"
 	return
 
 /obj/mecha/proc/log_message(message as text,red=null)
@@ -964,7 +974,7 @@
 	return log.len
 
 /obj/mecha/proc/log_append_to_last(message as text,red=null)
-	var/list/last_entry = src.log[src.log.len]
+	var/list/last_entry = log[log.len]
 	last_entry["message"] += "<br>[red?"<font color='red'>":null][message][red?"</font>":null]"
 	return
 
@@ -1005,265 +1015,3 @@ var/year_integer = text2num(year) // = 2013???
 	if(occupant_sight_flags)
 		if(user == occupant)
 			user.sight |= occupant_sight_flags
-
-//////////////////////////////////////// Action Buttons ///////////////////////////////////////////////
-
-/obj/mecha/proc/GrantActions(var/mob/living/user, var/human_occupant = 0)
-	if(human_occupant)
-		eject_action.chassis = src
-		eject_action.Grant(user)
-
-	internals_action.chassis = src
-	internals_action.Grant(user)
-
-	cycle_action.chassis = src
-	cycle_action.Grant(user)
-
-	lights_action.chassis = src
-	lights_action.Grant(user)
-
-	stats_action.chassis = src
-	stats_action.Grant(user)
-
-
-/obj/mecha/proc/RemoveActions(var/mob/living/user, var/human_occupant = 0)
-	if(human_occupant)
-		eject_action.Remove(user)
-	internals_action.Remove(user)
-	cycle_action.Remove(user)
-	lights_action.Remove(user)
-	stats_action.Remove(user)
-
-
-/datum/action/innate/mecha
-	check_flags = AB_CHECK_RESTRAINED | AB_CHECK_STUNNED | AB_CHECK_CONSCIOUS
-	var/obj/mecha/chassis
-
-/datum/action/innate/mecha/Destroy()
-	chassis = null
-	return ..()
-
-/datum/action/innate/mecha/mech_eject
-	name = "Eject From Mech"
-	button_icon_state = "mech_eject"
-
-/datum/action/innate/mecha/mech_eject/Activate()
-	if(!owner || !iscarbon(owner))
-		return
-	if(!chassis || chassis.occupant != owner)
-		return
-	chassis.go_out()
-
-
-/datum/action/innate/mecha/mech_toggle_internals
-	name = "Toggle Internal Airtank Usage"
-	button_icon_state = "mech_internals_off"
-
-/datum/action/innate/mecha/mech_toggle_internals/Activate()
-	if(!owner || !chassis || chassis.occupant != owner)
-		return
-	chassis.use_internal_tank = !chassis.use_internal_tank
-	button_icon_state = "mech_internals_[chassis.use_internal_tank ? "on" : "off"]"
-	chassis.occupant_message("Now taking air from [chassis.use_internal_tank?"internal airtank":"environment"].")
-	chassis.log_message("Now taking air from [chassis.use_internal_tank?"internal airtank":"environment"].")
-
-
-/datum/action/innate/mecha/mech_cycle_equip
-	name = "Cycle Equipment"
-	button_icon_state = "mech_cycle_equip_off"
-
-/datum/action/innate/mecha/mech_cycle_equip/Activate()
-	if(!owner || !chassis || chassis.occupant != owner)
-		return
-	if(chassis.equipment.len == 0)
-		chassis.occupant_message("No equipment available.")
-		return
-	if(!chassis.selected)
-		chassis.selected = chassis.equipment[1]
-		chassis.occupant_message("You select [chassis.selected]")
-		send_byjax(chassis.occupant,"exosuit.browser","eq_list",chassis.get_equipment_list())
-		button_icon_state = "mech_cycle_equip_on"
-		return
-	var/number = 0
-	for(var/A in chassis.equipment)
-		number++
-		if(A == chassis.selected)
-			if(chassis.equipment.len == number)
-				chassis.selected = null
-				chassis.occupant_message("You switch to no equipment")
-				button_icon_state = "mech_cycle_equip_off"
-			else
-				chassis.selected = chassis.equipment[number+1]
-				chassis.occupant_message("You switch to [chassis.selected]")
-				button_icon_state = "mech_cycle_equip_on"
-			send_byjax(chassis.occupant,"exosuit.browser","eq_list",chassis.get_equipment_list())
-			return
-
-
-/datum/action/innate/mecha/mech_toggle_lights
-	name = "Toggle Lights"
-	button_icon_state = "mech_lights_off"
-
-/datum/action/innate/mecha/mech_toggle_lights/Activate()
-	if(!owner || !chassis || chassis.occupant != owner)
-		return
-	chassis.lights = !chassis.lights
-	if(chassis.lights)
-		chassis.AddLuminosity(chassis.lights_power)
-		button_icon_state = "mech_lights_on"
-	else
-		chassis.AddLuminosity(-chassis.lights_power)
-		button_icon_state = "mech_lights_off"
-	chassis.occupant_message("Toggled lights [chassis.lights?"on":"off"].")
-	chassis.log_message("Toggled lights [chassis.lights?"on":"off"].")
-
-
-/datum/action/innate/mecha/mech_view_stats
-	name = "View Stats"
-	button_icon_state = "mech_view_stats"
-
-/datum/action/innate/mecha/mech_view_stats/Activate()
-	if(!owner || !chassis || chassis.occupant != owner)
-		return
-	chassis.occupant << browse(chassis.get_stats_html(), "window=exosuit")
-
-
-
-//////////////////////////////////////// Specific Ability Actions  ///////////////////////////////////////////////
-//Need to be granted by the mech type, Not default abilities.
-
-/datum/action/innate/mecha/mech_toggle_thrusters
-	name = "Toggle Thrusters"
-	button_icon_state = "mech_thrusters_off"
-
-/datum/action/innate/mecha/mech_toggle_thrusters/Activate()
-	if(!owner || !chassis || chassis.occupant != owner)
-		return
-	var/obj/mecha/M = chassis
-	if(M.get_charge() > 0)
-		M.thrusters_active = !M.thrusters_active
-		button_icon_state = "mech_thrusters_[M.thrusters_active ? "on" : "off"]"
-		M.log_message("Toggled thrusters.")
-		M.occupant_message("<font color='[M.thrusters_active ?"blue":"red"]'>Thrusters [M.thrusters_active ?"en":"dis"]abled.")
-
-
-/datum/action/innate/mecha/mech_defence_mode
-	name = "Toggle Defence Mode"
-	button_icon_state = "mech_defense_mode_off"
-
-/datum/action/innate/mecha/mech_defence_mode/Activate(forced_state = null)
-	if(!owner || !chassis || chassis.occupant != owner)
-		return
-	var/obj/mecha/M = chassis
-	if(forced_state)
-		M.defence_mode = forced_state
-	else
-		M.defence_mode = !M.defence_mode
-	button_icon_state = "mech_defense_mode_[M.defence_mode ? "on" : "off"]"
-	if(M.defence_mode)
-		M.deflect_chance = M.defence_mode_deflect_chance
-		M.occupant_message("<span class='notice'>You enable [M] defence mode.</span>")
-	else
-		M.deflect_chance = initial(M.deflect_chance)
-		M.occupant_message("<span class='danger'>You disable [M] defence mode.</span>")
-	M.log_message("Toggled defence mode.")
-
-
-/datum/action/innate/mecha/mech_overload_mode
-	name = "Toggle leg actuators overload"
-	button_icon_state = "mech_overload_off"
-
-/datum/action/innate/mecha/mech_overload_mode/Activate(forced_state = null)
-	if(!owner || !chassis || chassis.occupant != owner)
-		return
-	var/obj/mecha/M = chassis
-	if(forced_state)
-		M.leg_overload_mode = forced_state
-	else
-		M.leg_overload_mode = !M.leg_overload_mode
-	button_icon_state = "mech_overload_[M.leg_overload_mode ? "on" : "off"]"
-	M.log_message("Toggled leg actuators overload.")
-	if(M.leg_overload_mode)
-		M.leg_overload_mode = 1
-		M.step_in = min(1, round(M.step_in/2))
-		M.step_energy_drain = M.step_energy_drain*M.leg_overload_coeff
-		M.occupant_message("<span class='danger'>You enable leg actuators overload.</span>")
-	else
-		M.leg_overload_mode = 0
-		M.step_in = initial(M.step_in)
-		M.step_energy_drain = initial(M.step_energy_drain)
-		M.occupant_message("<span class='notice'>You disable leg actuators overload.</span>")
-
-
-/datum/action/innate/mecha/mech_smoke
-	name = "Smoke"
-	button_icon_state = "mech_smoke"
-
-/datum/action/innate/mecha/mech_smoke/Activate()
-	if(!owner || !chassis || chassis.occupant != owner)
-		return
-	var/obj/mecha/M = chassis
-	if(M.smoke_ready && M.smoke>0)
-		M.smoke_system.start()
-		M.smoke--
-		M.smoke_ready = 0
-		spawn(M.smoke_cooldown)
-			M.smoke_ready = 1
-
-
-/datum/action/innate/mecha/mech_zoom
-	name = "Zoom"
-	button_icon_state = "mech_zoom_off"
-
-/datum/action/innate/mecha/mech_zoom/Activate()
-	if(!owner || !chassis || chassis.occupant != owner)
-		return
-	var/obj/mecha/M = chassis
-	if(owner.client)
-		M.zoom_mode = !M.zoom_mode
-		button_icon_state = "mech_zoom_[M.zoom_mode ? "on" : "off"]"
-		M.log_message("Toggled zoom mode.")
-		M.occupant_message("<font color='[M.zoom_mode?"blue":"red"]'>Zoom mode [M.zoom_mode?"en":"dis"]abled.</font>")
-		if(M.zoom_mode)
-			owner.client.view = 12
-			owner << sound('sound/mecha/imag_enh.ogg',volume=50)
-		else
-			owner.client.view = world.view//world.view - default mob view size
-
-
-/datum/action/innate/mecha/mech_switch_damtype
-	name = "Reconfigure arm microtool arrays"
-	button_icon_state = "mech_damtype_brute"
-
-/datum/action/innate/mecha/mech_switch_damtype/Activate()
-	if(!owner || !chassis || chassis.occupant != owner)
-		return
-	var/obj/mecha/M = chassis
-	var/new_damtype
-	switch(M.damtype)
-		if("tox")
-			new_damtype = "brute"
-			M.occupant_message("Your exosuit's hands form into fists.")
-		if("brute")
-			new_damtype = "fire"
-			M.occupant_message("A torch tip extends from your exosuit's hand, glowing red.")
-		if("fire")
-			new_damtype = "tox"
-			M.occupant_message("A bone-chillingly thick plasteel needle protracts from the exosuit's palm.")
-	M.damtype = new_damtype.
-	button_icon_state = "mech_damtype_[new_damtype]"
-	playsound(src, 'sound/mecha/mechmove01.ogg', 50, 1)
-
-
-/datum/action/innate/mecha/mech_toggle_phasing
-	name = "Toggle Phasing"
-	button_icon_state = "mech_phasing_off"
-
-/datum/action/innate/mecha/mech_toggle_phasing/Activate()
-	if(!owner || !chassis || chassis.occupant != owner)
-		return
-	var/obj/mecha/M = chassis
-	M.phasing = !M.phasing
-	button_icon_state = "mech_phasing_[M.phasing ? "on" : "off"]"
-	M.occupant_message("<font color=\"[M.phasing?"#00f\">En":"#f00\">Dis"]abled phasing.</font>")
-

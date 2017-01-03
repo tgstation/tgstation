@@ -2,7 +2,7 @@ var/datum/subsystem/events/SSevent
 
 /datum/subsystem/events
 	name = "Events"
-	priority = 6
+	init_order = 6
 
 	var/list/control = list()	//list of all datum/round_event_control. Used for selecting events based on weight and occurrences.
 	var/list/running = list()	//list of all existing /datum/round_event
@@ -21,14 +21,10 @@ var/datum/subsystem/events/SSevent
 
 
 /datum/subsystem/events/Initialize(time, zlevel)
-	if (zlevel)
-		return ..()
 	for(var/type in typesof(/datum/round_event_control))
 		var/datum/round_event_control/E = new type()
 		if(!E.typepath)
 			continue				//don't want this one! leave it for the garbage collector
-		if(E.wizardevent && !wizardmode)
-			E.weight = 0
 		control += E				//add it to the list of all events (controls)
 	reschedule()
 	getHoliday()
@@ -44,8 +40,8 @@ var/datum/subsystem/events/SSevent
 	var/list/currentrun = src.currentrun
 
 	while(currentrun.len)
-		var/datum/thing = currentrun[1]
-		currentrun.Cut(1, 2)
+		var/datum/thing = currentrun[currentrun.len]
+		currentrun.len--
 		if(thing)
 			thing.process()
 		else
@@ -70,19 +66,14 @@ var/datum/subsystem/events/SSevent
 //		if(E)	E.runEvent()
 		return
 
+	var/gamemode = ticker.mode.config_tag
+	var/players_amt = get_active_player_count(alive_check = 1, afk_check = 1, human_check = 1)
+	// Only alive, non-AFK human players count towards this.
+
 	var/sum_of_weights = 0
 	for(var/datum/round_event_control/E in control)
-		if(E.occurrences >= E.max_occurrences)
+		if(!E.canSpawnEvent(players_amt, gamemode))
 			continue
-		if(E.earliest_start >= world.time)
-			continue
-		if(E.gamemode_blacklist.len && (ticker.mode.config_tag in E.gamemode_blacklist))
-			continue
-		if(E.gamemode_whitelist.len && !(ticker.mode.config_tag in E.gamemode_whitelist))
-			continue
-		if(E.holidayID)
-			if(!holidays || !holidays[E.holidayID])
-				continue
 		if(E.weight < 0)						//for round-start events etc.
 			if(E.runEvent() == PROCESS_KILL)
 				E.max_occurrences = 0
@@ -96,17 +87,8 @@ var/datum/subsystem/events/SSevent
 	sum_of_weights = rand(0,sum_of_weights)	//reusing this variable. It now represents the 'weight' we want to select
 
 	for(var/datum/round_event_control/E in control)
-		if(E.occurrences >= E.max_occurrences)
+		if(!E.canSpawnEvent(players_amt, gamemode))
 			continue
-		if(E.earliest_start >= world.time)
-			continue
-		if(E.gamemode_blacklist.len && (ticker.mode.config_tag in E.gamemode_blacklist))
-			continue
-		if(E.gamemode_whitelist.len && !(ticker.mode.config_tag in E.gamemode_whitelist))
-			continue
-		if(E.holidayID)
-			if(!holidays || !holidays[E.holidayID])
-				continue
 		sum_of_weights -= E.weight
 
 		if(sum_of_weights <= 0)				//we've hit our goal
@@ -120,8 +102,8 @@ var/datum/subsystem/events/SSevent
 
 /datum/round_event/proc/findEventArea() //Here's a nice proc to use to find an area for your event to land in!
 	var/list/safe_areas = list(
-	/area/turret_protected/ai,
-	/area/turret_protected/ai_upload,
+	/area/ai_monitored/turret_protected/ai,
+	/area/ai_monitored/turret_protected/ai_upload,
 	/area/engine,
 	/area/solar,
 	/area/holodeck,
@@ -213,10 +195,6 @@ var/datum/subsystem/events/SSevent
 
 /datum/subsystem/events/proc/toggleWizardmode()
 	wizardmode = !wizardmode
-	for(var/datum/round_event_control/E in SSevent.control)
-		E.weight = initial(E.weight)
-		if((E.wizardevent && !wizardmode) || (!E.wizardevent && wizardmode))
-			E.weight = 0
 	message_admins("Summon Events has been [wizardmode ? "enabled, events will occur every [SSevent.frequency_lower / 600] to [SSevent.frequency_upper / 600] minutes" : "disabled"]!")
 	log_game("Summon Events was [wizardmode ? "enabled" : "disabled"]!")
 

@@ -1,10 +1,8 @@
 /mob/living/silicon/ai/death(gibbed)
 	if(stat == DEAD)
 		return
-	if(!gibbed)
-		emote("me", 1, "sparks and its screen flickers, its systems slowly coming to a halt.")
-	stat = DEAD
 
+	. = ..()
 
 	if("[icon_state]_dead" in icon_states(src.icon,1))
 		icon_state = "[icon_state]_dead"
@@ -23,17 +21,14 @@
 
 	if(nuking)
 		set_security_level("red")
-		nuking = 0
-		SSshuttle.emergencyNoEscape = 0
-		if(SSshuttle.emergency.mode == SHUTTLE_STRANDED)
-			SSshuttle.emergency.mode = SHUTTLE_DOCKED
-			SSshuttle.emergency.timer = world.time
-			priority_announce("Hostile enviroment resolved. You have 3 minutes to board the Emergency Shuttle.", null, 'sound/AI/shuttledock.ogg', "Priority")
-		for(var/obj/item/weapon/pinpointer/point in pinpointer_list)
-			point.the_disk = null //Point back to the disk.
+		nuking = FALSE
+		for(var/obj/item/weapon/pinpointer/P in pinpointer_list)
+			P.switch_mode_to(TRACK_NUKE_DISK) //Party's over, back to work, everyone
+			P.nuke_warning = FALSE
 
 	if(doomsday_device)
-		doomsday_device.timing = 0
+		doomsday_device.timing = FALSE
+		SSshuttle.clearHostileEnvironment(doomsday_device)
 		qdel(doomsday_device)
 	if(explosive)
 		spawn(10)
@@ -45,4 +40,3 @@
 			if(istype(loc, /obj/item/device/aicard))
 				loc.icon_state = "aicard-404"
 
-	return ..()

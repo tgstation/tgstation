@@ -1,4 +1,4 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
+
 
 /obj/machinery/computer/med_data//TODO:SANITY
 	name = "medical records console"
@@ -6,7 +6,7 @@
 	icon_screen = "medcomp"
 	icon_keyboard = "med_key"
 	req_one_access = list(access_medical, access_forensics_lockers)
-	circuit = /obj/item/weapon/circuitboard/med_data
+	circuit = /obj/item/weapon/circuitboard/computer/med_data
 	var/obj/item/weapon/card/id/scan = null
 	var/authenticated = null
 	var/rank = null
@@ -28,7 +28,7 @@
 		scan = O
 		user << "<span class='notice'>You insert [O].</span>"
 	else
-		..()
+		return ..()
 
 /obj/machinery/computer/med_data/attack_hand(mob/user)
 	if(..())
@@ -189,8 +189,6 @@
 				else
 		else
 			dat += text("<A href='?src=\ref[];login=1'>{Log In}</A>", src)
-	//user << browse(text("<HEAD><TITLE>Medical Records</TITLE></HEAD><TT>[]</TT>", dat), "window=med_rec")
-	//onclose(user, "med_rec")
 	var/datum/browser/popup = new(user, "med_rec", "Medical Records Console", 600, 400)
 	popup.set_content(dat)
 	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
@@ -206,19 +204,19 @@
 	if(!(active2 in data_core.medical))
 		src.active2 = null
 
-	if((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (istype(usr, /mob/living/silicon)) || IsAdminGhost(usr))
+	if(usr.contents.Find(src) || (in_range(src, usr) && isturf(loc)) || issilicon(usr) || IsAdminGhost(usr))
 		usr.set_machine(src)
 		if(href_list["temp"])
 			src.temp = null
 		if(href_list["scan"])
 			if(src.scan)
-				if(istype(usr,/mob/living/carbon/human) && !usr.get_active_hand())
+				if(ishuman(usr) && !usr.get_active_held_item())
 					usr.put_in_hands(scan)
 				else
 					scan.loc = get_turf(src)
 				src.scan = null
 			else
-				var/obj/item/I = usr.get_active_hand()
+				var/obj/item/I = usr.get_active_held_item()
 				if(istype(I, /obj/item/weapon/card/id))
 					if(!usr.drop_item())
 						return
@@ -243,7 +241,7 @@
 					sortBy = href_list["sort"]
 					order = initial(order)
 		else if(href_list["login"])
-			if(istype(usr, /mob/living/silicon))
+			if(issilicon(usr))
 				src.active1 = null
 				src.active2 = null
 				src.authenticated = 1
@@ -502,7 +500,7 @@
 				var/counter = 1
 				while(src.active2.fields[text("com_[]", counter)])
 					counter++
-				src.active2.fields[text("com_[]", counter)] = text("Made by [] ([]) on [] [], []<BR>[]", src.authenticated, src.rank, worldtime2text(), time2text(world.realtime, "MMM DD"), year_integer+540, t1,)
+				src.active2.fields[text("com_[]", counter)] = text("Made by [] ([]) on [] [], []<BR>[]", src.authenticated, src.rank, worldtime2text(), time2text(world.realtime, "MMM DD"), year_integer+540, t1)
 
 			else if(href_list["del_c"])
 				if((istype(src.active2, /datum/data/record) && src.active2.fields[text("com_[]", href_list["del_c"])]))
@@ -563,35 +561,31 @@
 	return
 
 /obj/machinery/computer/med_data/emp_act(severity)
-	if(stat & (BROKEN|NOPOWER))
-		..(severity)
-		return
+	if(!(stat & (BROKEN|NOPOWER)))
+		for(var/datum/data/record/R in data_core.medical)
+			if(prob(10/severity))
+				switch(rand(1,6))
+					if(1)
+						if(prob(10))
+							R.fields["name"] = random_unique_lizard_name(R.fields["sex"],1)
+						else
+							R.fields["name"] = random_unique_name(R.fields["sex"],1)
+					if(2)
+						R.fields["sex"]	= pick("Male", "Female")
+					if(3)
+						R.fields["age"] = rand(AGE_MIN, AGE_MAX)
+					if(4)
+						R.fields["blood_type"] = random_blood_type()
+					if(5)
+						R.fields["p_stat"] = pick("*Unconcious*", "Active", "Physically Unfit")
+					if(6)
+						R.fields["m_stat"] = pick("*Insane*", "*Unstable*", "*Watch*", "Stable")
+				continue
 
-	for(var/datum/data/record/R in data_core.medical)
-		if(prob(10/severity))
-			switch(rand(1,6))
-				if(1)
-					if(prob(10))
-						R.fields["name"] = random_unique_lizard_name(R.fields["sex"],1)
-					else
-						R.fields["name"] = random_unique_name(R.fields["sex"],1)
-				if(2)
-					R.fields["sex"]	= pick("Male", "Female")
-				if(3)
-					R.fields["age"] = rand(AGE_MIN, AGE_MAX)
-				if(4)
-					R.fields["blood_type"] = random_blood_type()
-				if(5)
-					R.fields["p_stat"] = pick("*Unconcious*", "Active", "Physically Unfit")
-				if(6)
-					R.fields["m_stat"] = pick("*Insane*", "*Unstable*", "*Watch*", "Stable")
-			continue
-
-		else if(prob(1))
-			qdel(R)
-			continue
-
-	..(severity)
+			else if(prob(1))
+				qdel(R)
+				continue
+	..()
 
 /obj/machinery/computer/med_data/proc/canUseMedicalRecordsConsole(mob/user, message = 1, record1, record2)
 	if(user)
@@ -609,3 +603,4 @@
 	icon_state = "laptop"
 	icon_screen = "medlaptop"
 	icon_keyboard = "laptop_key"
+	clockwork = TRUE //it'd look weird

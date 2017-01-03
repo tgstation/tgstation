@@ -8,7 +8,7 @@
 	viable_mobtypes = list(/mob/living/carbon/human)
 	cure_chance = 5//like hell are you getting out of hell
 	desc = "A rare highly transmittable virulent virus. Few samples exist, rumoured to be carefully grown and cultured by clandestine bio-weapon specialists. Causes fever, blood vomiting, lung damage, weight loss, and fatigue."
-	required_organs = list(/obj/item/organ/limb/head)
+	required_organs = list(/obj/item/bodypart/head)
 	severity = DANGEROUS
 
 /datum/disease/tuberculosis/stage_act() //it begins

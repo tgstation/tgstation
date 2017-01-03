@@ -17,6 +17,8 @@
 	M.mind.antag_hud = src
 
 /datum/atom_hud/antag/proc/leave_hud(mob/M)
+	if(!M)
+		return
 	if(!istype(M))
 		CRASH("leave_hud(): [M] ([M.type]) is not a mob!")
 	remove_from_hud(M)
@@ -39,7 +41,7 @@
 
 //MIND PROCS
 //these are called by mind.transfer_to()
-/datum/mind/proc/transfer_antag_huds(var/datum/atom_hud/antag/newhud)
+/datum/mind/proc/transfer_antag_huds(datum/atom_hud/antag/newhud)
 	leave_all_huds()
 	ticker.mode.set_antag_hud(current, antag_hud_icon_state)
 	if(newhud)
@@ -53,3 +55,38 @@
 	for(var/datum/atom_hud/data/hud in huds)
 		if(current in hud.hudusers)
 			hud.remove_hud_from(current)
+
+/datum/atom_hud/antag/gang
+	var/color = null
+
+/datum/atom_hud/antag/gang/add_to_hud(atom/A)
+	if(!A)
+		return
+	var/image/holder = A.hud_list[ANTAG_HUD]
+	if(holder)
+		holder.color = color
+	..()
+
+/datum/atom_hud/antag/gang/remove_from_hud(atom/A)
+	if(!A)
+		return
+	var/image/holder = A.hud_list[ANTAG_HUD]
+	if(holder)
+		holder.color = null
+	..()
+
+/datum/atom_hud/antag/gang/join_hud(mob/M)
+	if(!istype(M))
+		CRASH("join_hud(): [M] ([M.type]) is not a mob!")
+	var/image/holder = M.hud_list[ANTAG_HUD]
+	if(holder)
+		holder.color = color
+	..()
+
+/datum/atom_hud/antag/gang/leave_hud(mob/M)
+	if(!istype(M))
+		CRASH("leave_hud(): [M] ([M.type]) is not a mob!")
+	var/image/holder = M.hud_list[ANTAG_HUD]
+	if(holder)
+		holder.color = null
+	..()

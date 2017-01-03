@@ -1,7 +1,7 @@
 /obj/item/weapon/grenade
 	name = "grenade"
 	desc = "It has an adjustable timer."
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	icon = 'icons/obj/grenade.dmi'
 	icon_state = "grenade"
 	item_state = "flashbang"
@@ -9,15 +9,18 @@
 	throw_range = 7
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
-	burn_state = FLAMMABLE
-	burntime = 5
+	resistance_flags = FLAMMABLE
+	obj_integrity = 40
+	max_integrity = 40
 	var/active = 0
 	var/det_time = 50
 	var/display_timer = 1
 
-/obj/item/weapon/grenade/burn()
-	prime()
-	..()
+/obj/item/weapon/grenade/deconstruct(disassembled = TRUE)
+	if(!disassembled)
+		prime()
+	if(!qdeleted(src))
+		qdel(src)
 
 /obj/item/weapon/grenade/proc/clown_check(mob/living/carbon/human/user)
 	if(user.disabilities & CLUMSY && prob(50))
@@ -31,24 +34,6 @@
 			prime()
 		return 0
 	return 1
-
-
-/*/obj/item/weapon/grenade/afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
-	if (istype(target, /obj/item/weapon/storage)) return ..() // Trying to put it in a full container
-	if (istype(target, /obj/item/weapon/gun/grenadelauncher)) return ..()
-	if((user.get_active_hand() == src) && (!active) && (clown_check(user)) && target.loc != src.loc)
-		user << "<span class='warning'>You prime the [name]! [det_time/10] seconds!</span>"
-		active = 1
-		icon_state = initial(icon_state) + "_active"
-		playsound(loc, 'sound/weapons/armbomb.ogg', 75, 1, -3)
-		spawn(det_time)
-			prime()
-			return
-		user.dir = get_dir(user, target)
-		user.drop_item()
-		var/t = (isturf(target) ? target : target.loc)
-		walk_towards(src, t, 3)
-	return*/
 
 
 /obj/item/weapon/grenade/examine(mob/user)
@@ -70,8 +55,10 @@
 			add_fingerprint(user)
 			var/turf/bombturf = get_turf(src)
 			var/area/A = get_area(bombturf)
-			message_admins("[key_name_admin(usr)]<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A> (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[usr]'>FLW</A>) has primed a [name] for detonation at <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[bombturf.x];Y=[bombturf.y];Z=[bombturf.z]'>[A.name] (JMP)</a>.")
-			log_game("[key_name(usr)] has primed a [name] for detonation at [A.name] ([bombturf.x],[bombturf.y],[bombturf.z]).")
+			var/message = "[ADMIN_LOOKUPFLW(user)]) has primed a [name] for detonation at [ADMIN_COORDJMP(bombturf)]"
+			bombers += message
+			message_admins(message)
+			log_game("[key_name(usr)] has primed a [name] for detonation at [A.name] [COORD(bombturf)].")
 			if(iscarbon(user))
 				var/mob/living/carbon/C = user
 				C.throw_mode_on()
@@ -103,7 +90,8 @@
 				det_time = 1
 				user << "<span class='notice'>You set the [name] for instant detonation.</span>"
 		add_fingerprint(user)
-	..()
+	else
+		return ..()
 
 /obj/item/weapon/grenade/attack_hand()
 	walk(src, null, null)

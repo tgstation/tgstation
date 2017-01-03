@@ -1,7 +1,7 @@
-/turf/space
+/turf/open/space
 	icon = 'icons/turf/space.dmi'
-	name = "\proper space"
 	icon_state = "0"
+	name = "\proper space"
 	intact = 0
 
 	temperature = TCMB
@@ -12,25 +12,57 @@
 	var/destination_x
 	var/destination_y
 
-/turf/space/New()
-	if(!istype(src, /turf/space/transit))
-		icon_state = SPACE_ICON_STATE
+	var/global/datum/gas_mixture/space/space_gas = new
+	plane = PLANE_SPACE
 
-/turf/space/Destroy()
-	return QDEL_HINT_LETMELIVE
+/turf/open/space/New()
+	icon_state = SPACE_ICON_STATE
+	air = space_gas
 
-/turf/space/proc/update_starlight()
-	if(config)
-		if(config.starlight)
-			for(var/turf/simulated/T in RANGE_TURFS(1,src)) //RANGE_TURFS is in code\__HELPERS\game.dm
-				SetLuminosity(4,1)
-				return
-			SetLuminosity(0)
+/turf/open/space/Destroy(force)
+	if(force)
+		. = ..()
+	else
+		return QDEL_HINT_LETMELIVE
 
-/turf/space/attack_paw(mob/user)
+/turf/open/space/attack_ghost(mob/dead/observer/user)
+	if(destination_z)
+		var/turf/T = locate(destination_x, destination_y, destination_z)
+		user.forceMove(T)
+
+/turf/open/space/Initalize_Atmos(times_fired)
+	return
+
+/turf/open/space/ChangeTurf(path)
+	. = ..()
+
+/turf/open/space/TakeTemperature(temp)
+
+/turf/open/space/RemoveLattice()
+	return
+
+/turf/open/space/AfterChange()
+	..()
+	atmos_overlay_types = null
+
+/turf/open/space/Assimilate_Air()
+	return
+
+/turf/open/space/proc/update_starlight()
+	if(config.starlight)
+		for(var/t in RANGE_TURFS(1,src)) //RANGE_TURFS is in code\__HELPERS\game.dm
+			if(isspaceturf(t))
+				//let's NOT update this that much pls
+				continue
+			SetLuminosity(4,5)
+			light.mode = LIGHTING_STARLIGHT
+			return
+		SetLuminosity(0)
+
+/turf/open/space/attack_paw(mob/user)
 	return src.attack_hand(user)
 
-/turf/space/attackby(obj/item/C, mob/user, params)
+/turf/open/space/attackby(obj/item/C, mob/user, params)
 	..()
 	if(istype(C, /obj/item/stack/rods))
 		var/obj/item/stack/rods/R = C
@@ -63,13 +95,13 @@
 				qdel(L)
 				playsound(src, 'sound/weapons/Genhit.ogg', 50, 1)
 				user << "<span class='notice'>You build a floor.</span>"
-				ChangeTurf(/turf/simulated/floor/plating)
+				ChangeTurf(/turf/open/floor/plating)
 			else
 				user << "<span class='warning'>You need one floor tile to build a floor!</span>"
 		else
 			user << "<span class='warning'>The plating is going to need some support! Place metal rods first.</span>"
 
-/turf/space/Entered(atom/movable/A)
+/turf/open/space/Entered(atom/movable/A)
 	..()
 	if ((!(A) || src != A.loc))
 		return
@@ -86,10 +118,10 @@
 				L.pulling.loc = T
 
 		//now we're on the new z_level, proceed the space drifting
-		sleep(0)//Let a diagonal move finish, if necessary
+		stoplag()//Let a diagonal move finish, if necessary
 		A.newtonian_move(A.inertia_dir)
 
-/turf/space/proc/Sandbox_Spacemove(atom/movable/A)
+/turf/open/space/proc/Sandbox_Spacemove(atom/movable/A)
 	var/cur_x
 	var/cur_y
 	var/next_x = src.x
@@ -126,13 +158,21 @@
 	var/turf/T = locate(next_x, next_y, target_z)
 	A.Move(T)
 
-/turf/space/handle_slip()
+/turf/open/space/handle_slip()
 	return
 
-/turf/space/singularity_act()
+/turf/open/space/singularity_act()
 	return
 
-/turf/space/can_have_cabling()
+/turf/open/space/can_have_cabling()
 	if(locate(/obj/structure/lattice/catwalk, src))
 		return 1
+	return 0
+
+/turf/open/space/is_transition_turf()
+	if(destination_x || destination_y || destination_z)
+		return 1
+
+
+/turf/open/space/acid_act(acidpwr, acid_volume)
 	return 0

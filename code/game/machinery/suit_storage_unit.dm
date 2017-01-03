@@ -1,4 +1,4 @@
-// SUIT STORAGE UNIT /////////////////close_machine(
+// SUIT STORAGE UNIT /////////////////
 /obj/machinery/suit_storage_unit
 	name = "suit storage unit"
 	desc = "An industrial unit made to hold space suits. It comes with a built-in UV cauterization mechanism. A small warning label advises that organic matter should not be placed into the unit."
@@ -6,6 +6,8 @@
 	icon_state = "close"
 	anchored = 1
 	density = 1
+	obj_integrity = 250
+	max_integrity = 250
 
 	var/obj/item/clothing/suit/space/suit = null
 	var/obj/item/clothing/head/helmet/space/helmet = null
@@ -32,9 +34,8 @@
 	mask_type = /obj/item/clothing/mask/breath
 
 /obj/machinery/suit_storage_unit/captain
-	suit_type = /obj/item/clothing/suit/space/captain
-	helmet_type = /obj/item/clothing/head/helmet/space/captain
-	mask_type = /obj/item/clothing/mask/gas
+	suit_type = /obj/item/clothing/suit/space/hardsuit/captain
+	mask_type = /obj/item/clothing/mask/gas/sechailer
 	storage_type = /obj/item/weapon/tank/jetpack/oxygen/captain
 
 /obj/machinery/suit_storage_unit/engine
@@ -60,6 +61,10 @@
 	storage_type = /obj/item/weapon/watertank/atmos
 
 /obj/machinery/suit_storage_unit/mining
+	suit_type = /obj/item/clothing/suit/hooded/explorer
+	mask_type = /obj/item/clothing/mask/gas/explorer
+
+/obj/machinery/suit_storage_unit/mining/eva
 	suit_type = /obj/item/clothing/suit/space/hardsuit/mining
 	mask_type = /obj/item/clothing/mask/breath
 
@@ -109,62 +114,71 @@
 		storage = new storage_type(src)
 	update_icon()
 
+/obj/machinery/suit_storage_unit/Destroy()
+	if(suit)
+		qdel(suit)
+		suit = null
+	if(helmet)
+		qdel(helmet)
+		helmet = null
+	if(mask)
+		qdel(mask)
+		mask = null
+	if(storage)
+		qdel(storage)
+		storage = null
+	return ..()
+
 /obj/machinery/suit_storage_unit/update_icon()
-	overlays.Cut()
+	cut_overlays()
 
 	if(uv)
 		if(uv_super)
-			overlays += "super"
+			add_overlay("super")
 		else if(occupant)
-			overlays += "uvhuman"
+			add_overlay("uvhuman")
 		else
-			overlays += "uv"
+			add_overlay("uv")
 	else if(state_open)
 		if(stat & BROKEN)
-			overlays += "broken"
+			add_overlay("broken")
 		else
-			overlays += "open"
+			add_overlay("open")
 			if(suit)
-				overlays += "suit"
+				add_overlay("suit")
 			if(helmet)
-				overlays += "helm"
+				add_overlay("helm")
 			if(storage)
-				overlays += "storage"
+				add_overlay("storage")
 	else if(occupant)
-		overlays += "human"
+		add_overlay("human")
 
 /obj/machinery/suit_storage_unit/power_change()
 	..()
 	if(!is_operational() && state_open)
-		open_machine(dump = TRUE)
+		open_machine()
+		dump_contents()
 	update_icon()
 
-/obj/machinery/suit_storage_unit/open_machine(dump = FALSE)
-	state_open = TRUE
-	if(dump)
-		dropContents()
-		helmet = null
-		suit = null
-		mask = null
-		storage = null
-		occupant = null
-	update_icon()
+/obj/machinery/suit_storage_unit/proc/dump_contents()
+	dropContents()
+	helmet = null
+	suit = null
+	mask = null
+	storage = null
+	occupant = null
 
-/obj/machinery/suit_storage_unit/ex_act(severity, target)
-	switch(severity)
-		if(1)
-			if(prob(50))
-				open_machine(dump = TRUE)
-			qdel(src)
-		if(2)
-			if(prob(50))
-				open_machine(dump = TRUE)
-				qdel(src)
+/obj/machinery/suit_storage_unit/deconstruct(disassembled = TRUE)
+	if(!(flags & NODECONSTRUCT))
+		open_machine()
+		dump_contents()
+		new /obj/item/stack/sheet/metal (loc, 2)
+	qdel(src)
 
-/obj/machinery/suit_storage_unit/MouseDrop_T(mob/target, mob/user)
-	if(user.stat || user.lying || !Adjacent(user) || !Adjacent(target))
+/obj/machinery/suit_storage_unit/MouseDrop_T(atom/A, mob/user)
+	if(user.stat || user.lying || !Adjacent(user) || !Adjacent(A) || !isliving(A))
 		return
-
+	var/mob/living/target = A
 	if(!state_open)
 		user << "<span class='warning'>The unit's doors are shut!</span>"
 		return
@@ -176,11 +190,17 @@
 		return
 
 	if(target == user)
-		visible_message("<span class='warning'>[user] squeezes into [src]!</span>", "<span class='notice'>You squeeze into [src].</span>")
+		user.visible_message("<span class='warning'>[user] starts squeezing into [src]!</span>", "<span class='notice'>You start working your way into [src]...</span>")
 	else
-		visible_message("<span class='warning'>[user] starts putting [target] into [src]!</span>", "<span class='userdanger'>[user] starts shoving you into [src]!</span>")
+		target.visible_message("<span class='warning'>[user] starts shoving [target] into [src]!</span>", "<span class='userdanger'>[user] starts shoving you into [src]!</span>")
 
-	if(do_mob(user, target, 10))
+	if(do_mob(user, target, 30))
+		if(occupant || helmet || suit || storage)
+			return
+		if(target == user)
+			user.visible_message("<span class='warning'>[user] slips into [src] and closes the door behind them!</span>", "<span class=notice'>You slip into [src]'s cramped space and shut its door.</span>")
+		else
+			target.visible_message("<span class='warning'>[user] pushes [target] into [src] and shuts its door!<span>", "<span class='userdanger'>[user] shoves you into [src] and shuts the door!</span>")
 		close_machine(target)
 		add_fingerprint(user)
 
@@ -197,13 +217,14 @@
 				occupant.adjustFireLoss(rand(10, 16))
 			if(iscarbon(occupant))
 				occupant.emote("scream")
-		addtimer(src, "cook", 50, FALSE)
+		addtimer(src, "cook", 50, TIMER_NORMAL)
 	else
 		uv_cycles = initial(uv_cycles)
 		uv = FALSE
 		locked = FALSE
 		if(uv_super)
-			visible_message("<span class='warning'>With a loud whining noise, [src]'s door grinds open. A foul cloud of smoke emanates from the chamber.</span>")
+			visible_message("<span class='warning'>[src]'s door creaks open with a loud whining noise. A cloud of foul black smoke escapes from its chamber.</span>")
+			playsound(src, 'sound/machines/airlock_alien_prying.ogg', 50, 1)
 			helmet = null
 			qdel(helmet)
 			suit = null
@@ -215,30 +236,37 @@
 			// The wires get damaged too.
 			wires.cut_all()
 		else
-			visible_message("<span class='warning'>With a loud whining noise, [src]'s door grinds open. A light cloud of steam escapes from the chamber.</span>")
-			for(var/obj/item/I in src)
+			if(!occupant)
+				visible_message("<span class='notice'>[src]'s door slides open. The glowing yellow lights dim to a gentle green.</span>")
+			else
+				visible_message("<span class='warning'>[src]'s door slides open, barraging you with the nauseating smell of charred flesh.</span>")
+			playsound(src, 'sound/machines/AirlockClose.ogg', 25, 1)
+			for(var/obj/item/I in src) //Scorches away blood and forensic evidence, although the SSU itself is unaffected
 				I.clean_blood()
-		open_machine(dump = !!occupant)
+				I.fingerprints = list()
+		open_machine(FALSE)
+		if(occupant)
+			dump_contents()
 
 /obj/machinery/suit_storage_unit/proc/shock(mob/user, prb)
 	if(!prob(prb))
 		var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 		s.set_up(5, 1, src)
 		s.start()
-		if(electrocute_mob(user, src, src))
+		if(electrocute_mob(user, src, src, 1, TRUE))
 			return 1
 
 /obj/machinery/suit_storage_unit/relaymove(mob/user)
-	container_resist()
+	container_resist(user)
 
-/obj/machinery/suit_storage_unit/container_resist()
-	var/mob/living/user = usr
+/obj/machinery/suit_storage_unit/container_resist(mob/living/user)
 	add_fingerprint(user)
 	if(locked)
 		visible_message("<span class='notice'>You see [user] kicking against the doors of [src]!</span>", "<span class='notice'>You start kicking against the doors...</span>")
-		addtimer(src, "resist_open", 300, FALSE, user)
+		addtimer(src, "resist_open", 300, TIMER_NORMAL, user)
 	else
-		open_machine(dump = TRUE)
+		open_machine()
+		dump_contents()
 
 /obj/machinery/suit_storage_unit/proc/resist_open(mob/user)
 	if(!state_open && occupant && (user in src) && user.stat == 0) // Check they're still here.
@@ -268,7 +296,7 @@
 			if(!user.drop_item())
 				return
 			mask = I
-		else if(istype(I, /obj/item))
+		else
 			if(storage)
 				user << "<span class='warning'>The auxiliary storage compartment is full!</span>"
 				return
@@ -278,6 +306,8 @@
 
 		I.loc = src
 		visible_message("<span class='notice'>[user] inserts [I] into [src]</span>", "<span class='notice'>You load [I] into [src].</span>")
+		update_icon()
+		return
 
 	if(panel_open && is_wire_tool(I))
 		wires.interact(user)
@@ -285,10 +315,10 @@
 		if(default_deconstruction_screwdriver(user, "panel", "close", I))
 			return
 	if(default_pry_open(I))
+		dump_contents()
 		return
 
-	update_icon()
-	return
+	return ..()
 
 /obj/machinery/suit_storage_unit/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
 										datum/tgui/master_ui = null, datum/ui_state/state = notcontained_state)
@@ -324,7 +354,9 @@
 			if(state_open)
 				close_machine()
 			else
-				open_machine(!!occupant) // Dump out contents if someone is in there.
+				open_machine(0)
+				if(occupant)
+					dump_contents() // Dump out contents if someone is in there.
 			. = TRUE
 		if("lock")
 			locked = !locked
@@ -335,6 +367,8 @@
 			else if(!helmet && !mask && !suit && !storage && !occupant)
 				return
 			else
+				if(occupant)
+					occupant << "<span class='userdanger'>[src]'s confines grow warm, then hot, then scorching. You're being burned [!occupant.stat ? "alive" : "away"]!</span>"
 				cook()
 				. = TRUE
 		if("dispense")

@@ -8,25 +8,25 @@
 	generic_pixel_y = 4
 	vehicle_move_delay = 1
 	var/static/image/atvcover = null
-
+	
 
 /obj/vehicle/atv/New()
 	..()
 	if(!atvcover)
 		atvcover = image("icons/obj/vehicles.dmi", "atvcover")
-		atvcover.layer = MOB_LAYER + 0.1
+		atvcover.layer = ABOVE_MOB_LAYER
 
 
-obj/vehicle/atv/post_buckle_mob(mob/living/M)
-	if(buckled_mobs.len)
-		overlays += atvcover
+/obj/vehicle/atv/post_buckle_mob(mob/living/M)
+	if(has_buckled_mobs())
+		add_overlay(atvcover)
 	else
 		overlays -= atvcover
 
 
 /obj/vehicle/atv/handle_vehicle_layer()
 	if(dir == SOUTH)
-		layer = MOB_LAYER+0.1
+		layer = ABOVE_MOB_LAYER
 	else
 		layer = OBJ_LAYER
 
@@ -51,13 +51,13 @@ obj/vehicle/atv/post_buckle_mob(mob/living/M)
 
 /obj/vehicle/atv/turret/handle_vehicle_layer()
 	if(dir == SOUTH)
-		layer = MOB_LAYER+0.1
+		layer = ABOVE_MOB_LAYER
 	else
 		layer = OBJ_LAYER
 
 	if(turret)
 		if(dir == NORTH)
-			turret.layer = MOB_LAYER+0.1
+			turret.layer = ABOVE_MOB_LAYER
 		else
 			turret.layer = OBJ_LAYER
 

@@ -6,7 +6,7 @@
 	desc = "It's good to be emperor."
 	item_state = "that"
 	flags_inv = 0
-	armor = list(melee = 30, bullet = 15, laser = 30, energy = 10, bomb = 25, bio = 0, rad = 0)
+	armor = list(melee = 30, bullet = 15, laser = 30, energy = 10, bomb = 25, bio = 0, rad = 0, fire = 50, acid = 50)
 	strip_delay = 80
 
 /obj/item/clothing/head/powdered_wig
@@ -20,10 +20,11 @@
 	desc = "It's an amish looking hat."
 	icon_state = "tophat"
 	item_state = "that"
+	dog_fashion = /datum/dog_fashion/head
 
 /obj/item/clothing/head/canada
 	name = "striped red tophat"
-	desc = " It feels sticky, like maple syrup - <i>il se sent collante, comme le sirop d'érable</i>"
+	desc = " It feels sticky, like maple syrup - <i>il se sent collante, comme le sirop d'Ã©rable</i>"
 	icon_state = "canada"
 	item_state = "canada"
 
@@ -55,6 +56,8 @@
 	desc = "It allows quick identification of trained medical personnel."
 	icon_state = "nursehat"
 
+	dog_fashion = /datum/dog_fashion/head/nurse
+
 /obj/item/clothing/head/syndicatefake
 	name = "black space-helmet replica"
 	icon_state = "syndicate-helm-black-red"
@@ -62,12 +65,12 @@
 	desc = "A plastic replica of a Syndicate agent's space helmet. You'll look just like a real murderous Syndicate agent in this! This is a toy, it is not made for use in space!"
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
 
-/obj/item/clothing/head/cardborg
-	name = "cardborg helmet"
-	desc = "A helmet made out of a box."
-	icon_state = "cardborg_h"
-	item_state = "cardborg_h"
-	flags_cover = HEADCOVERSEYES
+/obj/item/clothing/head/cueball
+	name = "cueball helmet"
+	desc = "A large, featureless white orb meant to be worn on your head. How do you even see out of this thing?"
+	icon_state = "cueball"
+	item_state="cueball"
+	flags_cover = HEADCOVERSEYES|HEADCOVERSMOUTH
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
 
 /obj/item/clothing/head/snowman
@@ -107,6 +110,9 @@
 	desc = "Wearing these makes you look useless, and only good for your sex appeal."
 	icon_state = "bunny"
 
+	dog_fashion = /datum/dog_fashion/head/rabbit
+
+
 /obj/item/clothing/head/flatcap
 	name = "flat cap"
 	desc = "A working man's cap."
@@ -118,10 +124,9 @@
 	desc = "Yarr."
 	icon_state = "pirate"
 	item_state = "pirate"
+	dog_fashion = /datum/dog_fashion/head/pirate
 
-/obj/item/clothing/head/hgpiratecap
-	name = "pirate hat"
-	desc = "Yarr."
+/obj/item/clothing/head/pirate/captain
 	icon_state = "hgpiratecap"
 	item_state = "hgpiratecap"
 
@@ -176,6 +181,7 @@
 	icon_state = "fedora"
 	item_state = "fedora"
 	desc = "A really cool hat if you're a mobster. A really lame hat if you're not."
+	pockets = /obj/item/weapon/storage/internal/pocket/small
 
 /obj/item/clothing/head/fedora/suicide_act(mob/user)
 	if(user.gender == FEMALE)
@@ -194,12 +200,15 @@
 	desc = "You can practically taste the fiesta."
 	flags_inv = HIDEHAIR
 
+	dog_fashion = /datum/dog_fashion/head/sombrero
+
 /obj/item/clothing/head/sombrero/green
 	name = "green sombrero"
 	icon_state = "greensombrero"
 	item_state = "greensombrero"
 	desc = "As elegant as a dancing cactus."
 	flags_inv = HIDEHAIR|HIDEFACE|HIDEEARS
+	dog_fashion = null
 
 /obj/item/clothing/head/sombrero/shamebrero
 	name = "shamebrero"
@@ -207,6 +216,7 @@
 	item_state = "shamebrero"
 	desc = "Once it's on, it never comes off."
 	flags = NODROP
+	dog_fashion = null
 
 /obj/item/clothing/head/cone
 	desc = "This cone is trying to warn you of something!"
@@ -218,9 +228,9 @@
 	throwforce = 3
 	throw_speed = 2
 	throw_range = 5
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	attack_verb = list("warned", "cautioned", "smashed")
-	burn_state = FIRE_PROOF
+	resistance_flags = 0
 
 /obj/item/clothing/head/santa
 	name = "santa hat"
@@ -229,6 +239,7 @@
 	item_state = "that"
 	cold_protection = HEAD
 	min_cold_protection_temperature = FIRE_HELM_MIN_TEMP_PROTECT
+	dog_fashion = /datum/dog_fashion/head/santa
 
 /obj/item/clothing/head/jester
 	name = "jester hat"
@@ -244,3 +255,27 @@
 	name = "lizardskin cloche hat"
 	desc = "How many lizards died to make this hat? Not enough."
 	icon_state = "lizard"
+
+/obj/item/clothing/head/papersack
+	name = "paper sack hat"
+	desc = "A paper sack with crude holes cut out for eyes. Useful for hiding one's identity or ugliness."
+	icon_state = "papersack"
+	flags_inv = HIDEHAIR|HIDEFACE|HIDEEARS
+
+/obj/item/clothing/head/papersack/smiley
+	name = "paper sack hat"
+	desc = "A paper sack with crude holes cut out for eyes and a sketchy smile drawn on the front. Not creepy at all."
+	icon_state = "papersack_smile"
+	flags_inv = HIDEHAIR|HIDEFACE|HIDEEARS
+
+/obj/item/clothing/head/crown
+	name = "crown"
+	desc = "A crown fit for a king, a petty king maybe."
+	icon_state = "crown"
+	armor = list(melee = 15, bullet = 0, laser = 0,energy = 15, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 50)
+	resistance_flags = FIRE_PROOF
+
+/obj/item/clothing/head/crown/fancy
+	name = "magnificent crown"
+	desc = "A crown worn by only the highest emperors of the land."
+	icon_state = "fancycrown"

@@ -68,9 +68,9 @@
 	air_contents.volume = 1000
 
 /obj/machinery/atmospherics/components/unary/vent_pump/update_icon_nopipes()
-	overlays.Cut()
+	cut_overlays()
 	if(showpipe)
-		overlays += getpipeimage('icons/obj/atmospherics/components/unary_devices.dmi', "vent_cap", initialize_directions)
+		add_overlay(getpipeimage('icons/obj/atmospherics/components/unary_devices.dmi', "vent_cap", initialize_directions))
 
 	if(welded)
 		icon_state = "vent_welded"
@@ -244,15 +244,12 @@
 	return
 
 /obj/machinery/atmospherics/components/unary/vent_pump/attackby(obj/item/W, mob/user, params)
-	if (istype(W, /obj/item/weapon/wrench)&& !(stat & NOPOWER) && on)
-		user << "<span class='warning'>You cannot unwrench this [src], turn it off first!</span>"
-		return 1
 	if(istype(W, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = W
 		if (WT.remove_fuel(0,user))
-			playsound(loc, 'sound/items/Welder.ogg', 40, 1)
+			playsound(loc, WT.usesound, 40, 1)
 			user << "<span class='notice'>You begin welding the vent...</span>"
-			if(do_after(user, 20/W.toolspeed, target = src))
+			if(do_after(user, 20*W.toolspeed, target = src))
 				if(!src || !WT.isOn()) return
 				playsound(src.loc, 'sound/items/Welder2.ogg', 50, 1)
 				if(!welded)
@@ -262,10 +259,18 @@
 					user.visible_message("[user] unwelds the vent.", "<span class='notice'>You unweld the vent.</span>", "<span class='italics'>You hear welding.</span>")
 					welded = 0
 				update_icon()
-				pipe_vision_img = image(src, loc, layer = 20, dir = dir)
+				pipe_vision_img = image(src, loc, layer = ABOVE_HUD_LAYER, dir = dir)
+				pipe_vision_img.plane = ABOVE_HUD_PLANE
 			return 0
 	else
 		return ..()
+
+/obj/machinery/atmospherics/components/unary/vent_pump/can_unwrench(mob/user)
+	if(..())
+		if(!(stat & NOPOWER) && on)
+			user << "<span class='warning'>You cannot unwrench this [src], turn it off first!</span>"
+		else
+			return 1
 
 /obj/machinery/atmospherics/components/unary/vent_pump/examine(mob/user)
 	..()
@@ -278,6 +283,17 @@
 
 /obj/machinery/atmospherics/components/unary/vent_pump/can_crawl_through()
 	return !welded
+
+/obj/machinery/atmospherics/components/unary/vent_pump/attack_alien(mob/user)
+	if(!welded || !(do_after(user, 20, target = src)))
+		return
+	user.visible_message("[user] furiously claws at [src]!", "You manage to clear away the stuff blocking the vent", "You hear loud scraping noises.")
+	welded = 0
+	update_icon()
+	pipe_vision_img = image(src, loc, layer = ABOVE_HUD_LAYER, dir = dir)
+	pipe_vision_img.plane = ABOVE_HUD_PLANE
+	playsound(loc, 'sound/weapons/bladeslice.ogg', 100, 1)
+
 
 #undef INT_BOUND
 #undef EXT_BOUND

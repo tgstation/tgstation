@@ -33,7 +33,7 @@ var/list/admin_verbs_debug_mapping = list(
 	/client/proc/count_objects_all,
 	/client/proc/cmd_assume_direct_control,	//-errorage
 	/client/proc/startSinglo,
-	/client/proc/fps,	//allows you to set the ticklag.
+	/client/proc/set_server_fps,	//allows you to set the ticklag.
 	/client/proc/cmd_admin_grantfullaccess,
 	/client/proc/cmd_admin_areatest,
 	/client/proc/cmd_admin_rejuvenate,
@@ -44,6 +44,12 @@ var/list/admin_verbs_debug_mapping = list(
 	/client/proc/cmd_show_at_list,
 	/client/proc/manipulate_organs
 )
+
+/obj/effect/debugging/mapfix_marker
+	name = "map fix marker"
+	icon = 'icons/mob/screen_gen.dmi'
+	icon_state = "mapfixmarker"
+	desc = "I am a mappers mistake."
 
 /obj/effect/debugging/marker
 	icon = 'icons/turf/areas.dmi'

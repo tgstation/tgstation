@@ -1,6 +1,6 @@
 /var/global/list/mutations_list = list()
 
-/datum/mutation/
+/datum/mutation
 
 	var/name
 
@@ -19,6 +19,7 @@
 	var/layer_used = MUTATIONS_LAYER //which mutation layer to use
 	var/list/species_allowed = list() //to restrict mutation to only certain species
 	var/health_req //minimum health required to acquire the mutation
+	var/limb_req //required limbs to acquire this mutation
 	var/time_coeff = 1 //coefficient for timed mutations
 
 /datum/mutation/human/proc/force_give(mob/living/carbon/human/owner)
@@ -47,9 +48,9 @@
 	if(hex2num(getblock(se_string, dna_block)) >= lowest_value)
 		return 1
 
-/datum/mutation/human/proc/check_block(mob/living/carbon/human/owner)
+/datum/mutation/human/proc/check_block(mob/living/carbon/human/owner, force_powers=0)
 	if(check_block_string(owner.dna.struc_enzymes))
-		if(prob(get_chance))
+		if(prob(get_chance)||force_powers)
 			. = on_acquiring(owner)
 	else
 		. = on_losing(owner)
@@ -60,6 +61,8 @@
 	if(species_allowed.len && !species_allowed.Find(owner.dna.species.id))
 		return 1
 	if(health_req && owner.health < health_req)
+		return 1
+	if(limb_req && !owner.get_bodypart(limb_req))
 		return 1
 	owner.dna.mutations.Add(src)
 	if(text_gain_indication)
@@ -76,7 +79,7 @@
 /datum/mutation/human/proc/get_visual_indicator(mob/living/carbon/human/owner)
 	return
 
-/datum/mutation/human/proc/on_attack_hand(mob/living/carbon/human/owner, atom/target)
+/datum/mutation/human/proc/on_attack_hand(mob/living/carbon/human/owner, atom/target, proximity)
 	return
 
 /datum/mutation/human/proc/on_ranged_attack(mob/living/carbon/human/owner, atom/target)
@@ -120,23 +123,16 @@
 	species_allowed = list("human") //no skeleton/lizard hulk
 	health_req = 25
 
-/datum/mutation/human/hulk/New()
-	..()
-	visual_indicators |= image("icon"='icons/effects/genetics.dmi', "icon_state"="hulk_f_s", "layer"=-MUTATIONS_LAYER)
-	visual_indicators |= image("icon"='icons/effects/genetics.dmi', "icon_state"="hulk_m_s", "layer"=-MUTATIONS_LAYER)
-
 /datum/mutation/human/hulk/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
 		return
 	var/status = CANSTUN | CANWEAKEN | CANPARALYSE | CANPUSH
 	owner.status_flags &= ~status
+	owner.update_body_parts()
 
-/datum/mutation/human/hulk/on_attack_hand(mob/living/carbon/human/owner, atom/target)
-	return target.attack_hulk(owner)
-
-/datum/mutation/human/hulk/get_visual_indicator(mob/living/carbon/human/owner)
-	var/g = (owner.gender == FEMALE) ? 1 : 2
-	return visual_indicators[g]
+/datum/mutation/human/hulk/on_attack_hand(mob/living/carbon/human/owner, atom/target, proximity)
+	if(proximity) //no telekinetic hulk attack
+		return target.attack_hulk(owner)
 
 /datum/mutation/human/hulk/on_life(mob/living/carbon/human/owner)
 	if(owner.health < 0)
@@ -147,6 +143,7 @@
 	if(..())
 		return
 	owner.status_flags |= CANSTUN | CANWEAKEN | CANPARALYSE | CANPUSH
+	owner.update_body_parts()
 
 /datum/mutation/human/hulk/say_mod(message)
 	if(message)
@@ -160,6 +157,7 @@
 	get_chance = 20
 	lowest_value = 256 * 12
 	text_gain_indication = "<span class='notice'>You feel smarter!</span>"
+	limb_req = "head"
 
 /datum/mutation/human/telekinesis/New()
 	..()
@@ -190,7 +188,7 @@
 /datum/mutation/human/cold_resistance/on_life(mob/living/carbon/human/owner)
 	if(owner.getFireLoss())
 		if(prob(1))
-			owner.heal_organ_damage(0,1)   //Is this really needed?
+			owner.heal_bodypart_damage(0,1)   //Is this really needed?
 
 /datum/mutation/human/x_ray
 
@@ -239,11 +237,13 @@
 		owner.visible_message("<span class='danger'>[owner] starts having a seizure!</span>", "<span class='userdanger'>You have a seizure!</span>")
 		owner.Paralyse(10)
 		owner.Jitter(1000)
-		spawn(90)
-			owner.jitteriness = 10
+		addtimer(src, "jitter_less", 90, TIMER_NORMAL, owner)
+
+/datum/mutation/human/epilepsy/proc/jitter_less(mob/living/carbon/human/owner)
+	if(owner)
+		owner.jitteriness = 10
 
 /datum/mutation/human/bad_dna
-
 	name = "Unstable DNA"
 	quality = NEGATIVE
 	text_gain_indication = "<span class='danger'>You feel strange.</span>"
@@ -253,18 +253,17 @@
 	var/mob/new_mob
 	if(prob(95))
 		if(prob(50))
-			new_mob = randmutb(owner)
+			new_mob = owner.randmutb()
 		else
-			new_mob = randmuti(owner)
+			new_mob = owner.randmuti()
 	else
-		new_mob = randmutg(owner)
+		new_mob = owner.randmutg()
 	if(new_mob && ismob(new_mob))
 		owner = new_mob
 	. = owner
 	on_losing(owner)
 
 /datum/mutation/human/cough
-
 	name = "Cough"
 	quality = MINOR_NEGATIVE
 	text_gain_indication = "<span class='danger'>You start coughing.</span>"
@@ -275,7 +274,6 @@
 		owner.emote("cough")
 
 /datum/mutation/human/dwarfism
-
 	name = "Dwarfism"
 	quality = POSITIVE
 	get_chance = 15
@@ -314,7 +312,6 @@
 	owner.disabilities &= ~CLUMSY
 
 /datum/mutation/human/tourettes
-
 	name = "Tourettes Syndrome"
 	quality = NEGATIVE
 	text_gain_indication = "<span class='danger'>You twitch.</span>"
@@ -335,7 +332,6 @@
 		animate(owner, pixel_x = x_offset_old, pixel_y = y_offset_old, time = 1)
 
 /datum/mutation/human/nervousness
-
 	name = "Nervousness"
 	quality = MINOR_NEGATIVE
 	text_gain_indication = "<span class='danger'>You feel nervous.</span>"
@@ -345,7 +341,6 @@
 		owner.stuttering = max(10, owner.stuttering)
 
 /datum/mutation/human/deaf
-
 	name = "Deafness"
 	quality = NEGATIVE
 	text_gain_indication = "<span class='danger'>You can't seem to hear anything.</span>"
@@ -361,7 +356,6 @@
 	owner.disabilities &= ~DEAF
 
 /datum/mutation/human/blind
-
 	name = "Blindness"
 	quality = NEGATIVE
 	text_gain_indication = "<span class='danger'>You can't seem to see anything.</span>"
@@ -383,6 +377,9 @@
 	time_coeff = 2
 
 /datum/mutation/human/race/on_acquiring(mob/living/carbon/human/owner)
+	if(owner.has_brain_worms())
+		owner << "<span class='warning'>You feel something strongly clinging to your humanity!</span>"
+		return
 	if(..())
 		return
 	. = owner.monkeyize(TR_KEEPITEMS | TR_KEEPIMPLANTS | TR_KEEPORGANS | TR_KEEPDAMAGE | TR_KEEPVIRUS | TR_KEEPSE)
@@ -538,6 +535,10 @@
 /datum/mutation/human/swedish/say_mod(message)
 	if(message)
 		message = replacetext(message,"w","v")
+		message = replacetext(message,"j","y")
+		message = replacetext(message,"a",pick("å","ä","æ","a"))
+		message = replacetext(message,"bo","bjo")
+		message = replacetext(message,"o",pick("ö","ø","o"))
 		if(prob(30))
 			message += " Bork[pick("",", bork",", bork, bork")]!"
 	return message
@@ -613,6 +614,7 @@
 	dna_block = NON_SCANNABLE
 	text_gain_indication = "<span class='notice'>You feel pressure building up behind your eyes.</span>"
 	layer_used = FRONT_MUTATIONS_LAYER
+	limb_req = "head"
 
 /datum/mutation/human/laser_eyes/New()
 	..()
@@ -622,7 +624,7 @@
 	return visual_indicators[1]
 
 /datum/mutation/human/laser_eyes/on_ranged_attack(mob/living/carbon/human/owner, atom/target)
-	if(owner.a_intent == "harm")
+	if(owner.a_intent == INTENT_HARM)
 		owner.LaserEyes(target)
 
 

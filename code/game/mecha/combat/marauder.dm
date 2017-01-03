@@ -3,10 +3,12 @@
 	name = "\improper Marauder"
 	icon_state = "marauder"
 	step_in = 5
-	health = 500
+	obj_integrity = 500
+	max_integrity = 500
 	deflect_chance = 25
-	damage_absorption = list("brute"=0.5,"fire"=0.7,"bullet"=0.45,"laser"=0.6,"energy"=0.7,"bomb"=0.7)
+	armor = list(melee = 50, bullet = 55, laser = 40, energy = 30, bomb = 30, bio = 0, rad = 0, fire = 100, acid = 100)
 	max_temperature = 60000
+	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	infra_luminosity = 3
 	operation_req_access = list(access_cent_specops)
 	wreckage = /obj/structure/mecha_wreckage/marauder
@@ -14,19 +16,15 @@
 	internal_damage_threshold = 25
 	force = 45
 	max_equip = 4
+	bumpsmash = 1
 
-/obj/mecha/combat/marauder/GrantActions(var/mob/living/user, var/human_occupant = 0)
+/obj/mecha/combat/marauder/GrantActions(mob/living/user, human_occupant = 0)
 	..()
-	smoke_action.chassis = src
-	smoke_action.Grant(user)
+	smoke_action.Grant(user, src)
+	thrusters_action.Grant(user, src)
+	zoom_action.Grant(user, src)
 
-	thrusters_action.chassis = src
-	thrusters_action.Grant(user)
-
-	zoom_action.chassis = src
-	zoom_action.Grant(user)
-
-/obj/mecha/combat/marauder/RemoveActions(var/mob/living/user, var/human_occupant = 0)
+/obj/mecha/combat/marauder/RemoveActions(mob/living/user, human_occupant = 0)
 	..()
 	smoke_action.Remove(user)
 	thrusters_action.Remove(user)
@@ -49,7 +47,7 @@
 	icon_state = "seraph"
 	operation_req_access = list(access_cent_specops)
 	step_in = 3
-	health = 550
+	obj_integrity = 550
 	wreckage = /obj/structure/mecha_wreckage/seraph
 	internal_damage_threshold = 20
 	force = 55

@@ -41,9 +41,22 @@
 
 /mob/living/simple_animal/hostile/syndicate/mecha_pilot/no_mech/New()
 	..()
-	wanted_objects = subtypesof(/obj/mecha/combat)
+	wanted_objects = typecacheof(/obj/mecha/combat, ignore_root_path=TRUE)
 
+/mob/living/simple_animal/hostile/syndicate/mecha_pilot/nanotrasen //nanotrasen are syndies! no it's just a weird path.
+	name = "Nanotrasen Mecha Pilot"
+	desc = "Death to the Syndicate. This variant comes in MECHA DEATH flavour."
+	icon_living = "nanotrasen"
+	icon_state = "nanotrasen"
+	faction = list("nanotrasen")
+	spawn_mecha_type = /obj/mecha/combat/marauder/loaded
 
+/mob/living/simple_animal/hostile/syndicate/mecha_pilot/no_mech/nanotrasen
+	name = "Nanotrasen Mecha Pilot"
+	desc = "Death to the Syndicate. This variant comes in MECHA DEATH flavour."
+	icon_living = "nanotrasen"
+	icon_state = "nanotrasen"
+	faction = list("nanotrasen")
 
 
 /mob/living/simple_animal/hostile/syndicate/mecha_pilot/New()
@@ -88,7 +101,7 @@
 	targets_from = src
 
 	//Find a new mecha
-	wanted_objects = subtypesof(/obj/mecha/combat)
+	wanted_objects = typecacheof(/obj/mecha/combat, ignore_root_path=TRUE)
 	var/search_aggressiveness = 2
 	for(var/obj/mecha/combat/C in range(vision_range,src))
 		if(is_valid_mecha(C))
@@ -99,6 +112,7 @@
 	ranged = 0
 	minimum_distance = 1
 
+	walk(M,0)//end any lingering movement loops, to prevent the haunted mecha bug
 
 //Checks if a mecha is valid for theft
 /mob/living/simple_animal/hostile/syndicate/mecha_pilot/proc/is_valid_mecha(obj/mecha/M)
@@ -108,7 +122,7 @@
 		return 0
 	if(!M.has_charge(required_mecha_charge))
 		return 0
-	if(M.health < (initial(M.health)*0.5))
+	if(M.obj_integrity < M.max_integrity*0.5)
 		return 0
 	return 1
 
@@ -202,7 +216,7 @@
 				return
 
 			//Too Much Damage - Eject
-			if(mecha.health < initial(mecha.health)*0.1)
+			if(mecha.obj_integrity < mecha.max_integrity*0.1)
 				exit_mecha(mecha)
 				return
 
@@ -212,18 +226,18 @@
 					mecha.smoke_action.Activate()
 
 			//Heavy damage - Defence Power or Retreat
-			if(mecha.health < initial(mecha.health)*0.25)
+			if(mecha.obj_integrity < mecha.max_integrity*0.25)
 				if(prob(defence_mode_chance))
 					if(mecha.defense_action && mecha.defense_action.owner && !mecha.defence_mode)
 						mecha.leg_overload_mode = 0
 						mecha.defense_action.Activate(TRUE)
-						addtimer(mecha.defense_action, "Activate", 100, FALSE, FALSE) //10 seconds of defence, then toggle off
+						addtimer(mecha.defense_action, "Activate", 100, TIMER_NORMAL, FALSE) //10 seconds of defence, then toggle off
 
 				else if(prob(retreat_chance))
 					//Speed boost if possible
 					if(mecha.overload_action && mecha.overload_action.owner && !mecha.leg_overload_mode)
 						mecha.overload_action.Activate(TRUE)
-						addtimer(mecha.overload_action, "Activate", 100, FALSE, FALSE) //10 seconds of speeeeed, then toggle off
+						addtimer(mecha.overload_action, "Activate", 100, TIMER_NORMAL, FALSE) //10 seconds of speeeeed, then toggle off
 
 					retreat_distance = 50
 					spawn(100)
@@ -253,6 +267,10 @@
 		else //we're not in a mecha, so we check if we can steal it instead.
 			if(is_valid_mecha(M))
 				return 1
+			else if (M.occupant && CanAttack(M.occupant))
+				return 1
+			else
+				return 0
 
 	. = ..()
 

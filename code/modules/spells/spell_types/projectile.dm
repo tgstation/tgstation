@@ -35,7 +35,7 @@
 				projectile:linked_spells += proj_type
 			projectile.icon = proj_icon
 			projectile.icon_state = proj_icon_state
-			projectile.dir = get_dir(target,projectile)
+			projectile.setDir(get_dir(target,projectile))
 			projectile.name = proj_name
 
 			var/current_loc = user.loc
@@ -48,7 +48,7 @@
 
 				if(proj_homing)
 					if(proj_insubstantial)
-						projectile.dir = get_dir(projectile,target)
+						projectile.setDir(get_dir(projectile,target))
 						projectile.loc = get_step_to(projectile,target)
 					else
 						step_to(projectile,target)
@@ -72,8 +72,7 @@
 							trail.icon = proj_trail_icon
 							trail.icon_state = proj_trail_icon_state
 							trail.density = 0
-							spawn(proj_trail_lifespan)
-								qdel(trail)
+							QDEL_IN(trail, proj_trail_lifespan)
 
 				if(projectile.loc in range(target.loc,proj_trigger_range))
 					projectile.perform(list(target),user=user)

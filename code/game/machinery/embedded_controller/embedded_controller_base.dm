@@ -27,8 +27,6 @@
 	var/on = 1
 
 /obj/machinery/embedded_controller/interact(mob/user)
-	//user << browse(return_text(), "window=computer")
-	//onclose(user, "computer")
 	user.set_machine(src)
 	var/datum/browser/popup = new(user, "computer", name) // Set up the popup browser window
 	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
@@ -58,10 +56,10 @@
 
 	if(program)
 		program.receive_user_command(href_list["command"])
-		spawn(5) program.process()
+		addtimer(program, "process", 5)
 
 	usr.set_machine(src)
-	spawn(5) src.updateDialog()
+	addtimer(src, "updateDialog", 5)
 
 /obj/machinery/embedded_controller/process()
 	if(program)

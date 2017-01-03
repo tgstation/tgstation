@@ -3,7 +3,7 @@
 	if(desc)
 		msg += "[desc]\n"
 
-	var/obj/act_module = get_active_hand()
+	var/obj/act_module = get_active_held_item()
 	if(act_module)
 		msg += "It is holding \icon[act_module] \a [act_module].\n"
 	msg += "<span class='warning'>"
@@ -33,6 +33,9 @@
 	if(cell && cell.charge <= 0)
 		msg += "<span class='warning'>Its battery indicator is blinking red!</span>\n"
 
+	if(is_servant_of_ratvar(src) && user.Adjacent(src) && !stat) //To counter pseudo-stealth by using headlamps
+		msg += "<span class='warning'>Its eyes are glowing a blazing yellow!</span>\n"
+
 	switch(src.stat)
 		if(CONSCIOUS)
 			if(!src.client)
@@ -44,3 +47,5 @@
 	msg += "*---------*</span>"
 
 	user << msg
+
+	..()

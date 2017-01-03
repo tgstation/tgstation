@@ -11,8 +11,10 @@
 	production = 5
 	yield = 4
 	potency = 20
+	growing_icon = 'icons/obj/hydroponics/growing_vegetables.dmi'
 	icon_grow = "chili-grow" // Uses one growth icons set for all the subtypes
 	icon_dead = "chili-dead" // Same for the dead icon
+	genes = list(/datum/plant_gene/trait/repeated_harvest)
 	mutatelist = list(/obj/item/seeds/chili/ice, /obj/item/seeds/chili/ghost)
 	reagents_add = list("capsaicin" = 0.25, "vitamin" = 0.04, "nutriment" = 0.04)
 
@@ -46,6 +48,7 @@
 	icon_state = "icepepper"
 	filling_color = "#0000CD"
 	bitesize_mod = 2
+	origin_tech = "biotech=4"
 
 // Ghost Chili
 /obj/item/seeds/chili/ghost
@@ -53,7 +56,7 @@
 	desc = "These seeds grow into a chili said to be the hottest in the galaxy."
 	icon_state = "seed-chilighost"
 	species = "chilighost"
-	plantname = "chilighost"
+	plantname = "Ghost Chili Plants"
 	product = /obj/item/weapon/reagent_containers/food/snacks/grown/ghost_chili
 	endurance = 10
 	maturation = 10
@@ -71,16 +74,17 @@
 	var/mob/held_mob
 	filling_color = "#F8F8FF"
 	bitesize_mod = 4
+	origin_tech = "biotech=4;magnets=5"
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/ghost_chili/attack_hand(mob/user)
 	..()
 	if( istype(src.loc, /mob) )
 		held_mob = src.loc
-		SSobj.processing |= src
+		START_PROCESSING(SSobj, src)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/ghost_chili/process()
 	if(held_mob && src.loc == held_mob)
-		if( (held_mob.l_hand == src) || (held_mob.r_hand == src))
+		if(held_mob.is_holding(src))
 			if(hasvar(held_mob,"gloves") && held_mob:gloves)
 				return
 			held_mob.bodytemperature += 15 * TEMPERATURE_DAMAGE_COEFFICIENT

@@ -38,12 +38,14 @@
 			if(istext(proj_type))
 				var/projectile_type = text2path(proj_type)
 				projectile = new projectile_type(user)
-			if(istype(proj_type,/obj/effect/proc_holder/spell))
+			else if(istype(proj_type,/obj/effect/proc_holder/spell))
 				projectile = new /obj/effect/proc_holder/spell/targeted/trigger(user)
 				projectile:linked_spells += proj_type
+			else
+				projectile = new proj_type(user)
 			projectile.icon = proj_icon
 			projectile.icon_state = proj_icon_state
-			projectile.dir = get_dir(projectile, target)
+			projectile.setDir(get_dir(projectile, target))
 			projectile.name = proj_name
 
 			var/current_loc = user.loc
@@ -75,10 +77,12 @@
 							trail.icon = proj_trail_icon
 							trail.icon_state = proj_trail_icon_state
 							trail.density = 0
-							spawn(proj_trail_lifespan)
-								qdel(trail)
+							QDEL_IN(trail, proj_trail_lifespan)
 
 				current_loc = projectile.loc
+				var/matrix/M = new
+				M.Turn(dir2angle(projectile.dir))
+				projectile.transform = M
 
 				sleep(proj_step_delay)
 

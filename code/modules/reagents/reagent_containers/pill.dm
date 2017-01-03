@@ -9,6 +9,7 @@
 	var/apply_type = INGEST
 	var/apply_method = "swallow"
 	var/roundstart = 0
+	var/self_delay = 0 //pills are instant, this is because patches inheret their aplication from pills
 
 /obj/item/weapon/reagent_containers/pill/New()
 	..()
@@ -22,19 +23,22 @@
 	return
 
 
-/obj/item/weapon/reagent_containers/pill/attack(mob/M, mob/user, def_zone)
+/obj/item/weapon/reagent_containers/pill/attack(mob/M, mob/user, def_zone, self_delay)
 	if(!canconsume(M, user))
 		return 0
 
 	if(M == user)
+		M.visible_message("<span class='notice'>[user] attempts to [apply_method] [src].</span>")
+		if(self_delay)
+			if(!do_mob(user, M, self_delay))
+				return 0
 		M << "<span class='notice'>You [apply_method] [src].</span>"
 
 	else
 		M.visible_message("<span class='danger'>[user] attempts to force [M] to [apply_method] [src].</span>", \
 							"<span class='userdanger'>[user] attempts to force [M] to [apply_method] [src].</span>")
-
-		if(!do_mob(user, M)) return
-
+		if(!do_mob(user, M))
+			return 0
 		M.visible_message("<span class='danger'>[user] forces [M] to [apply_method] [src].</span>", \
 							"<span class='userdanger'>[user] forces [M] to [apply_method] [src].</span>")
 
@@ -100,7 +104,7 @@
 /obj/item/weapon/reagent_containers/pill/salbutamol
 	name = "salbutamol pill"
 	desc = "Used to treat oxygen deprivation."
-	icon_state = "pill18"
+	icon_state = "pill16"
 	list_reagents = list("salbutamol" = 30)
 	roundstart = 1
 /obj/item/weapon/reagent_containers/pill/charcoal
@@ -130,19 +134,19 @@
 /obj/item/weapon/reagent_containers/pill/salicyclic
 	name = "salicylic acid pill"
 	desc = "Used to dull pain."
-	icon_state = "pill5"
+	icon_state = "pill9"
 	list_reagents = list("sal_acid" = 24)
 	roundstart = 1
 /obj/item/weapon/reagent_containers/pill/oxandrolone
 	name = "oxandrolone pill"
 	desc = "Used to stimulate burn healing."
-	icon_state = "pill5"
+	icon_state = "pill11"
 	list_reagents = list("oxandrolone" = 24)
 	roundstart = 1
 
 /obj/item/weapon/reagent_containers/pill/insulin
 	name = "insulin pill"
 	desc = "Handles hyperglycaemic coma."
-	icon_state = "pill5"
+	icon_state = "pill18"
 	list_reagents = list("insulin" = 50)
 	roundstart = 1

@@ -39,9 +39,9 @@ It's like a regular ol' straight pipe, but you can turn it on and off.
 
 /obj/machinery/atmospherics/components/binary/valve/proc/normalize_dir()
 	if(dir==SOUTH)
-		dir = NORTH
+		setDir(NORTH)
 	else if(dir==WEST)
-		dir = EAST
+		setDir(EAST)
 
 /obj/machinery/atmospherics/components/binary/valve/attack_ai(mob/user)
 	return

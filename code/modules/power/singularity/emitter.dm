@@ -1,10 +1,11 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:33
+
 
 /obj/machinery/power/emitter
 	name = "Emitter"
 	desc = "A heavy duty industrial laser.\n<span class='notice'>Alt-click to rotate it clockwise.</span>"
 	icon = 'icons/obj/singularity.dmi'
 	icon_state = "emitter"
+	var/icon_state_on = "emitter_+a"
 	anchored = 0
 	density = 1
 	req_access = list(access_engine_equip)
@@ -29,11 +30,17 @@
 
 /obj/machinery/power/emitter/New()
 	..()
-	component_parts = list()
-	component_parts += new /obj/item/weapon/circuitboard/emitter(null)
-	component_parts += new /obj/item/weapon/stock_parts/micro_laser(null)
-	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
+	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/emitter(null)
+	B.apply_default_parts(src)
 	RefreshParts()
+
+/obj/item/weapon/circuitboard/machine/emitter
+	name = "circuit board (Emitter)"
+	build_path = /obj/machinery/power/emitter
+	origin_tech = "programming=3;powerstorage=4;engineering=4"
+	req_components = list(
+							/obj/item/weapon/stock_parts/micro_laser = 1,
+							/obj/item/weapon/stock_parts/manipulator = 1)
 
 /obj/machinery/power/emitter/RefreshParts()
 	var/max_firedelay = 120
@@ -61,7 +68,7 @@
 	if (src.anchored)
 		usr << "<span class='warning'>It is fastened to the floor!</span>"
 		return 0
-	src.dir = turn(src.dir, 270)
+	src.setDir(turn(src.dir, 270))
 	return 1
 
 /obj/machinery/power/emitter/AltClick(mob/user)
@@ -88,9 +95,9 @@
 
 /obj/machinery/power/emitter/update_icon()
 	if (active && powernet && avail(active_power_usage))
-		icon_state = "emitter_+a"
+		icon_state = icon_state_on
 	else
-		icon_state = "emitter"
+		icon_state = initial(icon_state)
 
 
 /obj/machinery/power/emitter/attack_hand(mob/user)
@@ -118,6 +125,16 @@
 	else
 		user << "<span class='warning'>The [src] needs to be firmly secured to the floor first!</span>"
 		return 1
+
+/obj/machinery/power/emitter/attack_animal(mob/living/simple_animal/M)
+	if(ismegafauna(M))
+		state = 0
+		anchored = FALSE
+		M.visible_message("<span class='warning'>[M] rips [src] free from its moorings!</span>")
+	else
+		..()
+	if(!anchored)
+		step(src, get_dir(M, src))
 
 
 /obj/machinery/power/emitter/emp_act(severity)//Emitters are hardened but still might have issues
@@ -163,7 +180,7 @@
 
 		var/obj/item/projectile/A = PoolOrNew(projectile_type,src.loc)
 
-		A.dir = src.dir
+		A.setDir(src.dir)
 		playsound(src.loc, projectile_sound, 25, 1)
 
 		if(prob(35))
@@ -187,75 +204,67 @@
 		A.starting = loc
 		A.fire()
 
+/obj/machinery/power/emitter/can_be_unfasten_wrench(mob/user)
+	if(state == EM_WELDED)
+		user  << "<span class='warning'>[src] is welded to the floor!</span>"
+		return FAILED_UNFASTEN
+	return ..()
+
+/obj/machinery/power/emitter/default_unfasten_wrench(mob/user, obj/item/weapon/wrench/W, time = 20)
+	. = ..()
+	if(. == SUCCESSFUL_UNFASTEN)
+		if(anchored)
+			state = EM_SECURED
+		else
+			state = EM_UNSECURED
 
 /obj/machinery/power/emitter/attackby(obj/item/W, mob/user, params)
-
 	if(istype(W, /obj/item/weapon/wrench))
 		if(active)
-			user << "<span class='warning'>Turn off \the [src] first!</span>"
+			user << "<span class='warning'>Turn \the [src] off first!</span>"
 			return
-		switch(state)
-			if(0)
-				if(isinspace()) return
-				state = 1
-				playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
-				user.visible_message("[user.name] secures [src.name] to the floor.", \
-					"<span class='notice'>You secure the external reinforcing bolts to the floor.</span>", \
-					"<span class='italics'>You hear a ratchet</span>")
-				src.anchored = 1
-			if(1)
-				state = 0
-				playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
-				user.visible_message("[user.name] unsecures [src.name] reinforcing bolts from the floor.", \
-					"<span class='notice'>You undo the external reinforcing bolts.</span>", \
-					"<span class='italics'>You hear a ratchet.</span>")
-				src.anchored = 0
-			if(2)
-				user << "<span class='warning'>The [src.name] needs to be unwelded from the floor!</span>"
+		default_unfasten_wrench(user, W, 0)
 		return
 
 	if(istype(W, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = W
 		if(active)
-			user << "Turn off \the [src] first."
+			user << "Turn \the [src] off first."
 			return
 		switch(state)
-			if(0)
+			if(EM_UNSECURED)
 				user << "<span class='warning'>The [src.name] needs to be wrenched to the floor!</span>"
-			if(1)
-				if (WT.remove_fuel(0,user))
-					playsound(src.loc, 'sound/items/Welder2.ogg', 50, 1)
-					user.visible_message("[user.name] starts to weld the [src.name] to the floor.", \
+			if(EM_SECURED)
+				if(WT.remove_fuel(0,user))
+					playsound(loc, WT.usesound, 50, 1)
+					user.visible_message("[user.name] starts to weld the [name] to the floor.", \
 						"<span class='notice'>You start to weld \the [src] to the floor...</span>", \
 						"<span class='italics'>You hear welding.</span>")
-					if (do_after(user,20/W.toolspeed, target = src))
-						if(!src || !WT.isOn()) return
-						state = 2
+					if(do_after(user,20*W.toolspeed, target = src) && WT.isOn())
+						state = EM_WELDED
 						user << "<span class='notice'>You weld \the [src] to the floor.</span>"
 						connect_to_network()
-			if(2)
-				if (WT.remove_fuel(0,user))
-					playsound(src.loc, 'sound/items/Welder2.ogg', 50, 1)
-					user.visible_message("[user.name] starts to cut the [src.name] free from the floor.", \
+			if(EM_WELDED)
+				if(WT.remove_fuel(0,user))
+					playsound(loc, WT.usesound, 50, 1)
+					user.visible_message("[user.name] starts to cut the [name] free from the floor.", \
 						"<span class='notice'>You start to cut \the [src] free from the floor...</span>", \
 						"<span class='italics'>You hear welding.</span>")
-					if (do_after(user,20/W.toolspeed, target = src))
-						if(!src || !WT.isOn()) return
-						state = 1
+					if(do_after(user,20*W.toolspeed, target = src) && WT.isOn())
+						state = EM_SECURED
 						user << "<span class='notice'>You cut \the [src] free from the floor.</span>"
 						disconnect_from_network()
 		return
 
-	if(istype(W, /obj/item/weapon/card/id) || istype(W, /obj/item/device/pda))
+	if(W.GetID())
 		if(emagged)
 			user << "<span class='warning'>The lock seems to be broken!</span>"
 			return
-		if(src.allowed(user))
+		if(allowed(user))
 			if(active)
-				src.locked = !src.locked
+				locked = !locked
 				user << "<span class='notice'>You [src.locked ? "lock" : "unlock"] the controls.</span>"
 			else
-				src.locked = 0 //just in case it somehow gets locked
 				user << "<span class='warning'>The controls can only be locked when \the [src] is online!</span>"
 		else
 			user << "<span class='danger'>Access denied.</span>"
@@ -270,10 +279,10 @@
 	if(default_pry_open(W))
 		return
 
-	default_deconstruction_crowbar(W)
+	if(default_deconstruction_crowbar(W))
+		return
 
-	..()
-	return
+	return ..()
 
 /obj/machinery/power/emitter/emag_act(mob/user)
 	if(!emagged)

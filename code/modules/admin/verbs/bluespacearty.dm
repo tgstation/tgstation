@@ -16,7 +16,7 @@
 
 	explosion(target.loc, 0, 0, 0, 0)
 
-	var/turf/simulated/floor/T = get_turf(target)
+	var/turf/open/floor/T = get_turf(target)
 	if(istype(T))
 		if(prob(80))
 			T.break_tile_to_plating()
@@ -24,11 +24,11 @@
 			T.break_tile()
 
 	target << "<span class='userdanger'>You're hit by bluespace artillery!</span>"
-	log_admin("[target.name] has been hit by Bluespace Artillery fired by [usr]")
-	message_admins("[target.name] has been hit by Bluespace Artillery fired by [usr]")
+	log_admin("[key_name(target)] has been hit by Bluespace Artillery fired by [key_name(usr)]")
+	message_admins("[ADMIN_LOOKUPFLW(target)] has been hit by Bluespace Artillery fired by [ADMIN_LOOKUPFLW(usr)]")
 
 	if(target.health <= 1)
-		target.gib()
+		target.gib(1, 1)
 	else
 		target.adjustBruteLoss(min(99,(target.health - 1)))
 		target.Stun(20)

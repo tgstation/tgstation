@@ -1,42 +1,7 @@
-/obj/structure/lavaland_door
-	name = "necropolis gate"
-	desc = "An imposing, seemingly impenetrable door."
-	icon = 'icons/effects/96x96.dmi'
-	icon_state = "door"
-	anchored = 1
-	density = 1
-	bound_width = 96
-	bound_height = 96
-	burn_state = LAVA_PROOF
-	luminosity = 1
+//If you're looking for spawners like ash walker eggs, check ghost_role_spawners.dm
 
-/obj/structure/lavaland_door/singularity_pull()
-	return 0
-
-/obj/structure/lavaland_door/Destroy()
-	return QDEL_HINT_LETMELIVE
-
-/obj/machinery/lavaland_controller
-	name = "weather control machine"
-	desc = "Controls the weather."
-	icon = 'icons/obj/machines/telecomms.dmi'
-	icon_state = "processor"
-	var/ongoing_weather = FALSE
-	var/weather_cooldown = 0
-
-/obj/machinery/lavaland_controller/process()
-	if(ongoing_weather || weather_cooldown > world.time)
-		return
-	ongoing_weather = TRUE
-	weather_cooldown = world.time + rand(3500, 6500)
-	var/datum/weather/ash_storm/LAVA = new /datum/weather/ash_storm
-	LAVA.weather_start_up()
-	ongoing_weather = FALSE
-
-/obj/machinery/lavaland_controller/Destroy()
-	return QDEL_HINT_LETMELIVE
-
-
+/obj/structure/fans/tiny/invisible //For blocking air in ruin doorways
+	invisibility = INVISIBILITY_ABSTRACT
 
 //lavaland_surface_seed_vault.dmm
 //Seed Vault
@@ -51,197 +16,127 @@
 				/obj/item/seeds/sunflower/moonflower = 8
 				)
 
-/obj/effect/mob_spawn/human/seed_vault
-	name = "sleeper"
-	mob_name = "Vault Creature"
-	icon = 'icons/obj/Cryogenic2.dmi'
-	icon_state = "sleeper"
-	roundstart = FALSE
-	death = FALSE
-	mob_species = /datum/species/pod
-	flavour_text = {"You are a strange, artificial creature. Your creators were a highly advanced and benevolent race, and launched many seed vaults into the stars, hoping to aid fledgling civilizations. You are to tend to the vault and await the arrival of sentient species. You've been waiting quite a while though..."}
+//Free Golems
 
-/obj/effect/mob_spawn/human/seed_vault/special(mob/living/new_spawn)
-	var/plant_name = pick("Tomato", "Potato", "Brocolli", "Carrot", "Deathcap", "Ambrosia", "Pumpkin", "Ivy", "Kudzu", "Bannana", "Moss", "Flower", "Bloom", "Spore", "Root", "Bark", "Glowshroom", "Petal", "Leaf", "Venus", "Sprout","Cocao", "Strawberry", "Citrus", "Oak", "Cactus", "Pepper")
-	new_spawn.real_name = plant_name
+/obj/item/weapon/disk/design_disk/golem_shell
+	name = "Golem Creation Disk"
+	desc = "A gift from the Liberator."
+	icon_state = "datadisk1"
+	max_blueprints = 1
 
-//Greed
+/obj/item/weapon/disk/design_disk/golem_shell/New()
+	..()
+	var/datum/design/golem_shell/G = new
+	blueprints[1] = G
 
-/obj/structure/cursed_slot_machine
-	name = "greed's slot machine"
-	desc = "High stakes, high rewards."
-	icon = 'icons/obj/economy.dmi'
-	icon_state = "slots1"
-	anchored = 1
-	density = 1
-	var/win_prob = 5
+/datum/design/golem_shell
+	name = "Golem Shell Construction"
+	desc = "Allows for the construction of a Golem Shell."
+	id = "golem"
+	req_tech = list("materials" = 12)
+	build_type = AUTOLATHE
+	materials = list(MAT_METAL = 40000)
+	build_path = /obj/item/golem_shell
+	category = list("Imported")
 
-/obj/structure/cursed_slot_machine/attack_hand(mob/living/carbon/human/user)
-	if(!istype(user))
-		return
-	if(in_use)
-		return
-	in_use = TRUE
-	user << "<span class='danger'><B>You feel your very life draining away as you pull the lever...it'll be worth it though, right?</B></span>"
-	user.adjustCloneLoss(20)
-	if(user.stat)
-		user.gib()
-	icon_state = "slots2"
-	sleep(50)
-	icon_state = "slots1"
-	in_use = FALSE
-	if(prob(win_prob))
-		new /obj/item/weapon/dice/d20/fate/one_use(get_turf(src))
-		if(user)
-			user << "You hear laughter echoing around you as the machine fades away. In it's place...more gambling."
-			qdel(src)
-	else
-		if(user)
-			user << "<span class='danger'>Looks like you didn't win anything this time...next time though, right?</span>"
-//Gluttony
-
-/obj/effect/gluttony
-	name = "gluttony's wall"
-	desc = "Only those who truly indulge may pass."
-	anchored = 1
-	density = 1
-	icon_state = "blob"
-	icon = 'icons/mob/blob.dmi'
-
-/obj/effect/gluttony/CanPass(atom/movable/mover, turf/target, height=0)//So bullets will fly over and stuff.
-	if(height==0)
-		return 1
-	if(istype(mover, /mob/living/carbon/human))
-		var/mob/living/carbon/human/H = mover
-		if(H.nutrition >= NUTRITION_LEVEL_FAT)
-			return 1
-		else
-			H << "<span class='danger'><B>You're not gluttonous enough to pass this barrier!</B></span>"
-	else
-		return 0
-
-//Pride
-
-/obj/structure/mirror/magic/pride
-	name = "pride's mirror"
-	desc = "Pride cometh before the..."
-	icon_state = "magic_mirror"
-
-/obj/structure/mirror/magic/pride/curse(mob/user)
-	user.visible_message("<span class='danger'><B>The ground splits beneath [user] as their hand leaves the mirror!</B></span>")
-	var/turf/T = get_turf(user)
-	T.ChangeTurf(/turf/simulated/chasm/straight_down)
-	var/turf/simulated/chasm/straight_down/C = T
-	C.drop(user)
-
-//Sloth - I'll finish this item later
-
-//Envy
-
-/obj/item/weapon/knife/envy
-	name = "envy's knife"
-	desc = "Their success will be yours."
+/obj/item/golem_shell
+	name = "incomplete golem shell"
 	icon = 'icons/obj/wizard.dmi'
-	icon_state = "render"
-	item_state = "render"
-	force = 18
-	throwforce = 10
-	w_class = 3
-	hitsound = 'sound/weapons/bladeslice.ogg'
+	icon_state = "construct"
+	desc = "The incomplete body of a golem. Add ten sheets of any mineral to finish."
+	var/shell_type = /obj/effect/mob_spawn/human/golem
+	var/has_owner = FALSE //if the resulting golem obeys someone
 
-/obj/item/weapon/knife/envy/afterattack(atom/movable/AM, mob/living/carbon/human/user, proximity)
+/obj/item/golem_shell/attackby(obj/item/I, mob/user, params)
 	..()
-	if(!proximity)
-		return
-	if(!istype(user))
-		return
-	if(istype(AM, /mob/living/carbon/human))
-		var/mob/living/carbon/human/H = AM
-		if(user.real_name != H.dna.real_name)
-			user.real_name = H.dna.real_name
-			H.dna.transfer_identity(user, transfer_SE=1)
-			user.updateappearance(mutcolor_update=1)
-			user.domutcheck()
-			user << "You assume the face of [H]. Are you satisfied?"
+	var/species
+	if(istype(I, /obj/item/stack/sheet))
+		var/obj/item/stack/sheet/O = I
 
-///Ash Walkers
+		if(istype(O, /obj/item/stack/sheet/metal))
+			species = /datum/species/golem
 
-/mob/living/simple_animal/hostile/spawner/ash_walker
-	name = "ash walker nest"
-	desc = "A nest built around a necropolis tendril. The eggs seem to grow unnaturally fast..."
-	icon = 'icons/mob/nest.dmi'
-	icon_state = "ash_walker_nest"
-	icon_living = "ash_walker_nest"
-	health = 200
-	maxHealth = 200
-	loot = list(/obj/effect/gibspawner, /obj/item/device/assembly/signaler/anomaly)
-	del_on_death = 1
-	var/meat_counter
+		if(istype(O, /obj/item/stack/sheet/glass))
+			species = /datum/species/golem/glass
 
-/mob/living/simple_animal/hostile/spawner/ash_walker/Life()
-	..()
-	if(!stat)
-		consume()
-		spawn_mob()
+		if(istype(O, /obj/item/stack/sheet/plasteel))
+			species = /datum/species/golem/plasteel
 
-/mob/living/simple_animal/hostile/spawner/ash_walker/proc/consume()
-	for(var/mob/living/H in view(src,1)) //Only for corpse right next to/on same tile
-		if(H.stat)
-			visible_message("<span class='warning'>Tendrils reach out from \the [src.name] pulling [H] in! Blood seeps over the eggs as [H] is devoured.</span>")
-			playsound(get_turf(src),'sound/magic/Demon_consume.ogg', 100, 1)
-			meat_counter ++
-			H.gib()
+		if(istype(O, /obj/item/stack/sheet/mineral/sandstone))
+			species = /datum/species/golem/sand
 
-/mob/living/simple_animal/hostile/spawner/ash_walker/spawn_mob()
-	if(meat_counter >= 2)
-		new /obj/effect/mob_spawn/human/ash_walker(get_step(src.loc, SOUTH))
-		visible_message("<span class='danger'>An egg is ready to hatch!</span>")
-		meat_counter -= 2
+		if(istype(O, /obj/item/stack/sheet/mineral/plasma))
+			species = /datum/species/golem/plasma
 
-/obj/effect/mob_spawn/human/ash_walker
-	name = "ash walker egg"
-	icon = 'icons/mob/lavaland/lavaland_monsters.dmi'
-	icon_state = "large_egg"
-	mob_species = /datum/species/lizard
-	helmet = /obj/item/clothing/head/helmet/gladiator
-	uniform = /obj/item/clothing/under/gladiator
+		if(istype(O, /obj/item/stack/sheet/mineral/diamond))
+			species = /datum/species/golem/diamond
+
+		if(istype(O, /obj/item/stack/sheet/mineral/gold))
+			species = /datum/species/golem/gold
+
+		if(istype(O, /obj/item/stack/sheet/mineral/silver))
+			species = /datum/species/golem/silver
+
+		if(istype(O, /obj/item/stack/sheet/mineral/uranium))
+			species = /datum/species/golem/uranium
+
+		if(istype(O, /obj/item/stack/sheet/mineral/bananium))
+			species = /datum/species/golem/bananium
+
+		if(istype(O, /obj/item/stack/sheet/mineral/titanium))
+			species = /datum/species/golem/titanium
+
+		if(istype(O, /obj/item/stack/sheet/mineral/plastitanium))
+			species = /datum/species/golem/plastitanium
+
+		if(istype(O, /obj/item/stack/sheet/mineral/abductor))
+			species = /datum/species/golem/alloy
+
+		if(istype(O, /obj/item/stack/sheet/mineral/wood))
+			species = /datum/species/golem/wood
+
+		if(istype(O, /obj/item/stack/sheet/bluespace_crystal))
+			species = /datum/species/golem/bluespace
+
+		if(species)
+			if(O.use(10))
+				user << "You finish up the golem shell with ten sheets of [O]."
+				new shell_type(get_turf(src), species, has_owner, user)
+				qdel(src)
+			else
+				user << "You need at least ten sheets to finish a golem."
+		else
+			user << "You can't build a golem out of this kind of material."
+
+//made with xenobiology, the golem obeys its creator
+/obj/item/golem_shell/artificial
+	name = "incomplete artificial golem shell"
+	has_owner = TRUE
+
+
+///Syndicate Listening Post
+/obj/effect/mob_spawn/human/lavaland_syndicate
+	r_hand = /obj/item/weapon/gun/ballistic/automatic/sniper_rifle
+	name = "Syndicate Bioweapon Scientist"
+	uniform = /obj/item/clothing/under/syndicate
+	suit = /obj/item/clothing/suit/toggle/labcoat
+	shoes = /obj/item/clothing/shoes/combat
+	gloves = /obj/item/clothing/gloves/combat
+	radio = /obj/item/device/radio/headset/syndicate/alt
+	back = /obj/item/weapon/storage/backpack
+	pocket1 = /obj/item/weapon/gun/ballistic/automatic/pistol
 	roundstart = FALSE
 	death = FALSE
-	anchored = 0
-	density = 0
-	flavour_text = {"<B>You are an Ash Walker. Your tribe worships<span class='danger'>the necropolis</span>. The wastes are sacred ground, it's monsters a blessed bounty. You have seen lights in the distance though, the arrival of outsiders seeking to destroy the land. Fresh sacrifices.</B>"}
-
-/obj/effect/mob_spawn/human/ash_walker/special(mob/living/new_spawn)
-	new_spawn.real_name = random_unique_lizard_name(gender)
-	new_spawn << "Drag corpes to your nest to feed the young, and spawn more Ash Walkers. Bring glory to the tribe!"
-	if(ishuman(new_spawn))
-		var/mob/living/carbon/human/H = new_spawn
-		H.dna.species.specflags |= NOBREATH
-
-
-
-//Wishgranter Exile
-
-/obj/effect/mob_spawn/human/exile
-	name = "exile sleeper"
-	mob_name = "Penitent Exile"
 	icon = 'icons/obj/Cryogenic2.dmi'
 	icon_state = "sleeper"
-	roundstart = FALSE
-	death = FALSE
-	mob_species = /datum/species/shadow
-	flavour_text = {"You are cursed! Many years ago you risked it all to reach the Wish Granter, siezing it's power for yourself and leaving your friends for dead.. Though your wish came true, it did so at a price, and you've been doomed to wander these wastes ever since. You seek only to atone now, to somehow redeem yourself, and finally be released. You've seen ships landing in the distance. Perhaps now is the time to make things right?"}
-
-/obj/effect/mob_spawn/human/exile/special(mob/living/new_spawn)
-	new_spawn.real_name = "[new_spawn.real_name] ([rand(0,999)])"
-	var/wish = rand(1,4)
-	switch(wish)
-		if(1)
-			new_spawn << "You wished to kill, and kill you did. You've lost track of the number and murder long lost it's spark of excitement. You feel only regret."
-		if(2)
-			new_spawn << "You wished for unending wealth, but no amount of money was worth this existence. Maybe charity might redeem your soul?"
-		if(3)
-			new_spawn << "You wished for power. Little good it did you, cast out of the light. You are a king, but ruling over a miserable wasteland. You feel only remorse."
-		if(4)
-			new_spawn << "You wished for immortality, even as your friends lay dying behind you. No matter how many times you cast yourself into the lava, you awaken in this room again within a few days. You are overwhelmed with guilt."
-
+	has_id = 1
+	flavour_text = "<font size=3>You are a syndicate agent, employed in a top secret research facility developing biological weapons. Unfortunatley, your hated enemy, Nanotrasen, has begun mining in this sector. <b>Continue your research as best you can, and try to keep a low profile. Do not abandon the base without good cause.</b> The base is rigged with explosives should the worst happen, do not let the base fall into enemy hands!</b>"
+	id_access_list = list(access_syndicate)
+	
+/obj/effect/mob_spawn/human/lavaland_syndicate/comms
+	name = "Syndicate Comms Agent"
+	r_hand = /obj/item/weapon/melee/energy/sword/saber
+	mask = /obj/item/clothing/mask/chameleon
+	suit = /obj/item/clothing/suit/armor/vest
+	flavour_text = "<font size=3>You are a syndicate agent, employed in a top secret research facility developing biological weapons. Unfortunatley, your hated enemy, Nanotrasen, has begun mining in this sector. <b>Monitor enemy activity as best you can, and try to keep a low profile. Do not abandon the base without good cause.</b> Use the communication equipment to provide support to any field agents, and sow disinformation to throw Nanotrasen off your trail. Do not let the base fall into enemy hands!</b>"
+	pocket2 = /obj/item/weapon/card/id/syndicate/anyone

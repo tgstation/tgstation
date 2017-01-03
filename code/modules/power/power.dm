@@ -10,6 +10,7 @@
 	name = null
 	icon = 'icons/obj/power.dmi'
 	anchored = 1
+	on_blueprints = TRUE
 	var/datum/powernet/powernet = null
 	use_power = 0
 	idle_power_usage = 0
@@ -113,24 +114,17 @@
 // attach a wire to a power machine - leads from the turf you are standing on
 //almost never called, overwritten by all power machines but terminal and generator
 /obj/machinery/power/attackby(obj/item/weapon/W, mob/user, params)
-
 	if(istype(W, /obj/item/stack/cable_coil))
-
 		var/obj/item/stack/cable_coil/coil = W
-
 		var/turf/T = user.loc
-
-		if(T.intact || !istype(T, /turf/simulated/floor))
+		if(T.intact || !isfloorturf(T))
 			return
-
 		if(get_dist(src, user) > 1)
 			return
-
 		coil.place_turf(T, user)
-		return
 	else
-		..()
-	return
+		return ..()
+
 
 ///////////////////////////////////////////
 // Powernet handling helpers
@@ -281,11 +275,16 @@
 //M is a mob who touched wire/whatever
 //power_source is a source of electricity, can be powercell, area, apc, cable, powernet or null
 //source is an object caused electrocuting (airlock, grille, etc)
+//siemens_coeff - layman's terms, conductivity
+//dist_check - set to only shock mobs within 1 of source (vendors, airlocks, etc.)
 //No animations will be performed by this proc.
-/proc/electrocute_mob(mob/living/carbon/M, power_source, obj/source, siemens_coeff = 1)
+/proc/electrocute_mob(mob/living/carbon/M, power_source, obj/source, siemens_coeff = 1, dist_check = FALSE)
 	if(istype(M.loc,/obj/mecha))
 		return 0	//feckin mechs are dumb
-	if(istype(M,/mob/living/carbon/human))
+	if(dist_check)
+		if(!in_range(source,M))
+			return 0
+	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		if(H.gloves)
 			var/obj/item/clothing/gloves/G = H.gloves
@@ -333,6 +332,8 @@
 		power_source = cell
 		shock_damage = cell_damage
 	var/drained_hp = M.electrocute_act(shock_damage, source, siemens_coeff) //zzzzzzap!
+	add_logs(source, M, "electrocuted")
+
 	var/drained_energy = drained_hp*20
 
 	if (source_area)
