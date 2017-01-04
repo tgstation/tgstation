@@ -42,7 +42,7 @@
 	files = new /datum/research/limbgrower(src)
 
 /obj/item/weapon/circuitboard/machine/limbgrower
-	name = "circuit board (Limb Grower)"
+	name = "Limb Grower (Machine Board)"
 	build_path = /obj/machinery/limbgrower
 	origin_tech = "programming=2;biotech=2"
 	req_components = list(

@@ -39,7 +39,7 @@ Note: Must be placed west/left of and R&D console to function.
 	B.apply_default_parts(src)
 
 /obj/item/weapon/circuitboard/machine/protolathe
-	name = "circuit board (Protolathe)"
+	name = "Protolathe (Machine Board)"
 	build_path = /obj/machinery/r_n_d/protolathe
 	origin_tech = "engineering=2;programming=2"
 	req_components = list(
