@@ -392,7 +392,7 @@
 		return	//Robots can't interact with storage items.
 
 	if(!can_be_inserted(W, 0 , user))
-		return
+		return 0
 
 	handle_item_insertion(W, 0 , user)
 
