@@ -228,7 +228,8 @@
 						materials.use_amount(materials_used)
 						for(var/i=1, i<=multiplier, i++)
 							var/obj/item/new_item = new being_built.build_path(T)
-							new_item.materials = materials_used.Copy()
+							for(var/mat in materials_used)
+								new_item.materials[mat] = materials_used[mat] / multiplier
 							new_item.autolathe_crafted(src)
 						busy = 0
 						updateUsrDialog()

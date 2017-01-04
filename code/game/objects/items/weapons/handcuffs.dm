@@ -305,7 +305,7 @@
 
 /obj/item/weapon/restraints/legcuffs/beartrap/energy/New()
 	..()
-	addtimer(src, "dissipate", 100)
+	addtimer(CALLBACK(src, .proc/dissipate), 100)
 
 /obj/item/weapon/restraints/legcuffs/beartrap/energy/proc/dissipate()
 	if(!istype(loc, /mob))
@@ -329,7 +329,7 @@
 	origin_tech = "engineering=3;combat=1"
 	var/weaken = 0
 
-/obj/item/weapon/restraints/legcuffs/bola/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0)
+/obj/item/weapon/restraints/legcuffs/bola/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback)
 	if(!..())
 		return
 	playsound(src.loc,'sound/weapons/bolathrow.ogg', 75, 1)

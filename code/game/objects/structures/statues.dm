@@ -46,7 +46,7 @@
 		playsound(src, 'sound/items/Welder.ogg', 100, 1)
 		user.visible_message("[user] is slicing apart the [name]...", \
 							 "<span class='notice'>You are slicing apart the [name]...</span>")
-		if(do_after(user,30, target = src))
+		if(do_after(user,40*W.toolspeed, target = src))
 			if(!src.loc)
 				return
 			user.visible_message("[user] slices apart the [name].", \

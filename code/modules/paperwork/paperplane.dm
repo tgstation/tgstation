@@ -87,8 +87,8 @@
 	add_fingerprint(user)
 
 
-/obj/item/weapon/paperplane/throw_at(atom/target, range, speed, mob/thrower, spin=FALSE, diagonals_first = FALSE)
-	. = ..(target, range, speed, thrower, FALSE, diagonals_first)
+/obj/item/weapon/paperplane/throw_at(atom/target, range, speed, mob/thrower, spin=FALSE, diagonals_first = FALSE, datum/callback/callback)
+	. = ..(target, range, speed, thrower, FALSE, diagonals_first, callback)
 
 /obj/item/weapon/paperplane/throw_impact(atom/hit_atom)
 	if(..() || !ishuman(hit_atom))//if the plane is caught or it hits a nonhuman
@@ -104,9 +104,12 @@
 		H.emote("scream")
 
 /obj/item/weapon/paper/AltClick(mob/living/carbon/user, obj/item/I)
-	if((!in_range(src, user)) || usr.stat || usr.restrained())
-		return
-	user << "<span class='notice'>You fold [src] into the shape of a plane!</span>"
-	user.unEquip(src)
-	I = new /obj/item/weapon/paperplane(loc, src)
-	user.put_in_hands(I)
+	if ( istype(user) )
+		if( (!in_range(src, user)) || user.stat || user.restrained() )
+			return
+		user << "<span class='notice'>You fold [src] into the shape of a plane!</span>"
+		user.unEquip(src)
+		I = new /obj/item/weapon/paperplane(loc, src)
+		user.put_in_hands(I)
+	else
+		user << "<span class='notice'> You lack the dexterity to fold \the [src]. </span>"

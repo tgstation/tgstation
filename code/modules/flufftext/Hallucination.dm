@@ -249,7 +249,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 	if(target_dist<=3) //"Eaten"
 		target.hal_screwyhud = 1
 		target.SetSleeping(20)
-		addtimer(src, "wake_and_restore", rand(50, 100))
+		addtimer(CALLBACK(src, .proc/wake_and_restore), rand(50, 100))
 
 /obj/effect/hallucination/battle
 
@@ -400,7 +400,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 	my_target = T
 	QDEL_IN(src, 300)
 	step_away(src,my_target,2)
-	addtimer(src, "attack_loop", 0)
+	addtimer(CALLBACK(src, .proc/attack_loop), 0)
 
 
 /obj/effect/fake_attacker/proc/updateimage()

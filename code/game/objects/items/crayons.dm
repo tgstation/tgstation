@@ -137,8 +137,7 @@
 	if(charges == -1)
 		. = FALSE
 	else if(!charges_left)
-		user << "<span class='warning'>There is no more of \the [src.name] \
-			left!</span>"
+		user << "<span class='warning'>There is no more of \the [src.name] left!</span>"
 		if(self_contained)
 			qdel(src)
 		. = TRUE
@@ -155,8 +154,7 @@
 /obj/item/toy/crayon/spraycan/AltClick(mob/user)
 	if(has_cap)
 		is_capped = !is_capped
-		user << "<span class='notice'>The cap on [src] is now \
-			[is_capped ? "on" : "off"].</span>"
+		user << "<span class='notice'>The cap on [src] is now [is_capped ? "on" : "off"].</span>"
 		update_icon()
 
 /obj/item/toy/crayon/ui_data()
@@ -355,8 +353,7 @@
 						user << "<span class='warning'>There isn't enough space to paint!</span>"
 						return
 
-	user << "<span class='notice'>You finish \
-		[instant ? "spraying" : "drawing"] \the [temp].</span>"
+	user << "<span class='notice'>You finish [instant ? "spraying" : "drawing"] \the [temp].</span>"
 
 	if(length(text_buffer))
 		text_buffer = copytext(text_buffer,2)
@@ -395,8 +392,7 @@
 	// Reject space, player-created areas, and non-station z-levels.
 	var/area/A = get_area(target)
 	if(!A || (A.z != ZLEVEL_STATION) || !A.valid_territory)
-		user << "<span class='warning'>[A] is unsuitable for \
-			tagging.</span>"
+		user << "<span class='warning'>[A] is unsuitable for tagging.</span>"
 		return FALSE
 
 	var/spraying_over = FALSE
@@ -540,8 +536,7 @@
 				usr << "This crayon is too sad to be contained in this box."
 				return
 			if("rainbow")
-				usr << "This crayon is too powerful to be contained in this \
-					box."
+				usr << "This crayon is too powerful to be contained in this box."
 				return
 		if(istype(W, /obj/item/toy/crayon/spraycan))
 			user << "Spraycans are not crayons."
@@ -560,8 +555,7 @@
 	paint_color = null
 
 	item_state = "spraycan"
-	desc = "A metallic container containing tasty paint.\n\
-		Alt-click to toggle the cap."
+	desc = "A metallic container containing tasty paint.\n Alt-click to toggle the cap."
 
 	instant = TRUE
 	edible = FALSE
@@ -572,6 +566,9 @@
 
 	validSurfaces = list(/turf/open/floor,/turf/closed/wall)
 	reagent_contents = list("welding_fuel" = 1, "ethanol" = 1)
+
+	pre_noise = TRUE
+	post_noise = TRUE
 
 /obj/item/toy/crayon/spraycan/suicide_act(mob/user)
 	var/mob/living/carbon/human/H = user
@@ -628,13 +625,11 @@
 
 	if(iscarbon(target))
 		if(pre_noise || post_noise)
-			playsound(user.loc, 'sound/effects/spray.ogg', 5, 1, 5)
+			playsound(user.loc, 'sound/effects/spray.ogg', 25, 1, 5)
 
 		var/mob/living/carbon/C = target
-		user.visible_message("<span class='danger'>[user] sprays [src] \
-			into the face of [target]!</span>")
-		target << "<span class='userdanger'>[user] sprays [src] into your \
-			face!</span>"
+		user.visible_message("<span class='danger'>[user] sprays [src] into the face of [target]!</span>")
+		target << "<span class='userdanger'>[user] sprays [src] into your face!</span>"
 
 		if(C.client)
 			C.blur_eyes(3)
@@ -699,8 +694,7 @@
 /obj/item/toy/crayon/spraycan/gang/examine(mob/user)
 	. = ..()
 	if((user.mind && user.mind.gang_datum) || isobserver(user))
-		user << "This spraycan has \
-			been specially modified for tagging territory."
+		user << "This spraycan has been specially modified for tagging territory."
 
 /obj/item/toy/crayon/spraycan/borg
 	name = "cyborg spraycan"

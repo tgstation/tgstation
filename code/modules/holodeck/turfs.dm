@@ -88,7 +88,7 @@
 
 /turf/open/floor/holofloor/carpet/New()
 	..()
-	addtimer(src, "update_icon", 1)
+	addtimer(CALLBACK(src, .proc/update_icon), 1)
 
 /turf/open/floor/holofloor/carpet/update_icon()
 	if(!..())

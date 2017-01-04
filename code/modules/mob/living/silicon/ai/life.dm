@@ -167,7 +167,7 @@
 	blind_eyes(1)
 	update_sight()
 	src << "You've lost power!"
-	addtimer(src, "start_RestorePowerRoutine", 20)
+	addtimer(CALLBACK(src, .proc/start_RestorePowerRoutine), 20)
 
 #undef POWER_RESTORATION_OFF
 #undef POWER_RESTORATION_START

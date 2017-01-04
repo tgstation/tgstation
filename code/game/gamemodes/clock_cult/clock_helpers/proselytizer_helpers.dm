@@ -188,7 +188,7 @@
 	if(reinf)
 		prosel_cost -= REPLICANT_ROD
 	for(var/obj/structure/grille/G in get_turf(src))
-		addtimer(proselytizer, "proselytize", 0, TIMER_NORMAL, G, user)
+		addtimer(CALLBACK(proselytizer, /obj/item/clockwork/clockwork_proselytizer.proc/proselytize, G, user), 0)
 	return list("operation_time" = prosel_time, "new_obj_type" = windowtype, "alloy_cost" = prosel_cost, "spawn_dir" = dir, "dir_in_new" = new_dir)
 
 /obj/structure/window/reinforced/clockwork/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer)

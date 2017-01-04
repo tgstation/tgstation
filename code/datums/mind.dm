@@ -62,7 +62,7 @@
 	var/damnation_type = 0
 	var/datum/mind/soulOwner //who owns the soul.  Under normal circumstances, this will point to src
 	var/isholy = FALSE //is this person a chaplain or admin role allowed to use bibles
-	
+
 	var/mob/living/enslaved_to //If this mind's master is another mob (i.e. adamantine golems)
 
 /datum/mind/New(var/key)
@@ -1496,7 +1496,7 @@
 			if(istype(S, type))
 				continue
 		S.charge_counter = delay
-		addtimer(S, "start_recharge", 0)
+		addtimer(CALLBACK(S, /obj/effect/proc_holder/spell.proc/start_recharge), 0)
 
 /datum/mind/proc/get_ghost(even_if_they_cant_reenter)
 	for(var/mob/dead/observer/G in dead_mob_list)

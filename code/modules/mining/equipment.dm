@@ -10,18 +10,16 @@
 	cold_protection = CHEST|GROIN|LEGS|ARMS
 	max_heat_protection_temperature = FIRE_SUIT_MAX_TEMP_PROTECT
 	heat_protection = CHEST|GROIN|LEGS|ARMS
-	hooded = 1
-	hoodtype = /obj/item/clothing/head/explorer
+	hoodtype = /obj/item/clothing/head/hooded/explorer
 	armor = list(melee = 30, bullet = 20, laser = 20, energy = 20, bomb = 50, bio = 100, rad = 50, fire = 50, acid = 50)
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/internals, /obj/item/weapon/resonator, /obj/item/device/mining_scanner, /obj/item/device/t_scanner/adv_mining_scanner, /obj/item/weapon/gun/energy/kinetic_accelerator, /obj/item/weapon/pickaxe)
 	resistance_flags = FIRE_PROOF
 
-/obj/item/clothing/head/explorer
+/obj/item/clothing/head/hooded/explorer
 	name = "explorer hood"
 	desc = "An armoured hood for exploring harsh environments."
 	icon_state = "explorer"
 	body_parts_covered = HEAD
-	flags = NODROP
 	flags_inv = HIDEHAIR|HIDEFACE|HIDEEARS
 	min_cold_protection_temperature = FIRE_HELM_MIN_TEMP_PROTECT
 	max_heat_protection_temperature = FIRE_HELM_MAX_TEMP_PROTECT
@@ -145,7 +143,7 @@
 	desc = "A stable hole in the universe made by a wormhole jaunter. Turbulent doesn't even begin to describe how rough passage through one of these is, but at least it will always get you somewhere near a beacon."
 
 /obj/effect/portal/wormhole/jaunt_tunnel/teleport(atom/movable/M)
-	if(istype(M, /obj/effect))
+	if(M.anchored || istype(M, /obj/effect))
 		return
 
 	if(istype(M, /atom/movable))
@@ -157,7 +155,7 @@
 				L.Weaken(3)
 				if(ishuman(L))
 					shake_camera(L, 20, 1)
-					addtimer(L, "vomit", 20)
+					addtimer(CALLBACK(L, /mob/living/carbon.proc/vomit), 20)
 
 /**********************Resonator**********************/
 
@@ -236,7 +234,7 @@
 	if(pressure < 50)
 		name = "strong resonance field"
 		resonance_damage = 60
-	addtimer(src, "burst", timetoburst, TIMER_NORMAL, proj_turf)
+	addtimer(CALLBACK(src, .proc/burst, proj_turf), timetoburst)
 
 /obj/effect/resonance/Destroy()
 	if(res)
@@ -550,7 +548,7 @@
 		D.fire()
 		charged = 0
 		icon_state = "mining_hammer1_uncharged"
-		addtimer(src, "Recharge", charge_time)
+		addtimer(CALLBACK(src, .proc/Recharge), charge_time)
 		return
 	if(proximity_flag && target == mark && isliving(target))
 		var/mob/living/L = target

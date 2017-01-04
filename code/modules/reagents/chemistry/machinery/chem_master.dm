@@ -103,7 +103,7 @@
 	if(default_unfasten_wrench(user, I))
 		return
 
-	if(istype(I, /obj/item/weapon/reagent_containers) && (I.flags & OPENCONTAINER))
+	if(istype(I, /obj/item/weapon/reagent_containers) && (I.container_type & OPENCONTAINER))
 		. = 1 // no afterattack
 		if(panel_open)
 			user << "<span class='warning'>You can't use the [src.name] while its panel is opened!</span>"

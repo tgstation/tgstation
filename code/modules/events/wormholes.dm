@@ -60,7 +60,7 @@
 /obj/effect/portal/wormhole/teleport(atom/movable/M)
 	if(istype(M, /obj/effect))	//sparks don't teleport
 		return
-	if(M.anchored && istype(M, /obj/mecha))
+	if(M.anchored && !istype(M, /obj/mecha))
 		return
 
 	if(istype(M, /atom/movable))
