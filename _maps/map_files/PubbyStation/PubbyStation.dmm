@@ -1,4 +1,4 @@
-//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aaa" = (
 /turf/open/space,
 /area/space)
@@ -46985,11 +46985,11 @@
 	pixel_y = 7
 	},
 /turf/open/floor/plating/airless,
-/area/space/nearstation)
+/area/space)
 "bQc" = (
 /obj/item/weapon/phone,
 /turf/open/floor/plating/airless,
-/area/space/nearstation)
+/area/space)
 "bQd" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/light{
@@ -48250,7 +48250,7 @@
 	state = 2
 	},
 /turf/open/floor/plating/airless,
-/area/space/nearstation)
+/area/space)
 "bSX" = (
 /turf/open/floor/plating/airless/warnplate{
 	dir = 4
@@ -48419,17 +48419,17 @@
 /turf/open/floor/plating/airless/warnplate{
 	dir = 9
 	},
-/area/space/nearstation)
+/area/space)
 "bTr" = (
 /turf/open/floor/plating/airless/warnplate{
 	dir = 1
 	},
-/area/space/nearstation)
+/area/space)
 "bTs" = (
 /turf/open/floor/plating/airless/warnplate{
 	dir = 5
 	},
-/area/space/nearstation)
+/area/space)
 "bTt" = (
 /obj/machinery/camera{
 	active_power_usage = 0;
@@ -48462,16 +48462,16 @@
 /turf/open/floor/plating/airless/warnplate{
 	dir = 8
 	},
-/area/space/nearstation)
+/area/space)
 "bTw" = (
 /obj/machinery/the_singularitygen/tesla,
 /turf/open/floor/plating/airless,
-/area/space/nearstation)
+/area/space)
 "bTx" = (
 /turf/open/floor/plating/airless/warnplate{
 	dir = 4
 	},
-/area/space/nearstation)
+/area/space)
 "bTy" = (
 /obj/machinery/light{
 	dir = 4;
@@ -48495,17 +48495,17 @@
 /turf/open/floor/plating/airless/warnplate{
 	dir = 10
 	},
-/area/space/nearstation)
+/area/space)
 "bTB" = (
 /turf/open/floor/plating/airless/warnplate{
 	dir = 2
 	},
-/area/space/nearstation)
+/area/space)
 "bTC" = (
 /turf/open/floor/plating/airless/warnplate{
 	dir = 6
 	},
-/area/space/nearstation)
+/area/space)
 "bTD" = (
 /turf/closed/mineral/random/low_chance,
 /area/mine/explored{
@@ -51361,7 +51361,7 @@
 	layer = 2.9
 	},
 /turf/open/floor/plating/airless,
-/area/space/nearstation)
+/area/space)
 "cas" = (
 /turf/open/floor/plasteel/darkwarning{
 	dir = 9
@@ -51877,13 +51877,13 @@
 	},
 /obj/structure/lattice,
 /turf/open/space,
-/area/space/nearstation)
+/area/space)
 "cbK" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
 /turf/open/floor/plating/airless,
-/area/space/nearstation)
+/area/space)
 "cbL" = (
 /turf/open/floor/plasteel/darkwarning/corner{
 	tag = "icon-black_warn_corner (WEST)";
@@ -51900,7 +51900,7 @@
 /obj/structure/disposalpipe/segment,
 /obj/structure/lattice,
 /turf/open/space,
-/area/space/nearstation)
+/area/space)
 "cbO" = (
 /obj/structure/sign/directions/engineering{
 	tag = "icon-direction_eng (EAST)";
@@ -51942,7 +51942,7 @@
 	icon_state = "pipe-c"
 	},
 /turf/open/space,
-/area/space/nearstation)
+/area/space)
 "cbU" = (
 /obj/machinery/light/small{
 	brightness = 3;
@@ -51970,7 +51970,7 @@
 	dir = 1
 	},
 /turf/open/floor/plating/airless,
-/area/space/nearstation)
+/area/space)
 "cbY" = (
 /obj/structure/grille/broken,
 /turf/open/floor/plating{
@@ -52314,7 +52314,7 @@
 	},
 /obj/structure/window/reinforced,
 /turf/open/space,
-/area/space/nearstation)
+/area/space)
 "ccM" = (
 /obj/structure/closet/emcloset{
 	anchored = 1;
@@ -74344,7 +74344,7 @@ aaa
 aad
 asa
 caT
-bTf
+agP
 caT
 cbD
 cbb
@@ -74600,8 +74600,8 @@ aad
 aad
 aad
 aad
-ccl
-bTf
+cbI
+agP
 caT
 caT
 cbb
@@ -74858,7 +74858,7 @@ aaa
 aad
 aaa
 aad
-bTf
+agP
 ccL
 caT
 caT
@@ -75115,8 +75115,8 @@ aaa
 aad
 aaa
 aad
-bTf
-bOH
+agP
+aad
 cbI
 cbI
 cbI
@@ -75371,8 +75371,8 @@ aaa
 aaa
 aad
 aad
-bOH
-bTf
+aad
+agP
 aad
 aaa
 aaa
@@ -75625,11 +75625,11 @@ aaa
 aaa
 aaa
 aaa
-bOG
+aaa
 aad
 aaa
-bOH
-bTf
+aad
+agP
 aad
 aaa
 aaa
@@ -75885,9 +75885,9 @@ aaa
 aaa
 bdx
 aad
-bOH
-bTf
-bOH
+aad
+agP
+aad
 aad
 aad
 aad
@@ -76142,9 +76142,9 @@ aaa
 cbS
 cbX
 aaa
-bOH
-bTf
-bOH
+aad
+agP
+aad
 aaa
 aaa
 aaa
@@ -76391,9 +76391,9 @@ bFz
 cbg
 bvp
 bwu
-bOG
-bOG
-bOG
+aaa
+aaa
+aaa
 cbJ
 cbN
 cbT
@@ -76648,11 +76648,11 @@ bFA
 cbg
 bvp
 bwu
-bOH
-bOH
-bOG
+aad
+aad
+aaa
 cbK
-bOH
+aad
 bpM
 bpM
 bpM
@@ -76905,7 +76905,7 @@ bFB
 cbg
 bvp
 bwu
-bOH
+aad
 bwu
 bwu
 bJx
@@ -79742,13 +79742,13 @@ bvp
 bpM
 bND
 bpM
-bOG
-bOG
-bOG
-bOH
-bOG
-bOG
-bOG
+aaa
+aaa
+aaa
+aad
+aaa
+aaa
+aaa
 bwu
 bvp
 bwu
@@ -79999,13 +79999,13 @@ bvp
 bpM
 bFC
 bpM
-bOH
-bOH
-bOH
+aad
+aad
+aad
 bQb
-bOG
-bOG
-bOG
+aaa
+aaa
+aaa
 bwu
 bRR
 bwu
@@ -80256,13 +80256,13 @@ bvp
 bpM
 bFC
 bpM
-bOG
-bOG
-bOG
+aaa
+aaa
+aaa
 bQc
-bOH
-bOH
-bOH
+aad
+aad
+aad
 bwu
 bvp
 bwu
@@ -80513,13 +80513,13 @@ bMq
 bpM
 bNE
 bpM
-bOG
-bOG
-bOG
-bOH
-bOG
-bOG
-bOG
+aaa
+aaa
+aaa
+aad
+aaa
+aaa
+aaa
 bwu
 bvp
 bwu
@@ -83097,7 +83097,7 @@ bPn
 bSK
 bSR
 bTa
-bTf
+agP
 aad
 aad
 aad
@@ -84895,13 +84895,13 @@ bSc
 bSD
 bSN
 bSW
-bOG
-bOG
-bOH
-bOG
+aaa
+aaa
+aad
+aaa
 bSW
-bOG
-bOG
+aaa
+aaa
 bSW
 bSE
 bSN
@@ -85151,15 +85151,15 @@ bSc
 bSc
 bSc
 bSN
-bOG
-bOG
-bOG
-bOH
-bOG
-bOH
-bOG
-bOG
-bOG
+aaa
+aaa
+aaa
+aad
+aaa
+aad
+aaa
+aaa
+aaa
 bTJ
 bTM
 bKF
@@ -85408,15 +85408,15 @@ bSd
 bSp
 bSc
 bSN
-bOG
-bOG
-bOH
-bOH
-bOH
-bOH
-bOH
-bOG
-bOG
+aaa
+aaa
+aad
+aad
+aad
+aad
+aad
+aaa
+aaa
 bSE
 bSN
 bKF
@@ -85666,14 +85666,14 @@ bSq
 bSc
 bSN
 bSW
-bOH
-bOH
+aad
+aad
 bTq
 bTv
 bTA
-bOH
-bOH
-bOH
+aad
+aad
+aad
 bSE
 bSN
 bKF
@@ -85922,15 +85922,15 @@ bSf
 bSr
 bSF
 bSO
-bOG
-bOG
-bOH
+aaa
+aaa
+aad
 bTr
 bTw
 bTB
-bOH
-bOG
-bOG
+aad
+aaa
+aaa
 bTJ
 bTN
 bKF
@@ -86179,14 +86179,14 @@ bSg
 bSs
 bSc
 bSN
-bOH
-bOH
-bOH
+aad
+aad
+aad
 bTs
 bTx
 bTC
-bOH
-bOH
+aad
+aad
 bSW
 bSE
 bSN
@@ -86436,15 +86436,15 @@ bRN
 bSt
 bSc
 bSN
-bOG
-bOG
-bOH
-bOH
-bOH
-bOH
-bOH
-bOG
-bOG
+aaa
+aaa
+aad
+aad
+aad
+aad
+aad
+aaa
+aaa
 bSE
 bSN
 bKF
@@ -86693,15 +86693,15 @@ bSc
 bSc
 bSc
 bSN
-bOG
-bOG
-bOG
-bOH
-bOG
-bOH
-bOG
-bOG
-bOG
+aaa
+aaa
+aaa
+aad
+aaa
+aad
+aaa
+aaa
+aaa
 bTJ
 bTM
 bKF
@@ -86951,13 +86951,13 @@ bSc
 bSD
 bSN
 bSW
-bOG
-bOG
+aaa
+aaa
 bSW
-bOG
-bOH
-bOG
-bOG
+aaa
+aad
+aaa
+aaa
 bSW
 bSE
 bSN
@@ -97207,7 +97207,7 @@ bAr
 bAr
 agP
 agP
-bIi
+bTU
 aaa
 aaa
 aaa
