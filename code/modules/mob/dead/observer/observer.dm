@@ -118,13 +118,13 @@ var/list/image/ghost_images_simple = list() //this is a list of all ghost images
 	var/old_color = color
 	color = "#960000"
 	animate(src, color = old_color, time = 10)
-	addtimer(src, "update_atom_colour", 10)
+	addtimer(CALLBACK(src, /atom/proc/update_atom_colour), 10)
 
 /mob/dead/observer/ratvar_act()
 	var/old_color = color
 	color = "#FAE48C"
 	animate(src, color = old_color, time = 10)
-	addtimer(src, "update_atom_colour", 10)
+	addtimer(CALLBACK(src, /atom/proc/update_atom_colour), 10)
 
 /mob/dead/observer/Destroy()
 	ghost_images_full -= ghostimage
@@ -501,14 +501,14 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	listclearnulls(ghost_images_default)
 	listclearnulls(ghost_images_simple)
 	listclearnulls(ghost_darkness_images)
-	
+
 	for (var/mob/dead/observer/O in player_list)
 		O.updateghostimages()
 
 /mob/dead/observer/proc/updateghostimages()
 	if (!client)
 		return
-	
+
 	if(lastsetting)
 		switch(lastsetting) //checks the setting we last came from, for a little efficiency so we don't try to delete images from the client that it doesn't have anyway
 			if(GHOST_OTHERS_THEIR_SETTING)

@@ -266,4 +266,4 @@
 	if(!wet && wet_time)
 		wet_time = 0
 	if(wet)
-		addtimer(src, "HandleWet", 15)
+		addtimer(CALLBACK(src, .proc/HandleWet), 15)

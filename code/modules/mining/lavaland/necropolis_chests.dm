@@ -796,11 +796,11 @@
 	calculate_anger_mod(user)
 	timer = world.time + CLICK_CD_MELEE //by default, melee attacks only cause melee blasts, and have an accordingly short cooldown
 	if(proximity_flag)
-		addtimer(src, "aoe_burst", 0, TIMER_NORMAL, T, user)
+		addtimer(CALLBACK(src, .proc/aoe_burst, T, user), 0)
 		add_logs(user, target, "fired 3x3 blast at", src)
 	else
 		if(ismineralturf(target) && get_dist(user, target) < 6) //target is minerals, we can hit it(even if we can't see it)
-			addtimer(src, "cardinal_blasts", 0, TIMER_NORMAL, T, user)
+			addtimer(CALLBACK(src, .proc/cardinal_blasts, T, user), 0)
 			timer = world.time + cooldown_time
 		else if(target in view(5, get_turf(user))) //if the target is in view, hit it
 			timer = world.time + cooldown_time
@@ -809,12 +809,12 @@
 				PoolOrNew(/obj/effect/overlay/temp/hierophant/chaser, list(get_turf(user), user, target, chaser_speed, friendly_fire_check))
 				add_logs(user, target, "fired a chaser at", src)
 			else
-				addtimer(src, "cardinal_blasts", 0, TIMER_NORMAL, T, user) //otherwise, just do cardinal blast
+				addtimer(CALLBACK(src, .proc/cardinal_blasts, T, user), 0) //otherwise, just do cardinal blast
 				add_logs(user, target, "fired cardinal blast at", src)
 		else
 			user << "<span class='warning'>That target is out of range!</span>" //too far away
 			timer = world.time
-	addtimer(src, "prepare_icon_update", 0)
+	addtimer(CALLBACK(src, .proc/prepare_icon_update), 0)
 
 /obj/item/weapon/hierophant_club/proc/calculate_anger_mod(mob/user) //we get stronger as the user loses health
 	chaser_cooldown = initial(chaser_cooldown)
@@ -857,7 +857,7 @@
 			user.visible_message("<span class='hierophant_warning'>[user] starts fiddling with [src]'s pommel...</span>", \
 			"<span class='notice'>You start detaching the hierophant beacon...</span>")
 			timer = world.time + 51
-			addtimer(src, "prepare_icon_update", 0)
+			addtimer(CALLBACK(src, .proc/prepare_icon_update), 0)
 			if(do_after(user, 50, target = user) && !beacon)
 				var/turf/T = get_turf(user)
 				playsound(T,'sound/magic/Blind.ogg', 200, 1, -4)
@@ -869,7 +869,7 @@
 				<span class='notice'>You can remove the beacon to place it again by striking it with the club.</span>")
 			else
 				timer = world.time
-				addtimer(src, "prepare_icon_update", 0)
+				addtimer(CALLBACK(src, .proc/prepare_icon_update), 0)
 		else
 			user << "<span class='warning'>You need to be on solid ground to detach the beacon!</span>"
 		return
@@ -886,7 +886,7 @@
 	user.update_action_buttons_icon()
 	user.visible_message("<span class='hierophant_warning'>[user] starts to glow faintly...</span>")
 	timer = world.time + 50
-	addtimer(src, "prepare_icon_update", 0)
+	addtimer(CALLBACK(src, .proc/prepare_icon_update), 0)
 	beacon.icon_state = "hierophant_tele_on"
 	var/obj/effect/overlay/temp/hierophant/telegraph/edge/TE1 = PoolOrNew(/obj/effect/overlay/temp/hierophant/telegraph/edge, user.loc)
 	var/obj/effect/overlay/temp/hierophant/telegraph/edge/TE2 = PoolOrNew(/obj/effect/overlay/temp/hierophant/telegraph/edge, beacon.loc)
@@ -898,7 +898,7 @@
 			user << "<span class='warning'>The beacon is blocked by something, preventing teleportation!</span>"
 			user.update_action_buttons_icon()
 			timer = world.time
-			addtimer(src, "prepare_icon_update", 0)
+			addtimer(CALLBACK(src, .proc/prepare_icon_update), 0)
 			beacon.icon_state = "hierophant_tele_off"
 			return
 		PoolOrNew(/obj/effect/overlay/temp/hierophant/telegraph, list(T, user))
@@ -910,7 +910,7 @@
 			if(user)
 				user.update_action_buttons_icon()
 			timer = world.time
-			addtimer(src, "prepare_icon_update", 0)
+			addtimer(CALLBACK(src, .proc/prepare_icon_update), 0)
 			if(beacon)
 				beacon.icon_state = "hierophant_tele_off"
 			return
@@ -919,7 +919,7 @@
 			user << "<span class='warning'>The beacon is blocked by something, preventing teleportation!</span>"
 			user.update_action_buttons_icon()
 			timer = world.time
-			addtimer(src, "prepare_icon_update", 0)
+			addtimer(CALLBACK(src, .proc/prepare_icon_update), 0)
 			beacon.icon_state = "hierophant_tele_off"
 			return
 		add_logs(user, beacon, "teleported self from ([source.x],[source.y],[source.z]) to")
@@ -932,7 +932,7 @@
 			var/obj/effect/overlay/temp/hierophant/blast/B = PoolOrNew(/obj/effect/overlay/temp/hierophant/blast, list(t, user, TRUE)) //but absolutely will hurt enemies
 			B.damage = 30
 		for(var/mob/living/L in range(1, source))
-			addtimer(src, "teleport_mob", 0, TIMER_NORMAL, source, L, T, user) //regardless, take all mobs near us along
+			addtimer(CALLBACK(src, .proc/teleport_mob, source, L, T, user), 0) //regardless, take all mobs near us along
 		sleep(6) //at this point the blasts detonate
 		if(beacon)
 			beacon.icon_state = "hierophant_tele_off"
@@ -940,7 +940,7 @@
 		qdel(TE1)
 		qdel(TE2)
 		timer = world.time
-		addtimer(src, "prepare_icon_update", 0)
+		addtimer(CALLBACK(src, .proc/prepare_icon_update), 0)
 	if(beacon)
 		beacon.icon_state = "hierophant_tele_off"
 	teleporting = FALSE
@@ -979,7 +979,7 @@
 	sleep(2)
 	PoolOrNew(/obj/effect/overlay/temp/hierophant/blast, list(T, user, friendly_fire_check))
 	for(var/d in cardinal)
-		addtimer(src, "blast_wall", 0, TIMER_NORMAL, T, d, user)
+		addtimer(CALLBACK(src, .proc/blast_wall, T, d, user), 0)
 
 /obj/item/weapon/hierophant_club/proc/blast_wall(turf/T, dir, mob/living/user) //make a wall of blasts blast_range tiles long
 	if(!T)

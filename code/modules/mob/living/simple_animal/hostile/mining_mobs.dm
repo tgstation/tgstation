@@ -159,7 +159,7 @@
 			retreat_distance = 10
 			minimum_distance = 10
 			if(will_burrow)
-				addtimer(src, "Burrow", chase_time)
+				addtimer(CALLBACK(src, .proc/Burrow), chase_time)
 
 /mob/living/simple_animal/hostile/asteroid/goldgrub/AttackingTarget()
 	if(istype(target, /obj/item/weapon/ore))
@@ -251,7 +251,7 @@
 
 /obj/item/organ/hivelord_core/New()
 	..()
-	addtimer(src, "inert_check", 2400)
+	addtimer(CALLBACK(src, .proc/inert_check), 2400)
 
 /obj/item/organ/hivelord_core/proc/inert_check()
 	if(!owner && !preserved)
@@ -339,7 +339,7 @@
 
 /mob/living/simple_animal/hostile/asteroid/hivelordbrood/New()
 	..()
-	addtimer(src, "death", 100)
+	addtimer(CALLBACK(src, .proc/death), 100)
 
 /mob/living/simple_animal/hostile/asteroid/hivelordbrood/blood
 	name = "blood brood"
@@ -493,7 +493,7 @@
 	if(ismineralturf(turftype))
 		var/turf/closed/mineral/M = turftype
 		M.gets_drilled()
-	addtimer(src, "Trip", 10)
+	addtimer(CALLBACK(src, .proc/Trip), 10)
 
 /obj/effect/goliath_tentacle/original
 
@@ -642,7 +642,7 @@
 	environment_smash = 2
 	mob_size = MOB_SIZE_LARGE
 	speed = 1
-	addtimer(src, "Deflate", 100)
+	addtimer(CALLBACK(src, .proc/Deflate), 100)
 
 /mob/living/simple_animal/hostile/asteroid/fugu/proc/Deflate()
 	if(wumbo)

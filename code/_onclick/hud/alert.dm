@@ -56,7 +56,7 @@
 	animate(alert, transform = matrix(), time = 2.5, easing = CUBIC_EASING)
 
 	if(alert.timeout)
-		addtimer(src, "alert_timeout", alert.timeout, TIMER_NORMAL, alert, category)
+		addtimer(CALLBACK(src, .proc/alert_timeout, alert, category), alert.timeout)
 		alert.timeout = world.time + alert.timeout - world.tick_lag
 	return alert
 

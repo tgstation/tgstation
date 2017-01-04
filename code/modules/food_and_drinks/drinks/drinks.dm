@@ -77,7 +77,7 @@
 		if(iscyborg(user)) //Cyborg modules that include drinks automatically refill themselves, but drain the borg's cell
 			var/mob/living/silicon/robot/bro = user
 			bro.cell.use(30)
-			addtimer(reagents, "add_reagent", 600, TIMER_NORMAL, refill, trans)
+			addtimer(CALLBACK(reagents, /datum/reagents.proc/add_reagent, refill, trans), 600)
 
 /obj/item/weapon/reagent_containers/food/drinks/attackby(obj/item/I, mob/user, params)
 	if(I.is_hot())

@@ -113,7 +113,7 @@
 	if(crit_fail)
 		return
 	crit_fail = TRUE
-	addtimer(src, "reboot", 90 / severity)
+	addtimer(CALLBACK(src, .proc/reboot), 90 / severity)
 
 /obj/item/organ/cyberimp/brain/anti_stun/proc/reboot()
 	crit_fail = FALSE

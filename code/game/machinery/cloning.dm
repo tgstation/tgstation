@@ -134,7 +134,7 @@
 		if(!G)
 			return FALSE
 	if(clonemind.damnation_type) //Can't clone the damned.
-		addtimer(src, "horrifyingsound", 0)
+		addtimer(CALLBACK(src, .proc/horrifyingsound), 0)
 		mess = 1
 		icon_state = "pod_g"
 		update_icon()
@@ -145,7 +145,7 @@
 	countdown.start()
 
 	eject_wait = TRUE
-	addtimer(src, "wait_complete", 30)
+	addtimer(CALLBACK(src, .proc/wait_complete), 30)
 
 	var/mob/living/carbon/human/H = new /mob/living/carbon/human(src)
 

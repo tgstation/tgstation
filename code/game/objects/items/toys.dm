@@ -362,7 +362,7 @@
 
 /obj/effect/decal/cleanable/ash/snappop_phoenix/New()
 	. = ..()
-	addtimer(src, "respawn", respawn_time)
+	addtimer(CALLBACK(src, .proc/respawn), respawn_time)
 
 /obj/effect/decal/cleanable/ash/snappop_phoenix/proc/respawn()
 	new /obj/item/toy/snappop/phoenix(get_turf(src))

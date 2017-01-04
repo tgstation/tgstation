@@ -303,7 +303,7 @@
 		if(!suit)
 			disable_flight(1)
 		if(!resync)
-			addtimer(src, "resync", 600, TIMER_NORMAL)
+			addtimer(CALLBACK(src, .proc/resync), 600)
 			resync = 1
 		if(!wearer)	//Oh god our user fell off!
 			disable_flight(1)
@@ -672,7 +672,7 @@
 			return TRUE
 		usermessage("Warning: Velocity too high to safely disengage. Retry to confirm emergency shutoff.", 2)
 		override_safe = TRUE
-		addtimer(src, "enable_safe", 50, TIMER_NORMAL)
+		addtimer(CALLBACK(src, .proc/enable_safe), 50)
 		return FALSE
 	update_icon()
 

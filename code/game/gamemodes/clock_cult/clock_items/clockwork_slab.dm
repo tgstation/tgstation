@@ -102,7 +102,7 @@
 
 /obj/item/clockwork/slab/dropped(mob/user)
 	. = ..()
-	addtimer(src, "check_on_mob", 1, TIMER_NORMAL, user) //dropped is called before the item is out of the slot, so we need to check slightly later
+	addtimer(CALLBACK(src, .proc/check_on_mob, user), 1) //dropped is called before the item is out of the slot, so we need to check slightly later
 
 /obj/item/clockwork/slab/proc/check_on_mob(mob/user)
 	if(user && !(src in user.held_items) && slab_ability && slab_ability.ranged_ability_user) //if we happen to check and we AREN'T in user's hands, remove whatever ability we have
@@ -436,7 +436,7 @@
 		if("toggle")
 			recollecting = !recollecting
 		if("recite")
-			addtimer(src, "recite_scripture", 0, TIMER_NORMAL, text2path(params["category"]), usr, FALSE)
+			addtimer(CALLBACK(src, .proc/recite_scripture, text2path(params["category"]), usr, FALSE), 0)
 		if("select")
 			selected_scripture = params["category"]
 		if("bind")

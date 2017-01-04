@@ -188,7 +188,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 		var/oldcolor = color
 		color = rgb(255, 0, 0)
 		animate(src, color = oldcolor, time = 5)
-		addtimer(src, "update_atom_colour", 5)
+		addtimer(CALLBACK(src, /atom/proc/update_atom_colour), 5)
 
 //Malformed Rune: This forms if a rune is not drawn correctly. Invoking it does nothing but hurt the user.
 /obj/effect/rune/malformed
@@ -402,7 +402,7 @@ var/list/teleport_runes = list()
 		..()
 		do_sacrifice(L, invokers)
 	animate(src, color = oldcolor, time = 5)
-	addtimer(src, "update_atom_colour", 5)
+	addtimer(CALLBACK(src, /atom/proc/update_atom_colour), 5)
 	rune_in_use = FALSE
 
 /obj/effect/rune/convert/proc/do_convert(mob/living/convertee, list/invokers)
@@ -795,7 +795,7 @@ var/list/wall_runes = list()
 			W.density = TRUE
 			W.update_state()
 			W.spread_density()
-	density_timer = addtimer(src, "lose_density", 900)
+	density_timer = addtimer(CALLBACK(src, .proc/lose_density), 900)
 
 /obj/effect/rune/wall/proc/lose_density()
 	if(density)
@@ -805,7 +805,7 @@ var/list/wall_runes = list()
 		var/oldcolor = color
 		add_atom_colour("#696969", FIXED_COLOUR_PRIORITY)
 		animate(src, color = oldcolor, time = 50, easing = EASE_IN)
-		addtimer(src, "recharge", 50)
+		addtimer(CALLBACK(src, .proc/recharge), 50)
 
 /obj/effect/rune/wall/proc/recharge()
 	recharging = FALSE

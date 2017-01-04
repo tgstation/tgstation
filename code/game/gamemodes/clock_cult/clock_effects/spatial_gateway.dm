@@ -15,7 +15,7 @@
 
 /obj/effect/clockwork/spatial_gateway/New()
 	..()
-	addtimer(src, "check_setup", 1)
+	addtimer(CALLBACK(src, .proc/check_setup), 1)
 
 /obj/effect/clockwork/spatial_gateway/Destroy()
 	deltimer(timerid)
@@ -135,7 +135,7 @@
 	if(!no_cost)
 		uses = max(0, uses - 1)
 		linked_gateway.uses = max(0, linked_gateway.uses - 1)
-	addtimer(src, "check_uses", 10)
+	addtimer(CALLBACK(src, .proc/check_uses), 10)
 	return TRUE
 
 /obj/effect/clockwork/spatial_gateway/proc/check_uses()
