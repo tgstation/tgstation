@@ -12,9 +12,9 @@
 
 /datum/surgery_step/incise/tool_check(mob/user, obj/item/tool)
 	if(implement_type == /obj/item && !tool.is_sharp())
-		return 0
+		return FALSE
 
-	return 1
+	return TRUE
 
 //clamp bleeders
 /datum/surgery_step/clamp_bleeders
