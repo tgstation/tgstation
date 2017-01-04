@@ -43,7 +43,8 @@
 
 /obj/machinery/power/smes/examine(user)
 	..()
-	user << "<span class='warning'>This SMES has no power terminal!</span>"
+	if(!terminal)
+		user << "<span class='warning'>This SMES has no power terminal!</span>"
 
 /obj/machinery/power/smes/New()
 	..()
@@ -178,7 +179,7 @@
 		log_game("[src] has been deconstructed by [key_name(user)]")
 		investigate_log("SMES deconstructed by [key_name(user)]","singulo")
 		return
-	else if(istype(I, /obj/item/weapon/crowbar))
+	else if(panel_open && istype(I, /obj/item/weapon/crowbar))
 		return
 
 	return ..()
@@ -186,7 +187,7 @@
 /obj/machinery/power/smes/default_deconstruction_crowbar(obj/item/weapon/crowbar/C)
 	if(istype(C) && terminal)
 		usr << "<span class='warning'>You must first remove the power terminal!</span>"
-		return 0
+		return FALSE
 
 	return ..()
 
