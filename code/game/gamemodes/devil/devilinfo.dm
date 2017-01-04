@@ -414,40 +414,43 @@ var/global/list/lawlorify = list (
 			var/mob/living/carbon/true_devil/D = body
 			if(D.oldform)
 				D.oldform.revive(1,0) // Heal the old body too, so the devil doesn't resurrect, then immediately regress into a dead body.
+		if(body.status == DEAD)
+			create_new_body()
 	else
-		if(blobstart.len > 0)
-			var/turf/targetturf = get_turf(pick(blobstart))
-			var/mob/currentMob = owner.current
-			if(!currentMob)
-				currentMob = owner.get_ghost()
-				if(!currentMob)
-					message_admins("[owner.name]'s devil resurrection failed due to client logoff.  Aborting.")
-					return -1 //
-			if(currentMob.mind != owner)
-				message_admins("[owner.name]'s devil resurrection failed due to becoming a new mob.  Aborting.")
-				return -1
-			currentMob.change_mob_type( /mob/living/carbon/human , targetturf, null, 1)
-			var/mob/living/carbon/human/H  = owner.current
-			give_summon_contract()
-			if(SOULVALUE >= BLOOD_THRESHOLD)
-				H.set_species(/datum/species/lizard, 1)
-				H.underwear = "Nude"
-				H.undershirt = "Nude"
-				H.socks = "Nude"
-				H.dna.features["mcolor"] = "511"
-				H.regenerate_icons()
-				if(SOULVALUE >= TRUE_THRESHOLD) //Yes, BOTH this and the above if statement are to run if soulpower is high enough.
-					var/mob/living/carbon/true_devil/A = new /mob/living/carbon/true_devil(targetturf)
-					A.faction |= "hell"
-					H.forceMove(A)
-					A.oldform = H
-					A.set_name()
-					owner.transfer_to(A)
-					if(SOULVALUE >= ARCH_THRESHOLD)
-						A.convert_to_archdevil()
-		else
-			throw EXCEPTION("Unable to find a blobstart landmark for hellish resurrection")
+		create_new_body()
 	check_regression()
+
+/datum/devilinfo/proc/create_new_body()
+	if(blobstart.len > 0)
+		var/turf/targetturf = get_turf(pick(blobstart))
+		var/mob/currentMob = owner.current
+		if(!currentMob)
+			currentMob = owner.get_ghost()
+			if(!currentMob)
+				message_admins("[owner.name]'s devil resurrection failed due to client logoff.  Aborting.")
+				return -1 //
+		if(currentMob.mind != owner)
+			message_admins("[owner.name]'s devil resurrection failed due to becoming a new mob.  Aborting.")
+			return -1
+		if(SOULVALUE >= BLOOD_THRESHOLD)
+			H.set_species(/datum/species/lizard, 1)
+			H.underwear = "Nude"
+			H.undershirt = "Nude"
+			H.socks = "Nude"
+			H.dna.features["mcolor"] = "511"
+			H.regenerate_icons()
+			if(SOULVALUE >= TRUE_THRESHOLD) //Yes, BOTH this and the above if statement are to run if soulpower is high enough.
+				var/mob/living/carbon/true_devil/A = new /mob/living/carbon/true_devil(targetturf)
+				A.faction |= "hell"
+				H.forceMove(A)
+				A.oldform = H
+				A.set_name()
+				owner.transfer_to(A)
+				if(SOULVALUE >= ARCH_THRESHOLD)
+					A.convert_to_archdevil()
+	else
+		throw EXCEPTION("Unable to find a blobstart landmark for hellish resurrection")
+	
 
 /datum/devilinfo/proc/update_hud()
 	if(istype(owner.current, /mob/living/carbon))
