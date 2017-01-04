@@ -94,15 +94,17 @@ var/global/list/lawlorify = list (
 	/obj/effect/proc_holder/spell/targeted/summon_contract,
 	/obj/effect/proc_holder/spell/targeted/conjure_item/violin,
 	/obj/effect/proc_holder/spell/targeted/summon_dancefloor)
+	var/ascendable = FALSE
 
 
-/datum/devilinfo/New()
+/datum/devilinfo/New(can_ascend = FALSE)
 	..()
 	dont_remove_spells = typecacheof(dont_remove_spells)
+	ascendable = can_ascend
 
 
-/proc/randomDevilInfo(name = randomDevilName())
-	var/datum/devilinfo/devil = new
+/proc/randomDevilInfo(name = randomDevilName(), ascendable = FALSE)
+	var/datum/devilinfo/devil = new(ascendable)
 	devil.truename = name
 	devil.bane = randomdevilbane()
 	devil.obligation = randomdevilobligation()
@@ -110,11 +112,11 @@ var/global/list/lawlorify = list (
 	devil.banish = randomdevilbanish()
 	return devil
 
-/proc/devilInfo(name, saveDetails = 0)
+/proc/devilInfo(name, saveDetails = FALSE, ascendable = FALSE)
 	if(allDevils[lowertext(name)])
 		return allDevils[lowertext(name)]
 	else
-		var/datum/devilinfo/devil = randomDevilInfo(name)
+		var/datum/devilinfo/devil = randomDevilInfo(name, ascendable)
 		allDevils[lowertext(name)] = devil
 		devil.exists = saveDetails
 		return devil
@@ -251,6 +253,8 @@ var/global/list/lawlorify = list (
 
 
 /datum/devilinfo/proc/increase_arch_devil()
+	if(!ascendable)
+		return
 	var/mob/living/carbon/true_devil/D = owner.current
 	D << "<span class='warning'>You feel as though your form is about to ascend."
 	sleep(50)
@@ -443,7 +447,7 @@ var/global/list/lawlorify = list (
 					A.oldform = H
 					A.set_name()
 					owner.transfer_to(A)
-					if(SOULVALUE >= ARCH_THRESHOLD)
+					if(SOULVALUE >= ARCH_THRESHOLD  && ascendable)
 						A.convert_to_archdevil()
 		else
 			throw EXCEPTION("Unable to find a blobstart landmark for hellish resurrection")

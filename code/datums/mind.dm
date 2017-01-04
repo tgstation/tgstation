@@ -544,11 +544,14 @@
 		text = uppertext(text)
 	text = "<i><b>[text]</b></i>: "
 	if(src in ticker.mode.devils)
-		text += "<b>DEVIL</b>|sintouched|<a href='?src=\ref[src];devil=clear'>human</a>"
+		if(devilinfo && devilinfo.ascendable)
+			text += "<b>DEVIL</b>|<a href='?src=\ref[src];devil='ascendable_devil'>Ascendable Devil</a>|sintouched|<a href='?src=\ref[src];devil=clear'>human</a>"
+		else
+			text += "<a href='?src=\ref[src];devil='devil'>DEVIL</a>|<b>ASCENDABLE DEVIL</b>|sintouched|<a href='?src=\ref[src];devil=clear'>human</a>"
 	else if(src in ticker.mode.sintouched)
 		text += "devil|<b>SINTOUCHED</b>|<a href='?src=\ref[src];devil=clear'>human</a>"
 	else
-		text += "<a href='?src=\ref[src];devil=devil'>devil</a>|<a href='?src=\ref[src];devil=sintouched'>sintouched</a>|<b>HUMAN</b>"
+		text += "<a href='?src=\ref[src];devil=devil'>devil</a>|<a href='?src=\ref[src];devil='ascendable_devil'>Ascendable Devil</a>|<a href='?src=\ref[src];devil=sintouched'>sintouched</a>|<b>HUMAN</b>"
 
 	if(current && current.client && (ROLE_DEVIL in current.client.prefs.be_special))
 		text += "|Enabled in Prefs"
@@ -1128,12 +1131,28 @@
 					message_admins("[key_name_admin(usr)] has de-sintouch'ed [current].")
 					log_admin("[key_name(usr)] has de-sintouch'ed [current].")
 			if("devil")
+				if(devilinfo)
+					devilinfo.ascendable = FALSE
+					return
 				if(!ishuman(current) && !iscyborg(current))
 					usr << "<span class='warning'>This only works on humans and cyborgs!</span>"
 					return
 				ticker.mode.devils += src
 				special_role = "devil"
 				ticker.mode.finalize_devil(src)
+				ticker.mode.add_devil_objectives(src, 2)
+				announceDevilLaws()
+				announce_objectives()
+			if("ascendable_devil")
+				if(devilinfo)
+					devilinfo.ascendable = TRUE
+					return
+				if(!ishuman(current) && !iscyborg(current))
+					usr << "<span class='warning'>This only works on humans and cyborgs!</span>"
+					return
+				ticker.mode.devils += src
+				special_role = "devil"
+				ticker.mode.finalize_devil(src, TRUE)
 				ticker.mode.add_devil_objectives(src, 2)
 				announceDevilLaws()
 				announce_objectives()
