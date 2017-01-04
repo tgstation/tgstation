@@ -201,7 +201,8 @@
 /mob/living/carbon/human/attack_hand(mob/living/carbon/human/M)
 	if(..())	//to allow surgery to return properly.
 		return
-	dna.species.spec_attack_hand(M, src)
+	if(istype(M))
+		dna.species.spec_attack_hand(M, src)
 
 
 /mob/living/carbon/human/attack_paw(mob/living/carbon/monkey/M)
