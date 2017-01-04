@@ -107,7 +107,7 @@
 
 /datum/objective/mutiny/check_completion()
 	if(target && target.current)
-		if(target.current.stat == DEAD || !ishuman(target.current) || !target.current.ckey || !target.current.client)
+		if(target.current.stat == DEAD || target.current.nuked || !ishuman(target.current) || !target.current.ckey || !target.current.client)
 			return 1
 		var/turf/T = get_turf(target.current)
 		if(T && (T.z > ZLEVEL_STATION) || target.current.client.is_afk())			//If they leave the station or go afk they count as dead for this
@@ -137,7 +137,7 @@
 
 /datum/objective/maroon/check_completion()
 	if(target && target.current)
-		if(target.current.stat == DEAD || issilicon(target.current) || isbrain(target.current) || target.current.z > 6 || !target.current.ckey) //Borgs/brains/AIs count as dead for traitor objectives. --NeoFite
+		if(target.current.stat == DEAD || target.current.nuked || issilicon(target.current) || isbrain(target.current) || target.current.z > 6 || !target.current.ckey) //Borgs/brains/AIs count as dead for traitor objectives. --NeoFite
 			return 1
 		if(target.current.onCentcom() || target.current.onSyndieBase())
 			return 0
@@ -164,7 +164,7 @@
 /datum/objective/debrain/check_completion()
 	if(!target)//If it's a free objective.
 		return 1
-	if( !owner.current || owner.current.stat==DEAD )//If you're otherwise dead.
+	if( !owner.current || owner.current.stat==DEAD || owner.current.nuked )//If you're otherwise dead.
 		return 0
 	if( !target.current || !isbrain(target.current) )
 		return 0
@@ -199,7 +199,7 @@
 	if(!target)			//If it's a free objective.
 		return 1
 	if(target.current)
-		if(target.current.stat == DEAD || issilicon(target.current) || isbrain(target.current))
+		if(target.current.stat == DEAD || target.current.nuked || issilicon(target.current) || isbrain(target.current))
 			return 0
 		return 1
 	return 0
@@ -352,7 +352,7 @@
 		return 0
 	if(ticker.force_ending) //This one isn't their fault, so lets just assume good faith
 		return 1
-	if(ticker.mode.station_was_nuked) //If they escaped the blast somehow, let them win
+	if(ticker.mode.station_was_nuked && !target.current.nuked) //If they escaped the blast somehow, let them win
 		return 1
 	if(SSshuttle.emergency.mode != SHUTTLE_ENDGAME)
 		return 0
@@ -411,7 +411,7 @@
 	dangerrating = 3
 
 /datum/objective/survive/check_completion()
-	if(!owner.current || owner.current.stat == DEAD || isbrain(owner.current))
+	if(!owner.current || owner.current.stat == DEAD || owner.current.nuked || isbrain(owner.current))
 		return 0		//Brains no longer win survive objectives. --NEO
 	if(!is_special_character(owner.current)) //This fails borg'd traitors
 		return 0
@@ -425,7 +425,7 @@
 /datum/objective/martyr/check_completion()
 	if(!owner.current) //Gibbed, etc.
 		return 1
-	if(owner.current && owner.current.stat == DEAD) //You're dead! Yay!
+	if(owner.current && (owner.current.stat == DEAD || owner.current.nuked)) //You're dead! Yay!
 		return 1
 	return 0
 
@@ -689,7 +689,7 @@ var/global/list/possible_items_special = list()
 
 /datum/objective/destroy/check_completion()
 	if(target && target.current)
-		if(target.current.stat == DEAD || target.current.z > 6 || !target.current.ckey) //Borgs/brains/AIs count as dead for traitor objectives. --NeoFite
+		if(target.current.stat == DEAD || target.current.nuked || target.current.z > 6 || !target.current.ckey) //Borgs/brains/AIs count as dead for traitor objectives. --NeoFite
 			return 1
 		return 0
 	return 1
