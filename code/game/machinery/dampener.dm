@@ -37,14 +37,14 @@
 	var/list/turf/already_protected = list()
 	for(var/d in dampener_list)
 		var/obj/machinery/dampener/D = d
-		already_protected |= D.protected_turfs
+		already_protected[D.protected_turfs] = TRUE
 
 	protected_turfs.Cut()
 
 	var/turf/current = get_turf(src)
 
 	for(var/t in RANGE_TURFS(radius, current))
-		if(t in already_protected)
+		if(already_protected[t])
 			continue
 		protected_turfs |= t
 
