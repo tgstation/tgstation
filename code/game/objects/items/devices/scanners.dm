@@ -324,8 +324,9 @@ MASS SPECTROMETER
 	icon_state = "spectrometer"
 	item_state = "analyzer"
 	w_class = WEIGHT_CLASS_SMALL
-	flags = CONDUCT | OPENCONTAINER
+	flags = CONDUCT
 	slot_flags = SLOT_BELT
+	container_type = OPENCONTAINER
 	throwforce = 0
 	throw_speed = 3
 	throw_range = 7
