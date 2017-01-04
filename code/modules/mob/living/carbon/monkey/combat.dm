@@ -163,7 +163,7 @@
 	if(pulledby && (mode != MONKEY_IDLE || prob(MONKEY_PULL_AGGRO_PROB)))
 		if(Adjacent(pulledby))
 			a_intent = INTENT_DISARM
-			pulledby.attack_paw(src)
+			monkey_attack(pulledby)
 			retaliate(pulledby)
 			return TRUE
 
@@ -239,39 +239,20 @@
 
 			if(target && target.stat == CONSCIOUS)		// make sure target exists
 				if(Adjacent(target) && isturf(target.loc))	// if right next to perp
-					var/obj/item/weapon/Weapon = locate(/obj/item/weapon) in held_items
 
-					// attack with weapon if we have one
-					if(Weapon)
+					// check if target has a weapon
+					var/obj/item/weapon/W = locate(/obj/item/weapon) in target.held_items
 
-						// if the target has a weapon, chance to disarm them
-						if((locate(/obj/item/weapon) in target.held_items) && prob(MONKEY_ATTACK_DISARM_PROB))
+					// if the target has a weapon, chance to disarm them
+					if(W && prob(MONKEY_ATTACK_DISARM_PROB))
+						pickupTarget = W
+						a_intent = INTENT_DISARM
+						monkey_attack(target)
 
-							pickupTarget = locate(/obj/item/weapon) in target.held_items
-
-							a_intent = INTENT_DISARM
-							target.attackby(Weapon, src)
-							attacked(target)
-
-						else
-							a_intent = INTENT_HARM
-							target.attackby(Weapon, src)
-							attacked(target)
 					else
+						a_intent = INTENT_HARM
+						monkey_attack(target)
 
-						// if the target has a weapon, chance to disarm them
-						if((locate(/obj/item/weapon) in target.held_items) && prob(MONKEY_ATTACK_DISARM_PROB))
-
-							pickupTarget = locate(/obj/item/weapon) in target.held_items
-
-							a_intent = INTENT_DISARM
-							target.attack_paw(src)
-							attacked(target)
-
-						else
-							a_intent = INTENT_HARM
-							target.attack_paw(src)
-							attacked(target)
 					return TRUE
 
 				else								// not next to perp
@@ -360,19 +341,32 @@
 	a_intent = INTENT_HELP
 	frustration = 0
 
-// handle de-aggro
-/mob/living/carbon/monkey/proc/attacked(mob/living/carbon/H)
-	if(!enemies[H])
-		return
+// attack using a held weapon otherwise bite the enemy, then if we are angry there is a chance we might calm down a little
+/mob/living/carbon/monkey/proc/monkey_attack(mob/living/L)
+	var/obj/item/weapon/Weapon = locate(/obj/item/weapon) in held_items
+
+	// attack with weapon if we have one
+	if(Weapon)
+		L.attackby(Weapon, src)
+	else
+		L.attack_paw(src)
+
+	// if we arn't enemies, we were likely recruited to attack this target, jobs done if we calm down so go back to idle
+	if(!enemies[L])
+		if( target == L && prob(MONKEY_HATRED_REDUCTION_PROB) )
+			back_to_idle()
+		return // already de-aggroed
 
 	if(prob(MONKEY_HATRED_REDUCTION_PROB))
-		enemies[H] --
+		enemies[L] --
 
-	if(enemies[H] <= 0)
-		enemies.Remove(H)
-		if( target == H )
+	// if we are not angry at our target, go back to idle
+	if(enemies[L] <= 0)
+		enemies.Remove(L)
+		if( target == L )
 			back_to_idle()
 
+// get angry are a mob
 /mob/living/carbon/monkey/proc/retaliate(mob/living/L)
 	mode = MONKEY_HUNT
 	target = L
