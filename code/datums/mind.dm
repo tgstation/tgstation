@@ -1133,11 +1133,11 @@
 			if("devil")
 				if(devilinfo)
 					devilinfo.ascendable = FALSE
+					message_admins("[key_name_admin(usr)] has made [current] unable to ascend as a devil.")
+					log_admin("[key_name_admin(usr)] has made [current] unable to ascend as a devil.")
 					return
 				if(!ishuman(current) && !iscyborg(current))
 					usr << "<span class='warning'>This only works on humans and cyborgs!</span>"
-					message_admins("[key_name_admin(usr)] has made [current] unable to ascend as a devil.")
-					log_admin("[key_name_admin(usr)] has made [current] unable to ascend as a devil.")
 					return
 				ticker.mode.devils += src
 				special_role = "devil"
