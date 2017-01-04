@@ -281,6 +281,8 @@
 	icon_state = "megaphone"
 	var/cooldown = 0
 	var/emagged = FALSE
+	var/cooldownnormal = 200
+	var/cooldownemag = 600
 
 /obj/item/device/harmalarm/emag_act(mob/user)
 	emagged = !emagged
@@ -313,7 +315,7 @@
 				M.confused += 6
 		audible_message("<font color='red' size='7'>HUMAN HARM</font>")
 		playsound(get_turf(src), 'sound/AI/harmalarm.ogg', 70, 3)
-		cooldown = world.time + 200
+		cooldown = world.time + cooldownnormal
 		log_game("[user.ckey]([user]) used a Cyborg Harm Alarm in ([user.x],[user.y],[user.z])")
 		if(iscyborg(user))
 			var/mob/living/silicon/robot/R = user
@@ -336,7 +338,7 @@
 					C.stuttering += 15
 					C.Jitter(25)
 		playsound(get_turf(src), 'sound/machines/warning-buzzer.ogg', 130, 3)
-		cooldown = world.time + 600
+		cooldown = world.time + cooldownemag
 		log_game("[user.ckey]([user]) used an emagged Cyborg Harm Alarm in ([user.x],[user.y],[user.z])")
 
 /obj/item/borg/lollipop
