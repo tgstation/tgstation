@@ -5,13 +5,8 @@
 	icon_state = "rune1"
 	gender = NEUTER
 	var/do_icon_rotate = TRUE
-	var/datum/ai_fake_rune/ai_hidden = null
 
 /obj/effect/decal/cleanable/crayon/New(location, main = "#FFFFFF", var/type = "rune1", var/e_name = "rune", var/rotation = 0, var/alt_icon = null)
-	if(name == "rune")
-		ai_hidden = new(location)
-		invisibility = INVISIBILITY_AI
-
 	..()
 	loc = location
 
@@ -31,9 +26,6 @@
 
 	add_atom_colour(main, FIXED_COLOUR_PRIORITY)
 
-/obj/effect/decal/cleanable/crayon/Destroy()
-	qdel(ai_hidden)
-	return ..()
 
 /obj/effect/decal/cleanable/crayon/gang
 	layer = HIGH_OBJ_LAYER //Harder to hide
