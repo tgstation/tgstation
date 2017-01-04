@@ -30,8 +30,8 @@
 		apply_cuffs(user,user)
 		return
 		
-	// 20% chance of retaliation
-	if(istype(C, /mob/living/carbon/monkey) && prob(20))
+	// chance of monkey retaliation
+	if(istype(C, /mob/living/carbon/monkey) && prob(MONKEY_CUFF_RETALIATION_PROB))
 		var/mob/living/carbon/monkey/M
 		M = C
 		M.retaliate(user)
