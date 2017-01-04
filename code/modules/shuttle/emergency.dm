@@ -388,9 +388,13 @@
 	launch_status = UNLAUNCHED
 
 /obj/docking_port/mobile/pod/request()
-	if((security_level == SEC_LEVEL_RED || security_level == SEC_LEVEL_DELTA) && launch_status == UNLAUNCHED)
-		launch_status = EARLY_LAUNCHED
-		return ..()
+	if(security_level == SEC_LEVEL_RED || security_level == SEC_LEVEL_DELTA)
+		if(launch_status == UNLAUNCHED)
+			launch_status = EARLY_LAUNCHED
+			return ..()
+	else
+		usr << "<span class='warning'>Escape pods will only launch during \"Code Red\" security alert.</span>"
+		return 1
 
 /obj/docking_port/mobile/pod/New()
 	if(id == "pod")
@@ -420,12 +424,21 @@
 	width = 3
 	height = 4
 	var/target_area = /area/lavaland/surface/outdoors
+	var/edge_distance = 4
+	// Minimal distance from the map edge, setting this too low can result in shuttle landing on the edge and getting "sliced"
 
 /obj/docking_port/stationary/random/initialize()
 	..()
 	var/list/turfs = get_area_turfs(target_area)
 	var/turf/T = pick(turfs)
-	src.loc = T
+
+	while(turfs.len)
+		if(T.x<edge_distance || T.y<edge_distance || (world.maxx+1-T.x)<edge_distance || (world.maxy+1-T.y)<edge_distance)
+			turfs -= T
+			T = pick(turfs)
+		else
+			src.loc = T
+			break
 
 //Pod suits/pickaxes
 
