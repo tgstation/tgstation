@@ -1,6 +1,6 @@
 
 /mob/living/carbon/monkey
-	var/aggressive=0
+	var/aggressive=0 // set to 1 using VV for an angry monkey
 	var/frustration=0
 	var/pickupTimer=0
 	var/list/enemies = list()
@@ -175,7 +175,7 @@
 
 			// scan for enemies
 			for(var/mob/living/L in around)
-				if(enemies[L])
+				if(enemies[L] || aggressive)
 					if(L.stat == CONSCIOUS)
 						emote(pick("roar","screech"))
 						retaliate(L)
@@ -227,7 +227,7 @@
 
 			// switch targets
 			for(var/mob/living/L in around)
-				if(L != target && enemies[L] && L.stat == CONSCIOUS && prob(MONKEY_SWITCH_TARGET_PROB))
+				if(L != target && (enemies[L] || aggressive) && L.stat == CONSCIOUS && prob(MONKEY_SWITCH_TARGET_PROB))
 					target = L
 					return TRUE
 
@@ -266,6 +266,8 @@
 		if(MONKEY_FLEE)
 			var/list/around = view(src, MONKEY_FLEE_VISION)
 			target = null
+			
+			// flee from anyone who attacked us and we didn't beat down
 			for(var/mob/living/carbon/C in around)
 				if(enemies[C] && C.stat == CONSCIOUS)
 					target = C
@@ -351,6 +353,10 @@
 	else
 		L.attack_paw(src)
 
+	// no de-aggro
+	if(aggressive)
+		return
+		
 	// if we arn't enemies, we were likely recruited to attack this target, jobs done if we calm down so go back to idle
 	if(!enemies[L])
 		if( target == L && prob(MONKEY_HATRED_REDUCTION_PROB) )
