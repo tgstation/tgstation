@@ -177,11 +177,11 @@
 				playsound(loc, W.usesound, 100, 1)
 				var/turf/T = get_turf(user)
 				user << "<span class='notice'>You start attaching the gun to the frame...</span>"
-				do_after(user, 40*W.toolspeed, 0, src, 1)
-				if(get_turf(user) == T)
-					build_step++
-					name = "armed [name]"
-					user << "<span class='notice'>Taser gun attached.</span>"
+				if(do_after(user, 40*W.toolspeed, 0, src, 1))
+					if(get_turf(user) == T)
+						build_step++
+						name = "armed [name]"
+						user << "<span class='notice'>Taser gun attached.</span>"
 
 		if(9)
 			if(istype(W, /obj/item/weapon/stock_parts/cell))
