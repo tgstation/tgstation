@@ -1,4 +1,4 @@
-//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
 /turf/open/space,
 /area/space)
@@ -27,7 +27,7 @@
 /area/shuttle/escape)
 "ag" = (
 /turf/open/space,
-/area/space/nearstation)
+/area/space)
 "ah" = (
 /obj/structure/grille,
 /obj/structure/window/shuttle,
@@ -629,7 +629,7 @@ ac
 ac
 "}
 (9,1,1) = {"
-ag
+aa
 ac
 ac
 aH
@@ -644,8 +644,8 @@ ac
 aa
 "}
 (10,1,1) = {"
-ag
-ag
+aa
+aa
 ac
 aI
 at
@@ -704,8 +704,8 @@ aa
 aa
 "}
 (14,1,1) = {"
-ag
-ag
+aa
+aa
 ad
 aK
 at
@@ -719,8 +719,8 @@ aa
 aa
 "}
 (15,1,1) = {"
-ag
-ag
+aa
+aa
 ad
 aK
 at
@@ -734,8 +734,8 @@ aa
 aa
 "}
 (16,1,1) = {"
-ag
-ag
+aa
+aa
 ad
 aK
 at
@@ -794,8 +794,8 @@ aa
 aa
 "}
 (20,1,1) = {"
-ag
-ag
+aa
+aa
 ac
 aM
 at
@@ -809,7 +809,7 @@ aa
 aa
 "}
 (21,1,1) = {"
-ag
+aa
 ac
 ac
 aN
@@ -914,9 +914,9 @@ aa
 aa
 "}
 (28,1,1) = {"
-ag
-ag
-ag
+aa
+aa
+aa
 ac
 ac
 ad
