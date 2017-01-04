@@ -6,6 +6,7 @@
 	var/steps_per_tick
 	var/allow_climbing
 	var/datum/callback/on_step
+	var/moved_at_all = FALSE
 															//as fast as ssfastprocess
 /datum/forced_movement/New(atom/movable/_victim, atom/_target, _steps_per_tick = 0.5, _allow_climbing = FALSE, datum/callback/_on_step = null)
 	victim = _victim
@@ -27,7 +28,8 @@
 /datum/forced_movement/Destroy()
 	if(victim.force_moving == src)
 		victim.force_moving = null
-		victim.forceMove(victim.loc)	//get the side effects of moving here that require us to currently not be force_moving aka reslipping on ice
+		if(moved_at_all)
+			victim.forceMove(victim.loc)	//get the side effects of moving here that require us to currently not be force_moving aka reslipping on ice
 		STOP_PROCESSING(SSfastprocess, src)
 	victim = null
 	target = null
@@ -41,6 +43,7 @@
 	if(steps_to_take)
 		for(var/i in 1 to steps_to_take)
 			if(TryMove())
+				moved_at_all = TRUE
 				if(on_step)
 					on_step.InvokeAsync()
 			else
