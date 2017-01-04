@@ -47,7 +47,7 @@
 
 
 
-/obj/machinery/r_n_d/attackby(obj/O, mob/user, params)
+/obj/machinery/r_n_d/attackby(obj/item/O, mob/user, params)
 	if (shocked)
 		if(shock(user,50))
 			return 1
