@@ -87,7 +87,7 @@
 
 /mob/living/carbon/monkey/proc/pickup_and_wear(var/obj/item/clothing/C)
 	if(!equip_to_appropriate_slot(C))
-		unEquip(get_item_by_slot(C)) // remove the existing item if worn
+		monkeyDrop(get_item_by_slot(C)) // remove the existing item if worn
 		sleep(5)
 		equip_to_appropriate_slot(C)
 
@@ -132,8 +132,7 @@
 
 			// who cares about these items, i want that one!
 			for(var/obj/item/I in held_items)
-				if(I)
-					monkeyDrop(I)
+				monkeyDrop(I)
 
 			// on floor
 			if(isturf(pickupTarget.loc))
@@ -325,7 +324,8 @@
 			if(I == pickupTarget)
 				M.visible_message("<span class='danger'>[src] snatches [pickupTarget] from [M].</span>", "<span class='userdanger'>[src] snatched [pickupTarget]!</span>")
 				M.unEquip(pickupTarget)
-				equip_item(pickupTarget)
+				if(!qdeleted(pickupTarget))
+					equip_item(pickupTarget)
 	pickpocketing = FALSE
 	pickupTarget = null
 	pickupTimer = 0
@@ -421,6 +421,5 @@
 
 /mob/living/carbon/monkey/proc/monkeyDrop(var/obj/item/A)
 	if(A)
-		unEquip(A)
-		A.loc = get_turf(src) // drop item works inconsistently
+		unEquip(A, 1)
 		update_icons()
