@@ -160,7 +160,7 @@
 /obj/item/weapon/twohanded/required/equipped(mob/user, slot)
 	..()
 	var/slotbit = slotdefine2slotbit(slot)
-	if(slotbit == slot_flags)
+	if(slot_flags & slotbit)
 		return
 	if(slot == slot_hands)
 		wield(user)
