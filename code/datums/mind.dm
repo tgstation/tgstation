@@ -1136,6 +1136,8 @@
 					return
 				if(!ishuman(current) && !iscyborg(current))
 					usr << "<span class='warning'>This only works on humans and cyborgs!</span>"
+					message_admins("[key_name_admin(usr)] has made [current] unable to ascend as a devil.")
+					log_admin("[key_name_admin(usr)] has made [current] unable to ascend as a devil.")
 					return
 				ticker.mode.devils += src
 				special_role = "devil"
@@ -1143,9 +1145,13 @@
 				ticker.mode.add_devil_objectives(src, 2)
 				announceDevilLaws()
 				announce_objectives()
+				message_admins("[key_name_admin(usr)] has devil'ed [current].")
+				log_admin("[key_name(usr)] has devil'ed [current].")
 			if("ascendable_devil")
 				if(devilinfo)
 					devilinfo.ascendable = TRUE
+					message_admins("[key_name_admin(usr)] has made [current] able to ascend as a devil.")
+					log_admin("[key_name_admin(usr)] has made [current] able to ascend as a devil.")
 					return
 				if(!ishuman(current) && !iscyborg(current))
 					usr << "<span class='warning'>This only works on humans and cyborgs!</span>"
@@ -1156,6 +1162,8 @@
 				ticker.mode.add_devil_objectives(src, 2)
 				announceDevilLaws()
 				announce_objectives()
+				message_admins("[key_name_admin(usr)] has devil'ed [current].  The devil has been marked as ascendable.")
+				log_admin("[key_name(usr)] has devil'ed [current]. The devil has been marked as ascendable.")
 			if("sintouched")
 				if(ishuman(current))
 					ticker.mode.sintouched += src
