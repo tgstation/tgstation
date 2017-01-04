@@ -62,7 +62,7 @@
 	var/damnation_type = 0
 	var/datum/mind/soulOwner //who owns the soul.  Under normal circumstances, this will point to src
 	var/isholy = FALSE //is this person a chaplain or admin role allowed to use bibles
-	
+
 	var/mob/living/enslaved_to //If this mind's master is another mob (i.e. adamantine golems)
 
 /datum/mind/New(var/key)
@@ -1137,6 +1137,8 @@
 				ticker.mode.add_devil_objectives(src, 2)
 				announceDevilLaws()
 				announce_objectives()
+				message_admins("[key_name_admin(usr)] has devil'ed [current].")
+				log_admin("[key_name(usr)] has devil'ed [current].")
 			if("sintouched")
 				if(ishuman(current))
 					ticker.mode.sintouched += src
