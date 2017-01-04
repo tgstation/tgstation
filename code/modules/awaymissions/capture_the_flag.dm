@@ -224,7 +224,7 @@
 	spawn_team_member(new_team_member)
 
 /obj/machinery/capture_the_flag/proc/ctf_dust_old(mob/living/body)
-	if(isliving(body) && body.z == src.z)
+	if(isliving(body) && (team in body.faction))
 		var/turf/T = get_turf(body)
 		new /obj/effect/ctf/ammo(T)
 		recently_dead_ckeys += body.ckey
