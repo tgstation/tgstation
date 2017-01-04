@@ -51,6 +51,8 @@ var/const/ALIEN_AFK_BRACKET = 450 // 45 seconds
 			owner.adjustToxLoss(10)
 
 /obj/item/organ/body_egg/alien_embryo/egg_process()
+	if(owner.bodytemperature < 180.15 && prob(50)) //slow down when cold
+		return
 	if(stage < 5 && prob(3))
 		stage++
 		spawn(0)

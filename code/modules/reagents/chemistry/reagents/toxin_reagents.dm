@@ -711,6 +711,7 @@
 	color = "#00FF32"
 	toxpwr = 1
 	var/acidpwr = 10 //the amount of protection removed from the armour
+	metabolization_type = METABOLISM_CRYO //doesn't rely on bloodstream to hurt
 
 /datum/reagent/toxin/acid/reaction_mob(mob/living/carbon/C, method=TOUCH, reac_volume)
 	if(!istype(C))

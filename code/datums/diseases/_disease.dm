@@ -75,7 +75,7 @@ var/list/diseases = subtypesof(/datum/disease)
 	stage = min(stage, max_stages)
 
 	if(!cure)
-		if(prob(stage_prob))
+		if(prob(stage_prob) && !(affected_mob.bodytemperature < 180.15))
 			stage = min(stage + 1,max_stages)
 	else
 		if(prob(cure_chance))
@@ -84,6 +84,9 @@ var/list/diseases = subtypesof(/datum/disease)
 	if(disease_flags & CURABLE)
 		if(cure && prob(cure_chance))
 			cure()
+
+	if(affected_mob.bodytemperature < 180.15)
+		return
 
 
 /datum/disease/proc/has_cure()

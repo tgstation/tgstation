@@ -11,6 +11,7 @@
 	var/on = FALSE
 	state_open = FALSE
 	var/autoeject = FALSE
+	var/autostop = TRUE
 	var/volume = 100
 
 	var/efficiency = 1
@@ -98,12 +99,13 @@
 	var/datum/gas_mixture/air1 = AIR1
 	if(occupant)
 		if(occupant.health >= 100) // Don't bother with fully healed people.
-			on = FALSE
-			update_icon()
-			playsound(src.loc, 'sound/machines/ding.ogg', volume, 1) // Bug the doctors.
-			if(autoeject) // Eject if configured.
-				open_machine()
-			return
+			if(autostop) // Eject if configured.
+				on = FALSE
+				update_icon()
+				playsound(src.loc, 'sound/machines/ding.ogg', volume, 1) // Bug the doctors.
+				if(autoeject)// Eject if configured.
+					open_machine()
+				return
 		else if(occupant.stat == DEAD) // We don't bother with dead people.
 			return
 		if(air1.gases.len)
@@ -226,6 +228,7 @@
 	data["hasOccupant"] = occupant ? 1 : 0
 	data["isOpen"] = state_open
 	data["autoEject"] = autoeject
+	data["autoStop"] = autostop
 
 	var/list/occupantData = list()
 	if(occupant)
@@ -271,6 +274,9 @@
 			. = TRUE
 		if("autoeject")
 			autoeject = !autoeject
+			. = TRUE
+		if("autostop")
+			autostop = !autostop
 			. = TRUE
 		if("ejectbeaker")
 			if(beaker)

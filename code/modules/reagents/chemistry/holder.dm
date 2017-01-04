@@ -232,9 +232,13 @@ var/const/INJECT = 5 //injection
 			C = R.holder.my_atom
 		if(C && R)
 			if(C.reagent_check(R) != 1)
+				if(C.bodytemperature < 180.15 && R.metabolization_type != METABOLISM_CRYO) //stop processing chems if the body is too cold
+					continue
 				if(can_overdose)
 					if(R.overdose_threshold)
 						if(R.volume >= R.overdose_threshold && !R.overdosed)
+							if(C.bodytemperature < 180.15) //no OD while cryo'd, but it stops the positive effects as well
+								continue
 							R.overdosed = 1
 							need_mob_update += R.overdose_start(C)
 					if(R.addiction_threshold)

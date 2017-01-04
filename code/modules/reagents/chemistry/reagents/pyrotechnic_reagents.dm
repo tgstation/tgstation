@@ -41,6 +41,7 @@
 	reagent_state = LIQUID
 	color = "#FFC8C8"
 	metabolization_rate = 4
+	metabolization_type = METABOLISM_CRYO
 
 /datum/reagent/clf3/on_mob_life(mob/living/M)
 	M.adjust_fire_stacks(2)
@@ -133,6 +134,7 @@
 	description = "Catches you on fire and makes you ignite."
 	reagent_state = LIQUID
 	color = "#FA00AF"
+	metabolization_type = METABOLISM_CRYO
 
 /datum/reagent/phlogiston/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
 	M.IgniteMob()
@@ -151,6 +153,7 @@
 	description = "Very flammable."
 	reagent_state = LIQUID
 	color = "#FA00AF"
+	metabolization_type = METABOLISM_CRYO
 
 /datum/reagent/napalm/on_mob_life(mob/living/M)
 	M.adjust_fire_stacks(1)
@@ -167,6 +170,7 @@
 	description = "Comes into existence at 20K. As long as there is sufficient oxygen for it to react with, Cryostylane slowly cools all other reagents in the container 0K."
 	color = "#0000DC"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
+	metabolization_type = METABOLISM_CRYO
 
 
 /datum/reagent/cryostylane/on_mob_life(mob/living/M) //TODO: code freezing into an ice cube
@@ -193,6 +197,7 @@
 	description = "Comes into existence at 20K. As long as there is sufficient oxygen for it to react with, Pyrosium slowly heats all other reagents in the container."
 	color = "#64FAC8"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
+	metabolization_type = METABOLISM_CRYO
 
 /datum/reagent/pyrosium/on_mob_life(mob/living/M)
 	if(M.reagents.has_reagent("oxygen"))

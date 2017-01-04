@@ -202,6 +202,7 @@
 	color = "#482000" // rgb: 72, 32, 0
 	nutriment_factor = 0
 	overdose_threshold = 80
+	metabolization_type = METABOLISM_CRYO
 
 /datum/reagent/consumable/coffee/overdose_process(mob/living/M)
 	M.Jitter(5)
@@ -224,6 +225,7 @@
 	description = "Tasty black tea, it has antioxidants, it's good for you!"
 	color = "#101000" // rgb: 16, 16, 0
 	nutriment_factor = 0
+	metabolization_type = METABOLISM_CRYO
 
 /datum/reagent/consumable/tea/on_mob_life(mob/living/M)
 	M.dizziness = max(0,M.dizziness-2)
@@ -256,6 +258,7 @@
 	description = "Coffee and ice, refreshing and cool."
 	color = "#102838" // rgb: 16, 40, 56
 	nutriment_factor = 0
+	metabolization_type = METABOLISM_CRYO
 
 /datum/reagent/consumable/icecoffee/on_mob_life(mob/living/M)
 	M.dizziness = max(0,M.dizziness-5)
@@ -273,6 +276,7 @@
 	description = "No relation to a certain rap artist/actor."
 	color = "#104038" // rgb: 16, 64, 56
 	nutriment_factor = 0
+	metabolization_type = METABOLISM_CRYO
 
 /datum/reagent/consumable/icetea/on_mob_life(mob/living/M)
 	M.dizziness = max(0,M.dizziness-2)
@@ -398,6 +402,7 @@
 	description = "Frozen water, your dentist wouldn't like you chewing this."
 	reagent_state = SOLID
 	color = "#619494" // rgb: 97, 148, 148
+	metabolization_type = METABOLISM_CRYO
 
 /datum/reagent/consumable/ice/on_mob_life(mob/living/M)
 	M.bodytemperature = max( M.bodytemperature - 5 * TEMPERATURE_DAMAGE_COEFFICIENT, 0)
@@ -408,6 +413,7 @@
 	id = "soy_latte"
 	description = "A nice and tasty beverage while you are reading your hippie books."
 	color = "#664300" // rgb: 102, 67, 0
+	metabolization_type = METABOLISM_CRYO
 
 /datum/reagent/consumable/soy_latte/on_mob_life(mob/living/M)
 	M.dizziness = max(0,M.dizziness-5)
@@ -426,6 +432,7 @@
 	id = "cafe_latte"
 	description = "A nice, strong and tasty beverage while you are reading."
 	color = "#664300" // rgb: 102, 67, 0
+	metabolization_type = METABOLISM_CRYO
 
 /datum/reagent/consumable/cafe_latte/on_mob_life(mob/living/M)
 	M.dizziness = max(0,M.dizziness-5)
