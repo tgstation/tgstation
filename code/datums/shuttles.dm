@@ -44,13 +44,7 @@
 	description = "Save money by building your own shuttle! The chassis will dock upon purchase, but launch will have to be authorized as usual via shuttle call. Interior and atmosphere not included."
 	admin_notes = "No brig, no medical facilities, no air."
 	credit_cost = -7500
-
-/datum/map_template/shuttle/emergency/asteroid
-	suffix = "asteroid"
-	name = "Asteroid Station Emergency Shuttle"
-	description = "A respectable mid-sized shuttle that first saw service shuttling Nanotrasen crew to and from their asteroid belt embedded facilities."
-	credit_cost = 3000
-
+	
 /datum/map_template/shuttle/emergency/bar
 	suffix = "bar"
 	name = "The Emergency Escape Bar"
@@ -58,13 +52,6 @@
 	admin_notes = "Bardrone and Barmaid are GODMODE, will be automatically sentienced by the fun balloon at 60 seconds before arrival. \
 	Has medical facilities."
 	credit_cost = 5000
-
-/datum/map_template/shuttle/emergency/meteor
-	suffix = "meteor"
-	name = "An Asteroid With Engines Strapped To It"
-	description = "A hollowed out asteroid with engines strapped to it. Due to its size and difficulty in steering it, this shuttle may damage the docking area."
-	admin_notes = "This shuttle will likely crush escape, killing anyone there."
-	credit_cost = -5000
 
 /datum/map_template/shuttle/emergency/luxury
 	suffix = "luxury"
@@ -95,17 +82,7 @@
 	Have a fun ride!"
 	admin_notes = "Brig is replaced by anchored greentext book surrounded by lavaland chasms, stationside door has been removed to prevent accidental dropping. No brig."
 	credit_cost = 8000
-
-/datum/map_template/shuttle/emergency/cramped
-	suffix = "cramped"
-	name = "Secure Transport Vessel 5 (STV5)"
-	description = "Well, looks like Centcomm only had this ship in the area, they probably weren't expecting you to need evac for a while. \
-	Probably best if you don't rifle around in whatever equipment they were transporting. I hope you're friendly with your coworkers, because there is very little space in this thing.\n\
-	\n\
-	Contains contraband armory guns, maintenance loot, and abandoned crates!"
-	admin_notes = "Due to origin as a solo piloted secure vessel, has an active GPS onboard labeled STV5."
-	credit_cost = -7500
-
+	
 /datum/map_template/shuttle/emergency/meta
 	suffix = "meta"
 	name = "Meta Station Emergency Shuttle"
@@ -116,14 +93,7 @@
 	suffix = "mini"
 	name = "Ministation emergency shuttle"
 	credit_cost = 1000
-	description = "Despite it's namesake, this shuttle is actually only slightly smaller than standard, and still complete with a brig and medbay."
-
-/datum/map_template/shuttle/emergency/scrapheap
-	suffix = "scrapheap"
-	name = "Standby Evacuation Vessel \"Scrapheap Challenge\""
-	credit_cost = -1000
-	description = "Due to a lack of functional emergency shuttles, we bought this second hand from a scrapyard and pressed it into service. Please do not lean to heavily on the exterior windows, they are fragile."
-	admin_notes = "An abomination with no functional medbay, sections missing, and some very fragile windows. Surprisingly airtight."
+	description = "Despite it's namesake, this shuttle is actually only slightly smaller than standard, and still complete with a brig and medbay."	
 
 /datum/map_template/shuttle/emergency/narnar
 	suffix = "narnar"
@@ -150,27 +120,11 @@
 	It does, however, still dust anything on contact, emits high levels of radiation, and induce hallucinations in anyone looking at it without protective goggles. \
 	Emitters spawn powered on, expect admin notices, they are harmless."
 
-/datum/map_template/shuttle/emergency/imfedupwiththisworld
-	suffix = "imfedupwiththisworld"
-	name = "Oh, Hi Daniel"
-	description = "How was space work today? Oh, pretty good. We got a new space station and the company will make a lot of money. What space station? I cannot tell you; it's space confidential. \
-	Aw, come space on. Why not? No, I can't. Anyway, how is your space roleplay life?"
-	credit_cost = -5000
-
 /datum/map_template/shuttle/emergency/goon
 	suffix = "goon"
 	name = "NES Port"
 	description = "The Nanotrasen Emergency Shuttle Port(NES Port for short) is a shuttle used at other less known nanotrasen facilities and has a more open inside for larger crowds."
 	credit_cost = 3000
-
-/datum/map_template/shuttle/emergency/wabbajack
-	suffix = "wabbajack"
-	name = "NT Lepton Violet"
-	description = "The research team based on this vessel went missing one day, and no amount of investigation could discover what happened to them. \
-	The only occupants were a number of dead rodents, who appeared to have clawed each other to death. \
-	Needless to say, no engineering team wanted to go near the thing, and it's only being used as an Emergency Escape Shuttle because there is literally nothing else available."
-	admin_notes = "If the crew can solve the puzzle, they will wake the wabbajack statue. It will likely not end well. There's a reason it's boarded up. Maybe they should have just left it alone."
-	credit_cost = 15000
 
 /datum/map_template/shuttle/ferry/base
 	suffix = "base"
