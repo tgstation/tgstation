@@ -99,7 +99,7 @@
 			var/mob/living/M = user
 			M.electrocute_act(15,"Energy Barrier", safety=1)
 			shockcd = TRUE
-			addtimer(src, "cooldown", 5)
+			addtimer(CALLBACK(src, .proc/cooldown), 5)
 
 /obj/structure/holosign/barrier/cyborg/hacked/Bumped(atom/user)
 	if(!shockcd)
@@ -107,4 +107,4 @@
 			var/mob/living/M = user
 			M.electrocute_act(15,"Energy Barrier", safety=1)
 			shockcd = TRUE
-			addtimer(src, "cooldown", 5)
+			addtimer(CALLBACK(src, .proc/cooldown), 5)

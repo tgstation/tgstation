@@ -88,19 +88,19 @@ Difficulty: Hard
 
 	var/warped = FALSE
 	if(!try_bloodattack())
-		addtimer(src, "blood_spray", 0)
+		addtimer(CALLBACK(src, .proc/blood_spray), 0)
 		warped = blood_warp()
 		if(warped && prob(100 - anger_modifier))
 			return
 
 	if(prob(90 - anger_modifier) || slaughterlings())
 		if(health > maxHealth * 0.5)
-			addtimer(src, "charge", 0)
+			addtimer(CALLBACK(src, .proc/charge), 0)
 		else
 			if(prob(70) || warped)
-				addtimer(src, "triple_charge", 0)
+				addtimer(CALLBACK(src, .proc/triple_charge), 0)
 			else
-				addtimer(src, "warp_charge", 0)
+				addtimer(CALLBACK(src, .proc/warp_charge), 0)
 
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/New()
@@ -201,7 +201,7 @@ Difficulty: Hard
 /mob/living/simple_animal/hostile/megafauna/bubblegum/proc/try_bloodattack()
 	var/list/targets = get_mobs_on_blood()
 	if(targets.len)
-		addtimer(src, "bloodattack", 0, TIMER_NORMAL, targets, prob(50))
+		addtimer(CALLBACK(src, .proc/bloodattack, targets, prob(50)), 0)
 
 		return TRUE
 	return FALSE
@@ -268,7 +268,7 @@ Difficulty: Hard
 			L.forceMove(targetturf)
 			playsound(targetturf, 'sound/magic/exit_blood.ogg', 100, 1, -1)
 			if(L.stat != CONSCIOUS)
-				addtimer(src, "devour", 2, TIMER_NORMAL, L)
+				addtimer(CALLBACK(src, .proc/devour, L), 2)
 	sleep(1)
 
 /obj/effect/overlay/temp/bubblegum_hands

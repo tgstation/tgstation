@@ -10,6 +10,9 @@
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "floor"
 
+/turf/open/indestructible/TerraformTurf(path, defer_change = FALSE, ignore_air = FALSE)
+	return
+
 /turf/open/indestructible/sound
 	name = "squeeky floor"
 	var/sound
@@ -263,4 +266,4 @@
 	if(!wet && wet_time)
 		wet_time = 0
 	if(wet)
-		addtimer(src, "HandleWet", 15)
+		addtimer(CALLBACK(src, .proc/HandleWet), 15)

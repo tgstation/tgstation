@@ -204,7 +204,7 @@
 		playsound(invoker, 'sound/magic/lightningbolt.ogg', 100, 0)
 		if(invoker.stat == CONSCIOUS)
 			animate(invoker, color = oldcolor, time = 10)
-			addtimer(invoker, "update_atom_colour", 10)
+			addtimer(CALLBACK(invoker, /atom/proc/update_atom_colour), 10)
 			for(var/mob/living/L in view(7, invoker))
 				if(is_servant_of_ratvar(L) || L.null_rod_check())
 					continue

@@ -57,7 +57,7 @@
 
 /datum/callback/proc/Invoke(...)
 	if (!object)
-		CRASH("Cannot call null.[delegate]")
+		return
 
 	var/list/calling_arguments = arguments
 
@@ -75,7 +75,7 @@
 /datum/callback/proc/InvokeAsync(...)
 	set waitfor = 0
 	if (!object)
-		CRASH("Cannot call null.[delegate]")
+		return
 
 	var/list/calling_arguments = arguments
 

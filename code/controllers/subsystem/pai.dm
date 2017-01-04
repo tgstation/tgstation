@@ -146,7 +146,7 @@ var/list/obj/item/device/paicard/pai_card_list = list()
 				continue
 			//G << 'sound/misc/server-ready.ogg' //Alerting them to their consideration
 			G << "<span class='ghostalert'>Someone is requesting a pAI personality! Use the pAI button to submit yourself as one.</span>"
-		addtimer(src, "spam_again", spam_delay)
+		addtimer(CALLBACK(src, .proc/spam_again), spam_delay)
 	var/list/available = list()
 	for(var/datum/paiCandidate/c in SSpai.candidates)
 		if(c.ready)

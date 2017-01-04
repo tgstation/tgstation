@@ -85,7 +85,7 @@
 		else
 			if(istype(I, /obj/item/weapon/reagent_containers))
 				var/obj/item/weapon/reagent_containers/RC = I
-				if(RC.flags & OPENCONTAINER)
+				if(RC.container_type & OPENCONTAINER)
 					for(var/datum/reagent/A in RC.reagents.reagent_list)
 						.[A.type] += A.volume
 			.[I.type] += 1

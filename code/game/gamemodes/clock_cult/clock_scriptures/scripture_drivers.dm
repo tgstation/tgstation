@@ -210,7 +210,7 @@
 	var/invoker_old_color = invoker.color
 	invoker.color = "#AF0AAF"
 	animate(invoker, color = invoker_old_color, time = flee_time+grace_period)
-	addtimer(invoker, "update_atom_colour", flee_time+grace_period)
+	addtimer(CALLBACK(invoker, /atom/proc/update_atom_colour), flee_time+grace_period)
 	if(chant_number != chant_amount) //if this is the last chant, we don't have a movement period because the chant is over
 		var/endtime = world.time + flee_time
 		var/starttime = world.time

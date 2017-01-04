@@ -50,4 +50,4 @@
 	F.active = 1
 	F.icon_state = initial(F.icon_state) + "_active"
 	playsound(user.loc, 'sound/weapons/armbomb.ogg', 75, 1, -3)
-	addtimer(F, "prime", 15)
+	addtimer(CALLBACK(F, /obj/item/weapon/grenade.proc/prime), 15)

@@ -162,65 +162,47 @@
 		locked = null
 
 /obj/machinery/computer/teleporter/proc/set_target(mob/user)
+	var/list/L = list()
+	var/list/areaindex = list()
 	if(regime_set == "Teleporter")
-		var/list/L = list()
-		var/list/areaindex = list()
-
 		for(var/obj/item/device/radio/beacon/R in teleportbeacons)
 			var/turf/T = get_turf(R)
-			if (!T)
+			if(!T)
 				continue
 			if(T.z == ZLEVEL_CENTCOM || T.z > ZLEVEL_SPACEMAX)
 				continue
-			var/tmpname = T.loc.name
-			if(areaindex[tmpname])
-				tmpname = "[tmpname] ([++areaindex[tmpname]])"
-			else
-				areaindex[tmpname] = 1
-			L[tmpname] = R
+			L[avoid_assoc_duplicate_keys(T.loc.name, areaindex)] = R
 
-		for (var/obj/item/weapon/implant/tracking/I in tracked_implants)
-			if (!I.imp_in || !ismob(I.loc))
+		for(var/obj/item/weapon/implant/tracking/I in tracked_implants)
+			if(!I.imp_in || !ismob(I.loc))
 				continue
 			else
 				var/mob/M = I.loc
-				if (M.stat == 2)
-					if (M.timeofdeath + 6000 < world.time)
+				if(M.stat == DEAD)
+					if(M.timeofdeath + 6000 < world.time)
 						continue
 				var/turf/T = get_turf(M)
 				if(!T)
 					continue
 				if(T.z == ZLEVEL_CENTCOM)
 					continue
-				var/tmpname = M.real_name
-				if(areaindex[tmpname])
-					tmpname = "[tmpname] ([++areaindex[tmpname]])"
-				else
-					areaindex[tmpname] = 1
-				L[tmpname] = I
+				L[avoid_assoc_duplicate_keys(M.real_name, areaindex)] = I
 
 		var/desc = input("Please select a location to lock in.", "Locking Computer") as null|anything in L
 		target = L[desc]
 
 	else
-		var/list/L = list()
-		var/list/areaindex = list()
 		var/list/S = power_station.linked_stations
 		if(!S.len)
 			user << "<span class='alert'>No connected stations located.</span>"
 			return
 		for(var/obj/machinery/teleport/station/R in S)
 			var/turf/T = get_turf(R)
-			if (!T || !R.teleporter_hub || !R.teleporter_console)
+			if(!T || !R.teleporter_hub || !R.teleporter_console)
 				continue
 			if(T.z == ZLEVEL_CENTCOM || T.z > ZLEVEL_SPACEMAX)
 				continue
-			var/tmpname = T.loc.name
-			if(areaindex[tmpname])
-				tmpname = "[tmpname] ([++areaindex[tmpname]])"
-			else
-				areaindex[tmpname] = 1
-			L[tmpname] = R
+			L[avoid_assoc_duplicate_keys(T.loc.name, areaindex)] = R
 		var/desc = input("Please select a station to lock in.", "Locking Computer") as null|anything in L
 		target = L[desc]
 		if(target)
@@ -233,7 +215,6 @@
 			if(trg.teleporter_console)
 				trg.teleporter_console.stat &= ~NOPOWER
 				trg.teleporter_console.update_icon()
-	return
 
 /obj/machinery/teleport
 	name = "teleport"
