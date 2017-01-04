@@ -300,8 +300,6 @@ var/datum/subsystem/ticker/ticker
 					station_explosion_detonation(bomb)	//TODO: no idea what this case could be
 					cinematic.icon_state = "summary_selfdes"
 				if("no_core") //Nuke failed to detonate as it had no core
-					if(!station_missed)
-						stack_trace("Non-missing station explosion without a core! Everyone may have died")
 					flick("intro_nuke",cinematic)
 					sleep(35)
 					flick("station_intact",cinematic)
@@ -312,6 +310,7 @@ var/datum/subsystem/ticker/ticker
 						cinematic = null
 					for(var/mob/M in mob_list)
 						M.notransform = FALSE
+						M.nuked = FALSE
 					return	//Faster exit, since nothing happened
 				else //Station nuked (nuke,explosion,summary)
 					flick("intro_nuke",cinematic)
