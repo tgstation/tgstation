@@ -118,31 +118,20 @@ var/global/posibrain_notif_cooldown = 0
 	return TRUE
 
 
-/obj/item/device/mmi/posibrain/examine()
-
-	set src in oview()
-
-	if(!usr || !src)
-		return
-	if((usr.disabilities & BLIND || usr.stat) && !isobserver(usr))
-		usr << "<span class='notice'>Something is there but you can't see it.</span>"
-		return
-
-	var/msg = "<span class='info'>*---------*\nThis is \icon[src] \a <EM>[src]</EM>!\n[desc]\n"
-	msg += "<span class='warning'>"
-
+/obj/item/device/mmi/posibrain/examine(mob/user)
+	. = ..()
+	var/msg
 	if(brainmob && brainmob.key)
 		switch(brainmob.stat)
 			if(CONSCIOUS)
 				if(!src.brainmob.client)
-					msg += "It appears to be in stand-by mode.\n" //afk
+					msg = "It appears to be in stand-by mode." //afk
 			if(DEAD)
-				msg += "<span class='deadsay'>It appears to be completely inactive.</span>\n"
+				msg = "<span class='deadsay'>It appears to be completely inactive.</span>"
 	else
-		msg += "[dead_message]\n"
-	msg += "<span class='info'>*---------*</span>"
-	usr << msg
-	return
+		msg = "[dead_message]"
+
+	user << msg
 
 /obj/item/device/mmi/posibrain/New()
 	brainmob = new(src)
