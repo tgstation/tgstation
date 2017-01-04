@@ -5,14 +5,14 @@
 	var/last_processed
 	var/steps_per_tick
 	var/allow_climbing
-	var/spin
+	var/datum/callback/on_step
 															//as fast as ssfastprocess
-/datum/forced_movement/New(atom/movable/_victim, atom/_target, _steps_per_tick = 0.5, _allow_climbing = FALSE, _spin = FALSE)
+/datum/forced_movement/New(atom/movable/_victim, atom/_target, _steps_per_tick = 0.5, _allow_climbing = FALSE, datum/callback/_on_step = null)
 	victim = _victim
 	target = _target
 	steps_per_tick = _steps_per_tick
 	allow_climbing = _allow_climbing
-	spin = _spin
+	on_step = _on_step
 
 	last_processed = world.time
 
@@ -40,7 +40,10 @@
 	var/steps_to_take = round(steps_per_tick * (world.time - last_processed))
 	if(steps_to_take)
 		for(var/i in 1 to steps_to_take)
-			if(!TryMove())
+			if(TryMove())
+				if(on_step)
+					on_step.InvokeAsync()
+			else
 				qdel(src)
 				return
 		last_processed = world.time
@@ -50,11 +53,6 @@
 	var/atom/tar = target
 
 	if(!recursive)
-		if(iscarbon(vic))
-			var/mob/living/carbon/C = vic
-			if(spin)
-				C.spin(1,1)
-
 		. = step_towards(vic, tar)
 
 	//shit way for getting around corners
