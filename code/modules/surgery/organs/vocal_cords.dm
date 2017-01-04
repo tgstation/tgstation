@@ -45,9 +45,11 @@ var/static/regex/multispin_words = regex("like a record baby")
 /obj/item/organ/vocal_cords/proc/can_speak_with() //if there is any limitation to speaking with these cords
 	return TRUE
 
-/obj/item/organ/vocal_cords/proc/speak_with(message) //do what the organ does and modify speech if needed
-	return message
+/obj/item/organ/vocal_cords/proc/speak_with(message) //do what the organ does
+	return
 
+/obj/item/organ/vocal_cords/proc/handle_speech(message) //change the message
+	return message
 
 //Colossus drop, forces the listeners to obey certain commands
 /obj/item/organ/vocal_cords/colossus
@@ -91,7 +93,7 @@ var/static/regex/multispin_words = regex("like a record baby")
 		if(world.time < cords.next_command)
 			owner << "<span class='notice'>You must wait [(cords.next_command - world.time)/10] seconds before Speaking again.</span>"
 		return
-	var/command = stripped_input(owner, "Speak with the Voice of God", "Command", max_length = 140)
+	var/command = input(owner, "Speak with the Voice of God", "Command")
 	if(!command)
 		return
 	owner.say(".x[command]")
@@ -109,9 +111,11 @@ var/static/regex/multispin_words = regex("like a record baby")
 		return FALSE
 	return TRUE
 
+/obj/item/organ/vocal_cords/colossus/handle_speech(message)
+	return uppertext(message)
+
 /obj/item/organ/vocal_cords/colossus/speak_with(message)
 	message = lowertext(message)
-	var/spoken = uppertext(message)
 	playsound(get_turf(owner), 'sound/magic/clockwork/invoke_general.ogg', 300, 1, 5)
 
 	var/mob/living/list/listeners = list()
@@ -145,23 +149,33 @@ var/static/regex/multispin_words = regex("like a record baby")
 		power_multiplier *= 2
 		spans = list("ratvar")
 
+	//Try to check if the speaker specified a name or a job to focus on
+	var/list/specific_listeners = list()
+	var/found_string = null
+
 	for(var/V in listeners)
 		var/mob/living/L = V
-		var/start
 		if(L.mind && L.mind.devilinfo && findtext(message, L.mind.devilinfo.truename))
-			start = findtext(message, L.mind.devilinfo.truename)
-			listeners = list(L)
+			var/start = findtext(message, L.mind.devilinfo.truename)
+			listeners = list(L) //let's be honest you're never going to find two devils with the same name
 			power_multiplier *= 5 //if you're a devil and god himself addressed you, you fucked up
 			//Cut out the name so it doesn't trigger commands
 			message = copytext(message, 0, start)+copytext(message, start + length(L.mind.devilinfo.truename), length(message) + 1)
 			break
-		else if(findtext(message, L.real_name))
-			start = findtext(message, L.real_name)
-			listeners = list(L) //focus on a particular person
-			power_multiplier *= 2
+		else if(findtext(message, L.real_name) == 1)
+			specific_listeners += L //focus on those with the specified name
 			//Cut out the name so it doesn't trigger commands
-			message = copytext(message, 0, start)+copytext(message, start + length(L.real_name), length(message) + 1)
-			break
+			found_string = L.real_name
+
+		else if(L.mind && findtext(message, L.mind.assigned_role) == 1)
+			specific_listeners += L //focus on those with the specified job
+			//Cut out the job so it doesn't trigger commands
+			found_string = L.mind.assigned_role
+
+	if(specific_listeners.len)
+		listeners = specific_listeners
+		power_multiplier *= (1 + (1/specific_listeners.len)) //2x on a single guy, 1.5x on two and so on
+		message = copytext(message, 0, 1)+copytext(message, 1 + length(found_string), length(message) + 1)
 
 	//STUN
 	if(findtext(message, stun_words))
@@ -181,7 +195,7 @@ var/static/regex/multispin_words = regex("like a record baby")
 	else if((findtext(message, sleep_words)))
 		for(var/V in listeners)
 			var/mob/living/L = V
-			L.Sleeping(3 * power_multiplier)
+			L.Sleeping(2 * power_multiplier)
 		next_command = world.time + cooldown_stun
 
 	//VOMIT
@@ -203,7 +217,7 @@ var/static/regex/multispin_words = regex("like a record baby")
 		for(var/V in listeners)
 			var/mob/living/L = V
 			new /obj/effect/hallucination/delusion(get_turf(L),L,duration=150 * power_multiplier,skip_nearby=0)
-		next_command = world.time + cooldown_damage
+		next_command = world.time + cooldown_meme
 
 	//WAKE UP
 	else if((findtext(message, wakeup_words)))
@@ -275,8 +289,9 @@ var/static/regex/multispin_words = regex("like a record baby")
 	//STATE LAWS
 	else if((findtext(message, statelaws_words)))
 		for(var/mob/living/silicon/S in listeners)
-			S.statelaws()
-		next_command = world.time + cooldown_meme
+			S.checklaws()
+			S.statelaws(force = 1)
+		next_command = world.time + cooldown_stun
 
 	//MOVE
 	else if((findtext(message, move_words)))
@@ -416,7 +431,9 @@ var/static/regex/multispin_words = regex("like a record baby")
 		if(owner.mind && owner.mind.assigned_role == "Clown")
 			for(var/mob/living/carbon/C in listeners)
 				C.slip(0,7 * power_multiplier)
-		next_command = world.time + cooldown_meme
+			next_command = world.time + cooldown_stun
+		else
+			next_command = world.time + cooldown_meme
 
 	//RIGHT ROUND
 	else if((findtext(message, multispin_words)))
@@ -427,6 +444,4 @@ var/static/regex/multispin_words = regex("like a record baby")
 
 	else
 		next_command = world.time + cooldown_none
-
-	return spoken
 
