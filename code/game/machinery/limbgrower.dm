@@ -121,7 +121,7 @@
 				use_power(power)
 				flick("limbgrower_fill",src)
 				icon_state = "limbgrower_idleon"
-				addtimer(src, "build_item",32*prod_coeff)
+				addtimer(CALLBACK(src, .proc/build_item),32*prod_coeff)
 
 	else
 		usr << "<span class=\"alert\">The limb grower is busy. Please wait for completion of previous operation.</span>"

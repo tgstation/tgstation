@@ -71,6 +71,7 @@
 				user.put_in_hands(P)
 			I.forceMove(P)
 			var/size = round(I.w_class)
+			P.name = "[weightclass2text(size)] parcel"
 			P.w_class = size
 			size = min(size, 5)
 			P.icon_state = "deliverypackage[size]"
@@ -85,7 +86,7 @@
 		if(use(3))
 			var/obj/structure/bigDelivery/P = new /obj/structure/bigDelivery(get_turf(O.loc))
 			P.icon_state = O.delivery_icon
-			O.loc = P
+			O.forceMove(P)
 			P.add_fingerprint(user)
 			O.add_fingerprint(user)
 		else

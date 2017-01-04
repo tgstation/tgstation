@@ -35,7 +35,7 @@ The console is located at computer/gulag_teleporter.dm
 				/obj/item/clothing/mask/gas))
 	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/gulag_teleporter(null)
 	B.apply_default_parts(src)
-	addtimer(src, "locate_reclaimer", 5)
+	addtimer(CALLBACK(src, .proc/locate_reclaimer), 5)
 
 /obj/machinery/gulag_teleporter/Destroy()
 	if(linked_reclaimer)

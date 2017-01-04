@@ -132,6 +132,7 @@
 	sharpness = IS_SHARP
 	can_charge = 0
 	heat = 3800
+	toolspeed = 0.7 //plasmacutters can be used as welders for a few things, and are faster than standard welders
 
 /obj/item/weapon/gun/energy/plasmacutter/examine(mob/user)
 	..()

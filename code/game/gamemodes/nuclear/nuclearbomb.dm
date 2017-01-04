@@ -587,5 +587,5 @@ This is here to make the tiles around the station mininuke change when it's arme
 
 /obj/item/weapon/disk/fakenucleardisk
 	name = "cheap plastic imitation of the nuclear authentication disk"
-	desc = "Broken dreams and a faint oder of cheese."
+	desc = "Broken dreams and a faint odor of cheese."
 	icon_state = "nucleardisk"

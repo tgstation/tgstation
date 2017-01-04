@@ -729,14 +729,10 @@
 		var/static/image/electrocution_skeleton_anim = image(icon = icon, icon_state = "electrocuted_base")
 		electrocution_skeleton_anim.appearance_flags = RESET_COLOR
 		add_overlay(electrocution_skeleton_anim)
-		addtimer(src, "end_electrocution_animation", anim_duration, TIMER_NORMAL, electrocution_skeleton_anim)
+		addtimer(CALLBACK(src, .proc/end_electrocution_animation, electrocution_skeleton_anim), anim_duration)
 
 	else //or just do a generic animation
-		var/list/viewing = list()
-		for(var/mob/M in viewers(src))
-			if(M.client)
-				viewing += M.client
-		flick_overlay(image(icon,src,"electrocuted_generic",ABOVE_MOB_LAYER), viewing, anim_duration)
+		flick_overlay_view(image(icon,src,"electrocuted_generic",ABOVE_MOB_LAYER), src, anim_duration)
 
 /mob/living/carbon/human/proc/end_electrocution_animation(image/I)
 	remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, "#000000")

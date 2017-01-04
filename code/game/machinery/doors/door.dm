@@ -191,7 +191,7 @@
 		if(secondsElectrified == 0)
 			secondsElectrified = -1
 			shockedby += "\[[time_stamp()]\]EM Pulse"
-			addtimer(src, "unelectrify", 300)
+			addtimer(CALLBACK(src, .proc/unelectrify), 300)
 	..()
 
 /obj/machinery/door/proc/unelectrify()
@@ -253,7 +253,7 @@
 		for(var/atom/movable/M in get_turf(src))
 			if(M.density && M != src) //something is blocking the door
 				if(autoclose)
-					addtimer(src, "autoclose", 60)
+					addtimer(CALLBACK(src, .proc/autoclose), 60)
 				return
 	operating = 1
 

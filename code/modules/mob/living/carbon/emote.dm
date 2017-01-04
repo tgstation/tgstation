@@ -20,6 +20,7 @@
 	key_third_person = "claps"
 	message = "claps."
 	muzzle_ignore = TRUE
+	restraint_check = TRUE
 	emote_type = EMOTE_AUDIBLE
 
 /datum/emote/living/carbon/gnarl
@@ -40,12 +41,14 @@
 	key_third_person = "rolls"
 	message = "rolls."
 	mob_type_allowed_typecache = list(/mob/living/carbon/monkey, /mob/living/carbon/alien)
+	restraint_check = TRUE
 
 /datum/emote/living/carbon/scratch
 	key = "scratch"
 	key_third_person = "scratches"
 	message = "scratches."
 	mob_type_allowed_typecache = list(/mob/living/carbon/monkey, /mob/living/carbon/alien)
+	restraint_check = TRUE
 
 /datum/emote/living/carbon/screech
 	key = "screech"
@@ -58,6 +61,7 @@
 	key_third_person = "signs"
 	message_param = "signs the number %t."
 	mob_type_allowed_typecache = list(/mob/living/carbon/monkey, /mob/living/carbon/alien)
+	restraint_check = TRUE
 
 /datum/emote/living/carbon/sign/select_param(mob/user, params)
 	. = ..()
@@ -69,6 +73,7 @@
 	key_third_person = "signals"
 	message_param = "raises %t fingers."
 	mob_type_allowed_typecache = list(/mob/living/carbon/human)
+	restraint_check = TRUE
 
 /datum/emote/living/carbon/tail
 	key = "tail"

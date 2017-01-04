@@ -5,7 +5,7 @@
 
 ##BIODOMES
 #_maps/RandomRuins/LavaRuins/lavaland_surface_biodome_winter.dmm
-#_maps/RandomRuins/LavaRuins/lavaland__biodome_beach.dmm
+#_maps/RandomRuins/LavaRuins/lavaland_biodome_beach.dmm
 #_maps/RandomRuins/LavaRuins/lavaland_biodome_clown_planet.dmm
 #_maps/RandomRuins/LavaRuins/lavaland_surface_cube.dmm
 
@@ -13,6 +13,7 @@
 #_maps/RandomRuins/LavaRuins/lavaland_surface_prisoner_crash.dmm
 #_maps/RandomRuins/LavaRuins/lavaland_surface_seed_vault.dmm
 #_maps/RandomRuins/LavaRuins/lavaland_surface_ash_walker1.dmm
+#_maps/RandomRuins/LavaRuins/lavaland_surface_syndicate_base1.dmm
 #_maps/RandomRuins/LavaRuins/lavaland_surface_golem_ship.dmm
 
 ##SIN
@@ -33,3 +34,9 @@
 #_maps/RandomRuins/LavaRuins/lavaland_surface_survivalpod.dmm
 #_maps/RandomRuins/LavaRuins/lavaland_surface_wwiioutpost.dmm
 #_maps/RandomRuins/LavaRuins/lavaland_surface_tomb.dmm
+#_maps/RandomRuins/LavaRuins/lavaland_surface_hierophant.dmm
+#_maps/RandomRuins/LavaRuins/lavaland_surface_fountain_hall.dmm
+#_maps/RandomRuins/LavaRuins/lavaland_surface_pizzaparty.dmm
+#_maps/RandomRuins/LavaRuins/lavaland_surface_cultaltar.dmm
+#_maps/RandomRuins/LavaRuins/lavaland_surface_hermit.dmm
+#_maps/RandomRuins/LavaRuins/lavaland_surface_swarmer_crash.dmm

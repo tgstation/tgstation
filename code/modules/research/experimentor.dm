@@ -436,7 +436,7 @@
 			investigate_log("Experimentor has triggered the 'throw things' reaction.", "experimentor")
 			for(var/atom/movable/AM in oview(7,src))
 				if(!AM.anchored)
-					AM.throw_at_fast(src,10,1)
+					AM.throw_at(src,10,1)
 		else if(prob(EFFECT_PROB_LOW-badThingCoeff))
 			visible_message("<span class='danger'>[src]'s crusher goes one level too high, crushing right into space-time!</span>")
 			playsound(src.loc, 'sound/effects/supermatter.ogg', 50, 1, -3)
@@ -447,7 +447,7 @@
 					throwAt.Add(AM)
 			for(var/counter = 1, counter < throwAt.len, ++counter)
 				var/atom/movable/cast = throwAt[counter]
-				cast.throw_at_fast(pick(throwAt),10,1)
+				cast.throw_at(pick(throwAt),10,1)
 		ejectItem(TRUE)
 	////////////////////////////////////////////////////////////////////////////////////////////////
 	if(exp == FAIL)
@@ -621,14 +621,13 @@
 
 /obj/item/weapon/relic/proc/throwSmoke(turf/where)
 	var/datum/effect_system/smoke_spread/smoke = new
-	smoke.set_up(0, where)
+	smoke.set_up(0, get_turf(where))
 	smoke.start()
 
 /obj/item/weapon/relic/proc/corgicannon(mob/user)
 	playsound(src.loc, "sparks", rand(25,50), 1)
 	var/mob/living/simple_animal/pet/dog/corgi/C = new/mob/living/simple_animal/pet/dog/corgi(get_turf(user))
-	C.throw_at(pick(oview(10,user)),10,rand(3,8))
-	throwSmoke(get_turf(C))
+	C.throw_at(pick(oview(10,user)), 10, rand(3,8), callback = CALLBACK(src, .throwSmoke, C))
 	warn_admins(user, "Corgi Cannon", 0)
 
 /obj/item/weapon/relic/proc/clean(mob/user)
@@ -671,7 +670,7 @@
 		R.realProc = realProc
 		R.revealed = TRUE
 		dupes |= R
-		R.throw_at_fast(pick(oview(7,get_turf(src))),10,1)
+		R.throw_at(pick(oview(7,get_turf(src))),10,1)
 	counter = 0
 	spawn(rand(10,100))
 		for(counter = 1; counter <= dupes.len; counter++)

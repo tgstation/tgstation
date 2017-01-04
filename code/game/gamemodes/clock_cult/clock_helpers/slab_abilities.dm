@@ -64,7 +64,7 @@
 				add_logs(ranged_ability_user, L, "bound with Geis")
 				if(slab.speed_multiplier >= 0.5) //excuse my debug...
 					ranged_ability_user.notransform = TRUE
-					addtimer(src, "reset_user_notransform", 5, TIMER_NORMAL, ranged_ability_user) //stop us moving for a little bit so we don't break the scripture following this
+					addtimer(CALLBACK(src, .proc/reset_user_notransform, ranged_ability_user), 5) //stop us moving for a little bit so we don't break the scripture following this
 				slab.busy = null
 				var/datum/clockwork_scripture/geis/conversion = new
 				conversion.slab = slab

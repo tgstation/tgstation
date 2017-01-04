@@ -159,7 +159,7 @@
 	guns_left = 0
 
 /obj/item/weapon/gun/ballistic/shotgun/boltaction/enchanted/proc/discard_gun(mob/user)
-	throw_at_fast(pick(oview(7,get_turf(user))),1,1)
+	throw_at(pick(oview(7,get_turf(user))),1,1)
 	user.visible_message("<span class='warning'>[user] tosses aside the spent rifle!</span>")
 
 /obj/item/weapon/gun/ballistic/shotgun/boltaction/enchanted/arcane_barrage/discard_gun(mob/user)

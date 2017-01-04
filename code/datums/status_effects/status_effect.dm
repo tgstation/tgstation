@@ -19,7 +19,7 @@ var/global/list/all_status_effects = list() //a list of all status effects, if f
 	if(owner)
 		LAZYADD(owner.status_effects, src)
 	all_status_effects += src
-	addtimer(src, "start_ticking", 1) //Give us time to set any variables
+	addtimer(CALLBACK(src, .proc/start_ticking), 1) //Give us time to set any variables
 
 /datum/status_effect/Destroy()
 	STOP_PROCESSING(SSprocessing, src)
