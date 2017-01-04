@@ -75,11 +75,7 @@
 	else if(istype(I,/obj/item/clothing))
 		var/obj/item/clothing/C = I
 		monkeyDrop(C)
-		spawn(5)
-			if(!equip_to_appropriate_slot(C))
-				unEquip(get_item_by_slot(C)) // remove the existing item if worn
-				spawn(5)
-					equip_to_appropriate_slot(C)
+		addtimer(CALLBACK(src, .proc/pickup_and_wear, C), 5)
 		return TRUE
 
 	// EVERYTHING ELSE
@@ -90,6 +86,12 @@
 
 	blacklistItems[I] ++
 	return FALSE
+
+/mob/living/carbon/monkey/proc/pickup_and_wear(var/obj/item/clothing/C)
+	if(!equip_to_appropriate_slot(C))
+		unEquip(get_item_by_slot(C)) // remove the existing item if worn
+		sleep(5)
+		equip_to_appropriate_slot(C)
 
 /mob/living/carbon/monkey/resist_restraints()
 	var/obj/item/I = null
@@ -147,16 +149,7 @@
 				if(!pickpocketing)
 					pickpocketing = TRUE
 					M.visible_message("[src] starts trying to take [pickupTarget] from [M]", "[src] tries to take [pickupTarget]!")
-					spawn(5)
-						if(do_mob(src, M, 20) && pickupTarget)
-							for(var/obj/item/I in M.held_items)
-								if(I == pickupTarget)
-									M.visible_message("<span class='danger'>[src] snatches [pickupTarget] from [M].</span>", "<span class='userdanger'>[src] snatched [pickupTarget]!</span>")
-									M.unEquip(pickupTarget)
-									equip_item(pickupTarget)
-						pickpocketing = FALSE
-						pickupTarget = null
-						pickupTimer = 0
+					addtimer(CALLBACK(src, .proc/pickpocket, M), 0)
 
 		else
 			if(pickupTimer >= 8)
@@ -332,9 +325,7 @@
 
 				if(Adjacent(bodyDisposal))
 					disposing_body = TRUE
-					spawn(5)
-						bodyDisposal.stuff_mob_in(target, src)
-						disposing_body = FALSE
+					addtimer(CALLBACK(src, .proc/stuff_mob_in), 5)
 
 				else
 					var/turf/olddist = get_dist(src, bodyDisposal)
@@ -348,6 +339,22 @@
 
 
 	return IsStandingStill()
+
+/mob/living/carbon/monkey/proc/pickpocket(var/mob/M)
+	if(do_mob(src, M, 25) && pickupTarget)
+		for(var/obj/item/I in M.held_items)
+			if(I == pickupTarget)
+				M.visible_message("<span class='danger'>[src] snatches [pickupTarget] from [M].</span>", "<span class='userdanger'>[src] snatched [pickupTarget]!</span>")
+				M.unEquip(pickupTarget)
+				equip_item(pickupTarget)
+	pickpocketing = FALSE
+	pickupTarget = null
+	pickupTimer = 0
+
+/mob/living/carbon/monkey/proc/stuff_mob_in()
+	if(bodyDisposal && target && Adjacent(bodyDisposal))
+		bodyDisposal.stuff_mob_in(target, src)
+	disposing_body = FALSE
 
 /mob/living/carbon/monkey/proc/back_to_idle()
 	mode = MONKEY_IDLE
