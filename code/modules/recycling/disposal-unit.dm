@@ -46,7 +46,8 @@
 		mode = PRESSURE_OFF
 		flush = 0
 	else
-		mode = PRESSURE_ON
+		if(initial(mode))
+			mode = PRESSURE_ON
 		flush = initial(flush)
 		trunk.linked = src // link the pipe trunk to self
 
