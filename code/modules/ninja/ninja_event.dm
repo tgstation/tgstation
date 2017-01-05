@@ -157,8 +157,8 @@ Contents:
 	Ninja << sound('sound/effects/ninja_greeting.ogg') //so ninja you probably wouldn't even know if you were made one
 	ticker.mode.update_ninja_icons_added(Ninja)
 	spawned_mobs += Ninja
-	message_admins("[key] has been made into a ninja by an event.")
-	log_game("[key] was spawned as a ninja by an event.")
+	message_admins("[key_name_admin(Ninja)] has been made into a ninja by an event.")
+	log_game("[key_name(Ninja)] was spawned as a ninja by an event.")
 
 	return SUCCESSFUL_SPAWN
 
