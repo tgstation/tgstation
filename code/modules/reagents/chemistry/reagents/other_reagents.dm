@@ -217,7 +217,8 @@
 /datum/reagent/fuel/unholywater/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
 	if(method == TOUCH || method == VAPOR)
 		M.reagents.add_reagent("unholywater", reac_volume)
-		return ..()
+		return
+	return ..()
 
 /datum/reagent/fuel/unholywater/on_mob_life(mob/living/M)
 	if(iscultist(M))
@@ -231,7 +232,7 @@
 		M.adjustFireLoss(-2, 0)
 	else
 		M.adjustBrainLoss(3)
-		M.adjustToxLoss(2, 0)
+		M.adjustToxLoss(1, 0)
 		M.adjustFireLoss(2, 0)
 		M.adjustOxyLoss(2, 0)
 		M.adjustBruteLoss(2, 0)
