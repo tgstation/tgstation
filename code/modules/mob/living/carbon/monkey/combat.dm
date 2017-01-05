@@ -110,7 +110,7 @@
 	if(enemies[L])
 		return 1
 
-	// randomly target non-monkey mobs when aggressive, with a small probability of monkey v monkey
+	// target non-monkey mobs when aggressive, with a small probability of monkey v monkey
 	if(aggressive && (!istype(L, /mob/living/carbon/monkey/) || prob(MONKEY_AGGRESSIVE_MVM_PROB)))
 		return 1
 
