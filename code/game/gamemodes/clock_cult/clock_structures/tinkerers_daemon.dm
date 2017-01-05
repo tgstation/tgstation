@@ -160,6 +160,6 @@
 		if(component_to_generate)
 			generate_cache_component(component_to_generate, src)
 			production_time = world.time + (production_cooldown * get_efficiency_mod(TRUE)) //go on cooldown
-			visible_message("<span class='warning'>[src] hums as it produces a [get_component_name(component_to_generate)].</span>")
+			visible_message("<span class='warning'>[src] hums as it produces a </span><span class='[get_component_span(component_to_generate)]'>component</span><span class='warning'>.</span>")
 		else
 			forced_disable(FALSE) //we shouldn't actually ever get here, as we should cancel out way before this
