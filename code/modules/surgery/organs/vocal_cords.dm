@@ -115,6 +115,7 @@ var/static/regex/multispin_words = regex("like a record baby")
 	return uppertext(message)
 
 /obj/item/organ/vocal_cords/colossus/speak_with(message)
+	var/log_message = uppertext(message)
 	message = lowertext(message)
 	playsound(get_turf(owner), 'sound/magic/clockwork/invoke_general.ogg', 300, 1, 5)
 
@@ -448,4 +449,7 @@ var/static/regex/multispin_words = regex("like a record baby")
 
 	else
 		next_command = world.time + cooldown_none
+
+	message_admins("[key_name_admin(owner)] has said '[log_message]' with a Voice of God, affecting [english_list(listeners)], with a power multiplier of [power_multiplier].")
+	log_game("[key_name(owner)] has said '[log_message]' with a Voice of God, affecting [english_list(listeners)], with a power multiplier of [power_multiplier].")
 
