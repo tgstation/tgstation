@@ -94,6 +94,10 @@
 	input = /obj/item/weapon/reagent_containers/food/snacks/meat/rawcutlet
 	output = /obj/item/weapon/reagent_containers/food/snacks/meat/rawbacon
 
+/datum/food_processor_process/potatowedges
+	input = /obj/item/weapon/reagent_containers/food/snacks/grown/potato/wedges
+	output = /obj/item/weapon/reagent_containers/food/snacks/fries
+
 /datum/food_processor_process/sweetpotato
 	input = /obj/item/weapon/reagent_containers/food/snacks/grown/potato/sweet
 	output = /obj/item/weapon/reagent_containers/food/snacks/yakiimo
@@ -101,10 +105,6 @@
 /datum/food_processor_process/potato
 	input = /obj/item/weapon/reagent_containers/food/snacks/grown/potato
 	output = /obj/item/weapon/reagent_containers/food/snacks/tatortot
-
-/datum/food_processor_process/potatowedges
-	input = /obj/item/weapon/reagent_containers/food/snacks/grown/potato/wedges
-	output = /obj/item/weapon/reagent_containers/food/snacks/fries
 
 /datum/food_processor_process/carrot
 	input = /obj/item/weapon/reagent_containers/food/snacks/grown/carrot
@@ -211,7 +211,7 @@
 	var/datum/food_processor_process/P = select_recipe(O)
 	if(P)
 		user.visible_message("[user] put [O] into [src].", \
-			"You put the [O] into [src].")
+			"You put [O] into [src].")
 		user.drop_item()
 		O.loc = src
 		return 1
@@ -264,7 +264,7 @@
 		P.process_food(src.loc, O, src)
 	pixel_x = initial(pixel_x) //return to its spot after shaking
 	src.processing = 0
-	src.visible_message("\the [src] finishes processing.")
+	src.visible_message("\The [src] finishes processing.")
 
 /obj/machinery/processor/verb/eject()
 	set category = "Object"
