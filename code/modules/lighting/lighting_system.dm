@@ -324,7 +324,7 @@
 	if(lighting_object)
 		lighting_object.PutOut()
 
-/turf/proc/redraw_lighting(instantly = 0)
+/turf/proc/redraw_lighting()
 	if(lighting_object)
 		var/newalpha
 		if(lighting_lumcount <= 0)
