@@ -113,7 +113,7 @@ display round(lastgen) and plasmatank amount
 	sheet_name = sheet.name
 
 /obj/item/weapon/circuitboard/machine/pacman
-	name = "circuit board (PACMAN-type Generator)"
+	name = "PACMAN-type Generator (Machine Board)"
 	build_path = /obj/machinery/power/port_gen/pacman
 	origin_tech = "programming=2;powerstorage=3;plasmatech=3;engineering=3"
 	req_components = list(
@@ -123,12 +123,12 @@ display round(lastgen) and plasmatank amount
 							/obj/item/weapon/stock_parts/capacitor = 1)
 
 /obj/item/weapon/circuitboard/machine/pacman/super
-	name = "circuit board (SUPERPACMAN-type Generator)"
+	name = "SUPERPACMAN-type Generator (Machine Board)"
 	build_path = /obj/machinery/power/port_gen/pacman/super
 	origin_tech = "programming=3;powerstorage=4;engineering=4"
 
 /obj/item/weapon/circuitboard/machine/pacman/mrs
-	name = "circuit board (MRSPACMAN-type Generator)"
+	name = "MRSPACMAN-type Generator (Machine Board)"
 	build_path = "/obj/machinery/power/port_gen/pacman/mrs"
 	origin_tech = "programming=3;powerstorage=4;engineering=4;plasmatech=4"
 

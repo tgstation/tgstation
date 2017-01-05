@@ -89,7 +89,7 @@
 	SetTypeReactions()
 
 /obj/item/weapon/circuitboard/machine/experimentor
-	name = "circuit board (E.X.P.E.R.I-MENTOR)"
+	name = "E.X.P.E.R.I-MENTOR (Machine Board)"
 	build_path = /obj/machinery/r_n_d/experimentor
 	origin_tech = "magnets=1;engineering=1;programming=1;biotech=1;bluespace=2"
 	req_components = list(

@@ -25,7 +25,7 @@
 	B.apply_default_parts(src)
 
 /obj/item/weapon/circuitboard/machine/rtg
-	name = "circuit board (RTG)"
+	name = "RTG (Machine Board)"
 	build_path = /obj/machinery/power/rtg
 	origin_tech = "programming=2;materials=4;powerstorage=3;engineering=2"
 	req_components = list(
@@ -76,7 +76,7 @@
 	board_path = /obj/item/weapon/circuitboard/machine/rtg/advanced
 
 /obj/item/weapon/circuitboard/machine/rtg/advanced
-	name = "circuit board (Advanced RTG)"
+	name = "Advanced RTG (Machine Board)"
 	build_path = /obj/machinery/power/rtg/advanced
 	origin_tech = "programming=3;materials=5;powerstorage=4;engineering=3;plasmatech=3"
 	req_components = list(

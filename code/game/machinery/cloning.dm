@@ -67,7 +67,7 @@
 		heal_level = 100
 
 /obj/item/weapon/circuitboard/machine/clonepod
-	name = "circuit board (Clone Pod)"
+	name = "Clone Pod (Machine Board)"
 	build_path = /obj/machinery/clonepod
 	origin_tech = "programming=2;biotech=2"
 	req_components = list(

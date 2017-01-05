@@ -78,7 +78,7 @@
 	inturf = get_step(src, dir)
 
 /obj/item/weapon/circuitboard/machine/power_compressor
-	name = "circuit board (Power Compressor)"
+	name = "Power Compressor (Machine Board)"
 	build_path = /obj/machinery/power/compressor
 	origin_tech = "programming=4;powerstorage=4;engineering=4"
 	req_components = list(
@@ -194,7 +194,7 @@
 	outturf = get_step(src, dir)
 
 /obj/item/weapon/circuitboard/machine/power_turbine
-	name = "circuit board (Power Turbine)"
+	name = "Power Turbine (Machine Board)"
 	build_path = /obj/machinery/power/turbine
 	origin_tech = "programming=4;powerstorage=4;engineering=4"
 	req_components = list(

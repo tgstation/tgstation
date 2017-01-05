@@ -35,7 +35,7 @@
 	RefreshParts()
 
 /obj/item/weapon/circuitboard/machine/emitter
-	name = "circuit board (Emitter)"
+	name = "Emitter (Machine Board)"
 	build_path = /obj/machinery/power/emitter
 	origin_tech = "programming=3;powerstorage=4;engineering=4"
 	req_components = list(

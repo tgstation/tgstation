@@ -6,7 +6,7 @@
 	desc = "yummy"
 	icon = 'icons/obj/drinks.dmi'
 	icon_state = null
-	flags = OPENCONTAINER
+	container_type = OPENCONTAINER
 	var/gulp_size = 5 //This is now officially broken ... need to think of a nice way to fix it.
 	possible_transfer_amounts = list(5,10,15,20,25,30,50)
 	volume = 50
@@ -103,7 +103,8 @@
 	materials = list(MAT_METAL=100)
 	possible_transfer_amounts = list()
 	volume = 5
-	flags = CONDUCT | OPENCONTAINER
+	flags = CONDUCT
+	container_type = OPENCONTAINER
 	spillable = 1
 	resistance_flags = FIRE_PROOF
 

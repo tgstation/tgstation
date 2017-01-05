@@ -126,7 +126,8 @@
 	item_state = "plasmacutter"
 	origin_tech = "combat=1;materials=3;magnets=2;plasmatech=3;engineering=1"
 	ammo_type = list(/obj/item/ammo_casing/energy/plasma)
-	flags = CONDUCT | OPENCONTAINER
+	flags = CONDUCT
+	container_type = OPENCONTAINER
 	attack_verb = list("attacked", "slashed", "cut", "sliced")
 	force = 12
 	sharpness = IS_SHARP
