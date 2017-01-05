@@ -213,6 +213,10 @@
 	name = "Unholy Water"
 	id = "unholywater"
 	description = "Something that shouldn't exist on this plane of existence."
+	
+/datum/reagent/fuel/unholywater/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
+	if(method == TOUCH || method == VAPOR)
+		M.reagents.add_reagent("unholywater", reac_volume)
 
 /datum/reagent/fuel/unholywater/on_mob_life(mob/living/M)
 	if(iscultist(M))
