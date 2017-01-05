@@ -313,7 +313,7 @@
 	else
 		if(!lighting_object)
 			lighting_object = new (src)
-		redraw_lighting(1)
+		redraw_lighting()
 		for(var/turf/open/space/T in RANGE_TURFS(1,src))
 			T.update_starlight()
 
