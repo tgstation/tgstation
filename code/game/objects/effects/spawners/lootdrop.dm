@@ -168,3 +168,8 @@
 				/obj/structure/closet/crate/secure/loot = 20,
 				"" = 80
 				)
+
+/obj/effect/spawner/lootdrop/two_percent_egg
+	name = "2% chance xeno egg spawner"
+	loot = list(/obj/effect/decal/remains/xeno = 49,
+				/obj/structure/alien/egg = 1)
