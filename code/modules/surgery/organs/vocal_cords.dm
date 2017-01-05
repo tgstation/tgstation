@@ -121,6 +121,10 @@ var/static/regex/multispin_words = regex("like a record baby")
 	var/mob/living/list/listeners = list()
 	for(var/mob/living/L in get_hearers_in_view(8, owner))
 		if(!L.ear_deaf && L != owner && L.stat != DEAD)
+			if(ishuman(L))
+				var/mob/living/carbon/human/H = L
+				if(istype(H.ears, /obj/item/clothing/ears/earmuffs))
+					continue
 			listeners += L
 
 	if(!listeners.len)
