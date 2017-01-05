@@ -46,11 +46,8 @@
 
 /obj/machinery/air_sensor/Initialize()
 	..()
-	set_frequency(frequency)
-
-/obj/machinery/air_sensor/New()
-	..()
 	SSair.atmos_machinery += src
+	set_frequency(frequency)
 
 /obj/machinery/air_sensor/Destroy()
 	SSair.atmos_machinery -= src
