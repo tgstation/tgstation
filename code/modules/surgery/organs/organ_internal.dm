@@ -693,3 +693,28 @@
 	if(inflamed)
 		S.reagents.add_reagent("????", 5)
 	return S
+
+/mob/living/proc/regenerate_organs()
+	return 0
+
+/mob/living/carbon/regenerate_organs()
+	if(!(NOBREATH in dna.species.species_traits) && !getorganslot("lungs"))
+		var/obj/item/organ/lungs/L = new()
+		L.Insert(src)
+
+	if(!(NOBLOOD in dna.species.species_traits) && !getorganslot("heart"))
+		var/obj/item/organ/heart/H = new()
+		H.Insert(src)
+
+	if(!getorganslot("tongue"))
+		var/obj/item/organ/tongue/T
+
+		for(var/tongue_type in dna.species.mutant_organs)
+			if(ispath(tongue_type, /obj/item/organ/tongue))
+				T = new tongue_type()
+				T.Insert(src)
+
+		// if they have no mutant tongues, give them a regular one
+		if(!T)
+			T = new()
+			T.Insert(src)
