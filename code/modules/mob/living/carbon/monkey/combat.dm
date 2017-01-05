@@ -102,6 +102,17 @@
 		last_special = world.time + CLICK_CD_BREAKOUT
 		cuff_resist(I)
 
+/mob/living/carbon/monkey/proc/should_target(var/mob/living/L)
+
+	if(enemies[L])
+		return 1
+
+	// randomly target non-monkey mobs when aggressive, with a small probability of monkey v monkey
+	if(aggressive && (!istype(L, /mob/living/carbon/monkey/) || prob(MONKEY_AGGRESSIVE_MVM_PROB)))
+		return 1
+
+	return 0
+
 /mob/living/carbon/monkey/proc/handle_combat()
 
 	if(on_fire || buckled || restrained())
@@ -175,7 +186,7 @@
 
 			// scan for enemies
 			for(var/mob/living/L in around)
-				if(enemies[L] || aggressive)
+				if( should_target(L) )
 					if(L.stat == CONSCIOUS)
 						emote(pick("roar","screech"))
 						retaliate(L)
@@ -227,7 +238,7 @@
 
 			// switch targets
 			for(var/mob/living/L in around)
-				if(L != target && (enemies[L] || aggressive) && L.stat == CONSCIOUS && prob(MONKEY_SWITCH_TARGET_PROB))
+				if(L != target && should_target(L) && L.stat == CONSCIOUS && prob(MONKEY_SWITCH_TARGET_PROB))
 					target = L
 					return TRUE
 
@@ -266,11 +277,11 @@
 		if(MONKEY_FLEE)
 			var/list/around = view(src, MONKEY_FLEE_VISION)
 			target = null
-			
+
 			// flee from anyone who attacked us and we didn't beat down
-			for(var/mob/living/carbon/C in around)
-				if(enemies[C] && C.stat == CONSCIOUS)
-					target = C
+			for(var/mob/living/L in around)
+				if( enemies[L] && L.stat == CONSCIOUS )
+					target = L
 
 			if(target != null)
 				walk_away(src, target, MONKEY_ENEMY_VISION, 5)
@@ -356,7 +367,7 @@
 	// no de-aggro
 	if(aggressive)
 		return
-		
+
 	// if we arn't enemies, we were likely recruited to attack this target, jobs done if we calm down so go back to idle
 	if(!enemies[L])
 		if( target == L && prob(MONKEY_HATRED_REDUCTION_PROB) )
