@@ -387,8 +387,8 @@
 
 
 #define LIGHTING_MAX_LUMINOSITY_STATIC	8	//Maximum luminosity to reduce lag.
-#define LIGHTING_MAX_LUMINOSITY_MOBILE	5	//Moving objects have a lower max luminosity since these update more often. (lag reduction)
-#define LIGHTING_MAX_LUMINOSITY_MOB		5
+#define LIGHTING_MAX_LUMINOSITY_MOBILE	8	//Moving objects have a lower max luminosity since these update more often. (lag reduction)
+#define LIGHTING_MAX_LUMINOSITY_MOB     8
 #define LIGHTING_MAX_LUMINOSITY_TURF	8	//turfs are static too, why was this 1?!
 
 //caps luminosity effects max-range based on what type the light's owner is.
