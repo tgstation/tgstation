@@ -347,6 +347,7 @@
 	if(bodyDisposal && target && Adjacent(bodyDisposal))
 		bodyDisposal.stuff_mob_in(target, src)
 	disposing_body = FALSE
+	back_to_idle()
 
 /mob/living/carbon/monkey/proc/back_to_idle()
 	mode = MONKEY_IDLE
