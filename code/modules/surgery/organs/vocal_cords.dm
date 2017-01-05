@@ -60,7 +60,7 @@ var/static/regex/multispin_words = regex("like a record baby")
 	slot = "vocal_cords"
 	actions_types = list(/datum/action/item_action/organ_action/colossus)
 	var/next_command = 0
-	var/cooldown_stun = 900
+	var/cooldown_stun = 1200
 	var/cooldown_damage = 600
 	var/cooldown_meme = 300
 	var/cooldown_none = 150
@@ -181,27 +181,39 @@ var/static/regex/multispin_words = regex("like a record baby")
 	if(findtext(message, stun_words))
 		for(var/V in listeners)
 			var/mob/living/L = V
-			L.Stun(3 * power_multiplier)
+			if(!L.isloyal()) //mindshield protects
+				L.Stun(3 * power_multiplier)
+			else
+				L << "<span class='notice'>Your mindshield implant shields your mind from the command!</span>"
 		next_command = world.time + cooldown_stun
 
 	//WEAKEN
 	else if(findtext(message, weaken_words))
 		for(var/V in listeners)
 			var/mob/living/L = V
-			L.Weaken(3 * power_multiplier)
+			if(!L.isloyal()) //mindshield protects
+				L.Weaken(3 * power_multiplier)
+			else
+				L << "<span class='notice'>Your mindshield implant shields your mind from the command!</span>"
 		next_command = world.time + cooldown_stun
 
 	//SLEEP
 	else if((findtext(message, sleep_words)))
 		for(var/V in listeners)
 			var/mob/living/L = V
-			L.Sleeping(2 * power_multiplier)
+			if(!L.isloyal()) //mindshield protects
+				L.Sleeping(2 * power_multiplier)
+			else
+				L << "<span class='notice'>Your mindshield implant shields your mind from the command!</span>"
 		next_command = world.time + cooldown_stun
 
 	//VOMIT
 	else if((findtext(message, vomit_words)))
 		for(var/mob/living/carbon/C in listeners)
-			C.vomit(10 * power_multiplier)
+			if(!C.isloyal()) //mindshield protects
+				C.vomit(10 * power_multiplier)
+			else
+				C << "<span class='notice'>Your mindshield implant shields your mind from the command!</span>"
 		next_command = world.time + cooldown_stun
 
 	//SILENCE
@@ -209,6 +221,8 @@ var/static/regex/multispin_words = regex("like a record baby")
 		for(var/mob/living/carbon/C in listeners)
 			if(owner.mind && (owner.mind.assigned_role == "Librarian" || owner.mind.assigned_role == "Mime"))
 				power_multiplier *= 3
+			if(C.isloyal()) //mindshield protects
+				power_multiplier *= 0.5
 			C.silent += (10 * power_multiplier)
 		next_command = world.time + cooldown_stun
 
@@ -237,12 +251,16 @@ var/static/regex/multispin_words = regex("like a record baby")
 	else if((findtext(message, hurt_words)))
 		for(var/V in listeners)
 			var/mob/living/L = V
+			if(L.isloyal()) //mindshield protects
+				power_multiplier *= 0.5
 			L.apply_damage(15 * power_multiplier, def_zone = "chest")
 		next_command = world.time + cooldown_damage
 
 	//BLEED
 	else if((findtext(message, bleed_words)))
 		for(var/mob/living/carbon/human/H in listeners)
+			if(H.isloyal()) //mindshield protects
+				power_multiplier *= 0.5
 			H.bleed_rate += (5 * power_multiplier)
 		next_command = world.time + cooldown_damage
 
@@ -250,6 +268,8 @@ var/static/regex/multispin_words = regex("like a record baby")
 	else if((findtext(message, burn_words)))
 		for(var/V in listeners)
 			var/mob/living/L = V
+			if(L.isloyal()) //mindshield protects
+				power_multiplier *= 0.5
 			L.adjust_fire_stacks(1 * power_multiplier)
 			L.IgniteMob()
 		next_command = world.time + cooldown_damage
@@ -268,7 +288,7 @@ var/static/regex/multispin_words = regex("like a record baby")
 			var/mob/living/L = V
 			if(L.mind && L.mind.devilinfo)
 				L.say("[L.mind.devilinfo.truename]")
-			else
+			else if(!L.isloyal()) //mindshield protects
 				L.say("[L.real_name]")
 		next_command = world.time + cooldown_meme
 
@@ -430,6 +450,8 @@ var/static/regex/multispin_words = regex("like a record baby")
 		addtimer(CALLBACK(GLOBAL_PROC, .proc/playsound, get_turf(owner), "sound/items/bikehorn.ogg", 300, 1), 25)
 		if(owner.mind && owner.mind.assigned_role == "Clown")
 			for(var/mob/living/carbon/C in listeners)
+				if(C.isloyal()) //mindshield protects
+					power_multiplier *= 0.25
 				C.slip(0,7 * power_multiplier)
 			next_command = world.time + cooldown_stun
 		else
