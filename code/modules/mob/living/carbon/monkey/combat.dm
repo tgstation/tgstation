@@ -104,6 +104,9 @@
 
 /mob/living/carbon/monkey/proc/should_target(var/mob/living/L)
 
+	if(L == src)
+		return 0
+
 	if(enemies[L])
 		return 1
 
