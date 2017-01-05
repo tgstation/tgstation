@@ -12,4 +12,4 @@
 /datum/round_event/wizard/lava/start()
 	if(!started)
 		started = TRUE
-		SSweather.run_weather("the floor is lava", 1)
+		SSweather.run_weather("the floor is lava", ZLEVEL_STATION)
