@@ -1,0 +1,6 @@
+author: "MrStonedOne and Ter13"
+delete-after: True
+changes: 
+  - rscadd: "Added some ping tracking to the game."
+  - rscadd: "Your ping shows in the status tab"
+  - rscadd: "Other players ping shows in who to players and admins."
