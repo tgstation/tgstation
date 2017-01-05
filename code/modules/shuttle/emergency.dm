@@ -421,11 +421,12 @@
 	height = 4
 	var/target_area = /area/lavaland/surface/outdoors
 
-/obj/docking_port/stationary/random/initialize()
+/obj/docking_port/stationary/random/Initialize(roundstart)
 	..()
-	var/list/turfs = get_area_turfs(target_area)
-	var/turf/T = pick(turfs)
-	src.loc = T
+	if(roundstart)
+		var/list/turfs = get_area_turfs(target_area)
+		var/turf/T = pick(turfs)
+		src.loc = T
 
 //Pod suits/pickaxes
 

@@ -99,7 +99,7 @@ display round(lastgen) and plasmatank amount
 	var/time_per_sheet = 260
 	var/current_heat = 0
 
-/obj/machinery/power/port_gen/pacman/initialize()
+/obj/machinery/power/port_gen/pacman/Initialize()
 	..()
 	if(anchored)
 		connect_to_network()

@@ -44,14 +44,8 @@
 	// new display
 	// register for radio system
 
-/obj/machinery/status_display/New()
-	..()
-	if(SSradio)
-		SSradio.add_object(src, frequency)
-
-/obj/machinery/status_display/initialize()
-	if(SSradio)
-		SSradio.add_object(src, frequency)
+/obj/machinery/status_display/Initialize()
+	SSradio.add_object(src, frequency)
 
 /obj/machinery/status_display/Destroy()
 	if(SSradio)

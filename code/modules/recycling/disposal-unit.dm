@@ -60,7 +60,10 @@
 	if(current_size >= STAGE_FIVE)
 		deconstruct()
 
-/obj/machinery/disposal/initialize()
+/obj/machinery/disposal/Initialize(roundstart)
+	..()
+	if(!roundstart)
+		return
 	//this will get a copy of the air turf and take a SEND PRESSURE amount of air from it
 	var/atom/L = loc
 	var/datum/gas_mixture/env = new

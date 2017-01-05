@@ -34,14 +34,12 @@
 	var/material_drop_amount = 2
 	var/delivery_icon = "deliverycloset" //which icon to use when packagewrapped. null to be unwrappable.
 
-/obj/structure/closet/New()
-	..()
-	update_icon()
 
-/obj/structure/closet/initialize()
+/obj/structure/closet/Initialize(roundstart)
 	..()
-	if(!opened)		// if closed, any item at the crate's loc is put in the contents
+	if(roundstart && !opened)		// if closed, any item at the crate's loc is put in the contents
 		take_contents()
+	update_icon()
 
 /obj/structure/closet/Destroy()
 	dump_contents()

@@ -23,7 +23,8 @@ var/obj/machinery/gateway/centerstation/the_gateway = null
 	return ..()
 
 
-/obj/machinery/gateway/initialize()
+/obj/machinery/gateway/Initialize()
+	..()
 	update_icon()
 	switch(dir)
 		if(SOUTH,SOUTHEAST,SOUTHWEST)
@@ -52,7 +53,8 @@ var/obj/machinery/gateway/centerstation/the_gateway = null
 	var/wait = 0				//this just grabs world.time at world start
 	var/obj/machinery/gateway/centeraway/awaygate = null
 
-/obj/machinery/gateway/centerstation/initialize()
+/obj/machinery/gateway/centerstation/Initialize()
+	..()
 	update_icon()
 	wait = world.time + config.gateway_delay	//+ thirty minutes default
 	awaygate = locate(/obj/machinery/gateway/centeraway)
@@ -179,7 +181,8 @@ var/obj/machinery/gateway/centerstation/the_gateway = null
 	var/obj/machinery/gateway/centeraway/stationgate = null
 
 
-/obj/machinery/gateway/centeraway/initialize()
+/obj/machinery/gateway/centeraway/Initialize()
+	..()
 	update_icon()
 	stationgate = locate(/obj/machinery/gateway/centerstation)
 
