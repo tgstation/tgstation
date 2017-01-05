@@ -65,7 +65,7 @@
 		var/mob/living/L = user.pulling
 		if(L.buckled)
 			return
-		L.loc = src.loc
+		L.forceMove(get_turf(src))
 		user_buckle_mob(L, user)
 	else
 		..()

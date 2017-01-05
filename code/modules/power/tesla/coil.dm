@@ -5,6 +5,12 @@
 	icon_state = "coil"
 	anchored = 0
 	density = 1
+
+	// Executing a traitor caught releasing tesla was never this fun!
+	can_buckle = TRUE
+	buckle_lying = FALSE
+	buckle_requires_restraints = TRUE
+
 	var/power_loss = 2
 	var/input_power_multiplier = 1
 
@@ -47,6 +53,16 @@
 
 	return ..()
 
+/obj/machinery/power/tesla_coil/attack_hand(mob/user)
+	if(can_buckle && isliving(user.pulling) && user.a_intent == INTENT_GRAB && !has_buckled_mobs())
+		var/mob/living/L = user.pulling
+		if(L.buckled)
+			return
+		L.forceMove(get_turf(src))
+		user_buckle_mob(L, user)
+	else
+		..()
+
 /obj/machinery/power/tesla_coil/tesla_act(var/power)
 	being_shocked = 1
 	//don't lose arc power when it's not connected to anything
@@ -65,6 +81,10 @@
 	icon_state = "grounding_rod"
 	anchored = 0
 	density = 1
+
+	can_buckle = TRUE
+	buckle_lying = FALSE
+	buckle_requires_restraints = TRUE
 
 /obj/machinery/power/grounding_rod/New()
 	..()
@@ -94,6 +114,16 @@
 		return
 
 	return ..()
+
+/obj/machinery/power/grounding_rod/attack_hand(mob/user)
+	if(can_buckle && isliving(user.pulling) && user.a_intent == INTENT_GRAB && !has_buckled_mobs())
+		var/mob/living/L = user.pulling
+		if(L.buckled)
+			return
+		L.forceMove(get_turf(src))
+		user_buckle_mob(L, user)
+	else
+		..()
 
 /obj/machinery/power/grounding_rod/tesla_act(var/power)
 	flick("coil_shock_1", src)
