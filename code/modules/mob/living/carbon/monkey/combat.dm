@@ -20,6 +20,7 @@
 /mob/living/carbon/monkey/proc/IsStandingStill()
 	return resisting || pickpocketing || disposing_body
 
+// blocks
 // taken from /mob/living/carbon/human/interactive/
 /mob/living/carbon/monkey/proc/walk2derpless(target)
 	if(!target || IsStandingStill())
@@ -36,6 +37,12 @@
 						walk_to(src,myPath[1],0,5)
 						myPath -= myPath[1]
 			return 1
+
+	// failed to path correctly so just try to head straight for a bit
+	walk_to(src,get_turf(target),0,5)
+	sleep(1)
+	walk_to(src,0)
+
 	return 0
 
 // taken from /mob/living/carbon/human/interactive/
@@ -142,11 +149,10 @@
 
 		// next to target
 		if(Adjacent(pickupTarget) || Adjacent(pickupTarget.loc))
-			walk2derpless(pickupTarget.loc)
+			addtimer(CALLBACK(src, .proc/walk2derpless, pickupTarget.loc), 0)
 
 			// who cares about these items, i want that one!
-			for(var/obj/item/I in held_items)
-				monkeyDrop(I)
+			drop_all_held_items()
 
 			// on floor
 			if(isturf(pickupTarget.loc))
@@ -168,7 +174,7 @@
 				pickupTarget = null
 				pickupTimer = 0
 			else
-				walk2derpless(pickupTarget.loc)
+				addtimer(CALLBACK(src, .proc/walk2derpless, pickupTarget.loc), 0)
 
 		return TRUE
 
@@ -223,7 +229,7 @@
 				return TRUE
 
 			if(target != null)
-				walk2derpless(target)
+				addtimer(CALLBACK(src, .proc/walk2derpless, target), 0)
 
 			// pickup any nearby weapon
 			if(!pickupTarget && prob(MONKEY_WEAPON_PROB))
@@ -289,7 +295,7 @@
 			if(target != null)
 				walk_away(src, target, MONKEY_ENEMY_VISION, 5)
 			else
-				mode = MONKEY_IDLE
+				back_to_idle()
 
 			return TRUE
 
@@ -302,7 +308,7 @@
 
 			if(target.pulledby != src && !istype(target.pulledby, /mob/living/carbon/monkey/))
 
-				walk2derpless(target.loc)
+				addtimer(CALLBACK(src, .proc/walk2derpless, target.loc), 0)
 
 				if(Adjacent(target) && isturf(target.loc))
 					a_intent = INTENT_GRAB
@@ -315,7 +321,7 @@
 						frustration = 0
 
 			else if(!disposing_body)
-				walk2derpless(bodyDisposal.loc)
+				addtimer(CALLBACK(src, .proc/walk2derpless, bodyDisposal.loc), 0)
 
 				if(Adjacent(bodyDisposal))
 					disposing_body = TRUE
@@ -353,10 +359,15 @@
 	back_to_idle()
 
 /mob/living/carbon/monkey/proc/back_to_idle()
+
+	if(pulling)
+		stop_pulling()
+
 	mode = MONKEY_IDLE
 	target = null
 	a_intent = INTENT_HELP
 	frustration = 0
+	walk_to(src,0)
 
 // attack using a held weapon otherwise bite the enemy, then if we are angry there is a chance we might calm down a little
 /mob/living/carbon/monkey/proc/monkey_attack(mob/living/L)
