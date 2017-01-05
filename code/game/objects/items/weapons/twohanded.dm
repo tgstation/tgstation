@@ -91,7 +91,7 @@
 	if(user)
 		var/obj/item/weapon/twohanded/O = user.get_inactive_held_item()
 		if(istype(O))
-			qdel(O)							//This was O.unwield(user, FALSE), but this is a slightly more definitive solution.
+			O.unwield(user, FALSE)
 	unwield(user)
 
 /obj/item/weapon/twohanded/update_icon()
@@ -123,12 +123,12 @@
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
 /obj/item/weapon/twohanded/offhand/unwield()
-	if(wielded && !qdeleted(src))//Only delete if we're wielded
+	if(wielded)//Only delete if we're wielded
 		wielded = FALSE
 		qdel(src)
 
 /obj/item/weapon/twohanded/offhand/wield()
-	if(wielded && !qdeleted(src))//Only delete if we're wielded
+	if(wielded)//Only delete if we're wielded
 		wielded = FALSE
 		qdel(src)
 
