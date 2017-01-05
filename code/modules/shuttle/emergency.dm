@@ -424,7 +424,7 @@
 	width = 3
 	height = 4
 	var/target_area = /area/lavaland/surface/outdoors
-	var/edge_distance = 4
+	var/edge_distance = 16
 	// Minimal distance from the map edge, setting this too low can result in shuttle landing on the edge and getting "sliced"
 
 /obj/docking_port/stationary/random/initialize()
