@@ -109,11 +109,13 @@ var/datum/subsystem/ticker/ticker
 				current_state = GAME_STATE_FINISHED
 				toggle_ooc(1) // Turn it on
 				declare_completion(force_ending)
-				spawn(50)
-					if(mode.station_was_nuked)
-						world.Reboot("Station destroyed by Nuclear Device.", "end_proper", "nuke")
-					else
-						world.Reboot("Round ended.", "end_proper", "proper completion")
+				addtimer(CALLBACK(src, .proc/NukeCleanup), 50)
+
+/datum/subsystem/ticker/proc/NukeCleanup()
+	if(mode.station_was_nuked)
+		world.Reboot("Station destroyed by Nuclear Device.", "end_proper", "nuke")
+	else
+		world.Reboot("Round ended.", "end_proper", "proper completion")
 
 /datum/subsystem/ticker/proc/setup()
 		//Create and announce mode
