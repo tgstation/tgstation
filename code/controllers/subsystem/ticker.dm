@@ -194,20 +194,22 @@ var/datum/subsystem/ticker/ticker
 			var/datum/holiday/holiday = SSevent.holidays[holidayname]
 			world << "<h4>[holiday.greet()]</h4>"
 
-
-	spawn(0)//Forking here so we dont have to wait for this to finish
-		mode.post_setup()
-		//Cleanup some stuff
-		for(var/obj/effect/landmark/start/S in landmarks_list)
-			//Deleting Startpoints but we need the ai point to AI-ize people later
-			if(S.name != "AI")
-				qdel(S)
-
-		var/list/adm = get_admin_counts()
-		if(!adm["present"])
-			send2irc("Server", "Round just started with no active admins online!")
+	PostSetup()
 
 	return 1
+
+/datum/subsystem/ticker/proc/PostSetup()
+	set waitfor = 0
+	mode.post_setup()
+	//Cleanup some stuff
+	for(var/obj/effect/landmark/start/S in landmarks_list)
+		//Deleting Startpoints but we need the ai point to AI-ize people later
+		if(S.name != "AI")
+			qdel(S)
+
+	var/list/adm = get_admin_counts()
+	if(!adm["present"])
+		send2irc("Server", "Round just started with no active admins online!")
 
 //Plus it provides an easy way to make cinematics for other events. Just use this as a template
 /datum/subsystem/ticker/proc/station_explosion_cinematic(station_missed=0, override = null)
