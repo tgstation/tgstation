@@ -179,7 +179,9 @@ var/const/tk_maxrange = 15
 	O.icon = 'icons/effects/effects.dmi'
 	O.icon_state = "nothing"
 	flick("empdisable",O)
-	QDEL_IN(O, 5)
+	spawn(5)
+		qdel(O)
+
 
 /obj/item/tk_grab/update_icon()
 	cut_overlays()
