@@ -125,7 +125,7 @@ var/global/list/parasites = list() //all currently existing/living guardians
 	src << playstyle_string
 
 /mob/living/simple_animal/hostile/guardian/Life() //Dies if the summoner dies
-	..()
+	. = ..()
 	update_health_hud() //we need to update all of our health displays to match our summoner and we can't practically give the summoner a hook to do it
 	med_hud_set_health()
 	med_hud_set_status()

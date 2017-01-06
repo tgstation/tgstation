@@ -52,6 +52,11 @@
 		var/datum/tech/D = new path()
 		tech_list[D.id] = D
 
+	//Emotes
+	for(var/path in subtypesof(/datum/emote))
+		var/datum/emote/E = new path()
+		emote_list[E.key] = E
+
 	init_subtypes(/datum/crafting_recipe, crafting_recipes)
 
 /* // Uncomment to debug chemical reaction list.

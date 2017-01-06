@@ -110,7 +110,7 @@
 	owner.add_stun_absorption("inathneq", 150, 2, "'s flickering blue aura momentarily intensifies!", "Inath-neq's power absorbs the stun!", " glowing with a flickering blue light!")
 	owner.status_flags |= GODMODE
 	animate(owner, color = oldcolor, time = 150, easing = EASE_IN)
-	addtimer(owner, "update_atom_colour", 150)
+	addtimer(CALLBACK(owner, /atom/proc/update_atom_colour), 150)
 	playsound(owner, 'sound/magic/Ethereal_Enter.ogg', 50, 1)
 
 /datum/status_effect/inathneqs_endowment/on_remove()

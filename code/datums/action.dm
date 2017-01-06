@@ -3,7 +3,6 @@
 #define AB_CHECK_LYING 4
 #define AB_CHECK_CONSCIOUS 8
 
-
 /datum/action
 	var/name = "Generic Action"
 	var/desc = null
@@ -83,19 +82,24 @@
 			return 0
 	return 1
 
-/datum/action/proc/UpdateButtonIcon()
+/datum/action/proc/UpdateButtonIcon(status_only = FALSE)
 	if(button)
-		button.name = name
-		button.desc = desc
-		if(owner && owner.hud_used && background_icon_state == ACTION_BUTTON_DEFAULT_BACKGROUND)
-			var/list/settings = owner.hud_used.get_action_buttons_icons()
-			button.icon = settings["bg_icon"]
-			button.icon_state = settings["bg_state"]
-		else
-			button.icon = button_icon
-			button.icon_state = background_icon_state
+		if(!status_only)
+			button.name = name
+			button.desc = desc
+			if(owner && owner.hud_used && background_icon_state == ACTION_BUTTON_DEFAULT_BACKGROUND)
+				var/list/settings = owner.hud_used.get_action_buttons_icons()
+				if(button.icon != settings["bg_icon"])
+					button.icon = settings["bg_icon"]
+				if(button.icon_state != settings["bg_state"])
+					button.icon_state = settings["bg_state"]
+			else
+				if(button.icon != button_icon)
+					button.icon = button_icon
+				if(button.icon_state != background_icon_state)
+					button.icon_state = background_icon_state
 
-		ApplyIcon(button)
+			ApplyIcon(button)
 
 		if(!IsAvailable())
 			button.color = rgb(128,0,0,128)
@@ -104,14 +108,13 @@
 			return 1
 
 /datum/action/proc/ApplyIcon(obj/screen/movable/action_button/current_button)
-	current_button.cut_overlays()
-	if(icon_icon && button_icon_state)
+	if(icon_icon && button_icon_state && current_button.button_icon_state != button_icon_state)
 		var/image/img
 		img = image(icon_icon, current_button, button_icon_state)
 		img.pixel_x = 0
 		img.pixel_y = 0
-		current_button.add_overlay(img)
-
+		current_button.overlays = list(img)
+		current_button.button_icon_state = button_icon_state
 
 
 //Presets for item actions
@@ -142,19 +145,18 @@
 	return 1
 
 /datum/action/item_action/ApplyIcon(obj/screen/movable/action_button/current_button)
-	current_button.cut_overlays()
-
 	if(button_icon && button_icon_state)
 		// If set, use the custom icon that we set instead
 		// of the item appearence
 		..(current_button)
-	else if(target)
+	else if(target && current_button.appearance_cache != target.appearance) //replace with /ref comparison if this is not valid.
 		var/obj/item/I = target
+		current_button.appearance_cache = I.appearance
 		var/old_layer = I.layer
 		var/old_plane = I.plane
 		I.layer = FLOAT_LAYER //AAAH
 		I.plane = FLOAT_PLANE //^ what that guy said
-		current_button.add_overlay(I)
+		current_button.overlays = list(I)
 		I.layer = old_layer
 		I.plane = old_plane
 
@@ -188,7 +190,7 @@
 /datum/action/item_action/set_internals
 	name = "Set Internals"
 
-/datum/action/item_action/set_internals/UpdateButtonIcon()
+/datum/action/item_action/set_internals/UpdateButtonIcon(status_only = FALSE)
 	if(..()) //button available
 		if(iscarbon(owner))
 			var/mob/living/carbon/C = owner
@@ -213,7 +215,7 @@
 	if(..())
 		UpdateButtonIcon()
 
-/datum/action/item_action/toggle_unfriendly_fire/UpdateButtonIcon()
+/datum/action/item_action/toggle_unfriendly_fire/UpdateButtonIcon(status_only = FALSE)
 	if(istype(target, /obj/item/weapon/hierophant_club))
 		var/obj/item/weapon/hierophant_club/H = target
 		if(H.friendly_fire_check)

@@ -371,6 +371,10 @@
 		S.resources += 49 //refund the whole thing
 	return FALSE //would logically be TRUE, but we don't want AI swarmers eating player spawn chances.
 
+/obj/machinery/hydroponics/soil/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
+	S << "<span class='warning'>This object does not contain enough materials to work with.</span>"
+	return FALSE
+
 ////END CTRL CLICK FOR SWARMERS////
 
 /mob/living/simple_animal/hostile/swarmer/proc/Fabricate(atom/fabrication_object,fabrication_cost = 0)

@@ -46,7 +46,8 @@
 		mode = PRESSURE_OFF
 		flush = 0
 	else
-		mode = PRESSURE_ON
+		if(initial(mode))
+			mode = PRESSURE_ON
 		flush = initial(flush)
 		trunk.linked = src // link the pipe trunk to self
 
@@ -227,7 +228,7 @@
 
 			AM.forceMove(T)
 			AM.pipe_eject(0)
-			AM.throw_at_fast(target, 5, 1)
+			AM.throw_at(target, 5, 1)
 
 		H.vent_gas(loc)
 		qdel(H)
@@ -392,7 +393,7 @@
 	updateDialog()
 
 	if(flush && air_contents.return_pressure() >= SEND_PRESSURE) // flush can happen even without power
-		addtimer(src, "flush", 0)
+		addtimer(CALLBACK(src, .proc/flush), 0)
 
 	if(stat & NOPOWER) // won't charge if no power
 		return

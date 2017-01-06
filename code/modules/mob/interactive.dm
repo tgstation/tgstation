@@ -743,7 +743,7 @@
 		tryWalk(TARGET)
 	LAST_TARGET = TARGET
 	if(alternateProcessing)
-		addtimer(src, "doProcess", processTime)
+		addtimer(CALLBACK(src, .proc/doProcess), processTime)
 
 /mob/living/carbon/human/interactive/proc/favouredObjIn(var/list/inList)
 	var/list/outList = list()

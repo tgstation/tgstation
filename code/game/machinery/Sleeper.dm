@@ -31,7 +31,7 @@
 	update_icon()
 
 /obj/item/weapon/circuitboard/machine/sleeper
-	name = "circuit board (Sleeper)"
+	name = "Sleeper (Machine Board)"
 	build_path = /obj/machinery/sleeper
 	origin_tech = "programming=3;biotech=2;engineering=3"
 	req_components = list(

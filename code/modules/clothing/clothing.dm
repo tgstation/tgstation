@@ -51,7 +51,7 @@
 		M.put_in_hand(src, H.held_index)
 		add_fingerprint(usr)
 
-/obj/item/clothing/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0)
+/obj/item/clothing/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback)
 	if(pockets)
 		pockets.close_all()
 	return ..()
@@ -79,9 +79,10 @@
 		user << "<span class='notice'>You fix the damages on [src] with [C].</span>"
 		return 1
 	if(pockets)
-		return pockets.attackby(W, user, params)
-	else
-		return ..()
+		var/i = pockets.attackby(W, user, params)
+		if(i)
+			return i
+	return ..()
 
 /obj/item/clothing/AltClick(mob/user)
 	if(pockets && pockets.quickdraw && pockets.contents.len && !user.incapacitated())
@@ -580,10 +581,11 @@ BLIND     // can't see anything
 
 /obj/item/clothing/under/examine(mob/user)
 	..()
-	if(adjusted == ALT_STYLE)
-		user << "Alt-click on [src] to wear it normally."
-	else
-		user << "Alt-click on [src] to wear it casually."
+	if(can_adjust)
+		if(adjusted == ALT_STYLE)
+			user << "Alt-click on [src] to wear it normally."
+		else
+			user << "Alt-click on [src] to wear it casually."
 	switch(sensor_mode)
 		if(0)
 			user << "Its sensors appear to be disabled."

@@ -53,13 +53,12 @@
 	name = "Memory Allocation"
 	desc = "Allocates part of your consciousness to a Clockwork Marauder, a vigilent fighter that lives within you, able to be \
 	called forth by Speaking its True Name or if you become exceptionally low on health.<br>\
-	It gains Fatigue as it is attacked, weakening it. Marauders cannot move too far from their hosts, \
-	and will gain Fatigue at an increasing rate as they grow farther away. At maximum Fatigue, the marauder is forced to return to you and will be unable to manifest until its Fatigue is at zero."
+	If it remains close to you, you will gradually regain health up to a low amount, but it will die if it goes too far from you."
 	invocations = list("Fright's will...", "...call forth...")
 	channel_time = 100
 	required_components = list(BELLIGERENT_EYE = 1, VANGUARD_COGWHEEL = 1, GEIS_CAPACITOR = 3)
 	consumed_components = list(BELLIGERENT_EYE = 1, VANGUARD_COGWHEEL = 1, GEIS_CAPACITOR = 2)
-	usage_tip = "Marauders are useful as personal bodyguards and frontline warriors, although they do little damage."
+	usage_tip = "Marauders are useful as personal bodyguards and frontline warriors."
 	tier = SCRIPTURE_APPLICATION
 	primary_component = GEIS_CAPACITOR
 	sort_priority = 3
@@ -75,7 +74,7 @@
 	return create_marauder()
 
 /datum/clockwork_scripture/memory_allocation/proc/create_marauder()
-	invoker.visible_message("<span class='warning'>A yellow tendril appears from [invoker]'s [slab.name] and impales itself in [invoker.p_their()] forehead!</span>", \
+	invoker.visible_message("<span class='warning'>A purple tendril appears from [invoker]'s [slab.name] and impales itself in [invoker.p_their()] forehead!</span>", \
 	"<span class='heavy_brass'>A tendril flies from [slab] into your forehead. You begin waiting while it painfully rearranges your thought pattern...</span>")
 	invoker.notransform = TRUE //Vulnerable during the process
 	slab.busy = "Thought Modification in progress"

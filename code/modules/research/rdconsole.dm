@@ -1069,7 +1069,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 /obj/machinery/computer/rdconsole/robotics/New()
 	..()
 	if(circuit)
-		circuit.name = "circuit board (RD Console - Robotics)"
+		circuit.name = "RD Console - Robotics (Computer Board)"
 		circuit.build_path = /obj/machinery/computer/rdconsole/robotics
 
 /obj/machinery/computer/rdconsole/core

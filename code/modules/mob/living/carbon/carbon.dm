@@ -96,8 +96,10 @@
 	if(hit_atom.density && isturf(hit_atom))
 		Weaken(1)
 		take_bodypart_damage(10)
-	if(iscarbon(hit_atom))
+	if(iscarbon(hit_atom) && hit_atom != src)
 		var/mob/living/carbon/victim = hit_atom
+		if(victim.movement_type & FLYING)
+			return
 		victim.Weaken(1)
 		Weaken(1)
 		victim.take_bodypart_damage(10)

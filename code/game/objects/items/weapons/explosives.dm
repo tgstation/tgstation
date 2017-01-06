@@ -94,7 +94,7 @@
 
 		target.add_overlay(image_overlay, 1)
 		user << "<span class='notice'>You plant the bomb. Timer counting down from [timer].</span>"
-		addtimer(src, "explode", timer * 10)
+		addtimer(CALLBACK(src, .proc/explode), timer * 10)
 
 /obj/item/weapon/c4/proc/explode()
 	if(qdeleted(src))

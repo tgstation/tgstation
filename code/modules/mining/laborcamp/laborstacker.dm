@@ -19,7 +19,7 @@
 	..()
 	Radio = new/obj/item/device/radio(src)
 	Radio.listening = 0
-	addtimer(src, "locate_stacking_machine", 7)
+	addtimer(CALLBACK(src, .proc/locate_stacking_machine), 7)
 
 /obj/machinery/mineral/labor_claim_console/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/card/id/prisoner))
