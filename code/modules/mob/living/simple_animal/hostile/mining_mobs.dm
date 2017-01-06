@@ -732,34 +732,10 @@
 	icon_dead = "goliath_dead"
 	throw_message = "does nothing to the tough hide of the"
 	pre_attack_icon = "goliath2"
-	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab/goliath = 1, /obj/item/stack/sheet/animalhide/goliath_hide = 1, /obj/item/stack/sheet/bone = 1)
+	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab/goliath = 2, /obj/item/stack/sheet/animalhide/goliath_hide = 1, /obj/item/stack/sheet/bone = 2)
 	loot = list()
 	stat_attack = 1
 	robust_searching = 1
-	buckle_lying = 0
-	wanted_objects = list(/obj/item/weapon/reagent_containers/food/snacks, /obj/effect/decal/cleanable/blood/gibs/)
-	search_objects = TRUE
-
-//Goliath pup
-
-/mob/living/simple_animal/hostile/asteroid/goliath/beast/baby
-	name = "goliath pup"
-	desc = "A baby goliath, commonly seen following their mothers."
-	icon_state = "goliath_baby"
-	icon_living = "goliath_baby"
-	icon_aggro = "goliath_baby"
-	icon_dead = "goliath_baby_dead"
-	melee_damage_lower = 1
-	melee_damage_upper = 1
-	health = 50
-	attacktext = "bumps into"
-	pre_attack_icon = "goliath_baby"
-	attack_sound = 'sound/weapons/tap.ogg'
-	ventcrawler = VENTCRAWLER_ALWAYS
-	pass_flags = PASSTABLE | PASSMOB
-	anchored = 0
-	stop_automated_movement_when_pulled = 1
-
 
 
 
@@ -939,12 +915,8 @@
 	if(stat == CONSCIOUS && istype(O, /obj/item/weapon/reagent_containers/glass))
 		udder.milkAnimal(O, user)
 		regenerate_icons()
-	if(seedify(O,-1, src, user))
-		user << "<span class='notice'>You feed [src] some plants, and it vomits up some seeds.</span>"
 	else
 		..()
-
-
 
 /mob/living/simple_animal/hostile/asteroid/gutlunch/AttackingTarget()
 	if(is_type_in_typecache(target,wanted_objects)) //we eats
@@ -996,63 +968,6 @@
 	if(.)
 		udder.reagents.clear_reagents()
 		regenerate_icons()
-
-/mob/living/simple_animal/hostile/poison/gutshank
-	name = "gutshank"
-	desc = "A wild, very dangerous cousin of the domesticated gutlunch. Instead of a milk udder, it has evolved a poison gland."
-	health = 35
-	harm_intent_damage = 5
-	melee_damage_lower = 9
-	melee_damage_upper = 9
-	obj_damage = 0
-	attacktext = "bites"
-	vision_range = 10
-	poison_per_bite = 5
-	poison_type = null
-	icon = 'icons/mob/lavaland/lavaland_monsters.dmi'
-	icon_state = "gutshank"
-	icon_living = "gutshank"
-	icon_dead = "gutshank"
-	faction = list("mining")
-	speak_emote = list("rattles")
-	emote_hear = list("rattles")
-	speak_chance = 5
-	turns_per_move = 5
-	see_in_dark = 10
-	environment_smash = 0
-	attack_sound = 'sound/creatures/rattle.ogg'
-
-	ambush_sound = 'sound/creatures/rattle.ogg'
-	del_on_death = TRUE
-	search_objects = TRUE
-	loot = list(/obj/effect/decal/cleanable/blood/gibs)
-
-
-/mob/living/simple_animal/hostile/poison/gutshank/New()
-	..()
-	add_atom_colour(pick("#E39FBB", "#D97D64", "#CF8C4A"), FIXED_COLOUR_PRIORITY)
-	poison_type = pick("rotatium", "amatoxin", "lexorin")
-
-/mob/living/simple_animal/hostile/poison/gutshank/proc/prepare_ambush(var/obj/machinery/sleeper/S,var/mob/living/carbon/human/H)
-	for(H in range(vision_range, src))
-		if(!H.stat)
-			return
-
-	if(isturf(loc))
-		for(S in view(src,vision_range))
-			if(!S.ambush_inside)
-				walk_to(src, S)
-				if(Adjacent(S)) //if there's no human around, get to a sleeper in range and hide in it
-					S.ambush_inside = src
-					visible_message("<span class='boldannounce'>[src] crawls into the [S]...</span>")
-					S.state_open = FALSE
-					S.update_icon()
-					forceMove(S)
-
-/mob/living/simple_animal/hostile/poison/gutshank/Life()
-	..()
-	prepare_ambush()
-
 
 //Nests
 /mob/living/simple_animal/hostile/spawner/lavaland

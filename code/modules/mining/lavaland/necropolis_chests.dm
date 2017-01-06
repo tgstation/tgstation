@@ -349,7 +349,6 @@
 	desc = "A boat used for traversing lava."
 	icon_state = "goliath_boat"
 	icon = 'icons/obj/lavaland/dragonboat.dmi'
-	keytype = /obj/item/weapon/oar
 	resistance_flags = LAVA_PROOF | FIRE_PROOF
 
 /obj/vehicle/lavaboat/relaymove(mob/user, direction)
@@ -404,11 +403,7 @@
 /obj/vehicle/lavaboat/dragon
 	name = "mysterious boat"
 	desc = "This boat moves where you will it, without the need for an oar."
-	keytype = null
 	icon_state = "dragon_boat"
-	generic_pixel_y = 2
-	generic_pixel_x = 1
-	vehicle_move_delay = 1
 
 //Potion of Flight
 /obj/item/weapon/reagent_containers/glass/bottle/potion

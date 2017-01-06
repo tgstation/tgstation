@@ -134,7 +134,3 @@
 		else
 			visual_effect_icon = ATTACK_EFFECT_SMASH
 	..()
-
-/mob/living/simple_animal/attackby(obj/item/O, mob/user, params)
-	var/datum/taming/D = new
-	D.feed(user, src, O)
