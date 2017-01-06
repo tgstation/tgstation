@@ -338,7 +338,7 @@
 				M.adjustBruteLoss(5)
 				M << "<span class='userdanger'>You're slammed into the floor by [user]!</span>"
 		else
-			PoolOrNew(sparkle_path, list(get_turf(AM), get_dir(user, AM)) //created sparkles will disappear on their own
+			PoolOrNew(sparkle_path, list(get_turf(AM), get_dir(user, AM))) //created sparkles will disappear on their own
 			if(isliving(AM))
 				var/mob/living/M = AM
 				M.Weaken(stun_amt)
