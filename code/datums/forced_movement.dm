@@ -15,11 +15,10 @@
 	allow_climbing = _allow_climbing
 	on_step = _on_step
 
-	last_processed = world.time
-
 	. = ..()
 
-	if(!_victim.force_moving)
+	if(_victim && _target && _steps_per_tick && !_victim.force_moving)
+		last_processed = world.time
 		_victim.force_moving = src
 		START_PROCESSING(SSfastprocess, src)
 	else
