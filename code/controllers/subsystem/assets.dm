@@ -15,7 +15,10 @@ var/datum/subsystem/assets/SSasset
 		A.register()
 
 	for(var/client/C in clients)
-		// Doing this to a client too soon after they've connected can cause issues, also the proc we call sleeps.
-		spawn(10)
-			getFilesSlow(C, cache, FALSE)
+		GiveFilesToClient(C)
 	..()
+
+/datum/subsystem/assets/proc/GiveFilesToClient(client/C)
+	set waitfor = 0
+	sleep(10)	// Doing this to a client too soon after they've connected can cause issues, also the proc we call sleeps.
+	getFilesSlow(C, cache, FALSE)
