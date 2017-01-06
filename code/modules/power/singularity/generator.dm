@@ -18,14 +18,9 @@
 	var/creation_type = /obj/singularity
 
 /obj/machinery/the_singularitygen/attack_hand(mob/user)
-	if(can_buckle && isliving(user.pulling) && user.a_intent == INTENT_GRAB && !has_buckled_mobs())
-		var/mob/living/L = user.pulling
-		if(L.buckled)
-			return
-		L.forceMove(get_turf(src))
-		user_buckle_mob(L, user)
-	else
-		..()
+	if(user.a_intent == INTENT_GRAB && user_buckle_mob(user.pulling, user, check_loc = 0))
+		return
+	..()
 
 /obj/machinery/the_singularitygen/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/wrench))
