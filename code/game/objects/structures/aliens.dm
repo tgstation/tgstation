@@ -130,7 +130,8 @@
 	var/static/list/blacklisted_turfs = typecacheof(list(
 	/turf/open/space,
 	/turf/open/chasm,
-	/turf/open/floor/plating/lava))
+	/turf/open/floor/plating/lava,
+	/turf/open/space/transit,))
 
 /obj/structure/alien/weeds/New()
 	pixel_x = -4
