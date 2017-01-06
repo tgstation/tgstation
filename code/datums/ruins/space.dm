@@ -1,3 +1,5 @@
+// Hey! Listen! Update \config\spaceruinblacklist.txt with your new ruins!
+
 /datum/map_template/ruin/space
 	prefix = "_maps/RandomRuins/SpaceRuins/"
 	cost = 1
@@ -247,3 +249,9 @@
 	suffix = "miracle.dmm"
 	name = "Ordinary Space Tile"
 	description = "Absolutely nothing strange going on here please move along, plenty more space to see right this way!"
+
+/datum/map_template/ruin/space/dragoon
+	id = "dragoon"
+	suffix = "dragoontomb.dmm"
+	name = "Sky Bulge Tomb"
+	description = "A tomb of a dice-loving dragoon in space. Turns out he got too good and jumped too high. Contains the Sky Bulge, which when thrown, warps the thrower."

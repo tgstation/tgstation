@@ -73,7 +73,7 @@ var/datum/events/keycard_events = new()
 	event = event_type
 	waiting = 1
 	keycard_events.fireEvent("triggerEvent", src)
-	addtimer(src, "eventSent", 20)
+	addtimer(CALLBACK(src, .proc/eventSent), 20)
 
 /obj/machinery/keycard_auth/proc/eventSent()
 	triggerer = null
@@ -83,7 +83,7 @@ var/datum/events/keycard_events = new()
 /obj/machinery/keycard_auth/proc/triggerEvent(source)
 	icon_state = "auth_on"
 	event_source = source
-	addtimer(src, "eventTriggered", 20)
+	addtimer(CALLBACK(src, .proc/eventTriggered), 20)
 
 /obj/machinery/keycard_auth/proc/eventTriggered()
 	icon_state = "auth_off"

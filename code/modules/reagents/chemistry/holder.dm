@@ -1,4 +1,4 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:32
+
 
 var/const/TOUCH = 1 //splashing
 var/const/INGEST = 2 //ingestion
@@ -561,12 +561,12 @@ var/const/INJECT = 5 //injection
 
 	if(isnull(amount))
 		amount = 0
-		throw EXCEPTION("null amount passed to reagent code")
+		CRASH("null amount passed to reagent code")
 		return FALSE
 
 	if(!isnum(amount))
 		return FALSE
-	
+
 	if(amount < 0)
 		return FALSE
 
@@ -696,3 +696,13 @@ var/const/INJECT = 5 //injection
 		qdel(reagents)
 	reagents = new/datum/reagents(max_vol)
 	reagents.my_atom = src
+
+/proc/get_random_reagent_id()	// Returns a random reagent ID minus blacklisted reagents
+	var/static/list/random_reagents = list()
+	if(!random_reagents.len)
+		for(var/thing  in subtypesof(/datum/reagent))
+			var/datum/reagent/R = thing
+			if(initial(R.can_synth))
+				random_reagents += initial(R.id)
+	var/picked_reagent = pick(random_reagents)
+	return picked_reagent

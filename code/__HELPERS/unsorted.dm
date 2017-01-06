@@ -1,4 +1,4 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
+
 
 /*
  * A large number of misc global procs.
@@ -283,27 +283,20 @@ Turf and target are seperate in case you want to teleport some distance from a t
 //Returns a list of all items of interest with their name
 /proc/getpois(mobs_only=0,skip_mindless=0)
 	var/list/mobs = sortmobs()
-	var/list/names = list()
-	var/list/pois = list()
 	var/list/namecounts = list()
-
+	var/list/pois = list()
 	for(var/mob/M in mobs)
 		if(skip_mindless && (!M.mind && !M.ckey))
 			if(!isbot(M) && !istype(M, /mob/camera/))
 				continue
 		if(M.client && M.client.holder && M.client.holder.fakekey) //stealthmins
 			continue
-		var/name = M.name
-		if (name in names)
-			namecounts[name]++
-			name = "[name] ([namecounts[name]])"
-		else
-			names.Add(name)
-			namecounts[name] = 1
-		if (M.real_name && M.real_name != M.name)
+		var/name = avoid_assoc_duplicate_keys(M.name, namecounts)
+
+		if(M.real_name && M.real_name != M.name)
 			name += " \[[M.real_name]\]"
-		if (M.stat == 2)
-			if(istype(M, /mob/dead/observer/))
+		if(M.stat == DEAD)
+			if(isobserver(M))
 				name += " \[ghost\]"
 			else
 				name += " \[dead\]"
@@ -313,14 +306,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 		for(var/atom/A in poi_list)
 			if(!A || !A.loc)
 				continue
-			var/name = A.name
-			if (names.Find(name))
-				namecounts[name]++
-				name = "[name] ([namecounts[name]])"
-			else
-				names.Add(name)
-				namecounts[name] = 1
-			pois[name] = A
+			pois[avoid_assoc_duplicate_keys(A.name, namecounts)] = A
 
 	return pois
 //Orders mobs by type then by name
@@ -437,12 +423,15 @@ Turf and target are seperate in case you want to teleport some distance from a t
 		if(M.ckey == key)
 			return M
 
-// Returns the atom sitting on the turf.
-// For example, using this on a disk, which is in a bag, on a mob, will return the mob because it's on the turf.
-/proc/get_atom_on_turf(atom/movable/M)
+//Returns the atom sitting on the turf.
+//For example, using this on a disk, which is in a bag, on a mob, will return the mob because it's on the turf.
+//Optional arg 'type' to stop once it reaches a specific type instead of a turf.
+/proc/get_atom_on_turf(atom/movable/M, stop_type)
 	var/atom/loc = M
 	while(loc && loc.loc && !isturf(loc.loc))
 		loc = loc.loc
+		if(stop_type && istype(loc, stop_type))
+			break
 	return loc
 
 // returns the turf located at the map edge in the specified direction relative to A
@@ -533,12 +522,12 @@ Turf and target are seperate in case you want to teleport some distance from a t
 
 	return 1
 
-/proc/is_blocked_turf(turf/T)
+/proc/is_blocked_turf(turf/T, exclude_mobs)
 	if(T.density)
 		return 1
 	for(var/i in T)
 		var/atom/A = i
-		if(A.density)
+		if(A.density && (!exclude_mobs || !ismob(A)))
 			return 1
 	return 0
 
@@ -795,24 +784,24 @@ var/global/list/common_tools = list(
 
 //For objects that should embed, but make no sense being is_sharp or is_pointed()
 //e.g: rods
+var/list/can_embed_types = typecacheof(list(
+	/obj/item/stack/rods,
+	/obj/item/pipe))
+
 /proc/can_embed(obj/item/W)
 	if(W.is_sharp())
 		return 1
 	if(is_pointed(W))
 		return 1
 
-	var/list/embed_items = list(\
-	/obj/item/stack/rods,\
-	)
-
-	if(is_type_in_list(W, embed_items))
+	if(is_type_in_typecache(W, can_embed_types))
 		return 1
 
 
 /*
 Checks if that loc and dir has a item on the wall
 */
-var/list/WALLITEMS = list(
+var/list/WALLITEMS = typecacheof(list(
 	/obj/machinery/power/apc, /obj/machinery/airalarm, /obj/item/device/radio/intercom,
 	/obj/structure/extinguisher_cabinet, /obj/structure/reagent_dispensers/peppertank,
 	/obj/machinery/status_display, /obj/machinery/requests_console, /obj/machinery/light_switch, /obj/structure/sign,
@@ -820,22 +809,22 @@ var/list/WALLITEMS = list(
 	/obj/machinery/computer/security/telescreen, /obj/machinery/embedded_controller/radio/simple_vent_controller,
 	/obj/item/weapon/storage/secure/safe, /obj/machinery/door_timer, /obj/machinery/flasher, /obj/machinery/keycard_auth,
 	/obj/structure/mirror, /obj/structure/fireaxecabinet, /obj/machinery/computer/security/telescreen/entertainment
-	)
+	))
 
-var/list/WALLITEMS_EXTERNAL = list(
+var/list/WALLITEMS_EXTERNAL = typecacheof(list(
 	/obj/machinery/camera, /obj/structure/camera_assembly,
-	/obj/structure/light_construct, /obj/machinery/light)
+	/obj/structure/light_construct, /obj/machinery/light))
 
-var/list/WALLITEMS_INVERSE = list(
-	/obj/structure/light_construct, /obj/machinery/light)
+var/list/WALLITEMS_INVERSE = typecacheof(list(
+	/obj/structure/light_construct, /obj/machinery/light))
 
 
 /proc/gotwallitem(loc, dir, var/check_external = 0)
 	var/locdir = get_step(loc, dir)
 	for(var/obj/O in loc)
-		if(is_type_in_list(O, WALLITEMS) && check_external != 2)
+		if(is_type_in_typecache(O, WALLITEMS) && check_external != 2)
 			//Direction works sometimes
-			if(is_type_in_list(O, WALLITEMS_INVERSE))
+			if(is_type_in_typecache(O, WALLITEMS_INVERSE))
 				if(O.dir == turn(dir, 180))
 					return 1
 			else if(O.dir == dir)
@@ -846,8 +835,8 @@ var/list/WALLITEMS_INVERSE = list(
 			if(get_turf_pixel(O) == locdir)
 				return 1
 
-		if(is_type_in_list(O, WALLITEMS_EXTERNAL) && check_external)
-			if(is_type_in_list(O, WALLITEMS_INVERSE))
+		if(is_type_in_typecache(O, WALLITEMS_EXTERNAL) && check_external)
+			if(is_type_in_typecache(O, WALLITEMS_INVERSE))
 				if(O.dir == turn(dir, 180))
 					return 1
 			else if(O.dir == dir)
@@ -855,7 +844,7 @@ var/list/WALLITEMS_INVERSE = list(
 
 	//Some stuff is placed directly on the wallturf (signs)
 	for(var/obj/O in locdir)
-		if(is_type_in_list(O, WALLITEMS) && check_external != 2)
+		if(is_type_in_typecache(O, WALLITEMS) && check_external != 2)
 			if(O.pixel_x == 0 && O.pixel_y == 0)
 				return 1
 	return 0
@@ -1328,7 +1317,7 @@ proc/pick_closest_path(value, list/matches = get_fancy_list_of_atom_types())
 
 #define RANDOM_COLOUR (rgb(rand(0,255),rand(0,255),rand(0,255)))
 
-#define QDEL_IN(item, time) addtimer(GLOBAL_PROC, "qdel", time, TIMER_NORMAL, item)
+#define QDEL_IN(item, time) addtimer(CALLBACK(GLOBAL_PROC, /proc/qdel, item), time)
 
 /proc/check_for_cleanbot_bug()
 	var/static/admins_warned //bet you didn't know you could do this!
@@ -1355,3 +1344,29 @@ proc/pick_closest_path(value, list/matches = get_fancy_list_of_atom_types())
 	while(length(str) < 5)
 		str = "0" + str
 	. = str
+
+/atom/proc/Shake(pixelshiftx = 15, pixelshifty = 15, duration = 250)
+	var/initialpixelx = pixel_x
+	var/initialpixely = pixel_y
+	var/shiftx = rand(-pixelshiftx,pixelshiftx)
+	var/shifty = rand(-pixelshifty,pixelshifty)
+	animate(src, pixel_x = pixel_x + shiftx, pixel_y = pixel_y + shifty, time = 0.2, loop = duration)
+	pixel_x = initialpixelx
+	pixel_y = initialpixely
+
+/proc/weightclass2text(var/w_class)
+	switch(w_class)
+		if(WEIGHT_CLASS_TINY)
+			. = "tiny"
+		if(WEIGHT_CLASS_SMALL)
+			. = "small"
+		if(WEIGHT_CLASS_NORMAL)
+			. = "normal-sized"
+		if(WEIGHT_CLASS_BULKY)
+			. = "bulky"
+		if(WEIGHT_CLASS_HUGE)
+			. = "huge"
+		if(WEIGHT_CLASS_GIGANTIC)
+			. = "gigantic"
+		else
+			. = ""

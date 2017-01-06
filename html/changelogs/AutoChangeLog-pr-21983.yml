@@ -1,7 +1,0 @@
-author: "Fox McCloud"
-delete-after: True
-changes: 
-  - rscadd: "The ability to harvest a plant, repeatedly, is now a gene-extractable trait that can be spliced into other plants"
-  - rscadd: "can extract the battery capabilities of potatoes and splice them into other plants"
-  - rscadd: "Plants types are now gene traits that can be added/removed from plants"
-  - rscadd: "Adds new stinging plant trait that will inject a bit of a plant's reagents when thrown at someone"

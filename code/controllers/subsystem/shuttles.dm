@@ -448,11 +448,15 @@ var/datum/subsystem/shuttle/SSshuttle
 	if(!midpoint)
 		return FALSE
 	//world << "Making transit dock at [COORD(midpoint)]"
+	var/area/shuttle/transit/A = new()
+	A.parallax_movedir = travel_dir
 	var/obj/docking_port/stationary/transit/new_transit_dock = new(midpoint)
 	new_transit_dock.assigned_turfs = proposed_zone
 	new_transit_dock.name = "Transit for [M.id]/[M.name]"
 	new_transit_dock.turf_type = transit_path
 	new_transit_dock.owner = M
+	new_transit_dock.assigned_area = A
+
 
 	// Add 180, because ports point inwards, rather than outwards
 	new_transit_dock.setDir(angle2dir(dock_angle))
@@ -461,6 +465,7 @@ var/datum/subsystem/shuttle/SSshuttle
 		var/turf/T = i
 		T.ChangeTurf(transit_path)
 		T.flags &= ~(UNUSED_TRANSIT_TURF)
+		A.contents += T
 
 	M.assigned_transit = new_transit_dock
 	return TRUE

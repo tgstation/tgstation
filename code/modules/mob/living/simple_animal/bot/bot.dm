@@ -22,7 +22,7 @@
 	verb_yell = "alarms"
 	bubble_icon = "machine"
 
-	faction = list("neutral", "silicon")
+	faction = list("neutral", "silicon" , "turret")
 
 	var/obj/machinery/bot_core/bot_core = null
 	var/bot_core_type = /obj/machinery/bot_core
@@ -193,7 +193,7 @@
 	else
 		user << "[src] is in pristine condition."
 
-/mob/living/simple_animal/bot/adjustHealth(amount)
+/mob/living/simple_animal/bot/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
 	if(amount>0 && prob(10))
 		new /obj/effect/decal/cleanable/oil(loc)
 	. = ..()

@@ -78,6 +78,22 @@
 	S.potency = value
 
 
+/datum/plant_gene/core/weed_rate
+	name = "Weed Growth Rate"
+	value = 1
+
+/datum/plant_gene/core/weed_rate/apply_stat(obj/item/seeds/S)
+	S.weed_rate = value
+
+
+/datum/plant_gene/core/weed_chance
+	name = "Weed Vulnerability"
+	value = 5
+
+/datum/plant_gene/core/weed_chance/apply_stat(obj/item/seeds/S)
+	S.weed_chance = value
+
+
 // Reagent genes store reagent ID and reagent ratio. Amount of reagent in the plant = 1 + (potency * rate)
 /datum/plant_gene/reagent
 	name = "Nutriment"
@@ -180,10 +196,6 @@
 	name = "Liquid Contents"
 	examine_line = "<span class='info'>It has a lot of liquid contents inside.</span>"
 	origin_tech = list("biotech" = 5)
-
-/datum/plant_gene/trait/squash/on_slip(obj/item/weapon/reagent_containers/food/snacks/grown/G, mob/living/carbon/target)
-	G.squash(target)
-
 
 /datum/plant_gene/trait/slip
 	// Makes plant slippery, unless it has a grown-type trash. Then the trash gets slippery.
@@ -321,7 +333,7 @@
 	G.reagents.maximum_volume *= rate
 
 /datum/plant_gene/trait/repeated_harvest
-	name = "perennial growth"
+	name = "Perennial Growth"
 
 /datum/plant_gene/trait/repeated_harvest/can_add(obj/item/seeds/S)
 	if(!..())
@@ -331,7 +343,7 @@
 	return TRUE
 
 /datum/plant_gene/trait/battery
-	name = "capacitive cellular production"
+	name = "Capacitive Cell Production"
 
 /datum/plant_gene/trait/battery/on_attackby(obj/item/weapon/reagent_containers/food/snacks/grown/G, obj/item/I, mob/user)
 	if(istype(I, /obj/item/stack/cable_coil))
@@ -359,7 +371,7 @@
 
 
 /datum/plant_gene/trait/stinging
-	name = "hypodermic prickles"
+	name = "Hypodermic Prickles"
 
 /datum/plant_gene/trait/stinging/on_throw_impact(obj/item/weapon/reagent_containers/food/snacks/grown/G, atom/target)
 	if(isliving(target) && G.reagents && G.reagents.total_volume)
@@ -371,12 +383,24 @@
 			G.reagents.trans_to(L, injecting_amount)
 			target << "<span class='danger'>You are pricked by [G]!</span>"
 
+/datum/plant_gene/trait/smoke
+	name = "gaseous decomposition"
+
+/datum/plant_gene/trait/smoke/on_squash(obj/item/weapon/reagent_containers/food/snacks/grown/G, atom/target)
+	var/datum/effect_system/smoke_spread/chem/S = new
+	var/splat_location = get_turf(target)
+	var/smoke_amount = round(sqrt(G.seed.potency * 0.1), 1)
+	S.attach(splat_location)
+	S.set_up(G.reagents, smoke_amount, splat_location, 0)
+	S.start()
+	G.reagents.clear_reagents()
+
 /datum/plant_gene/trait/plant_type // Parent type
 	name = "you shouldn't see this"
 	trait_id = "plant_type"
 
 /datum/plant_gene/trait/plant_type/weed_hardy
-	name = "Robust Species"
+	name = "Weed Adaptation"
 
 /datum/plant_gene/trait/plant_type/fungal_metabolism
 	name = "Fungal Vitality"

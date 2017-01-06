@@ -1,6 +1,6 @@
 /obj/machinery/abductor/experiment
 	name = "experimentation machine"
-	desc = "A large man-sized tube sporting a complex array of surgical apparatus."
+	desc = "A large man-sized tube sporting a complex array of surgical machinery."
 	icon = 'icons/obj/abductor.dmi'
 	icon_state = "experiment-open"
 	density = 0
@@ -36,6 +36,28 @@
 			return
 	if(state_open && !panel_open)
 		..(target)
+
+/obj/machinery/abductor/experiment/relaymove(mob/user)
+	if(user.stat != CONSCIOUS)
+		return
+	container_resist(user)
+
+/obj/machinery/abductor/experiment/container_resist(mob/living/user)
+	var/breakout_time = 600
+	user.changeNext_move(CLICK_CD_BREAKOUT)
+	user.last_special = world.time + CLICK_CD_BREAKOUT
+	user << "<span class='notice'>You lean on the back of [src] and start pushing the door open... (this will take about a minute.)</span>"
+	user.visible_message("<span class='italics'>You hear a metallic creaking from [src]!</span>")
+
+	if(do_after(user,(breakout_time), target = src))
+		if(!user || user.stat != CONSCIOUS || user.loc != src || state_open)
+			return
+
+		visible_message("<span class='warning'>[user] successfully broke out of [src]!</span>")
+		user << "<span class='notice'>You successfully break out of [src]!</span>"
+
+		open_machine()
+
 
 /obj/machinery/abductor/experiment/proc/dissection_icon(mob/living/carbon/human/H)
 	var/icon/photo = null
@@ -177,7 +199,7 @@
 			playsound(src.loc, 'sound/machines/buzz-sigh.ogg', 50, 1)
 			return "<span class='bad'>Experiment failed! No replacement organ detected.</span>"
 	else
-		say("Brain activity nonexistant - disposing sample...")
+		say("Brain activity nonexistent - disposing sample...")
 		open_machine()
 		SendBack(H)
 		return "<span class='bad'>Specimen braindead - disposed.</span>"

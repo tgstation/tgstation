@@ -9,6 +9,8 @@
 	var/d_state = INTACT
 	hardness = 10
 	sheet_type = /obj/item/stack/sheet/plasteel
+	sheet_amount = 1
+	girder_type = /obj/structure/girder/reinforced
 	explosion_block = 2
 
 /turf/closed/wall/r_wall/examine(mob/user)
@@ -29,12 +31,8 @@
 		if(SHEATH)
 			user << "<span class='notice'>The support rods have been <i>sliced through</i>, and the outer sheath is <b>connected loosely</b> to the girder.</span>"
 
-/turf/closed/wall/r_wall/break_wall()
-	builtin_sheet.loc = src
-	return (new /obj/structure/girder/reinforced(src))
-
 /turf/closed/wall/r_wall/devastate_wall()
-	builtin_sheet.loc = src
+	new sheet_type(src, sheet_amount)
 	new /obj/item/stack/sheet/metal(src, 2)
 
 /turf/closed/wall/r_wall/attack_animal(mob/living/simple_animal/M)
@@ -75,7 +73,7 @@
 			if(istype(W, /obj/item/weapon/screwdriver))
 				user << "<span class='notice'>You begin unsecuring the support lines...</span>"
 				playsound(src, W.usesound, 100, 1)
-				if(do_after(user, 40/W.toolspeed, target = src))
+				if(do_after(user, 40*W.toolspeed, target = src))
 					if(!istype(src, /turf/closed/wall/r_wall) || !W || d_state != SUPPORT_LINES)
 						return 1
 					d_state = COVER
@@ -96,7 +94,7 @@
 				if(WT.remove_fuel(0,user))
 					user << "<span class='notice'>You begin slicing through the metal cover...</span>"
 					playsound(src, W.usesound, 100, 1)
-					if(do_after(user, 60/W.toolspeed, target = src))
+					if(do_after(user, 60*W.toolspeed, target = src))
 						if(!istype(src, /turf/closed/wall/r_wall) || !WT || !WT.isOn() || d_state != COVER)
 							return 1
 						d_state = CUT_COVER
@@ -107,7 +105,7 @@
 			if(istype(W, /obj/item/weapon/gun/energy/plasmacutter))
 				user << "<span class='notice'>You begin slicing through the metal cover...</span>"
 				playsound(src, 'sound/items/Welder.ogg', 100, 1)
-				if(do_after(user, 60/W.toolspeed, target = src))
+				if(do_after(user, 60*W.toolspeed, target = src))
 					if(!istype(src, /turf/closed/wall/r_wall) || !W || d_state != COVER)
 						return 1
 					d_state = CUT_COVER
@@ -118,7 +116,7 @@
 			if(istype(W, /obj/item/weapon/screwdriver))
 				user << "<span class='notice'>You begin securing the support lines...</span>"
 				playsound(src, W.usesound, 100, 1)
-				if(do_after(user, 40/W.toolspeed, target = src))
+				if(do_after(user, 40*W.toolspeed, target = src))
 					if(!istype(src, /turf/closed/wall/r_wall) || !W || d_state != COVER)
 						return 1
 					d_state = SUPPORT_LINES
@@ -130,7 +128,7 @@
 			if(istype(W, /obj/item/weapon/crowbar))
 				user << "<span class='notice'>You struggle to pry off the cover...</span>"
 				playsound(src, W.usesound, 100, 1)
-				if(do_after(user, 100/W.toolspeed, target = src))
+				if(do_after(user, 100*W.toolspeed, target = src))
 					if(!istype(src, /turf/closed/wall/r_wall) || !W || d_state != CUT_COVER)
 						return 1
 					d_state = BOLTS
@@ -142,8 +140,8 @@
 				var/obj/item/weapon/weldingtool/WT = W
 				if(WT.remove_fuel(0,user))
 					user << "<span class='notice'>You begin welding the metal cover back to the frame...</span>"
-					playsound(src, 'sound/items/Welder.ogg', 100, 1)
-					if(do_after(user, 60/WT.toolspeed, target = src))
+					playsound(src, WT.usesound, 100, 1)
+					if(do_after(user, 60*WT.toolspeed, target = src))
 						if(!istype(src, /turf/closed/wall/r_wall) || !WT || !WT.isOn() || d_state != CUT_COVER)
 							return 1
 						d_state = COVER
@@ -155,7 +153,7 @@
 			if(istype(W, /obj/item/weapon/wrench))
 				user << "<span class='notice'>You start loosening the anchoring bolts which secure the support rods to their frame...</span>"
 				playsound(src, W.usesound, 100, 1)
-				if(do_after(user, 40/W.toolspeed, target = src))
+				if(do_after(user, 40*W.toolspeed, target = src))
 					if(!istype(src, /turf/closed/wall/r_wall) || !W || d_state != BOLTS)
 						return 1
 					d_state = SUPPORT_RODS
@@ -166,7 +164,7 @@
 			if(istype(W, /obj/item/weapon/crowbar))
 				user << "<span class='notice'>You start to pry the cover back into place...</span>"
 				playsound(src, W.usesound, 100, 1)
-				if(do_after(user, 20/W.toolspeed, target = src))
+				if(do_after(user, 20*W.toolspeed, target = src))
 					if(!istype(src, /turf/closed/wall/r_wall) || !W || d_state != BOLTS)
 						return 1
 					d_state = CUT_COVER
@@ -180,7 +178,7 @@
 				if(WT.remove_fuel(0,user))
 					user << "<span class='notice'>You begin slicing through the support rods...</span>"
 					playsound(src, W.usesound, 100, 1)
-					if(do_after(user, 100/W.toolspeed, target = src))
+					if(do_after(user, 100*W.toolspeed, target = src))
 						if(!istype(src, /turf/closed/wall/r_wall) || !WT || !WT.isOn() || d_state != SUPPORT_RODS)
 							return 1
 						d_state = SHEATH
@@ -191,7 +189,7 @@
 			if(istype(W, /obj/item/weapon/gun/energy/plasmacutter))
 				user << "<span class='notice'>You begin slicing through the support rods...</span>"
 				playsound(src, 'sound/items/Welder.ogg', 100, 1)
-				if(do_after(user, 70/W.toolspeed, target = src))
+				if(do_after(user, 100*W.toolspeed, target = src))
 					if(!istype(src, /turf/closed/wall/r_wall) || !W || d_state != SUPPORT_RODS)
 						return 1
 					d_state = SHEATH
@@ -201,8 +199,8 @@
 
 			if(istype(W, /obj/item/weapon/wrench))
 				user << "<span class='notice'>You start tightening the bolts which secure the support rods to their frame...</span>"
-				playsound(src, 'sound/items/Ratchet.ogg', 100, 1)
-				if(do_after(user, 40/W.toolspeed, target = src))
+				playsound(src, W.usesound, 100, 1)
+				if(do_after(user, 40*W.toolspeed, target = src))
 					if(!istype(src, /turf/closed/wall/r_wall) || !W || d_state != SUPPORT_RODS)
 						return 1
 					d_state = BOLTS
@@ -214,7 +212,7 @@
 			if(istype(W, /obj/item/weapon/crowbar))
 				user << "<span class='notice'>You struggle to pry off the outer sheath...</span>"
 				playsound(src, W.usesound, 100, 1)
-				if(do_after(user, 100/W.toolspeed, target = src))
+				if(do_after(user, 100*W.toolspeed, target = src))
 					if(!istype(src, /turf/closed/wall/r_wall) || !W || d_state != SHEATH)
 						return 1
 					user << "<span class='notice'>You pry off the outer sheath.</span>"
@@ -225,8 +223,8 @@
 				var/obj/item/weapon/weldingtool/WT = W
 				if(WT.remove_fuel(0,user))
 					user << "<span class='notice'>You begin welding the support rods back together...</span>"
-					playsound(src, 'sound/items/Welder.ogg', 100, 1)
-					if(do_after(user, 100/WT.toolspeed, target = src))
+					playsound(src, WT.usesound, 100, 1)
+					if(do_after(user, 100*WT.toolspeed, target = src))
 						if(!istype(src, /turf/closed/wall/r_wall) || !WT || !WT.isOn() || d_state != SHEATH)
 							return 1
 						d_state = SUPPORT_RODS

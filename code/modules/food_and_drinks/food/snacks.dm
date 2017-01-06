@@ -143,6 +143,8 @@
 	if(sharp)
 		if(slice(sharp, W, user))
 			return 1
+	else
+		..()
 
 //Called when you finish tablecrafting a snack.
 /obj/item/weapon/reagent_containers/food/snacks/CheckParts(list/parts_list, datum/crafting_recipe/food/R)

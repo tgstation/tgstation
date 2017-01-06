@@ -87,30 +87,30 @@
 		var/old_icon_state1 = T.icon_state
 		var/old_icon1 = T.icon
 
-		var/turf/X = new T.type(B)
-		X.setDir(old_dir1)
-		X.icon = old_icon1
-		X.icon_state = old_icon_state1
+		B.ChangeTurf(T.type)
+		B.setDir(old_dir1)
+		B.icon = old_icon1
+		B.icon_state = old_icon_state1
 
 		for(var/obj/O in T)
-			var/obj/O2 = DuplicateObject(O , perfectcopy=TRUE, newloc = X, nerf=nerf_weapons, holoitem=TRUE)
+			var/obj/O2 = DuplicateObject(O , perfectcopy=TRUE, newloc = B, nerf=nerf_weapons, holoitem=TRUE)
 			if(!O2) continue
 			copiedobjs += O2.GetAllContents()
 
 		for(var/mob/M in T)
 			if(istype(M, /mob/camera)) continue // If we need to check for more mobs, I'll add a variable
-			var/mob/SM = DuplicateObject(M , perfectcopy=TRUE, newloc = X, holoitem=TRUE)
+			var/mob/SM = DuplicateObject(M , perfectcopy=TRUE, newloc = B, holoitem=TRUE)
 			copiedobjs += SM.GetAllContents()
 
 		var/global/list/forbidden_vars = list("type","stat","loc","locs","vars", "parent", "parent_type","verbs","ckey","key","x","y","z","contents", "luminosity")
 		for(var/V in T.vars - forbidden_vars)
 			if(V == "air")
-				var/turf/open/O1 = X
+				var/turf/open/O1 = B
 				var/turf/open/O2 = T
 				O1.air.copy_from(O2.air)
 				continue
-			X.vars[V] = T.vars[V]
-		toupdate += X
+			B.vars[V] = T.vars[V]
+		toupdate += B
 
 	if(toupdate.len)
 		for(var/turf/T1 in toupdate)

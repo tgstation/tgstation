@@ -22,7 +22,7 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 
 	obj_integrity = 200
 	max_integrity = 200
-	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 0, acid = 0)
+
 
 	var/hitsound = null
 	var/usesound = null
@@ -38,8 +38,8 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 	var/max_heat_protection_temperature //Set this variable to determine up to which temperature (IN KELVIN) the item protects against heat damage. Keep at null to disable protection. Only protects areas set by heat_protection flags
 	var/min_cold_protection_temperature //Set this variable to determine down to which temperature (IN KELVIN) the item protects against cold damage. 0 is NOT an acceptable number due to if(varname) tests!! Keep at null to disable protection. Only protects areas set by cold_protection flags
 
-	var/list/actions = list() //list of /datum/action's that this item has.
-	var/list/actions_types = list() //list of paths of action datums to give to the item on New().
+	var/list/actions //list of /datum/action's that this item has.
+	var/list/actions_types //list of paths of action datums to give to the item on New().
 
 	//Since any item can now be a piece of clothing, this has to be put here so all items share it.
 	var/flags_inv //This flag is used to determine when items in someone's inventory cover others. IE helmets making it so you can't see glasses, etc.
@@ -58,11 +58,11 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 	var/strip_delay = 40
 	var/put_on_delay = 20
 	var/breakouttime = 0
-	var/list/materials = list()
+	var/list/materials
 	var/origin_tech = null	//Used by R&D to determine what research bonuses it grants.
 	var/needs_permit = 0			//Used by security bots to determine if this item is safe for public use.
 
-	var/list/attack_verb = list() //Used in attackby() to say how something was attacked "[x] has been [z.attack_verb] by [y] with [z]"
+	var/list/attack_verb //Used in attackby() to say how something was attacked "[x] has been [z.attack_verb] by [y] with [z]"
 	var/list/species_exception = null	// list() of species types, if a species cannot put items in a certain slot, but species type is in list, it will be able to wear that item
 
 	var/suittoggled = 0
@@ -98,20 +98,15 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 	// non-clothing items
 	var/datum/dog_fashion/dog_fashion = null
 
-
-/obj/item/proc/check_allowed_items(atom/target, not_inside, target_self)
-	if(((src in target) && !target_self) || (!isturf(target.loc) && !isturf(target) && not_inside))
-		return 0
-	else
-		return 1
-
-/obj/item/device
-	icon = 'icons/obj/device.dmi'
-
 /obj/item/New()
+	if (!armor)
+		armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 0, acid = 0)
+	if (!materials)
+		materials = list()
 	..()
 	for(var/path in actions_types)
 		new path(src)
+	actions_types = null
 
 /obj/item/Destroy()
 	if(ismob(loc))
@@ -120,6 +115,15 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 	for(var/X in actions)
 		qdel(X)
 	return ..()
+
+/obj/item/device
+	icon = 'icons/obj/device.dmi'
+
+/obj/item/proc/check_allowed_items(atom/target, not_inside, target_self)
+	if(((src in target) && !target_self) || (!isturf(target.loc) && !isturf(target) && not_inside))
+		return 0
+	else
+		return 1
 
 /obj/item/blob_act(obj/structure/blob/B)
 	if(B && B.loc == loc)
@@ -151,29 +155,12 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 
 /obj/item/examine(mob/user) //This might be spammy. Remove?
 	..()
-	var/size
-	switch(src.w_class)
-		if(WEIGHT_CLASS_TINY)
-			size = "tiny"
-		if(WEIGHT_CLASS_SMALL)
-			size = "small"
-		if(WEIGHT_CLASS_NORMAL)
-			size = "normal-sized"
-		if(WEIGHT_CLASS_BULKY)
-			size = "bulky"
-		if(WEIGHT_CLASS_HUGE)
-			size = "huge"
-		if(WEIGHT_CLASS_GIGANTIC)
-			size = "gigantic"
-		else
-	//if ((CLUMSY in usr.mutations) && prob(50)) t = "funny-looking"
-
 	var/pronoun
 	if(src.gender == PLURAL)
 		pronoun = "They are"
 	else
 		pronoun = "It is"
-
+	var/size = weightclass2text(src.w_class)
 	user << "[pronoun] a [size] item." //e.g. They are a small item. or It is a bulky item.
 
 	if(user.research_scanner) //Mob has a research scanner active.
@@ -301,38 +288,44 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 
 // Due to storage type consolidation this should get used more now.
 // I have cleaned it up a little, but it could probably use more.  -Sayu
+// The lack of ..() is intentional, do not add one
 /obj/item/attackby(obj/item/weapon/W, mob/user, params)
-	if(istype(W,/obj/item/weapon/storage))
-		var/obj/item/weapon/storage/S = W
-		if(S.use_to_pickup)
-			if(S.collection_mode) //Mode is set to collect multiple items on a tile and we clicked on a valid one.
-				if(isturf(src.loc))
-					var/list/rejections = list()
-					var/success = 0
-					var/failure = 0
+	if(unique_rename && istype(W, /obj/item/weapon/pen))
+		rewrite(user)
+	else
+		if(istype(W,/obj/item/weapon/storage))
+			var/obj/item/weapon/storage/S = W
+			if(S.use_to_pickup)
+				if(S.collection_mode) //Mode is set to collect multiple items on a tile and we clicked on a valid one.
+					if(isturf(src.loc))
+						var/list/rejections = list()
+						var/success = 0
+						var/failure = 0
 
-					for(var/obj/item/I in src.loc)
-						if(S.collection_mode == 2 && !istype(I,src.type)) // We're only picking up items of the target type
-							failure = 1
-							continue
-						if(I.type in rejections) // To limit bag spamming: any given type only complains once
-							continue
-						if(!S.can_be_inserted(I))	// Note can_be_inserted still makes noise when the answer is no
-							rejections += I.type	// therefore full bags are still a little spammy
-							failure = 1
-							continue
+						for(var/obj/item/I in src.loc)
+							if(S.collection_mode == 2 && !istype(I,src.type)) // We're only picking up items of the target type
+								failure = 1
+								continue
+							if(I.type in rejections) // To limit bag spamming: any given type only complains once
+								continue
+							if(!S.can_be_inserted(I, stop_messages = 1))	// Note can_be_inserted still makes noise when the answer is no
+								if(S.contents.len >= S.storage_slots)
+									break
+								rejections += I.type	// therefore full bags are still a little spammy
+								failure = 1
+								continue
 
-						success = 1
-						S.handle_item_insertion(I, 1)	//The 1 stops the "You put the [src] into [S]" insertion message from being displayed.
-					if(success && !failure)
-						user << "<span class='notice'>You put everything [S.preposition] [S].</span>"
-					else if(success)
-						user << "<span class='notice'>You put some things [S.preposition] [S].</span>"
-					else
-						user << "<span class='warning'>You fail to pick anything up with [S]!</span>"
+							success = 1
+							S.handle_item_insertion(I, 1)	//The 1 stops the "You put the [src] into [S]" insertion message from being displayed.
+						if(success && !failure)
+							user << "<span class='notice'>You put everything [S.preposition] [S].</span>"
+						else if(success)
+							user << "<span class='notice'>You put some things [S.preposition] [S].</span>"
+						else
+							user << "<span class='warning'>You fail to pick anything up with [S]!</span>"
 
-			else if(S.can_be_inserted(src))
-				S.handle_item_insertion(src)
+				else if(S.can_be_inserted(src))
+					S.handle_item_insertion(src)
 
 
 // afterattack() and attack() prototypes moved to _onclick/item_attack.dm for consistency
@@ -509,7 +502,7 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 
 /obj/item/singularity_pull(S, current_size)
 	if(current_size >= STAGE_FOUR)
-		throw_at_fast(S,14,3, spin=0)
+		throw_at(S,14,3, spin=0)
 	else ..()
 
 /obj/item/throw_impact(atom/A)
@@ -518,11 +511,16 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 		itempush = 0 //too light to push anything
 	return A.hitby(src, 0, itempush)
 
-/obj/item/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0)
+/obj/item/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback)
 	thrownby = thrower
-	. = ..()
-	throw_speed = initial(throw_speed) //explosions change this.
+	callback = CALLBACK(src, .proc/after_throw, callback) //replace their callback with our own
+	. = ..(target, range, speed, thrower, spin, diagonals_first, callback)
 
+
+/obj/item/proc/after_throw(datum/callback/callback)
+	if (callback) //call the original callback
+		. = callback.Invoke()
+	throw_speed = initial(throw_speed) //explosions change this.
 
 /obj/item/proc/remove_item_from_storage(atom/newLoc) //please use this if you're going to snowflake an item out of a obj/item/weapon/storage
 	if(!newLoc)

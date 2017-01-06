@@ -98,6 +98,8 @@
 	holds_charge = TRUE
 	unique_frequency = TRUE
 	can_flashlight = 0
+	max_mod_capacity = 0
+	empty_state = null
 
 /obj/item/weapon/gun/energy/kinetic_accelerator/crossbow/halloween
 	name = "candy corn crossbow"
@@ -124,12 +126,14 @@
 	item_state = "plasmacutter"
 	origin_tech = "combat=1;materials=3;magnets=2;plasmatech=3;engineering=1"
 	ammo_type = list(/obj/item/ammo_casing/energy/plasma)
-	flags = CONDUCT | OPENCONTAINER
+	flags = CONDUCT
+	container_type = OPENCONTAINER
 	attack_verb = list("attacked", "slashed", "cut", "sliced")
 	force = 12
 	sharpness = IS_SHARP
 	can_charge = 0
 	heat = 3800
+	toolspeed = 0.7 //plasmacutters can be used as welders for a few things, and are faster than standard welders
 
 /obj/item/weapon/gun/energy/plasmacutter/examine(mob/user)
 	..()

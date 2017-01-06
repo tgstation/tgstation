@@ -232,7 +232,7 @@ var/list/airlock_overlays = list()
 			if(cyclelinkedairlock.operating)
 				cyclelinkedairlock.delayed_close_requested = TRUE
 			else
-				addtimer(cyclelinkedairlock, "close", 2)
+				addtimer(CALLBACK(cyclelinkedairlock, .proc/close), 2)
 	..()
 
 
@@ -298,25 +298,26 @@ var/list/airlock_overlays = list()
 		src.secondsBackupPowerLost = 0
 
 // shock user with probability prb (if all connections & power are working)
-// returns 1 if shocked, 0 otherwise
+// returns TRUE if shocked, FALSE otherwise
 // The preceding comment was borrowed from the grille's shock script
 /obj/machinery/door/airlock/proc/shock(mob/user, prb)
 	if(!hasPower())		// unpowered, no shock
-		return 0
+		return FALSE
 	if(hasShocked)
-		return 0	//Already shocked someone recently?
+		return FALSE	//Already shocked someone recently?
 	if(!prob(prb))
-		return 0 //you lucked out, no shock for you
+		return FALSE //you lucked out, no shock for you
 	var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 	s.set_up(5, 1, src)
 	s.start() //sparks always.
-	if(electrocute_mob(user, get_area(src), src))
-		hasShocked = 1
+	var/tmp/check_range = TRUE
+	if(electrocute_mob(user, get_area(src), src, 1, check_range))
+		hasShocked = TRUE
 		spawn(10)
-			hasShocked = 0
-		return 1
+			hasShocked = FALSE
+		return TRUE
 	else
-		return 0
+		return FALSE
 
 /obj/machinery/door/airlock/update_icon(state=0, override=0)
 	if(operating && !override)
@@ -991,7 +992,7 @@ var/list/airlock_overlays = list()
 						return
 					user << "<span class='notice'>You begin cutting wire shielding...</span>"
 					playsound(loc, WT.usesound, 40, 1)
-					if(do_after(user, 40/WT.toolspeed, 1, target = src))
+					if(do_after(user, 40*WT.toolspeed, 1, target = src))
 						if(!panel_open || !WT.isOn())
 							return
 						playsound(loc, WT.usesound, 50, 1)
@@ -1007,7 +1008,7 @@ var/list/airlock_overlays = list()
 					var/obj/item/weapon/crowbar/W = C
 					user << "<span class='notice'>You started removing inner layer of shielding...</span>"
 					playsound(src, W.usesound, 100, 1)
-					if(do_after(user, 40/W.toolspeed, 1, target = src))
+					if(do_after(user, 40*W.toolspeed, 1, target = src))
 						if(!panel_open)
 							return
 						user.visible_message("<span class='notice'>[user] removed \the [src]'s shielding.</span>",
@@ -1025,7 +1026,7 @@ var/list/airlock_overlays = list()
 						return
 					user << "<span class='notice'>You begin cutting inner layer of shielding...</span>"
 					playsound(loc, WT.usesound, 40, 1)
-					if(do_after(user, 40/WT.toolspeed, 1, target = src))
+					if(do_after(user, 40*WT.toolspeed, 1, target = src))
 						if(!panel_open || !WT.isOn())
 							return
 						playsound(loc, WT.usesound, 50, 1)
@@ -1039,7 +1040,7 @@ var/list/airlock_overlays = list()
 					var/obj/item/weapon/crowbar/W = C
 					user << "<span class='notice'>You started removing outer layer of shielding...</span>"
 					playsound(src, W.usesound, 100, 1)
-					if(do_after(user, 40/W.toolspeed, 1, target = src))
+					if(do_after(user, 40*W.toolspeed, 1, target = src))
 						if(!panel_open)
 							return
 						user.visible_message("<span class='notice'>[user] removed \the [src]'s shielding.</span>",
@@ -1054,7 +1055,7 @@ var/list/airlock_overlays = list()
 						return
 					user << "<span class='notice'>You begin cutting outer layer of shielding...</span>"
 					playsound(loc, WT.usesound, 40, 1)
-					if(do_after(user, 40/WT.toolspeed, 1, target = src))
+					if(do_after(user, 40*WT.toolspeed, 1, target = src))
 						if(!panel_open || !WT.isOn())
 							return
 						playsound(loc, WT.usesound, 50, 1)
@@ -1065,12 +1066,12 @@ var/list/airlock_overlays = list()
 					return
 			if(AIRLOCK_SECURITY_PLASTEEL)
 				if(istype(C, /obj/item/weapon/wirecutters))
-					var/obj/item/weapon/W = C
+					var/obj/item/weapon/wirecutters/W = C
 					if(src.hasPower() && src.shock(user, 60)) // Protective grille of wiring is electrified
 						return
-					user << "<span class='notice'>You started cutting through outer grille</span>"
+					user << "<span class='notice'>You start cutting through outer grille.</span>"
 					playsound(src, W.usesound, 100, 1)
-					if(do_after(user, 10, 1, target = src))
+					if(do_after(user, 10*W.toolspeed, 1, target = src))
 						if(!panel_open)
 							return
 						user.visible_message("<span class='notice'>[user] cut through \the [src]'s outer grille.</span>",
@@ -1119,8 +1120,8 @@ var/list/airlock_overlays = list()
 			user.visible_message("[user] is [welded ? "unwelding":"welding"] the airlock.", \
 							"<span class='notice'>You begin [welded ? "unwelding":"welding"] the airlock...</span>", \
 							"<span class='italics'>You hear welding.</span>")
-			playsound(loc, 'sound/items/Welder.ogg', 40, 1)
-			if(do_after(user,40/W.toolspeed, 1, target = src))
+			playsound(loc, W.usesound, 40, 1)
+			if(do_after(user,40*W.toolspeed, 1, target = src))
 				if(density && !operating)//Door must be closed to weld.
 					if(!user || !W || !W.isOn() || !user.loc )
 						return
@@ -1139,7 +1140,7 @@ var/list/airlock_overlays = list()
 	if(panel_open && charge)
 		user << "<span class='notice'>You carefully start removing [charge] from [src]...</span>"
 		playsound(get_turf(src), I.usesound, 50, 1)
-		if(!do_after(user, 150/I.toolspeed, target = src))
+		if(!do_after(user, 150*I.toolspeed, target = src))
 			user << "<span class='warning'>You slip and [charge] detonates!</span>"
 			charge.ex_act(1)
 			user.Weaken(3)
@@ -1153,7 +1154,7 @@ var/list/airlock_overlays = list()
 		playsound(src.loc, I.usesound, 100, 1)
 		user.visible_message("[user] removes the electronics from the airlock assembly.", \
 							 "<span class='notice'>You start to remove electronics from the airlock assembly...</span>")
-		if(do_after(user,40/I.toolspeed, target = src))
+		if(do_after(user,40*I.toolspeed, target = src))
 			if(src.loc)
 				deconstruct(TRUE, user)
 				return
@@ -1243,9 +1244,9 @@ var/list/airlock_overlays = list()
 		playsound(src.loc, 'sound/machines/airlockforced.ogg', 30, 1)
 
 	if(autoclose && normalspeed)
-		addtimer(src, "autoclose", 150)
+		addtimer(CALLBACK(src, .proc/autoclose), 150)
 	else if(autoclose && !normalspeed)
-		addtimer(src, "autoclose", 15)
+		addtimer(CALLBACK(src, .proc/autoclose), 15)
 
 	if(!density)
 		return 1
@@ -1265,7 +1266,7 @@ var/list/airlock_overlays = list()
 	update_freelook_sight()
 	if(delayed_close_requested)
 		delayed_close_requested = FALSE
-		addtimer(src, "close", 2)
+		addtimer(CALLBACK(src, .proc/close), 2)
 	return 1
 
 
@@ -1278,7 +1279,7 @@ var/list/airlock_overlays = list()
 	if(safe)
 		for(var/atom/movable/M in get_turf(src))
 			if(M.density && M != src) //something is blocking the door
-				addtimer(src, "autoclose", 60)
+				addtimer(CALLBACK(src, .proc/autoclose), 60)
 				return
 
 	if(forced < 2)

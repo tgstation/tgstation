@@ -30,6 +30,7 @@
 	anchored = 1
 	density = 1
 	resistance_flags = FIRE_PROOF
+	CanAtmosPass = ATMOS_PASS_DENSITY
 	var/obj/machinery/power/turbine/turbine
 	var/datum/gas_mixture/gas_contained
 	var/turf/inturf
@@ -49,6 +50,7 @@
 	anchored = 1
 	density = 1
 	resistance_flags = FIRE_PROOF
+	CanAtmosPass = ATMOS_PASS_DENSITY
 	var/opened = 0
 	var/obj/machinery/power/compressor/compressor
 	var/turf/outturf
@@ -76,7 +78,7 @@
 	inturf = get_step(src, dir)
 
 /obj/item/weapon/circuitboard/machine/power_compressor
-	name = "circuit board (Power Compressor)"
+	name = "Power Compressor (Machine Board)"
 	build_path = /obj/machinery/power/compressor
 	origin_tech = "programming=4;powerstorage=4;engineering=4"
 	req_components = list(
@@ -132,9 +134,6 @@
 		return
 
 	default_deconstruction_crowbar(I)
-
-/obj/machinery/power/compressor/CanAtmosPass(turf/T)
-	return !density
 
 /obj/machinery/power/compressor/process()
 	if(!turbine)
@@ -195,7 +194,7 @@
 	outturf = get_step(src, dir)
 
 /obj/item/weapon/circuitboard/machine/power_turbine
-	name = "circuit board (Power Turbine)"
+	name = "Power Turbine (Machine Board)"
 	build_path = /obj/machinery/power/turbine
 	origin_tech = "programming=4;powerstorage=4;engineering=4"
 	req_components = list(
@@ -220,9 +219,6 @@
 	compressor = locate() in get_step(src, get_dir(outturf, src))
 	if(compressor)
 		compressor.locate_machinery()
-
-/obj/machinery/power/turbine/CanAtmosPass(turf/T)
-	return !density
 
 /obj/machinery/power/turbine/process()
 

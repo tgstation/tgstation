@@ -277,7 +277,7 @@
 
 /turf/open/check_tile_is_border()
 	for(var/atom/movable/AM in src)
-		if(!AM.CanAtmosPass(src))
+		if(!CANATMOSPASS(AM, src))
 			return BORDER_2NDTILE
 
 	return BORDER_NONE

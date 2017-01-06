@@ -143,13 +143,14 @@
 /datum/clockwork_scripture/geis
 	name = "Geis Conversion"
 	invocations = list("Enlighten this heathen!", "All are insects before Engine!", "Purge all untruths and honor Engine.")
-	channel_time = 50
+	channel_time = 49
 	tier = SCRIPTURE_PERIPHERAL
 	var/mob/living/target
 	var/obj/structure/destructible/clockwork/geis_binding/binding
 
 /datum/clockwork_scripture/geis/Destroy()
-	qdel(binding)
+	if(binding && !qdeleted(binding))
+		qdel(binding)
 	return ..()
 
 /datum/clockwork_scripture/geis/can_recite()
@@ -209,14 +210,14 @@
 	var/invoker_old_color = invoker.color
 	invoker.color = "#AF0AAF"
 	animate(invoker, color = invoker_old_color, time = flee_time+grace_period)
-	addtimer(invoker, "update_atom_colour", flee_time+grace_period)
+	addtimer(CALLBACK(invoker, /atom/proc/update_atom_colour), flee_time+grace_period)
 	if(chant_number != chant_amount) //if this is the last chant, we don't have a movement period because the chant is over
 		var/endtime = world.time + flee_time
 		var/starttime = world.time
 		progbar = new(invoker, flee_time, invoker)
 		progbar.bar.color = "#AF0AAF"
 		animate(progbar.bar, color = initial(progbar.bar.color), time = flee_time+grace_period)
-		while(world.time < endtime)
+		while(world.time < endtime && invoker && slab && invoker.get_active_held_item() == slab)
 			sleep(1)
 			progbar.update(world.time - starttime)
 		qdel(progbar)
@@ -266,15 +267,16 @@
 	quickbind = TRUE
 	quickbind_desc = "Creates a Tinkerer's Cache, which stores components globally for slab access."
 
-/datum/clockwork_scripture/create_object/tinkerers_cache/New()
+/datum/clockwork_scripture/create_object/tinkerers_cache/creation_update()
 	var/cache_cost_increase = min(round(clockwork_caches*0.25), 5)
+	required_components = list(BELLIGERENT_EYE = 0, VANGUARD_COGWHEEL = 0, GEIS_CAPACITOR = 0, REPLICANT_ALLOY = 2, HIEROPHANT_ANSIBLE = 0)
+	consumed_components = list(BELLIGERENT_EYE = 0, VANGUARD_COGWHEEL = 0, GEIS_CAPACITOR = 0, REPLICANT_ALLOY = 1, HIEROPHANT_ANSIBLE = 0)
 	for(var/i in required_components)
 		if(i != REPLICANT_ALLOY)
 			required_components[i] += cache_cost_increase
 	for(var/i in consumed_components)
 		if(i != REPLICANT_ALLOY)
 			consumed_components[i] += cache_cost_increase
-	return ..()
 
 
 //Wraith Spectacles: Creates a pair of wraith spectacles, which grant xray vision but damage vision slowly.

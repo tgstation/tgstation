@@ -17,7 +17,7 @@
 	B.apply_default_parts(src)
 
 /obj/item/weapon/circuitboard/machine/recharger
-	name = "circuit board (Weapon Recharger)"
+	name = "Weapon Recharger (Machine Board)"
 	build_path = /obj/machinery/recharger
 	origin_tech = "powerstorage=4;engineering=3;materials=4"
 	req_components = list(/obj/item/weapon/stock_parts/capacitor = 1)
@@ -34,7 +34,7 @@
 		anchored = !anchored
 		power_change()
 		user << "<span class='notice'>You [anchored ? "attached" : "detached"] [src].</span>"
-		playsound(loc, 'sound/items/Ratchet.ogg', 75, 1)
+		playsound(loc, G.usesound, 75, 1)
 		return
 
 	var/allowed = is_type_in_list(G, allowed_devices)

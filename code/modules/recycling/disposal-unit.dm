@@ -46,7 +46,8 @@
 		mode = PRESSURE_OFF
 		flush = 0
 	else
-		mode = PRESSURE_ON
+		if(initial(mode))
+			mode = PRESSURE_ON
 		flush = initial(flush)
 		trunk.linked = src // link the pipe trunk to self
 
@@ -77,7 +78,7 @@
 				mode = SCREWS_OUT
 			else
 				mode = PRESSURE_OFF
-			playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+			playsound(src.loc, I.usesound, 50, 1)
 			user << "<span class='notice'>You [mode == SCREWS_OUT ? "remove":"attach"] the screws around the power connection.</span>"
 			return
 		else if(istype(I,/obj/item/weapon/weldingtool) && mode == SCREWS_OUT)
@@ -85,7 +86,7 @@
 			if(W.remove_fuel(0,user))
 				playsound(src.loc, 'sound/items/Welder2.ogg', 100, 1)
 				user << "<span class='notice'>You start slicing the floorweld off \the [src]...</span>"
-				if(do_after(user,20/I.toolspeed, target = src) && mode == SCREWS_OUT)
+				if(do_after(user,20*I.toolspeed, target = src) && mode == SCREWS_OUT)
 					if(!W.isOn())
 						return
 					user << "<span class='notice'>You slice the floorweld off \the [src].</span>"
@@ -227,7 +228,7 @@
 
 			AM.forceMove(T)
 			AM.pipe_eject(0)
-			AM.throw_at_fast(target, 5, 1)
+			AM.throw_at(target, 5, 1)
 
 		H.vent_gas(loc)
 		qdel(H)
@@ -392,7 +393,7 @@
 	updateDialog()
 
 	if(flush && air_contents.return_pressure() >= SEND_PRESSURE) // flush can happen even without power
-		addtimer(src, "flush", 0)
+		addtimer(CALLBACK(src, .proc/flush), 0)
 
 	if(stat & NOPOWER) // won't charge if no power
 		return

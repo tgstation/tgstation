@@ -206,6 +206,20 @@
 	if(start)
 		return findtextEx(text, suffix, start, null)
 
+//Checks if any of a given list of needles is in the haystack
+/proc/text_in_list(haystack, list/needle_list, start=1, end=0)
+	for(var/needle in needle_list)
+		if(findtext(haystack, needle, start, end))
+			return 1
+	return 0
+
+//Like above, but case sensitive
+/proc/text_in_list_case(haystack, list/needle_list, start=1, end=0)
+	for(var/needle in needle_list)
+		if(findtextEx(haystack, needle, start, end))
+			return 1
+	return 0
+
 //Adds 'u' number of zeros ahead of the text 't'
 /proc/add_zero(t, u)
 	while (length(t) < u)
@@ -438,3 +452,98 @@ var/list/binary = list("0","1")
 			ca -= 13
 		result += ascii2text(ca)
 	return jointext(result, "")
+
+//Takes a list of values, sanitizes it down for readability and character count,
+//then exports it as a json file at data/npc_saves/[filename].json.
+//As far as SS13 is concerned this is write only data. You can't change something
+//in the json file and have it be reflected in the in game item/mob it came from.
+//(That's what things like savefiles are for) Note that this list is not shuffled.
+/proc/twitterize(list/proposed, filename, cullshort = 1, storemax = 1000)
+	if(!islist(proposed) || !filename || !config.log_twitter)
+		return
+
+	//Regular expressions are, as usual, absolute magic
+	var/regex/is_website = new("http|www.|\[a-z0-9_-]+.(com|org|net|mil|edu)+", "i")
+	var/regex/is_email = new("\[a-z0-9_-]+@\[a-z0-9_-]+.\[a-z0-9_-]+", "i")
+	var/regex/alphanumeric = new("\[a-z0-9]+", "i")
+	var/regex/punctuation = new("\[.!?]+", "i")
+	var/regex/all_invalid_symbols = new("\[^ -~]+")
+
+	var/list/accepted = list()
+	for(var/string in proposed)
+		if(findtext(string,is_website) || findtext(string,is_email) || findtext(string,all_invalid_symbols) || !findtext(string,alphanumeric))
+			continue
+		var/buffer = ""
+		var/early_culling = TRUE
+		for(var/pos = 1, pos <= lentext(string), pos++)
+			var/let = copytext(string, pos, (pos + 1) % lentext(string))
+			if(early_culling && !findtext(let,alphanumeric))
+				continue
+			early_culling = FALSE
+			buffer += let
+		if(!findtext(buffer,alphanumeric))
+			continue
+		var/punctbuffer = ""
+		var/cutoff = lentext(buffer)
+		for(var/pos = lentext(buffer), pos >= 0, pos--)
+			var/let = copytext(buffer, pos, (pos + 1) % lentext(buffer))
+			if(findtext(let,alphanumeric))
+				break
+			if(findtext(let,punctuation))
+				punctbuffer = let + punctbuffer //Note this isn't the same thing as using +=
+				cutoff = pos
+		if(punctbuffer) //We clip down excessive punctuation to get the letter count lower and reduce repeats. It's not perfect but it helps.
+			var/exclaim = FALSE
+			var/question = FALSE
+			var/periods = 0
+			for(var/pos = lentext(punctbuffer), pos >= 0, pos--)
+				var/punct = copytext(punctbuffer, pos, (pos + 1) % lentext(punctbuffer))
+				if(!exclaim && findtext(punct,"!"))
+					exclaim = TRUE
+				if(!question && findtext(punct,"?"))
+					question = TRUE
+				if(!exclaim && !question && findtext(punct,"."))
+					periods += 1
+			if(exclaim)
+				if(question)
+					punctbuffer = "?!"
+				else
+					punctbuffer = "!"
+			else if(question)
+				punctbuffer = "?"
+			else if(periods)
+				if(periods > 1)
+					punctbuffer = "..."
+				else
+					punctbuffer = "" //Grammer nazis be damned
+			buffer = copytext(buffer, 1, cutoff) + punctbuffer
+		if(!findtext(buffer,alphanumeric))
+			continue
+		if(!buffer || lentext(buffer) > 140 || lentext(buffer) <= cullshort || buffer in accepted)
+			continue
+
+		accepted += buffer
+
+	var/log = file("data/npc_saves/[filename].json") //If this line ever shows up as changed in a PR be very careful you aren't being memed on
+	var/list/oldjson = list()
+	var/list/oldentries = list()
+	if(fexists(log))
+		oldjson = json_decode(file2text(log))
+		oldentries = oldjson["data"]
+	if(!isemptylist(oldentries))
+		for(var/string in accepted)
+			for(var/old in oldentries)
+				if(string == old)
+					oldentries.Remove(old) //Line's position in line is "refreshed" until it falls off the in game radar
+					break
+
+	var/list/finalized = list()
+	finalized = accepted.Copy() + oldentries.Copy() //we keep old and unreferenced phrases near the bottom for culling
+	listclearnulls(finalized)
+	if(!isemptylist(finalized) && length(finalized) > storemax)
+		finalized.Cut(storemax + 1)
+	fdel(log)
+
+	var/list/tosend = list()
+	tosend["data"] = finalized
+	log << json_encode(tosend)

@@ -16,7 +16,7 @@
 	B.apply_default_parts(src)
 
 /obj/item/weapon/circuitboard/machine/telesci_pad
-	name = "circuit board (Telepad)"
+	name = "Telepad (Machine Board)"
 	build_path = /obj/machinery/telepad
 	origin_tech = "programming=4;engineering=3;plasmatech=4;bluespace=4"
 	req_components = list(
@@ -75,11 +75,11 @@
 			user << "<span class='caution'>\The [src] is now secured.</span>"
 	else if(istype(W, /obj/item/weapon/screwdriver))
 		if(stage == 0)
-			playsound(src, 'sound/items/Screwdriver.ogg', 50, 1)
+			playsound(src, W.usesound, 50, 1)
 			user << "<span class='caution'>You unscrew the telepad's tracking beacon.</span>"
 			stage = 1
 		else if(stage == 1)
-			playsound(src, 'sound/items/Screwdriver.ogg', 50, 1)
+			playsound(src, W.usesound, 50, 1)
 			user << "<span class='caution'>You screw in the telepad's tracking beacon.</span>"
 			stage = 0
 	else if(istype(W, /obj/item/weapon/weldingtool) && stage == 1)
@@ -87,7 +87,7 @@
 		if(WT.remove_fuel(0,user))
 			playsound(src.loc, 'sound/items/Welder2.ogg', 100, 1)
 			user << "<span class='notice'>You start disassembling [src]...</span>"
-			if(do_after(user,20/WT.toolspeed, target = src))
+			if(do_after(user,20*WT.toolspeed, target = src))
 				if(!WT.isOn())
 					return
 				user << "<span class='notice'>You disassemble [src].</span>"

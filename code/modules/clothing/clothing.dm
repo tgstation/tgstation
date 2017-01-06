@@ -51,14 +51,22 @@
 		M.put_in_hand(src, H.held_index)
 		add_fingerprint(usr)
 
-/obj/item/clothing/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0)
+/obj/item/clothing/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback)
 	if(pockets)
 		pockets.close_all()
 	return ..()
 
 /obj/item/clothing/attack_hand(mob/user)
 	if(pockets && pockets.priority && ismob(loc))
-		pockets.show_to(user)
+		//If we already have the pockets open, close them.
+		if (user.s_active == pockets)
+			pockets.close(user)
+		//Close whatever the user has open and show them the pockets.
+		else
+			if (user.s_active)
+				user.s_active.close(user)
+			pockets.orient2hud(user)
+			pockets.show_to(user)
 	else
 		return ..()
 
@@ -71,9 +79,10 @@
 		user << "<span class='notice'>You fix the damages on [src] with [C].</span>"
 		return 1
 	if(pockets)
-		return pockets.attackby(W, user, params)
-	else
-		return ..()
+		var/i = pockets.attackby(W, user, params)
+		if(i)
+			return i
+	return ..()
 
 /obj/item/clothing/AltClick(mob/user)
 	if(pockets && pockets.quickdraw && pockets.contents.len && !user.incapacitated())
@@ -572,10 +581,11 @@ BLIND     // can't see anything
 
 /obj/item/clothing/under/examine(mob/user)
 	..()
-	if(adjusted == ALT_STYLE)
-		user << "Alt-click on [src] to wear it normally."
-	else
-		user << "Alt-click on [src] to wear it casually."
+	if(can_adjust)
+		if(adjusted == ALT_STYLE)
+			user << "Alt-click on [src] to wear it normally."
+		else
+			user << "Alt-click on [src] to wear it casually."
 	switch(sensor_mode)
 		if(0)
 			user << "Its sensors appear to be disabled."
@@ -685,25 +695,31 @@ BLIND     // can't see anything
 			body_parts_covered |= CHEST
 	return adjusted
 
-/obj/item/clothing/proc/weldingvisortoggle()			//Malk: proc to toggle welding visors on helmets, masks, goggles, etc.
-	if(!can_use(usr))
-		return
+/obj/item/clothing/proc/weldingvisortoggle(mob/user) //proc to toggle welding visors on helmets, masks, goggles, etc.
+	if(!can_use(user))
+		return FALSE
 
-	up ^= 1
-	flags ^= visor_flags
-	flags_inv ^= visor_flags_inv
-	flags_cover ^= initial(flags_cover)
-	icon_state = "[initial(icon_state)][up ? "up" : ""]"
-	usr << "<span class='notice'>You adjust \the [src] [up ? "up" : "down"].</span>"
-	flash_protect ^= initial(flash_protect)
-	tint ^= initial(tint)
+	visor_toggling()
 
-	if(istype(usr, /mob/living/carbon))
-		var/mob/living/carbon/C = usr
+	user << "<span class='notice'>You adjust \the [src] [up ? "up" : "down"].</span>"
+
+	if(iscarbon(user))
+		var/mob/living/carbon/C = user
 		C.head_update(src, forced = 1)
 	for(var/X in actions)
 		var/datum/action/A = X
 		A.UpdateButtonIcon()
+	return TRUE
+
+/obj/item/clothing/proc/visor_toggling() //handles all the actual toggling of flags
+	up = !up
+	flags ^= visor_flags
+	flags_inv ^= visor_flags_inv
+	flags_cover ^= initial(flags_cover)
+	icon_state = "[initial(icon_state)][up ? "up" : ""]"
+	flash_protect ^= initial(flash_protect)
+	tint ^= initial(tint)
+
 
 /obj/item/clothing/proc/can_use(mob/user)
 	if(user && ismob(user))

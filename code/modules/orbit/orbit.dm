@@ -51,8 +51,8 @@
 	if (!targetloc || (!lock && orbiter.loc != lastloc && orbiter.loc != targetloc))
 		orbiter.stop_orbit()
 		return
-
 	orbiter.loc = targetloc
+	orbiter.update_parallax_contents()
 	lastloc = orbiter.loc
 
 
@@ -97,15 +97,6 @@
 /atom/movable/proc/stop_orbit()
 	SpinAnimation(0,0)
 	qdel(orbiting)
-
-/atom/movable/Moved(atom/OldLoc, Dir)
-	..()
-	if (orbiters)
-		for (var/thing in orbiters)
-			var/datum/orbit/O = thing
-			O.Check()
-	if (orbiting)
-		orbiting.Check()
 
 /atom/Destroy(force = FALSE)
 	..()

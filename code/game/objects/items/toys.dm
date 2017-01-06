@@ -43,6 +43,7 @@
 
 /obj/item/toy/balloon/New()
 	create_reagents(10)
+	..()
 
 /obj/item/toy/balloon/attack(mob/living/carbon/human/M, mob/user)
 	return
@@ -361,7 +362,7 @@
 
 /obj/effect/decal/cleanable/ash/snappop_phoenix/New()
 	. = ..()
-	addtimer(src, "respawn", respawn_time)
+	addtimer(CALLBACK(src, .proc/respawn), respawn_time)
 
 /obj/effect/decal/cleanable/ash/snappop_phoenix/proc/respawn()
 	new /obj/item/toy/snappop/phoenix(get_turf(src))
@@ -648,9 +649,6 @@
 	var/card_throw_speed = 3
 	var/card_throw_range = 7
 	var/list/card_attack_verb = list("attacked")
-
-/obj/item/toy/cards/New()
-	..()
 
 /obj/item/toy/cards/proc/apply_card_vars(obj/item/toy/cards/newobj, obj/item/toy/cards/sourceobj) // Applies variables for supporting multiple types of card deck
 	if(!istype(sourceobj))
@@ -1178,6 +1176,7 @@
 
 /obj/item/toy/figure/New()
     desc = "A \"Space Life\" brand [src]."
+    ..()
 
 /obj/item/toy/figure/attack_self(mob/user as mob)
 	if(cooldown <= world.time)
@@ -1278,7 +1277,7 @@
 	toysay = "Smash!"
 
 /obj/item/toy/figure/hop
-	name = "Head of Personel action figure"
+	name = "Head of Personnel action figure"
 	icon_state = "hop"
 	toysay = "Giving out all access!"
 

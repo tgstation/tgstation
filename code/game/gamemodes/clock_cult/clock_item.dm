@@ -10,6 +10,7 @@
 
 /obj/item/clockwork/New()
 	..()
+	ratvar_act()
 	all_clockwork_objects += src
 
 /obj/item/clockwork/Destroy()

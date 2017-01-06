@@ -379,7 +379,7 @@
 /datum/spellbook_entry/item/armor/Buy(mob/living/carbon/human/user,obj/item/weapon/spellbook/book)
 	. = ..()
 	if(.)
-		new /obj/item/clothing/shoes/sandal(get_turf(user)) //In case they've lost them.
+		new /obj/item/clothing/shoes/sandal/magic(get_turf(user)) //In case they've lost them.
 		new /obj/item/clothing/gloves/color/purple(get_turf(user))//To complete the outfit
 
 /datum/spellbook_entry/item/contract
@@ -388,6 +388,19 @@
 	item_path = /obj/item/weapon/antag_spawner/contract
 	log_name = "CT"
 	category = "Assistance"
+
+/datum/spellbook_entry/item/guardian
+	name = "Guardian Deck"
+	desc = "A deck of guardian tarot cards, capable of binding a personal guardian to your body. There are multiple types of guardian available, but all of them will transfer some amount of damage to you. \
+	It would be wise to avoid buying these with anything capable of causing you to swap bodies with others."
+	item_path = /obj/item/weapon/guardiancreator/choose/wizard
+	log_name = "GU"
+	category = "Assistance"
+
+/datum/spellbook_entry/item/guardian/Buy(mob/living/carbon/human/user,obj/item/weapon/spellbook/book)
+	. = ..()
+	if(.)
+		new /obj/item/weapon/paper/guardian/wizard(get_turf(user))
 
 /datum/spellbook_entry/item/bloodbottle
 	name = "Bottle of Blood"

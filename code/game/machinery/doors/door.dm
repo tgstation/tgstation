@@ -11,7 +11,7 @@
 	obj_integrity = 350
 	max_integrity = 350
 	armor = list(melee = 30, bullet = 30, laser = 20, energy = 20, bomb = 10, bio = 100, rad = 100, fire = 80, acid = 70)
-
+	CanAtmosPass = ATMOS_PASS_DENSITY
 
 	var/secondsElectrified = 0
 	var/shockedby = list()
@@ -62,16 +62,19 @@
 /obj/machinery/door/Bumped(atom/AM)
 	if(operating || emagged)
 		return
-
-	if(isliving(AM))
-		var/mob/living/M = AM
-		if(world.time - M.last_bumped <= 10)
-			return	//Can bump-open one airlock per second. This is to prevent shock spam.
-		M.last_bumped = world.time
-		if(M.restrained() && !check_access(null))
+	if(ismob(AM))
+		var/mob/B = AM
+		if((isdrone(B) || iscyborg(B)) && B.stat)
 			return
-		bumpopen(M)
-		return
+		if(isliving(AM))
+			var/mob/living/M = AM
+			if(world.time - M.last_bumped <= 10)
+				return	//Can bump-open one airlock per second. This is to prevent shock spam.
+			M.last_bumped = world.time
+			if(M.restrained() && !check_access(null))
+				return
+			bumpopen(M)
+			return
 
 	if(istype(AM, /obj/mecha))
 		var/obj/mecha/mecha = AM
@@ -95,9 +98,6 @@
 /obj/machinery/door/CanPass(atom/movable/mover, turf/target, height=0)
 	if(istype(mover) && mover.checkpass(PASSGLASS))
 		return !opacity
-	return !density
-
-/obj/machinery/door/CanAtmosPass()
 	return !density
 
 /obj/machinery/door/proc/bumpopen(mob/user)
@@ -186,12 +186,12 @@
 
 /obj/machinery/door/emp_act(severity)
 	if(prob(20/severity) && (istype(src,/obj/machinery/door/airlock) || istype(src,/obj/machinery/door/window)) )
-		open()
+		addtimer(CALLBACK(src, .proc/open), 0)
 	if(prob(40/severity))
 		if(secondsElectrified == 0)
 			secondsElectrified = -1
 			shockedby += "\[[time_stamp()]\]EM Pulse"
-			addtimer(src, "unelectrify", 300)
+			addtimer(CALLBACK(src, .proc/unelectrify), 300)
 	..()
 
 /obj/machinery/door/proc/unelectrify()
@@ -253,7 +253,7 @@
 		for(var/atom/movable/M in get_turf(src))
 			if(M.density && M != src) //something is blocking the door
 				if(autoclose)
-					addtimer(src, "autoclose", 60)
+					addtimer(CALLBACK(src, .proc/autoclose), 60)
 				return
 	operating = 1
 

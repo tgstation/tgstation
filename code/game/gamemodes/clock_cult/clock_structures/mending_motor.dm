@@ -18,9 +18,9 @@
 	var/stored_alloy = 0
 	var/max_alloy = REPLICANT_ALLOY_POWER * 10
 	var/heal_attempts = 4
-	var/list/heal_finish_messages = list("There, all mended!", "Try not to get too damaged.", "No more dents and scratches for you!", "Champions never die.", "All patched up.", \
+	var/static/list/heal_finish_messages = list("There, all mended!", "Try not to get too damaged.", "No more dents and scratches for you!", "Champions never die.", "All patched up.", \
 	"Ah, child, it's okay now.")
-	var/list/heal_failure_messages = list("Pain is temporary.", "What you do for the Justiciar is eternal.", "Bear this for me.", "Be strong, child.", "Please, be careful!", \
+	var/static/list/heal_failure_messages = list("Pain is temporary.", "What you do for the Justiciar is eternal.", "Bear this for me.", "Be strong, child.", "Please, be careful!", \
 	"If you die, you will be remembered.")
 	var/static/list/mending_motor_typecache = typecacheof(list(
 	/obj/structure/destructible/clockwork,
@@ -55,31 +55,61 @@
 		which is equivalent to <b>[stored_alloy]W/[max_alloy]W</b> of power.</span>"
 		user << "<span class='inathneq_small'>It requires at least <b>[MIN_CLOCKCULT_POWER]W</b> to attempt to repair clockwork mobs, structures, or converted silicons.</span>"
 
+/obj/structure/destructible/clockwork/powered/mending_motor/forced_disable(bad_effects)
+	if(active)
+		if(bad_effects)
+			try_use_power(MIN_CLOCKCULT_POWER*2)
+		visible_message("<span class='warning'>[src] emits an airy chuckling sound and falls dark!</span>")
+		toggle()
+		return TRUE
+
+/obj/structure/destructible/clockwork/powered/mending_motor/attack_hand(mob/living/user)
+	if(user.canUseTopic(src, !issilicon(user)) && is_servant_of_ratvar(user))
+		if(total_accessable_power() < MIN_CLOCKCULT_POWER)
+			user << "<span class='warning'>[src] needs more power or replicant alloy to function!</span>"
+			return 0
+		toggle(0, user)
+
+/obj/structure/destructible/clockwork/powered/mending_motor/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/clockwork/component/replicant_alloy) && is_servant_of_ratvar(user))
+		if(stored_alloy + REPLICANT_ALLOY_POWER > max_alloy)
+			user << "<span class='warning'>[src] is too full to accept any more alloy!</span>"
+			return 0
+		playsound(user, 'sound/machines/click.ogg', 50, 1)
+		clockwork_say(user, text2ratvar("Transmute into fuel."), TRUE)
+		user << "<span class='brass'>You force [I] to liquify and pour it into [src]'s compartments. \
+		It now contains <b>[stored_alloy*CLOCKCULT_POWER_TO_ALLOY_MULTIPLIER]/[max_alloy*CLOCKCULT_POWER_TO_ALLOY_MULTIPLIER]</b> units of liquified alloy.</span>"
+		stored_alloy = stored_alloy + REPLICANT_ALLOY_POWER
+		user.drop_item()
+		qdel(I)
+		return 1
+	else
+		return ..()
+
 /obj/structure/destructible/clockwork/powered/mending_motor/process()
 	var/efficiency = get_efficiency_mod()
 	for(var/atom/movable/M in range(7, src))
 		var/turf/T
 		if(isclockmob(M) || istype(M, /mob/living/simple_animal/drone/cogscarab))
 			T = get_turf(M)
-			var/mob/living/simple_animal/hostile/clockwork/marauder/E = M
-			var/is_marauder = istype(E)
-			if(E.health == E.maxHealth || E.stat == DEAD || (is_marauder && !E.fatigue))
+			var/mob/living/simple_animal/S = M
+			if(S.health == S.maxHealth || S.stat == DEAD)
 				continue
 			for(var/i in 1 to heal_attempts)
-				if(E.health < E.maxHealth || (is_marauder && E.fatigue))
+				if(S.health < S.maxHealth)
 					if(try_use_power(MIN_CLOCKCULT_POWER))
-						E.adjustHealth(-(8 * efficiency))
+						S.adjustHealth(-(8 * efficiency))
 						PoolOrNew(/obj/effect/overlay/temp/heal, list(T, "#1E8CE1"))
 					else
-						E << "<span class='inathneq'>\"[text2ratvar(pick(heal_failure_messages))]\"</span>"
+						S << "<span class='inathneq'>\"[text2ratvar(pick(heal_failure_messages))]\"</span>"
 						break
 				else
-					E << "<span class='inathneq'>\"[text2ratvar(pick(heal_finish_messages))]\"</span>"
+					S << "<span class='inathneq'>\"[text2ratvar(pick(heal_finish_messages))]\"</span>"
 					break
 		else if(is_type_in_typecache(M, mending_motor_typecache))
 			T = get_turf(M)
-			var/obj/structure/C = M
-			if(C.obj_integrity == C.max_integrity)
+			var/obj/structure/destructible/clockwork/C = M
+			if(C.obj_integrity == C.max_integrity || (istype(C) && !C.can_be_repaired))
 				continue
 			for(var/i in 1 to heal_attempts)
 				if(C.obj_integrity < C.max_integrity)
@@ -112,29 +142,4 @@
 					break
 	. = ..()
 	if(. < MIN_CLOCKCULT_POWER)
-		visible_message("<span class='warning'>[src] emits an airy chuckling sound and falls dark!</span>")
-		toggle()
-		return
-
-/obj/structure/destructible/clockwork/powered/mending_motor/attack_hand(mob/living/user)
-	if(user.canUseTopic(src, !issilicon(user)) && is_servant_of_ratvar(user))
-		if(total_accessable_power() < MIN_CLOCKCULT_POWER)
-			user << "<span class='warning'>[src] needs more power or replicant alloy to function!</span>"
-			return 0
-		toggle(0, user)
-
-/obj/structure/destructible/clockwork/powered/mending_motor/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/clockwork/component/replicant_alloy) && is_servant_of_ratvar(user))
-		if(stored_alloy + REPLICANT_ALLOY_POWER > max_alloy)
-			user << "<span class='warning'>[src] is too full to accept any more alloy!</span>"
-			return 0
-		playsound(user, 'sound/machines/click.ogg', 50, 1)
-		clockwork_say(user, text2ratvar("Transmute into fuel."), TRUE)
-		user << "<span class='brass'>You force [I] to liquify and pour it into [src]'s compartments. \
-		It now contains <b>[stored_alloy*CLOCKCULT_POWER_TO_ALLOY_MULTIPLIER]/[max_alloy*CLOCKCULT_POWER_TO_ALLOY_MULTIPLIER]</b> units of liquified alloy.</span>"
-		stored_alloy = stored_alloy + REPLICANT_ALLOY_POWER
-		user.drop_item()
-		qdel(I)
-		return 1
-	else
-		return ..()
+		forced_disable(FALSE)

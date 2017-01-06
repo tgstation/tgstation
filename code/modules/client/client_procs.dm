@@ -136,7 +136,7 @@ var/next_external_rsc = 0
 		admins |= src
 		holder.owner = src
 
-	//preferences datum - also holds some persistant data for the client (because we may as well keep these datums to a minimum)
+	//preferences datum - also holds some persistent data for the client (because we may as well keep these datums to a minimum)
 	prefs = preferences_datums[ckey]
 	if(!prefs)
 		prefs = new /datum/preferences(src)
@@ -199,7 +199,7 @@ var/next_external_rsc = 0
 			if(config.allow_panic_bunker_bounce && tdata != "redirect")
 				src << "<span class='notice'>Sending you to [config.panic_server_name].</span>"
 				winset(src, null, "command=.options")
-				src << link("[global.panic_address]?redirect")
+				src << link("[config.panic_address]?redirect")
 			qdel(src)
 			return 0
 
@@ -262,6 +262,9 @@ var/next_external_rsc = 0
 		admins -= src
 	directory -= ckey
 	clients -= src
+	if(movingmob != null)
+		movingmob.client_mobs_in_contents -= mob
+		UNSETEMPTY(movingmob.client_mobs_in_contents)
 	return ..()
 
 /client/Destroy()

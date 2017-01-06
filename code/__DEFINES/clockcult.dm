@@ -14,6 +14,7 @@ var/global/list/all_clockwork_mobs = list() //All clockwork SERVANTS (not creatu
 var/global/list/clockwork_component_cache = list(BELLIGERENT_EYE = 0, VANGUARD_COGWHEEL = 0, GEIS_CAPACITOR = 0, REPLICANT_ALLOY = 0, HIEROPHANT_ANSIBLE = 0) //The pool of components that caches draw from
 var/global/ratvar_awakens = 0 //If Ratvar has been summoned; not a boolean, for proper handling of multiple ratvars
 var/global/clockwork_gateway_activated = FALSE //if a gateway to the celestial derelict has ever been successfully activated
+var/global/list/all_scripture = list() //a list containing scripture instances; not used to track existing scripture
 
 //Scripture tiers and requirements; peripherals should never be used
 #define SCRIPTURE_PERIPHERAL "Peripheral"
@@ -89,9 +90,12 @@ var/global/clockwork_gateway_activated = FALSE //if a gateway to the celestial d
 #define GATEWAY_RATVAR_ARRIVAL 300 //when progress is at or above this, game over ratvar's here everybody go home
 
 //Objective defines
-
 #define CLOCKCULT_GATEWAY "gateway"
 
 #define CLOCKCULT_ESCAPE "escape"
 
 #define CLOCKCULT_SILICONS "silicons"
+
+//misc clockcult stuff
+
+#define MARAUDER_EMERGE_THRESHOLD 65 //marauders cannot emerge unless host is at this% or less health

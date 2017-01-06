@@ -41,7 +41,7 @@
 	B.victim << "<span class='danger'>You feel the captive mind of [src] begin to resist your control.</span>"
 
 	var/delay = rand(150,250) + B.victim.brainloss
-	addtimer(src, "return_control", delay, TIMER_NORMAL, src.loc)
+	addtimer(CALLBACK(src, .proc/return_control, src.loc), delay)
 
 /mob/living/captive_brain/proc/return_control(mob/living/simple_animal/borer/B)
     if(!B || !B.controlling)
@@ -272,7 +272,7 @@ var/total_borer_hosts_needed = 10
 					else
 						src << "<span class='warning'>You start shaking off your lethargy as the sugar leaves your host's blood. This will take about 10 seconds...</span>"
 
-					waketimerid = addtimer(src,"wakeup",10,TIMER_NORMAL)
+					waketimerid = addtimer(CALLBACK(src, "wakeup"), 10)
 			if(controlling)
 
 				if(docile)
@@ -509,7 +509,7 @@ var/total_borer_hosts_needed = 10
 
 	leaving = TRUE
 
-	addtimer(src, "release_host", 100, TIMER_NORMAL)
+	addtimer(CALLBACK(src, .proc/release_host), 100)
 
 /mob/living/simple_animal/borer/proc/release_host()
 	if(!victim || !src || qdeleted(victim) || qdeleted(src))
@@ -633,7 +633,7 @@ var/total_borer_hosts_needed = 10
 	bonding = TRUE
 
 	var/delay = 200+(victim.brainloss*5)
-	addtimer(src, "assume_control", delay, TIMER_NORMAL)
+	addtimer(CALLBACK(src, .proc/assume_control), delay)
 
 /mob/living/simple_animal/borer/proc/assume_control()
 	if(!victim || !src || controlling || victim.stat == DEAD)

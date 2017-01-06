@@ -28,6 +28,7 @@
 
 /obj/item/pizzabox/New()
 	update_icon()
+	..()
 
 /obj/item/pizzabox/Destroy()
 	unprocess()
@@ -191,6 +192,7 @@
 		if(bomb in src)
 			bomb.detonate()
 			unprocess()
+			qdel(src)
 	if(!bomb_active || bomb_defused)
 		if(bomb_defused && bomb in src)
 			bomb.defuse()

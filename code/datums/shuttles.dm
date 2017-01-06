@@ -118,6 +118,13 @@
 	credit_cost = 1000
 	description = "Despite it's namesake, this shuttle is actually only slightly smaller than standard, and still complete with a brig and medbay."
 
+/datum/map_template/shuttle/emergency/scrapheap
+	suffix = "scrapheap"
+	name = "Standby Evacuation Vessel \"Scrapheap Challenge\""
+	credit_cost = -1000
+	description = "Due to a lack of functional emergency shuttles, we bought this second hand from a scrapyard and pressed it into service. Please do not lean to heavily on the exterior windows, they are fragile."
+	admin_notes = "An abomination with no functional medbay, sections missing, and some very fragile windows. Surprisingly airtight."
+
 /datum/map_template/shuttle/emergency/narnar
 	suffix = "narnar"
 	name = "Shuttle 667"
@@ -206,3 +213,10 @@
 /datum/map_template/shuttle/cargo/birdboat
 	suffix = "birdboat"
 	name = "supply shuttle (Birdboat)"
+
+/datum/map_template/shuttle/emergency/delta
+	suffix = "delta"
+	name = "Delta Station Emergency Shuttle"
+	description = "A large shuttle for a large station, this shuttle can comfortably fit all your overpopulation and crowding needs. Complete with all facilities plus additional equipment."
+	admin_notes = "Go big or go home."
+	credit_cost = 7500

@@ -330,7 +330,9 @@
 
 
 /obj/item/weapon/shard/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/weapon/weldingtool))
+	if(istype(I, /obj/item/device/lightreplacer))
+		I.attackby(src, user)
+	else if(istype(I, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = I
 		if(WT.remove_fuel(0, user))
 			var/obj/item/stack/sheet/glass/NG = new (user.loc)
@@ -358,7 +360,6 @@
 				return
 			if(!H.shoes)
 				H.apply_damage(5, BRUTE, picked_def_zone)
-				H.Weaken(3)
 				if(cooldown < world.time - 10) //cooldown to avoid message spam.
 					if(!H.incapacitated())
 						H.visible_message("<span class='danger'>[H] steps in the broken glass!</span>", \
@@ -368,3 +369,4 @@
 								"<span class='userdanger'>You slide on the broken glass!</span>")
 
 					cooldown = world.time
+				H.Weaken(3)

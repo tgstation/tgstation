@@ -261,7 +261,7 @@
 	S.attach(location)
 	playsound(location, 'sound/effects/smoke.ogg', 50, 1, -3)
 	if(S)
-		S.set_up(holder, smoke_radius, 0, location)
+		S.set_up(holder, smoke_radius, location, 0)
 		S.start()
 	if(holder && holder.my_atom)
 		holder.clear_reagents()
@@ -281,7 +281,7 @@
 	S.attach(location)
 	playsound(location, 'sound/effects/smoke.ogg', 50, 1, -3)
 	if(S)
-		S.set_up(holder, smoke_radius, 0, location)
+		S.set_up(holder, smoke_radius, location, 0)
 		S.start()
 	if(holder && holder.my_atom)
 		holder.clear_reagents()
@@ -395,7 +395,7 @@
 	id = "teslium_lightning2"
 	required_temp = 474
 	required_reagents = list("teslium" = 1)
-	
+
 /datum/chemical_reaction/reagent_explosion/nitrous_oxide
 	name = "N2O explosion"
 	id = "n2o_explosion"

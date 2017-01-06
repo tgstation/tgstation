@@ -121,7 +121,7 @@
 		if(default_unfasten_wrench(user, I))
 				return
 
-		if (istype(I, /obj/item/weapon/reagent_containers) && (I.flags & OPENCONTAINER) )
+		if (istype(I, /obj/item/weapon/reagent_containers) && (I.container_type & OPENCONTAINER) )
 				if (!beaker)
 						if(!user.drop_item())
 								return 1

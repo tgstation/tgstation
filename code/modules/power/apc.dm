@@ -47,11 +47,10 @@
 	icon_state = "apc0"
 	anchored = 1
 	use_power = 0
-	req_access = list(access_engine_equip)
+	req_access = null
 	obj_integrity = 200
 	max_integrity = 200
 	integrity_failure = 50
-	armor = list(melee = 20, bullet = 20, laser = 10, energy = 100, bomb = 30, bio = 100, rad = 100, fire = 90, acid = 50)
 	var/area/area
 	var/areastring = null
 	var/obj/item/weapon/stock_parts/cell/cell
@@ -92,7 +91,6 @@
 	var/update_state = -1
 	var/update_overlay = -1
 	var/global/status_overlays = 0
-	var/updating_icon = 0
 	var/global/list/status_overlays_lock
 	var/global/list/status_overlays_charging
 	var/global/list/status_overlays_equipment
@@ -109,6 +107,10 @@
 		terminal.connect_to_network()
 
 /obj/machinery/power/apc/New(turf/loc, var/ndir, var/building=0)
+	if (!req_access)
+		req_access = list(access_engine_equip)
+	if (!armor)
+		armor = list(melee = 20, bullet = 20, laser = 10, energy = 100, bomb = 30, bio = 100, rad = 100, fire = 90, acid = 50)
 	..()
 	apcs_list += src
 
@@ -125,17 +127,14 @@
 
 	pixel_x = (src.tdir & 3)? 0 : (src.tdir == 4 ? 24 : -24)
 	pixel_y = (src.tdir & 3)? (src.tdir ==1 ? 24 : -24) : 0
-	if (building==0)
-		init()
-	else
+	if (building)
 		area = src.loc.loc:master
 		opened = 1
 		operating = 0
 		name = "[area.name] APC"
 		stat |= MAINT
 		src.update_icon()
-		spawn(5)
-			src.update()
+		addtimer(CALLBACK(src, .proc/update), 5)
 
 /obj/machinery/power/apc/Destroy()
 	apcs_list -= src
@@ -170,7 +169,7 @@
 	terminal.setDir(tdir)
 	terminal.master = src
 
-/obj/machinery/power/apc/proc/init()
+/obj/machinery/power/apc/initialize()
 	has_electronics = 2 //installed and secured
 	// is starting with a power cell installed, create it and set its charge level
 	if(cell_type)
@@ -189,8 +188,7 @@
 
 	make_terminal()
 
-	spawn(5)
-		src.update()
+	addtimer(CALLBACK(src, .proc/update), 5)
 
 /obj/machinery/power/apc/examine(mob/user)
 	..()
@@ -217,17 +215,11 @@
 /obj/machinery/power/apc/update_icon()
 	if (!status_overlays)
 		status_overlays = 1
-		status_overlays_lock = new
-		status_overlays_charging = new
-		status_overlays_equipment = new
-		status_overlays_lighting = new
-		status_overlays_environ = new
-
-		status_overlays_lock.len = 2
-		status_overlays_charging.len = 3
-		status_overlays_equipment.len = 4
-		status_overlays_lighting.len = 4
-		status_overlays_environ.len = 4
+		status_overlays_lock = new(2)
+		status_overlays_charging = new(3)
+		status_overlays_equipment = new(4)
+		status_overlays_lighting = new(4)
+		status_overlays_environ = new(4)
 
 		status_overlays_lock[1] = image(icon, "apcox-0")    // 0=blue 1=red
 		status_overlays_lock[2] = image(icon, "apcox-1")
@@ -281,18 +273,20 @@
 
 	if(!(update_state & UPSTATE_ALLGOOD))
 		if(overlays.len)
-			overlays = 0
+			cut_overlays()
 
 	if(update & 2)
 		if(overlays.len)
-			overlays.len = 0
+			cut_overlays()
 		if(!(stat & (BROKEN|MAINT)) && update_state & UPSTATE_ALLGOOD)
-			add_overlay(status_overlays_lock[locked+1])
-			add_overlay(status_overlays_charging[charging+1])
+			var/list/O = list(
+				status_overlays_lock[locked+1],
+				status_overlays_charging[charging+1])
 			if(operating)
-				add_overlay(status_overlays_equipment[equipment+1])
-				add_overlay(status_overlays_lighting[lighting+1])
-				add_overlay(status_overlays_environ[environ+1])
+				O += status_overlays_equipment[equipment+1]
+				O += status_overlays_lighting[lighting+1]
+				O += status_overlays_environ[environ+1]
+			add_overlay(O)
 
 
 /obj/machinery/power/apc/proc/check_updates()
@@ -367,13 +361,7 @@
 
 // Used in process so it doesn't update the icon too much
 /obj/machinery/power/apc/proc/queue_icon_update()
-
-	if(!updating_icon)
-		updating_icon = 1
-		// Start the update
-		spawn(APC_UPDATE_ICON_COOLDOWN)
-			update_icon()
-			updating_icon = 0
+	addtimer(CALLBACK(src, .proc/update_icon), APC_UPDATE_ICON_COOLDOWN, TIMER_UNIQUE)
 
 //attack with an item - open/close cover, insert cell, or (un)lock interface
 
@@ -389,7 +377,7 @@
 					return
 				playsound(src.loc, W.usesound, 50, 1)
 				user << "<span class='notice'>You are trying to remove the power control board...</span>" //lpeters - fixed grammar issues
-				if(do_after(user, 50/W.toolspeed, target = src))
+				if(do_after(user, 50*W.toolspeed, target = src))
 					if (has_electronics==1)
 						has_electronics = 0
 						if (stat & BROKEN)
@@ -525,7 +513,7 @@
 			if (C.get_amount() >= 10 && !terminal && opened && has_electronics > 0)
 				var/turf/T = get_turf(src)
 				var/obj/structure/cable/N = T.get_cable_node()
-				if (prob(50) && electrocute_mob(usr, N, N))
+				if (prob(50) && electrocute_mob(usr, N, N, 1, TRUE))
 					var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 					s.set_up(5, 1, src)
 					s.start()
@@ -564,8 +552,8 @@
 		user.visible_message("[user.name] welds [src].", \
 							"<span class='notice'>You start welding the APC frame...</span>", \
 							"<span class='italics'>You hear welding.</span>")
-		playsound(src.loc, 'sound/items/Welder.ogg', 50, 1)
-		if(do_after(user, 50/W.toolspeed, target = src))
+		playsound(src.loc, WT.usesound, 50, 1)
+		if(do_after(user, 50*W.toolspeed, target = src))
 			if(!src || !WT.remove_fuel(3, user)) return
 			if ((stat & BROKEN) || opened==2)
 				new /obj/item/stack/sheet/metal(loc)
@@ -854,7 +842,7 @@
 		return
 	malf << "Beginning override of APC systems. This takes some time, and you cannot perform other actions during the process."
 	malf.malfhack = src
-	malf.malfhacking = addtimer(malf, "malfhacked", 600, TIMER_NORMAL, src)
+	malf.malfhacking = addtimer(CALLBACK(malf, /mob/living/silicon/ai/.proc/malfhacked, src), 600)
 
 	var/obj/screen/alert/hackingapc/A
 	A = malf.throw_alert("hackingapc", /obj/screen/alert/hackingapc)
@@ -871,9 +859,9 @@
 		return
 	if(src.z != 1)
 		return
-	occupier = new /mob/living/silicon/ai(src,malf.laws,null,1) //DEAR GOD WHY?
+	occupier = new /mob/living/silicon/ai(src, malf.laws, malf) //DEAR GOD WHY?
 	occupier.adjustOxyLoss(malf.getOxyLoss())
-	if(!findtext(occupier.name,"APC Copy"))
+	if(!findtext(occupier.name, "APC Copy"))
 		occupier.name = "[malf.name] APC Copy"
 	if(malf.parent)
 		occupier.parent = malf.parent
@@ -891,13 +879,12 @@
 /obj/machinery/power/apc/proc/malfvacate(forced)
 	if(!occupier)
 		return
-	if(occupier.parent && occupier.parent.stat != 2)
+	if(occupier.parent && occupier.parent.stat != DEAD)
 		occupier.mind.transfer_to(occupier.parent)
 		occupier.parent.shunted = 0
-		occupier.parent.adjustOxyLoss(occupier.getOxyLoss())
+		occupier.parent.setOxyLoss(occupier.getOxyLoss())
 		occupier.parent.cancel_camera()
 		qdel(occupier)
-
 	else
 		occupier << "<span class='danger'>Primary core damaged, unable to return core processes.</span>"
 		if(forced)
@@ -1180,7 +1167,7 @@
 	environ = 0
 	update_icon()
 	update()
-	addtimer(src, "reset", 600, TIMER_NORMAL, APC_RESET_EMP)
+	addtimer(CALLBACK(src, .proc/reset, APC_RESET_EMP), 600)
 	..()
 
 /obj/machinery/power/apc/blob_act(obj/structure/blob/B)
@@ -1223,7 +1210,7 @@
 	s.start()
 	if(isalien(user))
 		return 0
-	if(electrocute_mob(user, src, src))
+	if(electrocute_mob(user, src, src, 1, TRUE))
 		return 1
 	else
 		return 0

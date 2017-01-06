@@ -398,6 +398,7 @@
 /obj/item/weapon/paper/crumpled
 	name = "paper scrap"
 	icon_state = "scrap"
+	slot_flags = null
 
 /obj/item/weapon/paper/crumpled/update_icon()
 	return

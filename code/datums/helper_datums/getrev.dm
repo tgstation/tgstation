@@ -52,7 +52,27 @@ var/global/datum/getrev/revdata = new()
 	src << "Enforce Continuous Rounds: [config.continuous.len] of [config.modes.len] roundtypes"
 	src << "Allow Midround Antagonists: [config.midround_antag.len] of [config.modes.len] roundtypes"
 	if(config.show_game_type_odds)
-		src <<"<b>Game Mode Odds:</b>"
+		src <<"<b>Game Mode Odds at current population:</b>"
+		var/prob_sum = 0
+		var/list/probs = list()
+		var/list/modes = config.gamemode_cache
+		for(var/mode in modes)
+			var/datum/game_mode/M = mode
+			var/ctag = initial(M.config_tag)
+			if(!(ctag in config.probabilities))
+				continue
+			if((config.min_pop[ctag] && (config.min_pop[ctag] > clients.len)) || (initial(M.required_players) > clients.len))
+				continue
+			if(config.max_pop[ctag] && (config.max_pop[ctag] < clients.len))
+				continue
+			probs[ctag] = 1
+			prob_sum += config.probabilities[ctag]
+		for(var/i=1,i<=config.probabilities.len,i++)
+			if(config.probabilities[config.probabilities[i]] > 0 && (config.probabilities[i] in probs))
+				var/percentage = round(config.probabilities[config.probabilities[i]] / prob_sum * 100, 0.1)
+				src << "[config.probabilities[i]] [percentage]%"
+		
+		src <<"<b>All Game Mode Odds:</b>"
 		var/sum = 0
 		for(var/i=1,i<=config.probabilities.len,i++)
 			sum += config.probabilities[config.probabilities[i]]

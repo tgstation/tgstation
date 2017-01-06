@@ -14,6 +14,7 @@
 /obj/structure/toilet/New()
 	open = round(rand(0, 1))
 	update_icon()
+	..()
 
 
 /obj/structure/toilet/attack_hand(mob/living/user)
@@ -74,7 +75,7 @@
 	if(istype(I, /obj/item/weapon/crowbar))
 		user << "<span class='notice'>You start to [cistern ? "replace the lid on the cistern" : "lift the lid off the cistern"]...</span>"
 		playsound(loc, 'sound/effects/stonedoor_openclose.ogg', 50, 1)
-		if(do_after(user, 30/I.toolspeed, target = src))
+		if(do_after(user, 30*I.toolspeed, target = src))
 			user.visible_message("[user] [cistern ? "replaces the lid on the cistern" : "lifts the lid off the cistern"]!", "<span class='notice'>You [cistern ? "replace the lid on the cistern" : "lift the lid off the cistern"]!</span>", "<span class='italics'>You hear grinding porcelain.</span>")
 			cistern = !cistern
 			update_icon()
@@ -147,7 +148,7 @@
 	if(istype(I, /obj/item/weapon/screwdriver))
 		user << "<span class='notice'>You start to [exposed ? "screw the cap back into place" : "unscrew the cap to the drain protector"]...</span>"
 		playsound(loc, 'sound/effects/stonedoor_openclose.ogg', 50, 1)
-		if(do_after(user, 20/I.toolspeed, target = src))
+		if(do_after(user, 20*I.toolspeed, target = src))
 			user.visible_message("[user] [exposed ? "screws the cap back into place" : "unscrew the cap to the drain protector"]!", "<span class='notice'>You [exposed ? "screw the cap back into place" : "unscrew the cap on the drain"]!</span>", "<span class='italics'>You hear metal and squishing noises.</span>")
 			exposed = !exposed
 	else if(exposed)
@@ -219,7 +220,7 @@
 		user << "<span class='notice'>The water temperature seems to be [watertemp].</span>"
 	if(istype(I, /obj/item/weapon/wrench))
 		user << "<span class='notice'>You begin to adjust the temperature valve with \the [I]...</span>"
-		if(do_after(user, 50/I.toolspeed, target = src))
+		if(do_after(user, 50*I.toolspeed, target = src))
 			switch(watertemp)
 				if("normal")
 					watertemp = "freezing"
@@ -453,7 +454,7 @@
 
 	if(istype(O, /obj/item/weapon/reagent_containers))
 		var/obj/item/weapon/reagent_containers/RG = O
-		if(RG.flags & OPENCONTAINER)
+		if(RG.container_type & OPENCONTAINER)
 			RG.reagents.add_reagent("water", min(RG.volume - RG.reagents.total_volume, RG.amount_per_transfer_from_this))
 			user << "<span class='notice'>You fill [RG] from [src].</span>"
 			return 1

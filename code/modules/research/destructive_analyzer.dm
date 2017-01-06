@@ -1,4 +1,4 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:33
+
 
 /*
 Destructive Analyzer
@@ -19,7 +19,7 @@ Note: Must be placed within 3 tiles of the R&D Console
 	B.apply_default_parts(src)
 
 /obj/item/weapon/circuitboard/machine/destructive_analyzer
-	name = "circuit board (Destructive Analyzer)"
+	name = "Destructive Analyzer (Machine Board)"
 	build_path = /obj/machinery/r_n_d/destructive_analyzer
 	origin_tech = "magnets=2;engineering=2;programming=2"
 	req_components = list(

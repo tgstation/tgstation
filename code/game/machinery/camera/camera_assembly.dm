@@ -128,8 +128,8 @@
 	if(!WT.remove_fuel(0, user))
 		return 0
 	user << "<span class='notice'>You start to weld \the [src]...</span>"
-	playsound(src.loc, 'sound/items/Welder.ogg', 50, 1)
-	if(do_after(user, 20, target = src))
+	playsound(src.loc, WT.usesound, 50, 1)
+	if(do_after(user, 20*WT.toolspeed, target = src))
 		if(WT.isOn())
 			playsound(loc, 'sound/items/Welder2.ogg', 50, 1)
 			return 1

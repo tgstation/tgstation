@@ -62,8 +62,8 @@
 	if (istype(W, /obj/item/weapon/wirecutters))
 		if (bulb)
 			user.visible_message("[user] begins to disconnect [src]'s flashbulb.", "<span class='notice'>You begin to disconnect [src]'s flashbulb...</span>")
-			playsound(src.loc, 'sound/items/Wirecutter.ogg', 100, 1)
-			if(do_after(user, 30/W.toolspeed, target = src) && bulb)
+			playsound(src.loc, W.usesound, 100, 1)
+			if(do_after(user, 30*W.toolspeed, target = src) && bulb)
 				user.visible_message("[user] has disconnected [src]'s flashbulb!", "<span class='notice'>You disconnect [src]'s flashbulb.</span>")
 				bulb.forceMove(loc)
 				bulb = null
@@ -83,8 +83,8 @@
 	else if (istype(W, /obj/item/weapon/wrench))
 		if(!bulb)
 			user << "<span class='notice'>You start unsecuring the flasher frame...</span>"
-			playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
-			if(do_after(user, 40/W.toolspeed, target = src))
+			playsound(loc, W.usesound, 50, 1)
+			if(do_after(user, 40*W.toolspeed, target = src))
 				user << "<span class='notice'>You unsecure the flasher frame.</span>"
 				deconstruct(TRUE)
 		else
@@ -173,7 +173,7 @@
 
 /obj/machinery/flasher/portable/attackby(obj/item/weapon/W, mob/user, params)
 	if (istype(W, /obj/item/weapon/wrench))
-		playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
+		playsound(src.loc, W.usesound, 100, 1)
 
 		if (!anchored && !isinspace())
 			user << "<span class='notice'>[src] is now secured.</span>"

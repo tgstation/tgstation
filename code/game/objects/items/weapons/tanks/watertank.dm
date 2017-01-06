@@ -113,7 +113,8 @@
 	amount_per_transfer_from_this = 50
 	possible_transfer_amounts = list(25,50,100)
 	volume = 500
-	flags = NODROP | OPENCONTAINER | NOBLUDGEON
+	flags = NODROP | NOBLUDGEON
+	container_type = OPENCONTAINER
 	slot_flags = 0
 
 	var/obj/item/weapon/watertank/tank
@@ -226,12 +227,13 @@
 	var/nanofrost_cooldown = 0
 
 /obj/item/weapon/extinguisher/mini/nozzle/New(parent_tank)
+	..()
 	if(check_tank_exists(parent_tank, src))
 		tank = parent_tank
 		reagents = tank.reagents
 		max_water = tank.volume
 		loc = tank
-	return
+
 
 /obj/item/weapon/extinguisher/mini/nozzle/Move()
 	..()
@@ -346,7 +348,7 @@
 	var/usage_ratio = 5 //5 unit added per 1 removed
 	var/injection_amount = 1
 	amount_per_transfer_from_this = 5
-	flags = OPENCONTAINER
+	container_type = OPENCONTAINER
 	spillable = 0
 	possible_transfer_amounts = list(5,10,15)
 

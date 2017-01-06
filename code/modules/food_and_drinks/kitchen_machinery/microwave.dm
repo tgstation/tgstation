@@ -26,9 +26,10 @@
 	create_reagents(100)
 	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/microwave(null)
 	B.apply_default_parts(src)
+	..()
 
 /obj/item/weapon/circuitboard/machine/microwave
-	name = "circuit board (Microwave)"
+	name = "Microwave (Machine Board)"
 	build_path = /obj/machinery/microwave
 	origin_tech = "programming=2;magnets=2"
 	req_components = list(
@@ -72,7 +73,7 @@
 				"[user] starts to fix part of the microwave.", \
 				"<span class='notice'>You start to fix part of the microwave...</span>" \
 			)
-			if (do_after(user,20/O.toolspeed, target = src))
+			if (do_after(user,20*O.toolspeed, target = src))
 				user.visible_message( \
 					"[user] fixes part of the microwave.", \
 					"<span class='notice'>You fix part of the microwave.</span>" \
@@ -83,7 +84,7 @@
 				"[user] starts to fix part of the microwave.", \
 				"<span class='notice'>You start to fix part of the microwave...</span>" \
 			)
-			if (do_after(user,20/O.toolspeed, target = src))
+			if (do_after(user,20*O.toolspeed, target = src))
 				user.visible_message( \
 					"[user] fixes the microwave.", \
 					"<span class='notice'>You fix the microwave.</span>" \
@@ -91,7 +92,7 @@
 				src.icon_state = "mw"
 				src.broken = 0 // Fix it!
 				src.dirty = 0 // just to be sure
-				src.flags = OPENCONTAINER
+				src.container_type = OPENCONTAINER
 				return 0 //to use some fuel
 		else
 			user << "<span class='warning'>It's broken!</span>"
@@ -108,7 +109,7 @@
 			src.dirty = 0 // It's clean!
 			src.broken = 0 // just to be sure
 			src.icon_state = "mw"
-			src.flags = OPENCONTAINER
+			src.container_type = OPENCONTAINER
 			src.updateUsrDialog()
 			return 1 // Disables the after-attack so we don't spray the floor/user.
 		else
@@ -129,7 +130,7 @@
 			src.dirty = 0 // It's clean!
 			src.broken = 0 // just to be sure
 			src.icon_state = "mw"
-			src.flags = OPENCONTAINER
+			src.container_type = OPENCONTAINER
 
 	else if(src.dirty==100) // The microwave is all dirty so can't be used!
 		user << "<span class='warning'>It's dirty!</span>"

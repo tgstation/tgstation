@@ -1,4 +1,4 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:33
+
 
 /obj/machinery/field/containment
 	name = "containment field"
@@ -128,4 +128,4 @@
 	s.start()
 	var/atom/target = get_edge_target_turf(AM, get_dir(src, get_step_away(AM, src)))
 	AM.throw_at(target, 200, 4)
-	addtimer(src, "clear_shock", 5)
+	addtimer(CALLBACK(src, .proc/clear_shock), 5)

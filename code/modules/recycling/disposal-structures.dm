@@ -273,7 +273,7 @@
 		AM.forceMove(src.loc)
 		AM.pipe_eject(direction)
 		if(target)
-			AM.throw_at_fast(target, eject_range, 1)
+			AM.throw_at(target, eject_range, 1)
 	H.vent_gas(T)
 	qdel(H)
 
@@ -683,7 +683,7 @@
 		for(var/atom/movable/AM in H)
 			AM.forceMove(T)
 			AM.pipe_eject(dir)
-			AM.throw_at_fast(target, eject_range, 1)
+			AM.throw_at(target, eject_range, 1)
 
 		H.vent_gas(T)
 		qdel(H)
@@ -706,7 +706,7 @@
 		if(W.remove_fuel(0,user))
 			playsound(src.loc, 'sound/items/Welder2.ogg', 100, 1)
 			user << "<span class='notice'>You start slicing the floorweld off \the [src]...</span>"
-			if(do_after(user,20/I.toolspeed, target = src))
+			if(do_after(user,20*I.toolspeed, target = src))
 				if(!src || !W.isOn()) return
 				user << "<span class='notice'>You slice the floorweld off \the [src].</span>"
 				stored.loc = loc

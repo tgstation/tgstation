@@ -117,24 +117,23 @@
 		..()
 		return
 
-	var/mob/living/carbon/human/L = M
-	if(!istype(L))
-		return
 
-	if(check_martial_counter(L, user))
-		return 
+	if(ishuman(M))
+		var/mob/living/carbon/human/L = M
+		if(check_martial_counter(L, user))
+			return
 
 	if(user.a_intent != INTENT_HARM)
 		if(status)
-			if(baton_stun(L, user))
-				user.do_attack_animation(L)
+			if(baton_stun(M, user))
+				user.do_attack_animation(M)
 				return
 		else
-			L.visible_message("<span class='warning'>[user] has prodded [L] with [src]. Luckily it was off.</span>", \
+			M.visible_message("<span class='warning'>[user] has prodded [M] with [src]. Luckily it was off.</span>", \
 							"<span class='warning'>[user] has prodded you with [src]. Luckily it was off</span>")
 	else
 		if(status)
-			baton_stun(L, user)
+			baton_stun(M, user)
 		..()
 
 

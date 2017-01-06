@@ -212,7 +212,7 @@
 /datum/reagent/fuel/unholywater		//if you somehow managed to extract this from someone, dont splash it on yourself and have a smoke
 	name = "Unholy Water"
 	id = "unholywater"
-	description = "Something that shouldn't exist on this plane of existance."
+	description = "Something that shouldn't exist on this plane of existence."
 
 /datum/reagent/fuel/unholywater/on_mob_life(mob/living/M)
 	if(iscultist(M))
@@ -685,7 +685,7 @@
 /datum/reagent/lithium
 	name = "Lithium"
 	id = "lithium"
-	description = "A silver metal, it's claim to fame is its remarkably low density. Using it is a bit too effective in calming oneself down."
+	description = "A silver metal, its claim to fame is its remarkably low density. Using it is a bit too effective in calming oneself down."
 	reagent_state = SOLID
 	color = "#808080" // rgb: 128, 128, 128
 
@@ -892,7 +892,7 @@
 /datum/reagent/cryptobiolin
 	name = "Cryptobiolin"
 	id = "cryptobiolin"
-	description = "Cryptobiolin causes confusion and dizzyness."
+	description = "Cryptobiolin causes confusion and dizziness."
 	color = "#C8A5DC" // rgb: 200, 165, 220
 	metabolization_rate = 1.5 * REAGENTS_METABOLISM
 
@@ -1178,7 +1178,7 @@
 /datum/reagent/ash
 	name = "Ash"
 	id = "ash"
-	description = "Supposedly pheonixes rise from these, but you've never seen it."
+	description = "Supposedly phoenixes rise from these, but you've never seen it."
 	reagent_state = LIQUID
 	color = "#C8A5DC"
 
@@ -1385,16 +1385,16 @@
 	var/newsize = current_size
 	switch(volume)
 		if(0 to 19)
-			newsize = 1.5
+			newsize = 1.25
 		if(20 to 49)
-			newsize = 2
+			newsize = 1.5
 		if(50 to 99)
-			newsize = 2.5
+			newsize = 2
 		if(100 to 199)
-			newsize = 3.5
+			newsize = 2.5
 		if(200 to INFINITY)
-			newsize = 5
-		
+			newsize = 3.5
+
 	H.resize = newsize/current_size
 	current_size = newsize
 	H.update_transform()

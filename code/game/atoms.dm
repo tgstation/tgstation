@@ -6,6 +6,7 @@
 	var/list/fingerprints
 	var/list/fingerprintshidden
 	var/list/blood_DNA
+	var/container_type = 0
 	var/admin_spawned = 0	//was this spawned by an admin? used for stat tracking stuff.
 
 	//This atom's HUD (med/sec, etc) images. Associative list.
@@ -27,10 +28,18 @@
 	//atom creation method that preloads variables at creation
 	if(use_preloader && (src.type == _preloader.target_path))//in case the instanciated atom is creating other atoms in New()
 		_preloader.load(src)
-
+	//atom color stuff
 	if(color)
 		add_atom_colour(color, FIXED_COLOUR_PRIORITY)
-	. = ..()
+
+	//lighting stuff
+	if(opacity && isturf(loc))
+		loc.UpdateAffectingLights()
+
+	if(luminosity)
+		light = new(src)
+
+	//. = ..() //uncomment if you are dumb enough to add a /datum/New() proc
 
 /atom/Destroy()
 	if(alternate_appearances)
@@ -45,6 +54,8 @@
 				AA.hide(list(src))
 	return ..()
 
+/atom/proc/CanPass(atom/movable/mover, turf/target, height=1.5)
+	return (!density || !height)
 
 /atom/proc/onCentcom()
 	var/turf/T = get_turf(src)
@@ -120,7 +131,10 @@
 // returns true if open
 // false if closed
 /atom/proc/is_open_container()
-	return flags & OPENCONTAINER
+	return container_type & OPENCONTAINER
+
+/atom/proc/is_transparent()
+	return container_type & TRANSPARENT
 
 /*//Convenience proc to see whether a container can be accessed in a certain way.
 
@@ -197,7 +211,7 @@
 	// *****RM
 	//user << "[name]: Dn:[density] dir:[dir] cont:[contents] icon:[icon] is:[icon_state] loc:[loc]"
 
-	if(reagents && is_open_container()) //is_open_container() isn't really the right proc for this, but w/e
+	if(reagents && (is_open_container() || is_transparent())) //is_open_container() isn't really the right proc for this, but w/e
 		user << "It contains:"
 		if(reagents.reagent_list.len)
 			if(user.can_see_reagents()) //Show each individual reagent

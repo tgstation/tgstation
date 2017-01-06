@@ -743,7 +743,7 @@
 		tryWalk(TARGET)
 	LAST_TARGET = TARGET
 	if(alternateProcessing)
-		addtimer(src, "doProcess", processTime)
+		addtimer(CALLBACK(src, .proc/doProcess), processTime)
 
 /mob/living/carbon/human/interactive/proc/favouredObjIn(var/list/inList)
 	var/list/outList = list()
@@ -1476,10 +1476,10 @@
 				TARGET = retal_target
 			else
 				var/mob/living/M = locate(/mob/living) in oview(7,src)
-				if(M != src && !compareFaction(M.faction))
-					TARGET = M
 				if(!M)
 					doing = doing & ~FIGHTING
+				else if(M != src && !compareFaction(M.faction))
+					TARGET = M
 
 	//no infighting
 	if(retal)

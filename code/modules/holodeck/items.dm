@@ -24,9 +24,12 @@
 	var/active = 0
 
 /obj/item/weapon/holo/esword/green/New()
+	..()
 	item_color = "green"
 
+
 /obj/item/weapon/holo/esword/red/New()
+	..()
 	item_color = "red"
 
 /obj/item/weapon/holo/esword/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance)
@@ -39,6 +42,7 @@
 
 /obj/item/weapon/holo/esword/New()
 	item_color = pick("red","blue","green","purple")
+	..()
 
 /obj/item/weapon/holo/esword/attack_self(mob/living/user as mob)
 	active = !active

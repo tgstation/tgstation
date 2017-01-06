@@ -3274,7 +3274,7 @@
 /turf/closed/wall,
 /area/ruin/hotel/power)
 "if" = (
-/obj/machinery/smartfridge,
+/obj/machinery/smartfridge/food,
 /turf/open/floor/plasteel/cafeteria,
 /area/ruin/hotel/bar)
 "ig" = (

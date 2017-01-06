@@ -170,7 +170,7 @@
 	if(default_unfasten_wrench(user, I))
 		return
 
-	if(istype(I, /obj/item/weapon/reagent_containers) && (I.flags & OPENCONTAINER))
+	if(istype(I, /obj/item/weapon/reagent_containers) && (I.container_type & OPENCONTAINER))
 		var/obj/item/weapon/reagent_containers/B = I
 		. = 1 //no afterattack
 		if(beaker)
@@ -251,7 +251,7 @@
 	B.apply_default_parts(src)
 
 /obj/item/weapon/circuitboard/machine/chem_dispenser
-	name = "circuit board (Portable Chem Dispenser)"
+	name = "Portable Chem Dispenser (Machine Board)"
 	build_path = /obj/machinery/chem_dispenser/constructable
 	origin_tech = "materials=4;programming=4;plasmatech=4;biotech=3"
 	req_components = list(
