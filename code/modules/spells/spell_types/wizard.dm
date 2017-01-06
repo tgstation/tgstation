@@ -325,7 +325,7 @@
 			thrownatoms += AM
 
 	for(var/am in thrownatoms)
-		var.atom/movable/AM = am
+		var/atom/movable/AM = am
 		if(AM == user || AM.anchored)
 			continue
 
