@@ -310,14 +310,13 @@ var/datum/subsystem/ticker/ticker
 					cinematic.icon_state = "summary_selfdes"
 	//If its actually the end of the round, wait for it to end.
 	//Otherwise if its a verb it will continue on afterwards.
-	spawn(300)
-		if(cinematic)
-			qdel(cinematic)		//end the cinematic
-		for(var/mob/M in mob_list)
-			M.notransform = FALSE //gratz you survived
-	return
+	addtimer(CALLBACK(src, .proc/finish_cinematic), 300)
 
-
+/datum/subsystem/ticker/proc/finish_cinematic()
+	if(cinematic)
+		qdel(cinematic)		//end the cinematic
+	for(var/mob/M in mob_list)
+		M.notransform = FALSE //gratz you survived
 
 /datum/subsystem/ticker/proc/create_characters()
 	for(var/mob/new_player/player in player_list)
