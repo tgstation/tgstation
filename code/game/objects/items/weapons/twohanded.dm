@@ -111,7 +111,7 @@
 
 /obj/item/weapon/twohanded/equipped(mob/user, slot)
 	..()
-	if(!user.is_holding(src) && wielded)
+	if(!user.is_holding(src) && wielded && !istype(src, /obj/item/weapon/twohanded/required))
 		unwield(user)
 
 ///////////OFFHAND///////////////
@@ -131,6 +131,12 @@
 	if(wielded)//Only delete if we're wielded
 		wielded = FALSE
 		qdel(src)
+
+/obj/item/weapon/twohanded/offhand/attack_self(mob/living/carbon/user)		//You should never be able to do this in standard use of two handed items. This is a backup for lingering offhands.
+	var/obj/item/weapon/twohanded/O = user.get_inactive_held_item()
+	if (istype(O) && !istype(O, /obj/item/weapon/twohanded/offhand/))		//If you have a proper item in your other hand that the offhand is for, do nothing. This should never happen.
+		return
+	qdel(src)																//If it's another offhand, or literally anything else, qdel. If I knew how to add logging messages I'd put one here.
 
 ///////////Two hand required objects///////////////
 //This is for objects that require two hands to even pick up
@@ -159,6 +165,9 @@
 
 /obj/item/weapon/twohanded/required/equipped(mob/user, slot)
 	..()
+	var/slotbit = slotdefine2slotbit(slot)
+	if(slot_flags & slotbit)
+		return
 	if(slot == slot_hands)
 		wield(user)
 	else
@@ -271,7 +280,7 @@
 		impale(user)
 		return
 	if((wielded) && prob(50))
-		addtimer(src, "jedi_spin", 0, TIMER_UNIQUE, user)
+		addtimer(CALLBACK(src, .proc/jedi_spin, user), 0, TIMER_UNIQUE)
 
 /obj/item/weapon/twohanded/dualsaber/proc/jedi_spin(mob/living/user)
 	for(var/i in list(1,2,4,8,4,2,1,2,4,8,4,2))
@@ -339,7 +348,7 @@
 	playsound(loc, hitsound, get_clamped_volume(), 1, -1)
 	add_fingerprint(user)
 	// Light your candles while spinning around the room
-	addtimer(src, "jedi_spin", 0, TIMER_UNIQUE, user)
+	addtimer(CALLBACK(src, .proc/jedi_spin, user), 0, TIMER_UNIQUE)
 
 /obj/item/weapon/twohanded/dualsaber/green/New()
 	item_color = "green"
@@ -670,7 +679,7 @@
 /obj/item/weapon/twohanded/skybulge/update_icon()
 	icon_state = "sky_bulge[wielded]"
 
-/obj/item/weapon/twohanded/skybulge/throw_at()  //Throw cooldown and offhand-proofing.
+/obj/item/weapon/twohanded/skybulge/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback)  //Throw cooldown and offhand-proofing.
 	if(throw_cooldown > world.time)
 		var/mob/user = thrownby
 		user.put_in_hands(src)

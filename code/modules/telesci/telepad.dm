@@ -16,7 +16,7 @@
 	B.apply_default_parts(src)
 
 /obj/item/weapon/circuitboard/machine/telesci_pad
-	name = "circuit board (Telepad)"
+	name = "Telepad (Machine Board)"
 	build_path = /obj/machinery/telepad
 	origin_tech = "programming=4;engineering=3;plasmatech=4;bluespace=4"
 	req_components = list(

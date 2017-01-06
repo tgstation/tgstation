@@ -74,7 +74,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/tatortot
 	name = "tator tot"
-	desc = "A large fried potato nugget that may or may not try to valid you"
+	desc = "A large fried potato nugget that may or may not try to valid you."
 	icon_state = "tatortot"
 	list_reagents = list("nutriment" = 4)
 	filling_color = "FFD700"
@@ -369,7 +369,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/lollipop/cyborg/New()
 	..()
-	addtimer(src, "spamcheck", 1200)
+	addtimer(CALLBACK(src, .proc/spamcheck), 1200)
 
 /obj/item/weapon/reagent_containers/food/snacks/lollipop/cyborg/equipped(mob/living/user, slot)
 	. = ..(user, slot)
@@ -395,7 +395,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/gumball/cyborg/New()
 	..()
-	addtimer(src, "spamcheck", 1200)
+	addtimer(CALLBACK(src, .proc/spamcheck), 1200)
 
 /obj/item/weapon/reagent_containers/food/snacks/gumball/cyborg/equipped(mob/living/user, slot)
 	. = ..(user, slot)

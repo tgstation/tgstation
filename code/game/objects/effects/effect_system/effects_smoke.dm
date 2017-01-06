@@ -42,7 +42,7 @@
 
 /obj/effect/particle_effect/smoke/proc/kill_smoke()
 	STOP_PROCESSING(SSobj, src)
-	addtimer(src, "fade_out", 0)
+	addtimer(CALLBACK(src, .proc/fade_out), 0)
 	QDEL_IN(src, 10)
 
 /obj/effect/particle_effect/smoke/process()
@@ -64,7 +64,7 @@
 	if(C.smoke_delay)
 		return 0
 	C.smoke_delay++
-	addtimer(src, "remove_smoke_delay", 10, TIMER_NORMAL, C)
+	addtimer(CALLBACK(src, .proc/remove_smoke_delay, C), 10)
 	return 1
 
 /obj/effect/particle_effect/smoke/proc/remove_smoke_delay(mob/living/carbon/C)

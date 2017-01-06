@@ -417,7 +417,7 @@
 	chameleon_action.emp_randomise()
 
 /obj/item/weapon/storage/backpack/chameleon
-	name = "chameleon backpack"
+	name = "backpack"
 	var/datum/action/item_action/chameleon/change/chameleon_action
 
 /obj/item/weapon/storage/backpack/chameleon/New()
@@ -431,7 +431,7 @@
 	chameleon_action.emp_randomise()
 
 /obj/item/device/radio/headset/chameleon
-	name = "chameleon headset"
+	name = "radio headset"
 	var/datum/action/item_action/chameleon/change/chameleon_action
 
 /obj/item/device/radio/headset/chameleon/New()
@@ -445,7 +445,7 @@
 	chameleon_action.emp_randomise()
 
 /obj/item/device/pda/chameleon
-	name = "chameleon PDA"
+	name = "PDA"
 	var/datum/action/item_action/chameleon/change/chameleon_action
 
 /obj/item/device/pda/chameleon/New()

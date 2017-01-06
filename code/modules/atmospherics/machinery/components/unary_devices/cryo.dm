@@ -29,7 +29,7 @@
 	B.apply_default_parts(src)
 
 /obj/item/weapon/circuitboard/machine/cryo_tube
-	name = "circuit board (Cryotube)"
+	name = "Cryotube (Machine Board)"
 	build_path = /obj/machinery/atmospherics/components/unary/cryo_cell
 	origin_tech = "programming=4;biotech=3;engineering=4;plasmatech=3"
 	req_components = list(

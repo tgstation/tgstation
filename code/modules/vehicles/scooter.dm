@@ -71,7 +71,7 @@
 		var/mob/living/carbon/H = buckled_mobs[1]
 		var/atom/throw_target = get_edge_target_turf(H, pick(cardinal))
 		unbuckle_mob(H)
-		H.throw_at_fast(throw_target, 4, 3)
+		H.throw_at(throw_target, 4, 3)
 		H.Weaken(5)
 		H.adjustStaminaLoss(40)
 		visible_message("<span class='danger'>[src] crashes into [A], sending [H] flying!</span>")

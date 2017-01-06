@@ -111,7 +111,7 @@
 		if(glow)
 			qdel(glow)
 		animate(src, color = oldcolor, time = 20)
-		addtimer(src, "update_atom_colour", 20)
+		addtimer(CALLBACK(src, /atom/proc/update_atom_colour), 20)
 		visible_message("<span class='warning'>[src] slowly stops glowing!</span>")
 		return
 	post_channel(L)
@@ -137,7 +137,7 @@
 		qdel(src)
 	else
 		animate(src, color = oldcolor, time = 20)
-		addtimer(src, "update_atom_colour", 20)
+		addtimer(CALLBACK(src, /atom/proc/update_atom_colour), 20)
 		visible_message("<span class='warning'>[src] slowly stops glowing!</span>")
 
 
@@ -217,7 +217,7 @@
 		var/datum/status_effect/cyborg_power_regen/CPR = cyborg.apply_status_effect(STATUS_EFFECT_POWERREGEN)
 		CPR.power_to_give = giving_power * 0.1 //ten ticks, restoring 10% each
 		animate(cyborg, color = previous_color, time = 100)
-		addtimer(cyborg, "update_atom_colour", 100)
+		addtimer(CALLBACK(cyborg, /atom/proc/update_atom_colour), 100)
 
 /obj/effect/clockwork/sigil/transmission/proc/cyborg_checks(mob/living/silicon/robot/cyborg)
 	if(!cyborg.cell)
@@ -287,7 +287,7 @@
 		return
 	visible_message("<span class='warning'>[src] begins to glow bright blue!</span>")
 	animate(src, alpha = 255, time = 10)
-	addtimer(src, "update_alpha", 10)
+	addtimer(CALLBACK(src, .proc/update_alpha), 10)
 	sleep(10)
 //as long as they're still on the sigil and are either not a servant or they're a servant AND it has remaining vitality
 	while(L && (!is_servant_of_ratvar(L) || (is_servant_of_ratvar(L) && vitality)) && get_turf(L) == get_turf(src))
@@ -383,7 +383,7 @@
 		visible_message("<span class='warning'>[src] slowly stops glowing!</span>")
 	if(sigil_active || alpha == 255)
 		animate(src, alpha = initial(alpha), time = 10)
-		addtimer(src, "update_alpha", 10)
+		addtimer(CALLBACK(src, .proc/update_alpha), 10)
 
 /obj/effect/clockwork/sigil/vitality/proc/update_alpha()
 	if(sigil_active)
