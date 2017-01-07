@@ -157,7 +157,7 @@
 
 //Function Call: Grants the invoker the ability to call forth a Ratvarian spear that deals significant damage to silicons.
 /datum/clockwork_scripture/function_call
-	descname = "Permenant Summonable Spear"
+	descname = "Permanent Summonable Spear"
 	name = "Function Call"
 	desc = "Grants the invoker the ability to call forth a powerful Ratvarian spear every three minutes. The spear will deal significant damage to Nar-Sie's dogs and silicon lifeforms, but will \
 	vanish three minutes after being summoned."
@@ -202,7 +202,7 @@
 
 /datum/action/innate/function_call/Activate()
 	if(!owner.get_empty_held_indexes())
-		usr << "<span class='warning'>You need an empty to hand to call forth your spear!</span>"
+		usr << "<span class='warning'>You need an empty hand to call forth your spear!</span>"
 		return FALSE
 	owner.visible_message("<span class='warning'>A strange spear materializes in [owner]'s hands!</span>", "<span class='brass'>You call forth your spear!</span>")
 	var/obj/item/clockwork/ratvarian_spear/R = new(get_turf(usr))

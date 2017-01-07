@@ -4,7 +4,7 @@
 
 //Sigil of Accession: Creates a sigil of accession, which is like a sigil of submission, but can convert any number of non-implanted targets and up to one implanted target.
 /datum/clockwork_scripture/create_object/sigil_of_accession
-	descname = "Trap, Permenant Conversion"
+	descname = "Trap, Permanent Conversion"
 	name = "Sigil of Accession"
 	desc = "Places a luminous sigil much like a Sigil of Submission, but it will remain even after successfully converting a non-implanted target. \
 	It will penetrate mindshield implants once before disappearing."
