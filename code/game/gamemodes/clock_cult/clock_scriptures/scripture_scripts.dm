@@ -138,14 +138,14 @@
 /datum/clockwork_scripture/create_object/clockwork_proselytizer
 	descname = "Converts Objects to Ratvarian"
 	name = "Clockwork Proselytizer"
-	desc = "Forms a device that, when used on certain objects, converts them into their Ratvarian equivalents. It requires replicant alloy to function."
+	desc = "Forms a device that, when used on certain objects, converts them into their Ratvarian equivalents. It requires power to function."
 	invocations = list("With this device...", "...his presence shall be made known.")
 	channel_time = 20
 	required_components = list(GEIS_CAPACITOR = 1, REPLICANT_ALLOY = 2)
 	consumed_components = list(GEIS_CAPACITOR = 1, REPLICANT_ALLOY = 1)
 	whispered = TRUE
 	object_path = /obj/item/clockwork/clockwork_proselytizer/preloaded
-	creator_message = "<span class='brass'>You form a clockwork proselytizer, which is already pre-loaded with a small amount of replicant alloy.</span>"
+	creator_message = "<span class='brass'>You form a clockwork proselytizer.</span>"
 	usage_tip = "Clockwork Walls cause nearby tinkerer's caches to generate components passively, making them a vital tool. Clockwork Floors heal toxin damage in Servants standing on them."
 	tier = SCRIPTURE_SCRIPT
 	space_allowed = TRUE

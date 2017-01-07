@@ -46,39 +46,32 @@ var/global/list/all_scripture = list() //a list containing scripture instances; 
 
 #define LOWER_PROB_PER_COMPONENT 10 //how much each component in the cache reduces the weight of getting another of that component type
 
-#define MAX_COMPONENTS_BEFORE_RAND 10*LOWER_PROB_PER_COMPONENT //the number of each component, times LOWER_PROB_PER_COMPONENT, you need to have before component generation will become random
+#define MAX_COMPONENTS_BEFORE_RAND (10*LOWER_PROB_PER_COMPONENT) //the number of each component, times LOWER_PROB_PER_COMPONENT, you need to have before component generation will become random
 
 #define CLOCKWORK_GENERAL_COOLDOWN 3000 //how long clockwork generals go on cooldown after use, defaults to 5 minutes
 
-//proselytizer defines
-#define REPLICANT_ALLOY_UNIT 100 //how much each piece of replicant alloy gives in a clockwork proselytizer
-
-#define REPLICANT_STANDARD REPLICANT_ALLOY_UNIT*0.2 //how much alloy is in anything else; doesn't matter as much as the following
-
-#define REPLICANT_FLOOR REPLICANT_ALLOY_UNIT*0.1 //how much alloy is in a clockwork floor, determines the cost of clockwork floor production
-
-#define REPLICANT_WALL_MINUS_FLOOR REPLICANT_ALLOY_UNIT*0.4 //amount of alloy in a clockwork wall, determines the cost of clockwork wall production
-
-#define REPLICANT_GEAR REPLICANT_ALLOY_UNIT*0.3 //amount of alloy in a wall gear, minus the brass from the wall
-
-#define REPLICANT_WALL_TOTAL REPLICANT_WALL_MINUS_FLOOR+REPLICANT_FLOOR //how much alloy is in a clockwork wall and the floor under it
-
-#define REPLICANT_ROD REPLICANT_ALLOY_UNIT*0.01 //amount of replicant alloy in one rod
-
-#define REPLICANT_METAL REPLICANT_ALLOY_UNIT*0.02 //amount of replicant alloy in one sheet of metal
-
-#define REPLICANT_PLASTEEL REPLICANT_ALLOY_UNIT*0.05 //amount of replicant alloy in one sheet of plasteel
-
-#define RATVAR_ALLOY_CHECK "ratvar?" //when passed into can_use_alloy(), converts it into a check for if ratvar has woken/the proselytizer is debug
-
 //clockcult power defines
-#define MIN_CLOCKCULT_POWER 50 //the minimum amount of power clockcult machines will handle gracefully
+#define MIN_CLOCKCULT_POWER 25 //the minimum amount of power clockcult machines will handle gracefully
 
-#define CLOCKCULT_POWER_TO_ALLOY_MULTIPLIER 0.04 //conversion rate for power -> alloy
+#define CLOCKCULT_POWER_UNIT (MIN_CLOCKCULT_POWER*100) //standard power amount for clockwork proselytizer costs
 
-#define CLOCKCULT_ALLOY_TO_POWER_MULTIPLIER 25 //conversion rate for alloy -> power
+#define POWER_STANDARD (CLOCKCULT_POWER_UNIT*0.2) //how much power is in anything else; doesn't matter as much as the following
 
-#define REPLICANT_ALLOY_POWER REPLICANT_ALLOY_UNIT*CLOCKCULT_ALLOY_TO_POWER_MULTIPLIER //the amount of power you get from a single piece of replicant alloy
+#define POWER_FLOOR (CLOCKCULT_POWER_UNIT*0.1) //how much power is in a clockwork floor, determines the cost of clockwork floor production
+
+#define POWER_WALL_MINUS_FLOOR (CLOCKCULT_POWER_UNIT*0.4) //how much power is in a clockwork wall, determines the cost of clockwork wall production
+
+#define POWER_GEAR (CLOCKCULT_POWER_UNIT*0.3) //how much power is in a wall gear, minus the brass from the wall
+
+#define POWER_WALL_TOTAL (POWER_WALL_MINUS_FLOOR+POWER_FLOOR) //how much power is in a clockwork wall and the floor under it
+
+#define POWER_ROD (CLOCKCULT_POWER_UNIT*0.01) //how much power is in one rod
+
+#define POWER_METAL (CLOCKCULT_POWER_UNIT*0.02) //how much power is in one sheet of metal
+
+#define POWER_PLASTEEL (CLOCKCULT_POWER_UNIT*0.05) //how much power is in one sheet of plasteel
+
+#define RATVAR_POWER_CHECK "ratvar?" //when passed into can_use_power(), converts it into a check for if ratvar has woken/the proselytizer is debug
 
 //Ark defines
 #define GATEWAY_SUMMON_RATE 1 //the time amount the Gateway to the Celestial Derelict gets each process tick; defaults to 1 per tick
