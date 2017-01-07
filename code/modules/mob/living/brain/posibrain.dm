@@ -98,7 +98,7 @@ var/global/posibrain_notif_cooldown = 0
 
 /obj/item/device/mmi/posibrain/proc/transfer_personality(mob/candidate)
 	if(used || (brainmob && brainmob.key)) //Prevents hostile takeover if two ghosts get the prompt or link for the same brain.
-		candidate << "This brain has already been taken! Please try your possesion again later!"
+		candidate << "This brain has already been taken! Please try your possession again later!"
 		return FALSE
 	notified = 0
 	if(candidate.mind && !isobserver(candidate))

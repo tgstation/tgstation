@@ -360,7 +360,7 @@
 			return
 		if (WT.remove_fuel(0, user)) //The welder has 1u of fuel consumed by it's afterattack, so we don't need to worry about taking any away.
 			if(src == user)
-				user << "<span class='notice'>You start fixing youself...</span>"
+				user << "<span class='notice'>You start fixing yourself...</span>"
 				if(!do_after(user, 50, target = src))
 					return
 
@@ -378,7 +378,7 @@
 		var/obj/item/stack/cable_coil/coil = W
 		if (getFireLoss() > 0)
 			if(src == user)
-				user << "<span class='notice'>You start fixing youself...</span>"
+				user << "<span class='notice'>You start fixing yourself...</span>"
 				if(!do_after(user, 50, target = src))
 					return
 			if (coil.use(1))
@@ -489,7 +489,7 @@
 	else if(istype(W, /obj/item/borg/upgrade/))
 		var/obj/item/borg/upgrade/U = W
 		if(!opened)
-			user << "<span class='warning'>You must access the borgs internals!</span>"
+			user << "<span class='warning'>You must access the borg's internals!</span>"
 		else if(!src.module && U.require_module)
 			user << "<span class='warning'>The borg must choose a module before it can be upgraded!</span>"
 		else if(U.locked)
@@ -526,7 +526,7 @@
 	if(stat == DEAD)
 		return //won't work if dead
 	if(locked)
-		switch(alert("You can not lock your cover again, are you sure?\n      (You can still ask for a human to lock it)", "Unlock Own Cover", "Yes", "No"))
+		switch(alert("You cannot lock your cover again, are you sure?\n      (You can still ask for a human to lock it)", "Unlock Own Cover", "Yes", "No"))
 			if("Yes")
 				locked = 0
 				update_icons()
@@ -674,7 +674,7 @@
 /mob/living/silicon/robot/proc/ResetSecurityCodes()
 	set category = "Robot Commands"
 	set name = "Reset Identity Codes"
-	set desc = "Scrambles your security and identification codes and resets your current buffers.  Unlocks you and permenantly severs you from your AI and the robotics console and will deactivate your camera system."
+	set desc = "Scrambles your security and identification codes and resets your current buffers. Unlocks you and permenantly severs you from your AI and the robotics console and will deactivate your camera system."
 
 	var/mob/living/silicon/robot/R = src
 
