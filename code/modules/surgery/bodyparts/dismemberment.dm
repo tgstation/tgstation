@@ -311,7 +311,6 @@
 	for(var/Z in limb_list)
 		. += regenerate_limb(Z, noheal)
 
-
 /mob/living/proc/regenerate_limb(limb_zone, noheal)
 	return
 
