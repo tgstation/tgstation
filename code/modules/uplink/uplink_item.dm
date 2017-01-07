@@ -1095,13 +1095,6 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	surplus = 0
 	include_modes = list(/datum/game_mode/nuclear)
 
-/datum/uplink_item/cyber_implants/spawn_item(turf/loc, obj/item/device/uplink/U)
-	if(item)
-		if(findtext(item, /obj/item/organ/cyberimp))
-			return new /obj/item/weapon/storage/box/cyber_implants(loc, item)
-		else
-			return ..()
-
 /datum/uplink_item/cyber_implants/thermals
 	name = "Thermal Vision Implant"
 	desc = "These cybernetic eyes will give you thermal vision. They must be implanted via surgery."
@@ -1129,9 +1122,8 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 
 /datum/uplink_item/cyber_implants/bundle
 	name = "Cybernetic Implants Bundle"
-	desc = "A random selection of cybernetic implants. Guaranteed 5 high quality implants. \
-			They must be implanted via surgery."
-	item = /obj/item/weapon/storage/box/cyber_implants
+	desc = "A random selection of cybernetic implants. Guaranteed 5 high quality implants. Comes with an autoimplanter."
+	item = /obj/item/weapon/storage/box/cyber_implants/bundle
 	cost = 40
 
 // Pointless
