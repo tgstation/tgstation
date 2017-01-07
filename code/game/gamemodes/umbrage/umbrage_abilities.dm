@@ -1,14 +1,14 @@
 /datum/action/innate/umbrage
-	name = "umbrage adction"
+	name = "umbrage ability"
 	desc = "This probably shouldn't exist."
 	background_icon_state = "bg_alien"
 	buttontooltipstyle = "alien"
-	var/mana_cost = 0
+	var/psi_cost = 0
 
 /datum/action/innate/umbrage/Activate()
 	..()
 	if(usr.mind.umbrage_psionics)
-		usr.mind.umbrage_psionics.use_mana(mana_cost)
+		usr.mind.umbrage_psionics.use_psi(psi_cost)
 
 /datum/action/innate/umbrage/IsAvailable()
 	if(!usr)
@@ -16,8 +16,8 @@
 	var/datum/umbrage/U = usr.mind.umbrage_psionics
 	if(!U)
 		return
-	if(U.mana < mana_cost)
-		usr << "<span class='warning'>Your mind is too weak! Restore your mana first!</span>"
+	if(U.psi < psi_cost)
+		usr << "<span class='warning'>You need more psi.</span>"
 		return
 	return ..()
 
@@ -27,7 +27,7 @@
 	desc = "Silently speak to your allies on the same z-level."
 	button_icon_state = "umbrage_mindlink"
 	check_flags = AB_CHECK_CONSCIOUS
-	mana_cost = 10
+	psi_cost = 10
 
 /datum/action/innate/umbrage/umbrage_comms/Activate()
 	var/message = stripped_input(usr, "Enter a message to tell your nearby allies.", "Mindlink", "")
@@ -63,7 +63,7 @@
 	desc = "Change your active hand into a tendril with many uses."
 	button_icon_state = "umbrage_pass"
 	check_flags = AB_CHECK_RESTRAINED|AB_CHECK_LYING|AB_CHECK_CONSCIOUS
-	mana_cost = 5
+	psi_cost = 5
 	var/precise = 0 //Accuracy upgrade for mobility
 
 /datum/action/innate/umbrage/umbrage_pass/Activate()
@@ -79,7 +79,7 @@
 /datum/action/innate/umbrage/umbrage_pass/Deactivate()
 	var/deleted_tendrils = 0
 	for(var/obj/item/weapon/umbrage_pass/P in usr)
-		P.use_mana(UMBRAGE_PASS_COST_DISMISS)
+		P.use_psi(UMBRAGE_PASS_COST_DISMISS)
 		qdel(P)
 		deleted_tendrils = 1
 	if(deleted_tendrils)
