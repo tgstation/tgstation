@@ -231,9 +231,9 @@ list(name = "- Carbon Dioxide", desc = " This informational poster teaches the v
 	if (!official)
 		P = new /obj/item/weapon/poster/contraband(src, serial_number)
 	else
-		P = new /obj/item/weapon/poster/legit(src, serial_number)	
+		P = new /obj/item/weapon/poster/legit(src, serial_number)
 	P.resulting_poster = src
-	P.loc = location
+	P.forceMove(location)
 	loc = P
 
 //seperated to reduce code duplication. Moved here for ease of reference and to unclutter r_wall/attackby()
