@@ -7,7 +7,7 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	force = 5
 	flags = NOBLUDGEON
-	var/stored_power = 0 //Requires this to function; each chunk of replicant alloy provides CLOCKCULT_POWER_UNIT
+	var/stored_power = 0 //Requires power to function
 	var/max_power = CLOCKCULT_POWER_UNIT * 10
 	var/uses_power = TRUE
 	var/metal_to_power = FALSE
