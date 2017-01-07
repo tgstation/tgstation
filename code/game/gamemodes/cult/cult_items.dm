@@ -163,16 +163,14 @@
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	allowed = list(/obj/item/weapon/tome,/obj/item/weapon/melee/cultblade)
 	var/current_charges = 3
-	hooded = 1
-	hoodtype = /obj/item/clothing/head/cult_hoodie
+	hoodtype = /obj/item/clothing/head/hooded/cult_hoodie
 
-/obj/item/clothing/head/cult_hoodie
+/obj/item/clothing/head/hooded/cult_hoodie
 	name = "empowered cultist armor"
 	desc = "Empowered garb which creates a powerful shield around the user."
 	icon_state = "cult_hoodalt"
 	armor = list(melee = 50, bullet = 40, laser = 50,energy = 30, bomb = 50, bio = 30, rad = 30, fire = 50, acid = 50)
 	body_parts_covered = HEAD
-	flags = NODROP
 	flags_inv = HIDEHAIR|HIDEFACE|HIDEEARS
 
 /obj/item/clothing/suit/hooded/cultrobes/cult_shield/equipped(mob/living/user, slot)
@@ -217,15 +215,13 @@
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	armor = list(melee = -50, bullet = -50, laser = -100,energy = -50, bomb = -50, bio = -50, rad = -50, fire = 0, acid = 0)
 	slowdown = -1
-	hooded = 1
-	hoodtype = /obj/item/clothing/head/berserkerhood
+	hoodtype = /obj/item/clothing/head/hooded/berserkerhood
 
-/obj/item/clothing/head/berserkerhood
+/obj/item/clothing/head/hooded/berserkerhood
 	name = "flagellant's robes"
 	desc = "Blood-soaked garb infused with dark magic; allows the user to move at inhuman speeds, but at the cost of increased damage."
 	icon_state = "culthood"
 	body_parts_covered = HEAD
-	flags = NODROP
 	flags_inv = HIDEHAIR|HIDEFACE|HIDEEARS
 	armor = list(melee = -50, bullet = -50, laser = -50, energy = -50, bomb = -50, bio = -50, rad = -50, fire = 0, acid = 0)
 

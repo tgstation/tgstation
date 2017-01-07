@@ -15,7 +15,7 @@
 
 /obj/effect/clockwork/spatial_gateway/New()
 	..()
-	addtimer(src, "check_setup", 1)
+	addtimer(CALLBACK(src, .proc/check_setup), 1)
 
 /obj/effect/clockwork/spatial_gateway/Destroy()
 	deltimer(timerid)
@@ -135,7 +135,7 @@
 	if(!no_cost)
 		uses = max(0, uses - 1)
 		linked_gateway.uses = max(0, linked_gateway.uses - 1)
-	addtimer(src, "check_uses", 10)
+	addtimer(CALLBACK(src, .proc/check_uses), 10)
 	return TRUE
 
 /obj/effect/clockwork/spatial_gateway/proc/check_uses()
@@ -147,31 +147,16 @@
 /atom/movable/proc/procure_gateway(mob/living/invoker, time_duration, gateway_uses, two_way)
 	var/list/possible_targets = list()
 	var/list/teleportnames = list()
-	var/list/duplicatenamecount = list()
 
 	for(var/obj/structure/destructible/clockwork/powered/clockwork_obelisk/O in all_clockwork_objects)
 		if(!O.Adjacent(invoker) && O != src && (O.z <= ZLEVEL_SPACEMAX) && O.anchored) //don't list obelisks that we're next to
 			var/area/A = get_area(O)
 			var/locname = initial(A.name)
-			var/resultkey = "[locname] [O.name]"
-			if(resultkey in teleportnames) //why the fuck did you put two obelisks in the same area
-				duplicatenamecount[resultkey]++
-				resultkey = "[resultkey] ([duplicatenamecount[resultkey]])"
-			else
-				teleportnames.Add(resultkey)
-				duplicatenamecount[resultkey] = 1
-			possible_targets[resultkey] = O
+			possible_targets[avoid_assoc_duplicate_keys("[locname] [O.name]", teleportnames)] = O
 
 	for(var/mob/living/L in living_mob_list)
 		if(!L.stat && is_servant_of_ratvar(L) && !L.Adjacent(invoker) && (L.z <= ZLEVEL_SPACEMAX)) //People right next to the invoker can't be portaled to, for obvious reasons
-			var/resultkey = "[L.name] ([L.real_name])"
-			if(resultkey in teleportnames)
-				duplicatenamecount[resultkey]++
-				resultkey = "[resultkey] ([duplicatenamecount[resultkey]])"
-			else
-				teleportnames.Add(resultkey)
-				duplicatenamecount[resultkey] = 1
-			possible_targets[resultkey] = L
+			possible_targets[avoid_assoc_duplicate_keys("[L.name] ([L.real_name])", teleportnames)] = L
 
 	if(!possible_targets.len)
 		invoker << "<span class='warning'>There are no other eligible targets for a Spatial Gateway!</span>"

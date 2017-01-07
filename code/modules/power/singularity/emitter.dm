@@ -35,7 +35,7 @@
 	RefreshParts()
 
 /obj/item/weapon/circuitboard/machine/emitter
-	name = "circuit board (Emitter)"
+	name = "Emitter (Machine Board)"
 	build_path = /obj/machinery/power/emitter
 	origin_tech = "programming=3;powerstorage=4;engineering=4"
 	req_components = list(
@@ -204,13 +204,13 @@
 		A.starting = loc
 		A.fire()
 
-/obj/machinery/field/generator/can_be_unfasten_wrench(mob/user)
+/obj/machinery/power/emitter/can_be_unfasten_wrench(mob/user)
 	if(state == EM_WELDED)
 		user  << "<span class='warning'>[src] is welded to the floor!</span>"
 		return FAILED_UNFASTEN
 	return ..()
 
-/obj/machinery/field/generator/default_unfasten_wrench(mob/user, obj/item/weapon/wrench/W, time = 20)
+/obj/machinery/power/emitter/default_unfasten_wrench(mob/user, obj/item/weapon/wrench/W, time = 20)
 	. = ..()
 	if(. == SUCCESSFUL_UNFASTEN)
 		if(anchored)

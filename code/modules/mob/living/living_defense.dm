@@ -324,7 +324,7 @@
 
 
 /mob/living/ratvar_act()
-	if(!is_servant_of_ratvar(src) && !add_servant_of_ratvar(src))
+	if(stat != DEAD && !is_servant_of_ratvar(src) && !add_servant_of_ratvar(src))
 		src << "<span class='userdanger'>A blinding light boils you alive! <i>Run!</i></span>"
 		adjustFireLoss(35)
 		if(src)
@@ -338,7 +338,7 @@
 /mob/living/proc/flash_act(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0, type = /obj/screen/fullscreen/flash)
 	if(get_eye_protection() < intensity && (override_blindness_check || !(disabilities & BLIND)))
 		overlay_fullscreen("flash", type)
-		addtimer(src, "clear_fullscreen", 25, TIMER_NORMAL, "flash", 25)
+		addtimer(CALLBACK(src, .proc/clear_fullscreen, "flash", 25), 25)
 		return 1
 
 //called when the mob receives a loud bang

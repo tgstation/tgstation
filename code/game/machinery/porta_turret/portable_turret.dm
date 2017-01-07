@@ -361,11 +361,11 @@
 		if(istype(A, /mob/living/carbon))
 			var/mob/living/carbon/C = A
 			//If not emagged, only target non downed carbons
-			if(!emagged && (C.stat || C.handcuffed || C.lying))
+			if(mode != TURRET_LETHAL && (C.stat || C.handcuffed || C.lying))
 				continue
 
 			//If emagged, target all but dead carbons
-			if(emagged && C.stat == DEAD)
+			if(mode == TURRET_LETHAL && C.stat == DEAD)
 				continue
 
 			//if the target is a human and not in our faction, analyze threat level

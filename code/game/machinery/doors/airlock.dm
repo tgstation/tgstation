@@ -232,7 +232,7 @@ var/list/airlock_overlays = list()
 			if(cyclelinkedairlock.operating)
 				cyclelinkedairlock.delayed_close_requested = TRUE
 			else
-				addtimer(cyclelinkedairlock, "close", 2)
+				addtimer(CALLBACK(cyclelinkedairlock, .proc/close), 2)
 	..()
 
 
@@ -1244,9 +1244,9 @@ var/list/airlock_overlays = list()
 		playsound(src.loc, 'sound/machines/airlockforced.ogg', 30, 1)
 
 	if(autoclose && normalspeed)
-		addtimer(src, "autoclose", 150)
+		addtimer(CALLBACK(src, .proc/autoclose), 150)
 	else if(autoclose && !normalspeed)
-		addtimer(src, "autoclose", 15)
+		addtimer(CALLBACK(src, .proc/autoclose), 15)
 
 	if(!density)
 		return 1
@@ -1266,7 +1266,7 @@ var/list/airlock_overlays = list()
 	update_freelook_sight()
 	if(delayed_close_requested)
 		delayed_close_requested = FALSE
-		addtimer(src, "close", 2)
+		addtimer(CALLBACK(src, .proc/close), 2)
 	return 1
 
 
@@ -1279,7 +1279,7 @@ var/list/airlock_overlays = list()
 	if(safe)
 		for(var/atom/movable/M in get_turf(src))
 			if(M.density && M != src) //something is blocking the door
-				addtimer(src, "autoclose", 60)
+				addtimer(CALLBACK(src, .proc/autoclose), 60)
 				return
 
 	if(forced < 2)

@@ -25,7 +25,7 @@
 	B.apply_default_parts(src)
 
 /obj/item/weapon/circuitboard/machine/smartfridge
-	name = "circuit board (Smartfridge)"
+	name = "Smartfridge (Machine Board)"
 	build_path = /obj/machinery/smartfridge
 	origin_tech = "programming=1"
 	req_components = list(/obj/item/weapon/stock_parts/matter_bin = 1)

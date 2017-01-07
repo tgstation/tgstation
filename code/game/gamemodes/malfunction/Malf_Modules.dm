@@ -162,8 +162,8 @@
 	for(var/obj/machinery/door/D in airlocks)
 		if(D.z != ZLEVEL_STATION)
 			continue
-		addtimer(D, "hostile_lockdown", 0, TIMER_NORMAL, src)
-		addtimer(D, "disable_lockdown", 900)
+		addtimer(CALLBACK(D, /obj/machinery/door.proc/hostile_lockdown, src), 0)
+		addtimer(CALLBACK(D, /obj/machinery/door.proc/disable_lockdown), 900)
 
 	var/obj/machinery/computer/communications/C = locate() in machines
 	if(C)
@@ -172,9 +172,9 @@
 	verbs -= /mob/living/silicon/ai/proc/lockdown
 	minor_announce("Hostile runtime detected in door controllers. Isolation Lockdown protocols are now in effect. Please remain calm.","Network Alert:", 1)
 	src << "<span class = 'warning'>Lockdown Initiated. Network reset in 90 seconds.</span>"
-	addtimer(GLOBAL_PROC, "minor_announce", 900, TIMER_NORMAL,
+	addtimer(CALLBACK(GLOBAL_PROC, .proc/minor_announce,
 		"Automatic system reboot complete. Have a secure day.",
-		"Network reset:")
+		"Network reset:"), 900)
 
 /datum/AI_Module/large/destroy_rcd
 	module_name = "Destroy RCDs"
@@ -291,7 +291,7 @@
 		for(var/datum/AI_Module/small/overload_machine/overload in current_modules)
 			if(overload.uses > 0)
 				overload.uses --
-				audible_message("<span class='userdanger'>You hear a loud electrical buzzing sound coming from [M]!</span>")
+				M.audible_message("<span class='userdanger'>You hear a loud electrical buzzing sound coming from [M]!</span>")
 				src << "<span class='warning'>Overloading machine circuitry...</span>"
 				spawn(50)
 					if(M)
@@ -323,7 +323,7 @@
 		for(var/datum/AI_Module/small/override_machine/override in current_modules)
 			if(override.uses > 0)
 				override.uses --
-				audible_message("<span class='italics'>You hear a loud electrical buzzing sound!</span>")
+				M.audible_message("<span class='userdanger'>You hear a loud electrical buzzing sound!</span>")
 				src << "<span class='warning'>Reprogramming machine behaviour...</span>"
 				spawn(50)
 					if(M && !qdeleted(M))

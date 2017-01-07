@@ -124,7 +124,7 @@
 				H.CloseWings()
 			else
 				H.OpenWings()
-			addtimer(H, "[open ? "Open" : "Close"]Wings", wing_time)
+			addtimer(CALLBACK(H, open ? /mob/living/carbon/human.proc/OpenWings : /mob/living/carbon/human.proc/CloseWings), wing_time)
 
 /datum/emote/living/flap/aflap
 	key = "aflap"

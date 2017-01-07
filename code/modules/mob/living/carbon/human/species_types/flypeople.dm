@@ -1,6 +1,5 @@
 /datum/species/fly
-	// Humans turned into fly-like abominations in teleporter accidents.
-	name = "Human?"
+	name = "Flyperson"
 	id = "fly"
 	say_mod = "buzzes"
 	mutant_organs = list(/obj/item/organ/tongue/fly)
