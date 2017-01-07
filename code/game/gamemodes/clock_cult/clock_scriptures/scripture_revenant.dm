@@ -154,7 +154,7 @@
 			if(W.sight_range == 5)
 				W.sight_range = initial(W.sight_range)
 		for(var/obj/item/clockwork/clockwork_proselytizer/P in all_clockwork_objects)
-			if(P.charge_rate = 1250)
+			if(P.charge_rate == 1250)
 				P.charge_rate = initial(P.charge_rate)
 		for(var/obj/structure/destructible/clockwork/powered/M in all_clockwork_objects)
 			M.needs_power = initial(M.needs_power)
