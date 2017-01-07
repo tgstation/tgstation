@@ -755,32 +755,13 @@ Turf and target are seperate in case you want to teleport some distance from a t
 		loc = loc.loc
 	return null
 
-//Quick type checks for some tools
-var/global/list/common_tools = list(
-/obj/item/stack/cable_coil,
-/obj/item/weapon/wrench,
-/obj/item/weapon/weldingtool,
-/obj/item/weapon/screwdriver,
-/obj/item/weapon/wirecutters,
-/obj/item/device/multitool,
-/obj/item/weapon/crowbar)
+var/list/static/global/pointed_types = typecacheof(list(
+	/obj/item/weapon/pen,
+	/obj/item/weapon/screwdriver,
+	/obj/item/weapon/reagent_containers/syringe,
+	/obj/item/weapon/kitchen/fork))
 
-/proc/istool(O)
-	if(O && is_type_in_list(O, common_tools))
-		return 1
-	return 0
-
-/proc/is_pointed(obj/item/W)
-	if(istype(W, /obj/item/weapon/pen))
-		return 1
-	if(istype(W, /obj/item/weapon/screwdriver))
-		return 1
-	if(istype(W, /obj/item/weapon/reagent_containers/syringe))
-		return 1
-	if(istype(W, /obj/item/weapon/kitchen/fork))
-		return 1
-	else
-		return 0
+#define is_pointed(W) (is_type_in_typecache(W, pointed_types))
 
 //For objects that should embed, but make no sense being is_sharp or is_pointed()
 //e.g: rods
