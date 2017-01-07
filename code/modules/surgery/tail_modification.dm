@@ -69,5 +69,5 @@
 	L.dna.features["tail_lizard"] = T.markings
 	L.dna.species.mutant_bodyparts += "tail_lizard"
 	qdel(tool)
-	L.update_body()
+	L.update_mutant_bodyparts()
 	return 1
