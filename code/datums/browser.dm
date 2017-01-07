@@ -162,8 +162,7 @@
 					winset(user, "mapwindow", "focus=true")
 				break
 	if (timeout)
-		spawn(timeout)
-			close()
+		addtimer(CALLBACK(src, .proc/close), timeout)
 
 /datum/browser/alert/close()
 	.=..()
