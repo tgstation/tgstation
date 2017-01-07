@@ -581,7 +581,7 @@ var/global/list/RPD_recipes=list(
 			if(!isturf(A))
 				user << "<span class='warning'>The [src]'s error light flickers!</span>"
 				return 0
-			user << "<span class='notice'>You start building meter...</span>"
+			user << "<span class='notice'>You start building a meter...</span>"
 			playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
 			if(do_after(user, 2, target = A))
 				activate()
