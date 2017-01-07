@@ -61,16 +61,6 @@
 	build_path = /obj/item/weapon/gun_attachment/handle/semiauto
 	category = list("Guncrafting Parts")
 
-/datum/design/handle_burst
-	name = "Gun Handle: 3 Round Burst"
-	desc = "A burst handle."
-	id = "handle_burst"
-	req_tech = list("combat" = 1, "materials" = 1)
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 500, MAT_GLASS = 300)
-	build_path = /obj/item/weapon/gun_attachment/handle/burst
-	category = list("Guncrafting Parts")
-
 /datum/design/handle_auto
 	name = "Gun Handle: Automatic"
 	desc = "A fully automatic handle."

@@ -2,7 +2,7 @@
 	name = "Semi-Auto Handle"
 	icon_state = "handle_semiauto"
 	burst_size = 1
-	fire_delay = 0
+	fire_delay = 1
 	recoil = 1
 	automatic = 0
 	spread = 0
@@ -10,9 +10,9 @@
 /obj/item/weapon/gun_attachment/handle/burst
 	name = "Burst Handle"
 	icon_state = "handle_burst"
-	burst_size = 3
-	fire_delay = 2
-	recoil = 2
+	burst_size = 2
+	fire_delay = 3
+	recoil = 4
 	automatic = 0
 	spread = 5
 
