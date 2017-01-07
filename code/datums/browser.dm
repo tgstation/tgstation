@@ -101,13 +101,14 @@
 		send_asset_list(user, scripts, verify=FALSE)
 	user << browse(get_content(), "window=[window_id];[window_size][window_options]")
 	if (use_onclose)
-		spawn(0)
-			//winexists sleeps, so we don't need to.
-			for (var/i in 1 to 10)
-				if (user && winexists(user, window_id))
-					onclose(user, window_id, ref)
-					break
+		setup_onclose()
 
+/datum/browser/proc/setup_onclose()
+	set waitfor = 0 //winexists sleeps, so we don't need to.
+	for (var/i in 1 to 10)
+		if (user && winexists(user, window_id))
+			onclose(user, window_id, ref)
+			break
 
 /datum/browser/proc/close()
 	user << browse(null, "window=[window_id]")
