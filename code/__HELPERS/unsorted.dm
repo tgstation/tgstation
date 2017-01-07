@@ -1298,7 +1298,6 @@ proc/pick_closest_path(value, list/matches = get_fancy_list_of_atom_types())
 #undef DELTA_CALC
 
 /proc/flash_color(mob_or_client, flash_color="#960000", flash_time=20)
-	set waitfor = 0
 	var/client/C
 	if(istype(mob_or_client, /mob))
 		var/mob/M = mob_or_client
