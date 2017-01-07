@@ -1,0 +1,5 @@
+author: "Speed of Light Somehow Changed"
+delete-after: True
+changes: 
+  - tweak: "Dynamic lights are no longer animated, and update instantly"
+  - tweak: "Increased maximum radius of mob and mobile lights"
