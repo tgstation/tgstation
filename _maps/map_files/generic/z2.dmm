@@ -631,7 +631,7 @@
 "mg" = (/turf/closed/indestructible/fakeglass{icon_state = "fakewindows2"; dir = 1},/area/syndicate_mothership)
 "mh" = (/obj/item/toy/figure/syndie,/turf/open/floor/plating/asteroid/snow/atmosphere,/area/syndicate_mothership)
 "mi" = (/obj/machinery/newscaster/security_unit,/turf/closed/indestructible/riveted,/area/centcom/ferry)
-"mj" = (/obj/structure/toilet{dir = 4},/obj/machinery/light{icon_state = "tube1"; dir = 8},/obj/effect/landmark/start{name = "Captain"},/turf/open/floor/plasteel/white,/area/centcom/ferry)
+"mj" = (/obj/structure/toilet{dir = 4},/obj/machinery/light{icon_state = "tube1"; dir = 8},/turf/open/floor/plasteel/white,/area/centcom/ferry)
 "mk" = (/obj/structure/window/reinforced{dir = 8},/obj/machinery/shower{pixel_y = 16},/obj/structure/curtain,/obj/machinery/door/window/brigdoor/southleft{name = "Shower"},/obj/item/weapon/soap/deluxe,/obj/machinery/atmospherics/components/unary/vent_pump{dir = 2; on = 1},/turf/open/floor/plasteel/white,/area/centcom/ferry)
 "ml" = (/obj/machinery/computer/security/mining,/turf/open/floor/plasteel/warning{dir = 6},/area/centcom/supply)
 "mm" = (/turf/open/floor/plasteel/brown{tag = "icon-brown (SOUTHWEST)"; icon_state = "brown"; dir = 10},/area/centcom/supply)
