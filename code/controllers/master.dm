@@ -52,7 +52,6 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 
 /datum/controller/master/New()
 	// Highlander-style: there can only be one! Kill off the old and replace it with the new.
-	check_for_cleanbot_bug()
 	subsystems = list()
 	if (Master != src)
 		if (istype(Master))
@@ -125,7 +124,6 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 	if(init_sss)
 		init_subtypes(/datum/subsystem, subsystems)
 
-	check_for_cleanbot_bug()
 	world << "<span class='boldannounce'>Initializing subsystems...</span>"
 
 	// Sort subsystems by init_order, so they initialize in the correct order.
@@ -145,13 +143,10 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 
 	// Sort subsystems by display setting for easy access.
 	sortTim(subsystems, /proc/cmp_subsystem_display)
-	check_for_cleanbot_bug()
 	// Set world options.
 	world.sleep_offline = 1
 	world.fps = config.fps
-	check_for_cleanbot_bug()
 	sleep(1)
-	check_for_cleanbot_bug()
 	// Loop.
 	Master.StartProcessing(0)
 

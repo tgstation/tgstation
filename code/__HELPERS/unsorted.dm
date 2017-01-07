@@ -1319,25 +1319,6 @@ proc/pick_closest_path(value, list/matches = get_fancy_list_of_atom_types())
 
 #define QDEL_IN(item, time) addtimer(CALLBACK(GLOBAL_PROC, /proc/qdel, item), time)
 
-/proc/check_for_cleanbot_bug()
-	var/static/admins_warned //bet you didn't know you could do this!
-	var/icon/Icon_test = icon('icons/BadAss.dmi')
-	if(!istype(Icon_test))
-		var/msg = "Cleanbot bug detected in icons! Icons are mapping to [Icon_test]"
-		if (!admins_warned)
-			admins_warned = 1
-			spawn(25)
-				message_admins(msg)
-		stack_trace(msg)
-	var/sound/Sound_test = sound('sound/misc/null.ogg')
-	if(!istype(Sound_test))
-		var/msg = "Cleanbot bug detected in sounds! Sounds are mapping to [Sound_test]"
-		if (!admins_warned)
-			admins_warned = 1
-			spawn(25)
-				message_admins(msg)
-		stack_trace(msg)
-
 /proc/random_nukecode()
 	var/val = rand(0, 99999)
 	var/str = "[val]"
