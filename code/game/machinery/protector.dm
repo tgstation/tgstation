@@ -23,10 +23,9 @@
 		in_range += L
 		protected |= L
 		L.status_flags |= GODMODE
+		L.fully_heal(admin_revive=TRUE)
 
 	for(var/m in protected - in_range)
 		var/mob/living/L = m
-		if(!istype(L))
-			protected -= L
-		L.status_flags &= ~GODMODE
 		protected -= L
+		L.status_flags &= ~GODMODE
