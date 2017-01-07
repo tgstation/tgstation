@@ -65,6 +65,8 @@
 
 	var/mob/living/enslaved_to //If this mind's master is another mob (i.e. adamantine golems)
 
+	var/datum/umbrage/umbrage_psionics //If we're an umbrage, this datum will contain a lot of our stuff.
+
 /datum/mind/New(var/key)
 	src.key = key
 	soulOwner = src

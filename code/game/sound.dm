@@ -121,6 +121,8 @@
 				soundin = pick('sound/machines/terminal_button01.ogg', 'sound/machines/terminal_button02.ogg', 'sound/machines/terminal_button03.ogg', \
 								'sound/machines/terminal_button04.ogg', 'sound/machines/terminal_button05.ogg', 'sound/machines/terminal_button06.ogg', \
 								'sound/machines/terminal_button07.ogg', 'sound/machines/terminal_button08.ogg')
+			if ("loud_smash")
+				soundin = pick('sound/effects/loud_smash_01.ogg', 'sound/effects/loud_smash_02.ogg', 'sound/effects/loud_smash_03.ogg', 'sound/effects/loud_smash_04.ogg')
 	return soundin
 
 /proc/playsound_global(file, repeat=0, wait, channel, volume)

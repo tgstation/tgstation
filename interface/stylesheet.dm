@@ -66,8 +66,10 @@ h1.alert, h2.alert		{color: #000000;}
 .suicide				{color: #ff5050;	font-style: italic;}
 .green					{color: #03ff39;}
 .shadowling				{color: #3b2769;}
-.velvet_large			{color: #3b2769; font-size: 3;}
-.velvet_progenitor		{color: #3b2769; font-weight: bold; font-size: 15;}
+.velvet					{color: #21007F;}
+.velvet_bold			{color: #21007F; font-weight:bold;}
+.velvet_large			{color: #21007F; font-size: 3;}
+.velvet_progenitor		{color: #21007F; font-weight: bold; font-size: 15;}
 .cult					{color: #960000;}
 .cultitalic				{color: #960000;	font-style: italic;}
 .cultlarge				{color: #960000; font-weight: bold; font-size: 3;}

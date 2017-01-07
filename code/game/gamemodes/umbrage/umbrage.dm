@@ -23,10 +23,11 @@ Terminology you might remember has been changed to spookier variants, such as:
 
 Folder contents:
 	/code/game/gamemodes/umbrage
-		/__umbrage_defines.dm: Contains defines for all umbrage code.
+		/__umbrage_defines.dm: Contains defines and global variables for all umbrage code.
 		/umbrage.dm: This file. Contains the skeleton of the gamemode.
 		/umbrage_abilities.dm: Contains spells, abilities, and other stuff. Does NOT including hatching and ascension.
 		/umbrage_antags.dm: Contains antagonist datums for umbrages and veils.
+		/umbrage_datum.dm: Contains the tracking datum for lots of umbrage stuff.
 		/umbrage_special_abilities.dm: Contains hatching and ascension abilities and their related objects.
 		/umbrage_unsorted.dm: Contains things with nowhere else to be, like the umbrage race.
 
@@ -53,7 +54,7 @@ Idea and initial code by Xhuis (my 3rd gamemode now...)
 	enemy_minimum_age = 14
 	restricted_jobs = list("AI", "Cyborg", "Captain") //Notice that chaplains aren't here. Umbrages aren't magical or cultlike!
 	protected_jobs = list("Security Officer", "Warden", "Detective", "Head of Security", "Captain")
-	announce_span = "shadowling"
+	announce_span = "velvet"
 	announce_text = "Eldritch aberrations are trying to enslave the station!\n\
 	<span class='umbrage'>Umbrages</span>: Dominate the will of the crew and ascend into a progenitor.\n\
 	<span class='notice'>Crew</span>: Protect your minds and nullify the umbrages before they take over."
@@ -90,16 +91,18 @@ Idea and initial code by Xhuis (my 3rd gamemode now...)
 /datum/game_mode/proc/greet_umbrage(mob/living/U) //Describes what an umbrage is and its role.
 	if(!U)
 		return
-	U << "<span class='velvet_large'><b>You are an umbrage!</span>\n\
-	You are an umbrage, an unearthly creature bent on enslaving lesser creatures such as humans. \
-	In your true form, you possess latent abilities of stealth, sabotage, and shadow, but you're disguised as a human right now. \
-	Once you're out of your disguise, the light will kill you very quickly, and you must stay in darkness to survive. \
-	Consult the in-game tutorial in the Umbrage tab if you're new or need to know more.</b>"
+	U << "<span class='velvet_large'><b>You are an umbrage!</b></span>"
+	U << "<i>Read the Tutorial in your Umbrage tab if you need to know anything.</i>"
 	return 1
 
 /datum/game_mode/proc/equip_umbrage(mob/living/U)
-	var/datum/action/innate/umbrage_comms/C = new
+	var/datum/umbrage/S = new
+	S.linked_mind = U.mind
+	U.mind.umbrage_psionics = S
+	var/datum/action/innate/umbrage/umbrage_comms/C = new
 	C.Grant(U)
+	var/datum/action/innate/umbrage/umbrage_pass/P= new
+	P.Grant(U)
 	return
 
 /datum/game_mode/proc/antag_umbrage(mob/living/U)
