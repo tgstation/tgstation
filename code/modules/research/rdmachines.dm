@@ -59,7 +59,7 @@
 		return
 	if(default_deconstruction_crowbar(O))
 		return
-	if((O.container_type & OPENCONTAINER) && O.is_open_container())
+	if(is_open_container() && O.is_open_container())
 		return 0 //inserting reagents into the machine
 	if(Insert_Item(O, user))
 		return 1
