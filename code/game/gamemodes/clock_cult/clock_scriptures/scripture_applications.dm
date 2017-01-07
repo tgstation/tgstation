@@ -51,7 +51,7 @@
 /datum/clockwork_scripture/memory_allocation
 	descname = "Guardian"
 	name = "Memory Allocation"
-	desc = "Allocates part of your consciousness to a Clockwork Marauder, a vigilent fighter that lives within you, able to be \
+	desc = "Allocates part of your consciousness to a Clockwork Marauder, a vigilant fighter that lives within you, able to be \
 	called forth by Speaking its True Name or if you become exceptionally low on health.<br>\
 	If it remains close to you, you will gradually regain health up to a low amount, but it will die if it goes too far from you."
 	invocations = list("Fright's will...", "...call forth...")

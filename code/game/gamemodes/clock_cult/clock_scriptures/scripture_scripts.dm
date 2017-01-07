@@ -40,7 +40,7 @@
 	required_components = list(BELLIGERENT_EYE = 2, HIEROPHANT_ANSIBLE = 1)
 	consumed_components = list(BELLIGERENT_EYE = 1, HIEROPHANT_ANSIBLE = 1)
 	object_path = /obj/structure/destructible/clockwork/shell/cogscarab
-	creator_message = "<span class='brass'>You form a cogscarab, a constructor soul vessel receptable.</span>"
+	creator_message = "<span class='brass'>You form a cogscarab, a constructor soul vessel receptacle.</span>"
 	observer_message = "<span class='warning'>The slab disgorges a puddle of black metal that contracts and forms into a strange shell!</span>"
 	usage_tip = "Useless without a soul vessel and should not be created without one."
 	tier = SCRIPTURE_SCRIPT
