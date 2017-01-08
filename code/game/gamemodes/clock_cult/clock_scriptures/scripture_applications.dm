@@ -4,7 +4,7 @@
 
 //Sigil of Accession: Creates a sigil of accession, which is like a sigil of submission, but can convert any number of non-implanted targets and up to one implanted target.
 /datum/clockwork_scripture/create_object/sigil_of_accession
-	descname = "Trap, Permenant Conversion"
+	descname = "Trap, Permanent Conversion"
 	name = "Sigil of Accession"
 	desc = "Places a luminous sigil much like a Sigil of Submission, but it will remain even after successfully converting a non-implanted target. \
 	It will penetrate mindshield implants once before disappearing."
@@ -51,7 +51,7 @@
 /datum/clockwork_scripture/memory_allocation
 	descname = "Guardian"
 	name = "Memory Allocation"
-	desc = "Allocates part of your consciousness to a Clockwork Marauder, a vigilent fighter that lives within you, able to be \
+	desc = "Allocates part of your consciousness to a Clockwork Marauder, a vigilant fighter that lives within you, able to be \
 	called forth by Speaking its True Name or if you become exceptionally low on health.<br>\
 	If it remains close to you, you will gradually regain health up to a low amount, but it will die if it goes too far from you."
 	invocations = list("Fright's will...", "...call forth...")
