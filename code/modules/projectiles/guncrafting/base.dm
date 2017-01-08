@@ -26,8 +26,7 @@
 	owner.item_state = the_item_state
 	if(istype(owner.loc, /mob/living/carbon))
 		var/mob/living/carbon/C = owner.loc
-		C.update_inv_r_hand()
-		C.update_inv_l_hand()
+		C.update_inv_hands()
 
 /obj/item/weapon/gun_attachment/base/on_remove(var/obj/item/weapon/gun/owner)
 	..()
@@ -40,8 +39,7 @@
 			E.ammo_type = list()
 			E.power_supply = new(E)
 	owner.base = null
-	owner.item_state = initial()
+	owner.item_state = initial(owner.item_state)
 	if(istype(owner.loc, /mob/living/carbon))
 		var/mob/living/carbon/C = owner.loc
-		C.update_inv_r_hand()
-		C.update_inv_l_hand()
+		C.update_inv_hands()

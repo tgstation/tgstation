@@ -121,7 +121,11 @@
 		for(var/obj/item/weapon/gun_attachment/A in attachments)
 			overlays += A.my_overlay
 	var/ratio = Ceiling((power_supply.charge / power_supply.maxcharge) * charge_sections)
-	var/obj/item/ammo_casing/energy/shot = ammo_type[select]
+	var/obj/item/ammo_casing/energy/shot
+	if(!customizable_type)
+		shot = ammo_type[select]
+	else if(chambered)
+		shot = chambered
 	var/iconState = "[icon_state]_charge"
 	var/itemState = null
 	if(!initial(item_state))
@@ -129,7 +133,7 @@
 	if (modifystate)
 		add_overlay("[icon_state]_[shot.select_name]")
 		iconState += "_[shot.select_name]"
-		if(itemState)
+		if(itemState && !customizable_type)
 			itemState += "[shot.select_name]"
 	if(power_supply.charge < shot.e_cost)
 		add_overlay("[icon_state]_empty")
