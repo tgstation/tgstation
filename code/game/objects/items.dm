@@ -506,7 +506,7 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 	else ..()
 
 /obj/item/throw_impact(atom/A)
-	if(A)
+	if(A && !qdeleted(A))
 		var/itempush = 1
 		if(w_class < 4)
 			itempush = 0 //too light to push anything
