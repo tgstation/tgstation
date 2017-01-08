@@ -179,7 +179,7 @@
 	id = "ebullet_decloner"
 	req_tech = list("combat" = 1, "materials" = 1)
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 500, MAT_GLASS = 300)
+	materials = list(MAT_METAL = 500, MAT_GLASS = 300, MAT_URANIUM = 2000)
 	build_path = /obj/item/weapon/gun_attachment/energy_bullet/decloner
 	category = list("Guncrafting Parts")
 
@@ -229,7 +229,7 @@
 	id = "bullet_rad"
 	req_tech = list("combat" = 1, "materials" = 1)
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 500, MAT_GLASS = 300)
+	materials = list(MAT_METAL = 500, MAT_GLASS = 300, MAT_URANIUM = 2000)
 	build_path = /obj/item/weapon/gun_attachment/bullet/polonium
 	category = list("Guncrafting Parts")
 
