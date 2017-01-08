@@ -169,11 +169,12 @@
 	..()
 	var/slotbit = slotdefine2slotbit(slot)
 	if(slot_flags & slotbit)
-		if(!user.is_holding_item_of_type(/obj/item/weapon/twohanded/offhand))
+		var/O == user.is_holding_item_of_type(/obj/item/weapon/twohanded/offhand)
+		if(!O)
 			return
-		if(qdeleted(I))
+		if(qdeleted(O))
 			return
-		qdel(I)
+		qdel(O)
 		return
 	if(slot == slot_hands)
 		wield(user)
