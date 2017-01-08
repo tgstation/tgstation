@@ -28,7 +28,8 @@ Folder contents:
 		/umbrage_abilities.dm: Contains spells, abilities, and other stuff. Does NOT including hatching and ascension.
 		/umbrage_antags.dm: Contains antagonist datums for umbrages and veils.
 		/umbrage_datum.dm: Contains the tracking datum for lots of umbrage stuff.
-		/umbrage_special_abilities.dm: Contains hatching and ascension abilities and their related objects.
+		/umbrage_major_abilities.dm: Contains hatching and ascension abilities and their related objects.
+		/umbrage_objects.dm: Contains the few items and structures used in Umbrage.
 		/umbrage_unsorted.dm: Contains things with nowhere else to be, like the umbrage race.
 
 Idea and initial code by Xhuis (my 3rd gamemode now...)
@@ -88,21 +89,20 @@ Idea and initial code by Xhuis (my 3rd gamemode now...)
 	..()
 	return 1
 
-/datum/game_mode/proc/greet_umbrage(mob/living/U) //Describes what an umbrage is and its role.
+/datum/game_mode/proc/greet_umbrage(mob/living/U) //Announcement and direction to the tutorial
 	if(!U)
 		return
 	U << "<span class='velvet_large'><b>You are an umbrage!</b></span>"
-	U << "<i>Read the Tutorial in your Umbrage tab if you need to know anything.</i>"
+	U << "<i>Look for the info button in the top left of your screen if you need help.</i>"
 	return 1
 
 /datum/game_mode/proc/equip_umbrage(mob/living/U)
 	var/datum/umbrage/S = new
 	S.linked_mind = U.mind
 	U.mind.umbrage_psionics = S
-	var/datum/action/innate/umbrage/umbrage_comms/C = new
-	C.Grant(U)
-	var/datum/action/innate/umbrage/umbrage_pass/P= new
-	P.Grant(U)
+	for(var/V in subtypesof(/datum/action/innate/umbrage))
+		var/datum/action/innate/umbrage/A = new V
+		A.Grant(U)
 	return
 
 /datum/game_mode/proc/antag_umbrage(mob/living/U)
@@ -126,6 +126,9 @@ Idea and initial code by Xhuis (my 3rd gamemode now...)
 		if(T = M)
 			return 1
 	return 0
+
+/proc/is_umbrage_or_veil(datum/mind/M)
+	return is_umbrage(M) || is_veil(M)
 
 /proc/is_umbrage_progenitor(datum/mind/M)
 	return 0

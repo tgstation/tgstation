@@ -531,6 +531,15 @@
 	icon_state = "shieldsparkles"
 	duration = 6
 
+/obj/effect/overlay/temp/soul
+	icon_state = "soul"
+	duration = 10
+	alpha = 0
+
+/obj/effect/overlay/temp/soul/New()
+	..()
+	animate(src, alpha = 255, pixel_y = 16, time = 5)
+	animate(src, alpha = 0, pixel_y = 32, time = 5)
 
 /obj/effect/overlay/palmtree_r
 	name = "Palm tree"

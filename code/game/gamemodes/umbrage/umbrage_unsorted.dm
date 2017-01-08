@@ -1,3 +1,4 @@
+//The umbrage mutant species. They have no blood, don't need to breathe, are immune to radiation and viruses, and, most importantly, cannot wield guns. They also have night vision.
 /datum/species/umbrage
 	name = "Umbrage"
 	id = "umbrage"
@@ -33,3 +34,30 @@
 		H.adjustToxLoss(UMBRAGE_DARK_HEAL)
 		H.adjustOxyLoss(UMBRAGE_DARK_HEAL)
 		H.adjustCloneLoss(UMBRAGE_DARK_HEAL)
+
+
+
+//Mindlink communication proc.
+/mob/living/proc/umbrage_say(message)
+	var/processed_message
+	if(is_umbrage(mind))
+		if(!is_umbrage_progenitor(usr.mind))
+			processed_message = "<span class='velvet'><b>\[Mindlink\] Umbrage [real_name]:</b> \"[message]\"</span>"
+		else
+			processed_message = "<span class='velvet_large'><b>\[Mindlink\] Progenitor [real_name]:</b> \"[message]\"</span>" //Progenitors get big spooky text
+	else if(is_veil(mind))
+		processed_message = "<span class='velvet'><b>\[Mindlink\] [real_name]:</b> \"[message]\""
+	else
+		return 0 //How are you doing this in the first place?
+	src << "<span class='velvet_bold'>saa'teo</span>"
+	for(var/V in ticker.mode.umbrages_and_veils)
+		var/datum/mind/M = V
+		if(M.current.z != z)
+			if(prob(10))
+				M.current << "<span class='warning'>Your mindlink trembles with words, but you're too far away to make it out...</span>"
+			continue
+		else
+			M.current << processed_message
+	for(var/mob/M in dead_mob_list)
+		var/link = FOLLOW_LINK(M, src)
+		M << "[link] [processed_message]"

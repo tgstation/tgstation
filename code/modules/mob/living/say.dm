@@ -245,6 +245,8 @@ var/list/crit_allowed_modes = list(MODE_WHISPER,MODE_CHANGELING,MODE_ALIEN)
 	if(message_mode == MODE_ALIEN)
 		if(hivecheck())
 			alien_talk(message)
+		else if(is_umbrage_or_veil(mind))
+			umbrage_say(message)
 		return TRUE
 	if(message_mode == MODE_VOCALCORDS)
 		if(iscarbon(src))
