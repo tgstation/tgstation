@@ -57,3 +57,6 @@
 
 	var/lastping = 0
 	var/avgping = 0
+	
+	var/preferences_cd = 0
+	var/preferences_count = 0
