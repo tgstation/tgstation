@@ -91,6 +91,8 @@
 		SF.Grant(src)
 	else
 		verbs -= /mob/living/simple_animal/drone/verb/toggle_statics
+	var/datum/action/generic/drone/show_alerts/SA = new(src)
+	SA.Grant(src)
 
 	var/datum/atom_hud/data/diagnostic/diag_hud = huds[DATA_HUD_DIAGNOSTIC]
 	diag_hud.add_to_hud(src)
@@ -214,6 +216,26 @@
 	if(severity == 1)
 		adjustBruteLoss(heavy_emp_damage)
 		src << "<span class='userdanger'>HeAV% DA%^MMA+G TO I/O CIR!%UUT!</span>"
+
+/mob/living/simple_animal/drone/proc/drone_alerts()
+	var/dat = ""
+	for(var/cat in alarms)
+		dat += text("<B>[cat]</B><BR>\n")
+		var/list/L = alarms[cat]
+		if(L.len)
+			for(var/alarm in L)
+				var/list/alm = L[alarm]
+				var/area/A = alm[1]
+				dat += "<NOBR>"
+				dat += text("-- [A.name]")
+				dat += "</NOBR><BR>\n"
+		else
+			dat += "-- All Systems Nominal<BR>\n"
+		dat += "<BR>\n"
+
+	var/datum/browser/alerts = new(usr, "robotalerts", "Current Station Alerts", 400, 410)
+	alerts.set_content(dat)
+	alerts.open()
 
 
 /mob/living/simple_animal/drone/proc/triggerAlarm(class, area/A, O, obj/alarmsource)
