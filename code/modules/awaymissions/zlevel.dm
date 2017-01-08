@@ -62,6 +62,13 @@ var/global/list/potentialRandomZlevels = generateMapList(filename = "config/away
 /proc/seedRuins(list/z_levels = null, budget = 0, whitelist = /area/space, list/potentialRuins = space_ruins_templates)
 	if(!z_levels || !z_levels.len)
 		z_levels = list(1)
+
+	for(var/zl in z_levels)
+		var/turf/T = locate(1, 1, zl)
+		if(!T)
+			WARNING("Z level [zl] does not exist - Not generating ruins")
+			return
+
 	var/overall_sanity = 100
 	var/list/ruins = potentialRuins.Copy()
 
