@@ -551,12 +551,20 @@ var/list/TYPES_SHORTCUTS = list(
 	if (isnull(dresscode))
 		return
 
-	var/datum/job/jobdatum
+	if (outfits[dresscode])
+		dresscode = outfits[dresscode]
+
 	if (dresscode == "As Job...")
-		var/jobname = input("Select job", "Robust quick dress shop") as null|anything in get_all_jobs()
-		if(isnull(jobname))
+		var/list/job_paths = subtypesof(/datum/outfit/job)
+		var/list/job_outfits = list()
+		for(var/path in job_paths)
+			var/datum/outfit/O = path
+			job_outfits[initial(O.name)] = path
+
+		dresscode = input("Select job equipment", "Robust quick dress shop") as null|anything in job_outfits
+		dresscode = job_outfits[dresscode]
+		if(isnull(dresscode))
 			return
-		jobdatum = SSjob.GetJob(jobname)
 
 
 	var/datum/outfit/custom = null
@@ -578,20 +586,14 @@ var/list/TYPES_SHORTCUTS = list(
 		if ("Custom")
 			//use custom one
 			M.equipOutfit(custom)
-		if ("As Job...")
-			if(jobdatum)
-				dresscode = jobdatum.title
-				M.job = jobdatum.title
-				jobdatum.equip(M)
-
 		else
-			M.equipOutfit(outfits[dresscode])
+			M.equipOutfit(dresscode)
 
 
 	M.regenerate_icons()
 
 	log_admin("[key_name(usr)] changed the equipment of [key_name(M)] to [dresscode].")
-	message_admins("<span class='adminnotice'>[key_name_admin(usr)] changed the equipment of [key_name_admin(M)] to [dresscode]..</span>")
+	message_admins("<span class='adminnotice'>[key_name_admin(usr)] changed the equipment of [key_name_admin(M)] to [dresscode].</span>")
 
 /client/proc/startSinglo()
 
