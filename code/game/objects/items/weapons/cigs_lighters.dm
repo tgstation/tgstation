@@ -109,7 +109,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	var/icon_off = "cigoff"
 	var/type_butt = /obj/item/weapon/cigbutt
 	var/lastHolder = null
-	var/smoketime = 300
+	var/smoketime = 150
 	var/chem_volume = 30
 	heat = 1000
 
@@ -121,7 +121,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	..()
 	create_reagents(chem_volume)
 	reagents.set_reacting(FALSE) // so it doesn't react until you light it
-	reagents.add_reagent("nicotine", 15)
+	reagents.add_reagent("nicotine", 20)
 
 /obj/item/clothing/mask/cigarette/Destroy()
 	if(reagents)
@@ -256,7 +256,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 
 /obj/item/clothing/mask/cigarette/rollie
 	name = "rollie"
-	desc = "A roll of dried plant matter wrapped in thin paper."
+	desc = "A handmade roll of dried plant matter wrapped in thin paper. Dosn't last as long as a cigarette."
 	icon_state = "spliffoff"
 	icon_on = "spliffon"
 	icon_off = "spliffoff"
@@ -292,8 +292,8 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 // CIGARS //
 ////////////
 /obj/item/clothing/mask/cigarette/cigar
-	name = "premium cigar"
-	desc = "A brown roll of tobacco and... well, you're not quite sure. This thing's huge!"
+	name = "cheap cigar"
+	desc = "A brown roll of tobacco and... well, you're not quite sure. It gets the job done, though."
 	icon_state = "cigaroff"
 	icon_on = "cigaron"
 	icon_off = "cigaroff"
@@ -305,7 +305,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 
 /obj/item/clothing/mask/cigarette/cigar/cohiba
 	name = "\improper Cohiba Robusto cigar"
-	desc = "There's little more you could want from a cigar."
+	desc = "A decently robust, well-made cigar. For maximum carcinogenic efficiency."
 	icon_state = "cigar2off"
 	icon_on = "cigar2on"
 	icon_off = "cigar2off"
@@ -315,12 +315,12 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 
 /obj/item/clothing/mask/cigarette/cigar/havana
 	name = "premium Havanian cigar"
-	desc = "A cigar fit for only the best of the best."
+	desc = "A top-of-the-line cigar fit for dictators of small island nations. The finest in modern smokeables."
 	icon_state = "cigar2off"
 	icon_on = "cigar2on"
 	icon_off = "cigar2off"
 	smoketime = 7200
-	chem_volume = 50
+	chem_volume = 120
 
 /obj/item/weapon/cigbutt
 	name = "cigarette butt"
@@ -332,7 +332,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 
 /obj/item/weapon/cigbutt/cigarbutt
 	name = "cigar butt"
-	desc = "A manky old cigar butt."
+	desc = "The butt of too many bad jokes."
 	icon_state = "cigarbutt"
 
 /////////////////
@@ -439,7 +439,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 /////////
 /obj/item/weapon/lighter
 	name = "\improper Zippo lighter"
-	desc = "The zippo."
+	desc = "A high-end lighter, for high-end people. Will make everone think you're cool."
 	icon = 'icons/obj/cigarettes.dmi'
 	icon_state = "zippo"
 	item_state = "zippo"
@@ -452,7 +452,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 
 /obj/item/weapon/lighter/greyscale
 	name = "cheap lighter"
-	desc = "A cheap-as-free lighter."
+	desc = "A cheap-as-free lighter. Don't burn yourself."
 	icon_state = "lighter"
 
 /obj/item/weapon/lighter/greyscale/New()
@@ -481,7 +481,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 			hitsound = 'sound/items/welder.ogg'
 			attack_verb = list("burnt", "singed")
 			if(!istype(src, /obj/item/weapon/lighter/greyscale))
-				user.visible_message("Without even breaking stride, [user] flips open and lights [src] in one smooth movement.", "<span class='notice'>Without even breaking stride, you flip open and lights [src] in one smooth movement.</span>")
+				user.visible_message("Without even breaking stride, [user] flips open and lights [src] in one smooth movement.", "<span class='notice'>Without even breaking stride, you flip open and light [src] in one smooth movement. Damn, you're cool.</span>")
 			else
 				var/prot = FALSE
 				var/mob/living/carbon/human/H = user
@@ -529,7 +529,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 			cig.attackby(src, user)
 		else
 			if(!istype(src, /obj/item/weapon/lighter/greyscale))
-				cig.light("<span class='rose'>[user] whips the [name] out and holds it for [M]. [user.p_their(TRUE)] arm is as steady as the unflickering flame they light \the [cig] with.</span>")
+				cig.light("<span class='rose'>[user] whips the [name] out and holds it for [M]. [user.p_their(TRUE)] arm is as steady as the unflickering flame they light \the [cig] with.</span>") //fucking kek who wrote this
 			else
 				cig.light("<span class='notice'>[user] holds the [name] out for [M], and lights the [cig.name].</span>")
 	else
@@ -650,7 +650,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 			else
 				cut_overlays()
 				super = 0
-				user << "<span class='notice'>You decrease the voltage in the [src]</span>"
+				user << "<span class='notice'>You decrease the ohms in the [src]</span>"
 				add_overlay(image(icon, "vapeopen_low"))
 
 		if(screw && emagged)
@@ -663,7 +663,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 			cut_overlays()
 			emagged = 1
 			super = 0
-			user << "<span class='warning'>You maximize the voltage in the [src]</span>"
+			user << "<span class='warning'>You maximize the ohms in the [src], whatever that means.</span>"
 			add_overlay(image(icon, "vapeopen_high"))
 			var/datum/effect_system/spark_spread/sp = new /datum/effect_system/spark_spread //for effect
 			sp.set_up(5, 1, src)
@@ -682,7 +682,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 /obj/item/clothing/mask/vape/equipped(mob/user, slot)
 	if(slot == slot_wear_mask)
 		if(!screw)
-			user << "<span class='notice'>You start puffing on the vape.</span>"
+			user << "<span class='notice'>You start puffing on dat vape.</span>"
 			reagents.set_reacting(TRUE)
 			START_PROCESSING(SSobj, src)
 		else //it will not start if the vape is opened.

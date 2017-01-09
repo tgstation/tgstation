@@ -200,18 +200,24 @@
 
 /obj/item/weapon/storage/fancy/cigarettes/cigpack_robustgold
 	name = "Robust Gold"
-	desc = "Smoked by the truly robust."
+	desc = "Smoked by the truly robust. Now with real gold flakes!"
 	icon_state = "robustg"
 
 /obj/item/weapon/storage/fancy/cigarettes/cigpack_robustgold/New()
 	..()
 	for(var/i = 1 to storage_slots)
 		reagents.add_reagent("gold",1)
+		reagents.add_reagent("ephedrine", 5) //because robust gold is rare
 
 /obj/item/weapon/storage/fancy/cigarettes/cigpack_carp
 	name = "Carp Classic"
-	desc = "Since 2313."
+	desc = "Since 2313. Contains a unique space tobacco mixture."
 	icon_state = "carp"
+
+/obj/item/weapon/storage/fancy/cigarettes/cigpack_carp/New()
+	..()
+	for(var/i = 1 to storage_slots)
+		reagents.add_reagent("salbutamol",5) //not as good as botany's pure Space tobacco cigs, but still nice anyways
 
 /obj/item/weapon/storage/fancy/cigarettes/cigpack_syndicate
 	name = "unknown"
@@ -265,8 +271,8 @@
 /////////////
 
 /obj/item/weapon/storage/fancy/cigarettes/cigars
-	name = "\improper premium cigar case"
-	desc = "A case of premium cigars. Very expensive."
+	name = "\improper cigar case"
+	desc = "A case of cheap cigars. Still, very expensive."
 	icon = 'icons/obj/cigarettes.dmi'
 	icon_state = "cigarcase"
 	w_class = WEIGHT_CLASS_NORMAL
