@@ -11,7 +11,7 @@
 	name = "Burst Handle"
 	icon_state = "handle_burst"
 	burst_size = 2
-	fire_delay = 3
+	fire_delay = 6
 	recoil = 4
 	automatic = 0
 	spread = 5

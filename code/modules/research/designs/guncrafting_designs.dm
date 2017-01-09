@@ -221,7 +221,7 @@
 	req_tech = list("combat" = 1, "materials" = 1)
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 500, MAT_GLASS = 300)
-	build_path = /obj/item/weapon/gun_attachment/base/revolver_38
+	build_path = /obj/item/weapon/gun_attachment/base/shotgun
 	category = list("Guncrafting Parts")
 
 //energy bullets
