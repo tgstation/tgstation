@@ -170,13 +170,13 @@
 
 /obj/machinery/suit_storage_unit/Exited(atom/movable/M, atom/newloc)
 	if(M == helmet)
-		helmet == null
+		helmet = null
 	if(M == suit)
-		suit == null
+		suit = null
 	if(M == mask)
-		mask == null
+		mask = null
 	if(M == helmet)
-		helmet == null
+		helmet = null
 	..()
 	update_icon()
 

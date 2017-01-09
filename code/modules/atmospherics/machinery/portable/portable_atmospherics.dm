@@ -74,7 +74,7 @@
 
 /obj/machinery/portable_atmospherics/Exited(atom/movable/M, atom/newloc)
 	if(M == holding)
-		holding == null
+		holding = null
 		update_icon()
 	..()
 
