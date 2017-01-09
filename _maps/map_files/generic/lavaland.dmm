@@ -2802,9 +2802,7 @@
 "fP" = (
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /turf/closed/indestructible/riveted,
-/area/ruin/unpowered{
-	name = "Necropolis Bridge"
-	})
+/area/space)
 
 (1,1,1) = {"
 aa
