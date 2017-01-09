@@ -203,4 +203,4 @@
 /datum/action/generic/drone/show_alerts
 	name = "View Station Alerts"
 	button_icon_state = "drone_alert"
-	procname = /mob/living/simple_animal/drone/proc/drone_alerts
+	procname = /mob/living/simple_animal/drone/verb/dr_drone_alerts

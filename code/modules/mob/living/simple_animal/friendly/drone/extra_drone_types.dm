@@ -115,6 +115,7 @@
 	laws = "0. Purge all untruths and honor Ratvar."
 	default_storage = /obj/item/weapon/storage/toolbox/brass/prefilled
 	seeStatic = 0
+	seeAlerts = 0
 	hacked = TRUE
 	visualAppearence = CLOCKDRONE
 	can_be_held = FALSE

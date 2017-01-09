@@ -64,6 +64,7 @@
 	var/obj/item/default_storage = /obj/item/weapon/storage/backpack/dufflebag/drone //If this exists, it will spawn in internal storage
 	var/obj/item/default_hatmask //If this exists, it will spawn in the hat/mask slot if it can fit
 	var/seeStatic = 1 //Whether we see static instead of mobs
+	var/seeAlerts = 1
 	var/visualAppearence = MAINTDRONE //What we appear as
 	var/hacked = 0 //If we have laws to destroy the station
 	var/can_be_held = TRUE //if assholes can pick us up
@@ -91,8 +92,11 @@
 		SF.Grant(src)
 	else
 		verbs -= /mob/living/simple_animal/drone/verb/toggle_statics
-	var/datum/action/generic/drone/show_alerts/SA = new(src)
-	SA.Grant(src)
+	if(seeAlerts)
+		var/datum/action/generic/drone/show_alerts/SA = new(src)
+		SA.Grant(src)
+	else
+		verbs -= /mob/living/simple_animal/drone/verb/dr_drone_alerts
 
 	var/datum/atom_hud/data/diagnostic/diag_hud = huds[DATA_HUD_DIAGNOSTIC]
 	diag_hud.add_to_hud(src)
