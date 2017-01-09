@@ -63,8 +63,8 @@
 	var/obj/item/head
 	var/obj/item/default_storage = /obj/item/weapon/storage/backpack/dufflebag/drone //If this exists, it will spawn in internal storage
 	var/obj/item/default_hatmask //If this exists, it will spawn in the hat/mask slot if it can fit
-	var/seeStatic = 1 //Whether we see static instead of mobs
-	var/seeAlerts = 1
+	var/seeStatic = TRUE //Whether we see static instead of mobs
+	var/seeAlerts = TRUE
 	var/visualAppearence = MAINTDRONE //What we appear as
 	var/hacked = 0 //If we have laws to destroy the station
 	var/can_be_held = TRUE //if assholes can pick us up
