@@ -321,6 +321,7 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 	qdel(cellular_emporium)
 	cellular_emporium = null
 	qdel(emporium_action)
+	emporium_action = null
 	. = ..()
 
 /datum/changeling/proc/regenerate(var/mob/living/carbon/the_ling)
