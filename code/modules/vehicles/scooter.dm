@@ -54,6 +54,7 @@
 		slowed = TRUE
 	else if(slowed)
 		vehicle_move_delay = vehicle_move_delay - slowvalue
+		slowed = FALSE
 
 /obj/vehicle/scooter/skateboard
 	name = "skateboard"
