@@ -67,6 +67,17 @@
 	if(.)
 		disconnect()
 
+/obj/machinery/portable_atmospherics/forceMove(atom/destination)
+	. = ..()
+	if(.)
+		disconnect()
+
+/obj/machinery/portable_atmospherics/Exited(atom/movable/M, atom/newloc)
+	if(M == holding)
+		holding == null
+		update_icon()
+	..()
+
 /obj/machinery/portable_atmospherics/proc/disconnect()
 	if(!connected_port)
 		return 0

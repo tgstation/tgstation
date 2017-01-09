@@ -176,6 +176,11 @@ Class Procs:
 			L.update_canmove()
 	occupant = null
 
+/obj/machinery/Exited(atom/movable/M, atom/newloc)
+	if(M == occupant)
+		occupant == null
+	..()
+
 /obj/machinery/proc/close_machine(mob/living/target = null)
 	state_open = 0
 	density = 1
