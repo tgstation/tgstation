@@ -61,7 +61,8 @@ var/global/list/potentialRandomZlevels = generateMapList(filename = "config/away
 
 /proc/seedRuins(list/z_levels = null, budget = 0, whitelist = /area/space, list/potentialRuins = space_ruins_templates)
 	if(!z_levels || !z_levels.len)
-		z_levels = list(1)
+		WARNING("No Z levels provided - Not generating ruins")
+		return
 
 	for(var/zl in z_levels)
 		var/turf/T = locate(1, 1, zl)
