@@ -1,0 +1,6 @@
+author: "XDTM"
+delete-after: True
+changes: 
+  - rscadd: "Earmuffs and null rods protect against the Voice of God."
+  - rscadd: "Earmuffs are now buildable in autolathes."
+  - tweak: "Voice of God stuns have a longer cooldown."
