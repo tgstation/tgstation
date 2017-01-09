@@ -118,6 +118,12 @@
 			dat += "<a href='?src=\ref[src];purchase=spraycan'>Territory Spraycan</a><br>"
 		else
 			dat += "Territory Spraycan<br>"
+			
+		dat += "(5 Influence) "
+		if(points >= 5)
+			dat += "<a href='?src=\ref[src];purchase=soap'>Syndicate Soap</a><br>"
+		else
+			dat +="Syndicate Soap<br>"
 
 		dat += "(10 Influence) "
 		if(points >= 10)
@@ -187,6 +193,10 @@
 			if("spraycan")
 				if(gang.points >= 5)
 					item_type = /obj/item/toy/crayon/spraycan/gang
+					pointcost = 5
+			if("soap")
+				if(gang.points >= 5)
+					item_type = /obj/item/weapon/soap/syndie
 					pointcost = 5
 			if("switchblade")
 				if(gang.points >= 10)
