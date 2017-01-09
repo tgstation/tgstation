@@ -865,7 +865,7 @@
 							if(!valid_id)
 								usr << "<span class='warning'>A reagent with that ID doesn't exist!</span>"
 					if("Choose ID")
-						chosen_id = input(usr, "Choose a reagent to add.", "Choose a reagent.") in reagent_options|null
+						chosen_id = input(usr, "Choose a reagent to add.", "Choose a reagent.") as null|anything in reagent_options
 				if(chosen_id)
 					var/amount = input(usr, "Choose the amount to add.", "Choose the amount.", A.reagents.maximum_volume) as num
 					if(amount)
