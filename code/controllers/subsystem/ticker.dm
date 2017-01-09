@@ -11,6 +11,8 @@ var/datum/subsystem/ticker/ticker
 
 	var/current_state = GAME_STATE_STARTUP	//state of current round (used by process()) Use the defines GAME_STATE_* !
 	var/force_ending = 0					//Round was ended by admin intervention
+	// If true, there is no lobby phase, the game starts immediately.
+	var/start_immediately = FALSE
 
 	var/hide_mode = 0
 	var/datum/game_mode/mode = null
@@ -81,6 +83,9 @@ var/datum/subsystem/ticker/ticker
 				++totalPlayers
 				if(player.ready)
 					++totalPlayersReady
+
+			if(start_immediately)
+				timeLeft = 0
 
 			//countdown
 			if(timeLeft < 0)

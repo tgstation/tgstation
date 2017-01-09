@@ -11,7 +11,7 @@ Note: Must be placed west/left of and R&D console to function.
 	name = "Protolathe"
 	desc = "Converts raw materials into useful objects."
 	icon_state = "protolathe"
-	flags = OPENCONTAINER
+	container_type = OPENCONTAINER
 
 	var/datum/material_container/materials
 	var/efficiency_coeff
@@ -39,7 +39,7 @@ Note: Must be placed west/left of and R&D console to function.
 	B.apply_default_parts(src)
 
 /obj/item/weapon/circuitboard/machine/protolathe
-	name = "circuit board (Protolathe)"
+	name = "Protolathe (Machine Board)"
 	build_path = /obj/machinery/r_n_d/protolathe
 	origin_tech = "engineering=2;programming=2"
 	req_components = list(

@@ -133,7 +133,7 @@ var/last_irc_status = 0
 			// Key-authed callers may know the truth behind the "secret"
 
 		s["security_level"] = get_security_level()
-		s["round_duration"] = round(world.time/10)
+		s["round_duration"] = round((world.time-round_start_time)/10)
 		// Amount of world's ticks in seconds, useful for calculating round duration
 
 		if(SSshuttle && SSshuttle.emergency)

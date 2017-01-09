@@ -520,6 +520,8 @@ var/next_mob_id = 0
 	..()
 
 	if(statpanel("Status"))
+		if (client)
+			stat(null, "Ping: [round(client.lastping, 1)]ms (Average: [round(client.avgping, 1)]ms)")
 		stat(null, "Map: [MAP_NAME]")
 		if(nextmap && istype(nextmap))
 			stat(null, "Next Map: [nextmap.friendlyname]")

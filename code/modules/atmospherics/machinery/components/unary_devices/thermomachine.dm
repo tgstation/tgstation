@@ -24,7 +24,7 @@
 	B.apply_default_parts(src)
 
 /obj/item/weapon/circuitboard/machine/thermomachine
-	name = "circuit board (Thermomachine)"
+	name = "Thermomachine (Machine Board)"
 	desc = "You can use a screwdriver to switch between heater and freezer."
 	origin_tech = "programming=3;plasmatech=3"
 	req_components = list(
@@ -36,10 +36,10 @@
 /obj/item/weapon/circuitboard/machine/thermomachine/New()
 	..()
 	if(prob(50))
-		name = "circuit board (Freezer)"
+		name = "Freezer (Machine Board)"
 		build_path = /obj/machinery/atmospherics/components/unary/thermomachine/freezer
 	else
-		name = "circuit board (Heater)"
+		name = "Heater (Machine Board)"
 		build_path = /obj/machinery/atmospherics/components/unary/thermomachine/heater
 
 /obj/item/weapon/circuitboard/machine/thermomachine/attackby(obj/item/I, mob/user, params)
@@ -208,7 +208,7 @@
 	B.apply_default_parts(src)
 
 /obj/item/weapon/circuitboard/machine/thermomachine/freezer
-	name = "circuit board (Freezer)"
+	name = "Freezer (Machine Board)"
 	build_path = /obj/machinery/atmospherics/components/unary/thermomachine/freezer
 
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer/RefreshParts()
@@ -233,7 +233,7 @@
 	B.apply_default_parts(src)
 
 /obj/item/weapon/circuitboard/machine/thermomachine/heater
-	name = "circuit board (Heater)"
+	name = "Heater (Machine Board)"
 	build_path = /obj/machinery/atmospherics/components/unary/thermomachine/heater
 
 /obj/machinery/atmospherics/components/unary/thermomachine/heater/RefreshParts()

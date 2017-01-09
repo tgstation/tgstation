@@ -23,7 +23,10 @@
 
 /datum/surgery_step/add_limb/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	var/obj/item/bodypart/aug = tool
-	if(aug.status != BODYPART_ROBOTIC && aug.body_zone != target_zone)
+	if(aug.status != BODYPART_ROBOTIC)
+		user << "<span class='warning'>that's not an augment silly!</span>"
+		return -1
+	if(aug.body_zone != target_zone)
 		user << "<span class='warning'>[tool] isn't the right type for [parse_zone(target_zone)].</span>"
 		return -1
 	L = surgery.operated_bodypart

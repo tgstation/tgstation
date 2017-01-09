@@ -197,7 +197,7 @@
 	return
 
 /obj/item/weapon/circuitboard/machine/bsa/back
-	name = "circuit board (Bluespace Artillery Generator)"
+	name = "Bluespace Artillery Generator (Machine Board)"
 	build_path = /obj/machinery/bsa/back
 	origin_tech = "engineering=2;combat=2;bluespace=2" //No freebies!
 	req_components = list(
@@ -205,7 +205,7 @@
 							/obj/item/stack/cable_coil = 2)
 
 /obj/item/weapon/circuitboard/machine/bsa/middle
-	name = "circuit board (Bluespace Artillery Fusor)"
+	name = "Bluespace Artillery Fusor (Machine Board)"
 	build_path = /obj/machinery/bsa/middle
 	origin_tech = "engineering=2;combat=2;bluespace=2"
 	req_components = list(
@@ -213,7 +213,7 @@
 							/obj/item/stack/cable_coil = 2)
 
 /obj/item/weapon/circuitboard/machine/bsa/front
-	name = "circuit board (Bluespace Artillery Bore)"
+	name = "Bluespace Artillery Bore (Machine Board)"
 	build_path = /obj/machinery/bsa/front
 	origin_tech = "engineering=2;combat=2;bluespace=2"
 	req_components = list(
@@ -221,7 +221,7 @@
 							/obj/item/stack/cable_coil = 2)
 
 /obj/item/weapon/circuitboard/machine/computer/bsa_control
-	name = "circuit board (Bluespace Artillery Controls)"
+	name = "Bluespace Artillery Controls (Computer Board)"
 	build_path = /obj/machinery/computer/bsa_control
 	origin_tech = "engineering=2;combat=2;bluespace=2"
 

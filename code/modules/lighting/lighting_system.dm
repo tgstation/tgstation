@@ -313,7 +313,7 @@
 	else
 		if(!lighting_object)
 			lighting_object = new (src)
-		redraw_lighting(1)
+		redraw_lighting()
 		for(var/turf/open/space/T in RANGE_TURFS(1,src))
 			T.update_starlight()
 
@@ -324,7 +324,7 @@
 	if(lighting_object)
 		lighting_object.PutOut()
 
-/turf/proc/redraw_lighting(instantly = 0)
+/turf/proc/redraw_lighting()
 	if(lighting_object)
 		var/newalpha
 		if(lighting_lumcount <= 0)
@@ -338,10 +338,7 @@
 		if(newalpha >= LIGHTING_DARKEST_VISIBLE_ALPHA)
 			newalpha = 255
 		if(lighting_object.alpha != newalpha)
-			if(instantly)
-				lighting_object.alpha = newalpha
-			else
-				animate(lighting_object, alpha = newalpha, time = LIGHTING_TIME)
+			lighting_object.alpha = newalpha
 			if(newalpha >= LIGHTING_DARKEST_VISIBLE_ALPHA)
 				luminosity = 0
 				lighting_object.luminosity = 0
@@ -390,8 +387,8 @@
 
 
 #define LIGHTING_MAX_LUMINOSITY_STATIC	8	//Maximum luminosity to reduce lag.
-#define LIGHTING_MAX_LUMINOSITY_MOBILE	7	//Moving objects have a lower max luminosity since these update more often. (lag reduction)
-#define LIGHTING_MAX_LUMINOSITY_MOB		6
+#define LIGHTING_MAX_LUMINOSITY_MOBILE	8	//Moving objects have a lower max luminosity since these update more often. (lag reduction)
+#define LIGHTING_MAX_LUMINOSITY_MOB     8
 #define LIGHTING_MAX_LUMINOSITY_TURF	8	//turfs are static too, why was this 1?!
 
 //caps luminosity effects max-range based on what type the light's owner is.

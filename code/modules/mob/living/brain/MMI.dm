@@ -155,7 +155,7 @@
 	brainmob << "<span class='notice'>Radio is [radio.listening==1 ? "now" : "no longer"] receiving broadcast.</span>"
 
 /obj/item/device/mmi/emp_act(severity)
-	if(!brainmob)
+	if(!brainmob || iscyborg(loc))
 		return
 	else
 		switch(severity)

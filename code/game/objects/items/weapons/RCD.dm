@@ -335,7 +335,7 @@ RCD
 			if(isspaceturf(A))
 				var/turf/open/space/S = A
 				if(useResource(floorcost, user))
-					user << "<span class='notice'>You start building floor...</span>"
+					user << "<span class='notice'>You start building a floor...</span>"
 					activate()
 					S.ChangeTurf(/turf/open/floor/plating)
 					return 1
@@ -344,7 +344,7 @@ RCD
 			if(isfloorturf(A))
 				var/turf/open/floor/F = A
 				if(checkResource(wallcost, user))
-					user << "<span class='notice'>You start building wall...</span>"
+					user << "<span class='notice'>You start building a wall...</span>"
 					playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 					if(do_after(user, walldelay, target = A))
 						if(!istype(F)) return 0
@@ -379,7 +379,7 @@ RCD
 							break
 
 					if(door_check)
-						user << "<span class='notice'>You start building airlock...</span>"
+						user << "<span class='notice'>You start building an airlock...</span>"
 						playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 						if(do_after(user, airlockdelay, target = A))
 							if(!useResource(airlockcost, user)) return 0
@@ -606,10 +606,10 @@ RCD
 	icon_state = "rcd"
 	item_state = "rcdammo"
 	origin_tech = "materials=3"
-	materials = list(MAT_METAL=3000, MAT_GLASS=2000)
+	materials = list(MAT_METAL=12000, MAT_GLASS=8000)
 	var/ammoamt = 40
 
 /obj/item/weapon/rcd_ammo/large
 	origin_tech = "materials=4"
-	materials = list(MAT_METAL=12000, MAT_GLASS=8000)
+	materials = list(MAT_METAL=48000, MAT_GLASS=32000)
 	ammoamt = 160
