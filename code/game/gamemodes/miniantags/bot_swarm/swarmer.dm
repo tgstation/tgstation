@@ -148,6 +148,10 @@
 	else
 		. = ..()
 
+/mob/living/simple_animal/hostile/swarmer/experience_pressure_difference()
+	if(stat)
+		return ..()
+
 /mob/living/simple_animal/hostile/swarmer/get_spans()
 	return ..() | SPAN_ROBOT
 
