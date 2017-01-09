@@ -15,7 +15,7 @@ var/list/map_transition_config = MAP_TRANSITION_CONFIG
 /world/New()
 	check_for_cleanbot_bug()
 	map_ready = 1
-	world.log << "Map is ready."
+	world.log << "[MAP_NAME] is ready."
 
 #if (PRELOAD_RSC == 0)
 	external_rsc_urls = file2list("config/external_rsc_urls.txt","\n")
