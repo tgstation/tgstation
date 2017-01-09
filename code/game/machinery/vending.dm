@@ -302,6 +302,7 @@
 			cut_overlays()
 			if(panel_open)
 				add_overlay(image(icon, "[initial(icon_state)]-panel"))
+			playsound(src.loc, W.usesound, 50, 1)
 			updateUsrDialog()
 		else
 			user << "<span class='warning'>You must first secure [src].</span>"

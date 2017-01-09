@@ -205,7 +205,7 @@ var/global/BSACooldown = 0
 			dat+="<HR><B>Feed Security functions:</B><BR>"
 			dat+="<BR><A href='?src=\ref[src];ac_menu_wanted=1'>[(wanted_already) ? ("Manage") : ("Publish")] \"Wanted\" Issue</A>"
 			dat+="<BR><A href='?src=\ref[src];ac_menu_censor_story=1'>Censor Feed Stories</A>"
-			dat+="<BR><A href='?src=\ref[src];ac_menu_censor_channel=1'>Mark Feed Channel with Nanotrasen D-Notice (disables and locks the channel.</A>"
+			dat+="<BR><A href='?src=\ref[src];ac_menu_censor_channel=1'>Mark Feed Channel with Nanotrasen D-Notice (disables and locks the channel).</A>"
 			dat+="<BR><HR><A href='?src=\ref[src];ac_set_signature=1'>The newscaster recognises you as:<BR> <FONT COLOR='green'>[src.admin_signature]</FONT></A>"
 		if(1)
 			dat+= "Station Feed Channels<HR>"

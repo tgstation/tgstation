@@ -1,4 +1,0 @@
-author: "Mervill"
-delete-after: True
-changes: 
-  - bugfix: "pre-placed posters don't retain their pixel offset when taken down carefully"
