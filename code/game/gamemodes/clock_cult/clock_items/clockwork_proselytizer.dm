@@ -169,10 +169,9 @@
 		proselytize_values["alloy_cost"] = 0
 
 	var/turf/Y = get_turf(user)
-	if(!Y || (Y.z != ZLEVEL_STATION && Y.z != ZLEVEL_CENTCOM && Y.z != ZLEVEL_MINING && Y.z != ZLEVEL_LAVALAND))
-		proselytize_values["operation_time"] *= 2
-		if(proselytize_values["alloy_cost"] > 0)
-			proselytize_values["alloy_cost"] *= 2
+	if(!Y || Y.z != ZLEVEL_STATION)
+		user << "<span class='warning'>You need to be on the station to do this!"
+		return FALSE
 
 	if(!can_use_alloy(proselytize_values["alloy_cost"]))
 		if(stored_alloy - proselytize_values["alloy_cost"] < 0)
