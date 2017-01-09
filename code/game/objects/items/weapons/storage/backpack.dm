@@ -283,6 +283,12 @@
 		anchored = 0
 		icon_state = initial(icon_state)
 
+/obj/item/weapon/storage/backpack/satchel/flat/attackby(obj/item/I, mob/living/user, params)
+	if(anchored)
+		user << "<span class='warning'>You must remove the plating first!</span>"
+		return
+	. = ..()
+
 /obj/item/weapon/storage/backpack/satchel/flat/New()
 	..()
 	PoolOrNew(/obj/item/stack/tile/plasteel, src)
