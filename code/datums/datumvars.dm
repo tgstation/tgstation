@@ -1,6 +1,5 @@
 /datum
 	var/var_edited = FALSE //Warrenty void if seal is broken
-	var/datum/reagents/reagents = null
 	var/fingerprintslast = null
 
 /datum/proc/vv_edit_var(var_name, var_value) //called whenever a var is edited
@@ -52,13 +51,13 @@
 	var/refid = "\ref[D]"
 	var/icon/sprite
 	var/hash
-	
+
 	var/type = /list
 	if (!islist)
 		type = D.type
 
 
-	
+
 	if(istype(D,/atom))
 		var/atom/AT = D
 		if(AT.icon && AT.icon_state)
