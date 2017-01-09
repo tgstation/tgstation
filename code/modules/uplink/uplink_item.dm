@@ -1132,6 +1132,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	desc = "A random selection of cybernetic implants. Guaranteed 5 high quality implants. Comes with an autoimplanter."
 	item = /obj/item/weapon/storage/box/cyber_implants/bundle
 	cost = 40
+	cant_discount = TRUE
 
 // Pointless
 /datum/uplink_item/badass
