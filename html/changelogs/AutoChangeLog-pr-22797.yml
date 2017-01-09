@@ -1,0 +1,4 @@
+author: "Arianya"
+delete-after: True
+changes: 
+  - bugfix: "Doors and vending machines once again make a sound when you screwdriver them."
