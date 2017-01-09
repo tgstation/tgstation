@@ -1,4 +1,0 @@
-author: "Cruix"
-delete-after: True
-changes: 
-  - bugfix: "Fixed the leftmost and bottommost 15 turfs not having static for AIs and camera consoles"

@@ -1287,14 +1287,13 @@ proc/pick_closest_path(value, list/matches = get_fancy_list_of_atom_types())
 /proc/stoplag()
 	. = round(1*DELTA_CALC)
 	sleep(world.tick_lag)
-	if (world.tick_usage > TICK_LIMIT_TO_RUN) //woke up, still not enough tick, sleep for more.
+	if (world.tick_usage > min(TICK_LIMIT_TO_RUN, CURRENT_TICKLIMIT)) //woke up, still not enough tick, sleep for more.
 		. += round(2*DELTA_CALC)
 		sleep(world.tick_lag*2*DELTA_CALC)
-		if (world.tick_usage > TICK_LIMIT_TO_RUN) //woke up, STILL not enough tick, sleep for more.
+		if (world.tick_usage > min(TICK_LIMIT_TO_RUN, CURRENT_TICKLIMIT)) //woke up, STILL not enough tick, sleep for more.
 			. += round(4*DELTA_CALC)
 			sleep(world.tick_lag*4*DELTA_CALC)
-			//you might be thinking of adding more steps to this, or making it use a loop and a counter var
-			//	not worth it.
+
 #undef DELTA_CALC
 
 /proc/flash_color(mob_or_client, flash_color="#960000", flash_time=20)
