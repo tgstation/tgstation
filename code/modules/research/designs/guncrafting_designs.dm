@@ -217,7 +217,7 @@
 /datum/design/base_shotgun
 	name = "Gun Ballistic Base: Shotgun"
 	desc = "Security, Antag, I'm the guy with the shotgun."
-	id = "base_revolver_38"
+	id = "base_shotgun"
 	req_tech = list("combat" = 1, "materials" = 1)
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 500, MAT_GLASS = 300)
