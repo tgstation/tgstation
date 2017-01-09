@@ -88,7 +88,8 @@
 		return
 
 	if(ismob(target) && target.reagents)
-		reagents.total_volume *= rand(5,10) * 0.1 //Not all of it makes contact with the target
+		if(thrown)
+			reagents.total_volume *= rand(5,10) * 0.1 //Not all of it makes contact with the target
 		var/mob/M = target
 		var/R
 		target.visible_message("<span class='danger'>[M] has been splashed with something!</span>", \
