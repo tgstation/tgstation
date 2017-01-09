@@ -6,7 +6,7 @@
 	invis_sight = SEE_INVISIBLE_MINIMUM
 	sexes = 0
 	blacklisted = 1
-	saymod = "chirps"
+	say_mod = "chirps"
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/shadow
 	species_traits = list(NOBREATH, NOBLOOD, RADIMMUNE, VIRUSIMMUNE, NOGUNS)
 	dangerous_existence = 1

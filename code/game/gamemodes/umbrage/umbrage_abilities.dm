@@ -60,3 +60,52 @@
 	B.linked_ability = src
 	..()
 	return 1
+
+
+
+//Veil Mind: Converts all eligible targets nearby into veils. Targets become eligible for a short time when drained by Devour Will.
+/datum/action/innate/umbrage/veil_mind
+	name = "Veil Mind"
+	desc = "Converts nearby eligible targets into thralls. To be eligible, they must be alive and recently drained by Devour Will."
+	button_icon_state = "umbrage_veil_mind"
+	check_flags = AB_CHECK_STUNNED|AB_CHECK_CONSCIOUS
+	psi_cost = 30
+
+/datum/action/innate/umbrage/veil_mind/IsAvailable()
+	if(!usr)
+		return
+	return ..()
+
+/datum/action/innate/umbrage/veil_mind/Activate()
+	var/mob/living/carbon/human/H = usr
+	if(!H.can_speak_vocal())
+		H << "<span class='warning'>You can't speak!</span>"
+		return
+	usr.visible_message("<span class='warning'>[usr]'s sigils flare as they inhale...</span>", "<span class='velvet_bold'>dawn kqn okjc...</span><br>\
+	<span class='notice'>You take a deep breath...</span>")
+	playsound(usr, 'sound/magic/veil_mind_gasp.ogg', 25, 1)
+	if(!do_after(usr, 10, target = usr))
+		return
+	usr.visible_message("<span class='boldwarning'>[usr] lets out a horrific scream!</span>", "<span class='velvet_bold'>...wjz oanra</span><br>\
+	<span class='notice'>You veil the minds of everyone nearby.</span>")
+	playsound(usr, 'sound/magic/veil_mind_scream.ogg', 100, 0)
+	for(var/mob/living/L in view(3, usr))
+		if(L == usr)
+			continue
+		if(issilicon(L))
+			L << "<span class='userdanger'>$@!) ERR: RECEPTOR OVERLOAD ^!</</span>"
+			L << sound('sound/misc/interference.ogg', volume = 50)
+			L.emote("alarm")
+			L.Stun(2)
+			L.overlay_fullscreen("flash", /obj/screen/fullscreen/flash/static)
+			L.clear_fullscreen("flash", 10)
+		else
+			if(L.ear_deaf)
+				L << "<span class='warning'>...but you can't hear it!</span>"
+			else
+				if(L.status_flags & FAKEDEATH)
+					L.visible_message("<span class='warning'>[L] convulses wildly!</span>", "<span class='velvet_large'><b>ukq wna ieja jks</b></span>")
+				else
+					L << "<span class='boldwarning'>...and it scrambles your thoughts!</span>"
+					L.dir = pick(cardinal)
+					L.confused += 2
