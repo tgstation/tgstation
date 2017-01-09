@@ -256,7 +256,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 
 /obj/item/clothing/mask/cigarette/rollie
 	name = "rollie"
-	desc = "A handmade roll of dried plant matter wrapped in thin paper. Dosn't last as long as a cigarette."
+	desc = "A handmade roll of dried plant matter wrapped in thin paper. Doesn't last as long as a cigarette."
 	icon_state = "spliffoff"
 	icon_on = "spliffon"
 	icon_off = "spliffoff"
