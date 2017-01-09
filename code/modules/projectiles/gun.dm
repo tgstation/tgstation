@@ -66,6 +66,7 @@
 
 	// Guncrafting
 	var/customizable_type = null
+	var/uses_internal = 0
 	var/list/attachments = list()
 	var/obj/item/weapon/gun_attachment/barrel/barrel = null
 	var/obj/item/weapon/gun_attachment/base/base = null

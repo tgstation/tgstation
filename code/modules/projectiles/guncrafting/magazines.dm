@@ -14,7 +14,7 @@
 	max_ammo = 8
 
 /obj/item/projectile/bullet/guncrafting_ar
-	damage = 3
+	damage = 4.5
 
 /obj/item/ammo_casing/guncrafting_ar
 	desc = "A pistol bullet casing."
@@ -27,3 +27,8 @@
 	ammo_type = /obj/item/ammo_casing/guncrafting_ar
 	caliber = "NT Custom"
 	max_ammo = 30
+
+/obj/item/ammo_box/magazine/internal/shot/guncrafting
+	name = "shotgun internal magazine"
+	ammo_type = /obj/item/ammo_casing/shotgun
+	max_ammo = 6

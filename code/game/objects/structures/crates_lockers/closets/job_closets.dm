@@ -27,6 +27,7 @@
 	new /obj/item/clothing/suit/armor/vest/alt(src)
 	new /obj/item/clothing/glasses/sunglasses/reagent(src)
 	new /obj/item/weapon/storage/belt/bandolier(src)
+	new /obj/item/weapon/gun/ballistic/frame/double_barrel(src)
 
 /obj/structure/closet/chefcloset
 	name = "\proper chef's closet"

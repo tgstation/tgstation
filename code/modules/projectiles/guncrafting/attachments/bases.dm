@@ -12,6 +12,39 @@
 	mag_type = /obj/item/ammo_box/magazine/guncrafting_pistol
 	the_item_state = "gun"
 
+/obj/item/weapon/gun_attachment/base/shotgun
+	gun_type = CUSTOMIZABLE_PROJECTILE
+	name = "Shotgun Ballistic Base"
+	icon_state = "base_projectile_shotgun"
+	mag_type = /obj/item/ammo_box/magazine/internal/shot/guncrafting
+	the_item_state = "shotgun"
+	internal = 1
+
+/obj/item/weapon/gun_attachment/base/shotgun_db
+	gun_type = CUSTOMIZABLE_PROJECTILE
+	name = "Double Barrel Shotgun Ballistic Base"
+	icon_state = "base_projectile_shotgun_db"
+	mag_type = /obj/item/ammo_box/magazine/internal/shot/dual
+	the_item_state = "shotgun"
+	internal = 1
+
+/obj/item/weapon/gun_attachment/base/revolver_357
+	gun_type = CUSTOMIZABLE_PROJECTILE
+	name = ".357 Revolver Ballistic Base"
+	icon_state = "base_projectile_revolver"
+	mag_type = /obj/item/ammo_box/magazine/internal/cylinder
+	the_item_state = "gun"
+	internal = 1
+
+/obj/item/weapon/gun_attachment/base/revolver_38
+	gun_type = CUSTOMIZABLE_PROJECTILE
+	name = ".38 Special Revolver Ballistic Base"
+	icon_state = "base_projectile_revolver"
+	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/rev38
+	the_item_state = "gun"
+	internal = 1
+
+
 /obj/item/weapon/gun_attachment/base/stun
 	gun_type = CUSTOMIZABLE_ENERGY
 	name = "Stun Energy Base"
@@ -38,7 +71,7 @@
 	name = "Laser Energy Base"
 	icon_state = "base_energy_laser"
 	energy_type = list(/obj/item/ammo_casing/energy/lasergun)
-	the_item_state = "laser4"
+	the_item_state = "laser"
 
 /obj/item/weapon/gun_attachment/base/ion
 	gun_type = CUSTOMIZABLE_ENERGY
