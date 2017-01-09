@@ -20,7 +20,7 @@
 		var/list/hand_items = list(L.get_active_held_item(),L.get_inactive_held_item())
 		var/message
 
-		if(!marked_item) //linking item to the spell
+		if(!marked_item || qdeleted(marked_item)) //linking item to the spell
 			message = "<span class='notice'>"
 			for(var/obj/item in hand_items)
 				if(ABSTRACT in item.flags)
@@ -43,30 +43,23 @@
 			name = "Instant Summons"
 			marked_item = 		null
 
-		else if(marked_item && qdeleted(marked_item)) //the item was destroyed at some point
-			message = "<span class='warning'>You sense your marked item has been destroyed!</span>"
-			name = "Instant Summons"
-			marked_item = 		null
-
 		else	//Getting previously marked item
-			var/obj/item_to_retrive = marked_item
-
-			if(!item_to_retrive.loc)
-				if(isorgan(item_to_retrive)) //Organs are usually stored in nullspace
-					var/obj/item/organ/organ = item_to_retrive
+			if(!marked_item.loc)
+				if(isorgan(marked_item)) //Organs are usually stored in nullspace
+					var/obj/item/organ/organ = marked_item
 					if(organ.owner)
 						// If this code ever runs I will be happy
 						add_logs(L, organ.owner, "magically removed [organ.name] from", addition="INTENT: [uppertext(L.a_intent)]")
 						organ.Remove(organ.owner)
 
-			item_to_retrive.visible_message("<span class='warning'>The [item_to_retrive.name] suddenly disappears!</span>")
-			playsound(item_to_retrive,"sound/magic/SummonItems_generic.ogg",50,1)
-			item_to_retrive.forceMove(L.loc)
-			if(!L.put_in_hands(item_to_retrive))
-				item_to_retrive.visible_message("<span class='warning'>The [item_to_retrive.name] suddenly appears!</span>")
+			marked_item.visible_message("<span class='warning'>The [marked_item.name] suddenly disappears!</span>")
+			playsound(marked_item,"sound/magic/SummonItems_generic.ogg",50,1)
+			marked_item.forceMove(L.loc)
+			if(!L.put_in_hands(marked_item))
+				marked_item.visible_message("<span class='warning'>The [marked_item.name] suddenly appears!</span>")
 			else
-				L.visible_message("<span class='warning'>The [item_to_retrive.name] suddenly appears in [L]'s hand!</span>")
-			playsound(item_to_retrive,"sound/magic/SummonItems_generic.ogg",50,1)
+				L.visible_message("<span class='warning'>The [marked_item.name] suddenly appears in [L]'s hand!</span>")
+			playsound(marked_item,"sound/magic/SummonItems_generic.ogg",50,1)
 
 		if(message)
 			L << message

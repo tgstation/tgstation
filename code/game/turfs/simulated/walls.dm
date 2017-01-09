@@ -122,7 +122,6 @@
 	playsound(src, 'sound/weapons/Genhit.ogg', 25, 1)
 	src.add_fingerprint(user)
 	..()
-	return
 
 
 /turf/closed/wall/attackby(obj/item/weapon/W, mob/user, params)
@@ -148,8 +147,6 @@
 	//the istype cascade has been spread among various procs for easy overriding
 	if(try_wallmount(W,user,T) || try_decon(W,user,T) || try_destroy(W,user,T))
 		return
-
-	return
 
 
 /turf/closed/wall/proc/try_wallmount(obj/item/weapon/W, mob/user, turf/T)
@@ -226,15 +223,10 @@
 		var/turf/open/floor/F = ChangeTurf(/turf/open/floor/plating)
 		F.burn_tile()
 		F.add_hiddenprint(user)
-		spawn(burning_time)
-			if(O)
-				qdel(O)
+		QDEL_IN(O, burning_time)
 	else
 		thermite = 0
-		spawn(50)
-			if(O)
-				qdel(O)
-	return
+		QDEL_IN(O, 50)
 
 /turf/closed/wall/singularity_pull(S, current_size)
 	if(current_size >= STAGE_FIVE)

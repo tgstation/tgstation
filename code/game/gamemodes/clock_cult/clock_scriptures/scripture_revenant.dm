@@ -107,7 +107,7 @@
 	descname = "Global Structure Buff"
 	name = "Invoke Nezbere, the Brass Eidolon"
 	desc = "Taps the limitless power of Nezbere, one of Ratvar's four generals. The restless toil of the Eidolon will empower a wide variety of clockwork apparatus for a full minute - notably, \
-	clockwork proselytizers will cost no replicant alloy to use."
+	clockwork proselytizers will charge very rapidly."
 	invocations = list("I call upon you, Armorer!!", "Let your machinations reign on this miserable station!!", "Let your power flow through the tools of your master!!")
 	channel_time = 150
 	required_components = list(BELLIGERENT_EYE = 3, VANGUARD_COGWHEEL = 3, GEIS_CAPACITOR = 3, REPLICANT_ALLOY = 6)
@@ -140,7 +140,7 @@
 		W.damage_per_tick = 5
 		W.sight_range = 5
 	for(var/obj/item/clockwork/clockwork_proselytizer/P in all_clockwork_objects) //Proselytizers no longer require alloy
-		P.uses_alloy = FALSE
+		P.charge_rate = 1250
 	for(var/obj/structure/destructible/clockwork/powered/M in all_clockwork_objects) //Powered clockwork structures no longer need power
 		M.needs_power = FALSE
 		if(istype(M, /obj/structure/destructible/clockwork/powered/tinkerers_daemon)) //Daemons produce components twice as quickly
@@ -154,7 +154,8 @@
 			if(W.sight_range == 5)
 				W.sight_range = initial(W.sight_range)
 		for(var/obj/item/clockwork/clockwork_proselytizer/P in all_clockwork_objects)
-			P.uses_alloy = initial(P.uses_alloy)
+			if(P.charge_rate == 1250)
+				P.charge_rate = initial(P.charge_rate)
 		for(var/obj/structure/destructible/clockwork/powered/M in all_clockwork_objects)
 			M.needs_power = initial(M.needs_power)
 			if(istype(M, /obj/structure/destructible/clockwork/powered/tinkerers_daemon))

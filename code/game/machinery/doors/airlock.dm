@@ -1088,6 +1088,7 @@ var/list/airlock_overlays = list()
 			return
 		panel_open = !panel_open
 		user << "<span class='notice'>You [panel_open ? "open":"close"] the maintenance panel of the airlock.</span>"
+		playsound(src.loc, C.usesound, 50, 1)
 		src.update_icon()
 	else if(is_wire_tool(C))
 		return attack_hand(user)

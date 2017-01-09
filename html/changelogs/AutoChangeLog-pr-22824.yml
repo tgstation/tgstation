@@ -1,0 +1,7 @@
+author: "Joan"
+delete-after: True
+changes: 
+  - experiment: "Clockwork Proselytizers no longer require Replicant Alloy to function; instead, they gradually charge themselves with power, which is used more or less the same as alloy."
+  - tweak: "Clockwork Proselytizers now produce brass sheets when used in-hand, instead of Replicant Alloy."
+  - rscdel: "Tinkerer's Caches can no longer have Replicant Alloy removed from them; using an empty hand on them will simply check when they'll next produce a component."
+  - rscdel: "Mending Motors can no longer use Replicant Alloy in place of power."
