@@ -501,7 +501,7 @@ Difficulty: Very Hard
 						if(O.air)
 							var/datum/gas_mixture/G = O.air
 							G.copy_from_turf(O)
-						if(prob(florachance) && NewFlora.len && !is_blocked_turf(O))
+						if(prob(florachance) && NewFlora.len && !is_blocked_turf(O, TRUE))
 							var/atom/Picked = pick(NewFlora)
 							new Picked(O)
 						continue
