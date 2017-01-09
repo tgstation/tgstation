@@ -6,6 +6,7 @@
 	invis_sight = SEE_INVISIBLE_MINIMUM
 	sexes = 0
 	blacklisted = 1
+	saymod = "chirps"
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/shadow
 	species_traits = list(NOBREATH, NOBLOOD, RADIMMUNE, VIRUSIMMUNE, NOGUNS)
 	dangerous_existence = 1
@@ -52,9 +53,9 @@
 	src << "<span class='velvet_bold'>saa'teo</span>"
 	for(var/V in ticker.mode.umbrages_and_veils)
 		var/datum/mind/M = V
-		if(M.current.z != z)
+		if(M.current.z != z || M.current.stat)
 			if(prob(10))
-				M.current << "<span class='warning'>Your mindlink trembles with words, but you're too far away to make it out...</span>"
+				M.current << "<span class='warning'>Your mindlink trembles with words, but you can't make them out...</span>"
 			continue
 		else
 			M.current << processed_message

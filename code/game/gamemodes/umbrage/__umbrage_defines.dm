@@ -1,6 +1,9 @@
 #define UMBRAGE_LIGHT_BURN 7 //How much burn danage umbrages take per tick when in the light.
 #define UMBRAGE_DARK_HEAL -2 //How much damage of each type umbrages heal per tick when in the dark.
 
+//Ability costs
+#define UMBRAGE_DEVOUR_WILL_PSI 20
+
 //Pass mana costs
 #define UMBRAGE_PASS_COST_DISMISS 0 //Dismissed without being used.
 
