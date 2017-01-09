@@ -82,6 +82,10 @@
 	var/dextrous_hud_type = /datum/hud/dextrous
 	var/datum/personal_crafting/handcrafting
 
+	//domestication
+	var/tame = 0
+	var/saddled = 0
+	var/datum/riding/D = null
 
 /mob/living/simple_animal/New()
 	..()
@@ -92,6 +96,7 @@
 		real_name = name
 	if(!loc)
 		stack_trace("Simple animal being instantiated in nullspace")
+	D = new/datum/riding/animal
 
 /mob/living/simple_animal/Login()
 	if(src && src.client)
@@ -520,4 +525,32 @@
 			l_hand.plane = ABOVE_HUD_PLANE
 			l_hand.screen_loc = ui_hand_position(get_held_index_of_item(l_hand))
 			client.screen |= l_hand
+
+//ANIMAL RIDING
+/mob/living/simple_animal/unbuckle_mob(mob/living/buckled_mob,force = 0)
+	D.restore_position(buckled_mob)
+	. = ..()
+
+
+/mob/living/simple_animal/user_buckle_mob(mob/living/M, mob/user)
+	if(user.incapacitated())
+		return
+	for(var/atom/movable/A in get_turf(src))
+		if(A.density)
+			if(A != src && A != M)
+				return
+	M.loc = get_turf(src)
+	..()
+	D.handle_vehicle_offsets()
+	D.ridden = src
+
+/mob/living/simple_animal/relaymove(mob/user, direction)
+	if(tame && saddled)
+		D.handle_ride(user, direction)
+
+
+/mob/living/simple_animal/Move(NewLoc,Dir=0,step_x=0,step_y=0)
+	. = ..()
+	D.handle_vehicle_layer()
+	D.handle_vehicle_offsets()
 

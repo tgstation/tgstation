@@ -3,6 +3,10 @@
 	desc = "A fun way to get around."
 	icon_state = "scooter"
 
+/obj/vehicle/scooter/New()
+	..()
+	D = new/datum/riding/scooter
+
 /obj/vehicle/scooter/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/wrench))
 		user << "<span class='notice'>You begin to remove the handlebars...</span>"
@@ -31,6 +35,10 @@
 	icon_state = "skateboard"
 
 	density = 0
+
+/obj/vehicle/scooter/skateboard/New()
+	..()
+	D = new/datum/riding/scooter/skateboard
 
 /obj/vehicle/scooter/skateboard/post_buckle_mob(mob/living/M)//allows skateboards to be non-dense but still allows 2 skateboarders to collide with each other
 	if(has_buckled_mobs())

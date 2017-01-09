@@ -11,6 +11,7 @@
 	overlay = image("icons/obj/bike.dmi", overlay_state)
 	overlay.layer = ABOVE_MOB_LAYER
 	add_overlay(overlay)
+	D = new/datum/riding/space/speedbike
 
 /obj/effect/overlay/temp/speedbike_trail
 	name = "speedbike trails"

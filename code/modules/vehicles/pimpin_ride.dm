@@ -13,6 +13,10 @@
 		mybag = null
 	return ..()
 
+/obj/vehicle/janicart/New()
+	..()
+	D = new/datum/riding/janicart
+
 
 /obj/item/key/janitor
 	desc = "A keyring with a small steel key, and a pink fob reading \"Pussy Wagon\"."

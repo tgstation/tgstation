@@ -15,25 +15,12 @@
 	var/view_range = 7
 	var/datum/riding/D = null
 
-
 /obj/vehicle/New()
 	..()
-	D.handle_vehicle_layer(src)
-
-
-//APPEARANCE
-
-
-//Override this to set your vehicle's various pixel offsets
-//if they differ between directions, otherwise use the
-//generic variables
-
+	D = new/datum/riding
 
 /obj/vehicle/update_icon()
 	return
-
-
-
 
 /obj/item/key
 	name = "key"
@@ -58,19 +45,20 @@
 				return
 	M.loc = get_turf(src)
 	..()
-	D.handle_vehicle_offsets(src)
+	D.handle_vehicle_offsets()
 	if(user.client)
 		user.client.view = view_range
-
+	D.ridden = src
 
 //MOVEMENT
 /obj/vehicle/relaymove(mob/user, direction)
-	D.handle_ride(user, direction, src)
+	D.handle_ride(user, direction)
+
 
 /obj/vehicle/Move(NewLoc,Dir=0,step_x=0,step_y=0)
 	. = ..()
-	D.handle_vehicle_layer(src)
-	D.handle_vehicle_offsets(src)
+	D.handle_vehicle_layer()
+	D.handle_vehicle_offsets()
 
 
 /obj/vehicle/Bump(atom/movable/M)

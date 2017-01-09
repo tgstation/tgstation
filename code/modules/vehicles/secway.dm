@@ -7,3 +7,7 @@
 /obj/item/key/security
 	desc = "A keyring with a small steel key, and a rubber stun baton accessory."
 	icon_state = "keysec"
+
+/obj/vehicle/secway/New()
+	..()
+	D = new/datum/riding/secway

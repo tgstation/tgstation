@@ -1,7 +1,7 @@
 
 /datum/riding
 	var/generic_pixel_x = 0 //All dirs show this pixel_x for the driver
-	var/generic_pixel_y = 0 //All dirs shwo this pixel_y for the driver
+	var/generic_pixel_y = 0 //All dirs show this pixel_y for the driver, use these vars if the pixel shift is stable across all dir, override handle_vehicle_offsets otherwise.
 	var/next_vehicle_move = 0 //used for move delays
 	var/vehicle_move_delay = 2 //tick delay between movements, lower = faster, higher = slower
 	var/keytype = null
@@ -29,10 +29,10 @@
 /datum/riding/proc/keycheck(mob/user)
 	if(keytype)
 		if(user.is_holding_item_of_type(keytype))
-			return 1
+			return TRUE
 	else
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 
 //BUCKLE HOOKS
@@ -233,3 +233,30 @@
 				if(WEST)
 					buckled_mob.pixel_x = 10
 					buckled_mob.pixel_y = 5
+
+///////////////ANIMALS////////////
+//general animals
+/datum/riding/animal
+	keytype = null
+	generic_pixel_x = 0
+	generic_pixel_y = 4
+	ridden = /mob/living/simple_animal
+
+/datum/riding/animal/handle_ride(mob/user, direction)
+	if(user.incapacitated())
+		ridden.unbuckle_mob(user)
+		return
+
+	if(world.time < next_vehicle_move)
+		return
+
+	next_vehicle_move = world.time + vehicle_move_delay
+	if(keycheck(user))
+		if(!isturf(ridden.loc))
+			return
+		step(ridden, direction)
+
+		handle_vehicle_layer()
+		handle_vehicle_offsets()
+	else
+		user << "<span class='notice'>You'll need something  to guide the [ridden.name].</span>"
