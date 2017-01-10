@@ -98,8 +98,7 @@
 			break
 
 	for(var/obj/item/I in embedded_objects)
-		embedded_objects -= I
-		I.loc = src
+		I.forceMove(T)
 	if(!C.has_embedded_objects())
 		C.clear_alert("embeddedobject")
 

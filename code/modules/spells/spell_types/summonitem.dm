@@ -20,7 +20,7 @@
 		var/list/hand_items = list(L.get_active_held_item(),L.get_inactive_held_item())
 		var/message
 
-		if(!marked_item) //linking item to the spell
+		if(!marked_item || qdeleted(marked_item)) //linking item to the spell
 			message = "<span class='notice'>"
 			for(var/obj/item in hand_items)
 				if(ABSTRACT in item.flags)
@@ -43,71 +43,23 @@
 			name = "Instant Summons"
 			marked_item = 		null
 
-		else if(marked_item && qdeleted(marked_item)) //the item was destroyed at some point
-			message = "<span class='warning'>You sense your marked item has been destroyed!</span>"
-			name = "Instant Summons"
-			marked_item = 		null
-
 		else	//Getting previously marked item
-			var/obj/item_to_retrieve = marked_item
-			var/infinite_recursion = 0 //I don't want to know how someone could put something inside itself but these are wizards so let's be safe
-
-			if(!item_to_retrieve.loc)
-				if(isorgan(item_to_retrieve)) // Organs are usually stored in nullspace
-					var/obj/item/organ/organ = item_to_retrieve
+			if(!marked_item.loc)
+				if(isorgan(marked_item)) //Organs are usually stored in nullspace
+					var/obj/item/organ/organ = marked_item
 					if(organ.owner)
 						// If this code ever runs I will be happy
 						add_logs(L, organ.owner, "magically removed [organ.name] from", addition="INTENT: [uppertext(L.a_intent)]")
 						organ.Remove(organ.owner)
+
+			marked_item.visible_message("<span class='warning'>The [marked_item.name] suddenly disappears!</span>")
+			playsound(marked_item,"sound/magic/SummonItems_generic.ogg",50,1)
+			marked_item.forceMove(L.loc)
+			if(!L.put_in_hands(marked_item))
+				marked_item.visible_message("<span class='warning'>The [marked_item.name] suddenly appears!</span>")
 			else
-				while(!isturf(item_to_retrieve.loc) && infinite_recursion < 10) //if it's in something you get the whole thing.
-					if(ismob(item_to_retrieve.loc)) //If its on someone, properly drop it
-						var/mob/M = item_to_retrieve.loc
-
-						if(issilicon(M)) //Items in silicons warp the whole silicon
-							M.loc.visible_message("<span class='warning'>[M] suddenly disappears!</span>")
-							M.loc = L.loc
-							M.loc.visible_message("<span class='caution'>[M] suddenly appears!</span>")
-							item_to_retrieve = null
-							break
-						M.unEquip(item_to_retrieve)
-
-						if(iscarbon(M)) //Edge case housekeeping
-							var/mob/living/carbon/C = M
-							if(C.stomach_contents && item_to_retrieve in C.stomach_contents)
-								C.stomach_contents -= item_to_retrieve
-							for(var/X in C.bodyparts)
-								var/obj/item/bodypart/part = X
-								if(item_to_retrieve in part.embedded_objects)
-									part.embedded_objects -= item_to_retrieve
-									C << "<span class='warning'>The [item_to_retrieve] that was embedded in your [L] has myseriously vanished. How fortunate!</span>"
-									if(!C.has_embedded_objects())
-										C.clear_alert("embeddedobject")
-									break
-
-					else
-						if(istype(item_to_retrieve.loc,/obj/machinery/portable_atmospherics/)) //Edge cases for moved machinery
-							var/obj/machinery/portable_atmospherics/P = item_to_retrieve.loc
-							P.disconnect()
-							P.update_icon()
-
-						item_to_retrieve = item_to_retrieve.loc
-
-					infinite_recursion += 1
-
-			if(!item_to_retrieve)
-				return
-
-			if(item_to_retrieve.loc)
-				item_to_retrieve.loc.visible_message("<span class='warning'>The [item_to_retrieve.name] suddenly disappears!</span>")
-			if(!L.put_in_hands(item_to_retrieve))
-				item_to_retrieve.loc = L.loc
-				item_to_retrieve.loc.visible_message("<span class='caution'>The [item_to_retrieve.name] suddenly appears!</span>")
-				playsound(get_turf(L),"sound/magic/SummonItems_generic.ogg",50,1)
-			else
-				item_to_retrieve.loc.visible_message("<span class='caution'>The [item_to_retrieve.name] suddenly appears in [L]'s hand!</span>")
-				playsound(get_turf(L),"sound/magic/SummonItems_generic.ogg",50,1)
-
+				L.visible_message("<span class='warning'>The [marked_item.name] suddenly appears in [L]'s hand!</span>")
+			playsound(marked_item,"sound/magic/SummonItems_generic.ogg",50,1)
 
 		if(message)
 			L << message
