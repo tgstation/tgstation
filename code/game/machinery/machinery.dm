@@ -177,7 +177,7 @@ Class Procs:
 	occupant = null
 
 /obj/machinery/Exited(atom/movable/AM, atom/newloc)
-	if(M == occupant)
+	if(AM == occupant)
 		occupant = null
 	..()
 

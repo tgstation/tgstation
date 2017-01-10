@@ -13,7 +13,7 @@
 	return (!mover.density || !density || lying)
 
 /mob/Exited(atom/movable/AM, atom/newloc)
-	unEquip(M, TRUE) //make sure the exiting item is unequipped properly
+	unEquip(AM, TRUE) //make sure the exiting item is unequipped properly
 	..()
 
 //The byond version of these verbs wait for the next tick before acting.

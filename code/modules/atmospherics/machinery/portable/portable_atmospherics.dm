@@ -73,7 +73,7 @@
 		disconnect()
 
 /obj/machinery/portable_atmospherics/Exited(atom/movable/AM, atom/newloc)
-	if(M == holding)
+	if(AM == holding)
 		holding = null
 		update_icon()
 	..()

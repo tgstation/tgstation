@@ -373,7 +373,7 @@
 	return 1
 
 /obj/item/weapon/storage/Exited(atom/movable/AM, atom/newloc)
-	remove_from_storage(M, newloc)
+	remove_from_storage(AM, newloc)
 	..()
 
 /obj/item/weapon/storage/deconstruct(disassembled = TRUE)

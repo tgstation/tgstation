@@ -41,8 +41,8 @@
 	var/dmg_overlay_type //the type of damage overlay (if any) to use when this bodypart is bruised/burned.
 
 /obj/item/bodypart/Exited(atom/movable/AM, atom/newloc)
-	if(M in embedded_objects)
-		embedded_objects -= M
+	if(AM in embedded_objects)
+		embedded_objects -= AM
 	..()
 
 /obj/item/bodypart/examine(mob/user)

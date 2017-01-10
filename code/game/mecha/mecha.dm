@@ -898,7 +898,7 @@
 
 
 /obj/mecha/Exited(atom/movable/AM, atom/newloc)
-	if(occupant == M) // The occupant exited the mech without calling go_out()
+	if(AM == occupant) //The occupant exited the mech without calling go_out()
 		go_out(1, newloc)
 	..()
 

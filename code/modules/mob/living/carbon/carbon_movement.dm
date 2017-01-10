@@ -65,6 +65,6 @@ var/const/SLIDE_ICE = 8
 			bodytemperature += 2
 
 /mob/living/carbon/Exited(atom/movable/AM, atom/newloc)
-	if(M in stomach_contents)
-		stomach_contents -= M
+	if(AM in stomach_contents)
+		stomach_contents -= AM
 	..()
