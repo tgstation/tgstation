@@ -136,6 +136,8 @@
 	var/obj/item/weapon/twohanded/O = user.get_inactive_held_item()
 	if (istype(O) && !istype(O, /obj/item/weapon/twohanded/offhand/))		//If you have a proper item in your other hand that the offhand is for, do nothing. This should never happen.
 		return
+	if (qdeleted(src))
+		return
 	qdel(src)																//If it's another offhand, or literally anything else, qdel. If I knew how to add logging messages I'd put one here.
 
 ///////////Two hand required objects///////////////
@@ -167,6 +169,10 @@
 	..()
 	var/slotbit = slotdefine2slotbit(slot)
 	if(slot_flags & slotbit)
+		var/O = user.is_holding_item_of_type(/obj/item/weapon/twohanded/offhand)
+		if(!O || qdeleted(O))
+			return
+		qdel(O)
 		return
 	if(slot == slot_hands)
 		wield(user)
