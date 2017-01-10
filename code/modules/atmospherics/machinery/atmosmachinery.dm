@@ -46,6 +46,7 @@ Pipelines + Other Objects -> Pipe network
 		nullifyNode(I)
 
 	SSair.atmos_machinery -= src
+	SSair.currentrun -= src
 
 	dropContents()
 	if(pipe_vision_img)
