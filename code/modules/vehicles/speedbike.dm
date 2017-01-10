@@ -6,12 +6,15 @@
 	var/overlay_state = "cover_blue"
 	var/image/overlay = null
 
+/obj/vehicle/space/speedbike/user_buckle_mob()
+	riding_datum = new/datum/riding/space/speedbike
+
 /obj/vehicle/space/speedbike/New()
 	..()
 	overlay = image("icons/obj/bike.dmi", overlay_state)
 	overlay.layer = ABOVE_MOB_LAYER
 	add_overlay(overlay)
-	D = new/datum/riding/space/speedbike
+	riding_datum = new/datum/riding/space/speedbike
 
 /obj/effect/overlay/temp/speedbike_trail
 	name = "speedbike trails"

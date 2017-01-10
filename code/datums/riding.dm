@@ -86,7 +86,6 @@
 	generic_pixel_x = 0
 	generic_pixel_y = 4
 	vehicle_move_delay = 1
-	ridden = /obj/vehicle
 
 /datum/riding/atv/handle_vehicle_layer()
 	if(ridden.dir == SOUTH)
@@ -95,7 +94,6 @@
 		ridden.layer = OBJ_LAYER
 
 /datum/riding/atv/turret
-	ridden = /obj/vehicle/atv/turret
 	var/obj/machinery/porta_turret/syndicate/vehicle_turret/turret = null
 
 /datum/riding/atv/turret/handle_vehicle_layer()
@@ -132,7 +130,6 @@
 
 //pimpin ride
 /datum/riding/janicart
-	ridden = /obj/vehicle/janicart
 	keytype = /obj/item/key/janitor
 
 
@@ -156,7 +153,6 @@
 					buckled_mob.pixel_y = 7
 //scooter
 /datum/riding/scooter
-	ridden = /obj/vehicle/scooter
 
 /datum/riding/scooter/handle_vehicle_layer()
 	if(ridden.dir == SOUTH)
@@ -189,7 +185,6 @@
 		vehicle_move_delay ++
 
 /datum/riding/scooter/skateboard
-	ridden = /obj/vehicle/scooter/skateboard
 	vehicle_move_delay = 0//fast
 
 
@@ -198,12 +193,10 @@
 	keytype = /obj/item/key/security
 	generic_pixel_x = 0
 	generic_pixel_y = 4
-	ridden = /obj/vehicle/secway
 
 //speedbike
 /datum/riding/space/speedbike
 	keytype = null
-	ridden = /obj/vehicle/space/speedbike
 	vehicle_move_delay = 0
 
 /datum/riding/space/speedbike/handle_vehicle_layer()
@@ -240,7 +233,6 @@
 	keytype = null
 	generic_pixel_x = 0
 	generic_pixel_y = 4
-	ridden = /mob/living/simple_animal
 
 /datum/riding/animal/handle_ride(mob/user, direction)
 	if(user.incapacitated())

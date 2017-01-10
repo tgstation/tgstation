@@ -8,6 +8,6 @@
 	desc = "A keyring with a small steel key, and a rubber stun baton accessory."
 	icon_state = "keysec"
 
-/obj/vehicle/secway/New()
+/obj/vehicle/secway/user_buckle_mob()
 	..()
-	D = new/datum/riding/secway
+	riding_datum = new/datum/riding/secway

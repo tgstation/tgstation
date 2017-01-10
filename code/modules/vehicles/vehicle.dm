@@ -13,11 +13,11 @@
 	armor = list(melee = 30, bullet = 30, laser = 30, energy = 0, bomb = 30, bio = 0, rad = 0, fire = 60, acid = 60)
 	var/auto_door_open = TRUE
 	var/view_range = 7
-	var/datum/riding/D = null
+	var/datum/riding/riding_datum = null
 
 /obj/vehicle/New()
 	..()
-	D = new/datum/riding
+
 
 /obj/vehicle/update_icon()
 	return
@@ -32,7 +32,7 @@
 
 //BUCKLE HOOKS
 /obj/vehicle/unbuckle_mob(mob/living/buckled_mob,force = 0)
-	D.restore_position(buckled_mob)
+	riding_datum.restore_position(buckled_mob)
 	. = ..()
 
 
@@ -45,20 +45,20 @@
 				return
 	M.loc = get_turf(src)
 	..()
-	D.handle_vehicle_offsets()
+	riding_datum.handle_vehicle_offsets()
 	if(user.client)
 		user.client.view = view_range
-	D.ridden = src
+	riding_datum.ridden = src
 
 //MOVEMENT
 /obj/vehicle/relaymove(mob/user, direction)
-	D.handle_ride(user, direction)
+	riding_datum.handle_ride(user, direction)
 
 
 /obj/vehicle/Move(NewLoc,Dir=0,step_x=0,step_y=0)
 	. = ..()
-	D.handle_vehicle_layer()
-	D.handle_vehicle_offsets()
+	riding_datum.handle_vehicle_layer()
+	riding_datum.handle_vehicle_offsets()
 
 
 /obj/vehicle/Bump(atom/movable/M)

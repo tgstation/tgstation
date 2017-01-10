@@ -3,10 +3,6 @@
 	desc = "A fun way to get around."
 	icon_state = "scooter"
 
-/obj/vehicle/scooter/New()
-	..()
-	D = new/datum/riding/scooter
-
 /obj/vehicle/scooter/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/wrench))
 		user << "<span class='notice'>You begin to remove the handlebars...</span>"
@@ -17,6 +13,9 @@
 			user << "<span class='notice'>You remove the handlebars from [src].</span>"
 			qdel(src)
 
+/obj/vehicle/scooter/buckle_mob()
+	..()
+	riding_datum = new/datum/riding/scooter
 
 /obj/vehicle/scooter/buckle_mob(mob/living/M, force = 0)
 	if(!istype(M))
@@ -27,7 +26,7 @@
 	. = ..()
 
 /obj/vehicle/scooter/post_buckle_mob(mob/living/M)
-	D.account_limbs(M)
+	riding_datum.account_limbs(M)
 
 /obj/vehicle/scooter/skateboard
 	name = "skateboard"
@@ -36,9 +35,9 @@
 
 	density = 0
 
-/obj/vehicle/scooter/skateboard/New()
+/obj/vehicle/scooter/skateboard/buckle_mob()
 	..()
-	D = new/datum/riding/scooter/skateboard
+	riding_datum = new/datum/riding/scooter/skateboard
 
 /obj/vehicle/scooter/skateboard/post_buckle_mob(mob/living/M)//allows skateboards to be non-dense but still allows 2 skateboarders to collide with each other
 	if(has_buckled_mobs())

@@ -5,9 +5,9 @@
 	icon_state = "atv"
 	var/static/image/atvcover = null
 
-/obj/vehicle/atv/New()
+/obj/vehicle/atv/user_buckle_mob()
 	..()
-	D = new/datum/riding/atv
+	riding_datum = new/datum/riding/atv
 
 /obj/vehicle/atv/New()
 	..()
@@ -40,4 +40,9 @@
 	..()
 	turret = new(loc)
 	turret.base = src
-	D = new/datum/riding/atv/turret
+
+/obj/vehicle/atv/turret/user_buckle_mob()
+	..()
+	riding_datum = new/datum/riding/atv/turret
+
+

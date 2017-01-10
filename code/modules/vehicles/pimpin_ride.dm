@@ -13,9 +13,9 @@
 		mybag = null
 	return ..()
 
-/obj/vehicle/janicart/New()
+/obj/vehicle/janicart/buckle_mob()
 	..()
-	D = new/datum/riding/janicart
+	riding_datum = new/datum/riding/janicart
 
 
 /obj/item/key/janitor

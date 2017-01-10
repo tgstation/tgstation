@@ -344,8 +344,8 @@
 
 	if(istype(C, /obj/vehicle))
 		var/obj/vehicle/V = C
-		var/datum/riding/R = V.D
-		if(V.D)
+		var/datum/riding/R = V.riding_datum
+		if(V.riding_datum)
 			if(R.vehicle_move_delay <= 0 )
 				user << "<span class='warning'>The [C] can't be made any faster!</span>"
 				return ..()
