@@ -1,0 +1,15 @@
+This file contains a list of antags for use in threat datum.
+#Lines starting with # are ignored.
+Lines not inside antag blocks are also ignored
+Duplicated entries use the latter one.
+All whitespace at the start and end of lines is ignored. (including indentation, thats just for show)
+The number of players is the number of people PLAYING, it will NOT consider new_players or observers.
+Format:
+#antag [antag name] (name of the antag datum, must be the same as in the code)
+	path [path to datum] (Path to the antag datum)
+	minplayers [number] (Minimum of players required to this antag to happen)
+	maxplayers [number] (Maximum of players that this will antag will happen)
+	weight [number] (How much the antag will weight into the current round, will only accept a number from 0 to 100)
+	probability [number] (How much of a chance the antag will have to spawn)
+	maxantags [number] (What is the maximum amount of antags this datum will have)
+endantag
