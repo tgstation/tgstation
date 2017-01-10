@@ -202,7 +202,7 @@
 		if(A.anchored)
 			return
 		A.visible_message("<span class='danger'>[A] is snagged by [firer]'s hook!</span>")
-		new /datum/forced_movement(A, get_turf(firer), 5, TRUE, TRUE)
+		new /datum/forced_movement(A, get_turf(firer), 5, TRUE)
 		//TODO: keep the chain beamed to A
 		//TODO: needs a callback to delete the chain
 
