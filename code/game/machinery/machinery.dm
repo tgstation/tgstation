@@ -176,7 +176,7 @@ Class Procs:
 			L.update_canmove()
 	occupant = null
 
-/obj/machinery/Exited(atom/movable/M, atom/newloc)
+/obj/machinery/Exited(atom/movable/AM, atom/newloc)
 	if(M == occupant)
 		occupant = null
 	..()

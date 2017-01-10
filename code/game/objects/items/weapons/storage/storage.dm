@@ -372,7 +372,7 @@
 	W.mouse_opacity = initial(W.mouse_opacity)
 	return 1
 
-/obj/item/weapon/storage/Exited(atom/movable/M, atom/newloc)
+/obj/item/weapon/storage/Exited(atom/movable/AM, atom/newloc)
 	remove_from_storage(M, newloc)
 	..()
 

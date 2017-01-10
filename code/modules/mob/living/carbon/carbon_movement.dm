@@ -64,7 +64,7 @@ var/const/SLIDE_ICE = 8
 		if((disabilities & FAT) && m_intent == MOVE_INTENT_RUN && bodytemperature <= 360)
 			bodytemperature += 2
 
-/mob/living/carbon/Exited(atom/movable/M, atom/newloc)
+/mob/living/carbon/Exited(atom/movable/AM, atom/newloc)
 	if(M in stomach_contents)
 		stomach_contents -= M
 	..()

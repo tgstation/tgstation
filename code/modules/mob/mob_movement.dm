@@ -12,7 +12,7 @@
 			return 1
 	return (!mover.density || !density || lying)
 
-/mob/Exited(atom/movable/M, atom/newloc)
+/mob/Exited(atom/movable/AM, atom/newloc)
 	unEquip(M, TRUE) //make sure the exiting item is unequipped properly
 	..()
 
