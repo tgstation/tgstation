@@ -59,7 +59,7 @@
 		user << "You can't move your own flag!"
 		return
 	if(loc == user)
-		if(!user.unEquip(src))
+		if(!user.dropItemToGround(src))
 			return
 	anchored = FALSE
 	pickup(user)

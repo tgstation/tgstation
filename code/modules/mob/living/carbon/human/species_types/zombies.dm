@@ -43,7 +43,7 @@
 	. = ..()
 	for(var/obj/item/I in C.held_items)
 		if(istype(I, /obj/item/zombie_hand))
-			C.unEquip(I, TRUE)
+			qdel(I)
 
 
 // Your skin falls off

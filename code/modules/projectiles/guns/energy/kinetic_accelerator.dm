@@ -253,9 +253,10 @@
 				break
 	if(KA.get_remaining_mod_capacity() >= cost)
 		if(.)
+			if(!user.removeItemFromInventory(src))
+				return
 			user << "<span class='notice'>You install the modkit.</span>"
 			playsound(loc, 'sound/items/Screwdriver.ogg', 100, 1)
-			user.unEquip(src)
 			forceMove(KA)
 			KA.modkits += src
 		else

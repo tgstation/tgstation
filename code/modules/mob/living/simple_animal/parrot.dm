@@ -728,7 +728,7 @@
 				break
 
 		if(stolen_item)
-			C.unEquip(stolen_item)
+			C.removeItemFromInventory(stolen_item)
 			held_item = stolen_item
 			stolen_item.loc = src
 			visible_message("[src] grabs [held_item] out of [C]'s hand!", "<span class='notice'>You snag [held_item] out of [C]'s hand!</span>", "<span class='italics'>You hear the sounds of wings flapping furiously.</span>")

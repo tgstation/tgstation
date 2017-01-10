@@ -42,7 +42,7 @@
 				magazine = null
 			else
 				user << "<span class='notice'>You insert the magazine into \the [src].</span>"
-			user.remove_from_mob(AM)
+			user.removeItemFromInventory(AM)
 			magazine = AM
 			magazine.loc = src
 			chamber_round()

@@ -63,7 +63,7 @@
 		if(tank)
 			user << "<span class='warning'>\The [src] already has a tank.</span>"
 			return
-		if(!user.unEquip(thetank))
+		if(!user.removeItemFromInventory(thetank))
 			return
 		user << "<span class='notice'>You hook \the [thetank] up to \the [src].</span>"
 		tank = thetank

@@ -82,7 +82,7 @@
 	user << "<span class='notice'>You start planting the bomb...</span>"
 
 	if(do_after(user, 50, target = AM))
-		if(!user.unEquip(src))
+		if(!user.removeItemFromInventory(src))
 			return
 		src.target = AM
 		loc = null

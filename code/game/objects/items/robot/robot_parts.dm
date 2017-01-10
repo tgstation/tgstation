@@ -71,17 +71,17 @@
 				var/obj/item/weapon/ed209_assembly/B = new /obj/item/weapon/ed209_assembly
 				B.loc = get_turf(src)
 				user << "<span class='notice'>You arm the robot frame.</span>"
-				if (user.get_inactive_held_item()==src)
-					user.unEquip(src)
-					user.put_in_inactive_hand(B)
+				var/holding_this = user.get_inactive_held_item()==src
 				qdel(src)
+				if (holding_this)
+					user.put_in_inactive_hand(B)
 			else
 				user << "<span class='warning'>You need one sheet of metal to start building ED-209!</span>"
 				return
 	else if(istype(W, /obj/item/bodypart/l_leg/robot))
 		if(src.l_leg)
 			return
-		if(!user.unEquip(W))
+		if(!user.removeItemFromInventory(W))
 			return
 		W.forceMove(src)
 		W.icon_state = initial(W.icon_state)
@@ -92,7 +92,7 @@
 	else if(istype(W, /obj/item/bodypart/r_leg/robot))
 		if(src.r_leg)
 			return
-		if(!user.unEquip(W))
+		if(!user.removeItemFromInventory(W))
 			return
 		W.forceMove(src)
 		W.icon_state = initial(W.icon_state)
@@ -103,7 +103,7 @@
 	else if(istype(W, /obj/item/bodypart/l_arm/robot))
 		if(src.l_arm)
 			return
-		if(!user.unEquip(W))
+		if(!user.removeItemFromInventory(W))
 			return
 		W.forceMove(src)
 		W.icon_state = initial(W.icon_state)
@@ -114,7 +114,7 @@
 	else if(istype(W, /obj/item/bodypart/r_arm/robot))
 		if(src.r_arm)
 			return
-		if(!user.unEquip(W))
+		if(!user.removeItemFromInventory(W))
 			return
 		W.forceMove(src)
 		W.icon_state = initial(W.icon_state)//in case it is a dismembered robotic limb
@@ -127,7 +127,7 @@
 		if(src.chest)
 			return
 		if(CH.wired && CH.cell)
-			if(!user.unEquip(CH))
+			if(!user.removeItemFromInventory(CH))
 				return
 			CH.forceMove(src)
 			CH.icon_state = initial(CH.icon_state) //in case it is a dismembered robotic limb
@@ -148,7 +148,7 @@
 		if(src.head)
 			return
 		if(HD.flash2 && HD.flash1)
-			if(!user.unEquip(HD))
+			if(!user.removeItemFromInventory(HD))
 				return
 			HD.loc = src
 			HD.icon_state = initial(HD.icon_state)//in case it is a dismembered robotic limb
@@ -191,7 +191,7 @@
 				user << "<span class='warning'>This [M.name] does not seem to fit!</span>"
 				return
 
-			if(!user.unEquip(W))
+			if(!user.removeItemFromInventory(W))
 				return
 
 			var/mob/living/silicon/robot/O = new /mob/living/silicon/robot(get_turf(loc))

@@ -22,7 +22,7 @@
 /mob/living/simple_animal/hostile/guardian/dextrous/death(gibbed)
 	..()
 	if(internal_storage)
-		unEquip(internal_storage)
+		dropItemToGround(internal_storage)
 
 /mob/living/simple_animal/hostile/guardian/dextrous/examine(mob/user)
 	if(dextrous)

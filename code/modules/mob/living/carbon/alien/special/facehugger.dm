@@ -55,7 +55,7 @@ var/const/MAX_ACTIVE_TIME = 400
 
 /obj/item/clothing/mask/facehugger/attack(mob/living/M, mob/user)
 	..()
-	user.unEquip(src)
+	user.removeItemFromInventory(src)
 	Attach(M)
 
 /obj/item/clothing/mask/facehugger/examine(mob/user)
@@ -157,7 +157,7 @@ var/const/MAX_ACTIVE_TIME = 400
 			if(W.flags & NODROP)
 				return FALSE
 			if(!istype(W,/obj/item/clothing/mask/facehugger))
-				target.unEquip(W)
+				target.dropItemToGround(W)
 				target.visible_message("<span class='danger'>[src] tears [W] off of [target]'s face!</span>", \
 									"<span class='userdanger'>[src] tears [W] off of [target]'s face!</span>")
 

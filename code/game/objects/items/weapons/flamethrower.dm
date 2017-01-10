@@ -98,7 +98,7 @@
 			return
 		if(igniter)
 			return
-		if(!user.unEquip(W))
+		if(!user.removeItemFromInventory(W))
 			return
 		I.loc = src
 		igniter = I
@@ -109,7 +109,7 @@
 		if(ptank)
 			user << "<span class='notice'>There is already a plasma tank loaded in [src]!</span>"
 			return
-		if(!user.unEquip(W))
+		if(!user.removeItemFromInventory(W))
 			return
 		ptank = W
 		W.loc = src

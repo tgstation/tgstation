@@ -46,7 +46,7 @@
 	if(stored_card && stored_card2)
 		user << "<span class='warning'>You try to insert \the [I] into \the [src], but its slots are occupied.</span>"
 		return FALSE
-	if(user && !user.unEquip(I))
+	if(user && !user.removeItemFromInventory(I))
 		return FALSE
 
 	if(!stored_card)

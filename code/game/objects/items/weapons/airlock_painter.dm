@@ -109,7 +109,7 @@
 		if(ink)
 			user << "<span class='notice'>[src] already contains \a [ink].</span>"
 			return
-		if(!user.unEquip(W))
+		if(!user.removeItemFromInventory(W))
 			return
 		W.loc = src
 		user << "<span class='notice'>You install [W] into [src].</span>"

@@ -87,7 +87,7 @@
 	else if (istype(A, /obj/item/weapon/pen))
 		if(modified)
 			if(!FD.pen)
-				if(!user.unEquip(A))
+				if(!user.removeItemFromInventory(A))
 					return
 				A.forceMove(FD)
 				FD.pen = A

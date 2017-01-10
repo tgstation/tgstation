@@ -200,11 +200,9 @@
 	if(istype(W,/obj/item/weapon/ore/glass))
 		user << "<span class='notice'>You fill the sandbag.</span>"
 		var/obj/item/stack/sheet/mineral/sandbags/I = new /obj/item/stack/sheet/mineral/sandbags
-		user.unEquip(src)
+		qdel(src)
 		user.put_in_hands(I)
 		qdel(W)
-		qdel(src)
-		return
 	else
 		return ..()
 

@@ -140,9 +140,11 @@
 			return ..()
 		if(!M.restrained() && !M.stat && istype(over_object, /obj/screen/inventory/hand))
 			var/obj/screen/inventory/hand/H = over_object
-			if(!M.unEquip(src))
+			if(!M.removeItemFromInventory(src))
 				return
-			M.put_in_hand(src,H.held_index)
+			if(!M.put_in_hand(src,H.held_index))
+				qdel(src)	//This proc confuses me, don't leave it in nullspace if it fails -Cyberboss
+				return
 			src.add_fingerprint(usr)
 			return
 		if(over_object == usr && in_range(src, usr) || usr.contents.Find(src))

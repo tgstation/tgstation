@@ -26,7 +26,7 @@
 	if(!ninjacost(cost))
 		if(istype(energyKatana.loc, /mob/living/carbon))
 			var/mob/living/carbon/C = energyKatana.loc
-			C.unEquip(energyKatana)
+			C.dropItemToGround(energyKatana)
 
 			//Somebody swollowed my sword, probably the clown doing a circus act.
 			if(energyKatana in C.stomach_contents)

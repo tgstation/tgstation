@@ -642,25 +642,26 @@
 		return
 	if(what)
 		var/list/where_list
+		var/final_where
+
 		if(islist(where))
 			where_list = where
-			if(!what.mob_can_equip(who, src, where[1], 1))
-				src << "<span class='warning'>\The [what.name] doesn't fit in that place!</span>"
-				return
+			final_where = where[1]
 		else
-			if(!what.mob_can_equip(who, src, where, 1))
-				src << "<span class='warning'>\The [what.name] doesn't fit in that place!</span>"
-				return
+			final_where = where
+
+		if(!what.mob_can_equip(who, src, final_where, TRUE))
+			src << "<span class='warning'>\The [what.name] doesn't fit in that place!</span>"
+			return
+
 		visible_message("<span class='notice'>[src] tries to put [what] on [who].</span>")
 		if(do_mob(src, who, what.put_on_delay))
-			if(what && Adjacent(who))
-				unEquip(what)
+			if(what && Adjacent(who) && what.mob_can_equip(who, src, final_where, TRUE))
+				removeItemFromInventory(what)
 				if(where_list)
 					who.put_in_hand(what, where_list[2])
 				else
-					who.equip_to_slot_if_possible(what, where, 0, 1)
-				add_logs(src, who, "equipped", what)
-
+					who.equip_to_slot(what, where, TRUE)
 
 /mob/living/singularity_pull(S, current_size)
 	if(current_size >= STAGE_SIX)
@@ -900,7 +901,7 @@
 //Mobs on Fire end
 
 // used by secbot and monkeys Crossed
-/mob/living/proc/knockOver(var/mob/living/carbon/C)	
+/mob/living/proc/knockOver(var/mob/living/carbon/C)
 	C.visible_message("<span class='warning'>[pick( \
 					  "[C] dives out of [src]'s way!", \
 					  "[C] stumbles over [src]!", \
@@ -909,4 +910,3 @@
 					  "[C] topples over [src]!", \
 					  "[C] leaps out of [src]'s way!")]</span>")
 	C.Weaken(2)
-	

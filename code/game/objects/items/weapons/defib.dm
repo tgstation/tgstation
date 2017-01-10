@@ -112,7 +112,7 @@
 			if(C.maxcharge < paddles.revivecost)
 				user << "<span class='notice'>[src] requires a higher capacity cell.</span>"
 				return
-			if(!user.unEquip(W))
+			if(!user.removeItemFromInventory(W))
 				return
 			W.loc = src
 			bcell = W
@@ -191,7 +191,7 @@
 /obj/item/weapon/defibrillator/proc/remove_paddles(mob/user) //this fox the bug with the paddles when other player stole you the defib when you have the paddles equiped
 	if(ismob(paddles.loc))
 		var/mob/M = paddles.loc
-		M.unEquip(paddles,1)
+		M.dropItemToGround(paddles, TRUE)
 	return
 
 /obj/item/weapon/defibrillator/Destroy()
@@ -337,7 +337,6 @@
 	if(!req_defib)
 		return 1 //If it doesn't need a defib, just say it exists
 	if (!mainunit || !istype(mainunit, /obj/item/weapon/defibrillator))	//To avoid weird issues from admin spawns
-		M.unEquip(O)
 		qdel(O)
 		return 0
 	else

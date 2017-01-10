@@ -279,7 +279,7 @@
 		if(istype(I, /obj/item/device/flashlight/seclite))
 			var/obj/item/device/flashlight/seclite/S = I
 			if(!gun_light)
-				if(!user.unEquip(I))
+				if(!user.removeItemFromInventory(I))
 					return
 				user << "<span class='notice'>You click [S] into place on [src].</span>"
 				if(S.on)

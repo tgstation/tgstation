@@ -22,7 +22,7 @@
 			return
 
 		if(!tank_one)
-			if(!user.unEquip(item))
+			if(!user.removeItemFromInventory(item))
 				return
 			tank_one = item
 			item.loc = src
@@ -30,7 +30,7 @@
 			if(item.w_class > w_class)
 				w_class = item.w_class
 		else if(!tank_two)
-			if(!user.unEquip(item))
+			if(!user.removeItemFromInventory(item))
 				return
 			tank_two = item
 			item.loc = src
@@ -48,7 +48,8 @@
 		if(attached_device)
 			user << "<span class='warning'>There is already a device attached to the valve, remove it first!</span>"
 			return
-		user.remove_from_mob(item)
+		if(!user.removeItemFromInventory(item))
+			return
 		attached_device = A
 		A.loc = src
 		user << "<span class='notice'>You attach the [item] to the valve controls and secure it.</span>"

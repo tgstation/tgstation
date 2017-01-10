@@ -16,9 +16,8 @@
 		if(user.mind && user.mind.isholy)
 			user << "<span class='boldannounce'>The power of your faith melts away the [src]!</span>"
 			var/obj/item/weapon/ore/slag/wrath = new /obj/item/weapon/ore/slag
-			user.unEquip(src)
-			user.put_in_active_hand(wrath)
 			qdel(src)
+			user.put_in_active_hand(wrath)
 	if(is_servant_of_ratvar(user) && prob(20))
 		var/pickedmessage = pick(servant_of_ratvar_messages)
 		user << "<span class='[message_span]'>[servant_of_ratvar_messages[pickedmessage] ? "[text2ratvar(pickedmessage)]" : pickedmessage]</span>"

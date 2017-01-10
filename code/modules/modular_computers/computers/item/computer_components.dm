@@ -17,7 +17,7 @@
 	if(!can_install_component(H, user))
 		return FALSE
 
-	if(user && !user.unEquip(H))
+	if(user && !user.removeItemFromInventory(H))
 		return FALSE
 
 	all_components[H.device_type] = H

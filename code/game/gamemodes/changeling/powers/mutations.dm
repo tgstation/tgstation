@@ -29,7 +29,7 @@
 
 /obj/effect/proc_holder/changeling/weapon/proc/check_weapon(mob/user, obj/item/hand_item)
 	if(istype(hand_item, weapon_type))
-		user.unEquip(hand_item, 1) //DROPDEL will delete the item
+		user.unEquip(hand_item, TRUE) //DROPDEL will delete the item
 		if(!silent)
 			playsound(user, 'sound/effects/blobattack.ogg', 30, 1)
 			user.visible_message("<span class='warning'>With a sickening crunch, [user] reforms their [weapon_name_simple] into an arm!</span>", "<span class='notice'>We assimilate the [weapon_name_simple] back into our body.</span>", "<span class='italics>You hear organic matter ripping and tearing!</span>")
@@ -303,7 +303,7 @@
 
 /obj/item/projectile/tentacle/on_hit(atom/target, blocked = 0)
 	var/mob/living/carbon/human/H = firer
-	H.unEquip(source.gun,1) //Unequip thus delete the tentacle on hit
+	H.unEquip(source.gun, TRUE) //Unequip thus delete the tentacle on hit
 	if(blocked >= 100)
 		return 0
 	if(istype(target, /obj/item))
@@ -405,7 +405,6 @@
 		if(ishuman(loc))
 			var/mob/living/carbon/human/H = loc
 			H.visible_message("<span class='warning'>With a sickening crunch, [H] reforms his shield into an arm!</span>", "<span class='notice'>We assimilate our shield into our body</span>", "<span class='italics>You hear organic matter ripping and tearing!</span>")
-			H.unEquip(src, 1)
 		qdel(src)
 		return 0
 	else

@@ -453,5 +453,5 @@
 
 /mob/living/carbon/monkey/proc/monkeyDrop(var/obj/item/A)
 	if(A)
-		unEquip(A, 1)
+		dropItemToGround(A, TRUE)
 		update_icons()

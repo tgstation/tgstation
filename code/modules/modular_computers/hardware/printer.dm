@@ -40,7 +40,7 @@
 
 /obj/item/weapon/computer_hardware/printer/try_insert(obj/item/I, mob/living/user = null)
 	if(istype(I, /obj/item/weapon/paper))
-		if(user && !user.unEquip(I))
+		if(user && !user.removeItemFromInventory(I))
 			return FALSE
 
 		if(stored_paper >= max_paper)

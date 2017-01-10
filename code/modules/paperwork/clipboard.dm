@@ -29,7 +29,7 @@
 
 /obj/item/weapon/clipboard/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/paper))
-		if(!user.unEquip(W))
+		if(!user.removeItemFromInventory(W))
 			return
 		W.loc = src
 		toppaper = W
@@ -79,7 +79,7 @@
 				var/obj/item/held = usr.get_active_held_item()
 				if(istype(held, /obj/item/weapon/pen))
 					var/obj/item/weapon/pen/W = held
-					if(!usr.unEquip(W))
+					if(!usr.removeItemFromInventory(W))
 						return
 					W.loc = src
 					haspen = W

@@ -103,7 +103,7 @@
 			user << "<span class='warning'>You cannot install the upgrade to [src] while wearing it.</span>"
 			return
 
-		if(user.unEquip(I))
+		if(user.removeItemFromInventory(I))
 			jetpack = I
 			I.loc = src
 			user << "<span class='notice'>You successfully install the jetpack into [src].</span>"

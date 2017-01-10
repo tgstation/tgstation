@@ -246,7 +246,7 @@
 		var/obj/item/device/flashlight/seclite/S = I
 		if(can_flashlight)
 			if(!F)
-				if(!user.unEquip(S))
+				if(!user.removeItemFromInventory(S))
 					return
 				user << "<span class='notice'>You click [S] into place on [src].</span>"
 				if(S.on)

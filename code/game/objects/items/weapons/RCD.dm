@@ -263,8 +263,6 @@ RCD
 		if((matter + R.ammoamt) > max_matter)
 			user << "<span class='warning'>The RCD can't hold any more matter-units!</span>"
 			return
-		if(!user.unEquip(W))
-			return
 		qdel(W)
 		matter += R.ammoamt
 		playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
@@ -290,7 +288,7 @@ RCD
             user << "<span class='notice'>You insert [maxsheets] [S.name] sheets into the RCD. </span>"
         else
             matter += value*(S.amount)
-            user.unEquip()
+            user.removeItemFromInventory()
             S.use(S.amount)
             playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
             user << "<span class='notice'>You insert [S.amount] [S.name] sheets into the RCD. </span>"

@@ -97,7 +97,7 @@
 			return
 		src.master = F
 		F.ptank = src
-		user.unEquip(src)
+		user.removeItemFromInventory(src)
 		src.loc = F
 		F.update_icon()
 	else

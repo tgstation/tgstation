@@ -35,7 +35,7 @@
 /obj/item/weapon/implantpad/attackby(obj/item/weapon/implantcase/C, mob/user, params)
 	if(istype(C, /obj/item/weapon/implantcase))
 		if(!case)
-			if(!user.unEquip(C))
+			if(!user.removeItemFromInventory(C))
 				return
 			C.loc = src
 			case = C

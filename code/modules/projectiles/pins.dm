@@ -31,7 +31,7 @@
 				user << "<span class ='notice'>You remove [G]'s old pin.</span>"
 
 			if(!G.pin)
-				if(!user.unEquip(src))
+				if(!user.removeItemFromInventory(src))
 					return
 				gun_insert(user, G)
 				user << "<span class ='notice'>You insert [src] into [G].</span>"

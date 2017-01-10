@@ -246,13 +246,13 @@
 			return
 
 		if(!keyslot)
-			if(!user.unEquip(W))
+			if(!user.removeItemFromInventory(W))
 				return
 			W.loc = src
 			keyslot = W
 
 		else
-			if(!user.unEquip(W))
+			if(!user.removeItemFromInventory(W))
 				return
 			W.loc = src
 			keyslot2 = W

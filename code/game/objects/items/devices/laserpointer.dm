@@ -41,7 +41,7 @@
 /obj/item/device/laser_pointer/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/stock_parts/micro_laser))
 		if(!diode)
-			if(!user.unEquip(W))
+			if(!user.removeItemFromInventory(W))
 				return
 			W.loc = src
 			diode = W

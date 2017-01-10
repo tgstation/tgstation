@@ -22,7 +22,6 @@
 		var/obj/item/stack/sheet/glass/G = new (user.loc)
 		G.add_fingerprint(user)
 		if(amount <= 0)
-			user.unEquip(src, 1)
 			qdel(src)
 
 	else if(istype(O, /obj/item/stack/sheet/metal))

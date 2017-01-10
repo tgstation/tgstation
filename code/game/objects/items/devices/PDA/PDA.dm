@@ -759,7 +759,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				I = C
 
 	if(I && I.registered_name)
-		if(!user.unEquip(I))
+		if(!user.removeItemFromInventory(I))
 			return 0
 		var/obj/old_id = id
 		I.forceMove(src)
@@ -772,7 +772,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 // access to status display signals
 /obj/item/device/pda/attackby(obj/item/C, mob/user, params)
 	if(istype(C, /obj/item/weapon/cartridge) && !cartridge)
-		if(!user.unEquip(C))
+		if(!user.removeItemFromInventory(C))
 			return
 		cartridge = C
 		cartridge.loc = src
@@ -801,7 +801,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 			return	//Return in case of failed check or when successful.
 		updateSelfDialog()//For the non-input related code.
 	else if(istype(C, /obj/item/device/paicard) && !src.pai)
-		if(!user.unEquip(C))
+		if(!user.removeItemFromInventory(C))
 			return
 		C.loc = src
 		pai = C
@@ -812,7 +812,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		if(inserted_item)
 			user << "<span class='warning'>There is already \a [inserted_item] in \the [src]!</span>"
 		else
-			if(!user.unEquip(C))
+			if(!user.removeItemFromInventory(C))
 				return
 			C.forceMove(src)
 			user << "<span class='notice'>You slide \the [C] into \the [src].</span>"

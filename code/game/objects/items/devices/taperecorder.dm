@@ -32,7 +32,7 @@
 
 /obj/item/device/taperecorder/attackby(obj/item/I, mob/user, params)
 	if(!mytape && istype(I, /obj/item/device/tape))
-		if(!user.unEquip(I))
+		if(!user.removeItemFromInventory(I))
 			return
 		I.loc = src
 		mytape = I

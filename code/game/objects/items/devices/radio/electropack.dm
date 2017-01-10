@@ -44,14 +44,14 @@
 		var/obj/item/assembly/shock_kit/A = new /obj/item/assembly/shock_kit( user )
 		A.icon = 'icons/obj/assemblies.dmi'
 
-		if(!user.unEquip(W))
+		if(!user.removeItemFromInventory(W))
 			user << "<span class='warning'>[W] is stuck to your hand, you cannot attach it to [src]!</span>"
 			return
 		W.loc = A
 		W.master = A
 		A.part1 = W
 
-		user.unEquip(src)
+		user.removeItemFromInventory(src)
 		loc = A
 		master = A
 		A.part2 = src

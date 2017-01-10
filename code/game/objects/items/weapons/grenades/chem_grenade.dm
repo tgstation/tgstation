@@ -70,7 +70,7 @@
 			return
 		else
 			if(I.reagents.total_volume)
-				if(!user.unEquip(I))
+				if(!user.removeItemFromInventory(I))
 					return
 				user << "<span class='notice'>You add [I] to the [initial(name)] assembly.</span>"
 				I.loc = src
@@ -83,7 +83,7 @@
 		var/obj/item/device/assembly_holder/A = I
 		if(isigniter(A.a_left) == isigniter(A.a_right))	//Check if either part of the assembly has an igniter, but if both parts are igniters, then fuck it
 			return
-		if(!user.unEquip(I))
+		if(!user.removeItemFromInventory(I))
 			return
 
 		nadeassembly = A
@@ -218,7 +218,7 @@
 	//make a special case you might as well do it explicitly. -Sayu
 /obj/item/weapon/grenade/chem_grenade/large/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/slime_extract) && stage == WIRED)
-		if(!user.unEquip(I))
+		if(!user.removeItemFromInventory(I))
 			return
 		user << "<span class='notice'>You add [I] to the [initial(name)] assembly.</span>"
 		I.loc = src

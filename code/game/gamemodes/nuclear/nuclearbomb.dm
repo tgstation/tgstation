@@ -559,7 +559,7 @@ This is here to make the tiles around the station mininuke change when it's arme
 
 	if(ismob(loc))
 		var/mob/M = loc
-		M.remove_from_mob(src)
+		M.removeItemFromInventory(src)
 	if(istype(loc, /obj/item/weapon/storage))
 		var/obj/item/weapon/storage/S = loc
 		S.remove_from_storage(src, targetturf)

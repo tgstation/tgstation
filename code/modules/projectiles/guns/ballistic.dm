@@ -56,7 +56,7 @@
 	if (istype(A, /obj/item/ammo_box/magazine))
 		var/obj/item/ammo_box/magazine/AM = A
 		if (!magazine && istype(AM, mag_type))
-			user.remove_from_mob(AM)
+			user.removeItemFromInventory(AM)
 			magazine = AM
 			magazine.forceMove(src)
 			user << "<span class='notice'>You load a new magazine into \the [src].</span>"
@@ -70,7 +70,7 @@
 		var/obj/item/weapon/suppressor/S = A
 		if(can_suppress)
 			if(!suppressed)
-				if(!user.unEquip(A))
+				if(!user.removeItemFromInventory(A))
 					return
 				user << "<span class='notice'>You screw [S] onto [src].</span>"
 				suppressed = A

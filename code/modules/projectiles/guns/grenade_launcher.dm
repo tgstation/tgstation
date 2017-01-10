@@ -20,7 +20,7 @@
 
 	if((istype(I, /obj/item/weapon/grenade)))
 		if(grenades.len < max_grenades)
-			if(!user.unEquip(I))
+			if(!user.removeItemFromInventory(I))
 				return
 			I.loc = src
 			grenades += I

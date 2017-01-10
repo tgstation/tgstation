@@ -61,7 +61,7 @@
 			user << "<span class='warning'>You have already inserted a cell!</span>"
 			return
 		else
-			if(!user.unEquip(W))
+			if(!user.removeItemFromInventory(W))
 				return
 			W.loc = src
 			src.cell = W
@@ -118,7 +118,7 @@
 			user << "<span class='warning'>You can't use a broken flash!</span>"
 			return
 		else
-			if(!user.unEquip(W))
+			if(!user.removeItemFromInventory(W))
 				return
 			F.loc = src
 			if(src.flash1)

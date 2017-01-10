@@ -73,7 +73,7 @@
 			if(C.maxcharge < hitcost)
 				user << "<span class='notice'>[src] requires a higher capacity cell.</span>"
 				return
-			if(!user.unEquip(W))
+			if(!user.removeItemFromInventory(W))
 				return
 			W.loc = src
 			bcell = W

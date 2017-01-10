@@ -24,7 +24,7 @@
 /obj/item/weapon/grenade/plastic/attackby(obj/item/I, mob/user, params)
 	if(!nadeassembly && istype(I, /obj/item/device/assembly_holder))
 		var/obj/item/device/assembly_holder/A = I
-		if(!user.unEquip(I))
+		if(!user.removeItemFromInventory(I))
 			return ..()
 		nadeassembly = A
 		A.master = src
@@ -73,7 +73,7 @@
 	user << "<span class='notice'>You start planting the [src]. The timer is set to [det_time]...</span>"
 
 	if(do_after(user, 50, target = AM))
-		if(!user.unEquip(src))
+		if(!user.removeItemFromInventory(src))
 			return
 		src.target = AM
 		loc = null
