@@ -155,6 +155,10 @@ var/next_external_rsc = 0
 
 	. = ..()	//calls mob.Login()
 
+	connection_time = world.time
+	connection_realtime = world.realtime
+	connection_timeofday = world.timeofday
+
 	if (byond_version < config.client_error_version)		//Out of date client.
 		src << "<span class='danger'><b>Your version of byond is too old:</b></span>"
 		src << config.client_error_message
