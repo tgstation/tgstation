@@ -1,6 +1,5 @@
 /datum
 	var/var_edited = FALSE //Warrenty void if seal is broken
-	var/datum/reagents/reagents = null
 	var/fingerprintslast = null
 
 /datum/proc/vv_edit_var(var_name, var_value) //called whenever a var is edited
