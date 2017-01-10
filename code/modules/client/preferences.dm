@@ -123,8 +123,15 @@ var/list/preferences_datums = list()
 
 
 /datum/preferences/proc/ShowChoices(mob/user)
+	user.client.preferences_count += 1
 	if(!user || !user.client)
 		return
+	if((user.client.preferences_cd < world.time) && (user.client.preferences_count > 10))
+		return
+	user.client.preferences_cd = world.time + 200
+	if(user.client.preferences_count == 75)
+		log_admin("[user.ckey]/[user] seems to be spamming a laggy game-preferences command!")
+		message_admins("[user.ckey]/[user] seems to be spamming a laggy game-preferences command!")
 	update_preview_icon()
 	user << browse_rsc(preview_icon, "previewicon.png")
 	var/dat = "<center>"
