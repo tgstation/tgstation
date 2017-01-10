@@ -54,3 +54,6 @@
 
 	//datum that controls the displaying and hiding of tooltips
 	var/datum/tooltip/tooltips
+
+	var/lastping = 0
+	var/avgping = 0

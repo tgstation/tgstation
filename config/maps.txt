@@ -25,12 +25,6 @@ map metastation
 	#voteweight 0.5
 endmap
 
-#map ministation
-	friendlyname Mini Station
-	maxplayers 30
-	voteweight 0
-endmap
-
 map birdstation
 	friendlyname Bird Boat Station
 	maxplayers 35
@@ -38,4 +32,9 @@ endmap
 
 map pubbystation
 	friendlyname Pubby Station
+endmap
+
+map omegastation
+	friendlyname Omega Station
+	maxplayers 35
 endmap

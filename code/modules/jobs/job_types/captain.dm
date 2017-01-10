@@ -22,9 +22,13 @@ Captain
 /datum/job/captain/get_access()
 	return get_all_accesses()
 
+/datum/job/captain/announce(mob/living/carbon/human/H)
+	..()
+	minor_announce("Captain [H.real_name] on deck!")
 
 /datum/outfit/job/captain
 	name = "Captain"
+	jobtype = /datum/job/captain
 
 	id = /obj/item/weapon/card/id/gold
 	belt = /obj/item/device/pda/captain
@@ -41,19 +45,8 @@ Captain
 	satchel = /obj/item/weapon/storage/backpack/satchel/cap
 	dufflebag = /obj/item/weapon/storage/backpack/dufflebag/captain
 
-/datum/outfit/job/captain/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
-	..()
+	implants = list(/obj/item/weapon/implant/mindshield)
 
-	var/obj/item/clothing/under/U = H.w_uniform
-	U.attachTie(new /obj/item/clothing/tie/medal/gold/captain())
-
-	if(visualsOnly)
-		return
-
-	var/obj/item/weapon/implant/mindshield/L = new/obj/item/weapon/implant/mindshield(H)
-	L.implant(H, null, 1)
-
-	minor_announce("Captain [H.real_name] on deck!")
 
 /*
 Head of Personnel
@@ -63,6 +56,7 @@ Head of Personnel
 	flag = HOP
 	department_head = list("Captain")
 	department_flag = CIVILIAN
+	head_announce = list("Supply", "Service")
 	faction = "Station"
 	total_positions = 1
 	spawn_positions = 1
@@ -89,6 +83,7 @@ Head of Personnel
 
 /datum/outfit/job/hop
 	name = "Head of Personnel"
+	jobtype = /datum/job/hop
 
 	id = /obj/item/weapon/card/id/silver
 	belt = /obj/item/device/pda/heads/hop
@@ -98,11 +93,3 @@ Head of Personnel
 	head = /obj/item/clothing/head/hopcap
 	backpack_contents = list(/obj/item/weapon/storage/box/ids=1,\
 		/obj/item/weapon/melee/classic_baton/telescopic=1, /obj/item/device/modular_computer/tablet/preset/advanced = 1)
-
-/datum/outfit/job/hop/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
-	..()
-
-	if(visualsOnly)
-		return
-
-	announce_head(H, list("Supply", "Service"))

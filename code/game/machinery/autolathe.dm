@@ -56,7 +56,7 @@
 	matching_designs = list()
 
 /obj/item/weapon/circuitboard/machine/autolathe
-	name = "circuit board (Autolathe)"
+	name = "Autolathe (Machine Board)"
 	build_path = /obj/machinery/autolathe
 	origin_tech = "engineering=2;programming=2"
 	req_components = list(
@@ -228,7 +228,8 @@
 						materials.use_amount(materials_used)
 						for(var/i=1, i<=multiplier, i++)
 							var/obj/item/new_item = new being_built.build_path(T)
-							new_item.materials = materials_used.Copy()
+							for(var/mat in materials_used)
+								new_item.materials[mat] = materials_used[mat] / multiplier
 							new_item.autolathe_crafted(src)
 						busy = 0
 						updateUsrDialog()

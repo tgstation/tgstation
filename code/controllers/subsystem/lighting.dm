@@ -7,8 +7,8 @@ var/datum/subsystem/lighting/SSlighting
 	name = "Lighting"
 	init_order = 1
 	wait = 1
-	flags = SS_POST_FIRE_TIMING
-	priority = 40
+	flags = SS_TICKER
+	priority = 25
 	display_order = 5
 
 	var/list/changed_lights = list()		//list of all datum/light_source that need updating

@@ -389,6 +389,19 @@
 	log_name = "CT"
 	category = "Assistance"
 
+/datum/spellbook_entry/item/guardian
+	name = "Guardian Deck"
+	desc = "A deck of guardian tarot cards, capable of binding a personal guardian to your body. There are multiple types of guardian available, but all of them will transfer some amount of damage to you. \
+	It would be wise to avoid buying these with anything capable of causing you to swap bodies with others."
+	item_path = /obj/item/weapon/guardiancreator/choose/wizard
+	log_name = "GU"
+	category = "Assistance"
+
+/datum/spellbook_entry/item/guardian/Buy(mob/living/carbon/human/user,obj/item/weapon/spellbook/book)
+	. = ..()
+	if(.)
+		new /obj/item/weapon/paper/guardian/wizard(get_turf(user))
+
 /datum/spellbook_entry/item/bloodbottle
 	name = "Bottle of Blood"
 	desc = "A bottle of magically infused blood, the smell of which will attract extradimensional beings when broken. Be careful though, the kinds of creatures summoned by blood magic are indiscriminate in their killing, and you yourself may become a victim."
@@ -420,7 +433,7 @@
 
 /datum/spellbook_entry/item/singularity_hammer
 	name = "Singularity Hammer"
-	desc = "A hammer that creates an intensely powerful field of gravity where it strikes, pulling everthing nearby to the point of impact."
+	desc = "A hammer that creates an intensely powerful field of gravity where it strikes, pulling everything nearby to the point of impact."
 	item_path = /obj/item/weapon/twohanded/singularityhammer
 	log_name = "SI"
 
@@ -600,7 +613,7 @@
 			dat += "For spells: the number after the spell name is the cooldown time.<BR>"
 			dat += "You can reduce this number by spending more points on the spell.<BR>"
 		if("Defensive")
-			dat += "Spells and items geared towards improving your survivabilty or reducing foes ability to attack.<BR><BR>"
+			dat += "Spells and items geared towards improving your survivabilty or reducing foes' ability to attack.<BR><BR>"
 			dat += "Items are not bound to you and can be stolen. Additionaly they cannot typically be returned once purchased.<BR>"
 			dat += "For spells: the number after the spell name is the cooldown time.<BR>"
 			dat += "You can reduce this number by spending more points on the spell.<BR>"
@@ -647,7 +660,7 @@
 		owner = user
 		return
 	if(user != owner)
-		user << "<span class='warning'>The [name] does not recognize you as it's owner and refuses to open!</span>"
+		user << "<span class='warning'>The [name] does not recognize you as its owner and refuses to open!</span>"
 		return
 	user.set_machine(src)
 	var/dat = ""
@@ -696,7 +709,7 @@
 		return 1
 
 	if(H.mind.special_role == "apprentice")
-		temp = "If you got caught sneaking a peak from your teacher's spellbook, you'd likely be expelled from the Wizard Academy. Better not."
+		temp = "If you got caught sneaking a peek from your teacher's spellbook, you'd likely be expelled from the Wizard Academy. Better not."
 		return
 
 	var/datum/spellbook_entry/E = null

@@ -123,17 +123,9 @@
 /obj/item/weapon/paper/talisman/teleport/invoke(mob/living/user, successfuluse = 1)
 	var/list/potential_runes = list()
 	var/list/teleportnames = list()
-	var/list/duplicaterunecount = list()
 	for(var/R in teleport_runes)
 		var/obj/effect/rune/teleport/T = R
-		var/resultkey = T.listkey
-		if(resultkey in teleportnames)
-			duplicaterunecount[resultkey]++
-			resultkey = "[resultkey] ([duplicaterunecount[resultkey]])"
-		else
-			teleportnames.Add(resultkey)
-			duplicaterunecount[resultkey] = 1
-		potential_runes[resultkey] = T
+		potential_runes[avoid_assoc_duplicate_keys(T.listkey, teleportnames)] = T
 
 	if(!potential_runes.len)
 		user << "<span class='warning'>There are no valid runes to teleport to!</span>"
@@ -150,7 +142,7 @@
 	if(!src || qdeleted(src) || !user || !user.is_holding(src) || user.incapacitated() || !actual_selected_rune)
 		return ..(user, 0)
 	var/turf/target = get_turf(actual_selected_rune)
-	if(is_blocked_turf(target))
+	if(is_blocked_turf(target, TRUE))
 		user << "<span class='warning'>The target rune is blocked. Attempting to teleport to it would be massively unwise.</span>"
 		return ..(user, 0)
 	user.visible_message("<span class='warning'>Dust flows from [user]'s hand, and [user.p_they()] disappear in a flash of red light!</span>", \

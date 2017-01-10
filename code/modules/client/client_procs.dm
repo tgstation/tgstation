@@ -19,6 +19,7 @@
 	If you have any  questions about this stuff feel free to ask. ~Carn
 	*/
 /client/Topic(href, href_list, hsrc)
+	var/static/inprefs = FALSE
 	if(!usr || usr != mob)	//stops us calling Topic for somebody else's client. Also helps prevent usr=null
 		return
 	// asset_cache
@@ -45,7 +46,12 @@
 		if("usr")
 			hsrc = mob
 		if("prefs")
-			return prefs.process_link(usr,href_list)
+			if (inprefs)
+				return
+			inprefs = TRUE
+			. = prefs.process_link(usr,href_list)
+			inprefs = FALSE
+			return
 		if("vars")
 			return view_var_Topic(href,href_list,hsrc)
 
@@ -199,7 +205,7 @@ var/next_external_rsc = 0
 			if(config.allow_panic_bunker_bounce && tdata != "redirect")
 				src << "<span class='notice'>Sending you to [config.panic_server_name].</span>"
 				winset(src, null, "command=.options")
-				src << link("[global.panic_address]?redirect")
+				src << link("[config.panic_address]?redirect")
 			qdel(src)
 			return 0
 

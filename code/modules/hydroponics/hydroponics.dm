@@ -41,7 +41,7 @@
 	B.apply_default_parts(src)
 
 /obj/item/weapon/circuitboard/machine/hydroponics
-	name = "circuit board (Hydroponics Tray)"
+	name = "Hydroponics Tray (Machine Board)"
 	build_path = /obj/machinery/hydroponics/constructable
 	origin_tech = "programming=1;biotech=2"
 	req_components = list(

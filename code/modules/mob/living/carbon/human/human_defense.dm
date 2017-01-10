@@ -213,6 +213,18 @@
 		..() //shaking
 		return 0
 
+	if(M.a_intent == INTENT_DISARM) //Always drop item in hand, if no item, get stunned instead.
+		if(get_active_held_item() && drop_item())
+			playsound(loc, 'sound/weapons/slash.ogg', 25, 1, -1)
+			visible_message("<span class='danger'>[M] disarmed [src]!</span>", \
+					"<span class='userdanger'>[M] disarmed [src]!</span>")
+		else if(!M.client || prob(5)) // only natural monkeys get to stun reliably, (they only do it occasionaly)
+			playsound(loc, 'sound/weapons/pierce.ogg', 25, 1, -1)
+			Weaken(5)
+			add_logs(M, src, "tackled")
+			visible_message("<span class='danger'>[M] has tackled down [src]!</span>", \
+				"<span class='userdanger'>[M] has tackled down [src]!</span>")
+
 	if(M.limb_destroyer)
 		dismembering_strike(M, affecting.body_zone)
 

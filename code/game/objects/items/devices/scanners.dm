@@ -30,11 +30,7 @@ MASS SPECTROMETER
 /obj/item/device/t_scanner/proc/flick_sonar(obj/pipe)
 	var/image/I = image('icons/effects/effects.dmi', pipe, "blip", pipe.layer+1)
 	I.alpha = 128
-	var/list/nearby = list()
-	for(var/mob/M in viewers(pipe))
-		if(M.client)
-			nearby |= M.client
-	flick_overlay(I,nearby,8)
+	flick_overlay_view(I, pipe, 8)
 
 /obj/item/device/t_scanner/process()
 	if(!on)
@@ -328,8 +324,9 @@ MASS SPECTROMETER
 	icon_state = "spectrometer"
 	item_state = "analyzer"
 	w_class = WEIGHT_CLASS_SMALL
-	flags = CONDUCT | OPENCONTAINER
+	flags = CONDUCT
 	slot_flags = SLOT_BELT
+	container_type = OPENCONTAINER
 	throwforce = 0
 	throw_speed = 3
 	throw_range = 7

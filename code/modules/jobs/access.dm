@@ -65,6 +65,7 @@
 /var/const/access_minisat = 65
 /var/const/access_weapons = 66 //Weapon authorization for secbots
 /var/const/access_network = 67
+/var/const/access_cloning = 68 //Cloning room
 
 	//BEGIN CENTCOM ACCESS
 	/*Should leave plenty of room if we need to add more access levels.
@@ -243,7 +244,7 @@
 	            access_hydroponics, access_library, access_lawyer, access_virology, access_cmo, access_qm, access_surgery,
 	            access_theatre, access_research, access_mining, access_mailsorting, access_weapons,
 	            access_heads_vault, access_mining_station, access_xenobiology, access_ce, access_hop, access_hos, access_RC_announce,
-	            access_keycard_auth, access_tcomsat, access_gateway, access_mineral_storeroom, access_minisat, access_network)
+	            access_keycard_auth, access_tcomsat, access_gateway, access_mineral_storeroom, access_minisat, access_network, access_cloning)
 
 /proc/get_all_centcom_access()
 	return list(access_cent_general, access_cent_thunder, access_cent_specops, access_cent_medical, access_cent_living, access_cent_storage, access_cent_teleporter, access_cent_captain)
@@ -271,7 +272,7 @@
 		if(2) //security
 			return list(access_sec_doors, access_weapons, access_security, access_brig, access_armory, access_forensics_lockers, access_court, access_hos)
 		if(3) //medbay
-			return list(access_medical, access_genetics, access_morgue, access_chemistry, access_virology, access_surgery, access_cmo)
+			return list(access_medical, access_genetics, access_cloning, access_morgue, access_chemistry, access_virology, access_surgery, access_cmo)
 		if(4) //research
 			return list(access_research, access_tox, access_tox_storage, access_genetics, access_robotics, access_xenobiology, access_minisat, access_rd, access_network)
 		if(5) //engineering and maintenance
@@ -432,6 +433,8 @@
 			return "Weapon Permit"
 		if(access_network)
 			return "Network Access"
+		if(access_cloning)
+			return "Cloning Room"
 
 /proc/get_centcom_access_desc(A)
 	switch(A)

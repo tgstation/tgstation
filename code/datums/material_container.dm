@@ -143,14 +143,12 @@
 		if(M.amount < (sheet_amt * MINERAL_MATERIAL_AMOUNT))
 			sheet_amt = round(M.amount / MINERAL_MATERIAL_AMOUNT)
 		var/count = 0
-
 		while(sheet_amt > MAX_STACK_SIZE)
 			new M.sheet_type(get_turf(owner), MAX_STACK_SIZE)
 			count += MAX_STACK_SIZE
 			use_amount_type(sheet_amt * MINERAL_MATERIAL_AMOUNT, M.id)
 			sheet_amt -= MAX_STACK_SIZE
-
-		if(round(M.amount / MINERAL_MATERIAL_AMOUNT))
+		if(round((sheet_amt * MINERAL_MATERIAL_AMOUNT) / MINERAL_MATERIAL_AMOUNT))
 			new M.sheet_type(get_turf(owner), sheet_amt)
 			count += sheet_amt
 			use_amount_type(sheet_amt * MINERAL_MATERIAL_AMOUNT, M.id)

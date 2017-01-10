@@ -102,7 +102,7 @@
 						if(can_use())
 							cameranet.addCamera(src)
 						emped = 0 //Resets the consecutive EMP count
-						addtimer(src, "cancelCameraAlarm", 100)
+						addtimer(CALLBACK(src, .proc/cancelCameraAlarm), 100)
 			for(var/mob/O in mob_list)
 				if (O.client && O.client.eye == src)
 					O.unset_machine()
@@ -286,7 +286,7 @@
 	if(status)
 		change_msg = "reactivates"
 		triggerCameraAlarm()
-		addtimer(src, "cancelCameraAlarm", 100)
+		addtimer(CALLBACK(src, .proc/cancelCameraAlarm), 100)
 	if(displaymessage)
 		if(user)
 			visible_message("<span class='danger'>[user] [change_msg] [src]!</span>")

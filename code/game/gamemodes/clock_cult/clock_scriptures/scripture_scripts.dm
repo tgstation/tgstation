@@ -40,7 +40,7 @@
 	required_components = list(BELLIGERENT_EYE = 2, HIEROPHANT_ANSIBLE = 1)
 	consumed_components = list(BELLIGERENT_EYE = 1, HIEROPHANT_ANSIBLE = 1)
 	object_path = /obj/structure/destructible/clockwork/shell/cogscarab
-	creator_message = "<span class='brass'>You form a cogscarab, a constructor soul vessel receptable.</span>"
+	creator_message = "<span class='brass'>You form a cogscarab, a constructor soul vessel receptacle.</span>"
 	observer_message = "<span class='warning'>The slab disgorges a puddle of black metal that contracts and forms into a strange shell!</span>"
 	usage_tip = "Useless without a soul vessel and should not be created without one."
 	tier = SCRIPTURE_SCRIPT
@@ -138,14 +138,14 @@
 /datum/clockwork_scripture/create_object/clockwork_proselytizer
 	descname = "Converts Objects to Ratvarian"
 	name = "Clockwork Proselytizer"
-	desc = "Forms a device that, when used on certain objects, converts them into their Ratvarian equivalents. It requires replicant alloy to function."
+	desc = "Forms a device that, when used on certain objects, converts them into their Ratvarian equivalents. It requires power to function."
 	invocations = list("With this device...", "...his presence shall be made known.")
 	channel_time = 20
 	required_components = list(GEIS_CAPACITOR = 1, REPLICANT_ALLOY = 2)
 	consumed_components = list(GEIS_CAPACITOR = 1, REPLICANT_ALLOY = 1)
 	whispered = TRUE
 	object_path = /obj/item/clockwork/clockwork_proselytizer/preloaded
-	creator_message = "<span class='brass'>You form a clockwork proselytizer, which is already pre-loaded with a small amount of replicant alloy.</span>"
+	creator_message = "<span class='brass'>You form a clockwork proselytizer.</span>"
 	usage_tip = "Clockwork Walls cause nearby tinkerer's caches to generate components passively, making them a vital tool. Clockwork Floors heal toxin damage in Servants standing on them."
 	tier = SCRIPTURE_SCRIPT
 	space_allowed = TRUE
@@ -157,7 +157,7 @@
 
 //Function Call: Grants the invoker the ability to call forth a Ratvarian spear that deals significant damage to silicons.
 /datum/clockwork_scripture/function_call
-	descname = "Permenant Summonable Spear"
+	descname = "Permanent Summonable Spear"
 	name = "Function Call"
 	desc = "Grants the invoker the ability to call forth a powerful Ratvarian spear every three minutes. The spear will deal significant damage to Nar-Sie's dogs and silicon lifeforms, but will \
 	vanish three minutes after being summoned."
@@ -202,7 +202,7 @@
 
 /datum/action/innate/function_call/Activate()
 	if(!owner.get_empty_held_indexes())
-		usr << "<span class='warning'>You need an empty to hand to call forth your spear!</span>"
+		usr << "<span class='warning'>You need an empty hand to call forth your spear!</span>"
 		return FALSE
 	owner.visible_message("<span class='warning'>A strange spear materializes in [owner]'s hands!</span>", "<span class='brass'>You call forth your spear!</span>")
 	var/obj/item/clockwork/ratvarian_spear/R = new(get_turf(usr))
@@ -210,10 +210,10 @@
 	if(!ratvar_awakens)
 		R.clockwork_desc = "A powerful spear of Ratvarian making. It's more effective against enemy cultists and silicons, though it won't last for long."
 		owner << "<span class='warning'>Your spear begins to break down in this plane of existence. You can't use it for long!</span>"
-		R.timerid = addtimer(R, "break_spear", base_cooldown, TIMER_NORMAL)
+		R.timerid = addtimer(CALLBACK(R, /obj/item/clockwork/ratvarian_spear.proc/break_spear), base_cooldown)
 	cooldown = base_cooldown + world.time
 	owner.update_action_buttons_icon()
-	addtimer(src, "update_actions", base_cooldown, TIMER_NORMAL)
+	addtimer(CALLBACK(src, .proc/update_actions), base_cooldown)
 	return TRUE
 
 /datum/action/innate/function_call/proc/update_actions()

@@ -8,7 +8,7 @@
 
 
 
-/obj/item/weapon/twohanded/required/ctf
+/obj/item/weapon/twohanded/ctf
 	name = "banner"
 	icon = 'icons/obj/items.dmi'
 	icon_state = "banner"
@@ -27,22 +27,22 @@
 	var/obj/effect/ctf/flag_reset/reset
 	var/reset_path = /obj/effect/ctf/flag_reset
 
-/obj/item/weapon/twohanded/required/ctf/New()
+/obj/item/weapon/twohanded/ctf/New()
 	..()
 	if(!reset)
 		reset = new reset_path(get_turf(src))
 
-/obj/item/weapon/twohanded/required/ctf/Destroy()
+/obj/item/weapon/twohanded/ctf/Destroy()
 	if(reset)
 		qdel(reset)
 		reset = null
 	. = ..()
 
-/obj/item/weapon/twohanded/required/ctf/initialize()
+/obj/item/weapon/twohanded/ctf/initialize()
 	if(!reset)
 		reset = new reset_path(get_turf(src))
 
-/obj/item/weapon/twohanded/required/ctf/process()
+/obj/item/weapon/twohanded/ctf/process()
 	if(world.time > reset_cooldown)
 		forceMove(get_turf(src.reset))
 		for(var/mob/M in player_list)
@@ -52,7 +52,7 @@
 					to base!</span>"
 		STOP_PROCESSING(SSobj, src)
 
-/obj/item/weapon/twohanded/required/ctf/attack_hand(mob/living/user)
+/obj/item/weapon/twohanded/ctf/attack_hand(mob/living/user)
 	if(!user)
 		return
 	if(team in user.faction)
@@ -66,14 +66,16 @@
 	if(!user.put_in_active_hand(src))
 		dropped(user)
 		return
+	user.anchored = TRUE
 	for(var/mob/M in player_list)
 		var/area/mob_area = get_area(M)
 		if(istype(mob_area, /area/ctf))
 			M << "<span class='userdanger'>\The [src] has been taken!</span>"
 	STOP_PROCESSING(SSobj, src)
 
-/obj/item/weapon/twohanded/required/ctf/dropped(mob/user)
+/obj/item/weapon/twohanded/ctf/dropped(mob/user)
 	..()
+	user.anchored = FALSE
 	reset_cooldown = world.time + 200 //20 seconds
 	START_PROCESSING(SSobj, src)
 	for(var/mob/M in player_list)
@@ -83,7 +85,7 @@
 	anchored = TRUE
 
 
-/obj/item/weapon/twohanded/required/ctf/red
+/obj/item/weapon/twohanded/ctf/red
 	name = "red flag"
 	icon_state = "banner-red"
 	item_state = "banner-red"
@@ -92,7 +94,7 @@
 	reset_path = /obj/effect/ctf/flag_reset/red
 
 
-/obj/item/weapon/twohanded/required/ctf/blue
+/obj/item/weapon/twohanded/ctf/blue
 	name = "blue flag"
 	icon_state = "banner-blue"
 	item_state = "banner-blue"
@@ -155,7 +157,7 @@
 			/obj/machinery,
 			/obj/structure,
 			/obj/effect/ctf,
-			/obj/item/weapon/twohanded/required/ctf
+			/obj/item/weapon/twohanded/ctf
 		))
 	poi_list |= src
 
@@ -223,11 +225,11 @@
 	spawn_team_member(new_team_member)
 
 /obj/machinery/capture_the_flag/proc/ctf_dust_old(mob/living/body)
-	if(isliving(body) && body.z == src.z)
+	if(isliving(body) && (team in body.faction))
 		var/turf/T = get_turf(body)
 		new /obj/effect/ctf/ammo(T)
 		recently_dead_ckeys += body.ckey
-		addtimer(src, "clear_cooldown", respawn_cooldown, TIMER_UNIQUE, body.ckey)
+		addtimer(CALLBACK(src, .proc/clear_cooldown, body.ckey), respawn_cooldown, TIMER_UNIQUE)
 		body.dust()
 
 /obj/machinery/capture_the_flag/proc/clear_cooldown(var/ckey)
@@ -248,8 +250,8 @@
 			attack_ghost(ghost)
 
 /obj/machinery/capture_the_flag/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/weapon/twohanded/required/ctf))
-		var/obj/item/weapon/twohanded/required/ctf/flag = I
+	if(istype(I, /obj/item/weapon/twohanded/ctf))
+		var/obj/item/weapon/twohanded/ctf/flag = I
 		if(flag.team != src.team)
 			user.unEquip(flag)
 			flag.loc = get_turf(flag.reset)
@@ -267,7 +269,7 @@
 		if(istype(mob_area, /area/ctf))
 			M << "<span class='narsie'>[team] team wins!</span>"
 			M << "<span class='userdanger'>The game has been reset! Teams have been cleared. The machines will be active again in 30 seconds.</span>"
-			for(var/obj/item/weapon/twohanded/required/ctf/W in M)
+			for(var/obj/item/weapon/twohanded/ctf/W in M)
 				M.unEquip(W)
 			M.dust()
 	for(var/obj/machinery/control_point/control in machines)
@@ -280,7 +282,7 @@
 			CTF.ctf_enabled = FALSE
 			CTF.team_members = list()
 			CTF.arena_cleared = FALSE
-			addtimer(CTF, "start_ctf", 300)
+			addtimer(CALLBACK(CTF, .proc/start_ctf), 300)
 
 /obj/machinery/capture_the_flag/proc/toggle_ctf()
 	if(!ctf_enabled)
@@ -338,7 +340,7 @@
 
 /obj/item/weapon/gun/ballistic/automatic/pistol/deagle/ctf/dropped()
 	. = ..()
-	addtimer(src, "floor_vanish", 1)
+	addtimer(CALLBACK(src, .proc/floor_vanish), 1)
 
 /obj/item/weapon/gun/ballistic/automatic/pistol/deagle/ctf/proc/floor_vanish()
 	if(isturf(loc))
@@ -362,14 +364,13 @@
 	mag_type = /obj/item/ammo_box/magazine/recharge/ctf
 	desc = "This looks like it could really hurt in melee."
 	force = 50
-	flags = NODROP | DROPDEL
 
 /obj/item/ammo_box/magazine/recharge/ctf
 	ammo_type = /obj/item/ammo_casing/caseless/laser/ctf
 
 /obj/item/ammo_box/magazine/recharge/ctf/dropped()
 	. = ..()
-	addtimer(src, "floor_vanish", 1)
+	addtimer(CALLBACK(src, .proc/floor_vanish), 1)
 
 /obj/item/ammo_box/magazine/recharge/ctf/proc/floor_vanish()
 	if(isturf(loc))

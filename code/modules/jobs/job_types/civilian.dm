@@ -19,6 +19,7 @@ Clown
 
 /datum/outfit/job/clown
 	name = "Clown"
+	jobtype = /datum/job/clown
 
 	belt = /obj/item/device/pda/clown
 	uniform = /obj/item/clothing/under/rank/clown
@@ -38,9 +39,10 @@ Clown
 	satchel = /obj/item/weapon/storage/backpack/clown
 	dufflebag = /obj/item/weapon/storage/backpack/dufflebag/clown //strangely has a duffle
 
+	implants = list(/obj/item/weapon/implant/sad_trombone)
+
 /datum/outfit/job/clown/pre_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	..()
-
 	if(visualsOnly)
 		return
 
@@ -48,12 +50,8 @@ Clown
 
 /datum/outfit/job/clown/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	..()
-
 	if(visualsOnly)
 		return
-
-	var/obj/item/weapon/implant/sad_trombone/S = new/obj/item/weapon/implant/sad_trombone(H)
-	S.implant(H, null, 1)
 
 	H.dna.add_mutation(CLOWNMUT)
 	H.rename_self("clown")
@@ -79,6 +77,7 @@ Mime
 
 /datum/outfit/job/mime
 	name = "Mime"
+	jobtype = /datum/job/mime
 
 	belt = /obj/item/device/pda/mime
 	uniform = /obj/item/clothing/under/rank/mime
@@ -127,6 +126,7 @@ Librarian
 
 /datum/outfit/job/librarian
 	name = "Librarian"
+	jobtype = /datum/job/librarian
 
 	belt = /obj/item/device/pda/librarian
 	uniform = /obj/item/clothing/under/rank/librarian
@@ -156,6 +156,7 @@ Lawyer
 
 /datum/outfit/job/lawyer
 	name = "Lawyer"
+	jobtype = /datum/job/lawyer
 
 	belt = /obj/item/device/pda/lawyer
 	ears = /obj/item/device/radio/headset/headset_sec
@@ -169,11 +170,10 @@ Lawyer
 
 /datum/outfit/job/lawyer/pre_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	..()
-
 	if(visualsOnly)
 		return
 
-	var/datum/job/lawyer/J = SSjob.GetJob(H.job)
+	var/datum/job/lawyer/J = SSjob.GetJobType(jobtype)
 	J.lawyers++
 	if(J.lawyers>1)
 		uniform = /obj/item/clothing/under/lawyer/purpsuit

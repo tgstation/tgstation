@@ -55,7 +55,7 @@
 	density = 1
 	icon = 'icons/obj/cloning.dmi'
 	icon_state = "pod_0"
-	req_access = list(access_genetics) //For premature unlocking.
+	req_access = list(access_cloning) //For premature unlocking.
 	verb_say = "states"
 	var/heal_level //The clone is released once its health reaches this level.
 	var/mess = FALSE //Need to clean out it if it's full of exploded clone.
@@ -131,7 +131,7 @@
 	. = GM
 
 /obj/item/weapon/circuitboard/machine/clonepod
-	name = "circuit board (Clone Pod)"
+	name = "Clone Pod (Machine Board)"
 	build_path = /obj/machinery/cloning/pod
 	origin_tech = "programming=2;biotech=2"
 	req_components = list(
@@ -188,7 +188,30 @@
 /obj/machinery/cloning/pod/proc/growclone(datum/cloning_record/record)
 	if(!ready_to_clone())
 		return FALSE
+<<<<<<< HEAD
 	if(!record.can_clone())
+=======
+	if(mess || attempting)
+		return FALSE
+	clonemind = locate(mindref)
+	if(!istype(clonemind))	//not a mind
+		return FALSE
+	if( clonemind.current && clonemind.current.stat != DEAD )	//mind is associated with a non-dead body
+		return FALSE
+	if(clonemind.active)	//somebody is using that mind
+		if( ckey(clonemind.key)!=ckey )
+			return FALSE
+	else
+		// get_ghost() will fail if they're unable to reenter their body
+		var/mob/dead/observer/G = clonemind.get_ghost()
+		if(!G)
+			return FALSE
+	if(clonemind.damnation_type) //Can't clone the damned.
+		addtimer(CALLBACK(src, .proc/horrifyingsound), 0)
+		mess = 1
+		icon_state = "pod_g"
+		update_icon()
+>>>>>>> master
 		return FALSE
 
 	clonemind = record.mind
@@ -196,6 +219,12 @@
 	attempting = TRUE //One at a time!!
 	countdown.start()
 
+<<<<<<< HEAD
+=======
+	eject_wait = TRUE
+	addtimer(CALLBACK(src, .proc/wait_complete), 30)
+
+>>>>>>> master
 	var/mob/living/carbon/human/H = new /mob/living/carbon/human(src)
 
 	H.hardset_dna(record.ui, record.se, H.real_name, null, record.mrace,

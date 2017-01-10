@@ -91,6 +91,7 @@
 	if(iscarbon(user))
 		var/mob/living/carbon/C = user
 		C.regenerate_limbs()
+		C.regenerate_organs()
 	user << "<span class='notice'>You feel great!</span>"
 	charges--
 	..()

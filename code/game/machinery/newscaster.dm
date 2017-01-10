@@ -268,7 +268,7 @@ var/list/obj/machinery/newscaster/allCasters = list()
 		switch(screen)
 			if(0)
 				dat += "Welcome to Newscasting Unit #[unit_no].<BR> Interface & News networks Operational."
-				dat += "<BR><FONT SIZE=1>Property of Nanotransen Inc</FONT>"
+				dat += "<BR><FONT SIZE=1>Property of Nanotrasen Inc</FONT>"
 				if(news_network.wanted_issue.active)
 					dat+= "<HR><A href='?src=\ref[src];view_wanted=1'>Read Wanted Issue</A>"
 				dat+= "<HR><BR><A href='?src=\ref[src];create_channel=1'>Create Feed Channel</A>"
@@ -336,7 +336,7 @@ var/list/obj/machinery/newscaster/allCasters = list()
 					else
 						existing_authors += FC.author
 				if(scanned_user in existing_authors)
-					dat+="<FONT COLOR='maroon'>There already exists a Feed channel under your name.</FONT><BR>"
+					dat+="<FONT COLOR='maroon'>There is already a Feed channel under your name.</FONT><BR>"
 				if(channel_name=="" || channel_name == "\[REDACTED\]")
 					dat+="<FONT COLOR='maroon'>Invalid channel name.</FONT><BR>"
 				var/check = 0
@@ -598,7 +598,7 @@ var/list/obj/machinery/newscaster/allCasters = list()
 			channel_name = trim(stripped_input(usr, "Provide the name of the Wanted person", "Network Security Handler"))
 			updateUsrDialog()
 		else if(href_list["set_wanted_desc"])
-			msg = trim(stripped_input(usr, "Provide the a description of the Wanted person and any other details you deem important", "Network Security Handler"))
+			msg = trim(stripped_input(usr, "Provide a description of the Wanted person and any other details you deem important", "Network Security Handler"))
 			updateUsrDialog()
 		else if(href_list["submit_wanted"])
 			var/input_param = text2num(href_list["submit_wanted"])
@@ -980,7 +980,7 @@ var/list/obj/machinery/newscaster/allCasters = list()
 					else
 						dat+="None"
 				else
-					dat+="<I>Apart from some uninteresting Classified ads, there's nothing on this page...</I>"
+					dat+="<I>Apart from some uninteresting classified ads, there's nothing on this page...</I>"
 				if(scribble_page==curr_page)
 					dat+="<BR><I>There is a small scribble near the end of this page... It reads: \"[scribble]\"</I>"
 				dat+= "<HR><DIV STYLE='float:left;'><A href='?src=\ref[src];prev_page=1'>Previous Page</A></DIV>"
@@ -988,7 +988,7 @@ var/list/obj/machinery/newscaster/allCasters = list()
 		human_user << browse(dat, "window=newspaper_main;size=300x400")
 		onclose(human_user, "newspaper_main")
 	else
-		user << "The paper is full of intelligible symbols!"
+		user << "The paper is full of unintelligible symbols!"
 
 /obj/item/weapon/newspaper/proc/notContent(list/L)
 	if(!L.len)

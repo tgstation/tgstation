@@ -50,6 +50,7 @@
 	desc = "It looks highly unstable; It could close at any moment."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "anom"
+	mech_sized = TRUE
 
 /obj/effect/portal/wormhole/attack_hand(mob/user)
 	teleport(user)
@@ -60,8 +61,9 @@
 /obj/effect/portal/wormhole/teleport(atom/movable/M)
 	if(istype(M, /obj/effect))	//sparks don't teleport
 		return
-	if(M.anchored && istype(M, /obj/mecha))
-		return
+	if(M.anchored)
+		if(!(istype(M, /obj/mecha) && mech_sized))
+			return
 
 	if(istype(M, /atom/movable))
 		var/turf/target

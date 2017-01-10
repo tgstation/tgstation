@@ -9,7 +9,7 @@
 /turf/closed/mineral/volcanic/lava_land_surface,
 /area/ruin/unpowered/no_grav)
 "d" = (
-/mob/living/simple_animal/hostile/flan,
+/mob/living/simple_animal/hostile/flan/water,
 /turf/open/floor/plating/asteroid/airless,
 /area/ruin/unpowered/no_grav)
 "e" = (

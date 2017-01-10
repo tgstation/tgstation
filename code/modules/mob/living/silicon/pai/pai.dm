@@ -119,7 +119,7 @@
 	AR.Grant(src)
 	AL.Grant(src)
 	emittersemicd = TRUE
-	addtimer(src, "emittercool", 600)
+	addtimer(CALLBACK(src, .proc/emittercool), 600)
 
 /mob/living/silicon/pai/make_laws()
 	laws = new /datum/ai_laws/pai()
