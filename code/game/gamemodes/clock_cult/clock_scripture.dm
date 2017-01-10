@@ -288,8 +288,10 @@ Judgement: 12 servants, 5 caches, 300 CV, and any existing AIs are converted or 
 				progbar.update(end_time - world.time)
 		sleep(1)
 	if(slab)
-		if(slab.slab_ability && !slab.slab_ability.finished)
-			slab.slab_ability.remove_ranged_ability()
+		if(slab.slab_ability)
+			successful = slab.slab_ability.successful
+			if(slab.slab_ability.finished)
+				slab.slab_ability.remove_ranged_ability()
 		slab.icon_state = "dread_ipad"
 		if(invoker)
 			invoker.update_inv_hands()
