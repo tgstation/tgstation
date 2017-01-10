@@ -70,7 +70,8 @@
 				conversion.slab = slab
 				conversion.invoker = ranged_ability_user
 				conversion.target = target
-				successful = conversion.run_scripture()
+				conversion.run_scripture()
+				successful = TRUE
 
 		remove_ranged_ability()
 
