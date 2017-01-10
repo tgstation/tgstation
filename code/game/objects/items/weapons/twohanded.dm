@@ -443,7 +443,6 @@
 		explosive = G
 		name = "explosive lance"
 		desc = "A makeshift spear with [G] attached to it. Alt+click on the spear to set your war cry!"
-		return
 	update_icon()
 
 // CHAINSAW
