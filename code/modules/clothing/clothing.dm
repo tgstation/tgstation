@@ -526,12 +526,14 @@ BLIND     // can't see anything
 			adjusted = DIGITIGRADE_STYLE
 		H.update_inv_w_uniform()
 
-	if(hastie)
-		hastie.on_uniform_equip(src, user)
+		if(hastie && H.w_uniform == src)
+			hastie.on_uniform_equip(src, user)
 
 /obj/item/clothing/under/dropped(mob/user)
-	if(hastie)
-		hastie.on_uniform_dropped(src, user)
+	if(hastie && ishuman(user))
+		var/mob/living/carbon/human/H = user
+		if(src in H.held_items)
+			hastie.on_uniform_dropped(src, user)
 	..()
 
 /obj/item/clothing/under/attackby(obj/item/I, mob/user, params)

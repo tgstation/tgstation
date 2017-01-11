@@ -30,6 +30,10 @@
 	for(var/armor_type in armor)
 		U.armor[armor_type] += armor[armor_type]
 
+	if(ishuman(U.loc))
+		var/mob/living/carbon/human/H = U.loc
+		if(H.w_uniform == U)
+			on_uniform_equip(U)
 	return 1
 
 
@@ -48,6 +52,12 @@
 	layer = initial(layer)
 	plane = initial(plane)
 	U.cut_overlays()
+
+	if(ishuman(U.loc))
+		var/mob/living/carbon/human/H = U.loc
+		if(H.w_uniform == U)
+			on_uniform_dropped(U)
+
 	U.hastie = null
 
 /obj/item/clothing/tie/proc/on_uniform_equip(obj/item/clothing/under/U)
@@ -397,13 +407,9 @@
 		on_uniform_dropped(U)
 
 /obj/item/clothing/tie/lawyers_badge/on_uniform_equip(obj/item/clothing/under/U)
-	if(!isliving(U.loc))
-		return
 	var/mob/living/L = U.loc
 	L.bubble_icon = "lawyer"
 
 /obj/item/clothing/tie/lawyers_badge/on_uniform_dropped(obj/item/clothing/under/U)
-	if(!isliving(U.loc))
-		return
 	var/mob/living/L = U.loc
 	L.bubble_icon = initial(L.bubble_icon)
