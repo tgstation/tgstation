@@ -15,10 +15,6 @@
 	var/view_range = 7
 	var/datum/riding/riding_datum = null
 
-/obj/vehicle/New()
-	..()
-
-
 /obj/vehicle/update_icon()
 	return
 

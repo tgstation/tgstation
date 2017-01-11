@@ -6,7 +6,7 @@
 	var/static/image/atvcover = null
 
 /obj/vehicle/atv/buckle_mob()
-	..()
+	. = ..()
 	riding_datum = new/datum/riding/atv
 
 /obj/vehicle/atv/New()
@@ -37,7 +37,7 @@
 
 
 /obj/vehicle/atv/turret/New()
-	..()
+	. = ..()
 	turret = new(loc)
 	turret.base = src
 

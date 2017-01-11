@@ -9,5 +9,5 @@
 	icon_state = "keysec"
 
 /obj/vehicle/secway/buckle_mob()
-	..()
+	. = ..()
 	riding_datum = new/datum/riding/secway

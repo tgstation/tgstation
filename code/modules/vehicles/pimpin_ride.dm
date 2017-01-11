@@ -14,7 +14,7 @@
 	return ..()
 
 /obj/vehicle/janicart/buckle_mob()
-	..()
+	. = ..()
 	riding_datum = new/datum/riding/janicart
 
 

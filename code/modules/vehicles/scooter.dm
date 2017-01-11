@@ -14,7 +14,7 @@
 			qdel(src)
 
 /obj/vehicle/scooter/buckle_mob()
-	..()
+	. = ..()
 	riding_datum = new/datum/riding/scooter
 
 /obj/vehicle/scooter/buckle_mob(mob/living/M, force = 0)
@@ -36,7 +36,7 @@
 	density = 0
 
 /obj/vehicle/scooter/skateboard/buckle_mob()
-	..()
+	. = ..()
 	riding_datum = new/datum/riding/scooter/skateboard
 
 /obj/vehicle/scooter/skateboard/post_buckle_mob(mob/living/M)//allows skateboards to be non-dense but still allows 2 skateboarders to collide with each other

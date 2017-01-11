@@ -352,7 +352,7 @@
 	resistance_flags = LAVA_PROOF | FIRE_PROOF
 
 /obj/vehicle/lavaboat/buckle_mob()
-	..()
+	. = ..()
 	riding_datum = new/datum/riding/boat
 
 /obj/item/weapon/oar
