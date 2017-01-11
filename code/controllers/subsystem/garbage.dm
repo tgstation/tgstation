@@ -224,6 +224,8 @@ var/datum/subsystem/garbage_collector/SSgarbage
 // Return the appropriate QDEL_HINT; in most cases this is QDEL_HINT_QUEUE.
 /datum/proc/Destroy(force=FALSE)
 	tag = null
+	for(var/thing in SStimer.timer_src_dict[src])
+		qdel(thing)
 	return QDEL_HINT_QUEUE
 
 /datum/var/gc_destroyed //Time when this object was destroyed.
