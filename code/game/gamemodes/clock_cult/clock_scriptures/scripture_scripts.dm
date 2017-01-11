@@ -297,18 +297,17 @@
 		if(can_recite() && T == get_turf(invoker))
 			if(!ratvar_awakens && !iscyborg(invoker) && !isclockmob(invoker) && !isdrone(invoker))
 				var/obj/structure/destructible/clockwork/powered/volt_checker/VC = new/obj/structure/destructible/clockwork/powered/volt_checker(get_turf(invoker))
-				var/bonus_damage = -10
+				var/multiplier = 0.4
 				var/minimum_power = round(VC.total_accessable_power() * 0.2, MIN_CLOCKCULT_POWER)
 				var/usable_power = min(minimum_power, 500)
 				var/used_power = 0
 				while(used_power < usable_power && VC.try_use_power(MIN_CLOCKCULT_POWER))
 					used_power += MIN_CLOCKCULT_POWER
-					bonus_damage++
+					multiplier += 0.02
 				qdel(VC)
-				var/obj/effect/overlay/temp/ratvar/volt_hit/VH = PoolOrNew(/obj/effect/overlay/temp/ratvar/volt_hit, list(get_turf(invoker), null, bonus_damage))
-				bonus_damage = min(VH.damage, 20) //you have to fail all five blasts to die to this
+				var/obj/effect/overlay/temp/ratvar/volt_hit/VH = PoolOrNew(/obj/effect/overlay/temp/ratvar/volt_hit, list(get_turf(invoker), null, multiplier))
 				invoker.visible_message("<span class='warning'>[invoker] is struck by [invoker.p_their()] own [VH.name]!</span>", "<span class='userdanger'>You're struck by your own [VH.name]!</span>")
-				invoker.adjustFireLoss(bonus_damage)
+				invoker.adjustFireLoss(VH.damage) //you have to fail all five blasts to die to this
 				playsound(invoker, 'sound/machines/defib_zap.ogg', bonus_damage, 1, -1)
 			invoker << "<span class='nzcrentr'>\"[text2ratvar(pick(nzcrentr_insults))]\"</span>"
 		else

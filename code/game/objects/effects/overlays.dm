@@ -312,16 +312,16 @@
 	duration = 5
 	icon_state = "volt_hit"
 	var/mob/user
-	var/damage = 20
+	var/damage = 25
 
-/obj/effect/overlay/temp/ratvar/volt_hit/New(loc, caster, bonusdamage)
-	if(bonusdamage)
-		damage += bonusdamage
+/obj/effect/overlay/temp/ratvar/volt_hit/New(loc, caster, multiplier)
+	if(multiplier)
+		damage *= multiplier
 	duration = max(round(damage * 0.2), 1)
 	..()
 	SetLuminosity(3, 2)
 
-/obj/effect/overlay/temp/ratvar/volt_hit/true/New(loc, caster, bonusdamage)
+/obj/effect/overlay/temp/ratvar/volt_hit/true/New(loc, caster, multiplier)
 	..()
 	user = caster
 	if(user)
