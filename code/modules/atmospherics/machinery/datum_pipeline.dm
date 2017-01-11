@@ -210,15 +210,13 @@ var/pipenetwarnings = 10
 
 	for(var/i = 1; i <= PL.len; i++) //can't do a for-each here because we may add to the list within the loop
 		var/datum/pipeline/P = PL[i]
+		if(!P)
+			continue
 		GL += P.return_air()
 		for(var/obj/machinery/atmospherics/components/binary/valve/V in P.other_atmosmch)
 			if(V.open)
-				var/P1 = V.PARENT1
-				if(P1)
-					PL |= P1
-				var/P2 = V.PARENT2
-				if(P2)
-					PL |= P2
+				PL |= V.PARENT1
+				PL |= V.PARENT2
 		for(var/obj/machinery/atmospherics/components/unary/portables_connector/C in P.other_atmosmch)
 			if(C.connected_device)
 				GL += C.portableConnectorReturnAir()
