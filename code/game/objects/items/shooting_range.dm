@@ -17,6 +17,9 @@
 	pinnedLoc = null
 	density = 0
 
+/obj/item/target/newtonian_move(angle)
+	..(angle, TRUE)
+
 /obj/item/target/proc/removeOverlays()
 	cut_overlays()
 
