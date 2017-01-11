@@ -78,10 +78,6 @@
 	. = ..()
 	. += slowdown
 
-/mob/living/silicon/pai/examine(mob/user)
-	..()
-	user << "A personal AI in holochassis mode. Its master ID string seems to be [master]."
-
 /mob/living/silicon/pai/Destroy()
 	pai_list -= src
 	..()
