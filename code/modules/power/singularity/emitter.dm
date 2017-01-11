@@ -170,7 +170,7 @@
 		else
 			if(powered)
 				powered = 0
-				update_icon
+				update_icon()
 			powerloss++
 			if(powerloss > 2)	//Around 6 seconds of no power
 				investigate_log("lost power and turned <font color='red'>off</font>","singulo")
