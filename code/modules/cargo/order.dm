@@ -19,7 +19,7 @@
 	return stamped && stamped.len && !is_denied()
 
 /obj/item/weapon/paper/manifest/proc/is_denied()
-	return stamped && (/obj/item/weapon/stamp/denied in stamped)
+	return stamped && ("stamp-deny" in stamped)
 
 /datum/supply_order
 	var/id

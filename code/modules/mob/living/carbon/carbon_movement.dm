@@ -63,3 +63,8 @@ var/const/SLIDE_ICE = 8
 				nutrition -= HUNGER_FACTOR/10
 		if((disabilities & FAT) && m_intent == MOVE_INTENT_RUN && bodytemperature <= 360)
 			bodytemperature += 2
+
+/mob/living/carbon/Exited(atom/movable/AM, atom/newloc)
+	if(AM in stomach_contents)
+		stomach_contents -= AM
+	..()

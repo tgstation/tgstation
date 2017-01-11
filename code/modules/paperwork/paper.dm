@@ -316,7 +316,7 @@
 
 		if(!stamped)
 			stamped = new
-		stamped += P.type
+		stamped += P.icon_state
 		add_overlay(stampoverlay)
 
 		user << "<span class='notice'>You stamp the paper with your rubber stamp.</span>"

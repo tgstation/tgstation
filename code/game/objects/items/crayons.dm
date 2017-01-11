@@ -88,11 +88,6 @@
 
 	refill()
 
-/obj/item/toy/crayon/Destroy()
-	if(reagents)
-		qdel(reagents)
-	. = ..()
-
 /obj/item/toy/crayon/proc/refill()
 	if(charges == -1)
 		charges_left = 100

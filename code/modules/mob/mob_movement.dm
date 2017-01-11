@@ -12,6 +12,9 @@
 			return 1
 	return (!mover.density || !density || lying)
 
+/mob/Exited(atom/movable/AM, atom/newloc)
+	unEquip(AM, TRUE) //make sure the exiting item is unequipped properly
+	..()
 
 //The byond version of these verbs wait for the next tick before acting.
 //	instant verbs however can run mid tick or even during the time between ticks.
