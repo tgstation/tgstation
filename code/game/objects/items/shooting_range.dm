@@ -18,7 +18,9 @@
 	density = 0
 
 /obj/item/target/newtonian_move(angle)
-	..(angle, TRUE)
+	if(pinnedLoc)
+		..(angle, TRUE)
+	..(angle)
 
 /obj/item/target/proc/removeOverlays()
 	cut_overlays()
