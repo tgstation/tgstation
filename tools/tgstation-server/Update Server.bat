@@ -35,13 +35,14 @@ if %GIT_EXIT% neq 0 (
 	exit /b 1
 )
 if defined PUSHCHANGELOGTOGIT (
-	echo compiling change log
+	echo compiling change log and tgui updates
 	python tools\ss13_genchangelog.py html/changelog.html html/changelogs
 	if %ERRORLEVEL% == 0 (
 		echo pushing compiled changelog to server
 		git add -u html/changelog.html
 		git add -u html/changelogs
-		git commit -m "Automatic changelog compile, [ci skip]"
+		git add -u tgui/assets/*
+		git commit -m "Automatic changelog compile/tgui update, [ci skip]"
 		if %ERRORLEVEL% == 0 (
 			git push
 		)
