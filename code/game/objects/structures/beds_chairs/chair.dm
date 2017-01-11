@@ -13,10 +13,7 @@
 	var/buildstacktype = /obj/item/stack/sheet/metal
 	var/buildstackamount = 1
 	var/item_chair = /obj/item/chair // if null it can't be picked up
-
-/obj/structure/chair/New()
-	..()
-	handle_layer()
+	layer = OBJ_LAYER
 
 /obj/structure/chair/deconstruct()
 	// If we have materials, and don't have the NOCONSTRUCT flag
@@ -58,14 +55,13 @@
 		rotate()
 
 /obj/structure/chair/proc/handle_rotation(direction)
-	handle_layer()
 	if(has_buckled_mobs())
 		for(var/m in buckled_mobs)
 			var/mob/living/buckled_mob = m
-			buckled_mob.setDir(direction)
+			buckled_mob.setDir(direction)	
 
-/obj/structure/chair/proc/handle_layer()
-	if(dir == NORTH)
+/obj/structure/chair/post_buckle_mob(mob/living/M)
+	if(has_buckled_mobs() && dir == NORTH)
 		layer = ABOVE_ALL_MOB_LAYER
 	else
 		layer = OBJ_LAYER
