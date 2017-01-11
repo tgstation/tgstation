@@ -3,7 +3,7 @@
 	desc = "It measures something."
 	icon = 'icons/obj/meter.dmi'
 	icon_state = "meterX"
-	var/obj/machinery/atmospherics/pipe/target = null
+	var/atom/target = null
 	anchored = 1
 	power_channel = ENVIRON
 	var/frequency = 0
