@@ -193,20 +193,18 @@
 	return 0
 
 
-/atom/movable/proc/newtonian_move(direction, return_false = FALSE) //Only moves the object if it's under no gravity
+/atom/movable/proc/newtonian_move(direction, no_backup = FALSE) //Only moves the object if it's under no gravity
+	. = TRUE
 	if(!loc || Process_Spacemove(0))
 		inertia_dir = 0
 		return FALSE
 	inertia_dir = direction
 	if(!direction)
-		if(return_false)
-			return FALSE
-		return TRUE
+		. = 1
 	inertia_last_loc = loc
 	SSspacedrift.processing[src] = src
-	if(return_false)
-		return FALSE
-	return TRUE
+	if(no_backup)
+		. = 0
 
 /atom/movable/proc/checkpass(passflag)
 	return pass_flags&passflag
