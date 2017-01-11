@@ -288,7 +288,7 @@
 		if(iscyborg(ranged_ability_user))
 			var/mob/living/silicon/robot/C = ranged_ability_user
 			if(C.cell)
-				usable_power = Clamp(round(C.cell.charge, MIN_CLOCKCULT_POWER), usable_power, 1000)
+				usable_power = Clamp(round(C.cell.charge * 0.2, MIN_CLOCKCULT_POWER), usable_power, 1000)
 				while(used_power < usable_power && C.cell.use(MIN_CLOCKCULT_POWER))
 					used_power += MIN_CLOCKCULT_POWER
 					multiplier += 0.025

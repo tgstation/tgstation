@@ -273,6 +273,8 @@
 	descname = "Channeled, Targeted Energy Blasts"
 	name = "Volt Void" //Alternative name: "On all levels but physical, I am a power sink"
 	desc = "Allows you to fire energy rays at target locations; more power consumed causes more damage. Channeled every fourth of a second for a maximum of ten seconds."
+	channel_time = 20
+	invocations = list("Amperage...", "...grant me your power!")
 	chant_invocations = list("Use charge to kill!", "Slay with power!", "Hunt with energy!")
 	chant_amount = 5
 	chant_interval = 4
