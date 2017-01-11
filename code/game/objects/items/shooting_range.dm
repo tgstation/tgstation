@@ -20,7 +20,9 @@
 /obj/item/target/newtonian_move(angle)
 	if(pinnedLoc)
 		..(angle, TRUE)
+		return FALSE
 	..(angle)
+	return FALSE
 
 /obj/item/target/proc/removeOverlays()
 	cut_overlays()
