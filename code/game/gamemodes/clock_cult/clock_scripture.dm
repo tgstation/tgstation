@@ -292,7 +292,6 @@ Judgement: 12 servants, 5 caches, 300 CV, and any existing AIs are converted or 
 			else
 				progbar.update(end_time - world.time)
 		sleep(1)
-	successful = slab.slab_ability.successful
 	if(slab)
 		if(slab.slab_ability)
 			successful = slab.slab_ability.successful
