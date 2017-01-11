@@ -280,18 +280,18 @@
 		var/obj/structure/destructible/clockwork/powered/volt_checker/VC = new/obj/structure/destructible/clockwork/powered/volt_checker(get_turf(ranged_ability_user))
 		var/multiplier = 1
 		var/minimum_power = round(VC.total_accessable_power() * 0.2, MIN_CLOCKCULT_POWER)
-		var/usable_power = min(minimum_power, 500)
+		var/usable_power = min(minimum_power, 1000)
 		var/used_power = 0
 		while(used_power < usable_power && VC.try_use_power(MIN_CLOCKCULT_POWER))
 			used_power += MIN_CLOCKCULT_POWER
-			multiplier += 0.05
+			multiplier += 0.025
 		if(iscyborg(ranged_ability_user))
 			var/mob/living/silicon/robot/C = ranged_ability_user
 			if(C.cell)
-				usable_power = Clamp(round(C.cell.charge, MIN_CLOCKCULT_POWER), usable_power, 500)
+				usable_power = Clamp(round(C.cell.charge, MIN_CLOCKCULT_POWER), usable_power, 1000)
 				while(used_power < usable_power && C.cell.use(MIN_CLOCKCULT_POWER))
 					used_power += MIN_CLOCKCULT_POWER
-					multiplier += 0.05
+					multiplier += 0.025
 		qdel(VC)
 		PoolOrNew(/obj/effect/overlay/temp/ratvar/volt_hit/true, list(targetturf, ranged_ability_user, multiplier))
 		add_logs(ranged_ability_user, targetturf, "fired a volt ray")
