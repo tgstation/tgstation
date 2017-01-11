@@ -1,2 +1,3 @@
-/mob/living/silicon/pai/examine() //removed as it was pointless...moved to the pai-card instead.
-	return
+/mob/living/silicon/pai/examine(mob/user)
+	..()
+	user << "A personal AI in holochassis mode. Its master ID string seems to be [master]."
