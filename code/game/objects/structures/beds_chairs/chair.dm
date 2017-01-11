@@ -58,7 +58,7 @@
 	if(has_buckled_mobs())
 		for(var/m in buckled_mobs)
 			var/mob/living/buckled_mob = m
-			buckled_mob.setDir(direction)	
+			buckled_mob.setDir(direction)
 
 /obj/structure/chair/post_buckle_mob(mob/living/M)
 	if(has_buckled_mobs() && dir == NORTH)
