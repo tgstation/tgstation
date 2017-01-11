@@ -6,7 +6,7 @@
 	var/overlay_state = "cover_blue"
 	var/image/overlay = null
 
-/obj/vehicle/space/speedbike/user_buckle_mob()
+/obj/vehicle/space/speedbike/buckle_mob()
 	riding_datum = new/datum/riding/space/speedbike
 
 /obj/vehicle/space/speedbike/New()

@@ -96,7 +96,6 @@
 		real_name = name
 	if(!loc)
 		stack_trace("Simple animal being instantiated in nullspace")
-	riding_datum = new/datum/riding/animal
 
 /mob/living/simple_animal/Login()
 	if(src && src.client)
@@ -540,7 +539,6 @@
 			if(A != src && A != M)
 				return
 	M.loc = get_turf(src)
-	..()
 	riding_datum.handle_vehicle_offsets()
 	riding_datum.ridden = src
 
@@ -553,4 +551,8 @@
 	. = ..()
 	riding_datum.handle_vehicle_layer()
 	riding_datum.handle_vehicle_offsets()
+
+/mob/living/simple_animal/buckle_mob()
+	..()
+	riding_datum = new/datum/riding/animal
 
