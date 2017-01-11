@@ -358,6 +358,14 @@
 	S << "<span class='warning'>This object is receiving unactivated swarmer shells to help us. Aborting.</span>"
 	return FALSE
 
+/obj/stucture/lattice/catwalk/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
+	var/turf/here = get_turf(src)
+	for(var/obj/structure/cable/A in here.contents)
+		if(A)
+			S << "<span class='warning'>Disrupting the power grid would bring no benefit to us. Aborting.</span>"
+			return FALSE
+
+
 /obj/item/device/unactivated_swarmer/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
 	if(S.resources + 50 > S.max_resources)
 		S << "<span class='warning'>We have too many resources to reconsume this shell. Aborting.</span>"
