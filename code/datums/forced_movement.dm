@@ -88,12 +88,3 @@
 		var/obj/structure/S = A
 		if(S.climbable)
 			S.do_climb(src)
-
-#ifdef DEBUG
-/mob/verb/forcemoveto(atom/A as mob|obj|turf in view())
-	set name = "Force Move To"
-	set category = "IC"
-	var/result = text2num(input(usr, "Enter a speed in steps per tick", "Debug forced_movement"))
-	if(isnum(result))
-		new /datum/forced_movement(src, A, result, TRUE, TRUE)
-#endif
