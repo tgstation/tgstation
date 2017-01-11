@@ -23,7 +23,9 @@
 /obj/structure/target_stake/newtonian_move(angle)
 	if(pinned_target)
 		..(angle, TRUE)
+		return FALSE
 	..(angle)
+	return FALSE
 
 /obj/structure/target_stake/attackby(obj/item/target/T, mob/user)
 	if(pinned_target)
