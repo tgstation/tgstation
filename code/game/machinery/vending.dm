@@ -224,7 +224,8 @@
 	if(istype(W, /obj/item/weapon/reagent_containers/food/snacks))
 		if(!compartment_access_check(user))
 			return
-		if(!W.junkiness)
+		var/obj/item/weapon/reagent_containers/food/snacks/S = W
+		if(!S.junkiness)
 			if(!iscompartmentfull(user))
 				if(!user.drop_item())
 					return
