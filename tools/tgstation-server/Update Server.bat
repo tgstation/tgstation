@@ -34,6 +34,14 @@ if %GIT_EXIT% neq 0 (
 	pause
 	exit /b 1
 )
+
+echo building tgui.
+call bin\tgui.bat
+if %TGUI_EXIT% neq 0 (
+	echo TGUI compile failed. Aborting.
+	python bot\nudge.py %UPDATE_LOG_CHANNEL% "TGUI dependency installation/compile failed Aborting update after changelog compile." >nul 2>nul
+)
+
 if defined PUSHCHANGELOGTOGIT (
 	echo compiling change log and tgui updates
 	python tools\ss13_genchangelog.py html/changelog.html html/changelogs
@@ -48,6 +56,12 @@ if defined PUSHCHANGELOGTOGIT (
 		)
 		REM an error here generally means there was nothing to commit.
 	)
+)
+
+if %TGUI_EXIT% neq 0 (
+	@del /F /Q updating.lk >nul 2>nul
+	pause
+	exit /b 1
 )
 
 call bin\findab.bat
