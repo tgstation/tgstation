@@ -227,6 +227,27 @@
 					buckled_mob.pixel_x = 10
 					buckled_mob.pixel_y = 5
 
+///////////////BOATS////////////
+/datum/riding/boat
+	keytype = /obj/item/weapon/oar
+
+/datum/riding/boat/handle_ride(mob/user, direction)
+	var/turf/next = get_step(src, direction)
+	var/turf/current = get_turf(src)
+
+	if(istype(next, /turf/open/floor/plating/lava) || istype(current, /turf/open/floor/plating/lava)) //We can move from land to lava, or lava to land, but not from land to land
+		..()
+	else
+		user << "Boats don't go on land!"
+		return 0
+
+/datum/riding/boat/dragon
+	keytype = null
+	generic_pixel_y = 2
+	generic_pixel_x = 1
+	vehicle_move_delay = 1
+
+
 ///////////////ANIMALS////////////
 //general animals
 /datum/riding/animal
