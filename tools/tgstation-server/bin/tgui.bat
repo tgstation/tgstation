@@ -8,5 +8,5 @@ if %TGUI_EXIT% neq 0 (
 	exit /b 1
 )
 
-call %DME_FOLDER%\tgui\build.bat
+call %DME_FOLDER%\tgui\build_assets.bat
 set TGUI_EXIT=%ERRORLEVEL%
