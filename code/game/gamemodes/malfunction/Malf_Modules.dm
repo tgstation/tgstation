@@ -48,14 +48,15 @@
 	name = "doomsday device"
 	icon_state = "nuclearbomb_base"
 	desc = "A weapon which disintegrates all organic life in a large area."
-	anchored = 1
-	density = 1
+	anchored = TRUE
+	density = TRUE
 	verb_exclaim = "blares"
 	var/timing = FALSE
 	var/default_timer = 4500
 	var/obj/effect/countdown/doomsday/countdown
 	var/detonation_timer
 	var/list/milestones = list()
+	var/speed_process=TRUE
 
 /obj/machinery/doomsday_device/New()
 	..()
@@ -65,7 +66,6 @@
 	if(countdown)
 		qdel(countdown)
 		countdown = null
-	STOP_PROCESSING(SSfastprocess, src)
 	SSshuttle.clearHostileEnvironment(src)
 	for(var/A in ai_list)
 		var/mob/living/silicon/ai/Mlf = A
@@ -77,6 +77,7 @@
 	detonation_timer = world.time + default_timer
 	timing = TRUE
 	countdown.start()
+	//Readd to the fastprocess ticker
 	START_PROCESSING(SSfastprocess, src)
 	SSshuttle.registerHostileEnvironment(src)
 
@@ -84,19 +85,19 @@
 	. = max(0, (round((detonation_timer - world.time) / 10)))
 
 /obj/machinery/doomsday_device/process()
+	if(!timing)//Prevents us from ticking the entire round until we actually start timing
+		return PROCESS_KILL
+
 	var/turf/T = get_turf(src)
 	if(!T || T.z != ZLEVEL_STATION)
 		minor_announce("DOOMSDAY DEVICE OUT OF STATION RANGE, ABORTING", "ERROR ER0RR $R0RRO$!R41.%%!!(%$^^__+ @#F0E4", 1)
 		SSshuttle.clearHostileEnvironment(src)
 		qdel(src)
-	if(!timing)
-		STOP_PROCESSING(SSfastprocess, src)
-		return
 	var/sec_left = seconds_remaining()
 	if(sec_left <= 0)
 		timing = FALSE
-		detonate(T.z)
-		qdel(src)
+		addTimer(src, "detonate", 1, FALSE)
+		return PROCESS_KILL
 	else
 		var/key = num2text(sec_left)
 		if(!(sec_left % 60) && !(key in milestones))
@@ -118,6 +119,7 @@
 		L.dust()
 	world << "<B>The AI cleansed the station of life with the doomsday device!</B>"
 	ticker.force_ending = 1
+	qdel(src)
 
 /datum/AI_Module/large/upgrade_turrets
 	module_name = "AI Turret Upgrade"
