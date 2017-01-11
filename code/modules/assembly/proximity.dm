@@ -82,7 +82,7 @@
 
 /obj/item/device/assembly/prox_sensor/Destroy()
 	if(scanning)
-		remove_from_proximity_list(oldloc, sensitivity)
+		remove_from_proximity_list(src, sensitivity, oldloc)
 	return ..()
 
 /obj/item/device/assembly/prox_sensor/toggle_scan(scan)
