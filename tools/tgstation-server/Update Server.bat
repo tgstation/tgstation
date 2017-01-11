@@ -62,7 +62,15 @@ if not defined PUSHCHANGELOGTOGIT (
 	cd ..\..
 )
 
-
+echo building tgui.
+call bin\tgui.bat
+if %DM_EXIT% neq 0 (
+	echo TGUI compile failed. Aborting.
+	python bot\nudge.py %UPDATE_LOG_CHANNEL% "TGUI dependency installation/compile failed Aborting update." >nul 2>nul
+	@del /F /Q updating.lk >nul 2>nul
+	pause
+	exit /b 1
+)
 
 echo building script.
 call bin\build.bat
