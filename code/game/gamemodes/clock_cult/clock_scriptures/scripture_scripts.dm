@@ -270,7 +270,7 @@
 
 //Volt Void: Channeled for up to five times over ten seconds to fire up to five rays of energy at target locations.
 /datum/clockwork_scripture/channeled/volt_void
-	descname = "Channeled, Targetted Energy Blasts"
+	descname = "Channeled, Targeted Energy Blasts"
 	name = "Volt Void" //Alternative name: "On all levels but physical, I am a power sink"
 	desc = "Allows you to fire energy rays at target locations; more power consumed causes more damage. Channeled every fourth of a second for a maximum of ten seconds."
 	chant_invocations = list("Use charge to kill!", "Slay with power!", "Hunt with energy!")
