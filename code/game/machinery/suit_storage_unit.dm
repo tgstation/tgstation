@@ -8,6 +8,7 @@
 	density = 1
 	obj_integrity = 250
 	max_integrity = 250
+	emagged = FALSE
 
 	var/obj/item/clothing/suit/space/suit = null
 	var/obj/item/clothing/head/helmet/space/helmet = null
@@ -389,3 +390,11 @@
 					storage = null
 			. = TRUE
 	update_icon()
+
+/obj/machinery/suit_storage_unit/emag_act(mob/user)
+	if(emagged)
+		return
+	emagged = TRUE
+	safeties = FALSE
+	visible_message("<span class='warning'>WARNING! SAFETY PROTOCOLS DISENGAGED</span>")
+	playsound(src.loc, 'sound/effects/sparks4.ogg', 50, 1)
