@@ -92,6 +92,8 @@ var/const/tk_maxrange = 15
 	qdel(src)
 	return
 
+/obj/item/tk_grab/attack_hand(mob/user)
+	return
 
 /obj/item/tk_grab/attack_self(mob/user)
 	if(!focus)
@@ -100,6 +102,7 @@ var/const/tk_maxrange = 15
 		qdel(src)
 		return
 	focus.attack_self_tk(user)
+	update_icon()
 
 /obj/item/tk_grab/afterattack(atom/target, mob/living/carbon/user, proximity, params)//TODO: go over this
 	if(!target || !user)
@@ -136,11 +139,13 @@ var/const/tk_maxrange = 15
 		var/resolved = target.attackby(I, user, params)
 		if(!resolved && target && I)
 			I.afterattack(target,user,1) // for splashing with beakers
+			update_icon()
 	else
 		apply_focus_overlay()
 		focus.throw_at(target, 10, 1,user)
 		last_throw = world.time
 		user.changeNext_move(CLICK_CD_MELEE)
+		update_icon()
 
 /proc/tkMaxRangeCheck(mob/user, atom/target, atom/focus)
 	var/d = get_dist(user, target)
