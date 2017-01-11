@@ -308,7 +308,7 @@
 				var/obj/effect/overlay/temp/ratvar/volt_hit/VH = PoolOrNew(/obj/effect/overlay/temp/ratvar/volt_hit, list(get_turf(invoker), null, multiplier))
 				invoker.visible_message("<span class='warning'>[invoker] is struck by [invoker.p_their()] own [VH.name]!</span>", "<span class='userdanger'>You're struck by your own [VH.name]!</span>")
 				invoker.adjustFireLoss(VH.damage) //you have to fail all five blasts to die to this
-				playsound(invoker, 'sound/machines/defib_zap.ogg', bonus_damage, 1, -1)
+				playsound(invoker, 'sound/machines/defib_zap.ogg', VH.damage, 1, -1)
 			invoker << "<span class='nzcrentr'>\"[text2ratvar(pick(nzcrentr_insults))]\"</span>"
 		else
 			return FALSE
