@@ -90,7 +90,6 @@
 		return 0
 	else
 		user.visible_message("[user] finishes installing the chainsaw!", "<span class='notice'>You install the chainsaw.</span>")
-		user.unEquip(tool)
 		qdel(tool)
 		var/obj/item/weapon/mounted_chainsaw/sawarms = new(target)
 		target.put_in_hands(sawarms)
@@ -120,6 +119,6 @@
 
 /datum/surgery_step/chainsaw_removal/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	for(var/obj/item/weapon/mounted_chainsaw/V in target.held_items)
-		target.unEquip(V, 1)
+		target.dropItemToGround(V, TRUE)
 		user.visible_message("[user] carefully saws [target]'s arm free of the chainsaw.", "<span class='notice'>You remove the chainsaw.</span>")
 		return 1

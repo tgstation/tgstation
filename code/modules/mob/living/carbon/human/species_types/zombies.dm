@@ -30,7 +30,7 @@
 	// Drop items in hands
 	// If you're a zombie lucky enough to have a NODROP item, then it stays.
 	for(var/obj/item/I in C.held_items)
-		C.unEquip(I)
+		C.dropItemToGround(I)
 		C.put_in_hands(new /obj/item/zombie_hand(C))
 
 	// Next, deal with the source of this zombie corruption

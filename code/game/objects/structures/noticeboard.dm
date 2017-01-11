@@ -24,7 +24,7 @@
 			user << "<span class='info'>You are not authorized to add notices</span>"
 			return
 		if(notices < 5)
-			if(!user.unEquip(O))
+			if(!user.removeItemFromInventory(O))
 				return
 			O.loc = src
 			notices++

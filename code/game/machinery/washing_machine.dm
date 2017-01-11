@@ -207,7 +207,7 @@
 			user << "<span class='warning'>The washing machine is full!</span>"
 			return 1
 
-		if(!user.unEquip(W))
+		if(!user.removeItemFromInventory(W))
 			user << "<span class='warning'>\The [W] is stuck to your hand, you cannot put it in the washing machine!</span>"
 			return 1
 

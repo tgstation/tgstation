@@ -37,7 +37,7 @@
 	suittoggled = 0
 	if(ishuman(hood.loc))
 		var/mob/living/carbon/H = hood.loc
-		H.unEquip(hood, 1)
+		H.removeItemFromInventory(hood, TRUE)
 		H.update_inv_wear_suit()
 	hood.loc = src
 	for(var/X in actions)
@@ -163,7 +163,7 @@
 		var/mob/living/carbon/H = helmet.loc
 		if(helmet.on)
 			helmet.attack_self(H)
-		H.unEquip(helmet, 1)
+		H.removeItemFromInventory(helmet, TRUE)
 		H.update_inv_wear_suit()
 		H << "<span class='notice'>The helmet on the hardsuit disengages.</span>"
 		playsound(src.loc, 'sound/mecha/mechmove03.ogg', 50, 1)

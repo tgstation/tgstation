@@ -46,7 +46,7 @@
 		if (beaker)
 			return 1
 		else
-			if(!user.unEquip(O))
+			if(!user.removeItemFromInventory(O))
 				user << "<span class='warning'>\the [O] is stuck to your hand, you cannot put it in \the [src]!</span>"
 				return 0
 			O.loc = src
@@ -58,7 +58,7 @@
 	if (!is_type_in_list(O, allowed_items))
 		user << "This object contains no fluid or extractable reagents."
 		return 1
-	if(!user.unEquip(O))
+	if(!user.removeItemFromInventory(O))
 		user << "<span class='warning'>\the [O] is stuck to your hand, you cannot put it in \the [src]!</span>"
 		return 0
 	O.loc = src

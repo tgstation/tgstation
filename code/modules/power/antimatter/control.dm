@@ -181,7 +181,7 @@
 			user << "<span class='warning'>There is already a [fueljar] inside!</span>"
 			return
 
-		if(!user.unEquip(W))
+		if(!user.removeItemFromInventory(W))
 			return
 		fueljar = W
 		W.forceMove(src)

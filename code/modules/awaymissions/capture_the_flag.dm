@@ -253,8 +253,8 @@
 	if(istype(I, /obj/item/weapon/twohanded/ctf))
 		var/obj/item/weapon/twohanded/ctf/flag = I
 		if(flag.team != src.team)
-			user.unEquip(flag)
-			flag.loc = get_turf(flag.reset)
+			user.removeItemFromInventory(flag)
+			flag.forceMove(get_turf(flag.reset))
 			points++
 			for(var/mob/M in player_list)
 				var/area/mob_area = get_area(M)
@@ -270,7 +270,7 @@
 			M << "<span class='narsie'>[team] team wins!</span>"
 			M << "<span class='userdanger'>The game has been reset! Teams have been cleared. The machines will be active again in 30 seconds.</span>"
 			for(var/obj/item/weapon/twohanded/ctf/W in M)
-				M.unEquip(W)
+				M.dropItemToGround(W)
 			M.dust()
 	for(var/obj/machinery/control_point/control in machines)
 		control.icon_state = "dominator"
@@ -566,7 +566,6 @@
 			var/outfit = CTF.ctf_gear
 			var/datum/outfit/O = new outfit
 			for(var/obj/item/weapon/gun/G in M)
-				M.unEquip(G)
 				qdel(G)
 			O.equip(M)
 			M << "<span class='notice'>Ammunition reloaded!</span>"

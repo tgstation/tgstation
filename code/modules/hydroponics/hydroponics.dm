@@ -772,7 +772,7 @@
 		if(!myseed)
 			if(istype(O, /obj/item/seeds/kudzu))
 				investigate_log("had Kudzu planted in it by [user.ckey]([user]) at ([x],[y],[z])","kudzu")
-			user.unEquip(O)
+			user.removeItemFromInventory(O)
 			user << "<span class='notice'>You plant [O].</span>"
 			dead = 0
 			myseed = O

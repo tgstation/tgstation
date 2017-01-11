@@ -146,7 +146,7 @@
 		var/obj/item/honey_frame/HF = I
 		if(honey_frames.len < BEEBOX_MAX_FRAMES)
 			visible_message("<span class='notice'>[user] adds a frame to the apiary.</span>")
-			user.unEquip(HF)
+			user.removeItemFromInventory(HF)
 			HF.loc = src
 			honey_frames += HF
 		else
@@ -162,7 +162,7 @@
 			return
 
 		var/obj/item/queen_bee/qb = I
-		user.unEquip(qb)
+		user.removeItemFromInventory(qb)
 
 		qb.queen.loc = src
 		bees += qb.queen

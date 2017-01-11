@@ -104,7 +104,7 @@
 			var/atom/movable/M = A
 			if(isliving(M.loc))
 				var/mob/living/L = M.loc
-				L.unEquip(M)
+				L.removeItemFromInventory(M)
 			M.loc = src
 
 /atom/proc/assume_air(datum/gas_mixture/giver)

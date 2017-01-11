@@ -1347,7 +1347,7 @@
 			return
 
 		for(var/obj/item/I in M)
-			M.unEquip(I)
+			M.removeItemFromInventory(I)
 			if(I)
 				I.loc = M.loc
 				I.layer = initial(I.layer)
@@ -1378,7 +1378,7 @@
 			return
 
 		for(var/obj/item/I in M)
-			M.unEquip(I)
+			M.removeItemFromInventory(I)
 			if(I)
 				I.loc = M.loc
 				I.layer = initial(I.layer)
@@ -1432,7 +1432,7 @@
 			return
 
 		for(var/obj/item/I in M)
-			M.unEquip(I)
+			M.removeItemFromInventory(I)
 			if(I)
 				I.loc = M.loc
 				I.layer = initial(I.layer)

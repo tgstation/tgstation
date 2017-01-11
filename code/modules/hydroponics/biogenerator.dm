@@ -147,7 +147,7 @@
 		if(i >= max_items)
 			user << "<span class='warning'>The biogenerator is full! Activate it.</span>"
 		else
-			user.unEquip(O)
+			user.removeItemFromInventory(O)
 			O.loc = src
 			user << "<span class='info'>You put [O.name] in [src.name]</span>"
 		return 1 //no afterattack

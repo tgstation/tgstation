@@ -627,11 +627,11 @@
 			if(islist(where))
 				var/list/L = where
 				if(what == who.get_item_for_held_index(L[2]))
-					who.unEquip(what)
-					add_logs(src, who, "stripped", addition="of [what]")
+					if(who.dropItemToGround(what))
+						add_logs(src, who, "stripped", addition="of [what]")
 			if(what == who.get_item_by_slot(where))
-				who.unEquip(what)
-				add_logs(src, who, "stripped", addition="of [what]")
+				if(who.dropItemToGround(what))
+					add_logs(src, who, "stripped", addition="of [what]")
 
 // The src mob is trying to place an item on someone
 // Override if a certain mob should be behave differently when placing items (can't, for example)

@@ -40,7 +40,7 @@
 	if(istype(I, /obj/item/device/gps))
 		var/obj/item/device/gps/L = I
 		if(L.locked_location && !(stat & (NOPOWER|BROKEN)))
-			if(!user.unEquip(L))
+			if(!user.removeItemFromInventory(L))
 				user << "<span class='warning'>\the [I] is stuck to your hand, you cannot put it in \the [src]!</span>"
 				return
 			L.loc = src

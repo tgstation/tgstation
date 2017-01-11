@@ -481,7 +481,7 @@
 			if(diff==FORWARD)
 				user.visible_message("[user] installs scanner module to the [holder].", "<span class='notice'>You install scanner module to the [holder].</span>")
 				var/obj/item/I = used_atom
-				user.unEquip(I)
+				user.removeItemFromInventory(I)
 				I.loc = holder
 				holder.icon_state = "gygax11"
 			else
@@ -500,7 +500,7 @@
 			if(diff==FORWARD)
 				user.visible_message("[user] installs capacitor to the [holder].", "<span class='notice'>You install capacitor to the [holder].</span>")
 				var/obj/item/I = used_atom
-				user.unEquip(I)
+				user.removeItemFromInventory(I)
 				I.loc = holder
 				holder.icon_state = "gygax13"
 			else
@@ -1068,7 +1068,7 @@
 			if(diff==FORWARD)
 				user.visible_message("[user] installs scanner module to the [holder].", "<span class='notice'>You install phasic scanner module to the [holder].</span>")
 				var/obj/item/I = used_atom
-				user.unEquip(I)
+				user.removeItemFromInventory(I)
 				I.loc = holder
 				holder.icon_state = "durand11"
 			else
@@ -1087,7 +1087,7 @@
 			if(diff==FORWARD)
 				user.visible_message("[user] installs capacitor to the [holder].", "<span class='notice'>You install capacitor to the [holder].</span>")
 				var/obj/item/I = used_atom
-				user.unEquip(I)
+				user.removeItemFromInventory(I)
 				I.loc = holder
 				holder.icon_state = "durand13"
 			else
@@ -1375,7 +1375,7 @@
 			if(diff==FORWARD)
 				user.visible_message("[user] installs phasic scanner module to the [holder].", "<span class='notice'>You install scanner module to the [holder].</span>")
 				var/obj/item/I = used_atom
-				user.unEquip(I)
+				user.removeItemFromInventory(I)
 				I.loc = holder
 				holder.icon_state = "phazon11"
 			else
@@ -1394,7 +1394,7 @@
 			if(diff==FORWARD)
 				user.visible_message("[user] installs super capacitor to the [holder].", "<span class='notice'>You install capacitor to the [holder].</span>")
 				var/obj/item/I = used_atom
-				user.unEquip(I)
+				user.removeItemFromInventory(I)
 				I.loc = holder
 				holder.icon_state = "phazon13"
 			else

@@ -68,7 +68,7 @@
 
 	if(panel_open)
 		if(!device && istype(W, /obj/item/device/assembly))
-			if(!user.unEquip(W))
+			if(!user.removeItemFromInventory(W))
 				user << "<span class='warning'>\The [W] is stuck to you!</span>"
 				return
 			W.loc = src
@@ -76,7 +76,7 @@
 			user << "<span class='notice'>You add [W] to the button.</span>"
 
 		if(!board && istype(W, /obj/item/weapon/electronics/airlock))
-			if(!user.unEquip(W))
+			if(!user.removeItemFromInventory(W))
 				user << "<span class='warning'>\The [W] is stuck to you!</span>"
 				return
 			W.loc = src

@@ -873,7 +873,7 @@
 		else if(mmi_as_oc.brainmob.stat)
 			user << "<span class='warning'>Beta-rhythm below acceptable level!</span>"
 			return 0
-		if(!user.unEquip(mmi_as_oc))
+		if(!user.removeItemFromInventory(mmi_as_oc))
 			user << "<span class='warning'>\the [mmi_as_oc] is stuck to your hand, you cannot put it in \the [src]!</span>"
 			return
 		var/mob/brainmob = mmi_as_oc.brainmob

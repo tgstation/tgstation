@@ -93,7 +93,7 @@
 		walk_link(AM)
 
 /obj/effect/cross_action/spacetime_dist/attackby(obj/item/W, mob/user, params)
-	if(user.unEquip(W))
+	if(user.removeItemFromInventory(W))
 		walk_link(W)
 	else
 		walk_link(user)

@@ -29,7 +29,7 @@
 			else
 				meat_counter ++
 			for(var/obj/item/W in H)
-				H.unEquip(W)
+				H.dropItemToGround(W)
 			H.gib()
 
 /mob/living/simple_animal/hostile/spawner/ash_walker/spawn_mob()
