@@ -24,13 +24,20 @@
 		inview = 0
 
 	if(!ninjacost(cost))
+		if(istype(energyKatana.loc, /mob/living/carbon))
+			var/mob/living/carbon/C = energyKatana.loc
+			C.unEquip(energyKatana)
 
-		energyKatana.forceMove(get_turf(energyKatana))
+			//Somebody swollowed my sword, probably the clown doing a circus act.
+			if(energyKatana in C.stomach_contents)
+				C.stomach_contents -= energyKatana
 
-		if(energyKatana.loc && inview) //If we can see the katana, throw it towards ourselves, damaging people as we go.
+		energyKatana.loc = get_turf(energyKatana)
+
+		if(inview) //If we can see the katana, throw it towards ourselves, damaging people as we go.
 			energyKatana.spark_system.start()
 			playsound(H, "sparks", 50, 1)
-			energyKatana.visible_message("<span class='danger'>\the [energyKatana] flies towards [H]!</span>","<span class='warning'>You hold out your hand and \the [energyKatana] flies towards you!</span>")
+			H.visible_message("<span class='danger'>\the [energyKatana] flies towards [H]!</span>","<span class='warning'>You hold out your hand and \the [energyKatana] flies towards you!</span>")
 			energyKatana.throw_at(H, distance+1, energyKatana.throw_speed,H)
 
 		else //Else just TP it to us.

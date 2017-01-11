@@ -26,7 +26,8 @@
 			var/objects = 0
 			for(var/obj/item/I in L.embedded_objects)
 				objects++
-				I.forceMove(get_turf(H))
+				I.loc = get_turf(H)
+				L.embedded_objects -= I
 
 			if(objects > 0)
 				user.visible_message("[user] sucessfully removes [objects] objects from [H]'s [L]!", "<span class='notice'>You successfully remove [objects] objects from [H]'s [L.name].</span>")

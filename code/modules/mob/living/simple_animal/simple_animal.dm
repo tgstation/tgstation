@@ -500,15 +500,9 @@
 		if(H)
 			H.update_icon()
 
-/mob/living/simple_animal/put_in_hand(obj/item/I, hand_index)
-	. = ..()
-	if(.)
-		update_inv_hands()
-
-/mob/living/simple_animal/put_in_hand_check(obj/item/I)
-	. = ..()
-	if(!dextrous)
-		. = FALSE
+/mob/living/simple_animal/put_in_hands(obj/item/I)
+	..()
+	update_inv_hands()
 
 /mob/living/simple_animal/update_inv_hands()
 	if(client && hud_used && hud_used.hud_version != HUD_STYLE_NOHUD)
