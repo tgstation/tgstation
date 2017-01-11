@@ -62,9 +62,7 @@ var/datum/subsystem/timer/SStimer
 		while (event)
 			var/datum/callback/callback = event.callback
 			if (!callback)
-				stack_trace("FAILURE! [event]||[event.timeToRun]|[qdeleted(event)]|||[world.time]||[head_offset]||[practical_offset]")
-			if (event.timeToRun > world.time)
-				stack_trace("HOLY JESUS! SHIT BE FUCKED [event]||[event.timeToRun]||[world.time]||[event.callback.object]||[event.callback.delegate]||[head_offset]||[practical_offset]")
+				CRASH("Invalid event: event.timeToRun=[event.timeToRun]||qdeleted(event)=[qdeleted(event)]||world.time=[world.time]||head_offset=[head_offset]||practical_offset=[practical_offset]")
 			qdel(event) //same as above
 			callback.InvokeAsync()
 			if (MC_TICK_CHECK)
@@ -151,7 +149,6 @@ var/datum/subsystem/timer/SStimer
 	//calculate our place in the bucket list
 	var/bucket_pos = BUCKET_POS(src)
 	//we are too far aways from needing to run to be in the bucket list, refill_buckets() will handle us.
-	debug_admins("Timer insert: [bucket_pos] for [timeToRun] at [world.time] and [SStimer.head_offset]")
 	if (bucket_pos > length(buckets))
 		return
 	//get the bucket for our tick
