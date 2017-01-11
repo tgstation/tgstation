@@ -1,4 +1,3 @@
-//TODO: Flash range does nothing currently
 var/explosionid = 1
 
 /proc/explosion(turf/epicenter, devastation_range, heavy_impact_range, light_impact_range, flash_range, adminlog = 1, ignorecap = 0, flame_range = 0 ,silent = 0, smoke = 1)
@@ -105,6 +104,13 @@ var/explosionid = 1
 			for(var/obj/structure/blob/B in T)
 				cached_exp_block[T] += B.explosion_block
 			CHECK_TICK
+			
+	//flash mobs
+	if(flash_range)
+		for(var/mob/living/L in viewers(flash_range, epicenter))
+			L.flash_act()
+
+	CHECK_TICK
 
 	var/list/exploded_this_tick = list()	//open turfs that need to be blocked off while we sleep
 	for(var/turf/T in affected_turfs)
