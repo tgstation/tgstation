@@ -1153,7 +1153,7 @@ B --><-- A
 	for(var/B in L)
 		var/turf/C = B
 		LAZYINITLIST(C.proximity_checkers)
-		C.proximity_checkers[A] = TRUE
+		C.proximity_checkers |= A
 	return L
 
 /proc/remove_from_proximity_list(atom/A, range)
@@ -1163,9 +1163,7 @@ B --><-- A
 		var/turf/C = B
 		if (!C.proximity_checkers)
 			continue
-		C.proximity_checkers.Remove(A)
-		UNSETEMPTY(C.proximity_checkers)
-
+		C.proximity_checkers -= A
 
 /proc/shift_proximity(atom/checker, atom/A, range, atom/B, newrange)
 	var/turf/T = get_turf(A)
