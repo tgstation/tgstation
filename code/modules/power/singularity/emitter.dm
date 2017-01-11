@@ -29,6 +29,7 @@
 	var/projectile_sound = 'sound/weapons/emitter.ogg'
 	
 	var/powerloss = 0
+	var/powerlogged = 0
 
 /obj/machinery/power/emitter/New()
 	..()
