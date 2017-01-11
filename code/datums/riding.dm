@@ -232,8 +232,8 @@
 	keytype = /obj/item/weapon/oar
 
 /datum/riding/boat/handle_ride(mob/user, direction)
-	var/turf/next = get_step(src, direction)
-	var/turf/current = get_turf(src)
+	var/turf/next = get_step(ridden, direction)
+	var/turf/current = get_turf(ridden)
 
 	if(istype(next, /turf/open/floor/plating/lava) || istype(current, /turf/open/floor/plating/lava)) //We can move from land to lava, or lava to land, but not from land to land
 		..()
