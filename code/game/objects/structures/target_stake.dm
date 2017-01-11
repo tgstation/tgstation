@@ -20,6 +20,11 @@
 	if(pinned_target)
 		pinned_target.loc = loc
 
+/obj/structure/target_stake/newtonian_move(angle)
+	if(pinned_target)
+		..(angle, TRUE)
+	..(angle)
+
 /obj/structure/target_stake/attackby(obj/item/target/T, mob/user)
 	if(pinned_target)
 		return
