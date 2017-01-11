@@ -99,7 +99,9 @@
 /obj/item/device/assembly/prox_sensor/proc/sensitivity_change(value)
 	var/sense = min(max(sensitivity + value, 0), 5)
 	if(scanning)
-		shift_proximity(src, oldloc, sensitivity, loc, sense)
+		if(shift_proximity(src, oldloc, sensitivity, loc, sense))
+			sense()
+			oldloc = loc
 	sensitivity = sense
 
 /obj/item/device/assembly/prox_sensor/update_icon()
