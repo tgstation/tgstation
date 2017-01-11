@@ -283,6 +283,8 @@
 
 /obj/structure/alien/egg/Moved(oldloc)
 	remove_from_proximity_list(oldloc, 1)
+	if(status == GROWN)
+		add_to_proximity_list(src, 1)	
 	return ..()
 
 /obj/structure/alien/egg/deconstruct()
