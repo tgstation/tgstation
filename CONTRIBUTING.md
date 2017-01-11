@@ -107,6 +107,9 @@ eg: `/datum/thing` not `datum/thing`
 ###Datum type paths must began with "datum"
 In byond this is optional, but omitting it makes finding definitions harder.
 
+###Using undocumented var modifiers
+There exists undocumented var modifiers like static, do not use them
+
 ###Do not use text/string based type paths
 It is rarely allowed to put type paths in a text format, as there are no compile errors if the type path no longer exists. Here is an example:
 
