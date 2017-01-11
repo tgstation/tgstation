@@ -200,11 +200,11 @@
 		return FALSE
 	inertia_dir = direction
 	if(!direction)
-		. = 1
+		. = TRUE
 	inertia_last_loc = loc
 	SSspacedrift.processing[src] = src
 	if(no_backup)
-		. = 0
+		. = FALSE
 
 /atom/movable/proc/checkpass(passflag)
 	return pass_flags&passflag
