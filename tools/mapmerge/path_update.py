@@ -12,8 +12,8 @@ def tgm_check(map_file):
         firstline = f.readline()
         #why some maps have trailing spaces in this ???
         if firstline.startswith(map_helpers.tgm_header): 
-            return False
-        return True
+            return True
+        return False
 
 def save_map(map_data,filepath,tgm=False):
     map_data['dictionary'] =  map_helpers.sort_dictionary(map_data['dictionary'])
@@ -40,6 +40,8 @@ def update_map(map_filepath,update_file=None,update_string=None,verbose=False):
     if update_file:
         with open(update_file) as update_source:
             for line in update_source:
+                if line.startswith("#") or line.isspace():
+                    continue
                 map_data = update_path(map_data,line,verbose)
                 save_map(map_data,map_filepath,tgm)
     if update_string:
@@ -71,17 +73,16 @@ def update_path(mapdata,replacement_string,verbose=False):
     old_path_part,new_path_part = replacement_string.split(':',maxsplit=1)
     old_path, old_path_props = parse_rep_string(old_path_part)
     new_paths = dict()
-    for replacement_def in new_path_part.split(';'):
+    for replacement_def in new_path_part.split(','):
         new_path,new_path_props = parse_rep_string(replacement_def)
         new_paths[new_path] = new_path_props
-
     def replace_def(match):
         if match.group(2):
             old_props = string_to_props(match.group(2))
         else:
             old_props = dict()
         for filter_prop in old_path_props:
-            if old_props[filter_prop] != old_path_props[filter_prop]:
+            if filter_prop not in old_props or old_props[filter_prop] != old_path_props[filter_prop]:
                 return match.group(0) #does not match current filter, skip the change.
         if verbose:
             print("Found match : {0}".format(match.group(0)))
@@ -105,17 +106,24 @@ def update_path(mapdata,replacement_string,verbose=False):
             if out_props:
                 out += props_to_string(out_props)
             out_paths.append(out)
-        result = ",".join(out_paths)
         if verbose:
-            print("Replacing with: {0}".format(result))
-        return result
+            print("Replacing with: {0}".format(out_paths))
+        return out_paths
 
-    p = re.compile("{0}\s*({{(.*)}})?$".format(re.escape(old_path)))
+    def get_result(element):
+        p = re.compile("{0}\s*({{(.*)}})?$".format(re.escape(old_path)))
+        match = p.match(element)
+        if match:
+            return replace_def(match) # = re.sub(p,replace_def,element)
+        else:
+            return [element]
+
     for definition_key in mapdata['dictionary']:
         def_value = mapdata['dictionary'][definition_key]
-        new_value = tuple([re.sub(p,replace_def,element) for element in list(def_value)])
+        start = list(def_value)
+        changed = [y for x in start for y in get_result(x)]
+        new_value = tuple(changed)
         if new_value != def_value:
-            print(new_value,def_value)
             mapdata['dictionary'][definition_key] = new_value
 
     return mapdata
@@ -126,7 +134,7 @@ if __name__ == "__main__":
 
     Replacement syntax example:
         /turf/open/floor/plasteel/warningline : /obj/effect/turf_decal {dir = @OLD ;tag = @SKIP;icon_state = @SKIP}
-        /turf/open/floor/plasteel/warningline : /obj/effect/turf_decal {@OLD} ; /obj/thing {icon_state = @OLD:name; name = "meme"}
+        /turf/open/floor/plasteel/warningline : /obj/effect/turf_decal {@OLD} , /obj/thing {icon_state = @OLD:name; name = "meme"}
         /turf/open/floor/plasteel/warningline{dir=2} : /obj/thing
     New paths properties:
         @OLD - if used as property name copies all modified properties from original path to this one
@@ -156,6 +164,6 @@ if __name__ == "__main__":
             update_map(args.map,update_file=args.update_source,verbose=args.verbose)
     else:
         if args.inline:
-            update_all_maps(args.map,update_string=args.update_source,verbose=args.verbose)
+            update_all_maps(update_string=args.update_source,verbose=args.verbose)
         else:
-            update_all_maps(args.map,update_file=args.update_source,verbose=args.verbose)
+            update_all_maps(update_file=args.update_source,verbose=args.verbose)
