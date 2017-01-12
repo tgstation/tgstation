@@ -482,7 +482,7 @@
 	name = "Shotgun Shell: Slug"
 	desc = "A slug shell."
 	id = "slugshell"
-	req_tech = list("combat" = 1, "materials" = 1, "syndicate" = 2)
+	req_tech = list("combat" = 1, "materials" = 1)
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 200)
 	build_path = /obj/item/ammo_casing/shotgun
