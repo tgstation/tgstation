@@ -21,7 +21,7 @@
 	return ..()
 
 /datum/action/innate/umbrage/proc/get_umbrage()
-	return usr.mind.umbrage_psionics
+	return owner.mind.umbrage_psionics
 
 
 
@@ -104,8 +104,67 @@
 				L << "<span class='warning'>...but you can't hear it!</span>"
 			else
 				if(L.status_flags & FAKEDEATH)
-					L.visible_message("<span class='warning'>[L] convulses wildly!</span>", "<span class='velvet_large'><b>ukq wna ieja jks</b></span>")
+					usr << "<span class='velvet'><b>[L]</b> has become a veil.</span>"
+					L << "<span class='velvet_large'><b>ukq wna ieja jks</b></span>"
+					L << "<b>You have seen where you were once blind. In the Deep between the stars, something hungers. It watches and waits, the truth to all things and the impossible lie, infinite and nonexistent.<br>\
+					Its name is unspeakable and its form incomprehensible. You feel your mind rip itself to tatters, and you know that you are destined for something more.<br>\
+					Serve the one who has darkened the light you have lived in for so long. Help It and Its allies in their goals. Your former allegiances are forfeit.<br>\
+					<i>The Progenitor awaits.</i></b>"
+					L << sound('sound/magic/become_veil.ogg', volume = 50)
+					flash_color(L, flash_color = "#21007F", flash_time = 100)
 				else
 					L << "<span class='boldwarning'>...and it scrambles your thoughts!</span>"
 					L.dir = pick(cardinal)
 					L.confused += 2
+
+
+
+//Demented Outburst: Deafens and confuses listeners. Even if they can't hear it, everyone will be knocked away and staggered by its force.
+/datum/action/innate/umbrage/demented_outburst
+	name = "Demented Outburst"
+	desc = "Deafens and confuses listeners, and knocks away everyone nearby. Incredibly loud."
+	button_icon_state = "umbrage_demented_outburst"
+	check_flags = AB_CHECK_CONSCIOUS
+	psi_cost = 80 //big boom = big cost
+
+/datum/action/innate/umbrage/demented_outburst/IsAvailable()
+	if(!usr)
+		return
+	return ..()
+
+/datum/action/innate/umbrage/demented_outburst/Activate()
+	usr.visible_message("<span class='warning'>[usr] begins to growl!</span>", "<span class='velvet_bold'>cap...</span><br>\
+	<span class='danger'>You begin harnessing every ounce of your power...</span>")
+	playsound(usr, 'sound/magic/demented_outburst_charge.ogg', 100, 0)
+	addtimer(CALLBACK(src, .proc/outburst, usr), 50)
+
+/datum/action/innate/umbrage/demented_outburst/proc/outburst(mob/living/user)
+	if(!user || user.stat)
+		return
+	user.visible_message("<span class='boldwarning'>[user] lets out a deafening scream!</span>", "<span class='velvet_bold'><i>WSWU!</i></span><br>\
+	<span class='danger'>You let out a deafening outburst!</span>")
+	playsound(user, 'sound/magic/demented_outburst_scream.ogg', 150, 0)
+	var/list/thrown_atoms = list()
+	for(var/turf/T in view(5, user))
+		for(var/atom/movable/AM in T)
+			thrown_atoms += AM
+	for(var/atom/movable/AM in thrown_atoms)
+		if(AM == user || AM.anchored)
+			continue
+		var/distance = get_dist(user, AM)
+		var/turf/target = get_edge_target_turf(user, get_dir(user, get_step_away(AM, user)))
+		AM.throw_at(target, ((Clamp((5 - (Clamp(distance - 2, 0, distance))), 3, 5))), 1, user)
+		if(iscarbon(AM))
+			var/mob/living/carbon/L = AM
+			if(distance <= 1) //you done fucked up now
+				L.visible_message("<span class='warning'>The blast sends [L] flying!</span>", "<span class='userdanger'>The force sends you flying!</span>")
+				L.Weaken(5)
+				L.adjustBruteLoss(10)
+				L.soundbang_act(1, 5, 15, 5)
+			else if(distance <= 3)
+				L.visible_message("<span class='warning'>The blast knocks [L] off their feet!</span>", "<span class='userdanger'>The force bowls you over!</span>")
+				L.Weaken(3)
+				L.soundbang_act(1, 3, 5, 0)
+	var/datum/umbrage/U = get_umbrage()
+	U.use_psi(psi_cost)
+	return 1
