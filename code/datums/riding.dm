@@ -7,6 +7,9 @@
 	var/keytype = null
 	var/atom/movable/ridden = null
 
+	var/slowed = FALSE
+	var/slowvalue = 1
+
 /datum/riding/proc/handle_vehicle_layer()
 	if(ridden.dir != NORTH)
 		ridden.layer = ABOVE_MOB_LAYER
@@ -152,8 +155,6 @@
 					buckled_mob.pixel_x = 12
 					buckled_mob.pixel_y = 7
 //scooter
-/datum/riding/scooter
-
 /datum/riding/scooter/handle_vehicle_layer()
 	if(ridden.dir == SOUTH)
 		ridden.layer = ABOVE_MOB_LAYER
@@ -180,9 +181,12 @@
 				buckled_mob.pixel_y = -4
 
 /datum/riding/proc/account_limbs(mob/living/M)
-	vehicle_move_delay = initial(vehicle_move_delay)
-	if(M.get_num_legs() < 2)
-		vehicle_move_delay ++
+	if(M.get_num_legs() < 2 && !slowed)
+		vehicle_move_delay = vehicle_move_delay + slowvalue
+		slowed = TRUE
+	else if(slowed)
+		vehicle_move_delay = vehicle_move_delay - slowvalue
+		slowed = FALSE
 
 /datum/riding/scooter/skateboard
 	vehicle_move_delay = 0//fast

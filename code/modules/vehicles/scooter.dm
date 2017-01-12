@@ -21,7 +21,7 @@
 	if(!istype(M))
 		return 0
 	if(M.get_num_legs() < 2 && M.get_num_arms() <= 0)
-		M << "<span class='warning'>Your limbless body can't use [src].</span>"
+		M << "<span class='warning'>Your limbless body can't ride \the [src].</span>"
 		return 0
 	. = ..()
 
