@@ -20,6 +20,7 @@
 	glass = 1
 	var/nextstate = null
 	sub_door = 1
+	explosion_block = 1
 	safe = FALSE
 	closingLayer = CLOSED_FIREDOOR_LAYER
 	assemblytype = /obj/structure/firelock_frame
@@ -178,6 +179,7 @@
 	name = "heavy firelock"
 	icon = 'icons/obj/doors/Doorfire.dmi'
 	glass = 0
+	explosion_block = 2
 	assemblytype = /obj/structure/firelock_frame/heavy
 	obj_integrity = 550
 	max_integrity = 550

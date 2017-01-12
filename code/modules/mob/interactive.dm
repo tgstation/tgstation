@@ -132,7 +132,6 @@
 	myjob = new/datum/job/assistant()
 	job = myjob.title
 	myjob.equip(src)
-	myjob.apply_fingerprints(src)
 
 /mob/living/carbon/human/interactive/attacked_by(obj/item/I, mob/living/user, def_zone)
 	. = ..()
@@ -206,7 +205,6 @@
 						for(var/obj/item/W in T)
 							qdel(W)
 						T.myjob.equip(T)
-						T.myjob.apply_fingerprints(T)
 						T.doSetup()
 						break
 			if(choice == "Random")
@@ -215,7 +213,6 @@
 				for(var/obj/item/W in T)
 					qdel(W)
 				T.myjob.equip(T)
-				T.myjob.apply_fingerprints(T)
 				T.doSetup()
 				if(prob(25))
 					var/list/validchoices = list()
@@ -239,7 +236,6 @@
 					for(var/obj/item/W in T)
 						qdel(W)
 					T.myjob.equip(T)
-					T.myjob.apply_fingerprints(T)
 					T.doSetup()
 				var/shouldDoppel = input("Do you want the SNPC to disguise themself as a crewmember?") as null|anything in list("Yes","No")
 				if(shouldDoppel)

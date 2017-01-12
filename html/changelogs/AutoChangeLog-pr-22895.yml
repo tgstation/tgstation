@@ -1,0 +1,5 @@
+author: "coiax"
+delete-after: True
+changes: 
+  - rscadd: "The end of round stats include the number of people who escaped on
+the main emergency shuttle."

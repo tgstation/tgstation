@@ -213,7 +213,7 @@
 		changed_name = custom_name
 	if(changed_name == "" && client)
 		changed_name = client.prefs.custom_names["cyborg"]
-	if(changed_name == "")
+	if(!changed_name)
 		changed_name = get_standard_name()
 
 	real_name = changed_name

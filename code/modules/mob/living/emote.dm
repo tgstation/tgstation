@@ -253,6 +253,12 @@
 	message = "shakes their head."
 	emote_type = EMOTE_AUDIBLE
 
+/datum/emote/living/shiver
+	key = "shiver"
+	key_third_person = "shiver"
+	message = "shivers."
+	emote_type = EMOTE_AUDIBLE
+
 /datum/emote/living/sigh
 	key = "sigh"
 	key_third_person = "sighs"

@@ -190,10 +190,10 @@
 /obj/machinery/atmospherics/components/unary/cryo_cell/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/reagent_containers/glass))
 		. = 1 //no afterattack
-		if(!user.drop_item())
-			return
 		if(beaker)
 			user << "<span class='warning'>A beaker is already loaded into [src]!</span>"
+			return
+		if(!user.drop_item())
 			return
 		beaker = I
 		I.loc = src
