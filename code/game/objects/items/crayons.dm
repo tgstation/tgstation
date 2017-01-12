@@ -298,9 +298,8 @@
 			else
 				graf_rot = 0
 
-	user << "<span class='notice'>You start \
-		[instant ? "spraying" : "drawing"] a [temp] on the \
-		[target.name]...</span>"
+	if(!instant)
+		user << "<span class='notice'>You start drawing a [temp] on the	[target.name]...</span>"
 
 	if(pre_noise)
 		audible_message("<span class='notice'>You hear spraying.</span>")
@@ -347,8 +346,11 @@
 					else
 						user << "<span class='warning'>There isn't enough space to paint!</span>"
 						return
-
-	user << "<span class='notice'>You finish [instant ? "spraying" : "drawing"] \the [temp].</span>"
+	
+	if(!instant)
+		user << "<span class='notice'>You finish drawing \the [temp].</span>"
+	else
+		user << "<span class='notice'>You spray a [temp] on \the [target.name]</span>"
 
 	if(length(text_buffer))
 		text_buffer = copytext(text_buffer,2)
