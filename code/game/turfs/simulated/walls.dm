@@ -59,7 +59,7 @@
 	switch(severity)
 		if(1)
 			//SN src = null
-			var/turf/NT = ChangeTurf(src.baseturf)
+			var/turf/NT = ChangeTurf(baseturf)
 			NT.contents_explosion(severity, target)
 			return
 		if(2)
