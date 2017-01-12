@@ -196,6 +196,7 @@
 #include "code\datums\dna.dm"
 #include "code\datums\dog_fashion.dm"
 #include "code\datums\emotes.dm"
+#include "code\datums\forced_movement.dm"
 #include "code\datums\gas_overrides.dm"
 #include "code\datums\hud.dm"
 #include "code\datums\martial.dm"

@@ -519,7 +519,7 @@
 				if (AM.density && AM.anchored)
 					pressure_resistance_prob_delta -= 20
 					break
-	if(!slipping)
+	if(!force_moving)
 		..(pressure_difference, direction, pressure_resistance_prob_delta)
 
 /mob/living/verb/resist()

@@ -193,14 +193,18 @@
 	if(firer)
 		chain = firer.Beam(src, icon_state = "chain", time = INFINITY, maxdistance = INFINITY)
 	..()
+	//TODO: root the firer until the chain returns
 
 /obj/item/projectile/hook/on_hit(atom/target)
 	. = ..()
-	if(isliving(target))
-		var/mob/living/L = target
-		if(!L.anchored)
-			L.visible_message("<span class='danger'>[L] is snagged by [firer]'s hook!</span>")
-			L.forceMove(get_turf(firer))
+	if(istype(target, /atom/movable))
+		var/atom/movable/A = target
+		if(A.anchored)
+			return
+		A.visible_message("<span class='danger'>[A] is snagged by [firer]'s hook!</span>")
+		new /datum/forced_movement(A, get_turf(firer), 5, TRUE)
+		//TODO: keep the chain beamed to A
+		//TODO: needs a callback to delete the chain
 
 /obj/item/projectile/hook/Destroy()
 	qdel(chain)

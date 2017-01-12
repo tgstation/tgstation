@@ -12,6 +12,7 @@
 			return 1
 	return (!mover.density || !density || lying)
 
+
 //The byond version of these verbs wait for the next tick before acting.
 //	instant verbs however can run mid tick or even during the time between ticks.
 /client/verb/moveup()
@@ -126,10 +127,10 @@
 		return 0
 	if(moving)
 		return 0
+	if(mob.force_moving)
+		return 0
 	if(isliving(mob))
 		var/mob/living/L = mob
-		if(L.slipping)
-			return 0
 		if(L.incorporeal_move)	//Move though walls
 			Process_Incorpmove(direct)
 			return 0

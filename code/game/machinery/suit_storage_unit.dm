@@ -168,18 +168,6 @@
 	storage = null
 	occupant = null
 
-/obj/machinery/suit_storage_unit/Exited(atom/movable/AM, atom/newloc)
-	if(AM == helmet)
-		helmet = null
-	else if(AM == suit)
-		suit = null
-	else if(AM == mask)
-		mask = null
-	else if(AM == helmet)
-		helmet = null
-	..()
-	update_icon()
-
 /obj/machinery/suit_storage_unit/deconstruct(disassembled = TRUE)
 	if(!(flags & NODECONSTRUCT))
 		open_machine()
