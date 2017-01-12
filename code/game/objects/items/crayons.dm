@@ -253,6 +253,12 @@
 	if(check_empty(user))
 		return
 
+	if(istype(target, /obj/item/weapon/gun_attachment) || (istype(target, /obj/item/weapon/gun/energy/frame) || istype(target, /obj/item/weapon/gun/ballistic/frame)))
+		user << "You spray paint [target]."
+		target.color = paint_color
+		playsound(user.loc, 'sound/effects/spray.ogg', 5, 1, 5)
+		return
+
 	if(istype(target, /obj/effect/decal/cleanable))
 		target = target.loc
 

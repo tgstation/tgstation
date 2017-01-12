@@ -10,19 +10,19 @@
 
 /obj/item/ammo_casing/energy/laser
 	projectile_type = /obj/item/projectile/beam/laser
-	select_name = "kill"
+	select_name = "laser"
 
 /obj/item/ammo_casing/energy/lasergun
 	projectile_type = /obj/item/projectile/beam/laser
 	e_cost = 83
-	select_name = "kill"
+	select_name = "laser"
 
 /obj/item/ammo_casing/energy/laser/hos
 	e_cost = 100
 
 /obj/item/ammo_casing/energy/laser/practice
 	projectile_type = /obj/item/projectile/beam/practice
-	select_name = "practice"
+	select_name = "laser"
 
 /obj/item/ammo_casing/energy/laser/scatter
 	projectile_type = /obj/item/projectile/beam/scatter
@@ -37,7 +37,7 @@
 
 /obj/item/ammo_casing/energy/laser/heavy
 	projectile_type = /obj/item/projectile/beam/laser/heavylaser
-	select_name = "anti-vehicle"
+	select_name = "laser"
 	fire_sound = 'sound/weapons/lasercannonfire.ogg'
 
 /obj/item/ammo_casing/energy/laser/pulse
@@ -178,7 +178,7 @@
 /obj/item/ammo_casing/energy/tesla_revolver
 	fire_sound = 'sound/magic/lightningbolt.ogg'
 	e_cost = 200
-	select_name = "stun"
+	select_name = "special"
 	projectile_type = /obj/item/projectile/energy/tesla_revolver
 
 /obj/item/ammo_casing/energy/gravityrepulse

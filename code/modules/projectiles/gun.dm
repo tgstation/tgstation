@@ -1,6 +1,7 @@
 #define CUSTOMIZABLE_PROJECTILE "projectile"
 #define CUSTOMIZABLE_ENERGY "energy"
 #define BOTHTYPES "both"
+#define CUSTOMIZABLE_REVOLVER "youre pretty good"
 #define MAX_ATTACHMENTS 6
 
 /obj/item/weapon/gun
@@ -127,6 +128,7 @@
 /obj/item/weapon/gun/proc/shoot_with_empty_chamber(mob/living/user as mob|obj)
 	user << "<span class='danger'>*click*</span>"
 	playsound(user, 'sound/weapons/empty.ogg', 100, 1)
+	update_icon()
 
 
 /obj/item/weapon/gun/proc/shoot_live_shot(mob/living/user as mob|obj, pointblank = 0, mob/pbtarget = null, message = 1)
@@ -142,7 +144,7 @@
 				user.visible_message("<span class='danger'>[user] fires [src] point blank at [pbtarget]!</span>", null, null, COMBAT_MESSAGE_RANGE)
 			else
 				user.visible_message("<span class='danger'>[user] fires [src]!</span>", null, null, COMBAT_MESSAGE_RANGE)
-
+	update_icon()
 /obj/item/weapon/gun/emp_act(severity)
 	for(var/obj/O in contents)
 		O.emp_act(severity)
@@ -171,6 +173,7 @@
 
 	if(!can_shoot()) //Just because you can pull the trigger doesn't mean it can shoot.
 		shoot_with_empty_chamber(user)
+		update_icon()
 		return
 
 	if(flag)
@@ -232,6 +235,93 @@
 /obj/item/weapon/gun/proc/recharge_newshot()
 	return
 
+
+/obj/item/weapon/gun/update_icon() // oh god here we go
+	..()
+	if(customizable_type)
+		cut_overlays()
+		if(customizable_type != CUSTOMIZABLE_REVOLVER)
+			if(barrel)
+				var/image/I1 = image(icon = 'icons/obj/guncrafting/ausops_new.dmi', icon_state = barrel.icon_state)
+				I1.color = barrel.color
+				add_overlay(I1)
+			if(customizable_type == CUSTOMIZABLE_PROJECTILE && base)
+				var/image/I2 = image(icon = 'icons/obj/guncrafting/ausops_new.dmi', icon_state = base.icon_state)
+				I2.color = base.color
+				add_overlay(I2)
+			if(handle)
+				var/image/I3 = image(icon = 'icons/obj/guncrafting/ausops_new.dmi', icon_state = handle.icon_state)
+				I3.color = handle.color
+				add_overlay(I3)
+			var/image/I4 = image(icon = 'icons/obj/guncrafting/ausops_new.dmi', icon_state = src.icon_state)
+			I4.color = src.color
+			add_overlay(I4)
+			if(customizable_type == CUSTOMIZABLE_ENERGY)
+				var/obj/item/weapon/gun/energy/frame/F = src
+				var/image/I5 = image(icon = 'icons/obj/guncrafting/ausops_new.dmi', icon_state = F.battery_state)
+				add_overlay(I5)
+			if(customizable_type == CUSTOMIZABLE_ENERGY && base)
+				var/obj/item/weapon/gun/energy/E = src
+				var/obj/item/ammo_casing/energy/shot
+				if(chambered)
+					shot = chambered
+				var/temp_icon
+				var/base_icon = base.icon_state
+				if(E.ammo_type.len > 1)
+					if(shot)
+						base_icon = shot.select_name
+					else
+						temp_icon = "[base.icon_state]0"
+				else
+					if(shot)
+						base_icon = shot.select_name
+					else
+						temp_icon = "[base.icon_state]0"
+				if(shot)
+					var/tempmax = (E.power_supply.maxcharge / shot.e_cost)
+					var/temp80 = tempmax * 0.8
+					var/temp60 = tempmax * 0.6
+					var/temp40 = tempmax * 0.4
+					var/shotsleft = round((E.power_supply.charge / shot.e_cost))
+					world << shotsleft
+					if(INFINITY > shotsleft && shotsleft <= tempmax)
+						temp_icon = "[base_icon]100"
+					if(tempmax > shotsleft && shotsleft <= temp80)
+						temp_icon = "[base_icon]80"
+					if(temp80 > shotsleft && shotsleft <= temp60)
+						temp_icon = "[base_icon]60"
+					if(temp60 > shotsleft && shotsleft <= temp40)
+						temp_icon = "[base_icon]40"
+					if(temp40 > shotsleft && shotsleft <= 1)
+						temp_icon = "[base_icon]20"
+				world << temp_icon
+				add_overlay(image(icon = 'icons/obj/guncrafting/ausops_new.dmi', icon_state = temp_icon))
+			for(var/obj/item/weapon/gun_attachment/underbarrel/U in attachments)
+				var/image/UO = image(icon = 'icons/obj/guncrafting/ausops_new.dmi', icon_state = U.icon_state)
+				UO.color = U.color
+				UO.pixel_x += 3
+				UO.pixel_y -= 3
+				add_overlay(UO)
+			for(var/obj/item/weapon/gun_attachment/scope/S in attachments)
+				var/image/I6 = image(icon = 'icons/obj/guncrafting/ausops_new.dmi', icon_state = S.icon_state)
+				I6.color = S.color
+				add_overlay(I6)
+		else if(customizable_type == CUSTOMIZABLE_REVOLVER)
+			if(handle)
+				add_overlay(image(icon = 'icons/obj/guncrafting/ausops_new.dmi', icon_state = handle.icon_state))
+			add_overlay(image(icon = 'icons/obj/guncrafting/ausops_new.dmi', icon_state = src.icon_state))
+			if(barrel)
+				add_overlay(image(icon = 'icons/obj/guncrafting/ausops_new.dmi', icon_state = barrel.icon_state))
+			if(base)
+				add_overlay(image(icon = 'icons/obj/guncrafting/ausops_new.dmi', icon_state = base.icon_state))
+			for(var/obj/item/weapon/gun_attachment/underbarrel/U in attachments)
+				var/image/UO = image(icon = 'icons/obj/guncrafting/ausops_new.dmi', icon_state = U.icon_state)
+				UO.pixel_x += 4
+				UO.pixel_y += 1
+				add_overlay(UO)
+			for(var/obj/item/weapon/gun_attachment/scope/S in attachments)
+				add_overlay(image(icon = 'icons/obj/guncrafting/ausops_new.dmi', icon_state = S.icon_state))
+
 /obj/item/weapon/gun/proc/process_fire(atom/target as mob|obj|turf, mob/living/user as mob|obj, message = 1, params, zone_override, bonus_spread = 0)
 	add_fingerprint(user)
 
@@ -282,6 +372,7 @@
 			sprd = round((pick(1,-1)) * (randomized_gun_spread + randomized_bonus_spread))
 			if(!chambered.fire_casing(target, user, params, , suppressed, zone_override, sprd))
 				shoot_with_empty_chamber(user)
+				update_icon()
 				return
 			else
 				if(get_dist(user, target) <= 1) //Making sure whether the target is in vicinity for the pointblank shot
@@ -290,6 +381,7 @@
 					shoot_live_shot(user, 0, target, message)
 		else
 			shoot_with_empty_chamber(user)
+			update_icon()
 			return
 		process_chamber()
 		update_icon()
@@ -312,6 +404,7 @@
 		AT.on_attach(src)
 		AT.forceMove(src)
 		attachments += AT
+		update_icon()
 
 /obj/item/weapon/gun/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/screwdriver))
@@ -321,6 +414,7 @@
 				A.on_remove(src)
 				A.forceMove(get_turf(src))
 				attachments -= A
+			update_icon()
 
 	if(istype(I, /obj/item/weapon/gun_attachment))
 		var/obj/item/weapon/gun_attachment/AT = I
@@ -340,6 +434,7 @@
 			AT.on_attach(src)
 			AT.forceMove(src)
 			attachments += AT
+			update_icon()
 
 	if(can_flashlight)
 		if(istype(I, /obj/item/device/flashlight/seclite))

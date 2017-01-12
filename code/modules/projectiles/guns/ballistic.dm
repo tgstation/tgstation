@@ -21,10 +21,11 @@
 
 /obj/item/weapon/gun/ballistic/update_icon()
 	..()
-	if(current_skin)
-		icon_state = "[current_skin][suppressed ? "-suppressed" : ""][sawn_state ? "-sawn" : ""]"
-	else
-		icon_state = "[initial(icon_state)][suppressed ? "-suppressed" : ""][sawn_state ? "-sawn" : ""]"
+	if(!customizable_type)
+		if(current_skin)
+			icon_state = "[current_skin][suppressed ? "-suppressed" : ""][sawn_state ? "-sawn" : ""]"
+		else
+			icon_state = "[initial(icon_state)][suppressed ? "-suppressed" : ""][sawn_state ? "-sawn" : ""]"
 
 
 /obj/item/weapon/gun/ballistic/process_chamber(empty_chamber = 1)

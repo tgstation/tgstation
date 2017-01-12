@@ -61,6 +61,16 @@
 	category = list("Guncrafting Parts")
 
 
+/datum/design/guncrafting_frame_revolver
+	name = "Gun Frame: Revolver"
+	desc = "No pin included, have fun."
+	id = "guncrafting_frame_revolver"
+	req_tech = list("combat" = 1, "materials" = 1)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 500, MAT_GLASS = 300)
+	build_path = /obj/item/weapon/gun/ballistic/frame/revolver/testing
+	category = list("Revolver Parts")
+
 // barrels
 /datum/design/barrel_short
 	name = "Gun Barrel: Short"
@@ -92,6 +102,46 @@
 	build_path = /obj/item/weapon/gun_attachment/barrel/long
 	category = list("Guncrafting Parts")
 
+/datum/design/barrel_revolver_short
+	name = "Revolver Barrel: Short"
+	desc = "A short barrel."
+	id = "barrel_revolver_short"
+	req_tech = list("combat" = 1, "materials" = 1)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 500, MAT_GLASS = 300)
+	build_path = /obj/item/weapon/gun_attachment/barrel/revolver/short
+	category = list("Revolver Parts")
+
+/datum/design/barrel_revolver_normal
+	name = "Revolver Barrel: Medium"
+	desc = "A medium barrel."
+	id = "barrel_revolver_normal"
+	req_tech = list("combat" = 1, "materials" = 1)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 500, MAT_GLASS = 300)
+	build_path = /obj/item/weapon/gun_attachment/barrel/revolver/medium
+	category = list("Revolver Parts")
+
+/datum/design/barrel_revolver_long
+	name = "Revolver Barrel: Long"
+	desc = "A long barrel."
+	id = "barrel_revolver_long"
+	req_tech = list("combat" = 1, "materials" = 1)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 500, MAT_GLASS = 300)
+	build_path = /obj/item/weapon/gun_attachment/barrel/revolver/long
+	category = list("Revolver Parts")
+
+/datum/design/barrel_revolver_mateba
+	name = "Revolver Barrel: Mateba"
+	desc = "A long barrel."
+	id = "barrel_revolver_mateba"
+	req_tech = list("combat" = 1, "materials" = 1)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 500, MAT_GLASS = 300)
+	build_path = /obj/item/weapon/gun_attachment/barrel/revolver/mateba
+	category = list("Revolver Parts")
+
 // handles
 /datum/design/handle_semiauto
 	name = "Gun Handle: Semi-Automatic"
@@ -112,6 +162,16 @@
 	materials = list(MAT_METAL = 500, MAT_GLASS = 300)
 	build_path = /obj/item/weapon/gun_attachment/handle/auto
 	category = list("Guncrafting Parts")
+
+/datum/design/handle_revolver
+	name = "Revolver Handle"
+	desc = "A revolver handle."
+	id = "handle_revolver"
+	req_tech = list("combat" = 1, "materials" = 1)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 500, MAT_GLASS = 300)
+	build_path = /obj/item/weapon/gun_attachment/handle/revolver
+	category = list("Revolver Parts")
 
 // bases
 /datum/design/base_stun
@@ -195,24 +255,24 @@
 	category = list("Guncrafting Parts")
 
 /datum/design/base_revolver_38
-	name = "Gun Ballistic Base: .38 Special Revolver"
+	name = "Revolver Base: .38 Special Revolver"
 	desc = "Six bullets. More than enough to kill anything that moves."
 	id = "base_revolver_38"
 	req_tech = list("combat" = 1, "materials" = 1)
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 500, MAT_GLASS = 300)
 	build_path = /obj/item/weapon/gun_attachment/base/revolver_38
-	category = list("Guncrafting Parts")
+	category = list("Revolver Parts")
 
 /datum/design/base_revolver_357
-	name = "Gun Ballistic Base: .357 Revolver"
+	name = "Revolver Base: .357 Revolver"
 	desc = "A revolver base."
 	id = "base_revolver_357"
 	req_tech = list("combat" = 1, "materials" = 1, "syndicate" = 2)
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 500, MAT_GLASS = 300)
 	build_path = /obj/item/weapon/gun_attachment/base/revolver_357
-	category = list("Guncrafting Parts")
+	category = list("Revolver Parts")
 
 /datum/design/base_shotgun
 	name = "Gun Ballistic Base: Shotgun"
@@ -386,7 +446,7 @@ c
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 4000)
 	build_path = /obj/item/ammo_box/magazine/guncrafting_ar
-	category = list("Guncrafting Parts")
+	category = list("Gun Ammo")
 
 /datum/design/mag_pistol
 	name = "Gun Magazine: Pistol"
@@ -396,7 +456,7 @@ c
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 4000)
 	build_path = /obj/item/ammo_box/magazine/guncrafting_pistol
-	category = list("Guncrafting Parts")
+	category = list("Gun Ammo")
 
 /datum/design/mag_357
 	name = "Gun Magazine: .357 Speedloader"
@@ -406,7 +466,7 @@ c
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 4000)
 	build_path = /obj/item/ammo_box/a357
-	category = list("Guncrafting Parts")
+	category = list("Gun Ammo")
 
 /datum/design/mag_38
 	name = "Gun Magazine: .38 Speedloader"
@@ -416,4 +476,112 @@ c
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 4000)
 	build_path = /obj/item/ammo_box/c38
-	category = list("Guncrafting Parts")
+	category = list("Gun Ammo")
+
+/datum/design/slugshell
+	name = "Shotgun Shell: Slug"
+	desc = "A slug shell."
+	id = "slugshell"
+	req_tech = list("combat" = 1, "materials" = 1)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 200)
+	build_path = /obj/item/ammo_casing/shotgun
+	category = list("Gun Ammo")
+
+/datum/design/buckshotshell
+	name = "Shotgun Shell: Buckshot"
+	desc = "A buckshot shell."
+	id = "buckshotshell"
+	req_tech = list("combat" = 1, "materials" = 1)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 200)
+	build_path = /obj/item/ammo_casing/shotgun/buckshot
+	category = list("Gun Ammo")
+
+/datum/design/rubbershotshell
+	name = "Shotgun Shell: Rubber Shot"
+	desc = "A rubber shot shell."
+	id = "rubbershotshell"
+	req_tech = list("combat" = 1, "materials" = 1)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 200)
+	build_path = /obj/item/ammo_casing/shotgun/rubbershot
+	category = list("Gun Ammo")
+
+/datum/design/beanbagslugshell
+	name = "Shotgun Shell: Beanbag Slug"
+	desc = "A beanbag slug shell."
+	id = "beanbagslugshell"
+	req_tech = list("combat" = 1, "materials" = 1)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 200)
+	build_path = /obj/item/ammo_casing/shotgun/beanbag
+	category = list("Gun Ammo")
+
+/datum/design/dartshell
+	name = "Shotgun Shell: Dart"
+	desc = "A dart shell."
+	id = "dartshell"
+	req_tech = list("combat" = 1, "materials" = 3)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 200)
+	build_path = /obj/item/ammo_casing/shotgun/dart
+	category = list("Gun Ammo")
+
+/datum/design/dbshell
+	name = "Shotgun Shell: Dragon's Breath"
+	desc = "A dragon's breath shell."
+	id = "dbshell"
+	req_tech = list("combat" = 3, "materials" = 3)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 200)
+	build_path = /obj/item/ammo_casing/shotgun/incendiary/dragonsbreath
+	category = list("Gun Ammo")
+
+/datum/design/fragshell
+	name = "Shotgun Shell: Frag"
+	desc = "A slug shell."
+	id = "fragshell"
+	req_tech = list("combat" = 3, "materials" = 3)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 200)
+	build_path = /obj/item/ammo_casing/shotgun/frag12
+	category = list("Gun Ammo")
+
+/datum/design/breachshell
+	name = "Shotgun Shell: Breaching"
+	desc = "A breaching shell."
+	id = "breachshell"
+	req_tech = list("combat" = 1, "materials" = 3)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 200)
+	build_path = /obj/item/ammo_casing/shotgun/breaching
+	category = list("Gun Ammo")
+
+/datum/design/stunshell
+	name = "Shotgun Shell: Stun"
+	desc = "A stunning shell for a shotgun."
+	id = "stunshell"
+	req_tech = list("combat" = 3, "materials" = 3)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 200)
+	build_path = /obj/item/ammo_casing/shotgun/stunslug
+	category = list("Gun Ammo")
+
+/datum/design/techshell
+	name = "Shotgun Shell: Tech Shell"
+	desc = "A high-tech shotgun shell which can be loaded with materials to produce unique effects."
+	id = "techshotshell"
+	req_tech = list("combat" = 3, "materials" = 3, "powerstorage" = 4, "magnets" = 3)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 1000, MAT_GLASS = 200)
+	build_path = /obj/item/ammo_casing/shotgun/techshell
+	category = list("Gun Ammo")
+
+/datum/design/gspraycan
+	name = "Gun Cosmetic: Spray Paint"
+	id = "gspraycan"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 100, MAT_GLASS = 100)
+	build_path = /obj/item/toy/crayon/spraycan
+	category = list("Gun Cosmetics")

@@ -3,6 +3,7 @@
 	uses_overlay = FALSE
 	icon_state = "bullet"
 	not_okay = /obj/item/weapon/gun_attachment/bullet
+	no_revolver = 0
 
 /obj/item/weapon/gun_attachment/bullet/fmj
 	name = "Full Metal Jacket Rounds"
@@ -59,6 +60,5 @@
 
 /obj/item/weapon/gun_attachment/bullet/penetrator/on_fire(var/obj/item/weapon/gun/owner, var/obj/item/projectile/bullet)
 	..()
-	bullet.armour_penetration += 15
 	bullet.forcedodge = 1
-	bullet.damage *= 0.8
+	bullet.damage *= 0.5

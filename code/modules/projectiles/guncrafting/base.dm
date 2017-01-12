@@ -9,8 +9,21 @@
 
 /obj/item/weapon/gun_attachment/base/on_attach(var/obj/item/weapon/gun/owner)
 	..()
+	if(owner.chambered)
+		qdel(owner.chambered)
 	owner.base = src
 	switch(gun_type)
+		if(CUSTOMIZABLE_REVOLVER)
+			var/obj/item/weapon/gun/ballistic/O = owner
+			O.mag_type = mag_type
+			if(internal)
+				O.magazine = new mag_type(O)
+				O.uses_internal = 1
+			else
+				O.uses_internal = 0
+			if(O.chambered)
+				qdel(O.chambered)
+			O.chamber_round()
 		if(CUSTOMIZABLE_PROJECTILE)
 			var/obj/item/weapon/gun/ballistic/O = owner
 			O.mag_type = mag_type
@@ -38,7 +51,7 @@
 /obj/item/weapon/gun_attachment/base/on_remove(var/obj/item/weapon/gun/owner)
 	..()
 	switch(gun_type)
-		if(CUSTOMIZABLE_PROJECTILE)
+		if(CUSTOMIZABLE_PROJECTILE || CUSTOMIZABLE_REVOLVER)
 			var/obj/item/weapon/gun/ballistic/O = owner
 			O.mag_type = null
 			if(O.magazine)

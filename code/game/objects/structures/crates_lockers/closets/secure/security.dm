@@ -183,7 +183,7 @@
 	new /obj/item/ammo_box/c38(src)
 	new /obj/item/ammo_box/c38(src)
 	new /obj/item/weapon/storage/belt/holster(src)
-	new /obj/item/weapon/gun/ballistic/frame/revolver_38(src)
+	new /obj/item/weapon/gun/ballistic/frame/revolver/revolver_38(src)
 
 /obj/structure/closet/secure_closet/injection
 	name = "lethal injections"

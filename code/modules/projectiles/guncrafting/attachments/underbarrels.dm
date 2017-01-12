@@ -1,5 +1,6 @@
 /obj/item/weapon/gun_attachment/underbarrel
 	not_okay = /obj/item/weapon/gun_attachment/underbarrel
+	no_revolver = 0
 
 /obj/item/weapon/gun_attachment/underbarrel/bayonet
 	name = "Bayonet"
