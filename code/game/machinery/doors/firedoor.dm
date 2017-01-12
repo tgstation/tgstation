@@ -49,7 +49,7 @@
 	if(operating)
 		return//Already doing something.
 
-	if(istype(C, /obj/item/weapon/wrench) && panel_open)
+	if(istype(C, /obj/item/weapon/wrench) && welded)
 		playsound(get_turf(src), C.usesound, 50, 1)
 		user.visible_message("<span class='notice'>[user] starts undoing [src]'s bolts...</span>", \
 							 "<span class='notice'>You start unfastening [src]'s floor bolts...</span>")
@@ -59,10 +59,6 @@
 		user.visible_message("<span class='notice'>[user] unfastens [src]'s bolts.</span>", \
 							 "<span class='notice'>You undo [src]'s floor bolts.</span>")
 		deconstruct(TRUE)
-		return
-
-	if(istype(C, /obj/item/weapon/screwdriver))
-		default_deconstruction_screwdriver(user, icon_state, icon_state, C)
 		return
 
 	return ..()
@@ -79,6 +75,7 @@
 /obj/machinery/door/firedoor/try_to_crowbar(obj/item/I, mob/user)
 	if(welded || operating)
 		return
+
 	if(density)
 		open()
 	else
