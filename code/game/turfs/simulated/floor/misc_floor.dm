@@ -15,10 +15,10 @@
 
 /turf/open/floor/bluegrid/New()
 	..()
-	nuke_tiles += src
+	SSmapping.nuke_tiles += src
 
 /turf/open/floor/bluegrid/Destroy()
-	nuke_tiles -= src
+	SSmapping.nuke_tiles -= src
 	return ..()
 
 /turf/open/floor/greengrid
