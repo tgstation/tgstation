@@ -115,7 +115,7 @@
 /datum/riding/atv/turret/handle_vehicle_offsets()
 	..()
 	if(turret)
-		turret.loc = ridden.loc
+		turret.forceMove(get_turf(ridden))
 		switch(ridden.dir)
 			if(NORTH)
 				turret.pixel_x = 0
