@@ -113,10 +113,10 @@
 				return
 
 
-			var/synth_cost = being_built.reagents["synthflesh"]*prod_coeff
+			var/synth_cost = being_built.reagents_list["synthflesh"]*prod_coeff
 			var/power = max(2000, synth_cost/5)
 
-			if(reagents.has_reagent("synthflesh", being_built.reagents["synthflesh"]*prod_coeff))
+			if(reagents.has_reagent("synthflesh", being_built.reagents_list["synthflesh"]*prod_coeff))
 				busy = 1
 				use_power(power)
 				flick("limbgrower_fill",src)
@@ -130,8 +130,8 @@
 	return
 
 /obj/machinery/limbgrower/proc/build_item()
-	if(reagents.has_reagent("synthflesh", being_built.reagents["synthflesh"]*prod_coeff))	//sanity check, if this happens we are in big trouble
-		reagents.remove_reagent("synthflesh",being_built.reagents["synthflesh"]*prod_coeff)
+	if(reagents.has_reagent("synthflesh", being_built.reagents_list["synthflesh"]*prod_coeff))	//sanity check, if this happens we are in big trouble
+		reagents.remove_reagent("synthflesh",being_built.reagents_list["synthflesh"]*prod_coeff)
 		var/buildpath = being_built.build_path
 		if(ispath(buildpath, /obj/item/bodypart))	//This feels like spatgheti code, but i need to initilise a limb somehow
 			build_limb(buildpath)
@@ -221,12 +221,12 @@
 	return dat
 
 /obj/machinery/limbgrower/proc/can_build(datum/design/D)
-	return (reagents.has_reagent("synthflesh", D.reagents["synthflesh"]*prod_coeff)) //Return whether the machine has enough synthflesh to produce the design
+	return (reagents.has_reagent("synthflesh", D.reagents_list["synthflesh"]*prod_coeff)) //Return whether the machine has enough synthflesh to produce the design
 
 /obj/machinery/limbgrower/proc/get_design_cost(datum/design/D)
 	var/dat
-	if(D.reagents["synthflesh"])
-		dat += "[D.reagents["synthflesh"] * prod_coeff] Synthetic flesh "
+	if(D.reagents_list["synthflesh"])
+		dat += "[D.reagents_list["synthflesh"] * prod_coeff] Synthetic flesh "
 	return dat
 
 /obj/machinery/limbgrower/emag_act(mob/user)

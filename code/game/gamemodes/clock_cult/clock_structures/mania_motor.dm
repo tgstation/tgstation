@@ -17,7 +17,6 @@
 	var/mania_cost = 200
 	var/convert_attempt_cost = 500
 	var/convert_cost = 500
-
 	var/static/list/mania_messages = list("Go nuts.", "Take a crack at crazy.", "Make a bid for insanity.", "Get kooky.", "Move towards mania.", "Become bewildered.", "Wax wild.", \
 	"Go round the bend.", "Land in lunacy.", "Try dementia.", "Strive to get a screw loose.")
 	var/static/list/compel_messages = list("Come closer.", "Approach the transmitter.", "Touch the antennae.", "I always have to deal with idiots. Move towards the mania motor.", \
@@ -38,7 +37,7 @@
 /obj/structure/destructible/clockwork/powered/mania_motor/forced_disable(bad_effects)
 	if(active)
 		if(bad_effects)
-			try_use_power(MIN_CLOCKCULT_POWER*2)
+			try_use_power(MIN_CLOCKCULT_POWER*4)
 		visible_message("<span class='warning'>[src] hums loudly, then the sockets at its base fall dark!</span>")
 		playsound(src, 'sound/effects/screech.ogg', 40, 1)
 		toggle()

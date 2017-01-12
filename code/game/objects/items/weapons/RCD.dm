@@ -335,7 +335,7 @@ RCD
 			if(isspaceturf(A))
 				var/turf/open/space/S = A
 				if(useResource(floorcost, user))
-					user << "<span class='notice'>You start building floor...</span>"
+					user << "<span class='notice'>You start building a floor...</span>"
 					activate()
 					S.ChangeTurf(/turf/open/floor/plating)
 					return 1
@@ -344,7 +344,7 @@ RCD
 			if(isfloorturf(A))
 				var/turf/open/floor/F = A
 				if(checkResource(wallcost, user))
-					user << "<span class='notice'>You start building wall...</span>"
+					user << "<span class='notice'>You start building a wall...</span>"
 					playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 					if(do_after(user, walldelay, target = A))
 						if(!istype(F)) return 0
@@ -379,7 +379,7 @@ RCD
 							break
 
 					if(door_check)
-						user << "<span class='notice'>You start building airlock...</span>"
+						user << "<span class='notice'>You start building an airlock...</span>"
 						playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 						if(do_after(user, airlockdelay, target = A))
 							if(!useResource(airlockcost, user)) return 0
