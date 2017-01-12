@@ -131,7 +131,7 @@
 				<b>1:[POWER_PLASTEEL]W</b>, and <b>1:[POWER_FLOOR]W</b>, respectively.</span>"
 			else
 				user << "<span class='alloy'>It can convert brass to power at a rate of <b>1:[POWER_FLOOR]W</b>.</span>"
-			user << "<span class='alloy'>It is storing <b>[get_power()]W/[get_max_power()]W</b> of power, and is gaining [charge_rate*0.5] power per second.</span>"
+			user << "<span class='alloy'>It is storing <b>[get_power()]W/[get_max_power()]W</b> of power, and is gaining <b>[charge_rate*0.5]W</b> of power per second.</span>"
 			user << "<span class='alloy'>Use it in-hand to produce brass sheets.</span>"
 
 /obj/item/clockwork/clockwork_proselytizer/attack_self(mob/living/user)
