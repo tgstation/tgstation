@@ -1,7 +1,13 @@
 /mob/living/carbon/death(gibbed)
 	silent = 0
 	losebreath = 0
+	handling_hal = 1
+	halimage.qdel()
+	halbody.qdel()
+	halitem.qdel()
+	hal_screwyhud = 0
 	..()
+	handling_hal = 0
 
 /mob/living/carbon/gib(no_brain, no_organs, no_bodyparts)
 	for(var/mob/M in src)
