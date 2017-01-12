@@ -32,3 +32,4 @@
 	name = "shotgun internal magazine"
 	ammo_type = /obj/item/ammo_casing/shotgun
 	max_ammo = 6
+	start_empty = 1

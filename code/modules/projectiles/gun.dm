@@ -297,8 +297,7 @@
 			for(var/obj/item/weapon/gun_attachment/underbarrel/U in attachments)
 				var/image/UO = image(icon = 'icons/obj/guncrafting/ausops_new.dmi', icon_state = U.icon_state)
 				UO.color = U.color
-				UO.pixel_x += 3
-				UO.pixel_y -= 3
+				UO.pixel_x += 6
 				add_overlay(UO)
 			for(var/obj/item/weapon/gun_attachment/scope/S in attachments)
 				var/image/I6 = image(icon = 'icons/obj/guncrafting/ausops_new.dmi', icon_state = S.icon_state)
