@@ -10,11 +10,11 @@
 	
 	handling_hal = 1
 	if(halimage)
-		halimage.qdel()
+		qdel(halimage)
 	if(halbody)
-		halbody.qdel()
+		qdel(halbody)
 	if(halitem)
-		halitem.qdel()
+		qdel(halitem)
 	hal_screwyhud = 0
 	. = ..()
 	handling_hal = 0
