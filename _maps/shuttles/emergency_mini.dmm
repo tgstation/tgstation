@@ -110,7 +110,7 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "u" = (
-/obj/machinery/door/airlock/shuttle{
+/obj/machinery/door/airlock/titanium{
 	name = "Emergency Shuttle Airlock"
 	},
 /turf/open/floor/mineral/titanium/blue,
@@ -155,7 +155,7 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "B" = (
-/obj/machinery/door/airlock/shuttle{
+/obj/machinery/door/airlock/titanium{
 	name = "Emergency Shuttle Airlock"
 	},
 /obj/docking_port/mobile/emergency{

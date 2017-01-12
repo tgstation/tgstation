@@ -1,3 +1,4 @@
+#define CALL_BOT_COOLDOWN 900
 var/list/ai_list = list()
 
 //Not sure why this is necessary...
@@ -69,6 +70,7 @@ var/list/ai_list = list()
 	var/last_announcement = "" // For AI VOX, if enabled
 	var/turf/waypoint //Holds the turf of the currently selected waypoint.
 	var/waypoint_mode = 0 //Waypoint mode is for selecting a turf via clicking.
+	var/call_bot_cooldown = 0 //time of next call bot command
 	var/apc_override = 0 //hack for letting the AI use its APC even when visionless
 	var/nuking = FALSE
 	var/obj/machinery/doomsday_device/doomsday_device
@@ -80,48 +82,47 @@ var/list/ai_list = list()
 
 	var/obj/machinery/camera/portable/builtInCamera
 
-/mob/living/silicon/ai/New(loc, datum/ai_laws/L, obj/item/device/mmi/B, safety = 0)
+/mob/living/silicon/ai/New(loc, datum/ai_laws/L, mob/target_ai)
 	..()
-	if(!safety) //Only used by AIize() to successfully spawn an AI.
-		if(!B) //If there is no player/brain inside.
-			new/obj/structure/AIcore/deactivated(loc) //New empty terminal.
-			qdel(src)//Delete AI.
-			return
-		else
-			if(B.brainmob.mind)
-				B.brainmob.mind.transfer_to(src)
-				rename_self("ai")
-				if(mind.special_role)
-					mind.store_memory("As an AI, you must obey your silicon laws above all else. Your objectives will consider you to be dead.")
-					src << "<span class='userdanger'>You have been installed as an AI! </span>"
-					src << "<span class='danger'>You must obey your silicon laws above all else. Your objectives will consider you to be dead.</span>"
+	if(!target_ai) //If there is no player/brain inside.
+		new/obj/structure/AIcore/deactivated(loc) //New empty terminal.
+		qdel(src)//Delete AI.
+		return
 
-			src << "<B>You are playing the station's AI. The AI cannot move, but can interact with many objects while viewing them (through cameras).</B>"
-			src << "<B>To look at other parts of the station, click on yourself to get a camera menu.</B>"
-			src << "<B>While observing through a camera, you can use most (networked) devices which you can see, such as computers, APCs, intercoms, doors, etc.</B>"
-			src << "To use something, simply click on it."
-			src << "Use say :b to speak to your cyborgs through binary."
-			src << "For department channels, use the following say commands:"
-			src << ":o - AI Private, :c - Command, :s - Security, :e - Engineering, :u - Supply, :v - Service, :m - Medical, :n - Science."
-			show_laws()
-			src << "<b>These laws may be changed by other players, or by you being the traitor.</b>"
+	if(L && istype(L, /datum/ai_laws))
+		laws = L
+		laws.associate(src)
+	else
+		make_laws()
 
-			job = "AI"
+	if(target_ai.mind)
+		target_ai.mind.transfer_to(src)
+		if(mind.special_role)
+			mind.store_memory("As an AI, you must obey your silicon laws above all else. Your objectives will consider you to be dead.")
+			src << "<span class='userdanger'>You have been installed as an AI! </span>"
+			src << "<span class='danger'>You must obey your silicon laws above all else. Your objectives will consider you to be dead.</span>"
 
+	src << "<B>You are playing the station's AI. The AI cannot move, but can interact with many objects while viewing them (through cameras).</B>"
+	src << "<B>To look at other parts of the station, click on yourself to get a camera menu.</B>"
+	src << "<B>While observing through a camera, you can use most (networked) devices which you can see, such as computers, APCs, intercoms, doors, etc.</B>"
+	src << "To use something, simply click on it."
+	src << "Use say :b to speak to your cyborgs through binary."
+	src << "For department channels, use the following say commands:"
+	src << ":o - AI Private, :c - Command, :s - Security, :e - Engineering, :u - Supply, :v - Service, :m - Medical, :n - Science."
+	show_laws()
+	src << "<b>These laws may be changed by other players, or by you being the traitor.</b>"
+
+	job = "AI"
+
+	eyeobj.ai = src
+	eyeobj.loc = src.loc
 	rename_self("ai")
-	name = real_name
 
 	holo_icon = getHologramIcon(icon('icons/mob/AI.dmi',"holo1"))
 
 	spark_system = new /datum/effect_system/spark_spread()
 	spark_system.set_up(5, 0, src)
 	spark_system.attach(src)
-
-	if(L)
-		if (istype(L, /datum/ai_laws))
-			laws = L
-	else
-		make_laws()
 
 	verbs += /mob/living/silicon/ai/proc/show_laws_verb
 
@@ -142,10 +143,6 @@ var/list/ai_list = list()
 
 	ai_list += src
 	shuttle_caller_list += src
-
-	eyeobj.ai = src
-	eyeobj.name = "[src.name] (AI Eye)" // Give it a name
-	eyeobj.loc = src.loc
 
 	builtInCamera = new /obj/machinery/camera/portable(src)
 	builtInCamera.network = list("SS13")
@@ -401,6 +398,9 @@ var/list/ai_list = list()
 			src << "Target is not on or near any active cameras on the station."
 		return
 	if(href_list["callbot"]) //Command a bot to move to a selected location.
+		if(call_bot_cooldown > world.time)
+			src << "<span class='danger'>Error: Your last call bot command is still processing, please wait for the bot to finish calculating a route.</span>"
+			return
 		Bot = locate(href_list["callbot"]) in living_mob_list
 		if(!Bot || Bot.remote_disabled || src.control_disabled)
 			return //True if there is no bot found, the bot is manually emagged, or the AI is carded with wireless off.
@@ -494,8 +494,11 @@ var/list/ai_list = list()
 	if(Bot.calling_ai && Bot.calling_ai != src) //Prevents an override if another AI is controlling this bot.
 		src << "<span class='danger'>Interface error. Unit is already in use.</span>"
 		return
-
+	src << "<span class='notice'>Sending command to bot...</span>"
+	call_bot_cooldown = world.time + CALL_BOT_COOLDOWN
 	Bot.call_bot(src, waypoint)
+	call_bot_cooldown = 0
+	
 
 /mob/living/silicon/ai/triggerAlarm(class, area/A, O, obj/alarmsource)
 	if(alarmsource.z != z)
@@ -866,5 +869,7 @@ var/list/ai_list = list()
 			exclusive control."
 		apc.update_icon()
 
-/mob/living/silicon/ai/spawned/New(loc, datum/ai_laws/L, obj/item/device/mmi/B, safety = 0)
-	..(loc,L,B,1)
+/mob/living/silicon/ai/spawned/New(loc, datum/ai_laws/L, mob/target_ai)
+	if(!target_ai)
+		target_ai = src //cheat! just give... ourselves as the spawned AI, because that's technically correct
+	..()

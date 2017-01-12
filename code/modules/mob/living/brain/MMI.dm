@@ -9,12 +9,12 @@
 	origin_tech = "biotech=2;programming=3;engineering=2"
 	var/braintype = "Cyborg"
 	var/obj/item/device/radio/radio = null //Let's give it a radio.
-	var/hacked = 0 //Whether or not this is a Syndicate MMI
 	var/mob/living/brain/brainmob = null //The current occupant.
 	var/mob/living/silicon/robot = null //Appears unused.
 	var/obj/mecha = null //This does not appear to be used outside of reference in mecha.dm.
 	var/obj/item/organ/brain/brain = null //The actual brain
-	var/clockwork = FALSE //If this is a soul vessel
+	var/datum/ai_laws/laws = new()
+	var/force_replace_ai_name = FALSE
 
 /obj/item/device/mmi/update_icon()
 	if(brain)
@@ -37,8 +37,12 @@
 	..()
 	radio = new(src) //Spawns a radio inside the MMI.
 	radio.broadcasting = 0 //researching radio mmis turned the robofabs into radios because this didnt start as 0.
+	if(config)
+		laws.set_laws_config()
 
-
+/obj/item/device/mmi/initialize()
+	..()
+	laws.set_laws_config()
 
 /obj/item/device/mmi/attackby(obj/item/O, mob/user, params)
 	user.changeNext_move(CLICK_CD_MELEE)
@@ -68,8 +72,6 @@
 			living_mob_list += brainmob
 
 		brainmob.reset_perspective()
-		if(clockwork)
-			add_servant_of_ratvar(brainmob, TRUE)
 		newbrain.loc = src //P-put your brain in it
 		brain = newbrain
 
@@ -136,6 +138,8 @@
 	update_icon()
 	return
 
+/obj/item/device/mmi/proc/replacement_ai_name()
+	return brainmob.name
 
 /obj/item/device/mmi/verb/Toggle_Listening()
 	set name = "Toggle Listening"
@@ -154,7 +158,7 @@
 	brainmob << "<span class='notice'>Radio is [radio.listening==1 ? "now" : "no longer"] receiving broadcast.</span>"
 
 /obj/item/device/mmi/emp_act(severity)
-	if(!brainmob)
+	if(!brainmob || iscyborg(loc))
 		return
 	else
 		switch(severity)
@@ -205,10 +209,10 @@
 
 /obj/item/device/mmi/syndie
 	name = "Syndicate Man-Machine Interface"
-	desc = "Syndicate's own brand of MMI. It enforces laws designed to help Syndicate agents achieve their goals upon cyborgs created with it, but doesn't fit in Nanotrasen AI cores."
+	desc = "Syndicate's own brand of MMI. It enforces laws designed to help Syndicate agents achieve their goals upon cyborgs and AIs created with it."
 	origin_tech = "biotech=4;programming=4;syndicate=2"
-	hacked = 1
 
 /obj/item/device/mmi/syndie/New()
 	..()
+	laws = new /datum/ai_laws/syndicate_override()
 	radio.on = 0

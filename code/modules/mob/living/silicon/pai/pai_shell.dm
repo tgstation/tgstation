@@ -17,7 +17,7 @@
 		return FALSE
 
 	emittersemicd = TRUE
-	addtimer(src, "emittercool", emittercd)
+	addtimer(CALLBACK(src, .proc/emittercool), emittercd)
 	canmove = TRUE
 	density = TRUE
 	if(istype(card.loc, /obj/item/device/pda))
@@ -46,9 +46,9 @@
 /mob/living/silicon/pai/proc/fold_in(force = FALSE)
 	emittersemicd = TRUE
 	if(!force)
-		addtimer(src, "emittercool", emittercd)
+		addtimer(CALLBACK(src, .proc/emittercool), emittercd)
 	else
-		addtimer(src, "emittercool", emitteroverloadcd)
+		addtimer(CALLBACK(src, .proc/emittercool), emitteroverloadcd)
 	icon_state = "[chassis]"
 	if(!holoform)
 		. = fold_out(force)
@@ -90,3 +90,13 @@
 	if(loc != card)
 		visible_message("<span class='notice'>[src] [rest? "lays down for a moment..." : "perks up from the ground"]</span>")
 
+/mob/living/silicon/pai/start_pulling(atom/movable/AM)
+	return FALSE
+
+/mob/living/silicon/pai/proc/toggle_integrated_light()
+	if(!luminosity)
+		SetLuminosity(light_power)
+		src << "<span class='notice'>You enable your integrated light.</span>"
+	else
+		SetLuminosity(0)
+		src << "<span class='notice'>You disable your integrated light.</span>"

@@ -5,6 +5,9 @@
 	var/actiontooltipstyle = ""
 	screen_loc = null
 
+	var/button_icon_state
+	var/appearance_cache
+
 /obj/screen/movable/action_button/Click(location,control,params)
 	var/list/modifiers = params2list(params)
 	if(modifiers["shift"])
@@ -76,10 +79,10 @@
 
 //see human and alien hud for specific implementations.
 
-/mob/proc/update_action_buttons_icon()
+/mob/proc/update_action_buttons_icon(status_only = FALSE)
 	for(var/X in actions)
 		var/datum/action/A = X
-		A.UpdateButtonIcon()
+		A.UpdateButtonIcon(status_only)
 
 //This is the proc used to update all the action buttons.
 /mob/proc/update_action_buttons(reload_screen)
@@ -99,7 +102,7 @@
 	else
 		for(var/datum/action/A in actions)
 			button_number++
-			A.UpdateButtonIcon(hud_used)
+			A.UpdateButtonIcon()
 			var/obj/screen/movable/action_button/B = A.button
 			if(!B.moved)
 				B.screen_loc = hud_used.ButtonNumberToScreenCoords(button_number)

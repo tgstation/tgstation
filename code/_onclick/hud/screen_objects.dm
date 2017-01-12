@@ -201,7 +201,7 @@
 			usr.a_intent_change(INTENT_DISARM)
 
 	else
-		usr.a_intent_change(INTENT_NEXT)
+		usr.a_intent_change(INTENT_HOTKEY_RIGHT)
 
 /obj/screen/act_intent/alien
 	icon = 'icons/mob/screen_alien.dmi'

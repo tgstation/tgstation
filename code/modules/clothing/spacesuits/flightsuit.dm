@@ -37,12 +37,12 @@
 	var/override_safe = FALSE
 
 	var/boost = FALSE
-	var/boost_maxcharge = 50	//Vroom! If you hit someone while boosting they'll likely be knocked flying. Fun.
-	var/boost_charge = 50
+	var/boost_maxcharge = 30	//Vroom! If you hit someone while boosting they'll likely be knocked flying. Fun.
+	var/boost_charge = 30
 	var/boost_speed = 2
 	var/boost_power = 50
-	var/boost_chargerate = 0.5
-	var/boost_drain = 10	//Keep in mind it charges and drains at the same time, so drain realistically is drain-charge=change
+	var/boost_chargerate = 0.3
+	var/boost_drain = 6	//Keep in mind it charges and drains at the same time, so drain realistically is drain-charge=change
 
 	var/momentum_x = 0		//Realistic physics. No more "Instant stopping while barreling down a hallway at Mach 1".
 	var/momentum_y = 0
@@ -50,22 +50,23 @@
 	var/momentum_impact_coeff = 0.5	//At this speed you'll start coliding with people resulting in momentum loss and them being knocked back, but no injuries or knockdowns
 	var/momentum_impact_loss = 50
 	var/momentum_crash_coeff = 0.8	//At this speed if you hit a dense object, you will careen out of control, while that object will be knocked flying.
-	var/momentum_drift_coeff = 0.13
+	var/momentum_drift_coeff = 0.04
 	var/momentum_speed = 0	//How fast we are drifting around
 	var/momentum_speed_x = 0
 	var/momentum_speed_y = 0
-	var/momentum_passive_loss = 7
+	var/momentum_passive_loss = 4
 	var/momentum_gain = 20
+	var/drift_tolerance = 2
 
 	var/stabilizer = TRUE
-	var/stabilizer_decay_amount = 23
+	var/stabilizer_decay_amount = 11
 	var/gravity = TRUE
-	var/gravity_decay_amount = 5
+	var/gravity_decay_amount = 3
 	var/pressure = TRUE
-	var/pressure_decay_amount = 5
+	var/pressure_decay_amount = 3
 	var/pressure_threshold = 30
 	var/brake = FALSE
-	var/airbrake_decay_amount = 60
+	var/airbrake_decay_amount = 30
 
 	var/resync = FALSE	//Used to resync the flight-suit every 30 seconds or so.
 
@@ -77,7 +78,7 @@
 	var/emp_damage = 0	//One hit should make it hard to control, continuous hits will cripple it and then simply shut it off/make it crash. Direct hits count more.
 	var/emp_strong_damage = 1.5
 	var/emp_weak_damage = 1
-	var/emp_heal_amount = 0.1		//How much emp damage to heal per process.
+	var/emp_heal_amount = 0.06		//How much emp damage to heal per process.
 	var/emp_disable_threshold = 3	//3 weak ion, 2 strong ion hits.
 	var/emp_disabled = FALSE
 
@@ -85,7 +86,7 @@
 	var/crash_damage_low = 1
 	var/crash_damage_high = 2.5
 	var/crash_disable_threshold = 5
-	var/crash_heal_amount = 0.1
+	var/crash_heal_amount = 0.06
 	var/crash_disabled = FALSE
 	var/crash_dampening = 0
 
@@ -103,19 +104,20 @@
 
 //Start/Stop processing the item to use momentum and flight mechanics.
 /obj/item/device/flightpack/New()
-	START_PROCESSING(SSfastprocess, src)
-	..()
 	ion_trail = new
 	ion_trail.set_up(src)
+	START_PROCESSING(SSflightpacks, src)
+	..()
+	update_parts()
 
 /obj/item/device/flightpack/full/New()
-	..()
 	part_manip = new /obj/item/weapon/stock_parts/manipulator/pico(src)
 	part_scan = new /obj/item/weapon/stock_parts/scanning_module/phasic(src)
 	part_cap = new /obj/item/weapon/stock_parts/capacitor/super(src)
 	part_laser = new /obj/item/weapon/stock_parts/micro_laser/ultra(src)
 	part_bin = new /obj/item/weapon/stock_parts/matter_bin/super(src)
 	assembled = TRUE
+	..()
 
 /obj/item/device/flightpack/proc/update_parts()
 	boost_chargerate = initial(boost_chargerate)
@@ -143,8 +145,8 @@
 	powersetting_high = Clamp(laser, 0, 3)
 	emp_disable_threshold = bin*1.25
 	crash_disable_threshold = bin*2
-	stabilizer_decay_amount = scan*5.75
-	airbrake_decay_amount = manip*15
+	stabilizer_decay_amount = scan*3.5
+	airbrake_decay_amount = manip*8
 	crash_dampening = bin
 
 /obj/item/device/flightpack/Destroy()
@@ -155,7 +157,7 @@
 	qdel(part_cap)
 	qdel(part_laser)
 	qdel(part_bin)
-	STOP_PROCESSING(SSfastprocess, src)
+	STOP_PROCESSING(SSflightpacks, src)
 	part_manip = null
 	part_scan = null
 	part_cap = null
@@ -228,6 +230,8 @@
 		momentum_increment = boost_power
 	if(brake)
 		momentum_increment = 0
+	if(!gravity && !pressure)
+		momentum_increment -= 10
 	switch(dir)
 		if(NORTH)
 			adjust_momentum(0, momentum_increment)
@@ -299,7 +303,7 @@
 		if(!suit)
 			disable_flight(1)
 		if(!resync)
-			addtimer(src, "resync", 600, TIMER_NORMAL)
+			addtimer(CALLBACK(src, .proc/resync), 600)
 			resync = 1
 		if(!wearer)	//Oh god our user fell off!
 			disable_flight(1)
@@ -342,7 +346,6 @@
 		return FALSE
 	if(wearer)
 		wearer.float(TRUE)
-
 
 /obj/item/device/flightpack/proc/handle_damage()
 	if(crash_damage)
@@ -405,6 +408,7 @@
 		powersetting = 1
 	momentum_gain = powersetting * 10
 	usermessage("Engine output set to [momentum_gain].")
+	momentum_drift_coeff = ((momentum_gain)*(drift_tolerance*1.1))/momentum_max
 
 /obj/item/device/flightpack/proc/crash_damage(density, anchored, speed, victim_name)
 	var/crashmessagesrc = "<span class='userdanger'>[wearer] violently crashes into [victim_name], "
@@ -434,7 +438,7 @@
 		angle -= 360
 	dir = angle2dir(angle)
 	var/turf/target = get_edge_target_turf(get_turf(wearer), dir)
-	wearer.throw_at_fast(target, (speed+density+anchored), 2, wearer)
+	wearer.throw_at(target, (speed+density+anchored), 2, wearer)
 	wearer.visible_message("[wearer] is knocked flying by the impact!")
 
 /obj/item/device/flightpack/proc/flight_impact(atom/unmovablevictim, crashdir)	//Yes, victim.
@@ -463,12 +467,38 @@
 		if(L.throwing || (L.pulledby == wearer))
 			crashing = FALSE
 			return FALSE
+		if(L.buckled)
+			wearer.visible_message("<span class='warning'>[wearer] reflexively flies over [L]!</span>")
+			crashing = FALSE
+			return FALSE
 		suit.user.forceMove(get_turf(unmovablevictim))
 		crashing = FALSE
 		mobknockback(L, crashpower, crashdir)
 		damage = FALSE
 		density = TRUE
 		anchored = FALSE
+	else if(istype(unmovablevictim, /obj/structure/grille))
+		if(crashpower > 1)
+			var/obj/structure/grille/S = unmovablevictim
+			crash_grille(S)
+		crashing = FALSE
+		return FALSE
+	else if((istype(unmovablevictim, /obj/machinery/door)) && (!istype(unmovablevictim, /obj/machinery/door/poddoor)))
+		var/obj/machinery/door/D = unmovablevictim
+		if(!airlock_hit(D))
+			crashing = FALSE
+			return FALSE
+		else if(momentum_speed < 3)
+			crashing = FALSE
+			return FALSE
+		damage = TRUE
+		anchored = TRUE
+		density = FALSE
+	else if(istype(unmovablevictim, /obj/structure/mineral_door))
+		var/obj/structure/mineral_door/D = unmovablevictim
+		door_hit(D)
+		crashing = FALSE
+		return FALSE
 	else if(isclosedturf(unmovablevictim))
 		if(crashpower < 3)
 			crashing = FALSE
@@ -489,8 +519,40 @@
 	if(damage)
 		crash_damage(density, anchored, momentum_speed, unmovablevictim.name)
 		userknockback(density, anchored, momentum_speed, dir)
-		losecontrol(move = FALSE)
+		losecontrol(stun = FALSE, move = FALSE)
 	crashing = FALSE
+
+/obj/item/device/flightpack/proc/door_hit(obj/structure/mineral_door/door)
+	spawn()
+		door.Open()
+	wearer.forceMove(get_turf(door))
+	wearer.visible_message("<span class='boldnotice'>[wearer] rolls to their sides and slips past [door]!</span>")
+
+
+/obj/item/device/flightpack/proc/crash_grille(obj/structure/grille/target)
+	target.hitby(wearer)
+	target.take_damage(60, BRUTE, "melee", 1)
+	if(wearer.Move(target.loc))
+		wearer.visible_message("<span class='warning'>[wearer] smashes straight past [target]!</span>")
+
+/obj/item/device/flightpack/proc/airlock_hit(obj/machinery/door/A)
+	var/pass = 0
+	if(A.density)	//Is it closed?
+		pass += A.locked
+		pass += A.stat	//No power, no automatic open
+		pass += A.emagged
+		if(A.requiresID())
+			if((!A.allowed(wearer)) && !A.emergency)
+				pass += 1
+	else
+		return pass
+	if(!pass)
+		spawn()
+			A.open()
+		wearer.visible_message("<span class='warning'>[wearer] rolls sideways and slips past [A]</span>")
+		wearer.forceMove(get_turf(A))
+	return pass
+
 
 /obj/item/device/flightpack/proc/mobknockback(mob/living/victim, power, direction)
 	if(!ismob(victim))
@@ -517,7 +579,7 @@
 	for(var/i in 1 to (knockback-1))
 		target = get_step(target, throwdir)
 	wearer.visible_message(knockmessage)
-	victim.throw_at_fast(target, knockback, 1)
+	victim.throw_at(target, knockback, 1)
 	victim.Weaken(stun)
 
 /obj/item/device/flightpack/proc/victimknockback(atom/movable/victim, power, direction)
@@ -545,12 +607,16 @@
 	for(var/i in 1 to knockback/3)
 		target = get_step(target, pick(alldirs))
 	if(knockback)
-		victim.throw_at_fast(target, knockback, part_manip.rating)
+		victim.throw_at(target, knockback, part_manip.rating)
 	if(isobj(victim))
 		var/obj/O = victim
 		O.take_damage(damage)
 
 /obj/item/device/flightpack/proc/losecontrol(stun = FALSE, move = TRUE)
+	if(!move)
+		momentum_x = 0
+		momentum_y = 0
+		calculate_momentum_speed()
 	usermessage("Warning: Control system not responding. Deactivating!", 3)
 	wearer.visible_message("<span class='warning'>[wearer]'s flight suit abruptly shuts off and they lose control!</span>")
 	if(wearer)
@@ -566,7 +632,7 @@
 	momentum_x = 0
 	momentum_y = 0
 	if(flight)
-		disable_flight()
+		disable_flight(FALSE)
 
 /obj/item/device/flightpack/proc/enable_flight(forced = FALSE)
 	if(!suit)
@@ -588,7 +654,7 @@
 	if(forced)
 		losecontrol(stun = TRUE)
 		return TRUE
-	if(abs(momentum_x) <= 20 && abs(momentum_y) <= 20)
+	if(momentum_speed <= 1)
 		momentum_x = 0
 		momentum_y = 0
 		usermessage("DISENGAGING FLIGHT ENGINES.")
@@ -606,7 +672,7 @@
 			return TRUE
 		usermessage("Warning: Velocity too high to safely disengage. Retry to confirm emergency shutoff.", 2)
 		override_safe = TRUE
-		addtimer(src, "enable_safe", 50, TIMER_NORMAL)
+		addtimer(CALLBACK(src, .proc/enable_safe), 50)
 		return FALSE
 	update_icon()
 
@@ -627,14 +693,6 @@
 	..()
 
 /obj/item/device/flightpack/proc/calculate_momentum_speed()
-	if(momentum_x == 0 && momentum_y == 0)	//Calculate total
-		momentum_speed = 0
-	else if((abs(momentum_x) >= (momentum_crash_coeff*momentum_max))||(abs(momentum_y) >= (momentum_crash_coeff*momentum_max)))
-		momentum_speed = 3
-	else if((abs(momentum_x) >= (momentum_impact_coeff*momentum_max))||(abs(momentum_y) >= (momentum_impact_coeff*momentum_max)))
-		momentum_speed = 2
-	else if((abs(momentum_x) >= (momentum_drift_coeff*momentum_max))||(abs(momentum_y) >= (momentum_drift_coeff*momentum_max)))
-		momentum_speed = 1
 	if(abs(momentum_x) >= (momentum_crash_coeff*momentum_max))	//Calculate X
 		momentum_speed_x = 3
 	else if(abs(momentum_x) >= (momentum_impact_coeff*momentum_max))
@@ -651,6 +709,7 @@
 		momentum_speed_y = 1
 	else
 		momentum_speed_y = 0
+	momentum_speed = max(momentum_speed_x, momentum_speed_y)
 
 /obj/item/device/flightpack/item_action_slot_check(slot)
 	if(slot == slot_back)
@@ -735,35 +794,45 @@
 	if(istype(I, /obj/item/weapon/stock_parts))
 		var/obj/item/weapon/stock_parts/S = I
 		if(istype(S, /obj/item/weapon/stock_parts/manipulator))
-			if((!part_manip) || (part_manip.rating < S.rating))
-				usermessage("[I] has been sucessfully installed into systems.")
-				if(user.unEquip(I))
-					I.loc = src
-					part_manip = I
+			usermessage("[I] has been sucessfully installed into systems.")
+			if(user.unEquip(I))
+				if(part_manip)
+					part_manip.forceMove(get_turf(src))
+					part_manip = null
+				I.loc = src
+				part_manip = I
 		if(istype(S, /obj/item/weapon/stock_parts/scanning_module))
-			if((!part_scan) || (part_scan.rating < S.rating))
-				usermessage("[I] has been sucessfully installed into systems.")
-				if(user.unEquip(I))
-					I.loc = src
-					part_scan = I
+			usermessage("[I] has been sucessfully installed into systems.")
+			if(user.unEquip(I))
+				if(part_scan)
+					part_scan.forceMove(get_turf(src))
+					part_scan = null
+				I.loc = src
+				part_scan = I
 		if(istype(S, /obj/item/weapon/stock_parts/micro_laser))
-			if((!part_laser) || (part_laser.rating < S.rating))
-				usermessage("[I] has been sucessfully installed into systems.")
-				if(user.unEquip(I))
-					I.loc = src
-					part_laser = I
+			usermessage("[I] has been sucessfully installed into systems.")
+			if(user.unEquip(I))
+				if(part_laser)
+					part_laser.forceMove(get_turf(src))
+					part_laser = null
+				I.loc = src
+				part_laser = I
 		if(istype(S, /obj/item/weapon/stock_parts/matter_bin))
-			if((!part_bin) || (part_bin.rating < S.rating))
-				usermessage("[I] has been sucessfully installed into systems.")
-				if(user.unEquip(I))
-					I.loc = src
-					part_bin = I
+			usermessage("[I] has been sucessfully installed into systems.")
+			if(user.unEquip(I))
+				if(part_bin)
+					part_bin.forceMove(get_turf(src))
+					part_bin = null
+				I.loc = src
+				part_bin = I
 		if(istype(S, /obj/item/weapon/stock_parts/capacitor))
-			if((!part_cap) || (part_cap.rating < S.rating))
-				usermessage("[I] has been sucessfully installed into systems.")
-				if(user.unEquip(I))
-					I.loc = src
-					part_cap = I
+			usermessage("[I] has been sucessfully installed into systems.")
+			if(user.unEquip(I))
+				if(part_cap)
+					part_cap.forceMove(get_turf(src))
+					part_cap = null
+				I.loc = src
+				part_cap = I
 	update_parts()
 	..()
 
@@ -799,6 +868,7 @@
 /obj/item/clothing/shoes/flightshoes/Destroy()
 	if(suit)
 		suit.shoes = null
+	return ..()
 
 /obj/item/clothing/shoes/flightshoes/proc/toggle(toggle)
 	if(suit)
@@ -1181,6 +1251,9 @@
 	armor = list(melee = 20, bullet = 20, laser = 20, energy = 10, bomb = 30, bio = 100, rad = 75, fire = 100, acid = 100)
 	max_heat_protection_temperature = FIRE_HELM_MAX_TEMP_PROTECT
 	var/list/datahuds = list(DATA_HUD_SECURITY_ADVANCED, DATA_HUD_MEDICAL_ADVANCED, DATA_HUD_DIAGNOSTIC)
+	var/zoom_range = 14
+	var/zoom = FALSE
+	actions_types = list(/datum/action/item_action/toggle_helmet_light, /datum/action/item_action/flightpack/zoom)
 
 /obj/item/clothing/head/helmet/space/hardsuit/flightsuit/equipped(mob/living/carbon/human/wearer, slot)
 	..()
@@ -1193,7 +1266,25 @@
 	for(var/hudtype in datahuds)
 		var/datum/atom_hud/H = huds[hudtype]
 		H.remove_hud_from(wearer)
+	if(zoom)
+		toggle_zoom(wearer, TRUE)
 
+/obj/item/clothing/head/helmet/space/hardsuit/flightsuit/ui_action_click(owner, action)
+	if(istype(action, /datum/action/item_action/flightpack/zoom))
+		toggle_zoom(owner)
+	. = ..()
+
+/obj/item/clothing/head/helmet/space/hardsuit/flightsuit/proc/toggle_zoom(mob/living/user, force_off = FALSE)
+	if(zoom || force_off)
+		user.client.view = world.view
+		user << "<span class='boldnotice'>Disabling smart zooming image enhancement...</span>"
+		zoom = FALSE
+		return FALSE
+	else
+		user.client.view = zoom_range
+		user << "<span class='boldnotice'>Enabling smart zooming image enhancement!</span>"
+		zoom = TRUE
+		return TRUE
 
 //ITEM actionS------------------------------------------------------------------------------------------------------------------------------------------------------
 //TODO: TOGGLED BUTTON SPRITES
@@ -1241,3 +1332,8 @@
 	name = "Toggle Airbrake"
 	button_icon_state = "flightpack_airbrake"
 	background_icon_state = "bg_tech_blue"
+
+/datum/action/item_action/flightpack/zoom
+	name = "Helmet Smart Zoom"
+	background_icon_state = "bg_tech_blue"
+	button_icon_state = "sniper_zoom"

@@ -11,8 +11,14 @@
 
 /obj/item/clockwork/component/pickup(mob/living/user)
 	..()
-	if(iscultist(user) || (user.mind && user.mind.assigned_role == "Chaplain"))
+	if(iscultist(user) || (user.mind && user.mind.isholy))
 		user << "<span class='[message_span]'>[cultist_message]</span>"
+		if(user.mind && user.mind.isholy)
+			user << "<span class='boldannounce'>The power of your faith melts away the [src]!</span>"
+			var/obj/item/weapon/ore/slag/wrath = new /obj/item/weapon/ore/slag
+			user.unEquip(src)
+			user.put_in_active_hand(wrath)
+			qdel(src)
 	if(is_servant_of_ratvar(user) && prob(20))
 		var/pickedmessage = pick(servant_of_ratvar_messages)
 		user << "<span class='[message_span]'>[servant_of_ratvar_messages[pickedmessage] ? "[text2ratvar(pickedmessage)]" : pickedmessage]</span>"
@@ -78,7 +84,6 @@
 	servant_of_ratvar_messages = list("\"Who broke this.\"" = TRUE, "\"Did you break these off YOURSELF?\"" = TRUE, "\"Why did we give this to such simpletons, anyway?\"" = TRUE, \
 	"\"At least we can use these for something - unlike you.\"" = TRUE)
 
-//Replicant Alloy. Used for fuel and construction, and not merely scripture.
 /obj/item/clockwork/component/replicant_alloy
 	name = "replicant alloy"
 	desc = "A seemingly strong but very malleable chunk of metal. It seems as though it wants to be molded into something greater."
@@ -88,19 +93,6 @@
 	servant_of_ratvar_messages = list("\"There's always something to be done. Get to it.\"" = FALSE, "\"Idle hands are worse than broken ones. Get to work.\"" = FALSE, \
 	"A detailed image of Ratvar appears in the alloy for a moment." = FALSE)
 	message_span = "nezbere"
-
-/obj/item/clockwork/component/replicant_alloy/examine(mob/user)
-	..()
-	if(is_servant_of_ratvar(user))
-		user << "<span class='alloy'>Can be used to fuel Clockwork Proselytizers and Mending Motors, or shaped into brass sheets.</span>"
-
-/obj/item/clockwork/component/replicant_alloy/attack_self(mob/user)
-	if(is_servant_of_ratvar(user))
-		var/obj/item/stack/tile/brass/B = new /obj/item/stack/tile/brass(get_turf(src), 10)
-		user.unEquip(src, TRUE)
-		user.put_in_hands(B)
-		user << "<span class='brass'>You shape the alloy into some brass sheets.</span>"
-		qdel(src)
 
 /obj/item/clockwork/component/replicant_alloy/smashed_anima_fragment
 	name = "smashed anima fragment"

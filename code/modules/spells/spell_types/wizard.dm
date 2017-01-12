@@ -311,7 +311,7 @@
 	selection_type = "view"
 	sound = 'sound/magic/Repulse.ogg'
 	var/maxthrow = 5
-	var/sparkle_path = /obj/effect/overlay/temp/sparkle
+	var/sparkle_path = /obj/effect/overlay/temp/gravpush
 
 	action_icon_state = "repulse"
 
@@ -324,11 +324,11 @@
 		for(var/atom/movable/AM in T)
 			thrownatoms += AM
 
-	for(var/atom/movable/AM in thrownatoms)
-		if(AM == user || AM.anchored) continue
+	for(var/am in thrownatoms)
+		var/atom/movable/AM = am
+		if(AM == user || AM.anchored)
+			continue
 
-		// created sparkles will disappear on their own
-		PoolOrNew(sparkle_path, AM)
 		throwtarget = get_edge_target_turf(user, get_dir(user, get_step_away(AM, user)))
 		distfromcaster = get_dist(user, AM)
 		if(distfromcaster == 0)
@@ -338,11 +338,12 @@
 				M.adjustBruteLoss(5)
 				M << "<span class='userdanger'>You're slammed into the floor by [user]!</span>"
 		else
+			PoolOrNew(sparkle_path, list(get_turf(AM), get_dir(user, AM))) //created sparkles will disappear on their own
 			if(isliving(AM))
 				var/mob/living/M = AM
 				M.Weaken(stun_amt)
 				M << "<span class='userdanger'>You're thrown back by [user]!</span>"
-			AM.throw_at_fast(throwtarget, ((Clamp((maxthrow - (Clamp(distfromcaster - 2, 0, distfromcaster))), 3, maxthrow))), 1,user)//So stuff gets tossed around at the same time.
+			AM.throw_at(throwtarget, ((Clamp((maxthrow - (Clamp(distfromcaster - 2, 0, distfromcaster))), 3, maxthrow))), 1,user)//So stuff gets tossed around at the same time.
 
 /obj/effect/proc_holder/spell/aoe_turf/repulse/xeno //i fixed conflicts only to find out that this is in the WIZARD file instead of the xeno file?!
 	name = "Tail Sweep"
@@ -353,7 +354,7 @@
 	range = 2
 	cooldown_min = 150
 	invocation_type = "none"
-	sparkle_path = /obj/effect/overlay/temp/sparkle/tailsweep
+	sparkle_path = /obj/effect/overlay/temp/dir_setting/tailsweep
 	action_icon_state = "tailsweep"
 	action_background_icon_state = "bg_alien"
 
@@ -411,7 +412,7 @@
 			M.electrocute_act(80, src, illusion = 1)
 		qdel(src)
 
-/obj/item/spellpacket/lightningbolt/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0)
+/obj/item/spellpacket/lightningbolt/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback)
 	. = ..()
 	if(ishuman(thrower))
 		var/mob/living/carbon/human/H = thrower

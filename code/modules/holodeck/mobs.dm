@@ -17,4 +17,4 @@
 	butcher_results = list()
 	response_help = "pets"
 	response_disarm = "pushes aside"
-	response_harm = "bites"
+	response_harm = "kicks"

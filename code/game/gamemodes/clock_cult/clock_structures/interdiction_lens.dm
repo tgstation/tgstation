@@ -21,7 +21,7 @@
 	user << "<span class='[recharging > world.time ? "neovgre_small":"brass"]'>Its gemstone [recharging > world.time ? "has been breached by writhing tendrils of blackness that cover the totem" \
 	: "vibrates in place and thrums with power"].</span>"
 	if(is_servant_of_ratvar(user) || isobserver(user))
-		user << "<span class='neovgre_small'>If it fails to drain any electronics, it will disable itself for <b>[round(recharge_time/600, 1)]</b> minutes.</span>"
+		user << "<span class='neovgre_small'>If it fails to drain any electronics or has nothing to return power to, it will disable itself for <b>[round(recharge_time/600, 1)]</b> minutes.</span>"
 
 /obj/structure/destructible/clockwork/powered/interdiction_lens/toggle(fast_process, mob/living/user)
 	. = ..()
@@ -37,6 +37,19 @@
 			return 0
 		toggle(0, user)
 
+/obj/structure/destructible/clockwork/powered/interdiction_lens/forced_disable(bad_effects)
+	if(disabled)
+		return FALSE
+	if(!active)
+		toggle(0)
+	visible_message("<span class='warning'>The gemstone suddenly turns horribly dark, writhing tendrils covering it!</span>")
+	recharging = world.time + recharge_time
+	flick("interdiction_lens_discharged", src)
+	icon_state = "interdiction_lens_inactive"
+	SetLuminosity(2,1)
+	disabled = TRUE
+	return TRUE
+
 /obj/structure/destructible/clockwork/powered/interdiction_lens/process()
 	. = ..()
 	if(recharging > world.time)
@@ -47,6 +60,9 @@
 		disabled = FALSE
 		toggle(0)
 	else
+		if(!check_apc_and_sigils())
+			forced_disable()
+			return
 		var/successfulprocess = FALSE
 		var/power_drained = 0
 		var/list/atoms_to_test = list()
@@ -104,9 +120,4 @@
 			playsound(src, 'sound/items/PSHOOM.ogg', 50 * efficiency, 1, interdiction_range-7, 1)
 
 		if(!successfulprocess)
-			visible_message("<span class='warning'>The gemstone suddenly turns horribly dark, writhing tendrils covering it!</span>")
-			recharging = world.time + recharge_time
-			flick("interdiction_lens_discharged", src)
-			icon_state = "interdiction_lens_inactive"
-			SetLuminosity(2,1)
-			disabled = TRUE
+			forced_disable()

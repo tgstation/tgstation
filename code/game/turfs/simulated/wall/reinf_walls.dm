@@ -9,6 +9,8 @@
 	var/d_state = INTACT
 	hardness = 10
 	sheet_type = /obj/item/stack/sheet/plasteel
+	sheet_amount = 1
+	girder_type = /obj/structure/girder/reinforced
 	explosion_block = 2
 
 /turf/closed/wall/r_wall/examine(mob/user)
@@ -29,12 +31,8 @@
 		if(SHEATH)
 			user << "<span class='notice'>The support rods have been <i>sliced through</i>, and the outer sheath is <b>connected loosely</b> to the girder.</span>"
 
-/turf/closed/wall/r_wall/break_wall()
-	new sheet_type(src)
-	return (new /obj/structure/girder/reinforced(src))
-
 /turf/closed/wall/r_wall/devastate_wall()
-	new sheet_type(src)
+	new sheet_type(src, sheet_amount)
 	new /obj/item/stack/sheet/metal(src, 2)
 
 /turf/closed/wall/r_wall/attack_animal(mob/living/simple_animal/M)
@@ -191,7 +189,7 @@
 			if(istype(W, /obj/item/weapon/gun/energy/plasmacutter))
 				user << "<span class='notice'>You begin slicing through the support rods...</span>"
 				playsound(src, 'sound/items/Welder.ogg', 100, 1)
-				if(do_after(user, 70*W.toolspeed, target = src))
+				if(do_after(user, 100*W.toolspeed, target = src))
 					if(!istype(src, /turf/closed/wall/r_wall) || !W || d_state != SUPPORT_RODS)
 						return 1
 					d_state = SHEATH
@@ -236,13 +234,14 @@
 	return 0
 
 /turf/closed/wall/r_wall/proc/update_icon()
-	if(d_state)
+	if(d_state != INTACT)
 		smooth = SMOOTH_FALSE
 		clear_smooth_overlays()
 		icon_state = "r_wall-[d_state]"
 	else
 		smooth = SMOOTH_TRUE
 		queue_smooth_neighbors(src)
+		queue_smooth(src)
 		icon_state = "r_wall"
 
 /turf/closed/wall/r_wall/singularity_pull(S, current_size)

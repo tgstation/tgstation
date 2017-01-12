@@ -18,7 +18,8 @@
 	var/selected_scripture = SCRIPTURE_DRIVER
 	var/recollecting = FALSE //if we're looking at fancy recollection
 	var/obj/effect/proc_holder/slab/slab_ability //the slab's current bound ability, for certain scripture
-	var/list/quickbound = list(/datum/clockwork_scripture/ranged_ability/geis_prep) //quickbound scripture, accessed by index
+	var/list/quickbound = list(/datum/clockwork_scripture/ranged_ability/geis_prep, /datum/clockwork_scripture/create_object/replicant, \
+	/datum/clockwork_scripture/create_object/tinkerers_cache) //quickbound scripture, accessed by index
 	actions_types = list(/datum/action/item_action/clock/hierophant)
 
 /obj/item/clockwork/slab/starter
@@ -101,7 +102,7 @@
 
 /obj/item/clockwork/slab/dropped(mob/user)
 	. = ..()
-	addtimer(src, "check_on_mob", 1, TIMER_NORMAL, user) //dropped is called before the item is out of the slot, so we need to check slightly later
+	addtimer(CALLBACK(src, .proc/check_on_mob, user), 1) //dropped is called before the item is out of the slot, so we need to check slightly later
 
 /obj/item/clockwork/slab/proc/check_on_mob(mob/user)
 	if(user && !(src in user.held_items) && slab_ability && slab_ability.ranged_ability_user) //if we happen to check and we AREN'T in user's hands, remove whatever ability we have
@@ -124,21 +125,16 @@
 		production_slowdown = min(SLAB_SERVANT_SLOWDOWN * servants, SLAB_SLOWDOWN_MAXIMUM) //SLAB_SERVANT_SLOWDOWN additional seconds for each servant above 5, up to SLAB_SLOWDOWN_MAXIMUM
 	production_time = world.time + SLAB_PRODUCTION_TIME + production_slowdown
 	var/mob/living/L
-	if(isliving(loc))
-		L = loc
-	else if(istype(loc, /obj/item/weapon/storage))
-		var/obj/item/weapon/storage/W = loc
-		if(isliving(W.loc)) //Only goes one level down - otherwise it won't produce components
-			L = W.loc
-	if(L)
+	L = get_atom_on_turf(src, /mob/living)
+	if(istype(L) && is_servant_of_ratvar(L) && (nonhuman_usable || ishuman(L)))
 		var/component_to_generate = get_weighted_component_id(src) //more likely to generate components that we have less of
 		stored_components[component_to_generate]++
 		update_slab_info(src)
 		for(var/obj/item/clockwork/slab/S in L.GetAllContents()) //prevent slab abuse today
-			if(L == src)
+			if(S == src)
 				continue
-			S.production_time = world.time + SLAB_PRODUCTION_TIME
-		L << "<span class='warning'>Your slab clunks as it produces a new component.</span>"
+			S.production_time = production_time + 50 //set it to our next production plus five seconds, so that if you hold the same slabs, the same one will always generate
+		L << "<span class='warning'>Your slab cl[pick("ank", "ink", "unk", "ang")]s as it produces a new component.</span>"
 
 /obj/item/clockwork/slab/examine(mob/user)
 	..()
@@ -225,12 +221,15 @@
 		recite_scripture(quickbound[Q.scripture_index], user, FALSE)
 
 /obj/item/clockwork/slab/proc/show_hierophant(mob/living/user)
+	if(!user.can_speak_vocal())
+		user << "<span class='warning'>You cannot speak into the slab!</span>"
+		return FALSE
 	var/message = stripped_input(user, "Enter a message to send to your fellow servants.", "Hierophant")
-	if(!message || !user || !user.canUseTopic(src))
-		return 0
+	if(!message || !user || !user.canUseTopic(src) || !user.can_speak_vocal())
+		return FALSE
 	clockwork_say(user, text2ratvar("Servants, hear my words. [html_decode(message)]"), TRUE)
 	titled_hierophant_message(user, message)
-	return 1
+	return TRUE
 
 //Scripture Recital
 /obj/item/clockwork/slab/attack_self(mob/living/user)
@@ -437,7 +436,7 @@
 		if("toggle")
 			recollecting = !recollecting
 		if("recite")
-			addtimer(src, "recite_scripture", 0, TIMER_NORMAL, text2path(params["category"]), usr, FALSE)
+			addtimer(CALLBACK(src, .proc/recite_scripture, text2path(params["category"]), usr, FALSE), 0)
 		if("select")
 			selected_scripture = params["category"]
 		if("bind")

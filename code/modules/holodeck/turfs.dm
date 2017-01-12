@@ -88,7 +88,7 @@
 
 /turf/open/floor/holofloor/carpet/New()
 	..()
-	addtimer(src, "update_icon", 1)
+	addtimer(CALLBACK(src, .proc/update_icon), 1)
 
 /turf/open/floor/holofloor/carpet/update_icon()
 	if(!..())
@@ -104,7 +104,7 @@
 	slowdown = 2
 
 /turf/open/floor/holofloor/snow/cold
-	initial_gas_mix = "TEMP=0"
+	initial_gas_mix = "freon=7500;TEMP=0"
 
 /turf/open/floor/holofloor/asteroid
 	name = "asteroid sand"

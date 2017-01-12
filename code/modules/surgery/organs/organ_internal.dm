@@ -124,7 +124,7 @@
 		if(!special)
 			H.heart_attack = 1
 
-	addtimer(src, "stop_if_unowned", 120)
+	addtimer(CALLBACK(src, .proc/stop_if_unowned), 120)
 
 /obj/item/organ/heart/proc/stop_if_unowned()
 	if(!owner)
@@ -136,7 +136,7 @@
 		visible_message("<span class='notice'>[user] squeezes [src] to \
 			make it beat again!</span>")
 		Restart()
-		addtimer(src, "stop_if_unowned", 80)
+		addtimer(CALLBACK(src, .proc/stop_if_unowned), 80)
 
 /obj/item/organ/heart/Insert(mob/living/carbon/M, special = 0)
 	..()
@@ -691,5 +691,30 @@
 /obj/item/organ/appendix/prepare_eat()
 	var/obj/S = ..()
 	if(inflamed)
-		S.reagents.add_reagent("????", 5)
+		S.reagents.add_reagent("bad_food", 5)
 	return S
+
+/mob/living/proc/regenerate_organs()
+	return 0
+
+/mob/living/carbon/regenerate_organs()
+	if(!(NOBREATH in dna.species.species_traits) && !getorganslot("lungs"))
+		var/obj/item/organ/lungs/L = new()
+		L.Insert(src)
+
+	if(!(NOBLOOD in dna.species.species_traits) && !getorganslot("heart"))
+		var/obj/item/organ/heart/H = new()
+		H.Insert(src)
+
+	if(!getorganslot("tongue"))
+		var/obj/item/organ/tongue/T
+
+		for(var/tongue_type in dna.species.mutant_organs)
+			if(ispath(tongue_type, /obj/item/organ/tongue))
+				T = new tongue_type()
+				T.Insert(src)
+
+		// if they have no mutant tongues, give them a regular one
+		if(!T)
+			T = new()
+			T.Insert(src)

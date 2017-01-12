@@ -20,6 +20,7 @@ Chaplain
 
 /datum/outfit/job/chaplain
 	name = "Chaplain"
+	jobtype = /datum/job/chaplain
 
 	belt = /obj/item/device/pda/chaplain
 	uniform = /obj/item/clothing/under/rank/chaplain
@@ -34,6 +35,8 @@ Chaplain
 	if(visualsOnly)
 		return
 
+	if(H.mind)
+		H.mind.isholy = TRUE
 
 	var/obj/item/weapon/storage/book/bible/B = new /obj/item/weapon/storage/book/bible/booze(H)
 

@@ -21,6 +21,11 @@
 	if(SSradio)
 		SSradio.add_object(src, frequency, RADIO_CHAT)
 
+/obj/item/device/electropack/New()
+	if(SSradio)
+		SSradio.add_object(src, frequency, RADIO_CHAT)
+	..()
+
 /obj/item/device/electropack/Destroy()
 	if(SSradio)
 		SSradio.remove_object(src, frequency)

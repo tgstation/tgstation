@@ -224,7 +224,7 @@
 	ticker.mode.traitors |= player_mind
 	S << S.playstyle_string
 	S << 'sound/magic/Mutate.ogg'
-	message_admins("[selected.key] has been made into morph by an event.")
-	log_game("[selected.key] was spawned as a morph by an event.")
+	message_admins("[key_name_admin(S)] has been made into a morph by an event.")
+	log_game("[key_name(S)] was spawned as a morph by an event.")
 	spawned_mobs += S
 	return SUCCESSFUL_SPAWN

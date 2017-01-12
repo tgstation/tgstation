@@ -24,7 +24,7 @@ var/list/total_extraction_beacons = list()
 			possible_beacons += EP
 
 	if(!possible_beacons.len)
-		user << "There are no extraction beacons in existance!"
+		user << "There are no extraction beacons in existence!"
 		return
 
 	else
@@ -139,7 +139,7 @@ var/list/total_extraction_beacons = list()
 
 /obj/item/fulton_core
 	name = "extraction beacon signaller"
-	desc = "Emits a signal which fulton recovery devices can lock on to. Activate in hand to create a beacon."
+	desc = "Emits a signal which fulton recovery devices can lock onto. Activate in hand to create a beacon."
 	icon = 'icons/obj/stock_parts.dmi'
 	icon_state = "subspace_amplifier"
 

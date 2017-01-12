@@ -127,10 +127,10 @@
 		return 0
 	if(moving)
 		return 0
+	if(mob.force_moving)
+		return 0
 	if(isliving(mob))
 		var/mob/living/L = mob
-		if(L.slipping)
-			return 0
 		if(L.incorporeal_move)	//Move though walls
 			Process_Incorpmove(direct)
 			return 0
@@ -253,7 +253,7 @@
 			var/turf/open/floor/stepTurf = get_step(L, direct)
 			for(var/obj/effect/decal/cleanable/salt/S in stepTurf)
 				L << "<span class='warning'>[S] bars your passage!</span>"
-				if(istype(L, /mob/living/simple_animal/revenant))
+				if(isrevenant(L))
 					var/mob/living/simple_animal/revenant/R = L
 					R.reveal(20)
 					R.stun(20)

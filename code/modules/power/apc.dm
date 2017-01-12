@@ -134,7 +134,7 @@
 		name = "[area.name] APC"
 		stat |= MAINT
 		src.update_icon()
-		addtimer(src, "update", 5)
+		addtimer(CALLBACK(src, .proc/update), 5)
 
 /obj/machinery/power/apc/Destroy()
 	apcs_list -= src
@@ -188,7 +188,7 @@
 
 	make_terminal()
 
-	addtimer(src, "update", 5)
+	addtimer(CALLBACK(src, .proc/update), 5)
 
 /obj/machinery/power/apc/examine(mob/user)
 	..()
@@ -361,7 +361,7 @@
 
 // Used in process so it doesn't update the icon too much
 /obj/machinery/power/apc/proc/queue_icon_update()
-	addtimer(src, "update_icon", APC_UPDATE_ICON_COOLDOWN, TIMER_UNIQUE)
+	addtimer(CALLBACK(src, .proc/update_icon), APC_UPDATE_ICON_COOLDOWN, TIMER_UNIQUE)
 
 //attack with an item - open/close cover, insert cell, or (un)lock interface
 
@@ -513,7 +513,7 @@
 			if (C.get_amount() >= 10 && !terminal && opened && has_electronics > 0)
 				var/turf/T = get_turf(src)
 				var/obj/structure/cable/N = T.get_cable_node()
-				if (prob(50) && electrocute_mob(usr, N, N))
+				if (prob(50) && electrocute_mob(usr, N, N, 1, TRUE))
 					var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 					s.set_up(5, 1, src)
 					s.start()
@@ -842,7 +842,7 @@
 		return
 	malf << "Beginning override of APC systems. This takes some time, and you cannot perform other actions during the process."
 	malf.malfhack = src
-	malf.malfhacking = addtimer(malf, "malfhacked", 600, TIMER_NORMAL, src)
+	malf.malfhacking = addtimer(CALLBACK(malf, /mob/living/silicon/ai/.proc/malfhacked, src), 600)
 
 	var/obj/screen/alert/hackingapc/A
 	A = malf.throw_alert("hackingapc", /obj/screen/alert/hackingapc)
@@ -859,9 +859,9 @@
 		return
 	if(src.z != 1)
 		return
-	occupier = new /mob/living/silicon/ai(src,malf.laws,null,1) //DEAR GOD WHY?
+	occupier = new /mob/living/silicon/ai(src, malf.laws, malf) //DEAR GOD WHY?
 	occupier.adjustOxyLoss(malf.getOxyLoss())
-	if(!findtext(occupier.name,"APC Copy"))
+	if(!findtext(occupier.name, "APC Copy"))
 		occupier.name = "[malf.name] APC Copy"
 	if(malf.parent)
 		occupier.parent = malf.parent
@@ -879,13 +879,12 @@
 /obj/machinery/power/apc/proc/malfvacate(forced)
 	if(!occupier)
 		return
-	if(occupier.parent && occupier.parent.stat != 2)
+	if(occupier.parent && occupier.parent.stat != DEAD)
 		occupier.mind.transfer_to(occupier.parent)
 		occupier.parent.shunted = 0
-		occupier.parent.adjustOxyLoss(occupier.getOxyLoss())
+		occupier.parent.setOxyLoss(occupier.getOxyLoss())
 		occupier.parent.cancel_camera()
 		qdel(occupier)
-
 	else
 		occupier << "<span class='danger'>Primary core damaged, unable to return core processes.</span>"
 		if(forced)
@@ -1168,7 +1167,7 @@
 	environ = 0
 	update_icon()
 	update()
-	addtimer(src, "reset", 600, TIMER_NORMAL, APC_RESET_EMP)
+	addtimer(CALLBACK(src, .proc/reset, APC_RESET_EMP), 600)
 	..()
 
 /obj/machinery/power/apc/blob_act(obj/structure/blob/B)
@@ -1199,8 +1198,9 @@
 		spawn(0)
 			for(var/area/A in area.related)
 				for(var/obj/machinery/light/L in A)
-					L.on = 1
+					L.on = TRUE
 					L.break_light_tube()
+					L.on = FALSE
 					stoplag()
 
 /obj/machinery/power/apc/proc/shock(mob/user, prb)
@@ -1211,7 +1211,7 @@
 	s.start()
 	if(isalien(user))
 		return 0
-	if(electrocute_mob(user, src, src))
+	if(electrocute_mob(user, src, src, 1, TRUE))
 		return 1
 	else
 		return 0

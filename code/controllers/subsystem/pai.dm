@@ -139,12 +139,14 @@ var/list/obj/item/device/paicard/pai_card_list = list()
 /datum/subsystem/pai/proc/findPAI(obj/item/device/paicard/p, mob/user)
 	if(!ghost_spam)
 		ghost_spam = TRUE
-		deadchat_broadcast("<span class='ghostalert'>Someone is requesting a pAI personality! Use the pAI button to submit yourself as one.</span>")
 		for(var/mob/dead/observer/G in player_list)
 			if(!G.key || !G.client)
 				continue
-			G << 'sound/misc/server-ready.ogg' //Alerting them to their consideration
-		addtimer(src, "spam_again", spam_delay)
+			if(!(ROLE_PAI in G.client.prefs.be_special))
+				continue
+			//G << 'sound/misc/server-ready.ogg' //Alerting them to their consideration
+			G << "<span class='ghostalert'>Someone is requesting a pAI personality! Use the pAI button to submit yourself as one.</span>"
+		addtimer(CALLBACK(src, .proc/spam_again), spam_delay)
 	var/list/available = list()
 	for(var/datum/paiCandidate/c in SSpai.candidates)
 		if(c.ready)

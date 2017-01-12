@@ -14,10 +14,6 @@ field_generator power level display
 
 #define field_generator_max_power 250
 
-#define FG_UNSECURED 0
-#define FG_SECURED 1
-#define FG_WELDED 2
-
 #define FG_OFFLINE 0
 #define FG_CHARGING 1
 #define FG_ONLINE 2
@@ -81,30 +77,26 @@ field_generator power level display
 	else
 		user << "<span class='warning'>The [src] needs to be firmly secured to the floor first!</span>"
 
+/obj/machinery/field/generator/can_be_unfasten_wrench(mob/user)
+	if(state == FG_WELDED)
+		user  << "<span class='warning'>[src] is welded to the floor!</span>"
+		return FAILED_UNFASTEN
+	return ..()
+
+/obj/machinery/field/generator/default_unfasten_wrench(mob/user, obj/item/weapon/wrench/W, time = 20)
+	. = ..()
+	if(. == SUCCESSFUL_UNFASTEN)
+		if(anchored)
+			state = FG_SECURED
+		else
+			state = FG_UNSECURED
 
 /obj/machinery/field/generator/attackby(obj/item/W, mob/user, params)
 	if(active)
-		user << "<span class='warning'>The [src] needs to be off!</span>"
+		user << "<span class='warning'>[src] needs to be off!</span>"
 		return
 	else if(istype(W, /obj/item/weapon/wrench))
-		switch(state)
-			if(FG_UNSECURED)
-				if(isinspace()) return
-				state = FG_SECURED
-				playsound(loc, W.usesound, 75, 1)
-				user.visible_message("[user.name] secures [name] to the floor.", \
-					"<span class='notice'>You secure the external reinforcing bolts to the floor.</span>", \
-					"<span class='italics'>You hear ratchet.</span>")
-				anchored = 1
-			if(FG_SECURED)
-				state = FG_UNSECURED
-				playsound(loc, W.usesound, 75, 1)
-				user.visible_message("[user.name] unsecures [name] reinforcing bolts from the floor.", \
-					"<span class='notice'>You undo the external reinforcing bolts.</span>", \
-					"<span class='italics'>You hear ratchet.</span>")
-				anchored = 0
-			if(FG_WELDED)
-				user << "<span class='warning'>The [name] needs to be unwelded from the floor!</span>"
+		default_unfasten_wrench(user, W, 0)
 
 	else if(istype(W, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = W
@@ -114,23 +106,21 @@ field_generator power level display
 
 			if(FG_SECURED)
 				if (WT.remove_fuel(0,user))
-					playsound(loc, 'sound/items/Welder2.ogg', 50, 1)
+					playsound(loc, WT.usesound, 50, 1)
 					user.visible_message("[user.name] starts to weld the [name] to the floor.", \
 						"<span class='notice'>You start to weld \the [src] to the floor...</span>", \
 						"<span class='italics'>You hear welding.</span>")
-					if (do_after(user,20*W.toolspeed, target = src))
-						if(!src || !WT.isOn()) return
+					if(do_after(user,20*W.toolspeed, target = src) && state == FG_SECURED && WT.isOn())
 						state = FG_WELDED
 						user << "<span class='notice'>You weld the field generator to the floor.</span>"
 
 			if(FG_WELDED)
 				if (WT.remove_fuel(0,user))
-					playsound(loc, 'sound/items/Welder2.ogg', 50, 1)
+					playsound(loc, WT.usesound, 50, 1)
 					user.visible_message("[user.name] starts to cut the [name] free from the floor.", \
 						"<span class='notice'>You start to cut \the [src] free from the floor...</span>", \
 						"<span class='italics'>You hear welding.</span>")
-					if (do_after(user,20*W.toolspeed, target = src))
-						if(!src || !WT.isOn()) return
+					if(do_after(user,20*W.toolspeed, target = src) && state == FG_WELDED && WT.isOn())
 						state = FG_SECURED
 						user << "<span class='notice'>You cut \the [src] free from the floor.</span>"
 

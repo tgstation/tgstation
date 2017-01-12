@@ -107,8 +107,8 @@ structure_check() searches for nearby cultist structures required for the invoca
 	var/list/invokers = list() //people eligible to invoke the rune
 	var/list/chanters = list() //people who will actually chant the rune when passed to invoke()
 	if(user)
-		chanters |= user
-		invokers |= user
+		chanters += user
+		invokers += user
 	if(req_cultists > 1 || allow_excess_invokers)
 		for(var/mob/living/L in range(1, src))
 			if(iscultist(L))
@@ -120,16 +120,17 @@ structure_check() searches for nearby cultist structures required for the invoca
 						continue
 				if(L.stat)
 					continue
-				invokers |= L
+				invokers += L
 		if(invokers.len >= req_cultists)
+			invokers -= user
 			if(allow_excess_invokers)
-				chanters |= invokers
+				chanters += invokers
 			else
-				invokers -= user
 				shuffle(invokers)
-				for(var/i in 0 to req_cultists)
+				for(var/i in 1 to req_cultists)
 					var/L = pick_n_take(invokers)
-					chanters |= L
+					if(L)
+						chanters += L
 	return chanters
 
 /obj/effect/rune/proc/invoke(var/list/invokers)
@@ -154,7 +155,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 		var/oldcolor = color
 		color = rgb(255, 0, 0)
 		animate(src, color = oldcolor, time = 5)
-		addtimer(src, "update_atom_colour", 5)
+		addtimer(CALLBACK(src, /atom/proc/update_atom_colour), 5)
 
 //Malformed Rune: This forms if a rune is not drawn correctly. Invoking it does nothing but hurt the user.
 /obj/effect/rune/malformed
@@ -270,18 +271,10 @@ var/list/teleport_runes = list()
 	var/mob/living/user = invokers[1] //the first invoker is always the user
 	var/list/potential_runes = list()
 	var/list/teleportnames = list()
-	var/list/duplicaterunecount = list()
 	for(var/R in teleport_runes)
 		var/obj/effect/rune/teleport/T = R
-		var/resultkey = T.listkey
-		if(resultkey in teleportnames)
-			duplicaterunecount[resultkey]++
-			resultkey = "[resultkey] ([duplicaterunecount[resultkey]])"
-		else
-			teleportnames.Add(resultkey)
-			duplicaterunecount[resultkey] = 1
 		if(T != src && (T.z <= ZLEVEL_SPACEMAX))
-			potential_runes[resultkey] = T
+			potential_runes[avoid_assoc_duplicate_keys(T.listkey, teleportnames)] = T
 
 	if(!potential_runes.len)
 		user << "<span class='warning'>There are no valid runes to teleport to!</span>"
@@ -303,7 +296,7 @@ var/list/teleport_runes = list()
 
 	var/turf/T = get_turf(src)
 	var/turf/target = get_turf(actual_selected_rune)
-	if(is_blocked_turf(target))
+	if(is_blocked_turf(target, TRUE))
 		user << "<span class='warning'>The target rune is blocked. Attempting to teleport to it would be massively unwise.</span>"
 		fail_invoke()
 		return
@@ -376,7 +369,7 @@ var/list/teleport_runes = list()
 		..()
 		do_sacrifice(L, invokers)
 	animate(src, color = oldcolor, time = 5)
-	addtimer(src, "update_atom_colour", 5)
+	addtimer(CALLBACK(src, /atom/proc/update_atom_colour), 5)
 	rune_in_use = FALSE
 
 /obj/effect/rune/convert/proc/do_convert(mob/living/convertee, list/invokers)
@@ -769,7 +762,7 @@ var/list/wall_runes = list()
 			W.density = TRUE
 			W.update_state()
 			W.spread_density()
-	density_timer = addtimer(src, "lose_density", 900)
+	density_timer = addtimer(CALLBACK(src, .proc/lose_density), 900)
 
 /obj/effect/rune/wall/proc/lose_density()
 	if(density)
@@ -779,7 +772,7 @@ var/list/wall_runes = list()
 		var/oldcolor = color
 		add_atom_colour("#696969", FIXED_COLOUR_PRIORITY)
 		animate(src, color = oldcolor, time = 50, easing = EASE_IN)
-		addtimer(src, "recharge", 50)
+		addtimer(CALLBACK(src, .proc/recharge), 50)
 
 /obj/effect/rune/wall/proc/recharge()
 	recharging = FALSE

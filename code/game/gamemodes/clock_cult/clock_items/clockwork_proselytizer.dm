@@ -1,31 +1,32 @@
-//Clockwork proselytizer (yes, that's a real word): Converts applicable objects to Ratvarian variants.
+//Clockwork proselytizer: Converts applicable objects to Ratvarian variants.
 /obj/item/clockwork/clockwork_proselytizer
 	name = "clockwork proselytizer"
 	desc = "An odd, L-shaped device that hums with energy."
-	clockwork_desc = "A device that allows the replacing of mundane objects with Ratvarian variants. It requires liquified Replicant Alloy to function."
+	clockwork_desc = "A device that allows the replacing of mundane objects with Ratvarian variants. It requires power to function."
 	icon_state = "clockwork_proselytizer"
 	w_class = WEIGHT_CLASS_NORMAL
 	force = 5
 	flags = NOBLUDGEON
-	var/stored_alloy = 0 //Requires this to function; each chunk of replicant alloy provides REPLICANT_ALLOY_UNIT
-	var/max_alloy = REPLICANT_ALLOY_UNIT * 10
-	var/uses_alloy = TRUE
-	var/metal_to_alloy = FALSE
-	var/reform_alloy = TRUE
+	var/stored_power = 0 //Requires power to function
+	var/max_power = CLOCKCULT_POWER_UNIT * 10
+	var/uses_power = TRUE
+	var/metal_to_power = FALSE
 	var/repairing = null //what we're currently repairing, if anything
-	var/refueling = FALSE //if we're currently refueling from a cache
 	var/speed_multiplier = 1 //how fast this proselytizer works
+	var/charge_rate = MIN_CLOCKCULT_POWER //how much power we gain every two seconds
+	var/charge_delay = 2 //how many proccess ticks remain before we can start to charge
 
 /obj/item/clockwork/clockwork_proselytizer/preloaded
-	stored_alloy = REPLICANT_WALL_MINUS_FLOOR+REPLICANT_WALL_TOTAL
+	stored_power = POWER_WALL_MINUS_FLOOR+POWER_WALL_TOTAL
 
 /obj/item/clockwork/clockwork_proselytizer/scarab
 	name = "scarab proselytizer"
-	clockwork_desc = "A cogscarab's internal proselytizer. It can only be successfully used by a cogscarab and requires liquified Replicant Alloy to function."
-	metal_to_alloy = TRUE
+	clockwork_desc = "A cogscarab's internal proselytizer. It can only be successfully used by a cogscarab and requires power to function."
+	metal_to_power = TRUE
 	item_state = "nothing"
 	w_class = WEIGHT_CLASS_TINY
 	speed_multiplier = 0.5
+	charge_rate = MIN_CLOCKCULT_POWER * 2
 	var/debug = FALSE
 
 /obj/item/clockwork/clockwork_proselytizer/scarab/proselytize(atom/target, mob/living/user)
@@ -35,90 +36,113 @@
 
 /obj/item/clockwork/clockwork_proselytizer/scarab/debug
 	clockwork_desc = "A cogscarab's internal proselytizer. It can convert nearly any object into a Ratvarian variant."
-	uses_alloy = FALSE
+	uses_power = FALSE
 	debug = TRUE
 
 /obj/item/clockwork/clockwork_proselytizer/cyborg
 	name = "cyborg proselytizer"
-	clockwork_desc = "A cyborg's internal proselytizer. It is capable of using the cyborg's power if it lacks liquified replicant alloy."
-	metal_to_alloy = TRUE
-	reform_alloy = FALSE
+	clockwork_desc = "A cyborg's internal proselytizer. It is capable of using the cyborg's power in addition to stored power."
+	metal_to_power = TRUE
 
-/obj/item/clockwork/clockwork_proselytizer/cyborg/examine(mob/living/user)
-	..()
-	if(is_servant_of_ratvar(user) || isobserver(user))
-		user << "<span class='alloy'>It will use cell charge at a rate of <b>[CLOCKCULT_ALLOY_TO_POWER_MULTIPLIER]</b> charge to <b>1</b> alloy if it has insufficient alloy.</span>"
-		user << "<span class='alloy'><b>[get_power_alloy()]</b> is usable in this manner.</span>"
-
-/obj/item/clockwork/clockwork_proselytizer/cyborg/get_power_alloy() //returns alloy plus the alloy we have from power, where we need such
-	var/mob/living/silicon/robot/R = loc
-	var/alloy_power = 0
+/obj/item/clockwork/clockwork_proselytizer/cyborg/get_power() //returns power and cyborg's power
+	var/mob/living/silicon/robot/R = get_atom_on_turf(src, /mob/living)
+	var/borg_power = 0
 	var/current_charge = 0
 	if(istype(R) && R.cell)
 		current_charge = R.cell.charge
-		while(current_charge > CLOCKCULT_ALLOY_TO_POWER_MULTIPLIER)
-			current_charge -= CLOCKCULT_ALLOY_TO_POWER_MULTIPLIER
-			alloy_power++
-	return ..() + alloy_power
+		while(current_charge > MIN_CLOCKCULT_POWER)
+			current_charge -= MIN_CLOCKCULT_POWER
+			borg_power += MIN_CLOCKCULT_POWER
+	return ..() + borg_power
 
-/obj/item/clockwork/clockwork_proselytizer/cyborg/can_use_alloy(amount)
-	if(amount != RATVAR_ALLOY_CHECK)
-		var/mob/living/silicon/robot/R = loc
+/obj/item/clockwork/clockwork_proselytizer/cyborg/get_max_power()
+	var/mob/living/silicon/robot/R = get_atom_on_turf(src, /mob/living)
+	var/cell_maxcharge = 0
+	if(istype(R) && R.cell)
+		cell_maxcharge = R.cell.maxcharge
+	return ..() + cell_maxcharge
+
+/obj/item/clockwork/clockwork_proselytizer/cyborg/can_use_power(amount)
+	if(amount != RATVAR_POWER_CHECK)
+		var/mob/living/silicon/robot/R = get_atom_on_turf(src, /mob/living)
 		var/current_charge = 0
 		if(istype(R) && R.cell)
 			current_charge = R.cell.charge
-			while(amount > 0 && stored_alloy - amount < 0) //amount is greater than 0 and stored alloy minus the amount is still less than 0
-				current_charge -= CLOCKCULT_ALLOY_TO_POWER_MULTIPLIER
-				amount--
+			while(amount > 0 && stored_power - amount < 0) //amount is greater than 0 and stored power minus the amount is still less than 0
+				current_charge -= MIN_CLOCKCULT_POWER
+				amount -= MIN_CLOCKCULT_POWER
 		if(current_charge < 0)
 			return FALSE
 	. = ..()
 
-/obj/item/clockwork/clockwork_proselytizer/cyborg/modify_stored_alloy(amount)
-	var/mob/living/silicon/robot/R = loc
-	while(istype(R) && R.cell && amount < 0 && stored_alloy + amount < 0) //amount is less than 0 and stored alloy plus the amount is less than 0
-		R.cell.use(CLOCKCULT_ALLOY_TO_POWER_MULTIPLIER)
-		amount++
+/obj/item/clockwork/clockwork_proselytizer/cyborg/modify_stored_power(amount)
+	var/mob/living/silicon/robot/R = get_atom_on_turf(src, /mob/living)
+	if(istype(R) && R.cell && amount)
+		if(amount < 0)
+			while(amount < 0 && stored_power + amount < 0) //amount is less than 0 and stored alloy plus the amount is less than 0
+				R.cell.use(MIN_CLOCKCULT_POWER)
+				amount += MIN_CLOCKCULT_POWER
+		else
+			while(amount > 0 && R.cell.charge + MIN_CLOCKCULT_POWER < R.cell.maxcharge) //amount is greater than 0 and cell charge plus MIN_CLOCKCULT_POWER is less than maximum cell charge
+				R.cell.give(MIN_CLOCKCULT_POWER)
+				amount -= MIN_CLOCKCULT_POWER
 	. = ..()
+
+/obj/item/clockwork/clockwork_proselytizer/New()
+	..()
+	START_PROCESSING(SSobj, src)
+
+/obj/item/clockwork/clockwork_proselytizer/Destroy()
+	STOP_PROCESSING(SSobj, src)
+	return ..()
+
+/obj/item/clockwork/clockwork_proselytizer/process()
+	if(!charge_rate)
+		return
+	var/mob/living/L = get_atom_on_turf(src, /mob/living)
+	if(istype(L) && is_servant_of_ratvar(L))
+		if(charge_delay)
+			charge_delay--
+			return
+		modify_stored_power(charge_rate)
+		for(var/obj/item/clockwork/clockwork_proselytizer/S in L.GetAllContents()) //no multiple proselytizers
+			if(S == src)
+				continue
+			S.charge_delay = 2
+	else
+		charge_delay = 2
+
+/obj/item/clockwork/clockwork_proselytizer/ratvar_act()
+	if(ratvar_awakens)
+		uses_power = FALSE
+		speed_multiplier = initial(speed_multiplier) * 0.25
+	else
+		uses_power = initial(uses_power)
+		speed_multiplier = initial(speed_multiplier)
 
 /obj/item/clockwork/clockwork_proselytizer/examine(mob/living/user)
 	..()
 	if(is_servant_of_ratvar(user) || isobserver(user))
 		user << "<span class='brass'>Can be used to convert walls, floors, windows, airlocks, and a variety of other objects to clockwork variants.</span>"
 		user << "<span class='brass'>Can also form some objects into Brass sheets, as well as reform Clockwork Walls into Clockwork Floors, and vice versa.</span>"
-		if(uses_alloy)
-			if(metal_to_alloy)
-				user << "<span class='alloy'>It can convert rods, metal, plasteel, and brass to liquified replicant alloy at rates of <b>1:1</b>, <b>1:2</b>, <b>1:5</b>, and <b>1:10</b>, respectively.</span>"
-			user << "<span class='alloy'>It has <b>[stored_alloy]/[max_alloy]</b> units of liquified alloy stored.</span>"
-			user << "<span class='alloy'>Use it on a Tinkerer's Cache, strike it with Replicant Alloy, or attack Replicant Alloy with it to add additional liquified alloy.</span>"
-			if(reform_alloy)
-				user << "<span class='alloy'>Use it in-hand to remove stored liquified alloy.</span>"
+		if(uses_power)
+			if(metal_to_power)
+				user << "<span class='alloy'>It can convert rods, metal, plasteel, and brass to power at rates of <b>1:[POWER_ROD]W</b>, <b>1:[POWER_METAL]W</b>, \
+				<b>1:[POWER_PLASTEEL]W</b>, and <b>1:[POWER_FLOOR]W</b>, respectively.</span>"
+			else
+				user << "<span class='alloy'>It can convert brass to power at a rate of <b>1:[POWER_FLOOR]W</b>.</span>"
+			user << "<span class='alloy'>It is storing <b>[get_power()]W/[get_max_power()]W</b> of power, and is gaining [charge_rate*0.5] power per second.</span>"
+			user << "<span class='alloy'>Use it in-hand to produce brass sheets.</span>"
 
 /obj/item/clockwork/clockwork_proselytizer/attack_self(mob/living/user)
-	if(is_servant_of_ratvar(user) && uses_alloy && reform_alloy)
-		if(!can_use_alloy(REPLICANT_ALLOY_UNIT))
-			user << "<span class='warning'>[src] [stored_alloy ? "lacks enough":"contains no"] alloy to reform[stored_alloy ? "":" any"] into solidified alloy!</span>"
+	if(is_servant_of_ratvar(user))
+		if(!can_use_power(POWER_WALL_TOTAL))
+			user << "<span class='warning'>[src] requires <b>[POWER_WALL_TOTAL]W</b> of power to produce brass sheets!</span>"
 			return
-		modify_stored_alloy(-REPLICANT_ALLOY_UNIT)
+		modify_stored_power(-POWER_WALL_TOTAL)
 		playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
-		new/obj/item/clockwork/component/replicant_alloy(user.loc)
-		user << "<span class='brass'>You force [stored_alloy ? "some":"all"] of the alloy in [src]'s compartments to reform and solidify. \
-		It now contains <b>[stored_alloy]/[max_alloy]</b> units of liquified alloy.</span>"
-
-/obj/item/clockwork/clockwork_proselytizer/attackby(obj/item/I, mob/living/user, params)
-	if(istype(I, /obj/item/clockwork/component/replicant_alloy) && is_servant_of_ratvar(user) && uses_alloy)
-		if(!can_use_alloy(-REPLICANT_ALLOY_UNIT))
-			user << "<span class='warning'>[src]'s replicant alloy compartments are full!</span>"
-			return 0
-		modify_stored_alloy(REPLICANT_ALLOY_UNIT)
-		playsound(user, 'sound/machines/click.ogg', 50, 1)
-		clockwork_say(user, text2ratvar("Transmute into fuel."), TRUE)
-		user << "<span class='brass'>You force [I] to liquify and pour it into [src]'s compartments. It now contains <b>[stored_alloy]/[max_alloy]</b> units of liquified alloy.</span>"
-		user.drop_item()
-		qdel(I)
-		return 1
-	else
-		return ..()
+		new/obj/item/stack/tile/brass(user.loc, 5)
+		user << "<span class='brass'>You user [stored_power ? "some":"all"] of [src]'s power to produce some brass sheets. It now stores <b>[get_power()]W/[get_max_power()]W</b> of power.</span>"
 
 /obj/item/clockwork/clockwork_proselytizer/afterattack(atom/target, mob/living/user, proximity_flag, params)
 	if(!target || !user || !proximity_flag)
@@ -127,22 +151,25 @@
 		return ..()
 	proselytize(target, user)
 
-/obj/item/clockwork/clockwork_proselytizer/proc/get_power_alloy()
-	return stored_alloy
+/obj/item/clockwork/clockwork_proselytizer/proc/get_power()
+	return stored_power
 
-/obj/item/clockwork/clockwork_proselytizer/proc/modify_stored_alloy(amount)
-	stored_alloy = Clamp(stored_alloy + amount, 0, max_alloy)
+/obj/item/clockwork/clockwork_proselytizer/proc/get_max_power()
+	return max_power
+
+/obj/item/clockwork/clockwork_proselytizer/proc/modify_stored_power(amount)
+	stored_power = Clamp(stored_power + amount, 0, max_power)
 	return TRUE
 
-/obj/item/clockwork/clockwork_proselytizer/proc/can_use_alloy(amount)
-	if(amount == RATVAR_ALLOY_CHECK)
-		if(ratvar_awakens || !uses_alloy)
+/obj/item/clockwork/clockwork_proselytizer/proc/can_use_power(amount)
+	if(amount == RATVAR_POWER_CHECK)
+		if(ratvar_awakens || !uses_power)
 			return TRUE
 		else
 			return FALSE
-	if(stored_alloy - amount < 0)
+	if(stored_power - amount < 0)
 		return FALSE
-	if(stored_alloy - amount > max_alloy)
+	if(stored_power - amount > max_power)
 		return FALSE
 	return TRUE
 
@@ -152,9 +179,6 @@
 	if(repairing)
 		user << "<span class='warning'>You are currently repairing [repairing] with [src]!</span>"
 		return FALSE
-	if(refueling)
-		user << "<span class='warning'>You are currently refueling [src]!</span>"
-		return FALSE
 	var/list/proselytize_values = target.proselytize_vals(user, src) //relevant values for proselytizing stuff, given as an associated list
 	if(!islist(proselytize_values))
 		if(proselytize_values != TRUE) //if we get true, fail, but don't send a message for whatever reason
@@ -162,29 +186,23 @@
 				return proselytize(get_turf(target), user)
 			user << "<span class='warning'>[target] cannot be proselytized!</span>"
 		return FALSE
-	if(can_use_alloy(RATVAR_ALLOY_CHECK))
-		if(proselytize_values["alloy_cost"] < 0) //if it's less than 0, it's trying to refuel from whatever this is, and we don't need to refuel right now!
-			user << "<span class='warning'>[target] cannot be proselytized!</span>"
-			return FALSE
-		proselytize_values["alloy_cost"] = 0
+	if(can_use_power(RATVAR_POWER_CHECK))
+		proselytize_values["power_cost"] = 0
 
 	var/turf/Y = get_turf(user)
 	if(!Y || (Y.z != ZLEVEL_STATION && Y.z != ZLEVEL_CENTCOM && Y.z != ZLEVEL_MINING && Y.z != ZLEVEL_LAVALAND))
 		proselytize_values["operation_time"] *= 2
-		if(proselytize_values["alloy_cost"] > 0)
-			proselytize_values["alloy_cost"] *= 2
+		if(proselytize_values["power_cost"] > 0)
+			proselytize_values["power_cost"] *= 2
 
-	if(!can_use_alloy(proselytize_values["alloy_cost"]))
-		if(stored_alloy - proselytize_values["alloy_cost"] < 0)
-			user << "<span class='warning'>You need <b>[proselytize_values["alloy_cost"]]</b> liquified alloy to proselytize [target]!</span>"
-		else if(stored_alloy - proselytize_values["alloy_cost"] > max_alloy)
-			user << "<span class='warning'>You have too much liquified alloy stored to proselytize [target]!</span>"
+	if(!can_use_power(proselytize_values["power_cost"]))
+		if(stored_power - proselytize_values["power_cost"] < 0)
+			user << "<span class='warning'>You need <b>[proselytize_values["power_cost"]]W</b> power to proselytize [target]!</span>"
+		else if(stored_power - proselytize_values["power_cost"] > max_power)
+			user << "<span class='warning'>Your [name] contains too much power to proselytize [target]!</span>"
 		return FALSE
 
 	var/target_type = target.type
-
-	if(can_use_alloy(RATVAR_ALLOY_CHECK)) //Ratvar makes it faster
-		proselytize_values["operation_time"] *= 0.5
 
 	proselytize_values["operation_time"] *= speed_multiplier
 
@@ -193,12 +211,11 @@
 		user.visible_message("<span class='warning'>[user]'s [name] begins tearing apart [target]!</span>", "<span class='brass'>You begin proselytizing [target]...</span>")
 		if(!do_after(user, proselytize_values["operation_time"], target = target))
 			return FALSE
-		user.visible_message("<span class='warning'>[user]'s [name] disgorges a chunk of metal and shapes it over what's left of [target]!</span>", \
-		"<span class='brass'>You proselytize [target].</span>")
+		if(repairing || !can_use_power(proselytize_values["power_cost"]) || !target || target.type != target_type) //Check again to prevent bypassing via spamclick
+			return FALSE
+		user.visible_message("<span class='warning'>[user]'s [name] covers [target] in golden energy!</span>", "<span class='brass'>You proselytize [target].</span>")
 	else
-		user.visible_message("<span class='warning'>[user]'s [name] tears apart [target], covering it in metal!</span>", "<span class='brass'>You proselytize [target].</span>")
-	if(repairing || refueling || !can_use_alloy(proselytize_values["alloy_cost"]) || !target || target.type != target_type) //Check again to prevent bypassing via spamclick
-		return FALSE
+		user.visible_message("<span class='warning'>[user]'s [name] tears apart [target], covering it in golden energy!</span>", "<span class='brass'>You proselytize [target].</span>")
 
 	playsound(target, 'sound/items/Deconstruct.ogg', 50, 1)
 	var/new_thing_type = proselytize_values["new_obj_type"]
@@ -213,5 +230,5 @@
 			A.setDir(proselytize_values["spawn_dir"])
 		if(!proselytize_values["no_target_deletion"])
 			qdel(target)
-	modify_stored_alloy(-proselytize_values["alloy_cost"])
+	modify_stored_power(-proselytize_values["power_cost"])
 	return TRUE

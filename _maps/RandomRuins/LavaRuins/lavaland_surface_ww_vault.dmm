@@ -136,7 +136,8 @@
 /area/ruin/powered)
 "D" = (
 /turf/open/floor/engine/cult{
-	baseturf = /turf/open/floor/plating/lava/smooth
+	baseturf = /turf/open/floor/plating/lava/smooth;
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/template_noop)
 "E" = (
@@ -147,19 +148,22 @@
 	info = "meat grinder requires sacri"
 	},
 /turf/open/floor/engine/cult{
-	baseturf = /turf/open/floor/plating/lava/smooth
+	baseturf = /turf/open/floor/plating/lava/smooth;
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/template_noop)
 "G" = (
 /obj/effect/mob_spawn/human/syndicatecommando,
 /turf/open/floor/engine/cult{
-	baseturf = /turf/open/floor/plating/lava/smooth
+	baseturf = /turf/open/floor/plating/lava/smooth;
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/template_noop)
 "H" = (
 /mob/living/simple_animal/hostile/faithless,
 /turf/open/floor/engine/cult{
-	baseturf = /turf/open/floor/plating/lava/smooth
+	baseturf = /turf/open/floor/plating/lava/smooth;
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/template_noop)
 
@@ -872,7 +876,7 @@ b
 h
 s
 h
-z
+h
 s
 s
 s

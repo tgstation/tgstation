@@ -17,7 +17,6 @@
 	var/mania_cost = 200
 	var/convert_attempt_cost = 500
 	var/convert_cost = 500
-
 	var/static/list/mania_messages = list("Go nuts.", "Take a crack at crazy.", "Make a bid for insanity.", "Get kooky.", "Move towards mania.", "Become bewildered.", "Wax wild.", \
 	"Go round the bend.", "Land in lunacy.", "Try dementia.", "Strive to get a screw loose.")
 	var/static/list/compel_messages = list("Come closer.", "Approach the transmitter.", "Touch the antennae.", "I always have to deal with idiots. Move towards the mania motor.", \
@@ -34,6 +33,29 @@
 	..()
 	if(is_servant_of_ratvar(user) || isobserver(user))
 		user << "<span class='sevtug_small'>It requires <b>[mania_cost]W</b> to run, and <b>[convert_attempt_cost + convert_cost]W</b> to convert humans adjecent to it.</span>"
+
+/obj/structure/destructible/clockwork/powered/mania_motor/forced_disable(bad_effects)
+	if(active)
+		if(bad_effects)
+			try_use_power(MIN_CLOCKCULT_POWER*4)
+		visible_message("<span class='warning'>[src] hums loudly, then the sockets at its base fall dark!</span>")
+		playsound(src, 'sound/effects/screech.ogg', 40, 1)
+		toggle()
+		return TRUE
+
+/obj/structure/destructible/clockwork/powered/mania_motor/attack_hand(mob/living/user)
+	if(user.canUseTopic(src, !issilicon(user)) && is_servant_of_ratvar(user))
+		if(!total_accessable_power() >= mania_cost)
+			user << "<span class='warning'>[src] needs more power to function!</span>"
+			return 0
+		toggle(0, user)
+
+/obj/structure/destructible/clockwork/powered/mania_motor/toggle(fast_process, mob/living/user)
+	. = ..()
+	if(active)
+		SetLuminosity(2, 1)
+	else
+		SetLuminosity(0)
 
 /obj/structure/destructible/clockwork/powered/mania_motor/process()
 	if(try_use_power(mania_cost))
@@ -126,20 +148,4 @@
 						H.confused = min(H.confused + (5 * efficiency), 60)
 
 	else
-		visible_message("<span class='warning'>[src] hums loudly, then the sockets at its base fall dark!</span>")
-		playsound(src, 'sound/effects/screech.ogg', 40, 1)
-		toggle(0)
-
-/obj/structure/destructible/clockwork/powered/mania_motor/attack_hand(mob/living/user)
-	if(user.canUseTopic(src, !issilicon(user)) && is_servant_of_ratvar(user))
-		if(!total_accessable_power() >= mania_cost)
-			user << "<span class='warning'>[src] needs more power to function!</span>"
-			return 0
-		toggle(0, user)
-
-/obj/structure/destructible/clockwork/powered/mania_motor/toggle(fast_process, mob/living/user)
-	. = ..()
-	if(active)
-		SetLuminosity(2, 1)
-	else
-		SetLuminosity(0)
+		forced_disable(FALSE)

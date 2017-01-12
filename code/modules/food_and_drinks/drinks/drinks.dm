@@ -6,7 +6,7 @@
 	desc = "yummy"
 	icon = 'icons/obj/drinks.dmi'
 	icon_state = null
-	flags = OPENCONTAINER
+	container_type = OPENCONTAINER
 	var/gulp_size = 5 //This is now officially broken ... need to think of a nice way to fix it.
 	possible_transfer_amounts = list(5,10,15,20,25,30,50)
 	volume = 50
@@ -77,7 +77,7 @@
 		if(iscyborg(user)) //Cyborg modules that include drinks automatically refill themselves, but drain the borg's cell
 			var/mob/living/silicon/robot/bro = user
 			bro.cell.use(30)
-			addtimer(reagents, "add_reagent", 600, TIMER_NORMAL, refill, trans)
+			addtimer(CALLBACK(reagents, /datum/reagents.proc/add_reagent, refill, trans), 600)
 
 /obj/item/weapon/reagent_containers/food/drinks/attackby(obj/item/I, mob/user, params)
 	if(I.is_hot())
@@ -103,7 +103,8 @@
 	materials = list(MAT_METAL=100)
 	possible_transfer_amounts = list()
 	volume = 5
-	flags = CONDUCT | OPENCONTAINER
+	flags = CONDUCT
+	container_type = OPENCONTAINER
 	spillable = 1
 	resistance_flags = FIRE_PROOF
 
@@ -240,11 +241,15 @@
 			if("grapejuice")
 				icon_state = "grapebox"
 				name = "grape juice box"
-				desc = "Tastey grape juice in a fun little container. Non-alcoholic!"
+				desc = "Tasty grape juice in a fun little container. Non-alcoholic!"
 			if("chocolate_milk")
 				icon_state = "chocolatebox"
 				name = "carton of chocolate milk"
 				desc = "Milk for cool kids!"
+			if("eggnog")
+				icon_state = "nog2"
+				name = "carton of eggnog"
+				desc = "For enjoying the most wonderful time of the year."
 	else
 		icon_state = "juicebox"
 		name = "small carton"

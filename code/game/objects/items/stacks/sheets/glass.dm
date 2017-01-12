@@ -358,9 +358,9 @@
 			var/obj/item/bodypart/O = H.get_bodypart(picked_def_zone)
 			if(!istype(O))
 				return
-			if(!H.shoes)
+			var/feetCover = (H.wear_suit && H.wear_suit.body_parts_covered & FEET) || (H.w_uniform && H.w_uniform.body_parts_covered & FEET)
+			if(!H.shoes && !feetCover)
 				H.apply_damage(5, BRUTE, picked_def_zone)
-				H.Weaken(3)
 				if(cooldown < world.time - 10) //cooldown to avoid message spam.
 					if(!H.incapacitated())
 						H.visible_message("<span class='danger'>[H] steps in the broken glass!</span>", \
@@ -370,3 +370,4 @@
 								"<span class='userdanger'>You slide on the broken glass!</span>")
 
 					cooldown = world.time
+				H.Weaken(3)
