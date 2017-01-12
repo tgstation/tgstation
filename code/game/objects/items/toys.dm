@@ -362,7 +362,7 @@
 
 /obj/effect/decal/cleanable/ash/snappop_phoenix/New()
 	. = ..()
-	addtimer(src, "respawn", respawn_time)
+	addtimer(CALLBACK(src, .proc/respawn), respawn_time)
 
 /obj/effect/decal/cleanable/ash/snappop_phoenix/proc/respawn()
 	new /obj/item/toy/snappop/phoenix(get_turf(src))
@@ -1277,7 +1277,7 @@
 	toysay = "Smash!"
 
 /obj/item/toy/figure/hop
-	name = "Head of Personel action figure"
+	name = "Head of Personnel action figure"
 	icon_state = "hop"
 	toysay = "Giving out all access!"
 

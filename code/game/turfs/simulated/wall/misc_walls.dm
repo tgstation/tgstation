@@ -4,17 +4,16 @@
 	icon = 'icons/turf/walls/cult_wall.dmi'
 	icon_state = "cult"
 	canSmoothWith = null
+	sheet_type = /obj/item/stack/sheet/runed_metal
+	sheet_amount = 1
+	girder_type = /obj/structure/girder/cult
 
 /turf/closed/wall/mineral/cult/New()
 	PoolOrNew(/obj/effect/overlay/temp/cult/turf, src)
 	..()
 
-/turf/closed/wall/mineral/cult/break_wall()
-	new/obj/item/stack/sheet/runed_metal(get_turf(src), 1)
-	return (new /obj/structure/girder/cult(src))
-
 /turf/closed/wall/mineral/cult/devastate_wall()
-	new/obj/item/stack/sheet/runed_metal(get_turf(src), 1)
+	new sheet_type(get_turf(src), sheet_amount)
 
 /turf/closed/wall/mineral/cult/narsie_act()
 	return
@@ -25,7 +24,7 @@
 		var/previouscolor = color
 		color = "#FAE48C"
 		animate(src, color = previouscolor, time = 8)
-		addtimer(src, "update_atom_colour", 8)
+		addtimer(CALLBACK(src, /atom/proc/update_atom_colour), 8)
 
 /turf/closed/wall/mineral/cult/artificer
 	name = "runed stone wall"
@@ -44,7 +43,10 @@
 	desc = "A huge chunk of warm metal. The clanging of machinery emanates from within."
 	explosion_block = 2
 	hardness = 10
+	slicing_duration = 120
 	sheet_type = /obj/item/stack/tile/brass
+	sheet_amount = 1
+	girder_type = /obj/structure/destructible/clockwork/wall_gear
 	var/obj/effect/clockwork/overlay/wall/realappearence
 	var/obj/structure/destructible/clockwork/cache/linkedcache
 
@@ -59,39 +61,16 @@
 /turf/closed/wall/clockwork/examine(mob/user)
 	..()
 	if((is_servant_of_ratvar(user) || isobserver(user)) && linkedcache)
-		user << "<span class='brass'>It is linked, generating components in a cache!</span>"
+		user << "<span class='brass'>It is linked to a Tinkerer's Cache, generating components!</span>"
 
 /turf/closed/wall/clockwork/Destroy()
-	be_removed()
-	return ..()
-
-/turf/closed/wall/clockwork/ChangeTurf(path, defer_change = FALSE)
-	if(path != type)
-		be_removed()
-	return ..()
-
-/turf/closed/wall/clockwork/proc/be_removed()
 	if(linkedcache)
 		linkedcache.linkedwall = null
 		linkedcache = null
 	change_construction_value(-5)
-	qdel(realappearence)
-	realappearence = null
-
-/turf/closed/wall/clockwork/attackby(obj/item/I, mob/living/user, params)
-	if(istype(I, /obj/item/weapon/weldingtool))
-		var/obj/item/weapon/weldingtool/WT = I
-		if(!WT.remove_fuel(0,user))
-			return 0
-		playsound(src, WT.usesound, 100, 1)
-		user.visible_message("<span class='notice'>[user] begins slowly breaking down [src]...</span>", "<span class='notice'>You begin painstakingly destroying [src]...</span>")
-		if(!do_after(user, 120*WT.toolspeed, target = src))
-			return 0
-		if(!WT.remove_fuel(1, user))
-			return 0
-		user.visible_message("<span class='notice'>[user] breaks apart [src]!</span>", "<span class='notice'>You break apart [src]!</span>")
-		dismantle_wall()
-		return 1
+	if(realappearence)
+		qdel(realappearence)
+		realappearence = null
 	return ..()
 
 /turf/closed/wall/clockwork/narsie_act()
@@ -100,7 +79,7 @@
 		var/previouscolor = color
 		color = "#960000"
 		animate(src, color = previouscolor, time = 8)
-		addtimer(src, "update_atom_colour", 8)
+		addtimer(CALLBACK(src, /atom/proc/update_atom_colour), 8)
 
 /turf/closed/wall/clockwork/dismantle_wall(devastated=0, explode=0)
 	if(devastated)
@@ -119,10 +98,6 @@
 			P.roll_and_drop(src)
 		else
 			O.loc = src
-
-/turf/closed/wall/clockwork/break_wall()
-	new sheet_type(src)
-	return new/obj/structure/destructible/clockwork/wall_gear(src)
 
 /turf/closed/wall/clockwork/devastate_wall()
 	for(var/i in 1 to 2)

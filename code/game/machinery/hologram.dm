@@ -241,7 +241,7 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	return 1
 
 /obj/item/weapon/circuitboard/machine/holopad
-	name = "circuit board (AI Holopad)"
+	name = "AI Holopad (Machine Board)"
 	build_path = /obj/machinery/holopad
 	origin_tech = "programming=1"
 	req_components = list(/obj/item/weapon/stock_parts/capacitor = 1)

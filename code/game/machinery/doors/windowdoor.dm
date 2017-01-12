@@ -71,9 +71,9 @@
 	if (!( ticker ))
 		return
 	var/mob/M = AM
-	if(!M.restrained())
-		bumpopen(M)
-	return
+	if(M.restrained() || ((isdrone(M) || iscyborg(M)) && M.stat))
+		return
+	bumpopen(M)
 
 /obj/machinery/door/window/bumpopen(mob/user)
 	if( operating || !src.density )
@@ -339,7 +339,7 @@
 		var/previouscolor = color
 		color = "#960000"
 		animate(src, color = previouscolor, time = 8)
-		addtimer(src, "update_atom_colour", 8)
+		addtimer(CALLBACK(src, /atom/proc/update_atom_colour), 8)
 
 /obj/machinery/door/window/clockwork/allowed(mob/M)
 	if(is_servant_of_ratvar(M))

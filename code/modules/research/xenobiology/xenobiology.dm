@@ -13,6 +13,7 @@
 	throw_range = 6
 	origin_tech = "biotech=3"
 	var/Uses = 1 // uses before it goes inert
+	var/qdel_timer = null // deletion timer, for delayed reactions
 
 /obj/item/slime_extract/attackby(obj/item/O, mob/user)
 	if(istype(O, /obj/item/slimepotion/enhancer))

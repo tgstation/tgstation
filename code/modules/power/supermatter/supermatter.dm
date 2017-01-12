@@ -26,6 +26,8 @@
 	luminosity = 4
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
+	critical_machine = TRUE
+
 	var/gasefficency = 0.125
 
 	var/base_icon_state = "darkmatter_shard"
@@ -65,9 +67,12 @@
 	// For making hugbox supermatter
 	var/takes_damage = 1
 	var/produces_gas = 1
+	var/obj/effect/countdown/supermatter/countdown
 
 /obj/machinery/power/supermatter_shard/New()
 	. = ..()
+	countdown = new(src)
+	countdown.start()
 	poi_list |= src
 	radio = new(src)
 	radio.listening = 0
@@ -80,6 +85,9 @@
 		qdel(radio)
 		radio = null
 	poi_list -= src
+	if(countdown)
+		qdel(countdown)
+		countdown = null
 	. = ..()
 
 /obj/machinery/power/supermatter_shard/proc/explode()

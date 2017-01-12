@@ -142,6 +142,7 @@
 	var/mineral = "diamond"
 	assemblytype = /obj/structure/door_assembly/door_assembly_diamond
 	normal_integrity = 1000
+	explosion_block = 2
 
 /obj/machinery/door/airlock/uranium
 	name = "uranium airlock"
@@ -205,6 +206,24 @@
 	var/mineral = "wood"
 	assemblytype = /obj/structure/door_assembly/door_assembly_wood
 
+/obj/machinery/door/airlock/titanium
+	name = "shuttle airlock"
+	var/mineral = "titanium"
+	icon = 'icons/obj/doors/airlocks/shuttle/shuttle.dmi'
+	overlays_file = 'icons/obj/doors/airlocks/shuttle/overlays.dmi'
+	assemblytype = /obj/structure/door_assembly/door_assembly_titanium
+	normal_integrity = 400
+
+/obj/machinery/door/airlock/glass_titanium
+	name = "shuttle airlock"
+	var/mineral = "titanium"
+	icon = 'icons/obj/doors/airlocks/shuttle/shuttle.dmi'
+	overlays_file = 'icons/obj/doors/airlocks/shuttle/overlays.dmi'
+	opacity = 0
+	assemblytype = /obj/structure/door_assembly/door_assembly_titanium/glass
+	glass = 1
+	normal_integrity = 350
+
 //////////////////////////////////
 /*
 	Station2 Airlocks
@@ -228,6 +247,7 @@
 	icon = 'icons/obj/doors/airlocks/external/external.dmi'
 	overlays_file = 'icons/obj/doors/airlocks/external/overlays.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_ext
+	explosion_block = 1
 
 /obj/machinery/door/airlock/glass_external
 	name = "external airlock"
@@ -249,6 +269,7 @@
 	assemblytype = /obj/structure/door_assembly/door_assembly_centcom
 	normal_integrity = 1000
 	security_level = 6
+	explosion_block = 2
 
 //////////////////////////////////
 /*
@@ -359,7 +380,7 @@
 		M << pick(sound('sound/hallucinations/turn_around1.ogg',0,1,50), sound('sound/hallucinations/turn_around2.ogg',0,1,50))
 		flash_color(M, flash_color="#960000", flash_time=20)
 		M.Weaken(2)
-		M.throw_at_fast(throwtarget, 5, 1,src)
+		M.throw_at(throwtarget, 5, 1,src)
 		return 0
 
 /obj/machinery/door/airlock/cult/narsie_act()
@@ -447,7 +468,7 @@
 		var/previouscolor = color
 		color = "#960000"
 		animate(src, color = previouscolor, time = 8)
-		addtimer(src, "update_atom_colour", 8)
+		addtimer(CALLBACK(src, /atom/proc/update_atom_colour), 8)
 
 /obj/machinery/door/airlock/clockwork/attackby(obj/item/I, mob/living/user, params)
 	if(!attempt_construction(I, user))

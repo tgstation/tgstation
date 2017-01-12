@@ -1,3 +1,5 @@
+// Hey! Listen! Update \config\lavaruinblacklist.txt with your new ruins!
+
 /datum/map_template/ruin/lavaland
 	prefix = "_maps/RandomRuins/LavaRuins/"
 
@@ -124,7 +126,7 @@
 /datum/map_template/ruin/lavaland/hierophant
 	name = "Hierophant's Arena"
 	id = "hierophant"
-	description = "A huge fucking bird priest awaits you in this arena."
+	description = "A strange, square chunk of metal of massive size. Inside awaits only death and many, many squares."
 	suffix = "lavaland_surface_hierophant.dmm"
 	cost = 0
 	allow_duplicates = FALSE

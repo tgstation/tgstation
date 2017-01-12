@@ -147,7 +147,7 @@
 	if((stat & (NOPOWER|BROKEN)))
 		return
 
-	if(device && device.cooldown)
+	if(device && device.next_activate > world.time)
 		return
 
 	if(!allowed(user))
@@ -161,7 +161,7 @@
 	if(device)
 		device.pulsed()
 
-	addtimer(src, "update_icon", 15)
+	addtimer(CALLBACK(src, .proc/update_icon), 15)
 
 /obj/machinery/button/power_change()
 	..()

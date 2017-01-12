@@ -69,7 +69,7 @@
 	if(has_gravity())
 		return 1
 
-	if(pulledby)
+	if(pulledby && (pulledby.loc != loc))
 		return 1
 
 	return 0

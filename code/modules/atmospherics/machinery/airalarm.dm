@@ -369,7 +369,7 @@
 	var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 	s.set_up(5, 1, src)
 	s.start() //sparks always.
-	if (electrocute_mob(user, get_area(src), src))
+	if (electrocute_mob(user, get_area(src), src, 1, TRUE))
 		return 1
 	else
 		return 0

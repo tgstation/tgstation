@@ -44,7 +44,7 @@
 		updateUsrDialog()
 
 /obj/item/weapon/circuitboard/machine/biogenerator
-	name = "circuit board (Biogenerator)"
+	name = "Biogenerator (Machine Board)"
 	build_path = /obj/machinery/biogenerator
 	origin_tech = "programming=2;biotech=3;materials=3"
 	req_components = list(

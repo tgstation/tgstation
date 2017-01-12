@@ -72,7 +72,7 @@
 
 			var/mob/living/carbon/human/lich = new /mob/living/carbon/human(item_turf)
 
-			lich.equip_to_slot_or_del(new /obj/item/clothing/shoes/sandal(lich), slot_shoes)
+			lich.equip_to_slot_or_del(new /obj/item/clothing/shoes/sandal/magic(lich), slot_shoes)
 			lich.equip_to_slot_or_del(new /obj/item/clothing/under/color/black(lich), slot_w_uniform)
 			lich.equip_to_slot_or_del(new /obj/item/clothing/suit/wizrobe/black(lich), slot_wear_suit)
 			lich.equip_to_slot_or_del(new /obj/item/clothing/head/wizard/black(lich), slot_head)

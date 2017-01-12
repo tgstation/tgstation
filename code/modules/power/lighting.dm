@@ -302,7 +302,7 @@
 
 	// attempt to insert light
 	else if(istype(W, /obj/item/weapon/light))
-		if(status != LIGHT_EMPTY)
+		if(status == LIGHT_OK)
 			user << "<span class='warning'>There is a [fitting] already inserted!</span>"
 		else
 			src.add_fingerprint(user)
@@ -310,8 +310,14 @@
 			if(istype(L, light_type))
 				if(!user.drop_item())
 					return
+
+				src.add_fingerprint(user)
+				if(status != LIGHT_EMPTY)
+					drop_light_tube(user)
+					user << "<span class='notice'>You replace [L].</span>"
+				else
+					user << "<span class='notice'>You insert [L].</span>"
 				status = L.status
-				user << "<span class='notice'>You insert the [L.name].</span>"
 				switchcount = L.switchcount
 				rigged = L.rigged
 				brightness = L.brightness
@@ -339,7 +345,7 @@
 				s.set_up(3, 1, src)
 				s.start()
 				if (prob(75))
-					electrocute_mob(user, get_area(src), src, rand(0.7,1.0))
+					electrocute_mob(user, get_area(src), src, rand(0.7,1.0), TRUE)
 	else
 		return ..()
 
@@ -374,7 +380,7 @@
 	if(status == LIGHT_BROKEN || status == LIGHT_EMPTY)
 		if(on && (I.flags & CONDUCT))
 			if(prob(12))
-				electrocute_mob(user, get_area(src), src, 0.3)
+				electrocute_mob(user, get_area(src), src, 0.3, TRUE)
 
 /obj/machinery/light/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1)
 	. = ..()

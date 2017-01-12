@@ -242,8 +242,13 @@
 	return TRUE
 
 /obj/machinery/door/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
-	S.DisIntegrate(src)
+	for(var/turf/T in range(1, src))
+		if(isspaceturf(T) || istype(T.loc, /area/space))
+			S << "<span class='warning'>Destroying this object has the potential to cause a hull breach. Aborting.</span>"
+			S.target = null
+			return FALSE
 	return TRUE
+	S.DisIntegrate(src)
 
 /obj/machinery/camera/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
 	S.DisIntegrate(src)
@@ -365,6 +370,10 @@
 		..()
 		S.resources += 49 //refund the whole thing
 	return FALSE //would logically be TRUE, but we don't want AI swarmers eating player spawn chances.
+
+/obj/machinery/hydroponics/soil/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
+	S << "<span class='warning'>This object does not contain enough materials to work with.</span>"
+	return FALSE
 
 ////END CTRL CLICK FOR SWARMERS////
 

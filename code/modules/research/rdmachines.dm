@@ -33,7 +33,7 @@
 	var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 	s.set_up(5, 1, src)
 	s.start()
-	if (electrocute_mob(user, get_area(src), src, 0.7))
+	if (electrocute_mob(user, get_area(src), src, 0.7, TRUE))
 		return 1
 	else
 		return 0
@@ -59,7 +59,7 @@
 		return
 	if(default_deconstruction_crowbar(O))
 		return
-	if((flags & OPENCONTAINER) && O.is_open_container())
+	if(is_open_container() && O.is_open_container())
 		return 0 //inserting reagents into the machine
 	if(Insert_Item(O, user))
 		return 1

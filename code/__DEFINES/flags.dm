@@ -23,7 +23,6 @@
 
 #define NOSLIP		1024 		//prevents from slipping on wet floors, in space etc (NOTE: flag shared with THICKMATERIAL for external suits and helmet)
 
-#define OPENCONTAINER	4096	// is an open container for chemistry purposes
 #define HEADBANGPROTECT		4096
 
 // BLOCK_GAS_SMOKE_EFFECT only used in masks at the moment.

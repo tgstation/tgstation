@@ -457,10 +457,10 @@
 		M.adjustToxLoss(2*REM, 0)
 	return ..()
 
-/datum/reagent/toxin/questionmark // food poisoning
+/datum/reagent/toxin/bad_food
 	name = "Bad Food"
-	id = "????"
-	description = "????"
+	id = "bad_food"
+	description = "The result of some abomination of cookery, food so bad it's toxic."
 	reagent_state = LIQUID
 	color = "#d6d6d8"
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM

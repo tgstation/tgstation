@@ -34,6 +34,7 @@
 	var/log_adminchat = 0				// log admin chat messages
 	var/log_pda = 0						// log pda messages
 	var/log_hrefs = 0					// log all links clicked in-game. Could be used for debugging and tracking down exploits
+	var/log_twitter = 0					// log certain expliotable parrots and other such fun things in a JSON file of twitter valid phrases.
 	var/log_world_topic = 0				// log all world.Topic() calls
 	var/sql_enabled = 0					// for sql switching
 	var/allow_admin_ooccolor = 0		// Allows admins with relevant permissions to have their own ooc colour
@@ -75,6 +76,7 @@
 
 	var/allow_panic_bunker_bounce = 0 //Send new players somewhere else
 	var/panic_server_name = "somewhere else"
+	var/panic_address = "byond://" //Reconnect a player this linked server if this server isn't accepting new players
 
 	//IP Intel vars
 	var/ipintel_email
@@ -227,9 +229,11 @@
 	var/cross_name = "Other server"
 	var/showircname = 0
 
+	var/list/gamemode_cache = null
+
 /datum/configuration/New()
-	var/list/L = subtypesof(/datum/game_mode)
-	for(var/T in L)
+	gamemode_cache = typecacheof(/datum/game_mode,TRUE)
+	for(var/T in gamemode_cache)
 		// I wish I didn't have to instance the game modes in order to look up
 		// their information, but it is the only way (at least that I know of).
 		var/datum/game_mode/M = new T()
@@ -315,6 +319,8 @@
 					config.log_pda = 1
 				if("log_hrefs")
 					config.log_hrefs = 1
+				if("log_twitter")
+					config.log_twitter = 1
 				if("log_world_topic")
 					config.log_world_topic = 1
 				if("allow_admin_ooccolor")
@@ -396,7 +402,7 @@
 				if("panic_server_name")
 					panic_server_name = value
 				if("panic_server_address")
-					global.panic_address = value
+					panic_address = value
 					if(value != "byond:\\address:port")
 						allow_panic_bunker_bounce = 1
 				if("medal_hub_address")
@@ -807,7 +813,7 @@
 /datum/configuration/proc/pick_mode(mode_name)
 	// I wish I didn't have to instance the game modes in order to look up
 	// their information, but it is the only way (at least that I know of).
-	for(var/T in subtypesof(/datum/game_mode))
+	for(var/T in gamemode_cache)
 		var/datum/game_mode/M = new T()
 		if(M.config_tag && M.config_tag == mode_name)
 			return M
@@ -816,7 +822,7 @@
 
 /datum/configuration/proc/get_runnable_modes()
 	var/list/datum/game_mode/runnable_modes = new
-	for(var/T in subtypesof(/datum/game_mode))
+	for(var/T in gamemode_cache)
 		var/datum/game_mode/M = new T()
 		//world << "DEBUG: [T], tag=[M.config_tag], prob=[probabilities[M.config_tag]]"
 		if(!(M.config_tag in modes))
@@ -836,7 +842,7 @@
 
 /datum/configuration/proc/get_runnable_midround_modes(crew)
 	var/list/datum/game_mode/runnable_modes = new
-	for(var/T in (subtypesof(/datum/game_mode) - ticker.mode.type))
+	for(var/T in (gamemode_cache - ticker.mode.type))
 		var/datum/game_mode/M = new T()
 		if(!(M.config_tag in modes))
 			qdel(M)

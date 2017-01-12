@@ -3,6 +3,17 @@
 	materials = list(MAT_GLASS = 250)
 	var/glass_colour_type = null //colors your vision when worn
 
+/obj/item/clothing/glasses/visor_toggling()
+	..()
+	vision_flags ^= initial(vision_flags)
+	darkness_view ^= initial(darkness_view)
+	invis_view ^= initial(invis_view)
+
+/obj/item/clothing/glasses/weldingvisortoggle(mob/user)
+	. = ..()
+	if(. && user)
+		user.update_sight()
+
 //called when thermal glasses are emped.
 /obj/item/clothing/glasses/proc/thermal_overload()
 	if(ishuman(src.loc))
@@ -202,17 +213,8 @@
 	visor_flags_inv = HIDEEYES
 	glass_colour_type = /datum/client_colour/glass_colour/gray
 
-
-/obj/item/clothing/glasses/welding/attack_self()
-	toggle()
-
-
-/obj/item/clothing/glasses/welding/verb/toggle()
-	set category = "Object"
-	set name = "Adjust welding goggles"
-	set src in usr
-
-	weldingvisortoggle()
+/obj/item/clothing/glasses/welding/attack_self(mob/user)
+	weldingvisortoggle(user)
 
 
 /obj/item/clothing/glasses/sunglasses/blindfold

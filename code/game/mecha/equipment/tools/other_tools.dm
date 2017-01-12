@@ -63,6 +63,7 @@
 	P.icon = 'icons/obj/objects.dmi'
 	P.icon_state = "anom"
 	P.name = "wormhole"
+	P.mech_sized = TRUE
 	var/turf/T = get_turf(target)
 	message_admins("[ADMIN_LOOKUPFLW(chassis.occupant)] used a Wormhole Generator in [ADMIN_COORDJMP(T)]",0,1)
 	log_game("[key_name(chassis.occupant)] used a Wormhole Generator in [COORD(T)]")

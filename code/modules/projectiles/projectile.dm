@@ -74,6 +74,9 @@
 	else //when a limb is missing the damage is actually passed to the chest
 		return "chest"
 
+/obj/item/projectile/proc/prehit(atom/target)
+	return
+
 /obj/item/projectile/proc/on_hit(atom/target, blocked = 0)
 	var/turf/target_loca = get_turf(target)
 	if(!isliving(target))
@@ -145,6 +148,7 @@
 
 	var/turf/target_turf = get_turf(A)
 
+	prehit(A)
 	var/permutation = A.bullet_act(src, def_zone) // searches for return value, could be deleted after run so check A isn't null
 	if(permutation == -1 || forcedodge)// the bullet passes through a dense object!
 		loc = target_turf
@@ -158,6 +162,7 @@
 				mobs_list += L
 			if(mobs_list.len)
 				var/mob/living/picked_mob = pick(mobs_list)
+				prehit(picked_mob)
 				picked_mob.bullet_act(src, def_zone)
 	qdel(src)
 
@@ -168,6 +173,7 @@
 	if(!log_override && firer && original)
 		add_logs(firer, original, "fired at", src, " [get_area(src)]")
 	if(direct_target)
+		prehit(direct_target)
 		direct_target.bullet_act(src, def_zone)
 		qdel(src)
 		return

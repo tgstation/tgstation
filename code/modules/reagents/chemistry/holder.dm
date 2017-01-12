@@ -12,7 +12,7 @@ var/const/INJECT = 5 //injection
 	var/list/datum/reagent/reagent_list = new/list()
 	var/total_volume = 0
 	var/maximum_volume = 100
-	var/datum/my_atom = null
+	var/atom/my_atom = null
 	var/chem_temp = 150
 	var/last_tick = 1
 	var/addiction_tick = 1
@@ -561,7 +561,7 @@ var/const/INJECT = 5 //injection
 
 	if(isnull(amount))
 		amount = 0
-		throw EXCEPTION("null amount passed to reagent code")
+		CRASH("null amount passed to reagent code")
 		return FALSE
 
 	if(!isnum(amount))
@@ -691,7 +691,7 @@ var/const/INJECT = 5 //injection
 
 // Convenience proc to create a reagents holder for an atom
 // Max vol is maximum volume of holder
-/datum/proc/create_reagents(max_vol)
+/atom/proc/create_reagents(max_vol)
 	if(reagents)
 		qdel(reagents)
 	reagents = new/datum/reagents(max_vol)
