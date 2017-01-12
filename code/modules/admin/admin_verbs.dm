@@ -501,12 +501,14 @@ var/list/admin_verbs_hideable = list(
 	switch(choice)
 		if(null)
 			return 0
-		if("Small Bomb")
-			explosion(epicenter, 1, 2, 3, 3)
-		if("Medium Bomb")
-			explosion(epicenter, 2, 3, 4, 4)
-		if("Big Bomb")
-			explosion(epicenter, 3, 5, 7, 5)
+		if("Small Bomb (1, 2, 3, 3)")
+			explosion(epicenter, 1, 2, 3, 3, TRUE, TRUE)
+		if("Medium Bomb (2, 3, 4, 4)")
+			explosion(epicenter, 2, 3, 4, 4, TRUE, TRUE)
+		if("Big Bomb  (3, 5, 7, 5)")
+			explosion(epicenter, 3, 5, 7, 5, TRUE, TRUE)
+		if("Maxcap ([MAX_EX_DEVESTATION_RANGE], [MAX_EX_HEAVY_RANGE], [MAX_EX_LIGHT_RANGE], [MAX_EX_FLASH_RANGE])")
+			explosion(epicenter, MAX_EX_DEVESTATION_RANGE, MAX_EX_HEAVY_RANGE, MAX_EX_LIGHT_RANGE, MAX_EX_FLASH_RANGE)
 		if("Custom Bomb")
 			var/devastation_range = input("Devastation range (in tiles):") as null|num
 			if(devastation_range == null)
@@ -521,7 +523,7 @@ var/list/admin_verbs_hideable = list(
 			if(flash_range == null)
 				return
 			epicenter = mob.loc //We need to reupdate as they may have moved again
-			explosion(epicenter, devastation_range, heavy_impact_range, light_impact_range, flash_range)
+			explosion(epicenter, devastation_range, heavy_impact_range, light_impact_range, flash_range, TRUE, TRUE)
 	message_admins("[ADMIN_LOOKUPFLW(usr)] creating an admin explosion at [epicenter.loc].")
 	log_admin("[key_name(usr)] created an admin explosion at [epicenter.loc].")
 	feedback_add_details("admin_verb","DB") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
