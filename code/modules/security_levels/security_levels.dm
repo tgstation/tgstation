@@ -50,7 +50,7 @@
 					if(SSshuttle.emergency.mode == SHUTTLE_CALL || SSshuttle.emergency.mode == SHUTTLE_RECALL)
 						if(security_level == SEC_LEVEL_GREEN)
 							SSshuttle.emergency.modTimer(0.25)
-						else
+						else if(security_level == SEC_LEVEL_BLUE)
 							SSshuttle.emergency.modTimer(0.5)
 				else
 					minor_announce(config.alert_desc_red_downto, "Attention! Code red!")
