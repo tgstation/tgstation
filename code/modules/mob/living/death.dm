@@ -63,6 +63,7 @@
 	paralysis = 0
 	stunned = 0
 	weakened = 0
+	hallucination = 0
 	set_drugginess(0)
 	SetSleeping(0, 0)
 	blind_eyes(1)
