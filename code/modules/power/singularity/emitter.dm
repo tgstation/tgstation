@@ -27,6 +27,9 @@
 	var/projectile_type = /obj/item/projectile/beam/emitter
 
 	var/projectile_sound = 'sound/weapons/emitter.ogg'
+	
+	var/powerloss = 0
+	var/powerlogged = 0
 
 /obj/machinery/power/emitter/New()
 	..()
@@ -147,6 +150,7 @@
 
 
 /obj/machinery/power/emitter/process()
+	
 	if(stat & (BROKEN))
 		return
 	if(src.state != 2 || (!powernet && active_power_usage))
@@ -160,14 +164,19 @@
 			if(!powered)
 				powered = 1
 				update_icon()
-				investigate_log("regained power and turned <font color='green'>on</font>","singulo")
+				if(powerlogged)
+					investigate_log("regained power and turned <font color='green'>on</font>","singulo")
+					powerlogged = 0
 		else
 			if(powered)
 				powered = 0
 				update_icon()
+			powerloss++
+			if(powerloss > 2)	//Around 6 seconds of no power
 				investigate_log("lost power and turned <font color='red'>off</font>","singulo")
 				log_game("Emitter lost power in ([x],[y],[z])")
 				message_admins("Emitter lost power in ([x],[y],[z] - <a href='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
+				powerlogged = 1
 			return
 
 		src.last_shot = world.time
@@ -203,6 +212,7 @@
 				A.xo = 0
 		A.starting = loc
 		A.fire()
+		powerloss = 0
 
 /obj/machinery/power/emitter/can_be_unfasten_wrench(mob/user)
 	if(state == EM_WELDED)
