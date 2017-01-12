@@ -1,6 +1,12 @@
 /mob/living/carbon/death(gibbed)
+	if(stat == DEAD)
+		return
+
 	silent = 0
 	losebreath = 0
+	
+	if(!gibbed)
+		emote("deathgasp")
 	handling_hal = 1
 	halimage.qdel()
 	halbody.qdel()
@@ -8,6 +14,8 @@
 	hal_screwyhud = 0
 	..()
 	handling_hal = 0
+	if(ticker && ticker.mode)
+		ticker.mode.check_win() //Calls the rounds wincheck, mainly for wizard, malf, and changeling now
 
 /mob/living/carbon/gib(no_brain, no_organs, no_bodyparts)
 	for(var/mob/M in src)
