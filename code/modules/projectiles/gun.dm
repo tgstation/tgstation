@@ -283,7 +283,6 @@
 					var/temp60 = tempmax * 0.6
 					var/temp40 = tempmax * 0.4
 					var/shotsleft = round((E.power_supply.charge / shot.e_cost))
-					world << shotsleft
 					if(INFINITY > shotsleft && shotsleft <= tempmax)
 						temp_icon = "[base_icon]100"
 					if(tempmax > shotsleft && shotsleft <= temp80)
@@ -294,7 +293,6 @@
 						temp_icon = "[base_icon]40"
 					if(temp40 > shotsleft && shotsleft <= 1)
 						temp_icon = "[base_icon]20"
-				world << temp_icon
 				add_overlay(image(icon = 'icons/obj/guncrafting/ausops_new.dmi', icon_state = temp_icon))
 			for(var/obj/item/weapon/gun_attachment/underbarrel/U in attachments)
 				var/image/UO = image(icon = 'icons/obj/guncrafting/ausops_new.dmi', icon_state = U.icon_state)
