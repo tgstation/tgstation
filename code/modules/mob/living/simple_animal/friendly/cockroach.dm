@@ -31,8 +31,8 @@
 	..()
 
 /mob/living/simple_animal/cockroach/proc/squish()
-	adjustBruteLoss(1) // kills a normal cockroach
 	new /obj/effect/decal/cleanable/deadcockroach(get_turf(src))
+	adjustBruteLoss(1) // kills a normal cockroach
 
 /mob/living/simple_animal/cockroach/Crossed(var/atom/movable/AM)
 	if(ismob(AM))
