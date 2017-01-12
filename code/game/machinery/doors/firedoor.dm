@@ -52,7 +52,7 @@
 
 	if(istype(C, /obj/item/weapon/wrench))
 		if(boltslocked)
-			user << "<span class='notice'>There are screws locking the bolts in place!</span>
+			user << "<span class='notice'>There are screws locking the bolts in place!</span>"
 			return
 		playsound(get_turf(src), C.usesound, 50, 1)
 		user.visible_message("<span class='notice'>[user] starts undoing [src]'s bolts...</span>", \
