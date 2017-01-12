@@ -394,7 +394,7 @@
 	materials = list(MAT_METAL = 500, MAT_GLASS = 300)
 	build_path = /obj/item/weapon/gun_attachment/bullet/penetrator
 	category = list("Guncrafting Parts")
-c
+
 //scopes
 /datum/design/scope_reflex
 	name = "Gun Sight: Reflex"
