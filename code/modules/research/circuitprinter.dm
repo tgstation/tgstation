@@ -67,7 +67,7 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 		qdel(src)
 
 /obj/machinery/r_n_d/circuit_imprinter/proc/check_mat(datum/design/being_built, M)	// now returns how many times the item can be built with the material
-	var/list/all_materials = being_built.reagents + being_built.materials
+	var/list/all_materials = being_built.reagents_list + being_built.materials
 
 	var/A = materials.amount(M)
 	if(!A)

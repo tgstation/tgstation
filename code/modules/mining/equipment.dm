@@ -181,7 +181,7 @@
 
 /obj/item/weapon/resonator/upgraded
 	name = "upgraded resonator"
-	desc = "An upgraded version of the resonator that can produce more fields at once."
+	desc = "An upgraded version of the resonator that can produce more fields at once, as well as having no damage penalty for bursting a resonance field early."
 	icon_state = "resonator_u"
 	item_state = "resonator_u"
 	origin_tech = "materials=4;powerstorage=3;engineering=3;magnets=3"
@@ -193,11 +193,11 @@
 	var/obj/effect/resonance/R = locate(/obj/effect/resonance) in T
 	if(R)
 		R.resonance_damage *= quick_burst_mod
-		R.burst(T)
+		R.burst()
 		return
 	if(fields.len < fieldlimit)
 		playsound(src,'sound/weapons/resonator_fire.ogg',50,1)
-		var/obj/effect/resonance/RE = new /obj/effect/resonance(T, creator, burst_time, src)
+		var/obj/effect/resonance/RE = new(T, creator, burst_time, src)
 		fields += RE
 
 /obj/item/weapon/resonator/attack_self(mob/user)
@@ -217,7 +217,7 @@
 
 /obj/effect/resonance
 	name = "resonance field"
-	desc = "A resonating field that significantly damages anything inside of it when the field eventually ruptures."
+	desc = "A resonating field that significantly damages anything inside of it when the field eventually ruptures. More damaging in low pressure environments."
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "shield1"
 	layer = ABOVE_ALL_MOB_LAYER
@@ -231,22 +231,30 @@
 	..()
 	creator = set_creator
 	res = set_resonator
+	check_pressure()
+	addtimer(CALLBACK(src, .proc/burst), timetoburst)
+
+/obj/effect/resonance/Destroy()
+	if(res)
+		res.fields -= src
+	. = ..()
+
+/obj/effect/resonance/proc/check_pressure()
 	var/turf/proj_turf = get_turf(src)
 	if(!istype(proj_turf))
 		return
 	var/datum/gas_mixture/environment = proj_turf.return_air()
 	var/pressure = environment.return_pressure()
 	if(pressure < 50)
-		name = "strong resonance field"
+		name = "strong [initial(name)]"
 		resonance_damage = 60
-	addtimer(CALLBACK(src, .proc/burst, proj_turf), timetoburst)
+	else
+		name = initial(name)
+		resonance_damage = initial(resonance_damage)
 
-/obj/effect/resonance/Destroy()
-	if(res)
-		res.fields -= src
-	return ..()
-
-/obj/effect/resonance/proc/burst(turf/T)
+/obj/effect/resonance/proc/burst()
+	check_pressure()
+	var/turf/T = get_turf(src)
 	playsound(src,'sound/weapons/resonator_blast.ogg',50,1)
 	if(ismineralturf(T))
 		var/turf/closed/mineral/M = T
@@ -254,7 +262,7 @@
 	for(var/mob/living/L in T)
 		if(creator)
 			add_logs(creator, L, "used a resonator field on", "resonator")
-		L << "<span class='danger'>The [src.name] ruptured with you in it!</span>"
+		L << "<span class='userdanger'>[src] ruptured with you in it!</span>"
 		L.apply_damage(resonance_damage, BRUTE)
 	qdel(src)
 
@@ -351,12 +359,14 @@
 	if(!user.client)
 		return
 	if(!cooldown)
-		cooldown = 1
-		spawn(40)
-			cooldown = 0
+		cooldown = TRUE
+		addtimer(CALLBACK(src, .proc/clear_cooldown), 40)
 		var/list/mobs = list()
 		mobs |= user
 		mineral_scan_pulse(mobs, get_turf(user))
+
+/obj/item/device/mining_scanner/proc/clear_cooldown()
+	cooldown = FALSE
 
 
 //Debug item to identify all ore spread quickly

@@ -1,0 +1,4 @@
+author: "Mervill"
+delete-after: True
+changes: 
+  - bugfix: "Hardsuits, amour and other suits that cover the feet now protect against glass shards"

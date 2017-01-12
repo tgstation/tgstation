@@ -23,7 +23,7 @@
 	return
 
 
-/obj/item/weapon/reagent_containers/pill/attack(mob/M, mob/user, def_zone, self_delay)
+/obj/item/weapon/reagent_containers/pill/attack(mob/M, mob/user, def_zone)
 	if(!canconsume(M, user))
 		return 0
 

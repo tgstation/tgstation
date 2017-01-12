@@ -1,4 +1,0 @@
-author: "Mervill"
-delete-after: True
-changes: 
-  - bugfix: "Controlling the station status displays no longer overrides the cargo supply timer"

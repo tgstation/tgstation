@@ -1,6 +1,0 @@
-author: "Cyberboss"
-delete-after: True
-changes: 
-  - bugfix: "Explosions can no longer be dodged"
-  - tweak: "Airlocks are now destroyed by the same level explosion that destroys walls"
-  - tweak: "Diamond/External/Centcomm airlocks and firedoors now block explosions as walls do"

@@ -2,6 +2,8 @@
 	name = "scooter"
 	desc = "A fun way to get around."
 	icon_state = "scooter"
+	var/slowed = FALSE
+	var/slowvalue = 1
 
 /obj/vehicle/scooter/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/wrench))
@@ -42,14 +44,17 @@
 	if(!istype(M))
 		return 0
 	if(M.get_num_legs() < 2 && M.get_num_arms() <= 0)
-		M << "<span class='warning'>Your limbless body can't use [src].</span>"
+		M << "<span class='warning'>Your limbless body can't ride \the [src].</span>"
 		return 0
 	. = ..()
 
 /obj/vehicle/scooter/post_buckle_mob(mob/living/M)
-	vehicle_move_delay = initial(vehicle_move_delay)
-	if(M.get_num_legs() < 2)
-		vehicle_move_delay ++
+	if(M.get_num_legs() < 2 && !slowed)
+		vehicle_move_delay = vehicle_move_delay + slowvalue
+		slowed = TRUE
+	else if(slowed)
+		vehicle_move_delay = vehicle_move_delay - slowvalue
+		slowed = FALSE
 
 /obj/vehicle/scooter/skateboard
 	name = "skateboard"

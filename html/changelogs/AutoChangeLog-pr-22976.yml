@@ -1,0 +1,4 @@
+author: "Thunder12345"
+delete-after: True
+changes: 
+  - bugfix: "Morphs will no longer retain the colour of the last thing mimicked when reverting to their true form"
