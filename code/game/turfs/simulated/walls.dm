@@ -59,7 +59,8 @@
 	switch(severity)
 		if(1)
 			//SN src = null
-			src.ChangeTurf(src.baseturf)
+			var/turf/NT = ChangeTurf(src.baseturf)
+			NT.contents_explosion(severity, target)
 			return
 		if(2)
 			if (prob(50))
