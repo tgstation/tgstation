@@ -31,8 +31,26 @@
 /obj/effect/turf_decal/stripes/line
 	icon_state = "warningline"
 
-/obj/effect/turf_decal/stripes/side
-	icon_state = "warn_side"
+/obj/effect/turf_decal/stripes/end
+	icon_state = "warn_end"
 
 /obj/effect/turf_decal/stripes/corner
 	icon_state = "warninglinecorner"
+
+/obj/effect/turf_decal/stripes/asteroid/line
+	icon_state = "ast_warn"
+
+/obj/effect/turf_decal/stripes/asteroid/end
+	icon_state = "ast_warn_end"
+
+/obj/effect/turf_decal/stripes/asteroid/corner
+	icon_state = "ast_warn_corner"
+
+/obj/effect/turf_decal/delivery
+	icon_state = "delivery"
+
+/obj/effect/turf_decal/bot
+	icon_state = "bot"
+
+/obj/effect/turf_decal/loading_area
+	icon_state = "loading_area"
