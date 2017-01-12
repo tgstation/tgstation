@@ -1,4 +1,4 @@
-//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
 /turf/closed/indestructible/necropolis,
 /area/lavaland/surface/outdoors)
@@ -2802,9 +2802,7 @@
 "fP" = (
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /turf/closed/indestructible/riveted,
-/area/ruin/unpowered{
-	name = "Necropolis Bridge"
-	})
+/area/space)
 
 (1,1,1) = {"
 aa
@@ -34693,8 +34691,8 @@ aj
 aj
 ab
 ab
-ah
-ah
+aa
+aa
 af
 af
 af
@@ -34706,8 +34704,8 @@ af
 af
 af
 af
-ah
-ah
+aa
+aa
 ab
 ab
 ab
@@ -34950,21 +34948,21 @@ aj
 aj
 aj
 aj
-ai
-ai
-ai
-ai
-ai
-ai
-ai
-ai
-ai
-ai
-ai
-ai
-ai
-ai
-ah
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aa
 ab
 ab
 ab
@@ -35207,21 +35205,21 @@ aj
 aj
 aj
 aj
-ai
-ai
-ai
-ai
-ai
-ai
-ai
-ai
-ai
-ai
-ai
-ai
-ai
-ai
-ai
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
 ab
 ab
 ab
@@ -35464,21 +35462,21 @@ aj
 aj
 aj
 aj
-ai
-ai
-ai
-ai
-ai
-ai
-ai
-ai
-ai
-ai
-ai
-ai
-ai
-ai
-ah
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aa
 ab
 ab
 ab
@@ -35721,8 +35719,8 @@ aj
 aj
 ab
 ab
-ah
-ah
+aa
+aa
 af
 af
 af
@@ -35734,8 +35732,8 @@ af
 af
 af
 af
-ah
-ah
+aa
+aa
 ab
 ab
 ab

@@ -1,3 +1,5 @@
+#define PING_BUFFER_TIME 25
+
 var/datum/subsystem/ping/SSping
 
 /datum/subsystem/ping
@@ -18,7 +20,7 @@ var/datum/subsystem/ping/SSping
 	while (length(currentrun))
 		var/client/C = currentrun[currentrun.len]
 		currentrun.len--
-		if (!C)
+		if (!C || world.time - C.connection_time < PING_BUFFER_TIME)
 			if (MC_TICK_CHECK)
 				return
 			continue
@@ -27,3 +29,5 @@ var/datum/subsystem/ping/SSping
 			return
 
 	currentrun = null
+
+#undef PING_BUFFER_TIME

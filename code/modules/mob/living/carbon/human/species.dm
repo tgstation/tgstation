@@ -851,6 +851,7 @@
 						H.emote("gasp")
 						H.domutcheck()
 		return 0
+	H.radiation = 0
 	return 1
 
 /datum/species/proc/go_bald(mob/living/carbon/human/H)
