@@ -157,6 +157,9 @@
 	limb.icon_state = "[selected_category]_[limb.body_zone]_s"
 	limb.name = "Synthetic [selected_category] [parse_zone(limb.body_zone)]"
 	limb.desc = "A synthetic [selected_category] limb that will morph on its first use in surgery. This one is for the [parse_zone(limb.body_zone)]"
+	limb.species_id = selected_category
+	limb.should_draw_greyscale = TRUE
+	limb.update_icon_dropped()
 
 /obj/machinery/limbgrower/RefreshParts()
 	reagents.maximum_volume = 0
