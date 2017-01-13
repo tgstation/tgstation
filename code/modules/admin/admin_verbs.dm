@@ -522,6 +522,9 @@ var/list/admin_verbs_hideable = list(
 			var/flash_range = input("Flash range (in tiles):") as null|num
 			if(flash_range == null)
 				return
+			if(devastation_range > MAX_EX_DEVESTATION_RANGE || heavy_impact_range > MAX_EX_HEAVY_RANGE || light_impact_range > MAX_EX_LIGHT_RANGE || flash_range > MAX_EX_FLASH_RANGE)
+				if(alert("Bomb is bigger than the maxcap. Continue?","Yes","No") != "Yes")
+					return
 			epicenter = mob.loc //We need to reupdate as they may have moved again
 			explosion(epicenter, devastation_range, heavy_impact_range, light_impact_range, flash_range, TRUE, TRUE)
 	message_admins("[ADMIN_LOOKUPFLW(usr)] creating an admin explosion at [epicenter.loc].")
