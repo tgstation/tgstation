@@ -15,7 +15,7 @@
 /obj/item/weapon/gun_attachment/base/shotgun
 	gun_type = CUSTOMIZABLE_PROJECTILE
 	name = "Shotgun Ballistic Base"
-	icon_state = "base_projectile_shotgun"
+	icon_state = "base_projectile_shotgun1"
 	mag_type = /obj/item/ammo_box/magazine/internal/shot/guncrafting
 	the_item_state = "shotgun"
 	internal = 1
@@ -23,7 +23,7 @@
 /obj/item/weapon/gun_attachment/base/shotgun_db
 	gun_type = CUSTOMIZABLE_PROJECTILE
 	name = "Double Barrel Shotgun Ballistic Base"
-	icon_state = "base_projectile_shotgun_db"
+	icon_state = "base_projectile_shotgun2"
 	mag_type = /obj/item/ammo_box/magazine/internal/shot/dual
 	the_item_state = "shotgun"
 	internal = 1
