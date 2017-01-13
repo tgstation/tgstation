@@ -247,8 +247,8 @@
 			S << "<span class='warning'>Destroying this object has the potential to cause a hull breach. Aborting.</span>"
 			S.target = null
 			return FALSE
-	return TRUE
 	S.DisIntegrate(src)
+	return TRUE
 
 /obj/machinery/camera/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
 	S.DisIntegrate(src)
