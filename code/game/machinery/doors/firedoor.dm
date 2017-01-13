@@ -47,29 +47,30 @@
 
 /obj/machinery/door/firedoor/attackby(obj/item/weapon/C, mob/user, params)
 	add_fingerprint(user)
-	if(operating || !welded)
+	if(operating)
 		return
-
-	if(istype(C, /obj/item/weapon/wrench))
-		if(boltslocked)
-			user << "<span class='notice'>There are screws locking the bolts in place!</span>"
+	
+	if(welded)
+		if(istype(C, /obj/item/weapon/wrench))
+			if(boltslocked)
+				user << "<span class='notice'>There are screws locking the bolts in place!</span>"
+				return
+			playsound(get_turf(src), C.usesound, 50, 1)
+			user.visible_message("<span class='notice'>[user] starts undoing [src]'s bolts...</span>", \
+								 "<span class='notice'>You start unfastening [src]'s floor bolts...</span>")
+			if(!do_after(user, 50*C.toolspeed, target = src))
+				return
+			playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
+			user.visible_message("<span class='notice'>[user] unfastens [src]'s bolts.</span>", \
+								 "<span class='notice'>You undo [src]'s floor bolts.</span>")
+			deconstruct(TRUE)
 			return
-		playsound(get_turf(src), C.usesound, 50, 1)
-		user.visible_message("<span class='notice'>[user] starts undoing [src]'s bolts...</span>", \
-							 "<span class='notice'>You start unfastening [src]'s floor bolts...</span>")
-		if(!do_after(user, 50*C.toolspeed, target = src))
+		if(istype(C, /obj/item/weapon/screwdriver))
+			user.visible_message("<span class='notice'>[user] [boltslocked ? "unlocks" : "locks"] [src]'s bolts...</span>", \
+								 "<span class='notice'>You [boltslocked ? "unlock" : "lock"] [src]'s floor bolts...</span>")
+			playsound(get_turf(src), C.usesound, 50, 1)
+			boltslocked = !boltslocked
 			return
-		playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
-		user.visible_message("<span class='notice'>[user] unfastens [src]'s bolts.</span>", \
-							 "<span class='notice'>You undo [src]'s floor bolts.</span>")
-		deconstruct(TRUE)
-		return
-	if(istype(C, /obj/item/weapon/screwdriver))
-		user.visible_message("<span class='notice'>[user] [boltslocked ? "unlocks" : "locks"] [src]'s bolts...</span>", \
-							 "<span class='notice'>You [boltslocked ? "unlock" : "lock"] [src]'s floor bolts...</span>")
-		playsound(get_turf(src), C.usesound, 50, 1)
-		boltslocked = !boltslocked
-		return
 
 	return ..()
 
