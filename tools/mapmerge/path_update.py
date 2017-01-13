@@ -84,8 +84,14 @@ def update_path(mapdata, replacement_string, verbose=False):
         else:
             old_props = dict()
         for filter_prop in old_path_props:
-            if filter_prop not in old_props or old_props[filter_prop] != old_path_props[filter_prop]:
-                return match.group(0) #does not match current filter, skip the change.
+            if filter_prop not in old_props:
+                if old_path_props[filter_prop] == "@UNSET":
+                    continue
+                else:
+                    return [match.group(0)]
+            else:
+                if old_props[filter_prop] != old_path_props[filter_prop] or old_path_props[filter_prop] == "@UNSET":
+                    return [match.group(0)] #does not match current filter, skip the change.
         if verbose:
             print("Found match : {0}".format(match.group(0)))
         out_paths = []
@@ -145,7 +151,8 @@ if __name__ == "__main__":
         property = @OLD:name - will copy [name] property from original object even if global @OLD is not used
         Anything else is copied as written.
     Old paths properties:
-    Will be used as filter.
+        Will be used as a filter.
+        property = @UNSET - will apply the rule only if the property is not mapedited
     """
 
     parser = argparse.ArgumentParser(description=desc, formatter_class=argparse.RawTextHelpFormatter)
