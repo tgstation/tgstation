@@ -144,12 +144,10 @@
 		new/obj/item/stack/tile/brass(user.loc, 5)
 		user << "<span class='brass'>You user [stored_power ? "some":"all"] of [src]'s power to produce some brass sheets. It now stores <b>[get_power()]W/[get_max_power()]W</b> of power.</span>"
 
-/obj/item/clockwork/clockwork_proselytizer/afterattack(atom/target, mob/living/user, proximity_flag, params)
-	if(!target || !user || !proximity_flag)
-		return 0
-	if(!is_servant_of_ratvar(user))
-		return ..()
-	proselytize(target, user)
+/obj/item/clockwork/clockwork_proselytizer/pre_attackby(atom/target, mob/living/user, params)
+	if(!target || !user || !is_servant_of_ratvar(user) || istype(target, /obj/item/weapon/storage))
+		return TRUE
+	return proselytize(target, user)
 
 /obj/item/clockwork/clockwork_proselytizer/proc/get_power()
 	return stored_power
@@ -173,7 +171,8 @@
 		return FALSE
 	return TRUE
 
-/obj/item/clockwork/clockwork_proselytizer/proc/proselytize(atom/target, mob/living/user)
+//A note here; return values are for if we CAN BE PUT ON A TABLE, not IF WE ARE SUCCESSFUL, unless no_table_check is TRUE
+/obj/item/clockwork/clockwork_proselytizer/proc/proselytize(atom/target, mob/living/user, no_table_check)
 	if(!target || !user)
 		return FALSE
 	if(repairing)
@@ -183,8 +182,10 @@
 	if(!islist(proselytize_values))
 		if(proselytize_values != TRUE) //if we get true, fail, but don't send a message for whatever reason
 			if(!isturf(target)) //otherwise, if we didn't get TRUE and the original target wasn't a turf, try to proselytize the turf
-				return proselytize(get_turf(target), user)
+				return proselytize(get_turf(target), user, no_table_check)
 			user << "<span class='warning'>[target] cannot be proselytized!</span>"
+			if(!no_table_check)
+				return TRUE
 		return FALSE
 	if(can_use_power(RATVAR_POWER_CHECK))
 		proselytize_values["power_cost"] = 0
@@ -202,12 +203,11 @@
 			user << "<span class='warning'>Your [name] contains too much power to proselytize [target]!</span>"
 		return FALSE
 
-	var/target_type = target.type
-
 	proselytize_values["operation_time"] *= speed_multiplier
 
 	playsound(target, 'sound/machines/click.ogg', 50, 1)
 	if(proselytize_values["operation_time"])
+		var/target_type = target.type
 		user.visible_message("<span class='warning'>[user]'s [name] begins tearing apart [target]!</span>", "<span class='brass'>You begin proselytizing [target]...</span>")
 		if(!do_after(user, proselytize_values["operation_time"], target = target))
 			return FALSE
@@ -231,4 +231,6 @@
 		if(!proselytize_values["no_target_deletion"])
 			qdel(target)
 	modify_stored_power(-proselytize_values["power_cost"])
-	return TRUE
+	if(no_table_check)
+		return TRUE
+	return FALSE

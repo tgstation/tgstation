@@ -47,6 +47,8 @@
 	return FALSE
 
 /turf/open/floor/clockwork/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer)
+	if(locate(/obj/structure/table) in loc)
+		return FALSE
 	if(is_blocked_turf(src, TRUE))
 		user << "<span class='warning'>Something is in the way, preventing you from proselytizing [src] into a clockwork wall.</span>"
 		return TRUE
@@ -167,6 +169,33 @@
 	return list("operation_time" = 60, "new_obj_type" = doortype, "power_cost" = POWER_WALL_TOTAL, "spawn_dir" = dir)
 
 /obj/machinery/door/airlock/clockwork/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer)
+	return FALSE
+
+//Table conversion
+/obj/structure/table/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer)
+	var/prosel_cost = POWER_STANDARD
+	if(framestack == /obj/item/stack/rods)
+		prosel_cost -= POWER_ROD*framestackamount
+	else if(framestack == /obj/item/stack/tile/brass)
+		prosel_cost -= POWER_FLOOR*framestackamount
+	if(buildstack == /obj/item/stack/sheet/metal)
+		prosel_cost -= POWER_METAL*buildstackamount
+	else if(buildstack == /obj/item/stack/sheet/plasteel)
+		prosel_cost -= POWER_PLASTEEL*buildstackamount
+	return list("operation_time" = 20, "new_obj_type" = /obj/structure/table/reinforced/brass, "power_cost" = prosel_cost, "spawn_dir" = SOUTH)
+
+/obj/structure/table/reinforced/brass/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer)
+	return FALSE
+
+/obj/structure/table_frame/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer)
+	var/prosel_cost = POWER_FLOOR
+	if(framestack == /obj/item/stack/rods)
+		prosel_cost -= POWER_ROD*framestackamount
+	else if(framestack == /obj/item/stack/tile/brass)
+		prosel_cost -= POWER_FLOOR*framestackamount
+	return list("operation_time" = 10, "new_obj_type" = /obj/structure/table_frame/brass, "power_cost" = prosel_cost, "spawn_dir" = SOUTH)
+
+/obj/structure/table_frame/brass/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer)
 	return FALSE
 
 //Window conversion
