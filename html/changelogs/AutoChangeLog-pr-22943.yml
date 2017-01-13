@@ -1,4 +1,0 @@
-author: "XDTM"
-delete-after: True
-changes: 
-  - bugfix: "Accelerator laser cannons' projectile now properly grows with distance."

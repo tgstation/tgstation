@@ -1,5 +1,0 @@
-author: "Shadowlight213"
-delete-after: True
-changes: 
-  - bugfix: "The ID console now properly handles authorization"
-  - bugfix: "Clicking on one of the ID cards in the UI will no longer eject both of them"
