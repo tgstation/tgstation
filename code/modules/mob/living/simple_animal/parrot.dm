@@ -87,13 +87,19 @@
 	//Parrots will generally sit on their perch unless something catches their eye.
 	//These vars store their preffered perch and if they dont have one, what they can use as a perch
 	var/obj/parrot_perch = null
-	var/obj/desired_perches = list(/obj/structure/frame/computer, 		/obj/structure/displaycase, \
-									/obj/structure/filingcabinet,		/obj/machinery/teleport, \
-									/obj/machinery/computer,			/obj/machinery/clonepod, \
-									/obj/machinery/dna_scannernew,		/obj/machinery/telecomms, \
-									/obj/machinery/nuclearbomb,			/obj/machinery/particle_accelerator, \
-									/obj/machinery/recharge_station,	/obj/machinery/smartfridge, \
-									/obj/machinery/suit_storage_unit)
+	var/static/list/obj/desired_perches = typecacheof(list(
+		/obj/structure/frame/computer,
+		/obj/structure/displaycase,
+		/obj/structure/filingcabinet,
+		/obj/machinery/teleport,
+		/obj/machinery/computer,
+		/obj/machinery/cloning,
+		/obj/machinery/telecomms,
+		/obj/machinery/nuclearbomb,
+		/obj/machinery/particle_accelerator,
+		/obj/machinery/recharge_station,
+		/obj/machinery/smartfridge,
+		/obj/machinery/suit_storage_unit))
 
 	//Parrots are kleptomaniacs. This variable ... stores the item a parrot is holding.
 	var/obj/item/held_item = null
@@ -647,17 +653,15 @@
 
 /mob/living/simple_animal/parrot/proc/search_for_perch()
 	for(var/obj/O in view(src))
-		for(var/path in desired_perches)
-			if(istype(O, path))
-				return O
+		if(is_type_in_typecache(O, desired_perches))
+			return O
 	return null
 
 //This proc was made to save on doing two 'in view' loops seperatly
 /mob/living/simple_animal/parrot/proc/search_for_perch_and_item()
 	for(var/atom/movable/AM in view(src))
-		for(var/perch_path in desired_perches)
-			if(istype(AM, perch_path))
-				return AM
+		if(is_type_in_typecache(O, desired_perches))
+			return O
 
 		//Skip items we already stole or are wearing or are too big
 		if(parrot_perch && AM.loc == parrot_perch.loc || AM.loc == src)
@@ -798,11 +802,10 @@
 
 	if(icon_state == "parrot_fly")
 		for(var/atom/movable/AM in view(src,1))
-			for(var/perch_path in desired_perches)
-				if(istype(AM, perch_path))
-					src.loc = AM.loc
-					icon_state = "parrot_sit"
-					return
+			if(is_type_in_typecache(AM, desired_perches))
+				forceMove(get_turf(AM))
+				icon_state = "parrot_sit"
+				return
 	src << "<span class='warning'>There is no perch nearby to sit on!</span>"
 	return
 

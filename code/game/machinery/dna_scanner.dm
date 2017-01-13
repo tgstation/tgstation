@@ -1,4 +1,4 @@
-/obj/machinery/dna_scannernew
+/obj/machinery/cloning/scanner
 	name = "\improper DNA scanner"
 	desc = "It scans DNA structures."
 	icon = 'icons/obj/Cryogenic2.dmi'
@@ -13,14 +13,14 @@
 	var/scan_level
 	var/precision_coeff
 
-/obj/machinery/dna_scannernew/New()
+/obj/machinery/cloning/scanner/New()
 	..()
 	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/clonescanner(null)
 	B.apply_default_parts(src)
 
 /obj/item/weapon/circuitboard/machine/clonescanner
 	name = "Cloning Scanner (Machine Board)"
-	build_path = /obj/machinery/dna_scannernew
+	build_path = /obj/machinery/cloning/scanner
 	origin_tech = "programming=2;biotech=2"
 	req_components = list(
 							/obj/item/weapon/stock_parts/scanning_module = 1,
@@ -29,7 +29,7 @@
 							/obj/item/stack/sheet/glass = 1,
 							/obj/item/stack/cable_coil = 2)
 
-/obj/machinery/dna_scannernew/RefreshParts()
+/obj/machinery/cloning/scanner/RefreshParts()
 	scan_level = 0
 	damage_coeff = 0
 	precision_coeff = 0
@@ -40,7 +40,7 @@
 	for(var/obj/item/weapon/stock_parts/micro_laser/P in component_parts)
 		damage_coeff = P.rating
 
-/obj/machinery/dna_scannernew/update_icon()
+/obj/machinery/cloning/scanner/update_icon()
 
 	//no power or maintenance
 	if(stat & (NOPOWER|BROKEN))
@@ -59,11 +59,11 @@
 	//running
 	icon_state = initial(icon_state)+ (state_open ? "_open" : "")
 
-/obj/machinery/dna_scannernew/power_change()
+/obj/machinery/cloning/scanner/power_change()
 	..()
 	update_icon()
 
-/obj/machinery/dna_scannernew/proc/toggle_open(mob/user)
+/obj/machinery/cloning/scanner/proc/toggle_open(mob/user)
 	if(panel_open)
 		user << "<span class='notice'>Close the maintenance panel first.</span>"
 		return
@@ -78,7 +78,7 @@
 
 	open_machine()
 
-/obj/machinery/dna_scannernew/container_resist(mob/living/user)
+/obj/machinery/cloning/scanner/container_resist(mob/living/user)
 	var/breakout_time = 2
 	if(state_open || !locked)	//Open and unlocked, no need to escape
 		state_open = 1
@@ -98,7 +98,7 @@
 
 		open_machine()
 
-/obj/machinery/dna_scannernew/close_machine()
+/obj/machinery/cloning/scanner/close_machine()
 	if(!state_open)
 		return 0
 
@@ -106,22 +106,17 @@
 
 	// search for ghosts, if the corpse is empty and the scanner is connected to a cloner
 	if(occupant)
-		if(locate(/obj/machinery/computer/cloning, get_step(src, NORTH)) \
-			|| locate(/obj/machinery/computer/cloning, get_step(src, SOUTH)) \
-			|| locate(/obj/machinery/computer/cloning, get_step(src, EAST)) \
-			|| locate(/obj/machinery/computer/cloning, get_step(src, WEST)))
+		if(istype(computer, /obj/machinery/computer/cloning))
 			if(!occupant.suiciding && !(occupant.disabilities & NOCLONE) && !occupant.hellbound)
 				occupant.notify_ghost_cloning("Your corpse has been placed into a cloning scanner. Re-enter your corpse if you want to be cloned!", source = src)
 
-		var/obj/machinery/computer/scan_consolenew/console
-		for(dir in list(NORTH,EAST,SOUTH,WEST))
-			console = locate(/obj/machinery/computer/scan_consolenew, get_step(src, dir))
+		if(istype(computer, /obj/machinery/computer/scan_consolenew))
+			var/obj/machinery/computer/scan_consolenew/console = computer
 			if(console)
 				console.on_scanner_close()
-				break
 	return 1
 
-/obj/machinery/dna_scannernew/open_machine()
+/obj/machinery/cloning/scanner/open_machine()
 	if(state_open)
 		return 0
 
@@ -129,12 +124,11 @@
 
 	return 1
 
-/obj/machinery/dna_scannernew/relaymove(mob/user as mob)
+/obj/machinery/cloning/scanner/relaymove(mob/user as mob)
 	if(user.stat || locked)
 		return
 
 	open_machine()
-	return
 
 /obj/machinery/dna_scannernew/attackby(obj/item/I, mob/user, params)
 
@@ -153,7 +147,7 @@
 
 	return ..()
 
-/obj/machinery/dna_scannernew/attack_hand(mob/user)
+/obj/machinery/cloning/scanner/attack_hand(mob/user)
 	if(..(user,1,0)) //don't set the machine, since there's no dialog
 		return
 

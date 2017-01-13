@@ -1113,3 +1113,12 @@
 	M.adjustToxLoss(2, 0)
 	. = 1
 	..()
+
+/datum/reagent/medicine/corazone
+	// Heart attack code will not do as damage if corazone is present
+	// because it's SPACE MAGIC ASPIRIN
+	name = "Corazone"
+	id = "corazone"
+	description = "A medication used to treat pain, fever, and inflammation, \
+		along with heart attacks."
+	color = "#F5F5F5"

@@ -45,7 +45,5 @@ var/global/default_martial_art = new/datum/martial_art
 
 	var/name_override //For temporary visible name changes
 
-	var/heart_attack = 0
-
 	var/drunkenness = 0 //Overall drunkenness - check handle_alcohol() in life.dm for effects
 	var/datum/personal_crafting/handcrafting

@@ -1,0 +1,44 @@
+<ui-display>
+  <ui-button action='refresh_network'>Refresh</ui-button>
+</ui-display>
+<ui-display title='Network'>
+  {{#each data.scanners}}
+    <ui-section label='Scanner'>
+      <ui-button action='toggle_autoscan' params='{"id":"{{id}}"}'
+        style='{{autoscan_status}}'>
+        Autoscan
+      </ui-button>
+      <ui-section label='Occupant'>
+        {{occupant}}
+      </ui-section>
+      <ui-button action='scan' params='{"id":"{{id}}"}'
+        style='{{scan_status}}'>Scan</ui-button>
+    </ui-section>
+  {{/each}}
+  {{#each data.pods}}
+    <ui-section label='Pod'>
+      <ui-button action='toggle_autoclone' params='{"id":"{{id}}"}'
+        style='{{autoclone_status}}'>
+        Autoclone
+      </ui-button>
+      <ui-section label='Occupant'>
+        {{occupant}}
+      </ui-section>
+      {{#if occupant}}
+        <ui-bar min='0' max='100' value='{{progress}}'>{{progress}}%</ui-bar>
+        <ui-button action='eject' params='{"id":"{{id}}"}'
+          style='{{eject_status}}'>
+          Eject
+        </ui-button>
+      {{/if occupant}}
+    </ui-section>
+  {{/each}}
+</ui-display>
+<ui-display title='Records'>
+  {{#each data.records}}
+   <ui-section title='{{name}}'>
+    <ui-button action='clone' params='{"record_id":"{{record_id}}"}'>
+      Clone
+    </ui-button>
+  {{/each}}
+</ui-display>

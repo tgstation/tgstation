@@ -125,7 +125,7 @@ MASS SPECTROMETER
 
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-		if(H.heart_attack && H.stat != DEAD)
+		if(H.undergoing_cardiac_arrest() && H.stat != DEAD)
 			user << "<span class='danger'>Subject suffering from heart attack: Apply defibrillator immediately!</span>"
 
 	if(iscarbon(M))

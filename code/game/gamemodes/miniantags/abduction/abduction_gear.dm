@@ -437,7 +437,7 @@ Congratulations! You are now trained for xenobiology research!"}
 		species = "<span clas=='notice'>[H.dna.species.name]</span>"
 		if(L.mind && L.mind.changeling)
 			species = "<span class='warning'>Changeling lifeform</span>"
-		var/obj/item/organ/gland/temp = locate() in H.internal_organs
+		var/obj/item/organ/heart/gland/temp = locate() in H.internal_organs
 		if(temp)
 			helptext = "<span class='warning'>Experimental gland detected!</span>"
 		else
@@ -533,15 +533,6 @@ Congratulations! You are now trained for xenobiology research!"}
 
 // Operating Table / Beds / Lockers
 
-/obj/structure/table/optable/abductor
-	icon = 'icons/obj/abductor.dmi'
-	icon_state = "bed"
-	can_buckle = 1
-	buckle_lying = 1
-	flags = NODECONSTRUCT
-	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
-
-
 /obj/structure/bed/abductor
 	name = "resting contraption"
 	desc = "This looks similar to contraptions from earth. Could aliens be stealing our technology?"
@@ -578,6 +569,18 @@ Congratulations! You are now trained for xenobiology research!"}
 			new /obj/structure/table/abductor(src.loc)
 			qdel(src)
 		return
+	if(istype(I, /obj/item/stack/sheet/mineral/silver))
+		var/obj/item/stack/sheet/P = I
+		if(P.get_amount() < 1)
+			user << "<span class='warning'>You need one sheet of silver to do \
+				this!</span>"
+			return
+		user << "<span class='notice'>You start adding [P] to [src]...</span>"
+		if(do_after(user, 50, target = src))
+			P.use(1)
+			new /obj/structure/table/optable/abductor(src.loc)
+			qdel(src)
+		return
 
 /obj/structure/table/abductor
 	name = "alien table"
@@ -591,6 +594,37 @@ Congratulations! You are now trained for xenobiology research!"}
 	canSmoothWith = null
 	frame = /obj/structure/table_frame/abductor
 
+/obj/structure/table/optable/abductor
+	name = "alien operating table"
+	desc = "Used for alien medical procedures, it is covered in tiny spikes."
+	frame = /obj/structure/table_frame/abductor
+	buildstack = /obj/item/stack/sheet/mineral/silver
+	framestack = /obj/item/stack/sheet/mineral/abductor
+	buildstackamount = 1
+	framestackamount = 1
+	icon = 'icons/obj/abductor.dmi'
+	icon_state = "bed"
+	can_buckle = 1
+	buckle_lying = 1
+
+	var/chemical = "corazone"
+
+/obj/structure/table/optable/abductor/Crossed(atom/movable/AM)
+	. = ..()
+	if(ishuman(AM))
+		START_PROCESSING(SSobj, src)
+		AM << "<span class='danger'>You feel a series of tiny pricks!</span>"
+
+/obj/structure/table/optable/abductor/process()
+	. = PROCESS_KILL
+	for(var/mob/living/carbon/human/H in get_turf(src))
+		. = TRUE
+		if(H.reagents.get_reagent_amount(chemical) < 1)
+			H.reagents.add_reagent(chemical, 1)
+
+/obj/structure/table/optable/abductor/Destroy()
+	STOP_PROCESSING(SSobj, src)
+	. = ..()
 
 /obj/structure/closet/abductor
 	name = "alien locker"
