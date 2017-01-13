@@ -329,7 +329,7 @@
 
 /turf/closed/wall/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
 	for(var/turf/T in range(1, src))
-		if(isspaceturf(T) || istype(T.loc, /area/space))
+		if(isspaceturf(T) || istype(T.loc, /area/space) || istype(T, /turf/closed/wall/shuttle))
 			S << "<span class='warning'>Destroying this object has the potential to cause a hull breach. Aborting.</span>"
 			S.target = null
 			return TRUE
