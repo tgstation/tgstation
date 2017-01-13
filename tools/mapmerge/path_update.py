@@ -1,8 +1,7 @@
-import map_helpers #why we don't have some generic package for these reee
 import re
 import os
 import argparse
-from argparse import RawTextHelpFormatter
+import map_helpers #why we don't have some generic package for these reee
 
 default_map_directory = "../../_maps"
 replacement_re = re.compile('\s*([^{]*)\s*(\{(.*)\})?')
@@ -11,12 +10,12 @@ def tgm_check(map_file):
     with open(map_file) as f:
         firstline = f.readline()
         #why some maps have trailing spaces in this ???
-        if firstline.startswith(map_helpers.tgm_header): 
+        if firstline.startswith(map_helpers.tgm_header):
             return True
         return False
 
 def save_map(map_data,filepath,tgm=False):
-    map_data['dictionary'] =  map_helpers.sort_dictionary(map_data['dictionary'])
+    map_data['dictionary'] = map_helpers.sort_dictionary(map_data['dictionary'])
     if tgm:
         map_helpers.write_dictionary_tgm(filepath, map_data['dictionary'])
         map_helpers.write_grid_coord_small(filepath, map_data['grid'], map_data['maxx'], map_data['maxy'])
@@ -24,16 +23,16 @@ def save_map(map_data,filepath,tgm=False):
         map_helpers.write_dictionary(filepath, map_data['dictionary'])
         map_helpers.write_grid(filepath, map_data['grid'], map_data['maxx'], map_data['maxy'])
 
-def update_all_maps(update_file=None,update_string=None,map_directory=None,verbose=False):
+def update_all_maps(update_file=None, update_string=None, map_directory=None, verbose=False):
     if map_directory is None:
         map_directory = os.path.normpath(os.path.join(os.path.dirname(__file__), default_map_directory))
-    for root,dirs,files in os.walk(map_directory):
-        for f in files:
-            if f.endswith(".dmm"):
-                path = os.path.join(root,f)
-                update_map(path,update_file,update_string,verbose)
+    for root, _, files in os.walk(map_directory):
+        for filepath in files:
+            if filepath.endswith(".dmm"):
+                path = os.path.join(root, filepath)
+                update_map(path, update_file, update_string, verbose)
 
-def update_map(map_filepath,update_file=None,update_string=None,verbose=False):
+def update_map(map_filepath, update_file=None, update_string=None, verbose=False):
     print("Updating: {0}".format(map_filepath))
     map_data = map_helpers.parse_map(map_helpers.get_map_raw_text(map_filepath))
     tgm = tgm_check(map_filepath)
@@ -42,40 +41,43 @@ def update_map(map_filepath,update_file=None,update_string=None,verbose=False):
             for line in update_source:
                 if line.startswith("#") or line.isspace():
                     continue
-                map_data = update_path(map_data,line,verbose)
-                save_map(map_data,map_filepath,tgm)
+                map_data = update_path(map_data, line, verbose)
+                save_map(map_data, map_filepath, tgm)
     if update_string:
-        map_data = update_path(map_data,update_string,verbose)
-        save_map(map_data,map_filepath,tgm)
+        map_data = update_path(map_data, update_string, verbose)
+        save_map(map_data, map_filepath, tgm)
 
 def props_to_string(props):
     return "{{{0}}}".format(";".join([k+" = "+props[k] for k in props]))
 
 def string_to_props(propstring):
     props = dict()
-    for raw_prop in propstring.split(';'): #this is obviously unsafe with shit like meme=";fuckyou" but this is simple tool
-        prop = raw_prop.split('=',maxsplit=1)
-        props[prop[0].strip()] =  prop[1].strip() if len(prop) > 1 else None
+    # this is obviously unsafe with shit like meme=";fuckyou" but this is
+    # simple tool
+    for raw_prop in propstring.split(';'):
+        prop = raw_prop.split('=', maxsplit=1)
+        props[prop[0].strip()] = prop[1].strip() if len(prop) > 1 else None
     return props
 
 def parse_rep_string(replacement_string):
     # translates /blah/blah {meme = "test",} into path,prop dictionary tuple
-    match = re.match(replacement_re,replacement_string)
+    match = re.match(replacement_re, replacement_string)
     path = match.group(1)
     props = match.group(3)
     if props:
         prop_dict = string_to_props(props)
     else:
         prop_dict = dict()
-    return path.strip(),prop_dict
+    return path.strip(), prop_dict
 
-def update_path(mapdata,replacement_string,verbose=False):
-    old_path_part,new_path_part = replacement_string.split(':',maxsplit=1)
+def update_path(mapdata, replacement_string, verbose=False):
+    old_path_part, new_path_part = replacement_string.split(':', maxsplit=1)
     old_path, old_path_props = parse_rep_string(old_path_part)
     new_paths = dict()
     for replacement_def in new_path_part.split(','):
-        new_path,new_path_props = parse_rep_string(replacement_def)
+        new_path, new_path_props = parse_rep_string(replacement_def)
         new_paths[new_path] = new_path_props
+
     def replace_def(match):
         if match.group(2):
             old_props = string_to_props(match.group(2))
@@ -87,15 +89,15 @@ def update_path(mapdata,replacement_string,verbose=False):
         if verbose:
             print("Found match : {0}".format(match.group(0)))
         out_paths = []
-        for new_path,new_props in new_paths.items():
+        for new_path, new_props in new_paths.items():
             out = new_path
             out_props = dict()
-            for prop_name,prop_value in new_props.items():
+            for prop_name, prop_value in new_props.items():
                 if prop_name == "@OLD":
                     out_props = dict(old_props)
                     continue
                 if prop_value == "@SKIP":
-                    out_props.pop(prop_name,None)
+                    out_props.pop(prop_name, None)
                     continue
                 if prop_value.startswith("@OLD"):
                     params = prop_value.split(":")
@@ -146,12 +148,12 @@ if __name__ == "__main__":
     Will be used as filter.
     """
 
-    parser = argparse.ArgumentParser(description=desc,formatter_class=RawTextHelpFormatter)
-    parser.add_argument("update_source",help="update file path / line of update notation")
-    parser.add_argument("--map","-m",help="path to update, defaults to all maps in maps directory")
-    parser.add_argument("--directory","-d",help="path to maps directory, defaults to ../../_maps")
-    parser.add_argument("--inline","-i",help="treat update source as update string instead of path",action="store_true")
-    parser.add_argument("--verbose","-v",help="toggle detailed update information",action="store_true")
+    parser = argparse.ArgumentParser(description=desc, formatter_class=argparse.RawTextHelpFormatter)
+    parser.add_argument("update_source", help="update file path / line of update notation")
+    parser.add_argument("--map", "-m", help="path to update, defaults to all maps in maps directory")
+    parser.add_argument("--directory", "-d", help="path to maps directory, defaults to ../../_maps")
+    parser.add_argument("--inline", "-i", help="treat update source as update string instead of path", action="store_true")
+    parser.add_argument("--verbose", "-v", help="toggle detailed update information", action="store_true")
 
     args = parser.parse_args()
     if args.directory:
@@ -159,11 +161,11 @@ if __name__ == "__main__":
 
     if args.map:
         if args.inline:
-            update_map(args.map,update_string=args.update_source,verbose=args.verbose)
+            update_map(args.map, update_string=args.update_source, verbose=args.verbose)
         else:
-            update_map(args.map,update_file=args.update_source,verbose=args.verbose)
+            update_map(args.map, update_file=args.update_source, verbose=args.verbose)
     else:
         if args.inline:
-            update_all_maps(update_string=args.update_source,verbose=args.verbose)
+            update_all_maps(update_string=args.update_source, verbose=args.verbose)
         else:
-            update_all_maps(update_file=args.update_source,verbose=args.verbose)
+            update_all_maps(update_file=args.update_source, verbose=args.verbose)
