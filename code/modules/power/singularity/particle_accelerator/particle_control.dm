@@ -204,7 +204,7 @@
 
 /obj/machinery/particle_accelerator/control_box/proc/toggle_power()
 	active = !active
-	investigate_log("turned [active?"<font color='red'>ON</font>":"<font color='green'>OFF</font>"] by [usr ? key_name(usr) : "outside forces"]","singulo")
+	investigate_log("turned [active?"<font color='green'>ON</font>":"<font color='red'>OFF</font>"] by [usr ? key_name(usr) : "outside forces"]","singulo")
 	message_admins("PA Control Computer turned [active ?"ON":"OFF"] by [usr ? key_name_admin(usr) : "outside forces"](<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[usr]'>FLW</A>) in ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
 	log_game("PA Control Computer turned [active ?"ON":"OFF"] by [usr ? "[key_name(usr)]" : "outside forces"] in ([x],[y],[z])")
 	if(active)
@@ -271,7 +271,7 @@
 	switch(construction_state)
 		if(PA_CONSTRUCTION_UNSECURED)
 			if(istype(W, /obj/item/weapon/wrench) && !isinspace())
-				playsound(loc, 'sound/items/Ratchet.ogg', 75, 1)
+				playsound(loc, W.usesound, 75, 1)
 				anchored = 1
 				user.visible_message("[user.name] secures the [name] to the floor.", \
 					"You secure the external bolts.")
@@ -279,7 +279,7 @@
 				did_something = TRUE
 		if(PA_CONSTRUCTION_UNWIRED)
 			if(istype(W, /obj/item/weapon/wrench))
-				playsound(loc, 'sound/items/Ratchet.ogg', 75, 1)
+				playsound(loc, W.usesound, 75, 1)
 				anchored = 0
 				user.visible_message("[user.name] detaches the [name] from the floor.", \
 					"You remove the external bolts.")

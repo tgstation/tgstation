@@ -7,7 +7,8 @@
 /area/ruin/powered)
 "ac" = (
 /turf/open/floor/noslip{
-	baseturf = /turf/open/floor/plating/lava/smooth
+	baseturf = /turf/open/floor/plating/lava/smooth;
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/ruin/powered)
 "ad" = (
@@ -21,7 +22,8 @@
 "af" = (
 /obj/item/clothing/head/cone,
 /turf/open/floor/noslip{
-	baseturf = /turf/open/floor/plating/lava/smooth
+	baseturf = /turf/open/floor/plating/lava/smooth;
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/ruin/powered)
 "ag" = (
@@ -30,7 +32,8 @@
 	},
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/noslip{
-	baseturf = /turf/open/floor/plating/lava/smooth
+	baseturf = /turf/open/floor/plating/lava/smooth;
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/ruin/powered)
 "ah" = (
@@ -46,7 +49,8 @@
 	},
 /obj/structure/disposalpipe/trunk,
 /turf/open/floor/noslip{
-	baseturf = /turf/open/floor/plating/lava/smooth
+	baseturf = /turf/open/floor/plating/lava/smooth;
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/ruin/powered)
 "aj" = (
@@ -55,7 +59,8 @@
 	dir = 1
 	},
 /turf/open/floor/noslip{
-	baseturf = /turf/open/floor/plating/lava/smooth
+	baseturf = /turf/open/floor/plating/lava/smooth;
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/ruin/powered)
 "ak" = (

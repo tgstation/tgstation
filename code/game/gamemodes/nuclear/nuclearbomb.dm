@@ -102,7 +102,7 @@ var/bomb_set
 			if(istype(I, /obj/item/weapon/screwdriver/nuke))
 				playsound(loc, I.usesound, 100, 1)
 				user << "<span class='notice'>You start removing [src]'s front panel's screws...</span>"
-				if(do_after(user, 60/I.toolspeed,target=src))
+				if(do_after(user, 60*I.toolspeed,target=src))
 					deconstruction_state = NUKESTATE_UNSCREWED
 					user << "<span class='notice'>You remove the screws from [src]'s front panel.</span>"
 					update_icon()
@@ -111,7 +111,7 @@ var/bomb_set
 			if(istype(I, /obj/item/weapon/crowbar))
 				user << "<span class='notice'>You start removing [src]'s front panel...</span>"
 				playsound(loc, I.usesound, 100, 1)
-				if(do_after(user,30/I.toolspeed,target=src))
+				if(do_after(user,30*I.toolspeed,target=src))
 					user << "<span class='notice'>You remove [src]'s front panel.</span>"
 					deconstruction_state = NUKESTATE_PANEL_REMOVED
 					update_icon()
@@ -122,7 +122,7 @@ var/bomb_set
 				playsound(loc, I.usesound, 100, 1)
 				user << "<span class='notice'>You start cutting [src]'s inner plate...</span>"
 				if(welder.remove_fuel(1,user))
-					if(do_after(user,80/I.toolspeed,target=src))
+					if(do_after(user,80*I.toolspeed,target=src))
 						user << "<span class='notice'>You cut [src]'s inner plate.</span>"
 						deconstruction_state = NUKESTATE_WELDED
 						update_icon()
@@ -131,7 +131,7 @@ var/bomb_set
 			if(istype(I, /obj/item/weapon/crowbar))
 				user << "<span class='notice'>You start prying off [src]'s inner plate...</span>"
 				playsound(loc, I.usesound, 100, 1)
-				if(do_after(user,50/I.toolspeed,target=src))
+				if(do_after(user,50*I.toolspeed,target=src))
 					user << "<span class='notice'>You pry off [src]'s inner plate. You can see the core's green glow!</span>"
 					deconstruction_state = NUKESTATE_CORE_EXPOSED
 					update_icon()
@@ -385,6 +385,9 @@ var/bomb_set
 		bomb_set = FALSE
 		detonation_timer = null
 		set_security_level(previous_level)
+		for(var/obj/item/weapon/pinpointer/syndicate/S in pinpointer_list)
+			S.switch_mode_to(initial(S.mode))
+			S.nuke_warning = FALSE
 		countdown.stop()
 	update_icon()
 
@@ -462,27 +465,27 @@ var/bomb_set
 This is here to make the tiles around the station mininuke change when it's armed.
 */
 
-/obj/machinery/nuclearbomb/selfdestruct/proc/SetTurfs()
-	if(loc == initial(loc))
-		for(var/N in nuke_tiles)
-			var/turf/open/floor/T = N
-			T.icon_state = (timing ? "rcircuitanim" : T.icon_regular_floor)
-
 /obj/machinery/nuclearbomb/selfdestruct/set_anchor()
 	return
 
 /obj/machinery/nuclearbomb/selfdestruct/set_active()
 	..()
-	SetTurfs()
+	if(timing)
+		SSmapping.add_nuke_threat(src)
+	else
+		SSmapping.remove_nuke_threat(src)
 
 /obj/machinery/nuclearbomb/selfdestruct/set_safety()
 	..()
-	SetTurfs()
+	if(timing)
+		SSmapping.add_nuke_threat(src)
+	else
+		SSmapping.remove_nuke_threat(src)
 
 //==========DAT FUKKEN DISK===============
 /obj/item/weapon/disk
 	icon = 'icons/obj/module.dmi'
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 	item_state = "card-id"
 	icon_state = "datadisk0"
 
@@ -584,5 +587,5 @@ This is here to make the tiles around the station mininuke change when it's arme
 
 /obj/item/weapon/disk/fakenucleardisk
 	name = "cheap plastic imitation of the nuclear authentication disk"
-	desc = "Broken dreams and a faint oder of cheese."
+	desc = "Broken dreams and a faint odor of cheese."
 	icon_state = "nucleardisk"

@@ -75,10 +75,10 @@
 		//helmet and armor = 100% protection
 		if( istype(inventory_head,/obj/item/clothing/head/helmet) && istype(inventory_back,/obj/item/clothing/suit/armor) )
 			if( O.force )
-				user << "<span class='warning'>[src] is wearing too much armor! You can't cause \him any damage.</span>"
+				user << "<span class='warning'>[src] is wearing too much armor! You can't cause [p_them()] any damage.</span>"
 				visible_message("<span class='danger'>[user] hits [src] with [O], however [src] is too armored.</span>")
 			else
-				user << "<span class='warning'>[src] is wearing too much armor! You can't reach \his skin.<span>"
+				user << "<span class='warning'>[src] is wearing too much armor! You can't reach [p_their()] skin.<span>"
 				visible_message("[user] gently taps [src] with [O].")
 			if(health>0 && prob(15))
 				emote("me", 1, "looks at [user] with [pick("an amused","an annoyed","a confused","a resentful", "a happy", "an excited")] expression.")
@@ -224,10 +224,10 @@
 
 	if(valid)
 		if(health <= 0)
-			user << "<span class ='notice'>There is merely a dull, lifeless look in [real_name]'s eyes as you put the [item_to_add] on \him.</span>"
+			user << "<span class ='notice'>There is merely a dull, lifeless look in [real_name]'s eyes as you put the [item_to_add] on [p_them()].</span>"
 		else if(user)
 			user.visible_message("[user] puts [item_to_add] on [real_name]'s head.  [src] looks at [user] and barks once.",
-				"<span class='notice'>You put [item_to_add] on [real_name]'s head.  [src] gives you a peculiar look, then wags \his tail once and barks.</span>",
+				"<span class='notice'>You put [item_to_add] on [real_name]'s head.  [src] gives you a peculiar look, then wags [p_their()] tail once and barks.</span>",
 				"<span class='italics'>You hear a friendly-sounding bark.</span>")
 		item_to_add.loc = src
 		src.inventory_head = item_to_add

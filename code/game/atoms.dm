@@ -6,7 +6,9 @@
 	var/list/fingerprints
 	var/list/fingerprintshidden
 	var/list/blood_DNA
+	var/container_type = 0
 	var/admin_spawned = 0	//was this spawned by an admin? used for stat tracking stuff.
+	var/datum/reagents/reagents = null
 
 	//This atom's HUD (med/sec, etc) images. Associative list.
 	var/list/image/hud_list = null
@@ -27,10 +29,18 @@
 	//atom creation method that preloads variables at creation
 	if(use_preloader && (src.type == _preloader.target_path))//in case the instanciated atom is creating other atoms in New()
 		_preloader.load(src)
-
+	//atom color stuff
 	if(color)
 		add_atom_colour(color, FIXED_COLOUR_PRIORITY)
-	. = ..()
+
+	//lighting stuff
+	if(opacity && isturf(loc))
+		loc.UpdateAffectingLights()
+
+	if(luminosity)
+		light = new(src)
+
+	//. = ..() //uncomment if you are dumb enough to add a /datum/New() proc
 
 /atom/Destroy()
 	if(alternate_appearances)
@@ -43,8 +53,12 @@
 			for(var/aa in viewing_alternate_appearances[aakey])
 				var/datum/alternate_appearance/AA = aa
 				AA.hide(list(src))
+	if(reagents)
+		qdel(reagents)
 	return ..()
 
+/atom/proc/CanPass(atom/movable/mover, turf/target, height=1.5)
+	return (!density || !height)
 
 /atom/proc/onCentcom()
 	var/turf/T = get_turf(src)
@@ -120,7 +134,10 @@
 // returns true if open
 // false if closed
 /atom/proc/is_open_container()
-	return flags & OPENCONTAINER
+	return container_type & OPENCONTAINER
+
+/atom/proc/is_transparent()
+	return container_type & TRANSPARENT
 
 /*//Convenience proc to see whether a container can be accessed in a certain way.
 
@@ -197,7 +214,7 @@
 	// *****RM
 	//user << "[name]: Dn:[density] dir:[dir] cont:[contents] icon:[icon] is:[icon_state] loc:[loc]"
 
-	if(reagents && is_open_container()) //is_open_container() isn't really the right proc for this, but w/e
+	if(reagents && (is_open_container() || is_transparent())) //is_open_container() isn't really the right proc for this, but w/e
 		user << "It contains:"
 		if(reagents.reagent_list.len)
 			if(user.can_see_reagents()) //Show each individual reagent
@@ -448,14 +465,6 @@ var/list/blood_splatter_icons = list()
 /atom/proc/setDir(newdir)
 	dir = newdir
 
-/atom/on_varedit(modified_var)
-	..()
-	if(!Debug2)
-		admin_spawned = TRUE
-	switch(modified_var)
-		if("color")
-			add_atom_colour(color, ADMIN_COLOUR_PRIORITY)
-
 /atom/proc/mech_melee_attack(obj/mecha/M)
 	return
 
@@ -517,4 +526,26 @@ var/list/blood_splatter_icons = list()
 		else if(C)
 			color = C
 			return
+
+/atom/vv_edit_var(var_name, var_value)
+	if(!Debug2)
+		admin_spawned = TRUE
+	switch(var_name)
+		if("luminosity")
+			src.SetLuminosity(var_value)
+			return//prevent normal setting of this value
+	. = ..()
+	switch(var_name)
+		if("color")
+			add_atom_colour(color, ADMIN_COLOUR_PRIORITY)
+
+/atom/vv_get_dropdown()
+	. = ..()
+	. += "---"
+	var/turf/curturf = get_turf(src)
+	if (curturf)
+		.["Jump to"] = "?_src_=holder;adminplayerobservecoodjump=1;X=[curturf.x];Y=[curturf.y];Z=[curturf.z]"
+	.["Add reagent"] = "?_src_=vars;addreagent=\ref[src]"
+	.["Trigger EM pulse"] = "?_src_=vars;emp=\ref[src]"
+	.["Trigger explosion"] = "?_src_=vars;explode=\ref[src]"
 

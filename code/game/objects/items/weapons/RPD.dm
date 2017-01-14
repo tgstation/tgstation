@@ -1,4 +1,4 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:32
+
 
 /*
 CONTAINS:
@@ -130,7 +130,7 @@ var/global/list/RPD_recipes=list(
 	throwforce = 10
 	throw_speed = 1
 	throw_range = 5
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 	materials = list(MAT_METAL=75000, MAT_GLASS=37500)
 	origin_tech = "engineering=4;materials=2"
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 50)
@@ -544,7 +544,6 @@ var/global/list/RPD_recipes=list(
 			playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
 			P.add_atom_colour(paint_colors[paint_color], FIXED_COLOUR_PRIORITY)
 			P.pipe_color = paint_colors[paint_color]
-			P.stored.add_atom_colour(paint_colors[paint_color], FIXED_COLOUR_PRIORITY)
 			user.visible_message("<span class='notice'>[user] paints \the [P] [paint_color].</span>","<span class='notice'>You paint \the [P] [paint_color].</span>")
 			//P.update_icon()
 			P.update_node_icon()
@@ -582,7 +581,7 @@ var/global/list/RPD_recipes=list(
 			if(!isturf(A))
 				user << "<span class='warning'>The [src]'s error light flickers!</span>"
 				return 0
-			user << "<span class='notice'>You start building meter...</span>"
+			user << "<span class='notice'>You start building a meter...</span>"
 			playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
 			if(do_after(user, 2, target = A))
 				activate()

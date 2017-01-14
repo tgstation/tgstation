@@ -1,4 +1,4 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:32
+
 
 var/const/TOUCH = 1 //splashing
 var/const/INGEST = 2 //ingestion
@@ -12,7 +12,7 @@ var/const/INJECT = 5 //injection
 	var/list/datum/reagent/reagent_list = new/list()
 	var/total_volume = 0
 	var/maximum_volume = 100
-	var/datum/my_atom = null
+	var/atom/my_atom = null
 	var/chem_temp = 150
 	var/last_tick = 1
 	var/addiction_tick = 1
@@ -561,12 +561,12 @@ var/const/INJECT = 5 //injection
 
 	if(isnull(amount))
 		amount = 0
-		throw EXCEPTION("null amount passed to reagent code")
+		CRASH("null amount passed to reagent code")
 		return FALSE
 
 	if(!isnum(amount))
 		return FALSE
-	
+
 	if(amount < 0)
 		return FALSE
 
@@ -691,8 +691,18 @@ var/const/INJECT = 5 //injection
 
 // Convenience proc to create a reagents holder for an atom
 // Max vol is maximum volume of holder
-/datum/proc/create_reagents(max_vol)
+/atom/proc/create_reagents(max_vol)
 	if(reagents)
 		qdel(reagents)
 	reagents = new/datum/reagents(max_vol)
 	reagents.my_atom = src
+
+/proc/get_random_reagent_id()	// Returns a random reagent ID minus blacklisted reagents
+	var/static/list/random_reagents = list()
+	if(!random_reagents.len)
+		for(var/thing  in subtypesof(/datum/reagent))
+			var/datum/reagent/R = thing
+			if(initial(R.can_synth))
+				random_reagents += initial(R.id)
+	var/picked_reagent = pick(random_reagents)
+	return picked_reagent

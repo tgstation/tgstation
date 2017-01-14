@@ -17,10 +17,12 @@
 	..()
 	START_PROCESSING(SSobj, src)
 	clockwork_caches++
+	update_slab_info()
 	SetLuminosity(2,1)
 
 /obj/structure/destructible/clockwork/cache/Destroy()
 	clockwork_caches--
+	update_slab_info()
 	STOP_PROCESSING(SSobj, src)
 	if(linkedwall)
 		linkedwall.linkedcache = null
@@ -42,9 +44,7 @@
 			break
 	if(linkedwall && wall_generation_cooldown <= world.time)
 		wall_generation_cooldown = world.time + (CACHE_PRODUCTION_TIME * get_efficiency_mod(TRUE))
-		var/component_to_generate = get_weighted_component_id()
-		PoolOrNew(get_component_animation_type(component_to_generate), get_turf(src))
-		clockwork_component_cache[component_to_generate]++
+		generate_cache_component(null, src)
 		playsound(linkedwall, 'sound/magic/clockwork/fellowship_armory.ogg', rand(15, 20), 1, -3, 1, 1)
 		visible_message("<span class='warning'>Something cl[pick("ank", "ink", "unk", "ang")]s around inside of [src]...</span>")
 
@@ -57,6 +57,7 @@
 			user << "<span class='warning'>[src] needs to be secured to place [C] into it!</span>"
 		else
 			clockwork_component_cache[C.component_id]++
+			update_slab_info()
 			user << "<span class='notice'>You add [C] to [src].</span>"
 			user.drop_item()
 			qdel(C)
@@ -69,31 +70,27 @@
 			for(var/i in S.stored_components)
 				clockwork_component_cache[i] += S.stored_components[i]
 				S.stored_components[i] = 0
+			update_slab_info()
 			user.visible_message("<span class='notice'>[user] empties [S] into [src].</span>", "<span class='notice'>You offload your slab's components into [src].</span>")
 		return 1
 	else
 		return ..()
 
-/obj/structure/destructible/clockwork/cache/attack_hand(mob/user)
-	if(!is_servant_of_ratvar(user))
-		return 0
-	if(!anchored)
-		user << "<span class='warning'>[src] needs to be secured to remove Replicant Alloy from it!</span>"
-		return 0
-	if(!clockwork_component_cache[REPLICANT_ALLOY])
-		user << "<span class='warning'>There is no Replicant Alloy in the global component cache!</span>"
-		return 0
-	clockwork_component_cache[REPLICANT_ALLOY]--
-	var/obj/item/clockwork/component/replicant_alloy/A = new(get_turf(src))
-	user.visible_message("<span class='notice'>[user] withdraws [A] from [src].</span>", "<span class='notice'>You withdraw [A] from [src].</span>")
-	user.put_in_hands(A)
-	return 1
+/obj/structure/destructible/clockwork/cache/attack_hand(mob/living/user)
+	..()
+	if(is_servant_of_ratvar(user) && linkedwall)
+		if(wall_generation_cooldown > world.time)
+			user << "<span class='alloy'>It will produce a component in <b>[(world.time - wall_generation_cooldown) * 0.1]</b> seconds.</span>"
+		else
+			user << "<span class='brass'>It is about to produce a component!</span>"
 
 /obj/structure/destructible/clockwork/cache/examine(mob/user)
 	..()
 	if(is_servant_of_ratvar(user) || isobserver(user))
 		if(linkedwall)
-			user << "<span class='brass'>It is linked and will generate a component every <b>[round((CACHE_PRODUCTION_TIME * 0.1) * get_efficiency_mod(TRUE), 0.1)]</b> seconds!</span>"
+			user << "<span class='brass'>It is linked to a Clockwork Wall and will generate a component every <b>[round((CACHE_PRODUCTION_TIME * 0.1) * get_efficiency_mod(TRUE), 0.1)]</b> seconds!</span>"
+		else
+			user << "<span class='alloy'>It is unlinked! Construct a Clockwork Wall nearby to generate components!</span>"
 		user << "<b>Stored components:</b>"
 		for(var/i in clockwork_component_cache)
 			user << "<span class='[get_component_span(i)]_small'><i>[get_component_name(i)][i != REPLICANT_ALLOY ? "s":""]:</i> <b>[clockwork_component_cache[i]]</b></span>"

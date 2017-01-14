@@ -11,7 +11,7 @@
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "paper"
 	throwforce = 0
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 	throw_range = 1
 	throw_speed = 1
 	pressure_resistance = 0
@@ -316,7 +316,7 @@
 
 		if(!stamped)
 			stamped = new
-		stamped += P.type
+		stamped += P.icon_state
 		add_overlay(stampoverlay)
 
 		user << "<span class='notice'>You stamp the paper with your rubber stamp.</span>"
@@ -398,6 +398,7 @@
 /obj/item/weapon/paper/crumpled
 	name = "paper scrap"
 	icon_state = "scrap"
+	slot_flags = null
 
 /obj/item/weapon/paper/crumpled/update_icon()
 	return

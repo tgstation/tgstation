@@ -6,8 +6,8 @@
 /datum/clockwork_scripture/ark_of_the_clockwork_justiciar
 	descname = "Structure, Win Condition"
 	name = "Ark of the Clockwork Justiciar"
-	desc = "Pulls from the power of all of Ratvar's servants and generals to construct a massive machine used to tear apart a rift in spacetime to Reebe, the Celestial Derelict.\n\
-	This gateway will either call forth Ratvar from his exile if that is the task he has set you, or proselytize the entire station if it is not."
+	desc = "Tears apart a rift in spacetime to Reebe, the Celestial Derelict.\n\
+	This gateway will either call forth Ratvar from his exile if that is the task He has set you, or proselytize the entire station if it is not."
 	invocations = list("ARMORER! FRIGHT! AMPERAGE! VANGUARD! I CALL UPON YOU!!", \
 	"THE TIME HAS COME FOR OUR MASTER TO BREAK THE CHAINS OF EXILE!!", \
 	"LEND US YOUR AID! ENGINE COMES!!")
@@ -39,7 +39,7 @@
 			return FALSE
 		var/area/A = get_area(invoker)
 		var/turf/T = get_turf(invoker)
-		if(!T || T.z != ZLEVEL_STATION || istype(A, /area/shuttle))
+		if(!T || T.z != ZLEVEL_STATION || istype(A, /area/shuttle) || !A.blob_allowed)
 			invoker << "<span class='warning'>You must be on the station to activate the Ark!</span>"
 			return FALSE
 		if(clockwork_gateway_activated)

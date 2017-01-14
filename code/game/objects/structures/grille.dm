@@ -12,12 +12,11 @@
 	obj_integrity = 50
 	max_integrity = 50
 	integrity_failure = 20
-	var/obj/item/stack/rods/stored
-
-/obj/structure/grille/New()
-	..()
-	stored = new/obj/item/stack/rods(src)
-	stored.amount = 2
+	var/rods_type = /obj/item/stack/rods
+	var/rods_amount = 2
+	var/rods_broken = 1
+	var/grille_type = null
+	var/broken_type = /obj/structure/grille/broken
 
 /obj/structure/grille/ratvar_act()
 	if(broken)
@@ -38,7 +37,7 @@
 	return 60
 
 /obj/structure/grille/attack_hulk(mob/living/carbon/human/user, does_attack_animation = 0)
-	if(user.a_intent == "harm")
+	if(user.a_intent == INTENT_HARM)
 		if(!shock(user, 70))
 			..(user, 1)
 		return 1
@@ -93,11 +92,9 @@
 		if(!shock(user, 90))
 			user.visible_message("<span class='notice'>[user] rebuilds the broken grille.</span>", \
 								 "<span class='notice'>You rebuild the broken grille.</span>")
-			obj_integrity = max_integrity
-			density = 1
-			broken = 0
-			icon_state = initial(icon_state)
+			new grille_type(src.loc)
 			R.use(1)
+			qdel(src)
 			return
 
 //window placing begin
@@ -152,19 +149,17 @@
 	if(!loc) //if already qdel'd somehow, we do nothing
 		return
 	if(!(flags&NODECONSTRUCT))
-		transfer_fingerprints_to(stored)
-		var/turf/T = loc
-		stored.forceMove(T)
+		var/obj/R = new rods_type(src.loc, rods_amount)
+		transfer_fingerprints_to(R)
+		qdel(src)
 	..()
 
 /obj/structure/grille/obj_break()
 	if(!broken && !(flags & NODECONSTRUCT))
-		icon_state = "broken[initial(icon_state)]"
-		density = 0
-		broken = 1
-		stored.amount = 1
-		var/obj/item/stack/rods/newrods = new(loc)
-		transfer_fingerprints_to(newrods)
+		new broken_type(src.loc)
+		var/obj/R = new rods_type(src.loc, rods_broken)
+		transfer_fingerprints_to(R)
+		qdel(src)
 
 
 // shock user with probability prb (if all connections & power are working)
@@ -180,7 +175,7 @@
 	var/turf/T = get_turf(src)
 	var/obj/structure/cable/C = T.get_cable_node()
 	if(C)
-		if(electrocute_mob(user, C, src))
+		if(electrocute_mob(user, C, src, 1, TRUE))
 			var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 			s.set_up(3, 1, src)
 			s.start()
@@ -203,6 +198,7 @@
 			if(C)
 				playsound(src.loc, 'sound/magic/LightningShock.ogg', 100, 1, extrarange = 5)
 				tesla_zap(src, 3, C.powernet.avail * 0.01) //Zap for 1/100 of the amount of power. At a million watts in the grid, it will be as powerful as a tesla revolver shot.
+				C.powernet.load += C.powernet.avail * 0.0375 // you can gain up to 3.5 via the 4x upgrades power is halved by the pole so thats 2x then 1X then .5X for 3.5x the 3 bounces shock.
 	return ..()
 
 /obj/structure/grille/storage_contents_dump_act(obj/item/weapon/storage/src_object, mob/user)
@@ -213,15 +209,16 @@
 	density = 0
 	obj_integrity = 20
 	broken = 1
+	rods_amount = 1
+	rods_broken = 0
+	grille_type = /obj/structure/grille
+	broken_type = null
 
-/obj/structure/grille/broken/New()
-	..()
-	stored.amount = 1
-	icon_state = "brokengrille"
 
 /obj/structure/grille/ratvar
 	icon_state = "ratvargrille"
 	desc = "A strangely-shaped grille."
+	broken_type = /obj/structure/grille/ratvar/broken
 
 /obj/structure/grille/ratvar/New()
 	..()
@@ -242,17 +239,18 @@
 		var/previouscolor = color
 		color = "#960000"
 		animate(src, color = previouscolor, time = 8)
-		addtimer(src, "update_atom_colour", 8)
+		addtimer(CALLBACK(src, /atom/proc/update_atom_colour), 8)
 
 /obj/structure/grille/ratvar/ratvar_act()
 	return
 
 /obj/structure/grille/ratvar/broken
+	icon_state = "brokenratvargrille"
 	density = 0
 	obj_integrity = 20
 	broken = 1
+	rods_amount = 1
+	rods_broken = 0
+	grille_type = /obj/structure/grille/ratvar
+	broken_type = null
 
-/obj/structure/grille/ratvar/broken/New()
-	..()
-	stored.amount = 1
-	icon_state = "brokenratvargrille"

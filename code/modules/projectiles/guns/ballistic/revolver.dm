@@ -32,10 +32,6 @@
 		update_icon()
 		chamber_round(0)
 
-	if(unique_rename)
-		if(istype(A, /obj/item/weapon/pen))
-			rename_weapon(user)
-
 /obj/item/weapon/gun/ballistic/revolver/attack_self(mob/living/user)
 	var/num_unloaded = 0
 	chambered = null
@@ -62,14 +58,17 @@
 	if(M.stat || !in_range(M,src))
 		return
 
-	if(istype(magazine, /obj/item/ammo_box/magazine/internal/cylinder))
-		var/obj/item/ammo_box/magazine/internal/cylinder/C = magazine
-		C.spin()
-		chamber_round(0)
+	if(do_spin())
 		usr.visible_message("[usr] spins [src]'s chamber.", "<span class='notice'>You spin [src]'s chamber.</span>")
 	else
 		verbs -= /obj/item/weapon/gun/ballistic/revolver/verb/spin
 
+/obj/item/weapon/gun/ballistic/revolver/proc/do_spin()
+	var/obj/item/ammo_box/magazine/internal/cylinder/C = magazine
+	. = istype(C)
+	if(.)
+		C.spin()
+		chamber_round(0)
 
 /obj/item/weapon/gun/ballistic/revolver/can_shoot()
 	return get_ammo(0,0)
@@ -122,7 +121,7 @@
 				afterattack(user, user)	//you know the drill
 				user.visible_message("<span class='danger'>[src] goes off!</span>", "<span class='userdanger'>[src] goes off in your face!</span>")
 				return
-			if(do_after(user, 30/A.toolspeed, target = src))
+			if(do_after(user, 30*A.toolspeed, target = src))
 				if(magazine.ammo_count())
 					user << "<span class='warning'>You can't modify it!</span>"
 					return
@@ -135,7 +134,7 @@
 				afterattack(user, user)	//and again
 				user.visible_message("<span class='danger'>[src] goes off!</span>", "<span class='userdanger'>[src] goes off in your face!</span>")
 				return
-			if(do_after(user, 30/A.toolspeed, target = src))
+			if(do_after(user, 30*A.toolspeed, target = src))
 				if(magazine.ammo_count())
 					user << "<span class='warning'>You can't modify it!</span>"
 					return
@@ -173,55 +172,35 @@
 	name = "\improper russian revolver"
 	desc = "A Russian-made revolver for drinking games. Uses .357 ammo, and has a mechanism requiring you to spin the chamber before each trigger pull."
 	origin_tech = "combat=2;materials=2"
-	mag_type = /obj/item/ammo_box/magazine/internal/rus357
-	var/spun = 0
+	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/rus357
+	var/spun = FALSE
 
 /obj/item/weapon/gun/ballistic/revolver/russian/New()
 	..()
-	Spin()
+	do_spin()
+	spun = TRUE
 	update_icon()
 
-/obj/item/weapon/gun/ballistic/revolver/russian/proc/Spin()
-	chambered = null
-	var/random = rand(1, magazine.max_ammo)
-	if(random <= get_ammo(0,0))
-		chamber_round()
-	spun = 1
-
 /obj/item/weapon/gun/ballistic/revolver/russian/attackby(obj/item/A, mob/user, params)
-	var/num_loaded = ..()
-	if(num_loaded)
-		user.visible_message("[user] loads a single bullet into the revolver and spins the chamber.", "<span class='notice'>You load a single bullet into the chamber and spin it.</span>")
-	else
-		user.visible_message("[user] spins the chamber of the revolver.", "<span class='notice'>You spin the revolver's chamber.</span>")
+	..()
 	if(get_ammo() > 0)
-		Spin()
+		spin()
+		spun = TRUE
 	update_icon()
 	A.update_icon()
 	return
 
 /obj/item/weapon/gun/ballistic/revolver/russian/attack_self(mob/user)
 	if(!spun && can_shoot())
-		user.visible_message("[user] spins the chamber of the revolver.", "<span class='notice'>You spin the revolver's chamber.</span>")
-		Spin()
-	else
-		var/num_unloaded = 0
-		while (get_ammo() > 0)
-			var/obj/item/ammo_casing/CB
-			CB = magazine.get_round()
-			chambered = null
-			CB.loc = get_turf(src.loc)
-			CB.update_icon()
-			num_unloaded++
-		if (num_unloaded)
-			user << "<span class='notice'>You unload [num_unloaded] shell\s from [src].</span>"
-		else
-			user << "<span class='notice'>[src] is empty.</span>"
+		spin()
+		spun = TRUE
+		return
+	..()
 
 /obj/item/weapon/gun/ballistic/revolver/russian/afterattack(atom/target, mob/living/user, flag, params)
 	if(flag)
 		if(!(target in user.contents) && ismob(target))
-			if(user.a_intent == "harm") // Flogging action
+			if(user.a_intent == INTENT_HARM) // Flogging action
 				return
 
 	if(isliving(user))
@@ -238,7 +217,7 @@
 			user << "<span class='warning'>You need to spin the revolver's chamber first!</span>"
 			return
 
-		spun = 0
+		spun = FALSE
 
 		if(chambered)
 			var/obj/item/ammo_casing/AC = chambered
@@ -249,7 +228,8 @@
 				if(zone == "head" || zone == "eyes" || zone == "mouth")
 					shoot_self(user, affecting)
 				else
-					user.visible_message("<span class='danger'>[user.name] cowardly fires [src] at \his [affecting.name]!</span>", "<span class='userdanger'>You cowardly fire [src] at your [affecting.name]!</span>", "<span class='italics'>You hear a gunshot!</span>")
+					user.visible_message("<span class='danger'>[user.name] cowardly fires [src] at [user.p_their()] [affecting.name]!</span>", "<span class='userdanger'>You cowardly fire [src] at your [affecting.name]!</span>", "<span class='italics'>You hear a gunshot!</span>")
+				chambered = null
 				return
 
 		user.visible_message("<span class='danger'>*click*</span>")
@@ -257,7 +237,7 @@
 
 /obj/item/weapon/gun/ballistic/revolver/russian/proc/shoot_self(mob/living/carbon/human/user, affecting = "head")
 	user.apply_damage(300, BRUTE, affecting)
-	user.visible_message("<span class='danger'>[user.name] fires [src] at \his head!</span>", "<span class='userdanger'>You fire [src] at your head!</span>", "<span class='italics'>You hear a gunshot!</span>")
+	user.visible_message("<span class='danger'>[user.name] fires [src] at [user.p_their()] head!</span>", "<span class='userdanger'>You fire [src] at your head!</span>", "<span class='italics'>You hear a gunshot!</span>")
 
 /obj/item/weapon/gun/ballistic/revolver/russian/soul
 	name = "cursed russian revolver"
@@ -271,8 +251,6 @@
 		return
 	user.visible_message("<span class='danger'>[user.name]'s soul is captured by \the [src]!</span>", "<span class='userdanger'>You've lost the gamble! Your soul is forfiet!</span>")
 
-
-
 /////////////////////////////
 // DOUBLE BARRELED SHOTGUN //
 /////////////////////////////
@@ -282,7 +260,7 @@
 	desc = "A true classic."
 	icon_state = "dshotgun"
 	item_state = "shotgun"
-	w_class = 4
+	w_class = WEIGHT_CLASS_BULKY
 	force = 10
 	flags = CONDUCT
 	slot_flags = SLOT_BACK
@@ -326,9 +304,6 @@
 	else
 		user << "<span class='warning'>[src] is empty!</span>"
 
-
-
-
 // IMPROVISED SHOTGUN //
 
 /obj/item/weapon/gun/ballistic/revolver/doublebarrel/improvised
@@ -336,7 +311,7 @@
 	desc = "Essentially a tube that aims shotgun shells."
 	icon_state = "ishotgun"
 	item_state = "shotgun"
-	w_class = 4
+	w_class = WEIGHT_CLASS_BULKY
 	force = 10
 	slot_flags = null
 	mag_type = /obj/item/ammo_box/magazine/internal/shot/improvised

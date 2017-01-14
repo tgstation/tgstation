@@ -18,10 +18,12 @@ var/global/list/uplinks = list()
 	var/datum/game_mode/gamemode = null
 	var/spent_telecrystals = 0
 	var/purchase_log = ""
+	var/list/uplink_items
 
 /obj/item/device/uplink/New()
 	..()
 	uplinks += src
+	uplink_items = get_uplink_items(gamemode)
 
 /obj/item/device/uplink/Destroy()
 	uplinks -= src
@@ -67,8 +69,6 @@ var/global/list/uplinks = list()
 	data["telecrystals"] = telecrystals
 	data["lockable"] = lockable
 
-	var/list/uplink_items = get_uplink_items(gamemode)
-
 	data["categories"] = list()
 	for(var/category in uplink_items)
 		var/list/cat = list(
@@ -77,6 +77,8 @@ var/global/list/uplinks = list()
 		if(category == selected_cat)
 			for(var/item in uplink_items[category])
 				var/datum/uplink_item/I = uplink_items[category][item]
+				if(I.limited_stock == 0)
+					continue
 				cat["items"] += list(list(
 					"name" = I.name,
 					"cost" = I.cost,
@@ -94,7 +96,6 @@ var/global/list/uplinks = list()
 		if("buy")
 			var/item = params["item"]
 
-			var/list/uplink_items = get_uplink_items(gamemode)
 			var/list/buyable_items = list()
 			for(var/category in uplink_items)
 				buyable_items += uplink_items[category]

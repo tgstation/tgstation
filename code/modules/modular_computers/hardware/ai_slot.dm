@@ -3,7 +3,7 @@
 	desc = "A module allowing this computer to interface with most common intelliCard modules. Necessary for some programs to run properly."
 	power_usage = 100 //W
 	icon_state = "card_mini"
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	origin_tech = "programming=2"
 	device_type = MC_AI
 
@@ -11,7 +11,7 @@
 	var/locked = FALSE
 
 
-obj/item/weapon/computer_hardware/ai_slot/examine(mob/user)
+/obj/item/weapon/computer_hardware/ai_slot/examine(mob/user)
 	..()
 	if(stored_card)
 		user << "There appears to be an intelliCard loaded. There appears to be a pinhole protecting a manual eject button. A screwdriver could probably press it"

@@ -5,7 +5,7 @@
 	icon_state = "dnainjector"
 	throw_speed = 3
 	throw_range = 5
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 	origin_tech = "biotech=1"
 
 	var/damage_coeff  = 1
@@ -310,7 +310,7 @@
 
 	if(M.has_dna() && !(M.disabilities & NOCLONE))
 		if(M.stat == DEAD)	//prevents dead people from having their DNA changed
-			user << "<span class='notice'>You can't modify [M]'s DNA while \he's dead.</span>"
+			user << "<span class='notice'>You can't modify [M]'s DNA while [M.p_theyre()] dead.</span>"
 			return
 		M.radiation += rand(20/(damage_coeff  ** 2),50/(damage_coeff  ** 2))
 		var/log_msg = "[key_name(user)] injected [key_name(M)] with the [name]"

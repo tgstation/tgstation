@@ -2,6 +2,9 @@
 /datum/chemical_reaction/slime
 
 /datum/chemical_reaction/slime/on_reaction(datum/reagents/holder)
+	delete_extract(holder)
+
+/datum/chemical_reaction/slime/proc/delete_extract(datum/reagents/holder)
 	var/obj/item/slime_extract/M = holder.my_atom
 	if(M.Uses <= 0)
 		if (!results.len) //if the slime doesn't output chemicals
@@ -118,9 +121,10 @@
 	feedback_add_details("slime_cores_used","[type]")
 	var/turf/T = get_turf(holder.my_atom)
 	T.visible_message("<span class='danger'>The slime extract begins to vibrate violently !</span>")
-	addtimer(src, "chemical_mob_spawn", 50, FALSE, holder, 5, "Gold Slime")
-	spawn(60)
-	..()
+	addtimer(CALLBACK(src, .proc/chemical_mob_spawn, holder, 5, "Gold Slime"), 50)
+	var/obj/item/slime_extract/M = holder.my_atom
+	deltimer(M.qdel_timer)
+	M.qdel_timer = addtimer(CALLBACK(src, .proc/delete_extract, holder), 55)
 
 /datum/chemical_reaction/slime/slimecritlesser
 	name = "Slime Crit Lesser"
@@ -133,9 +137,10 @@
 	feedback_add_details("slime_cores_used","[type]")
 	var/turf/T = get_turf(holder.my_atom)
 	T.visible_message("<span class='danger'>The slime extract begins to vibrate violently !</span>")
-	addtimer(src, "chemical_mob_spawn", 50, FALSE, holder, 3, "Lesser Gold Slime", "neutral")
-	spawn(60)
-	..()
+	addtimer(CALLBACK(src, .proc/chemical_mob_spawn, holder, 3, "Lesser Gold Slime", "neutral"), 50)
+	var/obj/item/slime_extract/M = holder.my_atom
+	deltimer(M.qdel_timer)
+	M.qdel_timer = addtimer(CALLBACK(src, .proc/delete_extract, holder), 55)
 
 /datum/chemical_reaction/slime/slimecritfriendly
 	name = "Slime Crit Friendly"
@@ -148,9 +153,10 @@
 	feedback_add_details("slime_cores_used","[type]")
 	var/turf/T = get_turf(holder.my_atom)
 	T.visible_message("<span class='danger'>The slime extract begins to vibrate adorably !</span>")
-	addtimer(src, "chemical_mob_spawn", 50, FALSE, holder, 1, "Friendly Gold Slime", "neutral")
-	spawn(60)
-	..()
+	addtimer(CALLBACK(src, .proc/chemical_mob_spawn, holder, 1, "Friendly Gold Slime", "neutral"), 50)
+	var/obj/item/slime_extract/M = holder.my_atom
+	deltimer(M.qdel_timer)
+	M.qdel_timer = addtimer(CALLBACK(src, .proc/delete_extract, holder), 55)
 
 //Silver
 /datum/chemical_reaction/slime/slimebork
@@ -283,9 +289,10 @@
 	feedback_add_details("slime_cores_used","[type]")
 	var/turf/T = get_turf(holder.my_atom)
 	T.visible_message("<span class='danger'>The slime extract begins to vibrate adorably!</span>")
-	addtimer(src, "freeze", 50, FALSE, holder)
-	spawn(60)
-	..()
+	addtimer(CALLBACK(src, .proc/freeze, holder), 50)
+	var/obj/item/slime_extract/M = holder.my_atom
+	deltimer(M.qdel_timer)
+	M.qdel_timer = addtimer(CALLBACK(src, .proc/delete_extract, holder), 55)
 
 /datum/chemical_reaction/slime/slimefreeze/proc/freeze(datum/reagents/holder)
 	if(holder && holder.my_atom)
@@ -332,9 +339,10 @@
 	feedback_add_details("slime_cores_used","[type]")
 	var/turf/TU = get_turf(holder.my_atom)
 	TU.visible_message("<span class='danger'>The slime extract begins to vibrate adorably!</span>")
-	addtimer(src, "slime_burn", 50, FALSE, holder)
-	spawn(60)
-	..()
+	addtimer(CALLBACK(src, .proc/slime_burn, holder), 50)
+	var/obj/item/slime_extract/M = holder.my_atom
+	deltimer(M.qdel_timer)
+	M.qdel_timer = addtimer(CALLBACK(src, .proc/delete_extract, holder), 55)
 
 /datum/chemical_reaction/slime/slimefire/proc/slime_burn(datum/reagents/holder)
 	if(holder && holder.my_atom)
@@ -543,9 +551,10 @@
 	message_admins("Slime Explosion reaction started at <a href='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>[T.loc.name] (JMP)</a>. Last Fingerprint: [touch_msg]")
 	log_game("Slime Explosion reaction started at [T.loc.name] ([T.x],[T.y],[T.z]). Last Fingerprint: [lastkey ? lastkey : "N/A"].")
 	T.visible_message("<span class='danger'>The slime extract begins to vibrate violently !</span>")
-	addtimer(src, "boom", 50, FALSE, holder)
-	spawn(60)
-	..()
+	addtimer(CALLBACK(src, .proc/boom, holder), 50)
+	var/obj/item/slime_extract/M = holder.my_atom
+	deltimer(M.qdel_timer)
+	M.qdel_timer = addtimer(CALLBACK(src, .proc/delete_extract, holder), 55)
 
 /datum/chemical_reaction/slime/slimeexplosion/proc/boom(datum/reagents/holder)
 	if(holder && holder.my_atom)
@@ -591,6 +600,19 @@
 	var/obj/effect/golemrune/Z = new /obj/effect/golemrune
 	Z.loc = get_turf(holder.my_atom)
 	notify_ghosts("Golem rune created in [get_area(Z)].", 'sound/effects/ghost2.ogg', source = Z)
+	..()
+
+/datum/chemical_reaction/slime/slimegolem2
+	name = "Slime Golem 2"
+	id = "m_golem2"
+	required_reagents = list("iron" = 1)
+	required_container = /obj/item/slime_extract/adamantine
+	required_other = 1
+
+/datum/chemical_reaction/slime/slimegolem2/on_reaction(datum/reagents/holder)
+	feedback_add_details("slime_cores_used","[type]")
+	var/obj/item/golem_shell/artificial/Z = new /obj/item/golem_shell/artificial
+	Z.loc = get_turf(holder.my_atom)
 	..()
 
 //Bluespace

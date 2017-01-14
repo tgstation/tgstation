@@ -14,7 +14,7 @@ MASS SPECTROMETER
 	icon_state = "t-ray0"
 	var/on = 0
 	slot_flags = SLOT_BELT
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	item_state = "electronic"
 	materials = list(MAT_METAL=150)
 	origin_tech = "magnets=1;engineering=1"
@@ -30,11 +30,7 @@ MASS SPECTROMETER
 /obj/item/device/t_scanner/proc/flick_sonar(obj/pipe)
 	var/image/I = image('icons/effects/effects.dmi', pipe, "blip", pipe.layer+1)
 	I.alpha = 128
-	var/list/nearby = list()
-	for(var/mob/M in viewers(pipe))
-		if(M.client)
-			nearby |= M.client
-	flick_overlay(I,nearby,8)
+	flick_overlay_view(I, pipe, 8)
 
 /obj/item/device/t_scanner/process()
 	if(!on)
@@ -74,7 +70,7 @@ MASS SPECTROMETER
 	flags = CONDUCT | NOBLUDGEON
 	slot_flags = SLOT_BELT
 	throwforce = 3
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 	throw_speed = 3
 	throw_range = 7
 	materials = list(MAT_METAL=200)
@@ -253,7 +249,7 @@ MASS SPECTROMETER
 	name = "analyzer"
 	icon_state = "atmos"
 	item_state = "analyzer"
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	flags = CONDUCT | NOBLUDGEON
 	slot_flags = SLOT_BELT
 	throwforce = 0
@@ -327,9 +323,10 @@ MASS SPECTROMETER
 	name = "mass-spectrometer"
 	icon_state = "spectrometer"
 	item_state = "analyzer"
-	w_class = 2
-	flags = CONDUCT | OPENCONTAINER
+	w_class = WEIGHT_CLASS_SMALL
+	flags = CONDUCT
 	slot_flags = SLOT_BELT
+	container_type = OPENCONTAINER
 	throwforce = 0
 	throw_speed = 3
 	throw_range = 7
@@ -388,7 +385,7 @@ MASS SPECTROMETER
 	icon_state = "adv_spectrometer"
 	item_state = "analyzer"
 	origin_tech = "biotech=2"
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	flags = CONDUCT
 	throwforce = 0
 	throw_speed = 3

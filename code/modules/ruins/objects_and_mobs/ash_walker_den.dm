@@ -31,6 +31,7 @@
 			for(var/obj/item/W in H)
 				H.unEquip(W)
 			H.gib()
+			adjustHealth(-maxHealth * 0.05)//restores 5% hp of tendril
 
 /mob/living/simple_animal/hostile/spawner/ash_walker/spawn_mob()
 	if(meat_counter >= ASH_WALKER_SPAWN_THRESHOLD)

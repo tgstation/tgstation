@@ -10,9 +10,11 @@
 	var/mob/living/carbon/C = owner
 	if(!dismemberable)
 		return 0
+	if(C.status_flags & GODMODE)
+		return 0
 	if(ishuman(C))
 		var/mob/living/carbon/human/H = C
-		if(NODISMEMBER in H.dna.species.specflags) // species don't allow dismemberment
+		if(NODISMEMBER in H.dna.species.species_traits) // species don't allow dismemberment
 			return 0
 
 	var/obj/item/bodypart/affecting = C.get_bodypart("chest")
@@ -36,7 +38,7 @@
 		target_turf = new_turf
 		if(new_turf.density)
 			break
-	throw_at_fast(target_turf, throw_range, throw_speed)
+	throw_at(target_turf, throw_range, throw_speed)
 	return 1
 
 
@@ -48,7 +50,7 @@
 		return 0
 	if(ishuman(C))
 		var/mob/living/carbon/human/H = C
-		if(NODISMEMBER in H.dna.species.specflags) // species don't allow dismemberment
+		if(NODISMEMBER in H.dna.species.species_traits) // species don't allow dismemberment
 			return 0
 
 	var/organ_spilled = 0
@@ -308,7 +310,6 @@
 		limb_list -= excluded_limbs
 	for(var/Z in limb_list)
 		. += regenerate_limb(Z, noheal)
-
 
 /mob/living/proc/regenerate_limb(limb_zone, noheal)
 	return

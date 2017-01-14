@@ -27,7 +27,7 @@
 		if(!is_servant_of_ratvar(C) && !C.null_rod_check() && number_legs) //you have legs right
 			C.apply_damage(noncultist_damage * 0.5, BURN, "l_leg")
 			C.apply_damage(noncultist_damage * 0.5, BURN, "r_leg")
-			if(C.m_intent != "walk")
+			if(C.m_intent != MOVE_INTENT_WALK)
 				if(!iscultist(C))
 					C << "<span class='warning'>Your leg[number_legs > 1 ? "s shiver":" shivers"] with pain!</span>"
 				else //Cultists take extra burn damage
@@ -111,7 +111,7 @@
 	descname = "Melee Convert Attack"
 	name = "Geis"
 	desc = "Charges your slab with divine energy, allowing you to bind a nearby heretic for conversion. This is very obvious and will make your slab visible in-hand."
-	invocations = list("Divinity, grant me strength...", "...to enlighten the heathen!")
+	invocations = list("Divinity, grant...", "...me strength...", "...to enlighten...", "...the heathen!")
 	whispered = TRUE
 	channel_time = 20
 	required_components = list(GEIS_CAPACITOR = 1)
@@ -135,19 +135,22 @@
 			servants++
 	if(servants > SCRIPT_SERVANT_REQ)
 		whispered = FALSE
+		servants -= SCRIPT_SERVANT_REQ
+		channel_time = min(channel_time + servants*3, 50)
 	return ..()
 
 //The scripture that does the converting.
 /datum/clockwork_scripture/geis
 	name = "Geis Conversion"
 	invocations = list("Enlighten this heathen!", "All are insects before Engine!", "Purge all untruths and honor Engine.")
-	channel_time = 50
+	channel_time = 49
 	tier = SCRIPTURE_PERIPHERAL
 	var/mob/living/target
 	var/obj/structure/destructible/clockwork/geis_binding/binding
 
 /datum/clockwork_scripture/geis/Destroy()
-	qdel(binding)
+	if(binding && !qdeleted(binding))
+		qdel(binding)
 	return ..()
 
 /datum/clockwork_scripture/geis/can_recite()
@@ -162,7 +165,7 @@
 			servants++
 	if(servants > SCRIPT_SERVANT_REQ)
 		servants -= SCRIPT_SERVANT_REQ
-		channel_time = min(channel_time + servants*5, 100)
+		channel_time = min(channel_time + servants*7, 120)
 	if(target.buckled)
 		target.buckled.unbuckle_mob(target, TRUE)
 	binding = new(get_turf(target))
@@ -207,14 +210,14 @@
 	var/invoker_old_color = invoker.color
 	invoker.color = "#AF0AAF"
 	animate(invoker, color = invoker_old_color, time = flee_time+grace_period)
-	addtimer(invoker, "update_atom_colour", flee_time+grace_period)
+	addtimer(CALLBACK(invoker, /atom/proc/update_atom_colour), flee_time+grace_period)
 	if(chant_number != chant_amount) //if this is the last chant, we don't have a movement period because the chant is over
 		var/endtime = world.time + flee_time
 		var/starttime = world.time
 		progbar = new(invoker, flee_time, invoker)
 		progbar.bar.color = "#AF0AAF"
 		animate(progbar.bar, color = initial(progbar.bar.color), time = flee_time+grace_period)
-		while(world.time < endtime)
+		while(world.time < endtime && invoker && slab && invoker.get_active_held_item() == slab)
 			sleep(1)
 			progbar.update(world.time - starttime)
 		qdel(progbar)
@@ -224,8 +227,8 @@
 	qdel(progbar)
 
 
-//Replicant: Creates a new clockwork slab. Doesn't use create_object because of its unique behavior.
-/datum/clockwork_scripture/replicant
+//Replicant: Creates a new clockwork slab.
+/datum/clockwork_scripture/create_object/replicant
 	descname = "New Clockwork Slab"
 	name = "Replicant"
 	desc = "Creates a new clockwork slab."
@@ -233,18 +236,15 @@
 	channel_time = 10
 	required_components = list(REPLICANT_ALLOY = 1)
 	whispered = TRUE
+	object_path = /obj/item/clockwork/slab
+	creator_message = "<span class='brass'>You copy a piece of replicant alloy and command it into a new slab.</span>"
 	usage_tip = "This is inefficient as a way to produce components, as the slab produced must be held by someone with no other slabs to produce components."
 	tier = SCRIPTURE_DRIVER
+	space_allowed = TRUE
 	primary_component = REPLICANT_ALLOY
 	sort_priority = 7
 	quickbind = TRUE
 	quickbind_desc = "Creates a new Clockwork Slab."
-
-/datum/clockwork_scripture/replicant/scripture_effects()
-	invoker <<  "<span class='brass'>You copy a piece of replicant alloy and command it into a new slab.</span>" //No visible message, for stealth purposes
-	var/obj/item/clockwork/slab/S = new(get_turf(invoker))
-	invoker.put_in_hands(S) //Put it in your hands if possible
-	return TRUE
 
 
 //Tinkerer's Cache: Creates a tinkerer's cache, allowing global component storage.
@@ -267,15 +267,16 @@
 	quickbind = TRUE
 	quickbind_desc = "Creates a Tinkerer's Cache, which stores components globally for slab access."
 
-/datum/clockwork_scripture/create_object/tinkerers_cache/New()
-	var/cache_cost_increase = min(round(clockwork_caches*0.2), 5)
+/datum/clockwork_scripture/create_object/tinkerers_cache/creation_update()
+	var/cache_cost_increase = min(round(clockwork_caches*0.25), 5)
+	required_components = list(BELLIGERENT_EYE = 0, VANGUARD_COGWHEEL = 0, GEIS_CAPACITOR = 0, REPLICANT_ALLOY = 2, HIEROPHANT_ANSIBLE = 0)
+	consumed_components = list(BELLIGERENT_EYE = 0, VANGUARD_COGWHEEL = 0, GEIS_CAPACITOR = 0, REPLICANT_ALLOY = 1, HIEROPHANT_ANSIBLE = 0)
 	for(var/i in required_components)
 		if(i != REPLICANT_ALLOY)
 			required_components[i] += cache_cost_increase
 	for(var/i in consumed_components)
 		if(i != REPLICANT_ALLOY)
 			consumed_components[i] += cache_cost_increase
-	return ..()
 
 
 //Wraith Spectacles: Creates a pair of wraith spectacles, which grant xray vision but damage vision slowly.

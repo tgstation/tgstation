@@ -7,7 +7,7 @@
 	desc = "A custom made grenade."
 	icon_state = "chemg"
 	item_state = "flashbang"
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	force = 2
 	var/stage = EMPTY
 	var/list/beakers = list()
@@ -17,11 +17,12 @@
 	var/assemblyattacher
 	var/ignition_temp = 10 // The amount of heat added to the reagents when this grenade goes off.
 	var/threatscale = 1 // Used by advanced grenades to make them slightly more worthy.
+	var/no_splash = FALSE //If the grenade deletes even if it has no reagents to splash with. Used for slime core reactions.
 
 /obj/item/weapon/grenade/chem_grenade/New()
 	create_reagents(1000)
 	stage_change() // If no argument is set, it will change the stage to the current stage, useful for stock grenades that start READY.
-
+	..()
 
 /obj/item/weapon/grenade/chem_grenade/examine(mob/user)
 	display_timer = (stage == READY && !nadeassembly)	//show/hide the timer based on assembly state
@@ -45,7 +46,7 @@
 				var/mob/living/carbon/C = user
 				C.throw_mode_on()
 
-			addtimer(src, "prime", det_time)
+			addtimer(CALLBACK(src, .proc/prime), det_time)
 
 
 /obj/item/weapon/grenade/chem_grenade/attackby(obj/item/I, mob/user, params)
@@ -54,7 +55,7 @@
 			if(beakers.len)
 				stage_change(READY)
 				user << "<span class='notice'>You lock the [initial(name)] assembly.</span>"
-				playsound(loc, 'sound/items/Screwdriver.ogg', 25, -3)
+				playsound(loc, I.usesound, 25, -3)
 			else
 				user << "<span class='warning'>You need to add at least one beaker before locking the [initial(name)] assembly!</span>"
 		else if(stage == READY && !nadeassembly)
@@ -164,8 +165,13 @@
 	for(var/obj/item/weapon/reagent_containers/glass/G in beakers)
 		reactants += G.reagents
 
-	if(!chem_splash(get_turf(src), affected_area, reactants, ignition_temp, threatscale))
+	if(!chem_splash(get_turf(src), affected_area, reactants, ignition_temp, threatscale) && !no_splash)
 		playsound(loc, 'sound/items/Screwdriver2.ogg', 50, 1)
+		if(beakers.len)
+			for(var/obj/O in beakers)
+				O.loc = get_turf(src)
+			beakers = list()
+		stage_change(EMPTY)
 		return
 
 	if(nadeassembly)
@@ -206,11 +212,16 @@
 				G.reagents.trans_to(S, G.reagents.total_volume)
 
 			//If there is still a core (sometimes it's used up)
-			//and there are reagents left, behave normally
+			//and there are reagents left, behave normally,
+			//otherwise drop it on the ground for timed reactions like gold.
 
-			if(S && S.reagents && S.reagents.total_volume)
-				S.reagents.trans_to(src,S.reagents.total_volume)
-			return
+			if(S)
+				if(S.reagents && S.reagents.total_volume)
+					for(var/obj/item/weapon/reagent_containers/glass/G in beakers)
+						S.reagents.trans_to(G, S.reagents.total_volume)
+				else
+					S.forceMove(get_turf(src))
+					no_splash = TRUE
 	..()
 
 	//I tried to just put it in the allowed_containers list but
@@ -287,7 +298,7 @@
 		message_admins("grenade primed by an assembly, attached by [key_name_admin(M)]<A HREF='?_src_=holder;adminmoreinfo=\ref[M]'>(?)</A> (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[M]'>FLW</A>) and last touched by [key_name_admin(last)]<A HREF='?_src_=holder;adminmoreinfo=\ref[last]'>(?)</A> (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[last]'>FLW</A>) ([nadeassembly.a_left.name] and [nadeassembly.a_right.name]) at <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>[A.name] (JMP)</a>.")
 		log_game("grenade primed by an assembly, attached by [key_name(M)] and last touched by [key_name(last)] ([nadeassembly.a_left.name] and [nadeassembly.a_right.name]) at [A.name] ([T.x], [T.y], [T.z])")
 	else
-		addtimer(src, "prime", det_time)
+		addtimer(CALLBACK(src, .proc/prime), det_time)
 	var/turf/DT = get_turf(src)
 	var/area/DA = get_area(DT)
 	log_game("A grenade detonated at [DA.name] ([DT.x], [DT.y], [DT.z])")

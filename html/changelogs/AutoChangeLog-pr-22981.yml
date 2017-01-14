@@ -1,0 +1,4 @@
+author: "XDTM"
+delete-after: True
+changes: 
+  - bugfix: "Wrenching portable chem dispensers won't cause you to immediately try unwrenching them."

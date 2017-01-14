@@ -121,7 +121,7 @@
 	..()
 
 /obj/item/weapon/circuitboard/machine/ntnet_relay
-	name = "circuit board (NTNet Relay)"
+	name = "NTNet Relay (Machine Board)"
 	build_path = /obj/machinery/ntnet_relay
 	origin_tech = "programming=3;bluespace=3;magnets=2"
 	req_components = list(

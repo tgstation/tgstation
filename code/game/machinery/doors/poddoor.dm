@@ -24,14 +24,15 @@
 
 //special poddoors that open when emergency shuttle docks at centcom
 /obj/machinery/door/poddoor/shuttledock
-	var/checkdir = 4	//door won't open if turf in this dir is space
+	var/checkdir = 4	//door won't open if turf in this dir is `turftype`
+	var/turftype = /turf/open/space
 
 /obj/machinery/door/poddoor/shuttledock/proc/check()
 	var/turf/T = get_step(src, checkdir)
-	if(!isspaceturf(T))
-		addtimer(src, "open", 0, TIMER_UNIQUE)
+	if(!istype(T, turftype))
+		addtimer(CALLBACK(src, .proc/open), 0, TIMER_UNIQUE)
 	else
-		addtimer(src, "close", 0, TIMER_UNIQUE)
+		addtimer(CALLBACK(src, .proc/close), 0, TIMER_UNIQUE)
 
 /obj/machinery/door/poddoor/Bumped(atom/AM)
 	if(density)
@@ -61,6 +62,6 @@
 /obj/machinery/door/poddoor/try_to_activate_door(mob/user)
  	return
 
-obj/machinery/door/poddoor/try_to_crowbar(obj/item/I, mob/user)
+/obj/machinery/door/poddoor/try_to_crowbar(obj/item/I, mob/user)
 	if(stat & NOPOWER)
 		open(1)

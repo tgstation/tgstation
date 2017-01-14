@@ -30,7 +30,7 @@
 /obj/item/organ/cyberimp/chest/nutriment/emp_act(severity)
 	if(!owner)
 		return
-	owner.reagents.add_reagent("????",poison_amount / severity) //food poisoning
+	owner.reagents.add_reagent("bad_food", poison_amount / severity)
 	owner << "<span class='warning'>You feel like your insides are burning.</span>"
 
 
@@ -57,7 +57,7 @@
 /obj/item/organ/cyberimp/chest/reviver/on_life()
 	if(reviving)
 		if(owner.stat == UNCONSCIOUS)
-			addtimer(src, "heal", 30)
+			addtimer(CALLBACK(src, .proc/heal), 30)
 		else
 			cooldown = revive_cost + world.time
 			reviving = FALSE
@@ -100,7 +100,7 @@
 		var/mob/living/carbon/human/H = owner
 		if(H.stat != DEAD && prob(50 / severity))
 			H.heart_attack = TRUE
-			addtimer(src, "undo_heart_attack", 600 / severity)
+			addtimer(CALLBACK(src, .proc/undo_heart_attack), 600 / severity)
 
 /obj/item/organ/cyberimp/chest/reviver/proc/undo_heart_attack()
 	var/mob/living/carbon/human/H = owner
@@ -121,7 +121,7 @@
 	implant_overlay = null
 	implant_color = null
 	actions_types = list(/datum/action/item_action/organ_action/toggle)
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 	var/on = 0
 	var/datum/effect_system/trail_follow/ion/ion_trail
 

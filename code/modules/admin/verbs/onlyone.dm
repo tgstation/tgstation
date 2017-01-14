@@ -18,12 +18,12 @@ var/highlander = FALSE
 
 	message_admins("<span class='adminnotice'>[key_name_admin(usr)] used THERE CAN BE ONLY ONE!</span>")
 	log_admin("[key_name(usr)] used THERE CAN BE ONLY ONE.")
-	addtimer(SSshuttle.emergency, "request", 50, FALSE, null, 1)
+	addtimer(CALLBACK(SSshuttle.emergency, /obj/docking_port/mobile/emergency.proc/request, null, 1), 50)
 
 /mob/living/carbon/human/proc/make_scottish()
 	ticker.mode.traitors += mind
 	mind.special_role = "highlander"
-	dna.species.specflags |= NOGUNS //nice try jackass
+	dna.species.species_traits |= NOGUNS //nice try jackass
 
 	var/datum/objective/steal/steal_objective = new
 	steal_objective.owner = mind

@@ -9,7 +9,7 @@
 	anchored = 1
 	density = 1
 	resistance_flags = FIRE_PROOF | ACID_PROOF
-	var/repair_amount = 5 //how much a proselytizer can repair each cycle
+	var/repair_amount = 4 //how much a proselytizer can repair each cycle
 	var/can_be_repaired = TRUE //if a proselytizer can repair it at all
 	break_message = "<span class='warning'>The frog isn't a meme after all!</span>" //The message shown when a structure breaks
 	break_sound = 'sound/magic/clockwork/anima_fragment_death.ogg' //The sound played when a structure breaks
@@ -36,7 +36,7 @@
 		var/previouscolor = color
 		color = "#960000"
 		animate(src, color = previouscolor, time = 8)
-		addtimer(src, "update_atom_colour", 8)
+		addtimer(CALLBACK(src, /atom/proc/update_atom_colour), 8)
 
 /obj/structure/destructible/clockwork/examine(mob/user)
 	var/can_see_clockwork = is_servant_of_ratvar(user) || isobserver(user)
@@ -62,7 +62,9 @@
 
 /obj/structure/destructible/clockwork/proc/get_efficiency_mod(increasing)
 	if(ratvar_awakens)
-		return 1
+		if(increasing)
+			return 0.5
+		return 2
 	. = max(sqrt(obj_integrity/max(max_integrity, 1)), 0.5)
 	if(increasing)
 		. *= min(max_integrity/max(obj_integrity, 1), 4)
@@ -77,15 +79,25 @@
 /obj/structure/destructible/clockwork/attackby(obj/item/I, mob/user, params)
 	if(is_servant_of_ratvar(user) && istype(I, /obj/item/weapon/wrench) && unanchored_icon)
 		if(default_unfasten_wrench(user, I, 50) == SUCCESSFUL_UNFASTEN)
-			if(anchored)
-				icon_state = initial(icon_state)
-			else
-				icon_state = unanchored_icon
-				playsound(src, break_sound, 10 * get_efficiency_mod(TRUE), 1)
-				take_damage(round(max_integrity * 0.25, 1), BRUTE)
-				user << "<span class='warning'>As you unsecure [src] from the floor, you see cracks appear in its surface!</span>"
+			update_anchored(user, TRUE)
 		return 1
 	return ..()
+
+/obj/structure/destructible/clockwork/proc/update_anchored(mob/user, do_damage)
+	if(anchored)
+		icon_state = initial(icon_state)
+	else
+		icon_state = unanchored_icon
+		if(do_damage)
+			playsound(src, break_sound, 10 * get_efficiency_mod(TRUE), 1)
+			take_damage(round(max_integrity * 0.25, 1), BRUTE)
+		user << "<span class='warning'>As you unsecure [src] from the floor, you see cracks appear in its surface!</span>"
+
+/obj/structure/destructible/clockwork/emp_act(severity)
+	if(anchored && unanchored_icon)
+		anchored = FALSE
+		update_anchored(null, obj_integrity > max_integrity * 0.25)
+		PoolOrNew(/obj/effect/overlay/temp/emp, loc)
 
 
 //for the ark and Ratvar
@@ -164,6 +176,13 @@
 			STOP_PROCESSING(SSobj, src)
 	return TRUE
 
+/obj/structure/destructible/clockwork/powered/proc/forced_disable(bad_effects)
+	if(active)
+		toggle()
+
+/obj/structure/destructible/clockwork/powered/emp_act(severity)
+	if(forced_disable(TRUE))
+		PoolOrNew(/obj/effect/overlay/temp/emp, loc)
 
 /obj/structure/destructible/clockwork/powered/proc/total_accessable_power() //how much power we have and can use
 	if(!needs_power || ratvar_awakens)
@@ -240,10 +259,8 @@
 /obj/structure/destructible/clockwork/powered/proc/return_power(amount) //returns a given amount of power to all nearby sigils or if there are no sigils, to the APC
 	if(amount <= 0)
 		return FALSE
-	var/list/sigils_in_range = list()
-	for(var/obj/effect/clockwork/sigil/transmission/T in range(1, src))
-		sigils_in_range |= T
-	if(!sigils_in_range.len && (!target_apc || !target_apc.cell))
+	var/list/sigils_in_range = check_apc_and_sigils()
+	if(!istype(sigils_in_range))
 		return FALSE
 	if(sigils_in_range.len)
 		while(amount >= MIN_CLOCKCULT_POWER)
@@ -258,3 +275,11 @@
 		target_apc.update_icon()
 		target_apc.updateUsrDialog()
 	return TRUE
+
+/obj/structure/destructible/clockwork/powered/proc/check_apc_and_sigils() //checks for sigils and an APC, returning FALSE if it finds neither, and a list of sigils otherwise
+	. = list()
+	for(var/obj/effect/clockwork/sigil/transmission/T in range(1, src))
+		. |= T
+	var/list/L = .
+	if(!L.len && (!target_apc || !target_apc.cell))
+		return FALSE

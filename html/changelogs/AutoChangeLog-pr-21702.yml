@@ -1,4 +1,0 @@
-author: "Mervill"
-delete-after: True
-changes: 
-  - imageadd: "Disposal units now use a tgui instead of plain html"

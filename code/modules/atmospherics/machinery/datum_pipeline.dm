@@ -1,13 +1,16 @@
 /datum/pipeline
 	var/datum/gas_mixture/air
-	var/list/datum/gas_mixture/other_airs = list()
+	var/list/datum/gas_mixture/other_airs
 
-	var/list/obj/machinery/atmospherics/pipe/members = list()
-	var/list/obj/machinery/atmospherics/components/other_atmosmch = list()
+	var/list/obj/machinery/atmospherics/pipe/members
+	var/list/obj/machinery/atmospherics/components/other_atmosmch
 
 	var/update = 1
 
 /datum/pipeline/New()
+	other_airs = list()
+	members = list()
+	other_atmosmch = list()
 	SSair.networks += src
 
 /datum/pipeline/Destroy()
@@ -80,6 +83,8 @@ var/pipenetwarnings = 10
 /datum/pipeline/proc/addMachineryMember(obj/machinery/atmospherics/components/C)
 	other_atmosmch |= C
 	var/datum/gas_mixture/G = C.returnPipenetAir(src)
+	if(!G)
+		stack_trace("addMachineryMember: Null gasmix added to pipeline datum from [C] which is of type [C.type]. Nearby: ([C.x], [C.y], [C.z])")
 	other_airs |= G
 
 /datum/pipeline/proc/addMember(obj/machinery/atmospherics/A, obj/machinery/atmospherics/N)
@@ -207,6 +212,8 @@ var/pipenetwarnings = 10
 
 	for(var/i = 1; i <= PL.len; i++) //can't do a for-each here because we may add to the list within the loop
 		var/datum/pipeline/P = PL[i]
+		if(!P)
+			continue
 		GL += P.return_air()
 		for(var/obj/machinery/atmospherics/components/binary/valve/V in P.other_atmosmch)
 			if(V.open)

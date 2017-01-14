@@ -10,7 +10,7 @@
 	throwforce = 5
 	throw_speed = 2
 	throw_range = 5
-	w_class = 3.
+	w_class = WEIGHT_CLASS_NORMAL
 	var/created_name = "Cleanbot"
 
 /obj/item/weapon/bucket_sensor/attackby(obj/item/W, mob/user as mob, params)
@@ -175,10 +175,8 @@
 		if(8)
 			if(istype(W, /obj/item/weapon/screwdriver))
 				playsound(loc, W.usesound, 100, 1)
-				var/turf/T = get_turf(user)
 				user << "<span class='notice'>You start attaching the gun to the frame...</span>"
-				sleep(40)
-				if(get_turf(user) == T)
+				if(do_after(user, 40*W.toolspeed, 0, src, 1))
 					build_step++
 					name = "armed [name]"
 					user << "<span class='notice'>Taser gun attached.</span>"
@@ -205,7 +203,7 @@
 	throwforce = 10
 	throw_speed = 2
 	throw_range = 5
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 	var/created_name = "Floorbot"
 
 /obj/item/weapon/toolbox_tiles_sensor
@@ -217,7 +215,7 @@
 	throwforce = 10
 	throw_speed = 2
 	throw_range = 5
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 	var/created_name = "Floorbot"
 
 /obj/item/weapon/storage/toolbox/mechanical/attackby(obj/item/stack/tile/plasteel/T, mob/user, params)
@@ -287,7 +285,7 @@
 	var/build_step = 0
 	var/created_name = "Medibot" //To preserve the name if it's a unique medbot I guess
 	var/skin = null //Same as medbot, set to tox or ointment for the respective kits.
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 
 	/obj/item/weapon/firstaid_arm_assembly/New()
 		..()

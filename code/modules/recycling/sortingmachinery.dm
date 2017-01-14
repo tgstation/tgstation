@@ -1,6 +1,6 @@
 /obj/structure/bigDelivery
 	name = "large parcel"
-	desc = "A big wrapped package."
+	desc = "A large delivery parcel."
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "deliverycloset"
 	density = 1
@@ -69,10 +69,9 @@
 			user << "<span class='warning'>You fail to remove [O]'s wrapping!</span>"
 
 
-
 /obj/item/smallDelivery
-	name = "small parcel"
-	desc = "A small wrapped package."
+	name = "parcel"
+	desc = "A brown paper delivery parcel."
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "deliverypackage3"
 	var/giftwrapped = 0
@@ -143,7 +142,7 @@
 	//If you don't want to fuck up disposals, add to this list, and don't change the order.
 	//If you insist on changing the order, you'll have to change every sort junction to reflect the new order. --Pete
 
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 	item_state = "electronic"
 	flags = CONDUCT
 	slot_flags = SLOT_BELT

@@ -1,4 +1,4 @@
-/mob/living/simple_animal/hostile/asteroid/
+/mob/living/simple_animal/hostile/asteroid
 	vision_range = 2
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	faction = list("mining")
@@ -11,7 +11,7 @@
 	response_disarm = "shoves"
 	response_harm = "strikes"
 	status_flags = 0
-	a_intent = "harm"
+	a_intent = INTENT_HARM
 	var/throw_message = "bounces off of"
 	var/icon_aggro = null // for swapping to when we get aggressive
 	see_in_dark = 8
@@ -25,6 +25,8 @@
 
 /mob/living/simple_animal/hostile/asteroid/LoseAggro()
 	..()
+	if(stat == DEAD)
+		return
 	icon_state = icon_living
 
 /mob/living/simple_animal/hostile/asteroid/bullet_act(obj/item/projectile/P)//Reduces damage from most projectiles to curb off-screen kills
@@ -74,7 +76,7 @@
 	melee_damage_lower = 12
 	melee_damage_upper = 12
 	attacktext = "bites into"
-	a_intent = "harm"
+	a_intent = INTENT_HARM
 	speak_emote = list("chitters")
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	aggro_vision_range = 9
@@ -127,7 +129,7 @@
 	melee_damage_upper = 0
 	attacktext = "barrels into"
 	attack_sound = 'sound/weapons/punch1.ogg'
-	a_intent = "help"
+	a_intent = INTENT_HELP
 	speak_emote = list("screeches")
 	throw_message = "sinks in slowly, before being pushed out of "
 	deathmessage = "spits up the contents of its stomach before dying!"
@@ -157,7 +159,7 @@
 			retreat_distance = 10
 			minimum_distance = 10
 			if(will_burrow)
-				addtimer(src, "Burrow", chase_time)
+				addtimer(CALLBACK(src, .proc/Burrow), chase_time)
 
 /mob/living/simple_animal/hostile/asteroid/goldgrub/AttackingTarget()
 	if(istype(target, /obj/item/weapon/ore))
@@ -181,7 +183,7 @@
 	visible_message("<span class='danger'>The [P.name] was repelled by [src.name]'s girth!</span>")
 	return
 
-/mob/living/simple_animal/hostile/asteroid/goldgrub/adjustHealth(damage)
+/mob/living/simple_animal/hostile/asteroid/goldgrub/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
 	idle_vision_range = 9
 	. = ..()
 
@@ -249,7 +251,7 @@
 
 /obj/item/organ/hivelord_core/New()
 	..()
-	addtimer(src, "inert_check", 2400)
+	addtimer(CALLBACK(src, .proc/inert_check), 2400)
 
 /obj/item/organ/hivelord_core/proc/inert_check()
 	if(!owner && !preserved)
@@ -337,7 +339,7 @@
 
 /mob/living/simple_animal/hostile/asteroid/hivelordbrood/New()
 	..()
-	addtimer(src, "death", 100)
+	addtimer(CALLBACK(src, .proc/death), 100)
 
 /mob/living/simple_animal/hostile/asteroid/hivelordbrood/blood
 	name = "blood brood"
@@ -468,7 +470,7 @@
 		icon_state = icon_aggro
 		pre_attack = 0
 
-/mob/living/simple_animal/hostile/asteroid/goliath/adjustHealth(damage)
+/mob/living/simple_animal/hostile/asteroid/goliath/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
 	ranged_cooldown -= 10
 	handle_preattack()
 	. = ..()
@@ -479,7 +481,7 @@
 	if(icon_state != icon_aggro)
 		icon_state = icon_aggro
 
-/obj/effect/goliath_tentacle/
+/obj/effect/goliath_tentacle
 	name = "Goliath tentacle"
 	icon = 'icons/mob/lavaland/lavaland_monsters.dmi'
 	icon_state = "Goliath_tentacle"
@@ -491,7 +493,7 @@
 	if(ismineralturf(turftype))
 		var/turf/closed/mineral/M = turftype
 		M.gets_drilled()
-	addtimer(src, "Trip", 10)
+	addtimer(CALLBACK(src, .proc/Trip), 10)
 
 /obj/effect/goliath_tentacle/original
 
@@ -525,12 +527,12 @@
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "goliath_hide"
 	flags = NOBLUDGEON
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 	layer = MOB_LAYER
 
 /obj/item/stack/sheet/animalhide/goliath_hide/afterattack(atom/target, mob/user, proximity_flag)
 	if(proximity_flag)
-		if(istype(target, /obj/item/clothing/suit/space/hardsuit/mining) || istype(target, /obj/item/clothing/head/helmet/space/hardsuit/mining) ||  istype(target, /obj/item/clothing/suit/hooded/explorer) || istype(target, /obj/item/clothing/head/explorer))
+		if(istype(target, /obj/item/clothing/suit/space/hardsuit/mining) || istype(target, /obj/item/clothing/head/helmet/space/hardsuit/mining) ||  istype(target, /obj/item/clothing/suit/hooded/explorer) || istype(target, /obj/item/clothing/head/hooded/explorer))
 			var/obj/item/clothing/C = target
 			var/list/current_armor = C.armor
 			if(current_armor.["melee"] < 60)
@@ -604,9 +606,9 @@
 		Inflate()
 	..()
 
-/mob/living/simple_animal/hostile/asteroid/fugu/adjustHealth(var/damage)
-	if(wumbo)
-		return 0
+/mob/living/simple_animal/hostile/asteroid/fugu/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
+	if(!forced && wumbo)
+		return FALSE
 	. = ..()
 
 /mob/living/simple_animal/hostile/asteroid/fugu/Aggro()
@@ -640,7 +642,7 @@
 	environment_smash = 2
 	mob_size = MOB_SIZE_LARGE
 	speed = 1
-	addtimer(src, "Deflate", 100)
+	addtimer(CALLBACK(src, .proc/Deflate), 100)
 
 /mob/living/simple_animal/hostile/asteroid/fugu/proc/Deflate()
 	if(wumbo)
@@ -671,7 +673,7 @@
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "fugu_gland"
 	flags = NOBLUDGEON
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 	layer = MOB_LAYER
 	origin_tech = "biotech=6"
 	var/list/banned_mobs()
@@ -709,7 +711,7 @@
 	melee_damage_lower = 15
 	melee_damage_upper = 15
 	attacktext = "impales"
-	a_intent = "harm"
+	a_intent = INTENT_HARM
 	speak_emote = list("telepathically cries")
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	stat_attack = 1
@@ -874,8 +876,8 @@
 	response_disarm = "gently pushes aside"
 	response_harm   = "squishes"
 	friendly = "pinches"
-	a_intent = "help"
-	ventcrawler = 2
+	a_intent = INTENT_HELP
+	ventcrawler = VENTCRAWLER_ALWAYS
 	gold_core_spawnable = 2
 	stat_attack = 1
 	gender = NEUTER
@@ -996,7 +998,7 @@
 	for(var/F in RANGE_TURFS(1, src))
 		if(ismineralturf(F))
 			var/turf/closed/mineral/M = F
-			M.ChangeTurf(M.turf_type)
+			M.ChangeTurf(M.turf_type,FALSE,TRUE)
 	gps = new /obj/item/device/gps/internal(src)
 
 /mob/living/simple_animal/hostile/spawner/lavaland/Destroy()
@@ -1045,7 +1047,7 @@
 		visible_message("<span class='boldannounce'>The tendril falls inward, the ground around it widening into a yawning chasm!</span>")
 		for(var/turf/T in range(2,src))
 			if(!T.density)
-				T.ChangeTurf(/turf/open/chasm/straight_down/lava_land_surface)
+				T.TerraformTurf(/turf/open/chasm/straight_down/lava_land_surface)
 		qdel(src)
 
 /mob/living/simple_animal/hostile/spawner/lavaland/goliath

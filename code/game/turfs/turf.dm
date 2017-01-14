@@ -11,8 +11,6 @@
 
 	var/blocks_air = 0
 
-	var/PathNode/PNode = null //associated PathNode in the A* algorithm
-
 	flags = CAN_BE_DIRTY
 
 	var/list/proximity_checkers
@@ -21,13 +19,15 @@
 
 	var/list/image/blueprint_data //for the station blueprints, images of objects eg: pipes
 
+	var/explosion_level = 0	//for preventing explosion dodging
+	var/explosion_id = 0
 
 /turf/New()
 	..()
 
 	levelupdate()
 	if(smooth)
-		smooth_icon(src)
+		queue_smooth(src)
 	visibilityChanged()
 
 	for(var/atom/movable/AM in src)
@@ -55,6 +55,25 @@
 		return 1
 
 	return 0
+
+/turf/CanPass(atom/movable/mover, turf/target, height=1.5)
+	if(!target) return 0
+
+	if(istype(mover)) // turf/Enter(...) will perform more advanced checks
+		return !density
+
+	else // Now, doing more detailed checks for air movement and air group formation
+		if(target.blocks_air||blocks_air)
+			return 0
+
+		for(var/obj/obstacle in src)
+			if(!obstacle.CanPass(mover, target, height))
+				return 0
+		for(var/obj/obstacle in target)
+			if(!obstacle.CanPass(mover, src, height))
+				return 0
+
+		return 1
 
 /turf/Enter(atom/movable/mover as mob|obj, atom/forget as mob|obj|turf|area)
 	if (!mover)
@@ -94,6 +113,9 @@
 		var/atom/B = A
 		B.HasProximity(AM)
 
+	if(explosion_level && AM.ex_check(explosion_id))
+		AM.ex_act(explosion_level)
+
 /turf/open/Entered(atom/movable/AM)
 	..()
 	//slipping
@@ -114,6 +136,11 @@
 				M.slip(0, 6, null, (SLIDE_ICE|GALOSHES_DONT_HELP))
 			if(TURF_WET_SLIDE)
 				M.slip(0, 4, null, (SLIDE|GALOSHES_DONT_HELP))
+	//melting
+	if(isobj(AM) && air && air.temperature > T0C)
+		var/obj/O = AM
+		if(O.is_frozen)
+			O.make_unfrozen()
 
 /turf/proc/is_plasteel_floor()
 	return 0
@@ -135,8 +162,12 @@
 	if(L)
 		qdel(L)
 
+//wrapper for ChangeTurf()s that you want to prevent/affect without overriding ChangeTurf() itself
+/turf/proc/TerraformTurf(path, defer_change = FALSE, ignore_air = FALSE)
+	return ChangeTurf(path, defer_change, ignore_air)
+
 //Creates a new turf
-/turf/proc/ChangeTurf(path, defer_change = FALSE)
+/turf/proc/ChangeTurf(path, defer_change = FALSE, ignore_air = FALSE)
 	if(!path)
 		return
 	if(!use_preloader && path == type) // Don't no-op if the map loader requires it to be reconstructed
@@ -145,13 +176,24 @@
 
 	SSair.remove_from_active(src)
 
+	var/list/old_checkers = proximity_checkers
+	var/old_ex_level = explosion_level
+	var/old_ex_id = explosion_id
+
+	Destroy()	//❄
 	var/turf/W = new path(src)
+
+	W.proximity_checkers = old_checkers
+	W.explosion_level = old_ex_level
+	W.explosion_id = old_ex_id
+
+
 	if(!defer_change)
-		W.AfterChange()
+		W.AfterChange(ignore_air)
 	W.blueprint_data = old_blueprint_data
 	return W
 
-/turf/proc/AfterChange() //called after a turf has been replaced in ChangeTurf()
+/turf/proc/AfterChange(ignore_air = FALSE) //called after a turf has been replaced in ChangeTurf()
 	levelupdate()
 	CalculateAdjacentTurfs()
 
@@ -286,6 +328,10 @@
 	for(var/V in contents)
 		var/atom/A = V
 		if(A.level >= affecting_level)
+			if(istype(A,/atom/movable))
+				var/atom/movable/AM = A
+				if(!AM.ex_check(explosion_id))
+					continue
 			A.ex_act(severity, target)
 			CHECK_TICK
 

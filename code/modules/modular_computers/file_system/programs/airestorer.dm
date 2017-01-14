@@ -120,6 +120,6 @@
 		ui = new(user, src, ui_key, "ai_restorer", "Integrity Restorer", 600, 400, master_ui, state)
 		ui.open()
 
-datum/computer_file/program/aidiag/kill_program(forced)
+/datum/computer_file/program/aidiag/kill_program(forced)
 	restoring = FALSE
 	return ..(forced)

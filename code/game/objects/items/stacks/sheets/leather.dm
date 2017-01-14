@@ -152,7 +152,7 @@ var/global/list/datum/stack_recipe/sinew_recipes = list ( \
 	icon_state = "goliath_hide"
 	singular_name = "hide plate"
 	flags = NOBLUDGEON
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 	layer = MOB_LAYER
 
 /obj/item/stack/sheet/animalhide/ashdrake
@@ -162,7 +162,7 @@ var/global/list/datum/stack_recipe/sinew_recipes = list ( \
 	icon_state = "dragon_hide"
 	singular_name = "drake plate"
 	flags = NOBLUDGEON
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 	layer = MOB_LAYER
 
 

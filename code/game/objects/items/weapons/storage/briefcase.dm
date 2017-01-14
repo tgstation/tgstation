@@ -7,8 +7,8 @@
 	hitsound = "swing_hit"
 	throw_speed = 2
 	throw_range = 4
-	w_class = 4
-	max_w_class = 3
+	w_class = WEIGHT_CLASS_BULKY
+	max_w_class = WEIGHT_CLASS_NORMAL
 	max_combined_w_class = 21
 	attack_verb = list("bashed", "battered", "bludgeoned", "thrashed", "whacked")
 	resistance_flags = FLAMMABLE
@@ -39,8 +39,8 @@
 	hitsound = "swing_hit"
 	throw_speed = 2
 	throw_range = 4
-	w_class = 4
-	max_w_class = 3
+	w_class = WEIGHT_CLASS_BULKY
+	max_w_class = WEIGHT_CLASS_NORMAL
 	max_combined_w_class = 21
 	attack_verb = list("bashed", "battered", "bludgeoned", "thrashed", "whacked")
 	resistance_flags = FLAMMABLE

@@ -28,6 +28,7 @@
 	/turf/closed/wall/clockwork)
 	smooth = SMOOTH_TRUE
 	can_be_unanchored = 0
+	CanAtmosPass = ATMOS_PASS_DENSITY
 
 /obj/structure/falsewall/New(loc)
 	..()
@@ -37,9 +38,6 @@
 	density = 0
 	air_update_turf(1)
 	return ..()
-
-/obj/structure/falsewall/CanAtmosPass(turf/T)
-	return !density
 
 /obj/structure/falsewall/ratvar_act()
 	new /obj/structure/falsewall/brass(loc)
@@ -83,7 +81,7 @@
 	if(density)
 		smooth = SMOOTH_TRUE
 		queue_smooth(src)
-		icon_state = "wall"
+		icon_state = initial(icon_state)
 	else
 		icon_state = "fwall_open"
 
@@ -324,9 +322,10 @@
 	icon_state = "clockwork_wall"
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	mineral_amount = 1
+	canSmoothWith = list(/obj/effect/clockwork/overlay/wall, /obj/structure/falsewall/brass)
 	girder_type = /obj/structure/destructible/clockwork/wall_gear/displaced
 	walltype = /turf/closed/wall/clockwork
-	mineral = /obj/item/stack/sheet/brass
+	mineral = /obj/item/stack/tile/brass
 
 /obj/structure/falsewall/brass/New(loc)
 	..()

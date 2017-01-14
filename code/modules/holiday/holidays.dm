@@ -316,6 +316,20 @@
 /datum/holiday/xmas/greet()
 	return "Have a merry Christmas!"
 
+/datum/holiday/festive_season
+	name = FESTIVE_SEASON
+	begin_day = 1
+	begin_month = DECEMBER
+	end_day = 31
+
+/datum/holiday/festive_season/celebrate()
+	for(var/obj/effect/landmark/xmastree/XT in landmarks_list)
+		new XT.tree(get_turf(XT))
+		qdel(XT)
+
+/datum/holiday/festive_season/greet()
+	return "Have a nice festive season!"
+
 /datum/holiday/boxing
 	name = "Boxing Day"
 	begin_day = 26

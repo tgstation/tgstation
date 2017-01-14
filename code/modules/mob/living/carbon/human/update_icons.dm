@@ -86,6 +86,7 @@ There are several things that need to be remembered:
 		update_inv_back()
 		update_inv_wear_suit()
 		update_inv_pockets()
+		update_inv_neck()
 		update_transform()
 		//mutations
 		update_mutations_overlay()
@@ -134,9 +135,9 @@ There are several things that need to be remembered:
 
 		overlays_standing[UNIFORM_LAYER]	= standing
 
-	else
-		// Automatically drop anything in store / id / belt if you're not wearing a uniform.	//CHECK IF NECESARRY
-		for(var/obj/item/thing in list(r_store, l_store, wear_id, belt))						//
+	else if(!(dna && dna.species.nojumpsuit))
+		// Automatically drop anything in store / id / belt if you're not wearing a uniform.
+		for(var/obj/item/thing in list(r_store, l_store, wear_id, belt))
 			unEquip(thing)
 
 	apply_overlay(UNIFORM_LAYER)
@@ -550,6 +551,8 @@ generate/load female uniform sprites matching all previously decided variables
 			. += "-robotic"
 		if(BP.use_digitigrade)
 			. += "-digitigrade[BP.use_digitigrade]"
+		if(BP.dmg_overlay_type)
+			. += "-[BP.dmg_overlay_type]"
 
 	if(disabilities & HUSK)
 		. += "-husk"

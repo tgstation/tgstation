@@ -48,6 +48,8 @@
 	var/area/master				// master area used for power calcluations
 	var/list/related			// the other areas of the same type as this
 
+	var/parallax_movedir = 0
+
 	var/global/global_uid = 0
 	var/uid
 	var/list/ambientsounds = list('sound/ambience/ambigen1.ogg','sound/ambience/ambigen3.ogg',\
@@ -195,7 +197,7 @@ var/list/teleportlocs = list()
 					if(D.operating)
 						D.nextstate = CLOSED
 					else if(!D.density)
-						addtimer(D, "close", 0)
+						addtimer(CALLBACK(D, /obj/machinery/door/firedoor.proc/close), 0)
 			for(var/obj/machinery/firealarm/F in RA)
 				F.update_icon()
 		for (var/obj/machinery/camera/C in RA)
@@ -221,7 +223,7 @@ var/list/teleportlocs = list()
 					if(D.operating)
 						D.nextstate = OPEN
 					else if(D.density)
-						addtimer(D, "open", 0)
+						addtimer(CALLBACK(D, /obj/machinery/door/firedoor.proc/open), 0)
 			for(var/obj/machinery/firealarm/F in RA)
 				F.update_icon()
 
@@ -255,7 +257,7 @@ var/list/teleportlocs = list()
 	for (var/mob/living/silicon/SILICON in player_list)
 		if(SILICON.triggerAlarm("Burglar", src, cameras, trigger))
 			//Cancel silicon alert after 1 minute
-			addtimer(SILICON, "cancelAlarm", 600, TIMER_NORMAL,"Burglar",src,trigger)
+			addtimer(CALLBACK(SILICON, /mob/living/silicon.proc/cancelAlarm,"Burglar",src,trigger), 600)
 
 /area/proc/set_fire_alarm_effect()
 	fire = 1
@@ -292,7 +294,7 @@ var/list/teleportlocs = list()
 				if(D.operating)
 					D.nextstate = OPEN
 				else if(D.density)
-					addtimer(D, "open", 0)
+					addtimer(CALLBACK(D, /obj/machinery/door/firedoor.proc/open), 0)
 
 /area/proc/updateicon()
 	if ((fire || eject || party) && (!requires_power||power_environ))//If it doesn't require power, can still activate this proc.
@@ -304,11 +306,15 @@ var/list/teleportlocs = list()
 			icon_state = "party"
 		else
 			icon_state = "blue-red"
+		invisibility = INVISIBILITY_LIGHTING
 	else
+	//	new lighting behaviour with obj lights
 		icon_state = null
+		invisibility = INVISIBILITY_MAXIMUM
 
 /area/space/updateicon()
 	icon_state = null
+	invisibility = INVISIBILITY_MAXIMUM
 
 /*
 #define EQUIP 1

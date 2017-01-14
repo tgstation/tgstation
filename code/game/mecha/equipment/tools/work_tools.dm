@@ -53,7 +53,7 @@
 	else if(isliving(target))
 		var/mob/living/M = target
 		if(M.stat == DEAD) return
-		if(chassis.occupant.a_intent == "harm")
+		if(chassis.occupant.a_intent == INTENT_HARM)
 			M.take_overall_damage(dam_force)
 			if(!M)
 				return
@@ -104,10 +104,10 @@
 	else if(isliving(target))
 		var/mob/living/M = target
 		if(M.stat == DEAD) return
-		if(chassis.occupant.a_intent == "harm")
+		if(chassis.occupant.a_intent == INTENT_HARM)
 			target.visible_message("<span class='danger'>[chassis] destroys [target] in an unholy fury.</span>", \
 								"<span class='userdanger'>[chassis] destroys [target] in an unholy fury.</span>")
-		if(chassis.occupant.a_intent == "disarm")
+		if(chassis.occupant.a_intent == INTENT_DISARM)
 			target.visible_message("<span class='danger'>[chassis] rips [target]'s arms off.</span>", \
 								"<span class='userdanger'>[chassis] rips [target]'s arms off.</span>")
 		else
@@ -294,7 +294,7 @@
 	name = "cable layer"
 	desc = "Equipment for engineering exosuits. Lays cable along the exosuit's path."
 	icon_state = "mecha_wire"
-	var/datum/event/event
+	var/datum/callback/event
 	var/turf/old_turf
 	var/obj/structure/cable/last_piece
 	var/obj/item/stack/cable_coil/cable
@@ -313,7 +313,7 @@
 
 /obj/item/mecha_parts/mecha_equipment/cable_layer/attach()
 	..()
-	event = chassis.events.addEvent("onMove",src,"layCable")
+	event = chassis.events.addEvent("onMove", CALLBACK(src, .proc/layCable))
 	return
 
 /obj/item/mecha_parts/mecha_equipment/cable_layer/detach()

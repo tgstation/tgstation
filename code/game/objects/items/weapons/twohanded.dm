@@ -29,7 +29,7 @@
 	var/wieldsound = null
 	var/unwieldsound = null
 
-/obj/item/weapon/twohanded/proc/unwield(mob/living/carbon/user)
+/obj/item/weapon/twohanded/proc/unwield(mob/living/carbon/user, show_message = TRUE)
 	if(!wielded || !user)
 		return
 	wielded = 0
@@ -41,12 +41,11 @@
 	else //something wrong
 		name = "[initial(name)]"
 	update_icon()
-	if(iscyborg(user))
-		user << "<span class='notice'>You free up your module.</span>"
-	else if(istype(src, /obj/item/weapon/twohanded/required))
-		user << "<span class='notice'>You drop [src].</span>"
-	else
-		user << "<span class='notice'>You are now carrying [src] with one hand.</span>"
+	if(show_message)
+		if(iscyborg(user))
+			user << "<span class='notice'>You free up your module.</span>"
+		else
+			user << "<span class='notice'>You are now carrying [src] with one hand.</span>"
 	if(unwieldsound)
 		playsound(loc, unwieldsound, 50, 1)
 	var/obj/item/weapon/twohanded/offhand/O = user.get_inactive_held_item()
@@ -80,17 +79,20 @@
 	var/obj/item/weapon/twohanded/offhand/O = new(user) ////Let's reserve his other hand~
 	O.name = "[name] - offhand"
 	O.desc = "Your second grip on [src]."
+	O.wielded = TRUE
 	user.put_in_inactive_hand(O)
 	return
 
 /obj/item/weapon/twohanded/dropped(mob/user)
 	..()
 	//handles unwielding a twohanded weapon when dropped as well as clearing up the offhand
+	if(!wielded)
+		return
 	if(user)
 		var/obj/item/weapon/twohanded/O = user.get_inactive_held_item()
 		if(istype(O))
-			O.unwield(user)
-	return	unwield(user)
+			O.unwield(user, FALSE)
+	unwield(user)
 
 /obj/item/weapon/twohanded/update_icon()
 	return
@@ -109,27 +111,39 @@
 
 /obj/item/weapon/twohanded/equipped(mob/user, slot)
 	..()
-	if(!user.is_holding(src) && wielded)
+	if(!user.is_holding(src) && wielded && !istype(src, /obj/item/weapon/twohanded/required))
 		unwield(user)
 
 ///////////OFFHAND///////////////
 /obj/item/weapon/twohanded/offhand
 	name = "offhand"
 	icon_state = "offhand"
-	w_class = 5
-	flags = ABSTRACT
+	w_class = WEIGHT_CLASS_HUGE
+	flags = ABSTRACT | NODROP
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
 /obj/item/weapon/twohanded/offhand/unwield()
-	qdel(src)
+	if(wielded)//Only delete if we're wielded
+		wielded = FALSE
+		qdel(src)
 
 /obj/item/weapon/twohanded/offhand/wield()
-	qdel(src)
+	if(wielded)//Only delete if we're wielded
+		wielded = FALSE
+		qdel(src)
+
+/obj/item/weapon/twohanded/offhand/attack_self(mob/living/carbon/user)		//You should never be able to do this in standard use of two handed items. This is a backup for lingering offhands.
+	var/obj/item/weapon/twohanded/O = user.get_inactive_held_item()
+	if (istype(O) && !istype(O, /obj/item/weapon/twohanded/offhand/))		//If you have a proper item in your other hand that the offhand is for, do nothing. This should never happen.
+		return
+	if (qdeleted(src))
+		return
+	qdel(src)																//If it's another offhand, or literally anything else, qdel. If I knew how to add logging messages I'd put one here.
 
 ///////////Two hand required objects///////////////
 //This is for objects that require two hands to even pick up
-/obj/item/weapon/twohanded/required/
-	w_class = 5
+/obj/item/weapon/twohanded/required
+	w_class = WEIGHT_CLASS_HUGE
 
 /obj/item/weapon/twohanded/required/attack_self()
 	return
@@ -143,7 +157,7 @@
 /obj/item/weapon/twohanded/required/attack_hand(mob/user)//Can't even pick it up without both hands empty
 	var/obj/item/weapon/twohanded/required/H = user.get_inactive_held_item()
 	if(get_dist(src,user) > 1)
-		return 0
+		return
 	if(H != null)
 		user << "<span class='notice'>[src] is too cumbersome to carry in one hand!</span>"
 		return
@@ -153,10 +167,28 @@
 
 /obj/item/weapon/twohanded/required/equipped(mob/user, slot)
 	..()
+	var/slotbit = slotdefine2slotbit(slot)
+	if(slot_flags & slotbit)
+		var/O = user.is_holding_item_of_type(/obj/item/weapon/twohanded/offhand)
+		if(!O || qdeleted(O))
+			return
+		qdel(O)
+		return
 	if(slot == slot_hands)
 		wield(user)
 	else
 		unwield(user)
+
+/obj/item/weapon/twohanded/required/wield(mob/living/carbon/user)
+	..()
+	if(!wielded)
+		user.unEquip(src)
+
+/obj/item/weapon/twohanded/required/unwield(mob/living/carbon/user, show_message = TRUE)
+	if(show_message)
+		user << "<span class='notice'>You drop [src].</span>"
+	..(user, FALSE)
+	user.unEquip(src)
 
 /*
  * Fireaxe
@@ -167,7 +199,7 @@
 	desc = "Truly, the weapon of a madman. Who would think to fight fire with an axe?"
 	force = 5
 	throwforce = 15
-	w_class = 4
+	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = SLOT_BACK
 	force_unwielded = 5
 	force_wielded = 24
@@ -210,8 +242,8 @@
 	throwforce = 5
 	throw_speed = 3
 	throw_range = 5
-	w_class = 2
-	var/w_class_on = 4
+	w_class = WEIGHT_CLASS_SMALL
+	var/w_class_on = WEIGHT_CLASS_BULKY
 	force_unwielded = 3
 	force_wielded = 34
 	wieldsound = 'sound/weapons/saberon.ogg'
@@ -254,7 +286,7 @@
 		impale(user)
 		return
 	if((wielded) && prob(50))
-		addtimer(src, "jedi_spin", 0, TRUE, user)
+		addtimer(CALLBACK(src, .proc/jedi_spin, user), 0, TIMER_UNIQUE)
 
 /obj/item/weapon/twohanded/dualsaber/proc/jedi_spin(mob/living/user)
 	for(var/i in list(1,2,4,8,4,2,1,2,4,8,4,2))
@@ -285,11 +317,12 @@
 		if(M.dna.check_mutation(HULK))
 			M << "<span class='warning'>You lack the grace to wield this!</span>"
 			return
-	sharpness = IS_SHARP
-	w_class = w_class_on
 	..()
-	hitsound = 'sound/weapons/blade1.ogg'
-	START_PROCESSING(SSobj, src)
+	if(wielded)
+		sharpness = IS_SHARP
+		w_class = w_class_on
+		hitsound = 'sound/weapons/blade1.ogg'
+		START_PROCESSING(SSobj, src)
 
 /obj/item/weapon/twohanded/dualsaber/unwield() //Specific unwield () to switch hitsounds.
 	sharpness = initial(sharpness)
@@ -321,7 +354,7 @@
 	playsound(loc, hitsound, get_clamped_volume(), 1, -1)
 	add_fingerprint(user)
 	// Light your candles while spinning around the room
-	addtimer(src, "jedi_spin", 0, TRUE, user)
+	addtimer(CALLBACK(src, .proc/jedi_spin, user), 0, TIMER_UNIQUE)
 
 /obj/item/weapon/twohanded/dualsaber/green/New()
 	item_color = "green"
@@ -347,7 +380,7 @@
 	name = "spear"
 	desc = "A haphazardly-constructed yet still deadly weapon of ancient design."
 	force = 10
-	w_class = 4
+	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = SLOT_BACK
 	force_unwielded = 10
 	force_wielded = 18
@@ -410,7 +443,6 @@
 		explosive = G
 		name = "explosive lance"
 		desc = "A makeshift spear with [G] attached to it. Alt+click on the spear to set your war cry!"
-		return
 	update_icon()
 
 // CHAINSAW
@@ -421,7 +453,7 @@
 	flags = CONDUCT
 	force = 13
 	var/force_on = 21
-	w_class = 5
+	w_class = WEIGHT_CLASS_HUGE
 	throwforce = 13
 	throw_speed = 2
 	throw_range = 4
@@ -500,7 +532,7 @@
 	desc = "A simple tool used for moving hay."
 	force = 7
 	throwforce = 15
-	w_class = 4
+	w_class = WEIGHT_CLASS_BULKY
 	force_unwielded = 7
 	force_wielded = 15
 	attack_verb = list("attacked", "impaled", "pierced")
@@ -570,7 +602,7 @@
 	throw_speed = 4
 	sharpness = IS_SHARP
 	attack_verb = list("cut", "sliced", "diced")
-	w_class = 4
+	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = SLOT_BACK
 	hitsound = 'sound/weapons/bladeslice.ogg'
 
@@ -611,7 +643,7 @@
 	name = "bone spear"
 	desc = "A haphazardly-constructed yet still deadly weapon. The pinnacle of modern technology."
 	force = 11
-	w_class = 4
+	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = SLOT_BACK
 	force_unwielded = 11
 	force_wielded = 20					//I have no idea how to balance
@@ -624,4 +656,56 @@
 	sharpness = IS_SHARP
 
 /obj/item/weapon/twohanded/bonespear/update_icon()
-		icon_state = "bone_spear[wielded]"
+	icon_state = "bone_spear[wielded]"
+
+/*
+ * Sky Bulge (Gae Bolg, tradtional dragoon lance from many FF games.)
+ */
+/obj/item/weapon/twohanded/skybulge	//Copy+paste job from bonespear because no explosions.
+	icon_state = "sky_bulge0"
+	name = "Sky Bulge"
+	desc = "A legendary stick with a very pointy tip. Looks to be used for throwing. And jumping. Can be stubborn if you throw too much." //TODO: Be funnier.
+	force = 10 //This thing aint for robusting.
+	w_class = WEIGHT_CLASS_BULKY
+	slot_flags = SLOT_BACK
+	force_unwielded = 10
+	force_wielded = 18					//Same as regular spear. This is a utility weapon.
+	throwforce = 24						//And that utility is throwing. 24 so it takes 5 hits instead of 4.
+	throw_speed = 4
+	embedded_impact_pain_multiplier = 0	//If you somehow embed this, it's not going to hurt.
+	armour_penetration = 15				//Same as Bone Spear
+	embed_chance = 0					//Would ruin the whole theme of the thing.
+	hitsound = 'sound/weapons/bladeslice.ogg'
+	attack_verb = list("attacked", "poked", "jabbed", "torn", "gored", "lanced") //Added lanced for flavour.
+	sharpness = IS_SHARP
+	var/maxdist = 16
+	var/throw_cooldown = 0				//Should equate to half a second. Not supposed to be varedited.
+
+/obj/item/weapon/twohanded/skybulge/update_icon()
+	icon_state = "sky_bulge[wielded]"
+
+/obj/item/weapon/twohanded/skybulge/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback)  //Throw cooldown and offhand-proofing.
+	if(throw_cooldown > world.time)
+		var/mob/user = thrownby
+		user.put_in_hands(src)
+		return
+	unwield(src)
+	..()
+
+/obj/item/weapon/twohanded/skybulge/throw_impact(atom/target) //Praise be the ratvar spear for showing me how to use this proc.
+	var/turf/turfhit = get_turf(target)
+	var/mob/user = thrownby
+	var/turf/source = get_turf(thrownby)
+
+	if(source.z == ZLEVEL_STATION && get_dist(turfhit, source) < maxdist || source.z != ZLEVEL_STATION)
+		..()
+		if(do_after_mob(user, src, 5, uninterruptible = 1, progress = 0))
+			if(qdeleted(src))
+				return
+			var/turf/landing = get_turf(src)
+			if (loc != landing)
+				return
+			user.forceMove(landing)
+	throw_cooldown = world.time + 5				//Half a second between throws.
+	user.put_in_hands(src)
+	playsound(src, 'sound/weapons/laser2.ogg', 20, 1)

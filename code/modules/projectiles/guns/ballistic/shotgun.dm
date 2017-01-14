@@ -3,7 +3,7 @@
 	desc = "A traditional shotgun with wood furniture and a four-shell capacity underneath."
 	icon_state = "shotgun"
 	item_state = "shotgun"
-	w_class = 4
+	w_class = WEIGHT_CLASS_BULKY
 	force = 10
 	flags =  CONDUCT
 	slot_flags = SLOT_BACK
@@ -159,7 +159,7 @@
 	guns_left = 0
 
 /obj/item/weapon/gun/ballistic/shotgun/boltaction/enchanted/proc/discard_gun(mob/user)
-	throw_at_fast(pick(oview(7,get_turf(user))),1,1)
+	throw_at(pick(oview(7,get_turf(user))),1,1)
 	user.visible_message("<span class='warning'>[user] tosses aside the spent rifle!</span>")
 
 /obj/item/weapon/gun/ballistic/shotgun/boltaction/enchanted/arcane_barrage/discard_gun(mob/user)
@@ -189,7 +189,7 @@
 	icon_state = "cshotgun"
 	origin_tech = "combat=6"
 	mag_type = /obj/item/ammo_box/magazine/internal/shot/com
-	w_class = 5
+	w_class = WEIGHT_CLASS_HUGE
 
 //Dual Feed Shotgun
 
@@ -199,7 +199,7 @@
 	icon_state = "cycler"
 	origin_tech = "combat=4;materials=2"
 	mag_type = /obj/item/ammo_box/magazine/internal/shot/tube
-	w_class = 5
+	w_class = WEIGHT_CLASS_HUGE
 	var/toggled = 0
 	var/obj/item/ammo_box/magazine/internal/shot/alternate_magazine
 

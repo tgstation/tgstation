@@ -8,7 +8,7 @@
 	icon_state = "holstered"
 	item_state = "backpack"
 	slot_flags = SLOT_BACK
-	w_class = 5
+	w_class = WEIGHT_CLASS_HUGE
 	var/obj/item/weapon/gun/ballistic/minigun/gun = null
 	var/armed = 0 //whether the gun is attached, 0 is attached, 1 is the gun is wielded.
 	var/overheat = 0
@@ -101,7 +101,7 @@
 	flags = CONDUCT | HANDSLOW
 	slowdown = 1
 	slot_flags = null
-	w_class = 5
+	w_class = WEIGHT_CLASS_HUGE
 	materials = list()
 	burst_size = 3
 	automatic = 0

@@ -104,74 +104,81 @@
 /mob/living/proc/getBruteLoss()
 	return bruteloss
 
-/mob/living/proc/adjustBruteLoss(amount, updating_health=1)
-	if(status_flags & GODMODE)
-		return 0
+/mob/living/proc/adjustBruteLoss(amount, updating_health = TRUE, forced = FALSE)
+	if(!forced && (status_flags & GODMODE))
+		return FALSE
 	bruteloss = Clamp((bruteloss + (amount * config.damage_multiplier)), 0, maxHealth*2)
 	if(updating_health)
 		updatehealth()
+	return amount
 
 /mob/living/proc/getOxyLoss()
 	return oxyloss
 
-/mob/living/proc/adjustOxyLoss(amount, updating_health=1)
-	if(status_flags & GODMODE)
-		return 0
+/mob/living/proc/adjustOxyLoss(amount, updating_health = TRUE, forced = FALSE)
+	if(!forced && (status_flags & GODMODE))
+		return FALSE
 	oxyloss = Clamp((oxyloss + (amount * config.damage_multiplier)), 0, maxHealth*2)
 	if(updating_health)
 		updatehealth()
+	return amount
 
-/mob/living/proc/setOxyLoss(amount, updating_health=1)
+/mob/living/proc/setOxyLoss(amount, updating_health = TRUE, forced = FALSE)
 	if(status_flags & GODMODE)
 		return 0
 	oxyloss = amount
 	if(updating_health)
 		updatehealth()
+	return amount
 
 /mob/living/proc/getToxLoss()
 	return toxloss
 
-/mob/living/proc/adjustToxLoss(amount, updating_health=1)
-	if(status_flags & GODMODE)
-		return 0
+/mob/living/proc/adjustToxLoss(amount, updating_health = TRUE, forced = FALSE)
+	if(!forced && (status_flags & GODMODE))
+		return FALSE
 	toxloss = Clamp((toxloss + (amount * config.damage_multiplier)), 0, maxHealth*2)
 	if(updating_health)
 		updatehealth()
 	return amount
 
-/mob/living/proc/setToxLoss(amount, updating_health=1)
-	if(status_flags & GODMODE)
-		return 0
+/mob/living/proc/setToxLoss(amount, updating_health = TRUE, forced = FALSE)
+	if(!forced && (status_flags & GODMODE))
+		return FALSE
 	toxloss = amount
 	if(updating_health)
 		updatehealth()
+	return amount
 
 /mob/living/proc/getFireLoss()
 	return fireloss
 
-/mob/living/proc/adjustFireLoss(amount, updating_health=1)
-	if(status_flags & GODMODE)
-		return 0
+/mob/living/proc/adjustFireLoss(amount, updating_health = TRUE, forced = FALSE)
+	if(!forced && (status_flags & GODMODE))
+		return FALSE
 	fireloss = Clamp((fireloss + (amount * config.damage_multiplier)), 0, maxHealth*2)
 	if(updating_health)
 		updatehealth()
+	return amount
 
 /mob/living/proc/getCloneLoss()
 	return cloneloss
 
-/mob/living/proc/adjustCloneLoss(amount, updating_health=1)
-	if(status_flags & GODMODE)
-		return 0
+/mob/living/proc/adjustCloneLoss(amount, updating_health = TRUE, forced = FALSE)
+	if(!forced && (status_flags & GODMODE))
+		return FALSE
 	cloneloss = Clamp((cloneloss + (amount * config.damage_multiplier)), 0, maxHealth*2)
 	if(updating_health)
 		updatehealth()
+	return amount
 
-/mob/living/proc/setCloneLoss(amount, updating_health=1)
-	if(status_flags & GODMODE)
-		return 0
+/mob/living/proc/setCloneLoss(amount, updating_health = TRUE, forced = FALSE)
+	if(!forced && (status_flags & GODMODE))
+		return FALSE
 	cloneloss = amount
 	if(updating_health)
 		updatehealth()
+	return amount
 
 /mob/living/proc/getBrainLoss()
 	return brainloss
@@ -189,10 +196,10 @@
 /mob/living/proc/getStaminaLoss()
 	return staminaloss
 
-/mob/living/proc/adjustStaminaLoss(amount, updating_stamina = 1)
+/mob/living/proc/adjustStaminaLoss(amount, updating_stamina = TRUE, forced = FALSE)
 	return
 
-/mob/living/proc/setStaminaLoss(amount, updating_stamina = 1)
+/mob/living/proc/setStaminaLoss(amount, updating_stamina = TRUE, forced = FALSE)
 	return
 
 

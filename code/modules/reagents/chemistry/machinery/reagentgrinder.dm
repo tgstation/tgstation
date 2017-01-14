@@ -121,7 +121,7 @@
 		if(default_unfasten_wrench(user, I))
 				return
 
-		if (istype(I, /obj/item/weapon/reagent_containers) && (I.flags & OPENCONTAINER) )
+		if (istype(I, /obj/item/weapon/reagent_containers) && (I.container_type & OPENCONTAINER) )
 				if (!beaker)
 						if(!user.drop_item())
 								return 1
@@ -161,7 +161,7 @@
 				return 1
 
 		if (!is_type_in_list(I, blend_items) && !is_type_in_list(I, juice_items))
-				if(user.a_intent == "harm")
+				if(user.a_intent == INTENT_HARM)
 						return ..()
 				else
 						user << "<span class='warning'>Cannot refine into a reagent!</span>"

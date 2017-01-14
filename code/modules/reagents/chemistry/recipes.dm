@@ -74,9 +74,9 @@ var/list/chemical_mob_spawn_nicecritters = list() // and possible friendly mobs
 			if(moving_power > 2) //if the vortex is powerful and we're close, we get thrown
 				if(setting_type)
 					var/atom/throw_target = get_edge_target_turf(X, get_dir(X, get_step_away(X, T)))
-					X.throw_at_fast(throw_target, moving_power, 1)
+					X.throw_at(throw_target, moving_power, 1)
 				else
-					X.throw_at_fast(T, moving_power, 1)
+					X.throw_at(T, moving_power, 1)
 			else
 				spawn(0) //so everything moves at the same time.
 					if(setting_type)

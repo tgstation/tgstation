@@ -13,10 +13,11 @@ Buildable meters
 	var/pipe_type = 0
 	var/pipename
 	force = 7
+	throwforce = 7
 	icon = 'icons/obj/atmospherics/pipes/pipe_item.dmi'
 	icon_state = "simple"
 	item_state = "buildpipe"
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 	level = 2
 	var/flipped = 0
 	var/is_bent = 0
@@ -232,7 +233,7 @@ var/global/list/pipeID2State = list(
 		T.flipped = flipped
 	A.on_construction(pipe_type, color)
 
-	playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+	playsound(src.loc, W.usesound, 50, 1)
 	user.visible_message( \
 		"[user] fastens \the [src].", \
 		"<span class='notice'>You fasten \the [src].</span>", \
@@ -259,7 +260,7 @@ var/global/list/pipeID2State = list(
 	icon = 'icons/obj/atmospherics/pipes/pipe_item.dmi'
 	icon_state = "meter"
 	item_state = "buildpipe"
-	w_class = 4
+	w_class = WEIGHT_CLASS_BULKY
 
 /obj/item/pipe_meter/attackby(obj/item/weapon/W, mob/user, params)
 	..()
@@ -270,6 +271,6 @@ var/global/list/pipeID2State = list(
 		user << "<span class='warning'>You need to fasten it to a pipe!</span>"
 		return 1
 	new/obj/machinery/meter( src.loc )
-	playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+	playsound(src.loc, W.usesound, 50, 1)
 	user << "<span class='notice'>You fasten the meter to the pipe.</span>"
 	qdel(src)

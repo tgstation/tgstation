@@ -26,7 +26,7 @@
 	icon_state = "brain_implant"
 	implant_overlay = "brain_implant_overlay"
 	zone = "head"
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 
 /obj/item/organ/cyberimp/brain/emp_act(severity)
 	if(!owner)
@@ -113,7 +113,7 @@
 	if(crit_fail)
 		return
 	crit_fail = TRUE
-	addtimer(src, "reboot", 90 / severity)
+	addtimer(CALLBACK(src, .proc/reboot), 90 / severity)
 
 /obj/item/organ/cyberimp/brain/anti_stun/proc/reboot()
 	crit_fail = FALSE
@@ -128,7 +128,7 @@
 	desc = "This simple implant adds an internals connector to your back, allowing you to use internals without a mask and protecting you from being choked."
 	icon_state = "implant_mask"
 	slot = "breathing_tube"
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 	origin_tech = "materials=2;biotech=3"
 
 /obj/item/organ/cyberimp/mouth/breathing_tube/emp_act(severity)

@@ -15,7 +15,7 @@
 	if (wear_mask)
 		msg += "[t_He] [t_is] wearing \icon[src.wear_mask] \a [src.wear_mask] on [t_his] face.\n"
 	if (wear_neck)
-		msg += "[t_He] [t_is] wearing \icon[src.wear_neck] \a [src.wear_neck] on [t_his] face.\n"
+		msg += "[t_He] [t_is] wearing \icon[src.wear_neck] \a [src.wear_neck] around [t_his] neck.\n"
 
 	for(var/obj/item/I in held_items)
 		if(!(I.flags & ABSTRACT))

@@ -21,6 +21,7 @@
 	var/sheetAmount = 7
 	var/openSound = 'sound/effects/stonedoor_openclose.ogg'
 	var/closeSound = 'sound/effects/stonedoor_openclose.ogg'
+	CanAtmosPass = ATMOS_PASS_DENSITY
 
 /obj/structure/mineral_door/New(location)
 	..()
@@ -60,9 +61,6 @@
 		return !opacity
 	return !density
 
-/obj/structure/mineral_door/CanAtmosPass()
-	return !density
-
 /obj/structure/mineral_door/proc/TryToSwitchState(atom/user)
 	if(isSwitchingStates)
 		return
@@ -99,7 +97,7 @@
 	isSwitchingStates = 0
 
 	if(close_delay != -1)
-		addtimer(src, "Close", close_delay)
+		addtimer(CALLBACK(src, .proc/Close), close_delay)
 
 /obj/structure/mineral_door/proc/Close()
 	if(isSwitchingStates || state != 1)
@@ -131,7 +129,7 @@
 		if(do_after(user,digTool.digspeed*(1+round(max_integrity*0.01)), target = src) && src)
 			user << "<span class='notice'>You finish digging.</span>"
 			deconstruct(TRUE)
-	else if(user.a_intent != "harm")
+	else if(user.a_intent != INTENT_HARM)
 		attack_hand(user)
 	else
 		return ..()

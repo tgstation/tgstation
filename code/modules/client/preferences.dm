@@ -1,10 +1,11 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:33
+
 
 var/list/preferences_datums = list()
 
 
 
 /datum/preferences
+	var/client/parent
 	//doohickeys for savefiles
 	var/path
 	var/default_slot = 1				//Holder so it doesn't default to slot 1, rather the last one used
@@ -94,7 +95,10 @@ var/list/preferences_datums = list()
 
 	var/clientfps = 0
 
+	var/parallax = PARALLAX_HIGH
+
 /datum/preferences/New(client/C)
+	parent = C
 	custom_names["ai"] = pick(ai_names)
 	custom_names["cyborg"] = pick(ai_names)
 	custom_names["clown"] = pick(clown_names)
@@ -207,7 +211,7 @@ var/list/preferences_datums = list()
 
 				dat += "</td>"
 
-			if(HAIR in pref_species.specflags)
+			if(HAIR in pref_species.species_traits)
 
 				dat += "<td valign='top' width='21%'>"
 
@@ -228,7 +232,7 @@ var/list/preferences_datums = list()
 
 				dat += "</td>"
 
-			if(EYECOLOR in pref_species.specflags)
+			if(EYECOLOR in pref_species.species_traits)
 
 				dat += "<td valign='top' width='21%'>"
 
@@ -240,7 +244,7 @@ var/list/preferences_datums = list()
 
 			if(config.mutant_races) //We don't allow mutant bodyparts for humans either unless this is true.
 
-				if((MUTCOLORS in pref_species.specflags) || (MUTCOLORS_PARTSONLY in pref_species.specflags))
+				if((MUTCOLORS in pref_species.species_traits) || (MUTCOLORS_PARTSONLY in pref_species.species_traits))
 
 					dat += "<td valign='top' width='14%'>"
 
@@ -355,8 +359,8 @@ var/list/preferences_datums = list()
 			dat += "<b>Ghost ears:</b> <a href='?_src_=prefs;preference=ghost_ears'>[(chat_toggles & CHAT_GHOSTEARS) ? "All Speech" : "Nearest Creatures"]</a><br>"
 			dat += "<b>Ghost sight:</b> <a href='?_src_=prefs;preference=ghost_sight'>[(chat_toggles & CHAT_GHOSTSIGHT) ? "All Emotes" : "Nearest Creatures"]</a><br>"
 			dat += "<b>Ghost whispers:</b> <a href='?_src_=prefs;preference=ghost_whispers'>[(chat_toggles & CHAT_GHOSTWHISPER) ? "All Speech" : "Nearest Creatures"]</a><br>"
-			dat += "<b>Ghost radio:</b> <a href='?_src=prefs;preference=ghost_radio'>[(chat_toggles & CHAT_GHOSTRADIO) ? "Yes" : "No"]</a><br>"
-			dat += "<b>Ghost pda:</b> <a href='?_src=prefs;preference=ghost_pda'>[(chat_toggles & CHAT_GHOSTPDA) ? "All Messages" : "Nearest Creatures"]</a><br>"
+			dat += "<b>Ghost radio:</b> <a href='?_src_=prefs;preference=ghost_radio'>[(chat_toggles & CHAT_GHOSTRADIO) ? "Yes" : "No"]</a><br>"
+			dat += "<b>Ghost pda:</b> <a href='?_src_=prefs;preference=ghost_pda'>[(chat_toggles & CHAT_GHOSTPDA) ? "All Messages" : "Nearest Creatures"]</a><br>"
 			dat += "<b>Pull requests:</b> <a href='?_src_=prefs;preference=pull_requests'>[(chat_toggles & CHAT_PULLR) ? "Yes" : "No"]</a><br>"
 			dat += "<b>Midround Antagonist:</b> <a href='?_src_=prefs;preference=allow_midround_antag'>[(toggles & MIDROUND_ANTAG) ? "Yes" : "No"]</a><br>"
 			if(config.allow_Metadata)
@@ -411,9 +415,23 @@ var/list/preferences_datums = list()
 							p_map = VM.friendlyname
 					else
 						p_map += " (No longer exists)"
-				dat += "<b>Preferred Map:</b> <a href='?_src_=prefs;preference=preferred_map;task=input'>[p_map]</a>"
+				dat += "<b>Preferred Map:</b> <a href='?_src_=prefs;preference=preferred_map;task=input'>[p_map]</a><br>"
 
-			dat += "<b>FPS:</b> <a href='?_src_=prefs;preference=clientfps;task=input'>[clientfps]</a>"
+			dat += "<b>FPS:</b> <a href='?_src_=prefs;preference=clientfps;task=input'>[clientfps]</a><br>"
+
+			dat += "<b>Parallax (Fancy Space):</b> <a href='?_src_=prefs;preference=parallaxdown' oncontextmenu='window.location.href=\"?_src_=prefs;preference=parallaxup\";return false;'>"
+			switch (parallax)
+				if (PARALLAX_LOW)
+					dat += "Low"
+				if (PARALLAX_MED)
+					dat += "Medium"
+				if (PARALLAX_INSANE)
+					dat += "Insane"
+				if (PARALLAX_DISABLE)
+					dat += "Disabled"
+				else
+					dat += "High"
+			dat += "</a><br>"
 
 			dat += "</td><td width='300px' height='300px' valign='top'>"
 
@@ -934,7 +952,7 @@ var/list/preferences_datums = list()
 						pref_species = new newtype()
 						//Now that we changed our species, we must verify that the mutant colour is still allowed.
 						var/temp_hsv = RGBtoHSV(features["mcolor"])
-						if(features["mcolor"] == "#000" || (!(MUTCOLORS_PARTSONLY in pref_species.specflags) && ReadHSV(temp_hsv)[3] < ReadHSV("#7F7F7F")[3]))
+						if(features["mcolor"] == "#000" || (!(MUTCOLORS_PARTSONLY in pref_species.species_traits) && ReadHSV(temp_hsv)[3] < ReadHSV("#7F7F7F")[3]))
 							features["mcolor"] = pref_species.default_color
 				if("mutant_color")
 					var/new_mutantcolor = input(user, "Choose your character's alien/mutant color:", "Character Preference") as color|null
@@ -942,7 +960,7 @@ var/list/preferences_datums = list()
 						var/temp_hsv = RGBtoHSV(new_mutantcolor)
 						if(new_mutantcolor == "#000000")
 							features["mcolor"] = pref_species.default_color
-						else if((MUTCOLORS_PARTSONLY in pref_species.specflags) || ReadHSV(temp_hsv)[3] >= ReadHSV("#7F7F7F")[3]) // mutantcolors must be bright, but only if they affect the skin
+						else if((MUTCOLORS_PARTSONLY in pref_species.species_traits) || ReadHSV(temp_hsv)[3] >= ReadHSV("#7F7F7F")[3]) // mutantcolors must be bright, but only if they affect the skin
 							features["mcolor"] = sanitize_hexcolor(new_mutantcolor)
 						else
 							user << "<span class='danger'>Invalid color. Your color is not bright enough.</span>"
@@ -1167,6 +1185,16 @@ var/list/preferences_datums = list()
 
 				if("allow_midround_antag")
 					toggles ^= MIDROUND_ANTAG
+
+				if("parallaxup")
+					parallax = Wrap(parallax + 1, PARALLAX_INSANE, PARALLAX_DISABLE + 1)
+					if (parent && parent.mob && parent.mob.hud_used)
+						parent.mob.hud_used.update_parallax_pref()
+
+				if("parallaxdown")
+					parallax = Wrap(parallax - 1, PARALLAX_INSANE, PARALLAX_DISABLE + 1)
+					if (parent && parent.mob && parent.mob.hud_used)
+						parent.mob.hud_used.update_parallax_pref()
 
 				if("save")
 					save_preferences()

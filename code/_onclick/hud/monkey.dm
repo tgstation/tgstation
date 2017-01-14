@@ -12,7 +12,7 @@
 
 	using = new /obj/screen/mov_intent()
 	using.icon = ui_style
-	using.icon_state = (mymob.m_intent == "run" ? "running" : "walking")
+	using.icon_state = (mymob.m_intent == MOVE_INTENT_RUN ? "running" : "walking")
 	using.screen_loc = ui_movi
 	static_inventory += using
 
@@ -118,7 +118,7 @@
 			inv_slots[inv.slot_id] = inv
 			inv.update_icon()
 
-/datum/hud/monkey/persistant_inventory_update()
+/datum/hud/monkey/persistent_inventory_update()
 	if(!mymob)
 		return
 	var/mob/living/carbon/monkey/M = mymob

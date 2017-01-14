@@ -40,7 +40,7 @@
 /obj/item/zombie_hand/proc/check_infection(mob/living/carbon/human/target, mob/user)
 	CHECK_DNA_AND_SPECIES(target)
 
-	if(NOZOMBIE in target.dna.species.specflags)
+	if(NOZOMBIE in target.dna.species.species_traits)
 		// cannot infect any NOZOMBIE subspecies (such as high functioning
 		// zombies)
 		return
@@ -67,7 +67,7 @@
 	playsound(src.loc, 'sound/machines/airlock_alien_prying.ogg', 100, 1)
 	A.audible_message("<span class='italics'>You hear a loud metallic grinding sound.</span>")
 
-	addtimer(src, "growl", 20, FALSE, user)
+	addtimer(CALLBACK(src, .proc/growl, user), 20)
 
 	if(do_after(user, delay=160, needhand=FALSE, target=A, progress=TRUE))
 		playsound(src.loc, 'sound/hallucinations/far_noise.ogg', 50, 1)

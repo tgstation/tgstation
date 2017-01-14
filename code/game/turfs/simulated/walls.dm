@@ -11,7 +11,8 @@
 	var/hardness = 40 //lower numbers are harder. Used to determine the probability of a hulk smashing through.
 	var/slicing_duration = 100  //default time taken to slice the wall
 	var/sheet_type = /obj/item/stack/sheet/metal
-	var/obj/item/stack/sheet/builtin_sheet = null
+	var/sheet_amount = 2
+	var/girder_type = /obj/structure/girder
 
 	canSmoothWith = list(
 	/turf/closed/wall,
@@ -23,10 +24,6 @@
 	/turf/closed/wall/r_wall/rust,
 	/turf/closed/wall/clockwork)
 	smooth = SMOOTH_TRUE
-
-/turf/closed/wall/New()
-	..()
-	builtin_sheet = new sheet_type
 
 /turf/closed/wall/attack_tk()
 	return
@@ -48,13 +45,11 @@
 	ChangeTurf(/turf/open/floor/plating)
 
 /turf/closed/wall/proc/break_wall()
-	builtin_sheet.amount = 2
-	builtin_sheet.loc = src
-	return (new /obj/structure/girder(src))
+	new sheet_type(src, sheet_amount)
+	return new girder_type(src)
 
 /turf/closed/wall/proc/devastate_wall()
-	builtin_sheet.amount = 2
-	builtin_sheet.loc = src
+	new sheet_type(src, sheet_amount)
 	new /obj/item/stack/sheet/metal(src)
 
 /turf/closed/wall/ex_act(severity, target)
@@ -64,7 +59,8 @@
 	switch(severity)
 		if(1)
 			//SN src = null
-			src.ChangeTurf(src.baseturf)
+			var/turf/NT = ChangeTurf(baseturf)
+			NT.contents_explosion(severity, target)
 			return
 		if(2)
 			if (prob(50))
@@ -127,7 +123,6 @@
 	playsound(src, 'sound/weapons/Genhit.ogg', 25, 1)
 	src.add_fingerprint(user)
 	..()
-	return
 
 
 /turf/closed/wall/attackby(obj/item/weapon/W, mob/user, params)
@@ -154,8 +149,6 @@
 	if(try_wallmount(W,user,T) || try_decon(W,user,T) || try_destroy(W,user,T))
 		return
 
-	return
-
 
 /turf/closed/wall/proc/try_wallmount(obj/item/weapon/W, mob/user, turf/T)
 	//check for wall mounted frames
@@ -178,7 +171,7 @@
 		if( WT.remove_fuel(0,user) )
 			user << "<span class='notice'>You begin slicing through the outer plating...</span>"
 			playsound(src, W.usesound, 100, 1)
-			if(do_after(user, slicing_duration/W.toolspeed, target = src))
+			if(do_after(user, slicing_duration*W.toolspeed, target = src))
 				if(!iswallturf(src) || !user || !WT || !WT.isOn() || !T)
 					return 1
 				if( user.loc == T && user.get_active_held_item() == WT )
@@ -188,7 +181,7 @@
 	else if( istype(W, /obj/item/weapon/gun/energy/plasmacutter) )
 		user << "<span class='notice'>You begin slicing through the outer plating...</span>"
 		playsound(src, 'sound/items/Welder.ogg', 100, 1)
-		if(do_after(user, slicing_duration*0.6, target = src))  // plasma cutter is faster than welding tool
+		if(do_after(user, slicing_duration*W.toolspeed, target = src))
 			if(!iswallturf(src) || !user || !W || !T)
 				return 1
 			if( user.loc == T && user.get_active_held_item() == W )
@@ -230,17 +223,11 @@
 		var/burning_time = max(100,300 - thermite)
 		var/turf/open/floor/F = ChangeTurf(/turf/open/floor/plating)
 		F.burn_tile()
-		F.icon_state = "wall_thermite"
 		F.add_hiddenprint(user)
-		spawn(burning_time)
-			if(O)
-				qdel(O)
+		QDEL_IN(O, burning_time)
 	else
 		thermite = 0
-		spawn(50)
-			if(O)
-				qdel(O)
-	return
+		QDEL_IN(O, 50)
 
 /turf/closed/wall/singularity_pull(S, current_size)
 	if(current_size >= STAGE_FIVE)

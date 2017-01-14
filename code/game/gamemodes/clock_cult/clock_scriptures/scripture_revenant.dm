@@ -79,25 +79,19 @@
 		if(H.z == invoker.z && !is_servant_of_ratvar(H))
 			var/distance = 0
 			distance += get_dist(T, get_turf(H))
-			var/messaged = FALSE
 			var/visualsdistance = max(150 - distance, 5)
 			var/minordistance = max(200 - distance*2, 5)
 			var/majordistance = max(150 - distance*3, 5)
 			if(H.null_rod_check())
-				visualsdistance = round(visualsdistance * 0.25)
-				minordistance = round(minordistance * 0.25)
-				majordistance = round(majordistance * 0.25)
 				H << "<span class='sevtug'>[text2ratvar("Oh, a void weapon. How annoying, I may as well not bother.")]</span>\n\
-				<span class='warning'>Your holy weapon glows a faint orange in an attempt to defend your mind!</span>"
-				messaged = TRUE
-			if(H.isloyal())
+				<span class='warning'>Your holy weapon glows a faint orange, defending your mind!</span>"
+				continue
+			else if(H.isloyal())
 				visualsdistance = round(visualsdistance * 0.5) //half effect for shielded targets
 				minordistance = round(minordistance * 0.5)
 				majordistance = round(majordistance * 0.5)
-				if(!messaged)
-					H << "<span class='sevtug'>[text2ratvar("Oh, look, a mindshield. Cute, I suppose I'll humor it.")]</span>"
-					messaged = TRUE
-			if(!messaged && prob(visualsdistance))
+				H << "<span class='sevtug'>[text2ratvar("Oh, look, a mindshield. Cute, I suppose I'll humor it.")]</span>"
+			else if(prob(visualsdistance))
 				H << "<span class='sevtug'>[text2ratvar(pick(mindbreaksayings))]</span>"
 			H.playsound_local(T, hum, visualsdistance, 1)
 			flash_color(H, flash_color="#AF0AAF", flash_time=visualsdistance*10)
@@ -113,7 +107,7 @@
 	descname = "Global Structure Buff"
 	name = "Invoke Nezbere, the Brass Eidolon"
 	desc = "Taps the limitless power of Nezbere, one of Ratvar's four generals. The restless toil of the Eidolon will empower a wide variety of clockwork apparatus for a full minute - notably, \
-	clockwork proselytizers will cost no replicant alloy to use."
+	clockwork proselytizers will charge very rapidly."
 	invocations = list("I call upon you, Armorer!!", "Let your machinations reign on this miserable station!!", "Let your power flow through the tools of your master!!")
 	channel_time = 150
 	required_components = list(BELLIGERENT_EYE = 3, VANGUARD_COGWHEEL = 3, GEIS_CAPACITOR = 3, REPLICANT_ALLOY = 6)
@@ -143,10 +137,10 @@
 	clockwork_generals_invoked["nezbere"] = world.time + CLOCKWORK_GENERAL_COOLDOWN
 	playsound(invoker, 'sound/magic/clockwork/invoke_general.ogg', 50, 0)
 	for(var/obj/structure/destructible/clockwork/ocular_warden/W in all_clockwork_objects) //Ocular wardens have increased damage and radius
-		W.damage_per_tick *= 1.5
-		W.sight_range *= 2
+		W.damage_per_tick = 5
+		W.sight_range = 5
 	for(var/obj/item/clockwork/clockwork_proselytizer/P in all_clockwork_objects) //Proselytizers no longer require alloy
-		P.uses_alloy = FALSE
+		P.charge_rate = 1250
 	for(var/obj/structure/destructible/clockwork/powered/M in all_clockwork_objects) //Powered clockwork structures no longer need power
 		M.needs_power = FALSE
 		if(istype(M, /obj/structure/destructible/clockwork/powered/tinkerers_daemon)) //Daemons produce components twice as quickly
@@ -155,10 +149,13 @@
 			D.production_cooldown *= 0.5
 	spawn(600)
 		for(var/obj/structure/destructible/clockwork/ocular_warden/W in all_clockwork_objects)
-			W.damage_per_tick = initial(W.damage_per_tick)
-			W.sight_range = initial(W.sight_range)
+			if(W.damage_per_tick == 5)
+				W.damage_per_tick = initial(W.damage_per_tick)
+			if(W.sight_range == 5)
+				W.sight_range = initial(W.sight_range)
 		for(var/obj/item/clockwork/clockwork_proselytizer/P in all_clockwork_objects)
-			P.uses_alloy = initial(P.uses_alloy)
+			if(P.charge_rate == 1250)
+				P.charge_rate = initial(P.charge_rate)
 		for(var/obj/structure/destructible/clockwork/powered/M in all_clockwork_objects)
 			M.needs_power = initial(M.needs_power)
 			if(istype(M, /obj/structure/destructible/clockwork/powered/tinkerers_daemon))
@@ -192,7 +189,7 @@
 /datum/clockwork_scripture/invoke_nzcrentr/scripture_effects()
 	new/obj/effect/clockwork/general_marker/nzcrentr(get_turf(invoker))
 	clockwork_generals_invoked["nzcrentr"] = world.time + CLOCKWORK_GENERAL_COOLDOWN
-	hierophant_message("<span class='nzcrentr_large'>[text2ratvar("Amperage: \"[invoker.real_name] has called forth my power. Hope they do not shatter under it!")]\"</span>", FALSE, invoker)
+	hierophant_message("<span class='nzcrentr_large'>[text2ratvar("Amperage: \"[invoker.real_name] has called forth my power. Hope [invoker.p_they()] [invoker.p_do()] not shatter under it!")]\"</span>", FALSE, invoker)
 	invoker.visible_message("<span class='warning'>[invoker] begins to radiate a blinding light!</span>", \
 	"<span class='nzcrentr'>\"[text2ratvar("The boss says it's okay to do this. Don't blame me if you die from it.")]\"</span>\n \
 	<span class='userdanger'>You feel limitless power surging through you!</span>")
@@ -208,9 +205,9 @@
 		playsound(invoker, 'sound/magic/lightningbolt.ogg', 100, 0)
 		if(invoker.stat == CONSCIOUS)
 			animate(invoker, color = oldcolor, time = 10)
-			addtimer(invoker, "update_atom_colour", 10)
+			addtimer(CALLBACK(invoker, /atom/proc/update_atom_colour), 10)
 			for(var/mob/living/L in view(7, invoker))
-				if(is_servant_of_ratvar(L))
+				if(is_servant_of_ratvar(L) || L.null_rod_check())
 					continue
 				invoker.Beam(L, icon_state = "nzcrentrs_power", time = 10)
 				var/randdamage = rand(40, 60)

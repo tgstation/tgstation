@@ -114,8 +114,8 @@
 		var/turf/t = turf
 		if(obscuredTurfs[t])
 			if(!t.obscured)
-				t.obscured = image('icons/effects/cameravis.dmi', t, "black", 16)
-
+				t.obscured = image('icons/effects/cameravis.dmi', t, null, LIGHTING_LAYER+1)
+				t.obscured.plane = LIGHTING_PLANE+1
 			obscured += t.obscured
 			for(var/eye in seenby)
 				var/mob/camera/aiEye/m = eye
@@ -144,7 +144,7 @@
 		if(c.can_use())
 			cameras += c
 
-	for(var/turf/t in block(locate(x, y, z), locate(min(x + CHUNK_SIZE - 1, world.maxx), min(y + CHUNK_SIZE - 1, world.maxy), z)))
+	for(var/turf/t in block(locate(max(x, 1), max(y, 1), z), locate(min(x + CHUNK_SIZE - 1, world.maxx), min(y + CHUNK_SIZE - 1, world.maxy), z)))
 		turfs[t] = t
 
 	for(var/camera in cameras)
@@ -169,7 +169,8 @@
 	for(var/turf in obscuredTurfs)
 		var/turf/t = turf
 		if(!t.obscured)
-			t.obscured = image('icons/effects/cameravis.dmi', t, "black", 16)
+			t.obscured = image('icons/effects/cameravis.dmi', t, null, LIGHTING_LAYER+1)
+			t.obscured.plane = LIGHTING_PLANE+1
 		obscured += t.obscured
 
 #undef UPDATE_BUFFER

@@ -22,8 +22,8 @@
 	var/l_setshort = 0
 	var/l_hacking = 0
 	var/open = 0
-	w_class = 3
-	max_w_class = 2
+	w_class = WEIGHT_CLASS_NORMAL
+	max_w_class = WEIGHT_CLASS_SMALL
 	max_combined_w_class = 14
 
 /obj/item/weapon/storage/secure/examine(mob/user)
@@ -33,14 +33,14 @@
 /obj/item/weapon/storage/secure/attackby(obj/item/weapon/W, mob/user, params)
 	if(locked)
 		if (istype(W, /obj/item/weapon/screwdriver))
-			if (do_after(user, 20/W.toolspeed, target = src))
+			if (do_after(user, 20*W.toolspeed, target = src))
 				src.open =! src.open
 				user.show_message("<span class='notice'>You [open ? "open" : "close"] the service panel.</span>", 1)
 			return
 		if ((istype(W, /obj/item/device/multitool)) && (src.open == 1)&& (!src.l_hacking))
 			user.show_message("<span class='danger'>Now attempting to reset internal memory, please hold.</span>", 1)
 			src.l_hacking = 1
-			if (do_after(usr, 100/W.toolspeed, target = src))
+			if (do_after(usr, 100*W.toolspeed, target = src))
 				if (prob(33))
 					src.l_setshort = 1
 					src.l_set = 0
@@ -140,8 +140,8 @@
 	hitsound = "swing_hit"
 	throw_speed = 2
 	throw_range = 4
-	w_class = 4
-	max_w_class = 3
+	w_class = WEIGHT_CLASS_BULKY
+	max_w_class = WEIGHT_CLASS_NORMAL
 	max_combined_w_class = 21
 	attack_verb = list("bashed", "battered", "bludgeoned", "thrashed", "whacked")
 
@@ -179,7 +179,7 @@
 	icon_locking = "safeb"
 	icon_sparking = "safespark"
 	force = 8
-	w_class = 8
+	w_class = WEIGHT_CLASS_GIGANTIC
 	max_w_class = 8
 	anchored = 1
 	density = 0

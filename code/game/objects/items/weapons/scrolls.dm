@@ -4,7 +4,7 @@
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "scroll"
 	var/uses = 4
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	item_state = "paper"
 	throw_speed = 3
 	throw_range = 7
@@ -67,9 +67,6 @@
 	if(!L.len)
 		user << "The spell matrix was unable to locate a suitable teleport destination for an unknown reason. Sorry."
 		return
-
-	if(user && user.buckled)
-		user.buckled.unbuckle_mob(user, force=1)
 
 	user.forceMove(pick(L))
 

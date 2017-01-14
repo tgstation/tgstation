@@ -1,9 +1,10 @@
-/obj/structure/destructible/clockwork/massive/celestial_gateway //The gateway to Reebe, from which Ratvar emerges
+//The gateway to Reebe, from which Ratvar emerges.
+/obj/structure/destructible/clockwork/massive/celestial_gateway
 	name = "Gateway to the Celestial Derelict"
 	desc = "A massive, thrumming rip in spacetime."
 	clockwork_desc = "A portal to the Celestial Derelict. Massive and intimidating, it is the only thing that can both transport Ratvar and withstand the massive amount of energy he emits."
-	obj_integrity = 500
-	max_integrity = 500
+	obj_integrity = 600
+	max_integrity = 600
 	mouse_opacity = 2
 	icon = 'icons/effects/clockwork_effects.dmi'
 	icon_state = "nothing"
@@ -22,7 +23,7 @@
 
 /obj/structure/destructible/clockwork/massive/celestial_gateway/New()
 	..()
-	addtimer(src, "spawn_animation", 0)
+	addtimer(CALLBACK(src, .proc/spawn_animation), 0)
 
 /obj/structure/destructible/clockwork/massive/celestial_gateway/proc/spawn_animation()
 	var/turf/T = get_turf(src)
@@ -58,7 +59,7 @@
 	playsound(T, 'sound/magic/clockwork/invoke_general.ogg', 100, 0)
 	var/list/open_turfs = list()
 	for(var/turf/open/OT in orange(1, T))
-		if(!is_blocked_turf(OT))
+		if(!is_blocked_turf(OT, TRUE))
 			open_turfs |= OT
 	if(open_turfs.len)
 		for(var/mob/living/L in T)
@@ -86,7 +87,7 @@
 		send_to_playing_players(sound(null, 0, channel = 8))
 	var/was_stranded = SSshuttle.emergency.mode == SHUTTLE_STRANDED
 	SSshuttle.clearHostileEnvironment(src)
-	if(!was_stranded && !purpose_fulfilled)
+	if(!was_stranded && !purpose_fulfilled && second_sound_played)
 		priority_announce("Massive energy anomaly no longer on short-range scanners.","Anomaly Alert")
 	if(glow)
 		qdel(glow)
@@ -99,6 +100,7 @@
 /obj/structure/destructible/clockwork/massive/celestial_gateway/deconstruct(disassembled = TRUE)
 	if(!(flags & NODECONSTRUCT))
 		if(!disassembled)
+			resistance_flags |= INDESTRUCTIBLE
 			countdown.stop()
 			visible_message("<span class='userdanger'>The [src] begins to pulse uncontrollably... you might want to run!</span>")
 			send_to_playing_players(sound('sound/effects/clockcult_gateway_disrupted.ogg', 0, channel = 8, volume = 50))
@@ -154,6 +156,18 @@
 				M << "<span class='warning'><b>You hear otherworldly sounds from the [dir2text(get_dir(get_turf(M), get_turf(src)))]...</span>"
 	if(!obj_integrity)
 		return 0
+	for(var/t in RANGE_TURFS(1, loc))
+		if(iswallturf(t))
+			var/turf/closed/wall/W = t
+			W.dismantle_wall()
+		else if(t && (isclosedturf(t) || !is_blocked_turf(t)))
+			var/turf/T = t
+			T.ChangeTurf(/turf/open/floor/clockwork)
+	for(var/obj/O in orange(1, src))
+		if(!istype(O, /obj/effect) && O.density)
+			if(!step_away(O, src, 2) || get_dist(O, src) < 2)
+				O.take_damage(50, BURN, "bomb")
+			O.update_icon()
 	progress_in_seconds += GATEWAY_SUMMON_RATE
 	switch(progress_in_seconds)
 		if(-INFINITY to GATEWAY_REEBE_FOUND)
@@ -194,7 +208,7 @@
 					sleep(3)
 					new/obj/structure/destructible/clockwork/massive/ratvar(startpoint)
 				else
-					addtimer(SSshuttle.emergency, "request", 0, TIMER_NORMAL, null, 0) //call the shuttle immediately
+					addtimer(CALLBACK(SSshuttle.emergency, /obj/docking_port/mobile/emergency.proc/request, null, 0), 0) //call the shuttle immediately
 					sleep(3)
 					send_to_playing_players("<span class='ratvar'>\"[text2ratvar("Behold")]!\"</span>\n<span class='inathneq_large'>\"[text2ratvar("See Engine's mercy")]!\"</span>\n\
 					<span class='sevtug_large'>\"[text2ratvar("Observe Engine's design skills")]!\"</span>\n<span class='nezbere_large'>\"[text2ratvar("Behold Engine's light")]!!\"</span>\n\
@@ -213,6 +227,13 @@
 							dist = FALSE
 						T.ratvar_act(dist)
 						CHECK_TICK
+					for(var/mob/living/silicon/robot/R in silicon_mobs)
+						if(R && R.stat != DEAD && !is_servant_of_ratvar(R))
+							add_servant_of_ratvar(R)
+					for(var/i in ai_list)
+						var/mob/living/silicon/ai/A = i
+						if(A && A.stat != DEAD && !is_servant_of_ratvar(A))
+							add_servant_of_ratvar(A)
 					for(var/I in all_clockwork_mobs)
 						var/mob/M = I
 						if(M.stat == CONSCIOUS)
@@ -224,4 +245,4 @@
 	icon_state = "clockwork_gateway_charging"
 	pixel_x = -32
 	pixel_y = -32
-	layer = MASSIVE_OBJ_LAYER
+	layer = BELOW_OPEN_DOOR_LAYER

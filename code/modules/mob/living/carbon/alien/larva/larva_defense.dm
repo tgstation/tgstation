@@ -19,13 +19,10 @@
 					"<span class='userdanger'>[M] has attempted to kick [src]!</span>", null, COMBAT_MESSAGE_RANGE)
 
 /mob/living/carbon/alien/larva/attack_hulk(mob/living/carbon/human/user, does_attack_animation = 0)
-	if(user.a_intent == "harm")
+	if(user.a_intent == INTENT_HARM)
 		..(user, 1)
 		adjustBruteLoss(5 + rand(1,9))
-		spawn()
-			step_away(src,user,15)
-			sleep(1)
-			step_away(src,user,15)
+		new /datum/forced_movement(src, get_step_away(user,src, 30), 1)
 		return 1
 
 /mob/living/carbon/alien/larva/do_attack_animation(atom/A, visual_effect_icon, obj/item/used_item, no_effect, end_pixel_y)

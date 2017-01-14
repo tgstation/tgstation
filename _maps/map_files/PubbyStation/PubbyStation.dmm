@@ -1,4 +1,4 @@
-//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aaa" = (
 /turf/open/space,
 /area/space)
@@ -7741,7 +7741,7 @@
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/pod_1)
 "apG" = (
-/obj/machinery/door/airlock/shuttle{
+/obj/machinery/door/airlock/titanium{
 	name = "Shuttle Airlock"
 	},
 /obj/docking_port/stationary{
@@ -7871,7 +7871,7 @@
 /turf/open/floor/mineral/plastitanium/brig,
 /area/shuttle/labor)
 "apR" = (
-/obj/machinery/door/airlock/shuttle{
+/obj/machinery/door/airlock/titanium{
 	name = "Labor Shuttle Airlock";
 	req_access_txt = "2"
 	},
@@ -8304,7 +8304,7 @@
 	name = "Brig Maintenance"
 	})
 "aqM" = (
-/obj/machinery/door/airlock/shuttle{
+/obj/machinery/door/airlock/titanium{
 	name = "Labor Shuttle Airlock";
 	req_access_txt = "2"
 	},
@@ -8578,12 +8578,7 @@
 /turf/closed/wall,
 /area/bridge)
 "aro" = (
-/obj/structure/closet/secure_closet/freezer/money,
-/obj/item/weapon/reagent_containers/food/drinks/bottle/vodka/badminka,
-/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/shotglass,
-/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/shotglass,
-/obj/item/clothing/head/bearpelt,
-/obj/item/weapon/skub,
+/obj/machinery/computer/bank_machine,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
@@ -9603,7 +9598,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/labor)
 "atr" = (
-/obj/machinery/door/airlock/shuttle{
+/obj/machinery/door/airlock/titanium{
 	id_tag = "prisonshuttle";
 	name = "Labor Shuttle Airlock"
 	},
@@ -9906,8 +9901,13 @@
 /turf/open/floor/plating,
 /area/bridge)
 "aue" = (
+/obj/structure/closet/secure_closet/freezer/money,
+/obj/item/weapon/reagent_containers/food/drinks/bottle/vodka/badminka,
+/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/shotglass,
+/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/shotglass,
+/obj/item/clothing/head/bearpelt,
+/obj/item/weapon/skub,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/structure/statue/gold/hop,
 /turf/open/floor/plasteel/vault{
 	dir = 1
 	},
@@ -16789,7 +16789,7 @@
 /turf/open/floor/mineral/plastitanium/brig,
 /area/shuttle/escape)
 "aHL" = (
-/obj/machinery/door/airlock/shuttle{
+/obj/machinery/door/airlock/titanium{
 	name = "Emergency Shuttle Airlock";
 	req_access_txt = "2"
 	},
@@ -20044,7 +20044,7 @@
 	},
 /area/maintenance/disposal)
 "aOx" = (
-/obj/machinery/door/airlock/shuttle{
+/obj/machinery/door/airlock/titanium{
 	name = "Emergency Shuttle Airlock"
 	},
 /turf/open/floor/plating,
@@ -20985,7 +20985,7 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "aQt" = (
-/obj/machinery/door/airlock/shuttle{
+/obj/machinery/door/airlock/titanium{
 	name = "Emergency Shuttle Airlock"
 	},
 /obj/docking_port/stationary{
@@ -21334,7 +21334,7 @@
 /turf/open/floor/plating,
 /area/quartermaster/storage)
 "aRf" = (
-/obj/machinery/door/airlock/shuttle{
+/obj/machinery/door/airlock/titanium{
 	name = "Supply Shuttle Airlock";
 	req_access_txt = "31"
 	},
@@ -22349,7 +22349,7 @@
 /turf/open/floor/plating,
 /area/quartermaster/storage)
 "aTf" = (
-/obj/machinery/door/airlock/shuttle{
+/obj/machinery/door/airlock/titanium{
 	name = "Supply Shuttle Airlock";
 	req_access_txt = "31"
 	},
@@ -23982,6 +23982,7 @@
 	dir = 8;
 	initialize_directions = 11
 	},
+/obj/effect/landmark/xmastree,
 /turf/open/floor/carpet{
 	icon_state = "carpetsymbol"
 	},
@@ -24358,7 +24359,8 @@
 	id = "jangarage";
 	name = "Custodial Closet Shutters Control";
 	pixel_x = -25;
-	pixel_y = 0
+	pixel_y = 0;
+	req_access_txt = "26"
 	},
 /obj/structure/cable{
 	d1 = 2;
@@ -26010,7 +26012,7 @@
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/arrival)
 "baH" = (
-/obj/machinery/door/airlock/shuttle{
+/obj/machinery/door/airlock/titanium{
 	name = "Arrivals Shuttle Airlock"
 	},
 /turf/open/floor/plating,
@@ -26391,14 +26393,14 @@
 /turf/open/floor/plating,
 /area/quartermaster/miningdock)
 "bbv" = (
-/obj/machinery/door/airlock/shuttle{
+/obj/machinery/door/airlock/titanium{
 	name = "Mining Shuttle Airlock";
 	req_access_txt = "48"
 	},
 /turf/open/floor/plating,
 /area/shuttle/labor)
 "bbw" = (
-/obj/machinery/door/airlock/shuttle{
+/obj/machinery/door/airlock/titanium{
 	name = "Mining Shuttle Airlock";
 	req_access_txt = "48"
 	},
@@ -27792,7 +27794,7 @@
 /turf/open/floor/plating,
 /area/maintenance/apmaint)
 "bed" = (
-/obj/machinery/door/airlock/shuttle{
+/obj/machinery/door/airlock/titanium{
 	name = "Arrivals Shuttle Airlock"
 	},
 /obj/docking_port/mobile{
@@ -32887,11 +32889,11 @@
 /turf/open/floor/plating,
 /area/maintenance/apmaint)
 "bow" = (
-/obj/machinery/door/airlock/shuttle,
+/obj/machinery/door/airlock/titanium,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/transport)
 "box" = (
-/obj/machinery/door/airlock/shuttle,
+/obj/machinery/door/airlock/titanium,
 /obj/docking_port/mobile{
 	dir = 8;
 	dwidth = 2;
@@ -50390,7 +50392,8 @@
 	id = "jangarage";
 	name = "Custodial Closet Shutters Control";
 	pixel_x = 25;
-	pixel_y = 0
+	pixel_y = 0;
+	req_access_txt = "26"
 	},
 /turf/open/floor/plasteel/neutral/corner,
 /area/hallway/primary/central)
@@ -50744,7 +50747,7 @@
 /turf/open/floor/plating,
 /area/shuttle/arrival)
 "bYM" = (
-/obj/machinery/door/airlock/shuttle{
+/obj/machinery/door/airlock/titanium{
 	name = "Arrivals Shuttle Airlock"
 	},
 /turf/open/floor/mineral/titanium/blue,
@@ -54593,10 +54596,46 @@
 /area/chapel/main{
 	name = "Monastery"
 	})
-"chr" = (
-/obj/item/weapon/storage/toolbox/mechanical,
-/turf/open/floor/plating,
-/area/maintenance/aft)
+"chk" = (
+/obj/structure/closet/firecloset,
+/obj/effect/decal/cleanable/cobweb,
+/turf/open/floor/plating{
+	icon_state = "platingdmg3"
+	},
+/area/maintenance/fsmaint)
+"chl" = (
+/obj/structure/grille/broken,
+/turf/open/floor/plating{
+	icon_state = "platingdmg3"
+	},
+/area/maintenance/fsmaint)
+"chm" = (
+/obj/machinery/atmospherics/pipe/simple/cyan/hidden,
+/obj/structure/disposalpipe/segment{
+	dir = 2;
+	icon_state = "pipe-c"
+	},
+/turf/open/floor/plasteel/showroomfloor,
+/area/security/warden)
+"chn" = (
+/obj/machinery/atmospherics/pipe/simple/cyan/hidden,
+/obj/structure/disposalpipe/segment{
+	dir = 1;
+	icon_state = "pipe-c"
+	},
+/turf/open/floor/plasteel,
+/area/security/brig)
+"cho" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/security/brig)
+"chp" = (
+/obj/machinery/holopad,
+/turf/open/floor/plasteel,
+/area/quartermaster/miningdock)
 "chq" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -54607,46 +54646,10 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
-"chp" = (
-/obj/machinery/holopad,
-/turf/open/floor/plasteel,
-/area/quartermaster/miningdock)
-"cho" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/security/brig)
-"chn" = (
-/obj/machinery/atmospherics/pipe/simple/cyan/hidden,
-/obj/structure/disposalpipe/segment{
-	dir = 1;
-	icon_state = "pipe-c"
-	},
-/turf/open/floor/plasteel,
-/area/security/brig)
-"chm" = (
-/obj/machinery/atmospherics/pipe/simple/cyan/hidden,
-/obj/structure/disposalpipe/segment{
-	dir = 2;
-	icon_state = "pipe-c"
-	},
-/turf/open/floor/plasteel/showroomfloor,
-/area/security/warden)
-"chl" = (
-/obj/structure/grille/broken,
-/turf/open/floor/plating{
-	icon_state = "platingdmg3"
-	},
-/area/maintenance/fsmaint)
-"chk" = (
-/obj/structure/closet/firecloset,
-/obj/effect/decal/cleanable/cobweb,
-/turf/open/floor/plating{
-	icon_state = "platingdmg3"
-	},
-/area/maintenance/fsmaint)
+"chr" = (
+/obj/item/weapon/storage/toolbox/mechanical,
+/turf/open/floor/plating,
+/area/maintenance/aft)
 
 (1,1,1) = {"
 aaa

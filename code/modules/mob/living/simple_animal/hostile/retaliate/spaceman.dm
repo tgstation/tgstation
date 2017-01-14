@@ -10,7 +10,7 @@
 	response_help = "pokes"
 	response_disarm = "gently pushes aside"
 	response_harm = "punches"
-	a_intent = "harm"
+	a_intent = INTENT_HARM
 	maxHealth = 100
 	health = 100
 	speed = 0

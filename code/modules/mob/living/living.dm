@@ -125,10 +125,10 @@
 	if(!M.buckled && !M.has_buckled_mobs())
 		var/mob_swap
 		//the puller can always swap with its victim if on grab intent
-		if(M.pulledby == src && a_intent == "grab")
+		if(M.pulledby == src && a_intent == INTENT_GRAB)
 			mob_swap = 1
 		//restrained people act if they were on 'help' intent to prevent a person being pulled from being seperated from their puller
-		else if((M.restrained() || M.a_intent == "help") && (restrained() || a_intent == "help"))
+		else if((M.restrained() || M.a_intent == INTENT_HELP) && (restrained() || a_intent == INTENT_HELP))
 			mob_swap = 1
 		if(mob_swap)
 			//switch our position with M
@@ -443,15 +443,15 @@
 	if(isopenturf(loc) && !is_flying())
 		var/turf/open/T = loc
 		. += T.slowdown
-	if(!ignorewalk)
+	if(ignorewalk)
 		. += config.run_speed
 	else
 		switch(m_intent)
-			if("run")
+			if(MOVE_INTENT_RUN)
 				if(drowsyness > 0)
 					. += 6
 				. += config.run_speed
-			if("walk")
+			if(MOVE_INTENT_WALK)
 				. += config.walk_speed
 
 /mob/living/proc/makeTrail(turf/T)
@@ -485,7 +485,7 @@
 						TH.transfer_mob_blood_dna(src)
 
 /mob/living/carbon/human/makeTrail(turf/T)
-	if((NOBLOOD in dna.species.specflags) || !bleed_rate || bleedsuppress)
+	if((NOBLOOD in dna.species.species_traits) || !bleed_rate || bleedsuppress)
 		return
 	..()
 
@@ -519,7 +519,7 @@
 				if (AM.density && AM.anchored)
 					pressure_resistance_prob_delta -= 20
 					break
-	if(!slipping)
+	if(!force_moving)
 		..(pressure_difference, direction, pressure_resistance_prob_delta)
 
 /mob/living/verb/resist()
@@ -664,7 +664,7 @@
 
 /mob/living/singularity_pull(S, current_size)
 	if(current_size >= STAGE_SIX)
-		throw_at_fast(S,14,3, spin=1)
+		throw_at(S,14,3, spin=1)
 	else
 		step_towards(src,S)
 
@@ -824,7 +824,7 @@
 			return 1
 	return 0
 
-/mob/living/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0)
+/mob/living/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback)
 	stop_pulling()
 	. = ..()
 
@@ -898,3 +898,15 @@
 		IgniteMob()
 
 //Mobs on Fire end
+
+// used by secbot and monkeys Crossed
+/mob/living/proc/knockOver(var/mob/living/carbon/C)	
+	C.visible_message("<span class='warning'>[pick( \
+					  "[C] dives out of [src]'s way!", \
+					  "[C] stumbles over [src]!", \
+					  "[C] jumps out of [src]'s path!", \
+					  "[C] trips over [src] and falls!", \
+					  "[C] topples over [src]!", \
+					  "[C] leaps out of [src]'s way!")]</span>")
+	C.Weaken(2)
+	

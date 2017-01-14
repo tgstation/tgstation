@@ -20,7 +20,7 @@
 	back = /obj/item/weapon/storage/backpack
 	has_id = 1
 	id_job = "Operative"
-	id_access = "Syndicate"
+	id_access_list = list(access_syndicate)
 
 /obj/effect/mob_spawn/human/corpse/syndicatecommando
 	name = "Syndicate Commando"
@@ -30,12 +30,11 @@
 	gloves = /obj/item/clothing/gloves/combat
 	radio = /obj/item/device/radio/headset
 	mask = /obj/item/clothing/mask/gas/syndicate
-	helmet = /obj/item/clothing/head/helmet/space/hardsuit/syndi
 	back = /obj/item/weapon/tank/jetpack/oxygen
 	pocket1 = /obj/item/weapon/tank/internals/emergency_oxygen
 	has_id = 1
 	id_job = "Operative"
-	id_access = "Syndicate"
+	id_access_list = list(access_syndicate)
 
 /obj/effect/mob_spawn/human/corpse/syndicatestormtrooper
 	name = "Syndicate Stormtrooper"
@@ -45,26 +44,16 @@
 	gloves = /obj/item/clothing/gloves/combat
 	radio = /obj/item/device/radio/headset
 	mask = /obj/item/clothing/mask/gas/syndicate
-	helmet = /obj/item/clothing/head/helmet/space/hardsuit/syndi/elite
 	back = /obj/item/weapon/tank/jetpack/oxygen/harness
 	has_id = 1
 	id_job = "Operative"
-	id_access = "Syndicate"
+	id_access_list = list(access_syndicate)
 
 
 
-/obj/effect/mob_spawn/human/corpse/clown
-	name = "Clown"
-	uniform = /obj/item/clothing/under/rank/clown
-	shoes = /obj/item/clothing/shoes/clown_shoes
-	radio = /obj/item/device/radio/headset
-	mask = /obj/item/clothing/mask/gas/clown_hat
-	pocket1 = /obj/item/weapon/bikehorn
-	back = /obj/item/weapon/storage/backpack/clown
-	has_id = 1
-	id_job = "Clown"
-	id_access = "Clown"
-
+/obj/effect/mob_spawn/human/clown/corpse
+	roundstart = FALSE
+	instant = TRUE
 
 
 /obj/effect/mob_spawn/human/corpse/pirate
@@ -111,7 +100,7 @@
 	name = "Space Wizard"
 	uniform = /obj/item/clothing/under/color/lightpurple
 	suit = /obj/item/clothing/suit/wizrobe
-	shoes = /obj/item/clothing/shoes/sandal
+	shoes = /obj/item/clothing/shoes/sandal/magic
 	helmet = /obj/item/clothing/head/wizard
 
 

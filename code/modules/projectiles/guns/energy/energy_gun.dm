@@ -16,7 +16,7 @@
 	desc = "A small, pistol-sized energy gun with a built-in flashlight. It has two settings: stun and kill."
 	icon_state = "mini"
 	item_state = "gun"
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	cell_type = /obj/item/weapon/stock_parts/cell{charge = 600; maxcharge = 600}
 	ammo_x_offset = 2
 	charge_sections = 3
@@ -67,7 +67,7 @@
 	icon_state = "turretlaser"
 	item_state = "turretlaser"
 	slot_flags = null
-	w_class = 5
+	w_class = WEIGHT_CLASS_HUGE
 	ammo_type = list(/obj/item/ammo_casing/energy/electrode, /obj/item/ammo_casing/energy/laser)
 	weapon_weight = WEAPON_HEAVY
 	can_flashlight = 0

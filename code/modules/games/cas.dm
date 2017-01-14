@@ -54,6 +54,7 @@ var/global/list/cards_against_space
 		P.card_icon = "cas_white"
 		cards += P
 	shuffle(cards) // distribute blank cards throughout deck
+	..()
 
 /obj/item/toy/cards/deck/cas/attack_hand(mob/user)
 	if(user.lying)
@@ -125,7 +126,7 @@ var/global/list/cards_against_space
 	flipped = !flipped
 	update_icon()
 
-obj/item/toy/cards/singlecard/cas/AltClick(mob/living/user)
+/obj/item/toy/cards/singlecard/cas/AltClick(mob/living/user)
 	if(!user.canUseTopic(src,1))
 		return
 	Flip()

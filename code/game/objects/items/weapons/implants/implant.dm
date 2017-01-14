@@ -5,10 +5,9 @@
 	origin_tech = "materials=2;biotech=3;programming=2"
 	actions_types = list(/datum/action/item_action/hands_free/activate)
 	var/activated = 1 //1 for implant types that can be activated, 0 for ones that are "always on" like mindshield implants
-	var/implanted = null
-	var/mob/living/carbon/imp_in = null
+	var/mob/living/imp_in = null
 	item_color = "b"
-	var/allow_multiple = 0
+	var/allow_multiple = FALSE
 	var/uses = -1
 	flags = DROPDEL
 
@@ -22,13 +21,29 @@
 /obj/item/weapon/implant/ui_action_click()
 	activate("action_button")
 
+/obj/item/weapon/implant/proc/can_be_implanted_in(mob/living/target) // for human-only and other special requirements
+	return TRUE
+
+/mob/living/proc/can_be_implanted()
+	return TRUE
+
+/mob/living/silicon/can_be_implanted()
+	return FALSE
+
+/mob/living/simple_animal/can_be_implanted()
+	return healable //Applies to robots and most non-organics, exceptions can override.
+
+
 
 //What does the implant do upon injection?
 //return 1 if the implant injects
 //return -1 if the implant fails to inject
 //return 0 if there is no room for implant
-/obj/item/weapon/implant/proc/implant(mob/living/carbon/source, mob/user, silent = 0)
-	for(var/X in source.implants)
+/obj/item/weapon/implant/proc/implant(mob/living/target, mob/user, silent = 0)
+	LAZYINITLIST(target.implants)
+	if(!target.can_be_implanted() || !can_be_implanted_in(target))
+		return -1
+	for(var/X in target.implants)
 		if(istype(X, type))
 			var/obj/item/weapon/implant/imp_e = X
 			if(!allow_multiple)
@@ -42,27 +57,25 @@
 				else
 					return 0
 
-	src.loc = source
-	imp_in = source
-	source.implants += src
-	implanted = 1
+	src.loc = target
+	imp_in = target
+	target.implants += src
 	if(activated)
 		for(var/X in actions)
 			var/datum/action/A = X
-			A.Grant(source)
-	if(ishuman(source))
-		var/mob/living/carbon/human/H = source
+			A.Grant(target)
+	if(ishuman(target))
+		var/mob/living/carbon/human/H = target
 		H.sec_hud_set_implants()
 
 	if(user)
-		add_logs(user, source, "implanted", object="[name]")
+		add_logs(user, target, "implanted", object="[name]")
 
 	return 1
 
-/obj/item/weapon/implant/proc/removed(mob/living/carbon/source, silent = 0, special = 0)
+/obj/item/weapon/implant/proc/removed(mob/living/source, silent = 0, special = 0)
 	src.loc = null
 	imp_in = null
-	implanted = 0
 	source.implants -= src
 	for(var/X in actions)
 		var/datum/action/A = X

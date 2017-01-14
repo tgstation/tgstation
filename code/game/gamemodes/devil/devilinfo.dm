@@ -18,6 +18,7 @@ var/global/list/lawlorify = list (
 		LORE = list(
 			OBLIGATION_FOOD = "This devil seems to always offer its victims food before slaughtering them.",
 			OBLIGATION_FIDDLE = "This devil will never turn down a musical challenge.",
+			OBLIGATION_DANCEOFF = "This devil will never turn down a dance off.",
 			OBLIGATION_GREET = "This devil seems to only be able to converse with people it knows the name of.",
 			OBLIGATION_PRESENCEKNOWN = "This devil seems to be unable to attack from stealth.",
 			OBLIGATION_SAYNAME = "He will always chant his name upon killing someone.",
@@ -48,6 +49,7 @@ var/global/list/lawlorify = list (
 		LAW = list(
 			OBLIGATION_FOOD = "When not acting in self defense, you must always offer your victim food before harming them.",
 			OBLIGATION_FIDDLE = "When not in immediate danger, if you are challenged to a musical duel, you must accept it.  You are not obligated to duel the same person twice.",
+			OBLIGATION_DANCEOFF = "When not in immediate danger, if you are challenged to a dance off, you must accept it. You are not obligated to face off with the same person twice.",
 			OBLIGATION_GREET = "You must always greet other people by their last name before talking with them.",
 			OBLIGATION_PRESENCEKNOWN = "You must always make your presence known before attacking.",
 			OBLIGATION_SAYNAME = "You must always say your true name after you kill someone.",
@@ -77,7 +79,7 @@ var/global/list/lawlorify = list (
 		)
 	)
 
-/datum/devilinfo/
+/datum/devilinfo
 	var/datum/mind/owner = null
 	var/obligation
 	var/ban
@@ -88,6 +90,16 @@ var/global/list/lawlorify = list (
 	var/reviveNumber = 0
 	var/form = BASIC_DEVIL
 	var/exists = 0
+	var/static/list/dont_remove_spells = list(
+	/obj/effect/proc_holder/spell/targeted/summon_contract,
+	/obj/effect/proc_holder/spell/targeted/conjure_item/violin,
+	/obj/effect/proc_holder/spell/targeted/summon_dancefloor)
+
+
+/datum/devilinfo/New()
+	..()
+	dont_remove_spells = typecacheof(dont_remove_spells)
+
 
 /proc/randomDevilInfo(name = randomDevilName())
 	var/datum/devilinfo/devil = new
@@ -128,7 +140,7 @@ var/global/list/lawlorify = list (
 	return preTitle + title + mainName + suffix
 
 /proc/randomdevilobligation()
-	return pick(OBLIGATION_FOOD, OBLIGATION_FIDDLE, OBLIGATION_GREET, OBLIGATION_PRESENCEKNOWN, OBLIGATION_SAYNAME, OBLIGATION_ANNOUNCEKILL, OBLIGATION_ANSWERTONAME)
+	return pick(OBLIGATION_FOOD, OBLIGATION_FIDDLE, OBLIGATION_DANCEOFF, OBLIGATION_GREET, OBLIGATION_PRESENCEKNOWN, OBLIGATION_SAYNAME, OBLIGATION_ANNOUNCEKILL, OBLIGATION_ANSWERTONAME)
 
 /proc/randomdevilban()
 	return pick(BAN_HURTWOMAN, BAN_CHAPEL, BAN_HURTPRIEST, BAN_AVOIDWATER, BAN_STRIKEUNCONCIOUS, BAN_HURTLIZARD, BAN_HURTANIMAL)
@@ -289,7 +301,7 @@ var/global/list/lawlorify = list (
 /datum/devilinfo/proc/remove_spells()
 	for(var/X in owner.spell_list)
 		var/obj/effect/proc_holder/spell/S = X
-		if(!istype(S, /obj/effect/proc_holder/spell/targeted/summon_contract) && !istype(S, /obj/effect/proc_holder/spell/targeted/conjure_item/violin))
+		if(!is_type_in_typecache(S, dont_remove_spells))
 			owner.RemoveSpell(S)
 
 /datum/devilinfo/proc/give_summon_contract()
@@ -302,8 +314,10 @@ var/global/list/lawlorify = list (
 	owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/conjure_item/summon_pitchfork(null))
 	if(give_summon_contract)
 		give_summon_contract()
-		if (obligation == OBLIGATION_FIDDLE)
+		if(obligation == OBLIGATION_FIDDLE)
 			owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/conjure_item/violin(null))
+		if(obligation == OBLIGATION_DANCEOFF)
+			owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/summon_dancefloor(null))
 
 /datum/devilinfo/proc/give_lizard_spells()
 	remove_spells()

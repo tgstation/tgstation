@@ -109,7 +109,7 @@
 
 /proc/random_unique_plasmaman_name(attempts_to_find_unique_name=10)
 	for(var/i=1, i<=attempts_to_find_unique_name, i++)
-		. = capitalize(plasmaman_name()) + " " + "\Roman[rand(1,99)]"
+		. = capitalize(plasmaman_name())
 
 		if(i != attempts_to_find_unique_name && !findname(.))
 			break
@@ -169,24 +169,30 @@ Proc for attack log creation, because really why not
 */
 
 /proc/add_logs(mob/user, mob/target, what_done, object=null, addition=null)
-	var/newhealthtxt = ""
-	var/coordinates = ""
 	var/turf/attack_location = get_turf(target)
-	if(attack_location)
-		coordinates = "([attack_location.x],[attack_location.y],[attack_location.z])"
-	if(target && isliving(target))
-		var/mob/living/L = target
-		newhealthtxt = " (NEWHP: [L.health])"
-	if(user && ismob(user))
-		user.attack_log += text("\[[time_stamp()]\] <font color='red'>Has [what_done] [target ? "[target.name][(ismob(target) && target.ckey) ? "([target.ckey])" : ""]" : "NON-EXISTANT SUBJECT"][object ? " with [object]" : " "][addition][newhealthtxt][coordinates]</font>")
-		if(user.mind)
-			user.mind.attack_log += text("\[[time_stamp()]\] <font color='red'>[user ? "[user.name][(ismob(user) && user.ckey) ? "([user.ckey])" : ""]" : "NON-EXISTANT SUBJECT"] has [what_done] [target ? "[target.name][(ismob(target) && target.ckey) ? "([target.ckey])" : ""]" : "NON-EXISTANT SUBJECT"][object ? " with [object]" : " "][addition][newhealthtxt][coordinates]</font>")
-	if(target && ismob(target))
-		target.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been [what_done] by [user ? "[user.name][(ismob(user) && user.ckey) ? "([user.ckey])" : ""]" : "NON-EXISTANT SUBJECT"][object ? " with [object]" : " "][addition][newhealthtxt][coordinates]</font>")
-		if(target.mind)
-			target.mind.attack_log += text("\[[time_stamp()]\] <font color='orange'>[target ? "[target.name][(ismob(target) && target.ckey) ? "([target.ckey])" : ""]" : "NON-EXISTANT SUBJECT"] has been [what_done] by [user ? "[user.name][(ismob(user) && user.ckey) ? "([user.ckey])" : ""]" : "NON-EXISTANT SUBJECT"][object ? " with [object]" : " "][addition][newhealthtxt][coordinates]</font>")
-	log_attack("[user ? "[user.name][(ismob(user) && user.ckey) ? "([user.ckey])" : ""]" : "NON-EXISTANT SUBJECT"] [what_done] [target ? "[target.name][(ismob(target) && target.ckey)? "([target.ckey])" : ""]" : "NON-EXISTANT SUBJECT"][object ? " with [object]" : " "][addition][newhealthtxt][coordinates]")
 
+	var/is_mob_user = user && typecache_mob[user.type]
+	var/is_mob_target = target && typecache_mob[target.type]
+
+	var/mob/living/living_target
+
+
+	if(target && isliving(target))
+		living_target = target
+
+	if(is_mob_user)
+		var/message = "\[[time_stamp()]\] <font color='red'>[user ? "[user.name][(user.ckey) ? "([user.ckey])" : ""]" : "NON-EXISTANT SUBJECT"] has [what_done] [target ? "[target.name][(is_mob_target && target.ckey) ? "([target.ckey])" : ""]" : "NON-EXISTANT SUBJECT"][object ? " with [object]" : " "][addition][(living_target) ? " (NEWHP: [living_target.health])" : ""][(attack_location) ? "([attack_location.x],[attack_location.y],[attack_location.z])" : ""]</font>"
+		user.attack_log += message
+		if(user.mind)
+			user.mind.attack_log += message
+
+	if(is_mob_target)
+		var/message = "\[[time_stamp()]\] <font color='orange'>[target ? "[target.name][(target.ckey) ? "([target.ckey])" : ""]" : "NON-EXISTANT SUBJECT"] has been [what_done] by [user ? "[user.name][(is_mob_user && user.ckey) ? "([user.ckey])" : ""]" : "NON-EXISTANT SUBJECT"][object ? " with [object]" : " "][addition][(living_target) ? " (NEWHP: [living_target.health])" : ""][(attack_location) ? "([attack_location.x],[attack_location.y],[attack_location.z])" : ""]</font>"
+		target.attack_log += message
+		if(target.mind)
+			target.mind.attack_log += message
+
+	log_attack("[user ? "[user.name][(is_mob_user && user.ckey) ? "([user.ckey])" : ""]" : "NON-EXISTANT SUBJECT"] [what_done] [target ? "[target.name][(is_mob_target && target.ckey)? "([target.ckey])" : ""]" : "NON-EXISTANT SUBJECT"][object ? " with [object]" : " "][addition][(living_target) ? " (NEWHP: [living_target.health])" : ""][(attack_location) ? "([attack_location.x],[attack_location.y],[attack_location.z])" : ""]")
 
 
 /proc/do_mob(mob/user , mob/target, time = 30, uninterruptible = 0, progress = 1)
@@ -340,7 +346,7 @@ Proc for attack log creation, because really why not
 /proc/spawn_atom_to_turf(spawn_type, target, amount, admin_spawn=FALSE)
 	var/turf/T = get_turf(target)
 	if(!T)
-		throw EXCEPTION("attempt to spawn atom type: [spawn_type] in nullspace")
+		CRASH("attempt to spawn atom type: [spawn_type] in nullspace")
 
 	for(var/j in 1 to amount)
 		var/atom/X = new spawn_type(T)
@@ -350,7 +356,7 @@ Proc for attack log creation, because really why not
 	var/turf/T = get_turf(target)
 	var/step_count = 0
 	if(!T)
-		throw EXCEPTION("attempt to spawn atom type: [spawn_type] in nullspace")
+		CRASH("attempt to spawn atom type: [spawn_type] in nullspace")
 
 	for(var/j in 1 to amount)
 		var/atom/movable/X = new spawn_type(T)

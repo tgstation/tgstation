@@ -8,7 +8,7 @@
 	throwforce = 12
 	throw_speed = 2
 	throw_range = 7
-	w_class = 4
+	w_class = WEIGHT_CLASS_BULKY
 	materials = list(MAT_METAL = 500)
 	origin_tech = "combat=1;engineering=1"
 	attack_verb = list("robusted")
@@ -106,8 +106,8 @@
 	name = "brass box"
 	desc = "A huge brass box with several indentations in its surface."
 	icon_state = "brassbox"
-	w_class = 5
-	max_w_class = 3
+	w_class = WEIGHT_CLASS_HUGE
+	max_w_class = WEIGHT_CLASS_NORMAL
 	max_combined_w_class = 28
 	storage_slots = 28
 	slowdown = 1

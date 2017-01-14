@@ -25,6 +25,7 @@
 	power_channel = ENVIRON
 	var/detecting = 1
 	var/buildstage = 2 // 2 = complete, 1 = no wires, 0 = circuit gone
+	resistance_flags = FIRE_PROOF
 
 
 /obj/machinery/firealarm/New(loc, dir, building)
@@ -61,7 +62,12 @@
 		if(stat & NOPOWER)
 			return
 
-		add_overlay("overlay_[security_level]")
+		if(src.z == ZLEVEL_STATION)
+			add_overlay("overlay_[security_level]")
+		else
+			//var/green = SEC_LEVEL_GREEN
+			add_overlay("overlay_[SEC_LEVEL_GREEN]")
+
 		if(detecting)
 			add_overlay("overlay_[A.fire ? "fire" : "clear"]")
 		else
@@ -93,7 +99,7 @@
 	playsound(src.loc, 'sound/ambience/signal.ogg', 75, 0)
 
 /obj/machinery/firealarm/proc/alarm_in(time)
-	addtimer(src, "alarm", time, TIMER_NORMAL)
+	addtimer(CALLBACK(src, .proc/alarm), time)
 
 /obj/machinery/firealarm/proc/reset()
 	if(!is_operational())
@@ -102,7 +108,7 @@
 	A.firereset(src)
 
 /obj/machinery/firealarm/proc/reset_in(time)
-	addtimer(src, "reset", time, TIMER_NORMAL)
+	addtimer(CALLBACK(src, .proc/reset), time)
 
 /obj/machinery/firealarm/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
 									datum/tgui/master_ui = null, datum/ui_state/state = default_state)
@@ -114,7 +120,11 @@
 /obj/machinery/firealarm/ui_data(mob/user)
 	var/list/data = list()
 	data["emagged"] = emagged
-	data["seclevel"] = get_security_level()
+
+	if(src.z == ZLEVEL_STATION)
+		data["seclevel"] = get_security_level()
+	else
+		data["seclevel"] = "green"
 
 	var/area/A = get_area(src)
 	data["alarm"] = A.fire
@@ -176,7 +186,7 @@
 					playsound(src.loc, W.usesound, 50, 1)
 					user.visible_message("[user.name] removes the electronics from [src.name].", \
 										"<span class='notice'>You start prying out the circuit...</span>")
-					if(do_after(user, 20/W.toolspeed, target = src))
+					if(do_after(user, 20*W.toolspeed, target = src))
 						if(buildstage == 1)
 							if(stat & BROKEN)
 								user << "<span class='notice'>You remove the destroyed circuit.</span>"

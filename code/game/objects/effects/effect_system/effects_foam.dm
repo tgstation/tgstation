@@ -14,6 +14,10 @@
 	var/metal = 0
 	var/lifetime = 40
 	var/reagent_divisor = 7
+	var/static/list/blacklisted_turfs = typecacheof(list(
+	/turf/open/space/transit,
+	/turf/open/chasm,
+	/turf/open/floor/plating/lava))
 
 
 /obj/effect/particle_effect/foam/metal
@@ -104,6 +108,9 @@
 		if(foundfoam)
 			continue
 
+		if(is_type_in_typecache(T, blacklisted_turfs))
+			continue
+
 		for(var/mob/living/L in T)
 			foam_mob(L)
 		var/obj/effect/particle_effect/foam/F = PoolOrNew(src.type, T)
@@ -187,6 +194,7 @@
 	gender = PLURAL
 	obj_integrity = 20
 	max_integrity = 20
+	CanAtmosPass = ATMOS_PASS_DENSITY
 
 /obj/structure/foamedmetal/New()
 	..()
@@ -218,9 +226,6 @@
 /obj/structure/foamedmetal/CanPass(atom/movable/mover, turf/target, height=1.5)
 	return !density
 
-
-/obj/structure/foamedmetal/CanAtmosPass()
-	return !density
 /obj/structure/foamedmetal/iron
 	obj_integrity = 50
 	max_integrity = 50

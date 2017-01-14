@@ -27,7 +27,7 @@
 	B.apply_default_parts(src)
 
 /obj/item/weapon/circuitboard/machine/plantgenes
-	name = "circuit board (Plant DNA Manipulator)"
+	name = "Plant DNA Manipulator (Machine Board)"
 	build_path = /obj/machinery/plantgenes
 	origin_tech = "programming=3;biotech=3"
 	req_components = list(
@@ -338,7 +338,9 @@
 			/datum/plant_gene/core/yield,
 			/datum/plant_gene/core/production,
 			/datum/plant_gene/core/endurance,
-			/datum/plant_gene/core/lifespan
+			/datum/plant_gene/core/lifespan,
+			/datum/plant_gene/core/weed_rate,
+			/datum/plant_gene/core/weed_chance
 			)
 		for(var/a in gene_paths)
 			core_genes += seed.get_gene(a)

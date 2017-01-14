@@ -11,8 +11,14 @@
 
 /obj/item/clockwork/component/pickup(mob/living/user)
 	..()
-	if(iscultist(user) || (user.mind && user.mind.assigned_role == "Chaplain"))
+	if(iscultist(user) || (user.mind && user.mind.isholy))
 		user << "<span class='[message_span]'>[cultist_message]</span>"
+		if(user.mind && user.mind.isholy)
+			user << "<span class='boldannounce'>The power of your faith melts away the [src]!</span>"
+			var/obj/item/weapon/ore/slag/wrath = new /obj/item/weapon/ore/slag
+			user.unEquip(src)
+			user.put_in_active_hand(wrath)
+			qdel(src)
 	if(is_servant_of_ratvar(user) && prob(20))
 		var/pickedmessage = pick(servant_of_ratvar_messages)
 		user << "<span class='[message_span]'>[servant_of_ratvar_messages[pickedmessage] ? "[text2ratvar(pickedmessage)]" : pickedmessage]</span>"
@@ -38,7 +44,7 @@
 	icon_state = "blind_eye"
 	cultist_message = "The eye flickers at you with intense hate before falling dark."
 	servant_of_ratvar_messages = list("The eye flickers before falling dark." = FALSE, "You feel watched." = FALSE, "\"...\"" = FALSE)
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 
 /obj/item/clockwork/component/vanguard_cogwheel
 	name = "vanguard cogwheel"
@@ -57,7 +63,7 @@
 	cultist_message = "The gear grows warm in your hands."
 	servant_of_ratvar_messages = list("The lock isn't getting any lighter." = FALSE, "\"Damaged gears are better than broken bodies.\"" = TRUE, \
 	"\"It's a shame it can't be reused.\"" = TRUE)
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 
 /obj/item/clockwork/component/geis_capacitor
 	name = "geis capacitor"
@@ -78,7 +84,6 @@
 	servant_of_ratvar_messages = list("\"Who broke this.\"" = TRUE, "\"Did you break these off YOURSELF?\"" = TRUE, "\"Why did we give this to such simpletons, anyway?\"" = TRUE, \
 	"\"At least we can use these for something - unlike you.\"" = TRUE)
 
-//Replicant Alloy. Used for fuel and construction, and not merely scripture.
 /obj/item/clockwork/component/replicant_alloy
 	name = "replicant alloy"
 	desc = "A seemingly strong but very malleable chunk of metal. It seems as though it wants to be molded into something greater."
@@ -89,19 +94,6 @@
 	"A detailed image of Ratvar appears in the alloy for a moment." = FALSE)
 	message_span = "nezbere"
 
-/obj/item/clockwork/component/replicant_alloy/examine(mob/user)
-	..()
-	if(is_servant_of_ratvar(user))
-		user << "<span class='alloy'>Can be used to fuel Clockwork Proselytizers and Mending Motors, or shaped into brass sheets.</span>"
-
-/obj/item/clockwork/component/replicant_alloy/attack_self(mob/user)
-	if(is_servant_of_ratvar(user))
-		var/obj/item/stack/sheet/brass/B = new /obj/item/stack/sheet/brass(get_turf(src), 10)
-		user.unEquip(src, TRUE)
-		user.put_in_hands(B)
-		user << "<span class='brass'>You shape the alloy into some brass sheets.</span>"
-		qdel(src)
-
 /obj/item/clockwork/component/replicant_alloy/smashed_anima_fragment
 	name = "smashed anima fragment"
 	desc = "Shattered chunks of metal. Damaged beyond repair and completely unusable."
@@ -110,7 +102,7 @@
 	cultist_message = "The shards vibrate in your hands for a moment."
 	servant_of_ratvar_messages = list("\"...still fight...\"" = FALSE, "\"...where am I...?\"" = FALSE, "\"...put me... slab...\"" = FALSE)
 	message_span = "heavy_brass"
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 
 /obj/item/clockwork/component/replicant_alloy/fallen_armor
 	name = "fallen armor"
@@ -120,7 +112,7 @@
 	cultist_message = "Red flame sputters from the mask's eye before winking out."
 	servant_of_ratvar_messages = list("A piece of armor hovers away from the others for a moment." = FALSE, "Red flame appears in the cuirass before sputtering out." = FALSE)
 	message_span = "heavy_brass"
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 
 /obj/item/clockwork/component/hierophant_ansible
 	name = "hierophant ansible"
@@ -140,7 +132,7 @@
 	servant_of_ratvar_messages = list("You hear the distinctive sound of the Hierophant Network for a moment." = FALSE, "\"Hieroph'ant Br'o'adcas't fail'ure.\"" = TRUE, \
 	"The obelisk flickers wildly, as if trying to open a gateway." = FALSE, "\"Spa'tial Ga'tewa'y fai'lure.\"" = TRUE)
 	icon_state = "obelisk_prism"
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 
 //Shards of Alloy, suitable only for proselytization.
 /obj/item/clockwork/alloy_shards

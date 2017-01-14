@@ -58,7 +58,7 @@
 	attack_hand(user)
 
 /obj/structure/table/attack_hand(mob/living/user)
-	if(user.a_intent == "grab" && user.pulling && isliving(user.pulling))
+	if(user.a_intent == INTENT_GRAB && user.pulling && isliving(user.pulling))
 		var/mob/living/pushed_mob = user.pulling
 		if(pushed_mob.buckled)
 			user << "<span class='warning'>[pushed_mob] is buckled to [pushed_mob.buckled]!</span>"
@@ -102,14 +102,14 @@
 		if(istype(I, /obj/item/weapon/screwdriver) && deconstruction_ready)
 			user << "<span class='notice'>You start disassembling [src]...</span>"
 			playsound(src.loc, I.usesound, 50, 1)
-			if(do_after(user, 20, target = src))
+			if(do_after(user, 20*I.toolspeed, target = src))
 				deconstruct(TRUE)
 			return
 
 		if(istype(I, /obj/item/weapon/wrench) && deconstruction_ready)
 			user << "<span class='notice'>You start deconstructing [src]...</span>"
 			playsound(src.loc, I.usesound, 50, 1)
-			if(do_after(user, 40, target = src))
+			if(do_after(user, 40*I.toolspeed, target = src))
 				playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 				deconstruct(TRUE, 1)
 			return
@@ -127,7 +127,7 @@
 			return
 		// If the tray IS empty, continue on (tray will be placed on the table like other items)
 
-	if(user.a_intent != "harm" && !(I.flags & ABSTRACT))
+	if(user.a_intent != INTENT_HARM && !(I.flags & ABSTRACT))
 		if(user.drop_item())
 			I.Move(loc)
 			var/list/click_params = params2list(params)
@@ -187,7 +187,7 @@
 		return
 	// Don't break if they're just flying past
 	if(AM.throwing)
-		addtimer(src, "throw_check", 5, FALSE, AM)
+		addtimer(CALLBACK(src, .proc/throw_check, AM), 5)
 	else
 		check_break(AM)
 
@@ -301,13 +301,13 @@
 			playsound(src.loc, W.usesound, 50, 1)
 			if(deconstruction_ready)
 				user << "<span class='notice'>You start strengthening the reinforced table...</span>"
-				if (do_after(user, 50/W.toolspeed, target = src))
+				if (do_after(user, 50*W.toolspeed, target = src))
 					if(!src || !WT.isOn()) return
 					user << "<span class='notice'>You strengthen the table.</span>"
 					deconstruction_ready = 0
 			else
 				user << "<span class='notice'>You start weakening the reinforced table...</span>"
-				if (do_after(user, 50/W.toolspeed, target = src))
+				if (do_after(user, 50*W.toolspeed, target = src))
 					if(!src || !WT.isOn()) return
 					user << "<span class='notice'>You weaken the table.</span>"
 					deconstruction_ready = 1
@@ -321,8 +321,8 @@
 	icon_state = "brass_table"
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	frame = /obj/structure/table_frame/brass
-	framestack = /obj/item/stack/sheet/brass
-	buildstack = /obj/item/stack/sheet/brass
+	framestack = /obj/item/stack/tile/brass
+	buildstack = /obj/item/stack/tile/brass
 	framestackamount = 1
 	buildstackamount = 1
 	canSmoothWith = list(/obj/structure/table/reinforced/brass)
@@ -342,7 +342,7 @@
 		var/previouscolor = color
 		color = "#960000"
 		animate(src, color = previouscolor, time = 8)
-		addtimer(src, "update_atom_colour", 8)
+		addtimer(CALLBACK(src, /atom/proc/update_atom_colour), 8)
 
 /obj/structure/table/reinforced/brass/ratvar_act()
 	obj_integrity = max_integrity
@@ -434,7 +434,7 @@
 		playsound(src.loc, W.usesound, 50, 1)
 		deconstruct(TRUE)
 		return
-	if(user.a_intent == "harm")
+	if(user.a_intent == INTENT_HARM)
 		return ..()
 	if(user.drop_item())
 		W.Move(loc)
@@ -444,6 +444,8 @@
 	attack_hand(user)
 
 /obj/structure/rack/attack_hand(mob/living/user)
+	if(user.weakened || user.resting || user.lying || user.get_num_legs() < 2)
+		return
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.do_attack_animation(src, ATTACK_EFFECT_KICK)
 	user.visible_message("<span class='danger'>[user] kicks [src].</span>", null, null, COMBAT_MESSAGE_RANGE)

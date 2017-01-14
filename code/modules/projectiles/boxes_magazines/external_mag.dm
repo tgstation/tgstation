@@ -119,7 +119,7 @@
 	..()
 	icon_state = "c20r45-[round(ammo_count(),2)]"
 
-obj/item/ammo_box/magazine/tommygunm45
+/obj/item/ammo_box/magazine/tommygunm45
 	name = "drum magazine (.45)"
 	icon_state = "drum45"
 	ammo_type = /obj/item/ammo_casing/c45

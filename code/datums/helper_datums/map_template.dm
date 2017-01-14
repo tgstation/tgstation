@@ -94,8 +94,8 @@
 
 /proc/preloadRuinTemplates()
 	// Still supporting bans by filename
-	var/list/banned = generateMapList("config/lavaRuinBlacklist.txt")
-	banned += generateMapList("config/spaceRuinBlacklist.txt")
+	var/list/banned = generateMapList("config/lavaruinblacklist.txt")
+	banned += generateMapList("config/spaceruinblacklist.txt")
 
 	for(var/item in subtypesof(/datum/map_template/ruin))
 		var/datum/map_template/ruin/ruin_type = item
@@ -117,7 +117,7 @@
 
 
 /proc/preloadShuttleTemplates()
-	var/list/unbuyable = generateMapList("config/unbuyableShuttles.txt")
+	var/list/unbuyable = generateMapList("config/unbuyableshuttles.txt")
 
 	for(var/item in subtypesof(/datum/map_template/shuttle))
 		var/datum/map_template/shuttle/shuttle_type = item

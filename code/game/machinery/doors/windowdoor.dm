@@ -12,6 +12,7 @@
 	visible = 0
 	flags = ON_BORDER
 	opacity = 0
+	CanAtmosPass = ATMOS_PASS_PROC
 	var/obj/item/weapon/electronics/airlock/electronics = null
 	var/reinf = 0
 	var/shards = 2
@@ -70,9 +71,9 @@
 	if (!( ticker ))
 		return
 	var/mob/M = AM
-	if(!M.restrained())
-		bumpopen(M)
-	return
+	if(M.restrained() || ((isdrone(M) || iscyborg(M)) && M.stat))
+		return
+	bumpopen(M)
 
 /obj/machinery/door/window/bumpopen(mob/user)
 	if( operating || !src.density )
@@ -225,7 +226,7 @@
 				playsound(src.loc, I.usesound, 100, 1)
 				user.visible_message("[user] removes the electronics from the [src.name].", \
 									 "<span class='notice'>You start to remove electronics from the [src.name]...</span>")
-				if(do_after(user,40/I.toolspeed, target = src))
+				if(do_after(user,40*I.toolspeed, target = src))
 					if(panel_open && !density && !operating && src.loc)
 						var/obj/structure/windoor_assembly/WA = new /obj/structure/windoor_assembly(src.loc)
 						switch(base_state)
@@ -338,7 +339,7 @@
 		var/previouscolor = color
 		color = "#960000"
 		animate(src, color = previouscolor, time = 8)
-		addtimer(src, "update_atom_colour", 8)
+		addtimer(CALLBACK(src, /atom/proc/update_atom_colour), 8)
 
 /obj/machinery/door/window/clockwork/allowed(mob/M)
 	if(is_servant_of_ratvar(M))

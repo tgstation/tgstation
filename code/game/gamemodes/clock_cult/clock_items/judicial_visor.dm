@@ -52,7 +52,7 @@
 
 /obj/item/clothing/glasses/judicial_visor/dropped(mob/user)
 	. = ..()
-	addtimer(src, "check_on_mob", 1, TIMER_NORMAL, user) //dropped is called before the item is out of the slot, so we need to check slightly later
+	addtimer(CALLBACK(src, .proc/check_on_mob, user), 1) //dropped is called before the item is out of the slot, so we need to check slightly later
 
 /obj/item/clothing/glasses/judicial_visor/proc/check_on_mob(mob/user)
 	if(user && src != user.get_item_by_slot(slot_glasses)) //if we happen to check and we AREN'T in the slot, we need to remove our shit from whoever we got dropped from
@@ -131,7 +131,7 @@
 				continue
 			V.recharging = TRUE //To prevent exploiting multiple visors to bypass the cooldown
 			V.update_status()
-			addtimer(V, "recharge_visor", (ratvar_awakens ? visor.recharge_cooldown*0.1 : visor.recharge_cooldown) * 2, TIMER_NORMAL, ranged_ability_user)
+			addtimer(CALLBACK(V, /obj/item/clothing/glasses/judicial_visor.proc/recharge_visor), (ratvar_awakens ? visor.recharge_cooldown*0.1 : visor.recharge_cooldown) * 2, ranged_ability_user)
 		clockwork_say(ranged_ability_user, text2ratvar("Kneel, heathens!"))
 		ranged_ability_user.visible_message("<span class='warning'>[ranged_ability_user]'s judicial visor fires a stream of energy at [target], creating a strange mark!</span>", "<span class='heavy_brass'>You direct [visor]'s power to [target]. You must wait for some time before doing this again.</span>")
 		var/turf/targetturf = get_turf(target)
@@ -139,7 +139,7 @@
 		add_logs(ranged_ability_user, targetturf, "created a judicial marker")
 		ranged_ability_user.update_action_buttons_icon()
 		ranged_ability_user.update_inv_glasses()
-		addtimer(visor, "recharge_visor", ratvar_awakens ? visor.recharge_cooldown*0.1 : visor.recharge_cooldown, TIMER_NORMAL, ranged_ability_user)//Cooldown is reduced by 10x if Ratvar is up
+		addtimer(CALLBACK(visor, /obj/item/clothing/glasses/judicial_visor.proc/recharge_visor), ratvar_awakens ? visor.recharge_cooldown*0.1 : visor.recharge_cooldown, ranged_ability_user)//Cooldown is reduced by 10x if Ratvar is up
 		remove_ranged_ability()
 
 		return TRUE
@@ -158,19 +158,20 @@
 
 /obj/effect/clockwork/judicial_marker/New(loc, caster)
 	..()
+	SetLuminosity(4, 3)
 	user = caster
-	playsound(src, 'sound/magic/MAGIC_MISSILE.ogg', 50, 1, 1, 1)
-	flick("judicial_marker", src)
-	addtimer(src, "burstanim", 16, TIMER_NORMAL)
-
-/obj/effect/clockwork/judicial_marker/proc/burstanim()
-	layer = ABOVE_ALL_MOB_LAYER
-	flick("judicial_explosion", src)
-	addtimer(src, "judicialblast", 13, TIMER_NORMAL)
+	addtimer(CALLBACK(src, .proc/judicialblast), 0)
 
 /obj/effect/clockwork/judicial_marker/proc/judicialblast()
+	playsound(src, 'sound/magic/MAGIC_MISSILE.ogg', 50, 1, 1, 1)
+	flick("judicial_marker", src)
+	sleep(16)
+	layer = ABOVE_ALL_MOB_LAYER
+	flick("judicial_explosion", src)
+	sleep(13)
 	var/targetsjudged = 0
 	playsound(src, 'sound/effects/explosionfar.ogg', 100, 1, 1, 1)
+	SetLuminosity(0)
 	for(var/mob/living/L in range(1, src))
 		if(is_servant_of_ratvar(L))
 			continue
@@ -196,7 +197,8 @@
 		L.adjustBruteLoss(10)
 		add_logs(user, L, "struck with a judicial blast")
 	user << "<span class='brass'><b>[targetsjudged ? "Successfully judged <span class='neovgre'>[targetsjudged]</span>":"Judged no"] heretic[!targetsjudged || targetsjudged > 1 ? "s":""].</b></span>"
-	QDEL_IN(src, 3) //so the animation completes properly
+	sleep(3) //so the animation completes properly
+	qdel(src)
 
 /obj/effect/clockwork/judicial_marker/ex_act(severity)
 	return

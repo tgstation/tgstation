@@ -14,6 +14,13 @@
 			return legcuffed
 	return null
 
+/mob/living/carbon/proc/equip_in_one_of_slots(obj/item/I, list/slots, qdel_on_fail = 1)
+	for(var/slot in slots)
+		if(equip_to_slot_if_possible(I, slots[slot], qdel_on_fail = 0, disable_warning = TRUE))
+			return slot
+	if(qdel_on_fail)
+		qdel(I)
+	return null
 
 //This is an UNSAFE proc. Use mob_can_equip() before calling this one! Or rather use equip_to_slot_if_possible() or advanced_equip_to_slot_if_possible()
 /mob/living/carbon/equip_to_slot(obj/item/I, slot)
@@ -65,9 +72,11 @@
 			put_in_hands(I)
 			update_inv_hands()
 		if(slot_in_backpack)
-			if(I == get_active_held_item())
-				unEquip(I)
-			I.loc = back
+			var/obj/item/weapon/storage/B = back
+			var/prev_jimmies = B.rustle_jimmies
+			B.rustle_jimmies = FALSE //don't conspicously rustle
+			B.handle_item_insertion(I, 1, src)
+			B.rustle_jimmies = prev_jimmies
 		else
 			not_handled = TRUE
 

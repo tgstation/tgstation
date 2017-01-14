@@ -212,7 +212,7 @@
 /datum/reagent/fuel/unholywater		//if you somehow managed to extract this from someone, dont splash it on yourself and have a smoke
 	name = "Unholy Water"
 	id = "unholywater"
-	description = "Something that shouldn't exist on this plane of existance."
+	description = "Something that shouldn't exist on this plane of existence."
 
 /datum/reagent/fuel/unholywater/on_mob_life(mob/living/M)
 	if(iscultist(M))
@@ -300,7 +300,7 @@
 					if ("albino")
 						N.skin_tone = "caucasian1"
 
-			if(MUTCOLORS in N.dna.species.specflags) //take current alien color and darken it slightly
+			if(MUTCOLORS in N.dna.species.species_traits) //take current alien color and darken it slightly
 				var/newcolor = ""
 				var/len = length(N.dna.features["mcolor"])
 				for(var/i=1, i<=len, i+=1)
@@ -343,7 +343,7 @@
 			N.skin_tone = "orange"
 			N.hair_style = "Spiky"
 			N.hair_color = "000"
-		if(MUTCOLORS in N.dna.species.specflags) //Aliens with custom colors simply get turned orange
+		if(MUTCOLORS in N.dna.species.species_traits) //Aliens with custom colors simply get turned orange
 			N.dna.features["mcolor"] = "f80"
 		N.regenerate_icons()
 		if(prob(7))
@@ -685,7 +685,7 @@
 /datum/reagent/lithium
 	name = "Lithium"
 	id = "lithium"
-	description = "A silver metal, it's claim to fame is its remarkably low density. Using it is a bit too effective in calming oneself down."
+	description = "A silver metal, its claim to fame is its remarkably low density. Using it is a bit too effective in calming oneself down."
 	reagent_state = SOLID
 	color = "#808080" // rgb: 128, 128, 128
 
@@ -892,7 +892,7 @@
 /datum/reagent/cryptobiolin
 	name = "Cryptobiolin"
 	id = "cryptobiolin"
-	description = "Cryptobiolin causes confusion and dizzyness."
+	description = "Cryptobiolin causes confusion and dizziness."
 	color = "#C8A5DC" // rgb: 200, 165, 220
 	metabolization_rate = 1.5 * REAGENTS_METABOLISM
 
@@ -1000,7 +1000,7 @@
 	description = "A potent oxidizer used as fuel in rockets and as an anaesthetic during surgery."
 	reagent_state = LIQUID
 	color = "#808080"
-	
+
 /datum/reagent/nitrous_oxide/reaction_obj(obj/O, reac_volume)
 	if((!O) || (!reac_volume))
 		return 0
@@ -1178,7 +1178,7 @@
 /datum/reagent/ash
 	name = "Ash"
 	id = "ash"
-	description = "Supposedly pheonixes rise from these, but you've never seen it."
+	description = "Supposedly phoenixes rise from these, but you've never seen it."
 	reagent_state = LIQUID
 	color = "#C8A5DC"
 
@@ -1356,7 +1356,7 @@
 
 //Misc reagents
 
-datum/reagent/romerol
+/datum/reagent/romerol
 	name = "romerol"
 	// the REAL zombie powder
 	id = "romerol"
@@ -1382,14 +1382,22 @@ datum/reagent/romerol
 	var/current_size = 1
 
 /datum/reagent/growthserum/on_mob_life(mob/living/carbon/H)
-	if(volume >= 20 && current_size != 2)
-		H.resize = 2/current_size
-		current_size = 2
-		H.update_transform()
-	else if (current_size != 1.5)
-		H.resize = 1.5/current_size
-		current_size = 1.5
-		H.update_transform()
+	var/newsize = current_size
+	switch(volume)
+		if(0 to 19)
+			newsize = 1.25
+		if(20 to 49)
+			newsize = 1.5
+		if(50 to 99)
+			newsize = 2
+		if(100 to 199)
+			newsize = 2.5
+		if(200 to INFINITY)
+			newsize = 3.5
+
+	H.resize = newsize/current_size
+	current_size = newsize
+	H.update_transform()
 	..()
 
 /datum/reagent/growthserum/on_mob_delete(mob/living/M)

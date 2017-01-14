@@ -104,14 +104,14 @@
 	harm_intent_damage = 5
 	density = TRUE
 	speed = 1
-	ventcrawler = 0
+	ventcrawler = VENTCRAWLER_NONE
 	faction = list("ratvar")
 	speak_emote = list("clanks", "clinks", "clunks", "clangs")
 	verb_ask = "requests"
 	verb_exclaim = "proclaims"
 	verb_yell = "harangues"
 	bubble_icon = "clock"
-	heavy_emp_damage = 10
+	heavy_emp_damage = 0
 	laws = "0. Purge all untruths and honor Ratvar."
 	default_storage = /obj/item/weapon/storage/toolbox/brass/prefilled
 	seeStatic = 0
@@ -140,7 +140,7 @@
 	src << "<span class='heavy_brass'>You are a cogscarab</span><b>, a clockwork creation of Ratvar. As a cogscarab, you have low health, an inbuilt proselytizer that can convert brass \
 	to liquified alloy, a set of relatively fast tools, </b><span class='heavy_brass'>can communicate over the Hierophant Network with :b</span><b>, and are immune to extreme \
 	temperatures and pressures. \nYour goal is to serve the Justiciar and his servants by repairing and defending all they create. \
-	\nYou yourself are one of these servants, and will be able to utilize almost anything they can, <i>excluding a clockwork slab.</i></b>"
+	\nYou yourself are one of these servants, and will be able to utilize almost anything they can[ratvar_awakens ? "":", <i>excluding a clockwork slab</i>"].</b>"
 
 /mob/living/simple_animal/drone/cogscarab/binarycheck()
 	return FALSE

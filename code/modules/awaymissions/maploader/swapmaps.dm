@@ -1,4 +1,4 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:32
+
 
 /*
 	SwapMaps library by Lummox JR
@@ -509,7 +509,7 @@ var/swapmaps_initialized
 var/swapmaps_loaded
 var/swapmaps_byname
 
-proc/InitializeSwapMaps()
+/proc/InitializeSwapMaps()
 	if(swapmaps_initialized) return
 	swapmaps_initialized=1
 	swapmaps_compiled_maxx=world.maxx
@@ -523,16 +523,16 @@ proc/InitializeSwapMaps()
 			// so you can look up an icon file by name or vice-versa
 			swapmaps_iconcache[swapmaps_iconcache[V]]=V
 
-proc/SwapMaps_AddIconToCache(name,icon)
+/proc/SwapMaps_AddIconToCache(name,icon)
 	if(!swapmaps_iconcache) swapmaps_iconcache=list()
 	swapmaps_iconcache[name]=icon
 	swapmaps_iconcache[icon]=name
 
-proc/SwapMaps_Find(id)
+/proc/SwapMaps_Find(id)
 	InitializeSwapMaps()
 	return swapmaps_byname[id]
 
-proc/SwapMaps_Load(id)
+/proc/SwapMaps_Load(id)
 	InitializeSwapMaps()
 	var/swapmap/M=swapmaps_byname[id]
 	if(!M)
@@ -553,29 +553,29 @@ proc/SwapMaps_Load(id)
 		M.mode=text
 	return M
 
-proc/SwapMaps_Save(id)
+/proc/SwapMaps_Save(id)
 	InitializeSwapMaps()
 	var/swapmap/M=swapmaps_byname[id]
 	if(M) M.Save()
 	return M
 
-proc/SwapMaps_Save_All()
+/proc/SwapMaps_Save_All()
 	InitializeSwapMaps()
 	for(var/swapmap/M in swapmaps_loaded)
 		if(M) M.Save()
 
-proc/SwapMaps_Unload(id)
+/proc/SwapMaps_Unload(id)
 	InitializeSwapMaps()
 	var/swapmap/M=swapmaps_byname[id]
 	if(!M) return	// return silently from an error
 	M.Unload()
 	return 1
 
-proc/SwapMaps_DeleteFile(id)
+/proc/SwapMaps_DeleteFile(id)
 	fdel("map_[id].sav")
 	fdel("map_[id].txt")
 
-proc/SwapMaps_CreateFromTemplate(template_id)
+/proc/SwapMaps_CreateFromTemplate(template_id)
 	var/swapmap/M=new
 	var/savefile/S
 	var/text=0
@@ -602,7 +602,7 @@ proc/SwapMaps_CreateFromTemplate(template_id)
 	while(M.locked) sleep(1)
 	return M
 
-proc/SwapMaps_LoadChunk(chunk_id,turf/locorner)
+/proc/SwapMaps_LoadChunk(chunk_id,turf/locorner)
 	var/swapmap/M=new
 	var/savefile/S
 	var/text=0
@@ -629,7 +629,7 @@ proc/SwapMaps_LoadChunk(chunk_id,turf/locorner)
 	qdel(M)
 	return 1
 
-proc/SwapMaps_SaveChunk(chunk_id,turf/corner1,turf/corner2)
+/proc/SwapMaps_SaveChunk(chunk_id,turf/corner1,turf/corner2)
 	if(!corner1 || !corner2)
 		world.log << "SwapMaps error in SwapMaps_SaveChunk():"
 		if(!corner1) world.log << "  corner1 turf is null"
@@ -650,7 +650,7 @@ proc/SwapMaps_SaveChunk(chunk_id,turf/corner1,turf/corner2)
 	qdel(M)
 	return 1
 
-proc/SwapMaps_GetSize(id)
+/proc/SwapMaps_GetSize(id)
 	var/savefile/S
 	var/text=0
 	if(swapmaps_mode==SWAPMAPS_TEXT && fexists("map_[id].txt"))

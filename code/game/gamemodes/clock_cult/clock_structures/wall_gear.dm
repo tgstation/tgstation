@@ -21,6 +21,9 @@
 	..()
 	PoolOrNew(/obj/effect/overlay/temp/ratvar/gear, get_turf(src))
 
+/obj/structure/destructible/clockwork/wall_gear/emp_act(severity)
+	return
+
 /obj/structure/destructible/clockwork/wall_gear/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/wrench))
 		default_unfasten_wrench(user, I, 10)
@@ -31,12 +34,12 @@
 		else
 			playsound(src, I.usesound, 100, 1)
 			user.visible_message("<span class='warning'>[user] starts to disassemble [src].</span>", "<span class='notice'>You start to disassemble [src]...</span>")
-			if(do_after(user, 40/I.toolspeed, target = src) && !anchored)
+			if(do_after(user, 40*I.toolspeed, target = src) && !anchored)
 				user << "<span class='notice'>You disassemble [src].</span>"
 				deconstruct(TRUE)
 		return 1
-	else if(istype(I, /obj/item/stack/sheet/brass))
-		var/obj/item/stack/sheet/brass/W = I
+	else if(istype(I, /obj/item/stack/tile/brass))
+		var/obj/item/stack/tile/brass/W = I
 		if(W.get_amount() < 1)
 			user << "<span class='warning'>You need one brass sheet to do this!</span>"
 			return
@@ -69,5 +72,5 @@
 
 /obj/structure/destructible/clockwork/wall_gear/deconstruct(disassembled = TRUE)
 	if(!(flags & NODECONSTRUCT) && disassembled)
-		new /obj/item/stack/sheet/brass(loc, 3)
+		new /obj/item/stack/tile/brass(loc, 3)
 	return ..()

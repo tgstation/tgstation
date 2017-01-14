@@ -70,7 +70,7 @@
 	return 150 //the damage hulks do on punches to this object, is affected by melee armor
 
 /obj/attack_hulk(mob/living/carbon/human/user, does_attack_animation = 0)
-	if(user.a_intent == "harm")
+	if(user.a_intent == INTENT_HARM)
 		..(user, 1)
 		visible_message("<span class='danger'>[user] smashes [src]!</span>", null, null, COMBAT_MESSAGE_RANGE)
 		if(density)
@@ -100,7 +100,7 @@
 
 /obj/attack_animal(mob/living/simple_animal/M)
 	if(!M.melee_damage_upper && !M.obj_damage)
-		M.emote("[M.friendly] [src]")
+		M.emote("custom", message = "[M.friendly] [src]")
 		return 0
 	else
 		var/play_soundeffect = 1
@@ -215,7 +215,7 @@ var/global/image/acid_overlay = image("icon" = 'icons/effects/effects.dmi', "ico
 	being_shocked = 1
 	var/power_bounced = power / 2
 	tesla_zap(src, 3, power_bounced)
-	addtimer(src, "reset_shocked", 10)
+	addtimer(CALLBACK(src, .proc/reset_shocked), 10)
 
 /obj/proc/reset_shocked()
 	being_shocked = 0

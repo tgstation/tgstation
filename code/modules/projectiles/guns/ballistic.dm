@@ -3,7 +3,7 @@
 	name = "projectile gun"
 	icon_state = "pistol"
 	origin_tech = "combat=2;materials=2"
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 	var/spawnwithmagazine = 1
 	var/mag_type = /obj/item/ammo_box/magazine/m10mm //Removes the need for max_ammo and caliber info
 	var/obj/item/ammo_box/magazine/magazine
@@ -77,7 +77,7 @@
 				S.oldsound = fire_sound
 				S.initial_w_class = w_class
 				fire_sound = 'sound/weapons/Gunshot_silenced.ogg'
-				w_class = 3 //so pistols do not fit in pockets when suppressed
+				w_class = WEIGHT_CLASS_NORMAL //so pistols do not fit in pockets when suppressed
 				A.loc = src
 				update_icon()
 				return
@@ -172,7 +172,7 @@
 		user.visible_message("[user] shortens \the [src]!", "<span class='notice'>You shorten \the [src].</span>")
 		name = "sawn-off [src.name]"
 		desc = sawn_desc
-		w_class = 3
+		w_class = WEIGHT_CLASS_NORMAL
 		item_state = "gun"
 		slot_flags &= ~SLOT_BACK	//you can't sling it on your back
 		slot_flags |= SLOT_BELT		//but you can wear it on your belt (poorly concealed under a trenchcoat, ideally)
@@ -194,7 +194,7 @@
 	desc = "A universal syndicate small-arms suppressor for maximum espionage."
 	icon = 'icons/obj/guns/projectile.dmi'
 	icon_state = "suppressor"
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	var/oldsound = null
 	var/initial_w_class = null
 

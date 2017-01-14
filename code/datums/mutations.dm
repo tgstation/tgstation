@@ -1,6 +1,6 @@
 /var/global/list/mutations_list = list()
 
-/datum/mutation/
+/datum/mutation
 
 	var/name
 
@@ -237,7 +237,7 @@
 		owner.visible_message("<span class='danger'>[owner] starts having a seizure!</span>", "<span class='userdanger'>You have a seizure!</span>")
 		owner.Paralyse(10)
 		owner.Jitter(1000)
-		addtimer(src, "jitter_less", 90, TIMER_NORMAL, owner)
+		addtimer(CALLBACK(src, .proc/jitter_less, owner), 90)
 
 /datum/mutation/human/epilepsy/proc/jitter_less(mob/living/carbon/human/owner)
 	if(owner)
@@ -624,7 +624,7 @@
 	return visual_indicators[1]
 
 /datum/mutation/human/laser_eyes/on_ranged_attack(mob/living/carbon/human/owner, atom/target)
-	if(owner.a_intent == "harm")
+	if(owner.a_intent == INTENT_HARM)
 		owner.LaserEyes(target)
 
 

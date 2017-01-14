@@ -6,7 +6,7 @@
 	item_state = "staff"
 	fire_sound = 'sound/weapons/emitter.ogg'
 	flags =  CONDUCT
-	w_class = 5
+	w_class = WEIGHT_CLASS_HUGE
 	var/max_charges = 6
 	var/charges = 0
 	var/recharge_rate = 4
@@ -79,8 +79,8 @@
 	playsound(loc, fire_sound, 50, 1, -1)
 	return (FIRELOSS)
 
-/obj/item/weapon/gun/magic/on_varedit(varname)
+/obj/item/weapon/gun/magic/vv_edit_var(var_name, var_value)
 	. = ..()
-	switch (varname)
+	switch (var_name)
 		if ("charges")
 			recharge_newshot()

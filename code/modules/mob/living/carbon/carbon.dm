@@ -85,7 +85,7 @@
 
 /mob/living/carbon/attackby(obj/item/I, mob/user, params)
 	if(lying && surgeries.len)
-		if(user != src && user.a_intent == "help")
+		if(user != src && user.a_intent == INTENT_HELP)
 			for(var/datum/surgery/S in surgeries)
 				if(S.next_step(user))
 					return 1
@@ -96,8 +96,10 @@
 	if(hit_atom.density && isturf(hit_atom))
 		Weaken(1)
 		take_bodypart_damage(10)
-	if(iscarbon(hit_atom))
+	if(iscarbon(hit_atom) && hit_atom != src)
 		var/mob/living/carbon/victim = hit_atom
+		if(victim.movement_type & FLYING)
+			return
 		victim.Weaken(1)
 		Weaken(1)
 		victim.take_bodypart_damage(10)
@@ -371,6 +373,10 @@
 			legcuffed = null
 			update_inv_legcuffed()
 			return
+		else
+			unEquip(I)
+			I.dropped()
+			return
 		return TRUE
 
 /mob/living/carbon/proc/is_mouth_covered(head_only = 0, mask_only = 0)
@@ -445,13 +451,13 @@
 	return ..()
 
 /mob/living/carbon/proc/vomit(var/lost_nutrition = 10, var/blood = 0, var/stun = 1, var/distance = 0, var/message = 1, var/toxic = 0)
-	if(dna && dna.species && NOHUNGER in dna.species.specflags)
+	if(dna && dna.species && NOHUNGER in dna.species.species_traits)
 		return 1
 
 	if(nutrition < 100 && !blood)
 		if(message)
 			visible_message("<span class='warning'>[src] dry heaves!</span>", \
-							"<span class='userdanger'>You try to throw up, but there's nothing your stomach!</span>")
+							"<span class='userdanger'>You try to throw up, but there's nothing in your stomach!</span>")
 		if(stun)
 			Weaken(10)
 		return 1
@@ -682,6 +688,7 @@
 			D.cure(0)
 	if(admin_revive)
 		regenerate_limbs()
+		regenerate_organs()
 		handcuffed = initial(handcuffed)
 		for(var/obj/item/weapon/restraints/R in contents) //actually remove cuffs from inventory
 			qdel(R)
@@ -718,7 +725,9 @@
 	..()
 
 /mob/living/carbon/fakefire(var/fire_icon = "Generic_mob_burning")
-	overlays_standing[FIRE_LAYER] = image("icon"='icons/mob/OnFire.dmi', "icon_state"= fire_icon, "layer"=-FIRE_LAYER)
+	var/image/new_fire_overlay = image("icon"='icons/mob/OnFire.dmi', "icon_state"= fire_icon, "layer"=-FIRE_LAYER)
+	new_fire_overlay.appearance_flags = RESET_COLOR
+	overlays_standing[FIRE_LAYER] = new_fire_overlay
 	apply_overlay(FIRE_LAYER)
 
 /mob/living/carbon/fakefireextinguish()
@@ -730,7 +739,7 @@
 					"<span class='userdanger'>[src] is attempting to devour you!</span>")
 	if(!do_mob(src, C, devour_time))
 		return
-	if(pulling && pulling == C && grab_state >= GRAB_AGGRESSIVE && a_intent == "grab")
+	if(pulling && pulling == C && grab_state >= GRAB_AGGRESSIVE && a_intent == INTENT_GRAB)
 		C.visible_message("<span class='danger'>[src] devours [C]!</span>", \
 						"<span class='userdanger'>[src] devours you!</span>")
 		C.forceMove(src)
@@ -759,3 +768,10 @@
 	for(var/X in internal_organs)
 		var/obj/item/organ/I = X
 		I.Insert(src)
+
+/mob/living/carbon/vv_get_dropdown()
+	. = ..()
+	. += "---"
+	.["Make AI"] = "?_src_=vars;makeai=\ref[src]"
+	.["Modify bodypart"] = "?_src_=vars;editbodypart=\ref[src]"
+	.["Modify organs"] = "?_src_=vars;editorgans=\ref[src]"

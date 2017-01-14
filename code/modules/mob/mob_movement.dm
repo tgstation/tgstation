@@ -127,6 +127,8 @@
 		return 0
 	if(moving)
 		return 0
+	if(mob.force_moving)
+		return 0
 	if(isliving(mob))
 		var/mob/living/L = mob
 		if(L.incorporeal_move)	//Move though walls
@@ -251,7 +253,7 @@
 			var/turf/open/floor/stepTurf = get_step(L, direct)
 			for(var/obj/effect/decal/cleanable/salt/S in stepTurf)
 				L << "<span class='warning'>[S] bars your passage!</span>"
-				if(istype(L, /mob/living/simple_animal/revenant))
+				if(isrevenant(L))
 					var/mob/living/simple_animal/revenant/R = L
 					R.reveal(20)
 					R.stun(20)
@@ -309,14 +311,19 @@
 
 //moves the mob/object we're pulling
 /mob/proc/Move_Pulled(atom/A)
-	if (!pulling)
+	if(!pulling)
 		return
-	if (pulling.anchored || !pulling.Adjacent(src))
+	if(pulling.anchored || !pulling.Adjacent(src))
 		stop_pulling()
 		return
-	if (A == loc && pulling.density)
+	if(isliving(pulling))
+		var/mob/living/L = pulling
+		if(L.buckled && L.buckled.buckle_prevents_pull) //if they're buckled to something that disallows pulling, prevent it
+			stop_pulling()
+			return
+	if(A == loc && pulling.density)
 		return
-	if (!Process_Spacemove(get_dir(pulling.loc, A)))
+	if(!Process_Spacemove(get_dir(pulling.loc, A)))
 		return
 	step(pulling, get_dir(pulling.loc, A))
 

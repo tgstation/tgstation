@@ -1,7 +1,7 @@
 /obj/item/weapon/pneumatic_cannon
 	name = "pneumatic cannon"
 	desc = "A gas-powered cannon that can fire any object loaded into it."
-	w_class = 4
+	w_class = WEIGHT_CLASS_BULKY
 	force = 8 //Very heavy
 	attack_verb = list("bludgeoned", "smashed", "beaten")
 	icon = 'icons/obj/pneumaticCannon.dmi'
@@ -71,7 +71,7 @@
 
 
 /obj/item/weapon/pneumatic_cannon/afterattack(atom/target, mob/living/carbon/human/user, flag, params)
-	if(flag && user.a_intent == "harm") //melee attack
+	if(flag && user.a_intent == INTENT_HARM) //melee attack
 		return
 	if(!istype(user))
 		return
@@ -110,7 +110,7 @@
 		loadedWeightClass -= ITD.w_class
 		ITD.throw_speed = pressureSetting * 2
 		ITD.loc = get_turf(src)
-		ITD.throw_at_fast(target, pressureSetting * 5, pressureSetting * 2,user)
+		ITD.throw_at(target, pressureSetting * 5, pressureSetting * 2,user)
 	if(pressureSetting >= 3 && user)
 		user.visible_message("<span class='warning'>[user] is thrown down by the force of the cannon!</span>", "<span class='userdanger'>[src] slams into your shoulder, knocking you down!")
 		user.Weaken(3)
@@ -120,7 +120,7 @@
 	name = "improvised pneumatic cannon"
 	desc = "A gas-powered, object-firing cannon made out of common parts."
 	force = 5
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 	maxWeightClass = 7
 	gasPerThrow = 5
 

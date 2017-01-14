@@ -18,7 +18,7 @@
 	item_state = "pen"
 	slot_flags = SLOT_BELT | SLOT_EARS
 	throwforce = 0
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 	throw_speed = 3
 	throw_range = 7
 	materials = list(MAT_METAL=10)
@@ -83,7 +83,7 @@
  */
 /obj/item/weapon/pen/sleepy
 	origin_tech = "engineering=4;syndicate=2"
-	flags = OPENCONTAINER
+	container_type = OPENCONTAINER
 
 
 /obj/item/weapon/pen/sleepy/attack(mob/living/M, mob/user)
@@ -125,7 +125,7 @@
 	else
 		on = 1
 		force = 18
-		w_class = 3
+		w_class = WEIGHT_CLASS_NORMAL
 		name = "energy dagger"
 		hitsound = 'sound/weapons/blade1.ogg'
 		embed_chance = 100 //rule of cool

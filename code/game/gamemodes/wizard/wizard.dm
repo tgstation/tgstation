@@ -146,7 +146,7 @@
 	wizard_mob.set_species(/datum/species/human)
 	wizard_mob.equip_to_slot_or_del(new /obj/item/device/radio/headset(wizard_mob), slot_ears)
 	wizard_mob.equip_to_slot_or_del(new /obj/item/clothing/under/color/lightpurple(wizard_mob), slot_w_uniform)
-	wizard_mob.equip_to_slot_or_del(new /obj/item/clothing/shoes/sandal(wizard_mob), slot_shoes)
+	wizard_mob.equip_to_slot_or_del(new /obj/item/clothing/shoes/sandal/magic(wizard_mob), slot_shoes)
 	wizard_mob.equip_to_slot_or_del(new /obj/item/clothing/suit/wizrobe(wizard_mob), slot_wear_suit)
 	wizard_mob.equip_to_slot_or_del(new /obj/item/clothing/head/wizard(wizard_mob), slot_head)
 	wizard_mob.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack(wizard_mob), slot_back)
@@ -245,22 +245,6 @@
 		var/obj/effect/proc_holder/spell/spell_to_remove = X
 		qdel(spell_to_remove)
 		mind.spell_list -= spell_to_remove
-
-/*Checks if the wizard can cast spells.
-Made a proc so this is not repeated 14 (or more) times.*/
-/mob/proc/casting()
-//Removed the stat check because not all spells require clothing now.
-	if(!istype(usr:wear_suit, /obj/item/clothing/suit/wizrobe))
-		usr << "I don't feel strong enough without my robe."
-		return 0
-	if(!istype(usr:shoes, /obj/item/clothing/shoes/sandal))
-		usr << "I don't feel strong enough without my sandals."
-		return 0
-	if(!istype(usr:head, /obj/item/clothing/head/wizard))
-		usr << "I don't feel strong enough without my hat."
-		return 0
-	else
-		return 1
 
 //returns whether the mob is a wizard (or apprentice)
 /proc/iswizard(mob/living/M)

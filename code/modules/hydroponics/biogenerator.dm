@@ -44,7 +44,7 @@
 		updateUsrDialog()
 
 /obj/item/weapon/circuitboard/machine/biogenerator
-	name = "circuit board (Biogenerator)"
+	name = "Biogenerator (Machine Board)"
 	build_path = /obj/machinery/biogenerator
 	origin_tech = "programming=2;biotech=3;materials=3"
 	req_components = list(
@@ -81,7 +81,7 @@
 	return
 
 /obj/machinery/biogenerator/attackby(obj/item/O, mob/user, params)
-	if(user.a_intent == "harm")
+	if(user.a_intent == INTENT_HARM)
 		return ..()
 
 	if(processing)

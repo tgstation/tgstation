@@ -2,8 +2,9 @@
 
 /obj/item/clothing/suit/hooded
 	actions_types = list(/datum/action/item_action/toggle_hood)
-	var/obj/item/clothing/head/hood
-	var/hoodtype = /obj/item/clothing/head/winterhood //so the chaplain hoodie or other hoodies can override this
+	var/obj/item/clothing/head/hooded/hood
+	var/hoodtype = /obj/item/clothing/head/hooded/winterhood //so the chaplain hoodie or other hoodies can override this
+	hooded = 1
 
 /obj/item/clothing/suit/hooded/New()
 	MakeHood()
@@ -15,7 +16,8 @@
 
 /obj/item/clothing/suit/hooded/proc/MakeHood()
 	if(!hood)
-		var/obj/item/clothing/head/W = new hoodtype(src)
+		var/obj/item/clothing/head/hooded/W = new hoodtype(src)
+		W.suit = src
 		hood = W
 
 /obj/item/clothing/suit/hooded/ui_action_click()
@@ -65,6 +67,22 @@
 					A.UpdateButtonIcon()
 	else
 		RemoveHood()
+
+/obj/item/clothing/head/hooded
+	var/obj/item/clothing/suit/hooded/suit
+
+/obj/item/clothing/head/hooded/dropped()
+	..()
+	if(suit)
+		suit.RemoveHood()
+
+/obj/item/clothing/head/hooded/equipped(mob/user, slot)
+	..()
+	if(slot != slot_head)
+		if(suit)
+			suit.RemoveHood()
+		else
+			qdel(src)
 
 //Toggle exosuits for different aesthetic styles (hoodies, suit jacket buttons, etc)
 

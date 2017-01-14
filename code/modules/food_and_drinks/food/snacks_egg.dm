@@ -96,7 +96,7 @@
 	bonus_reagents = list("nutriment" = 1, "vitamin" = 2)
 	list_reagents = list("nutriment" = 8, "vitamin" = 1)
 	bitesize = 1
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 
 /obj/item/weapon/reagent_containers/food/snacks/omelette/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W,/obj/item/weapon/kitchen/fork))
@@ -122,5 +122,5 @@
 	icon_state = "benedict"
 	bonus_reagents = list("vitamin" = 4)
 	trash = /obj/item/trash/plate
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 	list_reagents = list("nutriment" = 6, "vitamin" = 4)

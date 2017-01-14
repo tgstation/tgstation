@@ -21,9 +21,10 @@
 	add_overlay("waitlight")
 	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/chem_master(null)
 	B.apply_default_parts(src)
+	..()
 
 /obj/item/weapon/circuitboard/machine/chem_master
-	name = "circuit board (ChemMaster 3000)"
+	name = "ChemMaster 3000 (Machine Board)"
 	build_path = /obj/machinery/chem_master
 	origin_tech = "materials=3;programming=2;biotech=3"
 	req_components = list(
@@ -41,7 +42,7 @@
 			new_path = /obj/machinery/chem_master/condimaster
 
 		build_path = new_path
-		name = "circuit board ([new_name] 3000)"
+		name = "[new_name] 3000 (Machine Board)"
 		user << "<span class='notice'>You change the circuit board setting to \"[new_name]\".</span>"
 	else
 		return ..()
@@ -102,7 +103,7 @@
 	if(default_unfasten_wrench(user, I))
 		return
 
-	if(istype(I, /obj/item/weapon/reagent_containers) && (I.flags & OPENCONTAINER))
+	if(istype(I, /obj/item/weapon/reagent_containers) && (I.container_type & OPENCONTAINER))
 		. = 1 // no afterattack
 		if(panel_open)
 			user << "<span class='warning'>You can't use the [src.name] while its panel is opened!</span>"
@@ -303,7 +304,7 @@
 				var/name = stripped_input(usr, "Name:","Name your bottle!", (reagents.total_volume ? reagents.get_master_reagent_name() : " "), MAX_NAME_LEN)
 				if(!name || !reagents.total_volume || !src || qdeleted(src) || !usr.canUseTopic(src, be_close=TRUE))
 					return
-				
+
 				var/obj/item/weapon/reagent_containers/glass/bottle/P
 				for(var/i = 0; i < amount_full; i++)
 					P = new/obj/item/weapon/reagent_containers/glass/bottle(src.loc)
@@ -311,7 +312,7 @@
 					P.pixel_y = rand(-7, 7)
 					P.name = trim("[name] bottle")
 					reagents.trans_to(P, 30)
-					
+
 				if(vol_part)
 					P = new/obj/item/weapon/reagent_containers/glass/bottle(src.loc)
 					P.name = trim("[name] bottle")
@@ -360,5 +361,5 @@
 	condi = 1
 
 /obj/item/weapon/circuitboard/machine/chem_master/condi
-	name = "circuit board (CondiMaster 3000)"
+	name = "CondiMaster 3000 (Machine Board)"
 	build_path = /obj/machinery/chem_master/condimaster

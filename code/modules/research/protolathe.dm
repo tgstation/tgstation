@@ -11,7 +11,7 @@ Note: Must be placed west/left of and R&D console to function.
 	name = "Protolathe"
 	desc = "Converts raw materials into useful objects."
 	icon_state = "protolathe"
-	flags = OPENCONTAINER
+	container_type = OPENCONTAINER
 
 	var/datum/material_container/materials
 	var/efficiency_coeff
@@ -39,7 +39,7 @@ Note: Must be placed west/left of and R&D console to function.
 	B.apply_default_parts(src)
 
 /obj/item/weapon/circuitboard/machine/protolathe
-	name = "circuit board (Protolathe)"
+	name = "Protolathe (Machine Board)"
 	build_path = /obj/machinery/r_n_d/protolathe
 	origin_tech = "engineering=2;programming=2"
 	req_components = list(
@@ -67,7 +67,7 @@ Note: Must be placed west/left of and R&D console to function.
 	efficiency_coeff = min(max(0, T), 1)
 
 /obj/machinery/r_n_d/protolathe/proc/check_mat(datum/design/being_built, M)	// now returns how many times the item can be built with the material
-	var/list/all_materials = being_built.reagents + being_built.materials
+	var/list/all_materials = being_built.reagents_list + being_built.materials
 
 	var/A = materials.amount(M)
 	if(!A)
@@ -119,7 +119,7 @@ Note: Must be placed west/left of and R&D console to function.
 			busy = 0
 		updateUsrDialog()
 
-	else if(user.a_intent != "harm")
+	else if(user.a_intent != INTENT_HARM)
 		user << "<span class='warning'>You cannot insert this item into the [name]!</span>"
 		return 1
 	else

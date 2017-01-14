@@ -102,6 +102,23 @@
  /**
   * private
   *
+  * Close *ALL* UIs
+  *
+  * return int The number of UIs closed.
+ **/
+/datum/subsystem/tgui/proc/close_all_uis()
+	var/close_count = 0
+	for(var/src_object_key in open_uis)
+		for(var/ui_key in open_uis[src_object_key])
+			for(var/datum/tgui/ui in open_uis[src_object_key][ui_key])
+				if(ui && ui.src_object && ui.user && ui.src_object.ui_host()) // Check the UI is valid.
+					ui.close() // Close the UI.
+					close_count++ // Count each UI we close.
+	return close_count
+
+ /**
+  * private
+  *
   * Update all UIs belonging to a user.
   *
   * required user mob The mob who opened/is using the UI.

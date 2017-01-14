@@ -24,7 +24,7 @@
 	for(var/i in 1 to plasmatanks)
 		new /obj/item/weapon/tank/internals/plasma(src)
 	update_icon()
-
+	..()
 /obj/structure/tank_dispenser/update_icon()
 	cut_overlays()
 	switch(oxygentanks)
@@ -53,7 +53,7 @@
 	else if(istype(I, /obj/item/weapon/wrench))
 		default_unfasten_wrench(user, I, time = 20)
 		return
-	else if(user.a_intent != "harm")
+	else if(user.a_intent != INTENT_HARM)
 		user << "<span class='notice'>[I] does not fit into [src].</span>"
 		return
 	else
@@ -88,13 +88,13 @@
 	switch(action)
 		if("plasma")
 			var/obj/item/weapon/tank/internals/plasma/tank = locate() in src
-			if(tank)
+			if(tank && Adjacent(usr))
 				usr.put_in_hands(tank)
 				plasmatanks--
 			. = TRUE
 		if("oxygen")
 			var/obj/item/weapon/tank/internals/oxygen/tank = locate() in src
-			if(tank)
+			if(tank && Adjacent(usr))
 				usr.put_in_hands(tank)
 				oxygentanks--
 			. = TRUE

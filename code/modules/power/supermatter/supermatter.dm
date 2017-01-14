@@ -26,6 +26,8 @@
 	luminosity = 4
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
+	critical_machine = TRUE
+
 	var/gasefficency = 0.125
 
 	var/base_icon_state = "darkmatter_shard"
@@ -65,9 +67,12 @@
 	// For making hugbox supermatter
 	var/takes_damage = 1
 	var/produces_gas = 1
+	var/obj/effect/countdown/supermatter/countdown
 
 /obj/machinery/power/supermatter_shard/New()
 	. = ..()
+	countdown = new(src)
+	countdown.start()
 	poi_list |= src
 	radio = new(src)
 	radio.listening = 0
@@ -80,6 +85,9 @@
 		qdel(radio)
 		radio = null
 	poi_list -= src
+	if(countdown)
+		qdel(countdown)
+		countdown = null
 	. = ..()
 
 /obj/machinery/power/supermatter_shard/proc/explode()
@@ -273,7 +281,7 @@
 /obj/machinery/power/supermatter_shard/attack_hand(mob/living/user)
 	if(!istype(user))
 		return
-	user.visible_message("<span class='danger'>\The [user] reaches out and touches \the [src], inducing a resonance... \his body starts to glow and bursts into flames before flashing into ash.</span>",\
+	user.visible_message("<span class='danger'>\The [user] reaches out and touches \the [src], inducing a resonance... [user.p_their()] body starts to glow and bursts into flames before flashing into ash.</span>",\
 		"<span class='userdanger'>You reach out and touch \the [src]. Everything starts burning and all you can hear is ringing. Your last thought is \"That was not a wise decision.\"</span>",\
 		"<span class='italics'>You hear an unearthly noise as a wave of heat washes over you.</span>")
 
@@ -302,7 +310,7 @@
 
 /obj/machinery/power/supermatter_shard/Bumped(atom/AM)
 	if(isliving(AM))
-		AM.visible_message("<span class='danger'>\The [AM] slams into \the [src] inducing a resonance... \his body starts to glow and catch flame before flashing into ash.</span>",\
+		AM.visible_message("<span class='danger'>\The [AM] slams into \the [src] inducing a resonance... [AM.p_their()] body starts to glow and catch flame before flashing into ash.</span>",\
 		"<span class='userdanger'>You slam into \the [src] as your ears are filled with unearthly ringing. Your last thought is \"Oh, fuck.\"</span>",\
 		"<span class='italics'>You hear an unearthly noise as a wave of heat washes over you.</span>")
 	else if(isobj(AM) && !istype(AM, /obj/effect))

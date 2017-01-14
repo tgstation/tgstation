@@ -9,7 +9,7 @@
 	viable_mobtypes = list(/mob/living/carbon/human)
 	disease_flags = CAN_CARRY|CAN_RESIST|CURABLE
 	permeability_mod = 0.75
-	desc = "Some speculate, that this virus is the cause of Wizard Federation existance. Subjects affected show the signs of mental retardation, yelling obscure sentences or total gibberish. On late stages subjects sometime express the feelings of inner power, and, cite, 'the ability to control the forces of cosmos themselves!' A gulp of strong, manly spirits usually reverts them to normal, humanlike, condition."
+	desc = "Some speculate that this virus is the cause of the Space Wizard Federation's existence. Subjects affected show the signs of mental retardation, yelling obscure sentences or total gibberish. On late stages subjects sometime express the feelings of inner power, and, cite, 'the ability to control the forces of cosmos themselves!' A gulp of strong, manly spirits usually reverts them to normal, humanlike, condition."
 	severity = HARMFUL
 	required_organs = list(/obj/item/bodypart/head)
 
@@ -70,10 +70,10 @@ STI KALY - blind
 				H.equip_to_slot_or_del(new /obj/item/clothing/suit/wizrobe(H), slot_wear_suit)
 			return
 		if(prob(chance))
-			if(!istype(H.shoes, /obj/item/clothing/shoes/sandal))
+			if(!istype(H.shoes, /obj/item/clothing/shoes/sandal/magic))
 				if(!H.unEquip(H.shoes))
 					qdel(H.shoes)
-			H.equip_to_slot_or_del(new /obj/item/clothing/shoes/sandal(H), slot_shoes)
+			H.equip_to_slot_or_del(new /obj/item/clothing/shoes/sandal/magic(H), slot_shoes)
 			return
 	else
 		var/mob/living/carbon/H = affected_mob

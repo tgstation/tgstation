@@ -84,7 +84,7 @@
 	if(istype(I, /obj/item/weapon/screwdriver) && stat != DEAD)
 		if(health < maxHealth)
 			user << "<span class='notice'>You start to tighten loose screws on [src]...</span>"
-			if(do_after(user,80/I.toolspeed,target=user))
+			if(do_after(user,80*I.toolspeed,target=user))
 				adjustBruteLoss(-getBruteLoss())
 				visible_message("<span class='notice'>[user] tightens [src == user ? "[user.p_their()]" : "[src]'s"] loose screws!</span>", "<span class='notice'>You tighten [src == user ? "your" : "[src]'s"] loose screws.</span>")
 			else
@@ -95,8 +95,8 @@
 	else if(istype(I, /obj/item/weapon/wrench) && user != src) //They aren't required to be hacked, because laws can change in other ways (i.e. admins)
 		user.visible_message("<span class='notice'>[user] starts resetting [src]...</span>", \
 							 "<span class='notice'>You press down on [src]'s factory reset control...</span>")
-		playsound(src, 'sound/items/Ratchet.ogg', 50, 1)
-		if(!do_after(user, 50/I.toolspeed, target = src))
+		playsound(src, I.usesound, 50, 1)
+		if(!do_after(user, 50*I.toolspeed, target = src))
 			return
 		user.visible_message("<span class='notice'>[user] resets [src]!</span>", \
 							 "<span class='notice'>You reset [src]'s directives to factory defaults!</span>")
@@ -140,7 +140,7 @@
 		hacked = 1
 		mind.special_role = "hacked drone"
 		seeStatic = 0 //I MUST SEE THEIR TERRIFIED FACES
-		ventcrawler = 0 //Again, balance
+		ventcrawler = VENTCRAWLER_NONE //Again, balance
 		speed = 1 //gotta go slow
 		message_admins("[src] ([src.key]) became a hacked drone hellbent on [clockwork ? "serving Ratvar" : "destroying the station"]!")
 	else
@@ -199,4 +199,3 @@
 	name = "Select Vision Filter"
 	button_icon_state = "drone_vision"
 	procname = /mob/living/simple_animal/drone/verb/toggle_statics
-

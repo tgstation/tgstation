@@ -66,7 +66,7 @@
 	desc = "A small grey key."
 	icon = 'icons/obj/vehicles.dmi'
 	icon_state = "key"
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 
 
 //BUCKLE HOOKS
@@ -137,7 +137,7 @@
 	if(has_gravity())
 		return 1
 
-	if(pulledby)
+	if(pulledby && (pulledby.loc != loc))
 		return 1
 
 	return 0

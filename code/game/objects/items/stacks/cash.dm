@@ -9,7 +9,7 @@
 	throwforce = 0
 	throw_speed = 2
 	throw_range = 2
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 	resistance_flags = FLAMMABLE
 	var/value = 1
 

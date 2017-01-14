@@ -46,7 +46,7 @@ Difficulty: Very Hard
 	del_on_death = 1
 	medal_type = MEDAL_PREFIX
 	score_type = COLOSSUS_SCORE
-	loot = list(/obj/machinery/anomalous_crystal/random)
+	loot = list(/obj/machinery/anomalous_crystal/random, /obj/item/organ/vocal_cords/colossus)
 	butcher_results = list(/obj/item/weapon/ore/diamond = 5, /obj/item/stack/sheet/sinew = 5, /obj/item/stack/sheet/animalhide/ashdrake = 10, /obj/item/stack/sheet/bone = 30)
 	deathmessage = "disintegrates, leaving a glowing core in its wake."
 	death_sound = 'sound/magic/demon_dies.ogg'
@@ -77,7 +77,7 @@ Difficulty: Very Hard
 			double_spiral()
 		else
 			visible_message("<span class='colossus'>\"<b>Judgement.</b>\"</span>")
-			addtimer(src, "spiral_shoot", 0, FALSE, rand(0, 1))
+			addtimer(CALLBACK(src, .proc/spiral_shoot, rand(0, 1)), 0)
 
 	else if(prob(20))
 		ranged_cooldown = world.time + 30
@@ -88,7 +88,7 @@ Difficulty: Very Hard
 			blast()
 		else
 			ranged_cooldown = world.time + 40
-			addtimer(src, "alternating_dir_shots", 0)
+			addtimer(CALLBACK(src, .proc/alternating_dir_shots), 0)
 
 
 /mob/living/simple_animal/hostile/megafauna/colossus/New()
@@ -108,7 +108,7 @@ Difficulty: Very Hard
 /obj/effect/overlay/temp/at_shield/New(new_loc, new_target)
 	..()
 	target = new_target
-	addtimer(src, "orbit", 0, FALSE, target, 0, FALSE, 0, 0, FALSE, TRUE)
+	addtimer(CALLBACK(src, /atom/movable/proc/orbit, target, 0, FALSE, 0, 0, FALSE, TRUE), 0)
 
 /mob/living/simple_animal/hostile/megafauna/colossus/bullet_act(obj/item/projectile/P)
 	if(!stat)
@@ -139,8 +139,8 @@ Difficulty: Very Hard
 	visible_message("<span class='colossus'>\"<b>Die.</b>\"</span>")
 
 	sleep(10)
-	addtimer(src, "spiral_shoot", 0)
-	addtimer(src, "spiral_shoot", 0, FALSE, 1)
+	addtimer(CALLBACK(src, .proc/spiral_shoot), 0)
+	addtimer(CALLBACK(src, .proc/spiral_shoot, 1), 0)
 
 /mob/living/simple_animal/hostile/megafauna/colossus/proc/spiral_shoot(negative = 0, counter_start = 1)
 	var/counter = counter_start
@@ -501,7 +501,7 @@ Difficulty: Very Hard
 						if(O.air)
 							var/datum/gas_mixture/G = O.air
 							G.copy_from_turf(O)
-						if(prob(florachance) && NewFlora.len && !is_blocked_turf(O))
+						if(prob(florachance) && NewFlora.len && !is_blocked_turf(O, TRUE))
 							var/atom/Picked = pick(NewFlora)
 							new Picked(O)
 						continue
@@ -579,10 +579,10 @@ Difficulty: Very Hard
 	..()
 	if(ready_to_deploy)
 		var/be_helper = alert("Become a Lightgeist? (Warning, You can no longer be cloned!)",,"Yes","No")
-		if(be_helper == "No")
-			return
-		var/mob/living/simple_animal/hostile/lightgeist/W = new /mob/living/simple_animal/hostile/lightgeist(get_turf(loc))
-		W.key = user.key
+		if(be_helper == "Yes" && !qdeleted(src) && isobserver(user))
+			var/mob/living/simple_animal/hostile/lightgeist/W = new /mob/living/simple_animal/hostile/lightgeist(get_turf(loc))
+			W.key = user.key
+
 
 /obj/machinery/anomalous_crystal/helpers/Topic(href, href_list)
 	if(href_list["ghostjoin"])
@@ -608,7 +608,7 @@ Difficulty: Very Hard
 	density = 0
 	movement_type = FLYING
 	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
-	ventcrawler = 2
+	ventcrawler = VENTCRAWLER_ALWAYS
 	mob_size = MOB_SIZE_TINY
 	gold_core_spawnable = 0
 	verb_say = "warps"
