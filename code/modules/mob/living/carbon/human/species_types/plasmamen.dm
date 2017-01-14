@@ -19,7 +19,7 @@ var/global/image/plasmaman_on_fire = image("icon"='icons/mob/OnFire.dmi', "icon_
 
 /datum/species/plasmaman/spec_life(mob/living/carbon/human/H)
 	var/datum/gas_mixture/environment = H.loc.return_air()
-	var/atmos_sealed = (wear_suit && (wear_suit.flags & STOPSPRESSUREDMAGE)) && (head && (head.flags & STOPSPRESSUREDMAGE))
+	var/atmos_sealed = (H.wear_suit && (H.wear_suit.flags & STOPSPRESSUREDMAGE)) && (H.head && (H.head.flags & STOPSPRESSUREDMAGE))
 	if((!istype(H.w_uniform, /obj/item/clothing/under/plasmaman) || !istype(H.head, /obj/item/clothing/head/helmet/space/plasmaman)) && !atmos_sealed)
 		if(environment)
 			var/total_moles = environment.total_moles()
