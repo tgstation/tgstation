@@ -4,28 +4,27 @@
 /obj/item/clothing/mask/gas/sechailer
 	name = "security gas mask"
 	desc = "A standard issue Security gas mask with integrated 'Compli-o-nator 3000' device. Plays over a dozen pre-recorded compliance phrases designed to get scumbags to stand still whilst you taze them. Do not tamper with the device."
-	actions_types = list(/datum/action/item_action/halt, /datum/action/item_action/adjust, /datum/action/item_action/selectphrase)
+	actions_types = list(/datum/action/item_action/halt, /datum/action/item_action/adjust)
 	icon_state = "sechailer"
 	flags = BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
 	flags_inv = HIDEFACIALHAIR|HIDEFACE
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	visor_flags = BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
 	visor_flags_inv = HIDEFACE
 	flags_cover = MASKCOVERSMOUTH
 	visor_flags_cover = MASKCOVERSMOUTH
-	var/phrase = 1
-	var/aggressiveness = 1
+	var/aggressiveness = 2
 	var/cooldown_special
 	var/recent_uses = 0
 	var/broken_hailer = 0
+	var/safety = TRUE
 
 /obj/item/clothing/mask/gas/sechailer/swat
 	name = "\improper SWAT mask"
 	desc = "A close-fitting tactical mask with an especially aggressive Compli-o-nator 3000."
-	actions_types = list(/datum/action/item_action/halt, /datum/action/item_action/selectphrase)
+	actions_types = list(/datum/action/item_action/halt)
 	icon_state = "swat"
 	aggressiveness = 3
-	phrase = 12
 	flags_inv = HIDEFACIALHAIR|HIDEFACE|HIDEEYES|HIDEEARS|HIDEHAIR
 	visor_flags_inv = 0
 
@@ -41,164 +40,37 @@
 	if(istype(W, /obj/item/weapon/screwdriver))
 		switch(aggressiveness)
 			if(1)
-				user << "<span class='notice'>You set the aggressiveness restrictor to the second position.</span>"
+				user << "<span class='notice'>You set the restrictor to the middle position.</span>"
 				aggressiveness = 2
 			if(2)
-				user << "<span class='notice'>You set the aggressiveness restrictor to the third position.</span>"
+				user << "<span class='notice'>You set the restrictor to the last position.</span>"
 				aggressiveness = 3
 			if(3)
-				user << "<span class='notice'>You set the aggressiveness restrictor to the fourth position.</span>"
-				aggressiveness = 4
-			if(4)
-				user << "<span class='notice'>You set the aggressiveness restrictor to the first position.</span>"
+				user << "<span class='notice'>You set the restrictor to the first position.</span>"
 				aggressiveness = 1
-			if(5)
+			if(4)
 				user << "<span class='danger'>You adjust the restrictor but nothing happens, probably because it's broken.</span>"
 	else if(istype(W, /obj/item/weapon/wirecutters))
-		if(aggressiveness != 5)
+		if(aggressiveness != 4)
 			user << "<span class='danger'>You broke the restrictor!</span>"
-			aggressiveness = 5
+			aggressiveness = 4
 	else
 		..()
 
 /obj/item/clothing/mask/gas/sechailer/ui_action_click(mob/user, action)
 	if(istype(action, /datum/action/item_action/halt))
 		halt()
-	else if(istype(action, /datum/action/item_action/adjust))
+	else
 		adjustmask(user)
-	else if(istype(action, /datum/action/item_action/selectphrase))
-		switch(aggressiveness)
-			if(1)
-				switch(phrase)
-					if(1)
-						user << "<span class='notice'>You set the restrictor to: Stop in the name of the Law.</span>"
-						phrase = 2
-					if(2)
-						user << "<span class='notice'>You set the restrictor to: Compliance is in your best interest.</span>"
-						phrase = 3
-					if(3)
-						user << "<span class='notice'>You set the restrictor to: Prepare for justice.</span>"
-						phrase = 4
-					if(4)
-						user << "<span class='notice'>You set the restrictor to: Running will only increase your sentence.</span>"
-						phrase = 5
-					if(5)
-						user << "<span class='notice'>You set the restrictor to: Don't move, Creep!</span>"
-						phrase = 6
-					if(6)
-						user << "<span class='notice'>You set the restrictor to: HALT! HALT! HALT! HALT!</span>"
-						phrase = 1
-					else
-						user << "<span class='notice'>You set the restrictor to: HALT! HALT! HALT! HALT!</span>"
-						phrase = 1
-			if(2)
-				switch(phrase)
-					if(7)
-						user << "<span class='notice'>You set the restrictor to: Dead or alive you're coming with me.</span>"
-						phrase = 8
-					if(8)
-						user << "<span class='notice'>You set the restrictor to: God made today for the crooks we could not catch yesterday.</span>"
-						phrase = 9
-					if(9)
-						user << "<span class='notice'>You set the restrictor to: Freeze, Scum Bag!</span>"
-						phrase = 10
-					if(10)
-						user << "<span class='notice'>You set the restrictor to: Stop right there, criminal scum!</span>"
-						phrase = 11
-					if(11)
-						user << "<span class='notice'>You set the restrictor to: Down on the floor, Creep!</span>"
-						phrase = 7
-					else
-						user << "<span class='notice'>You set the restrictor to: Down on the floor, Creep!</span>"
-						phrase = 7
-			if(3)
-				switch(phrase)
-					if(12)
-						user << "<span class='notice'>You set the restrictor to: Go ahead, make my day.</span>"
-						phrase = 13
-					if(13)
-						user << "<span class='notice'>You set the restrictor to: Stop breaking the law, ass hole.</span>"
-						phrase = 14
-					if(14)
-						user << "<span class='notice'>You set the restrictor to: You have the right to shut the fuck up.</span>"
-						phrase = 15
-					if(15)
-						user << "<span class='notice'>You set the restrictor to: Shut up crime!</span>"
-						phrase = 16
-					if(16)
-						user << "<span class='notice'>You set the restrictor to: Face the wrath of the golden bolt.</span>"
-						phrase = 17
-					if(17)
-						user << "<span class='notice'>You set the restrictor to: I am, the LAW!</span>"
-						phrase = 18
-					if(18)
-						user << "<span class='notice'>You set the restrictor to: Stop or I'll bash you.</span>"
-						phrase = 12
-					else
-						user << "<span class='notice'>You set the restrictor to: Go ahead, make my day.</span>"
-						phrase = 13
-
-			if(4)
-				switch(phrase)
-					if(1)
-						user << "<span class='notice'>You set the restrictor to: Stop in the name of the Law.</span>"
-						phrase = 2
-					if(2)
-						user << "<span class='notice'>You set the restrictor to: Compliance is in your best interest.</span>"
-						phrase = 3
-					if(3)
-						user << "<span class='notice'>You set the restrictor to: Prepare for justice.</span>"
-						phrase = 4
-					if(4)
-						user << "<span class='notice'>You set the restrictor to: Running will only increase your sentence.</span>"
-						phrase = 5
-					if(5)
-						user << "<span class='notice'>You set the restrictor to: Don't move, Creep!</span>"
-						phrase = 6
-					if(6)
-						user << "<span class='notice'>You set the restrictor to: Down on the floor, Creep!</span>"
-						phrase = 7
-					if(7)
-						user << "<span class='notice'>You set the restrictor to: Dead or alive you're coming with me.</span>"
-						phrase = 8
-					if(8)
-						user << "<span class='notice'>You set the restrictor to: God made today for the crooks we could not catch yesterday.</span>"
-						phrase = 9
-					if(9)
-						user << "<span class='notice'>You set the restrictor to: Freeze, Scum Bag!</span>"
-						phrase = 10
-					if(10)
-						user << "<span class='notice'>You set the restrictor to: Stop right there, criminal scum!</span>"
-						phrase = 11
-					if(11)
-						user << "<span class='notice'>You set the restrictor to: Stop or I'll bash you.</span>"
-						phrase = 12
-					if(12)
-						user << "<span class='notice'>You set the restrictor to: Go ahead, make my day.</span>"
-						phrase = 13
-					if(13)
-						user << "<span class='notice'>You set the restrictor to: Stop breaking the law, ass hole.</span>"
-						phrase = 14
-					if(14)
-						user << "<span class='notice'>You set the restrictor to: You have the right to shut the fuck up.</span>"
-						phrase = 15
-					if(15)
-						user << "<span class='notice'>You set the restrictor to: Shut up crime!</span>"
-						phrase = 16
-					if(16)
-						user << "<span class='notice'>You set the restrictor to: Face the wrath of the golden bolt.</span>"
-						phrase = 17
-					if(17)
-						user << "<span class='notice'>You set the restrictor to: I am, the LAW!</span>"
-						phrase = 18
-					if(18)
-						user << "<span class='notice'>You set the restrictor to: HALT! HALT! HALT! HALT!</span>"
-						phrase = 1
-			else
-				user << "<span class='notice'>It's broken.</span>"
 
 /obj/item/clothing/mask/gas/sechailer/attack_self()
 	halt()
+/obj/item/clothing/mask/gas/sechailer/emag_act(mob/user as mob)
+	if(safety)
+		safety = FALSE
+		user << "<span class='warning'>You silently fry [src]'s vocal circuit with the cryptographic sequencer."
+	else
+		return
 
 /obj/item/clothing/mask/gas/sechailer/verb/halt()
 	set category = "Object"
@@ -212,6 +84,7 @@
 		usr << "<span class='warning'>\The [src]'s hailing system is broken.</span>"
 		return
 
+	var/phrase = 0	//selects which phrase to use
 	var/phrase_text = null
 	var/phrase_sound = null
 
@@ -231,67 +104,81 @@
 				usr << "<span class='userdanger'>\The [src]'s power modulator overloads and breaks.</span>"
 				return
 
-		switch(phrase)	//sets the properties of the chosen phrase
-			if(1)				// good cop
-				phrase_text = "HALT! HALT! HALT!"
-				phrase_sound = "halt"
+		switch(aggressiveness)		// checks if the user has unlocked the restricted phrases
+			if(1)
+				phrase = rand(1,5)	// set the upper limit as the phrase above the first 'bad cop' phrase, the mask will only play 'nice' phrases
 			if(2)
-				phrase_text = "Stop in the name of the Law."
-				phrase_sound = "bobby"
+				phrase = rand(1,11)	// default setting, set upper limit to last 'bad cop' phrase. Mask will play good cop and bad cop phrases
 			if(3)
-				phrase_text = "Compliance is in your best interest."
-				phrase_sound = "compliance"
+				phrase = rand(1,18)	// user has unlocked all phrases, set upper limit to last phrase. The mask will play all phrases
 			if(4)
-				phrase_text = "Prepare for justice!"
-				phrase_sound = "justice"
-			if(5)
-				phrase_text = "Running will only increase your sentence."
-				phrase_sound = "running"
-			if(6)				// bad cop
-				phrase_text = "Don't move, Creep!"
-				phrase_sound = "dontmove"
-			if(7)
-				phrase_text = "Down on the floor, Creep!"
-				phrase_sound = "floor"
-			if(8)
-				phrase_text = "Dead or alive you're coming with me."
-				phrase_sound = "robocop"
-			if(9)
-				phrase_text = "God made today for the crooks we could not catch yesterday."
-				phrase_sound = "god"
-			if(10)
-				phrase_text = "Freeze, Scum Bag!"
-				phrase_sound = "freeze"
-			if(11)
-				phrase_text = "Stop right there, criminal scum!"
-				phrase_sound = "imperial"
-			if(12)				// LA-PD
-				phrase_text = "Stop or I'll bash you."
-				phrase_sound = "bash"
-			if(13)
-				phrase_text = "Go ahead, make my day."
-				phrase_sound = "harry"
-			if(14)
-				phrase_text = "Stop breaking the law, ass hole."
-				phrase_sound = "asshole"
-			if(15)
-				phrase_text = "You have the right to shut the fuck up."
-				phrase_sound = "stfu"
-			if(16)
-				phrase_text = "Shut up crime!"
-				phrase_sound = "shutup"
-			if(17)
-				phrase_text = "Face the wrath of the golden bolt."
-				phrase_sound = "super"
-			if(18)
-				phrase_text = "I am, the LAW!"
-				phrase_sound = "dredd"
+				phrase = rand(12,18)	// user has broke the restrictor, it will now only play shitcurity phrases
+
+		if(!safety)
+			phrase_text = "FUCK YOUR CUNT YOU SHIT EATING COCKSTORM AND EAT A DONG FUCKING ASS RAMMING SHIT FUCK EAT PENISES IN YOUR FUCK FACE AND SHIT OUT ABORTIONS OF FUCK AND POO AND SHIT IN YOUR ASS YOU COCK FUCK SHIT MONKEY FUCK ASS WANKER FROM THE DEPTHS OF SHIT."
+			phrase_sound = "emag"
+		else
+
+			switch(phrase)	//sets the properties of the chosen phrase
+				if(1)				// good cop
+					phrase_text = "HALT! HALT! HALT!"
+					phrase_sound = "halt"
+				if(2)
+					phrase_text = "Stop in the name of the Law."
+					phrase_sound = "bobby"
+				if(3)
+					phrase_text = "Compliance is in your best interest."
+					phrase_sound = "compliance"
+				if(4)
+					phrase_text = "Prepare for justice!"
+					phrase_sound = "justice"
+				if(5)
+					phrase_text = "Running will only increase your sentence."
+					phrase_sound = "running"
+				if(6)				// bad cop
+					phrase_text = "Don't move, Creep!"
+					phrase_sound = "dontmove"
+				if(7)
+					phrase_text = "Down on the floor, Creep!"
+					phrase_sound = "floor"
+				if(8)
+					phrase_text = "Dead or alive you're coming with me."
+					phrase_sound = "robocop"
+				if(9)
+					phrase_text = "God made today for the crooks we could not catch yesterday."
+					phrase_sound = "god"
+				if(10)
+					phrase_text = "Freeze, Scum Bag!"
+					phrase_sound = "freeze"
+				if(11)
+					phrase_text = "Stop right there, criminal scum!"
+					phrase_sound = "imperial"
+				if(12)				// LA-PD
+					phrase_text = "Stop or I'll bash you."
+					phrase_sound = "bash"
+				if(13)
+					phrase_text = "Go ahead, make my day."
+					phrase_sound = "harry"
+				if(14)
+					phrase_text = "Stop breaking the law, ass hole."
+					phrase_sound = "asshole"
+				if(15)
+					phrase_text = "You have the right to shut the fuck up."
+					phrase_sound = "stfu"
+				if(16)
+					phrase_text = "Shut up crime!"
+					phrase_sound = "shutup"
+				if(17)
+					phrase_text = "Face the wrath of the golden bolt."
+					phrase_sound = "super"
+				if(18)
+					phrase_text = "I am, the LAW!"
+					phrase_sound = "dredd"
 
 		usr.audible_message("[usr]'s Compli-o-Nator: <font color='red' size='4'><b>[phrase_text]</b></font>")
 		playsound(src.loc, "sound/voice/complionator/[phrase_sound].ogg", 100, 0, 4)
 		cooldown = world.time
 		cooldown_special = world.time
-
 
 
 
