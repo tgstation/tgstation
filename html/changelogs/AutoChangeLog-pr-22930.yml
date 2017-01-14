@@ -1,4 +1,0 @@
-author: "XDTM"
-delete-after: True
-changes: 
-  - bugfix: "Golems no longer drop belt, id, and pocket contents in a fit of extreme clumsiness when drawing a sword from a sheath."

@@ -1,5 +1,0 @@
-author: "XDTM"
-delete-after: True
-changes: 
-  - bugfix: "Nanotrasen decided that the \"violent osmosis\" method for refilling fire extinguishers was, while cathartic, too expensive, due to the water tank repair bills. Water tanks now have a tap."
-  - bugfix: "(refilling extinguishers from tanks won't make you hit them)"
