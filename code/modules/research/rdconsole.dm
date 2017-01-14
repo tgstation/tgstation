@@ -747,7 +747,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 					if(D.build_type)
 						dat += "Lathe Types:<BR>"
 						if(D.build_type & IMPRINTER) dat += "Circuit Imprinter<BR>"
-						if(D.build_type & d) dat += "Protolathe<BR>"
+						if(D.build_type & PROTOLATHE) dat += "Protolathe<BR>"
 						if(D.build_type & AUTOLATHE) dat += "Autolathe<BR>"
 						if(D.build_type & MECHFAB) dat += "Exosuit Fabricator<BR>"
 						if(D.build_type & GUNLATHE) dat += "Gunlathe<BR>"
