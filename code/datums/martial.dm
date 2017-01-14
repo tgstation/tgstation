@@ -9,6 +9,7 @@
 	var/block_chance = 0 //Chance to block melee attacks using items while on throw mode.
 	var/restraining = 0 //used in cqc's disarm_act to check if the disarmed is being restrained and so whether they should be put in a chokehold or not
 	var/help_verb = null
+	var/no_guns = FALSE
 
 /datum/martial_art/proc/disarm_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	return 0
@@ -81,12 +82,14 @@
 		temporary = 1
 	if(H.martial_art && temporary)
 		base = H.martial_art
+		no_guns = no_guns || base.no_guns
 	H.martial_art = src
 
 /datum/martial_art/proc/remove(mob/living/carbon/human/H)
 	if(H.martial_art != src)
 		return
 	H.martial_art = base
+	no_guns = initial(no_guns)
 	if(help_verb)
 		H.verbs -= help_verb
 
@@ -248,6 +251,7 @@
 /datum/martial_art/the_sleeping_carp
 	name = "The Sleeping Carp"
 	deflection_chance = 100
+	no_guns = TRUE
 	help_verb = /mob/living/carbon/human/proc/sleeping_carp_help
 
 /datum/martial_art/the_sleeping_carp/proc/check_streak(mob/living/carbon/human/A, mob/living/carbon/human/D)
