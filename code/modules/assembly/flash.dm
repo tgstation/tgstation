@@ -51,6 +51,10 @@
 		if(T)
 			T.visible_message("[src] burns out!")
 
+		var/mob/living/L = loc
+		if(loc)
+			L << "<span class='userdanger'>[src] burns out!</span>"
+
 
 /obj/item/device/assembly/flash/proc/flash_recharge(interval=10)
 	if(prob(times_used * 3)) //The more often it's used in a short span of time the more likely it will burn out
