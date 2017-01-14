@@ -42,7 +42,7 @@
 		user << "<span class='notice'>You store linkage information in [W]'s buffer.</span>"
 	else if(istype(W, /obj/item/weapon/wrench))
 		default_unfasten_wrench(user, W, 10)
-		return 1
+		return TRUE
 	else
 		return ..()
 
@@ -58,7 +58,7 @@
 		user << "<span class='notice'>You store linkage information in [W]'s buffer.</span>"
 	else if(istype(W, /obj/item/weapon/wrench))
 		default_unfasten_wrench(user, W, 10)
-		return 1
+		return TRUE
 	else
 		return ..()
 
