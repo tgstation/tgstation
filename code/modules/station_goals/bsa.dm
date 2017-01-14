@@ -83,7 +83,7 @@
 				user << "<span class='notice'>You link [src] with [front].</span>"
 	else if(istype(W, /obj/item/weapon/wrench))
 		default_unfasten_wrench(user, W, 10)
-		return 1
+		return TRUE
 	else
 		return ..()
 
