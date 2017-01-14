@@ -495,7 +495,7 @@ var/list/admin_verbs_hideable = list(
 	set desc = "Cause an explosion of varying strength at your location."
 
 	var/list/choices = list("Small Bomb (1, 2, 3, 3)", "Medium Bomb (2, 3, 4, 4)", "Big Bomb (3, 5, 7, 5)", "Maxcap", "Custom Bomb")
-	var/choice = input("What size explosion would you like to produce? WARNING: These ignore the maxcap") in choices|null
+	var/choice = input("What size explosion would you like to produce? WARNING: These ignore the maxcap") in null|choices
 	var/turf/epicenter = mob.loc
 
 	switch(choice)
