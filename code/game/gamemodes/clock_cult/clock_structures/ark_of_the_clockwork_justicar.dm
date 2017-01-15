@@ -164,7 +164,7 @@
 			var/turf/T = t
 			T.ChangeTurf(/turf/open/floor/clockwork)
 	for(var/obj/O in orange(1, src))
-		if(!istype(O, /obj/effect) && O.density)
+		if(!O.pulledby && !istype(O, /obj/effect) && O.density)
 			if(!step_away(O, src, 2) || get_dist(O, src) < 2)
 				O.take_damage(50, BURN, "bomb")
 			O.update_icon()
