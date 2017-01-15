@@ -419,8 +419,8 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 		power = max(3000, power)
 		screen = 0.3
 		var/key = usr.key	//so we don't lose the info during the spawn delay
-		if (!(being_built.build_type & PROTOLATHE))
-			message_admins("Protolathe exploit attempted by [key_name(usr, usr.client)]!")
+		if (!(being_built.build_type & PROTOLATHE) && !(being_built.build_type & GUNLATHE))
+			message_admins("Protolathe/Gunlathe exploit attempted by [key_name(usr, usr.client)]!")
 			updateUsrDialog()
 			return
 
