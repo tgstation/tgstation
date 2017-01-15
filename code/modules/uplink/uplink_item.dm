@@ -103,7 +103,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	else
 		// Don't add /obj/item/stack/telecrystal to the purchase_log since
 		// it's just used to buy more items (including itself!)
-		if(!istype(src, /obj/item/stack/telecrystal))
+		if(!istype(src, /datum/uplink_item/device_tools/telecrystal))
 			U.purchase_log += "<big>\icon[A]</big>"
 
 	if(limited_stock > 0)
