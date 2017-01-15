@@ -9,8 +9,11 @@
 
 
 /obj/item/device/assembly/mousetrap/examine(mob/user)
+	..()
 	if(armed)
-		user << "It looks like it's armed."
+		user << "The mousetrap is armed!"
+	else
+		user << "The mousetrap is not armed."
 
 /obj/item/device/assembly/mousetrap/activate()
 	if(..())
