@@ -15,6 +15,11 @@ var/global/static/ntnrc_uid = 0
 		ntnet_global.chat_channels.Add(src)
 	..()
 
+/datum/ntnet_conversation/Destroy()
+	if(ntnet_global)
+		ntnet_global.chat_channels.Remove(src)
+	..()
+
 /datum/ntnet_conversation/proc/add_message(message, username)
 	message = "[worldtime2text()] [username]: [message]"
 	messages.Add(message)
