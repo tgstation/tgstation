@@ -101,7 +101,10 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 		for(var/obj/item/I in B)
 			U.purchase_log += "<big>\icon[I]</big>"
 	else
-		U.purchase_log += "<big>\icon[A]</big>"
+		// Don't add /obj/item/stack/telecrystal to the purchase_log since
+		// it's just used to buy more items (including itself!)
+		if(!istype(src, /obj/item/stack/telecrystal))
+			U.purchase_log += "<big>\icon[A]</big>"
 
 	if(limited_stock > 0)
 		limited_stock -= 1
