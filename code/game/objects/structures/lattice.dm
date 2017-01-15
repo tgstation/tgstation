@@ -91,7 +91,7 @@
 	stored.update_icon()
 
 /obj/structure/lattice/catwalk/ratvar_act()
-	return
+	new/obj/structure/lattice/catwalk/clockwork(loc)
 
 /obj/structure/lattice/catwalk/Move()
 	var/turf/T = loc
@@ -105,3 +105,14 @@
 		C.deconstruct()
 	..()
 
+/obj/structure/lattice/catwalk/clockwork
+	name = "clockwork catwalk"
+	icon = 'icons/obj/smooth_structures/catwalk_clockwork.dmi'
+
+/obj/structure/lattice/catwalk/clockwork/New()
+	..()
+	PoolOrNew(/obj/effect/overlay/temp/ratvar/floor/catwalk, loc)
+	PoolOrNew(/obj/effect/overlay/temp/ratvar/beam/catwalk, loc)
+
+/obj/structure/lattice/catwalk/clockwork/ratvar_act()
+	return
