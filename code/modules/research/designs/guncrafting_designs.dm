@@ -8,48 +8,6 @@
 	build_path = /obj/item/weapon/gun/energy/frame/testing
 	category = list("Guncrafting Parts")
 
-/datum/design/guncrafting_frame_energy_high
-	name = "Gun Frame: High Capacity Energy"
-	desc = "No pin included, have fun."
-	id = "guncrafting_frame_energy_high"
-	req_tech = list("powerstorage" = 2)
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 8000, MAT_GLASS = 2000)
-	build_path = /obj/item/weapon/gun/energy/frame/testing/high
-	category = list("Guncrafting Parts")
-
-/datum/design/guncrafting_frame_energy_super
-	name = "Gun Frame: Super Energy"
-	desc = "No pin included, have fun."
-	id = "guncrafting_frame_energy_super"
-	req_tech = list("powerstorage" = 3, "materials" = 3)
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 8000, MAT_GLASS = 2000)
-	build_path = /obj/item/weapon/gun/energy/frame/testing/super
-	category = list("Guncrafting Parts")
-
-/datum/design/guncrafting_frame_energy_hyper
-	name = "Gun Frame: Hyper Energy"
-	desc = "No pin included, have fun."
-	id = "guncrafting_frame_energy_hyper"
-	req_tech = list("powerstorage" = 5, "materials" = 5, "engineering" = 5)
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 8000, MAT_GLASS = 2000, MAT_GOLD = 150, MAT_SILVER = 150, MAT_GLASS = 80)
-	build_path = /obj/item/weapon/gun/energy/frame/testing/hyper
-	category = list("Guncrafting Parts")
-
-/datum/design/guncrafting_frame_energy_bluespace
-	name = "Gun Frame: Bluespace Energy"
-	desc = "No pin included, have fun."
-	id = "guncrafting_frame_energy_bluespace"
-	req_tech = list("powerstorage" = 6, "materials" = 5, "engineering" = 5, "bluespace" = 5)
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 8000, MAT_GLASS = 2000, MAT_GOLD = 120, MAT_SILVER = 150, MAT_GLASS = 160, MAT_DIAMOND = 160, MAT_TITANIUM = 300)
-	build_path = /obj/item/weapon/gun/energy/frame/testing/bluespace
-	category = list("Guncrafting Parts")
-
-
-
 /datum/design/guncrafting_frame_ballistic
 	name = "Gun Frame: Ballistic"
 	desc = "No pin included, have fun."
