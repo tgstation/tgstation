@@ -32,6 +32,12 @@
 /obj/structure/lattice/blob_act(obj/structure/blob/B)
 	return
 
+/obj/structure/lattice/ratvar_act()
+	if(IsEven(x + y))
+		new/obj/structure/lattice/clockwork(loc)
+	else
+		new/obj/structure/lattice/clockwork/large(loc)
+
 /obj/structure/lattice/attackby(obj/item/C, mob/user, params)
 	if(istype(C, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = C
@@ -52,6 +58,25 @@
 	if(current_size >= STAGE_FOUR)
 		deconstruct()
 
+/obj/structure/lattice/clockwork
+	name = "clockwork lattice"
+	desc = "A lightweight support lattice. These hold the Justicar's station together."
+	icon = 'icons/obj/smooth_structures/lattice_clockwork.dmi'
+
+/obj/structure/lattice/clockwork/ratvar_act()
+	if(IsOdd(x+y))
+		new/obj/structure/lattice/clockwork/large(loc)
+
+/obj/structure/lattice/clockwork/large/New()
+	..()
+	icon = 'icons/obj/smooth_structures/lattice_clockwork_large.dmi'
+	pixel_x = -9
+	pixel_y = -9
+
+/obj/structure/lattice/clockwork/large/ratvar_act()
+	if(IsEven(x + y))
+		new/obj/structure/lattice/clockwork(loc)
+
 /obj/structure/lattice/catwalk
 	name = "catwalk"
 	desc = "A catwalk for easier EVA maneuvering and cable placement."
@@ -64,6 +89,9 @@
 	..()
 	stored.amount++
 	stored.update_icon()
+
+/obj/structure/lattice/catwalk/ratvar_act()
+	return
 
 /obj/structure/lattice/catwalk/Move()
 	var/turf/T = loc

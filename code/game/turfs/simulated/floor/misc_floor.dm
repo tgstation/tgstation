@@ -83,6 +83,11 @@
 		realappearence = null
 	return ..()
 
+/turf/open/floor/clockwork/ReplaceWithLattice()
+	..()
+	for(var/obj/structure/lattice/L in src)
+		L.ratvar_act()
+
 /turf/open/floor/clockwork/Entered(atom/movable/AM)
 	..()
 	START_PROCESSING(SSobj, src)
