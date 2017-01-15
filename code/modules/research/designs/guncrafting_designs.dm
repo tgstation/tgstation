@@ -4,7 +4,7 @@
 	id = "guncrafting_frame_energy"
 	req_tech = list("combat" = 1, "materials" = 1)
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 500, MAT_GLASS = 300)
+	materials = list(MAT_METAL = 8000, MAT_GLASS = 2000)
 	build_path = /obj/item/weapon/gun/energy/frame/testing
 	category = list("Guncrafting Parts")
 
@@ -14,7 +14,7 @@
 	id = "guncrafting_frame_energy_high"
 	req_tech = list("powerstorage" = 2)
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 700, MAT_GLASS = 300)
+	materials = list(MAT_METAL = 8000, MAT_GLASS = 2000)
 	build_path = /obj/item/weapon/gun/energy/frame/testing/high
 	category = list("Guncrafting Parts")
 
@@ -24,7 +24,7 @@
 	id = "guncrafting_frame_energy_super"
 	req_tech = list("powerstorage" = 3, "materials" = 3)
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 700, MAT_GLASS = 900)
+	materials = list(MAT_METAL = 8000, MAT_GLASS = 2000)
 	build_path = /obj/item/weapon/gun/energy/frame/testing/super
 	category = list("Guncrafting Parts")
 
@@ -34,7 +34,7 @@
 	id = "guncrafting_frame_energy_hyper"
 	req_tech = list("powerstorage" = 5, "materials" = 5, "engineering" = 5)
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 700, MAT_GLASS = 900, MAT_GOLD = 150, MAT_SILVER = 150, MAT_GLASS = 80)
+	materials = list(MAT_METAL = 8000, MAT_GLASS = 2000, MAT_GOLD = 150, MAT_SILVER = 150, MAT_GLASS = 80)
 	build_path = /obj/item/weapon/gun/energy/frame/testing/hyper
 	category = list("Guncrafting Parts")
 
@@ -44,7 +44,7 @@
 	id = "guncrafting_frame_energy_bluespace"
 	req_tech = list("powerstorage" = 6, "materials" = 5, "engineering" = 5, "bluespace" = 5)
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 800, MAT_GLASS = 900, MAT_GOLD = 120, MAT_SILVER = 150, MAT_GLASS = 160, MAT_DIAMOND = 160, MAT_TITANIUM = 300)
+	materials = list(MAT_METAL = 8000, MAT_GLASS = 2000, MAT_GOLD = 120, MAT_SILVER = 150, MAT_GLASS = 160, MAT_DIAMOND = 160, MAT_TITANIUM = 300)
 	build_path = /obj/item/weapon/gun/energy/frame/testing/bluespace
 	category = list("Guncrafting Parts")
 
@@ -56,7 +56,7 @@
 	id = "guncrafting_frame_ballistic"
 	req_tech = list("combat" = 1, "materials" = 1)
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 500, MAT_GLASS = 300)
+	materials = list(MAT_METAL = 8000, MAT_GLASS = 2000)
 	build_path = /obj/item/weapon/gun/ballistic/frame/testing
 	category = list("Guncrafting Parts")
 
@@ -67,7 +67,7 @@
 	id = "guncrafting_frame_revolver"
 	req_tech = list("combat" = 1, "materials" = 1)
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 500, MAT_GLASS = 300)
+	materials = list(MAT_METAL = 6000, MAT_GLASS = 1500)
 	build_path = /obj/item/weapon/gun/ballistic/frame/revolver/testing
 	category = list("Revolver Parts")
 
@@ -78,7 +78,7 @@
 	id = "barrel_short"
 	req_tech = list("combat" = 1, "materials" = 1)
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 500, MAT_GLASS = 300)
+	materials = list(MAT_METAL = 1200, MAT_GLASS = 300)
 	build_path = /obj/item/weapon/gun_attachment/barrel/short
 	category = list("Guncrafting Parts")
 
@@ -88,7 +88,7 @@
 	id = "barrel_medium"
 	req_tech = list("combat" = 1, "materials" = 1)
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 500, MAT_GLASS = 300)
+	materials = list(MAT_METAL = 2000, MAT_GLASS = 500)
 	build_path = /obj/item/weapon/gun_attachment/barrel/medium
 	category = list("Guncrafting Parts")
 
@@ -98,7 +98,7 @@
 	id = "barrel_long"
 	req_tech = list("combat" = 1, "materials" = 1)
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 500, MAT_GLASS = 300)
+	materials = list(MAT_METAL = 2500, MAT_GLASS = 500)
 	build_path = /obj/item/weapon/gun_attachment/barrel/long
 	category = list("Guncrafting Parts")
 
@@ -108,7 +108,7 @@
 	id = "barrel_revolver_short"
 	req_tech = list("combat" = 1, "materials" = 1)
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 500, MAT_GLASS = 300)
+	materials = list(MAT_METAL = 1200, MAT_GLASS = 300)
 	build_path = /obj/item/weapon/gun_attachment/barrel/revolver/short
 	category = list("Revolver Parts")
 
@@ -118,7 +118,7 @@
 	id = "barrel_revolver_normal"
 	req_tech = list("combat" = 1, "materials" = 1)
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 500, MAT_GLASS = 300)
+	materials = list(MAT_METAL = 2000, MAT_GLASS = 500)
 	build_path = /obj/item/weapon/gun_attachment/barrel/revolver/medium
 	category = list("Revolver Parts")
 
@@ -128,7 +128,7 @@
 	id = "barrel_revolver_long"
 	req_tech = list("combat" = 1, "materials" = 1)
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 500, MAT_GLASS = 300)
+	materials = list(MAT_METAL = 2500, MAT_GLASS = 500)
 	build_path = /obj/item/weapon/gun_attachment/barrel/revolver/long
 	category = list("Revolver Parts")
 
@@ -138,7 +138,7 @@
 	id = "barrel_revolver_mateba"
 	req_tech = list("combat" = 1, "materials" = 1)
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 500, MAT_GLASS = 300)
+	materials = list(MAT_METAL = 2500, MAT_GLASS = 500)
 	build_path = /obj/item/weapon/gun_attachment/barrel/revolver/mateba
 	category = list("Revolver Parts")
 
@@ -149,7 +149,7 @@
 	id = "handle_semiauto"
 	req_tech = list("combat" = 1, "materials" = 1)
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 500, MAT_GLASS = 300)
+	materials = list(MAT_METAL = 2000, MAT_GLASS = 500)
 	build_path = /obj/item/weapon/gun_attachment/handle/semiauto
 	category = list("Guncrafting Parts")
 
@@ -159,7 +159,7 @@
 	id = "handle_auto"
 	req_tech = list("combat" = 1, "materials" = 1)
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 500, MAT_GLASS = 300)
+	materials = list(MAT_METAL = 2000, MAT_GLASS = 500)
 	build_path = /obj/item/weapon/gun_attachment/handle/auto
 	category = list("Guncrafting Parts")
 
@@ -169,7 +169,7 @@
 	id = "handle_revolver"
 	req_tech = list("combat" = 1, "materials" = 1)
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 500, MAT_GLASS = 300)
+	materials = list(MAT_METAL = 2000, MAT_GLASS = 500)
 	build_path = /obj/item/weapon/gun_attachment/handle/revolver
 	category = list("Revolver Parts")
 
@@ -180,7 +180,7 @@
 	id = "base_stun"
 	req_tech = list("combat" = 1, "materials" = 1)
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 500, MAT_GLASS = 300)
+	materials = list(MAT_METAL = 2000, MAT_GLASS = 500)
 	build_path = /obj/item/weapon/gun_attachment/base/stun
 	category = list("Guncrafting Parts")
 
@@ -190,7 +190,7 @@
 	id = "base_disable"
 	req_tech = list("combat" = 1, "materials" = 1)
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 500, MAT_GLASS = 300)
+	materials = list(MAT_METAL = 2000, MAT_GLASS = 500)
 	build_path = /obj/item/weapon/gun_attachment/base/disable
 	category = list("Guncrafting Parts")
 
@@ -200,7 +200,7 @@
 	id = "base_laser"
 	req_tech = list("combat" = 1, "materials" = 1)
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 500, MAT_GLASS = 300)
+	materials = list(MAT_METAL = 2000, MAT_GLASS = 350)
 	build_path = /obj/item/weapon/gun_attachment/base/laser
 	category = list("Guncrafting Parts")
 
@@ -240,7 +240,7 @@
 	id = "base_ar"
 	req_tech = list("combat" = 1, "materials" = 1)
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 500, MAT_GLASS = 300)
+	materials = list(MAT_METAL = 8000, MAT_GLASS = 2000)
 	build_path = /obj/item/weapon/gun_attachment/base/assault
 	category = list("Guncrafting Parts")
 
@@ -250,7 +250,7 @@
 	id = "base_pistol"
 	req_tech = list("combat" = 1, "materials" = 1)
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 500, MAT_GLASS = 300)
+	materials = list(MAT_METAL = 4000, MAT_GLASS = 1000)
 	build_path = /obj/item/weapon/gun_attachment/base/pistol
 	category = list("Guncrafting Parts")
 
@@ -260,7 +260,7 @@
 	id = "base_revolver_38"
 	req_tech = list("combat" = 1, "materials" = 1)
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 500, MAT_GLASS = 300)
+	materials = list(MAT_METAL = 8000, MAT_GLASS = 2000)
 	build_path = /obj/item/weapon/gun_attachment/base/revolver_38
 	category = list("Revolver Parts")
 
@@ -268,9 +268,9 @@
 	name = "Revolver Base: .357 Revolver"
 	desc = "A revolver base."
 	id = "base_revolver_357"
-	req_tech = list("combat" = 1, "materials" = 1, "syndicate" = 2)
+	req_tech = list("combat" = 1, "materials" = 1, "syndicate" = 5)
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 500, MAT_GLASS = 300)
+	materials = list(MAT_METAL = 8000, MAT_GLASS = 2000)
 	build_path = /obj/item/weapon/gun_attachment/base/revolver_357
 	category = list("Revolver Parts")
 
@@ -280,19 +280,8 @@
 	id = "base_shotgun"
 	req_tech = list("combat" = 1, "materials" = 1)
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 500, MAT_GLASS = 300)
+	materials = list(MAT_METAL = 8000, MAT_GLASS = 4000)
 	build_path = /obj/item/weapon/gun_attachment/base/shotgun
-	category = list("Guncrafting Parts")
-
-//energy bullets
-/datum/design/ebullet_pen
-	name = "Gun Energy Modifier: Penetrator" // ;)
-	desc = "A Penetrator mod."
-	id = "ebullet_pen"
-	req_tech = list("combat" = 1, "materials" = 1)
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 500, MAT_GLASS = 300)
-	build_path = /obj/item/weapon/gun_attachment/energy_bullet/armor_pen
 	category = list("Guncrafting Parts")
 
 /datum/design/ebullet_disorient
@@ -325,26 +314,6 @@
 	build_path = /obj/item/weapon/gun_attachment/energy_bullet/speed
 	category = list("Guncrafting Parts")
 
-/datum/design/ebullet_big
-	name = "Gun Energy Modifier: Size" // matters
-	desc = "A big mod."
-	id = "ebullet_big"
-	req_tech = list("combat" = 1, "materials" = 1)
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 500, MAT_GLASS = 300)
-	build_path = /obj/item/weapon/gun_attachment/energy_bullet/big
-	category = list("Guncrafting Parts")
-
-/datum/design/bullet_fmj
-	name = "Gun Bullet Modifier: Full Metal Jacket" // this is my rifle, this is my gun
-	desc = "A FMJ mod."
-	id = "bullet_fmj"
-	req_tech = list("combat" = 1, "materials" = 1)
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 500, MAT_GLASS = 300)
-	build_path = /obj/item/weapon/gun_attachment/bullet/fmj
-	category = list("Guncrafting Parts")
-
 /datum/design/bullet_rad
 	name = "Gun Bullet Modifier: Polonium"
 	desc = "A polonium mod."
@@ -353,16 +322,6 @@
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 500, MAT_GLASS = 300, MAT_URANIUM = 2000)
 	build_path = /obj/item/weapon/gun_attachment/bullet/polonium
-	category = list("Guncrafting Parts")
-
-/datum/design/bullet_ap
-	name = "Gun Bullet Modifier: Armor Piercing"
-	desc = "An AP mod."
-	id = "bullet_ap"
-	req_tech = list("combat" = 1, "materials" = 1)
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 500, MAT_GLASS = 300)
-	build_path = /obj/item/weapon/gun_attachment/bullet/ap
 	category = list("Guncrafting Parts")
 
 /datum/design/bullet_fire
@@ -454,7 +413,7 @@
 	id = "mag_pistol"
 	req_tech = list("combat" = 1, "materials" = 1)
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 4000)
+	materials = list(MAT_METAL = 8000)
 	build_path = /obj/item/ammo_box/magazine/guncrafting_pistol
 	category = list("Gun Ammo")
 
@@ -464,7 +423,7 @@
 	id = "mag_357"
 	req_tech = list("combat" = 1, "materials" = 1, "syndicate" = 2)
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 4000)
+	materials = list(MAT_METAL = 10000) // Cheaper than the autolathe counterpart, which the cost of that is 30,000
 	build_path = /obj/item/ammo_box/a357
 	category = list("Gun Ammo")
 
@@ -484,7 +443,7 @@
 	id = "slugshell"
 	req_tech = list("combat" = 1, "materials" = 1)
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 200)
+	materials = list(MAT_METAL = 1000)
 	build_path = /obj/item/ammo_casing/shotgun
 	category = list("Gun Ammo")
 
@@ -494,7 +453,7 @@
 	id = "buckshotshell"
 	req_tech = list("combat" = 1, "materials" = 1)
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 200)
+	materials = list(MAT_METAL = 1000)
 	build_path = /obj/item/ammo_casing/shotgun/buckshot
 	category = list("Gun Ammo")
 
@@ -504,7 +463,7 @@
 	id = "rubbershotshell"
 	req_tech = list("combat" = 1, "materials" = 1)
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 200)
+	materials = list(MAT_METAL = 1000)
 	build_path = /obj/item/ammo_casing/shotgun/rubbershot
 	category = list("Gun Ammo")
 
@@ -514,7 +473,7 @@
 	id = "beanbagslugshell"
 	req_tech = list("combat" = 1, "materials" = 1)
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 200)
+	materials = list(MAT_METAL = 1000)
 	build_path = /obj/item/ammo_casing/shotgun/beanbag
 	category = list("Gun Ammo")
 
@@ -524,7 +483,7 @@
 	id = "dartshell"
 	req_tech = list("combat" = 1, "materials" = 3)
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 200)
+	materials = list(MAT_METAL = 1000)
 	build_path = /obj/item/ammo_casing/shotgun/dart
 	category = list("Gun Ammo")
 
@@ -534,7 +493,7 @@
 	id = "dbshell"
 	req_tech = list("combat" = 3, "materials" = 3)
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 200)
+	materials = list(MAT_METAL = 1000)
 	build_path = /obj/item/ammo_casing/shotgun/incendiary/dragonsbreath
 	category = list("Gun Ammo")
 
@@ -544,7 +503,7 @@
 	id = "fragshell"
 	req_tech = list("combat" = 3, "materials" = 3)
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 200)
+	materials = list(MAT_METAL = 1000)
 	build_path = /obj/item/ammo_casing/shotgun/frag12
 	category = list("Gun Ammo")
 
@@ -554,7 +513,7 @@
 	id = "breachshell"
 	req_tech = list("combat" = 1, "materials" = 3)
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 200)
+	materials = list(MAT_METAL = 1000)
 	build_path = /obj/item/ammo_casing/shotgun/breaching
 	category = list("Gun Ammo")
 
@@ -564,7 +523,7 @@
 	id = "stunshell"
 	req_tech = list("combat" = 3, "materials" = 3)
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 200)
+	materials = list(MAT_METAL = 1000)
 	build_path = /obj/item/ammo_casing/shotgun/stunslug
 	category = list("Gun Ammo")
 

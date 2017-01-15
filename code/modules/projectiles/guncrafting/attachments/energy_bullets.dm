@@ -16,15 +16,6 @@
 	else
 		bullet.damage = 0
 
-/obj/item/weapon/gun_attachment/energy_bullet/armor_pen
-	name = "Energy Penetrator"
-	desc = "Press up to consent."
-
-/obj/item/weapon/gun_attachment/energy_bullet/armor_pen/on_fire(var/obj/item/weapon/gun/owner, var/obj/item/projectile/bullet)
-	..()
-	bullet.armour_penetration += 30
-	bullet.damage *= 0.5
-
 /obj/item/weapon/gun_attachment/energy_bullet/decloner
 	name = "Energy Decloner"
 	desc = "Force your enemies into cryogenics.."
@@ -32,7 +23,7 @@
 /obj/item/weapon/gun_attachment/energy_bullet/decloner/on_fire(var/obj/item/weapon/gun/owner, var/obj/item/projectile/bullet)
 	..()
 	bullet.damage_type = CLONE
-	bullet.damage *= 0.8
+	bullet.damage *= 0.7
 	bullet.irradiate = 10
 
 /obj/item/weapon/gun_attachment/energy_bullet/speed
@@ -53,12 +44,3 @@
 	..()
 	bullet.speed = 1
 	bullet.damage *= -1
-
-/obj/item/weapon/gun_attachment/energy_bullet/big
-	name = "Energy Collapser"
-	desc = "Beefy but slow."
-
-/obj/item/weapon/gun_attachment/energy_bullet/big/on_fire(var/obj/item/weapon/gun/owner, var/obj/item/projectile/bullet)
-	..()
-	bullet.speed *= 2
-	bullet.damage *= 2

@@ -1,5 +1,5 @@
 /obj/item/projectile/bullet/guncrafting_pistol
-	damage = 14
+	damage = 20
 
 /obj/item/ammo_casing/guncrafting_pistol
 	desc = "A pistol bullet casing."
@@ -14,7 +14,7 @@
 	max_ammo = 8
 
 /obj/item/projectile/bullet/guncrafting_ar
-	damage = 4.5
+	damage = 20
 
 /obj/item/ammo_casing/guncrafting_ar
 	desc = "A pistol bullet casing."
