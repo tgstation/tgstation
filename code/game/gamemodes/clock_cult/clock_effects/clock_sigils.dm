@@ -334,7 +334,7 @@
 			var/vitality_for_cycle = min(vitality, 3)
 			if(ratvar_awakens)
 				vitality_for_cycle = 3
-			var/vitality_used = heal_ordered_damage(vitality_for_cycle, damage_heal_order)
+			var/vitality_used = L.heal_ordered_damage(vitality_for_cycle, damage_heal_order)
 
 			if(!vitality_used)
 				break
