@@ -76,7 +76,7 @@
 	speed = 1
 
 /mob/living/simple_animal/hostile/syndicate/melee/space/noloot
-	loot = list()
+	loot = list(/obj/effect/gibspawner/human)
 
 /mob/living/simple_animal/hostile/syndicate/melee/space/Process_Spacemove(movement_dir = 0)
 	return 1
