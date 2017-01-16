@@ -48,8 +48,14 @@
 		crit_fail = 1
 		update_icon()
 		var/turf/T = get_turf(src)
+		var/mob/living/L = loc
 		if(T)
 			T.visible_message("[src] burns out!")
+		if(loc)
+			return
+
+		if(loc)
+			L << "<span class='userdanger'>[src] burns out!</span>"
 
 
 /obj/item/device/assembly/flash/proc/flash_recharge(interval=10)
