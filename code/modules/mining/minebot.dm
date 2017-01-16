@@ -75,7 +75,7 @@
 			if(maxHealth == health)
 				user << "<span class='info'>[src] is at full integrity.</span>"
 			else
-				if(W.remove_fuel(1, user))
+				if(W.remove_fuel(0, user))
 					adjustBruteLoss(-10)
 					user << "<span class='info'>You repair some of the armor on [src].</span>"
 			return
