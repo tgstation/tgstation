@@ -282,6 +282,7 @@ var/list/sec_departments = list("engineering", "supply", "medical", "science")
 
 
 /obj/item/device/radio/headset/headset_sec/alt/department/New()
+	..()
 	wires = new(src)
 	secure_radio_connections = new
 
