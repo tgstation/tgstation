@@ -1,5 +1,0 @@
-author: "XDTM"
-delete-after: True
-changes: 
-  - tweak: "Chemical splashing is now based on distance rather than affected tiles."
-  - bugfix: "You can now properly wet floors by putting enough water in a grenade."

@@ -1,4 +1,0 @@
-author: "XDTM"
-delete-after: True
-changes: 
-  - tweak: "Updating your PDA info with an agent id card inside will also overwrite the previous name."
