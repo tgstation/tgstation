@@ -84,7 +84,7 @@
 		qdel(src)
 		return TRUE
 	if(istype(I, /obj/item/clockwork/slab))
-		user << "<span class='heavy_brass'>\"I don't think you want to drop your slab into that\".\n\"If you really want to, try throwing it.\"</span>"
+		user << "<span class='heavy_brass'>\"I don't think you want to drop your slab into that.\"\n\"If you really want to, try throwing it.\"</span>"
 		return TRUE
 	if(user.drop_item() && uses)
 		user.visible_message("<span class='warning'>[user] drops [I] into [src]!</span>", "<span class='danger'>You drop [I] into [src]!</span>")
@@ -163,15 +163,18 @@
 		return FALSE
 	var/input_target_key = input(invoker, "Choose a target to form a rift to.", "Spatial Gateway") as null|anything in possible_targets
 	var/atom/movable/target = possible_targets[input_target_key]
-	if(!src || !target || !invoker || !invoker.canUseTopic(src, !issilicon(invoker)) || !is_servant_of_ratvar(invoker) || (istype(src, /obj/item) && invoker.get_active_held_item() != src) || !invoker.can_speak_vocal())
+	if(!src || !invoker || !invoker.canUseTopic(src, !issilicon(invoker)) || !is_servant_of_ratvar(invoker) || (istype(src, /obj/item) && invoker.get_active_held_item() != src) || !invoker.can_speak_vocal())
 		return FALSE //if any of the involved things no longer exist, the invoker is stunned, too far away to use the object, or does not serve ratvar, or if the object is an item and not in the mob's active hand, fail
+	if(!target)
+		invoker << "<span class='warning'>That target no longer exists!</span>"
+		return procure_gateway(invoker, time_duration, gateway_uses, two_way) //try again?
 	if(isliving(target))
 		var/mob/living/L = target
-		if(L.stat != CONSCIOUS)
-			invoker << "<span class='warning'>That Servant is no longer conscious!</span>"
-			return procure_gateway(invoker, time_duration, gateway_uses, two_way) //try again?
 		if(!is_servant_of_ratvar(L))
 			invoker << "<span class='warning'>That target is no longer a Servant!</span>"
+			return procure_gateway(invoker, time_duration, gateway_uses, two_way)
+		if(L.stat != CONSCIOUS)
+			invoker << "<span class='warning'>That Servant is no longer conscious!</span>"
 			return procure_gateway(invoker, time_duration, gateway_uses, two_way)
 	var/istargetobelisk = istype(target, /obj/structure/destructible/clockwork/powered/clockwork_obelisk)
 	var/issrcobelisk = istype(src, /obj/structure/destructible/clockwork/powered/clockwork_obelisk)

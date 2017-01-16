@@ -544,14 +544,26 @@
 
 /mob/living/simple_animal/relaymove(mob/user, direction)
 	if(tame && saddled && riding_datum)
-		riding_datum.handle_ride(user, direction)
+    if(user.incapacitated())
+      return
+    for(var/atom/movable/A in get_turf(src))
+      if(A.density)
+        if(A != src && A != M)
+          return
+    M.loc = get_turf(src)
+    riding_datum.handle_vehicle_offsets()
+    riding_datum.ridden = src
 
+/mob/living/simple_animal/relaymove(mob/user, direction)
+	if(tame && saddled)
 
 /mob/living/simple_animal/Move(NewLoc,Dir=0,step_x=0,step_y=0)
 	. = ..()
+
 	if(riding_datum)
 		riding_datum.handle_vehicle_layer()
 		riding_datum.handle_vehicle_offsets()
+
 
 /mob/living/simple_animal/buckle_mob()
 	..()

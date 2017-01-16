@@ -291,9 +291,9 @@ RCD
         else
             matter += value*(S.amount)
             user.unEquip()
-            S.use(S.amount)
             playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
             user << "<span class='notice'>You insert [S.amount] [S.name] sheets into the RCD. </span>"
+            S.use(S.amount)
 
         return 1
     user << "<span class='warning'>You can't insert any more [S.name] sheets into the RCD!"

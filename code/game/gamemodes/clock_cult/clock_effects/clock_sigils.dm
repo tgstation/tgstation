@@ -209,7 +209,7 @@
 		return
 	if(!cyborg_checks(cyborg))
 		return
-	var/giving_power = min(round((cyborg.cell.maxcharge - cyborg.cell.charge) * 0.02) * 50, power_charge) //give the borg either all our power or their missing power floored to 50
+	var/giving_power = min(Floor(cyborg.cell.maxcharge - cyborg.cell.charge, MIN_CLOCKCULT_POWER), power_charge) //give the borg either all our power or their missing power floored to MIN_CLOCKCULT_POWER
 	if(modify_charge(giving_power))
 		cyborg.visible_message("<span class='warning'>[cyborg] glows a brilliant orange!</span>")
 		var/previous_color = cyborg.color
