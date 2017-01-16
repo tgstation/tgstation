@@ -573,10 +573,6 @@
 		if(slot_belt)
 			if(H.belt)
 				return 0
-			if(!H.w_uniform && !nojumpsuit)
-				if(!disable_warning)
-					H << "<span class='warning'>You need a jumpsuit before you can attach this [I.name]!</span>"
-				return 0
 			if( !(I.slot_flags & SLOT_BELT) )
 				return
 			return 1
