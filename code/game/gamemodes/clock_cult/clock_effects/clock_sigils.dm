@@ -179,6 +179,18 @@
 	sigil_name = "Sigil of Transmission"
 	affects_servants = TRUE
 	var/power_charge = CLOCKCULT_POWER_UNIT //starts with CLOCKCULT_POWER_UNIT by default
+	var/charge_rate = MIN_CLOCKCULT_POWER //how much power we gain every two seconds
+
+/obj/effect/clockwork/sigil/transmission/New()
+	..()
+	START_PROCESSING(SSobj, src)
+
+/obj/effect/clockwork/sigil/transmission/Destroy()
+	STOP_PROCESSING(SSobj, src)
+	return ..()
+
+/obj/effect/clockwork/sigil/transmission/process()
+	modify_charge(-charge_rate)
 
 /obj/effect/clockwork/sigil/transmission/ex_act(severity)
 	if(severity == 3)
@@ -190,7 +202,7 @@
 /obj/effect/clockwork/sigil/transmission/examine(mob/user)
 	..()
 	if(is_servant_of_ratvar(user) || isobserver(user))
-		user << "<span class='[power_charge ? "brass":"alloy"]'>It is storing <b>[ratvar_awakens ? "INFINITY":"[power_charge]"]W</b> of power.</span>"
+		user << "<span class='brass'>It is storing <b>[ratvar_awakens ? "INFINITY":"[power_charge]"]W</b> of power[ratvar_awakens ? "":", and is gaining <b>[charge_rate*0.5]W</b> power per second"].</span>"
 		if(iscyborg(user))
 			user << "<span class='brass'>You can recharge from the [sigil_name] by crossing it.</span>"
 
@@ -198,7 +210,7 @@
 	if(is_servant_of_ratvar(L))
 		if(iscyborg(L))
 			charge_cyborg(L)
-	else if(power_charge)
+	else
 		L << "<span class='brass'>You feel a slight, static shock.</span>"
 
 /obj/effect/clockwork/sigil/transmission/proc/charge_cyborg(mob/living/silicon/robot/cyborg)
