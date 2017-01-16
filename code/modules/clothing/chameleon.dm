@@ -69,6 +69,7 @@
 /datum/action/item_action/chameleon/change
 	name = "Chameleon Change"
 	var/list/chameleon_blacklist = list()
+	var/list/chameleon_blacklist_types = list()
 	var/list/chameleon_list = list()
 	var/chameleon_type = null
 	var/chameleon_name = "Item"
@@ -80,7 +81,10 @@
 		button.name = "Change [chameleon_name] Appearance"
 	chameleon_blacklist += target.type
 	var/list/temp_list = typesof(chameleon_type)
-	for(var/V in temp_list - (chameleon_blacklist))
+	var/list/black_list = chameleon_blacklist
+	for(var/V in chameleon_blacklist_types)
+		black_list += typesof(V)
+	for(var/V in temp_list - black_list)
 		if(ispath(V, /obj/item))
 			var/obj/item/I = V
 			if(initial(I.flags) & ABSTRACT)
@@ -410,7 +414,7 @@
 	chameleon_action = new(src)
 	chameleon_action.chameleon_type = /obj/item/weapon/gun
 	chameleon_action.chameleon_name = "Gun"
-	chameleon_action.chameleon_blacklist = typesof(/obj/item/weapon/gun/magic)
+	chameleon_action.chameleon_blacklist_types = list(/obj/item/weapon/gun/magic)
 	chameleon_action.initialize_disguises()
 
 /obj/item/weapon/gun/energy/laser/chameleon/emp_act(severity)
@@ -453,7 +457,8 @@
 	chameleon_action = new(src)
 	chameleon_action.chameleon_type = /obj/item/device/pda
 	chameleon_action.chameleon_name = "PDA"
-	chameleon_action.chameleon_blacklist = list(/obj/item/device/pda/ai)
+	chameleon_action.chameleon_blacklist = list(/obj/item/device/pda/heads)
+	chameleon_action.chameleon_blacklist_types = list(/obj/item/device/pda/ai)
 	chameleon_action.initialize_disguises()
 
 /obj/item/device/pda/chameleon/emp_act(severity)
