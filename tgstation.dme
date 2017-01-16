@@ -206,6 +206,7 @@
 #include "code\datums\outfit.dm"
 #include "code\datums\progressbar.dm"
 #include "code\datums\recipe.dm"
+#include "code\datums\riding.dm"
 #include "code\datums\ruins.dm"
 #include "code\datums\shuttles.dm"
 #include "code\datums\votablemap.dm"
