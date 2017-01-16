@@ -59,7 +59,9 @@
 	switch(severity)
 		if(1)
 			//SN src = null
-			src.ChangeTurf(src.baseturf)
+			var/turf/NT = ChangeTurf(baseturf)
+			NT.contents_explosion(severity, target)
+			return
 		if(2)
 			if (prob(50))
 				dismantle_wall(0,1)

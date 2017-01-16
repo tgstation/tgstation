@@ -1,0 +1,4 @@
+author: "XDTM"
+delete-after: True
+changes: 
+  - bugfix: "Loading a xenobiology console with a bio bag won't cause you to smack it with it."

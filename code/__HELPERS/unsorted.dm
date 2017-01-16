@@ -1156,16 +1156,14 @@ B --><-- A
 		C.proximity_checkers[A] = TRUE
 	return L
 
-/proc/remove_from_proximity_list(atom/A, range)
-	var/turf/T = get_turf(A)
+/proc/remove_from_proximity_list(atom/A, range, oldloc = null)
+	var/turf/T = get_turf(oldloc ? oldloc : A)
 	var/list/L = block(locate(T.x - range, T.y - range, T.z), locate(T.x + range, T.y + range, T.z))
 	for(var/B in L)
 		var/turf/C = B
 		if (!C.proximity_checkers)
 			continue
 		C.proximity_checkers.Remove(A)
-		UNSETEMPTY(C.proximity_checkers)
-
 
 /proc/shift_proximity(atom/checker, atom/A, range, atom/B, newrange)
 	var/turf/T = get_turf(A)
@@ -1181,7 +1179,6 @@ B --><-- A
 		if (!D.proximity_checkers)
 			continue
 		D.proximity_checkers.Remove(checker)
-		UNSETEMPTY(D.proximity_checkers)
 	for(var/E in O)
 		var/turf/F = E
 		LAZYINITLIST(F.proximity_checkers)

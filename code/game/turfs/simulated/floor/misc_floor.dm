@@ -15,10 +15,10 @@
 
 /turf/open/floor/bluegrid/New()
 	..()
-	nuke_tiles += src
+	SSmapping.nuke_tiles += src
 
 /turf/open/floor/bluegrid/Destroy()
-	nuke_tiles -= src
+	SSmapping.nuke_tiles -= src
 	return ..()
 
 /turf/open/floor/greengrid
@@ -82,6 +82,11 @@
 		qdel(realappearence)
 		realappearence = null
 	return ..()
+
+/turf/open/floor/clockwork/ReplaceWithLattice()
+	..()
+	for(var/obj/structure/lattice/L in src)
+		L.ratvar_act()
 
 /turf/open/floor/clockwork/Entered(atom/movable/AM)
 	..()

@@ -28,6 +28,9 @@ var/const/GRAV_NEEDS_WRENCH = 3
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	var/sprite_number = 0
 
+/obj/machinery/gravity_generator/throw_at()
+	return FALSE
+
 /obj/machinery/gravity_generator/ex_act(severity, target)
 	if(severity == 1) // Very sturdy.
 		set_broken()

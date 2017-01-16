@@ -247,8 +247,8 @@
 			S << "<span class='warning'>Destroying this object has the potential to cause a hull breach. Aborting.</span>"
 			S.target = null
 			return FALSE
-	return TRUE
 	S.DisIntegrate(src)
+	return TRUE
 
 /obj/machinery/camera/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
 	S.DisIntegrate(src)
@@ -362,6 +362,16 @@
 /obj/machinery/droneDispenser/swarmer/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
 	S << "<span class='warning'>This object is receiving unactivated swarmer shells to help us. Aborting.</span>"
 	return FALSE
+
+/obj/stucture/lattice/catwalk/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
+	. = ..()
+	var/turf/here = get_turf(src)
+	for(var/A in here.contents)
+		var/obj/structure/cable/C = A
+		if(istype(C))
+			S << "<span class='warning'>Disrupting the power grid would bring no benefit to us. Aborting.</span>"
+			return FALSE
+
 
 /obj/item/device/unactivated_swarmer/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
 	if(S.resources + 50 > S.max_resources)
