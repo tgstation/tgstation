@@ -209,10 +209,10 @@
 	name = "high-capacity gun power cell"
 	origin_tech = "powerstorage=2"
 	icon_state = "hcell"
-	maxcharge = 10000
+	maxcharge = 1500
 	materials = list(MAT_GLASS=60)
 	rating = 3
-	chargerate = 1500
+	chargerate = 1000
 
 /obj/item/weapon/stock_parts/cell/high/plus
 	name = "high-capacity power cell+"
@@ -238,10 +238,10 @@
 	name = "super-capacity gun power cell"
 	origin_tech = "powerstorage=3;materials=3"
 	icon_state = "scell"
-	maxcharge = 12500
+	maxcharge = 2000
 	materials = list(MAT_GLASS=300)
 	rating = 4
-	chargerate = 1500
+	chargerate = 1000
 
 /obj/item/weapon/stock_parts/cell/super/empty/New()
 	..()
@@ -260,10 +260,10 @@
 	name = "hyper-capacity gun power cell"
 	origin_tech = "powerstorage=4;engineering=4;materials=4"
 	icon_state = "hpcell"
-	maxcharge = 15000
+	maxcharge = 3000
 	materials = list(MAT_GLASS=400)
 	rating = 5
-	chargerate = 1500
+	chargerate = 1000
 
 /obj/item/weapon/stock_parts/cell/hyper/empty/New()
 	..()
@@ -284,10 +284,10 @@
 	desc = "A rechargable transdimensional power cell."
 	origin_tech = "powerstorage=5;bluespace=4;materials=4;engineering=4"
 	icon_state = "bscell"
-	maxcharge = 20000
+	maxcharge = 4000
 	materials = list(MAT_GLASS=600)
 	rating = 6
-	chargerate = 3000
+	chargerate = 1000
 
 /obj/item/weapon/stock_parts/cell/bluespace/empty/New()
 	..()
