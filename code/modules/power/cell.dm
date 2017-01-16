@@ -232,7 +232,7 @@
 	maxcharge = 20000
 	materials = list(MAT_GLASS=300)
 	rating = 4
-	chargerate = 2000
+	chargerate = 1500
 
 /obj/item/weapon/stock_parts/cell/guncraftsuper
 	name = "super-capacity gun power cell"
@@ -241,7 +241,7 @@
 	maxcharge = 12500
 	materials = list(MAT_GLASS=300)
 	rating = 4
-	chargerate = 2000
+	chargerate = 1500
 
 /obj/item/weapon/stock_parts/cell/super/empty/New()
 	..()
@@ -263,7 +263,7 @@
 	maxcharge = 15000
 	materials = list(MAT_GLASS=400)
 	rating = 5
-	chargerate = 2000
+	chargerate = 1500
 
 /obj/item/weapon/stock_parts/cell/hyper/empty/New()
 	..()
