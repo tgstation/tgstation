@@ -345,12 +345,10 @@
 
 	if(istype(C, /obj/vehicle))
 		var/obj/vehicle/V = C
-		var/datum/riding/R = V.riding_datum
-		if(V.riding_datum)
-			if(R.vehicle_move_delay <= 0 )
-				user << "<span class='warning'>The [C] can't be made any faster!</span>"
-				return ..()
-			R.vehicle_move_delay = 0
+		if(V.vehicle_move_delay <= 0)
+			user << "<span class='warning'>The [C] can't be made any faster!</span>"
+			return ..()
+		V.vehicle_move_delay = 0
 
 	user <<"<span class='notice'>You slather the red gunk over the [C], making it faster.</span>"
 	C.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
