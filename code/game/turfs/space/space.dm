@@ -73,7 +73,7 @@
 			return
 		if(L)
 			if(R.use(1))
-				user << "<span class='notice'>You construct a catwalk..</span>"
+				user << "<span class='notice'>You construct a catwalk.</span>"
 				playsound(src, 'sound/weapons/Genhit.ogg', 50, 1)
 				new/obj/structure/lattice/catwalk(src)
 			else
