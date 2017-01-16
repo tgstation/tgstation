@@ -18,22 +18,22 @@
 
 /obj/item/weapon/gun/energy/frame/testing/high
 	name = "high energy gun frame"
-	cell_type = /obj/item/weapon/stock_parts/cell/high
+	cell_type = /obj/item/weapon/stock_parts/cell/guncrafthigh
 	battery_state = "battery_high"
 
 /obj/item/weapon/gun/energy/frame/testing/super
 	name = "super energy gun frame"
-	cell_type = /obj/item/weapon/stock_parts/cell/super
+	cell_type = /obj/item/weapon/stock_parts/cell/guncraftsuper
 	battery_state = "battery_super"
 
 /obj/item/weapon/gun/energy/frame/testing/hyper
 	name = "hyper energy gun frame"
-	cell_type = /obj/item/weapon/stock_parts/cell/hyper
+	cell_type = /obj/item/weapon/stock_parts/cell/guncrafthyper
 	battery_state = "battery_hyper"
 
 /obj/item/weapon/gun/energy/frame/testing/bluespace
 	name = "bluespace energy gun frame"
-	cell_type = /obj/item/weapon/stock_parts/cell/bluespace
+	cell_type = /obj/item/weapon/stock_parts/cell/guncraftbluespace
 	battery_state = "battery_bluespace"
 
 
