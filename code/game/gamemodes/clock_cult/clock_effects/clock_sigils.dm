@@ -171,7 +171,7 @@
 /obj/effect/clockwork/sigil/transmission
 	name = "suspicious sigil"
 	desc = "A glowing orange sigil. The air around it feels staticky."
-	clockwork_desc = "A sigil that will serve as a battery for clockwork structures. Use Volt Void while standing on it to charge it."
+	clockwork_desc = "A sigil that will serve as a battery for clockwork structures."
 	icon_state = "sigiltransmission"
 	color = "#EC8A2D"
 	alpha = 50
