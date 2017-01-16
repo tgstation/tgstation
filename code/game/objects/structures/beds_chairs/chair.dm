@@ -137,6 +137,7 @@
 	return ..()
 
 /obj/structure/chair/comfy/post_buckle_mob(mob/living/M)
+	..()
 	if(has_buckled_mobs())
 		add_overlay(armrest)
 	else
