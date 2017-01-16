@@ -110,9 +110,11 @@ var/global/datum/crewmonitor/crewmonitor = new
 			hi = src.interfaces["[z]"]
 			src.update(z,TRUE)
 
+		/*
 		// Debugging purposes
 		mob << browse_rsc(file("code/game/machinery/computer/crew.js"), "crew.js")
 		mob << browse_rsc(file("code/game/machinery/computer/crew.css"), "crew.css")
+		*/
 
 		hi = src.interfaces["[z]"]
 		hi.show(mob)
