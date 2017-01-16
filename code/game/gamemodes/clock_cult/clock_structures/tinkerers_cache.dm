@@ -78,11 +78,16 @@
 
 /obj/structure/destructible/clockwork/cache/attack_hand(mob/living/user)
 	..()
-	if(is_servant_of_ratvar(user) && linkedwall)
-		if(wall_generation_cooldown > world.time)
-			user << "<span class='alloy'>It will produce a component in <b>[(world.time - wall_generation_cooldown) * 0.1]</b> seconds.</span>"
+	if(is_servant_of_ratvar(user))
+		if(linkedwall)
+			if(wall_generation_cooldown > world.time)
+				user << "<span class='alloy'>[src] will produce a component in <b>[(world.time - wall_generation_cooldown) * 0.1]</b> seconds.</span>"
+			else
+				user << "<span class='brass'>[src] is about to produce a component!</span>"
+		else if(anchored)
+			user << "<span class='alloy'>[src] is unlinked! Construct a Clockwork Wall nearby to generate components!</span>"
 		else
-			user << "<span class='brass'>It is about to produce a component!</span>"
+			user << "<span class='alloy'>[src] needs to be secured to generate components!</span>"
 
 /obj/structure/destructible/clockwork/cache/examine(mob/user)
 	..()
