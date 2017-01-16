@@ -1,0 +1,4 @@
+author: "Joan"
+delete-after: True
+changes: 
+  - rscadd: "Ratvar will now convert lattices and catwalks to clockwork versions."
