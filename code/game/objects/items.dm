@@ -587,7 +587,7 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 		var/turf/T = get_turf(src)
 		var/obj/effect/decal/cleanable/ash/A = new()
 		A.desc = "Looks like this used to be a [name] some time ago."
-		A.forceMove(T) //so the ash decal is deleted if on top of lava.
+		A.Entered(T,T) //so the ash decal is deleted if on top of lava.
 		..()
 
 /obj/item/acid_melt()
