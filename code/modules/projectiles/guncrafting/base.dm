@@ -24,11 +24,7 @@
 			if(O.chambered)
 				qdel(O.chambered)
 			O.chamber_round()
-			if mag_type == /obj/item/ammo_box/magazine/internal/cylinder/rev38
-				name = ".38 Revolver"
-			else
-				if mag_type == /obj/item/ammo_box/magazine/internal/cylinder
-				name = ".357 Revolver"
+
 		if(CUSTOMIZABLE_PROJECTILE)
 			var/obj/item/weapon/gun/ballistic/O = owner
 			O.mag_type = mag_type
