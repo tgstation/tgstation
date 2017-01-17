@@ -1,10 +1,11 @@
 
-#define ARTILLERY_RELOAD_TIME 60
-#define EXPLOSION_SIZE 3
 
 /obj/machinery/artillerycontrol
-	var/reload = ARTILLERY_RELOAD_TIME
-	var/explosionsize = EXPLOSION_SIZE
+	var/reload = 60
+	var/reload_cooldown = 60
+	var/explosiondev = 3
+	var/explosionmed = 6
+	var/explosionlight = 12
 	name = "bluespace artillery control"
 	icon_state = "control_boxp1"
 	icon = 'icons/obj/machines/particle_accelerator.dmi'
@@ -12,7 +13,7 @@
 	anchored = 1
 
 /obj/machinery/artillerycontrol/process()
-	if(reload < ARTILLERY_RELOAD_TIME)
+	if(reload < reload_cooldown)
 		reload++
 
 /obj/structure/artilleryplaceholder
@@ -43,7 +44,7 @@
 	var/area/thearea = teleportlocs[A]
 	if(usr.stat || usr.restrained())
 		return
-	if(src.reload < ARTILLERY_RELOAD_TIME)
+	if(reload < reload_cooldown)
 		return
 	if(usr.contents.Find(src) || (in_range(src, usr) && isturf(loc)) || issilicon(usr))
 		priority_announce("Bluespace artillery fire detected. Brace for impact.")
@@ -52,7 +53,7 @@
 		for(var/turf/T in get_area_turfs(thearea.type))
 			L+=T
 		var/loc = pick(L)
-		explosion(loc,explosionsize,explosionsize*2,explosionsize*4)
+		explosion(loc,explosiondev,explosionmed,explosionlight)
 		reload = 0
 
 /*/mob/proc/openfire()

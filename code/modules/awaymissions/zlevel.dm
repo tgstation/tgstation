@@ -10,21 +10,30 @@ var/global/list/potentialRandomZlevels = generateMapList(filename = "config/away
 
 		var/map = pick(potentialRandomZlevels)
 		var/file = file(map)
-		if(isfile(file))
-			maploader.load_map(file)
-			smooth_zlevel(world.maxz)
-			world.log << "away mission loaded: [map]"
-
-		map_transition_config.Add(AWAY_MISSION_LIST)
-
-		for(var/obj/effect/landmark/L in landmarks_list)
-			if (L.name != "awaystart")
-				continue
-			awaydestinations.Add(L)
+		load_away_mission(file)
 
 		world << "<span class='boldannounce'>Away mission loaded.</span>"
 
 		SortAreas() //To add recently loaded areas
+
+/proc/load_away_mission(var/file)
+	if(!isfile(file))
+		return FALSE
+	maploader.load_map(file)
+	smooth_zlevel(world.maxz)
+	world.log << "away mission loaded: [file]"
+
+/obj/effect/landmark/awaystart
+	name = "away mission spawn"
+	desc = "Randomly picked away mission spawn points"
+
+/obj/effect/landmark/awaystart/New()
+	awaydestinations += src
+	..()
+
+/obj/effect/landmark/awaystart/Destroy()
+	awaydestinations -= src
+	..()
 
 /proc/generateMapList(filename)
 	var/list/potentialMaps = list()
