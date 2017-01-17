@@ -40,15 +40,7 @@
 			if(O.chambered)
 				qdel(O.chambered)
 			O.chamber_round()
-			if mag_type == /obj/item/ammo_box/magazine/guncrafting_ar
-				name == "Assault Rifle"
-			if mag_type == /obj/item/ammo_box/magazine/guncrafting_pistol
-				name == "10mm Pistol"
-			if mag_type == /obj/item/ammo_box/magazine/internal/shot/guncrafting
-				name == "Shotgun"
-			if mag_type == /obj/item/ammo_box/magazine/internal/shot/dual
-				name == "Dual Barrled Shotgun"
-				
+
 		if(CUSTOMIZABLE_ENERGY)
 			var/obj/item/weapon/gun/energy/E = owner
 			for(var/EN in energy_type)
