@@ -88,10 +88,9 @@ var/datum/subsystem/timer/SStimer
 						break
 					if (head.prev)
 						head.prev.next = timer
-						if (timer)
-							if (timer.prev)
-								timer.prev.next = head
-							timer.prev = head.prev
+						if (timer.prev)
+							timer.prev.next = head
+						timer.prev = head.prev
 						bucket_list[practical_offset] = timer
 					break LOOP_OUTER
 			while (timer && timer != head)
@@ -244,7 +243,7 @@ var/datum/subsystem/timer/SStimer
 		SStimer.hashes -= hash
 
 
-	if (callBack && callBack.object != GLOBAL_PROC && callBack.object.active_timers)
+	if (callBack && callBack.object && callBack.object != GLOBAL_PROC && callBack.object.active_timers)
 		callBack.object.active_timers -= src
 		UNSETEMPTY(callBack.object.active_timers)
 
@@ -272,9 +271,10 @@ var/datum/subsystem/timer/SStimer
 
 		if (bucketpos > 0 && bucketpos <= length(bucket_list))
 			buckethead = bucket_list[bucketpos]
+			SStimer.bucket_count--
 		else
 			SStimer.processing -= src
-		SStimer.bucket_count--
+
 		if (buckethead == src)
 			bucket_list[bucketpos] = next
 	else
@@ -282,9 +282,6 @@ var/datum/subsystem/timer/SStimer
 			prev.next = null
 		if (next && next.prev == src)
 			next.prev = null
-
-	prev = null
-	next = null
 
 	return QDEL_HINT_IWILLGC
 

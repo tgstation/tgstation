@@ -228,7 +228,10 @@ var/datum/subsystem/garbage_collector/SSgarbage
 	tag = null
 	var/list/timers = active_timers
 	active_timers = null
-	for(var/timer in timers)
+	for(var/thing in timers)
+		var/datum/timedevent/timer = thing
+		if (timer.spent)
+			continue
 		qdel(timer)
 	return QDEL_HINT_QUEUE
 
