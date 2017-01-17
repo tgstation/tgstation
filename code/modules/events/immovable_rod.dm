@@ -36,15 +36,16 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 	var/z_original = 0
 	var/destination
 
-/obj/effect/immovablerod/New(atom/start, atom/end)
+/obj/effect/immovablerod/New(atom/start, atom/end, notify_ghosts = TRUE)
 	..()
 	if(SSaugury)
 		SSaugury.register_doom(src, 2000)
 	z_original = z
 	destination = end
-	notify_ghosts("\A [src] is inbound!",
-		enter_link="<a href=?src=\ref[src];orbit=1>(Click to orbit)</a>",
-		source=src, action=NOTIFY_ORBIT)
+	if(notify_ghosts)
+		notify_ghosts("\A [src] is inbound!",
+			enter_link="<a href=?src=\ref[src];orbit=1>(Click to orbit)</a>",
+			source=src, action=NOTIFY_ORBIT)
 	poi_list += src
 	if(end && end.z==z_original)
 		walk_towards(src, destination, 1)
