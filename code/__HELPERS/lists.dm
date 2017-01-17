@@ -67,6 +67,12 @@
 		return 0
 	return L[A.type]
 
+/proc/is_path_in_typecache(A, list/L)
+	if(!L || !L.len || !A)
+
+		return 0
+	return L[A]
+
 //returns a new list with only atoms that are in typecache L
 /proc/typecache_filter_list(list/atoms, list/typecache)
 	. = list()
