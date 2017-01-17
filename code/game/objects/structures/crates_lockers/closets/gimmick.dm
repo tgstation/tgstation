@@ -2,8 +2,9 @@
 	name = "cabinet"
 	desc = "Old will forever be in fashion."
 	icon_state = "cabinet"
-	resistance_flags = 0
-	burntime = 20
+	resistance_flags = FLAMMABLE
+	obj_integrity = 70
+	max_integrity = 70
 
 /obj/structure/closet/acloset
 	name = "strange closet"

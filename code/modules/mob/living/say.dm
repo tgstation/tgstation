@@ -17,6 +17,7 @@ var/list/department_radio_keys = list(
 	  ":o" = "AI Private",	"#o" = "AI Private",	".o" = "AI Private",
 	  ":g" = "changeling",	"#g" = "changeling",	".g" = "changeling",
 	  ":y" = "Centcom",		"#y" = "Centcom",		".y" = "Centcom",
+	  ":x" = "cords",		"#x" = "cords",			".x" = "cords",
 
 	  ":R" = "right hand",	"#R" = "right hand",	".R" = "right hand",
 	  ":L" = "left hand",	"#L" = "left hand",		".L" = "left hand",
@@ -36,6 +37,7 @@ var/list/department_radio_keys = list(
 	  ":O" = "AI Private",	"#O" = "AI Private",	".O" = "AI Private",
 	  ":G" = "changeling",	"#G" = "changeling",	".G" = "changeling",
 	  ":Y" = "Centcom",		"#Y" = "Centcom",		".Y" = "Centcom",
+	  ":X" = "cords",		"#X" = "cords",			".X" = "cords",
 
 	  //kinda localization -- rastaf0
 	  //same keys as above, but on russian keyboard layout. This file uses cp1251 as encoding.
@@ -58,8 +60,9 @@ var/list/department_radio_keys = list(
 
 var/list/crit_allowed_modes = list(MODE_WHISPER,MODE_CHANGELING,MODE_ALIEN)
 
-/mob/living/say(message, bubble_type,var/list/spans = list())
-	message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
+/mob/living/say(message, bubble_type,var/list/spans = list(), sanitize = TRUE)
+	if(sanitize)
+		message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
 	if(!message || message == "")
 		return
 
@@ -98,8 +101,8 @@ var/list/crit_allowed_modes = list(MODE_WHISPER,MODE_CHANGELING,MODE_ALIEN)
 
 	spans += get_spans()
 
-	//Log of what we've said, plain message, no spans or junk
-	say_log += message
+	//Log what we've said with an associated timestamp, using the list's len for safety/to prevent overwriting messages
+	say_log["[LAZYLEN(say_log) + 1]\[[time_stamp()]\]"] = message
 
 	var/message_range = 7
 	var/radio_return = radio(message, message_mode, spans)
@@ -220,7 +223,6 @@ var/list/crit_allowed_modes = list(MODE_WHISPER,MODE_CHANGELING,MODE_ALIEN)
 							if(1)
 								if(prob(40))
 									M << "<i><font color=#800080>We can faintly sense an outsider trying to communicate through the hivemind...</font></i>"
-				return 1
 			if(2)
 				var/msg = "<i><font color=#800080><b>[mind.changeling.changelingID]:</b> [message]</font></i>"
 				log_say("[mind.changeling.changelingID]/[src.key] : [message]")
@@ -237,15 +239,22 @@ var/list/crit_allowed_modes = list(MODE_WHISPER,MODE_CHANGELING,MODE_ALIEN)
 							if(1)
 								if(prob(40))
 									M << "<i><font color=#800080>We can faintly sense another of our kind trying to communicate through the hivemind...</font></i>"
-				return 1
 			if(1)
 				src << "<i><font color=#800080>Our senses have not evolved enough to be able to communicate this way...</font></i>"
-				return 1
+		return TRUE
 	if(message_mode == MODE_ALIEN)
 		if(hivecheck())
 			alien_talk(message)
-			return 1
-	return 0
+		return TRUE
+	if(message_mode == MODE_VOCALCORDS)
+		if(iscarbon(src))
+			var/mob/living/carbon/C = src
+			var/obj/item/organ/vocal_cords/V = C.getorganslot("vocal_cords")
+			if(V && V.can_speak_with())
+				C.say(V.handle_speech(message), spans = V.spans, sanitize = FALSE)
+				V.speak_with(message) //words come before actions
+		return TRUE
+	return FALSE
 
 /mob/living/proc/treat_message(message)
 	if(getBrainLoss() >= 60)
@@ -269,12 +278,12 @@ var/list/crit_allowed_modes = list(MODE_WHISPER,MODE_CHANGELING,MODE_ALIEN)
 		if(MODE_R_HAND)
 			for(var/obj/item/r_hand in get_held_items_for_side("r", all = TRUE))
 				if (r_hand)
-					r_hand.talk_into(src, message, , spans)
+					return r_hand.talk_into(src, message, , spans)
 				return ITALICS | REDUCE_RANGE
 		if(MODE_L_HAND)
 			for(var/obj/item/l_hand in get_held_items_for_side("l", all = TRUE))
 				if (l_hand)
-					l_hand.talk_into(src, message, , spans)
+					return l_hand.talk_into(src, message, , spans)
 				return ITALICS | REDUCE_RANGE
 
 		if(MODE_INTERCOM)

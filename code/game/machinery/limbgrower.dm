@@ -10,7 +10,7 @@
 	icon = 'icons/obj/machines/limbgrower.dmi'
 	icon_state = "limbgrower_idleoff"
 	density = 1
-	flags = OPENCONTAINER
+	container_type = OPENCONTAINER
 
 	var/operating = 0
 	anchored = 1
@@ -42,7 +42,7 @@
 	files = new /datum/research/limbgrower(src)
 
 /obj/item/weapon/circuitboard/machine/limbgrower
-	name = "circuit board (Limb Grower)"
+	name = "Limb Grower (Machine Board)"
 	build_path = /obj/machinery/limbgrower
 	origin_tech = "programming=2;biotech=2"
 	req_components = list(
@@ -71,6 +71,7 @@
 /obj/machinery/limbgrower/on_deconstruction()
 	for(var/obj/item/weapon/reagent_containers/glass/G in component_parts)
 		reagents.trans_to(G, G.reagents.maximum_volume)
+	..()
 
 /obj/machinery/limbgrower/attackby(obj/item/O, mob/user, params)
 	if (busy)
@@ -87,7 +88,7 @@
 	if(panel_open && default_deconstruction_crowbar(O))
 		return
 
-	if(user.a_intent == "harm") //so we can hit the machine
+	if(user.a_intent == INTENT_HARM) //so we can hit the machine
 		return ..()
 
 /obj/machinery/limbgrower/Topic(href, href_list)
@@ -112,15 +113,15 @@
 				return
 
 
-			var/synth_cost = being_built.reagents["synthflesh"]*prod_coeff
+			var/synth_cost = being_built.reagents_list["synthflesh"]*prod_coeff
 			var/power = max(2000, synth_cost/5)
 
-			if(reagents.has_reagent("synthflesh", being_built.reagents["synthflesh"]*prod_coeff))
+			if(reagents.has_reagent("synthflesh", being_built.reagents_list["synthflesh"]*prod_coeff))
 				busy = 1
 				use_power(power)
 				flick("limbgrower_fill",src)
 				icon_state = "limbgrower_idleon"
-				addtimer(src, "build_item",32*prod_coeff)
+				addtimer(CALLBACK(src, .proc/build_item),32*prod_coeff)
 
 	else
 		usr << "<span class=\"alert\">The limb grower is busy. Please wait for completion of previous operation.</span>"
@@ -129,8 +130,8 @@
 	return
 
 /obj/machinery/limbgrower/proc/build_item()
-	if(reagents.has_reagent("synthflesh", being_built.reagents["synthflesh"]*prod_coeff))	//sanity check, if this happens we are in big trouble
-		reagents.remove_reagent("synthflesh",being_built.reagents["synthflesh"]*prod_coeff)
+	if(reagents.has_reagent("synthflesh", being_built.reagents_list["synthflesh"]*prod_coeff))	//sanity check, if this happens we are in big trouble
+		reagents.remove_reagent("synthflesh",being_built.reagents_list["synthflesh"]*prod_coeff)
 		var/buildpath = being_built.build_path
 		if(ispath(buildpath, /obj/item/bodypart))	//This feels like spatgheti code, but i need to initilise a limb somehow
 			build_limb(buildpath)
@@ -156,6 +157,9 @@
 	limb.icon_state = "[selected_category]_[limb.body_zone]_s"
 	limb.name = "Synthetic [selected_category] [parse_zone(limb.body_zone)]"
 	limb.desc = "A synthetic [selected_category] limb that will morph on its first use in surgery. This one is for the [parse_zone(limb.body_zone)]"
+	limb.species_id = selected_category
+	limb.should_draw_greyscale = TRUE
+	limb.update_icon_dropped()
 
 /obj/machinery/limbgrower/RefreshParts()
 	reagents.maximum_volume = 0
@@ -220,12 +224,12 @@
 	return dat
 
 /obj/machinery/limbgrower/proc/can_build(datum/design/D)
-	return (reagents.has_reagent("synthflesh", D.reagents["synthflesh"]*prod_coeff)) //Return whether the machine has enough synthflesh to produce the design
+	return (reagents.has_reagent("synthflesh", D.reagents_list["synthflesh"]*prod_coeff)) //Return whether the machine has enough synthflesh to produce the design
 
 /obj/machinery/limbgrower/proc/get_design_cost(datum/design/D)
 	var/dat
-	if(D.reagents["synthflesh"])
-		dat += "[D.reagents["synthflesh"] * prod_coeff] Synthetic flesh "
+	if(D.reagents_list["synthflesh"])
+		dat += "[D.reagents_list["synthflesh"] * prod_coeff] Synthetic flesh "
 	return dat
 
 /obj/machinery/limbgrower/emag_act(mob/user)

@@ -14,25 +14,19 @@ It is possible to destroy the net by the occupant or someone else.
 	mouse_opacity = 1//So you can hit it with stuff.
 	anchored = 1//Can't drag/grab the trapped mob.
 	layer = ABOVE_ALL_MOB_LAYER
-	var/health = 25//How much health it has.
+	obj_integrity = 25//How much health it has.
+	max_integrity = 25
 	var/mob/living/affecting = null//Who it is currently affecting, if anyone.
 	var/mob/living/master = null//Who shot web. Will let this person know if the net was successful or failed.
 
 
 
-/obj/structure/energy_net/proc/take_damage(damage, damage_type = BRUTE, sound_effect = 1)
+/obj/structure/energy_net/play_attack_sound(damage, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
 		if(BRUTE)
-			if(sound_effect)
-				playsound(src.loc, 'sound/weapons/slash.ogg', 80, 1)
+			playsound(src.loc, 'sound/weapons/slash.ogg', 80, 1)
 		if(BURN)
-			if(sound_effect)
-				playsound(src.loc, 'sound/weapons/slash.ogg', 80, 1)
-		else
-			return
-	health -= damage
-	if(health <=0)
-		qdel(src)
+			playsound(src.loc, 'sound/weapons/slash.ogg', 80, 1)
 
 /obj/structure/energy_net/Destroy()
 	if(affecting)
@@ -67,7 +61,7 @@ It is possible to destroy the net by the occupant or someone else.
 
 		density = 0//Make the net pass-through.
 		invisibility = INVISIBILITY_ABSTRACT//Make the net invisible so all the animations can play out.
-		health = INFINITY//Make the net invincible so that an explosion/something else won't kill it while, spawn() is running.
+		resistance_flags |= INDESTRUCTIBLE //Make the net invincible so that an explosion/something else won't kill it while, spawn() is running.
 		for(var/obj/item/W in M)
 			if(ishuman(M))
 				var/mob/living/carbon/human/H = M
@@ -102,61 +96,7 @@ It is possible to destroy the net by the occupant or someone else.
 
 
 
-/obj/structure/energy_net/bullet_act(obj/item/projectile/Proj)
-	. = ..()
-	take_damage(Proj.damage, Proj.damage_type)
-
-
-
-/obj/structure/energy_net/ex_act(severity, target)
-	switch(severity)
-		if(1)
-			qdel(src)
-		if(2)
-			qdel(src)
-		if(3)
-			take_damage(rand(10,25), BRUTE, 0)
-
-/obj/structure/energy_net/blob_act(obj/structure/blob/B)
-	qdel(src)
-
-/obj/structure/energy_net/hitby(atom/movable/AM)
-	..()
-	var/tforce = 0
-	if(ismob(AM))
-		tforce = 10
-	else if(isobj(AM))
-		var/obj/O = AM
-		tforce = O.throwforce
-	take_damage(tforce)
-
-
-/obj/structure/energy_net/attack_hulk(mob/living/carbon/human/user)
-	..(user, 1)
-	user.visible_message("<span class='danger'>[user] rips the energy net apart!</span>", \
-								"<span class='notice'>You easily destroy the energy net.</span>")
-	qdel(src)
-
-
-
 /obj/structure/energy_net/attack_paw(mob/user)
 	return attack_hand()
-
-
-
-/obj/structure/energy_net/attack_alien(mob/living/user)
-	user.do_attack_animation(src)
-	user.changeNext_move(CLICK_CD_MELEE)
-	playsound(src.loc, 'sound/weapons/slash.ogg', 80, 1)
-	user.visible_message("<span class='danger'>[user] slices the energy net apart!</span>", \
-						 "\green You slice the energy net to pieces.")
-	qdel(src)
-
-
-
-/obj/structure/energy_net/attacked_by(obj/item/weapon/W, mob/user)
-	..()
-	take_damage(W.force, W.damtype)
-
 
 

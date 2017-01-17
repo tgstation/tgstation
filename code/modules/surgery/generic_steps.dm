@@ -39,7 +39,7 @@
 //close incision
 /datum/surgery_step/close
 	name = "mend incision"
-	implements = list(/obj/item/weapon/cautery = 100, /obj/item/weapon/weldingtool = 70, /obj/item/weapon/lighter = 45, /obj/item/weapon/match = 20)
+	implements = list(/obj/item/weapon/cautery = 100, /obj/item/weapon/gun/energy/laser = 90, /obj/item/weapon/weldingtool = 70, /obj/item/weapon/lighter = 45, /obj/item/weapon/match = 20)
 	time = 24
 
 /datum/surgery_step/close/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)

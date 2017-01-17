@@ -15,7 +15,7 @@
 		src << "<span class='revenwarning'>You are already siphoning the essence of a soul!</span>"
 		return
 	if(!target.stat)
-		src << "<span class='revennotice'>This being's soul is too strong to harvest.</span>"
+		src << "<span class='revennotice'>[target.p_their(TRUE)] soul is too strong to harvest.</span>"
 		if(prob(10))
 			target << "You feel as if you are being watched."
 		return
@@ -24,13 +24,13 @@
 	src << "<span class='revennotice'>You search for the soul of [target].</span>"
 	if(do_after(src, rand(10, 20), 0, target)) //did they get deleted in that second?
 		if(target.ckey)
-			src << "<span class='revennotice'>Their soul burns with intelligence.</span>"
+			src << "<span class='revennotice'>[target.p_their(TRUE)] soul burns with intelligence.</span>"
 			essence_drained += rand(20, 30)
 		if(target.stat != DEAD)
-			src << "<span class='revennotice'>Their soul blazes with life!</span>"
+			src << "<span class='revennotice'>[target.p_their(TRUE)] soul blazes with life!</span>"
 			essence_drained += rand(40, 50)
 		else
-			src << "<span class='revennotice'>Their soul is weak and faltering.</span>"
+			src << "<span class='revennotice'>[target.p_their(TRUE)] soul is weak and faltering.</span>"
 		if(do_after(src, rand(15, 20), 0, target)) //did they get deleted NOW?
 			switch(essence_drained)
 				if(1 to 30)
@@ -43,7 +43,7 @@
 					src << "<span class='revenbignotice'>Ah, the perfect soul. [target] will yield massive amounts of essence to you.</span>"
 			if(do_after(src, rand(15, 25), 0, target)) //how about now
 				if(!target.stat)
-					src << "<span class='revenwarning'>They are now powerful enough to fight off your draining.</span>"
+					src << "<span class='revenwarning'>[target.p_they(TRUE)] [target.p_are()] now powerful enough to fight off your draining.</span>"
 					target << "<span class='boldannounce'>You feel something tugging across your body before subsiding.</span>"
 					draining = 0
 					essence_drained = 0
@@ -53,7 +53,7 @@
 					target << "<span class='warning'>You feel a horribly unpleasant draining sensation as your grip on life weakens...</span>"
 				reveal(46)
 				stun(46)
-				target.visible_message("<span class='warning'>[target] suddenly rises slightly into the air, their skin turning an ashy gray.</span>")
+				target.visible_message("<span class='warning'>[target] suddenly rises slightly into the air, [target.p_their()] skin turning an ashy gray.</span>")
 				var/datum/beam/B = Beam(target,icon_state="drain_life",time=46)
 				if(do_after(src, 46, 0, target)) //As one cannot prove the existance of ghosts, ghosts cannot prove the existance of the target they were draining.
 					qdel(B)
@@ -73,20 +73,13 @@
 				else
 					qdel(B)
 					src << "<span class='revenwarning'>[target ? "[target] has":"They have"] been drawn out of your grasp. The link has been broken.</span>"
-					draining = 0
-					essence_drained = 0
 					if(target) //Wait, target is WHERE NOW?
 						target.visible_message("<span class='warning'>[target] slumps onto the ground.</span>", \
 											   "<span class='revenwarning'>Violets lights, dancing in your vision, receding--</span>")
-					return
 			else
 				src << "<span class='revenwarning'>You are not close enough to siphon [target ? "[target]'s":"their"] soul. The link has been broken.</span>"
-				draining = 0
-				essence_drained = 0
-				return
 	draining = 0
 	essence_drained = 0
-	return
 
 //Toggle night vision: lets the revenant toggle its night vision
 /obj/effect/proc_holder/spell/targeted/night_vision/revenant
@@ -202,7 +195,7 @@
 /obj/effect/proc_holder/spell/aoe_turf/revenant/overload/cast(list/targets, mob/living/simple_animal/revenant/user = usr)
 	if(attempt_cast(user))
 		for(var/turf/T in targets)
-			addtimer(src, "overload", 0, FALSE, T, user)
+			addtimer(CALLBACK(src, .proc/overload, T, user), 0)
 
 /obj/effect/proc_holder/spell/aoe_turf/revenant/overload/proc/overload(turf/T, mob/user)
 	for(var/obj/machinery/light/L in T)
@@ -242,13 +235,13 @@
 /obj/effect/proc_holder/spell/aoe_turf/revenant/defile/cast(list/targets, mob/living/simple_animal/revenant/user = usr)
 	if(attempt_cast(user))
 		for(var/turf/T in targets)
-			addtimer(src, "defile", 0, FALSE, T)
+			addtimer(CALLBACK(src, .proc/defile, T), 0)
 
 /obj/effect/proc_holder/spell/aoe_turf/revenant/defile/proc/defile(turf/T)
 	if(T.flags & NOJAUNT)
 		T.flags -= NOJAUNT
 		PoolOrNew(/obj/effect/overlay/temp/revenant, T)
-	if(!istype(T, /turf/open/floor/plating) && !istype(T, /turf/open/floor/engine/cult) && istype(T, /turf/open/floor) && prob(15))
+	if(!istype(T, /turf/open/floor/plating) && !istype(T, /turf/open/floor/engine/cult) && isfloorturf(T) && prob(15))
 		var/turf/open/floor/floor = T
 		if(floor.intact && floor.floor_tile)
 			PoolOrNew(floor.floor_tile, floor)
@@ -289,7 +282,7 @@
 /obj/effect/proc_holder/spell/aoe_turf/revenant/malfunction/cast(list/targets, mob/living/simple_animal/revenant/user = usr)
 	if(attempt_cast(user))
 		for(var/turf/T in targets)
-			addtimer(src, "malfunction", 0, FALSE, T, user)
+			addtimer(CALLBACK(src, .proc/malfunction, T, user), 0)
 
 /obj/effect/proc_holder/spell/aoe_turf/revenant/malfunction/proc/malfunction(turf/T, mob/user)
 	for(var/mob/living/simple_animal/bot/bot in T)
@@ -333,7 +326,7 @@
 /obj/effect/proc_holder/spell/aoe_turf/revenant/blight/cast(list/targets, mob/living/simple_animal/revenant/user = usr)
 	if(attempt_cast(user))
 		for(var/turf/T in targets)
-			addtimer(src, "blight", 0, FALSE, T, user)
+			addtimer(CALLBACK(src, .proc/blight, T, user), 0)
 
 /obj/effect/proc_holder/spell/aoe_turf/revenant/blight/proc/blight(turf/T, mob/user)
 	for(var/mob/living/mob in T)
@@ -344,15 +337,7 @@
 			if(ishuman(mob))
 				var/mob/living/carbon/human/H = mob
 				if(H.dna && H.dna.species)
-					H.dna.species.handle_mutant_bodyparts(H,"#1d2953")
-					H.dna.species.handle_hair(H,"#1d2953")
-					var/old_color = H.color
-					H.color = "#1d2953"
-					spawn(20)
-						if(H && H.dna && H.dna.species)
-							H.dna.species.handle_mutant_bodyparts(H)
-							H.dna.species.handle_hair(H)
-							H.color = old_color
+					H.dna.species.handle_hair(H,"#1d2953") //will be reset when blight is cured
 				var/blightfound = 0
 				for(var/datum/disease/revblight/blight in H.viruses)
 					blightfound = 1
@@ -367,11 +352,11 @@
 		else
 			mob.adjustToxLoss(5)
 	for(var/obj/structure/spacevine/vine in T) //Fucking with botanists, the ability.
-		vine.color = "#823abb"
+		vine.add_atom_colour("#823abb", TEMPORARY_COLOUR_PRIORITY)
 		PoolOrNew(/obj/effect/overlay/temp/revenant, vine.loc)
 		QDEL_IN(vine, 10)
 	for(var/obj/structure/glowshroom/shroom in T)
-		shroom.color = "#823abb"
+		shroom.add_atom_colour("#823abb", TEMPORARY_COLOUR_PRIORITY)
 		PoolOrNew(/obj/effect/overlay/temp/revenant, shroom.loc)
 		QDEL_IN(shroom, 10)
 	for(var/obj/machinery/hydroponics/tray in T)

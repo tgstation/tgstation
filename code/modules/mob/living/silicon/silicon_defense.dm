@@ -45,11 +45,11 @@
 	return attack_hand(user)
 
 /mob/living/silicon/attack_larva(mob/living/carbon/alien/larva/L)
-	if(L.a_intent == "help")
+	if(L.a_intent == INTENT_HELP)
 		visible_message("[L.name] rubs its head against [src].")
 
-/mob/living/silicon/attack_hulk(mob/living/carbon/human/user)
-	if(user.a_intent == "harm")
+/mob/living/silicon/attack_hulk(mob/living/carbon/human/user, does_attack_animation = 0)
+	if(user.a_intent == INTENT_HARM)
 		..(user, 1)
 		adjustBruteLoss(rand(10, 15))
 		playsound(loc, "punch", 25, 1, -1)
@@ -66,13 +66,13 @@
 		if("grab")
 			grabbedby(M)
 		else
-			M.do_attack_animation(src)
+			M.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
 			playsound(src.loc, 'sound/effects/bang.ogg', 10, 1)
-			visible_message("<span class='warning'>[M] punches [src], but doesn't leave a dent.</span>", \
-						"<span class='warning'>[M] punches [src], but doesn't leave a dent.</span>")
+			visible_message("<span class='danger'>[M] punches [src], but doesn't leave a dent.</span>", \
+				"<span class='warning'>[M] punches [src], but doesn't leave a dent.</span>", null, COMBAT_MESSAGE_RANGE)
 	return 0
 
-/mob/living/silicon/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, safety = 0, tesla_shock = 0)
+/mob/living/silicon/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, safety = 0, tesla_shock = 0, illusion = 0)
 	return 0 //So borgs they don't die trying to fix wiring
 
 /mob/living/silicon/emp_act(severity)
@@ -92,6 +92,6 @@
 	Proj.on_hit(src)
 	return 2
 
-/mob/living/silicon/flash_act(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0, type = /obj/screen/fullscreen/flash/noise)
+/mob/living/silicon/flash_act(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0, type = /obj/screen/fullscreen/flash/static)
 	if(affect_silicon)
 		return ..()

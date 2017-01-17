@@ -18,7 +18,7 @@
 		user << "<span class='danger'>You unscrew the planks.</span>"
 		new floor_tile(src)
 		make_plating()
-		playsound(src, 'sound/items/Screwdriver.ogg', 80, 1)
+		playsound(src, C.usesound, 80, 1)
 		return
 
 /turf/open/floor/wood/cold
@@ -123,20 +123,13 @@
 	burnt = 1
 	update_icon()
 
-/turf/open/floor/carpet/carpetsymbol
-	icon_state = "carpetsymbol"
-	smooth = SMOOTH_FALSE
-
-/turf/open/floor/carpet/carpetsymbol2
-	icon_state = "carpetstar"
-	smooth = SMOOTH_FALSE
-
 
 /turf/open/floor/fakespace
 	icon = 'icons/turf/space.dmi'
 	icon_state = "0"
 	floor_tile = /obj/item/stack/tile/fakespace
 	broken_states = list("damaged")
+	plane = PLANE_SPACE
 
 /turf/open/floor/fakespace/New()
 	..()

@@ -55,6 +55,7 @@ other types of metals and chemistry for reagents).
 	var/max_blueprints = 1
 
 /obj/item/weapon/disk/design_disk/New()
+	..()
 	src.pixel_x = rand(-5, 5)
 	src.pixel_y = rand(-5, 5)
 	for(var/i in 1 to max_blueprints)
@@ -368,7 +369,7 @@ other types of metals and chemistry for reagents).
 	build_path = /obj/item/clothing/glasses/hud/security/night
 	category = list("Equipment")
 
-datum/design/diagnostic_hud
+/datum/design/diagnostic_hud
 	name = "Diagnostic HUD"
 	desc = "A HUD used to analyze and determine faults within robotic machinery."
 	id = "dianostic_hud"
@@ -378,7 +379,7 @@ datum/design/diagnostic_hud
 	build_path = /obj/item/clothing/glasses/hud/diagnostic
 	category = list("Equipment")
 
-datum/design/diagnostic_hud_night
+/datum/design/diagnostic_hud_night
 	name = "Night Vision Diagnostic HUD"
 	desc = "Upgraded version of the diagnostic HUD designed to function during a power failure."
 	id = "dianostic_hud_night"
@@ -503,6 +504,86 @@ datum/design/diagnostic_hud_night
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 500, MAT_GLASS = 500)
 	build_path = /obj/item/clothing/glasses/science
+	category = list("Equipment")
+
+/datum/design/handdrill
+	name = "Hand Drill"
+	desc = "A small electric hand drill with an interchangable screwdriver and bolt bit"
+	id = "handdrill"
+	req_tech = list("materials" = 4, "engineering" = 6)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 3500, MAT_SILVER = 1500, MAT_TITANIUM = 2500)
+	build_path = /obj/item/weapon/screwdriver/power
+	category = list("Equipment")
+
+/datum/design/jawsoflife
+	name = "Jaws of Life"
+	desc = "A small, compact Jaws of Life with an interchangable pry jaws and cutting jaws"
+	id = "jawsoflife"
+	req_tech = list("materials" = 4, "engineering" = 6, "magnets" = 6) // added one more requirment since the Jaws of Life are a bit OP
+	build_path = /obj/item/weapon/crowbar/power
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 4500, MAT_SILVER = 2500, MAT_TITANIUM = 3500)
+	category = list("Equipment")
+
+/datum/design/alienwrench
+	name = "Alien Wrench"
+	desc = "An advanced wrench obtained through Abductor technology."
+	id = "alien_wrench"
+	req_tech = list("engineering" = 5, "materials" = 5, "abductor" = 4)
+	build_path = /obj/item/weapon/wrench/abductor
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 5000, MAT_SILVER = 2500, MAT_PLASMA = 1000, MAT_TITANIUM = 2000, MAT_DIAMOND = 2000)
+	category = list("Equipment")
+
+/datum/design/alienwirecutters
+	name = "Alien Wirecutters"
+	desc = "Advanced wirecutters obtained through Abductor technology."
+	id = "alien_wirecutters"
+	req_tech = list("engineering" = 5, "materials" = 5, "abductor" = 4)
+	build_path = /obj/item/weapon/wirecutters/abductor
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 5000, MAT_SILVER = 2500, MAT_PLASMA = 1000, MAT_TITANIUM = 2000, MAT_DIAMOND = 2000)
+	category = list("Equipment")
+
+/datum/design/alienscrewdriver
+	name = "Alien Screwdriver"
+	desc = "An advanced screwdriver obtained through Abductor technology."
+	id = "alien_screwdriver"
+	req_tech = list("engineering" = 5, "materials" = 5, "abductor" = 4)
+	build_path = /obj/item/weapon/screwdriver/abductor
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 5000, MAT_SILVER = 2500, MAT_PLASMA = 1000, MAT_TITANIUM = 2000, MAT_DIAMOND = 2000)
+	category = list("Equipment")
+
+/datum/design/aliencrowbar
+	name = "Alien Crowbar"
+	desc = "An advanced crowbar obtained through Abductor technology."
+	id = "alien_crowbar"
+	req_tech = list("engineering" = 5, "materials" = 5, "abductor" = 4)
+	build_path = /obj/item/weapon/crowbar/abductor
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 5000, MAT_SILVER = 2500, MAT_PLASMA = 1000, MAT_TITANIUM = 2000, MAT_DIAMOND = 2000)
+	category = list("Equipment")
+
+/datum/design/alienwelder
+	name = "Alien Welding Tool"
+	desc = "An advanced welding tool obtained through Abductor technology."
+	id = "alien_welder"
+	req_tech = list("engineering" = 5, "plasmatech" = 5, "abductor" = 4)
+	build_path = /obj/item/weapon/weldingtool/abductor
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 5000, MAT_SILVER = 2500, MAT_PLASMA = 5000, MAT_TITANIUM = 2000, MAT_DIAMOND = 2000)
+	category = list("Equipment")
+
+/datum/design/alienmultitool
+	name = "Alien Multitool"
+	desc = "An advanced multitool obtained through Abductor technology."
+	id = "alien_multitool"
+	req_tech = list("engineering" = 5, "programming" = 5, "abductor" = 4)
+	build_path = /obj/item/device/multitool/abductor
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 5000, MAT_SILVER = 2500, MAT_PLASMA = 5000, MAT_TITANIUM = 2000, MAT_DIAMOND = 2000)
 	category = list("Equipment")
 
 /datum/design/diskplantgene

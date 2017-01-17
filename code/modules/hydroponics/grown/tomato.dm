@@ -10,7 +10,7 @@
 	growing_icon = 'icons/obj/hydroponics/growing_fruits.dmi'
 	icon_grow = "tomato-grow"
 	icon_dead = "tomato-dead"
-	genes = list(/datum/plant_gene/trait/squash)
+	genes = list(/datum/plant_gene/trait/squash, /datum/plant_gene/trait/repeated_harvest)
 	mutatelist = list(/obj/item/seeds/tomato/blue, /obj/item/seeds/tomato/blood, /obj/item/seeds/tomato/killer)
 	reagents_add = list("vitamin" = 0.04, "nutriment" = 0.1)
 
@@ -56,7 +56,7 @@
 	yield = 2
 	icon_grow = "bluetomato-grow"
 	mutatelist = list(/obj/item/seeds/tomato/blue/bluespace)
-	genes = list(/datum/plant_gene/trait/slip)
+	genes = list(/datum/plant_gene/trait/slip, /datum/plant_gene/trait/repeated_harvest)
 	reagents_add = list("lube" = 0.2, "vitamin" = 0.04, "nutriment" = 0.1)
 	rarity = 20
 
@@ -79,7 +79,7 @@
 	product = /obj/item/weapon/reagent_containers/food/snacks/grown/tomato/blue/bluespace
 	yield = 2
 	mutatelist = list()
-	genes = list(/datum/plant_gene/trait/squash, /datum/plant_gene/trait/slip, /datum/plant_gene/trait/teleport)
+	genes = list(/datum/plant_gene/trait/squash, /datum/plant_gene/trait/slip, /datum/plant_gene/trait/teleport, /datum/plant_gene/trait/repeated_harvest)
 	reagents_add = list("lube" = 0.2, "singulo" = 0.2, "vitamin" = 0.04, "nutriment" = 0.1)
 	rarity = 50
 
@@ -100,7 +100,7 @@
 	plantname = "Killer-Tomato Plants"
 	product = /obj/item/weapon/reagent_containers/food/snacks/grown/tomato/killer
 	yield = 2
-	oneharvest = 1
+	genes = list(/datum/plant_gene/trait/squash)
 	growthstages = 2
 	icon_grow = "killertomato-grow"
 	icon_harvest = "killertomato-harvest"
@@ -124,7 +124,7 @@
 	..()
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/tomato/killer/attack_self(mob/user)
-	if(awakening || istype(user.loc,/turf/open/space))
+	if(awakening || isspaceturf(user.loc))
 		return
 	user << "<span class='notice'>You begin to awaken the Killer Tomato...</span>"
 	awakening = 1

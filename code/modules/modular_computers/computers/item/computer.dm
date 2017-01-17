@@ -30,12 +30,11 @@
 	var/max_hardware_size = 0								// Maximal hardware w_class. Tablets/PDAs have 1, laptops 2, consoles 4.
 	var/steel_sheet_cost = 5								// Amount of steel sheets refunded when disassembling an empty frame of this computer.
 
-	// Damage of the chassis. If the chassis takes too much damage it will break apart.
-	var/damage = 0				// Current damage level
-	var/broken_damage = 50		// Damage level at which the computer ceases to operate
-	var/max_damage = 100		// Damage level at which the computer breaks apart.
-
+	obj_integrity = 100
+	integrity_failure = 50
+	max_integrity = 100
 	armor = list(melee = 0, bullet = 20, laser = 20, energy = 100, bomb = 0, bio = 100, rad = 100, fire = 0, acid = 0)
+
 	// Important hardware (must be installed for computer to work)
 
 	// Optional hardware (improves functionality, but is not critical for computer to work)
@@ -63,8 +62,11 @@
 	for(var/H in all_components)
 		var/obj/item/weapon/computer_hardware/CH = all_components[H]
 		if(CH.holder == src)
+			CH.on_remove(src)
 			CH.holder = null
+			all_components.Remove(CH.device_type)
 			qdel(CH)
+	physical = null
 	return ..()
 
 
@@ -74,6 +76,8 @@
 			verbs += /obj/item/device/modular_computer/proc/eject_id
 		if(MC_SDD)
 			verbs += /obj/item/device/modular_computer/proc/eject_disk
+		if(MC_AI)
+			verbs += /obj/item/device/modular_computer/proc/eject_card
 
 /obj/item/device/modular_computer/proc/remove_verb(path)
 	switch(path)
@@ -81,6 +85,8 @@
 			verbs -= /obj/item/device/modular_computer/proc/eject_id
 		if(MC_SDD)
 			verbs -= /obj/item/device/modular_computer/proc/eject_disk
+		if(MC_AI)
+			verbs -= /obj/item/device/modular_computer/proc/eject_card
 
 // Eject ID card from computer, if it has ID slot with card inside.
 /obj/item/device/modular_computer/proc/eject_id()
@@ -92,13 +98,24 @@
 		return
 	var/obj/item/weapon/computer_hardware/card_slot/card_slot = all_components[MC_CARD]
 	if(usr.canUseTopic(src))
-		card_slot.try_eject(, usr)
+		card_slot.try_eject(null, usr)
+
+// Eject ID card from computer, if it has ID slot with card inside.
+/obj/item/device/modular_computer/proc/eject_card()
+	set name = "Eject Intellicard"
+	set category = "Object"
+
+	if(issilicon(usr))
+		return
+	var/obj/item/weapon/computer_hardware/ai_slot/ai_slot = all_components[MC_AI]
+	if(usr.canUseTopic(src))
+		ai_slot.try_eject(null, usr,1)
+
 
 // Eject ID card from computer, if it has ID slot with card inside.
 /obj/item/device/modular_computer/proc/eject_disk()
 	set name = "Eject Data Disk"
 	set category = "Object"
-	set src in view(1)
 
 	if(issilicon(usr))
 		return
@@ -115,12 +132,16 @@
 
 	if(user.canUseTopic(src))
 		var/obj/item/weapon/computer_hardware/card_slot/card_slot = all_components[MC_CARD]
+		var/obj/item/weapon/computer_hardware/ai_slot/ai_slot = all_components[MC_AI]
 		var/obj/item/weapon/computer_hardware/hard_drive/portable/portable_drive = all_components[MC_SDD]
 		if(portable_drive)
 			if(uninstall_component(portable_drive, user))
 				portable_drive.verb_pickup()
-		else if(card_slot)
-			card_slot.try_eject(, user)
+		else
+			if(card_slot && card_slot.try_eject(null, user))
+				return
+			if(ai_slot)
+				ai_slot.try_eject(null, user)
 
 
 // Gets IDs/access levels from card slot. Would be useful when/if PDAs would become modular PCs.
@@ -164,9 +185,9 @@
 
 /obj/item/device/modular_computer/examine(mob/user)
 	..()
-	if(damage > broken_damage)
+	if(obj_integrity <= integrity_failure)
 		user << "<span class='danger'>It is heavily damaged!</span>"
-	else if(damage)
+	else if(obj_integrity < max_integrity)
 		user << "<span class='warning'>It is damaged.</span>"
 
 /obj/item/device/modular_computer/update_icon()
@@ -180,7 +201,7 @@
 		else
 			add_overlay(icon_state_menu)
 
-	if(damage > broken_damage)
+	if(obj_integrity <= integrity_failure)
 		add_overlay("bsod")
 		add_overlay("broken")
 
@@ -194,7 +215,7 @@
 
 /obj/item/device/modular_computer/proc/turn_on(mob/user)
 	var/issynth = issilicon(user) // Robots and AIs get different activation messages.
-	if(damage > broken_damage)
+	if(obj_integrity <= integrity_failure)
 		if(issynth)
 			user << "<span class='warning'>You send an activation signal to \the [src], but it responds with an error code. It must be damaged.</span>"
 		else
@@ -226,7 +247,7 @@
 		last_power_usage = 0
 		return 0
 
-	if(damage > broken_damage)
+	if(obj_integrity <= integrity_failure)
 		shutdown_computer()
 		return 0
 
@@ -377,13 +398,14 @@
 			user << "<span class='warning'>\The [W] is off.</span>"
 			return
 
-		if(!damage)
+		if(obj_integrity == max_integrity)
 			user << "<span class='warning'>\The [src] does not require repairs.</span>"
 			return
 
 		user << "<span class='notice'>You begin repairing damage to \the [src]...</span>"
-		if(WT.remove_fuel(round(damage/75)) && do_after(usr, damage/10))
-			damage = 0
+		var/dmg = round(max_integrity - obj_integrity)
+		if(WT.remove_fuel(round(dmg/75)) && do_after(usr, dmg/10))
+			obj_integrity = max_integrity
 			user << "<span class='notice'>You repair \the [src].</span>"
 		return
 
@@ -392,15 +414,16 @@
 			user << "<span class='warning'>This device doesn't have any components installed.</span>"
 			return
 		var/list/component_names = list()
-		for(var/obj/item/weapon/computer_hardware/H in all_components)
+		for(var/h in all_components)
+			var/obj/item/weapon/computer_hardware/H = all_components[h]
 			component_names.Add(H.name)
 
-		var/choice = input(usr, "Which component do you want to uninstall?", "Computer maintenance", null) as null|anything in component_names
+		var/choice = input(user, "Which component do you want to uninstall?", "Computer maintenance", null) as null|anything in component_names
 
 		if(!choice)
 			return
 
-		if(!Adjacent(usr))
+		if(!Adjacent(user))
 			return
 
 		var/obj/item/weapon/computer_hardware/H = find_hardware_by_name(choice)

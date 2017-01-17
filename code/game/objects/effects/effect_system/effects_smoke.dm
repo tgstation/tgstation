@@ -42,7 +42,7 @@
 
 /obj/effect/particle_effect/smoke/proc/kill_smoke()
 	STOP_PROCESSING(SSobj, src)
-	addtimer(src, "fade_out", 0)
+	addtimer(CALLBACK(src, .proc/fade_out), 0)
 	QDEL_IN(src, 10)
 
 /obj/effect/particle_effect/smoke/process()
@@ -64,7 +64,7 @@
 	if(C.smoke_delay)
 		return 0
 	C.smoke_delay++
-	addtimer(src, "remove_smoke_delay", 10, FALSE, C)
+	addtimer(CALLBACK(src, .proc/remove_smoke_delay, C), 10)
 	return 1
 
 /obj/effect/particle_effect/smoke/proc/remove_smoke_delay(mob/living/carbon/C)
@@ -84,7 +84,7 @@
 		reagents.copy_to(S, reagents.total_volume)
 		S.setDir(pick(cardinal))
 		S.amount = amount-1
-		S.color = color
+		S.add_atom_colour(color, FIXED_COLOUR_PRIORITY)
 		S.lifetime = lifetime
 		if(S.amount>0)
 			if(opaque)
@@ -157,7 +157,7 @@
 	var/blast = 0
 
 /datum/effect_system/smoke_spread/freezing/proc/Chilled(atom/A)
-	if(istype(A,/turf/open))
+	if(isopenturf(A))
 		var/turf/open/T = A
 		if(T.air)
 			var/datum/gas_mixture/G = T.air
@@ -227,6 +227,8 @@
 		for(var/atom/movable/AM in T)
 			if(AM.type == src.type)
 				continue
+			if(T.intact && AM.level == 1) //hidden under the floor
+				continue
 			reagents.reaction(AM, TOUCH, fraction)
 
 		reagents.reaction(T, TOUCH, fraction)
@@ -264,7 +266,7 @@
 	return ..()
 
 /datum/effect_system/smoke_spread/chem/set_up(datum/reagents/carry = null, radius = 1, loca, silent = 0)
-	if(istype(loca, /turf/))
+	if(isturf(loca))
 		location = loca
 	else
 		location = get_turf(loca)
@@ -295,7 +297,7 @@
 
 
 /datum/effect_system/smoke_spread/chem/start()
-	var/color = mix_color_from_reagents(chemholder.reagents.reagent_list)
+	var/mixcolor = mix_color_from_reagents(chemholder.reagents.reagent_list)
 	if(holder)
 		location = get_turf(holder)
 	var/obj/effect/particle_effect/smoke/chem/S = new effect_type(location)
@@ -303,9 +305,20 @@
 	if(chemholder.reagents.total_volume > 1) // can't split 1 very well
 		chemholder.reagents.copy_to(S, chemholder.reagents.total_volume)
 
-	if(color)
-		S.color = color // give the smoke color, if it has any to begin with
+	if(mixcolor)
+		S.add_atom_colour(mixcolor, FIXED_COLOUR_PRIORITY) // give the smoke color, if it has any to begin with
 	S.amount = amount
 	if(S.amount)
 		S.spread_smoke() //calling process right now so the smoke immediately attacks mobs.
 
+
+/////////////////////////////////////////////
+// Transparent smoke
+/////////////////////////////////////////////
+
+//Same as the base type, but the smoke produced is not opaque
+/datum/effect_system/smoke_spread/transparent
+	effect_type = /obj/effect/particle_effect/smoke/transparent
+
+/obj/effect/particle_effect/smoke/transparent
+	opaque = FALSE

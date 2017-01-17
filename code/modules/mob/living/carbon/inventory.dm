@@ -4,6 +4,8 @@
 			return back
 		if(slot_wear_mask)
 			return wear_mask
+		if(slot_neck)
+			return wear_neck
 		if(slot_head)
 			return head
 		if(slot_handcuffed)
@@ -12,6 +14,13 @@
 			return legcuffed
 	return null
 
+/mob/living/carbon/proc/equip_in_one_of_slots(obj/item/I, list/slots, qdel_on_fail = 1)
+	for(var/slot in slots)
+		if(equip_to_slot_if_possible(I, slots[slot], qdel_on_fail = 0, disable_warning = TRUE))
+			return slot
+	if(qdel_on_fail)
+		qdel(I)
+	return null
 
 //This is an UNSAFE proc. Use mob_can_equip() before calling this one! Or rather use equip_to_slot_if_possible() or advanced_equip_to_slot_if_possible()
 /mob/living/carbon/equip_to_slot(obj/item/I, slot)
@@ -37,6 +46,7 @@
 				observe.client.screen -= I
 	I.loc = src
 	I.layer = ABOVE_HUD_LAYER
+	I.plane = ABOVE_HUD_PLANE
 	I.appearance_flags |= NO_CLIENT_COLOR
 	var/not_handled = FALSE
 	switch(slot)
@@ -49,6 +59,9 @@
 		if(slot_head)
 			head = I
 			head_update(I)
+		if(slot_neck)
+			wear_neck = I
+			update_inv_neck(I)
 		if(slot_handcuffed)
 			handcuffed = I
 			update_handcuffed()
@@ -59,9 +72,11 @@
 			put_in_hands(I)
 			update_inv_hands()
 		if(slot_in_backpack)
-			if(I == get_active_held_item())
-				unEquip(I)
-			I.loc = back
+			var/obj/item/weapon/storage/B = back
+			var/prev_jimmies = B.rustle_jimmies
+			B.rustle_jimmies = FALSE //don't conspicously rustle
+			B.handle_item_insertion(I, 1, src)
+			B.rustle_jimmies = prev_jimmies
 		else
 			not_handled = TRUE
 
@@ -87,6 +102,9 @@
 	else if(I == wear_mask)
 		wear_mask = null
 		wear_mask_update(I, toggle_off = 1)
+	if(I == wear_neck)
+		wear_neck = null
+		update_inv_neck(I)
 	else if(I == handcuffed)
 		handcuffed = null
 		if(buckled && buckled.buckle_requires_restraints)
@@ -114,3 +132,4 @@
 	if(I.flags_inv & HIDEMASK || forced)
 		update_inv_wear_mask()
 	update_inv_head()
+

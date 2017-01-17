@@ -8,7 +8,7 @@
 	icon_state = "plastic-explosive0"
 	item_state = "plasticx"
 	flags = NOBLUDGEON
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	origin_tech = "syndicate=1"
 	var/timer = 10
 	var/open_panel = 0
@@ -26,7 +26,7 @@
 	return ..()
 
 /obj/item/weapon/c4/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] activates the [src.name] and holds it above \his head! It looks like \he's going out with a bang!</span>")
+	user.visible_message("<span class='suicide'>[user] activates the [src.name] and holds it above [user.p_their()] head! It looks like [user.p_theyre()] going out with a bang!</span>")
 	var/message_say = "FOR NO RAISIN!"
 	if(user.mind)
 		if(user.mind.special_role)
@@ -94,7 +94,7 @@
 
 		target.add_overlay(image_overlay, 1)
 		user << "<span class='notice'>You plant the bomb. Timer counting down from [timer].</span>"
-		addtimer(src, "explode", timer * 10)
+		addtimer(CALLBACK(src, .proc/explode), timer * 10)
 
 /obj/item/weapon/c4/proc/explode()
 	if(qdeleted(src))

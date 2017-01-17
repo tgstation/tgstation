@@ -60,6 +60,7 @@
 	I.screen_loc = null // will get moved if inventory is visible
 	I.loc = src
 	I.layer = ABOVE_HUD_LAYER
+	I.plane = ABOVE_HUD_PLANE
 
 	switch(slot)
 		if(slot_head)

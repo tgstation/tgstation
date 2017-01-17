@@ -1,4 +1,4 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
+
 
 /var/const/access_security = 1 // Security equipment
 /var/const/access_brig = 2 // Brig timers and permabrig
@@ -65,6 +65,7 @@
 /var/const/access_minisat = 65
 /var/const/access_weapons = 66 //Weapon authorization for secbots
 /var/const/access_network = 67
+/var/const/access_cloning = 68 //Cloning room
 
 	//BEGIN CENTCOM ACCESS
 	/*Should leave plenty of room if we need to add more access levels.
@@ -105,28 +106,29 @@
 /obj/proc/allowed(mob/M)
 	//check if it doesn't require any access at all
 	if(src.check_access(null))
-		return 1
-	if(istype(M, /mob/living/silicon))
-		//AI can do whatever he wants
-		return 1
+		return TRUE
+	if(issilicon(M))
+		if(ispAI(M))
+			return FALSE
+		return TRUE	//AI can do whatever it wants
 	if(IsAdminGhost(M))
 		//Access can't stop the abuse
-		return 1
+		return TRUE
 	else if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		//if they are holding or wearing a card that has access, that works
 		if(check_access(H.get_active_held_item()) || src.check_access(H.wear_id))
-			return 1
+			return TRUE
 	else if(ismonkey(M) || isalienadult(M))
 		var/mob/living/carbon/george = M
 		//they can only hold things :(
 		if(check_access(george.get_active_held_item()))
-			return 1
+			return TRUE
 	else if(isanimal(M))
 		var/mob/living/simple_animal/A = M
 		if(check_access(A.get_active_held_item()) || check_access(A.access_card))
-			return 1
-	return 0
+			return TRUE
+	return FALSE
 
 /obj/item/proc/GetAccess()
 	return list()
@@ -134,7 +136,8 @@
 /obj/item/proc/GetID()
 	return null
 
-/obj/proc/check_access(obj/item/I)
+//Call this before using req_access or req_one_access directly
+/obj/proc/gen_access()
 	//These generations have been moved out of /obj/New() because they were slowing down the creation of objects that never even used the access system.
 	if(!src.req_access)
 		src.req_access = list()
@@ -154,45 +157,48 @@
 				if(n)
 					req_one_access += n
 
+/obj/proc/check_access(obj/item/I)
+	gen_access()
+
 	if(!istype(src.req_access, /list)) //something's very wrong
-		return 1
+		return TRUE
 
 	var/list/L = src.req_access
 	if(!L.len && (!src.req_one_access || !src.req_one_access.len)) //no requirements
-		return 1
+		return TRUE
 	if(!I)
-		return 0
+		return FALSE
 	for(var/req in src.req_access)
 		if(!(req in I.GetAccess())) //doesn't have this access
-			return 0
+			return FALSE
 	if(src.req_one_access && src.req_one_access.len)
 		for(var/req in src.req_one_access)
 			if(req in I.GetAccess()) //has an access from the single access list
-				return 1
-		return 0
-	return 1
+				return TRUE
+		return FALSE
+	return TRUE
 
 
 /obj/proc/check_access_list(list/L)
 	if(!src.req_access  && !src.req_one_access)
-		return 1
+		return TRUE
 	if(!istype(src.req_access, /list))
-		return 1
+		return TRUE
 	if(!src.req_access.len && (!src.req_one_access || !src.req_one_access.len))
-		return 1
+		return TRUE
 	if(!L)
-		return 0
+		return FALSE
 	if(!istype(L, /list))
-		return 0
+		return FALSE
 	for(var/req in src.req_access)
 		if(!(req in L)) //doesn't have this access
-			return 0
+			return FALSE
 	if(src.req_one_access && src.req_one_access.len)
 		for(var/req in src.req_one_access)
 			if(req in L) //has an access from the single access list
-				return 1
-		return 0
-	return 1
+				return TRUE
+		return FALSE
+	return TRUE
 
 /proc/get_centcom_access(job)
 	switch(job)
@@ -238,7 +244,7 @@
 	            access_hydroponics, access_library, access_lawyer, access_virology, access_cmo, access_qm, access_surgery,
 	            access_theatre, access_research, access_mining, access_mailsorting, access_weapons,
 	            access_heads_vault, access_mining_station, access_xenobiology, access_ce, access_hop, access_hos, access_RC_announce,
-	            access_keycard_auth, access_tcomsat, access_gateway, access_mineral_storeroom, access_minisat, access_network)
+	            access_keycard_auth, access_tcomsat, access_gateway, access_mineral_storeroom, access_minisat, access_network, access_cloning)
 
 /proc/get_all_centcom_access()
 	return list(access_cent_general, access_cent_thunder, access_cent_specops, access_cent_medical, access_cent_living, access_cent_storage, access_cent_teleporter, access_cent_captain)
@@ -266,7 +272,7 @@
 		if(2) //security
 			return list(access_sec_doors, access_weapons, access_security, access_brig, access_armory, access_forensics_lockers, access_court, access_hos)
 		if(3) //medbay
-			return list(access_medical, access_genetics, access_morgue, access_chemistry, access_virology, access_surgery, access_cmo)
+			return list(access_medical, access_genetics, access_cloning, access_morgue, access_chemistry, access_virology, access_surgery, access_cmo)
 		if(4) //research
 			return list(access_research, access_tox, access_tox_storage, access_genetics, access_robotics, access_xenobiology, access_minisat, access_rd, access_network)
 		if(5) //engineering and maintenance
@@ -427,6 +433,8 @@
 			return "Weapon Permit"
 		if(access_network)
 			return "Network Access"
+		if(access_cloning)
+			return "Cloning Room"
 
 /proc/get_centcom_access_desc(A)
 	switch(A)

@@ -362,13 +362,6 @@ var/global/dmm_suite/preloader/_preloader = new
 
 	return to_return
 
-//atom creation method that preloads variables at creation
-/atom/New()
-	if(use_preloader && (src.type == _preloader.target_path))//in case the instanciated atom is creating other atoms in New()
-		_preloader.load(src)
-
-	. = ..()
-
 /dmm_suite/Destroy()
 	..()
 	return QDEL_HINT_HARDDEL_NOW

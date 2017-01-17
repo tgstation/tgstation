@@ -18,7 +18,7 @@
 		target_ckey = new_ckey
 	var/target_sql_ckey = sanitizeSQL(target_ckey)
 	if(!notetext)
-		notetext = input(usr,"Write your Note","Add Note") as message
+		notetext = input(usr,"Write your Note","Add Note") as null|message
 		if(!notetext)
 			return
 	notetext = sanitizeSQL(notetext)
@@ -97,7 +97,7 @@
 		target_ckey = query_find_note_edit.item[1]
 		var/old_note = query_find_note_edit.item[2]
 		var/adminckey = query_find_note_edit.item[3]
-		var/new_note = input("Input new note", "New Note", "[old_note]") as message
+		var/new_note = input("Input new note", "New Note", "[old_note]") as null|message
 		if(!new_note)
 			return
 		new_note = sanitizeSQL(new_note)

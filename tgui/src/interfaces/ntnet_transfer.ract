@@ -38,7 +38,7 @@
 
 	{{#if data.error}}
 	<div class='item'>
-		<h2>An error has occured during operation...</h2>
+		<h2>An error has occurred during operation...</h2>
 		<b>Additional information: </b>{{data.error}}<br>
 		<ui-button action='PRG_reset'>Clear</ui-button>
 	</div>

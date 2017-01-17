@@ -10,12 +10,13 @@
 	hidden_uplink.telecrystals = 10
 	..()
 
-/obj/item/weapon/implant/uplink/implant(mob/user)
-	var/obj/item/weapon/implant/imp_e = locate(src.type) in user
-	if(imp_e && imp_e != src)
-		imp_e.hidden_uplink.telecrystals += hidden_uplink.telecrystals
-		qdel(src)
-		return 1
+/obj/item/weapon/implant/uplink/implant(mob/living/target, mob/user, silent = 0)
+	for(var/X in target.implants)
+		if(istype(X, type))
+			var/obj/item/weapon/implant/imp_e = X
+			imp_e.hidden_uplink.telecrystals += hidden_uplink.telecrystals
+			qdel(src)
+			return 1
 
 	if(..())
 		hidden_uplink.owner = "[user.key]"

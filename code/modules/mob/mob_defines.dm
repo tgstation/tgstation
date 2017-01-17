@@ -29,8 +29,8 @@
 	var/attack_log = list( )
 	var/obj/machinery/machine = null
 	var/other_mobs = null
-	var/memory = ""
 	var/disabilities = 0	//Carbon
+	var/movement_type = GROUND		//Incase you have multiple types, you automatically use the most useful one. IE: Skating on ice, flippers on water, flying over chasm/space, etc.
 
 	var/atom/movable/pulling = null
 	var/grab_state = 0
@@ -72,8 +72,8 @@
 	var/stunned = 0
 	var/weakened = 0
 	var/losebreath = 0//Carbon
-	var/a_intent = "help"//Living
-	var/m_intent = "run"//Living
+	var/a_intent = INTENT_HELP//Living
+	var/m_intent = MOVE_INTENT_RUN//Living
 	var/lastKnownIP = null
 	var/atom/movable/buckled = null//Living
 

@@ -26,7 +26,7 @@ var/const/SAFETY_COOLDOWN = 100
 	update_icon()
 
 /obj/item/weapon/circuitboard/machine/recycler
-	name = "circuit board (Recycler)"
+	name = "Recycler (Machine Board)"
 	build_path = /obj/machinery/recycler
 	origin_tech = "programming=2;engineering=2"
 	req_components = list(
@@ -116,9 +116,13 @@ var/const/SAFETY_COOLDOWN = 100
 
 	for(var/i in to_eat)
 		var/atom/movable/AM = i
-		if(isliving(AM))
+		var/obj/item/bodypart/head/as_head = AM
+		var/obj/item/device/mmi/as_mmi = AM
+		var/brain_holder = istype(AM, /obj/item/organ/brain) || (istype(as_head) && as_head.brain) || (istype(as_mmi) && as_mmi.brain)
+		if(isliving(AM) || brain_holder)
 			if(emagged)
-				crush_living(AM)
+				if(!brain_holder)
+					crush_living(AM)
 			else
 				emergency_stop(AM)
 		else if(istype(AM, /obj/item))
@@ -148,7 +152,7 @@ var/const/SAFETY_COOLDOWN = 100
 	safety_mode = TRUE
 	update_icon()
 	L.loc = src.loc
-	addtimer(src, "reboot", SAFETY_COOLDOWN)
+	addtimer(CALLBACK(src, .proc/reboot), SAFETY_COOLDOWN)
 
 /obj/machinery/recycler/proc/reboot()
 	playsound(src.loc, 'sound/machines/ping.ogg', 50, 0)

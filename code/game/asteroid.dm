@@ -117,7 +117,7 @@ var/global/max_secret_rooms = 6
 		if("speakeasy")
 			theme = "speakeasy"
 			floortypes = list(/turf/open/floor/plasteel,/turf/open/floor/wood)
-			treasureitems = list(/obj/item/weapon/melee/energy/sword/pirate=1,/obj/item/weapon/gun/projectile/revolver/doublebarrel=1,/obj/item/weapon/storage/backpack/satchel/flat=1,
+			treasureitems = list(/obj/item/weapon/melee/energy/sword/pirate=1,/obj/item/weapon/gun/ballistic/revolver/doublebarrel=1,/obj/item/weapon/storage/backpack/satchel/flat=1,
 			/obj/machinery/reagentgrinder=2, /obj/machinery/computer/security/wooden_tv=4, /obj/machinery/vending/coffee=3)
 			fluffitems = list(/obj/structure/table/wood=2,/obj/structure/reagent_dispensers/beerkeg=1,/obj/item/stack/spacecash/c500=4,
 							  /obj/item/weapon/reagent_containers/food/drinks/shaker=1,/obj/item/weapon/reagent_containers/food/drinks/bottle/wine=3,
@@ -174,7 +174,7 @@ var/global/max_secret_rooms = 6
 	if(!T)
 		return 0
 
-	room = spawn_room(T,x_size,y_size,walltypes,floor,) //WE'RE FINALLY CREATING THE ROOM
+	room = spawn_room(T,x_size,y_size,walltypes,floor) //WE'RE FINALLY CREATING THE ROOM
 
 	if(room)//time to fill it with stuff
 		var/list/emptyturfs = room["floors"]

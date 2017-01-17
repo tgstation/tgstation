@@ -25,8 +25,26 @@
 	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/biogenerator(null)
 	B.apply_default_parts(src)
 
+/obj/machinery/biogenerator/Destroy()
+	if(beaker)
+		qdel(beaker)
+		beaker = null
+	return ..()
+
+/obj/machinery/biogenerator/contents_explosion(severity, target)
+	..()
+	if(beaker)
+		beaker.ex_act(severity, target)
+
+/obj/machinery/biogenerator/handle_atom_del(atom/A)
+	..()
+	if(A == beaker)
+		beaker = null
+		update_icon()
+		updateUsrDialog()
+
 /obj/item/weapon/circuitboard/machine/biogenerator
-	name = "circuit board (Biogenerator)"
+	name = "Biogenerator (Machine Board)"
 	build_path = /obj/machinery/biogenerator
 	origin_tech = "programming=2;biotech=3;materials=3"
 	req_components = list(
@@ -63,7 +81,7 @@
 	return
 
 /obj/machinery/biogenerator/attackby(obj/item/O, mob/user, params)
-	if(user.a_intent == "harm")
+	if(user.a_intent == INTENT_HARM)
 		return ..()
 
 	if(processing)

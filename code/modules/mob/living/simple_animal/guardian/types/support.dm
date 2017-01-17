@@ -1,6 +1,6 @@
 //Healer
 /mob/living/simple_animal/hostile/guardian/healer
-	a_intent = "harm"
+	a_intent = INTENT_HARM
 	friendly = "heals"
 	speed = 0
 	damage_coeff = list(BRUTE = 0.7, BURN = 0.7, TOX = 0.7, CLONE = 0.7, STAMINA = 0, OXY = 0.7)
@@ -46,7 +46,7 @@
 /mob/living/simple_animal/hostile/guardian/healer/ToggleMode()
 	if(src.loc == summoner)
 		if(toggle)
-			a_intent = "harm"
+			a_intent = INTENT_HARM
 			speed = 0
 			damage_coeff = list(BRUTE = 0.7, BURN = 0.7, TOX = 0.7, CLONE = 0.7, STAMINA = 0, OXY = 0.7)
 			melee_damage_lower = 15
@@ -54,7 +54,7 @@
 			src << "<span class='danger'><B>You switch to combat mode.</span></B>"
 			toggle = FALSE
 		else
-			a_intent = "help"
+			a_intent = INTENT_HELP
 			speed = 1
 			damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
 			melee_damage_lower = 0
@@ -68,15 +68,14 @@
 /mob/living/simple_animal/hostile/guardian/healer/verb/Beacon()
 	set name = "Place Bluespace Beacon"
 	set category = "Guardian"
-	set desc = "Mark a floor as your beacon point, allowing you to warp \
-		targets to it. Your beacon will not work at extreme distances."
+	set desc = "Mark a floor as your beacon point, allowing you to warp targets to it. Your beacon will not work at extreme distances."
 
 	if(beacon_cooldown >= world.time)
 		src << "<span class='danger'><B>Your power is on cooldown. You must wait five minutes between placing beacons.</span></B>"
 		return
 
 	var/turf/beacon_loc = get_turf(src.loc)
-	if(!istype(beacon_loc, /turf/open/floor))
+	if(!isfloorturf(beacon_loc))
 		return
 
 	if(beacon)
@@ -85,8 +84,7 @@
 
 	beacon = new(beacon_loc, src)
 
-	src << "<span class='danger'><B>Beacon placed! You may now warp targets \
-		to it, including your user, via Alt+Click.</span></B>"
+	src << "<span class='danger'><B>Beacon placed! You may now warp targets and objects to it, including your user, via Alt+Click.</span></B>"
 
 	beacon_cooldown = world.time + 3000
 
@@ -103,7 +101,7 @@
 /obj/structure/recieving_pad/New(loc, mob/living/simple_animal/hostile/guardian/healer/G)
 	. = ..()
 	if(G.namedatum)
-		color = G.namedatum.colour
+		add_atom_colour(G.namedatum.colour, FIXED_COLOUR_PRIORITY)
 
 /obj/structure/recieving_pad/proc/disappear()
 	visible_message("[src] vanishes!")
@@ -113,33 +111,27 @@
 	if(!istype(A))
 		return
 	if(src.loc == summoner)
-		src << "<span class='danger'><B>You must be manifested to warp a \
-			target!</span></B>"
+		src << "<span class='danger'><B>You must be manifested to warp a target!</span></B>"
 		return
 	if(!beacon)
-		src << "<span class='danger'><B>You need a beacon placed to warp \
-			things!</span></B>"
+		src << "<span class='danger'><B>You need a beacon placed to warp things!</span></B>"
 		return
 	if(!Adjacent(A))
-		src << "<span class='danger'><B>You must be adjacent to your \
-			target!</span></B>"
+		src << "<span class='danger'><B>You must be adjacent to your target!</span></B>"
 		return
 	if(A.anchored)
-		src << "<span class='danger'><B>Your target cannot be \
-			anchored!</span></B>"
+		src << "<span class='danger'><B>Your target cannot be anchored!</span></B>"
 		return
 
 	var/turf/T = get_turf(A)
 	if(beacon.z != T.z)
-		src << "<span class='danger'><B>The beacon is too far away to warp \
-			to!</span></B>"
+		src << "<span class='danger'><B>The beacon is too far away to warp to!</span></B>"
 		return
 
 	src << "<span class='danger'><B>You begin to warp [A].</span></B>"
-	A.visible_message("<span class='danger'>[A] starts to glow faintly!\
-		</span>", "<span class='userdanger'>You start to faintly glow, and \
-		you feel strangely weightless!</span>")
-	do_attack_animation(A)
+	A.visible_message("<span class='danger'>[A] starts to glow faintly!</span>", \
+	"<span class='userdanger'>You start to faintly glow, and you feel strangely weightless!</span>")
+	do_attack_animation(A, null, 1)
 
 	if(!do_mob(src, A, 60)) //now start the channel
 		src << "<span class='danger'><B>You need to hold still!</span></B>"
@@ -149,8 +141,7 @@
 	if(isliving(A))
 		var/mob/living/L = A
 		L.flash_act()
-	A.visible_message("<span class='danger'>[A] disappears in a flash of \
-		light!</span>", "<span class='userdanger'>Your vision is obscured \
-		by a flash of light!</span>")
+	A.visible_message("<span class='danger'>[A] disappears in a flash of light!</span>", \
+	"<span class='userdanger'>Your vision is obscured by a flash of light!</span>")
 	do_teleport(A, beacon, 0)
 	PoolOrNew(/obj/effect/overlay/temp/guardian/phase, get_turf(A))

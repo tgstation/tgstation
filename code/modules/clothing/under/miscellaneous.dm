@@ -22,6 +22,14 @@
 	item_color = "ek"
 	can_adjust = 0
 
+/obj/item/clothing/under/scratch
+	name = "white suit"
+	desc = "A white suit, suitable for an excellent host"
+	icon_state = "scratch"
+	item_state = "scratch"
+	item_color = "scratch"
+	can_adjust = 0
+
 /obj/item/clothing/under/sl_suit
 	desc = "It's a very amish looking suit."
 	name = "amish suit"
@@ -37,7 +45,7 @@
 	item_state = "armor"
 	can_adjust = 0
 	strip_delay = 100
-	resistance_flags = FIRE_PROOF
+	resistance_flags = 0
 
 /obj/item/clothing/under/waiter
 	name = "waiter's outfit"
@@ -116,7 +124,7 @@
 	icon_state = "black"
 	item_state = "bl_suit"
 	item_color = "black"
-	w_class = 4//bulky item
+	w_class = WEIGHT_CLASS_BULKY
 	gas_transfer_coefficient = 0.01
 	permeability_coefficient = 0.02
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
@@ -125,7 +133,7 @@
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	max_heat_protection_temperature = SPACE_SUIT_MAX_TEMP_PROTECT
 	can_adjust = 0
-	resistance_flags = FIRE_PROOF
+	resistance_flags = 0
 
 /obj/item/clothing/under/acj
 	name = "administrative cybernetic jumpsuit"
@@ -259,7 +267,7 @@
 	item_state = "burial"
 	item_color = "burial"
 
-/obj/item/clothing/under/blackskirt
+/obj/item/clothing/under/skirt/black
 	name = "black skirt"
 	desc = "A black skirt, very fancy!"
 	icon_state = "blackskirt"
@@ -268,7 +276,7 @@
 	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = 0
 
-/obj/item/clothing/under/blueskirt
+/obj/item/clothing/under/skirt/blue
 	name = "blue skirt"
 	desc = "A blue, casual skirt."
 	icon_state = "blueskirt"
@@ -278,12 +286,26 @@
 	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = 0
 
-/obj/item/clothing/under/blueskirt/redskirt
+/obj/item/clothing/under/skirt/red
 	name = "red skirt"
 	desc = "A red, casual skirt."
 	icon_state = "redskirt"
 	item_color = "redskirt"
 	item_state = "r_suit"
+	body_parts_covered = CHEST|GROIN|ARMS
+	fitted = FEMALE_UNIFORM_TOP
+	can_adjust = 0
+
+/obj/item/clothing/under/skirt/purple
+	name = "purple skirt"
+	desc = "A purple, casual skirt."
+	icon_state = "purpleskirt"
+	item_color = "purpleskirt"
+	item_state = "p_suit"
+	body_parts_covered = CHEST|GROIN|ARMS
+	fitted = FEMALE_UNIFORM_TOP
+	can_adjust = 0
+
 
 /obj/item/clothing/under/schoolgirl
 	name = "blue schoolgirl uniform"
@@ -378,7 +400,11 @@
 	body_parts_covered = CHEST|GROIN|ARMS
 	fitted = NO_FEMALE_UNIFORM
 	can_adjust = 0
-	resistance_flags = FIRE_PROOF
+	resistance_flags = 0
+
+/obj/item/clothing/under/gladiator/ash_walker
+	desc = "This gladiator uniform appears to be covered in ash and fairly dated."
+	has_sensor = 0
 
 /obj/item/clothing/under/sundress
 	name = "sundress"
@@ -509,6 +535,26 @@
 	can_adjust = 1
 	alt_covers_chest = 1
 
+/obj/item/clothing/under/singery
+	name = "yellow performer's outfit"
+	desc = "Just looking at this makes you want to sing."
+	icon_state = "ysing"
+	item_state = "ysing"
+	item_color = "ysing"
+	fitted = NO_FEMALE_UNIFORM
+	alternate_worn_layer = ABOVE_SHOES_LAYER
+	can_adjust = 0
+
+/obj/item/clothing/under/singerb
+	name = "blue performer's outfit"
+	desc = "Just looking at this makes you want to sing."
+	icon_state = "bsing"
+	item_state = "bsing"
+	item_color = "bsing"
+	alternate_worn_layer = ABOVE_SHOES_LAYER
+	fitted = FEMALE_UNIFORM_TOP
+	can_adjust = 0
+
 /obj/item/clothing/under/plaid_skirt/green
 	name = "green plaid skirt"
 	desc = "A preppy green skirt with a white blouse."
@@ -524,6 +570,20 @@
 	desc = "A jolly dress, well suited to entertain your master, nuncle."
 	icon_state = "jester"
 	item_color = "jester"
+	can_adjust = 0
+
+/obj/item/clothing/under/geisha
+	name = "geisha suit"
+	desc = "Cute space ninja senpai not included."
+	icon_state = "geisha"
+	item_color = "geisha"
+	can_adjust = 0
+
+/obj/item/clothing/under/villain
+	name = "villain suit"
+	desc = "A change of wardrobe is necessary if you ever want to catch a real superhero."
+	icon_state = "villain"
+	item_color = "villain"
 	can_adjust = 0
 
 /obj/item/clothing/under/plasmaman

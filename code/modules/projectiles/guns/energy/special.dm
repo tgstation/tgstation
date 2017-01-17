@@ -5,7 +5,7 @@
 	item_state = null	//so the human update icon uses the icon_state instead.
 	origin_tech = "combat=4;magnets=4"
 	can_flashlight = 1
-	w_class = 5
+	w_class = WEIGHT_CLASS_HUGE
 	flags =  CONDUCT
 	slot_flags = SLOT_BACK
 	ammo_type = list(/obj/item/ammo_casing/energy/ion)
@@ -20,7 +20,7 @@
 	name = "ion carbine"
 	desc = "The MK.II Prototype Ion Projector is a lightweight carbine version of the larger ion rifle, built to be ergonomic and efficient."
 	icon_state = "ioncarbine"
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 	slot_flags = SLOT_BELT
 	pin = null
 	ammo_x_offset = 2
@@ -58,7 +58,7 @@
 	desc = "For the love of god, make sure you're aiming this the right way!"
 	icon_state = "riotgun"
 	item_state = "c20r"
-	w_class = 4
+	w_class = WEIGHT_CLASS_BULKY
 	ammo_type = list(/obj/item/ammo_casing/energy/meteor)
 	cell_type = "/obj/item/weapon/stock_parts/cell/potato"
 	clumsy_check = 0 //Admin spawn only, might as well let clowns use it.
@@ -72,7 +72,7 @@
 	item_state = "pen"
 	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 
 /obj/item/weapon/gun/energy/mindflayer
 	name = "\improper Mind Flayer"
@@ -87,7 +87,7 @@
 	desc = "A weapon favored by syndicate stealth specialists."
 	icon_state = "crossbow"
 	item_state = "crossbow"
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	materials = list(MAT_METAL=2000)
 	origin_tech = "combat=4;magnets=4;syndicate=5"
 	suppressed = 1
@@ -98,39 +98,42 @@
 	holds_charge = TRUE
 	unique_frequency = TRUE
 	can_flashlight = 0
+	max_mod_capacity = 0
+	empty_state = null
+
+/obj/item/weapon/gun/energy/kinetic_accelerator/crossbow/halloween
+	name = "candy corn crossbow"
+	desc = "A weapon favored by Syndicate trick-or-treaters."
+	icon_state = "crossbow_halloween"
+	item_state = "crossbow"
+	ammo_type = list(/obj/item/ammo_casing/energy/bolt/halloween)
 
 /obj/item/weapon/gun/energy/kinetic_accelerator/crossbow/large
 	name = "energy crossbow"
 	desc = "A reverse engineered weapon using syndicate technology."
 	icon_state = "crossbowlarge"
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 	materials = list(MAT_METAL=4000)
 	origin_tech = "combat=4;magnets=4;syndicate=2"
 	suppressed = 0
 	ammo_type = list(/obj/item/ammo_casing/energy/bolt/large)
 	pin = null
 
-/obj/item/weapon/gun/energy/kinetic_accelerator/suicide_act(mob/user)
-	if(!suppressed)
-		playsound(src.loc, 'sound/weapons/kenetic_reload.ogg', 60, 1)
-	user.visible_message("<span class='suicide'>[user] cocks the [src.name] and pretends to blow \his brains out! It looks like \he's trying to commit suicide!</b></span>")
-	shoot_live_shot()
-	return (OXYLOSS)
-
 /obj/item/weapon/gun/energy/plasmacutter
 	name = "plasma cutter"
 	desc = "A mining tool capable of expelling concentrated plasma bursts. You could use it to cut limbs off of xenos! Or, you know, mine stuff."
 	icon_state = "plasmacutter"
 	item_state = "plasmacutter"
-	modifystate = -1
 	origin_tech = "combat=1;materials=3;magnets=2;plasmatech=3;engineering=1"
 	ammo_type = list(/obj/item/ammo_casing/energy/plasma)
-	flags = CONDUCT | OPENCONTAINER
+	flags = CONDUCT
+	container_type = OPENCONTAINER
 	attack_verb = list("attacked", "slashed", "cut", "sliced")
 	force = 12
 	sharpness = IS_SHARP
 	can_charge = 0
 	heat = 3800
+	toolspeed = 0.7 //plasmacutters can be used as welders for a few things, and are faster than standard welders
 
 /obj/item/weapon/gun/energy/plasmacutter/examine(mob/user)
 	..()
@@ -142,10 +145,12 @@
 		var/obj/item/stack/sheet/S = A
 		S.use(1)
 		power_supply.give(1000)
+		recharge_newshot(1)
 		user << "<span class='notice'>You insert [A] in [src], recharging it.</span>"
 	else if(istype(A, /obj/item/weapon/ore/plasma))
 		qdel(A)
 		power_supply.give(500)
+		recharge_newshot(1)
 		user << "<span class='notice'>You insert [A] in [src], recharging it.</span>"
 	else
 		..()
@@ -214,16 +219,13 @@
 	cell_type = "/obj/item/weapon/stock_parts/cell/secborg"
 	ammo_type = list(/obj/item/ammo_casing/energy/c3dbullet)
 	can_charge = 0
+	use_cyborg_cell = 1
 
 /obj/item/weapon/gun/energy/printer/update_icon()
 	return
 
 /obj/item/weapon/gun/energy/printer/emp_act()
 	return
-
-/obj/item/weapon/gun/energy/printer/newshot()
-	..()
-	robocharge()
 
 /obj/item/weapon/gun/energy/temperature
 	name = "temperature gun"
@@ -266,8 +268,6 @@
 
 /obj/item/weapon/gun/energy/gravity_gun
 	name = "one-point bluespace-gravitational manipulator"
-	icon_state = "gravity_gun"
-	item_state = "gravity_gun"
 	desc = "An experimental, multi-mode device that fires bolts of Zero-Point Energy, causing local distortions in gravity"
 	ammo_type = list(/obj/item/ammo_casing/energy/gravityrepulse, /obj/item/ammo_casing/energy/gravityattract, /obj/item/ammo_casing/energy/gravitychaos)
 	origin_tech = "combat=4;magnets=4;materials=6;powerstorage=4;bluespace=4"

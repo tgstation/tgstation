@@ -22,7 +22,6 @@
 	icon_state = "nothing"
 	anchored = 1
 	layer = ABOVE_MOB_LAYER
-	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE
 	mouse_opacity = 0
 	var/duration = 10 //in deciseconds
 	var/randomdir = TRUE
@@ -40,6 +39,9 @@
 	flick("[icon_state]", src) //Because we might be pulling it from a pool, flick whatever icon it uses so it starts at the start of the icon's animation.
 
 	timerid = QDEL_IN(src, duration)
+
+/obj/effect/overlay/temp/ex_act()
+	return
 
 /obj/effect/overlay/temp/dir_setting
 	randomdir = FALSE
@@ -148,6 +150,10 @@
 /obj/effect/overlay/temp/dir_setting/wraith/out
 	icon_state = "phase_shift"
 
+/obj/effect/overlay/temp/dir_setting/tailsweep
+	icon_state = "tailsweep"
+	duration = 4
+
 /obj/effect/overlay/temp/wizard
 	name = "water"
 	icon = 'icons/mob/mob.dmi'
@@ -198,6 +204,13 @@
 	..()
 	animate(src, alpha = 0, time = duration)
 
+/obj/effect/overlay/temp/decoy/fading/fivesecond
+	duration = 50
+
+/obj/effect/overlay/temp/small_smoke
+	icon_state = "smoke"
+	duration = 50
+
 /obj/effect/overlay/temp/cult
 	randomdir = 0
 	duration = 10
@@ -239,6 +252,7 @@
 
 /obj/effect/overlay/temp/ratvar
 	name = "ratvar's light"
+	icon = 'icons/effects/clockwork_effects.dmi'
 	duration = 8
 	randomdir = 0
 	layer = ABOVE_NORMAL_TURF_LAYER
@@ -254,33 +268,61 @@
 	icon_state = "ratvarbeamglow"
 
 /obj/effect/overlay/temp/ratvar/beam/door
-	layer = CLOSED_FIREDOOR_LAYER //above closed doors
+	layer = CLOSED_DOOR_LAYER
 
 /obj/effect/overlay/temp/ratvar/beam/grille
-	layer = LOW_ITEM_LAYER //above grilles
+	layer = BELOW_OBJ_LAYER
 
 /obj/effect/overlay/temp/ratvar/beam/itemconsume
 	layer = HIGH_OBJ_LAYER
 
+/obj/effect/overlay/temp/ratvar/beam/falsewall
+	layer = OBJ_LAYER
+
+/obj/effect/overlay/temp/ratvar/beam/catwalk
+	layer = LATTICE_LAYER
+
 /obj/effect/overlay/temp/ratvar/wall
 	icon_state = "ratvarwallglow"
+
+/obj/effect/overlay/temp/ratvar/wall/false
+	layer = OBJ_LAYER
 
 /obj/effect/overlay/temp/ratvar/floor
 	icon_state = "ratvarfloorglow"
 
+/obj/effect/overlay/temp/ratvar/floor/catwalk
+	layer = LATTICE_LAYER
+
 /obj/effect/overlay/temp/ratvar/window
 	icon_state = "ratvarwindowglow"
-	layer = ABOVE_WINDOW_LAYER //above windows
+	layer = ABOVE_WINDOW_LAYER
+
+/obj/effect/overlay/temp/ratvar/gear
+	icon_state = "ratvargearglow"
+	layer = BELOW_OBJ_LAYER
 
 /obj/effect/overlay/temp/ratvar/grille
 	icon_state = "ratvargrilleglow"
-	layer = LOW_ITEM_LAYER //above grilles
+	layer = BELOW_OBJ_LAYER
 
 /obj/effect/overlay/temp/ratvar/grille/broken
 	icon_state = "ratvarbrokengrilleglow"
 
 /obj/effect/overlay/temp/ratvar/window/single
 	icon_state = "ratvarwindowglow_s"
+
+/obj/effect/overlay/temp/ratvar/ocular_warden
+	name = "warden's gaze"
+	layer = ABOVE_MOB_LAYER
+	icon_state = "warden_gaze"
+	duration = 3
+
+/obj/effect/overlay/temp/ratvar/ocular_warden/New()
+	..()
+	pixel_x = rand(-8, 8)
+	pixel_y = rand(-10, 10)
+	animate(src, alpha = 0, time = 3, easing = EASE_OUT)
 
 /obj/effect/overlay/temp/ratvar/spearbreak
 	icon = 'icons/effects/64x64.dmi'
@@ -289,9 +331,39 @@
 	pixel_y = -16
 	pixel_x = -16
 
+/obj/effect/overlay/temp/ratvar/geis_binding
+	icon_state = "geisbinding"
+
+/obj/effect/overlay/temp/ratvar/geis_binding/top
+	icon_state = "geisbinding_top"
+
+/obj/effect/overlay/temp/ratvar/component
+	icon = 'icons/obj/clockwork_objects.dmi'
+	icon_state = "belligerent_eye"
+	layer = ABOVE_MOB_LAYER
+	duration = 10
+
+/obj/effect/overlay/temp/ratvar/component/New()
+	..()
+	transform = matrix()*0.75
+	pixel_x = rand(-10, 10)
+	pixel_y = rand(-10, -2)
+	animate(src, pixel_y = pixel_y + 10, alpha = 50, time = 10, easing = EASE_OUT)
+
+/obj/effect/overlay/temp/ratvar/component/cogwheel
+	icon_state = "vanguard_cogwheel"
+
+/obj/effect/overlay/temp/ratvar/component/capacitor
+	icon_state = "geis_capacitor"
+
+/obj/effect/overlay/temp/ratvar/component/alloy
+	icon_state = "replicant_alloy"
+
+/obj/effect/overlay/temp/ratvar/component/ansible
+	icon_state = "hierophant_ansible"
+
 /obj/effect/overlay/temp/ratvar/sigil
 	name = "glowing circle"
-	icon = 'icons/effects/clockwork_effects.dmi'
 	icon_state = "sigildull"
 
 /obj/effect/overlay/temp/ratvar/sigil/transgression
@@ -305,6 +377,18 @@
 	var/oldtransform = transform
 	animate(src, transform = matrix()*2, time = 5)
 	animate(transform = oldtransform, alpha = 0, time = 65)
+
+/obj/effect/overlay/temp/ratvar/sigil/voltvoid
+	color = "#EC8A2D"
+	layer = ABOVE_MOB_LAYER
+	duration = 10
+	luminosity = 3
+
+/obj/effect/overlay/temp/ratvar/sigil/voltvoid/New()
+	..()
+	var/oldtransform = transform
+	animate(src, transform = matrix()*3, time = 1)
+	animate(transform = oldtransform, alpha = 0, time = 9)
 
 /obj/effect/overlay/temp/ratvar/sigil/vitality
 	color = "#1E8CE1"
@@ -328,6 +412,16 @@
 	icon_state = "purplecrack"
 	duration = 6
 
+
+/obj/effect/overlay/temp/gravpush
+	name = "gravity wave"
+	icon_state = "shieldsparkles"
+	duration = 5
+
+/obj/effect/overlay/temp/telekinesis
+	name = "telekinetic force"
+	icon_state = "empdisable"
+	duration = 5
 
 /obj/effect/overlay/temp/emp
 	name = "emp sparks"
@@ -360,30 +454,6 @@
 /obj/effect/overlay/temp/dust_animation/New(loc, dust_icon)
 	icon_state = dust_icon // Before ..() so the correct icon is flick()'d
 	..()
-
-/obj/effect/overlay/temp/sparkle
-	icon = 'icons/effects/effects.dmi'
-	icon_state = "shieldsparkles"
-	mouse_opacity = 0
-	density = 0
-	duration = 10
-	var/atom/movable/attached_to
-
-/obj/effect/overlay/temp/sparkle/New(atom/movable/AM)
-	..()
-	if(istype(AM))
-		attached_to = AM
-		attached_to.overlays += src
-
-/obj/effect/overlay/temp/sparkle/Destroy()
-	if(attached_to)
-		attached_to.overlays -= src
-	attached_to = null
-	. = ..()
-
-/obj/effect/overlay/temp/sparkle/tailsweep
-	icon_state = "tailsweep"
-
 
 /obj/effect/overlay/temp/heal //color is white by default, set to whatever is needed
 	name = "healing glow"
@@ -424,7 +494,6 @@
 	duration = 6
 
 /obj/effect/overlay/temp/impact_effect
-	icon = 'icons/effects/effects.dmi'
 	icon_state = "impact_bullet"
 	duration = 5
 

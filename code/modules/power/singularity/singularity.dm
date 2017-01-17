@@ -1,4 +1,4 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:33
+
 
 /obj/singularity
 	name = "gravitational singularity"
@@ -26,7 +26,7 @@
 	var/last_failed_movement = 0//Will not move in the same dir if it couldnt before, will help with the getting stuck on fields thing
 	var/last_warning
 	var/consumedSupermatter = 0 //If the singularity has eaten a supermatter shard and can go to stage six
-	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
 /obj/singularity/New(loc, var/starting_energy = 50, var/temp = 0)
 	//CARN: admin-alert for chuckle-fuckery.
@@ -57,6 +57,19 @@
 
 
 /obj/singularity/attack_hand(mob/user)
+	consume(user)
+	return 1
+
+/obj/singularity/attack_paw(mob/user)
+	consume(user)
+
+/obj/singularity/attack_alien(mob/user)
+	consume(user)
+
+/obj/singularity/attack_animal(mob/user)
+	consume(user)
+
+/obj/singularity/attackby(obj/item/weapon/W, mob/user, params)
 	consume(user)
 	return 1
 

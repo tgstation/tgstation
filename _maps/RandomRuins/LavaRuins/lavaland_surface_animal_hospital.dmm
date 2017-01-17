@@ -7,13 +7,15 @@
 /area/lavaland/surface/outdoors)
 "ac" = (
 /turf/open/floor/grass{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/lavaland/surface/outdoors)
 "ad" = (
 /obj/structure/flora/ausbushes/brflowers,
 /turf/open/floor/grass{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/lavaland/surface/outdoors)
 "ae" = (
@@ -158,7 +160,8 @@
 /obj/item/bodybag,
 /obj/item/weapon/reagent_containers/food/drinks/bottle/vodka,
 /turf/open/floor/grass{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/lavaland/surface/outdoors)
 "ay" = (
@@ -244,7 +247,8 @@
 /area/ruin/powered)
 "aJ" = (
 /turf/open/floor/plasteel/grimy{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/lavaland/surface/outdoors)
 "aK" = (
@@ -312,7 +316,7 @@
 /obj/effect/decal/cleanable/cobweb,
 /obj/item/ammo_casing/shotgun/dart,
 /obj/item/ammo_casing/shotgun/dart,
-/obj/item/weapon/gun/projectile/revolver/doublebarrel{
+/obj/item/weapon/gun/ballistic/revolver/doublebarrel{
 	desc = "For putting critters out to pasture."
 	},
 /obj/item/ammo_casing/shotgun/buckshot,
@@ -647,6 +651,7 @@
 /obj/machinery/door/airlock/glass_large{
 	name = "Ian's Pet Care"
 	},
+/obj/structure/fans/tiny/invisible,
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
@@ -666,13 +671,15 @@
 	dir = 4
 	},
 /turf/open/floor/grass{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/lavaland/surface/outdoors)
 "bM" = (
 /obj/structure/flora/ausbushes/sunnybush,
 /turf/open/floor/grass{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/lavaland/surface/outdoors)
 "bN" = (
@@ -688,7 +695,8 @@
 "bO" = (
 /obj/structure/flora/ausbushes/ppflowers,
 /turf/open/floor/grass{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/lavaland/surface/outdoors)
 "bP" = (
@@ -702,7 +710,7 @@
 /area/ruin/powered)
 "bQ" = (
 /obj/structure/table/glass,
-/obj/item/clothing/tie/petcollar,
+/obj/item/clothing/neck/petcollar,
 /obj/item/weapon/pen/blue,
 /turf/open/floor/plasteel/white{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
@@ -745,14 +753,18 @@
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "bW" = (
-/turf/open/floor/grass,
-/area/lavaland/surface/outdoors)
+/obj/structure/fans/tiny/invisible,
+/turf/open/floor/plasteel{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/ruin/powered)
 "bX" = (
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 6
 	},
 /turf/open/floor/grass{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/lavaland/surface/outdoors)
 "bY" = (
@@ -760,7 +772,8 @@
 	dir = 1
 	},
 /turf/open/floor/grass{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/lavaland/surface/outdoors)
 "bZ" = (
@@ -768,7 +781,8 @@
 	dir = 10
 	},
 /turf/open/floor/grass{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/lavaland/surface/outdoors)
 "ca" = (
@@ -776,13 +790,15 @@
 	dir = 4
 	},
 /turf/open/floor/grass{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/lavaland/surface/outdoors)
 "cb" = (
 /obj/machinery/atmospherics/components/binary/valve,
 /turf/open/floor/grass{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/lavaland/surface/outdoors)
 "cc" = (
@@ -836,6 +852,7 @@
 	desc = "There's a note wedged in the seam saying something about directing pizza here.";
 	name = "Staff Entrance"
 	},
+/obj/structure/fans/tiny/invisible,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
@@ -1080,8 +1097,8 @@ ac
 ac
 ab
 ab
-bW
-bW
+ac
+ac
 "}
 (8,1,1) = {"
 aa
@@ -1194,12 +1211,12 @@ bl
 bt
 aK
 aK
-aK
-aJ
-aJ
-ab
-ab
 bW
+aJ
+aJ
+ab
+ab
+ac
 ab
 ab
 "}

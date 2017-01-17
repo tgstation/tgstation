@@ -1,4 +1,4 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:33
+
 
 /* new portable generator - work in progress
 
@@ -113,7 +113,7 @@ display round(lastgen) and plasmatank amount
 	sheet_name = sheet.name
 
 /obj/item/weapon/circuitboard/machine/pacman
-	name = "circuit board (PACMAN-type Generator)"
+	name = "PACMAN-type Generator (Machine Board)"
 	build_path = /obj/machinery/power/port_gen/pacman
 	origin_tech = "programming=2;powerstorage=3;plasmatech=3;engineering=3"
 	req_components = list(
@@ -123,12 +123,12 @@ display round(lastgen) and plasmatank amount
 							/obj/item/weapon/stock_parts/capacitor = 1)
 
 /obj/item/weapon/circuitboard/machine/pacman/super
-	name = "circuit board (SUPERPACMAN-type Generator)"
+	name = "SUPERPACMAN-type Generator (Machine Board)"
 	build_path = /obj/machinery/power/port_gen/pacman/super
 	origin_tech = "programming=3;powerstorage=4;engineering=4"
 
 /obj/item/weapon/circuitboard/machine/pacman/mrs
-	name = "circuit board (MRSPACMAN-type Generator)"
+	name = "MRSPACMAN-type Generator (Machine Board)"
 	build_path = "/obj/machinery/power/port_gen/pacman/mrs"
 	origin_tech = "programming=3;powerstorage=4;engineering=4;plasmatech=4"
 
@@ -241,7 +241,7 @@ display round(lastgen) and plasmatank amount
 			return
 		else if(istype(O, /obj/item/weapon/screwdriver))
 			panel_open = !panel_open
-			playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+			playsound(src.loc, O.usesound, 50, 1)
 			if(panel_open)
 				user << "<span class='notice'>You open the access panel.</span>"
 			else
@@ -271,7 +271,7 @@ display round(lastgen) and plasmatank amount
 
 /obj/machinery/power/port_gen/pacman/interact(mob/user)
 	if (get_dist(src, user) > 1 )
-		if (!istype(user, /mob/living/silicon/ai))
+		if(!isAI(user))
 			user.unset_machine()
 			user << browse(null, "window=port_gen")
 			return
@@ -290,7 +290,7 @@ display round(lastgen) and plasmatank amount
 	dat += text("Power current: [(powernet == null ? "Unconnected" : "[avail()]")]<br>")
 	dat += text("Heat: [current_heat]<br>")
 	dat += "<br><A href='?src=\ref[src];action=close'>Close</A>"
-	user << browse("[dat]", "window=port_gen")
+	user << browse(dat, "window=port_gen")
 	onclose(user, "port_gen")
 
 /obj/machinery/power/port_gen/pacman/Topic(href, href_list)
@@ -332,8 +332,9 @@ display round(lastgen) and plasmatank amount
 	power_gen = 15000
 	time_per_sheet = 85
 	board_path = /obj/item/weapon/circuitboard/machine/pacman/super
-	overheat()
-		explosion(src.loc, 3, 3, 3, -1)
+
+/obj/machinery/power/port_gen/pacman/super/overheat()
+	explosion(src.loc, 3, 3, 3, -1)
 
 /obj/machinery/power/port_gen/pacman/mrs
 	name = "\improper M.R.S.P.A.C.M.A.N.-type portable generator"
@@ -342,5 +343,6 @@ display round(lastgen) and plasmatank amount
 	power_gen = 40000
 	time_per_sheet = 80
 	board_path = /obj/item/weapon/circuitboard/machine/pacman/mrs
-	overheat()
-		explosion(src.loc, 4, 4, 4, -1)
+
+/obj/machinery/power/port_gen/pacman/mrs/overheat()
+	explosion(src.loc, 4, 4, 4, -1)

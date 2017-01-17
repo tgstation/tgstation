@@ -7,6 +7,7 @@
 	icon = 'icons/obj/nuke_tools.dmi'
 	icon_state = "plutonium_core"
 	item_state = "plutoniumcore"
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	var/pulse = 0
 	var/cooldown = 0
 
@@ -42,7 +43,7 @@
 	core = ncore
 	icon_state = "core_container_loaded"
 	user << "<span class='warning'>Container is sealing...</span>"
-	addtimer(src, "seal", 50)
+	addtimer(CALLBACK(src, .proc/seal), 50)
 	return 1
 
 /obj/item/nuke_core_container/proc/seal()
@@ -69,7 +70,7 @@
 	desc = "A screwdriver with an ultra thin tip."
 	icon = 'icons/obj/nuke_tools.dmi'
 	icon_state = "screwdriver_nuke"
-	toolspeed = 2
+	toolspeed = 0.5
 
 /obj/item/weapon/paper/nuke_instructions
 	info = "How to break into a Nanotrasen self-destruct terminal and remove its plutonium core:<br>\

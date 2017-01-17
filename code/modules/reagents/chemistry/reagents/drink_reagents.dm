@@ -5,7 +5,7 @@
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /datum/reagent/consumable/orangejuice
-	name = "Orange juice"
+	name = "Orange Juice"
 	id = "orangejuice"
 	description = "Both delicious AND rich in Vitamin C, what more do you need?"
 	color = "#E78108" // rgb: 231, 129, 8
@@ -41,7 +41,7 @@
 	..()
 
 /datum/reagent/consumable/carrotjuice
-	name = "Carrot juice"
+	name = "Carrot Juice"
 	id = "carrotjuice"
 	description = "It is just like a carrot but without crunching."
 	color = "#973800" // rgb: 151, 56, 0
@@ -63,6 +63,12 @@
 	id = "berryjuice"
 	description = "A delicious blend of several different kinds of berries."
 	color = "#863333" // rgb: 134, 51, 51
+
+/datum/reagent/consumable/applejuice
+	name = "Apple Juice"
+	id = "applejuice"
+	description = "The sweet juice of an apple, fit for all ages."
+	color = "#ECFF56" // rgb: 236, 255, 86
 
 /datum/reagent/consumable/poisonberryjuice
 	name = "Poison Berry Juice"
@@ -142,7 +148,7 @@
 	color = "#302000" // rgb: 48, 32, 0
 
 /datum/reagent/consumable/grapejuice
-	name = "Grape juice"
+	name = "Grape Juice"
 	id = "grapejuice"
 	description = "The juice of a bunch of grapes. Guaranteed non-alcoholic."
 	color = "#290029" // dark purple
@@ -264,7 +270,7 @@
 /datum/reagent/consumable/icetea
 	name = "Iced Tea"
 	id = "icetea"
-	description = "No relation to a certain rap artist/ actor."
+	description = "No relation to a certain rap artist/actor."
 	color = "#104038" // rgb: 16, 64, 56
 	nutriment_factor = 0
 
@@ -327,7 +333,7 @@
 /datum/reagent/consumable/dr_gibb
 	name = "Dr. Gibb"
 	id = "dr_gibb"
-	description = "A delicious blend of 42 different flavours"
+	description = "A delicious blend of 42 different flavours."
 	color = "#102000" // rgb: 16, 32, 0
 
 /datum/reagent/consumable/dr_gibb/on_mob_life(mob/living/M)
@@ -488,7 +494,7 @@
 /datum/reagent/consumable/gibbfloats
 	name = "Gibb Floats"
 	id = "gibbfloats"
-	description = "Icecream on top of a Dr. Gibb glass."
+	description = "Ice cream on top of a Dr. Gibb glass."
 	color = "#B22222"
 	nutriment_factor = 3 * REAGENTS_METABOLISM
 
@@ -515,3 +521,9 @@
 	id = "grapesoda"
 	description = "Beloved of children and teetotalers."
 	color = "#E6CDFF"
+
+/datum/reagent/consumable/milk/chocolate_milk
+	name = "Chocolate Milk"
+	id = "chocolate_milk"
+	description = "Milk for cool kids."
+	color = "#7D4E29"

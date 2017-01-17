@@ -94,7 +94,7 @@
 	if(iscarbon(M))
 		C = M
 		CHECK_DNA_AND_SPECIES(C)
-		if(NOBREATH in C.dna.species.specflags)
+		if(NOBREATH in C.dna.species.species_traits)
 			. = FALSE
 
 	if(.)
@@ -457,10 +457,10 @@
 		M.adjustToxLoss(2*REM, 0)
 	return ..()
 
-/datum/reagent/toxin/questionmark // food poisoning
+/datum/reagent/toxin/bad_food
 	name = "Bad Food"
-	id = "????"
-	description = "????"
+	id = "bad_food"
+	description = "The result of some abomination of cookery, food so bad it's toxic."
 	reagent_state = LIQUID
 	color = "#d6d6d8"
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
@@ -525,7 +525,7 @@
 					if(!H.heart_attack)
 						H.heart_attack = 1 // rip in pepperoni
 						if(H.stat == CONSCIOUS)
-							H.visible_message("<span class='userdanger'>[H] clutches at [H.their_pronoun()] chest as if [H.their_pronoun()] heart stopped!</span>")
+							H.visible_message("<span class='userdanger'>[H] clutches at [H.p_their()] chest as if [H.p_their()] heart stopped!</span>")
 					else
 						H.losebreath += 10
 						H.adjustOxyLoss(rand(5,25), 0)
@@ -658,6 +658,49 @@
 	return ..() || .
 
 
+/datum/reagent/toxin/rotatium //Rotatium. Fucks up your rotation and is hilarious
+	name = "Rotatium"
+	id = "rotatium"
+	description = "A constantly swirling, oddly colourful fluid. Causes the consumer's sense of direction and hand-eye coordination to become wild."
+	reagent_state = LIQUID
+	color = "#AC88CA" //RGB: 172, 136, 202
+	metabolization_rate = 0.6 * REAGENTS_METABOLISM
+	toxpwr = 0.5
+
+/datum/reagent/toxin/rotatium/on_mob_life(mob/living/M)
+	if(M.hud_used)
+		if(current_cycle >= 20 && current_cycle%20 == 0)
+			var/list/screens = list(M.hud_used.plane_masters["[GAME_PLANE]"], M.hud_used.plane_masters["[LIGHTING_PLANE]"])
+			var/rotation = min(round(current_cycle/20), 89) // By this point the player is probably puking and quitting anyway
+			for(var/whole_screen in screens)
+				animate(whole_screen, transform = matrix(rotation, MATRIX_ROTATE), time = 5, easing = QUAD_EASING, loop = -1)
+				animate(transform = matrix(-rotation, MATRIX_ROTATE), time = 5, easing = QUAD_EASING)
+	return ..()
+
+/datum/reagent/toxin/rotatium/on_mob_delete(mob/living/M)
+	if(M && M.hud_used)
+		var/list/screens = list(M.hud_used.plane_masters["[GAME_PLANE]"], M.hud_used.plane_masters["[LIGHTING_PLANE]"])
+		for(var/whole_screen in screens)
+			animate(whole_screen, transform = matrix(), time = 5, easing = QUAD_EASING)
+	..()
+
+/datum/reagent/toxin/anacea
+	name = "Anacea"
+	id = "anacea"
+	description = "A toxin that quickly purges medicines and metabolizes very slowly."
+	reagent_state = LIQUID
+	color = "#3C5133"
+	metabolization_rate = 0.08 * REAGENTS_METABOLISM
+	toxpwr = 0.15
+	
+/datum/reagent/toxin/anacea/on_mob_life(mob/living/M)
+	var/remove_amt = 5
+	if(holder.has_reagent("calomel") || holder.has_reagent("pen_acid"))
+		remove_amt = 0.5
+	for(var/datum/reagent/medicine/R in M.reagents.reagent_list)
+		M.reagents.remove_reagent(R.id,remove_amt)
+	return ..()
+	
 //ACID
 
 
@@ -679,7 +722,7 @@
 	if(method == INJECT)
 		C.adjustBruteLoss(1.5 * min(6*toxpwr, reac_volume * toxpwr))
 		return
-	C.acid_act(acidpwr, toxpwr, reac_volume)
+	C.acid_act(acidpwr, reac_volume)
 
 /datum/reagent/toxin/acid/reaction_obj(obj/O, reac_volume)
 	if(istype(O.loc, /mob)) //handled in human acid_act()
@@ -691,8 +734,7 @@
 	if (!istype(T))
 		return
 	reac_volume = round(reac_volume,0.1)
-	for(var/obj/O in T)
-		O.acid_act(acidpwr, reac_volume)
+	T.acid_act(acidpwr, reac_volume)
 
 /datum/reagent/toxin/acid/fluacid
 	name = "Fluorosulfuric acid"
@@ -715,8 +757,10 @@
 	metabolization_rate = 1.5 * REAGENTS_METABOLISM
 
 /datum/reagent/toxin/peaceborg/confuse/on_mob_life(mob/living/M)
-	M.confused += 1
-	M.Dizzy(1)
+	if(M.confused < 6)
+		M.confused = Clamp(M.confused + 3, 0, 5)
+	if(M.dizziness < 6)
+		M.dizziness = Clamp(M.dizziness + 3, 0, 5)
 	if(prob(20))
 		M << "You feel confused and disorientated."
 	..()
@@ -729,7 +773,8 @@
 	metabolization_rate = 1.5 * REAGENTS_METABOLISM
 
 /datum/reagent/toxin/peaceborg/tire/on_mob_life(mob/living/M)
-	if(M.staminaloss < 50)
+	var/healthcomp = (100 - M.health)	//DOES NOT ACCOUNT FOR ADMINBUS THINGS THAT MAKE YOU HAVE MORE THAN 200/210 HEALTH, OR SOMETHING OTHER THAN A HUMAN PROCESSING THIS.
+	if(M.staminaloss < (45 - healthcomp))	//At 50 health you would have 200 - 150 health meaning 50 compensation. 60 - 50 = 10, so would only do 10-19 stamina.)
 		M.adjustStaminaLoss(10)
 	if(prob(30))
 		M << "You should sit down and take a rest..."

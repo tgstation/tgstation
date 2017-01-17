@@ -8,14 +8,14 @@
 	throwforce = 12
 	throw_speed = 2
 	throw_range = 7
-	w_class = 4
+	w_class = WEIGHT_CLASS_BULKY
 	materials = list(MAT_METAL = 500)
 	origin_tech = "combat=1;engineering=1"
 	attack_verb = list("robusted")
 	hitsound = 'sound/weapons/smash.ogg'
 
 /obj/item/weapon/storage/toolbox/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] robusts \himself with [src]! It looks like \he's trying to commit suicide..</span>")
+	user.visible_message("<span class='suicide'>[user] robusts [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return (BRUTELOSS)
 
 /obj/item/weapon/storage/toolbox/emergency
@@ -55,17 +55,17 @@
 
 /obj/item/weapon/storage/toolbox/electrical/New()
 	..()
-	var/color = pick("red","yellow","green","blue","pink","orange","cyan","white")
+	var/pickedcolor = pick("red","yellow","green","blue","pink","orange","cyan","white")
 	new /obj/item/weapon/screwdriver(src)
 	new /obj/item/weapon/wirecutters(src)
 	new /obj/item/device/t_scanner(src)
 	new /obj/item/weapon/crowbar(src)
-	new /obj/item/stack/cable_coil(src,30,color)
-	new /obj/item/stack/cable_coil(src,30,color)
+	new /obj/item/stack/cable_coil(src,30,pickedcolor)
+	new /obj/item/stack/cable_coil(src,30,pickedcolor)
 	if(prob(5))
 		new /obj/item/clothing/gloves/color/yellow(src)
 	else
-		new /obj/item/stack/cable_coil(src,30,color)
+		new /obj/item/stack/cable_coil(src,30,pickedcolor)
 
 /obj/item/weapon/storage/toolbox/syndicate
 	name = "suspicious looking toolbox"
@@ -93,12 +93,12 @@
 
 /obj/item/weapon/storage/toolbox/drone/New()
 	..()
-	var/color = pick("red","yellow","green","blue","pink","orange","cyan","white")
+	var/pickedcolor = pick("red","yellow","green","blue","pink","orange","cyan","white")
 	new /obj/item/weapon/screwdriver(src)
 	new /obj/item/weapon/wrench(src)
 	new /obj/item/weapon/weldingtool(src)
 	new /obj/item/weapon/crowbar(src)
-	new /obj/item/stack/cable_coil(src,30,color)
+	new /obj/item/stack/cable_coil(src,30,pickedcolor)
 	new /obj/item/weapon/wirecutters(src)
 	new /obj/item/device/multitool(src)
 
@@ -106,8 +106,8 @@
 	name = "brass box"
 	desc = "A huge brass box with several indentations in its surface."
 	icon_state = "brassbox"
-	w_class = 5
-	max_w_class = 3
+	w_class = WEIGHT_CLASS_HUGE
+	max_w_class = WEIGHT_CLASS_NORMAL
 	max_combined_w_class = 28
 	storage_slots = 28
 	slowdown = 1

@@ -16,9 +16,10 @@
 	faction = list("creature")
 	robust_searching = 1
 	stat_attack = 2
+	obj_damage = 0
 	environment_smash = 0
 	speak_emote = list("squeaks")
-	ventcrawler = 2
+	ventcrawler = VENTCRAWLER_ALWAYS
 	var/datum/mind/origin
 	var/egg_lain = 0
 	gold_core_spawnable = 1 //are you sure about this??

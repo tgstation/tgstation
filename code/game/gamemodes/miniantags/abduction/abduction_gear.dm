@@ -243,54 +243,6 @@
 			if(!istype(I,/obj/item/device/radio/headset))
 				r.broadcasting = 0 //goddamned headset hacks
 
-
-/obj/item/weapon/implant/abductor
-	name = "recall implant"
-	desc = "Returns you to the mothership."
-	icon = 'icons/obj/abductor.dmi'
-	icon_state = "implant"
-	activated = 1
-	origin_tech = "materials=2;biotech=7;magnets=4;bluespace=4;abductor=5"
-	var/obj/machinery/abductor/pad/home
-	var/cooldown = 30
-
-/obj/item/weapon/implant/abductor/activate()
-	if(cooldown == initial(cooldown))
-		home.Retrieve(imp_in,1)
-		cooldown = 0
-		START_PROCESSING(SSobj, src)
-	else
-		imp_in << "<span class='warning'>You must wait [30 - cooldown] seconds to use [src] again!</span>"
-
-/obj/item/weapon/implant/abductor/process()
-	if(cooldown < initial(cooldown))
-		cooldown++
-		if(cooldown == initial(cooldown))
-			STOP_PROCESSING(SSobj, src)
-
-/obj/item/weapon/implant/abductor/implant(var/mob/source, var/mob/user)
-	if(..())
-		var/obj/machinery/abductor/console/console
-		if(ishuman(source))
-			var/mob/living/carbon/human/H = source
-			if(H.dna.species.id == "abductor")
-				var/datum/species/abductor/S = H.dna.species
-				console = get_team_console(S.team)
-				home = console.pad
-
-		if(!home)
-			console = get_team_console(pick(1, 2, 3, 4))
-			home = console.pad
-		return 1
-
-/obj/item/weapon/implant/abductor/proc/get_team_console(var/team)
-	var/obj/machinery/abductor/console/console
-	for(var/obj/machinery/abductor/console/c in machines)
-		if(c.team == team)
-			console = c
-			break
-	return console
-
 /obj/item/device/firing_pin/abductor
 	name = "alien firing pin"
 	icon_state = "firing_pin_ayy"
@@ -354,7 +306,7 @@ Congratulations! You are now trained for xenobiology research!"}
 	slot_flags = SLOT_BELT
 	origin_tech = "materials=4;combat=4;biotech=7;abductor=4"
 	force = 7
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 	actions_types = list(/datum/action/item_action/toggle_mode)
 
 /obj/item/weapon/abductor_baton/proc/toggle(mob/living/user=usr)
@@ -392,7 +344,7 @@ Congratulations! You are now trained for xenobiology research!"}
 	if(!isabductor(user))
 		return
 
-	if(isrobot(target))
+	if(iscyborg(target))
 		..()
 		return
 
@@ -532,30 +484,35 @@ Congratulations! You are now trained for xenobiology research!"}
 	desc = "It's a gleaming sharp knife made out of silvery-green metal."
 	icon = 'icons/obj/abductor.dmi'
 	origin_tech = "materials=2;biotech=2;abductor=2"
+	toolspeed = 0.25
 
 /obj/item/weapon/hemostat/alien
 	name = "alien hemostat"
 	desc = "You've never seen this before."
 	icon = 'icons/obj/abductor.dmi'
 	origin_tech = "materials=2;biotech=2;abductor=2"
+	toolspeed = 0.25
 
 /obj/item/weapon/retractor/alien
 	name = "alien retractor"
 	desc = "You're not sure if you want the veil pulled back."
 	icon = 'icons/obj/abductor.dmi'
 	origin_tech = "materials=2;biotech=2;abductor=2"
+	toolspeed = 0.25
 
 /obj/item/weapon/circular_saw/alien
 	name = "alien saw"
 	desc = "Do the aliens also lose this, and need to find an alien hatchet?"
 	icon = 'icons/obj/abductor.dmi'
 	origin_tech = "materials=2;biotech=2;abductor=2"
+	toolspeed = 0.25
 
 /obj/item/weapon/surgicaldrill/alien
 	name = "alien drill"
 	desc = "Maybe alien surgeons have finally found a use for the drill."
 	icon = 'icons/obj/abductor.dmi'
 	origin_tech = "materials=2;biotech=2;abductor=2"
+	toolspeed = 0.25
 
 /obj/item/weapon/cautery/alien
 	name = "alien cautery"
@@ -563,6 +520,7 @@ Congratulations! You are now trained for xenobiology research!"}
 		Unless..."
 	icon = 'icons/obj/abductor.dmi'
 	origin_tech = "materials=2;biotech=2;abductor=2"
+	toolspeed = 0.25
 
 /obj/item/clothing/head/helmet/abductor
 	name = "agent headgear"
@@ -581,9 +539,8 @@ Congratulations! You are now trained for xenobiology research!"}
 	can_buckle = 1
 	buckle_lying = 1
 	flags = NODECONSTRUCT
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 
-/obj/structure/table/optable/abductor/table_destroy()
-	return //can't destroy the abductor's only optable.
 
 /obj/structure/bed/abductor
 	name = "resting contraption"
@@ -603,8 +560,8 @@ Congratulations! You are now trained for xenobiology research!"}
 /obj/structure/table_frame/abductor/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/wrench))
 		user << "<span class='notice'>You start disassembling [src]...</span>"
-		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-		if(do_after(user, 30/I.toolspeed, target = src))
+		playsound(src.loc, I.usesound, 50, 1)
+		if(do_after(user, 30*I.toolspeed, target = src))
 			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 			for(var/i = 1, i <= framestackamount, i++)
 				new framestack(get_turf(src))
@@ -660,7 +617,7 @@ Congratulations! You are now trained for xenobiology research!"}
 			user.visible_message("<span class='warning'>[user] disassembles the airlock assembly.</span>", \
 								"You start to disassemble the airlock assembly...")
 			playsound(src.loc, 'sound/items/Welder2.ogg', 50, 1)
-			if(do_after(user, 40/W.toolspeed, target = src))
+			if(do_after(user, 40*W.toolspeed, target = src))
 				if( !WT.isOn() )
 					return
 				user << "<span class='notice'>You disassemble the airlock assembly.</span>"

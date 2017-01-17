@@ -70,7 +70,7 @@
 				M << telegraph_message
 			if(telegraph_sound)
 				M << sound(telegraph_sound)
-	addtimer(src, "start", telegraph_duration)
+	addtimer(CALLBACK(src, .proc/start), telegraph_duration)
 
 /datum/weather/proc/start()
 	if(stage >= MAIN_STAGE)
@@ -85,7 +85,7 @@
 			if(weather_sound)
 				M << sound(weather_sound)
 	START_PROCESSING(SSweather, src)
-	addtimer(src, "wind_down", weather_duration)
+	addtimer(CALLBACK(src, .proc/wind_down), weather_duration)
 
 /datum/weather/proc/wind_down()
 	if(stage >= WIND_DOWN_STAGE)
@@ -100,7 +100,7 @@
 			if(end_sound)
 				M << sound(end_sound)
 	STOP_PROCESSING(SSweather, src)
-	addtimer(src, "end", end_duration)
+	addtimer(CALLBACK(src, .proc/end), end_duration)
 
 /datum/weather/proc/end()
 	if(stage == END_STAGE)
@@ -110,7 +110,7 @@
 
 /datum/weather/proc/can_impact(mob/living/L) //Can this weather impact a mob?
 	var/turf/mob_turf = get_turf(L)
-	if(mob_turf.z != target_z)
+	if(mob_turf && (mob_turf.z != target_z))
 		return
 	if(immunity_type in L.weather_immunities)
 		return

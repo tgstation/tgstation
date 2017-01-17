@@ -11,7 +11,7 @@
 	desc = "A simple deck of playing cards."
 	icon = 'icons/obj/playing_cards.dmi'
 	icon_state = "deck"
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	flags = NOBLUDGEON
 
 	var/list/cards = list()
@@ -19,17 +19,19 @@
 /obj/item/weapon/deck/New()
 	. = ..()
 
-	var/color
+	var/cardcolor
 	var/datum/playingcard/card
 
 	for (var/suit in list("spades", "clubs", "diamonds", "hearts"))
-		if (suit == "spades" || suit == "clubs") color = "black_"
-		else                                     color = "red_"
+		if (suit == "spades" || suit == "clubs")
+			cardcolor = "black_"
+		else
+			cardcolor = "red_"
 
 		for (var/number in list("ace", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten"))
 			card               = new()
 			card.name          = "[number] of [suit]"
-			card.card_icon     = "[color]num"
+			card.card_icon     = "[cardcolor]num"
 			card.suit          = suit
 			card.number        = number
 
@@ -38,7 +40,7 @@
 		for (var/number in list("jack", "queen", "king"))
 			card               = new()
 			card.name          = "[number] of [suit]"
-			card.card_icon     = "[color]col"
+			card.card_icon     = "[cardcolor]col"
 			card.suit          = suit
 			card.number        = number
 
@@ -119,13 +121,13 @@
 	desc           = "Some playing cards."
 	icon = 'icons/obj/playing_cards.dmi'
 	icon_state     = "empty"
-	w_class        = 1
+	w_class        = WEIGHT_CLASS_TINY
 
 	var/concealed  = 0
 	var/blank = 0
 	var/list/cards = list()
 	var/datum/html_interface/hi
-	resistance_flags = 0
+	resistance_flags = FLAMMABLE
 
 /obj/item/weapon/hand/New(loc)
 	. = ..()

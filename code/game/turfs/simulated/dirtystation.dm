@@ -95,7 +95,7 @@
 	if(prob(75))	//low dirt  - 1/60
 		return
 
-	if(istype(A, /area/turret_protected) || istype(A, /area/security))	//chance of incident
+	if(istype(A, /area/ai_monitored/turret_protected) || istype(A, /area/security))	//chance of incident
 		if(prob(20))
 			if(prob(5))
 				new /obj/effect/decal/cleanable/blood/gibs/old(src)

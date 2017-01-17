@@ -199,7 +199,7 @@ mob
 				getFlatIcon(src)
 			Browse_Icon()
 
-obj/effect/overlayTest
+/obj/effect/overlayTest
 	icon = 'old_or_unused.dmi'
 	icon_state = "blue"
 	pixel_x = -24
@@ -948,9 +948,8 @@ var/global/list/friendly_animal_types = list()
 	overlays += priority_overlays
 
 /atom/proc/add_overlay(image, priority = 0)
-	if(image in overlays)
-		return
 	var/list/new_overlays = overlays.Copy()
+	new_overlays -= image
 	if(priority)
 		if(!priority_overlays)
 			priority_overlays = list()
@@ -1014,21 +1013,25 @@ var/list/freeze_item_icons = list()
 /atom/proc/freeze_icon_index()
 	return "\ref[initial(icon)]-[initial(icon_state)]"
 
-/obj/proc/make_frozen_visual(var/obj/F)
-	if(!F.is_frozen && (initial(icon) && initial(icon_state)))
+/obj/proc/make_frozen_visual()
+	if(!is_frozen && (initial(icon) && initial(icon_state)))
 		var/index = freeze_icon_index()
 		var/icon/IC
 		var/icon/P = freeze_item_icons[index]
 		if(!P)
 			P = new /icon
-			for(var/iconstate in icon_states(F.icon))
+			for(var/iconstate in icon_states(icon))
 				var/icon/O = new('icons/effects/freeze.dmi', "ice_cube")
-				IC = new(F.icon, iconstate)
+				IC = new(icon, iconstate)
 				O.Blend(IC, ICON_ADD)
 				P.Insert(O, iconstate)
 			freeze_item_icons[index] = P
-		F.icon = P
-		F.name = "frozen [F.name]"
-		F.is_frozen = TRUE
-		return
-	return
+		icon = P
+		name = "frozen [name]"
+		is_frozen = TRUE
+
+//Assumes already frozed
+obj/proc/make_unfrozen()
+	icon = initial(icon)
+	name = replacetext(name, "frozen ", "")
+	is_frozen = FALSE

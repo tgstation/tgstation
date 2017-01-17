@@ -225,6 +225,8 @@
 			return 'icons/mob/screen_slimecore.dmi'
 		if("Operative")
 			return 'icons/mob/screen_operative.dmi'
+		if("Clockwork")
+			return 'icons/mob/screen_clockwork.dmi'
 		else
 			return 'icons/mob/screen_midnight.dmi'
 
@@ -346,55 +348,6 @@ for(var/t in test_times)
 
 /proc/isLeap(y)
 	return ((y) % 4 == 0 && ((y) % 100 != 0 || (y) % 400 == 0))
-
-// A copy of text2dir, extended to accept one and two letter
-//  directions, and to clearly return 0 otherwise.
-/proc/text2dir_extended(direction)
-	switch(uppertext(direction))
-		if("NORTH", "N")
-			return 1
-		if("SOUTH", "S")
-			return 2
-		if("EAST", "E")
-			return 4
-		if("WEST", "W")
-			return 8
-		if("NORTHEAST", "NE")
-			return 5
-		if("NORTHWEST", "NW")
-			return 9
-		if("SOUTHEAST", "SE")
-			return 6
-		if("SOUTHWEST", "SW")
-			return 10
-		else
-	return 0
-
-
-
-// A copy of dir2text, which returns the short one or two letter
-//  directions used in tube icon states.
-/proc/dir2text_short(direction)
-	switch(direction)
-		if(1)
-			return "N"
-		if(2)
-			return "S"
-		if(4)
-			return "E"
-		if(8)
-			return "W"
-		if(5)
-			return "NE"
-		if(6)
-			return "SE"
-		if(9)
-			return "NW"
-		if(10)
-			return "SW"
-		else
-	return
-
 
 
 

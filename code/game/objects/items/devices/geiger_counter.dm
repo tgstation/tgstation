@@ -9,7 +9,7 @@
 	desc = "A handheld device used for detecting and measuring radiation pulses."
 	icon_state = "geiger_off"
 	item_state = "multitool"
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	slot_flags = SLOT_BELT
 	materials = list(MAT_METAL = 150, MAT_GLASS = 150)
 	var/scanning = 0
@@ -99,7 +99,7 @@
 	user << "<span class='notice'>\icon[src] You switch [scanning ? "on" : "off"] [src].</span>"
 
 /obj/item/device/geiger_counter/attack(mob/living/M, mob/user)
-	if(user.a_intent == "help")
+	if(user.a_intent == INTENT_HELP)
 		if(!emagged)
 			user.visible_message("<span class='notice'>[user] scans [M] with [src].</span>", "<span class='notice'>You scan [M]'s radiation levels with [src]...</span>")
 			if(!M.radiation)
@@ -121,8 +121,8 @@
 			user << "<span class='warning'>Turn off [src] before you perform this action!</span>"
 			return 0
 		user.visible_message("<span class='notice'>[user] unscrews [src]'s maintenance panel and begins fiddling with its innards...</span>", "<span class='notice'>You begin resetting [src]...</span>")
-		playsound(user, 'sound/items/Screwdriver.ogg', 50, 1)
-		if(!do_after(user, 40/I.toolspeed, target = user))
+		playsound(user, I.usesound, 50, 1)
+		if(!do_after(user, 40*I.toolspeed, target = user))
 			return 0
 		user.visible_message("<span class='notice'>[user] refastens [src]'s maintenance panel!</span>", "<span class='notice'>You reset [src] to its factory settings!</span>")
 		playsound(user, 'sound/items/Screwdriver2.ogg', 50, 1)

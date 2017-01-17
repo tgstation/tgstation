@@ -55,10 +55,10 @@
 	name = "Crusader's Armour"
 	desc = "Armour that's comprised of metal and cloth."
 	icon_state = "crusader"
-	w_class = 4 //bulky
+	w_class = WEIGHT_CLASS_BULKY
 	slowdown = 2.0 //gotta pretend we're balanced.
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
-	armor = list(melee = 50, bullet = 50, laser = 50, energy = 40, bomb = 60, bio = 0, rad = 0)
+	armor = list(melee = 50, bullet = 50, laser = 50, energy = 40, bomb = 60, bio = 0, rad = 0, fire = 60, acid = 60)
 
 /obj/item/clothing/suit/armor/plate/crusader/red
 	icon_state = "crusader-red"
@@ -70,9 +70,9 @@
 	name = "Crusader's Hood"
 	desc = "A brownish hood."
 	icon_state = "crusader"
-	w_class = 3 //normal
+	w_class = WEIGHT_CLASS_NORMAL
 	flags_inv = HIDEHAIR|HIDEEARS|HIDEFACE
-	armor = list(melee = 50, bullet = 50, laser = 50, energy = 40, bomb = 60, bio = 0, rad = 0)
+	armor = list(melee = 50, bullet = 50, laser = 50, energy = 40, bomb = 60, bio = 0, rad = 0, fire = 60, acid = 60)
 
 /obj/item/clothing/head/helmet/plate/crusader/blue
 	icon_state = "crusader-blue"
@@ -86,7 +86,7 @@
 	desc = "A religious-looking hat."
 	alternate_worn_icon = 'icons/mob/large-worn-icons/64x64/head.dmi'
 	flags = 0
-	armor = list(melee = 60, bullet = 60, laser = 60, energy = 50, bomb = 70, bio = 50, rad = 50) //religion protects you from disease and radiation, honk.
+	armor = list(melee = 60, bullet = 60, laser = 60, energy = 50, bomb = 70, bio = 50, rad = 50, fire = 60, acid = 60) //religion protects you from disease and radiation, honk.
 	worn_x_dimension = 64
 	worn_y_dimension = 64
 
@@ -111,7 +111,7 @@
 		return
 	user.visible_message("[user] chants deeply and waves their staff!")
 	if(do_after(user, 20,1,src))
-		target.color = conversion_color //wololo
+		target.add_atom_colour(conversion_color, WASHABLE_COLOUR_PRIORITY) //wololo
 	staffcooldown = world.time
 
 /obj/item/weapon/godstaff/red
@@ -142,8 +142,8 @@
 	name = "Plate Boots"
 	desc = "Metal boots, they look heavy."
 	icon_state = "crusader"
-	w_class = 3 //normal
-	armor = list(melee = 50, bullet = 50, laser = 50, energy = 40, bomb = 60, bio = 0, rad = 0) //does this even do anything on boots?
+	w_class = WEIGHT_CLASS_NORMAL
+	armor = list(melee = 50, bullet = 50, laser = 50, energy = 40, bomb = 60, bio = 0, rad = 0, fire = 60, acid = 60) //does this even do anything on boots?
 	flags = NOSLIP
 	cold_protection = FEET
 	min_cold_protection_temperature = SHOES_MIN_TEMP_PROTECT

@@ -8,7 +8,7 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 	name = "Circuit Imprinter"
 	desc = "Manufactures circuit boards for the construction of machines."
 	icon_state = "circuit_imprinter"
-	flags = OPENCONTAINER
+	container_type = OPENCONTAINER
 
 	var/datum/material_container/materials
 	var/efficiency_coeff
@@ -39,7 +39,7 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 	return ..()
 
 /obj/item/weapon/circuitboard/machine/circuit_imprinter
-	name = "circuit board (Circuit Imprinter)"
+	name = "Circuit Imprinter (Machine Board)"
 	build_path = /obj/machinery/r_n_d/circuit_imprinter
 	origin_tech = "engineering=2;programming=2"
 	req_components = list(
@@ -67,7 +67,7 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 		qdel(src)
 
 /obj/machinery/r_n_d/circuit_imprinter/proc/check_mat(datum/design/being_built, M)	// now returns how many times the item can be built with the material
-	var/list/all_materials = being_built.reagents + being_built.materials
+	var/list/all_materials = being_built.reagents_list + being_built.materials
 
 	var/A = materials.amount(M)
 	if(!A)
@@ -113,7 +113,7 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 			user << "<span class='notice'>You add [amount_inserted] sheets to the [src.name].</span>"
 		updateUsrDialog()
 
-	else if(user.a_intent != "harm")
+	else if(user.a_intent != INTENT_HARM)
 		user << "<span class='warning'>You cannot insert this item into the [name]!</span>"
 		return 1
 	else

@@ -6,10 +6,10 @@ var/global/list/shuttle_caller_list = list()  		//list of all communication cons
 var/global/list/machines = list()					//NOTE: this is a list of ALL machines now. The processing machines list is SSmachine.processing !
 var/global/list/syndicate_shuttle_boards = list()	//important to keep track of for managing nukeops war declarations.
 var/global/list/navbeacons = list()					//list of all bot nagivation beacons, used for patrolling.
+var/global/list/teleportbeacons = list()			//list of all tracking beacons used by teleporters
 var/global/list/deliverybeacons = list()			//list of all MULEbot delivery beacons.
 var/global/list/deliverybeacontags = list()			//list of all tags associated with delivery beacons.
 var/global/list/nuke_list = list()
-var/global/list/nuke_tiles = list()					//list of all turfs that turn to animated red grids when a nuke is triggered
 var/global/list/alarmdisplay = list()				//list of all machines or programs that can display station alerts
 
 var/global/list/chemical_reactions_list				//list of all /datum/chemical_reaction datums. Used during chemical reactions

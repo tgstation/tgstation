@@ -20,7 +20,7 @@
 	if(!state)
 		return
 
-	if(istype(user, /mob/dead/observer))
+	if(isobserver(user))
 		// If they turn on ghost AI control, admins can always interact.
 		if(IsAdminGhost(user))
 			. = max(., UI_INTERACTIVE)

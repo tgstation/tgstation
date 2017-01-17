@@ -886,7 +886,7 @@
 /area/awaymission/centcomAway/cafe)
 "cT" = (
 /obj/structure/table/reinforced,
-/obj/item/clothing/tie/stethoscope,
+/obj/item/clothing/neck/stethoscope,
 /turf/open/floor/plasteel/whitepurple/side{
 	dir = 1
 	},
@@ -2612,7 +2612,7 @@
 /area/awaymission/centcomAway/general)
 "is" = (
 /obj/structure/bookcase,
-/obj/effect/decal/cleanable/cobweb2,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/plasteel/grimy,
 /area/awaymission/centcomAway/general)
 "it" = (
@@ -2899,7 +2899,7 @@
 	},
 /area/awaymission/centcomAway/general)
 "jk" = (
-/obj/effect/decal/cleanable/cobweb2,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/plasteel/grimy,
 /area/awaymission/centcomAway/general)
 "jl" = (
@@ -4160,7 +4160,7 @@
 /obj/structure/safe/floor,
 /obj/item/clothing/under/rank/centcom_officer,
 /obj/item/clothing/suit/det_suit,
-/obj/item/weapon/gun/projectile/revolver/mateba,
+/obj/item/weapon/gun/ballistic/revolver/mateba,
 /turf/open/floor/plasteel/grimy,
 /area/awaymission/centcomAway/general)
 "mR" = (

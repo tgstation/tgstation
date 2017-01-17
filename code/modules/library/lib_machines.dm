@@ -197,7 +197,7 @@ var/global/list/datum/cachedbook/cachedbooks // List of our cached book datums
 /obj/machinery/computer/libraryconsole/bookmanagement/New()
 	..()
 	if(circuit)
-		circuit.name = "circuit board (Book Inventory Management Console)"
+		circuit.name = "Book Inventory Management Console (Machine Board)"
 		circuit.build_path = /obj/machinery/computer/libraryconsole/bookmanagement
 
 /obj/machinery/computer/libraryconsole/bookmanagement/interact(mob/user)
@@ -215,9 +215,7 @@ var/global/list/datum/cachedbook/cachedbooks // List of our cached book datums
 			if(src.emagged)
 				dat += "<A href='?src=\ref[src];switchscreen=7'>7. Access the Forbidden Lore Vault</A><BR>"
 			if(src.arcanecheckout)
-				new /obj/item/weapon/tome(src.loc)
-				user << "<span class='warning'>Your sanity barely endures the seconds spent in the vault's browsing window. The only thing to remind you of this when you stop browsing is a dusty old tome sitting on the desk. You don't really remember printing it.</span>"
-				user.visible_message("[user] stares at the blank screen for a few moments, his expression frozen in fear. When he finally awakens from it, he looks a lot older.", 2)
+				print_forbidden_lore(user)
 				src.arcanecheckout = 0
 		if(1)
 			// Inventory
@@ -299,6 +297,17 @@ var/global/list/datum/cachedbook/cachedbooks // List of our cached book datums
 	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 	popup.open()
 
+/obj/machinery/computer/libraryconsole/bookmanagement/proc/print_forbidden_lore(mob/user)
+	var/spook = pick("blood", "brass")
+	var/turf/T = get_turf(src)
+	if(spook == "blood")
+		new /obj/item/weapon/tome(T)
+	else
+		new /obj/item/clockwork/slab(T)
+
+	user << "<span class='warning'>Your sanity barely endures the seconds spent in the vault's browsing window. The only thing to remind you of this when you stop browsing is a [spook == "blood" ? "dusty old tome" : "strange metal tablet"] sitting on the desk. You don't really remember printing it.[spook == "brass" ? " And how did it print something made of metal?" : ""]</span>"
+	user.visible_message("[user] stares at the blank screen for a few moments, [user.p_their()] expression frozen in fear. When [user.p_they()] finally awaken[user.p_s()] from it, [user.p_they()] look[user.p_s()] a lot older.", 2)
+
 /obj/machinery/computer/libraryconsole/bookmanagement/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/barcodescanner))
 		var/obj/item/weapon/barcodescanner/scanner = W
@@ -337,11 +346,11 @@ var/global/list/datum/cachedbook/cachedbooks // List of our cached book datums
 				if(!bibledelay)
 
 					var/obj/item/weapon/storage/book/bible/B = new /obj/item/weapon/storage/book/bible(src.loc)
-					if(ticker && ( ticker.Bible_icon_state && ticker.Bible_item_state) )
-						B.icon_state = ticker.Bible_icon_state
-						B.item_state = ticker.Bible_item_state
-						B.name = ticker.Bible_name
-						B.deity_name = ticker.Bible_deity_name
+					if(SSreligion.Bible_icon_state && SSreligion.Bible_item_state)
+						B.icon_state = SSreligion.Bible_icon_state
+						B.item_state = SSreligion.Bible_item_state
+						B.name = SSreligion.Bible_name
+						B.deity_name = SSreligion.Bible_deity_name
 
 					bibledelay = 1
 					spawn(60)
@@ -410,10 +419,14 @@ var/global/list/datum/cachedbook/cachedbooks // List of our cached book datums
 							log_game("[usr.name]/[usr.key] has uploaded the book titled [scanner.cache.name], [length(scanner.cache.dat)] signs")
 							alert("Upload Complete. Uploaded title will be unavailable for printing for a short period")
 	if(href_list["orderbyid"])
-		var/orderid = input("Enter your order:") as num|null
-		if(orderid)
-			if(isnum(orderid) && IsInteger(orderid))
-				href_list["targetid"] = orderid
+		if(bibledelay)
+			say("Printer unavailable. Please allow a short time before attempting to print.")
+		else
+			var/orderid = input("Enter your order:") as num|null
+			if(orderid)
+				if(isnum(orderid) && IsInteger(orderid))
+					href_list["targetid"] = num2text(orderid)
+
 	if(href_list["targetid"])
 		var/sqlid = sanitizeSQL(href_list["targetid"])
 		establish_db_connection()
@@ -432,17 +445,17 @@ var/global/list/datum/cachedbook/cachedbooks // List of our cached book datums
 				var/author = query.item[2]
 				var/title = query.item[3]
 				var/content = query.item[4]
-				var/obj/item/weapon/book/B = new(src.loc)
+				var/obj/item/weapon/book/B = new(get_turf(src))
 				B.name = "Book: [title]"
 				B.title = title
 				B.author = author
 				B.dat = content
 				B.icon_state = "book[rand(1,8)]"
-				src.visible_message("[src]'s printer hums as it produces a completely bound book. How did it do that?")
+				visible_message("[src]'s printer hums as it produces a completely bound book. How did it do that?")
 				break
-	src.add_fingerprint(usr)
-	src.updateUsrDialog()
-	return
+
+	add_fingerprint(usr)
+	updateUsrDialog()
 
 /*
  * Library Scanner
@@ -475,8 +488,6 @@ var/global/list/datum/cachedbook/cachedbooks // List of our cached book datums
 		dat += "       <A href='?src=\ref[src];clear=1'>\[Clear Memory\]</A><BR><BR><A href='?src=\ref[src];eject=1'>\[Remove Book\]</A>"
 	else
 		dat += "<BR>"
-	//user << browse(dat, "window=scanner")
-	//onclose(user, "scanner")
 	var/datum/browser/popup = new(user, "scanner", name, 600, 400)
 	popup.set_content(dat)
 	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))

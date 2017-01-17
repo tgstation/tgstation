@@ -8,8 +8,10 @@
 	force = 20
 	throwforce = 10
 	throw_range = 7
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 	origin_tech = "combat=5;powerstorage=3;syndicate=3"
+	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 40)
+	resistance_flags = FIRE_PROOF
 	var/click_delay = 1.5
 	var/fisto_setting = 1
 	var/gasperfist = 3
@@ -41,7 +43,7 @@
 				fisto_setting = 3
 			if(3)
 				fisto_setting = 1
-		playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
+		playsound(loc, W.usesound, 50, 1)
 		user << "<span class='notice'>You tweak \the [src]'s piston valve to [fisto_setting].</span>"
 	else if(istype(W, /obj/item/weapon/screwdriver))
 		if(tank)
@@ -84,8 +86,8 @@
 	playsound(loc, 'sound/weapons/genhit2.ogg', 50, 1)
 
 	var/atom/throw_target = get_edge_target_turf(target, get_dir(src, get_step_away(target, src)))
-	spawn(1)
-		target.throw_at(throw_target, 5 * fisto_setting, 0.2)
+
+	target.throw_at(throw_target, 5 * fisto_setting, 0.2)
 
 	add_logs(user, target, "power fisted", src)
 

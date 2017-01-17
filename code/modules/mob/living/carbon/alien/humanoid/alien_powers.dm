@@ -48,7 +48,7 @@ Doesn't work on other aliens/AI.*/
 		if(!silent)
 			user << "<span class='noticealien'>Not enough plasma stored.</span>"
 		return 0
-	if(check_turf && (!isturf(user.loc) || istype(user.loc, /turf/open/space)))
+	if(check_turf && (!isturf(user.loc) || isspaceturf(user.loc)))
 		if(!silent)
 			user << "<span class='noticealien'>Bad place for a garden!</span>"
 		return 0
@@ -122,14 +122,14 @@ Doesn't work on other aliens/AI.*/
 		if (get_dist(user,M) <= 1)
 			M.adjustPlasma(amount)
 			user.adjustPlasma(-amount)
-			M << "<span class='noticealien'>[user] has transfered [amount] plasma to you.</span>"
-			user << "<span class='noticealien'>You trasfer [amount] plasma to [M]</span>"
+			M << "<span class='noticealien'>[user] has transferred [amount] plasma to you.</span>"
+			user << "<span class='noticealien'>You transfer [amount] plasma to [M]</span>"
 		else
 			user << "<span class='noticealien'>You need to be closer!</span>"
 	return
 
 /obj/effect/proc_holder/alien/acid
-	name = "Corrossive Acid"
+	name = "Corrosive Acid"
 	desc = "Drench an object in acid, destroying it over time."
 	plasma_cost = 200
 	action_icon_state = "alien_acid"
@@ -140,30 +140,16 @@ Doesn't work on other aliens/AI.*/
 /obj/effect/proc_holder/alien/acid/on_lose(mob/living/carbon/user)
 	user.verbs.Remove(/mob/living/carbon/proc/corrosive_acid)
 
-/obj/effect/proc_holder/alien/acid/proc/corrode(target,mob/living/carbon/user = usr)
+/obj/effect/proc_holder/alien/acid/proc/corrode(atom/target,mob/living/carbon/user = usr)
 	if(target in oview(1,user))
-		// OBJ CHECK
-		if(isobj(target))
-			var/obj/I = target
-			if(I.resistance_flags & UNACIDABLE)//So the aliens don't destroy energy fields/singularies/other aliens/etc with their acid.
-				user << "<span class='noticealien'>You cannot dissolve this object.</span>"
-				return 0
-		// TURF CHECK
-		else if(istype(target, /turf))
-			var/turf/T = target
-			// R WALL
-			if(istype(T, /turf/closed/wall/r_wall))
-				user << "<span class='noticealien'>You cannot dissolve this object.</span>"
-				return 0
-			// R FLOOR
-			if(istype(T, /turf/open/floor/engine))
-				user << "<span class='noticealien'>You cannot dissolve this object.</span>"
-				return 0
-		else// Not a type we can acid.
+		if(target.acid_act(200, 100))
+			user.visible_message("<span class='alertalien'>[user] vomits globs of vile stuff all over [target]. It begins to sizzle and melt under the bubbling mess of acid!</span>")
+			return 1
+		else
+			user << "<span class='noticealien'>You cannot dissolve this object.</span>"
+
+
 			return 0
-		new /obj/effect/acid(get_turf(target), target)
-		user.visible_message("<span class='alertalien'>[user] vomits globs of vile stuff all over [target]. It begins to sizzle and melt under the bubbling mess of acid!</span>")
-		return 1
 	else
 		src << "<span class='noticealien'>Target is too far away.</span>"
 		return 0
@@ -171,8 +157,10 @@ Doesn't work on other aliens/AI.*/
 
 /obj/effect/proc_holder/alien/acid/fire(mob/living/carbon/alien/user)
 	var/O = input("Select what to dissolve:","Dissolve",null) as obj|turf in oview(1,user)
-	if(!O) return 0
-	return corrode(O,user)
+	if(!O || user.incapacitated())
+		return 0
+	else
+		return corrode(O,user)
 
 /mob/living/carbon/proc/corrosive_acid(O as obj|turf in oview(1)) // right click menu verb ugh
 	set name = "Corrossive Acid"
@@ -196,26 +184,28 @@ Doesn't work on other aliens/AI.*/
 	var/message
 	if(active)
 		message = "<span class='notice'>You empty your neurotoxin gland.</span>"
-		remove_ranged_ability(user, message)
+		remove_ranged_ability(message)
 	else
 		message = "<span class='notice'>You prepare your neurotoxin gland. <B>Left-click to fire at a target!</B></span>"
-		add_ranged_ability(user, message)
+		add_ranged_ability(user, message, TRUE)
 
 /obj/effect/proc_holder/alien/neurotoxin/update_icon()
 	action.button_icon_state = "alien_neurotoxin_[active]"
 	action.UpdateButtonIcon()
 
-/obj/effect/proc_holder/alien/neurotoxin/InterceptClickOn(mob/living/carbon/user, params, atom/target)
+/obj/effect/proc_holder/alien/neurotoxin/InterceptClickOn(mob/living/caller, params, atom/target)
 	if(..())
 		return
 	var/p_cost = 50
-	if(!iscarbon(user) || user.lying || user.stat)
-		remove_ranged_ability(user)
+	if(!iscarbon(ranged_ability_user) || ranged_ability_user.lying || ranged_ability_user.stat)
+		remove_ranged_ability(ranged_ability_user)
 		return
+
+	var/mob/living/carbon/user = ranged_ability_user
 
 	if(user.getPlasma() < p_cost)
 		user << "<span class='warning'>You need at least [p_cost] plasma to spit.</span>"
-		remove_ranged_ability(user)
+		remove_ranged_ability()
 		return
 
 	var/turf/T = user.loc

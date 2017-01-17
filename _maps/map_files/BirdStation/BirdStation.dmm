@@ -226,7 +226,6 @@
 /area/shuttle/syndicate)
 "aaG" = (
 /obj/machinery/door/poddoor{
-	auto_close = 300;
 	id = "smindicate";
 	name = "outer blast door"
 	},
@@ -1436,7 +1435,7 @@
 /area/space)
 "adL" = (
 /turf/closed/wall/r_wall,
-/area/turret_protected/ai{
+/area/ai_monitored/turret_protected/ai{
 	name = "\improper AI Core"
 	})
 "adM" = (
@@ -1551,12 +1550,12 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/black,
-/area/turret_protected/ai{
+/area/ai_monitored/turret_protected/ai{
 	name = "\improper AI Core"
 	})
 "aec" = (
 /turf/open/floor/bluegrid,
-/area/turret_protected/ai{
+/area/ai_monitored/turret_protected/ai{
 	name = "\improper AI Core"
 	})
 "aed" = (
@@ -1565,7 +1564,7 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/black,
-/area/turret_protected/ai{
+/area/ai_monitored/turret_protected/ai{
 	name = "\improper AI Core"
 	})
 "aee" = (
@@ -1585,7 +1584,7 @@
 	dir = 6
 	},
 /turf/open/floor/plasteel/black,
-/area/turret_protected/ai{
+/area/ai_monitored/turret_protected/ai{
 	name = "\improper AI Core"
 	})
 "aeg" = (
@@ -1593,7 +1592,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/black,
-/area/turret_protected/ai{
+/area/ai_monitored/turret_protected/ai{
 	name = "\improper AI Core"
 	})
 "aeh" = (
@@ -1682,7 +1681,7 @@
 	uses = 10
 	},
 /turf/open/floor/bluegrid,
-/area/turret_protected/ai{
+/area/ai_monitored/turret_protected/ai{
 	name = "\improper AI Core"
 	})
 "aeq" = (
@@ -1690,7 +1689,7 @@
 	network = "tcommsat"
 	},
 /turf/open/floor/plasteel,
-/area/turret_protected/tcomeast{
+/area/ai_monitored/turret_protected/tcomeast{
 	name = "\improper Telecommunications Chamber"
 	})
 "aer" = (
@@ -1786,7 +1785,7 @@
 /area/engine/engineering)
 "aeB" = (
 /turf/open/floor/plasteel/black,
-/area/turret_protected/ai{
+/area/ai_monitored/turret_protected/ai{
 	name = "\improper AI Core"
 	})
 "aeC" = (
@@ -1839,9 +1838,9 @@
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "aeI" = (
-/obj/machinery/hologram/holopad,
+/obj/machinery/holopad,
 /turf/open/floor/plasteel,
-/area/turret_protected/tcomeast{
+/area/ai_monitored/turret_protected/tcomeast{
 	name = "\improper Telecommunications Chamber"
 	})
 "aeJ" = (
@@ -1927,7 +1926,7 @@
 /area/space)
 "aeU" = (
 /turf/closed/wall/r_wall,
-/area/turret_protected/tcomeast{
+/area/ai_monitored/turret_protected/tcomeast{
 	name = "\improper Telecommunications Chamber"
 	})
 "aeV" = (
@@ -1936,7 +1935,7 @@
 	dir = 5
 	},
 /turf/open/floor/plasteel/black,
-/area/turret_protected/ai{
+/area/ai_monitored/turret_protected/ai{
 	name = "\improper AI Core"
 	})
 "aeW" = (
@@ -1954,7 +1953,7 @@
 	dir = 9
 	},
 /turf/open/floor/plasteel/black,
-/area/turret_protected/ai{
+/area/ai_monitored/turret_protected/ai{
 	name = "\improper AI Core"
 	})
 "aeY" = (
@@ -2053,13 +2052,13 @@
 	layer = 4.1
 	},
 /turf/open/floor/plasteel/black,
-/area/turret_protected/tcomeast{
+/area/ai_monitored/turret_protected/tcomeast{
 	name = "\improper Telecommunications Chamber"
 	})
 "afm" = (
 /obj/machinery/camera/autoname,
 /turf/open/floor/plasteel/black,
-/area/turret_protected/tcomeast{
+/area/ai_monitored/turret_protected/tcomeast{
 	name = "\improper Telecommunications Chamber"
 	})
 "afn" = (
@@ -2068,12 +2067,12 @@
 	},
 /obj/machinery/ntnet_relay,
 /turf/open/floor/plasteel/black,
-/area/turret_protected/tcomeast{
+/area/ai_monitored/turret_protected/tcomeast{
 	name = "\improper Telecommunications Chamber"
 	})
 "afo" = (
 /turf/open/floor/plasteel/black,
-/area/turret_protected/tcomeast{
+/area/ai_monitored/turret_protected/tcomeast{
 	name = "\improper Telecommunications Chamber"
 	})
 "afp" = (
@@ -2081,7 +2080,7 @@
 	icon_state = "2-4"
 	},
 /turf/open/floor/bluegrid,
-/area/turret_protected/ai{
+/area/ai_monitored/turret_protected/ai{
 	name = "\improper AI Core"
 	})
 "afq" = (
@@ -2172,19 +2171,19 @@
 "afC" = (
 /obj/machinery/telecomms/bus/preset_one/birdstation,
 /turf/open/floor/bluegrid,
-/area/turret_protected/tcomeast{
+/area/ai_monitored/turret_protected/tcomeast{
 	name = "\improper Telecommunications Chamber"
 	})
 "afD" = (
 /obj/machinery/blackbox_recorder,
 /turf/open/floor/bluegrid,
-/area/turret_protected/tcomeast{
+/area/ai_monitored/turret_protected/tcomeast{
 	name = "\improper Telecommunications Chamber"
 	})
 "afE" = (
 /obj/machinery/telecomms/broadcaster/preset_left/birdstation,
 /turf/open/floor/bluegrid,
-/area/turret_protected/tcomeast{
+/area/ai_monitored/turret_protected/tcomeast{
 	name = "\improper Telecommunications Chamber"
 	})
 "afF" = (
@@ -2192,7 +2191,7 @@
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/black,
-/area/turret_protected/ai{
+/area/ai_monitored/turret_protected/ai{
 	name = "\improper AI Core"
 	})
 "afG" = (
@@ -2207,7 +2206,7 @@
 	dir = 10
 	},
 /turf/open/floor/plasteel/black,
-/area/turret_protected/ai{
+/area/ai_monitored/turret_protected/ai{
 	name = "\improper AI Core"
 	})
 "afI" = (
@@ -2345,24 +2344,24 @@
 "afX" = (
 /obj/machinery/telecomms/server/presets/common/birdstation,
 /turf/open/floor/bluegrid,
-/area/turret_protected/tcomeast{
+/area/ai_monitored/turret_protected/tcomeast{
 	name = "\improper Telecommunications Chamber"
 	})
 "afY" = (
 /turf/open/floor/bluegrid,
-/area/turret_protected/tcomeast{
+/area/ai_monitored/turret_protected/tcomeast{
 	name = "\improper Telecommunications Chamber"
 	})
 "afZ" = (
 /obj/machinery/telecomms/hub/preset,
 /turf/open/floor/bluegrid,
-/area/turret_protected/tcomeast{
+/area/ai_monitored/turret_protected/tcomeast{
 	name = "\improper Telecommunications Chamber"
 	})
 "aga" = (
 /obj/machinery/announcement_system,
 /turf/open/floor/bluegrid,
-/area/turret_protected/tcomeast{
+/area/ai_monitored/turret_protected/tcomeast{
 	name = "\improper Telecommunications Chamber"
 	})
 "agb" = (
@@ -2374,7 +2373,7 @@
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/black,
-/area/turret_protected/ai{
+/area/ai_monitored/turret_protected/ai{
 	name = "\improper AI Core"
 	})
 "agc" = (
@@ -2516,19 +2515,19 @@
 "agv" = (
 /obj/machinery/telecomms/processor/preset_one/birdstation,
 /turf/open/floor/bluegrid,
-/area/turret_protected/tcomeast{
+/area/ai_monitored/turret_protected/tcomeast{
 	name = "\improper Telecommunications Chamber"
 	})
 "agw" = (
 /obj/machinery/message_server,
 /turf/open/floor/bluegrid,
-/area/turret_protected/tcomeast{
+/area/ai_monitored/turret_protected/tcomeast{
 	name = "\improper Telecommunications Chamber"
 	})
 "agx" = (
 /obj/machinery/telecomms/receiver/preset_left/birdstation,
 /turf/open/floor/bluegrid,
-/area/turret_protected/tcomeast{
+/area/ai_monitored/turret_protected/tcomeast{
 	name = "\improper Telecommunications Chamber"
 	})
 "agy" = (
@@ -2536,7 +2535,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/black,
-/area/turret_protected/aisat_interior{
+/area/ai_monitored/turret_protected/aisat_interior{
 	name = "\improper AI Core Lobby"
 	})
 "agz" = (
@@ -2544,7 +2543,7 @@
 	name = "Cyborg"
 	},
 /turf/open/floor/plasteel/black,
-/area/turret_protected/aisat_interior{
+/area/ai_monitored/turret_protected/aisat_interior{
 	name = "\improper AI Core Lobby"
 	})
 "agA" = (
@@ -2552,7 +2551,7 @@
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/black,
-/area/turret_protected/aisat_interior{
+/area/ai_monitored/turret_protected/aisat_interior{
 	name = "\improper AI Core Lobby"
 	})
 "agB" = (
@@ -2560,12 +2559,12 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/black,
-/area/turret_protected/aisat_interior{
+/area/ai_monitored/turret_protected/aisat_interior{
 	name = "\improper AI Core Lobby"
 	})
 "agC" = (
 /turf/closed/wall/r_wall,
-/area/turret_protected/aisat_interior{
+/area/ai_monitored/turret_protected/aisat_interior{
 	name = "\improper AI Core Lobby"
 	})
 "agD" = (
@@ -2701,23 +2700,23 @@
 "agP" = (
 /obj/structure/window/reinforced,
 /turf/open/floor/plasteel/black,
-/area/turret_protected/tcomeast{
+/area/ai_monitored/turret_protected/tcomeast{
 	name = "\improper Telecommunications Chamber"
 	})
 "agQ" = (
 /obj/machinery/door/window/southright,
 /turf/open/floor/plasteel/black,
-/area/turret_protected/tcomeast{
+/area/ai_monitored/turret_protected/tcomeast{
 	name = "\improper Telecommunications Chamber"
 	})
 "agR" = (
 /turf/open/floor/plasteel/black,
-/area/turret_protected/aisat_interior{
+/area/ai_monitored/turret_protected/aisat_interior{
 	name = "\improper AI Core Lobby"
 	})
 "agS" = (
 /turf/open/floor/bluegrid,
-/area/turret_protected/aisat_interior{
+/area/ai_monitored/turret_protected/aisat_interior{
 	name = "\improper AI Core Lobby"
 	})
 "agT" = (
@@ -2725,7 +2724,7 @@
 	icon_state = "1-2"
 	},
 /turf/open/floor/bluegrid,
-/area/turret_protected/aisat_interior{
+/area/ai_monitored/turret_protected/aisat_interior{
 	name = "\improper AI Core Lobby"
 	})
 "agU" = (
@@ -2856,7 +2855,7 @@
 "ahl" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
-/area/turret_protected/tcomeast{
+/area/ai_monitored/turret_protected/tcomeast{
 	name = "\improper Telecommunications Chamber"
 	})
 "ahm" = (
@@ -2864,7 +2863,7 @@
 	network = "tcommsat"
 	},
 /turf/open/floor/plasteel,
-/area/turret_protected/tcomeast{
+/area/ai_monitored/turret_protected/tcomeast{
 	name = "\improper Telecommunications Chamber"
 	})
 "ahn" = (
@@ -2877,7 +2876,7 @@
 	layer = 4.1
 	},
 /turf/open/floor/plasteel,
-/area/turret_protected/tcomeast{
+/area/ai_monitored/turret_protected/tcomeast{
 	name = "\improper Telecommunications Chamber"
 	})
 "aho" = (
@@ -2888,12 +2887,12 @@
 	},
 /obj/item/weapon/pen,
 /turf/open/floor/plasteel,
-/area/turret_protected/tcomeast{
+/area/ai_monitored/turret_protected/tcomeast{
 	name = "\improper Telecommunications Chamber"
 	})
 "ahp" = (
 /turf/open/floor/plasteel/neutral,
-/area/turret_protected/tcomeast{
+/area/ai_monitored/turret_protected/tcomeast{
 	name = "\improper Telecommunications Chamber"
 	})
 "ahq" = (
@@ -2905,7 +2904,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/black,
-/area/turret_protected/aisat_interior{
+/area/ai_monitored/turret_protected/aisat_interior{
 	name = "\improper AI Core Lobby"
 	})
 "ahr" = (
@@ -2913,7 +2912,7 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/black,
-/area/turret_protected/aisat_interior{
+/area/ai_monitored/turret_protected/aisat_interior{
 	name = "\improper AI Core Lobby"
 	})
 "ahs" = (
@@ -2931,7 +2930,7 @@
 	icon_state = "tube1"
 	},
 /turf/open/floor/plasteel/black,
-/area/turret_protected/aisat_interior{
+/area/ai_monitored/turret_protected/aisat_interior{
 	name = "\improper AI Core Lobby"
 	})
 "ahu" = (
@@ -3061,7 +3060,7 @@
 "ahL" = (
 /obj/item/device/radio/beacon,
 /turf/open/floor/plasteel/neutral,
-/area/turret_protected/tcomeast{
+/area/ai_monitored/turret_protected/tcomeast{
 	name = "\improper Telecommunications Chamber"
 	})
 "ahM" = (
@@ -3069,7 +3068,7 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/neutral,
-/area/turret_protected/tcomeast{
+/area/ai_monitored/turret_protected/tcomeast{
 	name = "\improper Telecommunications Chamber"
 	})
 "ahN" = (
@@ -3077,7 +3076,7 @@
 	icon_state = "2-4"
 	},
 /turf/open/floor/plasteel/neutral,
-/area/turret_protected/tcomeast{
+/area/ai_monitored/turret_protected/tcomeast{
 	name = "\improper Telecommunications Chamber"
 	})
 "ahO" = (
@@ -3089,7 +3088,7 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/black,
-/area/turret_protected/tcomeast{
+/area/ai_monitored/turret_protected/tcomeast{
 	name = "\improper Telecommunications Chamber"
 	})
 "ahP" = (
@@ -3097,7 +3096,7 @@
 	icon_state = "1-8"
 	},
 /turf/open/floor/plasteel/black,
-/area/turret_protected/aisat_interior{
+/area/ai_monitored/turret_protected/aisat_interior{
 	name = "\improper AI Core Lobby"
 	})
 "ahQ" = (
@@ -3181,7 +3180,7 @@
 "aic" = (
 /obj/machinery/light,
 /turf/open/floor/plasteel/neutral,
-/area/turret_protected/tcomeast{
+/area/ai_monitored/turret_protected/tcomeast{
 	name = "\improper Telecommunications Chamber"
 	})
 "aid" = (
@@ -3194,7 +3193,7 @@
 	icon_state = "0-8"
 	},
 /turf/open/floor/plasteel/neutral,
-/area/turret_protected/tcomeast{
+/area/ai_monitored/turret_protected/tcomeast{
 	name = "\improper Telecommunications Chamber"
 	})
 "aie" = (
@@ -3205,7 +3204,7 @@
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/neutral,
-/area/turret_protected/tcomeast{
+/area/ai_monitored/turret_protected/tcomeast{
 	name = "\improper Telecommunications Chamber"
 	})
 "aif" = (
@@ -3214,7 +3213,7 @@
 	layer = 4.1
 	},
 /turf/open/floor/plasteel/black,
-/area/turret_protected/aisat_interior{
+/area/ai_monitored/turret_protected/aisat_interior{
 	name = "\improper AI Core Lobby"
 	})
 "aig" = (
@@ -3224,7 +3223,7 @@
 	},
 /obj/structure/cable/cyan,
 /turf/open/floor/plasteel/black,
-/area/turret_protected/aisat_interior{
+/area/ai_monitored/turret_protected/aisat_interior{
 	name = "\improper AI Core Lobby"
 	})
 "aih" = (
@@ -3347,7 +3346,7 @@
 	req_access_txt = "61"
 	},
 /turf/open/floor/plasteel/neutral,
-/area/turret_protected/tcomeast{
+/area/ai_monitored/turret_protected/tcomeast{
 	name = "\improper Telecommunications Chamber"
 	})
 "aiy" = (
@@ -3359,7 +3358,7 @@
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/neutral,
-/area/turret_protected/tcomeast{
+/area/ai_monitored/turret_protected/tcomeast{
 	name = "\improper Telecommunications Chamber"
 	})
 "aiz" = (
@@ -4117,7 +4116,7 @@
 	})
 "akh" = (
 /turf/closed/wall/r_wall,
-/area/turret_protected/ai_upload)
+/area/ai_monitored/turret_protected/ai_upload)
 "aki" = (
 /turf/closed/wall,
 /area/gateway)
@@ -4249,11 +4248,11 @@
 	pixel_y = 0
 	},
 /turf/open/floor/plasteel/black,
-/area/turret_protected/ai_upload)
+/area/ai_monitored/turret_protected/ai_upload)
 "akA" = (
 /obj/machinery/porta_turret/ai,
 /turf/open/floor/plasteel/black,
-/area/turret_protected/ai_upload)
+/area/ai_monitored/turret_protected/ai_upload)
 "akB" = (
 /obj/structure/table,
 /obj/item/weapon/aiModule/reset,
@@ -4261,14 +4260,14 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/black,
-/area/turret_protected/ai_upload)
+/area/ai_monitored/turret_protected/ai_upload)
 "akC" = (
 /obj/structure/table,
 /obj/item/weapon/aiModule/core/full/asimov,
 /obj/item/weapon/aiModule/core/full/asimovpp,
 /obj/item/weapon/aiModule/core/full/corp,
 /turf/open/floor/plasteel/black,
-/area/turret_protected/ai_upload)
+/area/ai_monitored/turret_protected/ai_upload)
 "akD" = (
 /obj/item/weapon/twohanded/required/kirbyplants{
 	icon_state = "plant-02";
@@ -4379,26 +4378,26 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel,
-/area/turret_protected/ai_upload)
+/area/ai_monitored/turret_protected/ai_upload)
 "akT" = (
 /obj/structure/cable/cyan{
 	icon_state = "2-8"
 	},
 /turf/open/floor/plasteel/black,
-/area/turret_protected/ai_upload)
+/area/ai_monitored/turret_protected/ai_upload)
 "akU" = (
 /obj/machinery/door/airlock/command{
 	name = "command door";
 	req_access_txt = "19"
 	},
 /turf/open/floor/plasteel/black,
-/area/turret_protected/ai_upload)
+/area/ai_monitored/turret_protected/ai_upload)
 "akV" = (
 /turf/open/floor/plasteel/black,
-/area/turret_protected/ai_upload)
+/area/ai_monitored/turret_protected/ai_upload)
 "akW" = (
 /turf/open/floor/bluegrid,
-/area/turret_protected/ai_upload)
+/area/ai_monitored/turret_protected/ai_upload)
 "akX" = (
 /obj/machinery/computer/upload/borg,
 /obj/structure/window/reinforced{
@@ -4413,7 +4412,7 @@
 	req_access_txt = "55"
 	},
 /turf/open/floor/bluegrid,
-/area/turret_protected/ai_upload)
+/area/ai_monitored/turret_protected/ai_upload)
 "akY" = (
 /obj/item/weapon/twohanded/required/kirbyplants{
 	anchored = 1;
@@ -4425,7 +4424,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/black,
-/area/turret_protected/ai_upload)
+/area/ai_monitored/turret_protected/ai_upload)
 "akZ" = (
 /turf/closed/wall/r_wall,
 /area/maintenance/fsmaint)
@@ -4455,7 +4454,7 @@
 /area/maintenance/fsmaint)
 "alf" = (
 /obj/structure/table/wood,
-/obj/item/clothing/under/blueskirt/redskirt,
+/obj/item/clothing/under/skirt/red,
 /turf/open/floor/wood,
 /area/maintenance/fsmaint)
 "alg" = (
@@ -4572,7 +4571,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/black,
-/area/turret_protected/ai_upload)
+/area/ai_monitored/turret_protected/ai_upload)
 "alt" = (
 /obj/machinery/computer/upload/ai,
 /obj/structure/window/reinforced{
@@ -4587,7 +4586,7 @@
 	req_access_txt = "55"
 	},
 /turf/open/floor/bluegrid,
-/area/turret_protected/ai_upload)
+/area/ai_monitored/turret_protected/ai_upload)
 "alu" = (
 /obj/item/weapon/twohanded/required/kirbyplants{
 	anchored = 1;
@@ -4596,7 +4595,7 @@
 	name = "incredibly heavy plant"
 	},
 /turf/open/floor/plasteel/black,
-/area/turret_protected/ai_upload)
+/area/ai_monitored/turret_protected/ai_upload)
 "alv" = (
 /obj/structure/cable/cyan{
 	icon_state = "1-2"
@@ -4733,19 +4732,19 @@
 	icon_state = "0-2"
 	},
 /turf/open/floor/plasteel/black,
-/area/turret_protected/ai_upload)
+/area/ai_monitored/turret_protected/ai_upload)
 "alN" = (
 /obj/machinery/porta_turret/ai{
 	dir = 1
 	},
 /turf/open/floor/plasteel/black,
-/area/turret_protected/ai_upload)
+/area/ai_monitored/turret_protected/ai_upload)
 "alO" = (
 /obj/structure/table,
 /obj/item/weapon/aiModule/supplied/freeform,
 /obj/machinery/light/small,
 /turf/open/floor/plasteel/black,
-/area/turret_protected/ai_upload)
+/area/ai_monitored/turret_protected/ai_upload)
 "alP" = (
 /obj/structure/table,
 /obj/item/weapon/aiModule/core/full/tyrant,
@@ -4757,7 +4756,7 @@
 /obj/item/weapon/aiModule/supplied/protectStation,
 /obj/item/weapon/aiModule/supplied/safeguard,
 /turf/open/floor/plasteel/black,
-/area/turret_protected/ai_upload)
+/area/ai_monitored/turret_protected/ai_upload)
 "alQ" = (
 /obj/structure/cable/cyan{
 	icon_state = "4-8"
@@ -4935,7 +4934,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/black,
-/area/turret_protected/ai_upload)
+/area/ai_monitored/turret_protected/ai_upload)
 "amo" = (
 /turf/closed/wall/r_wall,
 /area/crew_quarters/captain{
@@ -5737,7 +5736,7 @@
 	pixel_y = -29
 	},
 /turf/open/floor/plasteel/black,
-/area/turret_protected/ai{
+/area/ai_monitored/turret_protected/ai{
 	name = "\improper AI Core"
 	})
 "aok" = (
@@ -5757,7 +5756,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/black,
-/area/turret_protected/ai{
+/area/ai_monitored/turret_protected/ai{
 	name = "\improper AI Core"
 	})
 "aom" = (
@@ -5766,7 +5765,7 @@
 	icon_state = "tube1"
 	},
 /turf/open/floor/plasteel/black,
-/area/turret_protected/ai{
+/area/ai_monitored/turret_protected/ai{
 	name = "\improper AI Core"
 	})
 "aon" = (
@@ -6571,7 +6570,7 @@
 /turf/open/floor/wood,
 /area/maintenance/fsmaint)
 "aqc" = (
-/obj/item/weapon/gun/projectile/shotgun/toy,
+/obj/item/weapon/gun/ballistic/shotgun/toy,
 /turf/open/floor/wood,
 /area/maintenance/fsmaint)
 "aqd" = (
@@ -7377,7 +7376,7 @@
 	d2 = 2
 	},
 /turf/open/floor/plasteel/black,
-/area/turret_protected/ai{
+/area/ai_monitored/turret_protected/ai{
 	name = "\improper AI Core"
 	})
 "asa" = (
@@ -7625,7 +7624,7 @@
 	pixel_y = 24
 	},
 /turf/open/floor/bluegrid,
-/area/turret_protected/ai{
+/area/ai_monitored/turret_protected/ai{
 	name = "\improper AI Core"
 	})
 "asG" = (
@@ -7959,13 +7958,13 @@
 	icon_state = "1-4"
 	},
 /turf/open/floor/bluegrid,
-/area/turret_protected/ai{
+/area/ai_monitored/turret_protected/ai{
 	name = "\improper AI Core"
 	})
 "att" = (
 /obj/machinery/light,
 /turf/open/floor/plasteel/black,
-/area/turret_protected/ai{
+/area/ai_monitored/turret_protected/ai{
 	name = "\improper AI Core"
 	})
 "atu" = (
@@ -8053,7 +8052,7 @@
 /turf/open/floor/plasteel/shuttle/white,
 /area/shuttle/supply)
 "atI" = (
-/obj/machinery/door/airlock/shuttle{
+/obj/machinery/door/airlock/titanium{
 	name = "Supply Shuttle Airlock";
 	req_access_txt = "31"
 	},
@@ -8386,13 +8385,13 @@
 /obj/structure/cable/cyan{
 	icon_state = "1-8"
 	},
-/obj/machinery/hologram/holopad,
+/obj/machinery/holopad,
 /mob/living/simple_animal/bot/ed209{
 	name = "Officer Pingsky II";
 	radio_channel = "AI Private"
 	},
 /turf/open/floor/bluegrid,
-/area/turret_protected/aisat_interior{
+/area/ai_monitored/turret_protected/aisat_interior{
 	name = "\improper AI Core Lobby"
 	})
 "auE" = (
@@ -8525,7 +8524,7 @@
 /turf/open/floor/plating,
 /area/maintenance/fsmaint)
 "auU" = (
-/obj/machinery/door/airlock/shuttle{
+/obj/machinery/door/airlock/titanium{
 	name = "Supply Shuttle Airlock";
 	req_access_txt = "31"
 	},
@@ -9737,7 +9736,7 @@
 /turf/open/floor/wood,
 /area/maintenance/fsmaint)
 "ayj" = (
-/obj/machinery/door/airlock/shuttle{
+/obj/machinery/door/airlock/titanium{
 	name = "Mining Shuttle Airlock";
 	req_access_txt = "0"
 	},
@@ -10635,7 +10634,7 @@
 /turf/open/floor/plating,
 /area/maintenance/fsmaint)
 "aAw" = (
-/obj/item/clothing/tie/petcollar,
+/obj/item/clothing/neck/petcollar,
 /obj/effect/spawner/lootdrop/maintenance{
 	lootcount = 3;
 	name = "3maintenance loot spawner"
@@ -10920,7 +10919,7 @@
 /obj/item/weapon/wirerod,
 /obj/item/weapon/reagent_containers/syringe,
 /obj/item/weapon/restraints/handcuffs,
-/obj/item/clothing/tie/stethoscope,
+/obj/item/clothing/neck/stethoscope,
 /turf/open/floor/plasteel/white,
 /area/space)
 "aBj" = (
@@ -12330,7 +12329,7 @@
 /obj/structure/cable/cyan{
 	icon_state = "1-2"
 	},
-/obj/machinery/hologram/holopad,
+/obj/machinery/holopad,
 /turf/open/floor/plasteel,
 /area/hallway/primary/fore{
 	name = "\improper Command Hallway"
@@ -12644,7 +12643,7 @@
 	})
 "aFh" = (
 /obj/structure/table/wood,
-/obj/item/weapon/gun/projectile/revolver/doublebarrel,
+/obj/item/weapon/gun/ballistic/revolver/doublebarrel,
 /turf/open/floor/wood,
 /area/crew_quarters/bar{
 	name = "\improper Bar and Kitchen"
@@ -13653,7 +13652,7 @@
 /turf/open/floor/plasteel/black,
 /area/shuttle/escape)
 "aHX" = (
-/obj/machinery/door/airlock/shuttle,
+/obj/machinery/door/airlock/titanium,
 /turf/open/floor/plasteel/shuttle/white,
 /area/shuttle/escape)
 "aHY" = (
@@ -13987,7 +13986,7 @@
 /area/maintenance/asmaint2)
 "aIK" = (
 /obj/structure/closet/chefcloset,
-/obj/item/clothing/under/blueskirt,
+/obj/item/clothing/under/skirt/blue,
 /obj/item/clothing/under/janimaid,
 /obj/item/clothing/under/sundress,
 /obj/item/clothing/glasses/sunglasses/reagent,
@@ -14020,7 +14019,7 @@
 /turf/open/floor/plasteel/black,
 /area/shuttle/escape)
 "aIP" = (
-/obj/machinery/door/airlock/shuttle,
+/obj/machinery/door/airlock/titanium,
 /obj/docking_port/mobile/emergency{
 	dheight = 0;
 	dir = 8;
@@ -14046,7 +14045,7 @@
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit)
 "aIR" = (
-/obj/machinery/hologram/holopad,
+/obj/machinery/holopad,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "aIS" = (
@@ -14677,7 +14676,7 @@
 /turf/open/floor/wood,
 /area/maintenance/fsmaint)
 "aKw" = (
-/obj/machinery/hologram/holopad,
+/obj/machinery/holopad,
 /turf/open/floor/plasteel,
 /area/teleporter{
 	name = "\improper Teleporter Room"
@@ -15286,13 +15285,13 @@
 /turf/open/floor/plasteel,
 /area/bridge)
 "aLS" = (
-/obj/machinery/hologram/holopad,
+/obj/machinery/holopad,
 /turf/open/floor/plasteel,
 /area/ai_monitored/storage/eva{
 	name = "E.V.A. Storage"
 	})
 "aLT" = (
-/obj/machinery/hologram/holopad,
+/obj/machinery/holopad,
 /turf/open/floor/plasteel,
 /area/storage/primary{
 	name = "Tool Storage"
@@ -15301,7 +15300,7 @@
 /obj/effect/landmark{
 	name = "lightsout"
 	},
-/obj/machinery/hologram/holopad,
+/obj/machinery/holopad,
 /turf/open/floor/plasteel/black,
 /area/bridge)
 "aLV" = (
@@ -15318,7 +15317,7 @@
 /turf/open/floor/engine,
 /area/toxins/xenobiology)
 "aLX" = (
-/obj/machinery/hologram/holopad,
+/obj/machinery/holopad,
 /mob/living/simple_animal/pet/dog/corgi/Ian,
 /turf/open/floor/carpet,
 /area/crew_quarters/heads)
@@ -16549,9 +16548,9 @@
 /area/medical/medbay)
 "aPb" = (
 /obj/structure/closet/wardrobe/white/medical,
-/obj/item/clothing/tie/stethoscope,
-/obj/item/clothing/tie/stethoscope,
-/obj/item/clothing/under/blueskirt,
+/obj/item/clothing/neck/stethoscope,
+/obj/item/clothing/neck/stethoscope,
+/obj/item/clothing/under/skirt/blue,
 /obj/item/clothing/under/plaid_skirt/blue,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay)
@@ -17156,8 +17155,8 @@
 /area/toxins/xenobiology)
 "aQz" = (
 /obj/structure/rack,
-/obj/item/weapon/gun/energy/gun/advtaser,
-/obj/item/weapon/gun/energy/gun/advtaser{
+/obj/item/weapon/gun/energy/e_gun/advtaser,
+/obj/item/weapon/gun/energy/e_gun/advtaser{
 	pixel_x = 5;
 	pixel_y = -5
 	},
@@ -18091,7 +18090,7 @@
 /obj/structure/cable/cyan{
 	icon_state = "1-2"
 	},
-/obj/item/clothing/tie/stethoscope,
+/obj/item/clothing/neck/stethoscope,
 /obj/machinery/camera/autoname{
 	icon_state = "camera";
 	dir = 4
@@ -18551,7 +18550,7 @@
 	name = "\improper South Hallway"
 	})
 "aTG" = (
-/obj/machinery/hologram/holopad,
+/obj/machinery/holopad,
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
 "aTH" = (
@@ -18574,7 +18573,7 @@
 	name = "\improper South Hallway"
 	})
 "aTL" = (
-/obj/machinery/hologram/holopad,
+/obj/machinery/holopad,
 /turf/open/floor/plasteel,
 /area/crew_quarters/sleep)
 "aTM" = (
@@ -18737,7 +18736,7 @@
 "aUd" = (
 /obj/structure/closet/wardrobe/red,
 /obj/machinery/light,
-/obj/item/clothing/under/blueskirt/redskirt,
+/obj/item/clothing/under/skirt/red,
 /obj/item/clothing/under/plaid_skirt,
 /turf/open/floor/plasteel/black,
 /area/security/warden)
@@ -20118,7 +20117,7 @@
 /turf/open/floor/plasteel/showroomfloor,
 /area/maintenance/asmaint2)
 "aXy" = (
-/obj/item/clothing/tie/stethoscope,
+/obj/item/clothing/neck/stethoscope,
 /turf/open/floor/plating,
 /area/maintenance/asmaint2)
 "aXz" = (
@@ -20558,7 +20557,7 @@
 	})
 "aYD" = (
 /obj/structure/table/wood,
-/obj/item/weapon/gun/projectile/revolver/doublebarrel/improvised,
+/obj/item/weapon/gun/ballistic/revolver/doublebarrel/improvised,
 /turf/open/floor/wood,
 /area/maintenance/fore{
 	name = "Security Maintenance"
@@ -21088,7 +21087,7 @@
 	},
 /area/shuttle/arrival)
 "aZP" = (
-/obj/machinery/hologram/holopad,
+/obj/machinery/holopad,
 /turf/open/floor/wood,
 /area/crew_quarters/theatre)
 "aZQ" = (
@@ -21228,7 +21227,7 @@
 	id = "kitchen shutter";
 	name = "kitchen shutter"
 	},
-/obj/machinery/hologram/holopad,
+/obj/machinery/holopad,
 /obj/machinery/newscaster{
 	pixel_y = 32
 	},
@@ -21321,7 +21320,7 @@
 /turf/closed/wall,
 /area/medical/morgue)
 "bav" = (
-/obj/machinery/hologram/holopad,
+/obj/machinery/holopad,
 /obj/machinery/atmospherics/pipe/simple/cyan/hidden{
 	icon_state = "intact";
 	dir = 4
@@ -21390,7 +21389,7 @@
 /obj/structure/cable/cyan{
 	icon_state = "2-4"
 	},
-/obj/machinery/hologram/holopad,
+/obj/machinery/holopad,
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit)
 "baA" = (
@@ -21673,7 +21672,7 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "bbc" = (
-/obj/machinery/hologram/holopad,
+/obj/machinery/holopad,
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness)
 "bbd" = (
@@ -22470,14 +22469,14 @@
 /turf/open/floor/plasteel/white,
 /area/maintenance/asmaint)
 "bdf" = (
-/obj/machinery/door/airlock/shuttle,
+/obj/machinery/door/airlock/titanium,
 /turf/open/floor/plasteel/shuttle,
 /area/shuttle/transport)
 "bdg" = (
 /turf/open/floor/plasteel/shuttle,
 /area/shuttle/transport)
 "bdh" = (
-/obj/machinery/door/airlock/shuttle,
+/obj/machinery/door/airlock/titanium,
 /obj/docking_port/mobile{
 	dir = 8;
 	dwidth = 2;
@@ -22724,7 +22723,7 @@
 /obj/structure/cable/cyan{
 	icon_state = "2-8"
 	},
-/obj/machinery/hologram/holopad,
+/obj/machinery/holopad,
 /turf/open/floor/plasteel/white,
 /area/medical/genetics_cloning)
 "bdL" = (
@@ -22793,11 +22792,11 @@
 /obj/structure/cable/cyan{
 	icon_state = "1-2"
 	},
-/obj/machinery/hologram/holopad,
+/obj/machinery/holopad,
 /turf/open/floor/plasteel,
 /area/security/brig)
 "bdS" = (
-/obj/machinery/hologram/holopad,
+/obj/machinery/holopad,
 /turf/open/floor/plasteel,
 /area/medical/robotics)
 "bdT" = (
@@ -22930,7 +22929,7 @@
 /obj/structure/cable/cyan{
 	icon_state = "1-8"
 	},
-/obj/machinery/hologram/holopad,
+/obj/machinery/holopad,
 /turf/open/floor/plasteel/showroomfloor,
 /area/security/warden)
 "bed" = (
@@ -22996,11 +22995,11 @@
 	icon_state = "intact";
 	dir = 4
 	},
-/obj/machinery/hologram/holopad,
+/obj/machinery/holopad,
 /turf/open/floor/plasteel,
 /area/toxins/misc_lab)
 "bem" = (
-/obj/machinery/hologram/holopad,
+/obj/machinery/holopad,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay)
 "ben" = (
@@ -23023,7 +23022,7 @@
 	name = "\improper South Hallway"
 	})
 "bep" = (
-/obj/machinery/door/airlock/shuttle{
+/obj/machinery/door/airlock/titanium{
 	name = "Arrivals Shuttle Airlock"
 	},
 /turf/open/floor/plating,
@@ -23170,7 +23169,7 @@
 /area/toxins/xenobiology)
 "beI" = (
 /obj/structure/rack,
-/obj/item/weapon/gun/energy/gun/dragnet,
+/obj/item/weapon/gun/energy/e_gun/dragnet,
 /turf/open/floor/plasteel/bot,
 /area/security/warden)
 "beJ" = (
@@ -23180,11 +23179,11 @@
 /obj/item/weapon/storage/box/rubbershot,
 /obj/item/weapon/storage/box/rubbershot,
 /obj/item/weapon/storage/box/rubbershot,
-/obj/item/weapon/gun/projectile/shotgun/riot{
+/obj/item/weapon/gun/ballistic/shotgun/riot{
 	pixel_x = -5;
 	pixel_y = 5
 	},
-/obj/item/weapon/gun/projectile/shotgun/riot,
+/obj/item/weapon/gun/ballistic/shotgun/riot,
 /turf/open/floor/plasteel/bot,
 /area/security/warden)
 "beK" = (
@@ -23234,7 +23233,7 @@
 	lootcount = 3;
 	name = "teargas clusterbuster spawner"
 	},
-/obj/item/weapon/gun/energy/gun/hos,
+/obj/item/weapon/gun/energy/e_gun/hos,
 /obj/item/weapon/storage/box/lethalshot,
 /obj/item/weapon/storage/box/lethalshot,
 /turf/open/floor/plasteel,
@@ -23263,6 +23262,12 @@
 /area/maintenance/fore{
 	name = "Security Maintenance"
 	})
+"ZyZ" = (
+/obj/effect/landmark/xmastree/rdrod,
+/turf/open/floor/plasteel/warnwhite{
+	dir = 8
+	},
+/area/toxins/lab)
 "Zza" = (
 /turf/open/space,
 /obj/machinery/porta_turret/syndicate{
@@ -65065,7 +65070,7 @@ aJt
 aKn
 aHu
 aEF
-aMC
+ZyZ
 aMC
 aOu
 aPk

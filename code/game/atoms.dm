@@ -1,11 +1,14 @@
 /atom
 	layer = TURF_LAYER
+	plane = GAME_PLANE
 	var/level = 2
 	var/flags = 0
 	var/list/fingerprints
 	var/list/fingerprintshidden
 	var/list/blood_DNA
+	var/container_type = 0
 	var/admin_spawned = 0	//was this spawned by an admin? used for stat tracking stuff.
+	var/datum/reagents/reagents = null
 
 	//This atom's HUD (med/sec, etc) images. Associative list.
 	var/list/image/hud_list = null
@@ -18,6 +21,27 @@
 	//overlays that should remain on top and not normally be removed, like c4.
 	var/list/priority_overlays
 
+	var/list/atom_colours	 //used to store the different colors on an atom
+							//its inherent color, the colored paint applied on it, special color effect etc...
+
+
+/atom/New()
+	//atom creation method that preloads variables at creation
+	if(use_preloader && (src.type == _preloader.target_path))//in case the instanciated atom is creating other atoms in New()
+		_preloader.load(src)
+	//atom color stuff
+	if(color)
+		add_atom_colour(color, FIXED_COLOUR_PRIORITY)
+
+	//lighting stuff
+	if(opacity && isturf(loc))
+		loc.UpdateAffectingLights()
+
+	if(luminosity)
+		light = new(src)
+
+	//. = ..() //uncomment if you are dumb enough to add a /datum/New() proc
+
 /atom/Destroy()
 	if(alternate_appearances)
 		for(var/aakey in alternate_appearances)
@@ -29,8 +53,12 @@
 			for(var/aa in viewing_alternate_appearances[aakey])
 				var/datum/alternate_appearance/AA = aa
 				AA.hide(list(src))
+	if(reagents)
+		qdel(reagents)
 	return ..()
 
+/atom/proc/CanPass(atom/movable/mover, turf/target, height=1.5)
+	return (!density || !height)
 
 /atom/proc/onCentcom()
 	var/turf/T = get_turf(src)
@@ -62,11 +90,11 @@
 
 	return 0
 
-/atom/proc/attack_hulk(mob/living/carbon/human/hulk, do_attack_animation = 0)
-	if(do_attack_animation)
-		hulk.changeNext_move(CLICK_CD_MELEE)
-		add_logs(hulk, src, "punched", "hulk powers")
-		hulk.do_attack_animation(src)
+/atom/proc/attack_hulk(mob/living/carbon/human/user, does_attack_animation = 0)
+	if(does_attack_animation)
+		user.changeNext_move(CLICK_CD_MELEE)
+		add_logs(user, src, "punched", "hulk powers")
+		user.do_attack_animation(src, ATTACK_EFFECT_SMASH)
 
 /atom/proc/CheckParts(list/parts_list)
 	for(var/A in parts_list)
@@ -106,7 +134,10 @@
 // returns true if open
 // false if closed
 /atom/proc/is_open_container()
-	return flags & OPENCONTAINER
+	return container_type & OPENCONTAINER
+
+/atom/proc/is_transparent()
+	return container_type & TRANSPARENT
 
 /*//Convenience proc to see whether a container can be accessed in a certain way.
 
@@ -183,7 +214,7 @@
 	// *****RM
 	//user << "[name]: Dn:[density] dir:[dir] cont:[contents] icon:[icon] is:[icon_state] loc:[loc]"
 
-	if(reagents && is_open_container()) //is_open_container() isn't really the right proc for this, but w/e
+	if(reagents && (is_open_container() || is_transparent())) //is_open_container() isn't really the right proc for this, but w/e
 		user << "It contains:"
 		if(reagents.reagent_list.len)
 			if(user.can_see_reagents()) //Show each individual reagent
@@ -201,9 +232,7 @@
 	return
 
 /atom/proc/contents_explosion(severity, target)
-	for(var/atom/A in contents)
-		A.ex_act(severity, target)
-		CHECK_TICK
+	return
 
 /atom/proc/ex_act(severity, target)
 	contents_explosion(severity, target)
@@ -211,7 +240,7 @@
 /atom/proc/blob_act(obj/structure/blob/B)
 	return
 
-/atom/proc/fire_act()
+/atom/proc/fire_act(exposed_temperature, exposed_volume)
 	return
 
 /atom/proc/hitby(atom/movable/AM, skipcatch, hitpush, blocked)
@@ -355,7 +384,7 @@ var/list/blood_splatter_icons = list()
 		return 0
 
 /atom/proc/isinspace()
-	if(istype(get_turf(src), /turf/open/space))
+	if(isspaceturf(get_turf(src)))
 		return 1
 	else
 		return 0
@@ -371,7 +400,7 @@ var/list/blood_splatter_icons = list()
 /atom/proc/singularity_pull()
 	return
 
-/atom/proc/acid_act(acidpwr, toxpwr, acid_volume)
+/atom/proc/acid_act(acidpwr, acid_volume)
 	return
 
 /atom/proc/emag_act()
@@ -415,7 +444,7 @@ var/list/blood_splatter_icons = list()
 	return
 
 /atom/proc/add_vomit_floor(mob/living/carbon/M, toxvomit = 0)
-	if(istype(src,/turf) )
+	if(isturf(src))
 		var/obj/effect/decal/cleanable/vomit/V = PoolOrNew(/obj/effect/decal/cleanable/vomit, src)
 		// Make toxins vomit look different
 		if(toxvomit)
@@ -436,6 +465,87 @@ var/list/blood_splatter_icons = list()
 /atom/proc/setDir(newdir)
 	dir = newdir
 
-/atom/on_varedit(modified_var)
+/atom/proc/mech_melee_attack(obj/mecha/M)
+	return
+
+
+
+/*
+	Atom Colour Priority System
+	A System that gives finer control over which atom colour to colour the atom with.
+	The "highest priority" one is always displayed as opposed to the default of
+	"whichever was set last is displayed"
+*/
+
+
+/*
+	Adds an instance of colour_type to the atom's atom_colours list
+*/
+/atom/proc/add_atom_colour(coloration, colour_priority)
+	if(!atom_colours || !atom_colours.len)
+		atom_colours = list()
+		atom_colours.len = COLOUR_PRIORITY_AMOUNT //four priority levels currently.
+	if(!coloration)
+		return
+	if(colour_priority > atom_colours.len)
+		return
+	atom_colours[colour_priority] = coloration
+	update_atom_colour()
+
+
+/*
+	Removes an instance of colour_type from the atom's atom_colours list
+*/
+/atom/proc/remove_atom_colour(colour_priority, coloration)
+	if(!atom_colours)
+		atom_colours = list()
+		atom_colours.len = COLOUR_PRIORITY_AMOUNT //four priority levels currently.
+	if(colour_priority > atom_colours.len)
+		return
+	if(coloration && atom_colours[colour_priority] != coloration)
+		return //if we don't have the expected color (for a specific priority) to remove, do nothing
+	atom_colours[colour_priority] = null
+	update_atom_colour()
+
+
+/*
+	Resets the atom's color to null, and then sets it to the highest priority
+	colour available
+*/
+/atom/proc/update_atom_colour()
+	if(!atom_colours)
+		atom_colours = list()
+		atom_colours.len = COLOUR_PRIORITY_AMOUNT //four priority levels currently.
+	color = null
+	for(var/C in atom_colours)
+		if(islist(C))
+			var/list/L = C
+			if(L.len)
+				color = L
+				return
+		else if(C)
+			color = C
+			return
+
+/atom/vv_edit_var(var_name, var_value)
 	if(!Debug2)
 		admin_spawned = TRUE
+	switch(var_name)
+		if("luminosity")
+			src.SetLuminosity(var_value)
+			return//prevent normal setting of this value
+	. = ..()
+	switch(var_name)
+		if("color")
+			add_atom_colour(color, ADMIN_COLOUR_PRIORITY)
+
+/atom/vv_get_dropdown()
+	. = ..()
+	. += "---"
+	var/turf/curturf = get_turf(src)
+	if (curturf)
+		.["Jump to"] = "?_src_=holder;adminplayerobservecoodjump=1;X=[curturf.x];Y=[curturf.y];Z=[curturf.z]"
+	.["Add reagent"] = "?_src_=vars;addreagent=\ref[src]"
+	.["Trigger EM pulse"] = "?_src_=vars;emp=\ref[src]"
+	.["Trigger explosion"] = "?_src_=vars;explode=\ref[src]"
+

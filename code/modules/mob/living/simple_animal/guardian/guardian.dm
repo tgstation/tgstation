@@ -19,9 +19,9 @@ var/global/list/parasites = list() //all currently existing/living guardians
 	icon_living = "magicOrange"
 	icon_dead = "magicOrange"
 	speed = 0
-	a_intent = "harm"
+	a_intent = INTENT_HARM
 	stop_automated_movement = 1
-	flying = 1 // Immunity to chasms and landmines, etc.
+	movement_type = FLYING // Immunity to chasms and landmines, etc.
 	attack_sound = 'sound/weapons/punch1.ogg'
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
@@ -32,6 +32,7 @@ var/global/list/parasites = list() //all currently existing/living guardians
 	healable = FALSE //don't brusepack the guardian
 	damage_coeff = list(BRUTE = 0.5, BURN = 0.5, TOX = 0.5, CLONE = 0.5, STAMINA = 0, OXY = 0.5) //how much damage from each damage type we transfer to the owner
 	environment_smash = 1
+	obj_damage = 40
 	melee_damage_lower = 15
 	melee_damage_upper = 15
 	butcher_results = list(/obj/item/weapon/ectoplasm = 1)
@@ -100,7 +101,7 @@ var/global/list/parasites = list() //all currently existing/living guardians
 	bubble_icon = "[namedatum.bubbleicon]"
 
 	if (namedatum.stainself)
-		color = namedatum.colour
+		add_atom_colour(namedatum.colour, FIXED_COLOUR_PRIORITY)
 
 	//Special case holocarp, because #snowflake code
 	if(theme == "carp")
@@ -124,7 +125,7 @@ var/global/list/parasites = list() //all currently existing/living guardians
 	src << playstyle_string
 
 /mob/living/simple_animal/hostile/guardian/Life() //Dies if the summoner dies
-	..()
+	. = ..()
 	update_health_hud() //we need to update all of our health displays to match our summoner and we can't practically give the summoner a hook to do it
 	med_hud_set_health()
 	med_hud_set_status()
@@ -171,9 +172,12 @@ var/global/list/parasites = list() //all currently existing/living guardians
 		else
 			src << "<span class='holoparasite'>You moved out of range, and were pulled back! You can only move [range] meters from [summoner.real_name]!</span>"
 			visible_message("<span class='danger'>\The [src] jumps back to its user.</span>")
-			PoolOrNew(/obj/effect/overlay/temp/guardian/phase/out, get_turf(src))
-			forceMove(get_turf(summoner))
-			PoolOrNew(/obj/effect/overlay/temp/guardian/phase, get_turf(src))
+			if(istype(summoner.loc, /obj/effect))
+				Recall(TRUE)
+			else
+				PoolOrNew(/obj/effect/overlay/temp/guardian/phase/out, loc)
+				forceMove(summoner.loc)
+				PoolOrNew(/obj/effect/overlay/temp/guardian/phase, loc)
 
 /mob/living/simple_animal/hostile/guardian/canSuicide()
 	return 0
@@ -202,18 +206,18 @@ var/global/list/parasites = list() //all currently existing/living guardians
 			resulthealth = round((summoner.health / summoner.maxHealth) * 100, 0.5)
 		hud_used.healths.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#efeeef'>[resulthealth]%</font></div>"
 
-/mob/living/simple_animal/hostile/guardian/adjustHealth(amount) //The spirit is invincible, but passes on damage to the summoner
-	. = ..()
+/mob/living/simple_animal/hostile/guardian/adjustHealth(amount, updating_health = TRUE, forced = FALSE) //The spirit is invincible, but passes on damage to the summoner
+	. = amount
 	if(summoner)
 		if(loc == summoner)
-			return 0
+			return FALSE
 		summoner.adjustBruteLoss(amount)
 		if(amount > 0)
 			summoner << "<span class='danger'><B>Your [name] is under attack! You take damage!</span></B>"
 			summoner.visible_message("<span class='danger'><B>Blood sprays from [summoner] as [src] takes damage!</B></span>")
 			if(summoner.stat == UNCONSCIOUS)
 				summoner << "<span class='danger'><B>Your body can't take the strain of sustaining [src] in this condition, it begins to fall apart!</span></B>"
-				summoner.adjustCloneLoss(amount*0.5) //dying hosts take 50% bonus damage as cloneloss
+				summoner.adjustCloneLoss(amount * 0.5) //dying hosts take 50% bonus damage as cloneloss
 		update_health_hud()
 
 /mob/living/simple_animal/hostile/guardian/ex_act(severity, target)
@@ -254,6 +258,7 @@ var/global/list/parasites = list() //all currently existing/living guardians
 	I.loc = src
 	I.equipped(src, slot)
 	I.layer = ABOVE_HUD_LAYER
+	I.plane = ABOVE_HUD_PLANE
 
 /mob/living/simple_animal/hostile/guardian/proc/apply_overlay(cache_index)
 	var/image/I = guardian_overlays[cache_index]
@@ -282,6 +287,7 @@ var/global/list/parasites = list() //all currently existing/living guardians
 
 		if(client && hud_used && hud_used.hud_version != HUD_STYLE_NOHUD)
 			r_hand.layer = ABOVE_HUD_LAYER
+			r_hand.plane = ABOVE_HUD_PLANE
 			r_hand.screen_loc = ui_hand_position(get_held_index_of_item(r_hand))
 			client.screen |= r_hand
 
@@ -296,6 +302,7 @@ var/global/list/parasites = list() //all currently existing/living guardians
 
 		if(client && hud_used && hud_used.hud_version != HUD_STYLE_NOHUD)
 			l_hand.layer = ABOVE_HUD_LAYER
+			l_hand.plane = ABOVE_HUD_PLANE
 			l_hand.screen_loc = ui_hand_position(get_held_index_of_item(l_hand))
 			client.screen |= l_hand
 
@@ -308,24 +315,24 @@ var/global/list/parasites = list() //all currently existing/living guardians
 
 //MANIFEST, RECALL, TOGGLE MODE/LIGHT, SHOW TYPE
 
-/mob/living/simple_animal/hostile/guardian/proc/Manifest()
-	if(cooldown > world.time)
-		return 0
+/mob/living/simple_animal/hostile/guardian/proc/Manifest(forced)
+	if(istype(summoner.loc, /obj/effect) || (cooldown > world.time && !forced))
+		return FALSE
 	if(loc == summoner)
-		forceMove(get_turf(summoner))
-		PoolOrNew(/obj/effect/overlay/temp/guardian/phase, get_turf(src))
+		forceMove(summoner.loc)
+		PoolOrNew(/obj/effect/overlay/temp/guardian/phase, loc)
 		cooldown = world.time + 10
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
-/mob/living/simple_animal/hostile/guardian/proc/Recall()
-	if(loc == summoner || cooldown > world.time)
-		return 0
-	PoolOrNew(/obj/effect/overlay/temp/guardian/phase/out, get_turf(src))
+/mob/living/simple_animal/hostile/guardian/proc/Recall(forced)
+	if(!summoner || loc == summoner || (cooldown > world.time && !forced))
+		return FALSE
+	PoolOrNew(/obj/effect/overlay/temp/guardian/phase/out, loc)
 
 	forceMove(summoner)
 	cooldown = world.time + 10
-	return 1
+	return TRUE
 
 /mob/living/simple_animal/hostile/guardian/proc/ToggleMode()
 	src << "<span class='danger'><B>You don't have another mode!</span></B>"
@@ -567,6 +574,13 @@ var/global/list/parasites = list() //all currently existing/living guardians
 /obj/item/weapon/guardiancreator/choose
 	random = FALSE
 
+/obj/item/weapon/guardiancreator/choose/dextrous
+	possible_guardians = list("Assassin", "Chaos", "Charger", "Dextrous", "Explosive", "Lightning", "Protector", "Ranged", "Standard", "Support")
+
+/obj/item/weapon/guardiancreator/choose/wizard
+	possible_guardians = list("Assassin", "Chaos", "Charger", "Dextrous", "Explosive", "Lightning", "Protector", "Ranged", "Standard")
+	allowmultiple = TRUE
+
 /obj/item/weapon/guardiancreator/tech
 	name = "holoparasite injector"
 	desc = "It contains an alien nanoswarm of unknown origin. Though capable of near sorcerous feats via use of hardlight holograms and nanomachines, it requires an organic host as a home base and source of fuel."
@@ -610,12 +624,35 @@ var/global/list/parasites = list() //all currently existing/living guardians
  <br>
  <b>Standard</b>: Devastating close combat attacks and high damage resist. Can smash through weak walls.<br>
  <br>
- <b>Support</b>: Has two modes. Combat; Medium power attacks and damage resist. Healer; Heals instead of attack, but has low damage resist and slow movement. Can deploy a bluespace beacon and warp targets to it (including you) in either mode.<br>
- <br>
 "}
 
 /obj/item/weapon/paper/guardian/update_icon()
 	return
+
+/obj/item/weapon/paper/guardian/wizard
+	name = "Guardian Guide"
+	info = {"<b>A list of Guardian Types</b><br>
+
+ <br>
+ <b>Assassin</b>: Does medium damage and takes full damage, but can enter stealth, causing its next attack to do massive damage and ignore armor. However, it becomes briefly unable to recall after attacking from stealth.<br>
+ <br>
+ <b>Chaos</b>: Ignites enemies on touch and causes them to hallucinate all nearby people as the guardian. Automatically extinguishes the user if they catch on fire.<br>
+ <br>
+ <b>Charger</b>: Moves extremely fast, does medium damage on attack, and can charge at targets, damaging the first target hit and forcing them to drop any items they are holding.<br>
+ <br>
+ <b>Dexterous</b>: Does low damage on attack, but is capable of holding items and storing a single item within it. It will drop items held in its hands when it recalls, but it will retain the stored item.<br>
+ <br>
+ <b>Explosive</b>: High damage resist and medium power attack that may explosively teleport targets. Can turn any object, including objects too large to pick up, into a bomb, dealing explosive damage to the next person to touch it. The object will return to normal after the trap is triggered or after a delay.<br>
+ <br>
+ <b>Lightning</b>: Attacks apply lightning chains to targets. Has a lightning chain to the user. Lightning chains shock everything near them, doing constant damage.<br>
+ <br>
+ <b>Protector</b>: Causes you to teleport to it when out of range, unlike other parasites. Has two modes; Combat, where it does and takes medium damage, and Protection, where it does and takes almost no damage but moves slightly slower.<br>
+ <br>
+ <b>Ranged</b>: Has two modes. Ranged; which fires a constant stream of weak, armor-ignoring projectiles. Scout; Cannot attack, but can move through walls and is quite hard to see. Can lay surveillance snares, which alert it when crossed, in either mode.<br>
+ <br>
+ <b>Standard</b>: Devastating close combat attacks and high damage resist. Can smash through weak walls.<br>
+ <br>
+"}
 
 
 /obj/item/weapon/storage/box/syndie_kit/guardian

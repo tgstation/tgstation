@@ -38,7 +38,7 @@
 	icon_state = "heater";
 	dir = 8
 	},
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/ruin/powered/authorship)
 "g" = (
 /obj/structure/table/wood,

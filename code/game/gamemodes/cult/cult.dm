@@ -1,4 +1,4 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
+
 
 /datum/game_mode
 	var/list/datum/mind/cult = list()
@@ -26,7 +26,7 @@
 			return 0
 	else
 		return 0
-	if(isloyal(M) || issilicon(M) || isbot(M) || isdrone(M) || is_servant_of_ratvar(M))
+	if(M.isloyal() || issilicon(M) || isbot(M) || isdrone(M) || is_servant_of_ratvar(M))
 		return 0 //can't convert machines, shielded, or ratvar's dogs
 	return 1
 
@@ -163,13 +163,6 @@
 			cult_mind.current.Paralyse(5)
 		return 1
 
-
-/datum/game_mode/cult/add_cultist(datum/mind/cult_mind, stun) //INHERIT
-	if (!..(cult_mind))
-		return
-	memorize_cult_objectives(cult_mind)
-
-
 /datum/game_mode/proc/remove_cultist(datum/mind/cult_mind, show_message = 1, stun)
 	if(cult_mind.current)
 		var/datum/antagonist/cultist/cult_datum = cult_mind.current.has_antag_datum(/datum/antagonist/cultist, TRUE)
@@ -194,7 +187,7 @@
 /datum/game_mode/cult/proc/get_unconvertables()
 	var/list/ucs = list()
 	for(var/mob/living/carbon/human/player in player_list)
-		if(player.mind && !is_convertable_to_cult(player.mind))
+		if(player.mind && !is_convertable_to_cult(player) && !(player.mind in cultists_to_cult))
 			ucs += player.mind
 	return ucs
 
@@ -244,9 +237,11 @@
 					if(!check_survive())
 						explanation = "Make sure at least [acolytes_needed] acolytes escape on the shuttle. ([acolytes_survived] escaped) <span class='greenannounce'>Success!</span>"
 						feedback_add_details("cult_objective","cult_survive|SUCCESS|[acolytes_needed]")
+						ticker.news_report = CULT_ESCAPE
 					else
 						explanation = "Make sure at least [acolytes_needed] acolytes escape on the shuttle. ([acolytes_survived] escaped) <span class='boldannounce'>Fail.</span>"
 						feedback_add_details("cult_objective","cult_survive|FAIL|[acolytes_needed]")
+						ticker.news_report = CULT_FAILURE
 				if("sacrifice")
 					if(sacrifice_target)
 						if(sacrifice_target in sacrificed)
@@ -262,9 +257,12 @@
 					if(!eldergod)
 						explanation = "Summon Nar-Sie. <span class='greenannounce'>Success!</span>"
 						feedback_add_details("cult_objective","cult_narsie|SUCCESS")
+						ticker.news_report = CULT_SUMMON
 					else
 						explanation = "Summon Nar-Sie. <span class='boldannounce'>Fail.</span>"
 						feedback_add_details("cult_objective","cult_narsie|FAIL")
+						ticker.news_report = CULT_FAILURE
+
 			text += "<br><B>Objective #[obj_count]</B>: [explanation]"
 	world << text
 	..()

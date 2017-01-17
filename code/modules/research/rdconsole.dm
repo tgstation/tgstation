@@ -277,7 +277,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				usr << "<span class='danger'>The destructive analyzer is busy at the moment.</span>"
 
 			else if(linked_destroy.loaded_item)
-				linked_destroy.loaded_item.loc = linked_destroy.loc
+				linked_destroy.loaded_item.forceMove(linked_destroy.loc)
 				linked_destroy.loaded_item = null
 				linked_destroy.icon_state = "d_analyzer"
 				screen = 1.0
@@ -571,7 +571,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	else if(href_list["reset"]) //Reset the R&D console's database.
 		griefProtection()
 		var/choice = alert("R&D Console Database Reset", "Are you sure you want to reset the R&D console's database? Data lost cannot be recovered.", "Continue", "Cancel")
-		if(choice == "Continue")
+		if(choice == "Continue" && usr.canUseTopic(src))
 			message_admins("[key_name_admin(usr)] reset \the [src.name]'s database")
 			log_game("[key_name_admin(usr)] reset \the [src.name]'s database")
 			screen = 0.0
@@ -1069,7 +1069,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 /obj/machinery/computer/rdconsole/robotics/New()
 	..()
 	if(circuit)
-		circuit.name = "circuit board (RD Console - Robotics)"
+		circuit.name = "RD Console - Robotics (Computer Board)"
 		circuit.build_path = /obj/machinery/computer/rdconsole/robotics
 
 /obj/machinery/computer/rdconsole/core

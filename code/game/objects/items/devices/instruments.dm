@@ -1,8 +1,9 @@
 //copy pasta of the space piano, don't hurt me -Pete
 /obj/item/device/instrument
 	name = "generic instrument"
-	resistance_flags = 0
-	burntime = 20
+	resistance_flags = FLAMMABLE
+	obj_integrity = 100
+	max_integrity = 100
 	var/datum/song/handheld/song
 	var/instrumentId = "generic"
 	var/instrumentExt = "ogg"
@@ -10,6 +11,7 @@
 /obj/item/device/instrument/New()
 	song = new(instrumentId, src)
 	song.instrumentExt = instrumentExt
+	..()
 
 /obj/item/device/instrument/Destroy()
 	qdel(song)
@@ -17,7 +19,7 @@
 	return ..()
 
 /obj/item/device/instrument/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] begins to play 'Gloomy Sunday'! It looks like \he's trying to commit suicide..</span>")
+	user.visible_message("<span class='suicide'>[user] begins to play 'Gloomy Sunday'! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return (BRUTELOSS)
 
 /obj/item/device/instrument/initialize()
@@ -49,6 +51,13 @@
 	force = 10
 	hitsound = "swing_hit"
 	instrumentId = "violin"
+
+/obj/item/device/instrument/violin/golden
+	name = "golden violin"
+	desc = "A golden musical instrument with four strings and a bow. \"The devil went down to space, he was looking for an assistant to grief.\""
+	icon_state = "golden_violin"
+	item_state = "golden_violin"
+	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 
 /obj/item/device/instrument/guitar
 	name = "guitar"

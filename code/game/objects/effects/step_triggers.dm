@@ -14,7 +14,7 @@
 	..()
 	if(!H)
 		return
-	if(istype(H, /mob/dead/observer) && !affect_ghosts)
+	if(isobserver(H) && !affect_ghosts)
 		return
 	if(!istype(H, /mob) && mobs_only)
 		return

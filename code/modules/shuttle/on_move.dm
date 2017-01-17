@@ -2,6 +2,8 @@
 	if(rotation)
 		shuttleRotate(rotation)
 	loc = T1
+	if (length(client_mobs_in_contents))
+		update_parallax_contents()
 	return 1
 
 /obj/onShuttleMove()
@@ -16,10 +18,10 @@
 	. = ..()
 	if(!.)
 		return
-	addtimer(src, "close", 0, TRUE)
+	addtimer(CALLBACK(src, .proc/close), 0, TIMER_UNIQUE)
 	// Close any attached airlocks as well
 	for(var/obj/machinery/door/D in orange(1, src))
-		addtimer(src, "close", 0, TRUE)
+		addtimer(CALLBACK(src, .proc/close), 0, TIMER_UNIQUE)
 
 /obj/machinery/door/airlock/onShuttleMove()
 	shuttledocked = 0

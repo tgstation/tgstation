@@ -38,7 +38,7 @@
 	status_flags = 0
 	wander = 0
 	density = 0
-	flying = 1
+	movement_type = FLYING
 	anchored = 1
 	mob_size = MOB_SIZE_TINY
 	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
@@ -150,9 +150,9 @@
 	log_say("[key_name(src)] : [message]")
 	var/rendered = "<span class='revennotice'><b>[src]</b> says, \"[message]\"</span>"
 	for(var/mob/M in mob_list)
-		if(istype(M, /mob/living/simple_animal/revenant))
+		if(isrevenant(M))
 			M << rendered
-		if(isobserver(M))
+		else if(isobserver(M))
 			var/link = FOLLOW_LINK(M, src)
 			M << "[link] [rendered]"
 	return
@@ -186,19 +186,20 @@
 		adjustBruteLoss(25) //hella effective
 		inhibited = 1
 		update_action_buttons_icon()
-		addtimer(src, "reset_inhibit", 30, FALSE)
+		addtimer(CALLBACK(src, .proc/reset_inhibit), 30)
 
 /mob/living/simple_animal/revenant/proc/reset_inhibit()
 	if(src)
 		inhibited = 0
 		update_action_buttons_icon()
 
-/mob/living/simple_animal/revenant/adjustHealth(amount)
-	if(!revealed)
-		return 0
+/mob/living/simple_animal/revenant/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
+	if(!forced && !revealed)
+		return FALSE
 	. = amount
 	essence = max(0, essence-amount)
-	update_health_hud()
+	if(updating_health)
+		update_health_hud()
 	if(essence == 0)
 		death()
 
@@ -284,7 +285,7 @@
 	if(!src)
 		return
 	var/turf/T = get_turf(src)
-	if(istype(T, /turf/closed))
+	if(isclosedturf(T))
 		src << "<span class='revenwarning'>You cannot use abilities from inside of a wall.</span>"
 		return 0
 	for(var/obj/O in T)
@@ -323,7 +324,7 @@
 	desc = "A pile of fine blue dust. Small tendrils of violet mist swirl around it."
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "revenantEctoplasm"
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	var/essence = 75 //the maximum essence of the reforming revenant
 	var/reforming = 1
 	var/inert = 0
@@ -331,7 +332,7 @@
 
 /obj/item/weapon/ectoplasm/revenant/New()
 	..()
-	addtimer(src, "try_reform", 600, FALSE)
+	addtimer(CALLBACK(src, .proc/try_reform), 600)
 
 /obj/item/weapon/ectoplasm/revenant/proc/try_reform()
 	if(src)
@@ -420,7 +421,7 @@
 	..()
 
 /datum/objective/revenant/check_completion()
-	if(!istype(owner.current, /mob/living/simple_animal/revenant))
+	if(!isrevenant(owner.current))
 		return 0
 	var/mob/living/simple_animal/revenant/R = owner.current
 	if(!R || R.stat == DEAD)

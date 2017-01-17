@@ -14,7 +14,7 @@
 	desc = "A suit that helps protect against fire and heat."
 	icon_state = "fire"
 	item_state = "ro_suit"
-	w_class = 4
+	w_class = WEIGHT_CLASS_BULKY
 	gas_transfer_coefficient = 0.90
 	permeability_coefficient = 0.50
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
@@ -57,7 +57,7 @@
 	desc = "Use in case of bomb."
 	icon_state = "bombsuit"
 	flags = THICKMATERIAL
-	armor = list(melee = 20, bullet = 0, laser = 20,energy = 10, bomb = 100, bio = 0, rad = 0, fire = 25, acid = 50)
+	armor = list(melee = 20, bullet = 0, laser = 20,energy = 10, bomb = 100, bio = 0, rad = 0, fire = 80, acid = 50)
 	flags_inv = HIDEFACE|HIDEMASK|HIDEEARS|HIDEEYES|HIDEHAIR|HIDEFACIALHAIR
 	cold_protection = HEAD
 	min_cold_protection_temperature = HELMET_MIN_TEMP_PROTECT
@@ -66,7 +66,7 @@
 	strip_delay = 70
 	put_on_delay = 70
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
-	resistance_flags = FIRE_PROOF
+	resistance_flags = 0
 
 
 /obj/item/clothing/suit/bomb_suit
@@ -74,13 +74,13 @@
 	desc = "A suit designed for safety when handling explosives."
 	icon_state = "bombsuit"
 	item_state = "bombsuit"
-	w_class = 4//bulky item
+	w_class = WEIGHT_CLASS_BULKY
 	gas_transfer_coefficient = 0.01
 	permeability_coefficient = 0.01
 	flags = THICKMATERIAL
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	slowdown = 2
-	armor = list(melee = 20, bullet = 0, laser = 20,energy = 10, bomb = 100, bio = 0, rad = 0, fire = 25, acid = 50)
+	armor = list(melee = 20, bullet = 0, laser = 20,energy = 10, bomb = 100, bio = 0, rad = 0, fire = 80, acid = 50)
 	flags_inv = HIDEJUMPSUIT
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	max_heat_protection_temperature = ARMOR_MAX_TEMP_PROTECT
@@ -88,7 +88,7 @@
 	min_cold_protection_temperature = ARMOR_MIN_TEMP_PROTECT
 	strip_delay = 70
 	put_on_delay = 70
-	resistance_flags = FIRE_PROOF
+	resistance_flags = 0
 
 
 /obj/item/clothing/head/bomb_hood/security
@@ -114,14 +114,14 @@
 	strip_delay = 60
 	put_on_delay = 60
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
-	resistance_flags = FIRE_PROOF
+	resistance_flags = 0
 
 /obj/item/clothing/suit/radiation
 	name = "radiation suit"
 	desc = "A suit that protects against radiation. The label reads, 'Made with lead. Please do not consume insulation.'"
 	icon_state = "rad"
 	item_state = "rad_suit"
-	w_class = 4//bulky item
+	w_class = WEIGHT_CLASS_BULKY
 	gas_transfer_coefficient = 0.90
 	permeability_coefficient = 0.50
 	flags = THICKMATERIAL
@@ -132,4 +132,4 @@
 	strip_delay = 60
 	put_on_delay = 60
 	flags_inv = HIDEJUMPSUIT
-	resistance_flags = FIRE_PROOF
+	resistance_flags = 0

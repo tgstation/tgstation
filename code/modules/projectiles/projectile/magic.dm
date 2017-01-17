@@ -79,6 +79,7 @@
 		if(iscarbon(target))
 			var/mob/living/carbon/C = target
 			C.regenerate_limbs()
+			C.regenerate_organs()
 		if(target.revive(full_heal = 1))
 			target.grab_ghost(force = TRUE) // even suicides
 			target << "<span class='notice'>You rise with a start, \
@@ -126,7 +127,7 @@
 		OpenDoor(target)
 	else
 		var/turf/T = get_turf(target)
-		if(istype(T,/turf/closed) && !istype(T, /turf/closed/indestructible))
+		if(isclosedturf(T) && !istype(T, /turf/closed/indestructible))
 			CreateDoor(T)
 
 /obj/item/projectile/magic/door/proc/CreateDoor(turf/T)
@@ -151,6 +152,7 @@
 /obj/item/projectile/magic/change/on_hit(atom/change)
 	. = ..()
 	wabbajack(change)
+	qdel(src)
 
 /proc/wabbajack(mob/living/M)
 	if(!istype(M) || M.stat == DEAD || M.notransform || (GODMODE & M.status_flags))
@@ -164,7 +166,7 @@
 
 	var/list/contents = M.contents.Copy()
 
-	if(istype(M, /mob/living/silicon/robot))
+	if(iscyborg(M))
 		var/mob/living/silicon/robot/Robot = M
 		if(Robot.mmi)
 			qdel(Robot.mmi)
@@ -315,7 +317,7 @@
 
 	M.attack_log += text("\[[time_stamp()]\] <font color='orange'>[M.real_name] ([M.ckey]) became [new_mob.real_name].</font>")
 
-	new_mob.a_intent = "harm"
+	new_mob.a_intent = INTENT_HARM
 
 	M.wabbajack_act(new_mob)
 
@@ -332,35 +334,37 @@
 	damage_type = BURN
 	nodamage = 1
 
-/obj/item/projectile/magic/animate/Bump(atom/change)
+/obj/item/projectile/magic/animate/on_hit(atom/target, blocked = 0)
 	..()
-	if(istype(change, /obj/item) || istype(change, /obj/structure) && !is_type_in_list(change, protected_objects))
-		if(istype(change, /obj/structure/closet/statue))
-			for(var/mob/living/carbon/human/H in change.contents)
-				var/mob/living/simple_animal/hostile/statue/S = new /mob/living/simple_animal/hostile/statue(change.loc, firer)
-				S.name = "statue of [H.name]"
+	if((istype(target, /obj/item) || istype(target, /obj/structure)) && !is_type_in_list(target, protected_objects))
+		if(istype(target, /obj/structure/statue/petrified))
+			var/obj/structure/statue/petrified/P = target
+			if(P.petrified_mob)
+				var/mob/living/L = P.petrified_mob
+				var/mob/living/simple_animal/hostile/statue/S = new (P.loc, firer)
+				S.name = "statue of [L.name]"
 				S.faction = list("\ref[firer]")
-				S.icon = change.icon
-				S.icon_state = change.icon_state
-				S.overlays = change.overlays
-				S.color = change.color
-				if(H.mind)
-					H.mind.transfer_to(S)
+				S.icon = P.icon
+				S.icon_state = P.icon_state
+				S.overlays = P.overlays
+				S.color = P.color
+				S.atom_colours = P.atom_colours.Copy()
+				if(L.mind)
+					L.mind.transfer_to(S)
 					S << "<span class='userdanger'>You are an animate statue. You cannot move when monitored, but are nearly invincible and deadly when unobserved! Do not harm [firer.name], your creator.</span>"
-				H = change
-				H.loc = S
+				P.loc = S
 				qdel(src)
 				return
 		else
-			var/obj/O = change
+			var/obj/O = target
 			if(istype(O, /obj/item/weapon/gun))
 				new /mob/living/simple_animal/hostile/mimic/copy/ranged(O.loc, O, firer)
 			else
 				new /mob/living/simple_animal/hostile/mimic/copy(O.loc, O, firer)
 
-	else if(istype(change, /mob/living/simple_animal/hostile/mimic/copy))
+	else if(istype(target, /mob/living/simple_animal/hostile/mimic/copy))
 		// Change our allegiance!
-		var/mob/living/simple_animal/hostile/mimic/copy/C = change
+		var/mob/living/simple_animal/hostile/mimic/copy/C = target
 		C.ChangeOwner(firer)
 
 /obj/item/projectile/magic/spellblade
@@ -371,3 +375,12 @@
 	flag = "magic"
 	dismemberment = 50
 	nodamage = 0
+
+/obj/item/projectile/magic/arcane_barrage
+	name = "arcane bolt"
+	icon_state = "arcane_barrage"
+	damage = 20
+	damage_type = BURN
+	nodamage = 0
+	armour_penetration = 0
+	flag = "magic"

@@ -82,9 +82,9 @@
 /datum/teleport/proc/playSpecials(atom/location,datum/effect_system/effect,sound)
 	if(location)
 		if(effect)
-			addtimer(src, "do_effect", 0, FALSE, location, effect)
+			addtimer(CALLBACK(src, .proc/do_effect, location, effect), 0)
 		if(sound)
-			addtimer(src, "do_sound", 0, FALSE, location, sound)
+			addtimer(CALLBACK(src, .proc/do_sound, location, sound), 0)
 
 /datum/teleport/proc/do_effect(atom/location, datum/effect_system/effect)
 	src = null
@@ -174,7 +174,7 @@
 
 // Safe location finder
 
-/proc/find_safe_turf(zlevel = ZLEVEL_STATION, list/zlevels)
+/proc/find_safe_turf(zlevel = ZLEVEL_STATION, list/zlevels, extended_safety_checks = FALSE)
 	if(!zlevels)
 		zlevels = list(zlevel)
 	var/cycles = 1000
@@ -185,7 +185,7 @@
 		var/z = pick(zlevels)
 		var/random_location = locate(x,y,z)
 
-		if(!(istype(random_location, /turf/open/floor)))
+		if(!isfloorturf(random_location))
 			continue
 		var/turf/open/floor/F = random_location
 		if(!F.air)
@@ -216,6 +216,12 @@
 		var/pressure = A.return_pressure()
 		if((pressure <= 20) || (pressure >= 550))
 			continue
+
+		if(extended_safety_checks)
+			if(istype(F, /turf/open/floor/plating/lava)) //chasms aren't /floor, and so are pre-filtered
+				var/turf/open/floor/plating/lava/L = F
+				if(!L.is_safe())
+					continue
 
 		// DING! You have passed the gauntlet, and are "probably" safe.
 		return F

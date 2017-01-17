@@ -8,11 +8,14 @@
 	return
 
 /obj/attackby(obj/item/I, mob/living/user, params)
-	return I.attack_obj(src, user)
+	if(unique_rename && istype(I, /obj/item/weapon/pen))
+		rewrite(user)
+	else
+		return I.attack_obj(src, user)
 
 /mob/living/attackby(obj/item/I, mob/user, params)
 	user.changeNext_move(CLICK_CD_MELEE)
-	if(user.a_intent == "harm" && stat == DEAD && butcher_results) //can we butcher it?
+	if(user.a_intent == INTENT_HARM && stat == DEAD && butcher_results) //can we butcher it?
 		var/sharpness = I.is_sharp()
 		if(sharpness)
 			user << "<span class='notice'>You begin to butcher [src]...</span>"
@@ -34,8 +37,7 @@
 	user.lastattacked = M
 	M.lastattacker = user
 
-	if(user != M)
-		user.do_attack_animation(M)
+	user.do_attack_animation(M)
 	M.attacked_by(src, user)
 
 	add_logs(user, M, "attacked", src.name, "(INTENT: [uppertext(user.a_intent)]) (DAMTYPE: [uppertext(damtype)])")
@@ -50,14 +52,14 @@
 	user.do_attack_animation(O)
 	O.attacked_by(src, user)
 
-
-
 /atom/movable/proc/attacked_by()
 	return
 
 /obj/attacked_by(obj/item/I, mob/living/user)
 	if(I.force)
-		user.visible_message("<span class='danger'>[user] has hit [src] with [I]!</span>", "<span class='danger'>You hit [src] with [I]!</span>")
+		visible_message("<span class='danger'>[user] has hit [src] with [I]!</span>", null, null, COMBAT_MESSAGE_RANGE)
+		//only witnesses close by and the victim see a hit message.
+	take_damage(I.force, I.damtype, "melee", 1)
 
 /mob/living/attacked_by(obj/item/I, mob/living/user)
 	send_item_attack_message(I, user)
@@ -73,12 +75,8 @@
 		return TRUE //successful attack
 
 /mob/living/simple_animal/attacked_by(obj/item/I, mob/living/user)
-	if(!I.force)
-		user.visible_message("<span class='warning'>[user] gently taps [src] with [I].</span>",\
-						"<span class='warning'>This weapon is ineffective, it does no damage!</span>")
-	else if(I.force < force_threshold || I.damtype == STAMINA)
-		visible_message("<span class='warning'>[I] bounces harmlessly off of [src].</span>",\
-					"<span class='warning'>[I] bounces harmlessly off of [src]!</span>")
+	if(I.force < force_threshold || I.damtype == STAMINA)
+		playsound(loc, 'sound/weapons/tap.ogg', I.get_clamped_volume(), 1, -1)
 	else
 		return ..()
 
@@ -104,11 +102,10 @@
 	var/message_hit_area = ""
 	if(hit_area)
 		message_hit_area = " in the [hit_area]"
-
 	var/attack_message = "[src] has been [message_verb][message_hit_area] with [I]."
 	if(user in viewers(src, null))
 		attack_message = "[user] has [message_verb] [src][message_hit_area] with [I]!"
-	visible_message("<span class='danger'>[attack_message]</span>",
-		"<span class='userdanger'>[attack_message]</span>")
+	visible_message("<span class='danger'>[attack_message]</span>", \
+		"<span class='userdanger'>[attack_message]</span>", null, COMBAT_MESSAGE_RANGE)
 	return 1
 

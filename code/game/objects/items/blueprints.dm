@@ -52,6 +52,7 @@
 	icon = 'icons/obj/items.dmi'
 	icon_state = "blueprints"
 	fluffnotice = "Property of Nanotrasen. For heads of staff only. Store in high-secure storage."
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	var/list/image/showing = list()
 	var/client/viewing
 	var/legend = FALSE	//Viewing the wire legend
@@ -276,7 +277,7 @@
 
 /turf/open/check_tile_is_border()
 	for(var/atom/movable/AM in src)
-		if(!AM.CanAtmosPass(src))
+		if(!CANATMOSPASS(AM, src))
 			return BORDER_2NDTILE
 
 	return BORDER_NONE

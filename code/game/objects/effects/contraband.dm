@@ -103,7 +103,7 @@ list(name = "- Carbon Dioxide", desc = " This informational poster teaches the v
 	desc = "You probably shouldn't be holding this."
 	icon = 'icons/obj/contraband.dmi'
 	force = 0
-	resistance_flags = 0
+	resistance_flags = FLAMMABLE
 	var/serial_number = 0
 	var/obj/structure/sign/poster/resulting_poster = null //The poster that will be created is initialised and stored through contraband/poster's constructor
 	var/official = 0
@@ -201,7 +201,7 @@ list(name = "- Carbon Dioxide", desc = " This informational poster teaches the v
 
 /obj/structure/sign/poster/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/wirecutters))
-		playsound(loc, 'sound/items/Wirecutter.ogg', 100, 1)
+		playsound(loc, I.usesound, 100, 1)
 		if(ruined)
 			user << "<span class='notice'>You remove the remnants of the poster.</span>"
 			qdel(src)
@@ -225,21 +225,16 @@ list(name = "- Carbon Dioxide", desc = " This informational poster teaches the v
 	add_fingerprint(user)
 
 /obj/structure/sign/poster/proc/roll_and_drop(turf/location, official)
+	pixel_x = 0
+	pixel_y = 0
+	var/obj/item/weapon/poster/P
 	if (!official)
-		var/obj/item/weapon/poster/contraband/P = new(src, serial_number)
-		P.resulting_poster = src
-		P.loc = location
-		P.pixel_x = 0
-		P.pixel_y = 0
-		loc = P
+		P = new /obj/item/weapon/poster/contraband(src, serial_number)
 	else
-		var/obj/item/weapon/poster/legit/P = new(src, serial_number)
-		P.resulting_poster = src
-		P.loc = location
-		P.pixel_x = 0
-		P.pixel_y = 0
-		loc = P
-
+		P = new /obj/item/weapon/poster/legit(src, serial_number)
+	P.resulting_poster = src
+	P.forceMove(location)
+	loc = P
 
 //seperated to reduce code duplication. Moved here for ease of reference and to unclutter r_wall/attackby()
 /turf/closed/wall/proc/place_poster(obj/item/weapon/poster/P, mob/user)
@@ -272,7 +267,7 @@ list(name = "- Carbon Dioxide", desc = " This informational poster teaches the v
 		if(!D)
 			return
 
-		if(istype(src,/turf/closed/wall) && user && user.loc == temp_loc)	//Let's check if everything is still there
+		if(iswallturf(src) && user && user.loc == temp_loc)	//Let's check if everything is still there
 			user << "<span class='notice'>You place the poster!</span>"
 		else
 			D.roll_and_drop(temp_loc,D.official)

@@ -26,23 +26,13 @@
 		Colored lights
 */
 
-#define LIGHTING_CIRCULAR 1									//Comment this out to use old square lighting effects.
-//#define LIGHTING_LAYER 15									//Drawing layer for lighting, moved to layers.dm
-#define LIGHTING_CAP 10										//The lumcount level at which alpha is 0 and we're fully lit.
-#define LIGHTING_CAP_FRAC (255/LIGHTING_CAP)				//A precal'd variable we'll use in turf/redraw_lighting()
-#define LIGHTING_ICON 'icons/effects/alphacolors.dmi'
-#define LIGHTING_ICON_STATE "white"
-#define LIGHTING_TIME 2									//Time to do any lighting change. Actual number pulled out of my ass
-#define LIGHTING_DARKEST_VISIBLE_ALPHA 250					//Anything darker than this is so dark, we'll just consider the whole tile unlit
-#define LIGHTING_LUM_FOR_FULL_BRIGHT 6						//Anything who's lum is lower then this starts off less bright.
-#define LIGHTING_MIN_RADIUS 4								//Lowest radius a light source can effect.
-
 /datum/light_source
 	var/atom/owner
 	var/radius = 0
 	var/luminosity = 0
 	var/cap = 0
 	var/changed = 0
+	var/mode = LIGHTING_REGULAR
 	var/list/effect = list()
 	var/__x = 0		//x coordinate at last update
 	var/__y = 0		//y coordinate at last update
@@ -104,10 +94,8 @@
 //Remove current effect
 /datum/light_source/proc/remove_effect().
 	for(var/turf/T in effect)
-		T.update_lumcount(-effect[T])
-
-		if(T.affecting_lights && T.affecting_lights.len)
-			T.affecting_lights -= src
+		LAZYREMOVE(T.affecting_lights, src)
+		T.update_lumcount(-effect[T], mode)
 
 	effect.Cut()
 
@@ -151,33 +139,15 @@
 
 		if(delta_lumcount > 0)
 			effect[T] = delta_lumcount
-			T.update_lumcount(delta_lumcount)
+			T.update_lumcount(delta_lumcount, mode)
 
-			if(!T.affecting_lights)
-				T.affecting_lights = list()
+			LAZYINITLIST(T.affecting_lights)
 			T.affecting_lights |= src
 
 	return 1
 
 /atom
 	var/datum/light_source/light
-
-
-//Turfs with opacity when they are constructed will trigger nearby lights to update
-//Turfs and atoms with luminosity when they are constructed will create a light_source automatically
-/turf/New()
-	..()
-	if(luminosity)
-		light = new(src)
-
-//Movable atoms with opacity when they are constructed will trigger nearby lights to update
-//Movable atoms with luminosity when they are constructed will create a light_source automatically
-/atom/movable/New()
-	..()
-	if(opacity && isturf(loc))
-		loc.UpdateAffectingLights()
-	if(luminosity)
-		light = new(src)
 
 //Objects with opacity will trigger nearby lights to update at next SSlighting fire
 /atom/movable/Destroy()
@@ -186,17 +156,6 @@
 		loc.UpdateAffectingLights()
 	return ..()
 
-//Objects with opacity will trigger nearby lights of the old location to update at next SSlighting fire
-/atom/movable/Moved(atom/OldLoc, Dir)
-	if(opacity)
-		if (isturf(OldLoc))
-			OldLoc.UpdateAffectingLights()
-		if (isturf(loc))
-			loc.UpdateAffectingLights()
-	else
-		if(light)
-			light.changed()
-	return ..()
 
 //Sets our luminosity.
 //If we have no light it will create one.
@@ -237,6 +196,7 @@
 	icon = LIGHTING_ICON
 	icon_state = LIGHTING_ICON_STATE
 	layer = LIGHTING_LAYER
+	plane = LIGHTING_PLANE
 	mouse_opacity = 0
 	blend_mode = BLEND_OVERLAY
 	invisibility = INVISIBILITY_LIGHTING
@@ -275,7 +235,8 @@
 	var/lighting_lumcount = 0
 	var/lighting_changed = 0
 	var/atom/movable/light/lighting_object //Will be null for space turfs and anything in a static lighting area
-	var/list/affecting_lights			//not initialised until used (even empty lists reserve a fair bit of memory)
+	var/list/affecting_lights			//all /light_source affecting this turf, lazy initialized
+	var/starlight = 0					//Amount of starlight hitting this turf
 
 /turf/ChangeTurf(path)
 	if(!path || (!use_preloader && path == type)) //Sucks this is here but it would cause problems otherwise.
@@ -289,6 +250,7 @@
 
 	var/old_lumcount = lighting_lumcount - initial(lighting_lumcount)
 	var/oldbaseturf = baseturf
+	var/old_starlight = starlight
 
 	var/list/our_lights //reset affecting_lights if needed
 	if(opacity != initial(path:opacity) && old_lumcount)
@@ -302,7 +264,8 @@
 	affecting_lights = our_lights
 
 	lighting_changed = 1 //Don't add ourself to SSlighting.changed_turfs
-	update_lumcount(old_lumcount)
+	update_lumcount(old_lumcount, LIGHTING_REGULAR)
+	starlight = old_starlight
 	baseturf = oldbaseturf
 	lighting_object = locate() in src
 
@@ -311,14 +274,34 @@
 	for(var/turf/open/space/S in RANGE_TURFS(1,src)) //RANGE_TURFS is in code\__HELPERS\game.dm
 		S.update_starlight()
 
-/turf/proc/update_lumcount(amount)
-	lighting_lumcount += amount
+/turf/proc/update_lumcount(amount, mode)
+	switch(mode)
+		if(LIGHTING_REGULAR)
+			lighting_lumcount += amount
+		if(LIGHTING_STARLIGHT)
+			if(amount > starlight)
+				lighting_lumcount -= starlight
+				starlight = amount
+				lighting_lumcount += amount
+			else if(amount && amount == -starlight)
+				lighting_lumcount -= starlight
+				starlight = 0
+				for(var/thing in affecting_lights)
+					var/datum/light_source/LS = thing
+					if(LS.mode == LIGHTING_STARLIGHT)
+						var/starlight_test = LS.effect[src]
+						if(starlight < starlight_test)
+							starlight = starlight_test
+				lighting_lumcount += starlight
+
 	if(!lighting_changed)
 		SSlighting.changed_turfs += src
 		lighting_changed = 1
 
-/turf/open/space/update_lumcount(amount) //Keep track in case the turf becomes a floor at some point, but don't process.
-	lighting_lumcount += amount
+/turf/open/space/update_lumcount(amount, mode) //Keep track in case the turf becomes a floor at some point, but don't process.
+	lighting_changed = TRUE
+	..()
+	lighting_changed = FALSE
 
 /turf/proc/init_lighting()
 	var/area/A = loc
@@ -355,10 +338,10 @@
 		if(newalpha >= LIGHTING_DARKEST_VISIBLE_ALPHA)
 			newalpha = 255
 		if(lighting_object.alpha != newalpha)
-			if(instantly)
+			if(instantly || abs(lighting_object.alpha - newalpha) < LIGHTING_MIN_ALPHA_DELTA_TO_ANIMATE)
 				lighting_object.alpha = newalpha
 			else
-				animate(lighting_object, alpha = newalpha, time = LIGHTING_TIME)
+				animate(lighting_object, alpha = newalpha, time = LIGHTING_ANIMATE_TIME)
 			if(newalpha >= LIGHTING_DARKEST_VISIBLE_ALPHA)
 				luminosity = 0
 				lighting_object.luminosity = 0
@@ -389,17 +372,6 @@
 	for(var/turf/T in src.contents)
 		T.init_lighting()
 		T.update_lumcount(0)
-
-#undef LIGHTING_CIRCULAR
-#undef LIGHTING_ICON
-#undef LIGHTING_ICON_STATE
-#undef LIGHTING_TIME
-#undef LIGHTING_CAP
-#undef LIGHTING_CAP_FRAC
-#undef LIGHTING_DARKEST_VISIBLE_ALPHA
-#undef LIGHTING_LUM_FOR_FULL_BRIGHT
-#undef LIGHTING_MIN_RADIUS
-
 
 //set the changed status of all lights which could have possibly lit this atom.
 //We don't need to worry about lights which lit us but moved away, since they will have change status set already

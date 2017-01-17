@@ -7,7 +7,7 @@
 	color = "#550000"
 
 /datum/reagent/thermite/reaction_turf(turf/T, reac_volume)
-	if(reac_volume >= 1 && istype(T, /turf/closed/wall))
+	if(reac_volume >= 1 && iswallturf(T))
 		var/turf/closed/wall/Wall = T
 		if(istype(Wall, /turf/closed/wall/r_wall))
 			Wall.thermite = Wall.thermite+(reac_volume*2.5)
@@ -54,17 +54,17 @@
 		var/turf/open/floor/plating/F = T
 		if(prob(10 + F.burnt + 5*F.broken)) //broken or burnt plating is more susceptible to being destroyed
 			F.ChangeTurf(F.baseturf)
-	if(istype(T, /turf/open/floor/))
+	if(isfloorturf(T))
 		var/turf/open/floor/F = T
 		if(prob(reac_volume))
 			F.make_plating()
 		else if(prob(reac_volume))
 			F.burn_tile()
-		if(istype(F, /turf/open/floor/))
+		if(isfloorturf(F))
 			for(var/turf/turf in range(1,F))
 				if(!locate(/obj/effect/hotspot) in turf)
 					PoolOrNew(/obj/effect/hotspot, F)
-	if(istype(T, /turf/closed/wall/))
+	if(iswallturf(T))
 		var/turf/closed/wall/W = T
 		if(prob(reac_volume))
 			W.ChangeTurf(/turf/open/floor/plating)
@@ -223,4 +223,3 @@
 		M.electrocute_act(rand(5,20), "Teslium in their body", 1, 1) //Override because it's caused from INSIDE of you
 		playsound(M, "sparks", 50, 1)
 	..()
-

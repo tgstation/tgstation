@@ -14,11 +14,14 @@
 	var/state = 0 //closed, 1 == open
 	var/isSwitchingStates = 0
 	var/close_delay = -1 //-1 if does not auto close.
-	var/hardness = 1
+	obj_integrity = 200
+	max_integrity = 200
+	armor = list(melee = 10, bullet = 0, laser = 0, energy = 100, bomb = 10, bio = 100, rad = 100, fire = 50, acid = 50)
 	var/sheetType = /obj/item/stack/sheet/metal
 	var/sheetAmount = 7
 	var/openSound = 'sound/effects/stonedoor_openclose.ogg'
 	var/closeSound = 'sound/effects/stonedoor_openclose.ogg'
+	CanAtmosPass = ATMOS_PASS_DENSITY
 
 /obj/structure/mineral_door/New(location)
 	..()
@@ -43,7 +46,7 @@
 /obj/structure/mineral_door/attack_ai(mob/user) //those aren't machinery, they're just big fucking slabs of a mineral
 	if(isAI(user)) //so the AI can't open it
 		return
-	else if(isrobot(user)) //but cyborgs can
+	else if(iscyborg(user)) //but cyborgs can
 		if(get_dist(user,src) <= 1) //not remotely though
 			return TryToSwitchState(user)
 
@@ -56,9 +59,6 @@
 /obj/structure/mineral_door/CanPass(atom/movable/mover, turf/target, height=0)
 	if(istype(mover, /obj/effect/beam))
 		return !opacity
-	return !density
-
-/obj/structure/mineral_door/CanAtmosPass()
 	return !density
 
 /obj/structure/mineral_door/proc/TryToSwitchState(atom/user)
@@ -97,7 +97,7 @@
 	isSwitchingStates = 0
 
 	if(close_delay != -1)
-		addtimer(src, "Close", close_delay)
+		addtimer(CALLBACK(src, .proc/Close), close_delay)
 
 /obj/structure/mineral_door/proc/Close()
 	if(isSwitchingStates || state != 1)
@@ -126,63 +126,33 @@
 	if(istype(W,/obj/item/weapon/pickaxe))
 		var/obj/item/weapon/pickaxe/digTool = W
 		user << "<span class='notice'>You start digging the [name]...</span>"
-		if(do_after(user,digTool.digspeed*hardness, target = src) && src)
+		if(do_after(user,digTool.digspeed*(1+round(max_integrity*0.01)), target = src) && src)
 			user << "<span class='notice'>You finish digging.</span>"
-			Dismantle()
-	else if(user.a_intent != "harm")
+			deconstruct(TRUE)
+	else if(user.a_intent != INTENT_HARM)
 		attack_hand(user)
 	else
 		return ..()
 
-/obj/structure/mineral_door/attacked_by(obj/item/I, mob/user)
-	..()
-	if(I.damtype != STAMINA)
-		hardness -= I.force/100
-		CheckHardness()
-
-/obj/structure/mineral_door/bullet_act(obj/item/projectile/Proj)
-	hardness -= Proj.damage
-	..()
-	CheckHardness()
-
-/obj/structure/mineral_door/proc/CheckHardness()
-	if(hardness <= 0)
-		Dismantle(1)
-
-/obj/structure/mineral_door/proc/Dismantle(devastated = 0)
+/obj/structure/mineral_door/deconstruct(disassembled = TRUE)
 	var/turf/T = get_turf(src)
-	if(!devastated)
-		for(var/i in 1 to sheetAmount)
-			new sheetType(T)
+	if(disassembled)
+		new sheetType(T, sheetAmount)
 	else
-		for(var/i in 3 to sheetAmount)
-			new sheetType(T)
+		new sheetType(T, max(sheetAmount - 2, 1))
 	qdel(src)
-
-/obj/structure/mineral_door/ex_act(severity = 1)
-	switch(severity)
-		if(1)
-			Dismantle(1)
-		if(2)
-			if(prob(20))
-				Dismantle(1)
-			else
-				hardness--
-				CheckHardness()
-		if(3)
-			hardness -= 0.1
-			CheckHardness()
-
 
 /obj/structure/mineral_door/iron
 	name = "iron door"
-	hardness = 3
+	obj_integrity = 300
+	max_integrity = 300
 
 /obj/structure/mineral_door/silver
 	name = "silver door"
 	icon_state = "silver"
 	sheetType = /obj/item/stack/sheet/mineral/silver
-	hardness = 3
+	obj_integrity = 300
+	max_integrity = 300
 
 /obj/structure/mineral_door/gold
 	name = "gold door"
@@ -193,14 +163,16 @@
 	name = "uranium door"
 	icon_state = "uranium"
 	sheetType = /obj/item/stack/sheet/mineral/uranium
-	hardness = 3
+	obj_integrity = 300
+	max_integrity = 300
 	luminosity = 2
 
 /obj/structure/mineral_door/sandstone
 	name = "sandstone door"
 	icon_state = "sandstone"
 	sheetType = /obj/item/stack/sheet/mineral/sandstone
-	hardness = 0.5
+	obj_integrity = 100
+	max_integrity = 100
 
 /obj/structure/mineral_door/transparent
 	opacity = 0
@@ -228,20 +200,21 @@
 
 /obj/structure/mineral_door/transparent/plasma/proc/TemperatureAct()
 	atmos_spawn_air("plasma=500;TEMP=1000")
-	Dismantle(1)
+	deconstruct(FALSE)
 
 /obj/structure/mineral_door/transparent/diamond
 	name = "diamond door"
 	icon_state = "diamond"
 	sheetType = /obj/item/stack/sheet/mineral/diamond
-	hardness = 10
+	obj_integrity = 1000
+	max_integrity = 1000
 
 /obj/structure/mineral_door/wood
 	name = "wood door"
 	icon_state = "wood"
-	hardness = 1
 	openSound = 'sound/effects/doorcreaky.ogg'
 	closeSound = 'sound/effects/doorcreaky.ogg'
 	sheetType = /obj/item/stack/sheet/mineral/wood
-	resistance_flags = 0
-	burntime = 30
+	resistance_flags = FLAMMABLE
+	obj_integrity = 200
+	max_integrity = 200

@@ -6,20 +6,50 @@
 	icon_state = "fireaxe"
 	anchored = 1
 	density = 0
-	armor = list(melee = 50, bullet = 20, laser = 0, energy = 100, bomb = 10, bio = 100, rad = 100, fire = 0, acid = 0)
+	armor = list(melee = 50, bullet = 20, laser = 0, energy = 100, bomb = 10, bio = 100, rad = 100, fire = 90, acid = 50)
 	var/locked = 1
 	var/open = 0
-	var/health = 60
+	obj_integrity = 150
+	max_integrity = 150
+	integrity_failure = 50
 
 /obj/structure/fireaxecabinet/New()
 	..()
 	update_icon()
 
+/obj/structure/fireaxecabinet/Destroy()
+	if(fireaxe)
+		qdel(fireaxe)
+		fireaxe = null
+	return ..()
+
 /obj/structure/fireaxecabinet/attackby(obj/item/I, mob/user, params)
-	if(isrobot(user) || istype(I,/obj/item/device/multitool))
+	if(iscyborg(user) || istype(I,/obj/item/device/multitool))
 		toggle_lock(user)
+	else if(istype(I, /obj/item/weapon/weldingtool) && user.a_intent == INTENT_HELP && !broken)
+		var/obj/item/weapon/weldingtool/WT = I
+		if(obj_integrity < max_integrity && WT.remove_fuel(2, user))
+			user << "<span class='notice'>You begin repairing [src].</span>"
+			playsound(loc, WT.usesound, 40, 1)
+			if(do_after(user, 40*I.toolspeed, target = src))
+				obj_integrity = max_integrity
+				playsound(loc, 'sound/items/Welder2.ogg', 50, 1)
+				update_icon()
+				user << "<span class='notice'>You repair [src].</span>"
+		else
+			user << "<span class='warning'>[src] is already in good condition!</span>"
 		return
-	if(open || health <= 0)
+	else if(istype(I, /obj/item/stack/sheet/glass) && broken)
+		var/obj/item/stack/sheet/glass/G = I
+		if(G.get_amount() < 2)
+			user << "<span class='warning'>You need two glass sheets to fix [src]!</span>"
+			return
+		user << "<span class='notice'>You start fixing [src]...</span>"
+		if(do_after(user, 20, target = src) && G.use(2))
+			broken = 0
+			obj_integrity = max_integrity
+			update_icon()
+	else if(open || broken)
 		if(istype(I, /obj/item/weapon/twohanded/fireaxe) && !fireaxe)
 			var/obj/item/weapon/twohanded/fireaxe/F = I
 			if(F.wielded)
@@ -28,68 +58,56 @@
 			if(!user.drop_item())
 				return
 			fireaxe = F
-			src.contents += F
+			F.forceMove(src)
 			user << "<span class='caution'>You place the [F.name] back in the [name].</span>"
 			update_icon()
 			return
-		else if(health > 0)
+		else if(!broken)
 			toggle_open()
 	else
 		return ..()
 
-/obj/structure/fireaxecabinet/attacked_by(obj/item/I, mob/living/user)
-	..()
-	take_damage(I.force, I.damtype)
-
-/obj/structure/fireaxecabinet/proc/take_damage(damage, damage_type, sound_effect = 1)
-	if(open)
-		return
+/obj/structure/fireaxecabinet/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
 		if(BRUTE)
-			if(sound_effect)
-				if(health <= 0)
-					playsound(loc, 'sound/effects/hit_on_shattered_glass.ogg', 90, 1)
-				else
-					playsound(loc, 'sound/effects/Glasshit.ogg', 90, 1)
-		if(BURN)
-			if(sound_effect)
-				playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
-		else
-			return
-	if(damage < 10)
-		return
-	if(health > 0)
-		health -= damage
-		update_icon()
-		if(health <= 0)
-			playsound(src, 'sound/effects/Glassbr3.ogg', 100, 1)
-
-
-/obj/structure/fireaxecabinet/ex_act(severity, target)
-	switch(severity)
-		if(1)
-			qdel(src)
-		if(2)
-			if(prob(50) && fireaxe)
-				fireaxe.loc = src.loc
-				qdel(src)
+			if(broken)
+				playsound(loc, 'sound/effects/hit_on_shattered_glass.ogg', 90, 1)
 			else
-				take_damage(rand(30,70), BRUTE, 0)
-		if(3)
-			take_damage(rand(10,30), BRUTE, 0)
+				playsound(loc, 'sound/effects/Glasshit.ogg', 90, 1)
+		if(BURN)
+			playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
 
-/obj/structure/fireaxecabinet/bullet_act(obj/item/projectile/P)
+/obj/structure/fireaxecabinet/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
+	if(open)
+		return
 	. = ..()
-	take_damage(P.damage, P.damage_type, 0)
+	if(.)
+		update_icon()
 
+/obj/structure/fireaxecabinet/obj_break(damage_flag)
+	if(!broken && !(flags & NODECONSTRUCT))
+		update_icon()
+		broken = TRUE
+		playsound(src, 'sound/effects/Glassbr3.ogg', 100, 1)
+		new /obj/item/weapon/shard(loc)
+		new /obj/item/weapon/shard(loc)
+
+/obj/structure/fireaxecabinet/deconstruct(disassembled = TRUE)
+	if(!(flags & NODECONSTRUCT))
+		if(fireaxe && loc)
+			fireaxe.forceMove(loc)
+			fireaxe = null
+		new /obj/item/stack/sheet/metal(loc, 2)
+	qdel(src)
 
 /obj/structure/fireaxecabinet/blob_act(obj/structure/blob/B)
 	if(fireaxe)
 		fireaxe.forceMove(loc)
+		fireaxe = null
 	qdel(src)
 
 /obj/structure/fireaxecabinet/attack_hand(mob/user)
-	if(open || health <= 0)
+	if(open || broken)
 		if(fireaxe)
 			user.put_in_hands(fireaxe)
 			fireaxe = null
@@ -108,20 +126,6 @@
 /obj/structure/fireaxecabinet/attack_paw(mob/living/user)
 	attack_hand(user)
 
-/obj/structure/fireaxecabinet/attack_alien(mob/living/user)
-	user.visible_message("<span class='warning'>[user] slashes [src].</span>")
-	take_damage(20)
-
-/obj/structure/fireaxecabinet/attack_animal(mob/living/simple_animal/M)
-	if(!M.melee_damage_upper && !M.obj_damage)
-		return
-	M.visible_message("<span class='warning'>[M] smashes against [src].</span>", \
-					  "<span class='danger'>You smash against [src].</span>")
-	if(M.obj_damage)
-		take_damage(M.obj_damage, M.melee_damage_type)
-	else
-		take_damage(rand(M.melee_damage_lower,M.melee_damage_upper), M.melee_damage_type)
-
 /obj/structure/fireaxecabinet/attack_ai(mob/user)
 	toggle_lock(user)
 	return
@@ -131,17 +135,19 @@
 	if(fireaxe)
 		add_overlay("axe")
 	if(!open)
-		switch(health)
-			if(-INFINITY to 0)
-				add_overlay("glass4")
-			if(1 to 20)
-				add_overlay("glass3")
-			if(21 to 40)
-				add_overlay("glass2")
-			if(41 to 59)
-				add_overlay("glass1")
-			if(60)
-				add_overlay("glass")
+		var/hp_percent = obj_integrity/max_integrity * 100
+		if(broken)
+			add_overlay("glass4")
+		else
+			switch(hp_percent)
+				if(-INFINITY to 40)
+					add_overlay("glass3")
+				if(40 to 60)
+					add_overlay("glass2")
+				if(60 to 80)
+					add_overlay("glass1")
+				if(80 to INFINITY)
+					add_overlay("glass")
 		if(locked)
 			add_overlay("locked")
 		else

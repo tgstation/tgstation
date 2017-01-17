@@ -8,7 +8,7 @@
 	flags = CONDUCT | NOBLUDGEON
 	slot_flags = SLOT_BELT
 	materials = list(MAT_METAL=500, MAT_GLASS=500)
-	w_class = 2 //Increased to 2, because diodes are w_class 2. Conservation of matter.
+	w_class = WEIGHT_CLASS_SMALL
 	origin_tech = "combat=1;magnets=2"
 	var/turf/pointer_loc
 	var/energy = 5
@@ -71,7 +71,7 @@
 		return
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
-		if(H.dna.check_mutation(HULK) || (NOGUNS in H.dna.species.specflags))
+		if(H.dna.check_mutation(HULK) || (NOGUNS in H.dna.species.species_traits))
 			user << "<span class='warning'>Your fingers can't press the button!</span>"
 			return
 
@@ -106,7 +106,7 @@
 				outmsg = "<span class='warning'>You fail to blind [C] by shining [src] at their eyes!</span>"
 
 	//robots
-	else if(isrobot(target))
+	else if(iscyborg(target))
 		var/mob/living/silicon/S = target
 		//20% chance to actually hit the sensors
 		if(prob(effectchance * diode.rating))
@@ -130,10 +130,6 @@
 
 	//laser pointer image
 	icon_state = "pointer_[pointer_icon_state]"
-	var/list/showto = list()
-	for(var/mob/M in viewers(7,targloc))
-		if(M.client)
-			showto.Add(M.client)
 	var/image/I = image('icons/obj/projectiles.dmi',targloc,pointer_icon_state,10)
 	var/list/click_params = params2list(params)
 	if(click_params)
@@ -159,7 +155,7 @@
 			user << "<span class='warning'>[src]'s battery is overused, it needs time to recharge!</span>"
 			recharge_locked = 1
 
-	flick_overlay(I, showto, 10)
+	flick_overlay_view(I, targloc, 10)
 	icon_state = "pointer"
 
 /obj/item/device/laser_pointer/process()

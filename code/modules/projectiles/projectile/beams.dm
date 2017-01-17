@@ -66,7 +66,7 @@
 
 /obj/item/projectile/beam/pulse/on_hit(atom/target, blocked = 0)
 	. = ..()
-	if(istype(target,/turf/)||istype(target,/obj/structure/))
+	if(isturf(target) || istype(target,/obj/structure/))
 		target.ex_act(2)
 
 /obj/item/projectile/beam/pulse/shot

@@ -9,8 +9,9 @@
 	anchored = 1
 	layer = BELOW_MOB_LAYER
 	var/point_return = 0 //How many points the blob gets back when it removes a blob of that type. If less than 0, blob cannot be removed.
-	var/health = 30
-	var/maxhealth = 30
+	obj_integrity = 30
+	max_integrity = 30
+	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 80, acid = 70)
 	var/health_regen = 2 //how much health this blob regens when pulsed
 	var/pulse_timestamp = 0 //we got pulsed when?
 	var/heal_timestamp = 0 //we got healed when?
@@ -27,11 +28,11 @@
 	blobs += src //Keep track of the blob in the normal list either way
 	setDir(pick(cardinal))
 	update_icon()
-	..(loc)
+	..()
 	ConsumeTile()
 	if(atmosblock)
+		CanAtmosPass = ATMOS_PASS_NO
 		air_update_turf(1)
-	return
 
 /obj/structure/blob/proc/creation_action() //When it's created by the overmind, do this.
 	return
@@ -45,6 +46,8 @@
 	playsound(src.loc, 'sound/effects/splat.ogg', 50, 1) //Expand() is no longer broken, no check necessary.
 	return ..()
 
+/obj/structure/blob/blob_act()
+	return
 
 /obj/structure/blob/Adjacent(var/atom/neighbour)
 	. = ..()
@@ -59,9 +62,6 @@
 					if(C)
 						result++
 		. -= result - 1
-
-/obj/structure/blob/CanAtmosPass(turf/T)
-	return !atmosblock
 
 /obj/structure/blob/BlockSuperconductivity()
 	return atmosblock
@@ -79,18 +79,11 @@
 		var/atom/movable/mover = caller
 		. = . || mover.checkpass(PASSBLOB)
 
-/obj/structure/blob/proc/check_health(cause)
-	health = Clamp(health, 0, maxhealth)
-	if(health <= 0)
-		if(overmind)
-			overmind.blob_reagent_datum.death_reaction(src, cause)
-		qdel(src) //we dead now
-
 /obj/structure/blob/update_icon() //Updates color based on overmind color if we have an overmind.
 	if(overmind)
-		color = overmind.blob_reagent_datum.color
+		add_atom_colour(overmind.blob_reagent_datum.color, FIXED_COLOUR_PRIORITY)
 	else
-		color = null
+		remove_atom_colour(FIXED_COLOUR_PRIORITY)
 
 /obj/structure/blob/process()
 	Life()
@@ -133,7 +126,7 @@
 	if(pulse_timestamp <= world.time)
 		ConsumeTile()
 		if(heal_timestamp <= world.time)
-			health = min(maxhealth, health+health_regen)
+			obj_integrity = min(max_integrity, obj_integrity+health_regen)
 			heal_timestamp = world.time + 20
 		update_icon()
 		pulse_timestamp = world.time + 10
@@ -143,7 +136,7 @@
 /obj/structure/blob/proc/ConsumeTile()
 	for(var/atom/A in loc)
 		A.blob_act(src)
-	if(istype(loc, /turf/closed/wall))
+	if(iswallturf(loc))
 		loc.blob_act(src) //don't ask how a wall got on top of the core, just eat it
 
 /obj/structure/blob/proc/blob_attack_animation(atom/A = null, controller) //visually attacks an atom
@@ -174,7 +167,7 @@
 		return 0
 	var/make_blob = TRUE //can we make a blob?
 
-	if(istype(T, /turf/open/space) && !(locate(/obj/structure/lattice) in T) && prob(80))
+	if(isspaceturf(T) && !(locate(/obj/structure/lattice) in T) && prob(80))
 		make_blob = FALSE
 		playsound(src.loc, 'sound/effects/splat.ogg', 50, 1) //Let's give some feedback that we DID try to spawn in space, since players are used to it
 
@@ -199,7 +192,7 @@
 			B.loc = T
 			B.update_icon()
 			if(B.overmind && expand_reaction)
-				B.overmind.blob_reagent_datum.expand_reaction(src, B, T)
+				B.overmind.blob_reagent_datum.expand_reaction(src, B, T, controller)
 			return B
 		else
 			blob_attack_animation(T, controller)
@@ -209,17 +202,6 @@
 	else
 		blob_attack_animation(T, controller) //if we can't, animate that we attacked
 	return null
-
-
-/obj/structure/blob/ex_act(severity, target)
-	..()
-	var/damage = 150 - 20 * severity
-	take_damage(damage, BRUTE)
-
-/obj/structure/blob/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
-	..()
-	var/damage = Clamp(0.01 * exposed_temperature, 0, 4)
-	take_damage(damage, BURN)
 
 /obj/structure/blob/emp_act(severity)
 	if(severity > 0)
@@ -232,19 +214,17 @@
 	..()
 	if(overmind)
 		if(overmind.blob_reagent_datum.tesla_reaction(src, power))
-			take_damage(power/400, BURN)
+			take_damage(power/400, BURN, "energy")
 	else
-		take_damage(power/400, BURN)
+		take_damage(power/400, BURN, "energy")
 
 /obj/structure/blob/extinguish()
 	..()
 	if(overmind)
 		overmind.blob_reagent_datum.extinguish_reaction(src)
 
-/obj/structure/blob/bullet_act(var/obj/item/projectile/Proj)
-	..()
-	take_damage(Proj.damage, Proj.damage_type, Proj)
-	return 0
+/obj/structure/blob/hulk_damage()
+	return 15
 
 /obj/structure/blob/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/device/analyzer))
@@ -266,53 +246,50 @@
 
 /obj/structure/blob/proc/typereport(mob/user)
 	user << "<b>Blob Type:</b> <span class='notice'>[uppertext(initial(name))]</span>"
-	user << "<b>Health:</b> <span class='notice'>[health]/[maxhealth]</span>"
+	user << "<b>Health:</b> <span class='notice'>[obj_integrity]/[max_integrity]</span>"
 	user << "<b>Effects:</b> <span class='notice'>[scannerreport()]</span>"
-
-/obj/structure/blob/attacked_by(obj/item/I, mob/living/user)
-	user.changeNext_move(CLICK_CD_MELEE)
-	user.do_attack_animation(src)
-	playsound(src.loc, 'sound/effects/attackblob.ogg', 50, 1)
-	visible_message("<span class='danger'>[user] has attacked the [src.name] with \the [I]!</span>")
-	if(I.damtype == BURN)
-		playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
-	take_damage(I.force, I.damtype, user)
 
 /obj/structure/blob/attack_animal(mob/living/simple_animal/M)
 	if("blob" in M.faction) //sorry, but you can't kill the blob as a blobbernaut
 		return
-	M.changeNext_move(CLICK_CD_MELEE)
-	M.do_attack_animation(src)
-	playsound(src.loc, 'sound/effects/attackblob.ogg', 50, 1)
-	visible_message("<span class='danger'>\The [M] has attacked the [src.name]!</span>")
-	var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
-	take_damage(damage, M.melee_damage_type, M)
-	return
+	..()
 
-/obj/structure/blob/attack_alien(mob/living/carbon/alien/humanoid/M)
-	M.changeNext_move(CLICK_CD_MELEE)
-	M.do_attack_animation(src)
-	playsound(src.loc, 'sound/effects/attackblob.ogg', 50, 1)
-	visible_message("<span class='danger'>[M] has slashed the [src.name]!</span>")
-	var/damage = rand(15, 30)
-	take_damage(damage, BRUTE, M)
-	return
-
-/obj/structure/blob/proc/take_damage(damage, damage_type, cause = null, overmind_reagent_trigger = 1)
-	switch(damage_type) //blobs only take brute and burn damage
+/obj/structure/blob/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
+	switch(damage_type)
 		if(BRUTE)
-			damage = max(damage * brute_resist, 0)
+			if(damage_amount)
+				playsound(src.loc, 'sound/effects/attackblob.ogg', 50, 1)
+			else
+				playsound(src, 'sound/weapons/tap.ogg', 50, 1)
 		if(BURN)
-			damage = max(damage * fire_resist, 0)
-		if(CLONE) //this is basically a marker for 'don't modify the damage'
+			playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
 
+/obj/structure/blob/run_obj_armor(damage_amount, damage_type, damage_flag = 0, attack_dir)
+	switch(damage_type)
+		if(BRUTE)
+			damage_amount *= brute_resist
+		if(BURN)
+			damage_amount *= fire_resist
+		if(CLONE)
 		else
-			damage = 0
-	if(overmind && overmind_reagent_trigger)
-		damage = overmind.blob_reagent_datum.damage_reaction(src, health, damage, damage_type, cause) //pass the blob, its health before damage, the damage being done, the type of damage being done, and the cause.
-	health -= damage
-	update_icon()
-	check_health(cause)
+			return 0
+	var/armor_protection = 0
+	if(damage_flag)
+		armor_protection = armor[damage_flag]
+	damage_amount = round(damage_amount * (100 - armor_protection)*0.01, 0.1)
+	if(overmind && damage_flag)
+		damage_amount = overmind.blob_reagent_datum.damage_reaction(src, damage_amount, damage_type, damage_flag)
+	return damage_amount
+
+/obj/structure/blob/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
+	. = ..()
+	if(. && obj_integrity > 0)
+		update_icon()
+
+/obj/structure/blob/obj_destruction(damage_flag)
+	if(overmind)
+		overmind.blob_reagent_datum.death_reaction(src, damage_flag)
+	..()
 
 /obj/structure/blob/proc/change_to(type, controller)
 	if(!ispath(type))
@@ -349,19 +326,19 @@
 	name = "normal blob"
 	icon_state = "blob"
 	luminosity = 0
-	health = 21
-	maxhealth = 25
+	obj_integrity = 21
+	max_integrity = 25
 	health_regen = 1
 	brute_resist = 0.25
 
 /obj/structure/blob/normal/scannerreport()
-	if(health <= 15)
+	if(obj_integrity <= 15)
 		return "Currently weak to brute damage."
 	return "N/A"
 
 /obj/structure/blob/normal/update_icon()
 	..()
-	if(health <= 15)
+	if(obj_integrity <= 15)
 		icon_state = "blob_damaged"
 		name = "fragile blob"
 		desc = "A thin lattice of slightly twitching tendrils."

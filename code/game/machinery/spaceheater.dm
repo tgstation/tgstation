@@ -10,6 +10,9 @@
 	icon_state = "sheater-off"
 	name = "space heater"
 	desc = "Made by Space Amish using traditional space techniques, this heater/cooler is guaranteed not to set the station on fire."
+	obj_integrity = 250
+	max_integrity = 250
+	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 100, rad = 100, fire = 80, acid = 10)
 	var/obj/item/weapon/stock_parts/cell/cell
 	var/on = FALSE
 	var/mode = HEATER_MODE_STANDBY
@@ -29,7 +32,7 @@
 	update_icon()
 
 /obj/item/weapon/circuitboard/machine/space_heater
-	name = "circuit board (Space Heater)"
+	name = "Space Heater (Machine Board)"
 	build_path = /obj/machinery/space_heater
 	origin_tech = "programming=2;engineering=2;plasmatech=2"
 	req_components = list(

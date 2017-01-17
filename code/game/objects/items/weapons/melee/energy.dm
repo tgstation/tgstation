@@ -4,13 +4,17 @@
 	var/throwforce_on = 20
 	var/icon_state_on = "axe1"
 	var/list/attack_verb_on = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
-	w_class = 2
-	var/w_class_on = 4
+	w_class = WEIGHT_CLASS_SMALL
+	sharpness = IS_SHARP
+	var/w_class_on = WEIGHT_CLASS_BULKY
 	heat = 3500
+	obj_integrity = 200
+	max_integrity = 200
+	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 30)
+	resistance_flags = FIRE_PROOF
 
 /obj/item/weapon/melee/energy/suicide_act(mob/user)
-	user.visible_message(pick("<span class='suicide'>[user] is slitting \his stomach open with [src]! It looks like \he's trying to commit seppuku.</span>", \
-						"<span class='suicide'>[user] is falling on [src]! It looks like \he's trying to commit suicide.</span>"))
+	user.visible_message("<span class='suicide'>[user] is [pick("slitting [user.p_their()] stomach open with", "falling on")] [src]! It looks like [user.p_theyre()] trying to commit seppuku!</span>")
 	return (BRUTELOSS|FIRELOSS)
 
 /obj/item/weapon/melee/energy/add_blood(list/blood_dna)
@@ -30,8 +34,8 @@
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	throw_speed = 3
 	throw_range = 5
-	w_class = 3
-	w_class_on = 5
+	w_class = WEIGHT_CLASS_NORMAL
+	w_class_on = WEIGHT_CLASS_HUGE
 	flags = CONDUCT
 	armour_penetration = 100
 	origin_tech = "combat=4;magnets=3"
@@ -39,7 +43,7 @@
 	attack_verb_on = list()
 
 /obj/item/weapon/melee/energy/axe/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] swings the [src.name] towards \his head! It looks like \he's trying to commit suicide.</span>")
+	user.visible_message("<span class='suicide'>[user] swings [src] towards [user.p_their()] head! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return (BRUTELOSS|FIRELOSS)
 
 /obj/item/weapon/melee/energy/sword
@@ -154,7 +158,7 @@
 	icon_state_on = "esaw_1"
 	hitcost = 75 //Costs more than a standard cyborg esword
 	item_color = null
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 	sharpness = IS_SHARP
 
 /obj/item/weapon/melee/energy/sword/cyborg/saw/New()
@@ -227,8 +231,9 @@
 	throwforce = 1//Throwing or dropping the item deletes it.
 	throw_speed = 3
 	throw_range = 1
-	w_class = 4//So you can't hide it in your pocket or some such.
+	w_class = WEIGHT_CLASS_BULKY//So you can't hide it in your pocket or some such.
 	var/datum/effect_system/spark_spread/spark_system
+	sharpness = IS_SHARP
 
 //Most of the other special functions are handled in their own files. aka special snowflake code so kewl
 /obj/item/weapon/melee/energy/blade/New()
@@ -241,3 +246,9 @@
 
 /obj/item/weapon/melee/energy/blade/attack_self(mob/user)
 	return
+
+/obj/item/weapon/melee/energy/blade/hardlight
+	name = "hardlight blade"
+	desc = "An extremely sharp blade made out of hard light. Packs quite a punch."
+	icon_state = "lightblade"
+	item_state = "lightblade"

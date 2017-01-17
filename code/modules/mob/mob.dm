@@ -16,7 +16,8 @@
 		qdel(cc)
 	client_colours = null
 	ghostize()
-	return ..()
+	..()
+	return QDEL_HINT_HARDDEL
 
 var/next_mob_id = 0
 /mob/New()
@@ -83,61 +84,43 @@ var/next_mob_id = 0
 	else
 		src << msg
 
-// Show a message the src mob and to all player mobs who sees the src mob
-// This would be for visible actions by the src mob
-// message is the message output to anyone who can see e.g. "[src] does something!"
+// Show a message to all player mobs who sees this atom
+// Show a message to the src mob (if the src is a mob)
+// Use for atoms performing visible actions
+// message is output to anyone who can see, e.g. "The [src] does something!"
 // self_message (optional) is what the src mob sees e.g. "You do something!"
 // blind_message (optional) is what blind people will hear e.g. "You hear something!"
+// vision_distance (optional) define how many tiles away the message can be seen.
+// ignored_mob (optional) doesn't show any message to a given mob if TRUE.
 
-/mob/visible_message(message, self_message, blind_message)
+/atom/proc/visible_message(message, self_message, blind_message, vision_distance, ignored_mob)
 	var/turf/T = get_turf(src)
 	if(!T)
 		return
-	for(var/mob/M in get_hearers_in_view(7, src))
+	var/range = 7
+	if(vision_distance)
+		range = vision_distance
+	for(var/mob/M in get_hearers_in_view(range, src))
 		if(!M.client)
+			continue
+		if(M == ignored_mob)
 			continue
 		var/msg = message
 		if(M == src) //the src always see the main message or self message
 			if(self_message)
 				msg = self_message
 		else
-			if(M.see_invisible<invisibility || T != loc) //if src is inside something or invisible to us,
+			if(M.see_invisible<invisibility || (T != loc && T != src))//if src is invisible to us or is inside something (and isn't a turf),
 				if(blind_message) // then people see blind message if there is one, otherwise nothing.
 					msg = blind_message
 				else
 					continue
 			else if(T.lighting_object)
-				if(T.lighting_object.invisibility <= M.see_invisible && !T.lighting_object.luminosity)
-					if(blind_message) //if the light object is dark and not invisible to us, we see blind_message/nothing
+				if(T.lighting_object.invisibility <= M.see_invisible && !T.lighting_object.luminosity) //the light object is dark and not invisible to us
+					if(blind_message)
 						msg = blind_message
 					else
 						continue
-		M.show_message(msg,1,blind_message,2)
-
-// Show a message to all player mobs who sees this atom
-// Use for objects performing visible actions
-// message is output to anyone who can see, e.g. "The [src] does something!"
-// blind_message (optional) is what blind people will hear e.g. "You hear something!"
-
-/atom/proc/visible_message(message, blind_message)
-	var/turf/T = get_turf(src)
-	if(!T)
-		return
-	for(var/mob/M in get_hearers_in_view(7, src))
-		if(!M.client)
-			continue
-		var/msg = message
-		if(M.see_invisible<invisibility || (T != loc && T != src))//if src is invisible to us or is inside something (and isn't a turf),
-			if(blind_message) // then people see blind message if there is one, otherwise nothing.
-				msg = blind_message
-			else
-				continue
-		else if(T.lighting_object)
-			if(T.lighting_object.invisibility <= M.see_invisible && !T.lighting_object.luminosity) //the light object is dark and not invisible to us
-				if(blind_message)
-					msg = blind_message
-				else
-					continue
 		M.show_message(msg,1,blind_message,2)
 
 // Show a message to all mobs in earshot of this one
@@ -225,7 +208,7 @@ var/next_mob_id = 0
 
 //This is just a commonly used configuration for the equip_to_slot_if_possible() proc, used to equip people when the rounds tarts and when events happen and such.
 /mob/proc/equip_to_slot_or_del(obj/item/W, slot)
-	equip_to_slot_if_possible(W, slot, 1, 1, 0)
+	return equip_to_slot_if_possible(W, slot, 1, 1, 0)
 
 //puts the item "W" into an appropriate slot in a human's inventory
 //returns 0 if it cannot, 1 if successful
@@ -237,7 +220,7 @@ var/next_mob_id = 0
 		slot_priority = list( \
 			slot_back, slot_wear_id,\
 			slot_w_uniform, slot_wear_suit,\
-			slot_wear_mask, slot_head,\
+			slot_wear_mask, slot_head, slot_neck,\
 			slot_shoes, slot_gloves,\
 			slot_ears, slot_glasses,\
 			slot_belt, slot_s_store,\
@@ -274,20 +257,6 @@ var/next_mob_id = 0
 		else
 			clear_fullscreen("remote_view", 0)
 		update_pipe_vision()
-
-/mob/dead/reset_perspective(atom/A)
-	if(client)
-		if(ismob(client.eye) && (client.eye != src))
-			var/mob/target = client.eye
-			if(target.observers)
-				target.observers -= src
-				var/list/L = target.observers
-				if(!L.len)
-					target.observers = null
-	if(..())
-		if(hud_used)
-			client.screen = list()
-			hud_used.show_hud(hud_used.hud_version)
 
 /mob/proc/show_inv(mob/user)
 	return
@@ -333,6 +302,10 @@ var/next_mob_id = 0
 		return
 	if(AM.anchored || AM.throwing)
 		return
+	if(isliving(AM))
+		var/mob/living/L = AM
+		if(L.buckled && L.buckled.buckle_prevents_pull)
+			return
 	if(throwing || incapacitated())
 		return
 
@@ -418,7 +391,7 @@ var/next_mob_id = 0
 	if(mind)
 		mind.show_memory(src)
 	else
-		src << "The game appears to have misplaced your mind datum, so we can't show you your notes."
+		src << "You don't have a mind datum for some reason, so you can't look at your notes, if you had any."
 
 /mob/verb/add_memory(msg as message)
 	set name = "Add Note"
@@ -430,21 +403,7 @@ var/next_mob_id = 0
 	if(mind)
 		mind.store_memory(msg)
 	else
-		src << "The game appears to have misplaced your mind datum, so we can't show you your notes."
-
-/mob/proc/store_memory(msg as message, popup, sane = 1)
-	msg = copytext(msg, 1, MAX_MESSAGE_LEN)
-
-	if (sane)
-		msg = sanitize(msg)
-
-	if (length(memory) == 0)
-		memory += msg
-	else
-		memory += "<BR>[msg]"
-
-	if (popup)
-		memory()
+		src << "You don't have a mind datum for some reason, so you can't add a note to it."
 
 /mob/verb/abandon_mob()
 	set name = "Respawn"
@@ -479,36 +438,7 @@ var/next_mob_id = 0
 //	M.Login()	//wat
 	return
 
-/mob/verb/observe()
-	set name = "Observe"
-	set category = "OOC"
 
-	if(stat != DEAD || istype(src, /mob/new_player))
-		usr << "<span class='notice'>You must be observing to use this!</span>"
-		return
-
-	var/list/creatures = getpois()
-
-	reset_perspective(null)
-
-	var/eye_name = null
-
-	eye_name = input("Please, select a player!", "Observe", null, null) as null|anything in creatures
-
-	if (!eye_name)
-		return
-
-	var/mob/mob_eye = creatures[eye_name]
-	//Istype so we filter out points of interest that are not mobs
-	if(client && mob_eye && istype(mob_eye))
-		client.eye = mob_eye
-		if(isobserver(src))
-			src.client.screen = list()
-			if(mob_eye.hud_used)
-				if(!mob_eye.observers)
-					mob_eye.observers = list()
-				mob_eye.observers |= src
-				mob_eye.hud_used.show_hud(1,src)
 
 /mob/verb/cancel_camera()
 	set name = "Cancel Camera View"
@@ -537,7 +467,8 @@ var/next_mob_id = 0
 			else
 				what = get_item_by_slot(slot)
 			if(what)
-				usr.stripPanelUnequip(what,src,slot)
+				if(!(what.flags & ABSTRACT))
+					usr.stripPanelUnequip(what,src,slot)
 			else
 				usr.stripPanelEquip(what,src,slot)
 
@@ -565,7 +496,7 @@ var/next_mob_id = 0
 		return
 	if(!Adjacent(usr))
 		return
-	if(istype(M, /mob/living/silicon/ai))
+	if(isAI(M))
 		return
 	show_inv(usr)
 
@@ -589,11 +520,14 @@ var/next_mob_id = 0
 	..()
 
 	if(statpanel("Status"))
+		if (client)
+			stat(null, "Ping: [round(client.lastping, 1)]ms (Average: [round(client.avgping, 1)]ms)")
 		stat(null, "Map: [MAP_NAME]")
 		if(nextmap && istype(nextmap))
 			stat(null, "Next Map: [nextmap.friendlyname]")
 		stat(null, "Server Time: [time2text(world.realtime, "YYYY-MM-DD hh:mm")]")
 		if(SSshuttle.emergency)
+			stat(null, "Current Shuttle: [SSshuttle.emergency.name]")
 			var/ETA = SSshuttle.emergency.getModeStr()
 			if(ETA)
 				stat(null, "[ETA] [SSshuttle.emergency.getTimerStr()]")
@@ -628,7 +562,7 @@ var/next_mob_id = 0
 			var/list/overrides = list()
 			for(var/image/I in client.images)
 				if(I.loc && I.loc.loc == listed_turf && I.override)
-					overrides = I.loc
+					overrides += I.loc
 			for(var/atom/A in listed_turf)
 				if(!A.mouse_opacity)
 					continue
@@ -713,7 +647,7 @@ var/next_mob_id = 0
 		if(layer == LYING_MOB_LAYER)
 			layer = initial(layer)
 	update_transform()
-	update_action_buttons_icon()
+	update_action_buttons_icon(status_only=TRUE)
 	if(isliving(src))
 		var/mob/living/L = src
 		if(L.has_status_effect(/datum/status_effect/freon))
@@ -925,31 +859,40 @@ var/next_mob_id = 0
 /mob/proc/update_health_hud()
 	return
 
-/mob/living/on_varedit(modified_var)
-	switch(modified_var)
+/mob/living/vv_edit_var(var_name, var_value)
+	switch(var_name)
+		if("stat")
+			if((stat == DEAD) && (var_value < DEAD))//Bringing the dead back to life
+				dead_mob_list -= src
+				living_mob_list += src
+			if((stat < DEAD) && (var_value == DEAD))//Kill he
+				living_mob_list -= src
+				dead_mob_list += src
+	. = ..()
+	switch(var_name)
 		if("weakened")
-			SetWeakened(weakened)
+			SetWeakened(var_value)
 		if("stunned")
-			SetStunned(stunned)
+			SetStunned(var_value)
 		if("paralysis")
-			SetParalysis(paralysis)
+			SetParalysis(var_value)
 		if("sleeping")
-			SetSleeping(sleeping)
+			SetSleeping(var_value)
 		if("eye_blind")
-			set_blindness(eye_blind)
+			set_blindness(var_value)
 		if("eye_damage")
-			set_eye_damage(eye_damage)
+			set_eye_damage(var_value)
 		if("eye_blurry")
-			set_blurriness(eye_blurry)
+			set_blurriness(var_value)
 		if("ear_deaf")
-			setEarDamage(-1, ear_deaf)
+			setEarDamage(-1, var_value)
 		if("ear_damage")
-			setEarDamage(ear_damage, -1)
+			setEarDamage(var_value, -1)
 		if("maxHealth")
 			updatehealth()
 		if("resize")
 			update_transform()
-	..()
+
 
 /mob/proc/is_literate()
 	return 0
@@ -959,3 +902,25 @@ var/next_mob_id = 0
 
 /mob/proc/get_idcard()
 	return
+
+/mob/vv_get_dropdown()
+	. = ..()
+	. += "---"
+	.["Gib"] = "?_src_=vars;gib=\ref[src]"
+	.["Give Spell"] = "?_src_=vars;give_spell=\ref[src]"
+	.["Remove Spell"] = "?_src_=vars;remove_spell=\ref[src]"
+	.["Give Disease"] = "?_src_=vars;give_disease=\ref[src]"
+	.["Toggle Godmode"] = "?_src_=vars;godmode=\ref[src]"
+	.["Drop Everything"] = "?_src_=vars;drop_everything=\ref[src]"
+	.["Regenerate Icons"] = "?_src_=vars;regenerateicons=\ref[src]"
+	.["Make Space Ninja"] = "?_src_=vars;ninja=\ref[src]"
+	.["Show player panel"] = "?_src_=vars;mob_player_panel=\ref[src]"
+	.["Toggle Build Mode"] = "?_src_=vars;build_mode=\ref[src]"
+	.["Assume Direct Control"] = "?_src_=vars;direct_control=\ref[src]"
+	.["Offer Control to Ghosts"] = "?_src_=vars;offer_control=\ref[src]"
+
+/mob/vv_get_var(var_name)
+	switch(var_name)
+		if ("attack_log")
+			return debug_variable(var_name, attack_log, 0, src, FALSE)
+	. = ..()

@@ -31,7 +31,7 @@
 	suit = /obj/item/clothing/suit/det_suit
 	glasses = /obj/item/clothing/glasses/thermal/monocle
 	head = /obj/item/clothing/head/det_hat
-	r_hand = /obj/item/weapon/gun/projectile
+	r_hand = /obj/item/weapon/gun/ballistic
 	l_hand = null
 	r_pocket = /obj/item/ammo_box/c10mm
 
@@ -133,9 +133,10 @@
 	r_hand = /obj/item/weapon/twohanded/fireaxe
 
 /datum/outfit/psycho/post_equip(mob/living/carbon/human/H)
-	for(var/obj/item/carried_item in H.contents)
-		if(!istype(carried_item, /obj/item/weapon/implant))//If it's not an implant.
-			carried_item.add_mob_blood(H)//Oh yes, there will be blood...
+	for(var/obj/item/carried_item in H.get_equipped_items())
+		carried_item.add_mob_blood(H)//Oh yes, there will be blood...
+	for(var/obj/item/I in H.held_items)
+		I.add_mob_blood(H)
 	H.regenerate_icons()
 
 /datum/outfit/assassin
@@ -165,7 +166,7 @@
 	for(var/i = 3 to 0 step -1)
 		sec_briefcase.handle_item_insertion(new /obj/item/stack/spacecash/c1000,1)
 	sec_briefcase.handle_item_insertion(new /obj/item/weapon/gun/energy/kinetic_accelerator/crossbow,1)
-	sec_briefcase.handle_item_insertion(new /obj/item/weapon/gun/projectile/revolver/mateba,1)
+	sec_briefcase.handle_item_insertion(new /obj/item/weapon/gun/ballistic/revolver/mateba,1)
 	sec_briefcase.handle_item_insertion(new /obj/item/ammo_box/a357,1)
 	sec_briefcase.handle_item_insertion(new /obj/item/weapon/grenade/plastic/x4,1)
 
@@ -191,7 +192,7 @@
 	glasses = /obj/item/clothing/glasses/eyepatch
 	mask = /obj/item/clothing/mask/cigarette/cigar/cohiba
 	head = /obj/item/clothing/head/centhat
-	belt = /obj/item/weapon/gun/projectile/revolver/mateba
+	belt = /obj/item/weapon/gun/ballistic/revolver/mateba
 	r_pocket = /obj/item/weapon/lighter
 	l_pocket = /obj/item/ammo_box/a357
 	back = /obj/item/weapon/storage/backpack/satchel/leather
@@ -246,7 +247,7 @@
 
 	uniform = /obj/item/clothing/under/color/lightpurple
 	suit = /obj/item/clothing/suit/wizrobe
-	shoes = /obj/item/clothing/shoes/sandal
+	shoes = /obj/item/clothing/shoes/sandal/magic
 	ears = /obj/item/device/radio/headset
 	head = /obj/item/clothing/head/wizard
 	r_pocket = /obj/item/weapon/teleportation_scroll
@@ -279,7 +280,7 @@
 	glasses = /obj/item/clothing/glasses/thermal/eyepatch
 	suit = /obj/item/clothing/suit/pirate/captain
 	back = /obj/item/weapon/storage/backpack/satchel/leather
-	belt = /obj/item/weapon/gun/projectile/revolver/mateba
+	belt = /obj/item/weapon/gun/ballistic/revolver/mateba
 
 	id = /obj/item/weapon/card/id
 
@@ -304,7 +305,7 @@
 	gloves = /obj/item/clothing/gloves/color/black
 	ears = /obj/item/device/radio/headset
 	glasses = /obj/item/clothing/glasses/sunglasses
-	r_hand = /obj/item/weapon/gun/projectile/automatic/tommygun
+	r_hand = /obj/item/weapon/gun/ballistic/automatic/tommygun
 	id = /obj/item/weapon/card/id
 
 /datum/outfit/mobster/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
@@ -337,7 +338,7 @@
 	l_pocket = /obj/item/weapon/melee/energy/sword/saber
 	r_pocket = /obj/item/weapon/shield/energy
 	suit_store = /obj/item/weapon/tank/internals/emergency_oxygen
-	belt = /obj/item/weapon/gun/projectile/revolver/mateba
+	belt = /obj/item/weapon/gun/ballistic/revolver/mateba
 	r_hand = /obj/item/weapon/gun/energy/pulse/loyalpin
 	id = /obj/item/weapon/card/id
 	ears = /obj/item/device/radio/headset/headset_cent/alt
@@ -358,9 +359,7 @@
 	R.freqlock = 1
 
 	var/obj/item/weapon/implant/mindshield/L = new/obj/item/weapon/implant/mindshield(H)//Here you go Deuryn
-	L.imp_in = H
-	L.implanted = 1
-	H.sec_hud_set_implants()
+	L.implant(H, null, 1)
 
 
 	var/obj/item/weapon/card/id/W = H.wear_id

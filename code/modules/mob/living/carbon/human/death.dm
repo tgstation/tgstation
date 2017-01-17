@@ -16,7 +16,9 @@
 /mob/living/carbon/human/death(gibbed)
 	if(stat == DEAD)
 		return
-	stat = DEAD
+
+	. = ..()
+
 	dizziness = 0
 	jitteriness = 0
 	heart_attack = 0
@@ -26,17 +28,12 @@
 		if(M.occupant == src)
 			M.go_out()
 
-	if(!gibbed)
-		emote("deathgasp") //let the world KNOW WE ARE DEAD
-
 	dna.species.spec_death(gibbed, src)
 
 	if(ticker && ticker.mode)
 		sql_report_death(src)
-		ticker.mode.check_win()		//Calls the rounds wincheck, mainly for wizard, malf, and changeling now
-	. = ..(gibbed)
 	if(mind && mind.devilinfo)
-		addtimer(mind.devilinfo, "beginResurrectionCheck", 0, FALSE, src)
+		addtimer(CALLBACK(mind.devilinfo, /datum/devilinfo.proc/beginResurrectionCheck, src), 0)
 
 /mob/living/carbon/human/proc/makeSkeleton()
 	status_flags |= DISFIGURED

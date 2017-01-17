@@ -11,11 +11,10 @@
 	production = 1
 	yield = 5
 	potency = 50
-	oneharvest = 1
 	growthstages = 3
 	growing_icon = 'icons/obj/hydroponics/growing_mushrooms.dmi'
 	icon_dead = "towercap-dead"
-	plant_type = PLANT_MUSHROOM
+	genes = list(/datum/plant_gene/trait/plant_type/fungal_metabolism)
 	mutatelist = list(/obj/item/seeds/tower/steel)
 
 /obj/item/seeds/tower/steel
@@ -38,7 +37,7 @@
 	icon_state = "logs"
 	force = 5
 	throwforce = 5
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 	throw_speed = 2
 	throw_range = 3
 	origin_tech = "materials=1"
@@ -53,7 +52,6 @@
 
 
 /obj/item/weapon/grown/log/attackby(obj/item/weapon/W, mob/user, params)
-	..()
 	if(W.sharpness)
 		user.show_message("<span class='notice'>You make [plank_name] out of \the [src]!</span>", 1)
 		var/obj/item/stack/plank = new plank_type(user.loc, 1 + round(seed.potency / 25))
@@ -77,6 +75,8 @@
 			return
 		else
 			usr << "<span class ='warning'>You must dry this first!</span>"
+	else
+		return ..()
 
 /obj/item/weapon/grown/log/tree
 	seed = null
@@ -134,7 +134,7 @@
 
 
 /obj/structure/bonfire/proc/CheckOxygen()
-	if(istype(loc,/turf/open))
+	if(isopenturf(loc))
 		var/turf/open/O = loc
 		if(O.air)
 			var/G = O.air.gases
@@ -150,7 +150,7 @@
 		Burn()
 		START_PROCESSING(SSobj, src)
 
-/obj/structure/bonfire/fire_act()
+/obj/structure/bonfire/fire_act(exposed_temperature, exposed_volume)
 	StartBurning()
 
 /obj/structure/bonfire/Crossed(atom/movable/AM)
@@ -165,9 +165,7 @@
 			continue
 		if(isobj(A))
 			var/obj/O = A
-			if(O.resistance_flags & FIRE_PROOF)
-				continue
-			O.fire_act()
+			O.fire_act(1000, 500)
 		else if(isliving(A))
 			var/mob/living/L = A
 			L.adjust_fire_stacks(fire_stack_strength)

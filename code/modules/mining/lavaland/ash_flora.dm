@@ -8,7 +8,7 @@
 	var/harvested_name = "shortened mushrooms"
 	var/harvested_desc = "Some quickly regrowing mushrooms, formerly known to be quite large."
 	var/needs_sharp_harvest = TRUE
-	var/harvest = /obj/item/ash_flora/shavings
+	var/harvest = /obj/item/weapon/reagent_containers/food/snacks/ash_flora/shavings
 	var/harvest_amount_low = 1
 	var/harvest_amount_high = 3
 	var/harvest_time = 60
@@ -46,7 +46,7 @@
 	name = harvested_name
 	desc = harvested_desc
 	harvested = TRUE
-	addtimer(src, "regrow", rand(regrowth_time_low, regrowth_time_high))
+	addtimer(CALLBACK(src, .proc/regrow), rand(regrowth_time_low, regrowth_time_high))
 	return 1
 
 /obj/structure/flora/ash/proc/regrow()
@@ -71,13 +71,16 @@
 	else
 		..()
 
+/obj/structure/flora/ash/tall_shroom //exists only so that the spawning check doesn't allow these spawning near other things
+	regrowth_time_low = 4200
+
 /obj/structure/flora/ash/leaf_shroom
 	icon_state = "s_mushroom"
 	name = "leafy mushrooms"
 	desc = "A number of mushrooms, each of which surrounds a greenish sporangium with a number of leaf-like structures."
 	harvested_name = "leafless mushrooms"
 	harvested_desc = "A bunch of formerly-leafed mushrooms, with their sporangiums exposed. Scandalous?"
-	harvest = /obj/item/ash_flora/mushroom_leaf
+	harvest = /obj/item/weapon/reagent_containers/food/snacks/ash_flora/mushroom_leaf
 	needs_sharp_harvest = FALSE
 	harvest_amount_high = 4
 	harvest_time = 20
@@ -93,10 +96,10 @@
 	desc = "Several mushrooms, the larger of which have a ring of conks at the midpoint of their stems."
 	harvested_name = "small mushrooms"
 	harvested_desc = "Several small mushrooms near the stumps of what likely were larger mushrooms."
-	harvest = /obj/item/ash_flora/mushroom_cap
+	harvest = /obj/item/weapon/reagent_containers/food/snacks/ash_flora/mushroom_cap
 	harvest_amount_high = 4
 	harvest_time = 50
-	harvest_message_low = "You slice the cap off of a mushroom."
+	harvest_message_low = "You slice the cap off a mushroom."
 	harvest_message_med = "You slice off a few conks from the larger mushrooms."
 	harvest_message_high = "You slice off a number of caps and conks from these mushrooms."
 	regrowth_time_low = 3000
@@ -105,13 +108,14 @@
 /obj/structure/flora/ash/stem_shroom
 	icon_state = "t_mushroom"
 	name = "numerous mushrooms"
-	desc = "A large number of mushrooms, some of which have long, fleshy stems."
+	desc = "A large number of mushrooms, some of which have long, fleshy stems. They're radiating light!"
+	luminosity = 1
 	harvested_name = "tiny mushrooms"
 	harvested_desc = "A few tiny mushrooms around larger stumps. You can already see them growing back."
-	harvest = /obj/item/ash_flora/mushroom_stem
+	harvest = /obj/item/weapon/reagent_containers/food/snacks/ash_flora/mushroom_stem
 	harvest_amount_high = 4
 	harvest_time = 40
-	harvest_message_low = "You pick and slice the cap off of a mushroom, leaving the stem."
+	harvest_message_low = "You pick and slice the cap off a mushroom, leaving the stem."
 	harvest_message_med = "You pick and decapitate several mushrooms for their stems."
 	harvest_message_high = "You acquire a number of stems from these mushrooms."
 	regrowth_time_low = 3000
@@ -123,7 +127,7 @@
 	desc = "Several prickly cacti, brimming with ripe fruit and covered in a thin layer of ash."
 	harvested_name = "cacti"
 	harvested_desc = "A bunch of prickly cacti. You can see fruits slowly growing beneath the covering of ash."
-	harvest = /obj/item/ash_flora/cactus_fruit
+	harvest = /obj/item/weapon/reagent_containers/food/snacks/ash_flora/cactus_fruit
 	needs_sharp_harvest = FALSE
 	harvest_amount_high = 2
 	harvest_time = 10
@@ -139,114 +143,76 @@
 		if(!H.shoes && !H.lying) //ouch, my feet.
 			var/picked_def_zone = pick("l_leg", "r_leg")
 			var/obj/item/bodypart/O = H.get_bodypart(picked_def_zone)
-			if(!istype(O) || (PIERCEIMMUNE in H.dna.species.specflags))
+			if(!istype(O) || (PIERCEIMMUNE in H.dna.species.species_traits))
 				return
 			H.apply_damage(rand(3, 6), BRUTE, picked_def_zone)
 			H.Weaken(2)
 			H.visible_message("<span class='danger'>[H] steps on a cactus!</span>", \
 				"<span class='userdanger'>You step on a cactus!</span>")
 
-/obj/item/ash_flora
+/obj/item/weapon/reagent_containers/food/snacks/ash_flora
 	name = "mushroom shavings"
 	desc = "Some shavings from a tall mushroom. With enough, might serve as a bowl."
 	icon = 'icons/obj/lavaland/ash_flora.dmi'
 	icon_state = "mushroom_shavings"
-	w_class = 1
-	resistance_flags = 0
-	burntime = 30
-	var/prepared = FALSE
-	var/prepared_type = /obj/item/ash_flora/shavings
-	var/standard_prep = TRUE
+	list_reagents = list("sugar" = 3, "ethanol" = 2, "stabilizing_agent" = 3, "minttoxin" = 2)
+	w_class = WEIGHT_CLASS_TINY
+	resistance_flags = FLAMMABLE
+	obj_integrity = 100
+	max_integrity = 100
 
-/obj/item/ash_flora/New()
+/obj/item/weapon/reagent_containers/food/snacks/ash_flora/New()
 	..()
 	pixel_x = rand(-4, 4)
 	pixel_y = rand(-4, 4)
 
-/obj/item/ash_flora/attackby(obj/item/weapon/W, mob/user, params)
-	if(!standard_prep || !W.sharpness || !prepare(user))
-		return ..()
 
-/obj/item/ash_flora/proc/prepare(mob/user)
-	if(!prepared)
-		prepared = TRUE
-		user << "<span class='notice'>You prepare [src].</span>"
-		var/obj/item/ash_flora/A = new prepared_type(get_turf(src))
-		if(user.is_holding(src))
-			user.unEquip(src, TRUE)
-			user.put_in_hands(A)
-		qdel(src)
-		. = 1
+/obj/item/weapon/reagent_containers/food/snacks/ash_flora/shavings //for actual crafting
 
-/obj/item/ash_flora/shavings //for actual crafting
-	prepared = TRUE
 
-/obj/item/ash_flora/mushroom_leaf
+/obj/item/weapon/reagent_containers/food/snacks/ash_flora/mushroom_leaf
 	name = "mushroom leaf"
-	desc = "A leaflike structure from a mushroom. You should probably wash the ash off."
+	desc = "A leaf, from a mushroom."
+	list_reagents = list("nutriment" = 3, "vitfro" = 2, "nicotine" = 2)
 	icon_state = "mushroom_leaf"
-	standard_prep = FALSE
-	prepared_type = /obj/item/ash_flora/mushroom_leaf/prepared
 
-/obj/item/ash_flora/mushroom_leaf/afterattack(atom/target, mob/user, proximity_flag)
-	if(proximity_flag && (istype(target, /turf/open/floor/plating/ashplanet/wateryrock) || istype(target, /obj/structure/sink)))
-		prepare(user)
 
-/obj/item/ash_flora/mushroom_leaf/prepared
-	name = "washed mushroom leaf"
-	desc = "A greenish leaflike structure from a mushroom. Kind of like lettuce?"
-	icon_state = "mushroom_leaf_p"
-	prepared = TRUE
 
-/obj/item/ash_flora/mushroom_cap
+/obj/item/weapon/reagent_containers/food/snacks/ash_flora/mushroom_cap
 	name = "mushroom cap"
-	desc = "A mushroom cap. Possibly delicious, at least if you cut it up a bit first."
+	desc = "The cap of a large mushroom."
+	list_reagents = list("mindbreaker" = 2, "entpoly" = 4, "mushroomhallucinogen" = 2)
 	icon_state = "mushroom_cap"
-	prepared_type = /obj/item/ash_flora/mushroom_cap/prepared
 
-/obj/item/ash_flora/mushroom_cap/prepared
-	name = "sliced mushroom cap"
-	desc = "A sliced-up mushroom cap, revealing pale yellow innards. It smells faintly salty."
-	icon_state = "mushroom_cap_p"
-	prepared = TRUE
 
-/obj/item/ash_flora/mushroom_stem
+/obj/item/weapon/reagent_containers/food/snacks/ash_flora/mushroom_stem
 	name = "mushroom stem"
-	desc = "A mushroom stem. Slice it up, throw it in a stew."
+	desc = "A long mushroom stem. It's slightly glowing."
+	list_reagents = list("tinlux" = 2, "vitamin" = 1, "space_drugs" = 1)
 	icon_state = "mushroom_stem"
-	prepared_type = /obj/item/ash_flora/mushroom_stem/prepared
+	luminosity = 1
 
-/obj/item/ash_flora/mushroom_stem/prepared
-	name = "sliced mushroom stem"
-	desc = "A mushroom stem, cut in half to reveal orange flesh. Smells almost like potatos, but with a sour undertone."
-	icon_state = "mushroom_stem_p"
-	prepared = TRUE
-
-/obj/item/ash_flora/cactus_fruit
+/obj/item/weapon/reagent_containers/food/snacks/ash_flora/cactus_fruit
 	name = "cactus fruit"
+	list_reagents = list("vitamin" = 2, "nutriment" = 2, "vitfro" = 4)
 	desc = "A cactus fruit covered in a thick, reddish skin. And some ash."
 	icon_state = "cactus_fruit"
-	prepared_type = /obj/item/ash_flora/cactus_fruit/prepared
 
-/obj/item/ash_flora/cactus_fruit/prepared
-	name = "peeled cactus fruit"
-	desc = "A cactus fruit with the skin and ash carefully scraped off, revealing a faintly sweet-smelling yellow center."
-	icon_state = "cactus_fruit_p"
-	prepared = TRUE
 
 /obj/item/mushroom_bowl
 	name = "mushroom bowl"
 	desc = "A bowl made out of mushrooms. Not food, though it might have contained some at some point."
 	icon = 'icons/obj/lavaland/ash_flora.dmi'
 	icon_state = "mushroom_bowl"
-	w_class = 2
-	resistance_flags = 0
-	burntime = 40
+	w_class = WEIGHT_CLASS_SMALL
+	resistance_flags = FLAMMABLE
+	obj_integrity = 200
+	max_integrity = 200
 
 //what you can craft with these things
 /datum/crafting_recipe/mushroom_bowl
 	name = "Mushroom Bowl"
-	result = /obj/item/mushroom_bowl
-	reqs = list(/obj/item/ash_flora/shavings = 5)
+	result = /obj/item/weapon/reagent_containers/food/drinks/mushroom_bowl
+	reqs = list(/obj/item/weapon/reagent_containers/food/snacks/ash_flora/shavings = 5)
 	time = 30
-	//category = CAT_PRIMAL //uncomment once ashplanet exists and this wouldn't just take up space fnr
+	category = CAT_PRIMAL

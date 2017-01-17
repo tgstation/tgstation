@@ -1,4 +1,4 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:32
+
 
 var/const/TOUCH = 1 //splashing
 var/const/INGEST = 2 //ingestion
@@ -12,7 +12,7 @@ var/const/INJECT = 5 //injection
 	var/list/datum/reagent/reagent_list = new/list()
 	var/total_volume = 0
 	var/maximum_volume = 100
-	var/datum/my_atom = null
+	var/atom/my_atom = null
 	var/chem_temp = 150
 	var/last_tick = 1
 	var/addiction_tick = 1
@@ -134,9 +134,11 @@ var/const/INJECT = 5 //injection
 
 /datum/reagents/proc/trans_to(obj/target, amount=1, multiplier=1, preserve_data=1, no_react = 0)//if preserve_data=0, the reagents data will be lost. Usefull if you use data for some strange stuff and don't want it to be transferred.
 	var/list/cached_reagents = reagent_list
-
 	if(!target || !total_volume)
 		return
+	if(amount < 0)
+		return
+
 	var/datum/reagents/R
 	if(istype(target, /datum/reagents))
 		R = target
@@ -168,6 +170,8 @@ var/const/INJECT = 5 //injection
 		return
 	if(!target.reagents || src.total_volume<=0)
 		return
+	if(amount < 0)
+		return
 	var/datum/reagents/R = target.reagents
 	amount = min(min(amount, total_volume), R.maximum_volume-R.total_volume)
 	var/part = amount / total_volume
@@ -190,6 +194,8 @@ var/const/INJECT = 5 //injection
 	if (!target)
 		return
 	if (!target.reagents || src.total_volume<=0 || !src.get_reagent_amount(reagent))
+		return
+	if(amount < 0)
 		return
 
 	var/datum/reagents/R = target.reagents
@@ -311,9 +317,9 @@ var/const/INJECT = 5 //injection
 	if(flags & REAGENT_NOREACT)
 		return //Yup, no reactions here. No siree.
 
-	var/reaction_occured = 0
+	var/reaction_occurred = 0
 	do
-		reaction_occured = 0
+		reaction_occurred = 0
 		for(var/reagent in cached_reagents)
 			var/datum/reagent/R = reagent
 			for(var/reaction in cached_reactions[R.id]) // Was a big list but now it should be smaller since we filtered it with our reagent id
@@ -400,10 +406,10 @@ var/const/INJECT = 5 //injection
 									ME2.desc = "This extract has been used up."
 
 					C.on_reaction(src, multiplier)
-					reaction_occured = 1
+					reaction_occurred = 1
 					break
 
-	while(reaction_occured)
+	while(reaction_occurred)
 	update_total()
 	return 0
 
@@ -500,7 +506,11 @@ var/const/INJECT = 5 //injection
 
 /datum/reagents/proc/add_reagent(reagent, amount, list/data=null, reagtemp = 300, no_react = 0)
 	if(!isnum(amount) || !amount)
-		return 1
+		return FALSE
+
+	if(amount < 0)
+		return FALSE
+
 	var/list/cached_reagents = reagent_list
 	update_total()
 	if(total_volume + amount > maximum_volume)
@@ -518,7 +528,7 @@ var/const/INJECT = 5 //injection
 			R.on_merge(data)
 			if(!no_react)
 				handle_reactions()
-			return 0
+			return TRUE
 
 	var/datum/reagent/D = chemical_reagents_list[reagent]
 	if(D)
@@ -536,14 +546,11 @@ var/const/INJECT = 5 //injection
 			my_atom.on_reagent_change()
 		if(!no_react)
 			handle_reactions()
-		return 0
+		return TRUE
+
 	else
 		WARNING("[my_atom] attempted to add a reagent called ' [reagent] ' which doesn't exist. ([usr])")
-
-	if(!no_react)
-		handle_reactions()
-
-	return 1
+	return FALSE
 
 /datum/reagents/proc/add_reagent_list(list/list_reagents, list/data=null) // Like add_reagent but you can enter a list. Format it like this: list("toxin" = 10, "beer" = 15)
 	for(var/r_id in list_reagents)
@@ -553,25 +560,33 @@ var/const/INJECT = 5 //injection
 /datum/reagents/proc/remove_reagent(reagent, amount, safety)//Added a safety check for the trans_id_to
 
 	if(isnull(amount))
-		amount = INFINITY
+		amount = 0
+		CRASH("null amount passed to reagent code")
+		return FALSE
 
 	if(!isnum(amount))
-		return 1
+		return FALSE
+
+	if(amount < 0)
+		return FALSE
 
 	var/list/cached_reagents = reagent_list
 
 	for(var/A in cached_reagents)
 		var/datum/reagent/R = A
 		if (R.id == reagent)
+			//clamp the removal amount to be between current reagent amount
+			//and zero, to prevent removing more than the holder has stored
+			amount = Clamp(amount, 0, R.volume)
 			R.volume -= amount
 			update_total()
 			if(!safety)//So it does not handle reactions when it need not to
 				handle_reactions()
 			if(my_atom)
 				my_atom.on_reagent_change()
-			return 0
+			return TRUE
 
-	return 1
+	return FALSE
 
 /datum/reagents/proc/has_reagent(reagent, amount = -1)
 	var/list/cached_reagents = reagent_list
@@ -676,8 +691,18 @@ var/const/INJECT = 5 //injection
 
 // Convenience proc to create a reagents holder for an atom
 // Max vol is maximum volume of holder
-/datum/proc/create_reagents(max_vol)
+/atom/proc/create_reagents(max_vol)
 	if(reagents)
 		qdel(reagents)
 	reagents = new/datum/reagents(max_vol)
 	reagents.my_atom = src
+
+/proc/get_random_reagent_id()	// Returns a random reagent ID minus blacklisted reagents
+	var/static/list/random_reagents = list()
+	if(!random_reagents.len)
+		for(var/thing  in subtypesof(/datum/reagent))
+			var/datum/reagent/R = thing
+			if(initial(R.can_synth))
+				random_reagents += initial(R.id)
+	var/picked_reagent = pick(random_reagents)
+	return picked_reagent

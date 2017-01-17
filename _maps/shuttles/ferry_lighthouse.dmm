@@ -82,7 +82,7 @@
 /turf/open/floor/wood,
 /area/shuttle/transport)
 "as" = (
-/obj/machinery/shield,
+/obj/structure/emergency_shield,
 /turf/open/space,
 /area/shuttle/transport)
 "at" = (
@@ -185,7 +185,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/transport)
 "aO" = (
-/obj/machinery/door/airlock/shuttle,
+/obj/machinery/door/airlock/titanium,
 /obj/docking_port/mobile{
 	dir = 8;
 	dwidth = 8;

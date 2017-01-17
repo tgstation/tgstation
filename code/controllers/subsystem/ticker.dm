@@ -11,6 +11,8 @@ var/datum/subsystem/ticker/ticker
 
 	var/current_state = GAME_STATE_STARTUP	//state of current round (used by process()) Use the defines GAME_STATE_* !
 	var/force_ending = 0					//Round was ended by admin intervention
+	// If true, there is no lobby phase, the game starts immediately.
+	var/start_immediately = FALSE
 
 	var/hide_mode = 0
 	var/datum/game_mode/mode = null
@@ -21,12 +23,6 @@ var/datum/subsystem/ticker/ticker
 	var/round_end_sound						//music/jingle played when the world reboots
 
 	var/list/datum/mind/minds = list()		//The characters in the game. Used for objective tracking.
-
-	//These bible variables should be a preference
-	var/Bible_icon_state					//icon_state the chaplain has chosen for his bible
-	var/Bible_item_state					//item_state the chaplain has chosen for his bible
-	var/Bible_name							//name of the bible
-	var/Bible_deity_name					//name of chaplin's deity
 
 	var/list/syndicate_coalition = list()	//list of traitor-compatible factions
 	var/list/factions = list()				//list of all factions
@@ -55,10 +51,12 @@ var/datum/subsystem/ticker/ticker
 
 	var/maprotatechecked = 0
 
+	var/news_report
+
 /datum/subsystem/ticker/New()
 	NEW_SS_GLOBAL(ticker)
 
-	login_music = pickweight(list('sound/ambience/title2.ogg' = 31, 'sound/ambience/title1.ogg' = 31, 'sound/ambience/title3.ogg' =31, 'sound/ambience/clown.ogg' = 7)) // choose title music!
+	login_music = pickweight(list('sound/ambience/title2.ogg' = 15, 'sound/ambience/title1.ogg' =15, 'sound/ambience/title3.ogg' =14, 'sound/ambience/title4.ogg' =14, 'sound/misc/i_did_not_grief_them.ogg' =14, 'sound/ambience/clown.ogg' = 9)) // choose title music!
 	if(SSevent.holidays && SSevent.holidays[APRIL_FOOLS])
 		login_music = 'sound/ambience/clown.ogg'
 
@@ -85,6 +83,9 @@ var/datum/subsystem/ticker/ticker
 				++totalPlayers
 				if(player.ready)
 					++totalPlayersReady
+
+			if(start_immediately)
+				timeLeft = 0
 
 			//countdown
 			if(timeLeft < 0)
@@ -239,7 +240,7 @@ var/datum/subsystem/ticker/ticker
 
 	//Now animate the cinematic
 	switch(station_missed)
-		if(1)	//nuke was nearby but (mostly) missed
+		if(NUKE_NEAR_MISS)	//nuke was nearby but (mostly) missed
 			if( mode && !override )
 				override = mode.name
 			switch( override )
@@ -265,7 +266,7 @@ var/datum/subsystem/ticker/ticker
 					//flick("end",cinematic)
 
 
-		if(2)	//nuke was nowhere nearby	//TODO: a really distant explosion animation
+		if(NUKE_MISS_STATION || NUKE_SYNDICATE_BASE)	//nuke was nowhere nearby	//TODO: a really distant explosion animation
 			sleep(50)
 			world << sound('sound/effects/explosionfar.ogg')
 		else	//station was destroyed
@@ -349,7 +350,7 @@ var/datum/subsystem/ticker/ticker
 				SSjob.EquipRank(player, player.mind.assigned_role, 0)
 	if(captainless)
 		for(var/mob/M in player_list)
-			if(!istype(M,/mob/new_player))
+			if(!isnewplayer(M))
 				M << "Captainship not forced on anyone."
 
 
@@ -358,6 +359,7 @@ var/datum/subsystem/ticker/ticker
 	var/station_evacuated = EMERGENCY_ESCAPED_OR_ENDGAMED
 	var/num_survivors = 0
 	var/num_escapees = 0
+	var/num_shuttle_escapees = 0
 
 	world << "<BR><BR><BR><FONT size=3><B>The round has ended.</B></FONT>"
 
@@ -367,11 +369,16 @@ var/datum/subsystem/ticker/ticker
 			if(Player.stat != DEAD && !isbrain(Player))
 				num_survivors++
 				if(station_evacuated) //If the shuttle has already left the station
+					var/area/shuttle_area
+					if(SSshuttle && SSshuttle.emergency)
+						shuttle_area = SSshuttle.emergency.areaInstance
 					if(!Player.onCentcom() && !Player.onSyndieBase())
 						Player << "<font color='blue'><b>You managed to survive, but were marooned on [station_name()]...</b></FONT>"
 					else
 						num_escapees++
 						Player << "<font color='green'><b>You managed to survive the events on [station_name()] as [Player.real_name].</b></FONT>"
+						if(get_area(Player) == shuttle_area)
+							num_shuttle_escapees++
 				else
 					Player << "<font color='green'><b>You managed to survive the events on [station_name()] as [Player.real_name].</b></FONT>"
 			else
@@ -380,15 +387,22 @@ var/datum/subsystem/ticker/ticker
 	//Round statistics report
 	var/datum/station_state/end_state = new /datum/station_state()
 	end_state.count()
-	var/station_integrity = min(round( 100 * start_state.score(end_state), 0.1), 100)
+	var/station_integrity = min(PERCENT(start_state.score(end_state)), 100)
 
 	world << "<BR>[TAB]Shift Duration: <B>[round(world.time / 36000)]:[add_zero("[world.time / 600 % 60]", 2)]:[world.time / 100 % 6][world.time / 100 % 10]</B>"
 	world << "<BR>[TAB]Station Integrity: <B>[mode.station_was_nuked ? "<font color='red'>Destroyed</font>" : "[station_integrity]%"]</B>"
+	if(mode.station_was_nuked)
+		ticker.news_report = STATION_DESTROYED_NUKE
+	var/total_players = joined_player_list.len
 	if(joined_player_list.len)
-		world << "<BR>[TAB]Total Population: <B>[joined_player_list.len]</B>"
+		world << "<BR>[TAB]Total Population: <B>[total_players]</B>"
 		if(station_evacuated)
-			world << "<BR>[TAB]Evacuation Rate: <B>[num_escapees] ([round((num_escapees/joined_player_list.len)*100, 0.1)]%)</B>"
-		world << "<BR>[TAB]Survival Rate: <B>[num_survivors] ([round((num_survivors/joined_player_list.len)*100, 0.1)]%)</B>"
+			world << "<BR>[TAB]Evacuation Rate: <B>[num_escapees] ([PERCENT(num_escapees/total_players)]%)</B>"
+			world << "<BR>[TAB](on emergency shuttle): <B>[num_shuttle_escapees] ([PERCENT(num_shuttle_escapees/total_players)]%)</B>"
+			news_report = STATION_EVACUATED
+			if(SSshuttle.emergency.is_hijacked())
+				news_report = SHUTTLE_HIJACK
+		world << "<BR>[TAB]Survival Rate: <B>[num_survivors] ([PERCENT(num_survivors/total_players)]%)</B>"
 	world << "<BR>"
 
 	//Silicon laws report
@@ -425,6 +439,9 @@ var/datum/subsystem/ticker/ticker
 		if (findtext("[handler]","auto_declare_completion_"))
 			call(mode, handler)(force_ending)
 
+	if(cross_allowed)
+		send_news_report()
+
 	//Print a list of antagonists to the server log
 	var/list/total_antagonists = list()
 	//Look into all mobs in world, dead or alive
@@ -441,6 +458,42 @@ var/datum/subsystem/ticker/ticker
 	log_game("Antagonists at round end were...")
 	for(var/i in total_antagonists)
 		log_game("[i]s[total_antagonists[i]].")
+
+	//Borers
+	var/borerwin = FALSE
+	if(borers.len)
+		var/borertext = "<br><font size=3><b>The borers were:</b></font>"
+		for(var/mob/living/simple_animal/borer/B in borers)
+			if((B.key || B.controlling) && B.stat != DEAD)
+				borertext += "<br>[B.controlling ? B.victim.key : B.key] was [B.truename] ("
+				var/turf/location = get_turf(B)
+				if(location.z == ZLEVEL_CENTCOM && B.victim)
+					borertext += "escaped with host"
+				else
+					borertext += "failed"
+				borertext += ")"
+		world << borertext
+
+		var/total_borers = 0
+		for(var/mob/living/simple_animal/borer/B in borers)
+			if((B.key || B.victim) && B.stat != DEAD)
+				total_borers++
+		if(total_borers)
+			var/total_borer_hosts = 0
+			for(var/mob/living/carbon/C in mob_list)
+				var/mob/living/simple_animal/borer/D = C.has_brain_worms()
+				var/turf/location = get_turf(C)
+				if(location.z == ZLEVEL_CENTCOM && D && D.stat != DEAD)
+					total_borer_hosts++
+			if(total_borer_hosts_needed <= total_borer_hosts)
+				borerwin = TRUE
+			world << "<b>There were [total_borers] borers alive at round end!</b>"
+			world << "<b>A total of [total_borer_hosts] borers with hosts escaped on the shuttle alive. The borers needed [total_borer_hosts_needed] hosts to escape.</b>"
+			if(borerwin)
+				world << "<b><font color='green'>The borers were successful!</font></b>"
+			else
+				world << "<b><font color='red'>The borers have failed!</font></b>"
+	return TRUE
 
 	mode.declare_station_goal_completion()
 
@@ -529,11 +582,6 @@ var/datum/subsystem/ticker/ticker
 
 	minds = ticker.minds
 
-	Bible_icon_state = ticker.Bible_icon_state
-	Bible_item_state = ticker.Bible_item_state
-	Bible_name = ticker.Bible_name
-	Bible_deity_name = ticker.Bible_deity_name
-
 	syndicate_coalition = ticker.syndicate_coalition
 	factions = ticker.factions
 	availablefactions = ticker.availablefactions
@@ -553,3 +601,56 @@ var/datum/subsystem/ticker/ticker
 	queued_players = ticker.queued_players
 	cinematic = ticker.cinematic
 	maprotatechecked = ticker.maprotatechecked
+
+
+/datum/subsystem/ticker/proc/send_news_report()
+	var/news_message
+	var/news_source = "Nanotrasen News Network"
+	switch(news_report)
+		if(NUKE_SYNDICATE_BASE)
+			news_message = "In a daring raid, the heroic crew of [station_name()] detonated a nuclear device in the heart of a terrorist base."
+		if(STATION_DESTROYED_NUKE)
+			news_message = "We would like to reassure all employees that the reports of a Syndicate backed nuclear attack on [station_name()] are, in fact, a hoax. Have a secure day!"
+		if(STATION_EVACUATED)
+			news_message = "The crew of [station_name()] has been evacuated amid unconfirmed reports of enemy activity."
+		if(GANG_LOSS)
+			news_message = "Organized crime aboard [station_name()] has been stamped out by members of our ever vigilant security team. Remember to thank your assigned officers today!"
+		if(GANG_TAKEOVER)
+			news_message = "Contact with [station_name()] has been lost after a sophisticated hacking attack by organized criminal elements. Stay vigilant!"
+		if(BLOB_WIN)
+			news_message = "[station_name()] was overcome by an unknown biological outbreak, killing all crew on board. Don't let it happen to you! Remember, a clean work station is a safe work station."
+		if(BLOB_NUKE)
+			news_message = "[station_name()] is currently undergoing decontanimation after a controlled burst of radiation was used to remove a biological ooze. All employees were safely evacuated prior, and are enjoying a relaxing vacation."
+		if(BLOB_DESTROYED)
+			news_message = "[station_name()] is currently undergoing decontamination procedures after the destruction of a biological hazard. As a reminder, any crew members experiencing cramps or bloating should report immediately to security for incineration."
+		if(CULT_ESCAPE)
+			news_message = "Security Alert: A group of religious fanatics have escaped from [station_name()]."
+		if(CULT_FAILURE)
+			news_message = "Following the dismantling of a restricted cult aboard [station_name()], we would like to remind all employees that worship outside of the Chapel is strictly prohibited, and cause for termination."
+		if(CULT_SUMMON)
+			news_message = "Company officials would like to clarify that [station_name()] was scheduled to be decommissioned following meteor damage earlier this year. Earlier reports of an unknowable eldritch horror were made in error."
+		if(NUKE_MISS)
+			news_message = "The Syndicate have bungled a terrorist attack [station_name()], detonating a nuclear weapon in empty space near by."
+		if(OPERATIVES_KILLED)
+			news_message = "Repairs to [station_name()] are underway after an elite Syndicate death squad was wiped out by the crew."
+		if(OPERATIVE_SKIRMISH)
+			news_message = "A skirmish between security forces and Syndicate agents aboard [station_name()] ended with both sides bloodied but intact."
+		if(REVS_WIN)
+			news_message = "Company officials have reassured investors that despite a union led revolt aboard [station_name()] that there will be no wage increases for workers."
+		if(REVS_LOSE)
+			news_message = "[station_name()] quickly put down a misguided attempt at mutiny. Remember, unionizing is illegal!"
+		if(WIZARD_KILLED)
+			news_message = "Tensions have flared with the Wizard's Federation following the death of one of their members aboard [station_name()]."
+		if(STATION_NUKED)
+			news_message = "[station_name()] activated its self destruct device for unknown reasons. Attempts to clone the Captain so he can be arrested and executed are under way."
+		if(CLOCK_SUMMON)
+			news_message = "The garbled messages about hailing a mouse and strange energy readings from [station_name()] have been discovered to be an ill-advised, if thorough, prank by a clown."
+		if(CLOCK_SILICONS)
+			news_message = "The project started by [station_name()] to upgrade their silicon units with advanced equipment have been largely successful, though they have thus far refused to release schematics in a violation of company policy."
+		if(CLOCK_PROSELYTIZATION)
+			news_message = "The burst of energy released near [station_name()] has been confirmed as merely a test of a new weapon. However, due to an unexpected mechanical error, their communications system has been knocked offline."
+		if(SHUTTLE_HIJACK)
+			news_message = "During routine evacuation procedures, the emergency shuttle of [station_name()] had its navigation protocols corrupted and went off course, but was recovered shortly after."
+
+	if(news_message)
+		send2otherserver(news_source, news_message,"News_Report")

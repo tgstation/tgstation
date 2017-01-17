@@ -62,7 +62,7 @@
 	. = list()
 	for(var/obj/item/I in user.held_items)
 		. += I
-	if(!istype(user.loc, /turf))
+	if(!isturf(user.loc))
 		return
 	var/list/L = block(get_step(user, SOUTHWEST), get_step(user, NORTHEAST))
 	for(var/A in L)
@@ -85,7 +85,7 @@
 		else
 			if(istype(I, /obj/item/weapon/reagent_containers))
 				var/obj/item/weapon/reagent_containers/RC = I
-				if(RC.flags & OPENCONTAINER)
+				if(RC.container_type & OPENCONTAINER)
 					for(var/datum/reagent/A in RC.reagents.reagent_list)
 						.[A.type] += A.volume
 			.[I.type] += 1

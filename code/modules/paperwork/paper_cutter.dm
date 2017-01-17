@@ -2,10 +2,10 @@
 	name = "paper cutter"
 	desc = "Standard office equipment. Precisely cuts paper using a large blade."
 	icon = 'icons/obj/bureaucracy.dmi'
-	icon_state = "papercutter-cutter"
+	icon_state = "papercutter"
 	force = 5
 	throwforce = 5
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 	var/obj/item/weapon/paper/storedpaper = null
 	var/obj/item/weapon/hatchet/cutterblade/storedcutter = null
 	var/cuttersecured = TRUE
@@ -15,15 +15,21 @@
 /obj/item/weapon/papercutter/New()
 	..()
 	storedcutter = new /obj/item/weapon/hatchet/cutterblade(src)
+	update_icon()
 
 
 /obj/item/weapon/papercutter/suicide_act(mob/user)
 	if(storedcutter)
-		user.visible_message("<span class='suicide'>[user] is beheading \himself with [src.name]! It looks like \he's trying to commit suicide.</span>")
-		playsound(loc, 'sound/weapons/bladeslice.ogg', 50, 1, -1)
+		user.visible_message("<span class='suicide'>[user] is beheading [user.p_them()]self with [src.name]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+		if(iscarbon(user))
+			var/mob/living/carbon/C = user
+			var/obj/item/bodypart/BP = C.get_bodypart("head")
+			if(BP)
+				BP.drop_limb()
+				playsound(loc,pick('sound/misc/desceration-01.ogg','sound/misc/desceration-02.ogg','sound/misc/desceration-01.ogg') ,50, 1, -1)
 		return (BRUTELOSS)
 	else
-		user.visible_message("<span class='suicide'>[user] repeatedly bashes [src.name] against \his head! It looks like \he's trying to commit suicide.</span>")
+		user.visible_message("<span class='suicide'>[user] repeatedly bashes [src.name] against [user.p_their()] head! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 		playsound(loc, 'sound/items/gavel.ogg', 50, 1, -1)
 		return (BRUTELOSS)
 
@@ -41,7 +47,7 @@
 		if(!user.drop_item())
 			return
 		playsound(loc, "pageturn", 60, 1)
-		user << "<span class='notice'>You place \the [P] in [src].</span>"
+		user << "<span class='notice'>You place [P] in [src].</span>"
 		P.loc = src
 		storedpaper = P
 		update_icon()
@@ -55,17 +61,17 @@
 		update_icon()
 		return
 	if(istype(P, /obj/item/weapon/screwdriver) && storedcutter)
-		playsound(src, 'sound/items/Screwdriver.ogg', 50, 1)
-		user << "<span class='notice'>\The [storedcutter] has been [cuttersecured ? "unsecured" : "secured"].</span>"
+		playsound(src, P.usesound, 50, 1)
+		user << "<span class='notice'>[storedcutter] has been [cuttersecured ? "unsecured" : "secured"].</span>"
 		cuttersecured = !cuttersecured
 		return
 	..()
 
 
 /obj/item/weapon/papercutter/attack_hand(mob/user)
-	src.add_fingerprint(user)
+	add_fingerprint(user)
 	if(!storedcutter)
-		user << "<span class='notice'>The cutting blade is gone! You can't use \the [src] now.</span>"
+		user << "<span class='notice'>The cutting blade is gone! You can't use [src] now.</span>"
 		return
 
 	if(!cuttersecured)
@@ -76,7 +82,7 @@
 
 	if(storedpaper)
 		playsound(src.loc, 'sound/weapons/slash.ogg', 50, 1)
-		user << "<span class='notice'>You neatly cut \the [storedpaper].</span>"
+		user << "<span class='notice'>You neatly cut [storedpaper].</span>"
 		storedpaper = null
 		qdel(storedpaper)
 		new /obj/item/weapon/paperslip(get_turf(src))
@@ -106,8 +112,9 @@
 	desc = "A little slip of paper left over after a larger piece was cut. Whoa."
 	icon_state = "paperslip"
 	icon = 'icons/obj/bureaucracy.dmi'
-	resistance_flags = 0
-	burntime = 3
+	resistance_flags = FLAMMABLE
+	obj_integrity = 50
+	max_integrity = 50
 
 /obj/item/weapon/paperslip/New()
 	..()

@@ -1,4 +1,4 @@
-/obj/effect/proc_holder/spell/targeted/touch/
+/obj/effect/proc_holder/spell/targeted/touch
 	var/hand_path = "/obj/item/weapon/melee/touch_attack"
 	var/obj/item/weapon/melee/touch_attack/attached_hand = null
 	invocation_type = "none" //you scream on connecting, not summoning

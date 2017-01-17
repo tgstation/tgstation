@@ -11497,7 +11497,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/item/weapon/hand_labeler,
-/obj/item/clothing/tie/stethoscope,
+/obj/item/clothing/neck/stethoscope,
 /turf/open/floor/plasteel/white/side{
 	dir = 2;
 	heat_capacity = 1e+006
@@ -18069,7 +18069,7 @@
 "yN" = (
 /obj/structure/grille{
 	density = 0;
-	destroyed = 1;
+	broken = 1;
 	icon_state = "brokengrille"
 	},
 /turf/open/floor/plasteel/shuttle{

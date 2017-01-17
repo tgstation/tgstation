@@ -66,6 +66,14 @@
 	build_path = /obj/item/weapon/weldingtool
 	category = list("initial","Tools")
 
+/datum/design/mini_weldingtool
+	name = "Emergency welding tool"
+	id = "mini_welding_tool"
+	build_type = AUTOLATHE
+	materials = list(MAT_METAL = 30, MAT_GLASS = 10)
+	build_path = /obj/item/weapon/weldingtool/mini
+	category = list("initial","Tools")
+
 /datum/design/screwdriver
 	name = "Screwdriver"
 	id = "screwdriver"
@@ -162,6 +170,14 @@
 	materials = list(MAT_METAL = 50, MAT_GLASS = 50)
 	build_path = /obj/item/weapon/electronics/firealarm
 	category = list("initial", "Electronics")
+
+/datum/design/earmuffs
+	name = "Earmuffs"
+	id = "earmuffs"
+	build_type = AUTOLATHE
+	materials = list(MAT_METAL = 500, MAT_GLASS = 500)
+	build_path = /obj/item/clothing/ears/earmuffs
+	category = list("initial", "Misc")
 
 /datum/design/pipe_painter
 	name = "Pipe painter"
@@ -499,7 +515,7 @@
 	name = "Light tube"
 	id = "light_tube"
 	build_type = AUTOLATHE
-	materials = list(MAT_METAL = 60, MAT_GLASS = 100)
+	materials = list(MAT_GLASS = 100)
 	build_path = /obj/item/weapon/light/tube
 	category = list("initial", "Construction")
 
@@ -507,7 +523,7 @@
 	name = "Light bulb"
 	id = "light_bulb"
 	build_type = AUTOLATHE
-	materials = list(MAT_METAL = 60, MAT_GLASS = 100)
+	materials = list(MAT_GLASS = 100)
 	build_path = /obj/item/weapon/light/bulb
 	category = list("initial", "Construction")
 

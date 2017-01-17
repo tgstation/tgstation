@@ -8,6 +8,7 @@
 	circuit = /obj/item/weapon/circuitboard/computer/pandemic
 	use_power = 1
 	idle_power_usage = 20
+	resistance_flags = ACID_PROOF
 	var/temp_html = ""
 	var/wait = null
 	var/obj/item/weapon/reagent_containers/beaker = null
@@ -226,9 +227,12 @@
 							dat += "<b>Description: </b> [(D.desc||"none")]<BR>"
 							dat += "<b>Spread:</b> [(D.spread_text||"none")]<BR>"
 							dat += "<b>Possible cure:</b> [(D.cure_text||"none")]<BR><BR>"
-
 							if(istype(D, /datum/disease/advance))
 								var/datum/disease/advance/A = D
+								dat += "<b>Stealth:</b> [(A.totalStealth())]<BR>"
+								dat += "<b>Resistance:</b> [(A.totalResistance())]<BR>"
+								dat += "<b>Stage Speed:</b> [(A.totalStageSpeed())]<BR>"
+								dat += "<b>Transmission:</b> [(A.totalTransmittable())]<BR><BR>"
 								dat += "<b>Symptoms:</b> "
 								var/english_symptoms = list()
 								for(var/datum/symptom/S in A.symptoms)
@@ -274,7 +278,7 @@
 
 
 /obj/machinery/computer/pandemic/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/weapon/reagent_containers) && (I.flags & OPENCONTAINER))
+	if(istype(I, /obj/item/weapon/reagent_containers) && (I.container_type & OPENCONTAINER))
 		. = 1 //no afterattack
 		if(stat & (NOPOWER|BROKEN))
 			return

@@ -138,7 +138,7 @@
 	else if(isAI(user))
 		var/mob/living/silicon/ai/U = user
 		P = U.aiMulti
-	else if(isrobot(user) && in_range(user, src))
+	else if(iscyborg(user) && in_range(user, src))
 		if(istype(user.get_active_held_item(), /obj/item/device/multitool))
 			P = user.get_active_held_item()
 	return P
@@ -179,7 +179,7 @@
 		if(result)
 			temp = "<font color = #666633>-% [src]'s signal has been successfully changed.</font color>"
 		else
-			temp = "<font color = #666633>-% [src] could not lock it's signal onto the station. Two broadcasters or receivers required.</font color>"
+			temp = "<font color = #666633>-% [src] could not lock its signal onto the station. Two broadcasters or receivers required.</font color>"
 
 // BUS
 

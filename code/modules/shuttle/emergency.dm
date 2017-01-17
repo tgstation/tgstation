@@ -86,8 +86,9 @@
 
 	if((old_len != authorized.len) && !ENGINES_STARTED)
 		var/alert = (authorized.len > old_len)
-		if(authorized.len)
-			minor_announce("[auth_need - authorized.len] authorizations \
+		var/remaining = auth_need - authorized.len
+		if(authorized.len && remaining)
+			minor_announce("[remaining] authorizations \
 				needed until shuttle is launched early", null, alert)
 		else
 			minor_announce("All authorizations to launch the shuttle \
@@ -136,6 +137,10 @@
 	if(!IS_DOCKED)
 		return
 
+	if(emagged || ENGINES_STARTED)	//SYSTEM ERROR: THE SHUTTLE WILL LA-SYSTEM ERROR: THE SHUTTLE WILL LA-SYSTEM ERROR: THE SHUTTLE WILL LAUNCH IN 10 SECONDS
+		user << "<span class='warning'>The shuttle is already about to launch!</span>"
+		return
+
 	var/time = TIME_LEFT
 	message_admins("[key_name_admin(user.client)] \
 	(<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) \
@@ -155,12 +160,7 @@
 
 		authorized += ID
 
-	if(ENGINES_STARTED)
-		// Give them a message anyway
-		user << "<span class='warning'>The shuttle is already \
-			about to launch!</span>"
-	else
-		process()
+	process()
 
 /obj/machinery/computer/emergency_shuttle/Destroy()
 	// Our fake IDs that the emag generated are just there for colour
@@ -185,6 +185,9 @@
 	port_angle = -90
 	roundstart_move = "emergency_away"
 	var/sound_played = 0 //If the launch sound has been sent to all players on the shuttle itself
+
+/obj/docking_port/mobile/emergency/canDock(obj/docking_port/stationary/S)
+	return SHUTTLE_CAN_DOCK //If the emergency shuttle can't move, the whole game breaks, so it will force itself to land even if it has to crush a few departments in the process
 
 /obj/docking_port/mobile/emergency/register()
 	. = ..()
@@ -229,6 +232,26 @@
 	else
 		SSshuttle.emergencyLastCallLoc = null
 	priority_announce("The emergency shuttle has been recalled.[SSshuttle.emergencyLastCallLoc ? " Recall signal traced. Results can be viewed on any communications console." : "" ]", null, 'sound/AI/shuttlerecalled.ogg', "Priority")
+
+/obj/docking_port/mobile/emergency/proc/is_hijacked()
+	var/has_people = FALSE
+
+	for(var/mob/living/player in player_list)
+		if(player.mind)
+			if(player.stat != DEAD)
+				if(issilicon(player)) //Borgs are technically dead anyways
+					continue
+				if(isanimal(player)) //animals don't count
+					continue
+				if(isbrain(player)) //also technically dead
+					continue
+				if(get_area(player) == areaInstance)
+					has_people = TRUE
+					var/location = get_turf(player.mind.current)
+					if(!(player.mind.special_role == "traitor" || player.mind.special_role == "Syndicate") && !istype(location, /turf/open/floor/plasteel/shuttle/red) && !istype(location, /turf/open/floor/mineral/plastitanium/brig))
+						return FALSE
+
+	return has_people
 
 /obj/docking_port/mobile/emergency/check()
 	if(!timer)
@@ -318,9 +341,21 @@
 				launch_status = ENDGAME_LAUNCHED
 				setTimer(SSshuttle.emergencyEscapeTime)
 				priority_announce("The Emergency Shuttle has left the station. Estimate [timeLeft(600)] minutes until the shuttle docks at Central Command.", null, null, "Priority")
+
 		if(SHUTTLE_STRANDED)
 			SSshuttle.checkHostileEnvironment()
+
 		if(SHUTTLE_ESCAPE)
+			if(areaInstance.parallax_movedir && time_left <= PARALLAX_LOOP_TIME)
+				parallax_slowdown()
+				for(var/area/shuttle/escape/E in world)
+					E << 'sound/effects/hyperspace_end.ogg'
+				for(var/A in SSshuttle.mobile)
+					var/obj/docking_port/mobile/M = A
+					if(M.launch_status == ENDGAME_LAUNCHED)
+						if(istype(M, /obj/docking_port/mobile/pod))
+							M.parallax_slowdown()
+
 			if(time_left <= 0)
 				//move each escape pod to its corresponding escape dock
 				for(var/A in SSshuttle.mobile)
@@ -331,10 +366,16 @@
 						else
 							continue //Mapping a new docking point for each ship mappers could potentially want docking with centcomm would take up lots of space, just let them keep flying off into the sunset for their greentext
 
-				//now move the actual emergency shuttle to centcomm
-				for(var/area/shuttle/escape/E in world)
-					E << 'sound/effects/hyperspace_end.ogg'
-				dock(SSshuttle.getDock("emergency_away"))
+				// now move the actual emergency shuttle to centcomm
+				// unless the shuttle is "hijacked"
+				var/destination_dock = "emergency_away"
+				if(is_hijacked())
+					destination_dock = "emergency_syndicate"
+					minor_announce("Corruption detected in \
+						shuttle navigation protocols. Please contact your \
+						supervisor.", "SYSTEM ERROR:", alert=TRUE)
+
+				dock_id(destination_dock)
 				mode = SHUTTLE_ENDGAME
 				timer = 0
 
@@ -347,9 +388,13 @@
 	launch_status = UNLAUNCHED
 
 /obj/docking_port/mobile/pod/request()
-	if((security_level == SEC_LEVEL_RED || security_level == SEC_LEVEL_DELTA) && launch_status == UNLAUNCHED)
-		launch_status = EARLY_LAUNCHED
-		return ..()
+	if(security_level == SEC_LEVEL_RED || security_level == SEC_LEVEL_DELTA)
+		if(launch_status == UNLAUNCHED)
+			launch_status = EARLY_LAUNCHED
+			return ..()
+	else
+		usr << "<span class='warning'>Escape pods will only launch during \"Code Red\" security alert.</span>"
+		return 1
 
 /obj/docking_port/mobile/pod/New()
 	if(id == "pod")
@@ -379,12 +424,21 @@
 	width = 3
 	height = 4
 	var/target_area = /area/lavaland/surface/outdoors
+	var/edge_distance = 16
+	// Minimal distance from the map edge, setting this too low can result in shuttle landing on the edge and getting "sliced"
 
 /obj/docking_port/stationary/random/initialize()
 	..()
 	var/list/turfs = get_area_turfs(target_area)
 	var/turf/T = pick(turfs)
-	src.loc = T
+
+	while(turfs.len)
+		if(T.x<edge_distance || T.y<edge_distance || (world.maxx+1-T.x)<edge_distance || (world.maxy+1-T.y)<edge_distance)
+			turfs -= T
+			T = pick(turfs)
+		else
+			src.loc = T
+			break
 
 //Pod suits/pickaxes
 

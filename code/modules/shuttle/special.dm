@@ -57,7 +57,8 @@
 	name = "wabbajack altar"
 	desc = "Whether you're sleeping or waking, it's going to be \
 		quite chaotic."
-	health = 1000
+	obj_integrity = 1000
+	max_integrity = 1000
 	verb_say = "chants"
 	var/obj/machinery/power/emitter/energycannon/magical/our_statue
 	var/list/mob/living/sleepers = list()
@@ -94,12 +95,11 @@
 	// New sleepers
 	for(var/i in found - sleepers)
 		var/mob/living/L = i
-		L.color = "#800080"
-		L.visible_message("<span class='revennotice'>A strange purple glow \
-			wraps itself around [L] as they suddenly fall unconcious.</span>",
+		L.add_atom_colour("#800080", TEMPORARY_COLOUR_PRIORITY)
+		L.visible_message("<span class='revennotice'>A strange purple glow wraps itself around [L] as [L.p_they()] suddenly fall[L.p_s()] unconscious.</span>",
 			"<span class='revendanger'>[desc]</span>")
 		// Don't let them sit suround unconscious forever
-		addtimer(src, "sleeper_dreams", 100, FALSE, L)
+		addtimer(CALLBACK(src, .proc/sleeper_dreams, L), 100)
 
 	// Existing sleepers
 	for(var/i in found)
@@ -109,7 +109,7 @@
 	// Missing sleepers
 	for(var/i in sleepers - found)
 		var/mob/living/L = i
-		L.color = initial(L.color)
+		L.remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, "#800080")
 		L.visible_message("<span class='revennotice'>The glow from [L] fades \
 			away.</span>")
 		L.grab_ghost()
@@ -187,7 +187,8 @@
 /obj/structure/table/wood/bar
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	flags = NODECONSTRUCT
-	health = 1000
+	obj_integrity = 1000
+	max_integrity = 1000
 	var/boot_dir = 1
 
 /obj/structure/table/wood/bar/Crossed(atom/movable/AM)
@@ -196,7 +197,7 @@
 		var/mob/living/M = AM
 		var/throwtarget = get_edge_target_turf(src, boot_dir)
 		M.Weaken(2)
-		M.throw_at_fast(throwtarget, 5, 1,src)
+		M.throw_at(throwtarget, 5, 1,src)
 		M << "<span class='notice'>No climbing on the bar please.</span>"
 	else
 		. = ..()

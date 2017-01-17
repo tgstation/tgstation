@@ -4,6 +4,7 @@
 	icon_state = "largecrate"
 	density = 1
 	material_drop = /obj/item/stack/sheet/mineral/wood
+	delivery_icon = "deliverybox"
 
 /obj/structure/closet/crate/large/attack_hand(mob/user)
 	add_fingerprint(user)

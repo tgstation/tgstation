@@ -14,6 +14,8 @@
 	var/opening = 0
 	density = 1
 	opacity = 1
+	obj_integrity = 100
+	max_integrity = 100
 
 	canSmoothWith = list(
 	/turf/closed/wall,
@@ -26,6 +28,7 @@
 	/turf/closed/wall/clockwork)
 	smooth = SMOOTH_TRUE
 	can_be_unanchored = 0
+	CanAtmosPass = ATMOS_PASS_DENSITY
 
 /obj/structure/falsewall/New(loc)
 	..()
@@ -36,8 +39,9 @@
 	air_update_turf(1)
 	return ..()
 
-/obj/structure/falsewall/CanAtmosPass(turf/T)
-	return !density
+/obj/structure/falsewall/ratvar_act()
+	new /obj/structure/falsewall/brass(loc)
+	qdel(src)
 
 /obj/structure/falsewall/attack_hand(mob/user)
 	if(opening)
@@ -65,14 +69,6 @@
 	air_update_turf(1)
 	opening = 0
 
-/obj/structure/falsewall/attack_animal(mob/living/simple_animal/user)
-	if(user.environment_smash)
-		user.changeNext_move(CLICK_CD_MELEE)
-		user.do_attack_animation(src)
-		playsound(src, 'sound/effects/meteorimpact.ogg', 100, 1)
-		visible_message("<span class='danger'>[user] smashes [src] apart!</span>")
-		deconstruct()
-
 /obj/structure/falsewall/proc/do_the_flick()
 	if(density)
 		smooth = SMOOTH_FALSE
@@ -85,7 +81,7 @@
 	if(density)
 		smooth = SMOOTH_TRUE
 		queue_smooth(src)
-		icon_state = "wall"
+		icon_state = initial(icon_state)
 	else
 		icon_state = "fwall_open"
 
@@ -107,7 +103,7 @@
 			if(T.density)
 				user << "<span class='warning'>[src] is blocked!</span>"
 				return
-			if(!istype(T, /turf/open/floor))
+			if(!isfloorturf(T))
 				user << "<span class='warning'>[src] bolts must be tightened on the floor!</span>"
 				return
 			user.visible_message("<span class='notice'>[user] tightens some bolts on the wall.</span>", "<span class='notice'>You tighten the bolts on the wall.</span>")
@@ -128,21 +124,25 @@
 	else
 		return ..()
 
-/obj/structure/falsewall/proc/dismantle(mob/user, drop_girder)
+/obj/structure/falsewall/proc/dismantle(mob/user, disassembled = TRUE)
 	user.visible_message("<span class='notice'>[user] dismantles the false wall.</span>", "<span class='notice'>You dismantle the false wall.</span>")
 	playsound(src, 'sound/items/Welder.ogg', 100, 1)
-	deconstruct(drop_girder)
+	deconstruct(disassembled)
 
-/obj/structure/falsewall/deconstruct(drop_girder)
-	if(drop_girder)
-		new girder_type(loc)
-	if(mineral_amount)
-		for(var/i in 1 to mineral_amount)
-			new mineral(loc)
-	..()
+/obj/structure/falsewall/deconstruct(disassembled = TRUE)
+	if(!(flags & NODECONSTRUCT))
+		if(disassembled)
+			new girder_type(loc)
+		if(mineral_amount)
+			for(var/i in 1 to mineral_amount)
+				new mineral(loc)
+	qdel(src)
 
 /obj/structure/falsewall/storage_contents_dump_act(obj/item/weapon/storage/src_object, mob/user)
 	return 0
+
+/obj/structure/falsewall/examine_status() //So you can't detect falsewalls by examine.
+	return null
 
 /*
  * False R-Walls
@@ -220,6 +220,8 @@
 	mineral = /obj/item/stack/sheet/mineral/diamond
 	walltype = /turf/closed/wall/mineral/diamond
 	canSmoothWith = list(/obj/structure/falsewall/diamond, /turf/closed/wall/mineral/diamond)
+	obj_integrity = 800
+	max_integrity = 800
 
 /obj/structure/falsewall/plasma
 	name = "plasma wall"
@@ -318,7 +320,23 @@
 	desc = "A huge chunk of warm metal. The clanging of machinery emanates from within."
 	icon = 'icons/turf/walls/clockwork_wall.dmi'
 	icon_state = "clockwork_wall"
+	resistance_flags = FIRE_PROOF | ACID_PROOF
 	mineral_amount = 1
+	canSmoothWith = list(/obj/effect/clockwork/overlay/wall, /obj/structure/falsewall/brass)
 	girder_type = /obj/structure/destructible/clockwork/wall_gear/displaced
 	walltype = /turf/closed/wall/clockwork
-	mineral = /obj/item/stack/sheet/brass
+	mineral = /obj/item/stack/tile/brass
+
+/obj/structure/falsewall/brass/New(loc)
+	..()
+	var/turf/T = get_turf(src)
+	PoolOrNew(/obj/effect/overlay/temp/ratvar/wall/false, T)
+	PoolOrNew(/obj/effect/overlay/temp/ratvar/beam/falsewall, T)
+	change_construction_value(4)
+
+/obj/structure/falsewall/brass/Destroy()
+	change_construction_value(-4)
+	return ..()
+
+/obj/structure/falsewall/brass/ratvar_act()
+	obj_integrity = max_integrity

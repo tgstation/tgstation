@@ -53,11 +53,11 @@
 	response_disarm = "gently moves aside"
 	response_harm   = "swats"
 	stop_automated_movement = 1
-	a_intent = "harm" //parrots now start "aggressive" since only player parrots will nuzzle.
+	a_intent = INTENT_HARM //parrots now start "aggressive" since only player parrots will nuzzle.
 	attacktext = "chomps"
 	friendly = "grooms"
 	mob_size = MOB_SIZE_SMALL
-	flying = 1
+	movement_type = FLYING
 	gold_core_spawnable = 2
 
 	var/parrot_damage_upper = 10
@@ -199,7 +199,7 @@
 		return
 
 	//Is the usr's mob type able to do this? (lolaliens)
-	if(ishuman(usr) || ismonkey(usr) || isrobot(usr) ||  isalienadult(usr))
+	if(ishuman(usr) || ismonkey(usr) || iscyborg(usr) ||  isalienadult(usr))
 
 		//Removing from inventory
 		if(href_list["remove_inv"])
@@ -280,7 +280,7 @@
 	..()
 	if(client)
 		return
-	if(!stat && M.a_intent == "harm")
+	if(!stat && M.a_intent == INTENT_HARM)
 
 		icon_state = "parrot_fly" //It is going to be flying regardless of whether it flees or attacks
 
@@ -295,7 +295,7 @@
 		else
 			parrot_state |= PARROT_FLEE		//Otherwise, fly like a bat out of hell!
 			drop_held_item(0)
-	if(!stat && M.a_intent == "help")
+	if(!stat && M.a_intent == INTENT_HELP)
 		handle_automated_speech(1) //assured speak/emote
 	return
 
@@ -561,7 +561,7 @@
 		var/mob/living/L = parrot_interest
 		if(melee_damage_upper == 0)
 			melee_damage_upper = parrot_damage_upper
-			a_intent = "harm"
+			a_intent = INTENT_HARM
 
 		//If the mob is close enough to interact with
 		if(Adjacent(parrot_interest))
@@ -629,12 +629,12 @@
 			continue
 		if(istype(AM, /obj/item))
 			var/obj/item/I = AM
-			if(I.w_class < 2)
+			if(I.w_class < WEIGHT_CLASS_SMALL)
 				item = I
 		else if(iscarbon(AM))
 			var/mob/living/carbon/C = AM
 			for(var/obj/item/I in C.held_items)
-				if(I.w_class <= 2)
+				if(I.w_class <= WEIGHT_CLASS_SMALL)
 					item = I
 					break
 		if(item)
@@ -665,13 +665,13 @@
 
 		if(istype(AM, /obj/item))
 			var/obj/item/I = AM
-			if(I.w_class <= 2)
+			if(I.w_class <= WEIGHT_CLASS_SMALL)
 				return I
 
 		if(iscarbon(AM))
 			var/mob/living/carbon/C = AM
 			for(var/obj/item/I in C.held_items)
-				if(I.w_class <= 2)
+				if(I.w_class <= WEIGHT_CLASS_SMALL)
 					return C
 	return null
 
@@ -693,7 +693,7 @@
 
 	for(var/obj/item/I in view(1,src))
 		//Make sure we're not already holding it and it's small enough
-		if(I.loc != src && I.w_class <= 2)
+		if(I.loc != src && I.w_class <= WEIGHT_CLASS_SMALL)
 
 			//If we have a perch and the item is sitting on it, continue
 			if(!client && parrot_perch && I.loc == parrot_perch.loc)
@@ -723,7 +723,7 @@
 
 	for(var/mob/living/carbon/C in view(1,src))
 		for(var/obj/item/I in C.held_items)
-			if(I.w_class <= 2)
+			if(I.w_class <= WEIGHT_CLASS_SMALL)
 				stolen_item = I
 				break
 
@@ -856,10 +856,10 @@
 
 	if(melee_damage_upper)
 		melee_damage_upper = 0
-		a_intent = "help"
+		a_intent = INTENT_HELP
 	else
 		melee_damage_upper = parrot_damage_upper
-		a_intent = "harm"
+		a_intent = INTENT_HARM
 	src << "You will now [a_intent] others..."
 	return
 
@@ -869,7 +869,7 @@
 /mob/living/simple_animal/parrot/Poly
 	name = "Poly"
 	desc = "Poly the Parrot. An expert on quantum cracker theory."
-	speak = list("Poly wanna cracker!", ":e Check the singlo, you chucklefucks!",":e Wire the solars, you lazy bums!",":e WHO TOOK THE DAMN HARDSUITS?",":e OH GOD ITS FREE CALL THE SHUTTLE")
+	speak = list("Poly wanna cracker!", ":e Check the singulo, you chucklefucks!",":e Wire the solars, you lazy bums!",":e WHO TOOK THE DAMN HARDSUITS?",":e OH GOD ITS FREE CALL THE SHUTTLE")
 	gold_core_spawnable = 0
 	speak_chance = 3
 	var/memory_saved = 0
@@ -885,11 +885,11 @@
 		speak += pick("...[longest_survival].", "The things I've seen!", "I have lived many lives!", "What are you before me?")
 		desc += " Old as sin, and just as loud. Claimed to be [rounds_survived]."
 		speak_chance = 20 //His hubris has made him more annoying/easier to justify killing
-		color = "#EEEE22"
+		add_atom_colour("#EEEE22", FIXED_COLOUR_PRIORITY)
 	else if(rounds_survived == longest_deathstreak)
 		speak += pick("What are you waiting for!", "Violence breeds violence!", "Blood! Blood!", "Strike me down if you dare!")
 		desc += " The squawks of [-rounds_survived] dead parrots ring out in your ears..."
-		color = "#BB7777"
+		add_atom_colour("#BB7777", FIXED_COLOUR_PRIORITY)
 	else if(rounds_survived > 0)
 		speak += pick("...again?", "No, It was over!", "Let me out!", "It never ends!")
 		desc += " Over [rounds_survived] shifts without a \"terrible\" \"accident\"!"

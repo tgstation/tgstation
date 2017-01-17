@@ -10,8 +10,8 @@
 	throwforce = 10
 	throw_speed = 1
 	throw_range = 7
-	w_class = 4
-
+	w_class = WEIGHT_CLASS_BULKY
+	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 70, acid = 30)
 	var/charges = list(0, 0, 0)	//how many restocking "charges" the refill has for standard/contraband/coin products
 	var/init_charges = list(0, 0, 0)
 
@@ -63,7 +63,7 @@
 /obj/item/weapon/vending_refill/autodrobe
 	machine_name = "AutoDrobe"
 	icon_state = "refill_costume"
-	charges = list(27, 2, 3)// of 75 standard, 6 contraband, 9 premium
+	charges = list(31, 2, 3)// of 94 standard, 6 contraband, 9 premium
 	init_charges = list(27, 2, 3)
 
 /obj/item/weapon/vending_refill/clothing

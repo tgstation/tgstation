@@ -14,7 +14,7 @@
 	dried_type = -1
 	// Saves us from having to define each stupid grown's dried_type as itself.
 	// If you don't want a plant to be driable (watermelons) set this to null in the time definition.
-	resistance_flags = 0
+	resistance_flags = FLAMMABLE
 	origin_tech = "biotech=1"
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/New(newloc, var/obj/item/seeds/new_seed = null)
@@ -80,8 +80,10 @@
 			msg += reag_txt
 			msg += "<br><span class='info'>*---------*</span>"
 		user << msg
-		return
-	return
+	else
+		if(seed)
+			for(var/datum/plant_gene/trait/T in seed.genes)
+				T.on_attackby(src, O, user)
 
 
 // Various gene procs
@@ -92,8 +94,11 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/throw_impact(atom/hit_atom)
 	if(!..()) //was it caught by a mob?
-		if(seed && seed.get_gene(/datum/plant_gene/trait/squash))
-			squash(hit_atom)
+		if(seed)
+			for(var/datum/plant_gene/trait/T in seed.genes)
+				T.on_throw_impact(src, hit_atom)
+			if(seed.get_gene(/datum/plant_gene/trait/squash))
+				squash(hit_atom)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/proc/squash(atom/target)
 	var/turf/T = get_turf(target)
@@ -106,10 +111,7 @@
 		new splat_type(T)
 
 	if(trash)
-		if(ispath(trash, /obj/item/weapon/grown) || ispath(trash, /obj/item/weapon/reagent_containers/food/snacks/grown))
-			new trash(T, seed)
-		else
-			new trash(T)
+		generate_trash(T)
 
 	visible_message("<span class='warning'>[src] has been squashed.</span>","<span class='italics'>You hear a smack.</span>")
 	if(seed)
@@ -159,17 +161,18 @@
 			user.AddLuminosity(-G.get_lum(seed))
 			SetLuminosity(G.get_lum(seed))
 
-
+/obj/item/weapon/reagent_containers/food/snacks/grown/generate_trash(atom/location)
+	if(trash && ispath(trash, /obj/item/weapon/grown))
+		. = new trash(location, seed)
+		trash = null
+		return
+	return ..()
 
 // For item-containing growns such as eggy or gatfruit
-/obj/item/weapon/reagent_containers/food/snacks/grown/shell/attack_self(mob/user as mob)
+/obj/item/weapon/reagent_containers/food/snacks/grown/shell/attack_self(mob/user)
 	user.unEquip(src)
 	if(trash)
-		var/obj/item/weapon/T
-		if(ispath(trash, /obj/item/weapon/grown) || ispath(trash, /obj/item/weapon/reagent_containers/food/snacks/grown))
-			T = new trash(user.loc, seed)
-		else
-			T = new trash(user.loc)
+		var/obj/item/T = generate_trash()
 		user.put_in_hands(T)
 		user << "<span class='notice'>You open [src]\'s shell, revealing \a [T].</span>"
 	qdel(src)

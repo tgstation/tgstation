@@ -3,8 +3,9 @@
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(5, 10, 15, 20, 25, 30, 50)
 	volume = 50
-	flags = OPENCONTAINER
+	container_type = OPENCONTAINER
 	spillable = 1
+	resistance_flags = ACID_PROOF
 
 
 /obj/item/weapon/reagent_containers/glass/attack(mob/M, mob/user, obj/target)
@@ -19,7 +20,7 @@
 		return
 
 	if(istype(M))
-		if(user.a_intent == "harm")
+		if(user.a_intent == INTENT_HARM)
 			var/R
 			M.visible_message("<span class='danger'>[user] splashes the contents of [src] onto [M]!</span>", \
 							"<span class='userdanger'>[user] splashes the contents of [src] onto [M]!</span>")
@@ -78,7 +79,7 @@
 		user << "<span class='notice'>You transfer [trans] unit\s of the solution to [target].</span>"
 
 	else if(reagents.total_volume)
-		if(user.a_intent == "harm")
+		if(user.a_intent == INTENT_HARM)
 			user.visible_message("<span class='danger'>[user] splashes the contents of [src] onto [target]!</span>", \
 								"<span class='notice'>You splash the contents of [src] onto [target].</span>")
 			reagents.reaction(target, TOUCH)
@@ -212,7 +213,7 @@
 /obj/item/weapon/reagent_containers/glass/beaker/large/epinephrine
 	name = "epinephrine reserve tank"
 	list_reagents = list("epinephrine" = 50)
-	
+
 /obj/item/weapon/reagent_containers/glass/beaker/synthflesh
 	list_reagents = list("synthflesh" = 50)
 
@@ -223,18 +224,19 @@
 	icon_state = "bucket"
 	item_state = "bucket"
 	materials = list(MAT_METAL=200)
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 	amount_per_transfer_from_this = 20
 	possible_transfer_amounts = list(10,15,20,25,30,50,70)
 	volume = 70
 	flags = OPENCONTAINER
 	flags_inv = HIDEHAIR
 	slot_flags = SLOT_HEAD
-	armor = list(melee = 10, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0) //Weak melee protection, because you can wear it on your head
+	resistance_flags = 0
+	armor = list(melee = 10, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 75, acid = 50) //Weak melee protection, because you can wear it on your head
 	slot_equipment_priority = list( \
 		slot_back, slot_wear_id,\
 		slot_w_uniform, slot_wear_suit,\
-		slot_wear_mask, slot_head,\
+		slot_wear_mask, slot_head, slot_neck,\
 		slot_shoes, slot_gloves,\
 		slot_ears, slot_glasses,\
 		slot_belt, slot_s_store,\

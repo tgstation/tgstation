@@ -10,13 +10,15 @@
 	var/mob/living/carbon/C = owner
 	if(!dismemberable)
 		return 0
+	if(C.status_flags & GODMODE)
+		return 0
 	if(ishuman(C))
 		var/mob/living/carbon/human/H = C
-		if(NODISMEMBER in H.dna.species.specflags) // species don't allow dismemberment
+		if(NODISMEMBER in H.dna.species.species_traits) // species don't allow dismemberment
 			return 0
 
 	var/obj/item/bodypart/affecting = C.get_bodypart("chest")
-	affecting.take_damage(Clamp(brute_dam/2, 15, 50), Clamp(burn_dam/2, 0, 50)) //Damage the chest based on limb's existing damage
+	affecting.receive_damage(Clamp(brute_dam/2, 15, 50), Clamp(burn_dam/2, 0, 50)) //Damage the chest based on limb's existing damage
 	C.visible_message("<span class='danger'><B>[C]'s [src.name] has been violently dismembered!</B></span>")
 	C.emote("scream")
 	drop_limb()
@@ -36,7 +38,7 @@
 		target_turf = new_turf
 		if(new_turf.density)
 			break
-	throw_at_fast(target_turf, throw_range, throw_speed)
+	throw_at(target_turf, throw_range, throw_speed)
 	return 1
 
 
@@ -48,7 +50,7 @@
 		return 0
 	if(ishuman(C))
 		var/mob/living/carbon/human/H = C
-		if(NODISMEMBER in H.dna.species.specflags) // species don't allow dismemberment
+		if(NODISMEMBER in H.dna.species.species_traits) // species don't allow dismemberment
 			return 0
 
 	var/organ_spilled = 0
@@ -245,7 +247,9 @@
 	owner = C
 	C.bodyparts += src
 	if(held_index)
-		C.hand_bodyparts += src
+		if(held_index > C.hand_bodyparts.len)
+			C.hand_bodyparts.len = held_index
+		C.hand_bodyparts[held_index] = src
 		if(C.hud_used)
 			var/obj/screen/inventory/hand/hand = C.hud_used.hand_slots["[held_index]"]
 			if(hand)
@@ -306,7 +310,6 @@
 		limb_list -= excluded_limbs
 	for(var/Z in limb_list)
 		. += regenerate_limb(Z, noheal)
-
 
 /mob/living/proc/regenerate_limb(limb_zone, noheal)
 	return

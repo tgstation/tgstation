@@ -123,17 +123,9 @@
 /obj/item/weapon/paper/talisman/teleport/invoke(mob/living/user, successfuluse = 1)
 	var/list/potential_runes = list()
 	var/list/teleportnames = list()
-	var/list/duplicaterunecount = list()
 	for(var/R in teleport_runes)
 		var/obj/effect/rune/teleport/T = R
-		var/resultkey = T.listkey
-		if(resultkey in teleportnames)
-			duplicaterunecount[resultkey]++
-			resultkey = "[resultkey] ([duplicaterunecount[resultkey]])"
-		else
-			teleportnames.Add(resultkey)
-			duplicaterunecount[resultkey] = 1
-		potential_runes[resultkey] = T
+		potential_runes[avoid_assoc_duplicate_keys(T.listkey, teleportnames)] = T
 
 	if(!potential_runes.len)
 		user << "<span class='warning'>There are no valid runes to teleport to!</span>"
@@ -147,13 +139,13 @@
 
 	var/input_rune_key = input(user, "Choose a rune to teleport to.", "Rune to Teleport to") as null|anything in potential_runes //we know what key they picked
 	var/obj/effect/rune/teleport/actual_selected_rune = potential_runes[input_rune_key] //what rune does that key correspond to?
-	if(!actual_selected_rune)
+	if(!src || qdeleted(src) || !user || !user.is_holding(src) || user.incapacitated() || !actual_selected_rune)
 		return ..(user, 0)
 	var/turf/target = get_turf(actual_selected_rune)
-	if(is_blocked_turf(target))
+	if(is_blocked_turf(target, TRUE))
 		user << "<span class='warning'>The target rune is blocked. Attempting to teleport to it would be massively unwise.</span>"
 		return ..(user, 0)
-	user.visible_message("<span class='warning'>Dust flows from [user]'s hand, and they disappear in a flash of red light!</span>", \
+	user.visible_message("<span class='warning'>Dust flows from [user]'s hand, and [user.p_they()] disappear in a flash of red light!</span>", \
 						 "<span class='cultitalic'>You speak the words of the talisman and find yourself somewhere else!</span>")
 	user.forceMove(target)
 	return ..()

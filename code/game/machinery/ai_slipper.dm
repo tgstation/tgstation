@@ -4,6 +4,10 @@
 	icon_state = "motion3"
 	layer = PROJECTILE_HIT_THRESHHOLD_LAYER
 	anchored = 1
+	obj_integrity = 200
+	max_integrity = 200
+	armor = list(melee = 50, bullet = 20, laser = 20, energy = 20, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 30)
+
 	var/uses = 20
 	var/disabled = 1
 	var/lethal = 0
@@ -77,7 +81,7 @@
 	if(..())
 		return
 	if (src.locked)
-		if (!(istype(usr, /mob/living/silicon)|| IsAdminGhost(usr)))
+		if(!(issilicon(usr)|| IsAdminGhost(usr)))
 			usr << "Control panel is locked!"
 			return
 	if (href_list["toggleOn"])

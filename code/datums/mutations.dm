@@ -1,6 +1,6 @@
 /var/global/list/mutations_list = list()
 
-/datum/mutation/
+/datum/mutation
 
 	var/name
 
@@ -79,7 +79,7 @@
 /datum/mutation/human/proc/get_visual_indicator(mob/living/carbon/human/owner)
 	return
 
-/datum/mutation/human/proc/on_attack_hand(mob/living/carbon/human/owner, atom/target)
+/datum/mutation/human/proc/on_attack_hand(mob/living/carbon/human/owner, atom/target, proximity)
 	return
 
 /datum/mutation/human/proc/on_ranged_attack(mob/living/carbon/human/owner, atom/target)
@@ -130,8 +130,9 @@
 	owner.status_flags &= ~status
 	owner.update_body_parts()
 
-/datum/mutation/human/hulk/on_attack_hand(mob/living/carbon/human/owner, atom/target)
-	return target.attack_hulk(owner)
+/datum/mutation/human/hulk/on_attack_hand(mob/living/carbon/human/owner, atom/target, proximity)
+	if(proximity) //no telekinetic hulk attack
+		return target.attack_hulk(owner)
 
 /datum/mutation/human/hulk/on_life(mob/living/carbon/human/owner)
 	if(owner.health < 0)
@@ -236,7 +237,7 @@
 		owner.visible_message("<span class='danger'>[owner] starts having a seizure!</span>", "<span class='userdanger'>You have a seizure!</span>")
 		owner.Paralyse(10)
 		owner.Jitter(1000)
-		addtimer(src, "jitter_less", 90, FALSE, owner)
+		addtimer(CALLBACK(src, .proc/jitter_less, owner), 90)
 
 /datum/mutation/human/epilepsy/proc/jitter_less(mob/living/carbon/human/owner)
 	if(owner)
@@ -376,6 +377,9 @@
 	time_coeff = 2
 
 /datum/mutation/human/race/on_acquiring(mob/living/carbon/human/owner)
+	if(owner.has_brain_worms())
+		owner << "<span class='warning'>You feel something strongly clinging to your humanity!</span>"
+		return
 	if(..())
 		return
 	. = owner.monkeyize(TR_KEEPITEMS | TR_KEEPIMPLANTS | TR_KEEPORGANS | TR_KEEPDAMAGE | TR_KEEPVIRUS | TR_KEEPSE)
@@ -531,6 +535,10 @@
 /datum/mutation/human/swedish/say_mod(message)
 	if(message)
 		message = replacetext(message,"w","v")
+		message = replacetext(message,"j","y")
+		message = replacetext(message,"a",pick("å","ä","æ","a"))
+		message = replacetext(message,"bo","bjo")
+		message = replacetext(message,"o",pick("ö","ø","o"))
 		if(prob(30))
 			message += " Bork[pick("",", bork",", bork, bork")]!"
 	return message
@@ -616,7 +624,7 @@
 	return visual_indicators[1]
 
 /datum/mutation/human/laser_eyes/on_ranged_attack(mob/living/carbon/human/owner, atom/target)
-	if(owner.a_intent == "harm")
+	if(owner.a_intent == INTENT_HARM)
 		owner.LaserEyes(target)
 
 

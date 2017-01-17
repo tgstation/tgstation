@@ -67,6 +67,11 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 	// Tell qdel() to Del() this object.
 	return QDEL_HINT_HARDDEL_NOW
 
+/datum/controller/master/proc/Shutdown()
+	processing = FALSE
+	for(var/datum/subsystem/ss in subsystems)
+		ss.Shutdown()
+
 // Returns 1 if we created a new mc, 0 if we couldn't due to a recent restart,
 //	-1 if we encountered a runtime trying to recreate it
 /proc/Recreate_MC()
@@ -167,8 +172,8 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 	message_admins("MC crashed or runtimed, restarting")
 	var/rtn2 = Recreate_MC()
 	if (rtn2 <= 0)
-		log_game("Failed to recreate MC (Error code: [rtn2]), its up to the failsafe now")
-		message_admins("Failed to recreate MC (Error code: [rtn2]), its up to the failsafe now")
+		log_game("Failed to recreate MC (Error code: [rtn2]), it's up to the failsafe now")
+		message_admins("Failed to recreate MC (Error code: [rtn2]), it's up to the failsafe now")
 		Failsafe.defcon = 2
 
 // Main loop.
@@ -227,6 +232,7 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 	while (1)
 		tickdrift = max(0, MC_AVERAGE_FAST(tickdrift, (((world.timeofday - init_timeofday) - (world.time - init_time)) / world.tick_lag)))
 		if (processing <= 0)
+			CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 			sleep(10)
 			continue
 
@@ -234,6 +240,7 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 		//	because sleeps are processed in the order received, so longer sleeps are more likely to run first
 		if (world.tick_usage > TICK_LIMIT_MC)
 			sleep_delta += 2
+			CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING - (TICK_LIMIT_RUNNING * 0.5)
 			sleep(world.tick_lag * (processing + sleep_delta))
 			continue
 
@@ -262,6 +269,7 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 			if (!error_level)
 				iteration++
 			error_level++
+			CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 			sleep(10)
 			continue
 
@@ -273,6 +281,7 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 				if (!error_level)
 					iteration++
 				error_level++
+				CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 				sleep(10)
 				continue
 		error_level--
@@ -283,6 +292,7 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 		iteration++
 		last_run = world.time
 		src.sleep_delta = MC_AVERAGE_FAST(src.sleep_delta, sleep_delta)
+		CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING - (TICK_LIMIT_RUNNING * 0.25) //reserve the tail 1/4 of the next tick for the mc.
 		sleep(world.tick_lag * (processing + sleep_delta))
 
 
@@ -440,7 +450,6 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 				return
 			queue_node = queue_node.queue_next
 
-	CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 	. = 1
 
 //resets the queue, and all subsystems, while filtering out the subsystem lists

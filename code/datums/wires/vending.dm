@@ -12,7 +12,7 @@
 
 /datum/wires/vending/interactable(mob/user)
 	var/obj/machinery/vending/V = holder
-	if(!istype(user, /mob/living/silicon) && V.seconds_electrified && V.shock(user, 100))
+	if(!issilicon(user) && V.seconds_electrified && V.shock(user, 100))
 		return FALSE
 	if(V.panel_open)
 		return TRUE

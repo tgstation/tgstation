@@ -122,7 +122,8 @@ var/list/admin_verbs_server = list(
 	/client/proc/forcerandomrotate,
 	/client/proc/adminchangemap,
 #endif
-	/client/proc/panicbunker
+	/client/proc/panicbunker,
+	/client/proc/toggle_hub
 
 	)
 var/list/admin_verbs_debug = list(
@@ -358,7 +359,7 @@ var/list/admin_verbs_hideable = list(
 	set name = "Aghost"
 	if(!holder)
 		return
-	if(istype(mob,/mob/dead/observer))
+	if(isobserver(mob))
 		//re-enter
 		var/mob/dead/observer/ghost = mob
 		if(!ghost.mind || !ghost.mind.current) //won't do anything if there is no body
@@ -369,7 +370,7 @@ var/list/admin_verbs_hideable = list(
 		ghost.can_reenter_corpse = 1 //force re-entering even when otherwise not possible
 		ghost.reenter_corpse()
 		feedback_add_details("admin_verb","P") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-	else if(istype(mob,/mob/new_player))
+	else if(isnewplayer(mob))
 		src << "<font color='red'>Error: Aghost: Can't admin-ghost whilst in the lobby. Join or Observe first.</font>"
 	else
 		//ghostize
@@ -480,7 +481,7 @@ var/list/admin_verbs_hideable = list(
 			holder.fakekey = new_key
 			createStealthKey()
 			if(isobserver(mob))
-				mob.invisibility = INVISIBILITY_ABSTRACT //JUST IN CASE
+				mob.invisibility = INVISIBILITY_MAXIMUM //JUST IN CASE
 				mob.alpha = 0 //JUUUUST IN CASE
 				mob.name = " "
 				mob.mouse_opacity = 0
@@ -496,6 +497,7 @@ var/list/admin_verbs_hideable = list(
 	var/list/choices = list("Small Bomb", "Medium Bomb", "Big Bomb", "Custom Bomb")
 	var/choice = input("What size explosion would you like to produce?") in choices
 	var/turf/epicenter = mob.loc
+
 	switch(choice)
 		if(null)
 			return 0
@@ -520,7 +522,8 @@ var/list/admin_verbs_hideable = list(
 				return
 			epicenter = mob.loc //We need to reupdate as they may have moved again
 			explosion(epicenter, devastation_range, heavy_impact_range, light_impact_range, flash_range)
-	message_admins("<span class='adminnotice'>[ckey] creating an admin explosion at [epicenter.loc].</span>")
+	message_admins("[ADMIN_LOOKUPFLW(usr)] creating an admin explosion at [epicenter.loc].")
+	log_admin("[key_name(usr)] created an admin explosion at [epicenter.loc].")
 	feedback_add_details("admin_verb","DB") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/drop_dynex_bomb()
@@ -532,7 +535,8 @@ var/list/admin_verbs_hideable = list(
 	var/turf/epicenter = mob.loc
 	if(ex_power && epicenter)
 		dyn_explosion(epicenter, ex_power)
-		message_admins("<span class='adminnotice'>[ckey] creating an admin explosion at [epicenter.loc].</span>")
+		message_admins("[ADMIN_LOOKUPFLW(usr)] creating an admin explosion at [epicenter.loc].")
+		log_admin("[key_name(usr)] created an admin explosion at [epicenter.loc].")
 		feedback_add_details("admin_verb","DDXB") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/get_dynex_range()

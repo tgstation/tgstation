@@ -3,9 +3,9 @@
 	desc = "A folder."
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "folder"
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	pressure_resistance = 2
-	resistance_flags = 0
+	resistance_flags = FLAMMABLE
 
 /obj/item/weapon/folder/blue
 	desc = "A blue folder."

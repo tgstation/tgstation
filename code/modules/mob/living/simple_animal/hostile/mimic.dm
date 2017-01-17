@@ -71,7 +71,7 @@
 		visible_message("<b>[src]</b> starts to move!")
 		attempt_open = 1
 
-/mob/living/simple_animal/hostile/mimic/crate/adjustHealth(damage)
+/mob/living/simple_animal/hostile/mimic/crate/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
 	trigger()
 	. = ..()
 
@@ -199,7 +199,7 @@ var/global/list/protected_objects = list(/obj/structure/table, /obj/structure/ca
 /mob/living/simple_animal/hostile/mimic/copy/machine/CanAttack(atom/the_target)
 	if(the_target == creator) // Don't attack our creator AI.
 		return 0
-	if(isrobot(the_target))
+	if(iscyborg(the_target))
 		var/mob/living/silicon/robot/R = the_target
 		if(R.connected_ai == creator) // Only attack robots that aren't synced to our creator AI.
 			return 0
@@ -210,12 +210,13 @@ var/global/list/protected_objects = list(/obj/structure/table, /obj/structure/ca
 /mob/living/simple_animal/hostile/mimic/copy/ranged
 	var/obj/item/weapon/gun/TrueGun = null
 	var/obj/item/weapon/gun/magic/Zapstick
-	var/obj/item/weapon/gun/projectile/Pewgun
+	var/obj/item/weapon/gun/ballistic/Pewgun
 	var/obj/item/weapon/gun/energy/Zapgun
 
 /mob/living/simple_animal/hostile/mimic/copy/ranged/CopyObject(obj/O, mob/living/creator, destroy_original = 0)
 	if(..())
 		emote_see = list("aims menacingly")
+		obj_damage = 0
 		environment_smash = 0 //needed? seems weird for them to do so
 		ranged = 1
 		retreat_distance = 1 //just enough to shoot
@@ -230,7 +231,7 @@ var/global/list/protected_objects = list(/obj/structure/table, /obj/structure/ca
 			Zapstick = G
 			var/obj/item/ammo_casing/magic/M = Zapstick.ammo_type
 			projectiletype = initial(M.projectile_type)
-		if(istype(G, /obj/item/weapon/gun/projectile))
+		if(istype(G, /obj/item/weapon/gun/ballistic))
 			Pewgun = G
 			var/obj/item/ammo_box/magazine/M = Pewgun.mag_type
 			casingtype = initial(M.ammo_type)

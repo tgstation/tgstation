@@ -104,10 +104,10 @@
 
 /mob/camera/blob/update_health_hud()
 	if(blob_core)
-		hud_used.healths.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#e36600'>[round(blob_core.health)]</font></div>"
+		hud_used.healths.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#e36600'>[round(blob_core.obj_integrity)]</font></div>"
 		for(var/mob/living/simple_animal/hostile/blob/blobbernaut/B in blob_mobs)
 			if(B.hud_used && B.hud_used.blobpwrdisplay)
-				B.hud_used.blobpwrdisplay.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#82ed00'>[round(blob_core.health)]</font></div>"
+				B.hud_used.blobpwrdisplay.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#82ed00'>[round(blob_core.obj_integrity)]</font></div>"
 
 /mob/camera/blob/proc/add_points(points)
 	blob_points = Clamp(blob_points + points, 0, max_blob_points)
@@ -157,7 +157,7 @@
 	..()
 	if(statpanel("Status"))
 		if(blob_core)
-			stat(null, "Core Health: [blob_core.health]")
+			stat(null, "Core Health: [blob_core.obj_integrity]")
 		stat(null, "Power Stored: [blob_points]/[max_blob_points]")
 		if(ticker && istype(ticker.mode, /datum/game_mode/blob))
 			var/datum/game_mode/blob/B = ticker.mode
@@ -180,7 +180,7 @@
 			return 0
 	else
 		var/area/A = get_area(NewLoc)
-		if(istype(NewLoc, /turf/open/space) || istype(A, /area/shuttle)) //if unplaced, can't go on shuttles or space tiles
+		if(isspaceturf(NewLoc) || istype(A, /area/shuttle)) //if unplaced, can't go on shuttles or space tiles
 			return 0
 		loc = NewLoc
 		return 1

@@ -3,6 +3,17 @@
 	materials = list(MAT_GLASS = 250)
 	var/glass_colour_type = null //colors your vision when worn
 
+/obj/item/clothing/glasses/visor_toggling()
+	..()
+	vision_flags ^= initial(vision_flags)
+	darkness_view ^= initial(darkness_view)
+	invis_view ^= initial(invis_view)
+
+/obj/item/clothing/glasses/weldingvisortoggle(mob/user)
+	. = ..()
+	if(. && user)
+		user.update_sight()
+
 //called when thermal glasses are emped.
 /obj/item/clothing/glasses/proc/thermal_overload()
 	if(ishuman(src.loc))
@@ -56,7 +67,8 @@
 	scan_reagents = 1 //You can see reagents while wearing science goggles
 	actions_types = list(/datum/action/item_action/toggle_research_scanner)
 	glass_colour_type = /datum/client_colour/glass_colour/purple
-	resistance_flags = FIRE_PROOF | ACID_PROOF
+	resistance_flags = ACID_PROOF
+	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 80, acid = 100)
 
 /obj/item/clothing/glasses/science/item_action_slot_check(slot)
 	if(slot == slot_glasses)
@@ -127,11 +139,7 @@
 	icon_state = "hipster_glasses"
 	item_state = "hipster_glasses"
 
-/obj/item/clothing/glasses/gglasses
-	name = "Green Glasses"
-	desc = "Forest green glasses, like the kind you'd wear when hatching a nasty scheme."
-	icon_state = "gglasses"
-	item_state = "gglasses"
+//Here lies green glasses, so ugly they died. RIP
 
 /obj/item/clothing/glasses/sunglasses
 	desc = "Strangely ancient technology used to help provide rudimentary eye cover. Enhanced shielding blocks many flashes."
@@ -205,17 +213,8 @@
 	visor_flags_inv = HIDEEYES
 	glass_colour_type = /datum/client_colour/glass_colour/gray
 
-
-/obj/item/clothing/glasses/welding/attack_self()
-	toggle()
-
-
-/obj/item/clothing/glasses/welding/verb/toggle()
-	set category = "Object"
-	set name = "Adjust welding goggles"
-	set src in usr
-
-	weldingvisortoggle()
+/obj/item/clothing/glasses/welding/attack_self(mob/user)
+	weldingvisortoggle(user)
 
 
 /obj/item/clothing/glasses/sunglasses/blindfold
@@ -289,7 +288,7 @@
 
 /obj/item/clothing/glasses/red
 	name = "red glasses"
-	desc = "A sweet pair of red shades."
+	desc = "Hey, you're looking good, senpai!"
 	icon_state = "redglasses"
 	item_state = "redglasses"
 	glass_colour_type = /datum/client_colour/glass_colour/red

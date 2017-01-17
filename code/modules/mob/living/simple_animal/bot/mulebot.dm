@@ -1,4 +1,4 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
+
 
 // Mulebot - carries crates around for Quartermaster
 // Navigates via floor navbeacons
@@ -20,7 +20,7 @@ var/global/mulebot_count = 0
 	health = 50
 	maxHealth = 50
 	damage_coeff = list(BRUTE = 0.5, BURN = 0.7, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
-	a_intent = "harm" //No swapping
+	a_intent = INTENT_HARM //No swapping
 	buckle_lying = 0
 	mob_size = MOB_SIZE_LARGE
 
@@ -157,10 +157,10 @@ var/global/mulebot_count = 0
 			wires.cut_random()
 
 /mob/living/simple_animal/bot/mulebot/interact(mob/user)
-	if(open && !istype(user, /mob/living/silicon/ai))
+	if(open && !isAI(user))
 		wires.interact(user)
 	else
-		if(wires.is_cut(WIRE_RX) && istype(user, /mob/living/silicon/ai))
+		if(wires.is_cut(WIRE_RX) && isAI(user))
 			return
 		ui_interact(user)
 
@@ -408,6 +408,7 @@ var/global/mulebot_count = 0
 		load.loc = loc
 		load.pixel_y = initial(load.pixel_y)
 		load.layer = initial(load.layer)
+		load.plane = initial(load.plane)
 		if(dirn)
 			var/turf/T = loc
 			var/turf/newT = get_step(T,dirn)
@@ -474,12 +475,13 @@ var/global/mulebot_count = 0
 				if(next == loc)
 					path -= next
 					return
-				if(istype( next, /turf))
+				if(isturf(next))
 					//world << "at ([x],[y]) moving to ([next.x],[next.y])"
 
 					if(bloodiness)
 						var/obj/effect/decal/cleanable/blood/tracks/B = new(loc)
-						B.blood_DNA |= blood_DNA.Copy()
+						if(blood_DNA && blood_DNA.len)
+							B.blood_DNA |= blood_DNA.Copy()
 						var/newdir = get_dir(next, loc)
 						if(newdir == dir)
 							B.setDir(newdir)
@@ -636,7 +638,7 @@ var/global/mulebot_count = 0
 	if(wires.is_cut(WIRE_AVOIDANCE))	// usually just bumps, but if avoidance disabled knock over mobs
 		var/mob/M = obs
 		if(ismob(M))
-			if(istype(M,/mob/living/silicon/robot))
+			if(iscyborg(M))
 				visible_message("<span class='danger'>[src] bumps into [M]!</span>")
 			else
 				if(!paicard)
@@ -665,6 +667,10 @@ var/global/mulebot_count = 0
 
 	var/turf/T = get_turf(src)
 	T.add_mob_blood(H)
+
+	var/list/blood_dna = H.get_blood_dna_list()
+	if(blood_dna)
+		transfer_blood_dna(blood_dna)
 	bloodiness += 4
 
 // player on mulebot attempted to move
@@ -738,7 +744,7 @@ var/global/mulebot_count = 0
 		unload(get_dir(loc, A))
 	else
 		..()
-		
+
 /mob/living/simple_animal/bot/mulebot/insertpai(mob/user, obj/item/device/paicard/card)
 	if(..())
 		visible_message("[src] safeties are locked on.")

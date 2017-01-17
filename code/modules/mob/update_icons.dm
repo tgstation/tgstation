@@ -25,6 +25,9 @@
 /mob/proc/update_inv_wear_mask()
 	return
 
+/mob/proc/update_inv_neck()
+	return
+
 /mob/proc/update_inv_wear_suit()
 	return
 

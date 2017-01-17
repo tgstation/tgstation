@@ -14,14 +14,14 @@ var/datum/subsystem/objects/SSobj
 	var/list/atom_spawners = list()
 	var/list/processing = list()
 	var/list/currentrun = list()
-	var/list/burning = list()
 
 /datum/subsystem/objects/New()
 	NEW_SS_GLOBAL(SSobj)
 
 /datum/subsystem/objects/Initialize(timeofdayl)
+	fire_overlay.appearance_flags = RESET_COLOR
 	trigger_atom_spawners()
-	setupGenetics()
+	setupGenetics() //to set the mutations' place in structural enzymes, so monkey.initialize() knows where to put the monkey mutation.
 	for(var/thing in world)
 		var/atom/A = thing
 		A.initialize()
@@ -55,12 +55,6 @@ var/datum/subsystem/objects/SSobj
 		if (MC_TICK_CHECK)
 			return
 
-	for(var/obj/burningobj in SSobj.burning)
-		if(burningobj && (burningobj.resistance_flags & ON_FIRE))
-			if(burningobj.burn_world_time < world.time)
-				burningobj.burn()
-		else
-			SSobj.burning.Remove(burningobj)
 
 /datum/subsystem/objects/proc/setup_template_objects(list/objects)
 	trigger_atom_spawners(0, ignore_z=TRUE)
@@ -73,5 +67,3 @@ var/datum/subsystem/objects/SSobj
 		atom_spawners = SSobj.atom_spawners
 	if (istype(SSobj.processing))
 		processing = SSobj.processing
-	if (istype(SSobj.burning))
-		burning = SSobj.burning

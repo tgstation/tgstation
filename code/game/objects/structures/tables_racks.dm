@@ -29,7 +29,9 @@
 	var/buildstackamount = 1
 	var/framestackamount = 2
 	var/deconstruction_ready = 1
-	var/health = 100
+	obj_integrity = 100
+	max_integrity = 100
+	integrity_failure = 30
 	smooth = SMOOTH_TRUE
 	canSmoothWith = list(/obj/structure/table, /obj/structure/table/reinforced)
 
@@ -44,18 +46,6 @@
 		queue_smooth(src)
 		queue_smooth_neighbors(src)
 
-/obj/structure/table/ex_act(severity, target)
-	switch(severity)
-		if(1)
-			qdel(src)
-		if(2)
-			take_damage(rand(80,120), BRUTE, 0)
-		if(3)
-			take_damage(rand(40,80), BRUTE, 0)
-
-/obj/structure/table/blob_act(obj/structure/blob/B)
-	take_damage(rand(75,150), BRUTE, 0)
-
 /obj/structure/table/narsie_act()
 	if(prob(20))
 		new /obj/structure/table/wood(src.loc)
@@ -63,46 +53,12 @@
 /obj/structure/table/ratvar_act()
 	new /obj/structure/table/reinforced/brass(src.loc)
 
-/obj/structure/table/mech_melee_attack(obj/mecha/M)
-	playsound(src.loc, 'sound/weapons/punch4.ogg', 50, 1)
-	visible_message("<span class='danger'>[M.name] smashes [src]!</span>")
-	take_damage(200, M.damtype, 0)
-
-/obj/structure/table/attack_alien(mob/living/user)
-	user.changeNext_move(CLICK_CD_MELEE)
-	user.do_attack_animation(src)
-	playsound(src.loc, 'sound/weapons/bladeslice.ogg', 50, 1)
-	visible_message("<span class='danger'>[user] slices [src]!</span>")
-	take_damage(100, BRUTE, 0)
-
-
-/obj/structure/table/attack_animal(mob/living/simple_animal/user)
-	user.changeNext_move(CLICK_CD_MELEE)
-	user.do_attack_animation(src)
-	if(user.melee_damage_upper || user.obj_damage)
-		var/dmg_dealt = user.melee_damage_upper
-		if(user.obj_damage)
-			dmg_dealt = user.obj_damage
-		if(user.environment_smash)
-			dmg_dealt = 100
-		visible_message("<span class='warning'>[user] smashes [src]!</span>")
-		playsound(src.loc, 'sound/weapons/Genhit.ogg', 50, 1)
-		take_damage(dmg_dealt, user.melee_damage_type, 0)
-
 
 /obj/structure/table/attack_paw(mob/user)
 	attack_hand(user)
 
-/obj/structure/table/attack_hulk(mob/living/carbon/human/user)
-	..(user, 1)
-	playsound(src, 'sound/effects/meteorimpact.ogg', 100, 1)
-	visible_message("<span class='danger'>[user] smashes [src]!</span>")
-	user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
-	take_damage(rand(180,280), BRUTE, 0)
-	return 1
-
 /obj/structure/table/attack_hand(mob/living/user)
-	if(user.a_intent == "grab" && user.pulling && isliving(user.pulling))
+	if(user.a_intent == INTENT_GRAB && user.pulling && isliving(user.pulling))
 		var/mob/living/pushed_mob = user.pulling
 		if(pushed_mob.buckled)
 			user << "<span class='warning'>[pushed_mob] is buckled to [pushed_mob.buckled]!</span>"
@@ -114,13 +70,6 @@
 		user.stop_pulling()
 	else
 		..()
-
-/obj/structure/table/attack_tk() // no telehulk sorry
-	return
-
-/obj/structure/table/bullet_act(obj/item/projectile/P)
-	. = ..()
-	take_damage(P.damage, P.damage_type, 0)
 
 /obj/structure/table/CanPass(atom/movable/mover, turf/target, height=0)
 	if(height==0)
@@ -151,11 +100,18 @@
 /obj/structure/table/attackby(obj/item/I, mob/user, params)
 	if(!(flags & NODECONSTRUCT))
 		if(istype(I, /obj/item/weapon/screwdriver) && deconstruction_ready)
-			table_deconstruct(user, 1)
+			user << "<span class='notice'>You start disassembling [src]...</span>"
+			playsound(src.loc, I.usesound, 50, 1)
+			if(do_after(user, 20*I.toolspeed, target = src))
+				deconstruct(TRUE)
 			return
 
 		if(istype(I, /obj/item/weapon/wrench) && deconstruction_ready)
-			table_deconstruct(user, 0)
+			user << "<span class='notice'>You start deconstructing [src]...</span>"
+			playsound(src.loc, I.usesound, 50, 1)
+			if(do_after(user, 40*I.toolspeed, target = src))
+				playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+				deconstruct(TRUE, 1)
 			return
 
 	if(istype(I, /obj/item/weapon/storage/bag/tray))
@@ -171,7 +127,7 @@
 			return
 		// If the tray IS empty, continue on (tray will be placed on the table like other items)
 
-	if(user.a_intent != "harm" && !(I.flags & ABSTRACT))
+	if(user.a_intent != INTENT_HARM && !(I.flags & ABSTRACT))
 		if(user.drop_item())
 			I.Move(loc)
 			var/list/click_params = params2list(params)
@@ -185,60 +141,16 @@
 	else
 		return ..()
 
-/obj/structure/table/attacked_by(obj/item/I, mob/living/user)
-	..()
-	take_damage(I.force, I.damtype)
 
-/obj/structure/table/proc/take_damage(damage, damage_type = BRUTE, sound_effect = 1)
-	switch(damage_type)
-		if(BRUTE)
-			if(sound_effect)
-				if(damage)
-					playsound(loc, 'sound/weapons/smash.ogg', 50, 1)
-				else
-					playsound(loc, 'sound/weapons/tap.ogg', 50, 1)
-		if(BURN)
-			if(sound_effect)
-				playsound(loc, 'sound/items/Welder.ogg', 40, 1)
-		else
-			return
-	health -= damage
-	if(health <= 0)
-		table_destroy()
-
-/*
- * TABLE DESTRUCTION/DECONSTRUCTION
- */
-
-
-
-/obj/structure/table/proc/table_destroy()
+/obj/structure/table/deconstruct(disassembled = TRUE, wrench_disassembly = 0)
 	if(!(flags & NODECONSTRUCT))
 		var/turf/T = get_turf(src)
-		for(var/i = 1, i <= framestackamount, i++)
-			new framestack(T)
-		for(var/i = 1, i <= buildstackamount, i++)
-			new buildstack(T)
+		new buildstack(T, buildstackamount)
+		if(!wrench_disassembly)
+			new frame(T)
+		else
+			new framestack(T, framestackamount)
 	qdel(src)
-
-
-/obj/structure/table/proc/table_deconstruct(mob/user, disassembling = 0)
-	if(flags & NODECONSTRUCT)
-		return
-	if(disassembling)
-		user << "<span class='notice'>You start disassembling [src]...</span>"
-		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
-		if(do_after(user, 20, target = src))
-			new frame(src.loc)
-			for(var/i = 1, i <= buildstackamount, i++)
-				new buildstack(get_turf(src))
-			qdel(src)
-	else
-		user << "<span class='notice'>You start deconstructing [src]...</span>"
-		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-		if(do_after(user, 40, target = src))
-			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
-			table_destroy()
 
 
 /*
@@ -251,7 +163,10 @@
 	icon_state = "glass_table"
 	buildstack = /obj/item/stack/sheet/glass
 	canSmoothWith = null
-	health = 50
+	obj_integrity = 70
+	max_integrity = 70
+	resistance_flags = ACID_PROOF
+	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 80, acid = 100)
 	var/list/debris = list()
 
 /obj/structure/table/glass/New()
@@ -272,7 +187,7 @@
 		return
 	// Don't break if they're just flying past
 	if(AM.throwing)
-		addtimer(src, "throw_check", 5, FALSE, AM)
+		addtimer(CALLBACK(src, .proc/throw_check, AM), 5)
 	else
 		check_break(AM)
 
@@ -298,6 +213,20 @@
 	M.Weaken(5)
 	qdel(src)
 
+/obj/structure/table/glass/deconstruct(disassembled = TRUE, wrench_disassembly = 0)
+	if(!(flags & NODECONSTRUCT))
+		if(disassembled)
+			..()
+			return
+		else
+			var/turf/T = get_turf(src)
+			playsound(T, "shatter", 50, 1)
+			for(var/X in debris)
+				var/atom/movable/AM = X
+				AM.forceMove(T)
+				debris -= AM
+	qdel(src)
+
 /obj/structure/table/glass/narsie_act()
 	color = NARSIE_WINDOW_COLOUR
 	for(var/obj/item/weapon/shard/S in debris)
@@ -315,8 +244,9 @@
 	frame = /obj/structure/table_frame/wood
 	framestack = /obj/item/stack/sheet/mineral/wood
 	buildstack = /obj/item/stack/sheet/mineral/wood
-	resistance_flags = 0
-	burntime = 20
+	resistance_flags = FLAMMABLE
+	obj_integrity = 70
+	max_integrity = 70
 	canSmoothWith = list(/obj/structure/table/wood,
 		/obj/structure/table/wood/poker,
 		/obj/structure/table/wood/bar)
@@ -348,10 +278,6 @@
 	icon = 'icons/obj/smooth_structures/fancy_table.dmi' //so that the tables place correctly in the map editor
 	..()
 
-/obj/structure/table/wood/fancy/burn() //basically made out of metal
-	new frame(loc)
-	qdel(src)
-
 /*
  * Reinforced tables
  */
@@ -363,23 +289,25 @@
 	deconstruction_ready = 0
 	buildstack = /obj/item/stack/sheet/plasteel
 	canSmoothWith = list(/obj/structure/table/reinforced, /obj/structure/table)
-	health = 200
-	armor = list(melee = 10, bullet = 10, laser = 10, energy = 100, bomb = 20, bio = 0, rad = 0, fire = 0, acid = 70)
+	obj_integrity = 200
+	max_integrity = 200
+	integrity_failure = 50
+	armor = list(melee = 10, bullet = 30, laser = 30, energy = 100, bomb = 20, bio = 0, rad = 0, fire = 80, acid = 70)
 
 /obj/structure/table/reinforced/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = W
 		if(WT.remove_fuel(0, user))
-			playsound(src.loc, 'sound/items/Welder.ogg', 50, 1)
+			playsound(src.loc, W.usesound, 50, 1)
 			if(deconstruction_ready)
 				user << "<span class='notice'>You start strengthening the reinforced table...</span>"
-				if (do_after(user, 50/W.toolspeed, target = src))
+				if (do_after(user, 50*W.toolspeed, target = src))
 					if(!src || !WT.isOn()) return
 					user << "<span class='notice'>You strengthen the table.</span>"
 					deconstruction_ready = 0
 			else
 				user << "<span class='notice'>You start weakening the reinforced table...</span>"
-				if (do_after(user, 50/W.toolspeed, target = src))
+				if (do_after(user, 50*W.toolspeed, target = src))
 					if(!src || !WT.isOn()) return
 					user << "<span class='notice'>You weaken the table.</span>"
 					deconstruction_ready = 1
@@ -391,12 +319,22 @@
 	desc = "A solid, slightly beveled brass table."
 	icon = 'icons/obj/smooth_structures/brass_table.dmi'
 	icon_state = "brass_table"
+	resistance_flags = FIRE_PROOF | ACID_PROOF
 	frame = /obj/structure/table_frame/brass
-	framestack = /obj/item/stack/sheet/brass
-	buildstack = /obj/item/stack/sheet/brass
+	framestack = /obj/item/stack/tile/brass
+	buildstack = /obj/item/stack/tile/brass
 	framestackamount = 1
 	buildstackamount = 1
 	canSmoothWith = list(/obj/structure/table/reinforced/brass)
+
+/obj/structure/table/reinforced/brass/New()
+	change_construction_value(2)
+	..()
+
+/obj/structure/table/reinforced/brass/Destroy()
+	change_construction_value(-2)
+	return ..()
+
 
 /obj/structure/table/reinforced/brass/narsie_act()
 	take_damage(rand(15, 45), BRUTE)
@@ -404,9 +342,10 @@
 		var/previouscolor = color
 		color = "#960000"
 		animate(src, color = previouscolor, time = 8)
+		addtimer(CALLBACK(src, /atom/proc/update_atom_colour), 8)
 
 /obj/structure/table/reinforced/brass/ratvar_act()
-	health = initial(health)
+	obj_integrity = max_integrity
 
 /*
  * Surgery Tables
@@ -463,27 +402,8 @@
 	density = 1
 	anchored = 1
 	pass_flags = LETPASSTHROW //You can throw objects over this, despite it's density.
-	var/health = 20
-
-/obj/structure/rack/ex_act(severity, target)
-	switch(severity)
-		if(1)
-			qdel(src)
-		if(2)
-			if(prob(50))
-				rack_destroy()
-			else
-				qdel(src)
-		if(3)
-			take_damage(rand(5,25), BRUTE, 0)
-
-/obj/structure/rack/blob_act(obj/structure/blob/B)
-	rack_destroy()
-
-
-/obj/structure/rack/mech_melee_attack(obj/mecha/M)
-	if(..())
-		take_damage(M.force*2)
+	obj_integrity = 20
+	max_integrity = 20
 
 /obj/structure/rack/CanPass(atom/movable/mover, turf/target, height=0)
 	if(height==0) return 1
@@ -511,87 +431,42 @@
 
 /obj/structure/rack/attackby(obj/item/weapon/W, mob/user, params)
 	if (istype(W, /obj/item/weapon/wrench) && !(flags&NODECONSTRUCT))
-		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-		rack_destroy()
+		playsound(src.loc, W.usesound, 50, 1)
+		deconstruct(TRUE)
 		return
-	if(user.a_intent == "harm")
+	if(user.a_intent == INTENT_HARM)
 		return ..()
 	if(user.drop_item())
 		W.Move(loc)
 		return 1
 
-/obj/structure/rack/attacked_by(obj/item/I, mob/living/user)
-	..()
-	take_damage(I.force, I.damtype)
-
 /obj/structure/rack/attack_paw(mob/living/user)
 	attack_hand(user)
 
-/obj/structure/rack/attack_hulk(mob/living/carbon/human/user)
-	..(user, 1)
-	rack_destroy()
-	return 1
-
 /obj/structure/rack/attack_hand(mob/living/user)
+	if(user.weakened || user.resting || user.lying || user.get_num_legs() < 2)
+		return
 	user.changeNext_move(CLICK_CD_MELEE)
-	user.do_attack_animation(src)
-	user.visible_message("<span class='warning'>[user] kicks [src].</span>", \
-						 "<span class='danger'>You kick [src].</span>")
-	take_damage(rand(4,8), BRUTE)
-
-/obj/structure/rack/attack_alien(mob/living/user)
-	user.changeNext_move(CLICK_CD_MELEE)
-	user.do_attack_animation(src)
-	playsound(src.loc, 'sound/weapons/bladeslice.ogg', 50, 1)
-	visible_message("<span class='warning'>[user] slices [src] apart.</span>")
-	rack_destroy()
+	user.do_attack_animation(src, ATTACK_EFFECT_KICK)
+	user.visible_message("<span class='danger'>[user] kicks [src].</span>", null, null, COMBAT_MESSAGE_RANGE)
+	take_damage(rand(4,8), BRUTE, "melee", 1)
 
 
-/obj/structure/rack/attack_animal(mob/living/simple_animal/user)
-	user.changeNext_move(CLICK_CD_MELEE)
-	user.do_attack_animation(src)
-	if(user.melee_damage_upper || user.obj_damage)
-		var/dmg_dealt = user.melee_damage_upper
-		if(user.obj_damage)
-			dmg_dealt = user.obj_damage
-		if(user.environment_smash)
-			playsound(src, 'sound/effects/meteorimpact.ogg', 100, 1)
-			visible_message("<span class='warning'>[user] smashes [src] apart.</span>")
-			rack_destroy()
-		else
-			take_damage(dmg_dealt, user.melee_damage_type)
-
-
-/obj/structure/rack/attack_tk() // no telehulk sorry
-	return
-
-/obj/structure/rack/bullet_act(obj/item/projectile/P)
-	. = ..()
-	take_damage(P.damage, P.damage_type, 0)
-
-/obj/structure/rack/proc/take_damage(damage, damage_type = BRUTE, sound_effect = 1)
+/obj/structure/rack/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
 		if(BRUTE)
-			if(sound_effect)
-				if(damage)
-					playsound(loc, 'sound/items/dodgeball.ogg', 80, 1)
-				else
-					playsound(loc, 'sound/weapons/tap.ogg', 50, 1)
+			if(damage_amount)
+				playsound(loc, 'sound/items/dodgeball.ogg', 80, 1)
+			else
+				playsound(loc, 'sound/weapons/tap.ogg', 50, 1)
 		if(BURN)
-			if(sound_effect)
-				playsound(loc, 'sound/items/Welder.ogg', 40, 1)
-		else
-			return
-	health -= damage
-	if(health <= 0)
-		rack_destroy()
-
+			playsound(loc, 'sound/items/Welder.ogg', 40, 1)
 
 /*
  * Rack destruction
  */
 
-/obj/structure/rack/proc/rack_destroy()
+/obj/structure/rack/deconstruct(disassembled = TRUE)
 	if(!(flags&NODECONSTRUCT))
 		density = 0
 		var/obj/item/weapon/rack_parts/newparts = new(loc)

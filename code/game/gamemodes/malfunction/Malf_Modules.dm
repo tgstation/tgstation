@@ -9,10 +9,10 @@
 
 	var/power_type
 
-/datum/AI_Module/large/
+/datum/AI_Module/large
 	uses = 1
 
-/datum/AI_Module/small/
+/datum/AI_Module/small
 	uses = 5
 
 /datum/AI_Module/large/nuke_station
@@ -27,10 +27,6 @@
 /mob/living/silicon/ai/proc/nuke_station()
 	set category = "Malfunction"
 	set name = "Doomsday Device"
-
-	for(var/N in nuke_tiles)
-		var/turf/T = N
-		T.icon_state = "rcircuitanim" //This causes all blue "circuit" tiles on the map to change to animated red icon state.
 
 	src << "<span class='notice'>Nuclear device armed.</span>"
 	priority_announce("Hostile runtimes detected in all station systems, please deactivate your AI to prevent possible damage to its morality core.", "Anomaly Alert", 'sound/AI/aimalf.ogg')
@@ -67,6 +63,11 @@
 		countdown = null
 	STOP_PROCESSING(SSfastprocess, src)
 	SSshuttle.clearHostileEnvironment(src)
+	SSmapping.remove_nuke_threat(src)
+	for(var/A in ai_list)
+		var/mob/living/silicon/ai/Mlf = A
+		if(Mlf.doomsday_device == src)
+			Mlf.doomsday_device = null
 	. = ..()
 
 /obj/machinery/doomsday_device/proc/start()
@@ -75,9 +76,10 @@
 	countdown.start()
 	START_PROCESSING(SSfastprocess, src)
 	SSshuttle.registerHostileEnvironment(src)
+	SSmapping.add_nuke_threat(src) //This causes all blue "circuit" tiles on the map to change to animated red icon state.
 
 /obj/machinery/doomsday_device/proc/seconds_remaining()
-	. = max(0, (round(detonation_timer - world.time) / 10))
+	. = max(0, (round((detonation_timer - world.time) / 10)))
 
 /obj/machinery/doomsday_device/process()
 	var/turf/T = get_turf(src)
@@ -92,11 +94,11 @@
 	if(sec_left <= 0)
 		timing = FALSE
 		detonate(T.z)
-		qdel(src)
 	else
-		if(!(sec_left % 60) && (!milestones[sec_left]))
-			milestones[sec_left] = TRUE
-			var/message = "[sec_left] SECONDS UNTIL DOOMSDAY DEVICE ACTIVATION!"
+		var/key = num2text(sec_left)
+		if(!(sec_left % 60) && !(key in milestones))
+			milestones[key] = TRUE
+			var/message = "[key] SECONDS UNTIL DOOMSDAY DEVICE ACTIVATION!"
 			minor_announce(message, "ERROR ER0RR $R0RRO$!R41.%%!!(%$^^__+ @#F0E4", 1)
 
 /obj/machinery/doomsday_device/proc/detonate(z_level = 1)
@@ -109,7 +111,7 @@
 			continue
 		if(issilicon(L))
 			continue
-		L << "<span class='danger'><B>The blast wave from the [src] tears you atom from atom!</B></span>"
+		L << "<span class='userdanger'>The blast wave from [src] tears you atom from atom!</span>"
 		L.dust()
 	world << "<B>The AI cleansed the station of life with the doomsday device!</B>"
 	ticker.force_ending = 1
@@ -133,9 +135,9 @@
 	src.verbs -= /mob/living/silicon/ai/proc/upgrade_turrets
 	//Upgrade AI turrets around the world
 	for(var/obj/machinery/porta_turret/ai/turret in machines)
-		turret.health += 30
-		turret.eprojectile = /obj/item/projectile/beam/laser/heavylaser //Once you see it, you will know what it means to FEAR.
-		turret.eshot_sound = 'sound/weapons/lasercannonfire.ogg'
+		turret.obj_integrity += 30
+		turret.lethal_projectile = /obj/item/projectile/beam/laser/heavylaser //Once you see it, you will know what it means to FEAR.
+		turret.lethal_projectile_sound = 'sound/weapons/lasercannonfire.ogg'
 	src << "<span class='notice'>Turrets upgraded.</span>"
 
 /datum/AI_Module/large/lockdown
@@ -157,8 +159,8 @@
 	for(var/obj/machinery/door/D in airlocks)
 		if(D.z != ZLEVEL_STATION)
 			continue
-		addtimer(D, "hostile_lockdown", 0, FALSE, src)
-		addtimer(D, "disable_lockdown", 900)
+		addtimer(CALLBACK(D, /obj/machinery/door.proc/hostile_lockdown, src), 0)
+		addtimer(CALLBACK(D, /obj/machinery/door.proc/disable_lockdown), 900)
 
 	var/obj/machinery/computer/communications/C = locate() in machines
 	if(C)
@@ -167,9 +169,9 @@
 	verbs -= /mob/living/silicon/ai/proc/lockdown
 	minor_announce("Hostile runtime detected in door controllers. Isolation Lockdown protocols are now in effect. Please remain calm.","Network Alert:", 1)
 	src << "<span class = 'warning'>Lockdown Initiated. Network reset in 90 seconds.</span>"
-	addtimer(GLOBAL_PROC, "minor_announce", 900, FALSE,
+	addtimer(CALLBACK(GLOBAL_PROC, .proc/minor_announce,
 		"Automatic system reboot complete. Have a secure day.",
-		"Network reset:")
+		"Network reset:"), 900)
 
 /datum/AI_Module/large/destroy_rcd
 	module_name = "Destroy RCDs"
@@ -286,11 +288,11 @@
 		for(var/datum/AI_Module/small/overload_machine/overload in current_modules)
 			if(overload.uses > 0)
 				overload.uses --
-				audible_message("<span class='italics'>You hear a loud electrical buzzing sound!</span>")
+				M.audible_message("<span class='userdanger'>You hear a loud electrical buzzing sound coming from [M]!</span>")
 				src << "<span class='warning'>Overloading machine circuitry...</span>"
 				spawn(50)
 					if(M)
-						explosion(get_turf(M), 0,1,1,0)
+						explosion(get_turf(M), 0,2,3,0)
 						qdel(M)
 			else src << "<span class='notice'>Out of uses.</span>"
 	else src << "<span class='notice'>That's not a machine.</span>"
@@ -318,7 +320,7 @@
 		for(var/datum/AI_Module/small/override_machine/override in current_modules)
 			if(override.uses > 0)
 				override.uses --
-				audible_message("<span class='italics'>You hear a loud electrical buzzing sound!</span>")
+				M.audible_message("<span class='userdanger'>You hear a loud electrical buzzing sound!</span>")
 				src << "<span class='warning'>Reprogramming machine behaviour...</span>"
 				spawn(50)
 					if(M && !qdeleted(M))
@@ -372,7 +374,7 @@
 		for(var/n=1;n<4,n++)
 			var/fail
 			var/turf/T = turfs[n]
-			if(!istype(T, /turf/open/floor))
+			if(!isfloorturf(T))
 				fail = 1
 			var/datum/camerachunk/C = cameranet.getCameraChunk(T.x, T.y, T.z)
 			if(!C.visibleTurfs[T])

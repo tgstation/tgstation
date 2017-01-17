@@ -15,7 +15,7 @@
 
 /obj/machinery/computer/gulag_teleporter_computer/New()
 	..()
-	addtimer(src, "scan_machinery", 5)
+	addtimer(CALLBACK(src, .proc/scan_machinery), 5)
 
 /obj/machinery/computer/gulag_teleporter_computer/Destroy()
 	if(id)
@@ -124,7 +124,7 @@
 		if("teleport")
 			if(!teleporter || !beacon)
 				return
-			addtimer(src, "teleport", 5, FALSE, usr)
+			addtimer(CALLBACK(src, .proc/teleport, usr), 5)
 
 /obj/machinery/computer/gulag_teleporter_computer/proc/scan_machinery()
 	teleporter = findteleporter()

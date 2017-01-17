@@ -37,4 +37,4 @@
 	item_color = "trackpants"
 	can_adjust = 0
 	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0, fire = 0, acid = 0)
-	resistance_flags = FIRE_PROOF
+	resistance_flags = 0

@@ -310,7 +310,7 @@
 /area/awaymission/cabin)
 "aZ" = (
 /obj/structure/guncase/shotgun,
-/obj/item/weapon/gun/projectile/shotgun/riot,
+/obj/item/weapon/gun/ballistic/shotgun/riot,
 /turf/open/floor/carpet,
 /area/awaymission/cabin)
 "ba" = (

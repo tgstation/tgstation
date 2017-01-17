@@ -3,7 +3,7 @@
 	desc = "It measures something."
 	icon = 'icons/obj/meter.dmi'
 	icon_state = "meterX"
-	var/obj/machinery/atmospherics/pipe/target = null
+	var/atom/target = null
 	anchored = 1
 	power_channel = ENVIRON
 	var/frequency = 0
@@ -11,6 +11,10 @@
 	use_power = 1
 	idle_power_usage = 2
 	active_power_usage = 4
+	obj_integrity = 150
+	max_integrity = 150
+	armor = list(melee = 0, bullet = 0, laser = 0, energy = 100, bomb = 0, bio = 100, rad = 100, fire = 40, acid = 0)
+
 
 /obj/machinery/meter/New()
 	..()
@@ -94,9 +98,9 @@
 
 /obj/machinery/meter/attackby(obj/item/weapon/W, mob/user, params)
 	if (istype(W, /obj/item/weapon/wrench))
-		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+		playsound(src.loc, W.usesound, 50, 1)
 		user << "<span class='notice'>You begin to unfasten \the [src]...</span>"
-		if (do_after(user, 40/W.toolspeed, target = src))
+		if (do_after(user, 40*W.toolspeed, target = src))
 			user.visible_message( \
 				"[user] unfastens \the [src].", \
 				"<span class='notice'>You unfasten \the [src].</span>", \
@@ -137,4 +141,3 @@
 /obj/machinery/meter/turf/initialize()
 	if (!target)
 		src.target = loc
-

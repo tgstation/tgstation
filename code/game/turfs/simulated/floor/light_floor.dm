@@ -6,9 +6,10 @@
 	floor_tile = /obj/item/stack/tile/light
 	broken_states = list("light_broken")
 	var/on = 1
-	var/state //0 = fine, 1 = flickering, 2 = breaking, 3 = broken
+	var/state = 0//0 = fine, 1 = flickering, 2 = breaking, 3 = broken
 	var/list/coloredlights = list("g", "r", "y", "b", "p", "w", "s","o","g")
 	var/currentcolor = 1
+	var/can_modify_colour = TRUE
 
 
 /turf/open/floor/light/New()
@@ -39,9 +40,11 @@
 
 /turf/open/floor/light/ChangeTurf(turf/T)
 	SetLuminosity(0)
-	..()
+	return ..()
 
 /turf/open/floor/light/attack_hand(mob/user)
+	if(!can_modify_colour)
+		return
 	if(!on)
 		on = 1
 		currentcolor = 1
@@ -67,3 +70,23 @@
 			user << "<span class='notice'>You replace the light bulb.</span>"
 		else
 			user << "<span class='notice'>The lightbulb seems fine, no need to replace it.</span>"
+
+
+//Cycles through all of the colours
+/turf/open/floor/light/colour_cycle
+	coloredlights = list("cycle_all")
+	can_modify_colour = FALSE
+
+
+
+//Two different "dancefloor" types so that you can have a checkered pattern
+// (also has a longer delay than colour_cycle between cycling colours)
+/turf/open/floor/light/colour_cycle/dancefloor_a
+	name = "dancefloor"
+	desc = "Funky floor."
+	coloredlights = list("dancefloor_A")
+
+/turf/open/floor/light/colour_cycle/dancefloor_b
+	name = "dancefloor"
+	desc = "Funky floor."
+	coloredlights = list("dancefloor_B")

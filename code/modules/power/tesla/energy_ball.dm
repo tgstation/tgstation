@@ -100,7 +100,7 @@ var/list/blacklisted_tesla_types = typecacheof(list(/obj/machinery/atmospherics,
 		energy_to_raise = energy_to_raise * 1.25
 
 		playsound(src.loc, 'sound/magic/lightning_chargeup.ogg', 100, 1, extrarange = 30)
-		addtimer(src, "new_mini_ball", 100)
+		addtimer(CALLBACK(src, .proc/new_mini_ball), 100)
 
 	else if(energy < energy_to_lower && orbiting_balls.len)
 		energy_to_raise = energy_to_raise / 1.25
@@ -145,7 +145,7 @@ var/list/blacklisted_tesla_types = typecacheof(list(/obj/machinery/atmospherics,
 		orbitingball.orbiting_balls -= src
 		orbitingball.dissipate_strength = orbitingball.orbiting_balls.len
 	..()
-	if (!loc)
+	if (!loc && !qdeleted(src))
 		qdel(src)
 
 
@@ -253,7 +253,7 @@ var/list/blacklisted_tesla_types = typecacheof(list(/obj/machinery/atmospherics,
 	else if(closest_mob)
 		var/shock_damage = Clamp(round(power/400), 10, 90) + rand(-5, 5)
 		closest_mob.electrocute_act(shock_damage, source, 1, tesla_shock = 1)
-		if(istype(closest_mob, /mob/living/silicon))
+		if(issilicon(closest_mob))
 			var/mob/living/silicon/S = closest_mob
 			S.emp_act(2)
 			tesla_zap(S, 7, power / 1.5) // metallic folks bounce it further

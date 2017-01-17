@@ -141,7 +141,7 @@
 		if(src.dna.check_mutation(HULK))
 			src << "<span class='warning'>Your meaty finger is much too large for the trigger guard!</span>"
 			return 0
-		if(NOGUNS in src.dna.species.specflags)
+		if(NOGUNS in src.dna.species.species_traits)
 			src << "<span class='warning'>Your fingers don't fit in the trigger guard!</span>"
 			return 0
 

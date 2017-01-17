@@ -805,7 +805,7 @@
 	name = "\improper BMP Asteroid Level 3"
 	})
 "bG" = (
-/obj/item/weapon/gun/projectile/automatic/pistol/deagle/gold,
+/obj/item/weapon/gun/ballistic/automatic/pistol/deagle/gold,
 /turf/open/floor/plating/asteroid/basalt/lava{
 	initial_gas_mix = "n2=23;o2=14"
 	},
@@ -1685,7 +1685,7 @@
 /area/awaymission/northblock)
 "dD" = (
 /obj/structure/table/wood,
-/obj/effect/decal/cleanable/cobweb2,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/wood{
 	baseturf = /turf/open/floor/plating/asteroid/basalt
 	},
@@ -1832,7 +1832,7 @@
 "dY" = (
 /obj/structure/bed,
 /obj/item/weapon/bedsheet,
-/obj/effect/decal/cleanable/cobweb2,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/effect/landmark{
 	name = "awaystart"
 	},
@@ -2122,7 +2122,7 @@
 /obj/structure/table,
 /obj/item/weapon/gun/energy/kinetic_accelerator,
 /obj/item/weapon/gun/energy/kinetic_accelerator,
-/obj/effect/decal/cleanable/cobweb2,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/basalt
 	},

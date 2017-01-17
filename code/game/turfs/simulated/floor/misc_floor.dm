@@ -15,10 +15,10 @@
 
 /turf/open/floor/bluegrid/New()
 	..()
-	nuke_tiles += src
+	SSmapping.nuke_tiles += src
 
 /turf/open/floor/bluegrid/Destroy()
-	nuke_tiles -= src
+	SSmapping.nuke_tiles -= src
 	return ..()
 
 /turf/open/floor/greengrid
@@ -26,82 +26,23 @@
 	icon_state = "gcircuit"
 	floor_tile = /obj/item/stack/tile/plasteel
 
-/turf/open/floor/plating/beach
-	name = "beach"
-	icon = 'icons/misc/beach.dmi'
-	flags = NONE
 
-/turf/open/floor/plating/beach/ex_act(severity, target)
-	contents_explosion(severity, target)
+/turf/open/floor/pod
+	name = "pod floor"
+	icon_state = "podfloor"
+	icon_regular_floor = "podfloor"
+	floor_tile = /obj/item/stack/tile/pod
 
-/turf/open/floor/plating/beach/sand
-	name = "sand"
-	desc = "Surf's up."
-	icon_state = "sand"
-	baseturf = /turf/open/floor/plating/beach/sand
+/turf/open/floor/pod/light
+	icon_state = "podfloor_light"
+	icon_regular_floor = "podfloor_light"
+	floor_tile = /obj/item/stack/tile/pod/light
 
-/turf/open/floor/plating/beach/coastline_t
-	name = "coastline"
-	desc = "Tide's high tonight. Charge your batons."
-	icon_state = "sandwater_t"
-	baseturf = /turf/open/floor/plating/beach/coastline_t
+/turf/open/floor/pod/dark
+	icon_state = "podfloor_dark"
+	icon_regular_floor = "podfloor_dark"
+	floor_tile = /obj/item/stack/tile/pod/dark
 
-/turf/open/floor/plating/beach/coastline_b
-	name = "coastline"
-	icon_state = "sandwater_b"
-	baseturf = /turf/open/floor/plating/beach/coastline_b
-
-/turf/open/floor/plating/beach/water
-	name = "water"
-	desc = "You get the feeling that nobody's bothered to actually make this water functional..."
-	icon_state = "water"
-	baseturf = /turf/open/floor/plating/beach/water
-
-/turf/open/floor/plating/ironsand
-	name = "iron sand"
-	desc = "Like sand, but more <i>metal</i>."
-
-/turf/open/floor/plating/ironsand/New()
-	..()
-	icon_state = "ironsand[rand(1,15)]"
-
-/turf/open/floor/plating/ironsand/burn_tile()
-	return
-
-/turf/open/floor/plating/ice
-	name = "ice sheet"
-	desc = "A sheet of solid ice. Looks slippery."
-	icon = 'icons/turf/snow.dmi'
-	icon_state = "ice"
-	temperature = 180
-	baseturf = /turf/open/floor/plating/ice
-	slowdown = 1
-	wet = TURF_WET_PERMAFROST
-
-/turf/open/floor/plating/ice/colder
-	temperature = 140
-
-/turf/open/floor/plating/ice/temperate
-	temperature = 255.37
-
-/turf/open/floor/plating/ice/break_tile()
-	return
-
-/turf/open/floor/plating/ice/burn_tile()
-	return
-
-/turf/open/floor/plating/snowed
-	name = "snowed-over plating"
-	desc = "A section of plating covered in a light layer of snow."
-	icon = 'icons/turf/snow.dmi'
-	icon_state = "snowplating"
-	temperature = 180
-
-/turf/open/floor/plating/snowed/colder
-	temperature = 140
-
-/turf/open/floor/plating/snowed/temperatre
-	temperature = 255.37
 
 /turf/open/floor/noslip
 	name = "high-traction floor"
@@ -135,19 +76,17 @@
 	change_construction_value(1)
 
 /turf/open/floor/clockwork/Destroy()
-	be_removed()
-	return ..()
-
-/turf/open/floor/clockwork/ChangeTurf(path, defer_change = FALSE)
-	if(path != type)
-		be_removed()
-	return ..()
-
-/turf/open/floor/clockwork/proc/be_removed()
 	STOP_PROCESSING(SSobj, src)
 	change_construction_value(-1)
-	qdel(realappearence)
-	realappearence = null
+	if(realappearence)
+		qdel(realappearence)
+		realappearence = null
+	return ..()
+
+/turf/open/floor/clockwork/ReplaceWithLattice()
+	..()
+	for(var/obj/structure/lattice/L in src)
+		L.ratvar_act()
 
 /turf/open/floor/clockwork/Entered(atom/movable/AM)
 	..()
@@ -159,43 +98,39 @@
 
 /turf/open/floor/clockwork/proc/healservants()
 	for(var/mob/living/L in src)
-		if(L.stat == DEAD || !is_servant_of_ratvar(L))
+		if(L.stat == DEAD)
 			continue
-		var/swapdamage = FALSE
-		if(L.has_dna()) //if has_dna() is true they're at least carbon
-			var/mob/living/carbon/C = L
-			if(TOXINLOVER in C.dna.species.specflags)
-				swapdamage = TRUE
-		if(isanimal(L))
-			var/mob/living/simple_animal/A = L
-			if(A.damage_coeff[TOX] < 0)
-				swapdamage = TRUE
-		if(swapdamage) //they'd take damage, we need to swap it
-			L.adjustToxLoss(3)
-		else
-			L.adjustToxLoss(-3)
 		. = 1
+		if(!is_servant_of_ratvar(L) || !L.toxloss)
+			continue
+
+		var/image/I = new('icons/effects/effects.dmi', src, "heal", ABOVE_MOB_LAYER) //fake a healing glow for servants
+		I.appearance_flags = RESET_COLOR
+		I.color = "#5A6068"
+		I.pixel_x = rand(-12, 12)
+		I.pixel_y = rand(-9, 0)
+		var/list/viewing = list()
+		for(var/mob/M in viewers(src))
+			if(M.client && (is_servant_of_ratvar(M) || isobserver(M) || M.stat == DEAD))
+				viewing += M.client
+		flick_overlay(I, viewing, 8)
+		L.adjustToxLoss(-3, TRUE, TRUE)
 
 /turf/open/floor/clockwork/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/weapon/crowbar))
 		user.visible_message("<span class='notice'>[user] begins slowly prying up [src]...</span>", "<span class='notice'>You begin painstakingly prying up [src]...</span>")
-		playsound(src, 'sound/items/Crowbar.ogg', 20, 1)
-		if(!do_after(user, 70 / I.toolspeed, target = src))
+		playsound(src, I.usesound, 20, 1)
+		if(!do_after(user, 70*I.toolspeed, target = src))
 			return 0
-		user.visible_message("<span class='notice'>[user] pries up [src]!</span>", "<span class='notice'>You pry up [src], destroying it!</span>")
-		playsound(src, 'sound/items/Crowbar.ogg', 80, 1)
+		user.visible_message("<span class='notice'>[user] pries up [src]!</span>", "<span class='notice'>You pry up [src]!</span>")
+		playsound(src, I.usesound, 80, 1)
 		make_plating()
 		return 1
 	return ..()
 
 /turf/open/floor/clockwork/make_plating()
-	new/obj/item/clockwork/alloy_shards/small(src)
-	new/obj/item/clockwork/alloy_shards/medium(src)
+	PoolOrNew(/obj/item/stack/tile/brass, src)
 	return ..()
-
-/turf/open/floor/clockwork/ratvar_act()
-	for(var/mob/M in src)
-		M.ratvar_act()
 
 /turf/open/floor/clockwork/narsie_act()
 	..()
@@ -203,3 +138,67 @@
 		var/previouscolor = color
 		color = "#960000"
 		animate(src, color = previouscolor, time = 8)
+		addtimer(CALLBACK(src, /atom/proc/update_atom_colour), 8)
+
+
+/turf/open/floor/bluespace
+	slowdown = -1
+	icon_state = "bluespace"
+	desc = "Through a series of micro-teleports these tiles let people move at incredible speeds"
+	floor_tile = /obj/item/stack/tile/bluespace
+
+
+/turf/open/floor/sepia
+	slowdown = 2
+	icon_state = "sepia"
+	desc = "Time seems to flow very slowly around these tiles"
+	floor_tile = /obj/item/stack/tile/sepia
+
+
+
+// VINE FLOOR
+
+/turf/open/floor/vines
+	color = "#aa77aa"
+	icon_state = "vinefloor"
+	broken_states = list()
+
+
+//All of this shit is useless for vines
+
+/turf/open/floor/vines/attackby()
+	return
+
+/turf/open/floor/vines/burn_tile()
+	return
+
+/turf/open/floor/vines/break_tile()
+	return
+
+/turf/open/floor/vines/make_plating()
+	return
+
+/turf/open/floor/vines/break_tile_to_plating()
+	return
+
+/turf/open/floor/vines/ex_act(severity, target)
+	..()
+	if(severity < 3 || target == src)
+		ChangeTurf(src.baseturf)
+
+/turf/open/floor/vines/narsie_act()
+	if(prob(20))
+		ChangeTurf(src.baseturf) //nar sie eats this shit
+
+/turf/open/floor/vines/singularity_pull(S, current_size)
+	if(current_size >= STAGE_FIVE)
+		if(prob(50))
+			ChangeTurf(src.baseturf)
+
+/turf/open/floor/vines/ChangeTurf(turf/open/floor/T)
+	. = ..()
+	//Do this *after* the turf has changed as qdel in spacevines will call changeturf again if it hasn't
+	for(var/obj/structure/spacevine/SV in src)
+		if(!qdestroying(SV))//Helps avoid recursive loops
+			qdel(SV)
+	UpdateAffectingLights()

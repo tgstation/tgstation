@@ -1,0 +1,5 @@
+author: "Mervill"
+delete-after: True
+changes: 
+  - bugfix: "Using a welder to repair a mining drone now follows standard behaviour"
+  - bugfix: "Redeeming the mining voucher for a mining drone now also provides welding goggles"

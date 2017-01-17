@@ -9,7 +9,7 @@
 	throwforce = 5
 	throw_speed = 2
 	throw_range = 5
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	var/charge = 0	// note %age conveted to actual charge in New
 	var/maxcharge = 1000
 	materials = list(MAT_METAL=700, MAT_GLASS=50)
@@ -17,6 +17,7 @@
 	var/chargerate = 100 //how much power is given every tick in a recharger
 	var/self_recharge = 0 //does it self recharge, over time, or not?
 	var/ratingdesc = TRUE
+	var/grown_battery = FALSE // If it's a grown that acts as a battery, add a wire overlay to it.
 
 /obj/item/weapon/stock_parts/cell/New()
 	..()
@@ -30,13 +31,14 @@
 	STOP_PROCESSING(SSobj, src)
 	return ..()
 
-/obj/item/weapon/stock_parts/cell/on_varedit(modified_var)
-	if(modified_var == "self_recharge")
-		if(self_recharge)
-			START_PROCESSING(SSobj, src)
-		else
-			STOP_PROCESSING(SSobj, src)
-	..()
+/obj/item/weapon/stock_parts/cell/vv_edit_var(var_name, var_value)
+	switch(var_name)
+		if("self_recharge")
+			if(var_value)
+				START_PROCESSING(SSobj, src)
+			else
+				STOP_PROCESSING(SSobj, src)
+	. = ..()
 
 /obj/item/weapon/stock_parts/cell/process()
 	if(self_recharge)
@@ -46,6 +48,8 @@
 
 /obj/item/weapon/stock_parts/cell/proc/updateicon()
 	cut_overlays()
+	if(grown_battery)
+		add_overlay(image('icons/obj/power.dmi', "grown_wires"))
 	if(charge < 0.01)
 		return
 	else if(charge/maxcharge >=0.995)
@@ -87,7 +91,7 @@
 		user << "The charge meter reads [round(src.percent() )]%."
 
 /obj/item/weapon/stock_parts/cell/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is licking the electrodes of the [src.name]! It looks like \he's trying to commit suicide.</span>")
+	user.visible_message("<span class='suicide'>[user] is licking the electrodes of [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return (FIRELOSS)
 
 /obj/item/weapon/stock_parts/cell/attackby(obj/item/W, mob/user, params)
@@ -281,13 +285,14 @@
 /obj/item/weapon/stock_parts/cell/potato
 	name = "potato battery"
 	desc = "A rechargable starch based power cell."
-	icon = 'icons/obj/power.dmi' //'icons/obj/hydroponics/harvest.dmi'
-	icon_state = "potato_cell" //"potato_battery"
+	icon = 'icons/obj/hydroponics/harvest.dmi'
+	icon_state = "potato"
 	origin_tech = "powerstorage=1;biotech=1"
 	charge = 100
 	maxcharge = 300
 	materials = list()
 	rating = 1
+	grown_battery = TRUE //it has the overlays for wires
 
 /obj/item/weapon/stock_parts/cell/high/slime
 	name = "charged slime core"

@@ -164,9 +164,6 @@
 /area/shuttle/escape)
 "G" = (
 /obj/structure/extinguisher_cabinet{
-	has_extinguisher = null;
-	icon_state = "extinguisher_empty";
-	opened = 1;
 	pixel_x = 27;
 	pixel_y = 0
 	},

@@ -13,6 +13,8 @@
 		qdel(food)
 	for(var/BP in bodyparts)
 		qdel(BP)
+	for(var/imp in implants)
+		qdel(imp)
 	bodyparts = list()
 	remove_from_all_data_huds()
 	if(dna)
@@ -30,7 +32,7 @@
 			if(I && I.force)
 				var/d = rand(round(I.force / 4), I.force)
 				var/obj/item/bodypart/BP = get_bodypart("chest")
-				if(BP.take_damage(d, 0))
+				if(BP.receive_damage(d, 0))
 					update_damage_overlays()
 				visible_message("<span class='danger'>[user] attacks [src]'s stomach wall with the [I.name]!</span>", \
 									"<span class='userdanger'>[user] attacks your stomach wall with the [I.name]!</span>")
@@ -83,7 +85,7 @@
 
 /mob/living/carbon/attackby(obj/item/I, mob/user, params)
 	if(lying && surgeries.len)
-		if(user != src && user.a_intent == "help")
+		if(user != src && user.a_intent == INTENT_HELP)
 			for(var/datum/surgery/S in surgeries)
 				if(S.next_step(user))
 					return 1
@@ -94,8 +96,10 @@
 	if(hit_atom.density && isturf(hit_atom))
 		Weaken(1)
 		take_bodypart_damage(10)
-	if(iscarbon(hit_atom))
+	if(iscarbon(hit_atom) && hit_atom != src)
 		var/mob/living/carbon/victim = hit_atom
+		if(victim.movement_type & FLYING)
+			return
 		victim.Weaken(1)
 		Weaken(1)
 		victim.take_bodypart_damage(10)
@@ -174,7 +178,8 @@
 	<B><FONT size=3>[name]</FONT></B>
 	<HR>
 	<BR><B>Head:</B> <A href='?src=\ref[src];item=[slot_head]'>				[(head && !(head.flags&ABSTRACT)) 			? head 		: "Nothing"]</A>
-	<BR><B>Mask:</B> <A href='?src=\ref[src];item=[slot_wear_mask]'>		[(wear_mask && !(wear_mask.flags&ABSTRACT))	? wear_mask	: "Nothing"]</A>"}
+	<BR><B>Mask:</B> <A href='?src=\ref[src];item=[slot_wear_mask]'>		[(wear_mask && !(wear_mask.flags&ABSTRACT))	? wear_mask	: "Nothing"]</A>
+	<BR><B>Neck:</B> <A href='?src=\ref[src];item=[slot_neck]'>		[(wear_neck && !(wear_neck.flags&ABSTRACT))	? wear_neck	: "Nothing"]</A>"}
 
 	for(var/i in 1 to held_items.len)
 		var/obj/item/I = get_item_for_held_index(i)
@@ -261,7 +266,7 @@
 
 /mob/living/carbon/resist_fire()
 	fire_stacks -= 5
-	Weaken(3,1)
+	Weaken(3, 1, 1)
 	spin(32,2)
 	visible_message("<span class='danger'>[src] rolls on the floor, trying to put themselves out!</span>", \
 		"<span class='notice'>You stop, drop, and roll!</span>")
@@ -321,6 +326,7 @@
 			W.dropped(src)
 			if (W)
 				W.layer = initial(W.layer)
+				W.plane = initial(W.plane)
 	if (legcuffed)
 		var/obj/item/weapon/W = legcuffed
 		legcuffed = null
@@ -332,6 +338,7 @@
 			W.dropped(src)
 			if (W)
 				W.layer = initial(W.layer)
+				W.plane = initial(W.plane)
 
 /mob/living/carbon/proc/clear_cuffs(obj/item/I, cuff_break)
 	if(!I.loc || buckled)
@@ -365,6 +372,10 @@
 			legcuffed.dropped()
 			legcuffed = null
 			update_inv_legcuffed()
+			return
+		else
+			unEquip(I)
+			I.dropped()
 			return
 		return TRUE
 
@@ -440,10 +451,13 @@
 	return ..()
 
 /mob/living/carbon/proc/vomit(var/lost_nutrition = 10, var/blood = 0, var/stun = 1, var/distance = 0, var/message = 1, var/toxic = 0)
+	if(dna && dna.species && NOHUNGER in dna.species.species_traits)
+		return 1
+
 	if(nutrition < 100 && !blood)
 		if(message)
 			visible_message("<span class='warning'>[src] dry heaves!</span>", \
-							"<span class='userdanger'>You try to throw up, but there's nothing your stomach!</span>")
+							"<span class='userdanger'>You try to throw up, but there's nothing in your stomach!</span>")
 		if(stun)
 			Weaken(10)
 		return 1
@@ -498,8 +512,6 @@
 	update_stat()
 	if(((maxHealth - total_burn) < HEALTH_THRESHOLD_DEAD) && stat == DEAD )
 		become_husk()
-		if(on_fire)
-			shred_clothing()
 	med_hud_set_health()
 
 /mob/living/carbon/update_sight()
@@ -676,6 +688,7 @@
 			D.cure(0)
 	if(admin_revive)
 		regenerate_limbs()
+		regenerate_organs()
 		handcuffed = initial(handcuffed)
 		for(var/obj/item/weapon/restraints/R in contents) //actually remove cuffs from inventory
 			qdel(R)
@@ -704,8 +717,17 @@
 
 	..()
 
+/mob/living/carbon/ExtinguishMob()
+	for(var/X in get_equipped_items())
+		var/obj/item/I = X
+		I.acid_level = 0 //washes off the acid on our clothes
+		I.extinguish() //extinguishes our clothes
+	..()
+
 /mob/living/carbon/fakefire(var/fire_icon = "Generic_mob_burning")
-	overlays_standing[FIRE_LAYER] = image("icon"='icons/mob/OnFire.dmi', "icon_state"= fire_icon, "layer"=-FIRE_LAYER)
+	var/image/new_fire_overlay = image("icon"='icons/mob/OnFire.dmi', "icon_state"= fire_icon, "layer"=-FIRE_LAYER)
+	new_fire_overlay.appearance_flags = RESET_COLOR
+	overlays_standing[FIRE_LAYER] = new_fire_overlay
 	apply_overlay(FIRE_LAYER)
 
 /mob/living/carbon/fakefireextinguish()
@@ -717,7 +739,7 @@
 					"<span class='userdanger'>[src] is attempting to devour you!</span>")
 	if(!do_mob(src, C, devour_time))
 		return
-	if(pulling && pulling == C && grab_state >= GRAB_AGGRESSIVE && a_intent == "grab")
+	if(pulling && pulling == C && grab_state >= GRAB_AGGRESSIVE && a_intent == INTENT_GRAB)
 		C.visible_message("<span class='danger'>[src] devours [C]!</span>", \
 						"<span class='userdanger'>[src] devours you!</span>")
 		C.forceMove(src)
@@ -725,16 +747,20 @@
 		add_logs(src, C, "devoured")
 
 /mob/living/carbon/proc/create_bodyparts()
+	var/l_arm_index_next = -1
+	var/r_arm_index_next = 0
 	for(var/X in bodyparts)
 		var/obj/item/bodypart/O = new X()
 		O.owner = src
 		bodyparts.Remove(X)
 		bodyparts.Add(O)
 		if(O.body_part == ARM_LEFT)
-			O.held_index = 1
+			l_arm_index_next += 2
+			O.held_index = l_arm_index_next //1, 3, 5, 7...
 			hand_bodyparts += O
 		else if(O.body_part == ARM_RIGHT)
-			O.held_index = 2
+			r_arm_index_next += 2
+			O.held_index = r_arm_index_next //2, 4, 6, 8...
 			hand_bodyparts += O
 
 
@@ -742,3 +768,10 @@
 	for(var/X in internal_organs)
 		var/obj/item/organ/I = X
 		I.Insert(src)
+
+/mob/living/carbon/vv_get_dropdown()
+	. = ..()
+	. += "---"
+	.["Make AI"] = "?_src_=vars;makeai=\ref[src]"
+	.["Modify bodypart"] = "?_src_=vars;editbodypart=\ref[src]"
+	.["Modify organs"] = "?_src_=vars;editorgans=\ref[src]"

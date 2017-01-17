@@ -159,6 +159,7 @@
 		I.loc = src
 		held_items[hand_index] = I
 		I.layer = ABOVE_HUD_LAYER
+		I.plane = ABOVE_HUD_PLANE
 		I.equipped(src, slot_hands)
 		if(I.pulledby)
 			I.pulledby.stop_pulling()
@@ -197,12 +198,14 @@
 	return put_in_hand(I, get_inactive_hand_index())
 
 
-//Puts the item our active hand if possible. Failing that it tries our inactive hand. Returns TRUE on success.
+//Puts the item our active hand if possible. Failing that it tries other hands. Returns TRUE on success.
 //If both fail it drops it on the floor and returns FALSE.
 //This is probably the main one you need to know :)
 /mob/proc/put_in_hands(obj/item/I, del_on_fail = FALSE)
 	if(!I)
 		return FALSE
+	if(put_in_active_hand(I))
+		return TRUE
 	var/hand = get_empty_held_index_for_side("l")
 	if(!hand)
 		hand =  get_empty_held_index_for_side("r")
@@ -214,6 +217,7 @@
 		return FALSE
 	I.forceMove(get_turf(src))
 	I.layer = initial(I.layer)
+	I.plane = initial(I.plane)
 	I.dropped(src)
 	return FALSE
 
@@ -266,6 +270,7 @@
 		if(client)
 			client.screen -= I
 		I.layer = initial(I.layer)
+		I.plane = initial(I.plane)
 		I.appearance_flags &= ~NO_CLIENT_COLOR
 		I.forceMove(loc)
 		I.dropped(src)
@@ -292,6 +297,8 @@
 		items += head
 	if(wear_mask)
 		items += wear_mask
+	if(wear_neck)
+		items += wear_neck
 	return items
 
 /mob/living/carbon/human/get_equipped_items()
@@ -313,6 +320,7 @@
 	if(w_uniform)
 		items += w_uniform
 	return items
+
 
 
 /obj/item/proc/equip_to_best_slot(var/mob/M)
@@ -345,7 +353,6 @@
 	S = M.get_item_by_slot(slot_back)	//else we put in backpack
 	if(istype(S) && S.can_be_inserted(src,1))
 		S.handle_item_insertion(src)
-		playsound(src.loc, "rustle", 50, 1, -5)
 		return TRUE
 
 	M << "<span class='warning'>You are unable to equip that!</span>"

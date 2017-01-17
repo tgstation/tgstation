@@ -17,7 +17,7 @@
 	Therefore, the top right corner (except during admin shenanigans) is at "15,15"
 */
 
-//Lower left, persistant menu
+//Lower left, persistent menu
 #define ui_inventory "WEST:6,SOUTH:5"
 
 //Middle left indicators
@@ -28,7 +28,7 @@
 
 #define ui_devilsouldisplay "WEST:6,CENTER-1:15"
 
-//Lower center, persistant menu
+//Lower center, persistent menu
 #define ui_sstore1 "CENTER-5:10,SOUTH:5"
 #define ui_id "CENTER-4:12,SOUTH:5"
 #define ui_belt "CENTER-3:14,SOUTH:5"
@@ -65,7 +65,8 @@
 
 #define ui_monkey_head "CENTER-4:13,SOUTH:5"	//monkey
 #define ui_monkey_mask "CENTER-3:14,SOUTH:5"	//monkey
-#define ui_monkey_back "CENTER-2:15,SOUTH:5"	//monkey
+#define ui_monkey_neck "CENTER-2:15,SOUTH:5"	//monkey
+#define ui_monkey_back "CENTER-1:16,SOUTH:5"	//monkey
 
 #define ui_alien_storage_l "CENTER-2:14,SOUTH:5"//alien
 #define ui_alien_storage_r "CENTER+1:18,SOUTH:5"//alien
@@ -76,7 +77,7 @@
 #define ui_drone_storage "CENTER-2:14,SOUTH:5"  //maintenance drones
 #define ui_drone_head "CENTER-3:14,SOUTH:5"     //maintenance drones
 
-//Lower right, persistant menu
+//Lower right, persistent menu
 #define ui_drop_throw "EAST-1:28,SOUTH+1:7"
 #define ui_pull_resist "EAST-2:26,SOUTH+1:7"
 #define ui_movi "EAST-2:26,SOUTH:5"
@@ -134,22 +135,22 @@
 #define ui_oclothing "WEST+1:8,SOUTH+1:7"
 #define ui_gloves "WEST+2:10,SOUTH+1:7"
 
-#define ui_glasses "WEST:6,SOUTH+2:9"
+#define ui_glasses "WEST:6,SOUTH+3:11"
 #define ui_mask "WEST+1:8,SOUTH+2:9"
 #define ui_ears "WEST+2:10,SOUTH+2:9"
-
+#define ui_neck "WEST:6,SOUTH+2:9"
 #define ui_head "WEST+1:8,SOUTH+3:11"
 
 //Ghosts
 
-#define ui_ghost_jumptomob "SOUTH:6,CENTER-2:16"
-#define ui_ghost_orbit "SOUTH:6,CENTER-1:16"
-#define ui_ghost_reenter_corpse "SOUTH:6,CENTER:16"
-#define ui_ghost_teleport "SOUTH:6,CENTER+1:16"
+#define ui_ghost_jumptomob "SOUTH:6,CENTER-2:24"
+#define ui_ghost_orbit "SOUTH:6,CENTER-1:24"
+#define ui_ghost_reenter_corpse "SOUTH:6,CENTER:24"
+#define ui_ghost_teleport "SOUTH:6,CENTER+1:24"
+#define ui_ghost_pai "SOUTH: 6, CENTER+2:24"
 
 //Hand of God, god
 
 #define ui_deityhealth "EAST-1:28,CENTER-2:13"
 #define ui_deitypower	"EAST-1:28,CENTER-1:15"
 #define ui_deityfollowers "EAST-1:28,CENTER:17"
-

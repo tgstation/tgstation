@@ -15,6 +15,7 @@
  *		Handcuff, mousetrap, and pillbottle boxes,
  *		Snap-pops and matchboxes,
  *		Replacement light boxes.
+ *		Action Figure Boxes
  *		Various paper bags.
  *
  *		For syndicate call-ins see uplink_kits.dm
@@ -25,7 +26,7 @@
 	desc = "It's just an ordinary box."
 	icon_state = "box"
 	item_state = "syringe_kit"
-	resistance_flags = 0
+	resistance_flags = FLAMMABLE
 	var/foldable = /obj/item/stack/sheet/cardboard
 
 
@@ -126,7 +127,6 @@
 /obj/item/weapon/storage/box/syringes
 	name = "box of syringes"
 	desc = "A box full of syringes."
-	desc = "A biohazard alert warning is printed on the box."
 	icon_state = "syringe"
 
 /obj/item/weapon/storage/box/syringes/New()
@@ -489,7 +489,7 @@
 	icon_state = "matchbox"
 	item_state = "zippo"
 	storage_slots = 10
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 	slot_flags = SLOT_BELT
 	can_hold = list(/obj/item/weapon/match)
 
@@ -566,7 +566,7 @@
 	foldable = null
 
 /obj/item/weapon/storage/box/hug/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] clamps the box of hugs on \his jugular! Guess it wasn't such a hugbox after all..</span>")
+	user.visible_message("<span class='suicide'>[user] clamps the box of hugs on [user.p_their()] jugular! Guess it wasn't such a hugbox after all..</span>")
 	return (BRUTELOSS)
 
 /obj/item/weapon/storage/box/hug/attack_self(mob/user)
@@ -623,6 +623,18 @@
 	new /obj/item/ammo_casing/shotgun/beanbag(src)
 	new /obj/item/ammo_casing/shotgun/beanbag(src)
 
+
+/obj/item/weapon/storage/box/actionfigure
+	name = "box of action figures"
+	desc = "The latest set of collectable action figures."
+	icon_state = "box"
+
+/obj/item/weapon/storage/box/actionfigure/New()
+	..()
+	for(var/i in 1 to 4)
+		var/randomFigure = pick(subtypesof(/obj/item/toy/figure))
+		new randomFigure(src)
+
 #define NODESIGN "None"
 #define NANOTRASEN "NanotrasenStandard"
 #define SYNDI "SyndiSnacks"
@@ -634,7 +646,7 @@
 	desc = "A sack neatly crafted out of paper."
 	icon_state = "paperbag_None"
 	item_state = "paperbag_None"
-	resistance_flags = 0
+	resistance_flags = FLAMMABLE
 	foldable = null
 	var/design = NODESIGN
 

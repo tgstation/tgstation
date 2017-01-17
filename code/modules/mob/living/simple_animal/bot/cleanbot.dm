@@ -98,7 +98,7 @@
 		return
 
 	if(emagged == 2) //Emag functions
-		if(istype(loc, /turf/open))
+		if(isopenturf(loc))
 
 			for(var/mob/living/carbon/victim in loc)
 				if(victim != target)
@@ -170,7 +170,7 @@
 		/obj/effect/decal/cleanable/vomit,
 		/obj/effect/decal/cleanable/robot_debris,
 		/obj/effect/decal/cleanable/crayon,
-		/obj/effect/decal/cleanable/molten_item,
+		/obj/effect/decal/cleanable/molten_object,
 		/obj/effect/decal/cleanable/tomato_smudge,
 		/obj/effect/decal/cleanable/egg_smudge,
 		/obj/effect/decal/cleanable/pie_smudge,
@@ -217,7 +217,7 @@
 	else if(istype(A, /mob/living/simple_animal/cockroach) || istype(A, /mob/living/simple_animal/mouse))
 		var/mob/living/simple_animal/M = target
 		if(!M.stat)
-			visible_message("<span class='danger'>[src] smashes [target] with it's mop!</span>")
+			visible_message("<span class='danger'>[src] smashes [target] with its mop!</span>")
 			M.death()
 		target = null
 

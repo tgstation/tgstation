@@ -85,6 +85,9 @@
 					<ui-section label='Description'>
 						{{fileinfo}}
 					</ui-section>
+					<ui-section label='Compatibility'>
+						{{compatibility}}
+					</ui-section>
 					<ui-section label='File controls'>
 						<ui-button icon='signal' action='PRG_downloadfile' params='{"filename": "{{filename}}"}'>
 							DOWNLOAD

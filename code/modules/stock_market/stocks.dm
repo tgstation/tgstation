@@ -90,7 +90,7 @@
 /datum/stock/proc/frc(amt)
 	var/shares = available_shares + outside_shareholders * average_shares
 	var/fr = amt / 100 / shares * fluctuational_coefficient * fluctuation_rate * max(-(current_trend / 100), 1)
-	if (fr < 0 && speculation < 0 || fr > 0 && speculation > 0)
+	if ((fr < 0 && speculation < 0) || (fr > 0 && speculation > 0))
 		fr *= max(abs(speculation) / 5, 1)
 	else
 		fr /= max(abs(speculation) / 5, 1)

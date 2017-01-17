@@ -109,31 +109,34 @@
  */
 
 /datum/reagent/water/reaction_turf(turf/open/T, reac_volume)
-	if (!istype(T)) return
+	if (!istype(T))
+		return
 	var/CT = cooling_temperature
 
 	if(reac_volume >= 5)
-		T.MakeSlippery(min_wet_time = 10, wet_time_to_add = reac_volume*1.5)
+		T.MakeSlippery(min_wet_time = 10, wet_time_to_add = min(reac_volume*1.5, 60))
 
 	for(var/mob/living/simple_animal/slime/M in T)
 		M.apply_water()
 
 	var/obj/effect/hotspot/hotspot = (locate(/obj/effect/hotspot) in T)
-	if(hotspot && !istype(T, /turf/open/space))
+	if(hotspot && !isspaceturf(T))
 		if(T.air)
 			var/datum/gas_mixture/G = T.air
 			G.temperature = max(min(G.temperature-(CT*1000),G.temperature/CT),0)
 			G.react()
 			qdel(hotspot)
+	var/obj/effect/acid/A = (locate(/obj/effect/acid) in T)
+	if(A)
+		A.acid_level = max(A.acid_level - reac_volume*50, 0)
 
 /*
  *	Water reaction to an object
  */
 
 /datum/reagent/water/reaction_obj(obj/O, reac_volume)
-	if(istype(O))
-		O.extinguish()
-
+	O.extinguish()
+	O.acid_level = 0
 	// Monkey cube
 	if(istype(O,/obj/item/weapon/reagent_containers/food/snacks/monkeycube))
 		var/obj/item/weapon/reagent_containers/food/snacks/monkeycube/cube = O
@@ -210,7 +213,7 @@
 /datum/reagent/fuel/unholywater		//if you somehow managed to extract this from someone, dont splash it on yourself and have a smoke
 	name = "Unholy Water"
 	id = "unholywater"
-	description = "Something that shouldn't exist on this plane of existance."
+	description = "Something that shouldn't exist on this plane of existence."
 
 /datum/reagent/fuel/unholywater/on_mob_life(mob/living/M)
 	if(iscultist(M))
@@ -257,9 +260,10 @@
 	color = "#009CA8" // rgb: 0, 156, 168
 
 /datum/reagent/lube/reaction_turf(turf/open/T, reac_volume)
-	if (!istype(T)) return
+	if (!istype(T))
+		return
 	if(reac_volume >= 1)
-		T.MakeSlippery(wet_setting=TURF_WET_LUBE, min_wet_time=15, wet_time_to_add=reac_volume*2)
+		T.MakeSlippery(wet_setting=TURF_WET_LUBE, min_wet_time=15, min(wet_time_to_add=reac_volume*2, 120))
 
 /datum/reagent/spraytan
 	name = "Spray Tan"
@@ -298,7 +302,7 @@
 					if ("albino")
 						N.skin_tone = "caucasian1"
 
-			if(MUTCOLORS in N.dna.species.specflags) //take current alien color and darken it slightly
+			if(MUTCOLORS in N.dna.species.species_traits) //take current alien color and darken it slightly
 				var/newcolor = ""
 				var/len = length(N.dna.features["mcolor"])
 				for(var/i=1, i<=len, i+=1)
@@ -341,56 +345,171 @@
 			N.skin_tone = "orange"
 			N.hair_style = "Spiky"
 			N.hair_color = "000"
-		if(MUTCOLORS in N.dna.species.specflags) //Aliens with custom colors simply get turned orange
+		if(MUTCOLORS in N.dna.species.species_traits) //Aliens with custom colors simply get turned orange
 			N.dna.features["mcolor"] = "f80"
 		N.regenerate_icons()
 		if(prob(7))
 			if(N.w_uniform)
-				M.visible_message(pick("<b>[M]</b>'s collar pops up without warning.</span>", "<b>[M]</b> flexes [M.their_pronoun()] arms."))
+				M.visible_message(pick("<b>[M]</b>'s collar pops up without warning.</span>", "<b>[M]</b> flexes [M.p_their()] arms."))
 			else
-				M.visible_message("<b>[M]</b> [M.their_pronoun()] their arms.")
+				M.visible_message("<b>[M]</b> [M.p_their()] their arms.")
 	if(prob(10))
 		M.say(pick("Check these sweet biceps bro!", "Deal with it.", "CHUG! CHUG! CHUG! CHUG!", "Winning!", "NERDS!", "My name is John and I hate every single one of you."))
 	..()
 	return
 
-/datum/reagent/slimetoxin
-	name = "Mutation Toxin"
-	id = "mutationtoxin"
-	description = "A corruptive toxin produced by slimes."
-	color = "#13BC5E" // rgb: 19, 188, 94
-
-/datum/reagent/unstableslimetoxin
-	name = "Unstable Mutation Toxin"
-	id = "unstablemutationtoxin"
-	description = "An unstable and unpredictable corruptive toxin produced by slimes."
+/datum/reagent/stableslimetoxin
+	name = "Stable Mutation Toxin"
+	id = "stablemutationtoxin"
+	description = "A humanizing toxin produced by slimes."
 	color = "#5EFF3B" //RGB: 94, 255, 59
 	metabolization_rate = INFINITY //So it instantly removes all of itself
+	var/datum/species/race = /datum/species/human
+	var/mutationtext = "<span class='danger'>The pain subsides. You feel... human.</span>"
 
-/datum/reagent/unstableslimetoxin/on_mob_life(mob/living/carbon/human/H)
+/datum/reagent/stableslimetoxin/on_mob_life(mob/living/carbon/human/H)
 	..()
 	H << "<span class='warning'><b>You crumple in agony as your flesh wildly morphs into new forms!</b></span>"
-	H.visible_message("<b>[H]</b> falls to the ground and screams as [H.their_pronoun()] skin bubbles and froths!") //'froths' sounds painful when used with SKIN.
+	H.visible_message("<b>[H]</b> falls to the ground and screams as [H.p_their()] skin bubbles and froths!") //'froths' sounds painful when used with SKIN.
 	H.Weaken(3, 0)
 	spawn(30)
 		if(!H || qdeleted(H))
 			return
-		var/list/possible_morphs = list()
-		for(var/type in subtypesof(/datum/species))
-			var/datum/species/S = type
-			if(initial(S.blacklisted))
-				continue
-			possible_morphs += S
 
 		var/current_species = H.dna.species.type
-		var/datum/species/mutation = pick(possible_morphs)
+		var/datum/species/mutation = race
 		if(mutation && mutation != current_species)
-			H << "<span class='danger'>The pain subsides. You feel... different.</span>"
+			H << mutationtext
 			H.set_species(mutation)
 		else
 			H << "<span class='danger'>The pain vanishes suddenly. You feel no different.</span>"
 
 	return 1
+
+/datum/reagent/stableslimetoxin/classic //The one from plasma on green slimes
+	name = "Mutation Toxin"
+	id = "mutationtoxin"
+	description = "A corruptive toxin produced by slimes."
+	color = "#13BC5E" // rgb: 19, 188, 94
+	race = /datum/species/jelly/slime
+	mutationtext = "<span class='danger'>The pain subsides. Your whole body feels like slime.</span>"
+
+/datum/reagent/stableslimetoxin/lizard
+	name = "Lizard Mutation Toxin"
+	id = "lizardmutationtoxin"
+	description = "A lizarding toxin produced by slimes."
+	color = "#5EFF3B" //RGB: 94, 255, 59
+	race = /datum/species/lizard
+	mutationtext = "<span class='danger'>The pain subsides. You feel... scaly.</span>"
+
+/datum/reagent/stableslimetoxin/fly
+	name = "Fly Mutation Toxin"
+	id = "flymutationtoxin"
+	description = "An insectifying toxin produced by slimes."
+	color = "#5EFF3B" //RGB: 94, 255, 59
+	race = /datum/species/fly
+	mutationtext = "<span class='danger'>The pain subsides. You feel... buzzy.</span>"
+
+/datum/reagent/stableslimetoxin/pod
+	name = "Podperson Mutation Toxin"
+	id = "podmutationtoxin"
+	description = "A vegetalizing toxin produced by slimes."
+	color = "#5EFF3B" //RGB: 94, 255, 59
+	race = /datum/species/pod
+	mutationtext = "<span class='danger'>The pain subsides. You feel... plantlike.</span>"
+
+/datum/reagent/stableslimetoxin/jelly
+	name = "Imperfect Mutation Toxin"
+	id = "jellymutationtoxin"
+	description = "An jellyfying toxin produced by slimes."
+	color = "#5EFF3B" //RGB: 94, 255, 59
+	race = /datum/species/jelly
+	mutationtext = "<span class='danger'>The pain subsides. You feel... wobbly.</span>"
+
+/datum/reagent/stableslimetoxin/golem
+	name = "Golem Mutation Toxin"
+	id = "golemmutationtoxin"
+	description = "A crystal toxin produced by slimes."
+	color = "#5EFF3B" //RGB: 94, 255, 59
+	race = /datum/species/golem/random
+	mutationtext = "<span class='danger'>The pain subsides. You feel... rocky.</span>"
+
+/datum/reagent/stableslimetoxin/abductor
+	name = "Abductor Mutation Toxin"
+	id = "abductormutationtoxin"
+	description = "An alien toxin produced by slimes."
+	color = "#5EFF3B" //RGB: 94, 255, 59
+	race = /datum/species/abductor
+	mutationtext = "<span class='danger'>The pain subsides. You feel... alien.</span>"
+
+/datum/reagent/stableslimetoxin/android
+	name = "Android Mutation Toxin"
+	id = "androidmutationtoxin"
+	description = "A robotic toxin produced by slimes."
+	color = "#5EFF3B" //RGB: 94, 255, 59
+	race = /datum/species/android
+	mutationtext = "<span class='danger'>The pain subsides. You feel... artificial.</span>"
+
+
+//BLACKLISTED RACES
+/datum/reagent/stableslimetoxin/skeleton
+	name = "Skeleton Mutation Toxin"
+	id = "skeletonmutationtoxin"
+	description = "A scary toxin produced by slimes."
+	color = "#5EFF3B" //RGB: 94, 255, 59
+	race = /datum/species/skeleton
+	mutationtext = "<span class='danger'>The pain subsides. You feel... spooky.</span>"
+
+/datum/reagent/stableslimetoxin/zombie
+	name = "Zombie Mutation Toxin"
+	id = "zombiemutationtoxin"
+	description = "An undead toxin produced by slimes."
+	color = "#5EFF3B" //RGB: 94, 255, 59
+	race = /datum/species/zombie //Not the infectious kind. The days of xenobio zombie outbreaks are long past.
+	mutationtext = "<span class='danger'>The pain subsides. You feel... undead.</span>"
+
+/datum/reagent/stableslimetoxin/ash
+	name = "Ash Mutation Toxin"
+	id = "ashmutationtoxin"
+	description = "An ashen toxin produced by slimes."
+	color = "#5EFF3B" //RGB: 94, 255, 59
+	race = /datum/species/lizard/ashwalker
+	mutationtext = "<span class='danger'>The pain subsides. You feel... savage.</span>"
+
+
+//DANGEROUS RACES
+/datum/reagent/stableslimetoxin/shadow
+	name = "Shadow Mutation Toxin"
+	id = "shadowmutationtoxin"
+	description = "A dark toxin produced by slimes."
+	color = "#5EFF3B" //RGB: 94, 255, 59
+	race = /datum/species/shadow
+	mutationtext = "<span class='danger'>The pain subsides. You feel... darker.</span>"
+
+/datum/reagent/stableslimetoxin/plasma
+	name = "Plasma Mutation Toxin"
+	id = "plasmamutationtoxin"
+	description = "A plasma-based toxin produced by slimes."
+	color = "#5EFF3B" //RGB: 94, 255, 59
+	race = /datum/species/plasmaman
+	mutationtext = "<span class='danger'>The pain subsides. You feel... flammable.</span>"
+
+/datum/reagent/stableslimetoxin/unstable //PSYCH
+	name = "Unstable Mutation Toxin"
+	id = "unstablemutationtoxin"
+	description = "An unstable and unpredictable corruptive toxin produced by slimes."
+	color = "#5EFF3B" //RGB: 94, 255, 59
+	mutationtext = "<span class='danger'>The pain subsides. You feel... different.</span>"
+
+/datum/reagent/stableslimetoxin/unstable/on_mob_life(mob/living/carbon/human/H)
+	var/list/possible_morphs = list()
+	for(var/type in subtypesof(/datum/species))
+		var/datum/species/S = type
+		if(initial(S.blacklisted))
+			continue
+		possible_morphs += S
+	race = pick(possible_morphs)
+	..()
 
 /datum/reagent/mulligan
 	name = "Mulligan Toxin"
@@ -500,7 +619,7 @@
 	color = "#484848" // rgb: 72, 72, 72
 
 /datum/reagent/mercury/on_mob_life(mob/living/M)
-	if(M.canmove && istype(M.loc, /turf/open/space))
+	if(M.canmove && isspaceturf(M.loc))
 		step(M, pick(cardinal))
 	if(prob(5))
 		M.emote(pick("twitch","drool","moan"))
@@ -522,7 +641,7 @@
 	color = "#1C1300" // rgb: 30, 20, 0
 
 /datum/reagent/carbon/reaction_turf(turf/T, reac_volume)
-	if(!istype(T, /turf/open/space))
+	if(!isspaceturf(T))
 		var/obj/effect/decal/cleanable/dirt/D = locate() in T.contents
 		if(!D)
 			new /obj/effect/decal/cleanable/dirt(T)
@@ -568,12 +687,12 @@
 /datum/reagent/lithium
 	name = "Lithium"
 	id = "lithium"
-	description = "A silver metal, it's claim to fame is its remarkably low density. Using it is a bit too effective in calming oneself down."
+	description = "A silver metal, its claim to fame is its remarkably low density. Using it is a bit too effective in calming oneself down."
 	reagent_state = SOLID
 	color = "#808080" // rgb: 128, 128, 128
 
 /datum/reagent/lithium/on_mob_life(mob/living/M)
-	if(M.canmove && istype(M.loc, /turf/open/space))
+	if(M.canmove && isspaceturf(M.loc))
 		step(M, pick(cardinal))
 	if(prob(5))
 		M.emote(pick("twitch","drool","moan"))
@@ -598,7 +717,7 @@
 
 /datum/reagent/radium/reaction_turf(turf/T, reac_volume)
 	if(reac_volume >= 3)
-		if(!istype(T, /turf/open/space))
+		if(!isspaceturf(T))
 			var/obj/effect/decal/cleanable/greenglow/GG = locate() in T.contents
 			if(!GG)
 				GG = new/obj/effect/decal/cleanable/greenglow(T)
@@ -676,7 +795,7 @@
 
 /datum/reagent/uranium/reaction_turf(turf/T, reac_volume)
 	if(reac_volume >= 3)
-		if(!istype(T, /turf/open/space))
+		if(!isspaceturf(T))
 			var/obj/effect/decal/cleanable/greenglow/GG = locate() in T.contents
 			if(!GG)
 				GG = new/obj/effect/decal/cleanable/greenglow(T)
@@ -726,10 +845,12 @@
 		qdel(O)
 	else
 		if(O)
+			O.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
 			O.clean_blood()
 
 /datum/reagent/space_cleaner/reaction_turf(turf/T, reac_volume)
 	if(reac_volume >= 1)
+		T.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
 		T.clean_blood()
 		for(var/obj/effect/decal/cleanable/C in T)
 			qdel(C)
@@ -739,6 +860,7 @@
 
 /datum/reagent/space_cleaner/reaction_mob(mob/M, method=TOUCH, reac_volume)
 	if(method == TOUCH || method == VAPOR)
+		M.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
 		if(iscarbon(M))
 			var/mob/living/carbon/C = M
 			if(ishuman(M))
@@ -772,7 +894,7 @@
 /datum/reagent/cryptobiolin
 	name = "Cryptobiolin"
 	id = "cryptobiolin"
-	description = "Cryptobiolin causes confusion and dizzyness."
+	description = "Cryptobiolin causes confusion and dizziness."
 	color = "#C8A5DC" // rgb: 200, 165, 220
 	metabolization_rate = 1.5 * REAGENTS_METABOLISM
 
@@ -872,6 +994,23 @@
 /datum/reagent/carbondioxide/reaction_turf(turf/open/T, reac_volume)
 	if(istype(T))
 		T.atmos_spawn_air("co2=[reac_volume/5];TEMP=[T20C]")
+	return
+
+/datum/reagent/nitrous_oxide
+	name = "Nitrous Oxide"
+	id = "nitrous_oxide"
+	description = "A potent oxidizer used as fuel in rockets and as an anaesthetic during surgery."
+	reagent_state = LIQUID
+	color = "#808080"
+
+/datum/reagent/nitrous_oxide/reaction_obj(obj/O, reac_volume)
+	if((!O) || (!reac_volume))
+		return 0
+	O.atmos_spawn_air("n2o=[reac_volume/5];TEMP=[T20C]")
+
+/datum/reagent/nitrous_oxide/reaction_turf(turf/open/T, reac_volume)
+	if(istype(T))
+		T.atmos_spawn_air("n2o=[reac_volume/5];TEMP=[T20C]")
 	return
 
 
@@ -1041,7 +1180,7 @@
 /datum/reagent/ash
 	name = "Ash"
 	id = "ash"
-	description = "Supposedly pheonixes rise from these, but you've never seen it."
+	description = "Supposedly phoenixes rise from these, but you've never seen it."
 	reagent_state = LIQUID
 	color = "#C8A5DC"
 
@@ -1063,23 +1202,23 @@
 
 /datum/reagent/colorful_reagent/on_mob_life(mob/living/M)
 	if(M && isliving(M))
-		M.color = pick(random_color_list)
+		M.add_atom_colour(pick(random_color_list), WASHABLE_COLOUR_PRIORITY)
 	..()
 	return
 
 /datum/reagent/colorful_reagent/reaction_mob(mob/living/M, reac_volume)
 	if(M && isliving(M))
-		M.color = pick(random_color_list)
+		M.add_atom_colour(pick(random_color_list), WASHABLE_COLOUR_PRIORITY)
 	..()
 
 /datum/reagent/colorful_reagent/reaction_obj(obj/O, reac_volume)
 	if(O)
-		O.color = pick(random_color_list)
+		O.add_atom_colour(pick(random_color_list), WASHABLE_COLOUR_PRIORITY)
 	..()
 
 /datum/reagent/colorful_reagent/reaction_turf(turf/T, reac_volume)
 	if(T)
-		T.color = pick(random_color_list)
+		T.add_atom_colour(pick(random_color_list), WASHABLE_COLOUR_PRIORITY)
 	..()
 
 /datum/reagent/hair_dye
@@ -1219,7 +1358,7 @@
 
 //Misc reagents
 
-datum/reagent/romerol
+/datum/reagent/romerol
 	name = "romerol"
 	// the REAL zombie powder
 	id = "romerol"
@@ -1245,14 +1384,22 @@ datum/reagent/romerol
 	var/current_size = 1
 
 /datum/reagent/growthserum/on_mob_life(mob/living/carbon/H)
-	if(volume >= 20 && current_size != 2)
-		H.resize = 2/current_size
-		current_size = 2
-		H.update_transform()
-	else if (current_size != 1.5)
-		H.resize = 1.5/current_size
-		current_size = 1.5
-		H.update_transform()
+	var/newsize = current_size
+	switch(volume)
+		if(0 to 19)
+			newsize = 1.25
+		if(20 to 49)
+			newsize = 1.5
+		if(50 to 99)
+			newsize = 2
+		if(100 to 199)
+			newsize = 2.5
+		if(200 to INFINITY)
+			newsize = 3.5
+
+	H.resize = newsize/current_size
+	current_size = newsize
+	H.update_transform()
 	..()
 
 /datum/reagent/growthserum/on_mob_delete(mob/living/M)

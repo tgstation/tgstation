@@ -10,14 +10,14 @@ LINEN BINS
 	icon = 'icons/obj/bedsheets.dmi'
 	icon_state = "sheetwhite"
 	item_state = "bedsheet"
-	slot_flags = SLOT_BACK
+	slot_flags = SLOT_NECK
 	layer = MOB_LAYER
 	throwforce = 0
 	throw_speed = 1
 	throw_range = 2
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 	item_color = "white"
-	resistance_flags = 0
+	resistance_flags = FLAMMABLE
 
 	dog_fashion = /datum/dog_fashion/head/ghost
 
@@ -205,8 +205,9 @@ LINEN BINS
 	icon = 'icons/obj/structures.dmi'
 	icon_state = "linenbin-full"
 	anchored = 1
-	resistance_flags = 0
-	burntime = 20
+	resistance_flags = FLAMMABLE
+	obj_integrity = 70
+	max_integrity = 70
 	var/amount = 10
 	var/list/sheets = list()
 	var/obj/item/hidden = null
@@ -231,16 +232,11 @@ LINEN BINS
 		else
 			icon_state = "linenbin-full"
 
-/obj/structure/bedsheetbin/fire_act()
-	if(!amount)
-		return
+/obj/structure/bedsheetbin/fire_act(exposed_temperature, exposed_volume)
+	if(amount)
+		amount = 0
+		update_icon()
 	..()
-
-/obj/structure/bedsheetbin/burn()
-	amount = 0
-	extinguish()
-	update_icon()
-	return
 
 /obj/structure/bedsheetbin/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/bedsheet))
@@ -251,7 +247,7 @@ LINEN BINS
 		amount++
 		user << "<span class='notice'>You put [I] in [src].</span>"
 		update_icon()
-	else if(amount && !hidden && I.w_class < 4)	//make sure there's sheets to hide it among, make sure nothing else is hidden in there.
+	else if(amount && !hidden && I.w_class < WEIGHT_CLASS_BULKY)	//make sure there's sheets to hide it among, make sure nothing else is hidden in there.
 		if(!user.drop_item())
 			user << "<span class='warning'>\The [I] is stuck to your hand, you cannot hide it among the sheets!</span>"
 			return

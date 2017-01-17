@@ -4,30 +4,30 @@
 /area/space)
 "b" = (
 /turf/closed/wall/mineral/titanium/overspace,
-/area/ruin/powered)
+/area/ruin/powered/mechtransport)
 "c" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
 /turf/open/floor/plating,
-/area/ruin/powered)
+/area/ruin/powered/mechtransport)
 "d" = (
 /turf/closed/wall/shuttle{
 	icon_state = "swall_s10";
 	dir = 2
 	},
-/area/ruin/powered)
+/area/ruin/powered/mechtransport)
 "e" = (
 /turf/closed/wall/mineral/titanium,
-/area/ruin/powered)
+/area/ruin/powered/mechtransport)
 "f" = (
 /obj/structure/closet/crate/secure/loot,
 /obj/effect/decal/cleanable/cobweb,
 /turf/open/floor/mineral/titanium/blue,
-/area/ruin/powered)
+/area/ruin/powered/mechtransport)
 "g" = (
 /obj/structure/closet/crate/secure/loot,
 /turf/open/floor/mineral/titanium/blue,
-/area/ruin/powered)
+/area/ruin/powered/mechtransport)
 "h" = (
 /obj/structure/table,
 /obj/machinery/button/door{
@@ -35,122 +35,122 @@
 	name = "Mecha Cargo Ship Doors"
 	},
 /turf/open/floor/mineral/titanium/blue,
-/area/ruin/powered)
+/area/ruin/powered/mechtransport)
 "i" = (
 /obj/structure/table,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/mineral/titanium/blue,
-/area/ruin/powered)
+/area/ruin/powered/mechtransport)
 "j" = (
 /obj/machinery/computer/shuttle,
 /turf/open/floor/mineral/titanium/blue,
-/area/ruin/powered)
+/area/ruin/powered/mechtransport)
 "k" = (
 /obj/effect/decal/cleanable/vomit/old,
 /turf/open/floor/mineral/titanium/blue,
-/area/ruin/powered)
+/area/ruin/powered/mechtransport)
 "l" = (
 /obj/effect/decal/remains/human,
 /turf/open/floor/mineral/titanium/blue,
-/area/ruin/powered)
+/area/ruin/powered/mechtransport)
 "m" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/mineral/titanium/blue,
-/area/ruin/powered)
+/area/ruin/powered/mechtransport)
 "n" = (
 /obj/structure/chair/office/dark{
 	dir = 1
 	},
 /turf/open/floor/mineral/titanium/blue,
-/area/ruin/powered)
+/area/ruin/powered/mechtransport)
 "o" = (
 /turf/closed/wall/shuttle{
 	icon_state = "swall13";
 	dir = 2
 	},
-/area/ruin/powered)
+/area/ruin/powered/mechtransport)
 "p" = (
 /obj/machinery/door/airlock/hatch{
 	name = "Cockpit";
 	req_access_txt = "101"
 	},
 /turf/open/floor/mineral/titanium,
-/area/ruin/powered)
+/area/ruin/powered/mechtransport)
 "q" = (
 /turf/closed/wall/shuttle{
 	icon_state = "swall12";
 	dir = 2
 	},
-/area/ruin/powered)
+/area/ruin/powered/mechtransport)
 "r" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/cobweb,
-/turf/open/floor/mineral/titanium,
-/area/ruin/powered)
+/turf/open/floor/mineral/titanium/airless,
+/area/ruin/powered/mechtransport)
 "s" = (
-/turf/open/floor/mineral/titanium,
-/area/ruin/powered)
+/turf/open/floor/mineral/titanium/airless,
+/area/ruin/powered/mechtransport)
 "t" = (
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/mineral/titanium,
-/area/ruin/powered)
+/turf/open/floor/mineral/titanium/airless,
+/area/ruin/powered/mechtransport)
 "u" = (
-/obj/effect/decal/cleanable/cobweb2,
-/turf/open/floor/mineral/titanium,
-/area/ruin/powered)
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/turf/open/floor/mineral/titanium/airless,
+/area/ruin/powered/mechtransport)
 "v" = (
 /obj/structure/mecha_wreckage/phazon,
-/turf/open/floor/mineral/titanium/yellow,
-/area/ruin/powered)
+/turf/open/floor/mineral/titanium/yellow/airless,
+/area/ruin/powered/mechtransport)
 "w" = (
-/turf/open/floor/mineral/titanium/yellow,
-/area/ruin/powered)
+/turf/open/floor/mineral/titanium/yellow/airless,
+/area/ruin/powered/mechtransport)
 "x" = (
 /obj/structure/mecha_wreckage/ripley/firefighter,
-/turf/open/floor/mineral/titanium/yellow,
-/area/ruin/powered)
+/turf/open/floor/mineral/titanium/yellow/airless,
+/area/ruin/powered/mechtransport)
 "y" = (
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/mineral/titanium/yellow,
-/area/ruin/powered)
+/turf/open/floor/mineral/titanium/yellow/airless,
+/area/ruin/powered/mechtransport)
 "z" = (
 /obj/structure/mecha_wreckage/ripley,
-/turf/open/floor/mineral/titanium/yellow,
-/area/ruin/powered)
+/turf/open/floor/mineral/titanium/yellow/airless,
+/area/ruin/powered/mechtransport)
 "A" = (
 /obj/mecha/working/ripley,
-/turf/open/floor/mineral/titanium/yellow,
-/area/ruin/powered)
+/turf/open/floor/mineral/titanium/yellow/airless,
+/area/ruin/powered/mechtransport)
 "B" = (
 /obj/effect/decal/cleanable/oil,
-/turf/open/floor/mineral/titanium/yellow,
-/area/ruin/powered)
+/turf/open/floor/mineral/titanium/yellow/airless,
+/area/ruin/powered/mechtransport)
 "C" = (
 /obj/effect/decal/cleanable/robot_debris/up,
-/turf/open/floor/mineral/titanium/yellow,
-/area/ruin/powered)
+/turf/open/floor/mineral/titanium/yellow/airless,
+/area/ruin/powered/mechtransport)
 "D" = (
 /obj/machinery/door/poddoor{
 	id = "mechaship1";
 	name = "Cargo Bay Door"
 	},
-/turf/open/floor/mineral/titanium/yellow,
-/area/ruin/powered)
+/turf/open/floor/mineral/titanium/yellow/airless,
+/area/ruin/powered/mechtransport)
 "E" = (
 /obj/effect/decal/cleanable/robot_debris,
-/turf/open/floor/mineral/titanium/yellow,
-/area/ruin/powered)
+/turf/open/floor/mineral/titanium/yellow/airless,
+/area/ruin/powered/mechtransport)
 "F" = (
 /obj/structure/mecha_wreckage/durand,
-/turf/open/floor/mineral/titanium/yellow,
-/area/ruin/powered)
+/turf/open/floor/mineral/titanium/yellow/airless,
+/area/ruin/powered/mechtransport)
 "G" = (
 /obj/item/stack/tile/plasteel,
 /turf/open/floor/plating/airless,
-/area/ruin/powered)
+/area/ruin/powered/mechtransport)
 "H" = (
 /turf/open/floor/plating/airless,
-/area/ruin/powered)
+/area/ruin/powered/mechtransport)
 "I" = (
 /obj/structure/lattice,
 /turf/open/space,
@@ -158,39 +158,39 @@
 "J" = (
 /obj/machinery/computer/mecha,
 /turf/open/floor/mineral/titanium/blue,
-/area/ruin/powered)
+/area/ruin/powered/mechtransport)
 "K" = (
 /obj/effect/decal/cleanable/robot_debris/gib,
 /turf/open/floor/plating/airless,
-/area/ruin/powered)
+/area/ruin/powered/mechtransport)
 "L" = (
 /obj/effect/decal/cleanable/robot_debris,
 /obj/item/stack/tile/plasteel,
-/turf/open/floor/mineral/titanium/yellow,
-/area/ruin/powered)
+/turf/open/floor/mineral/titanium/yellow/airless,
+/area/ruin/powered/mechtransport)
 "M" = (
 /turf/open/floor/plating/airless{
 	broken = 1;
 	icon_state = "platingdmg1"
 	},
-/area/ruin/powered)
+/area/ruin/powered/mechtransport)
 "N" = (
 /turf/open/floor/plating/airless{
 	icon_state = "platingdmg2"
 	},
-/area/ruin/powered)
+/area/ruin/powered/mechtransport)
 "O" = (
 /obj/structure/mecha_wreckage/odysseus,
-/turf/open/floor/mineral/titanium/yellow,
-/area/ruin/powered)
+/turf/open/floor/mineral/titanium/yellow/airless,
+/area/ruin/powered/mechtransport)
 "P" = (
 /obj/item/stack/sheet/metal,
 /turf/open/space,
 /area/space)
 "Q" = (
 /obj/structure/mecha_wreckage/gygax,
-/turf/open/floor/mineral/titanium,
-/area/ruin/powered)
+/turf/open/floor/mineral/titanium/airless,
+/area/ruin/powered/mechtransport)
 "R" = (
 /turf/open/floor/plating/airless{
 	icon_state = "platingdmg3"
@@ -199,19 +199,19 @@
 "S" = (
 /obj/item/stack/rods,
 /turf/open/floor/plating/airless,
-/area/ruin/powered)
+/area/ruin/powered/mechtransport)
 "T" = (
 /turf/closed/wall/shuttle{
 	icon_state = "swall14";
 	dir = 2
 	},
-/area/ruin/powered)
+/area/ruin/powered/mechtransport)
 "U" = (
 /turf/closed/wall/shuttle{
 	icon_state = "swall_s9";
 	dir = 2
 	},
-/area/ruin/powered)
+/area/ruin/powered/mechtransport)
 "V" = (
 /obj/item/stack/rods,
 /turf/open/space,
@@ -221,11 +221,11 @@
 	icon_state = "swall15";
 	dir = 2
 	},
-/area/ruin/powered)
+/area/ruin/powered/mechtransport)
 "X" = (
 /obj/structure/shuttle/engine/propulsion,
 /turf/open/space,
-/area/ruin/powered)
+/area/ruin/powered/mechtransport)
 
 (1,1,1) = {"
 a

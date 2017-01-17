@@ -13,85 +13,30 @@
 	desc = "Looks like this would make good cover."
 	anchored = 1
 	density = 1
-	var/health = 100
-	var/maxhealth = 100
+	obj_integrity = 100
+	max_integrity = 100
 	var/proj_pass_rate = 50 //How many projectiles will pass the cover. Lower means stronger cover
-	var/ranged_damage_modifier = 1 //Multiply for ranged damage
 	var/material = METAL
-	var/debris_type
 
-
-/obj/structure/barricade/proc/take_damage(damage, damage_type = BRUTE, sound_effect = 1)
-	switch(damage_type)
-		if(BRUTE)
-			if(sound_effect)
-				if(damage)
-					playsound(loc, 'sound/weapons/smash.ogg', 50, 1)
-				else
-					playsound(loc, 'sound/weapons/tap.ogg', 50, 1)
-		if(BURN)
-			if(sound_effect)
-				playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
-		else
-			damage = 0
-	health -= damage
-	if(health <= 0)
+/obj/structure/barricade/deconstruct(disassembled = TRUE)
+	if(!(flags & NODECONSTRUCT))
 		make_debris()
-		qdel(src)
+	qdel(src)
 
 /obj/structure/barricade/proc/make_debris()
 	return
 
-/obj/structure/barricade/attack_animal(mob/living/simple_animal/M)
-	M.changeNext_move(CLICK_CD_MELEE)
-	M.do_attack_animation(src)
-	if(!M.melee_damage_upper && !M.obj_damage || (M.melee_damage_type != BRUTE && M.melee_damage_type != BURN))
-		return
-	visible_message("<span class='danger'>[M] [M.attacktext] [src]!</span>")
-	add_logs(M, src, "attacked")
-	if(M.obj_damage)
-		take_damage(M.obj_damage)
-	else
-		take_damage(M.melee_damage_upper)
-
-/obj/structure/barricade/attack_alien(mob/living/user)
-	user.changeNext_move(CLICK_CD_MELEE)
-	user.do_attack_animation(src)
-	user.visible_message("<span class='danger'>[user] claws at [src]!</span>")
-	playsound(user.loc, 'sound/weapons/slash.ogg', 100, 1)
-	take_damage(50, BRUTE, 0)
-
 /obj/structure/barricade/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/weapon/weldingtool) && user.a_intent != "harm" && material == METAL)
+	if(istype(I, /obj/item/weapon/weldingtool) && user.a_intent != INTENT_HARM && material == METAL)
 		var/obj/item/weapon/weldingtool/WT = I
-		if(health < maxhealth)
+		if(obj_integrity < max_integrity)
 			if(WT.remove_fuel(0,user))
 				user << "<span class='notice'>You begin repairing [src]...</span>"
-				playsound(loc, 'sound/items/Welder.ogg', 40, 1)
-				if(do_after(user, 40/I.toolspeed, target = src))
-					health = Clamp(health + 20, 0, maxhealth)
+				playsound(loc, WT.usesound, 40, 1)
+				if(do_after(user, 40*I.toolspeed, target = src))
+					obj_integrity = Clamp(obj_integrity + 20, 0, max_integrity)
 	else
 		return ..()
-
-
-/obj/structure/barricade/attacked_by(obj/item/I, mob/living/user)
-	..()
-	take_damage(I.force)
-
-/obj/structure/barricade/bullet_act(obj/item/projectile/P)
-	. = ..()
-	visible_message("<span class='warning'>\The [src] is hit by [P]!</span>")
-	take_damage(P.damage*ranged_damage_modifier)
-
-/obj/structure/barricade/ex_act(severity, target)
-	switch(severity)
-		if(1)
-			qdel(src)
-		if(2)
-			take_damage(25, BRUTE, 0)
-
-/obj/structure/barricade/blob_act(obj/structure/blob/B)
-	take_damage(25, BRUTE, 0)
 
 /obj/structure/barricade/CanPass(atom/movable/mover, turf/target, height=0)//So bullets will fly over and stuff.
 	if(height==0)
@@ -130,8 +75,8 @@
 	desc = "Bags of sand. Self explanatory."
 	icon = 'icons/obj/smooth_structures/sandbags.dmi'
 	icon_state = "sandbags"
-	health = 280
-	maxhealth = 280
+	obj_integrity = 280
+	max_integrity = 280
 	proj_pass_rate = 20
 	pass_flags = LETPASSTHROW
 	material = SAND
@@ -147,16 +92,15 @@
 	icon_state = "barrier0"
 	density = 0
 	anchored = 0
-	health = 180
-	maxhealth = 180
+	obj_integrity = 180
+	max_integrity = 180
 	proj_pass_rate = 20
-	ranged_damage_modifier = 0.5
-	armor = list(melee = 10, bullet = 50, laser = 50, energy = 0, bomb = 10, bio = 100, rad = 100, fire = 10, acid = 0)
+	armor = list(melee = 10, bullet = 50, laser = 50, energy = 50, bomb = 10, bio = 100, rad = 100, fire = 10, acid = 0)
 
 
 /obj/structure/barricade/security/New()
 	..()
-	addtimer(src, "deploy", 40)
+	addtimer(CALLBACK(src, .proc/deploy), 40)
 
 /obj/structure/barricade/security/proc/deploy()
 	icon_state = "barrier1"

@@ -4,9 +4,13 @@
 	area = /area/space
 	view = "15x15"
 	cache_lifespan = 7
+	hub = "Exadv1.spacestation13"
+	hub_password = "kMZy3U5jJHSiBQjr"
+	name = "/tg/ Station 13"
 	fps = 20
+	visibility = 0
 
-var/global/list/map_transition_config = MAP_TRANSITION_CONFIG
+var/list/map_transition_config = MAP_TRANSITION_CONFIG
 
 /world/New()
 	check_for_cleanbot_bug()
@@ -32,7 +36,6 @@ var/global/list/map_transition_config = MAP_TRANSITION_CONFIG
 	changelog_hash = md5('html/changelog.html')					//used for telling if the changelog has changed recently
 
 	make_datum_references_lists()	//initialises global lists for referencing frequently used datums (so that we only ever do it once)
-
 	load_configuration()
 	load_mode()
 	load_motd()
@@ -130,7 +133,7 @@ var/last_irc_status = 0
 			// Key-authed callers may know the truth behind the "secret"
 
 		s["security_level"] = get_security_level()
-		s["round_duration"] = round(world.time/10)
+		s["round_duration"] = round((world.time-round_start_time)/10)
 		// Amount of world's ticks in seconds, useful for calculating round duration
 
 		if(SSshuttle && SSshuttle.emergency)
@@ -161,6 +164,8 @@ var/last_irc_status = 0
 				minor_announce(input["message"], "Incoming message from [input["message_sender"]]")
 				for(var/obj/machinery/computer/communications/CM in machines)
 					CM.overrideCooldown()
+			if(input["crossmessage"] == "News_Report")
+				minor_announce(input["message"], "Breaking Update From [input["message_sender"]]")
 
 	else if("adminmsg" in input)
 		if(!key_valid)
@@ -245,6 +250,7 @@ var/last_irc_status = 0
 		else
 			world << sound(pick('sound/AI/newroundsexy.ogg','sound/misc/apcdestroyed.ogg','sound/misc/bangindonk.ogg','sound/misc/leavingtg.ogg', 'sound/misc/its_only_game.ogg')) // random end sounds!! - LastyBatsy
 	sleep(soundwait)
+	Master.Shutdown()	//run SS shutdowns
 	for(var/thing in clients)
 		var/client/C = thing
 		if (!C)

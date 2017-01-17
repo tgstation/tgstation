@@ -4,10 +4,12 @@
 	name = "abandoned crate"
 	desc = "What could be inside?"
 	icon_state = "securecrate"
+	integrity_failure = 0 //no breaking open the crate
 	var/code = null
 	var/lastattempt = null
 	var/attempts = 10
 	var/codelen = 4
+	tamperproof = 90
 
 /obj/structure/closet/crate/secure/loot/New()
 	..()
@@ -54,7 +56,7 @@
 		if(46 to 50)
 			new /obj/item/clothing/under/chameleon(src)
 			for(var/i in 1 to 7)
-				new /obj/item/clothing/tie/horrible(src)
+				new /obj/item/clothing/neck/tie/horrible(src)
 		if(51 to 52) // 2% chance
 			new /obj/item/weapon/melee/classic_baton(src)
 		if(53 to 54)
@@ -71,7 +73,7 @@
 		if(61 to 62)
 			for(var/i in 1 to 5)
 				new /obj/item/clothing/head/kitty(src)
-				new /obj/item/clothing/tie/petcollar(src)
+				new /obj/item/clothing/neck/petcollar(src)
 		if(63 to 64)
 			for(var/i in 1 to rand(4, 7))
 				var/newcoin = pick(/obj/item/weapon/coin/silver, /obj/item/weapon/coin/silver, /obj/item/weapon/coin/silver, /obj/item/weapon/coin/iron, /obj/item/weapon/coin/iron, /obj/item/weapon/coin/iron, /obj/item/weapon/coin/gold, /obj/item/weapon/coin/diamond, /obj/item/weapon/coin/plasma, /obj/item/weapon/coin/uranium)
@@ -140,7 +142,7 @@
 			new /obj/item/weapon/hand_tele(src)
 		if(97)
 			new /obj/item/clothing/mask/balaclava
-			new /obj/item/weapon/gun/projectile/automatic/pistol(src)
+			new /obj/item/weapon/gun/ballistic/automatic/pistol(src)
 			new /obj/item/ammo_box/magazine/m10mm(src)
 		if(98)
 			new /obj/item/weapon/katana/cursed(src)
@@ -178,9 +180,6 @@
 					boom(user)
 	else
 		return ..()
-
-/obj/structure/closet/crate/secure/loot/attack_animal(mob/user)
-	boom(user)
 
 /obj/structure/closet/crate/secure/loot/AltClick(mob/living/user)
 	if(!user.canUseTopic(src))
@@ -224,14 +223,5 @@
 	else
 		..()
 
-/obj/structure/closet/crate/secure/loot/burn()
-	SSobj.burning -= src
+/obj/structure/closet/crate/secure/loot/deconstruct(disassembled = TRUE)
 	boom()
-
-/obj/structure/closet/crate/secure/loot/proc/boom(mob/user)
-	if(user)
-		user << "<span class='danger'>The crate's anti-tamper system activates!</span>"
-	for(var/atom/movable/AM in src)
-		qdel(AM)
-	explosion(get_turf(src), 0, 1, 5, 5)
-	qdel(src)

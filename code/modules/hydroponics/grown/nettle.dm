@@ -9,7 +9,7 @@
 	endurance = 40 // tuff like a toiger
 	yield = 4
 	growthstages = 5
-	plant_type = PLANT_WEED
+	genes = list(/datum/plant_gene/trait/repeated_harvest, /datum/plant_gene/trait/plant_type/weed_hardy)
 	mutatelist = list(/obj/item/seeds/nettle/death)
 	reagents_add = list("sacid" = 0.5)
 
@@ -23,6 +23,7 @@
 	endurance = 25
 	maturation = 8
 	yield = 2
+	genes = list(/datum/plant_gene/trait/repeated_harvest, /datum/plant_gene/trait/plant_type/weed_hardy, /datum/plant_gene/trait/stinging)
 	mutatelist = list()
 	reagents_add = list("facid" = 0.5, "sacid" = 0.5)
 	rarity = 20
@@ -36,14 +37,14 @@
 	force = 15
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	throwforce = 5
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 	throw_speed = 1
 	throw_range = 3
 	origin_tech = "combat=3"
 	attack_verb = list("stung")
 
 /obj/item/weapon/grown/nettle/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is eating some of the [src.name]! It looks like \he's trying to commit suicide.</span>")
+	user.visible_message("<span class='suicide'>[user] is eating some of [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return (BRUTELOSS|TOXLOSS)
 
 /obj/item/weapon/grown/nettle/pickup(mob/living/user)
@@ -56,7 +57,7 @@
 	var/hit_zone = (C.held_index_to_dir(C.active_hand_index) == "l" ? "l_":"r_") + "arm"
 	var/obj/item/bodypart/affecting = C.get_bodypart(hit_zone)
 	if(affecting)
-		if(affecting.take_damage(0, force))
+		if(affecting.receive_damage(0, force))
 			C.update_damage_overlays()
 	C << "<span class='userdanger'>The nettle burns your bare hand!</span>"
 	return 1
@@ -97,7 +98,8 @@
 			user << "<span class='userdanger'>You are stunned by the Deathnettle when you try picking it up!</span>"
 
 /obj/item/weapon/grown/nettle/death/attack(mob/living/carbon/M, mob/user)
-	if(!..()) return
+	if(!..())
+		return
 	if(isliving(M))
 		M << "<span class='danger'>You are stunned by the powerful acid of the Deathnettle!</span>"
 		add_logs(user, M, "attacked", src)

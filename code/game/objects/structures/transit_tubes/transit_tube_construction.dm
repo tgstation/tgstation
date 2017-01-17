@@ -4,58 +4,44 @@
 /obj/structure/c_transit_tube
 	name = "unattached transit tube"
 	icon = 'icons/obj/atmospherics/pipes/transit_tube.dmi'
-	icon_state = "E-W" //icon_state decides which tube will be built
+	icon_state = "straight"
 	density = 0
-	layer = ABOVE_OBJ_LAYER //same as the built tube
+	layer = LOW_ITEM_LAYER //same as the built tube
 	anchored = 0
+	var/flipped = 0
+	var/build_type = /obj/structure/transit_tube
+	var/flipped_build_type
+	var/base_icon
 
 /obj/structure/c_transit_tube/examine(mob/user)
 	..()
 	user << "<span class='notice'>Alt-click to rotate it clockwise.</span>"
 
-//wrapper for turn that changes the transit tube formatted icon_state instead of the dir
-/obj/structure/c_transit_tube/proc/tube_turn(angle)
-	var/list/badtubes = list("W-E", "W-E-Pass", "S-N", "S-N-Pass", "SW-NE", "SE-NW")
-	var/list/split_text = splittext(icon_state, "-")
-	for(var/i=1; i<=split_text.len; i++)
-		var/curdir = text2dir_extended(split_text[i]) //0 if not a valid direction (e.g. Pass, Block)
-		if(curdir)
-			split_text[i] = dir2text_short(turn(curdir, angle))
-	var/newdir = jointext(split_text, "-")
-	if(badtubes.Find(newdir))
-		split_text.Swap(1,2)
-		newdir = jointext(split_text, "-")
-	icon_state = newdir
+/obj/structure/c_transit_tube/proc/tube_rotate()
+	setDir(turn(dir, -90))
 
 /obj/structure/c_transit_tube/proc/tube_flip()
-	var/list/split_text = splittext(icon_state, "-")
-	//skip straight pipes
-	if(length(split_text[2]) < 2)
-		return
-	//for junctions, just swap the diagonals with each other
-	if(split_text.len == 3 && split_text[3] != "Pass")
-		split_text.Swap(2,3)
-	else if(length(split_text[1]) == 2 && length(split_text[2]) == 2) //diagonals
-		split_text[1] = copytext(split_text[1],1,2) + copytext(split_text[2],2,3)
-		split_text[2] = copytext(split_text[2],1,2) + ((copytext(split_text[2],2,3) == "E") ? "W" : "E")
-	//for curves, swap the diagonal direction that is not in the same axis as the cardinal direction
-	else
-		if(split_text[1] == "N" || split_text[1] == "S")
-			split_text[2] = copytext(split_text[2],1,2) + ((copytext(split_text[2],2,3) == "E") ? "W" : "E")
+	if(flipped_build_type)
+		flipped = !flipped
+		var/cur_flip = initial(flipped) ? !flipped : flipped
+		if(cur_flip)
+			build_type = flipped_build_type
 		else
-			split_text[2] = ((copytext(split_text[2],1,2) == "N") ? "S" : "N") + copytext(split_text[2],2,3)
-	icon_state = jointext(split_text, "-")
+			build_type = initial(build_type)
+		icon_state = "[base_icon][flipped]"
+	else
+		setDir(turn(dir, 180))
 
 // disposals-style flip and rotate verbs
 /obj/structure/c_transit_tube/verb/rotate()
-	set name = "Rotate Tube CW"
+	set name = "Rotate Tube"
 	set category = "Object"
 	set src in view(1)
 
 	if(usr.incapacitated())
 		return
 
-	tube_turn(-90)
+	tube_rotate()
 
 /obj/structure/c_transit_tube/AltClick(mob/user)
 	..()
@@ -64,18 +50,7 @@
 		return
 	if(!in_range(src, user))
 		return
-	else
-		rotate()
-
-/obj/structure/c_transit_tube/verb/rotate_ccw()
-	set name = "Rotate Tube CCW"
-	set category = "Object"
-	set src in view(1)
-
-	if(usr.incapacitated())
-		return
-
-	tube_turn(90)
+	tube_rotate()
 
 /obj/structure/c_transit_tube/verb/flip()
 	set name = "Flip"
@@ -84,25 +59,20 @@
 
 	if(usr.incapacitated())
 		return
-
 	tube_flip()
 
-/obj/structure/c_transit_tube/proc/buildtube()
-	var/obj/structure/transit_tube/R = new/obj/structure/transit_tube(src.loc)
-	R.icon_state = src.icon_state
-	R.init_dirs()
-	R.generate_automatic_corners(R.tube_dirs)
-	return R
 
 /obj/structure/c_transit_tube/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/wrench))
 		user << "<span class='notice'>You start attaching the [name]...</span>"
-		src.add_fingerprint(user)
-		if(do_after(user, 40/I.toolspeed, target = src))
-			if(!src) return
+		add_fingerprint(user)
+		playsound(src.loc, I.usesound, 50, 1)
+		if(do_after(user, 40*I.toolspeed, target = src))
+			if(qdeleted(src))
+				return
 			user << "<span class='notice'>You attach the [name].</span>"
-			var/obj/structure/transit_tube/R = src.buildtube()
-			src.transfer_fingerprints_to(R)
+			var/obj/structure/transit_tube/R = new build_type(loc, dir)
+			transfer_fingerprints_to(R)
 			qdel(src)
 	else
 		return ..()
@@ -110,51 +80,79 @@
 // transit tube station
 /obj/structure/c_transit_tube/station
 	name = "unattached through station"
-	icon = 'icons/obj/atmospherics/pipes/transit_tube_station.dmi'
-	icon_state = "closed"
+	icon_state = "closed_station0"
+	build_type = /obj/structure/transit_tube/station
+	flipped_build_type = /obj/structure/transit_tube/station/flipped
+	base_icon = "closed_station"
 
-/obj/structure/c_transit_tube/station/tube_turn(var/angle)
-	src.setDir(turn(src.dir, angle))
+/obj/structure/c_transit_tube/station/flipped
+	icon_state = "closed_station1"
+	flipped = 1
+	build_type = /obj/structure/transit_tube/station/flipped
+	flipped_build_type = /obj/structure/transit_tube/station
 
-/obj/structure/c_transit_tube/station/tube_flip()
-	src.tube_turn(180)
-
-/obj/structure/c_transit_tube/station/buildtube()
-	var/obj/structure/transit_tube/station/R = new/obj/structure/transit_tube/station(src.loc)
-	R.setDir(src.dir)
-	R.init_dirs()
-	return R
 
 // reverser station, used for the terminus
 /obj/structure/c_transit_tube/station/reverse
 	name = "unattached terminus station"
+	icon_state = "closed_terminus0"
+	build_type = /obj/structure/transit_tube/station/reverse
+	flipped_build_type = /obj/structure/transit_tube/station/reverse/flipped
+	base_icon = "closed_terminus"
 
-/obj/structure/c_transit_tube/station/reverse/buildtube()
-	var/obj/structure/transit_tube/station/reverse/R = new/obj/structure/transit_tube/station/reverse(src.loc)
-	R.setDir(src.dir)
-	R.init_dirs()
-	return R
+/obj/structure/c_transit_tube/station/reverse/flipped
+	icon_state = "closed_terminus1"
+	flipped = 1
+	build_type = /obj/structure/transit_tube/station/reverse/flipped
+	flipped_build_type = /obj/structure/transit_tube/station/reverse
 
-// block, used after the terminus of a transit tube station, decorative only
-// code-wise they're normal tubes but they're ~speshul~ because they care about the dir instead of the icon_state
-// in that sense they're the same as stations and can reuse their flip and rotate verbs
-/obj/structure/c_transit_tube/station/block
-	name = "unattached tube blocker"
-	icon = 'icons/obj/atmospherics/pipes/transit_tube.dmi'
-	icon_state = "Block"
 
-/obj/structure/c_transit_tube/station/block/buildtube()
-	var/obj/structure/transit_tube/R = new/obj/structure/transit_tube(src.loc)
-	R.icon_state = src.icon_state
-	R.setDir(src.dir)
-	R.init_dirs()
-	return R
+/obj/structure/c_transit_tube/crossing
+	icon_state = "crossing"
+	build_type = /obj/structure/transit_tube/crossing
+
+
+/obj/structure/c_transit_tube/diagonal
+	icon_state = "diagonal"
+	build_type = /obj/structure/transit_tube/diagonal
+
+/obj/structure/c_transit_tube/diagonal/crossing
+	icon_state = "diagonal_crossing"
+	build_type = /obj/structure/transit_tube/diagonal/crossing
+
+
+/obj/structure/c_transit_tube/curved
+	icon_state = "curved0"
+	build_type = /obj/structure/transit_tube/curved
+	flipped_build_type = /obj/structure/transit_tube/curved/flipped
+	base_icon = "curved"
+
+/obj/structure/c_transit_tube/curved/flipped
+	icon_state = "curved1"
+	build_type = /obj/structure/transit_tube/curved/flipped
+	flipped_build_type = /obj/structure/transit_tube/curved
+	flipped = 1
+
+
+/obj/structure/c_transit_tube/junction
+	icon_state = "junction0"
+	build_type = /obj/structure/transit_tube/junction
+	flipped_build_type = /obj/structure/transit_tube/junction/flipped
+	base_icon = "junction"
+
+
+/obj/structure/c_transit_tube/junction/flipped
+	icon_state = "junction1"
+	flipped = 1
+	build_type = /obj/structure/transit_tube/junction/flipped
+	flipped_build_type = /obj/structure/transit_tube/junction
+
 
 //transit tube pod
 //see station.dm for the logic
 /obj/structure/c_transit_tube_pod
 	name = "unattached transit tube pod"
-	icon = 'icons/obj/atmospherics/pipes/transit_tube_pod.dmi'
+	icon = 'icons/obj/atmospherics/pipes/transit_tube.dmi'
 	icon_state = "pod"
 	anchored = 0
 	density = 0

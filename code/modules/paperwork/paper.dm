@@ -11,14 +11,15 @@
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "paper"
 	throwforce = 0
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 	throw_range = 1
 	throw_speed = 1
 	pressure_resistance = 0
 	slot_flags = SLOT_HEAD
 	body_parts_covered = HEAD
-	resistance_flags = 0
-	burntime = 5
+	resistance_flags = FLAMMABLE
+	obj_integrity = 50
+	max_integrity = 50
 	dog_fashion = /datum/dog_fashion/head
 
 	var/info		//What's actually written on the paper.
@@ -89,7 +90,7 @@
 	add_fingerprint(usr)
 
 /obj/item/weapon/paper/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] scratches a grid on their wrist with the paper! It looks like \he's trying to commit sudoku..</span>")
+	user.visible_message("<span class='suicide'>[user] scratches a grid on [user.p_their()] wrist with the paper! It looks like [user.p_theyre()] trying to commit sudoku...</span>")
 	return (BRUTELOSS)
 
 /obj/item/weapon/paper/attack_self(mob/user)
@@ -190,6 +191,7 @@
 	t = replacetext(t, "\[/large\]", "</font>")
 	t = replacetext(t, "\[sign\]", "<font face=\"[SIGNFONT]\"><i>[user.real_name]</i></font>")
 	t = replacetext(t, "\[field\]", "<span class=\"paper_field\"></span>")
+	t = replacetext(t, "\[tab\]", "&nbsp;")
 
 	if(!iscrayon)
 		t = replacetext(t, "\[*\]", "<li>")
@@ -314,7 +316,7 @@
 
 		if(!stamped)
 			stamped = new
-		stamped += P.type
+		stamped += P.icon_state
 		add_overlay(stampoverlay)
 
 		user << "<span class='notice'>You stamp the paper with your rubber stamp.</span>"
@@ -338,10 +340,11 @@
 
 	add_fingerprint(user)
 
-/obj/item/weapon/paper/fire_act()
-	..(0)
-	icon_state = "paper_onfire"
-	info = "[stars(info)]"
+/obj/item/weapon/paper/fire_act(exposed_temperature, exposed_volume)
+	..()
+	if(!(resistance_flags & FIRE_PROOF))
+		icon_state = "paper_onfire"
+		info = "[stars(info)]"
 
 
 /obj/item/weapon/paper/extinguish()
@@ -395,6 +398,7 @@
 /obj/item/weapon/paper/crumpled
 	name = "paper scrap"
 	icon_state = "scrap"
+	slot_flags = null
 
 /obj/item/weapon/paper/crumpled/update_icon()
 	return

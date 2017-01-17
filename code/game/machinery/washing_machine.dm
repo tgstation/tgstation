@@ -76,7 +76,7 @@
 	if(WM.color_source)
 		if(istype(WM.color_source,/obj/item/toy/crayon))
 			var/obj/item/toy/crayon/CR = WM.color_source
-			color = CR.paint_color
+			add_atom_colour(CR.paint_color, WASHABLE_COLOUR_PRIORITY)
 
 /mob/living/simple_animal/pet/dog/corgi/machine_wash(obj/machinery/washing_machine/WM)
 	gib()
@@ -169,7 +169,7 @@
 /obj/machinery/washing_machine/relaymove(mob/user)
 	container_resist(user)
 
-/obj/machinery/washing_machine/container_resist(mob/user)
+/obj/machinery/washing_machine/container_resist(mob/living/user)
 	if(!busy)
 		add_fingerprint(user)
 		open_machine()
@@ -193,7 +193,7 @@
 		update_icon()
 		return
 
-	else if(user.a_intent != "harm")
+	else if(user.a_intent != INTENT_HARM)
 
 		if (!state_open)
 			user << "<span class='warning'>Open the door first!</span>"
@@ -224,7 +224,7 @@
 		user << "<span class='warning'>[src] is busy.</span>"
 		return
 
-	if(user.pulling && user.a_intent == "grab" && isliving(user.pulling))
+	if(user.pulling && user.a_intent == INTENT_GRAB && isliving(user.pulling))
 		var/mob/living/L = user.pulling
 		if(L.buckled || L.has_buckled_mobs())
 			return
@@ -241,6 +241,9 @@
 		state_open = 0 //close the door
 		update_icon()
 
+/obj/machinery/washing_machine/deconstruct(disassembled = TRUE)
+	new /obj/item/stack/sheet/metal (loc, 2)
+	qdel(src)
 
 /obj/machinery/washing_machine/open_machine(drop = 1)
 	..()

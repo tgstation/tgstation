@@ -1,4 +1,4 @@
-/obj/machinery/computer/arcade/
+/obj/machinery/computer/arcade
 	name = "random arcade"
 	desc = "random arcade machine"
 	icon_state = "arcade"
@@ -12,7 +12,7 @@
 		/obj/item/clothing/under/syndicate/tacticool			= 2,
 		/obj/item/toy/sword										= 2,
 		/obj/item/toy/gun										= 2,
-		/obj/item/weapon/gun/projectile/shotgun/toy/crossbow	= 2,
+		/obj/item/weapon/gun/ballistic/shotgun/toy/crossbow	= 2,
 		/obj/item/weapon/storage/box/fakesyndiesuit				= 2,
 		/obj/item/weapon/storage/crayons						= 2,
 		/obj/item/toy/spinningtoy								= 2,
@@ -38,6 +38,7 @@
 		/obj/item/weapon/coin/antagtoken						= 2,
 		/obj/item/stack/tile/fakespace/loaded					= 2,
 		/obj/item/toy/toy_xeno									= 2,
+		/obj/item/weapon/storage/box/actionfigure				= 1,
 		/obj/item/weapon/restraints/handcuffs/fake              = 2)
 
 /obj/machinery/computer/arcade/New()
@@ -137,9 +138,6 @@
 		dat += "<a href='byond://?src=\ref[src];charge=1'>Recharge Power</a>"
 
 	dat += "</b></center>"
-
-	//user << browse(dat, "window=arcade")
-	//onclose(user, "arcade")
 	var/datum/browser/popup = new(user, "arcade", "Space Villian 2000")
 	popup.set_content(dat)
 	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
@@ -887,7 +885,7 @@
 		if(ORION_TRAIL_SPACEPORT)
 			gameStatus = ORION_STATUS_MARKET
 			if(spaceport_raided)
-				eventdat += "The Spaceport is on high alert! they wont let you dock since you tried to attack them!"
+				eventdat += "The Spaceport is on high alert! They won't let you dock since you tried to attack them!"
 				if(last_spaceport_action)
 					eventdat += "<br>Last Spaceport Action: [last_spaceport_action]"
 				eventdat += "<P ALIGN=Right><a href='byond://?src=\ref[src];leave_spaceport=1'>Depart Spaceport</a></P>"
@@ -1039,7 +1037,7 @@
 	desc = "The Premier security forces for all spaceports found along the Orion Trail."
 	faction = list("orion")
 	loot = list(/obj/effect/mob_spawn/human/corpse/orionsecurity,
-				/obj/item/weapon/gun/projectile/automatic/c20r/unrestricted,
+				/obj/item/weapon/gun/ballistic/automatic/c20r/unrestricted,
 				/obj/item/weapon/shield/energy)
 
 /obj/effect/mob_spawn/human/corpse/orionsecurity
@@ -1054,14 +1052,14 @@
 	back = /obj/item/weapon/storage/backpack
 	has_id = 1
 	id_job = "Officer"
-	id_access = "Syndicate"
+	id_access_list = list(access_syndicate)
 
 /obj/item/weapon/orion_ship
 	name = "model settler ship"
 	desc = "A model spaceship, it looks like those used back in the day when travelling to Orion! It even has a miniature FX-293 reactor, which was renowned for its instability and tendency to explode..."
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "ship"
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	var/active = 0 //if the ship is on
 
 /obj/item/weapon/orion_ship/examine(mob/user)

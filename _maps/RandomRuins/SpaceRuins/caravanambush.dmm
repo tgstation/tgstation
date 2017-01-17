@@ -1,230 +1,5709 @@
-"aa" = (/turf/open/space,/area/space)
-"ab" = (/turf/closed/wall/mineral/plastitanium,/area/ruin/powered)
-"ac" = (/obj/machinery/door/airlock/external{icon_state = "door_locked"; locked = 1},/turf/open/floor/plasteel,/area/ruin/powered)
-"ad" = (/turf/closed/wall,/area/ruin/powered)
-"ae" = (/turf/open/space,/turf/closed/wall/mineral/plastitanium{dir = 1; icon_state = "diagonalWall3"},/area/ruin/powered)
-"af" = (/obj/machinery/suit_storage_unit,/turf/open/floor/plasteel,/area/ruin/powered)
-"ag" = (/turf/open/floor/plasteel,/area/ruin/powered)
-"ah" = (/turf/open/floor/plating/airless,/area/ruin/powered)
-"ai" = (/obj/machinery/door/airlock/external,/turf/open/floor/plasteel,/area/ruin/powered)
-"aj" = (/obj/structure/statue/silver/medborg,/turf/open/floor/plasteel,/area/ruin/powered)
-"ak" = (/mob/living/simple_animal/hostile/pirate/ranged{environment_smash = 0},/turf/open/floor/plasteel,/area/ruin/powered)
-"al" = (/obj/structure/closet/emcloset,/turf/open/floor/plasteel,/area/ruin/powered)
-"am" = (/obj/structure/closet{name = "pirate outfits"},/obj/item/clothing/head/collectable/pirate,/obj/item/clothing/suit/pirate,/obj/item/clothing/under/pirate,/obj/item/clothing/shoes/jackboots,/obj/item/clothing/head/bandana,/turf/open/floor/plasteel,/area/ruin/powered)
-"an" = (/obj/structure/table,/obj/item/stack/sheet/mineral/gold{amount = 25},/obj/item/weapon/coin/plasma,/turf/open/floor/plasteel,/area/ruin/powered)
-"ao" = (/obj/structure/table,/obj/item/stack/sheet/mineral/gold{amount = 25},/obj/item/weapon/coin/gold,/obj/item/weapon/coin/gold,/obj/item/weapon/coin/mythril,/obj/item/weapon/coin/plasma,/turf/open/floor/plasteel,/area/ruin/powered)
-"ap" = (/obj/structure/table,/obj/item/weapon/coin/gold,/obj/item/weapon/coin/gold,/obj/item/weapon/coin/gold,/obj/item/weapon/coin/mythril,/obj/item/weapon/coin/plasma,/turf/open/floor/plasteel,/area/ruin/powered)
-"aq" = (/obj/structure/table,/mob/living/simple_animal/parrot{faction = list("pirate"); name = "Pegwing"},/turf/open/floor/plasteel,/area/ruin/powered)
-"ar" = (/obj/structure/shuttle/engine/propulsion/burst{dir = 4},/turf/open/floor/plating/airless,/area/ruin/powered)
-"as" = (/obj/structure/shuttle/engine/heater{icon_state = "heater"; dir = 8},/turf/closed/wall/mineral/plastitanium,/area/ruin/powered)
-"at" = (/obj/structure/bed,/obj/item/weapon/bedsheet/brown,/turf/open/floor/plasteel,/area/ruin/powered)
-"au" = (/obj/structure/chair{dir = 1},/turf/open/floor/plasteel,/area/ruin/powered)
-"av" = (/obj/structure/rack,/obj/item/weapon/storage/bag/money/vault,/turf/open/floor/plasteel,/area/ruin/powered)
-"aw" = (/obj/structure/closet/crate/secure/loot,/turf/open/floor/plasteel,/area/ruin/powered)
-"ax" = (/obj/structure/table,/turf/open/floor/plasteel,/area/ruin/powered)
-"ay" = (/obj/machinery/computer,/turf/open/floor/plasteel,/area/ruin/powered)
-"az" = (/obj/structure/table,/obj/item/weapon/storage/bag/money/vault,/turf/open/floor/plasteel,/area/ruin/powered)
-"aA" = (/obj/structure/closet/crate{icon_state = "crateopen"; opened = 1},/obj/item/stack/sheet/mineral/gold{amount = 25},/obj/item/stack/sheet/mineral/bananium{amount = 5},/obj/item/stack/sheet/mineral/silver{amount = 25},/obj/item/stack/sheet/mineral/uranium{amount = 10},/obj/item/stack/sheet/mineral/diamond{amount = 5},/turf/open/floor/plasteel,/area/ruin/powered)
-"aB" = (/obj/structure/grille,/obj/structure/window/reinforced/fulltile,/turf/open/floor/plating,/area/ruin/powered)
-"aC" = (/turf/closed/mineral,/area/ruin/unpowered/no_grav)
-"aD" = (/obj/item/stack/rods,/turf/open/space,/area/space)
-"aE" = (/obj/structure/fluff/broken_flooring{tag = "icon-pile (EAST)"; icon_state = "pile"; dir = 4},/turf/open/space,/area/space)
-"aF" = (/mob/living/simple_animal/hostile/pirate,/turf/open/floor/plasteel,/area/ruin/powered)
-"aG" = (/obj/structure/chair{dir = 1},/mob/living/simple_animal/hostile/pirate,/turf/open/floor/plasteel,/area/ruin/powered)
-"aH" = (/turf/open/floor/plating/asteroid/airless,/area/ruin/unpowered/no_grav)
-"aI" = (/turf/closed/wall/mineral/plastitanium,/area/ruin/unpowered/no_grav)
-"aJ" = (/obj/machinery/door/airlock/external{icon_state = "door_locked"; locked = 1},/turf/open/floor/plating,/area/ruin/unpowered/no_grav)
-"aK" = (/turf/closed/wall/mineral/iron,/area/ruin/unpowered/no_grav)
-"aL" = (/obj/item/weapon/coin/mythril,/turf/open/floor/plasteel,/area/ruin/powered)
-"aM" = (/obj/structure/chair,/turf/open/floor/plasteel,/area/ruin/powered)
-"aN" = (/obj/structure/shuttle/engine/propulsion/burst{dir = 4},/turf/open/floor/plating/airless,/area/ruin/unpowered/no_grav)
-"aO" = (/obj/structure/shuttle/engine/heater{icon_state = "heater"; dir = 8},/turf/closed/wall/mineral/plastitanium,/area/ruin/unpowered/no_grav)
-"aP" = (/obj/structure/chair,/obj/item/weapon/shard,/obj/item/stack/sheet/metal,/turf/open/floor/plasteel/airless/shuttle/red,/area/ruin/unpowered/no_grav)
-"aQ" = (/obj/structure/chair,/obj/effect/decal/cleanable/shreds,/turf/open/floor/plasteel/airless/shuttle/red,/area/ruin/unpowered/no_grav)
-"aR" = (/obj/item/weapon/shard,/turf/open/floor/plasteel/airless/shuttle/red,/area/ruin/unpowered/no_grav)
-"aS" = (/turf/open/floor/plating/airless{icon_plating = "platingdmg1"; icon_state = "platingdmg1"},/area/ruin/unpowered/no_grav)
-"aT" = (/obj/structure/fluff/broken_flooring{tag = "icon-singular"; icon_state = "singular"},/turf/open/space,/area/space)
-"aU" = (/obj/structure/rack,/obj/item/weapon/tank/internals/plasma/full,/obj/item/weapon/tank/internals/plasma/full,/obj/item/weapon/tank/internals/plasma/full,/turf/open/floor/plasteel,/area/ruin/powered)
-"aV" = (/obj/structure/fluff/broken_flooring{tag = "icon-singular"; icon_state = "singular"},/obj/effect/decal/cleanable/shreds,/turf/open/floor/plasteel/airless/shuttle/red,/area/ruin/unpowered/no_grav)
-"aW" = (/obj/effect/gibspawner/human,/turf/open/floor/plasteel/airless/shuttle/red,/area/ruin/unpowered/no_grav)
-"aX" = (/turf/open/space,/turf/open/floor/plating/airless{icon = 'icons/obj/smooth_structures/lattice.dmi'; icon_plating = "lattice"; icon_state = "lattice"; name = "anchor chain"},/area/space)
-"aY" = (/obj/structure/statue/gold/cmo,/turf/open/floor/plasteel,/area/ruin/powered)
-"aZ" = (/obj/structure/table,/obj/item/weapon/paper_bin,/obj/item/weapon/pen,/turf/open/floor/plasteel,/area/ruin/powered)
-"ba" = (/obj/structure/table,/obj/item/stack/sheet/mineral/gold{amount = 25},/turf/open/floor/plasteel,/area/ruin/powered)
-"bb" = (/turf/open/space,/turf/closed/wall/mineral/plastitanium{dir = 4; icon_state = "diagonalWall3"},/area/ruin/powered)
-"bc" = (/obj/structure/chair{dir = 1},/obj/item/stack/rods,/obj/effect/gibspawner/human,/turf/open/floor/plasteel/airless/shuttle/red,/area/ruin/unpowered/no_grav)
-"bd" = (/obj/structure/chair{dir = 1},/obj/item/weapon/shard,/obj/item/stack/sheet/metal,/obj/effect/decal/cleanable/shreds,/turf/open/floor/plasteel/airless/shuttle/red,/area/ruin/unpowered/no_grav)
-"be" = (/turf/open/floor/plasteel/airless/shuttle/red,/area/ruin/unpowered/no_grav)
-"bf" = (/obj/item/stack/sheet/metal,/turf/open/floor/plating/asteroid/airless,/area/ruin/unpowered/no_grav)
-"bg" = (/turf/open/floor/wood/airless,/area/ruin/unpowered/no_grav)
-"bh" = (/obj/structure/closet/crate/secure/weapon,/obj/item/weapon/gun/projectile/automatic/pistol/APS,/turf/open/floor/wood/airless,/area/ruin/unpowered/no_grav)
-"bi" = (/mob/living/simple_animal/hostile/pirate/space{environment_smash = 0},/turf/open/floor/wood/airless,/area/ruin/unpowered/no_grav)
-"bj" = (/obj/structure/closet/crate/secure/weapon,/obj/item/weapon/gun/projectile/shotgun/automatic/dual_tube,/turf/open/floor/wood/airless,/area/ruin/unpowered/no_grav)
-"bk" = (/obj/structure/girder,/turf/open/space,/area/space)
-"bl" = (/turf/closed/wall/mineral/titanium,/area/ruin/unpowered)
-"bm" = (/turf/open/floor/plating,/obj/machinery/door/poddoor{id = "caravantrade1"; name = "cargo blastdoor"},/turf/open/floor/plating/airless{icon_plating = "platingdmg2"; icon_state = "platingdmg2"},/area/ruin/unpowered)
-"bn" = (/turf/open/floor/plating/airless{icon_plating = "platingdmg1"; icon_state = "platingdmg1"},/area/ruin/unpowered)
-"bo" = (/turf/open/floor/mineral/titanium/yellow,/obj/structure/door_assembly/door_assembly_shuttle{density = 0; name = "broken airlock"},/turf/open/floor/plating/airless{icon_plating = "platingdmg2"; icon_state = "platingdmg2"},/area/ruin/unpowered)
-"bp" = (/turf/closed/wall/mineral/titanium/overspace,/area/ruin/unpowered)
-"bq" = (/obj/structure/fluff/broken_flooring{tag = "icon-pile (WEST)"; icon_state = "pile"; dir = 8},/turf/open/space,/area/space)
-"br" = (/obj/item/stack/sheet/metal,/turf/open/space,/area/space)
-"bs" = (/obj/structure/lattice,/turf/open/space,/area/space)
-"bt" = (/turf/open/floor/plating/airless{icon_plating = "platingdmg3"; icon_state = "platingdmg3"},/obj/effect/decal/cleanable/dirt,/turf/open/floor/plating/airless{icon_plating = "platingdmg2"; icon_state = "platingdmg2"},/area/ruin/unpowered)
-"bu" = (/obj/item/stack/sheet/metal,/obj/effect/decal/cleanable/dirt,/obj/item/stack/rods,/turf/open/floor/plating/airless{icon_plating = "platingdmg3"; icon_state = "platingdmg3"},/area/ruin/unpowered)
-"bv" = (/obj/effect/decal/cleanable/dirt,/turf/open/floor/mineral/titanium/blue,/area/ruin/unpowered)
-"bw" = (/turf/open/floor/mineral/titanium/blue,/area/ruin/unpowered)
-"bx" = (/obj/machinery/button/door{pixel_x = 24},/turf/open/floor/mineral/titanium/blue,/area/ruin/unpowered)
-"by" = (/obj/structure/bed,/obj/item/weapon/bedsheet/black,/turf/open/floor/mineral/titanium/blue,/area/ruin/unpowered)
-"bz" = (/turf/open/floor/mineral/titanium/blue,/turf/closed/wall/mineral/titanium/interior,/area/ruin/unpowered)
-"bA" = (/obj/structure/fluff/broken_flooring{tag = "icon-pile"; icon_state = "pile"},/turf/open/space,/area/space)
-"bB" = (/obj/effect/decal/cleanable/dirt,/turf/open/floor/plating/airless{icon_plating = "platingdmg1"; icon_state = "platingdmg1"},/area/ruin/unpowered)
-"bC" = (/turf/open/floor/plating/airless{icon_plating = "platingdmg3"; icon_state = "platingdmg3"},/area/ruin/unpowered)
-"bD" = (/obj/structure/closet/crate/secure/gear,/obj/item/ammo_casing/shotgun/techshell,/obj/item/ammo_casing/shotgun/techshell,/obj/item/ammo_casing/shotgun/techshell,/obj/item/ammo_casing/shotgun/pulseslug,/obj/item/weapon/storage/box/lethalshot,/turf/open/floor/mineral/titanium/yellow,/area/ruin/unpowered)
-"bE" = (/obj/effect/decal/cleanable/dirt,/turf/open/floor/mineral/titanium/yellow,/area/ruin/unpowered)
-"bF" = (/mob/living/simple_animal/hostile/pirate/space/ranged{environment_smash = 0},/turf/open/floor/mineral/titanium/yellow,/area/ruin/unpowered)
-"bG" = (/turf/open/floor/mineral/titanium/yellow,/area/ruin/unpowered)
-"bH" = (/mob/living/simple_animal/hostile/pirate/space{environment_smash = 0},/turf/open/floor/mineral/titanium/blue,/area/ruin/unpowered)
-"bI" = (/obj/structure/table,/obj/item/weapon/storage/firstaid/regular,/turf/open/floor/mineral/titanium/blue,/area/ruin/unpowered)
-"bJ" = (/turf/open/floor/plating,/obj/structure/grille,/obj/structure/window/shuttle,/turf/open/floor/plating/airless{icon_plating = "platingdmg2"; icon_state = "platingdmg2"},/area/ruin/unpowered)
-"bK" = (/obj/structure/fluff/broken_flooring{tag = "icon-plating (NORTH)"; icon_state = "plating"; dir = 1},/turf/open/space,/area/space)
-"bL" = (/obj/machinery/door/airlock/shuttle,/turf/open/floor/mineral/titanium/yellow,/area/ruin/unpowered)
-"bM" = (/obj/effect/decal/cleanable/blood,/turf/open/floor/mineral/titanium/blue,/area/ruin/unpowered)
-"bN" = (/obj/structure/table,/obj/item/weapon/paper_bin,/obj/item/weapon/pen,/turf/open/floor/mineral/titanium/blue,/area/ruin/unpowered)
-"bO" = (/obj/machinery/door/airlock/shuttle,/turf/open/floor/plating/airless{icon_plating = "platingdmg3"; icon_state = "platingdmg3"},/area/ruin/unpowered)
-"bP" = (/turf/open/space,/turf/closed/wall/mineral/plastitanium{dir = 8; icon_state = "diagonalWall3"},/area/ruin/powered)
-"bQ" = (/obj/structure/fluff/broken_flooring{tag = "icon-plating (NORTH)"; icon_state = "plating"; dir = 1},/obj/structure/lattice,/turf/open/space,/area/space)
-"bR" = (/obj/structure/girder,/turf/open/floor/plating/airless{icon_plating = "platingdmg3"; icon_state = "platingdmg3"},/area/ruin/unpowered)
-"bS" = (/obj/structure/girder,/turf/open/floor/plating/airless{icon_plating = "platingdmg2"; icon_state = "platingdmg2"},/area/ruin/unpowered)
-"bT" = (/obj/item/stack/sheet/metal,/obj/effect/decal/cleanable/dirt,/turf/open/floor/plating/airless{icon_plating = "platingdmg1"; icon_state = "platingdmg1"},/area/ruin/unpowered)
-"bU" = (/obj/item/stack/rods,/obj/effect/decal/cleanable/dirt,/turf/open/floor/plating/airless{icon_plating = "platingdmg3"; icon_state = "platingdmg3"},/area/ruin/unpowered)
-"bV" = (/obj/structure/closet/crate/secure/gear,/obj/item/ammo_casing/shotgun/frag12,/obj/item/ammo_casing/shotgun/frag12,/obj/item/ammo_casing/shotgun/frag12,/obj/item/ammo_casing/shotgun/frag12,/obj/item/weapon/storage/box/beanbag,/obj/item/weapon/storage/box/rubbershot,/turf/open/floor/mineral/titanium/yellow,/area/ruin/unpowered)
-"bW" = (/obj/structure/closet/crate/secure/gear,/obj/item/ammo_box/c10mm,/obj/item/ammo_casing/shotgun/meteorshot,/obj/item/ammo_casing/shotgun/meteorshot,/obj/item/ammo_casing/shotgun/meteorshot,/turf/open/floor/mineral/titanium/yellow,/area/ruin/unpowered)
-"bX" = (/obj/structure/closet/crate/secure/gear,/obj/item/ammo_box/a40mm,/obj/item/ammo_box/a40mm,/turf/open/floor/mineral/titanium/yellow,/area/ruin/unpowered)
-"bY" = (/obj/structure/chair{dir = 4},/obj/effect/mob_spawn/human/corpse/nanotrasensoldier,/obj/effect/decal/cleanable/blood,/turf/open/floor/mineral/titanium/blue,/area/ruin/unpowered)
-"bZ" = (/obj/machinery/computer,/turf/open/floor/mineral/titanium/blue,/area/ruin/unpowered)
-"ca" = (/obj/structure/shuttle/engine/propulsion/burst/left{tag = "icon-burst_l (EAST)"; icon_state = "burst_l"; dir = 4},/turf/open/floor/plating/airless,/area/ruin/unpowered)
-"cb" = (/obj/structure/shuttle/engine/heater{icon_state = "heater"; dir = 8},/turf/closed/wall/mineral/titanium,/area/ruin/unpowered)
-"cc" = (/obj/structure/table,/turf/open/floor/mineral/titanium/blue,/area/ruin/unpowered)
-"cd" = (/obj/effect/decal/cleanable/dirt,/obj/structure/bed,/obj/item/weapon/bedsheet/black,/turf/open/floor/mineral/titanium/blue,/area/ruin/unpowered)
-"ce" = (/obj/structure/table,/turf/open/floor/mineral/plastitanium,/area/ruin/powered)
-"cf" = (/obj/machinery/computer,/turf/open/floor/mineral/plastitanium,/area/ruin/powered)
-"cg" = (/obj/structure/fluff/broken_flooring{tag = "icon-plating (EAST)"; icon_state = "plating"; dir = 4},/obj/structure/lattice,/turf/open/space,/area/space)
-"ch" = (/turf/open/space,/obj/item/stack/rods,/obj/effect/decal/cleanable/dirt,/turf/open/floor/plating/airless{icon_plating = "platingdmg2"; icon_state = "platingdmg2"},/area/ruin/unpowered)
-"ci" = (/obj/effect/decal/cleanable/dirt,/turf/open/floor/plating/airless{icon_plating = "platingdmg3"; icon_state = "platingdmg3"},/area/ruin/unpowered)
-"cj" = (/turf/open/floor/plating/airless,/area/ruin/unpowered)
-"ck" = (/obj/structure/closet/crate/secure/weapon,/obj/item/weapon/gun/projectile/revolver/grenadelauncher/unrestricted,/turf/open/floor/mineral/titanium/yellow,/area/ruin/unpowered)
-"cl" = (/mob/living/simple_animal/hostile/pirate/space{environment_smash = 0},/turf/open/floor/mineral/titanium/yellow,/area/ruin/unpowered)
-"cm" = (/obj/structure/door_assembly/door_assembly_shuttle{density = 0; name = "broken airlock"},/turf/open/floor/mineral/titanium/yellow,/area/ruin/unpowered)
-"cn" = (/obj/structure/table,/obj/item/device/gps{gpstag = "Distress Signal"},/turf/open/floor/mineral/titanium/blue,/area/ruin/unpowered)
-"co" = (/obj/structure/shuttle/engine/propulsion/burst{dir = 4},/turf/open/floor/plating/airless,/area/ruin/unpowered)
-"cp" = (/obj/structure/closet/crate/secure/engineering,/obj/item/weapon/storage/toolbox/mechanical,/obj/item/weapon/storage/toolbox/mechanical,/obj/item/weapon/storage/toolbox/electrical,/obj/item/weapon/storage/toolbox/electrical,/obj/item/clothing/gloves/color/yellow,/turf/open/floor/mineral/titanium/yellow,/area/ruin/unpowered)
-"cq" = (/obj/item/weapon/shard,/obj/effect/decal/cleanable/dirt,/turf/open/floor/mineral/titanium/blue,/area/ruin/unpowered)
-"cr" = (/obj/structure/table_frame,/obj/effect/decal/cleanable/dirt,/turf/open/floor/mineral/titanium/blue,/area/ruin/unpowered)
-"cs" = (/turf/open/floor/mineral/plastitanium,/area/ruin/powered)
-"ct" = (/obj/structure/chair{dir = 1},/mob/living/simple_animal/hostile/syndicate{environment_smash = 0; name = "Syndicate Salvage Pilot"},/turf/open/floor/mineral/plastitanium,/area/ruin/powered)
-"cu" = (/obj/structure/closet/crate/secure/engineering,/obj/item/weapon/wrench{color = "#ff0000"; desc = "A prototype of a new wrench design, allegedly the red color scheme makes it go faster."; name = "experimental wrench"; toolspeed = 3},/obj/item/weapon/screwdriver{color = "#ff0000"; desc = "A prototype of a new screwdriver design, allegedly the red color scheme makes it go faster."; name = "experimental screwdriver"; toolspeed = 3},/obj/item/weapon/wirecutters{color = "#ff0000"; desc = "A prototype of a new wirecutter design, allegedly the red color scheme makes it go faster."; name = "experimental wirecutters"; toolspeed = 3},/obj/item/weapon/crowbar/red{color = "#ff0000"; desc = "A prototype of a new crowbar design, allegedly the red color scheme makes it go faster."; name = "experimental crowbar"; toolspeed = 3},/turf/open/floor/mineral/plastitanium,/area/ruin/powered)
-"cv" = (/obj/effect/decal/cleanable/dirt,/mob/living/simple_animal/hostile/syndicate/ranged/space{environment_smash = 0; name = "Syndicate Salvage Worker"},/turf/open/floor/mineral/titanium/blue,/area/ruin/unpowered)
-"cw" = (/obj/item/stack/rods,/turf/open/floor/plating/airless{icon_plating = "platingdmg3"; icon_state = "platingdmg3"},/area/ruin/unpowered)
-"cx" = (/turf/open/space,/obj/effect/decal/cleanable/dirt,/turf/open/floor/plating/airless{icon_plating = "platingdmg2"; icon_state = "platingdmg2"},/area/ruin/unpowered)
-"cy" = (/obj/effect/decal/cleanable/dirt,/obj/effect/decal/cleanable/dirt,/obj/structure/girder,/turf/open/floor/plating/airless{icon_plating = "platingdmg3"; icon_state = "platingdmg3"},/area/ruin/unpowered)
-"cz" = (/obj/item/stack/sheet/metal,/obj/effect/decal/cleanable/dirt,/turf/open/floor/plating/airless{icon_plating = "platingdmg3"; icon_state = "platingdmg3"},/area/ruin/unpowered)
-"cA" = (/obj/structure/closet/crate/secure/weapon,/obj/item/weapon/gun/projectile/shotgun/riot,/obj/item/weapon/gun/projectile/shotgun/riot,/turf/open/floor/mineral/titanium/yellow,/area/ruin/unpowered)
-"cB" = (/obj/structure/closet/crate/secure/weapon,/obj/item/weapon/gun/syringe/syndicate,/obj/item/weapon/gun/syringe/rapidsyringe,/turf/open/floor/mineral/titanium/yellow,/area/ruin/unpowered)
-"cC" = (/obj/structure/closet/crate/secure/weapon,/obj/item/weapon/gun/projectile/automatic/c20r/toy/unrestricted,/obj/item/weapon/gun/projectile/automatic/c20r/toy/unrestricted,/turf/open/floor/mineral/titanium/yellow,/area/ruin/unpowered)
-"cD" = (/mob/living/simple_animal/hostile/pirate/space/ranged{environment_smash = 0},/turf/open/floor/mineral/titanium/blue,/area/ruin/unpowered)
-"cE" = (/obj/structure/table,/obj/item/weapon/clipboard,/turf/open/floor/mineral/titanium/blue,/area/ruin/unpowered)
-"cF" = (/obj/structure/shuttle/engine/propulsion/burst/right{tag = "icon-burst_r (EAST)"; icon_state = "burst_r"; dir = 4},/turf/open/floor/plating/airless,/area/ruin/unpowered)
-"cG" = (/mob/living/simple_animal/hostile/syndicate/melee/space{environment_smash = 0; name = "Syndicate Salvage Worker"},/turf/open/floor/mineral/titanium/yellow,/area/ruin/unpowered)
-"cH" = (/obj/item/stack/rods,/obj/effect/decal/cleanable/dirt,/turf/open/floor/plating/airless{icon_plating = "platingdmg1"; icon_state = "platingdmg1"},/area/ruin/unpowered)
-"cI" = (/obj/structure/grille/broken,/obj/item/weapon/shard,/turf/open/floor/plating/airless{icon_plating = "platingdmg1"; icon_state = "platingdmg1"},/area/ruin/unpowered)
-"cJ" = (/obj/structure/closet/crate/secure/engineering,/obj/item/clothing/gloves/color/yellow,/obj/item/clothing/gloves/color/yellow,/turf/open/floor/mineral/plastitanium,/area/ruin/powered)
-"cK" = (/obj/structure/closet/crate,/obj/item/stack/sheet/plasteel/twenty,/obj/item/stack/sheet/plasteel/twenty,/obj/effect/decal/cleanable/dirt,/turf/open/floor/mineral/titanium/yellow,/area/ruin/unpowered)
-"cL" = (/obj/item/stack/sheet/metal,/obj/effect/decal/cleanable/dirt,/turf/open/floor/mineral/titanium/yellow,/area/ruin/unpowered)
-"cM" = (/obj/effect/decal/cleanable/dirt,/obj/effect/decal/cleanable/dirt,/turf/open/floor/plating/airless{icon_plating = "platingdmg3"; icon_state = "platingdmg3"},/area/ruin/unpowered)
-"cN" = (/obj/structure/closet/crate/secure/plasma,/obj/item/weapon/tank/internals/plasma/full,/obj/item/weapon/tank/internals/plasma/full,/obj/item/stack/sheet/mineral/plasma{amount = 25},/turf/open/floor/mineral/titanium/yellow,/area/ruin/unpowered)
-"cO" = (/obj/item/weapon/shard,/turf/open/floor/mineral/titanium/blue,/area/ruin/unpowered)
-"cP" = (/obj/item/chair,/obj/effect/mob_spawn/human/corpse/nanotrasensoldier,/obj/effect/decal/cleanable/blood,/turf/open/floor/mineral/titanium/blue,/area/ruin/unpowered)
-"cQ" = (/obj/item/stack/rods,/obj/item/stack/sheet/metal,/turf/open/floor/plating/airless{icon_plating = "platingdmg1"; icon_state = "platingdmg1"},/area/ruin/unpowered)
-"cR" = (/obj/structure/fluff/broken_flooring{tag = "icon-plating (WEST)"; icon_state = "plating"; dir = 8},/obj/structure/lattice,/turf/open/space,/area/space)
-"cS" = (/obj/machinery/door/airlock/external{icon_state = "door_locked"; locked = 1},/turf/open/floor/plating,/area/ruin/powered)
-"cT" = (/obj/machinery/porta_turret/syndicate/pod,/turf/open/floor/plating/airless,/area/ruin/powered)
-"cU" = (/obj/effect/decal/cleanable/dirt,/mob/living/simple_animal/hostile/syndicate/melee/space/stormtrooper{environment_smash = 0; name = "Syndicate Salvage Leader"},/turf/open/floor/mineral/titanium/yellow,/area/ruin/unpowered)
-"cV" = (/obj/structure/chair{dir = 4},/obj/effect/decal/cleanable/blood,/turf/open/floor/mineral/titanium/blue,/area/ruin/unpowered)
-"cW" = (/obj/structure/closet/crate/secure/plasma,/obj/item/weapon/tank/internals/plasma/full,/obj/item/stack/sheet/mineral/plasma{amount = 25},/turf/open/floor/mineral/titanium/yellow,/area/ruin/unpowered)
-"cX" = (/obj/structure/closet/crate/secure/engineering,/obj/item/organ/cyberimp/arm/toolset,/obj/item/organ/cyberimp/arm/toolset,/turf/open/floor/mineral/titanium/yellow,/area/ruin/unpowered)
-"cY" = (/obj/structure/closet/crate/secure/plasma,/obj/item/mecha_parts/mecha_equipment/weapon/energy/plasma,/turf/open/floor/mineral/titanium/yellow,/area/ruin/unpowered)
-"cZ" = (/mob/living/simple_animal/hostile/syndicate/ranged/space/stormtrooper{environment_smash = 0; name = "Syndicate Salvage Leader"},/turf/open/floor/mineral/titanium/yellow,/area/ruin/unpowered)
-"da" = (/obj/item/stack/rods,/obj/item/weapon/shard,/mob/living/simple_animal/hostile/syndicate/melee/space{environment_smash = 0; name = "Syndicate Salvage Worker"},/turf/open/floor/mineral/titanium/blue,/area/ruin/unpowered)
-"db" = (/obj/item/weapon/shard,/turf/open/floor/plating/airless{icon_plating = "platingdmg1"; icon_state = "platingdmg1"},/area/ruin/unpowered)
-"dc" = (/obj/item/weapon/shard,/turf/open/space,/area/space)
-"dd" = (/obj/structure/chair{dir = 4},/turf/open/floor/mineral/plastitanium,/area/ruin/powered)
-"de" = (/obj/structure/closet/crate/secure/plasma,/obj/item/stack/sheet/mineral/plasma{amount = 25},/obj/item/stack/sheet/mineral/plasma{amount = 25},/obj/item/weapon/tank/internals/plasma/full,/obj/item/weapon/tank/internals/plasma/full,/turf/open/floor/mineral/plastitanium,/area/ruin/powered)
-"df" = (/obj/structure/chair{dir = 8},/turf/open/floor/mineral/plastitanium,/area/ruin/powered)
-"dg" = (/obj/structure/closet/crate,/obj/item/stack/sheet/rglass{amount = 20},/obj/item/stack/sheet/rglass{amount = 20},/turf/open/floor/mineral/titanium/yellow,/area/ruin/unpowered)
-"dh" = (/obj/structure/closet/crate{icon_state = "crateopen"; opened = 1},/obj/item/stack/sheet/mineral/gold{amount = 25},/obj/item/stack/sheet/mineral/bananium{amount = 5},/turf/open/floor/mineral/titanium/yellow,/area/ruin/unpowered)
-"di" = (/obj/structure/closet/crate{icon_state = "crateopen"; opened = 1},/obj/item/stack/sheet/mineral/silver{amount = 25},/obj/item/stack/sheet/mineral/uranium{amount = 10},/turf/open/floor/mineral/titanium/yellow,/area/ruin/unpowered)
-"dj" = (/obj/effect/mob_spawn/human/corpse/nanotrasensoldier,/obj/effect/decal/cleanable/blood,/turf/open/floor/mineral/titanium/yellow,/area/ruin/unpowered)
-"dk" = (/obj/structure/table,/obj/effect/decal/cleanable/dirt,/turf/open/floor/mineral/titanium/blue,/area/ruin/unpowered)
-"dl" = (/obj/structure/closet/crate/secure/plasma,/obj/item/stack/sheet/mineral/plasma{amount = 25},/obj/item/weapon/tank/internals/plasma/full,/turf/open/floor/mineral/plastitanium,/area/ruin/powered)
-"dm" = (/obj/structure/chair,/turf/open/floor/mineral/plastitanium,/area/ruin/powered)
-"dn" = (/obj/structure/closet/crate,/obj/item/stack/sheet/mineral/gold{amount = 25},/obj/item/stack/sheet/mineral/silver{amount = 25},/turf/open/floor/mineral/plastitanium,/area/ruin/powered)
-"do" = (/obj/structure/closet/crate,/obj/item/stack/sheet/metal/fifty,/obj/item/stack/sheet/metal/fifty,/obj/item/stack/sheet/glass/fifty,/obj/item/stack/sheet/glass/fifty,/obj/effect/decal/cleanable/dirt,/turf/open/floor/mineral/titanium/yellow,/area/ruin/unpowered)
-"dp" = (/obj/structure/closet/crate,/obj/item/stack/sheet/mineral/silver{amount = 25},/turf/open/floor/mineral/titanium/yellow,/area/ruin/unpowered)
-"dq" = (/mob/living/simple_animal/hostile/syndicate/ranged/space{environment_smash = 0; name = "Syndicate Salvage Worker"},/turf/open/floor/mineral/titanium/blue,/area/ruin/unpowered)
-"dr" = (/obj/effect/decal/cleanable/dirt,/obj/item/weapon/clipboard,/turf/open/floor/mineral/titanium/blue,/area/ruin/unpowered)
-"ds" = (/obj/structure/shuttle/engine/heater,/turf/closed/wall/mineral/plastitanium,/area/ruin/powered)
-"dt" = (/obj/structure/closet/crate{icon_state = "crateopen"; opened = 1},/obj/item/stack/sheet/mineral/diamond{amount = 5},/obj/item/stack/sheet/mineral/gold{amount = 25},/turf/open/floor/mineral/plastitanium,/area/ruin/powered)
-"du" = (/obj/structure/chair{dir = 4},/mob/living/simple_animal/hostile/syndicate{environment_smash = 0; name = "Syndicate Salvage Pilot"},/turf/open/floor/mineral/plastitanium,/area/ruin/powered)
-"dv" = (/obj/structure/shuttle/engine/propulsion/burst,/turf/open/floor/plating/airless,/area/ruin/powered)
-"dw" = (/obj/structure/chair{dir = 1},/turf/open/floor/mineral/plastitanium,/area/ruin/powered)
-"dx" = (/obj/structure/closet/crate,/obj/item/stack/sheet/mineral/diamond{amount = 5},/obj/item/stack/sheet/mineral/uranium{amount = 10},/obj/item/stack/sheet/mineral/silver{amount = 25},/turf/open/floor/mineral/plastitanium,/area/ruin/powered)
-"dy" = (/mob/living/simple_animal/hostile/syndicate/ranged/space/stormtrooper{environment_smash = 0; name = "Syndicate Salvage Leader"},/turf/open/floor/plating/asteroid/airless,/area/ruin/unpowered/no_grav)
-"dz" = (/mob/living/simple_animal/hostile/syndicate/ranged/space{environment_smash = 0; name = "Syndicate Salvage Worker"},/turf/open/floor/plating/asteroid/airless,/area/ruin/unpowered/no_grav)
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
+"aa" = (
+/turf/open/space,
+/area/space)
+"ab" = (
+/turf/closed/wall/mineral/plastitanium,
+/area/ruin/powered)
+"ac" = (
+/obj/machinery/door/airlock/external{
+	icon_state = "door_locked";
+	locked = 1
+	},
+/turf/open/floor/plasteel,
+/area/ruin/powered)
+"ad" = (
+/turf/closed/wall,
+/area/ruin/powered)
+"ae" = (
+/turf/open/space,
+/turf/closed/wall/mineral/plastitanium{
+	dir = 1;
+	icon_state = "diagonalWall3"
+	},
+/area/ruin/powered)
+"af" = (
+/obj/machinery/suit_storage_unit,
+/turf/open/floor/plasteel,
+/area/ruin/powered)
+"ag" = (
+/turf/open/floor/plasteel,
+/area/ruin/powered)
+"ah" = (
+/turf/open/floor/plating/airless,
+/area/ruin/powered)
+"ai" = (
+/obj/machinery/door/airlock/external,
+/turf/open/floor/plasteel,
+/area/ruin/powered)
+"aj" = (
+/obj/structure/statue/silver/medborg,
+/turf/open/floor/plasteel,
+/area/ruin/powered)
+"ak" = (
+/mob/living/simple_animal/hostile/pirate/ranged{
+	environment_smash = 0
+	},
+/turf/open/floor/plasteel,
+/area/ruin/powered)
+"al" = (
+/obj/structure/closet/emcloset,
+/turf/open/floor/plasteel,
+/area/ruin/powered)
+"am" = (
+/obj/structure/closet{
+	name = "pirate outfits"
+	},
+/obj/item/clothing/head/collectable/pirate,
+/obj/item/clothing/suit/pirate,
+/obj/item/clothing/under/pirate,
+/obj/item/clothing/shoes/jackboots,
+/obj/item/clothing/head/bandana,
+/turf/open/floor/plasteel,
+/area/ruin/powered)
+"an" = (
+/obj/structure/table,
+/obj/item/stack/sheet/mineral/gold{
+	amount = 25
+	},
+/obj/item/weapon/coin/plasma,
+/turf/open/floor/plasteel,
+/area/ruin/powered)
+"ao" = (
+/obj/structure/table,
+/obj/item/stack/sheet/mineral/gold{
+	amount = 25
+	},
+/obj/item/weapon/coin/gold,
+/obj/item/weapon/coin/gold,
+/obj/item/weapon/coin/mythril,
+/obj/item/weapon/coin/plasma,
+/turf/open/floor/plasteel,
+/area/ruin/powered)
+"ap" = (
+/obj/structure/table,
+/obj/item/weapon/coin/gold,
+/obj/item/weapon/coin/gold,
+/obj/item/weapon/coin/gold,
+/obj/item/weapon/coin/mythril,
+/obj/item/weapon/coin/plasma,
+/turf/open/floor/plasteel,
+/area/ruin/powered)
+"aq" = (
+/obj/structure/table,
+/mob/living/simple_animal/parrot{
+	faction = list("pirate");
+	name = "Pegwing"
+	},
+/turf/open/floor/plasteel,
+/area/ruin/powered)
+"ar" = (
+/obj/structure/shuttle/engine/propulsion/burst{
+	dir = 4
+	},
+/turf/open/floor/plating/airless,
+/area/ruin/powered)
+"as" = (
+/obj/structure/shuttle/engine/heater{
+	icon_state = "heater";
+	dir = 8
+	},
+/turf/closed/wall/mineral/plastitanium,
+/area/ruin/powered)
+"at" = (
+/obj/structure/bed,
+/obj/item/weapon/bedsheet/brown,
+/turf/open/floor/plasteel,
+/area/ruin/powered)
+"au" = (
+/obj/structure/chair{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/ruin/powered)
+"av" = (
+/obj/structure/rack,
+/obj/item/weapon/storage/bag/money/vault,
+/turf/open/floor/plasteel,
+/area/ruin/powered)
+"aw" = (
+/obj/structure/closet/crate/secure/loot,
+/turf/open/floor/plasteel,
+/area/ruin/powered)
+"ax" = (
+/obj/structure/table,
+/turf/open/floor/plasteel,
+/area/ruin/powered)
+"ay" = (
+/obj/machinery/computer,
+/turf/open/floor/plasteel,
+/area/ruin/powered)
+"az" = (
+/obj/structure/table,
+/obj/item/weapon/storage/bag/money/vault,
+/turf/open/floor/plasteel,
+/area/ruin/powered)
+"aA" = (
+/obj/structure/closet/crate{
+	icon_state = "crateopen";
+	opened = 1
+	},
+/obj/item/stack/sheet/mineral/gold{
+	amount = 25
+	},
+/obj/item/stack/sheet/mineral/bananium{
+	amount = 5
+	},
+/obj/item/stack/sheet/mineral/silver{
+	amount = 25
+	},
+/obj/item/stack/sheet/mineral/uranium{
+	amount = 10
+	},
+/obj/item/stack/sheet/mineral/diamond{
+	amount = 5
+	},
+/turf/open/floor/plasteel,
+/area/ruin/powered)
+"aB" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/fulltile,
+/turf/open/floor/plating,
+/area/ruin/powered)
+"aC" = (
+/turf/closed/mineral,
+/area/ruin/unpowered/no_grav)
+"aD" = (
+/obj/item/stack/rods,
+/turf/open/space,
+/area/space)
+"aE" = (
+/obj/structure/fluff/broken_flooring{
+	tag = "icon-pile (EAST)";
+	icon_state = "pile";
+	dir = 4
+	},
+/turf/open/space,
+/area/space)
+"aF" = (
+/mob/living/simple_animal/hostile/pirate,
+/turf/open/floor/plasteel,
+/area/ruin/powered)
+"aG" = (
+/obj/structure/chair{
+	dir = 1
+	},
+/mob/living/simple_animal/hostile/pirate,
+/turf/open/floor/plasteel,
+/area/ruin/powered)
+"aH" = (
+/turf/open/floor/plating/asteroid/airless,
+/area/ruin/unpowered/no_grav)
+"aI" = (
+/turf/closed/wall/mineral/plastitanium,
+/area/ruin/unpowered/no_grav)
+"aJ" = (
+/obj/machinery/door/airlock/external{
+	icon_state = "door_locked";
+	locked = 1
+	},
+/turf/open/floor/plating,
+/area/ruin/unpowered/no_grav)
+"aK" = (
+/turf/closed/wall/mineral/iron,
+/area/ruin/unpowered/no_grav)
+"aL" = (
+/obj/item/weapon/coin/mythril,
+/turf/open/floor/plasteel,
+/area/ruin/powered)
+"aM" = (
+/obj/structure/chair,
+/turf/open/floor/plasteel,
+/area/ruin/powered)
+"aN" = (
+/obj/structure/shuttle/engine/propulsion/burst{
+	dir = 4
+	},
+/turf/open/floor/plating/airless,
+/area/ruin/unpowered/no_grav)
+"aO" = (
+/obj/structure/shuttle/engine/heater{
+	icon_state = "heater";
+	dir = 8
+	},
+/turf/closed/wall/mineral/plastitanium,
+/area/ruin/unpowered/no_grav)
+"aP" = (
+/obj/structure/chair,
+/obj/item/weapon/shard,
+/obj/item/stack/sheet/metal,
+/turf/open/floor/plasteel/airless/shuttle/red,
+/area/ruin/unpowered/no_grav)
+"aQ" = (
+/obj/structure/chair,
+/obj/effect/decal/cleanable/shreds,
+/turf/open/floor/plasteel/airless/shuttle/red,
+/area/ruin/unpowered/no_grav)
+"aR" = (
+/obj/item/weapon/shard,
+/turf/open/floor/plasteel/airless/shuttle/red,
+/area/ruin/unpowered/no_grav)
+"aS" = (
+/turf/open/floor/plating/airless{
+	icon_plating = "platingdmg1";
+	icon_state = "platingdmg1"
+	},
+/area/ruin/unpowered/no_grav)
+"aT" = (
+/obj/structure/fluff/broken_flooring{
+	tag = "icon-singular";
+	icon_state = "singular"
+	},
+/turf/open/space,
+/area/space)
+"aU" = (
+/obj/structure/rack,
+/obj/item/weapon/tank/internals/plasma/full,
+/obj/item/weapon/tank/internals/plasma/full,
+/obj/item/weapon/tank/internals/plasma/full,
+/turf/open/floor/plasteel,
+/area/ruin/powered)
+"aV" = (
+/obj/structure/fluff/broken_flooring{
+	tag = "icon-singular";
+	icon_state = "singular"
+	},
+/obj/effect/decal/cleanable/shreds,
+/turf/open/floor/plasteel/airless/shuttle/red,
+/area/ruin/unpowered/no_grav)
+"aW" = (
+/obj/effect/gibspawner/human,
+/turf/open/floor/plasteel/airless/shuttle/red,
+/area/ruin/unpowered/no_grav)
+"aX" = (
+/turf/open/space,
+/turf/open/floor/plating/airless{
+	icon = 'icons/obj/smooth_structures/lattice.dmi';
+	icon_plating = "lattice";
+	icon_state = "lattice";
+	name = "anchor chain"
+	},
+/area/space)
+"aY" = (
+/obj/structure/statue/gold/cmo,
+/turf/open/floor/plasteel,
+/area/ruin/powered)
+"aZ" = (
+/obj/structure/table,
+/obj/item/weapon/paper_bin,
+/obj/item/weapon/pen,
+/turf/open/floor/plasteel,
+/area/ruin/powered)
+"ba" = (
+/obj/structure/table,
+/obj/item/stack/sheet/mineral/gold{
+	amount = 25
+	},
+/turf/open/floor/plasteel,
+/area/ruin/powered)
+"bb" = (
+/turf/open/space,
+/turf/closed/wall/mineral/plastitanium{
+	dir = 4;
+	icon_state = "diagonalWall3"
+	},
+/area/ruin/powered)
+"bc" = (
+/obj/structure/chair{
+	dir = 1
+	},
+/obj/item/stack/rods,
+/obj/effect/gibspawner/human,
+/turf/open/floor/plasteel/airless/shuttle/red,
+/area/ruin/unpowered/no_grav)
+"bd" = (
+/obj/structure/chair{
+	dir = 1
+	},
+/obj/item/weapon/shard,
+/obj/item/stack/sheet/metal,
+/obj/effect/decal/cleanable/shreds,
+/turf/open/floor/plasteel/airless/shuttle/red,
+/area/ruin/unpowered/no_grav)
+"be" = (
+/turf/open/floor/plasteel/airless/shuttle/red,
+/area/ruin/unpowered/no_grav)
+"bf" = (
+/obj/item/stack/sheet/metal,
+/turf/open/floor/plating/asteroid/airless,
+/area/ruin/unpowered/no_grav)
+"bg" = (
+/turf/open/floor/wood/airless,
+/area/ruin/unpowered/no_grav)
+"bh" = (
+/obj/structure/closet/crate/secure/weapon,
+/obj/item/weapon/gun/ballistic/automatic/pistol/APS,
+/turf/open/floor/wood/airless,
+/area/ruin/unpowered/no_grav)
+"bi" = (
+/mob/living/simple_animal/hostile/pirate/space{
+	environment_smash = 0
+	},
+/turf/open/floor/wood/airless,
+/area/ruin/unpowered/no_grav)
+"bj" = (
+/obj/structure/closet/crate/secure/weapon,
+/obj/item/weapon/gun/ballistic/shotgun/automatic/dual_tube,
+/turf/open/floor/wood/airless,
+/area/ruin/unpowered/no_grav)
+"bk" = (
+/obj/structure/girder,
+/turf/open/space,
+/area/space)
+"bl" = (
+/turf/closed/wall/mineral/titanium,
+/area/ruin/unpowered)
+"bm" = (
+/turf/open/floor/plating,
+/obj/machinery/door/poddoor{
+	id = "caravantrade1";
+	name = "cargo blastdoor"
+	},
+/turf/open/floor/plating/airless{
+	icon_plating = "platingdmg2";
+	icon_state = "platingdmg2"
+	},
+/area/ruin/unpowered)
+"bn" = (
+/turf/open/floor/plating/airless{
+	icon_plating = "platingdmg1";
+	icon_state = "platingdmg1"
+	},
+/area/ruin/unpowered)
+"bo" = (
+/obj/structure/door_assembly/door_assembly_titanium{
+	density = 0;
+	name = "broken airlock"
+	},
+/turf/open/floor/plating/airless{
+	icon_plating = "platingdmg2";
+	icon_state = "platingdmg2"
+	},
+/area/ruin/unpowered)
+"bp" = (
+/turf/closed/wall/mineral/titanium/overspace,
+/area/ruin/unpowered)
+"bq" = (
+/obj/structure/fluff/broken_flooring{
+	tag = "icon-pile (WEST)";
+	icon_state = "pile";
+	dir = 8
+	},
+/turf/open/space,
+/area/space)
+"br" = (
+/obj/item/stack/sheet/metal,
+/turf/open/space,
+/area/space)
+"bs" = (
+/obj/structure/lattice,
+/turf/open/space,
+/area/space)
+"bt" = (
+/turf/open/floor/plating/airless{
+	icon_plating = "platingdmg3";
+	icon_state = "platingdmg3"
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating/airless{
+	icon_plating = "platingdmg2";
+	icon_state = "platingdmg2"
+	},
+/area/ruin/unpowered)
+"bu" = (
+/obj/item/stack/sheet/metal,
+/obj/effect/decal/cleanable/dirt,
+/obj/item/stack/rods,
+/turf/open/floor/plating/airless{
+	icon_plating = "platingdmg3";
+	icon_state = "platingdmg3"
+	},
+/area/ruin/unpowered)
+"bv" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/mineral/titanium/blue/airless,
+/area/ruin/unpowered)
+"bw" = (
+/turf/open/floor/mineral/titanium/blue/airless,
+/area/ruin/unpowered)
+"bx" = (
+/obj/machinery/button/door{
+	pixel_x = 24
+	},
+/turf/open/floor/mineral/titanium/blue/airless,
+/area/ruin/unpowered)
+"by" = (
+/obj/structure/bed,
+/obj/item/weapon/bedsheet/black,
+/turf/open/floor/mineral/titanium/blue/airless,
+/area/ruin/unpowered)
+"bz" = (
+/turf/open/floor/mineral/titanium/blue,
+/turf/closed/wall/mineral/titanium/interior,
+/area/ruin/unpowered)
+"bA" = (
+/obj/structure/fluff/broken_flooring{
+	tag = "icon-pile";
+	icon_state = "pile"
+	},
+/turf/open/space,
+/area/space)
+"bB" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating/airless{
+	icon_plating = "platingdmg1";
+	icon_state = "platingdmg1"
+	},
+/area/ruin/unpowered)
+"bC" = (
+/turf/open/floor/plating/airless{
+	icon_plating = "platingdmg3";
+	icon_state = "platingdmg3"
+	},
+/area/ruin/unpowered)
+"bD" = (
+/obj/structure/closet/crate/secure/gear,
+/obj/item/ammo_casing/shotgun/techshell,
+/obj/item/ammo_casing/shotgun/techshell,
+/obj/item/ammo_casing/shotgun/techshell,
+/obj/item/ammo_casing/shotgun/pulseslug,
+/obj/item/weapon/storage/box/lethalshot,
+/turf/open/floor/mineral/titanium/yellow/airless,
+/area/ruin/unpowered)
+"bE" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/mineral/titanium/yellow/airless,
+/area/ruin/unpowered)
+"bF" = (
+/mob/living/simple_animal/hostile/pirate/space/ranged{
+	environment_smash = 0
+	},
+/turf/open/floor/mineral/titanium/yellow/airless,
+/area/ruin/unpowered)
+"bG" = (
+/turf/open/floor/mineral/titanium/yellow/airless,
+/area/ruin/unpowered)
+"bH" = (
+/mob/living/simple_animal/hostile/pirate/space{
+	environment_smash = 0
+	},
+/turf/open/floor/mineral/titanium/blue/airless,
+/area/ruin/unpowered)
+"bI" = (
+/obj/structure/table,
+/obj/item/weapon/storage/firstaid/regular,
+/turf/open/floor/mineral/titanium/blue/airless,
+/area/ruin/unpowered)
+"bJ" = (
+/turf/open/floor/plating,
+/obj/structure/grille,
+/obj/structure/window/shuttle,
+/turf/open/floor/plating/airless{
+	icon_plating = "platingdmg2";
+	icon_state = "platingdmg2"
+	},
+/area/ruin/unpowered)
+"bK" = (
+/obj/structure/fluff/broken_flooring{
+	tag = "icon-plating (NORTH)";
+	icon_state = "plating";
+	dir = 1
+	},
+/turf/open/space,
+/area/space)
+"bL" = (
+/obj/machinery/door/airlock/titanium,
+/turf/open/floor/mineral/titanium/yellow/airless,
+/area/ruin/unpowered)
+"bM" = (
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/mineral/titanium/blue/airless,
+/area/ruin/unpowered)
+"bN" = (
+/obj/structure/table,
+/obj/item/weapon/paper_bin,
+/obj/item/weapon/pen,
+/turf/open/floor/mineral/titanium/blue/airless,
+/area/ruin/unpowered)
+"bO" = (
+/obj/machinery/door/airlock/titanium,
+/turf/open/floor/plating/airless{
+	icon_plating = "platingdmg3";
+	icon_state = "platingdmg3"
+	},
+/area/ruin/unpowered)
+"bP" = (
+/turf/open/space,
+/turf/closed/wall/mineral/plastitanium{
+	dir = 8;
+	icon_state = "diagonalWall3"
+	},
+/area/ruin/powered)
+"bQ" = (
+/obj/structure/fluff/broken_flooring{
+	tag = "icon-plating (NORTH)";
+	icon_state = "plating";
+	dir = 1
+	},
+/obj/structure/lattice,
+/turf/open/space,
+/area/space)
+"bR" = (
+/obj/structure/girder,
+/turf/open/floor/plating/airless{
+	icon_plating = "platingdmg3";
+	icon_state = "platingdmg3"
+	},
+/area/ruin/unpowered)
+"bS" = (
+/obj/structure/girder,
+/turf/open/floor/plating/airless{
+	icon_plating = "platingdmg2";
+	icon_state = "platingdmg2"
+	},
+/area/ruin/unpowered)
+"bT" = (
+/obj/item/stack/sheet/metal,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating/airless{
+	icon_plating = "platingdmg1";
+	icon_state = "platingdmg1"
+	},
+/area/ruin/unpowered)
+"bU" = (
+/obj/item/stack/rods,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating/airless{
+	icon_plating = "platingdmg3";
+	icon_state = "platingdmg3"
+	},
+/area/ruin/unpowered)
+"bV" = (
+/obj/structure/closet/crate/secure/gear,
+/obj/item/ammo_casing/shotgun/frag12,
+/obj/item/ammo_casing/shotgun/frag12,
+/obj/item/ammo_casing/shotgun/frag12,
+/obj/item/ammo_casing/shotgun/frag12,
+/obj/item/weapon/storage/box/beanbag,
+/obj/item/weapon/storage/box/rubbershot,
+/turf/open/floor/mineral/titanium/yellow/airless,
+/area/ruin/unpowered)
+"bW" = (
+/obj/structure/closet/crate/secure/gear,
+/obj/item/ammo_box/c10mm,
+/obj/item/ammo_casing/shotgun/meteorshot,
+/obj/item/ammo_casing/shotgun/meteorshot,
+/obj/item/ammo_casing/shotgun/meteorshot,
+/turf/open/floor/mineral/titanium/yellow/airless,
+/area/ruin/unpowered)
+"bX" = (
+/obj/structure/closet/crate/secure/gear,
+/obj/item/ammo_box/a40mm,
+/obj/item/ammo_box/a40mm,
+/turf/open/floor/mineral/titanium/yellow/airless,
+/area/ruin/unpowered)
+"bY" = (
+/obj/structure/chair{
+	dir = 4
+	},
+/obj/effect/mob_spawn/human/corpse/nanotrasensoldier,
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/mineral/titanium/blue/airless,
+/area/ruin/unpowered)
+"bZ" = (
+/obj/machinery/computer,
+/turf/open/floor/mineral/titanium/blue/airless,
+/area/ruin/unpowered)
+"ca" = (
+/obj/structure/shuttle/engine/propulsion/burst/left{
+	tag = "icon-burst_l (EAST)";
+	icon_state = "burst_l";
+	dir = 4
+	},
+/turf/open/floor/plating/airless,
+/area/ruin/unpowered)
+"cb" = (
+/obj/structure/shuttle/engine/heater{
+	icon_state = "heater";
+	dir = 8
+	},
+/turf/closed/wall/mineral/titanium,
+/area/ruin/unpowered)
+"cc" = (
+/obj/structure/table,
+/turf/open/floor/mineral/titanium/blue/airless,
+/area/ruin/unpowered)
+"cd" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/bed,
+/obj/item/weapon/bedsheet/black,
+/turf/open/floor/mineral/titanium/blue/airless,
+/area/ruin/unpowered)
+"ce" = (
+/obj/structure/table,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/powered)
+"cf" = (
+/obj/machinery/computer,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/powered)
+"cg" = (
+/obj/structure/fluff/broken_flooring{
+	tag = "icon-plating (EAST)";
+	icon_state = "plating";
+	dir = 4
+	},
+/obj/structure/lattice,
+/turf/open/space,
+/area/space)
+"ch" = (
+/turf/open/space,
+/obj/item/stack/rods,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating/airless{
+	icon_plating = "platingdmg2";
+	icon_state = "platingdmg2"
+	},
+/area/ruin/unpowered)
+"ci" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating/airless{
+	icon_plating = "platingdmg3";
+	icon_state = "platingdmg3"
+	},
+/area/ruin/unpowered)
+"cj" = (
+/turf/open/floor/plating/airless,
+/area/ruin/unpowered)
+"ck" = (
+/obj/structure/closet/crate/secure/weapon,
+/obj/item/weapon/gun/ballistic/revolver/grenadelauncher/unrestricted,
+/turf/open/floor/mineral/titanium/yellow/airless,
+/area/ruin/unpowered)
+"cl" = (
+/mob/living/simple_animal/hostile/pirate/space{
+	environment_smash = 0
+	},
+/turf/open/floor/mineral/titanium/yellow/airless,
+/area/ruin/unpowered)
+"cm" = (
+/obj/structure/door_assembly/door_assembly_titanium{
+	density = 0;
+	name = "broken airlock"
+	},
+/turf/open/floor/mineral/titanium/yellow/airless,
+/area/ruin/unpowered)
+"cn" = (
+/obj/structure/table,
+/obj/item/device/gps{
+	gpstag = "Distress Signal"
+	},
+/turf/open/floor/mineral/titanium/blue/airless,
+/area/ruin/unpowered)
+"co" = (
+/obj/structure/shuttle/engine/propulsion/burst{
+	dir = 4
+	},
+/turf/open/floor/plating/airless,
+/area/ruin/unpowered)
+"cp" = (
+/obj/structure/closet/crate/secure/engineering,
+/obj/item/weapon/storage/toolbox/mechanical,
+/obj/item/weapon/storage/toolbox/mechanical,
+/obj/item/weapon/storage/toolbox/electrical,
+/obj/item/weapon/storage/toolbox/electrical,
+/obj/item/clothing/gloves/color/yellow,
+/turf/open/floor/mineral/titanium/yellow/airless,
+/area/ruin/unpowered)
+"cq" = (
+/obj/item/weapon/shard,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/mineral/titanium/blue/airless,
+/area/ruin/unpowered)
+"cr" = (
+/obj/structure/table_frame,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/mineral/titanium/blue/airless,
+/area/ruin/unpowered)
+"cs" = (
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/powered)
+"ct" = (
+/obj/structure/chair{
+	dir = 1
+	},
+/mob/living/simple_animal/hostile/syndicate{
+	environment_smash = 0;
+	name = "Syndicate Salvage Pilot"
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/powered)
+"cu" = (
+/obj/structure/closet/crate/secure/engineering,
+/obj/item/weapon/wrench{
+	color = "#ff0000";
+	desc = "A prototype of a new wrench design, allegedly the red color scheme makes it go faster.";
+	name = "experimental wrench";
+	toolspeed = 3
+	},
+/obj/item/weapon/screwdriver{
+	color = "#ff0000";
+	desc = "A prototype of a new screwdriver design, allegedly the red color scheme makes it go faster.";
+	name = "experimental screwdriver";
+	toolspeed = 3
+	},
+/obj/item/weapon/wirecutters{
+	color = "#ff0000";
+	desc = "A prototype of a new wirecutter design, allegedly the red color scheme makes it go faster.";
+	name = "experimental wirecutters";
+	toolspeed = 3
+	},
+/obj/item/weapon/crowbar/red{
+	color = "#ff0000";
+	desc = "A prototype of a new crowbar design, allegedly the red color scheme makes it go faster.";
+	name = "experimental crowbar";
+	toolspeed = 3
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/powered)
+"cv" = (
+/obj/effect/decal/cleanable/dirt,
+/mob/living/simple_animal/hostile/syndicate/ranged/space{
+	environment_smash = 0;
+	name = "Syndicate Salvage Worker"
+	},
+/turf/open/floor/mineral/titanium/blue/airless,
+/area/ruin/unpowered)
+"cw" = (
+/obj/item/stack/rods,
+/turf/open/floor/plating/airless{
+	icon_plating = "platingdmg3";
+	icon_state = "platingdmg3"
+	},
+/area/ruin/unpowered)
+"cx" = (
+/turf/open/space,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating/airless{
+	icon_plating = "platingdmg2";
+	icon_state = "platingdmg2"
+	},
+/area/ruin/unpowered)
+"cy" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/girder,
+/turf/open/floor/plating/airless{
+	icon_plating = "platingdmg3";
+	icon_state = "platingdmg3"
+	},
+/area/ruin/unpowered)
+"cz" = (
+/obj/item/stack/sheet/metal,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating/airless{
+	icon_plating = "platingdmg3";
+	icon_state = "platingdmg3"
+	},
+/area/ruin/unpowered)
+"cA" = (
+/obj/structure/closet/crate/secure/weapon,
+/obj/item/weapon/gun/ballistic/shotgun/riot,
+/obj/item/weapon/gun/ballistic/shotgun/riot,
+/turf/open/floor/mineral/titanium/yellow/airless,
+/area/ruin/unpowered)
+"cB" = (
+/obj/structure/closet/crate/secure/weapon,
+/obj/item/weapon/gun/syringe/syndicate,
+/obj/item/weapon/gun/syringe/rapidsyringe,
+/turf/open/floor/mineral/titanium/yellow/airless,
+/area/ruin/unpowered)
+"cC" = (
+/obj/structure/closet/crate/secure/weapon,
+/obj/item/weapon/gun/ballistic/automatic/c20r/toy/unrestricted,
+/obj/item/weapon/gun/ballistic/automatic/c20r/toy/unrestricted,
+/turf/open/floor/mineral/titanium/yellow/airless,
+/area/ruin/unpowered)
+"cD" = (
+/mob/living/simple_animal/hostile/pirate/space/ranged{
+	environment_smash = 0
+	},
+/turf/open/floor/mineral/titanium/blue/airless,
+/area/ruin/unpowered)
+"cE" = (
+/obj/structure/table,
+/obj/item/weapon/clipboard,
+/turf/open/floor/mineral/titanium/blue/airless,
+/area/ruin/unpowered)
+"cF" = (
+/obj/structure/shuttle/engine/propulsion/burst/right{
+	tag = "icon-burst_r (EAST)";
+	icon_state = "burst_r";
+	dir = 4
+	},
+/turf/open/floor/plating/airless,
+/area/ruin/unpowered)
+"cG" = (
+/mob/living/simple_animal/hostile/syndicate/melee/space{
+	environment_smash = 0;
+	name = "Syndicate Salvage Worker"
+	},
+/turf/open/floor/mineral/titanium/yellow/airless,
+/area/ruin/unpowered)
+"cH" = (
+/obj/item/stack/rods,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating/airless{
+	icon_plating = "platingdmg1";
+	icon_state = "platingdmg1"
+	},
+/area/ruin/unpowered)
+"cI" = (
+/obj/structure/grille/broken,
+/obj/item/weapon/shard,
+/turf/open/floor/plating/airless{
+	icon_plating = "platingdmg1";
+	icon_state = "platingdmg1"
+	},
+/area/ruin/unpowered)
+"cJ" = (
+/obj/structure/closet/crate/secure/engineering,
+/obj/item/clothing/gloves/color/yellow,
+/obj/item/clothing/gloves/color/yellow,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/powered)
+"cK" = (
+/obj/structure/closet/crate,
+/obj/item/stack/sheet/plasteel/twenty,
+/obj/item/stack/sheet/plasteel/twenty,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/mineral/titanium/yellow/airless,
+/area/ruin/unpowered)
+"cL" = (
+/obj/item/stack/sheet/metal,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/mineral/titanium/yellow/airless,
+/area/ruin/unpowered)
+"cM" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating/airless{
+	icon_plating = "platingdmg3";
+	icon_state = "platingdmg3"
+	},
+/area/ruin/unpowered)
+"cN" = (
+/obj/structure/closet/crate/secure/plasma,
+/obj/item/weapon/tank/internals/plasma/full,
+/obj/item/weapon/tank/internals/plasma/full,
+/obj/item/stack/sheet/mineral/plasma{
+	amount = 25
+	},
+/turf/open/floor/mineral/titanium/yellow/airless,
+/area/ruin/unpowered)
+"cO" = (
+/obj/item/weapon/shard,
+/turf/open/floor/mineral/titanium/blue/airless,
+/area/ruin/unpowered)
+"cP" = (
+/obj/item/chair,
+/obj/effect/mob_spawn/human/corpse/nanotrasensoldier,
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/mineral/titanium/blue/airless,
+/area/ruin/unpowered)
+"cQ" = (
+/obj/item/stack/rods,
+/obj/item/stack/sheet/metal,
+/turf/open/floor/plating/airless{
+	icon_plating = "platingdmg1";
+	icon_state = "platingdmg1"
+	},
+/area/ruin/unpowered)
+"cR" = (
+/obj/structure/fluff/broken_flooring{
+	tag = "icon-plating (WEST)";
+	icon_state = "plating";
+	dir = 8
+	},
+/obj/structure/lattice,
+/turf/open/space,
+/area/space)
+"cS" = (
+/obj/machinery/door/airlock/external{
+	icon_state = "door_locked";
+	locked = 1
+	},
+/turf/open/floor/plating,
+/area/ruin/powered)
+"cT" = (
+/obj/machinery/porta_turret/syndicate/pod,
+/turf/open/floor/plating/airless,
+/area/ruin/powered)
+"cU" = (
+/obj/effect/decal/cleanable/dirt,
+/mob/living/simple_animal/hostile/syndicate/melee/space/stormtrooper{
+	environment_smash = 0;
+	name = "Syndicate Salvage Leader"
+	},
+/turf/open/floor/mineral/titanium/yellow/airless,
+/area/ruin/unpowered)
+"cV" = (
+/obj/structure/chair{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/mineral/titanium/blue/airless,
+/area/ruin/unpowered)
+"cW" = (
+/obj/structure/closet/crate/secure/plasma,
+/obj/item/weapon/tank/internals/plasma/full,
+/obj/item/stack/sheet/mineral/plasma{
+	amount = 25
+	},
+/turf/open/floor/mineral/titanium/yellow/airless,
+/area/ruin/unpowered)
+"cX" = (
+/obj/structure/closet/crate/secure/engineering,
+/obj/item/organ/cyberimp/arm/toolset,
+/obj/item/organ/cyberimp/arm/toolset,
+/turf/open/floor/mineral/titanium/yellow/airless,
+/area/ruin/unpowered)
+"cY" = (
+/obj/structure/closet/crate/secure/plasma,
+/obj/item/mecha_parts/mecha_equipment/weapon/energy/plasma,
+/turf/open/floor/mineral/titanium/yellow/airless,
+/area/ruin/unpowered)
+"cZ" = (
+/mob/living/simple_animal/hostile/syndicate/ranged/space/stormtrooper{
+	environment_smash = 0;
+	name = "Syndicate Salvage Leader"
+	},
+/turf/open/floor/mineral/titanium/yellow/airless,
+/area/ruin/unpowered)
+"da" = (
+/obj/item/stack/rods,
+/obj/item/weapon/shard,
+/mob/living/simple_animal/hostile/syndicate/melee/space{
+	environment_smash = 0;
+	name = "Syndicate Salvage Worker"
+	},
+/turf/open/floor/mineral/titanium/blue/airless,
+/area/ruin/unpowered)
+"db" = (
+/obj/item/weapon/shard,
+/turf/open/floor/plating/airless{
+	icon_plating = "platingdmg1";
+	icon_state = "platingdmg1"
+	},
+/area/ruin/unpowered)
+"dc" = (
+/obj/item/weapon/shard,
+/turf/open/space,
+/area/space)
+"dd" = (
+/obj/structure/chair{
+	dir = 4
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/powered)
+"de" = (
+/obj/structure/closet/crate/secure/plasma,
+/obj/item/stack/sheet/mineral/plasma{
+	amount = 25
+	},
+/obj/item/stack/sheet/mineral/plasma{
+	amount = 25
+	},
+/obj/item/weapon/tank/internals/plasma/full,
+/obj/item/weapon/tank/internals/plasma/full,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/powered)
+"df" = (
+/obj/structure/chair{
+	dir = 8
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/powered)
+"dg" = (
+/obj/structure/closet/crate,
+/obj/item/stack/sheet/rglass{
+	amount = 20
+	},
+/obj/item/stack/sheet/rglass{
+	amount = 20
+	},
+/turf/open/floor/mineral/titanium/yellow/airless,
+/area/ruin/unpowered)
+"dh" = (
+/obj/structure/closet/crate{
+	icon_state = "crateopen";
+	opened = 1
+	},
+/obj/item/stack/sheet/mineral/gold{
+	amount = 25
+	},
+/obj/item/stack/sheet/mineral/bananium{
+	amount = 5
+	},
+/turf/open/floor/mineral/titanium/yellow/airless,
+/area/ruin/unpowered)
+"di" = (
+/obj/structure/closet/crate{
+	icon_state = "crateopen";
+	opened = 1
+	},
+/obj/item/stack/sheet/mineral/silver{
+	amount = 25
+	},
+/obj/item/stack/sheet/mineral/uranium{
+	amount = 10
+	},
+/turf/open/floor/mineral/titanium/yellow/airless,
+/area/ruin/unpowered)
+"dj" = (
+/obj/effect/mob_spawn/human/corpse/nanotrasensoldier,
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/mineral/titanium/yellow/airless,
+/area/ruin/unpowered)
+"dk" = (
+/obj/structure/table,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/mineral/titanium/blue/airless,
+/area/ruin/unpowered)
+"dl" = (
+/obj/structure/closet/crate/secure/plasma,
+/obj/item/stack/sheet/mineral/plasma{
+	amount = 25
+	},
+/obj/item/weapon/tank/internals/plasma/full,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/powered)
+"dm" = (
+/obj/structure/chair,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/powered)
+"dn" = (
+/obj/structure/closet/crate,
+/obj/item/stack/sheet/mineral/gold{
+	amount = 25
+	},
+/obj/item/stack/sheet/mineral/silver{
+	amount = 25
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/powered)
+"do" = (
+/obj/structure/closet/crate,
+/obj/item/stack/sheet/metal/fifty,
+/obj/item/stack/sheet/metal/fifty,
+/obj/item/stack/sheet/glass/fifty,
+/obj/item/stack/sheet/glass/fifty,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/mineral/titanium/yellow/airless,
+/area/ruin/unpowered)
+"dp" = (
+/obj/structure/closet/crate,
+/obj/item/stack/sheet/mineral/silver{
+	amount = 25
+	},
+/turf/open/floor/mineral/titanium/yellow/airless,
+/area/ruin/unpowered)
+"dq" = (
+/mob/living/simple_animal/hostile/syndicate/ranged/space{
+	environment_smash = 0;
+	name = "Syndicate Salvage Worker"
+	},
+/turf/open/floor/mineral/titanium/blue/airless,
+/area/ruin/unpowered)
+"dr" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/weapon/clipboard,
+/turf/open/floor/mineral/titanium/blue/airless,
+/area/ruin/unpowered)
+"ds" = (
+/obj/structure/shuttle/engine/heater,
+/turf/closed/wall/mineral/plastitanium,
+/area/ruin/powered)
+"dt" = (
+/obj/structure/closet/crate{
+	icon_state = "crateopen";
+	opened = 1
+	},
+/obj/item/stack/sheet/mineral/diamond{
+	amount = 5
+	},
+/obj/item/stack/sheet/mineral/gold{
+	amount = 25
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/powered)
+"du" = (
+/obj/structure/chair{
+	dir = 4
+	},
+/mob/living/simple_animal/hostile/syndicate{
+	environment_smash = 0;
+	name = "Syndicate Salvage Pilot"
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/powered)
+"dv" = (
+/obj/structure/shuttle/engine/propulsion/burst,
+/turf/open/floor/plating/airless,
+/area/ruin/powered)
+"dw" = (
+/obj/structure/chair{
+	dir = 1
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/powered)
+"dx" = (
+/obj/structure/closet/crate,
+/obj/item/stack/sheet/mineral/diamond{
+	amount = 5
+	},
+/obj/item/stack/sheet/mineral/uranium{
+	amount = 10
+	},
+/obj/item/stack/sheet/mineral/silver{
+	amount = 25
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/powered)
+"dy" = (
+/mob/living/simple_animal/hostile/syndicate/ranged/space/stormtrooper{
+	environment_smash = 0;
+	name = "Syndicate Salvage Leader"
+	},
+/turf/open/floor/plating/asteroid/airless,
+/area/ruin/unpowered/no_grav)
+"dz" = (
+/mob/living/simple_animal/hostile/syndicate/ranged/space{
+	environment_smash = 0;
+	name = "Syndicate Salvage Worker"
+	},
+/turf/open/floor/plating/asteroid/airless,
+/area/ruin/unpowered/no_grav)
 
 (1,1,1) = {"
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaababacacadaeaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaadafagagafabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabafagagafabahadahadaeaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabababaiaiadadadababababaeaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabadadajagakagalamanaoapaqabadababababadaeaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaarasatatagatatagatatagauabavawaxayazaAaBaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaCaCaCaCaCaCaCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaDaaaEaaaaaaaaaaaaaaaaaaaaaaarasawaFagagagagagagakagagagagagaGagagaBaaaaaaaaaaaaaaaCaCaCaCaCaCaHaHaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaHaHaHaHaHaCaCaCaCaCaaaaaaaaaaaaaIaIaIaIaJaIaKaaaaaaaaaaaaaaaaaaaaaaaaaaaaarasawaLagagagagagagagagagagagagaMagagaBaaaaaaaaaaaaaaaCaCaCaCaCaCaHaHaHaHaHaHaHaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaCaCaHaHaHaHaHaHaCaCaCaCaCaCaaaaaaaaaNaOaPaQaRaKaSaTaDaaaaaaaaaaaaaaaaaaaaaaaaarasatatakatatagatataFaMabaUawaxayaxagaBaaaaaaaaaaaaaCaCaCaCaCaCaCaCaHaHaHaHaHaHaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaCaCaCaCaCaCaCaHaHaHaCaCaCaCaaaaaaaaaIaIaVaWaKaKaKaKaKaXaXaXaXaXaaaaaaaaaaaaabadadaYagagagalamazaZbaazabadadabababadbbaaaaaaaaaCaCaCaCaCaCaCaCaCaCaCaCaHaHaHaHaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaCaCaCaCaCaCaCaCaHaHaHaCaCaCaCaCaCaaaNaObcbdbeaKbeaSaaaDaaaaaaaXaXaXaXaXaXaXaXaXadadabaiaiabadadababababbbaaaaaaaaaaaaaaaaaaaCaCaCaCaCaCaCaCaCaCaCaCaHaHaCaCaCaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaCaCaCaCaCaCaCaCaHaHaHaHaCaCaCaaaIaIaIaIaJaIaKaIaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabafagagafabahadahadbbaaaaaaaaaaaaaaaaaaaaaCaCaCaCaCaCaCaCaCaCaCaCaHaCaCaCaCaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaCaCaCaCaCaCaCaCaCaCaCaHaHaCaCaaaaaaaaaaaaaaaDaaaaaTaaaaaaaaaaaaaaaaaaaaaaaaaaabafagagafabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaCaCaCaCaCaCaCaCaCaCaCaHaCaCaCaCaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaCaCaCaCaCaCaCaCaHaHaHaHaCaCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabadacacadbbaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaHaHaHaCaCaCaCaCaCaCaHaHaCaCaCaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaHaHaHaHaHbfaHaHaHaCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabgbgaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaHaHaHaHaHaHaHaHaHaHaHaHaCaCaCaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaHaHaHaHaHaHaHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabgbhaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaHaHaHaHaHaHaHaCaCaCaCaCaCaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabgbiaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaHaHaHaHaHaHaHaHaCaCaCaCaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabjbgaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabgbgaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaTbkblblblbmbmbnbnblboblbpaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabqaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaTbraabsbtbubvbwbwbxblbwbybzbpaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaEaDbBbCbDbEbFbGblbwbHbIbJaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaDaaaabraabqaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabsaabKbBbCbEbGbGbGbLbMbwbNbJaaaaaaaaaaaaaaaaaablblblblblblbmbmbmbmblbOblbpaaaaaabPaBaBaBaeaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaablblblblbsaaaTaaaaaaaaaabQbRaaaaaaaaaaaaaaaaaaaaaaaaaablbSblbTbUbVbGbFbWbXblbwbYbZbJaaaaaaaaaaaaaaaaaaaacacbbwbwccbwbwbwbxblbwcdbzbpaaaaabcecfceabaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacacbbvbCcgbraabsbschbBcibzbpaaaaaaaaaaaaaaaaaaaaaaaaaacjcbcibEbGckbGclbGcmbwbwcnbJaaaaaaaaaaaaaaaaaaaacocbbwbwbGbGbGcpbGblbwcqcrbnaaaaabcsctcuabaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacocbbwcvcicicwcxcicyczciccbJaaaaaaaaaaaaaaaaaaaaaaaaaacocbbwbwcAcBbGbGcCblbwcDcEbJaaaaaaaaaaaaaaaaaaaacFcbbwbGbGbGcGbGbGcmbwbvcHcIaaaaabcscJcsabaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacFcbbwcKbEcLcicMcLbEbGbwbNbJaaaaaaaaaaaaaaaaaaaaaaaaaacFcbbwbHccbwbwbwbxblbwbwbzbpaaaaaaaaaaaaaaaaaablblblbwbGcNbGbGcGbGblcOcPcQcRaaaacScscscscSaaaaaaaaaa
-aaaaaaaaaaaaaaaacTaaaaaaaaaaaaaaaaaablblblbwbGbGbGbEcUbGblbGcVbZbJaaaaaaaaaaaaaaaaaaaaaaaablblblblblblbmbmbmbmblbOblbpaaaaaaaaaaaaaaaaaaaaaacacbbwcWbGcXbGcYcZcmbMdadbbsaadcabdddedfabaaaaaaaaaa
-aaaaaaaaaaaaaaababababcSabababaeaaaaaacacbbwbGdgdhbGbGdicmdjbwccbJaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacocbbwbwbGbGbGbGbGblbwbvdkbnaaaaabdddldfabaaaaaaaaaa
-aaaaaaaaaaaaaaarasdmdmcsdncsceaBaaaaaacocbbwbwbGcGdobGdpbldqbwcEbJaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacFcbbwbwccbwbwbwbxbldrbwbzbpaacTabdsabdsabcTaaaaaaaa
-aaaaaaaaaaaaaaababdtcscscsducfaBaaaaaacFcbbwbwccbwbwbwbxblbwbwbzbpaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaCaCaHaHaHaCaCaCaaaaaaaaaaaaaaaaaaaaaablblblblblblbmbmbmbmblbOblbpaaaaaaabdvabdvabaaaaaaaaaa
-aaaaaaaaaaaaaaarasdwdwcsdxcsceaBaaaablblblblblblbmbmbmbmblbOblbpaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaCaCaCaCaCaCaHaHaCaCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaababababcSabababbbaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaCaCaCaCaCaCaCaHdyaCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaacTaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaCaCaCaCaCaCaCaCaCaHaHaCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaCaCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaCaCaCaCaCaCaCaCaHdzaCaCaCaCaaaaaaaacTaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaCaCaCaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaCaCaCaCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaCaCaCaCaCaCaCaHaHaCaCaCaCaCaaaaaaababababcSabababaeaaaaaaaaaaaaaaaaaaaaaCaCaCaCaCaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaCaCaCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaCaaaaaaaCaaaaaaaaaaaaaaaaaaaaaaaaaCaCaCaCaCaCaCaHaHaCaCaCaHaHaaaaaaarasdmdmcscscsceaBaaaaaaaaaaaaaaaaaaaCaCaCaCaCaCaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaCaCaCaCaCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaCaaaCaaaaaaaaaaaaaaaaaaaaaaaaaaaCaCaCaCdzaHaHaHaHaHaCaaaaaaababcscscscsducfaBaaaaaaaaaaaaaaaaaCaCaCaCaCaCaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaCaCaCaCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaCaaaCaCaCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaCaCaHaHdzaHaCaCaCaaaaaaarasdwdwcscscsceaBaaaaaaaaaaaaaaaaaCaCaCaCaCaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaCaCaCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaCaaaaaaaCaCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaCaCaCaCaCaCaCaaaaaaaaaaababababcSabababbbaaaaaaaaaaaaaaaaaCaCaCaCaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacTaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(2,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(3,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(4,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(5,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(6,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(7,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(8,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+ar
+ab
+ar
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(9,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+cT
+ab
+as
+ab
+as
+ab
+cT
+aa
+aa
+aa
+aC
+aC
+aC
+aa
+aa
+aa
+aa
+"}
+(10,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+dm
+dt
+dw
+ab
+aa
+aC
+aC
+aa
+aC
+aC
+aC
+aa
+aa
+aa
+aa
+"}
+(11,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+dm
+cs
+dw
+ab
+aa
+aC
+aC
+aC
+aC
+aC
+aC
+aa
+aa
+aa
+aa
+"}
+(12,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aC
+aC
+aC
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+cS
+cs
+cs
+cs
+cS
+aa
+aa
+aC
+aC
+aC
+aC
+aa
+aa
+aa
+aa
+aa
+"}
+(13,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aC
+aC
+aC
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+dn
+cs
+dx
+ab
+aa
+aa
+aC
+aC
+aC
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(14,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aH
+aH
+aC
+aC
+aC
+aC
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+cs
+du
+cs
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(15,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aH
+aH
+aC
+aC
+aC
+aC
+aC
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+ce
+cf
+ce
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(16,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aC
+aH
+aH
+aC
+aC
+aC
+aC
+aC
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ae
+aB
+aB
+aB
+bb
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(17,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aC
+aH
+aH
+aC
+aC
+aC
+aC
+aC
+aH
+aH
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(18,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aC
+aH
+aH
+aC
+aC
+aC
+aC
+aC
+aH
+aH
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(19,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aC
+aC
+aH
+aH
+aC
+aC
+aC
+aC
+aH
+aH
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+bl
+aa
+aa
+aa
+bl
+aa
+aa
+aa
+bl
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(20,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aC
+aC
+aC
+aH
+aH
+aC
+aC
+aC
+aH
+aH
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+bl
+ca
+co
+cF
+bl
+ca
+co
+cF
+bl
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(21,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aC
+aC
+aC
+aH
+aH
+aC
+aC
+aC
+aH
+aH
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+bl
+cb
+cb
+cb
+bl
+cb
+cb
+cb
+bl
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(22,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aC
+aC
+aC
+aC
+aH
+aH
+aC
+aC
+bf
+aH
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+bl
+bv
+bw
+bw
+bw
+bw
+bw
+bw
+bl
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(23,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aC
+aC
+aC
+aC
+aH
+aC
+aH
+aH
+aH
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+bs
+bC
+cv
+cK
+bG
+bG
+bw
+bw
+bl
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(24,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aC
+aC
+aC
+aH
+aC
+aH
+aH
+aa
+aa
+aa
+aa
+aa
+aa
+bA
+aa
+aa
+cg
+ci
+bE
+bG
+dg
+bG
+cc
+bl
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(25,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aC
+aC
+aC
+aH
+aH
+aH
+aH
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aD
+aT
+br
+ci
+cL
+bG
+dh
+cG
+bw
+bm
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(26,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aC
+aC
+aH
+aH
+aC
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+cw
+ci
+bE
+bG
+do
+bw
+bm
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(27,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aC
+aC
+aC
+aC
+aa
+aa
+aa
+aa
+aa
+aa
+bq
+aa
+aa
+aa
+bs
+cx
+cM
+cU
+bG
+bG
+bw
+bm
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(28,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aC
+aC
+aC
+aC
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+br
+aa
+bs
+ci
+cL
+bG
+di
+dp
+bx
+bm
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(29,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ch
+cy
+bE
+bl
+cm
+bl
+bl
+bl
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(30,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aI
+aN
+aI
+aN
+aI
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+bq
+aa
+bB
+cz
+bG
+bG
+dj
+dq
+bw
+bO
+aa
+aa
+aa
+aa
+aC
+aa
+aa
+aC
+aa
+aa
+aa
+aa
+"}
+(31,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aI
+aO
+aI
+aO
+aI
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+bQ
+ci
+ci
+bw
+cV
+bw
+bw
+bw
+bl
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(32,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aI
+aP
+aV
+bc
+aI
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+bR
+bz
+cc
+bN
+bZ
+cc
+cE
+bz
+bp
+aa
+aa
+aa
+aa
+aa
+aa
+aC
+aa
+aa
+aa
+aa
+aa
+"}
+(33,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aI
+aQ
+aW
+bd
+aI
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+bp
+bJ
+bJ
+bJ
+bJ
+bJ
+bp
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(34,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aJ
+aR
+aK
+be
+aJ
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aC
+aC
+aC
+aC
+aa
+aa
+aa
+aa
+"}
+(35,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aI
+aK
+aK
+aK
+aI
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aC
+aC
+aa
+aa
+aa
+aa
+"}
+(36,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aK
+aS
+aK
+be
+aK
+aD
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aC
+aC
+aa
+aa
+aa
+aa
+aa
+"}
+(37,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aD
+aa
+aT
+aK
+aS
+aI
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(38,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aD
+aK
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(39,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aE
+aa
+aa
+aX
+aD
+aa
+aT
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(40,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aX
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(41,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aX
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(42,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aX
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(43,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aX
+aX
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(44,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aX
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(45,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aX
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(46,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aX
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aT
+aa
+aa
+bl
+aa
+aa
+aa
+bl
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(47,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aX
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aT
+br
+aa
+bs
+bS
+cj
+co
+cF
+bl
+aa
+aa
+aa
+aa
+aa
+aC
+aC
+aC
+aC
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(48,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aX
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+bk
+aa
+aE
+aa
+bl
+cb
+cb
+cb
+bl
+aa
+aa
+aa
+aa
+aa
+aC
+aC
+aC
+aC
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(49,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aX
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+bl
+bs
+aD
+bK
+bT
+ci
+bw
+bw
+bl
+aa
+aa
+aa
+aC
+aC
+aC
+aC
+aC
+aC
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(50,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+ab
+aa
+aa
+aa
+aa
+ab
+aX
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+bl
+bt
+bB
+bB
+bU
+bE
+bw
+bH
+bl
+aa
+aa
+aa
+aC
+aC
+aC
+aC
+aC
+aC
+aC
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(51,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+ad
+ar
+ar
+ar
+ar
+ad
+aX
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+bl
+bu
+bC
+bC
+bV
+bG
+cA
+cc
+bl
+aa
+aa
+aC
+aC
+aC
+aC
+aC
+aC
+aC
+aC
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(52,1,1) = {"
+aa
+aa
+aa
+aa
+ab
+ad
+as
+as
+as
+as
+ad
+ad
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+bm
+bv
+bD
+bE
+bG
+ck
+cB
+bw
+bm
+aa
+aa
+aC
+aC
+aC
+aC
+aC
+aC
+aC
+aC
+aC
+aC
+aa
+aa
+aa
+aa
+"}
+(53,1,1) = {"
+aa
+ab
+ad
+ab
+ab
+aj
+at
+aw
+aw
+at
+aY
+ad
+ab
+ab
+ab
+aa
+aa
+aa
+aa
+aa
+bm
+bw
+bE
+bG
+bF
+bG
+bG
+bw
+bm
+aa
+aa
+aH
+aC
+aC
+aC
+aC
+aC
+aC
+aC
+aC
+aC
+aa
+aa
+aa
+aa
+"}
+(54,1,1) = {"
+aa
+ab
+af
+af
+ab
+ag
+at
+aF
+aL
+at
+ag
+ab
+af
+af
+ad
+aa
+aa
+aa
+aa
+aa
+bn
+bw
+bF
+bG
+bW
+cl
+bG
+bw
+bm
+aa
+aa
+aH
+aC
+aC
+aC
+aC
+aH
+aH
+dz
+aH
+aC
+aa
+aa
+aa
+aa
+"}
+(55,1,1) = {"
+aa
+ac
+ag
+ag
+ai
+ak
+ag
+ag
+ag
+ak
+ag
+ai
+ag
+ag
+ac
+bg
+bg
+bg
+bj
+bg
+bn
+bx
+bG
+bG
+bX
+bG
+cC
+bx
+bm
+aa
+aa
+aH
+aH
+aC
+aC
+aH
+aH
+aH
+aH
+aH
+aC
+aa
+aa
+aa
+aa
+"}
+(56,1,1) = {"
+aa
+ac
+ag
+ag
+ai
+ag
+at
+ag
+ag
+at
+ag
+ai
+ag
+ag
+ac
+bg
+bh
+bi
+bg
+bg
+bl
+bl
+bl
+bL
+bl
+cm
+bl
+bl
+bl
+aa
+aa
+aC
+aH
+aH
+aH
+dz
+aC
+aC
+aH
+dz
+aC
+aa
+aa
+aa
+aa
+"}
+(57,1,1) = {"
+aa
+ad
+af
+af
+ad
+al
+at
+ag
+ag
+at
+al
+ab
+af
+af
+ad
+aa
+aa
+aa
+aa
+aa
+bo
+bw
+bw
+bM
+bw
+bw
+bw
+bw
+bO
+aa
+aa
+aC
+aC
+dy
+aH
+aC
+aC
+aC
+aH
+aH
+aC
+aa
+aa
+aa
+aa
+"}
+(58,1,1) = {"
+aa
+ae
+ab
+ab
+ad
+am
+ag
+ag
+ag
+ag
+am
+ad
+ab
+ab
+bb
+aa
+aa
+aa
+aa
+aa
+bl
+by
+bH
+bw
+bY
+bw
+cD
+bw
+bl
+aa
+aa
+aC
+aC
+aC
+aC
+aC
+aC
+aC
+aH
+aC
+aC
+aa
+aa
+aa
+aa
+"}
+(59,1,1) = {"
+aa
+aa
+aa
+ah
+ad
+an
+at
+ag
+ag
+at
+az
+ad
+ah
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+bp
+bz
+bI
+bN
+bZ
+cn
+cE
+bz
+bp
+aa
+aa
+aa
+aa
+aa
+aa
+aC
+aC
+aH
+aH
+aC
+aa
+aa
+aa
+aa
+aa
+"}
+(60,1,1) = {"
+aa
+aa
+aa
+ad
+ab
+ao
+at
+ag
+ag
+at
+aZ
+ab
+ad
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+bp
+bJ
+bJ
+bJ
+bJ
+bJ
+bp
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aC
+aC
+aH
+aC
+aC
+aa
+aa
+aa
+aa
+aa
+"}
+(61,1,1) = {"
+aa
+aa
+aa
+ah
+ab
+ap
+ag
+ak
+ag
+aF
+ba
+ab
+ah
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(62,1,1) = {"
+aa
+aa
+aa
+ad
+ab
+aq
+au
+ag
+ag
+aM
+az
+ab
+ad
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(63,1,1) = {"
+aa
+aa
+aa
+ae
+ab
+ab
+ab
+ag
+ag
+ab
+ab
+ab
+bb
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(64,1,1) = {"
+aa
+aa
+aa
+aa
+ae
+ad
+av
+ag
+ag
+aU
+ad
+bb
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+ar
+ab
+ar
+ab
+aa
+aa
+aa
+aa
+"}
+(65,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+ab
+aw
+ag
+ag
+aw
+ad
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+cT
+ab
+as
+ab
+as
+ab
+cT
+aa
+aa
+aa
+"}
+(66,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+ab
+ax
+ag
+ag
+ax
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+dm
+cs
+dw
+ab
+aa
+aa
+aa
+aa
+"}
+(67,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+ab
+ay
+aG
+aM
+ay
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+dm
+cs
+dw
+ab
+aa
+aa
+aa
+aa
+"}
+(68,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+ab
+az
+ag
+ag
+ax
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+cS
+cs
+cs
+cs
+cS
+aa
+aa
+aa
+aa
+"}
+(69,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+ad
+aA
+ag
+ag
+ag
+ad
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+cs
+cs
+cs
+ab
+aa
+aa
+aa
+aa
+"}
+(70,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+ae
+aB
+aB
+aB
+aB
+bb
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+bl
+aa
+aa
+aa
+bl
+aa
+aa
+aa
+bl
+aa
+aa
+aa
+aa
+ab
+cs
+du
+cs
+ab
+aa
+aa
+aa
+aa
+"}
+(71,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+bl
+ca
+co
+cF
+bl
+ca
+co
+cF
+bl
+aa
+aa
+aa
+aa
+ab
+ce
+cf
+ce
+ab
+aa
+aa
+aa
+aa
+"}
+(72,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+bl
+cb
+cb
+cb
+bl
+cb
+cb
+cb
+bl
+aa
+aa
+aa
+aa
+ae
+aB
+aB
+aB
+bb
+aa
+aa
+aa
+aa
+"}
+(73,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+bl
+bw
+bw
+bw
+bw
+bw
+bw
+bw
+bl
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(74,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aC
+aC
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+bl
+bw
+bw
+bG
+bG
+cW
+bw
+bw
+bl
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(75,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aC
+aC
+aC
+aC
+aH
+aH
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+bl
+cc
+bG
+bG
+cN
+bG
+bG
+cc
+bl
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(76,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aC
+aC
+aC
+aC
+aH
+aH
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+bm
+bw
+bG
+bG
+bG
+cX
+bG
+bw
+bm
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(77,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aC
+aC
+aC
+aC
+aC
+aH
+aH
+aH
+aa
+aa
+aa
+aa
+aa
+aa
+bm
+bw
+bG
+cG
+bG
+bG
+bG
+bw
+bm
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(78,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aC
+aC
+aC
+aC
+aC
+aC
+aC
+aC
+aH
+aH
+aH
+aa
+aa
+aa
+aa
+aa
+bm
+bw
+cp
+bG
+cG
+cY
+bG
+bw
+bm
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(79,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aC
+aC
+aC
+aC
+aC
+aC
+aC
+aC
+aH
+aH
+aH
+aa
+aa
+aa
+aa
+aa
+bm
+bx
+bG
+bG
+bG
+cZ
+bG
+bx
+bm
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(80,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aC
+aC
+aC
+aC
+aC
+aC
+aC
+aC
+aH
+aH
+aH
+aa
+aa
+aa
+aa
+aa
+bl
+bl
+bl
+cm
+bl
+cm
+bl
+bl
+bl
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(81,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aC
+aC
+aC
+aC
+aC
+aC
+aC
+aC
+aH
+aH
+aH
+aa
+aa
+aa
+aa
+aa
+bO
+bw
+bw
+bw
+cO
+bM
+bw
+dr
+bO
+aa
+aa
+aa
+aa
+aa
+aa
+aC
+aC
+aC
+aa
+aa
+aa
+aa
+"}
+(82,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aC
+aC
+aC
+aC
+aC
+aC
+aC
+aC
+aH
+aH
+aH
+aa
+aa
+aa
+aa
+aa
+bl
+cd
+cq
+bv
+cP
+da
+bv
+bw
+bl
+aa
+aa
+aa
+aa
+aa
+aC
+aC
+aC
+aC
+aa
+aa
+aa
+aa
+"}
+(83,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aC
+aC
+aC
+aC
+aC
+aC
+aC
+aC
+aH
+aH
+aH
+aa
+aa
+aa
+aa
+aa
+bp
+bz
+cr
+cH
+cQ
+db
+dk
+bz
+bp
+aa
+aa
+aa
+aa
+aC
+aC
+aC
+aC
+aC
+aa
+aa
+aa
+aa
+"}
+(84,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aH
+aH
+aC
+aC
+aC
+aC
+aC
+aC
+aH
+aC
+aH
+aa
+aa
+aa
+aa
+aa
+aa
+bp
+bn
+cI
+cR
+bs
+bn
+bp
+aa
+aa
+aa
+aa
+aC
+aC
+aC
+aC
+aC
+aC
+aa
+aa
+aa
+aa
+"}
+(85,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aH
+aH
+aH
+aC
+aC
+aC
+aC
+aH
+aH
+aC
+aH
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aC
+aC
+aC
+aC
+aC
+aa
+aa
+aa
+aa
+aa
+"}
+(86,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aH
+aH
+aC
+aH
+aH
+aH
+aH
+aH
+aC
+aC
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+dc
+aa
+cT
+aa
+aa
+aa
+aa
+aC
+aC
+aC
+aC
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(87,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aH
+aH
+aH
+aH
+aC
+aC
+aC
+aC
+aC
+aC
+aa
+aa
+aa
+aa
+aa
+bP
+ab
+ab
+ab
+cS
+ab
+ab
+ab
+ab
+aa
+aa
+aa
+aa
+aC
+aC
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(88,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aH
+aH
+aH
+aC
+aC
+aC
+aC
+aC
+aC
+aC
+aa
+aa
+aa
+aa
+aa
+aB
+ce
+cs
+cs
+cs
+dd
+dd
+ds
+dv
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(89,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aH
+aH
+aH
+aC
+aC
+aC
+aC
+aC
+aC
+aC
+aa
+aa
+aa
+aa
+aa
+aB
+cf
+ct
+cJ
+cs
+de
+dl
+ab
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(90,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aH
+aH
+aH
+aC
+aC
+aC
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aB
+ce
+cu
+cs
+cs
+df
+df
+ds
+dv
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(91,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ae
+ab
+ab
+ab
+cS
+ab
+ab
+ab
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(92,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+cT
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(93,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(94,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(95,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(96,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 "}

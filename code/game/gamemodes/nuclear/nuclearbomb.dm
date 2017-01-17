@@ -18,6 +18,7 @@ var/bomb_set
 	icon = 'icons/obj/machines/nuke.dmi'
 	icon_state = "nuclearbomb_base"
 	density = 1
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
 	var/timer_set = 60
 	var/default_timer_set = 60
@@ -99,9 +100,9 @@ var/bomb_set
 	switch(deconstruction_state)
 		if(NUKESTATE_INTACT)
 			if(istype(I, /obj/item/weapon/screwdriver/nuke))
-				playsound(loc, 'sound/items/Screwdriver.ogg', 100, 1)
+				playsound(loc, I.usesound, 100, 1)
 				user << "<span class='notice'>You start removing [src]'s front panel's screws...</span>"
-				if(do_after(user, 60/I.toolspeed,target=src))
+				if(do_after(user, 60*I.toolspeed,target=src))
 					deconstruction_state = NUKESTATE_UNSCREWED
 					user << "<span class='notice'>You remove the screws from [src]'s front panel.</span>"
 					update_icon()
@@ -109,8 +110,8 @@ var/bomb_set
 		if(NUKESTATE_UNSCREWED)
 			if(istype(I, /obj/item/weapon/crowbar))
 				user << "<span class='notice'>You start removing [src]'s front panel...</span>"
-				playsound(loc, 'sound/items/Crowbar.ogg', 100, 1)
-				if(do_after(user,30/I.toolspeed,target=src))
+				playsound(loc, I.usesound, 100, 1)
+				if(do_after(user,30*I.toolspeed,target=src))
 					user << "<span class='notice'>You remove [src]'s front panel.</span>"
 					deconstruction_state = NUKESTATE_PANEL_REMOVED
 					update_icon()
@@ -118,10 +119,10 @@ var/bomb_set
 		if(NUKESTATE_PANEL_REMOVED)
 			if(istype(I, /obj/item/weapon/weldingtool))
 				var/obj/item/weapon/weldingtool/welder = I
-				playsound(loc, 'sound/items/Welder.ogg', 100, 1)
+				playsound(loc, I.usesound, 100, 1)
 				user << "<span class='notice'>You start cutting [src]'s inner plate...</span>"
 				if(welder.remove_fuel(1,user))
-					if(do_after(user,80/I.toolspeed,target=src))
+					if(do_after(user,80*I.toolspeed,target=src))
 						user << "<span class='notice'>You cut [src]'s inner plate.</span>"
 						deconstruction_state = NUKESTATE_WELDED
 						update_icon()
@@ -129,8 +130,8 @@ var/bomb_set
 		if(NUKESTATE_WELDED)
 			if(istype(I, /obj/item/weapon/crowbar))
 				user << "<span class='notice'>You start prying off [src]'s inner plate...</span>"
-				playsound(loc, 'sound/items/Crowbar.ogg', 100, 1)
-				if(do_after(user,50/I.toolspeed,target=src))
+				playsound(loc, I.usesound, 100, 1)
+				if(do_after(user,50*I.toolspeed,target=src))
 					user << "<span class='notice'>You pry off [src]'s inner plate. You can see the core's green glow!</span>"
 					deconstruction_state = NUKESTATE_CORE_EXPOSED
 					update_icon()
@@ -384,6 +385,9 @@ var/bomb_set
 		bomb_set = FALSE
 		detonation_timer = null
 		set_security_level(previous_level)
+		for(var/obj/item/weapon/pinpointer/syndicate/S in pinpointer_list)
+			S.switch_mode_to(initial(S.mode))
+			S.nuke_warning = FALSE
 		countdown.stop()
 	update_icon()
 
@@ -393,17 +397,15 @@ var/bomb_set
 	else
 		. = timer_set
 
-/obj/machinery/nuclearbomb/ex_act(severity, target)
-	return
-
 /obj/machinery/nuclearbomb/blob_act(obj/structure/blob/B)
 	if(exploding)
 		return
-	. = ..()
+	qdel(src)
 
-/obj/machinery/nuclearbomb/tesla_act(var/power)
+/obj/machinery/nuclearbomb/tesla_act(power, explosive)
 	..()
-	qdel(src)//like the singulo, tesla deletes it. stops it from exploding over and over
+	if(explosive)
+		qdel(src)//like the singulo, tesla deletes it. stops it from exploding over and over
 
 #define NUKERANGE 127
 /obj/machinery/nuclearbomb/proc/explode()
@@ -430,14 +432,16 @@ var/bomb_set
 
 	var/off_station = 0
 	var/turf/bomb_location = get_turf(src)
+	var/area/A = get_area(bomb_location)
 	if(bomb_location && (bomb_location.z == ZLEVEL_STATION))
-		var/area/A = get_area(bomb_location)
 		if(istype(A, /area/space))
-			off_station = 1
+			off_station = NUKE_MISS_STATION
 		if((bomb_location.x < (128-NUKERANGE)) || (bomb_location.x > (128+NUKERANGE)) || (bomb_location.y < (128-NUKERANGE)) || (bomb_location.y > (128+NUKERANGE)))
-			off_station = 1
+			off_station = NUKE_MISS_STATION
+	else if(istype(A, /area/syndicate_mothership) || (istype(A,/area/shuttle/syndicate) && bomb_location.z == ZLEVEL_CENTCOM))
+		off_station = NUKE_SYNDICATE_BASE
 	else
-		off_station = 2
+		off_station = NUKE_NEAR_MISS
 
 	if(ticker.mode && ticker.mode.name == "nuclear emergency")
 		var/obj/docking_port/mobile/Shuttle = SSshuttle.getShuttle("syndicate")
@@ -461,27 +465,27 @@ var/bomb_set
 This is here to make the tiles around the station mininuke change when it's armed.
 */
 
-/obj/machinery/nuclearbomb/selfdestruct/proc/SetTurfs()
-	if(loc == initial(loc))
-		for(var/N in nuke_tiles)
-			var/turf/open/floor/T = N
-			T.icon_state = (timing ? "rcircuitanim" : T.icon_regular_floor)
-
 /obj/machinery/nuclearbomb/selfdestruct/set_anchor()
 	return
 
 /obj/machinery/nuclearbomb/selfdestruct/set_active()
 	..()
-	SetTurfs()
+	if(timing)
+		SSmapping.add_nuke_threat(src)
+	else
+		SSmapping.remove_nuke_threat(src)
 
 /obj/machinery/nuclearbomb/selfdestruct/set_safety()
 	..()
-	SetTurfs()
+	if(timing)
+		SSmapping.add_nuke_threat(src)
+	else
+		SSmapping.remove_nuke_threat(src)
 
 //==========DAT FUKKEN DISK===============
 /obj/item/weapon/disk
 	icon = 'icons/obj/module.dmi'
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 	item_state = "card-id"
 	icon_state = "datadisk0"
 
@@ -490,6 +494,10 @@ This is here to make the tiles around the station mininuke change when it's arme
 	desc = "Better keep this safe."
 	icon_state = "nucleardisk"
 	persistence_replacement = /obj/item/weapon/disk/fakenucleardisk
+	obj_integrity = 250
+	max_integrity = 250
+	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 30, bio = 0, rad = 0, fire = 100, acid = 100)
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 
 /obj/item/weapon/disk/nuclear/New()
 	..()
@@ -511,19 +519,21 @@ This is here to make the tiles around the station mininuke change when it's arme
 	return ..()
 
 /obj/item/weapon/disk/nuclear/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is \
-		going delta! It looks like they're comitting suicide.</span>")
+	user.visible_message("<span class='suicide'>[user] is going delta! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	playsound(user.loc, 'sound/machines/Alarm.ogg', 50, -1, 1)
 	var/end_time = world.time + 100
-	var/orig_color = user.color
+	var/newcolor = "#00FF00"
 	while(world.time < end_time)
 		if(!user)
 			return
-		user.color = RANDOM_COLOUR
+		if(newcolor == "#FF0000")
+			newcolor = "#00FF00"
+		else
+			newcolor = "#FF0000"
+		user.add_atom_colour(newcolor, ADMIN_COLOUR_PRIORITY)
 		sleep(1)
-	user.color = orig_color
-	user.visible_message("<span class='suicide'>[user] was destroyed \
-		by the nuclear blast!</span>")
+	user.remove_atom_colour(ADMIN_COLOUR_PRIORITY)
+	user.visible_message("<span class='suicide'>[user] was destroyed by the nuclear blast!</span>")
 	return OXYLOSS
 
 /obj/item/weapon/disk/nuclear/process()
@@ -577,5 +587,5 @@ This is here to make the tiles around the station mininuke change when it's arme
 
 /obj/item/weapon/disk/fakenucleardisk
 	name = "cheap plastic imitation of the nuclear authentication disk"
-	desc = "Broken dreams and a faint oder of cheese."
+	desc = "Broken dreams and a faint odor of cheese."
 	icon_state = "nucleardisk"

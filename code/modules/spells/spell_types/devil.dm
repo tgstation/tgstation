@@ -1,12 +1,11 @@
-/obj/effect/proc_holder/spell/targeted/summon_pitchfork
+/obj/effect/proc_holder/spell/targeted/conjure_item/summon_pitchfork
 	name = "Summon Pitchfork"
 	desc = "A devil's weapon of choice.  Use this to summon/unsummon your pitchfork."
 	invocation_type = "none"
 	include_user = 1
 	range = -1
 	clothes_req = 0
-	var/obj/item/weapon/twohanded/pitchfork/demonic/pitchfork
-	var/pitchfork_type = /obj/item/weapon/twohanded/pitchfork/demonic/
+	item_type = /obj/item/weapon/twohanded/pitchfork/demonic
 
 	school = "conjuration"
 	charge_max = 150
@@ -14,27 +13,20 @@
 	action_icon_state = "pitchfork"
 	action_background_icon_state = "bg_demon"
 
-/obj/effect/proc_holder/spell/targeted/summon_pitchfork/cast(list/targets, mob/user = usr)
-	if (pitchfork)
-		qdel(pitchfork)
-	else
-		for(var/mob/living/carbon/C in targets)
-			if(C.drop_item())
-				pitchfork = new pitchfork_type
-				C.put_in_hands(pitchfork)
+/obj/effect/proc_holder/spell/targeted/conjure_item/summon_pitchfork/greater
+	item_type = /obj/item/weapon/twohanded/pitchfork/demonic/greater
 
-/obj/effect/proc_holder/spell/targeted/summon_pitchfork/Destroy()
-	if(pitchfork)
-		qdel(pitchfork)
-		pitchfork = null
-	return ..()
+/obj/effect/proc_holder/spell/targeted/conjure_item/summon_pitchfork/ascended
+	item_type = /obj/item/weapon/twohanded/pitchfork/demonic/ascended
 
-/obj/effect/proc_holder/spell/targeted/summon_pitchfork/greater
-	pitchfork_type = /obj/item/weapon/twohanded/pitchfork/demonic/greater
-
-/obj/effect/proc_holder/spell/targeted/summon_pitchfork/ascended
-	pitchfork_type = /obj/item/weapon/twohanded/pitchfork/demonic/ascended
-
+/obj/effect/proc_holder/spell/targeted/conjure_item/violin
+	item_type = /obj/item/device/instrument/violin/golden
+	desc = "A devil's instrument of choice.  Use this to summon/unsummon your golden violin."
+	invocation_type = "whisper"
+	invocation = "I aint have this much fun since Georgia."
+	action_icon_state = "golden_violin"
+	name = "Summon golden violin"
+	action_background_icon_state = "bg_demon"
 
 /obj/effect/proc_holder/spell/targeted/summon_contract
 	name = "Summon infernal contract"
@@ -74,7 +66,7 @@
 						contract = new /obj/item/weapon/paper/contract/infernal/knowledge(C.loc, C.mind, user.mind)
 				C.put_in_hands(contract)
 		else
-			user << "<span class='notice'>[C] seems to not be sentient.  You cannot summon a contract for them.</span>"
+			user << "<span class='notice'>[C] seems to not be sentient.  You cannot summon a contract for [C.p_them()].</span>"
 
 
 /obj/effect/proc_holder/spell/fireball/hellish
@@ -168,7 +160,7 @@
 	src.client.eye = src
 	src.visible_message("<span class='warning'><B>[src] appears in a firey blaze!</B>")
 	playsound(get_turf(src), 'sound/magic/exit_blood.ogg', 100, 1, -1)
-	addtimer(src, "fakefireextinguish", 15,TRUE)
+	addtimer(CALLBACK(src, .proc/fakefireextinguish), 15, TIMER_UNIQUE)
 
 /obj/effect/proc_holder/spell/targeted/sintouch
 	name = "Sin Touch"
@@ -204,3 +196,56 @@
 		H.influenceSin()
 		H.Weaken(2)
 		H.Stun(2)
+
+
+/obj/effect/proc_holder/spell/targeted/summon_dancefloor
+	name = "Summon Dancefloor"
+	desc = "When what a Devil really needs is funk."
+	include_user = 1
+	range = -1
+	clothes_req = 0
+
+	school = "conjuration"
+	charge_max = 10
+	cooldown_min = 50 //5 seconds, so the smoke can't be spammed
+	action_icon_state = "funk"
+	action_background_icon_state = "bg_demon"
+
+	var/list/dancefloor_turfs
+	var/list/dancefloor_turfs_types
+	var/dancefloor_exists = FALSE
+	var/datum/effect_system/smoke_spread/transparent/dancefloor_devil/smoke
+
+
+/obj/effect/proc_holder/spell/targeted/summon_dancefloor/cast(list/targets, mob/user = usr)
+	LAZYINITLIST(dancefloor_turfs)
+	LAZYINITLIST(dancefloor_turfs_types)
+
+	if(!smoke)
+		smoke = new()
+	smoke.set_up(0, get_turf(user))
+	smoke.start()
+
+	if(dancefloor_exists)
+		dancefloor_exists = FALSE
+		for(var/i in 1 to dancefloor_turfs.len)
+			var/turf/T = dancefloor_turfs[i]
+			T.ChangeTurf(dancefloor_turfs_types[i])
+	else
+		dancefloor_exists = TRUE
+		var/i = 1
+		var/list/funky_turfs = RANGE_TURFS(1, user)
+		dancefloor_turfs.len = funky_turfs.len
+		dancefloor_turfs_types.len = funky_turfs.len
+		for(var/t in funky_turfs)
+			var/turf/T = t
+			dancefloor_turfs[i] = T
+			dancefloor_turfs_types[i] = T.type
+			T.ChangeTurf((i % 2 == 0) ? /turf/open/floor/light/colour_cycle/dancefloor_a : /turf/open/floor/light/colour_cycle/dancefloor_b)
+			i++
+
+/datum/effect_system/smoke_spread/transparent/dancefloor_devil
+	effect_type = /obj/effect/particle_effect/smoke/transparent/dancefloor_devil
+
+/obj/effect/particle_effect/smoke/transparent/dancefloor_devil
+	lifetime = 2

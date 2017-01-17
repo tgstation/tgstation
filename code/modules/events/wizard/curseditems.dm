@@ -1,7 +1,7 @@
 /datum/round_event_control/wizard/cursed_items //fashion disasters
 	name = "Cursed Items"
 	weight = 3
-	typepath = /datum/round_event/wizard/cursed_items/
+	typepath = /datum/round_event/wizard/cursed_items
 	max_occurrences = 3
 	earliest_start = 0
 
@@ -19,12 +19,12 @@
 
 	switch(item_set)
 		if("wizardmimic")
-			loadout = list(/obj/item/clothing/suit/wizrobe, /obj/item/clothing/shoes/sandal, /obj/item/clothing/head/wizard)
+			loadout = list(/obj/item/clothing/suit/wizrobe, /obj/item/clothing/shoes/sandal/magic, /obj/item/clothing/head/wizard)
 			ruins_spaceworthiness = 1
 		if("swords")
 			loadout[5] = /obj/item/weapon/katana/cursed
 		if("bigfatdoobie")
-			loadout[4] = /obj/item/clothing/mask/cigarette/rollie/trippy/
+			loadout[4] = /obj/item/clothing/mask/cigarette/rollie/trippy
 			ruins_spaceworthiness = 1
 		if("boxing")
 			loadout[4] = /obj/item/clothing/mask/luchador
@@ -38,7 +38,7 @@
 			ruins_wizard_loadout = 1
 
 	for(var/mob/living/carbon/human/H in living_mob_list)
-		if(ruins_spaceworthiness && (H.z != 1 || istype(H.loc, /turf/open/space) || isplasmaman(H)))
+		if(ruins_spaceworthiness && (H.z != 1 || isspaceturf(H.loc) || isplasmaman(H)))
 			continue	//#savetheminers
 		if(ruins_wizard_loadout && H.mind && ((H.mind in ticker.mode.wizards) || (H.mind in ticker.mode.apprentices)))
 			continue

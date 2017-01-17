@@ -11,7 +11,7 @@
 	gender = NEUTER
 	health = 350
 	maxHealth = 350
-	ventcrawler = 0
+	ventcrawler = VENTCRAWLER_NONE
 	density = 1
 	pass_flags =  0
 	var/ascended = 0
@@ -82,9 +82,9 @@
 	if(stat == DEAD)
 		msg += "<span class='deadsay'>The hellfire seems to have been extinguished, for now at least.</span>\n"
 	else if(health < (maxHealth/10))
-		msg += "<span class='warning'>You can see hellfire inside of it's gaping wounds.</span>\n"
+		msg += "<span class='warning'>You can see hellfire inside its gaping wounds.</span>\n"
 	else if(health < (maxHealth/2))
-		msg += "<span class='warning'>You can see hellfire inside of it's wounds.</span>\n"
+		msg += "<span class='warning'>You can see hellfire inside its wounds.</span>\n"
 	msg += "*---------*</span>"
 	user << msg
 
@@ -130,7 +130,7 @@
 			attack_message = "[user] has [message_verb] [src] with [I]!"
 	if(message_verb)
 		visible_message("<span class='danger'>[attack_message]</span>",
-		"<span class='userdanger'>[attack_message]</span>")
+		"<span class='userdanger'>[attack_message]</span>", null, COMBAT_MESSAGE_RANGE)
 	return TRUE
 
 /mob/living/carbon/true_devil/Process_Spacemove(movement_dir = 0)

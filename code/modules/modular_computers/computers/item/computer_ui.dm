@@ -26,7 +26,7 @@
 	// This screen simply lists available programs and user may select them.
 	var/obj/item/weapon/computer_hardware/hard_drive/hard_drive = all_components[MC_HDD]
 	if(!hard_drive || !hard_drive.stored_files || !hard_drive.stored_files.len)
-		physical.visible_message("<span class='danger'>\The [src] beeps three times, it's screen displaying \"DISK ERROR\" warning.</span>")
+		user << "<span class='danger'>\The [src] beeps three times, it's screen displaying a \"DISK ERROR\" warning.</span>"
 		return // No HDD, No HDD files list or no stored files. Something is very broken.
 
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)

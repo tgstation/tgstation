@@ -5,39 +5,61 @@
 /obj/effect/proc_holder
 	var/panel = "Debug"//What panel the proc holder needs to go on.
 	var/active = FALSE //Used by toggle based abilities.
+	var/ranged_mousepointer
+	var/mob/living/ranged_ability_user
 
 var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin verb for now
 
-/obj/effect/proc_holder/proc/InterceptClickOn(mob/living/user, params, atom/A)
-	if(user.ranged_ability != src)
-		user << "<span class='warning'><b>[user.ranged_ability.name]</b> has been disabled."
-		user.ranged_ability.remove_ranged_ability(user)
+/obj/effect/proc_holder/Destroy()
+	if(ranged_ability_user)
+		remove_ranged_ability()
+	return ..()
+
+/obj/effect/proc_holder/proc/InterceptClickOn(mob/living/caller, params, atom/A)
+	if(caller.ranged_ability != src || ranged_ability_user != caller) //I'm not actually sure how these would trigger, but, uh, safety, I guess?
+		caller << "<span class='warning'><b>[caller.ranged_ability.name]</b> has been disabled."
+		caller.ranged_ability.remove_ranged_ability()
 		return TRUE //TRUE for failed, FALSE for passed.
-	user.next_click = world.time + CLICK_CD_CLICK_ABILITY
-	user.face_atom(A)
+	ranged_ability_user.next_click = world.time + CLICK_CD_CLICK_ABILITY
+	ranged_ability_user.face_atom(A)
 	return FALSE
 
-/obj/effect/proc_holder/proc/add_ranged_ability(mob/living/user, var/msg)
+/obj/effect/proc_holder/proc/add_ranged_ability(mob/living/user, msg, forced)
 	if(!user || !user.client)
 		return
 	if(user.ranged_ability && user.ranged_ability != src)
-		user << "<span class='warning'><b>[user.ranged_ability.name]</b> has been replaced by <b>[name]</b>."
-		user.ranged_ability.remove_ranged_ability(user)
+		if(forced)
+			user << "<span class='warning'><b>[user.ranged_ability.name]</b> has been replaced by <b>[name]</b>."
+			user.ranged_ability.remove_ranged_ability()
+		else
+			return
 	user.ranged_ability = src
 	user.client.click_intercept = user.ranged_ability
-	active = TRUE
+	add_mousepointer(user.client)
+	ranged_ability_user = user
 	if(msg)
-		user << msg
+		ranged_ability_user << msg
+	active = TRUE
 	update_icon()
 
-/obj/effect/proc_holder/proc/remove_ranged_ability(mob/living/user, var/msg)
-	if(!user || !user.client || (user.ranged_ability && user.ranged_ability != src)) //To avoid removing the wrong ability
+/obj/effect/proc_holder/proc/add_mousepointer(client/C)
+	if(C && ranged_mousepointer && C.mouse_pointer_icon == initial(C.mouse_pointer_icon))
+		C.mouse_pointer_icon = ranged_mousepointer
+
+/obj/effect/proc_holder/proc/remove_mousepointer(client/C)
+	if(C && ranged_mousepointer && C.mouse_pointer_icon == ranged_mousepointer)
+		C.mouse_pointer_icon = initial(C.mouse_pointer_icon)
+
+/obj/effect/proc_holder/proc/remove_ranged_ability(msg)
+	if(!ranged_ability_user || !ranged_ability_user.client || (ranged_ability_user.ranged_ability && ranged_ability_user.ranged_ability != src)) //To avoid removing the wrong ability
 		return
-	user.ranged_ability = null
-	user.client.click_intercept = null
-	active = FALSE
+	ranged_ability_user.ranged_ability = null
+	ranged_ability_user.client.click_intercept = null
+	remove_mousepointer(ranged_ability_user.client)
 	if(msg)
-		user << msg
+		ranged_ability_user << msg
+	ranged_ability_user = null
+	active = FALSE
 	update_icon()
 
 /obj/effect/proc_holder/spell
@@ -140,7 +162,6 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 
 		var/list/casting_clothes = typecacheof(list(/obj/item/clothing/suit/wizrobe,
 		/obj/item/clothing/suit/space/hardsuit/wizard,
-		/obj/item/clothing/shoes/sandal,
 		/obj/item/clothing/head/wizard,
 		/obj/item/clothing/head/helmet/space/hardsuit/wizard,
 		/obj/item/clothing/suit/space/hardsuit/shielded/wizard,
@@ -149,9 +170,6 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 		if(clothes_req) //clothes check
 			if(!is_type_in_typecache(H.wear_suit, casting_clothes))
 				H << "<span class='notice'>I don't feel strong enough without my robe.</span>"
-				return 0
-			if(!is_type_in_typecache(H.shoes, casting_clothes))
-				H << "<span class='notice'>I don't feel strong enough without my sandals.</span>"
 				return 0
 			if(!is_type_in_typecache(H.head, casting_clothes))
 				H << "<span class='notice'>I don't feel strong enough without my hat.</span>"
@@ -251,7 +269,7 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 			var/location
 			if(isliving(target))
 				location = target.loc
-			else if(istype(target,/turf))
+			else if(isturf(target))
 				location = target
 			var/obj/effect/overlay/spell = new /obj/effect/overlay(location)
 			spell.icon = overlay_icon
@@ -265,7 +283,7 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 		var/location
 		if(isliving(target))
 			location = target.loc
-		else if(istype(target,/turf))
+		else if(isturf(target))
 			location = target
 		if(isliving(target) && message)
 			target << text("[message]")

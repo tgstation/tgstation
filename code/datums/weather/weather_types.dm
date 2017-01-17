@@ -78,7 +78,7 @@
 	weather_sound = 'sound/lavaland/ash_storm_start.ogg'
 	weather_overlay = "ash_storm"
 
-	end_message = "<span class='boldannounce'>The shrieking wind whips away the last of the ash falls to its usual murmur. It should be safe to go outside now.</span>"
+	end_message = "<span class='boldannounce'>The shrieking wind whips away the last of the ash and falls to its usual murmur. It should be safe to go outside now.</span>"
 	end_duration = 300
 	end_sound = 'sound/lavaland/ash_storm_end.ogg'
 	end_overlay = "light_ash"
@@ -132,7 +132,8 @@
 	end_message = "<span class='notice'>The air seems to be cooling off again.</span>"
 
 	area_type = /area
-	protected_areas = list(/area/maintenance, /area/turret_protected/ai_upload, /area/turret_protected/ai_upload_foyer, /area/turret_protected/ai)
+	protected_areas = list(/area/maintenance, /area/ai_monitored/turret_protected/ai_upload, /area/ai_monitored/turret_protected/ai_upload_foyer,
+	/area/ai_monitored/turret_protected/ai, /area/storage/emergency, /area/storage/emergency2, /area/shuttle)
 	target_z = ZLEVEL_STATION
 
 	immunity_type = "rad"
@@ -148,7 +149,7 @@
 		if(ishuman(L))
 			var/mob/living/carbon/human/H = L
 			if(H.dna && H.dna.species)
-				if(!(RADIMMUNE in H.dna.species.specflags))
+				if(!(RADIMMUNE in H.dna.species.species_traits))
 					if(prob(max(0,100-resist)))
 						H.randmuti()
 						if(prob(50))

@@ -8,8 +8,12 @@
 	anchored = 1
 	density = 1
 	on_blueprints = TRUE
+	armor = list(melee = 25, bullet = 10, laser = 10, energy = 100, bomb = 0, bio = 100, rad = 100, fire = 90, acid = 30)
+	obj_integrity = 200
+	max_integrity = 200
+	resistance_flags = FIRE_PROOF
 	var/datum/gas_mixture/air_contents	// internal reservoir
-	var/mode = 1	// mode -1=screws removed 0=off 1=charging 2=charged
+	var/mode = PRESSURE_ON
 	var/flush = 0	// true if flush handle is pulled
 	var/obj/structure/disposalpipe/trunk/trunk = null // the attached pipe trunk
 	var/flushing = 0	// true if flushing in progress
@@ -37,14 +41,15 @@
 	update_icon()
 
 /obj/machinery/disposal/proc/trunk_check()
-	trunk = locate() in src.loc
+	trunk = locate() in loc
 	if(!trunk)
-		mode = 0
+		mode = PRESSURE_OFF
 		flush = 0
 	else
-		mode = initial(mode)
+		if(initial(mode))
+			mode = PRESSURE_ON
 		flush = initial(flush)
-		trunk.linked = src	// link the pipe trunk to self
+		trunk.linked = src // link the pipe trunk to self
 
 /obj/machinery/disposal/Destroy()
 	eject()
@@ -54,10 +59,10 @@
 
 /obj/machinery/disposal/singularity_pull(S, current_size)
 	if(current_size >= STAGE_FIVE)
-		Deconstruct()
+		deconstruct()
 
 /obj/machinery/disposal/initialize()
-	// this will get a copy of the air turf and take a SEND PRESSURE amount of air from it
+	//this will get a copy of the air turf and take a SEND PRESSURE amount of air from it
 	var/atom/L = loc
 	var/datum/gas_mixture/env = new
 	env.copy_from(L.return_air())
@@ -67,34 +72,28 @@
 
 /obj/machinery/disposal/attackby(obj/item/I, mob/user, params)
 	add_fingerprint(user)
-	if(mode<=0)
+	if(mode != PRESSURE_ON && mode != PRESSURE_MAXED && !flush)
 		if(istype(I, /obj/item/weapon/screwdriver))
-			if(contents.len > 0)
-				user << "<span class='notice'>Eject the items first!</span>"
-				return
-			if(mode==0)
-				mode=-1
+			if(mode == PRESSURE_OFF)
+				mode = SCREWS_OUT
 			else
-				mode=0
-			playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
-			user << "<span class='notice'>You [mode==0?"attach":"remove"] the screws around the power connection.</span>"
+				mode = PRESSURE_OFF
+			playsound(src.loc, I.usesound, 50, 1)
+			user << "<span class='notice'>You [mode == SCREWS_OUT ? "remove":"attach"] the screws around the power connection.</span>"
 			return
-		else if(istype(I,/obj/item/weapon/weldingtool) && mode==-1)
+		else if(istype(I,/obj/item/weapon/weldingtool) && mode == SCREWS_OUT)
 			var/obj/item/weapon/weldingtool/W = I
 			if(W.remove_fuel(0,user))
-				if(contents.len > 0)
-					user << "<span class='notice'>Eject the items first!</span>"
-					return
 				playsound(src.loc, 'sound/items/Welder2.ogg', 100, 1)
 				user << "<span class='notice'>You start slicing the floorweld off \the [src]...</span>"
-				if(do_after(user,20/I.toolspeed, target = src))
+				if(do_after(user,20*I.toolspeed, target = src) && mode == SCREWS_OUT)
 					if(!W.isOn())
 						return
 					user << "<span class='notice'>You slice the floorweld off \the [src].</span>"
-					Deconstruct()
+					deconstruct()
 			return
 
-	if(user.a_intent != "harm")
+	if(user.a_intent != INTENT_HARM)
 		if(!user.drop_item() || (I.flags & ABSTRACT))
 			return
 		place_item_in_disposal(I, user)
@@ -104,13 +103,10 @@
 		return ..()
 
 /obj/machinery/disposal/proc/place_item_in_disposal(obj/item/I, mob/user)
-	I.loc = src
-	user.visible_message("[user.name] places \the [I] into \the [src].", \
-						"<span class='notice'>You place \the [I] into \the [src].</span>")
+	I.forceMove(src)
+	user.visible_message("[user.name] places \the [I] into \the [src].", "<span class='notice'>You place \the [I] into \the [src].</span>")
 
-
-// mouse drop another mob or self
-
+//mouse drop another mob or self
 /obj/machinery/disposal/MouseDrop_T(mob/living/target, mob/living/user)
 	if(istype(target))
 		stuff_mob_in(target, user)
@@ -118,7 +114,7 @@
 /obj/machinery/disposal/proc/stuff_mob_in(mob/living/target, mob/living/user)
 	if(!iscarbon(user) && !user.ventcrawler) //only carbon and ventcrawlers can climb into disposal by themselves.
 		return
-	if(!istype(user.loc, /turf/)) //No magically doing it from inside closets
+	if(!isturf(user.loc)) //No magically doing it from inside closets
 		return
 	if(target.buckled || target.has_buckled_mobs())
 		return
@@ -127,50 +123,37 @@
 		return
 	add_fingerprint(user)
 	if(user == target)
-		user.visible_message("[user] starts climbing into [src].", \
-								"<span class='notice'>You start climbing into [src]...</span>")
+		user.visible_message("[user] starts climbing into [src].", "<span class='notice'>You start climbing into [src]...</span>")
 	else
-		target.visible_message("<span class='danger'>[user] starts putting [target] into [src].</span>", \
-								"<span class='userdanger'>[user] starts putting you into [src]!</span>")
+		target.visible_message("<span class='danger'>[user] starts putting [target] into [src].</span>", "<span class='userdanger'>[user] starts putting you into [src]!</span>")
 	if(do_mob(user, target, 20))
 		if (!loc)
 			return
 		target.forceMove(src)
 		if(user == target)
-			user.visible_message("[user] climbs into [src].", \
-									"<span class='notice'>You climb into [src].</span>")
+			user.visible_message("[user] climbs into [src].", "<span class='notice'>You climb into [src].</span>")
 		else
-			target.visible_message("<span class='danger'>[user] has placed [target] in [src].</span>", \
-									"<span class='userdanger'>[user] has placed [target] in [src].</span>")
+			target.visible_message("<span class='danger'>[user] has placed [target] in [src].</span>", "<span class='userdanger'>[user] has placed [target] in [src].</span>")
 			add_logs(user, target, "stuffed", addition="into [src]")
 			target.LAssailant = user
 		update_icon()
-
-// can breath normally in the disposal
-/obj/machinery/disposal/alter_health()
-	return get_turf(src)
 
 /obj/machinery/disposal/relaymove(mob/user)
 	attempt_escape(user)
 
 // resist to escape the bin
-/obj/machinery/disposal/container_resist()
-	attempt_escape(usr)
+/obj/machinery/disposal/container_resist(mob/living/user)
+	attempt_escape(user)
 
 /obj/machinery/disposal/proc/attempt_escape(mob/user)
-	if(src.flushing)
+	if(flushing)
 		return
 	go_out(user)
-	return
 
 // leave the disposal
 /obj/machinery/disposal/proc/go_out(mob/user)
-
-	user.loc = src.loc
-	user.reset_perspective(null)
+	user.forceMove(loc)
 	update_icon()
-	return
-
 
 // monkeys and xenos can only pull the flush lever
 /obj/machinery/disposal/attack_paw(mob/user)
@@ -188,20 +171,7 @@
 	if(user && user.loc == src)
 		usr << "<span class='warning'>You cannot reach the controls from inside!</span>"
 		return
-	/*
-	if(mode==-1)
-		usr << "\red The disposal units power is disabled."
-		return
-	*/
 	interact(user, 0)
-
-// hostile mob escape from disposals
-/obj/machinery/disposal/attack_animal(mob/living/simple_animal/M)
-	if(M.environment_smash)
-		M.do_attack_animation(src)
-		visible_message("<span class='danger'>[M.name] smashes \the [src] apart!</span>")
-		qdel(src)
-	return
 
 // eject the contents of the disposal unit
 /obj/machinery/disposal/proc/eject()
@@ -245,8 +215,6 @@
 /obj/machinery/disposal/power_change()
 	..()	// do default setting/reset of stat NOPOWER bit
 	update_icon()	// update icon
-	return
-
 
 // called when holder is expelled from a disposal
 // should usually only occur if the pipe network is modified
@@ -260,19 +228,22 @@
 
 			AM.forceMove(T)
 			AM.pipe_eject(0)
-			AM.throw_at_fast(target, 5, 1)
+			AM.throw_at(target, 5, 1)
 
 		H.vent_gas(loc)
 		qdel(H)
 
-/obj/machinery/disposal/Deconstruct()
-	if(stored)
-		var/turf/T = loc
-		stored.loc = T
-		src.transfer_fingerprints_to(stored)
-		stored.anchored = 0
-		stored.density = 1
-		stored.update_icon()
+/obj/machinery/disposal/deconstruct(disassembled = TRUE)
+	var/turf/T = loc
+	if(!(flags & NODECONSTRUCT))
+		if(stored)
+			stored.forceMove(T)
+			src.transfer_fingerprints_to(stored)
+			stored.anchored = 0
+			stored.density = 1
+			stored.update_icon()
+	for(var/atom/movable/AM in src) //out, out, darned crowbar!
+		AM.forceMove(T)
 	..()
 
 //How disposal handles getting a storage dump from a storage object
@@ -283,7 +254,6 @@
 				return
 		src_object.remove_from_storage(I, src)
 	return 1
-
 
 // Disposal bin
 // Holds items for disposal into pipe system
@@ -297,7 +267,7 @@
 	desc = "A pneumatic waste disposal unit."
 	icon_state = "disposal"
 
-	// attack by item places it in to disposal
+// attack by item places it in to disposal
 /obj/machinery/disposal/bin/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/storage/bag/trash))
 		var/obj/item/weapon/storage/bag/trash/T = I
@@ -309,73 +279,55 @@
 	else
 		return ..()
 
-// user interaction
-/obj/machinery/disposal/bin/interact(mob/user, ai=0)
-	src.add_fingerprint(user)
-	if(stat & BROKEN)
-		user.unset_machine()
-		return
-
-	var/dat = "<head><title>Waste Disposal Unit</title></head><body><TT><B>Waste Disposal Unit</B><HR>"
-
-	if(!ai)  // AI can't pull flush handle
-		if(flush)
-			dat += "Disposal handle: <A href='?src=\ref[src];handle=0'>Disengage</A> <B>Engaged</B>"
-		else
-			dat += "Disposal handle: <B>Disengaged</B> <A href='?src=\ref[src];handle=1'>Engage</A>"
-
-		dat += "<BR><HR><A href='?src=\ref[src];eject=1'>Eject contents</A><HR>"
-
-	if(mode <= 0)
-		dat += "Pump: <B>Off</B> <A href='?src=\ref[src];pump=1'>On</A><BR>"
-	else if(mode == 1)
-		dat += "Pump: <A href='?src=\ref[src];pump=0'>Off</A> <B>On</B> (pressurizing)<BR>"
-	else
-		dat += "Pump: <A href='?src=\ref[src];pump=0'>Off</A> <B>On</B> (idle)<BR>"
-
-	var/per = Clamp(100* air_contents.return_pressure() / (SEND_PRESSURE), 0, 100)
-
-	dat += "Pressure: [round(per, 1)]%<BR></body>"
-
-
-	user.set_machine(src)
-	user << browse(dat, "window=disposal;size=360x170")
-	onclose(user, "disposal")
-
 // handle machine interaction
 
-/obj/machinery/disposal/bin/Topic(href, href_list)
+/obj/machinery/disposal/bin/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
+									datum/tgui/master_ui = null, datum/ui_state/state = default_state)
+	if(stat & BROKEN)
+		return
+	if(user.loc == src)
+		user << "<span class='warning'>You cannot reach the controls from inside!</span>"
+		return
+	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+	if(!ui)
+		ui = new(user, src, ui_key, "disposal_unit", name, 300, 200, master_ui, state)
+		ui.open()
+
+/obj/machinery/disposal/bin/ui_data(mob/user)
+	var/list/data = list()
+	data["flush"] = flush
+	data["mode"] = mode
+	var/per = Clamp(100* air_contents.return_pressure() / (SEND_PRESSURE), 0, 100)
+	data["per"] = round(per, 1)
+	data["isai"] = isAI(user)
+	return data
+
+/obj/machinery/disposal/bin/ui_act(action, params)
 	if(..())
 		return
-	if(usr.loc == src)
-		usr << "<span class='warning'>You cannot reach the controls from inside!</span>"
-		return
-
-	if(mode==-1 && !href_list["eject"]) // only allow ejecting if mode is -1
-		usr << "<span class='danger'>\The [src]'s power is disabled.</span>"
-		return
-	..()
-	usr.set_machine(src)
-
-	if(href_list["close"])
-		usr.unset_machine()
-		usr << browse(null, "window=disposal")
-		return
-
-	if(href_list["pump"])
-		if(text2num(href_list["pump"]))
-			mode = 1
-		else
-			mode = 0
-		update_icon()
-
-	if(href_list["handle"])
-		flush = text2num(href_list["handle"])
-		update_icon()
-
-	if(href_list["eject"])
-		eject()
-	return
+	switch(action)
+		if("handle-0")
+			flush = 0
+			update_icon()
+			. = TRUE
+		if("handle-1")
+			if(mode != SCREWS_OUT)
+				flush = 1
+				update_icon()
+			. = TRUE
+		if("pump-0")
+			if(mode == PRESSURE_ON)
+				mode = PRESSURE_OFF
+				update_icon()
+			. = TRUE
+		if("pump-1")
+			if(mode == PRESSURE_OFF)
+				mode = PRESSURE_ON
+				update_icon()
+			. = TRUE
+		if("eject")
+			eject()
+			. = TRUE
 
 /obj/machinery/disposal/bin/CanPass(atom/movable/mover, turf/target, height=0)
 	if (istype(mover,/obj/item) && mover.throwing)
@@ -394,69 +346,67 @@
 
 /obj/machinery/disposal/bin/flush()
 	..()
-	if(mode == 2)
-		mode = 1
+	if(mode == PRESSURE_MAXED)
+		mode = PRESSURE_ON
 	update_icon()
 
 /obj/machinery/disposal/bin/update_icon()
 	cut_overlays()
 	if(stat & BROKEN)
-		mode = 0
+		mode = PRESSURE_OFF
 		flush = 0
 		return
 
-	// flush handle
+	//flush handle
 	if(flush)
 		add_overlay(image('icons/obj/atmospherics/pipes/disposal.dmi', "dispover-handle"))
 
-	// only handle is shown if no power
-	if(stat & NOPOWER || mode == -1)
+	//only handle is shown if no power
+	if(stat & NOPOWER || mode == SCREWS_OUT)
 		return
 
-	// 	check for items in disposal - occupied light
+	//check for items in disposal - occupied light
 	if(contents.len > 0)
 		add_overlay(image('icons/obj/atmospherics/pipes/disposal.dmi', "dispover-full"))
 
-	// charging and ready light
-	if(mode == 1)
+	//charging and ready light
+	if(mode == PRESSURE_ON)
 		add_overlay(image('icons/obj/atmospherics/pipes/disposal.dmi', "dispover-charge"))
-	else if(mode == 2)
+	else if(mode == PRESSURE_MAXED)
 		add_overlay(image('icons/obj/atmospherics/pipes/disposal.dmi', "dispover-ready"))
 
-
-// timed process
-// charge the gas reservoir and perform flush if ready
+//timed process
+//charge the gas reservoir and perform flush if ready
 /obj/machinery/disposal/bin/process()
-	if(stat & BROKEN)			// nothing can happen if broken
+	if(stat & BROKEN) //nothing can happen if broken
 		return
 
 	flush_count++
-	if( flush_count >= flush_every_ticks )
-		if( contents.len )
-			if(mode == 2)
+	if(flush_count >= flush_every_ticks)
+		if(contents.len)
+			if(mode == PRESSURE_MAXED)
 				spawn(0)
 					feedback_inc("disposal_auto_flush",1)
 					flush()
 		flush_count = 0
 
-	src.updateDialog()
+	updateDialog()
 
-	if(flush && air_contents.return_pressure() >= SEND_PRESSURE )	// flush can happen even without power
-		spawn(0)
-			flush()
+	if(flush && air_contents.return_pressure() >= SEND_PRESSURE) // flush can happen even without power
+		addtimer(CALLBACK(src, .proc/flush), 0)
 
-	if(stat & NOPOWER)			// won't charge if no power
+	if(stat & NOPOWER) // won't charge if no power
 		return
 
-	use_power(100)		// base power usage
+	use_power(100) // base power usage
 
-	if(mode != 1)		// if off or ready, no need to charge
+	if(mode != PRESSURE_ON) // if off or ready, no need to charge
 		return
 
 	// otherwise charge
-	use_power(500)		// charging power usage
+	use_power(500) // charging power usage
 
-	var/atom/L = loc						// recharging from loc turf
+	var/atom/L = loc //recharging from loc turf
 
 	var/datum/gas_mixture/env = L.return_air()
 	var/pressure_delta = (SEND_PRESSURE*1.01) - air_contents.return_pressure()
@@ -470,16 +420,15 @@
 		air_update_turf()
 
 
-	// if full enough, switch to ready mode
+	//if full enough, switch to ready mode
 	if(air_contents.return_pressure() >= SEND_PRESSURE)
-		mode = 2
+		mode = PRESSURE_MAXED
 		update_icon()
 	return
 
 /obj/machinery/disposal/bin/get_remote_view_fullscreens(mob/user)
 	if(user.stat == DEAD || !(user.sight & (SEEOBJS|SEEMOBS)))
 		user.overlay_fullscreen("remote_view", /obj/screen/fullscreen/impaired, 2)
-
 
 //Delivery Chute
 
@@ -488,7 +437,7 @@
 	desc = "A chute for big and small packages alike!"
 	density = 1
 	icon_state = "intake"
-	mode = 0 // the chute doesn't need charging and always works
+	mode = PRESSURE_OFF // the chute doesn't need charging and always works
 
 /obj/machinery/disposal/deliveryChute/New(loc,var/obj/structure/disposalconstruct/make_from)
 	..()
@@ -516,7 +465,7 @@
 		if(WEST)
 			if(AM.loc.x != loc.x-1) return
 
-	if(istype(AM, /obj))
+	if(isobj(AM))
 		var/obj/O = AM
 		O.loc = src
 	else if(istype(AM, /mob))
@@ -541,4 +490,3 @@
 
 /obj/machinery/disposal/deliveryChute/newHolderDestination(obj/structure/disposalholder/H)
 	H.destinationTag = 1
-

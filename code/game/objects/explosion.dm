@@ -1,9 +1,24 @@
-//TODO: Flash range does nothing currently
+var/explosionid = 1
 
 /proc/explosion(turf/epicenter, devastation_range, heavy_impact_range, light_impact_range, flash_range, adminlog = 1, ignorecap = 0, flame_range = 0 ,silent = 0, smoke = 1)
 	set waitfor = 0
-	src = null	//so we don't abort once src is deleted
+	src = null //so we don't abort once src is deleted
 	epicenter = get_turf(epicenter)
+	if(!epicenter)
+		return
+
+	// Archive the uncapped explosion for the doppler array
+	var/orig_dev_range = devastation_range
+	var/orig_heavy_range = heavy_impact_range
+	var/orig_light_range = light_impact_range
+
+	if(!ignorecap && epicenter.z != ZLEVEL_MINING)
+		//Clamp all values to MAX_EXPLOSION_RANGE
+		devastation_range = min(MAX_EX_DEVESTATION_RANGE, devastation_range)
+		heavy_impact_range = min(MAX_EX_HEAVY_RANGE, heavy_impact_range)
+		light_impact_range = min(MAX_EX_LIGHT_RANGE, light_impact_range)
+		flash_range = min(MAX_EX_FLASH_RANGE, flash_range)
+		flame_range = min(MAX_EX_FLAME_RANGE, flame_range)
 
 	//DO NOT REMOVE THIS SLEEP, IT BREAKS THINGS
 	//not sleeping causes us to ex_act() the thing that triggered the explosion
@@ -14,21 +29,8 @@
 	//and somethings expect us to ex_act them so they can qdel()
 	sleep(1) //tldr, let the calling proc call qdel(src) before we explode
 
-	// Archive the uncapped explosion for the doppler array
-	var/orig_dev_range = devastation_range
-	var/orig_heavy_range = heavy_impact_range
-	var/orig_light_range = light_impact_range
-
-	if(!ignorecap)
-		// Clamp all values to MAX_EXPLOSION_RANGE
-		devastation_range = min (MAX_EX_DEVESTATION_RANGE, devastation_range)
-		heavy_impact_range = min (MAX_EX_HEAVY_RANGE, heavy_impact_range)
-		light_impact_range = min (MAX_EX_LIGHT_RANGE, light_impact_range)
-		flash_range = min (MAX_EX_FLASH_RANGE, flash_range)
-		flame_range = min (MAX_EX_FLAME_RANGE, flame_range)
-
+	var/id = explosionid++
 	var/start = world.timeofday
-	if(!epicenter) return
 
 	var/max_range = max(devastation_range, heavy_impact_range, light_impact_range, flame_range)
 	var/list/cached_exp_block = list()
@@ -102,12 +104,21 @@
 			for(var/obj/structure/blob/B in T)
 				cached_exp_block[T] += B.explosion_block
 			CHECK_TICK
+			
+	//flash mobs
+	if(flash_range)
+		for(var/mob/living/L in viewers(flash_range, epicenter))
+			L.flash_act()
 
+	CHECK_TICK
+
+	var/list/exploded_this_tick = list()	//open turfs that need to be blocked off while we sleep
 	for(var/turf/T in affected_turfs)
 
 		if (!T)
 			continue
-		var/dist = cheap_hypotenuse(T.x, T.y, x0, y0)
+		var/init_dist = cheap_hypotenuse(T.x, T.y, x0, y0)
+		var/dist = init_dist
 
 		if(config.reactionary_explosions)
 			var/turf/Trajectory = T
@@ -130,13 +141,16 @@
 		else
 			dist = 0
 
-		//------- TURF FIRES -------
+		//------- EX_ACT AND TURF FIRES -------
 
 		if(T)
-			if(flame_dist && prob(40) && !istype(T, /turf/open/space) && !T.density)
+			if(flame_dist && prob(40) && !isspaceturf(T) && !T.density)
 				PoolOrNew(/obj/effect/hotspot, T) //Mostly for ambience!
 			if(dist > 0)
+				T.explosion_level = max(T.explosion_level, dist)	//let the bigger one have it
+				T.explosion_id = id
 				T.ex_act(dist)
+				exploded_this_tick += T
 
 		//--- THROW ITEMS AROUND ---
 
@@ -146,9 +160,23 @@
 				var/throw_range = rand(throw_dist, max_range)
 				var/turf/throw_at = get_ranged_target_turf(I, throw_dir, throw_range)
 				I.throw_speed = 4 //Temporarily change their throw_speed for embedding purposes (Reset when it finishes throwing, regardless of hitting anything)
-				I.throw_at_fast(throw_at, throw_range, 2)//Throw it at 2 speed, this is purely visual anyway.
+				I.throw_at(throw_at, throw_range, I.throw_speed)
 
-		CHECK_TICK
+		if(world.tick_usage > CURRENT_TICKLIMIT)
+			stoplag()
+
+			var/circumference = (PI * init_dist * 2) + 8 //+8 to prevent shit gaps
+			if(exploded_this_tick.len > circumference)	//only do this every revolution
+				for(var/Unexplode in exploded_this_tick)
+					var/turf/UnexplodeT = Unexplode
+					UnexplodeT.explosion_level = 0
+				exploded_this_tick.Cut()
+
+	//unfuck the shit
+	for(var/Unexplode in exploded_this_tick)
+		var/turf/UnexplodeT = Unexplode
+		UnexplodeT.explosion_level = 0
+	exploded_this_tick.Cut()
 
 	var/took = (world.timeofday-start)/10
 	//You need to press the DebugGame verb to see these now....they were getting annoying and we've collected a fair bit of data. Just -test- changes  to explosion code using this please so we can compare
@@ -246,7 +274,7 @@
 		T.color = null
 		T.maptext = ""
 
-proc/dyn_explosion(turf/epicenter, power, flash_range, adminlog = 1, ignorecap = 1, flame_range = 0 ,silent = 0, smoke = 1)
+/proc/dyn_explosion(turf/epicenter, power, flash_range, adminlog = 1, ignorecap = 1, flame_range = 0 ,silent = 0, smoke = 1)
 	if(!power)
 		return
 	var/range = 0

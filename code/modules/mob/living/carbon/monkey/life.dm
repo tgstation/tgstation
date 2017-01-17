@@ -1,4 +1,4 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:32
+
 
 /mob/living/carbon/monkey
 
@@ -10,13 +10,17 @@
 	if (notransform)
 		return
 
-	..()
+	if(..())
 
-	if(!client && stat == CONSCIOUS)
-		if(prob(33) && canmove && isturf(loc) && !pulledby)
-			step(src, pick(cardinal))
-		if(prob(1))
-			emote(pick("scratch","jump","roll","tail"))
+		if(!client)
+			if(stat == CONSCIOUS)
+				if(!handle_combat())
+					if(prob(33) && canmove && isturf(loc) && !pulledby)
+						step(src, pick(cardinal))
+					if(prob(1))
+						emote(pick("scratch","jump","roll","tail"))
+			else
+				walk_to(src,0)
 
 /mob/living/carbon/monkey/handle_mutations_and_radiation()
 
@@ -142,7 +146,29 @@
 			return 1
 
 /mob/living/carbon/monkey/handle_fire()
-	if(..())
-		return
-	bodytemperature += BODYTEMP_HEATING_MAX
-	return
+	. = ..()
+	if(on_fire)
+
+		//the fire tries to damage the exposed clothes and items
+		var/list/burning_items = list()
+		//HEAD//
+		var/obj/item/clothing/head_clothes = null
+		if(wear_mask)
+			head_clothes = wear_mask
+		if(wear_neck)
+			head_clothes = wear_neck
+		if(head)
+			head_clothes = head
+		if(head_clothes)
+			burning_items += head_clothes
+
+		if(back)
+			burning_items += back
+
+		for(var/X in burning_items)
+			var/obj/item/I = X
+			if(!(I.resistance_flags & FIRE_PROOF))
+				I.take_damage(fire_stacks, BURN, "fire", 0)
+
+		bodytemperature += BODYTEMP_HEATING_MAX
+

@@ -1,7 +1,7 @@
 /datum/round_event_control/wizard/rpgloot //its time to minmax your shit
 	name = "RPG Loot"
 	weight = 3
-	typepath = /datum/round_event/wizard/rpgloot/
+	typepath = /datum/round_event/wizard/rpgloot
 	max_occurrences = 1
 	earliest_start = 0
 
@@ -41,7 +41,7 @@
 	desc = "Somehow, this piece of paper can be applied to items to make them \"better\". Apparently there's a risk of losing the item if it's already \"too good\". <i>This all feels so arbitrary...</i>"
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "scroll"
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 
 /obj/item/upgradescroll/afterattack(obj/item/target, mob/user , proximity)
 	if(!proximity || !istype(target))
@@ -51,6 +51,7 @@
 		user << "<span class='danger'>[target] catches fire!</span>"
 		if(target.resistance_flags & (LAVA_PROOF|FIRE_PROOF))
 			target.resistance_flags &= ~(LAVA_PROOF|FIRE_PROOF)
+			target.resistance_flags |= FLAMMABLE
 		target.fire_act()
 		qdel(src)
 		return

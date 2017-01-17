@@ -11,6 +11,8 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 			uplink_items[I.category][I.name] = I
 
 	var/list/filtered_uplink_items = list()
+	var/list/sale_items = list()
+
 	for(var/category in uplink_items)
 		for(var/item in uplink_items[category])
 			var/datum/uplink_item/I = uplink_items[category][item]
@@ -30,7 +32,28 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 			if(!filtered_uplink_items[category])
 				filtered_uplink_items[category] = list()
 			filtered_uplink_items[category][item] = I
+			if(I.limited_stock < 0 && !I.cant_discount && I.item && I.cost > 1)
+				sale_items += I
 
+	for(var/i in 1 to 3)
+		var/datum/uplink_item/I = pick_n_take(sale_items)
+		var/datum/uplink_item/A = new I.type
+		var/discount = pick(4;0.75,2;0.5,1;0.25)
+		var/list/disclaimer = list("Void where prohibited.", "Not recommended for children.", "Contains small parts.", "Check local laws for legality in region.", "Do not taunt.", "Not responsible for direct, indirect, incidental or consequential damages resulting from any defect, error or failure to perform.", "Keep away from fire or flames.", "Product is provided \"as is\" without any implied or expressed warranties.", "As seen on TV.", "For recreational use only.", "Use only as directed.", "16% sales tax will be charged for orders originating within Space Nebraska.")
+		A.limited_stock = 1
+		I.refundable = FALSE //THIS MAN USES ONE WEIRD TRICK TO GAIN FREE TC, CODERS HATES HIM!
+		A.refundable = FALSE
+		if(A.cost >= 20) //Tough love for nuke ops
+			discount *= 0.5
+		A.cost = max(round(A.cost * discount),1)
+		A.category = "Discounted Gear"
+		A.name += " ([round(((initial(A.cost)-A.cost)/initial(A.cost))*100)]% off!)"
+		A.desc += " Normally costs [initial(A.cost)] TC. All sales final. [pick(disclaimer)]"
+		A.item = I.item
+
+		if(!filtered_uplink_items[A.category])
+			filtered_uplink_items[A.category] = list()
+		filtered_uplink_items[A.category][A.name] = A
 	return filtered_uplink_items
 
 
@@ -49,6 +72,8 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	var/refund_amount = 0 // specified refund amount in case there needs to be a TC penalty for refunds.
 	var/refundable = FALSE
 	var/surplus = 100 // Chance of being included in the surplus crate.
+	var/cant_discount = FALSE
+	var/limited_stock = -1 //Setting this above zero limits how many times this item can be bought by the same traitor in a round, -1 is unlimited
 	var/list/include_modes = list() // Game modes to allow this item in.
 	var/list/exclude_modes = list() // Game modes to disallow this item from.
 	var/player_minimum //The minimum crew size needed for this item to be added to uplinks.
@@ -64,7 +89,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	if (!user || user.incapacitated())
 		return
 
-	if(U.telecrystals < cost)
+	if(U.telecrystals < cost || limited_stock == 0)
 		return
 	else
 		U.telecrystals -= cost
@@ -78,6 +103,9 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	else
 		U.purchase_log += "<big>\icon[A]</big>"
 
+	if(limited_stock > 0)
+		limited_stock -= 1
+
 	if(ishuman(user) && istype(A, /obj/item))
 		var/mob/living/carbon/human/H = user
 		if(H.put_in_hands(A))
@@ -86,11 +114,16 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 			H << "\The [A] materializes onto the floor."
 	return 1
 
+//Discounts (dynamically filled above)
+/datum/uplink_item/discounts
+	category = "Discounted Gear"
+
 // Nuclear Operative (Special Offers)
 /datum/uplink_item/nukeoffer
 	category = "Special Offers"
 	surplus = 0
 	include_modes = list(/datum/game_mode/nuclear)
+	cant_discount = TRUE
 
 /datum/uplink_item/nukeoffer/c20r
 	name = "C-20r bundle"
@@ -140,13 +173,13 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	name = "Stechkin Pistol"
 	desc = "A small, easily concealable handgun that uses 10mm auto rounds in 8-round magazines and is compatible \
 			with suppressors."
-	item = /obj/item/weapon/gun/projectile/automatic/pistol
+	item = /obj/item/weapon/gun/ballistic/automatic/pistol
 	cost = 7
 
 /datum/uplink_item/dangerous/revolver
 	name = "Syndicate Revolver"
 	desc = "A brutally simple syndicate revolver that fires .357 Magnum rounds and has 7 chambers."
-	item = /obj/item/weapon/gun/projectile/revolver
+	item = /obj/item/weapon/gun/ballistic/revolver
 	cost = 13
 	surplus = 50
 
@@ -154,7 +187,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	name = "Bulldog Shotgun"
 	desc = "A fully-loaded semi-automatic drum-fed shotgun. Compatiable with all 12g rounds. Designed for close \
 			quarter anti-personel engagements."
-	item = /obj/item/weapon/gun/projectile/automatic/shotgun/bulldog
+	item = /obj/item/weapon/gun/ballistic/automatic/shotgun/bulldog
 	cost = 8
 	surplus = 40
 	include_modes = list(/datum/game_mode/nuclear)
@@ -163,20 +196,20 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	name = "C-20r Submachine Gun"
 	desc = "A fully-loaded Scarborough Arms bullpup submachine gun. The C-20r fires .45 rounds with a \
 			20-round magazine and is compatible with suppressors."
-	item = /obj/item/weapon/gun/projectile/automatic/c20r
+	item = /obj/item/weapon/gun/ballistic/automatic/c20r
 	cost = 10
 	surplus = 40
 	include_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/dangerous/smg/unrestricted
-	item = /obj/item/weapon/gun/projectile/automatic/c20r/unrestricted
+	item = /obj/item/weapon/gun/ballistic/automatic/c20r/unrestricted
 	include_modes = list(/datum/game_mode/gang)
 
 /datum/uplink_item/dangerous/machinegun
 	name = "L6 Squad Automatic Weapon"
 	desc = "A fully-loaded Aussec Armoury belt-fed machine gun. \
 			This deadly weapon has a massive 50-round magazine of devastating 5.56x45mm ammunition."
-	item = /obj/item/weapon/gun/projectile/automatic/l6_saw
+	item = /obj/item/weapon/gun/ballistic/automatic/l6_saw
 	cost = 18
 	surplus = 0
 	include_modes = list(/datum/game_mode/nuclear)
@@ -192,7 +225,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 /datum/uplink_item/dangerous/sniper
 	name = "Sniper Rifle"
 	desc = "Ranged fury, Syndicate style. guaranteed to cause shock and awe or your TC back!"
-	item = /obj/item/weapon/gun/projectile/automatic/sniper_rifle/syndicate
+	item = /obj/item/weapon/gun/ballistic/automatic/sniper_rifle/syndicate
 	cost = 16
 	surplus = 25
 	include_modes = list(/datum/game_mode/nuclear)
@@ -200,7 +233,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 /datum/uplink_item/dangerous/bolt_action
 	name = "Surplus Rifle"
 	desc = "A horribly outdated bolt action weapon. You've got to be desperate to use this."
-	item = /obj/item/weapon/gun/projectile/shotgun/boltaction
+	item = /obj/item/weapon/gun/ballistic/shotgun/boltaction
 	cost = 2
 	include_modes = list(/datum/game_mode/nuclear)
 
@@ -261,7 +294,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 /datum/uplink_item/dangerous/foamsmg
 	name = "Toy Submachine Gun"
 	desc = "A fully-loaded Donksoft bullpup submachine gun that fires riot grade rounds with a 20-round magazine."
-	item = /obj/item/weapon/gun/projectile/automatic/c20r/toy
+	item = /obj/item/weapon/gun/ballistic/automatic/c20r/toy
 	cost = 5
 	surplus = 0
 	include_modes = list(/datum/game_mode/nuclear)
@@ -270,7 +303,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	name = "Toy Machine Gun"
 	desc = "A fully-loaded Donksoft belt-fed machine gun. This weapon has a massive 50-round magazine of devastating \
 			riot grade darts, that can briefly incapacitate someone in just one volley."
-	item = /obj/item/weapon/gun/projectile/automatic/l6_saw/toy
+	item = /obj/item/weapon/gun/ballistic/automatic/l6_saw/toy
 	cost = 10
 	surplus = 0
 	include_modes = list(/datum/game_mode/nuclear)
@@ -321,10 +354,28 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 
 /datum/uplink_item/ammo/pistol
 	name = "10mm Handgun Magazine"
-	desc = "An additional 8-round 10mm magazine; compatible with the Stechkin Pistol. These subsonic rounds \
+	desc = "An additional 8-round 10mm magazine; compatible with the Stechkin Pistol. These rounds \
 			are dirt cheap but are half as effective as .357 rounds."
 	item = /obj/item/ammo_box/magazine/m10mm
 	cost = 1
+
+/datum/uplink_item/ammo/pistolap
+	name = "10mm Armour Piercing Magazine"
+	desc = "An additional 8-round 10mm magazine; compatible with the Stechkin Pistol. These rounds are less effective at injuring the target but penetrate protective gear."
+	item = /obj/item/ammo_box/magazine/m10mm/ap
+	cost = 2
+
+/datum/uplink_item/ammo/pistolfire
+	name = "10mm Incendiary Magazine"
+	desc = "An additional 8-round 10mm magazine; compatible with the Stechkin Pistol. Loaded with incendiary rounds which ignite the target."
+	item = /obj/item/ammo_box/magazine/m10mm/fire
+	cost = 2
+
+/datum/uplink_item/ammo/pistolhp
+	name = "10mm Hollow Point Magazine"
+	desc = "An additional 8-round 10mm magazine; compatible with the Stechkin Pistol. These rounds are more damaging but ineffective against armour."
+	item = /obj/item/ammo_box/magazine/m10mm/hp
+	cost = 3
 
 /datum/uplink_item/ammo/bolt_action
 	name = "Surplus Rifle Clip"
@@ -524,12 +575,20 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	surplus = 0
 	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/gang)
 
+/datum/uplink_item/stealthy_weapons/cqc
+	name = "CQC Manual"
+	desc = "A manual that teaches a single user tactical Close-Quarters Combat before self-destructing."
+	item = /obj/item/weapon/cqc_manual
+	include_modes = list(/datum/game_mode/nuclear)
+	cost = 13
+	surplus = 0
+
 /datum/uplink_item/stealthy_weapons/throwingweapons
 	name = "Box of Throwing Weapons"
 	desc = "A box of shurikens and reinforced bolas from ancient Earth martial arts. They are highly effective \
 			 throwing weapons. The bolas can knock a target down and the shurikens will embed into limbs."
 	item = /obj/item/weapon/storage/box/syndie_kit/throwing_weapons
-	cost = 5
+	cost = 3
 
 /datum/uplink_item/stealthy_weapons/edagger
 	name = "Energy Dagger"
@@ -541,7 +600,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	name = "Toy Gun with Riot Darts"
 	desc = "An innocent-looking toy pistol designed to fire foam darts. Comes loaded with riot-grade \
 			darts effective at incapacitating a target."
-	item = /obj/item/weapon/gun/projectile/automatic/toy/pistol/riot
+	item = /obj/item/weapon/gun/ballistic/automatic/toy/pistol/riot
 	cost = 3
 	surplus = 10
 	exclude_modes = list(/datum/game_mode/gang)
@@ -729,6 +788,13 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	cost = 1
 	surplus = 20
 
+/datum/uplink_item/stealthy_tools/fakenucleardisk
+	name = "Decoy Nuclear Authentication Disk"
+	desc = "It's just a normal disk. Visually it's identical to the real deal, but it won't hold up under closer scrutiny. Don't try to give this to us to complete your objective, we know better!"
+	item = /obj/item/weapon/disk/fakenucleardisk
+	cost = 1
+	surplus = 1
+
 //Space Suits and Hardsuits
 /datum/uplink_item/suits
 	category = "Space Suits and Hardsuits"
@@ -875,6 +941,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	desc = "Because sometimes quantity is quality. Contains 10 C-4 plastic explosives."
 	item = /obj/item/weapon/storage/backpack/dufflebag/syndie/c4
 	cost = 9 //10% discount!
+	cant_discount = TRUE
 
 /datum/uplink_item/device_tools/x4bag
 	name = "Bag of X-4 explosives"
@@ -882,6 +949,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 			blast through the wall, injuring anything on the opposite side, while being safer to the user. For when you want a wider, deeper, hole."
 	item = /obj/item/weapon/storage/backpack/dufflebag/syndie/x4
 	cost = 4 //
+	cant_discount = TRUE
 
 /datum/uplink_item/device_tools/powersink
 	name = "Power Sink"
@@ -961,6 +1029,13 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	desc = "A potion recovered at great risk by undercover syndicate operatives. Using it will make any animal sentient, and bound to serve you."
 	cost = 4
 	include_modes = list(/datum/game_mode/nuclear)
+
+/datum/uplink_item/device_tools/telecrystal
+	name = "Raw Telecrystal"
+	desc = "A telecrystal in its rawest and purest form; can be utilized on active uplinks to increase their telecrystal count."
+	item = /obj/item/stack/telecrystal
+	cost = 1
+	surplus = 0
 
 // Implants
 /datum/uplink_item/implants
@@ -1093,6 +1168,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 			Can blow the deepest of covers."
 	item = /obj/item/toy/syndicateballoon
 	cost = 20
+	cant_discount = TRUE
 
 /datum/uplink_item/badass/bundle
 	name = "Syndicate Bundle"
@@ -1102,6 +1178,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	item = /obj/item/weapon/storage/box/syndicate
 	cost = 20
 	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/gang)
+	cant_discount = TRUE
 
 /datum/uplink_item/badass/surplus
 	name = "Syndicate Surplus Crate"
@@ -1111,6 +1188,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	cost = 20
 	player_minimum = 25
 	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/gang)
+	cant_discount = TRUE
 
 /datum/uplink_item/badass/surplus/spawn_item(turf/loc, obj/item/device/uplink/U)
 	var/list/uplink_items = get_uplink_items(ticker.mode)
@@ -1138,6 +1216,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 			decided on a strategy yet."
 	item = /obj/item/weapon/paper
 	cost = 0
+	cant_discount = TRUE
 
 /datum/uplink_item/badass/random/spawn_item(turf/loc, obj/item/device/uplink/U)
 	var/list/uplink_items = get_uplink_items(ticker.mode)

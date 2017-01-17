@@ -88,7 +88,7 @@
 	name = "pizza spawner"
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/cobweb2,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/wood{
 	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
@@ -690,7 +690,7 @@ d
 d
 e
 e
-B
+N
 e
 e
 d

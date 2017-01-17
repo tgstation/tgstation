@@ -10,6 +10,12 @@
 			if( !(I.slot_flags & SLOT_MASK) )
 				return FALSE
 			return TRUE
+		if(slot_neck)
+			if(wear_neck)
+				return FALSE
+			if( !(I.slot_flags & SLOT_NECK) )
+				return FALSE
+			return TRUE
 		if(slot_head)
 			if(head)
 				return FALSE

@@ -338,6 +338,14 @@
 		for(var/client/C in show_to)
 			C.images -= I
 
+/proc/flick_overlay_view(image/I, atom/target, duration) //wrapper for the above, flicks to everyone who can see the target atom
+	var/list/viewing = list()
+	for(var/m in viewers(target))
+		var/mob/M = m
+		if(M.client)
+			viewing += M.client
+	flick_overlay(I, viewing, duration)
+
 /proc/get_active_player_count(var/alive_check = 0, var/afk_check = 0, var/human_check = 0)
 	// Get active players who are playing in the round
 	var/active_players = 0
@@ -350,7 +358,7 @@
 				continue
 			else if(human_check && !ishuman(M))
 				continue
-			else if(istype(M, /mob/new_player)) // exclude people in the lobby
+			else if(isnewplayer(M)) // exclude people in the lobby
 				continue
 			else if(isobserver(M)) // Ghosts are fine if they were playing once (didn't start as observers)
 				var/mob/dead/observer/O = M
@@ -442,17 +450,18 @@
 
 	return candidates
 
-/proc/pollCandidatesForMob(Question, jobbanType, datum/game_mode/gametypeCheck, be_special_flag = 0, poll_time = 300, mob/M)
-	var/list/L = pollCandidates(Question, jobbanType, gametypeCheck, be_special_flag, poll_time)
-	if(!M || qdeleted(M))
+/proc/pollCandidatesForMob(Question, jobbanType, datum/game_mode/gametypeCheck, be_special_flag = 0, poll_time = 300, mob/M, ignore_category = null)
+	var/list/L = pollCandidates(Question, jobbanType, gametypeCheck, be_special_flag, poll_time, ignore_category)
+	if(!M || qdeleted(M) || !M.loc)
 		return list()
 	return L
 
-/proc/pollCandidatesForMobs(Question, jobbanType, datum/game_mode/gametypeCheck, be_special_flag = 0, poll_time = 300, list/mobs)
-	var/list/L = pollCandidates(Question, jobbanType, gametypeCheck, be_special_flag, poll_time)
+/proc/pollCandidatesForMobs(Question, jobbanType, datum/game_mode/gametypeCheck, be_special_flag = 0, poll_time = 300, list/mobs, ignore_category = null)
+	var/list/L = pollCandidates(Question, jobbanType, gametypeCheck, be_special_flag, poll_time, ignore_category)
 	var/i=1
 	for(var/v in mobs)
-		if(!v || qdeleted(v))
+		var/atom/A = v
+		if(!A || qdeleted(A) || !A.loc)
 			mobs.Cut(i,i+1)
 		else
 			++i
@@ -470,6 +479,11 @@
 	new_character.key = G_found.key
 
 	return new_character
+
+/proc/send_to_playing_players(thing) //sends a whatever to all playing players; use instead of world << where needed
+	for(var/M in player_list)
+		if(M && !isnewplayer(M))
+			M << thing
 
 /proc/window_flash(var/client_or_usr)
 	if (!client_or_usr)

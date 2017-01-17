@@ -9,40 +9,28 @@
 
 /obj/structure/alien
 	icon = 'icons/mob/alien.dmi'
-	var/health = 100
+	obj_integrity = 100
+	max_integrity = 100
 
-/obj/structure/alien/attacked_by(obj/item/I, mob/user)
-	..()
-	var/damage = I.force
-	switch(I.damtype)
-		if(BRUTE)
-			damage *= 0.25
-		if(BURN)
-			damage *= 2
-		else
-			damage = 0 //stamina damage does no damage
-	take_damage(damage, I.damtype)
+/obj/structure/alien/run_obj_armor(damage_amount, damage_type, damage_flag = 0, attack_dir)
+	if(damage_flag == "melee")
+		switch(damage_type)
+			if(BRUTE)
+				damage_amount *= 0.25
+			if(BURN)
+				damage_amount *= 2
+	. = ..()
 
-/obj/structure/alien/proc/take_damage(amount, damage_type = BRUTE, sound_effect = 1)
+/obj/structure/alien/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
 		if(BRUTE)
-			if(sound_effect)
+			if(damage_amount)
 				playsound(loc, 'sound/effects/attackblob.ogg', 100, 1)
+			else
+				playsound(src, 'sound/weapons/tap.ogg', 50, 1)
 		if(BURN)
-			if(sound_effect)
+			if(damage_amount)
 				playsound(loc, 'sound/items/Welder.ogg', 100, 1)
-		else
-			return
-	health = max(health - amount, 0)
-	if(!health)
-		Break()
-
-/obj/structure/alien/proc/Break()
-	qdel(src)
-
-/obj/structure/alien/bullet_act(obj/item/projectile/P)
-	. = ..()
-	take_damage(P.damage, P.damage_type)
 
 /*
  * Generic alien stuff, not related to the purple lizards but still alien-like
@@ -54,8 +42,9 @@
 	icon = 'icons/obj/fluff.dmi'
 	icon_state = "gelmound"
 
-/obj/structure/alien/gelpod/Break()
-	new/obj/effect/mob_spawn/human/corpse/damaged(get_turf(src))
+/obj/structure/alien/gelpod/deconstruct(disassembled = TRUE)
+	if(!(flags & NODECONSTRUCT))
+		new/obj/effect/mob_spawn/human/corpse/damaged(get_turf(src))
 	qdel(src)
 
 /*
@@ -70,10 +59,11 @@
 	opacity = 1
 	anchored = 1
 	canSmoothWith = list(/obj/structure/alien/resin)
-	health = 200
+	obj_integrity = 200
+	max_integrity = 200
 	smooth = SMOOTH_TRUE
 	var/resintype = null
-
+	CanAtmosPass = ATMOS_PASS_DENSITY
 
 
 /obj/structure/alien/resin/New(location)
@@ -85,9 +75,6 @@
 	var/turf/T = loc
 	..()
 	move_update_air(T)
-
-/obj/structure/alien/resin/CanAtmosPass()
-	return !density
 
 /obj/structure/alien/resin/wall
 	name = "resin wall"
@@ -106,57 +93,14 @@
 	icon = 'icons/obj/smooth_structures/alien/resin_membrane.dmi'
 	icon_state = "membrane0"
 	opacity = 0
-	health = 160
+	obj_integrity = 160
+	max_integrity = 160
 	resintype = "membrane"
 	canSmoothWith = list(/obj/structure/alien/resin/wall, /obj/structure/alien/resin/membrane)
-
-/obj/structure/alien/resin/ex_act(severity, target)
-	switch(severity)
-		if(1)
-			take_damage(150, BRUTE, 0)
-		if(2)
-			take_damage(100, BRUTE, 0)
-		if(3)
-			take_damage(50, BRUTE, 0)
-
-/obj/structure/alien/blob_act(obj/structure/blob/B)
-	take_damage(50, BRUTE, 0)
-
-/obj/structure/alien/resin/hitby(atom/movable/AM)
-	..()
-	var/tforce = 0
-	if(!isobj(AM))
-		tforce = 10
-	else
-		var/obj/O = AM
-		tforce = O.throwforce
-	take_damage(tforce)
-
-/obj/structure/alien/resin/attack_hulk(mob/living/carbon/human/user)
-	..(user, 1)
-	user.visible_message("<span class='danger'>[user] destroys [src]!</span>")
-	take_damage(200)
 
 /obj/structure/alien/resin/attack_paw(mob/user)
 	return attack_hand(user)
 
-
-/obj/structure/alien/resin/attack_alien(mob/living/user)
-	user.changeNext_move(CLICK_CD_MELEE)
-	user.do_attack_animation(src)
-	user.visible_message("<span class='danger'>[user] claws at the resin!</span>")
-	take_damage(50)
-
-/obj/structure/alien/resin/attack_animal(mob/living/simple_animal/M)
-	M.changeNext_move(CLICK_CD_MELEE)
-	M.do_attack_animation(src)
-	if(!M.melee_damage_upper && !M.obj_damage)
-		return
-	visible_message("<span class='danger'>[M] [M.attacktext] [src]!</span>")
-	if(M.obj_damage)
-		take_damage(M.obj_damage, M.melee_damage_type)
-	else
-		take_damage(rand(M.melee_damage_lower,M.melee_damage_upper), M.melee_damage_type)
 
 /obj/structure/alien/resin/CanPass(atom/movable/mover, turf/target, height=0)
 	return !density
@@ -176,17 +120,24 @@
 	density = 0
 	layer = TURF_LAYER
 	icon_state = "weeds"
-	health = 15
-	var/obj/structure/alien/weeds/node/linked_node = null
+	obj_integrity = 15
+	max_integrity = 15
 	canSmoothWith = list(/obj/structure/alien/weeds, /turf/closed/wall)
 	smooth = SMOOTH_MORE
+	var/last_expand = 0 //last world.time this weed expanded
+	var/growth_cooldown_low = 150
+	var/growth_cooldown_high = 200
+	var/static/list/blacklisted_turfs = typecacheof(list(
+	/turf/open/space,
+	/turf/open/chasm,
+	/turf/open/floor/plating/lava))
 
-
-/obj/structure/alien/weeds/New(pos, node)
+/obj/structure/alien/weeds/New()
 	pixel_x = -4
 	pixel_y = -4 //so the sprites line up right in the map editor
 	..()
-	if(!luminosity) //weed nodes have luminosity, but normal weeds don't!
+	last_expand = world.time + rand(growth_cooldown_low, growth_cooldown_high)
+	if(icon == initial(icon))
 		switch(rand(1,3))
 			if(1)
 				icon = 'icons/obj/smooth_structures/alien/weeds1.dmi'
@@ -194,43 +145,26 @@
 				icon = 'icons/obj/smooth_structures/alien/weeds2.dmi'
 			if(3)
 				icon = 'icons/obj/smooth_structures/alien/weeds3.dmi'
-	linked_node = node
-	if(istype(loc, /turf/open/space))
-		qdel(src)
-		return
-	addtimer(src, "Life", rand(150, 200))
 
-/obj/structure/alien/weeds/Destroy()
-	linked_node = null
-	return ..()
-
-/obj/structure/alien/weeds/proc/Life()
-	set background = BACKGROUND_ENABLED
+/obj/structure/alien/weeds/proc/expand()
 	var/turf/U = get_turf(src)
-
-	if(istype(U, /turf/open/space))
+	if(is_type_in_typecache(U, blacklisted_turfs))
 		qdel(src)
-		return
-
-	if(!linked_node || get_dist(linked_node, src) > linked_node.node_range)
-		return
+		return FALSE
 
 	for(var/turf/T in U.GetAtmosAdjacentTurfs())
-
-		if (locate(/obj/structure/alien/weeds) in T || istype(T, /turf/open/space))
+		if(locate(/obj/structure/alien/weeds) in T)
 			continue
 
-		new /obj/structure/alien/weeds(T, linked_node)
+		if(is_type_in_typecache(T, blacklisted_turfs))
+			continue
 
-
-/obj/structure/alien/weeds/ex_act(severity, target)
-	qdel(src)
-
+		new /obj/structure/alien/weeds(T)
+	return TRUE
 
 /obj/structure/alien/weeds/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(exposed_temperature > 300)
-		take_damage(5, BURN, 0)
-
+		take_damage(5, BURN, 0, 0)
 
 //Weed nodes
 /obj/structure/alien/weeds/node
@@ -240,10 +174,23 @@
 	luminosity = 1
 	var/node_range = NODERANGE
 
-
 /obj/structure/alien/weeds/node/New()
 	icon = 'icons/obj/smooth_structures/alien/weednode.dmi'
-	..(loc, src)
+	..()
+	var/obj/structure/alien/weeds/W = locate(/obj/structure/alien/weeds)
+	if(W)
+		qdel(W)
+	START_PROCESSING(SSobj, src)
+
+/obj/structure/alien/weeds/node/Destroy()
+	STOP_PROCESSING(SSobj, src)
+	return ..()
+
+/obj/structure/alien/weeds/node/process()
+	for(var/obj/structure/alien/weeds/W in range(node_range, src))
+		if(W.last_expand <= world.time)
+			if(W.expand())
+				W.last_expand = world.time + rand(growth_cooldown_low, growth_cooldown_high)
 
 #undef NODERANGE
 
@@ -266,7 +213,8 @@
 	icon_state = "egg_growing"
 	density = 0
 	anchored = 1
-	health = 100
+	obj_integrity = 100
+	max_integrity = 100
 	var/status = GROWING	//can be GROWING, GROWN or BURST; all mutually exclusive
 	layer = MOB_LAYER
 
@@ -274,13 +222,16 @@
 /obj/structure/alien/egg/New()
 	new /obj/item/clothing/mask/facehugger(src)
 	..()
-	addtimer(src, "Grow", rand(MIN_GROWTH_TIME, MAX_GROWTH_TIME))
+	addtimer(CALLBACK(src, .proc/Grow), rand(MIN_GROWTH_TIME, MAX_GROWTH_TIME))
 
 /obj/structure/alien/egg/Destroy()
 	remove_from_proximity_list(src, 1)
-	..()
+	return ..()
 
 /obj/structure/alien/egg/attack_paw(mob/living/user)
+	return attack_hand(user)
+
+/obj/structure/alien/egg/attack_alien(mob/living/carbon/alien/user)
 	return attack_hand(user)
 
 /obj/structure/alien/egg/attack_hand(mob/living/user)
@@ -330,20 +281,24 @@
 							child.Attach(M)
 							break
 
-/obj/structure/alien/egg/Move()
-	remove_from_proximity_list(src, 1)
-	..()
+/obj/structure/alien/egg/Moved(oldloc)
+	remove_from_proximity_list(oldloc, 1)
+	if(status == GROWN)
+		add_to_proximity_list(src, 1)	
+	return ..()
 
-/obj/structure/alien/egg/Break()
-	if(status != BURST && status != BURSTING)
-		Burst()
-	else if(status == BURST)
-		qdel(src)	//Remove the egg after it has been hit after bursting.
-
+/obj/structure/alien/egg/deconstruct()
+	if(!(flags & NODECONSTRUCT))
+		if(status != BURST && status != BURSTING)
+			Burst()
+		else if(status == BURST)
+			qdel(src)	//Remove the egg after it has been hit after bursting.
+	else
+		qdel(src)
 
 /obj/structure/alien/egg/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(exposed_temperature > 500)
-		take_damage(5, BURN, 0)
+		take_damage(5, BURN, 0, 0)
 
 
 /obj/structure/alien/egg/HasProximity(atom/movable/AM)

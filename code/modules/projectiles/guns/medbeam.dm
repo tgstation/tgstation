@@ -4,7 +4,7 @@
 	icon = 'icons/obj/chronos.dmi'
 	icon_state = "chronogun"
 	item_state = "chronogun"
-	w_class = 3.0
+	w_class = WEIGHT_CLASS_NORMAL
 
 	var/mob/living/current_target
 	var/last_check = 0
@@ -47,7 +47,7 @@
 	current_target = target
 	active = 1
 	current_beam = new(user,current_target,time=6000,beam_icon_state="medbeam",btype=/obj/effect/ebeam/medical)
-	addtimer(current_beam, "Start", 0)
+	addtimer(CALLBACK(current_beam, /datum/beam.proc/Start), 0)
 
 	feedback_add_details("gun_fired","[src.type]")
 

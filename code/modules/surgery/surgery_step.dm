@@ -30,7 +30,7 @@
 			else
 				user << "<span class='warning'>You need to expose [target]'s [parse_zone(target_zone)] to perform surgery on it!</span>"
 				return 1	//returns 1 so we don't stab the guy in the dick or wherever.
-	if(isrobot(user) && user.a_intent != "harm") //to save asimov borgs a LOT of heartache
+	if(iscyborg(user) && user.a_intent != INTENT_HARM) //to save asimov borgs a LOT of heartache
 		return 1
 	return 0
 
@@ -38,11 +38,16 @@
 /datum/surgery_step/proc/initiate(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	surgery.step_in_progress = 1
 
+	var/speed_mod = 1
+
 	if(preop(user, target, target_zone, tool, surgery) == -1)
 		surgery.step_in_progress = 0
 		return
 
-	if(do_after(user, time, target = target))
+	if(tool)
+		speed_mod = tool.toolspeed
+
+	if(do_after(user, time * speed_mod, target = target))
 		var/advance = 0
 		var/prob_chance = 100
 
@@ -50,7 +55,7 @@
 			prob_chance = implements[implement_type]
 		prob_chance *= surgery.get_propability_multiplier()
 
-		if(prob(prob_chance) || isrobot(user))
+		if(prob(prob_chance) || iscyborg(user))
 			if(success(user, target, target_zone, tool, surgery))
 				advance = 1
 		else

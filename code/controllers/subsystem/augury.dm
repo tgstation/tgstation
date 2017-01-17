@@ -37,38 +37,48 @@ var/datum/subsystem/augury/SSaugury
 				var/datum/action/innate/augury/A = new
 				A.Grant(i)
 				observers_given_action[i] = TRUE
+	else
+		for(var/i in observers_given_action)
+			if(observers_given_action[i] && isobserver(i))
+				var/mob/dead/observer/O = i
+				for(var/datum/action/innate/augury/A in O.actions)
+					qdel(A)
+			observers_given_action -= i
 
 	for(var/w in watchers)
 		if(!w)
 			watchers -= w
 			continue
 		var/mob/dead/observer/O = w
-		if(O.orbiting)
-			continue
-		else if(biggest_doom)
-			addtimer(O, "orbit", 0, FALSE, biggest_doom)
+		if(biggest_doom && (!O.orbiting || O.orbiting.orbiting != biggest_doom))
+			O.ManualFollow(biggest_doom)
 
 /datum/action/innate/augury
 	name = "Auto Follow Debris"
 	icon_icon = 'icons/obj/meteor.dmi'
 	button_icon_state = "flaming"
+	background_icon_state = ACTION_BUTTON_DEFAULT_BACKGROUND
+
+/datum/action/innate/augury/Destroy()
+	if(owner)
+		SSaugury.watchers -= owner
+	return ..()
 
 /datum/action/innate/augury/Activate()
-	SSaugury.watchers[owner] = TRUE
+	SSaugury.watchers += owner
 	owner << "<span class='notice'>You are now auto-following debris.</span>"
 	active = TRUE
 	UpdateButtonIcon()
 
 /datum/action/innate/augury/Deactivate()
 	SSaugury.watchers -= owner
-	owner << "<span class='notice'>You are no longer auto-following \
-		debris.</span>"
+	owner << "<span class='notice'>You are no longer auto-following debris.</span>"
 	active = FALSE
 	UpdateButtonIcon()
 
-/datum/action/innate/augury/UpdateButtonIcon()
+/datum/action/innate/augury/UpdateButtonIcon(status_only = FALSE)
 	..()
 	if(active)
-		button.icon_state = "bg_default_on"
+		button.icon_state = "template_active"
 	else
-		button.icon_state = background_icon_state
+		button.icon_state = "template"

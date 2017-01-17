@@ -104,13 +104,8 @@
 
 //Removes any null entries from the list
 /proc/listclearnulls(list/L)
-	if(istype(L))
-		var/i=1
-		for(var/thing in L)
-			if(thing != null)
-				++i
-				continue
-			L.Cut(i,i+1)
+	var/list/N = new(L.len)
+	L -= N
 
 /*
  * Returns list containing all the entries from first list that are not present in second.
@@ -228,11 +223,29 @@
 
 	return L
 
+//same, but returns nothing and acts on list in place
+/proc/shuffle_inplace(list/L)
+	if(!L)
+		return
+
+	for(var/i=1, i<L.len, ++i)
+		L.Swap(i,rand(i,L.len))
+
 //Return a list with no duplicate entries
 /proc/uniqueList(list/L)
 	. = list()
 	for(var/i in L)
 		. |= i
+
+//same, but returns nothing and acts on list in place (also handles associated values properly)
+/proc/uniqueList_inplace(list/L)
+	var/temp = L.Copy()
+	L.len = 0
+	for(var/key in temp)
+		if (isnum(key))
+			L |= key
+		else
+			L[key] = temp[key]
 
 //for sorting clients or mobs by ckey
 /proc/sortKey(list/L, order=1)
@@ -392,6 +405,18 @@
 		if(islist(.[i]))
 			.[i] = .(.[i])
 
+//takes an input_key, as text, and the list of keys already used, outputting a replacement key in the format of "[input_key] ([number_of_duplicates])" if it finds a duplicate
+//use this for lists of things that might have the same name, like mobs or objects, that you plan on giving to a player as input
+/proc/avoid_assoc_duplicate_keys(input_key, list/used_key_list)
+	if(!input_key || !istype(used_key_list))
+		return
+	if(used_key_list[input_key])
+		used_key_list[input_key]++
+		input_key = "[input_key] ([used_key_list[input_key]])"
+	else
+		used_key_list[input_key] = 1
+	return input_key
+
 #if DM_VERSION > 512
 #error Remie said that lummox was adding a way to get a lists
 #error contents via list.values, if that is true remove this
@@ -407,3 +432,11 @@
 
 //Picks from the list, with some safeties, and returns the "default" arg if it fails
 #define DEFAULTPICK(L, default) ((istype(L, /list) && L:len) ? pick(L) : default)
+
+#define LAZYINITLIST(L) if (!L) L = list()
+
+#define UNSETEMPTY(L) if (L && !L.len) L = null
+#define LAZYREMOVE(L, I) if(L) { L -= I; if(!L.len) { L = null; } }
+#define LAZYADD(L, I) if(!L) { L = list(); } L += I;
+#define LAZYACCESS(L, I) (L ? (isnum(I) ? (I > 0 && I <= L.len ? L[I] : null) : L[I]) : null)
+#define LAZYLEN(L) length(L)

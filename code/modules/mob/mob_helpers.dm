@@ -1,11 +1,13 @@
 
 // see _DEFINES/is_helpers.dm for mob type checks
 
-/proc/isloyal(A) //Checks to see if the person contains a mindshield implant, then checks that the implant is actually inside of them
-	for(var/obj/item/weapon/implant/mindshield/L in A)
-		if(L && L.implanted)
-			return 1
+/mob/proc/isloyal() //Checks to see if the person contains a mindshield implant, then checks that the implant is actually inside of them
 	return 0
+
+/mob/living/carbon/isloyal()
+	for(var/obj/item/weapon/implant/mindshield/L in implants)
+		return 1
+
 
 /proc/check_zone(zone)
 	if(!zone)
@@ -278,29 +280,6 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 			return 1
 	return 0
 
-//converts intent-strings into numbers and back
-/proc/intent_numeric(argument)
-	if(istext(argument))
-		switch(argument)
-			if("help")
-				return 0
-			if("disarm")
-				return 1
-			if("grab")
-				return 2
-			else
-				return 3
-	else
-		switch(argument)
-			if(0)
-				return "help"
-			if(1)
-				return "disarm"
-			if(2)
-				return "grab"
-			else
-				return "harm"
-
 //change a mob's act-intent. Input the intent as a string such as "help" or use "right"/"left
 /mob/verb/a_intent_change(input as text)
 	set name = "a-intent"
@@ -308,24 +287,44 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 
 	if(ishuman(src) || isalienadult(src) || isbrain(src))
 		switch(input)
-			if("help", "disarm", "grab", "harm")
+			if(INTENT_HELP, INTENT_DISARM, INTENT_GRAB, INTENT_HARM)
 				a_intent = input
-			if("right")
-				a_intent = intent_numeric((intent_numeric(a_intent) + 1) % 4)
-			if("left")
-				a_intent = intent_numeric((intent_numeric(a_intent) + 3) % 4)
+			if(INTENT_HOTKEY_RIGHT)
+				switch (a_intent)
+					if(INTENT_HELP)
+						a_intent = INTENT_DISARM
+					if(INTENT_DISARM)
+						a_intent = INTENT_GRAB
+					if(INTENT_GRAB)
+						a_intent = INTENT_HARM
+					if(INTENT_HARM)
+						a_intent = INTENT_HELP
+			if(INTENT_HOTKEY_LEFT)
+				switch (a_intent)
+					if(INTENT_HELP)
+						a_intent = INTENT_HARM
+					if(INTENT_DISARM)
+						a_intent = INTENT_HELP
+					if(INTENT_GRAB)
+						a_intent = INTENT_DISARM
+					if(INTENT_HARM)
+						a_intent = INTENT_GRAB
 
 		if(hud_used && hud_used.action_intent)
 			hud_used.action_intent.icon_state = "[a_intent]"
 
-	else if(isrobot(src) || ismonkey(src) || islarva(src))
+	else if(iscyborg(src) || ismonkey(src) || islarva(src))
 		switch(input)
-			if("help")
-				a_intent = "help"
-			if("harm")
-				a_intent = "harm"
-			if("right","left")
-				a_intent = intent_numeric(intent_numeric(a_intent) - 3)
+			if(INTENT_HELP)
+				a_intent = INTENT_HELP
+			if(INTENT_HARM)
+				a_intent = INTENT_HARM
+			if(INTENT_HOTKEY_RIGHT, INTENT_HOTKEY_LEFT)
+				switch (a_intent)
+					if(INTENT_HELP)
+						a_intent = INTENT_HARM
+					if(INTENT_HARM)
+						a_intent = INTENT_HELP
 
 		if(hud_used && hud_used.action_intent)
 			hud_used.action_intent.icon_state = "[a_intent]"
@@ -342,7 +341,7 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 	if(!istype(M))
 		return 0
 	if(issilicon(M))
-		if(isrobot(M)) //For cyborgs, returns 1 if the cyborg has a law 0 and special_role. Returns 0 if the borg is merely slaved to an AI traitor.
+		if(iscyborg(M)) //For cyborgs, returns 1 if the cyborg has a law 0 and special_role. Returns 0 if the borg is merely slaved to an AI traitor.
 			var/mob/living/silicon/robot/R = M
 			if(R.mind && R.mind.special_role)
 				if(R.laws && R.laws.zeroth && R.syndicate)
@@ -404,11 +403,15 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 					A.target = source
 					if(!alert_overlay)
 						var/old_layer = source.layer
+						var/old_plane = source.plane
 						source.layer = FLOAT_LAYER
+						source.plane = FLOAT_PLANE
 						A.add_overlay(source)
 						source.layer = old_layer
+						source.plane = old_plane
 					else
 						alert_overlay.layer = FLOAT_LAYER
+						alert_overlay.plane = FLOAT_PLANE
 						A.add_overlay(alert_overlay)
 
 /proc/item_heal_robotic(mob/living/carbon/human/H, mob/user, brute_heal, burn_heal)
@@ -477,3 +480,8 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 			for(var/obj/screen/wheel/talk/TW in L.hud_used.wheels)
 				TW.Click()
 
+/mob/proc/is_flying(mob/M = src)
+	if(M.movement_type & FLYING)
+		return 1
+	else
+		return 0

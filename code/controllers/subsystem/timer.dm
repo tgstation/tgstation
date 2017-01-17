@@ -26,30 +26,19 @@ var/datum/subsystem/timer/SStimer
 		can_fire = 0 //nothing to do, lets stop firing.
 		return
 	for(var/datum/timedevent/event in processing)
-		if(!event.thingToCall || qdeleted(event.thingToCall))
-			qdel(event)
 		if(event.timeToRun <= world.time)
-			runevent(event)
+			event.callback.InvokeAsync()
 			qdel(event)
 		if (MC_TICK_CHECK)
 			return
-
-/datum/subsystem/timer/proc/runevent(datum/timedevent/event)
-	set waitfor = 0
-	if(event.thingToCall == GLOBAL_PROC && istext(event.procToCall))
-		call("/proc/[event.procToCall]")(arglist(event.argList))
-	else
-		call(event.thingToCall, event.procToCall)(arglist(event.argList))
 
 /datum/subsystem/timer/Recover()
 	processing |= SStimer.processing
 	hashes |= SStimer.hashes
 
 /datum/timedevent
-	var/thingToCall
-	var/procToCall
+	var/datum/callback/callback
 	var/timeToRun
-	var/argList
 	var/id
 	var/hash
 	var/static/nextid = 1
@@ -62,33 +51,32 @@ var/datum/subsystem/timer/SStimer
 	SStimer.hashes -= hash
 	return QDEL_HINT_IWILLGC
 
-/proc/addtimer(thingToCall, procToCall, wait, unique = FALSE, ...)
-	if (!thingToCall || !procToCall)
+/proc/addtimer(datum/callback/callback, wait, unique = TIMER_NORMAL)
+	if (!callback)
 		return
 	if (!SStimer.can_fire)
 		SStimer.can_fire = 1
 
 	var/datum/timedevent/event = new()
-	event.thingToCall = thingToCall
-	event.procToCall = procToCall
+	event.callback = callback
 	event.timeToRun = world.time + wait
-	var/hashlist = args.Copy()
+	var/list/hashlist = args.Copy()
 
-	hashlist[1] = "[thingToCall](\ref[thingToCall])"
-	event.hash = jointext(args, null)
-	if(args.len > 4)
-		event.argList = args.Copy(5)
+	hashlist[1] = "[callback.object](\ref[callback.object])"
+	hashlist.Insert(2, callback.delegate, callback.arguments)
+	event.hash = jointext(hashlist, null)
 
-	// Check for dupes if unique = 1.
-	if(unique)
+	if(unique == TIMER_UNIQUE)
 		var/datum/timedevent/hash_event = SStimer.hashes[event.hash]
 		if(hash_event)
 			return hash_event.id
+
 	SStimer.hashes[event.hash] = event
 	if (wait <= 0)
-		SStimer.runevent(event)
+		callback.InvokeAsync()
 		SStimer.hashes -= event.hash
 		return
+
 	// If we are unique (or we're not checking that), add the timer and return the id.
 	SStimer.processing += event
 

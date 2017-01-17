@@ -28,6 +28,7 @@
 
 /obj/item/pizzabox/New()
 	update_icon()
+	..()
 
 /obj/item/pizzabox/Destroy()
 	unprocess()
@@ -44,7 +45,7 @@
 			if(bomb_defused)
 				desc = "[desc] The bomb seems inert."
 			if(bomb_active)
-				desc = "[desc] It looks like its about to go off!"
+				desc = "[desc] It looks like it's about to go off!"
 	else
 		var/obj/item/pizzabox/box = boxes.len ? boxes[boxes.len] : src
 		if(boxes.len)
@@ -191,6 +192,7 @@
 		if(bomb in src)
 			bomb.detonate()
 			unprocess()
+			qdel(src)
 	if(!bomb_active || bomb_defused)
 		if(bomb_defused && bomb in src)
 			bomb.defuse()

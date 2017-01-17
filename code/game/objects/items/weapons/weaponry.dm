@@ -1,28 +1,5 @@
 /obj/item/weapon
 
-	var/unique_rename = 0 //allows renaming with a pen
-
-/obj/item/weapon/examine(mob/user)
-	..()
-	if(unique_rename)
-		user << "<span class='notice'>Use a pen on it to rename it.</span>"
-
-/obj/item/weapon/attackby(obj/item/I, mob/user, params)
-	if(unique_rename)
-		if(istype(I, /obj/item/weapon/pen))
-			rename_weapon(user)
-	..()
-
-/obj/item/weapon/proc/rename_weapon(mob/M)
-	var/input = stripped_input(M,"What do you want to name the weapon?", ,"", MAX_NAME_LEN)
-
-	if(src && input && !M.stat && in_range(M,src) && !M.restrained() && M.canmove)
-		name = input
-		M << "You name the weapon [input]. Say hello to your new friend."
-		return
-
-
-
 /obj/item/weapon/banhammer
 	desc = "A banhammer"
 	name = "banhammer"
@@ -30,13 +7,17 @@
 	icon_state = "toyhammer"
 	slot_flags = SLOT_BELT
 	throwforce = 0
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 	throw_speed = 3
 	throw_range = 7
 	attack_verb = list("banned")
+	obj_integrity = 200
+	max_integrity = 200
+	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 70)
+	resistance_flags = FIRE_PROOF
 
 /obj/item/weapon/banhammer/suicide_act(mob/user)
-		user.visible_message("<span class='suicide'>[user] is hitting \himself with the [src.name]! It looks like \he's trying to ban \himself from life.</span>")
+		user.visible_message("<span class='suicide'>[user] is hitting [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to ban [user.p_them()]self from life.</span>")
 		return (BRUTELOSS|FIRELOSS|TOXLOSS|OXYLOSS)
 
 /obj/item/weapon/banhammer/attack(mob/M, mob/user)
@@ -52,13 +33,14 @@
 	slot_flags = SLOT_BELT
 	force = 2
 	throwforce = 1
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 
 /obj/item/weapon/sord/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is trying to impale \himself with \the [name]! It might be a suicide attempt if it weren't so shitty.</span>", "<span class='suicide'>You try to impale yourself with \the [name], but it's USELESS...</span>")
-	return(SHAME)
+	user.visible_message("<span class='suicide'>[user] is trying to impale [user.p_them()]self with [src]! It might be a suicide attempt if it weren't so shitty.</span>", \
+	"<span class='suicide'>You try to impale yourself with [src], but it's USELESS...</span>")
+	return SHAME
 
 /obj/item/weapon/claymore
 	name = "claymore"
@@ -70,13 +52,17 @@
 	slot_flags = SLOT_BELT | SLOT_BACK
 	force = 40
 	throwforce = 10
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	block_chance = 50
 	sharpness = IS_SHARP
+	obj_integrity = 200
+	max_integrity = 200
+	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 50)
+	resistance_flags = FIRE_PROOF
 
 /obj/item/weapon/claymore/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is falling on the [src.name]! It looks like \he's trying to commit suicide.</span>")
+	user.visible_message("<span class='suicide'>[user] is falling on [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return(BRUTELOSS)
 
 var/highlander_claymores = 0
@@ -87,8 +73,6 @@ var/highlander_claymores = 0
 	block_chance = 0 //RNG WON'T HELP YOU NOW, PANSY
 	attack_verb = list("brutalized", "eviscerated", "disemboweled", "hacked", "carved", "cleaved") //ONLY THE MOST VISCERAL ATTACK VERBS
 	var/notches = 0 //HOW MANY PEOPLE HAVE BEEN SLAIN WITH THIS BLADE
-	var/announced = FALSE //IF WE ARE THE ONLY ONE LEFT STANDING
-	var/bloodthirst_level = 0 //HOW THIRSTY WE ARE FOR BLOOD
 	var/obj/item/weapon/disk/nuclear/nuke_disk //OUR STORED NUKE DISK
 
 /obj/item/weapon/claymore/highlander/New()
@@ -105,29 +89,12 @@ var/highlander_claymores = 0
 		nuke_disk = null
 	return ..()
 
-/obj/item/weapon/claymore/highlander/process()
-	if(isliving(loc))
-		var/mob/living/L = loc
-		if(L.stat != DEAD)
-			if(!announced)
-				handle_bloodthirst(L)
-			if(announced || admin_spawned || highlander_claymores > 1)
-				return
-			announced = TRUE
-			L.fully_heal()
-			world << "<span class='userdanger'>[uppertext(L.real_name)] IS THE ONLY ONE LEFT STANDING!</span>"
-			world << sound('sound/misc/highlander_only_one.ogg')
-			L << "<span class='notice'>YOU ARE THE ONLY ONE LEFT STANDING!</span>"
-			for(var/obj/item/weapon/bloodcrawl/B in L)
-				qdel(B)
-
 /obj/item/weapon/claymore/highlander/pickup(mob/living/user)
 	user << "<span class='notice'>The power of Scotland protects you! You are shielded from all stuns and knockdowns.</span>"
-	user.add_stun_absorption("highlander", INFINITY, 1, "is protected by the power of Scotland!", "The power of Scotland absorbs the stun!", " is protected by the power of Scotland!")
+	user.add_stun_absorption("highlander", INFINITY, 1, " is protected by the power of Scotland!", "The power of Scotland absorbs the stun!", " is protected by the power of Scotland!")
 
 /obj/item/weapon/claymore/highlander/dropped(mob/living/user)
-	user << "<span class='danger'>The power of Scotland fades away! You are no longer shielded from stuns.</span>"
-	user.add_stun_absorption("highlander", 0.1, 1, "is protected by the power of Scotland!", "The power of Scotland absorbs the stun!", " is protected by the power of Scotland!")
+	qdel(src) //If this ever happens, it's because you lost an arm
 
 /obj/item/weapon/claymore/highlander/examine(mob/user)
 	..()
@@ -136,14 +103,9 @@ var/highlander_claymores = 0
 		user << "<span class='boldwarning'>It's holding the nuke disk!</span>"
 
 /obj/item/weapon/claymore/highlander/attack(mob/living/target, mob/living/user)
-	var/old_target_stat = target.stat
 	. = ..()
-	bloodthirst_level = max(bloodthirst_level - (target.mind && target.mind.special_role == "highlander" ? 15 : 5), 0)
-	if(target && target.stat == DEAD && old_target_stat != DEAD && target.mind && target.mind.special_role == "highlander")
+	if(target && target.stat == DEAD && target.mind && target.mind.special_role == "highlander")
 		user.fully_heal() //STEAL THE LIFE OF OUR FALLEN FOES
-		if(bloodthirst_level >= 30)
-			user << "<span class='notice'>[src] shakes greedily as it devours [target]'s soul. Its bloodthirst is quenched for the moment...</span>"
-		bloodthirst_level = 0
 		add_notch(user)
 		target.visible_message("<span class='warning'>[target] crumbles to dust beneath [user]'s blows!</span>", "<span class='userdanger'>As you fall, your body crumbles to dust!</span>")
 		target.dust()
@@ -174,35 +136,35 @@ var/highlander_claymores = 0
 		if(2)
 			user << "<span class='notice'>Another falls before you. Another soul fuses with your own. Another notch in the blade.</span>"
 			new_name = "double-notched claymore"
-			color = rgb(255, 235, 235)
+			add_atom_colour(rgb(255, 235, 235), ADMIN_COLOUR_PRIORITY)
 		if(3)
 			user << "<span class='notice'>You're beginning to</span> <span class='danger'><b>relish</b> the <b>thrill</b> of <b>battle.</b></span>"
 			new_name = "triple-notched claymore"
-			color = rgb(255, 215, 215)
+			add_atom_colour(rgb(255, 215, 215), ADMIN_COLOUR_PRIORITY)
 		if(4)
 			user << "<span class='notice'>You've lost count of</span> <span class='boldannounce'>how many you've killed.</span>"
 			new_name = "many-notched claymore"
-			color = rgb(255, 195, 195)
+			add_atom_colour(rgb(255, 195, 195), ADMIN_COLOUR_PRIORITY)
 		if(5)
 			user << "<span class='boldannounce'>Five voices now echo in your mind, cheering the slaughter.</span>"
 			new_name = "battle-tested claymore"
-			color = rgb(255, 175, 175)
+			add_atom_colour(rgb(255, 175, 175), ADMIN_COLOUR_PRIORITY)
 		if(6)
 			user << "<span class='boldannounce'>Is this what the vikings felt like? Visions of glory fill your head as you slay your sixth foe.</span>"
 			new_name = "battle-scarred claymore"
-			color = rgb(255, 155, 155)
+			add_atom_colour(rgb(255, 155, 155), ADMIN_COLOUR_PRIORITY)
 		if(7)
 			user << "<span class='boldannounce'>Kill. Butcher. <i>Conquer.</i></span>"
 			new_name = "vicious claymore"
-			color = rgb(255, 135, 135)
+			add_atom_colour(rgb(255, 135, 135), ADMIN_COLOUR_PRIORITY)
 		if(8)
 			user << "<span class='userdanger'>IT NEVER GETS OLD. THE <i>SCREAMING</i>. THE <i>BLOOD</i> AS IT <i>SPRAYS</i> ACROSS YOUR <i>FACE.</i></span>"
 			new_name = "bloodthirsty claymore"
-			color = rgb(255, 115, 115)
+			add_atom_colour(rgb(255, 115, 115), ADMIN_COLOUR_PRIORITY)
 		if(9)
 			user << "<span class='userdanger'>ANOTHER ONE FALLS TO YOUR BLOWS. ANOTHER WEAKLING UNFIT TO LIVE.</span>"
 			new_name = "gore-stained claymore"
-			color = rgb(255, 95, 95)
+			add_atom_colour(rgb(255, 95, 95), ADMIN_COLOUR_PRIORITY)
 		if(10)
 			user.visible_message("<span class='warning'>[user]'s eyes light up with a vengeful fire!</span>", \
 			"<span class='userdanger'>YOU FEEL THE POWER OF VALHALLA FLOWING THROUGH YOU! <i>THERE CAN BE ONLY ONE!!!</i></span>")
@@ -210,26 +172,10 @@ var/highlander_claymores = 0
 			new_name = "GORE-DRENCHED CLAYMORE OF [pick("THE WHIMSICAL SLAUGHTER", "A THOUSAND SLAUGHTERED CATTLE", "GLORY AND VALHALLA", "ANNIHILATION", "OBLITERATION")]"
 			icon_state = "claymore_valhalla"
 			item_state = "cultblade"
-			color = initial(color)
+			remove_atom_colour(ADMIN_COLOUR_PRIORITY)
 
 	name = new_name
 	playsound(user, 'sound/items/Screwdriver2.ogg', 50, 1)
-
-/obj/item/weapon/claymore/highlander/proc/handle_bloodthirst(mob/living/S) //THE BLADE THIRSTS FOR BLOOD AND WILL PUNISH THE WEAK OR PACIFISTIC
-	bloodthirst_level += (1 + min(notches, 10))
-	if(bloodthirst_level == 30)
-		S << "<span class='warning'>[src] shudders in your hand. It hungers for battle...</span>"
-	if(bloodthirst_level == 60)
-		S << "<span class='boldwarning'>[src] trembles violently. Kill someone already!</span>"
-	if(bloodthirst_level == 90)
-		S << "<span class='userdanger'>[src] starts shaking viciously! Shed blood or it'll give you away!</span>"
-	if(bloodthirst_level >= 120)
-		var/turf/T = get_turf(S)
-		for(var/mob/M in player_list - S)
-			if(M.z == T.z)
-				M << "<span class='userdanger'>THERE IS A COWARD WHO DOES NOT FIGHT TO THE [uppertext(dir2text(get_dir(M, T)))]. THEIR NAME IS [uppertext(S.real_name)] - SLAUGHTER THEM.</span>"
-		S << "<span class='notice'>you fucked up</span>"
-		bloodthirst_level = 100
 
 /obj/item/weapon/katana
 	name = "katana"
@@ -240,17 +186,21 @@ var/highlander_claymores = 0
 	slot_flags = SLOT_BELT | SLOT_BACK
 	force = 40
 	throwforce = 10
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	block_chance = 50
 	sharpness = IS_SHARP
+	obj_integrity = 200
+	max_integrity = 200
+	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 50)
+	resistance_flags = FIRE_PROOF
 
 /obj/item/weapon/katana/cursed
 	slot_flags = null
 
 /obj/item/weapon/katana/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is slitting \his stomach open with the [src.name]! It looks like \he's trying to commit seppuku.</span>")
+	user.visible_message("<span class='suicide'>[user] is slitting [user.p_their()] stomach open with [src]! It looks like [user.p_theyre()] trying to commit seppuku!</span>")
 	return(BRUTELOSS)
 
 /obj/item/weapon/wirerod
@@ -261,7 +211,7 @@ var/highlander_claymores = 0
 	flags = CONDUCT
 	force = 9
 	throwforce = 10
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 	materials = list(MAT_METAL=1150, MAT_GLASS=75)
 	attack_verb = list("hit", "bludgeoned", "whacked", "bonked")
 
@@ -302,11 +252,12 @@ var/highlander_claymores = 0
 	throwforce = 20 //This is never used on mobs since this has a 100% embed chance.
 	throw_speed = 4
 	embedded_pain_multiplier = 4
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	embed_chance = 100
 	embedded_fall_chance = 0 //Hahaha!
 	sharpness = IS_SHARP
 	materials = list(MAT_METAL=500, MAT_GLASS=500)
+	resistance_flags = FIRE_PROOF
 
 
 /obj/item/weapon/switchblade
@@ -315,7 +266,7 @@ var/highlander_claymores = 0
 	desc = "A sharp, concealable, spring-loaded knife."
 	flags = CONDUCT
 	force = 3
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	throwforce = 5
 	throw_speed = 3
 	throw_range = 6
@@ -323,6 +274,7 @@ var/highlander_claymores = 0
 	origin_tech = "engineering=3;combat=2"
 	hitsound = 'sound/weapons/Genhit.ogg'
 	attack_verb = list("stubbed", "poked")
+	resistance_flags = FIRE_PROOF
 	var/extended = 0
 
 /obj/item/weapon/switchblade/attack_self(mob/user)
@@ -330,7 +282,7 @@ var/highlander_claymores = 0
 	playsound(src.loc, 'sound/weapons/batonextend.ogg', 50, 1)
 	if(extended)
 		force = 20
-		w_class = 3
+		w_class = WEIGHT_CLASS_NORMAL
 		throwforce = 23
 		icon_state = "switchblade_ext"
 		attack_verb = list("slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
@@ -338,7 +290,7 @@ var/highlander_claymores = 0
 		sharpness = IS_SHARP
 	else
 		force = 3
-		w_class = 2
+		w_class = WEIGHT_CLASS_SMALL
 		throwforce = 5
 		icon_state = "switchblade"
 		attack_verb = list("stubbed", "poked")
@@ -346,7 +298,7 @@ var/highlander_claymores = 0
 		sharpness = IS_BLUNT
 
 /obj/item/weapon/switchblade/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is slitting \his own throat with the [src.name]! It looks like \he's trying to commit suicide.</span>")
+	user.visible_message("<span class='suicide'>[user] is slitting [user.p_their()] own throat with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return (BRUTELOSS)
 
 /obj/item/weapon/phone
@@ -358,15 +310,15 @@ var/highlander_claymores = 0
 	throwforce = 2
 	throw_speed = 3
 	throw_range = 4
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	attack_verb = list("called", "rang")
 	hitsound = 'sound/weapons/ring.ogg'
 
 /obj/item/weapon/phone/suicide_act(mob/user)
 	if(locate(/obj/structure/chair/stool) in user.loc)
-		user.visible_message("<span class='suicide'>[user] begins to tie a noose with the [src.name]'s cord! It looks like \he's trying to commit suicide.</span>")
+		user.visible_message("<span class='suicide'>[user] begins to tie a noose with [src]'s cord! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	else
-		user.visible_message("<span class='suicide'>[user] is strangling \himself with the [src.name]'s cord! It looks like \he's trying to commit suicide.</span>")
+		user.visible_message("<span class='suicide'>[user] is strangling [user.p_them()]self with [src]'s cord! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return(OXYLOSS)
 
 /obj/item/weapon/cane
@@ -377,7 +329,7 @@ var/highlander_claymores = 0
 	item_state = "stick"
 	force = 5
 	throwforce = 5
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	materials = list(MAT_METAL=50)
 	attack_verb = list("bludgeoned", "whacked", "disciplined", "thrashed")
 
@@ -390,17 +342,17 @@ var/highlander_claymores = 0
 	throwforce = 5
 	throw_speed = 2
 	throw_range = 5
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	armour_penetration = 100
 	attack_verb = list("bludgeoned", "whacked", "disciplined")
-	resistance_flags = 0
+	resistance_flags = FLAMMABLE
 
 /obj/item/weapon/staff/broom
 	name = "broom"
 	desc = "Used for sweeping, and flying into the night while cackling. Black cat not included."
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "broom"
-	resistance_flags = 0
+	resistance_flags = FLAMMABLE
 
 /obj/item/weapon/staff/stick
 	name = "stick"
@@ -412,7 +364,7 @@ var/highlander_claymores = 0
 	throwforce = 5
 	throw_speed = 2
 	throw_range = 5
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/weapon/ectoplasm
 	name = "ectoplasm"
@@ -422,7 +374,7 @@ var/highlander_claymores = 0
 	icon_state = "ectoplasm"
 
 /obj/item/weapon/ectoplasm/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is inhaling the [src.name]! It looks like \he's trying to visit the astral plane.</span>")
+	user.visible_message("<span class='suicide'>[user] is inhaling [src]! It looks like [user.p_theyre()] trying to visit the astral plane.</span>")
 	return (OXYLOSS)
 
 /obj/item/weapon/mounted_chainsaw
@@ -431,7 +383,7 @@ var/highlander_claymores = 0
 	icon_state = "chainsaw_on"
 	item_state = "mounted_chainsaw"
 	flags = NODROP | ABSTRACT
-	w_class = 5.0
+	w_class = WEIGHT_CLASS_HUGE
 	force = 21
 	throwforce = 0
 	throw_range = 0
@@ -480,7 +432,7 @@ var/highlander_claymores = 0
 	item_state = "skateboard"
 	force = 12
 	throwforce = 4
-	w_class = 5.0
+	w_class = WEIGHT_CLASS_HUGE
 	attack_verb = list("smacked", "whacked", "slammed", "smashed")
 
 /obj/item/weapon/melee/skateboard/attack_self(mob/user)
@@ -496,7 +448,7 @@ var/highlander_claymores = 0
 	force = 10
 	throwforce = 12
 	attack_verb = list("beat", "smacked")
-	w_class = 5
+	w_class = WEIGHT_CLASS_HUGE
 	var/homerun_ready = 0
 	var/homerun_able = 0
 
@@ -560,17 +512,19 @@ var/highlander_claymores = 0
 	throwforce = 1
 	attack_verb = list("swatted", "smacked")
 	hitsound = 'sound/effects/snap.ogg'
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	//Things in this list will be instantly splatted.  Flyman weakness is handled in the flyman species weakness proc.
 	var/list/strong_against
 
 /obj/item/weapon/melee/flyswatter/New()
+	..()
 	strong_against = typecacheof(list(
 					/mob/living/simple_animal/hostile/poison/bees/,
 					/mob/living/simple_animal/butterfly,
 					/mob/living/simple_animal/cockroach,
-					/obj/item/queen_bee/
+					/obj/item/queen_bee
 	))
+
 
 /obj/item/weapon/melee/flyswatter/afterattack(atom/target, mob/user, proximity_flag)
 	if(proximity_flag)

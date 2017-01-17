@@ -6,6 +6,7 @@
 
 /obj/structure/disposalholder
 	invisibility = INVISIBILITY_MAXIMUM
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	var/datum/gas_mixture/gas = null	// gas used to flush, will appear at exit point
 	var/active = 0	// true if the holder is moving, otherwise inactive
 	dir = 0
@@ -123,6 +124,9 @@
 /obj/structure/disposalholder/allow_drop()
 	return 1
 
+/obj/structure/disposalholder/ex_act(severity, target)
+	return
+
 // Disposal pipes
 
 /obj/structure/disposalpipe
@@ -135,7 +139,9 @@
 	level = 1			// underfloor only
 	var/dpdir = 0		// bitmask of pipe directions
 	dir = 0// dir will contain dominant direction for junction pipes
-	var/health = 10 	// health points 0-10
+	obj_integrity = 200
+	max_integrity = 200
+	armor = list(melee = 25, bullet = 10, laser = 10, energy = 100, bomb = 0, bio = 100, rad = 100, fire = 90, acid = 30)
 	layer = DISPOSAL_PIPE_LAYER			// slightly lower than wires and other pipes
 	var/base_icon_state	// initial icon state on map
 	var/obj/structure/disposalconstruct/stored
@@ -178,22 +184,9 @@
 /obj/structure/disposalpipe/Destroy()
 	var/obj/structure/disposalholder/H = locate() in src
 	if(H)
-		// holder was present
 		H.active = 0
 		var/turf/T = src.loc
-		if(T.density)
-			// deleting pipe is inside a dense turf (wall)
-			// this is unlikely, but just dump out everything into the turf in case
-
-			for(var/atom/movable/AM in H)
-				AM.forceMove(src.loc)
-				AM.pipe_eject(0)
-			qdel(H)
-			return ..()
-
-		// otherwise, do normal expel from turf
-		else
-			expel(H, T, 0)
+		expel(H, T, 0)
 	return ..()
 
 // returns the direction of the next pipe object, given the entrance dir
@@ -228,7 +221,7 @@
 // update the icon_state to reflect hidden status
 /obj/structure/disposalpipe/proc/update()
 	var/turf/T = src.loc
-	hide(T.intact && !istype(T,/turf/open/space))	// space never hides pipes
+	hide(T.intact && !isspaceturf(T))	// space never hides pipes
 
 // hide called by levelupdate if turf intact status changes
 // change visibility status and force update of icon
@@ -255,103 +248,47 @@
 /obj/structure/disposalpipe/proc/expel(obj/structure/disposalholder/H, turf/T, direction)
 
 	var/turf/target
+	var/eject_range = 5
+	var/turf/open/floor/floorturf
 
-	if(istype(T, /turf/open/floor)) //intact floor, pop the tile
-		var/turf/open/floor/myturf = T
-		if(myturf.floor_tile)
-			PoolOrNew(myturf.floor_tile, T)
-		myturf.make_plating()
+	if(isfloorturf(T)) //intact floor, pop the tile
+		floorturf = T
+		if(floorturf.floor_tile)
+			PoolOrNew(floorturf.floor_tile, T)
+		floorturf.make_plating()
 
 	if(direction)		// direction is specified
-		if(istype(T, /turf/open/space)) // if ended in space, then range is unlimited
+		if(isspaceturf(T)) // if ended in space, then range is unlimited
 			target = get_edge_target_turf(T, direction)
 		else						// otherwise limit to 10 tiles
 			target = get_ranged_target_turf(T, direction, 10)
 
-		playsound(src, 'sound/machines/hiss.ogg', 50, 0, 0)
-		if(H)
-			for(var/atom/movable/AM in H)
-				AM.forceMove(src.loc)
-				AM.pipe_eject(direction)
-				AM.throw_at_fast(target, 10, 1)
+		eject_range = 10
 
-	else	// no specified direction, so throw in random direction
+	else if(floorturf)
+		target = get_offset_target_turf(T, rand(5)-rand(5), rand(5)-rand(5))
 
-		playsound(src, 'sound/machines/hiss.ogg', 50, 0, 0)
-		if(H)
-			for(var/atom/movable/AM in H)
-				target = get_offset_target_turf(T, rand(5)-rand(5), rand(5)-rand(5))
-				AM.forceMove(src.loc)
-				AM.pipe_eject(0)
-				AM.throw_at_fast(target, 5, 1)
+	playsound(src, 'sound/machines/hiss.ogg', 50, 0, 0)
+	for(var/atom/movable/AM in H)
+		AM.forceMove(src.loc)
+		AM.pipe_eject(direction)
+		if(target)
+			AM.throw_at(target, eject_range, 1)
 	H.vent_gas(T)
 	qdel(H)
-	return
-
-// call to break the pipe
-// will expel any holder inside at the time
-// then delete the pipe
-// remains : set to leave broken pipe pieces in place
-/obj/structure/disposalpipe/proc/broken(remains = 0)
-	if(remains)
-		for(var/D in cardinal)
-			if(D & dpdir)
-				var/obj/structure/disposalpipe/broken/P = new(src.loc)
-				P.setDir(D)
-
-	src.invisibility = INVISIBILITY_MAXIMUM	// make invisible (since we won't delete the pipe immediately)
-	var/obj/structure/disposalholder/H = locate() in src
-	if(H)
-		// holder was present
-		H.active = 0
-		var/turf/T = src.loc
-		if(T.density)
-			// broken pipe is inside a dense turf (wall)
-			// this is unlikely, but just dump out everything into the turf in case
-
-			for(var/atom/movable/AM in H)
-				AM.forceMove(src.loc)
-				AM.pipe_eject(0)
-			qdel(H)
-			return
-
-		// otherwise, do normal expel from turf
-		if(H)
-			expel(H, T, 0)
-
-	spawn(2)	// delete pipe after 2 ticks to ensure expel proc finished
-		qdel(src)
 
 
 // pipe affected by explosion
-/obj/structure/disposalpipe/ex_act(severity, target)
-
-	//pass on ex_act to our contents before calling it on ourself
+/obj/structure/disposalpipe/contents_explosion(severity, target)
 	var/obj/structure/disposalholder/H = locate() in src
 	if(H)
 		H.contents_explosion(severity, target)
 
-	switch(severity)
-		if(1)
-			broken(0)
-			return
-		if(2)
-			health -= rand(5,15)
-			healthcheck()
-			return
-		if(3)
-			health -= rand(0,15)
-			healthcheck()
-			return
 
-
-// test health for brokenness
-/obj/structure/disposalpipe/proc/healthcheck()
-	if(health < -2)
-		broken(0)
-	else if(health<1)
-		broken(1)
-	return
+/obj/structure/disposalpipe/run_obj_armor(damage_amount, damage_type, damage_flag = 0, attack_dir)
+	if(damage_flag == "melee" && damage_amount < 10)
+		return 0
+	. = ..()
 
 //attack by item
 //weldingtool: unfasten and convert to obj/disposalconstruct
@@ -370,7 +307,7 @@
 				// check if anything changed over 2 seconds
 				if(do_after(user,30, target = src))
 					if(!src || !W.isOn()) return
-					Deconstruct()
+					deconstruct()
 					user << "<span class='notice'>You slice the disposal pipe.</span>"
 	else
 		return ..()
@@ -380,20 +317,28 @@
 	. = 1
 
 // called when pipe is cut with welder
-/obj/structure/disposalpipe/Deconstruct()
-	if(stored)
-		var/turf/T = loc
-		stored.loc = T
-		transfer_fingerprints_to(stored)
-		stored.setDir(dir)
-		stored.density = 0
-		stored.anchored = 1
-		stored.update_icon()
-		..()
+/obj/structure/disposalpipe/deconstruct(disassembled = TRUE)
+	if(!(flags & NODECONSTRUCT))
+		if(disassembled)
+			if(stored)
+				var/turf/T = loc
+				stored.loc = T
+				transfer_fingerprints_to(stored)
+				stored.setDir(dir)
+				stored.density = 0
+				stored.anchored = 1
+				stored.update_icon()
+		else
+			for(var/D in cardinal)
+				if(D & dpdir)
+					var/obj/structure/disposalpipe/broken/P = new(src.loc)
+					P.setDir(D)
+	qdel(src)
+
 
 /obj/structure/disposalpipe/singularity_pull(S, current_size)
 	if(current_size >= STAGE_FIVE)
-		Deconstruct()
+		deconstruct()
 
 // *** TEST verb
 //client/verb/dispstop()
@@ -679,11 +624,10 @@
 /obj/structure/disposalpipe/broken/New()
 	..()
 	update()
-	return
 
 // the disposal outlet machine
 
-/obj/structure/disposalpipe/broken/Deconstruct()
+/obj/structure/disposalpipe/broken/deconstruct()
 	qdel(src)
 
 /obj/structure/disposaloutlet
@@ -739,7 +683,7 @@
 		for(var/atom/movable/AM in H)
 			AM.forceMove(T)
 			AM.pipe_eject(dir)
-			AM.throw_at_fast(target, eject_range, 1)
+			AM.throw_at(target, eject_range, 1)
 
 		H.vent_gas(T)
 		qdel(H)
@@ -750,11 +694,11 @@
 	if(istype(I, /obj/item/weapon/screwdriver))
 		if(mode==0)
 			mode=1
-			playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+			playsound(src.loc, I.usesound, 50, 1)
 			user << "<span class='notice'>You remove the screws around the power connection.</span>"
 		else if(mode==1)
 			mode=0
-			playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+			playsound(src.loc, I.usesound, 50, 1)
 			user << "<span class='notice'>You attach the screws around the power connection.</span>"
 
 	else if(istype(I,/obj/item/weapon/weldingtool) && mode==1)
@@ -762,7 +706,7 @@
 		if(W.remove_fuel(0,user))
 			playsound(src.loc, 'sound/items/Welder2.ogg', 100, 1)
 			user << "<span class='notice'>You start slicing the floorweld off \the [src]...</span>"
-			if(do_after(user,20/I.toolspeed, target = src))
+			if(do_after(user,20*I.toolspeed, target = src))
 				if(!src || !W.isOn()) return
 				user << "<span class='notice'>You slice the floorweld off \the [src].</span>"
 				stored.loc = loc

@@ -27,8 +27,8 @@
 	med_hud_set_status()
 
 /mob/living/Destroy()
-	..()
-
+	if(ranged_ability)
+		ranged_ability.remove_ranged_ability(src)
 	if(buckled)
 		buckled.unbuckle_mob(src,force=1)
 
@@ -39,7 +39,15 @@
 			qdel(I)
 	staticOverlays.len = 0
 	remove_from_all_data_huds()
-	return QDEL_HINT_HARDDEL
+
+	return ..()
+
+/mob/living/ghostize(can_reenter_corpse = 1)
+	var/prev_client = client
+	. = ..()
+	if(.)
+		if(ranged_ability && prev_client)
+			ranged_ability.remove_mousepointer(prev_client)
 
 
 /mob/living/proc/OpenCraftingMenu()
@@ -117,10 +125,10 @@
 	if(!M.buckled && !M.has_buckled_mobs())
 		var/mob_swap
 		//the puller can always swap with its victim if on grab intent
-		if(M.pulledby == src && a_intent == "grab")
+		if(M.pulledby == src && a_intent == INTENT_GRAB)
 			mob_swap = 1
 		//restrained people act if they were on 'help' intent to prevent a person being pulled from being seperated from their puller
-		else if((M.restrained() || M.a_intent == "help") && (restrained() || a_intent == "help"))
+		else if((M.restrained() || M.a_intent == INTENT_HELP) && (restrained() || a_intent == INTENT_HELP))
 			mob_swap = 1
 		if(mob_swap)
 			//switch our position with M
@@ -430,18 +438,21 @@
 	if (s_active && !(s_active.ClickAccessible(src, depth=STORAGE_VIEW_DEPTH) || s_active.Adjacent(src)))
 		s_active.close(src)
 
-/mob/living/movement_delay()
+/mob/living/movement_delay(ignorewalk = 0)
 	. = ..()
-	if(istype(loc, /turf/open))
+	if(isopenturf(loc) && !is_flying())
 		var/turf/open/T = loc
 		. += T.slowdown
-	switch(m_intent)
-		if("run")
-			if(drowsyness > 0)
-				. += 6
-			. += config.run_speed
-		if("walk")
-			. += config.walk_speed
+	if(ignorewalk)
+		. += config.run_speed
+	else
+		switch(m_intent)
+			if(MOVE_INTENT_RUN)
+				if(drowsyness > 0)
+					. += 6
+				. += config.run_speed
+			if(MOVE_INTENT_WALK)
+				. += config.walk_speed
 
 /mob/living/proc/makeTrail(turf/T)
 	if(!has_gravity())
@@ -474,7 +485,7 @@
 						TH.transfer_mob_blood_dna(src)
 
 /mob/living/carbon/human/makeTrail(turf/T)
-	if((NOBLOOD in dna.species.specflags) || !bleed_rate || bleedsuppress)
+	if((NOBLOOD in dna.species.species_traits) || !bleed_rate || bleedsuppress)
 		return
 	..()
 
@@ -508,7 +519,7 @@
 				if (AM.density && AM.anchored)
 					pressure_resistance_prob_delta -= 20
 					break
-	if(!slipping)
+	if(!force_moving)
 		..(pressure_difference, direction, pressure_resistance_prob_delta)
 
 /mob/living/verb/resist()
@@ -595,6 +606,8 @@
 		fixed = 1
 	if(on && !floating && !fixed)
 		animate(src, pixel_y = pixel_y + 2, time = 10, loop = -1)
+		sleep(10)
+		animate(src, pixel_y = pixel_y - 2, time = 10, loop = -1)
 		floating = 1
 	else if(((!on || fixed) && floating))
 		animate(src, pixel_y = get_standard_pixel_y_offset(lying), time = 10)
@@ -651,74 +664,9 @@
 
 /mob/living/singularity_pull(S, current_size)
 	if(current_size >= STAGE_SIX)
-		throw_at_fast(S,14,3, spin=1)
+		throw_at(S,14,3, spin=1)
 	else
 		step_towards(src,S)
-
-/atom/movable/proc/do_attack_animation(atom/A, end_pixel_y)
-	var/pixel_x_diff = 0
-	var/pixel_y_diff = 0
-	var/final_pixel_y = initial(pixel_y)
-	if(end_pixel_y)
-		final_pixel_y = end_pixel_y
-
-	var/direction = get_dir(src, A)
-	if(direction & NORTH)
-		pixel_y_diff = 8
-	else if(direction & SOUTH)
-		pixel_y_diff = -8
-
-	if(direction & EAST)
-		pixel_x_diff = 8
-	else if(direction & WEST)
-		pixel_x_diff = -8
-
-	animate(src, pixel_x = pixel_x + pixel_x_diff, pixel_y = pixel_y + pixel_y_diff, time = 2)
-	animate(pixel_x = initial(pixel_x), pixel_y = final_pixel_y, time = 2)
-
-
-/mob/living/do_attack_animation(atom/A)
-	var/final_pixel_y = get_standard_pixel_y_offset(lying)
-	..(A, final_pixel_y)
-	floating = 0 // If we were without gravity, the bouncing animation got stopped, so we make sure we restart the bouncing after the next movement.
-
-	// What icon do we use for the attack?
-	var/image/I
-	var/obj/item/held_item = get_active_held_item()
-	if(held_item)
-		I = image(held_item.icon, A, held_item.icon_state, A.layer + 0.1)
-	else
-		return
-
-	// Who can see the attack?
-	var/list/viewing = list()
-	for(var/mob/M in viewers(A))
-		if(M.client)
-			viewing |= M.client
-	flick_overlay(I, viewing, 5) // 5 ticks/half a second
-
-	// Scale the icon.
-	I.transform *= 0.75
-	// The icon should not rotate.
-	I.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
-
-	// Set the direction of the icon animation.
-	var/direction = get_dir(src, A)
-	if(direction & NORTH)
-		I.pixel_y = -16
-	else if(direction & SOUTH)
-		I.pixel_y = 16
-
-	if(direction & EAST)
-		I.pixel_x = -16
-	else if(direction & WEST)
-		I.pixel_x = 16
-
-	if(!direction) // Attacked self?!
-		I.pixel_z = 16
-
-	// And animate the attack!
-	animate(I, alpha = 175, pixel_x = 0, pixel_y = 0, pixel_z = 0, time = 3)
 
 /mob/living/proc/do_jitter_animation(jitteriness)
 	var/amplitude = min(4, (jitteriness/100) + 1)
@@ -739,7 +687,7 @@
 	else if(istype(loc, /obj/structure/transit_tube_pod))
 		loc_temp = environment.temperature
 
-	else if(istype(get_turf(src), /turf/open/space))
+	else if(isspaceturf(get_turf(src)))
 		var/turf/heat_turf = get_turf(src)
 		loc_temp = heat_turf.temperature
 
@@ -876,7 +824,7 @@
 			return 1
 	return 0
 
-/mob/living/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0)
+/mob/living/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback)
 	stop_pulling()
 	. = ..()
 
@@ -950,3 +898,15 @@
 		IgniteMob()
 
 //Mobs on Fire end
+
+// used by secbot and monkeys Crossed
+/mob/living/proc/knockOver(var/mob/living/carbon/C)	
+	C.visible_message("<span class='warning'>[pick( \
+					  "[C] dives out of [src]'s way!", \
+					  "[C] stumbles over [src]!", \
+					  "[C] jumps out of [src]'s path!", \
+					  "[C] trips over [src] and falls!", \
+					  "[C] topples over [src]!", \
+					  "[C] leaps out of [src]'s way!")]</span>")
+	C.Weaken(2)
+	

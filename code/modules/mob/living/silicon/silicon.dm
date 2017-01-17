@@ -39,7 +39,7 @@
 
 /mob/living/silicon/New()
 	..()
-	silicon_mobs |= src
+	silicon_mobs += src
 	var/datum/atom_hud/data/diagnostic/diag_hud = huds[DATA_HUD_DIAGNOSTIC]
 	diag_hud.add_to_hud(src)
 	diag_hud_set_status()
@@ -192,7 +192,7 @@
 	return
 
 
-/mob/living/silicon/proc/statelaws()
+/mob/living/silicon/proc/statelaws(force = 0)
 
 	//"radiomod" is inserted before a hardcoded message to change if and how it is handled by an internal radio.
 	src.say("[radiomod] Current Active Laws:")
@@ -203,13 +203,13 @@
 
 	if (src.laws.devillaws && src.laws.devillaws.len)
 		for(var/index = 1, index <= src.laws.devillaws.len, index++)
-			if (src.devillawcheck[index] == "Yes")
+			if (src.devillawcheck[index] == "Yes" || force)
 				src.say("[radiomod] 666. [src.laws.devillaws[index]]")
 				sleep(10)
 
 
 	if (src.laws.zeroth)
-		if (src.lawcheck[1] == "Yes")
+		if (src.lawcheck[1] == "Yes" || force)
 			src.say("[radiomod] 0. [src.laws.zeroth]")
 			sleep(10)
 
@@ -217,7 +217,7 @@
 		var/law = src.laws.ion[index]
 		var/num = ionnum()
 		if (length(law) > 0)
-			if (src.ioncheck[index] == "Yes")
+			if (src.ioncheck[index] == "Yes" || force)
 				src.say("[radiomod] [num]. [law]")
 				sleep(10)
 
@@ -225,7 +225,7 @@
 		var/law = src.laws.inherent[index]
 
 		if (length(law) > 0)
-			if (src.lawcheck[index+1] == "Yes")
+			if (src.lawcheck[index+1] == "Yes" || force)
 				src.say("[radiomod] [number]. [law]")
 				sleep(10)
 			number++
@@ -236,7 +236,7 @@
 
 		if (length(law) > 0)
 			if(src.lawcheck.len >= number+1)
-				if (src.lawcheck[number+1] == "Yes")
+				if (src.lawcheck[number+1] == "Yes" || force)
 					src.say("[radiomod] [number]. [law]")
 					sleep(10)
 				number++

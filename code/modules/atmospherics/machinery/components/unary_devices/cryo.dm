@@ -4,6 +4,9 @@
 	icon_state = "cell-off"
 	density = 1
 	anchored = 1
+	obj_integrity = 350
+	max_integrity = 350
+	armor = list(melee = 0, bullet = 0, laser = 0, energy = 100, bomb = 0, bio = 100, rad = 100, fire = 30, acid = 30)
 
 	var/on = FALSE
 	state_open = FALSE
@@ -26,7 +29,7 @@
 	B.apply_default_parts(src)
 
 /obj/item/weapon/circuitboard/machine/cryo_tube
-	name = "circuit board (Cryotube)"
+	name = "Cryotube (Machine Board)"
 	build_path = /obj/machinery/atmospherics/components/unary/cryo_cell
 	origin_tech = "programming=4;biotech=3;engineering=4;plasmatech=3"
 	req_components = list(
@@ -50,8 +53,26 @@
 	conduction_coefficient = initial(conduction_coefficient) * C
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/Destroy()
-	beaker = null
+	if(beaker)
+		qdel(beaker)
+		beaker = null
 	return ..()
+
+/obj/machinery/atmospherics/components/unary/cryo_cell/contents_explosion(severity, target)
+	..()
+	if(beaker)
+		beaker.ex_act(severity, target)
+
+/obj/machinery/atmospherics/components/unary/cryo_cell/handle_atom_del(atom/A)
+	..()
+	if(A == beaker)
+		beaker = null
+		updateUsrDialog()
+
+/obj/machinery/atmospherics/components/unary/cryo_cell/on_deconstruction()
+	if(beaker)
+		beaker.forceMove(loc)
+		beaker = null
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/update_icon()
 	if(panel_open)
@@ -85,18 +106,18 @@
 			return
 		else if(occupant.stat == DEAD) // We don't bother with dead people.
 			return
+		if(air1.gases.len)
+			if(occupant.bodytemperature < T0C) // Sleepytime. Why? More cryo magic.
+				occupant.Sleeping((occupant.bodytemperature / sleep_factor) * 100)
+				occupant.Paralyse((occupant.bodytemperature / paralyze_factor) * 100)
 
-		if(occupant.bodytemperature < T0C) // Sleepytime. Why? More cryo magic.
-			occupant.Sleeping((occupant.bodytemperature / sleep_factor) * 100)
-			occupant.Paralyse((occupant.bodytemperature / paralyze_factor) * 100)
-
-		if(beaker)
-			if(reagent_transfer == 0) // Magically transfer reagents. Because cryo magic.
-				beaker.reagents.trans_to(occupant, 1, 10 * efficiency) // Transfer reagents, multiplied because cryo magic.
-				beaker.reagents.reaction(occupant, VAPOR)
-				air1.gases["o2"][MOLES] -= 2 / efficiency // Lets use gas for this.
-			if(++reagent_transfer >= 10 * efficiency) // Throttle reagent transfer (higher efficiency will transfer the same amount but consume less from the beaker).
-				reagent_transfer = 0
+			if(beaker)
+				if(reagent_transfer == 0) // Magically transfer reagents. Because cryo magic.
+					beaker.reagents.trans_to(occupant, 1, 10 * efficiency) // Transfer reagents, multiplied because cryo magic.
+					beaker.reagents.reaction(occupant, VAPOR)
+					air1.gases["o2"][MOLES] -= 2 / efficiency // Lets use gas for this.
+				if(++reagent_transfer >= 10 * efficiency) // Throttle reagent transfer (higher efficiency will transfer the same amount but consume less from the beaker).
+					reagent_transfer = 0
 	return 1
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/process_atmos()
@@ -104,7 +125,7 @@
 	if(!on)
 		return
 	var/datum/gas_mixture/air1 = AIR1
-	if(!NODE1 || !AIR1 || air1.gases["o2"][MOLES] < 5) // Turn off if the machine won't work.
+	if(!NODE1 || !AIR1 || !air1.gases.len || air1.gases["o2"][MOLES] < 5) // Turn off if the machine won't work.
 		on = FALSE
 		update_icon()
 		return
@@ -137,14 +158,14 @@
 		on = FALSE
 		..()
 		if(beaker)
-			beaker.loc = src
+			beaker.forceMove(src)
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/close_machine(mob/living/carbon/user)
 	if((isnull(user) || istype(user)) && state_open && !panel_open)
 		..(user)
 		return occupant
 
-/obj/machinery/atmospherics/components/unary/cryo_cell/container_resist(mob/user)
+/obj/machinery/atmospherics/components/unary/cryo_cell/container_resist(mob/living/user)
 	user << "<span class='notice'>You struggle inside the cryotube, kicking the release with your foot... (This will take around 30 seconds.)</span>"
 	audible_message("<span class='notice'>You hear a thump from [src].</span>")
 	if(do_after(user, 300))
@@ -169,10 +190,10 @@
 /obj/machinery/atmospherics/components/unary/cryo_cell/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/reagent_containers/glass))
 		. = 1 //no afterattack
-		if(!user.drop_item())
-			return
 		if(beaker)
 			user << "<span class='warning'>A beaker is already loaded into [src]!</span>"
+			return
+		if(!user.drop_item())
 			return
 		beaker = I
 		I.loc = src
@@ -253,7 +274,7 @@
 			. = TRUE
 		if("ejectbeaker")
 			if(beaker)
-				beaker.loc = loc
+				beaker.forceMove(loc)
 				beaker = null
 				. = TRUE
 	update_icon()

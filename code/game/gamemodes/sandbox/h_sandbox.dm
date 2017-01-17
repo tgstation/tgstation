@@ -1,16 +1,15 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
+
 
 var/hsboxspawn = 1
 
 /mob
 	var/datum/hSB/sandbox = null
 /mob/proc/CanBuild()
-	if(master_mode == "sandbox")
-		sandbox = new/datum/hSB
-		sandbox.owner = src.ckey
-		if(src.client.holder)
-			sandbox.admin = 1
-		verbs += new/mob/proc/sandbox_panel
+	sandbox = new/datum/hSB
+	sandbox.owner = src.ckey
+	if(src.client.holder)
+		sandbox.admin = 1
+	verbs += new/mob/proc/sandbox_panel
 /mob/proc/sandbox_panel()
 	set name = "Sandbox Panel"
 	if(sandbox)
@@ -143,30 +142,38 @@ var/hsboxspawn = 1
 				if(P.wear_suit)
 					P.wear_suit.loc = P.loc
 					P.wear_suit.layer = initial(P.wear_suit.layer)
+					P.wear_suit.plane = initial(P.wear_suit.plane)
 					P.wear_suit = null
 				P.wear_suit = new/obj/item/clothing/suit/space(P)
 				P.wear_suit.layer = ABOVE_HUD_LAYER
+				P.wear_suit.plane = ABOVE_HUD_PLANE
 				P.update_inv_wear_suit()
 				if(P.head)
 					P.head.loc = P.loc
 					P.head.layer = initial(P.head.layer)
+					P.head.plane = initial(P.head.plane)
 					P.head = null
 				P.head = new/obj/item/clothing/head/helmet/space(P)
 				P.head.layer = ABOVE_HUD_LAYER
+				P.head.plane = ABOVE_HUD_PLANE
 				P.update_inv_head()
 				if(P.wear_mask)
 					P.wear_mask.loc = P.loc
 					P.wear_mask.layer = initial(P.wear_mask.layer)
+					P.wear_mask.plane = initial(P.wear_mask.plane)
 					P.wear_mask = null
 				P.wear_mask = new/obj/item/clothing/mask/gas(P)
 				P.wear_mask.layer = ABOVE_HUD_LAYER
+				P.wear_mask.plane = ABOVE_HUD_PLANE
 				P.update_inv_wear_mask()
 				if(P.back)
 					P.back.loc = P.loc
 					P.back.layer = initial(P.back.layer)
+					P.back.plane = initial(P.back.plane)
 					P.back = null
 				P.back = new/obj/item/weapon/tank/jetpack/oxygen(P)
 				P.back.layer = ABOVE_HUD_LAYER
+				P.back.plane = ABOVE_HUD_PLANE
 				P.update_inv_back()
 				P.internal = P.back
 				P.update_internals_hud_icon(1)

@@ -7,56 +7,37 @@
 	if(istype(I, /obj/item/weapon/wrench))
 		user << "<span class='notice'>You begin to remove the handlebars...</span>"
 		playsound(get_turf(user), 'sound/items/Ratchet.ogg', 50, 1)
-		if(do_after(user, 40/I.toolspeed, target = src))
+		if(do_after(user, 40*I.toolspeed, target = src))
 			new /obj/vehicle/scooter/skateboard(get_turf(src))
 			new /obj/item/stack/rods(get_turf(src),2)
 			user << "<span class='notice'>You remove the handlebars from [src].</span>"
 			qdel(src)
 
-/obj/vehicle/scooter/handle_vehicle_layer()
-	if(dir == SOUTH)
-		layer = ABOVE_MOB_LAYER
-	else
-		layer = OBJ_LAYER
-
-/obj/vehicle/scooter/handle_vehicle_offsets()
-	..()
-	if(has_buckled_mobs())
-		for(var/m in buckled_mobs)
-			var/mob/living/buckled_mob = m
-			switch(buckled_mob.dir)
-				if(NORTH)
-					buckled_mob.pixel_x = 0
-				if(EAST)
-					buckled_mob.pixel_x = -2
-				if(SOUTH)
-					buckled_mob.pixel_x = 0
-				if(WEST)
-					buckled_mob.pixel_x = 2
-			if(buckled_mob.get_num_legs() > 0)
-				buckled_mob.pixel_y = 5
-			else
-				buckled_mob.pixel_y = -4
+/obj/vehicle/scooter/buckle_mob()
+	. = ..()
+	riding_datum = new/datum/riding/scooter
 
 /obj/vehicle/scooter/buckle_mob(mob/living/M, force = 0)
 	if(!istype(M))
 		return 0
 	if(M.get_num_legs() < 2 && M.get_num_arms() <= 0)
-		M << "<span class='warning'>Your limbless body can't use [src].</span>"
+		M << "<span class='warning'>Your limbless body can't ride \the [src].</span>"
 		return 0
 	. = ..()
 
 /obj/vehicle/scooter/post_buckle_mob(mob/living/M)
-	vehicle_move_delay = initial(vehicle_move_delay)
-	if(M.get_num_legs() < 2)
-		vehicle_move_delay ++
+	riding_datum.account_limbs(M)
 
 /obj/vehicle/scooter/skateboard
 	name = "skateboard"
 	desc = "An unfinished scooter which can only barely be called a skateboard. It's still rideable, but probably unsafe. Looks like you'll need to add a few rods to make handlebars."
 	icon_state = "skateboard"
-	vehicle_move_delay = 0//fast
+
 	density = 0
+
+/obj/vehicle/scooter/skateboard/buckle_mob()
+	. = ..()
+	riding_datum = new/datum/riding/scooter/skateboard
 
 /obj/vehicle/scooter/skateboard/post_buckle_mob(mob/living/M)//allows skateboards to be non-dense but still allows 2 skateboarders to collide with each other
 	if(has_buckled_mobs())
@@ -71,7 +52,7 @@
 		var/mob/living/carbon/H = buckled_mobs[1]
 		var/atom/throw_target = get_edge_target_turf(H, pick(cardinal))
 		unbuckle_mob(H)
-		H.throw_at_fast(throw_target, 4, 3)
+		H.throw_at(throw_target, 4, 3)
 		H.Weaken(5)
 		H.adjustStaminaLoss(40)
 		visible_message("<span class='danger'>[src] crashes into [A], sending [H] flying!</span>")
@@ -95,7 +76,7 @@
 	desc = "A metal frame for building a scooter. Looks like you'll need to add some metal to make wheels."
 	icon = 'icons/obj/vehicles.dmi'
 	icon_state = "scooter_frame"
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 
 /obj/item/scooter_frame/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/wrench))
@@ -122,7 +103,7 @@
 /obj/vehicle/scooter/skateboard/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/screwdriver))
 		user << "<span class='notice'>You begin to deconstruct and remove the wheels on [src]...</span>"
-		playsound(get_turf(user), 'sound/items/Screwdriver.ogg', 50, 1)
+		playsound(get_turf(user), I.usesound, 50, 1)
 		if(do_after(user, 20, target = src))
 			user << "<span class='notice'>You deconstruct the wheels on [src].</span>"
 			new /obj/item/stack/sheet/metal(get_turf(src),5)

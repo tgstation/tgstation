@@ -14,7 +14,7 @@ MASS SPECTROMETER
 	icon_state = "t-ray0"
 	var/on = 0
 	slot_flags = SLOT_BELT
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	item_state = "electronic"
 	materials = list(MAT_METAL=150)
 	origin_tech = "magnets=1;engineering=1"
@@ -30,11 +30,7 @@ MASS SPECTROMETER
 /obj/item/device/t_scanner/proc/flick_sonar(obj/pipe)
 	var/image/I = image('icons/effects/effects.dmi', pipe, "blip", pipe.layer+1)
 	I.alpha = 128
-	var/list/nearby = list()
-	for(var/mob/M in viewers(pipe))
-		if(M.client)
-			nearby |= M.client
-	flick_overlay(I,nearby,8)
+	flick_overlay_view(I, pipe, 8)
 
 /obj/item/device/t_scanner/process()
 	if(!on)
@@ -74,7 +70,7 @@ MASS SPECTROMETER
 	flags = CONDUCT | NOBLUDGEON
 	slot_flags = SLOT_BELT
 	throwforce = 3
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 	throw_speed = 3
 	throw_range = 7
 	materials = list(MAT_METAL=200)
@@ -131,6 +127,12 @@ MASS SPECTROMETER
 		var/mob/living/carbon/human/H = M
 		if(H.heart_attack && H.stat != DEAD)
 			user << "<span class='danger'>Subject suffering from heart attack: Apply defibrillator immediately!</span>"
+
+	if(iscarbon(M))
+		var/mob/living/carbon/C = M
+		if(C.has_brain_worms())
+			user << "<span class='danger'>Foreign organism detected in subject's cranium. Recommended treatment: Dosage of sucrose solution and removal of object via surgery.</span>"
+
 	user << "<span class='info'>Analyzing results for [M]:\n\tOverall status: [mob_status]</span>"
 
 	// Damage descriptions
@@ -202,13 +204,13 @@ MASS SPECTROMETER
 			else
 				user << "<span class='info'>Blood level [blood_percent] %, [C.blood_volume] cl, type: [blood_type]</span>"
 
-		var/implant_detect
+		var/cyberimp_detect
 		for(var/obj/item/organ/cyberimp/CI in C.internal_organs)
 			if(CI.status == ORGAN_ROBOTIC)
-				implant_detect += "[C.name] is modified with a [CI.name].<br>"
-		if(implant_detect)
+				cyberimp_detect += "[C.name] is modified with a [CI.name].<br>"
+		if(cyberimp_detect)
 			user << "<span class='notice'>Detected cybernetic modifications:</span>"
-			user << "<span class='notice'>[implant_detect]</span>"
+			user << "<span class='notice'>[cyberimp_detect]</span>"
 
 /proc/chemscan(mob/living/user, mob/living/M)
 	if(ishuman(M))
@@ -247,7 +249,7 @@ MASS SPECTROMETER
 	name = "analyzer"
 	icon_state = "atmos"
 	item_state = "analyzer"
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	flags = CONDUCT | NOBLUDGEON
 	slot_flags = SLOT_BELT
 	throwforce = 0
@@ -321,9 +323,10 @@ MASS SPECTROMETER
 	name = "mass-spectrometer"
 	icon_state = "spectrometer"
 	item_state = "analyzer"
-	w_class = 2
-	flags = CONDUCT | OPENCONTAINER
+	w_class = WEIGHT_CLASS_SMALL
+	flags = CONDUCT
 	slot_flags = SLOT_BELT
+	container_type = OPENCONTAINER
 	throwforce = 0
 	throw_speed = 3
 	throw_range = 7
@@ -382,7 +385,7 @@ MASS SPECTROMETER
 	icon_state = "adv_spectrometer"
 	item_state = "analyzer"
 	origin_tech = "biotech=2"
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	flags = CONDUCT
 	throwforce = 0
 	throw_speed = 3

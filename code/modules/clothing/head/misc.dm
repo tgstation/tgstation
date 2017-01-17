@@ -6,7 +6,7 @@
 	desc = "It's good to be emperor."
 	item_state = "that"
 	flags_inv = 0
-	armor = list(melee = 30, bullet = 15, laser = 30, energy = 10, bomb = 25, bio = 0, rad = 0, fire = 0, acid = 50)
+	armor = list(melee = 30, bullet = 15, laser = 30, energy = 10, bomb = 25, bio = 0, rad = 0, fire = 50, acid = 50)
 	strip_delay = 80
 
 /obj/item/clothing/head/powdered_wig
@@ -24,7 +24,7 @@
 
 /obj/item/clothing/head/canada
 	name = "striped red tophat"
-	desc = " It feels sticky, like maple syrup - <i>il se sent collante, comme le sirop d'érable</i>"
+	desc = "it smells like fresh donut holes / <i>il sent comme des trous de beignets frais</i>"
 	icon_state = "canada"
 	item_state = "canada"
 
@@ -63,6 +63,14 @@
 	icon_state = "syndicate-helm-black-red"
 	item_state = "syndicate-helm-black-red"
 	desc = "A plastic replica of a Syndicate agent's space helmet. You'll look just like a real murderous Syndicate agent in this! This is a toy, it is not made for use in space!"
+	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
+
+/obj/item/clothing/head/cueball
+	name = "cueball helmet"
+	desc = "A large, featureless white orb meant to be worn on your head. How do you even see out of this thing?"
+	icon_state = "cueball"
+	item_state="cueball"
+	flags_cover = HEADCOVERSEYES|HEADCOVERSMOUTH
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
 
 /obj/item/clothing/head/snowman
@@ -220,9 +228,9 @@
 	throwforce = 3
 	throw_speed = 2
 	throw_range = 5
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	attack_verb = list("warned", "cautioned", "smashed")
-	resistance_flags = FIRE_PROOF
+	resistance_flags = 0
 
 /obj/item/clothing/head/santa
 	name = "santa hat"
@@ -264,7 +272,8 @@
 	name = "crown"
 	desc = "A crown fit for a king, a petty king maybe."
 	icon_state = "crown"
-	armor = list(melee = 15, bullet = 0, laser = 0,energy = 15, bomb = 0, bio = 0, rad = 0, fire = 0, acid = 50)
+	armor = list(melee = 15, bullet = 0, laser = 0,energy = 15, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 50)
+	resistance_flags = FIRE_PROOF
 
 /obj/item/clothing/head/crown/fancy
 	name = "magnificent crown"

@@ -18,13 +18,13 @@
 	switch(damagetype)
 		if(BRUTE)
 			if(BP)
-				if(BP.take_damage(damage * hit_percent, 0))
+				if(BP.receive_damage(damage * hit_percent, 0))
 					update_damage_overlays()
 			else //no bodypart, we deal damage with a more general method.
 				adjustBruteLoss(damage * hit_percent)
 		if(BURN)
 			if(BP)
-				if(BP.take_damage(0, damage * hit_percent))
+				if(BP.receive_damage(0, damage * hit_percent))
 					update_damage_overlays()
 			else
 				adjustFireLoss(damage * hit_percent)
@@ -55,25 +55,27 @@
 	return amount
 
 
-/mob/living/carbon/adjustBruteLoss(amount, updating_health = 1)
-	if(status_flags & GODMODE)
-		return 0
+/mob/living/carbon/adjustBruteLoss(amount, updating_health = TRUE, forced = FALSE)
+	if(!forced && (status_flags & GODMODE))
+		return FALSE
 	if(amount > 0)
-		take_overall_damage(amount, 0)
+		take_overall_damage(amount, 0, updating_health)
 	else
 		heal_overall_damage(-amount, 0, 0, 1, updating_health)
+	return amount
 
-/mob/living/carbon/adjustFireLoss(amount)
-	if(status_flags & GODMODE)
-		return 0
+/mob/living/carbon/adjustFireLoss(amount, updating_health = TRUE, forced = FALSE)
+	if(!forced && (status_flags & GODMODE))
+		return FALSE
 	if(amount > 0)
-		take_overall_damage(0, amount)
+		take_overall_damage(0, amount, updating_health)
 	else
-		heal_overall_damage(0, -amount)
+		heal_overall_damage(0, -amount, 0, 1, updating_health)
+	return amount
 
 
-/mob/living/carbon/adjustToxLoss(amount, updating_health=1)
-	if(has_dna() && TOXINLOVER in dna.species.specflags) //damage becomes healing and healing becomes damage
+/mob/living/carbon/adjustToxLoss(amount, updating_health = TRUE, forced = FALSE)
+	if(!forced && has_dna() && TOXINLOVER in dna.species.species_traits) //damage becomes healing and healing becomes damage
 		amount = -amount
 		if(amount > 0)
 			blood_volume -= 5*amount
@@ -120,7 +122,7 @@
 	if(!parts.len)
 		return
 	var/obj/item/bodypart/picked = pick(parts)
-	if(picked.take_damage(brute,burn))
+	if(picked.receive_damage(brute,burn))
 		update_damage_overlays()
 
 
@@ -162,7 +164,7 @@
 		var/burn_was = picked.burn_dam
 
 
-		update |= picked.take_damage(brute_per_part,burn_per_part, 0)
+		update |= picked.receive_damage(brute_per_part,burn_per_part, 0)
 
 		brute	-= (picked.brute_dam - brute_was)
 		burn	-= (picked.burn_dam - burn_was)

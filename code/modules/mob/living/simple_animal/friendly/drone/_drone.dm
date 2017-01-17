@@ -22,13 +22,12 @@
 	icon_state = "drone_maint_grey"
 	icon_living = "drone_maint_grey"
 	icon_dead = "drone_maint_dead"
-	gender = NEUTER
 	health = 30
 	maxHealth = 30
 	unsuitable_atmos_damage = 0
 	wander = 0
 	speed = 0
-	ventcrawler = 2
+	ventcrawler = VENTCRAWLER_ALWAYS
 	healable = 0
 	density = 0
 	pass_flags = PASSTABLE | PASSMOB
@@ -46,7 +45,7 @@
 	staticOverlays = list()
 	hud_possible = list(DIAG_STAT_HUD, DIAG_HUD, ANTAG_HUD)
 	unique_name = TRUE
-	faction = list("neutral","silicon")
+	faction = list("neutral","silicon","turret")
 	dextrous = TRUE
 	dextrous_hud_type = /datum/hud/dextrous/drone
 	var/staticChoice = "static"
@@ -56,7 +55,7 @@
 	var/laws = \
 	"1. You may not involve yourself in the matters of another being, even if such matters conflict with Law Two or Law Three, unless the other being is another Drone.\n"+\
 	"2. You may not harm any being, regardless of intent or circumstance.\n"+\
-	"3. Your goals are to build, maintain, repair, improve, and power to the best of your abilities, You must never actively work against these goals."
+	"3. Your goals are to build, maintain, repair, improve, and power the station to the best of your abilities, You must never actively work against these goals."
 	var/light_on = 0
 	var/heavy_emp_damage = 25 //Amount of damage sustained if hit by a heavy EMP pulse
 	var/alarms = list("Atmosphere" = list(), "Fire" = list(), "Power" = list())
@@ -67,6 +66,7 @@
 	var/seeStatic = 1 //Whether we see static instead of mobs
 	var/visualAppearence = MAINTDRONE //What we appear as
 	var/hacked = 0 //If we have laws to destroy the station
+	var/can_be_held = TRUE //if assholes can pick us up
 
 /mob/living/simple_animal/drone/New()
 	. = ..()
@@ -140,6 +140,19 @@
 /mob/living/simple_animal/drone/gib()
 	dust()
 
+/mob/living/simple_animal/drone/ratvar_act()
+	if(internal_storage)
+		unEquip(internal_storage)
+	if(head)
+		unEquip(head)
+	var/mob/living/simple_animal/drone/cogscarab/ratvar/R = new /mob/living/simple_animal/drone/cogscarab/ratvar(loc)
+	R.setDir(dir)
+	if(mind)
+		mind.transfer_to(R, 1)
+	else
+		R.key = key
+	qdel(src)
+
 
 /mob/living/simple_animal/drone/examine(mob/user)
 	var/msg = "<span class='info'>*---------*\nThis is \icon[src] \a <b>[src]</b>!\n"
@@ -176,10 +189,10 @@
 
 	//Damaged
 	if(health != maxHealth)
-		if(health > 10) //Between 30 and 10
+		if(health > maxHealth * 0.33) //Between maxHealth and about a third of maxHealth, between 30 and 10 for normal drones
 			msg += "<span class='warning'>Its screws are slightly loose.</span>\n"
-		else //Between 9 and 0
-			msg += "<span class='warning'><b>Its screws are very loose!</b></span>\n"
+		else //otherwise, below about 33%
+			msg += "<span class='boldwarning'>Its screws are very loose!</span>\n"
 
 	//Dead
 	if(stat == DEAD)
@@ -251,12 +264,9 @@
 /mob/living/simple_animal/drone/experience_pressure_difference(pressure_difference, direction)
 	return
 
-/mob/living/simple_animal/drone/fully_heal(admin_revive = 0)
-	adjustBruteLoss(-getBruteLoss()) //Heal all brute damage
-
 /mob/living/simple_animal/drone/bee_friendly()
 	// Why would bees pay attention to drones?
 	return 1
 
-/mob/living/simple_animal/drone/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, safety = 0, tesla_shock = 0)
+/mob/living/simple_animal/drone/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, safety = 0, tesla_shock = 0, illusion = 0)
 	return 0 //So they don't die trying to fix wiring

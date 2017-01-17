@@ -36,11 +36,12 @@
 		if(istype(I, /obj/item/weapon/paper) || istype(I, /obj/item/weapon/folder) || istype(I, /obj/item/weapon/photo))
 			I.loc = src
 
-/obj/structure/filingcabinet/ex_act(severity, target)
-	for(var/obj/item/I in src)
-		I.loc = src.loc
+/obj/structure/filingcabinet/deconstruct(disassembled = TRUE)
+	if(!(flags & NODECONSTRUCT))
+		new /obj/item/stack/sheet/metal(loc, 2)
+		for(var/obj/item/I in src)
+			I.forceMove(loc)
 	qdel(src)
-	..()
 
 /obj/structure/filingcabinet/attackby(obj/item/P, mob/user, params)
 	if(istype(P, /obj/item/weapon/paper) || istype(P, /obj/item/weapon/folder) || istype(P, /obj/item/weapon/photo) || istype(P, /obj/item/documents))
@@ -53,10 +54,12 @@
 		icon_state = initial(icon_state)
 		updateUsrDialog()
 	else if(istype(P, /obj/item/weapon/wrench))
-		playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
-		anchored = !anchored
-		user << "<span class='notice'>You [anchored ? "wrench" : "unwrench"] [src].</span>"
-	else if(user.a_intent != "harm")
+		user << "<span class='notice'>You begin to [anchored ? "unwrench" : "wrench"] [src].</span>"
+		playsound(loc, P.usesound, 50, 1)
+		if(do_after(user, 20, target = src))
+			user << "<span class='notice'>You successfully [anchored ? "unwrench" : "wrench"] [src].</span>"
+			anchored = !anchored
+	else if(user.a_intent != INTENT_HARM)
 		user << "<span class='warning'>You can't put [P] in [src]!</span>"
 	else
 		return ..()
@@ -131,6 +134,7 @@
 			P.name = "paper - '[G.fields["name"]]'"
 			virgin = 0	//tabbing here is correct- it's possible for people to try and use it
 						//before the records have been generated, so we do this inside the loop.
+
 /obj/structure/filingcabinet/security/attack_hand()
 	populate()
 	..()
@@ -212,16 +216,3 @@ var/list/employmentCabinets = list()
 		cooldown = 0
 	else
 		user << "<span class='warning'>The [src] is jammed, give it a few seconds.</span>"
-
-
-
-
-/obj/structure/filingcabinet/employment/attackby(obj/item/P, mob/user, params)
-	if(istype(P, /obj/item/weapon/wrench))
-		user << "<span class='notice'>You begin to [anchored ? "wrench" : "unwrench"] [src].</span>"
-		if (do_after(user,300,user))
-			playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
-			anchored = !anchored
-			user << "<span class='notice'>You successfully [anchored ? "wrench" : "unwrench"] [src].</span>"
-	else
-		return ..()

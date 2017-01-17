@@ -3,7 +3,7 @@
 	var/last_move = null
 	var/anchored = 0
 	var/throwing = 0
-	var/throw_speed = 2
+	var/throw_speed = 2 //How many tiles to move per ds when being thrown. Float values are fully supported
 	var/throw_range = 7
 	var/mob/pulledby = null
 	var/languages_spoken = 0 //For say() and Hear()
@@ -19,8 +19,11 @@
 	var/inertia_move_delay = 5
 	var/pass_flags = 0
 	var/moving_diagonally = 0 //0: not doing a diagonal move. 1 and 2: doing the first/second step of the diagonal move
+	var/list/client_mobs_in_contents // This contains all the client mobs within this container
+	var/list/acted_explosions	//for explosion dodging
 	glide_size = 8
 	appearance_flags = TILE_BOUND
+	var/datum/forced_movement/force_moving = null	//handled soley by forced_movement.dm
 
 
 
@@ -64,6 +67,7 @@
 						moving_diagonally = SECOND_DIAG_STEP
 						. = step(src, SOUTH)
 			moving_diagonally = 0
+			return
 
 	if(!loc || (loc == oldloc && oldloc != newloc))
 		last_move = 0
@@ -79,17 +83,34 @@
 
 //Called after a successful Move(). By this point, we've already moved
 /atom/movable/proc/Moved(atom/OldLoc, Dir)
+	//Objects with opacity will trigger nearby lights of the old location to update at next SSlighting fire
+	if(opacity)
+		if (isturf(OldLoc))
+			OldLoc.UpdateAffectingLights()
+		if (isturf(loc))
+			loc.UpdateAffectingLights()
+	else
+		if(light)
+			light.changed()
+
 	if (!inertia_moving)
 		inertia_next_move = world.time + inertia_move_delay
 		newtonian_move(Dir)
+	if (length(client_mobs_in_contents))
+		update_parallax_contents()
+
+	if (orbiters)
+		for (var/thing in orbiters)
+			var/datum/orbit/O = thing
+			O.Check()
+	if (orbiting)
+		orbiting.Check()
 	return 1
 
 /atom/movable/Destroy()
 	. = ..()
 	if(loc)
 		loc.handle_atom_del(src)
-	if(reagents)
-		qdel(reagents)
 	for(var/atom/movable/AM in contents)
 		qdel(AM)
 	loc = null
@@ -119,10 +140,12 @@
 		if(pulledby)
 			pulledby.stop_pulling()
 		var/atom/oldloc = loc
-		if(oldloc)
+		var/same_loc = oldloc == destination.loc
+		if(oldloc && !same_loc)
 			oldloc.Exited(src, destination)
 		loc = destination
-		destination.Entered(src, oldloc)
+		if(oldloc && !same_loc)
+			destination.Entered(src, oldloc)
 		var/area/old_area = get_area(oldloc)
 		var/area/destarea = get_area(destination)
 		if(old_area != destarea)
@@ -148,17 +171,9 @@
 
 /mob/living/brain/forceMove(atom/destination)
 	if(container)
-		container.forceMove(destination)
+		return container.forceMove(destination)
 	else //something went very wrong.
 		CRASH("Brainmob without container.")
-
-
-/mob/living/silicon/pai/forceMove(atom/destination)
-	if(card)
-		card.forceMove(destination)
-	else //something went very wrong.
-		CRASH("pAI without card")
-
 
 //Called whenever an object moves and by mobs when they attempt to move themselves through space
 //And when an object or action applies a force on src, see newtonian_move() below
@@ -204,109 +219,82 @@
 		step(src, AM.dir)
 	..()
 
-/atom/movable/proc/throw_at_fast(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0)
-	set waitfor = 0
-	throw_at(target, range, speed, thrower, spin, diagonals_first)
+/atom/movable/proc/throw_at(atom/target, range, speed, mob/thrower, spin=TRUE, diagonals_first = FALSE, var/datum/callback/callback)
+	if (!target || (flags & NODROP) || speed <= 0)
+		return
 
-/atom/movable/proc/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0)
-	if(!target || !src || (flags & NODROP))
-		return 0
-	//use a modified version of Bresenham's algorithm to get from the atom's current position to that of the target
-
-	if(pulledby)
+	if (pulledby)
 		pulledby.stop_pulling()
 
-	throwing = 1
-	if(spin) //if we don't want the /atom/movable to spin.
-		SpinAnimation(5, 1)
+	//They are moving! Wouldn't it be cool if we calculated their momentum and added it to the throw?
+	if (thrower && thrower.last_move && thrower.client && thrower.client.move_delay >= world.time + world.tick_lag*2)
+		var/user_momentum = thrower.movement_delay()
+		if (!user_momentum) //no movement_delay, this means they move once per byond tick, lets calculate from that instead.
+			user_momentum = world.tick_lag
 
-	var/dist_travelled = 0
-	var/next_sleep = 0
+		user_momentum = 1 / user_momentum // convert from ds to the tiles per ds that throw_at uses.
+
+		if (get_dir(thrower, target) & last_move)
+			user_momentum = user_momentum //basically a noop, but needed
+		else if (get_dir(target, thrower) & last_move)
+			user_momentum = -user_momentum //we are moving away from the target, lets slowdown the throw accordingly
+		else
+			user_momentum = 0
+
+
+		if (user_momentum)
+			//first lets add that momentum to range.
+			range *= (user_momentum / speed) + 1
+			//then lets add it to speed
+			speed += user_momentum
+			if (speed <= 0)
+				return //no throw speed, the user was moving too fast.
+
+	var/datum/thrownthing/TT = new()
+	TT.thrownthing = src
+	TT.target = target
+	TT.target_turf = get_turf(target)
+	TT.init_dir = get_dir(src, target)
+	TT.maxrange = range
+	TT.speed = speed
+	TT.thrower = thrower
+	TT.diagonals_first = diagonals_first
+	TT.callback = callback
 
 	var/dist_x = abs(target.x - src.x)
 	var/dist_y = abs(target.y - src.y)
 	var/dx = (target.x > src.x) ? EAST : WEST
 	var/dy = (target.y > src.y) ? NORTH : SOUTH
 
-	var/pure_diagonal = 0
-	if(dist_x == dist_y)
-		pure_diagonal = 1
+	if (dist_x == dist_y)
+		TT.pure_diagonal = 1
 
-	if(dist_x <= dist_y)
+	else if(dist_x <= dist_y)
 		var/olddist_x = dist_x
 		var/olddx = dx
 		dist_x = dist_y
 		dist_y = olddist_x
 		dx = dy
 		dy = olddx
+	TT.dist_x = dist_x
+	TT.dist_y = dist_y
+	TT.dx = dx
+	TT.dy = dy
+	TT.diagonal_error = dist_x/2 - dist_y
+	TT.start_time = world.time
 
-	var/error = dist_x/2 - dist_y //used to decide whether our next move should be forward or diagonal.
-	var/atom/finalturf = get_turf(target)
-	var/hit = 0
-	var/init_dir = get_dir(src, target)
+	if(pulledby)
+		pulledby.stop_pulling()
 
-	while(target && ((dist_travelled < range && loc != finalturf)  || !has_gravity(src))) //stop if we reached our destination (or max range) and aren't floating
-		var/slept = 0
-		if(!istype(loc, /turf))
-			hit = 1
-			break
+	throwing = 1
+	if(spin)
+		SpinAnimation(5, 1)
 
-		var/atom/step
-		if(dist_travelled < max(dist_x, dist_y)) //if we haven't reached the target yet we home in on it, otherwise we use the initial direction
-			step = get_step(src, get_dir(src, finalturf))
-		else
-			step = get_step(src, init_dir)
+	SSthrowing.processing[src] = TT
+	if (SSthrowing.paused && length(SSthrowing.currentrun))
+		SSthrowing.currentrun[src] = TT
+	TT.tick()
 
-		if(!pure_diagonal && !diagonals_first) // not a purely diagonal trajectory and we don't want all diagonal moves to be done first
-			if(error >= 0 && max(dist_x,dist_y) - dist_travelled != 1) //we do a step forward unless we're right before the target
-				step = get_step(src, dx)
-			error += (error < 0) ? dist_x/2 : -dist_y
-		if(!step) // going off the edge of the map makes get_step return null, don't let things go off the edge
-			break
-		Move(step, get_dir(loc, step))
-		if(!throwing) // we hit something during our move
-			hit = 1
-			break
-		dist_travelled++
-
-		if(dist_travelled > 600) //safety to prevent infinite while loop.
-			break
-		if(dist_travelled >= next_sleep)
-			slept = 1
-			next_sleep += speed
-			sleep(1)
-		if(!slept)
-			var/ticks_slept = TICK_CHECK
-			if(ticks_slept)
-				slept = 1
-				next_sleep += speed*(ticks_slept*world.tick_lag) //delay the next normal sleep
-
-		if(slept && hitcheck()) //to catch sneaky things moving on our tile while we slept
-			hit = 1
-			break
-
-
-	//done throwing, either because it hit something or it finished moving
-	throwing = 0
-	if(!hit)
-		for(var/atom/A in get_turf(src)) //looking for our target on the turf we land on.
-			if(A == target)
-				hit = 1
-				throw_impact(A)
-				return 1
-
-		throw_impact(get_turf(src))  // we haven't hit something yet and we still must, let's hit the ground.
-	newtonian_move(init_dir)
-	return 1
-
-/atom/movable/proc/hitcheck()
-	for(var/atom/movable/AM in get_turf(src))
-		if(AM == src)
-			continue
-		if(AM.density && !(AM.pass_flags & LETPASSTHROW) && !(AM.flags & ON_BORDER))
-			throwing = 0
-			throw_impact(AM)
-			return 1
 
 /atom/movable/proc/handle_buckled_mob_movement(newloc,direct)
 	for(var/m in buckled_mobs)
@@ -347,3 +335,77 @@
 //called when a mob resists while inside a container that is itself inside something.
 /atom/movable/proc/relay_container_resist(mob/living/user, obj/O)
 	return
+
+
+/atom/movable/proc/do_attack_animation(atom/A, visual_effect_icon, obj/item/used_item, no_effect, end_pixel_y)
+	if(!no_effect && (visual_effect_icon || used_item))
+		do_item_attack_animation(A, visual_effect_icon, used_item)
+
+	var/pixel_x_diff = 0
+	var/pixel_y_diff = 0
+	var/final_pixel_y = initial(pixel_y)
+	if(end_pixel_y)
+		final_pixel_y = end_pixel_y
+
+	var/direction = get_dir(src, A)
+	if(direction & NORTH)
+		pixel_y_diff = 8
+	else if(direction & SOUTH)
+		pixel_y_diff = -8
+
+	if(direction & EAST)
+		pixel_x_diff = 8
+	else if(direction & WEST)
+		pixel_x_diff = -8
+
+	animate(src, pixel_x = pixel_x + pixel_x_diff, pixel_y = pixel_y + pixel_y_diff, time = 2)
+	animate(pixel_x = initial(pixel_x), pixel_y = final_pixel_y, time = 2)
+
+/atom/movable/proc/do_item_attack_animation(atom/A, visual_effect_icon, obj/item/used_item)
+	var/image/I
+	if(visual_effect_icon)
+		I = image('icons/effects/effects.dmi', A, visual_effect_icon, A.layer + 0.1)
+	else if(used_item)
+		I = image(used_item.icon, A, used_item.icon_state, A.layer + 0.1)
+
+		// Scale the icon.
+		I.transform *= 0.75
+		// The icon should not rotate.
+		I.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
+
+		// Set the direction of the icon animation.
+		var/direction = get_dir(src, A)
+		if(direction & NORTH)
+			I.pixel_y = -16
+		else if(direction & SOUTH)
+			I.pixel_y = 16
+
+		if(direction & EAST)
+			I.pixel_x = -16
+		else if(direction & WEST)
+			I.pixel_x = 16
+
+		if(!direction) // Attacked self?!
+			I.pixel_z = 16
+
+	if(!I)
+		return
+
+	flick_overlay(I, clients, 5) // 5 ticks/half a second
+
+	// And animate the attack!
+	animate(I, alpha = 175, pixel_x = 0, pixel_y = 0, pixel_z = 0, time = 3)
+
+/atom/movable/vv_get_dropdown()
+	. = ..()
+	. -= "Jump to"
+	.["Follow"] = "?_src_=holder;adminplayerobservefollow=\ref[src]"
+
+/atom/movable/proc/ex_check(ex_id)
+	if(!ex_id)
+		return TRUE
+	LAZYINITLIST(acted_explosions)
+	if(ex_id in acted_explosions)
+		return FALSE
+	acted_explosions += ex_id
+	return TRUE

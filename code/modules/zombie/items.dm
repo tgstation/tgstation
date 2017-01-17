@@ -40,7 +40,7 @@
 /obj/item/zombie_hand/proc/check_infection(mob/living/carbon/human/target, mob/user)
 	CHECK_DNA_AND_SPECIES(target)
 
-	if(NOZOMBIE in target.dna.species.specflags)
+	if(NOZOMBIE in target.dna.species.species_traits)
 		// cannot infect any NOZOMBIE subspecies (such as high functioning
 		// zombies)
 		return
@@ -62,33 +62,28 @@
 
 /obj/item/zombie_hand/proc/tear_airlock(obj/machinery/door/airlock/A, mob/user)
 	removing_airlock = TRUE
-	user << "<span class='notice'>You start tearing apart the airlock...\
-		</span>"
+	user << "<span class='notice'>You start tearing apart the airlock...</span>"
 
 	playsound(src.loc, 'sound/machines/airlock_alien_prying.ogg', 100, 1)
-	A.audible_message("<span class='italics'>You hear a loud metallic \
-		grinding sound.</span>")
+	A.audible_message("<span class='italics'>You hear a loud metallic grinding sound.</span>")
 
-	addtimer(src, "growl", 20, unique=FALSE, target=user)
+	addtimer(CALLBACK(src, .proc/growl, user), 20)
 
 	if(do_after(user, delay=160, needhand=FALSE, target=A, progress=TRUE))
 		playsound(src.loc, 'sound/hallucinations/far_noise.ogg', 50, 1)
-		A.audible_message("<span class='danger'>With a screech, [A] is torn \
-			apart!</span>")
+		A.audible_message("<span class='danger'>With a screech, [A] is torn apart!</span>")
 		var/obj/structure/door_assembly/door = new A.assemblytype(get_turf(A))
 		door.density = 0
 		door.anchored = 1
 		door.name = "ravaged [door]"
-		door.desc = "An airlock that has been torn apart. Looks like it \
-			won't be keeping much out now."
+		door.desc = "An airlock that has been torn apart. Looks like it won't be keeping much out now."
 		qdel(A)
 	removing_airlock = FALSE
 
 /obj/item/zombie_hand/proc/growl(mob/user)
 	if(removing_airlock)
 		playsound(src.loc, 'sound/hallucinations/growl3.ogg', 50, 1)
-		user.audible_message("<span class='warning'>[user] growls as \
-			their claws dig into the metal frame...</span>")
+		user.audible_message("<span class='warning'>[user] growls as [user.p_their()] claws dig into the metal frame...</span>")
 
 /obj/item/zombie_hand/suicide_act(mob/living/carbon/user)
 	// Suiciding as a zombie brings someone else in to play it
@@ -99,10 +94,8 @@
 	user.Weaken(30)
 	var/success = offer_control(user)
 	if(success)
-		user.visible_message("<span class='suicide'>[user] appears to have \
-			found new spirit.</span>")
+		user.visible_message("<span class='suicide'>[user] appears to have found new spirit.</span>")
 		return SHAME
 	else
-		user.visible_message("<span class='suicide'>[user] stops moving.\
-			</span>")
+		user.visible_message("<span class='suicide'>[user] stops moving.</span>")
 		return OXYLOSS

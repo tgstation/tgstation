@@ -47,7 +47,15 @@
 /mob/living/silicon/ai/proc/lacks_power()
 	var/turf/T = get_turf(src)
 	var/area/A = get_area(src)
-	return !T || !A || ((!A.master.power_equip || istype(T, /turf/open/space)) && !is_type_in_list(src.loc, list(/obj/item, /obj/mecha)))
+	switch(requires_power)
+		if(POWER_REQ_NONE)
+			return FALSE
+		if(POWER_REQ_ALL)
+			return !T || !A || ((!A.master.power_equip || isspaceturf(T)) && !is_type_in_list(loc, list(/obj/item, /obj/mecha)))
+		if(POWER_REQ_CLOCKCULT)
+			for(var/obj/effect/clockwork/sigil/transmission/ST in range(src, 1))
+				return FALSE
+			return !T || !A || (!istype(T, /turf/open/floor/clockwork) && (!A.master.power_equip || isspaceturf(T)) && !is_type_in_list(loc, list(/obj/item, /obj/mecha)))
 
 /mob/living/silicon/ai/updatehealth()
 	if(status_flags & GODMODE)
@@ -88,7 +96,7 @@
 	var/turf/T = get_turf(src)
 	var/area/AIarea = get_area(src)
 	if(AIarea && AIarea.master.power_equip)
-		if(!istype(T, /turf/open/space))
+		if(!isspaceturf(T))
 			ai_restore_power()
 			return
 	src << "Fault confirmed: missing external power. Shutting down main control system to save power."
@@ -96,7 +104,7 @@
 	src << "Emergency control system online. Verifying connection to power network."
 	sleep(50)
 	T = get_turf(src)
-	if (istype(T, /turf/open/space))
+	if(isspaceturf(T))
 		src << "Unable to verify! No power connection detected!"
 		aiRestorePowerRoutine = POWER_RESTORATION_SEARCH_APC
 		return
@@ -123,7 +131,7 @@
 			aiRestorePowerRoutine = POWER_RESTORATION_SEARCH_APC
 			return
 		if(AIarea.master.power_equip)
-			if (!istype(T, /turf/open/space))
+			if(!isspaceturf(T))
 				ai_restore_power()
 				return
 		switch(PRP)
@@ -159,7 +167,7 @@
 	blind_eyes(1)
 	update_sight()
 	src << "You've lost power!"
-	addtimer(src, "start_RestorePowerRoutine", 20)
+	addtimer(CALLBACK(src, .proc/start_RestorePowerRoutine), 20)
 
 #undef POWER_RESTORATION_OFF
 #undef POWER_RESTORATION_START

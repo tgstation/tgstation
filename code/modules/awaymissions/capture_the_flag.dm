@@ -8,7 +8,7 @@
 
 
 
-/obj/item/weapon/twohanded/required/ctf
+/obj/item/weapon/twohanded/ctf
 	name = "banner"
 	icon = 'icons/obj/items.dmi'
 	icon_state = "banner"
@@ -19,6 +19,7 @@
 	throw_range = 1
 	force = 200
 	armour_penetration = 1000
+	resistance_flags = INDESTRUCTIBLE
 	anchored = TRUE
 	flags = HANDSLOW
 	var/team = WHITE_TEAM
@@ -26,21 +27,22 @@
 	var/obj/effect/ctf/flag_reset/reset
 	var/reset_path = /obj/effect/ctf/flag_reset
 
-/obj/item/weapon/twohanded/required/ctf/New()
+/obj/item/weapon/twohanded/ctf/New()
+	..()
 	if(!reset)
 		reset = new reset_path(get_turf(src))
 
-/obj/item/weapon/twohanded/required/ctf/Destroy()
+/obj/item/weapon/twohanded/ctf/Destroy()
 	if(reset)
 		qdel(reset)
 		reset = null
 	. = ..()
 
-/obj/item/weapon/twohanded/required/ctf/initialize()
+/obj/item/weapon/twohanded/ctf/initialize()
 	if(!reset)
 		reset = new reset_path(get_turf(src))
 
-/obj/item/weapon/twohanded/required/ctf/process()
+/obj/item/weapon/twohanded/ctf/process()
 	if(world.time > reset_cooldown)
 		forceMove(get_turf(src.reset))
 		for(var/mob/M in player_list)
@@ -50,7 +52,7 @@
 					to base!</span>"
 		STOP_PROCESSING(SSobj, src)
 
-/obj/item/weapon/twohanded/required/ctf/attack_hand(mob/living/user)
+/obj/item/weapon/twohanded/ctf/attack_hand(mob/living/user)
 	if(!user)
 		return
 	if(team in user.faction)
@@ -64,14 +66,16 @@
 	if(!user.put_in_active_hand(src))
 		dropped(user)
 		return
+	user.anchored = TRUE
 	for(var/mob/M in player_list)
 		var/area/mob_area = get_area(M)
 		if(istype(mob_area, /area/ctf))
 			M << "<span class='userdanger'>\The [src] has been taken!</span>"
 	STOP_PROCESSING(SSobj, src)
 
-/obj/item/weapon/twohanded/required/ctf/dropped(mob/user)
+/obj/item/weapon/twohanded/ctf/dropped(mob/user)
 	..()
+	user.anchored = FALSE
 	reset_cooldown = world.time + 200 //20 seconds
 	START_PROCESSING(SSobj, src)
 	for(var/mob/M in player_list)
@@ -81,7 +85,7 @@
 	anchored = TRUE
 
 
-/obj/item/weapon/twohanded/required/ctf/red
+/obj/item/weapon/twohanded/ctf/red
 	name = "red flag"
 	icon_state = "banner-red"
 	item_state = "banner-red"
@@ -90,7 +94,7 @@
 	reset_path = /obj/effect/ctf/flag_reset/red
 
 
-/obj/item/weapon/twohanded/required/ctf/blue
+/obj/item/weapon/twohanded/ctf/blue
 	name = "blue flag"
 	icon_state = "banner-blue"
 	item_state = "banner-blue"
@@ -123,6 +127,7 @@
 	icon = 'icons/obj/device.dmi'
 	icon_state = "syndbeacon"
 	anchored = 1
+	resistance_flags = INDESTRUCTIBLE
 	var/team = WHITE_TEAM
 	//Capture the Flag scoring
 	var/points = 0
@@ -152,7 +157,7 @@
 			/obj/machinery,
 			/obj/structure,
 			/obj/effect/ctf,
-			/obj/item/weapon/twohanded/required/ctf
+			/obj/item/weapon/twohanded/ctf
 		))
 	poi_list |= src
 
@@ -220,11 +225,11 @@
 	spawn_team_member(new_team_member)
 
 /obj/machinery/capture_the_flag/proc/ctf_dust_old(mob/living/body)
-	if(isliving(body) && body.z == src.z)
+	if(isliving(body) && (team in body.faction))
 		var/turf/T = get_turf(body)
 		new /obj/effect/ctf/ammo(T)
 		recently_dead_ckeys += body.ckey
-		addtimer(src, "clear_cooldown", respawn_cooldown, TRUE, body.ckey)
+		addtimer(CALLBACK(src, .proc/clear_cooldown, body.ckey), respawn_cooldown, TIMER_UNIQUE)
 		body.dust()
 
 /obj/machinery/capture_the_flag/proc/clear_cooldown(var/ckey)
@@ -245,8 +250,8 @@
 			attack_ghost(ghost)
 
 /obj/machinery/capture_the_flag/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/weapon/twohanded/required/ctf))
-		var/obj/item/weapon/twohanded/required/ctf/flag = I
+	if(istype(I, /obj/item/weapon/twohanded/ctf))
+		var/obj/item/weapon/twohanded/ctf/flag = I
 		if(flag.team != src.team)
 			user.unEquip(flag)
 			flag.loc = get_turf(flag.reset)
@@ -264,7 +269,7 @@
 		if(istype(mob_area, /area/ctf))
 			M << "<span class='narsie'>[team] team wins!</span>"
 			M << "<span class='userdanger'>The game has been reset! Teams have been cleared. The machines will be active again in 30 seconds.</span>"
-			for(var/obj/item/weapon/twohanded/required/ctf/W in M)
+			for(var/obj/item/weapon/twohanded/ctf/W in M)
 				M.unEquip(W)
 			M.dust()
 	for(var/obj/machinery/control_point/control in machines)
@@ -277,7 +282,7 @@
 			CTF.ctf_enabled = FALSE
 			CTF.team_members = list()
 			CTF.arena_cleared = FALSE
-			addtimer(CTF, "start_ctf", 300)
+			addtimer(CALLBACK(CTF, .proc/start_ctf), 300)
 
 /obj/machinery/capture_the_flag/proc/toggle_ctf()
 	if(!ctf_enabled)
@@ -328,30 +333,44 @@
 			CTF.ctf_gear = initial(ctf_gear)
 			CTF.respawn_cooldown = DEFAULT_RESPAWN
 
-/obj/item/weapon/gun/projectile/automatic/pistol/deagle/ctf
+/obj/item/weapon/gun/ballistic/automatic/pistol/deagle/ctf
 	desc = "This looks like it could really hurt in melee."
 	force = 75
+	mag_type = /obj/item/ammo_box/magazine/m50/ctf
 
-/obj/item/weapon/gun/projectile/automatic/pistol/deagle/ctf/dropped()
+/obj/item/weapon/gun/ballistic/automatic/pistol/deagle/ctf/dropped()
 	. = ..()
-	addtimer(src, "floor_vanish", 1)
+	addtimer(CALLBACK(src, .proc/floor_vanish), 1)
 
-/obj/item/weapon/gun/projectile/automatic/pistol/deagle/ctf/proc/floor_vanish()
+/obj/item/weapon/gun/ballistic/automatic/pistol/deagle/ctf/proc/floor_vanish()
 	if(isturf(loc))
 		qdel(src)
 
-/obj/item/weapon/gun/projectile/automatic/laser/ctf
+/obj/item/ammo_box/magazine/m50/ctf
+	ammo_type = /obj/item/ammo_casing/a50/ctf
+
+/obj/item/ammo_casing/a50/ctf
+	projectile_type = /obj/item/projectile/bullet/ctf
+
+/obj/item/projectile/bullet/ctf
+	damage = 0
+
+/obj/item/projectile/bullet/ctf/prehit(atom/target)
+	if(is_ctf_target(target))
+		damage = 60
+	. = ..()
+
+/obj/item/weapon/gun/ballistic/automatic/laser/ctf
 	mag_type = /obj/item/ammo_box/magazine/recharge/ctf
 	desc = "This looks like it could really hurt in melee."
 	force = 50
-	flags = NODROP | DROPDEL
 
 /obj/item/ammo_box/magazine/recharge/ctf
 	ammo_type = /obj/item/ammo_casing/caseless/laser/ctf
 
 /obj/item/ammo_box/magazine/recharge/ctf/dropped()
 	. = ..()
-	addtimer(src, "floor_vanish", 1)
+	addtimer(CALLBACK(src, .proc/floor_vanish), 1)
 
 /obj/item/ammo_box/magazine/recharge/ctf/proc/floor_vanish()
 	if(isturf(loc))
@@ -361,12 +380,26 @@
 	projectile_type = /obj/item/projectile/beam/ctf
 
 /obj/item/projectile/beam/ctf
-	damage = 150
+	damage = 0
 	icon_state = "omnilaser"
+
+/obj/item/projectile/beam/ctf/prehit(atom/target)
+	if(is_ctf_target(target))
+		damage = 150
+	. = ..()
+
+/proc/is_ctf_target(atom/target)
+	. = FALSE
+	if(istype(target, /obj/structure/barricade/security/ctf))
+		. = TRUE
+	if(ishuman(target))
+		var/mob/living/carbon/human/H = target
+		if(istype(H.wear_suit, /obj/item/clothing/suit/space/hardsuit/shielded/ctf))
+			. = TRUE
 
 // RED TEAM GUNS
 
-/obj/item/weapon/gun/projectile/automatic/laser/ctf/red
+/obj/item/weapon/gun/ballistic/automatic/laser/ctf/red
 	mag_type = /obj/item/ammo_box/magazine/recharge/ctf/red
 
 /obj/item/ammo_box/magazine/recharge/ctf/red
@@ -380,7 +413,7 @@
 
 // BLUE TEAM GUNS
 
-/obj/item/weapon/gun/projectile/automatic/laser/ctf/blue
+/obj/item/weapon/gun/ballistic/automatic/laser/ctf/blue
 	mag_type = /obj/item/ammo_box/magazine/recharge/ctf/blue
 
 /obj/item/ammo_box/magazine/recharge/ctf/blue
@@ -400,10 +433,10 @@
 	shoes = /obj/item/clothing/shoes/combat
 	gloves = /obj/item/clothing/gloves/combat
 	id = /obj/item/weapon/card/id/syndicate
-	belt = /obj/item/weapon/gun/projectile/automatic/pistol/deagle/ctf
+	belt = /obj/item/weapon/gun/ballistic/automatic/pistol/deagle/ctf
 	l_pocket = /obj/item/ammo_box/magazine/recharge/ctf
 	r_pocket = /obj/item/ammo_box/magazine/recharge/ctf
-	r_hand = /obj/item/weapon/gun/projectile/automatic/laser/ctf
+	r_hand = /obj/item/weapon/gun/ballistic/automatic/laser/ctf
 
 /datum/outfit/ctf/post_equip(mob/living/carbon/human/H, visualsOnly=FALSE)
 	if(visualsOnly)
@@ -430,7 +463,7 @@
 /datum/outfit/ctf/red
 	ears = /obj/item/device/radio/headset/syndicate/alt
 	suit = /obj/item/clothing/suit/space/hardsuit/shielded/ctf/red
-	r_hand = /obj/item/weapon/gun/projectile/automatic/laser/ctf/red
+	r_hand = /obj/item/weapon/gun/ballistic/automatic/laser/ctf/red
 	l_pocket = /obj/item/ammo_box/magazine/recharge/ctf/red
 	r_pocket = /obj/item/ammo_box/magazine/recharge/ctf/red
 
@@ -441,7 +474,7 @@
 /datum/outfit/ctf/blue
 	ears = /obj/item/device/radio/headset/headset_cent/commander
 	suit = /obj/item/clothing/suit/space/hardsuit/shielded/ctf/blue
-	r_hand = /obj/item/weapon/gun/projectile/automatic/laser/ctf/blue
+	r_hand = /obj/item/weapon/gun/ballistic/automatic/laser/ctf/blue
 	l_pocket = /obj/item/ammo_box/magazine/recharge/ctf/blue
 	r_pocket = /obj/item/ammo_box/magazine/recharge/ctf/blue
 
@@ -467,6 +500,7 @@
 	name = "Spawn protection"
 	desc = "Stay outta the enemy spawn!"
 	icon_state = "trap"
+	resistance_flags = INDESTRUCTIBLE
 	var/team = WHITE_TEAM
 	time_between_triggers = 1
 	alpha = 255
@@ -499,6 +533,7 @@
 	anchored = TRUE
 	invisibility = INVISIBILITY_OBSERVER
 	alpha = 100
+	resistance_flags = INDESTRUCTIBLE
 
 /obj/effect/ctf/ammo
 	name = "ammo pickup"
@@ -554,41 +589,6 @@
 		new /obj/structure/barricade/security/ctf(get_turf(src))
 		qdel(src)
 
-//Areas
-
-/area/ctf
-	name = "Capture the Flag"
-	icon_state = "yellow"
-	requires_power = 0
-	has_gravity = 1
-
-/area/ctf/control_room
-	name = "Control Room A"
-
-/area/ctf/control_room2
-	name = "Control Room B"
-
-/area/ctf/central
-	name = "Central"
-
-/area/ctf/main_hall
-	name = "Main Hall A"
-
-/area/ctf/main_hall2
-	name = "Main Hall B"
-
-/area/ctf/corridor
-	name = "Corridor A"
-
-/area/ctf/corridor2
-	name = "Corridor B"
-
-/area/ctf/flag_room
-	name = "Flag Room A"
-
-/area/ctf/flag_room2
-	name = "Flag Room B"
-
 
 //Control Point
 
@@ -598,6 +598,7 @@
 	icon = 'icons/obj/machines/dominator.dmi'
 	icon_state = "dominator"
 	anchored = 1
+	resistance_flags = INDESTRUCTIBLE
 	var/obj/machinery/capture_the_flag/controlling
 	var/team = "none"
 	var/point_rate = 1

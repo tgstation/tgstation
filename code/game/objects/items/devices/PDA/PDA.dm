@@ -11,9 +11,12 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	icon_state = "pda"
 	item_state = "electronic"
 	flags = NOBLUDGEON
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 	slot_flags = SLOT_ID | SLOT_BELT
 	origin_tech = "programming=2"
+	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 100)
+	resistance_flags = FIRE_PROOF | ACID_PROOF
+
 
 	//Main variables
 	var/owner = null // String name of owner
@@ -52,6 +55,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 	var/list/contained_item = list(/obj/item/weapon/pen, /obj/item/toy/crayon, /obj/item/weapon/lipstick, /obj/item/device/flashlight/pen, /obj/item/clothing/mask/cigarette)
 	var/obj/item/inserted_item //Used for pen, crayon, and lipstick insertion or removal. Same as above.
+	var/overlays_x_offset = 0	//x offset to use for certain overlays
 
 /obj/item/device/pda/pickup(mob/user)
 	..()
@@ -77,6 +81,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	if(default_cartridge)
 		cartridge = new default_cartridge(src)
 	inserted_item =	new /obj/item/weapon/pen(src)
+	update_icon()
 
 /obj/item/device/pda/proc/update_label()
 	name = "PDA-[owner] ([ownjob])" //Name generalisation
@@ -89,6 +94,25 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 /obj/item/device/pda/GetID()
 	return id
+
+/obj/item/device/pda/update_icon()
+	cut_overlays()
+	if(id)
+		var/image/I = image(icon_state = "id_overlay", pixel_x = overlays_x_offset)
+		add_overlay(I)
+	if(inserted_item)
+		var/image/I = image(icon_state = "insert_overlay", pixel_x = overlays_x_offset)
+		add_overlay(I)
+	if(fon)
+		var/image/I = image(icon_state = "light_overlay", pixel_x = overlays_x_offset)
+		add_overlay(I)
+	if(pai)
+		if(pai.pai)
+			var/image/I = image(icon_state = "pai_overlay", pixel_x = overlays_x_offset)
+			add_overlay(I)
+		else
+			var/image/I = image(icon_state = "pai_off_overlay", pixel_x = overlays_x_offset)
+			add_overlay(I)
 
 /obj/item/device/pda/MouseDrop(obj/over_object, src_location, over_location)
 	var/mob/M = usr
@@ -196,6 +220,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				if (pai)
 					if(pai.loc != src)
 						pai = null
+						update_icon()
 					else
 						dat += "<li><a href='byond://?src=\ref[src];choice=pai;option=1'>pAI Device Configuration</a></li>"
 						dat += "<li><a href='byond://?src=\ref[src];choice=pai;option=2'>Eject pAI Device</a></li>"
@@ -310,9 +335,11 @@ var/global/list/obj/item/device/pda/PDAs = list()
 						cartridge.mode = mode
 						cartridge.unlock()
 			if ("Authenticate")//Checks for ID
-				id_check(U, 1)
+				id_check(U)
 			if("UpdateInfo")
 				ownjob = id.assignment
+				if(istype(id, /obj/item/weapon/card/id/syndicate))
+					owner = id.registered_name
 				update_label()
 			if("Eject")//Ejects the cart, only done from hub.
 				if (!isnull(cartridge))
@@ -322,6 +349,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 					if (cartridge.radio)
 						cartridge.radio.hostpda = null
 					cartridge = null
+					update_icon()
 
 //MENU FUNCTIONS===================================
 
@@ -354,6 +382,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 						U.AddLuminosity(f_lum)
 					else
 						SetLuminosity(f_lum)
+				update_icon()
 			if("Medical Scan")
 				if(scanmode == 1)
 					scanmode = 0
@@ -530,7 +559,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 //EXTRA FUNCTIONS===================================
 
 	if (mode == 2||mode == 21)//To clear message overlays.
-		cut_overlays()
+		update_icon()
 
 	if ((honkamt > 0) && (prob(60)))//For clown virus.
 		honkamt--
@@ -552,6 +581,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		else
 			id.loc = get_turf(src)
 		id = null
+		update_icon()
 
 /obj/item/device/pda/proc/msg_input(mob/living/U = usr)
 	var/t = stripped_input(U, "Please enter message", name, null, MAX_MESSAGE_LEN)
@@ -623,7 +653,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	if(L && L.stat != UNCONSCIOUS)
 		L << "\icon[src] <b>Message from [source.owner] ([source.ownjob]), </b>\"[msg.message]\"[msg.get_photo_ref()] (<a href='byond://?src=\ref[src];choice=Message;skiprefresh=1;target=\ref[source]'>Reply</a>)"
 
-	cut_overlays()
+	update_icon()
 	add_overlay(image(icon, icon_alert))
 
 /obj/item/device/pda/proc/show_to_ghosts(mob/living/user, datum/data_pda_msg/msg,multiple = 0)
@@ -679,7 +709,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		if(id)
 			remove_id()
 		else
-			usr << "<span class='warning'>This PDA does not have an ID in it!</span>"
+			remove_pen()
 
 /obj/item/device/pda/verb/verb_remove_id()
 	set category = "Object"
@@ -704,48 +734,54 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		return
 
 	if (usr.canUseTopic(src))
-		if(inserted_item)
-			if(ismob(loc))
-				var/mob/M = loc
-				M.put_in_hands(inserted_item)
-			else
-				inserted_item.forceMove(loc)
-			usr << "<span class='notice'>You remove \the [inserted_item] from \the [src].</span>"
-			inserted_item = null
+		remove_pen()
+
+/obj/item/device/pda/proc/remove_pen()
+	if(inserted_item)
+		if(ismob(loc))
+			var/mob/M = loc
+			M.put_in_hands(inserted_item)
 		else
-			usr << "<span class='warning'>This PDA does not have a pen in it!</span>"
-/obj/item/device/pda/proc/id_check(mob/user, choice as num)//To check for IDs; 1 for in-pda use, 2 for out of pda use.
-	if(choice == 1)
-		if (id)
-			remove_id()
-		else
-			var/obj/item/I = user.get_active_held_item()
-			if (istype(I, /obj/item/weapon/card/id))
-				if(!user.unEquip(I))
-					return 0
-				I.loc = src
-				id = I
+			inserted_item.forceMove(loc)
+		usr << "<span class='notice'>You remove \the [inserted_item] from \the [src].</span>"
+		inserted_item = null
+		update_icon()
 	else
-		var/obj/item/weapon/card/I = user.get_active_held_item()
-		if (istype(I, /obj/item/weapon/card/id) && I:registered_name)
-			if(!user.unEquip(I))
-				return 0
-			var/obj/old_id = id
-			I.loc = src
-			id = I
+		usr << "<span class='warning'>This PDA does not have a pen in it!</span>"
+
+//trying to insert or remove an id
+/obj/item/device/pda/proc/id_check(mob/user, obj/item/weapon/card/id/I)
+	if(!I)
+		if(id)
+			remove_id()
+			return 1
+		else
+			var/obj/item/weapon/card/id/C = user.get_active_held_item()
+			if(istype(C))
+				I = C
+
+	if(I && I.registered_name)
+		if(!user.unEquip(I))
+			return 0
+		var/obj/old_id = id
+		I.forceMove(src)
+		id = I
+		if(old_id)
 			user.put_in_hands(old_id)
+		update_icon()
 	return 1
 
 // access to status display signals
 /obj/item/device/pda/attackby(obj/item/C, mob/user, params)
 	if(istype(C, /obj/item/weapon/cartridge) && !cartridge)
-		cartridge = C
 		if(!user.unEquip(C))
 			return
+		cartridge = C
 		cartridge.loc = src
 		user << "<span class='notice'>You insert [cartridge] into [src].</span>"
 		if(cartridge.radio)
 			cartridge.radio.hostpda = src
+		update_icon()
 
 	else if(istype(C, /obj/item/weapon/card/id))
 		var/obj/item/weapon/card/id/idcard = C
@@ -759,8 +795,8 @@ var/global/list/obj/item/device/pda/PDAs = list()
 			user << "<span class='notice'>Card scanned.</span>"
 		else
 			//Basic safety check. If either both objects are held by user or PDA is on ground and card is in hand.
-			if(((src in user.contents) && (C in user.contents)) || (istype(loc, /turf) && in_range(src, user) && (C in user.contents)) )
-				if(!id_check(user, 2))
+			if(((src in user.contents) || (isturf(loc) && in_range(src, user))) && (C in user.contents))
+				if(!id_check(user, idcard))
 					return
 				user << "<span class='notice'>You put the ID into \the [src]'s slot.</span>"
 				updateSelfDialog()//Update self dialog on success.
@@ -772,6 +808,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		C.loc = src
 		pai = C
 		user << "<span class='notice'>You slot \the [C] into [src].</span>"
+		update_icon()
 		updateUsrDialog()
 	else if(is_type_in_list(C, contained_item)) //Checks if there is a pen
 		if(inserted_item)
@@ -782,6 +819,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 			C.forceMove(src)
 			user << "<span class='notice'>You slide \the [C] into \the [src].</span>"
 			inserted_item = C
+			update_icon()
 	else if(istype(C, /obj/item/weapon/photo))
 		var/obj/item/weapon/photo/P = C
 		photo = P.img
@@ -883,6 +921,15 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 /obj/item/device/pda/Destroy()
 	PDAs -= src
+	if(id)
+		qdel(id)
+		id = null
+	if(cartridge)
+		qdel(cartridge)
+		cartridge = null
+	if(pai)
+		qdel(pai)
+		pai = null
 	if(inserted_item)
 		qdel(inserted_item)
 		inserted_item = null
@@ -891,7 +938,6 @@ var/global/list/obj/item/device/pda/PDAs = list()
 //AI verb and proc for sending PDA messages.
 
 /mob/living/silicon/ai/proc/cmd_send_pdamesg(mob/user)
-	var/list/names = list()
 	var/list/plist = list()
 	var/list/namecounts = list()
 
@@ -908,15 +954,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		else if (P == src.aiPDA)
 			continue
 
-		var/name = P.owner
-		if (name in names)
-			namecounts[name]++
-			name = text("[name] ([namecounts[name]])")
-		else
-			names.Add(name)
-			namecounts[name] = 1
-
-		plist[text("[name]")] = P
+		plist[avoid_assoc_duplicate_keys(P.owner, namecounts)] = P
 
 	var/c = input(user, "Please select a PDA") as null|anything in sortList(plist)
 

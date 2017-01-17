@@ -4,7 +4,7 @@
 	power_usage = 100
 	origin_tech = "programming=2;engineering=2"
 	icon_state = "printer"
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 	device_type = MC_PRINT
 	var/stored_paper = 20
 	var/max_paper = 30
@@ -44,7 +44,7 @@
 			return FALSE
 
 		if(stored_paper >= max_paper)
-			user << "<span class='warning'>You try to add \the [I] into [src], but it's paper bin is full!</span>"
+			user << "<span class='warning'>You try to add \the [I] into [src], but its paper bin is full!</span>"
 			return FALSE
 
 		user << "<span class='notice'>You insert \the [I] into [src]'s paper recycler.</span>"
@@ -58,6 +58,6 @@
 	desc = "A small printer with paper recycling module."
 	power_usage = 50
 	icon_state = "printer_mini"
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 	stored_paper = 5
 	max_paper = 15

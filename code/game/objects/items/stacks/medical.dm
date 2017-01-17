@@ -4,11 +4,12 @@
 	icon = 'icons/obj/items.dmi'
 	amount = 6
 	max_amount = 6
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 	throw_speed = 3
 	throw_range = 7
-	resistance_flags = 0
-	burntime = 5
+	resistance_flags = FLAMMABLE
+	obj_integrity = 40
+	max_integrity = 40
 	var/heal_brute = 0
 	var/heal_burn = 0
 	var/stop_bleeding = 0
@@ -124,7 +125,7 @@
 	desc = "A roll of cloth roughly cut from something that can stop bleeding, but does not heal wounds."
 	stop_bleeding = 900
 
-/obj/item/stack/medical/gauze/cyborg/
+/obj/item/stack/medical/gauze/cyborg
 	materials = list()
 	is_cyborg = 1
 	cost = 250

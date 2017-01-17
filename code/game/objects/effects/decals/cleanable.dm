@@ -46,6 +46,8 @@
 			src.reagents.chem_temp = min(src.reagents.chem_temp + added_heat, hotness)
 			src.reagents.handle_reactions()
 			user << "<span class='notice'>You heat [src] with [W]!</span>"
+	else
+		return ..()
 
 /obj/effect/decal/cleanable/ex_act()
 	if(reagents)
@@ -53,7 +55,7 @@
 			R.on_ex_act()
 	..()
 
-/obj/effect/decal/cleanable/fire_act()
+/obj/effect/decal/cleanable/fire_act(exposed_temperature, exposed_volume)
 	if(reagents)
 		reagents.chem_temp += 30
 		reagents.handle_reactions()

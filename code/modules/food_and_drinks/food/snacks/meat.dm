@@ -177,9 +177,8 @@
 	icon_state = "goliathmeat"
 
 /obj/item/weapon/reagent_containers/food/snacks/meat/slab/goliath/burn()
-	visible_message("\The [src] finishes cooking!")
-	new/obj/item/weapon/reagent_containers/food/snacks/meat/steak/goliath/(src.loc)
-	SSobj.burning -= src
+	visible_message("[src] finishes cooking!")
+	new /obj/item/weapon/reagent_containers/food/snacks/meat/steak/goliath/(loc)
 	qdel(src)
 
 /obj/item/weapon/reagent_containers/food/snacks/meat/slab/meatwheat
@@ -205,6 +204,7 @@
 	icon_state = "baconcooked"
 	list_reagents = list("nutriment" = 2)
 	bonus_reagents = list("nutriment" = 1, "vitamin" = 1)
+	filling_color = "#854817"
 
 ////////////////////////////////////// MEAT STEAKS ///////////////////////////////////////////////////////////
 

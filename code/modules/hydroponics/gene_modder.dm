@@ -27,7 +27,7 @@
 	B.apply_default_parts(src)
 
 /obj/item/weapon/circuitboard/machine/plantgenes
-	name = "circuit board (Plant DNA Manipulator)"
+	name = "Plant DNA Manipulator (Machine Board)"
 	build_path = /obj/machinery/plantgenes
 	origin_tech = "programming=3;biotech=3"
 	req_components = list(
@@ -66,7 +66,7 @@
 		return
 	if(default_deconstruction_crowbar(I))
 		return
-	if(isrobot(user))
+	if(iscyborg(user))
 		return
 
 	if(istype(I, /obj/item/seeds))
@@ -104,7 +104,7 @@
 		return
 
 	var/datum/browser/popup = new(user, "plantdna", "Plant DNA Manipulator", 450, 600)
-	if(!( in_range(src, user) || istype(user, /mob/living/silicon) ))
+	if(!(in_range(src, user) || issilicon(user)))
 		popup.close()
 		return
 
@@ -338,7 +338,9 @@
 			/datum/plant_gene/core/yield,
 			/datum/plant_gene/core/production,
 			/datum/plant_gene/core/endurance,
-			/datum/plant_gene/core/lifespan
+			/datum/plant_gene/core/lifespan,
+			/datum/plant_gene/core/weed_rate,
+			/datum/plant_gene/core/weed_chance
 			)
 		for(var/a in gene_paths)
 			core_genes += seed.get_gene(a)

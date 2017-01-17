@@ -8,7 +8,7 @@
 	pass_flags = PASSTABLE
 	languages_spoken = MONKEY
 	languages_understood = MONKEY
-	ventcrawler = 1
+	ventcrawler = VENTCRAWLER_NUDE
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab/monkey = 5, /obj/item/stack/sheet/animalhide/monkey = 1)
 	type_of_meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/monkey
 	gib_type = /obj/effect/decal/cleanable/blood/gibs
@@ -122,7 +122,7 @@
 				threatcount += 4
 
 	//mindshield implants imply trustworthyness
-	if(isloyal(src))
+	if(isloyal())
 		threatcount -= 1
 
 	return threatcount

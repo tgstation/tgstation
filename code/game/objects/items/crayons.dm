@@ -24,7 +24,7 @@
 	var/use_overlays = FALSE
 
 	item_color = "red"
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 	attack_verb = list("attacked", "coloured")
 	var/paint_color = "#FF0000" //RGB
 
@@ -69,7 +69,7 @@
 	var/post_noise = FALSE
 
 /obj/item/toy/crayon/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is jamming the [src.name] up \his nose and into \his brain. It looks like \he's trying to commit suicide.</span>")
+	user.visible_message("<span class='suicide'>[user] is jamming [src] up [user.p_their()] nose and into [user.p_their()] brain. It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return (BRUTELOSS|OXYLOSS)
 
 /obj/item/toy/crayon/New()
@@ -87,11 +87,6 @@
 	drawtype = pick(all_drawables)
 
 	refill()
-
-/obj/item/toy/crayon/Destroy()
-	if(reagents)
-		qdel(reagents)
-	. = ..()
 
 /obj/item/toy/crayon/proc/refill()
 	if(charges == -1)
@@ -129,16 +124,15 @@
 /obj/item/toy/crayon/proc/check_empty(mob/user)
 	// When eating a crayon, check_empty() can be called twice producing
 	// two messages unless we check for being deleted first
-	if(!qdeleted(src))
-		. = TRUE
+	if(qdeleted(src))
+		return TRUE
 
 	. = FALSE
 	// -1 is unlimited charges
 	if(charges == -1)
 		. = FALSE
 	else if(!charges_left)
-		user << "<span class='warning'>There is no more of [src.name] \
-			left!</span>"
+		user << "<span class='warning'>There is no more of \the [src.name] left!</span>"
 		if(self_contained)
 			qdel(src)
 		. = TRUE
@@ -155,8 +149,7 @@
 /obj/item/toy/crayon/spraycan/AltClick(mob/user)
 	if(has_cap)
 		is_capped = !is_capped
-		user << "<span class='notice'>The cap on [src] is now \
-			[is_capped ? "on" : "off"].</span>"
+		user << "<span class='notice'>The cap on [src] is now [is_capped ? "on" : "off"].</span>"
 		update_icon()
 
 /obj/item/toy/crayon/ui_data()
@@ -305,9 +298,8 @@
 			else
 				graf_rot = 0
 
-	user << "<span class='notice'>You start \
-		[instant ? "spraying" : "drawing"] a [temp] on the \
-		[target.name]...</span>"
+	if(!instant)
+		user << "<span class='notice'>You start drawing a [temp] on the	[target.name]...</span>"
 
 	if(pre_noise)
 		audible_message("<span class='notice'>You hear spraying.</span>")
@@ -354,9 +346,11 @@
 					else
 						user << "<span class='warning'>There isn't enough space to paint!</span>"
 						return
-
-	user << "<span class='notice'>You finish \
-		[instant ? "spraying" : "drawing"] \the [temp].</span>"
+	
+	if(!instant)
+		user << "<span class='notice'>You finish drawing \the [temp].</span>"
+	else
+		user << "<span class='notice'>You spray a [temp] on \the [target.name]</span>"
 
 	if(length(text_buffer))
 		text_buffer = copytext(text_buffer,2)
@@ -370,7 +364,8 @@
 		cost = 5
 	. = use_charges(cost)
 	var/fraction = min(1, . / reagents.maximum_volume)
-	fraction /= affected_turfs.len
+	if(affected_turfs.len)
+		fraction /= affected_turfs.len
 	for(var/t in affected_turfs)
 		reagents.reaction(t, TOUCH, fraction * volume_multiplier)
 		reagents.trans_to(t, ., volume_multiplier)
@@ -380,6 +375,8 @@
 	if(edible && (M == user))
 		user << "You take a bite of the [src.name]. Delicious!"
 		var/eaten = use_charges(5)
+		if(check_empty(user)) //Prevents divsion by zero
+			return
 		var/fraction = min(eaten / reagents.total_volume, 1)
 		reagents.reaction(M, INGEST, fraction * volume_multiplier)
 		reagents.trans_to(M, eaten, volume_multiplier)
@@ -392,8 +389,7 @@
 	// Reject space, player-created areas, and non-station z-levels.
 	var/area/A = get_area(target)
 	if(!A || (A.z != ZLEVEL_STATION) || !A.valid_territory)
-		user << "<span class='warning'>[A] is unsuitable for \
-			tagging.</span>"
+		user << "<span class='warning'>[A] is unsuitable for tagging.</span>"
 		return FALSE
 
 	var/spraying_over = FALSE
@@ -507,7 +503,7 @@
 	desc = "A box of crayons for all your rune drawing needs."
 	icon = 'icons/obj/crayons.dmi'
 	icon_state = "crayonbox"
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	storage_slots = 7
 	can_hold = list(
 		/obj/item/toy/crayon
@@ -537,8 +533,7 @@
 				usr << "This crayon is too sad to be contained in this box."
 				return
 			if("rainbow")
-				usr << "This crayon is too powerful to be contained in this \
-					box."
+				usr << "This crayon is too powerful to be contained in this box."
 				return
 		if(istype(W, /obj/item/toy/crayon/spraycan))
 			user << "Spraycans are not crayons."
@@ -557,8 +552,7 @@
 	paint_color = null
 
 	item_state = "spraycan"
-	desc = "A metallic container containing tasty paint.\n\
-		Alt-click to toggle the cap."
+	desc = "A metallic container containing tasty paint.\n Alt-click to toggle the cap."
 
 	instant = TRUE
 	edible = FALSE
@@ -570,18 +564,17 @@
 	validSurfaces = list(/turf/open/floor,/turf/closed/wall)
 	reagent_contents = list("welding_fuel" = 1, "ethanol" = 1)
 
+	pre_noise = TRUE
+	post_noise = FALSE
+
 /obj/item/toy/crayon/spraycan/suicide_act(mob/user)
 	var/mob/living/carbon/human/H = user
 	if(is_capped || !actually_paints)
-		user.visible_message("<span class='suicide'>[user] shakes up the \
-			[src] with a rattle and lifts it to their mouth, but nothing \
-			happens!</span>")
+		user.visible_message("<span class='suicide'>[user] shakes up [src] with a rattle and lifts it to [user.p_their()] mouth, but nothing happens!</span>")
 		user.say("MEDIOCRE!!")
 		return SHAME
 	else
-		user.visible_message("<span class='suicide'>[user] shakes up the \
-			[src] with a rattle and lifts it to their mouth, spraying \
-			paint across their teeth!</span>")
+		user.visible_message("<span class='suicide'>[user] shakes up [src] with a rattle and lifts it to [user.p_their()] mouth, spraying paint across [user.p_their()] teeth!</span>")
 		user.say("WITNESS ME!!")
 		if(pre_noise || post_noise)
 			playsound(loc, 'sound/effects/spray.ogg', 5, 1, 5)
@@ -629,13 +622,11 @@
 
 	if(iscarbon(target))
 		if(pre_noise || post_noise)
-			playsound(user.loc, 'sound/effects/spray.ogg', 5, 1, 5)
+			playsound(user.loc, 'sound/effects/spray.ogg', 25, 1, 5)
 
 		var/mob/living/carbon/C = target
-		user.visible_message("<span class='danger'>[user] sprays [src] \
-			into the face of [target]!</span>")
-		target << "<span class='userdanger'>[user] sprays [src] into your \
-			face!</span>"
+		user.visible_message("<span class='danger'>[user] sprays [src] into the face of [target]!</span>")
+		target << "<span class='userdanger'>[user] sprays [src] into your face!</span>"
 
 		if(C.client)
 			C.blur_eyes(3)
@@ -658,7 +649,7 @@
 
 	if(istype(target, /obj/structure/window))
 		if(actually_paints)
-			target.color = paint_color
+			target.add_atom_colour(paint_color, WASHABLE_COLOUR_PRIORITY)
 			if(color_hex2num(paint_color) < 255)
 				target.SetOpacity(255)
 			else
@@ -700,8 +691,7 @@
 /obj/item/toy/crayon/spraycan/gang/examine(mob/user)
 	. = ..()
 	if((user.mind && user.mind.gang_datum) || isobserver(user))
-		user << "This spraycan has \
-			been specially modified for tagging territory."
+		user << "This spraycan has been specially modified for tagging territory."
 
 /obj/item/toy/crayon/spraycan/borg
 	name = "cyborg spraycan"
@@ -710,7 +700,7 @@
 
 /obj/item/toy/crayon/spraycan/borg/afterattack(atom/target,mob/user,proximity)
 	var/diff = ..()
-	if(!isrobot(user))
+	if(!iscyborg(user))
 		user << "<span class='notice'>How did you get this?</span>"
 		qdel(src)
 		return FALSE

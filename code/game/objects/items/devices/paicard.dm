@@ -3,19 +3,20 @@
 	icon = 'icons/obj/aicards.dmi'
 	icon_state = "pai"
 	item_state = "electronic"
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	slot_flags = SLOT_BELT
 	origin_tech = "programming=2"
-	var/obj/item/device/radio/radio
-	var/looking_for_personality = 0
 	var/mob/living/silicon/pai/pai
+	resistance_flags = FIRE_PROOF | ACID_PROOF | INDESTRUCTIBLE
 
 /obj/item/device/paicard/New()
 	..()
+	pai_card_list += src
 	add_overlay("pai-off")
 
 /obj/item/device/paicard/Destroy()
 	//Will stop people throwing friend pAIs into the singularity so they can respawn
+	pai_card_list -= src
 	if(!isnull(pai))
 		pai.death(0)
 	return ..()
@@ -35,22 +36,22 @@
 		dat += "<a href='byond://?src=\ref[src];setlaws=1'>Configure Directives</a><br>"
 		dat += "<br>"
 		dat += "<h3>Device Settings</h3><br>"
-		if(radio)
+		if(pai.radio)
 			dat += "<b>Radio Uplink</b><br>"
-			dat += "Transmit: <A href='byond://?src=\ref[src];wires=[WIRE_TX]'>[(radio.wires.is_cut(WIRE_TX)) ? "Disabled" : "Enabled"]</A><br>"
-			dat += "Receive: <A href='byond://?src=\ref[src];wires=[WIRE_RX]'>[(radio.wires.is_cut(WIRE_RX)) ? "Disabled" : "Enabled"]</A><br>"
+			dat += "Transmit: <A href='byond://?src=\ref[src];wires=[WIRE_TX]'>[(pai.radio.wires.is_cut(WIRE_TX)) ? "Disabled" : "Enabled"]</A><br>"
+			dat += "Receive: <A href='byond://?src=\ref[src];wires=[WIRE_RX]'>[(pai.radio.wires.is_cut(WIRE_RX)) ? "Disabled" : "Enabled"]</A><br>"
 		else
 			dat += "<b>Radio Uplink</b><br>"
 			dat += "<font color=red><i>Radio firmware not loaded. Please install a pAI personality to load firmware.</i></font><br>"
+		if(ishuman(user))
+			var/mob/living/carbon/human/H = user
+			if(H.real_name == pai.master || H.dna.unique_enzymes == pai.master_dna)
+				dat += "<A href='byond://?src=\ref[src];toggle_holo=1'>\[[pai.canholo? "Disable" : "Enable"] holomatrix projectors\]</a><br>"
 		dat += "<A href='byond://?src=\ref[src];wipe=1'>\[Wipe current pAI personality\]</a><br>"
 	else
-		if(looking_for_personality)
-			dat += "Searching for a personality..."
-			dat += "<A href='byond://?src=\ref[src];request=1'>\[View available personalities\]</a><br>"
-		else
-			dat += "No personality is installed.<br>"
-			dat += "<A href='byond://?src=\ref[src];request=1'>\[Request personal AI personality\]</a><br>"
-			dat += "Each time this button is pressed, a request will be sent out to any available personalities. Check back often and give a lot of time for personalities to respond. This process could take anywhere from 15 seconds to several minutes, depending on the available personalities' timeliness."
+		dat += "No personality installed.<br>"
+		dat += "Searching for a personality... Press view available personalities to notify potential candidates."
+		dat += "<A href='byond://?src=\ref[src];request=1'>\[View available personalities\]</a><br>"
 	user << browse(dat, "window=paicard")
 	onclose(user, "paicard")
 	return
@@ -61,7 +62,6 @@
 		return
 
 	if(href_list["request"])
-		src.looking_for_personality = 1
 		SSpai.findPAI(src, usr)
 
 	if(pai)
@@ -75,6 +75,7 @@
 				pai.master = M.real_name
 				pai.master_dna = M.dna.unique_enzymes
 				pai << "<span class='notice'>You have been bound to a new master.</span>"
+				pai.emittersemicd = FALSE
 		if(href_list["wipe"])
 			var/confirm = input("Are you CERTAIN you wish to delete the current personality? This action cannot be undone.", "Personality Wipe") in list("Yes", "No")
 			if(confirm == "Yes")
@@ -84,11 +85,10 @@
 					pai << "<span class='userdanger'>Your mental faculties leave you.</span>"
 					pai << "<span class='rose'>oblivion... </span>"
 					pai.death(0)
-				removePersonality()
 		if(href_list["wires"])
 			var/wire = text2num(href_list["wires"])
-			if(radio)
-				radio.wires.cut(wire)
+			if(pai.radio)
+				pai.radio.wires.cut(wire)
 		if(href_list["setlaws"])
 			var/newlaws = copytext(sanitize(input("Enter any additional directives you would like your pAI personality to follow. Note that these directives will not override the personality's allegiance to its imprinted master. Conflicting directives will be ignored.", "pAI Directive Configuration", pai.laws.supplied[1]) as message),1,MAX_MESSAGE_LEN)
 			if(newlaws && pai)
@@ -97,6 +97,16 @@
 				pai << "Prime Directive : <br>[pai.laws.zeroth]"
 				for(var/slaws in pai.laws.supplied)
 					pai << "Supplemental Directives: <br>[slaws]"
+		if(href_list["toggle_holo"])
+			if(pai.canholo)
+				pai << "<span class='userdanger'>Your owner has disabled your holomatrix projectors!</span>"
+				pai.canholo = FALSE
+				usr << "<span class='warning'>You disable your pAI's holomatrix!</span>"
+			else
+				pai << "<span class='boldnotice'>Your owner has enabled your holomatrix projectors!</span>"
+				pai.canholo = TRUE
+				usr << "<span class='notice'>You enable your pAI's holomatrix!</span>"
+
 	attack_self(usr)
 
 // 		WIRE_SIGNAL = 1

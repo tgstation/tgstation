@@ -15,8 +15,8 @@
 		var/mob/living/carbon/human/H = M
 		if(H.check_shields(0, "[M]'s [name]", src, MELEE_ATTACK))
 			playsound(M, 'sound/weapons/Genhit.ogg', 50, 1)
-			return 0
-	if(isrobot(user))
+			return FALSE
+	if(iscyborg(user))
 		var/mob/living/silicon/robot/R = user
 		if(!R.cell.use(charge_cost))
 			return
@@ -40,10 +40,11 @@
 	var/mode = 0 //0 = Hugs 1 = "Hug" 2 = Shock 3 = CRUSH
 	var/ccooldown = 0
 	var/scooldown = 0
-	var/shockallowed = 0//Can it be a stunarm when emagged. Only PK borgs get this by default.
+	var/shockallowed = FALSE//Can it be a stunarm when emagged. Only PK borgs get this by default.
+	var/boop = FALSE
 
 /obj/item/borg/cyborghug/attack_self(mob/living/user)
-	if(isrobot(user))
+	if(iscyborg(user))
 		var/mob/living/silicon/robot/P = user
 		if(P.emagged&&shockallowed == 1)
 			if(mode < 3)
@@ -68,15 +69,20 @@
 	switch(mode)
 		if(0)
 			if(M.health >= 0)
-				if(ishuman(M))
+				if(user.zone_selected == "head")
+					user.visible_message("<span class='notice'>[user] playfully boops [M] on the head!</span>", \
+									"<span class='notice'>You playfully boop [M] on the head!</span>")
+					user.do_attack_animation(M, ATTACK_EFFECT_BOOP)
+					playsound(loc, 'sound/weapons/tap.ogg', 50, 1, -1)
+				else if(ishuman(M))
 					if(M.lying)
-						user.visible_message("<span class='notice'>[user] shakes [M] trying to get \him up!</span>", \
-										"<span class='notice'>You shake [M] trying to get \him up!</span>")
+						user.visible_message("<span class='notice'>[user] shakes [M] trying to get [M.p_them()] up!</span>", \
+										"<span class='notice'>You shake [M] trying to get [M.p_them()] up!</span>")
 					else
-						user.visible_message("<span class='notice'>[user] hugs [M] to make \him feel better!</span>", \
-								"<span class='notice'>You hug [M] to make \him feel better!</span>")
+						user.visible_message("<span class='notice'>[user] hugs [M] to make [M.p_them()] feel better!</span>", \
+								"<span class='notice'>You hug [M] to make [M.p_them()] feel better!</span>")
 					if(M.resting)
-						M.resting = 0
+						M.resting = FALSE
 						M.update_canmove()
 				else
 					user.visible_message("<span class='notice'>[user] pets [M]!</span>", \
@@ -86,13 +92,17 @@
 			if(M.health >= 0)
 				if(ishuman(M))
 					if(M.lying)
-						user.visible_message("<span class='notice'>[user] shakes [M] trying to get \him up!</span>", \
-										"<span class='notice'>You shake [M] trying to get \him up!</span>")
+						user.visible_message("<span class='notice'>[user] shakes [M] trying to get [M.p_them()] up!</span>", \
+										"<span class='notice'>You shake [M] trying to get [M.p_them()] up!</span>")
+					else if(user.zone_selected == "head")
+						user.visible_message("<span class='warning'>[user] bops [M] on the head!</span>", \
+										"<span class='warning'>You bop [M] on the head!</span>")
+						user.do_attack_animation(M, ATTACK_EFFECT_PUNCH)
 					else
 						user.visible_message("<span class='warning'>[user] hugs [M] in a firm bear-hug! [M] looks uncomfortable...</span>", \
-								"<span class='warning'>You hug [M] firmly to make \him feel better! [M] looks uncomfortable...</span>")
+								"<span class='warning'>You hug [M] firmly to make [M.p_them()] feel better! [M] looks uncomfortable...</span>")
 					if(M.resting)
-						M.resting = 0
+						M.resting = FALSE
 						M.update_canmove()
 				else
 					user.visible_message("<span class='warning'>[user] bops [M] on the head!</span>", \
@@ -107,7 +117,7 @@
 							"<span class='danger'>You electrocute [M] with your touch!</span>")
 						M.update_canmove()
 					else
-						if(!isrobot(M))
+						if(!iscyborg(M))
 							M.adjustFireLoss(10)
 							user.visible_message("<span class='userdanger'>[user] shocks [M]!</span>", \
 								"<span class='danger'>You shock [M]!</span>")
@@ -116,9 +126,9 @@
 								"<span class='danger'>You shock [M] to no effect.</span>")
 					playsound(loc, 'sound/effects/sparks2.ogg', 50, 1, -1)
 					user.cell.charge -= 500
-					scooldown = 1
+					scooldown = TRUE
 					spawn(20)
-					scooldown = 0
+					scooldown = FALSE
 		if(3)
 			if(!ccooldown)
 				if(M.health >= 0)
@@ -129,14 +139,17 @@
 						user.visible_message("<span class='userdanger'>[user] crushes [M]!</span>", \
 								"<span class='danger'>You crush [M]!</span>")
 					playsound(loc, 'sound/weapons/smash.ogg', 50, 1, -1)
-					M.adjustBruteLoss(10)
+					M.adjustBruteLoss(15)
 					user.cell.charge -= 300
-					ccooldown = 1
+					ccooldown = TRUE
 					spawn(10)
-					ccooldown = 0
+					ccooldown = FALSE
 
 /obj/item/borg/cyborghug/peacekeeper
-	shockallowed = 1
+	shockallowed = TRUE
+
+/obj/item/borg/cyborghug/medical
+	boop = TRUE
 
 /obj/item/borg/charger
 	name = "power connector"
@@ -161,7 +174,7 @@
 	update_icon()
 
 /obj/item/borg/charger/afterattack(obj/item/target, mob/living/silicon/robot/user, proximity_flag)
-	if(!proximity_flag || !isrobot(user))
+	if(!proximity_flag || !iscyborg(user))
 		return
 	if(mode == "draw")
 		if(is_type_in_list(target, charge_machines))
@@ -267,7 +280,7 @@
 	desc = "Releases a harmless blast that confuses most organics. For when the harm is JUST TOO MUCH"
 	icon_state = "megaphone"
 	var/cooldown = 0
-	var/emagged = 0
+	var/emagged = FALSE
 
 /obj/item/device/harmalarm/emag_act(mob/user)
 	emagged = !emagged
@@ -282,33 +295,34 @@
 		user << "<font color='red'>The device is still recharging!</font>"
 		return
 
-	if(isrobot(user))
+	if(iscyborg(user))
 		var/mob/living/silicon/robot/R = user
 		if(R.cell.charge < 1200)
 			user << "<font color='red'>You don't have enough charge to do this!</font>"
 			return
 		R.cell.charge -= 1000
 		if(R.emagged)
-			safety = 0
+			safety = FALSE
 
-	if(safety == 1)
+	if(safety == TRUE)
 		user.visible_message("<font color='red' size='2'>[user] blares out a near-deafening siren from its speakers!</font>", \
 			"<span class='userdanger'>The siren pierces your hearing and confuses you!</span>", \
 			"<span class='danger'>The siren pierces your hearing!</span>")
 		for(var/mob/living/carbon/M in get_hearers_in_view(9, user))
-			if(M.get_ear_protection() == 0)
+			if(M.get_ear_protection() == FALSE)
 				M.confused += 6
 		audible_message("<font color='red' size='7'>HUMAN HARM</font>")
 		playsound(get_turf(src), 'sound/AI/harmalarm.ogg', 70, 3)
 		cooldown = world.time + 200
 		log_game("[user.ckey]([user]) used a Cyborg Harm Alarm in ([user.x],[user.y],[user.z])")
-		if(isrobot(user))
+		if(iscyborg(user))
 			var/mob/living/silicon/robot/R = user
 			R.connected_ai << "<br><span class='notice'>NOTICE - Peacekeeping 'HARM ALARM' used by: [user]</span><br>"
 
 		return
 
-	if(safety == 0)
+	if(safety == FALSE)
+		user.audible_message("<font color='red' size='7'>BZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZT</font>")
 		for(var/mob/living/carbon/C in get_hearers_in_view(9, user))
 			var/bang_effect = C.soundbang_act(2, 0, 0, 5)
 			switch(bang_effect)
@@ -321,11 +335,166 @@
 					C.confused += 10
 					C.stuttering += 15
 					C.Jitter(25)
-
-		user.audible_message("<font color='red' size='7'>BZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZT</font>")
 		playsound(get_turf(src), 'sound/machines/warning-buzzer.ogg', 130, 3)
 		cooldown = world.time + 600
 		log_game("[user.ckey]([user]) used an emagged Cyborg Harm Alarm in ([user.x],[user.y],[user.z])")
+
+/obj/item/borg/lollipop
+	name = "lollipop fabricator"
+	desc = "Reward good humans with this. Toggle in-module to switch between dispensing and high velocity ejection modes."
+	icon_state = "lollipop"
+	var/candy = 30
+	var/candymax = 30
+	var/charge_delay = 10
+	var/charging = 0
+	var/mode = 1
+	var/firedelay = 0
+	var/hitspeed = 2
+	var/hitdamage = 0
+	var/emaggedhitdamage = 3
+
+/obj/item/borg/lollipop/equipped()
+	check_amount()
+
+/obj/item/borg/lollipop/dropped()
+	check_amount()
+
+/obj/item/borg/lollipop/proc/check_amount()	//Doesn't even use processing ticks.
+	if(charging)
+		return
+	if(candy < candymax)
+		addtimer(CALLBACK(src, .proc/charge_lollipops), charge_delay)
+		charging = TRUE
+
+/obj/item/borg/lollipop/proc/charge_lollipops()
+	candy++
+	charging = FALSE
+	check_amount()
+
+/obj/item/borg/lollipop/proc/dispense(atom/A, mob/user)
+	if(candy <= 0)
+		user << "<span class='warning'>No lollipops left in storage!</span>"
+		return FALSE
+	var/turf/T = get_turf(A)
+	if(!T || !istype(T) || !isopenturf(T))
+		return FALSE
+	if(isobj(A))
+		var/obj/O = A
+		if(O.density)
+			return FALSE
+	new /obj/item/weapon/reagent_containers/food/snacks/lollipop(T)
+	candy--
+	check_amount()
+	user << "<span class='notice'>Dispensing lollipop...</span>"
+	playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
+	return TRUE
+
+/obj/item/borg/lollipop/proc/shootL(atom/target, mob/living/user, params)
+	if(candy <= 0)
+		user << "<span class='warning'>Not enough lollipops left!</span>"
+		return FALSE
+	candy--
+	var/obj/item/ammo_casing/caseless/lollipop/A = new /obj/item/ammo_casing/caseless/lollipop(src)
+	A.BB.damage = hitdamage
+	A.BB.speed = 0.5
+	playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
+	A.fire_casing(target, user, params, 0, 0, null, 0)
+	user.visible_message("<span class='warning'>[user] blasts a flying lollipop at [target]!</span>")
+	check_amount()
+
+/obj/item/borg/lollipop/proc/shootG(atom/target, mob/living/user, params)	//Most certainly a good idea.
+	if(candy <= 0)
+		user << "<span class='warning'>Not enough gumballs left!</span>"
+		return FALSE
+	candy--
+	var/obj/item/ammo_casing/caseless/gumball/A = new /obj/item/ammo_casing/caseless/gumball(src)
+	A.BB.damage = hitdamage
+	A.BB.speed = 0.5
+	A.BB.color = rgb(rand(0, 255), rand(0, 255), rand(0, 255))
+	playsound(src.loc, 'sound/weapons/bulletflyby3.ogg', 50, 1)
+	A.fire_casing(target, user, params, 0, 0, null, 0)
+	user.visible_message("<span class='warning'>[user] shoots a high-velocity gumball at [target]!</span>")
+	check_amount()
+
+/obj/item/borg/lollipop/afterattack(atom/target, mob/living/user, proximity, click_params)
+	check_amount()
+	if(iscyborg(user))
+		var/mob/living/silicon/robot/R = user
+		if(!R.cell.use(12))
+			user << "<span class='warning'>Not enough power.</span>"
+			return FALSE
+		if(R.emagged)
+			hitdamage = emaggedhitdamage
+	switch(mode)
+		if(1)
+			if(!proximity)
+				return FALSE
+			dispense(target, user)
+		if(2)
+			shootL(target, user, click_params)
+		if(3)
+			shootG(target, user, click_params)
+	hitdamage = initial(hitdamage)
+
+/obj/item/borg/lollipop/attack_self(mob/living/user)
+	switch(mode)
+		if(1)
+			mode++
+			user << "<span class='notice'>Module is now throwing lollipops.</span>"
+		if(2)
+			mode++
+			user << "<span class='notice'>Module is now blasting gumballs.</span>"
+		if(3)
+			mode = 1
+			user << "<span class='notice'>Module is now dispensing lollipops.</span>"
+	..()
+
+/obj/item/ammo_casing/caseless/gumball
+	name = "Gumball"
+	desc = "Why are you seeing this?!"
+	projectile_type = /obj/item/projectile/bullet/reusable/gumball
+	click_cooldown_override = 2
+
+
+/obj/item/projectile/bullet/reusable/gumball
+	name = "gumball"
+	desc = "Oh noes! A fast-moving gumball!"
+	icon_state = "gumball"
+	ammo_type = /obj/item/weapon/reagent_containers/food/snacks/gumball/cyborg
+
+/obj/item/projectile/bullet/reusable/gumball/handle_drop()
+	if(!dropped)
+		var/turf/T = get_turf(src)
+		var/obj/item/weapon/reagent_containers/food/snacks/gumball/S = new ammo_type(T)
+		S.color = color
+		dropped = TRUE
+
+/obj/item/ammo_casing/caseless/lollipop	//NEEDS RANDOMIZED COLOR LOGIC.
+	name = "Lollipop"
+	desc = "Why are you seeing this?!"
+	projectile_type = /obj/item/projectile/bullet/reusable/lollipop
+	click_cooldown_override = 2
+
+/obj/item/projectile/bullet/reusable/lollipop
+	name = "lollipop"
+	desc = "Oh noes! A fast-moving lollipop!"
+	icon_state = "lollipop_1"
+	ammo_type = /obj/item/weapon/reagent_containers/food/snacks/lollipop/cyborg
+	var/color2 = rgb(0, 0, 0)
+
+/obj/item/projectile/bullet/reusable/lollipop/New()
+	var/obj/item/weapon/reagent_containers/food/snacks/lollipop/S = new ammo_type(src)
+	color2 = S.headcolor
+	var/image/head = image(icon = 'icons/obj/projectiles.dmi', icon_state = "lollipop_2")
+	head.color = color2
+	add_overlay(head)
+
+/obj/item/projectile/bullet/reusable/lollipop/handle_drop()
+	if(!dropped)
+		var/turf/T = get_turf(src)
+		var/obj/item/weapon/reagent_containers/food/snacks/lollipop/S = new ammo_type(T)
+		S.change_head_color(color2)
+		dropped = TRUE
 
 /**********************************************************************
 						HUD/SIGHT things
@@ -340,6 +509,10 @@
 	icon_state = "securearea"
 	sight_mode = BORGXRAY
 
+/obj/item/borg/sight/xray/truesight_lens
+	name = "truesight lens"
+	icon = 'icons/obj/clockwork_objects.dmi'
+	icon_state = "truesight_lens"
 
 /obj/item/borg/sight/thermal
 	name = "\proper thermal vision"

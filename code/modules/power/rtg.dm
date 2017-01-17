@@ -26,7 +26,7 @@
 	connect_to_network()
 
 /obj/item/weapon/circuitboard/machine/rtg
-	name = "circuit board (RTG)"
+	name = "RTG (Machine Board)"
 	build_path = /obj/machinery/power/rtg
 	origin_tech = "programming=2;materials=4;powerstorage=3;engineering=2"
 	req_components = list(
@@ -61,7 +61,7 @@
 	return ..()
 
 /obj/machinery/power/rtg/attack_hand(mob/user)
-	if(can_buckle && isliving(user.pulling) && user.a_intent == "grab" && !has_buckled_mobs())
+	if(can_buckle && isliving(user.pulling) && user.a_intent == INTENT_GRAB && !has_buckled_mobs())
 		var/mob/living/L = user.pulling
 		if(L.buckled)
 			return
@@ -77,7 +77,7 @@
 	board_path = /obj/item/weapon/circuitboard/machine/rtg/advanced
 
 /obj/item/weapon/circuitboard/machine/rtg/advanced
-	name = "circuit board (Advanced RTG)"
+	name = "Advanced RTG (Machine Board)"
 	build_path = /obj/machinery/power/rtg/advanced
 	origin_tech = "programming=3;materials=5;powerstorage=4;engineering=3;plasmatech=3"
 	req_components = list(
@@ -124,7 +124,7 @@
 		"<span class='italics'>You hear a loud electrical crack!</span>")
 	playsound(src.loc, 'sound/magic/LightningShock.ogg', 100, 1, extrarange = 5)
 	tesla_zap(src, 5, power_gen * 0.05)
-	addtimer(GLOBAL_PROC, "explosion", 100, FALSE, get_turf(src), 2, 3, 4, 8) // Not a normal explosion.
+	addtimer(CALLBACK(GLOBAL_PROC, .proc/explosion, get_turf(src), 2, 3, 4, 8), 100) // Not a normal explosion.
 
 /obj/machinery/power/rtg/abductor/bullet_act(obj/item/projectile/Proj)
 	..()
@@ -142,7 +142,7 @@
 	else
 		overload()
 
-/obj/machinery/power/rtg/abductor/fire_act()
+/obj/machinery/power/rtg/abductor/fire_act(exposed_temperature, exposed_volume)
 	overload()
 
 /obj/machinery/power/rtg/abductor/tesla_act()

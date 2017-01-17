@@ -15,14 +15,14 @@
 /turf/closed/wall/mineral/titanium,
 /area/ruin/unpowered)
 "f" = (
-/obj/machinery/door/airlock/shuttle,
+/obj/machinery/door/airlock/titanium,
 /turf/open/floor/plating/airless,
 /area/ruin/unpowered)
 "g" = (
 /turf/open/floor/plating/airless,
 /area/ruin/unpowered)
 "h" = (
-/turf/open/floor/mineral/titanium/blue,
+/turf/open/floor/plasteel/airless/shuttle,
 /area/ruin/unpowered)
 "i" = (
 /obj/structure/chair,
@@ -31,15 +31,15 @@
 	icon_state = "rwindow";
 	dir = 8
 	},
-/turf/open/floor/mineral/titanium/blue,
+/turf/open/floor/plasteel/airless/shuttle,
 /area/ruin/unpowered)
 "j" = (
 /obj/structure/chair,
-/turf/open/floor/mineral/titanium/blue,
+/turf/open/floor/plasteel/airless/shuttle,
 /area/ruin/unpowered)
 "k" = (
 /obj/effect/spawner/lootdrop/crate_spawner,
-/turf/open/floor/mineral/titanium/blue,
+/turf/open/floor/plasteel/airless/shuttle,
 /area/ruin/unpowered)
 "l" = (
 /obj/structure/shuttle/engine/propulsion{
@@ -67,7 +67,7 @@
 /area/ruin/unpowered)
 "p" = (
 /obj/structure/table,
-/turf/open/floor/mineral/titanium/blue,
+/turf/open/floor/plasteel/airless/shuttle,
 /area/ruin/unpowered)
 "q" = (
 /obj/item/weapon/shard,
@@ -76,7 +76,7 @@
 	icon_state = "chair";
 	dir = 8
 	},
-/turf/open/floor/mineral/titanium/blue,
+/turf/open/floor/plasteel/airless/shuttle,
 /area/ruin/unpowered)
 "r" = (
 /obj/structure/chair{
@@ -87,7 +87,7 @@
 	icon_state = "rwindow";
 	dir = 8
 	},
-/turf/open/floor/mineral/titanium/blue,
+/turf/open/floor/plasteel/airless/shuttle,
 /area/ruin/unpowered)
 "s" = (
 /obj/structure/chair{

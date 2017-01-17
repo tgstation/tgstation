@@ -14,11 +14,7 @@ As such, they can either help or harm other aliens. Help works like the human he
 In all, this is a lot like the monkey code. /N
 */
 /mob/living/carbon/alien/attack_alien(mob/living/carbon/alien/M)
-	if(!ticker || !ticker.mode)
-		M << "You cannot attack people before the game has started."
-		return
-
-	if (istype(loc, /turf) && istype(loc.loc, /area/start))
+	if(isturf(loc) && istype(loc.loc, /area/start))
 		M << "No attacking people at spawn, you jackass."
 		return
 
@@ -30,19 +26,18 @@ In all, this is a lot like the monkey code. /N
 			AdjustParalysis(-3)
 			AdjustStunned(-3)
 			AdjustWeakened(-3)
-			visible_message("<span class='notice'>[M.name] nuzzles [src] trying to wake it up!</span>")
+			visible_message("<span class='notice'>[M.name] nuzzles [src] trying to wake [p_them()] up!</span>")
 
 		if ("grab")
 			grabbedby(M)
 
 		else
-			if (health > 0)
-				M.do_attack_animation(src)
+			if(health > 0)
+				M.do_attack_animation(src, ATTACK_EFFECT_BITE)
 				playsound(loc, 'sound/weapons/bite.ogg', 50, 1, -1)
-				var/damage = 1
 				visible_message("<span class='danger'>[M.name] bites [src]!</span>", \
-						"<span class='userdanger'>[M.name] bites [src]!</span>")
-				adjustBruteLoss(damage)
+						"<span class='userdanger'>[M.name] bites [src]!</span>", null, COMBAT_MESSAGE_RANGE)
+				adjustBruteLoss(1)
 				add_logs(M, src, "attacked")
 				updatehealth()
 			else
@@ -62,8 +57,11 @@ In all, this is a lot like the monkey code. /N
 			help_shake_act(M)
 		if("grab")
 			grabbedby(M)
-		if ("harm", "disarm")
-			M.do_attack_animation(src)
+		if ("harm")
+			M.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
+			return 1
+		if("disarm")
+			M.do_attack_animation(src, ATTACK_EFFECT_DISARM)
 			return 1
 	return 0
 
@@ -73,8 +71,6 @@ In all, this is a lot like the monkey code. /N
 		if (stat != DEAD)
 			var/obj/item/bodypart/affecting = get_bodypart(ran_zone(M.zone_selected))
 			apply_damage(rand(1, 3), BRUTE, affecting)
-
-
 
 
 /mob/living/carbon/alien/attack_animal(mob/living/simple_animal/M)
@@ -104,11 +100,14 @@ In all, this is a lot like the monkey code. /N
 		add_logs(M, src, "attacked")
 		updatehealth()
 
-/mob/living/carbon/alien/ex_act(severity, target)
+/mob/living/carbon/alien/ex_act(severity, target, origin)
+	if(origin && istype(origin, /datum/spacevine_mutation) && isvineimmune(src))
+		return
 	..()
 	switch (severity)
 		if (1)
 			gib()
+			return
 
 		if (2)
 			take_overall_damage(60, 60)
@@ -122,3 +121,6 @@ In all, this is a lot like the monkey code. /N
 
 /mob/living/carbon/alien/soundbang_act(intensity = 1, stun_pwr = 1, damage_pwr = 5, deafen_pwr = 15)
 	return 0
+
+/mob/living/carbon/alien/acid_act(acidpwr, acid_volume)
+	return 0//aliens are immune to acid.

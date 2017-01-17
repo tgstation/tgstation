@@ -31,6 +31,7 @@ var/list/image/ghost_images_simple = list() //this is a list of all ghost images
 	var/image/ghostimage_simple = null //this mob with the simple white ghost sprite
 	var/ghostvision = 1 //is the ghost able to see things humans can't?
 	var/seedarkness = 1
+	var/mob/observetarget = null	//The target mob that the ghost is observing. Used as a reference in logout()
 	var/ghost_hud_enabled = 1 //did this ghost disable the on-screen HUD?
 	var/data_huds_on = 0 //Are data HUDs currently enabled?
 	var/list/datahuds = list(DATA_HUD_SECURITY_ADVANCED, DATA_HUD_MEDICAL_ADVANCED, DATA_HUD_DIAGNOSTIC) //list of data HUDs shown to ghosts.
@@ -89,10 +90,10 @@ var/list/image/ghost_images_simple = list() //this is a list of all ghost images
 		mind = body.mind	//we don't transfer the mind but we keep a reference to it.
 		if(ishuman(body))
 			var/mob/living/carbon/human/body_human = body
-			if(HAIR in body_human.dna.species.specflags)
+			if(HAIR in body_human.dna.species.species_traits)
 				hair_style = body_human.hair_style
 				hair_color = brighten_color(body_human.hair_color)
-			if(FACEHAIR in body_human.dna.species.specflags)
+			if(FACEHAIR in body_human.dna.species.species_traits)
 				facial_hair_style = body_human.facial_hair_style
 				facial_hair_color = brighten_color(body_human.facial_hair_color)
 
@@ -117,11 +118,13 @@ var/list/image/ghost_images_simple = list() //this is a list of all ghost images
 	var/old_color = color
 	color = "#960000"
 	animate(src, color = old_color, time = 10)
+	addtimer(CALLBACK(src, /atom/proc/update_atom_colour), 10)
 
 /mob/dead/observer/ratvar_act()
 	var/old_color = color
 	color = "#FAE48C"
 	animate(src, color = old_color, time = 10)
+	addtimer(CALLBACK(src, /atom/proc/update_atom_colour), 10)
 
 /mob/dead/observer/Destroy()
 	ghost_images_full -= ghostimage
@@ -275,7 +278,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		loc = NewLoc
 		for(var/obj/effect/step_trigger/S in NewLoc)
 			S.Crossed(src)
-
+		update_parallax_contents()
 		return
 	loc = get_turf(src) //Get out of closets and such as a ghost
 	if((direct & NORTH) && y < world.maxy)
@@ -334,9 +337,12 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 					A.icon = ui_style2icon(client.prefs.UI_style)
 				A.desc = message
 				var/old_layer = source.layer
+				var/old_plane = source.plane
 				source.layer = FLOAT_LAYER
+				source.plane = FLOAT_PLANE
 				A.add_overlay(source)
 				source.layer = old_layer
+				source.plane = old_plane
 	src << "<span class='ghostalert'><a href=?src=\ref[src];reenter=1>(Click to re-enter)</a></span>"
 	if(sound)
 		src << sound(sound)
@@ -345,7 +351,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	set category = "Ghost"
 	set name = "Teleport"
 	set desc= "Teleport to a location"
-	if(!istype(usr, /mob/dead/observer))
+	if(!isobserver(usr))
 		usr << "Not when you're not dead!"
 		return
 	var/A
@@ -362,6 +368,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		usr << "No area available."
 
 	usr.loc = pick(L)
+	update_parallax_contents()
 
 /mob/dead/observer/verb/follow()
 	set category = "Ghost"
@@ -417,7 +424,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	set name = "Jump to Mob"
 	set desc = "Teleport to a mob"
 
-	if(istype(usr, /mob/dead/observer)) //Make sure they're an observer!
+	if(isobserver(usr)) //Make sure they're an observer!
 
 
 		var/list/dest = list() //List of possible destinations (mobs)
@@ -435,6 +442,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 			if(T && isturf(T))	//Make sure the turf exists, then move the source to that destination.
 				A.loc = T
+				A.update_parallax_contents()
 			else
 				A << "This mob is not located in the game world."
 
@@ -489,6 +497,11 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	updateghostimages()
 
 /proc/updateallghostimages()
+	listclearnulls(ghost_images_full)
+	listclearnulls(ghost_images_default)
+	listclearnulls(ghost_images_simple)
+	listclearnulls(ghost_darkness_images)
+
 	for (var/mob/dead/observer/O in player_list)
 		O.updateghostimages()
 
@@ -547,7 +560,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		return 0
 
 	if(can_reenter_corpse || (mind && mind.current))
-		if(alert(src, "Your soul is still tied to your former life as [mind.current.name], if you go foward there is no going back to that life. Are you sure you wish to continue?", "Move On", "Yes", "No") == "No")
+		if(alert(src, "Your soul is still tied to your former life as [mind.current.name], if you go forward there is no going back to that life. Are you sure you wish to continue?", "Move On", "Yes", "No") == "No")
 			return 0
 	if(target.key)
 		src << "<span class='warning'>Someone has taken this body while you were choosing!</span>"
@@ -656,10 +669,10 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	if(client.prefs.be_random_body)
 		client.prefs.random_character(gender)
 
-	if(HAIR in client.prefs.pref_species.specflags)
+	if(HAIR in client.prefs.pref_species.species_traits)
 		hair_style = client.prefs.hair_style
 		hair_color = brighten_color(client.prefs.hair_color)
-	if(FACEHAIR in client.prefs.pref_species.specflags)
+	if(FACEHAIR in client.prefs.pref_species.species_traits)
 		facial_hair_style = client.prefs.facial_hair_style
 		facial_hair_color = brighten_color(client.prefs.facial_hair_color)
 
@@ -673,7 +686,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 /mob/dead/observer/is_literate()
 	return 1
 
-/mob/dead/observer/on_varedit(var_name)
+/mob/dead/observer/vv_edit_var(var_name, var_value)
 	. = ..()
 	switch(var_name)
 		if("icon")
@@ -691,3 +704,56 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 			else
 				verbs -= /mob/dead/observer/verb/boo
 				verbs -= /mob/dead/observer/verb/possess
+
+/mob/dead/observer/reset_perspective(atom/A)
+	if(client)
+		if(ismob(client.eye) && (client.eye != src))
+			var/mob/target = client.eye
+			observetarget = null
+			if(target.observers)
+				target.observers -= src
+				UNSETEMPTY(target.observers)
+	if(..())
+		if(hud_used)
+			client.screen = list()
+			hud_used.show_hud(hud_used.hud_version)
+
+/mob/dead/observer/verb/observe()
+	set name = "Observe"
+	set category = "OOC"
+
+	var/list/creatures = getpois()
+
+	reset_perspective(null)
+
+	var/eye_name = null
+
+	eye_name = input("Please, select a player!", "Observe", null, null) as null|anything in creatures
+
+	if (!eye_name)
+		return
+
+	var/mob/mob_eye = creatures[eye_name]
+	//Istype so we filter out points of interest that are not mobs
+	if(client && mob_eye && istype(mob_eye))
+		client.eye = mob_eye
+		client.screen = list()
+		if(mob_eye.hud_used)
+			LAZYINITLIST(mob_eye.observers)
+			mob_eye.observers |= src
+			mob_eye.hud_used.show_hud(1,src)
+			observetarget = mob_eye
+
+/mob/dead/observer/verb/register_pai_candidate()
+	set category = "Ghost"
+	set name = "pAI Setup"
+	set desc = "Upload a fragment of your personality to the global pAI databanks"
+
+	register_pai()
+
+/mob/dead/observer/proc/register_pai()
+	if(istype(src, /mob/dead/observer))
+		if(SSpai)
+			SSpai.recruitWindow(src)
+	else
+		usr << "Can't become a pAI candidate while not dead!"

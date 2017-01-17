@@ -1,6 +1,7 @@
 /obj/structure/flora
-	resistance_flags = 0
-	burntime = 30
+	resistance_flags = FLAMMABLE
+	obj_integrity = 150
+	max_integrity = 150
 	anchored = 1
 
 //trees
@@ -241,7 +242,7 @@
 	icon = 'icons/obj/flora/plants.dmi'
 	icon_state = "plant-01"
 	layer = ABOVE_MOB_LAYER
-	w_class = 5
+	w_class = WEIGHT_CLASS_HUGE
 	force = 10
 	throwforce = 13
 	throw_speed = 2
@@ -251,6 +252,7 @@
 	var/image/I = image(icon = 'icons/obj/flora/plants.dmi' , icon_state = src.icon_state, loc = user)
 	I.override = 1
 	user.add_alt_appearance("sneaking_mission", I, player_list)
+	..()
 
 /obj/item/weapon/twohanded/required/kirbyplants/dropped(mob/living/user)
 	..()

@@ -8,7 +8,7 @@
 #define PRESET_MEDIUM 3000
 #define PRESET_LONG 6000
 
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
+
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 // Brig Door control displays.
@@ -92,7 +92,7 @@
 	for(var/obj/machinery/door/window/brigdoor/door in targets)
 		if(door.density)
 			continue
-		addtimer(door, "close", 0)
+		addtimer(CALLBACK(door, /obj/machinery/door/window/brigdoor.proc/close), 0)
 
 	for(var/obj/structure/closet/secure_closet/brig/C in targets)
 		if(C.broken)
@@ -121,7 +121,7 @@
 	for(var/obj/machinery/door/window/brigdoor/door in targets)
 		if(!door.density)
 			continue
-		addtimer(door, "open", 0)
+		addtimer(CALLBACK(door, /obj/machinery/door/window/brigdoor.proc/open), 0)
 
 	for(var/obj/structure/closet/secure_closet/brig/C in targets)
 		if(C.broken)

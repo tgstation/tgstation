@@ -71,6 +71,20 @@
 /obj/item/projectile/bullet/midbullet3
 	damage = 30
 
+/obj/item/projectile/bullet/midbullet3/hp
+	damage = 40
+	armour_penetration = -50
+
+/obj/item/projectile/bullet/midbullet3/ap
+	damage = 27
+	armour_penetration = 40
+
+/obj/item/projectile/bullet/midbullet3/fire/on_hit(atom/target, blocked = 0)
+	if(..(target, blocked))
+		var/mob/living/M = target
+		M.adjust_fire_stacks(1)
+		M.IgniteMob()
+
 /obj/item/projectile/bullet/heavybullet
 	damage = 35
 
@@ -203,12 +217,7 @@
 //This one is for future syringe guns update
 /obj/item/projectile/bullet/dart/syringe
 	name = "syringe"
-	icon = 'icons/obj/chemical.dmi'
 	icon_state = "syringeproj"
-
-//Piercing Syringe
-/obj/item/projectile/bullet/dart/syringe/piercing
-	piercing = 1
 
 /obj/item/projectile/bullet/neurotoxin
 	name = "neurotoxin spit"
@@ -228,6 +237,7 @@
 //// SNIPER BULLETS
 
 /obj/item/projectile/bullet/sniper
+	speed = 0		//360 alwaysscope.
 	damage = 70
 	stun = 5
 	weaken = 5
@@ -312,7 +322,7 @@
 	damage = 7
 	armour_penetration = 0
 
-obj/item/projectile/bullet/saw/incen/Move()
+/obj/item/projectile/bullet/saw/incen/Move()
 	..()
 	var/turf/location = get_turf(src)
 	if(location)

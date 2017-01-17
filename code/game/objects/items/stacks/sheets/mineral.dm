@@ -135,8 +135,9 @@ var/global/list/datum/stack_recipe/uranium_recipes = list ( \
 	singular_name = "plasma sheet"
 	origin_tech = "plasmatech=2;materials=2"
 	sheettype = "plasma"
-	resistance_flags = 0
-	burntime = 5
+	resistance_flags = FLAMMABLE
+	obj_integrity = 100
+	max_integrity = 100
 	materials = list(MAT_PLASMA=MINERAL_MATERIAL_AMOUNT)
 
 var/global/list/datum/stack_recipe/plasma_recipes = list ( \
@@ -159,7 +160,7 @@ var/global/list/datum/stack_recipe/plasma_recipes = list ( \
 	else
 		return ..()
 
-/obj/item/stack/sheet/mineral/plasma/fire_act()
+/obj/item/stack/sheet/mineral/plasma/fire_act(exposed_temperature, exposed_volume)
 	atmos_spawn_air("plasma=[amount*10];TEMP=1000")
 	qdel(src)
 
@@ -249,7 +250,7 @@ var/global/list/datum/stack_recipe/clown_recipes = list ( \
 	singular_name = "titanium sheet"
 	force = 5
 	throwforce = 5
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 	throw_speed = 1
 	throw_range = 3
 	origin_tech = "materials=4"
@@ -276,12 +277,12 @@ var/global/list/datum/stack_recipe/titanium_recipes = list ( \
 	singular_name = "plastitanium sheet"
 	force = 5
 	throwforce = 5
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 	throw_speed = 1
 	throw_range = 3
 	origin_tech = "materials=4"
 	sheettype = "plastitanium"
-	materials = list(MAT_TITANIUM=6000, MAT_PLASMA=6000)
+	materials = list(MAT_TITANIUM=2000, MAT_PLASMA=2000)
 
 var/global/list/datum/stack_recipe/plastitanium_recipes = list ( \
 	new/datum/stack_recipe("plas-titanium tile", /obj/item/stack/tile/mineral/plastitanium, 1, 4, 20), \

@@ -6,7 +6,7 @@
 	name = "forensic scanner"
 	desc = "Used to remotely scan objects and biomass for DNA and fingerprints. Can print a report of the findings."
 	icon_state = "forensicnew"
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	item_state = "electronic"
 	flags = CONDUCT | NOBLUDGEON
 	slot_flags = SLOT_BELT

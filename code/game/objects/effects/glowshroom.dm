@@ -13,7 +13,8 @@ var/list/blacklisted_glowshroom_turfs = typecacheof(list(
 	icon = 'icons/obj/lighting.dmi'
 	icon_state = "glowshroom" //replaced in New
 	layer = ABOVE_NORMAL_TURF_LAYER
-	var/endurance = 30
+	obj_integrity = 30
+	max_integrity = 30
 	var/potency = 30
 	var/delay = 1200
 	var/floor = 0
@@ -21,7 +22,7 @@ var/list/blacklisted_glowshroom_turfs = typecacheof(list(
 	var/generation = 1
 	var/spreadIntoAdjacentChance = 60
 
-obj/structure/glowshroom/glowcap
+/obj/structure/glowshroom/glowcap
 	name = "glowcap"
 	icon_state = "glowcap"
 
@@ -51,7 +52,7 @@ obj/structure/glowshroom/glowcap
 	else //if on the floor, glowshroom on-floor sprite
 		icon_state = "[base_icon_state]f"
 
-	addtimer(src, "Spread", delay)
+	addtimer(CALLBACK(src, .proc/Spread), delay)
 
 /obj/structure/glowshroom/proc/Spread()
 	for(var/i = 1 to yield)
@@ -89,7 +90,9 @@ obj/structure/glowshroom/glowcap
 			child.potency = max(potency + rand(-3,6), 0)
 			child.yield = max(yield + rand(-1,2), 0)
 			child.delay = max(delay + rand(-30,60), 0)
-			child.endurance = max(endurance + rand(-3,6), 1)
+			var/newhealth = max(obj_integrity + rand(-3,6), 1)
+			child.obj_integrity = newhealth
+			child.max_integrity = newhealth
 			child.generation = generation + 1
 
 			CHECK_TICK
@@ -126,34 +129,17 @@ obj/structure/glowshroom/glowcap
 	floor = 1
 	return 1
 
-/obj/structure/glowshroom/attacked_by(obj/item/I, mob/user)
-	..()
-	if(I.damtype != STAMINA)
-		endurance -= I.force
-		CheckEndurance()
-
-/obj/structure/glowshroom/ex_act(severity, target)
-	switch(severity)
-		if(1)
-			qdel(src)
-		if(2)
-			if(prob(50))
-				qdel(src)
-		if(3)
-			if(prob(5))
-				qdel(src)
+/obj/structure/glowshroom/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
+	if(damage_type == BURN && damage_amount)
+		playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
 
 /obj/structure/glowshroom/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(exposed_temperature > 300)
-		endurance -= 5
-		CheckEndurance()
+		take_damage(5, BURN, 0, 0)
 
-/obj/structure/glowshroom/proc/CheckEndurance()
-	if(endurance <= 0)
-		qdel(src)
-
-/obj/structure/glowshroom/acid_act(acidpwr, toxpwr, acid_volume)
+/obj/structure/glowshroom/acid_act(acidpwr, acid_volume)
+	. = 1
 	visible_message("<span class='danger'>[src] melts away!</span>")
-	var/obj/effect/decal/cleanable/molten_item/I = new (get_turf(src))
+	var/obj/effect/decal/cleanable/molten_object/I = new (get_turf(src))
 	I.desc = "Looks like this was \an [src] some time ago."
 	qdel(src)

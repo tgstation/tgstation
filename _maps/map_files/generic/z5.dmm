@@ -153,10 +153,7 @@
 /turf/open/floor/plating/airless,
 /area/mine/abandoned)
 "aA" = (
-/obj/item/clothing/mask/facehugger{
-	icon_state = "facehugger_dead";
-	stat = 2
-	},
+/obj/item/clothing/mask/facehugger/dead,
 /turf/open/floor/plasteel/airless,
 /area/mine/abandoned)
 "aB" = (
@@ -280,10 +277,7 @@
 /turf/open/floor/plating/airless,
 /area/mine/abandoned)
 "aU" = (
-/obj/item/clothing/mask/facehugger{
-	icon_state = "facehugger_dead";
-	stat = 2
-	},
+/obj/item/clothing/mask/facehugger/dead,
 /obj/structure/alien/weeds,
 /turf/open/floor/plating/airless,
 /area/mine/abandoned)
@@ -324,10 +318,7 @@
 /obj/item/weapon/shard{
 	icon_state = "small"
 	},
-/obj/item/clothing/mask/facehugger{
-	icon_state = "facehugger_dead";
-	stat = 2
-	},
+/obj/item/clothing/mask/facehugger/dead,
 /turf/open/space,
 /area/mine/abandoned)
 "bc" = (
@@ -396,10 +387,7 @@
 	},
 /area/mine/abandoned)
 "bn" = (
-/obj/item/clothing/mask/facehugger{
-	icon_state = "facehugger_dead";
-	stat = 2
-	},
+/obj/item/clothing/mask/facehugger/dead,
 /obj/structure/alien/weeds,
 /turf/open/floor/plasteel/airless{
 	icon_state = "floorscorched1"
@@ -465,10 +453,7 @@
 /turf/open/floor/plating/airless,
 /area/mine/abandoned)
 "by" = (
-/obj/item/clothing/mask/facehugger{
-	icon_state = "facehugger_dead";
-	stat = 2
-	},
+/obj/item/clothing/mask/facehugger/dead,
 /obj/structure/alien/weeds,
 /turf/open/floor/plasteel/airless,
 /area/mine/abandoned)
@@ -1091,7 +1076,7 @@
 /turf/open/floor/plasteel/floorgrime,
 /area/mine/laborcamp)
 "dp" = (
-/obj/effect/decal/cleanable/cobweb2,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/structure/chair{
 	dir = 8
 	},
@@ -4657,7 +4642,7 @@
 /obj/structure/table,
 /obj/item/weapon/paper{
 	anchored = 0;
-	info = "A hastily written note has been scribbled here... <br><br> Please use the ore redemption machine in the science wing for smelting. PLEASE! <br><br>--The Research Staff";
+	info = "A hastily written note has been scribbled here... <br><br> Please use the ore redemption machine in the cargo office for smelting. PLEASE! <br><br>--The Research Staff";
 	name = "URGENT!"
 	},
 /turf/open/floor/plasteel/bot{

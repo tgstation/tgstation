@@ -11,6 +11,11 @@
 	var/obj/effect/proc_holder/spell/S = null //Since spellbooks can be used by only one person anyway we can track the actual spell
 	var/buy_word = "Learn"
 	var/limit //used to prevent a spellbook_entry from being bought more than X times with one wizard spellbook
+	var/list/no_coexistance_typecache //Used so you can't have specific spells together
+
+/datum/spellbook_entry/New()
+	..()
+	no_coexistance_typecache = typecacheof(no_coexistance_typecache)
 
 /datum/spellbook_entry/proc/IsAvailible() // For config prefs / gamemode restrictions - these are round applied
 	return 1
@@ -18,6 +23,9 @@
 /datum/spellbook_entry/proc/CanBuy(mob/living/carbon/human/user,obj/item/weapon/spellbook/book) // Specific circumstances
 	if(book.uses<cost || limit == 0)
 		return 0
+	for(var/spell in user.mind.spell_list)
+		if(is_type_in_typecache(spell, no_coexistance_typecache))
+			return 0
 	return 1
 
 /datum/spellbook_entry/proc/Buy(mob/living/carbon/human/user,obj/item/weapon/spellbook/book) //return 1 on success
@@ -99,6 +107,11 @@
 	spell_type = /obj/effect/proc_holder/spell/fireball
 	log_name = "FB"
 
+/datum/spellbook_entry/rod_form
+	name = "Rod Form"
+	spell_type = /obj/effect/proc_holder/spell/targeted/rod_form
+	log_name = "RF"
+
 /datum/spellbook_entry/magicm
 	name = "Magic Missile"
 	spell_type = /obj/effect/proc_holder/spell/targeted/projectile/magic_missile
@@ -121,6 +134,12 @@
 	name = "Repulse"
 	spell_type = /obj/effect/proc_holder/spell/aoe_turf/repulse
 	log_name = "RP"
+	category = "Defensive"
+
+/datum/spellbook_entry/lightningPacket
+	name = "Lightning bolt!  Lightning bolt!"
+	spell_type = /obj/effect/proc_holder/spell/targeted/conjure_item/spellpacket
+	log_name = "LP"
 	category = "Defensive"
 
 /datum/spellbook_entry/timestop
@@ -150,7 +169,7 @@
 
 /datum/spellbook_entry/forcewall
 	name = "Force Wall"
-	spell_type = /obj/effect/proc_holder/spell/aoe_turf/conjure/forcewall
+	spell_type = /obj/effect/proc_holder/spell/targeted/forcewall
 	log_name = "FW"
 	category = "Defensive"
 	cost = 1
@@ -210,9 +229,17 @@
 
 /datum/spellbook_entry/infinite_guns
 	name = "Lesser Summon Guns"
-	spell_type = /obj/effect/proc_holder/spell/targeted/infinite_guns
+	spell_type = /obj/effect/proc_holder/spell/targeted/infinite_guns/gun
 	log_name = "IG"
 	cost = 3
+	no_coexistance_typecache = /obj/effect/proc_holder/spell/targeted/infinite_guns/arcane_barrage
+
+/datum/spellbook_entry/arcane_barrage
+	name = "Arcane Barrage"
+	spell_type = /obj/effect/proc_holder/spell/targeted/infinite_guns/arcane_barrage
+	log_name = "AB"
+	cost = 3
+	no_coexistance_typecache = /obj/effect/proc_holder/spell/targeted/infinite_guns/gun
 
 /datum/spellbook_entry/barnyard
 	name = "Barnyard Curse"
@@ -352,7 +379,7 @@
 /datum/spellbook_entry/item/armor/Buy(mob/living/carbon/human/user,obj/item/weapon/spellbook/book)
 	. = ..()
 	if(.)
-		new /obj/item/clothing/shoes/sandal(get_turf(user)) //In case they've lost them.
+		new /obj/item/clothing/shoes/sandal/magic(get_turf(user)) //In case they've lost them.
 		new /obj/item/clothing/gloves/color/purple(get_turf(user))//To complete the outfit
 
 /datum/spellbook_entry/item/contract
@@ -361,6 +388,19 @@
 	item_path = /obj/item/weapon/antag_spawner/contract
 	log_name = "CT"
 	category = "Assistance"
+
+/datum/spellbook_entry/item/guardian
+	name = "Guardian Deck"
+	desc = "A deck of guardian tarot cards, capable of binding a personal guardian to your body. There are multiple types of guardian available, but all of them will transfer some amount of damage to you. \
+	It would be wise to avoid buying these with anything capable of causing you to swap bodies with others."
+	item_path = /obj/item/weapon/guardiancreator/choose/wizard
+	log_name = "GU"
+	category = "Assistance"
+
+/datum/spellbook_entry/item/guardian/Buy(mob/living/carbon/human/user,obj/item/weapon/spellbook/book)
+	. = ..()
+	if(.)
+		new /obj/item/weapon/paper/guardian/wizard(get_turf(user))
 
 /datum/spellbook_entry/item/bloodbottle
 	name = "Bottle of Blood"
@@ -393,7 +433,7 @@
 
 /datum/spellbook_entry/item/singularity_hammer
 	name = "Singularity Hammer"
-	desc = "A hammer that creates an intensely powerful field of gravity where it strikes, pulling everthing nearby to the point of impact."
+	desc = "A hammer that creates an intensely powerful field of gravity where it strikes, pulling everything nearby to the point of impact."
 	item_path = /obj/item/weapon/twohanded/singularityhammer
 	log_name = "SI"
 
@@ -411,6 +451,14 @@
 	item_path = /obj/item/wizard_armour_charge
 	log_name = "AC"
 	category = "Defensive"
+	cost = 1
+
+/datum/spellbook_entry/item/warpwhistle
+	name = "Warp Whistle"
+	desc = "A strange whistle that will transport you to a distant safe place on the station. There is a window of vulnerability at the begining of every use."
+	item_path = /obj/item/warpwhistle
+	log_name = "WW"
+	category = "Mobility"
 	cost = 1
 
 /datum/spellbook_entry/summon
@@ -504,7 +552,7 @@
 	icon_state ="book"
 	throw_speed = 2
 	throw_range = 5
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 	persistence_replacement = /obj/item/weapon/spellbook/oneuse/random
 	var/uses = 10
 	var/temp = null
@@ -565,7 +613,7 @@
 			dat += "For spells: the number after the spell name is the cooldown time.<BR>"
 			dat += "You can reduce this number by spending more points on the spell.<BR>"
 		if("Defensive")
-			dat += "Spells and items geared towards improving your survivabilty or reducing foes ability to attack.<BR><BR>"
+			dat += "Spells and items geared towards improving your survivabilty or reducing foes' ability to attack.<BR><BR>"
 			dat += "Items are not bound to you and can be stolen. Additionaly they cannot typically be returned once purchased.<BR>"
 			dat += "For spells: the number after the spell name is the cooldown time.<BR>"
 			dat += "You can reduce this number by spending more points on the spell.<BR>"
@@ -612,7 +660,7 @@
 		owner = user
 		return
 	if(user != owner)
-		user << "<span class='warning'>The [name] does not recognize you as it's owner and refuses to open!</span>"
+		user << "<span class='warning'>The [name] does not recognize you as its owner and refuses to open!</span>"
 		return
 	user.set_machine(src)
 	var/dat = ""
@@ -661,11 +709,11 @@
 		return 1
 
 	if(H.mind.special_role == "apprentice")
-		temp = "If you got caught sneaking a peak from your teacher's spellbook, you'd likely be expelled from the Wizard Academy. Better not."
+		temp = "If you got caught sneaking a peek from your teacher's spellbook, you'd likely be expelled from the Wizard Academy. Better not."
 		return
 
 	var/datum/spellbook_entry/E = null
-	if(loc == H || (in_range(src, H) && istype(loc, /turf)))
+	if(loc == H || (in_range(src, H) && isturf(loc)))
 		H.set_machine(src)
 		if(href_list["buy"])
 			E = entries[text2num(href_list["buy"])]
@@ -802,7 +850,7 @@
 	stored_swap = null
 
 /obj/item/weapon/spellbook/oneuse/forcewall
-	spell = /obj/effect/proc_holder/spell/aoe_turf/conjure/forcewall
+	spell = /obj/effect/proc_holder/spell/targeted/forcewall
 	spellname = "forcewall"
 	icon_state ="bookforcewall"
 	desc = "This book has a dedication to mimes everywhere inside the front cover."
@@ -810,10 +858,8 @@
 /obj/item/weapon/spellbook/oneuse/forcewall/recoil(mob/user)
 	..()
 	user <<"<span class='warning'>You suddenly feel very solid!</span>"
-	var/obj/structure/closet/statue/S = new /obj/structure/closet/statue(user.loc, user)
-	S.timer = 30
-	user.drop_item()
-
+	user.Stun(2)
+	user.petrify(30)
 
 /obj/item/weapon/spellbook/oneuse/knock
 	spell = /obj/effect/proc_holder/spell/aoe_turf/knock

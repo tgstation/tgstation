@@ -30,18 +30,15 @@
 	item_state = "chaplain_hoodie"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	allowed = list(/obj/item/weapon/storage/book/bible, /obj/item/weapon/nullrod, /obj/item/weapon/reagent_containers/food/drinks/bottle/holywater, /obj/item/weapon/storage/fancy/candle_box, /obj/item/candle, /obj/item/weapon/tank/internals/emergency_oxygen)
-	hooded = 1
-	hoodtype = /obj/item/clothing/head/chaplain_hood
+	hoodtype = /obj/item/clothing/head/hooded/chaplain_hood
 
-/obj/item/clothing/head/chaplain_hood
+/obj/item/clothing/head/hooded/chaplain_hood
 	name = "chaplain hood"
 	desc = "For protecting your identity when immolating demons."
 	icon_state = "chaplain_hood"
 	body_parts_covered = HEAD
-	flags = NODROP
 	flags_inv = HIDEHAIR|HIDEFACE|HIDEEARS
 
-//Chaplain
 /obj/item/clothing/suit/nun
 	name = "nun robe"
 	desc = "Maximum piety in this star system."
@@ -49,6 +46,22 @@
 	item_state = "nun"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS|HANDS
 	flags_inv = HIDESHOES|HIDEJUMPSUIT
+	allowed = list(/obj/item/weapon/storage/book/bible, /obj/item/weapon/nullrod, /obj/item/weapon/reagent_containers/food/drinks/bottle/holywater, /obj/item/weapon/storage/fancy/candle_box, /obj/item/candle, /obj/item/weapon/tank/internals/emergency_oxygen)
+
+/obj/item/clothing/suit/studentuni
+	name = "student robe"
+	desc = "The uniform of a bygone institute of learning."
+	icon_state = "studentuni"
+	item_state = "studentuni"
+	body_parts_covered = ARMS|CHEST
+	allowed = list(/obj/item/weapon/storage/book/bible, /obj/item/weapon/nullrod, /obj/item/weapon/reagent_containers/food/drinks/bottle/holywater, /obj/item/weapon/storage/fancy/candle_box, /obj/item/candle, /obj/item/weapon/tank/internals/emergency_oxygen)
+
+/obj/item/clothing/suit/witchhunter
+	name = "witchunter garb"
+	desc = "This worn outfit saw much use back in the day."
+	icon_state = "witchhunter"
+	item_state = "witchhunter"
+	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	allowed = list(/obj/item/weapon/storage/book/bible, /obj/item/weapon/nullrod, /obj/item/weapon/reagent_containers/food/drinks/bottle/holywater, /obj/item/weapon/storage/fancy/candle_box, /obj/item/candle, /obj/item/weapon/tank/internals/emergency_oxygen)
 
 //Chef
@@ -81,7 +94,7 @@
 	item_state = "det_suit"
 	blood_overlay_type = "coat"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
-	allowed = list(/obj/item/weapon/tank/internals/emergency_oxygen,/obj/item/weapon/reagent_containers/spray/pepper,/obj/item/device/flashlight,/obj/item/weapon/gun/energy,/obj/item/weapon/gun/projectile,/obj/item/ammo_box,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/restraints/handcuffs,/obj/item/weapon/storage/fancy/cigarettes,/obj/item/weapon/lighter,/obj/item/device/detective_scanner,/obj/item/device/taperecorder,/obj/item/weapon/melee/classic_baton/telescopic)
+	allowed = list(/obj/item/weapon/tank/internals/emergency_oxygen,/obj/item/weapon/reagent_containers/spray/pepper,/obj/item/device/flashlight,/obj/item/weapon/gun/energy,/obj/item/weapon/gun/ballistic,/obj/item/ammo_box,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/restraints/handcuffs,/obj/item/weapon/storage/fancy/cigarettes,/obj/item/weapon/lighter,/obj/item/device/detective_scanner,/obj/item/device/taperecorder,/obj/item/weapon/melee/classic_baton)
 	armor = list(melee = 25, bullet = 10, laser = 25, energy = 10, bomb = 0, bio = 0, rad = 0, fire = 0, acid = 45)
 	cold_protection = CHEST|GROIN|LEGS|ARMS
 	heat_protection = CHEST|GROIN|LEGS|ARMS
@@ -100,7 +113,7 @@
 	item_state = "hazard"
 	blood_overlay_type = "armor"
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/internals/emergency_oxygen,/obj/item/device/t_scanner,/obj/item/device/radio)
-	resistance_flags = FIRE_PROOF
+	resistance_flags = 0
 //Lawyer
 /obj/item/clothing/suit/toggle/lawyer
 	name = "blue suit jacket"
@@ -154,10 +167,22 @@
 	item_state = "hosbluejacket"
 	body_parts_covered = CHEST|ARMS
 
-
 //Surgeon
 /obj/item/clothing/suit/apron/surgical
 	name = "surgical apron"
 	desc = "A sterile blue surgical apron."
 	icon_state = "surgical"
 	allowed = list(/obj/item/weapon/scalpel, /obj/item/weapon/surgical_drapes, /obj/item/weapon/cautery, /obj/item/weapon/hemostat, /obj/item/weapon/retractor)
+
+//Curator
+/obj/item/clothing/suit/curator
+	name = "treasure hunter's coat"
+	desc = "Both fashionable and lightly armoured, this jacket is favoured by treasure hunters the galaxy over."
+	icon_state = "curator"
+	item_state = "curator"
+	blood_overlay_type = "coat"
+	body_parts_covered = CHEST|ARMS
+	allowed = list(/obj/item/weapon/tank/internals/emergency_oxygen, /obj/item/weapon/melee/curator_whip)
+	armor = list(melee = 25, bullet = 10, laser = 25, energy = 10, bomb = 0, bio = 0, rad = 0, fire = 0, acid = 45)
+	cold_protection = CHEST|ARMS
+	heat_protection = CHEST|ARMS

@@ -1,7 +1,7 @@
-/proc/DuplicateObject(obj/original, var/perfectcopy = 0 , var/sameloc = 0, var/atom/newloc = null, var/nerf = 0)
+/proc/DuplicateObject(var/atom/original, var/perfectcopy = TRUE, var/sameloc = FALSE, var/atom/newloc = null, var/nerf = FALSE, var/holoitem=FALSE)
 	if(!original)
 		return null
-	var/obj/O
+	var/atom/O
 
 	if(sameloc)
 		O = new original.type(original.loc)
@@ -20,15 +20,19 @@
 			else
 				O.vars[V] = original.vars[V]
 
-	if(istype(O))
-		O.resistance_flags |= LAVA_PROOF | FIRE_PROOF | UNACIDABLE // holoitems do not burn
+	if(istype(O, /obj))
+		var/obj/N = O
+		if(holoitem)
+			N.resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF // holoitems do not burn
+
 		if(nerf && istype(O,/obj/item))
 			var/obj/item/I = O
 			I.damtype = STAMINA // thou shalt not
+
+		N.update_icon()
 		if(istype(O,/obj/machinery))
 			var/obj/machinery/M = O
 			M.power_change()
-	O.update_icon()
 	return O
 
 
@@ -76,37 +80,37 @@
 			continue
 
 		if(platingRequired)
-			if(istype(B, /turf/open/space))
+			if(isspaceturf(B))
 				continue
 
 		var/old_dir1 = T.dir
 		var/old_icon_state1 = T.icon_state
 		var/old_icon1 = T.icon
 
-		var/turf/X = new T.type(B)
-		X.setDir(old_dir1)
-		X.icon = old_icon1
-		X.icon_state = old_icon_state1
+		B.ChangeTurf(T.type)
+		B.setDir(old_dir1)
+		B.icon = old_icon1
+		B.icon_state = old_icon_state1
 
 		for(var/obj/O in T)
-			var/obj/O2 = DuplicateObject(O , 1, newloc = X, nerf=nerf_weapons)
+			var/obj/O2 = DuplicateObject(O , perfectcopy=TRUE, newloc = B, nerf=nerf_weapons, holoitem=TRUE)
 			if(!O2) continue
 			copiedobjs += O2.GetAllContents()
 
 		for(var/mob/M in T)
 			if(istype(M, /mob/camera)) continue // If we need to check for more mobs, I'll add a variable
-			var/mob/SM = DuplicateObject(M , 1, newloc = X)
+			var/mob/SM = DuplicateObject(M , perfectcopy=TRUE, newloc = B, holoitem=TRUE)
 			copiedobjs += SM.GetAllContents()
 
 		var/global/list/forbidden_vars = list("type","stat","loc","locs","vars", "parent", "parent_type","verbs","ckey","key","x","y","z","contents", "luminosity")
 		for(var/V in T.vars - forbidden_vars)
 			if(V == "air")
-				var/turf/open/O1 = X
+				var/turf/open/O1 = B
 				var/turf/open/O2 = T
 				O1.air.copy_from(O2.air)
 				continue
-			X.vars[V] = T.vars[V]
-		toupdate += X
+			B.vars[V] = T.vars[V]
+		toupdate += B
 
 	if(toupdate.len)
 		for(var/turf/T1 in toupdate)

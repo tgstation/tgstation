@@ -18,7 +18,7 @@
 	item_state = "pen"
 	slot_flags = SLOT_BELT | SLOT_EARS
 	throwforce = 0
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 	throw_speed = 3
 	throw_range = 7
 	materials = list(MAT_METAL=10)
@@ -26,7 +26,7 @@
 	var/colour = "black"	//what colour the ink is!
 
 /obj/item/weapon/pen/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is scribbling numbers all over themself with [src]! It looks like they're trying to commit sudoku!</span>")
+	user.visible_message("<span class='suicide'>[user] is scribbling numbers all over [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit sudoku...</span>")
 	return(BRUTELOSS)
 
 /obj/item/weapon/pen/blue
@@ -83,7 +83,7 @@
  */
 /obj/item/weapon/pen/sleepy
 	origin_tech = "engineering=4;syndicate=2"
-	flags = OPENCONTAINER
+	container_type = OPENCONTAINER
 
 
 /obj/item/weapon/pen/sleepy/attack(mob/living/M, mob/user)
@@ -125,7 +125,7 @@
 	else
 		on = 1
 		force = 18
-		w_class = 3
+		w_class = WEIGHT_CLASS_NORMAL
 		name = "energy dagger"
 		hitsound = 'sound/weapons/blade1.ogg'
 		embed_chance = 100 //rule of cool

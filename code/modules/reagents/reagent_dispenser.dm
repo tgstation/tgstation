@@ -6,28 +6,16 @@
 	density = 1
 	anchored = 0
 	pressure_resistance = 2*ONE_ATMOSPHERE
+	obj_integrity = 300
+	max_integrity = 300
 	var/tank_volume = 1000 //In units, how much the dispenser can hold
 	var/reagent_id = "water" //The ID of the reagent that the dispenser uses
 
-/obj/structure/reagent_dispensers/ex_act(severity, target)
-	switch(severity)
-		if(1)
+/obj/structure/reagent_dispensers/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
+	. = ..()
+	if(. && obj_integrity > 0)
+		if(tank_volume && (damage_flag == "bullet" || damage_flag == "laser"))
 			boom()
-			return
-		if(2)
-			if (prob(50))
-				boom()
-				return
-		if(3)
-			if (prob(5))
-				boom()
-				return
-		else
-	return
-
-/obj/structure/reagent_dispensers/blob_act(obj/structure/blob/B)
-	if(prob(50))
-		boom()
 
 /obj/structure/reagent_dispensers/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/reagent_containers))
@@ -53,20 +41,17 @@
 	chem_splash(loc, 5, list(reagents))
 	qdel(src)
 
+/obj/structure/reagent_dispensers/deconstruct(disassembled = TRUE)
+	if(!(flags & NODECONSTRUCT))
+		if(!disassembled)
+			boom()
+	else
+		qdel(src)
+
 /obj/structure/reagent_dispensers/watertank
 	name = "water tank"
 	desc = "A water tank."
 	icon_state = "water"
-
-/obj/structure/reagent_dispensers/bullet_act(obj/item/projectile/Proj)
-	..()
-	if(tank_volume && istype(Proj) && !Proj.nodamage && ((Proj.damage_type == BURN) || (Proj.damage_type == BRUTE)))
-		boom()
-
-/obj/structure/reagent_dispensers/watertank/blob_act(obj/structure/blob/B)
-	if(prob(50))
-		PoolOrNew(/obj/effect/particle_effect/water, loc)
-		qdel(src)
 
 /obj/structure/reagent_dispensers/watertank/high
 	name = "high-capacity water tank"
@@ -80,15 +65,6 @@
 	icon_state = "fuel"
 	reagent_id = "welding_fuel"
 
-/obj/structure/reagent_dispensers/fueltank/bullet_act(obj/item/projectile/Proj)
-	..()
-	if(istype(Proj) && !Proj.nodamage && ((Proj.damage_type == BURN) || (Proj.damage_type == BRUTE)))
-		var/boom_message = "[key_name_admin(Proj.firer)] triggered a fueltank explosion via projectile."
-		bombers += boom_message
-		message_admins(boom_message)
-		log_game("[key_name(Proj.firer)] triggered a fueltank explosion via projectile.")
-		boom()
-
 /obj/structure/reagent_dispensers/fueltank/boom()
 	explosion(get_turf(src), 0, 1, 5, flame_range = 5)
 	qdel(src)
@@ -99,12 +75,22 @@
 /obj/structure/reagent_dispensers/fueltank/ex_act()
 	boom()
 
-/obj/structure/reagent_dispensers/fueltank/fire_act()
+/obj/structure/reagent_dispensers/fueltank/fire_act(exposed_temperature, exposed_volume)
 	boom()
 
 /obj/structure/reagent_dispensers/fueltank/tesla_act()
 	..() //extend the zap
 	boom()
+
+/obj/structure/reagent_dispensers/fueltank/bullet_act(obj/item/projectile/P)
+	..()
+	if(!qdeleted(src)) //wasn't deleted by the projectile's effects.
+		if(!P.nodamage && ((P.damage_type == BURN) || (P.damage_type == BRUTE)))
+			var/boom_message = "[key_name_admin(P.firer)] triggered a fueltank explosion via projectile."
+			bombers += boom_message
+			message_admins(boom_message)
+			log_game("[key_name(P.firer)] triggered a fueltank explosion via projectile.")
+			boom()
 
 /obj/structure/reagent_dispensers/fueltank/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/weapon/weldingtool))
@@ -117,11 +103,11 @@
 				user << "<span class='warning'>Your [W.name] is already full!</span>"
 				return
 			reagents.trans_to(W, W.max_fuel)
-			user.visible_message("<span class='notice'>[user] refills \his [W.name].</span>", "<span class='notice'>You refill [W].</span>")
+			user.visible_message("<span class='notice'>[user] refills [user.p_their()] [W.name].</span>", "<span class='notice'>You refill [W].</span>")
 			playsound(src, 'sound/effects/refill.ogg', 50, 1)
 			update_icon()
 		else
-			user.visible_message("<span class='warning'>[user] catastrophically fails at refilling \his [W.name]!</span>", "<span class='userdanger'>That was stupid of you.</span>")
+			user.visible_message("<span class='warning'>[user] catastrophically fails at refilling [user.p_their()] [W.name]!</span>", "<span class='userdanger'>That was stupid of you.</span>")
 			var/message = "[key_name_admin(user)] triggered a fueltank explosion via welding tool."
 			bombers += message
 			message_admins(message)
@@ -176,6 +162,8 @@
 
 /obj/structure/reagent_dispensers/beerkeg/blob_act(obj/structure/blob/B)
 	explosion(src.loc,0,3,5,7,10)
+	if(!qdeleted(src))
+		qdel(src)
 
 
 /obj/structure/reagent_dispensers/virusfood

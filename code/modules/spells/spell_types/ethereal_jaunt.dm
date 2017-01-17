@@ -10,7 +10,6 @@
 	range = -1
 	cooldown_min = 100 //50 deciseconds reduction per rank
 	include_user = 1
-	centcom_cancast = 0 //Prevent people from getting to centcom
 	nonabstract_req = 1
 	var/jaunt_duration = 50 //in deciseconds
 	var/jaunt_in_time = 5
@@ -21,7 +20,7 @@
 /obj/effect/proc_holder/spell/targeted/ethereal_jaunt/cast(list/targets,mob/user = usr) //magnets, so mostly hardcoded
 	playsound(get_turf(user), 'sound/magic/Ethereal_Enter.ogg', 50, 1, -1)
 	for(var/mob/living/target in targets)
-		addtimer(src, "do_jaunt", 0, FALSE, target)
+		addtimer(CALLBACK(src, .proc/do_jaunt, target), 0)
 
 /obj/effect/proc_holder/spell/targeted/ethereal_jaunt/proc/do_jaunt(mob/living/target)
 	target.notransform = 1
@@ -78,7 +77,7 @@
 	density = 0
 	anchored = 1
 	invisibility = 60
-	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE
+	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
 /obj/effect/dummy/spell_jaunt/Destroy()
 	// Eject contents if deleted somehow

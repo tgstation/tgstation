@@ -27,25 +27,27 @@
 #define EASTER					"Easter"
 #define HALLOWEEN				"Halloween"
 #define CHRISTMAS				"Christmas"
+#define FESTIVE_SEASON			"Festive Season"
 #define FRIDAY_13TH				"Friday the 13th"
 
 //Human Overlays Indexes/////////
-#define MUTATIONS_LAYER			25		//mutations. Tk headglows, cold resistance glow, etc
-#define BODY_BEHIND_LAYER		24		//certain mutantrace features (tail when looking south) that must appear behind the body parts
-#define BODYPARTS_LAYER			23		//Initially "AUGMENTS", this was repurposed to be a catch-all bodyparts flag
-#define BODY_ADJ_LAYER			22		//certain mutantrace features (snout, body markings) that must appear above the body parts
-#define BODY_LAYER				21		//underwear, undershirts, socks, eyes, lips(makeup)
-#define FRONT_MUTATIONS_LAYER	20		//mutations that should appear above body, body_adj and bodyparts layer (e.g. laser eyes)
-#define DAMAGE_LAYER			19		//damage indicators (cuts and burns)
-#define UNIFORM_LAYER			18
-#define ID_LAYER				17
-#define SHOES_LAYER				16
-#define GLOVES_LAYER			15
-#define EARS_LAYER				14
-#define SUIT_LAYER				13
-#define GLASSES_LAYER			12
-#define BELT_LAYER				11		//Possible make this an overlay of somethign required to wear a belt?
-#define SUIT_STORE_LAYER		10
+#define MUTATIONS_LAYER			26		//mutations. Tk headglows, cold resistance glow, etc
+#define BODY_BEHIND_LAYER		25		//certain mutantrace features (tail when looking south) that must appear behind the body parts
+#define BODYPARTS_LAYER			24		//Initially "AUGMENTS", this was repurposed to be a catch-all bodyparts flag
+#define BODY_ADJ_LAYER			23		//certain mutantrace features (snout, body markings) that must appear above the body parts
+#define BODY_LAYER				22		//underwear, undershirts, socks, eyes, lips(makeup)
+#define FRONT_MUTATIONS_LAYER	21		//mutations that should appear above body, body_adj and bodyparts layer (e.g. laser eyes)
+#define DAMAGE_LAYER			20		//damage indicators (cuts and burns)
+#define UNIFORM_LAYER			19
+#define ID_LAYER				18
+#define SHOES_LAYER				17
+#define GLOVES_LAYER			16
+#define EARS_LAYER				15
+#define SUIT_LAYER				14
+#define GLASSES_LAYER			13
+#define BELT_LAYER				12		//Possible make this an overlay of somethign required to wear a belt?
+#define SUIT_STORE_LAYER		11
+#define NECK_LAYER				10
 #define BACK_LAYER				9
 #define HAIR_LAYER				8		//TODO: make part of head layer?
 #define FACEMASK_LAYER			7
@@ -55,7 +57,7 @@
 #define HANDS_LAYER				3
 #define BODY_FRONT_LAYER		2
 #define FIRE_LAYER				1		//If you're on fire
-#define TOTAL_LAYERS			25		//KEEP THIS UP-TO-DATE OR SHIT WILL BREAK ;_;
+#define TOTAL_LAYERS			26		//KEEP THIS UP-TO-DATE OR SHIT WILL BREAK ;_;
 
 //Human Overlay Index Shortcuts for alternate_worn_layer, layers
 //Because I *KNOW* somebody will think layer+1 means "above"
@@ -129,53 +131,9 @@
 
 #define TRANSITIONEDGE			7 //Distance from edge to move to another z-level
 
-
-
-//HUD styles. Please ensure HUD_VERSIONS is the same as the maximum index. Index order defines how they are cycled in F12.
-#define HUD_STYLE_STANDARD 1
-#define HUD_STYLE_REDUCED 2
-#define HUD_STYLE_NOHUD 3
-
-
-#define HUD_VERSIONS 3	//used in show_hud()
-//1 = standard hud
-//2 = reduced hud (just hands and intent switcher)
-//3 = no hud (for screenshots)
-
-#define MINERAL_MATERIAL_AMOUNT 2000
-//The amount of materials you get from a sheet of mineral like iron/diamond/glass etc
-#define MAX_STACK_SIZE 50
-//The maximum size of a stack object.
-
-#define CLICK_CD_MELEE 8
-#define CLICK_CD_RANGE 4
-#define CLICK_CD_RAPID 2
-#define CLICK_CD_CLICK_ABILITY 6
-#define CLICK_CD_BREAKOUT 100
-#define CLICK_CD_HANDCUFFED 10
-#define CLICK_CD_RESIST 20
-#define CLICK_CD_GRABBING 10
-
-//click cooldowns, in tenths of a second
-
-
 #define BE_CLOSE 1		//in the case of a silicon, to select if they need to be next to the atom
 #define NO_DEXTERY 1	//if other mobs (monkeys, aliens, etc) can use this
 //used by canUseTopic()
-
-//Sizes of mobs, used by mob/living/var/mob_size
-#define MOB_SIZE_TINY 0
-#define MOB_SIZE_SMALL 1
-#define MOB_SIZE_HUMAN 2
-#define MOB_SIZE_LARGE 3
-
-//Cuff resist speeds
-
-#define FAST_CUFFBREAK 1
-#define INSTANT_CUFFBREAK 2
-
-//Slime evolution threshold. Controls how fast slimes can split/grow
-#define SLIME_EVOLUTION_THRESHOLD 10
 
 //singularity defines
 #define STAGE_ONE 1
@@ -214,55 +172,12 @@
 #define CRAYON_FONT "Comic Sans MS"
 #define SIGNFONT "Times New Roman"
 
-
-//NPC DEFINES
-#define INTERACTING 2
-#define TRAVEL 4
-#define FIGHTING 8
-
-//TRAITS
-
-#define TRAIT_ROBUST 2
-#define TRAIT_UNROBUST 4
-#define TRAIT_SMART 8
-#define TRAIT_DUMB 16
-#define TRAIT_MEAN 32
-#define TRAIT_FRIENDLY 64
-#define TRAIT_THIEVING 128
-
-//SNPC defines
-#define MAX_RANGE_FIND 32
-#define MIN_RANGE_FIND 16
-#define FUZZY_CHANCE_HIGH 85
-#define FUZZY_CHANCE_LOW 50
-#define CHANCE_TALK 1
-
-#define SNPC_BRUTE 1
-#define SNPC_STEALTH 2
-#define SNPC_MARTYR 3
-#define SNPC_PSYCHO 4
-
-
-#define MAXCOIL 30
 #define RESIZE_DEFAULT_SIZE 1
 
 //transfer_ai() defines. Main proc in ai_core.dm
 #define AI_TRANS_TO_CARD	1 //Downloading AI to InteliCard.
 #define AI_TRANS_FROM_CARD	2 //Uploading AI from InteliCard
 #define AI_MECH_HACK		3 //Malfunctioning AI hijacking mecha
-
-//Material defines
-#define MAT_METAL		"$metal"
-#define MAT_GLASS		"$glass"
-#define MAT_SILVER		"$silver"
-#define MAT_GOLD		"$gold"
-#define MAT_DIAMOND		"$diamond"
-#define MAT_URANIUM		"$uranium"
-#define MAT_PLASMA		"$plasma"
-#define MAT_BANANIUM	"$bananium"
-#define MAT_TITANIUM	"$titanium"
-#define MAT_BIOMASS		"$biomass"
-
 
 //check_target_facings() return defines
 #define FACING_FAILED											0
@@ -300,11 +215,6 @@ var/list/bloody_footprints_cache = list()
 //Maximum amount of time, (in approx. seconds.) a tile can be wet for.
 #define MAXIMUM_WET_TIME 300
 
-//Object/Item sharpness
-#define IS_BLUNT			0
-#define IS_SHARP			1
-#define IS_SHARP_ACCURATE	2
-
 //unmagic-strings for types of polls
 #define POLLTYPE_OPTION		"OPTION"
 #define POLLTYPE_TEXT		"TEXT"
@@ -326,30 +236,14 @@ var/list/bloody_footprints_cache = list()
 //Gets the turf this atom inhabits
 #define get_turf(A) (get_step(A, 0))
 
-//Bot types
-#define SEC_BOT				1	// Secutritrons (Beepsky) and ED-209s
-#define MULE_BOT			2	// MULEbots
-#define FLOOR_BOT			4	// Floorbots
-#define CLEAN_BOT			8	// Cleanbots
-#define MED_BOT				16	// Medibots
-
-//Sentience types
-#define SENTIENCE_ORGANIC 1
-#define SENTIENCE_ARTIFICIAL 2
-#define SENTIENCE_OTHER 3
-#define SENTIENCE_MINEBOT 4
-#define SENTIENCE_BOSS 5
-
-
 //Fire and Acid stuff, for resistance_flags
 #define LAVA_PROOF 1
-#define FIRE_PROOF 2 //not flammable (but may or may not take damage from fire)
-#define ON_FIRE 4
-#define UNACIDABLE 8 //acid can't even appear on it, let alone melt it.
-#define ACID_PROOF 16 //acid stuck on it doesn't melt it.
-#define INDESTRUCTIBLE 32 //doesn't take damage
-#define EMP_PROOF 64 //immune to emp
-
+#define FIRE_PROOF 2 //100% immune to fire damage (but not necessarily to lava or heat)
+#define FLAMMABLE 4
+#define ON_FIRE 8
+#define UNACIDABLE 16 //acid can't even appear on it, let alone melt it.
+#define ACID_PROOF 32 //acid stuck on it doesn't melt it.
+#define INDESTRUCTIBLE 64 //doesn't take damage
 
 //Ghost orbit types:
 #define GHOST_ORBIT_CIRCLE		"circle"
@@ -382,10 +276,6 @@ var/global/list/ghost_accs_options = list(GHOST_ACCS_NONE, GHOST_ACCS_DIR, GHOST
 #define GHOST_OTHERS_DEFAULT_OPTION			GHOST_OTHERS_THEIR_SETTING
 
 var/global/list/ghost_others_options = list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DEFAULT_SPRITE, GHOST_OTHERS_THEIR_SETTING) //Same as ghost_accs_options.
-
-//Bloodcrawling
-#define BLOODCRAWL 1
-#define BLOODCRAWL_EAT 2
 
 //Color Defines
 #define OOC_COLOR  "#002eb8"
@@ -421,17 +311,6 @@ var/global/list/ghost_others_options = list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 //Just space
 #define SPACE_ICON_STATE	"[((x + y) ^ ~(x * y) + z) % 25]"
 
-//Gun trigger guards
-#define TRIGGER_GUARD_ALLOW_ALL -1
-#define TRIGGER_GUARD_NONE 0
-#define TRIGGER_GUARD_NORMAL 1
-
-// Plant types
-#define PLANT_NORMAL 0
-#define PLANT_WEED 1
-#define PLANT_MUSHROOM 2
-#define PLANT_ALIEN 3
-
 // Maploader bounds indices
 #define MAP_MINX 1
 #define MAP_MINY 2
@@ -440,11 +319,6 @@ var/global/list/ghost_others_options = list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 #define MAP_MAXY 5
 #define MAP_MAXZ 6
 
-#define CHECK_DNA_AND_SPECIES(C) if((!(C.dna)) || (!(C.dna.species))) return
-
-// Evil narsie colour
-#define NARSIE_WINDOW_COLOUR "#7D1919"
-
 // Defib stats
 #define DEFIB_TIME_LIMIT 120
 #define DEFIB_TIME_LOSS 60
@@ -452,15 +326,6 @@ var/global/list/ghost_others_options = list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 // Diagonal movement
 #define FIRST_DIAG_STEP 1
 #define SECOND_DIAG_STEP 2
-
-//Slime commands defines
-#define SLIME_FRIENDSHIP_FOLLOW 			3 //Min friendship to order it to follow
-#define SLIME_FRIENDSHIP_STOPEAT 			5 //Min friendship to order it to stop eating someone
-#define SLIME_FRIENDSHIP_STOPEAT_NOANGRY	7 //Min friendship to order it to stop eating someone without it losing friendship
-#define SLIME_FRIENDSHIP_STOPCHASE			4 //Min friendship to order it to stop chasing someone (their target)
-#define SLIME_FRIENDSHIP_STOPCHASE_NOANGRY	6 //Min friendship to order it to stop chasing someone (their target) without it losing friendship
-#define SLIME_FRIENDSHIP_STAY				3 //Min friendship to order it to stay
-#define SLIME_FRIENDSHIP_ATTACK				8 //Min friendship to order it to attack
 
 #define DEADCHAT_ARRIVALRATTLE "arrivalrattle"
 #define DEADCHAT_DEATHRATTLE "deathrattle"
@@ -480,55 +345,20 @@ var/global/list/ghost_others_options = list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 #define COORD(A) "([A.x],[A.y],[A.z])"
 #define INCREMENT_TALLY(L, stat) if(L[stat]){L[stat]++}else{L[stat] = 1}
 
-// Inventory depth: limits how many nested storage items you can access directly.
-// 1: stuff in mob, 2: stuff in backpack, 3: stuff in box in backpack, etc
-#define INVENTORY_DEPTH		3
-#define STORAGE_VIEW_DEPTH	2
-
-
 // Medal names
-
 #define BOSS_KILL_MEDAL "Killer"
-
 #define ALL_KILL_MEDAL "Exterminator"	//Killing all of x type
 
 // Score names
-
 #define LEGION_SCORE "Legion Killed"
 #define COLOSSUS_SCORE "Colossus Killed"
 #define BUBBLEGUM_SCORE "Bubblegum Killed"
 #define DRAKE_SCORE "Drakes Killed"
 #define BIRD_SCORE "Hierophants Killed"
+#define SWARMER_BEACON_SCORE "Swarmer Beacons Killed"
 #define BOSS_SCORE "Bosses Killed"
 #define TENDRIL_CLEAR_SCORE "Tendrils Killed"
 
-
-
-									// NTNet module-configuration values. Do not change these. If you need to add another use larger number (5..6..7 etc)
-#define NTNET_SOFTWAREDOWNLOAD 1 	// Downloads of software from NTNet
-#define NTNET_PEERTOPEER 2			// P2P transfers of files between devices
-#define NTNET_COMMUNICATION 3		// Communication (messaging)
-#define NTNET_SYSTEMCONTROL 4		// Control of various systems, RCon, air alarm control, etc.
-
-// NTNet transfer speeds, used when downloading/uploading a file/program.
-#define NTNETSPEED_LOWSIGNAL 0.5	// GQ/s transfer speed when the device is wirelessly connected and on Low signal
-#define NTNETSPEED_HIGHSIGNAL 1	// GQ/s transfer speed when the device is wirelessly connected and on High signal
-#define NTNETSPEED_ETHERNET 2		// GQ/s transfer speed when the device is using wired connection
-
-
-// Program bitflags
-#define PROGRAM_ALL 7
-#define PROGRAM_CONSOLE 1
-#define PROGRAM_LAPTOP 2
-#define PROGRAM_TABLET 4
-
-#define PROGRAM_STATE_KILLED 0
-#define PROGRAM_STATE_BACKGROUND 1
-#define PROGRAM_STATE_ACTIVE 2
-
-// Caps for NTNet logging. Less than 10 would make logging useless anyway, more than 500 may make the log browser too laggy. Defaults to 100 unless user changes it.
-#define MAX_NTNET_LOGS 300
-#define MIN_NTNET_LOGS 10
 //TODO Move to a pref
 #define STATION_GOAL_BUDGET  1
 
@@ -536,3 +366,36 @@ var/global/list/ghost_others_options = list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 #define LUMA_R 0.213
 #define LUMA_G 0.715
 #define LUMA_B 0.072
+
+//different types of atom colorations
+#define ADMIN_COLOUR_PRIORITY 		1 //only used by rare effects like greentext coloring mobs and when admins varedit color
+#define TEMPORARY_COLOUR_PRIORITY 	2 //e.g. purple effect of the revenant on a mob, black effect when mob electrocuted
+#define WASHABLE_COLOUR_PRIORITY 	3 //color splashed onto an atom (e.g. paint on turf)
+#define FIXED_COLOUR_PRIORITY 		4 //color inherent to the atom (e.g. blob color)
+#define COLOUR_PRIORITY_AMOUNT 4 //how many priority levels there are.
+
+//Endgame Results
+#define NUKE_NEAR_MISS 1
+#define NUKE_MISS_STATION 2
+#define NUKE_SYNDICATE_BASE 3
+#define STATION_DESTROYED_NUKE 4
+#define STATION_EVACUATED 5
+#define GANG_LOSS 6
+#define GANG_TAKEOVER 7
+#define BLOB_WIN 8
+#define BLOB_NUKE 9
+#define BLOB_DESTROYED 10
+#define CULT_ESCAPE 11
+#define CULT_FAILURE 12
+#define CULT_SUMMON 13
+#define NUKE_MISS 14
+#define OPERATIVES_KILLED 15
+#define OPERATIVE_SKIRMISH 16
+#define REVS_WIN 17
+#define REVS_LOSE 18
+#define WIZARD_KILLED 19
+#define STATION_NUKED 20
+#define CLOCK_SUMMON 21
+#define CLOCK_SILICONS 22
+#define CLOCK_PROSELYTIZATION 23
+#define SHUTTLE_HIJACK 24

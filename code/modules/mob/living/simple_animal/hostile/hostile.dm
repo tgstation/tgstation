@@ -1,6 +1,7 @@
 /mob/living/simple_animal/hostile
 	faction = list("hostile")
 	stop_automated_movement_when_pulled = 0
+	obj_damage = 40
 	environment_smash = 1 //Set to 1 to break closets,tables,racks, etc; 2 for walls; 3 for rwalls
 	var/atom/target
 	var/ranged = 0
@@ -39,19 +40,27 @@
 	var/aggro_vision_range = 9 //If a mob is aggro, we search in this radius. Defaults to 9 to keep in line with original simple mob aggro radius
 	var/idle_vision_range = 9 //If a mob is just idling around, it's vision range is limited to this. Defaults to 9 to keep in line with original simple mob aggro radius
 	var/search_objects = 0 //If we want to consider objects when searching around, set this to 1. If you want to search for objects while also ignoring mobs until hurt, set it to 2. To completely ignore mobs, even when attacked, set it to 3
-	var/list/wanted_objects = list() //A list of objects that will be checked against to attack, should we have search_objects enabled
+	var/search_objects_timer_id //Timer for regaining our old search_objects value after being attacked
+	var/search_objects_regain_time = 30 //the delay between being attacked and gaining our old search_objects value back
+	var/list/wanted_objects = list() //A typecache of objects types that will be checked against to attack, should we have search_objects enabled
 	var/stat_attack = 0 //Mobs with stat_attack to 1 will attempt to attack things that are unconscious, Mobs with stat_attack set to 2 will attempt to attack the dead.
 	var/stat_exclusive = 0 //Mobs with this set to 1 will exclusively attack things defined by stat_attack, stat_attack 2 means they will only attack corpses
 	var/attack_same = 0 //Set us to 1 to allow us to attack our own faction, or 2, to only ever attack our own faction
 	var/AIStatus = AI_ON //The Status of our AI, can be set to AI_ON (On, usual processing), AI_IDLE (Will not process, but will return to AI_ON if an enemy comes near), AI_OFF (Off, Not processing ever)
 	var/atom/targets_from = null //all range/attack/etc. calculations should be done from this atom, defaults to the mob itself, useful for Vehicles and such
+	var/attack_all_objects = FALSE //if true, equivalent to having a wanted_objects list containing ALL objects.
+
+	var/lose_patience_timer_id //id for a timer to call LoseTarget(), used to stop mobs fixating on a target they can't reach
+	var/lose_patience_timeout = 300 //30 seconds by default, so there's no major changes to AI behaviour, beyond actually bailing if stuck forever
 
 
 /mob/living/simple_animal/hostile/New()
 	..()
+
 	if(!targets_from)
 		targets_from = src
 	environment_target_typecache = typecacheof(environment_target_typecache)
+	wanted_objects = typecacheof(wanted_objects)
 
 
 /mob/living/simple_animal/hostile/Destroy()
@@ -196,13 +205,15 @@
 
 
 	if(isobj(the_target))
-		if(is_type_in_list(the_target, wanted_objects))
+		if(attack_all_objects || is_type_in_typecache(the_target, wanted_objects))
 			return 1
 	return 0
 
 /mob/living/simple_animal/hostile/proc/GiveTarget(new_target)//Step 4, give us our selected target
 	target = new_target
+	LosePatience()
 	if(target != null)
+		GainPatience()
 		Aggro()
 		return 1
 
@@ -232,6 +243,7 @@
 		if(target)
 			if(targets_from && isturf(targets_from.loc) && target.Adjacent(targets_from)) //If they're next to us, attack
 				AttackingTarget()
+				GainPatience()
 			return 1
 		return 0
 	if(environment_smash)
@@ -251,12 +263,12 @@
 /mob/living/simple_animal/hostile/proc/Goto(target, delay, minimum_distance)
 	walk_to(src, target, minimum_distance, delay)
 
-/mob/living/simple_animal/hostile/adjustHealth(damage)
+/mob/living/simple_animal/hostile/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
 	. = ..()
-	if(!ckey && !stat && search_objects < 3 && damage > 0)//Not unconscious, and we don't ignore mobs
+	if(!ckey && !stat && search_objects < 3 && . > 0)//Not unconscious, and we don't ignore mobs
 		if(search_objects)//Turn off item searching and ignore whatever item we were looking at, we're more concerned with fight or flight
-			search_objects = 0
 			target = null
+			LoseSearchObjects()
 		if(AIStatus == AI_IDLE)
 			AIStatus = AI_ON
 			FindTarget()
@@ -290,12 +302,15 @@
 	LoseTarget()
 	..(gibbed)
 
-/mob/living/simple_animal/hostile/proc/summon_backup(distance)
+/mob/living/simple_animal/hostile/proc/summon_backup(distance, exact_faction_match)
 	do_alert_animation(src)
 	playsound(loc, 'sound/machines/chime.ogg', 50, 1, -1)
 	for(var/mob/living/simple_animal/hostile/M in oview(distance, targets_from))
 		var/list/L = M.faction&faction
-		if(L.len)
+		var/success = L.len
+		if(exact_faction_match)
+			success = (L.len == faction.len) //since the above op is &, an exact match would be of the same length
+		if(success)
 			if(M.AIStatus == AI_OFF)
 				return
 			else
@@ -328,10 +343,9 @@
 		return
 	var/turf/startloc = get_turf(targets_from)
 	if(casingtype)
-		var/obj/item/ammo_casing/casing = new casingtype
+		var/obj/item/ammo_casing/casing = new casingtype(startloc)
 		playsound(src, projectilesound, 100, 1)
-		casing.fire(targeted_atom, src, zone_override = ran_zone())
-		casing.loc = startloc
+		casing.fire_casing(targeted_atom, src, null, null, null, zone_override = ran_zone())
 	else if(projectiletype)
 		var/obj/item/projectile/P = new projectiletype(startloc)
 		playsound(src, projectilesound, 100, 1)
@@ -352,7 +366,7 @@
 		EscapeConfinement()
 		for(var/dir in cardinal)
 			var/turf/T = get_step(targets_from, dir)
-			if(istype(T, /turf/closed/wall) || istype(T, /turf/closed/mineral))
+			if(iswallturf(T) || ismineralturf(T))
 				if(T.Adjacent(targets_from))
 					T.attack_animal(src)
 			for(var/a in T)
@@ -400,3 +414,28 @@
 
 /mob/living/simple_animal/hostile/proc/AIShouldSleep(var/list/possible_targets)
 	return !FindTarget(possible_targets, 1)
+
+
+//These two procs handle losing our target if we've failed to attack them for
+//more than lose_patience_timeout deciseconds, which probably means we're stuck
+/mob/living/simple_animal/hostile/proc/GainPatience()
+	if(lose_patience_timeout)
+		LosePatience()
+		lose_patience_timer_id = addtimer(CALLBACK(src, .proc/LoseTarget), lose_patience_timeout)
+
+
+/mob/living/simple_animal/hostile/proc/LosePatience()
+	deltimer(lose_patience_timer_id)
+
+
+//These two procs handle losing and regaining search_objects when attacked by a mob
+/mob/living/simple_animal/hostile/proc/LoseSearchObjects()
+	search_objects = 0
+	deltimer(search_objects_timer_id)
+	search_objects_timer_id = addtimer(CALLBACK(src, .proc/RegainSearchObjects), search_objects_regain_time)
+
+
+/mob/living/simple_animal/hostile/proc/RegainSearchObjects(value)
+	if(!value)
+		value = initial(search_objects)
+	search_objects = value

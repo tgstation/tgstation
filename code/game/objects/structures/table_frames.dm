@@ -17,18 +17,18 @@
 	density = 0
 	anchored = 0
 	layer = PROJECTILE_HIT_THRESHHOLD_LAYER
+	obj_integrity = 100
+	max_integrity = 100
 	var/framestack = /obj/item/stack/rods
 	var/framestackamount = 2
 
 /obj/structure/table_frame/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/wrench))
 		user << "<span class='notice'>You start disassembling [src]...</span>"
-		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-		if(do_after(user, 30/I.toolspeed, target = src))
+		playsound(src.loc, I.usesound, 50, 1)
+		if(do_after(user, 30*I.toolspeed, target = src))
 			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
-			for(var/i = 1, i <= framestackamount, i++)
-				new framestack(get_turf(src))
-			qdel(src)
+			deconstruct(TRUE)
 	else if(istype(I, /obj/item/stack/sheet/plasteel))
 		var/obj/item/stack/sheet/plasteel/P = I
 		if(P.get_amount() < 1)
@@ -77,6 +77,10 @@
 	else
 		return ..()
 
+/obj/structure/table_frame/deconstruct(disassembled = TRUE)
+	new framestack(get_turf(src), framestackamount)
+	qdel(src)
+
 /obj/structure/table_frame/narsie_act()
 	if(prob(20))
 		new /obj/structure/table_frame/wood(src.loc)
@@ -96,7 +100,7 @@
 	icon_state = "wood_frame"
 	framestack = /obj/item/stack/sheet/mineral/wood
 	framestackamount = 2
-	resistance_flags = 0
+	resistance_flags = FLAMMABLE
 
 /obj/structure/table_frame/wood/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/stack/sheet/mineral/wood))
@@ -125,12 +129,21 @@
 	name = "brass table frame"
 	desc = "Four pieces of brass arranged in a square. It's slightly warm to the touch."
 	icon_state = "brass_frame"
-	framestack = /obj/item/stack/sheet/brass
+	resistance_flags = FIRE_PROOF | ACID_PROOF
+	framestack = /obj/item/stack/tile/brass
 	framestackamount = 1
 
+/obj/structure/table_frame/brass/New()
+	change_construction_value(1)
+	..()
+
+/obj/structure/table_frame/brass/Destroy()
+	change_construction_value(-1)
+	return ..()
+
 /obj/structure/table_frame/brass/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/stack/sheet/brass))
-		var/obj/item/stack/sheet/brass/W = I
+	if(istype(I, /obj/item/stack/tile/brass))
+		var/obj/item/stack/tile/brass/W = I
 		if(W.get_amount() < 1)
 			user << "<span class='warning'>You need one brass sheet to do this!</span>"
 			return
@@ -147,3 +160,4 @@
 		var/previouscolor = color
 		color = "#960000"
 		animate(src, color = previouscolor, time = 8)
+		addtimer(CALLBACK(src, /atom/proc/update_atom_colour), 8)

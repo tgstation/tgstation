@@ -219,6 +219,7 @@
 	Ctrl click
 	For most objects, pull
 */
+
 /mob/proc/CtrlClickOn(atom/A)
 	A.CtrlClick(src)
 	return
@@ -228,6 +229,13 @@
 	if(istype(ML))
 		ML.pulled(src)
 
+/mob/living/carbon/human/CtrlClick(mob/user)
+	if(ishuman(user) && Adjacent(user))
+		var/mob/living/carbon/human/H = user
+		H.dna.species.grab(H, src, H.martial_art)
+		H.next_click = world.time + CLICK_CD_MELEE
+	else 
+		..()
 /*
 	Alt click
 	Unused except for AI
@@ -346,15 +354,11 @@
 	icon_state = "click_catcher"
 	plane = CLICKCATCHER_PLANE
 	mouse_opacity = 2
-	screen_loc = "CENTER-7,CENTER-7"
+	screen_loc = "CENTER"
 
-/obj/screen/click_catcher/proc/MakeGreed()
-	. = list()
-	for(var/i = 0, i<15, i++)
-		for(var/j = 0, j<15, j++)
-			var/obj/screen/click_catcher/CC = new()
-			CC.screen_loc = "NORTH-[i],EAST-[j]"
-			. += CC
+/obj/screen/click_catcher/New()
+	..()
+	transform = matrix(200, 0, 0, 0, 200, 0)
 
 /obj/screen/click_catcher/Click(location, control, params)
 	var/list/modifiers = params2list(params)
@@ -362,7 +366,7 @@
 		var/mob/living/carbon/C = usr
 		C.swap_hand()
 	else
-		var/turf/T = screen_loc2turf(screen_loc, get_turf(usr))
+		var/turf/T = params2turf(modifiers["screen-loc"], get_turf(usr))
 		if(T)
 			T.Click(location, control, params)
 	. = 1

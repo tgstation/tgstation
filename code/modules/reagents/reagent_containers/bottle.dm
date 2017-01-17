@@ -19,7 +19,7 @@
 	update_icon()
 
 /obj/item/weapon/reagent_containers/glass/bottle/update_icon()
-	overlays.Cut()
+	cut_overlays()
 	if(reagents.total_volume)
 		var/image/filling = image('icons/obj/reagentfillings.dmi', src, "[icon_state]-10")
 

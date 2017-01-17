@@ -87,7 +87,6 @@
 
 /datum/hud/human/New(mob/living/carbon/human/owner, ui_style = 'icons/mob/screen_midnight.dmi')
 	..()
-
 	var/obj/screen/using
 	var/obj/screen/inventory/inv_box
 
@@ -111,7 +110,7 @@
 
 	using = new /obj/screen/mov_intent()
 	using.icon = ui_style
-	using.icon_state = (mymob.m_intent == "run" ? "running" : "walking")
+	using.icon_state = (mymob.m_intent == MOVE_INTENT_RUN ? "running" : "walking")
 	using.screen_loc = ui_movi
 	static_inventory += using
 
@@ -168,6 +167,15 @@
 //	inv_box.icon_full = "template"
 	inv_box.screen_loc = ui_mask
 	inv_box.slot_id = slot_wear_mask
+	toggleable_inventory += inv_box
+
+	inv_box = new /obj/screen/inventory()
+	inv_box.name = "neck"
+	inv_box.icon = ui_style
+	inv_box.icon_state = "neck"
+//	inv_box.icon_full = "template"
+	inv_box.screen_loc = ui_neck
+	inv_box.slot_id = slot_neck
 	toggleable_inventory += inv_box
 
 	inv_box = new /obj/screen/inventory()
@@ -344,6 +352,9 @@
 		if(H.wear_mask)
 			H.wear_mask.screen_loc = ui_mask
 			screenmob.client.screen += H.wear_mask
+		if(H.wear_neck)
+			H.wear_neck.screen_loc = ui_neck
+			screenmob.client.screen += H.wear_neck
 		if(H.head)
 			H.head.screen_loc = ui_head
 			screenmob.client.screen += H.head
@@ -355,11 +366,12 @@
 		if(H.w_uniform)	screenmob.client.screen -= H.w_uniform
 		if(H.wear_suit)	screenmob.client.screen -= H.wear_suit
 		if(H.wear_mask)	screenmob.client.screen -= H.wear_mask
+		if(H.wear_neck)	screenmob.client.screen -= H.wear_neck
 		if(H.head)		screenmob.client.screen -= H.head
 
 
 
-/datum/hud/human/persistant_inventory_update(mob/viewer)
+/datum/hud/human/persistent_inventory_update(mob/viewer)
 	if(!mymob)
 		return
 	..()

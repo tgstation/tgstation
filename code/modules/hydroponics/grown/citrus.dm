@@ -19,6 +19,7 @@
 	yield = 4
 	potency = 15
 	growing_icon = 'icons/obj/hydroponics/growing_fruits.dmi'
+	genes = list(/datum/plant_gene/trait/repeated_harvest)
 	mutatelist = list(/obj/item/seeds/orange)
 	reagents_add = list("vitamin" = 0.04, "nutriment" = 0.05)
 
@@ -44,6 +45,7 @@
 	growing_icon = 'icons/obj/hydroponics/growing_fruits.dmi'
 	icon_grow = "lime-grow"
 	icon_dead = "lime-dead"
+	genes = list(/datum/plant_gene/trait/repeated_harvest)
 	mutatelist = list(/obj/item/seeds/lime)
 	reagents_add = list("vitamin" = 0.04, "nutriment" = 0.05)
 
@@ -68,6 +70,7 @@
 	growing_icon = 'icons/obj/hydroponics/growing_fruits.dmi'
 	icon_grow = "lime-grow"
 	icon_dead = "lime-dead"
+	genes = list(/datum/plant_gene/trait/repeated_harvest)
 	mutatelist = list(/obj/item/seeds/firelemon)
 	reagents_add = list("vitamin" = 0.04, "nutriment" = 0.05)
 
@@ -89,6 +92,7 @@
 	growing_icon = 'icons/obj/hydroponics/growing_fruits.dmi'
 	icon_grow = "lime-grow"
 	icon_dead = "lime-dead"
+	genes = list(/datum/plant_gene/trait/repeated_harvest)
 	lifespan = 55
 	endurance = 45
 	yield = 4
@@ -111,7 +115,9 @@
 	if(iscarbon(user))
 		var/mob/living/carbon/C = user
 		C.throw_mode_on()
-	prime()
+	icon_state = "firelemon_active"
+	playsound(loc, 'sound/weapons/armbomb.ogg', 75, 1, -3)
+	addtimer(CALLBACK(src, .proc/prime), rand(10, 60))
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/firelemon/burn()
 	prime()
@@ -126,8 +132,6 @@
 	qdel(src) //Ensuring that it's deleted by its own explosion
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/firelemon/proc/prime()
-	icon_state = "firelemon_active"
-	playsound(loc, 'sound/weapons/armbomb.ogg', 75, 1, -3)
 	switch(seed.potency) //Combustible lemons are alot like IEDs, lots of flame, very little bang.
 		if(0 to 30)
 			update_mob()

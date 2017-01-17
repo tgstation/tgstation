@@ -8,6 +8,11 @@
 	explosion_block = 3
 	heat_proof = 1
 	safe = 0
+	obj_integrity = 600
+	max_integrity = 600
+	armor = list(melee = 50, bullet = 100, laser = 100, energy = 100, bomb = 50, bio = 100, rad = 100, fire = 100, acid = 70)
+	resistance_flags = FIRE_PROOF
+	damage_deflection = 70
 
 /obj/machinery/door/poddoor/preopen
 	icon_state = "open"
@@ -19,14 +24,15 @@
 
 //special poddoors that open when emergency shuttle docks at centcom
 /obj/machinery/door/poddoor/shuttledock
-	var/checkdir = 4	//door won't open if turf in this dir is space
+	var/checkdir = 4	//door won't open if turf in this dir is `turftype`
+	var/turftype = /turf/open/space
 
 /obj/machinery/door/poddoor/shuttledock/proc/check()
 	var/turf/T = get_step(src, checkdir)
-	if(!istype(T,/turf/open/space))
-		addtimer(src, "open", 0, TRUE)
+	if(!istype(T, turftype))
+		addtimer(CALLBACK(src, .proc/open), 0, TIMER_UNIQUE)
 	else
-		addtimer(src, "close", 0, TRUE)
+		addtimer(CALLBACK(src, .proc/close), 0, TIMER_UNIQUE)
 
 /obj/machinery/door/poddoor/Bumped(atom/AM)
 	if(density)
@@ -36,30 +42,9 @@
 
 //"BLAST" doors are obviously stronger than regular doors when it comes to BLASTS.
 /obj/machinery/door/poddoor/ex_act(severity, target)
-	if(target == src)
-		qdel(src)
+	if(severity == 3)
 		return
-	switch(severity)
-		if(1)
-			if(prob(80))
-				qdel(src)
-			else
-				var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
-				s.set_up(2, 1, src)
-				s.start()
-		if(2)
-			if(prob(20))
-				qdel(src)
-			else
-				var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
-				s.set_up(2, 1, src)
-				s.start()
-
-		if(3)
-			if(prob(80))
-				var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
-				s.set_up(2, 1, src)
-				s.start()
+	..()
 
 /obj/machinery/door/poddoor/do_animate(animation)
 	switch(animation)
@@ -77,6 +62,6 @@
 /obj/machinery/door/poddoor/try_to_activate_door(mob/user)
  	return
 
-obj/machinery/door/poddoor/try_to_crowbar(obj/item/I, mob/user)
+/obj/machinery/door/poddoor/try_to_crowbar(obj/item/I, mob/user)
 	if(stat & NOPOWER)
 		open(1)

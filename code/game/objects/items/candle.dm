@@ -6,7 +6,7 @@
 	icon = 'icons/obj/candle.dmi'
 	icon_state = "candle1"
 	item_state = "candle1"
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 	var/wax = 200
 	var/lit = FALSE
 	var/infinite = FALSE
@@ -35,9 +35,10 @@
 	if(msg)
 		light(msg)
 
-/obj/item/candle/fire_act()
+/obj/item/candle/fire_act(exposed_temperature, exposed_volume)
 	if(!src.lit)
 		light() //honk
+	..()
 
 /obj/item/candle/proc/light(show_message)
 	if(!src.lit)

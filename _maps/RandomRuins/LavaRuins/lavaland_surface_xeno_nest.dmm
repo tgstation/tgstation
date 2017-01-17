@@ -53,7 +53,7 @@
 	},
 /obj/structure/alien/weeds{
 	desc = "A large mottled egg.";
-	health = 100;
+	obj_integrity = 100;
 	icon_state = "egg_hatched";
 	name = "egg"
 	},
@@ -141,7 +141,7 @@
 	},
 /obj/structure/alien/weeds{
 	desc = "A large mottled egg.";
-	health = 100;
+	obj_integrity = 100;
 	icon_state = "egg_hatched";
 	name = "egg"
 	},
@@ -206,7 +206,7 @@
 	item_state = "facehugger_impregnated";
 	stat = 2
 	},
-/obj/item/weapon/gun/projectile/automatic/pistol,
+/obj/item/weapon/gun/ballistic/automatic/pistol,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/awaycontent/a5{
 	always_unpowered = 1;
@@ -336,7 +336,7 @@
 /obj/structure/alien/weeds,
 /obj/structure/alien/weeds{
 	desc = "A large mottled egg.";
-	health = 100;
+	obj_integrity = 100;
 	icon_state = "egg_hatched";
 	name = "egg"
 	},
@@ -407,7 +407,7 @@
 	},
 /obj/structure/alien/weeds{
 	desc = "A large mottled egg.";
-	health = 100;
+	obj_integrity = 100;
 	icon_state = "egg_hatched";
 	name = "egg"
 	},
@@ -426,7 +426,7 @@
 /obj/structure/alien/weeds,
 /obj/structure/alien/weeds{
 	desc = "A large mottled egg.";
-	health = 100;
+	obj_integrity = 100;
 	icon_state = "egg_hatched";
 	name = "egg"
 	},

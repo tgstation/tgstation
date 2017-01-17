@@ -37,7 +37,7 @@
 	<div style="clear: both">
 
 	{{#if data.error}}
-		<h2>An error has occured and this program can not continue.</h2>
+		<h2>An error has occurred and this program can not continue.</h2>
 		Additional information: {{data.error}}<br>
 		<i>Please try again. If the problem persists contact your system administrator for assistance.</i>
 		<ui-button action='PRG_closefile'>Restart program</ui-button>

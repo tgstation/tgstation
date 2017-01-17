@@ -11,10 +11,11 @@
 	for(var/mob/living/carbon/human/H in mob_list)
 		var/obj/item/weapon/storage/backpack/b = locate() in H.contents
 		new /obj/item/weapon/storage/spooky(b)
-		if(prob(50))
-			H.set_species(/datum/species/skeleton)
-		else
-			H.set_species(/datum/species/zombie)
+		if(ishuman(H) || islizard(H))
+			if(prob(50))
+				H.set_species(/datum/species/skeleton)
+			else
+				H.set_species(/datum/species/zombie)
 
 	for(var/mob/living/simple_animal/pet/dog/corgi/Ian/Ian in mob_list)
 		Ian.place_on_head(new /obj/item/weapon/bedsheet(Ian))
@@ -53,6 +54,50 @@
 	if(IsMultiple(activeFor, 4))
 		spawn_meteors(3, meteorsSPOOKY) //meteor list types defined in gamemode/meteor/meteors.dm
 
+//Creepy clown invasion
+/datum/round_event_control/creepy_clowns
+	name = "Clowns"
+	typepath = /datum/round_event/creepy_clowns
+	holidayID = HALLOWEEN
+	weight = 20
+	earliest_start = 0
+
+/datum/round_event/creepy_clowns
+	endWhen = 40
+
+/datum/round_event/creepy_clowns/start()
+	for(var/mob/living/carbon/human/H in living_mob_list)
+		if(!H.client || !istype(H))
+			return
+		H << "<span class='danger'>Honk...</span>"
+		H << 'sound/spookoween/scary_clown_appear.ogg'
+		var/turf/T = get_turf(H)
+		if(T)
+			new /obj/effect/hallucination/simple/clown(T, H, 50)
+
+/datum/round_event/creepy_clowns/tick()
+	if(IsMultiple(activeFor, 4))
+		for(var/mob/living/carbon/human/H in living_mob_list)
+			if (prob(66))
+				playsound(H.loc, pick('sound/spookoween/scary_horn.ogg','sound/spookoween/scary_horn2.ogg', 'sound/spookoween/scary_horn3.ogg'), 100, 1)
+			if (prob(33))
+				var/turf/T = get_turf(H)
+				if(T)
+					new /obj/effect/hallucination/simple/clown(T, H, 25)
+			else if (prob(25))
+				var/turf/T = get_turf(H)
+				if(T)
+					new /obj/effect/hallucination/simple/clown/scary(T, H, 25)
+			else if (prob(5))
+				var/turf/T = get_turf(H)
+				if(T)
+					spawn_atom_to_turf(/obj/effect/mob_spawn/human/clown/corpse, H, 1)
+			else if (prob(1))
+				spawn_atom_to_turf(/mob/living/simple_animal/hostile/retaliate/clown, H, 1)
+
+/datum/round_event/creepy_clowns/announce()
+	priority_announce("Honk... Honk... honk... HONK! HONK! HONKHONKHONKHONKHONK", "HONK!", 'sound/spookoween/scary_horn.ogg')
+
 //spooky foods (you can't actually make these when it's not halloween)
 /obj/item/weapon/reagent_containers/food/snacks/sugarcookie/spookyskull
 	name = "skull cookie"
@@ -86,3 +131,8 @@
 		/obj/item/weapon/reagent_containers/food/snacks/chocolatebar,
 		/obj/item/organ/brain ) // OH GOD THIS ISN'T CANDY!
 		new type(src)
+
+/obj/item/weapon/card/emag/halloween
+	name = "hack-o'-lantern"
+	desc = "It's a pumpkin with a cryptographic sequencer sticking out."
+	icon_state = "hack_o_lantern"
