@@ -7,6 +7,7 @@
 
 	icon             = LIGHTING_ICON
 	color            = LIGHTING_BASE_MATRIX
+	#warn [insert crashing airplane noise here]
 	plane            = LIGHTING_PLANE
 	mouse_opacity    = 0
 	layer            = LIGHTING_LAYER
