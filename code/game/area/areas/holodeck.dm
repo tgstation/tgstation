@@ -1,7 +1,7 @@
 /area/holodeck
 	name = "Holodeck"
 	icon_state = "Holodeck"
-	lighting_use_dynamic = DYNAMIC_LIGHTING_DISABLED
+	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
 	flags = 0
 
 	var/obj/machinery/computer/holodeck/linked

@@ -329,7 +329,7 @@
 /obj/item/weapon/gun/proc/update_gunlight(mob/user = null)
 	if(gun_light)
 		if(gun_light.on)
-			light_range(gun_light.brightness_on)
+			set_light(gun_light.brightness_on)
 		else
 			set_light(0)
 		update_icon()

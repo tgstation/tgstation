@@ -17,3 +17,4 @@
 #define TICK_USAGE_TO_MS(starting_tickusage) (TICK_DELTA_TO_MS(world.tick_usage-starting_tickusage))
 
 #define PERCENT(val) (round(val*100, 0.1))
+#define CLAMP01(x) (Clamp(x, 0, 1))

@@ -1359,7 +1359,6 @@ proc/pick_closest_path(value, list/matches = get_fancy_list_of_atom_types())
 	density = 0
 	see_in_dark = 1e6
 	anchored = 1
-	flags = INVULNERABLE
 
 
 #define FOR_DVIEW(type, range, center, invis_flags) \

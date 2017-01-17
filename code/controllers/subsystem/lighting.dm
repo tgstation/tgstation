@@ -73,9 +73,6 @@ var/list/lighting_update_overlays  = list() // List of lighting overlays queued 
 			return
 
 	if (resuming_stage == STAGE_SOURCES || !resumed)
-		if (currentrun_corners && currentrun_corners.len)
-			to_chat(world, "we still have corners to do, but we're gonna override them?")
-
 		currentrun_corners  = lighting_update_corners
 		lighting_update_corners  = list()
 
@@ -99,6 +96,9 @@ var/list/lighting_update_overlays  = list() // List of lighting overlays queued 
 	while (currentrun_overlays.len)
 		var/atom/movable/lighting_overlay/O = currentrun_overlays[currentrun_overlays.len]
 		currentrun_overlays.len--
+
+		if (qdeleted(O))
+			continue
 
 		O.update_overlay()
 		O.needs_update = FALSE
