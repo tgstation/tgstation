@@ -371,7 +371,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	switch(new_character.mind.special_role)
 		if("traitor")
 			SSjob.EquipRank(new_character, new_character.mind.assigned_role, 1)
-			ticker.mode.equip_traitor(new_character)
+			//ticker.mode.equip_traitor(new_character)
 		if("Wizard")
 			new_character.loc = pick(wizardstart)
 			//ticker.mode.learn_basic_spells(new_character)
@@ -394,18 +394,18 @@ Traitors and the like can also be revived with the previous role mostly intact.
 				new_character.loc = ninja_spawn_here.loc
 
 		else//They may also be a cyborg or AI.
-			switch(new_character.mind.assigned_role)
+/*			switch(new_character.mind.assigned_role)
 				if("Cyborg")//More rigging to make em' work and check if they're traitor.
 					new_character = new_character.Robotize()
 					if(new_character.mind.special_role=="traitor")
-						ticker.mode.add_law_zero(new_character)
+						//ticker.mode.add_law_zero(new_character)
 				if("AI")
 					new_character = new_character.AIize()
 					if(new_character.mind.special_role=="traitor")
-						ticker.mode.add_law_zero(new_character)
+						//ticker.mode.add_law_zero(new_character)
 				else
 					SSjob.EquipRank(new_character, new_character.mind.assigned_role, 1)//Or we simply equip them.
-
+*/
 	//Announces the character on all the systems, based on the record.
 	if(!issilicon(new_character))//If they are not a cyborg/AI.
 		if(!record_found&&new_character.mind.assigned_role!=new_character.mind.special_role)//If there are no records for them. If they have a record, this info is already in there. MODE people are not announced anyway.

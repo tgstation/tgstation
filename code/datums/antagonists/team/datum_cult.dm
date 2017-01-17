@@ -32,5 +32,5 @@
 	. = ..()
 	owner << "<span class='userdanger'>An unfamiliar white light flashes through your mind, cleansing the taint of the Dark One and all your memories as its servant.</span>"
 	owner.attack_log += "\[[time_stamp()]\] <font color=#960000>Has renounced the cult of Nar'Sie!</font>"
-	if(!silent_update)
+	if(!silent)
 		owner.current.visible_message("<span class='big'>[owner] looks like [owner.current.p_they()] just reverted to their old faith!</span>")

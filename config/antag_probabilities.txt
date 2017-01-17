@@ -12,4 +12,38 @@ Format:
 	weight [number] (How much the antag will weight into the current round, will only accept a number from 0 to 100)
 	probability [number] (How much of a chance the antag will have to spawn)
 	maxantags [number] (What is the maximum amount of antags this datum will have)
+	minantags [number] (Minimum of antags that will be spawned)
+	scalingcoeff [number] (Coefficient of antag scaling)
+endantag
+
+antag traitor
+	path traitor
+	weight 10
+	probability 0
+	maxantags 100
+	minantags 3
+endantag
+
+antag wizard
+	path wizard
+	weight 0
+	probability 0
+	maxantags 1
+	minantags 1
+endantag
+
+antag operative
+	path team/nuclear_operative
+	weight 100
+	probability 100
+	maxantags 1
+	minantags 1
+endantag
+
+antag changeling
+	path changeling
+	weight 11
+	probability 0
+	maxantags 10
+	minantags 2
 endantag

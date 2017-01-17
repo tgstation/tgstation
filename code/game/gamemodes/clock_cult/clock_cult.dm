@@ -64,16 +64,16 @@ Credit where due:
 		return TRUE
 	return FALSE
 
-/proc/add_servant_of_ratvar(mob/living/L, silent = FALSE)
+/proc/add_servant_of_ratvar(datum/mind/M, silent = FALSE)
 	var/update_type = /datum/antagonist/team/clockcult
-	. = L.add_antag_datum(update_type)
+	. = M.add_antag_datum(update_type)
 
-/proc/remove_servant_of_ratvar(mob/living/L, silent = FALSE)
-	var/datum/antagonist/team/clockcult/clock_datum = L.has_antag_datum(/datum/antagonist/team/clockcult, TRUE)
+/proc/remove_servant_of_ratvar(datum/mind/M, silent = FALSE)
+	var/datum/antagonist/team/clockcult/clock_datum = M.has_antag_datum(/datum/antagonist/team/clockcult, TRUE)
 	if(!clock_datum)
 		return FALSE
-	clock_datum.silent_update = silent
-	clock_datum.on_remove()
+	clock_datum.silent = silent
+	clock_datum.on_removal()
 	return TRUE
 
 ///////////////

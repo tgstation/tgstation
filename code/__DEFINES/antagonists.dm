@@ -1,7 +1,7 @@
 //The file that the threat datum will read the probabilities
-#define ANTAG_PROBABILITIES_FILE	'config/antag_probabilities.txt'
+#define ANTAG_PROBABILITIES_FILE	"config/antag_probabilities.txt"
 
-#define ANTAG_DATUM_PATH			"/datum/antagonist/"
+#define ANTAG_DATUM_PATH			/datum/antagonist/
 
 #define ANTAG_SCORE_INITIAL 100
 
@@ -24,7 +24,11 @@
 #define ANTAG_DATUM_WIZARD_APPRENTICE		/datum/antagonist/wizard/apprentice
 #define ANTAG_DATUM_WIZARD_APPRENTICE_NAME	"Wizard Apprentice"
 
-#define ANTAG_DATUM_HEAD_REVOLUTIONARY		/datum/antagonist/revolution
+#define ANTAG_DATUM_HEAD_REVOLUTIONARY		/datum/antagonist/team/revolution
+
+#define ANTAG_DATUM_GANG					/datum/antagonist/team/gang
+#define ANTAG_DATUM_CULT					/datum/antagonist/team/cult
+#define ANTAG_DATUM_CLOCKCULT				/datum/antagonist/team/clockcult
 
 
 /* TRAITOR DATUM DEFINES */

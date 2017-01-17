@@ -391,10 +391,8 @@ var/global/BSACooldown = 0
 
 	var/dat = {"
 		<center><B>Game Panel</B></center><hr>\n
-		<A href='?src=\ref[src];c_mode=1'>Change Game Mode</A><br>
+		<A href='?src=\ref[src];c_antag_prob=1'>Change Antagonists Probabilities</A><br>
 		"}
-	if(master_mode == "secret")
-		dat += "<A href='?src=\ref[src];f_secret=1'>(Force Secret Mode)</A><br>"
 
 	dat += {"
 		<BR>

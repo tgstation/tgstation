@@ -9,12 +9,21 @@
 	possible_objectives = list(/datum/objective/steal, /datum/objective/assassinate, /datum/objective/maroon)
 
 /datum/antagonist/changeling/apply_innate_effects()
+	. = ..()
 	if(!owner)
 		return
 	if(owner.current)
 		owner.current.make_changeling()
 
 	ticker.mode.update_changeling_icons_added(owner)
+
+/datum/antagonist/changeling/remove_innate_effects()
+	. = ..()
+	if(!owner)
+		return
+	if(owner.changeling)
+		qdel(owner.changeling)
+		owner.changeling = null
 
 /datum/antagonist/changeling/generate_objectives()
 	var/has_escape = TRUE

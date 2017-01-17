@@ -114,14 +114,20 @@
 	objectives, uplinks, powers etc are all handled.
 */
 
-/datum/mind/proc/add_antag_datum(datum_type, on_gain = TRUE)
+/datum/mind/proc/add_antag_datum(datum_type, on_gain = TRUE, datum/team/T = null)
 	if(!datum_type)
 		return
 	if(!can_hold_antag_datum(datum_type))
 		return
-	var/datum/antagonist/A = new datum_type
+	var/datum/antagonist/A = new datum_type(src)
 	antag_datums += A
-	A.owner = src
+	if(T)
+		T.add_member(src)
+	if(LAZYLEN(A.restricted_jobs))
+		restricted_roles = A.restricted_jobs
+	if(A.ignore_job_selection)
+		assigned_role = A.name
+		special_role = A.name
 	if(on_gain)
 		A.on_gain()
 
@@ -744,7 +750,7 @@
 	else if (href_list["revolution"])
 		switch(href_list["revolution"])
 			if("clear")
-				remove_rev()
+				//remove_rev()
 				current << "<span class='userdanger'>You have been brainwashed! You are no longer a revolutionary!</span>"
 				message_admins("[key_name_admin(usr)] has de-rev'ed [current].")
 				log_admin("[key_name(usr)] has de-rev'ed [current].")
@@ -821,7 +827,9 @@
 	else if (href_list["gang"])
 		switch(href_list["gang"])
 			if("clear")
-				remove_gang()
+				var/datum/antagonist/A = has_antag_datum(ANTAG_DATUM_GANG)
+				if(A)
+					A.on_removal()
 				message_admins("[key_name_admin(usr)] has de-gang'ed [current].")
 				log_admin("[key_name(usr)] has de-gang'ed [current].")
 
@@ -886,7 +894,9 @@
 	else if (href_list["cult"])
 		switch(href_list["cult"])
 			if("clear")
-				remove_cultist()
+				var/datum/antagonist/A = has_antag_datum(ANTAG_DATUM_CULT)
+				if(A)
+					A.on_removal()
 				message_admins("[key_name_admin(usr)] has de-cult'ed [current].")
 				log_admin("[key_name(usr)] has de-cult'ed [current].")
 			if("cultist")
@@ -922,7 +932,7 @@
 	else if (href_list["wizard"])
 		switch(href_list["wizard"])
 			if("clear")
-				remove_wizard()
+				//remove_wizard()
 				current << "<span class='userdanger'>You have been brainwashed! You are no longer a wizard!</span>"
 				log_admin("[key_name(usr)] has de-wizard'ed [current].")
 				ticker.mode.update_wiz_icons_removed(src)
@@ -948,7 +958,7 @@
 	else if (href_list["changeling"])
 		switch(href_list["changeling"])
 			if("clear")
-				remove_changeling()
+//				remove_changeling()
 				current << "<span class='userdanger'>You grow weak and lose your powers! You are no longer a changeling and are stuck in your current form!</span>"
 				message_admins("[key_name_admin(usr)] has de-changeling'ed [current].")
 				log_admin("[key_name(usr)] has de-changeling'ed [current].")
@@ -978,7 +988,7 @@
 	else if (href_list["nuclear"])
 		switch(href_list["nuclear"])
 			if("clear")
-				remove_nukeop()
+//				remove_nukeop()
 				current << "<span class='userdanger'>You have been brainwashed! You are no longer a syndicate operative!</span>"
 				message_admins("[key_name_admin(usr)] has de-nuke op'ed [current].")
 				log_admin("[key_name(usr)] has de-nuke op'ed [current].")
@@ -1028,7 +1038,7 @@
 	else if (href_list["traitor"])
 		switch(href_list["traitor"])
 			if("clear")
-				remove_traitor()
+				//remove_traitor()
 				current << "<span class='userdanger'>You have been brainwashed! You are no longer a traitor!</span>"
 				message_admins("[key_name_admin(usr)] has de-traitor'ed [current].")
 				log_admin("[key_name(usr)] has de-traitor'ed [current].")
@@ -1041,13 +1051,13 @@
 					current << "<span class='boldannounce'>You are a traitor!</span>"
 					message_admins("[key_name_admin(usr)] has traitor'ed [current].")
 					log_admin("[key_name(usr)] has traitor'ed [current].")
-					if(isAI(current))
-						var/mob/living/silicon/ai/A = current
-						ticker.mode.add_law_zero(A)
+					//if(isAI(current))
+						//var/mob/living/silicon/ai/A = current
+						//ticker.mode.add_law_zero(A)
 					ticker.mode.update_traitor_icons_added(src)
 
 			if("autoobjectives")
-				ticker.mode.forge_traitor_objectives(src)
+				//ticker.mode.forge_traitor_objectives(src)
 				usr << "<span class='notice'>The objectives for traitor [key] have been generated. You can edit them and anounce manually.</span>"
 
 	else if(href_list["devil"])
@@ -1203,8 +1213,8 @@
 							message_admins("[key_name_admin(usr)] changed [current]'s telecrystal count to [crystals].")
 							log_admin("[key_name(usr)] changed [current]'s telecrystal count to [crystals].")
 			if("uplink")
-				if(!ticker.mode.equip_traitor(current, !(src in ticker.mode.traitors)))
-					usr << "<span class='danger'>Equipping a syndicate failed!</span>"
+				//if(!ticker.mode.equip_traitor(current, !(src in ticker.mode.traitors)))
+				//	usr << "<span class='danger'>Equipping a syndicate failed!</span>"
 				log_admin("[key_name(usr)] attempted to give [current] an uplink.")
 
 	else if (href_list["obj_announce"])
@@ -1233,12 +1243,8 @@
 		qdel(H)
 
 /datum/mind/proc/make_Traitor()
-	if(!(src in ticker.mode.traitors))
-		ticker.mode.traitors += src
-		special_role = "traitor"
-		ticker.mode.forge_traitor_objectives(src)
-		ticker.mode.finalize_traitor(src)
-		ticker.mode.greet_traitor(src)
+	if(!(src in ticker.threat.antagonists[ROLE_TRAITOR]))
+		add_antag_datum(ANTAG_DATUM_TRAITOR)
 
 /datum/mind/proc/make_Nuke(turf/spawnloc, nuke_code, leader=0, telecrystals = TRUE)
 	if(!(src in ticker.mode.syndicates))
@@ -1283,13 +1289,8 @@
 			current.real_name = "[syndicate_name()] Operative #[ticker.mode.syndicates.len-1]"
 
 /datum/mind/proc/make_Changling()
-	if(!(src in ticker.mode.changelings))
-		ticker.mode.changelings += src
-		current.make_changeling()
-		special_role = "Changeling"
-		ticker.mode.forge_changeling_objectives(src)
-		ticker.mode.greet_changeling(src)
-		ticker.mode.update_changeling_icons_added(src)
+	if(!(src in ticker.threat.antagonists[ROLE_CHANGELING]))
+		add_antag_datum(ANTAG_DATUM_CHANGELING)
 
 /datum/mind/proc/make_Wizard()
 	if(!(src in ticker.mode.wizards))

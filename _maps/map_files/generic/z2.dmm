@@ -876,7 +876,7 @@
 "qR" = (/obj/machinery/flasher{id = "tdomeflash";name = "Thunderdome Flash"},/turf/open/floor/bluegrid,/area/tdome/arena)
 "qS" = (/obj/machinery/camera{pixel_x = 12;pixel_y = -10;network = list("thunder");c_tag = "Green Team"},/obj/effect/landmark{name = "tdome1"},/turf/open/floor/plasteel,/area/tdome/tdome1)
 "qT" = (/turf/closed/indestructible/fakeglass{color = "#008000"},/area/wizard_station)
-"qU" = (/obj/effect/landmark/start{name = "wizard"},/turf/open/floor/engine/cult,/area/wizard_station)
+"qU" = (/obj/effect/landmark{name = "wizard"},/turf/open/floor/engine/cult,/area/wizard_station)
 "qV" = (/obj/effect/decal/remains/human,/obj/effect/decal/cleanable/blood/splatter,/turf/open/floor/grass,/area/wizard_station)
 "qW" = (/obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/slime,/turf/open/floor/grass,/area/wizard_station)
 "qX" = (/obj/effect/decal/remains/xeno,/turf/open/floor/grass,/area/wizard_station)

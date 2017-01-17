@@ -15,13 +15,13 @@
 
 /datum/antagonist/team/revolutionary/apply_innate_effects()
 	. = ..()
-	update_rev_icons_added(owner)
+	//update_rev_icons_added(owner)
 	if(team)
 		team.members += owner
 
 /datum/antagonist/team/revolutionary/remove_innate_effects()
 	. = ..()
-	update_rev_icons_removed(owner)
+	//update_rev_icons_removed(owner)
 
 /datum/antagonist/team/revolutionary/head
 	text_on_gain = "<span class='userdanger'>You are a member of the revolutionaries' leadership!</span>"
@@ -48,7 +48,7 @@
 			O << "Your employer was unable to get you \a [I]."
 
 /datum/antagonist/team/revolutionary/head/generate_objectives()
-	var/list/heads = ticker.threat.get_living_heads() //make it a threat datum objective or something
+	var/list/heads = list()// = ticker.threat.get_living_heads() //make it a threat datum objective or something
 	for(var/h in heads)
 		var/datum/mind/H = h
 		var/datum/objective/mutiny/viva = new

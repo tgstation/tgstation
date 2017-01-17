@@ -5,7 +5,7 @@
 
 /datum/antagonist/team/clockcult/Destroy()
 	qdel(hierophant_network)
-	..()
+	return ..()
 
 /datum/antagonist/team/clockcult/on_gain()
 	if(!owner)

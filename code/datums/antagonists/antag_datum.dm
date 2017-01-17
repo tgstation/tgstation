@@ -1,6 +1,5 @@
 /datum/antagonist
 	var/name = "Antagonist"
-	var/antag_flag = null						//Flag that the antag(user's preferences)
 
 	var/datum/mind/owner						//Mind that owns this datum
 
@@ -18,19 +17,29 @@
 	var/can_coexist_with_others = TRUE			//Whether or not the person will be able to have more than one datum
 	var/list/typecache_datum_blacklist = list()	//List of datums this type can't coexist with
 
-/datum/antagonist/New()
+	var/list/restricted_jobs = list()			//Restricted jobs if you have this antag datum
+	var/ignore_job_selection = FALSE			//It won't assign the owner to any job if set to true(only valid to roundstart selection)
+	var/landmark_spawn = ""						//It will attempt to spawn in a landmark with the same name as set in the variable
+
+/datum/antagonist/New(datum/mind/new_owner)
 	. = ..()
 	typecache_datum_blacklist = typecacheof(typecache_datum_blacklist)
-	if(ticker)
-		ticker.antagonists[name] += src
+	if(new_owner)
+		owner = new_owner
+	if(ticker && ticker.threat)
+		if(!islist(ticker.threat.antagonists[name]))
+			ticker.threat.antagonists[name] = list()
+		ticker.threat.antagonists[name] += owner
 
-/datum/antagonist/proc/apply_innate_effects()	//This handles the application of antag huds/special abilities
+//This handles the application of antag huds/special abilities
+/datum/antagonist/proc/apply_innate_effects()
 	return
 
 /datum/antagonist/proc/remove_innate_effects()	//This handles the removal of antag huds/special abilities
 	return
 
-/datum/antagonist/proc/on_gain() 				//Proc called when the datum is given to a mind. Should only be called once per mind
+//Proc called when the datum is given to a mind.
+/datum/antagonist/proc/on_gain()
 	if(owner && owner.current)
 		if(!silent)
 			greet()
@@ -40,8 +49,7 @@
 			var/mob/living/carbon/human/H = owner.current
 			H << "Your training has allowed you to overcome your clownish nature, allowing you to wield weapons without harming yourself."
 			H.dna.remove_mutation(CLOWNMUT)
-
-	apply_innate_effects()
+		apply_innate_effects()
 
 /datum/antagonist/proc/on_removal()
 	remove_innate_effects()

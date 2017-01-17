@@ -32,14 +32,14 @@
 			return
 		switch(href_list["makeAntag"])
 			if("traitors")
-				if(src.makeTraitors())
+				if(makeTraitors())
 					message_admins("[key_name_admin(usr)] created traitors.")
 					log_admin("[key_name(usr)] created traitors.")
 				else
 					message_admins("[key_name_admin(usr)] tried to create traitors. Unfortunately, there were no candidates available.")
 					log_admin("[key_name(usr)] failed to create traitors.")
 			if("changelings")
-				if(src.makeChanglings())
+				if(src.makeChangelings())
 					message_admins("[key_name(usr)] created changelings.")
 					log_admin("[key_name(usr)] created changelings.")
 				else
@@ -1173,19 +1173,25 @@
 			return
 		cmd_admin_mute(href_list["mute"], text2num(href_list["mute_type"]))
 
-	else if(href_list["c_mode"])
+	else if(href_list["c_antag_prob"])
 		if(!check_rights(R_ADMIN))
 			return
+		if(ticker && ticker.threat)
+			var/dat = "<a href='?src=\ref[ticker.threat]'>Antag points left: [ticker.threat.antag_score_left]</a><br>"
+			for(var/h in ticker.threat.possible_antags)
+				var/datum/antag_holder/AH = h
+				dat += "<tr><td>Antagonist name: [AH]<br></td>"
+				dat += "<td><a href='?src=\ref[AH];c_weight=1'>Current weight: [AH.weight]</a></td><br>"
+				dat += "<td><a href='?src=\ref[AH];c_prob=1'>Current probability: [AH.probability]</a></td><br>"
+				dat += "<td><a href='?src=\ref[AH];c_minp=1'>Minimum players: [AH.min_players]</a></td><br>"
+				dat += "<td><a href='?src=\ref[AH];c_maxp=1'>Maximum players: [AH.max_players]</a></td><br>"
+				dat += "<td><a href='?src=\ref[AH];c_mina=1'>Minimum antagonists: [AH.min_antags]</a></td><br>"
+				dat += "<td><a href='?src=\ref[AH];c_maxp=1'>Maximum antagonists: [AH.max_players]</a></td><br>"
+				dat += "<td><a href='?src=\ref[AH];c_scal=1'>Scalling coefficient: [AH.min_players]</a></td></tr><br>"
+			var/datum/browser/B = new(usr, "Antagonist Probabilities", "Probabilities", 600, 400)
+			B.set_content(dat)
+			B.open()
 
-		if(ticker && ticker.mode)
-			return alert(usr, "The game has already started.", null, null, null, null)
-		var/dat = {"<B>What mode do you wish to play?</B><HR>"}
-		for(var/mode in config.modes)
-			dat += {"<A href='?src=\ref[src];c_mode2=[mode]'>[config.mode_names[mode]]</A><br>"}
-		dat += {"<A href='?src=\ref[src];c_mode2=secret'>Secret</A><br>"}
-		dat += {"<A href='?src=\ref[src];c_mode2=random'>Random</A><br>"}
-		dat += {"Now: [master_mode]"}
-		usr << browse(dat, "window=c_mode")
 
 	else if(href_list["f_secret"])
 		if(!check_rights(R_ADMIN))

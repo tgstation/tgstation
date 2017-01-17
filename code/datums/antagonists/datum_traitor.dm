@@ -1,6 +1,5 @@
 /datum/antagonist/traitor
 	name = ROLE_TRAITOR
-	antag_flag = ROLE_TRAITOR
 
 	text_on_gain = "<span class='userdanger'>You are a traitor!</span>"
 	text_on_lose = "<span class='userdanger'>Your allegiance to the Syndicate wavers. You make a choice: you are no longer a traitor to Nanotrasen!</span>"
@@ -9,7 +8,6 @@
 	number_of_possible_objectives = 1 //Number of objectives by default if there's no config for it.
 
 	var/possible_objectives_silicon_special = list(/datum/objective/block, /datum/objective/purge, /datum/objective/robot_army, /datum/objective/protect)
-	var/has_uplink = TRUE //If this datum already generated an uplink or not.
 
 /datum/antagonist/traitor/New()
 	. = ..()
@@ -17,38 +15,32 @@
 		number_of_possible_objectives = config.traitor_objectives_amount
 
 /datum/antagonist/traitor/apply_innate_effects()
-	if(!owner)
-		return
 	give_codewords()
-	if(issilicon(owner))
+	if(has_objectives)
+		generate_objectives()
+	if(issilicon(owner.current))
 		give_syndicate_laws()
-	else
-		give_equipment()
 
-	ticker.mode.update_traitor_icons_added(owner) // To-do: better huds
+//	ticker.mode.update_traitor_icons_added(owner) // To-do: better huds
 
 /datum/antagonist/traitor/remove_innate_effects()
 	. = ..()
-	ticker.mode.update_traitor_icons_removed(owner)
+//	ticker.mode.update_traitor_icons_removed(owner)
 
 /datum/antagonist/traitor/give_equipment()
-	if(!has_uplink)
-		return
 	var/uplink_string
 	var/memory_string
-	var/obj/item/I = locate(/obj/item/device/pda) in owner.current.contents
-	if(I)
-		var/obj/item/device/uplink/U = new(I)
+	var/obj/item/device/pda/P = locate(/obj/item/device/pda) in owner.current.contents
+	if(P)
+		var/obj/item/device/uplink/U = new(P)
 		U.owner = owner.key
-		I.hidden_uplink = U
-		var/obj/item/device/pda/P = I
+		P.hidden_uplink = U
 		P.lock_code = "[rand(100,999)] [pick(pda_phonetics)]"
 		uplink_string = "The Syndicate have cunningly hidden an uplink as your [P.name]. Simply enter the code \"[P.lock_code]\" into the ringtone select to unlock its hidden features."
 		memory_string = "<b>Uplink password:</b> [P.lock_code]"
 	else
-		I = locate(/obj/item/device/radio) in owner.current.contents
-		if(I)
-			var/obj/item/device/radio/R = I
+		var/obj/item/device/radio/R = locate(/obj/item/device/radio) in owner.current.contents
+		if(R)
 			var/obj/item/device/uplink/U = new(R)
 			U.owner = owner.key
 			R.hidden_uplink = U
@@ -56,10 +48,10 @@
 			uplink_string = "The Syndicate have cunningly hidden an uplink into your [R.name]. Simply dial the frequency [format_frequency(R.traitor_frequency)] to unlock its hidden features."
 			memory_string = "<b>Headset Uplink Frequency:</b> [format_frequency(R.traitor_frequency)]"
 		else
-			new /obj/item/device/radio/uplink(get_turf(owner))
+			new /obj/item/device/radio/uplink(get_turf(owner.current))
 			uplink_string = "At your feet is a Syndicate uplink that you can buy contraband with. Keep it hidden, as it is highly illegal on Nanotrasen stations."
 	if(uplink_string)
-		owner << uplink_string
+		owner.current << uplink_string
 	if(memory_string)
 		owner.store_memory(memory_string)
 

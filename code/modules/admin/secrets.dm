@@ -343,9 +343,9 @@
 				new_objective.owner = H
 				new_objective.explanation_text = objective
 				H.mind.objectives += new_objective
-				ticker.mode.greet_traitor(H.mind)
+				//ticker.mode.greet_traitor(H.mind)
 				//ticker.mode.forge_traitor_objectives(H.mind)
-				ticker.mode.finalize_traitor(H.mind)
+				//ticker.mode.finalize_traitor(H.mind)
 			for(var/mob/living/silicon/A in player_list)
 				if(A.stat == 2 || !A.client || !A.mind) continue
 				if(ispAI(A)) continue
@@ -356,8 +356,8 @@
 				new_objective.owner = A
 				new_objective.explanation_text = objective
 				A.mind.objectives += new_objective
-				ticker.mode.greet_traitor(A.mind)
-				ticker.mode.finalize_traitor(A.mind)
+				//ticker.mode.greet_traitor(A.mind)
+				//ticker.mode.finalize_traitor(A.mind)
 			message_admins("<span class='adminnotice'>[key_name_admin(usr)] used everyone is a traitor secret. Objective is [objective]</span>")
 			log_admin("[key_name(usr)] used everyone is a traitor secret. Objective is [objective]")
 

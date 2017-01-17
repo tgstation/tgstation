@@ -6,6 +6,9 @@
 
 	possible_objectives = list(/datum/objective/steal, /datum/objective/assassinate)
 
+	ignore_job_selection = TRUE
+	landmark_spawn = "wizard"
+
 /datum/antagonist/wizard/apply_innate_effects()
 	if(!owner)
 		return

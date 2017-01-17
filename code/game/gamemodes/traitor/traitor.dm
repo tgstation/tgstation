@@ -5,6 +5,8 @@
 	var/exchange_blue
 	var/exchange_red
 
+	var/list/traitors = list()
+
 /datum/game_mode/traitor
 	name = "traitor"
 	config_tag = "traitor"
@@ -57,14 +59,14 @@
 	return 1
 
 /datum/game_mode/traitor/post_setup()
-	for(var/datum/mind/traitor in traitors)
-		forge_traitor_objectives(traitor)
-		spawn(rand(10,100))
-			finalize_traitor(traitor)
-			greet_traitor(traitor)
-	if(!exchange_blue)
-		exchange_blue = -1 //Block latejoiners from getting exchange objectives
-	modePlayer += traitors
+	//for(var/datum/mind/traitor in traitors)
+		//forge_traitor_objectives(traitor)
+		//spawn(rand(10,100))
+		//	finalize_traitor(traitor)
+		//	greet_traitor(traitor)
+//	if(!exchange_blue)
+//		exchange_blue = -1 //Block latejoiners from getting exchange objectives
+//	modePlayer += traitors
 	..()
 	return 1
 

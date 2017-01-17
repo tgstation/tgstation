@@ -38,18 +38,17 @@
 	devil_mind.store_memory("Your devilic true name is [devil_mind.devilinfo.truename]<br>[lawlorify[LAW][devil_mind.devilinfo.ban]]<br>You may not use violence to coerce someone into selling their soul.<br>You may not directly and knowingly physically harm a devil, other than yourself.<br>[lawlorify[LAW][devil_mind.devilinfo.bane]]<br>[lawlorify[LAW][devil_mind.devilinfo.obligation]]<br>[lawlorify[LAW][devil_mind.devilinfo.banish]]<br>")
 	devil_mind.devilinfo.owner = devil_mind
 	devil_mind.devilinfo.give_base_spells(1)
-	spawn(10)
-		devil_mind.devilinfo.update_hud()
-		if(devil_mind.assigned_role == "Clown" && ishuman(devil_mind.current))
-			var/mob/living/carbon/human/S = devil_mind.current
-			S << "<span class='notice'>Your infernal nature has allowed you to overcome your clownishness.</span>"
-			S.dna.remove_mutation(CLOWNMUT)
-	if(issilicon(devil_mind.current))
-		add_law_sixsixsix(devil_mind.current)
+	devil_mind.devilinfo.update_hud()
+	if(devil_mind.assigned_role == "Clown" && ishuman(devil_mind.current))
+		var/mob/living/carbon/human/S = devil_mind.current
+		S << "<span class='notice'>Your infernal nature has allowed you to overcome your clownishness.</span>"
+		S.dna.remove_mutation(CLOWNMUT)
+//	if(issilicon(devil_mind.current))
+		//add_law_sixsixsix(devil_mind.current)
 
 /datum/game_mode/proc/add_devil_objectives(datum/mind/devil_mind, quantity)
-	var/list/validtypes = list(/datum/objective/devil/soulquantity, /datum/objective/devil/soulquality, /datum/objective/devil/sintouch, /datum/objective/devil/buy_target)
-	for(var/i = 1 to quantity)
+/*	var/list/validtypes = list(/datum/objective/devil/soulquantity, /datum/objective/devil/soulquality, /datum/objective/devil/sintouch, /datum/objective/devil/buy_target)
+	for(var/i in quantity)
 		var/type = pick(validtypes)
 		var/datum/objective/devil/objective = new type(null)
 		objective.owner = devil_mind
@@ -58,7 +57,7 @@
 			validtypes -= type //prevent duplicate objectives, EXCEPT for buy_target.
 		else
 			objective.find_target()
-
+*/
 /datum/mind/proc/announceDevilLaws()
 	if(!devilinfo)
 		return

@@ -12,9 +12,10 @@ var/datum/subsystem/ticker/ticker
 	var/current_state = GAME_STATE_STARTUP	//state of current round (used by process()) Use the defines GAME_STATE_* !
 	var/force_ending = FALSE				//Round was ended by admin intervention
 
+	var/list/antagonists = list()
+
 	var/datum/game_mode/mode = null
 	var/datum/threat/threat
-	var/list/antagonists = list()			//List of round antagonists
 	var/event_time = null
 	var/event = 0
 
@@ -102,12 +103,12 @@ var/datum/subsystem/ticker/ticker
 				current_state = GAME_STATE_STARTUP
 
 		if(GAME_STATE_PLAYING)
-			mode.process(wait * 0.1)
+			//mode.process(wait * 0.1)
 			check_queue()
 			check_maprotate()
 			scripture_states = scripture_unlock_alert(scripture_states)
 
-			if(!mode.explosion_in_progress && mode.check_finished() || force_ending)
+			/*if(!mode.explosion_in_progress && mode.check_finished() || force_ending)
 				current_state = GAME_STATE_FINISHED
 				toggle_ooc(1) // Turn it on
 				declare_completion(force_ending)
@@ -116,9 +117,8 @@ var/datum/subsystem/ticker/ticker
 						world.Reboot("Station destroyed by Nuclear Device.", "end_proper", "nuke")
 					else
 						world.Reboot("Round ended.", "end_proper", "proper completion")
-
+			*/
 /datum/subsystem/ticker/proc/setup()
-	threat = new
 	threat.pre_setup()						//Select round start antags
 	SSjob.DivideOccupations() 				//Distribute jobs
 
@@ -146,7 +146,7 @@ var/datum/subsystem/ticker/ticker
 
 
 	spawn(0)//Forking here so we dont have to wait for this to finish
-		mode.post_setup()
+		threat.post_setup()
 		//Cleanup some stuff
 		for(var/obj/effect/landmark/start/S in landmarks_list)
 			//Deleting Startpoints but we need the ai point to AI-ize people later
