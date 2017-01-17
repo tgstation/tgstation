@@ -8,7 +8,7 @@
 
 	var/damtype = "brute"
 	var/force = 0
-
+	var/holospawned = 0
 	var/list/armor
 	var/obj_integrity = 500
 	var/max_integrity = 500

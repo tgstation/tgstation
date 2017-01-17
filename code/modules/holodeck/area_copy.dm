@@ -33,6 +33,7 @@
 		if(istype(O,/obj/machinery))
 			var/obj/machinery/M = O
 			M.power_change()
+		N.holospawned = 1
 	return O
 
 
