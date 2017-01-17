@@ -261,7 +261,7 @@ list(name = "- Carbon Dioxide", desc = " This informational poster teaches the v
 	//declaring D because otherwise if P gets 'deconstructed' we lose our reference to P.resulting_poster
 	var/obj/structure/sign/poster/D = P.resulting_poster
 
-	var/temp_loc = user.loc
+	var/temp_loc = get_turf(user)
 	flick("poster_being_set",D)
 	D.loc = src
 	D.official = P.official
@@ -269,10 +269,12 @@ list(name = "- Carbon Dioxide", desc = " This informational poster teaches the v
 	playsound(D.loc, 'sound/items/poster_being_created.ogg', 100, 1)
 
 	if(do_after(user,D.placespeed,target=src))
-		if(!D)
+		if(!D || qdeleted(D))
 			return
 
 		if(iswallturf(src) && user && user.loc == temp_loc)	//Let's check if everything is still there
 			user << "<span class='notice'>You place the poster!</span>"
-		else
-			D.roll_and_drop(temp_loc,D.official)
+			return
+
+	D.roll_and_drop(temp_loc,D.official)
+	user << "<span class='notice'>The poster falls down!</span>"
