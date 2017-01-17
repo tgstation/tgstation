@@ -32,6 +32,12 @@
 	if(!burn_stuff())
 		STOP_PROCESSING(SSobj, src)
 
+/turf/open/floor/plating/lava/singularity_act()
+	return
+
+/turf/open/floor/plating/lava/singularity_pull(S, current_size)
+	return
+
 /turf/open/floor/plating/lava/make_plating()
 	return
 
