@@ -8,7 +8,9 @@
 
 #define GAME_PLANE 0
 //#define TURF_LAYER 2 //For easy recordkeeping; this is a byond define
+#define DECAL_PLATING_LAYER 2.015
 #define MID_TURF_LAYER 2.02
+#define DECAL_LAYER 2.025
 #define HIGH_TURF_LAYER 2.03
 #define ABOVE_OPEN_TURF_LAYER 2.04
 #define CLOSED_TURF_LAYER 2.05
