@@ -17,6 +17,7 @@
 	var/assemblyattacher
 	var/ignition_temp = 10 // The amount of heat added to the reagents when this grenade goes off.
 	var/threatscale = 1 // Used by advanced grenades to make them slightly more worthy.
+	var/no_splash = FALSE //If the grenade deletes even if it has no reagents to splash with. Used for slime core reactions.
 
 /obj/item/weapon/grenade/chem_grenade/New()
 	create_reagents(1000)
@@ -164,8 +165,13 @@
 	for(var/obj/item/weapon/reagent_containers/glass/G in beakers)
 		reactants += G.reagents
 
-	if(!chem_splash(get_turf(src), affected_area, reactants, ignition_temp, threatscale))
+	if(!chem_splash(get_turf(src), affected_area, reactants, ignition_temp, threatscale) && !no_splash)
 		playsound(loc, 'sound/items/Screwdriver2.ogg', 50, 1)
+		if(beakers.len)
+			for(var/obj/O in beakers)
+				O.loc = get_turf(src)
+			beakers = list()
+		stage_change(EMPTY)
 		return
 
 	if(nadeassembly)
@@ -206,11 +212,16 @@
 				G.reagents.trans_to(S, G.reagents.total_volume)
 
 			//If there is still a core (sometimes it's used up)
-			//and there are reagents left, behave normally
+			//and there are reagents left, behave normally,
+			//otherwise drop it on the ground for timed reactions like gold.
 
-			if(S && S.reagents && S.reagents.total_volume)
-				S.reagents.trans_to(src,S.reagents.total_volume)
-			return
+			if(S)
+				if(S.reagents && S.reagents.total_volume)
+					for(var/obj/item/weapon/reagent_containers/glass/G in beakers)
+						S.reagents.trans_to(G, S.reagents.total_volume)
+				else
+					S.forceMove(get_turf(src))
+					no_splash = TRUE
 	..()
 
 	//I tried to just put it in the allowed_containers list but

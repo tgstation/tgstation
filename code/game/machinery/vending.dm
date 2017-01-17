@@ -224,7 +224,8 @@
 	if(istype(W, /obj/item/weapon/reagent_containers/food/snacks))
 		if(!compartment_access_check(user))
 			return
-		if(junk_check(W))
+		var/obj/item/weapon/reagent_containers/food/snacks/S = W
+		if(!S.junkiness)
 			if(!iscompartmentfull(user))
 				if(!user.drop_item())
 					return
@@ -243,7 +244,7 @@
 		for(var/obj/item/weapon/reagent_containers/food/snacks/S in T.contents)
 			if(iscompartmentfull(user))
 				break
-			if(junk_check(S))
+			if(!S.junkiness)
 				T.remove_from_storage(S, src)
 				food_load(S)
 				loaded++
@@ -266,11 +267,6 @@
 		req_access_txt = "0"
 		return 0
 	req_access_txt = "0"
-	return 1
-
-/obj/machinery/vending/snack/proc/junk_check(obj/item/weapon/reagent_containers/food/snacks/S)
-	if(S.junkiness)
-		return 0
 	return 1
 
 /obj/machinery/vending/snack/proc/iscompartmentfull(mob/user)

@@ -99,8 +99,6 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 	var/datum/dog_fashion/dog_fashion = null
 
 /obj/item/New()
-	if (!armor)
-		armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 0, acid = 0)
 	if (!materials)
 		materials = list()
 	..()

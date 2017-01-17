@@ -135,7 +135,7 @@ There are several things that need to be remembered:
 
 		overlays_standing[UNIFORM_LAYER]	= standing
 
-	else
+	else if(!(dna && dna.species.nojumpsuit))
 		// Automatically drop anything in store / id / belt if you're not wearing a uniform.	//CHECK IF NECESARRY
 		for(var/obj/item/thing in list(r_store, l_store, wear_id, belt))						//
 			dropItemToGround(thing)

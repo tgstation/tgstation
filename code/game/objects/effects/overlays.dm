@@ -279,6 +279,9 @@
 /obj/effect/overlay/temp/ratvar/beam/falsewall
 	layer = OBJ_LAYER
 
+/obj/effect/overlay/temp/ratvar/beam/catwalk
+	layer = LATTICE_LAYER
+
 /obj/effect/overlay/temp/ratvar/wall
 	icon_state = "ratvarwallglow"
 
@@ -287,6 +290,9 @@
 
 /obj/effect/overlay/temp/ratvar/floor
 	icon_state = "ratvarfloorglow"
+
+/obj/effect/overlay/temp/ratvar/floor/catwalk
+	layer = LATTICE_LAYER
 
 /obj/effect/overlay/temp/ratvar/window
 	icon_state = "ratvarwindowglow"

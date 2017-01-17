@@ -541,6 +541,7 @@
 		pass += A.locked
 		pass += A.stat	//No power, no automatic open
 		pass += A.emagged
+		pass += A.welded
 		if(A.requiresID())
 			if((!A.allowed(wearer)) && !A.emergency)
 				pass += 1

@@ -288,10 +288,10 @@ RCD
             user << "<span class='notice'>You insert [maxsheets] [S.name] sheets into the RCD. </span>"
         else
             matter += value*(S.amount)
-            user.removeItemFromInventory()
-            S.use(S.amount)
+            user.removeItemFromInventory(S)
             playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
             user << "<span class='notice'>You insert [S.amount] [S.name] sheets into the RCD. </span>"
+            S.use(S.amount)
 
         return 1
     user << "<span class='warning'>You can't insert any more [S.name] sheets into the RCD!"

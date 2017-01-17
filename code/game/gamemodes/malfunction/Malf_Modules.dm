@@ -28,10 +28,6 @@
 	set category = "Malfunction"
 	set name = "Doomsday Device"
 
-	for(var/N in nuke_tiles)
-		var/turf/T = N
-		T.icon_state = "rcircuitanim" //This causes all blue "circuit" tiles on the map to change to animated red icon state.
-
 	src << "<span class='notice'>Nuclear device armed.</span>"
 	priority_announce("Hostile runtimes detected in all station systems, please deactivate your AI to prevent possible damage to its morality core.", "Anomaly Alert", 'sound/AI/aimalf.ogg')
 	set_security_level("delta")
@@ -67,6 +63,7 @@
 		countdown = null
 	STOP_PROCESSING(SSfastprocess, src)
 	SSshuttle.clearHostileEnvironment(src)
+	SSmapping.remove_nuke_threat(src)
 	for(var/A in ai_list)
 		var/mob/living/silicon/ai/Mlf = A
 		if(Mlf.doomsday_device == src)
@@ -79,6 +76,7 @@
 	countdown.start()
 	START_PROCESSING(SSfastprocess, src)
 	SSshuttle.registerHostileEnvironment(src)
+	SSmapping.add_nuke_threat(src) //This causes all blue "circuit" tiles on the map to change to animated red icon state.
 
 /obj/machinery/doomsday_device/proc/seconds_remaining()
 	. = max(0, (round((detonation_timer - world.time) / 10)))
@@ -96,7 +94,6 @@
 	if(sec_left <= 0)
 		timing = FALSE
 		detonate(T.z)
-		qdel(src)
 	else
 		var/key = num2text(sec_left)
 		if(!(sec_left % 60) && !(key in milestones))
@@ -114,7 +111,7 @@
 			continue
 		if(issilicon(L))
 			continue
-		L << "<span class='danger'><B>The blast wave from the [src] tears you atom from atom!</B></span>"
+		L << "<span class='userdanger'>The blast wave from [src] tears you atom from atom!</span>"
 		L.dust()
 	world << "<B>The AI cleansed the station of life with the doomsday device!</B>"
 	ticker.force_ending = 1
