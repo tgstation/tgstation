@@ -54,10 +54,10 @@
 		icon_state = initial(icon_state)
 		updateUsrDialog()
 	else if(istype(P, /obj/item/weapon/wrench))
-		user << "<span class='notice'>You begin to [anchored ? "wrench" : "unwrench"] [src].</span>"
+		user << "<span class='notice'>You begin to [anchored ? "unwrench" : "wrench"] [src].</span>"
 		playsound(loc, P.usesound, 50, 1)
 		if(do_after(user, 20, target = src))
-			user << "<span class='notice'>You successfully [anchored ? "wrench" : "unwrench"] [src].</span>"
+			user << "<span class='notice'>You successfully [anchored ? "unwrench" : "wrench"] [src].</span>"
 			anchored = !anchored
 	else if(user.a_intent != INTENT_HARM)
 		user << "<span class='warning'>You can't put [P] in [src]!</span>"

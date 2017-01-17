@@ -130,10 +130,6 @@
 
 	//laser pointer image
 	icon_state = "pointer_[pointer_icon_state]"
-	var/list/showto = list()
-	for(var/mob/M in viewers(7,targloc))
-		if(M.client)
-			showto.Add(M.client)
 	var/image/I = image('icons/obj/projectiles.dmi',targloc,pointer_icon_state,10)
 	var/list/click_params = params2list(params)
 	if(click_params)
@@ -159,7 +155,7 @@
 			user << "<span class='warning'>[src]'s battery is overused, it needs time to recharge!</span>"
 			recharge_locked = 1
 
-	flick_overlay(I, showto, 10)
+	flick_overlay_view(I, targloc, 10)
 	icon_state = "pointer"
 
 /obj/item/device/laser_pointer/process()

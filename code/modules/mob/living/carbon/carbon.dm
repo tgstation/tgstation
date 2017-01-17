@@ -96,7 +96,7 @@
 	if(hit_atom.density && isturf(hit_atom))
 		Weaken(1)
 		take_bodypart_damage(10)
-	if(iscarbon(hit_atom))
+	if(iscarbon(hit_atom) && hit_atom != src)
 		var/mob/living/carbon/victim = hit_atom
 		if(victim.movement_type & FLYING)
 			return
@@ -457,7 +457,7 @@
 	if(nutrition < 100 && !blood)
 		if(message)
 			visible_message("<span class='warning'>[src] dry heaves!</span>", \
-							"<span class='userdanger'>You try to throw up, but there's nothing your stomach!</span>")
+							"<span class='userdanger'>You try to throw up, but there's nothing in your stomach!</span>")
 		if(stun)
 			Weaken(10)
 		return 1
@@ -688,6 +688,7 @@
 			D.cure(0)
 	if(admin_revive)
 		regenerate_limbs()
+		regenerate_organs()
 		handcuffed = initial(handcuffed)
 		for(var/obj/item/weapon/restraints/R in contents) //actually remove cuffs from inventory
 			qdel(R)
@@ -724,7 +725,9 @@
 	..()
 
 /mob/living/carbon/fakefire(var/fire_icon = "Generic_mob_burning")
-	overlays_standing[FIRE_LAYER] = image("icon"='icons/mob/OnFire.dmi', "icon_state"= fire_icon, "layer"=-FIRE_LAYER)
+	var/image/new_fire_overlay = image("icon"='icons/mob/OnFire.dmi', "icon_state"= fire_icon, "layer"=-FIRE_LAYER)
+	new_fire_overlay.appearance_flags = RESET_COLOR
+	overlays_standing[FIRE_LAYER] = new_fire_overlay
 	apply_overlay(FIRE_LAYER)
 
 /mob/living/carbon/fakefireextinguish()

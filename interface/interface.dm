@@ -52,7 +52,15 @@
 	set desc = "Report an issue"
 	set hidden = 1
 	if(config.githuburl)
-		if(alert("This will open the Github issue reporter in your browser. Are you sure?",,"Yes","No")=="No")
+		var/message = "This will open the Github issue reporter in your browser. Are you sure?"
+		var/first = TRUE
+		for(var/line in revdata.testmerge)
+			if(line)
+				if(first)
+					first = FALSE
+					message += ". The following experimental changes are active and are probably the cause of any new or sudden issues you may experience. If possible, please try to find a specific thread for your issue instead of posting to the general issue tracker:"	
+				message += " <a href='[config.githuburl]/pull/[line]'>#[line]</a>"
+		if(tgalert(src, message, "Report Issue","Yes","No")=="No")
 			return
 		src << link("[config.githuburl]/issues/new")
 	else

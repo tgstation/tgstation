@@ -193,14 +193,18 @@
 	if(firer)
 		chain = firer.Beam(src, icon_state = "chain", time = INFINITY, maxdistance = INFINITY)
 	..()
+	//TODO: root the firer until the chain returns
 
 /obj/item/projectile/hook/on_hit(atom/target)
 	. = ..()
-	if(isliving(target))
-		var/mob/living/L = target
-		if(!L.anchored)
-			L.visible_message("<span class='danger'>[L] is snagged by [firer]'s hook!</span>")
-			L.forceMove(get_turf(firer))
+	if(istype(target, /atom/movable))
+		var/atom/movable/A = target
+		if(A.anchored)
+			return
+		A.visible_message("<span class='danger'>[A] is snagged by [firer]'s hook!</span>")
+		new /datum/forced_movement(A, get_turf(firer), 5, TRUE)
+		//TODO: keep the chain beamed to A
+		//TODO: needs a callback to delete the chain
 
 /obj/item/projectile/hook/Destroy()
 	qdel(chain)
@@ -349,18 +353,11 @@
 	desc = "A boat used for traversing lava."
 	icon_state = "goliath_boat"
 	icon = 'icons/obj/lavaland/dragonboat.dmi'
-	keytype = /obj/item/weapon/oar
 	resistance_flags = LAVA_PROOF | FIRE_PROOF
 
-/obj/vehicle/lavaboat/relaymove(mob/user, direction)
-	var/turf/next = get_step(src, direction)
-	var/turf/current = get_turf(src)
-
-	if(istype(next, /turf/open/floor/plating/lava) || istype(current, /turf/open/floor/plating/lava)) //We can move from land to lava, or lava to land, but not from land to land
-		..()
-	else
-		user << "Boats don't go on land!"
-		return 0
+/obj/vehicle/lavaboat/buckle_mob()
+	. = ..()
+	riding_datum = new/datum/riding/boat
 
 /obj/item/weapon/oar
 	name = "oar"
@@ -404,11 +401,11 @@
 /obj/vehicle/lavaboat/dragon
 	name = "mysterious boat"
 	desc = "This boat moves where you will it, without the need for an oar."
-	keytype = null
 	icon_state = "dragon_boat"
-	generic_pixel_y = 2
-	generic_pixel_x = 1
-	vehicle_move_delay = 1
+
+/obj/vehicle/lavaboat/dragon/buckle_mob()
+	..()
+	riding_datum = new/datum/riding/boat/dragon
 
 //Potion of Flight
 /obj/item/weapon/reagent_containers/glass/bottle/potion
@@ -665,21 +662,22 @@
 			user.visible_message("<span class='danger'>[user] points [src] at [T]!</span>")
 			timer = world.time + create_delay + 1
 			if(do_after(user, create_delay, target = T))
-				user.visible_message("<span class='danger'>[user] turns \the [T] into [transform_string]!</span>")
-				message_admins("[key_name_admin(user)] fired the lava staff at [get_area(target)]. [ADMIN_COORDJMP(T)]")
-				log_game("[key_name(user)] fired the lava staff at [get_area(target)] [COORD(T)].")
-				T.ChangeTurf(turf_type)
-				timer = world.time + create_cooldown
-				qdel(L)
+				var/old_name = T.name
+				if(T.TerraformTurf(turf_type))
+					user.visible_message("<span class='danger'>[user] turns \the [old_name] into [transform_string]!</span>")
+					message_admins("[key_name_admin(user)] fired the lava staff at [get_area(target)]. [ADMIN_COORDJMP(T)]")
+					log_game("[key_name(user)] fired the lava staff at [get_area(target)] [COORD(T)].")
+					timer = world.time + create_cooldown
+					playsound(T,'sound/magic/Fireball.ogg', 200, 1)
 			else
 				timer = world.time
-				qdel(L)
-				return
+			qdel(L)
 		else
-			user.visible_message("<span class='danger'>[user] turns \the [T] into [reset_string]!</span>")
-			T.ChangeTurf(reset_turf_type)
-			timer = world.time + reset_cooldown
-		playsound(T,'sound/magic/Fireball.ogg', 200, 1)
+			var/old_name = T.name
+			if(T.TerraformTurf(reset_turf_type))
+				user.visible_message("<span class='danger'>[user] turns \the [old_name] into [reset_string]!</span>")
+				timer = world.time + reset_cooldown
+				playsound(T,'sound/magic/Fireball.ogg', 200, 1)
 
 /obj/effect/overlay/temp/lavastaff
 	icon_state = "lavastaff_warn"
@@ -795,11 +793,11 @@
 	calculate_anger_mod(user)
 	timer = world.time + CLICK_CD_MELEE //by default, melee attacks only cause melee blasts, and have an accordingly short cooldown
 	if(proximity_flag)
-		addtimer(src, "aoe_burst", 0, TIMER_NORMAL, T, user)
+		addtimer(CALLBACK(src, .proc/aoe_burst, T, user), 0)
 		add_logs(user, target, "fired 3x3 blast at", src)
 	else
 		if(ismineralturf(target) && get_dist(user, target) < 6) //target is minerals, we can hit it(even if we can't see it)
-			addtimer(src, "cardinal_blasts", 0, TIMER_NORMAL, T, user)
+			addtimer(CALLBACK(src, .proc/cardinal_blasts, T, user), 0)
 			timer = world.time + cooldown_time
 		else if(target in view(5, get_turf(user))) //if the target is in view, hit it
 			timer = world.time + cooldown_time
@@ -808,12 +806,12 @@
 				PoolOrNew(/obj/effect/overlay/temp/hierophant/chaser, list(get_turf(user), user, target, chaser_speed, friendly_fire_check))
 				add_logs(user, target, "fired a chaser at", src)
 			else
-				addtimer(src, "cardinal_blasts", 0, TIMER_NORMAL, T, user) //otherwise, just do cardinal blast
+				addtimer(CALLBACK(src, .proc/cardinal_blasts, T, user), 0) //otherwise, just do cardinal blast
 				add_logs(user, target, "fired cardinal blast at", src)
 		else
 			user << "<span class='warning'>That target is out of range!</span>" //too far away
 			timer = world.time
-	addtimer(src, "prepare_icon_update", 0)
+	addtimer(CALLBACK(src, .proc/prepare_icon_update), 0)
 
 /obj/item/weapon/hierophant_club/proc/calculate_anger_mod(mob/user) //we get stronger as the user loses health
 	chaser_cooldown = initial(chaser_cooldown)
@@ -856,7 +854,7 @@
 			user.visible_message("<span class='hierophant_warning'>[user] starts fiddling with [src]'s pommel...</span>", \
 			"<span class='notice'>You start detaching the hierophant beacon...</span>")
 			timer = world.time + 51
-			addtimer(src, "prepare_icon_update", 0)
+			addtimer(CALLBACK(src, .proc/prepare_icon_update), 0)
 			if(do_after(user, 50, target = user) && !beacon)
 				var/turf/T = get_turf(user)
 				playsound(T,'sound/magic/Blind.ogg', 200, 1, -4)
@@ -868,7 +866,7 @@
 				<span class='notice'>You can remove the beacon to place it again by striking it with the club.</span>")
 			else
 				timer = world.time
-				addtimer(src, "prepare_icon_update", 0)
+				addtimer(CALLBACK(src, .proc/prepare_icon_update), 0)
 		else
 			user << "<span class='warning'>You need to be on solid ground to detach the beacon!</span>"
 		return
@@ -885,7 +883,7 @@
 	user.update_action_buttons_icon()
 	user.visible_message("<span class='hierophant_warning'>[user] starts to glow faintly...</span>")
 	timer = world.time + 50
-	addtimer(src, "prepare_icon_update", 0)
+	addtimer(CALLBACK(src, .proc/prepare_icon_update), 0)
 	beacon.icon_state = "hierophant_tele_on"
 	var/obj/effect/overlay/temp/hierophant/telegraph/edge/TE1 = PoolOrNew(/obj/effect/overlay/temp/hierophant/telegraph/edge, user.loc)
 	var/obj/effect/overlay/temp/hierophant/telegraph/edge/TE2 = PoolOrNew(/obj/effect/overlay/temp/hierophant/telegraph/edge, beacon.loc)
@@ -897,7 +895,7 @@
 			user << "<span class='warning'>The beacon is blocked by something, preventing teleportation!</span>"
 			user.update_action_buttons_icon()
 			timer = world.time
-			addtimer(src, "prepare_icon_update", 0)
+			addtimer(CALLBACK(src, .proc/prepare_icon_update), 0)
 			beacon.icon_state = "hierophant_tele_off"
 			return
 		PoolOrNew(/obj/effect/overlay/temp/hierophant/telegraph, list(T, user))
@@ -909,7 +907,7 @@
 			if(user)
 				user.update_action_buttons_icon()
 			timer = world.time
-			addtimer(src, "prepare_icon_update", 0)
+			addtimer(CALLBACK(src, .proc/prepare_icon_update), 0)
 			if(beacon)
 				beacon.icon_state = "hierophant_tele_off"
 			return
@@ -918,7 +916,7 @@
 			user << "<span class='warning'>The beacon is blocked by something, preventing teleportation!</span>"
 			user.update_action_buttons_icon()
 			timer = world.time
-			addtimer(src, "prepare_icon_update", 0)
+			addtimer(CALLBACK(src, .proc/prepare_icon_update), 0)
 			beacon.icon_state = "hierophant_tele_off"
 			return
 		add_logs(user, beacon, "teleported self from ([source.x],[source.y],[source.z]) to")
@@ -931,7 +929,7 @@
 			var/obj/effect/overlay/temp/hierophant/blast/B = PoolOrNew(/obj/effect/overlay/temp/hierophant/blast, list(t, user, TRUE)) //but absolutely will hurt enemies
 			B.damage = 30
 		for(var/mob/living/L in range(1, source))
-			addtimer(src, "teleport_mob", 0, TIMER_NORMAL, source, L, T, user) //regardless, take all mobs near us along
+			addtimer(CALLBACK(src, .proc/teleport_mob, source, L, T, user), 0) //regardless, take all mobs near us along
 		sleep(6) //at this point the blasts detonate
 		if(beacon)
 			beacon.icon_state = "hierophant_tele_off"
@@ -939,7 +937,7 @@
 		qdel(TE1)
 		qdel(TE2)
 		timer = world.time
-		addtimer(src, "prepare_icon_update", 0)
+		addtimer(CALLBACK(src, .proc/prepare_icon_update), 0)
 	if(beacon)
 		beacon.icon_state = "hierophant_tele_off"
 	teleporting = FALSE
@@ -978,7 +976,7 @@
 	sleep(2)
 	PoolOrNew(/obj/effect/overlay/temp/hierophant/blast, list(T, user, friendly_fire_check))
 	for(var/d in cardinal)
-		addtimer(src, "blast_wall", 0, TIMER_NORMAL, T, d, user)
+		addtimer(CALLBACK(src, .proc/blast_wall, T, d, user), 0)
 
 /obj/item/weapon/hierophant_club/proc/blast_wall(turf/T, dir, mob/living/user) //make a wall of blasts blast_range tiles long
 	if(!T)

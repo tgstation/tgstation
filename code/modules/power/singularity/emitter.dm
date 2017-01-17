@@ -35,7 +35,7 @@
 	RefreshParts()
 
 /obj/item/weapon/circuitboard/machine/emitter
-	name = "circuit board (Emitter)"
+	name = "Emitter (Machine Board)"
 	build_path = /obj/machinery/power/emitter
 	origin_tech = "programming=3;powerstorage=4;engineering=4"
 	req_components = list(
@@ -167,7 +167,6 @@
 				update_icon()
 				investigate_log("lost power and turned <font color='red'>off</font>","singulo")
 				log_game("Emitter lost power in ([x],[y],[z])")
-				message_admins("Emitter lost power in ([x],[y],[z] - <a href='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
 			return
 
 		src.last_shot = world.time
@@ -204,13 +203,13 @@
 		A.starting = loc
 		A.fire()
 
-/obj/machinery/field/generator/can_be_unfasten_wrench(mob/user)
+/obj/machinery/power/emitter/can_be_unfasten_wrench(mob/user)
 	if(state == EM_WELDED)
 		user  << "<span class='warning'>[src] is welded to the floor!</span>"
 		return FAILED_UNFASTEN
 	return ..()
 
-/obj/machinery/field/generator/default_unfasten_wrench(mob/user, obj/item/weapon/wrench/W, time = 20)
+/obj/machinery/power/emitter/default_unfasten_wrench(mob/user, obj/item/weapon/wrench/W, time = 20)
 	. = ..()
 	if(. == SUCCESSFUL_UNFASTEN)
 		if(anchored)

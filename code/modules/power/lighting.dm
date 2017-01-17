@@ -302,7 +302,7 @@
 
 	// attempt to insert light
 	else if(istype(W, /obj/item/weapon/light))
-		if(status != LIGHT_EMPTY)
+		if(status == LIGHT_OK)
 			user << "<span class='warning'>There is a [fitting] already inserted!</span>"
 		else
 			src.add_fingerprint(user)
@@ -310,8 +310,14 @@
 			if(istype(L, light_type))
 				if(!user.drop_item())
 					return
+
+				src.add_fingerprint(user)
+				if(status != LIGHT_EMPTY)
+					drop_light_tube(user)
+					user << "<span class='notice'>You replace [L].</span>"
+				else
+					user << "<span class='notice'>You insert [L].</span>"
 				status = L.status
-				user << "<span class='notice'>You insert the [L.name].</span>"
 				switchcount = L.switchcount
 				rigged = L.rigged
 				brightness = L.brightness

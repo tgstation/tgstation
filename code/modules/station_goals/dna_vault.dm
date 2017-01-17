@@ -117,7 +117,7 @@ var/list/non_simple_animals = typecacheof(list(/mob/living/carbon/monkey,/mob/li
 
 
 /obj/item/weapon/circuitboard/machine/dna_vault
-	name = "circuit board (DNA Vault)"
+	name = "DNA Vault (Machine Board)"
 	build_path = /obj/machinery/dna_vault
 	origin_tech = "engineering=2;combat=2;bluespace=2" //No freebies!
 	req_components = list(

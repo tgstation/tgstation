@@ -102,7 +102,7 @@
 
 /obj/item/clockwork/slab/dropped(mob/user)
 	. = ..()
-	addtimer(src, "check_on_mob", 1, TIMER_NORMAL, user) //dropped is called before the item is out of the slot, so we need to check slightly later
+	addtimer(CALLBACK(src, .proc/check_on_mob, user), 1) //dropped is called before the item is out of the slot, so we need to check slightly later
 
 /obj/item/clockwork/slab/proc/check_on_mob(mob/user)
 	if(user && !(src in user.held_items) && slab_ability && slab_ability.ranged_ability_user) //if we happen to check and we AREN'T in user's hands, remove whatever ability we have
@@ -131,7 +131,7 @@
 		stored_components[component_to_generate]++
 		update_slab_info(src)
 		for(var/obj/item/clockwork/slab/S in L.GetAllContents()) //prevent slab abuse today
-			if(L == src)
+			if(S == src)
 				continue
 			S.production_time = production_time + 50 //set it to our next production plus five seconds, so that if you hold the same slabs, the same one will always generate
 		L << "<span class='warning'>Your slab cl[pick("ank", "ink", "unk", "ang")]s as it produces a new component.</span>"
@@ -436,7 +436,7 @@
 		if("toggle")
 			recollecting = !recollecting
 		if("recite")
-			addtimer(src, "recite_scripture", 0, TIMER_NORMAL, text2path(params["category"]), usr, FALSE)
+			addtimer(CALLBACK(src, .proc/recite_scripture, text2path(params["category"]), usr, FALSE), 0)
 		if("select")
 			selected_scripture = params["category"]
 		if("bind")

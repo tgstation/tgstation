@@ -174,7 +174,7 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 								SSshuttle.points -= S.credit_cost
 								minor_announce("[usr.name] has purchased [S.name] for [S.credit_cost] credits." , "Shuttle Purchase")
 								message_admins("[key_name_admin(usr)] purchased [S.name].")
-								feedback_add_details("shuttle_manipulator", S.name)
+								feedback_add_details("shuttle_purchase", S.name)
 							else
 								usr << "Something went wrong! The shuttle exchange system seems to be down."
 						else
@@ -478,7 +478,7 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 			if (src.currmsg)
 				dat += "<B>[src.messagetitle[src.currmsg]]</B><BR><BR>[src.messagetext[src.currmsg]]"
 				if (src.authenticated)
-					dat += "<BR><BR>\[ <A HREF='?src=\ref[src];operation=delmessage'>Delete \]"
+					dat += "<BR><BR>\[ <A HREF='?src=\ref[src];operation=delmessage'>Delete</a> \]"
 			else
 				src.state = STATE_MESSAGELIST
 				src.attack_hand(user)

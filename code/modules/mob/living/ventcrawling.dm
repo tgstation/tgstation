@@ -16,7 +16,7 @@ var/list/ventcrawl_machinery = list(/obj/machinery/atmospherics/components/unary
 		src << "You can't vent crawl while you're restrained!"
 		return
 	if(has_buckled_mobs())
-		src << "You can't vent crawl with others creatures on you!"
+		src << "You can't vent crawl with other creatures on you!"
 		return
 	if(buckled)
 		src << "You can't vent crawl while buckled!"

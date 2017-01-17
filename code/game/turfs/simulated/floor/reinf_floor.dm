@@ -134,7 +134,7 @@
 		var/previouscolor = color
 		color = "#FAE48C"
 		animate(src, color = previouscolor, time = 8)
-		addtimer(src, "update_atom_colour", 8)
+		addtimer(CALLBACK(src, /atom/proc/update_atom_colour), 8)
 
 /turf/open/floor/engine/cult/airless
 	initial_gas_mix = "TEMP=2.7"

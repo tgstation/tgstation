@@ -15,10 +15,10 @@
 
 /turf/open/floor/bluegrid/New()
 	..()
-	nuke_tiles += src
+	SSmapping.nuke_tiles += src
 
 /turf/open/floor/bluegrid/Destroy()
-	nuke_tiles -= src
+	SSmapping.nuke_tiles -= src
 	return ..()
 
 /turf/open/floor/greengrid
@@ -83,6 +83,11 @@
 		realappearence = null
 	return ..()
 
+/turf/open/floor/clockwork/ReplaceWithLattice()
+	..()
+	for(var/obj/structure/lattice/L in src)
+		L.ratvar_act()
+
 /turf/open/floor/clockwork/Entered(atom/movable/AM)
 	..()
 	START_PROCESSING(SSobj, src)
@@ -133,7 +138,7 @@
 		var/previouscolor = color
 		color = "#960000"
 		animate(src, color = previouscolor, time = 8)
-		addtimer(src, "update_atom_colour", 8)
+		addtimer(CALLBACK(src, /atom/proc/update_atom_colour), 8)
 
 
 /turf/open/floor/bluespace

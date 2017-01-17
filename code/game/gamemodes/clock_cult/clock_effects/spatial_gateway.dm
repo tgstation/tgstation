@@ -15,7 +15,7 @@
 
 /obj/effect/clockwork/spatial_gateway/New()
 	..()
-	addtimer(src, "check_setup", 1)
+	addtimer(CALLBACK(src, .proc/check_setup), 1)
 
 /obj/effect/clockwork/spatial_gateway/Destroy()
 	deltimer(timerid)
@@ -84,7 +84,7 @@
 		qdel(src)
 		return TRUE
 	if(istype(I, /obj/item/clockwork/slab))
-		user << "<span class='heavy_brass'>\"I don't think you want to drop your slab into that\".\n\"If you really want to, try throwing it.\"</span>"
+		user << "<span class='heavy_brass'>\"I don't think you want to drop your slab into that.\"\n\"If you really want to, try throwing it.\"</span>"
 		return TRUE
 	if(user.drop_item() && uses)
 		user.visible_message("<span class='warning'>[user] drops [I] into [src]!</span>", "<span class='danger'>You drop [I] into [src]!</span>")
@@ -135,7 +135,7 @@
 	if(!no_cost)
 		uses = max(0, uses - 1)
 		linked_gateway.uses = max(0, linked_gateway.uses - 1)
-	addtimer(src, "check_uses", 10)
+	addtimer(CALLBACK(src, .proc/check_uses), 10)
 	return TRUE
 
 /obj/effect/clockwork/spatial_gateway/proc/check_uses()
@@ -147,46 +147,34 @@
 /atom/movable/proc/procure_gateway(mob/living/invoker, time_duration, gateway_uses, two_way)
 	var/list/possible_targets = list()
 	var/list/teleportnames = list()
-	var/list/duplicatenamecount = list()
 
 	for(var/obj/structure/destructible/clockwork/powered/clockwork_obelisk/O in all_clockwork_objects)
 		if(!O.Adjacent(invoker) && O != src && (O.z <= ZLEVEL_SPACEMAX) && O.anchored) //don't list obelisks that we're next to
 			var/area/A = get_area(O)
 			var/locname = initial(A.name)
-			var/resultkey = "[locname] [O.name]"
-			if(resultkey in teleportnames) //why the fuck did you put two obelisks in the same area
-				duplicatenamecount[resultkey]++
-				resultkey = "[resultkey] ([duplicatenamecount[resultkey]])"
-			else
-				teleportnames.Add(resultkey)
-				duplicatenamecount[resultkey] = 1
-			possible_targets[resultkey] = O
+			possible_targets[avoid_assoc_duplicate_keys("[locname] [O.name]", teleportnames)] = O
 
 	for(var/mob/living/L in living_mob_list)
 		if(!L.stat && is_servant_of_ratvar(L) && !L.Adjacent(invoker) && (L.z <= ZLEVEL_SPACEMAX)) //People right next to the invoker can't be portaled to, for obvious reasons
-			var/resultkey = "[L.name] ([L.real_name])"
-			if(resultkey in teleportnames)
-				duplicatenamecount[resultkey]++
-				resultkey = "[resultkey] ([duplicatenamecount[resultkey]])"
-			else
-				teleportnames.Add(resultkey)
-				duplicatenamecount[resultkey] = 1
-			possible_targets[resultkey] = L
+			possible_targets[avoid_assoc_duplicate_keys("[L.name] ([L.real_name])", teleportnames)] = L
 
 	if(!possible_targets.len)
 		invoker << "<span class='warning'>There are no other eligible targets for a Spatial Gateway!</span>"
 		return FALSE
 	var/input_target_key = input(invoker, "Choose a target to form a rift to.", "Spatial Gateway") as null|anything in possible_targets
 	var/atom/movable/target = possible_targets[input_target_key]
-	if(!src || !target || !invoker || !invoker.canUseTopic(src, !issilicon(invoker)) || !is_servant_of_ratvar(invoker) || (istype(src, /obj/item) && invoker.get_active_held_item() != src) || !invoker.can_speak_vocal())
+	if(!src || !invoker || !invoker.canUseTopic(src, !issilicon(invoker)) || !is_servant_of_ratvar(invoker) || (istype(src, /obj/item) && invoker.get_active_held_item() != src) || !invoker.can_speak_vocal())
 		return FALSE //if any of the involved things no longer exist, the invoker is stunned, too far away to use the object, or does not serve ratvar, or if the object is an item and not in the mob's active hand, fail
+	if(!target)
+		invoker << "<span class='warning'>That target no longer exists!</span>"
+		return procure_gateway(invoker, time_duration, gateway_uses, two_way) //try again?
 	if(isliving(target))
 		var/mob/living/L = target
-		if(L.stat != CONSCIOUS)
-			invoker << "<span class='warning'>That Servant is no longer conscious!</span>"
-			return procure_gateway(invoker, time_duration, gateway_uses, two_way) //try again?
 		if(!is_servant_of_ratvar(L))
 			invoker << "<span class='warning'>That target is no longer a Servant!</span>"
+			return procure_gateway(invoker, time_duration, gateway_uses, two_way)
+		if(L.stat != CONSCIOUS)
+			invoker << "<span class='warning'>That Servant is no longer conscious!</span>"
 			return procure_gateway(invoker, time_duration, gateway_uses, two_way)
 	var/istargetobelisk = istype(target, /obj/structure/destructible/clockwork/powered/clockwork_obelisk)
 	var/issrcobelisk = istype(src, /obj/structure/destructible/clockwork/powered/clockwork_obelisk)

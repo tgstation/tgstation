@@ -18,6 +18,7 @@
 		- If so, is there any protection against somebody spam-clicking a link?
 	If you have any  questions about this stuff feel free to ask. ~Carn
 	*/
+/client/var/inprefs = FALSE
 /client/Topic(href, href_list, hsrc)
 	if(!usr || usr != mob)	//stops us calling Topic for somebody else's client. Also helps prevent usr=null
 		return
@@ -45,7 +46,12 @@
 		if("usr")
 			hsrc = mob
 		if("prefs")
-			return prefs.process_link(usr,href_list)
+			if (inprefs)
+				return
+			inprefs = TRUE
+			. = prefs.process_link(usr,href_list)
+			inprefs = FALSE
+			return
 		if("vars")
 			return view_var_Topic(href,href_list,hsrc)
 
@@ -148,6 +154,10 @@ var/next_external_rsc = 0
 	sethotkeys(1)						//set hoykeys from preferences (from_pref = 1)
 
 	. = ..()	//calls mob.Login()
+
+	connection_time = world.time
+	connection_realtime = world.realtime
+	connection_timeofday = world.timeofday
 
 	if (byond_version < config.client_error_version)		//Out of date client.
 		src << "<span class='danger'><b>Your version of byond is too old:</b></span>"
