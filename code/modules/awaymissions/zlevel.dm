@@ -26,6 +26,18 @@ var/global/list/potentialRandomZlevels = generateMapList(filename = "config/away
 
 		SortAreas() //To add recently loaded areas
 
+/obj/effect/landmark/awaystart
+	name = "away mission spawn"
+	desc = "Randomly picked away mission spawn points"
+
+/obj/effect/landmark/awaystart/New()
+	awaydestinations += src
+	..()
+
+/obj/effect/landmark/awaystart/Destroy()
+	awaydestinations -= src
+	..()
+
 /proc/generateMapList(filename)
 	var/list/potentialMaps = list()
 	var/list/Lines = file2list(filename)
