@@ -861,7 +861,7 @@ var/list/wall_runes = list()
 	rune_in_use = TRUE
 	var/turf/T = get_turf(src)
 	visible_message("<span class='warning'>[src] turns a bright, glowing orange!</span>")
-	SetLuminosity(6)
+	set_light(6)
 	color = "#FC9B54"
 	for(var/M in invokers)
 		var/mob/living/L = M

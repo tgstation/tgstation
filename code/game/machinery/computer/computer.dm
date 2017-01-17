@@ -74,9 +74,9 @@
 /obj/machinery/computer/power_change()
 	..()
 	if(stat & NOPOWER)
-		SetLuminosity(0)
+		set_light(0)
 	else
-		SetLuminosity(brightness_on)
+		set_light(brightness_on)
 	update_icon()
 	return
 

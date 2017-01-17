@@ -370,7 +370,7 @@
 	color = "#FAE48C"
 	layer = ABOVE_MOB_LAYER
 	duration = 70
-	luminosity = 6
+	light_range = 6
 
 /obj/effect/overlay/temp/ratvar/sigil/transgression/New()
 	..()
@@ -382,7 +382,7 @@
 	color = "#EC8A2D"
 	layer = ABOVE_MOB_LAYER
 	duration = 10
-	luminosity = 3
+	light_range = 3
 
 /obj/effect/overlay/temp/ratvar/sigil/voltvoid/New()
 	..()

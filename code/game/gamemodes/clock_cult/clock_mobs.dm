@@ -80,7 +80,9 @@
 
 /mob/living/simple_animal/hostile/clockwork/fragment/New()
 	..()
-	SetLuminosity(2,1)
+	#warn falloff?
+	//SetLuminosity(2,1)
+	set_light(2)
 	if(prob(1))
 		name = "anime fragment"
 		real_name = name
@@ -159,7 +161,9 @@
 	..()
 	combattimer = 0
 	true_name = pick(possible_true_names)
-	SetLuminosity(2,1)
+	#warn falloff?
+	//SetLuminosity(2,1)
+	set_light(2)
 
 /mob/living/simple_animal/hostile/clockwork/marauder/Life()
 	..()

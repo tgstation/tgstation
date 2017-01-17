@@ -11,7 +11,7 @@
 	bound_height = 96
 	pixel_x = -32
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
-	luminosity = 1
+	light_range = 1
 	var/boss = FALSE
 	var/is_anyone_home = FALSE
 

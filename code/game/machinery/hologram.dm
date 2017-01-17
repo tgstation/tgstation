@@ -202,13 +202,13 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	h.layer = FLY_LAYER//Above all the other objects/mobs. Or the vast majority of them.
 	h.anchored = 1//So space wind cannot drag it.
 	h.name = "[A.name] (Hologram)"//If someone decides to right click.
-	h.SetLuminosity(2)	//hologram lighting
+	h.set_light(2)	//hologram lighting
 	set_holo(A, h)
 	return TRUE
 
 /obj/machinery/holopad/proc/set_holo(mob/living/silicon/ai/A, var/obj/effect/overlay/holo_pad_hologram/h)
 	masters[A] = h
-	SetLuminosity(2) // pad lighting
+	set_light(2) // pad lighting
 	icon_state = "holopad1"
 	A.current = src
 	use_power += HOLOGRAM_POWER_USAGE
@@ -225,7 +225,7 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	masters -= user // Discard AI from the list of those who use holopad
 	use_power = max(HOLOPAD_PASSIVE_POWER_USAGE, use_power - HOLOGRAM_POWER_USAGE)//Reduce power usage
 	if (!masters.len) // If no users left
-		SetLuminosity(0) // pad lighting (hologram lighting will be handled automatically since its owner was deleted)
+		set_light(0) // pad lighting (hologram lighting will be handled automatically since its owner was deleted)
 		icon_state = "holopad0"
 		use_power = HOLOPAD_PASSIVE_POWER_USAGE
 	return TRUE

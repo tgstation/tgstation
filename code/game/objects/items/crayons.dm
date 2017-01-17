@@ -346,7 +346,7 @@
 					else
 						user << "<span class='warning'>There isn't enough space to paint!</span>"
 						return
-	
+
 	if(!instant)
 		user << "<span class='notice'>You finish drawing \the [temp].</span>"
 	else
@@ -651,9 +651,9 @@
 		if(actually_paints)
 			target.add_atom_colour(paint_color, WASHABLE_COLOUR_PRIORITY)
 			if(color_hex2num(paint_color) < 255)
-				target.SetOpacity(255)
+				target.set_opacity(255)
 			else
-				target.SetOpacity(initial(target.opacity))
+				target.set_opacity(initial(target.opacity))
 		. = use_charges(2)
 		var/fraction = min(1, . / reagents.maximum_volume)
 		reagents.reaction(target, TOUCH, fraction * volume_multiplier)

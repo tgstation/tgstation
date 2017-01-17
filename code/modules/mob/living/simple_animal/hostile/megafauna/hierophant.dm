@@ -435,7 +435,7 @@ Difficulty: Hard
 /obj/effect/overlay/temp/hierophant/squares
 	icon_state = "hierophant_squares"
 	duration = 3
-	luminosity = 1
+	light_range = 1
 	randomdir = FALSE
 
 /obj/effect/overlay/temp/hierophant/squares/New(loc, new_caster)
@@ -448,7 +448,7 @@ Difficulty: Hard
 	name = "vortex wall"
 	icon = 'icons/turf/walls/hierophant_wall_temp.dmi'
 	icon_state = "wall"
-	luminosity = 1
+	light_range = 1
 	duration = 100
 	smooth = SMOOTH_TRUE
 
@@ -551,7 +551,7 @@ Difficulty: Hard
 /obj/effect/overlay/temp/hierophant/blast
 	icon_state = "hierophant_blast"
 	name = "vortex blast"
-	luminosity = 1
+	light_range = 1
 	desc = "Get out of the way!"
 	duration = 9
 	var/damage = 10 //how much damage do we do?
@@ -614,7 +614,7 @@ Difficulty: Hard
 	desc = "A strange beacon, allowing mass teleportation for those able to use it."
 	icon = 'icons/obj/lavaland/artefacts.dmi'
 	icon_state = "hierophant_tele_off"
-	luminosity = 2
+	light_range = 2
 	layer = LOW_OBJ_LAYER
 	anchored = TRUE
 

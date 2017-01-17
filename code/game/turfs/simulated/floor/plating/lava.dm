@@ -6,7 +6,7 @@
 	gender = PLURAL //"That's some lava."
 	baseturf = /turf/open/floor/plating/lava //lava all the way down
 	slowdown = 2
-	luminosity = 1
+	light_range = 1
 	var/static/list/safeties_typecache = list(/obj/structure/lattice/catwalk)
 	//if anything matching this typecache is found in the lava, we don't burn things
 

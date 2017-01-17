@@ -171,7 +171,7 @@
 	name = "glowing resin"
 	desc = "Blue bioluminescence shines from beneath the surface."
 	icon_state = "weednode"
-	luminosity = 1
+	light_range = 1
 	var/node_range = NODERANGE
 
 /obj/structure/alien/weeds/node/New()
@@ -284,7 +284,7 @@
 /obj/structure/alien/egg/Moved(oldloc)
 	remove_from_proximity_list(oldloc, 1)
 	if(status == GROWN)
-		add_to_proximity_list(src, 1)	
+		add_to_proximity_list(src, 1)
 	return ..()
 
 /obj/structure/alien/egg/deconstruct()

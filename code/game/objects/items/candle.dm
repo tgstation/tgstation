@@ -46,7 +46,7 @@
 		//src.damtype = "fire"
 		if(show_message)
 			usr.visible_message(show_message)
-		SetLuminosity(CANDLE_LUMINOSITY)
+		set_light(CANDLE_LUMINOSITY)
 		START_PROCESSING(SSobj, src)
 		update_icon()
 
@@ -71,22 +71,7 @@
 			"<span class='notice'>[user] snuffs [src].</span>")
 		lit = FALSE
 		update_icon()
-		SetLuminosity(0)
-		user.AddLuminosity(-CANDLE_LUMINOSITY)
-
-
-/obj/item/candle/pickup(mob/user)
-	..()
-	if(lit)
-		SetLuminosity(0)
-		user.AddLuminosity(CANDLE_LUMINOSITY)
-
-
-/obj/item/candle/dropped(mob/user)
-	..()
-	if(lit)
-		user.AddLuminosity(-CANDLE_LUMINOSITY)
-		SetLuminosity(CANDLE_LUMINOSITY)
+		set_light(0)
 
 /obj/item/candle/is_hot()
 	return lit * heat

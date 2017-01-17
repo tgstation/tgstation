@@ -146,7 +146,7 @@
 	if(!burning && CheckOxygen())
 		icon_state = "bonfire_on_fire"
 		burning = 1
-		SetLuminosity(6)
+		set_light(6)
 		Burn()
 		START_PROCESSING(SSobj, src)
 
@@ -181,7 +181,7 @@
 	if(burning)
 		icon_state = "bonfire"
 		burning = 0
-		SetLuminosity(0)
+		Set_light(0)
 		STOP_PROCESSING(SSobj, src)
 
 /obj/structure/bonfire/buckle_mob(mob/living/M, force = 0)

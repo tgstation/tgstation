@@ -75,7 +75,7 @@
 		if(do_after(user, src.cleanspeed, target = target))
 			user << "<span class='notice'>You clean \the [target.name].</span>"
 			target.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
-			target.SetOpacity(initial(target.opacity))
+			target.set_opacity(initial(target.opacity))
 	else
 		user.visible_message("[user] begins to clean \the [target.name] with [src]...", "<span class='notice'>You begin to clean \the [target.name] with [src]...</span>")
 		if(do_after(user, src.cleanspeed, target = target))

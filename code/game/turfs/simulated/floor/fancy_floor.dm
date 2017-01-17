@@ -82,8 +82,9 @@
 		icon_state = "basalt[rand(0, 12)]"
 		switch(icon_state)
 			if("basalt1", "basalt2", "basalt3")
-				SetLuminosity(1, 1)
-
+				#warn ???
+				//SetLuminosity(1, 1)
+				set_light(1)
 
 /turf/open/floor/carpet
 	name = "carpet"

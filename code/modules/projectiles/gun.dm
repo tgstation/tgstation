@@ -283,7 +283,7 @@
 					return
 				user << "<span class='notice'>You click [S] into place on [src].</span>"
 				if(S.on)
-					SetLuminosity(0)
+					set_light(0)
 				gun_light = S
 				I.loc = src
 				update_icon()
@@ -329,21 +329,12 @@
 /obj/item/weapon/gun/proc/update_gunlight(mob/user = null)
 	if(gun_light)
 		if(gun_light.on)
-			if(loc == user)
-				user.AddLuminosity(gun_light.brightness_on)
-			else if(isturf(loc))
-				SetLuminosity(gun_light.brightness_on)
+			light_range(gun_light.brightness_on)
 		else
-			if(loc == user)
-				user.AddLuminosity(-gun_light.brightness_on)
-			else if(isturf(loc))
-				SetLuminosity(0)
+			set_light(0)
 		update_icon()
 	else
-		if(loc == user)
-			user.AddLuminosity(-5)
-		else if(isturf(loc))
-			SetLuminosity(0)
+		set_light(0)
 	for(var/X in actions)
 		var/datum/action/A = X
 		A.UpdateButtonIcon()
@@ -351,19 +342,11 @@
 
 /obj/item/weapon/gun/pickup(mob/user)
 	..()
-	if(gun_light)
-		if(gun_light.on)
-			user.AddLuminosity(gun_light.brightness_on)
-			SetLuminosity(0)
 	if(azoom)
 		azoom.Grant(user)
 
 /obj/item/weapon/gun/dropped(mob/user)
 	..()
-	if(gun_light)
-		if(gun_light.on)
-			user.AddLuminosity(-gun_light.brightness_on)
-			SetLuminosity(gun_light.brightness_on)
 	zoom(user,FALSE)
 	if(azoom)
 		azoom.Remove(user)
@@ -493,4 +476,3 @@
 	if(zoomable)
 		azoom = new()
 		azoom.gun = src
-

@@ -521,7 +521,7 @@
 	icon_state = "ui_light"
 	layer = MOB_LAYER
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
-	luminosity = 1
+	light_range = 1
 	obj_integrity = 30
 	max_integrity = 30
 	anchored = 1
@@ -583,7 +583,7 @@
 	name = "swarmer blockade"
 	desc = "A quickly assembled energy blockade. Will not retain its form if damaged enough, but disabler beams and swarmers pass right through."
 	icon_state = "barricade"
-	luminosity = 1
+	light_range = 1
 	obj_integrity = 50
 	max_integrity = 50
 
@@ -626,10 +626,10 @@
 		src << "<span class='info'>We successfully repaired ourselves.</span>"
 
 /mob/living/simple_animal/hostile/swarmer/proc/ToggleLight()
-	if(!luminosity)
-		SetLuminosity(3)
+	if(!light_range)
+		set_light(3)
 	else
-		SetLuminosity(0)
+		set_light(0)
 
 /mob/living/simple_animal/hostile/swarmer/proc/swarmer_chat(msg)
 	var/rendered = "<B>Swarm communication - [src]</b> [say_quote(msg, get_spans())]"

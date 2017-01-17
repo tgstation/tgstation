@@ -141,4 +141,4 @@
 				N.icon = 'icons/turf/areas.dmi'
 				N.layer = AREA_LAYER //Just default back to normal area stuff since I assume setting a var is faster than initial
 				N.invisibility = INVISIBILITY_MAXIMUM
-				N.opacity = 0
+					N.set_opacity(FALSE)

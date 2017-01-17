@@ -277,7 +277,7 @@
 	if(ismob(newloc))
 		G.pickup(newloc)//adjusts the lighting on the mob
 	else
-		G.SetLuminosity(get_lum(G.seed))
+		G.set_light(get_lum(G.seed))
 
 /datum/plant_gene/trait/glow/berry
 	name = "Strong Bioluminescence"

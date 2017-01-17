@@ -134,7 +134,7 @@ var/list/non_simple_animals = typecacheof(list(/mob/living/carbon/monkey,/mob/li
 	idle_power_usage = 5000
 	pixel_x = -32
 	pixel_y = -64
-	luminosity = 1
+	light_range = 1
 
 	//High defaults so it's not completed automatically if there's no station goal
 	var/animals_max = 100

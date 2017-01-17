@@ -20,26 +20,13 @@
 	icon_state = "[basestate][on]-[item_color]"
 	user.update_inv_head()	//so our mob-overlays update
 
-	if(on)
-		user.AddLuminosity(brightness_on)
-	else
-		user.AddLuminosity(-brightness_on)
+	set_light(brightness_on)
 	for(var/X in actions)
 		var/datum/action/A = X
 		A.UpdateButtonIcon()
 
-
-/obj/item/clothing/head/helmet/space/hardsuit/pickup(mob/user)
-	..()
-	if(on)
-		user.AddLuminosity(brightness_on)
-		SetLuminosity(0)
-
 /obj/item/clothing/head/helmet/space/hardsuit/dropped(mob/user)
 	..()
-	if(on)
-		user.AddLuminosity(-brightness_on)
-		SetLuminosity(brightness_on)
 	if(suit)
 		suit.RemoveHelmet()
 
@@ -262,7 +249,7 @@
 		user << "<span class='notice'>You switch your hardsuit to EVA mode, sacrificing speed for space protection.</span>"
 		name = initial(name)
 		desc = initial(desc)
-		user.AddLuminosity(brightness_on)
+		set_light(brightness_on)
 		flags |= visor_flags
 		flags_cover |= HEADCOVERSEYES | HEADCOVERSMOUTH
 		flags_inv |= visor_flags_inv
@@ -271,7 +258,7 @@
 		user << "<span class='notice'>You switch your hardsuit to combat mode and can now run at full speed.</span>"
 		name += " (combat)"
 		desc = alt_desc
-		user.AddLuminosity(-brightness_on)
+		set_light(0)
 		flags &= ~visor_flags
 		flags_cover &= ~(HEADCOVERSEYES | HEADCOVERSMOUTH)
 		flags_inv &= ~visor_flags_inv

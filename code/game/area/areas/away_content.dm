@@ -21,7 +21,6 @@
 /area/awaymission/beach
 	name = "Beach"
 	icon_state = "away"
-	luminosity = 1
 	lighting_use_dynamic = DYNAMIC_LIGHTING_DISABLED
 	requires_power = 0
 	has_gravity = 1
@@ -29,7 +28,6 @@
 
 /area/awaymission/errorroom
 	name = "Super Secret Room"
-	luminosity = 1
 	lighting_use_dynamic = DYNAMIC_LIGHTING_DISABLED
 	has_gravity = 1
 
@@ -39,7 +37,6 @@
 /area/awaymission/research
 	name = "Research Outpost"
 	icon_state = "away"
-	luminosity = 0
 	lighting_use_dynamic = DYNAMIC_LIGHTING_ENABLED
 
 /area/awaymission/research/interior
@@ -159,14 +156,12 @@
 	name = "Snow Forest"
 	icon_state = "away"
 	requires_power = 0
-	luminosity = 1
 	lighting_use_dynamic = DYNAMIC_LIGHTING_ENABLED
 
 /area/awaymission/cabin
 	name = "Cabin"
 	icon_state = "away2"
 	requires_power = 1
-	luminosity = 0
 	lighting_use_dynamic = DYNAMIC_LIGHTING_ENABLED
 
 /area/awaymission/snowforest/lumbermill
@@ -178,7 +173,6 @@
 /area/awaymission/BMPship
 	name = "BMP Asteroids"
 	icon_state = "away"
-	luminosity = 0
 
 
 /area/awaymission/BMPship/Aft
@@ -234,31 +228,26 @@
 /area/awaymission/wwmines
 	name = "Wild West Mines"
 	icon_state = "away1"
-	luminosity = 1
 	requires_power = 0
 
 /area/awaymission/wwgov
 	name = "Wild West Mansion"
 	icon_state = "away2"
-	luminosity = 1
 	requires_power = 0
 
 /area/awaymission/wwrefine
 	name = "Wild West Refinery"
 	icon_state = "away3"
-	luminosity = 1
 	requires_power = 0
 
 /area/awaymission/wwvault
 	name = "Wild West Vault"
 	icon_state = "away3"
-	luminosity = 0
 
 /area/awaymission/wwvaultdoors
 	name = "Wild West Vault Doors"  // this is to keep the vault area being entirely lit because of requires_power
 	icon_state = "away2"
 	requires_power = 0
-	luminosity = 0
 
 
 /*
@@ -327,7 +316,6 @@
 	name = "Snowdin Tundra Plains"
 	icon_state = "away"
 	requires_power = 0
-	luminosity = 1
 	lighting_use_dynamic = DYNAMIC_LIGHTING_ENABLED
 
 /area/awaymission/snowdin/post
@@ -341,7 +329,6 @@
 /area/awaymission/snowdin/cave
 	name = "Snowdin Caves"
 	icon_state = "away2"
-	luminosity = 0
 
 /area/awaymission/snowdin/base
 	name = "Snowdin Main Base"
@@ -351,7 +338,6 @@
 /area/awaymission/snowdin/dungeon1
 	name = "Snowdin Depths"
 	icon_state = "away2"
-	luminosity = 0
 
 /area/awaymission/snowdin/sekret
 	name = "Snowdin Operations"

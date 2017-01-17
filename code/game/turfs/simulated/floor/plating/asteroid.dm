@@ -121,11 +121,13 @@
 	..()
 	switch(icon_state)
 		if("basalt1", "basalt2", "basalt3") //5 and 9 are too dark to glow and make the amount of glows in tunnels too high
-			SetLuminosity(1, 1) //this is basically a 3.75% chance that a basalt floor glows
+			#warn ???
+			//SetLuminosity(1, 1) //this is basically a 3.75% chance that a basalt floor glows
+			set_light(1)
 
 /turf/open/floor/plating/asteroid/basalt/gets_dug()
 	if(!dug)
-		SetLuminosity(0)
+		set_light(0)
 	..()
 
 
@@ -322,6 +324,3 @@
 
 /turf/open/floor/plating/asteroid/snow/atmosphere
 	initial_gas_mix = "o2=22;n2=82;TEMP=180"
-
-
-

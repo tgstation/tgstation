@@ -54,10 +54,12 @@
 			if(isspaceturf(t))
 				//let's NOT update this that much pls
 				continue
-			SetLuminosity(4,5)
-			light.mode = LIGHTING_STARLIGHT
+			#warn a
+			//SetLuminosity(4,5)
+			set_light(2)
+			//light.mode = LIGHTING_STARLIGHT
 			return
-		SetLuminosity(0)
+		set_light(0)
 
 /turf/open/space/attack_paw(mob/user)
 	return src.attack_hand(user)

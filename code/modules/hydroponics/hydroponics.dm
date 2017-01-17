@@ -260,7 +260,7 @@
 			add_atom_colour(rgb(255, 175, 0), FIXED_COLOUR_PRIORITY)
 		else
 			overlays += image('icons/obj/hydroponics/equipment.dmi', icon_state = "gaia_blessing")
-		SetLuminosity(3)
+		set_light(3)
 
 	update_icon_hoses()
 
@@ -271,9 +271,9 @@
 	if(!self_sustaining)
 		if(myseed && myseed.get_gene(/datum/plant_gene/trait/glow))
 			var/datum/plant_gene/trait/glow/G = myseed.get_gene(/datum/plant_gene/trait/glow)
-			SetLuminosity(G.get_lum(myseed))
+			set_light(G.get_lum(myseed))
 		else
-			SetLuminosity(0)
+			set_light(0)
 
 	return
 

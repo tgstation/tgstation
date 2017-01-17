@@ -71,7 +71,7 @@
 
 /obj/effect/nettingportal/New()
 	..()
-	SetLuminosity(3)
+	set_light(3)
 	var/obj/item/device/radio/beacon/teletarget = null
 	for(var/obj/machinery/computer/teleporter/com in machines)
 		if(com.target)

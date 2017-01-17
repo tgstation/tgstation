@@ -53,7 +53,7 @@
 		sleep(5)
 		if(!qdeleted(src))
 			density = 0
-			SetOpacity(0)
+			set_opacity(0)
 			update_icon()
 	else
 		var/srcturf = get_turf(src)
@@ -64,7 +64,7 @@
 		density = 1
 		sleep(5)
 		if(!qdeleted(src))
-			SetOpacity(1)
+			set_opacity(1)
 			update_icon()
 	air_update_turf(1)
 	opening = 0

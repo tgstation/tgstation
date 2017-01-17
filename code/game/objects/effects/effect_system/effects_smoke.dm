@@ -27,7 +27,7 @@
 	for(var/i = 0, i < frames, i++)
 		alpha -= step
 		if(alpha < 160)
-			opacity = 0 //if we were blocking view, we aren't now because we're fading out
+			set_opacity(0) //if we were blocking view, we aren't now because we're fading out
 		stoplag()
 
 /obj/effect/particle_effect/smoke/New()
@@ -88,7 +88,7 @@
 		S.lifetime = lifetime
 		if(S.amount>0)
 			if(opaque)
-				S.opacity = 1
+				S.set_opacity(TRUE)
 			newsmokes.Add(S)
 
 	if(newsmokes.len)

@@ -1259,13 +1259,13 @@ var/list/airlock_overlays = list()
 		return 0
 	operating = 1
 	update_icon(AIRLOCK_OPENING, 1)
-	src.SetOpacity(0)
+	src.set_opacity(0)
 	sleep(5)
 	src.density = 0
 	sleep(9)
 	src.layer = OPEN_DOOR_LAYER
 	update_icon(AIRLOCK_OPEN, 1)
-	SetOpacity(0)
+	set_opacity(0)
 	operating = 0
 	air_update_turf(1)
 	update_freelook_sight()
@@ -1311,7 +1311,7 @@ var/list/airlock_overlays = list()
 	sleep(9)
 	update_icon(AIRLOCK_CLOSED, 1)
 	if(visible && !glass)
-		SetOpacity(1)
+		set_opacity(1)
 	operating = 0
 	delayed_close_requested = FALSE
 	air_update_turf(1)

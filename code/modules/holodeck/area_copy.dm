@@ -102,7 +102,7 @@
 			var/mob/SM = DuplicateObject(M , perfectcopy=TRUE, newloc = B, holoitem=TRUE)
 			copiedobjs += SM.GetAllContents()
 
-		var/global/list/forbidden_vars = list("type","stat","loc","locs","vars", "parent", "parent_type","verbs","ckey","key","x","y","z","contents", "luminosity")
+		var/global/list/forbidden_vars = list("type","stat","loc","locs","vars", "parent", "parent_type","verbs","ckey","key","x","y","z","contents", "light_range", "light_power", "light_color", "light", "light_sources")
 		for(var/V in T.vars - forbidden_vars)
 			if(V == "air")
 				var/turf/open/O1 = B

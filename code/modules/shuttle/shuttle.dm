@@ -458,7 +458,9 @@
 		if(!A0)
 			A0 = new area_type(null)
 		for(var/turf/T0 in L0)
+			var/area/old = T0.loc
 			A0.contents += T0
+			T0.change_area(old, A0)
 	if (istype(S1, /obj/docking_port/stationary/transit))
 		areaInstance.parallax_movedir = preferred_direction
 	else
@@ -478,7 +480,9 @@
 		if(T0.type != T0.baseturf) //So if there is a hole in the shuttle we don't drag along the space/asteroid/etc to wherever we are going next
 			T0.copyTurf(T1)
 			T1.baseturf = destination_turf_type
+			var/area/old = T1.loc
 			areaInstance.contents += T1
+			T1.change_area(old, areaInstance)
 
 			//copy over air
 			if(isopenturf(T1))
@@ -492,15 +496,12 @@
 		if(rotation)
 			T1.shuttleRotate(rotation)
 
-		//lighting stuff
-		T1.redraw_lighting()
 		SSair.remove_from_active(T1)
 		T1.CalculateAdjacentTurfs()
 		SSair.add_to_active(T1,1)
 
 		T0.ChangeTurf(turf_type)
 
-		T0.redraw_lighting()
 		SSair.remove_from_active(T0)
 		T0.CalculateAdjacentTurfs()
 		SSair.add_to_active(T0,1)

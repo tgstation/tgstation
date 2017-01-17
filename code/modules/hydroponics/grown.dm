@@ -137,30 +137,6 @@
 	..()
 
 
-// Glow gene procs
-/obj/item/weapon/reagent_containers/food/snacks/grown/Destroy()
-	if(seed)
-		var/datum/plant_gene/trait/glow/G = seed.get_gene(/datum/plant_gene/trait/glow)
-		if(G && ismob(loc))
-			loc.AddLuminosity(-G.get_lum(seed))
-	return ..()
-
-/obj/item/weapon/reagent_containers/food/snacks/grown/pickup(mob/user)
-	..()
-	if(seed)
-		var/datum/plant_gene/trait/glow/G = seed.get_gene(/datum/plant_gene/trait/glow)
-		if(G)
-			SetLuminosity(0)
-			user.AddLuminosity(G.get_lum(seed))
-
-/obj/item/weapon/reagent_containers/food/snacks/grown/dropped(mob/user)
-	..()
-	if(seed)
-		var/datum/plant_gene/trait/glow/G = seed.get_gene(/datum/plant_gene/trait/glow)
-		if(G)
-			user.AddLuminosity(-G.get_lum(seed))
-			SetLuminosity(G.get_lum(seed))
-
 /obj/item/weapon/reagent_containers/food/snacks/grown/generate_trash(atom/location)
 	if(trash && ispath(trash, /obj/item/weapon/grown))
 		. = new trash(location, seed)

@@ -53,9 +53,11 @@
 /obj/structure/destructible/clockwork/powered/mania_motor/toggle(fast_process, mob/living/user)
 	. = ..()
 	if(active)
-		SetLuminosity(2, 1)
+		#warn falloff?
+		//SetLuminosity(2, 1)
+		set_light(2)
 	else
-		SetLuminosity(0)
+		set_light(0)
 
 /obj/structure/destructible/clockwork/powered/mania_motor/process()
 	if(try_use_power(mania_cost))
