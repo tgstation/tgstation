@@ -60,26 +60,7 @@
 	owner.item_state = the_item_state
 	if(istype(owner.loc, /mob/living/carbon))
 		var/mob/living/carbon/C = owner.loc
-		C.update_inv_hands()
-		if(obj/item/ammo_casing/energy/ion in energy_type)
-			name == "Ion Gun"
-		if(obj/item/ammo_casing/energy/bee in energy_type)
-			name == "Bee Gun"
-		if(obj/item/ammo_casing/energy/tesla_revolver in energy_type)
-			name == "Tesla Revolver"
-		if(obj/item/ammo_casing/energy/xray in energy_type)
-			name == "Xray Gun"
-		if(obj/item/ammo_casing/energy/lasergun in energy_type)
-			name == "Laser Gun
-		if(obj/item/ammo_casing/energy/disabler in energy_type)
-			name == "Disabler Gun"
-		if(obj/item/ammo_casing/energy/electrode in energy_type)
-			name == "Stun Gun"
-		if(obj/item/ammo_casing/energy/lasergun in energy_type)	&& if (obj/item/ammo_casing/energy/disabler in energy_type)
-			name == "Hybrid Taser Gun"
-		if(obj/item/ammo_casing/energy/disabler in energy_type) && if(obj/item/ammo_casing/energy/electrode in energy_type)
-			name == "Energy Gun"
-			
+		C.update_inv_hands()	
 
 /obj/item/weapon/gun_attachment/base/on_remove(var/obj/item/weapon/gun/owner)
 	..()
