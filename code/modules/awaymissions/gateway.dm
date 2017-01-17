@@ -12,6 +12,8 @@ var/obj/machinery/gateway/centerstation/the_gateway = null
 	var/checkparts = TRUE
 	var/list/obj/effect/landmark/randomspawns = list()
 	var/calibrated = TRUE
+	var/list/linked = list()
+	var/can_link = FALSE	//Is this the centerpiece?
 
 /obj/machinery/gateway/initialize()
 	randomspawns = awaydestinations
@@ -24,6 +26,8 @@ var/obj/machinery/gateway/centerstation/the_gateway = null
 	update_icon()
 
 /obj/machinery/gateway/proc/detect()
+	if(!can_link)
+		return FALSE
 	linked = list()	//clear the list
 	var/turf/T = loc
 	var/ready = FALSE
@@ -61,13 +65,16 @@ var/obj/machinery/gateway/centerstation/the_gateway = null
 /obj/machinery/gateway/shuttleRotate()
 	return
 
-/obj/machinery/gateway/centerstation/attack_hand(mob/user)
-	if(!detect)
+/obj/machinery/gateway/attack_hand(mob/user)
+	if(!detect())
 		return
 	if(!active)
 		toggleon(user)
 		return
 	toggleoff()
+
+/obj/machinery/gateway/proc/toggleon(mob/user)
+	return FALSE
 
 /obj/machinery/gateway/centerstation/New()
 	..()
@@ -81,14 +88,14 @@ var/obj/machinery/gateway/centerstation/the_gateway = null
 
 //this is da important part wot makes things go
 /obj/machinery/gateway/centerstation
-	density = 1
+	density = TRUE
 	icon_state = "offcenter"
-	use_power = 1
+	use_power = TRUE
 
 	//warping vars
-	var/list/linked = list()
 	var/wait = 0				//this just grabs world.time at world start
 	var/obj/machinery/gateway/centeraway/awaygate = null
+	can_link = TRUE
 
 /obj/machinery/gateway/centerstation/initialize()
 	update_icon()
@@ -102,7 +109,7 @@ var/obj/machinery/gateway/centerstation/the_gateway = null
 	icon_state = "offcenter"
 
 /obj/machinery/gateway/centerstation/process()
-	if((stat & (NOPOWER) && use_power)
+	if((stat & (NOPOWER)) && use_power)
 		if(active)
 			toggleoff()
 		return
@@ -110,7 +117,7 @@ var/obj/machinery/gateway/centerstation/the_gateway = null
 	if(active)
 		use_power(5000)
 
-/obj/machinery/gateway/centerstation/proc/toggleon(mob/user)
+/obj/machinery/gateway/centerstation/toggleon(mob/user)
 	if(!detect())
 		return
 	if(!powered())
@@ -167,11 +174,11 @@ var/obj/machinery/gateway/centerstation/the_gateway = null
 
 
 /obj/machinery/gateway/centeraway
-	density = 1
+	density = TRUE
 	icon_state = "offcenter"
-	use_power = 0
-	var/list/linked = list()	//a list of the connected gateway chunks
+	use_power = FALSE
 	var/obj/machinery/gateway/centeraway/stationgate = null
+	can_link = TRUE
 
 
 /obj/machinery/gateway/centeraway/initialize()
@@ -185,7 +192,7 @@ var/obj/machinery/gateway/centerstation/the_gateway = null
 		return
 	icon_state = "offcenter"
 
-/obj/machinery/gateway/centeraway/proc/toggleon(mob/user)
+/obj/machinery/gateway/centeraway/toggleon(mob/user)
 	if(!detect())
 		return
 	if(!stationgate)
