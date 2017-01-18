@@ -477,8 +477,9 @@
 	return ..()
 
 /obj/structure/window/reinforced/clockwork/ratvar_act()
-	obj_integrity = max_integrity
-	update_icon()
+	if(ratvar_awakens)
+		obj_integrity = max_integrity
+		update_icon()
 
 /obj/structure/window/reinforced/clockwork/narsie_act()
 	take_damage(rand(25, 75), BRUTE)
