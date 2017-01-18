@@ -20,6 +20,13 @@ var/global/list/potentialRandomZlevels = generateMapList(filename = "config/away
 	SortAreas()
 	world.log << "loaded [file] as z-level [world.maxz]"
 
+/proc/reset_gateway_spawns(reset = FALSE)
+	for(var/obj/machinery/gateway/G in world)
+		if(reset)
+			G.randomspawns = awaydestinations
+		else
+			G.randomspawns.Add(awaydestinations)
+
 /obj/effect/landmark/awaystart
 	name = "away mission spawn"
 	desc = "Randomly picked away mission spawn points"
