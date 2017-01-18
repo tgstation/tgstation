@@ -1,0 +1,4 @@
+author: "Mervill"
+delete-after: True
+changes: 
+  - bugfix: "Raw Telecrystals won't appear in the Traitor's purchase log at the end of the round"
