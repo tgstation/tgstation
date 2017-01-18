@@ -145,9 +145,10 @@
 	sleep(duration)
 	victim << "<span class='notice'>Your bloodlust seeps back into the bog of your subconscious and you regain self control.<span>"
 	qdel(chainsaw)
-	qdel(src)
 	if(on_complete)
 		on_complete.Invoke()
+		qdel(on_complete)
+	qdel(src)
 
 /obj/effect/mine/pickup/healing
 	name = "Blue Orb"
