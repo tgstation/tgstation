@@ -61,6 +61,7 @@
 		else
 			cooldown = revive_cost + world.time
 			reviving = FALSE
+			owner << "<span class='notice'>Your reviver implant shuts down and starts recharging. It will be ready again in [revive_cost/10] seconds.</span>"
 		return
 
 	if(cooldown > world.time)
@@ -72,20 +73,21 @@
 
 	revive_cost = 0
 	reviving = TRUE
+	owner << "<span class='notice'>You feel a faint buzzing as your reviver implant starts patching your wounds...</span>"
 
 /obj/item/organ/cyberimp/chest/reviver/proc/heal()
-	if(prob(90) && owner.getOxyLoss())
-		owner.adjustOxyLoss(-3)
+	if(owner.getOxyLoss())
+		owner.adjustOxyLoss(-5)
 		revive_cost += 5
-	if(prob(75) && owner.getBruteLoss())
-		owner.adjustBruteLoss(-1)
-		revive_cost += 20
-	if(prob(75) && owner.getFireLoss())
-		owner.adjustFireLoss(-1)
-		revive_cost += 20
-	if(prob(40) && owner.getToxLoss())
+	if(owner.getBruteLoss())
+		owner.adjustBruteLoss(-2)
+		revive_cost += 40
+	if(owner.getFireLoss())
+		owner.adjustFireLoss(-2)
+		revive_cost += 40
+	if(owner.getToxLoss())
 		owner.adjustToxLoss(-1)
-		revive_cost += 50
+		revive_cost += 40
 
 /obj/item/organ/cyberimp/chest/reviver/emp_act(severity)
 	if(!owner)
