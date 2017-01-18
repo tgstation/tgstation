@@ -55,16 +55,20 @@
 		rotate()
 
 /obj/structure/chair/proc/handle_rotation(direction)
+	handle_layer()
 	if(has_buckled_mobs())
 		for(var/m in buckled_mobs)
 			var/mob/living/buckled_mob = m
 			buckled_mob.setDir(direction)
 
-/obj/structure/chair/post_buckle_mob(mob/living/M)
+/obj/structure/chair/proc/handle_layer()
 	if(has_buckled_mobs() && dir == NORTH)
 		layer = ABOVE_ALL_MOB_LAYER
 	else
 		layer = OBJ_LAYER
+
+/obj/structure/chair/post_buckle_mob(mob/living/M)
+	handle_layer()
 
 /obj/structure/chair/proc/spin()
 	setDir(turn(dir, 90))
