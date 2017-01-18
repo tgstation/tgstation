@@ -206,16 +206,16 @@
 			L.confused = min(L.confused + 20, 100)
 			L.dizziness = min(L.dizziness + 20, 100)
 			L.Weaken(1)
-	invoker.visible_message("<span class='warning'>[invoker] is suddenly covered with a thin layer of dark purple smoke!</span>")
+	invoker.visible_message("<span class='warning'>[invoker] is suddenly covered with a thin layer of purple smoke!</span>")
 	var/invoker_old_color = invoker.color
-	invoker.color = "#AF0AAF"
+	invoker.color = list("#AF0AAF", "#AF0AAF", "#AF0AAF", rgb(0,0,0))
 	animate(invoker, color = invoker_old_color, time = flee_time+grace_period)
 	addtimer(CALLBACK(invoker, /atom/proc/update_atom_colour), flee_time+grace_period)
 	if(chant_number != chant_amount) //if this is the last chant, we don't have a movement period because the chant is over
 		var/endtime = world.time + flee_time
 		var/starttime = world.time
 		progbar = new(invoker, flee_time, invoker)
-		progbar.bar.color = "#AF0AAF"
+		progbar.bar.color = list("#AF0AAF", "#AF0AAF", "#AF0AAF", rgb(0,0,0))
 		animate(progbar.bar, color = initial(progbar.bar.color), time = flee_time+grace_period)
 		while(world.time < endtime && invoker && slab && invoker.get_active_held_item() == slab)
 			sleep(1)

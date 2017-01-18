@@ -178,7 +178,7 @@
 	resist_string = "glows faintly"
 	sigil_name = "Sigil of Transmission"
 	affects_servants = TRUE
-	var/power_charge = REPLICANT_ALLOY_POWER //starts with REPLICANT_ALLOY_POWER by default
+	var/power_charge = CLOCKCULT_POWER_UNIT //starts with CLOCKCULT_POWER_UNIT by default
 
 /obj/effect/clockwork/sigil/transmission/ex_act(severity)
 	if(severity == 3)
@@ -209,7 +209,7 @@
 		return
 	if(!cyborg_checks(cyborg))
 		return
-	var/giving_power = min(round((cyborg.cell.maxcharge - cyborg.cell.charge) * 0.02) * 50, power_charge) //give the borg either all our power or their missing power floored to 50
+	var/giving_power = min(Floor(cyborg.cell.maxcharge - cyborg.cell.charge, MIN_CLOCKCULT_POWER), power_charge) //give the borg either all our power or their missing power floored to MIN_CLOCKCULT_POWER
 	if(modify_charge(giving_power))
 		cyborg.visible_message("<span class='warning'>[cyborg] glows a brilliant orange!</span>")
 		var/previous_color = cyborg.color

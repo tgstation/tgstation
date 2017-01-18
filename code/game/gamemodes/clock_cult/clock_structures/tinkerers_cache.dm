@@ -76,27 +76,21 @@
 	else
 		return ..()
 
-/obj/structure/destructible/clockwork/cache/attack_hand(mob/user)
-	if(!is_servant_of_ratvar(user))
-		return 0
-	if(!anchored)
-		user << "<span class='warning'>[src] needs to be secured to remove Replicant Alloy from it!</span>"
-		return 0
-	if(!clockwork_component_cache[REPLICANT_ALLOY])
-		user << "<span class='warning'>There is no Replicant Alloy in the global component cache!</span>"
-		return 0
-	clockwork_component_cache[REPLICANT_ALLOY]--
-	update_slab_info()
-	var/obj/item/clockwork/component/replicant_alloy/A = new(get_turf(src))
-	user.visible_message("<span class='notice'>[user] withdraws [A] from [src].</span>", "<span class='notice'>You withdraw [A] from [src].</span>")
-	user.put_in_hands(A)
-	return 1
+/obj/structure/destructible/clockwork/cache/attack_hand(mob/living/user)
+	..()
+	if(is_servant_of_ratvar(user) && linkedwall)
+		if(wall_generation_cooldown > world.time)
+			user << "<span class='alloy'>It will produce a component in <b>[(world.time - wall_generation_cooldown) * 0.1]</b> seconds.</span>"
+		else
+			user << "<span class='brass'>It is about to produce a component!</span>"
 
 /obj/structure/destructible/clockwork/cache/examine(mob/user)
 	..()
 	if(is_servant_of_ratvar(user) || isobserver(user))
 		if(linkedwall)
-			user << "<span class='brass'>It is linked and will generate a component every <b>[round((CACHE_PRODUCTION_TIME * 0.1) * get_efficiency_mod(TRUE), 0.1)]</b> seconds!</span>"
+			user << "<span class='brass'>It is linked to a Clockwork Wall and will generate a component every <b>[round((CACHE_PRODUCTION_TIME * 0.1) * get_efficiency_mod(TRUE), 0.1)]</b> seconds!</span>"
+		else
+			user << "<span class='alloy'>It is unlinked! Construct a Clockwork Wall nearby to generate components!</span>"
 		user << "<b>Stored components:</b>"
 		for(var/i in clockwork_component_cache)
 			user << "<span class='[get_component_span(i)]_small'><i>[get_component_name(i)][i != REPLICANT_ALLOY ? "s":""]:</i> <b>[clockwork_component_cache[i]]</b></span>"

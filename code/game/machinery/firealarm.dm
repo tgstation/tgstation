@@ -62,7 +62,12 @@
 		if(stat & NOPOWER)
 			return
 
-		add_overlay("overlay_[security_level]")
+		if(src.z == ZLEVEL_STATION)
+			add_overlay("overlay_[security_level]")
+		else
+			//var/green = SEC_LEVEL_GREEN
+			add_overlay("overlay_[SEC_LEVEL_GREEN]")
+
 		if(detecting)
 			add_overlay("overlay_[A.fire ? "fire" : "clear"]")
 		else
@@ -115,7 +120,11 @@
 /obj/machinery/firealarm/ui_data(mob/user)
 	var/list/data = list()
 	data["emagged"] = emagged
-	data["seclevel"] = get_security_level()
+
+	if(src.z == ZLEVEL_STATION)
+		data["seclevel"] = get_security_level()
+	else
+		data["seclevel"] = "green"
 
 	var/area/A = get_area(src)
 	data["alarm"] = A.fire

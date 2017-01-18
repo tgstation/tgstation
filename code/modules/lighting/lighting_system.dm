@@ -338,10 +338,10 @@
 		if(newalpha >= LIGHTING_DARKEST_VISIBLE_ALPHA)
 			newalpha = 255
 		if(lighting_object.alpha != newalpha)
-			if(instantly)
+			if(instantly || abs(lighting_object.alpha - newalpha) < LIGHTING_MIN_ALPHA_DELTA_TO_ANIMATE)
 				lighting_object.alpha = newalpha
 			else
-				animate(lighting_object, alpha = newalpha, time = LIGHTING_TIME)
+				animate(lighting_object, alpha = newalpha, time = LIGHTING_ANIMATE_TIME)
 			if(newalpha >= LIGHTING_DARKEST_VISIBLE_ALPHA)
 				luminosity = 0
 				lighting_object.luminosity = 0

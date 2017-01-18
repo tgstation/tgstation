@@ -282,7 +282,7 @@ var/global/list/datum/stack_recipe/titanium_recipes = list ( \
 	throw_range = 3
 	origin_tech = "materials=4"
 	sheettype = "plastitanium"
-	materials = list(MAT_TITANIUM=6000, MAT_PLASMA=6000)
+	materials = list(MAT_TITANIUM=2000, MAT_PLASMA=2000)
 
 var/global/list/datum/stack_recipe/plastitanium_recipes = list ( \
 	new/datum/stack_recipe("plas-titanium tile", /obj/item/stack/tile/mineral/plastitanium, 1, 4, 20), \

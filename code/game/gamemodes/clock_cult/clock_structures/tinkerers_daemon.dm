@@ -43,7 +43,7 @@
 /obj/structure/destructible/clockwork/powered/tinkerers_daemon/forced_disable(bad_effects)
 	if(active)
 		if(bad_effects)
-			try_use_power(MIN_CLOCKCULT_POWER*2)
+			try_use_power(MIN_CLOCKCULT_POWER*4)
 			visible_message("<span class='warning'>[src] shuts down with a horrible grinding noise!</span>")
 			playsound(src, 'sound/magic/clockwork/anima_fragment_attack.ogg', 50, 1)
 		else
@@ -126,7 +126,7 @@
 		SetLuminosity(0)
 
 /obj/structure/destructible/clockwork/powered/tinkerers_daemon/proc/get_component_cost(id)
-	return max(MIN_CLOCKCULT_POWER, MIN_CLOCKCULT_POWER * (1 + round(clockwork_component_cache[id] * 0.2)))
+	return max(MIN_CLOCKCULT_POWER*2, (MIN_CLOCKCULT_POWER*2) * (1 + round(clockwork_component_cache[id] * 0.2)))
 
 /obj/structure/destructible/clockwork/powered/tinkerers_daemon/process()
 	var/servants = 0
