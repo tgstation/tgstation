@@ -120,7 +120,7 @@
 	if(!victim.client || !istype(victim))
 		return
 	victim << "<span class='reallybig redtext'>RIP AND TEAR</span>"
-	victim << 'sound/misc/e1m1.ogg'
+	victim << 'sound/misc/e1m1.mid'
 	var/old_color = victim.client.color
 	var/red_splash = list(1,0,0,0.8,0.2,0, 0.8,0,0.2,0.1,0,0)
 	var/pure_red = list(0,0,0,0,0,0,0,0,0,1,0,0)
