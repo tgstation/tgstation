@@ -1267,7 +1267,6 @@ proc/pick_closest_path(value, list/matches = get_fancy_list_of_atom_types())
 #undef DELTA_CALC
 
 /proc/flash_color(mob_or_client, flash_color="#960000", flash_time=20)
-	set waitfor = 0
 	var/client/C
 	if(istype(mob_or_client, /mob))
 		var/mob/M = mob_or_client
@@ -1287,32 +1286,6 @@ proc/pick_closest_path(value, list/matches = get_fancy_list_of_atom_types())
 #define RANDOM_COLOUR (rgb(rand(0,255),rand(0,255),rand(0,255)))
 
 #define QDEL_IN(item, time) addtimer(CALLBACK(GLOBAL_PROC, /proc/qdel, item), time)
-
-/proc/check_for_cleanbot_bug()
-	set waitfor = 0
-	var/static/admins_warned //bet you didn't know you could do this!
-	var/icon/Icon_test = icon('icons/BadAss.dmi')
-	var/msg1 = null
-	var/msg2 = null
-	if(!istype(Icon_test))
-		var/msg = "Cleanbot bug detected in icons! Icons are mapping to [Icon_test]"
-		if (!admins_warned)
-			admins_warned = 1
-			msg1 = msg
-		stack_trace(msg)
-	var/sound/Sound_test = sound('sound/misc/null.ogg')
-	if(!istype(Sound_test))
-		var/msg = "Cleanbot bug detected in sounds! Sounds are mapping to [Sound_test]"
-		if (!admins_warned)
-			admins_warned = 1
-			msg2 = msg
-		stack_trace(msg)
-	if(msg1 || msg2)
-		sleep(25)
-		if(msg1)
-			message_admins(msg1)
-		if(msg2)
-			message_admins(msg2)
 
 /proc/random_nukecode()
 	var/val = rand(0, 99999)
