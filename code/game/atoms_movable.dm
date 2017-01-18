@@ -144,7 +144,7 @@
 		if(oldloc && !same_loc)
 			oldloc.Exited(src, destination)
 		loc = destination
-		if(oldloc && !same_loc)
+		if(!same_loc)
 			destination.Entered(src, oldloc)
 		var/area/old_area = get_area(oldloc)
 		var/area/destarea = get_area(destination)
