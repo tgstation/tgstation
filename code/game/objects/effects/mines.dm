@@ -115,8 +115,10 @@
 	desc = "You feel angry just looking at it."
 	duration = 1200 //2min
 	color = "#FF0000"
+	var/datum/callback/on_complete = null
 
 /obj/effect/mine/pickup/bloodbath/mineEffect(mob/living/carbon/victim)
+	set waitfor = FALSE
 	if(!victim.client || !istype(victim))
 		return
 	victim << "<span class='reallybig redtext'>RIP AND TEAR</span>"
@@ -144,6 +146,8 @@
 	victim << "<span class='notice'>Your bloodlust seeps back into the bog of your subconscious and you regain self control.<span>"
 	qdel(chainsaw)
 	qdel(src)
+	if(on_complete)
+		on_complete.Invoke()
 
 /obj/effect/mine/pickup/healing
 	name = "Blue Orb"

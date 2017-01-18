@@ -693,9 +693,8 @@
 
 /obj/item/mayhem/attack_self(mob/user)
 	for(var/mob/living/carbon/human/H in range(7,user))
-		spawn()
-			var/obj/effect/mine/pickup/bloodbath/B = new(H)
-			B.mineEffect(H)
+		var/obj/effect/mine/pickup/bloodbath/B = new(H)
+		B.mineEffect(H)
 	user << "<span class='notice'>You shatter the bottle!</span>"
 	playsound(user.loc, 'sound/effects/Glassbr1.ogg', 100, 1)
 	qdel(src)
@@ -738,22 +737,33 @@
 
 		message_admins("<span class='adminnotice'>[L] has been marked for death!</span>")
 
+		var/list/demons = list()
+		for(var/mob/living/carbon/human/H in player_list)
+			if(H == L)
+				continue
+			demons += H
+			H << "<span class='userdanger'>You have an overwhelming desire to kill [L]. [L.p_they(TRUE)] [L.p_have()] been marked red! Go kill [L.p_them()]!</span>"
+			H.put_in_hands_or_del(new /obj/item/weapon/kitchen/knife/butcher(H))
+
 		var/datum/objective/survive/survive = new
 		survive.owner = L.mind
 		L.mind.objectives += survive
 		L << "<span class='userdanger'>You've been marked for death! Don't let the demons get you!</span>"
 		L.add_atom_colour("#FF0000", ADMIN_COLOUR_PRIORITY)
-		spawn()
-			var/obj/effect/mine/pickup/bloodbath/B = new(L)
-			B.mineEffect(L)
-
-		for(var/mob/living/carbon/human/H in player_list)
-			if(H == L)
-				continue
-			H << "<span class='userdanger'>You have an overwhelming desire to kill [L]. [L.p_they(TRUE)] [L.p_have()] been marked red! Go kill [L.p_them()]!</span>"
-			H.put_in_hands_or_del(new /obj/item/weapon/kitchen/knife/butcher(H))
+		var/obj/effect/mine/pickup/bloodbath/B = new(L)
+		B.on_complete = CALLBACK(GLOBAL_PROC, /.proc/cleanup_blood_contract, L, demons)
+		B.mineEffect(L)
 
 	qdel(src)
+
+/proc/cleanup_blood_contract(mob/living/target, list/demons)
+	if(istype(target))
+		target << "<span class='userdanger'>You are no longer marked for death!</span>"
+		target.remove_atom_colour(ADMIN_COLOUR_PRIORITY, "#FF0000")
+		for(var/mob/living/carbon/human/H in demons)
+			if(!H || H == target)
+				continue
+			H << "<span class='userdanger'>Your desire to kill [target] fades completely!</span>"
 
 //Hierophant
 /obj/item/weapon/hierophant_club
