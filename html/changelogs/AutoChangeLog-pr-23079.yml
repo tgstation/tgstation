@@ -1,0 +1,4 @@
+author: "XDTM"
+delete-after: True
+changes: 
+  - bugfix: "Nanotrasen no longer ships self-glueing posters. You'll have to finish placing the posters to ensure they don't fall on the ground."
