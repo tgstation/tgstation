@@ -751,13 +751,18 @@
 		L << "<span class='userdanger'>You've been marked for death! Don't let the demons get you!</span>"
 		L.add_atom_colour("#FF0000", ADMIN_COLOUR_PRIORITY)
 		var/obj/effect/mine/pickup/bloodbath/B = new(L)
-		B.on_complete = CALLBACK(GLOBAL_PROC, /.proc/cleanup_blood_contract, L, demons)
+		B.on_complete = CALLBACK(GLOBAL_PROC, /.proc/cleanup_blood_contract, L, demons, user)
 		B.mineEffect(L)
 
 	qdel(src)
 
-/proc/cleanup_blood_contract(mob/living/target, list/demons)
+/proc/cleanup_blood_contract(mob/living/target, list/demons, mob/marker)
 	if(istype(target))
+		if(istype(marker))
+			if(target.stat == DEAD)
+				marker << "<span class='danger'>[target] has been eliminated!</span>"
+			else
+				marker << "<span class='danger'>[target] survived the blood contract!</span>"
 		target << "<span class='userdanger'>You are no longer marked for death!</span>"
 		target.remove_atom_colour(ADMIN_COLOUR_PRIORITY, "#FF0000")
 		for(var/mob/living/carbon/human/H in demons)
