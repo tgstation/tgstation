@@ -495,5 +495,6 @@
 	fulltile = 1
 	dir = FULLTILE_WINDOW_DIR
 	max_integrity = 150
+	level = 3
 	glass_amount = 2
 	made_glow = TRUE
