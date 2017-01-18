@@ -393,7 +393,7 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 			O << "<span class='ghostalert'>[message][(enter_link) ? " [enter_link]" : ""]<span>"
 			if(ghost_sound)
 				O << sound(ghost_sound)
-			if(source)
+			if(source && O.client.prefs.ghost_hud)
 				var/obj/screen/alert/notify_action/A = O.throw_alert("\ref[source]_notify_action", /obj/screen/alert/notify_action)
 				if(A)
 					if(O.client.prefs && O.client.prefs.UI_style)
