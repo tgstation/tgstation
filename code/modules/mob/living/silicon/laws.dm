@@ -40,6 +40,11 @@
 	laws_sanity_check()
 	laws.add_ion_law(law)
 
+/mob/living/silicon/proc/replace_random_law(law,groups)
+	throw_alert("newlaw", /obj/screen/alert/newlaw)
+	laws_sanity_check()
+	laws.replace_random_law(law,groups)
+
 /mob/living/silicon/proc/clear_ion_laws()
 	throw_alert("newlaw", /obj/screen/alert/newlaw)
 	laws_sanity_check()
