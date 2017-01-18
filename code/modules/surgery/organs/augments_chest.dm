@@ -102,6 +102,7 @@
 		var/mob/living/carbon/human/H = owner
 		if(H.stat != DEAD && prob(50 / severity))
 			H.heart_attack = TRUE
+			H << "<span class='userdanger'>You feel a horrible agony in your chest!</span>"
 			addtimer(CALLBACK(src, .proc/undo_heart_attack), 600 / severity)
 
 /obj/item/organ/cyberimp/chest/reviver/proc/undo_heart_attack()
