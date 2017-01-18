@@ -73,6 +73,11 @@
 		realappearence = null
 	return ..()
 
+/turf/closed/wall/clockwork/ReplaceWithLattice()
+	..()
+	for(var/obj/structure/lattice/L in src)
+		L.ratvar_act()
+
 /turf/closed/wall/clockwork/narsie_act()
 	..()
 	if(istype(src, /turf/closed/wall/clockwork)) //if we haven't changed type

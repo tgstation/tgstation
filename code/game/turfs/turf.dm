@@ -245,10 +245,6 @@
 	ChangeTurf(baseturf)
 	new /obj/structure/lattice(locate(x, y, z))
 
-/turf/proc/ReplaceWithCatwalk()
-	ChangeTurf(baseturf)
-	new /obj/structure/lattice/catwalk(locate(x, y, z))
-
 /turf/proc/phase_damage_creatures(damage,mob/U = null)//>Ninja Code. Hurts and knocks out creatures on this turf //NINJACODE
 	for(var/mob/living/M in src)
 		if(M==U)
