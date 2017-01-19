@@ -29,7 +29,6 @@ var/datum/subsystem/objects/SSobj
 		A.Initialize(TRUE)
 		CHECK_TICK
 	initialized = TRUE
-	world.log << "atoms initialized"
 	. = ..()
 
 /datum/subsystem/objects/proc/pre_load_map()
