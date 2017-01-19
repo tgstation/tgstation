@@ -524,6 +524,7 @@
 			client.screen |= l_hand
 
 //ANIMAL RIDING
+
 /mob/living/simple_animal/buckle_mob()
 	. = ..()
 	riding_datum = new/datum/riding/animal
@@ -533,7 +534,6 @@
 	if(riding_datum)
 		riding_datum.restore_position(buckled_mob)
 		. = ..()
-
 
 /mob/living/simple_animal/user_buckle_mob(mob/living/M, mob/user)
 	if(user.incapacitated())
@@ -548,11 +548,11 @@
 	..()
 
 
+
 //MOVEMENT
 /mob/living/simple_animal/relaymove(mob/user, direction)
 	if(riding_datum && tame)
 		riding_datum.handle_ride(user, direction)
-
 
 /mob/living/simple_animal/Move(NewLoc,Dir=0,step_x=0,step_y=0)
 	. = ..()

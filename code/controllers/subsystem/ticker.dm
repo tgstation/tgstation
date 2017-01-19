@@ -434,13 +434,13 @@ var/datum/subsystem/ticker/ticker
 
 	mode.declare_completion()//To declare normal completion.
 
-	if(cross_allowed)
-		send_news_report()
-
 	//calls auto_declare_completion_* for all modes
 	for(var/handler in typesof(/datum/game_mode/proc))
 		if (findtext("[handler]","auto_declare_completion_"))
 			call(mode, handler)(force_ending)
+
+	if(cross_allowed)
+		send_news_report()
 
 	//Print a list of antagonists to the server log
 	var/list/total_antagonists = list()

@@ -1,0 +1,6 @@
+author: "coiax"
+delete-after: True
+changes: 
+  - bugfix: "AIs can no longer activate the Doomsday Device off-station.
+Previously it would activate and then immediately turn off, outing the
+AI as a traitor without any benefit."
