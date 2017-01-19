@@ -69,3 +69,34 @@
 
 /obj/item/device/radio/intercom/add_blood(list/blood_dna)
 	return 0
+
+//Presets
+/obj/item/device/radio/intercom/custom
+	name = "station intercom (Custom)"
+	broadcasting = 0
+	listening = 0
+
+/obj/item/device/radio/intercom/interrogation
+	name = "station intercom (Interrogation)"
+	frequency  = 1449
+
+/obj/item/device/radio/intercom/private
+	name = "station intercom (Private)"
+	frequency = AIPRIV_FREQ
+
+/obj/item/device/radio/intercom/syndicate
+	name = "illicit intercom"
+	desc = "Talk through this. Evilly."
+	frequency = SYND_FREQ
+	subspace_transmission = 1
+	syndie = 1
+
+/obj/item/device/radio/intercom/locked/ai_private
+	name = "\improper AI intercom"
+	frequency = AIPRIV_FREQ
+	broadcasting = 1
+	listening = 1
+
+/obj/item/device/radio/intercom/locked/confessional
+	name = "confessional intercom"
+	frequency = 1480
