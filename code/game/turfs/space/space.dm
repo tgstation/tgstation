@@ -15,7 +15,8 @@
 	var/global/datum/gas_mixture/space/space_gas = new
 	plane = PLANE_SPACE
 
-/turf/open/space/New()
+/turf/open/space/Initialize()
+	..()
 	icon_state = SPACE_ICON_STATE
 	air = space_gas
 

@@ -10,7 +10,7 @@
 	var/static/list/safeties_typecache = list(/obj/structure/lattice/catwalk)
 	//if anything matching this typecache is found in the lava, we don't burn things
 
-/turf/open/floor/plating/lava/New()
+/turf/open/floor/plating/lava/Initialize()
 	..()
 	safeties_typecache = typecacheof(safeties_typecache)
 

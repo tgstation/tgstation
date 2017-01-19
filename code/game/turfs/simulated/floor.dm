@@ -33,7 +33,8 @@ var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","
 	var/list/broken_states
 	var/list/burnt_states
 
-/turf/open/floor/New()
+/turf/open/floor/Initialize(roundstart)
+	..()
 	if (!broken_states)
 		broken_states = list("damaged1", "damaged2", "damaged3", "damaged4", "damaged5")
 	if (!burnt_states)
@@ -43,6 +44,8 @@ var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","
 		icon_regular_floor = "floor"
 	else
 		icon_regular_floor = icon_state
+	if(roundstart)
+		MakeDirty()
 
 /turf/open/floor/ex_act(severity, target)
 	var/shielded = is_shielded()
@@ -178,11 +181,6 @@ var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","
 	. = ..()
 	if(.)
 		ChangeTurf(/turf/open/floor/clockwork)
-
-/turf/open/floor/Initialize(mapload)
-	..()
-	if(mapload)
-		MakeDirty()
 
 /turf/open/floor/acid_melt()
 	ChangeTurf(baseturf)

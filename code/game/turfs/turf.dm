@@ -22,7 +22,7 @@
 	var/explosion_level = 0	//for preventing explosion dodging
 	var/explosion_id = 0
 
-/turf/New()
+/turf/Initialize()
 	..()
 
 	levelupdate()
