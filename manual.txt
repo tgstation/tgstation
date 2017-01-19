@@ -1,0 +1,1030 @@
+WASTELAND
+
+
+Table of Contents
+INTRODUCTION	2
+OBJECTIVE	3
+THE PARTY	3
+CREATING CHARACTERS	4
+CHARACTER PROFILE	4
+      Attributes and Personal Statistics	4
+      Items	6
+      Skills	7
+ONSCREEN STATISTICS	10
+GETTING PROMOTED	11
+RECRUITING ALLIES	11
+COMMANDS	12
+COMBAT	14
+      Hand-to-Hand Combat	15
+      Missile Weapon Combat	15
+      Selective Fire	16
+      Explosives	16
+WEAPONS LIST	16
+      Long Range Weapons	16
+      Medium Range Weapons	17
+      Short Range Weapons	17
+INJURIES AND DEATH	18
+TIME AND DISTANCE	18
+SPECIAL PLACES	19
+      Little Old Quartz	19
+      Xenophobic Needles	19
+      Lovely Vegas	19
+      Deadly Deserts	20
+PARAGRAPHS	20
+COMMAND SUMMARY	46
+CREDITS	51
+
+
+INTRODUCTION
+
+
+The following is an excerpt from The History of the Desert Rangers, The Early Years, by Karl Allard, 
+2087, Allard Press, Ranger Center Hardbound pp. 293, $20 gold.
+
+Tensions grew with the coming of 1998.  The United States’ Citadel Starstation was slated to be fully 
+operational by March, Soviet charges that the space station was merely a military launching platform 
+alarmed a number of nonaligned nations.  The right wing governments in the South and Central Americas, 
+many of them set up by the U.S. during the Drug Wars  (1987-1993), pledged their support to the U.S.  The 
+NATO nations, including the new African members also declared their alliance with the U.S.  That move 
+forced most of the remaining neutral powers to join the Soviet protest.  In six short weeks, only Switzer-
+land, Sweden, and Ireland continued to declare themselves neutral nations.
+
+Two weeks before Citadel was due for full operation, the station transmitted a distress signal.  Immediately 
+after the message was sent, most of the satellites orbiting the planet were swept clean from the sky, leaving 
+the great powers blind.  In military panic, each sent 90 percent of their nuclear arsenals skyward.  Although 
+the destruction was tremendous, it was not complete.  Pockets of civilization remained, some even oblivi-
+ous to the military exchange. 
+
+On the same day that the U.S. and  Soviet Union were attempting to extinguish each other, a company of 
+U.S. Army Engineers were in the southwestern deserts building transportation bridges over dry riverbeds.  
+They worked deep in the inhospitable desert valleys, surrounded by a number of survivalist communities.  
+Located directly south of their position on that day was a newly-constructed federal prison.  In addition to 
+housing the nation’s criminals condemned to death, the prison contained light industrial manufacturing 
+facilities.
+
+Shortly after the nuclear attack began, the Engineers, seeking shelter, took over the federal prison and 
+expelled the prisoners into the desolate desert to complete their sentences.  As the weeks passed, they 
+invited the nearby survivalist communities to join them and to help them build a new society.  Because of 
+each communities’ suspicions towards one another, times were difficult at first.  But as time nurtured trust, 
+this settlement -- which came to be known as Ranger Center -- grew to be one of the strongest outposts.  
+Ranger Center even proved powerful enough to repel the hands of rancorous criminals who repeatedly 
+attached in attempts to reclaim what was once “rightfully theirs.”
+
+The citizens of Ranger Center, after first believing that they were the only ones who survived the nuclear 
+malestrom, soon realized that communities beyond the desert’s grip had also survived, Because they had 
+such success in constructing a new community, they felt compelled to help other survivors rebuild and live 
+in peace.
+
+Toward this end, the Desert Rangers, in the great tradition of the Texas and Arizona Rangers a century 
+before, were born.
+
+
+OBJECTIVE
+
+Wasteland is a post-nuclear holocaust adventure.  Your party, the famed Desert Rangers, have been 
+assigned to investigate a series of disturbances in the desert.  After  several strategy meetings, you’ve 
+decided to search for clues in Highpool, the Agricultural Center, and the Rail Nomads’ Camp, all of  which 
+are located to the west of Ranger Center.
+
+The first thing you need to do is read the Command Summary section (page 46).  It tells you how to get 
+Wasteland up and running on your computer.  It also contains a summary of the keystroke commands that 
+you’ll be using.  Once you load the game, you’ll find a party waiting by the Ranger Center. 
+
+
+THE PARTY
+
+A party can have up to seven characters, four of whom you can create.  The four that you can create are 
+called Player Characters (PCs).  The other three spaces are reserved for Non-Player Characters (NPCs), 
+whom you’ll meet during the course of your adventure (see “Recruiting Allies” for more details on NPCs).  
+It you don’t use all of the four slots for your player characters, you can fill them with NPCs.
+
+A party of four awaits your command:  Hell Razor, Angela Deth, Thrasher, and Snake Vargas.  This is a 
+well-balanced party quite capable of seeing you through the entire game.  You can use them or create your 
+own characters.
+
+There are no special advantages to the characters in the original party -- no divine insight, no super luck, no 
+outrageous skills.  You could easily create characters who are just as -- or even more -- effective.  If you 
+prefer to make your own characters, enter the Ranger Center to do this.  You’ll have to delete one or more 
+of the existing characters to create your own.  But before you wipe out the existing party, take a look at 
+their profiles first by pressing keys 1-4 to see each one.
+
+At any time during the journey you can view your party roster by pressing the space bar.
+
+
+CREATING CHARACTERS
+
+Follow these steps to create a Desert Ranger.
+
+1.	Enter the Ranger Center.  If this is your first time in the game, you’re already at the 
+Ranger Center.
+
+2.	If the current party already contains four PCs, press D to delete one and make room for 
+your new character.
+
+3.	Press C to create a character.  At the top of the screen you’ll see “Create a character.”  
+Below are the character’s attributes -- the higher these values are, the better (see 
+“Attributes and Personal Statistics” for details).  If you’re not satisfied with these values, 
+press the spacebar to “reroll” the values.  When you’re satisfied, press <RETUREN>.
+
+4.	Name your character (up to 13 letters).
+
+5.	Choose a sex.
+
+6.	Select a nationality.
+
+7.	Select the skills you want your character to have (see “Skills” for complete details).  
+Press <RETURN> when you’re done.  If you make a mistake while allocating skills, 
+press <CONTROL>-R to re-allocate them.
+
+8.	Press Y if you want to keep this character.  Press N if you don’t want to keep him or her.
+
+9.	Press S to leave the Ranger Center and start the game.
+
+
+
+
+
+CHARACTER PROFILE
+
+To view any character’s profile -- personal statistics, possessions, and skills -- enter the character’s roster 
+number.  When you’re done viewing each screen, press the spacebar <RETURN> to go to the next screen, 
+or <ESC> to return to the previous screen.
+
+Attributes and Personal Statistics
+
+The first screen lists your character’s attributes and other miscellaneous personal statistics.
+
+Strength (ST):  The ability to overpower enemies or to lift, move, and break items.  This is important in 
+hand-to-hand combat and in physical tasks such as breaking down doors.
+
+Intelligence (IQ):  How well a character thinks and solves problems.  This is probably the mot important 
+attribute because it determines which and how many skills a character may master.  Certain skills can only 
+be master by characters with an IQ of a certain level or above.  Characters start with skill points equal to 
+their IQ.  During the course of the game, you’ll definitely want to raise your IQ.
+
+Luck (LK):  Lucky characters tend to find more things and avoid more damage then unlucky ones.  Luck 
+also improves your odds in hand-to-hand combat.
+
+Speed (SP):  How quickly you move, which helps you escape tight situations.
+
+Agility (AGL):  How deftly you move.  High agility enhances your acrobatic ability, so you can do things 
+like dodge blows and jump on tables  The higher this value, the better you’ll perform in  hand-to-hand 
+combat.
+
+Dexterity (DEX):  Ability to master fine movements like picking locks or aiming weapons.  Dexterity is 
+very important in combat, and extremely useful in mastering the “thiefly” arts.
+
+Charisma (CHR):  This attribute lets you know how likeable or persuasive a character is.  Although it 
+may seem like a trivial trait. it might well make the difference between life and death as you try to 
+convince someone that you’re trustworthy.  Charisma also affects how an NPC will react to you when you 
+want to hire him or trade equipment.
+
+Skill Points (SKP):  When you first create a character, this value is identical to IQ.  The more skill points 
+you have, the more skills you can learn.  You can acquire more skill points during the game (see “Skills” 
+for more details).
+
+Rank:  Each character starts out as a private.  As you acquire experience points, you can radio back to 
+Ranger Center for a field promotion.  Each time you’re promoted, your rank changes, your maximum 
+constitution goes up by two points, and you get an additional two points to invest in any attribute.  Rank 
+does not affect how orders are given or taken since your characters are equal member of a team.  A high 
+rank, however could impress civilians enough so you can get into places where regular folks can’t go.
+
+Maximum Constitution (MAXCON):  The higher this is, the more of a beating you can take before you 
+die.  This value is the same as MAX on the onscreen statistics.
+
+$:  The total cash this character is carrying.
+
+Sex:  Sex only affects what bathroom he or she has access to
+
+Nationality:  Choose from U.S., Russian, Mexican, Indian, or Chinese.
+
+P)ool:  Press P to command all the party members to pool their cash and give it to this character.
+
+D)iv cash:  Press D to have this character evenly distribute his cash among all the party members.  If you 
+have disbanded into several groups, only those in the same group as the character who is dividing his cash 
+will share in the wealth.
+
+
+ITEMS.
+
+The second screen lists what items your character owns.  You can carry up to 30 items that you find or buy 
+during your travels.  Don’t immediately toss away items that seem useless.  It can actually be an important 
+fragment from a greater, more powerful item.  Many items can be sold for cash at various stores.
+
+A precaution about picking up items:  once you pick something up, you have to keep it or drop it.  If you 
+drop it, it will vanish into the depths of Wasteland, never to be seen again.  If you have no intention of 
+picking up an item to keep (maybe because you’re already carrying the maximum amount and you don’t 
+want to drop anything) you should leave it where it is.  That way, you can come back for it later (and you 
+better remember too, or you may miss out on some loot hidden beneath the item.)
+
+To give or show something to someone who is not a party member, use the item on the space that you’re 
+on by pressing the spacebar.
+
+Press the number that represents the item you’d like to use, and you’ll get the following choices:
+
+Reload:  If you select an ammo clip that fits your currently-equipped weapon, you’re asked it you want to 
+Reload.
+
+Unjam:  If you choose a jammed weapon, you’ll be asked if you want to unjam it.  If you successfully 
+unjam the weapon, you’ll lose the clip that was in it, leaving you with an unloaded weapon.  Don’t forget 
+to reload before you’re ambushed by a bunch of bikers.
+
+Drop:  Drop removes something from your list forever.  You’ll probably only use this command if you’re 
+carrying a full load, and need to drop something in order to pick up another item.  You can also use this 
+command to drop something that’s broken (but keep in mind that broken items can be repaired or sold).
+
+Trade:  Trade lets you give items to another character.  Enter the number of the intended recipient and the 
+trade will be made.  NPCs have a mind of their own and may not always want to give their items away.
+
+unEquip:  To equip an item so it’s ready to use, press E.  If you use this while you’re already equipped, 
+the chosen item will replace the previously-equipped item.  You can only have one type of armor and one 
+type of weapon equipped at any given time.  The weapon you equip shows up in the onscreen statistics 
+below WEAPON.  When a piece of armor is properly equipped, your armor class reflects the change.
+
+
+Skills
+
+The third screen shows this character’s skills and skill levels.  The skills you posses weigh heavily in your 
+success.  Each character should have a slightly different repertoire, so the whole party benefits from a 
+greater variety of skills.  One character could specialize in gambling, lockpicking and forgery, while 
+another could excel in demolition, brawling, and climbing.
+
+Medical skills are something that more than one character should possess.  All the skills in the world don’t 
+amount to anything if a character’s flat on his back, too weak to use them.  The more characters who 
+possess medical savvy, the safer the party is.
+
+Since you must have a minimum IQ to be able to learn certain skills, the higher you IQ, the more skills you 
+get to choose from.  You simply can’t learn the more technical skills if you’re not smart enough.
+
+LVL:  The level of your skill.  The higher this is, the better you are.  You can invest skill points in any skill 
+as many times as you like, each time you invest in a skill, the skill level goes up  Skills also improve as you 
+use them.  Since the cost of each successive skill level rises dramatically, improving a skill by using it is a 
+cheap, effective method of gaining skill levels.
+
+NOTE:  When creating a character or when visiting a library, you’ll see the total available skill points at 
+the top of the screen.  (Your skill point value is the same as your initial I Q value).  To select a skill, enter 
+its number.  If you make an error, you can start your selecting over again by pressing  <CONTROL>R.  
+Press <ESC> to exit this character profile entirely.
+
+IQ:  The minimum IQ you must have to use this skill.
+
+PTS:  How many skill points it will cost to acquire this skill.  Initially, you can select a skill more than 
+once; in fact, this is how you become more adept (or advance in levels) at this skill.  Once you select a 
+skill, the point cost doubles as each successive skill level becomes more costly.
+
+Don’t be stingy with your skill points when you’re creating your characters.  You’ll have the chance to 
+acquire more skill points as you move up in the ranks (see “Getting Promoted” for details on how you can 
+accumulate skill points).  You can save a few, if you’d like, since there are several special places outside of 
+the Ranger Center where you can learn more skills.  But keep in mind that picking skills at the Ranger 
+Center is a one-shot deal; once you leave, you can’t come back to pick more.
+
+Below are descriptions of the skills grouped according to their minimum IQ requirement.  After each skill 
+name is a number in parentheses; this is the number of skill points needed to buy the first level for that 
+skill.  Each successive level doubles in cost.
+
+
+IQ 3
+
+Brawling (1):  Any fighter who can wander through a full-fledged bar fight without getting much more 
+than a scratch is either very lucky or highly skilled in brawling.  The higher your skill in brawling, the 
+more attacks you get per round in hand-to-hand combat.
+
+Climb (1):  Gives you the ability to climb over fences, up sheer cliff faces, and out of pits.
+
+Clip Pistol (1):  A must-have skill since your initial weapon issue will be either the M1911A1 .45 caliber 
+or a VP91Z 9 mm automatic clip pistol.  Without this skill, you won’t be very accurate with the weapon or 
+have much luck fixing it if it breaks.
+
+Knife Fighting (1):  When fighting with knives, this give an advantage to a skilled fighter over an 
+unskilled one.
+
+Pugilism (1):  One of the oldest forms of fighting, it teaches you how to dish out punches as well as avoid 
+them.  Handy for those close-up battles where the fists start flying.
+
+Rifle (1):  A good basic skill to have since many of the weapons sold by raiders are serviceable M19 rifles.  
+You’ll rue the day you didn’t pick up this skill as you look helplessly at the rifle you can’t shoot 
+accurately.
+
+Swim (1):  The desert sands don’t blanket the entire earth.  This will come in hand in those spots where 
+you have to swim.
+
+
+IQ 6
+
+Knife Throwing (1):  A tricky skill that comes in handy when fighting gets heavy.  You use up all your 
+ammo and resort to throwing knives.
+
+Perception (1):  Helps the character find concealed items and notice when things are out of the ordinary.  
+No one should be without it.
+
+
+IQ 9
+
+Assault Rifle (1):  If you’re using an AK-97 or M1089A1 assault rifle, this skill helps you fire, load, and 
+unjam it quickly.  A skill that ranks up there in importance with walking and breathing.
+
+AT Weapon (1):  Helps you recognize and use anti-tank weapons like LAW rockets.  A handy skill to 
+have should you encounter something far tougher than your Ranger instructors ever told you about.
+
+SMG (1):  Lets a character control basic submachine guns like the Uzi or Mac 17.  May make a big 
+difference when you’re outnumbered three to one by bandits who’ve decided that they want the gold from 
+your teeth.
+
+
+IQ 10
+
+Acrobat (1):  This skill for the agile can get you out of a tough situation -- like leaping off of bar counters 
+while you’re surrounded by a hostile crowd.
+
+Gamble (1):  The skill that built Vegas, you’ll do well in all games of chance, and you’ll; also be able to 
+spot a crooked game from a mile away.
+
+Picklock (1):  This can get you into places where you want to go, but where other don’t want you to go.,
+
+Silent Movement (1):  This helps you move unnoticed past a guard post; making it tough for enemies to 
+catch up with you.
+
+
+IQ 11
+
+Confidence (1):  For an already charismatic person, good confidence can enable one to talk to a miser out 
+of his fortune.  It’s particularly useful for getting information from people who are suspicious of you.
+
+
+IQ 12
+
+
+Sleight of Hand (1):  A thieving skill that lets you perform sleight-of-hand tricks -- perfect when you need 
+to amaze those you meet.
+
+
+IQ 13
+
+Demolition (1):  Teaches you how much of an explosive substance you can use without blowing yourself 
+up.
+
+Forgery (1):  Helps you recognize or create a forged document.  Someday you my just need to whip up a 
+security pass to get by some vigilant guards.
+
+
+IQ 14
+
+Alarm Disarm (1):  Trains you to recognize and disable alarms.  If you want to get into a place without 
+getting caught, this a good skill to have.
+
+Bureaucracy (1):  Even though most of civilization ended with the bomb, an inordinate number of petty 
+bureaucrats managed to survive.  This helps you deal with them so you can get when you want.
+
+
+IQ 15
+
+Bomb Disarm (2):  Allows you to defuse most explosive devices.
+
+Medic (2):  A vital skill that lets a character stabilize a badly-wounded comrade so he or she has a chance 
+to recover.
+
+Safecrack (2):  An experience practitioner of this art can open safes sealed even before the holocaust.
+
+
+IQ 16
+
+Cryptology (2):  Gives you the talent to encode and decode messages.  Useful in helping you determine 
+what a password might be.
+
+
+IQ 17
+
+Metallurgy (2):  Increases your ability to spot, identify, and work with some basic metals.
+
+To reorder your skills, view them and press <CONTROL>R.  Enter the number of he skill that you want at 
+the top of the list, the skill that you want second, and so on until you’ve selected all the skills.  The new list 
+won’t appear until you’ve selected all the skills.
+
+
+Onscreen Statistics
+
+In addition to the information that you can call up by entering the character’s number, the following 
+character statistics are always displayed on the party roster.
+
+	Armor class (AC):  The level of protection a character has against weapons, physical attack, and 
+other forms of damage.  The higher the armor class, the better.
+
+	Ammunition (AMM):  The amount of ammunition you have left in you equipped weapon.  When 
+it’s down to zero, it’s time to reload.  Reloading takes a full combat round, so establish a healthy 
+habit of reloading after each battle.
+
+	Maximum Constitution (MAX):  The maximum “health” points that your character can have 
+(see “Constitution” below for more details).  This is the same as MAXCON.  If this number is 
+highlighted, then your character has picked up a life-threatening illness. like radiation poisoning.  
+This illness won’t go away with the passing of time, so get this character medical help as soon as 
+you can.
+
+	Constitution (CON):  This shows the character’s current condition.  Compare this value to MAX 
+to determine your character’s relative health.  The closer this value is to MAX, the closer your 
+character is to full strength.  When CON drops below 1, the character becomes UNConscious.  If 
+the character’s condition becomes SERious, constitution continues to drop and the character will 
+die unless he get medical assistance soon.
+
+	Weapon:  This shows the weapon that your character is currently armed with.  FIST means the 
+character is unarmed.
+
+
+Getting Promoted
+
+You’re awarded experience points each time you accomplish a difficult task or win a difficult battle.  When 
+you think you’re accumulated enough experience points to warrant a promotion, you should radio back to 
+Ranger Center to have your instructors review your accomplishments.  Since it doesn’t cost you anything 
+to radio in, you can do it as often as you like.  If you’ve progressed enough (and only your instructors 
+know when this is), you’re given a field promotion.
+
+As a promotion reward, two points are automatically added to your maximum constitution (MAX, 
+MAXCON).  You’re also awarded an additional two points that you can add to any attribute your choose 
+Put both points on the same attribute or put one point on two separate attributes.  If you’d like, add them to 
+maximum constitution to boost that value even higher.
+
+If you wish to use these two points to acquire a new skill, you must apply them to IQ.  Remember, IQ 
+points translate into skill points.  If you don’t increase your skill points via IQ points, you won’t be able to 
+add new skills.
+
+
+Recruiting Allies
+
+Wasteland is populated with people who have, like you, survived the nuclear holocaust.  From time to time 
+you’ll run into non-player characters (NPCs) whom you can hire.  You may wish to enlist their services to 
+add skill, strength, or intelligence to your party.  Refer to the Encounter command below on how to hire an 
+NPC
+
+NPCs are not robots who obey your every command.  They don’t always do as told in combat.  They don’t 
+always trade something when you ask them to.  While you may not like their autonomy, and think that 
+they’re more trouble than they’re worth, remember that they may be able to get you things that you can’t 
+get for yourself or get you into places where you can’t normally go.
+
+To dismiss an NPC, use the disband command.
+
+
+Commands
+
+During normal play, a menu of commands are listed across the button of the screen:
+
+	Use:  This lets a character use an Item, Skill, or Attribute to accomplish a task.  Enter a character 
+number and select an Item, Skill or Attribute.  Then, enter a direction in which the character will 
+use the Item, Skill, or Attribute (press the spacebar if you want to use something right where 
+you’re standing).  Certain skills offer additional prompts.  For example, when you use a medical 
+skill, you will be asked which character you want to heal.
+
+	After you use something you may get the message “That doesn’t seem to work.”  This suggests 
+that this particular item or method doesn’t work, but that another might.  Also, if you use a skill or 
+attribute and it doesn’t seem to work -- but you’re really sure it should -- keep trying.  Sometimes 
+persistence pays off.
+
+	Enc:  Encounter calls up the same commands that are available to the party during combat.  You 
+may want to use Encounter to attract someone’s attention, so you can get information or try to hire 
+them.
+
+	You can also use this command as a short cut to perform certain actions on several characters..  
+For instance, you could have a couple characters reload, while another uses an item.  In this case, 
+using Encounter would be faster than calling up each character individually.
+
+	Order:  This changes the marching order of your party.  There are times when you’ll want to 
+change the order to maximize your party’s talents.  For instance, if you’re travelling through a 
+dangerous area, a character with high perception or silent movement would make an excellent 
+point man.  In another situation, a character carrying an item that could forestall an attack should 
+be in the lead.
+
+	NOTE:  When you select Order, you’re shown the current marching order.  Select the number of 
+the character you want in front, then second, then third, and so on until the whole party has been 
+reordered.  Being placed in the back of the ranks does not shield a character from combat.
+
+	Disband:  Disband lets you break your party into separate, smaller parties (up to four).  This en-
+ables each party to travel independently of the other parties.  The parties can be spread apart as far 
+as you’d like.  Disband also offers many tactical advantages in combat.
+
+	Disband has a number of important uses.  If you have dead party members, use disband to bury 
+them.  You could also use disband when you’re under attack; one person could split off to distract 
+the attackers.  Some places can only be passed through by one character at a time, so each person 
+will have to split off into their own party.
+
+	CAUTION:  Before you can disband NPCs, you’re asked if you want them permanently dis-
+missed.  If you answer  “yes,” then they are gone forever -- you’ll never , ever see them again.  If 
+you want them disbanded -- and not dismissed -- answer  “no.”
+
+	When you select Disband, enter the numbers for those characters who wish to split off from the 
+main party, and press  <RETURN>.  Next, indicate the direction that the disbanded party will 
+move.  Use View to shift control between parties.
+
+	To reunite separate parties into a single band, move them onto the same spot and they will auto-
+matically regroup.
+
+	View:  View lets you shift control between parties.  If you have more than two parties, and you’re 
+not in control of the party you want, keep entering V until you reach the right one.  If  the party is 
+on another map, you’re asked to confirm if you want to shift to them.
+
+	Save:  Saves the game.
+
+	Use this command anytime you find something you don’t want to lose.  Even before the great 
+nuclear war, computers were known to shut down at inopportune moments.  See the Command 
+Summary section for more important details on the Save command.
+
+	Radio:  Contacts your instructors at Ranger Center so they can evaluate your performance.  If 
+you’re done well, you’re given a field promotion.  When you select Radio, you’re asked to con-
+firm your choice.  If you choose to continue, all your characters are evaluated at the same time 
+and are apprised of any changes in rank.  Because a Ranger once slept through his promotion, the 
+instructors now require that all characters be conscious for this procedure; consequently, any 
+injured, unconscious Rangers will be passed over.  Promoted characters get a chance to modify 
+attributes at this point (see “Getting Promoted” for more details).
+
+
+Combat
+
+Often, when somebody or something comes into your range, you will enter the Encounter mode.  An 
+encounter is frequently the precursor to a fight.  Your party roster and a text window will appear.  The text 
+window will contain a short description of the encounter; press <RETURN> when you’re done reading it.  
+(If you want to temporarily remove the party roster and text window to see where the encounter is located, 
+press the spacebar.  To return to the party roster and text window, press any key.)
+
+Your options during an encounter are:
+
+	Run:  This lets the entire party or a single character run towards or away from an encounter.  
+Enter the direction that you want the party or character to move.  If a single character successfully 
+runs away, the he’s disbanded from the party  (This is impossible if there are four separate parties 
+already).
+
+	Use:  This lets a character use an Item, Skill or Attribute to accomplish a task.  Depending on 
+which you choose a list will appear.  You’re then asked to enter a direction in which the Item, 
+Skill, or Attribute will be executed.
+	
+	Hire:  Not everybody you meet has turned hostile under the hot desert sun.  Some are quite 
+pleasant, and may even offer you valuable services.  If you meet an NPC that you would like to 
+try to hire, enter the number of the desired recruit.
+
+	Evade:  This makes you much harder to hit in combat.  Use this command when your comrades 
+initiate a firefight, and you don’t have a missile weapon, or when you’re injured and wish to 
+minimize the risk of further physical abuse.
+
+	Attack:  In the battle-ridden wastelands, this is a command you’ll often use.  When you select it, 
+you’re given a choice of targets.  If your weapon is an automatic weapon capable of selective fire, 
+your’re asked if you want to fire Single, Burst or Autofire.  If the encounter is at an extended 
+range, and you have no missile weapons, you’re told that there are no attackers within your range.  
+If there’s only one group of attackers, they’re targeted automatically.
+
+	Weapon:  Lets you ready a new weapon, which is useful when your gun jams in the heat of the 
+battle and you don’t want to fix it.  Or, once you assess the current battle situation, you may want 
+to use a weapon that’s more effective.
+
+	Load/unjam:  Loads or unjams a weapon.  This command takes a full combat round, so it’s a 
+good idea to keep your weapon loaded at all times, otherwise you’ll have to reload in the first 
+round of a firefight.  (You can load or unjam at any time by selecting Enc from the Main Menu, or 
+by choosing the weapon or appropriate ammo.)  When a weapon jams, you lose the ammo that 
+was in the weapon at the time.  Unjamming a weapon during combat automatically reloads it.
+
+Press <ESC> if you wish to return to a previous character’s options.  Once you’ve made all your combat 
+selections you’re asked if you want to execute the commands you chose.  Press N to abandon your choices 
+and start the procedure over again.  Press Y if you’re satisfied.  You’ll then see a rundown on the effects of 
+the encounter in the text window.  Use <CONTROL>K or the up arrow to speed up text scrolling.  Use 
+<CONTROL>J or the down arrow to slow down text scrolling.
+
+Since parties can disband and more to different maps, there will be times when one party is locked in 
+combat while another party is on an entirely different map.  In these instances, the game asks if you want 
+the other parties to enter into an encounter.  If you answer “yes,” you’ll get one combat round for each dis-
+banded party.  This is a slow and time consuming process, so you should only run combats on multiple 
+maps in emergencies.  If you decline the invitation to have combat on multiple maps, the party you are 
+currently viewing will execute their combat round before you can view the other parties.
+
+
+Hand-to-Hand Combat
+
+Because the Rangers are trained soldiers, they have an advantage over the citizens in hand-to-hand combat.  
+In general, hand-to-hand combat is not as deadly as a firefight, but you can still easily die from a good 
+throttling or from a dead-on punch.  Hand-to-hand combat can only take place at a distance of 14 feet or 
+less.
+
+
+Missile Weapon Combat
+
+Missile weapon combat is combat that takes place with weapons capable of range fire.  From guns to 
+grenades, there are numerous missile weapons at your disposal.  Area-effect weapons, like TNT, plastic 
+explosives, and grenades, are auto-loading, which means that each time you use one, you automatically get 
+another until your supply runs out, so you won’t be unarmed in the middle of a fight.  Anti-tank weapons 
+such as LAW rockets must be re-equipped after firing Automatic weapons -- assault rifles and submachine 
+guns -- can shoot Single, Burst, or Autofire.  All guns are clip fed and come in .45, 9mm, or 7.62mm 
+calibers.  Always carry the proper ammo unless you want to pistol-whip your enemies.
+
+Keep in mind that all missile combat is simultaneous.  Sure, it’s exciting when you burn a clip of AK-97 
+ammo into an onrushing horde of mutant bikers, but your excitement may diminish somewhat when you 
+find that the mutants are returning fire with equal fervor.  You shoot, they shoot.
+
+
+Selective Fire
+
+Single, Burst and Autofire have different effects.  Single uses one bullet per round, which is great if you’re 
+low on ammo, but not so great if you need to hit your target with the first shot.  Burst consumes three bul-
+lets per round and gives the shooter a slight advantage in hitting and killing his target.  Autofire uses up all 
+the bullets in the clip, which greatly increases the chance of hitting a particular target and others in close 
+proximity.  A good choice if you really need to kill somebody, but not so good if you’re looking at your 
+last clip.
+
+
+Explosives
+
+If you want to do a great deal of damage over a wide area, go with explosives.  You get more impact per 
+target area, which can be a lifesaver when being eyed hungrily by a pack of nuke pooches.  Remember, 
+ammo doesn’t rain from the heavens.  Running your gun on full auto all the time may kill the bad guns in a 
+hurry, but you’re likely to run out of ammo just as the last nuke pooch lunges for your throat.
+
+
+Weapons List
+
+Missile weapons come in three range categories :  short, medium, and long.  You’ll find that using a clip 
+pistol to hit a target 80 feet away is not too effective.  Be sure to choose the appropriate weapon for the 
+appropriate distance.  Here are some of the more common weapons and their characteristics.
+
+
+Long Range Weapons
+
+AK-97 Assault Rifle:  Created in the image of the legendary AK-47, the AK-97 is the latest in the assault 
+rifle line.  It was created for the Comintern Combine nations of Europe and Africa, but saw large distribu-
+tion throughout the world before the war.  It is chambered for 7.62mm ammo and fires from a 30-bullet 
+clip.  This highly-respected weapon is fairly commonplace.
+
+M1989A1 NATO Assault Rifle:  The M1989A1 is big brother to the original M16A1.  It was 
+rechambered to accept the same 7.62mm ammo that the AK series of rifles uses so troops could use 
+captured Soviet ammo.  Although assault rifle users greatly preferred the American ammo for its damage 
+capabilities, the military implemented this change in anticipation of front-line ammo shortages.  With this 
+arrangement, a solider could kill an enemy and replenish his supply at the same time.
+
+M19 Rifle:  The M19 rifle is a single-shot weapon firing an 8-shot clip of 7.62mm ammo.  When rumors 
+of a  Soviet invasion of the U.S. spread through the states, survivalists demanded a weapon that could use 
+Soviet ammo (necessary, said the survivalists, if Americans were to be able to use captured ammo).  The 
+invasion never took place, but the M19 remains a high-profile weapon.  Although it can’t fire more than 
+one bullet at a time, it does have greater range than pistols.
+
+M17 Carbine:  The M17 Carbine is a lighter, short-barreled version of the M19 rifle.  Its 10-shot clip of 
+7.62mm ammo gives it a faster fire rate than its big brother, but the barrel length makes it slightly less 
+accurate at a maximum range.
+
+LAW Rocket:  The LAW rocket is a small, armor-piercing explosive rocket contained in a disposable 
+firing tube.  It was first developed to destroy tanks.  The mass of the tip (made from depleted uranium) 
+enables the rocket to blast through the armor so the explosive shell can burst, once inside.  Some knowl-
+edge or skill in anti-tank weaponry is useful when employing rocket.
+
+
+Medium Range Weapons
+
+MAC 17 SMG:  The Mac 17 is the sturdiest of the compact submachine guns developed in the early 
+1990s.  It shoots .45 Caliber slugs from a 30-shot clip and is known for its man-stopping capabilities.  This 
+small weapon is well-suited for close-up firefights.
+
+UZI 27 SMG:  The Uzi comes from the highly-skilled gunsmiths of Trans-Palestine.  Its magazine holds 
+40 9mm bullets and is capable of burning a full clip in five seconds.  This weapon was built specifically for 
+fighting terrorists has has proven very effective on mutant bikers or religious fanatics.
+
+
+Short Range Weapons
+
+1911A1 .45 Pistol:  The 1911A1 was the standard sidearm of the previous two world wars.  The .45 slug, 
+held in an 8-shot clip, was first developed to stop Moro rebels in the Phillipines.  In its current role, it has 
+no trouble slowing down desert raiders or the occasional mutant cactus.  Many Desert Rangers find this a 
+perfect weapon to take with them when they first head into the wastelands.
+
+VP91Z 9mm Pistol:  As well liked as the .45 pistol by Desert Rangers, the VP91Z is a variation on the 
+West German design, featuring an 18-shot capacity of this weapon reduces the need to reload, making it 
+ideal for extended firefights.
+
+Grenades:  Grenades are small, hand-tossed explosive devices useful for inflicting damage on an entire 
+group of foes at one time.  Grenades have a wide area of effect, so be sure your character has a good throw-
+ing arm!
+
+
+INJURIES AND DEATH
+
+Death is permanent.  If your characters get seriously injured, get them medical attention quickly or kiss 
+them goodbye.
+
+If a character is lightly wounded, they’ve taken a few hits, but are still awake and functional.  A few points 
+have been knocked off his constitution.
+
+Characters become unconscious when their constitution dips below 1.  While unconscious, they are unable 
+to move.  Over time, an unconscious character will regain consciousness and heal to full health.  An 
+alternative to waiting is to find a hospital and pay for a quick heal.
+
+Seriously-wounded characters are in a whole different class of medical trouble.  Like unconscious 
+characters, whey can do nothing, but unlike unconscious characters, they don’t heal with time -- they 
+worsen.  Without medical help, seriously-wounded characters deteriorate to critical, to mortal, to comatose, 
+and then  to dead.  Another character with medical skills may be able to stabilize the wounded character 
+enough so he can improve to the unconsciousness category.  If this happens, the character will recover with 
+time.
+
+Remember that time waits for no one.  Disbanding one character and sending him off across the desert to 
+find a doctor will not freeze time for a seriously-wounded character.  When that character finally returns 
+with a doctor, they may be back in time to bury the body.  (This is why your party should contain some-
+body -- preferably two -- with medical skills.)  Should the worst happen, you can bury a dead character by 
+using the Disband command.
+
+
+TIME AND DISTANCE
+
+The maps in Wasteland vary in scale.  The large desert map contains the various city maps, which, in turn, 
+contain building maps or whole underground levels of sewers and hideouts.  In combat, distances may 
+seem a bit off for the map you’re on, but these are tactical distances and are valid in combat only.
+
+Because of the difference in scale of the maps, time passes differently on them.  Though a single keystroke 
+on the computer will move you one space north in both the desert and in a building, the amount of time 
+that each move takes is different.
+
+If you want time to pass without moving, press <ESC>.
+
+
+SPECIAL PLACES
+
+You begin your adventure in the desert along the California-Arizona border.  The area you’ll cover extends 
+from the Ranger Center in the south up to the Grand Canyon in the north.  The towns of Quartz, Needles 
+and Las Vegas are three places you’ll surely want to visit.
+
+
+Little Old Quartz
+
+Quartz is a small town that suffered extensive damage from the nuclear attacks, yet managed to survive.  
+Although located far from the large military targets, this tiny community was affected by earthquakes and 
+low-level nuclear fallout.  But in its feisty, small town way, Quartz quickly resumed normal life.  About the 
+only trouble Quarts has these days is with bandits.
+
+
+Xenophobic Needles
+
+Needles is bigger than Quartz.  Aside from the flood that resulted when Hoover Dam was hit, life has not 
+changed much in Needles.  Needles is big enough to defend itself from roving bandits.  However, it has 
+become home to a couple of odd cults.  The folks in Needles don’t really like strangers that much, but 
+they’ve welcomed Desert Rangers in the past and are always willing to trade goods with them.
+
+
+Lovely Vegas
+
+Vegas is the city of Las Vegas.  No one is quite sure how the Soviet missiles managed to miss the city, but 
+most folks figure it was because the “house” was betting against a missile landing -- and no one wins 
+against the house.  There was an international rumor about some Russian general’s markers being torn up 
+after the attack, but that has yet to be confirmed.
+
+Undaunted by its brush with perdition, Vegas is still open for business and does very well for itself.  The 
+city is large enough to avoid conquest, and many elements of the desert rabble have even found gainful 
+employment as enforcers or casino employees.  Despite the relative success of the city, however, there are 
+dark rumors about horrors descending from the north to taking up residence in the city sewers.  All may not 
+be extremely well in the jewel of the Desert.
+
+
+Deadly Deserts
+
+The desert is just as formidable as it was before the holocaust.  In addition to the lack of water and the 
+fierce heat, there are reports of radiation zones that have melted the flesh of unwary travellers.  Along with 
+the irradiated human element -- left-over biker gangs, rabid survivalists, crazed religious zealots -- all sorts 
+of mutant animals make their home in the desert.  Some say that travelling in the desert nowadays without 
+an experienced guide is plain suicidal.
+
+
+COMMAND SUMMARY
+
+
+Game Play
+
+IMPORTANT:  Wasteland is a dynamic game and it’s very important that you understand how it saves and 
+keeps track of the fame.  The game changes as you play and updates changes to the disk permanently.  If 
+you take an item, it won’t be resurrected just because you leave and return.
+
+The game takes place in many locations.  As you explore, you’ll often be asked “Enter New Location 
+(Y/N)?”  If you answer “yes” the game will save any changes to that location, your party’s status, and 
+become your new saved game locations.  If you switch to another location to view a disbanded party, the 
+status’s of all parties are saved.  You should save the game before ending each session of play.  Then when 
+you go to play again you can pick u where you left off.  However, if your computer will search for the last 
+place it saved.  This way, you’re unlikely to lose any important recent acquisitions.  What can you do if a 
+character dies?  DO NOT ENTER A NEW LOCATION OR SAVE THE GAME!  Turn off your 
+computer and reboot, and your character will live again, but without anything they acquired since you last 
+saved.  If all the characters die in the midst of general carnage and mayhem, your computer will state the 
+obvious:  “Your life in Wasteland is over.”  Don’t get depressed, just reboot and the game will return your 
+characters to either the last time you saved or the last time the game map changed.  (This assumes, of 
+course, that three’s someplace to return to.)
+
+
+Time and Distance
+
+Wasteland’s maps vary in scale.  The desert map contains the city maps which in turn contain maps of 
+buildings and underground locations.  In combat, distances may seem a bit off for the map you’re on, but 
+these are tactical distances valid for combat only.
+
+Because the maps differ in scale, time passes differently on them.  A single keystroke will move you one 
+space in both the desert and in a building, but the amount of time each move takes is different.  Time 
+passes more quickly during overland travel, which the game takes into account for healing and deteriora-
+tion purposes.  And remember that time passes for both the main party and disbanded characters.  If you 
+send a disbanded character off to find a doctor for an injured comrade, that comrade will keep on bleeding.
+
+If you want time to pass without moving your party, press <ESC>  or place the mouse icon directly on 
+your party and press the mouse button.  If you wish time to pass more quickly, hold down the <ESC> key 
+or keep the mouse button depressed.
+
+
+Reviewing Messages
+
+Wasteland involves a great deal of text.  This text includes descriptions of your surroundings, descriptions 
+of non-player characters, clues and references to the Wasteland paragraph section included in this manual.  
+If you wish to refer back to or review a previous message, press the Pg Up key and keep it depressed until 
+the desired message appears.  To return to the most recent message, press the Pg Down key and keep it 
+depressed until that message reappears.
+
+
+Selecting Options
+
+Whenever you need to select an option, press the first letter in that option (unEquip if the exception; in this 
+case press E) or click on it with your mouse.
+
+Whenever you need to select an item, skill or attribute from a list, press its number or click on it with your 
+mouse.  To scroll through a list use the up and down arrows, the right or left arrow, the I key to scroll up or 
+the K key to scroll down, or use the mouse to click on the next option or click on the up or down arrows on 
+the right side of the option window.
+
+
+Movement Commands
+
+There are three ways to move your party:  Use the cursor keys, the mouse, or type I to move up, J to move 
+left, K to move down or L to more right.  When you use a mouse, a directional arrow will appear on the 
+screen pointing forward, left, right or backward.  Move the mouse in the direction you want to go until the 
+directional arrow points in that direction.  Then hold down the mouse button to more in that direction.  The 
+Spacebar toggles the view of the party roster on and off.
+
+
+Ranger Center
+
+The following options appear at the bottom of the screen when you’re at Ranger Center.
+
+Create		Creates a character
+
+Delete		Deletes a character
+
+Play		Begins Play outside Ranger Center
+
+
+Non-Combat Commands
+
+Except during combat, you can use the following commands by pressing the first letter of the command or 
+clicking on it with your mouse.
+
+Use	Use a skill, item or attribute.
+
+Enc	Simulate an Encounter.  This calls up combat commands, which you can use to 
+initiate combat or use the Hire command to hire a non-player character into your 
+party.
+
+Order	Establish a new party marching Order.
+
+Disband	Disband the party into two or more groups.  This command can also be used to 
+permanently dismiss a Non-Player Character from your party.
+
+View	Alternate the View between two or more groups.
+
+Save	Save the game.  When you use the Save command, the computer will ask “Save 
+Game(Y/N)?”  If you answer “yes” the computer will save the game at that 
+point and ask “Quite Game (Y/N)?”  If you answer “yes” the computer will 
+return you to the DOS screen and if you answer “no” the computer will continue 
+the game.  If you answer “no” to “Save Game(Y/N)?” the computer will still ask 
+“Quit Game(Y/N?)”  If you answer “no” the computer will continue the game.  
+If you answer “yes” the computer will return you to the DOS screen, and the 
+next time you reboot the game, it will start at the last point you saved.
+
+Radio	Radio Ranger Center to see if any party members have earned promotion.
+
+Print	Prints party information when the roster is displayed.
+
+<SHIFT>-#	Call up the Use command for a specific character.
+
+<CONTROL>R	Reorder items and skills for a selected character when those menus are 
+displayed.
+
+PgUp & Pg Dn	Scrolls through the messages at the bottom of the screen.
+
+
+Combat Commands
+
+Note:  Some weapons have a limited range in combat situations.  Contact weapons, such as knives, axes, 
+fists, etc., are ineffective against opponents more than 14 feet away.  Attacking opponents more than 14 
+feet away requires projectile weapons, such as throwing knives, pistols, rifles, etc.
+
+When you engage in battle, choose from the following options by pressing the command’s first letter or 
+clicking on the command with your mouse.
+
+Run	Move party or individual character one space.
+
+Use	Use a skill, item or attribute.
+
+Hire	Hire a Non-Player Character to join your party.
+
+Evade	Evade an enemy.
+
+Attack	Attack an enemy.
+
+Weapon	Change Weapons.
+
+Load/Unjam	Load and/or Unjam a weapon.
+
+<SPACEBAR>	Show map of immediate area during combat.
+
+<CONTROL>A	Show list of enemy groups and their distance from the party.  This will only 
+work with player characters, not hired NPC’s, and only when your foes are 
+within range of your weapons.
+
+<ESC>	Cancels commands.
+
+To speed the combat scrolling rate, press the up arrow key on the keyboard or click on the “fast” command 
+on the screen with the mouse.  To make it slower, press the down arrow key on the keyboard or click on 
+the “slow” command on the screen with the mouse.
+
+
+Viewing Characters
+
+Enter a character’s number to view their statistics.  The options you can use in this mode are:
+
+From the first screen
+
+This screen shows a character’s attributes:
+
+Pool	Pool all the party’s cash and give it to the character you are viewing.
+
+Div Cash	Divide cash evenly among the party.
+
+<ESC>	Cancels commands.
+
+(Press <enter> to go to the next screen.)
+
+
+From the second screen
+
+This screen shows what items the character has.  Enter an item number and the following options will 
+appear:
+
+Reload	Reload weapon,  (Only appears if you choose an ammo clip for the currently 
+Equipped weapon.)
+
+Unjam	Unjam weapon  (Only appears if your currently equipped weapon is jammed.)
+
+Drop	Drop an item.
+
+Trade	Trade an item.
+
+Equip	Equip or unequip an item.
+
+<CONTROL>-R	Reorder items.
+
+<ESC>	Cancels commands.
+
+When prompted Y/N, press Y or <enter> to accept the option.
+
+(Press <enter> to go to the next screen.)
+
+From the third screen
+
+This screen shows the character’s skills.
+
+<CONTROL>-R	Reorder skills.
+
+<ESC>	Cancels commands.
+
+
+Macro Functions
+
+Macro functions condense the several key strokes needed to give certain commands into one key stroke.  
+To create a macro function, press <control> and any one of the function keys, F1 to F10, simultaneously.  
+A message, REC.MAC. (with a number from 01 to 10 corresponding to the number of the function key 
+you are pressing), will appear in the upper left corner of the screen; when it does, release the <control> 
+and the function key again, the message in the upper left corner of the screen will vanish and the macro 
+function will have been created.  Pressing the appropriate function key thereafter will repeat the entire 
+command or series of commands.  (Example:  If you want time to pass more quickly, press <control> and 
+F1 and then release them when REC.MAC.01 appears in the upper left corner of the screen.  Now press 
+<ESC> several times, and then press <control> and F1.  Every subsequent time you press F1, time will 
+pass as if you had pressed <ESC> several times.  A macro function can be erased by pressing and holding 
+down <control> and pressing the appropriate function key twice.
+
+
+CREDITS
+
+
+	IBM version	Michael Quarles
+
+	Original program	Alan Pavlish
+
+	Design	Brian Fargo, Ken St. Andre
+		Alan Pavlish, Michael A. Stackpole
+
+	Maps	Bruce Balfour, Elizabeth T. Danforth
+		Chris Christensen, Jeff  “T.G.” Berman
+		Bill “Weez” Dugan, Nishan Hossepian
+		Stance Nixon, Alan Pavlish
+		Ken St. Andre, Michael Stackpole
+		Mike Williams, Daniel Carver
+
+	Graphics	Todd J. Camasta, Charles Weidman
+		Bruce Schlickbernd
+
+	Directed by	Troy P. Worrell
+
+	Playtest and Development	Bruce Schlickbernd
+		Thomas R. Decker
+
+	Moral Support	Susan Quarles
+
+
