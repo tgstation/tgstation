@@ -85,11 +85,11 @@
 				. = TRUE
 
 	if((old_len != authorized.len) && !ENGINES_STARTED)
-		var/alert = (authorized.len > old_len), var/repeal = (authorized.len < old_len)
+		var/alert = (authorized.len > old_len)
+		var/repeal = (authorized.len < old_len)
 		var/remaining = auth_need - authorized.len
 		if(authorized.len && remaining)
-			minor_announce("[remaining] authorizations \
-				needed until shuttle is launched early", null, alert)
+			minor_announce("[remaining] authorizations needed until shuttle is launched early", null, alert)
 		if(repeal)
 			minor_announce("Early launch authorization revoked, [remaining] authorizations needed")
 
