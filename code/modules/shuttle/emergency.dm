@@ -92,7 +92,7 @@
 			minor_announce("[remaining] authorizations \
 				needed until shuttle is launched early", null, alert)
 		if(repeal)
-			minor_announce("Authorization repeal detecteds \
+			minor_announce("Authorization repeal detected \
 				[remaining] authorizations needed")
 
 /obj/machinery/computer/emergency_shuttle/proc/authorize(mob/user, source)
