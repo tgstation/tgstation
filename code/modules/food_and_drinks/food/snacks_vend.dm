@@ -47,7 +47,6 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/no_raisin/healthy
 	name = "homemade raisins"
-	icon_state = "4no_raisins"
 	desc = "homemade raisins, the best in all of spess."
 	list_reagents = list("nutriment" = 3, "vitamin" = 2)
 	junkiness = 0
