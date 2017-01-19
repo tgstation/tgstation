@@ -1,0 +1,9 @@
+author: "Cakey"
+delete-after: True
+changes: 
+  - rscadd: "Added couches"
+  - rscadd: "Added apple trees"
+  - rscadd: "Added cosmetic stairs"
+  - rscadd: "Added lineolum"
+  - rscadd: "Added energy barriers"
+  - imageadd: "Added sideways sprites for several things"
