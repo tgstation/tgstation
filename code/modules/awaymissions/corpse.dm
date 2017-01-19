@@ -182,15 +182,18 @@
 				var/datum/job/J = new jobtype
 				if(J.title == id_access)
 					jobdatum = J
+					qdel(J)
 					break
+				else
+					qdel(J)
 			if(jobdatum)
 				W.access = jobdatum.get_access()
 			else
 				W.access = list()
-			if(id_access_list)
-				if(!W.access)
-					W.access = list()
-				W.access |= id_access_list
+		if(id_access_list)
+			if(!W.access)
+				W.access = list()
+			W.access |= id_access_list
 		if(id_job)
 			W.assignment = id_job
 		W.registered_name = H.real_name
