@@ -462,3 +462,7 @@
 
 /turf/open/floor/plasteel/sandeffect/warning/corner
 	icon_state = "warningsandeffectcorners"
+
+/turf/open/floor/plasteel/stairs
+	icon = 'icons/turf/stairs.dmi'
+	icon_state = "rampbottom"

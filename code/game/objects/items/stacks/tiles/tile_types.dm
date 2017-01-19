@@ -170,3 +170,11 @@
 	materials = list() // All other Borg versions of items have no Metal or Glass - RR
 	is_cyborg = 1
 	cost = 125
+
+/obj/item/stack/tile/linoleum
+	name = "linoleum"
+	singular_name = "linoleum"
+	desc = "A piece of linoleum. It is the same size as a normal floor tile!"
+	icon_state = "tile-linoleum"
+	force = 1
+	throwforce = 1
