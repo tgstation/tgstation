@@ -11,7 +11,9 @@ var/global/list/potentialRandomZlevels = generateMapList(filename = "config/away
 		var/map = pick(potentialRandomZlevels)
 		var/file = file(map)
 		if(isfile(file))
+			var/dmm_suite/maploader = new
 			maploader.load_map(file)
+			qdel(maploader)
 			smooth_zlevel(world.maxz)
 			world.log << "away mission loaded: [map]"
 

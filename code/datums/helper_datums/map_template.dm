@@ -17,7 +17,9 @@
 		name = rename
 
 /datum/map_template/proc/preload_size(path)
+	var/dmm_suite/maploader = new
 	var/bounds = maploader.load_map(file(path), 1, 1, 1, cropMap=FALSE, measureOnly=TRUE)
+	qdel(maploader)
 	if(bounds)
 		width = bounds[MAP_MAXX] // Assumes all templates are rectangular, have a single Z level, and begin at 1,1,1
 		height = bounds[MAP_MAXY]
@@ -54,7 +56,9 @@
 	if(T.y+height > world.maxy)
 		return
 
+	var/dmm_suite/maploader = new
 	var/list/bounds = maploader.load_map(get_file(), T.x, T.y, T.z, cropMap=TRUE)
+	qdel(maploader)
 	if(!bounds)
 		return 0
 
