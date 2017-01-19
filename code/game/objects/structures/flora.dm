@@ -306,3 +306,8 @@
 /obj/structure/flora/rock/pile/New()
 	..()
 	icon_state = "[icon_state][rand(1,3)]"
+
+/obj/structure/flora/tree/apple
+	name = "apple tree"
+	icon = 'icons/obj/flora/trees.dmi'
+	icon_state = "apple"
