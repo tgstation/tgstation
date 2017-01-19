@@ -1,0 +1,4 @@
+author: "MrStonedOne"
+delete-after: True
+changes: 
+  - tweak: "Server side timing of the parallax shuttle launch animation now runs on client time rather than byond time/server time. This will fix the odd issues it has during lag. The parallax shuttle slowdown animation will still have issues, those will be fixed in another more involved update to shuttles."
