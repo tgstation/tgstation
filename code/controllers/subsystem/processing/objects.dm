@@ -12,6 +12,7 @@ var/datum/subsystem/objects/SSobj
 	priority = 40
 
 	var/initialized = FALSE
+	var/old_initialized
 	var/list/atom_spawners = list()
 	var/list/processing = list()
 	var/list/currentrun = list()
@@ -29,6 +30,13 @@ var/datum/subsystem/objects/SSobj
 		CHECK_TICK
 	initialized = TRUE
 	. = ..()
+
+/datum/subsystem/objects/proc/pre_load_map()
+	old_initialized = initialized
+	initialized = FALSE
+
+/datum/subsystem/objects/proc/post_load_map()
+	initialized = old_initialized
 
 /datum/subsystem/objects/proc/trigger_atom_spawners(zlevel, ignore_z=FALSE)
 	for(var/V in atom_spawners)
