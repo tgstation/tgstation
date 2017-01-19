@@ -11,10 +11,7 @@ var/global/list/potentialRandomZlevels = generateMapList(filename = "config/away
 		var/map = pick(potentialRandomZlevels)
 		var/file = file(map)
 		if(isfile(file))
-			var/dmm_suite/maploader = new
-			maploader.load_map(file)
-			qdel(maploader)
-			smooth_zlevel(world.maxz)
+			load_z_level(file)
 			world.log << "away mission loaded: [map]"
 
 		map_transition_config.Add(AWAY_MISSION_LIST)
@@ -27,6 +24,12 @@ var/global/list/potentialRandomZlevels = generateMapList(filename = "config/away
 		world << "<span class='boldannounce'>Away mission loaded.</span>"
 
 		SortAreas() //To add recently loaded areas
+
+/proc/load_z_level(file)
+	var/dmm_suite/maploader = new
+	maploader.load_map(file)
+	qdel(maploader)
+	smooth_zlevel(world.maxz)
 
 /proc/generateMapList(filename)
 	var/list/potentialMaps = list()
