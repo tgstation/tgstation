@@ -525,30 +525,33 @@
 
 //ANIMAL RIDING
 /mob/living/simple_animal/unbuckle_mob(mob/living/buckled_mob,force = 0)
-	riding_datum.restore_position(buckled_mob)
+	if(riding_datum)
+		riding_datum.restore_position(buckled_mob)
 	. = ..()
 
 
 /mob/living/simple_animal/user_buckle_mob(mob/living/M, mob/user)
-	if(user.incapacitated())
-		return
-	for(var/atom/movable/A in get_turf(src))
-		if(A.density)
-			if(A != src && A != M)
-				return
-	M.loc = get_turf(src)
-	riding_datum.handle_vehicle_offsets()
-	riding_datum.ridden = src
+	if(riding_datum)
+		if(user.incapacitated())
+			return
+		for(var/atom/movable/A in get_turf(src))
+			if(A.density)
+				if(A != src && A != M)
+					return
+		M.loc = get_turf(src)
+		riding_datum.handle_vehicle_offsets()
+		riding_datum.ridden = src
 
 /mob/living/simple_animal/relaymove(mob/user, direction)
-	if(tame && saddled)
+	if(tame && saddled && riding_datum)
 		riding_datum.handle_ride(user, direction)
-
 
 /mob/living/simple_animal/Move(NewLoc,Dir=0,step_x=0,step_y=0)
 	. = ..()
-	riding_datum.handle_vehicle_layer()
-	riding_datum.handle_vehicle_offsets()
+	if(riding_datum)
+		riding_datum.handle_vehicle_layer()
+		riding_datum.handle_vehicle_offsets()
+
 
 /mob/living/simple_animal/buckle_mob()
 	..()

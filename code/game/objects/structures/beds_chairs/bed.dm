@@ -167,3 +167,8 @@
 	name = "resting contraption"
 	desc = "This looks similar to contraptions from earth. Could aliens be stealing our technology?"
 	icon_state = "abed"
+
+/obj/structure/bed/psych
+	name = "psychiatrist's couch"
+	desc = "For prime comfort during psychiatric evaluations."
+	icon_state = "psychbed"

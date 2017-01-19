@@ -20,7 +20,7 @@ var/datum/subsystem/ping/SSping
 	while (length(currentrun))
 		var/client/C = currentrun[currentrun.len]
 		currentrun.len--
-		if (!C || world.time - C.connection_time < PING_BUFFER_TIME)
+		if (!C || world.time - C.connection_time < PING_BUFFER_TIME || C.inactivity >= (wait-1))
 			if (MC_TICK_CHECK)
 				return
 			continue

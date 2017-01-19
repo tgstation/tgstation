@@ -75,8 +75,9 @@
 			if(maxHealth == health)
 				user << "<span class='info'>[src] is at full integrity.</span>"
 			else
-				adjustBruteLoss(-10)
-				user << "<span class='info'>You repair some of the armor on [src].</span>"
+				if(W.remove_fuel(0, user))
+					adjustBruteLoss(-10)
+					user << "<span class='info'>You repair some of the armor on [src].</span>"
 			return
 	if(istype(I, /obj/item/device/mining_scanner) || istype(I, /obj/item/device/t_scanner/adv_mining_scanner))
 		user << "<span class='info'>You instruct [src] to drop any collected ore.</span>"
