@@ -35,9 +35,9 @@
 	var/delivery_icon = "deliverycloset" //which icon to use when packagewrapped. null to be unwrappable.
 
 
-/obj/structure/closet/Initialize(roundstart)
+/obj/structure/closet/Initialize(mapload)
 	..()
-	if(roundstart && !opened)		// if closed, any item at the crate's loc is put in the contents
+	if(mapload && !opened)		// if closed, any item at the crate's loc is put in the contents
 		take_contents()
 	update_icon()
 

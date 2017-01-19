@@ -179,9 +179,9 @@ var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","
 	if(.)
 		ChangeTurf(/turf/open/floor/clockwork)
 
-/turf/open/floor/Initialize(roundstart)
+/turf/open/floor/Initialize(mapload)
 	..()
-	if(roundstart)
+	if(mapload)
 		MakeDirty()
 
 /turf/open/floor/acid_melt()

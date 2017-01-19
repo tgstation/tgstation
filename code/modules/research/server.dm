@@ -37,7 +37,7 @@
 		tot_rating += SP.rating
 	heat_gen /= max(1, tot_rating)
 
-/obj/machinery/r_n_d/server/Initialize(roundstart)
+/obj/machinery/r_n_d/server/Initialize(mapload)
 	..()
 	if(!files) files = new /datum/research(src)
 	var/list/temp_list

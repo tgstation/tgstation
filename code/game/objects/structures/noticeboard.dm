@@ -9,10 +9,10 @@
 	max_integrity = 150
 	var/notices = 0
 
-/obj/structure/noticeboard/Initialize(roundstart)
+/obj/structure/noticeboard/Initialize(mapload)
 	..()
 
-	if(!roundstart)
+	if(!mapload)
 		return
 
 	for(var/obj/item/I in loc)

@@ -146,7 +146,7 @@
 	wires = null
 	return ..()
 
-/obj/machinery/airalarm/Initialize(roundstart)
+/obj/machinery/airalarm/Initialize(mapload)
 	..()
 	set_frequency(frequency)
 

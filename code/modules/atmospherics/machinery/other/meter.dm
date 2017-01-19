@@ -27,9 +27,9 @@
 	src.target = null
 	return ..()
 
-/obj/machinery/meter/Initialize(roundstart)
+/obj/machinery/meter/Initialize(mapload)
 	..()
-	if (roundstart && !target)
+	if (mapload && !target)
 		src.target = locate(/obj/machinery/atmospherics/pipe) in loc
 
 /obj/machinery/meter/process_atmos()
