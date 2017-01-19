@@ -242,8 +242,9 @@
 	return TRUE
 
 /obj/machinery/door/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
+	var/isonshuttle = istype(get_area(src), /area/shuttle)
 	for(var/turf/T in range(1, src))
-		if(isspaceturf(T) || istype(T.loc, /area/space))
+		if(isspaceturf(T) || (!isonshuttle && (istype(T.loc, /area/shuttle) || istype(T.loc, /area/space))) || (isonshuttle && !istype(T.loc, /area/shuttle)))
 			S << "<span class='warning'>Destroying this object has the potential to cause a hull breach. Aborting.</span>"
 			S.target = null
 			return FALSE
@@ -328,16 +329,18 @@
 	return FALSE
 
 /turf/closed/wall/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
+	var/isonshuttle = istype(loc, /area/shuttle)
 	for(var/turf/T in range(1, src))
-		if(isspaceturf(T) || istype(T.loc, /area/space))
+		if(isspaceturf(T) || (!isonshuttle && (istype(T.loc, /area/shuttle) || istype(T.loc, /area/space))) || (isonshuttle && !istype(T.loc, /area/shuttle)))
 			S << "<span class='warning'>Destroying this object has the potential to cause a hull breach. Aborting.</span>"
 			S.target = null
 			return TRUE
 	return ..()
 
 /obj/structure/window/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
+	var/isonshuttle = istype(get_area(src), /area/shuttle)
 	for(var/turf/T in range(1, src))
-		if(isspaceturf(T) || istype(T.loc, /area/space))
+		if(isspaceturf(T) || (!isonshuttle && (istype(T.loc, /area/shuttle) || istype(T.loc, /area/space))) || (isonshuttle && !istype(T.loc, /area/shuttle)))
 			S << "<span class='warning'>Destroying this object has the potential to cause a hull breach. Aborting.</span>"
 			S.target = null
 			return TRUE

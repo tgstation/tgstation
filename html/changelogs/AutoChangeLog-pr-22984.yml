@@ -1,5 +1,0 @@
-author: "Cyberboss"
-delete-after: True
-changes: 
-  - bugfix: "Firedoors no longer have maintenance panels"
-  - tweak: "Firedoors must now be welded and screwdrivered prior to be deconstructed"

@@ -263,7 +263,7 @@
 	if (!istype(T))
 		return
 	if(reac_volume >= 1)
-		T.MakeSlippery(wet_setting=TURF_WET_LUBE, min_wet_time=15, min(wet_time_to_add=reac_volume*2, 120))
+		T.MakeSlippery(TURF_WET_LUBE, 15, min(reac_volume * 2, 120))
 
 /datum/reagent/spraytan
 	name = "Spray Tan"
