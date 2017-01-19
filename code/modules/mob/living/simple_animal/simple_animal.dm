@@ -84,7 +84,6 @@
 
 	//domestication
 	var/tame = 0
-	var/saddled = 0
 	var/datum/riding/riding_datum = null
 
 /mob/living/simple_animal/New()
@@ -96,6 +95,7 @@
 		real_name = name
 	if(!loc)
 		stack_trace("Simple animal being instantiated in nullspace")
+
 
 /mob/living/simple_animal/Login()
 	if(src && src.client)
@@ -524,36 +524,39 @@
 			client.screen |= l_hand
 
 //ANIMAL RIDING
+/mob/living/simple_animal/buckle_mob()
+	. = ..()
+	riding_datum = new/datum/riding/animal
+	riding_datum.ridden = src
+
 /mob/living/simple_animal/unbuckle_mob(mob/living/buckled_mob,force = 0)
 	if(riding_datum)
 		riding_datum.restore_position(buckled_mob)
-	. = ..()
+		. = ..()
 
 
 /mob/living/simple_animal/user_buckle_mob(mob/living/M, mob/user)
+	if(user.incapacitated())
+		return
+	for(var/atom/movable/A in get_turf(src))
+		if(A.density)
+			if(A != src && A != M)
+				return
+	M.loc = get_turf(src)
 	if(riding_datum)
-		if(user.incapacitated())
-			return
-		for(var/atom/movable/A in get_turf(src))
-			if(A.density)
-				if(A != src && A != M)
-					return
-		M.loc = get_turf(src)
 		riding_datum.handle_vehicle_offsets()
-		riding_datum.ridden = src
+	..()
 
+
+//MOVEMENT
 /mob/living/simple_animal/relaymove(mob/user, direction)
-	if(tame && saddled && riding_datum)
+	if(riding_datum && tame)
 		riding_datum.handle_ride(user, direction)
+
 
 /mob/living/simple_animal/Move(NewLoc,Dir=0,step_x=0,step_y=0)
 	. = ..()
 	if(riding_datum)
 		riding_datum.handle_vehicle_layer()
 		riding_datum.handle_vehicle_offsets()
-
-
-/mob/living/simple_animal/buckle_mob()
-	..()
-	riding_datum = new/datum/riding/animal
 
