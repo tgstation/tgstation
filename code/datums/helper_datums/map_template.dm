@@ -46,7 +46,7 @@
 	SSmachine.setup_template_powernets(cables)
 	SSair.setup_template_machinery(atmos_machines)
 
-/datum/map_template/proc/load(turf/T, centered = FALSE)
+/datum/map_template/proc/load(turf/T = null, centered = FALSE)
 	if(centered)
 		T = locate(T.x - round(width/2) , T.y - round(height/2) , T.z)
 	if(T)
