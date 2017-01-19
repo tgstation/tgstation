@@ -63,3 +63,32 @@
 #define PROGRAM_STATE_KILLED 0
 #define PROGRAM_STATE_BACKGROUND 1
 #define PROGRAM_STATE_ACTIVE 2
+
+// Camera networks
+#define NETWORK_CRESCENT "Crescent"
+#define NETWORK_CIVILIAN_EAST "Civilian Starboard"
+#define NETWORK_CIVILIAN_WEST "Civilian Port"
+#define NETWORK_COMMAND "Command"
+#define NETWORK_ENGINE "Engine"
+#define NETWORK_ENGINEERING "Engineering"
+#define NETWORK_ENGINEERING_OUTPOST "Engineering Outpost"
+#define NETWORK_ERT "ZeEmergencyResponseTeam"
+#define NETWORK_APOLLO "Apollo"
+#define NETWORK_EXPEDITION "Expedition"
+#define NETWORK_MEDICAL "Medical"
+#define NETWORK_MAINTENANCE "Maintenance Deck"
+#define NETWORK_MERCENARY "MercurialNet"
+#define NETWORK_MINE "MINE"
+#define NETWORK_RESEARCH "Research"
+#define NETWORK_RESEARCH_OUTPOST "Research Outpost"
+#define NETWORK_ROBOTS "Robots"
+#define NETWORK_POD "General Utility Pod"
+#define NETWORK_PRISON "Prison"
+#define NETWORK_SECURITY "Security"
+#define NETWORK_SUPPLY "Supply"
+#define NETWORK_TELECOM "Tcomsat"
+#define NETWORK_THIRD_DECK "Third Deck"
+#define NETWORK_THUNDER "Thunderdome"
+#define NETWORK_ALARM_ATMOS "Atmosphere Alarms"
+#define NETWORK_ALARM_POWER "Power Alarms"
+#define NETWORK_ALARM_FIRE "Fire Alarms"
