@@ -1,0 +1,4 @@
+author: "Cyberboss"
+delete-after: True
+changes: 
+  - rscadd: "Active testmerges of PRs will now be shown in the MOTD"
