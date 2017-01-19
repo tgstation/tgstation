@@ -587,9 +587,9 @@
 		pixel_y = (dir & 3)? (dir ==1 ? -24 : 24) : 0
 	power_change() //Checks power and initial settings
 
-/obj/machinery/turretid/Initialize(mapload) //map-placed turrets autolink turrets
+/obj/machinery/turretid/Initialize(roundstart) //map-placed turrets autolink turrets
 	..()
-	if(!mapload)
+	if(!roundstart)
 		return
 	if(control_area && istext(control_area))
 		for(var/V in sortedAreas)

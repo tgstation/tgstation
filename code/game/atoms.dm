@@ -435,7 +435,7 @@ var/list/blood_splatter_icons = list()
 
 //Called after New if the world is not loaded with TRUE
 //Called from base of New if the world is loaded with FALSE
-/atom/proc/Initialize(mapload)
+/atom/proc/Initialize(roundstart)
 	set waitfor = 0
 	return
 

@@ -21,7 +21,7 @@
 	anchored = 1
 	state = 2
 
-/obj/structure/bookcase/random/Initialize(mapload)
+/obj/structure/bookcase/random/Initialize(roundstart)
 	..()
 	if(!book_count || !isnum(book_count))
 		update_icon()
@@ -75,7 +75,7 @@
 	category = "Reference"
 	var/ref_book_prob = 20
 
-/obj/structure/bookcase/random/reference/Initialize(mapload)
+/obj/structure/bookcase/random/reference/Initialize(roundstart)
 	..()
 	while(book_count > 0 && prob(ref_book_prob))
 		book_count--

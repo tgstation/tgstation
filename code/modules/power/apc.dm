@@ -169,9 +169,9 @@
 	terminal.setDir(tdir)
 	terminal.master = src
 
-/obj/machinery/power/apc/Initialize(mapload)
+/obj/machinery/power/apc/Initialize(roundstart)
 	..()
-	if(!mapload)
+	if(!roundstart)
 		return
 	has_electronics = 2 //installed and secured
 	// is starting with a power cell installed, create it and set its charge level

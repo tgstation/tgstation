@@ -31,9 +31,9 @@
 	icon_state = "tallcabinet"
 
 
-/obj/structure/filingcabinet/Initialize(mapload)
+/obj/structure/filingcabinet/Initialize(roundstart)
 	..()
-	if(mapload)
+	if(roundstart)
 		for(var/obj/item/I in loc)
 			if(istype(I, /obj/item/weapon/paper) || istype(I, /obj/item/weapon/folder) || istype(I, /obj/item/weapon/photo))
 				I.loc = src
