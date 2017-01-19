@@ -26,10 +26,9 @@ var/global/list/potentialRandomZlevels = generateMapList(filename = "config/away
 		SortAreas() //To add recently loaded areas
 
 /proc/load_z_level(file)
-	var/dmm_suite/maploader = new
-	maploader.load_map(file)
-	qdel(maploader)
-	smooth_zlevel(world.maxz)
+	var/datum/map_template/loader = new(file)
+	loader.load()
+	qdel(loader)
 
 /proc/generateMapList(filename)
 	var/list/potentialMaps = list()

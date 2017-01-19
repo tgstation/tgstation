@@ -49,15 +49,24 @@
 /datum/map_template/proc/load(turf/T, centered = FALSE)
 	if(centered)
 		T = locate(T.x - round(width/2) , T.y - round(height/2) , T.z)
-	if(!T)
-		return
-	if(T.x+width > world.maxx)
-		return
-	if(T.y+height > world.maxy)
-		return
+	if(T)
+		if(T.x+width > world.maxx)
+			return
+		if(T.y+height > world.maxy)
+			return
+	else
+		if(width > world.maxx)
+			return
+		if(height > world.maxy)
+			return
 
 	var/dmm_suite/maploader = new
-	var/list/bounds = maploader.load_map(get_file(), T.x, T.y, T.z, cropMap=TRUE)
+	var/list/bounds
+	if(T)
+		bounds = maploader.load_map(get_file(), T.x, T.y, T.z, cropMap=TRUE)
+	else
+		bounds = maploader.load_map(get_file())
+		smooth_zlevel(world.maxz)
 	qdel(maploader)
 	if(!bounds)
 		return 0
