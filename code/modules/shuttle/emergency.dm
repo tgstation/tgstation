@@ -85,14 +85,13 @@
 				. = TRUE
 
 	if((old_len != authorized.len) && !ENGINES_STARTED)
-		var/alert = (authorized.len > old_len)
-		var/repeal = (authorized.len < old_len)
+		var/alert = (authorized.len > old_len), var/repeal = (authorized.len < old_len)
 		var/remaining = auth_need - authorized.len
 		if(authorized.len && remaining)
 			minor_announce("[remaining] authorizations \
 				needed until shuttle is launched early", null, alert)
 		if(repeal)
-			minor_announce("Early launch authorization revoked [remaining] authorizations needed")
+			minor_announce("Early launch authorization revoked, [remaining] authorizations needed")
 
 /obj/machinery/computer/emergency_shuttle/proc/authorize(mob/user, source)
 	var/obj/item/weapon/card/id/ID = user.get_idcard()
