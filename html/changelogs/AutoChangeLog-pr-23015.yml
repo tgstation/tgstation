@@ -1,6 +1,0 @@
-author: "XDTM"
-delete-after: True
-changes: 
-  - bugfix: "Plasmamen that are set on fire by reacting with oxygen will burn even if they have protective clothing. It will still protect from external fire sources."
-  - tweak: "Atmos-sealing clothing, like hardsuits, will protect plasmamen from reacting with the atmosphere."
-  - tweak: "Plasmamen can survive up to 1 mole of oxygen before burning, instead of burning with any hint of oxygen."
