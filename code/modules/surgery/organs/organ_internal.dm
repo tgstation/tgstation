@@ -661,6 +661,23 @@
 	name = "chattering bone \"tongue\""
 	chattering = TRUE
 
+/obj/item/organ/tongue/cat
+	name = "raspy tongue"
+	desc = "In soviet station, you have cat's tongue. It feels weird, but kinda nice"
+	say_mod = "purrrs"
+
+/obj/item/organ/tongue/cat/TongueSpeech(var/message)
+	var/regex/cat_mew = new("you+", "g")
+	var/regex/cat_Mew = new("You+", "g")
+	var/regex/cat_purrr = new("r+", "g")
+	var/regex/cat_puRRR = new("R+", "g")
+	if(copytext(message, 1, 2) != "*")
+		message = cat_mew.Replace(message, "mew")
+		message = cat_Mew.Replace(message, "Mew")
+		message = cat_purrr.Replace(message, "rrr")
+		message = cat_puRRR.Replace(message, "RRR")
+	return message
+
 /obj/item/organ/appendix
 	name = "appendix"
 	icon_state = "appendix"
