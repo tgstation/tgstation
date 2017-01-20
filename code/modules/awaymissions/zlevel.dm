@@ -11,8 +11,6 @@ var/global/list/potentialRandomZlevels = generateMapList(filename = "config/away
 		var/map = pick(potentialRandomZlevels)
 		var/file = file(map)
 		if(isfile(file))
-			if(SSobj.initialized)
-				WARNING("Zlevel loading occurred after atom initialization! Please reorganize subsystem init-order!")
 			maploader.load_map(file)
 			smooth_zlevel(world.maxz)
 			world.log << "away mission loaded: [map]"
