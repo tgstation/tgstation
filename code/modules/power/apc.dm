@@ -134,7 +134,7 @@
 		name = "[area.name] APC"
 		stat |= MAINT
 		src.update_icon()
-		addtimer(src, "update", 5)
+		addtimer(CALLBACK(src, .proc/update), 5)
 
 /obj/machinery/power/apc/Destroy()
 	apcs_list -= src
@@ -188,7 +188,7 @@
 
 	make_terminal()
 
-	addtimer(src, "update", 5)
+	addtimer(CALLBACK(src, .proc/update), 5)
 
 /obj/machinery/power/apc/examine(mob/user)
 	..()
@@ -361,7 +361,7 @@
 
 // Used in process so it doesn't update the icon too much
 /obj/machinery/power/apc/proc/queue_icon_update()
-	addtimer(src, "update_icon", APC_UPDATE_ICON_COOLDOWN, TIMER_UNIQUE)
+	addtimer(CALLBACK(src, .proc/update_icon), APC_UPDATE_ICON_COOLDOWN, TIMER_UNIQUE)
 
 //attack with an item - open/close cover, insert cell, or (un)lock interface
 
@@ -842,7 +842,7 @@
 		return
 	malf << "Beginning override of APC systems. This takes some time, and you cannot perform other actions during the process."
 	malf.malfhack = src
-	malf.malfhacking = addtimer(malf, "malfhacked", 600, TIMER_NORMAL, src)
+	malf.malfhacking = addtimer(CALLBACK(malf, /mob/living/silicon/ai/.proc/malfhacked, src), 600, TIMER_STOPPABLE)
 
 	var/obj/screen/alert/hackingapc/A
 	A = malf.throw_alert("hackingapc", /obj/screen/alert/hackingapc)
@@ -1167,7 +1167,7 @@
 	environ = 0
 	update_icon()
 	update()
-	addtimer(src, "reset", 600, TIMER_NORMAL, APC_RESET_EMP)
+	addtimer(CALLBACK(src, .proc/reset, APC_RESET_EMP), 600)
 	..()
 
 /obj/machinery/power/apc/blob_act(obj/structure/blob/B)
@@ -1198,8 +1198,9 @@
 		spawn(0)
 			for(var/area/A in area.related)
 				for(var/obj/machinery/light/L in A)
-					L.on = 1
+					L.on = TRUE
 					L.break_light_tube()
+					L.on = FALSE
 					stoplag()
 
 /obj/machinery/power/apc/proc/shock(mob/user, prb)

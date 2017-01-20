@@ -393,7 +393,7 @@
 				else if(canmove && isturf(loc) && prob(33))
 					step(src, pick(cardinal))
 		else if(!AIproc)
-			addtimer(src, "AIprocess", 0)
+			addtimer(CALLBACK(src, .proc/AIprocess), 0)
 
 /mob/living/simple_animal/slime/handle_automated_movement()
 	return //slime random movement is currently handled in handle_targets()

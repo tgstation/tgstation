@@ -35,11 +35,14 @@
 
 /obj/item/device/mmi/New()
 	..()
-	laws.set_laws_config()
 	radio = new(src) //Spawns a radio inside the MMI.
 	radio.broadcasting = 0 //researching radio mmis turned the robofabs into radios because this didnt start as 0.
+	if(config)
+		laws.set_laws_config()
 
-
+/obj/item/device/mmi/initialize()
+	..()
+	laws.set_laws_config()
 
 /obj/item/device/mmi/attackby(obj/item/O, mob/user, params)
 	user.changeNext_move(CLICK_CD_MELEE)
@@ -155,7 +158,7 @@
 	brainmob << "<span class='notice'>Radio is [radio.listening==1 ? "now" : "no longer"] receiving broadcast.</span>"
 
 /obj/item/device/mmi/emp_act(severity)
-	if(!brainmob)
+	if(!brainmob || iscyborg(loc))
 		return
 	else
 		switch(severity)

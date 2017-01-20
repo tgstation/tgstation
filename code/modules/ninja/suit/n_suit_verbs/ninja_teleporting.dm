@@ -60,12 +60,12 @@ Contents:
 	if(!ninjacost(200,N_STEALTH_CANCEL))
 		var/mob/living/carbon/human/H = affecting
 		var/turf/mobloc = get_turf(H.loc)//To make sure that certain things work properly below.
-		if(T.density && isturf(mobloc))
+		if(!T.density && isturf(mobloc))
 			playsound(H.loc, "sparks", 50, 1)
 			PoolOrNew(/obj/effect/overlay/temp/dir_setting/ninja/phase/out, list(get_turf(H), H.dir))
 
 			handle_teleport_grab(T, H)
-			H.loc = T
+			H.forceMove(T)
 
 			spark_system.start()
 			playsound(H.loc, 'sound/effects/phasein.ogg', 25, 1)

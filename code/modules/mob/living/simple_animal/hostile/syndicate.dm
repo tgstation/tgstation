@@ -59,11 +59,10 @@
 	if(!Proj)
 		return
 	if(prob(50))
-		if((Proj.damage_type == BRUTE || Proj.damage_type == BURN))
-			src.adjustHealth(Proj.damage)
+		return ..()
 	else
 		visible_message("<span class='danger'>[src] blocks [Proj] with its shield!</span>")
-	return 0
+		return 0
 
 
 /mob/living/simple_animal/hostile/syndicate/melee/space
@@ -74,9 +73,6 @@
 	name = "Syndicate Commando"
 	loot = list(/obj/effect/gibspawner/human)
 	speed = 1
-
-/mob/living/simple_animal/hostile/syndicate/melee/space/noloot
-	loot = list()
 
 /mob/living/simple_animal/hostile/syndicate/melee/space/Process_Spacemove(movement_dir = 0)
 	return 1
@@ -112,9 +108,6 @@
 	minbodytemp = 0
 	speed = 1
 	loot = list(/obj/effect/gibspawner/human)
-
-/mob/living/simple_animal/hostile/syndicate/ranged/space/noloot
-	loot = list()
 
 /mob/living/simple_animal/hostile/syndicate/ranged/space/Process_Spacemove(movement_dir = 0)
 	return 1

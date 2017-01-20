@@ -24,7 +24,7 @@
 		var/previouscolor = color
 		color = "#FAE48C"
 		animate(src, color = previouscolor, time = 8)
-		addtimer(src, "update_atom_colour", 8)
+		addtimer(CALLBACK(src, /atom/proc/update_atom_colour), 8)
 
 /turf/closed/wall/mineral/cult/artificer
 	name = "runed stone wall"
@@ -61,7 +61,7 @@
 /turf/closed/wall/clockwork/examine(mob/user)
 	..()
 	if((is_servant_of_ratvar(user) || isobserver(user)) && linkedcache)
-		user << "<span class='brass'>It is linked, generating components in a cache!</span>"
+		user << "<span class='brass'>It is linked to a Tinkerer's Cache, generating components!</span>"
 
 /turf/closed/wall/clockwork/Destroy()
 	if(linkedcache)
@@ -73,13 +73,18 @@
 		realappearence = null
 	return ..()
 
+/turf/closed/wall/clockwork/ReplaceWithLattice()
+	..()
+	for(var/obj/structure/lattice/L in src)
+		L.ratvar_act()
+
 /turf/closed/wall/clockwork/narsie_act()
 	..()
 	if(istype(src, /turf/closed/wall/clockwork)) //if we haven't changed type
 		var/previouscolor = color
 		color = "#960000"
 		animate(src, color = previouscolor, time = 8)
-		addtimer(src, "update_atom_colour", 8)
+		addtimer(CALLBACK(src, /atom/proc/update_atom_colour), 8)
 
 /turf/closed/wall/clockwork/dismantle_wall(devastated=0, explode=0)
 	if(devastated)

@@ -68,7 +68,7 @@
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/start_cooldown()
 	set_ready_state(0)
 	chassis.use_power(energy_drain*get_shot_amount())
-	addtimer(src, "set_ready_state", equip_cooldown, TIMER_NORMAL, 1)
+	addtimer(CALLBACK(src, .proc/set_ready_state, 1), equip_cooldown)
 
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/laser
 	equip_cooldown = 8
@@ -290,7 +290,7 @@
 	log_message("Launched a [O.name] from [name], targeting [target].")
 	projectiles--
 	proj_init(O)
-	O.throw_at_fast(target, missile_range, missile_speed, spin = 0)
+	O.throw_at(target, missile_range, missile_speed, spin = 0)
 	return 1
 
 //used for projectile initilisation (priming flashbang) and additional logging
@@ -344,7 +344,7 @@
 	var/turf/T = get_turf(src)
 	message_admins("[key_name(chassis.occupant, chassis.occupant.client)](<A HREF='?_src_=holder;adminmoreinfo=\ref[chassis.occupant]'>?</A>) fired a [src] in ([T.x],[T.y],[T.z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>JMP</a>)",0,1)
 	log_game("[key_name(chassis.occupant)] fired a [src] ([T.x],[T.y],[T.z])")
-	addtimer(F, "prime", det_time)
+	addtimer(CALLBACK(F, /obj/item/weapon/grenade/flashbang.proc/prime), det_time)
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/flashbang/clusterbang //Because I am a heartless bastard -Sieve //Heartless? for making the poor man's honkblast? - Kaze
 	name = "\improper SOB-3 grenade launcher"

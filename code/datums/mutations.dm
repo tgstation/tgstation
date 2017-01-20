@@ -237,7 +237,7 @@
 		owner.visible_message("<span class='danger'>[owner] starts having a seizure!</span>", "<span class='userdanger'>You have a seizure!</span>")
 		owner.Paralyse(10)
 		owner.Jitter(1000)
-		addtimer(src, "jitter_less", 90, TIMER_NORMAL, owner)
+		addtimer(CALLBACK(src, .proc/jitter_less, owner), 90)
 
 /datum/mutation/human/epilepsy/proc/jitter_less(mob/living/carbon/human/owner)
 	if(owner)

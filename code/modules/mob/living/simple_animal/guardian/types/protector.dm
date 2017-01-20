@@ -22,14 +22,10 @@
 /mob/living/simple_animal/hostile/guardian/protector/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
 	. = ..()
 	if(. > 0 && toggle)
-		var/list/viewing = list()
-		for(var/mob/M in viewers(src))
-			if(M.client)
-				viewing += M.client
 		var/image/I = new('icons/effects/effects.dmi', src, "shield-flash", MOB_LAYER+0.01, dir = pick(cardinal))
 		if(namedatum)
 			I.color = namedatum.colour
-		flick_overlay(I, viewing, 5)
+		flick_overlay_view(I, src, 5)
 
 /mob/living/simple_animal/hostile/guardian/protector/ToggleMode()
 	if(cooldown > world.time)

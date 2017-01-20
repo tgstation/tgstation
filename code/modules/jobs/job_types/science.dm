@@ -6,6 +6,7 @@ Research Director
 	flag = RD
 	department_head = list("Captain")
 	department_flag = MEDSCI
+	head_announce = list("Science")
 	faction = "Station"
 	total_positions = 1
 	spawn_positions = 1
@@ -29,6 +30,7 @@ Research Director
 
 /datum/outfit/job/rd
 	name = "Research Director"
+	jobtype = /datum/job/rd
 
 	id = /obj/item/weapon/card/id/silver
 	belt = /obj/item/device/pda/heads/rd
@@ -43,13 +45,14 @@ Research Director
 	backpack = /obj/item/weapon/storage/backpack/science
 	satchel = /obj/item/weapon/storage/backpack/satchel/tox
 
-/datum/outfit/job/rd/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
-	..()
+/datum/outfit/job/rd/rig
+	name = "Research Director (Hardsuit)"
 
-	if(visualsOnly)
-		return
-
-	announce_head(H, list("Science")) //tell underlings (science radio) they have a head
+	l_hand = null
+	mask = /obj/item/clothing/mask/breath
+	suit = /obj/item/clothing/suit/space/hardsuit/rd
+	suit_store = /obj/item/weapon/tank/internals/oxygen
+	internals_slot = slot_s_store
 
 /*
 Scientist
@@ -72,6 +75,7 @@ Scientist
 
 /datum/outfit/job/scientist
 	name = "Scientist"
+	jobtype = /datum/job/scientist
 
 	belt = /obj/item/device/pda/toxins
 	ears = /obj/item/device/radio/headset/headset_sci
@@ -103,6 +107,7 @@ Roboticist
 
 /datum/outfit/job/roboticist
 	name = "Roboticist"
+	jobtype = /datum/job/roboticist
 
 	belt = /obj/item/weapon/storage/belt/utility/full
 	l_pocket = /obj/item/device/pda/roboticist

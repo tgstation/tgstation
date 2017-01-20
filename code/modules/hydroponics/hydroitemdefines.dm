@@ -21,7 +21,7 @@
 	icon_state = "weedspray"
 	item_state = "spray"
 	volume = 100
-	flags = OPENCONTAINER
+	container_type = OPENCONTAINER
 	slot_flags = SLOT_BELT
 	throwforce = 0
 	w_class = WEIGHT_CLASS_SMALL
@@ -43,7 +43,7 @@
 	icon_state = "pestspray"
 	item_state = "plantbgone"
 	volume = 100
-	flags = OPENCONTAINER
+	container_type = OPENCONTAINER
 	slot_flags = SLOT_BELT
 	throwforce = 0
 	w_class = WEIGHT_CLASS_SMALL
