@@ -99,7 +99,7 @@
 	qdel(orbiting)
 
 /atom/Destroy(force = FALSE)
-	..()
+	. = ..()
 	if (orbiters)
 		for (var/thing in orbiters)
 			var/datum/orbit/O = thing
