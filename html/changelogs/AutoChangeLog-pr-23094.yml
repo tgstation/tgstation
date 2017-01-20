@@ -1,0 +1,4 @@
+author: "Joan"
+delete-after: True
+changes: 
+  - spellcheck: "Clockwork airlocks now have more explicit deconstruction messages, using the same syntax as rwall deconstruction."

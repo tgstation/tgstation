@@ -1,0 +1,5 @@
+author: "optional name here"
+delete-after: True
+changes: 
+  - rscadd: "Added more console presets"
+  - rscadd: "Added camera network defines"
