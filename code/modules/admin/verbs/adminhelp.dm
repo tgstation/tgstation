@@ -100,7 +100,7 @@
 
 	//remove our adminhelp verb temporarily to prevent spamming of admins.
 	src.verbs -= /client/verb/adminhelp
-	adminhelptimerid = addtimer(CALLBACK(src, .proc/giveadminhelpverb), 1200) //2 minute cooldown of admin helps
+	adminhelptimerid = addtimer(CALLBACK(src, .proc/giveadminhelpverb), 1200, TIMER_STOPPABLE) //2 minute cooldown of admin helps
 
 	msg = keywords_lookup(msg)
 
