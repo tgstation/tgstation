@@ -155,8 +155,8 @@
 			T.active_hotspot = null
 	DestroyTurf()
 	loc = null
-	..()
-	return QDEL_HINT_PUTINPOOL
+	. = ..()
+
 
 /obj/effect/hotspot/proc/DestroyTurf()
 	if(isturf(loc))

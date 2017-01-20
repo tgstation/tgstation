@@ -19,9 +19,6 @@
 /obj/effect/dummy/slaughter/singularity_act()
 	return
 
-/obj/effect/dummy/slaughter/Destroy()
-	..()
-	return QDEL_HINT_PUTINPOOL
 
 
 /mob/living/proc/phaseout(obj/effect/decal/cleanable/B)

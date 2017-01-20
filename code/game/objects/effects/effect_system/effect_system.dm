@@ -19,8 +19,7 @@ would spawn and follow the beaker, even if it is carried or thrown.
 /obj/effect/particle_effect/Destroy()
 	if(ticker)
 		cameranet.updateVisibility(src)
-	..()
-	return QDEL_HINT_PUTINPOOL
+	. = ..()
 
 /datum/effect_system
 	var/number = 3

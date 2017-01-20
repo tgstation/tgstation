@@ -586,8 +586,8 @@ so as to remain in compliance with the most up-to-date laws."
 		return usr.client.Click(master, location, control, params)
 
 /obj/screen/alert/Destroy()
-	..()
+	. = ..()
 	severity = 0
 	master = null
 	screen_loc = ""
-	return QDEL_HINT_PUTINPOOL //Don't destroy me, I have a family!
+
