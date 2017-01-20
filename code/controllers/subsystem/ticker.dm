@@ -211,7 +211,7 @@ var/datum/subsystem/ticker/ticker
 	if(bomb)	//BOOM
 		var/turf/epi = bomb.loc
 		qdel(bomb)
-		explosion(epi, 255, 255, 255, 255, TRUE, TRUE, 0, TRUE)
+		explosion(epi, 0, 256, 512, 0, TRUE, TRUE, 0, TRUE).
 
 //Plus it provides an easy way to make cinematics for other events. Just use this as a template
 /datum/subsystem/ticker/proc/station_explosion_cinematic(station_missed=0, override = null, bomb = null)
