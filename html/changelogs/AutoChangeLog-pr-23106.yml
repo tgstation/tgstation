@@ -1,0 +1,4 @@
+author: "XDTM"
+delete-after: True
+changes: 
+  - tweak: "Reviver implants now warn you when they're turning on or off, or when giving a heart attack due to EMP."

@@ -102,6 +102,11 @@
 
 			if(!msg)
 				return
+
+			if(prefs.muted & MUTE_ADMINHELP)
+				src << "<font color='red'>Error: Admin-PM: You are unable to use admin PM-s (muted).</font>"
+				return
+
 			if(!C)
 				if(holder)
 					src << "<font color='red'>Error: Admin-PM: Client not found.</font>"

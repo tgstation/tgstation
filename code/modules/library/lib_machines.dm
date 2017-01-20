@@ -197,7 +197,7 @@ var/global/list/datum/cachedbook/cachedbooks // List of our cached book datums
 /obj/machinery/computer/libraryconsole/bookmanagement/New()
 	..()
 	if(circuit)
-		circuit.name = "circuit board (Book Inventory Management Console)"
+		circuit.name = "Book Inventory Management Console (Machine Board)"
 		circuit.build_path = /obj/machinery/computer/libraryconsole/bookmanagement
 
 /obj/machinery/computer/libraryconsole/bookmanagement/interact(mob/user)

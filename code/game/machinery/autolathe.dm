@@ -56,7 +56,7 @@
 	matching_designs = list()
 
 /obj/item/weapon/circuitboard/machine/autolathe
-	name = "circuit board (Autolathe)"
+	name = "Autolathe (Machine Board)"
 	build_path = /obj/machinery/autolathe
 	origin_tech = "engineering=2;programming=2"
 	req_components = list(

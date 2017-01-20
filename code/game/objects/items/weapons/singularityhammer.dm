@@ -89,7 +89,7 @@
 		"<span class='userdanger'>You feel a powerful shock course through your body sending you flying!</span>", \
 		"<span class='italics'>You hear a heavy electrical crack!</span>")
 	var/atom/throw_target = get_edge_target_turf(target, get_dir(src, get_step_away(target, src)))
-	target.throw_at_fast(throw_target, 200, 4)
+	target.throw_at(throw_target, 200, 4)
 	return
 
 /obj/item/weapon/twohanded/mjollnir/attack(mob/living/M, mob/user)

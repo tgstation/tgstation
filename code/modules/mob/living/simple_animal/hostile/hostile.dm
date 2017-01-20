@@ -421,7 +421,7 @@
 /mob/living/simple_animal/hostile/proc/GainPatience()
 	if(lose_patience_timeout)
 		LosePatience()
-		lose_patience_timer_id = addtimer(src, "LoseTarget", lose_patience_timeout)
+		lose_patience_timer_id = addtimer(CALLBACK(src, .proc/LoseTarget), lose_patience_timeout)
 
 
 /mob/living/simple_animal/hostile/proc/LosePatience()
@@ -432,7 +432,7 @@
 /mob/living/simple_animal/hostile/proc/LoseSearchObjects()
 	search_objects = 0
 	deltimer(search_objects_timer_id)
-	search_objects_timer_id = addtimer(src, "RegainSearchObjects", search_objects_regain_time)
+	search_objects_timer_id = addtimer(CALLBACK(src, .proc/RegainSearchObjects), search_objects_regain_time)
 
 
 /mob/living/simple_animal/hostile/proc/RegainSearchObjects(value)

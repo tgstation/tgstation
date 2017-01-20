@@ -54,7 +54,7 @@
 	B.apply_default_parts(src)
 
 /obj/item/weapon/circuitboard/machine/seed_extractor
-	name = "circuit board (Seed Extractor)"
+	name = "Seed Extractor (Machine Board)"
 	build_path = /obj/machinery/seed_extractor
 	origin_tech = "programming=1"
 	req_components = list(

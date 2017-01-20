@@ -43,7 +43,7 @@
 	S << S.playstyle_string
 	S << "<B>You are currently not currently in the same plane of existence as the station. Blood Crawl near a blood pool to manifest.</B>"
 	S << 'sound/magic/demon_dies.ogg'
-	message_admins("[selected] has been made into a slaughter demon by an event.")
-	log_game("[selected] was spawned as a slaughter demon by an event.")
+	message_admins("[key_name_admin(S)] has been made into a slaughter demon by an event.")
+	log_game("[key_name(S)] was spawned as a slaughter demon by an event.")
 	spawned_mobs += S
 	return SUCCESSFUL_SPAWN

@@ -357,17 +357,9 @@
 	mask = /obj/item/clothing/mask/gas/syndicate
 	suit = /obj/item/clothing/suit/space/hardsuit/syndi
 	r_pocket = /obj/item/weapon/tank/internals/emergency_oxygen/engi
+	internals_slot = slot_r_store
 	belt = /obj/item/weapon/storage/belt/military
 	r_hand = /obj/item/weapon/gun/ballistic/automatic/shotgun/bulldog
 	backpack_contents = list(/obj/item/weapon/storage/box/syndie=1,\
 		/obj/item/weapon/tank/jetpack/oxygen/harness=1,\
 		/obj/item/weapon/gun/ballistic/automatic/pistol=1)
-
-/datum/outfit/syndicate/full/post_equip(mob/living/carbon/human/H)
-	..()
-
-
-	var/obj/item/clothing/suit/space/hardsuit/syndi/suit = H.wear_suit
-	suit.ToggleHelmet()
-
-	H.internal = H.r_store

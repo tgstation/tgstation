@@ -122,7 +122,7 @@
 	is_seeing |= user
 
 
-/obj/item/weapon/storage/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0)
+/obj/item/weapon/storage/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback)
 	close_all()
 	return ..()
 
@@ -392,7 +392,7 @@
 		return	//Robots can't interact with storage items.
 
 	if(!can_be_inserted(W, 0 , user))
-		return
+		return 0
 
 	handle_item_insertion(W, 0 , user)
 

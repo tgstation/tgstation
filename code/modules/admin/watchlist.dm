@@ -36,6 +36,8 @@
 	if(browse)
 		watchlist_show(target_sql_ckey)
 
+	add_note(target_ckey, "Added to Watchlist - [reason]", null, usr.ckey, 0, null, 1)
+
 /client/proc/watchlist_remove(target_ckey, browse = 0)
 	var/target_sql_ckey = sanitizeSQL(target_ckey)
 	var/DBQuery/query_watchdel = dbcon.NewQuery("DELETE FROM [format_table_name("watch")] WHERE ckey = '[target_sql_ckey]'")

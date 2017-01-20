@@ -19,6 +19,7 @@ var/datum/subsystem/objects/SSobj
 	NEW_SS_GLOBAL(SSobj)
 
 /datum/subsystem/objects/Initialize(timeofdayl)
+	fire_overlay.appearance_flags = RESET_COLOR
 	trigger_atom_spawners()
 	setupGenetics() //to set the mutations' place in structural enzymes, so monkey.initialize() knows where to put the monkey mutation.
 	for(var/thing in world)

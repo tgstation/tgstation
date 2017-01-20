@@ -36,7 +36,7 @@ var/list/announcement_systems = list()
 	update_icon()
 
 /obj/item/weapon/circuitboard/machine/announcement_system
-	name = "circuit board (Announcement System)"
+	name = "Announcement System (Machine Board)"
 	build_path = /obj/machinery/announcement_system
 	origin_tech = "programming=3;bluespace=3;magnets=2"
 	req_components = list(

@@ -14,7 +14,7 @@
 	active_power_usage = 300	//when active, this turret takes up constant 300 Equipment power
 	req_access = list(access_security)
 	power_channel = EQUIP	//drains power from the EQUIPMENT channel
-	
+
 	var/base_icon_state = "standard"
 
 	var/emp_vunerable = 1 // Can be empd
@@ -24,7 +24,7 @@
 
 	var/raised = 0			//if the turret cover is "open" and the turret is raised
 	var/raising= 0			//if the turret is currently opening or closing its cover
-	
+
 	obj_integrity = 160			//the turret's health
 	max_integrity = 160
 	integrity_failure = 80
@@ -49,7 +49,7 @@
 	var/has_cover = 1		//Hides the cover
 
 	var/obj/machinery/porta_turret_cover/cover = null	//the cover that is covering this turret
-	
+
 	var/last_fired = 0		//world.time the turret last fired
 	var/shot_delay = 15		//ticks until next shot (1.5 ?)
 
@@ -115,7 +115,7 @@
 		stored_gun = new installation(src)
 	else if (turret_gun)
 		stored_gun = turret_gun
-	
+
 	var/list/gun_properties = stored_gun.get_turret_properties()
 
 	//required properties
@@ -124,13 +124,13 @@
 	lethal_projectile = gun_properties["lethal_projectile"]
 	lethal_projectile_sound = gun_properties["lethal_projectile_sound"]
 	base_icon_state = gun_properties["base_icon_state"]
-	
+
 	//optional properties
 	if(gun_properties["shot_delay"])
 		shot_delay = gun_properties["shot_delay"]
 	if(gun_properties["reqpower"])
 		reqpower = gun_properties["reqpower"]
-	
+
 	update_icon()
 	return gun_properties
 
@@ -149,7 +149,7 @@
 	. = ..()
 	if(.)
 		return
-	
+
 	interact(user)
 
 /obj/machinery/porta_turret/interact(mob/user)
@@ -233,7 +233,7 @@
 				qdel(src)
 
 	else if((istype(I, /obj/item/weapon/wrench)) && (!on))
-		if(raised) 
+		if(raised)
 			return
 
 		//This code handles moving the turret around. After all, it's a portable turret!
@@ -502,9 +502,10 @@
 		A = new lethal_projectile(T)
 		playsound(loc, lethal_projectile_sound, 75, 1)
 
-	
+
 	//Shooting Code:
 	A.original = target
+	A.starting = T
 	A.current = T
 	A.yo = U.y - T.y
 	A.xo = U.x - T.x
@@ -820,7 +821,7 @@
 			return
 		if(team_color == "red" && istype(H.wear_suit, /obj/item/clothing/suit/bluetag))
 			return
-	
+
 	var/dat = "Status: <a href='?src=\ref[src];power=1'>[on ? "On" : "Off"]</a>"
 
 	var/datum/browser/popup = new(user, "autosec", "Automatic Portable Turret Installation", 300, 300)

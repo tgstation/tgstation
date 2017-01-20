@@ -86,7 +86,7 @@
 	if(!holds_charge)
 		// Put it on a delay because moving item from slot to hand
 		// calls dropped().
-		addtimer(src, "empty_if_not_held", 2)
+		addtimer(CALLBACK(src, .proc/empty_if_not_held), 2)
 
 /obj/item/weapon/gun/energy/kinetic_accelerator/proc/empty_if_not_held()
 	if(!ismob(loc))
@@ -112,7 +112,7 @@
 	else
 		carried = 1
 
-	addtimer(src, "reload", overheat_time * carried)
+	addtimer(CALLBACK(src, .proc/reload), overheat_time * carried)
 
 /obj/item/weapon/gun/energy/kinetic_accelerator/emp_act(severity)
 	return

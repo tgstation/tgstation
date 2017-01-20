@@ -1663,7 +1663,7 @@
 	contains = list(/obj/item/weapon/circuitboard/machine/bsa/front,
 					/obj/item/weapon/circuitboard/machine/bsa/middle,
 					/obj/item/weapon/circuitboard/machine/bsa/back,
-					/obj/item/weapon/circuitboard/machine/computer/bsa_control
+					/obj/item/weapon/circuitboard/computer/bsa_control
 					)
 	crate_name= "bluespace artillery parts crate"
 

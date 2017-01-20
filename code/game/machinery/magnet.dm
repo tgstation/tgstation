@@ -134,7 +134,7 @@
 				on = !on
 
 				if(on)
-					addtimer(src, "magnetic_process", 0)
+					addtimer(CALLBACK(src, .proc/magnetic_process), 0)
 
 
 
