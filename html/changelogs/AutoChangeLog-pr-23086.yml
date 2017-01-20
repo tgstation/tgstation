@@ -1,4 +1,0 @@
-author: "MrStonedOne"
-delete-after: True
-changes: 
-  - bugfix: "Fixed excessive and immersion ruining delay on the smoothing of asteroid/mining rock after a neighboring rock turf was mined up."
