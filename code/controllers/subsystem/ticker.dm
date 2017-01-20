@@ -74,6 +74,8 @@ var/datum/subsystem/ticker/ticker
 			world << "<span class='boldnotice'>Welcome to [station_name()]!</span>"
 			world << "Please set up your character and select \"Ready\". The game will start in [config.lobby_countdown] seconds."
 			current_state = GAME_STATE_PREGAME
+			for(var/client/C in clients)
+				window_flash(C) //let them know lobby has opened up.
 
 		if(GAME_STATE_PREGAME)
 				//lobby stats for statpanels

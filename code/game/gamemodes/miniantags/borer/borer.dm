@@ -272,7 +272,7 @@ var/total_borer_hosts_needed = 10
 					else
 						src << "<span class='warning'>You start shaking off your lethargy as the sugar leaves your host's blood. This will take about 10 seconds...</span>"
 
-					waketimerid = addtimer(CALLBACK(src, "wakeup"), 10)
+					waketimerid = addtimer(CALLBACK(src, "wakeup"), 10, TIMER_STOPPABLE)
 			if(controlling)
 
 				if(docile)
