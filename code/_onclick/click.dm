@@ -53,7 +53,7 @@
 		return
 	next_click = world.time + 1
 
-	if(client.click_intercept)
+	if(client && client.click_intercept)
 		if(call(client.click_intercept, "InterceptClickOn")(src, params, A))
 			return
 
@@ -234,7 +234,7 @@
 		var/mob/living/carbon/human/H = user
 		H.dna.species.grab(H, src, H.martial_art)
 		H.next_click = world.time + CLICK_CD_MELEE
-	else 
+	else
 		..()
 /*
 	Alt click

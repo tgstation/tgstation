@@ -1,28 +1,36 @@
 var/static/regex/stun_words = regex("stop|wait|stand still|hold on|halt")
-var/static/regex/weaken_words = regex("drop|fall|trip")
+var/static/regex/weaken_words = regex("drop|fall|trip|weaken")
 var/static/regex/sleep_words = regex("sleep|slumber")
 var/static/regex/vomit_words = regex("vomit|throw up")
 var/static/regex/silence_words = regex("shut up|silence|ssh|quiet|hush")
 var/static/regex/hallucinate_words = regex("see the truth|hallucinate")
 var/static/regex/wakeup_words = regex("wake up|awaken")
 var/static/regex/heal_words = regex("live|heal|survive|mend|heroes never die")
-var/static/regex/hurt_words = regex("die|suffer")
-var/static/regex/bleed_words = regex("bleed")
+var/static/regex/hurt_words = regex("die|suffer|hurt|pain")
+var/static/regex/bleed_words = regex("bleed|there will be blood")
 var/static/regex/burn_words = regex("burn|ignite")
-var/static/regex/repulse_words = regex("shoo|go away|leave me alone|begone|flee|fus ro dah")
+var/static/regex/hot_words = regex("heat|hot|hell")
+var/static/regex/cold_words = regex("cold|cool down|chill|freeze")
+var/static/regex/repulse_words = regex("shoo|go away|leave me alone|begone|flee|fus ro dah|get away|repulse")
+var/static/regex/attract_words = regex("come here|come to me|get over here|attract")
 var/static/regex/whoareyou_words = regex("who are you|say your name|state your name|identify")
-var/static/regex/saymyname_words = regex("say my name")
+var/static/regex/saymyname_words = regex("say my name|who am i|whoami")
 var/static/regex/knockknock_words = regex("knock knock")
 var/static/regex/statelaws_words = regex("state laws|state your laws")
-var/static/regex/move_words = regex("move")
-var/static/regex/walk_words = regex("walk|slow down")
+var/static/regex/move_words = regex("move|walk")
+var/static/regex/left_words = regex("left|west|port")
+var/static/regex/right_words = regex("right|east|starboard")
+var/static/regex/up_words = regex("up|north|fore")
+var/static/regex/down_words = regex("down|south|aft")
+var/static/regex/walk_words = regex("slow down")
 var/static/regex/run_words = regex("run")
-var/static/regex/helpintent_words = regex("help")
+var/static/regex/helpintent_words = regex("help|hug")
 var/static/regex/disarmintent_words = regex("disarm")
 var/static/regex/grabintent_words = regex("grab")
-var/static/regex/harmintent_words = regex("harm|fight")
+var/static/regex/harmintent_words = regex("harm|fight|punch")
 var/static/regex/throwmode_words = regex("throw|catch")
 var/static/regex/flip_words = regex("flip|rotate|revolve|roll|somersault")
+var/static/regex/speak_words = regex("speak|say something")
 var/static/regex/rest_words = regex("rest")
 var/static/regex/getup_words = regex("get up")
 var/static/regex/sit_words = regex("sit")
@@ -33,7 +41,7 @@ var/static/regex/salute_words = regex("salute")
 var/static/regex/deathgasp_words = regex("play dead")
 var/static/regex/clap_words = regex("clap|applaud")
 var/static/regex/honk_words = regex("ho+nk") //hooooooonk
-var/static/regex/multispin_words = regex("like a record baby")
+var/static/regex/multispin_words = regex("like a record baby|right round")
 
 /obj/item/organ/vocal_cords //organs that are activated through speech with the :x channel
 	name = "vocal cords"
@@ -254,12 +262,33 @@ var/static/regex/multispin_words = regex("like a record baby")
 			L.IgniteMob()
 		next_command = world.time + cooldown_damage
 
+	//HOT
+	else if((findtext(message, hot_words)))
+		for(var/V in listeners)
+			var/mob/living/L = V
+			L.bodytemperature += (50 * power_multiplier)
+		next_command = world.time + cooldown_damage
+
+	//COLD
+	else if((findtext(message, cold_words)))
+		for(var/V in listeners)
+			var/mob/living/L = V
+			L.bodytemperature -= (50 * power_multiplier)
+		next_command = world.time + cooldown_damage
+
 	//REPULSE
 	else if((findtext(message, repulse_words)))
 		for(var/V in listeners)
 			var/mob/living/L = V
 			var/throwtarget = get_edge_target_turf(owner, get_dir(owner, get_step_away(L, owner)))
-			L.throw_at(throwtarget, 3 * power_multiplier, 1)
+			L.throw_at(throwtarget, 3 * power_multiplier, 1 * power_multiplier)
+		next_command = world.time + cooldown_damage
+
+	//ATTRACT
+	else if((findtext(message, attract_words)))
+		for(var/V in listeners)
+			var/mob/living/L = V
+			L.throw_at(get_step_towards(owner,L), 3 * power_multiplier, 1 * power_multiplier)
 		next_command = world.time + cooldown_damage
 
 	//WHO ARE YOU?
@@ -270,6 +299,7 @@ var/static/regex/multispin_words = regex("like a record baby")
 				L.say("[L.mind.devilinfo.truename]")
 			else
 				L.say("[L.real_name]")
+			sleep(5) //So the chat flows more naturally
 		next_command = world.time + cooldown_meme
 
 	//SAY MY NAME
@@ -277,6 +307,7 @@ var/static/regex/multispin_words = regex("like a record baby")
 		for(var/V in listeners)
 			var/mob/living/L = V
 			L.say("[owner.name]!") //"Unknown!"
+			sleep(5) //So the chat flows more naturally
 		next_command = world.time + cooldown_meme
 
 	//KNOCK KNOCK
@@ -284,6 +315,7 @@ var/static/regex/multispin_words = regex("like a record baby")
 		for(var/V in listeners)
 			var/mob/living/L = V
 			L.say("Who's there?")
+			sleep(5) //So the chat flows more naturally
 		next_command = world.time + cooldown_meme
 
 	//STATE LAWS
@@ -295,9 +327,20 @@ var/static/regex/multispin_words = regex("like a record baby")
 
 	//MOVE
 	else if((findtext(message, move_words)))
-		for(var/V in listeners)
-			var/mob/living/L = V
-			step(L, pick(cardinal))
+		var/direction
+		if(findtext(message, up_words))
+			direction = NORTH
+		else if(findtext(message, down_words))
+			direction = SOUTH
+		else if(findtext(message, left_words))
+			direction = WEST
+		else if(findtext(message, right_words))
+			direction = EAST
+		for(var/i=1, i<=(5*power_multiplier), i++)
+			for(var/V in listeners)
+				var/mob/living/L = V
+				step(L, direction ? direction : pick(cardinal))
+			sleep(10)
 		next_command = world.time + cooldown_meme
 
 	//WALK
@@ -320,24 +363,56 @@ var/static/regex/multispin_words = regex("like a record baby")
 	else if((findtext(message, helpintent_words)))
 		for(var/mob/living/carbon/human/H in listeners)
 			H.a_intent_change(INTENT_HELP)
+			var/list/nearby_mobs = list()
+			for(var/mob/living/L in range(1, H))
+				if(L!=H)
+					nearby_mobs |= L
+			if(nearby_mobs.len)
+				var/mob/living/T = pick(nearby_mobs)
+				H.ClickOn(T)
+			sleep(2) //delay to make it feel more natural
 		next_command = world.time + cooldown_meme
 
 	//DISARM INTENT
 	else if((findtext(message, disarmintent_words)))
 		for(var/mob/living/carbon/human/H in listeners)
 			H.a_intent_change(INTENT_DISARM)
+			var/list/nearby_mobs = list()
+			for(var/mob/living/L in range(1, H))
+				if(L!=H)
+					nearby_mobs |= L
+			if(nearby_mobs.len)
+				var/mob/living/T = pick(nearby_mobs)
+				H.ClickOn(T)
+			sleep(2) //delay to make it feel more natural
 		next_command = world.time + cooldown_meme
 
 	//GRAB INTENT
 	else if((findtext(message, grabintent_words)))
 		for(var/mob/living/carbon/human/H in listeners)
 			H.a_intent_change(INTENT_GRAB)
+			var/list/nearby_mobs = list()
+			for(var/mob/living/L in range(1, H))
+				if(L!=H)
+					nearby_mobs |= L
+			if(nearby_mobs.len)
+				var/mob/living/T = pick(nearby_mobs)
+				H.ClickOn(T)
+			sleep(2) //delay to make it feel more natural
 		next_command = world.time + cooldown_meme
 
 	//HARM INTENT
 	else if((findtext(message, harmintent_words)))
 		for(var/mob/living/carbon/human/H in listeners)
 			H.a_intent_change(INTENT_HARM)
+			var/list/nearby_mobs = list()
+			for(var/mob/living/L in range(1, H))
+				if(L!=H)
+					nearby_mobs |= L
+			if(nearby_mobs.len)
+				var/mob/living/T = pick(nearby_mobs)
+				H.ClickOn(T)
+			sleep(2) //delay to make it feel more natural
 		next_command = world.time + cooldown_meme
 
 	//THROW/CATCH
@@ -351,6 +426,14 @@ var/static/regex/multispin_words = regex("like a record baby")
 		for(var/V in listeners)
 			var/mob/living/L = V
 			L.emote("flip")
+		next_command = world.time + cooldown_meme
+
+	//SPEAK
+	else if((findtext(message, speak_words)))
+		for(var/V in listeners)
+			var/mob/living/L = V
+			L.say(pick_list_replacements(BRAIN_DAMAGE_FILE, "brain_damage"))
+			sleep(5) //So the chat flows more naturally
 		next_command = world.time + cooldown_meme
 
 	//REST
@@ -394,14 +477,17 @@ var/static/regex/multispin_words = regex("like a record baby")
 		for(var/V in listeners)
 			var/mob/living/L = V
 			L.emote("dance")
+			sleep(5) //So the chat flows more naturally
 		next_command = world.time + cooldown_meme
 
 	//JUMP
 	else if((findtext(message, jump_words)))
 		for(var/V in listeners)
 			var/mob/living/L = V
-			L.say("HOW HIGH?!!")
+			if(prob(25))
+				L.say("HOW HIGH?!!")
 			L.emote("jump")
+			sleep(5) //So the chat flows more naturally
 		next_command = world.time + cooldown_meme
 
 	//SALUTE
@@ -409,6 +495,7 @@ var/static/regex/multispin_words = regex("like a record baby")
 		for(var/V in listeners)
 			var/mob/living/L = V
 			L.emote("salute")
+			sleep(5) //So the chat flows more naturally
 		next_command = world.time + cooldown_meme
 
 	//PLAY DEAD
@@ -416,6 +503,7 @@ var/static/regex/multispin_words = regex("like a record baby")
 		for(var/V in listeners)
 			var/mob/living/L = V
 			L.emote("deathgasp")
+			sleep(5) //So the chat flows more naturally
 		next_command = world.time + cooldown_meme
 
 	//PLEASE CLAP
@@ -423,6 +511,7 @@ var/static/regex/multispin_words = regex("like a record baby")
 		for(var/V in listeners)
 			var/mob/living/L = V
 			L.emote("clap")
+			sleep(5) //So the chat flows more naturally
 		next_command = world.time + cooldown_meme
 
 	//HONK
