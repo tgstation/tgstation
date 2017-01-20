@@ -23,7 +23,7 @@
 	master = null
 	return ..()
 
-/obj/screen/orbit(atom/A, radius = 10, clockwise = FALSE, rotation_speed = 20, rotation_segments = 36, pre_rotation = TRUE, lockinorbit = FALSE)
+/obj/screen/orbit(atom/A, radius, clockwise, rotation_speed, rotation_segments, pre_rotation, lockinorbit)
 	return
 
 /obj/screen/text
