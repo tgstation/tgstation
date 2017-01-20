@@ -89,6 +89,7 @@
 	H.death()
 	if(!prev_fakedeath)
 		H.status_flags &= ~FAKEDEATH
+	H.apply_status_effect(STATUS_EFFECT_SIGILMARK) //let them be affected by vitality matrices
 	picked_fluff_name = "Slave"
 	braintype = picked_fluff_name
 	brainmob.timeofhostdeath = H.timeofdeath
