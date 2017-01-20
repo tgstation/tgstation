@@ -15,10 +15,5 @@ var/datum/subsystem/assets/SSasset
 		A.register()
 
 	for(var/client/C in clients)
-		GiveFilesToClient(C)
+		addtimer(CALLBACK(GLOBAL_PROC, .proc/getFilesSlow, C, cache, FALSE), 10, TIMER_CLIENT_TIME)
 	..()
-
-/datum/subsystem/assets/proc/GiveFilesToClient(client/C)
-	set waitfor = 0
-	sleep(10)	// Doing this to a client too soon after they've connected can cause issues, also the proc we call sleeps.
-	getFilesSlow(C, cache, FALSE)
