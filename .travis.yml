@@ -10,13 +10,8 @@ env:
     - DM_MAPFILE=""
     matrix:
     - BUILD_TOOLS=true
-    - DM_MAPFILE="tgstation2"
-    - DM_MAPFILE="metastation"
-    - DM_MAPFILE="birdstation"
-    - DM_MAPFILE="pubbystation"
     - DM_MAPFILE="templates"
-    - DM_MAPFILE="omegastation"
-    - DM_MAPFILE="deltastation"
+    - DM_MAPFILE="loadallmaps"
 
 cache:
   directories:
