@@ -75,6 +75,7 @@ var/datum/subsystem/objects/SSobj
 
 /datum/subsystem/objects/Recover()
 	initialized = SSobj.initialized
+	old_initialized = SSobj.old_initialized
 	if (istype(SSobj.atom_spawners))
 		atom_spawners = SSobj.atom_spawners
 	if (istype(SSobj.processing))
