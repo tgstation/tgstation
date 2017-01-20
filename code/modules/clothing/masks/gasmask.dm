@@ -186,5 +186,10 @@ obj/item/clothing/mask/gas/tiki_mask/ui_action_click(mob/user)
 
 	if(src && choice && !M.stat && in_range(M,src))
 		icon_state = options[choice]
+		item_state = options[choice]
+		user.update_inv_wear_mask()
+		for(var/X in actions)
+			var/datum/action/A = X
+			A.UpdateButtonIcon()
 		M << "The Tiki Mask has now changed into the [choice] Mask!"
 		return 1
