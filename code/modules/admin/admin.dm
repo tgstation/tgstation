@@ -205,7 +205,7 @@ var/global/BSACooldown = 0
 			dat+="<HR><B>Feed Security functions:</B><BR>"
 			dat+="<BR><A href='?src=\ref[src];ac_menu_wanted=1'>[(wanted_already) ? ("Manage") : ("Publish")] \"Wanted\" Issue</A>"
 			dat+="<BR><A href='?src=\ref[src];ac_menu_censor_story=1'>Censor Feed Stories</A>"
-			dat+="<BR><A href='?src=\ref[src];ac_menu_censor_channel=1'>Mark Feed Channel with Nanotrasen D-Notice (disables and locks the channel.</A>"
+			dat+="<BR><A href='?src=\ref[src];ac_menu_censor_channel=1'>Mark Feed Channel with Nanotrasen D-Notice (disables and locks the channel).</A>"
 			dat+="<BR><HR><A href='?src=\ref[src];ac_set_signature=1'>The newscaster recognises you as:<BR> <FONT COLOR='green'>[src.admin_signature]</FONT></A>"
 		if(1)
 			dat+= "Station Feed Channels<HR>"
@@ -513,15 +513,17 @@ var/global/BSACooldown = 0
 	set category = "Server"
 	set desc="Start the round RIGHT NOW"
 	set name="Start Now"
-	if(ticker.current_state == GAME_STATE_PREGAME)
-		ticker.can_fire = 1
-		ticker.timeLeft = 0
+	if(ticker.current_state == GAME_STATE_PREGAME || ticker.current_state == GAME_STATE_STARTUP)
+		ticker.start_immediately = TRUE
 		log_admin("[usr.key] has started the game.")
-		message_admins("<font color='blue'>[usr.key] has started the game.</font>")
+		var/msg = ""
+		if(ticker.current_state == GAME_STATE_STARTUP)
+			msg = " (The server is still setting up, but the round will be \
+				started as soon as possible.)"
+		message_admins("<font color='blue'>\
+			[usr.key] has started the game.[msg]</font>")
 		feedback_add_details("admin_verb","SN") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 		return 1
-	else if (ticker.current_state == GAME_STATE_STARTUP)
-		usr << "<font color='red'>Error: Start Now: Game is in startup, please wait until it has finished.</font>"
 	else
 		usr << "<font color='red'>Error: Start Now: Game has already started.</font>"
 

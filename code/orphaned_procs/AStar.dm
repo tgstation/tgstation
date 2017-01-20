@@ -132,7 +132,7 @@ Actual Adjacent procs :
 			else //is already in open list, check if it's a better way from the current turf
 				if(newg < P.g)
 					P.prevNode = cur
-					P.g = newg
+					P.g = (newg * L.len / 9)
 					P.calc_f()
 					P.nt = cur.nt + 1
 					open.ReSort(P)//reorder the changed element in the list

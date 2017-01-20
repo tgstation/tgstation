@@ -64,6 +64,12 @@
 		step(O, get_dir(O, src))
 	return
 
+/obj/structure/proc/do_climb(atom/movable/A)
+	if(climbable)
+		density = 0
+		. = step(A,get_dir(A,src.loc))
+		density = 1
+
 /obj/structure/proc/climb_structure(mob/user)
 	src.add_fingerprint(user)
 	user.visible_message("<span class='warning'>[user] starts climbing onto [src].</span>", \
@@ -76,8 +82,7 @@
 	structureclimber = user
 	if(do_mob(user, user, adjusted_climb_time))
 		if(src.loc) //Checking if structure has been destroyed
-			density = 0
-			if(step(user,get_dir(user,src.loc)))
+			if(do_climb(user))
 				user.visible_message("<span class='warning'>[user] climbs onto [src].</span>", \
 									"<span class='notice'>You climb onto [src].</span>")
 				add_logs(user, src, "climbed onto")
@@ -85,7 +90,6 @@
 				. = 1
 			else
 				user << "<span class='warning'>You fail to climb onto [src].</span>"
-			density = 1
 	structureclimber = null
 
 /obj/structure/examine(mob/user)

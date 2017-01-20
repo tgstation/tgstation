@@ -42,6 +42,9 @@
 
 	var/turf/T = get_turf(A)
 
+	if(istype(A, /obj/item/weapon/reagent_containers/glass/bucket))
+		return
+
 	if(T)
 		user.visible_message("[user] begins to clean \the [T] with [src].", "<span class='notice'>You begin to clean \the [T] with [src]...</span>")
 

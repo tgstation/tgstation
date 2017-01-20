@@ -296,7 +296,7 @@ var/list/teleport_runes = list()
 
 	var/turf/T = get_turf(src)
 	var/turf/target = get_turf(actual_selected_rune)
-	if(is_blocked_turf(target))
+	if(is_blocked_turf(target, TRUE))
 		user << "<span class='warning'>The target rune is blocked. Attempting to teleport to it would be massively unwise.</span>"
 		fail_invoke()
 		return
@@ -762,7 +762,7 @@ var/list/wall_runes = list()
 			W.density = TRUE
 			W.update_state()
 			W.spread_density()
-	density_timer = addtimer(CALLBACK(src, .proc/lose_density), 900)
+	density_timer = addtimer(CALLBACK(src, .proc/lose_density), 900, TIMER_STOPPABLE)
 
 /obj/effect/rune/wall/proc/lose_density()
 	if(density)

@@ -17,7 +17,8 @@
 	resistance_flags = FIRE_PROOF
 	var/max_water = 50
 	var/last_use = 1
-	var/safety = 1
+	var/safety = TRUE
+	var/refilling = FALSE
 	var/sprite_name = "fire_extinguisher"
 	var/power = 5 //Maximum distance launched water will travel
 	var/precision = 0 //By default, turfs picked from a spray are random, set to 1 to make it always have at least one water effect per row
@@ -56,6 +57,13 @@
 	else
 		return ..()
 
+/obj/item/weapon/extinguisher/attack_obj(obj/O, mob/living/user)
+	if(AttemptRefill(O, user))
+		refilling = TRUE
+		return FALSE
+	else
+		return ..()
+
 /obj/item/weapon/extinguisher/examine(mob/user)
 	..()
 	if(reagents.total_volume)
@@ -66,7 +74,7 @@
 /obj/item/weapon/extinguisher/proc/AttemptRefill(atom/target, mob/user)
 	if(istype(target, /obj/structure/reagent_dispensers/watertank) && target.Adjacent(user))
 		var/safety_save = safety
-		safety = 1
+		safety = TRUE
 		if(reagents.total_volume == reagents.maximum_volume)
 			user << "<span class='warning'>\The [src] is already full!</span>"
 			safety = safety_save
@@ -87,8 +95,8 @@
 
 /obj/item/weapon/extinguisher/afterattack(atom/target, mob/user , flag)
 	//TODO; Add support for reagents in water.
-	var/Refill = AttemptRefill(target, user)
-	if(Refill)
+	if(refilling)
+		refilling = FALSE
 		return
 	if (!safety)
 		if (src.reagents.total_volume < 1)

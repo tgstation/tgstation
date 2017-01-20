@@ -111,7 +111,7 @@
 
 /obj/item/weapon/twohanded/equipped(mob/user, slot)
 	..()
-	if(!user.is_holding(src) && wielded)
+	if(!user.is_holding(src) && wielded && !istype(src, /obj/item/weapon/twohanded/required))
 		unwield(user)
 
 ///////////OFFHAND///////////////
@@ -131,6 +131,14 @@
 	if(wielded)//Only delete if we're wielded
 		wielded = FALSE
 		qdel(src)
+
+/obj/item/weapon/twohanded/offhand/attack_self(mob/living/carbon/user)		//You should never be able to do this in standard use of two handed items. This is a backup for lingering offhands.
+	var/obj/item/weapon/twohanded/O = user.get_inactive_held_item()
+	if (istype(O) && !istype(O, /obj/item/weapon/twohanded/offhand/))		//If you have a proper item in your other hand that the offhand is for, do nothing. This should never happen.
+		return
+	if (qdeleted(src))
+		return
+	qdel(src)																//If it's another offhand, or literally anything else, qdel. If I knew how to add logging messages I'd put one here.
 
 ///////////Two hand required objects///////////////
 //This is for objects that require two hands to even pick up
@@ -159,6 +167,13 @@
 
 /obj/item/weapon/twohanded/required/equipped(mob/user, slot)
 	..()
+	var/slotbit = slotdefine2slotbit(slot)
+	if(slot_flags & slotbit)
+		var/O = user.is_holding_item_of_type(/obj/item/weapon/twohanded/offhand)
+		if(!O || qdeleted(O))
+			return
+		qdel(O)
+		return
 	if(slot == slot_hands)
 		wield(user)
 	else
@@ -428,7 +443,6 @@
 		explosive = G
 		name = "explosive lance"
 		desc = "A makeshift spear with [G] attached to it. Alt+click on the spear to set your war cry!"
-		return
 	update_icon()
 
 // CHAINSAW
