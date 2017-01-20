@@ -107,6 +107,6 @@
 				O.orbiter.stop_orbit()
 
 /atom/movable/Destroy(force = FALSE)
-	..()
+	. = ..()
 	if (orbiting)
 		stop_orbit()
