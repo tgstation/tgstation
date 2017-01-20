@@ -912,7 +912,7 @@
 
 /mob/living/verb/request_replacement()
 	set name = "Ghost Replacement"
-	set category = "IC"
+	set category = "OOC"
 
 	if(alert(src, "Do you want to offer control of your mob to dead players?", "Ghost Replacement", "Yes", "No") == "No")
 		return

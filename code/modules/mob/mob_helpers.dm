@@ -461,6 +461,7 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 		theghost = pick(candidates)
 		M << "Your mob has been taken over by a ghost!"
 		message_admins("[key_name_admin(theghost)] has taken control of ([key_name_admin(M)])")
+		M.attack_log += "\[[time_stamp()]\] [key_name(theghost)] has taken control of [key_name(M)]"
 		M.ghostize(0)
 		M.key = theghost.key
 		return TRUE
