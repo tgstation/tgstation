@@ -36,10 +36,10 @@
 
 /datum/supply_pack/emergency
 	group = "Emergency"
-	
+
 /datum/supply_pack/emergency/vehicle
 	name = "Biker Gang Kit" //TUNNEL SNAKES OWN THIS TOWN
-	cost = 2000 
+	cost = 2000
 	contraband = TRUE
 	contains = list(/obj/vehicle/atv,
 					/obj/item/key,
@@ -1379,16 +1379,6 @@
 					/obj/item/weapon/book/manual/random/,
 					/obj/item/weapon/book/manual/random/,
 					/obj/item/weapon/book/random/triple)
-
-/datum/supply_pack/misc/posters
-	name = "Corporate Posters Crate"
-	cost = 800
-	contains = list(/obj/item/weapon/poster/legit,
-					/obj/item/weapon/poster/legit,
-					/obj/item/weapon/poster/legit,
-					/obj/item/weapon/poster/legit,
-					/obj/item/weapon/poster/legit)
-	crate_name = "corporate posters crate"
 
 /datum/supply_pack/misc/paper
 	name = "Bureaucracy Crate"
