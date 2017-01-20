@@ -6,7 +6,7 @@
 /datum/clockwork_scripture/ranged_ability/linked_vanguard
 	name = "Linked Vanguard"
 	invocations = list("Shield us...", "...from darkness!")
-	channel_time = 40
+	channel_time = 30
 	required_components = list(VANGUARD_COGWHEEL = 1)
 	primary_component = VANGUARD_COGWHEEL
 	quickbind_desc = "Allows you to grant a Servant and yourself stun immunity, as the Vanguard scripture.<br><b>Click your slab to disable.</b>"
@@ -27,7 +27,7 @@
 /datum/clockwork_scripture/ranged_ability/judicial_marker
 	name = "Judicial Marker"
 	invocations = list("May heathens...", "...kneel under our force!")
-	channel_time = 40
+	channel_time = 30
 	required_components = list(BELLIGERENT_EYE = 1)
 	primary_component = BELLIGERENT_EYE
 	quickbind_desc = "Allows you to place a Judicial Marker to stun and damage a target location.<br><b>Click your slab to disable.</b>"
