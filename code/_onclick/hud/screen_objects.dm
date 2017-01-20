@@ -23,7 +23,7 @@
 	master = null
 	return ..()
 
-/obj/screen/orbit(atom/A, radius, clockwise, rotation_speed, rotation_segments, pre_rotation, lockinorbit)
+/obj/screen/orbit()
 	return
 
 /obj/screen/text
