@@ -1503,7 +1503,7 @@
 	crate_name = "standard costume crate"
 	crate_type = /obj/structure/closet/crate/secure
 
-/datum/supply_pack/misc/costume
+/datum/supply_pack/misc/costume_original
 	name = "Original Costume Crate"
 	cost = 1000
 	contains = list(/obj/item/clothing/head/snowman,
