@@ -234,13 +234,14 @@
 	return 0
 
 /turf/closed/wall/r_wall/proc/update_icon()
-	if(d_state)
+	if(d_state != INTACT)
 		smooth = SMOOTH_FALSE
 		clear_smooth_overlays()
 		icon_state = "r_wall-[d_state]"
 	else
 		smooth = SMOOTH_TRUE
 		queue_smooth_neighbors(src)
+		queue_smooth(src)
 		icon_state = "r_wall"
 
 /turf/closed/wall/r_wall/singularity_pull(S, current_size)

@@ -170,7 +170,9 @@ var/datum/subsystem/garbage_collector/SSgarbage
 		switch(hint)
 			if (QDEL_HINT_QUEUE)		//qdel should queue the object for deletion.
 				SSgarbage.QueueForQueuing(D)
-			if (QDEL_HINT_LETMELIVE, QDEL_HINT_IWILLGC)	//qdel should let the object live after calling destory.
+			if (QDEL_HINT_IWILLGC)
+				return
+			if (QDEL_HINT_LETMELIVE)	//qdel should let the object live after calling destory.
 				if(!force)
 					D.gc_destroyed = null //clear the gc variable (important!)
 					return
@@ -224,6 +226,13 @@ var/datum/subsystem/garbage_collector/SSgarbage
 // Return the appropriate QDEL_HINT; in most cases this is QDEL_HINT_QUEUE.
 /datum/proc/Destroy(force=FALSE)
 	tag = null
+	var/list/timers = active_timers
+	active_timers = null
+	for(var/thing in timers)
+		var/datum/timedevent/timer = thing
+		if (timer.spent)
+			continue
+		qdel(timer)
 	return QDEL_HINT_QUEUE
 
 /datum/var/gc_destroyed //Time when this object was destroyed.

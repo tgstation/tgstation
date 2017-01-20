@@ -95,6 +95,7 @@
 	var/mode = "NTPROBEV0.8"
 	var/active = FALSE
 	density = 1
+	use_power = FALSE
 	var/static/gid = 0
 	var/id = 0
 
@@ -134,7 +135,8 @@
 	name = "Meteor Shield Satellite"
 	desc = "Meteor Point Defense Satellite"
 	mode = "M-SHIELD"
-	var/kill_range = 10
+	speed_process = TRUE
+	var/kill_range = 14
 
 /obj/machinery/satellite/meteor_shield/proc/space_los(meteor)
 	for(var/turf/T in getline(src,meteor))

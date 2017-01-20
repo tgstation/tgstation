@@ -73,15 +73,14 @@
 			return
 		if(L)
 			if(R.use(1))
-				user << "<span class='notice'>You begin constructing catwalk...</span>"
+				user << "<span class='notice'>You construct a catwalk.</span>"
 				playsound(src, 'sound/weapons/Genhit.ogg', 50, 1)
-				qdel(L)
-				ReplaceWithCatwalk()
+				new/obj/structure/lattice/catwalk(src)
 			else
 				user << "<span class='warning'>You need two rods to build a catwalk!</span>"
 			return
 		if(R.use(1))
-			user << "<span class='notice'>Constructing support lattice...</span>"
+			user << "<span class='notice'>You construct a lattice.</span>"
 			playsound(src, 'sound/weapons/Genhit.ogg', 50, 1)
 			ReplaceWithLattice()
 		else

@@ -311,7 +311,7 @@
 	selection_type = "view"
 	sound = 'sound/magic/Repulse.ogg'
 	var/maxthrow = 5
-	var/sparkle_path = /obj/effect/overlay/temp/sparkle
+	var/sparkle_path = /obj/effect/overlay/temp/gravpush
 
 	action_icon_state = "repulse"
 
@@ -324,11 +324,11 @@
 		for(var/atom/movable/AM in T)
 			thrownatoms += AM
 
-	for(var/atom/movable/AM in thrownatoms)
-		if(AM == user || AM.anchored) continue
+	for(var/am in thrownatoms)
+		var/atom/movable/AM = am
+		if(AM == user || AM.anchored)
+			continue
 
-		// created sparkles will disappear on their own
-		PoolOrNew(sparkle_path, AM)
 		throwtarget = get_edge_target_turf(user, get_dir(user, get_step_away(AM, user)))
 		distfromcaster = get_dist(user, AM)
 		if(distfromcaster == 0)
@@ -338,6 +338,7 @@
 				M.adjustBruteLoss(5)
 				M << "<span class='userdanger'>You're slammed into the floor by [user]!</span>"
 		else
+			PoolOrNew(sparkle_path, list(get_turf(AM), get_dir(user, AM))) //created sparkles will disappear on their own
 			if(isliving(AM))
 				var/mob/living/M = AM
 				M.Weaken(stun_amt)
@@ -353,7 +354,7 @@
 	range = 2
 	cooldown_min = 150
 	invocation_type = "none"
-	sparkle_path = /obj/effect/overlay/temp/sparkle/tailsweep
+	sparkle_path = /obj/effect/overlay/temp/dir_setting/tailsweep
 	action_icon_state = "tailsweep"
 	action_background_icon_state = "bg_alien"
 

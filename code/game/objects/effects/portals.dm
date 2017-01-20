@@ -9,6 +9,7 @@
 	var/creator = null
 	anchored = 1
 	var/precision = 1 // how close to the portal you will teleport. 0 = on the portal, 1 = adjacent
+	var/mech_sized = FALSE
 
 /obj/effect/portal/Bumped(mob/M as mob|obj)
 	teleport(M)
@@ -21,7 +22,8 @@
 	if(user && Adjacent(user))
 		teleport(user)
 
-
+/obj/effect/portal/make_frozen_visual()
+	return
 
 /obj/effect/portal/New(loc, turf/target, creator=null, lifespan=300)
 	..()
@@ -51,8 +53,9 @@
 /obj/effect/portal/proc/teleport(atom/movable/M as mob|obj)
 	if(istype(M, /obj/effect)) //sparks don't teleport
 		return
-	if(M.anchored&&istype(M, /obj/mecha))
-		return
+	if(M.anchored)
+		if(!(istype(M, /obj/mecha) && mech_sized))
+			return
 	if (!( target ))
 		qdel(src)
 		return

@@ -61,7 +61,7 @@
 /turf/closed/wall/clockwork/examine(mob/user)
 	..()
 	if((is_servant_of_ratvar(user) || isobserver(user)) && linkedcache)
-		user << "<span class='brass'>It is linked, generating components in a cache!</span>"
+		user << "<span class='brass'>It is linked to a Tinkerer's Cache, generating components!</span>"
 
 /turf/closed/wall/clockwork/Destroy()
 	if(linkedcache)
@@ -72,6 +72,11 @@
 		qdel(realappearence)
 		realappearence = null
 	return ..()
+
+/turf/closed/wall/clockwork/ReplaceWithLattice()
+	..()
+	for(var/obj/structure/lattice/L in src)
+		L.ratvar_act()
 
 /turf/closed/wall/clockwork/narsie_act()
 	..()

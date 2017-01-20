@@ -81,7 +81,7 @@
 	if(density)
 		smooth = SMOOTH_TRUE
 		queue_smooth(src)
-		icon_state = "wall"
+		icon_state = initial(icon_state)
 	else
 		icon_state = "fwall_open"
 

@@ -12,7 +12,7 @@ var/datum/events/keycard_events = new()
 	power_channel = ENVIRON
 	req_access = list(access_keycard_auth)
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
-	var/datum/event/ev
+	var/datum/callback/ev
 	var/event = ""
 	var/obj/machinery/keycard_auth/event_source
 	var/mob/triggerer = null
@@ -20,7 +20,7 @@ var/datum/events/keycard_events = new()
 
 /obj/machinery/keycard_auth/New()
 	. = ..()
-	ev = keycard_events.addEvent("triggerEvent", src, "triggerEvent")
+	ev = keycard_events.addEvent("triggerEvent", CALLBACK(src, .proc/triggerEvent))
 
 /obj/machinery/keycard_auth/Destroy()
 	keycard_events.clearEvent("triggerEvent", ev)
