@@ -1,5 +1,0 @@
-author: "XDTM"
-delete-after: True
-changes: 
-  - bugfix: "Chameleon PDAs can now morph into assistant PDAs."
-  - bugfix: "A few iconless items have been blacklisted from chameleon clothing."
