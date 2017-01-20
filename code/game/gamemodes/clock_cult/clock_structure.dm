@@ -9,7 +9,7 @@
 	anchored = 1
 	density = 1
 	resistance_flags = FIRE_PROOF | ACID_PROOF
-	var/repair_amount = 5 //how much a proselytizer can repair each cycle
+	var/repair_amount = 4 //how much a proselytizer can repair each cycle
 	var/can_be_repaired = TRUE //if a proselytizer can repair it at all
 	break_message = "<span class='warning'>The frog isn't a meme after all!</span>" //The message shown when a structure breaks
 	break_sound = 'sound/magic/clockwork/anima_fragment_death.ogg' //The sound played when a structure breaks
@@ -36,7 +36,7 @@
 		var/previouscolor = color
 		color = "#960000"
 		animate(src, color = previouscolor, time = 8)
-		addtimer(src, "update_atom_colour", 8)
+		addtimer(CALLBACK(src, /atom/proc/update_atom_colour), 8)
 
 /obj/structure/destructible/clockwork/examine(mob/user)
 	var/can_see_clockwork = is_servant_of_ratvar(user) || isobserver(user)
@@ -259,10 +259,8 @@
 /obj/structure/destructible/clockwork/powered/proc/return_power(amount) //returns a given amount of power to all nearby sigils or if there are no sigils, to the APC
 	if(amount <= 0)
 		return FALSE
-	var/list/sigils_in_range = list()
-	for(var/obj/effect/clockwork/sigil/transmission/T in range(1, src))
-		sigils_in_range |= T
-	if(!sigils_in_range.len && (!target_apc || !target_apc.cell))
+	var/list/sigils_in_range = check_apc_and_sigils()
+	if(!istype(sigils_in_range))
 		return FALSE
 	if(sigils_in_range.len)
 		while(amount >= MIN_CLOCKCULT_POWER)
@@ -277,3 +275,11 @@
 		target_apc.update_icon()
 		target_apc.updateUsrDialog()
 	return TRUE
+
+/obj/structure/destructible/clockwork/powered/proc/check_apc_and_sigils() //checks for sigils and an APC, returning FALSE if it finds neither, and a list of sigils otherwise
+	. = list()
+	for(var/obj/effect/clockwork/sigil/transmission/T in range(1, src))
+		. |= T
+	var/list/L = .
+	if(!L.len && (!target_apc || !target_apc.cell))
+		return FALSE

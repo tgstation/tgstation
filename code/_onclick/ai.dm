@@ -69,8 +69,8 @@
 		aicamera.captureimage(A, usr)
 		return
 	if(waypoint_mode)
-		set_waypoint(A)
 		waypoint_mode = 0
+		set_waypoint(A)
 		return
 
 	/*

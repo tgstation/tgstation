@@ -62,7 +62,7 @@
 	var/damnation_type = 0
 	var/datum/mind/soulOwner //who owns the soul.  Under normal circumstances, this will point to src
 	var/isholy = FALSE //is this person a chaplain or admin role allowed to use bibles
-	
+
 	var/mob/living/enslaved_to //If this mind's master is another mob (i.e. adamantine golems)
 
 /datum/mind/New(var/key)
@@ -89,7 +89,6 @@
 			var/datum/antagonist/D = i
 			D.transfer_to_new_body(new_character)
 	var/datum/atom_hud/antag/hud_to_transfer = antag_hud//we need this because leave_hud() will clear this list
-	leave_all_huds()									//leave all the huds in the old body, so it won't get huds if somebody else enters it
 	current = new_character								//associate ourself with our new body
 	new_character.mind = src							//and associate our new body with ourself
 	if(iscarbon(new_character))
@@ -1496,7 +1495,7 @@
 			if(istype(S, type))
 				continue
 		S.charge_counter = delay
-		addtimer(S, "start_recharge", 0)
+		addtimer(CALLBACK(S, /obj/effect/proc_holder/spell.proc/start_recharge), 0)
 
 /datum/mind/proc/get_ghost(even_if_they_cant_reenter)
 	for(var/mob/dead/observer/G in dead_mob_list)

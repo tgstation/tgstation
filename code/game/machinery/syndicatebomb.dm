@@ -34,7 +34,7 @@
 	. = (payload in src) && (active || ignore_active) && !defused
 	if(.)
 		payload.detonate()
-		
+
 /obj/machinery/syndicatebomb/obj_break()
 	if(!try_detonate())
 		..()
@@ -419,7 +419,7 @@
 		chem_splash(get_turf(src), spread_range, list(reactants), temp_boost)
 
 		// Detonate it again in one second, until it's out of juice.
-		addtimer(src, "detonate", 10)
+		addtimer(CALLBACK(src, .proc/detonate), 10)
 
 	// If it's not a time release bomb, do normal explosion
 

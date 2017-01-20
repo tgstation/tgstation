@@ -303,7 +303,7 @@
 		if(!suit)
 			disable_flight(1)
 		if(!resync)
-			addtimer(src, "resync", 600, TIMER_NORMAL)
+			addtimer(CALLBACK(src, .proc/resync), 600)
 			resync = 1
 		if(!wearer)	//Oh god our user fell off!
 			disable_flight(1)
@@ -438,7 +438,7 @@
 		angle -= 360
 	dir = angle2dir(angle)
 	var/turf/target = get_edge_target_turf(get_turf(wearer), dir)
-	wearer.throw_at_fast(target, (speed+density+anchored), 2, wearer)
+	wearer.throw_at(target, (speed+density+anchored), 2, wearer)
 	wearer.visible_message("[wearer] is knocked flying by the impact!")
 
 /obj/item/device/flightpack/proc/flight_impact(atom/unmovablevictim, crashdir)	//Yes, victim.
@@ -541,6 +541,7 @@
 		pass += A.locked
 		pass += A.stat	//No power, no automatic open
 		pass += A.emagged
+		pass += A.welded
 		if(A.requiresID())
 			if((!A.allowed(wearer)) && !A.emergency)
 				pass += 1
@@ -579,7 +580,7 @@
 	for(var/i in 1 to (knockback-1))
 		target = get_step(target, throwdir)
 	wearer.visible_message(knockmessage)
-	victim.throw_at_fast(target, knockback, 1)
+	victim.throw_at(target, knockback, 1)
 	victim.Weaken(stun)
 
 /obj/item/device/flightpack/proc/victimknockback(atom/movable/victim, power, direction)
@@ -607,7 +608,7 @@
 	for(var/i in 1 to knockback/3)
 		target = get_step(target, pick(alldirs))
 	if(knockback)
-		victim.throw_at_fast(target, knockback, part_manip.rating)
+		victim.throw_at(target, knockback, part_manip.rating)
 	if(isobj(victim))
 		var/obj/O = victim
 		O.take_damage(damage)
@@ -672,7 +673,7 @@
 			return TRUE
 		usermessage("Warning: Velocity too high to safely disengage. Retry to confirm emergency shutoff.", 2)
 		override_safe = TRUE
-		addtimer(src, "enable_safe", 50, TIMER_NORMAL)
+		addtimer(CALLBACK(src, .proc/enable_safe), 50)
 		return FALSE
 	update_icon()
 

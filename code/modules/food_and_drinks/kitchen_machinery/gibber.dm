@@ -52,7 +52,7 @@
 	B.apply_default_parts(src)
 
 /obj/item/weapon/circuitboard/machine/gibber
-	name = "circuit board (Gibber)"
+	name = "Gibber (Machine Board)"
 	build_path = /obj/machinery/gibber
 	origin_tech = "programming=2;engineering=2"
 	req_components = list(
@@ -223,11 +223,11 @@
 		var/list/turf/nearby_turfs = RANGE_TURFS(3,T) - T
 		var/obj/item/skin = allskin
 		skin.loc = src.loc
-		skin.throw_at_fast(pick(nearby_turfs),meat_produced,3)
+		skin.throw_at(pick(nearby_turfs),meat_produced,3)
 		for (var/i=1 to meat_produced)
 			var/obj/item/meatslab = allmeat[i]
 			meatslab.loc = src.loc
-			meatslab.throw_at_fast(pick(nearby_turfs),i,3)
+			meatslab.throw_at(pick(nearby_turfs),i,3)
 			for (var/turfs=1 to meat_produced)
 				var/turf/gibturf = pick(nearby_turfs)
 				if (!gibturf.density && src in view(gibturf))

@@ -184,27 +184,20 @@
 
 
 /obj/machinery/status_display/receive_signal(datum/signal/signal)
-
+	if(supply_display)
+		mode = 4
+		return
 	switch(signal.data["command"])
 		if("blank")
 			mode = 0
-
 		if("shuttle")
 			mode = 1
-
 		if("message")
 			mode = 2
 			set_message(signal.data["msg1"], signal.data["msg2"])
-
 		if("alert")
 			mode = 3
 			set_picture(signal.data["picture_state"])
-
-		if("supply")
-			if(supply_display)
-				mode = 4
-
-
 
 /obj/machinery/ai_status_display
 	icon = 'icons/obj/status_display.dmi'

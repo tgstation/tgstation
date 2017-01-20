@@ -41,7 +41,7 @@
 	B.apply_default_parts(src)
 
 /obj/item/weapon/circuitboard/machine/telecomms/processor
-	name = "circuit board (Processor Unit)"
+	name = "Processor Unit (Machine Board)"
 	build_path = /obj/machinery/telecomms/processor
 	origin_tech = "programming=2;engineering=2"
 	req_components = list(

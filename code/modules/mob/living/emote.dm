@@ -124,7 +124,7 @@
 				H.CloseWings()
 			else
 				H.OpenWings()
-			addtimer(H, "[open ? "Open" : "Close"]Wings", wing_time)
+			addtimer(CALLBACK(H, open ? /mob/living/carbon/human.proc/OpenWings : /mob/living/carbon/human.proc/CloseWings), wing_time)
 
 /datum/emote/living/flap/aflap
 	key = "aflap"
@@ -251,6 +251,12 @@
 	key = "shake"
 	key_third_person = "shakes"
 	message = "shakes their head."
+	emote_type = EMOTE_AUDIBLE
+
+/datum/emote/living/shiver
+	key = "shiver"
+	key_third_person = "shiver"
+	message = "shivers."
 	emote_type = EMOTE_AUDIBLE
 
 /datum/emote/living/sigh

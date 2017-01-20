@@ -10,6 +10,21 @@
 	obj_integrity = 200
 	max_integrity = 200
 
+/obj/structure/girder/examine(mob/user)
+	. = ..()
+	switch(state)
+		if(GIRDER_REINF)
+			user << "<span class='notice'>The support struts are <b>screwed</b> in place.</span>"
+		if(GIRDER_REINF_STRUTS)
+			user << "<span class='notice'>The support struts are <i>unscrewed</i> and the inner <b>grille</b> is intact.</span>"
+		if(GIRDER_NORMAL)
+			if(can_displace)
+				user << "<span class='notice'>The bolts are <b>wrenched</b> in place.</span>"
+		if(GIRDER_DISPLACED)
+			user << "<span class='notice'>The bolts are <i>loosened</i>, but the <b>screws</b> are holding [src] together.</span>"
+		if(GIRDER_DISASSEMBLED)
+			user << "<span class='notice'>[src] is disassembled! You probably shouldn't be able to see this examine message.</span>"
+
 /obj/structure/girder/attackby(obj/item/W, mob/user, params)
 	add_fingerprint(user)
 	if(istype(W, /obj/item/weapon/screwdriver))
@@ -33,6 +48,14 @@
 					return
 				user << "<span class='notice'>You unsecure the support struts.</span>"
 				state = GIRDER_REINF_STRUTS
+		else if(state == GIRDER_REINF_STRUTS)
+			playsound(src.loc, W.usesound, 100, 1)
+			user << "<span class='notice'>You start securing support struts...</span>"
+			if(do_after(user, 40*W.toolspeed, target = src))
+				if(state != GIRDER_REINF_STRUTS)
+					return
+				user << "<span class='notice'>You secure the support struts.</span>"
+				state = GIRDER_REINF
 
 	else if(istype(W, /obj/item/weapon/wrench))
 		if(state == GIRDER_DISPLACED)
@@ -58,7 +81,7 @@
 	else if(istype(W, /obj/item/weapon/gun/energy/plasmacutter))
 		user << "<span class='notice'>You start slicing apart the girder...</span>"
 		playsound(src, 'sound/items/Welder.ogg', 100, 1)
-		if(do_after(user, 30, target = src))
+		if(do_after(user, 40*W.toolspeed, target = src))
 			user << "<span class='notice'>You slice apart the girder.</span>"
 			var/obj/item/stack/sheet/metal/M = new (loc, 2)
 			M.add_fingerprint(user)
@@ -73,9 +96,9 @@
 
 	else if(istype(W, /obj/item/weapon/wirecutters) && state == GIRDER_REINF_STRUTS)
 		playsound(src.loc, W.usesound, 100, 1)
-		user << "<span class='notice'>You start removing support struts...</span>"
+		user << "<span class='notice'>You start removing the inner grille...</span>"
 		if(do_after(user, 40*W.toolspeed, target = src))
-			user << "<span class='notice'>You remove the support struts.</span>"
+			user << "<span class='notice'>You remove the inner grille.</span>"
 			new /obj/item/stack/sheet/plasteel(get_turf(src))
 			var/obj/structure/girder/G = new (loc)
 			transfer_fingerprints_to(G)
@@ -331,7 +354,7 @@
 	else if(istype(W, /obj/item/weapon/gun/energy/plasmacutter))
 		user << "<span class='notice'>You start slicing apart the girder...</span>"
 		playsound(src, 'sound/items/Welder.ogg', 100, 1)
-		if(do_after(user, 30, target = src))
+		if(do_after(user, 40*W.toolspeed, target = src))
 			user << "<span class='notice'>You slice apart the girder.</span>"
 			var/obj/item/stack/sheet/runed_metal/R = new(get_turf(src))
 			R.amount = 1

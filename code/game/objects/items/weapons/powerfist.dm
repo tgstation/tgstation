@@ -86,8 +86,8 @@
 	playsound(loc, 'sound/weapons/genhit2.ogg', 50, 1)
 
 	var/atom/throw_target = get_edge_target_turf(target, get_dir(src, get_step_away(target, src)))
-	spawn(1)
-		target.throw_at(throw_target, 5 * fisto_setting, 0.2)
+
+	target.throw_at(throw_target, 5 * fisto_setting, 0.2)
 
 	add_logs(user, target, "power fisted", src)
 
