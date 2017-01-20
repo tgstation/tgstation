@@ -19,12 +19,14 @@
 	new_mob_message = "<span class='brass'>The soul vessel emits a jet of steam before its cogwheel smooths out.</span>"
 	dead_message = "<span class='deadsay'>Its cogwheel, scratched and dented, lies motionless.</span>"
 	fluff_names = list("Judge", "Guard", "Servant", "Smith", "Auger")
-	clockwork = TRUE
 	autoping = FALSE
 	resistance_flags = FIRE_PROOF | ACID_PROOF
+	force_replace_ai_name = TRUE
 
 /obj/item/device/mmi/posibrain/soul_vessel/New()
 	..()
+	radio.on = 0
+	laws = new /datum/ai_laws/ratvar()
 	braintype = picked_fluff_name
 	all_clockwork_objects += src
 
@@ -37,6 +39,11 @@
 		desc = clockwork_desc
 	..()
 	desc = initial(desc)
+
+/obj/item/device/mmi/posibrain/soul_vessel/transfer_personality(mob/candidate)
+	. = ..()
+	if(.)
+		add_servant_of_ratvar(brainmob, TRUE)
 
 /obj/item/device/mmi/posibrain/soul_vessel/attack_self(mob/living/user)
 	if(!is_servant_of_ratvar(user))

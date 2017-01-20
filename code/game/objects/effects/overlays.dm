@@ -40,6 +40,9 @@
 
 	timerid = QDEL_IN(src, duration)
 
+/obj/effect/overlay/temp/ex_act()
+	return
+
 /obj/effect/overlay/temp/dir_setting
 	randomdir = FALSE
 
@@ -146,6 +149,10 @@
 
 /obj/effect/overlay/temp/dir_setting/wraith/out
 	icon_state = "phase_shift"
+
+/obj/effect/overlay/temp/dir_setting/tailsweep
+	icon_state = "tailsweep"
+	duration = 4
 
 /obj/effect/overlay/temp/wizard
 	name = "water"
@@ -272,6 +279,9 @@
 /obj/effect/overlay/temp/ratvar/beam/falsewall
 	layer = OBJ_LAYER
 
+/obj/effect/overlay/temp/ratvar/beam/catwalk
+	layer = LATTICE_LAYER
+
 /obj/effect/overlay/temp/ratvar/wall
 	icon_state = "ratvarwallglow"
 
@@ -280,6 +290,9 @@
 
 /obj/effect/overlay/temp/ratvar/floor
 	icon_state = "ratvarfloorglow"
+
+/obj/effect/overlay/temp/ratvar/floor/catwalk
+	layer = LATTICE_LAYER
 
 /obj/effect/overlay/temp/ratvar/window
 	icon_state = "ratvarwindowglow"
@@ -400,6 +413,16 @@
 	duration = 6
 
 
+/obj/effect/overlay/temp/gravpush
+	name = "gravity wave"
+	icon_state = "shieldsparkles"
+	duration = 5
+
+/obj/effect/overlay/temp/telekinesis
+	name = "telekinetic force"
+	icon_state = "empdisable"
+	duration = 5
+
 /obj/effect/overlay/temp/emp
 	name = "emp sparks"
 	icon_state = "empdisable"
@@ -431,30 +454,6 @@
 /obj/effect/overlay/temp/dust_animation/New(loc, dust_icon)
 	icon_state = dust_icon // Before ..() so the correct icon is flick()'d
 	..()
-
-/obj/effect/overlay/temp/sparkle
-	icon = 'icons/effects/effects.dmi'
-	icon_state = "shieldsparkles"
-	mouse_opacity = 0
-	density = 0
-	duration = 10
-	var/atom/movable/attached_to
-
-/obj/effect/overlay/temp/sparkle/New(atom/movable/AM)
-	..()
-	if(istype(AM))
-		attached_to = AM
-		attached_to.overlays += src
-
-/obj/effect/overlay/temp/sparkle/Destroy()
-	if(attached_to)
-		attached_to.overlays -= src
-	attached_to = null
-	. = ..()
-
-/obj/effect/overlay/temp/sparkle/tailsweep
-	icon_state = "tailsweep"
-
 
 /obj/effect/overlay/temp/heal //color is white by default, set to whatever is needed
 	name = "healing glow"
@@ -495,7 +494,6 @@
 	duration = 6
 
 /obj/effect/overlay/temp/impact_effect
-	icon = 'icons/effects/effects.dmi'
 	icon_state = "impact_bullet"
 	duration = 5
 

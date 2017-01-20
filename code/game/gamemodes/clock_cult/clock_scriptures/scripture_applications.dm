@@ -4,7 +4,7 @@
 
 //Sigil of Accession: Creates a sigil of accession, which is like a sigil of submission, but can convert any number of non-implanted targets and up to one implanted target.
 /datum/clockwork_scripture/create_object/sigil_of_accession
-	descname = "Trap, Permenant Conversion"
+	descname = "Trap, Permanent Conversion"
 	name = "Sigil of Accession"
 	desc = "Places a luminous sigil much like a Sigil of Submission, but it will remain even after successfully converting a non-implanted target. \
 	It will penetrate mindshield implants once before disappearing."
@@ -51,15 +51,14 @@
 /datum/clockwork_scripture/memory_allocation
 	descname = "Guardian"
 	name = "Memory Allocation"
-	desc = "Allocates part of your consciousness to a Clockwork Marauder, a vigilent fighter that lives within you, able to be \
+	desc = "Allocates part of your consciousness to a Clockwork Marauder, a vigilant fighter that lives within you, able to be \
 	called forth by Speaking its True Name or if you become exceptionally low on health.<br>\
-	It gains Fatigue as it is attacked, weakening it. Marauders cannot move too far from their hosts, \
-	and will gain Fatigue at an increasing rate as they grow farther away. At maximum Fatigue, the marauder is forced to return to you and will be unable to manifest until its Fatigue is at zero."
+	If it remains close to you, you will gradually regain health up to a low amount, but it will die if it goes too far from you."
 	invocations = list("Fright's will...", "...call forth...")
 	channel_time = 100
 	required_components = list(BELLIGERENT_EYE = 1, VANGUARD_COGWHEEL = 1, GEIS_CAPACITOR = 3)
 	consumed_components = list(BELLIGERENT_EYE = 1, VANGUARD_COGWHEEL = 1, GEIS_CAPACITOR = 2)
-	usage_tip = "Marauders are useful as personal bodyguards and frontline warriors, although they do little damage."
+	usage_tip = "Marauders are useful as personal bodyguards and frontline warriors."
 	tier = SCRIPTURE_APPLICATION
 	primary_component = GEIS_CAPACITOR
 	sort_priority = 3
@@ -75,7 +74,7 @@
 	return create_marauder()
 
 /datum/clockwork_scripture/memory_allocation/proc/create_marauder()
-	invoker.visible_message("<span class='warning'>A yellow tendril appears from [invoker]'s [slab.name] and impales itself in [invoker.p_their()] forehead!</span>", \
+	invoker.visible_message("<span class='warning'>A purple tendril appears from [invoker]'s [slab.name] and impales itself in [invoker.p_their()] forehead!</span>", \
 	"<span class='heavy_brass'>A tendril flies from [slab] into your forehead. You begin waiting while it painfully rearranges your thought pattern...</span>")
 	invoker.notransform = TRUE //Vulnerable during the process
 	slab.busy = "Thought Modification in progress"
@@ -185,17 +184,17 @@
 /datum/clockwork_scripture/create_object/mending_motor
 	descname = "Structure, Repairs Other Structures"
 	name = "Mending Motor"
-	desc = "Creates a mechanized prism that will rapidly repair damage to clockwork creatures, converted cyborgs, and clockwork structures. Requires replicant alloy or power to function."
+	desc = "Creates a mechanized prism that will rapidly repair damage to clockwork creatures, converted cyborgs, and clockwork structures. Requires power to function."
 	invocations = list("May this prism...", "...mend our dents and scratches!")
 	channel_time = 80
 	required_components = list(VANGUARD_COGWHEEL = 4, GEIS_CAPACITOR = 1, REPLICANT_ALLOY = 1)
 	consumed_components = list(VANGUARD_COGWHEEL = 3, GEIS_CAPACITOR = 1, REPLICANT_ALLOY = 1)
-	object_path = /obj/structure/destructible/clockwork/powered/mending_motor/prefilled
-	creator_message = "<span class='brass'>You form a mending motor, which will consume power or replicant alloy to mend constructs and structures.</span>"
+	object_path = /obj/structure/destructible/clockwork/powered/mending_motor
+	creator_message = "<span class='brass'>You form a mending motor, which will consume power to mend constructs and structures.</span>"
 	observer_message = "<span class='warning'>An onyx prism forms in midair and sprouts tendrils to support itself!</span>"
 	invokers_required = 2
 	multiple_invokers_used = TRUE
-	usage_tip = "Powerful healing but power use is very inefficient, and its alloy use is little better."
+	usage_tip = "Powerful healing but power use is somewhat inefficient, though much better than a proselytizer."
 	tier = SCRIPTURE_APPLICATION
 	one_per_tile = TRUE
 	primary_component = VANGUARD_COGWHEEL

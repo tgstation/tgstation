@@ -625,7 +625,7 @@ interface with the mining shuttle at the landing site if a mobile beacon is also
 		return
 
 	anti_spam_cd = 1
-	addtimer(src, "clear_cooldown", 100)
+	addtimer(CALLBACK(src, .proc/clear_cooldown), 100)
 
 	var/turf/landing_spot = get_turf(src)
 

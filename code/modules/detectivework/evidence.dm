@@ -52,6 +52,7 @@
 	I.pixel_x = 0		//then remove it so it'll stay within the evidence bag
 	I.pixel_y = 0
 	var/image/img = image("icon"=I, "layer"=FLOAT_LAYER)	//take a snapshot. (necessary to stop the underlays appearing under our inventory-HUD slots ~Carn
+	img.plane = FLOAT_PLANE
 	I.pixel_x = xx		//and then return it
 	I.pixel_y = yy
 	add_overlay(img)

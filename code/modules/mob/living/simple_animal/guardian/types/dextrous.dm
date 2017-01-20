@@ -46,9 +46,9 @@
 	else
 		..()
 
-/mob/living/simple_animal/hostile/guardian/dextrous/Recall()
-	if(loc == summoner || cooldown > world.time)
-		return 0
+/mob/living/simple_animal/hostile/guardian/dextrous/Recall(forced)
+	if(!summoner || loc == summoner || (cooldown > world.time && !forced))
+		return FALSE
 	drop_all_held_items()
 	return ..() //lose items, then return
 

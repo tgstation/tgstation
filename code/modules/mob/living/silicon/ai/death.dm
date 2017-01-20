@@ -1,10 +1,8 @@
 /mob/living/silicon/ai/death(gibbed)
 	if(stat == DEAD)
 		return
-	if(!gibbed)
-		visible_message("<b>[src]</b> lets out a flurry of sparks, its screen flickering as its systems slowly halt.")
-	stat = DEAD
 
+	. = ..()
 
 	if("[icon_state]_dead" in icon_states(src.icon,1))
 		icon_state = "[icon_state]_dead"
@@ -42,4 +40,3 @@
 			if(istype(loc, /obj/item/device/aicard))
 				loc.icon_state = "aicard-404"
 
-	return ..()

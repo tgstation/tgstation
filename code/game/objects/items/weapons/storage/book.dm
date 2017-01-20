@@ -8,8 +8,13 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	resistance_flags = FLAMMABLE
 	var/title = "book"
+
 /obj/item/weapon/storage/book/attack_self(mob/user)
 		user << "<span class='notice'>The pages of [title] have been cut out!</span>"
+
+var/global/list/biblenames      = list("Bible", "Quran", "Scrapbook", "Burning Bible", "Clown Bible", "Banana Bible", "Creeper Bible", "White Bible", "Holy Light",  "The God Delusion", "Tome",        "The King in Yellow", "Ithaqua", "Scientology", "Melted Bible", "Necronomicon")
+var/global/list/biblestates     = list("bible", "koran", "scrapbook", "burning",       "honk1",       "honk2",        "creeper",       "white",       "holylight",   "atheist",          "tome",        "kingyellow",         "ithaqua", "scientology", "melted",       "necronomicon")
+var/global/list/bibleitemstates = list("bible", "koran", "scrapbook", "bible",         "bible",       "bible",        "syringe_kit",   "syringe_kit", "syringe_kit", "syringe_kit",      "syringe_kit", "kingyellow",         "ithaqua", "scientology", "melted",       "necronomicon")
 
 /obj/item/weapon/storage/book/bible
 	name = "bible"
@@ -23,96 +28,42 @@
 	user.visible_message("<span class='suicide'>[user] is offering [user.p_them()]self to [deity_name]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return (BRUTELOSS)
 
-/obj/item/weapon/storage/book/bible/booze
-	name = "bible"
-	desc = "To be applied to the head repeatedly."
-	icon_state ="bible"
-
-/obj/item/weapon/storage/book/bible/booze/New()
-	..()
-	new /obj/item/weapon/reagent_containers/food/drinks/beer(src)
-	new /obj/item/weapon/reagent_containers/food/drinks/beer(src)
-	new /obj/item/stack/spacecash(src)
-	new /obj/item/stack/spacecash(src)
-	new /obj/item/stack/spacecash(src)
-
-//Pretty bible names
-var/global/list/biblenames =		list("Bible", "Quran", "Scrapbook", "Burning Bible", "Clown Bible", "Banana Bible", "Creeper Bible", "White Bible", "Holy Light", "The God Delusion", "Tome", "The King in Yellow", "Ithaqua", "Scientology", "Melted Bible", "Necronomicon")
-
-//Bible iconstates
-var/global/list/biblestates =		list("bible", "koran", "scrapbook", "burning", "honk1", "honk2", "creeper", "white", "holylight", "atheist", "tome", "kingyellow", "ithaqua", "scientology", "melted", "necronomicon")
-
-//Bible itemstates
-var/global/list/bibleitemstates =	list("bible", "koran", "scrapbook", "bible", "bible", "bible", "syringe_kit", "syringe_kit", "syringe_kit", "syringe_kit", "syringe_kit", "kingyellow", "ithaqua", "scientology", "melted", "necronomicon")
-
-
-
 /obj/item/weapon/storage/book/bible/attack_self(mob/living/carbon/human/H)
 	if(!istype(H))
 		return
+	// If H is the Chaplain, we can set the icon_state of the bible (but only once!)
 	if(!SSreligion.Bible_icon_state && H.job == "Chaplain")
-		//Open bible selection
 		var/dat = "<html><head><title>Pick Bible Style</title></head><body><center><h2>Pick a bible style</h2></center><table>"
-
 		var/i
 		for(i = 1, i < biblestates.len, i++)
 			var/icon/bibleicon = icon('icons/obj/storage.dmi', biblestates[i])
-
 			var/nicename = biblenames[i]
 			H << browse_rsc(bibleicon, nicename)
 			dat += {"<tr><td><img src="[nicename]"></td><td><a href="?src=\ref[src];seticon=[i]">[nicename]</a></td></tr>"}
-
 		dat += "</table></body></html>"
-
 		H << browse(dat, "window=editicon;can_close=0;can_minimize=0;size=250x650")
 
-/obj/item/weapon/storage/book/bible/proc/setupbiblespecifics(obj/item/weapon/storage/book/bible/B, mob/living/carbon/human/H)
-	switch(B.icon_state)
-		if("honk1","honk2")
+/obj/item/weapon/storage/book/bible/Topic(href, href_list)
+	if(!usr.canUseTopic(src))
+		return
+	if(href_list["seticon"] && ticker && !SSreligion.Bible_icon_state)
+		var/iconi = text2num(href_list["seticon"])
+		var/biblename = biblenames[iconi]
+		var/obj/item/weapon/storage/book/bible/B = locate(href_list["src"])
+		B.icon_state = biblestates[iconi]
+		B.item_state = bibleitemstates[iconi]
+
+		if(B.icon_state == "honk1" || B.icon_state == "honk2")
+			var/mob/living/carbon/human/H = usr
 			new /obj/item/weapon/bikehorn(B)
 			H.dna.add_mutation(CLOWNMUT)
 			H.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/clown_hat(H), slot_wear_mask)
 
-		if("bible")
-			for(var/area/chapel/main/A in world)
-				for(var/turf/T in A.contents)
-					if(T.icon_state == "carpetsymbol")
-						T.setDir(2)
-		if("koran")
-			for(var/area/chapel/main/A in world)
-				for(var/turf/T in A.contents)
-					if(T.icon_state == "carpetsymbol")
-						T.setDir(4)
-		if("scientology")
-			for(var/area/chapel/main/A in world)
-				for(var/turf/T in A.contents)
-					if(T.icon_state == "carpetsymbol")
-						T.setDir(8)
-		if("atheist")
-			for(var/area/chapel/main/A in world)
-				for(var/turf/T in A.contents)
-					if(T.icon_state == "carpetsymbol")
-						T.setDir(10)
-
-/obj/item/weapon/storage/book/bible/Topic(href, href_list)
-	if(href_list["seticon"] && ticker && !SSreligion.Bible_icon_state)
-		var/iconi = text2num(href_list["seticon"])
-
-		var/biblename = biblenames[iconi]
-		var/obj/item/weapon/storage/book/bible/B = locate(href_list["src"])
-
-		B.icon_state = biblestates[iconi]
-		B.item_state = bibleitemstates[iconi]
-
-		//Set biblespecific chapels
-		setupbiblespecifics(B, usr)
-
-
 		SSreligion.Bible_icon_state = B.icon_state
 		SSreligion.Bible_item_state = B.item_state
-		feedback_set_details("religion_book","[biblename]")
 
-		usr << browse(null, "window=editicon") // Close window
+		feedback_set_details("religion_book","[biblename]")
+		usr << browse(null, "window=editicon")
 
 /obj/item/weapon/storage/book/bible/proc/bless(mob/living/carbon/human/H, mob/living/user)
 	for(var/X in H.bodyparts)
@@ -134,28 +85,25 @@ var/global/list/bibleitemstates =	list("bible", "koran", "scrapbook", "bible", "
 		playsound(src.loc, "punch", 25, 1, -1)
 	return 1
 
-
-
 /obj/item/weapon/storage/book/bible/attack(mob/living/M, mob/living/carbon/human/user)
-
-	var/chaplain = 0
-	if(user.mind && (user.mind.isholy))
-		chaplain = 1
-
-
 
 	if (!user.IsAdvancedToolUser())
 		user << "<span class='warning'>You don't have the dexterity to do this!</span>"
-		return
-	if(!chaplain)
-		user << "<span class='danger'>The book sizzles in your hands.</span>"
-		user.take_bodypart_damage(0,10)
 		return
 
 	if (user.disabilities & CLUMSY && prob(50))
 		user << "<span class='danger'>[src] slips out of your hand and hits your head.</span>"
 		user.take_bodypart_damage(10)
 		user.Paralyse(20)
+		return
+
+	var/chaplain = 0
+	if(user.mind && (user.mind.isholy))
+		chaplain = 1
+
+	if(!chaplain)
+		user << "<span class='danger'>The book sizzles in your hands.</span>"
+		user.take_bodypart_damage(0,10)
 		return
 
 	var/smack = 1
@@ -183,7 +131,6 @@ var/global/list/bibleitemstates =	list("bible", "koran", "scrapbook", "bible", "
 		M.visible_message("<span class='danger'>[user] smacks [M]'s lifeless corpse with [src].</span>")
 		playsound(src.loc, "punch", 25, 1, -1)
 
-
 /obj/item/weapon/storage/book/bible/afterattack(atom/A, mob/user, proximity)
 	if(!proximity)
 		return
@@ -193,13 +140,24 @@ var/global/list/bibleitemstates =	list("bible", "koran", "scrapbook", "bible", "
 			for(var/obj/effect/rune/R in orange(2,user))
 				R.invisibility = 0
 	if(user.mind && (user.mind.isholy))
-		if(A.reagents && A.reagents.has_reagent("water")) //blesses all the water in the holder
+		if(A.reagents && A.reagents.has_reagent("water")) // blesses all the water in the holder
 			user << "<span class='notice'>You bless [A].</span>"
 			var/water2holy = A.reagents.get_reagent_amount("water")
 			A.reagents.del_reagent("water")
 			A.reagents.add_reagent("holywater",water2holy)
-		if(A.reagents && A.reagents.has_reagent("unholywater")) //yeah yeah, copy pasted code - sue me
+		if(A.reagents && A.reagents.has_reagent("unholywater")) // yeah yeah, copy pasted code - sue me
 			user << "<span class='notice'>You purify [A].</span>"
 			var/unholy2clean = A.reagents.get_reagent_amount("unholywater")
 			A.reagents.del_reagent("unholywater")
 			A.reagents.add_reagent("holywater",unholy2clean)
+
+/obj/item/weapon/storage/book/bible/booze
+	desc = "To be applied to the head repeatedly."
+
+/obj/item/weapon/storage/book/bible/booze/New()
+	..()
+	new /obj/item/weapon/reagent_containers/food/drinks/beer(src)
+	new /obj/item/weapon/reagent_containers/food/drinks/beer(src)
+	new /obj/item/stack/spacecash(src)
+	new /obj/item/stack/spacecash(src)
+	new /obj/item/stack/spacecash(src)

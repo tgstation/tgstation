@@ -82,6 +82,10 @@
 	var/dextrous_hud_type = /datum/hud/dextrous
 	var/datum/personal_crafting/handcrafting
 
+	//domestication
+	var/tame = 0
+	var/saddled = 0
+	var/datum/riding/riding_datum = null
 
 /mob/living/simple_animal/New()
 	..()
@@ -162,9 +166,9 @@
 					else
 						randomValue -= speak.len
 						if(emote_see && randomValue <= emote_see.len)
-							emote("me", 1, pick(emote_see))
+							emote("me [pick(emote_see)]", 1)
 						else
-							emote("me", 2, pick(emote_hear))
+							emote("me [pick(emote_hear)]", 2)
 				else
 					say(pick(speak))
 			else
@@ -237,13 +241,13 @@
 			bodytemperature += diff
 
 	if(!environment_is_safe(environment))
-		adjustHealth(-unsuitable_atmos_damage)
+		adjustHealth(unsuitable_atmos_damage)
 
 	handle_temperature_damage()
 
 /mob/living/simple_animal/proc/handle_temperature_damage()
 	if((bodytemperature < minbodytemp) || (bodytemperature > maxbodytemp))
-		adjustHealth(-unsuitable_atmos_damage)
+		adjustHealth(unsuitable_atmos_damage)
 
 /mob/living/simple_animal/gib()
 	if(butcher_results)
@@ -302,7 +306,6 @@
 			visible_message("<span class='danger'>\The [src] stops moving...</span>")
 	if(del_on_death)
 		ghostize()
-		stat = DEAD
 		//Prevent infinite loops if the mob Destroy() is overriden in such
 		//a manner as to cause a call to death() again
 		del_on_death = FALSE
@@ -311,7 +314,6 @@
 	else
 		health = 0
 		icon_state = icon_dead
-		stat = DEAD
 		density = 0
 		lying = 1
 	..()
@@ -520,4 +522,38 @@
 			l_hand.plane = ABOVE_HUD_PLANE
 			l_hand.screen_loc = ui_hand_position(get_held_index_of_item(l_hand))
 			client.screen |= l_hand
+
+//ANIMAL RIDING
+/mob/living/simple_animal/unbuckle_mob(mob/living/buckled_mob,force = 0)
+	if(riding_datum)
+		riding_datum.restore_position(buckled_mob)
+	. = ..()
+
+
+/mob/living/simple_animal/user_buckle_mob(mob/living/M, mob/user)
+	if(riding_datum)
+		if(user.incapacitated())
+			return
+		for(var/atom/movable/A in get_turf(src))
+			if(A.density)
+				if(A != src && A != M)
+					return
+		M.loc = get_turf(src)
+		riding_datum.handle_vehicle_offsets()
+		riding_datum.ridden = src
+
+/mob/living/simple_animal/relaymove(mob/user, direction)
+	if(tame && saddled && riding_datum)
+		riding_datum.handle_ride(user, direction)
+
+/mob/living/simple_animal/Move(NewLoc,Dir=0,step_x=0,step_y=0)
+	. = ..()
+	if(riding_datum)
+		riding_datum.handle_vehicle_layer()
+		riding_datum.handle_vehicle_offsets()
+
+
+/mob/living/simple_animal/buckle_mob()
+	..()
+	riding_datum = new/datum/riding/animal
 

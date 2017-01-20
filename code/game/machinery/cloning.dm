@@ -14,7 +14,7 @@
 	density = 1
 	icon = 'icons/obj/cloning.dmi'
 	icon_state = "pod_0"
-	req_access = list(access_genetics) //For premature unlocking.
+	req_access = list(access_cloning) //For premature unlocking.
 	verb_say = "states"
 	var/heal_level = 90 //The clone is released once its health reaches this level.
 	var/locked = FALSE
@@ -67,7 +67,7 @@
 		heal_level = 100
 
 /obj/item/weapon/circuitboard/machine/clonepod
-	name = "circuit board (Clone Pod)"
+	name = "Clone Pod (Machine Board)"
 	build_path = /obj/machinery/clonepod
 	origin_tech = "programming=2;biotech=2"
 	req_components = list(
@@ -134,7 +134,7 @@
 		if(!G)
 			return FALSE
 	if(clonemind.damnation_type) //Can't clone the damned.
-		addtimer(src, "horrifyingsound", 0)
+		addtimer(CALLBACK(src, .proc/horrifyingsound), 0)
 		mess = 1
 		icon_state = "pod_g"
 		update_icon()
@@ -145,7 +145,7 @@
 	countdown.start()
 
 	eject_wait = TRUE
-	addtimer(src, "wait_complete", 30)
+	addtimer(CALLBACK(src, .proc/wait_complete), 30)
 
 	var/mob/living/carbon/human/H = new /mob/living/carbon/human(src)
 

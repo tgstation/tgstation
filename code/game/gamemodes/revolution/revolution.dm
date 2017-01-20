@@ -275,7 +275,7 @@
 	rev_mind.special_role = "Revolutionary"
 	update_rev_icons_added(rev_mind)
 	if(jobban_isbanned(rev_mind.current, ROLE_REV))
-		addtimer(src, "replace_jobbaned_player", 0, TIMER_NORMAL, rev_mind.current, ROLE_REV, ROLE_REV)
+		addtimer(CALLBACK(src, .proc/replace_jobbaned_player), 0, rev_mind.current, ROLE_REV, ROLE_REV)
 	return 1
 //////////////////////////////////////////////////////////////////////////////
 //Deals with players being converted from the revolution (Not a rev anymore)//  // Modified to handle borged MMIs.  Accepts another var if the target is being borged at the time  -- Polymorph.

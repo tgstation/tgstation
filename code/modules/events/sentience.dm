@@ -21,11 +21,12 @@
 		if(!(L in player_list) && !L.mind)
 			potential += L
 
+	if(!potential.len)
+		return WAITING_FOR_SOMETHING
 	var/mob/living/simple_animal/SA = pick(potential)
+	if(!candidates.len)
+		return NOT_ENOUGH_PLAYERS
 	var/mob/dead/observer/SG = pick(candidates)
-
-	if(!SA || !SG)
-		return FALSE
 
 	SA.key = SG.key
 	SA.languages_spoken |= HUMAN
@@ -36,7 +37,11 @@
 	SA.health = SA.maxHealth
 	SA.del_on_death = FALSE
 
+	spawned_mobs += SA
+
 	SA << "<span class='userdanger'>Hello world!</span>"
 	SA << "<span class='warning'>Due to freak radiation and/or chemicals \
 		and/or lucky chance, you have gained human level intelligence \
 		and the ability to speak and understand human language!</span>"
+
+	return SUCCESSFUL_SPAWN
