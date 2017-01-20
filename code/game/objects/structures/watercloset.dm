@@ -542,8 +542,6 @@
 	desc = "Contains less than 1% mercury."
 	icon = 'icons/obj/watercloset.dmi'
 	icon_state = "open"
-	color = "#ACD1E9" //Default color, didn't bother hardcoding other colors, mappers can and should easily change it.
-	alpha = 200 //Mappers can also just set this to 255 if they want curtains that can't be seen through
 	layer = WALL_OBJ_LAYER
 	anchored = 1
 	opacity = 0
@@ -585,3 +583,32 @@
 				playsound(loc, 'sound/weapons/tap.ogg', 50, 1)
 		if(BURN)
 			playsound(loc, 'sound/items/welder.ogg', 80, 1)
+
+//Curtain types
+/obj/structure/curtain/black
+	name = "black curtain"
+	color = "#222222"
+
+/obj/structure/curtain/medical
+	name = "plastic curtain"
+	color = "#B8F5E3"
+	alpha = 200
+
+/obj/structure/curtain/open/bed
+	name = "bed curtain"
+	color = "#854636"
+
+/obj/structure/curtain/open/privacy
+	name = "privacy curtain"
+	color = "#B8F5E3"
+
+/obj/structure/curtain/open/shower
+	name = "shower curtain"
+	color = "#ACD1E9"
+	alpha = 200
+
+/obj/structure/curtain/open/shower/engineering
+	color = "#FFA500"
+
+/obj/structure/curtain/open/shower/security
+	color = "#AA0000"
