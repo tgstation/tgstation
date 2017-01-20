@@ -524,12 +524,12 @@
 			client.screen |= l_hand
 
 //ANIMAL RIDING
-/mob/living/simple_animal/buckle_mob()
+/mob/living/simple_animal/buckle_mob(mob/living/buckled_mob, force = 0)
 	. = ..()
 	riding_datum = new/datum/riding/animal
 	riding_datum.ridden = src
 
-/mob/living/simple_animal/unbuckle_mob(mob/living/buckled_mob,force = 0)
+/mob/living/simple_animal/unbuckle_mob(mob/living/buckled_mob, force = 0)
 	if(riding_datum)
 		riding_datum.restore_position(buckled_mob)
 		. = ..()
