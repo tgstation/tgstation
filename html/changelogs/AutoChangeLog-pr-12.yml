@@ -1,7 +1,0 @@
-author: "Cakey"
-delete-after: True
-changes: 
-  - rscadd: "Added curtain types"
-  - rscadd: "Added suit closet"
-  - rscadd: "Added added internal affairs stamp"
-  - rscadd: "Added adds directional stair sprites for new sprites"
