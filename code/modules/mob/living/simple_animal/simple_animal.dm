@@ -528,7 +528,6 @@
 /mob/living/simple_animal/buckle_mob(mob/living/buckled_mob, force = 0)
 	. = ..()
 	riding_datum = new/datum/riding/animal
-	riding_datum.ridden = src
 
 /mob/living/simple_animal/unbuckle_mob(mob/living/buckled_mob, force = 0)
 	if(riding_datum)
@@ -536,7 +535,6 @@
 		. = ..()
 
 /mob/living/simple_animal/user_buckle_mob(mob/living/M, mob/user)
-
 	if(user.incapacitated())
 		return
 	for(var/atom/movable/A in get_turf(src))
@@ -545,6 +543,7 @@
 				return
 	M.loc = get_turf(src)
 	if(riding_datum)
+		riding_datum.ridden = src
 		riding_datum.handle_vehicle_offsets()
 	..()
 
