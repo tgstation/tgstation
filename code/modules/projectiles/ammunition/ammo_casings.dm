@@ -169,7 +169,7 @@
 	icon_state = "blshell"
 	caliber = "shotgun"
 	projectile_type = /obj/item/projectile/bullet
-	materials = list(MAT_METAL=4000)
+	materials = list(MAT_METAL = 200)
 
 
 /obj/item/ammo_casing/shotgun/buckshot
@@ -187,7 +187,7 @@
 	projectile_type = /obj/item/projectile/bullet/rpellet
 	pellets = 6
 	variance = 25
-	materials = list(MAT_METAL=4000)
+	materials = list(MAT_METAL = 200)
 
 
 /obj/item/ammo_casing/shotgun/beanbag
@@ -195,7 +195,7 @@
 	desc = "A weak beanbag slug for riot control."
 	icon_state = "bshell"
 	projectile_type = /obj/item/projectile/bullet/weakbullet
-	materials = list(MAT_METAL=250)
+	materials = list(MAT_METAL = 200)
 
 
 /obj/item/ammo_casing/shotgun/improvised
@@ -203,7 +203,7 @@
 	desc = "An extremely weak shotgun shell with multiple small pellets made out of metal shards."
 	icon_state = "improvshell"
 	projectile_type = /obj/item/projectile/bullet/pellet/weak
-	materials = list(MAT_METAL=250)
+	materials = list(MAT_METAL = 200)
 	pellets = 10
 	variance = 25
 
@@ -214,7 +214,7 @@
 	propellant. It's like playing russian roulette, with a shotgun."
 	icon_state = "improvshell"
 	projectile_type = /obj/item/projectile/bullet/pellet/overload
-	materials = list(MAT_METAL=250)
+	materials = list(MAT_METAL = 200)
 	pellets = 4
 	variance = 40
 
@@ -224,7 +224,7 @@
 	desc = "A stunning taser slug."
 	icon_state = "stunshell"
 	projectile_type = /obj/item/projectile/bullet/stunshot
-	materials = list(MAT_METAL=250)
+	materials = list(MAT_METAL = 200)
 
 
 /obj/item/ammo_casing/shotgun/meteorshot
