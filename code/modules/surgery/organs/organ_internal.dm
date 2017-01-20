@@ -663,7 +663,7 @@
 
 /obj/item/organ/tongue/robot
 	name = "robotic voicebox"
-	desc = "A voice synthesizer that has can interface with organic lifeforms."
+	desc = "A voice synthesizer that can interface with organic lifeforms."
 	icon_state = "tonguerobot"
 	say_mod = "states"
 	attack_verb = list("beeped", "booped")
