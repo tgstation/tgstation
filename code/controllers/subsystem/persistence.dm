@@ -9,6 +9,8 @@ var/datum/subsystem/persistence/SSpersistence
 	var/list/new_secret_satchels 	= list() //these are objects
 	var/old_secret_satchels 		= ""
 
+	var/list/obj/structure/chisel_message/chisel_messages = list()
+
 /datum/subsystem/persistence/New()
 	NEW_SS_GLOBAL(SSpersistence)
 
@@ -85,3 +87,6 @@ var/datum/subsystem/persistence/SSpersistence
 			continue
 		old_secret_satchels += "[F.x]|[F.y]|[pick(savable_obj)]#"
 	secret_satchels[MAP_NAME] << old_secret_satchels
+
+/datum/subsystem/persistence/proc/SaveChiselMessage(obj/structure/chisel_message/message)
+	return
