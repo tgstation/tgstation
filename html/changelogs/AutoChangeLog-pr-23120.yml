@@ -1,4 +1,0 @@
-author: "Tofa01"
-delete-after: True
-changes: 
-  - bugfix: "Moved The CentComm station 6 tiles to the left in order to prevent large shuttles such as \"asteroid with engines on it\" from clipping off the end of the right side of the map."

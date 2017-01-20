@@ -99,10 +99,11 @@ var/datum/subsystem/timer/SStimer
 			if (MC_TICK_CHECK)
 				break
 
-	timer_id_dict -= spent
 	bucket_count -= length(spent)
+
 	for (var/timer in spent)
 		qdel(timer)
+
 	spent.len = 0
 
 
@@ -201,8 +202,8 @@ var/datum/subsystem/timer/SStimer
 	if (hash)
 		src.hash = hash
 		SStimer.hashes[hash] = src
-
-	SStimer.timer_id_dict["timerid[id]"] = src
+	if (flags & TIMER_STOPPABLE)
+		SStimer.timer_id_dict["timerid[id]"] = src
 
 	if (callBack.object != GLOBAL_PROC)
 		LAZYINITLIST(callBack.object.active_timers)
@@ -237,7 +238,6 @@ var/datum/subsystem/timer/SStimer
 	next.prev = src
 	prev.next = src
 
-
 /datum/timedevent/Destroy()
 	if (hash)
 		SStimer.hashes -= hash
@@ -253,6 +253,10 @@ var/datum/subsystem/timer/SStimer
 		SStimer.clienttime_timers -= src
 		return QDEL_HINT_IWILLGC
 
+	if (flags & TIMER_STOPPABLE)
+		SStimer.timer_id_dict -= "timerid[id]"
+
+
 	if (!spent)
 		if (prev == next && next)
 			next.prev = null
@@ -262,8 +266,6 @@ var/datum/subsystem/timer/SStimer
 				prev.next = next
 			if (next)
 				next.prev = prev
-
-		SStimer.timer_id_dict -= "timerid[id]"
 
 		var/bucketpos = BUCKET_POS(src)
 		var/datum/timedevent/buckethead
@@ -285,8 +287,7 @@ var/datum/subsystem/timer/SStimer
 
 	return QDEL_HINT_IWILLGC
 
-
-/proc/addtimer(datum/callback/callback, wait, flags)
+proc/addtimer(datum/callback/callback, wait, flags)
 	if (!callback)
 		return
 
@@ -306,15 +307,18 @@ var/datum/subsystem/timer/SStimer
 			if (flags & TIMER_OVERRIDE)
 				qdel(hash_timer)
 			else
-				return hash_timer.id
+				if (hash_timer.flags & TIMER_STOPPABLE)
+					. = hash_timer.id
+				return
+
 
 	var/timeToRun = world.time + wait
 	if (flags & TIMER_CLIENT_TIME)
 		timeToRun = REALTIMEOFDAY + wait
 
 	var/datum/timedevent/timer = new(callback, timeToRun, flags, hash)
-	return timer.id
-
+	if (flags & TIMER_STOPPABLE)
+		return timer.id
 
 /proc/deltimer(id)
 	if (!id)
