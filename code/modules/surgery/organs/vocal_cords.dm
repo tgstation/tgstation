@@ -363,13 +363,7 @@ var/static/regex/multispin_words = regex("like a record baby|right round")
 	else if((findtext(message, helpintent_words)))
 		for(var/mob/living/carbon/human/H in listeners)
 			H.a_intent_change(INTENT_HELP)
-			var/list/nearby_mobs = list()
-			for(var/mob/living/L in range(1, H))
-				if(L!=H)
-					nearby_mobs |= L
-			if(nearby_mobs.len)
-				var/mob/living/T = pick(nearby_mobs)
-				H.ClickOn(T)
+			H.click_random_mob()
 			sleep(2) //delay to make it feel more natural
 		next_command = world.time + cooldown_meme
 
@@ -377,13 +371,7 @@ var/static/regex/multispin_words = regex("like a record baby|right round")
 	else if((findtext(message, disarmintent_words)))
 		for(var/mob/living/carbon/human/H in listeners)
 			H.a_intent_change(INTENT_DISARM)
-			var/list/nearby_mobs = list()
-			for(var/mob/living/L in range(1, H))
-				if(L!=H)
-					nearby_mobs |= L
-			if(nearby_mobs.len)
-				var/mob/living/T = pick(nearby_mobs)
-				H.ClickOn(T)
+			H.click_random_mob()
 			sleep(2) //delay to make it feel more natural
 		next_command = world.time + cooldown_meme
 
@@ -391,13 +379,7 @@ var/static/regex/multispin_words = regex("like a record baby|right round")
 	else if((findtext(message, grabintent_words)))
 		for(var/mob/living/carbon/human/H in listeners)
 			H.a_intent_change(INTENT_GRAB)
-			var/list/nearby_mobs = list()
-			for(var/mob/living/L in range(1, H))
-				if(L!=H)
-					nearby_mobs |= L
-			if(nearby_mobs.len)
-				var/mob/living/T = pick(nearby_mobs)
-				H.ClickOn(T)
+			H.click_random_mob()
 			sleep(2) //delay to make it feel more natural
 		next_command = world.time + cooldown_meme
 
@@ -405,13 +387,7 @@ var/static/regex/multispin_words = regex("like a record baby|right round")
 	else if((findtext(message, harmintent_words)))
 		for(var/mob/living/carbon/human/H in listeners)
 			H.a_intent_change(INTENT_HARM)
-			var/list/nearby_mobs = list()
-			for(var/mob/living/L in range(1, H))
-				if(L!=H)
-					nearby_mobs |= L
-			if(nearby_mobs.len)
-				var/mob/living/T = pick(nearby_mobs)
-				H.ClickOn(T)
+			H.click_random_mob()
 			sleep(2) //delay to make it feel more natural
 		next_command = world.time + cooldown_meme
 
