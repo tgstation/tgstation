@@ -307,7 +307,7 @@ proc/addtimer(datum/callback/callback, wait, flags)
 			if (flags & TIMER_OVERRIDE)
 				qdel(hash_timer)
 			else
-				if (hash_timer & TIMER_STOPPABLE)
+				if (hash_timer.flags & TIMER_STOPPABLE)
 					. = hash_timer.id
 				return
 
