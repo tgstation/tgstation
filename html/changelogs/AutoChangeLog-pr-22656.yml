@@ -1,0 +1,4 @@
+author: "CoreOverload"
+delete-after: True
+changes: 
+  - tweak: "Any sharp item can now be used for \"incise\" surgery step, with 30% success probability."
