@@ -70,7 +70,7 @@
 	name = "engraved message"
 	desc = "A message from a past traveler."
 	icon = 'icons/obj/stationobjs.dmi'
-	icon_state = "darksouls_messages"
+	icon_state = "soapstone_message"
 	density = 0
 	anchored = 1
 	var/hidden_message
