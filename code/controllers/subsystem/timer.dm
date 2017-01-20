@@ -288,23 +288,6 @@ var/datum/subsystem/timer/SStimer
 	return QDEL_HINT_IWILLGC
 
 proc/addtimer(datum/callback/callback, wait, flags)
-	if (flags)
-		return addtimer_default(arglist(args))
-
-	var/static/const/num = 2
-	var/static/cur = rand(0, num-1)
-	if (prob(33))
-		cur = ((cur + 1) % num)
-
-	switch(cur)
-		if(0)
-			return addtimer_real(arglist(args))
-		if(1)
-			return addtimer_spawn(arglist(args))
-		else
-			throw EXCEPTION("invalid chain state")
-
-/proc/addtimer_default(datum/callback/callback, wait, flags)
 	if (!callback)
 		return
 
@@ -336,43 +319,6 @@ proc/addtimer(datum/callback/callback, wait, flags)
 	var/datum/timedevent/timer = new(callback, timeToRun, flags, hash)
 	if (flags & TIMER_STOPPABLE)
 		return timer.id
-
-/proc/addtimer_real(datum/callback/callback, wait, flags)
-	if (!callback)
-		return
-
-	if (wait <= 0)
-		callback.InvokeAsync()
-		return
-
-	var/hash
-
-	if (flags & TIMER_UNIQUE)
-		var/list/hashlist = list(callback.object, "(\ref[callback.object])", callback.delegate, wait, flags & TIMER_CLIENT_TIME)
-		hashlist += callback.arguments
-		hash = hashlist.Join("|||||||")
-
-		var/datum/timedevent/hash_timer = SStimer.hashes[hash]
-		if(hash_timer)
-			if (flags & TIMER_OVERRIDE)
-				qdel(hash_timer)
-			else
-				if (hash_timer & TIMER_STOPPABLE)
-					. = hash_timer.id
-				return
-
-
-	var/timeToRun = world.time + wait
-	if (flags & TIMER_CLIENT_TIME)
-		timeToRun = REALTIMEOFDAY + wait
-
-	var/datum/timedevent/timer = new(callback, timeToRun, flags, hash)
-	if (flags & TIMER_STOPPABLE)
-		return timer.id
-
-/proc/addtimer_spawn(datum/callback/callback, wait, flags)
-	spawn(wait)
-		callback.InvokeAsync()
 
 /proc/deltimer(id)
 	if (!id)
