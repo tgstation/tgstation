@@ -39,10 +39,10 @@
 		return
 
 	playsound(loc, 'sound/items/gavel.ogg', 50, 1, -1)
-	user.visible_message("<span class='notice'>[user] starts engraving a message into [target].</span>", "You start engraving a message into [target].", "<span class='italics'>You hear a chipping sound.</span>")
+	user.visible_message("<span class='notice'>[user] starts engraving a message into [T].</span>", "You start engraving a message into [T].", "<span class='italics'>You hear a chipping sound.</span>")
 	if(do_after(user, tool_speed, target=T))
 		if(!locate(/obj/structure/chisel_message in T))
-			user << "You chisel a message into [target]."
+			user << "You chisel a message into [T]."
 			playsound(loc, 'sound/items/gavel.ogg', 50, 1, -1)
 			var/obj/structure/chisel_message/M = new(T)
 			M.register(user, message)
@@ -63,6 +63,8 @@
 		. = FALSE
 	else if(!(isfloorturf(T) || iswallturf(T)))
 		. = FALSE
+	else if(locate(/obj/structure/chisel_message) in T)
+		. = FALSE
 	else
 		. = TRUE
 
@@ -73,6 +75,8 @@
 	icon_state = "soapstone_message"
 	density = 0
 	anchored = 1
+	luminosity = 1
+	obj_integrity = 30
 	var/hidden_message
 	var/creator_key
 	var/creator_name
@@ -94,8 +98,14 @@
 	creator_key = user.key
 	realdate = world.timeofday
 	map = MAP_NAME
+	update_icon()
 
-/obj/structure/chisel_message/proc/serialize()
+/obj/structure/chisel_message/update_icon()
+	var/hash = md5(hidden_message)
+	var/newcolor = copytext(hash, 1, 7)
+	add_atom_colour("#[newcolor]", FIXED_COLOUR_PRIORITY)
+
+/obj/structure/chisel_message/proc/pack()
 	var/list/data = list()
 	data["hidden_message"] = hidden_message
 	data["creator_name"] = creator_name
@@ -105,9 +115,9 @@
 	var/turf/T = get_turf(src)
 	data["x"] = T.x
 	data["y"] = T.y
-	. = data
+	return data
 
-/obj/structure/chisel_message/proc/unserialize(list/data)
+/obj/structure/chisel_message/proc/unpack(list/data)
 	hidden_message = data["hidden_message"]
 	creator_name = data["creator_name"]
 	creator_key = data["creator_key"]
@@ -117,11 +127,12 @@
 	var/y = data["y"]
 	var/turf/newloc = locate(x, y, ZLEVEL_STATION)
 	forceMove(newloc)
+	update_icon()
 
 /obj/structure/chisel_message/examine(mob/user)
 	..()
-	user << "The message reads:"
-	user << hidden_message
+	user << "<span class='warning'>[hidden_message]</span>"
+	user << "This message was engraved by <span class='name'>[creator_name]</span>."
 
 /obj/structure/chisel_message/Destroy()
 	if(persists)
