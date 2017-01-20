@@ -91,9 +91,9 @@ the new version.
 * [tgstation2 (default)](http://tgstation13.org/wiki/Boxstation)
 * [MetaStation](https://tgstation13.org/wiki/MetaStation)
 * [BirdStation](https://tgstation13.org/wiki/BirdStation)
-* DeltaStation
-* OmegaStation
-* PubbyStation
+* [DeltaStation](https://tgstation13.org/wiki/DeltaStation)
+* [OmegaStation](https://tgstation13.org/wiki/OmegaStation)
+* [PubbyStation](https://tgstation13.org/wiki/PubbyStation)
 
 
 All maps have their own code file that is in the base of the _maps directory. Instead of loading the map directly we instead use a code file to include the map and then include any other code changes that are needed for it. Follow this guideline when adding your own map, to your fork, for easy compatibility.
