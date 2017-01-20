@@ -161,6 +161,9 @@ var/static/regex/multispin_words = regex("like a record baby|right round")
 	var/list/specific_listeners = list()
 	var/found_string = null
 
+	//Get the proper job titles
+	get_full_job_name(message)
+
 	for(var/V in listeners)
 		var/mob/living/L = V
 		if(L.mind && L.mind.devilinfo && findtext(message, L.mind.devilinfo.truename))
@@ -170,12 +173,12 @@ var/static/regex/multispin_words = regex("like a record baby|right round")
 			//Cut out the name so it doesn't trigger commands
 			message = copytext(message, 0, start)+copytext(message, start + length(L.mind.devilinfo.truename), length(message) + 1)
 			break
-		else if(findtext(message, L.real_name) == 1)
+		else if(dd_hasprefix(message, L.real_name))
 			specific_listeners += L //focus on those with the specified name
 			//Cut out the name so it doesn't trigger commands
 			found_string = L.real_name
 
-		else if(L.mind && findtext(message, L.mind.assigned_role) == 1)
+		else if(L.mind && dd_hasprefix(message, L.mind.assigned_role))
 			specific_listeners += L //focus on those with the specified job
 			//Cut out the job so it doesn't trigger commands
 			found_string = L.mind.assigned_role
