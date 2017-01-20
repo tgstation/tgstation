@@ -1,0 +1,4 @@
+author: "MrStonedOne"
+delete-after: True
+changes: 
+  - rscadd: "The window will flash in the taskbar when a new round is ready and about to start."
