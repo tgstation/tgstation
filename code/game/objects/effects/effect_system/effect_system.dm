@@ -57,7 +57,7 @@ would spawn and follow the beaker, even if it is carried or thrown.
 /datum/effect_system/proc/generate_effect()
 	if(holder)
 		location = get_turf(holder)
-	var/obj/effect/E = PoolOrNew(effect_type, location)
+	var/obj/effect/E = new effect_type(location)
 	total_effects++
 	var/direction
 	if(cardinals)

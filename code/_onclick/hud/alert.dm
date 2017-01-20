@@ -33,7 +33,7 @@
 			else //no need to update
 				return 0
 	else
-		alert = PoolOrNew(type)
+		alert = new type()
 
 	if(new_master)
 		var/old_layer = new_master.layer

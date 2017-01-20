@@ -33,7 +33,7 @@
 		if(oxy < 0.5 || tox < 0.5)
 			return 0
 
-		active_hotspot = PoolOrNew(/obj/effect/hotspot, src)
+		active_hotspot = new /obj/effect/hotspot(src)
 		active_hotspot.temperature = exposed_temperature
 		active_hotspot.volume = exposed_volume
 

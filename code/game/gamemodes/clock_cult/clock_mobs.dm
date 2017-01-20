@@ -225,7 +225,7 @@
 	if(iscarbon(host))
 		resulthealth = round((abs(HEALTH_THRESHOLD_DEAD - host.health) / abs(HEALTH_THRESHOLD_DEAD - host.maxHealth)) * 100)
 	if(ratvar_awakens || resulthealth <= MARAUDER_EMERGE_THRESHOLD)
-		PoolOrNew(/obj/effect/overlay/temp/heal, list(host.loc, "#AF0AAF"))
+		new /obj/effect/overlay/temp/heal(host.loc, "#AF0AAF")
 		host.adjustBruteLoss(-1)
 		host.adjustFireLoss(-1)
 		host.adjustToxLoss(-1)

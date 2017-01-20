@@ -113,7 +113,7 @@
 
 /obj/structure/destructible/clockwork/massive/celestial_gateway/proc/make_glow()
 	if(!glow)
-		glow = PoolOrNew(/obj/effect/clockwork/overlay/gateway_glow, get_turf(src))
+		glow = new /obj/effect/clockwork/overlay/gateway_glow(get_turf(src))
 		glow.linked = src
 
 /obj/structure/destructible/clockwork/massive/celestial_gateway/ex_act(severity)

@@ -111,8 +111,8 @@
 
 /obj/structure/lattice/catwalk/clockwork/New()
 	..()
-	PoolOrNew(/obj/effect/overlay/temp/ratvar/floor/catwalk, loc)
-	PoolOrNew(/obj/effect/overlay/temp/ratvar/beam/catwalk, loc)
+	new /obj/effect/overlay/temp/ratvar/floor/catwalk(loc)
+	new /obj/effect/overlay/temp/ratvar/beam/catwalk(loc)
 
 /obj/structure/lattice/catwalk/clockwork/ratvar_act()
 	return

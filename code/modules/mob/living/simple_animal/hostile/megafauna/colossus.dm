@@ -112,7 +112,7 @@ Difficulty: Very Hard
 
 /mob/living/simple_animal/hostile/megafauna/colossus/bullet_act(obj/item/projectile/P)
 	if(!stat)
-		var/obj/effect/overlay/temp/at_shield/AT = PoolOrNew(/obj/effect/overlay/temp/at_shield, src.loc, src)
+		var/obj/effect/overlay/temp/at_shield/AT = new /obj/effect/overlay/temp/at_shield(src.loc, src)
 		var/random_x = rand(-32, 32)
 		AT.pixel_x += random_x
 
@@ -556,7 +556,7 @@ Difficulty: Very Hard
 	if(..())
 		for(var/i in range(1, src))
 			if(isturf(i))
-				PoolOrNew(/obj/effect/overlay/temp/cult/sparks, i)
+				new /obj/effect/overlay/temp/cult/sparks(i)
 				continue
 			if(ishuman(i))
 				var/mob/living/carbon/human/H = i
@@ -644,7 +644,7 @@ Difficulty: Very Hard
 		var/mob/living/L = target
 		if(L.stat < DEAD)
 			L.heal_overall_damage(heal_power, heal_power)
-			PoolOrNew(/obj/effect/overlay/temp/heal, list(get_turf(target), "#80F5FF"))
+			new /obj/effect/overlay/temp/heal(get_turf(target), "#80F5FF")
 
 /mob/living/simple_animal/hostile/lightgeist/ghostize()
 	. = ..()
@@ -667,7 +667,7 @@ Difficulty: Very Hard
 	if(..())
 		var/list/L = list()
 		var/turf/T = get_step(src, dir)
-		PoolOrNew(/obj/effect/overlay/temp/emp/pulse,T)
+		new /obj/effect/overlay/temp/emp/pulse(T)
 		for(var/i in T)
 			if(istype(i, /obj/item) && !is_type_in_typecache(i, banned_items_typecache))
 				var/obj/item/W = i

@@ -12,7 +12,7 @@
 		else if(!severity || severity == screen.severity)
 			return null
 	else
-		screen = PoolOrNew(type)
+		screen = new type()
 
 	screen.icon_state = "[initial(screen.icon_state)][severity]"
 	screen.severity = severity
