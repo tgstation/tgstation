@@ -117267,6 +117267,18 @@
 	},
 /turf/open/floor/plasteel/neutral/corner,
 /area/hallway/primary/central)
+"ebV" = (
+/obj/structure/cable/white{
+	tag = "icon-4-8";
+	icon_state = "4-8"
+	},
+/obj/item/device/radio/beacon,
+/turf/open/floor/plasteel/vault{
+	dir = 5
+	},
+/area/construction/hallway{
+	name = "\improper MiniSat Exterior"
+	})
 
 (1,1,1) = {"
 aaa
@@ -129216,7 +129228,7 @@ bJu
 bnO
 bNB
 bPu
-bRB
+ebV
 blR
 bnQ
 agg
