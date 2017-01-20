@@ -499,9 +499,9 @@
 	if(istype(I, /obj/item/weapon/photo))
 		if(!displayed)
 			var/obj/item/weapon/photo/P = I
+			user.unEquip(P)
+			P.forceMove(src)
 			displayed = P
-			displayed.icon = P.icon
-			qdel(P)
 			update_icon()
 		else
 			user << "<span class=notice>\The [src] already contains a photo.</span>"
@@ -512,8 +512,9 @@
 	if(user.get_inactive_held_item() != src)
 		..()
 		return
-	if(displayed)
-		user.put_in_hands(displayed)
+	if(contents.len)
+		var/obj/item/I = pick(contents)
+		user.put_in_hands(I)
 		user << "<span class='notice'>You carefully remove the photo from \the [src].</span>"
 		displayed = null
 		update_icon()
@@ -522,7 +523,7 @@
 	user.examinate(src)
 
 /obj/item/weapon/picture_frame/examine(mob/user)
-	if(in_range(src, user) && displayed)
+	if(user.is_holding(src) && displayed)
 		displayed.show(user)
 	else
 		..()
@@ -535,22 +536,20 @@
 		icon_state = initial(icon_state)
 
 /obj/item/weapon/picture_frame/afterattack(atom/target, mob/user, proximity)
-	if(isturf(target) && proximity)
-		var/turf/T = target
-		if (iswallturf(T))
-			user.visible_message("<span class='notice'>[user] fastens \the [src] to [T].</span>", \
-								 "<span class='notice'>You fasten \the [src] to [T].</span>")
-			var/obj/structure/sign/picture_frame/newpic = new /obj/structure/sign/picture_frame(T)
-			newpic.icon_state = icon_state
-			newpic.overlays = overlays.Copy()
-			if(displayed)
-				newpic.framed = displayed
-				newpic.framed.icon = displayed.icon
-				newpic.framed.loc = src
-			user.drop_item()
-			qdel(src)
-	else
-		return ..()
+	var/turf/T = target
+	if(!iswallturf(T))
+		return
+	user.visible_message("<span class='notice'>[user] fastens [src] to [T].</span>", \
+						 "<span class='notice'>You attach the sign to [T].</span>")
+	playsound(T, 'sound/items/Deconstruct.ogg', 50, 1)
+	var/obj/structure/sign/picture_frame/PF = new /obj/structure/sign/picture_frame(T)
+	PF.overlays = overlays.Copy()
+	if(displayed)
+		PF.framed = displayed
+	if(contents.len)
+		var/obj/item/I = pick(contents)
+		I.forceMove(PF)
+	qdel(src)
 
 /obj/structure/sign/picture_frame
 	name = "picture frame"
@@ -578,8 +577,10 @@
 		var/obj/item/weapon/picture_frame/F = new /obj/item/weapon/picture_frame(get_turf(user))
 		if(framed)
 			F.displayed = framed
-			F.displayed.loc = framed.loc
-			F.displayed.icon = framed.icon
+			framed = null
+		if(contents.len)
+			var/obj/item/I = pick(contents)
+			I.forceMove(F)
 		F.update_icon()
 		qdel(src)
 
@@ -587,8 +588,8 @@
 		if(!framed)
 			var/obj/item/weapon/photo/P = O
 			user.unEquip(P)
+			P.forceMove(src)
 			framed = P
-			P.loc = src
 			update_icon()
 		else
 			user << "<span class=notice>\The [src] already contains a photo.</span>"
@@ -597,10 +598,12 @@
 
 /obj/structure/sign/picture_frame/attack_hand(mob/user)
 	if(framed)
-		user.put_in_hands(framed)
-		user << "<span class='notice'>You carefully remove the photo from \the [src].</span>"
-		framed = null
-		update_icon()
+		if(contents.len)
+			var/obj/item/I = pick(contents)
+			user.put_in_hands(I)
+			user << "<span class='notice'>You carefully remove the photo from \the [src].</span>"
+			framed = null
+			update_icon()
 
 /obj/structure/sign/picture_frame/update_icon()
 	overlays.Cut()
