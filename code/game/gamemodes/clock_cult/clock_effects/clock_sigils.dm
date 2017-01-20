@@ -275,6 +275,7 @@
 	var/base_revive_cost = 20
 	var/sigil_active = FALSE
 	var/animation_number = 3 //each cycle increments this by 1, at 4 it produces an animation and resets
+	var/static/list/damage_heal_order = list(CLONE, TOX, BURN, BRUTE, OXY) //we heal damage in this order
 
 /obj/effect/clockwork/sigil/vitality/examine(mob/user)
 	..()
@@ -316,14 +317,8 @@
 			else
 				break
 		else
-			var/clone_to_heal = L.getCloneLoss()
-			var/tox_to_heal = L.getToxLoss()
-			var/burn_to_heal = L.getFireLoss()
-			var/brute_to_heal = L.getBruteLoss()
-			var/oxy_to_heal = L.getOxyLoss()
-			var/total_damage = clone_to_heal + tox_to_heal + burn_to_heal + brute_to_heal + oxy_to_heal
 			if(L.stat == DEAD)
-				var/revival_cost = base_revive_cost + total_damage - oxy_to_heal //ignores oxygen damage
+				var/revival_cost = base_revive_cost + L.getCloneLoss() + L.getToxLoss() + L.getFireLoss() + L.getBruteLoss() //ignores oxygen damage
 				if(ratvar_awakens)
 					revival_cost = 0
 				var/mob/dead/observer/ghost = L.get_ghost(TRUE)
@@ -336,45 +331,17 @@
 					"<span class='inathneq'>\"[text2ratvar("You will be okay, child.")]\"</span>")
 					vitality -= revival_cost
 				break
-			if(!total_damage)
-				break
 			var/vitality_for_cycle = min(vitality, 3)
-			var/vitality_used = 0
 			if(ratvar_awakens)
 				vitality_for_cycle = 3
+			var/vitality_used = L.heal_ordered_damage(vitality_for_cycle, damage_heal_order)
 
-			if(clone_to_heal && vitality_for_cycle)
-				var/healing = min(vitality_for_cycle, clone_to_heal)
-				vitality_for_cycle -= healing
-				L.adjustCloneLoss(-healing)
-				vitality_used += healing
-
-			if(tox_to_heal && vitality_for_cycle)
-				var/healing = min(vitality_for_cycle, tox_to_heal)
-				vitality_for_cycle -= healing
-				L.adjustToxLoss(-healing)
-				vitality_used += healing
-
-			if(burn_to_heal && vitality_for_cycle)
-				var/healing = min(vitality_for_cycle, burn_to_heal)
-				vitality_for_cycle -= healing
-				L.adjustFireLoss(-healing)
-				vitality_used += healing
-
-			if(brute_to_heal && vitality_for_cycle)
-				var/healing = min(vitality_for_cycle, brute_to_heal)
-				vitality_for_cycle -= healing
-				L.adjustBruteLoss(-healing)
-				vitality_used += healing
-
-			if(oxy_to_heal && vitality_for_cycle)
-				var/healing = min(vitality_for_cycle, oxy_to_heal)
-				vitality_for_cycle -= healing
-				L.adjustOxyLoss(-healing)
-				vitality_used += healing
+			if(!vitality_used)
+				break
 
 			if(!ratvar_awakens)
 				vitality -= vitality_used
+
 		sleep(2)
 
 	if(sigil_active)

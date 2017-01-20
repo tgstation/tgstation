@@ -74,6 +74,8 @@ var/datum/subsystem/ticker/ticker
 			world << "<span class='boldnotice'>Welcome to [station_name()]!</span>"
 			world << "Please set up your character and select \"Ready\". The game will start in [config.lobby_countdown] seconds."
 			current_state = GAME_STATE_PREGAME
+			for(var/client/C in clients)
+				window_flash(C) //let them know lobby has opened up.
 
 		if(GAME_STATE_PREGAME)
 				//lobby stats for statpanels
@@ -434,13 +436,13 @@ var/datum/subsystem/ticker/ticker
 
 	mode.declare_completion()//To declare normal completion.
 
-	if(cross_allowed)
-		send_news_report()
-
 	//calls auto_declare_completion_* for all modes
 	for(var/handler in typesof(/datum/game_mode/proc))
 		if (findtext("[handler]","auto_declare_completion_"))
 			call(mode, handler)(force_ending)
+
+	if(cross_allowed)
+		send_news_report()
 
 	//Print a list of antagonists to the server log
 	var/list/total_antagonists = list()

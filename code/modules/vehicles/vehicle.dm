@@ -47,7 +47,6 @@
 		riding_datum.ridden = src
 		riding_datum.handle_vehicle_offsets()
 
-
 //MOVEMENT
 /obj/vehicle/relaymove(mob/user, direction)
 	if(riding_datum)

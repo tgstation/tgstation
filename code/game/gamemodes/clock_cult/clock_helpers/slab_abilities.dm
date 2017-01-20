@@ -104,7 +104,8 @@
 
 		var/brutedamage = L.getBruteLoss()
 		var/burndamage = L.getFireLoss()
-		var/totaldamage = brutedamage + burndamage
+		var/oxydamage = L.getOxyLoss()
+		var/totaldamage = brutedamage + burndamage + oxydamage
 		if(!totaldamage && (!L.reagents || !L.reagents.has_reagent("holywater")))
 			ranged_ability_user << "<span class='inathneq'>\"[L] is unhurt and untainted.\"</span>"
 			return TRUE
@@ -115,6 +116,7 @@
 		if(totaldamage)
 			L.adjustBruteLoss(-brutedamage)
 			L.adjustFireLoss(-burndamage)
+			L.adjustOxyLoss(-oxydamage)
 			L.adjustToxLoss(totaldamage * 0.5, TRUE, TRUE)
 			var/healseverity = max(round(totaldamage*0.05, 1), 1) //shows the general severity of the damage you just healed, 1 glow per 20
 			for(var/i in 1 to healseverity)

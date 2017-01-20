@@ -414,10 +414,6 @@
 /obj/machinery/door/airlock/cult/unruned/glass/friendly
 	friendly = TRUE
 
-#define GEAR_SECURE 1 //Construction defines for the pinion airlock
-#define GEAR_UNFASTENED 2
-#define GEAR_LOOSE 3
-
 //Pinion airlocks: Clockwork doors that only let servants of Ratvar through.
 /obj/machinery/door/airlock/clockwork
 	name = "pinion airlock"
@@ -449,11 +445,11 @@
 	var/gear_text = "The cogwheel is flickering and twisting wildly. Report this to a coder."
 	switch(construction_state)
 		if(GEAR_SECURE)
-			gear_text = "<span class='brass'>The cogwheel is solidly secured to the brass around it.</span>"
+			gear_text = "<span class='brass'>The cogwheel is solidly <b>screwed</b> to the brass around it.</span>"
 		if(GEAR_UNFASTENED)
-			gear_text = "<span class='brass'>The cogwheel is slightly raised, enough to see a thin gap between it and the brass.</span>"
+			gear_text = "<span class='brass'>The cogwheel is <i>unscrewed</i>, but is still <b>wrenched</b> to the brass.</span>"
 		if(GEAR_LOOSE)
-			gear_text = "<span class='heavy_alloy'>There is a wide gap between the cogwheel and the door!</span>"
+			gear_text = "<span class='alloy'>The cogwheel has been <i>loosened</i>, but remains <b>connected loosely</b> to the door!</span>"
 	user << gear_text
 
 /obj/machinery/door/airlock/clockwork/canAIControl(mob/user)
@@ -503,7 +499,7 @@
 		if(construction_state == GEAR_SECURE)
 			user.visible_message("<span class='notice'>[user] begins unfastening [src]'s cogwheel...</span>", "<span class='notice'>You begin unfastening [src]'s cogwheel...</span>")
 			playsound(src, I.usesound, 50, 1)
-			if(!do_after(user, 100*I.toolspeed, target = src))
+			if(!do_after(user, 100*I.toolspeed, target = src) || construction_state != GEAR_SECURE)
 				return 1 //Returns 1 so as not to have extra interactions with the tools used (i.e. prying open)
 			user.visible_message("<span class='notice'>[user] unfastens [src]'s cogwheel!</span>", "<span class='notice'>[src]'s cogwheel shifts slightly with a pop.</span>")
 			playsound(src, 'sound/items/Screwdriver2.ogg', 50, 1)
@@ -511,7 +507,7 @@
 		else if(construction_state == GEAR_UNFASTENED)
 			user.visible_message("<span class='notice'>[user] begins fastening [src]'s cogwheel...</span>", "<span class='notice'>You begin fastening [src]'s cogwheel...</span>")
 			playsound(src, I.usesound, 50, 1)
-			if(!do_after(user, 75*I.toolspeed, target = src))
+			if(!do_after(user, 75*I.toolspeed, target = src) || construction_state != GEAR_UNFASTENED)
 				return 1
 			user.visible_message("<span class='notice'>[user] fastens [src]'s cogwheel!</span>", "<span class='notice'>[src]'s cogwheel shifts back into place.</span>")
 			playsound(src, 'sound/items/Screwdriver2.ogg', 50, 1)
@@ -526,7 +522,7 @@
 		else if(construction_state == GEAR_UNFASTENED)
 			user.visible_message("<span class='notice'>[user] begins loosening [src]'s cogwheel...</span>", "<span class='notice'>You begin loosening [src]'s cogwheel...</span>")
 			playsound(src, I.usesound, 50, 1)
-			if(!do_after(user, 100*I.toolspeed, target = src))
+			if(!do_after(user, 100*I.toolspeed, target = src) || construction_state != GEAR_UNFASTENED)
 				return 1
 			user.visible_message("<span class='notice'>[user] loosens [src]'s cogwheel!</span>", "<span class='notice'>[src]'s cogwheel pops off and dangles loosely.</span>")
 			playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
@@ -534,7 +530,7 @@
 		else if(construction_state == GEAR_LOOSE)
 			user.visible_message("<span class='notice'>[user] begins tightening [src]'s cogwheel...</span>", "<span class='notice'>You begin tightening [src]'s cogwheel into place...</span>")
 			playsound(src, I.usesound, 50, 1)
-			if(!do_after(user, 75*I.toolspeed, target = src))
+			if(!do_after(user, 75*I.toolspeed, target = src) || construction_state != GEAR_LOOSE)
 				return 1
 			user.visible_message("<span class='notice'>[user] tightens [src]'s cogwheel!</span>", "<span class='notice'>You firmly tighten [src]'s cogwheel into place.</span>")
 			playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
@@ -547,7 +543,7 @@
 		else if(construction_state == GEAR_LOOSE)
 			user.visible_message("<span class='notice'>[user] begins slowly lifting off [src]'s cogwheel...</span>", "<span class='notice'>You slowly begin lifting off [src]'s cogwheel...</span>")
 			playsound(src, I.usesound, 50, 1)
-			if(!do_after(user, 100*I.toolspeed, target = src))
+			if(!do_after(user, 100*I.toolspeed, target = src) || construction_state != GEAR_LOOSE)
 				return 1
 			user.visible_message("<span class='notice'>[user] lifts off [src]'s cogwheel, causing it to fall apart!</span>", \
 			"<span class='notice'>You lift off [src]'s cogwheel, causing it to fall apart!</span>")
@@ -558,10 +554,6 @@
 /obj/machinery/door/airlock/clockwork/brass
 	glass = 1
 	opacity = 0
-
-#undef GEAR_SECURE
-#undef GEAR_UNFASTENED
-#undef GEAR_LOOSE
 
 //////////////////////////////////
 /*
