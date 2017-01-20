@@ -53,11 +53,8 @@
 		return
 	if(T.y+height > world.maxy)
 		return
-		
-	SSobj.pre_load_map()
-	var/list/bounds = maploader.load_map(get_file(), T.x, T.y, T.z, cropMap=TRUE)
-	SSobj.post_load_map()
 
+	var/list/bounds = maploader.load_map(get_file(), T.x, T.y, T.z, cropMap=TRUE)
 	if(!bounds)
 		return 0
 

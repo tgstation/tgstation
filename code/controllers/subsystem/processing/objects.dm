@@ -31,11 +31,11 @@ var/datum/subsystem/objects/SSobj
 	initialized = TRUE
 	. = ..()
 
-/datum/subsystem/objects/proc/pre_load_map()
+/datum/subsystem/objects/proc/map_loader_begin()
 	old_initialized = initialized
 	initialized = FALSE
 
-/datum/subsystem/objects/proc/post_load_map()
+/datum/subsystem/objects/proc/map_loader_stop()
 	initialized = old_initialized
 
 /datum/subsystem/objects/proc/trigger_atom_spawners(zlevel, ignore_z=FALSE)
