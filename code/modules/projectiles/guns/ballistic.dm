@@ -21,10 +21,11 @@
 
 /obj/item/weapon/gun/ballistic/update_icon()
 	..()
-	if(current_skin)
-		icon_state = "[current_skin][suppressed ? "-suppressed" : ""][sawn_state ? "-sawn" : ""]"
-	else
-		icon_state = "[initial(icon_state)][suppressed ? "-suppressed" : ""][sawn_state ? "-sawn" : ""]"
+	if(!customizable_type)
+		if(current_skin)
+			icon_state = "[current_skin][suppressed ? "-suppressed" : ""][sawn_state ? "-sawn" : ""]"
+		else
+			icon_state = "[initial(icon_state)][suppressed ? "-suppressed" : ""][sawn_state ? "-sawn" : ""]"
 
 
 /obj/item/weapon/gun/ballistic/process_chamber(empty_chamber = 1)
@@ -36,36 +37,65 @@
 			chambered = null
 		else if(empty_chamber)
 			chambered = null
+		if(!AC.BB)
+			chambered = null
 	chamber_round()
 
 
 /obj/item/weapon/gun/ballistic/proc/chamber_round()
 	if (chambered || !magazine)
 		return
+	if(!magazine)
+		return
+	if(customizable_type && istype(magazine, /obj/item/ammo_box/magazine/internal))
+		if(magazine.ammo_count())
+			chambered = magazine.get_round(1)
+		for(var/i in 1 to magazine.stored_ammo.len)
+			var/obj/item/ammo_casing/AC = magazine.stored_ammo[i]
+			if(AC && !AC.BB)
+				magazine.stored_ammo[i] = null
 	else if (magazine.ammo_count())
 		chambered = magazine.get_round()
 		chambered.forceMove(src)
 
 /obj/item/weapon/gun/ballistic/can_shoot()
-	if(!magazine || !magazine.ammo_count(0))
+	if(!magazine)
+		return 0
+	if(chambered)
+		var/obj/item/ammo_casing/AC = chambered
+		if(!AC.BB)
+			chambered = null
+			if(magazine.ammo_count(0))
+				chamber_round()
+			else
+				return 0
+	else if(!magazine.ammo_count(0))
 		return 0
 	return 1
 
 /obj/item/weapon/gun/ballistic/attackby(obj/item/A, mob/user, params)
 	..()
-	if (istype(A, /obj/item/ammo_box/magazine))
-		var/obj/item/ammo_box/magazine/AM = A
-		if (!magazine && istype(AM, mag_type))
-			user.remove_from_mob(AM)
-			magazine = AM
-			magazine.forceMove(src)
-			user << "<span class='notice'>You load a new magazine into \the [src].</span>"
-			chamber_round()
+	if(customizable_type && uses_internal)
+		var/num_loaded = magazine.attackby(A, user, params, 1)
+		if(num_loaded)
+			user << "<span class='notice'>You load [num_loaded] round\s into \the [src].</span>"
 			A.update_icon()
-			update_icon()
+			chamber_round(0)
 			return 1
-		else if (magazine)
-			user << "<span class='notice'>There's already a magazine in \the [src].</span>"
+	else
+		if (istype(A, /obj/item/ammo_box/magazine))
+			var/obj/item/ammo_box/magazine/AM = A
+			if (!magazine && istype(AM, mag_type))
+				user.remove_from_mob(AM)
+				magazine = AM
+				magazine.forceMove(src)
+				user << "<span class='notice'>You load a new magazine into \the [src].</span>"
+				chamber_round()
+				A.update_icon()
+				update_icon()
+				return 1
+			else if (magazine)
+				user << "<span class='notice'>There's already a magazine in \the [src].</span>"
 	if(istype(A, /obj/item/weapon/suppressor))
 		var/obj/item/weapon/suppressor/S = A
 		if(can_suppress)
@@ -106,22 +136,38 @@
 	..()
 
 /obj/item/weapon/gun/ballistic/attack_self(mob/living/user)
-	var/obj/item/ammo_casing/AC = chambered //Find chambered round
-	if(magazine)
-		magazine.loc = get_turf(src.loc)
-		user.put_in_hands(magazine)
-		magazine.update_icon()
-		magazine = null
-		user << "<span class='notice'>You pull the magazine out of \the [src].</span>"
-	else if(chambered)
-		AC.loc = get_turf(src)
-		AC.SpinAnimation(10, 1)
+	if(customizable_type && uses_internal)
+		var/num_unloaded = 0
 		chambered = null
-		user << "<span class='notice'>You unload the round from \the [src]'s chamber.</span>"
+		while (get_ammo() > 0)
+			var/obj/item/ammo_casing/CB
+			CB = magazine.get_round(0)
+			if(CB)
+				CB.loc = get_turf(src.loc)
+				CB.SpinAnimation(10, 1)
+				CB.update_icon()
+				num_unloaded++
+		if (num_unloaded)
+			user << "<span class='notice'>You unload [num_unloaded] shell\s from [src].</span>"
+		else
+			user << "<span class='warning'>[src] is empty!</span>"
+		return
 	else
-		user << "<span class='notice'>There's no magazine in \the [src].</span>"
-	update_icon()
-	return
+		var/obj/item/ammo_casing/AC = chambered //Find chambered round
+		if(magazine)
+			magazine.loc = get_turf(src.loc)
+			user.put_in_hands(magazine)
+			magazine.update_icon()
+			magazine = null
+			user << "<span class='notice'>You pull the magazine out of \the [src].</span>"
+		else if(chambered)
+			AC.loc = get_turf(src)
+			AC.SpinAnimation(10, 1)
+			chambered = null
+			user << "<span class='notice'>You unload the round from \the [src]'s chamber.</span>"
+		else
+			user << "<span class='notice'>There's no magazine in \the [src].</span>"
+		update_icon()
 
 
 /obj/item/weapon/gun/ballistic/examine(mob/user)

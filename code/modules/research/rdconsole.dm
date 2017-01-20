@@ -52,7 +52,14 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	var/selected_category
 	var/list/datum/design/matching_designs = list() //for the search function
 	var/disk_slot_selected = 0
+	var/guncrafting = 0
 
+
+/obj/machinery/computer/rdconsole/guncrafting
+	name = "Guncrafting Console"
+	icon_screen = "guncrafting"
+	req_access = list(access_armory)
+	guncrafting = 1
 
 /proc/CallTechName(ID) //A simple helper proc to find the name of a tech with a given ID.
 	if(tech_list[ID])
@@ -74,18 +81,24 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	for(var/obj/machinery/r_n_d/D in oview(3,src))
 		if(D.linked_console != null || D.disabled || D.panel_open)
 			continue
-		if(istype(D, /obj/machinery/r_n_d/destructive_analyzer))
-			if(linked_destroy == null)
-				linked_destroy = D
-				D.linked_console = src
-		else if(istype(D, /obj/machinery/r_n_d/protolathe))
-			if(linked_lathe == null)
-				linked_lathe = D
-				D.linked_console = src
-		else if(istype(D, /obj/machinery/r_n_d/circuit_imprinter))
-			if(linked_imprinter == null)
-				linked_imprinter = D
-				D.linked_console = src
+		if(!guncrafting)
+			if(istype(D, /obj/machinery/r_n_d/destructive_analyzer))
+				if(linked_destroy == null)
+					linked_destroy = D
+					D.linked_console = src
+			else if(istype(D, /obj/machinery/r_n_d/protolathe))
+				if(linked_lathe == null)
+					linked_lathe = D
+					D.linked_console = src
+			else if(istype(D, /obj/machinery/r_n_d/circuit_imprinter))
+				if(linked_imprinter == null)
+					linked_imprinter = D
+					D.linked_console = src
+		else
+			if(istype(D, /obj/machinery/r_n_d/protolathe))
+				if(linked_lathe == null)
+					linked_lathe = D
+					D.linked_console = src
 	first_use = 0
 
 //Have it automatically push research to the centcom server so wild griffins can't fuck up R&D's work --NEO
@@ -265,7 +278,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 						autolathe_friendly = 0
 						D.category -= "Imported"
 
-			if(D.build_type & (AUTOLATHE|PROTOLATHE|CRAFTLATHE)) // Specifically excludes circuit imprinter and mechfab
+			if(D.build_type & (AUTOLATHE|PROTOLATHE|GUNLATHE)) // Specifically excludes circuit imprinter and mechfab
 				D.build_type = autolathe_friendly ? (D.build_type | AUTOLATHE) : D.build_type
 				D.category |= "Imported"
 			d_disk.blueprints[slot] = D
@@ -406,8 +419,8 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 		power = max(3000, power)
 		screen = 0.3
 		var/key = usr.key	//so we don't lose the info during the spawn delay
-		if (!(being_built.build_type & PROTOLATHE))
-			message_admins("Protolathe exploit attempted by [key_name(usr, usr.client)]!")
+		if (!(being_built.build_type & PROTOLATHE) && !(being_built.build_type & GUNLATHE))
+			message_admins("Protolathe/Gunlathe exploit attempted by [key_name(usr, usr.client)]!")
 			updateUsrDialog()
 			return
 
@@ -589,7 +602,10 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 		if(href_list["type"] == "proto")
 			compare = PROTOLATHE
 			screen = 3.17
-		else
+		else if(href_list["type"] == "gun")
+			compare = GUNLATHE
+			screen = 5.17
+		else if (href_list["type"] == "imprint")
 			compare = IMPRINTER
 			screen = 4.17
 
@@ -661,18 +677,24 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				dat += "<A href='?src=\ref[src];menu=1.4'>Disk Operations</A><BR>"
 			else
 				dat += "<span class='linkOff'>Disk Operations</span><BR>"
-			if(linked_destroy)
-				dat += "<A href='?src=\ref[src];menu=2.2'>Destructive Analyzer Menu</A><BR>"
+			if(!guncrafting)
+				if(linked_destroy)
+					dat += "<A href='?src=\ref[src];menu=2.2'>Destructive Analyzer Menu</A><BR>"
+				else
+					dat += "<span class='linkOff'>Destructive Analyzer Menu</span><BR>"
+				if(linked_lathe)
+					dat += "<A href='?src=\ref[src];menu=3.1'>Protolathe Construction Menu</A><BR>"
+				else
+					dat += "<span class='linkOff'>Protolathe Construction Menu</span><BR>"
+				if(linked_imprinter)
+					dat += "<A href='?src=\ref[src];menu=4.1'>Circuit Construction Menu</A><BR>"
+				else
+					dat += "<span class='linkOff'>Circuit Construction Menu</span><BR>"
 			else
-				dat += "<span class='linkOff'>Destructive Analyzer Menu</span><BR>"
-			if(linked_lathe)
-				dat += "<A href='?src=\ref[src];menu=3.1'>Protolathe Construction Menu</A><BR>"
-			else
-				dat += "<span class='linkOff'>Protolathe Construction Menu</span><BR>"
-			if(linked_imprinter)
-				dat += "<A href='?src=\ref[src];menu=4.1'>Circuit Construction Menu</A><BR>"
-			else
-				dat += "<span class='linkOff'>Circuit Construction Menu</span><BR>"
+				if(linked_lathe)
+					dat += "<A href='?src=\ref[src];menu=5.1'>Gunlathe Construction Menu</A><BR>"
+				else
+					dat += "<span class='linkOff'>Gunlathe Construction Menu</span><BR>"
 			dat += "<A href='?src=\ref[src];menu=1.6'>Settings</A>"
 			dat += "</div>"
 
@@ -728,6 +750,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 						if(D.build_type & PROTOLATHE) dat += "Protolathe<BR>"
 						if(D.build_type & AUTOLATHE) dat += "Autolathe<BR>"
 						if(D.build_type & MECHFAB) dat += "Exosuit Fabricator<BR>"
+						if(D.build_type & GUNLATHE) dat += "Gunlathe<BR>"
 						if(D.build_type & BIOGENERATOR) dat += "Biogenerator<BR>"
 					dat += "Required Materials:<BR>"
 					var/all_mats = D.materials + D.reagents_list
@@ -768,18 +791,24 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			dat += "<h3>R&D Console Device Linkage Menu:</h3><BR>"
 			dat += "<A href='?src=\ref[src];find_device=1'>Re-sync with Nearby Devices</A><BR><BR>"
 			dat += "<h3>Linked Devices:</h3><BR>"
-			if(linked_destroy)
-				dat += "* Destructive Analyzer <A href='?src=\ref[src];disconnect=destroy'>Disconnect</A><BR>"
+			if(!guncrafting)
+				if(linked_destroy)
+					dat += "* Destructive Analyzer <A href='?src=\ref[src];disconnect=destroy'>Disconnect</A><BR>"
+				else
+					dat += "* No Destructive Analyzer Linked<BR>"
+				if(linked_lathe)
+					dat += "* Protolathe <A href='?src=\ref[src];disconnect=lathe'>Disconnect</A><BR>"
+				else
+					dat += "* No Protolathe Linked<BR>"
+				if(linked_imprinter)
+					dat += "* Circuit Imprinter <A href='?src=\ref[src];disconnect=imprinter'>Disconnect</A><BR>"
+				else
+					dat += "* No Circuit Imprinter Linked<BR>"
 			else
-				dat += "* No Destructive Analyzer Linked<BR>"
-			if(linked_lathe)
-				dat += "* Protolathe <A href='?src=\ref[src];disconnect=lathe'>Disconnect</A><BR>"
-			else
-				dat += "* No Protolathe Linked<BR>"
-			if(linked_imprinter)
-				dat += "* Circuit Imprinter <A href='?src=\ref[src];disconnect=imprinter'>Disconnect</A><BR>"
-			else
-				dat += "* No Circuit Imprinter Linked<BR>"
+				if(linked_lathe)
+					dat += "* Gunlathe <A href='?src=\ref[src];disconnect=lathe'>Disconnect</A><BR>"
+				else
+					dat += "* No Gunlathe Linked<BR>"
 			dat += "</div>"
 
 		////////////////////DESTRUCTIVE ANALYZER SCREENS////////////////////////////
@@ -1034,6 +1063,126 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 					if(M.amount >= MINERAL_MATERIAL_AMOUNT) dat += "<A href='?src=\ref[src];imprinter_ejectsheet=[M.id];eject_amt=50'>All</A>"
 					dat += "<BR>"
 			dat += "</div>"
+		/////////////////////GUNLATHE SCREENS/////////////////////////
+		if(5.0)
+			dat += "<A href='?src=\ref[src];menu=1.0'>Main Menu</A><HR>"
+			dat += "<div class='statusDisplay'>NO GUNLATHE LINKED TO CONSOLE</div>"
+
+		if(5.1)
+			dat += "<A href='?src=\ref[src];menu=1.0'>Main Menu</A> "
+			dat += "<A href='?src=\ref[src];menu=5.2'>Material Storage</A>"
+			dat += "<A href='?src=\ref[src];menu=5.3'>Chemical Storage</A><div class='statusDisplay'>"
+			dat += "<h3>Gunlathe Menu:</h3><BR>"
+			dat += "<B>Material Amount:</B> [linked_lathe.materials.total_amount] / [linked_lathe.materials.max_amount]<BR>"
+			dat += "<B>Chemical Volume:</B> [linked_lathe.reagents.total_volume] / [linked_lathe.reagents.maximum_volume]<BR>"
+
+			dat += "<form name='search' action='?src=\ref[src]'>\
+			<input type='hidden' name='src' value='\ref[src]'>\
+			<input type='hidden' name='search' value='to_search'>\
+			<input type='hidden' name='type' value='gun'>\
+			<input type='text' name='to_search'>\
+			<input type='submit' value='Search'>\
+			</form><HR>"
+
+			dat += list_categories(linked_lathe.categories, 5.15)
+
+		//Grouping designs by categories, to improve readability
+		if(5.15)
+			dat += "<A href='?src=\ref[src];menu=1.0'>Main Menu</A>"
+			dat += "<A href='?src=\ref[src];menu=5.1'>Gunlathe Menu</A>"
+			dat += "<div class='statusDisplay'><h3>Browsing [selected_category]:</h3><BR>"
+			dat += "<B>Material Amount:</B> [linked_lathe.materials.total_amount] / [linked_lathe.materials.max_amount]<BR>"
+			dat += "<B>Chemical Volume:</B> [linked_lathe.reagents.total_volume] / [linked_lathe.reagents.maximum_volume]<HR>"
+
+			var/coeff = linked_lathe.efficiency_coeff
+			for(var/v in files.known_designs)
+				var/datum/design/D = files.known_designs[v]
+				if(!(selected_category in D.category)|| !(D.build_type & GUNLATHE))
+					continue
+				var/temp_material
+				var/c = 50
+				var/t
+
+				var/all_materials = D.materials + D.reagents_list
+				for(var/M in all_materials)
+					t = linked_lathe.check_mat(D, M)
+					temp_material += " | "
+					if (t < 1)
+						temp_material += "<span class='bad'>[all_materials[M]*coeff] [CallMaterialName(M)]</span>"
+					else
+						temp_material += " [all_materials[M]*coeff] [CallMaterialName(M)]"
+					c = min(c,t)
+
+				if (c >= 1)
+					dat += "<A href='?src=\ref[src];build=[D.id];amount=1'>[D.name]</A>"
+					if(c >= 5)
+						dat += "<A href='?src=\ref[src];build=[D.id];amount=5'>x5</A>"
+					if(c >= 10)
+						dat += "<A href='?src=\ref[src];build=[D.id];amount=10'>x10</A>"
+					dat += "[temp_material]"
+				else
+					dat += "<span class='linkOff'>[D.name]</span>[temp_material]"
+				dat += "<BR>"
+			dat += "</div>"
+
+		if(5.17) //Display search result
+			dat += "<A href='?src=\ref[src];menu=1.0'>Main Menu</A>"
+			dat += "<A href='?src=\ref[src];menu=5.1'>Gunlathe Menu</A>"
+			dat += "<div class='statusDisplay'><h3>Search results:</h3><BR>"
+			dat += "<B>Material Amount:</B> [linked_lathe.materials.total_amount] / [linked_lathe.materials.max_amount]<BR>"
+			dat += "<B>Chemical Volume:</B> [linked_lathe.reagents.total_volume] / [linked_lathe.reagents.maximum_volume]<HR>"
+
+			var/coeff = linked_lathe.efficiency_coeff
+			for(var/datum/design/D in matching_designs)
+				var/temp_material
+				var/c = 50
+				var/t
+				var/all_materials = D.materials + D.reagents_list
+				for(var/M in all_materials)
+					t = linked_lathe.check_mat(D, M)
+					temp_material += " | "
+					if (t < 1)
+						temp_material += "<span class='bad'>[all_materials[M]*coeff] [CallMaterialName(M)]</span>"
+					else
+						temp_material += " [all_materials[M]*coeff] [CallMaterialName(M)]"
+					c = min(c,t)
+
+				if (c >= 1)
+					dat += "<A href='?src=\ref[src];build=[D.id];amount=1'>[D.name]</A>"
+					if(c >= 5)
+						dat += "<A href='?src=\ref[src];build=[D.id];amount=5'>x5</A>"
+					if(c >= 10)
+						dat += "<A href='?src=\ref[src];build=[D.id];amount=10'>x10</A>"
+					dat += "[temp_material]"
+				else
+					dat += "<span class='linkOff'>[D.name]</span>[temp_material]"
+				dat += "<BR>"
+			dat += "</div>"
+
+		if(5.2) //Protolathe Material Storage Sub-menu
+			dat += "<A href='?src=\ref[src];menu=1.0'>Main Menu</A>"
+			dat += "<A href='?src=\ref[src];menu=5.1'>Gunlathe Menu</A><div class='statusDisplay'>"
+			dat += "<h3>Material Storage:</h3><BR><HR>"
+			if(!linked_lathe)
+				dat += "ERROR: Gunlathe connection failed."
+			else
+				for(var/mat_id in linked_lathe.materials.materials)
+					var/datum/material/M = linked_lathe.materials.materials[mat_id]
+					dat += "* [M.amount] of [M.name]: "
+					if(M.amount >= MINERAL_MATERIAL_AMOUNT) dat += "<A href='?src=\ref[src];ejectsheet=[M.id];eject_amt=1'>Eject</A> "
+					if(M.amount >= MINERAL_MATERIAL_AMOUNT*5) dat += "<A href='?src=\ref[src];ejectsheet=[M.id];eject_amt=5'>5x</A> "
+					if(M.amount >= MINERAL_MATERIAL_AMOUNT) dat += "<A href='?src=\ref[src];ejectsheet=[M.id];eject_amt=50'>All</A>"
+					dat += "<BR>"
+			dat += "</div>"
+
+		if(5.3)
+			dat += "<A href='?src=\ref[src];menu=1.0'>Main Menu</A>"
+			dat += "<A href='?src=\ref[src];menu=5.1'>Gunlathe Menu</A>"
+			dat += "<A href='?src=\ref[src];disposeallP=1'>Disposal All Chemicals in Storage</A><div class='statusDisplay'>"
+			dat += "<h3>Chemical Storage:</h3><BR><HR>"
+			for(var/datum/reagent/R in linked_lathe.reagents.reagent_list)
+				dat += "[R.name]: [R.volume]"
+				dat += "<A href='?src=\ref[src];disposeP=[R.id]'>Purge</A><BR>"
 
 	var/datum/browser/popup = new(user, "rndconsole", name, 460, 550)
 	popup.set_content(dat)

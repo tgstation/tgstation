@@ -204,6 +204,15 @@
 	materials = list(MAT_GLASS=60)
 	rating = 3
 	chargerate = 1500
+	
+/obj/item/weapon/stock_parts/cell/guncrafthigh  //Battery variants for guncrafting
+	name = "high-capacity gun power cell"
+	origin_tech = "powerstorage=2"
+	icon_state = "hcell"
+	maxcharge = 1500
+	materials = list(MAT_GLASS=60)
+	rating = 3
+	chargerate = 1000
 
 /obj/item/weapon/stock_parts/cell/high/plus
 	name = "high-capacity power cell+"
@@ -211,7 +220,7 @@
 	icon_state = "h+cell"
 	maxcharge = 15000
 	chargerate = 2250
-
+	
 /obj/item/weapon/stock_parts/cell/high/empty/New()
 	..()
 	charge = 0
@@ -223,7 +232,16 @@
 	maxcharge = 20000
 	materials = list(MAT_GLASS=300)
 	rating = 4
-	chargerate = 2000
+	chargerate = 1500
+
+/obj/item/weapon/stock_parts/cell/guncraftsuper
+	name = "super-capacity gun power cell"
+	origin_tech = "powerstorage=3;materials=3"
+	icon_state = "scell"
+	maxcharge = 2000
+	materials = list(MAT_GLASS=300)
+	rating = 4
+	chargerate = 1000
 
 /obj/item/weapon/stock_parts/cell/super/empty/New()
 	..()
@@ -238,6 +256,15 @@
 	rating = 5
 	chargerate = 3000
 
+/obj/item/weapon/stock_parts/cell/guncrafthyper
+	name = "hyper-capacity gun power cell"
+	origin_tech = "powerstorage=4;engineering=4;materials=4"
+	icon_state = "hpcell"
+	maxcharge = 3000
+	materials = list(MAT_GLASS=400)
+	rating = 5
+	chargerate = 1000
+
 /obj/item/weapon/stock_parts/cell/hyper/empty/New()
 	..()
 	charge = 0
@@ -251,6 +278,16 @@
 	materials = list(MAT_GLASS=600)
 	rating = 6
 	chargerate = 4000
+
+/obj/item/weapon/stock_parts/cell/guncraftbluespace
+	name = "bluespace power cell"
+	desc = "A rechargable transdimensional power cell."
+	origin_tech = "powerstorage=5;bluespace=4;materials=4;engineering=4"
+	icon_state = "bscell"
+	maxcharge = 4000
+	materials = list(MAT_GLASS=600)
+	rating = 6
+	chargerate = 1000
 
 /obj/item/weapon/stock_parts/cell/bluespace/empty/New()
 	..()

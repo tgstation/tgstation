@@ -79,6 +79,7 @@
 
 /obj/item/weapon/gun/energy/recharge_newshot(no_cyborg_drain)
 	if (!ammo_type || !power_supply)
+		update_icon()
 		return
 	if(use_cyborg_cell && !no_cyborg_drain)
 		if(iscyborg(loc))
@@ -93,6 +94,7 @@
 			chambered = AC //...prepare a new shot based on the current ammo type selected
 			if(!chambered.BB)
 				chambered.newshot()
+	update_icon()
 
 /obj/item/weapon/gun/energy/process_chamber()
 	if(chambered && !chambered.BB) //if BB is null, i.e the shot has been fired...
@@ -116,34 +118,36 @@
 	return
 
 /obj/item/weapon/gun/energy/update_icon()
-	cut_overlays()
-	var/ratio = Ceiling((power_supply.charge / power_supply.maxcharge) * charge_sections)
-	var/obj/item/ammo_casing/energy/shot = ammo_type[select]
-	var/iconState = "[icon_state]_charge"
-	var/itemState = null
-	if(!initial(item_state))
-		itemState = icon_state
-	if (modifystate)
-		add_overlay("[icon_state]_[shot.select_name]")
-		iconState += "_[shot.select_name]"
-		if(itemState)
-			itemState += "[shot.select_name]"
-	if(power_supply.charge < shot.e_cost)
-		add_overlay("[icon_state]_empty")
-	else
-		if(!shaded_charge)
-			for(var/i = ratio, i >= 1, i--)
-				add_overlay(image(icon = icon, icon_state = iconState, pixel_x = ammo_x_offset * (i -1)))
+	..()
+	if(!customizable_type)
+		cut_overlays()
+		var/ratio = Ceiling((power_supply.charge / power_supply.maxcharge) * charge_sections)
+		var/obj/item/ammo_casing/energy/shot = ammo_type[select]
+		var/iconState = "[icon_state]_charge"
+		var/itemState = null
+		if(!initial(item_state))
+			itemState = icon_state
+		if (modifystate)
+			add_overlay("[icon_state]_[shot.select_name]")
+			iconState += "_[shot.select_name]"
+			if(itemState)
+				itemState += "[shot.select_name]"
+		if(power_supply.charge < shot.e_cost)
+			add_overlay("[icon_state]_empty")
 		else
-			add_overlay(image(icon = icon, icon_state = "[icon_state]_charge[ratio]"))
-	if(gun_light && can_flashlight)
-		var/iconF = "flight"
-		if(gun_light.on)
-			iconF = "flight_on"
-		add_overlay(image(icon = icon, icon_state = iconF, pixel_x = flight_x_offset, pixel_y = flight_y_offset))
-	if(itemState)
-		itemState += "[ratio]"
-		item_state = itemState
+			if(!shaded_charge)
+				for(var/i = ratio, i >= 1, i--)
+					add_overlay(image(icon = icon, icon_state = iconState, pixel_x = ammo_x_offset * (i -1)))
+			else
+				add_overlay(image(icon = icon, icon_state = "[icon_state]_charge[ratio]"))
+		if(gun_light && can_flashlight)
+			var/iconF = "flight"
+			if(gun_light.on)
+				iconF = "flight_on"
+			add_overlay(image(icon = icon, icon_state = iconF, pixel_x = flight_x_offset, pixel_y = flight_y_offset))
+		if(itemState)
+			itemState += "[ratio]"
+			item_state = itemState
 
 /obj/item/weapon/gun/energy/ui_action_click()
 	toggle_gunlight()

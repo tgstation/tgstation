@@ -50,6 +50,7 @@
 	var/dismemberment = 0 //The higher the number, the greater the bonus to dismembering. 0 will not dismember at all.
 	var/impact_effect_type //what type of impact effect to show when hitting something
 	var/log_override = FALSE //is this type spammed enough to not log? (KAs)
+	var/obj/item/weapon/gun/firing_gun
 
 /obj/item/projectile/New()
 	permutated = list()
@@ -84,6 +85,9 @@
 			PoolOrNew(impact_effect_type, list(target_loca, target, src))
 		return 0
 	var/mob/living/L = target
+	if(firing_gun && firing_gun.customizable_type)
+		for(var/obj/item/weapon/gun_attachment/A in firing_gun.attachments)
+			A.on_hit(L, firer)
 	if(blocked != 100) // not completely blocked
 		if(damage && L.blood_volume && damage_type == BRUTE)
 			var/splatter_dir = dir
