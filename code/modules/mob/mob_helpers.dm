@@ -274,6 +274,12 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 			return M
 	return 0
 
+var/static/regex/firstname = new("^\[^\\s-\]+") //First word before whitespace or "-"
+
+/mob/proc/first_name()
+	firstname.Find(real_name)
+	return firstname.match
+
 /mob/proc/abiotic(full_body = 0)
 	for(var/obj/item/I in held_items)
 		if(!(I.flags & NODROP))
