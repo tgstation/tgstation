@@ -65,6 +65,8 @@ var/global/list/uplinks = list()
 		ui.open()
 
 /obj/item/device/uplink/ui_data(mob/user)
+	if(!user.mind)
+		return
 	var/list/data = list()
 	data["telecrystals"] = telecrystals
 	data["lockable"] = lockable
@@ -79,6 +81,32 @@ var/global/list/uplinks = list()
 				var/datum/uplink_item/I = uplink_items[category][item]
 				if(I.limited_stock == 0)
 					continue
+				if(I.restricted_roles.len)
+					var/is_inaccessible = 1
+					if(config.roundstart_role_uplink_items) //Role items are shown if our roundstart role is what they're given to
+						for(var/R in I.restricted_roles)
+							if(R == user.mind.assigned_role)
+								is_inaccessible = 0
+					else //Role items are shown if our CURRENT role (based on ID) is what they're given to
+						var/current_role = "WWE Super Slam Champion"
+						if(!ishuman(user))
+							current_role = user.mind.assigned_role
+						else
+							var/mob/living/carbon/human/H = user
+							var/obj/item/O = H.get_item_by_slot(slot_wear_id)
+							if(istype(O, /obj/item/weapon/card/id))
+								var/obj/item/weapon/card/id/ID = O
+								current_role = ID.assignment
+							else if(istype(O, /obj/item/device/pda))
+								var/obj/item/device/pda/P = O
+								if(P.id)
+									var/obj/item/weapon/card/id/ID = P.id
+									current_role = ID.assignment
+						for(var/role in I.restricted_roles)
+							if(role == current_role)
+								is_inaccessible = 0
+					if(is_inaccessible)
+						continue
 				cat["items"] += list(list(
 					"name" = I.name,
 					"cost" = I.cost,

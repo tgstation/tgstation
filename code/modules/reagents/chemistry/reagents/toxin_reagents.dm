@@ -692,7 +692,7 @@
 	color = "#3C5133"
 	metabolization_rate = 0.08 * REAGENTS_METABOLISM
 	toxpwr = 0.15
-	
+
 /datum/reagent/toxin/anacea/on_mob_life(mob/living/M)
 	var/remove_amt = 5
 	if(holder.has_reagent("calomel") || holder.has_reagent("pen_acid"))
@@ -700,7 +700,7 @@
 	for(var/datum/reagent/medicine/R in M.reagents.reagent_list)
 		M.reagents.remove_reagent(R.id,remove_amt)
 	return ..()
-	
+
 //ACID
 
 
