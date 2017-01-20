@@ -465,22 +465,22 @@ var/bomb_set
 This is here to make the tiles around the station mininuke change when it's armed.
 */
 
-/obj/machinery/nuclearbomb/selfdestruct/proc/SetTurfs()
-	if(loc == initial(loc))
-		for(var/N in nuke_tiles)
-			var/turf/open/floor/T = N
-			T.icon_state = (timing ? "rcircuitanim" : T.icon_regular_floor)
-
 /obj/machinery/nuclearbomb/selfdestruct/set_anchor()
 	return
 
 /obj/machinery/nuclearbomb/selfdestruct/set_active()
 	..()
-	SetTurfs()
+	if(timing)
+		SSmapping.add_nuke_threat(src)
+	else
+		SSmapping.remove_nuke_threat(src)
 
 /obj/machinery/nuclearbomb/selfdestruct/set_safety()
 	..()
-	SetTurfs()
+	if(timing)
+		SSmapping.add_nuke_threat(src)
+	else
+		SSmapping.remove_nuke_threat(src)
 
 //==========DAT FUKKEN DISK===============
 /obj/item/weapon/disk

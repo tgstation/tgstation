@@ -171,6 +171,14 @@
 	build_path = /obj/item/weapon/electronics/firealarm
 	category = list("initial", "Electronics")
 
+/datum/design/earmuffs
+	name = "Earmuffs"
+	id = "earmuffs"
+	build_type = AUTOLATHE
+	materials = list(MAT_METAL = 500, MAT_GLASS = 500)
+	build_path = /obj/item/clothing/ears/earmuffs
+	category = list("initial", "Misc")
+
 /datum/design/pipe_painter
 	name = "Pipe painter"
 	id = "pipe_painter"

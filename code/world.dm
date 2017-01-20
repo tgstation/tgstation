@@ -293,6 +293,9 @@ var/inerror = 0
 
 /world/proc/load_motd()
 	join_motd = file2text("config/motd.txt")
+	for(var/line in revdata.testmerge)
+		if(line)
+			join_motd += "<br>Test merge active of PR <a href='[config.githuburl]/pull/[line]'>#[line]</a>"
 
 /world/proc/load_configuration()
 	protected_config = new /datum/protected_configuration()

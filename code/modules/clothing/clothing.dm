@@ -526,7 +526,7 @@ BLIND     // can't see anything
 			adjusted = DIGITIGRADE_STYLE
 		H.update_inv_w_uniform()
 
-	if(hastie)
+	if(hastie && slot != slot_hands)
 		hastie.on_uniform_equip(src, user)
 
 /obj/item/clothing/under/dropped(mob/user)

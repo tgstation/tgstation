@@ -124,8 +124,6 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	reagents.add_reagent("nicotine", 15)
 
 /obj/item/clothing/mask/cigarette/Destroy()
-	if(reagents)
-		qdel(reagents)
 	STOP_PROCESSING(SSobj, src)
 	. = ..()
 
@@ -354,8 +352,6 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	name = "empty [initial(name)]"
 
 /obj/item/clothing/mask/cigarette/pipe/Destroy()
-	if(reagents)
-		qdel(reagents)
 	STOP_PROCESSING(SSobj, src)
 	. = ..()
 

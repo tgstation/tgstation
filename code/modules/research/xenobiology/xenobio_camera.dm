@@ -79,6 +79,7 @@
 				qdel(G)
 		if (loaded)
 			user << "<span class='notice'>You fill [src] with the monkey cubes stored in [O]. [src] now has [monkeys] monkey cubes stored.</span>"
+		return
 	..()
 
 /datum/action/innate/camera_off/xenobio/Activate()

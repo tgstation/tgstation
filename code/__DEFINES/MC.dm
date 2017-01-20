@@ -45,5 +45,12 @@
 #define SS_POST_FIRE_TIMING 128
 
 //Timing subsystem
-#define TIMER_NORMAL	"normal"
-#define TIMER_UNIQUE	"unique"
+//Don't run if there is an identical unique timer active
+#define TIMER_UNIQUE		0x1
+//For unique timers: Replace the old timer rather then not start this one
+#define TIMER_OVERRIDE		0x2
+//Timing should be based on how timing progresses on clients, not the sever.
+//	tracking this is more expensive,
+//	should only be used in conjuction with things that have to progress client side, such as animate() or sound()
+#define TIMER_CLIENT_TIME	0x4
+
