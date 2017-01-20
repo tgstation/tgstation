@@ -129,7 +129,6 @@
 	if(H.r_store)
 		H.r_store.add_fingerprint(H,1)
 	for(var/V in H.held_items)
-		if(V)
-			var/obj/item/I = V
-			I.add_fingerprint(H,1)
+		var/obj/item/I = V
+		I.add_fingerprint(H,1)
 	return 1
