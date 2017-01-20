@@ -598,12 +598,7 @@
 
 /obj/structure/sign/picture_frame/attack_hand(mob/user)
 	if(framed)
-		if(contents.len)
-			var/obj/item/I = pick(contents)
-			user.put_in_hands(I)
-			user << "<span class='notice'>You carefully remove the photo from \the [src].</span>"
-			framed = null
-			update_icon()
+		framed.show()
 
 /obj/structure/sign/picture_frame/update_icon()
 	overlays.Cut()
