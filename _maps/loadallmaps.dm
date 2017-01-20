@@ -44,6 +44,10 @@
 
 #undef TRAVIS_MASS_MAP_BUILD
 
+#ifdef TRAVISBUILDING
+#include "templates.dm"
+#endif
+
 #include "runtimestation.dm"
 
 #define BYOND_WHY_YOU_NO_ALLOW_INCLUDE_LAST_LINE //because byond fails to compile if the last thing in a file is an include.

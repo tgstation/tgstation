@@ -10,7 +10,6 @@ env:
     - DM_MAPFILE=""
     matrix:
     - BUILD_TOOLS=true
-    - DM_MAPFILE="templates"
     - DM_MAPFILE="loadallmaps"
 
 cache:
