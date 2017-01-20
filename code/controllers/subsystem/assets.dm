@@ -15,5 +15,5 @@ var/datum/subsystem/assets/SSasset
 		A.register()
 
 	for(var/client/C in clients)
-		addtimer(CALLBACK(GLOBAL_PROC, .proc/getFilesSlow, C, cache, FALSE), 10, TIMER_CLIENT_TIME)
+		addtimer(CALLBACK(GLOBAL_PROC, .proc/getFilesSlow, C, cache, FALSE), 10)
 	..()
