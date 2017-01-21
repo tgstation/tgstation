@@ -29,7 +29,7 @@
 	..()
 
 /obj/item/weapon/circuitboard/machine/microwave
-	name = "circuit board (Microwave)"
+	name = "Microwave (Machine Board)"
 	build_path = /obj/machinery/microwave
 	origin_tech = "programming=2;magnets=2"
 	req_components = list(

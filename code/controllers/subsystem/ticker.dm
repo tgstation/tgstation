@@ -11,6 +11,8 @@ var/datum/subsystem/ticker/ticker
 
 	var/current_state = GAME_STATE_STARTUP	//state of current round (used by process()) Use the defines GAME_STATE_* !
 	var/force_ending = 0					//Round was ended by admin intervention
+	// If true, there is no lobby phase, the game starts immediately.
+	var/start_immediately = FALSE
 
 	var/hide_mode = 0
 	var/datum/game_mode/mode = null
@@ -72,6 +74,8 @@ var/datum/subsystem/ticker/ticker
 			world << "<span class='boldnotice'>Welcome to [station_name()]!</span>"
 			world << "Please set up your character and select \"Ready\". The game will start in [config.lobby_countdown] seconds."
 			current_state = GAME_STATE_PREGAME
+			for(var/client/C in clients)
+				window_flash(C) //let them know lobby has opened up.
 
 		if(GAME_STATE_PREGAME)
 				//lobby stats for statpanels
@@ -81,6 +85,9 @@ var/datum/subsystem/ticker/ticker
 				++totalPlayers
 				if(player.ready)
 					++totalPlayersReady
+
+			if(start_immediately)
+				timeLeft = 0
 
 			//countdown
 			if(timeLeft < 0)
@@ -354,6 +361,7 @@ var/datum/subsystem/ticker/ticker
 	var/station_evacuated = EMERGENCY_ESCAPED_OR_ENDGAMED
 	var/num_survivors = 0
 	var/num_escapees = 0
+	var/num_shuttle_escapees = 0
 
 	world << "<BR><BR><BR><FONT size=3><B>The round has ended.</B></FONT>"
 
@@ -363,11 +371,16 @@ var/datum/subsystem/ticker/ticker
 			if(Player.stat != DEAD && !isbrain(Player))
 				num_survivors++
 				if(station_evacuated) //If the shuttle has already left the station
+					var/area/shuttle_area
+					if(SSshuttle && SSshuttle.emergency)
+						shuttle_area = SSshuttle.emergency.areaInstance
 					if(!Player.onCentcom() && !Player.onSyndieBase())
 						Player << "<font color='blue'><b>You managed to survive, but were marooned on [station_name()]...</b></FONT>"
 					else
 						num_escapees++
 						Player << "<font color='green'><b>You managed to survive the events on [station_name()] as [Player.real_name].</b></FONT>"
+						if(get_area(Player) == shuttle_area)
+							num_shuttle_escapees++
 				else
 					Player << "<font color='green'><b>You managed to survive the events on [station_name()] as [Player.real_name].</b></FONT>"
 			else
@@ -376,20 +389,22 @@ var/datum/subsystem/ticker/ticker
 	//Round statistics report
 	var/datum/station_state/end_state = new /datum/station_state()
 	end_state.count()
-	var/station_integrity = min(round( 100 * start_state.score(end_state), 0.1), 100)
+	var/station_integrity = min(PERCENT(start_state.score(end_state)), 100)
 
 	world << "<BR>[TAB]Shift Duration: <B>[round(world.time / 36000)]:[add_zero("[world.time / 600 % 60]", 2)]:[world.time / 100 % 6][world.time / 100 % 10]</B>"
 	world << "<BR>[TAB]Station Integrity: <B>[mode.station_was_nuked ? "<font color='red'>Destroyed</font>" : "[station_integrity]%"]</B>"
 	if(mode.station_was_nuked)
 		ticker.news_report = STATION_DESTROYED_NUKE
+	var/total_players = joined_player_list.len
 	if(joined_player_list.len)
-		world << "<BR>[TAB]Total Population: <B>[joined_player_list.len]</B>"
+		world << "<BR>[TAB]Total Population: <B>[total_players]</B>"
 		if(station_evacuated)
-			world << "<BR>[TAB]Evacuation Rate: <B>[num_escapees] ([round((num_escapees/joined_player_list.len)*100, 0.1)]%)</B>"
+			world << "<BR>[TAB]Evacuation Rate: <B>[num_escapees] ([PERCENT(num_escapees/total_players)]%)</B>"
+			world << "<BR>[TAB](on emergency shuttle): <B>[num_shuttle_escapees] ([PERCENT(num_shuttle_escapees/total_players)]%)</B>"
 			news_report = STATION_EVACUATED
 			if(SSshuttle.emergency.is_hijacked())
 				news_report = SHUTTLE_HIJACK
-		world << "<BR>[TAB]Survival Rate: <B>[num_survivors] ([round((num_survivors/joined_player_list.len)*100, 0.1)]%)</B>"
+		world << "<BR>[TAB]Survival Rate: <B>[num_survivors] ([PERCENT(num_survivors/total_players)]%)</B>"
 	world << "<BR>"
 
 	//Silicon laws report
@@ -421,13 +436,13 @@ var/datum/subsystem/ticker/ticker
 
 	mode.declare_completion()//To declare normal completion.
 
-	if(cross_allowed)
-		send_news_report()
-
 	//calls auto_declare_completion_* for all modes
 	for(var/handler in typesof(/datum/game_mode/proc))
 		if (findtext("[handler]","auto_declare_completion_"))
 			call(mode, handler)(force_ending)
+
+	if(cross_allowed)
+		send_news_report()
 
 	//Print a list of antagonists to the server log
 	var/list/total_antagonists = list()
@@ -480,7 +495,6 @@ var/datum/subsystem/ticker/ticker
 				world << "<b><font color='green'>The borers were successful!</font></b>"
 			else
 				world << "<b><font color='red'>The borers have failed!</font></b>"
-	return TRUE
 
 	mode.declare_station_goal_completion()
 

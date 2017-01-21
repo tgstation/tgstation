@@ -127,10 +127,10 @@
 		return 0
 	if(moving)
 		return 0
+	if(mob.force_moving)
+		return 0
 	if(isliving(mob))
 		var/mob/living/L = mob
-		if(L.slipping)
-			return 0
 		if(L.incorporeal_move)	//Move though walls
 			Process_Incorpmove(direct)
 			return 0

@@ -36,7 +36,7 @@
 		throwforce = initial(throwforce)
 		armour_penetration = 0
 		clockwork_desc = "A powerful spear of Ratvarian making. It's more effective against enemy cultists and silicons, though it won't last for long."
-		timerid = addtimer(CALLBACK(src, .proc/break_spear), 600)
+		timerid = addtimer(CALLBACK(src, .proc/break_spear), 600, TIMER_STOPPABLE)
 
 /obj/item/clockwork/ratvarian_spear/cyborg/ratvar_act() //doesn't break!
 	if(ratvar_awakens)

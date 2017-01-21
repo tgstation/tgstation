@@ -21,7 +21,7 @@
 	B.apply_default_parts(src)
 
 /obj/item/weapon/circuitboard/machine/quantumpad
-	name = "circuit board (Quantum Pad)"
+	name = "Quantum Pad (Machine Board)"
 	build_path = /obj/machinery/quantumpad
 	origin_tech = "programming=3;engineering=3;plasmatech=3;bluespace=4"
 	req_components = list(

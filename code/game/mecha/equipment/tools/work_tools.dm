@@ -294,7 +294,7 @@
 	name = "cable layer"
 	desc = "Equipment for engineering exosuits. Lays cable along the exosuit's path."
 	icon_state = "mecha_wire"
-	var/datum/event/event
+	var/datum/callback/event
 	var/turf/old_turf
 	var/obj/structure/cable/last_piece
 	var/obj/item/stack/cable_coil/cable
@@ -313,7 +313,7 @@
 
 /obj/item/mecha_parts/mecha_equipment/cable_layer/attach()
 	..()
-	event = chassis.events.addEvent("onMove",src,"layCable")
+	event = chassis.events.addEvent("onMove", CALLBACK(src, .proc/layCable))
 	return
 
 /obj/item/mecha_parts/mecha_equipment/cable_layer/detach()

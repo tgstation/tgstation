@@ -25,6 +25,9 @@
 /obj/machinery/computer/bank_machine/process()
 	..()
 	if(siphoning)
+		if (stat & (BROKEN|NOPOWER))
+			say("Insufficient power. Halting siphon.")
+			siphoning =	FALSE
 		if(SSshuttle.points < 200)
 			say("Station funds depleted. Halting siphon.")
 			siphoning = FALSE

@@ -618,7 +618,7 @@
 	name = "alien tongue"
 	desc = "According to leading xenobiologists the evolutionary benefit of having a second mouth in your mouth is \"that it looks badass\"."
 	icon_state = "tonguexeno"
-	say_mod = "hiss"
+	say_mod = "hisses"
 
 /obj/item/organ/tongue/alien/TongueSpeech(var/message)
 	playsound(owner, "hiss", 25, 1, 1)
@@ -661,6 +661,16 @@
 	name = "chattering bone \"tongue\""
 	chattering = TRUE
 
+/obj/item/organ/tongue/robot
+	name = "robotic voicebox"
+	desc = "A voice synthesizer that can interface with organic lifeforms."
+	icon_state = "tonguerobot"
+	say_mod = "states"
+	attack_verb = list("beeped", "booped")
+
+/obj/item/organ/tongue/robot/get_spans()
+	return ..() | SPAN_ROBOT
+
 /obj/item/organ/appendix
 	name = "appendix"
 	icon_state = "appendix"
@@ -691,5 +701,30 @@
 /obj/item/organ/appendix/prepare_eat()
 	var/obj/S = ..()
 	if(inflamed)
-		S.reagents.add_reagent("????", 5)
+		S.reagents.add_reagent("bad_food", 5)
 	return S
+
+/mob/living/proc/regenerate_organs()
+	return 0
+
+/mob/living/carbon/regenerate_organs()
+	if(!(NOBREATH in dna.species.species_traits) && !getorganslot("lungs"))
+		var/obj/item/organ/lungs/L = new()
+		L.Insert(src)
+
+	if(!(NOBLOOD in dna.species.species_traits) && !getorganslot("heart"))
+		var/obj/item/organ/heart/H = new()
+		H.Insert(src)
+
+	if(!getorganslot("tongue"))
+		var/obj/item/organ/tongue/T
+
+		for(var/tongue_type in dna.species.mutant_organs)
+			if(ispath(tongue_type, /obj/item/organ/tongue))
+				T = new tongue_type()
+				T.Insert(src)
+
+		// if they have no mutant tongues, give them a regular one
+		if(!T)
+			T = new()
+			T.Insert(src)

@@ -71,7 +71,7 @@
 	B.apply_default_parts(src)
 
 /obj/item/weapon/circuitboard/machine/mining_equipment_vendor
-	name = "circuit board (Mining Equipment Vendor)"
+	name = "Mining Equipment Vendor (Machine Board)"
 	build_path = /obj/machinery/mineral/equipment_vendor
 	origin_tech = "programming=1;engineering=3"
 	req_components = list(
@@ -180,6 +180,7 @@
 		if("Mining Drone")
 			new /mob/living/simple_animal/hostile/mining_drone(src.loc)
 			new /obj/item/weapon/weldingtool/hugetank(src.loc)
+			new /obj/item/clothing/glasses/welding(src.loc)
 		if("Extraction and Rescue Kit")
 			new /obj/item/weapon/extraction_pack(loc)
 			new /obj/item/fulton_core(loc)
@@ -225,7 +226,7 @@
 	B.apply_default_parts(src)
 
 /obj/item/weapon/circuitboard/machine/mining_equipment_vendor/golem
-	name = "circuit board (Golem Ship Equipment Vendor)"
+	name = "Golem Ship Equipment Vendor (Machine Board)"
 	build_path = /obj/machinery/mineral/equipment_vendor/golem
 
 

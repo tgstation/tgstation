@@ -1,4 +1,4 @@
-//TODO: Flash range does nothing currently
+var/explosionid = 1
 
 /proc/explosion(turf/epicenter, devastation_range, heavy_impact_range, light_impact_range, flash_range, adminlog = 1, ignorecap = 0, flame_range = 0 ,silent = 0, smoke = 1)
 	set waitfor = 0
@@ -32,6 +32,7 @@
 	//and somethings expect us to ex_act them so they can qdel()
 	sleep(1) //tldr, let the calling proc call qdel(src) before we explode
 
+	var/id = explosionid++
 	var/start = world.timeofday
 
 	var/max_range = max(devastation_range, heavy_impact_range, light_impact_range, flame_range)
@@ -106,14 +107,23 @@
 			for(var/obj/structure/blob/B in T)
 				cached_exp_block[T] += B.explosion_block
 			CHECK_TICK
+			
+	//flash mobs
+	if(flash_range)
+		for(var/mob/living/L in viewers(flash_range, epicenter))
+			L.flash_act()
 
+	CHECK_TICK
+
+	var/list/exploded_this_tick = list()	//open turfs that need to be blocked off while we sleep
 	for(var/turf/T in affected_turfs)
 		if(!T)
 			continue
 		// an explosion proof turf protects itself and its contents
 		if(T.flags & EXPLOSION_PROOF)
 			continue
-		var/dist = cheap_hypotenuse(T.x, T.y, x0, y0)
+		var/init_dist = cheap_hypotenuse(T.x, T.y, x0, y0)
+		var/dist = init_dist
 
 		if(config.reactionary_explosions)
 			var/turf/Trajectory = T
@@ -136,13 +146,16 @@
 		else
 			dist = 0
 
-		//------- TURF FIRES -------
+		//------- EX_ACT AND TURF FIRES -------
 
 		if(T)
 			if(flame_dist && prob(40) && !isspaceturf(T) && !T.density)
 				PoolOrNew(/obj/effect/hotspot, T) //Mostly for ambience!
 			if(dist > 0)
+				T.explosion_level = max(T.explosion_level, dist)	//let the bigger one have it
+				T.explosion_id = id
 				T.ex_act(dist)
+				exploded_this_tick += T
 
 		//--- THROW ITEMS AROUND ---
 
@@ -154,7 +167,21 @@
 				I.throw_speed = 4 //Temporarily change their throw_speed for embedding purposes (Reset when it finishes throwing, regardless of hitting anything)
 				I.throw_at(throw_at, throw_range, I.throw_speed)
 
-		CHECK_TICK
+		if(world.tick_usage > CURRENT_TICKLIMIT)
+			stoplag()
+
+			var/circumference = (PI * init_dist * 2) + 8 //+8 to prevent shit gaps
+			if(exploded_this_tick.len > circumference)	//only do this every revolution
+				for(var/Unexplode in exploded_this_tick)
+					var/turf/UnexplodeT = Unexplode
+					UnexplodeT.explosion_level = 0
+				exploded_this_tick.Cut()
+
+	//unfuck the shit
+	for(var/Unexplode in exploded_this_tick)
+		var/turf/UnexplodeT = Unexplode
+		UnexplodeT.explosion_level = 0
+	exploded_this_tick.Cut()
 
 	var/took = (world.timeofday-start)/10
 	//You need to press the DebugGame verb to see these now....they were getting annoying and we've collected a fair bit of data. Just -test- changes  to explosion code using this please so we can compare

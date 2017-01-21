@@ -29,7 +29,7 @@
 	B.apply_default_parts(src)
 
 /obj/item/weapon/circuitboard/machine/cryo_tube
-	name = "circuit board (Cryotube)"
+	name = "Cryotube (Machine Board)"
 	build_path = /obj/machinery/atmospherics/components/unary/cryo_cell
 	origin_tech = "programming=4;biotech=3;engineering=4;plasmatech=3"
 	req_components = list(
@@ -190,10 +190,10 @@
 /obj/machinery/atmospherics/components/unary/cryo_cell/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/reagent_containers/glass))
 		. = 1 //no afterattack
-		if(!user.drop_item())
-			return
 		if(beaker)
 			user << "<span class='warning'>A beaker is already loaded into [src]!</span>"
+			return
+		if(!user.drop_item())
 			return
 		beaker = I
 		I.loc = src

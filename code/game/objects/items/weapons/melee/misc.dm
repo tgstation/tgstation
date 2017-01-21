@@ -187,6 +187,8 @@
 /obj/item/weapon/melee/supermatter_sword/New()
 	..()
 	shard = new /obj/machinery/power/supermatter_shard(src)
+	qdel(shard.countdown)
+	shard.countdown = null
 	START_PROCESSING(SSobj, src)
 	visible_message("<span class='warning'>[src] appears, balanced ever so perfectly on its hilt. This isn't ominous at all.</span>")
 

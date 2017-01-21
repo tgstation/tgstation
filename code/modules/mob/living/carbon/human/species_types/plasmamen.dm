@@ -15,25 +15,34 @@ var/global/image/plasmaman_on_fire = image("icon"='icons/mob/OnFire.dmi', "icon_
 	breathid = "tox"
 	speedmod = 1
 	damage_overlay_type = ""//let's not show bloody wounds or burns over bones.
+	var/internal_fire = FALSE //If the bones themselves are burning clothes won't help you much
 
 /datum/species/plasmaman/spec_life(mob/living/carbon/human/H)
 	var/datum/gas_mixture/environment = H.loc.return_air()
-
-	if(!istype(H.w_uniform, /obj/item/clothing/under/plasmaman) || !istype(H.head, /obj/item/clothing/head/helmet/space/plasmaman))
+	var/atmos_sealed = (H.wear_suit && (H.wear_suit.flags & STOPSPRESSUREDMAGE)) && (H.head && (H.head.flags & STOPSPRESSUREDMAGE))
+	if((!istype(H.w_uniform, /obj/item/clothing/under/plasmaman) || !istype(H.head, /obj/item/clothing/head/helmet/space/plasmaman)) && !atmos_sealed)
 		if(environment)
-			var/total_moles = environment.total_moles()
-			if(total_moles)
-				if(environment.gases["o2"] && (environment.gases["o2"][MOLES] /total_moles) >= 0.01)
+			if(environment.total_moles())
+				if(environment.gases["o2"] && (environment.gases["o2"][MOLES]) >= 1) //Same threshhold that extinguishes fire
 					H.adjust_fire_stacks(0.5)
 					if(!H.on_fire && H.fire_stacks > 0)
 						H.visible_message("<span class='danger'>[H]'s body reacts with the atmosphere and bursts into flames!</span>","<span class='userdanger'>Your body reacts with the atmosphere and bursts into flame!</span>")
 					H.IgniteMob()
+					internal_fire = TRUE
 	else
 		if(H.fire_stacks)
 			var/obj/item/clothing/under/plasmaman/P = H.w_uniform
 			if(istype(P))
 				P.Extinguish(H)
+				internal_fire = FALSE
+		else
+			internal_fire = FALSE
 	H.update_fire()
+
+/datum/species/plasmaman/handle_fire(mob/living/carbon/human/H, no_protection)
+	if(internal_fire)
+		no_protection = TRUE
+	..()
 
 /datum/species/plasmaman/before_equip_job(datum/job/J, mob/living/carbon/human/H, visualsOnly = FALSE)
 	var/datum/outfit/plasmaman/O = new /datum/outfit/plasmaman

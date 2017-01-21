@@ -21,7 +21,7 @@
 	initialize() //Agouri
 
 /obj/item/weapon/circuitboard/machine/rdserver
-	name = "circuit board (R&D Server)"
+	name = "R&D Server (Machine Board)"
 	build_path = /obj/machinery/r_n_d/server
 	origin_tech = "programming=3"
 	req_components = list(

@@ -240,7 +240,7 @@
 	B.apply_default_parts(src)
 
 /obj/item/weapon/circuitboard/machine/teleporter_hub
-	name = "circuit board (Teleporter Hub)"
+	name = "Teleporter Hub (Machine Board)"
 	build_path = /obj/machinery/teleport/hub
 	origin_tech = "programming=3;engineering=4;bluespace=4;materials=4"
 	req_components = list(
@@ -353,7 +353,7 @@
 	link_console_and_hub()
 
 /obj/item/weapon/circuitboard/machine/teleporter_station
-	name = "circuit board (Teleporter Station)"
+	name = "Teleporter Station (Machine Board)"
 	build_path = /obj/machinery/teleport/station
 	origin_tech = "programming=4;engineering=4;bluespace=4;plasmatech=3"
 	req_components = list(

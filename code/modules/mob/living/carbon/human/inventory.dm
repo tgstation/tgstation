@@ -1,16 +1,6 @@
 /mob/living/carbon/human/can_equip(obj/item/I, slot, disable_warning = 0)
 	return dna.species.can_equip(I, slot, disable_warning, src)
 
-
-/mob/living/carbon/human/proc/equip_in_one_of_slots(obj/item/I, list/slots, qdel_on_fail = 1)
-	for(var/slot in slots)
-		if(equip_to_slot_if_possible(I, slots[slot], qdel_on_fail = 0, disable_warning = TRUE))
-			return slot
-	if(qdel_on_fail)
-		qdel(I)
-	return null
-
-
 // Return the item currently in the slot ID
 /mob/living/carbon/human/get_item_by_slot(slot_id)
 	switch(slot_id)

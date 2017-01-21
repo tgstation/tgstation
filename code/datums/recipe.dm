@@ -42,10 +42,10 @@
 
 /datum/recipe/proc/check_reagents(datum/reagents/avail_reagents) //1=precisely, 0=insufficiently, -1=superfluous
 	. = 1
-	for (var/r_r in reagents)
+	for (var/r_r in reagents_list)
 		var/aval_r_amnt = avail_reagents.get_reagent_amount(r_r)
-		if (!(abs(aval_r_amnt - reagents[r_r])<0.5)) //if NOT equals
-			if (aval_r_amnt>reagents[r_r])
+		if (!(abs(aval_r_amnt - reagents_list[r_r])<0.5)) //if NOT equals
+			if (aval_r_amnt>reagents_list[r_r])
 				. = -1
 			else
 				return 0

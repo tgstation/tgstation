@@ -186,7 +186,7 @@
 
 /obj/machinery/door/emp_act(severity)
 	if(prob(20/severity) && (istype(src,/obj/machinery/door/airlock) || istype(src,/obj/machinery/door/window)) )
-		open()
+		addtimer(CALLBACK(src, .proc/open), 0)
 	if(prob(40/severity))
 		if(secondsElectrified == 0)
 			secondsElectrified = -1
@@ -337,4 +337,8 @@
 /obj/machinery/door/proc/disable_lockdown()
 	if(!stat) //Opens only powered doors.
 		open() //Open everything!
+
+/obj/machinery/door/ex_act(severity, target)
+	//if it blows up a wall it should blow up a door
+	..(severity ? max(1, severity - 1) : 0, target)
 
