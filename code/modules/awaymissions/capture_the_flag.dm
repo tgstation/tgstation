@@ -503,6 +503,7 @@
 	resistance_flags = INDESTRUCTIBLE
 	var/team = WHITE_TEAM
 	time_between_triggers = 1
+	anchored = TRUE
 	alpha = 255
 
 /obj/structure/trap/examine(mob/user)
