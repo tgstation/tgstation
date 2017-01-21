@@ -227,7 +227,7 @@
 		resulthealth = round((abs(HEALTH_THRESHOLD_DEAD - host.health) / abs(HEALTH_THRESHOLD_DEAD - host.maxHealth)) * 100)
 	if(ratvar_awakens || resulthealth <= MARAUDER_EMERGE_THRESHOLD)
 		PoolOrNew(/obj/effect/overlay/temp/heal, list(host.loc, "#AF0AAF"))
-		host.heal_ordered_damage(6, damage_heal_order)
+		host.heal_ordered_damage(4, damage_heal_order)
 
 /mob/living/simple_animal/hostile/clockwork/marauder/proc/update_stats()
 	if(ratvar_awakens)
