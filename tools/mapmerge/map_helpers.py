@@ -27,7 +27,7 @@ def merge_map(newfile, backupfile, tgm):
     if new_map["key_length"] != old_map["key_length"]:
         if tgm:
             write_dictionary_tgm(newfile, new_map["dictionary"])
-            write_grid_coord_small(newfile, new_map["grid"])
+            write_grid_coord_small(newfile, new_map["grid"], new_map["maxx"], new_map["maxy"])
         return 1
     else:
         key_length = old_map["key_length"]
@@ -35,7 +35,7 @@ def merge_map(newfile, backupfile, tgm):
     if new_map["maxx"] != old_map["maxx"] or new_map["maxy"] != old_map["maxy"]:
         if tgm:
             write_dictionary_tgm(newfile, new_map["dictionary"])
-            write_grid_coord_small(newfile, new_map["grid"])
+            write_grid_coord_small(newfile, new_map["grid"], new_map["maxx"], new_map["maxy"])
         return 2
     else:
         maxx = old_map["maxx"]
@@ -99,10 +99,13 @@ def merge_map(newfile, backupfile, tgm):
                 old_dict[fresh_key] = new_tile
                 merged_grid[x,y] = fresh_key
 
-##    #step two: clean the dictionary if it has too many unused keys
-##    if len(unused_keys) > min(100, (len(old_dict) * 0.5)):
-##        print("NOTICE: Trimming the dictionary.")
-##        old_dict = trim_dictionary(old_dict)
+    #step two: clean the dictionary if it has too many unused keys
+    if len(unused_keys) > min(300, (len(old_dict) * 0.5)):
+        print("NOTICE: Trimming the dictionary.")
+        trimmed_dict_map = trim_dictionary({"dictionary": old_dict, "grid": merged_grid})
+        old_dict = trimmed_dict_map["dictionary"]
+        merged_grid = trimmed_dict_map["grid"]
+        print("NOTICE: Trimmed out {} unused dictionary keys.".format(len(unused_keys)))
 
     #step three: write the map to file
     if tgm:
@@ -194,26 +197,39 @@ def write_grid(filename, grid, maxx, maxy): #writes a map grid the same way Drea
 
 ####################
 #dictionary helpers#
+
+#faster than get_key() on smaller dictionaries
 def search_key(dictionary, data):
     for key, value in dictionary.items():
         if value == data:
             return key
     return None
 
-def get_key(keys, values, data):
+#faster than search_key() on bigger dictionaries
+def get_key(keys, values, data): 
     try:
         return keys[values.index(data)]
     except:
         return None
 
-def trim_dictionary(dictionary): #rewrites dictionary into an ordered dictionary with no unused keys
+def trim_dictionary(unclean_map): #rewrites dictionary into an ordered dictionary with no unused keys
     trimmed_dict = collections.OrderedDict()
-    key_length = len(list(dictionary.keys())[0])
+    adjusted_grid = dict()
+    key_length = len(list(unclean_map["dictionary"].keys())[0])
     key = ""
-    for tile in dictionary.values():
-        key = get_next_key(key, key_length)
-        trimmed_dict[key] = tile
-    return trimmed_dict
+    old_to_new = dict()
+    used_keys = set(unclean_map["grid"].values())
+
+    for old_key, tile in unclean_map["dictionary"].items():
+        if old_key in used_keys:
+            key = get_next_key(key, key_length)
+            trimmed_dict[key] = tile
+            old_to_new[old_key] = key
+
+    for coord, old_key in unclean_map["grid"].items():
+        adjusted_grid[coord] = old_to_new[old_key]
+
+    return {"dictionary": trimmed_dict, "grid": adjusted_grid}
 
 def sort_dictionary(dictionary):
     sorted_dict = collections.OrderedDict()
