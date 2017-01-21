@@ -460,10 +460,17 @@ var/static/regex/multispin_words = regex("like a record baby")
 /obj/item/organ/vocal_cords/colossus/wizard
 	name = "magical vocal cords"
 	desc = "Speak with the voice of an ancient magical god. Stronger and faster than the mere trinkets that Collossi have, as well as being very easy to absorb into the user's body."
-	base_multiplier = 2
-	cooldown_multiplier = 0.5
+	base_multiplier = 1.5
+	cooldown_multiplier = 0.75
+
+/obj/item/organ/vocal_cords/colossus/wizard/attack(mob/living/carbon/human/H, mob/living/carbon/human/user, obj/target)
+	if(H == user && istype(H))
+		attack_self(user)
+	else
+		. = ..()
 
 /obj/item/organ/vocal_cords/colossus/wizard/attack_self(mob/user)
 	playsound(get_turf(owner), 'sound/magic/Demon_consume.ogg', 50, 1, -1)
 	user.visible_message("<span class='warning'>[src] leaps at [user]'s throat!</span>", "<span class='userdanger'>The [src] leaps at your throat, bloodlessly tearing through the flesh!</span>", "<span class='italics'>You hear organic matter ripping and tearing!</span>")
+	user.drop_item()
 	Insert(user)

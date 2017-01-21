@@ -467,7 +467,7 @@
 	item_path = /obj/item/organ/vocal_cords/colossus/wizard
 	log_name = "VG"
 	category = "Assistance"
-	cost = 2
+	cost = 3
 
 /datum/spellbook_entry/summon
 	name = "Summon Stuff"
