@@ -79,8 +79,8 @@ var/global/datum/crewmonitor/crewmonitor = new
 	src.jobs = jobs
 	src.interfaces = list()
 	src.data = list()
-	register_asset("crewmonitor.js",'code/game/machinery/computer/crew.js')
-	register_asset("crewmonitor.css",'code/game/machinery/computer/crew.css')
+	register_asset("crewmonitor.js",'crew.js')
+	register_asset("crewmonitor.css",'crew.css')
 
 /datum/crewmonitor/Destroy()
 	if (src.interfaces)
