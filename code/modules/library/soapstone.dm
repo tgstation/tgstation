@@ -12,11 +12,12 @@
 	var/turf/T = get_turf(target)
 	if(!proximity)
 		return
+
+	var/obj/structure/chisel_message/already_message = locate(/obj/structure/chisel_message) in T
+
 	if(!good_chisel_message_location(T))
 		user << "<span class='warning'>It's not appropriate to engrave on [T].</span>"
 		return
-
-	var/obj/structure/chisel_message/already_message = locate(/obj/structure/chisel_message) in T
 
 	if(already_message)
 		user.visible_message("<span class='notice'>[user] starts erasing [already_message].</span>", "<span class='notice'>You start erasing [already_message].</span>", "<span class='italics'>You hear a chipping sound.</span>")
@@ -63,8 +64,6 @@
 		. = FALSE
 	else if(!(isfloorturf(T) || iswallturf(T)))
 		. = FALSE
-	else if(locate(/obj/structure/chisel_message) in T)
-		. = FALSE
 	else
 		. = TRUE
 
@@ -77,6 +76,8 @@
 	anchored = 1
 	luminosity = 1
 	obj_integrity = 30
+	max_integrity = 30
+
 	var/hidden_message
 	var/creator_key
 	var/creator_name
@@ -101,6 +102,7 @@
 	update_icon()
 
 /obj/structure/chisel_message/update_icon()
+	..()
 	var/hash = md5(hidden_message)
 	var/newcolor = copytext(hash, 1, 7)
 	add_atom_colour("#[newcolor]", FIXED_COLOUR_PRIORITY)
