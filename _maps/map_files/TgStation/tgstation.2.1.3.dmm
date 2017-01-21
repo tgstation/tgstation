@@ -19076,7 +19076,7 @@
 /turf/open/floor/engine/cult,
 /area/library)
 "aQs" = (
-/obj/structure/destructible/cult/tome,
+/obj/effect/spawner/lootdrop/librarian_cult_spawner,
 /obj/item/clothing/under/suit_jacket/red,
 /obj/item/weapon/book/codex_gigas,
 /turf/open/floor/engine/cult,
