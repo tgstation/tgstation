@@ -215,7 +215,7 @@
 	if(istype(MB))
 		MB.RunOver(src)
 
-	if(ishuman(AM))
+	if(ishuman(AM) && lying)
 		var/mob/living/carbon/human/stampede = AM
 		visible_message("<span class='danger'>[src] is trampled by [stampede.name]!</span>", "<span class='userdanger'>You got trampled by [stampede.name]!</span>")
 		adjustBruteLoss(8)
