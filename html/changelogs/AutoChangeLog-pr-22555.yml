@@ -1,0 +1,4 @@
+author: "ChemicalRascal"
+delete-after: True
+changes: 
+  - tweak: "Voice analyzers in \"inclusive\" mode (the default mode) are now case-insensitive."
