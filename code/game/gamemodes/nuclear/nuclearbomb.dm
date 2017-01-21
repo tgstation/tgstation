@@ -419,13 +419,13 @@ var/bomb_set
 	update_icon()
 	for(var/mob/M in player_list)
 		M << 'sound/machines/Alarm.ogg'
-	if(ticker && ticker.mode)
-		ticker.mode.explosion_in_progress = 1
+	if(ticker)
+		ticker.explosion_in_progress = TRUE
 	sleep(100)
 
 	if(!core)
 		ticker.station_explosion_cinematic(3,"no_core")
-		ticker.mode.explosion_in_progress = 0
+		ticker.explosion_in_progress = FALSE
 		return
 
 	enter_allowed = 0

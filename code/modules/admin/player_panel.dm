@@ -341,253 +341,28 @@
 		dat += "<BR>"
 		dat += "<a href='?_src_=holder;end_round=\ref[usr]'>End Round Now</a><br>"
 		dat += "<a href='?_src_=holder;delay_round_end=1'>[ticker.delay_end ? "End Round Normally" : "Delay Round End"]</a><br>"
-		if(ticker.mode.syndicates.len)
-			dat += "<br><table cellspacing=5><tr><td><B>Syndicates</B></td><td></td></tr>"
-			for(var/datum/mind/N in ticker.mode.syndicates)
-				var/mob/M = N.current
+
+		for(var/antag_type in ticker.threat.antagonists)
+			dat += "<b>[capitalize(antag_type)]</b><br>"
+			for(var/antag_datum in ticker.threat.antagonists[antag_type])
+				var/datum/antagonist/A = antag_datum
+				var/datum/mind/M = A.owner
 				if(M)
-					dat += "<tr><td><a href='?_src_=holder;adminplayeropts=\ref[M]'>[M.real_name]</a>[M.client ? "" : " <i>(No Client)</i>"][M.stat == 2 ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
-					dat += "<td><A href='?priv_msg=[M.ckey]'>PM</A></td>"
-					dat += "<td><A href='?_src_=holder;adminplayerobservefollow=\ref[M]'>FLW</a></td></tr>"
-				else
-					dat += "<tr><td><i><a href='?_src_=vars;Vars=\ref[N]'>[N.name]([N.key])</a> Nuclear Operative Body destroyed!</i></td>"
-					dat += "<td><A href='?priv_msg=[N.key]'>PM</A></td></tr>"
-			dat += "</table><br><table><tr><td><B>Nuclear Disk(s)</B></td></tr>"
-			for(var/obj/item/weapon/disk/nuclear/N in poi_list)
-				dat += "<tr><td>[N.name], "
-				var/atom/disk_loc = N.loc
-				while(!isturf(disk_loc))
-					if(ismob(disk_loc))
-						var/mob/M = disk_loc
-						dat += "carried by <a href='?_src_=holder;adminplayeropts=\ref[M]'>[M.real_name]</a> "
-					if(isobj(disk_loc))
-						var/obj/O = disk_loc
-						dat += "in \a [O.name] "
-					disk_loc = disk_loc.loc
-				dat += "in [disk_loc.loc] at ([disk_loc.x], [disk_loc.y], [disk_loc.z])</td></tr>"
-			dat += "</table>"
-
-		if(ticker.mode.head_revolutionaries.len || ticker.mode.revolutionaries.len)
-			dat += "<br><table cellspacing=5><tr><td><B>Revolutionaries</B></td><td></td></tr>"
-			for(var/datum/mind/N in ticker.mode.head_revolutionaries)
-				var/mob/M = N.current
-				if(!M)
-					dat += "<tr><td><a href='?_src_=vars;Vars=\ref[N]'>[N.name]([N.key])</a><i>Head Revolutionary body destroyed!</i></td>"
-					dat += "<td><A href='?priv_msg=[N.key]'>PM</A></td></tr>"
-				else
-					dat += "<tr><td><a href='?_src_=holder;adminplayeropts=\ref[M]'>[M.real_name]</a> <b>(Leader)</b>[M.client ? "" : " <i>(No Client)</i>"][M.stat == 2 ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
-					dat += "<td><A href='?priv_msg=[M.ckey]'>PM</A></td>"
-					dat += "<td><A href='?_src_=holder;adminplayerobservefollow=\ref[M]'>FLW</a></td></tr>"
-			for(var/datum/mind/N in ticker.mode.revolutionaries)
-				var/mob/M = N.current
-				if(M)
-					dat += "<tr><td><a href='?_src_=holder;adminplayeropts=\ref[M]'>[M.real_name]</a>[M.client ? "" : " <i>(No Client)</i>"][M.stat == 2 ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
-					dat += "<td><A href='?priv_msg=[M.ckey]'>PM</A></td>"
-					dat += "<td><A href='?_src_=holder;adminplayerobservefollow=\ref[M]'>FLW</a></td></tr>"
-			dat += "</table><table cellspacing=5><tr><td><B>Target(s)</B></td><td></td><td><B>Location</B></td></tr>"
-			for(var/datum/mind/N in ticker.mode.get_living_heads())
-				var/mob/M = N.current
-				if(M)
-					dat += "<tr><td><a href='?_src_=holder;adminplayeropts=\ref[M]'>[M.real_name]</a>[M.client ? "" : " <i>(No Client)</i>"][M.stat == 2 ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
-					dat += "<td><A href='?priv_msg=[M.ckey]'>PM</A></td>"
-					dat += "<td><A href='?_src_=holder;adminplayerobservefollow=\ref[M]'>FLW</a></td>"
-					var/turf/mob_loc = get_turf(M)
-					dat += "<td>[mob_loc.loc]</td></tr>"
-				else
-					dat += "<tr><td><a href='?_src_=vars;Vars=\ref[N]'>[N.name]([N.key])</a><i>Head body destroyed!</i></td>"
-					dat += "<td><A href='?priv_msg=[N.key]'>PM</A></td></tr>"
-			dat += "</table>"
-
-		for(var/datum/gang/G in ticker.mode.gangs)
-			dat += "<br><table cellspacing=5><tr><td><B>[G.name] Gang: <a href='?_src_=holder;gangpoints=\ref[G]'>[G.points] Influence</a> | [round((G.territory.len/start_state.num_territories)*100, 1)]% Control</B></td><td></td></tr>"
-			for(var/datum/mind/N in G.bosses)
-				var/mob/M = N.current
-				if(!M)
-					dat += "<tr><td><a href='?_src_=vars;Vars=\ref[N]'>[N.name]([N.key])</a><i>Gang Boss body destroyed!</i></td>"
-					dat += "<td><A href='?priv_msg=[N.key]'>PM</A></td></tr>"
-				else
-					dat += "<tr><td><a href='?_src_=holder;adminplayeropts=\ref[M]'>[M.real_name]</a> <b>(Boss)</b>[M.client ? "" : " <i>(No Client)</i>"][M.stat == 2 ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
-					dat += "<td><A href='?priv_msg=[M.ckey]'>PM</A></td>"
-					dat += "<td><A href='?_src_=holder;adminplayerobservefollow=\ref[M]'>FLW</a></td></tr>"
-			for(var/datum/mind/N in G.gangsters)
-				var/mob/M = N.current
-				if(M)
-					dat += "<tr><td><a href='?_src_=holder;adminplayeropts=\ref[M]'>[M.real_name]</a>[M.client ? "" : " <i>(No Client)</i>"][M.stat == 2 ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
-					dat += "<td><A href='?priv_msg=[M.ckey]'>PM</A></td></tr>"
-			dat += "</table>"
-
-		if(ticker.mode.changelings.len > 0)
-			dat += "<br><table cellspacing=5><tr><td><B>Changelings</B></td><td></td><td></td></tr>"
-			for(var/datum/mind/changeling in ticker.mode.changelings)
-				var/mob/M = changeling.current
-				if(M)
-					dat += "<tr><td>[M.mind.changeling.changelingID] as <a href='?_src_=holder;adminplayeropts=\ref[M]'>[M.real_name]</a>[M.client ? "" : " <i>(No Client)</i>"][M.stat == 2 ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
-					dat += "<td><A href='?priv_msg=[M.ckey]'>PM</A></td>"
-					dat += "<td><A href='?_src_=holder;adminplayerobservefollow=\ref[M]'>FLW</a></td>"
-					dat += "<td><A HREF='?_src_=holder;traitor=\ref[M]'>Show Objective</A></td></tr>"
-				else
-					dat += "<tr><td><a href='?_src_=vars;Vars=\ref[changeling]'>[changeling.name]([changeling.key])</a><i>Changeling body destroyed!</i></td>"
-					dat += "<td><A href='?priv_msg=[changeling.key]'>PM</A></td></tr>"
-			dat += "</table>"
-
-		if(ticker.mode.wizards.len > 0)
-			dat += "<br><table cellspacing=5><tr><td><B>Wizards</B></td><td></td><td></td></tr>"
-			for(var/datum/mind/wizard in ticker.mode.wizards)
-				var/mob/M = wizard.current
-				if(M)
-					dat += "<tr><td><a href='?_src_=holder;adminplayeropts=\ref[M]'>[M.real_name]</a>[M.client ? "" : " <i>(No Client)</i>"][M.stat == 2 ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
-					dat += "<td><A href='?priv_msg=[M.ckey]'>PM</A></td>"
-					dat += "<td><A href='?_src_=holder;adminplayerobservefollow=\ref[M]'>FLW</a></td>"
-					dat += "<td><A HREF='?_src_=holder;traitor=\ref[M]'>Show Objective</A></td></tr>"
-				else
-					dat += "<tr><td><a href='?_src_=vars;Vars=\ref[wizard]'>[wizard.name]([wizard.key])</a><i>Wizard body destroyed!</i></td></tr>"
-					dat += "<td><A href='?priv_msg=[wizard.key]'>PM</A></td></tr>"
-			dat += "</table>"
-
-		if(ticker.mode.apprentices.len > 0)
-			dat += "<br><table cellspacing=5><tr><td><B>Apprentice</B></td><td></td><td></td></tr>"
-			for(var/datum/mind/apprentice in ticker.mode.apprentices)
-				var/mob/M = apprentice.current
-				if(M)
-					dat += "<tr><td><a href='?_src_=holder;adminplayeropts=\ref[M]'>[M.real_name]</a>[M.client ? "" : " <i>(No Client)</i>"][M.stat == 2 ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
-					dat += "<td><A href='?priv_msg=[M.ckey]'>PM</A></td>"
-					dat += "<td><A href='?_src_=holder;adminplayerobservefollow=\ref[M]'>FLW</a></td>"
-					dat += "<td><A HREF='?_src_=holder;traitor=\ref[M]'>Show Objective</A></td></tr>"
-				else
-					dat += "<tr><td><a href='?_src_=vars;Vars=\ref[apprentice]'>[apprentice.name]([apprentice.key])</a><i>Apprentice body destroyed!!</i></td></tr>"
-					dat += "<td><A href='?priv_msg=[apprentice.key]'>PM</A></td></tr>"
-			dat += "</table>"
-
-		if(ticker.mode.cult.len)
-			dat += "<br><table cellspacing=5><tr><td><B>Cultists</B></td><td></td></tr>"
-			for(var/datum/mind/N in ticker.mode.cult)
-				var/mob/M = N.current
-				if(M)
-					dat += "<tr><td><a href='?_src_=holder;adminplayeropts=\ref[M]'>[M.real_name]</a>[M.client ? "" : " <i>(No Client)</i>"][M.stat == 2 ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
-					dat += "<td><A href='?priv_msg=[M.ckey]'>PM</A></td>"
-					dat += "<td><A href='?_src_=holder;adminplayerobservefollow=\ref[M]'>FLW</a></td></tr>"
-			dat += "</table>"
-
-		if(ticker.mode.servants_of_ratvar.len)
-			dat += "<br><table cellspacing=5><tr><td><B>Servants of Ratvar</B></td><td></td></tr>"
-			for(var/datum/mind/N in ticker.mode.servants_of_ratvar)
-				var/mob/M = N.current
-				if(M)
-					dat += "<tr><td><a href='?_src_=holder;adminplayeropts=\ref[M]'>[M.real_name]</a>[M.client ? "" : " <i>(ghost)</i>"][M.stat == 2 ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
-					dat += "<td><A href='?priv_msg=[M.ckey]'>PM</A></td>"
-					dat += "<td><A href='?_src_=holder;adminplayerobservefollow=\ref[M]'>FLW</a></td></tr>"
-			dat += "</table>"
-
-		if(ticker.mode.traitors.len > 0)
-			dat += "<br><table cellspacing=5><tr><td><B>Traitors</B></td><td></td><td></td></tr>"
-			for(var/datum/mind/traitor in ticker.mode.traitors)
-				var/mob/M = traitor.current
-				if(M)
-					dat += "<tr><td><a href='?_src_=holder;adminplayeropts=\ref[M]'>[M.real_name]</a>[M.client ? "" : " <i>(No Client)</i>"][M.stat == 2 ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
-					dat += "<td><A href='?priv_msg=[M.ckey]'>PM</A></td>"
-					dat += "<td><A href='?_src_=holder;adminplayerobservefollow=\ref[M]'>FLW</a></td>"
-					dat += "<td><A HREF='?_src_=holder;traitor=\ref[M]'>Show Objective</A></td></tr>"
-				else
-					dat += "<tr><td><a href='?_src_=vars;Vars=\ref[traitor]'>[traitor.name]([traitor.key])</a><i>Traitor body destroyed!</i></td>"
-					dat += "<td><A href='?priv_msg=[traitor.key]'>PM</A></td></tr>"
-			dat += "</table>"
-
-		if(ticker.mode.abductors.len)
-			dat += "<br><table cellspacing=5><tr><td><B>Abductors</B></td><td></td><td></td></tr>"
-			for(var/datum/mind/abductor in ticker.mode.abductors)
-				var/mob/M = abductor.current
-				if(M)
-					dat += "<tr><td><a href='?_src_=holder;adminplayeropts=\ref[M]'>[M.real_name]</a>[M.client ? "" : " <i>(No Client)</i>"][M.stat == 2 ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
-					dat += "<td><A href='?priv_msg=[M.ckey]'>PM</A></td>"
-					dat += "<td><A href='?_src_=holder;adminplayerobservefollow=\ref[M]'>FLW</a></td>"
-					dat += "<td><A HREF='?_src_=holder;traitor=\ref[M]'>Show Objective</A></td></tr>"
-				else
-					dat += "<tr><td><a href='?_src_=vars;Vars=\ref[abductor]'>[abductor.name]([abductor.key])</a><i>Abductor body destroyed!</i></td></tr>"
-					dat += "<td><A href='?priv_msg=[abductor.key]'>PM</A></td>"
-			dat += "</table>"
-			dat += "<br><table cellspacing=5><tr><td><B>Abductees</B></td><td></td><td></td></tr>"
-			for(var/obj/machinery/abductor/experiment/E in machines)
-				for(var/datum/mind/abductee in E.abductee_minds)
-					var/mob/M = abductee.current
-					if(M)
-						dat += "<tr><td><a href='?_src_=holder;adminplayeropts=\ref[M]'>[M.real_name]</a>[M.client ? "" : " <i>(No Client)</i>"][M.stat == 2 ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
-						dat += "<td><A href='?priv_msg=[M.ckey]'>PM</A></td>"
-						dat += "<td><A href='?_src_=holder;adminplayerobservefollow=\ref[M]'>FLW</a></td>"
-						dat += "<td><A HREF='?_src_=holder;traitor=\ref[M]'>Show Objective</A></td></tr>"
-					else
-						dat += "<tr><td><a href='?_src_=vars;Vars=\ref[abductee]'>[abductee.name]([abductee.key])</a><i>Abductee body destroyed!</i></td>"
-						dat += "<td><A href='?priv_msg=[abductee.key]'>PM</A></td></tr>"
-			dat += "</table>"
-
-		if(ticker.mode.devils.len)
-			dat += "<br><table cellspacing=5><tr><td><B>devils</B></td><td></td><td></td></tr>"
-			for(var/X in ticker.mode.devils)
-				var/datum/mind/devil = X
-				var/mob/M = devil.current
-				if(M)
-					dat += "<tr><td><a href='?_src_=holder;adminplayeropts=\ref[M]'>[M.real_name] : [devil.devilinfo.truename]</a>[M.client ? "" : " <i>(No Client)</i>"][M.stat == 2 ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
-					dat += "<td><A href='?priv_msg=[M.ckey]'>PM</A></td>"
-					dat += "<td><A HREF='?_src_=holder;traitor=\ref[M]'>Show Objective</A></td></tr>"
-					dat += "<td><A HREF='?_src_=holder;admincheckdevilinfo=\ref[M]'>Show all devil info</A></td></tr>"
-				else
-					dat += "<tr><td><a href='?_src_=vars;Vars=\ref[devil]'>[devil.name] :  [devil.devilinfo.truename] ([devil.key])</a><i>devil body destroyed!</i></td></tr>"
-					dat += "<td><A href='?priv_msg=[devil.key]'>PM</A></td>"
-			dat += "</table>"
-
-		if(ticker.mode.sintouched.len)
-			dat += "<br><table cellspacing=5><tr><td><B>sintouched</B></td><td></td><td></td></tr>"
-			for(var/X in ticker.mode.sintouched)
-				var/datum/mind/sintouched = X
-				var/mob/M = sintouched.current
-				if(M)
-					dat += "<tr><td><a href='?_src_=holder;adminplayeropts=\ref[M]'>[M.real_name]</a>[M.client ? "" : " <i>(No Client)</i>"][M.stat == 2 ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
-					dat += "<td><A href='?priv_msg=[M.ckey]'>PM</A></td>"
-					dat += "<td><A HREF='?_src_=holder;traitor=\ref[M]'>Show Objective</A></td></tr>"
-				else
-					dat += "<tr><td><a href='?_src_=vars;Vars=\ref[sintouched]'>[sintouched.name]([sintouched.key])</a><i>sintouched body destroyed!</i></td></tr>"
-					dat += "<td><A href='?priv_msg=[sintouched.key]'>PM</A></td>"
-			dat += "</table>"
-
-		var/list/blob_minds = list()
-		for(var/mob/camera/blob/B in mob_list)
-			blob_minds |= B.mind
-
-		if(istype(ticker.mode, /datum/game_mode/blob) || blob_minds.len)
-			dat += "<br><table cellspacing=5><tr><td><B>Blob</B></td><td></td><td></td></tr>"
-			if(istype(ticker.mode,/datum/game_mode/blob))
-				var/datum/game_mode/blob/mode = ticker.mode
-				blob_minds |= mode.blob_overminds
-				dat += "<tr><td><i>Progress: [blobs_legit.len]/[mode.blobwincount]</i></td></tr>"
-
-			for(var/datum/mind/blob in blob_minds)
-				var/mob/M = blob.current
-				if(M)
-					dat += "<tr><td><a href='?_src_=holder;adminplayeropts=\ref[M]'>[M.real_name]</a>[M.client ? "" : " <i>(No Client)</i>"][M.stat == 2 ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
-					dat += "<td><A href='?priv_msg=[M.ckey]'>PM</A></td>"
-					dat += "<td><A href='?_src_=holder;adminplayerobservefollow=\ref[M]'>FLW</a></td></tr>"
-				else
-					dat += "<tr><td><a href='?_src_=vars;Vars=\ref[blob]'>[blob.name]([blob.key])</a><i>Blob not found!</i></td>"
-					dat += "<td><A href='?priv_msg=[blob.key]'>PM</A></td></tr>"
-			dat += "</table>"
-
-
-		if(istype(ticker.mode, /datum/game_mode/monkey))
-			var/datum/game_mode/monkey/mode = ticker.mode
-			dat += "<br><table cellspacing=5><tr><td><B>Monkey</B></td><td></td><td></td></tr>"
-
-			for(var/datum/mind/eek in mode.ape_infectees)
-				var/mob/M = eek.current
-				if(M)
-					dat += "<tr><td><a href='?_src_=holder;adminplayeropts=\ref[M]'>[M.real_name]</a>[M.client ? "" : " <i>(No Client)</i>"][M.stat == 2 ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
-					dat += "<td><A href='?priv_msg=[M.ckey]'>PM</A></td>"
-					dat += "<td><A href='?_src_=holder;adminplayerobservefollow=\ref[M]'>FLW</a></td></tr>"
-				else
-					dat += "<tr><td><a href='?_src_=vars;Vars=\ref[eek]'>[eek.name]([eek.key])</a><i>Monkey not found!</i></td>"
-					dat += "<td><A href='?priv_msg=[eek.key]'>PM</A></td></tr>"
-			dat += "</table>"
-
+					dat += get_mob_dat(M, antag_type)
 
 		dat += "</body></html>"
 		usr << browse(dat, "window=roundstatus;size=420x500")
 	else
 		alert("The game hasn't started yet!")
+
+/proc/get_mob_dat(datum/mind/M, antag_name)
+	if(!M)
+		return
+	var/mob/current = M.current
+	if(!current)
+		. += "<tr><td><a href='?_src_=vars;Vars=\ref[M]'>[capitalize(antag_name)] body destroyed!</td>"
+		. += "<td>[ADMIN_PM(M.key)]</td></tr>"
+	else
+		. += "<tr><td><a href='?_src_=holder;adminplayeropts=\ref[current]'>[current.real_name]</a> [current.client ? "" : "<i>(No Client)</i>"][current.stat == DEAD ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
+		. += "<td>[ADMIN_PM(current.ckey)]</td>"
+		. += "<td>[ADMIN_FLW(current)]</td></tr>"

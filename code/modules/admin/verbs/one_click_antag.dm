@@ -47,7 +47,7 @@
 		. = TRUE
 		for(var/i in 1 to numChangelings)
 			var/datum/mind/M = pick_n_take(candidates)
-			M.make_Changling()
+			M.make_Changeling()
 
 /datum/admins/proc/makeRevs()
 	. = FALSE
@@ -103,47 +103,17 @@
 
 
 /datum/admins/proc/makeClockCult()
-	var/datum/game_mode/clockwork_cult/temp = new
-	if(config.protect_roles_from_antagonist)
-		temp.restricted_jobs += temp.protected_jobs
-
-	if(config.protect_assistant_from_antagonist)
-		temp.restricted_jobs += "Assistant"
-
-	var/list/mob/living/carbon/human/candidates = list()
-	var/mob/living/carbon/human/H = null
-
-	for(var/mob/living/carbon/human/applicant in player_list)
-		if(ROLE_SERVANT_OF_RATVAR in applicant.client.prefs.be_special)
-			var/turf/T = get_turf(applicant)
-			if(applicant.stat == CONSCIOUS && applicant.mind && !applicant.mind.special_role && T.z == ZLEVEL_STATION)
-				if(!jobban_isbanned(applicant, ROLE_SERVANT_OF_RATVAR) && !jobban_isbanned(applicant, "Syndicate"))
-					if(temp.age_check(applicant.client))
-						if(!(applicant.job in temp.restricted_jobs))
-							candidates += applicant
-
-	if(candidates.len)
-		var/numCultists = min(candidates.len, 4)
-
-		for(var/i = 0, i<numCultists, i++)
-			H = pick(candidates)
-			H << "<span class='heavy_brass'>The world before you suddenly glows a brilliant yellow. You hear the whooshing steam and clanking cogs of a billion billion machines, and all at once \
-			you see the truth. Ratvar, the Clockwork Justiciar, lies derelict and forgotten in an unseen realm, and he has selected you as one of his harbringers. You are now a servant of \
-			Ratvar, and you will bring him back.</span>"
-			add_servant_of_ratvar(H, TRUE)
-			ticker.mode.equip_servant(H)
-			candidates.Remove(H)
-
-		return 1
-
-	return 0
-
-
+	. = FALSE
+	var/list/candidates = ticker.threat.get_players_for_role(ROLE_SERVANT_OF_RATVAR)
+	var/numCultists = min(LAZYLEN(candidates), 4)
+	if(numCultists)
+		. = TRUE
+		for(var/i in 1 to numCultists)
+			var/datum/mind/M = pick_n_take(candidates)
+			M.add_antag_datum(ANTAG_DATUM_CLOCKCULT)
 
 /datum/admins/proc/makeNukeTeam()
-
-	var/datum/game_mode/nuclear/temp = new
-	var/list/mob/dead/observer/candidates = pollCandidates("Do you wish to be considered for a nuke team being sent in?", "operative", temp)
+	var/list/mob/dead/observer/candidates = pollCandidates("Do you wish to be considered for a nuke team being sent in?", "operative", null)
 	var/list/mob/dead/observer/chosen = list()
 	var/mob/dead/observer/theghost = null
 
@@ -196,10 +166,6 @@
 		return 1
 	else
 		return 0
-
-
-
-
 
 /datum/admins/proc/makeAliens()
 	var/datum/round_event/ghost_role/alien_infestation/E = new(FALSE)

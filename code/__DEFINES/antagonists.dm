@@ -24,11 +24,17 @@
 #define ANTAG_DATUM_WIZARD_APPRENTICE		/datum/antagonist/wizard/apprentice
 #define ANTAG_DATUM_WIZARD_APPRENTICE_NAME	"Wizard Apprentice"
 
-#define ANTAG_DATUM_HEAD_REVOLUTIONARY		/datum/antagonist/team/revolution
+#define ANTAG_DATUM_SURVIVALIST				/datum/antagonist/special_role/survivalist
+#define ANTAG_DATUM_SURVIVALIST_GUN			/datum/antagonist/special_role/survivalist/gun
+#define ANTAG_DATUM_SURVIVALIST_MAGIC		/datum/antagonist/special_role/survivalist/magic
+
+#define ANTAG_DATUM_HEAD_REVOLUTIONARY		/datum/antagonist/team/revolution/head
+#define ANTAG_DATUM_REVOLUTIONARY			/datum/antagonist/team/revolutionary
 
 #define ANTAG_DATUM_GANG					/datum/antagonist/team/gang
 #define ANTAG_DATUM_CULT					/datum/antagonist/team/cult
 #define ANTAG_DATUM_CLOCKCULT				/datum/antagonist/team/clockcult
+
 
 
 /* TRAITOR DATUM DEFINES */

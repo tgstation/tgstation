@@ -1,1 +1,2 @@
-/datum/
+/datum/antagonists/special_role
+

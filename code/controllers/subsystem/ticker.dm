@@ -17,7 +17,7 @@ var/datum/subsystem/ticker/ticker
 	var/start_immediately = FALSE			// If true, there is no lobby phase, the game starts immediately.
 
 	var/datum/game_mode/mode = null
-	var/datum/threat/threat
+	var/datum/threat/threat = null
 	var/event_time = null
 	var/event = 0
 
@@ -54,6 +54,9 @@ var/datum/subsystem/ticker/ticker
 	var/maprotatechecked = 0
 
 	var/news_report
+
+	var/station_was_nuked = FALSE
+	var/explosion_in_progress = FALSE
 
 /datum/subsystem/ticker/New()
 	NEW_SS_GLOBAL(ticker)
@@ -108,21 +111,21 @@ var/datum/subsystem/ticker/ticker
 				current_state = GAME_STATE_STARTUP
 
 		if(GAME_STATE_PLAYING)
-			//mode.process(wait * 0.1)
+			//ticker.process(wait * 0.1)
 			check_queue()
 			check_maprotate()
 			scripture_states = scripture_unlock_alert(scripture_states)
-
-			/*if(!mode.explosion_in_progress && mode.check_finished() || force_ending)
+/*
+			if(!explosion_in_progress) //&& threat.check_finished() || force_ending)
 				current_state = GAME_STATE_FINISHED
 				toggle_ooc(1) // Turn it on
 				declare_completion(force_ending)
 				spawn(50)
-					if(mode.station_was_nuked)
+					if(station_was_nuked)
 						world.Reboot("Station destroyed by Nuclear Device.", "end_proper", "nuke")
 					else
 						world.Reboot("Round ended.", "end_proper", "proper completion")
-			*/
+*/
 /datum/subsystem/ticker/proc/setup()
 	threat.pre_setup()						//Select round start antags
 	SSjob.DivideOccupations() 				//Distribute jobs
@@ -193,8 +196,6 @@ var/datum/subsystem/ticker/ticker
 	//Now animate the cinematic
 	switch(station_missed)
 		if(NUKE_NEAR_MISS)	//nuke was nearby but (mostly) missed
-			if( mode && !override )
-				override = mode.name
 			switch( override )
 				if("nuclear emergency") //Nuke wasn't on station when it blew up
 					flick("intro_nuke",cinematic)
@@ -222,8 +223,6 @@ var/datum/subsystem/ticker/ticker
 			sleep(50)
 			world << sound('sound/effects/explosionfar.ogg')
 		else	//station was destroyed
-			if( mode && !override )
-				override = mode.name
 			switch( override )
 				if("nuclear emergency") //Nuke Ops successfully bombed the station
 					flick("intro_nuke",cinematic)
@@ -342,7 +341,7 @@ var/datum/subsystem/ticker/ticker
 	var/station_integrity = min(PERCENT(start_state.score(end_state)), 100)
 
 	world << "<BR>[TAB]Shift Duration: <B>[round(world.time / 36000)]:[add_zero("[world.time / 600 % 60]", 2)]:[world.time / 100 % 6][world.time / 100 % 10]</B>"
-	world << "<BR>[TAB]Station Integrity: <B>[mode.station_was_nuked ? "<font color='red'>Destroyed</font>" : "[station_integrity]%"]</B>"
+	world << "<BR>[TAB]Station Integrity: <B>[station_was_nuked ? "<font color='red'>Destroyed</font>" : "[station_integrity]%"]</B>"
 	if(mode.station_was_nuked)
 		ticker.news_report = STATION_DESTROYED_NUKE
 	var/total_players = joined_player_list.len
@@ -384,12 +383,7 @@ var/datum/subsystem/ticker/ticker
 			if(robo) //How the hell do we lose robo between here and the world messages directly above this?
 				robo.laws.show_laws(world)
 
-	mode.declare_completion()//To declare normal completion.
-
-	//calls auto_declare_completion_* for all modes
-	for(var/handler in typesof(/datum/game_mode/proc))
-		if (findtext("[handler]","auto_declare_completion_"))
-			call(mode, handler)(force_ending)
+	//threat.declare_completion()//To declare normal completion.
 
 	if(cross_allowed)
 		send_news_report()
@@ -447,7 +441,7 @@ var/datum/subsystem/ticker/ticker
 				world << "<b><font color='red'>The borers have failed!</font></b>"
 	return TRUE
 
-	mode.declare_station_goal_completion()
+	//declare_station_goal_completion()
 
 	//Adds the del() log to world.log in a format condensable by the runtime condenser found in tools
 	if(SSgarbage.didntgc.len)

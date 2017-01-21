@@ -10,28 +10,20 @@
 		message_admins("[key_name_admin(user, 1)] summoned [summon_type ? "magic" : "guns"]!")
 		log_game("[key_name(user)] summoned [summon_type ? "magic" : "guns"]!")
 	for(var/mob/living/carbon/human/H in player_list)
-		if(H.stat == 2 || !(H.client)) continue
-		if(H.mind)
-			if(H.mind.special_role == "Wizard" || H.mind.special_role == "apprentice" || H.mind.special_role == "survivalist") continue
-		if(prob(survivor_probability) && !(H.mind in ticker.mode.traitors))
-			ticker.mode.traitors += H.mind
+		if(H.stat == DEAD || !(H.client))
+			continue
+		if(!H.mind)
+			return
+		if(H.mind.has_antag_datum(ANTAG_DATUM_WIZARD) || H.mind.special_role == "survivalist")
+			continue
+		if(prob(survivor_probability) && !H.mind.has_antag_datum(ANTAG_DATUM_SURVIVALIST))
 			if(!summon_type)
-				var/datum/objective/steal_five_of_type/summon_guns/guns = new
-				guns.owner = H.mind
-				H.mind.objectives += guns
-				H.mind.special_role = "survivalist"
+				H.mind.add_antag_datum(ANTAG_DATUM_SURVIVALIST_GUN)
 				H << "<B>You are the survivalist! Your own safety matters above all else, and the only way to ensure your safety is to stockpile weapons! Grab as many guns as possible, by any means necessary. Kill anyone who gets in your way.</B>"
 			else
-				var/datum/objective/steal_five_of_type/summon_magic/magic = new
-				magic.owner = H.mind
-				H.mind.objectives += magic
-				H.mind.special_role = "amateur magician"
+				H.mind.add_antag_datum(ANTAG_DATUM_SURVIVALIST_MAGIC)
 				H << "<B>You are the amateur magician! Grow your newfound talent! Grab as many magical artefacts as possible, by any means necessary. Kill anyone who gets in your way.</B>"
-			var/datum/objective/survive/survive = new
-			survive.owner = H.mind
-			H.mind.objectives += survive
 			H.attack_log += "\[[time_stamp()]\] <font color='red'>Was made into a survivalist, and trusts no one!</font>"
-			H.mind.announce_objectives()
 		var/randomizeguns 			= pick(gunslist)
 		var/randomizemagic 			= pick(magiclist)
 		var/randomizemagicspecial 	= pick(magicspeciallist)

@@ -2,11 +2,10 @@
 //Datum-based gangs
 
 /datum/gang
+	var/is_deconvertible = FALSE
 	var/name = "ERROR"
-	var/color = "white"
-	var/color_hex = "#FFFFFF"
-	var/list/datum/mind/gangsters = list() //gang B Members
-	var/list/datum/mind/bosses = list() //gang A Bosses
+	var/list/bosses = list()
+	var/list/gangsters = list()
 	var/list/obj/item/device/gangtool/gangtools = list()
 	var/style
 	var/fighting_style = "normal"
@@ -16,7 +15,9 @@
 	var/dom_attempts = 2
 	var/points = 15
 	var/datum/atom_hud/antag/gang/ganghud
-	var/is_deconvertible = TRUE //Can you deconvert normal gangsters from the gang
+
+	var/color = "white"
+	var/color_hex = "#FFFFFF"
 
 	var/domination_timer
 	var/is_dominating

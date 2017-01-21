@@ -222,6 +222,7 @@
 #include "code\datums\antagonists\datum_special_role.dm"
 #include "code\datums\antagonists\datum_traitor.dm"
 #include "code\datums\antagonists\datum_wizard.dm"
+#include "code\datums\antagonists\minor_roles\survivalist.dm"
 #include "code\datums\antagonists\team\datum_clockcult.dm"
 #include "code\datums\antagonists\team\datum_cult.dm"
 #include "code\datums\antagonists\team\datum_gang.dm"

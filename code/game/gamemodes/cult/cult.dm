@@ -6,10 +6,10 @@
 	return istype(M) && M.has_antag_datum(/datum/antagonist/team/cult, TRUE)
 
 /proc/is_sacrifice_target(datum/mind/mind)
-	if(ticker.mode.name == "cult")
-		var/datum/game_mode/cult/cult_mode = ticker.mode
-		if(mind == cult_mode.sacrifice_target)
-			return 1
+	//if(ticker.mode.name == "cult")
+	//	var/datum/game_mode/cult/cult_mode = ticker.mode
+	//	if(mind == cult_mode.sacrifice_target)
+	//		return 1
 	return 0
 
 /proc/is_convertable_to_cult(mob/living/M)

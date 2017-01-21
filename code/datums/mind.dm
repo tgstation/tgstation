@@ -170,19 +170,19 @@
 
 /datum/mind/proc/enslave_mind_to_creator(mob/living/creator)
 	if(iscultist(creator))
-		ticker.mode.add_cultist(src)
+		make_Cultist()
 
 	else if(is_gangster(creator))
-		ticker.mode.add_gangster(src, creator.mind.gang_datum, TRUE)
+		make_Gang(creator.mind.gang_datum)
 
 	else if(is_revolutionary_in_general(creator))
-		ticker.mode.add_revolutionary(src)
+		make_Rev()
 
 	else if(is_servant_of_ratvar(creator))
 		add_servant_of_ratvar(current)
 
-	else if(is_nuclear_operative(creator))
-		make_Nuke(null, null, 0, FALSE)
+//	else if(is_nuclear_operative(creator))
+//		make_Nuke(null, null, 0, FALSE)
 
 	enslaved_to = creator
 
@@ -1288,7 +1288,7 @@
 		else
 			current.real_name = "[syndicate_name()] Operative #[ticker.mode.syndicates.len-1]"
 
-/datum/mind/proc/make_Changling()
+/datum/mind/proc/make_Changeling()
 	if(!(src in ticker.threat.antagonists[ROLE_CHANGELING]))
 		add_antag_datum(ANTAG_DATUM_CHANGELING)
 

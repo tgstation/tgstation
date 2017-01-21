@@ -47,15 +47,15 @@
 		if(!antag_candidates.len)
 			break
 		var/datum/mind/traitor = pick(antag_candidates)
-		traitors += traitor
+	//	traitors += traitor
 		traitor.special_role = traitor_name
 		traitor.restricted_roles = restricted_jobs
 		log_game("[traitor.key] (ckey) has been selected as a [traitor_name]")
 		antag_candidates.Remove(traitor)
 
 
-	if(traitors.len < required_enemies)
-		return 0
+//	if(traitors.len < required_enemies)
+//		return 0
 	return 1
 
 /datum/game_mode/traitor/post_setup()
