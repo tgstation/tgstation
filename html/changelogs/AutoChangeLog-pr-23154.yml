@@ -1,0 +1,4 @@
+author: "Ultimate-Chimera"
+delete-after: True
+changes: 
+  - rscadd: "Adds a new costume crate to the cargo ordering console."

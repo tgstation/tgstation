@@ -6698,14 +6698,13 @@
 	layer = 4.1
 	},
 /turf/open/floor/plasteel/warning{
-	dir = 5
+	dir = 1
 	},
 /area/centcom/evac)
 "qZ" = (
-/obj/machinery/door/poddoor/shutters/preopen{
-	name = "XCC Emergency Dock Shutters"
+/turf/open/floor/plasteel/warning{
+	dir = 5
 	},
-/turf/open/floor/plasteel/warning/side,
 /area/centcom/evac)
 "ra" = (
 /obj/machinery/door/poddoor/shuttledock,
@@ -9155,9 +9154,7 @@
 	icon_state = "plant-21";
 	layer = 4.1
 	},
-/turf/open/floor/plasteel/warning{
-	dir = 6
-	},
+/turf/open/floor/plasteel/warning,
 /area/centcom/evac)
 "xu" = (
 /obj/structure/chair/wood/wings{
@@ -13213,6 +13210,50 @@
 	dir = 8
 	},
 /area/centcom/control)
+"HV" = (
+/turf/open/floor/plasteel/delivery,
+/area/centcom/evac)
+"HW" = (
+/turf/open/floor/plasteel/delivery,
+/area/centcom/evac)
+"HX" = (
+/turf/open/floor/plasteel/delivery,
+/area/centcom/evac)
+"HY" = (
+/turf/open/floor/plasteel/delivery,
+/area/centcom/evac)
+"HZ" = (
+/turf/open/floor/plasteel/delivery,
+/area/centcom/evac)
+"Ia" = (
+/turf/open/floor/plasteel/delivery,
+/area/centcom/evac)
+"Ib" = (
+/turf/open/floor/plasteel/delivery,
+/area/centcom/evac)
+"Ic" = (
+/turf/open/floor/plasteel/delivery,
+/area/centcom/evac)
+"Id" = (
+/turf/open/floor/plasteel/delivery,
+/area/centcom/evac)
+"Ie" = (
+/turf/open/floor/plasteel/delivery,
+/area/centcom/evac)
+"If" = (
+/turf/open/floor/plasteel/delivery,
+/area/centcom/evac)
+"Ig" = (
+/turf/open/floor/plasteel/delivery,
+/area/centcom/evac)
+"Ih" = (
+/turf/open/floor/plasteel/warning{
+	dir = 6
+	},
+/area/centcom/evac)
+"Ii" = (
+/turf/open/floor/plasteel/delivery,
+/area/centcom/evac)
 
 (1,1,1) = {"
 aa
@@ -61958,8 +61999,8 @@ ql
 qS
 rU
 sv
-sW
-tI
+sv
+sv
 sv
 sv
 sv
@@ -62215,9 +62256,9 @@ qm
 qT
 rU
 sv
-sX
-tJ
+sW
 tI
+sv
 sv
 sv
 sv
@@ -62473,9 +62514,9 @@ qT
 rU
 sv
 sX
-tK
 tJ
 tI
+sv
 sv
 sv
 sv
@@ -62729,13 +62770,13 @@ qk
 qT
 rU
 sv
-sW
-tL
-tL
-tL
-tL
-tL
-vF
+sX
+tK
+tJ
+tI
+sv
+sv
+sv
 sv
 wW
 xq
@@ -62986,13 +63027,13 @@ qk
 qU
 rU
 sv
-sY
-tK
-tK
-tK
-vm
-tM
-wd
+sW
+tL
+tL
+tL
+tL
+tL
+vF
 sv
 wW
 xp
@@ -63243,13 +63284,13 @@ ql
 qV
 rU
 sv
-sZ
 sY
 tK
 tK
 tK
-vF
-sZ
+vm
+tM
+wd
 sv
 wW
 xr
@@ -63500,13 +63541,13 @@ qk
 qW
 rU
 sv
-sW
-tL
-uo
+sZ
+sY
 tK
 tK
 tK
 vF
+sZ
 sv
 wW
 xp
@@ -63757,13 +63798,13 @@ qk
 qT
 rU
 sv
-sY
-tM
-tM
-tM
-tM
-tM
-wd
+sW
+tL
+uo
+tK
+tK
+tK
+vF
 sv
 wW
 xq
@@ -64014,13 +64055,13 @@ qk
 qT
 rU
 sv
-sv
-sv
-sv
-uQ
-vn
-tK
-we
+sY
+tM
+tM
+tM
+tM
+tM
+wd
 sv
 wW
 xq
@@ -64274,9 +64315,9 @@ sv
 sv
 sv
 sv
-sv
 uQ
 vn
+tK
 we
 sv
 wW
@@ -64532,9 +64573,9 @@ sv
 sv
 sv
 sv
-sv
 uQ
-wd
+vn
+we
 sv
 wW
 xs
@@ -64783,17 +64824,17 @@ it
 lW
 qk
 qY
-rV
-rV
-rV
-tN
-up
-rV
-up
-tN
-rV
-rV
-rV
+rU
+sv
+sv
+sv
+sv
+sv
+sv
+uQ
+wd
+sv
+wW
 xt
 qk
 xW
@@ -65039,19 +65080,19 @@ kd
 it
 it
 qk
-qk
-rW
-sw
-rW
-qk
-ql
-sw
-ql
-qk
-rW
-sw
-rW
-qk
+qS
+rU
+sv
+sv
+sv
+sv
+sv
+sv
+sv
+sv
+sv
+wW
+xp
 qk
 qk
 qk
@@ -65297,18 +65338,18 @@ it
 pe
 ql
 qZ
-qZ
-qZ
-qZ
-qZ
-qZ
-qZ
-qZ
-qZ
-qZ
-qZ
-qZ
-qZ
+rV
+rV
+rV
+rV
+rV
+rV
+rV
+rV
+rV
+rV
+rV
+Ih
 ql
 yb
 qk
@@ -65553,19 +65594,19 @@ kh
 it
 it
 qk
-qk
-rW
-sw
-rW
-qk
-ql
-sw
-ql
-qk
-rW
-sw
-rW
-qk
+HV
+HW
+HX
+HY
+HZ
+Ia
+Ib
+Ic
+Id
+Ie
+If
+Ig
+Ii
 qk
 qk
 qk
