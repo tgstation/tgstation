@@ -186,7 +186,6 @@
 
 /obj/item/bodypart/r_leg/drop_limb(special)
 	if(owner && !special)
-		owner.Weaken(2)
 		if(owner.legcuffed)
 			owner.legcuffed.loc = owner.loc
 			owner.legcuffed.dropped(owner)
@@ -198,7 +197,6 @@
 
 /obj/item/bodypart/l_leg/drop_limb(special) //copypasta
 	if(owner && !special)
-		owner.Weaken(2)
 		if(owner.legcuffed)
 			owner.legcuffed.loc = owner.loc
 			owner.legcuffed.dropped(owner)
