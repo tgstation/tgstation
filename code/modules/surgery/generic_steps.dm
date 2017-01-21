@@ -84,7 +84,7 @@
 	user.visible_message("[user] begins to saw through the bone in [target]'s [parse_zone(target_zone)].", "<span class='notice'>You begin to saw through the bone in [target]'s [parse_zone(target_zone)]...</span>")
 
 /datum/surgery_step/saw/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	target.apply_damage(50,"brute","[target_zone]")
+	target.apply_damage(50, BRUTE, "[target_zone]")
 
 	user.visible_message("[user] saws [target]'s [parse_zone(target_zone)] open!", "<span class='notice'>You saw [target]'s [parse_zone(target_zone)] open.</span>")
 	return 1
