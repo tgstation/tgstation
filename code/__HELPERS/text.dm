@@ -19,7 +19,10 @@
 	return copytext(sqltext, 2, lentext(sqltext));//Quote() adds quotes around input, we already do that
 
 /proc/format_table_name(table as text)
-	return sqlfdbktableprefix + table
+	if(text != "notes")
+		return sqlfdbktableprefix + table
+	return text
+
 
 /*
  * Text sanitization
