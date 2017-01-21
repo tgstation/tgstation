@@ -1,3 +1,8 @@
+//Mice and lizards
+
+//MICE//
+//why is there an entire not easily generizable subsystem just for this one event I swear to mouse jesus
+
 /datum/round_event_control/mice_migration
 	name = "Mice Migration"
 	typepath = /datum/round_event/mice_migration
@@ -26,3 +31,32 @@
 
 /datum/round_event/mice_migration/start()
 	SSsqueak.trigger_migration(rand(minimum_mice, maximum_mice))
+
+// Lizard filth //
+
+/datum/round_event_control/lizard_infestation
+	name = "Lizard Infestation"
+	typepath = /datum/round_event/lizard_infestation
+	weight = 10
+
+/datum/round_event/lizard_infestation
+	announceWhen = 5
+	var/lizardcount = 15
+	startWhen = 10
+
+/datum/round_event/lizard_infestation/announce()
+	priority_announce("Unusual levels of vermin have been detected near [station_name()]. Please be alert for potential contamination.", "Lifesign Alert")
+
+/datum/round_event/lizard_infestation/start()
+	var/list/turfs = list()
+	for(var/area/maintenance/A in world) // to spawn lizards in maint
+		for(var/turf/open/floor/T in A)
+			turfs += T
+
+	if(turfs.len)
+		for(var/i = 1, i <= lizardcount, i++)
+			var/turf/T = pick(turfs)
+			if(prob(66))
+				new /mob/living/simple_animal/hostile/lizard/filthy(T)
+			else // #notalllizards
+				new /mob/living/simple_animal/hostile/lizard(T)
