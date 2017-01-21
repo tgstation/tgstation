@@ -1138,6 +1138,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 // Role-specific items
 /datum/uplink_item/role_restricted
 	category = "Role-Restricted (may be empty!)"
+	exclude_modes = list(/datum/game_mode/nuclear)
 
 // Pointless
 /datum/uplink_item/badass
