@@ -1,0 +1,4 @@
+author: "Joan"
+delete-after: True
+changes: 
+  - rscadd: "Clockwork Proselytizers can now convert lattices and catwalks. This has negative gameplay benefit, but looks cool."
