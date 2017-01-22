@@ -210,6 +210,20 @@
 /obj/structure/grille/ratvar/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer)
 	return FALSE
 
+//Lattice conversion
+/obj/structure/lattice/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer)
+	return list("operation_time" = 0, "new_obj_type" = /obj/structure/lattice/clockwork, "power_cost" = 0, "spawn_dir" = SOUTH, "no_target_deletion" = TRUE)
+
+/obj/structure/lattice/clockwork/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer)
+	ratvar_act() //just in case we're the wrong type for some reason??
+	return FALSE
+
+/obj/structure/lattice/catwalk/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer)
+	return list("operation_time" = 0, "new_obj_type" = /obj/structure/lattice/catwalk/clockwork, "power_cost" = 0, "spawn_dir" = SOUTH, "no_target_deletion" = TRUE)
+
+/obj/structure/lattice/catwalk/clockwork/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer)
+	return FALSE
+
 //Girder conversion
 /obj/structure/girder/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer)
 	var/prosel_cost = POWER_GEAR - (POWER_METAL * 2)
@@ -264,7 +278,7 @@
 			user.visible_message("<span class='notice'>[user]'s [proselytizer.name] stops covering [src] with glowing orange energy.</span>", \
 			"<span class='alloy'>You finish repairing [src]. It is now at <b>[obj_integrity]/[max_integrity]</b> integrity.</span>")
 
-//Convert shards and replicant alloy directly to liquid alloy
+//Convert shards and replicant alloy directly to power
 /obj/item/clockwork/alloy_shards/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer)
 	return list("operation_time" = 0, "new_obj_type" = /obj/effect/overlay/temp/ratvar/beam/itemconsume, "power_cost" = -POWER_STANDARD, "spawn_dir" = SOUTH)
 

@@ -99,7 +99,7 @@
 	qdel(orbiting)
 
 /atom/Destroy(force = FALSE)
-	..()
+	. = ..()
 	if (orbiters)
 		for (var/thing in orbiters)
 			var/datum/orbit/O = thing
@@ -107,6 +107,6 @@
 				O.orbiter.stop_orbit()
 
 /atom/movable/Destroy(force = FALSE)
-	..()
+	. = ..()
 	if (orbiting)
 		stop_orbit()
