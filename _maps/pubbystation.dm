@@ -5,6 +5,7 @@
 		#define MINETYPE "lavaland"
 
 		#include "map_files\PubbyStation\PubbyStation.dmm"
+#ifndef TRAVIS_MASS_MAP_BUILD
 		#include "map_files\generic\z2.dmm"
 		#include "map_files\generic\z3.dmm"
 		#include "map_files\generic\z4.dmm"
@@ -21,7 +22,7 @@
 		#define MAP_NAME "PubbyStation"
 
 		#define MAP_TRANSITION_CONFIG DEFAULT_MAP_TRANSITION_CONFIG
-
+#endif
 		#if !defined(MAP_OVERRIDE_FILES)
 			#define MAP_OVERRIDE_FILES
 			#include "map_files\PubbyStation\job\job_changes.dm"
