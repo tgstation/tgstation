@@ -1,4 +1,0 @@
-author: "XDTM"
-delete-after: True
-changes: 
-  - bugfix: "Exosuits can't push anchored mobs, such as megafauna or tendrils, anymore."

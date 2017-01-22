@@ -76,6 +76,13 @@
 		return FAILED_UNFASTEN
 	return ..()
 
+/obj/structure/destructible/clockwork/attack_animal(mob/living/simple_animal/M)
+	if(is_servant_of_ratvar(M))
+		attack_hand(M)
+		return FALSE
+	else
+		return ..()
+
 /obj/structure/destructible/clockwork/attackby(obj/item/I, mob/user, params)
 	if(is_servant_of_ratvar(user) && istype(I, /obj/item/weapon/wrench) && unanchored_icon)
 		if(default_unfasten_wrench(user, I, 50) == SUCCESSFUL_UNFASTEN)
