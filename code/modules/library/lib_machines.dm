@@ -177,7 +177,7 @@ var/global/list/datum/cachedbook/cachedbooks // List of our cached book datums
 	var/obj/machinery/libraryscanner/scanner // Book scanner that will be used when uploading books to the Archive
 	var/list/libcomp_menu
 	var/page = 1	//current page of the external archives
-	var/bibledelay = 0 // LOL NO SPAM (1 minute delay) -- Doohl
+	var/cooldown = 0
 
 /obj/machinery/computer/libraryconsole/bookmanagement/proc/build_library_menu()
 	if(libcomp_menu)
@@ -436,7 +436,7 @@ var/global/list/datum/cachedbook/cachedbooks // List of our cached book datums
 		news_network.SubmitArticle(scanner.cache.dat, "[scanner.cache.name]", "Nanotrasen Book Club", null)
 		alert("Upload complete. Your uploaded title is now available on station newscasters.")
 	if(href_list["orderbyid"])
-		if(bibledelay)
+		if(cooldown > world.time)
 			say("Printer unavailable. Please allow a short time before attempting to print.")
 		else
 			var/orderid = input("Enter your order:") as num|null
@@ -449,12 +449,10 @@ var/global/list/datum/cachedbook/cachedbooks // List of our cached book datums
 		establish_db_connection()
 		if(!dbcon.IsConnected())
 			alert("Connection to Archive has been severed. Aborting.")
-		if(bibledelay)
+		if(cooldown > world.time)
 			say("Printer unavailable. Please allow a short time before attempting to print.")
 		else
-			bibledelay = 1
-			spawn(PRINTER_COOLDOWN)
-				bibledelay = 0
+			cooldown = world.time + PRINTER_COOLDOWN
 			var/DBQuery/query = dbcon.NewQuery("SELECT * FROM [format_table_name("library")] WHERE id=[sqlid] AND isnull(deleted)")
 			query.Execute()
 
@@ -471,24 +469,20 @@ var/global/list/datum/cachedbook/cachedbooks // List of our cached book datums
 				visible_message("[src]'s printer hums as it produces a completely bound book. How did it do that?")
 				break
 	if(href_list["printbible"])
-		if(!bibledelay)
+		if(cooldown < world.time)
 			var/obj/item/weapon/storage/book/bible/B = new /obj/item/weapon/storage/book/bible(src.loc)
 			if(SSreligion.Bible_icon_state && SSreligion.Bible_item_state)
 				B.icon_state = SSreligion.Bible_icon_state
 				B.item_state = SSreligion.Bible_item_state
 				B.name = SSreligion.Bible_name
 				B.deity_name = SSreligion.Bible_deity_name
-			bibledelay = 1
-			spawn(PRINTER_COOLDOWN)
-			bibledelay = 0
+			cooldown = world.time + PRINTER_COOLDOWN
 		else
 			say("Printer currently unavailable, please wait a moment.")
 	if(href_list["printposter"])
-		if(!bibledelay)
+		if(cooldown < world.time)
 			new /obj/item/weapon/poster/legit(src.loc)
-			bibledelay = 1
-			spawn(PRINTER_COOLDOWN)
-			bibledelay = 0
+			cooldown = world.time + PRINTER_COOLDOWN
 		else
 			say("Printer currently unavailable, please wait a moment.")
 	add_fingerprint(usr)
