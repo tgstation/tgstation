@@ -139,7 +139,9 @@
 	..()
 	if(is_servant_of_ratvar(user) || isobserver(user))
 		var/powered = total_accessable_power()
-		user << "<span class='[powered ? "brass":"alloy"]'>It has access to <b>[powered == INFINITY ? "INFINITY":"[powered]"]W</b> of power.</span>"
+		var/sigil_number = LAZYLEN(check_apc_and_sigils())
+		user << "<span class='[powered ? "brass":"alloy"]'>It has access to <b>[powered == INFINITY ? "INFINITY":"[powered]"]W</b> of power, \
+		and <b>[sigil_number]</b> Sigil[sigil_number == 1 ? "s":""] of Transmission [sigil_number == 1 ? "is":"are"] in range.</span>"
 
 /obj/structure/destructible/clockwork/powered/Destroy()
 	SSfastprocess.processing -= src
@@ -220,7 +222,7 @@
 
 /obj/structure/destructible/clockwork/powered/proc/accessable_sigil_power()
 	var/power = 0
-	for(var/obj/effect/clockwork/sigil/transmission/T in range(1, src))
+	for(var/obj/effect/clockwork/sigil/transmission/T in range(SIGIL_ACCESS_RANGE, src))
 		power += T.power_charge
 	return power
 
@@ -238,8 +240,8 @@
 /obj/structure/destructible/clockwork/powered/proc/use_power(amount) //we've made sure we had power, so now we use it
 	var/sigilpower = accessable_sigil_power()
 	var/list/sigils_in_range = list()
-	for(var/obj/effect/clockwork/sigil/transmission/T in range(1, src))
-		sigils_in_range |= T
+	for(var/obj/effect/clockwork/sigil/transmission/T in range(SIGIL_ACCESS_RANGE, src))
+		sigils_in_range += T
 	while(sigilpower && amount >= MIN_CLOCKCULT_POWER)
 		for(var/S in sigils_in_range)
 			var/obj/effect/clockwork/sigil/transmission/T = S
@@ -285,8 +287,8 @@
 
 /obj/structure/destructible/clockwork/powered/proc/check_apc_and_sigils() //checks for sigils and an APC, returning FALSE if it finds neither, and a list of sigils otherwise
 	. = list()
-	for(var/obj/effect/clockwork/sigil/transmission/T in range(1, src))
-		. |= T
+	for(var/obj/effect/clockwork/sigil/transmission/T in range(SIGIL_ACCESS_RANGE, src))
+		. += T
 	var/list/L = .
 	if(!L.len && (!target_apc || !target_apc.cell))
 		return FALSE

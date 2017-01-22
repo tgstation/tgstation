@@ -90,5 +90,6 @@ var/global/list/all_scripture = list() //a list containing scripture instances; 
 #define CLOCKCULT_SILICONS "silicons"
 
 //misc clockcult stuff
-
 #define MARAUDER_EMERGE_THRESHOLD 65 //marauders cannot emerge unless host is at this% or less health
+
+#define SIGIL_ACCESS_RANGE 2 //range at which transmission sigils can access power
