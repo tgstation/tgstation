@@ -153,6 +153,7 @@
 #include "code\controllers\subsystem\events.dm"
 #include "code\controllers\subsystem\fire_burning.dm"
 #include "code\controllers\subsystem\garbage.dm"
+#include "code\controllers\subsystem\globalvariable.dm"
 #include "code\controllers\subsystem\icon_smooth.dm"
 #include "code\controllers\subsystem\ipintel.dm"
 #include "code\controllers\subsystem\jobs.dm"

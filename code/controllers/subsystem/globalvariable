@@ -1,7 +1,0 @@
-var/datum/subsystem/globalvars/SSGlobalVars
-/datum/subsystem/globalvars
-  name = "Global Variables"
-  can_fire = FALSE
-  stat_tag = "GV"
-/datum/subsystem/globalvars/New()
-	NEW_SS_GLOBAL(SSGlobalVars)
