@@ -40,7 +40,7 @@
 
 /turf/open/floor/light/ChangeTurf(turf/T)
 	SetLuminosity(0)
-	..()
+	return ..()
 
 /turf/open/floor/light/attack_hand(mob/user)
 	if(!can_modify_colour)

@@ -14,6 +14,10 @@
 	var/metal = 0
 	var/lifetime = 40
 	var/reagent_divisor = 7
+	var/static/list/blacklisted_turfs = typecacheof(list(
+	/turf/open/space/transit,
+	/turf/open/chasm,
+	/turf/open/floor/plating/lava))
 
 
 /obj/effect/particle_effect/foam/metal
@@ -102,6 +106,9 @@
 	for(var/turf/T in t_loc.GetAtmosAdjacentTurfs())
 		var/obj/effect/particle_effect/foam/foundfoam = locate() in T //Don't spread foam where there's already foam!
 		if(foundfoam)
+			continue
+
+		if(is_type_in_typecache(T, blacklisted_turfs))
 			continue
 
 		for(var/mob/living/L in T)

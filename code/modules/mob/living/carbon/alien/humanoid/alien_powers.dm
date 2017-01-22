@@ -122,14 +122,14 @@ Doesn't work on other aliens/AI.*/
 		if (get_dist(user,M) <= 1)
 			M.adjustPlasma(amount)
 			user.adjustPlasma(-amount)
-			M << "<span class='noticealien'>[user] has transfered [amount] plasma to you.</span>"
-			user << "<span class='noticealien'>You trasfer [amount] plasma to [M]</span>"
+			M << "<span class='noticealien'>[user] has transferred [amount] plasma to you.</span>"
+			user << "<span class='noticealien'>You transfer [amount] plasma to [M]</span>"
 		else
 			user << "<span class='noticealien'>You need to be closer!</span>"
 	return
 
 /obj/effect/proc_holder/alien/acid
-	name = "Corrossive Acid"
+	name = "Corrosive Acid"
 	desc = "Drench an object in acid, destroying it over time."
 	plasma_cost = 200
 	action_icon_state = "alien_acid"

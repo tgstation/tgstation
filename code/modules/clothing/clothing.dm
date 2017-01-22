@@ -79,9 +79,10 @@
 		user << "<span class='notice'>You fix the damages on [src] with [C].</span>"
 		return 1
 	if(pockets)
-		return pockets.attackby(W, user, params)
-	else
-		return ..()
+		var/i = pockets.attackby(W, user, params)
+		if(i)
+			return i
+	return ..()
 
 /obj/item/clothing/AltClick(mob/user)
 	if(pockets && pockets.quickdraw && pockets.contents.len && !user.incapacitated())
@@ -525,7 +526,7 @@ BLIND     // can't see anything
 			adjusted = DIGITIGRADE_STYLE
 		H.update_inv_w_uniform()
 
-	if(hastie)
+	if(hastie && slot != slot_hands)
 		hastie.on_uniform_equip(src, user)
 
 /obj/item/clothing/under/dropped(mob/user)

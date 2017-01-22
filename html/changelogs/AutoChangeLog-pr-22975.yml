@@ -1,0 +1,5 @@
+author: "coiax"
+delete-after: True
+changes: 
+  - bugfix: "Blue circuit floors are now restored to their normal colour if
+an AI doomsday device is disabled."

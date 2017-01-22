@@ -8,7 +8,7 @@
 /obj/effect/proc_holder/slab/remove_ranged_ability(msg)
 	..()
 	finished = TRUE
-	QDEL_IN(src, 2)
+	QDEL_IN(src, 6)
 
 /obj/effect/proc_holder/slab/InterceptClickOn(mob/living/caller, params, atom/target)
 	if(..() || in_progress)
@@ -70,7 +70,8 @@
 				conversion.slab = slab
 				conversion.invoker = ranged_ability_user
 				conversion.target = target
-				successful = conversion.run_scripture()
+				conversion.run_scripture()
+				successful = TRUE
 
 		remove_ranged_ability()
 
@@ -230,6 +231,9 @@
 		if(!totaldamage && (!L.reagents || !L.reagents.has_reagent("holywater")))
 			ranged_ability_user << "<span class='inathneq'>\"[L] is unhurt and untainted.\"</span>"
 			return TRUE
+
+		successful = TRUE
+
 		var/targetturf = get_turf(L)
 		if(totaldamage)
 			L.adjustBruteLoss(-brutedamage)
@@ -280,6 +284,8 @@
 			ranged_ability_user << "<span class='inathneq'>\"[L.p_they(TRUE)] [L.p_are()] already shielded by a Vanguard.\"</span>"
 			return TRUE
 
+		successful = TRUE
+
 		if(L == ranged_ability_user)
 			for(var/mob/living/LT in spiral_range(7, T))
 				if(LT.stat == DEAD || !is_servant_of_ratvar(LT) || LT == ranged_ability_user || !(LT in view(7, get_turf(ranged_ability_user))) || \
@@ -310,6 +316,8 @@
 		return TRUE
 
 	if(target in view(7, get_turf(ranged_ability_user)))
+		successful = TRUE
+
 		clockwork_say(ranged_ability_user, text2ratvar("Kneel, heathens!"))
 		ranged_ability_user.visible_message("<span class='warning'>[ranged_ability_user]'s eyes fire a stream of energy at [target], creating a strange mark!</span>", \
 		"<span class='heavy_brass'>You direct the judicial force to [target].</span>")

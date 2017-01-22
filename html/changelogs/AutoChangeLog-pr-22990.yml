@@ -1,0 +1,4 @@
+author: "Lzimann"
+delete-after: True
+changes: 
+  - bugfix: "Fixes TGUI not working for people without IE11"
