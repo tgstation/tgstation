@@ -16,6 +16,7 @@
 	end_duration = 0
 
 	area_type = /area
+	protected_areas = list(/area/space)
 	target_z = ZLEVEL_STATION
 
 	overlay_layer = ABOVE_OPEN_TURF_LAYER //Covers floors only

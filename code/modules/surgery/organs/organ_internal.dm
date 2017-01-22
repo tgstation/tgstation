@@ -661,6 +661,16 @@
 	name = "chattering bone \"tongue\""
 	chattering = TRUE
 
+/obj/item/organ/tongue/robot
+	name = "robotic voicebox"
+	desc = "A voice synthesizer that can interface with organic lifeforms."
+	icon_state = "tonguerobot"
+	say_mod = "states"
+	attack_verb = list("beeped", "booped")
+
+/obj/item/organ/tongue/robot/get_spans()
+	return ..() | SPAN_ROBOT
+
 /obj/item/organ/appendix
 	name = "appendix"
 	icon_state = "appendix"

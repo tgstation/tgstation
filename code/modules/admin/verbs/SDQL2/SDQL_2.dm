@@ -121,6 +121,7 @@
 
 					else
 						text += ": [t]<br>"
+					CHECK_TICK
 
 				usr << browse(text, "window=SDQL-result")
 
