@@ -147,8 +147,7 @@
 		var/obj/buckled_obj
 		if(C.buckled)
 			buckled_obj = C.buckled
-			if(!(lube&GALOSHES_DONT_HELP)) //can't slip while buckled unless it's lube.
-				return 0
+			return 0
 		else
 			if(C.lying || !(C.status_flags & CANWEAKEN)) // can't slip unbuckled mob if they're lying or can't fall.
 				return 0
