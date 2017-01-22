@@ -67,7 +67,6 @@
 	new /obj/item/device/radio/headset/headset_eng(src)
 	new /obj/item/weapon/storage/toolbox/mechanical(src)
 	new /obj/item/weapon/tank/internals/emergency_oxygen/engi(src)
-	new /obj/item/clothing/gloves/color/black(src)
 	new /obj/item/weapon/holosign_creator/engineering(src)
 	new /obj/item/clothing/mask/gas(src)
 	new /obj/item/clothing/glasses/meson/engine(src)
