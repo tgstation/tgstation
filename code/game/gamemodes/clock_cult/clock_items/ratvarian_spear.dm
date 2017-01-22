@@ -100,7 +100,7 @@
 		attack_cooldown = world.time + initial(attack_cooldown)
 		if(target)
 			PoolOrNew(/obj/effect/overlay/temp/dir_setting/bloodsplatter, list(get_turf(target), get_dir(user, target)))
-			target.Stun(2)
+			target.Stun(2, 1, 1)
 			user << "<span class='brass'>You prepare to remove your ratvarian spear from [target]...</span>"
 			var/remove_verb = pick("pull", "yank", "drag")
 			if(do_after(user, 10, 1, target))
@@ -117,7 +117,7 @@
 					step(target, get_dir(user, target))
 					T = get_turf(target)
 					B.forceMove(T)
-					target.Weaken(2)
+					target.Weaken(2, 1, 1)
 					playsound(T, 'sound/weapons/thudswoosh.ogg', 50, 1)
 				flash_color(target, flash_color="#911414", flash_time=8)
 			else if(target) //it's a do_after, we gotta check again to make sure they didn't get deleted
