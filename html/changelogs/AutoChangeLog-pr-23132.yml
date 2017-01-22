@@ -1,5 +1,0 @@
-author: "Tofa01"
-delete-after: True
-changes: 
-  - tweak: "Changed alert message on early launch Authorization shuttle repeal message."
-  - bugfix: "Makes the repeal message work and push a alert to the crew properly, also reports every Authorization repeal now."
