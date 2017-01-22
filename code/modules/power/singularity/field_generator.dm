@@ -1,6 +1,3 @@
-
-
-
 /*
 field_generator power level display
    The icon used for the field_generator need to have 'num_power_levels' number of icon states
@@ -38,6 +35,8 @@ field_generator power level display
 	var/warming_up = 0
 	var/list/obj/machinery/field/containment/fields
 	var/list/obj/machinery/field/generator/connected_gens
+	var/list/obj/machinery/field/generator/generator_network
+	var/list/turf/field_zone
 	var/clean_up = 0
 
 /obj/machinery/field/generator/update_icon()
@@ -54,11 +53,31 @@ field_generator power level display
 	..()
 	fields = list()
 	connected_gens = list()
+	generator_network = list(src)
+	field_zone = list()
 
 
 /obj/machinery/field/generator/process()
 	if(active == FG_ONLINE)
 		calc_power()
+
+/obj/machinery/field/generator/attack_robot(mob/user)
+	attack_ai(user)
+
+/obj/machinery/field/generator/attack_ai(mob/user)
+	if(state != FG_WELDED)
+		user << "<span class='warning'>The [src] needs to be firmly secured to the floor first!</span>"
+		return
+
+	if(active >= FG_CHARGING)
+		user << "<span class='warning'>You are unable to turn off [src] once it is online!</span>"
+		return 1
+
+	user << "<span class='notice'>You turn on [src].</span>"
+	visible_message("[src] turns on.",
+		"<span class='italics'>You hear heavy droning.</span>")
+	turn_on()
+	investigate_log("<font color='green'>activated</font> by [user.key].","singulo")
 
 /obj/machinery/field/generator/attack_hand(mob/user)
 	if(state == FG_WELDED)
@@ -155,8 +174,11 @@ field_generator power level display
 
 
 /obj/machinery/field/generator/Destroy()
-	cleanup()
-	return ..()
+	network_cleanup()
+	// The cleanup readds src to generator_network, so we clear it again
+	generator_network.Cut()
+	field_zone.Cut()
+	. = ..()
 
 
 /obj/machinery/field/generator/proc/check_power_level()
@@ -167,22 +189,26 @@ field_generator power level display
 
 /obj/machinery/field/generator/proc/turn_off()
 	active = FG_OFFLINE
-	spawn(1)
-		cleanup()
-		while (warming_up>0 && !active)
-			sleep(50)
-			warming_up--
-			update_icon()
+	addtimer(src, "turn_off_spawn", 1)
+
+/obj/machinery/field/generator/proc/turn_off_spawn()
+	network_cleanup()
+	while(warming_up>0 && !active)
+		sleep(50)
+		warming_up--
+		update_icon()
 
 /obj/machinery/field/generator/proc/turn_on()
 	active = FG_CHARGING
-	spawn(1)
-		while (warming_up<3 && active)
-			sleep(50)
-			warming_up++
-			update_icon()
-			if(warming_up >= 3)
-				start_fields()
+	addtimer(src, "turn_on_spawn", 1)
+
+/obj/machinery/field/generator/proc/turn_on_spawn()
+	while(warming_up<3 && active)
+		sleep(50)
+		warming_up++
+		if(warming_up >= 3)
+			start_fields()
+		update_icon()
 
 
 /obj/machinery/field/generator/proc/calc_power(set_power_draw)
@@ -201,50 +227,33 @@ field_generator power level display
 		check_power_level()
 		return 0
 
-//This could likely be better, it tends to start loopin if you have a complex generator loop setup.  Still works well enough to run the engine fields will likely recode the field gens and fields sometime -Mport
-/obj/machinery/field/generator/proc/draw_power(draw = 0, failsafe = 0, obj/machinery/field/generator/G = null, obj/machinery/field/generator/last = null)
-	if((G && (G == src)) || (failsafe >= 8))//Loopin, set fail
-		return 0
-	else
-		failsafe++
+/obj/machinery/field/generator/proc/draw_power(draw = 0)
+	for(var/G in generator_network)
+		// first generator in `generator_network` is src
+		var/obj/machinery/field/generator/FG = G
+		if(FG.power >= draw)
+			FG.power -= draw
+			return TRUE
+		else
+			draw -= FG.power
+			FG.power = 0
 
-	if(power >= draw)//We have enough power
-		power -= draw
-		return 1
-
-	else//Need more power
-		draw -= power
-		power = 0
-		for(var/CG in connected_gens)
-			var/obj/machinery/field/generator/FG = CG
-			if(FG == last)//We just asked you
-				continue
-			if(G)//Another gen is askin for power and we dont have it
-				if(FG.draw_power(draw,failsafe,G,src))//Can you take the load
-					return 1
-				else
-					return 0
-			else//We are askin another for power
-				if(FG.draw_power(draw,failsafe,src,src))
-					return 1
-				else
-					return 0
-
+	if(draw)
+		return FALSE
 
 /obj/machinery/field/generator/proc/start_fields()
 	if(state != FG_WELDED || !anchored)
 		turn_off()
 		return
-	spawn(1)
-		setup_field(1)
-	spawn(2)
-		setup_field(2)
-	spawn(3)
-		setup_field(4)
-	spawn(4)
-		setup_field(8)
-	spawn(5)
-		active = FG_ONLINE
+	addtimer(src, "setup_field", 1, TIMER_NORMAL, NORTH)
+	addtimer(src, "setup_field", 2, TIMER_NORMAL, SOUTH)
+	addtimer(src, "setup_field", 3, TIMER_NORMAL, EAST)
+	addtimer(src, "setup_field", 4, TIMER_NORMAL, WEST)
+	addtimer(src, "set_online", 5)
+
+/obj/machinery/field/generator/proc/set_online()
+	active = FG_ONLINE
+	update_icon()
 
 
 /obj/machinery/field/generator/proc/setup_field(NSEW)
@@ -285,9 +294,7 @@ field_generator power level display
 		var/field_dir = get_dir(T,get_step(G.loc, NSEW))
 		T = get_step(T, NSEW)
 		if(!locate(/obj/machinery/field/containment) in T)
-			var/obj/machinery/field/containment/CF = new/obj/machinery/field/containment()
-			CF.set_master(src,G)
-			CF.loc = T
+			var/obj/machinery/field/containment/CF = new(T, src, G)
 			CF.setDir(field_dir)
 			fields += CF
 			G.fields += CF
@@ -296,35 +303,100 @@ field_generator power level display
 
 	connected_gens |= G
 	G.connected_gens |= src
+
+	add_to_network(G)
+	G.add_to_network(src)
+
 	update_icon()
 
+/obj/machinery/field/generator/proc/add_to_network(var/obj/machinery/field/generator/other_gen)
+	for(var/G in generator_network)
+		var/obj/machinery/field/generator/FG = G
+		FG.generator_network |= other_gen.generator_network
+
+/obj/machinery/field/generator/proc/check_zone()
+	/* Determine what turfs are encompassed by the field generators and
+	   fields. */
+	if(generator_network.len < 2)
+		return
+
+	var/obj/machinery/field/generator/topleft
+	var/obj/machinery/field/generator/bottomright
+
+	var/list/turf/network_field_turfs = list()
+
+	for(var/G in generator_network)
+		var/obj/machinery/field/generator/FG = G
+
+		network_field_turfs |= get_turf(FG)
+		for(var/f in FG.fields)
+			network_field_turfs |= get_turf(f)
+
+		if(!topleft || FG.x < topleft.x || FG.y < topleft.y)
+			topleft = FG
+			continue
+		if(!bottomright || FG.x > bottomright.x || FG.y > bottomright.y)
+			bottomright = FG
+			continue
+
+
+	topleft.add_atom_colour("#ff0000", ADMIN_COLOUR_PRIORITY)
+	bottomright.add_atom_colour("#00ff00", ADMIN_COLOUR_PRIORITY)
+
+	var/list/possible_turfs = block(
+		locate(topleft.x + 1, topleft.y + 1, topleft.z),
+		locate(bottomright.x - 1, bottomright.y -1, bottomright.z))
+
+	var/list/contained_turfs = list()
+
+	// For each turf, move in each of the four directions, and if you hit
+	// a network field turf before leaving the box, for each direction,
+	// then the turf is contained.
+	// No doubt there is a better way of doing this, please replace when
+	// you've thought of one.
+
+	turf_check:
+		for(var/t in possible_turfs)
+			var/turf/tested_turf = t
+			var/turf/T = t
+			next_dir:
+				for(var/dir in list(NORTH, SOUTH, EAST, WEST))
+					while(T.x >= topleft.x && T.y >= topleft.y && T.x <= bottomright.x && T.y <= bottomright.y)
+						T = get_step(T, dir)
+						if(T in network_field_turfs)
+							continue next_dir
+					continue turf_check
+			contained_turfs |= tested_turf
+
+	for(var/t in contained_turfs)
+		var/turf/T = t
+		T.add_atom_colour("#0000ff", ADMIN_COLOUR_PRIORITY)
+
+/obj/machinery/field/generator/proc/network_cleanup()
+	// this list includes src
+	for(var/G in generator_network)
+		var/obj/machinery/field/generator/FG = G
+		FG.cleanup()
+
+	check_loose_goose()
 
 /obj/machinery/field/generator/proc/cleanup()
-	clean_up = 1
-	for (var/F in fields)
+	for(var/F in fields)
 		qdel(F)
 
-	for(var/CG in connected_gens)
-		var/obj/machinery/field/generator/FG = CG
-		FG.connected_gens -= src
-		if(!FG.clean_up)//Makes the other gens clean up as well
-			FG.cleanup()
-		connected_gens -= FG
-	clean_up = 0
+	fields.Cut()
+	connected_gens.Cut()
+
+	generator_network.Cut()
+	generator_network += src
+
 	update_icon()
 
-	//This is here to help fight the "hurr durr, release singulo cos nobody will notice before the
-	//singulo eats the evidence". It's not fool-proof but better than nothing.
-	//I want to avoid using global variables.
-	spawn(1)
-		var/temp = 1 //stops spam
-		for(var/obj/singularity/O in world)
-			if(O.last_warning && temp)
-				if((world.time - O.last_warning) > 50) //to stop message-spam
-					temp = 0
-					message_admins("A singulo exists and a containment field has failed.",1)
-					investigate_log("has <font color='red'>failed</font> whilst a singulo exists.","singulo")
-			O.last_warning = world.time
+/obj/machinery/field/generator/proc/check_loose_goose()
+	// TODO get the area the field generator network covered, and check
+	// for singularities
+	message_admins("A singulo exists and a containment field has failed.",1)
+	investigate_log("has <font color='red'>failed</font> whilst a singulo exists.","singulo")
 
 /obj/machinery/field/generator/shock(mob/living/user)
 	if(fields.len)
