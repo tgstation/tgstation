@@ -1,5 +1,3 @@
-#define SPEAK(message) radio.talk_into(src, message, radio_channel, get_spans())
-
 /obj/machinery/atmospherics/components/unary/cryo_cell
 	name = "cryo cell"
 	icon = 'icons/obj/cryogenics.dmi'
@@ -24,21 +22,11 @@
 	var/obj/item/weapon/reagent_containers/glass/beaker = null
 	var/reagent_transfer = 0
 
-	var/obj/item/device/radio/radio
-	var/radio_key = /obj/item/device/encryptionkey/headset_med
-	var/radio_channel = "Medical"
-
 /obj/machinery/atmospherics/components/unary/cryo_cell/New()
 	..()
 	initialize_directions = dir
 	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/cryo_tube(null)
 	B.apply_default_parts(src)
-
-	radio = new(src)
-	radio.keyslot = new radio_key
-	radio.subspace_transmission = 1
-	radio.canhear_range = 0
-	radio.recalculateChannels()
 
 /obj/item/weapon/circuitboard/machine/cryo_tube
 	name = "Cryotube (Machine Board)"
@@ -65,8 +53,6 @@
 	conduction_coefficient = initial(conduction_coefficient) * C
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/Destroy()
-	qdel(radio)
-	radio = null
 	if(beaker)
 		qdel(beaker)
 		beaker = null
@@ -103,6 +89,7 @@
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/process()
 	..()
+
 	if(!on)
 		return
 	if(!is_operational())
@@ -116,18 +103,18 @@
 			on = FALSE
 			update_icon()
 			playsound(T, 'sound/machines/cryo_warning.ogg', volume, 1) // Bug the doctors.
-			SPEAK("Patient fully restored")
+			say("Patient fully restored")
 			if(autoeject) // Eject if configured.
-				SPEAK("Auto ejecting patient now")
+				say("Auto ejecting patient now")
 				open_machine()
 			return
 		else if(occupant.stat == DEAD) // We don't bother with dead people.
 			on = FALSE
 			update_icon()
 			playsound(T, 'sound/machines/cryo_warning.ogg', volume, 1) // Bug the doctors
-			SPEAK("Warning patient deceased")
+			say("Warning patient deceased")
 			if(autoeject) // Eject if configured.
-				SPEAK("Auto ejecting patient now")
+				say("Auto ejecting patient now")
 				open_machine()
 			return
 		if(air1.gases.len)
