@@ -1519,8 +1519,6 @@
 #include "code\modules\mob\living\silicon\ai\freelook\eye.dm"
 #include "code\modules\mob\living\silicon\ai\freelook\read_me.dm"
 #include "code\modules\mob\living\silicon\pai\death.dm"
-#include "code\modules\mob\living\silicon\pai\examine.dm"
-#include "code\modules\mob\living\silicon\pai\life.dm"
 #include "code\modules\mob\living\silicon\pai\pai.dm"
 #include "code\modules\mob\living\silicon\pai\pai_defense.dm"
 #include "code\modules\mob\living\silicon\pai\pai_shell.dm"
