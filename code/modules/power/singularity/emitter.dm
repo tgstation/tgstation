@@ -33,6 +33,7 @@
 	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/emitter(null)
 	B.apply_default_parts(src)
 	RefreshParts()
+	wires = new /datum/wires/emitter(src)
 
 /obj/item/weapon/circuitboard/machine/emitter
 	name = "Emitter (Machine Board)"
@@ -153,8 +154,7 @@
 		src.active = 0
 		update_icon()
 		return
-	if(((src.last_shot + src.fire_delay) <= world.time) && (src.active == 1))
-
+	if(src.active == 1)
 		if(!active_power_usage || avail(active_power_usage))
 			add_load(active_power_usage)
 			if(!powered)
@@ -168,40 +168,45 @@
 				investigate_log("lost power and turned <font color='red'>off</font>","singulo")
 				log_game("Emitter lost power in ([x],[y],[z])")
 			return
+		fire_beam()
 
-		src.last_shot = world.time
-		if(src.shot_number < 3)
-			src.fire_delay = 2
-			src.shot_number ++
-		else
-			src.fire_delay = rand(minimum_fire_delay,maximum_fire_delay)
-			src.shot_number = 0
+/obj/machinery/power/emitter/proc/check_delay()
+	if((src.last_shot + src.fire_delay) <= world.time)
+		return TRUE
+	return FALSE
 
-		var/obj/item/projectile/A = PoolOrNew(projectile_type,src.loc)
-
-		A.setDir(src.dir)
-		playsound(src.loc, projectile_sound, 25, 1)
-
-		if(prob(35))
-			var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
-			s.set_up(5, 1, src)
-			s.start()
-
-		switch(dir)
-			if(NORTH)
-				A.yo = 20
-				A.xo = 0
-			if(EAST)
-				A.yo = 0
-				A.xo = 20
-			if(WEST)
-				A.yo = 0
-				A.xo = -20
-			else // Any other
-				A.yo = -20
-				A.xo = 0
-		A.starting = loc
-		A.fire()
+/obj/machinery/power/emitter/proc/fire_beam()
+	if(!check_delay())
+		return FALSE
+	src.last_shot = world.time
+	if(src.shot_number < 3)
+		src.fire_delay = 20
+		src.shot_number ++
+	else
+		src.fire_delay = rand(minimum_fire_delay,maximum_fire_delay)
+		src.shot_number = 0
+	var/obj/item/projectile/A = PoolOrNew(projectile_type,src.loc)
+	A.setDir(src.dir)
+	playsound(src.loc, projectile_sound, 25, 1)
+	if(prob(35))
+		var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
+		s.set_up(5, 1, src)
+		s.start()
+	switch(dir)
+		if(NORTH)
+			A.yo = 20
+			A.xo = 0
+		if(EAST)
+			A.yo = 0
+			A.xo = 20
+		if(WEST)
+			A.yo = 0
+			A.xo = -20
+		else // Any other
+			A.yo = -20
+			A.xo = 0
+	A.starting = loc
+	A.fire()
 
 /obj/machinery/power/emitter/can_be_unfasten_wrench(mob/user)
 	if(state == EM_WELDED)
@@ -267,6 +272,10 @@
 				user << "<span class='warning'>The controls can only be locked when \the [src] is online!</span>"
 		else
 			user << "<span class='danger'>Access denied.</span>"
+		return
+
+	if(is_wire_tool(W) && panel_open)
+		wires.interact(user)
 		return
 
 	if(default_deconstruction_screwdriver(user, "emitter_open", "emitter", W))
