@@ -35,6 +35,9 @@
 	if(mind && mind.devilinfo)
 		addtimer(CALLBACK(mind.devilinfo, /datum/devilinfo.proc/beginResurrectionCheck, src), 0)
 
+	for(var/datum/mutation/human/HM in dna.mutations)
+		HM.on_death(src)
+
 /mob/living/carbon/human/proc/makeSkeleton()
 	status_flags |= DISFIGURED
 	set_species(/datum/species/skeleton)
