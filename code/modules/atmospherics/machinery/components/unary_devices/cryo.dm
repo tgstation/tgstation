@@ -1,3 +1,5 @@
+#define SPEAK(message) radio.talk_into(src, message, radio_channel, get_spans())
+
 /obj/machinery/atmospherics/components/unary/cryo_cell
 	name = "cryo cell"
 	icon = 'icons/obj/cryogenics.dmi'
@@ -22,11 +24,21 @@
 	var/obj/item/weapon/reagent_containers/glass/beaker = null
 	var/reagent_transfer = 0
 
+	var/obj/item/device/radio/radio
+	var/radio_key = /obj/item/device/encryptionkey/headset_med
+	var/radio_channel = "Medical"
+
 /obj/machinery/atmospherics/components/unary/cryo_cell/New()
 	..()
 	initialize_directions = dir
 	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/cryo_tube(null)
 	B.apply_default_parts(src)
+
+	radio = new(src)
+	radio.keyslot = new radio_key
+	radio.subspace_transmission = 1
+	radio.canhear_range = 0
+	radio.recalculateChannels()
 
 /obj/item/weapon/circuitboard/machine/cryo_tube
 	name = "Cryotube (Machine Board)"
@@ -53,6 +65,8 @@
 	conduction_coefficient = initial(conduction_coefficient) * C
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/Destroy()
+	qdel(radio)
+	radio = null
 	if(beaker)
 		qdel(beaker)
 		beaker = null
@@ -103,18 +117,14 @@
 			on = FALSE
 			update_icon()
 			playsound(T, 'sound/machines/cryo_warning.ogg', volume, 1) // Bug the doctors.
-			say("Patient fully restored")
+			SPEAK("Patient fully restored")
 			if(autoeject) // Eject if configured.
-				say("Auto ejecting patient now")
+				SPEAK("Auto ejecting patient now")
 				open_machine()
 			return
 		else if(occupant.stat == DEAD) // We don't bother with dead people.
-			on = FALSE
-			update_icon()
-			playsound(T, 'sound/machines/cryo_warning.ogg', volume, 1) // Bug the doctors
-			say("Warning patient deceased")
+			return
 			if(autoeject) // Eject if configured.
-				say("Auto ejecting patient now")
 				open_machine()
 			return
 		if(air1.gases.len)
@@ -164,12 +174,15 @@
 /obj/machinery/atmospherics/components/unary/cryo_cell/relaymove(mob/user)
 	container_resist(user)
 
-/obj/machinery/atmospherics/components/unary/cryo_cell/open_machine()
+/obj/machinery/atmospherics/components/unary/cryo_cell/open_machine(drop = 0)
 	if(!state_open && !panel_open)
 		on = FALSE
 		..()
-		if(beaker)
-			beaker.forceMove(src)
+	for(var/mob/M in contents) //only drop mobs
+		M.forceMove(get_turf(src))
+		if(isliving(M))
+			var/mob/living/L = M
+			L.update_canmove()
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/close_machine(mob/living/carbon/user)
 	if((isnull(user) || istype(user)) && state_open && !panel_open)
