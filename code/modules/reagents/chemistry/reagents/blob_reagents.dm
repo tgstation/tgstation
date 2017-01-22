@@ -170,7 +170,7 @@
 		for(var/turf/open/T in range(1, B))
 			var/obj/structure/blob/C = locate() in T
 			if(!(C && C.overmind && C.overmind.blob_reagent_datum.id == B.overmind.blob_reagent_datum.id) && prob(80))
-				PoolOrNew(/obj/effect/hotspot, T)
+				new /obj/effect/hotspot(T)
 	if(damage_flag == "fire")
 		return 0
 	return ..()
@@ -299,7 +299,7 @@
 	var/initial_volume = reac_volume
 	reac_volume = ..()
 	if(reac_volume >= 10) //if it's not a spore cloud, bad time incoming
-		var/obj/effect/overlay/temp/explosion/fast/E = PoolOrNew(/obj/effect/overlay/temp/explosion/fast, get_turf(M))
+		var/obj/effect/overlay/temp/explosion/fast/E = new /obj/effect/overlay/temp/explosion/fast(get_turf(M))
 		E.alpha = 150
 		for(var/mob/living/L in orange(get_turf(M), 1))
 			if("blob" in L.faction) //no friendly fire

@@ -104,7 +104,7 @@
 	if(anchored && unanchored_icon)
 		anchored = FALSE
 		update_anchored(null, obj_integrity > max_integrity * 0.25)
-		PoolOrNew(/obj/effect/overlay/temp/emp, loc)
+		new /obj/effect/overlay/temp/emp(loc)
 
 
 //for the ark and Ratvar
@@ -191,7 +191,7 @@
 
 /obj/structure/destructible/clockwork/powered/emp_act(severity)
 	if(forced_disable(TRUE))
-		PoolOrNew(/obj/effect/overlay/temp/emp, loc)
+		new /obj/effect/overlay/temp/emp(loc)
 
 /obj/structure/destructible/clockwork/powered/proc/total_accessable_power() //how much power we have and can use
 	if(!needs_power || ratvar_awakens)

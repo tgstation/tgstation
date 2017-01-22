@@ -290,7 +290,7 @@
 
 /datum/clockwork_scripture/channeled/volt_void/chant_effects(chant_number)
 	playsound(invoker, 'sound/effects/EMPulse.ogg', 50, 1)
-	PoolOrNew(/obj/effect/overlay/temp/ratvar/sigil/voltvoid, get_turf(invoker))
+	new /obj/effect/overlay/temp/ratvar/sigil/voltvoid(get_turf(invoker))
 	var/power_drained = 0
 	for(var/atom/movable/A in view(7, get_turf(invoker)))
 		power_drained += A.power_drain(TRUE)
