@@ -36,10 +36,10 @@
 
 /datum/supply_pack/emergency
 	group = "Emergency"
-	
+
 /datum/supply_pack/emergency/vehicle
 	name = "Biker Gang Kit" //TUNNEL SNAKES OWN THIS TOWN
-	cost = 2000 
+	cost = 2000
 	contraband = TRUE
 	contains = list(/obj/vehicle/atv,
 					/obj/item/key,
@@ -1503,6 +1503,24 @@
 	crate_name = "standard costume crate"
 	crate_type = /obj/structure/closet/crate/secure
 
+/datum/supply_pack/misc/costume_original
+	name = "Original Costume Crate"
+	cost = 1000
+	contains = list(/obj/item/clothing/head/snowman,
+					/obj/item/clothing/suit/snowman,
+					/obj/item/clothing/head/chicken,
+					/obj/item/clothing/suit/chickensuit,
+					/obj/item/clothing/mask/gas/monkeymask,
+					/obj/item/clothing/suit/monkeysuit,
+					/obj/item/clothing/head/cardborg,
+					/obj/item/clothing/suit/cardborg,
+					/obj/item/clothing/head/xenos,
+					/obj/item/clothing/suit/xenos,
+					/obj/item/clothing/suit/hooded/ian_costume,
+					/obj/item/clothing/suit/hooded/carp_costume,
+					/obj/item/clothing/suit/hooded/bee_costume)
+	crate_name = "original costume crate"
+
 /datum/supply_pack/misc/wizard
 	name = "Wizard Costume Crate"
 	cost = 2000
@@ -1663,7 +1681,7 @@
 	contains = list(/obj/item/weapon/circuitboard/machine/bsa/front,
 					/obj/item/weapon/circuitboard/machine/bsa/middle,
 					/obj/item/weapon/circuitboard/machine/bsa/back,
-					/obj/item/weapon/circuitboard/machine/computer/bsa_control
+					/obj/item/weapon/circuitboard/computer/bsa_control
 					)
 	crate_name= "bluespace artillery parts crate"
 

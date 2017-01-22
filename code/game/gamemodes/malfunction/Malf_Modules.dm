@@ -18,7 +18,7 @@
 /datum/AI_Module/large/nuke_station
 	module_name = "Doomsday Device"
 	mod_pick_name = "nukestation"
-	description = "Activate a weapon that will disintegrate all organic life on the station after a 450 second delay."
+	description = "Activate a weapon that will disintegrate all organic life on the station after a 450 second delay. Can only be used while on the station, will fail if your core is moved off station or destroyed."
 	cost = 130
 	one_time = 1
 
@@ -28,7 +28,13 @@
 	set category = "Malfunction"
 	set name = "Doomsday Device"
 
-	src << "<span class='notice'>Nuclear device armed.</span>"
+	var/turf/T = get_turf(src)
+
+	if(!istype(T) || T.z != ZLEVEL_STATION)
+		src << "<span class='warning'>You cannot activate the doomsday device while off-station!</span>"
+		return
+
+	src << "<span class='notice'>Doomsday device armed.</span>"
 	priority_announce("Hostile runtimes detected in all station systems, please deactivate your AI to prevent possible damage to its morality core.", "Anomaly Alert", 'sound/AI/aimalf.ogg')
 	set_security_level("delta")
 	nuking = 1

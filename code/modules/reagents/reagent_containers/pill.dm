@@ -68,8 +68,7 @@
 		for(var/mob/O in viewers(2, user))	//viewers is necessary here because of the small radius
 			O << "<span class='warning'>[user] slips something into [target]!</span>"
 		reagents.trans_to(target, reagents.total_volume)
-		spawn(5)
-			qdel(src)
+		qdel(src)
 
 /obj/item/weapon/reagent_containers/pill/tox
 	name = "toxins pill"

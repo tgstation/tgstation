@@ -84,11 +84,11 @@
 	return TRUE
 
 
-//Sentinel's Compromise: Allows the invoker to select a nearby servant and convert their brute and burn damage into half as much toxin damage.
+//Sentinel's Compromise: Allows the invoker to select a nearby servant and convert their brute, burn, and oxygen damage into half as much toxin damage.
 /datum/clockwork_scripture/ranged_ability/sentinels_compromise
-	descname = "Convert Brute/Burn to Half Toxin"
+	descname = "Convert Brute/Burn/Oxygen to Half Toxin"
 	name = "Sentinel's Compromise"
-	desc = "Charges your slab with healing power, allowing you to convert all of a target Servant's brute and burn damage to half as much toxin damage."
+	desc = "Charges your slab with healing power, allowing you to convert all of a target Servant's brute, burn, and oxygen damage to half as much toxin damage."
 	invocations = list("Mend the wounds of...", "...my inferior flesh.")
 	channel_time = 30
 	required_components = list(VANGUARD_COGWHEEL = 2)
@@ -98,7 +98,7 @@
 	primary_component = VANGUARD_COGWHEEL
 	sort_priority = 4
 	quickbind = TRUE
-	quickbind_desc = "Allows you to convert a Servant's brute and burn damage to half toxin damage.<br><b>Click your slab to disable.</b>"
+	quickbind_desc = "Allows you to convert a Servant's brute, burn, and oxygen damage to half toxin damage.<br><b>Click your slab to disable.</b>"
 	slab_icon = "compromise"
 	ranged_type = /obj/effect/proc_holder/slab/compromise
 	ranged_message = "<span class='inathneq_small'><i>You charge the clockwork slab with healing power.</i>\n\
@@ -206,16 +206,16 @@
 			L.confused = min(L.confused + 20, 100)
 			L.dizziness = min(L.dizziness + 20, 100)
 			L.Weaken(1)
-	invoker.visible_message("<span class='warning'>[invoker] is suddenly covered with a thin layer of dark purple smoke!</span>")
+	invoker.visible_message("<span class='warning'>[invoker] is suddenly covered with a thin layer of purple smoke!</span>")
 	var/invoker_old_color = invoker.color
-	invoker.color = "#AF0AAF"
+	invoker.color = list("#AF0AAF", "#AF0AAF", "#AF0AAF", rgb(0,0,0))
 	animate(invoker, color = invoker_old_color, time = flee_time+grace_period)
 	addtimer(CALLBACK(invoker, /atom/proc/update_atom_colour), flee_time+grace_period)
 	if(chant_number != chant_amount) //if this is the last chant, we don't have a movement period because the chant is over
 		var/endtime = world.time + flee_time
 		var/starttime = world.time
 		progbar = new(invoker, flee_time, invoker)
-		progbar.bar.color = "#AF0AAF"
+		progbar.bar.color = list("#AF0AAF", "#AF0AAF", "#AF0AAF", rgb(0,0,0))
 		animate(progbar.bar, color = initial(progbar.bar.color), time = flee_time+grace_period)
 		while(world.time < endtime && invoker && slab && invoker.get_active_held_item() == slab)
 			sleep(1)

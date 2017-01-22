@@ -1,0 +1,4 @@
+author: "XDTM"
+delete-after: True
+changes: 
+  - imageadd: "Armblades now look a bit more bladelike."

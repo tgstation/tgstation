@@ -296,7 +296,6 @@ var/static/regex/multispin_words = regex("like a record baby")
 	//STATE LAWS
 	else if((findtext(message, statelaws_words)))
 		for(var/mob/living/silicon/S in listeners)
-			S.checklaws()
 			S.statelaws(force = 1)
 		next_command = world.time + cooldown_stun
 
