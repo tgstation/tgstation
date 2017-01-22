@@ -399,3 +399,25 @@ var/global/list/ghost_others_options = list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 #define CLOCK_SILICONS 22
 #define CLOCK_PROSELYTIZATION 23
 #define SHUTTLE_HIJACK 24
+
+//For SSTimer
+
+#define TIMER_NORMAL "normal"
+#define TIMER_UNIQUE "unique"
+
+// Ventcrawling
+#define VENTCRAWLER_NONE   0
+#define VENTCRAWLER_NUDE   1
+#define VENTCRAWLER_ALWAYS 2
+
+// Intent
+#define INTENT_HELP   "help"
+#define INTENT_GRAB   "grab"
+#define INTENT_DISARM "disarm"
+#define INTENT_HARM   "harm"
+// NOTE: INTENT_HOTKEY_* defines are not actual intents!
+// they are here to support hotkeys
+#define INTENT_HOTKEY_LEFT  "left"
+#define INTENT_HOTKEY_RIGHT "right"
+
+#define DEFAULT_AI_LAWID "default"
