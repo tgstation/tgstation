@@ -199,3 +199,8 @@
 	name = "Select Vision Filter"
 	button_icon_state = "drone_vision"
 	procname = /mob/living/simple_animal/drone/verb/toggle_statics
+
+/datum/action/generic/drone/show_alerts
+	name = "View Station Alerts"
+	button_icon_state = "drone_alert"
+	procname = /mob/living/simple_animal/drone/verb/dr_drone_alerts

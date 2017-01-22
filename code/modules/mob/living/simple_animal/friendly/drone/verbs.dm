@@ -52,3 +52,9 @@
 
 	updateSeeStaticMobs()
 
+/mob/living/simple_animal/drone/verb/dr_drone_alerts()
+	set name = "View Station Alerts"
+	set desc = "View the alert aboard the station."
+	set category = "Drone"
+	if(stat != DEAD)
+		drone_alerts()

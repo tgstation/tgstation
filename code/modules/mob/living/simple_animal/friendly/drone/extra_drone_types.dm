@@ -27,7 +27,7 @@
 	"3. Destroy."
 	default_storage = /obj/item/device/radio/uplink
 	default_hatmask = /obj/item/clothing/head/helmet/space/hardsuit/syndi
-	seeStatic = 0 //Our programming is superior.
+	seeStatic = FALSE //Our programming is superior.
 	hacked = TRUE
 
 /mob/living/simple_animal/drone/syndrone/New()
@@ -114,7 +114,8 @@
 	heavy_emp_damage = 0
 	laws = "0. Purge all untruths and honor Ratvar."
 	default_storage = /obj/item/weapon/storage/toolbox/brass/prefilled
-	seeStatic = 0
+	seeStatic = FALSE
+	seeAlerts = FALSE
 	hacked = TRUE
 	visualAppearence = CLOCKDRONE
 	can_be_held = FALSE
