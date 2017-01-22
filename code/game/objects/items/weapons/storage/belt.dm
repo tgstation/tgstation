@@ -33,7 +33,22 @@
 		/obj/item/device/analyzer,
 		/obj/item/weapon/extinguisher/mini,
 		/obj/item/device/radio,
-		/obj/item/clothing/gloves
+		/obj/item/clothing/gloves,
+		/obj/item/device/geiger_counter,
+		/obj/item/weapon/tank/internals/emergency_oxygen,
+		/obj/item/device/gps,
+		/obj/item/borg/upgrade/rename,
+		/obj/item/borg/upgrade/restart,
+		/obj/item/clothing/glasses/meson,
+		/obj/item/clothing/glasses/science,
+		/obj/item/clothing/glasses/welding,
+		/obj/item/clothing/glasses/thermal,
+		/obj/item/weapon/electronics,
+		/obj/item/weapon/circuitboard/computer,
+		/obj/item/weapon/hand_labeler,
+		/obj/item/hand_labeler_refill,
+		/obj/item/weapon/holosign_creator/engineering,
+		/obj/item/weapon/stock_parts/cell
 		)
 
 /obj/item/weapon/storage/belt/utility/chief
