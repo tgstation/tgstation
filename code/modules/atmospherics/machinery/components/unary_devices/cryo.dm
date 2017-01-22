@@ -96,15 +96,25 @@
 		update_icon()
 		return
 	var/datum/gas_mixture/air1 = AIR1
+	var/turf/T = get_turf(src)
 	if(occupant)
 		if(occupant.health >= 100) // Don't bother with fully healed people.
 			on = FALSE
 			update_icon()
-			playsound(src.loc, 'sound/machines/ding.ogg', volume, 1) // Bug the doctors.
+			playsound(T, 'sound/machines/cryo_warning.ogg', volume, 1) // Bug the doctors.
+			T.visible_message("<span class='warning'>Patient fully restored</span>")
 			if(autoeject) // Eject if configured.
+				T.visible_message("<span class='warning'>Auto ejecting patient now</span>")
 				open_machine()
 			return
 		else if(occupant.stat == DEAD) // We don't bother with dead people.
+			on = FALSE
+			update_icon()
+			playsound(T, 'sound/machines/cryo_warning.ogg', volume, 1) // Bug the doctors
+			T.visible_message("<span class='warning'>Warning patient deceased</span>")
+			if(autoeject) // Eject if configured.
+				T.visible_message("<span class='warning'>Auto ejecting patient now</span>")
+				open_machine()
 			return
 		if(air1.gases.len)
 			if(occupant.bodytemperature < T0C) // Sleepytime. Why? More cryo magic.
