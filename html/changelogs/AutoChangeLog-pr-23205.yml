@@ -1,6 +1,0 @@
-author: "coiax"
-delete-after: True
-changes: 
-  - rscadd: "The Delta emergency shuttle now travels towards the south, rather
-than the north. This changes nothing except which direction the stars
-rushing past the windows are moving."

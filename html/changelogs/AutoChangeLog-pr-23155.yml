@@ -1,4 +1,0 @@
-author: "Joan"
-delete-after: True
-changes: 
-  - rscadd: "Clockwork constructs will toggle clockwork structures instead of attacking them."
