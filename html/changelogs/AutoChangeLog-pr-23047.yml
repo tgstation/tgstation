@@ -1,0 +1,5 @@
+author: "Joan"
+delete-after: True
+changes: 
+  - rscadd: "Sigils of Transmission can be accessed by clockwork structures in a larger range."
+  - tweak: "You can see, when examining a clockwork structure, how many sigils are in range of it."
