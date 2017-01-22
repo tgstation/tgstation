@@ -1,0 +1,4 @@
+author: "Thunder12345"
+delete-after: True
+changes: 
+  - rscadd: "The indestructible walls on CentComm will now smooth."
