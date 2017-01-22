@@ -1339,3 +1339,20 @@ proc/pick_closest_path(value, list/matches = get_fancy_list_of_atom_types())
 			. = "gigantic"
 		else
 			. = ""
+
+//can a window be here, or is there a window blocking it?
+/proc/valid_window_location(turf/T, dir_to_check)
+	if(!T)
+		return FALSE
+	for(var/obj/O in T)
+		if(istype(O, /obj/machinery/door/window) && (O.dir == dir_to_check || dir_to_check == FULLTILE_WINDOW_DIR))
+			return FALSE
+		if(istype(O, /obj/structure/windoor_assembly))
+			var/obj/structure/windoor_assembly/W = O
+			if(W.ini_dir == dir_to_check || dir_to_check == FULLTILE_WINDOW_DIR)
+				return FALSE
+		if(istype(O, /obj/structure/window))
+			var/obj/structure/window/W = O
+			if(W.ini_dir == dir_to_check || W.ini_dir == FULLTILE_WINDOW_DIR || dir_to_check == FULLTILE_WINDOW_DIR)
+				return FALSE
+	return TRUE
