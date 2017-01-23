@@ -342,7 +342,8 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/turf/open/floor/plasteel/warning{
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
 /area/ruin/onehalf/drone_bay)
@@ -357,13 +358,15 @@
 	name = "Mining Drone Bay APC";
 	pixel_y = 24
 	},
-/turf/open/floor/plasteel/warning{
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
 /area/ruin/onehalf/drone_bay)
 "aZ" = (
 /obj/structure/disposalpipe/segment,
-/turf/open/floor/plasteel/warning{
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
 /area/ruin/onehalf/drone_bay)
@@ -392,12 +395,14 @@
 	pixel_x = -8;
 	pixel_y = 37
 	},
-/turf/open/floor/plasteel/warning{
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
 /area/ruin/onehalf/drone_bay)
 "bb" = (
-/turf/open/floor/plasteel/warning{
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
 /area/ruin/onehalf/drone_bay)
@@ -426,13 +431,15 @@
 	pixel_x = 8;
 	pixel_y = 27
 	},
-/turf/open/floor/plasteel/warning{
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
 /area/ruin/onehalf/drone_bay)
 "bd" = (
 /obj/structure/disposalpipe/segment,
-/turf/open/floor/plasteel/warning{
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
 /area/ruin/onehalf/drone_bay)

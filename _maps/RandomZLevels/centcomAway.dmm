@@ -1,4 +1,4 @@
-//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
 /turf/open/space,
 /area/space)
@@ -342,7 +342,8 @@
 /turf/open/floor/plating,
 /area/awaymission/centcomAway/maint)
 "bc" = (
-/turf/open/floor/plating/warnplate{
+/turf/open/floor/plating,
+/obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
 /area/awaymission/centcomAway/hangar)
@@ -996,18 +997,21 @@
 /area/awaymission/centcomAway/hangar)
 "dn" = (
 /obj/structure/closet/crate,
-/turf/open/floor/plating/warnplate{
+/turf/open/floor/plating,
+/obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
 /area/awaymission/centcomAway/hangar)
 "do" = (
-/turf/open/floor/plating/warnplate{
+/turf/open/floor/plating,
+/obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
 /area/awaymission/centcomAway/hangar)
 "dp" = (
 /obj/structure/closet/crate/large,
-/turf/open/floor/plating/warnplate{
+/turf/open/floor/plating,
+/obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
 /area/awaymission/centcomAway/hangar)
@@ -1040,7 +1044,8 @@
 /area/awaymission/centcomAway/hangar)
 "dv" = (
 /obj/structure/closet/crate,
-/turf/open/floor/plating/warnplate{
+/turf/open/floor/plating,
+/obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
 /area/awaymission/centcomAway/hangar)
@@ -1079,7 +1084,8 @@
 /area/awaymission/centcomAway/hangar)
 "dB" = (
 /obj/structure/ore_box,
-/turf/open/floor/plating/warnplate{
+/turf/open/floor/plating,
+/obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
 /area/awaymission/centcomAway/hangar)
@@ -1140,18 +1146,21 @@
 /area/awaymission/centcomAway/hangar)
 "dM" = (
 /obj/structure/closet/crate/large,
-/turf/open/floor/plating/warnplate{
+/turf/open/floor/plating,
+/obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
 /area/awaymission/centcomAway/hangar)
 "dN" = (
 /obj/structure/closet/crate,
-/turf/open/floor/plating/warnplate{
+/turf/open/floor/plating,
+/obj/effect/turf_decal/stripes/line{
 	dir = 2
 	},
 /area/awaymission/centcomAway/hangar)
 "dO" = (
-/turf/open/floor/plating/warnplate{
+/turf/open/floor/plating,
+/obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
 /area/awaymission/centcomAway/hangar)
@@ -1830,12 +1839,14 @@
 /turf/open/floor/plasteel/white,
 /area/awaymission/centcomAway/general)
 "fV" = (
-/turf/open/floor/plasteel/warning{
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
 /area/awaymission/centcomAway/general)
 "fW" = (
-/turf/open/floor/plasteel/warning{
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
 /area/awaymission/centcomAway/general)
@@ -1945,13 +1956,15 @@
 	},
 /area/awaymission/centcomAway/hangar)
 "gn" = (
-/turf/open/floor/plating/warnplate{
+/turf/open/floor/plating,
+/obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
 /area/awaymission/centcomAway/hangar)
 "go" = (
 /obj/structure/table,
-/turf/open/floor/plating/warnplate{
+/turf/open/floor/plating,
+/obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
 /area/awaymission/centcomAway/hangar)
@@ -2435,7 +2448,8 @@
 	pixel_y = 7;
 	req_access_txt = "2"
 	},
-/turf/open/floor/plating/warnplate{
+/turf/open/floor/plating,
+/obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
 /area/awaymission/centcomAway/hangar)
@@ -2449,7 +2463,8 @@
 	pixel_x = -3;
 	pixel_y = -2
 	},
-/turf/open/floor/plating/warnplate{
+/turf/open/floor/plating,
+/obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
 /area/awaymission/centcomAway/hangar)
@@ -3231,7 +3246,8 @@
 	pixel_y = 7;
 	req_access_txt = "2"
 	},
-/turf/open/floor/plating/warnplate{
+/turf/open/floor/plating,
+/obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
 /area/awaymission/centcomAway/hangar)
@@ -4085,42 +4101,49 @@
 /turf/open/floor/plasteel/cafeteria,
 /area/awaymission/centcomAway/cafe)
 "mE" = (
-/turf/open/floor/plating/warnplate{
+/turf/open/floor/plating,
+/obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
 /area/awaymission/centcomAway/cafe)
 "mF" = (
 /obj/structure/reagent_dispensers/watertank,
-/turf/open/floor/plating/warnplate{
+/turf/open/floor/plating,
+/obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
 /area/awaymission/centcomAway/cafe)
 "mG" = (
 /obj/machinery/shieldgen,
-/turf/open/floor/plating/warnplate{
+/turf/open/floor/plating,
+/obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
 /area/awaymission/centcomAway/cafe)
 "mH" = (
 /obj/machinery/portable_atmospherics/canister/air,
-/turf/open/floor/plating/warnplate{
+/turf/open/floor/plating,
+/obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
 /area/awaymission/centcomAway/cafe)
 "mI" = (
 /obj/machinery/portable_atmospherics/pump,
-/turf/open/floor/plating/warnplate{
+/turf/open/floor/plating,
+/obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
 /area/awaymission/centcomAway/cafe)
 "mJ" = (
 /obj/machinery/portable_atmospherics/canister/air,
-/turf/open/floor/plating/warnplate{
+/turf/open/floor/plating,
+/obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
 /area/awaymission/centcomAway/cafe)
 "mK" = (
-/turf/open/floor/plating/warnplate{
+/turf/open/floor/plating,
+/obj/effect/turf_decal/stripes/line{
 	dir = 2
 	},
 /area/awaymission/centcomAway/cafe)

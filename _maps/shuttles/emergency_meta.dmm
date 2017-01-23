@@ -1,4 +1,4 @@
-//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
 /turf/open/space,
 /area/space)
@@ -472,7 +472,8 @@
 /obj/item/weapon/weldingtool,
 /obj/item/weapon/wirecutters,
 /obj/item/stack/cable_coil,
-/turf/open/floor/plasteel/warning{
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
 /area/shuttle/escape)
@@ -556,7 +557,8 @@
 	pixel_x = 3;
 	pixel_y = -5
 	},
-/turf/open/floor/plasteel/warning{
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
 /area/shuttle/escape)
@@ -577,7 +579,8 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "bA" = (
-/turf/open/floor/plasteel/warning{
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
 /area/shuttle/escape)
@@ -692,7 +695,8 @@
 /obj/item/clothing/suit/fire/firefighter,
 /obj/item/clothing/mask/gas,
 /obj/item/clothing/head/hardhat/red,
-/turf/open/floor/plasteel/warning{
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
 /area/shuttle/escape)
