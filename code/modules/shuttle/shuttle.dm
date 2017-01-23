@@ -237,9 +237,9 @@
 		areaInstance = null
 	. = ..()
 
-/obj/docking_port/mobile/Initialize(roundstart)
+/obj/docking_port/mobile/Initialize(mapload)
 	..()
-	if(!roundstart)
+	if(!mapload)
 		return
 	var/area/A = get_area(src)
 	if(istype(A, /area/shuttle))

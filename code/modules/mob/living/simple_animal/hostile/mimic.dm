@@ -39,9 +39,9 @@
 	var/attempt_open = 0
 
 // Pickup loot
-/mob/living/simple_animal/hostile/mimic/crate/Initialize(roundstart)
+/mob/living/simple_animal/hostile/mimic/crate/Initialize(mapload)
 	..()
-	if(roundstart)	//eat shit
+	if(mapload)	//eat shit
 		for(var/obj/item/I in loc)
 			I.loc = src
 
