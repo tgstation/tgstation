@@ -5,6 +5,7 @@
 	icon_state ="book"
 	throw_speed = 2
 	throw_range = 5
+	storage_slots = 1
 	w_class = WEIGHT_CLASS_NORMAL
 	resistance_flags = FLAMMABLE
 	var/title = "book"
@@ -21,6 +22,7 @@ var/global/list/bibleitemstates = list("bible", "koran", "scrapbook", "bible",  
 	desc = "Apply to head repeatedly."
 	icon = 'icons/obj/storage.dmi'
 	icon_state ="bible"
+	storage_slots = 7
 	var/mob/affecting = null
 	var/deity_name = "Christ"
 
