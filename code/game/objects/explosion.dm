@@ -145,7 +145,7 @@ var/explosionid = 1
 
 		if(T)
 			if(flame_dist && prob(40) && !isspaceturf(T) && !T.density)
-				PoolOrNew(/obj/effect/hotspot, T) //Mostly for ambience!
+				new /obj/effect/hotspot(T) //Mostly for ambience!
 			if(dist > 0)
 				T.explosion_level = max(T.explosion_level, dist)	//let the bigger one have it
 				T.explosion_id = id

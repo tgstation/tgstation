@@ -592,7 +592,7 @@ var/global/list/multiverse = list()
 	var/turf/T = get_turf(user)
 	playsound(T,'sound/magic/WarpWhistle.ogg', 200, 1)
 	user.canmove = 0
-	PoolOrNew(/obj/effect/overlay/temp/tornado,T)
+	new /obj/effect/overlay/temp/tornado(T)
 	sleep(20)
 	if(interrupted(user))
 		return
@@ -610,7 +610,7 @@ var/global/list/multiverse = list()
 			T = potential_T
 			break
 		breakout += 1
-	PoolOrNew(/obj/effect/overlay/temp/tornado,T)
+	new /obj/effect/overlay/temp/tornado(T)
 	sleep(20)
 	if(interrupted(user))
 		return

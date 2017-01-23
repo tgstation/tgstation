@@ -33,7 +33,7 @@ Contents:
 
 		if(destination && isturf(mobloc))//So we don't teleport out of containers
 			playsound(H.loc, "sparks", 50, 1)
-			PoolOrNew(/obj/effect/overlay/temp/dir_setting/ninja/phase/out, list(get_turf(H), H.dir))
+			new /obj/effect/overlay/temp/dir_setting/ninja/phase/out(get_turf(H), H.dir)
 
 			handle_teleport_grab(destination, H)
 			H.loc = destination
@@ -41,7 +41,7 @@ Contents:
 			spark_system.start()
 			playsound(H.loc, 'sound/effects/phasein.ogg', 25, 1)
 			playsound(H.loc, "sparks", 50, 1)
-			PoolOrNew(/obj/effect/overlay/temp/dir_setting/ninja/phase, list(get_turf(H), H.dir))
+			new /obj/effect/overlay/temp/dir_setting/ninja/phase(get_turf(H), H.dir)
 
 			destination.phase_damage_creatures(20,H)//Paralyse and damage mobs and mechas on the turf
 			s_coold = 1
@@ -62,7 +62,7 @@ Contents:
 		var/turf/mobloc = get_turf(H.loc)//To make sure that certain things work properly below.
 		if(!T.density && isturf(mobloc))
 			playsound(H.loc, "sparks", 50, 1)
-			PoolOrNew(/obj/effect/overlay/temp/dir_setting/ninja/phase/out, list(get_turf(H), H.dir))
+			new /obj/effect/overlay/temp/dir_setting/ninja/phase/out(get_turf(H), H.dir)
 
 			handle_teleport_grab(T, H)
 			H.forceMove(T)
@@ -70,7 +70,7 @@ Contents:
 			spark_system.start()
 			playsound(H.loc, 'sound/effects/phasein.ogg', 25, 1)
 			playsound(H.loc, "sparks", 50, 1)
-			PoolOrNew(/obj/effect/overlay/temp/dir_setting/ninja/phase, list(get_turf(H), H.dir))
+			new /obj/effect/overlay/temp/dir_setting/ninja/phase(get_turf(H), H.dir)
 
 			T.phase_damage_creatures(20,H)//Paralyse and damage mobs and mechas on the turf
 			s_coold = 1
