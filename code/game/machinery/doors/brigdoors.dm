@@ -44,18 +44,20 @@
 	Radio = new/obj/item/device/radio(src)
 	Radio.listening = 0
 
-/obj/machinery/door_timer/initialize()
-	for(var/obj/machinery/door/window/brigdoor/M in urange(20, src))
-		if (M.id == id)
-			targets += M
+/obj/machinery/door_timer/Initialize()
+	..()
+	if(id != null)
+		for(var/obj/machinery/door/window/brigdoor/M in urange(20, src))
+			if (M.id == id)
+				targets += M
 
-	for(var/obj/machinery/flasher/F in urange(20, src))
-		if(F.id == id)
-			targets += F
+		for(var/obj/machinery/flasher/F in urange(20, src))
+			if(F.id == id)
+				targets += F
 
-	for(var/obj/structure/closet/secure_closet/brig/C in urange(20, src))
-		if(C.id == id)
-			targets += C
+		for(var/obj/structure/closet/secure_closet/brig/C in urange(20, src))
+			if(C.id == id)
+				targets += C
 
 	if(!targets.len)
 		stat |= BROKEN

@@ -5,6 +5,12 @@
 	icon_state = "coil0"
 	anchored = 0
 	density = 1
+
+	// Executing a traitor caught releasing tesla was never this fun!
+	can_buckle = TRUE
+	buckle_lying = FALSE
+	buckle_requires_restraints = TRUE
+
 	var/power_loss = 2
 	var/input_power_multiplier = 1
 
@@ -52,6 +58,11 @@
 
 	return ..()
 
+/obj/machinery/power/tesla_coil/attack_hand(mob/user)
+	if(user.a_intent == INTENT_GRAB && user_buckle_mob(user.pulling, user, check_loc = 0))
+		return
+	..()
+
 /obj/machinery/power/tesla_coil/tesla_act(var/power)
 	if(anchored && !panel_open)
 		being_shocked = 1
@@ -73,6 +84,10 @@
 	icon_state = "grounding_rod0"
 	anchored = 0
 	density = 1
+
+	can_buckle = TRUE
+	buckle_lying = FALSE
+	buckle_requires_restraints = TRUE
 
 /obj/machinery/power/grounding_rod/New()
 	..()
@@ -107,6 +122,11 @@
 		return
 
 	return ..()
+
+/obj/machinery/power/grounding_rod/attack_hand(mob/user)
+	if(user.a_intent == INTENT_GRAB && user_buckle_mob(user.pulling, user, check_loc = 0))
+		return
+	..()
 
 /obj/machinery/power/grounding_rod/tesla_act(var/power)
 	if(anchored && !panel_open)

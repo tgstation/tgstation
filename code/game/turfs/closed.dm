@@ -40,7 +40,9 @@
 		icon_state = titlescreen
 
 /turf/closed/indestructible/riveted
+	icon = 'icons/turf/walls/riveted.dmi'
 	icon_state = "riveted"
+	smooth = SMOOTH_TRUE
 
 /turf/closed/indestructible/New()
 	..()
@@ -50,7 +52,6 @@
 /turf/closed/indestructible/riveted/uranium
 	icon = 'icons/turf/walls/uranium_wall.dmi'
 	icon_state = "uranium"
-	smooth = SMOOTH_TRUE
 
 /turf/closed/indestructible/abductor
 	icon_state = "alien1"
@@ -115,4 +116,3 @@
 	desc = "A wall made out of a strange metal. The squares on it pulse in a predictable pattern."
 	icon = 'icons/turf/walls/hierophant_wall.dmi'
 	icon_state = "wall"
-	smooth = SMOOTH_TRUE

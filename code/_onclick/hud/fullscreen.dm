@@ -12,7 +12,7 @@
 		else if(!severity || severity == screen.severity)
 			return null
 	else
-		screen = PoolOrNew(type)
+		screen = new type()
 
 	screen.icon_state = "[initial(screen.icon_state)][severity]"
 	screen.severity = severity
@@ -30,16 +30,17 @@
 	screens -= category
 
 	if(animated)
-		spawn(0)
-			animate(screen, alpha = 0, time = animated)
-			sleep(animated)
-			if(client)
-				client.screen -= screen
-			qdel(screen)
+		animate(screen, alpha = 0, time = animated)
+		addtimer(CALLBACK(src, .proc/clear_fullscreen_after_animate, screen), animated, TIMER_CLIENT_TIME)
 	else
 		if(client)
 			client.screen -= screen
 		qdel(screen)
+
+/mob/proc/clear_fullscreen_after_animate(obj/screen/fullscreen/screen)
+	if(client)
+		client.screen -= screen
+	qdel(screen)
 
 /mob/proc/clear_fullscreens()
 	for(var/category in screens)
@@ -65,9 +66,8 @@
 	var/severity = 0
 
 /obj/screen/fullscreen/Destroy()
-	..()
 	severity = 0
-	return QDEL_HINT_PUTINPOOL
+	. = ..()
 
 /obj/screen/fullscreen/brute
 	icon_state = "brutedamageoverlay"
