@@ -27,9 +27,12 @@ var/datum/controller/failsafe/Failsafe
 		if(istype(Failsafe))
 			qdel(Failsafe)
 	Failsafe = src
-	spawn()
-		Failsafe.Loop()
-		qdel(Failsafe) //when Loop() returns, we delete ourselves and let the mc recreate us
+	LaunchLoop()
+
+/datum/controller/failsafe/proc/LaunchLoop()
+	set waitfor = 0
+	Failsafe.Loop()
+	qdel(Failsafe) //when Loop() returns, we delete ourselves and let the mc recreate us
 
 /datum/controller/failsafe/Destroy()
 	..()

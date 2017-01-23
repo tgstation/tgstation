@@ -194,20 +194,22 @@ var/datum/subsystem/ticker/ticker
 			var/datum/holiday/holiday = SSevent.holidays[holidayname]
 			world << "<h4>[holiday.greet()]</h4>"
 
-
-	spawn(0)//Forking here so we dont have to wait for this to finish
-		mode.post_setup()
-		//Cleanup some stuff
-		for(var/obj/effect/landmark/start/S in landmarks_list)
-			//Deleting Startpoints but we need the ai point to AI-ize people later
-			if(S.name != "AI")
-				qdel(S)
-
-		var/list/adm = get_admin_counts()
-		if(!adm["present"])
-			send2irc("Server", "Round just started with no active admins online!")
+	PostSetup()
 
 	return 1
+
+/datum/subsystem/ticker/proc/PostSetup()
+	set waitfor = 0
+	mode.post_setup()
+	//Cleanup some stuff
+	for(var/obj/effect/landmark/start/S in landmarks_list)
+		//Deleting Startpoints but we need the ai point to AI-ize people later
+		if(S.name != "AI")
+			qdel(S)
+
+	var/list/adm = get_admin_counts()
+	if(!adm["present"])
+		send2irc("Server", "Round just started with no active admins online!")
 
 //Plus it provides an easy way to make cinematics for other events. Just use this as a template
 /datum/subsystem/ticker/proc/station_explosion_cinematic(station_missed=0, override = null)
@@ -308,14 +310,13 @@ var/datum/subsystem/ticker/ticker
 					cinematic.icon_state = "summary_selfdes"
 	//If its actually the end of the round, wait for it to end.
 	//Otherwise if its a verb it will continue on afterwards.
-	spawn(300)
-		if(cinematic)
-			qdel(cinematic)		//end the cinematic
-		for(var/mob/M in mob_list)
-			M.notransform = FALSE //gratz you survived
-	return
+	addtimer(CALLBACK(src, .proc/finish_cinematic), 300)
 
-
+/datum/subsystem/ticker/proc/finish_cinematic()
+	if(cinematic)
+		qdel(cinematic)		//end the cinematic
+	for(var/mob/M in mob_list)
+		M.notransform = FALSE //gratz you survived
 
 /datum/subsystem/ticker/proc/create_characters()
 	for(var/mob/new_player/player in player_list)
@@ -587,8 +588,7 @@ var/datum/subsystem/ticker/ticker
 	//map rotate chance defaults to 75% of the length of the round (in minutes)
 	if (!prob((world.time/600)*config.maprotatechancedelta))
 		return
-	spawn(0) //compiling a map can lock up the mc for 30 to 60 seconds if we don't spawn
-		maprotate()
+	addtimer(CALLBACK(GLOBAL_PROC, /.proc/maprotate), 0)
 
 
 /world/proc/has_round_started()
