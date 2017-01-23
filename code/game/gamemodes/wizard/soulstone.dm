@@ -203,8 +203,8 @@
 	if(stoner)
 		newstruct.faction |= "\ref[stoner]"
 	newstruct.key = target.key
-	if(newstruct.mind && ((stoner && iscultist(stoner)) || cultoverride) && ticker && ticker.mode)
-		ticker.mode.add_cultist(newstruct.mind, 0)
+	if(newstruct.mind && ((stoner && iscultist(stoner)) || cultoverride))
+		newstruct.mind.make_Cultist()
 	if(iscultist(stoner) || cultoverride)
 		newstruct << "<b>You are still bound to serve the cult[stoner ? " and [stoner]":""], follow their orders and help them complete their goals at all costs.</b>"
 	else if(stoner)

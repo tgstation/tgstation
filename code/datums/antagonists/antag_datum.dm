@@ -1,87 +1,87 @@
-//The Datum, Antagonist. Handles various antag things via a datum.
 /datum/antagonist
-	var/mob/living/owner //who's our owner and accordingly an antagonist
-	var/some_flufftext = "yer an antag larry"
-	var/prevented_antag_datum_type //the type of antag datum that this datum can't coexist with; should probably be a list
-	var/silent_update = FALSE //if we suppress messages during on_gain, apply_innate_effects, remove_innate_effects, and on_remove
+	var/name = "Antagonist"
 
-/datum/antagonist/New()
-	if(!prevented_antag_datum_type)
-		prevented_antag_datum_type = type
+	var/datum/mind/owner						//Mind that owns this datum
 
-/datum/antagonist/Destroy()
-	owner = null
-	return ..()
+	var/text_on_gain = ""						//Text that will be shown to the mob when he gains the datum
+	var/text_on_lose = "" 						//Text that will be shown to the mob when he loses the datum
+	var/silent = FALSE							//Silent will prevent the gain/lose texts to show
 
-/datum/antagonist/proc/can_be_owned(mob/living/new_body)
-	return new_body && !new_body.has_antag_datum(prevented_antag_datum_type, TRUE)
+	var/give_special_equipment = TRUE			//If the mob will receive some sort of gear when he is given the datum
+	var/remove_clown_mut = TRUE					//If it will remove the clown mutation on datum gain
+	var/has_objectives = TRUE 					//Whether or not the objectives will be generated when this datum is created
+	var/number_of_possible_objectives			//Number of objectives this datum will have
+	var/list/current_objectives = list()		//List of objectives this datum will have
+	var/list/possible_objectives = list()		//List of possible objectives
 
-/datum/antagonist/proc/give_to_body(mob/living/new_body) //tries to give an antag datum to a mob. cancels out if it can't be owned by the new body
-	if(new_body && can_be_owned(new_body))
-		new_body.antag_datums += src
-		owner = new_body
-		on_gain()
-		. = src //return the datum if successful
-	else
-		qdel(src)
-		. = FALSE
+	var/can_coexist_with_others = TRUE			//Whether or not the person will be able to have more than one datum
+	var/list/typecache_datum_blacklist = list()	//List of datums this type can't coexist with
 
-/datum/antagonist/proc/on_gain() //on initial gain of antag datum, do this. should only be called once per datum
-	apply_innate_effects()
-	if(!silent_update && some_flufftext)
-		owner << some_flufftext
+	var/list/restricted_jobs = list()			//Restricted jobs if you have this antag datum
+	var/ignore_job_selection = FALSE			//It won't assign the owner to any job if set to true(only valid to roundstart selection)
+	var/landmark_spawn = ""						//It will attempt to spawn in a landmark with the same name as set in the variable
 
-/datum/antagonist/proc/apply_innate_effects() //applies innate effects to the owner, may be called multiple times due to mind transferral, but should only be called once per mob
-	//antag huds would go here if antag huds were less completely unworkable as-is
+/datum/antagonist/New(datum/mind/new_owner)
+	. = ..()
+	typecache_datum_blacklist = typecacheof(typecache_datum_blacklist)
+	if(new_owner)
+		owner = new_owner
+	if(ticker && ticker.threat)
+		if(!islist(ticker.threat.antagonists[name]))
+			ticker.threat.antagonists[name] = list()
+		ticker.threat.antagonists[name] += owner
 
-/datum/antagonist/proc/remove_innate_effects() //removes innate effects from the owner, may be called multiple times due to mind transferral, but should only be called once per mob
-	//also antag huds but see above antag huds a shit
+//This handles the application of antag huds/special abilities
+/datum/antagonist/proc/apply_innate_effects()
+	return
 
-/datum/antagonist/proc/on_remove() //totally removes the antag datum from the owner; can only be called once per owner
+/datum/antagonist/proc/remove_innate_effects()	//This handles the removal of antag huds/special abilities
+	return
+
+//Proc called when the datum is given to a mind.
+/datum/antagonist/proc/on_gain()
+	if(owner && owner.current)
+		if(!silent)
+			greet()
+		if(give_special_equipment)
+			give_equipment()
+		if(remove_clown_mut && owner.assigned_role == "Clown")
+			var/mob/living/carbon/human/H = owner.current
+			H << "Your training has allowed you to overcome your clownish nature, allowing you to wield weapons without harming yourself."
+			H.dna.remove_mutation(CLOWNMUT)
+		apply_innate_effects()
+
+/datum/antagonist/proc/on_removal()
 	remove_innate_effects()
-	owner.antag_datums -= src
+	if(owner)
+		owner.antag_datums -= src
+		if(!silent && owner.current)
+			farewell()
 	qdel(src)
 
-/datum/antagonist/proc/transfer_to_new_body(mob/living/new_body)
-	remove_innate_effects()
-	if(!islist(new_body.antag_datums))
-		new_body.antag_datums = list()
-	new_body.antag_datums += src
-	owner.antag_datums -= src
-	owner = new_body
-	apply_innate_effects()
+/datum/antagonist/proc/greet()
+	if(text_on_gain)
+		owner.current << text_on_gain
+	if(has_objectives)
+		var/obj_count = 1
+		for(var/i in current_objectives)
+			var/datum/objective/current = i
+			owner.current << "<b>Objective #[obj_count]</b>: [current.explanation_text]"
+			obj_count++
 
-//mob var and helper procs/Destroy override
-/mob/living
-	var/list/antag_datums
+/datum/antagonist/proc/farewell()
+	owner.current << text_on_lose
 
-/mob/living/Destroy() //TODO: merge this with the living/Destroy() in code\modules\mob\living\living.dm (currently line 29)
-	if(islist(antag_datums))
-		for(var/i in antag_datums)
-			qdel(i)
-		antag_datums = null
-	return ..()
+/datum/antagonist/proc/give_equipment()
+	return
 
-/mob/living/proc/can_have_antag_datum(datum_type) //if we can have this specific antagonist datum; neccessary, but requires creating a new antag datum each time.
-	var/datum/antagonist/D = new datum_type()
-	. = D.can_be_owned(src) //we can't exactly cache the results, either, because conditions might change. avoid use? TODO: better proc
-	qdel(D)
+/datum/antagonist/proc/remove_equipment()
+	return
 
-/mob/living/proc/gain_antag_datum(datum_type) //tries to give a mob a specific antagonist datum; returns the datum if successful.
-	if(!islist(antag_datums))
-		antag_datums = list()
-	var/datum/antagonist/D = new datum_type()
-	. = D.give_to_body(src)
+/datum/antagonist/proc/generate_objectives()
+	return
 
-/mob/living/proc/has_antag_datum(type, check_subtypes) //checks this mob for if it has the antagonist datum. can either check specific type or subtypes
-	if(!islist(antag_datums))
-		return FALSE
-	for(var/i in antag_datums)
-		var/datum/antagonist/D = i
-		if(check_subtypes)
-			if(istype(D, type))
-				return D //if it finds the datum, will return it so you can mess with it
-		else
-			if(D.type == type)
-				return D
-	return FALSE
+/datum/antagonist/proc/wipe_objectives()
+	for(var/o in current_objectives)
+		current_objectives -= o
+		qdel(o)

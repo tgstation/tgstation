@@ -45,8 +45,8 @@ Credit where due:
 // PROCS //
 ///////////
 
-/proc/is_servant_of_ratvar(mob/living/M)
-	return istype(M) && M.has_antag_datum(/datum/antagonist/clockcultist, TRUE)
+/proc/is_servant_of_ratvar(datum/mind/M)
+	return istype(M) && M.has_antag_datum(/datum/antagonist/team/clockcult, TRUE)
 
 /proc/is_eligible_servant(mob/living/M)
 	if(!istype(M))
@@ -64,18 +64,16 @@ Credit where due:
 		return TRUE
 	return FALSE
 
-/proc/add_servant_of_ratvar(mob/living/L, silent = FALSE)
-	var/update_type = /datum/antagonist/clockcultist
-	if(silent)
-		update_type = /datum/antagonist/clockcultist/silent
-	. = L.gain_antag_datum(update_type)
+/proc/add_servant_of_ratvar(datum/mind/M, silent = FALSE)
+	var/update_type = /datum/antagonist/team/clockcult
+	. = M.add_antag_datum(update_type)
 
-/proc/remove_servant_of_ratvar(mob/living/L, silent = FALSE)
-	var/datum/antagonist/clockcultist/clock_datum = L.has_antag_datum(/datum/antagonist/clockcultist, TRUE)
+/proc/remove_servant_of_ratvar(datum/mind/M, silent = FALSE)
+	var/datum/antagonist/team/clockcult/clock_datum = M.has_antag_datum(/datum/antagonist/team/clockcult, TRUE)
 	if(!clock_datum)
 		return FALSE
-	clock_datum.silent_update = silent
-	clock_datum.on_remove()
+	clock_datum.silent = silent
+	clock_datum.on_removal()
 	return TRUE
 
 ///////////////

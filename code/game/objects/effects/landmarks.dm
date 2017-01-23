@@ -21,7 +21,6 @@
 			return
 		if("wizard")
 			wizardstart += loc
-			qdel(src)
 			return
 		if("JoinLate")
 			latejoin += loc

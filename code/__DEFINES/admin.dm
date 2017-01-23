@@ -37,6 +37,7 @@
 
 #define R_MAXPERMISSION 4096 //This holds the maximum value for a permission. It is used in iteration, so keep it updated.
 
+#define ADMIN_PM(ckey) "<a href='?priv_msg=[ckey]'>PM</a>"
 #define ADMIN_QUE(user) "(<a href='?_src_=holder;adminmoreinfo=\ref[user]'>?</a>)"
 #define ADMIN_FLW(user) "(<a href='?_src_=holder;adminplayerobservefollow=\ref[user]'>FLW</a>)"
 #define ADMIN_PP(user) "(<a href='?_src_=holder;adminplayeropts=\ref[user]'>PP</a>)"

@@ -311,7 +311,7 @@ var/list/gang_colors_pool = list("red","orange","yellow","green","blue","purple"
 				G.domination(0.5)
 			priority_announce("Multiple station takeover attempts have made simultaneously. Conflicting takeover attempts appears to have restarted.","Network Alert")
 		else
-			ticker.mode.explosion_in_progress = 1
+			ticker.explosion_in_progress = TRUE
 			ticker.station_explosion_cinematic(1)
-			ticker.mode.explosion_in_progress = 0
+			ticker.mode.explosion_in_progress = FALSE
 			ticker.force_ending = pick(winners)

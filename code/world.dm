@@ -102,7 +102,7 @@ var/last_irc_status = 0
 			return
 		var/list/adm = get_admin_counts()
 		var/status = "Admins: [adm["total"]] (Active: [adm["present"]] AFK: [adm["afk"]] Stealth: [adm["stealth"]] Skipped: [adm["noflags"]]). "
-		status += "Players: [clients.len] (Active: [get_active_player_count(0,1,0)]). Mode: [ticker.mode.name]."
+		status += "Players: [clients.len] (Active: [get_active_player_count(0,1,0)])."
 		send2irc("Status", status)
 		last_irc_status = world.time
 
@@ -127,10 +127,6 @@ var/last_irc_status = 0
 			s["gamestate"] = ticker.current_state
 
 		s["map_name"] = map_name ? map_name : "Unknown"
-
-		if(key_valid && ticker && ticker.mode)
-			s["real_mode"] = ticker.mode.name
-			// Key-authed callers may know the truth behind the "secret"
 
 		s["security_level"] = get_security_level()
 		s["round_duration"] = round((world.time-round_start_time)/10)

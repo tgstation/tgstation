@@ -310,9 +310,6 @@
 		synd_mind.current.real_name = synd_mind.name
 	return
 
-/proc/is_nuclear_operative(mob/M)
-	return M && istype(M) && M.mind && ticker && ticker.mode && M.mind in ticker.mode.syndicates
-
 /datum/outfit/syndicate
 	name = "Syndicate Operative - Basic"
 

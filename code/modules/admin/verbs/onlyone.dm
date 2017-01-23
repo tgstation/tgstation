@@ -74,7 +74,7 @@ var/highlander = FALSE
 	Activate it in your hand, and it will lead to the nearest target. Attack the nuclear authentication disk with it, and you will store it.</span>"
 
 /proc/only_me()
-	if(!ticker || !ticker.mode)
+	if(!ticker || !ticker.threat)
 		alert("The game hasn't started yet!")
 		return
 

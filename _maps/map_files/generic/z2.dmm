@@ -9018,7 +9018,7 @@
 	},
 /area/wizard_station)
 "wY" = (
-/obj/effect/landmark/start{
+/obj/effect/landmark/{
 	name = "wizard"
 	},
 /turf/open/floor/engine/cult,

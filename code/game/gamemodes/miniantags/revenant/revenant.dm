@@ -80,7 +80,7 @@
 	src << "<b>Be sure to read the wiki page at https://tgstation13.org/wiki/Revenant to learn more.</b>"
 	if(!generated_objectives_and_spells)
 		generated_objectives_and_spells = TRUE
-		mind.remove_all_antag()
+		mind.remove_all_antag_datums()
 		mind.wipe_memory()
 		src << 'sound/effects/ghost.ogg'
 		var/datum/objective/revenant/objective = new

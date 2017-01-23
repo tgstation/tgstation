@@ -248,10 +248,10 @@
 //Deals with converting players to the revolution//
 ///////////////////////////////////////////////////
 /proc/is_revolutionary(mob/M)
-	return M && istype(M) && M.mind && ticker && ticker.mode && M.mind in ticker.mode.revolutionaries
+	return M && istype(M) && M.mind && M.mind.has_antag_datum(ANTAG_DATUM_REVOLUTIONARY)
 
 /proc/is_head_revolutionary(mob/M)
-	return M && istype(M) && M.mind && ticker && ticker.mode && M.mind in ticker.mode.head_revolutionaries
+//	return M && istype(M) && M.mind && M.mind.has_antag_datum(ANTAG_DATUM_HEAD_REVOLUTIONARY)
 
 /proc/is_revolutionary_in_general(mob/M)
 	return is_revolutionary(M) || is_head_revolutionary(M)

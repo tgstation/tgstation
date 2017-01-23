@@ -10,12 +10,14 @@ var/datum/subsystem/ticker/ticker
 	flags = SS_FIRE_IN_LOBBY|SS_KEEP_TIMING
 
 	var/current_state = GAME_STATE_STARTUP	//state of current round (used by process()) Use the defines GAME_STATE_* !
-	var/force_ending = 0					//Round was ended by admin intervention
-	// If true, there is no lobby phase, the game starts immediately.
-	var/start_immediately = FALSE
+	var/force_ending = FALSE				//Round was ended by admin intervention
 
-	var/hide_mode = 0
+	var/list/antagonists = list()
+
+	var/start_immediately = FALSE			// If true, there is no lobby phase, the game starts immediately.
+
 	var/datum/game_mode/mode = null
+	var/datum/threat/threat = null
 	var/event_time = null
 	var/event = 0
 
@@ -33,10 +35,10 @@ var/datum/subsystem/ticker/ticker
 	SCRIPTURE_REVENANT = FALSE, \
 	SCRIPTURE_JUDGEMENT = FALSE) //list of clockcult scripture states for announcements
 
-	var/delay_end = 0						//if set true, the round will not restart on it's own
+	var/delay_end = FALSE					//if set true, the round will not restart on it's own
 
-	var/triai = 0							//Global holder for Triumvirate
-	var/tipped = 0							//Did we broadcast the tip of the day yet?
+	var/triai = FALSE						//Global holder for Triumvirate
+	var/tipped = FALSE						//Did we broadcast the tip of the day yet?
 	var/selected_tip						// What will be the tip of the day?
 
 	var/timeLeft = 1200						//pregame timer
@@ -53,6 +55,9 @@ var/datum/subsystem/ticker/ticker
 
 	var/news_report
 
+	var/station_was_nuked = FALSE
+	var/explosion_in_progress = FALSE
+
 /datum/subsystem/ticker/New()
 	NEW_SS_GLOBAL(ticker)
 
@@ -61,11 +66,12 @@ var/datum/subsystem/ticker/ticker
 		login_music = 'sound/ambience/clown.ogg'
 
 /datum/subsystem/ticker/Initialize(timeofday)
+	. = ..()
+	threat = new
 	if(!syndicate_code_phrase)
 		syndicate_code_phrase	= generate_code_phrase()
 	if(!syndicate_code_response)
 		syndicate_code_response	= generate_code_phrase()
-	..()
 
 /datum/subsystem/ticker/fire()
 	switch(current_state)
@@ -107,75 +113,24 @@ var/datum/subsystem/ticker/ticker
 				current_state = GAME_STATE_STARTUP
 
 		if(GAME_STATE_PLAYING)
-			mode.process(wait * 0.1)
+			//ticker.process(wait * 0.1)
 			check_queue()
 			check_maprotate()
 			scripture_states = scripture_unlock_alert(scripture_states)
-
-			if(!mode.explosion_in_progress && mode.check_finished() || force_ending)
+/*
+			if(!explosion_in_progress) //&& threat.check_finished() || force_ending)
 				current_state = GAME_STATE_FINISHED
 				toggle_ooc(1) // Turn it on
 				declare_completion(force_ending)
 				spawn(50)
-					if(mode.station_was_nuked)
+					if(station_was_nuked)
 						world.Reboot("Station destroyed by Nuclear Device.", "end_proper", "nuke")
 					else
 						world.Reboot("Round ended.", "end_proper", "proper completion")
-
+*/
 /datum/subsystem/ticker/proc/setup()
-		//Create and announce mode
-	var/list/datum/game_mode/runnable_modes
-	if(master_mode == "random" || master_mode == "secret")
-		runnable_modes = config.get_runnable_modes()
-
-		if(master_mode == "secret")
-			hide_mode = 1
-			if(secret_force_mode != "secret")
-				var/datum/game_mode/smode = config.pick_mode(secret_force_mode)
-				if(!smode.can_start())
-					message_admins("\blue Unable to force secret [secret_force_mode]. [smode.required_players] players and [smode.required_enemies] eligible antagonists needed.")
-				else
-					mode = smode
-
-		if(!mode)
-			if(!runnable_modes.len)
-				world << "<B>Unable to choose playable game mode.</B> Reverting to pre-game lobby."
-				return 0
-			mode = pickweight(runnable_modes)
-
-	else
-		mode = config.pick_mode(master_mode)
-		if(!mode.can_start())
-			world << "<B>Unable to start [mode.name].</B> Not enough players, [mode.required_players] players and [mode.required_enemies] eligible antagonists needed. Reverting to pre-game lobby."
-			qdel(mode)
-			mode = null
-			SSjob.ResetOccupations()
-			return 0
-
-	//Configure mode and assign player to special mode stuff
-	var/can_continue = 0
-	can_continue = src.mode.pre_setup()		//Choose antagonists
+	threat.pre_setup()						//Select round start antags
 	SSjob.DivideOccupations() 				//Distribute jobs
-
-	if(!Debug2)
-		if(!can_continue)
-			qdel(mode)
-			mode = null
-			world << "<B>Error setting up [master_mode].</B> Reverting to pre-game lobby."
-			SSjob.ResetOccupations()
-			return 0
-	else
-		message_admins("<span class='notice'>DEBUG: Bypassing prestart checks...</span>")
-
-	if(hide_mode)
-		var/list/modes = new
-		for (var/datum/game_mode/M in runnable_modes)
-			modes += M.name
-		modes = sortList(modes)
-		world << "<b>The gamemode is: secret!\n\
-		Possibilities:</B> [english_list(modes)]"
-	else
-		mode.announce()
 
 	current_state = GAME_STATE_PLAYING
 	if(!config.ooc_during_round)
@@ -201,7 +156,7 @@ var/datum/subsystem/ticker/ticker
 
 
 	spawn(0)//Forking here so we dont have to wait for this to finish
-		mode.post_setup()
+		threat.post_setup()
 		//Cleanup some stuff
 		for(var/obj/effect/landmark/start/S in landmarks_list)
 			//Deleting Startpoints but we need the ai point to AI-ize people later
@@ -243,8 +198,6 @@ var/datum/subsystem/ticker/ticker
 	//Now animate the cinematic
 	switch(station_missed)
 		if(NUKE_NEAR_MISS)	//nuke was nearby but (mostly) missed
-			if( mode && !override )
-				override = mode.name
 			switch( override )
 				if("nuclear emergency") //Nuke wasn't on station when it blew up
 					flick("intro_nuke",cinematic)
@@ -272,8 +225,6 @@ var/datum/subsystem/ticker/ticker
 			sleep(50)
 			world << sound('sound/effects/explosionfar.ogg')
 		else	//station was destroyed
-			if( mode && !override )
-				override = mode.name
 			switch( override )
 				if("nuclear emergency") //Nuke Ops successfully bombed the station
 					flick("intro_nuke",cinematic)
@@ -392,7 +343,7 @@ var/datum/subsystem/ticker/ticker
 	var/station_integrity = min(PERCENT(start_state.score(end_state)), 100)
 
 	world << "<BR>[TAB]Shift Duration: <B>[round(world.time / 36000)]:[add_zero("[world.time / 600 % 60]", 2)]:[world.time / 100 % 6][world.time / 100 % 10]</B>"
-	world << "<BR>[TAB]Station Integrity: <B>[mode.station_was_nuked ? "<font color='red'>Destroyed</font>" : "[station_integrity]%"]</B>"
+	world << "<BR>[TAB]Station Integrity: <B>[station_was_nuked ? "<font color='red'>Destroyed</font>" : "[station_integrity]%"]</B>"
 	if(mode.station_was_nuked)
 		ticker.news_report = STATION_DESTROYED_NUKE
 	var/total_players = joined_player_list.len
@@ -434,12 +385,7 @@ var/datum/subsystem/ticker/ticker
 			if(robo) //How the hell do we lose robo between here and the world messages directly above this?
 				robo.laws.show_laws(world)
 
-	mode.declare_completion()//To declare normal completion.
-
-	//calls auto_declare_completion_* for all modes
-	for(var/handler in typesof(/datum/game_mode/proc))
-		if (findtext("[handler]","auto_declare_completion_"))
-			call(mode, handler)(force_ending)
+	//threat.declare_completion()//To declare normal completion.
 
 	if(cross_allowed)
 		send_news_report()
@@ -496,7 +442,7 @@ var/datum/subsystem/ticker/ticker
 			else
 				world << "<b><font color='red'>The borers have failed!</font></b>"
 
-	mode.declare_station_goal_completion()
+	//declare_station_goal_completion()
 
 	//Adds the del() log to world.log in a format condensable by the runtime condenser found in tools
 	if(SSgarbage.didntgc.len)
@@ -573,8 +519,7 @@ var/datum/subsystem/ticker/ticker
 /datum/subsystem/ticker/Recover()
 	current_state = ticker.current_state
 	force_ending = ticker.force_ending
-	hide_mode = ticker.hide_mode
-	mode = ticker.mode
+	threat = ticker.threat
 	event_time = ticker.event_time
 	event = ticker.event
 
