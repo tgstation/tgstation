@@ -7,7 +7,7 @@
 	circuit = /obj/item/weapon/circuitboard/computer/cloning
 	req_access = list(access_heads) //Only used for record deletion right now.
 	var/obj/machinery/dna_scannernew/scanner = null //Linked scanner. For scanning.
-	var/obj/machinery/clonepod/pod1 = null //Linked cloning pod.
+	var/list/pods = list() //Linked cloning pods
 	var/temp = "Inactive"
 	var/scantemp_ckey
 	var/scantemp = "Ready to Scan"
@@ -21,30 +21,52 @@
 /obj/machinery/computer/cloning/New()
 	..()
 	spawn(5)
-		updatemodules()
+		updatemodules(TRUE)
+
+/obj/machinery/computer/cloning/Destroy()
+	for(var/P in pods)
+		DetachCloner(P)
+	pods = null
+	return ..()
+
+/obj/machinery/computer/cloning/proc/GetAvailablePod()
+	for(var/P in pods)
+		var/obj/machinery/clonepod/pod = P
+		if(pod.is_operational() && !(pod.occupant || pod.mess))
+			return pod
+
+/obj/machinery/computer/cloning/proc/GetEfficientPod()
+	for(var/P in pods)
+		var/obj/machinery/clonepod/pod = P
+		if(pod.is_operational() && pod.efficiency > 5)
+			return pod
+
+/obj/machinery/computer/cloning/proc/GetAvailableEfficientPod()
+	for(var/P in pods)
+		var/obj/machinery/clonepod/pod = P
+		if(pod.is_operational() && !(pod.occupant || pod.mess) && pod.efficiency > 5)
+			return pod
 
 /obj/machinery/computer/cloning/process()
-	if(!(scanner && pod1 && autoprocess))
+	if(!(scanner && pods.len && autoprocess))
 		return
 
-	if(!pod1.is_operational())
+	var/obj/machinery/clonepod/pod = GetAvailableEfficientPod()
+		
+	if(!pod)
 		return
 
-	if(scanner.occupant && (scanner.scan_level > 2))
+	if(scanner.occupant && scanner.scan_level > 2)
 		scan_mob(scanner.occupant)
 
-	if(!(pod1.occupant || pod1.mess) && (pod1.efficiency > 5))
-		for(var/datum/data/record/R in records)
-			if(!(pod1.occupant || pod1.mess))
-				if(pod1.growclone(R.fields["ckey"], R.fields["name"], R.fields["UI"], R.fields["SE"], R.fields["mind"], R.fields["mrace"], R.fields["features"], R.fields["factions"]))
-					records -= R
+	for(var/datum/data/record/R in records)
+		if(pod.growclone(R.fields["ckey"], R.fields["name"], R.fields["UI"], R.fields["SE"], R.fields["mind"], R.fields["mrace"], R.fields["features"], R.fields["factions"]))
+			records -= R
 
-/obj/machinery/computer/cloning/proc/updatemodules()
+/obj/machinery/computer/cloning/proc/updatemodules(findfirstcloner)
 	src.scanner = findscanner()
-	src.pod1 = findcloner()
-
-	if (!isnull(src.pod1))
-		src.pod1.connected = src // Some variable the pod needs
+	if(findfirstcloner && !pods.len)
+		findcloner()
 
 /obj/machinery/computer/cloning/proc/findscanner()
 	var/obj/machinery/dna_scannernew/scannerf = null
@@ -70,7 +92,16 @@
 		podf = locate(/obj/machinery/clonepod, get_step(src, dir))
 
 		if (!isnull(podf) && podf.is_operational())
-			return podf
+			AttachCloner(podf)
+
+/obj/machinery/computer/cloning/proc/AttachCloner(obj/machinery/clonepod/pod)
+	if(!pod.connected)
+		pod.connected = src
+		pods += pod
+
+/obj/machinery/computer/cloning/proc/DetachCloner(obj/machinery/clonepod/pod)
+	pod.connected = null
+	pods -= pod
 
 /obj/machinery/computer/cloning/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/disk/data)) //INSERT SOME DISKETTES
@@ -97,11 +128,13 @@
 	if(..())
 		return
 
-	updatemodules()
+	updatemodules(TRUE)
 
 	var/dat = ""
 	dat += "<a href='byond://?src=\ref[src];refresh=1'>Refresh</a>"
-	if(scanner && pod1 && ((scanner.scan_level > 2) || (pod1.efficiency > 5)))
+	
+	var/obj/machinery/clonepod/pod = GetEfficientPod()
+	if(scanner && pod && scanner.scan_level > 2)
 		if(!autoprocess)
 			dat += "<a href='byond://?src=\ref[src];task=autoprocess'>Autoprocess</a>"
 		else
@@ -114,12 +147,12 @@
 	switch(src.menu)
 		if(1)
 			// Modules
-			if (isnull(src.scanner) || isnull(src.pod1))
+			if (isnull(src.scanner) || !pods.len)
 				dat += "<h3>Modules</h3>"
 				//dat += "<a href='byond://?src=\ref[src];relmodules=1'>Reload Modules</a>"
 				if (isnull(src.scanner))
 					dat += "<font class='bad'>ERROR: No Scanner detected!</font><br>"
-				if (isnull(src.pod1))
+				if (!pods.len)
 					dat += "<font class='bad'>ERROR: No Pod detected</font><br>"
 
 			// Scanner
@@ -335,20 +368,18 @@
 		var/datum/data/record/C = find_record("id", href_list["clone"], records)
 		//Look for that player! They better be dead!
 		if(C)
+			var/obj/machinery/clonepod/pod = GetAvailablePod()
 			//Can't clone without someone to clone.  Or a pod.  Or if the pod is busy. Or full of gibs.
-			if(!pod1)
-				temp = "<font class='bad'>No Clonepod detected.</font>"
+			if(!pods.len)
+				temp = "<font class='bad'>No Clonepods detected.</font>"
 				playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
-			else if(pod1.occupant)
-				temp = "<font class='bad'>Clonepod is currently occupied.</font>"
-				playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
-			else if(pod1.mess)
-				temp = "<font class='bad'>Clonepod malfunction.</font>"
+			else if(!pod)
+				temp = "<font class='bad'>No Clonepods available.</font>"
 				playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
 			else if(!config.revival_cloning)
 				temp = "<font class='bad'>Unable to initiate cloning cycle.</font>"
 				playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
-			else if(pod1.growclone(C.fields["ckey"], C.fields["name"], C.fields["UI"], C.fields["SE"], C.fields["mind"], C.fields["mrace"], C.fields["features"], C.fields["factions"]))
+			else if(pod.growclone(C.fields["ckey"], C.fields["name"], C.fields["UI"], C.fields["SE"], C.fields["mind"], C.fields["mrace"], C.fields["features"], C.fields["factions"]))
 				temp = "[C.fields["name"]] => <font class='good'>Cloning cycle in progress...</font>"
 				playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
 				records.Remove(C)

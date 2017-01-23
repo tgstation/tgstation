@@ -53,6 +53,9 @@
 	radio = null
 	qdel(countdown)
 	countdown = null
+	if(connected)
+		connected.pods -= src
+		connected = null
 	. = ..()
 
 /obj/machinery/clonepod/RefreshParts()
