@@ -1,5 +1,3 @@
-#define SPEAK(message) radio.talk_into(src, message, radio_channel, get_spans())
-
 /obj/machinery/atmospherics/components/unary/cryo_cell
 	name = "cryo cell"
 	icon = 'icons/obj/cryogenics.dmi'
@@ -117,9 +115,9 @@
 			on = FALSE
 			update_icon()
 			playsound(T, 'sound/machines/cryo_warning.ogg', volume, 1) // Bug the doctors.
-			SPEAK("Patient fully restored")
+			radio.talk_into(src, "Patient fully restored", radio_channel)
 			if(autoeject) // Eject if configured.
-				SPEAK("Auto ejecting patient now")
+				radio.talk_into(src, "Auto ejecting patient now", radio_channel)
 				open_machine()
 			return
 		else if(occupant.stat == DEAD) // We don't bother with dead people.
