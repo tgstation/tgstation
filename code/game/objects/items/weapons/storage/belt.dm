@@ -54,7 +54,7 @@
 		/obj/item/seeds,
 		/obj/item/weapon/disk/plantgene,
 		/obj/item/weapon/disk/design_disk,
-		/datum/design/tech_disk
+		/obj/item/weapon/disk/tech_disk
 		)
 
 /obj/item/weapon/storage/belt/utility/chief
