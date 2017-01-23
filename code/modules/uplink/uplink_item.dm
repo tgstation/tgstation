@@ -77,6 +77,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	var/list/include_modes = list() // Game modes to allow this item in.
 	var/list/exclude_modes = list() // Game modes to disallow this item from.
 	var/player_minimum //The minimum crew size needed for this item to be added to uplinks.
+	var/purchase_log_vis = TRUE // Visible in the purchase log?
 
 /datum/uplink_item/proc/spawn_item(turf/loc, obj/item/device/uplink/U)
 	if(item)
@@ -101,7 +102,8 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 		for(var/obj/item/I in B)
 			U.purchase_log += "<big>\icon[I]</big>"
 	else
-		U.purchase_log += "<big>\icon[A]</big>"
+		if(purchase_log_vis)
+			U.purchase_log += "<big>\icon[A]</big>"
 
 	if(limited_stock > 0)
 		limited_stock -= 1
@@ -1037,6 +1039,9 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	cost = 1
 	surplus = 0
 	cant_discount = TRUE
+	// Don't add telecrystals to the purchase_log since
+	// it's just used to buy more items (including itself!)
+	purchase_log_vis = FALSE
 
 /datum/uplink_item/device_tools/telecrystal/five
 	name = "5 Raw Telecrystals"

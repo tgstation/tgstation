@@ -67,7 +67,7 @@
 
 	var/list/radios = list()
 
-	var/atom/movable/virtualspeaker/virt = PoolOrNew(/atom/movable/virtualspeaker,null)
+	var/atom/movable/virtualspeaker/virt = new /atom/movable/virtualspeaker(null)
 	virt.name = name
 	virt.job = job
 	virt.languages_spoken = AM.languages_spoken

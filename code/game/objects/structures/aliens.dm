@@ -226,7 +226,7 @@
 
 /obj/structure/alien/egg/Destroy()
 	remove_from_proximity_list(src, 1)
-	..()
+	return ..()
 
 /obj/structure/alien/egg/attack_paw(mob/living/user)
 	return attack_hand(user)
@@ -281,9 +281,11 @@
 							child.Attach(M)
 							break
 
-/obj/structure/alien/egg/Move()
-	remove_from_proximity_list(src, 1)
-	..()
+/obj/structure/alien/egg/Moved(oldloc)
+	remove_from_proximity_list(oldloc, 1)
+	if(status == GROWN)
+		add_to_proximity_list(src, 1)	
+	return ..()
 
 /obj/structure/alien/egg/deconstruct()
 	if(!(flags & NODECONSTRUCT))

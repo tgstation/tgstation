@@ -346,7 +346,7 @@ Proc for attack log creation, because really why not
 /proc/spawn_atom_to_turf(spawn_type, target, amount, admin_spawn=FALSE)
 	var/turf/T = get_turf(target)
 	if(!T)
-		throw EXCEPTION("attempt to spawn atom type: [spawn_type] in nullspace")
+		CRASH("attempt to spawn atom type: [spawn_type] in nullspace")
 
 	for(var/j in 1 to amount)
 		var/atom/X = new spawn_type(T)
@@ -356,7 +356,7 @@ Proc for attack log creation, because really why not
 	var/turf/T = get_turf(target)
 	var/step_count = 0
 	if(!T)
-		throw EXCEPTION("attempt to spawn atom type: [spawn_type] in nullspace")
+		CRASH("attempt to spawn atom type: [spawn_type] in nullspace")
 
 	for(var/j in 1 to amount)
 		var/atom/movable/X = new spawn_type(T)

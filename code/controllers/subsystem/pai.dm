@@ -20,6 +20,8 @@ var/list/obj/item/device/paicard/pai_card_list = list()
 		if(card.pai)
 			return
 		if(istype(card,/obj/item/device/paicard) && istype(candidate,/datum/paiCandidate))
+			if(check_ready(candidate) != candidate)
+				return FALSE
 			var/mob/living/silicon/pai/pai = new(card)
 			if(!candidate.name)
 				pai.name = pick(ninja_names)
@@ -136,6 +138,14 @@ var/list/obj/item/device/paicard/pai_card_list = list()
 /datum/subsystem/pai/proc/spam_again()
 	ghost_spam = FALSE
 
+/datum/subsystem/pai/proc/check_ready(var/datum/paiCandidate/C)
+	if(!C.ready)
+		return FALSE
+	for(var/mob/dead/observer/O in player_list)
+		if(O.key == C.key)
+			return C
+	return FALSE
+
 /datum/subsystem/pai/proc/findPAI(obj/item/device/paicard/p, mob/user)
 	if(!ghost_spam)
 		ghost_spam = TRUE
@@ -149,13 +159,7 @@ var/list/obj/item/device/paicard/pai_card_list = list()
 		addtimer(CALLBACK(src, .proc/spam_again), spam_delay)
 	var/list/available = list()
 	for(var/datum/paiCandidate/c in SSpai.candidates)
-		if(c.ready)
-			var/found = 0
-			for(var/mob/dead/observer/o in player_list)
-				if(o.key == c.key)
-					found = 1
-			if(found)
-				available.Add(c)
+		available.Add(check_ready(c))
 	var/dat = ""
 
 	dat += {"

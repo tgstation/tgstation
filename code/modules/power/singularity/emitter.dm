@@ -81,7 +81,7 @@
 	else
 		rotate()
 
-/obj/machinery/power/emitter/initialize()
+/obj/machinery/power/emitter/Initialize()
 	..()
 	if(state == 2 && anchored)
 		connect_to_network()
@@ -167,7 +167,6 @@
 				update_icon()
 				investigate_log("lost power and turned <font color='red'>off</font>","singulo")
 				log_game("Emitter lost power in ([x],[y],[z])")
-				message_admins("Emitter lost power in ([x],[y],[z] - <a href='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
 			return
 
 		src.last_shot = world.time
@@ -178,7 +177,7 @@
 			src.fire_delay = rand(minimum_fire_delay,maximum_fire_delay)
 			src.shot_number = 0
 
-		var/obj/item/projectile/A = PoolOrNew(projectile_type,src.loc)
+		var/obj/item/projectile/A = new projectile_type(src.loc)
 
 		A.setDir(src.dir)
 		playsound(src.loc, projectile_sound, 25, 1)
