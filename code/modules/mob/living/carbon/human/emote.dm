@@ -166,4 +166,3 @@
 		dna.species.mutant_bodyparts |= "wings"
 	update_body()
 
-//Ayy lmao
