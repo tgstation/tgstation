@@ -13,6 +13,7 @@ A small map intended for lowpop(40 players and less).
 		#define MINETYPE "lavaland"
 
 		#include "map_files\BirdStation\BirdStation.dmm"
+#ifndef TRAVIS_MASS_MAP_BUILD
 		#include "map_files\generic\z2.dmm"
 		#include "map_files\generic\z3.dmm"
 		#include "map_files\generic\z4.dmm"
@@ -29,7 +30,7 @@ A small map intended for lowpop(40 players and less).
 		#define MAP_NAME "BirdboatStation"
 
 		#define MAP_TRANSITION_CONFIG DEFAULT_MAP_TRANSITION_CONFIG
-
+#endif
 		#if !defined(MAP_OVERRIDE_FILES)
 				#define MAP_OVERRIDE_FILES
 			#include "map_files\BirdStation\job\job_changes.dm"

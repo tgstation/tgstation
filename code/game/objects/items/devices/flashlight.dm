@@ -111,7 +111,7 @@
 			return
 		var/T = get_turf(target)
 		if(locate(/mob/living) in T)
-			PoolOrNew(/obj/effect/overlay/temp/medical_holosign, list(T,user)) //produce a holographic glow
+			new /obj/effect/overlay/temp/medical_holosign(T,user) //produce a holographic glow
 			holo_cooldown = world.time + 100
 			return
 	..()
