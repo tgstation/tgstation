@@ -1335,9 +1335,72 @@
 // FIRE //
 //////////
 
-/datum/species/proc/handle_fire(mob/living/carbon/human/H)
+/datum/species/proc/handle_fire(mob/living/carbon/human/H, no_protection = FALSE)
 	if(NOFIRE in species_traits)
-		return 1
+		return
+	if(H.on_fire)
+		//the fire tries to damage the exposed clothes and items
+		var/list/burning_items = list()
+		//HEAD//
+		var/obj/item/clothing/head_clothes = null
+		if(H.glasses)
+			head_clothes = H.glasses
+		if(H.wear_mask)
+			head_clothes = H.wear_mask
+		if(H.wear_neck)
+			head_clothes = H.wear_neck
+		if(H.head)
+			head_clothes = H.head
+		if(head_clothes)
+			burning_items += head_clothes
+		else if(H.ears)
+			burning_items += H.ears
+
+		//CHEST//
+		var/obj/item/clothing/chest_clothes = null
+		if(H.w_uniform)
+			chest_clothes = H.w_uniform
+		if(H.wear_suit)
+			chest_clothes = H.wear_suit
+
+		if(chest_clothes)
+			burning_items += chest_clothes
+
+		//ARMS & HANDS//
+		var/obj/item/clothing/arm_clothes = null
+		if(H.gloves)
+			arm_clothes = H.gloves
+		if(H.w_uniform && ((H.w_uniform.body_parts_covered & HANDS) || (H.w_uniform.body_parts_covered & ARMS)))
+			arm_clothes = H.w_uniform
+		if(H.wear_suit && ((H.wear_suit.body_parts_covered & HANDS) || (H.wear_suit.body_parts_covered & ARMS)))
+			arm_clothes = H.wear_suit
+		if(arm_clothes)
+			burning_items += arm_clothes
+
+		//LEGS & FEET//
+		var/obj/item/clothing/leg_clothes = null
+		if(H.shoes)
+			leg_clothes = H.shoes
+		if(H.w_uniform && ((H.w_uniform.body_parts_covered & FEET) || (H.w_uniform.body_parts_covered & LEGS)))
+			leg_clothes = H.w_uniform
+		if(H.wear_suit && ((H.wear_suit.body_parts_covered & FEET) || (H.wear_suit.body_parts_covered & LEGS)))
+			leg_clothes = H.wear_suit
+		if(leg_clothes)
+			burning_items += leg_clothes
+
+		for(var/X in burning_items)
+			var/obj/item/I = X
+			if(!(I.resistance_flags & FIRE_PROOF))
+				I.take_damage(H.fire_stacks, BURN, "fire", 0)
+
+		var/thermal_protection = H.get_thermal_protection()
+
+		if(thermal_protection >= FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT && !no_protection)
+			return
+		if(thermal_protection >= FIRE_SUIT_MAX_TEMP_PROTECT && !no_protection)
+			H.bodytemperature += 11
+		else
+			H.bodytemperature += (BODYTEMP_HEATING_MAX + (H.fire_stacks * 12))
 
 /datum/species/proc/CanIgniteMob(mob/living/carbon/human/H)
 	if(NOFIRE in species_traits)

@@ -102,7 +102,7 @@ var/global/list/datum/stack_recipe/plasteel_recipes = list ( \
 	desc = "This sheet is an alloy of iron and plasma."
 	icon_state = "sheet-plasteel"
 	item_state = "sheet-metal"
-	materials = list(MAT_METAL=6000, MAT_PLASMA=6000)
+	materials = list(MAT_METAL=2000, MAT_PLASMA=2000)
 	throwforce = 10
 	flags = CONDUCT
 	origin_tech = "materials=2"

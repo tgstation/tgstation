@@ -88,13 +88,13 @@
 	switch(action)
 		if("plasma")
 			var/obj/item/weapon/tank/internals/plasma/tank = locate() in src
-			if(tank)
+			if(tank && Adjacent(usr))
 				usr.put_in_hands(tank)
 				plasmatanks--
 			. = TRUE
 		if("oxygen")
 			var/obj/item/weapon/tank/internals/oxygen/tank = locate() in src
-			if(tank)
+			if(tank && Adjacent(usr))
 				usr.put_in_hands(tank)
 				oxygentanks--
 			. = TRUE

@@ -61,7 +61,7 @@
 	if(current_size >= STAGE_FIVE)
 		if(floor_tile)
 			if(prob(30))
-				PoolOrNew(floor_tile, src)
+				new floor_tile(src)
 				make_plating()
 		else if(prob(30))
 			ReplaceWithLattice()
@@ -108,8 +108,8 @@
 
 /turf/open/floor/engine/cult/New()
 	..()
-	PoolOrNew(/obj/effect/overlay/temp/cult/turf/floor, src)
-	realappearence = PoolOrNew(/obj/effect/clockwork/overlay/floor/bloodcult, src)
+	new /obj/effect/overlay/temp/cult/turf/floor(src)
+	realappearence = new /obj/effect/clockwork/overlay/floor/bloodcult(src)
 	realappearence.linked = src
 
 /turf/open/floor/engine/cult/Destroy()

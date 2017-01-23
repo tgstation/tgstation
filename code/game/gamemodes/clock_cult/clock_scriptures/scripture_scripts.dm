@@ -138,14 +138,14 @@
 /datum/clockwork_scripture/create_object/clockwork_proselytizer
 	descname = "Converts Objects to Ratvarian"
 	name = "Clockwork Proselytizer"
-	desc = "Forms a device that, when used on certain objects, converts them into their Ratvarian equivalents. It requires replicant alloy to function."
+	desc = "Forms a device that, when used on certain objects, converts them into their Ratvarian equivalents. It requires power to function."
 	invocations = list("With this device...", "...his presence shall be made known.")
 	channel_time = 20
 	required_components = list(GEIS_CAPACITOR = 1, REPLICANT_ALLOY = 2)
 	consumed_components = list(GEIS_CAPACITOR = 1, REPLICANT_ALLOY = 1)
 	whispered = TRUE
 	object_path = /obj/item/clockwork/clockwork_proselytizer/preloaded
-	creator_message = "<span class='brass'>You form a clockwork proselytizer, which is already pre-loaded with a small amount of replicant alloy.</span>"
+	creator_message = "<span class='brass'>You form a clockwork proselytizer.</span>"
 	usage_tip = "Clockwork Walls cause nearby tinkerer's caches to generate components passively, making them a vital tool. Clockwork Floors heal toxin damage in Servants standing on them."
 	tier = SCRIPTURE_SCRIPT
 	space_allowed = TRUE
@@ -210,7 +210,7 @@
 	if(!ratvar_awakens)
 		R.clockwork_desc = "A powerful spear of Ratvarian making. It's more effective against enemy cultists and silicons, though it won't last for long."
 		owner << "<span class='warning'>Your spear begins to break down in this plane of existence. You can't use it for long!</span>"
-		R.timerid = addtimer(CALLBACK(R, /obj/item/clockwork/ratvarian_spear.proc/break_spear), base_cooldown)
+		R.timerid = addtimer(CALLBACK(R, /obj/item/clockwork/ratvarian_spear.proc/break_spear), base_cooldown, TIMER_STOPPABLE)
 	cooldown = base_cooldown + world.time
 	owner.update_action_buttons_icon()
 	addtimer(CALLBACK(src, .proc/update_actions), base_cooldown)
@@ -300,14 +300,14 @@
 			if(!ratvar_awakens && !iscyborg(invoker) && !isclockmob(invoker) && !isdrone(invoker))
 				var/obj/structure/destructible/clockwork/powered/volt_checker/VC = new/obj/structure/destructible/clockwork/powered/volt_checker(get_turf(invoker))
 				var/multiplier = 0.4
-				var/minimum_power = round(VC.total_accessable_power() * 0.2, MIN_CLOCKCULT_POWER)
+				var/minimum_power = Floor(VC.total_accessable_power() * 0.2, MIN_CLOCKCULT_POWER)
 				var/usable_power = min(minimum_power, 1000)
 				var/used_power = 0
 				while(used_power < usable_power && VC.try_use_power(MIN_CLOCKCULT_POWER))
 					used_power += MIN_CLOCKCULT_POWER
 					multiplier += 0.01
 				qdel(VC)
-				var/obj/effect/overlay/temp/ratvar/volt_hit/VH = PoolOrNew(/obj/effect/overlay/temp/ratvar/volt_hit, list(get_turf(invoker), null, multiplier))
+				var/obj/effect/overlay/temp/ratvar/volt_hit/VH = new /obj/effect/overlay/temp/ratvar/volt_hit(get_turf(invoker), null, multiplier)
 				invoker.visible_message("<span class='warning'>[invoker] is struck by [invoker.p_their()] own [VH.name]!</span>", "<span class='userdanger'>You're struck by your own [VH.name]!</span>")
 				invoker.adjustFireLoss(VH.damage) //you have to fail all five blasts to die to this
 				playsound(invoker, 'sound/machines/defib_zap.ogg', VH.damage, 1, -1)

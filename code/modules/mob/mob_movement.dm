@@ -127,10 +127,10 @@
 		return 0
 	if(moving)
 		return 0
+	if(mob.force_moving)
+		return 0
 	if(isliving(mob))
 		var/mob/living/L = mob
-		if(L.slipping)
-			return 0
 		if(L.incorporeal_move)	//Move though walls
 			Process_Incorpmove(direct)
 			return 0
@@ -241,12 +241,12 @@
 				L.loc = locate(locx,locy,mobloc.z)
 				var/limit = 2//For only two trailing shadows.
 				for(var/turf/T in getline(mobloc, L.loc))
-					PoolOrNew(/obj/effect/overlay/temp/dir_setting/ninja/shadow, list(T, L.dir))
+					new /obj/effect/overlay/temp/dir_setting/ninja/shadow(T, L.dir)
 					limit--
 					if(limit<=0)
 						break
 			else
-				PoolOrNew(/obj/effect/overlay/temp/dir_setting/ninja/shadow, list(mobloc, L.dir))
+				new /obj/effect/overlay/temp/dir_setting/ninja/shadow(mobloc, L.dir)
 				L.loc = get_step(L, direct)
 			L.setDir(direct)
 		if(3) //Incorporeal move, but blocked by holy-watered tiles and salt piles.

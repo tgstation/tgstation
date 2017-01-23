@@ -68,9 +68,6 @@
 		user << "The spell matrix was unable to locate a suitable teleport destination for an unknown reason. Sorry."
 		return
 
-	if(user && user.buckled)
-		user.buckled.unbuckle_mob(user, force=1)
-
 	user.forceMove(pick(L))
 
 	smoke.start()

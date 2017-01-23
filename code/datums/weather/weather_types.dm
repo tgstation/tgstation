@@ -16,6 +16,7 @@
 	end_duration = 0
 
 	area_type = /area
+	protected_areas = list(/area/space)
 	target_z = ZLEVEL_STATION
 
 	overlay_layer = ABOVE_OPEN_TURF_LAYER //Covers floors only
@@ -78,7 +79,7 @@
 	weather_sound = 'sound/lavaland/ash_storm_start.ogg'
 	weather_overlay = "ash_storm"
 
-	end_message = "<span class='boldannounce'>The shrieking wind whips away the last of the ash falls to its usual murmur. It should be safe to go outside now.</span>"
+	end_message = "<span class='boldannounce'>The shrieking wind whips away the last of the ash and falls to its usual murmur. It should be safe to go outside now.</span>"
 	end_duration = 300
 	end_sound = 'sound/lavaland/ash_storm_end.ogg'
 	end_overlay = "light_ash"
@@ -173,7 +174,7 @@
 		return
 
 	var/datum/signal/status_signal = new
-	var/atom/movable/virtualspeaker/virt = PoolOrNew(/atom/movable/virtualspeaker,null)
+	var/atom/movable/virtualspeaker/virt = new /atom/movable/virtualspeaker(null)
 	status_signal.source = virt
 	status_signal.transmission_method = 1
 	status_signal.data["command"] = "shuttle"

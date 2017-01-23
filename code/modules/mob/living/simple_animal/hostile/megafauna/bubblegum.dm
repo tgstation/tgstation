@@ -129,7 +129,7 @@ Difficulty: Hard
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/Move()
 	if(charging)
-		PoolOrNew(/obj/effect/overlay/temp/decoy/fading, list(loc,src))
+		new /obj/effect/overlay/temp/decoy/fading(loc,src)
 		DestroySurroundings()
 	. = ..()
 	if(!stat && .)
@@ -150,12 +150,12 @@ Difficulty: Hard
 	var/turf/T = get_turf(target)
 	if(!T || T == loc)
 		return
-	PoolOrNew(/obj/effect/overlay/temp/dragon_swoop, T)
+	new /obj/effect/overlay/temp/dragon_swoop(T)
 	charging = 1
 	DestroySurroundings()
 	walk(src, 0)
 	setDir(get_dir(src, T))
-	var/obj/effect/overlay/temp/decoy/D = PoolOrNew(/obj/effect/overlay/temp/decoy, list(loc,src))
+	var/obj/effect/overlay/temp/decoy/D = new /obj/effect/overlay/temp/decoy(loc,src)
 	animate(D, alpha = 0, color = "#FF0000", transform = matrix()*2, time = 5)
 	sleep(5)
 	throw_at(T, get_dist(src, T), 1, src, 0, callback = CALLBACK(src, .charge_end))
@@ -240,9 +240,9 @@ Difficulty: Hard
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/proc/bloodsmack(turf/T, handedness)
 	if(handedness)
-		PoolOrNew(/obj/effect/overlay/temp/bubblegum_hands/rightsmack, T)
+		new /obj/effect/overlay/temp/bubblegum_hands/rightsmack(T)
 	else
-		PoolOrNew(/obj/effect/overlay/temp/bubblegum_hands/leftsmack, T)
+		new /obj/effect/overlay/temp/bubblegum_hands/leftsmack(T)
 	sleep(2.5)
 	for(var/mob/living/L in T)
 		if(!faction_check(L))
@@ -254,11 +254,11 @@ Difficulty: Hard
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/proc/bloodgrab(turf/T, handedness)
 	if(handedness)
-		PoolOrNew(/obj/effect/overlay/temp/bubblegum_hands/rightpaw, T)
-		PoolOrNew(/obj/effect/overlay/temp/bubblegum_hands/rightthumb, T)
+		new /obj/effect/overlay/temp/bubblegum_hands/rightpaw(T)
+		new /obj/effect/overlay/temp/bubblegum_hands/rightthumb(T)
 	else
-		PoolOrNew(/obj/effect/overlay/temp/bubblegum_hands/leftpaw, T)
-		PoolOrNew(/obj/effect/overlay/temp/bubblegum_hands/leftthumb, T)
+		new /obj/effect/overlay/temp/bubblegum_hands/leftpaw(T)
+		new /obj/effect/overlay/temp/bubblegum_hands/leftthumb(T)
 	sleep(6)
 	for(var/mob/living/L in T)
 		if(!faction_check(L))
@@ -308,7 +308,7 @@ Difficulty: Hard
 	if(!pools.len)
 		return FALSE
 
-	var/obj/effect/overlay/temp/decoy/DA = PoolOrNew(/obj/effect/overlay/temp/decoy, list(loc,src))
+	var/obj/effect/overlay/temp/decoy/DA = new /obj/effect/overlay/temp/decoy(loc,src)
 	DA.color = "#FF0000"
 	var/oldtransform = DA.transform
 	DA.transform = matrix()*2
@@ -350,7 +350,7 @@ Difficulty: Hard
 	new /obj/effect/decal/cleanable/blood/bubblegum(J)
 	for(var/i in 1 to range)
 		J = get_step(previousturf, targetdir)
-		PoolOrNew(/obj/effect/overlay/temp/dir_setting/bloodsplatter, list(previousturf, get_dir(previousturf, J)))
+		new /obj/effect/overlay/temp/dir_setting/bloodsplatter(previousturf, get_dir(previousturf, J))
 		playsound(previousturf,'sound/effects/splat.ogg', 100, 1, -1)
 		if(!J || !previousturf.atmos_adjacent_turfs || !previousturf.atmos_adjacent_turfs[J])
 			break

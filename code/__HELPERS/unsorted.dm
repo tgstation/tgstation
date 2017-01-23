@@ -755,32 +755,6 @@ Turf and target are seperate in case you want to teleport some distance from a t
 		loc = loc.loc
 	return null
 
-//Quick type checks for some tools
-var/global/list/common_tools = list(
-/obj/item/stack/cable_coil,
-/obj/item/weapon/wrench,
-/obj/item/weapon/weldingtool,
-/obj/item/weapon/screwdriver,
-/obj/item/weapon/wirecutters,
-/obj/item/device/multitool,
-/obj/item/weapon/crowbar)
-
-/proc/istool(O)
-	if(O && is_type_in_list(O, common_tools))
-		return 1
-	return 0
-
-/proc/is_pointed(obj/item/W)
-	if(istype(W, /obj/item/weapon/pen))
-		return 1
-	if(istype(W, /obj/item/weapon/screwdriver))
-		return 1
-	if(istype(W, /obj/item/weapon/reagent_containers/syringe))
-		return 1
-	if(istype(W, /obj/item/weapon/kitchen/fork))
-		return 1
-	else
-		return 0
 
 //For objects that should embed, but make no sense being is_sharp or is_pointed()
 //e.g: rods
@@ -1182,16 +1156,14 @@ B --><-- A
 		C.proximity_checkers[A] = TRUE
 	return L
 
-/proc/remove_from_proximity_list(atom/A, range)
-	var/turf/T = get_turf(A)
+/proc/remove_from_proximity_list(atom/A, range, oldloc = null)
+	var/turf/T = get_turf(oldloc ? oldloc : A)
 	var/list/L = block(locate(T.x - range, T.y - range, T.z), locate(T.x + range, T.y + range, T.z))
 	for(var/B in L)
 		var/turf/C = B
 		if (!C.proximity_checkers)
 			continue
 		C.proximity_checkers.Remove(A)
-		UNSETEMPTY(C.proximity_checkers)
-
 
 /proc/shift_proximity(atom/checker, atom/A, range, atom/B, newrange)
 	var/turf/T = get_turf(A)
@@ -1207,7 +1179,6 @@ B --><-- A
 		if (!D.proximity_checkers)
 			continue
 		D.proximity_checkers.Remove(checker)
-		UNSETEMPTY(D.proximity_checkers)
 	for(var/E in O)
 		var/turf/F = E
 		LAZYINITLIST(F.proximity_checkers)
@@ -1285,14 +1256,13 @@ proc/pick_closest_path(value, list/matches = get_fancy_list_of_atom_types())
 #define DELTA_CALC max(((max(world.tick_usage, world.cpu) / 100) * max(Master.sleep_delta,1)), 1)
 
 /proc/stoplag()
-	. = round(1*DELTA_CALC)
-	sleep(world.tick_lag)
-	if (world.tick_usage > min(TICK_LIMIT_TO_RUN, CURRENT_TICKLIMIT)) //woke up, still not enough tick, sleep for more.
-		. += round(2*DELTA_CALC)
-		sleep(world.tick_lag*2*DELTA_CALC)
-		if (world.tick_usage > min(TICK_LIMIT_TO_RUN, CURRENT_TICKLIMIT)) //woke up, STILL not enough tick, sleep for more.
-			. += round(4*DELTA_CALC)
-			sleep(world.tick_lag*4*DELTA_CALC)
+	. = 0
+	var/i = 1
+	do
+		. += round(i*DELTA_CALC)
+		sleep(i*world.tick_lag*DELTA_CALC)
+		i *= 2
+	while (world.tick_usage > min(TICK_LIMIT_TO_RUN, CURRENT_TICKLIMIT))
 
 #undef DELTA_CALC
 
@@ -1316,7 +1286,7 @@ proc/pick_closest_path(value, list/matches = get_fancy_list_of_atom_types())
 
 #define RANDOM_COLOUR (rgb(rand(0,255),rand(0,255),rand(0,255)))
 
-#define QDEL_IN(item, time) addtimer(CALLBACK(GLOBAL_PROC, /proc/qdel, item), time)
+#define QDEL_IN(item, time) addtimer(CALLBACK(GLOBAL_PROC, /proc/qdel, item), time, TIMER_STOPPABLE)
 
 /proc/check_for_cleanbot_bug()
 	var/static/admins_warned //bet you didn't know you could do this!

@@ -131,7 +131,7 @@
 		stored_components[component_to_generate]++
 		update_slab_info(src)
 		for(var/obj/item/clockwork/slab/S in L.GetAllContents()) //prevent slab abuse today
-			if(L == src)
+			if(S == src)
 				continue
 			S.production_time = production_time + 50 //set it to our next production plus five seconds, so that if you hold the same slabs, the same one will always generate
 		L << "<span class='warning'>Your slab cl[pick("ank", "ink", "unk", "ang")]s as it produces a new component.</span>"

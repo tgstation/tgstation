@@ -8,6 +8,7 @@
 	var/list/blood_DNA
 	var/container_type = 0
 	var/admin_spawned = 0	//was this spawned by an admin? used for stat tracking stuff.
+	var/datum/reagents/reagents = null
 
 	//This atom's HUD (med/sec, etc) images. Associative list.
 	var/list/image/hud_list = null
@@ -52,6 +53,8 @@
 			for(var/aa in viewing_alternate_appearances[aakey])
 				var/datum/alternate_appearance/AA = aa
 				AA.hide(list(src))
+	if(reagents)
+		qdel(reagents)
 	return ..()
 
 /atom/proc/CanPass(atom/movable/mover, turf/target, height=1.5)
@@ -442,7 +445,7 @@ var/list/blood_splatter_icons = list()
 
 /atom/proc/add_vomit_floor(mob/living/carbon/M, toxvomit = 0)
 	if(isturf(src))
-		var/obj/effect/decal/cleanable/vomit/V = PoolOrNew(/obj/effect/decal/cleanable/vomit, src)
+		var/obj/effect/decal/cleanable/vomit/V = new /obj/effect/decal/cleanable/vomit(src)
 		// Make toxins vomit look different
 		if(toxvomit)
 			V.icon_state = "vomittox_[pick(1,4)]"
