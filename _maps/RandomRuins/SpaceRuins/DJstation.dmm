@@ -122,29 +122,29 @@
 /area/djstation)
 "au" = (
 /obj/structure/closet/emcloset,
-/turf/open/floor/plasteel/cafeteria,
+/turf/open/floor/plasteel,
 /area/djstation)
 "av" = (
 /obj/machinery/vending/snack,
 /obj/machinery/light/small{
 	dir = 1
 	},
-/turf/open/floor/plasteel/cafeteria,
+/turf/open/floor/plasteel,
 /area/djstation)
 "aw" = (
-/turf/open/floor/plasteel/cafeteria,
+/turf/open/floor/plasteel,
 /area/djstation)
 "ax" = (
 /obj/machinery/light_switch{
 	pixel_y = 28
 	},
-/turf/open/floor/plasteel/cafeteria,
+/turf/open/floor/plasteel,
 /area/djstation)
 "ay" = (
 /obj/machinery/newscaster{
 	pixel_y = 32
 	},
-/turf/open/floor/plasteel/cafeteria,
+/turf/open/floor/plasteel,
 /area/djstation)
 "az" = (
 /obj/structure/table,
@@ -185,7 +185,7 @@
 /obj/machinery/door/airlock/glass{
 	name = "Kitchen"
 	},
-/turf/open/floor/plasteel/cafeteria,
+/turf/open/floor/plasteel,
 /area/djstation)
 "aH" = (
 /obj/structure/table,
@@ -197,17 +197,17 @@
 	name = "Pirate Radio Listening Channel";
 	pixel_x = 0
 	},
-/turf/open/floor/plasteel/cafeteria,
+/turf/open/floor/plasteel,
 /area/djstation)
 "aI" = (
 /obj/structure/chair/office/light,
-/turf/open/floor/plasteel/cafeteria,
+/turf/open/floor/plasteel,
 /area/djstation)
 "aJ" = (
 /obj/machinery/door/airlock/glass{
 	name = "Rest Room"
 	},
-/turf/open/floor/plasteel/cafeteria,
+/turf/open/floor/plasteel,
 /area/djstation)
 "aK" = (
 /turf/open/floor/plasteel,
@@ -237,7 +237,7 @@
 "aP" = (
 /obj/structure/table,
 /obj/effect/spawner/lootdrop/maintenance,
-/turf/open/floor/plasteel/cafeteria,
+/turf/open/floor/plasteel,
 /area/djstation)
 "aQ" = (
 /obj/structure/table,
@@ -249,12 +249,12 @@
 	name = "Pirate Radio Broadcast Channel";
 	pixel_x = 0
 	},
-/turf/open/floor/plasteel/cafeteria,
+/turf/open/floor/plasteel,
 /area/djstation)
 "aR" = (
 /obj/structure/table,
 /obj/item/weapon/paper/djstation,
-/turf/open/floor/plasteel/cafeteria,
+/turf/open/floor/plasteel,
 /area/djstation)
 "aS" = (
 /obj/structure/frame/computer{
@@ -290,7 +290,7 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/turf/open/floor/plasteel/cafeteria,
+/turf/open/floor/plasteel,
 /area/djstation)
 "aZ" = (
 /obj/structure/disposalpipe/segment,
@@ -303,14 +303,14 @@
 /obj/structure/chair{
 	dir = 4
 	},
-/turf/open/floor/plasteel/cafeteria,
+/turf/open/floor/plasteel,
 /area/djstation)
 "bc" = (
 /obj/structure/window/reinforced{
 	dir = 1
 	},
 /obj/machinery/space_heater,
-/turf/open/floor/plasteel/cafeteria,
+/turf/open/floor/plasteel,
 /area/djstation)
 "bd" = (
 /obj/structure/window/reinforced{
@@ -321,7 +321,7 @@
 	},
 /obj/item/clothing/under/soviet,
 /obj/item/clothing/head/ushanka,
-/turf/open/floor/plasteel/cafeteria,
+/turf/open/floor/plasteel,
 /area/djstation)
 "be" = (
 /obj/structure/sink{
@@ -346,7 +346,7 @@
 	pixel_y = 9
 	},
 /obj/item/weapon/pen,
-/turf/open/floor/plasteel/cafeteria,
+/turf/open/floor/plasteel,
 /area/djstation)
 "bh" = (
 /obj/structure/sign/securearea{
@@ -357,7 +357,7 @@
 	pixel_x = 0;
 	pixel_y = -32
 	},
-/turf/open/floor/plasteel/cafeteria,
+/turf/open/floor/plasteel,
 /area/djstation)
 "bi" = (
 /obj/machinery/door/airlock/external{
