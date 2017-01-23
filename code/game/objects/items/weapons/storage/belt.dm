@@ -41,11 +41,20 @@
 		/obj/item/borg/upgrade/restart,
 		/obj/item/clothing/glasses,
 		/obj/item/weapon/electronics,
-		/obj/item/weapon/circuitboard/computer,
+		/obj/item/weapon/circuitboard,
 		/obj/item/weapon/hand_labeler,
 		/obj/item/hand_labeler_refill,
-		/obj/item/weapon/holosign_creator/engineering,
-		/obj/item/weapon/stock_parts/cell
+		/obj/item/weapon/holosign_creator,
+		/obj/item/weapon/stock_parts/cell,
+		/obj/item/device/plant_analyzer,
+		/obj/item/weapon/cultivator,
+		/obj/item/weapon/shovel/spade,
+		/obj/item/weapon/hatchet,
+		/obj/item/weapon/shovel/spade,
+		/obj/item/seeds,
+		/obj/item/weapon/disk/plantgene,
+		/obj/item/weapon/disk/design_disk,
+		/datum/design/tech_disk
 		)
 
 /obj/item/weapon/storage/belt/utility/chief
