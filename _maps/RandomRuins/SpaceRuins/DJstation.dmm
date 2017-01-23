@@ -149,37 +149,37 @@
 "az" = (
 /obj/structure/table,
 /obj/machinery/cell_charger,
-/turf/open/floor/plasteel/bar,
+/turf/open/floor/plasteel,
 /area/djstation)
 "aA" = (
-/turf/open/floor/plasteel/bar,
+/turf/open/floor/plasteel,
 /area/djstation)
 "aB" = (
 /obj/effect/spawner/lootdrop/crate_spawner,
-/turf/open/floor/plasteel/grimy,
+/turf/open/floor/plasteel,
 /area/djstation)
 "aC" = (
 /obj/machinery/light_switch{
 	pixel_y = 28
 	},
-/turf/open/floor/plasteel/grimy,
+/turf/open/floor/plasteel,
 /area/djstation)
 "aD" = (
 /obj/structure/bed,
 /obj/item/weapon/bedsheet,
-/turf/open/floor/plasteel/grimy,
+/turf/open/floor/plasteel,
 /area/djstation)
 "aE" = (
 /obj/structure/table,
 /obj/item/device/flashlight/lamp,
-/turf/open/floor/plasteel/grimy,
+/turf/open/floor/plasteel,
 /area/djstation)
 "aF" = (
 /obj/structure/table,
 /obj/machinery/microwave{
 	pixel_y = 8
 	},
-/turf/open/floor/plasteel/bar,
+/turf/open/floor/plasteel,
 /area/djstation)
 "aG" = (
 /obj/machinery/door/airlock/glass{
@@ -210,29 +210,29 @@
 /turf/open/floor/plasteel/cafeteria,
 /area/djstation)
 "aK" = (
-/turf/open/floor/plasteel/grimy,
+/turf/open/floor/plasteel,
 /area/djstation)
 "aL" = (
 /obj/machinery/sleeper{
 	icon_state = "sleeper-open";
 	dir = 8
 	},
-/turf/open/floor/plasteel/grimy,
+/turf/open/floor/plasteel,
 /area/djstation)
 "aM" = (
 /obj/machinery/disposal/bin,
 /obj/structure/disposalpipe/trunk,
-/turf/open/floor/plasteel/bar,
+/turf/open/floor/plasteel,
 /area/djstation)
 "aN" = (
 /obj/machinery/light/small,
-/turf/open/floor/plasteel/bar,
+/turf/open/floor/plasteel,
 /area/djstation)
 "aO" = (
 /obj/structure/chair{
 	dir = 1
 	},
-/turf/open/floor/plasteel/bar,
+/turf/open/floor/plasteel,
 /area/djstation)
 "aP" = (
 /obj/structure/table,
@@ -260,21 +260,21 @@
 /obj/structure/frame/computer{
 	anchored = 1
 	},
-/turf/open/floor/plasteel/grimy,
+/turf/open/floor/plasteel,
 /area/djstation)
 "aT" = (
 /obj/structure/chair{
 	dir = 8
 	},
-/turf/open/floor/plasteel/grimy,
+/turf/open/floor/plasteel,
 /area/djstation)
 "aU" = (
 /obj/machinery/light/small,
-/turf/open/floor/plasteel/grimy,
+/turf/open/floor/plasteel,
 /area/djstation)
 "aV" = (
 /obj/structure/closet,
-/turf/open/floor/plasteel/grimy,
+/turf/open/floor/plasteel,
 /area/djstation)
 "aW" = (
 /obj/structure/disposalpipe/segment,

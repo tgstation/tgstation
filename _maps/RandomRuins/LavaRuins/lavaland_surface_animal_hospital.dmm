@@ -31,26 +31,26 @@
 	},
 /area/ruin/powered)
 "ag" = (
-/turf/open/floor/plasteel/bar{
+/turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/ruin/powered)
 "ah" = (
 /obj/structure/toilet,
-/turf/open/floor/plasteel/bar{
+/turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/ruin/powered)
 "ai" = (
 /obj/machinery/vending/coffee,
-/turf/open/floor/plasteel/cmo{
+/turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/ruin/powered)
 "aj" = (
 /obj/structure/table/wood,
 /obj/item/device/flashlight/lamp,
-/turf/open/floor/plasteel/cmo{
+/turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/ruin/powered)
@@ -58,20 +58,20 @@
 /obj/structure/table/wood,
 /obj/item/device/taperecorder,
 /obj/item/weapon/pen/blue,
-/turf/open/floor/plasteel/cmo{
+/turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/ruin/powered)
 "al" = (
 /obj/structure/table/wood,
 /obj/item/toy/carpplushie,
-/turf/open/floor/plasteel/cmo{
+/turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/ruin/powered)
 "am" = (
 /obj/machinery/vending/snack,
-/turf/open/floor/plasteel/cmo{
+/turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/ruin/powered)
@@ -118,7 +118,7 @@
 	},
 /area/ruin/powered)
 "as" = (
-/turf/open/floor/plasteel/cmo{
+/turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/ruin/powered)
@@ -126,7 +126,7 @@
 /obj/structure/chair/office/dark{
 	dir = 1
 	},
-/turf/open/floor/plasteel/cmo{
+/turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/ruin/powered)
@@ -134,14 +134,14 @@
 /obj/structure/chair/office/dark{
 	dir = 4
 	},
-/turf/open/floor/plasteel/cmo{
+/turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/ruin/powered)
 "av" = (
 /obj/item/weapon/reagent_containers/glass/rag,
 /obj/item/weapon/reagent_containers/spray/cleaner,
-/turf/open/floor/plasteel/blue/side{
+/turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
 	dir = 8
 	},
@@ -174,7 +174,7 @@
 /obj/structure/mirror{
 	pixel_x = -28
 	},
-/turf/open/floor/plasteel/bar{
+/turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/ruin/powered)
@@ -187,7 +187,7 @@
 	info = "Nothing of interest to report.";
 	name = "Important Notice - Mrs. Henderson"
 	},
-/turf/open/floor/plasteel/cmo{
+/turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/ruin/powered)
@@ -226,7 +226,7 @@
 /obj/machinery/door/unpowered/shuttle{
 	name = "Restroom"
 	},
-/turf/open/floor/plasteel/bar{
+/turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/ruin/powered)
@@ -246,7 +246,7 @@
 /turf/closed/wall/shuttle/smooth,
 /area/ruin/powered)
 "aJ" = (
-/turf/open/floor/plasteel/grimy{
+/turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
@@ -257,14 +257,14 @@
 	},
 /area/ruin/powered)
 "aL" = (
-/turf/open/floor/plasteel/blue/side{
+/turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
 	dir = 1
 	},
 /area/ruin/powered)
 "aM" = (
 /obj/effect/mob_spawn/human/doctor/alive/lavaland,
-/turf/open/floor/plasteel/blue/side{
+/turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
 	dir = 1
 	},
@@ -275,38 +275,38 @@
 /obj/item/weapon/reagent_containers/blood/random,
 /obj/item/weapon/reagent_containers/blood/random,
 /obj/item/weapon/reagent_containers/blood/random,
-/turf/open/floor/plasteel/blue/side{
+/turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
 	dir = 1
 	},
 /area/ruin/powered)
 "aO" = (
 /obj/machinery/iv_drip,
-/turf/open/floor/plasteel/blue/side{
+/turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
 	dir = 1
 	},
 /area/ruin/powered)
 "aP" = (
-/turf/open/floor/plasteel/blue/side{
+/turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
 	dir = 0
 	},
 /area/ruin/powered)
 "aQ" = (
-/turf/open/floor/plasteel/blue/corner{
+/turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
 	dir = 8
 	},
 /area/ruin/powered)
 "aR" = (
-/turf/open/floor/plasteel/blue/side{
+/turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
 	dir = 4
 	},
 /area/ruin/powered)
 "aS" = (
-/turf/open/floor/plasteel/blue/side{
+/turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
 	dir = 8
 	},
@@ -462,7 +462,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/cookie{
 	name = "doggie biscuit"
 	},
-/turf/open/floor/plasteel/blue/side{
+/turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
 	dir = 1
 	},
@@ -471,7 +471,7 @@
 /obj/structure/chair/comfy/teal{
 	dir = 8
 	},
-/turf/open/floor/plasteel/blue/side{
+/turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
 	dir = 1
 	},
@@ -495,7 +495,7 @@
 /obj/item/trash/pistachios,
 /obj/item/weapon/lipstick/random,
 /obj/item/seeds/apple,
-/turf/open/floor/plasteel/blue/side{
+/turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
 	dir = 8
 	},
@@ -529,7 +529,7 @@
 /obj/structure/chair/comfy/teal{
 	dir = 8
 	},
-/turf/open/floor/plasteel/blue/side{
+/turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
 	dir = 4
 	},
@@ -562,7 +562,7 @@
 "by" = (
 /obj/structure/table/reinforced,
 /obj/item/device/flashlight/lamp,
-/turf/open/floor/plasteel/blue/side{
+/turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
 	dir = 8
 	},
@@ -610,13 +610,13 @@
 /area/ruin/powered)
 "bE" = (
 /obj/structure/closet/crate/critter,
-/turf/open/floor/plasteel/blue/side{
+/turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
 	dir = 8
 	},
 /area/ruin/powered)
 "bF" = (
-/turf/open/floor/plasteel/blue/side{
+/turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
 	dir = 10
 	},
@@ -625,7 +625,7 @@
 /obj/structure/chair/comfy/teal{
 	dir = 8
 	},
-/turf/open/floor/plasteel/blue/side{
+/turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
 	dir = 6
 	},
@@ -634,7 +634,7 @@
 /obj/structure/table,
 /obj/item/weapon/tank/internals/oxygen,
 /obj/item/weapon/tank/internals/oxygen,
-/turf/open/floor/plasteel/blue/side{
+/turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
 	dir = 8
 	},
@@ -724,7 +724,7 @@
 	name = "cattle prod"
 	},
 /obj/item/weapon/stock_parts/cell/high,
-/turf/open/floor/plasteel/blue/side{
+/turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
 	dir = 10
 	},
@@ -734,7 +734,7 @@
 /obj/item/weapon/defibrillator/loaded,
 /obj/item/weapon/storage/belt/medical,
 /obj/item/clothing/glasses/hud/health,
-/turf/open/floor/plasteel/blue/side{
+/turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
 	dir = 6
 	},
@@ -835,7 +835,7 @@
 /obj/machinery/door/unpowered/shuttle{
 	name = "Break Room"
 	},
-/turf/open/floor/plasteel/cmo{
+/turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/ruin/powered)

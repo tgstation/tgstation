@@ -299,7 +299,7 @@
 /turf/open/floor/plasteel/airless/bar,
 /area/ruin/unpowered)
 "aY" = (
-/turf/open/floor/plasteel/bar{
+/turf/open/floor/plasteel{
 	initial_gas_mix = "TEMP=2.7"
 	},
 /obj/item/stack/sheet/metal,
@@ -334,7 +334,7 @@
 /turf/open/floor/plasteel/airless/bar,
 /area/ruin/unpowered)
 "be" = (
-/turf/open/floor/plasteel/bar{
+/turf/open/floor/plasteel{
 	initial_gas_mix = "TEMP=2.7"
 	},
 /turf/open/floor/plating/airless{

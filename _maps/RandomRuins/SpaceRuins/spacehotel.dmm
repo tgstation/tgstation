@@ -2299,12 +2299,12 @@
 "fB" = (
 /obj/structure/table,
 /obj/machinery/chem_dispenser/drinks/beer,
-/turf/open/floor/plasteel/bar,
+/turf/open/floor/plasteel,
 /area/ruin/hotel/bar)
 "fC" = (
 /obj/structure/table,
 /obj/machinery/chem_dispenser/drinks,
-/turf/open/floor/plasteel/bar,
+/turf/open/floor/plasteel,
 /area/ruin/hotel/bar)
 "fD" = (
 /obj/structure/table,
@@ -2312,26 +2312,26 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/turf/open/floor/plasteel/bar,
+/turf/open/floor/plasteel,
 /area/ruin/hotel/bar)
 "fE" = (
 /obj/machinery/vending/boozeomat{
 	req_access_txt = "200"
 	},
-/turf/open/floor/plasteel/bar,
+/turf/open/floor/plasteel,
 /area/ruin/hotel/bar)
 "fF" = (
 /obj/structure/table,
 /obj/item/weapon/book/manual/barman_recipes,
 /obj/item/weapon/reagent_containers/food/drinks/shaker,
-/turf/open/floor/plasteel/bar,
+/turf/open/floor/plasteel,
 /area/ruin/hotel/bar)
 "fG" = (
-/turf/open/floor/plasteel/bar,
+/turf/open/floor/plasteel,
 /area/ruin/hotel/bar)
 "fH" = (
 /obj/structure/table/reinforced,
-/turf/open/floor/plasteel/bar,
+/turf/open/floor/plasteel,
 /area/ruin/hotel/bar)
 "fI" = (
 /obj/item/weapon/twohanded/required/kirbyplants{
@@ -2438,7 +2438,7 @@
 "fU" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/reagent_containers/food/drinks/beer,
-/turf/open/floor/plasteel/bar,
+/turf/open/floor/plasteel,
 /area/ruin/hotel/bar)
 "fV" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -2493,7 +2493,7 @@
 "gd" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/reagent_containers/glass/rag,
-/turf/open/floor/plasteel/bar,
+/turf/open/floor/plasteel,
 /area/ruin/hotel/bar)
 "ge" = (
 /obj/machinery/firealarm{
@@ -2578,7 +2578,7 @@
 /area/ruin/hotel/bar)
 "gr" = (
 /obj/structure/chair/stool/bar,
-/turf/open/floor/plasteel/bar,
+/turf/open/floor/plasteel,
 /area/ruin/hotel/bar)
 "gs" = (
 /obj/machinery/door/airlock/centcom{
@@ -2598,7 +2598,7 @@
 	icon_state = "bulb1";
 	dir = 8
 	},
-/turf/open/floor/plasteel/grimy,
+/turf/open/floor/plasteel,
 /area/ruin/hotel/dock)
 "gu" = (
 /obj/structure/table/wood,
@@ -2606,7 +2606,7 @@
 	dir = 1;
 	layer = 2.9
 	},
-/turf/open/floor/plasteel/grimy,
+/turf/open/floor/plasteel,
 /area/ruin/hotel/dock)
 "gv" = (
 /obj/structure/table/wood,
@@ -2621,7 +2621,7 @@
 	gpstag = "Twin-Nexus Hotel Retreat";
 	name = "hotel gps"
 	},
-/turf/open/floor/plasteel/grimy,
+/turf/open/floor/plasteel,
 /area/ruin/hotel/dock)
 "gw" = (
 /turf/open/floor/plasteel/black,
@@ -2722,17 +2722,17 @@
 /area/ruin/hotel/workroom)
 "gN" = (
 /obj/structure/filingcabinet,
-/turf/open/floor/plasteel/grimy,
+/turf/open/floor/plasteel,
 /area/ruin/hotel/dock)
 "gO" = (
 /obj/structure/chair/office/light{
 	dir = 4
 	},
-/turf/open/floor/plasteel/grimy,
+/turf/open/floor/plasteel,
 /area/ruin/hotel/dock)
 "gP" = (
 /obj/structure/table/wood,
-/turf/open/floor/plasteel/grimy,
+/turf/open/floor/plasteel,
 /area/ruin/hotel/dock)
 "gQ" = (
 /obj/machinery/computer/teleporter,
@@ -2782,7 +2782,7 @@
 /obj/structure/chair{
 	dir = 4
 	},
-/turf/open/floor/plasteel/bar,
+/turf/open/floor/plasteel,
 /area/ruin/hotel/bar)
 "gY" = (
 /obj/structure/table/wood,
@@ -2792,13 +2792,13 @@
 /obj/item/weapon/reagent_containers/food/condiment/peppermill{
 	pixel_x = -4
 	},
-/turf/open/floor/plasteel/bar,
+/turf/open/floor/plasteel,
 /area/ruin/hotel/bar)
 "gZ" = (
 /obj/structure/chair{
 	dir = 8
 	},
-/turf/open/floor/plasteel/bar,
+/turf/open/floor/plasteel,
 /area/ruin/hotel/bar)
 "ha" = (
 /obj/machinery/vending/wallmed{
@@ -2807,7 +2807,7 @@
 /turf/open/floor/plasteel/black,
 /area/ruin/hotel/workroom)
 "hb" = (
-/turf/open/floor/plasteel/grimy,
+/turf/open/floor/plasteel,
 /area/ruin/hotel/dock)
 "hc" = (
 /obj/structure/table/wood,
@@ -2834,7 +2834,7 @@
 	info = "<center><b>The Twin Nexus Hotel</center></b><br><center><i>A place of Sanctuary</i></center><br><br><center>Welcome to The Twin-Nexus Hotel, \[insert name here]! The loyal staff stride to their best effort to cater for the best possible experience for all space(wo)men! If you have any questions or comments, please ask one of our on-board staff for more infomation.</center>";
 	name = "hotel pamphlet"
 	},
-/turf/open/floor/plasteel/grimy,
+/turf/open/floor/plasteel,
 /area/ruin/hotel/dock)
 "hd" = (
 /obj/structure/table/wood,
@@ -3109,12 +3109,12 @@
 	icon_state = "bulb1";
 	dir = 8
 	},
-/turf/open/floor/plasteel/grimy,
+/turf/open/floor/plasteel,
 /area/ruin/hotel/dock)
 "hM" = (
 /obj/structure/table/wood,
 /obj/structure/window/reinforced,
-/turf/open/floor/plasteel/grimy,
+/turf/open/floor/plasteel,
 /area/ruin/hotel/dock)
 "hN" = (
 /obj/structure/table/wood,
@@ -3122,7 +3122,7 @@
 	dir = 4
 	},
 /obj/structure/window/reinforced,
-/turf/open/floor/plasteel/grimy,
+/turf/open/floor/plasteel,
 /area/ruin/hotel/dock)
 "hO" = (
 /obj/machinery/light,
@@ -3199,13 +3199,13 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/turf/open/floor/plasteel/grimy,
+/turf/open/floor/plasteel,
 /area/ruin/hotel/bar)
 "hW" = (
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/turf/open/floor/plasteel/grimy,
+/turf/open/floor/plasteel,
 /area/ruin/hotel/bar)
 "hX" = (
 /obj/structure/window/reinforced{
@@ -3215,7 +3215,7 @@
 	tag = "icon-piano";
 	icon_state = "piano"
 	},
-/turf/open/floor/plasteel/grimy,
+/turf/open/floor/plasteel,
 /area/ruin/hotel/bar)
 "hY" = (
 /obj/structure/window/reinforced{
@@ -3225,7 +3225,7 @@
 	dir = 1
 	},
 /obj/structure/chair/stool,
-/turf/open/floor/plasteel/grimy,
+/turf/open/floor/plasteel,
 /area/ruin/hotel/bar)
 "hZ" = (
 /obj/machinery/light{
@@ -3280,16 +3280,16 @@
 "ig" = (
 /obj/structure/table/wood,
 /obj/item/device/instrument/violin,
-/turf/open/floor/plasteel/grimy,
+/turf/open/floor/plasteel,
 /area/ruin/hotel/bar)
 "ih" = (
-/turf/open/floor/plasteel/grimy,
+/turf/open/floor/plasteel,
 /area/ruin/hotel/bar)
 "ii" = (
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/turf/open/floor/plasteel/grimy,
+/turf/open/floor/plasteel,
 /area/ruin/hotel/bar)
 "ij" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -3475,11 +3475,11 @@
 	name = "Theatre";
 	req_access_txt = "200"
 	},
-/turf/open/floor/plasteel/grimy,
+/turf/open/floor/plasteel,
 /area/ruin/hotel/bar)
 "iB" = (
 /obj/machinery/light,
-/turf/open/floor/plasteel/grimy,
+/turf/open/floor/plasteel,
 /area/ruin/hotel/bar)
 "iC" = (
 /obj/machinery/light,
@@ -4345,13 +4345,13 @@
 /turf/open/floor/plasteel/darkyellow,
 /area/ruin/hotel/security)
 "kD" = (
-/turf/open/floor/plasteel/vault{
+/turf/open/floor/plasteel/black{
 	dir = 5
 	},
 /area/ruin/hotel/pool)
 "kE" = (
 /obj/structure/chair,
-/turf/open/floor/plasteel/vault{
+/turf/open/floor/plasteel/black{
 	dir = 5
 	},
 /area/ruin/hotel/pool)
@@ -4441,7 +4441,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 5
 	},
-/turf/open/floor/plasteel/vault{
+/turf/open/floor/plasteel/black{
 	dir = 5
 	},
 /area/ruin/hotel/pool)
@@ -4449,7 +4449,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/turf/open/floor/plasteel/vault{
+/turf/open/floor/plasteel/black{
 	dir = 5
 	},
 /area/ruin/hotel/pool)
@@ -4560,7 +4560,7 @@
 /obj/structure/chair{
 	dir = 4
 	},
-/turf/open/floor/plasteel/vault{
+/turf/open/floor/plasteel/black{
 	dir = 5
 	},
 /area/ruin/hotel/pool)
@@ -4579,7 +4579,7 @@
 /obj/structure/chair{
 	dir = 8
 	},
-/turf/open/floor/plasteel/vault{
+/turf/open/floor/plasteel/black{
 	dir = 5
 	},
 /area/ruin/hotel/pool)
@@ -5105,7 +5105,7 @@
 	icon_state = "chair";
 	dir = 1
 	},
-/turf/open/floor/plasteel/vault{
+/turf/open/floor/plasteel/black{
 	dir = 5
 	},
 /area/ruin/hotel/pool)
