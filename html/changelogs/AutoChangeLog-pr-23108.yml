@@ -1,0 +1,4 @@
+author: "Joan"
+delete-after: True
+changes: 
+  - rscadd: "The Ark of the Clockwork Justicar will gradually convert objects near it with increasing range as it gets closer to activating."
