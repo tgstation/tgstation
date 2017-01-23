@@ -1,4 +1,0 @@
-author: "Mervill"
-delete-after: True
-changes: 
-  - bugfix: "ntnrc channels are now deleted properly"

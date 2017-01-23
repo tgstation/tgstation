@@ -281,11 +281,10 @@
 	var/obj/machinery/power/tracker/connected_tracker = null
 	var/list/connected_panels = list()
 
-
-/obj/machinery/power/solar_control/New()
+/obj/machinery/power/solar_control/Initialize()
 	..()
-	if(ticker)
-		initialize()
+	if(powernet)
+		set_panels(currentdir)
 	connect_to_network()
 
 /obj/machinery/power/solar_control/Destroy()
@@ -334,12 +333,6 @@
 
 	set_panels(currentdir)
 	updateDialog()
-
-
-/obj/machinery/power/solar_control/initialize()
-	..()
-	if(!powernet) return
-	set_panels(currentdir)
 
 /obj/machinery/power/solar_control/update_icon()
 	cut_overlays()

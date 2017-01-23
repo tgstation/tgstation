@@ -562,8 +562,10 @@
 				var/obj/O = obstacle
 				if(!O.anchored)
 					step(obstacle, dir)
-			else if(istype(obstacle, /mob))
-				step(obstacle, dir)
+			else if(ismob(obstacle))
+				var/mob/M = obstacle
+				if(!M.anchored)
+					step(obstacle, dir)
 
 
 

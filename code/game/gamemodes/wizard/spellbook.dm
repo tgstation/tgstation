@@ -568,7 +568,8 @@
 	else
 		user << "It appears to have no author."
 
-/obj/item/weapon/spellbook/proc/Initialize()
+/obj/item/weapon/spellbook/Initialize()
+	..()
 	var/entry_types = subtypesof(/datum/spellbook_entry) - /datum/spellbook_entry/item - /datum/spellbook_entry/summon
 	for(var/T in entry_types)
 		var/datum/spellbook_entry/E = new T
@@ -578,11 +579,6 @@
 		else
 			qdel(E)
 	tab = categories[1]
-
-/obj/item/weapon/spellbook/New()
-	..()
-	Initialize()
-
 
 /obj/item/weapon/spellbook/attackby(obj/item/O, mob/user, params)
 	if(istype(O, /obj/item/weapon/antag_spawner/contract))

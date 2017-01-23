@@ -40,6 +40,8 @@
 	if(luminosity)
 		light = new(src)
 
+	if(SSobj && SSobj.initialized)
+		Initialize(FALSE)
 	//. = ..() //uncomment if you are dumb enough to add a /datum/New() proc
 
 /atom/Destroy()
@@ -431,8 +433,10 @@ var/list/blood_splatter_icons = list()
 //effects at world start up without causing runtimes
 /atom/proc/spawn_atom_to_world()
 
-//This will be called after the map and objects are loaded
-/atom/proc/initialize()
+//Called after New if the world is not loaded with TRUE
+//Called from base of New if the world is loaded with FALSE
+/atom/proc/Initialize(mapload)
+	set waitfor = 0
 	return
 
 //the vision impairment to give to the mob whose perspective is set to that atom (e.g. an unfocused camera giving you an impaired vision when looking through it)
@@ -445,7 +449,7 @@ var/list/blood_splatter_icons = list()
 
 /atom/proc/add_vomit_floor(mob/living/carbon/M, toxvomit = 0)
 	if(isturf(src))
-		var/obj/effect/decal/cleanable/vomit/V = PoolOrNew(/obj/effect/decal/cleanable/vomit, src)
+		var/obj/effect/decal/cleanable/vomit/V = new /obj/effect/decal/cleanable/vomit(src)
 		// Make toxins vomit look different
 		if(toxvomit)
 			V.icon_state = "vomittox_[pick(1,4)]"

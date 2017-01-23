@@ -308,7 +308,7 @@
 
 /datum/species/golem/bluespace/proc/reactive_teleport(mob/living/carbon/human/H)
 	H.visible_message("<span class='warning'>[H] teleports!</span>", "<span class='danger'>You destabilize and teleport!</span>")
-	PoolOrNew(/obj/effect/particle_effect/sparks, get_turf(H))
+	new /obj/effect/particle_effect/sparks(get_turf(H))
 	playsound(get_turf(H), "sparks", 50, 1)
 	do_teleport(H, get_turf(H), 6, asoundin = 'sound/weapons/emitter2.ogg')
 	last_teleport = world.time

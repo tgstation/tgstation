@@ -175,9 +175,9 @@ var/global/list/parasites = list() //all currently existing/living guardians
 			if(istype(summoner.loc, /obj/effect))
 				Recall(TRUE)
 			else
-				PoolOrNew(/obj/effect/overlay/temp/guardian/phase/out, loc)
+				new /obj/effect/overlay/temp/guardian/phase/out(loc)
 				forceMove(summoner.loc)
-				PoolOrNew(/obj/effect/overlay/temp/guardian/phase, loc)
+				new /obj/effect/overlay/temp/guardian/phase(loc)
 
 /mob/living/simple_animal/hostile/guardian/canSuicide()
 	return 0
@@ -320,7 +320,7 @@ var/global/list/parasites = list() //all currently existing/living guardians
 		return FALSE
 	if(loc == summoner)
 		forceMove(summoner.loc)
-		PoolOrNew(/obj/effect/overlay/temp/guardian/phase, loc)
+		new /obj/effect/overlay/temp/guardian/phase(loc)
 		cooldown = world.time + 10
 		return TRUE
 	return FALSE
@@ -328,7 +328,7 @@ var/global/list/parasites = list() //all currently existing/living guardians
 /mob/living/simple_animal/hostile/guardian/proc/Recall(forced)
 	if(!summoner || loc == summoner || (cooldown > world.time && !forced))
 		return FALSE
-	PoolOrNew(/obj/effect/overlay/temp/guardian/phase/out, loc)
+	new /obj/effect/overlay/temp/guardian/phase/out(loc)
 
 	forceMove(summoner)
 	cooldown = world.time + 10

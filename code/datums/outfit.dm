@@ -128,4 +128,6 @@
 		H.l_store.add_fingerprint(H,1)
 	if(H.r_store)
 		H.r_store.add_fingerprint(H,1)
+	for(var/obj/item/I in H.held_items)
+		I.add_fingerprint(H,1)
 	return 1

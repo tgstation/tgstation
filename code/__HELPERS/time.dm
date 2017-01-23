@@ -23,3 +23,12 @@
 //returns timestamp in a sql and ISO 8601 friendly format
 /proc/SQLtime()
 	return time2text(world.realtime, "YYYY-MM-DD hh:mm:ss")
+
+
+/var/midnight_rollovers = 0
+/var/rollovercheck_last_timeofday = 0
+/proc/update_midnight_rollover()
+	if (world.timeofday < rollovercheck_last_timeofday) //TIME IS GOING BACKWARDS!
+		return midnight_rollovers++
+	return midnight_rollovers
+

@@ -26,7 +26,7 @@
 	target.notransform = 1
 	var/turf/mobloc = get_turf(target)
 	var/obj/effect/dummy/spell_jaunt/holder = new /obj/effect/dummy/spell_jaunt(mobloc)
-	PoolOrNew(jaunt_out_type, list(mobloc, holder.dir))
+	new jaunt_out_type(mobloc, holder.dir)
 	target.ExtinguishMob()
 	if(target.buckled)
 		target.buckled.unbuckle_mob(target,force=1)
@@ -51,7 +51,7 @@
 	holder.reappearing = 1
 	playsound(get_turf(target), 'sound/magic/Ethereal_Exit.ogg', 50, 1, -1)
 	sleep(25 - jaunt_in_time)
-	PoolOrNew(jaunt_in_type, list(mobloc, holder.dir))
+	new jaunt_in_type(mobloc, holder.dir)
 	sleep(jaunt_in_time)
 	qdel(holder)
 	if(!qdeleted(target))

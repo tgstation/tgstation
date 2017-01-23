@@ -18,7 +18,6 @@
 	..()
 	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/rdserver(null)
 	B.apply_default_parts(src)
-	initialize() //Agouri
 
 /obj/item/weapon/circuitboard/machine/rdserver
 	name = "R&D Server (Machine Board)"
@@ -38,7 +37,8 @@
 		tot_rating += SP.rating
 	heat_gen /= max(1, tot_rating)
 
-/obj/machinery/r_n_d/server/initialize()
+/obj/machinery/r_n_d/server/Initialize(mapload)
+	..()
 	if(!files) files = new /datum/research(src)
 	var/list/temp_list
 	if(!id_with_upload.len)
@@ -136,8 +136,11 @@
 	name = "Centcom Central R&D Database"
 	server_id = -1
 
-/obj/machinery/r_n_d/server/centcom/initialize()
+/obj/machinery/r_n_d/server/centcom/Initialize()
 	..()
+	fix_noid_research_servers()
+
+/proc/fix_noid_research_servers()
 	var/list/no_id_servers = list()
 	var/list/server_ids = list()
 	for(var/obj/machinery/r_n_d/server/S in machines)

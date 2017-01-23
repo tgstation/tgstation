@@ -8,7 +8,7 @@
 	obj_integrity = 25
 	max_integrity = 25
 	construction_value = 15
-	layer = HIGH_OBJ_LAYER
+	layer = WALL_OBJ_LAYER
 	break_message = "<span class='warning'>The warden's eye gives a glare of utter hate before falling dark!</span>"
 	debris = list(/obj/item/clockwork/component/belligerent_eye/blind_eye = 1)
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
@@ -78,7 +78,7 @@
 				var/obj/mecha/M = target
 				M.take_damage(damage_per_tick * get_efficiency_mod(), BURN, "melee", 1, get_dir(src, M))
 
-			PoolOrNew(/obj/effect/overlay/temp/ratvar/ocular_warden, get_turf(target))
+			new /obj/effect/overlay/temp/ratvar/ocular_warden(get_turf(target))
 
 			setDir(get_dir(get_turf(src), get_turf(target)))
 	if(!target)

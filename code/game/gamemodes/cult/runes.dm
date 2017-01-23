@@ -415,7 +415,7 @@ var/list/teleport_runes = list()
 	else
 		sacrificed += sacrificial
 
-	PoolOrNew(/obj/effect/overlay/temp/cult/sac, get_turf(src))
+	new /obj/effect/overlay/temp/cult/sac(get_turf(src))
 	for(var/M in invokers)
 		if(sacrifice_fulfilled)
 			M << "<span class='cultlarge'>\"Yes! This is the one I desire! You have done well.\"</span>"
@@ -762,7 +762,7 @@ var/list/wall_runes = list()
 			W.density = TRUE
 			W.update_state()
 			W.spread_density()
-	density_timer = addtimer(CALLBACK(src, .proc/lose_density), 900)
+	density_timer = addtimer(CALLBACK(src, .proc/lose_density), 900, TIMER_STOPPABLE)
 
 /obj/effect/rune/wall/proc/lose_density()
 	if(density)
@@ -891,7 +891,7 @@ var/list/wall_runes = list()
 	if(!src)
 		return
 	do_area_burn(T, 1.5)
-	PoolOrNew(/obj/effect/hotspot, T)
+	new /obj/effect/hotspot(T)
 	qdel(src)
 
 /obj/effect/rune/blood_boil/proc/do_area_burn(turf/T, multiplier)

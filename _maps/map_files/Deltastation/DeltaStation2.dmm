@@ -112458,8 +112458,9 @@
 	dwidth = 11;
 	height = 18;
 	name = "Delta emergency shuttle";
-	timid = 0;
-	width = 30
+	width = 30;
+	preferred_direction = 2;
+	port_angle = 90
 	},
 /obj/docking_port/stationary{
 	dheight = 0;

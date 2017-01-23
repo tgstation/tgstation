@@ -19,7 +19,7 @@
 
 /obj/structure/destructible/clockwork/wall_gear/New()
 	..()
-	PoolOrNew(/obj/effect/overlay/temp/ratvar/gear, get_turf(src))
+	new /obj/effect/overlay/temp/ratvar/gear(get_turf(src))
 
 /obj/structure/destructible/clockwork/wall_gear/emp_act(severity)
 	return

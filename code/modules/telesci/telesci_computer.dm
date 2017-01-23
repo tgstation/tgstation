@@ -31,8 +31,8 @@
 	var/obj/item/device/gps/inserted_gps
 
 /obj/machinery/computer/telescience/New()
-	..()
 	recalibrate()
+	..()
 
 /obj/machinery/computer/telescience/Destroy()
 	eject()
@@ -45,10 +45,11 @@
 	..()
 	user << "There are [crystals.len ? crystals.len : "no"] bluespace crystal\s in the crystal slots."
 
-/obj/machinery/computer/telescience/initialize()
+/obj/machinery/computer/telescience/Initialize(mapload)
 	..()
-	for(var/i = 1; i <= starting_crystals; i++)
-		crystals += new /obj/item/weapon/ore/bluespace_crystal/artificial(null) // starting crystals
+	if(mapload)
+		for(var/i = 1; i <= starting_crystals; i++)
+			crystals += new /obj/item/weapon/ore/bluespace_crystal/artificial(null) // starting crystals
 
 /obj/machinery/computer/telescience/attack_paw(mob/user)
 	user << "<span class='warning'>You are too primitive to use this computer!</span>"
