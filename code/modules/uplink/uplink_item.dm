@@ -1055,10 +1055,10 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 
 /datum/uplink_item/implants/uplink
 	name = "Uplink Implant"
-	desc = "An implant injected into the body, and later activated at the user's will. It will open a separate uplink \
-			with 10 telecrystals. Undetectable, and excellent for escaping confinement."
+	desc = "An implant injected into the body, and later activated at the user's will. Has no telecrystals, must be charged by the use of physical telecrystals. Undetectable (except via surgery), and excellent for escaping confinement."
 	item = /obj/item/weapon/storage/box/syndie_kit/imp_uplink
-	cost = 14
+	cost = 4
+	// An empty uplink is kinda useless.
 	surplus = 0
 
 /datum/uplink_item/implants/adrenal
