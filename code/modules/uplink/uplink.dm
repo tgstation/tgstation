@@ -25,6 +25,10 @@ var/global/list/uplinks = list()
 	uplinks += src
 	uplink_items = get_uplink_items(gamemode)
 
+/obj/item/device/uplink/proc/set_gamemode(gamemode)
+	src.gamemode = gamemode
+	uplink_items = get_uplink_items(gamemode)
+
 /obj/item/device/uplink/Destroy()
 	uplinks -= src
 	return ..()
@@ -129,7 +133,7 @@ var/global/list/uplinks = list()
 
 /obj/item/device/radio/uplink/nuclear/New()
 	..()
-	hidden_uplink.gamemode = /datum/game_mode/nuclear
+	hidden_uplink.set_gamemode(/datum/game_mode/nuclear)
 
 /obj/item/device/multitool/uplink/New()
 	..()

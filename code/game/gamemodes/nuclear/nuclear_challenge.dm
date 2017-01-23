@@ -55,7 +55,7 @@
 	var/obj/item/device/radio/uplink/nuclear/U = new(get_turf(user))
 	U.hidden_uplink.owner = "[user.key]"
 	U.hidden_uplink.telecrystals = CHALLENGE_TELECRYSTALS
-	U.hidden_uplink.gamemode = /datum/game_mode/nuclear
+	U.hidden_uplink.set_gamemode(/datum/game_mode/nuclear)
 	config.shuttle_refuel_delay = max(config.shuttle_refuel_delay, CHALLENGE_SHUTTLE_DELAY)
 	qdel(src)
 
