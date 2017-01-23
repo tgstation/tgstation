@@ -112,6 +112,23 @@
 			user << "<span class='notice'>You insert [W].</span>"
 			playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
 			src.updateUsrDialog()
+	else if(istype(W,/obj/item/device/multitool))
+		var/obj/item/device/multitool/P = W
+		
+		if(istype(P.buffer, /obj/machinery/clonepod))
+			if(get_area_master(P.buffer) != get_area_master(src))
+				user << "<font color = #666633>-% Cannot link machines across power zones. Buffer cleared %-</font color>"
+				P.buffer = null
+				return
+			user << "<font color = #666633>-% Successfully linked [P.buffer] with [src] %-</font color>"
+			var/obj/machinery/clonepod/pod = P.buffer
+			if(pod.connected)
+				pod.connected.DetachCloner(pod)
+			AttachCloner(pod)
+		else
+			P.buffer = src
+			user << "<font color = #666633>-% Successfully stored \ref[P.buffer] [P.buffer.name] in buffer %-</font color>"
+		return
 	else
 		return ..()
 
