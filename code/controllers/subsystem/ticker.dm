@@ -74,6 +74,8 @@ var/datum/subsystem/ticker/ticker
 			world << "<span class='boldnotice'>Welcome to [station_name()]!</span>"
 			world << "Please set up your character and select \"Ready\". The game will start in [config.lobby_countdown] seconds."
 			current_state = GAME_STATE_PREGAME
+			for(var/client/C in clients)
+				window_flash(C) //let them know lobby has opened up.
 
 		if(GAME_STATE_PREGAME)
 				//lobby stats for statpanels
@@ -493,7 +495,6 @@ var/datum/subsystem/ticker/ticker
 				world << "<b><font color='green'>The borers were successful!</font></b>"
 			else
 				world << "<b><font color='red'>The borers have failed!</font></b>"
-	return TRUE
 
 	mode.declare_station_goal_completion()
 

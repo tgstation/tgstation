@@ -447,7 +447,7 @@
 			minerals += M
 	if(minerals.len)
 		for(var/turf/closed/mineral/M in minerals)
-			var/obj/effect/overlay/temp/mining_overlay/C = PoolOrNew(/obj/effect/overlay/temp/mining_overlay, M)
+			var/obj/effect/overlay/temp/mining_overlay/C = new /obj/effect/overlay/temp/mining_overlay(M)
 			C.icon_state = M.scan_state
 
 /obj/effect/overlay/temp/mining_overlay
@@ -542,7 +542,7 @@
 		var/target_turf = get_turf(target)
 		if(ismineralturf(target_turf))
 			var/turf/closed/mineral/M = target_turf
-			PoolOrNew(/obj/effect/overlay/temp/kinetic_blast, M)
+			new /obj/effect/overlay/temp/kinetic_blast(M)
 			M.gets_drilled(firer)
 	..()
 
@@ -567,7 +567,7 @@
 		return
 	if(proximity_flag && target == mark && isliving(target))
 		var/mob/living/L = target
-		PoolOrNew(/obj/effect/overlay/temp/kinetic_blast, get_turf(L))
+		new /obj/effect/overlay/temp/kinetic_blast(get_turf(L))
 		mark = 0
 		if(L.mob_size >= MOB_SIZE_LARGE)
 			L.underlays -= marked_image

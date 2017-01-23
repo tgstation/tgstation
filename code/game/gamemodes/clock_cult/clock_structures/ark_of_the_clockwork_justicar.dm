@@ -3,8 +3,8 @@
 	name = "Gateway to the Celestial Derelict"
 	desc = "A massive, thrumming rip in spacetime."
 	clockwork_desc = "A portal to the Celestial Derelict. Massive and intimidating, it is the only thing that can both transport Ratvar and withstand the massive amount of energy he emits."
-	obj_integrity = 600
-	max_integrity = 600
+	obj_integrity = 500
+	max_integrity = 500
 	mouse_opacity = 2
 	icon = 'icons/effects/clockwork_effects.dmi'
 	icon_state = "nothing"
@@ -113,7 +113,7 @@
 
 /obj/structure/destructible/clockwork/massive/celestial_gateway/proc/make_glow()
 	if(!glow)
-		glow = PoolOrNew(/obj/effect/clockwork/overlay/gateway_glow, get_turf(src))
+		glow = new /obj/effect/clockwork/overlay/gateway_glow(get_turf(src))
 		glow.linked = src
 
 /obj/structure/destructible/clockwork/massive/celestial_gateway/ex_act(severity)
@@ -164,7 +164,7 @@
 			var/turf/T = t
 			T.ChangeTurf(/turf/open/floor/clockwork)
 	for(var/obj/O in orange(1, src))
-		if(!istype(O, /obj/effect) && O.density)
+		if(!O.pulledby && !istype(O, /obj/effect) && O.density)
 			if(!step_away(O, src, 2) || get_dist(O, src) < 2)
 				O.take_damage(50, BURN, "bomb")
 			O.update_icon()

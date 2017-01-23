@@ -248,7 +248,7 @@ var/last_irc_status = 0
 		if(ticker && ticker.round_end_sound)
 			world << sound(ticker.round_end_sound)
 		else
-			world << sound(pick('sound/AI/newroundsexy.ogg','sound/misc/apcdestroyed.ogg','sound/misc/bangindonk.ogg','sound/misc/leavingtg.ogg', 'sound/misc/its_only_game.ogg')) // random end sounds!! - LastyBatsy
+			world << sound(pick('sound/AI/newroundsexy.ogg','sound/misc/apcdestroyed.ogg','sound/misc/bangindonk.ogg','sound/misc/leavingtg.ogg', 'sound/misc/its_only_game.ogg', 'sound/misc/yeehaw.ogg')) // random end sounds!! - LastyBatsy
 	sleep(soundwait)
 	Master.Shutdown()	//run SS shutdowns
 	for(var/thing in clients)
@@ -293,6 +293,10 @@ var/inerror = 0
 
 /world/proc/load_motd()
 	join_motd = file2text("config/motd.txt")
+	join_motd += "<br>"
+	for(var/line in revdata.testmerge)
+		if(line)
+			join_motd += "Test merge active of PR <a href='[config.githuburl]/pull/[line]'>#[line]</a><br>"
 
 /world/proc/load_configuration()
 	protected_config = new /datum/protected_configuration()

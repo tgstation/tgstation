@@ -1,0 +1,4 @@
+author: "Tofa01"
+delete-after: True
+changes: 
+  - rscadd: "[Delta Station] Adds a tracking beacon to AI MiniSat Exterior Hallway"
