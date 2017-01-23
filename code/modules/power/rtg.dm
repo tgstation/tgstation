@@ -60,14 +60,9 @@
 	return ..()
 
 /obj/machinery/power/rtg/attack_hand(mob/user)
-	if(can_buckle && isliving(user.pulling) && user.a_intent == INTENT_GRAB && !has_buckled_mobs())
-		var/mob/living/L = user.pulling
-		if(L.buckled)
-			return
-		L.loc = src.loc
-		user_buckle_mob(L, user)
-	else
-		..()
+	if(user.a_intent == INTENT_GRAB && user_buckle_mob(user.pulling, user, check_loc = 0))
+		return
+	..()
 
 
 /obj/machinery/power/rtg/advanced
