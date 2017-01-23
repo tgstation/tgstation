@@ -325,3 +325,8 @@
 	for(var/i in 1 to 3)
 		new/obj/item/cardboard_cutout/adaptive(src)
 	new/obj/item/toy/crayon/rainbow(src)
+
+/obj/item/weapon/storage/box/syndie_kit/greytide/New()
+	..()
+	for(var/i in 1 to 5)
+		new/obj/item/toy/carpplushie/dehy_carp/greytide
