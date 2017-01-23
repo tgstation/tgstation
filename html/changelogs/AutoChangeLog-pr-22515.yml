@@ -1,5 +1,0 @@
-author: "XDTM"
-delete-after: True
-changes: 
-  - rscadd: "Xenobiology consoles are now buildable from circuitboards in R&D. They'll be limited to the area they're built in plus any area with the same name."
-  - rscadd: "Stock Exchange computers are now also buildable this way."

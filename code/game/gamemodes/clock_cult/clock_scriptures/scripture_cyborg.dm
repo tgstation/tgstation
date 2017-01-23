@@ -37,3 +37,8 @@
 	<b>Left-click a target to place a Judicial Marker!\n\
 	Click your slab to cancel.</b></span>"
 	timeout_time = 50
+
+//Volt Void, but with a different quickbind desc
+/datum/clockwork_scripture/channeled/volt_void/cyborg
+	quickbind_desc = "Allows you to fire energy rays at target locations using your own power.<br><b>Maximum 5 chants.</b>"
+	tier = SCRIPTURE_PERIPHERAL

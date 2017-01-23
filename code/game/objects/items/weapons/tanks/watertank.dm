@@ -300,7 +300,7 @@
 		if(!Adj|| !isturf(target))
 			return
 		if(metal_synthesis_cooldown < 5)
-			var/obj/effect/particle_effect/foam/metal/F = PoolOrNew(/obj/effect/particle_effect/foam/metal, get_turf(target))
+			var/obj/effect/particle_effect/foam/metal/F = new /obj/effect/particle_effect/foam/metal(get_turf(target))
 			F.amount = 0
 			metal_synthesis_cooldown++
 			spawn(100)

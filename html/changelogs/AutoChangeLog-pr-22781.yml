@@ -1,0 +1,4 @@
+author: "Joan"
+delete-after: True
+changes: 
+  - rscadd: "Clockwork Slabs can now focus on a specific component type to produce."

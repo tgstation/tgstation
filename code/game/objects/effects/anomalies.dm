@@ -63,7 +63,7 @@
 		qdel(src)
 
 /obj/effect/anomaly/proc/anomalyNeutralize()
-	PoolOrNew(/obj/effect/particle_effect/smoke/bad, loc)
+	new /obj/effect/particle_effect/smoke/bad(loc)
 
 	for(var/atom/movable/O in src)
 		O.loc = src.loc

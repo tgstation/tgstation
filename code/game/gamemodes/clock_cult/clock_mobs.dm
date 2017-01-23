@@ -225,7 +225,7 @@
 	if(iscarbon(host))
 		resulthealth = round((abs(HEALTH_THRESHOLD_DEAD - host.health) / abs(HEALTH_THRESHOLD_DEAD - host.maxHealth)) * 100)
 	if(ratvar_awakens || resulthealth <= MARAUDER_EMERGE_THRESHOLD)
-		PoolOrNew(/obj/effect/overlay/temp/heal, list(host.loc, "#AF0AAF"))
+		new /obj/effect/overlay/temp/heal(host.loc, "#AF0AAF")
 		host.adjustBruteLoss(-1)
 		host.adjustFireLoss(-1)
 		host.adjustToxLoss(-1)
@@ -384,7 +384,7 @@
 			target.do_attack_animation(src)
 			target.changeNext_move(CLICK_CD_MELEE)
 		blockchance = initial(blockchance)
-		playsound(src, 'sound/magic/clockwork/fellowship_armory.ogg', 10, 1, 0, 1) //clang
+		playsound(src, 'sound/magic/clockwork/fellowship_armory.ogg', 30, 1, 0, 1) //clang
 		visible_message("<span class='boldannounce'>[src] blocks [target && istype(textobject, /obj/item) ? "[target]'s [textobject.name]":"\the [textobject]"]!</span>", \
 		"<span class='userdanger'>You block [target && istype(textobject, /obj/item) ? "[target]'s [textobject.name]":"\the [textobject]"]!</span>")
 		if(target && Adjacent(target))

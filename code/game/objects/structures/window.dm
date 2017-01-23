@@ -453,12 +453,12 @@
 	var/amount_of_gears = 2
 	if(!fulltile)
 		if(direct)
-			var/obj/effect/E = PoolOrNew(/obj/effect/overlay/temp/ratvar/window/single, get_turf(src))
+			var/obj/effect/E = new /obj/effect/overlay/temp/ratvar/window/single(get_turf(src))
 			setDir(direct)
 			E.setDir(direct)
 			made_glow = TRUE
 	else
-		PoolOrNew(/obj/effect/overlay/temp/ratvar/window, get_turf(src))
+		new /obj/effect/overlay/temp/ratvar/window(get_turf(src))
 		made_glow = TRUE
 		amount_of_gears = 4
 	for(var/i in 1 to amount_of_gears)
@@ -467,7 +467,7 @@
 
 /obj/structure/window/reinforced/clockwork/setDir(direct)
 	if(!made_glow)
-		var/obj/effect/E = PoolOrNew(/obj/effect/overlay/temp/ratvar/window/single, get_turf(src))
+		var/obj/effect/E = new /obj/effect/overlay/temp/ratvar/window/single(get_turf(src))
 		E.setDir(direct)
 		made_glow = TRUE
 	..()
