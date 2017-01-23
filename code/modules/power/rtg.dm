@@ -23,7 +23,6 @@
 	..()
 	var/obj/item/weapon/circuitboard/machine/B = new board_path(null)
 	B.apply_default_parts(src)
-	connect_to_network()
 
 /obj/item/weapon/circuitboard/machine/rtg
 	name = "RTG (Machine Board)"
@@ -34,7 +33,7 @@
 		/obj/item/weapon/stock_parts/capacitor = 1,
 		/obj/item/stack/sheet/mineral/uranium = 10) // We have no Pu-238, and this is the closest thing to it.
 
-/obj/machinery/power/rtg/initialize()
+/obj/machinery/power/rtg/Initialize()
 	..()
 	connect_to_network()
 

@@ -37,10 +37,8 @@
 	..()
 	radio = new(src) //Spawns a radio inside the MMI.
 	radio.broadcasting = 0 //researching radio mmis turned the robofabs into radios because this didnt start as 0.
-	if(config)
-		laws.set_laws_config()
 
-/obj/item/device/mmi/initialize()
+/obj/item/device/mmi/Initialize()
 	..()
 	laws.set_laws_config()
 
