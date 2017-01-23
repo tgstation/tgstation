@@ -28,37 +28,45 @@
 	pods = null
 	return ..()
 
-/obj/machinery/computer/cloning/proc/GetAvailablePod()
+/obj/machinery/computer/cloning/proc/GetAvailablePod(mind = null)
 	for(var/P in pods)
 		var/obj/machinery/clonepod/pod = P
+		if(pod.occupant && pod.clonemind == mind)
+			return null
 		if(pod.is_operational() && !(pod.occupant || pod.mess))
 			return pod
 
-/obj/machinery/computer/cloning/proc/GetEfficientPod()
+/obj/machinery/computer/cloning/proc/HasEfficientPod()
 	for(var/P in pods)
 		var/obj/machinery/clonepod/pod = P
 		if(pod.is_operational() && pod.efficiency > 5)
-			return pod
+			return TRUE
+	return FALSE
 
-/obj/machinery/computer/cloning/proc/GetAvailableEfficientPod()
+/obj/machinery/computer/cloning/proc/GetAvailableEfficientPod(mind = null)
 	for(var/P in pods)
 		var/obj/machinery/clonepod/pod = P
-		if(pod.is_operational() && !(pod.occupant || pod.mess) && pod.efficiency > 5)
+		if(pod.occupant && pod.clonemind == mind)
 			return pod
+		else if(!. && pod.is_operational() && !(pod.occupant || pod.mess) && pod.efficiency > 5)
+			. = pod
 
 /obj/machinery/computer/cloning/process()
 	if(!(scanner && pods.len && autoprocess))
-		return
-
-	var/obj/machinery/clonepod/pod = GetAvailableEfficientPod()
-		
-	if(!pod)
 		return
 
 	if(scanner.occupant && scanner.scan_level > 2)
 		scan_mob(scanner.occupant)
 
 	for(var/datum/data/record/R in records)
+		var/obj/machinery/clonepod/pod = GetAvailableEfficientPod(R.fields["mind"])
+			
+		if(!pod)
+			return
+
+		if(pod.occupant)
+			continue	//how though?
+
 		if(pod.growclone(R.fields["ckey"], R.fields["name"], R.fields["UI"], R.fields["SE"], R.fields["mind"], R.fields["mrace"], R.fields["features"], R.fields["factions"]))
 			records -= R
 
@@ -149,8 +157,7 @@
 	var/dat = ""
 	dat += "<a href='byond://?src=\ref[src];refresh=1'>Refresh</a>"
 	
-	var/obj/machinery/clonepod/pod = GetEfficientPod()
-	if(scanner && pod && scanner.scan_level > 2)
+	if(scanner && HasEfficientPod() && scanner.scan_level > 2)
 		if(!autoprocess)
 			dat += "<a href='byond://?src=\ref[src];task=autoprocess'>Autoprocess</a>"
 		else
@@ -394,6 +401,9 @@
 				playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
 			else if(!config.revival_cloning)
 				temp = "<font class='bad'>Unable to initiate cloning cycle.</font>"
+				playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
+			else if(pod.occupant)
+				temp = "<font class='bad'>Cloning cycle already in progress.</font>"
 				playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
 			else if(pod.growclone(C.fields["ckey"], C.fields["name"], C.fields["UI"], C.fields["SE"], C.fields["mind"], C.fields["mrace"], C.fields["features"], C.fields["factions"]))
 				temp = "[C.fields["name"]] => <font class='good'>Cloning cycle in progress...</font>"
