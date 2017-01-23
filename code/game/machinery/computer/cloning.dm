@@ -18,10 +18,9 @@
 	var/loading = 0 // Nice loading text
 	var/autoprocess = 0
 
-/obj/machinery/computer/cloning/New()
+/obj/machinery/computer/cloning/Initialize()
 	..()
-	spawn(5)
-		updatemodules(TRUE)
+	updatemodules(TRUE)
 
 /obj/machinery/computer/cloning/Destroy()
 	for(var/P in pods)
