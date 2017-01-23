@@ -7,6 +7,7 @@ env:
     - BYOND_MINOR="1346"
     - NODE_VERSION="4"
     - BUILD_TOOLS=false
+    - DME_NAME="apollo"
     - DM_MAPFILE=""
     matrix:
     - BUILD_TOOLS=true
@@ -41,7 +42,7 @@ before_script:
   - tools/travis/before_build_byond.sh
 
 script:
-  - tools/travis/check_filedirs.sh apollo.dme
+  - tools/travis/check_filedirs.sh $DME_NAME
   - tools/travis/build_tools.sh
   - tools/travis/build_byond.sh
 
