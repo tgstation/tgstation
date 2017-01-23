@@ -392,7 +392,7 @@
 	poweralm = 0
 	})
 "ay" = (
-/turf/open/floor/plasteel/darkred/side{
+/turf/open/floor/plasteel/black{
 	dir = 9;
 	heat_capacity = 1e+006
 	},
@@ -401,7 +401,7 @@
 	name = "Syndicate Outpost"
 	})
 "az" = (
-/turf/open/floor/plasteel/darkred/corner{
+/turf/open/floor/plasteel/black{
 	dir = 1;
 	heat_capacity = 1e+006
 	},
@@ -418,7 +418,7 @@
 	name = "Syndicate Outpost"
 	})
 "aB" = (
-/turf/open/floor/plasteel/darkred/corner{
+/turf/open/floor/plasteel/black{
 	dir = 4;
 	heat_capacity = 1e+006
 	},
@@ -428,7 +428,7 @@
 	})
 "aC" = (
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/darkred/side{
+/turf/open/floor/plasteel/black{
 	dir = 5;
 	heat_capacity = 1e+006
 	},
@@ -478,7 +478,7 @@
 	})
 "aF" = (
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/darkred/corner{
+/turf/open/floor/plasteel/black{
 	dir = 1;
 	heat_capacity = 1e+006
 	},
@@ -490,7 +490,7 @@
 /obj/machinery/gateway{
 	dir = 9
 	},
-/turf/open/floor/plasteel/vault{
+/turf/open/floor/plasteel/black{
 	dir = 1;
 	heat_capacity = 1e+006
 	},
@@ -502,7 +502,7 @@
 /obj/machinery/gateway{
 	dir = 1
 	},
-/turf/open/floor/plasteel/vault{
+/turf/open/floor/plasteel/black{
 	dir = 8;
 	heat_capacity = 1e+006
 	},
@@ -514,7 +514,7 @@
 /obj/machinery/gateway{
 	dir = 5
 	},
-/turf/open/floor/plasteel/vault{
+/turf/open/floor/plasteel/black{
 	dir = 4;
 	heat_capacity = 1e+006
 	},
@@ -619,7 +619,7 @@
 /obj/machinery/gateway{
 	dir = 8
 	},
-/turf/open/floor/plasteel/vault{
+/turf/open/floor/plasteel/black{
 	dir = 8;
 	heat_capacity = 1e+006
 	},
@@ -642,7 +642,7 @@
 /obj/machinery/gateway{
 	dir = 4
 	},
-/turf/open/floor/plasteel/vault{
+/turf/open/floor/plasteel/black{
 	dir = 8;
 	heat_capacity = 1e+006
 	},
@@ -709,7 +709,7 @@
 	name = "Syndicate Outpost"
 	})
 "aV" = (
-/turf/open/floor/plasteel/darkred/corner{
+/turf/open/floor/plasteel/black{
 	dir = 8;
 	heat_capacity = 1e+006
 	},
@@ -721,7 +721,7 @@
 /obj/machinery/gateway{
 	dir = 10
 	},
-/turf/open/floor/plasteel/vault{
+/turf/open/floor/plasteel/black{
 	dir = 4;
 	heat_capacity = 1e+006
 	},
@@ -735,7 +735,7 @@
 	icon_state = "0-2";
 	d2 = 2
 	},
-/turf/open/floor/plasteel/vault{
+/turf/open/floor/plasteel/black{
 	dir = 8;
 	heat_capacity = 1e+006
 	},
@@ -748,7 +748,7 @@
 	dir = 6
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/vault{
+/turf/open/floor/plasteel/black{
 	dir = 1;
 	heat_capacity = 1e+006
 	},
@@ -757,7 +757,7 @@
 	name = "Syndicate Outpost"
 	})
 "aZ" = (
-/turf/open/floor/plasteel/darkred/corner{
+/turf/open/floor/plasteel/black{
 	dir = 2;
 	heat_capacity = 1e+006
 	},
@@ -837,7 +837,7 @@
 	})
 "bf" = (
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/darkred/side{
+/turf/open/floor/plasteel/black{
 	dir = 10;
 	heat_capacity = 1e+006
 	},
@@ -861,7 +861,7 @@
 	})
 "bh" = (
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/darkred/corner{
+/turf/open/floor/plasteel/black{
 	dir = 2;
 	heat_capacity = 1e+006
 	},
@@ -870,7 +870,7 @@
 	name = "Syndicate Outpost"
 	})
 "bi" = (
-/turf/open/floor/plasteel/darkred/side{
+/turf/open/floor/plasteel/black{
 	dir = 6;
 	heat_capacity = 1e+006
 	},
@@ -937,7 +937,7 @@
 	serial_number = 17
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/bar{
+/turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
 /area/awaycontent/a4{
@@ -946,7 +946,7 @@
 	})
 "bn" = (
 /obj/item/weapon/cigbutt,
-/turf/open/floor/plasteel/bar{
+/turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
 /area/awaycontent/a4{
@@ -960,7 +960,7 @@
 	pixel_y = 23;
 	req_access = "150"
 	},
-/turf/open/floor/plasteel/bar{
+/turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
 /area/awaycontent/a4{
@@ -976,7 +976,7 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/turf/open/floor/plasteel/bar{
+/turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
 /area/awaycontent/a4{
@@ -995,7 +995,7 @@
 /obj/item/device/radio/off{
 	pixel_x = 2
 	},
-/turf/open/floor/plasteel/warning{
+/turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
 /area/awaycontent/a4{
@@ -1016,7 +1016,7 @@
 	info = "Log 1:<br>We got our promised supply drop today. We were only meant to get it, what, a week ago? This bloody gateway keeps desyncing itself, and that means subsisting off recycled water and carb packs. No clue where the damn thing connects to on its off days, and HQ say we are 'not to touch it if it isn't linking to command.' We dumped off the assload of crates Jim filled, got our boxes of oxygen, food and drink, and closed the portal.<br><br>Log 2:<br>Damn thing is acting up again. Three days no contact this time. I thought I heard clanking noises from it yesterday. Jim is going on about the NT base or some shit. We've been over this before - They don't know we're here, that engineer was too drunk to recognise his suit, especially since I had it painted orange. He's starting to get annoying. We're safe.<br><br>Log 3:<br>Gateway synced itself up automatically today. I opened it for an instant to spy through it, got a glimpse of the inside of a transport container. Either HQ's redecorating or something, or there's more than two of these things.";
 	name = "Personal Log"
 	},
-/turf/open/floor/plasteel/warning{
+/turf/open/floor/plasteel{
 	dir = 6;
 	heat_capacity = 1e+006
 	},
@@ -1036,7 +1036,7 @@
 	icon_state = "1-2";
 	pixel_y = 0
 	},
-/turf/open/floor/plasteel/warning{
+/turf/open/floor/plasteel{
 	dir = 1;
 	heat_capacity = 1e+006
 	},
@@ -1051,7 +1051,7 @@
 /obj/structure/table,
 /obj/item/weapon/storage/firstaid/regular,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/warning{
+/turf/open/floor/plasteel{
 	dir = 10;
 	heat_capacity = 1e+006
 	},
@@ -1068,7 +1068,7 @@
 	pixel_y = 4
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/warning{
+/turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
 /area/awaycontent/a4{
@@ -1103,7 +1103,7 @@
 	name = "Syndicate Outpost"
 	})
 "bx" = (
-/turf/open/floor/plasteel/bar{
+/turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
 /area/awaycontent/a4{
@@ -1113,7 +1113,7 @@
 "by" = (
 /obj/structure/chair/stool,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/bar{
+/turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
 /area/awaycontent/a4{
@@ -1128,7 +1128,7 @@
 	},
 /obj/item/trash/plate,
 /obj/item/weapon/cigbutt,
-/turf/open/floor/plasteel/bar{
+/turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
 /area/awaycontent/a4{
@@ -1163,7 +1163,7 @@
 	icon_state = "1-2";
 	pixel_y = 0
 	},
-/turf/open/floor/plasteel/floorgrime{
+/turf/open/floor/plasteel{
 	dir = 8;
 	heat_capacity = 1e+006
 	},
@@ -1192,7 +1192,7 @@
 	pixel_y = 0;
 	req_access = "150"
 	},
-/turf/open/floor/plasteel/floorgrime{
+/turf/open/floor/plasteel{
 	dir = 8;
 	heat_capacity = 1e+006
 	},
@@ -1215,7 +1215,7 @@
 /obj/structure/closet/crate/bin,
 /obj/item/trash/syndi_cakes,
 /obj/item/trash/sosjerky,
-/turf/open/floor/plasteel/bar{
+/turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
 /area/awaycontent/a4{
@@ -1224,7 +1224,7 @@
 	})
 "bH" = (
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/bar{
+/turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
 /area/awaycontent/a4{
@@ -1233,7 +1233,7 @@
 	})
 "bI" = (
 /obj/structure/chair/stool,
-/turf/open/floor/plasteel/bar{
+/turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
 /area/awaycontent/a4{
@@ -1243,7 +1243,7 @@
 "bJ" = (
 /obj/structure/table,
 /obj/item/weapon/storage/box/donkpockets,
-/turf/open/floor/plasteel/bar{
+/turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
 /area/awaycontent/a4{
@@ -1251,7 +1251,7 @@
 	name = "Syndicate Outpost"
 	})
 "bK" = (
-/turf/open/floor/plasteel/red/side{
+/turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
 /area/awaycontent/a4{
@@ -1260,7 +1260,7 @@
 	})
 "bL" = (
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/red/side{
+/turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
 /area/awaycontent/a4{
@@ -1272,7 +1272,7 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/turf/open/floor/plasteel/red/side{
+/turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
 /area/awaycontent/a4{
@@ -1281,7 +1281,7 @@
 	})
 "bN" = (
 /obj/structure/closet/l3closet,
-/turf/open/floor/plasteel/red/side{
+/turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
 /area/awaycontent/a4{
@@ -1342,7 +1342,7 @@
 	},
 /obj/item/clothing/gloves/color/yellow,
 /obj/item/device/multitool,
-/turf/open/floor/plating/warnplate{
+/turf/open/floor/plating{
 	dir = 9;
 	heat_capacity = 1e+006
 	},
@@ -1360,7 +1360,7 @@
 	d2 = 4
 	},
 /obj/machinery/computer/monitor,
-/turf/open/floor/plating/warnplate{
+/turf/open/floor/plating{
 	dir = 5;
 	heat_capacity = 1e+006
 	},
@@ -1395,7 +1395,7 @@
 	pixel_y = 23;
 	req_access = "150"
 	},
-/turf/open/floor/plating/warnplate{
+/turf/open/floor/plating{
 	dir = 9;
 	heat_capacity = 1e+006
 	},
@@ -1405,7 +1405,7 @@
 	})
 "bV" = (
 /obj/machinery/portable_atmospherics/canister/air,
-/turf/open/floor/plating/warnplate{
+/turf/open/floor/plating{
 	dir = 5;
 	heat_capacity = 1e+006
 	},
@@ -1434,7 +1434,7 @@
 	dir = 2;
 	id = "awaysyndie"
 	},
-/turf/open/floor/plating/warnplate{
+/turf/open/floor/plating{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	dir = 4;
 	heat_capacity = 1e+006;
@@ -1472,7 +1472,7 @@
 	pixel_y = 32;
 	serial_number = 5
 	},
-/turf/open/floor/plasteel/loadingarea{
+/turf/open/floor/plasteel{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	dir = 8;
 	heat_capacity = 1e+006;
@@ -1483,7 +1483,7 @@
 	name = "Syndicate Outpost"
 	})
 "ca" = (
-/turf/open/floor/plasteel/floorgrime{
+/turf/open/floor/plasteel{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	dir = 8;
 	heat_capacity = 1e+006;
@@ -1498,7 +1498,7 @@
 /obj/structure/alien/weeds{
 	icon_state = "weeds1"
 	},
-/turf/open/floor/plasteel/red/side{
+/turf/open/floor/plasteel{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	dir = 4;
 	heat_capacity = 1e+006;
@@ -1510,7 +1510,7 @@
 	})
 "cc" = (
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/red/side{
+/turf/open/floor/plasteel{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	dir = 8;
 	heat_capacity = 1e+006;
@@ -1544,7 +1544,7 @@
 	pixel_y = 32
 	},
 /obj/structure/alien/weeds/node,
-/turf/open/floor/plasteel/warning/corner{
+/turf/open/floor/plasteel{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	dir = 8;
 	heat_capacity = 1e+006;
@@ -1562,7 +1562,7 @@
 	pixel_y = 0
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/warning{
+/turf/open/floor/plasteel{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	dir = 1;
 	heat_capacity = 1e+006;
@@ -1577,7 +1577,7 @@
 	pixel_x = 0;
 	pixel_y = 32
 	},
-/turf/open/floor/plasteel/warning/corner{
+/turf/open/floor/plasteel{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	dir = 4;
 	heat_capacity = 1e+006;
@@ -1595,7 +1595,7 @@
 	status = 2
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/red/side{
+/turf/open/floor/plasteel{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	dir = 4;
 	heat_capacity = 1e+006;
@@ -1622,7 +1622,7 @@
 	info = "Alright, listen up. If you're reading this, I'm either taking a shit or I've been recalled back to Command. Either way, you'll need to know how to restore power. We've stolen this stuff from Nanotrasen, so all the equipment is jury-rigged. We have generators that work on both plasma and uranium, about 50 sheets should power the outpost for quite a while. If the generators aren't working, which is very likely, take the power cell on the desk and put it into the APC in the hallway. That should get the place running, at least for a little while.";
 	name = "Engineering Instructions"
 	},
-/turf/open/floor/plating/warnplate{
+/turf/open/floor/plating{
 	dir = 8;
 	heat_capacity = 1e+006
 	},
@@ -1650,7 +1650,7 @@
 	icon_state = "0-2";
 	d2 = 2
 	},
-/turf/open/floor/plating/warnplate{
+/turf/open/floor/plating{
 	dir = 1;
 	heat_capacity = 1e+006
 	},
@@ -1660,7 +1660,7 @@
 	})
 "cl" = (
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating/warnplate/corner{
+/turf/open/floor/plating{
 	dir = 4;
 	heat_capacity = 1e+006
 	},
@@ -1678,7 +1678,7 @@
 	pixel_y = 0;
 	serial_number = 10
 	},
-/turf/open/floor/plating/warnplate{
+/turf/open/floor/plating{
 	dir = 4;
 	heat_capacity = 1e+006
 	},
@@ -1697,7 +1697,7 @@
 	name = "Syndicate Outpost"
 	})
 "co" = (
-/turf/open/floor/plasteel/warning{
+/turf/open/floor/plasteel{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	dir = 8;
 	heat_capacity = 1e+006;
@@ -1717,7 +1717,7 @@
 	name = "Syndicate Outpost"
 	})
 "cq" = (
-/turf/open/floor/plasteel/red/side{
+/turf/open/floor/plasteel{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	dir = 4;
 	heat_capacity = 1e+006;
@@ -1748,7 +1748,7 @@
 	name = "Syndicate Outpost"
 	})
 "cs" = (
-/turf/open/floor/plasteel/red/side{
+/turf/open/floor/plasteel{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	dir = 8;
 	heat_capacity = 1e+006;
@@ -1785,7 +1785,7 @@
 	icon_state = "4-8";
 	pixel_x = 0
 	},
-/turf/open/floor/plasteel/floorgrime{
+/turf/open/floor/plasteel{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	dir = 8;
 	heat_capacity = 1e+006;
@@ -1802,7 +1802,7 @@
 	icon_state = "4-8";
 	pixel_x = 0
 	},
-/turf/open/floor/plasteel/red/side{
+/turf/open/floor/plasteel{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	dir = 4;
 	heat_capacity = 1e+006;
@@ -1899,7 +1899,7 @@
 "cB" = (
 /obj/machinery/space_heater,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating/warnplate{
+/turf/open/floor/plating{
 	dir = 4;
 	heat_capacity = 1e+006
 	},
@@ -1912,7 +1912,7 @@
 	dir = 1;
 	output_dir = 2
 	},
-/turf/open/floor/plating/warnplate{
+/turf/open/floor/plating{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	dir = 4;
 	heat_capacity = 1e+006;
@@ -1933,7 +1933,7 @@
 	})
 "cE" = (
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/warning{
+/turf/open/floor/plasteel{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	dir = 8;
 	heat_capacity = 1e+006;
@@ -1945,7 +1945,7 @@
 	})
 "cF" = (
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/red/side{
+/turf/open/floor/plasteel{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	dir = 4;
 	heat_capacity = 1e+006;
@@ -1976,7 +1976,7 @@
 	name = "Syndicate Outpost"
 	})
 "cH" = (
-/turf/open/floor/plasteel/red/side{
+/turf/open/floor/plasteel{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	dir = 10;
 	heat_capacity = 1e+006;
@@ -1988,7 +1988,7 @@
 	})
 "cI" = (
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/red/side{
+/turf/open/floor/plasteel{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	heat_capacity = 1e+006;
 	temperature = 251
@@ -1998,7 +1998,7 @@
 	name = "Syndicate Outpost"
 	})
 "cJ" = (
-/turf/open/floor/plasteel/red/side{
+/turf/open/floor/plasteel{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	heat_capacity = 1e+006;
 	temperature = 251
@@ -2019,7 +2019,7 @@
 	req_access = "150";
 	start_charge = 0
 	},
-/turf/open/floor/plasteel/red/side{
+/turf/open/floor/plasteel{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	heat_capacity = 1e+006;
 	temperature = 251
@@ -2032,7 +2032,7 @@
 /obj/structure/alien/weeds{
 	icon_state = "weeds2"
 	},
-/turf/open/floor/plasteel/red/side{
+/turf/open/floor/plasteel{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	dir = 6;
 	heat_capacity = 1e+006;
@@ -2045,7 +2045,7 @@
 "cM" = (
 /obj/item/weapon/storage/box/lights/mixed,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating/warnplate{
+/turf/open/floor/plating{
 	dir = 10;
 	heat_capacity = 1e+006
 	},
@@ -2059,7 +2059,7 @@
 	desc = "A portable generator for emergency backup power.";
 	name = "P.A.C.M.A.N.-type portable generator"
 	},
-/turf/open/floor/plating/warnplate{
+/turf/open/floor/plating{
 	dir = 2;
 	heat_capacity = 1e+006
 	},
@@ -2074,7 +2074,7 @@
 	desc = "A portable generator for emergency backup power.";
 	name = "S.U.P.E.R.P.A.C.M.A.N.-type portable generator"
 	},
-/turf/open/floor/plating/warnplate{
+/turf/open/floor/plating{
 	dir = 2;
 	heat_capacity = 1e+006
 	},
@@ -2084,7 +2084,7 @@
 	})
 "cP" = (
 /obj/machinery/portable_atmospherics/scrubber,
-/turf/open/floor/plating/warnplate{
+/turf/open/floor/plating{
 	dir = 6;
 	heat_capacity = 1e+006
 	},
@@ -2098,7 +2098,7 @@
 	layer = 3.1;
 	name = "mining conveyor"
 	},
-/turf/open/floor/plasteel/warning{
+/turf/open/floor/plasteel{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	dir = 8;
 	heat_capacity = 1e+006;
@@ -2136,7 +2136,7 @@
 	icon_state = "tube-broken";
 	status = 2
 	},
-/turf/open/floor/plasteel/red/side{
+/turf/open/floor/plasteel{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	dir = 4;
 	heat_capacity = 1e+006;
@@ -2179,7 +2179,7 @@
 	})
 "cV" = (
 /obj/structure/alien/weeds/node,
-/turf/open/floor/plasteel/warning{
+/turf/open/floor/plasteel{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	dir = 8;
 	heat_capacity = 1e+006;
@@ -2224,7 +2224,7 @@
 /obj/structure/alien/weeds{
 	icon_state = "weeds2"
 	},
-/turf/open/floor/plasteel/bot{
+/turf/open/floor/plasteel{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	dir = 1;
 	heat_capacity = 1e+006;
@@ -2315,7 +2315,7 @@
 	input_dir = 1;
 	output_dir = 2
 	},
-/turf/open/floor/plating/warnplate{
+/turf/open/floor/plating{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	dir = 4;
 	heat_capacity = 1e+006;
@@ -2340,7 +2340,7 @@
 	amount = 10
 	},
 /obj/structure/alien/weeds,
-/turf/open/floor/plasteel/bot{
+/turf/open/floor/plasteel{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	dir = 1;
 	heat_capacity = 1e+006;
@@ -2413,7 +2413,7 @@
 /obj/structure/alien/weeds{
 	icon_state = "weeds1"
 	},
-/turf/open/floor/plasteel/loadingarea{
+/turf/open/floor/plasteel{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	heat_capacity = 1e+006;
 	temperature = 251
@@ -2424,7 +2424,7 @@
 	})
 "dm" = (
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/warning{
+/turf/open/floor/plasteel{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	dir = 1;
 	heat_capacity = 1e+006;
@@ -2435,7 +2435,7 @@
 	name = "Syndicate Outpost"
 	})
 "dn" = (
-/turf/open/floor/plasteel/warning/corner{
+/turf/open/floor/plasteel{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	dir = 4;
 	heat_capacity = 1e+006;
@@ -2594,7 +2594,7 @@
 	icon_state = "bulb-broken";
 	status = 2
 	},
-/turf/open/floor/plating/warnplate{
+/turf/open/floor/plating{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	dir = 9;
 	heat_capacity = 1e+006;
@@ -2620,7 +2620,7 @@
 /obj/item/clothing/mask/gas,
 /obj/item/weapon/pickaxe/drill,
 /obj/item/clothing/head/helmet/space/syndicate/orange,
-/turf/open/floor/plating/warnplate{
+/turf/open/floor/plating{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	dir = 5;
 	heat_capacity = 1e+006;
@@ -2669,7 +2669,7 @@
 	pixel_y = -32
 	},
 /obj/machinery/portable_atmospherics/canister/oxygen,
-/turf/open/floor/plating/warnplate{
+/turf/open/floor/plating{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	dir = 10;
 	heat_capacity = 1e+006;
@@ -2694,7 +2694,7 @@
 "dD" = (
 /obj/structure/rack,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating/warnplate{
+/turf/open/floor/plating{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	dir = 6;
 	heat_capacity = 1e+006;
@@ -3132,7 +3132,7 @@
 	name = "MO19 Research"
 	})
 "ee" = (
-/turf/open/floor/plasteel/floorgrime{
+/turf/open/floor/plasteel{
 	dir = 8;
 	heat_capacity = 1e+006
 	},
@@ -3168,7 +3168,7 @@
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 4
 	},
-/turf/open/floor/plasteel/white/side{
+/turf/open/floor/plasteel/white{
 	dir = 4;
 	heat_capacity = 1e+006
 	},
@@ -3203,7 +3203,7 @@
 /obj/structure/alien/weeds{
 	icon_state = "weeds2"
 	},
-/turf/open/floor/plasteel/warning{
+/turf/open/floor/plasteel{
 	dir = 8;
 	heat_capacity = 1e+006
 	},
@@ -3350,7 +3350,7 @@
 	icon_state = "bulb-broken";
 	status = 2
 	},
-/turf/open/floor/plasteel/floorgrime{
+/turf/open/floor/plasteel{
 	dir = 8;
 	heat_capacity = 1e+006
 	},
@@ -3399,7 +3399,7 @@
 	name = "xenobiology monitor";
 	network = list("MO19X")
 	},
-/turf/open/floor/plasteel/warning{
+/turf/open/floor/plasteel{
 	dir = 8;
 	heat_capacity = 1e+006
 	},
@@ -3518,7 +3518,7 @@
 	name = "MO19 Research"
 	})
 "eK" = (
-/turf/open/floor/plasteel/white/side{
+/turf/open/floor/plasteel/white{
 	dir = 2;
 	heat_capacity = 1e+006
 	},
@@ -3530,7 +3530,7 @@
 /obj/structure/alien/weeds{
 	icon_state = "weeds2"
 	},
-/turf/open/floor/plasteel/white/side{
+/turf/open/floor/plasteel/white{
 	dir = 2;
 	heat_capacity = 1e+006
 	},
@@ -3550,7 +3550,7 @@
 	dir = 4;
 	network = list("MO19","MO19R")
 	},
-/turf/open/floor/plasteel/white/side{
+/turf/open/floor/plasteel/white{
 	dir = 6;
 	heat_capacity = 1e+006
 	},
@@ -3591,7 +3591,7 @@
 /obj/structure/alien/weeds{
 	icon_state = "weeds2"
 	},
-/turf/open/floor/plasteel/warning{
+/turf/open/floor/plasteel{
 	dir = 8;
 	heat_capacity = 1e+006
 	},
@@ -3837,7 +3837,7 @@
 	dir = 5;
 	icon_state = "ltrails_1"
 	},
-/turf/open/floor/plasteel/whitepurple/corner{
+/turf/open/floor/plasteel/white{
 	dir = 8;
 	heat_capacity = 1e+006
 	},
@@ -3857,7 +3857,7 @@
 /obj/structure/alien/weeds{
 	icon_state = "weeds1"
 	},
-/turf/open/floor/plasteel/whitepurple/corner{
+/turf/open/floor/plasteel/white{
 	dir = 2;
 	heat_capacity = 1e+006
 	},
@@ -3871,7 +3871,7 @@
 /obj/structure/alien/weeds{
 	icon_state = "weeds2"
 	},
-/turf/open/floor/plasteel/floorgrime{
+/turf/open/floor/plasteel{
 	dir = 8;
 	heat_capacity = 1e+006
 	},
@@ -3932,7 +3932,7 @@
 	},
 /obj/item/clothing/mask/facehugger/impregnated,
 /obj/item/xenos_claw,
-/turf/open/floor/plasteel/floorgrime{
+/turf/open/floor/plasteel{
 	dir = 8;
 	heat_capacity = 1e+006
 	},
@@ -3943,7 +3943,7 @@
 "fj" = (
 /obj/machinery/door/firedoor,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/warning{
+/turf/open/floor/plasteel{
 	dir = 4;
 	heat_capacity = 1e+006
 	},
@@ -3976,7 +3976,7 @@
 /obj/structure/alien/weeds{
 	icon_state = "weeds1"
 	},
-/turf/open/floor/plasteel/warning{
+/turf/open/floor/plasteel{
 	dir = 8;
 	heat_capacity = 1e+006
 	},
@@ -4118,7 +4118,7 @@
 /obj/structure/alien/weeds{
 	icon_state = "weeds2"
 	},
-/turf/open/floor/plasteel/whitepurple/corner{
+/turf/open/floor/plasteel/white{
 	dir = 8;
 	heat_capacity = 1e+006
 	},
@@ -4139,7 +4139,7 @@
 	icon_state = "1-4"
 	},
 /obj/structure/alien/weeds,
-/turf/open/floor/plasteel/whitepurple/corner{
+/turf/open/floor/plasteel/white{
 	dir = 2;
 	heat_capacity = 1e+006
 	},
@@ -4178,7 +4178,7 @@
 	icon_state = "4-8";
 	pixel_x = 0
 	},
-/turf/open/floor/plasteel/floorgrime{
+/turf/open/floor/plasteel{
 	dir = 8;
 	heat_capacity = 1e+006
 	},
@@ -4208,7 +4208,7 @@
 	pixel_x = 0
 	},
 /obj/machinery/door/firedoor,
-/turf/open/floor/plasteel/warning{
+/turf/open/floor/plasteel{
 	dir = 4;
 	heat_capacity = 1e+006
 	},
@@ -4256,7 +4256,7 @@
 /obj/item/weapon/shard{
 	icon_state = "small"
 	},
-/turf/open/floor/plasteel/warning{
+/turf/open/floor/plasteel{
 	dir = 8;
 	heat_capacity = 1e+006
 	},
@@ -4482,7 +4482,7 @@
 	info = "Entry One - 27/05/2554:<br>I just arrived, and already I hate my job. I'm stuck on this shithole of an outpost, trying to avoid these damn eggheads running all over the place preparing for god knows what. There's no crimes to stop, no syndies to kill, and I'm not even allowed to beat the fuckin' assistant senseless! They said I was transferred from Space Station 13 for 'good behavior', but this feels more like a punishment than a reward. All I know is that if I don't get some action soon, I'm going to go insane.<br><br>Entry Two - 03/06/2554:<br>Okay, so get this: we got a fuckin' deathsquad coming in today! I thought the day I saw one of them would be the day my employment was 'terminated', if you get my drift. They're escorting some sort of weird alien creature for the eggheads to study. I heard one of the docs telling the chef that this thing killed a whole security force before it was captured. I sure as hell hope that I don't have to fight it.<br><br>Entry Three - 08/06/2554:<br>My first real bit of 'action' today, if you could call it that. Crazy Ivan got in a fight with Kuester today about his Booze-O-Mat. Apparently one of the crewmembers had stolen a couple bottles of booze from the machine after Ivan disabled the ID lock. Tell you the truth, I don't blame the thief. Everyone is going a little stir-crazy in here, and the bartender is being damn stingy with the alcohol. Either way, once they started to pick a fight, I had to take them down. It's a damn shame that we don't have a brig, though. I had to lock Ivan in a fuckin' freezer, for god's sake. Let's hope that we can keep our sanity together, at least for a while.<br><br>Entry Four - 10/06/2554:<br>Jesus fucking Christ riding on a motorbike. These things the scientists are studying are terrifying! Fucking great huge purple bug things as tall as the ceiling, with blades for arms and drooling at the mouth. I don't think my taser will do jack shit against these damn things, but the eggheads say that they're safely contained. If they do, I have a feeling that it's only a matter of time before we're all screwed. These bastards look like walking death.<br><br>Entry Five - 18/06/2554:<br>Finally caught who stole the booze from Kuester. It was that fuckin' loser assistant Steve! He was in the dorms, chugging his worries away. I took one of the bottles back to the barkeep, but no one has to know about this second one. I think I'm gonna enjoy this while watching tomorrow's Thunderdome match.<br><br>Entry Six - 19/06/2554:<br>Oh, great. The chef is still sleeping, so we get Ivan's gruel for breakfast today. I overheard Sano and Douglas saying something about the aliens being restless, so we might get some action today. As long as it happens after the big game, I'm fine with it. I still got one beer to drink before I'm ready to die.";
 	name = "Personal Log - Kenneth Cunningham"
 	},
-/turf/open/floor/plasteel/red/side{
+/turf/open/floor/plasteel{
 	dir = 9;
 	heat_capacity = 1e+006
 	},
@@ -4511,7 +4511,7 @@
 	pixel_y = 23;
 	req_access = null
 	},
-/turf/open/floor/plasteel/red/side{
+/turf/open/floor/plasteel{
 	dir = 1;
 	heat_capacity = 1e+006
 	},
@@ -4529,7 +4529,7 @@
 /obj/item/weapon/screwdriver{
 	pixel_y = 10
 	},
-/turf/open/floor/plasteel/red/side{
+/turf/open/floor/plasteel{
 	dir = 5;
 	heat_capacity = 1e+006
 	},
@@ -4551,7 +4551,7 @@
 /obj/structure/alien/weeds{
 	icon_state = "weeds1"
 	},
-/turf/open/floor/plasteel/whitepurple/corner{
+/turf/open/floor/plasteel/white{
 	dir = 8;
 	heat_capacity = 1e+006
 	},
@@ -4572,7 +4572,7 @@
 /obj/structure/alien/weeds{
 	icon_state = "weeds2"
 	},
-/turf/open/floor/plasteel/whitepurple/corner{
+/turf/open/floor/plasteel/white{
 	dir = 2;
 	heat_capacity = 1e+006
 	},
@@ -4595,7 +4595,7 @@
 	pixel_x = 0;
 	pixel_y = -29
 	},
-/turf/open/floor/plasteel/warning{
+/turf/open/floor/plasteel{
 	dir = 4;
 	heat_capacity = 1e+006
 	},
@@ -4609,7 +4609,7 @@
 	},
 /obj/structure/closet/l3closet/scientist,
 /obj/structure/alien/weeds,
-/turf/open/floor/plasteel/warning{
+/turf/open/floor/plasteel{
 	dir = 8;
 	heat_capacity = 1e+006
 	},
@@ -4711,7 +4711,7 @@
 	pixel_x = -30;
 	pixel_y = 0
 	},
-/turf/open/floor/plasteel/red/side{
+/turf/open/floor/plasteel{
 	dir = 8;
 	heat_capacity = 1e+006
 	},
@@ -4720,7 +4720,7 @@
 	name = "MO19 Research"
 	})
 "gj" = (
-/turf/open/floor/plasteel/red/side{
+/turf/open/floor/plasteel{
 	dir = 4;
 	heat_capacity = 1e+006
 	},
@@ -4745,7 +4745,7 @@
 	desc = "Your instincts say you shouldn't be following these.";
 	icon_state = "ltrails_1"
 	},
-/turf/open/floor/plasteel/whitepurple/corner{
+/turf/open/floor/plasteel/white{
 	dir = 8;
 	heat_capacity = 1e+006
 	},
@@ -4765,7 +4765,7 @@
 	pixel_x = 28
 	},
 /obj/structure/alien/weeds,
-/turf/open/floor/plasteel/whitepurple/corner{
+/turf/open/floor/plasteel/white{
 	dir = 2;
 	heat_capacity = 1e+006
 	},
@@ -4785,7 +4785,7 @@
 /obj/structure/alien/weeds{
 	icon_state = "weeds2"
 	},
-/turf/open/floor/plasteel/warnwhite{
+/turf/open/floor/plasteel/white{
 	dir = 1;
 	heat_capacity = 1e+006
 	},
@@ -4795,7 +4795,7 @@
 	})
 "go" = (
 /obj/structure/alien/weeds/node,
-/turf/open/floor/plasteel/warnwhite{
+/turf/open/floor/plasteel/white{
 	dir = 1;
 	heat_capacity = 1e+006
 	},
@@ -4804,7 +4804,7 @@
 	name = "MO19 Research"
 	})
 "gp" = (
-/turf/open/floor/plasteel/warnwhite{
+/turf/open/floor/plasteel/white{
 	dir = 1;
 	heat_capacity = 1e+006
 	},
@@ -4818,7 +4818,7 @@
 /obj/item/device/mmi,
 /obj/item/device/mmi,
 /obj/structure/alien/weeds,
-/turf/open/floor/plasteel/warnwhite{
+/turf/open/floor/plasteel/white{
 	dir = 1;
 	heat_capacity = 1e+006
 	},
@@ -4846,7 +4846,7 @@
 	name = "Acid-Proof disposal pipe"
 	},
 /obj/structure/alien/weeds,
-/turf/open/floor/plasteel/warning{
+/turf/open/floor/plasteel{
 	dir = 8;
 	heat_capacity = 1e+006
 	},
@@ -4973,7 +4973,7 @@
 	pixel_x = -30;
 	pixel_y = 0
 	},
-/turf/open/floor/plasteel/red/side{
+/turf/open/floor/plasteel{
 	dir = 8;
 	heat_capacity = 1e+006
 	},
@@ -5000,7 +5000,7 @@
 	dir = 8;
 	icon_state = "ltrails_1"
 	},
-/turf/open/floor/plasteel/red/side{
+/turf/open/floor/plasteel{
 	dir = 4;
 	heat_capacity = 1e+006
 	},
@@ -5030,7 +5030,7 @@
 	dir = 6;
 	icon_state = "ltrails_1"
 	},
-/turf/open/floor/plasteel/whitepurple/corner{
+/turf/open/floor/plasteel/white{
 	dir = 8;
 	heat_capacity = 1e+006
 	},
@@ -5049,7 +5049,7 @@
 	req_access = null;
 	start_charge = 100
 	},
-/turf/open/floor/plasteel/whitepurple/corner{
+/turf/open/floor/plasteel/white{
 	dir = 2;
 	heat_capacity = 1e+006
 	},
@@ -5131,7 +5131,7 @@
 	},
 /obj/item/weapon/pen,
 /obj/item/device/radio/off,
-/turf/open/floor/plasteel/warning{
+/turf/open/floor/plasteel{
 	dir = 8;
 	heat_capacity = 1e+006
 	},
@@ -5204,7 +5204,7 @@
 	desc = "Used to access the various cameras on the outpost.";
 	network = list("MO19R","MO19")
 	},
-/turf/open/floor/plasteel/red/side{
+/turf/open/floor/plasteel{
 	dir = 8;
 	heat_capacity = 1e+006
 	},
@@ -5226,7 +5226,7 @@
 /obj/machinery/recharger{
 	pixel_y = 4
 	},
-/turf/open/floor/plasteel/red/side{
+/turf/open/floor/plasteel{
 	dir = 4;
 	heat_capacity = 1e+006
 	},
@@ -5235,7 +5235,7 @@
 	name = "MO19 Research"
 	})
 "gR" = (
-/turf/open/floor/plasteel/whitepurple/corner{
+/turf/open/floor/plasteel/white{
 	dir = 8;
 	heat_capacity = 1e+006
 	},
@@ -5258,7 +5258,7 @@
 	pixel_y = 0;
 	req_access = null
 	},
-/turf/open/floor/plasteel/whitepurple/corner{
+/turf/open/floor/plasteel/white{
 	dir = 2;
 	heat_capacity = 1e+006
 	},
@@ -5271,7 +5271,7 @@
 /obj/structure/alien/weeds{
 	icon_state = "weeds2"
 	},
-/turf/open/floor/plasteel/white/side{
+/turf/open/floor/plasteel/white{
 	dir = 1;
 	heat_capacity = 1e+006
 	},
@@ -5282,7 +5282,7 @@
 "gU" = (
 /obj/machinery/computer/operating,
 /obj/structure/alien/weeds,
-/turf/open/floor/plasteel/white/side{
+/turf/open/floor/plasteel/white{
 	dir = 1;
 	heat_capacity = 1e+006
 	},
@@ -5298,7 +5298,7 @@
 /obj/structure/alien/weeds{
 	icon_state = "weeds2"
 	},
-/turf/open/floor/plasteel/white/side{
+/turf/open/floor/plasteel/white{
 	dir = 1;
 	heat_capacity = 1e+006
 	},
@@ -5344,7 +5344,7 @@
 /obj/structure/alien/weeds{
 	icon_state = "weeds2"
 	},
-/turf/open/floor/plasteel/warning{
+/turf/open/floor/plasteel{
 	dir = 8;
 	heat_capacity = 1e+006
 	},
@@ -5471,7 +5471,7 @@
 	pixel_x = -32;
 	pixel_y = 0
 	},
-/turf/open/floor/plasteel/red/side{
+/turf/open/floor/plasteel{
 	dir = 10;
 	heat_capacity = 1e+006
 	},
@@ -5482,7 +5482,7 @@
 "hh" = (
 /obj/structure/table,
 /obj/item/weapon/folder/red,
-/turf/open/floor/plasteel/red/side{
+/turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
 /area/awaycontent/a2{
@@ -5496,7 +5496,7 @@
 	pixel_y = 9
 	},
 /obj/item/weapon/pen,
-/turf/open/floor/plasteel/red/side{
+/turf/open/floor/plasteel{
 	dir = 6;
 	heat_capacity = 1e+006
 	},
@@ -5550,7 +5550,7 @@
 /obj/machinery/vending/medical{
 	req_access_txt = "201"
 	},
-/turf/open/floor/plasteel/white/side{
+/turf/open/floor/plasteel/white{
 	dir = 2;
 	heat_capacity = 1e+006
 	},
@@ -5569,7 +5569,7 @@
 	icon_state = "bulb-broken";
 	status = 2
 	},
-/turf/open/floor/plasteel/white/side{
+/turf/open/floor/plasteel/white{
 	dir = 2;
 	heat_capacity = 1e+006
 	},
@@ -5583,7 +5583,7 @@
 	pixel_x = 0;
 	pixel_y = 0
 	},
-/turf/open/floor/plasteel/white/corner{
+/turf/open/floor/plasteel/white{
 	dir = 8;
 	heat_capacity = 1e+006
 	},
@@ -5617,7 +5617,7 @@
 	},
 /obj/item/weapon/storage/backpack/satchel/tox,
 /obj/item/clothing/gloves/color/latex,
-/turf/open/floor/plasteel/cafeteria{
+/turf/open/floor/plasteel{
 	dir = 5
 	},
 /area/awaycontent/a2{
@@ -5635,7 +5635,7 @@
 	dir = 2;
 	pixel_y = 24
 	},
-/turf/open/floor/plasteel/cafeteria{
+/turf/open/floor/plasteel{
 	dir = 5
 	},
 /area/awaycontent/a2{
@@ -5660,7 +5660,7 @@
 	info = "Personal Log for Research Director Gerald Rosswell<br><br>Entry One - 17/05/2554:<br>You know, I can't believe I took this position so suddenly. I saw that corporate needed a research director for one of it's outposts and thought it would be a cakewalk, there isn't going to be a lot of research to be done on a tiny outpost. Mainly just running scans on the gas giant we are orbiting or some basic RnD. However, they conveniently forgot to tell me that me and my science staff would have to pull double duty as medical staff and that there is no one higher up on the chain of command here, so I get to pull triple duty as acting captain as well! This shit is probably allowed in some 3 point fine print buried underneath the literally thousands of pages of contracts. Well, at least the research will be easy work.<br><br>Entry Two - 25/05/2554:<br>Well, we all expected it at the outpost, CentComm has decided to completely change what research we are doing. They've decided that we should be research the species known as 'xenomporphs'. They announced this change 4 days ago and along with it, sadly, the termination of our current science staff barring me. Not to mention the constant noise made by the construction detail they sent to staple on an xenobiology lab ensuring no one has been able to sleep decently ever since they announced the shift. To make matters worse our current security guard actually died of a heart attack today. Just goes to show that 75 year old men shouldn't be security guards. Still can't believe that they decided to do this major change less than a month after the outpost was established.<br><br>Entry Three - 27/05/2554:<br>The new security guard arrived today. Apparently transferred here from the research station that also is orbiting the gas giant. He seems to be rather angry about his transfer. Considering the rumors I've heard about the research station he's probably caught off guard by the fact that Steve hasn't tried to force an IED down his throat.<br><br>Entry Four - 06/06/2554:<br>My requests for additional security and containment measures for the 'xenomorph' has been denied. Does Central Command not notice how dangerous these creatures are? The only thing keeping them in is a force field, a minor problem with the power grid and the entire hive is loose. What would stop them then, the lone security guard with a dinky little taser? Kenneth can barely handle a short-tempered engineer. We are under equipped and under staffed, we are inevitably going to be destroyed unless we get the equipment and staff we need.<br><br>Entry Five - 10/06/2554:<br>Cunningham got a good look at the xenomorph in containment. He was frightened for the rest of the day, rather amusing if it wasn't for the fact that we are all trapped on this scrap heap with naught but a force field keeping those xenomorphs in.<br><br>Entry Six - 17/06/2554:<br>The reactions from the specimens today has shown that they possess strange mental properties. Mark hypothesizes that they possibly have a sort of hive mind, while nothing is certain this would explain how xenomorphs seem to have vastly increased intellect when a 'queen' is present. Of course, to test this hypothesis would require many complicated procedures which we will not be able to undertake. But we do not know the full extend of the xenomorph mind, it may or may not be able to find a way to circumvent our containment system. I will resend my request for additional security measures along with this new found information.";
 	name = "Personal Log - Gerald Rosswell"
 	},
-/turf/open/floor/plasteel/cafeteria{
+/turf/open/floor/plasteel{
 	dir = 5
 	},
 /area/awaycontent/a2{
@@ -5669,7 +5669,7 @@
 	})
 "ht" = (
 /obj/structure/closet/crate/bin,
-/turf/open/floor/plasteel/cafeteria{
+/turf/open/floor/plasteel{
 	dir = 5
 	},
 /area/awaycontent/a2{
@@ -5692,7 +5692,7 @@
 	name = "MO19 Research"
 	})
 "hv" = (
-/turf/open/floor/plasteel/whitepurple/corner{
+/turf/open/floor/plasteel/white{
 	dir = 1;
 	heat_capacity = 1e+006
 	},
@@ -5701,7 +5701,7 @@
 	name = "MO19 Research"
 	})
 "hw" = (
-/turf/open/floor/plasteel/whitepurple/corner{
+/turf/open/floor/plasteel/white{
 	dir = 2;
 	heat_capacity = 1e+006
 	},
@@ -5772,7 +5772,7 @@
 	dir = 4;
 	pixel_x = 28
 	},
-/turf/open/floor/plasteel/white/side{
+/turf/open/floor/plasteel/white{
 	dir = 8;
 	heat_capacity = 1e+006
 	},
@@ -5781,7 +5781,7 @@
 	name = "MO19 Research"
 	})
 "hB" = (
-/turf/open/floor/plasteel/cafeteria{
+/turf/open/floor/plasteel{
 	dir = 5
 	},
 /area/awaycontent/a2{
@@ -5790,7 +5790,7 @@
 	})
 "hC" = (
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/cafeteria{
+/turf/open/floor/plasteel{
 	dir = 5
 	},
 /area/awaycontent/a2{
@@ -5809,7 +5809,7 @@
 	req_access_txt = "201";
 	req_one_access_txt = "0"
 	},
-/turf/open/floor/plasteel/cafeteria{
+/turf/open/floor/plasteel{
 	dir = 5
 	},
 /area/awaycontent/a2{
@@ -5836,7 +5836,7 @@
 	dir = 1;
 	network = list("MO19","MO19R")
 	},
-/turf/open/floor/plasteel/whitepurple/corner{
+/turf/open/floor/plasteel/white{
 	dir = 8;
 	heat_capacity = 1e+006
 	},
@@ -5880,7 +5880,7 @@
 	pixel_y = 0;
 	req_access = null
 	},
-/turf/open/floor/plasteel/white/side{
+/turf/open/floor/plasteel/white{
 	dir = 8;
 	heat_capacity = 1e+006
 	},
@@ -5924,7 +5924,7 @@
 	})
 "hM" = (
 /obj/structure/chair,
-/turf/open/floor/plasteel/cafeteria{
+/turf/open/floor/plasteel{
 	dir = 5
 	},
 /area/awaycontent/a2{
@@ -5939,7 +5939,7 @@
 	layer = 2.9;
 	name = "Acid-Proof biohazard containment door"
 	},
-/turf/open/floor/plasteel/delivery{
+/turf/open/floor/plasteel{
 	heat_capacity = 1e+006;
 	name = "floor"
 	},
@@ -5949,7 +5949,7 @@
 	})
 "hO" = (
 /obj/structure/table,
-/turf/open/floor/plasteel/white/side{
+/turf/open/floor/plasteel/white{
 	dir = 8;
 	heat_capacity = 1e+006
 	},
@@ -6077,7 +6077,7 @@
 	pixel_x = 3;
 	pixel_y = -2
 	},
-/turf/open/floor/plasteel/cafeteria{
+/turf/open/floor/plasteel{
 	dir = 5
 	},
 /area/awaycontent/a2{
@@ -6090,7 +6090,7 @@
 	pixel_x = 1;
 	pixel_y = 9
 	},
-/turf/open/floor/plasteel/cafeteria{
+/turf/open/floor/plasteel{
 	dir = 5
 	},
 /area/awaycontent/a2{
@@ -6107,7 +6107,7 @@
 	name = "research monitor";
 	network = list("MO19X","MO19R")
 	},
-/turf/open/floor/plasteel/cafeteria{
+/turf/open/floor/plasteel{
 	dir = 5
 	},
 /area/awaycontent/a2{
@@ -6119,7 +6119,7 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/turf/open/floor/plasteel/cafeteria{
+/turf/open/floor/plasteel{
 	dir = 5
 	},
 /area/awaycontent/a2{
@@ -6132,7 +6132,7 @@
 	dir = 8
 	},
 /obj/item/weapon/circuitboard/computer/teleporter,
-/turf/open/floor/plasteel/warnwhite{
+/turf/open/floor/plasteel/white{
 	dir = 9;
 	heat_capacity = 1e+006
 	},
@@ -6145,7 +6145,7 @@
 /obj/item/device/paicard{
 	pixel_x = 4
 	},
-/turf/open/floor/plasteel/warnwhite{
+/turf/open/floor/plasteel/white{
 	dir = 1;
 	heat_capacity = 1e+006
 	},
@@ -6155,7 +6155,7 @@
 	})
 "id" = (
 /obj/structure/rack,
-/turf/open/floor/plasteel/warnwhite{
+/turf/open/floor/plasteel/white{
 	dir = 5;
 	heat_capacity = 1e+006
 	},
@@ -6182,7 +6182,7 @@
 "if" = (
 /obj/structure/closet/l3closet,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/white/side{
+/turf/open/floor/plasteel/white{
 	dir = 1;
 	heat_capacity = 1e+006
 	},
@@ -6198,7 +6198,7 @@
 	icon_state = "bulb-broken";
 	status = 2
 	},
-/turf/open/floor/plasteel/white/side{
+/turf/open/floor/plasteel/white{
 	dir = 1;
 	heat_capacity = 1e+006
 	},
@@ -6214,7 +6214,7 @@
 	pixel_x = 0;
 	pixel_y = -30
 	},
-/turf/open/floor/plasteel/white/side{
+/turf/open/floor/plasteel/white{
 	dir = 1;
 	heat_capacity = 1e+006
 	},
@@ -6224,7 +6224,7 @@
 	})
 "ii" = (
 /obj/structure/table,
-/turf/open/floor/plasteel/white/corner{
+/turf/open/floor/plasteel/white{
 	dir = 1;
 	heat_capacity = 1e+006
 	},
@@ -6331,7 +6331,7 @@
 	pixel_y = -2;
 	req_access_txt = "201"
 	},
-/turf/open/floor/plasteel/cafeteria{
+/turf/open/floor/plasteel{
 	dir = 5
 	},
 /area/awaycontent/a2{
@@ -6343,7 +6343,7 @@
 	dir = 1;
 	pixel_y = 3
 	},
-/turf/open/floor/plasteel/cafeteria{
+/turf/open/floor/plasteel{
 	dir = 5
 	},
 /area/awaycontent/a2{
@@ -6351,7 +6351,7 @@
 	name = "MO19 Research"
 	})
 "ir" = (
-/turf/open/floor/plasteel/warnwhite{
+/turf/open/floor/plasteel/white{
 	dir = 8;
 	heat_capacity = 1e+006
 	},
@@ -6383,7 +6383,7 @@
 	info = "<i>19 06 2554</i><br><br><i>I fucking knew it. There was a major breach, that idiotic force field failed and the xenomorphs rushed out and took out the scientists. I've managed to make it to my office and closed the blast doors. I can hear them trying to pry open the doors. Probably don't have long. I have no clue what has happened to the rest of the crew, for all I know they've been killed to produce more of the fucks.</i>";
 	name = "Hastily Written Note"
 	},
-/turf/open/floor/plasteel/warnwhite{
+/turf/open/floor/plasteel/white{
 	dir = 4;
 	heat_capacity = 1e+006
 	},
@@ -6400,7 +6400,7 @@
 	icon_state = "shower";
 	name = "emergency shower"
 	},
-/turf/open/floor/plasteel/warnwhite{
+/turf/open/floor/plasteel/white{
 	dir = 9;
 	heat_capacity = 1e+006
 	},
@@ -6410,7 +6410,7 @@
 	})
 "iv" = (
 /obj/structure/closet/firecloset,
-/turf/open/floor/plasteel/warnwhite{
+/turf/open/floor/plasteel/white{
 	dir = 5;
 	heat_capacity = 1e+006
 	},
@@ -6478,7 +6478,7 @@
 "iB" = (
 /obj/structure/table,
 /obj/item/trash/plate,
-/turf/open/floor/plasteel/bar{
+/turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
 /area/awaycontent/a1{
@@ -6488,7 +6488,7 @@
 "iC" = (
 /obj/structure/table,
 /obj/item/weapon/cigbutt,
-/turf/open/floor/plasteel/bar{
+/turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
 /area/awaycontent/a1{
@@ -6498,7 +6498,7 @@
 "iD" = (
 /obj/structure/table,
 /obj/item/trash/raisins,
-/turf/open/floor/plasteel/bar{
+/turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
 /area/awaycontent/a1{
@@ -6561,7 +6561,7 @@
 	dir = 1;
 	network = list("MO19","MO19R")
 	},
-/turf/open/floor/plasteel/cafeteria{
+/turf/open/floor/plasteel{
 	dir = 5
 	},
 /area/awaycontent/a2{
@@ -6573,7 +6573,7 @@
 	pixel_x = 0;
 	pixel_y = -30
 	},
-/turf/open/floor/plasteel/cafeteria{
+/turf/open/floor/plasteel{
 	dir = 5
 	},
 /area/awaycontent/a2{
@@ -6584,7 +6584,7 @@
 /obj/structure/table,
 /obj/item/device/radio/off,
 /obj/item/device/laser_pointer,
-/turf/open/floor/plasteel/cafeteria{
+/turf/open/floor/plasteel{
 	dir = 5
 	},
 /area/awaycontent/a2{
@@ -6595,7 +6595,7 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/turf/open/floor/plasteel/warnwhite{
+/turf/open/floor/plasteel/white{
 	dir = 10;
 	heat_capacity = 1e+006
 	},
@@ -6605,7 +6605,7 @@
 	})
 "iL" = (
 /obj/machinery/light/small,
-/turf/open/floor/plasteel/warnwhite{
+/turf/open/floor/plasteel/white{
 	dir = 2;
 	heat_capacity = 1e+006
 	},
@@ -6619,7 +6619,7 @@
 /obj/item/device/taperecorder{
 	pixel_x = -3
 	},
-/turf/open/floor/plasteel/warnwhite{
+/turf/open/floor/plasteel/white{
 	dir = 6;
 	heat_capacity = 1e+006
 	},
@@ -6635,7 +6635,7 @@
 	pixel_y = 2
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/warnwhite{
+/turf/open/floor/plasteel/white{
 	dir = 10;
 	heat_capacity = 1e+006
 	},
@@ -6646,7 +6646,7 @@
 "iO" = (
 /obj/structure/closet/emcloset,
 /obj/machinery/light/small,
-/turf/open/floor/plasteel/warnwhite{
+/turf/open/floor/plasteel/white{
 	dir = 6;
 	heat_capacity = 1e+006
 	},
@@ -6670,7 +6670,7 @@
 /obj/structure/chair{
 	dir = 1
 	},
-/turf/open/floor/plasteel/bar{
+/turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
 /area/awaycontent/a1{
@@ -6682,7 +6682,7 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/bar{
+/turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
 /area/awaycontent/a1{
@@ -6696,7 +6696,7 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/turf/open/floor/plasteel/bar{
+/turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
 /area/awaycontent/a1{
@@ -6717,7 +6717,7 @@
 /obj/machinery/vending/boozeomat{
 	req_access_txt = "0"
 	},
-/turf/open/floor/plasteel/cafeteria{
+/turf/open/floor/plasteel{
 	dir = 5
 	},
 /area/awaycontent/a1{
@@ -6757,7 +6757,7 @@
 	name = "MO19 Arrivals"
 	})
 "iX" = (
-/turf/open/floor/plasteel/cafeteria{
+/turf/open/floor/plasteel{
 	dir = 5
 	},
 /area/awaycontent/a1{
@@ -6767,7 +6767,7 @@
 "iY" = (
 /obj/structure/table,
 /obj/machinery/reagentgrinder,
-/turf/open/floor/plasteel/cafeteria{
+/turf/open/floor/plasteel{
 	dir = 5
 	},
 /area/awaycontent/a1{
@@ -6806,7 +6806,7 @@
 /obj/structure/chair/comfy/black{
 	dir = 4
 	},
-/turf/open/floor/plasteel/floorgrime{
+/turf/open/floor/plasteel{
 	dir = 8;
 	heat_capacity = 1e+006
 	},
@@ -6817,7 +6817,7 @@
 "jc" = (
 /obj/structure/table,
 /obj/item/weapon/book/manual/detective,
-/turf/open/floor/plasteel/floorgrime{
+/turf/open/floor/plasteel{
 	dir = 8;
 	heat_capacity = 1e+006
 	},
@@ -6880,7 +6880,7 @@
 	},
 /obj/item/trash/cheesie,
 /obj/item/trash/can,
-/turf/open/floor/plasteel/bar{
+/turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
 /area/awaycontent/a1{
@@ -6889,7 +6889,7 @@
 	})
 "jj" = (
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/bar{
+/turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
 /area/awaycontent/a1{
@@ -6897,7 +6897,7 @@
 	name = "MO19 Arrivals"
 	})
 "jk" = (
-/turf/open/floor/plasteel/bar{
+/turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
 /area/awaycontent/a1{
@@ -6936,7 +6936,7 @@
 	})
 "jn" = (
 /obj/effect/decal/cleanable/flour,
-/turf/open/floor/plasteel/cafeteria{
+/turf/open/floor/plasteel{
 	dir = 5
 	},
 /area/awaycontent/a1{
@@ -6950,7 +6950,7 @@
 	},
 /obj/structure/table,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/cafeteria{
+/turf/open/floor/plasteel{
 	dir = 5
 	},
 /area/awaycontent/a1{
@@ -6990,7 +6990,7 @@
 	})
 "jr" = (
 /obj/structure/chair,
-/turf/open/floor/plasteel/floorgrime{
+/turf/open/floor/plasteel{
 	dir = 8;
 	heat_capacity = 1e+006
 	},
@@ -7011,7 +7011,7 @@
 "jt" = (
 /obj/structure/table,
 /obj/item/weapon/newspaper,
-/turf/open/floor/plasteel/floorgrime{
+/turf/open/floor/plasteel{
 	dir = 8;
 	heat_capacity = 1e+006
 	},
@@ -7067,7 +7067,7 @@
 	pixel_y = 32
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/purple/side{
+/turf/open/floor/plasteel{
 	dir = 9;
 	heat_capacity = 1e+006
 	},
@@ -7077,7 +7077,7 @@
 	})
 "jy" = (
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/purple/side{
+/turf/open/floor/plasteel{
 	dir = 1;
 	heat_capacity = 1e+006
 	},
@@ -7086,7 +7086,7 @@
 	name = "MO19 Arrivals"
 	})
 "jz" = (
-/turf/open/floor/plasteel/purple/side{
+/turf/open/floor/plasteel{
 	dir = 5;
 	heat_capacity = 1e+006
 	},
@@ -7150,7 +7150,7 @@
 	name = "MO19 Arrivals"
 	})
 "jF" = (
-/turf/open/floor/plasteel/floorgrime{
+/turf/open/floor/plasteel{
 	dir = 8;
 	heat_capacity = 1e+006
 	},
@@ -7207,7 +7207,7 @@
 	pixel_x = 0;
 	pixel_y = 30
 	},
-/turf/open/floor/plasteel/floorgrime{
+/turf/open/floor/plasteel{
 	dir = 8;
 	heat_capacity = 1e+006
 	},
@@ -7219,7 +7219,7 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/turf/open/floor/plasteel/floorgrime{
+/turf/open/floor/plasteel{
 	dir = 8;
 	heat_capacity = 1e+006
 	},
@@ -7257,7 +7257,7 @@
 	})
 "jN" = (
 /obj/item/weapon/cigbutt,
-/turf/open/floor/plasteel/bar{
+/turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
 /area/awaycontent/a1{
@@ -7284,7 +7284,7 @@
 	pixel_y = 5
 	},
 /obj/item/weapon/reagent_containers/food/drinks/shaker,
-/turf/open/floor/plasteel/cafeteria{
+/turf/open/floor/plasteel{
 	dir = 5
 	},
 /area/awaycontent/a1{
@@ -7297,7 +7297,7 @@
 	pixel_x = 3;
 	pixel_y = 3
 	},
-/turf/open/floor/plasteel/cafeteria{
+/turf/open/floor/plasteel{
 	dir = 5
 	},
 /area/awaycontent/a1{
@@ -7306,7 +7306,7 @@
 	})
 "jR" = (
 /obj/machinery/vending/dinnerware,
-/turf/open/floor/plasteel/cafeteria{
+/turf/open/floor/plasteel{
 	dir = 5
 	},
 /area/awaycontent/a1{
@@ -7338,7 +7338,7 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/turf/open/floor/plasteel/floorgrime{
+/turf/open/floor/plasteel{
 	dir = 8;
 	heat_capacity = 1e+006
 	},
@@ -7367,7 +7367,7 @@
 	icon_state = "4-8";
 	pixel_x = 0
 	},
-/turf/open/floor/plasteel/floorgrime{
+/turf/open/floor/plasteel{
 	dir = 8;
 	heat_capacity = 1e+006
 	},
@@ -7398,7 +7398,7 @@
 	pixel_x = 0
 	},
 /obj/item/weapon/cigbutt,
-/turf/open/floor/plasteel/floorgrime{
+/turf/open/floor/plasteel{
 	dir = 8;
 	heat_capacity = 1e+006
 	},
@@ -7422,7 +7422,7 @@
 	pixel_y = 23;
 	req_access = null
 	},
-/turf/open/floor/plasteel/purple/corner{
+/turf/open/floor/plasteel{
 	dir = 4;
 	heat_capacity = 1e+006
 	},
@@ -7437,7 +7437,7 @@
 	icon_state = "4-8";
 	pixel_x = 0
 	},
-/turf/open/floor/plasteel/purple/corner{
+/turf/open/floor/plasteel{
 	dir = 1;
 	heat_capacity = 1e+006
 	},
@@ -7453,7 +7453,7 @@
 	pixel_x = 0
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/purple/corner{
+/turf/open/floor/plasteel{
 	dir = 4;
 	heat_capacity = 1e+006
 	},
@@ -7526,7 +7526,7 @@
 	pixel_x = 0
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/floorgrime{
+/turf/open/floor/plasteel{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	dir = 8;
 	heat_capacity = 1e+006;
@@ -7546,7 +7546,7 @@
 	icon_state = "4-8";
 	pixel_x = 0
 	},
-/turf/open/floor/plasteel/floorgrime{
+/turf/open/floor/plasteel{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	dir = 8;
 	heat_capacity = 1e+006;
@@ -7625,7 +7625,7 @@
 	icon_state = "door_closed";
 	opacity = 0
 	},
-/turf/open/floor/plasteel/floorgrime{
+/turf/open/floor/plasteel{
 	dir = 8;
 	heat_capacity = 1e+006
 	},
@@ -7641,7 +7641,7 @@
 	icon_state = "4-8";
 	pixel_x = 0
 	},
-/turf/open/floor/plasteel/floorgrime{
+/turf/open/floor/plasteel{
 	dir = 8;
 	heat_capacity = 1e+006
 	},
@@ -7694,7 +7694,7 @@
 	})
 "ko" = (
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/cafeteria{
+/turf/open/floor/plasteel{
 	dir = 5
 	},
 /area/awaycontent/a1{
@@ -7705,7 +7705,7 @@
 /obj/structure/table,
 /obj/item/weapon/kitchen/rollingpin,
 /obj/item/weapon/kitchen/knife,
-/turf/open/floor/plasteel/cafeteria{
+/turf/open/floor/plasteel{
 	dir = 5
 	},
 /area/awaycontent/a1{
@@ -7719,7 +7719,7 @@
 	pixel_y = 6
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/cafeteria{
+/turf/open/floor/plasteel{
 	dir = 5
 	},
 /area/awaycontent/a1{
@@ -7728,7 +7728,7 @@
 	})
 "kr" = (
 /obj/effect/decal/cleanable/egg_smudge,
-/turf/open/floor/plasteel/cafeteria{
+/turf/open/floor/plasteel{
 	dir = 5
 	},
 /area/awaycontent/a1{
@@ -7749,7 +7749,7 @@
 	pixel_y = 0;
 	req_access = null
 	},
-/turf/open/floor/plasteel/cafeteria{
+/turf/open/floor/plasteel{
 	dir = 5
 	},
 /area/awaycontent/a1{
@@ -7760,7 +7760,7 @@
 /obj/structure/closet/crate/bin,
 /obj/item/trash/candy,
 /obj/item/trash/can,
-/turf/open/floor/plasteel/arrival{
+/turf/open/floor/plasteel{
 	dir = 2;
 	heat_capacity = 1e+006
 	},
@@ -7769,7 +7769,7 @@
 	name = "MO19 Arrivals"
 	})
 "ku" = (
-/turf/open/floor/plasteel/arrival{
+/turf/open/floor/plasteel{
 	dir = 2;
 	heat_capacity = 1e+006
 	},
@@ -7779,7 +7779,7 @@
 	})
 "kv" = (
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/arrival{
+/turf/open/floor/plasteel{
 	dir = 2;
 	heat_capacity = 1e+006
 	},
@@ -7798,7 +7798,7 @@
 	dir = 1;
 	network = list("MO19")
 	},
-/turf/open/floor/plasteel/arrival{
+/turf/open/floor/plasteel{
 	dir = 2;
 	heat_capacity = 1e+006
 	},
@@ -7813,7 +7813,7 @@
 	pixel_y = -32;
 	serial_number = 2
 	},
-/turf/open/floor/plasteel/arrival{
+/turf/open/floor/plasteel{
 	dir = 2;
 	heat_capacity = 1e+006
 	},
@@ -7822,7 +7822,7 @@
 	name = "MO19 Arrivals"
 	})
 "ky" = (
-/turf/open/floor/plasteel/white/corner{
+/turf/open/floor/plasteel/white{
 	dir = 8;
 	heat_capacity = 1e+006
 	},
@@ -7832,7 +7832,7 @@
 	})
 "kz" = (
 /obj/machinery/light/small,
-/turf/open/floor/plasteel/floorgrime{
+/turf/open/floor/plasteel{
 	dir = 8;
 	heat_capacity = 1e+006
 	},
@@ -7894,7 +7894,7 @@
 	name = "MO19 Arrivals"
 	})
 "kE" = (
-/turf/open/floor/plasteel/floorgrime{
+/turf/open/floor/plasteel{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	dir = 8;
 	heat_capacity = 1e+006;
@@ -7919,7 +7919,7 @@
 	})
 "kG" = (
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/floorgrime{
+/turf/open/floor/plasteel{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	dir = 8;
 	heat_capacity = 1e+006;
@@ -7944,7 +7944,7 @@
 	})
 "kI" = (
 /obj/effect/decal/cleanable/generic,
-/turf/open/floor/plasteel/floorgrime{
+/turf/open/floor/plasteel{
 	dir = 8;
 	heat_capacity = 1e+006
 	},
@@ -7968,7 +7968,7 @@
 "kK" = (
 /obj/effect/decal/cleanable/xenoblood,
 /obj/effect/decal/cleanable/xenoblood/xgibs,
-/turf/open/floor/plasteel/bar{
+/turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
 /area/awaycontent/a1{
@@ -7980,7 +7980,7 @@
 /obj/effect/decal/remains/xeno{
 	desc = "They look like the remains of something... alien. The front of skull appears to have been completely obliterated."
 	},
-/turf/open/floor/plasteel/bar{
+/turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
 /area/awaycontent/a1{
@@ -7991,7 +7991,7 @@
 /obj/structure/closet/crate/bin,
 /obj/item/trash/plate,
 /obj/item/weapon/reagent_containers/food/snacks/badrecipe,
-/turf/open/floor/plasteel/cafeteria{
+/turf/open/floor/plasteel{
 	dir = 5
 	},
 /area/awaycontent/a1{
@@ -7999,7 +7999,7 @@
 	name = "MO19 Arrivals"
 	})
 "kN" = (
-/turf/open/floor/plasteel/arrival{
+/turf/open/floor/plasteel{
 	dir = 8;
 	heat_capacity = 1e+006
 	},
@@ -8012,7 +8012,7 @@
 	dir = 4;
 	pixel_x = 24
 	},
-/turf/open/floor/plasteel/floorgrime{
+/turf/open/floor/plasteel{
 	dir = 8;
 	heat_capacity = 1e+006
 	},
@@ -8063,7 +8063,7 @@
 	icon_state = "door_closed";
 	opacity = 0
 	},
-/turf/open/floor/plasteel/neutral/corner{
+/turf/open/floor/plasteel{
 	dir = 2;
 	heat_capacity = 1e+006
 	},
@@ -8077,7 +8077,7 @@
 	icon_state = "door_closed";
 	opacity = 0
 	},
-/turf/open/floor/plasteel/neutral/corner{
+/turf/open/floor/plasteel{
 	dir = 8;
 	heat_capacity = 1e+006
 	},
@@ -8132,7 +8132,7 @@
 	})
 "kW" = (
 /obj/structure/closet/emcloset,
-/turf/open/floor/plasteel/blue/side{
+/turf/open/floor/plasteel{
 	dir = 0;
 	heat_capacity = 1e+006
 	},
@@ -8147,7 +8147,7 @@
 	pixel_y = -1
 	},
 /obj/item/device/multitool,
-/turf/open/floor/plasteel/blue/side{
+/turf/open/floor/plasteel{
 	dir = 0;
 	heat_capacity = 1e+006
 	},
@@ -8162,7 +8162,7 @@
 	charge = 100;
 	maxcharge = 15000
 	},
-/turf/open/floor/plasteel/blue/side{
+/turf/open/floor/plasteel{
 	dir = 0;
 	heat_capacity = 1e+006
 	},
@@ -8172,7 +8172,7 @@
 	})
 "kZ" = (
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/blue/side{
+/turf/open/floor/plasteel{
 	dir = 0;
 	heat_capacity = 1e+006
 	},
@@ -8183,7 +8183,7 @@
 "la" = (
 /obj/structure/chair,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/bar{
+/turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
 /area/awaycontent/a1{
@@ -8200,7 +8200,7 @@
 	dir = 8;
 	network = list("MO19")
 	},
-/turf/open/floor/plasteel/cafeteria{
+/turf/open/floor/plasteel{
 	dir = 5
 	},
 /area/awaycontent/a1{
@@ -8239,7 +8239,7 @@
 	})
 "lf" = (
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/arrival{
+/turf/open/floor/plasteel{
 	dir = 8;
 	heat_capacity = 1e+006
 	},
@@ -8249,7 +8249,7 @@
 	})
 "lg" = (
 /obj/item/weapon/cigbutt,
-/turf/open/floor/plasteel/floorgrime{
+/turf/open/floor/plasteel{
 	dir = 8;
 	heat_capacity = 1e+006
 	},
@@ -8261,7 +8261,7 @@
 /obj/structure/chair{
 	dir = 8
 	},
-/turf/open/floor/plasteel/warning/corner{
+/turf/open/floor/plasteel{
 	dir = 2;
 	heat_capacity = 1e+006
 	},
@@ -8304,7 +8304,7 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/turf/open/floor/plasteel/neutral/corner{
+/turf/open/floor/plasteel{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	dir = 8;
 	heat_capacity = 1e+006;
@@ -8316,7 +8316,7 @@
 	})
 "ll" = (
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/neutral/side{
+/turf/open/floor/plasteel{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	dir = 4;
 	heat_capacity = 1e+006;
@@ -8390,7 +8390,7 @@
 	pixel_y = 0;
 	req_access = null
 	},
-/turf/open/floor/plasteel/bar{
+/turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
 /area/awaycontent/a1{
@@ -8401,7 +8401,7 @@
 /obj/structure/chair{
 	dir = 8
 	},
-/turf/open/floor/plasteel/bar{
+/turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
 /area/awaycontent/a1{
@@ -8419,7 +8419,7 @@
 	dir = 8;
 	network = list("MO19")
 	},
-/turf/open/floor/plasteel/bar{
+/turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
 /area/awaycontent/a1{
@@ -8435,7 +8435,7 @@
 	req_access_txt = "0"
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/cafeteria{
+/turf/open/floor/plasteel{
 	dir = 5
 	},
 /area/awaycontent/a1{
@@ -8447,7 +8447,7 @@
 	name = "Kitchen Cold Room";
 	req_access_txt = "201"
 	},
-/turf/open/floor/plasteel/showroomfloor{
+/turf/open/floor/plasteel/freezer{
 	heat_capacity = 1e+006
 	},
 /area/awaycontent/a1{
@@ -8455,7 +8455,7 @@
 	name = "MO19 Arrivals"
 	})
 "lv" = (
-/turf/open/floor/plasteel/showroomfloor{
+/turf/open/floor/plasteel/freezer{
 	heat_capacity = 1e+006;
 	temperature = 273.15
 	},
@@ -8469,7 +8469,7 @@
 	name = "old sink";
 	pixel_y = 28
 	},
-/turf/open/floor/plasteel/showroomfloor{
+/turf/open/floor/plasteel/freezer{
 	heat_capacity = 1e+006;
 	temperature = 273.15
 	},
@@ -8484,7 +8484,7 @@
 	},
 /obj/item/weapon/storage/box/mousetraps,
 /obj/item/clothing/under/waiter,
-/turf/open/floor/plasteel/showroomfloor{
+/turf/open/floor/plasteel/freezer{
 	heat_capacity = 1e+006;
 	temperature = 273.15
 	},
@@ -8566,7 +8566,7 @@
 	name = "MO19 Arrivals"
 	})
 "lF" = (
-/turf/open/floor/plasteel/warning{
+/turf/open/floor/plasteel{
 	dir = 8;
 	heat_capacity = 1e+006
 	},
@@ -8575,7 +8575,7 @@
 	name = "MO19 Arrivals"
 	})
 "lG" = (
-/turf/open/floor/plasteel/warning/corner{
+/turf/open/floor/plasteel{
 	dir = 2;
 	heat_capacity = 1e+006
 	},
@@ -8586,7 +8586,7 @@
 "lH" = (
 /obj/structure/table,
 /obj/item/weapon/storage/fancy/cigarettes/dromedaryco,
-/turf/open/floor/plasteel/warning{
+/turf/open/floor/plasteel{
 	dir = 6;
 	heat_capacity = 1e+006
 	},
@@ -8595,7 +8595,7 @@
 	name = "MO19 Arrivals"
 	})
 "lI" = (
-/turf/open/floor/plasteel/neutral/corner{
+/turf/open/floor/plasteel{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	dir = 8;
 	heat_capacity = 1e+006;
@@ -8606,7 +8606,7 @@
 	name = "MO19 Arrivals"
 	})
 "lJ" = (
-/turf/open/floor/plasteel/neutral/corner{
+/turf/open/floor/plasteel{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	dir = 4;
 	heat_capacity = 1e+006;
@@ -8717,7 +8717,7 @@
 	desc = "They look like human remains. The skeleton is sitting upright with its legs tucked in and hands still holding onto its arms."
 	},
 /obj/item/weapon/gun/ballistic/shotgun/sc_pump,
-/turf/open/floor/plasteel/showroomfloor{
+/turf/open/floor/plasteel/freezer{
 	heat_capacity = 1e+006;
 	temperature = 273.15
 	},
@@ -8828,7 +8828,7 @@
 	name = "MO19 Arrivals"
 	})
 "mg" = (
-/turf/open/floor/plasteel/warning{
+/turf/open/floor/plasteel{
 	dir = 4;
 	heat_capacity = 1e+006
 	},
@@ -8837,7 +8837,7 @@
 	name = "MO19 Arrivals"
 	})
 "mh" = (
-/turf/open/floor/plasteel/neutral/corner{
+/turf/open/floor/plasteel{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	dir = 2;
 	heat_capacity = 1e+006;
@@ -8863,7 +8863,7 @@
 	})
 "mj" = (
 /obj/structure/chair/stool,
-/turf/open/floor/plasteel/bar{
+/turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
 /area/awaycontent/a1{
@@ -8872,7 +8872,7 @@
 	})
 "mk" = (
 /obj/machinery/light/small,
-/turf/open/floor/plasteel/bar{
+/turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
 /area/awaycontent/a1{
@@ -8898,7 +8898,7 @@
 /obj/item/weapon/reagent_containers/food/condiment/flour,
 /obj/item/weapon/reagent_containers/food/condiment/sugar,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/showroomfloor{
+/turf/open/floor/plasteel/freezer{
 	heat_capacity = 1e+006;
 	temperature = 273.15
 	},
@@ -8917,7 +8917,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/meat/slab/monkey,
 /obj/item/weapon/reagent_containers/food/snacks/meat/slab/monkey,
 /obj/item/weapon/reagent_containers/food/snacks/meat/slab/monkey,
-/turf/open/floor/plasteel/showroomfloor{
+/turf/open/floor/plasteel/freezer{
 	heat_capacity = 1e+006;
 	temperature = 273.15
 	},
@@ -8936,7 +8936,7 @@
 /obj/item/weapon/reagent_containers/food/condiment/milk,
 /obj/item/weapon/reagent_containers/food/condiment/milk,
 /obj/item/weapon/storage/fancy/egg_box,
-/turf/open/floor/plasteel/showroomfloor{
+/turf/open/floor/plasteel/freezer{
 	heat_capacity = 1e+006;
 	temperature = 273.15
 	},
@@ -9020,7 +9020,7 @@
 	})
 "mw" = (
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/warning{
+/turf/open/floor/plasteel{
 	dir = 4;
 	heat_capacity = 1e+006
 	},
@@ -9030,7 +9030,7 @@
 	})
 "mx" = (
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/neutral/corner{
+/turf/open/floor/plasteel{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	dir = 2;
 	heat_capacity = 1e+006;
@@ -9225,7 +9225,7 @@
 	dir = 8;
 	network = list("MO19")
 	},
-/turf/open/floor/plasteel/warning{
+/turf/open/floor/plasteel{
 	dir = 4;
 	heat_capacity = 1e+006
 	},
@@ -9254,7 +9254,7 @@
 	dir = 9;
 	icon_state = "ltrails_1"
 	},
-/turf/open/floor/plasteel/neutral/corner{
+/turf/open/floor/plasteel{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	dir = 8;
 	heat_capacity = 1e+006;
@@ -9383,7 +9383,7 @@
 	desc = "Your instincts say you shouldn't be following these.";
 	icon_state = "ltrails_1"
 	},
-/turf/open/floor/plasteel/neutral/corner{
+/turf/open/floor/plasteel{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	dir = 8;
 	heat_capacity = 1e+006;
@@ -9556,7 +9556,7 @@
 	})
 "no" = (
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/warning{
+/turf/open/floor/plasteel{
 	dir = 8;
 	heat_capacity = 1e+006
 	},
@@ -9661,7 +9661,7 @@
 	})
 "nw" = (
 /obj/machinery/washing_machine,
-/turf/open/floor/plasteel/barber{
+/turf/open/floor/plasteel{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	heat_capacity = 1e+006;
 	temperature = 251
@@ -9682,7 +9682,7 @@
 /obj/structure/bedsheetbin,
 /obj/item/clothing/neck/tie/black,
 /obj/item/clothing/under/lawyer/blacksuit,
-/turf/open/floor/plasteel/barber{
+/turf/open/floor/plasteel{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	heat_capacity = 1e+006;
 	temperature = 251
@@ -9700,7 +9700,7 @@
 	pixel_y = 0;
 	req_access = null
 	},
-/turf/open/floor/plasteel/neutral/corner{
+/turf/open/floor/plasteel{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	dir = 2;
 	heat_capacity = 1e+006;
@@ -9813,7 +9813,7 @@
 	dir = 8;
 	icon_state = "ltrails_1"
 	},
-/turf/open/floor/plasteel/floorgrime{
+/turf/open/floor/plasteel{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	dir = 8;
 	heat_capacity = 1e+006;
@@ -9829,7 +9829,7 @@
 	dir = 6;
 	icon_state = "ltrails_1"
 	},
-/turf/open/floor/plasteel/floorgrime{
+/turf/open/floor/plasteel{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	dir = 8;
 	heat_capacity = 1e+006;
@@ -9913,7 +9913,7 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/neutral/corner{
+/turf/open/floor/plasteel{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	dir = 8;
 	heat_capacity = 1e+006;
@@ -9924,7 +9924,7 @@
 	name = "MO19 Arrivals"
 	})
 "nN" = (
-/turf/open/floor/plasteel/neutral/side{
+/turf/open/floor/plasteel{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	dir = 4;
 	heat_capacity = 1e+006;
@@ -10070,7 +10070,7 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/generic,
-/turf/open/floor/plasteel/neutral/corner{
+/turf/open/floor/plasteel{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	dir = 2;
 	heat_capacity = 1e+006;
@@ -10115,7 +10115,7 @@
 	layer = 4.1;
 	pixel_y = 3
 	},
-/turf/open/floor/plasteel/neutral/side{
+/turf/open/floor/plasteel{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	heat_capacity = 1e+006;
 	temperature = 251
@@ -10342,7 +10342,7 @@
 	poweralm = 0
 	})
 "oq" = (
-/turf/open/floor/plasteel/floorgrime{
+/turf/open/floor/plasteel{
 	dir = 8;
 	heat_capacity = 1e+006
 	},
@@ -10581,7 +10581,7 @@
 	poweralm = 0
 	})
 "oF" = (
-/turf/open/floor/plasteel/floorgrime{
+/turf/open/floor/plasteel{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	dir = 8;
 	heat_capacity = 1e+006;

@@ -117,14 +117,14 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/turf/open/floor/plasteel/darkred{
+/turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin/base)
 "at" = (
 /obj/structure/filingcabinet,
 /obj/item/weapon/paper/snowdin/secnotice,
-/turf/open/floor/plasteel/darkred{
+/turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin/base)
@@ -141,7 +141,7 @@
 /obj/item/weapon/restraints/handcuffs,
 /obj/item/device/assembly/flash,
 /obj/item/weapon/storage/box/lethalshot,
-/turf/open/floor/plasteel/darkred{
+/turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin/base)
@@ -162,13 +162,13 @@
 /area/awaymission/snowdin/post)
 "aw" = (
 /obj/structure/chair/office/dark,
-/turf/open/floor/plasteel/darkred{
+/turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin/base)
 "ax" = (
 /obj/item/ammo_casing/a762,
-/turf/open/floor/plasteel/darkred{
+/turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin/base)
@@ -177,7 +177,7 @@
 /obj/item/weapon/paper_bin,
 /obj/item/weapon/pen,
 /obj/item/key,
-/turf/open/floor/plasteel/darkred{
+/turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin/base)
@@ -198,7 +198,7 @@
 "aB" = (
 /obj/structure/table/reinforced,
 /obj/structure/barricade/wooden,
-/turf/open/floor/plasteel/darkred{
+/turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin/base)
@@ -208,7 +208,7 @@
 	name = "Security Office";
 	req_access_txt = "63"
 	},
-/turf/open/floor/plasteel/darkred{
+/turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin/base)
@@ -298,7 +298,7 @@
 /obj/machinery/gateway{
 	dir = 9
 	},
-/turf/open/floor/plasteel/bot{
+/turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin/base)
@@ -306,7 +306,7 @@
 /obj/machinery/gateway{
 	dir = 5
 	},
-/turf/open/floor/plasteel/bot{
+/turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin/base)
@@ -314,7 +314,7 @@
 /obj/machinery/gateway{
 	dir = 1
 	},
-/turf/open/floor/plasteel/bot{
+/turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin/base)
@@ -327,7 +327,7 @@
 /obj/item/clothing/suit/hooded/wintercoat,
 /obj/item/clothing/shoes/winterboots,
 /obj/item/clothing/shoes/winterboots,
-/turf/open/floor/plasteel/bot{
+/turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin/base)
@@ -336,7 +336,7 @@
 /obj/item/weapon/storage/firstaid/regular,
 /obj/item/weapon/storage/firstaid/fire,
 /obj/item/weapon/storage/pill_bottle/stimulant,
-/turf/open/floor/plasteel/bot{
+/turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin/base)
@@ -385,7 +385,7 @@
 /obj/machinery/gateway{
 	dir = 8
 	},
-/turf/open/floor/plasteel/bot{
+/turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin/base)
@@ -393,7 +393,7 @@
 /obj/machinery/gateway{
 	dir = 4
 	},
-/turf/open/floor/plasteel/bot{
+/turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin/base)
@@ -401,12 +401,12 @@
 /obj/machinery/gateway/centeraway{
 	calibrated = 0
 	},
-/turf/open/floor/plasteel/bot{
+/turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin/base)
 "be" = (
-/turf/open/floor/plasteel/bot{
+/turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin/base)
@@ -417,7 +417,7 @@
 	},
 /obj/item/weapon/reagent_containers/spray/cleaner,
 /obj/item/weapon/soap/nanotrasen,
-/turf/open/floor/plasteel/bot{
+/turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin/base)
@@ -472,7 +472,7 @@
 /obj/machinery/gateway{
 	dir = 10
 	},
-/turf/open/floor/plasteel/bot{
+/turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin/base)
@@ -480,7 +480,7 @@
 /obj/machinery/gateway{
 	dir = 6
 	},
-/turf/open/floor/plasteel/bot{
+/turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin/base)
@@ -491,7 +491,7 @@
 	pixel_y = 1;
 	d2 = 2
 	},
-/turf/open/floor/plasteel/bot{
+/turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin/base)
@@ -509,7 +509,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/corn,
 /obj/item/weapon/reagent_containers/food/snacks/grown/cocoapod,
 /obj/item/weapon/reagent_containers/food/snacks/grown/cocoapod,
-/turf/open/floor/plasteel/bot{
+/turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin/base)
@@ -753,7 +753,7 @@
 /area/awaymission/snowdin)
 "bN" = (
 /obj/machinery/door/airlock/glass,
-/turf/open/floor/plasteel/cafeteria{
+/turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin/base)
@@ -817,13 +817,13 @@
 	dir = 8
 	},
 /obj/structure/filingcabinet,
-/turf/open/floor/plasteel/darkbrown{
+/turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin/base)
 "bX" = (
 /obj/structure/table,
-/turf/open/floor/plasteel/darkbrown{
+/turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin/base)
@@ -831,14 +831,14 @@
 /obj/structure/table,
 /obj/item/weapon/paper_bin,
 /obj/item/weapon/pen,
-/turf/open/floor/plasteel/darkbrown{
+/turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin/base)
 "bZ" = (
 /obj/structure/table,
 /obj/item/device/flashlight/lamp,
-/turf/open/floor/plasteel/darkbrown{
+/turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin/base)
@@ -847,19 +847,19 @@
 	dir = 1
 	},
 /obj/machinery/vending/coffee,
-/turf/open/floor/plasteel/cafeteria{
+/turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin/base)
 "cb" = (
-/turf/open/floor/plasteel/cafeteria{
+/turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin/base)
 "cc" = (
 /obj/structure/table,
 /obj/machinery/microwave,
-/turf/open/floor/plasteel/cafeteria{
+/turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin/base)
@@ -894,7 +894,7 @@
 	},
 /area/awaymission/snowdin/base)
 "ch" = (
-/turf/open/floor/plasteel/darkbrown{
+/turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin/base)
@@ -902,19 +902,19 @@
 /obj/structure/chair{
 	dir = 1
 	},
-/turf/open/floor/plasteel/darkbrown{
+/turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin/base)
 "cj" = (
 /obj/structure/chair/comfy/beige,
-/turf/open/floor/plasteel/cafeteria{
+/turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin/base)
 "ck" = (
 /obj/item/weapon/cigbutt,
-/turf/open/floor/plasteel/cafeteria{
+/turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin/base)
@@ -926,14 +926,14 @@
 /area/awaymission/snowdin/base)
 "cm" = (
 /obj/machinery/hydroponics/constructable,
-/turf/open/floor/plasteel/cafeteria{
+/turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin/base)
 "cn" = (
 /obj/structure/table/wood,
 /obj/item/trash/cheesie,
-/turf/open/floor/plasteel/cafeteria{
+/turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin/base)
@@ -967,14 +967,14 @@
 /area/awaymission/snowdin/base)
 "cs" = (
 /obj/machinery/door/airlock/hatch,
-/turf/open/floor/plasteel/darkbrown{
+/turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin/base)
 "ct" = (
 /obj/structure/table/wood,
 /obj/item/pizzabox/mushroom,
-/turf/open/floor/plasteel/cafeteria{
+/turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin/base)
@@ -1011,7 +1011,7 @@
 "cy" = (
 /obj/structure/table/wood,
 /obj/item/trash/can,
-/turf/open/floor/plasteel/cafeteria{
+/turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin/base)
@@ -1048,7 +1048,7 @@
 /area/awaymission/snowdin/base)
 "cD" = (
 /obj/structure/chair,
-/turf/open/floor/plasteel/darkbrown{
+/turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin/base)
@@ -1057,7 +1057,7 @@
 	dir = 1;
 	icon_state = "comfychair"
 	},
-/turf/open/floor/plasteel/cafeteria{
+/turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin/base)
@@ -1073,20 +1073,20 @@
 	},
 /obj/structure/filingcabinet,
 /obj/item/weapon/paper/snowdin/snowdinlog,
-/turf/open/floor/plasteel/darkbrown{
+/turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin/base)
 "cH" = (
 /obj/machinery/light,
 /obj/machinery/vending/cigarette,
-/turf/open/floor/plasteel/cafeteria{
+/turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin/base)
 "cI" = (
 /obj/structure/table,
-/turf/open/floor/plasteel/cafeteria{
+/turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin/base)
@@ -1797,7 +1797,7 @@
 /area/awaymission/snowdin)
 "eM" = (
 /mob/living/simple_animal/hostile/skeleton/eskimo,
-/turf/open/floor/plasteel/darkbrown{
+/turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/snow;
 	temperature = 180
 	},
@@ -1834,7 +1834,7 @@
 /obj/item/weapon/cautery{
 	pixel_x = 4
 	},
-/turf/open/floor/plasteel/whiteblue{
+/turf/open/floor/plasteel/white{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin/sekret)
@@ -1926,12 +1926,12 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/turf/open/floor/plasteel/cafeteria{
+/turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin/post)
 "fh" = (
-/turf/open/floor/plasteel/cafeteria{
+/turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin/post)
@@ -1990,7 +1990,7 @@
 /area/awaymission/snowdin/post)
 "fq" = (
 /obj/effect/decal/cleanable/blood/old,
-/turf/open/floor/plasteel/cafeteria{
+/turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin/post)
@@ -2002,7 +2002,7 @@
 /area/awaymission/snowdin/post)
 "fs" = (
 /obj/item/weapon/cigbutt/cigarbutt,
-/turf/open/floor/plasteel/cafeteria{
+/turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin/post)
@@ -2037,7 +2037,7 @@
 /area/awaymission/snowdin/dungeon1)
 "fy" = (
 /obj/machinery/door/airlock/hatch,
-/turf/open/floor/plasteel/cafeteria{
+/turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin/post)
@@ -2184,7 +2184,7 @@
 	},
 /area/awaymission/snowdin/post)
 "fU" = (
-/turf/open/floor/plasteel/cafeteria{
+/turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/snow;
 	temperature = 140
 	},
@@ -2193,14 +2193,14 @@
 /obj/structure/table,
 /obj/item/weapon/reagent_containers/food/drinks/drinkingglass,
 /obj/item/key,
-/turf/open/floor/plasteel/cafeteria{
+/turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/snow;
 	temperature = 140
 	},
 /area/awaymission/snowdin/post)
 "fW" = (
 /obj/structure/chair/stool,
-/turf/open/floor/plasteel/cafeteria{
+/turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/snow;
 	temperature = 140
 	},
@@ -2232,7 +2232,7 @@
 "ga" = (
 /obj/structure/table,
 /obj/item/weapon/storage/box/donkpockets,
-/turf/open/floor/plasteel/cafeteria{
+/turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/snow;
 	temperature = 140
 	},
@@ -2268,7 +2268,7 @@
 	pixel_x = 32;
 	pixel_y = 0
 	},
-/turf/open/floor/plasteel/darkred{
+/turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin/post)
@@ -2400,19 +2400,19 @@
 /obj/machinery/telecomms/allinone{
 	intercept = 1
 	},
-/turf/open/floor/plasteel/purple{
+/turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin/sekret)
 "gy" = (
 /obj/structure/table,
-/turf/open/floor/plasteel/darkbrown{
+/turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/snow;
 	temperature = 180
 	},
 /area/awaymission/snowdin/post)
 "gz" = (
-/turf/open/floor/plasteel/darkbrown{
+/turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/snow;
 	temperature = 180
 	},
@@ -2437,7 +2437,7 @@
 	icon_state = "tube1";
 	dir = 4
 	},
-/turf/open/floor/plasteel/darkbrown{
+/turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/snow;
 	temperature = 180
 	},
@@ -2446,7 +2446,7 @@
 /obj/structure/chair{
 	dir = 4
 	},
-/turf/open/floor/plasteel/darkbrown{
+/turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/snow;
 	temperature = 180
 	},
@@ -2460,7 +2460,7 @@
 /area/awaymission/snowdin/post)
 "gE" = (
 /obj/item/weapon/pen,
-/turf/open/floor/plasteel/darkbrown{
+/turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/snow;
 	temperature = 180
 	},
@@ -2468,7 +2468,7 @@
 "gF" = (
 /obj/structure/table,
 /obj/item/weapon/paper_bin,
-/turf/open/floor/plasteel/darkbrown{
+/turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/snow;
 	temperature = 180
 	},
@@ -2486,7 +2486,7 @@
 /area/awaymission/snowdin/post)
 "gH" = (
 /obj/structure/filingcabinet,
-/turf/open/floor/plasteel/darkbrown{
+/turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/snow;
 	temperature = 180
 	},
@@ -2497,7 +2497,7 @@
 	icon_state = "tube1";
 	dir = 8
 	},
-/turf/open/floor/plasteel/darkbrown{
+/turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/snow;
 	temperature = 180
 	},
@@ -2546,7 +2546,7 @@
 /area/awaymission/snowdin/dungeon1)
 "gP" = (
 /obj/machinery/door/airlock/glass,
-/turf/open/floor/plasteel/cafeteria{
+/turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/snow;
 	temperature = 180
 	},
@@ -2582,14 +2582,14 @@
 	},
 /area/awaymission/snowdin/post)
 "gU" = (
-/turf/open/floor/plasteel/cafeteria{
+/turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/snow;
 	temperature = 180
 	},
 /area/awaymission/snowdin/post)
 "gV" = (
 /obj/structure/table,
-/turf/open/floor/plasteel/cafeteria{
+/turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/snow;
 	temperature = 180
 	},
@@ -2630,7 +2630,7 @@
 	name = "Security Office";
 	req_access_txt = "63"
 	},
-/turf/open/floor/plasteel/darkred{
+/turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin/post)
@@ -2644,7 +2644,7 @@
 "hc" = (
 /obj/structure/table/reinforced,
 /obj/structure/barricade/wooden,
-/turf/open/floor/plasteel/darkred{
+/turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin/post)
@@ -2680,13 +2680,13 @@
 	icon_state = "bulb-broken";
 	status = 2
 	},
-/turf/open/floor/plasteel/cafeteria{
+/turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/snow;
 	temperature = 180
 	},
 /area/awaymission/snowdin/post)
 "hh" = (
-/turf/open/floor/plasteel/darkred{
+/turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin/post)
@@ -2694,7 +2694,7 @@
 /obj/structure/table/reinforced,
 /obj/item/weapon/paper_bin,
 /obj/item/weapon/pen,
-/turf/open/floor/plasteel/darkred{
+/turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin/post)
@@ -2702,7 +2702,7 @@
 /obj/structure/chair/office/dark{
 	dir = 1
 	},
-/turf/open/floor/plasteel/darkred{
+/turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin/post)
@@ -2732,14 +2732,14 @@
 	},
 /obj/item/weapon/restraints/handcuffs,
 /obj/item/device/assembly/flash,
-/turf/open/floor/plasteel/darkred{
+/turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin/post)
 "hn" = (
 /obj/structure/filingcabinet,
 /obj/item/weapon/paper/snowdin/secnotice,
-/turf/open/floor/plasteel/darkred{
+/turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin/post)
@@ -3006,7 +3006,7 @@
 	},
 /area/awaymission/snowdin/sekret)
 "ig" = (
-/turf/open/floor/plasteel/darkbrown{
+/turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin/post)
@@ -3014,7 +3014,7 @@
 /obj/machinery/door/poddoor/shutters{
 	id = "sekret"
 	},
-/turf/open/floor/plasteel/darkbrown{
+/turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin/post)
@@ -3022,7 +3022,7 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/turf/open/floor/plasteel/darkbrown{
+/turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin/post)
@@ -3046,7 +3046,7 @@
 /area/awaymission/snowdin/sekret)
 "il" = (
 /obj/structure/table/reinforced,
-/turf/open/floor/plasteel/darkred{
+/turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin/post)
@@ -3092,7 +3092,7 @@
 /obj/item/weapon/restraints/handcuffs,
 /obj/item/device/assembly/flash,
 /obj/item/weapon/storage/box/lethalshot,
-/turf/open/floor/plasteel/darkred{
+/turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin/post)
@@ -3101,13 +3101,13 @@
 	name = "Security Office";
 	req_access_txt = "63"
 	},
-/turf/open/floor/plasteel/darkred{
+/turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin/post)
 "it" = (
 /obj/machinery/light/small,
-/turf/open/floor/plasteel/darkbrown{
+/turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin/post)
@@ -3141,13 +3141,13 @@
 /obj/structure/table,
 /obj/item/weapon/storage/firstaid/toxin,
 /obj/item/weapon/storage/firstaid/toxin,
-/turf/open/floor/plasteel/cmo{
+/turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin/sekret)
 "iz" = (
 /obj/machinery/iv_drip,
-/turf/open/floor/plasteel/cmo{
+/turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin/sekret)
@@ -3155,7 +3155,7 @@
 /obj/structure/table,
 /obj/item/weapon/storage/firstaid/o2,
 /obj/item/weapon/storage/firstaid/o2,
-/turf/open/floor/plasteel/cmo{
+/turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin/sekret)
@@ -3163,7 +3163,7 @@
 /obj/structure/table,
 /obj/item/weapon/storage/firstaid/regular,
 /obj/item/weapon/storage/firstaid/regular,
-/turf/open/floor/plasteel/cmo{
+/turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin/sekret)
@@ -3171,7 +3171,7 @@
 /obj/structure/table,
 /obj/item/weapon/storage/firstaid/fire,
 /obj/item/weapon/storage/firstaid/fire,
-/turf/open/floor/plasteel/cmo{
+/turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin/sekret)
@@ -3179,7 +3179,7 @@
 /obj/structure/table,
 /obj/item/weapon/storage/firstaid/brute,
 /obj/item/weapon/storage/firstaid/brute,
-/turf/open/floor/plasteel/cmo{
+/turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin/sekret)
@@ -3215,7 +3215,7 @@
 	},
 /area/awaymission/snowdin/dungeon1)
 "iI" = (
-/turf/open/floor/plasteel/cmo{
+/turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin/sekret)
@@ -3287,7 +3287,7 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/turf/open/floor/plasteel/cmo{
+/turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin/sekret)
@@ -3298,7 +3298,7 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/turf/open/floor/plasteel/whiteblue{
+/turf/open/floor/plasteel/white{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin/sekret)
@@ -3309,7 +3309,7 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/turf/open/floor/plasteel/whiteblue{
+/turf/open/floor/plasteel/white{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin/sekret)
@@ -3323,7 +3323,7 @@
 	},
 /area/awaymission/snowdin/sekret)
 "iX" = (
-/turf/open/floor/plasteel/warning{
+/turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin/sekret)
@@ -3387,12 +3387,12 @@
 /area/awaymission/snowdin/sekret)
 "jg" = (
 /obj/structure/table/optable,
-/turf/open/floor/plasteel/whiteblue{
+/turf/open/floor/plasteel/white{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin/sekret)
 "jh" = (
-/turf/open/floor/plasteel/whiteblue{
+/turf/open/floor/plasteel/white{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin/sekret)
@@ -3449,13 +3449,13 @@
 	icon_state = "sleeper-open";
 	dir = 4
 	},
-/turf/open/floor/plasteel/cmo{
+/turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin/sekret)
 "jr" = (
 /obj/structure/window/reinforced,
-/turf/open/floor/plasteel/whiteblue{
+/turf/open/floor/plasteel/white{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin/sekret)
@@ -3464,7 +3464,7 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/turf/open/floor/plasteel/whiteblue{
+/turf/open/floor/plasteel/white{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin/sekret)
@@ -3473,7 +3473,7 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/turf/open/floor/plasteel/whiteblue{
+/turf/open/floor/plasteel/white{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin/sekret)
@@ -3485,7 +3485,7 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/turf/open/floor/plasteel/cmo{
+/turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin/sekret)
@@ -3588,7 +3588,7 @@
 	icon_state = "sleeper-open";
 	dir = 8
 	},
-/turf/open/floor/plasteel/cmo{
+/turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin/sekret)
@@ -3598,14 +3598,14 @@
 	name = "Armory";
 	req_access_txt = "150"
 	},
-/turf/open/floor/plasteel/darkwarning{
+/turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/snow;
 	dir = 9;
 	tag = "icon-warndark (NORTHWEST)"
 	},
 /area/awaymission/snowdin/sekret)
 "jJ" = (
-/turf/open/floor/plasteel/darkwarning{
+/turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/snow;
 	dir = 5;
 	tag = "icon-warndark (NORTHEAST)"
@@ -3645,7 +3645,7 @@
 	name = "Armory";
 	req_access_txt = "150"
 	},
-/turf/open/floor/plasteel/darkwarning{
+/turf/open/floor/plasteel/black{
 	dir = 8
 	},
 /area/awaymission/snowdin/sekret)
@@ -3657,7 +3657,7 @@
 /area/awaymission/snowdin/sekret)
 "jQ" = (
 /obj/structure/table,
-/turf/open/floor/plasteel/cmo{
+/turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin/sekret)
@@ -3669,12 +3669,12 @@
 /obj/item/weapon/reagent_containers/blood/random,
 /obj/item/weapon/reagent_containers/blood/random,
 /obj/item/weapon/reagent_containers/blood/random,
-/turf/open/floor/plasteel/cmo{
+/turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin/sekret)
 "jS" = (
-/turf/open/floor/plasteel/darkwarning{
+/turf/open/floor/plasteel/black{
 	tag = "icon-warndark (EAST)";
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/snow
@@ -3747,7 +3747,7 @@
 /obj/item/ammo_box/magazine/smgm9mm,
 /obj/item/ammo_box/a40mm,
 /obj/item/ammo_box/foambox/riot,
-/turf/open/floor/plasteel/darkwarning{
+/turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/snow;
 	dir = 9;
 	tag = "icon-warndark (NORTHWEST)"
@@ -3755,7 +3755,7 @@
 /area/awaymission/snowdin/sekret)
 "kb" = (
 /obj/machinery/porta_turret/syndicate,
-/turf/open/floor/plasteel/darkwarning{
+/turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/snow;
 	dir = 5;
 	tag = "icon-warndark (NORTHEAST)"
@@ -3862,7 +3862,7 @@
 	},
 /area/awaymission/snowdin/sekret)
 "kq" = (
-/turf/open/floor/plasteel/darkred{
+/turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin/sekret)
@@ -3873,13 +3873,13 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/turf/open/floor/plasteel/darkred{
+/turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin/sekret)
 "ks" = (
 /obj/structure/table/reinforced,
-/turf/open/floor/plasteel/darkred{
+/turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin/sekret)
@@ -3887,7 +3887,7 @@
 /obj/structure/chair/office/dark{
 	dir = 4
 	},
-/turf/open/floor/plasteel/darkred{
+/turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin/sekret)
@@ -3896,12 +3896,12 @@
 /obj/item/weapon/gun/ballistic/automatic/speargun,
 /obj/item/weapon/twohanded/spear,
 /obj/item/weapon/twohanded/spear,
-/turf/open/floor/plasteel/darkwarning{
+/turf/open/floor/plasteel/black{
 	dir = 8
 	},
 /area/awaymission/snowdin/sekret)
 "kv" = (
-/turf/open/floor/plasteel/cafeteria{
+/turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin/sekret)
@@ -3909,7 +3909,7 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/turf/open/floor/plasteel/cafeteria{
+/turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin/sekret)
@@ -4009,7 +4009,7 @@
 /obj/item/weapon/restraints/handcuffs,
 /obj/item/device/assembly/flash,
 /obj/item/weapon/storage/box/lethalshot,
-/turf/open/floor/plasteel/darkred{
+/turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin/sekret)
@@ -4020,7 +4020,7 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/turf/open/floor/plasteel/darkwarning{
+/turf/open/floor/plasteel/black{
 	dir = 8
 	},
 /area/awaymission/snowdin/sekret)
@@ -4029,13 +4029,13 @@
 	name = "Security Office";
 	req_access_txt = "63"
 	},
-/turf/open/floor/plasteel/darkred{
+/turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin/sekret)
 "kK" = (
 /obj/structure/chair/stool,
-/turf/open/floor/plasteel/cafeteria{
+/turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin/sekret)
@@ -4079,11 +4079,11 @@
 	},
 /area/awaymission/snowdin/sekret)
 "kQ" = (
-/turf/open/floor/plasteel/darkwarning,
+/turf/open/floor/plasteel/black,
 /area/awaymission/snowdin/sekret)
 "kR" = (
 /obj/structure/table,
-/turf/open/floor/plasteel/cafeteria{
+/turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin/sekret)
@@ -4091,7 +4091,7 @@
 /obj/structure/rack,
 /obj/item/weapon/gun/ballistic/automatic/mini_uzi,
 /obj/item/weapon/gun/ballistic/automatic/mini_uzi,
-/turf/open/floor/plasteel/darkwarning{
+/turf/open/floor/plasteel/black{
 	tag = "icon-warndark (SOUTHWEST)";
 	dir = 10;
 	baseturf = /turf/open/floor/plating/asteroid/snow
@@ -4101,7 +4101,7 @@
 /obj/structure/rack,
 /obj/item/weapon/gun/ballistic/automatic/shotgun/bulldog/unrestricted,
 /obj/item/weapon/gun/ballistic/automatic/shotgun/bulldog/unrestricted,
-/turf/open/floor/plasteel/darkwarning{
+/turf/open/floor/plasteel/black{
 	tag = "icon-warndark (SOUTHEAST)";
 	dir = 6;
 	baseturf = /turf/open/floor/plating/asteroid/snow
@@ -4182,7 +4182,7 @@
 "le" = (
 /obj/structure/table,
 /obj/item/pizzabox/mushroom,
-/turf/open/floor/plasteel/cafeteria{
+/turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin/sekret)
@@ -4254,7 +4254,7 @@
 /area/awaymission/snowdin/sekret)
 "lo" = (
 /obj/structure/table,
-/turf/open/floor/plasteel/purple{
+/turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin/sekret)
@@ -4265,7 +4265,7 @@
 	},
 /area/awaymission/snowdin/sekret)
 "lq" = (
-/turf/open/floor/plasteel/purple{
+/turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin/sekret)
@@ -4279,7 +4279,7 @@
 	name = "Pirate Radio Listening Channel";
 	pixel_x = 0
 	},
-/turf/open/floor/plasteel/purple{
+/turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin/sekret)
@@ -4341,7 +4341,7 @@
 "lz" = (
 /obj/structure/table,
 /obj/machinery/microwave,
-/turf/open/floor/plasteel/cafeteria{
+/turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin/sekret)
@@ -4365,7 +4365,7 @@
 	name = "Pirate Radio Broadcast Channel";
 	pixel_x = 0
 	},
-/turf/open/floor/plasteel/purple{
+/turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin/sekret)
@@ -4378,18 +4378,18 @@
 /obj/structure/chair/office/light{
 	dir = 8
 	},
-/turf/open/floor/plasteel/purple{
+/turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin/sekret)
 "lE" = (
 /obj/machinery/door/airlock/glass,
-/turf/open/floor/plasteel/cafeteria{
+/turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin)
 "lF" = (
-/turf/open/floor/plasteel/cafeteria{
+/turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin)
@@ -4477,7 +4477,7 @@
 /obj/structure/table,
 /obj/item/weapon/storage/box/donkpockets,
 /obj/item/weapon/storage/box/donkpockets,
-/turf/open/floor/plasteel/cafeteria{
+/turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin/sekret)
@@ -4485,7 +4485,7 @@
 /obj/structure/table,
 /obj/item/weapon/paper_bin,
 /obj/item/weapon/pen/fourcolor,
-/turf/open/floor/plasteel/purple{
+/turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin/sekret)
@@ -4580,7 +4580,7 @@
 /area/awaymission/snowdin/sekret)
 "mb" = (
 /obj/machinery/light,
-/turf/open/floor/plasteel/cafeteria{
+/turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin/sekret)
@@ -4588,7 +4588,7 @@
 /obj/machinery/light,
 /obj/structure/table,
 /obj/item/weapon/storage/box/drinkingglasses,
-/turf/open/floor/plasteel/cafeteria{
+/turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin/sekret)
@@ -4701,7 +4701,7 @@
 	dir = 1
 	},
 /obj/item/ammo_casing/c10mm,
-/turf/open/floor/plasteel/warning{
+/turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/snow;
 	dir = 8
 	},
@@ -4859,7 +4859,7 @@
 "mH" = (
 /obj/structure/window/reinforced,
 /obj/item/ammo_casing/c10mm,
-/turf/open/floor/plasteel/warning{
+/turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/snow;
 	dir = 8
 	},
@@ -4875,7 +4875,7 @@
 /obj/machinery/telecomms/relay/preset/ruskie{
 	use_power = 0
 	},
-/turf/open/floor/plasteel/purple{
+/turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin/sekret)
@@ -4943,7 +4943,7 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/turf/open/floor/plasteel/warning{
+/turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/snow;
 	dir = 8
 	},
@@ -5000,7 +5000,7 @@
 /obj/structure/window/reinforced,
 /obj/item/ammo_casing/c10mm,
 /obj/item/ammo_casing/c10mm,
-/turf/open/floor/plasteel/warning{
+/turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/snow;
 	dir = 8
 	},
@@ -5014,7 +5014,7 @@
 	},
 /area/awaymission/snowdin/sekret)
 "na" = (
-/turf/open/floor/plasteel/darkbrown{
+/turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin)
@@ -5022,14 +5022,14 @@
 /mob/living/simple_animal/bot/cleanbot{
 	name = "\improper Cleanksy"
 	},
-/turf/open/floor/plasteel/darkbrown{
+/turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin)
 "nc" = (
 /obj/structure/table,
 /obj/item/weapon/paper/crumpled/snowdin/shovel,
-/turf/open/floor/plasteel/darkbrown{
+/turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin)
@@ -5037,14 +5037,14 @@
 /obj/structure/table,
 /obj/item/weapon/paper_bin,
 /obj/item/weapon/pen,
-/turf/open/floor/plasteel/darkbrown{
+/turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin)
 "ne" = (
 /obj/structure/table,
 /obj/item/device/flashlight/lamp,
-/turf/open/floor/plasteel/darkbrown{
+/turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin)
@@ -5083,7 +5083,7 @@
 	dir = 1
 	},
 /obj/item/ammo_casing/a357,
-/turf/open/floor/plasteel/warning{
+/turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/snow;
 	dir = 8
 	},
@@ -5095,13 +5095,13 @@
 	name = "Weakened Syndicate Operative";
 	speed = 2
 	},
-/turf/open/floor/plasteel/darkbrown{
+/turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin)
 "nl" = (
 /obj/structure/filingcabinet,
-/turf/open/floor/plasteel/darkbrown{
+/turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin)
@@ -5109,7 +5109,7 @@
 /obj/structure/chair{
 	dir = 1
 	},
-/turf/open/floor/plasteel/darkbrown{
+/turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin)
@@ -5150,7 +5150,7 @@
 "ns" = (
 /obj/structure/window/reinforced,
 /obj/item/ammo_casing/a357,
-/turf/open/floor/plasteel/warning{
+/turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/snow;
 	dir = 8
 	},
@@ -5235,19 +5235,19 @@
 	},
 /obj/structure/filingcabinet,
 /obj/item/weapon/paper/snowdin/snowdinlog2,
-/turf/open/floor/plasteel/darkbrown{
+/turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin)
 "nC" = (
 /obj/effect/decal/cleanable/blood/drip,
-/turf/open/floor/plasteel/darkbrown{
+/turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin)
 "nD" = (
 /obj/machinery/door/airlock/hatch,
-/turf/open/floor/plasteel/darkbrown{
+/turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin)
@@ -5280,13 +5280,13 @@
 /area/awaymission/snowdin)
 "nH" = (
 /obj/effect/decal/cleanable/vomit,
-/turf/open/floor/plasteel/darkbrown{
+/turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin)
 "nI" = (
 /obj/structure/chair,
-/turf/open/floor/plasteel/darkbrown{
+/turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin)
@@ -5306,13 +5306,13 @@
 /area/awaymission/snowdin)
 "nL" = (
 /obj/effect/spawner/lootdrop/snowdin/dungeonlite,
-/turf/open/floor/plasteel/darkbrown{
+/turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin)
 "nM" = (
 /obj/structure/table,
-/turf/open/floor/plasteel/darkbrown{
+/turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin)
