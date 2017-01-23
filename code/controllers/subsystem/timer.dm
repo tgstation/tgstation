@@ -60,34 +60,33 @@ var/datum/subsystem/timer/SStimer
 
 	var/list/bucket_list = src.bucket_list
 	var/static/list/spent = list()
-	LOOP_OUTER
-		while (practical_offset <= BUCKET_LEN && head_offset + (practical_offset*world.tick_lag) <= world.time && !MC_TICK_CHECK)
-			var/datum/timedevent/head = bucket_list[practical_offset]
-			if (!head)
-				practical_offset++
-				if (MC_TICK_CHECK)
-					break
-				continue
-			var/datum/timedevent/timer = head
-			do
-				var/datum/callback/callBack = timer.callBack
-				if (!callBack || timer.spent)
-					continue
-
-				spent += timer
-				timer.spent = TRUE
-
-				callBack.InvokeAsync()
-
-				timer = timer.next
-
-				if (MC_TICK_CHECK)
-					return
-			while (timer && timer != head)
-
-			bucket_list[practical_offset++] = null
+	while (practical_offset <= BUCKET_LEN && head_offset + (practical_offset*world.tick_lag) <= world.time && !MC_TICK_CHECK)
+		var/datum/timedevent/head = bucket_list[practical_offset]
+		if (!head)
+			practical_offset++
 			if (MC_TICK_CHECK)
 				break
+			continue
+		var/datum/timedevent/timer = head
+		do
+			var/datum/callback/callBack = timer.callBack
+			if (!callBack || timer.spent)
+				continue
+
+			spent += timer
+			timer.spent = TRUE
+
+			callBack.InvokeAsync()
+
+			timer = timer.next
+
+			if (MC_TICK_CHECK)
+				return
+		while (timer && timer != head)
+
+		bucket_list[practical_offset++] = null
+		if (MC_TICK_CHECK)
+			break
 
 	bucket_count -= length(spent)
 
