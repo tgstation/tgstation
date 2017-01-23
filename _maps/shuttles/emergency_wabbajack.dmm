@@ -11,22 +11,22 @@
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "ad" = (
-/turf/open/floor/plasteel/green,
+/turf/open/floor/plasteel,
 /area/shuttle/escape)
 "ae" = (
-/turf/open/floor/plasteel/darkgreen,
+/turf/open/floor/plasteel/black,
 /area/shuttle/escape)
 "af" = (
 /obj/machinery/power/emitter/energycannon/magical,
-/turf/open/floor/plasteel/darkgreen,
+/turf/open/floor/plasteel/black,
 /area/shuttle/escape)
 "ag" = (
 /obj/structure/table/abductor/wabbajack/left,
-/turf/open/floor/plasteel/darkgreen,
+/turf/open/floor/plasteel/black,
 /area/shuttle/escape)
 "ah" = (
 /obj/structure/table/abductor/wabbajack/right,
-/turf/open/floor/plasteel/darkgreen,
+/turf/open/floor/plasteel/black,
 /area/shuttle/escape)
 "ai" = (
 /obj/structure/sign/biohazard,
@@ -263,29 +263,29 @@
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "aW" = (
-/turf/open/floor/plasteel/yellow,
-/turf/open/floor/plasteel/warningline{
+/turf/open/floor/plasteel,
+/turf/open/floor/plasteel{
 	tag = "icon-warningline (NORTH)";
 	dir = 1
 	},
 /area/shuttle/escape)
 "aX" = (
-/turf/open/floor/plasteel/yellow,
-/turf/open/floor/plasteel/warningline{
+/turf/open/floor/plasteel,
+/turf/open/floor/plasteel{
 	tag = "icon-warningline (NORTHEAST)";
 	dir = 5
 	},
 /area/shuttle/escape)
 "aY" = (
-/turf/open/floor/plasteel/whitered,
-/turf/open/floor/plasteel/warningline{
+/turf/open/floor/plasteel,
+/turf/open/floor/plasteel{
 	tag = "icon-warningline (NORTHWEST)";
 	dir = 9
 	},
 /area/shuttle/escape)
 "aZ" = (
-/turf/open/floor/plasteel/whitered,
-/turf/open/floor/plasteel/warningline{
+/turf/open/floor/plasteel,
+/turf/open/floor/plasteel{
 	tag = "icon-warningline (NORTH)";
 	dir = 1
 	},
@@ -295,18 +295,18 @@
 	desc = "A engine used in powering the shuttle.";
 	name = "magma engine"
 	},
-/turf/open/floor/plasteel/yellow,
+/turf/open/floor/plasteel,
 /area/shuttle/escape)
 "bb" = (
-/turf/open/floor/plasteel/yellow,
-/turf/open/floor/plasteel/warningline{
+/turf/open/floor/plasteel,
+/turf/open/floor/plasteel{
 	tag = "icon-warningline (EAST)";
 	dir = 4
 	},
 /area/shuttle/escape)
 "bc" = (
-/turf/open/floor/plasteel/whitered,
-/turf/open/floor/plasteel/warningline{
+/turf/open/floor/plasteel,
+/turf/open/floor/plasteel{
 	tag = "icon-warningline (WEST)";
 	dir = 8
 	},
@@ -316,7 +316,7 @@
 	desc = "A engine used in powering the shuttle.";
 	name = "magma engine"
 	},
-/turf/open/floor/plasteel/whitered,
+/turf/open/floor/plasteel,
 /area/shuttle/escape)
 "be" = (
 /obj/structure/window/reinforced{
