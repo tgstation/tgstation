@@ -7,6 +7,7 @@
 	circuit = /obj/item/weapon/circuitboard/computer/aifixer
 	icon_keyboard = "tech_key"
 	icon_screen = "ai-fixer"
+	var/fix_next_tick = 0
 
 /obj/machinery/computer/aifixer/attackby(obj/I, mob/user, params)
 	if(occupier && istype(I, /obj/item/weapon/screwdriver))
@@ -70,10 +71,28 @@
 	popup.open()
 	return
 
+/obj/machinery/computer/aifixer/proc/Fix()
+	if(world.time < fix_next_tick)
+		return
+	. = use_power(1000)
+	while(. && world.time < fix_next_tick)
+		fix_next_tick = world.time + 10
+		occupier.adjustOxyLoss(-1, 0)
+		occupier.adjustFireLoss(-1, 0)
+		occupier.adjustToxLoss(-1, 0)
+		occupier.adjustBruteLoss(-1, 0)
+		occupier.updatehealth()
+		occupier.updatehealth()
+		if(occupier.health >= 0 && occupier.stat == DEAD)
+			occupier.revive()
+		. = . && occupier.health < 100
+
 /obj/machinery/computer/aifixer/process()
 	if(..())
-		src.updateDialog()
-		return
+		if(active)
+			active = Fix()
+		updateDialog()
+		update_icon()
 
 /obj/machinery/computer/aifixer/Topic(href, href_list)
 	if(..())
@@ -81,23 +100,9 @@
 	if(href_list["fix"])
 		usr << "<span class='notice'>Reconstruction in progress. This will take several minutes.</span>"
 		playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 25, 0)
-		active = 1
-		while (occupier.health < 100)
-			occupier.adjustOxyLoss(-1, 0)
-			occupier.adjustFireLoss(-1, 0)
-			occupier.adjustToxLoss(-1, 0)
-			occupier.adjustBruteLoss(-1, 0)
-			occupier.updatehealth()
-			if(occupier.health >= 0 && occupier.stat == DEAD)
-				occupier.revive()
-			updateUsrDialog()
-			update_icon()
-			sleep(10)
-		active = 0
+		active = TRUE
 		add_fingerprint(usr)
-	updateUsrDialog()
-	update_icon()
-
+		fix_next_tick = world.time + 10
 
 /obj/machinery/computer/aifixer/update_icon()
 	..()
