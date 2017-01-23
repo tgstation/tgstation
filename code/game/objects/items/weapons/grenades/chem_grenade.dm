@@ -51,6 +51,7 @@
 
 
 /obj/item/weapon/grenade/chem_grenade/attackby(obj/item/I, mob/user, params)
+	..()
 	if(istype(I, /obj/item/weapon/screwdriver))
 		if(stage == WIRED)
 			if(beakers.len)
