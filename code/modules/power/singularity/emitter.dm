@@ -185,7 +185,7 @@
 	else
 		src.fire_delay = rand(minimum_fire_delay,maximum_fire_delay)
 		src.shot_number = 0
-	var/obj/item/projectile/A = PoolOrNew(projectile_type,src.loc)
+	var/obj/item/projectile/A = new projectile_type(src.loc)
 	A.setDir(src.dir)
 	playsound(src.loc, projectile_sound, 25, 1)
 	if(prob(35))
