@@ -43,12 +43,12 @@
 			Reset()
 			Draw()
 		sleep(sleep_time)
-
-	qdel(src)
+	if(!qdeleted(src))
+		qdel(src)
 
 
 /datum/beam/proc/End()
-	finished = 1
+	finished = TRUE
 
 
 /datum/beam/proc/Reset()

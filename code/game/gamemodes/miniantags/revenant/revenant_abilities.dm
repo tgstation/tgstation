@@ -54,9 +54,8 @@
 				reveal(46)
 				stun(46)
 				target.visible_message("<span class='warning'>[target] suddenly rises slightly into the air, [target.p_their()] skin turning an ashy gray.</span>")
-				var/datum/beam/B = Beam(target,icon_state="drain_life",time=46)
+				var/datum/beam/B = Beam(target,icon_state="drain_life",time=INFINITY)
 				if(do_after(src, 46, 0, target)) //As one cannot prove the existance of ghosts, ghosts cannot prove the existance of the target they were draining.
-					qdel(B)
 					change_essence_amount(essence_drained, 0, target)
 					if(essence_drained <= 90 && target.stat != DEAD)
 						essence_regen_cap += 5
@@ -71,11 +70,11 @@
 					drained_mobs.Add(target)
 					target.death(0)
 				else
-					qdel(B)
 					src << "<span class='revenwarning'>[target ? "[target] has":"They have"] been drawn out of your grasp. The link has been broken.</span>"
 					if(target) //Wait, target is WHERE NOW?
 						target.visible_message("<span class='warning'>[target] slumps onto the ground.</span>", \
 											   "<span class='revenwarning'>Violets lights, dancing in your vision, receding--</span>")
+				qdel(B)
 			else
 				src << "<span class='revenwarning'>You are not close enough to siphon [target ? "[target]'s":"their"] soul. The link has been broken.</span>"
 	draining = 0
