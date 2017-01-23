@@ -103,12 +103,12 @@
 	name = "Shuttle"
 	})
 "o" = (
-/turf/open/floor/plasteel/darkblue,
+/turf/open/floor/plasteel/black,
 /area/ruin/powered{
 	name = "Shuttle"
 	})
 "p" = (
-/turf/open/floor/plasteel/darkyellow,
+/turf/open/floor/plasteel/black,
 /area/ruin/powered{
 	name = "Shuttle"
 	})
@@ -129,7 +129,7 @@
 "s" = (
 /obj/structure/table,
 /obj/item/weapon/storage/firstaid/regular,
-/turf/open/floor/plasteel/darkblue,
+/turf/open/floor/plasteel/black,
 /area/ruin/powered{
 	name = "Shuttle"
 	})
@@ -139,13 +139,13 @@
 	icon_state = "sleeper";
 	dir = 1
 	},
-/turf/open/floor/plasteel/darkblue,
+/turf/open/floor/plasteel/black,
 /area/ruin/powered{
 	name = "Shuttle"
 	})
 "u" = (
 /obj/structure/table/reinforced,
-/turf/open/floor/plasteel/darkyellow,
+/turf/open/floor/plasteel/black,
 /area/ruin/powered{
 	name = "Shuttle"
 	})
@@ -174,7 +174,7 @@
 	icon_state = "comfychair";
 	dir = 4
 	},
-/turf/open/floor/plasteel/darkyellow,
+/turf/open/floor/plasteel/black,
 /area/ruin/powered{
 	name = "Shuttle"
 	})
