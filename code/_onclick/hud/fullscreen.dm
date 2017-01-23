@@ -12,7 +12,7 @@
 		else if(!severity || severity == screen.severity)
 			return null
 	else
-		screen = PoolOrNew(type)
+		screen = new type()
 
 	screen.icon_state = "[initial(screen.icon_state)][severity]"
 	screen.severity = severity
@@ -65,9 +65,8 @@
 	var/severity = 0
 
 /obj/screen/fullscreen/Destroy()
-	..()
 	severity = 0
-	return QDEL_HINT_PUTINPOOL
+	. = ..()
 
 /obj/screen/fullscreen/brute
 	icon_state = "brutedamageoverlay"

@@ -284,7 +284,8 @@ var/datum/subsystem/timer/SStimer
 			prev.next = null
 		if (next && next.prev == src)
 			next.prev = null
-
+	next = null
+	prev = null
 	return QDEL_HINT_IWILLGC
 
 proc/addtimer(datum/callback/callback, wait, flags)
