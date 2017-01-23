@@ -11,9 +11,8 @@ var/datum/subsystem/objects/SSobj
 	init_order = 12
 	priority = 40
 
-	var/initialized = FALSE
+	var/initialized = 0	//0: nothing should call Initialize. 1: New should call Initialize(TRUE). 2, New should call Initialize(FALSE)
 	var/old_initialized
-	var/list/atom_spawners = list()
 	var/list/processing = list()
 	var/list/currentrun = list()
 
@@ -22,28 +21,33 @@ var/datum/subsystem/objects/SSobj
 
 /datum/subsystem/objects/Initialize(timeofdayl)
 	fire_overlay.appearance_flags = RESET_COLOR
-	trigger_atom_spawners()
 	setupGenetics() //to set the mutations' place in structural enzymes, so monkey.initialize() knows where to put the monkey mutation.
-	for(var/thing in world)
-		var/atom/A = thing
-		A.Initialize(TRUE)
-		CHECK_TICK
-	initialized = TRUE
+	InitializeAtoms()
 	. = ..()
+
+/datum/subsystem/objects/proc/InitializeAtoms(list/objects = null)
+	initialized = 1
+
+	if(objects)
+		for(var/thing in objects)
+			var/atom/A = thing
+			A.Initialize(TRUE)
+			CHECK_TICK
+	else
+		for(var/thing in world)
+			var/atom/A = thing
+			if(!A.initialized)	//this check is to make sure we don't call it twice on an object that was created in a previous Initialize call
+				A.Initialize(TRUE)
+				CHECK_TICK
+
+	initialized = 2
 
 /datum/subsystem/objects/proc/map_loader_begin()
 	old_initialized = initialized
-	initialized = FALSE
+	initialized = 0
 
 /datum/subsystem/objects/proc/map_loader_stop()
 	initialized = old_initialized
-
-/datum/subsystem/objects/proc/trigger_atom_spawners(zlevel, ignore_z=FALSE)
-	for(var/V in atom_spawners)
-		var/atom/A = V
-		if (!ignore_z && (zlevel && A.z != zlevel))
-			continue
-		A.spawn_atom_to_world()
 
 /datum/subsystem/objects/stat_entry()
 	..("P:[processing.len]")
@@ -65,18 +69,11 @@ var/datum/subsystem/objects/SSobj
 		if (MC_TICK_CHECK)
 			return
 
-
-/datum/subsystem/objects/proc/setup_template_objects(list/objects)
-	trigger_atom_spawners(0, ignore_z=TRUE)
-	if(initialized)
-		for(var/A in objects)
-			var/atom/B = A
-			B.Initialize(TRUE)
-
 /datum/subsystem/objects/Recover()
 	initialized = SSobj.initialized
+	if(initialized == 1) //0.o?
+		InitializeAtoms()
 	old_initialized = SSobj.old_initialized
-	if (istype(SSobj.atom_spawners))
-		atom_spawners = SSobj.atom_spawners
+
 	if (istype(SSobj.processing))
 		processing = SSobj.processing
