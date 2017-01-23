@@ -72,9 +72,7 @@ var/datum/subsystem/timer/SStimer
 			do
 				var/datum/callback/callBack = timer.callBack
 				if (!callBack || timer.spent)
-					qdel(timer)
-					bucket_resolution = null //force bucket recreation
-					CRASH("Invalid timer: timer.timeToRun=[timer.timeToRun]||qdeleted(timer)=[qdeleted(timer)]||world.time=[world.time]||head_offset=[head_offset]||practical_offset=[practical_offset]||timer.spent=[timer.spent]")
+					continue
 
 				spent += timer
 				timer.spent = TRUE
@@ -84,15 +82,7 @@ var/datum/subsystem/timer/SStimer
 				timer = timer.next
 
 				if (MC_TICK_CHECK)
-					if (!timer || timer == head)
-						break
-					if (head.prev)
-						head.prev.next = timer
-						if (timer.prev)
-							timer.prev.next = head
-						timer.prev = head.prev
-						bucket_list[practical_offset] = timer
-					break LOOP_OUTER
+					return
 			while (timer && timer != head)
 
 			bucket_list[practical_offset++] = null
@@ -251,7 +241,7 @@ var/datum/subsystem/timer/SStimer
 
 	if (flags & TIMER_CLIENT_TIME)
 		SStimer.clienttime_timers -= src
-		return QDEL_HINT_IWILLGC
+		return QDEL_HINT_QUEUE
 
 	if (flags & TIMER_STOPPABLE)
 		SStimer.timer_id_dict -= "timerid[id]"
@@ -286,7 +276,7 @@ var/datum/subsystem/timer/SStimer
 			next.prev = null
 	next = null
 	prev = null
-	return QDEL_HINT_IWILLGC
+	return QDEL_HINT_QUEUE
 
 proc/addtimer(datum/callback/callback, wait, flags)
 	if (!callback)
