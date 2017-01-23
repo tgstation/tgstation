@@ -30,7 +30,6 @@
 		tripchance = TRUE //did trip!
 	else
 		tripchance = FALSE //did not trip!
-	trample_damage -= (targets_len - 1) * 0.1 //reduce the damage per target slightly
 	var/list/tramplemessage = list("<span class='danger'>")
 	var/list/tramplelogs = list()
 	for(var/i in targets)
