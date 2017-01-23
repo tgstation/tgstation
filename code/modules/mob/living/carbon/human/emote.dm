@@ -137,31 +137,6 @@
 	update_body()
 
 
-/datum/emote/living/carbon/human/unspeakable
-	key = "eat my anus"
-	key_third_person = "fuck me daddy"
-	message = "daddy taught us not to be ashamed of our dicks"
-
-/datum/emote/living/carbon/human/unspeakable/run_emote(mob/user, params)
-	. = ..()
-	var/mob/living/carbon/human/H = user
-	if(prob(prob(prob(1))))
-		H << "How the fuck?"
-		new /obj/item/weapon/gun/energy/pulse/destroyer(get_turf(H))
-	else
-		H.visible_message("<span class = 'userdanger'>[H] explodes into a shower of gibs for trying to commit an unspeakable act!</span>")
-		H.gib()
-
-/datum/emote/living/carbon/human/unspeakable/pee
-	key = "pee"
-	key_third_person = "pees"
-	message = "pisses."
-
-/datum/emote/living/carbon/human/unspeakable/poo
-	key = "poo"
-	key_third_person = "poops"
-	message = "poops."
-
 /mob/living/carbon/human/proc/endTailWag()
 	if(!dna || !dna.species)
 		return
@@ -191,3 +166,4 @@
 		dna.species.mutant_bodyparts |= "wings"
 	update_body()
 
+//Ayy lmao
