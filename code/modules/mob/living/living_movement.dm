@@ -22,7 +22,10 @@
 	if(size_multiplier)
 		trample_damage *= size_multiplier //do more damage based on size; tiny mobs can't trample, bigger mobs can
 	var/tripchance = max((targets_len * 10) - (movement_delay() * (targets_len * 5)), 0) //for 5 targets, this is a 50% chance to trip minus an amount based on your movement delay
-	if(prob(tripchance) && Weaken(3))
+	if(prob(tripchance) && (status_flags & CANWEAKEN))
+		for(var/obj/item/I in held_items)
+			accident(I)
+		Weaken(3)
 		trample_damage *= 0.5
 		tripchance = TRUE //did trip!
 	else
