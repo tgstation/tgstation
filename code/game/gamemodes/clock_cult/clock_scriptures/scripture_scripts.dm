@@ -268,62 +268,66 @@
 	return slab.procure_gateway(invoker, duration, portal_uses)
 
 
-//Volt Void: Channeled for up to thirty times over thirty seconds. Consumes power from most power storages and deals slight burn damage to the invoker.
+//Volt Void: Channeled for up to five times over ten seconds to fire up to five rays of energy at target locations.
 /datum/clockwork_scripture/channeled/volt_void
-	descname = "Channeled, Area Power Drain"
+	descname = "Channeled, Targeted Energy Blasts"
 	name = "Volt Void" //Alternative name: "On all levels but physical, I am a power sink"
-	desc = "Drains energy from nearby power sources, dealing burn damage if the total power consumed is above a threshhold. Channeled every second for a maximum of thirty seconds."
-	chant_invocations = list("Draw charge to this shell!")
-	chant_amount = 30
-	chant_interval = 10
+	desc = "Allows you to fire energy rays at target locations; more power consumed causes more damage. Channeled every fourth of a second for a maximum of ten seconds."
+	channel_time = 20
+	invocations = list("Amperage...", "...grant me your power!")
+	chant_invocations = list("Use charge to kill!", "Slay with power!", "Hunt with energy!")
+	chant_amount = 5
+	chant_interval = 4
 	required_components = list(GEIS_CAPACITOR = 1, HIEROPHANT_ANSIBLE = 2)
 	consumed_components = list(GEIS_CAPACITOR = 1, HIEROPHANT_ANSIBLE = 1)
-	usage_tip = "If standing on a Sigil of Transmission, will transfer power to it. Augumented limbs will also be healed unless above a very high threshhold."
+	usage_tip = "Though it requires you to stand still, this scripture can do massive damage."
 	tier = SCRIPTURE_SCRIPT
 	primary_component = HIEROPHANT_ANSIBLE
 	sort_priority = 10
 	quickbind = TRUE
-	quickbind_desc = "Drains power from nearby objects. If standing on a Sigil of Transmission, gives it that power.<br><b>Maximum 30 chants.</b>"
-	var/total_power_drained = 0
-	var/power_damage_threshhold = 3000
-	var/augument_damage_threshhold = 6000
+	quickbind_desc = "Allows you to fire energy rays at target locations. Failing to fire causes backlash.<br><b>Maximum 5 chants.</b>"
+	var/static/list/nzcrentr_insults = list("You're not very good at aiming.", "You hunt badly.", "What a waste of energy.", "Almost funny to watch.",
+	"Boss says </span><span class='heavy_brass'>\"Click something, you idiot!\"</span><span class='nzcrentr'>.", "Stop wasting components if you can't aim.")
 
 /datum/clockwork_scripture/channeled/volt_void/chant_effects(chant_number)
-	playsound(invoker, 'sound/effects/EMPulse.ogg', 50, 1)
-	new /obj/effect/overlay/temp/ratvar/sigil/voltvoid(get_turf(invoker))
-	var/power_drained = 0
-	for(var/atom/movable/A in view(7, get_turf(invoker)))
-		power_drained += A.power_drain(TRUE)
-	var/obj/effect/clockwork/sigil/transmission/ST = locate(/obj/effect/clockwork/sigil/transmission) in get_turf(invoker)
-	if(ST && power_drained >= MIN_CLOCKCULT_POWER)
-		var/sigil_drain = 0
-		while(power_drained >= MIN_CLOCKCULT_POWER)
-			ST.modify_charge(-MIN_CLOCKCULT_POWER)
-			power_drained -= MIN_CLOCKCULT_POWER
-			sigil_drain += MIN_CLOCKCULT_POWER * 0.2
-		power_drained += sigil_drain //readd part of the power given to the sigil to the power drained this cycle
-		ST.visible_message("<span class='warning'>[ST] flares a brilliant orange!</span>")
-	total_power_drained += power_drained
-	if(power_drained >= MIN_CLOCKCULT_POWER)
-		if(iscyborg(invoker))
-			var/mob/living/silicon/robot/R = invoker
-			if(R.cell)
-				R.cell.give(power_drained)
-				R.visible_message("<span class='warning'>[invoker] flares a brilliant orange!</span>", "<span class='brass'>You feel your cell charging.</span>")
-		else if(total_power_drained >= power_damage_threshhold)
-			var/power_damage = power_drained * 0.01
-			invoker.visible_message("<span class='warning'>[invoker] flares a brilliant orange!</span>", "<span class='userdanger'>You feel the heat of electricity running into your body.</span>")
-			if(ishuman(invoker))
-				var/mob/living/carbon/human/H = invoker
-				for(var/X in H.bodyparts)
-					var/obj/item/bodypart/BP = X
-					if(ratvar_awakens || (BP.status == BODYPART_ROBOTIC && total_power_drained < augument_damage_threshhold)) //if ratvar is alive, it won't damage and will always heal augumented limbs
-						if(BP.heal_damage(power_damage, power_damage, 1, 0)) //heals one point of burn and brute for every ~100W drained on augumented limbs
-							H.update_damage_overlays()
-					else
-						if(BP.receive_damage(0, power_damage))
-							H.update_damage_overlays()
-			else if(isanimal(invoker))
-				var/mob/living/simple_animal/A = invoker
-				A.adjustHealth(-power_damage) //if a simple animal is using volt void, just heal it
+	slab.busy = null
+	var/datum/clockwork_scripture/ranged_ability/volt_ray/ray = new
+	ray.slab = slab
+	ray.invoker = invoker
+	var/turf/T = get_turf(invoker)
+	if(!ray.run_scripture() && slab && invoker)
+		if(can_recite() && T == get_turf(invoker))
+			if(!ratvar_awakens && !iscyborg(invoker) && !isclockmob(invoker) && !isdrone(invoker))
+				var/obj/structure/destructible/clockwork/powered/volt_checker/VC = new/obj/structure/destructible/clockwork/powered/volt_checker(get_turf(invoker))
+				var/multiplier = 0.4
+				var/minimum_power = Floor(VC.total_accessable_power() * 0.2, MIN_CLOCKCULT_POWER)
+				var/usable_power = min(minimum_power, 1000)
+				var/used_power = 0
+				while(used_power < usable_power && VC.try_use_power(MIN_CLOCKCULT_POWER))
+					used_power += MIN_CLOCKCULT_POWER
+					multiplier += 0.01
+				qdel(VC)
+				var/obj/effect/overlay/temp/ratvar/volt_hit/VH = new /obj/effect/overlay/temp/ratvar/volt_hit(get_turf(invoker), null, multiplier)
+				invoker.visible_message("<span class='warning'>[invoker] is struck by [invoker.p_their()] own [VH.name]!</span>", "<span class='userdanger'>You're struck by your own [VH.name]!</span>")
+				invoker.adjustFireLoss(VH.damage) //you have to fail all five blasts to die to this
+				playsound(invoker, 'sound/machines/defib_zap.ogg', VH.damage, 1, -1)
+			invoker << "<span class='nzcrentr'>\"[text2ratvar(pick(nzcrentr_insults))]\"</span>"
+		else
+			return FALSE
 	return TRUE
+
+/obj/effect/ebeam/volt_ray
+	name = "volt_ray"
+	layer = LYING_MOB_LAYER
+
+/datum/clockwork_scripture/ranged_ability/volt_ray
+	name = "Volt Ray"
+	slab_icon = "volt"
+	allow_mobility = FALSE
+	ranged_type = /obj/effect/proc_holder/slab/volt
+	ranged_message = "<span class='nzcrentr_small'><i>You charge the clockwork slab with shocking might.</i>\n\
+	<b>Left-click a target to fire, quickly!</b></span>"
+	timeout_time = 16
+
+/obj/structure/destructible/clockwork/powered/volt_checker
+	invisibility = INVISIBILITY_ABSTRACT
