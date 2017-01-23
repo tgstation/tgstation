@@ -285,6 +285,7 @@
 	owner.resize = 0.8
 	owner.update_transform()
 	owner.pass_flags |= PASSTABLE
+	owner.mob_size--
 	owner.visible_message("<span class='danger'>[owner] suddenly shrinks!</span>", "<span class='notice'>Everything around you seems to grow..</span>")
 
 /datum/mutation/human/dwarfism/on_losing(mob/living/carbon/human/owner)
@@ -293,6 +294,7 @@
 	owner.resize = 1.25
 	owner.update_transform()
 	owner.pass_flags &= ~PASSTABLE
+	owner.mob_size++
 	owner.visible_message("<span class='danger'>[owner] suddenly grows!</span>", "<span class='notice'>Everything around you seems to shrink..</span>")
 
 /datum/mutation/human/clumsy
