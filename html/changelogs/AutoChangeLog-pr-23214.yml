@@ -1,0 +1,4 @@
+author: "Kor"
+delete-after: True
+changes: 
+  - rscadd: "Megafauna will not heal while on the station. Do not be afraid to throw your life away to get in a few toolbox hits."
