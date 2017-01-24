@@ -57,10 +57,10 @@
 
 			if(istype(over_object, /obj/screen/inventory/hand))
 				var/obj/screen/inventory/hand/H = over_object
-				if(!M.removeItemFromInventory(src))
+				if(!M.temporarilyRemoveItemFromInventory(src))
 					return
 				if(!M.put_in_hand(src,H.held_index))
-					qdel(src)//lol cya
+					qdel(src)
 					return
 
 			add_fingerprint(usr)
@@ -305,13 +305,12 @@
 	if(!istype(W))
 		return 0
 	if(usr)
-		if(!usr.removeItemFromInventory(W))
+		if(!usr.transferItemToLoc(W, src))
 			return 0
 	if(silent)
 		prevent_warning = 1
 	if(W.pulledby)
 		W.pulledby.stop_pulling()
-	W.loc = src
 	W.on_enter_storage(src)
 	if(usr)
 		if(usr.client && usr.s_active != src)

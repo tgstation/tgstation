@@ -46,12 +46,11 @@
 		else if(istype(I, /obj/item/weapon/reagent_containers/food/snacks/pizzaslice/custom) || istype(I, /obj/item/weapon/reagent_containers/food/snacks/cakeslice/custom))
 			user << "<span class='warning'>Adding [I.name] to [src] would make a mess.</span>"
 		else
-			if(!user.removeItemFromInventory(I))
+			if(!user.transferItemToLoc(I, src))
 				return
 			if(S.trash)
 				S.generate_trash(get_turf(user))
 			ingredients += S
-			S.loc = src
 			mix_filling_color(S)
 			S.reagents.trans_to(src,min(S.reagents.total_volume, 15)) //limit of 15, we don't want our custom food to be completely filled by just one ingredient with large reagent volume.
 			update_overlays(S)

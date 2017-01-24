@@ -145,7 +145,7 @@
 	if(!materials.has_space(material_amount))
 		user << "<span class='warning'>The autolathe is full. Please remove metal or glass from the autolathe in order to insert more.</span>"
 		return 1
-	if(!user.removeItemFromInventory(O))
+	if(!user.temporarilyRemoveItemFromInventory(O))
 		user << "<span class='warning'>\The [O] is stuck to you and cannot be placed into the autolathe.</span>"
 		return 1
 
@@ -165,6 +165,9 @@
 			user << "<span class='notice'>You insert a material total of [inserted] to the autolathe.</span>"
 			use_power(max(500,inserted/10))
 			qdel(O)
+	else
+		user.put_in_active_hand(O)
+
 	busy = 0
 	updateUsrDialog()
 	return 1

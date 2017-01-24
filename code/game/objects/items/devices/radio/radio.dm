@@ -581,9 +581,8 @@
 			return
 
 		if(!keyslot)
-			if(!user.removeItemFromInventory(W))
+			if(!user.transferItemToLoc(W, src))
 				return
-			W.loc = src
 			keyslot = W
 
 		recalculateChannels()

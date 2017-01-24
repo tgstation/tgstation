@@ -29,7 +29,7 @@
 
 /obj/effect/proc_holder/changeling/weapon/proc/check_weapon(mob/user, obj/item/hand_item)
 	if(istype(hand_item, weapon_type))
-		user.removeItemFromInventory(hand_item, TRUE) //DROPDEL will delete the item
+		user.temporarilyRemoveItemFromInventory(hand_item, TRUE) //DROPDEL will delete the item
 		if(!silent)
 			playsound(user, 'sound/effects/blobattack.ogg', 30, 1)
 			user.visible_message("<span class='warning'>With a sickening crunch, [user] reforms their [weapon_name_simple] into an arm!</span>", "<span class='notice'>We assimilate the [weapon_name_simple] back into our body.</span>", "<span class='italics>You hear organic matter ripping and tearing!</span>")
@@ -89,8 +89,8 @@
 	var/mob/living/carbon/human/H = user
 	if(istype(H.wear_suit, suit_type) || istype(H.head, helmet_type))
 		H.visible_message("<span class='warning'>[H] casts off their [suit_name_simple]!</span>", "<span class='warning'>We cast off our [suit_name_simple][genetic_damage > 0 ? ", temporarily weakening our genomes." : "."]</span>", "<span class='italics'>You hear the organic matter ripping and tearing!</span>")
-		H.removeItemFromInventory(H.head, TRUE) //The qdel on dropped() takes care of it
-		H.removeItemFromInventory(H.wear_suit, TRUE)
+		H.temporarilyRemoveItemFromInventory(H.head, TRUE) //The qdel on dropped() takes care of it
+		H.temporarilyRemoveItemFromInventory(H.wear_suit, TRUE)
 		H.update_inv_wear_suit()
 		H.update_inv_head()
 		H.update_hair()

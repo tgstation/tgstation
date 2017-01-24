@@ -87,9 +87,8 @@
 	else if (istype(A, /obj/item/weapon/pen))
 		if(modified)
 			if(!FD.pen)
-				if(!user.removeItemFromInventory(A))
+				if(!user.transferItemToLoc(A, FD))
 					return
-				A.forceMove(FD)
 				FD.pen = A
 				FD.damage = 5
 				FD.nodamage = 0

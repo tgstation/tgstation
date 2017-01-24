@@ -316,8 +316,7 @@
 			user << "<span class='warning'>[src] is full.</span>"
 			return 0
 		user << "<span class='notice'>You slip [W] inside [src].</span>"
-		user.removeItemFromInventory(W)
-		W.loc = src	//They were dropped before, but I'm not sure that was correct -Cyberboss
+		user.transferItemToLoc(W, src)
 		add_fingerprint(user)
 		contents += W
 		stored_item = 1

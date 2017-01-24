@@ -249,8 +249,7 @@
 	if(istype(I, /obj/item/weapon/twohanded/ctf))
 		var/obj/item/weapon/twohanded/ctf/flag = I
 		if(flag.team != src.team)
-			user.removeItemFromInventory(flag)
-			flag.forceMove(get_turf(flag.reset))
+			user.transferItemToLoc(flag, get_turf(flag.reset), TRUE)
 			points++
 			for(var/mob/M in player_list)
 				var/area/mob_area = get_area(M)

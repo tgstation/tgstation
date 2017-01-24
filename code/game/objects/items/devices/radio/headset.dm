@@ -246,15 +246,13 @@
 			return
 
 		if(!keyslot)
-			if(!user.removeItemFromInventory(W))
+			if(!user.transferItemToLoc(W, src))
 				return
-			W.loc = src
 			keyslot = W
 
 		else
-			if(!user.removeItemFromInventory(W))
+			if(!user.transferItemToLoc(W, src))
 				return
-			W.loc = src
 			keyslot2 = W
 
 

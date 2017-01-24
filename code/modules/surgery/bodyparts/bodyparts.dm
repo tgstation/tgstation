@@ -67,7 +67,7 @@
 				else
 					H.visible_message("<span class='warning'>[user] jams [src] into [H]'s empty socket!</span>",\
 					"<span class='notice'>[user] forces [src] into your empty socket, and it locks into place!</span>")
-				user.removeItemFromInventory(src, TRUE)
+				user.temporarilyRemoveItemFromInventory(src, TRUE)
 				attach_limb(C)
 				return
 	..()

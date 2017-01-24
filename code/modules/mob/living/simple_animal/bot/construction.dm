@@ -16,7 +16,7 @@
 /obj/item/weapon/bucket_sensor/attackby(obj/item/W, mob/user as mob, params)
 	..()
 	if(istype(W, /obj/item/bodypart/l_arm/robot) || istype(W, /obj/item/bodypart/r_arm/robot))
-		if(!user.removeItemFromInventory(W))
+		if(!user.temporarilyRemoveItemFromInventory(W))
 			return
 		qdel(W)
 		var/turf/T = get_turf(loc)
@@ -60,7 +60,7 @@
 	switch(build_step)
 		if(0,1)
 			if(istype(W, /obj/item/bodypart/l_leg/robot) || istype(W, /obj/item/bodypart/r_leg/robot))
-				if(!user.removeItemFromInventory(W))
+				if(!user.temporarilyRemoveItemFromInventory(W))
 					return
 				qdel(W)
 				build_step++
@@ -80,7 +80,7 @@
 			else if(istype(W, /obj/item/clothing/suit/bluetag))
 				newcolor = "b"
 			if(newcolor || istype(W, /obj/item/clothing/suit/armor/vest))
-				if(!user.removeItemFromInventory(W))
+				if(!user.temporarilyRemoveItemFromInventory(W))
 					return
 				lasercolor = newcolor
 				qdel(W)
@@ -111,7 +111,7 @@
 					if(!istype(W, /obj/item/clothing/head/helmet))
 						return
 
-			if(!user.removeItemFromInventory(W))
+			if(!user.temporarilyRemoveItemFromInventory(W))
 				return
 			qdel(W)
 			build_step++
@@ -122,7 +122,7 @@
 
 		if(5)
 			if(isprox(W))
-				if(!user.removeItemFromInventory(W))
+				if(!user.temporarilyRemoveItemFromInventory(W))
 					return
 				qdel(W)
 				build_step++
@@ -162,7 +162,7 @@
 					newname = "taser ED-209 assembly"
 				else
 					return
-			if(!user.removeItemFromInventory(W))
+			if(!user.temporarilyRemoveItemFromInventory(W))
 				return
 			name = newname
 			build_step++
@@ -182,7 +182,7 @@
 
 		if(9)
 			if(istype(W, /obj/item/weapon/stock_parts/cell))
-				if(!user.removeItemFromInventory(W))
+				if(!user.temporarilyRemoveItemFromInventory(W))
 					return
 				build_step++
 				user << "<span class='notice'>You complete the ED-209.</span>"
@@ -327,7 +327,7 @@
 		switch(build_step)
 			if(0)
 				if(istype(W, /obj/item/device/healthanalyzer))
-					if(!user.removeItemFromInventory(W))
+					if(!user.temporarilyRemoveItemFromInventory(W))
 						return
 					qdel(W)
 					build_step++
@@ -337,7 +337,7 @@
 
 			if(1)
 				if(isprox(W))
-					if(!user.removeItemFromInventory(W))
+					if(!user.temporarilyRemoveItemFromInventory(W))
 						return
 					qdel(W)
 					build_step++
@@ -397,7 +397,7 @@
 				user << "<span class='notice'>You weld the hole in [src] shut!</span>"
 
 	else if(isprox(I) && (build_step == 1))
-		if(!user.removeItemFromInventory(I))
+		if(!user.temporarilyRemoveItemFromInventory(I))
 			return
 		build_step++
 		user << "<span class='notice'>You add the prox sensor to [src]!</span>"
@@ -406,7 +406,7 @@
 		qdel(I)
 
 	else if(((istype(I, /obj/item/bodypart/l_arm/robot)) || (istype(I, /obj/item/bodypart/r_arm/robot))) && (build_step == 2))
-		if(!user.removeItemFromInventory(I))
+		if(!user.temporarilyRemoveItemFromInventory(I))
 			return
 		build_step++
 		user << "<span class='notice'>You add the robot arm to [src]!</span>"
@@ -415,7 +415,7 @@
 		qdel(I)
 
 	else if((istype(I, /obj/item/weapon/melee/baton)) && (build_step >= 3))
-		if(!user.removeItemFromInventory(I))
+		if(!user.temporarilyRemoveItemFromInventory(I))
 			return
 		build_step++
 		user << "<span class='notice'>You complete the Securitron! Beep boop.</span>"

@@ -260,21 +260,21 @@
 //for when you want the item to end up on the ground
 //will force move the item to the ground and call the turf's Entered
 /mob/proc/dropItemToGround(obj/item/I, force = FALSE)
-	return doUnEquip(I, force, FALSE)
+	return doUnEquip(I, force, loc, FALSE)
 
-//for when the item will be immediately moved/qdeld
-//Will practically remove the item from src's inventory
-//The loc is still set to src however, it should be changed/deleted by the caller
-//This prevents shit from getting the effects of landing on the ground when they
-//functionally should be moving right to their target
-//NOT TO BE CONFUSED with remove_item_from_storage, which does something else
-/mob/proc/removeItemFromInventory(obj/item/I, force = FALSE)
-	return doUnEquip(I, force, TRUE)
+//for when the item will be immediately placed in a loc other than the ground
+/mob/proc/transferItemToLoc(obj/item/I, newloc = null, force = FALSE)
+	return doUnEquip(I, force, newloc, FALSE)
+
+//visibly unequips I but it is NOT MOVED AND REMAINS IN SRC
+//item MUST BE FORCEMOVE'D OR QDEL'D
+/mob/proc/temporarilyRemoveItemFromInventory(obj/item/I, force = FALSE)
+	return doUnEquip(I, force, null, TRUE)
 
 //DO NOT CALL THIS PROC
 //use one of the above 2 helper procs
 //you may override it, but do not modify the args
-/mob/proc/doUnEquip(obj/item/I, force, no_move) //Force overrides NODROP for things like wizarditis and admin undress.
+/mob/proc/doUnEquip(obj/item/I, force, newloc, no_move) //Force overrides NODROP for things like wizarditis and admin undress.
 													//Use no_move if the item is just gonna be immediately moved afterward
 	if(!I) //If there's nothing to drop, the drop is automatically succesfull. If(unEquip) should generally be used to check for NODROP.
 		return TRUE
@@ -293,7 +293,7 @@
 		I.plane = initial(I.plane)
 		I.appearance_flags &= ~NO_CLIENT_COLOR
 		if(!no_move || (I.flags & DROPDEL))	//item may be moved/del'd immedietely, don't bother moving it
-			I.forceMove(loc)
+			I.forceMove(newloc)
 		I.dropped(src)
 	return TRUE
 

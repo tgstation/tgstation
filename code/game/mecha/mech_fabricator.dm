@@ -444,7 +444,7 @@
 		if(!materials.has_space(material_amount))
 			user << "<span class='warning'>\The [src] is full. Please remove some materials from [src] in order to insert more.</span>"
 			return 1
-		if(!user.removeItemFromInventory(W))
+		if(!user.temporarilyRemoveItemFromInventory(W))
 			user << "<span class='warning'>\The [W] is stuck to you and cannot be placed into [src].</span>"
 			return 1
 

@@ -657,11 +657,11 @@
 		visible_message("<span class='notice'>[src] tries to put [what] on [who].</span>")
 		if(do_mob(src, who, what.put_on_delay))
 			if(what && Adjacent(who) && what.mob_can_equip(who, src, final_where, TRUE))
-				removeItemFromInventory(what)
-				if(where_list)
-					who.put_in_hand(what, where_list[2])
-				else
-					who.equip_to_slot(what, where, TRUE)
+				if(temporarilyRemoveItemFromInventory(what))
+					if(where_list)
+						who.put_in_hand(what, where_list[2])
+					else
+						who.equip_to_slot(what, where, TRUE)
 
 /mob/living/singularity_pull(S, current_size)
 	if(current_size >= STAGE_SIX)

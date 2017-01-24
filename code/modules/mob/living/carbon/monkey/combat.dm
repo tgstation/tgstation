@@ -345,7 +345,7 @@
 		for(var/obj/item/I in M.held_items)
 			if(I == pickupTarget)
 				M.visible_message("<span class='danger'>[src] snatches [pickupTarget] from [M].</span>", "<span class='userdanger'>[src] snatched [pickupTarget]!</span>")
-				if(M.removeItemFromInventory(pickupTarget) && !qdeleted(pickupTarget))
+				if(M.temporarilyRemoveItemFromInventory(pickupTarget) && !qdeleted(pickupTarget))
 					equip_item(pickupTarget)
 	pickpocketing = FALSE
 	pickupTarget = null

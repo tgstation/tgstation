@@ -55,8 +55,8 @@ var/const/MAX_ACTIVE_TIME = 400
 
 /obj/item/clothing/mask/facehugger/attack(mob/living/M, mob/user)
 	..()
-	user.removeItemFromInventory(src)
-	Attach(M)
+	if(user.temporarilyRemoveItemFromInventory(src))
+		Attach(M)
 
 /obj/item/clothing/mask/facehugger/examine(mob/user)
 	..()
@@ -168,7 +168,7 @@ var/const/MAX_ACTIVE_TIME = 400
 									"<span class='userdanger'>[src] smashes against [H]'s [H.head]!</span>")
 				Die()
 				return FALSE
-		src.loc = target
+		forceMove(target)
 		target.equip_to_slot_if_possible(src, slot_wear_mask, 0, 1, 1)
 	// early returns and validity checks done: attach.
 	attached++

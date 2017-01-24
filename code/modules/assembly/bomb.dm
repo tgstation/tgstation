@@ -91,7 +91,7 @@
 
 	var/obj/item/device/onetankbomb/R = new /obj/item/device/onetankbomb(loc)
 
-	M.removeItemFromInventory(src)	//Remove the tank from your character,in case you were holding it
+	M.temporarilyRemoveItemFromInventory(src, TRUE)	//Remove the tank from your character,in case you were holding it
 	if(!M.put_in_hands(R))		//Equips the bomb if possible, or puts it on the floor.
 		forceMove(M.loc)
 

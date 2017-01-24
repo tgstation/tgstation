@@ -67,7 +67,7 @@
 /obj/item/weapon/watertank/proc/remove_noz()
 	if(ismob(noz.loc))
 		var/mob/M = noz.loc
-		M.removeItemFromInventory(noz, TRUE)
+		M.temporarilyRemoveItemFromInventory(noz, TRUE)
 	return
 
 /obj/item/weapon/watertank/Destroy()
@@ -85,7 +85,7 @@
 	var/mob/M = src.loc
 	if(istype(M) && istype(over_object, /obj/screen/inventory/hand))
 		var/obj/screen/inventory/hand/H = over_object
-		if(!M.removeItemFromInventory(src))
+		if(!M.temporarilyRemoveItemFromInventory(src))
 			return
 		M.put_in_hand(src, H.held_index)
 

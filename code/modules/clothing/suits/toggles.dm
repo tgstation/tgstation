@@ -37,11 +37,10 @@
 	suittoggled = 0
 	if(ishuman(hood.loc))
 		var/mob/living/carbon/H = hood.loc
-		H.removeItemFromInventory(hood, TRUE)
-		hood.loc = src
+		H.transferItemToLoc(hood, src, TRUE)
 		H.update_inv_wear_suit()
 	else
-		hood.loc = src
+		hood.forceMove(src)
 	for(var/X in actions)
 		var/datum/action/A = X
 		A.UpdateButtonIcon()
@@ -165,13 +164,12 @@
 		var/mob/living/carbon/H = helmet.loc
 		if(helmet.on)
 			helmet.attack_self(H)
-		H.removeItemFromInventory(helmet, TRUE)
-		helmet.loc = src
+		H.transferItemToLoc(helmet, src, TRUE)
 		H.update_inv_wear_suit()
 		H << "<span class='notice'>The helmet on the hardsuit disengages.</span>"
 		playsound(src.loc, 'sound/mecha/mechmove03.ogg', 50, 1)
 	else
-		helmet.loc = src
+		helmet.forceMove(src)
 
 /obj/item/clothing/suit/space/hardsuit/dropped()
 	..()

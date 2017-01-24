@@ -107,7 +107,7 @@
 		if( (!in_range(src, user)) || user.stat || user.restrained() )
 			return
 		user << "<span class='notice'>You fold [src] into the shape of a plane!</span>"
-		user.removeItemFromInventory(src)
+		user.temporarilyRemoveItemFromInventory(src)
 		I = new /obj/item/weapon/paperplane(loc, src)
 		user.put_in_hands(I)
 	else

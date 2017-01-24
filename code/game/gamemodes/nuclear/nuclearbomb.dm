@@ -559,12 +559,11 @@ This is here to make the tiles around the station mininuke change when it's arme
 
 	if(ismob(loc))
 		var/mob/M = loc
-		M.removeItemFromInventory(src)
-	if(istype(loc, /obj/item/weapon/storage))
+		M.transferItemToLoc(src, targetturf, TRUE)	//nodrops disks when?
+	else if(istype(loc, /obj/item/weapon/storage))
 		var/obj/item/weapon/storage/S = loc
 		S.remove_from_storage(src, targetturf)
 	// move the disc, so ghosts remain orbiting it even if it's "destroyed"
-	forceMove(targetturf)
 	return targetturf
 
 /obj/item/weapon/disk/nuclear/Destroy(force)

@@ -72,8 +72,7 @@
 		var/obj/item/device/assembly/flash/F = holder
 		F.SetLuminosity(0)
 
-	owner.removeItemFromInventory(holder, TRUE)
-	holder.forceMove(src)
+	owner.transferItemToLoc(holder, src, TRUE)
 	holder = null
 	playsound(get_turf(owner), 'sound/mecha/mechmove03.ogg', 50, 1)
 

@@ -174,14 +174,9 @@
 		var/Itemlist = get_equipped_items()
 		Itemlist += held_items
 		for(var/obj/item/W in Itemlist)
-			removeItemFromInventory(W)
+			dropItemToGround(W, TRUE)
 			if (client)
 				client.screen -= W
-			if (W)
-				W.loc = loc
-				W.dropped(src)
-				W.layer = initial(W.layer)
-				W.plane = initial(W.plane)
 
 
 

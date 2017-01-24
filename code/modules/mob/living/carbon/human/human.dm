@@ -271,7 +271,7 @@
 				else
 					if(place_item)
 						if(place_item.mob_can_equip(src, usr, pocket_id, FALSE, TRUE))
-							usr.removeItemFromInventory(place_item)
+							usr.temporarilyRemoveItemFromInventory(place_item, TRUE)
 							equip_to_slot(place_item, pocket_id, TRUE)
 						//do nothing otherwise
 

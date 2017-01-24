@@ -95,7 +95,7 @@
 		var/mob/M = src.loc
 		if(istype(over_object, /obj/screen/inventory/hand))
 			var/obj/screen/inventory/hand/H = over_object
-			if(!M.removeItemFromInventory(src))
+			if(!M.temporarilyRemoveItemFromInventory(src))
 				return
 			if(!M.put_in_hand(src, H.held_index))
 				qdel(src)	//wewie
@@ -113,9 +113,8 @@
 			if(C.maxcharge < paddles.revivecost)
 				user << "<span class='notice'>[src] requires a higher capacity cell.</span>"
 				return
-			if(!user.removeItemFromInventory(W))
+			if(!user.transferItemToLoc(W, src))
 				return
-			W.loc = src
 			bcell = W
 			user << "<span class='notice'>You install a cell in [src].</span>"
 			update_icon()

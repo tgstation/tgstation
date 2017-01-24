@@ -731,7 +731,7 @@
 	if(istype(I, /obj/item/toy/cards/singlecard))
 		var/obj/item/toy/cards/singlecard/SC = I
 		if(SC.parentdeck == src)
-			if(!user.removeItemFromInventory(SC))
+			if(!user.temporarilyRemoveItemFromInventory(SC))
 				user << "<span class='warning'>The card is stuck to your hand, you can't add it to the deck!</span>"
 				return
 			cards += SC.cardname
@@ -743,7 +743,7 @@
 	else if(istype(I, /obj/item/toy/cards/cardhand))
 		var/obj/item/toy/cards/cardhand/CH = I
 		if(CH.parentdeck == src)
-			if(!user.removeItemFromInventory(CH))
+			if(!user.temporarilyRemoveItemFromInventory(CH))
 				user << "<span class='warning'>The hand of cards is stuck to your hand, you can't add it to the deck!</span>"
 				return
 			cards += CH.currenthand
@@ -767,7 +767,7 @@
 		else if(istype(over_object, /obj/screen/inventory/hand))
 			var/obj/screen/inventory/hand/H = over_object
 			if(!remove_item_from_storage(M))
-				M.removeItemFromInventory(src)
+				M.temporarilyRemoveItemFromInventory(src, TRUE)
 			if(!M.put_in_hand(src, H.held_index))
 				qdel(src)
 				return

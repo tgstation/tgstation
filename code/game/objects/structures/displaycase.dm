@@ -213,8 +213,7 @@
 	else if(istype(I, /obj/item/weapon/electronics/airlock))
 		user << "<span class='notice'>You start installing the electronics into [src]...</span>"
 		playsound(src.loc, I.usesound, 50, 1)
-		if(do_after(user, 30, target = src) && user.removeItemFromInventory(I))
-			I.loc = src
+		if(do_after(user, 30, target = src) && user.transferItemToLoc(I,src))
 			electronics = I
 			user << "<span class='notice'>You install the airlock electronics.</span>"
 

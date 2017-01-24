@@ -558,8 +558,7 @@
 		if (R.use(1))
 			var/obj/item/weapon/flamethrower/F = new /obj/item/weapon/flamethrower(user.loc)
 			if(!remove_item_from_storage(F))
-				user.removeItemFromInventory(src)
-				loc = F
+				user.transferItemToLoc(src, F, TRUE)
 			F.weldtool = src
 			add_fingerprint(user)
 			user << "<span class='notice'>You add a rod to a welder, starting to build a flamethrower.</span>"

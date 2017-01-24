@@ -110,7 +110,7 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 	flags &= ~DROPDEL	//prevent reqdels
 	if(ismob(loc))
 		var/mob/m = loc
-		m.removeItemFromInventory(src, TRUE)
+		m.temporarilyRemoveItemFromInventory(src, TRUE)
 	for(var/X in actions)
 		qdel(X)
 	return ..()
