@@ -154,7 +154,7 @@ var/list/blacklisted_pylon_turfs = typecacheof(list(
 		for(var/mob/living/L in range(5, src))
 			if(iscultist(L) || isshade(L) || isconstruct(L))
 				if(L.health != L.maxHealth)
-					PoolOrNew(/obj/effect/overlay/temp/heal, list(get_turf(src), "#960000"))
+					new /obj/effect/overlay/temp/heal(get_turf(src), "#960000")
 					if(ishuman(L))
 						L.adjustBruteLoss(-1, 0)
 						L.adjustFireLoss(-1, 0)
@@ -184,7 +184,7 @@ var/list/blacklisted_pylon_turfs = typecacheof(list(
 		else
 			var/turf/open/floor/engine/cult/F = safepick(cultturfs)
 			if(F)
-				PoolOrNew(/obj/effect/overlay/temp/cult/turf/floor, F)
+				new /obj/effect/overlay/temp/cult/turf/floor(F)
 			else
 				// Are we in space or something? No cult turfs or
 				// convertable turfs?

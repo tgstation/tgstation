@@ -53,4 +53,5 @@
 //	tracking this is more expensive,
 //	should only be used in conjuction with things that have to progress client side, such as animate() or sound()
 #define TIMER_CLIENT_TIME	0x4
-
+//Timer can be stopped using deltimer()
+#define TIMER_STOPPABLE		0x8

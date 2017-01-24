@@ -128,7 +128,7 @@ Difficulty: Medium
 /obj/effect/overlay/temp/target/proc/fall()
 	var/turf/T = get_turf(src)
 	playsound(T,'sound/magic/Fireball.ogg', 200, 1)
-	PoolOrNew(/obj/effect/overlay/temp/fireball,T)
+	new /obj/effect/overlay/temp/fireball(T)
 	sleep(12)
 	explosion(T, 0, 0, 1, 0, 0, 0, 1)
 
@@ -157,7 +157,7 @@ Difficulty: Medium
 	visible_message("<span class='boldwarning'>Fire rains from the sky!</span>")
 	for(var/turf/turf in range(12,get_turf(src)))
 		if(prob(10))
-			PoolOrNew(/obj/effect/overlay/temp/target, turf)
+			new /obj/effect/overlay/temp/target(turf)
 
 /mob/living/simple_animal/hostile/megafauna/dragon/proc/fire_walls()
 	playsound(get_turf(src),'sound/magic/Fireball.ogg', 200, 1)
@@ -174,7 +174,7 @@ Difficulty: Medium
 		if(!range || (J != previousturf && (!previousturf.atmos_adjacent_turfs || !previousturf.atmos_adjacent_turfs[J])))
 			break
 		range--
-		PoolOrNew(/obj/effect/hotspot,J)
+		new /obj/effect/hotspot(J)
 		J.hotspot_expose(700,50,1)
 		for(var/mob/living/L in J.contents - hit_things)
 			L.adjustFireLoss(20)
@@ -218,7 +218,7 @@ Difficulty: Medium
 	else
 		tturf = get_turf(src)
 	forceMove(tturf)
-	PoolOrNew(/obj/effect/overlay/temp/dragon_swoop, tturf)
+	new /obj/effect/overlay/temp/dragon_swoop(tturf)
 	animate(src, pixel_x = initial(pixel_x), pixel_z = 0, time = 10)
 	sleep(10)
 	playsound(src.loc, 'sound/effects/meteorimpact.ogg', 200, 1)

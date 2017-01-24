@@ -254,7 +254,7 @@
 	if(isfloorturf(T)) //intact floor, pop the tile
 		floorturf = T
 		if(floorturf.floor_tile)
-			PoolOrNew(floorturf.floor_tile, T)
+			new floorturf.floor_tile(T)
 		floorturf.make_plating()
 
 	if(direction)		// direction is specified
