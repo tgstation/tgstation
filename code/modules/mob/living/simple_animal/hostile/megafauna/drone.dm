@@ -152,11 +152,11 @@
 	while(timer>0)
 		for(var/turf/turf in view(12,src))
 			if(prob(2))
-				PoolOrNew(/obj/effect/overlay/temp/drone/laser_beacon, list(turf, src))
+				new /obj/effect/overlay/temp/drone/laser_beacon(turf, src)
 		for(var/mob/living/L in view(12,src) - caster)
 			if( L.stat == DEAD)
 				continue
-			PoolOrNew(/obj/effect/overlay/temp/drone/laser_beacon, list(get_turf(L), src))
+			new /obj/effect/overlay/temp/drone/laser_beacon(get_turf(L), src)
 		sleep(2)
 		timer--
 
@@ -166,11 +166,11 @@
 	while(timer>0)
 		for(var/turf/turf in view(12,src))
 			if(prob(1/3))
-				PoolOrNew(/obj/effect/overlay/temp/drone/laser_beacon/green_cross, list(turf, src))
+				new /obj/effect/overlay/temp/drone/laser_beacon/green_cross(turf, src)
 		for(var/mob/living/L in view(12,src) - caster)
 			if( L.stat == DEAD)
 				continue
-			PoolOrNew(/obj/effect/overlay/temp/drone/laser_beacon/green, list(get_turf(L), src))
+			new /obj/effect/overlay/temp/drone/laser_beacon/green(get_turf(L), src)
 		sleep(2)
 		timer--
 
@@ -206,13 +206,13 @@
 	visible_message("<span class='boldwarning'>Laser rains from the sky!</span>")
 	for(var/turf/turf in view(12,src))
 		if(prob(50))
-			PoolOrNew(/obj/effect/overlay/temp/drone/laser_beacon, list(turf, src))
+			new /obj/effect/overlay/temp/drone/laser_beacon(turf, src)
 
 /mob/living/simple_animal/hostile/megafauna/megadrone/proc/laser_rain_green()
 	visible_message("<span class='boldwarning'>Laser rains from the sky!</span>")
 	for(var/turf/turf in view(12,src))
 		if(prob(7.5))
-			PoolOrNew(/obj/effect/overlay/temp/drone/laser_beacon/green_cross, list(turf, src))
+			new /obj/effect/overlay/temp/drone/laser_beacon/green_cross(turf, src)
 
 /mob/living/simple_animal/hostile/megafauna/megadrone/proc/shoot_projectile(turf/marker)
 	if(!marker || marker == loc)
@@ -400,7 +400,7 @@ obj/effect/overlay/temp/drone/laser_beacon/New(loc, caster)
 obj/effect/overlay/temp/drone/laser_beacon/proc/fall()
 	var/turf/T = get_turf(src)
 	playsound(T,'sound/magic/Blind.ogg', 200, 1)
-	PoolOrNew(/obj/effect/overlay/temp/drone/laser,T)
+	new /obj/effect/overlay/temp/drone/laser(T)
 	sleep(12)
 	do_damage(T)
 
@@ -435,7 +435,7 @@ obj/effect/overlay/temp/drone/laser_beacon/green
 obj/effect/overlay/temp/drone/laser_beacon/green/fall()
 	var/turf/T = get_turf(src)
 	playsound(T,'sound/magic/Blind.ogg', 200, 1)
-	PoolOrNew(/obj/effect/overlay/temp/drone/laser/green,T)
+	new /obj/effect/overlay/temp/drone/laser/green(T)
 	sleep(12)
 	do_damage(T)
 
@@ -459,7 +459,7 @@ obj/effect/overlay/temp/drone/laser_beacon/green_cross/proc/shoot_green_projecti
 obj/effect/overlay/temp/drone/laser_beacon/green_cross/fall()
 	var/turf/T = get_turf(src)
 	playsound(T,'sound/magic/Blind.ogg', 200, 1)
-	PoolOrNew(/obj/effect/overlay/temp/drone/laser/green_cross,T)
+	new /obj/effect/overlay/temp/drone/laser/green_cross(T)
 	sleep(12)
 	for(var/mob/living/L in view(12,src) - hit_things)
 		if(L.stat == DEAD)
