@@ -1,5 +1,0 @@
-author: "Joan"
-delete-after: True
-changes: 
-  - rscadd: "Clockwork Proselytizers can now repair Servant silicons and clockwork mobs. This works in the same manner as repairing clockwork structures."
-  - tweak: "Cogscarabs work slightly differently, and act as though the proselytizer is a screwdriver."

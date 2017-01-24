@@ -1,5 +1,0 @@
-author: "coiax"
-delete-after: True
-changes: 
-  - rscdel: "Statues are now just incredibly tough mobs, rather than GODMODE. As a side effect, they are no longer immune to bolts of change."
-  - bugfix: "Fixed some issues with X (as Y) names on polymorphed mobs."
