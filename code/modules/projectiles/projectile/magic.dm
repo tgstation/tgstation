@@ -15,6 +15,8 @@
 	. = ..()
 	if(ismob(target))
 		var/mob/M = target
+		target << "<span class='userdanger'>You feel incredibly angry!</span>"
+		target.visible_message("<span class='userdanger'>[target] looks incredibly angry! Something tells you you'll hear about this.</span>")
 		M.death(0)
 
 /obj/item/projectile/magic/fireball

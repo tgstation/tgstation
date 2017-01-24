@@ -54,12 +54,12 @@
 
 
 /////////////////////////////////////
-//WAND OF DEATH
+//WAND OF DRAMA
 /////////////////////////////////////
 
 /obj/item/weapon/gun/magic/wand/death
-	name = "wand of death"
-	desc = "This deadly wand overwhelms the victim's body with pure energy, slaying them without fail."
+	name = "wand of drama"
+	desc = "A forbidden weapon created by the gods for the express purpose of causing debilitating anger."
 	fire_sound = "sound/magic/WandoDeath.ogg"
 	ammo_type = /obj/item/ammo_casing/magic/death
 	icon_state = "deathwand"
