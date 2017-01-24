@@ -216,7 +216,7 @@
 	
 /datum/reagent/fuel/unholywater/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
 	if(method == TOUCH || method == VAPOR)
-		M.reagents.add_reagent("unholywater", reac_volume)
+		M.reagents.add_reagent("unholywater", (reac_volume/4))
 		return
 	return ..()
 
