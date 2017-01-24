@@ -46,7 +46,7 @@
 /turf/open/floor/carpet,
 /area/shuttle/escape)
 "j" = (
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel/bar,
 /area/shuttle/escape)
 "k" = (
 /obj/machinery/light{
@@ -54,7 +54,7 @@
 	dir = 4
 	},
 /obj/machinery/vending/boozeomat,
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel/bar,
 /area/shuttle/escape)
 "l" = (
 /obj/machinery/computer/security/wooden_tv,
@@ -80,7 +80,7 @@
 "p" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/reagent_containers/food/drinks/shaker,
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel/bar,
 /area/shuttle/escape)
 "q" = (
 /obj/structure/table/reinforced,
@@ -92,17 +92,17 @@
 /obj/item/weapon/reagent_containers/food/drinks/drinkingglass/shotglass,
 /obj/item/weapon/reagent_containers/food/drinks/drinkingglass/shotglass,
 /obj/item/weapon/reagent_containers/food/drinks/drinkingglass/shotglass,
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel/bar,
 /area/shuttle/escape)
 "s" = (
 /obj/machinery/door/window{
 	dir = 8
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel/bar,
 /area/shuttle/escape)
 "t" = (
 /obj/structure/table/reinforced,
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel/bar,
 /area/shuttle/escape)
 "u" = (
 /obj/machinery/light{

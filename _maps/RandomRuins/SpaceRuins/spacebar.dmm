@@ -250,36 +250,36 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel/bar,
 /area/ruin/powered/spacebar/bar)
 "aX" = (
 /obj/structure/chair/stool,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 10
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel/bar,
 /area/ruin/powered/spacebar/bar)
 "aY" = (
 /obj/structure/chair/stool,
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel/bar,
 /area/ruin/powered/spacebar/bar)
 "aZ" = (
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel/bar,
 /area/ruin/powered/spacebar/bar)
 "ba" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber,
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel/bar,
 /area/ruin/powered/spacebar/bar)
 "bb" = (
 /obj/machinery/light{
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel/bar,
 /area/ruin/powered/spacebar/bar)
 "bc" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel/bar,
 /area/ruin/powered/spacebar/bar)
 "bd" = (
 /obj/machinery/airalarm{
@@ -287,7 +287,7 @@
 	locked = 0;
 	pixel_y = 23
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel/bar,
 /area/ruin/powered/spacebar/bar)
 "be" = (
 /obj/structure/grille,
@@ -303,17 +303,17 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 5
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel/bar,
 /area/ruin/powered/spacebar/bar)
 "bh" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 4
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel/bar,
 /area/ruin/powered/spacebar/bar)
 "bi" = (
 /obj/machinery/computer/teleporter,
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel/bar,
 /area/ruin/powered/spacebar/bar)
 "bj" = (
 /obj/machinery/door/airlock/external,
@@ -326,38 +326,38 @@
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 8
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel/bar,
 /area/ruin/powered/spacebar/bar)
 "bm" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel/bar,
 /area/ruin/powered/spacebar/bar)
 "bn" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel/bar,
 /area/ruin/powered/spacebar/bar)
 "bo" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 9;
 	pixel_y = 0
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel/bar,
 /area/ruin/powered/spacebar/bar)
 "bp" = (
 /obj/machinery/teleport/station,
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel/bar,
 /area/ruin/powered/spacebar/bar)
 "bq" = (
 /obj/machinery/light{
 	icon_state = "tube1";
 	dir = 8
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel/bar,
 /area/ruin/powered/spacebar/bar)
 "br" = (
 /obj/structure/chair{
@@ -365,11 +365,11 @@
 	icon_state = "chair";
 	dir = 4
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel/bar,
 /area/ruin/powered/spacebar/bar)
 "bs" = (
 /obj/structure/table/wood,
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel/bar,
 /area/ruin/powered/spacebar/bar)
 "bt" = (
 /obj/structure/chair{
@@ -377,54 +377,54 @@
 	icon_state = "chair";
 	dir = 8
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel/bar,
 /area/ruin/powered/spacebar/bar)
 "bu" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel/bar,
 /area/ruin/powered/spacebar/bar)
 "bv" = (
 /obj/machinery/teleport/hub,
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel/bar,
 /area/ruin/powered/spacebar/bar)
 "bw" = (
 /obj/structure/chair,
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel/bar,
 /area/ruin/powered/spacebar/bar)
 "bx" = (
 /obj/machinery/bluespace_beacon,
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel/bar,
 /area/ruin/powered/spacebar/bar)
 "by" = (
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 8;
 	on = 1
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel/bar,
 /area/ruin/powered/spacebar/bar)
 "bz" = (
 /obj/machinery/vending/cola,
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel/bar,
 /area/ruin/powered/spacebar/bar)
 "bA" = (
 /obj/machinery/vending/cigarette,
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel/bar,
 /area/ruin/powered/spacebar/bar)
 "bB" = (
 /obj/machinery/vending/coffee,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel/bar,
 /area/ruin/powered/spacebar/bar)
 "bC" = (
 /obj/machinery/vending/snack,
 /obj/machinery/light,
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel/bar,
 /area/ruin/powered/spacebar/bar)
 "bD" = (
 /obj/structure/chair{
 	dir = 1
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel/bar,
 /area/ruin/powered/spacebar/bar)
 "bE" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -442,7 +442,7 @@
 	icon_state = "alarm0";
 	pixel_x = -22
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel/bar,
 /area/ruin/powered/spacebar/bar)
 "bH" = (
 /obj/structure/urinal{
@@ -501,7 +501,7 @@
 	icon_state = "tube1";
 	dir = 4
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel/bar,
 /area/ruin/powered/spacebar/bar)
 "bQ" = (
 /obj/machinery/light/small{

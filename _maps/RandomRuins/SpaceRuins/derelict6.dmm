@@ -203,13 +203,13 @@
 /area/ruin/unpowered)
 "aF" = (
 /obj/machinery/door/airlock/glass,
-/turf/open/floor/plasteel/airless,
+/turf/open/floor/plasteel/airless/bar,
 /area/ruin/unpowered)
 "aG" = (
 /obj/structure/door_assembly/door_assembly_glass{
 	name = "broken airlock"
 	},
-/turf/open/floor/plasteel/airless,
+/turf/open/floor/plasteel/airless/bar,
 /area/ruin/unpowered)
 "aH" = (
 /turf/open/floor/plating/airless,
@@ -217,12 +217,12 @@
 "aI" = (
 /obj/structure/table,
 /obj/machinery/microwave,
-/turf/open/floor/plasteel/airless,
+/turf/open/floor/plasteel/airless/cafeteria,
 /area/ruin/unpowered)
 "aJ" = (
 /obj/structure/table,
 /obj/item/weapon/storage/box/drinkingglasses,
-/turf/open/floor/plasteel/airless,
+/turf/open/floor/plasteel/airless/cafeteria,
 /area/ruin/unpowered)
 "aK" = (
 /obj/structure/closet/secure_closet/freezer/fridge,
@@ -231,22 +231,22 @@
 	icon_state = "tube-broken";
 	status = 2
 	},
-/turf/open/floor/plasteel/airless,
+/turf/open/floor/plasteel/airless/cafeteria,
 /area/ruin/unpowered)
 "aL" = (
 /obj/structure/closet/secure_closet/freezer/kitchen,
-/turf/open/floor/plasteel/airless,
+/turf/open/floor/plasteel/airless/cafeteria,
 /area/ruin/unpowered)
 "aM" = (
-/turf/open/floor/plasteel/airless,
+/turf/open/floor/plasteel/airless/bar,
 /area/ruin/unpowered)
 "aN" = (
 /obj/item/trash/plate,
-/turf/open/floor/plasteel/airless,
+/turf/open/floor/plasteel/airless/bar,
 /area/ruin/unpowered)
 "aO" = (
 /obj/item/chair,
-/turf/open/floor/plasteel/airless,
+/turf/open/floor/plasteel/airless/bar,
 /area/ruin/unpowered)
 "aP" = (
 /obj/machinery/light{
@@ -264,15 +264,15 @@
 /turf/open/floor/plating/airless,
 /area/ruin/unpowered)
 "aR" = (
-/turf/open/floor/plasteel/airless,
+/turf/open/floor/plasteel/airless/cafeteria,
 /area/ruin/unpowered)
 "aS" = (
 /obj/structure/table_frame,
-/turf/open/floor/plasteel/airless,
+/turf/open/floor/plasteel/airless/cafeteria,
 /area/ruin/unpowered)
 "aT" = (
 /obj/item/weapon/kitchen/fork,
-/turf/open/floor/plasteel/airless,
+/turf/open/floor/plasteel/airless/bar,
 /area/ruin/unpowered)
 "aU" = (
 /obj/structure/table/wood,
@@ -292,14 +292,14 @@
 /area/ruin/unpowered)
 "aW" = (
 /obj/structure/table,
-/turf/open/floor/plasteel/airless,
+/turf/open/floor/plasteel/airless/cafeteria,
 /area/ruin/unpowered)
 "aX" = (
 /obj/item/chair/stool/bar,
-/turf/open/floor/plasteel/airless,
+/turf/open/floor/plasteel/airless/bar,
 /area/ruin/unpowered)
 "aY" = (
-/turf/open/floor/plasteel{
+/turf/open/floor/plasteel/bar{
 	initial_gas_mix = "TEMP=2.7"
 	},
 /obj/item/stack/sheet/metal,
@@ -318,23 +318,23 @@
 /area/space)
 "ba" = (
 /mob/living/simple_animal/hostile/retaliate/ghost,
-/turf/open/floor/plasteel/airless,
+/turf/open/floor/plasteel/airless/cafeteria,
 /area/ruin/unpowered)
 "bb" = (
 /obj/item/weapon/reagent_containers/food/snacks/donkpocket,
-/turf/open/floor/plasteel/airless,
+/turf/open/floor/plasteel/airless/cafeteria,
 /area/ruin/unpowered)
 "bc" = (
 /obj/structure/table,
 /obj/item/weapon/shard,
-/turf/open/floor/plasteel/airless,
+/turf/open/floor/plasteel/airless/cafeteria,
 /area/ruin/unpowered)
 "bd" = (
 /obj/structure/chair/stool/bar,
-/turf/open/floor/plasteel/airless,
+/turf/open/floor/plasteel/airless/bar,
 /area/ruin/unpowered)
 "be" = (
-/turf/open/floor/plasteel{
+/turf/open/floor/plasteel/bar{
 	initial_gas_mix = "TEMP=2.7"
 	},
 /turf/open/floor/plating/airless{
@@ -361,7 +361,7 @@
 	status = 2
 	},
 /obj/structure/table_frame,
-/turf/open/floor/plasteel/airless,
+/turf/open/floor/plasteel/airless/cafeteria,
 /area/ruin/unpowered)
 "bi" = (
 /obj/item/stack/sheet/metal,
@@ -374,7 +374,7 @@
 "bj" = (
 /obj/item/trash/plate,
 /obj/effect/decal/remains/human,
-/turf/open/floor/plasteel/airless,
+/turf/open/floor/plasteel/airless/cafeteria,
 /area/ruin/unpowered)
 "bk" = (
 /obj/structure/table_frame/wood,
