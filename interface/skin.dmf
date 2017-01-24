@@ -208,11 +208,11 @@ macro "default"
 		command = "F12"
 		is-disabled = false
 	elem 
-		name = "C"
+		name = "ALT"
 		command = "toggle-walk-run"
 		is-disabled = false
 	elem 
-		name = "C+UP"
+		name = "ALT+UP"
 		command = "toggle-walk-run"
 		is-disabled = false
 
@@ -510,11 +510,11 @@ macro "hotkeys"
 		command = "F12"
 		is-disabled = false
 	elem 
-		name = "C"
+		name = "ALT"
 		command = "toggle-walk-run"
 		is-disabled = false
 	elem 
-		name = "C+UP"
+		name = "ALT+UP"
 		command = "toggle-walk-run"
 		is-disabled = false
 
