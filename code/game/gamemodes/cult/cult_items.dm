@@ -193,7 +193,7 @@
 	if(current_charges)
 		owner.visible_message("<span class='danger'>\The [attack_text] is deflected in a burst of blood-red sparks!</span>")
 		current_charges--
-		PoolOrNew(/obj/effect/overlay/temp/cult/sparks, get_turf(owner))
+		new /obj/effect/overlay/temp/cult/sparks(get_turf(owner))
 		if(!current_charges)
 			owner.visible_message("<span class='danger'>The runed shield around [owner] suddenly disappears!</span>")
 			owner.update_inv_wear_suit()
@@ -341,14 +341,14 @@
 		if(uses <= 0)
 			icon_state ="shifter_drained"
 		playsound(mobloc, "sparks", 50, 1)
-		PoolOrNew(/obj/effect/overlay/temp/dir_setting/cult/phase/out, list(mobloc, C.dir))
+		new /obj/effect/overlay/temp/dir_setting/cult/phase/out(mobloc, C.dir)
 
 		var/atom/movable/pulled = handle_teleport_grab(destination, C)
 		C.forceMove(destination)
 		if(pulled)
 			C.start_pulling(pulled) //forcemove resets pulls, so we need to re-pull
 
-		PoolOrNew(/obj/effect/overlay/temp/dir_setting/cult/phase, list(destination, C.dir))
+		new /obj/effect/overlay/temp/dir_setting/cult/phase(destination, C.dir)
 		playsound(destination, 'sound/effects/phasein.ogg', 25, 1)
 		playsound(destination, "sparks", 50, 1)
 

@@ -710,7 +710,6 @@ var/list/admin_verbs_hideable = list(
 		var/list/candidates
 		var/turf/open/floor/tile
 		var/j,k
-		var/mob/living/carbon/human/mob
 
 		for (var/i = 1 to amount)
 			j = 100
@@ -730,9 +729,8 @@ var/list/admin_verbs_hideable = list(
 						while ((!tile || !istype(tile)) && --k > 0)
 
 						if (tile)
-							mob = new/mob/living/carbon/human/interactive(tile)
-
-							testing("Spawned test mob with name \"[mob.name]\" at [tile.x],[tile.y],[tile.z]")
+							new/mob/living/carbon/human/interactive(tile)
+							testing("Spawned test mob at [tile.x],[tile.y],[tile.z]")
 			while (!area && --j > 0)
 
 /client/proc/toggle_AI_interact()

@@ -330,8 +330,8 @@
 /obj/structure/falsewall/brass/New(loc)
 	..()
 	var/turf/T = get_turf(src)
-	PoolOrNew(/obj/effect/overlay/temp/ratvar/wall/false, T)
-	PoolOrNew(/obj/effect/overlay/temp/ratvar/beam/falsewall, T)
+	new /obj/effect/overlay/temp/ratvar/wall/false(T)
+	new /obj/effect/overlay/temp/ratvar/beam/falsewall(T)
 	change_construction_value(4)
 
 /obj/structure/falsewall/brass/Destroy()
@@ -339,4 +339,5 @@
 	return ..()
 
 /obj/structure/falsewall/brass/ratvar_act()
-	obj_integrity = max_integrity
+	if(ratvar_awakens)
+		obj_integrity = max_integrity

@@ -6,6 +6,7 @@
 	health = 1
 	maxHealth = 1
 	turns_per_move = 5
+	loot = list(/obj/effect/decal/cleanable/deadcockroach)
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 270
 	maxbodytemp = INFINITY
@@ -30,25 +31,23 @@
 		return
 	..()
 
-/mob/living/simple_animal/cockroach/proc/squish()
-	adjustBruteLoss(1) // kills a normal cockroach
-	new /obj/effect/decal/cleanable/deadcockroach(get_turf(src))
-
 /mob/living/simple_animal/cockroach/Crossed(var/atom/movable/AM)
 	if(ismob(AM))
 		if(isliving(AM))
 			var/mob/living/A = AM
-			if(A.mob_size > MOB_SIZE_SMALL)
+			if(A.mob_size > MOB_SIZE_SMALL && !(A.movement_type & FLYING))
 				if(prob(squish_chance))
-					A.visible_message("<span class='notice'>\The [A] squashed \the [name].</span>", "<span class='notice'>You squashed \the [name].</span>")
-					squish()
+					A.visible_message("<span class='notice'>[A] squashed [src].</span>", "<span class='notice'>You squashed [src].</span>")
+					adjustBruteLoss(1) //kills a normal cockroach
 				else
-					visible_message("<span class='notice'>\The [name] avoids getting crushed.</span>")
+					visible_message("<span class='notice'>[src] avoids getting crushed.</span>")
 	else
-		if(isobj(AM))
-			if(istype(AM,/obj/structure))
-				visible_message("<span class='notice'>As \the [AM] moved over \the [name], it was crushed.</span>")
-				squish()
+		if(istype(AM,/obj/structure))
+			if(prob(squish_chance))
+				AM.visible_message("<span class='notice'>[src] was crushed under [AM].</span>")
+				adjustBruteLoss(1)
+			else
+				visible_message("<span class='notice'>[src] avoids getting crushed.</span>")
 
 /mob/living/simple_animal/cockroach/ex_act() //Explosions are a terrible way to handle a cockroach.
 	return

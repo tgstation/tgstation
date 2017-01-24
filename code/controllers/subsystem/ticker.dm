@@ -74,6 +74,8 @@ var/datum/subsystem/ticker/ticker
 			world << "<span class='boldnotice'>Welcome to [station_name()]!</span>"
 			world << "Please set up your character and select \"Ready\". The game will start in [config.lobby_countdown] seconds."
 			current_state = GAME_STATE_PREGAME
+			for(var/client/C in clients)
+				window_flash(C) //let them know lobby has opened up.
 
 		if(GAME_STATE_PREGAME)
 				//lobby stats for statpanels
@@ -114,11 +116,13 @@ var/datum/subsystem/ticker/ticker
 				current_state = GAME_STATE_FINISHED
 				toggle_ooc(1) // Turn it on
 				declare_completion(force_ending)
-				spawn(50)
-					if(mode.station_was_nuked)
-						world.Reboot("Station destroyed by Nuclear Device.", "end_proper", "nuke")
-					else
-						world.Reboot("Round ended.", "end_proper", "proper completion")
+				addtimer(CALLBACK(src, .proc/NukeCleanup), 50)
+
+/datum/subsystem/ticker/proc/NukeCleanup()
+	if(mode.station_was_nuked)
+		world.Reboot("Station destroyed by Nuclear Device.", "end_proper", "nuke")
+	else
+		world.Reboot("Round ended.", "end_proper", "proper completion")
 
 /datum/subsystem/ticker/proc/setup()
 		//Create and announce mode
@@ -197,20 +201,22 @@ var/datum/subsystem/ticker/ticker
 			var/datum/holiday/holiday = SSevent.holidays[holidayname]
 			world << "<h4>[holiday.greet()]</h4>"
 
-
-	spawn(0)//Forking here so we dont have to wait for this to finish
-		mode.post_setup()
-		//Cleanup some stuff
-		for(var/obj/effect/landmark/start/S in landmarks_list)
-			//Deleting Startpoints but we need the ai point to AI-ize people later
-			if(S.name != "AI")
-				qdel(S)
-
-		var/list/adm = get_admin_counts()
-		if(!adm["present"])
-			send2irc("Server", "Round just started with no active admins online!")
+	PostSetup()
 
 	return 1
+
+/datum/subsystem/ticker/proc/PostSetup()
+	set waitfor = 0
+	mode.post_setup()
+	//Cleanup some stuff
+	for(var/obj/effect/landmark/start/S in landmarks_list)
+		//Deleting Startpoints but we need the ai point to AI-ize people later
+		if(S.name != "AI")
+			qdel(S)
+
+	var/list/adm = get_admin_counts()
+	if(!adm["present"])
+		send2irc("Server", "Round just started with no active admins online!")
 
 /datum/subsystem/ticker/proc/station_explosion_detonation(atom/bomb)
 	if(bomb)	//BOOM
@@ -326,11 +332,6 @@ var/datum/subsystem/ticker/ticker
 					cinematic.icon_state = "summary_selfdes"
 	//If its actually the end of the round, wait for it to end.
 	//Otherwise if its a verb it will continue on afterwards.
-	spawn(300)
-		if(cinematic)
-			qdel(cinematic)		//end the cinematic
-		for(var/mob/M in mob_list)
-			M.notransform = FALSE //gratz you survived
 
 	if(mode)
 		mode.explosion_in_progress = 0
@@ -338,7 +339,13 @@ var/datum/subsystem/ticker/ticker
 		mode.station_was_nuked = (station_missed<2)	//station_missed==1 is a draw. the station becomes irradiated and needs to be evacuated.
 														//kinda shit but I couldn't  get permission to do what I wanted to do.
 
+	addtimer(CALLBACK(src, .proc/finish_cinematic), 300)
 
+/datum/subsystem/ticker/proc/finish_cinematic()
+	if(cinematic)
+		qdel(cinematic)		//end the cinematic
+	for(var/mob/M in mob_list)
+		M.notransform = FALSE //gratz you survived
 
 /datum/subsystem/ticker/proc/create_characters()
 	for(var/mob/new_player/player in player_list)
@@ -513,7 +520,6 @@ var/datum/subsystem/ticker/ticker
 				world << "<b><font color='green'>The borers were successful!</font></b>"
 			else
 				world << "<b><font color='red'>The borers have failed!</font></b>"
-	return TRUE
 
 	mode.declare_station_goal_completion()
 
@@ -580,8 +586,7 @@ var/datum/subsystem/ticker/ticker
 	//map rotate chance defaults to 75% of the length of the round (in minutes)
 	if (!prob((world.time/600)*config.maprotatechancedelta))
 		return
-	spawn(0) //compiling a map can lock up the mc for 30 to 60 seconds if we don't spawn
-		maprotate()
+	addtimer(CALLBACK(GLOBAL_PROC, /.proc/maprotate), 0)
 
 
 /world/proc/has_round_started()

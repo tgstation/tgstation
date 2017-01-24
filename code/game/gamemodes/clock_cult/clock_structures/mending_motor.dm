@@ -61,7 +61,7 @@
 				if(S.health < S.maxHealth)
 					if(try_use_power(heal_cost))
 						S.adjustHealth(-(8 * efficiency))
-						PoolOrNew(/obj/effect/overlay/temp/heal, list(T, "#1E8CE1"))
+						new /obj/effect/overlay/temp/heal(T, "#1E8CE1")
 					else
 						S << "<span class='inathneq'>\"[text2ratvar(pick(heal_failure_messages))]\"</span>"
 						break
@@ -80,7 +80,7 @@
 						if(C == src)
 							efficiency = get_efficiency_mod()
 						C.update_icon()
-						PoolOrNew(/obj/effect/overlay/temp/heal, list(T, "#1E8CE1"))
+						new /obj/effect/overlay/temp/heal(T, "#1E8CE1")
 					else
 						break
 				else
@@ -95,7 +95,7 @@
 					if(try_use_power(heal_cost))
 						S.adjustBruteLoss(-(5 * efficiency))
 						S.adjustFireLoss(-(3 * efficiency))
-						PoolOrNew(/obj/effect/overlay/temp/heal, list(T, "#1E8CE1"))
+						new /obj/effect/overlay/temp/heal(T, "#1E8CE1")
 					else
 						S << "<span class='inathneq'>\"[text2ratvar(pick(heal_failure_messages))]\"</span>"
 						break

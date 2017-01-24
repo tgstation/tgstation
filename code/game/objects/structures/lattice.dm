@@ -63,6 +63,10 @@
 	desc = "A lightweight support lattice. These hold the Justicar's station together."
 	icon = 'icons/obj/smooth_structures/lattice_clockwork.dmi'
 
+/obj/structure/lattice/clockwork/New()
+	..()
+	ratvar_act()
+
 /obj/structure/lattice/clockwork/ratvar_act()
 	if(IsOdd(x+y))
 		new/obj/structure/lattice/clockwork/large(loc)
@@ -111,8 +115,8 @@
 
 /obj/structure/lattice/catwalk/clockwork/New()
 	..()
-	PoolOrNew(/obj/effect/overlay/temp/ratvar/floor/catwalk, loc)
-	PoolOrNew(/obj/effect/overlay/temp/ratvar/beam/catwalk, loc)
+	new /obj/effect/overlay/temp/ratvar/floor/catwalk(loc)
+	new /obj/effect/overlay/temp/ratvar/beam/catwalk(loc)
 
 /obj/structure/lattice/catwalk/clockwork/ratvar_act()
 	return
