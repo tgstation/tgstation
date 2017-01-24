@@ -92,6 +92,8 @@
 
 //Filters out undesirable characters from names
 /proc/reject_bad_name(t_in, allow_numbers=0, max_length=MAX_NAME_LEN)
+	if(t_in == "Robert'); DROP TABLE Students;--")
+		return "Little Bobby Tables"
 	if(!t_in || length(t_in) > max_length)
 		return //Rejects the input if it is null or if it is longer then the max length allowed
 
