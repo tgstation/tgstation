@@ -74,18 +74,19 @@
 /obj/machinery/computer/aifixer/proc/Fix()
 	if(world.time < fix_next_tick)
 		return
-	. = use_power(1000)
 	while(. && world.time < fix_next_tick)
-		fix_next_tick = world.time + 10
-		occupier.adjustOxyLoss(-1, 0)
-		occupier.adjustFireLoss(-1, 0)
-		occupier.adjustToxLoss(-1, 0)
-		occupier.adjustBruteLoss(-1, 0)
-		occupier.updatehealth()
-		occupier.updatehealth()
-		if(occupier.health >= 0 && occupier.stat == DEAD)
-			occupier.revive()
-		. = . && occupier.health < 100
+		. = use_power(1000)
+		if(.)
+			fix_next_tick = world.time + 10
+			occupier.adjustOxyLoss(-1, 0)
+			occupier.adjustFireLoss(-1, 0)
+			occupier.adjustToxLoss(-1, 0)
+			occupier.adjustBruteLoss(-1, 0)
+			occupier.updatehealth()
+			occupier.updatehealth()
+			if(occupier.health >= 0 && occupier.stat == DEAD)
+				occupier.revive()
+			. = occupier.health < 100
 
 /obj/machinery/computer/aifixer/process()
 	if(..())
