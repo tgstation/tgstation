@@ -283,6 +283,7 @@ var/datum/subsystem/ticker/ticker
 			sleep(50)
 			world << sound('sound/effects/explosionfar.ogg')
 			station_explosion_detonation(bomb)
+			actually_blew_up = station_missed == NUKE_SYNDICATE_BASE	//don't kill everyone on station if it detonated off station
 		else	//station was destroyed
 			if( mode && !override )
 				override = mode.name
