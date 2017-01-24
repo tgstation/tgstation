@@ -203,6 +203,10 @@ macro "default"
 		name = "F7"
 		command = "Admin-PM"
 		is-disabled = false
+	elem
+		name = "CTRL+F7"
+		command = "Stealth-Mode"
+		is-disabled = false
 	elem 
 		name = "F8"
 		command = "Invisimin"
@@ -501,6 +505,10 @@ macro "hotkeys"
 		name = "F7"
 		command = "Admin-PM"
 		is-disabled = false
+	elem
+		name = "CTRL+F7"
+		command = "Stealth-Mode"
+		is-disabled = false
 	elem 
 		name = "F8"
 		command = "Invisimin"
@@ -698,6 +706,10 @@ macro "robot-default"
 	elem 
 		name = "F7"
 		command = "Admin-PM"
+		is-disabled = false
+	elem
+		name = "CTRL+F7"
+		command = "Stealth-Mode"
 		is-disabled = false
 	elem 
 		name = "F8"
@@ -976,6 +988,10 @@ macro "robot-hotkeys"
 	elem 
 		name = "F7"
 		command = "Admin-PM"
+		is-disabled = false
+	elem
+		name = "CTRL+F7"
+		command = "Stealth-Mode"
 		is-disabled = false
 	elem 
 		name = "F8"

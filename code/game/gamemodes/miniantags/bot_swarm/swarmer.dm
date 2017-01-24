@@ -409,7 +409,7 @@
 		resources++
 		do_attack_animation(target)
 		changeNext_move(CLICK_CD_MELEE)
-		var/obj/effect/overlay/temp/swarmer/integrate/I = PoolOrNew(/obj/effect/overlay/temp/swarmer/integrate, get_turf(target))
+		var/obj/effect/overlay/temp/swarmer/integrate/I = new /obj/effect/overlay/temp/swarmer/integrate(get_turf(target))
 		I.pixel_x = target.pixel_x
 		I.pixel_y = target.pixel_y
 		I.pixel_z = target.pixel_z
@@ -426,7 +426,7 @@
 
 
 /mob/living/simple_animal/hostile/swarmer/proc/DisIntegrate(atom/movable/target)
-	PoolOrNew(/obj/effect/overlay/temp/swarmer/disintegration, get_turf(target))
+	new /obj/effect/overlay/temp/swarmer/disintegration(get_turf(target))
 	do_attack_animation(target)
 	changeNext_move(CLICK_CD_MELEE)
 	target.ex_act(3)
@@ -474,7 +474,7 @@
 /mob/living/simple_animal/hostile/swarmer/proc/DismantleMachine(obj/machinery/target)
 	do_attack_animation(target)
 	src << "<span class='info'>We begin to dismantle this machine. We will need to be uninterrupted.</span>"
-	var/obj/effect/overlay/temp/swarmer/dismantle/D = PoolOrNew(/obj/effect/overlay/temp/swarmer/dismantle, get_turf(target))
+	var/obj/effect/overlay/temp/swarmer/dismantle/D = new /obj/effect/overlay/temp/swarmer/dismantle(get_turf(target))
 	D.pixel_x = target.pixel_x
 	D.pixel_y = target.pixel_y
 	D.pixel_z = target.pixel_z
@@ -484,7 +484,7 @@
 		M.amount = 5
 		for(var/obj/item/I in target.component_parts)
 			I.loc = M.loc
-		var/obj/effect/overlay/temp/swarmer/disintegration/N = PoolOrNew(/obj/effect/overlay/temp/swarmer/disintegration, get_turf(target))
+		var/obj/effect/overlay/temp/swarmer/disintegration/N = new /obj/effect/overlay/temp/swarmer/disintegration(get_turf(target))
 		N.pixel_x = target.pixel_x
 		N.pixel_y = target.pixel_y
 		N.pixel_z = target.pixel_z

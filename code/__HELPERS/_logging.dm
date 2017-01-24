@@ -8,10 +8,11 @@
 /proc/notice(msg)
 	world.log << "## NOTICE: [msg]"
 
-//print a testing-mode debug message to world.log
-/proc/testing(msg)
+//print a testing-mode debug message to world.log and world
 #ifdef TESTING
-	world.log << "## TESTING: [msg]"
+#define testing(msg) world.log << "## TESTING: [msg]"; world << "## TESTING: [msg]"
+#else
+#define testing(msg)
 #endif
 
 /proc/log_admin(text)

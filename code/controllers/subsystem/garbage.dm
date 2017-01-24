@@ -190,8 +190,6 @@ var/datum/subsystem/garbage_collector/SSgarbage
 				SSgarbage.HardQueue(D)
 			if (QDEL_HINT_HARDDEL_NOW)	//qdel should assume this object won't gc, and hard del it post haste.
 				del(D)
-			if (QDEL_HINT_PUTINPOOL)	//qdel will put this object in the pool.
-				PlaceInPool(D, 0)
 			if (QDEL_HINT_FINDREFERENCE)//qdel will, if TESTING is enabled, display all references to this object, then queue the object for deletion.
 				SSgarbage.QueueForQueuing(D)
 				#ifdef TESTING

@@ -68,7 +68,7 @@
 	L.visible_message("<span class='warning'>[src] appears around [L] in a burst of light!</span>", \
 	"<span class='userdanger'>[target_flashed ? "An unseen force":"The glowing sigil around you"] holds you in place!</span>")
 	L.Stun(5)
-	PoolOrNew(/obj/effect/overlay/temp/ratvar/sigil/transgression, get_turf(src))
+	new /obj/effect/overlay/temp/ratvar/sigil/transgression(get_turf(src))
 	qdel(src)
 
 
@@ -101,7 +101,7 @@
 	animate(src, color = "#AF0AAF", time = convert_time)
 	var/obj/effect/overlay/temp/ratvar/sigil/glow
 	if(glow_type)
-		glow = PoolOrNew(glow_type, get_turf(src))
+		glow = new glow_type(get_turf(src))
 		animate(glow, alpha = 255, time = convert_time)
 	var/I = 0
 	while(I < convert_time && get_turf(L) == get_turf(src))
@@ -171,7 +171,7 @@
 /obj/effect/clockwork/sigil/transmission
 	name = "suspicious sigil"
 	desc = "A glowing orange sigil. The air around it feels staticky."
-	clockwork_desc = "A sigil that will serve as a battery for clockwork structures. Use Volt Void while standing on it to charge it."
+	clockwork_desc = "A sigil that will serve as a battery for clockwork structures."
 	icon_state = "sigiltransmission"
 	color = "#EC8A2D"
 	alpha = 50
@@ -294,14 +294,14 @@
 	while(L && (!is_servant_of_ratvar(L) || (is_servant_of_ratvar(L) && vitality)) && get_turf(L) == get_turf(src))
 		sigil_active = TRUE
 		if(animation_number >= 4)
-			PoolOrNew(/obj/effect/overlay/temp/ratvar/sigil/vitality, get_turf(src))
+			new /obj/effect/overlay/temp/ratvar/sigil/vitality(get_turf(src))
 			animation_number = 0
 		animation_number++
 		if(!is_servant_of_ratvar(L))
 			var/vitality_drained = 0
 			if(L.stat == DEAD)
 				vitality_drained = L.maxHealth
-				var/obj/effect/overlay/temp/ratvar/sigil/vitality/V = PoolOrNew(/obj/effect/overlay/temp/ratvar/sigil/vitality, get_turf(src))
+				var/obj/effect/overlay/temp/ratvar/sigil/vitality/V = new /obj/effect/overlay/temp/ratvar/sigil/vitality(get_turf(src))
 				animate(V, alpha = 0, transform = matrix()*2, time = 8)
 				playsound(L, 'sound/magic/WandODeath.ogg', 50, 1)
 				L.visible_message("<span class='warning'>[L] collapses in on [L.p_them()]self as [src] flares bright blue!</span>")

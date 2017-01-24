@@ -430,6 +430,7 @@
 		var/mob/living/simple_animal/bot/secbot/S = new /mob/living/simple_animal/bot/secbot
 		S.loc = get_turf(src)
 		S.name = created_name
+		S.baton_type = I.type
 		qdel(I)
 		qdel(src)
 

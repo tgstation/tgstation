@@ -285,7 +285,7 @@
 			message_admins("[key_name_admin(usr)] (<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[usr]'>FLW</A>) activated a bluespace capsule away from the mining level! (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>JMP</a>)")
 			log_admin("[key_name(usr)] activated a bluespace capsule away from the mining level at [T.x], [T.y], [T.z]")
 		template.load(deploy_location, centered = TRUE)
-		PoolOrNew(/obj/effect/particle_effect/smoke, get_turf(src))
+		new /obj/effect/particle_effect/smoke(get_turf(src))
 		qdel(src)
 
 
