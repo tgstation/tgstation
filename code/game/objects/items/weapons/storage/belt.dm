@@ -33,7 +33,9 @@
 		/obj/item/device/analyzer,
 		/obj/item/weapon/extinguisher/mini,
 		/obj/item/device/radio,
-		/obj/item/clothing/gloves
+		/obj/item/clothing/gloves,
+		/obj/item/device/geiger_counter,
+		/obj/item/weapon/airlock_painter
 		)
 
 /obj/item/weapon/storage/belt/utility/chief
