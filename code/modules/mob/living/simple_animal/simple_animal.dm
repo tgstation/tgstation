@@ -84,7 +84,6 @@
 
 	//domestication
 	var/tame = 0
-	var/saddled = 0
 	var/datum/riding/riding_datum = null
 
 /mob/living/simple_animal/New()
@@ -535,15 +534,14 @@
 		if(user.incapacitated())
 			return
 		for(var/atom/movable/A in get_turf(src))
-			if(A.density)
-				if(A != src && A != M)
-					return
+			if(A != src && A != M && A.density)
+				return
 		M.loc = get_turf(src)
 		riding_datum.handle_vehicle_offsets()
 		riding_datum.ridden = src
 
 /mob/living/simple_animal/relaymove(mob/user, direction)
-	if(tame && saddled && riding_datum)
+	if(tame && riding_datum)
 		riding_datum.handle_ride(user, direction)
 
 /mob/living/simple_animal/Move(NewLoc,Dir=0,step_x=0,step_y=0)
