@@ -72,8 +72,7 @@
 	return
 
 /obj/machinery/computer/aifixer/proc/Fix()
-	if(world.time < fix_next_tick)
-		return
+	. = world.time < fix_next_tick
 	while(. && world.time < fix_next_tick)
 		. = use_power(1000)
 		if(.)
