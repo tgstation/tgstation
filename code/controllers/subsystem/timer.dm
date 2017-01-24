@@ -39,59 +39,71 @@ var/datum/subsystem/timer/SStimer
 /datum/subsystem/timer/stat_entry(msg)
 	..("B:[bucket_count] P:[length(processing)] H:[length(hashes)] C:[length(clienttime_timers)]")
 
-/datum/subsystem/timer/fire()
+/datum/subsystem/timer/fire(resumed = FALSE)
 	if (length(clienttime_timers))
 		for (var/thing in clienttime_timers)
-			var/datum/timedevent/timer = thing
-			if (timer.spent)
-				qdel(timer)
+			var/datum/timedevent/ctime_timer = thing
+			if (ctime_timer.spent)
+				qdel(ctime_timer)
 				continue
-			if (timer.timeToRun <= REALTIMEOFDAY)
-				var/datum/callback/callBack = timer.callBack
-				timer.spent = TRUE
+			if (ctime_timer.timeToRun <= REALTIMEOFDAY)
+				var/datum/callback/callBack = ctime_timer.callBack
+				ctime_timer.spent = TRUE
 				callBack.InvokeAsync()
-				qdel(timer)
+				qdel(ctime_timer)
 
 			if (MC_TICK_CHECK)
 				return
 
-	if (head_offset + (world.tick_lag * BUCKET_LEN) < world.time || length(src.bucket_list) != BUCKET_LEN || world.tick_lag != bucket_resolution)
+	var/static/list/spent = list()
+	var/static/datum/timedevent/timer
+	var/static/datum/timedevent/head
+
+	if ((practical_offset > BUCKET_LEN * 0.75 && (head_offset + (world.tick_lag * BUCKET_LEN) < world.time)) || length(src.bucket_list) != BUCKET_LEN || world.tick_lag != bucket_resolution)
 		shift_buckets()
+		resumed = FALSE
+
+	if (!resumed)
+		timer = null
+		head = null
 
 	var/list/bucket_list = src.bucket_list
-	var/static/list/spent = list()
+
 	while (practical_offset <= BUCKET_LEN && head_offset + (practical_offset*world.tick_lag) <= world.time && !MC_TICK_CHECK)
-		var/datum/timedevent/head = bucket_list[practical_offset]
-		if (!head)
-			practical_offset++
-			if (MC_TICK_CHECK)
-				break
-			continue
-		var/datum/timedevent/timer = head
+		if (!timer || !head || timer == head)
+			head = bucket_list[practical_offset]
+			if (!head)
+				practical_offset++
+				if (MC_TICK_CHECK)
+					break
+				continue
+			timer = head
 		do
 			var/datum/callback/callBack = timer.callBack
-			if (!callBack || timer.spent)
-				continue
+			if (!callBack)
+				qdel(timer)
+				bucket_resolution = null //force bucket recreation
+				CRASH("Invalid timer: timer.timeToRun=[timer.timeToRun]||qdeleted(timer)=[qdeleted(timer)]||world.time=[world.time]||head_offset=[head_offset]||practical_offset=[practical_offset]||timer.spent=[timer.spent]")
 
-			spent += timer
-			timer.spent = TRUE
-
-			callBack.InvokeAsync()
+			if (!timer.spent)
+				spent += timer
+				timer.spent = TRUE
+				callBack.InvokeAsync()
 
 			timer = timer.next
 
 			if (MC_TICK_CHECK)
 				return
 		while (timer && timer != head)
-
+		timer = null
 		bucket_list[practical_offset++] = null
 		if (MC_TICK_CHECK)
-			break
+			return
 
 	bucket_count -= length(spent)
 
-	for (var/timer in spent)
-		qdel(timer)
+	for (var/spent_timer in spent)
+		qdel(spent_timer)
 
 	spent.len = 0
 
