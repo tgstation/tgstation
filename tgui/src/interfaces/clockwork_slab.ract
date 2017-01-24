@@ -1,5 +1,6 @@
 <ui-display>
   <ui-button action='toggle'>{{data.recollection ? "Recital":"Recollection"}}</ui-button>
+  <ui-button action='component'>Target Component: {{{data.target_comp}}}</ui-button>
 </ui-display>
 {{#if data.recollection}}
 	 <ui-display>

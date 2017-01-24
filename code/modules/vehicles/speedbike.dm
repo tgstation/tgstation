@@ -29,7 +29,7 @@
 
 /obj/vehicle/space/speedbike/Move(newloc,move_dir)
 	if(has_buckled_mobs())
-		PoolOrNew(/obj/effect/overlay/temp/speedbike_trail,list(loc,move_dir))
+		new /obj/effect/overlay/temp/speedbike_trail(loc,move_dir)
 	. = ..()
 
 /obj/vehicle/space/speedbike/red

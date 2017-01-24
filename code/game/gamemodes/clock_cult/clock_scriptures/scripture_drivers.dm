@@ -35,6 +35,7 @@
 					C.apply_damage(cultist_damage * 0.5, BURN, "l_leg")
 					C.apply_damage(cultist_damage * 0.5, BURN, "r_leg")
 				C.toggle_move_intent()
+	return TRUE
 
 
 //Judicial Visor: Creates a judicial visor, which can smite an area.
@@ -217,11 +218,15 @@
 		progbar = new(invoker, flee_time, invoker)
 		progbar.bar.color = list("#AF0AAF", "#AF0AAF", "#AF0AAF", rgb(0,0,0))
 		animate(progbar.bar, color = initial(progbar.bar.color), time = flee_time+grace_period)
-		while(world.time < endtime && invoker && slab && invoker.get_active_held_item() == slab)
+		while(world.time < endtime && can_recite())
 			sleep(1)
 			progbar.update(world.time - starttime)
 		qdel(progbar)
-		sleep(grace_period)
+		if(can_recite())
+			sleep(grace_period)
+		else
+			return FALSE
+	return TRUE
 
 /datum/clockwork_scripture/channeled/taunting_tirade/chant_end_effects()
 	qdel(progbar)

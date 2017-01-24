@@ -52,7 +52,6 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 
 /datum/controller/master/New()
 	// Highlander-style: there can only be one! Kill off the old and replace it with the new.
-	check_for_cleanbot_bug()
 	subsystems = list()
 	if (Master != src)
 		if (istype(Master))
@@ -108,19 +107,23 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 	world.log << msg
 	if (istype(Master.subsystems))
 		subsystems = Master.subsystems
-		spawn (10)
-			StartProcessing()
+		StartProcessing(10)
 	else
 		world << "<span class='boldannounce'>The Master Controller is having some issues, we will need to re-initialize EVERYTHING</span>"
-		spawn (20)
-			init_subtypes(/datum/subsystem, subsystems)
-			Setup()
+		Setup(20, TRUE)
 
 
 // Please don't stuff random bullshit here,
 // 	Make a subsystem, give it the SS_NO_FIRE flag, and do your work in it's Initialize()
-/datum/controller/master/proc/Setup()
-	check_for_cleanbot_bug()
+/datum/controller/master/proc/Setup(delay, init_sss)
+	set waitfor = 0
+
+	if(delay)
+		sleep(delay)
+
+	if(init_sss)
+		init_subtypes(/datum/subsystem, subsystems)
+
 	world << "<span class='boldannounce'>Initializing subsystems...</span>"
 
 	// Sort subsystems by init_order, so they initialize in the correct order.
@@ -140,15 +143,12 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 
 	// Sort subsystems by display setting for easy access.
 	sortTim(subsystems, /proc/cmp_subsystem_display)
-	check_for_cleanbot_bug()
 	// Set world options.
 	world.sleep_offline = 1
 	world.fps = config.fps
-	check_for_cleanbot_bug()
 	sleep(1)
-	check_for_cleanbot_bug()
 	// Loop.
-	Master.StartProcessing()
+	Master.StartProcessing(0)
 
 // Notify the MC that the round has started.
 /datum/controller/master/proc/RoundStart()
@@ -162,8 +162,10 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 		SS.next_fire = timer
 
 // Starts the mc, and sticks around to restart it if the loop ever ends.
-/datum/controller/master/proc/StartProcessing()
+/datum/controller/master/proc/StartProcessing(delay)
 	set waitfor = 0
+	if(delay)
+		sleep(delay)
 	var/rtn = Loop()
 	if (rtn > 0 || processing < 0)
 		return //this was suppose to happen.

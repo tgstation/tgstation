@@ -140,11 +140,12 @@
 		show_note(target_ckey)
 
 /proc/show_note(target_ckey, index, linkless = 0)
+	if(!dbcon.IsConnected())
+		usr << "<span class='danger'>Failed to establish database connection.</span>"
+		return
 	var/output
-	var/navbar
-	var/ruler
-	ruler = "<hr style='background:#000000; border:0; height:3px'>"
-	navbar = "<a href='?_src_=holder;nonalpha=1'>\[All\]</a>|<a href='?_src_=holder;nonalpha=2'>\[#\]</a>"
+	var/ruler = "<hr style='background:#000000; border:0; height:3px'>"
+	var/navbar = "<a href='?_src_=holder;nonalpha=1'>\[All\]</a>|<a href='?_src_=holder;nonalpha=2'>\[#\]</a>"
 	for(var/letter in alphabet)
 		navbar += "|<a href='?_src_=holder;shownote=[letter]'>\[[letter]\]</a>"
 	navbar += "<br><form method='GET' name='search' action='?'>\
@@ -158,6 +159,7 @@
 		var/DBQuery/query_get_notes = dbcon.NewQuery("SELECT secret, timestamp, notetext, adminckey, last_editor, server, id FROM [format_table_name("notes")] WHERE ckey = '[target_sql_ckey]' ORDER BY timestamp")
 		if(!query_get_notes.Execute())
 			var/err = query_get_notes.ErrorMsg()
+			usr << "<span class='danger'>SQL ERROR: Failed to obtain DB records. Error : \[[err]\]\</span>"
 			log_game("SQL ERROR obtaining secret, timestamp, notetext, adminckey, last_editor, server, id from notes table. Error : \[[err]\]\n")
 			return
 		output += "<h2><center>Notes of [target_ckey]</center></h2>"
