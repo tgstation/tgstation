@@ -145,4 +145,3 @@
 	var/resize = 1 //Badminnery resize
 
 	var/list/observers = null	//The list of people observing this mob.
-	var/nuked = FALSE	//prevent "hurr-durr i survived" after a nuke goes off

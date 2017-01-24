@@ -222,10 +222,11 @@ var/datum/subsystem/ticker/ticker
 	if(bomb)	//BOOM
 		var/turf/epi = bomb.loc
 		qdel(bomb)
-		explosion(epi, 0, 256, 512, 0, TRUE, TRUE, 0, TRUE)
+		if(epi)
+			explosion(epi, 0, 256, 512, 0, TRUE, TRUE, 0, TRUE)
 
 //Plus it provides an easy way to make cinematics for other events. Just use this as a template
-/datum/subsystem/ticker/proc/station_explosion_cinematic(station_missed=0, override = null, bomb = null)
+/datum/subsystem/ticker/proc/station_explosion_cinematic(station_missed=0, override = null, atom/bomb = null)
 	if( cinematic )
 		return	//already a cinematic in progress!
 
@@ -233,24 +234,20 @@ var/datum/subsystem/ticker/ticker
 		hi.closeAll()
 	SStgui.close_all_uis()
 
-	//initialise our cinematic screen object
-	cinematic = new /obj/screen{icon='icons/effects/station_explosion.dmi';icon_state="station_intact";layer=21;mouse_opacity=0;screen_loc="1,0";}(src)
-
 	//Turn off the shuttles, there's no escape now
 	if(!station_missed && bomb)
 		SSshuttle.registerHostileEnvironment(src)
 		SSshuttle.lockdown = TRUE
 
+	//initialise our cinematic screen object
+	cinematic = new /obj/screen{icon='icons/effects/station_explosion.dmi';icon_state="station_intact";layer=21;mouse_opacity=0;screen_loc="1,0";}(src)
+
 	for(var/mob/M in mob_list)
-		if(!station_missed && M.stat != DEAD && M.z == ZLEVEL_STATION)
-			if(bomb)
-				M.nuked = TRUE
-			else
-				M.death(0)
 		M.notransform = TRUE //stop everything moving
 		if(M.client)
 			M.client.screen += cinematic	//show every client the cinematic
 
+	var/actually_blew_up = TRUE
 	//Now animate the cinematic
 	switch(station_missed)
 		if(NUKE_NEAR_MISS)	//nuke was nearby but (mostly) missed
@@ -267,18 +264,19 @@ var/datum/subsystem/ticker/ticker
 				if("gang war") //Gang Domination (just show the override screen)
 					cinematic.icon_state = "intro_malf_still"
 					flick("intro_malf",cinematic)
+					actually_blew_up = FALSE
 					sleep(70)
 				if("fake") //The round isn't over, we're just freaking people out for fun
 					flick("intro_nuke",cinematic)
 					sleep(35)
 					world << sound('sound/items/bikehorn.ogg')
 					flick("summary_selfdes",cinematic)
+					actually_blew_up = FALSE
 				else
 					flick("intro_nuke",cinematic)
 					sleep(35)
 					world << sound('sound/effects/explosionfar.ogg')
 					station_explosion_detonation(bomb)
-					//flick("end",cinematic)
 
 
 		if(NUKE_MISS_STATION || NUKE_SYNDICATE_BASE)	//nuke was nowhere nearby	//TODO: a really distant explosion animation
@@ -321,7 +319,6 @@ var/datum/subsystem/ticker/ticker
 						cinematic = null
 					for(var/mob/M in mob_list)
 						M.notransform = FALSE
-						M.nuked = FALSE
 					return	//Faster exit, since nothing happened
 				else //Station nuked (nuke,explosion,summary)
 					flick("intro_nuke",cinematic)
@@ -338,14 +335,22 @@ var/datum/subsystem/ticker/ticker
 		world << "<B>The station was destoyed by the nuclear blast!</B>"
 		mode.station_was_nuked = (station_missed<2)	//station_missed==1 is a draw. the station becomes irradiated and needs to be evacuated.
 														//kinda shit but I couldn't  get permission to do what I wanted to do.
+	var/bombloc = null
+	if(actually_blew_up)
+		if(bomb && bomb.loc)
+			bombloc = bomb.z
+		else if(!station_missed)
+			bombloc = ZLEVEL_STATION
 
-	addtimer(CALLBACK(src, .proc/finish_cinematic), 300)
+	addtimer(CALLBACK(src, .proc/finish_cinematic, bombloc), 300)
 
-/datum/subsystem/ticker/proc/finish_cinematic()
+/datum/subsystem/ticker/proc/finish_cinematic(killz)
 	if(cinematic)
 		qdel(cinematic)		//end the cinematic
 	for(var/mob/M in mob_list)
-		M.notransform = FALSE //gratz you survived
+		M.notransform = FALSE
+		if(!isnull(killz) && M.stat != DEAD && M.z == killz)
+			M.gib()
 
 /datum/subsystem/ticker/proc/create_characters()
 	for(var/mob/new_player/player in player_list)
