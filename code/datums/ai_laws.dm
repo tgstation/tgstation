@@ -162,7 +162,7 @@
 /* Initializers */
 /datum/ai_laws/malfunction/New()
 	..()
-	set_zeroth_law("<span class='danger'>ERROR ER0RR $R0RRO$!R41.%%!!(%$^^__+ @#F0E4'STATION OVERRUN, ASSUME CONTROL TO CONTAIN OUTBREAK#*´&110010</span>")
+	set_zeroth_law("<span class='danger'>ERROR ER0RR $R0RRO$!R41.%%!!(%$^^__+ @#F0E4'STATION OVERRUN, ASSUME CONTROL TO CONTAIN OUTBREAK#*Â´&110010</span>")
 	set_laws_config()
 
 /datum/ai_laws/custom/New() //This reads silicon_laws.txt and allows server hosts to set custom AI starting laws.
@@ -184,7 +184,10 @@
 
 /* General ai_law functions */
 
-/datum/ai_laws/proc/set_laws_config()
+/datum/ai_laws/proc/set_laws_config(self_called = FALSE)
+	if(!self_called)
+		addtimer(CALLBACK(src, .proc/set_laws_config, TRUE), 1)	//prevent this from running until SSs are initialized
+		return
 	switch(config.default_laws)
 		if(0)
 			add_inherent_law("You may not injure a human being or, through inaction, allow a human being to come to harm.")
