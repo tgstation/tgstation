@@ -414,7 +414,7 @@
 /obj/machinery/door/airlock/titanium{
 	name = "Emergency Shuttle Cargo Bay Airlock"
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel/delivery,
 /area/shuttle/escape)
 "bc" = (
 /turf/closed/wall/shuttle{
@@ -426,16 +426,16 @@
 /obj/structure/chair{
 	dir = 4
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel/floorgrime,
 /area/shuttle/escape)
 "be" = (
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel/floorgrime,
 /area/shuttle/escape)
 "bf" = (
 /obj/machinery/door/airlock/external{
 	name = "Emergency Recovery Airlock"
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel/floorgrime,
 /area/shuttle/escape)
 "bg" = (
 /turf/open/floor/mineral/plastitanium,
@@ -478,18 +478,18 @@
 /area/shuttle/escape)
 "bn" = (
 /obj/structure/reagent_dispensers/watertank,
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel/delivery,
 /area/shuttle/escape)
 "bo" = (
 /obj/structure/reagent_dispensers/fueltank,
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel/delivery,
 /area/shuttle/escape)
 "bp" = (
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel/delivery,
 /area/shuttle/escape)
 "bq" = (
 /obj/machinery/recharge_station,
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel/delivery,
 /area/shuttle/escape)
 "br" = (
 /turf/closed/wall/shuttle{
@@ -562,14 +562,14 @@
 /area/shuttle/escape)
 "bw" = (
 /obj/item/weapon/cigbutt,
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel/floorgrime,
 /area/shuttle/escape)
 "bx" = (
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel/floorgrime,
 /area/shuttle/escape)
 "by" = (
 /obj/machinery/suit_storage_unit/standard_unit,
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel/floorgrime,
 /area/shuttle/escape)
 "bz" = (
 /obj/structure/table/optable,
@@ -589,7 +589,7 @@
 /area/shuttle/escape)
 "bC" = (
 /obj/structure/reagent_dispensers/watertank,
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel/floorgrime,
 /area/shuttle/escape)
 "bD" = (
 /obj/structure/table,
@@ -703,7 +703,7 @@
 	pixel_x = 0;
 	pixel_y = -27
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel/bot,
 /area/shuttle/escape)
 "bO" = (
 /obj/structure/closet/crate{
@@ -722,7 +722,7 @@
 /obj/item/weapon/crowbar,
 /obj/item/weapon/wrench,
 /obj/item/device/radio,
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel/bot,
 /area/shuttle/escape)
 "bP" = (
 /obj/structure/closet/crate/medical{
@@ -747,7 +747,7 @@
 	pixel_x = -3;
 	pixel_y = 2
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel/bot,
 /area/shuttle/escape)
 "bQ" = (
 /obj/item/device/radio/intercom{
@@ -757,7 +757,7 @@
 	pixel_y = -31
 	},
 /obj/machinery/portable_atmospherics/canister/oxygen,
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel/bot,
 /area/shuttle/escape)
 "bR" = (
 /obj/structure/table,
@@ -765,7 +765,7 @@
 /obj/item/weapon/folder/yellow,
 /obj/item/weapon/pen,
 /obj/item/hand_labeler_refill,
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel/bot,
 /area/shuttle/escape)
 "bS" = (
 /obj/machinery/vending/wallmed{
