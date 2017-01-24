@@ -1,5 +1,9 @@
 var/datum/subsystem/objects/SSobj
 
+#define INITIALIZATION_INSSOBJ 0	//New should not call Initialize
+#define INITIALIZATION_INNEW_MAPLOAD 1	//New should call Initialize(TRUE)
+#define INITIALIZATION_INNEW_REGULAR 2	//New should call Initialize(FALSE)
+
 /datum/var/isprocessing = 0
 /datum/proc/process()
 	set waitfor = 0
@@ -11,7 +15,7 @@ var/datum/subsystem/objects/SSobj
 	init_order = 12
 	priority = 40
 
-	var/initialized = 0	//0: nothing should call Initialize. 1: New should call Initialize(TRUE). 2, New should call Initialize(FALSE)
+	var/initialized = INITIALIZATION_INSSOBJ
 	var/old_initialized
 	var/list/processing = list()
 	var/list/currentrun = list()
@@ -26,7 +30,7 @@ var/datum/subsystem/objects/SSobj
 	. = ..()
 
 /datum/subsystem/objects/proc/InitializeAtoms(list/objects = null)
-	initialized = 1
+	initialized = INITIALIZATION_INNEW_MAPLOAD
 
 	if(objects)
 		for(var/thing in objects)
@@ -39,11 +43,11 @@ var/datum/subsystem/objects/SSobj
 				A.Initialize(TRUE)
 				CHECK_TICK
 
-	initialized = 2
+	initialized = INITIALIZATION_INNEW_REGULAR
 
 /datum/subsystem/objects/proc/map_loader_begin()
 	old_initialized = initialized
-	initialized = 0
+	initialized = INITIALIZATION_INSSOBJ
 
 /datum/subsystem/objects/proc/map_loader_stop()
 	initialized = old_initialized
@@ -70,7 +74,7 @@ var/datum/subsystem/objects/SSobj
 
 /datum/subsystem/objects/Recover()
 	initialized = SSobj.initialized
-	if(initialized == 1) //0.o?
+	if(initialized == INITIALIZATION_INNEW_MAPLOAD) //0.o?
 		InitializeAtoms()
 	old_initialized = SSobj.old_initialized
 

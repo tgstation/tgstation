@@ -42,8 +42,8 @@
 		light = new(src)
 
 	var/initialized = SSobj.initialized
-	if(initialized > 0)
-		Initialize(initialized == 1)
+	if(initialized > INITIALIZATION_INSSOBJ)
+		Initialize(initialized == INITIALIZATION_INNEW_MAPLOAD)
 	//. = ..() //uncomment if you are dumb enough to add a /datum/New() proc
 
 /atom/Destroy()
