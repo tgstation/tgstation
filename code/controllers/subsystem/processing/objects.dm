@@ -34,7 +34,7 @@ var/datum/subsystem/objects/SSobj
 			A.Initialize(TRUE)
 			CHECK_TICK
 	else
-		for(var/atom/thing in world)
+		for(var/atom/A in world)
 			if(!A.initialized)	//this check is to make sure we don't call it twice on an object that was created in a previous Initialize call
 				A.Initialize(TRUE)
 				CHECK_TICK
