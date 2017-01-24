@@ -40223,7 +40223,6 @@
 	d2 = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/item/device/radio/beacon,
 /turf/open/floor/plasteel/black,
 /area/construction/hallway{
 	name = "\improper MiniSat Exterior"
@@ -40295,6 +40294,7 @@
 	d2 = 8
 	},
 /obj/machinery/holopad,
+/obj/item/device/radio/beacon,
 /turf/open/floor/plasteel/black,
 /area/ai_monitored/turret_protected/tcomfoyer{
 	name = "\improper MiniSat Foyer"
