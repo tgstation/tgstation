@@ -213,8 +213,8 @@
 		//Drop all worn head items
 		for(var/X in list(owner.glasses, owner.ears, owner.wear_mask, owner.head))
 			var/obj/item/I = X
-			owner.dropItemToGround(I, TRUE)
-	name = "[owner]'s head"
+			owner.unEquip(I, 1)
+	name = "[owner.real_name]'s head"
 	..()
 
 
