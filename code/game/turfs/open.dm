@@ -147,7 +147,8 @@
 		var/obj/buckled_obj
 		if(C.buckled)
 			buckled_obj = C.buckled
-			return 0
+			if(!(istype(C.buckled,/obj/vehicle/scooter) && lube))
+				return 0
 		else
 			if(C.lying || !(C.status_flags & CANWEAKEN)) // can't slip unbuckled mob if they're lying or can't fall.
 				return 0
