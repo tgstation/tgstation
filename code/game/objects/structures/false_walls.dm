@@ -339,4 +339,5 @@
 	return ..()
 
 /obj/structure/falsewall/brass/ratvar_act()
-	obj_integrity = max_integrity
+	if(ratvar_awakens)
+		obj_integrity = max_integrity

@@ -156,13 +156,20 @@
 				M << "<span class='warning'><b>You hear otherworldly sounds from the [dir2text(get_dir(get_turf(M), get_turf(src)))]...</span>"
 	if(!obj_integrity)
 		return 0
-	for(var/t in RANGE_TURFS(1, loc))
-		if(iswallturf(t))
-			var/turf/closed/wall/W = t
-			W.dismantle_wall()
-		else if(t && (isclosedturf(t) || !is_blocked_turf(t)))
-			var/turf/T = t
-			T.ChangeTurf(/turf/open/floor/clockwork)
+	var/convert_dist = 1 + (round(Floor(progress_in_seconds, 15) * 0.067))
+	for(var/t in RANGE_TURFS(convert_dist, loc))
+		var/turf/T = t
+		if(!T)
+			continue
+		if(get_dist(T, src) < 2)
+			if(iswallturf(T))
+				var/turf/closed/wall/W = T
+				W.dismantle_wall()
+			else if(t && (isclosedturf(T) || !is_blocked_turf(T)))
+				T.ChangeTurf(/turf/open/floor/clockwork)
+		var/dist = cheap_hypotenuse(T.x, T.y, x, y)
+		if(dist < convert_dist)
+			T.ratvar_act(FALSE, TRUE, 3)
 	for(var/obj/O in orange(1, src))
 		if(!O.pulledby && !istype(O, /obj/effect) && O.density)
 			if(!step_away(O, src, 2) || get_dist(O, src) < 2)

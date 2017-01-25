@@ -27,18 +27,14 @@
 	var/obj/effect/ctf/flag_reset/reset
 	var/reset_path = /obj/effect/ctf/flag_reset
 
-/obj/item/weapon/twohanded/ctf/New()
-	..()
-	if(!reset)
-		reset = new reset_path(get_turf(src))
-
 /obj/item/weapon/twohanded/ctf/Destroy()
 	if(reset)
 		qdel(reset)
 		reset = null
 	. = ..()
 
-/obj/item/weapon/twohanded/ctf/initialize()
+/obj/item/weapon/twohanded/ctf/Initialize()
+	..()
 	if(!reset)
 		reset = new reset_path(get_turf(src))
 

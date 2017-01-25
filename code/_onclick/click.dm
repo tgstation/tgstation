@@ -110,9 +110,10 @@
 	if(A.ClickAccessible(src, depth=INVENTORY_DEPTH))
 		// No adjacency needed
 		if(W)
-			var/resolved = A.attackby(W,src)
-			if(!resolved && A && W)
-				W.afterattack(A,src,1,params) // 1 indicates adjacency
+			if(W.pre_attackby(A,src,params))
+				var/resolved = A.attackby(W,src)
+				if(!resolved && A && W)
+					W.afterattack(A,src,1,params) // 1 indicates adjacency
 		else
 			if(ismob(A))
 				changeNext_move(CLICK_CD_MELEE)
@@ -126,10 +127,11 @@
 	if(isturf(A) || isturf(A.loc) || (A.loc && isturf(A.loc.loc)))
 		if(A.Adjacent(src)) // see adjacent.dm
 			if(W)
-				// Return 1 in attackby() to prevent afterattack() effects (when safely moving items for example)
-				var/resolved = A.attackby(W,src,params)
-				if(!resolved && A && W)
-					W.afterattack(A,src,1,params) // 1: clicking something Adjacent
+				if(W.pre_attackby(A,src,params))
+					// Return 1 in attackby() to prevent afterattack() effects (when safely moving items for example)
+					var/resolved = A.attackby(W,src,params)
+					if(!resolved && A && W)
+						W.afterattack(A,src,1,params) // 1: clicking something Adjacent
 			else
 				if(ismob(A))
 					changeNext_move(CLICK_CD_MELEE)
@@ -234,7 +236,7 @@
 		var/mob/living/carbon/human/H = user
 		H.dna.species.grab(H, src, H.martial_art)
 		H.next_click = world.time + CLICK_CD_MELEE
-	else 
+	else
 		..()
 /*
 	Alt click
