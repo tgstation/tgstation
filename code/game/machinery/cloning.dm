@@ -54,7 +54,7 @@
 	qdel(countdown)
 	countdown = null
 	if(connected)
-		connected.pods -= src
+		LAZYREMOVE(connected.pods, src)
 		connected = null
 	. = ..()
 

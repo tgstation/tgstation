@@ -7,7 +7,7 @@
 	circuit = /obj/item/weapon/circuitboard/computer/cloning
 	req_access = list(access_heads) //Only used for record deletion right now.
 	var/obj/machinery/dna_scannernew/scanner = null //Linked scanner. For scanning.
-	var/list/pods = list() //Linked cloning pods
+	var/list/pods //Linked cloning pods
 	var/temp = "Inactive"
 	var/scantemp_ckey
 	var/scantemp = "Ready to Scan"
@@ -23,36 +23,39 @@
 	updatemodules(TRUE)
 
 /obj/machinery/computer/cloning/Destroy()
-	for(var/P in pods)
-		DetachCloner(P)
-	pods = null
+	if(pods)
+		for(var/P in pods)
+			DetachCloner(P)
+		pods = null
 	return ..()
 
 /obj/machinery/computer/cloning/proc/GetAvailablePod(mind = null)
-	for(var/P in pods)
-		var/obj/machinery/clonepod/pod = P
-		if(pod.occupant && pod.clonemind == mind)
-			return null
-		if(pod.is_operational() && !(pod.occupant || pod.mess))
-			return pod
+	if(pods)
+		for(var/P in pods)
+			var/obj/machinery/clonepod/pod = P
+			if(pod.occupant && pod.clonemind == mind)
+				return null
+			if(pod.is_operational() && !(pod.occupant || pod.mess))
+				return pod
 
 /obj/machinery/computer/cloning/proc/HasEfficientPod()
-	for(var/P in pods)
-		var/obj/machinery/clonepod/pod = P
-		if(pod.is_operational() && pod.efficiency > 5)
-			return TRUE
-	return FALSE
+	if(pods)
+		for(var/P in pods)
+			var/obj/machinery/clonepod/pod = P
+			if(pod.is_operational() && pod.efficiency > 5)
+				return TRUE
 
 /obj/machinery/computer/cloning/proc/GetAvailableEfficientPod(mind = null)
-	for(var/P in pods)
-		var/obj/machinery/clonepod/pod = P
-		if(pod.occupant && pod.clonemind == mind)
-			return pod
-		else if(!. && pod.is_operational() && !(pod.occupant || pod.mess) && pod.efficiency > 5)
-			. = pod
+	if(pods)
+		for(var/P in pods)
+			var/obj/machinery/clonepod/pod = P
+			if(pod.occupant && pod.clonemind == mind)
+				return pod
+			else if(!. && pod.is_operational() && !(pod.occupant || pod.mess) && pod.efficiency > 5)
+				. = pod
 
 /obj/machinery/computer/cloning/process()
-	if(!(scanner && pods.len && autoprocess))
+	if(!(scanner && LAZYLEN(pods) && autoprocess))
 		return
 
 	if(scanner.occupant && scanner.scan_level > 2)
@@ -72,7 +75,7 @@
 
 /obj/machinery/computer/cloning/proc/updatemodules(findfirstcloner)
 	src.scanner = findscanner()
-	if(findfirstcloner && !pods.len)
+	if(findfirstcloner && !LAZYLEN(pods))
 		findcloner()
 
 /obj/machinery/computer/cloning/proc/findscanner()
@@ -104,11 +107,11 @@
 /obj/machinery/computer/cloning/proc/AttachCloner(obj/machinery/clonepod/pod)
 	if(!pod.connected)
 		pod.connected = src
-		pods += pod
+		LAZYADD(pods, pod)
 
 /obj/machinery/computer/cloning/proc/DetachCloner(obj/machinery/clonepod/pod)
 	pod.connected = null
-	pods -= pod
+	LAZYREMOVE(pods, pod)
 
 /obj/machinery/computer/cloning/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/disk/data)) //INSERT SOME DISKETTES
@@ -170,12 +173,12 @@
 	switch(src.menu)
 		if(1)
 			// Modules
-			if (isnull(src.scanner) || !pods.len)
+			if (isnull(src.scanner) || !LAZYLEN(pods))
 				dat += "<h3>Modules</h3>"
 				//dat += "<a href='byond://?src=\ref[src];relmodules=1'>Reload Modules</a>"
 				if (isnull(src.scanner))
 					dat += "<font class='bad'>ERROR: No Scanner detected!</font><br>"
-				if (!pods.len)
+				if (!LAZYLEN(pods))
 					dat += "<font class='bad'>ERROR: No Pod detected</font><br>"
 
 			// Scanner
@@ -393,7 +396,7 @@
 		if(C)
 			var/obj/machinery/clonepod/pod = GetAvailablePod()
 			//Can't clone without someone to clone.  Or a pod.  Or if the pod is busy. Or full of gibs.
-			if(!pods.len)
+			if(!LAZYLEN(pods))
 				temp = "<font class='bad'>No Clonepods detected.</font>"
 				playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
 			else if(!pod)
