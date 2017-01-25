@@ -1,5 +1,6 @@
 import sys
 import subprocess
+from datetime import datetime
 
 tgm_header = "//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE"
 
@@ -99,6 +100,7 @@ def merge_map(newfile, backupfile, tgm):
                 old_dict[fresh_key] = new_tile
                 merged_grid[x,y] = fresh_key
 
+    header = False
     #step two: clean the dictionary if it has too many unused keys
     if len(unused_keys) > min(300, (len(old_dict) * 0.5)):
         print("NOTICE: Trimming the dictionary.")
@@ -106,21 +108,24 @@ def merge_map(newfile, backupfile, tgm):
         old_dict = trimmed_dict_map["dictionary"]
         merged_grid = trimmed_dict_map["grid"]
         print("NOTICE: Trimmed out {} unused dictionary keys.".format(len(unused_keys)))
+        header = "//Model dictionary trimmed on: {}".format(datetime.utcnow().strftime("%d-%m-%Y %H:%M (UTC)"))
 
     #step three: write the map to file
     if tgm:
-        write_dictionary_tgm(newfile, old_dict)
+        write_dictionary_tgm(newfile, old_dict, header)
         write_grid_coord_small(newfile, merged_grid, maxx, maxy)
     else:
-        write_dictionary(newfile, old_dict)
+        write_dictionary(newfile, old_dict, header)
         write_grid(newfile, merged_grid, maxx, maxy)
     return 0
 
 #######################
 #write to file helpers#
-def write_dictionary_tgm(filename, dictionary): #write dictionary in tgm format
+def write_dictionary_tgm(filename, dictionary, header): #write dictionary in tgm format
     with open(filename, "w") as output:
         output.write("{}\n".format(tgm_header))
+        if header:
+            output.write("{}\n".format(header))
         for key, list_ in dictionary.items():
             output.write("\"{}\" = (\n".format(key))
 
@@ -174,9 +179,11 @@ def write_grid_coord_small(filename, grid, maxx, maxy): #thanks to YotaXP for fi
             output.write("{}\n\"}}\n".format(grid[x,maxy]))
 
 
-def write_dictionary(filename, dictionary): #writes a tile dictionary the same way Dreammaker does
+def write_dictionary(filename, dictionary, header): #writes a tile dictionary the same way Dreammaker does
     with open(filename, "w") as output:
         for key, value in dictionary.items():
+            if header:
+                output.write("{}\n".format(header))
             output.write("\"{}\" = ({})\n".format(key, ",".join(value)))
 
 
