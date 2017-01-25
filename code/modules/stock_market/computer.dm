@@ -18,6 +18,9 @@
 		return 0
 	return SSshuttle.points
 
+/obj/machinery/computer/stockexchange/attack_ai(mob/user)
+	return attack_hand(user)
+
 /obj/machinery/computer/stockexchange/attack_hand(var/mob/user)
 	if(..())
 		return
