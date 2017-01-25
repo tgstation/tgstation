@@ -300,7 +300,6 @@
 	    /obj/item/device/analyzer/plant_analyzer
 	    )
 
-
 /obj/item/weapon/storage/belt/military/assault
 	name = "assault belt"
 	desc = "A tactical assault belt."
