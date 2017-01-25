@@ -215,3 +215,12 @@
 	new /obj/item/weapon/reagent_containers/pill/patch/silver_sulf(src)
 	for(var/i in 1 to 3)
 		new /obj/item/weapon/reagent_containers/pill/patch/styptic(src)
+
+/obj/item/weapon/storage/pill_bottle/mining_pills
+	name = "bottle of pills"
+	desc = "Contains pills used to treat brute and burn damage, be careful not to overdose!"
+
+/obj/item/weapon/storage/pill_bottle/mining_pills/New()
+	..()
+	for(var/i in 1 to 7)
+		new /obj/item/weapon/reagent_containers/pill/mining
