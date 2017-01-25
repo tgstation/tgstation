@@ -15,6 +15,7 @@
 	buckle_lying = 0
 	buckle_prevents_pull = TRUE
 	var/resisting = FALSE
+	var/can_resist = FALSE
 	var/mob_layer = MOB_LAYER
 
 /obj/structure/destructible/clockwork/geis_binding/examine(mob/user)
@@ -30,6 +31,7 @@
 	qdel(src)
 
 /obj/structure/destructible/clockwork/geis_binding/post_buckle_mob(mob/living/M)
+	..()
 	if(M.buckled == src)
 		desc = "A flickering, glowing purple ring around [M]."
 		clockwork_desc = "A binding ring around [M], preventing [M.p_them()] from taking action while [M.p_theyre()] being converted."
@@ -44,8 +46,19 @@
 			var/obj/item/geis_binding/B = new(M)
 			M.put_in_hands(B, i)
 		M.regenerate_icons()
+		var/servants = 0
+		for(var/mob/living/M in all_clockwork_mobs)
+			if(ishuman(M) || issilicon(M))
+				servants++
+		if(servants > SCRIPT_SERVANT_REQ)
+			can_resist = TRUE
+		if(!can_resist)
+			M.Stun(3, 1, 1)
+			if(iscarbon(M))
+				var/mob/living/carbon/C = M
+				C.silent += 3
 		M.visible_message("<span class='warning'>A [name] appears around [M]!</span>", \
-		"<span class='warning'>A [name] appears around you!</span>\n<span class='userdanger'>Resist!</span>")
+		"<span class='warning'>A [name] appears around you!</span>[can_resist ? "\n<span class='userdanger'>Resist!</span>":'"]")
 	else
 		var/obj/effect/overlay/temp/ratvar/geis_binding/G = new /obj/effect/overlay/temp/ratvar/geis_binding(M.loc)
 		var/obj/effect/overlay/temp/ratvar/geis_binding/T = new /obj/effect/overlay/temp/ratvar/geis_binding/top(M.loc)
@@ -60,7 +73,7 @@
 			M.unEquip(GB, TRUE)
 
 /obj/structure/destructible/clockwork/geis_binding/relaymove(mob/user, direction)
-	if(isliving(user))
+	if(isliving(user) && can_resist)
 		var/mob/living/L = user
 		L.resist()
 
@@ -98,7 +111,7 @@
 
 /obj/structure/destructible/clockwork/geis_binding/user_unbuckle_mob(mob/living/buckled_mob, mob/user)
 	if(buckled_mob == user)
-		if(!resisting)
+		if(!resisting && can_resist)
 			resisting = TRUE
 			user.visible_message("<span class='warning'>[user] starts struggling against [src]...</span>", "<span class='userdanger'>You start breaking out of [src]...</span>")
 			while(do_after(user, 10, target = src) && resisting && obj_integrity)

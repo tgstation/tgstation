@@ -131,8 +131,8 @@
 
 /datum/clockwork_scripture/ranged_ability/geis_prep/run_scripture()
 	var/servants = 0
-	for(var/mob/living/M in living_mob_list)
-		if(is_servant_of_ratvar(M) && (ishuman(M) || issilicon(M)))
+	for(var/mob/living/M in all_clockwork_mobs)
+		if(ishuman(M) || issilicon(M))
 			servants++
 	if(servants > SCRIPT_SERVANT_REQ)
 		whispered = FALSE
@@ -161,8 +161,8 @@
 
 /datum/clockwork_scripture/geis/run_scripture()
 	var/servants = 0
-	for(var/mob/living/M in living_mob_list)
-		if(is_servant_of_ratvar(M) && (ishuman(M) || issilicon(M)))
+	for(var/mob/living/M in all_clockwork_mobs)
+		if(ishuman(M) || issilicon(M))
 			servants++
 	if(servants > SCRIPT_SERVANT_REQ)
 		servants -= SCRIPT_SERVANT_REQ
