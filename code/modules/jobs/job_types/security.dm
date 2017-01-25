@@ -181,14 +181,23 @@ Security Officer
 	L |= ..() | check_config_for_sec_maint()
 	return L
 
-var/list/sec_departments = list("engineering", "supply", "medical", "science")
+var/list/available_depts = list("Engineering", "Supply", "Medical", "Science")
 
 /datum/job/officer/after_spawn(mob/living/carbon/human/H)
-	// Assign departament security
-	if(!sec_departments.len)
-		return
-	var/department = pick(sec_departments)
-	sec_departments -= department
+	// Assign department security
+	var/department
+	if(H && H.client && H.client.prefs)
+		department = H.client.prefs.prefered_security_department
+		if(LAZYLEN(available_depts))
+			if(department == "Random")
+				department = pick_n_take(available_depts)
+			else if(department != "None")
+				if(department in available_depts)
+					LAZYREMOVE(available_depts, department)
+				else
+					department = pick_n_take(available_depts)
+		else
+			department = "None"
 	var/ears = null
 	var/tie = null
 	var/list/dep_access = null
@@ -196,25 +205,25 @@ var/list/sec_departments = list("engineering", "supply", "medical", "science")
 	var/spawn_point = null
 
 	switch(department)
-		if("supply")
+		if("Supply")
 			ears = /obj/item/device/radio/headset/headset_sec/alt/department/supply
 			dep_access = list(access_mailsorting, access_mining, access_mining_station)
 			destination = /area/security/checkpoint/supply
 			spawn_point = locate(/obj/effect/landmark/start/depsec/supply) in department_security_spawns
 			tie = /obj/item/clothing/tie/armband/cargo
-		if("engineering")
+		if("Engineering")
 			ears = /obj/item/device/radio/headset/headset_sec/alt/department/engi
 			dep_access = list(access_construction, access_engine)
 			destination = /area/security/checkpoint/engineering
 			spawn_point = locate(/obj/effect/landmark/start/depsec/engineering) in department_security_spawns
 			tie = /obj/item/clothing/tie/armband/engine
-		if("medical")
+		if("Medical")
 			ears = /obj/item/device/radio/headset/headset_sec/alt/department/med
 			dep_access = list(access_medical)
 			destination = /area/security/checkpoint/medical
 			spawn_point = locate(/obj/effect/landmark/start/depsec/medical) in department_security_spawns
 			tie =  /obj/item/clothing/tie/armband/medblue
-		if("science")
+		if("Science")
 			ears = /obj/item/device/radio/headset/headset_sec/alt/department/sci
 			dep_access = list(access_research)
 			destination = /area/security/checkpoint/science
