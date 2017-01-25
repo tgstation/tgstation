@@ -24,7 +24,7 @@
 		new /datum/data/mining_equipment("GAR scanners",		/obj/item/clothing/glasses/meson/gar,									500),
 		new /datum/data/mining_equipment("Explorer's Webbing",	/obj/item/weapon/storage/belt/mining,									500),
 		new /datum/data/mining_equipment("Survival Medipen",	/obj/item/weapon/reagent_containers/hypospray/medipen/survival,			500),
-		new /datum/data/nining_equipment("Brute and burn pill bottle", /obj/item/weapon/storage/pill_bottle/mining_pills				1000),
+		new /datum/data/nining_equipment("Brute and burn pill bottle", /obj/item/weapon/storage/pill_bottle/mining_pills,				1000),
 		new /datum/data/mining_equipment("Brute First-Aid Kit",	/obj/item/weapon/storage/firstaid/brute,								600),
 		new /datum/data/mining_equipment("Tracking Implant Kit",/obj/item/weapon/storage/box/minertracker,								600),
 		new /datum/data/mining_equipment("Jaunter",				/obj/item/device/wormhole_jaunter,										750),
