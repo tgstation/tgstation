@@ -188,16 +188,12 @@ var/list/available_depts = list("Engineering", "Supply", "Medical", "Science")
 	var/department
 	if(H && H.client && H.client.prefs)
 		department = H.client.prefs.prefered_security_department
-		if(LAZYLEN(available_depts))
-			if(department == "Random")
-				department = pick_n_take(available_depts)
-			else if(department != "None")
-				if(department in available_depts)
-					LAZYREMOVE(available_depts, department)
-				else
-					department = pick_n_take(available_depts)
+		if(!LAZYLEN(available_depts) || department == "None")
+			return
+		else if(department in available_depts)
+			LAZYREMOVE(available_depts, department)
 		else
-			department = "None"
+			department = pick_n_take(available_depts)
 	var/ears = null
 	var/tie = null
 	var/list/dep_access = null
