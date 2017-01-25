@@ -564,12 +564,12 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	item = /obj/mecha/combat/marauder/mauler/loaded
 	cost = 140
 
-// Stealthy Weapons
-/datum/uplink_item/stealthy_weapons
-	category = "Stealthy and Inconspicuous Weapons"
+// Martial Arts
+/datum/uplink_item/martial_arts
+	category = "Martial Arts"
 
-/datum/uplink_item/stealthy_weapons/martialarts
-	name = "Martial Arts Scroll"
+/datum/uplink_item/martial_arts/sleeping_carp
+	name = "Sleeping Carp Scroll"
 	desc = "This scroll contains the secrets of an ancient martial arts technique. You will master unarmed combat, \
 			deflecting all ranged weapon fire, but you also refuse to use dishonorable ranged weaponry."
 	item = /obj/item/weapon/sleeping_carp_scroll
@@ -577,13 +577,43 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	surplus = 0
 	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/gang)
 
-/datum/uplink_item/stealthy_weapons/cqc
+/datum/uplink_item/martial_arts/cqc
 	name = "CQC Manual"
 	desc = "A manual that teaches a single user tactical Close-Quarters Combat before self-destructing."
 	item = /obj/item/weapon/cqc_manual
-	include_modes = list(/datum/game_mode/nuclear)
 	cost = 13
 	surplus = 0
+	exclude_modes = list(/datum/game_mode/gang)
+
+/datum/uplink_item/martial_arts/plasma_fist
+	name = "Plasma Fist Scroll"
+	desc = "An ancient scroll containing the secrets to a highly lethal martial arts simply known as 'Plasma Fist'. \
+			The punches are rumoured to be highly explosive."
+	item = /obj/item/weapon/plasma_fist_scroll
+	cost = 18
+	surplus = 0
+	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/gang)
+
+/datum/uplink_item/martial_arts/wrestling
+	name = "Wrestling Belt"
+	desc = "It is said that those who wears this belt, instantly gains an understanding of an old Earth fighting technique \
+			known simply as 'wrestling'."
+	item = /obj/item/weapon/storage/belt/champion/wrestling
+	cost = 16
+	surplus = 0
+	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/gang)
+
+/datum/uplink_item/martial_arts/bostaff
+	name = "Bo Staff"
+	desc = "This is a long wooden staff which has traditionally been used in old Earth martial arts. It is a highly effective \
+			and often dangerous weapon."
+	item = /obj/item/weapon/twohanded/bostaff
+	cost = 13
+	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/gang)
+
+// Stealthy Weapons
+/datum/uplink_item/stealthy_weapons
+	category = "Stealthy and Inconspicuous Weapons"
 
 /datum/uplink_item/stealthy_weapons/throwingweapons
 	name = "Box of Throwing Weapons"
