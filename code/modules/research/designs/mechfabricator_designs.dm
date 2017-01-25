@@ -722,8 +722,10 @@
 /datum/design/mecha_tracking_ai_control
 	name = "AI Control Beacon"
 	id = "mecha_tracking_ai_control"
+	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_tracking/ai_control
 	materials = list(MAT_METAL = 1000, MAT_GLASS = 500, MAT_SILVER = 200)
+	req_tech = list("programming" = 3, "magnets" = 2, "engineering" = 2)
 	construction_time = 50
 	category = list("Misc")
 
