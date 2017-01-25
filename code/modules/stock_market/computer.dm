@@ -248,7 +248,7 @@ a.updated {
 	if (..())
 		return 1
 
-	if (!user || (!(user in range(1, src)) && iscarbon(user)))
+	if (!usr || (!(usr in range(1, src)) && iscarbon(usr)))
 		usr.machine = src
 
 	if (href_list["viewhistory"])
