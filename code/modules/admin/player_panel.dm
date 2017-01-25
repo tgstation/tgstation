@@ -76,7 +76,7 @@
 					body += "</td><td align='center'>";
 
 					body += "<a href='?_src_=holder;adminplayeropts="+ref+"'>PP</a> - "
-					body += "<a href='?_src_=holder;shownoteckey="+ckey+"'>N</a> - "
+					body += "<a href='?_src_=holder;showmessageckey="+ckey+"'>N</a> - "
 					body += "<a href='?_src_=vars;Vars="+ref+"'>VV</a> - "
 					body += "<a href='?_src_=holder;traitor="+ref+"'>TP</a> - "
 					body += "<a href='?priv_msg="+ckey+"'>PM</a> - "
