@@ -1285,7 +1285,7 @@ proc/pick_closest_path(value, list/matches = get_fancy_list_of_atom_types())
 
 #define RANDOM_COLOUR (rgb(rand(0,255),rand(0,255),rand(0,255)))
 
-#define QDEL_IN(item, time) addtimer(CALLBACK(GLOBAL_PROC, /proc/qdel, item), time, TIMER_STOPPABLE)
+#define QDEL_IN(item, time) addtimer(CALLBACK(GLOBAL_PROC, .proc/qdel, item), time, TIMER_STOPPABLE)
 
 /proc/random_nukecode()
 	var/val = rand(0, 99999)
