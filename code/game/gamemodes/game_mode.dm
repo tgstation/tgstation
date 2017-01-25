@@ -149,7 +149,7 @@
 		message_admins("Convert_roundtype failed due to no antag candidates.")
 		return null
 
-	antag_canadates = shuffle(antag_candidates)
+	antag_candidates = shuffle(antag_candidates)
 
 	if(config.protect_roles_from_antagonist)
 		replacementmode.restricted_jobs += replacementmode.protected_jobs
