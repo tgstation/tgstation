@@ -594,15 +594,6 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	surplus = 0
 	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/gang)
 
-/datum/uplink_item/martial_arts/wrestling
-	name = "Wrestling Belt"
-	desc = "It is said that those who wears this belt, instantly gains an understanding of an old Earth fighting technique \
-			known simply as 'wrestling'."
-	item = /obj/item/weapon/storage/belt/champion/wrestling
-	cost = 16
-	surplus = 0
-	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/gang)
-
 /datum/uplink_item/martial_arts/bostaff
 	name = "Bo Staff"
 	desc = "This is a long wooden staff which has traditionally been used in old Earth martial arts. It is a highly effective \
