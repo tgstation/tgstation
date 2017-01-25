@@ -587,8 +587,8 @@
 	can_adjust = 0
 
 /obj/item/clothing/under/plasmaman
-	name = "Plasma-man Jumpsuit"
-	desc = "A specially designed suit that allows Plasma based life forms to exist in an oxygenated environment."
+	name = "plasma envirosuit"
+	desc = "A special containment suit that allows plasma-based lifeforms to exist safely in an oxygenated environment, and automatically extinguishes them in a crisis. Despite being airtight, it's not spaceworthy."
 	icon_state = "plasmaman"
 	item_state = "plasmaman"
 	item_color = "plasmaman"
@@ -603,7 +603,7 @@
 
 /obj/item/clothing/under/plasmaman/examine(mob/user)
 	..()
-	user << "<span class='notice'>There are [extinguishes_left] extinguisher canisters left in this suit.</span>"
+	user << "<span class='notice'>There are [extinguishes_left] extinguisher charges left in this suit.</span>"
 
 
 /obj/item/clothing/under/plasmaman/proc/Extinguish(mob/living/carbon/human/H)
@@ -628,15 +628,15 @@
 			return
 		else
 			extinguishes_left = 5
-			user << "<span class='notice'>You refill the suits inbuilt extinguisher, using up the refill pack.</span>"
+			user << "<span class='notice'>You refill the suit's built-in extinguisher, using up the cartridge.</span>"
 			qdel(E)
 			return
 		return
 	return
 
 /obj/item/device/extinguisher_refill
-	name = "Plasma-man jumpsuit refill pack"
-	desc = "A compressed water pack used to refill plasma-man jumpsuit auto-extinguishers."
+	name = "plasma suit extinguisher cartridge"
+	desc = "A cartridge loaded with a compressed extinguisher mix, used to refill the automatic extinguisher on plasma envirosuits."
 	icon_state = "plasmarefill"
 	origin_tech = "materials=2;plasmatech=3;biotech=1"
 
