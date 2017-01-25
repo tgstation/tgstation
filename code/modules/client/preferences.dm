@@ -64,7 +64,7 @@ var/list/preferences_datums = list()
 	var/list/features = list("mcolor" = "FFF", "tail_lizard" = "Smooth", "tail_human" = "None", "snout" = "Round", "horns" = "None", "ears" = "None", "wings" = "None", "frills" = "None", "spines" = "None", "body_markings" = "None", "legs" = "Normal Legs")
 
 	var/list/custom_names = list("clown", "mime", "ai", "cyborg", "religion", "deity")
-	var/prefered_security_department = "Random"
+	var/prefered_security_department = SEC_DEPT_RANDOM
 
 		//Mob preview
 	var/icon/preview_icon = null
@@ -1086,8 +1086,7 @@ var/list/preferences_datums = list()
 					else
 						user << "<font color='red'>Invalid name. Your name should be at least 2 and at most [MAX_NAME_LEN] characters long. It may only contain the characters A-Z, a-z, -, ' and .</font>"
 				if("sec_dept")
-					var/list/depts = list("Random", "None", "Engineering", "Medical", "Science", "Supply")
-					var/department = input(user, "Choose your prefered security department:", "Security Departments") as null|anything in depts
+					var/department = input(user, "Choose your prefered security department:", "Security Departments") as null|anything in security_depts_prefs
 					if(department)
 						prefered_security_department = department
 				if ("preferred_map")
