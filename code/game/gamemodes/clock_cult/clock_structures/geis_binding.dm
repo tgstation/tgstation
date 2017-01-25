@@ -46,12 +46,6 @@
 			var/obj/item/geis_binding/B = new(M)
 			M.put_in_hands(B, i)
 		M.regenerate_icons()
-		var/servants = 0
-		for(var/mob/living/M in all_clockwork_mobs)
-			if(ishuman(M) || issilicon(M))
-				servants++
-		if(servants > SCRIPT_SERVANT_REQ)
-			can_resist = TRUE
 		if(!can_resist && iscarbon(M))
 			var/mob/living/carbon/C = M
 			C.silent += 4
