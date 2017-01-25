@@ -52,11 +52,9 @@
 				servants++
 		if(servants > SCRIPT_SERVANT_REQ)
 			can_resist = TRUE
-		if(!can_resist)
-			M.Stun(3, 1, 1)
-			if(iscarbon(M))
-				var/mob/living/carbon/C = M
-				C.silent += 3
+		if(!can_resist && iscarbon(M))
+			var/mob/living/carbon/C = M
+			C.silent += 4
 		M.visible_message("<span class='warning'>A [name] appears around [M]!</span>", \
 		"<span class='warning'>A [name] appears around you!</span>[can_resist ? "\n<span class='userdanger'>Resist!</span>":'"]")
 	else
