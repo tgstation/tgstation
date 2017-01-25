@@ -184,7 +184,7 @@ a.updated {
 	var/amt = round(input(user, "How many shares? \n(Have: [avail], unit price: [price])", "Sell shares in [S.name]", 0) as num|null)
 	amt = min(amt, S.shareholders[logged_in])
 
-	if (!user || !(user in range(1, src)))
+	if (!user || (!(user in range(1, src)) && iscarbon(user)))
 		return
 	if (!amt)
 		return
@@ -217,7 +217,7 @@ a.updated {
 	var/price = S.current_value
 	var/canbuy = round(b / price)
 	var/amt = round(input(user, "How many shares? \n(Available: [avail], unit price: [price], can buy: [canbuy])", "Buy shares in [S.name]", 0) as num|null)
-	if (!user || !(user in range(1, src)))
+	if (!user || (!(user in range(1, src)) && iscarbon(user)))
 		return
 	if (li != logged_in)
 		return
@@ -248,7 +248,7 @@ a.updated {
 	if (..())
 		return 1
 
-	if (usr in range(1, src))
+	if (!user || (!(user in range(1, src)) && iscarbon(user)))
 		usr.machine = src
 
 	if (href_list["viewhistory"])
