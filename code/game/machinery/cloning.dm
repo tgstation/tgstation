@@ -54,8 +54,7 @@
 	qdel(countdown)
 	countdown = null
 	if(connected)
-		LAZYREMOVE(connected.pods, src)
-		connected = null
+		connected.DetachCloner(src)
 	. = ..()
 
 /obj/machinery/clonepod/RefreshParts()
