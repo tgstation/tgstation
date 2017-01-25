@@ -590,8 +590,9 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	desc = "An ancient scroll containing the secrets to a highly lethal martial arts simply known as 'Plasma Fist'. \
 			The punches are rumoured to be highly explosive."
 	item = /obj/item/weapon/plasma_fist_scroll
-	cost = 18
+	cost = 20
 	surplus = 0
+	cant_discount = TRUE
 	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/gang)
 
 /datum/uplink_item/martial_arts/bostaff
