@@ -719,6 +719,14 @@
 	construction_time = 50
 	category = list("Misc")
 
+/datum/design/mecha_tracking_ai_control
+	name = "AI Control Beacon"
+	id = "mecha_tracking_ai_control"
+	build_path = /obj/item/mecha_parts/mecha_tracking/ai_control
+	materials = list(MAT_METAL = 1000, MAT_GLASS = 500, MAT_SILVER = 200)
+	construction_time = 50
+	category = list("Misc")
+
 /datum/design/drone_shell
 	name = "Drone Shell"
 	desc = "A shell of a maintenance drone, an expendable robot built to perform station repairs."
@@ -762,7 +770,7 @@
 	construction_time = 250
 	category = list("Misc")
 	req_tech = list("magnets" = 4, "combat" = 3, "plasmatech" = 4, "materials" = 5, "engineering" = 4, "powerstorage" = 4)
-	
+
 /datum/design/flightshoes
 	name = "Flight Shoes"
 	desc = "Flight shoes, attachable to a flight suit to provide additional functions."

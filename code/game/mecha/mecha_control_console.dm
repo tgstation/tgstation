@@ -115,6 +115,12 @@
 	return M.get_log_html()
 
 
+/obj/item/mecha_parts/mecha_tracking/ai_control
+	name = "exosuit AI control beacon"
+	desc = "A device used to transmit exosuit data. Also allows active AI units to take control of said exosuit."
+	origin_tech = "programming=3;magnets=2;engineering=2"
+
+
 /obj/item/weapon/storage/box/mechabeacons
 	name = "exosuit tracking beacons"
 

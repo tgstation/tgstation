@@ -82,6 +82,8 @@ var/list/ai_list = list()
 
 	var/obj/machinery/camera/portable/builtInCamera
 
+	var/obj/structure/AIcore/deactivated/linked_core //For exosuit control
+
 /mob/living/silicon/ai/New(loc, datum/ai_laws/L, mob/target_ai)
 	..()
 	if(!target_ai) //If there is no player/brain inside.
