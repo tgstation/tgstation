@@ -297,7 +297,10 @@
 	    /obj/item/seeds,
 	    /obj/item/weapon/hatchet,
 	    /obj/item/weapon/wrench,
-	    /obj/item/device/analyzer/plant_analyzer
+	    /obj/item/device/aplant_analyzer,
+	    /obj/item/weapon/lighter,
+	    /obj/item/weapon/rollingpaper,
+	    /obj/item/weapon/reagent_containers/food/snacks/grown
 	    )
 
 /obj/item/weapon/storage/belt/military/assault
