@@ -301,7 +301,7 @@
 	    /obj/item/weapon/lighter,
 	    /obj/item/weapon/rollingpaper,
 	    /obj/item/weapon/reagent_containers/food/snacks/grown,
-	    /obj/item/weapon/disk/plantgene/disk
+	    /obj/item/weapon/disk/plantgene
 	    )
 
 /obj/item/weapon/storage/belt/military/assault
