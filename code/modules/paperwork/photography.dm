@@ -120,6 +120,7 @@
 	var/picture_size = 2
 	var/picture_maxsize = 4
 	var/picture_size_px = 96
+	var/fluffyfluff = "narrow"
 
 /obj/item/device/camera/proc/get_base_icon()
 	var/icon/base
@@ -127,25 +128,40 @@
 		if(1)
 			base = icon('icons/effects/effects.dmi', "nothing")
 			picture_size_px = 32
+			fluffyfluff = "pinpoint"
 		if(2)
 			base = icon('icons/effects/96x96.dmi', "nothing")
 			picture_size_px = 96
+			fluffyfluff = "narrow"
 		if(3)
 			base = icon('icons/effects/160x160.dmi', "nothing")
 			picture_size_px = 160
+			fluffyfluff = "standard"
 		if(4)
 			base = icon('icons/effects/224x224.dmi', "nothing")
 			picture_size_px = 224
+			fluffyfluff = "wide"
 		if(5)
 			base = icon('icons/effects/288x288.dmi', "nothing")
 			picture_size_px = 288
+			fluffyfluff = "extra-wide"
 		if(6)
 			base = icon('icons/effects/352x352.dmi', "nothing")
 			picture_size_px = 352
+			fluffyfluff = "huge"
 		if(7)
 			base = icon('icons/effects/416x416.dmi', "nothing")
 			picture_size_px = 416
+			fluffyfluff = "a gaping hole"
 	return base
+
+/obj/item/device/camera/attack_self(mob/user)
+	if((picture_size =< picture_maxsize) && (picture_size > 0))
+		picture_size++
+	else
+		picture_size = 1
+	user << "<span class='notice'>You switch the camera to [fluffyfluff].</span>"
+	. = ..()
 
 /obj/item/device/camera/CheckParts(list/parts_list)
 	..()
