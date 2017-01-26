@@ -140,7 +140,7 @@
 	category = list("initial","Leather and Cloth")
 
 /datum/design/botanybelt
-    name = "Botany Belt"
+    name = "Botanist Belt"
     id = "botanybelt"
     build_type = BIOGENERATOR
     materials = list(MAT_BIOMASS = 300)
