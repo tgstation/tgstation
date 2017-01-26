@@ -1,4 +1,4 @@
-//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
 /turf/open/space,
 /area/space)
@@ -439,7 +439,8 @@
 /obj/machinery/door/poddoor/shutters{
 	id = "AcademyAuto"
 	},
-/turf/open/floor/plasteel/warning{
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
 /area/awaymission/academy/classrooms)
@@ -447,7 +448,8 @@
 /obj/machinery/door/poddoor/shutters{
 	id = "AcademyAuto"
 	},
-/turf/open/floor/plating/warnplate{
+/turf/open/floor/plating,
+/obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
 /area/awaymission/academy/classrooms)
@@ -461,7 +463,8 @@
 /obj/machinery/door/poddoor/shutters{
 	id = "AcademyAuto"
 	},
-/turf/open/floor/plating/warnplate{
+/turf/open/floor/plating,
+/obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
 /area/awaymission/academy/classrooms)
@@ -479,7 +482,8 @@
 /turf/open/floor/plasteel,
 /area/awaymission/academy/classrooms)
 "bA" = (
-/turf/open/floor/plating/warnplate{
+/turf/open/floor/plating,
+/obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
 /area/awaymission/academy/classrooms)
@@ -487,7 +491,8 @@
 /turf/open/floor/plating,
 /area/awaymission/academy/classrooms)
 "bC" = (
-/turf/open/floor/plating/warnplate{
+/turf/open/floor/plating,
+/obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
 /area/awaymission/academy/classrooms)
@@ -860,7 +865,8 @@
 /turf/open/floor/plating,
 /area/awaymission/academy/classrooms)
 "cK" = (
-/turf/open/floor/plasteel/warning{
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
 /area/awaymission/academy/classrooms)
@@ -880,12 +886,14 @@
 /turf/open/floor/plasteel,
 /area/awaymission/academy/classrooms)
 "cN" = (
-/turf/open/floor/plating/warnplate{
+/turf/open/floor/plating,
+/obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
 /area/awaymission/academy/classrooms)
 "cO" = (
-/turf/open/floor/plating/warnplate{
+/turf/open/floor/plating,
+/obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
 /area/awaymission/academy/classrooms)
@@ -1442,7 +1450,8 @@
 /turf/open/floor/plasteel/white,
 /area/awaymission/academy/classrooms)
 "ez" = (
-/turf/open/floor/plating/warnplate{
+/turf/open/floor/plating,
+/obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
 /area/awaymission/academy)
@@ -1503,7 +1512,8 @@
 	},
 /area/awaymission/academy/classrooms)
 "eJ" = (
-/turf/open/floor/plating/warnplate{
+/turf/open/floor/plating,
+/obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
 /area/awaymission/academy)
@@ -1615,7 +1625,8 @@
 	},
 /area/awaymission/academy/classrooms)
 "fb" = (
-/turf/open/floor/plating/warnplate{
+/turf/open/floor/plating,
+/obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
 /area/awaymission/academy)
@@ -1783,7 +1794,7 @@
 	},
 /area/awaymission/academy/classrooms)
 "fu" = (
-/turf/open/floor/plasteel/caution/corner{
+/obj/effect/turf_decal/stripes/corner{
 	dir = 4
 	},
 /area/awaymission/academy/classrooms)
@@ -1908,7 +1919,8 @@
 	icon_state = "4-8";
 	pixel_y = 0
 	},
-/turf/open/floor/plasteel/warning{
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
 /area/awaymission/academy/classrooms)
@@ -1966,7 +1978,8 @@
 /area/awaymission/academy/classrooms)
 "fR" = (
 /mob/living/simple_animal/hostile/wizard,
-/turf/open/floor/plasteel/warning{
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
 /area/awaymission/academy/classrooms)
@@ -1978,7 +1991,8 @@
 /area/awaymission/academy/classrooms)
 "fT" = (
 /obj/structure/table/reinforced,
-/turf/open/floor/plasteel/warning{
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
 /area/awaymission/academy/classrooms)
@@ -2018,7 +2032,8 @@
 /turf/open/floor/plating,
 /area/awaymission/academy/classrooms)
 "ga" = (
-/turf/open/floor/plasteel/warning{
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
 /area/awaymission/academy/classrooms)
@@ -2112,7 +2127,8 @@
 /obj/machinery/door/window{
 	dir = 4
 	},
-/turf/open/floor/plasteel/warning{
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
 /area/awaymission/academy/classrooms)
@@ -2211,7 +2227,8 @@
 	dir = 4
 	},
 /obj/item/ammo_casing,
-/turf/open/floor/plasteel/warning{
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
 /area/awaymission/academy/classrooms)
@@ -2311,7 +2328,8 @@
 	},
 /area/awaymission/academy/classrooms)
 "gP" = (
-/turf/open/floor/plasteel/warning{
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
 /area/awaymission/academy/classrooms)
@@ -2407,7 +2425,8 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/turf/open/floor/plasteel/warning{
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
 /area/awaymission/academy/classrooms)
@@ -3785,7 +3804,8 @@
 /obj/machinery/door/poddoor/shutters{
 	id = "AcademyGate"
 	},
-/turf/open/floor/plating/warnplate{
+/turf/open/floor/plating,
+/obj/effect/turf_decal/stripes/line{
 	dir = 2
 	},
 /area/awaymission/academy/academygate)
