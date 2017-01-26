@@ -34,7 +34,7 @@ var/global/datum/getrev/revdata = new()
 		var/list/http = world.Export("https://api.github.com/repositories/[config.githubrepoid]/pulls/[line]")
 		if(!http)
 			return	//give up, don't slow me down
-		
+
 		testmerge[line] = json_decode(file2text(http["CONTENT"]))
 		if(!testmerge[line])
 			return
@@ -48,7 +48,7 @@ var/global/datum/getrev/revdata = new()
 		var/details = ""
 		if(has_pr_details)
 			details = ": " + testmerge[line]["name"] + " by " + testmerge[line]["user"]["login"]
-		. += <a href='[config.githuburl]/pull/[line]'>#[line][details]</a><br/>"
+		. += "<a href='[config.githuburl]/pull/[line]'>#[line][details]</a><br/>"
 	. += "Based off master commit <a href='[config.githuburl]/commit/[parentcommit]'>[parentcommit]</a><br/>"
 
 /client/verb/showrevinfo()
@@ -59,7 +59,7 @@ var/global/datum/getrev/revdata = new()
 	if(revdata.parentcommit)
 		src << "<b>Server revision compiled on:</b> [revdata.date]"
 		if(revdata.testmerge.len)
-			src << GetTestMergeInfo()
+			src << revdata.GetTestMergeInfo()
 		else
 			src << "<a href='[config.githuburl]/commit/[revdata.parentcommit]'>[revdata.parentcommit]</a>"
 	else
@@ -92,7 +92,7 @@ var/global/datum/getrev/revdata = new()
 				if(config.probabilities[i] > 0 && (i in probs))
 					var/percentage = round(config.probabilities[i] / prob_sum * 100, 0.1)
 					src << "[i] [percentage]%"
-		
+
 		src <<"<b>All Game Mode Odds:</b>"
 		var/sum = 0
 		for(var/i in 1 to config.probabilities.len)

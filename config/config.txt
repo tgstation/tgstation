@@ -167,7 +167,7 @@ CHECK_RANDOMIZER
 ##Github repo id
 ##This can be found by going to https://api.github.com/users/<user name here>/repos
 ##Or https://api.github.com/orgs/<user name here>/repos if the repo owner is an organization 
-# GITHUB_REPOID 3234987
+# GITHUBREPOID 3234987
 
 ## Ban appeals URL - usually for a forum or wherever people should go to contact your admins.
 # BANAPPEALS http://justanotherday.example.com
