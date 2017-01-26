@@ -4,6 +4,7 @@ var/global/datum/getrev/revdata = new()
 	var/parentcommit
 	var/commit
 	var/list/testmerge = list()
+	var/has_pr_details = FALSE
 	var/date
 
 /datum/getrev/New()
@@ -27,6 +28,17 @@ var/global/datum/getrev/revdata = new()
 	else
 		world.log << parentcommit
 	world.log << "Current map - [MAP_NAME]" //can't think of anywhere better to put it
+
+/datum/getrev/proc/DownloadPRDetails()
+	for(var/line in testmerge)
+		var/list/http = world.Export("https://api.github.com/repositories/[config.githubrepoid]/pulls/[line]")
+		if(!http)
+			return	//give up, don't slow me down
+		
+		testmerge[line] = json_decode(file2text(http["CONTENT"]))
+		if(!testmerge[line])
+			return
+	has_pr_details = TRUE
 
 /client/verb/showrevinfo()
 	set category = "OOC"

@@ -36,6 +36,7 @@ var/list/map_transition_config = MAP_TRANSITION_CONFIG
 
 	make_datum_references_lists()	//initialises global lists for referencing frequently used datums (so that we only ever do it once)
 	load_configuration()
+	revdata.DownloadPRDetails()
 	load_mode()
 	load_motd()
 	load_admins()
