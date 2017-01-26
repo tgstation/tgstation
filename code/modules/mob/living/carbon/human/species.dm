@@ -180,22 +180,22 @@
 	if(H.facial_hair_style && (FACEHAIR in species_traits) && !facialhair_hidden)
 		S = facial_hair_styles_list[H.facial_hair_style]
 		if(S)
-			var/image/img_facial_s = image("icon" = S.icon, "icon_state" = "[S.icon_state]_s", "layer" = -HAIR_LAYER)
+			var/image/img_facial = image("icon" = S.icon, "icon_state" = "[S.icon_state]", "layer" = -HAIR_LAYER)
 
 			if(!forced_colour)
 				if(hair_color)
 					if(hair_color == "mutcolor")
-						img_facial_s.color = "#" + H.dna.features["mcolor"]
+						img_facial.color = "#" + H.dna.features["mcolor"]
 					else
-						img_facial_s.color = "#" + hair_color
+						img_facial.color = "#" + hair_color
 				else
-					img_facial_s.color = "#" + H.facial_hair_color
+					img_facial.color = "#" + H.facial_hair_color
 			else
-				img_facial_s.color = forced_colour
+				img_facial.color = forced_colour
 
-			img_facial_s.alpha = hair_alpha
+			img_facial.alpha = hair_alpha
 
-			standing += img_facial_s
+			standing += img_facial
 
 	//we check if our hat or helmet hides our hair.
 	if(H.head)
@@ -209,28 +209,26 @@
 	if(!hair_hidden)
 		if(!H.getorgan(/obj/item/organ/brain)) //Applies the debrained overlay if there is no brain
 			if(!(NOBLOOD in species_traits))
-				standing += image("icon"='icons/mob/human_face.dmi', "icon_state" = "debrained_s", "layer" = -HAIR_LAYER)
+				standing += image("icon"='icons/mob/human_face.dmi', "icon_state" = "debrained", "layer" = -HAIR_LAYER)
 
 		else if(H.hair_style && (HAIR in species_traits))
 			S = hair_styles_list[H.hair_style]
 			if(S)
-				var/image/img_hair_s = image("icon" = S.icon, "icon_state" = "[S.icon_state]_s", "layer" = -HAIR_LAYER)
-
-				img_hair_s = image("icon" = S.icon, "icon_state" = "[S.icon_state]_s", "layer" = -HAIR_LAYER)
+				var/image/img_hair = image("icon" = S.icon, "icon_state" = "[S.icon_state]", "layer" = -HAIR_LAYER)
 
 				if(!forced_colour)
 					if(hair_color)
 						if(hair_color == "mutcolor")
-							img_hair_s.color = "#" + H.dna.features["mcolor"]
+							img_hair.color = "#" + H.dna.features["mcolor"]
 						else
-							img_hair_s.color = "#" + hair_color
+							img_hair.color = "#" + hair_color
 					else
-						img_hair_s.color = "#" + H.hair_color
+						img_hair.color = "#" + H.hair_color
 				else
-					img_hair_s.color = forced_colour
-				img_hair_s.alpha = hair_alpha
+					img_hair.color = forced_colour
+				img_hair.alpha = hair_alpha
 
-				standing += img_hair_s
+				standing += img_hair
 
 	if(standing.len)
 		H.overlays_standing[HAIR_LAYER]	= standing
@@ -247,15 +245,15 @@
 	if(!(H.disabilities & HUSK))
 		// lipstick
 		if(H.lip_style && (LIPS in species_traits) && HD)
-			var/image/lips = image("icon"='icons/mob/human_face.dmi', "icon_state"="lips_[H.lip_style]_s", "layer" = -BODY_LAYER)
+			var/image/lips = image("icon"='icons/mob/human_face.dmi', "icon_state"="lips_[H.lip_style]", "layer" = -BODY_LAYER)
 			lips.color = H.lip_color
 			standing	+= lips
 
 		// eyes
 		if((EYECOLOR in species_traits) && HD)
-			var/image/img_eyes_s = image("icon" = 'icons/mob/human_face.dmi', "icon_state" = "[eyes]_s", "layer" = -BODY_LAYER)
-			img_eyes_s.color = "#" + H.eye_color
-			standing	+= img_eyes_s
+			var/image/img_eyes = image("icon" = 'icons/mob/human_face.dmi', "icon_state" = "[eyes]", "layer" = -BODY_LAYER)
+			img_eyes.color = "#" + H.eye_color
+			standing	+= img_eyes
 
 	//Underwear, Undershirts & Socks
 	if(H.underwear)
