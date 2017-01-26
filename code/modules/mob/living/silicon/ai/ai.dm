@@ -423,7 +423,46 @@ var/list/ai_list = list()
 			return
 		if(M)
 			M.transfer_ai(AI_MECH_HACK,src, usr) //Called om the mech itself.
+	if(href_list["opennear"])
+		var/mob/M = href_list["opennear"]
+		if(!istype(M))
+			return
+		if(M in trackable_mobs())
+			open_nearest_door(M)
+		else
+			src << "<span class='warning'>Target not on cameras!</span>"
 
+/mob/living/silicon/ai/proc/open_nearest_door(mob/M)
+	var/obj/machinery/door/airlock/D = null
+	var/found = FALSE
+	var/search_range = 0
+	for(search_range = 0, search_range < 5, search_range++)
+		for(var/obj/machinery/door/airlock/A in range(search_range,M))
+			D = A
+			found = TRUE
+			break
+		if(found)
+			break
+	if(!istype(D))
+		src << "<span class='warning'>No door found!</span>"
+		return
+	if(!D.canAIControl(src))
+		src << "<span class='warning'>Airlock control blocked by remote interface. Manual hacking required!</span>"
+		return
+	if(D.emagged)
+		src << "<span class='warning'>Unable to interface: Airlock is unresponsive.</span>"
+		return
+	if(D.detonated)
+		src << "<span class='warning'>Unable to interface. Airlock control panel damaged.</span>"
+		return
+	if(D.locked)
+		src << "<span class='warning'>Warning: Airlock bolted. Manual control necessary.</span>"
+		return
+	if(D.welded)
+		src << "<span class='warning'>Unable to open airlock: Door is physically constrained!</span>"
+		return
+	D.open()
+	src << "<span class='boldnotice'>Opening [D.name] for [M.name]!</span>"
 
 /mob/living/silicon/ai/proc/switchCamera(obj/machinery/camera/C)
 
