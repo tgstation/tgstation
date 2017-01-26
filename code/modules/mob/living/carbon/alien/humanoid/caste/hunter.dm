@@ -3,7 +3,7 @@
 	caste = "h"
 	maxHealth = 125
 	health = 125
-	icon_state = "alienh_s"
+	icon_state = "alienh"
 	var/obj/screen/leap_icon = null
 
 /mob/living/carbon/alien/humanoid/hunter/create_internal_organs()
