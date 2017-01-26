@@ -46,11 +46,13 @@
 			var/obj/item/geis_binding/B = new(M)
 			M.put_in_hands(B, i)
 		M.regenerate_icons()
-		if(!can_resist && iscarbon(M))
-			var/mob/living/carbon/C = M
-			C.silent += 4
 		M.visible_message("<span class='warning'>A [name] appears around [M]!</span>", \
 		"<span class='warning'>A [name] appears around you!</span>[can_resist ? "\n<span class='userdanger'>Resist!</span>":""]")
+		if(!can_resist)
+			repair_and_interrupt()
+			if(iscarbon(M))
+				var/mob/living/carbon/C = M
+				C.silent += 4
 	else
 		var/obj/effect/overlay/temp/ratvar/geis_binding/G = new /obj/effect/overlay/temp/ratvar/geis_binding(M.loc)
 		var/obj/effect/overlay/temp/ratvar/geis_binding/T = new /obj/effect/overlay/temp/ratvar/geis_binding/top(M.loc)
