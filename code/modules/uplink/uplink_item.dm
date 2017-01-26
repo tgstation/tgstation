@@ -1038,9 +1038,22 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	item = /obj/item/stack/telecrystal
 	cost = 1
 	surplus = 0
+	cant_discount = TRUE
 	// Don't add telecrystals to the purchase_log since
 	// it's just used to buy more items (including itself!)
 	purchase_log_vis = FALSE
+
+/datum/uplink_item/device_tools/telecrystal/five
+	name = "5 Raw Telecrystals"
+	desc = "Five telecrystals in their rawest and purest form; can be utilized on active uplinks to increase their telecrystal count."
+	item = /obj/item/stack/telecrystal/five
+	cost = 5
+
+/datum/uplink_item/device_tools/telecrystal/twenty
+	name = "20 Raw Telecrystals"
+	desc = "Twenty telecrystals in their rawest and purest form; can be utilized on active uplinks to increase their telecrystal count."
+	item = /obj/item/stack/telecrystal/twenty
+	cost = 20
 
 // Implants
 /datum/uplink_item/implants
