@@ -649,29 +649,15 @@ var/global/mulebot_count = 0
 					M.Weaken(5)
 	return ..()
 
-// called from mob/living/carbon/human/Crossed()
-// when mulebot is in the same loc
-/mob/living/simple_animal/bot/mulebot/proc/RunOver(mob/living/carbon/human/H)
-	add_logs(src, H, "run over", null, "(DAMTYPE: [uppertext(BRUTE)])")
-	H.visible_message("<span class='danger'>[src] drives over [H]!</span>", \
-					"<span class='userdanger'>[src] drives over you!<span>")
-	playsound(loc, 'sound/effects/splat.ogg', 50, 1)
-
-	var/damage = rand(5,15)
-	H.apply_damage(2*damage, BRUTE, "head", run_armor_check("head", "melee"))
-	H.apply_damage(2*damage, BRUTE, "chest", run_armor_check("chest", "melee"))
-	H.apply_damage(0.5*damage, BRUTE, "l_leg", run_armor_check("l_leg", "melee"))
-	H.apply_damage(0.5*damage, BRUTE, "r_leg", run_armor_check("r_leg", "melee"))
-	H.apply_damage(0.5*damage, BRUTE, "l_arm", run_armor_check("l_arm", "melee"))
-	H.apply_damage(0.5*damage, BRUTE, "r_arm", run_armor_check("r_arm", "melee"))
-
-	var/turf/T = get_turf(src)
-	T.add_mob_blood(H)
-
-	var/list/blood_dna = H.get_blood_dna_list()
-	if(blood_dna)
-		transfer_blood_dna(blood_dna)
-	bloodiness += 4
+//drive em over!
+/mob/living/simple_animal/bot/mulebot/trample(size_multiplier, trample_damage = TRAMPLE_DAMAGE, trample_verb = "trampled", trampled_verb = "trampled")
+	trample_damage = rand(2.5, 7.5)
+	trample_verb = "drove over"
+	trampled_verb = "driven over"
+	. = ..()
+	if(.)
+		playsound(loc, 'sound/effects/splat.ogg', 50, 1)
+		bloodiness += 5
 
 // player on mulebot attempted to move
 /mob/living/simple_animal/bot/mulebot/relaymove(mob/user)
