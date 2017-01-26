@@ -41040,7 +41040,7 @@
 	},
 /turf/open/floor/plating{
 	luminosity = 2;
-	initial_gas_mix = "o2=0.01;n2 = 0.01"
+	initial_gas_mix = "o2=0.01;n2=0.01"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
