@@ -25,10 +25,10 @@ Folder contents:
 	/code/game/gamemodes/umbrage
 		/__umbrage_defines.dm: Contains defines and global variables for all umbrage code.
 		/umbrage.dm: This file. Contains the skeleton of the gamemode.
-		/umbrage_abilities.dm: Contains spells, abilities, and other stuff. Does NOT including hatching and ascension.
 		/umbrage_antags.dm: Contains antagonist datums for umbrages and veils.
 		/umbrage_datum.dm: Contains the tracking datum for lots of umbrage stuff.
 		/umbrage_major_abilities.dm: Contains hatching and ascension abilities and their related objects.
+		/umbrage_minor_abilities.dm: Contains spells, abilities, and other stuff. Does NOT including hatching and ascension.
 		/umbrage_objects.dm: Contains the few items and structures used in Umbrage.
 		/umbrage_unsorted.dm: Contains things with nowhere else to be, like the umbrage race.
 
@@ -57,7 +57,7 @@ Idea and initial code by Xhuis (my 3rd gamemode now...)
 	protected_jobs = list("Security Officer", "Warden", "Detective", "Head of Security", "Captain")
 	announce_span = "velvet"
 	announce_text = "Eldritch aberrations are trying to enslave the station!\n\
-	<span class='umbrage'>Umbrages</span>: Dominate the will of the crew and ascend into a progenitor.\n\
+	<span class='velvet'>Umbrages</span>: Dominate the will of the crew and ascend into a progenitor.\n\
 	<span class='notice'>Crew</span>: Protect your minds and nullify the umbrages before they take over."
 	var/list/initial_umbrages = list()
 
@@ -93,6 +93,7 @@ Idea and initial code by Xhuis (my 3rd gamemode now...)
 	if(!U)
 		return
 	U << "<span class='velvet_large'><b>You are an umbrage!</b></span>"
+	U << "<i>Use <b>.a</b> before your message to speak over the Mindlink.</i>"
 	U << "<i>Look for the info button in the top left of your screen if you need help.</i>"
 	return 1
 
@@ -106,7 +107,7 @@ Idea and initial code by Xhuis (my 3rd gamemode now...)
 	return
 
 /datum/game_mode/proc/antag_umbrage(mob/living/U)
-	//todo
+#warn Umbrages need antag datums when LeoZ finishes his rework
 	return
 
 ///////////

@@ -32,7 +32,7 @@
 //	- Finally, they will be made vulnerable to Veil Mind for five ticks.
 /datum/action/innate/umbrage/devour_will
 	name = "Devour Will"
-	desc = "Creates a dark bead that can be used on a human to fully recharge psi and knock them out."
+	desc = "Creates a dark bead that can be used on a human to fully recharge psi and knock them out.<br><br>Costs 20 psi."
 	button_icon_state = "umbrage_devour_will"
 	check_flags = AB_CHECK_RESTRAINED|AB_CHECK_STUNNED|AB_CHECK_LYING|AB_CHECK_CONSCIOUS
 	psi_cost = 20
@@ -66,7 +66,7 @@
 //Veil Mind: Converts all eligible targets nearby into veils. Targets become eligible for a short time when drained by Devour Will.
 /datum/action/innate/umbrage/veil_mind
 	name = "Veil Mind"
-	desc = "Converts nearby eligible targets into thralls. To be eligible, they must be alive and recently drained by Devour Will."
+	desc = "Converts nearby eligible targets into thralls. To be eligible, they must be alive and recently drained by Devour Will.<br><br>Costs 30 psi."
 	button_icon_state = "umbrage_veil_mind"
 	check_flags = AB_CHECK_STUNNED|AB_CHECK_CONSCIOUS
 	psi_cost = 30
@@ -86,7 +86,7 @@
 	playsound(usr, 'sound/magic/veil_mind_gasp.ogg', 25, 1)
 	if(!do_after(usr, 10, target = usr))
 		return
-	usr.visible_message("<span class='boldwarning'>[usr] lets out a horrific scream!</span>", "<span class='velvet_bold'>...wjz oanra</span><br>\
+	usr.visible_message("<span class='boldwarning'>[usr] lets out a chilling cry!</span>", "<span class='velvet_bold'>...wjz oanra</span><br>\
 	<span class='notice'>You veil the minds of everyone nearby.</span>")
 	playsound(usr, 'sound/magic/veil_mind_scream.ogg', 100, 0)
 	for(var/mob/living/L in view(3, usr))
@@ -106,10 +106,11 @@
 				if(L.status_flags & FAKEDEATH)
 					usr << "<span class='velvet'><b>[L]</b> has become a veil.</span>"
 					L << "<span class='velvet_large'><b>ukq wna ieja jks</b></span>"
-					L << "<b>You have seen where you were once blind. In the Deep between the stars, something hungers. It watches and waits, the truth to all things and the impossible lie, infinite and nonexistent.<br>\
-					Its name is unspeakable and its form incomprehensible. You feel your mind rip itself to tatters, and you know that you are destined for something more.<br>\
-					Serve the one who has darkened the light you have lived in for so long. Help It and Its allies in their goals. Your former allegiances are forfeit.<br>\
-					<i>The Progenitor awaits.</i></b>"
+					L << "<b>Your mind goes numb. Your thoughts go blank. You feel more vulnerable than you have ever felt. But then, you dream.\n\
+					You dream of a vast, empty Void in the deep of space. Stars do not tread there, for they fear what lies within.\n\
+					An ancient, unknowable being makes the Void its home. It has a name, but to speak it is heresy. It has a form, but to behold it is madness.\n\
+					You hear the voice of the Progenitor reach for you, and you are helpeless to resist its call. Your mind tears itself to tatters, and you know you are destined for much, much more.\n\
+					Your former allegiances are now forfeit. You serve the Progenitor above all else, and you must answer to its servants, the umbrages. Obey their every command, and perhaps you will soon be free...</b>"
 					L << sound('sound/magic/become_veil.ogg', volume = 50)
 					flash_color(L, flash_color = "#21007F", flash_time = 100)
 				else
@@ -122,7 +123,7 @@
 //Demented Outburst: Deafens and confuses listeners. Even if they can't hear it, everyone will be knocked away and staggered by its force.
 /datum/action/innate/umbrage/demented_outburst
 	name = "Demented Outburst"
-	desc = "Deafens and confuses listeners, and knocks away everyone nearby. Incredibly loud."
+	desc = "Deafens and confuses listeners, and knocks away everyone nearby. Incredibly loud.<br><br>Costs 80 psi."
 	button_icon_state = "umbrage_demented_outburst"
 	check_flags = AB_CHECK_CONSCIOUS
 	psi_cost = 80 //big boom = big cost

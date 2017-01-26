@@ -29,7 +29,7 @@
 			user << "<span class='warning'>[L] must be given time to recover from their last draining.</span>"
 			return
 	eating = 1
-	user.visible_message("<span class='warning'>[user] grasps [L] leans in close...</span>", "<span class='velvet_bold'>cera qo...</span><br>\
+	user.visible_message("<span class='warning'>[user] grasps [L] and leans in close...</span>", "<span class='velvet_bold'>cera qo...</span><br>\
 	<span class='danger'>You begin siphoning [L]'s mental energy...</span>")
 	playsound(L, 'sound/magic/devour_will.ogg', 100, 0) //T A S T Y   S O U L S
 	if(!do_mob(user, L, 30))
@@ -52,7 +52,8 @@
 	L.confused += 40
 	L.reagents.add_reagent("zombiepowder", 2) //Brief window of vulnerability to veiling
 	qdel(src)
-	spawn(10) //debug
+	#warn Change this dark bead recovery timer - 2 minutes, maybe?
+	spawn(10)
 		if(linked_ability && L)
 			linked_ability.victims -= L
 			user << "<span class='notice'>[L] has recovered from their draining and is vulnerable to Devour Will again.</span>"
