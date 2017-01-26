@@ -1107,6 +1107,45 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 		else
 			return ..()
 
+/datum/uplink_item/cyber_implants/esword	//This is a bad idea
+	name = "Arm Energy-Blade Projector"
+	desc = "An illegal cybernetic combat implant that allows the user to project a blade of lethal energy from their hand."
+	item = /obj/item/device/autoimplanter/esword
+	cost = 12
+	player_minimum = 30
+
+/datum/uplink_item/cyber_implants/esword/traitor	//This is a worse idea
+	cost = 16
+	include_modes = list()
+	exclude_modes = list(/datum/game_mode/nuclear)
+
+/datum/uplink_item/cyber_implants/medbeam
+	name = "Medical Beam Arm Implant"
+	desc = "An cybernetic implant that gives the user an extendable medical beamgun in their arm"
+	item = /obj/item/device/autoimplanter/medbeam
+	cost = 20
+	player_minimum = 15
+
+/datum/uplink_item/cyber_implants/flash
+	name = "Arm Photon Projection Implant"
+	desc = "A glorified self-recharging flash that is implanted into a user's arm."
+	item = /obj/item/device/autoimplanter/flash
+	include_modes = list()
+	cost = 6
+
+/datum/uplink_item/cyber_implants/baton			//This is a _really_ bad idea
+	name = "Arm Electrification Implant"
+	desc = "An illegal cybernetic combat implant that allows the user to extend a prod that stun others with their arm."
+	item = /obj/item/device/autoimplanter/baton
+	cost = 16
+	player_minimum = 25
+
+/datum/uplink_item/cyber_implants/combat_melee	//If those were really bad ideas, this one must be the worst.
+	name = "Melee Combat Arm Implant"
+	desc = "A set of cybernetic implants combined in one value package for insertion into a user's arm. Contains energy blade, medical beam, flash, and stun-arm implant modules."
+	item = /obj/item/device/autoimplanter/combat/melee
+	cost = 48 //12 + 20 + 6 + 16 = 54 * 0.9 = 48.6
+
 /datum/uplink_item/cyber_implants/thermals
 	name = "Thermal Vision Implant"
 	desc = "These cybernetic eyes will give you thermal vision. They must be implanted via surgery."

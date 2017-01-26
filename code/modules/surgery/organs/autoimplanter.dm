@@ -63,3 +63,33 @@
 	desc = "A single use autoimplanter that contains a medical heads-up display augment. A screwdriver can be used to remove it, but implants can't be placed back in."
 	storedorgan = new/obj/item/organ/cyberimp/eyes/hud/medical()
 	uses = 1
+
+/obj/item/device/autoimplanter/esword
+	name = "Energy Blade Autoimplanter"
+	desc = "A single use autoimplanter that contains an energy blade implant, removable by screwdriver. However, once you remove it, you can no longer put it back in."
+	storedorgan = new/obj/item/organ/cyberimp/arm/esword()
+	uses = 1
+
+/obj/item/device/autoimplanter/baton
+	name = "Stun-Arm Autoimplanter"
+	desc = "A single use autoimplanter that contains a stun-arm implant, removable by screwdriver. However, once you remove it, you can no longer put it back in."
+	storedorgan = new/obj/item/organ/cyberimp/arm/baton()
+	uses = 1
+
+/obj/item/device/autoimplanter/medbeam
+	name = "Medibeam Autoimplanter"
+	desc = "A single use autoimplanter that contains a medical beamgun implant, removable by screwdriver. However, once you remove it, you can no longer put it back in."
+	storedorgan = new/obj/item/organ/cyberimp/arm/medbeam()
+	uses = 1
+
+/obj/item/device/autoimplanter/flash
+	name = "Photon Projecotr Autoimplanter"
+	desc = "A single use autoimplanter that contains a photon projector implant, removable by screwdriver. However, once you remove it, you can no longer put it back in."
+	storedorgan = new/obj/item/organ/cyberimp/arm/flash()
+	uses = 1
+
+/obj/item/device/autoimplanter/combat/melee
+	name = "Melee Combat Set Autoimplanter"
+	desc = "A single use autoimplanter that contains an implant containing a set of melee combat augments, as well as a medical beamgun, removable by screwdriver. However, once you remove it, you can no longer put it back in."
+	storedorgan = new/obj/item/organ/cyberimp/arm/combat()
+	uses = 1

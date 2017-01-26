@@ -196,7 +196,7 @@
 	contents = newlist(/obj/item/weapon/melee/energy/blade/hardlight)
 	origin_tech = "materials=4;combat=5;biotech=3;powerstorage=2;syndicate=5"
 
-/obj/item/organ/cyberimp/arm/medibeam
+/obj/item/organ/cyberimp/arm/medbeam
 	name = "integrated medical beamgun"
 	desc = "A cybernetic implant that allows the user to project a healing beam from their hand."
 	contents = newlist(/obj/item/weapon/gun/medbeam)
