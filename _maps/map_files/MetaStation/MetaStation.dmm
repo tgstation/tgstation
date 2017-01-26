@@ -36156,8 +36156,8 @@
 /area/bridge)
 "bkL" = (
 /obj/item/weapon/folder/white{
-	step_x = 4;
-	step_y = -3
+	pixel__x = 4;
+	pixel__y = -3
 	},
 /obj/structure/cable/yellow{
 	d1 = 1;
@@ -46503,8 +46503,8 @@
 "bBZ" = (
 /obj/structure/table/wood,
 /obj/item/weapon/folder/white{
-	step_x = 4;
-	step_y = -3
+	pixel__x = 4;
+	pixel__y = -3
 	},
 /turf/open/floor/carpet,
 /area/bridge)
@@ -51007,8 +51007,8 @@
 /area/security/vacantoffice)
 "bJT" = (
 /obj/item/weapon/folder/white{
-	step_x = 4;
-	step_y = -3
+	pixel__x = 4;
+	pixel__y = -3
 	},
 /obj/structure/table/wood,
 /turf/open/floor/carpet,
@@ -54682,8 +54682,8 @@
 "bQs" = (
 /obj/structure/table/wood,
 /obj/item/weapon/folder/white{
-	step_x = 4;
-	step_y = -3
+	pixel__x = 4;
+	pixel__y = -3
 	},
 /turf/open/floor/wood,
 /area/security/vacantoffice)
@@ -59724,12 +59724,12 @@
 	req_one_access_txt = "30;35"
 	},
 /obj/item/weapon/folder/white{
-	step_x = 4;
-	step_y = -3
+	pixel__x = 4;
+	pixel__y = -3
 	},
 /obj/item/weapon/folder/white{
-	step_x = 4;
-	step_y = -3
+	pixel__x = 4;
+	pixel__y = -3
 	},
 /turf/open/floor/plasteel/green{
 	dir = 4
@@ -60733,12 +60733,12 @@
 "caS" = (
 /obj/structure/table,
 /obj/item/weapon/folder/white{
-	step_x = 4;
-	step_y = -3
+	pixel__x = 4;
+	pixel__y = -3
 	},
 /obj/item/weapon/folder/white{
-	step_x = 4;
-	step_y = -3
+	pixel__x = 4;
+	pixel__y = -3
 	},
 /obj/item/weapon/pen,
 /obj/structure/extinguisher_cabinet{
@@ -61726,8 +61726,8 @@
 "ccF" = (
 /obj/structure/table,
 /obj/item/weapon/folder/white{
-	step_x = 4;
-	step_y = -3
+	pixel__x = 4;
+	pixel__y = -3
 	},
 /obj/item/clothing/glasses/science,
 /turf/open/floor/plasteel/whitepurple/side{
@@ -64190,12 +64190,12 @@
 "cgE" = (
 /obj/structure/table,
 /obj/item/weapon/folder/white{
-	step_x = 4;
-	step_y = -3
+	pixel__x = 4;
+	pixel__y = -3
 	},
 /obj/item/weapon/folder/white{
-	step_x = 4;
-	step_y = -3
+	pixel__x = 4;
+	pixel__y = -3
 	},
 /obj/item/weapon/pen,
 /turf/open/floor/plating,
@@ -65047,12 +65047,12 @@
 "chV" = (
 /obj/structure/table,
 /obj/item/weapon/folder/white{
-	step_x = 4;
-	step_y = -3
+	pixel__x = 4;
+	pixel__y = -3
 	},
 /obj/item/weapon/folder/white{
-	step_x = 4;
-	step_y = -3
+	pixel__x = 4;
+	pixel__y = -3
 	},
 /obj/item/weapon/pen,
 /obj/machinery/power/apc{
@@ -65274,8 +65274,8 @@
 "cil" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/folder/white{
-	step_x = 4;
-	step_y = -3
+	pixel__x = 4;
+	pixel__y = -3
 	},
 /obj/machinery/door/window/northleft{
 	dir = 2;
@@ -65284,8 +65284,8 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/item/weapon/folder/white{
-	step_x = 4;
-	step_y = -3
+	pixel__x = 4;
+	pixel__y = -3
 	},
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "chemistry_shutters";
@@ -65337,12 +65337,12 @@
 /obj/structure/table/reinforced,
 /obj/item/weapon/pen,
 /obj/item/weapon/folder/white{
-	step_x = 4;
-	step_y = -3
+	pixel__x = 4;
+	pixel__y = -3
 	},
 /obj/item/weapon/folder/white{
-	step_x = 4;
-	step_y = -3
+	pixel__x = 4;
+	pixel__y = -3
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/door/window/eastright{
@@ -69078,8 +69078,8 @@
 /obj/structure/table,
 /obj/structure/disposalpipe/segment,
 /obj/item/weapon/folder/white{
-	step_x = 4;
-	step_y = -3
+	pixel__x = 4;
+	pixel__y = -3
 	},
 /obj/item/weapon/disk/tech_disk{
 	pixel_x = 0;
@@ -69644,8 +69644,8 @@
 /area/medical/cmo)
 "cpR" = (
 /obj/item/weapon/folder/white{
-	step_x = 4;
-	step_y = -3
+	pixel__x = 4;
+	pixel__y = -3
 	},
 /obj/item/clothing/glasses/hud/health,
 /obj/structure/cable/yellow{
@@ -70017,12 +70017,12 @@
 "cqy" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/folder/white{
-	step_x = 4;
-	step_y = -3
+	pixel__x = 4;
+	pixel__y = -3
 	},
 /obj/item/weapon/folder/white{
-	step_x = 4;
-	step_y = -3
+	pixel__x = 4;
+	pixel__y = -3
 	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 8
@@ -70103,8 +70103,8 @@
 "cqF" = (
 /obj/structure/table,
 /obj/item/weapon/folder/white{
-	step_x = 4;
-	step_y = -3
+	pixel__x = 4;
+	pixel__y = -3
 	},
 /obj/item/weapon/reagent_containers/blood/random,
 /obj/item/weapon/reagent_containers/blood/random,
@@ -70426,8 +70426,8 @@
 "crj" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/folder/white{
-	step_x = 4;
-	step_y = -3
+	pixel__x = 4;
+	pixel__y = -3
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/door/window/eastright{
@@ -70436,8 +70436,8 @@
 	req_access_txt = "5; 33"
 	},
 /obj/item/weapon/folder/white{
-	step_x = 4;
-	step_y = -3
+	pixel__x = 4;
+	pixel__y = -3
 	},
 /obj/item/weapon/pen,
 /obj/machinery/door/poddoor/shutters/preopen{
@@ -70478,12 +70478,12 @@
 	req_access_txt = "7"
 	},
 /obj/item/weapon/folder/white{
-	step_x = 4;
-	step_y = -3
+	pixel__x = 4;
+	pixel__y = -3
 	},
 /obj/item/weapon/folder/white{
-	step_x = 4;
-	step_y = -3
+	pixel__x = 4;
+	pixel__y = -3
 	},
 /obj/machinery/door/firedoor,
 /obj/item/weapon/pen,
@@ -73744,8 +73744,8 @@
 "cww" = (
 /obj/structure/table,
 /obj/item/weapon/folder/white{
-	step_x = 4;
-	step_y = -3
+	pixel__x = 4;
+	pixel__y = -3
 	},
 /obj/item/clothing/neck/stethoscope,
 /obj/machinery/light/small{
@@ -73915,12 +73915,12 @@
 	icon_state = "0-2"
 	},
 /obj/item/weapon/folder/white{
-	step_x = 4;
-	step_y = -3
+	pixel__x = 4;
+	pixel__y = -3
 	},
 /obj/item/weapon/folder/white{
-	step_x = 4;
-	step_y = -3
+	pixel__x = 4;
+	pixel__y = -3
 	},
 /obj/item/weapon/storage/pill_bottle/mutadone,
 /obj/item/weapon/storage/pill_bottle/mannitol,
@@ -74579,8 +74579,8 @@
 "cxQ" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/folder/white{
-	step_x = 4;
-	step_y = -3
+	pixel__x = 4;
+	pixel__y = -3
 	},
 /obj/item/weapon/pen,
 /obj/machinery/door/firedoor,
@@ -74988,8 +74988,8 @@
 "cyA" = (
 /obj/structure/table,
 /obj/item/weapon/folder/white{
-	step_x = 4;
-	step_y = -3
+	pixel__x = 4;
+	pixel__y = -3
 	},
 /obj/item/clothing/neck/stethoscope,
 /obj/machinery/light/small{
@@ -75360,14 +75360,14 @@
 	pixel_y = -30
 	},
 /obj/item/weapon/stamp/rd{
-	step_x = -11;
-	step_y = 0;
+	pixel__x = -11;
+	pixel__y = 0;
 	pixel_x = 3;
 	pixel_y = -2
 	},
 /obj/item/weapon/folder/white{
-	step_x = 9;
-	step_y = -1
+	pixel__x = 9;
+	pixel__y = -1
 	},
 /obj/item/weapon/pen,
 /turf/open/floor/plasteel/cafeteria{
@@ -75713,8 +75713,8 @@
 /area/medical/genetics)
 "czI" = (
 /obj/item/weapon/folder/white{
-	step_x = 4;
-	step_y = -3
+	pixel__x = 4;
+	pixel__y = -3
 	},
 /obj/item/stack/packageWrap,
 /obj/item/weapon/pen,
@@ -76775,8 +76775,8 @@
 	pixel_y = 0
 	},
 /obj/item/weapon/folder/white{
-	step_x = 4;
-	step_y = -3
+	pixel__x = 4;
+	pixel__y = -3
 	},
 /obj/item/weapon/paper/range{
 	pixel_x = 2;
@@ -76970,12 +76970,12 @@
 "cBQ" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/folder/white{
-	step_x = 4;
-	step_y = -3
+	pixel__x = 4;
+	pixel__y = -3
 	},
 /obj/item/weapon/folder/white{
-	step_x = 4;
-	step_y = -3
+	pixel__x = 4;
+	pixel__y = -3
 	},
 /obj/machinery/door/firedoor,
 /obj/item/weapon/reagent_containers/glass/bottle/epinephrine,
@@ -79722,8 +79722,8 @@
 	icon_state = "0-8"
 	},
 /obj/item/weapon/folder/white{
-	step_x = 4;
-	step_y = -3
+	pixel__x = 4;
+	pixel__y = -3
 	},
 /obj/item/clothing/gloves/color/latex,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -79779,12 +79779,12 @@
 	req_access_txt = "29"
 	},
 /obj/item/weapon/folder/white{
-	step_x = 4;
-	step_y = -3
+	pixel__x = 4;
+	pixel__y = -3
 	},
 /obj/item/weapon/folder/white{
-	step_x = 4;
-	step_y = -3
+	pixel__x = 4;
+	pixel__y = -3
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor/shutters/preopen{
@@ -80129,12 +80129,12 @@
 /area/medical/virology)
 "cGY" = (
 /obj/item/weapon/folder/white{
-	step_x = 4;
-	step_y = -3
+	pixel__x = 4;
+	pixel__y = -3
 	},
 /obj/item/weapon/folder/white{
-	step_x = 4;
-	step_y = -3
+	pixel__x = 4;
+	pixel__y = -3
 	},
 /obj/item/weapon/pen/red,
 /obj/machinery/requests_console{
@@ -81033,12 +81033,12 @@
 "cIC" = (
 /obj/structure/table/glass,
 /obj/item/weapon/folder/white{
-	step_x = 4;
-	step_y = -3
+	pixel__x = 4;
+	pixel__y = -3
 	},
 /obj/item/weapon/folder/white{
-	step_x = 4;
-	step_y = -3
+	pixel__x = 4;
+	pixel__y = -3
 	},
 /obj/item/weapon/pen/red,
 /obj/structure/cable/yellow{
@@ -81923,12 +81923,12 @@
 	pixel_y = -24
 	},
 /obj/item/weapon/folder/white{
-	step_x = 4;
-	step_y = -3
+	pixel__x = 4;
+	pixel__y = -3
 	},
 /obj/item/weapon/folder/white{
-	step_x = 4;
-	step_y = -3
+	pixel__x = 4;
+	pixel__y = -3
 	},
 /obj/machinery/light,
 /obj/item/weapon/hand_labeler,
@@ -83364,8 +83364,8 @@
 "cMf" = (
 /obj/structure/table,
 /obj/item/weapon/folder/white{
-	step_x = 4;
-	step_y = -3
+	pixel__x = 4;
+	pixel__y = -3
 	},
 /obj/item/weapon/pen,
 /turf/open/floor/plasteel/black,
@@ -83518,12 +83518,12 @@
 	pixel_x = -30
 	},
 /obj/item/weapon/folder/white{
-	step_x = 4;
-	step_y = -3
+	pixel__x = 4;
+	pixel__y = -3
 	},
 /obj/item/weapon/folder/white{
-	step_x = 4;
-	step_y = -3
+	pixel__x = 4;
+	pixel__y = -3
 	},
 /obj/item/weapon/paper,
 /obj/item/weapon/pen/red,
@@ -92385,8 +92385,8 @@
 "dct" = (
 /obj/structure/table,
 /obj/item/weapon/folder/white{
-	step_x = 4;
-	step_y = -3
+	pixel__x = 4;
+	pixel__y = -3
 	},
 /obj/effect/decal/cleanable/dirt{
 	desc = "A thin layer of dust coating the floor.";
