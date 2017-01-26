@@ -34,7 +34,8 @@
 							/obj/machinery/smartfridge/drinks = "drinks",
 							/obj/machinery/smartfridge/extract = "slimes",
 							/obj/machinery/smartfridge/chemistry = "chems",
-							/obj/machinery/smartfridge/chemistry/virology = "viruses")
+							/obj/machinery/smartfridge/chemistry/virology = "viruses",
+							/obj/machinery/smartfridge/disks = "disks")
 
 /obj/item/weapon/circuitboard/machine/smartfridge/New(loc, new_type)
 	if(new_type)
@@ -96,13 +97,13 @@
 
 		if(contents.len >= max_n_of_items)
 			user << "<span class='warning'>\The [src] is full!</span>"
-			return 0
+			return FALSE
 
 		if(accept_check(O))
 			load(O)
 			user.visible_message("[user] has added \the [O] to \the [src].", "<span class='notice'>You add \the [O] to \the [src].</span>")
 			updateUsrDialog()
-			return 1
+			return TRUE
 
 		if(istype(O, /obj/item/weapon/storage/bag))
 			var/obj/item/weapon/storage/P = O
@@ -443,3 +444,17 @@
 		/obj/item/weapon/reagent_containers/glass/bottle/mutagen = 1,
 		/obj/item/weapon/reagent_containers/glass/bottle/plasma = 1,
 		/obj/item/weapon/reagent_containers/glass/bottle/synaptizine = 1)
+
+// ----------------------------
+// Disk """fridge"""
+// ----------------------------
+/obj/machinery/smartfridge/disks
+	name = "disk compartmentalizer"
+	description = "A machine capable of storing a variety of disks. Denoted by most as the DSU (disk storage unit)."
+	item_state = "diskstorage"
+
+/obj/machinery/smartfridge/disks/accept_check(obj/item/O)
+	if(istype(O,/obj/item/weapon/disk/))
+		return TRUE
+	else
+		return FALSE
