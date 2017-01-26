@@ -31,13 +31,37 @@ var/global/datum/getrev/revdata = new()
 
 /datum/getrev/proc/DownloadPRDetails()
 	for(var/line in testmerge)
-		var/list/http = world.Export("https://api.github.com/repositories/[config.githubrepoid]/pulls/[line]")
-		if(!http)
-			return	//give up, don't slow me down
+		//"This has got to be the ugliest hack I have ever done"
+		//warning, here be dragons
+		/*
+			                |  @___oo
+			      /\  /\   / (__,,,,|
+			     ) /^\) ^\/ _)
+			     )   /^\/   _)
+			     )   _ /  / _)
+			 /\  )/\/ ||  | )_)
+			<  >      |(,,) )__)
+			 ||      /    \)___)\
+			 | \____(      )___) )___
+			  \______(_______;;; __;;;
+		*/
+		var/url = "https://api.github.com/repositories/[config.githubrepoid]/pulls/[line].json"
+		var/temp_file = "prcheck[line].json"
+		var/command = "powershell -Command \"curl -O [temp_file] [url]\""
+		world.log << "Running command: [command]"
+		if(shell(command) != 0)
+			return
 
-		testmerge[line] = json_decode(file2text(http["CONTENT"]))
+		var/f = file(temp_file)
+		if(!f)
+			return
+		testmerge[line] = json_decode(file2text(f))
+		f = null
+		fdel(temp_file)
+
 		if(!testmerge[line])
 			return
+		CHECK_TICK
 	has_pr_details = TRUE
 
 /datum/getrev/proc/GetTestMergeInfo()
