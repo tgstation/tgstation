@@ -158,19 +158,16 @@
 		var/turf/targetturf = get_turf(target)
 		var/obj/structure/destructible/clockwork/powered/volt_checker/VC = new/obj/structure/destructible/clockwork/powered/volt_checker(get_turf(ranged_ability_user))
 		var/multiplier = 1
-		var/minimum_power = Floor(VC.total_accessable_power() * 0.2, MIN_CLOCKCULT_POWER)
-		var/usable_power = min(minimum_power, 1000)
-		var/used_power = 0
-		while(used_power < usable_power && VC.try_use_power(MIN_CLOCKCULT_POWER))
-			used_power += MIN_CLOCKCULT_POWER
-			multiplier += 0.025
+		var/usable_power = min(Floor(VC.total_accessable_power() * 0.2, MIN_CLOCKCULT_POWER), 1000)
+		if(VC.try_use_power(usable_power))
+			multiplier += (usable_power * 0.001) //should be a multiplier of 2 at maximum power usage
 		if(iscyborg(ranged_ability_user))
 			var/mob/living/silicon/robot/C = ranged_ability_user
 			if(C.cell)
-				usable_power = Clamp(Floor(C.cell.charge * 0.2, MIN_CLOCKCULT_POWER), usable_power, 1000)
-				while(used_power < usable_power && C.cell.use(MIN_CLOCKCULT_POWER))
-					used_power += MIN_CLOCKCULT_POWER
-					multiplier += 0.025
+				var/prev_power = usable_power //we don't want to increase the multiplier past 2
+				usable_power = min(Floor(C.cell.charge * 0.2, MIN_CLOCKCULT_POWER), 1000) - prev_power
+				if(usable_power > 0 && C.cell.use(usable_power))
+					multiplier += (usable_power * 0.001)
 		qdel(VC)
 		new/obj/effect/overlay/temp/ratvar/volt_hit/true(targetturf, ranged_ability_user, multiplier)
 		add_logs(ranged_ability_user, targetturf, "fired a volt ray")
