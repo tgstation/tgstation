@@ -260,7 +260,7 @@
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/unholywater
 	name = "flask of unholy water"
-	desc = "Toxic to nonbelievers; this water renews and reinvigorates the faithful of nar'sie."
+	desc = "Toxic to nonbelievers; reinvigorating to the faithful - this flask may be sipped or thrown."
 	icon_state = "holyflask"
 	color = "#333333"
 	list_reagents = list("unholywater" = 40)

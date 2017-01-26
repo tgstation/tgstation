@@ -520,16 +520,8 @@ var/global/list/multiverse = list()
 				var/turf/T = get_step(target,pick(cardinal))
 				target.Move(T)
 			if("r_arm","l_arm")
-				//use active hand on random nearby mob
-				var/list/nearby_mobs = list()
-				for(var/mob/living/L in range(1, target))
-					if(L!=target)
-						nearby_mobs |= L
-				if(nearby_mobs.len)
-					var/mob/living/T = pick(nearby_mobs)
-					log_game("[user][user.key] made [target][target.key] click on [T] with a voodoo doll.")
-					target.ClickOn(T)
-					GiveHint(target)
+				target.click_random_mob()
+				GiveHint(target)
 			if("head")
 				user << "<span class='notice'>You smack the doll's head with your hand.</span>"
 				target.Dizzy(10)

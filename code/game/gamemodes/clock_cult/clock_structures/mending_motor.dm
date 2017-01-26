@@ -17,6 +17,7 @@
 	/obj/item/clockwork/component/vanguard_cogwheel = 1)
 	var/heal_attempts = 4
 	var/heal_cost = MIN_CLOCKCULT_POWER*2
+	var/static/list/damage_heal_order = list(BRUTE, BURN, OXY)
 	var/static/list/heal_finish_messages = list("There, all mended!", "Try not to get too damaged.", "No more dents and scratches for you!", "Champions never die.", "All patched up.", \
 	"Ah, child, it's okay now.")
 	var/static/list/heal_failure_messages = list("Pain is temporary.", "What you do for the Justiciar is eternal.", "Bear this for me.", "Be strong, child.", "Please, be careful!", \
@@ -93,8 +94,7 @@
 			for(var/i in 1 to heal_attempts)
 				if(S.health < S.maxHealth)
 					if(try_use_power(heal_cost))
-						S.adjustBruteLoss(-(5 * efficiency))
-						S.adjustFireLoss(-(3 * efficiency))
+						S.heal_ordered_damage(8 * efficiency, damage_heal_order)
 						new /obj/effect/overlay/temp/heal(T, "#1E8CE1")
 					else
 						S << "<span class='inathneq'>\"[text2ratvar(pick(heal_failure_messages))]\"</span>"
