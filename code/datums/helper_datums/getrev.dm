@@ -4,7 +4,7 @@ var/global/datum/getrev/revdata = new()
 	var/parentcommit
 	var/commit
 	var/list/testmerge = list()
-	var/has_pr_details = FALSE
+	var/has_pr_details = FALSE	//example data in a testmerge entry when this is true: https://api.github.com/repositories/3234987/pulls/22586
 	var/date
 
 /datum/getrev/New()
@@ -40,6 +40,17 @@ var/global/datum/getrev/revdata = new()
 			return
 	has_pr_details = TRUE
 
+/datum/getrev/proc/GetTestMergeInfo()
+	if(!testmerge.len)
+		return ""
+	. = "The following pull requests are currently test merged:<br/>"
+	for(var/line in testmerge)
+		var/details = ""
+		if(has_pr_details)
+			details = ": " + testmerge[line]["name"] + " by " + testmerge[line]["user"]["login"]
+		. += <a href='[config.githuburl]/pull/[line]'>#[line][details]</a><br/>"
+	. += "Based off master commit <a href='[config.githuburl]/commit/[parentcommit]'>[parentcommit]</a><br/>"
+
 /client/verb/showrevinfo()
 	set category = "OOC"
 	set name = "Show Server Revision"
@@ -48,9 +59,7 @@ var/global/datum/getrev/revdata = new()
 	if(revdata.parentcommit)
 		src << "<b>Server revision compiled on:</b> [revdata.date]"
 		if(revdata.testmerge.len)
-			for(var/line in revdata.testmerge)
-				src << "Test merge active of PR <a href='[config.githuburl]/pull/[line]'>#[line]</a>"
-			src << "Based off master commit <a href='[config.githuburl]/commit/[revdata.parentcommit]'>[revdata.parentcommit]</a>"
+			src << GetTestMergeInfo()
 		else
 			src << "<a href='[config.githuburl]/commit/[revdata.parentcommit]'>[revdata.parentcommit]</a>"
 	else
