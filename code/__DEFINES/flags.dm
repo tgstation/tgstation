@@ -53,6 +53,7 @@
 #define IMMOBILE 0
 #define GROUND 1
 #define FLYING 2
+#define TRAMPLER 4 //always tramples, even if FLYING or not running
 
 
 /*

@@ -56,6 +56,7 @@ Difficulty: Hard
 	aggro_vision_range = 21 //so it can see to one side of the arena to the other
 	loot = list(/obj/item/weapon/hierophant_club)
 	wander = FALSE
+	movement_type = FLYING
 	var/burst_range = 3 //range on burst aoe
 	var/beam_range = 5 //range on cross blast beams
 	var/chaser_speed = 3 //how fast chasers are currently

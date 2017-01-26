@@ -3,12 +3,12 @@
 
 	if(isliving(AM) && lying)
 		var/mob/living/L = AM
-		L.trample(L.mob_size)
+		L.trample()
 
-/mob/living/proc/trample(size_multiplier, trample_damage = TRAMPLE_DAMAGE, trample_verb = "trample", trampled_verb = "trampled") //tramples all lying mobs in the tile
+/mob/living/proc/trample(trample_damage = TRAMPLE_DAMAGE, trample_verb = "trample", trampled_verb = "trampled") //tramples all lying mobs in the tile
 	if(world.time <= next_move)
 		return FALSE
-	if(m_intent != MOVE_INTENT_RUN || buckled || get_num_legs() < 2 || lying || incapacitated(TRUE, TRUE) || (movement_type & FLYING) || !mob_has_gravity())
+	if(!(movement_type & TRAMPLER) && (m_intent != MOVE_INTENT_RUN || (movement_type & FLYING)) || buckled || get_num_legs() < 2 || lying || incapacitated(TRUE, TRUE) || !mob_has_gravity())
 		return FALSE
 	changeNext_move(CLICK_CD_RANGE)
 	var/list/targets = list()
@@ -19,10 +19,11 @@
 	if(!targets_len)
 		return FALSE
 	shuffle(targets)
-	if(size_multiplier)
-		trample_damage *= size_multiplier //do more damage based on size; tiny mobs can't trample, bigger mobs can
 	var/tripchance = targets_len * 10
-	if(prob(tripchance) && Weaken(3))
+	if(prob(tripchance) && Weaken(3, FALSE))
+		for(var/obj/item/I in held_items)
+			accident(I)
+		update_canmove()
 		trample_damage *= 0.5
 		tripchance = TRUE //did trip!
 	else

@@ -650,8 +650,8 @@ var/global/mulebot_count = 0
 	return ..()
 
 //drive em over!
-/mob/living/simple_animal/bot/mulebot/trample(size_multiplier, trample_damage = TRAMPLE_DAMAGE, trample_verb = "trampled", trampled_verb = "trampled")
-	trample_damage = rand(2.5, 7.5)
+/mob/living/simple_animal/bot/mulebot/trample(trample_damage = TRAMPLE_DAMAGE, trample_verb = "trample", trampled_verb = "trampled")
+	trample_damage = rand(TRAMPLE_DAMAGE, TRAMPLE_DAMAGE*3)
 	trample_verb = "drove over"
 	trampled_verb = "driven over"
 	. = ..()

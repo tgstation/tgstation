@@ -13,7 +13,7 @@
 	luminosity = 3
 	faction = list("mining", "boss")
 	weather_immunities = list("lava","ash")
-	movement_type = FLYING
+	movement_type = FLYING | TRAMPLER
 	robust_searching = 1
 	ranged_ignores_vision = TRUE
 	stat_attack = 2
