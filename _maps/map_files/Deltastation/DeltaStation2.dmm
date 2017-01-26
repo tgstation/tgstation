@@ -68962,7 +68962,7 @@
 	},
 /area/library)
 "ctw" = (
-/obj/structure/destructible/cult/tome,
+/obj/effect/spawner/lootdrop/librarian_cult_spawner,
 /obj/item/weapon/book/codex_gigas,
 /turf/open/floor/plasteel/vault{
 	dir = 5
@@ -110571,7 +110571,7 @@
 	name = "Abandoned Library"
 	})
 "dPg" = (
-/obj/structure/destructible/cult/tome,
+/obj/effect/spawner/lootdrop/librarian_cult_spawner,
 /obj/effect/decal/cleanable/cobweb,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/blood/old,

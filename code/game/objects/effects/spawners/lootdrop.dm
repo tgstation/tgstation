@@ -168,3 +168,10 @@
 				/obj/structure/closet/crate/secure/loot = 20,
 				"" = 80
 				)
+
+/obj/effect/spawner/lootdrop/librarian_cult_spawner
+	name = "librarian cult spawner"
+	loot = list(
+		/obj/structure/destructible/cult/tome,
+		/obj/structure/destructible/clockwork/cache
+	)

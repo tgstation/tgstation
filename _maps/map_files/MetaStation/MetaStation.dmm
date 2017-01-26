@@ -55618,7 +55618,7 @@
 /turf/open/floor/wood,
 /area/library)
 "bSh" = (
-/obj/structure/destructible/cult/tome,
+/obj/effect/spawner/lootdrop/librarian_cult_spawner,
 /obj/machinery/newscaster{
 	pixel_x = -30;
 	pixel_y = 0
