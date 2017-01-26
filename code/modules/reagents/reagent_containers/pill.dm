@@ -152,7 +152,7 @@
 
 /obj/item/weapon/reagent_containers/pill/mining
 	name = "Basic brute and burn pill"
-	desc = "Contains 40 units of advanced healing chemicals, for a cheap way to mend those lacerations!"
+	desc = "Contains 20 units of bicaridine and kelotane, for a cheap way to mend those lacerations!"
 	icon_state = "pill20"
-	list_reagents = list("sal_acid" = 20, "oxandrolone" = 20)
+	list_reagents = list("Bicaridine" = 20, "Kelotane" = 20)
 	roundstart = 1
