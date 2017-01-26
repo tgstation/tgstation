@@ -145,9 +145,9 @@
 			//Applies the debrained overlay if there is no brain
 			if(!brain)
 				if(animal_origin == ALIEN_BODYPART)
-					standing += image("icon"='icons/mob/animal_parts.dmi', "icon_state" = "debrained_alien_s", "layer" = -HAIR_LAYER, "dir"=SOUTH)
+					standing += image("icon"='icons/mob/animal_parts.dmi', "icon_state" = "debrained_alien", "layer" = -HAIR_LAYER, "dir"=SOUTH)
 				else if(animal_origin == LARVA_BODYPART)
-					standing += image("icon"='icons/mob/animal_parts.dmi', "icon_state" = "debrained_larva_s", "layer" = -HAIR_LAYER, "dir"=SOUTH)
+					standing += image("icon"='icons/mob/animal_parts.dmi', "icon_state" = "debrained_larva", "layer" = -HAIR_LAYER, "dir"=SOUTH)
 				else if(!(NOBLOOD in species_flags_list))
 					standing += image("icon"='icons/mob/human_face.dmi', "icon_state" = "debrained", "layer" = -HAIR_LAYER, "dir"=SOUTH)
 			else
@@ -181,7 +181,7 @@
 
 /obj/item/bodypart/head/alien
 	icon = 'icons/mob/animal_parts.dmi'
-	icon_state = "alien_head_s"
+	icon_state = "alien_head"
 	px_x = 0
 	px_y = 0
 	dismemberable = 0
@@ -195,7 +195,7 @@
 
 /obj/item/bodypart/head/larva
 	icon = 'icons/mob/animal_parts.dmi'
-	icon_state = "larva_head_s"
+	icon_state = "larva_head"
 	px_x = 0
 	px_y = 0
 	dismemberable = 0
