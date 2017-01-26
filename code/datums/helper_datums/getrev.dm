@@ -47,7 +47,7 @@ var/global/datum/getrev/revdata = new()
 	for(var/line in testmerge)
 		var/details = ""
 		if(has_pr_details)
-			details = ": " + testmerge[line]["name"] + " by " + testmerge[line]["user"]["login"]
+			details = ": '" + testmerge[line]["name"] + "' by " + testmerge[line]["user"]["login"]
 		. += "<a href='[config.githuburl]/pull/[line]'>#[line][details]</a><br/>"
 	. += "Based off master commit <a href='[config.githuburl]/commit/[parentcommit]'>[parentcommit]</a><br/>"
 
