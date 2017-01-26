@@ -47,6 +47,13 @@ var/global/list/ghost_forms_with_accessories_list = list("ghost") //stores the g
 #define DSATCHEL "Department Satchel"
 #define DDUFFLEBAG "Department Dufflebag"
 var/global/list/backbaglist = list(DBACKPACK, DSATCHEL, DDUFFLEBAG, GBACKPACK, GSATCHEL, GDUFFLEBAG, LSATCHEL)
+
+//Uplink spawn loc
+#define UPLINK_PDA		"PDA"
+#define UPLINK_RADIO	"Radio"
+#define UPLINK_PEN		"Pen" //like a real spy!
+var/global/list/uplink_spawn_loc_list = list(UPLINK_PDA, UPLINK_RADIO, UPLINK_PEN)
+
 	//Female Uniforms
 var/global/list/female_clothing_icons = list()
 
