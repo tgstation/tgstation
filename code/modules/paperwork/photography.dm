@@ -35,7 +35,8 @@
 	var/scribble		//Scribble on the back.
 	var/blueprints = 0	//Does it include the blueprints?
 	var/sillynewscastervar  //Photo objects with this set to 1 will not be ejected by a newscaster. Only gets set to 1 if a silicon puts one of their images into a newscaster
-
+	var/size = 1
+	var/size_px = 96
 
 /obj/item/weapon/photo/attack_self(mob/user)
 	user.examinate(src)
@@ -63,9 +64,9 @@
 	user << browse_rsc(img, "tmp_photo.png")
 	user << browse("<html><head><title>[name]</title></head>" \
 		+ "<body style='overflow:hidden;margin:0;text-align:center'>" \
-		+ "<img src='tmp_photo.png' width='192' style='-ms-interpolation-mode:nearest-neighbor' />" \
+		+ "<img src='tmp_photo.png' width='[size_px]' style='-ms-interpolation-mode:nearest-neighbor' />" \
 		+ "[scribble ? "<br>Written on the back:<br><i>[scribble]</i>" : ""]"\
-		+ "</body></html>", "window=book;size=192x[scribble ? 400 : 192]")
+		+ "</body></html>", "window=book;size=[size_px]x[scribble ? (size_px + 128) : size_px]")
 	onclose(user, "[name]")
 
 
@@ -116,7 +117,35 @@
 	var/blueprints = 0	//are blueprints visible in the current photo being created?
 	var/list/aipictures = list() //Allows for storage of pictures taken by AI, in a similar manner the datacore stores info. Keeping this here allows us to share some procs w/ regualar camera
 	var/see_ghosts = 0 //for the spoop of it
+	var/picture_size = 2
+	var/picture_maxsize = 4
+	var/picture_size_px = 96
 
+/obj/item/device/camera/proc/get_base_icon()
+	var/icon/base
+	switch(picture_size)
+		if(1)
+			base = icon('icons/effects/effects.dmi', "nothing")
+			picture_size_px = 32
+		if(2)
+			base = icon('icons/effects/96x96.dmi', "nothing")
+			picture_size_px = 96
+		if(3)
+			base = icon('icons/effects/160x160.dmi', "nothing")
+			picture_size_px = 160
+		if(4)
+			base = icon('icons/effects/224x224.dmi', "nothing")
+			picture_size_px = 224
+		if(5)
+			base = icon('icons/effects/288x288.dmi', "nothing")
+			picture_size_px = 288
+		if(6)
+			base = icon('icons/effects/352x352.dmi', "nothing")
+			picture_size_px = 352
+		if(7)
+			base = icon('icons/effects/416x416.dmi', "nothing")
+			picture_size_px = 416
+	return base
 
 /obj/item/device/camera/CheckParts(list/parts_list)
 	..()
@@ -206,7 +235,7 @@
 				break
 		sorted.Insert(j+1, c)
 
-	var/icon/res = icon('icons/effects/96x96.dmi', "")
+	var/icon/res = get_base_icon()
 
 	for(var/atom/A in sorted)
 		var/icon/img = getFlatIcon(A)
@@ -215,8 +244,8 @@
 			if(L.lying)
 				img.Turn(L.lying)
 
-		var/offX = 32 * (A.x - center.x) + A.pixel_x + 33
-		var/offY = 32 * (A.y - center.y) + A.pixel_y + 33
+		var/offX = 32 * (A.x - center.x) + A.pixel_x + (((picture_size - 1) * 32) + 1)
+		var/offY = 32 * (A.y - center.y) + A.pixel_y + (((picture_size - 1) * 32) + 1)
 		if(istype(A, /atom/movable))
 			offX += A:step_x
 			offY += A:step_y
@@ -281,7 +310,7 @@
 		seen = get_hear(world.view, target)
 
 	var/list/turfs = list()
-	for(var/turf/T in range(1, target))
+	for(var/turf/T in range((picture_size - 1), target))
 		if(T in seen)
 			if(isAi && !cameranet.checkTurfVis(T))
 				continue
@@ -289,7 +318,7 @@
 				turfs += T
 				mobs += camera_get_mobs(T)
 
-	var/icon/temp = icon('icons/effects/96x96.dmi',"")
+	var/icon/temp = get_base_icon()
 	temp.Blend("#000", ICON_OVERLAY)
 	temp.Blend(camera_get_icon(turfs, target), ICON_OVERLAY)
 
@@ -314,6 +343,8 @@
 	P.desc = mobs
 	P.pixel_x = rand(-10, 10)
 	P.pixel_y = rand(-10, 10)
+	P.size = picture_size
+	P.size_px = picture_size_px
 
 	if(blueprints)
 		P.blueprints = 1
@@ -331,6 +362,7 @@
 	var/desc = mobs
 	var/pixel_x = rand(-10, 10)
 	var/pixel_y = rand(-10, 10)
+	var/size_px = picture_size_px
 
 	var/injectblueprints = 1
 	if(blueprints)
@@ -338,18 +370,15 @@
 		blueprints = 0
 
 	if(isAi)
-		injectaialbum(icon, img, desc, pixel_x, pixel_y, injectblueprints)
+		injectaialbum(icon, img, desc, pixel_x, pixel_y, injectblueprints, size_px)
 	else
-		injectmasteralbum(icon, img, desc, pixel_x, pixel_y, injectblueprints)
-
-
+		injectmasteralbum(icon, img, desc, pixel_x, pixel_y, injectblueprints, size_px)
 
 /datum/picture
 	var/name = "image"
 	var/list/fields = list()
 
-
-/obj/item/device/camera/proc/injectaialbum(icon, img, desc, pixel_x, pixel_y, blueprintsinject) //stores image information to a list similar to that of the datacore
+/obj/item/device/camera/proc/injectaialbum(icon, img, desc, pixel_x, pixel_y, blueprintsinject, size_px) //stores image information to a list similar to that of the datacore
 	var/numberer = 1
 	for(var/datum/picture in src.aipictures)
 		numberer++
@@ -361,11 +390,12 @@
 	P.fields["pixel_x"] = pixel_x
 	P.fields["pixel_y"] = pixel_y
 	P.fields["blueprints"] = blueprintsinject
+	P.fields["size_px"] = size_px
 
 	aipictures += P
 	usr << "<span class='unconscious'>Image recorded</span>"	//feedback to the AI player that the picture was taken
 
-/obj/item/device/camera/proc/injectmasteralbum(icon, img, desc, pixel_x, pixel_y, blueprintsinject) //stores image information to a list similar to that of the datacore
+/obj/item/device/camera/proc/injectmasteralbum(icon, img, desc, pixel_x, pixel_y, blueprintsinject, size_px) //stores image information to a list similar to that of the datacore
 	var/numberer = 1
 	var/mob/living/silicon/robot/C = src.loc
 	if(C.connected_ai)
@@ -379,6 +409,7 @@
 		P.fields["pixel_x"] = pixel_x
 		P.fields["pixel_y"] = pixel_y
 		P.fields["blueprints"] = blueprintsinject
+		P.fields["size_px"] = size_px
 
 		C.connected_ai.aicamera.aipictures += P
 		usr << "<span class='unconscious'>Image recorded and saved to remote database</span>"	//feedback to the Cyborg player that the picture was taken
@@ -425,9 +456,11 @@
 		viewpichelper(Ainfo)
 
 /obj/item/device/camera/afterattack(atom/target, mob/user, flag)
-	if(!on || !pictures_left || !isturf(target.loc))
+	if(!on || !pictures_left)
 		return
-
+	var/turf/T = locate(target.x,target.y,target.z)
+	if(!isturf(T))
+		return
 	captureimage(target, user, flag)
 
 	playsound(loc, pick('sound/items/polaroid1.ogg', 'sound/items/polaroid2.ogg'), 75, 1, -3)
