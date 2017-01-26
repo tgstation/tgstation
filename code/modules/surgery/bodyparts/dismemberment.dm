@@ -21,15 +21,14 @@
 	affecting.receive_damage(Clamp(brute_dam/2, 15, 50), Clamp(burn_dam/2, 0, 50)) //Damage the chest based on limb's existing damage
 	if(dam_type == BURN)
 		C.visible_message("<span class='danger'><B>[C]'s [src.name] has been burned to ash!</B></span>")
-	else
-		C.visible_message("<span class='danger'><B>[C]'s [src.name] has been violently dismembered!</B></span>")
-	C.emote("scream")
-	if(dam_type == BURN)
 		for(var/X in C.internal_organs)
 			var/obj/item/organ/O = X
 			var/org_zone = check_zone(O.zone)
 			if(org_zone == body_zone)
 				O.burn()
+	else
+		C.visible_message("<span class='danger'><B>[C]'s [src.name] has been violently dismembered!</B></span>")
+	C.emote("scream")
 	drop_limb()
 
 	if(dam_type == BURN)
