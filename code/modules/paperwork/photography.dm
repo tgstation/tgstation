@@ -156,7 +156,7 @@
 	return base
 
 /obj/item/device/camera/attack_self(mob/user)
-	if((picture_size =< picture_maxsize) && (picture_size > 0))
+	if((picture_size <= picture_maxsize) && (picture_size > 0))
 		picture_size++
 	else
 		picture_size = 1
