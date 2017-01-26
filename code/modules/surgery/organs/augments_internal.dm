@@ -156,8 +156,11 @@
 
 /obj/item/weapon/storage/box/cyber_implants/bundle
 	name = "boxed cybernetic implants"
-	var/list/boxed = list(/obj/item/organ/cyberimp/eyes/xray,/obj/item/organ/cyberimp/eyes/thermals,
-						/obj/item/organ/cyberimp/brain/anti_stun, /obj/item/organ/cyberimp/chest/reviver)
+	var/list/boxed = list(
+		/obj/item/organ/cyberimp/eyes/xray,
+		/obj/item/organ/cyberimp/eyes/thermals,
+		/obj/item/organ/cyberimp/brain/anti_stun,
+		/obj/item/organ/cyberimp/chest/reviver)
 	var/amount = 5
 
 /obj/item/weapon/storage/box/cyber_implants/bundle/New()

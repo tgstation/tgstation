@@ -1115,42 +1115,42 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 
 /datum/uplink_item/cyber_implants/spawn_item(turf/loc, obj/item/device/uplink/U)
 	if(item)
-		if(findtext(item, /obj/item/organ/cyberimp))
+		if(istype(item, /obj/item/organ/cyberimp))
 			return new /obj/item/weapon/storage/box/cyber_implants(loc, item)
 		else
 			return ..()
 
+
 /datum/uplink_item/cyber_implants/thermals
 	name = "Thermal Vision Implant"
-	desc = "These cybernetic eyes will give you thermal vision. They must be implanted via surgery."
+	desc = "These cybernetic eyes will give you thermal vision. Comes with a free autoimplanter."
 	item = /obj/item/organ/cyberimp/eyes/thermals
 	cost = 8
 
 /datum/uplink_item/cyber_implants/xray
 	name = "X-Ray Vision Implant"
-	desc = "These cybernetic eyes will give you X-ray vision. They must be implanted via surgery."
+	desc = "These cybernetic eyes will give you X-ray vision. Comes with an autoimplanter."
 	item = /obj/item/organ/cyberimp/eyes/xray
 	cost = 10
 
 /datum/uplink_item/cyber_implants/antistun
 	name = "CNS Rebooter Implant"
-	desc = "This implant will help you get back up on your feet faster after being stunned. \
-			It must be implanted via surgery."
+	desc = "This implant will help you get back up on your feet faster after being stunned. Comes with an autoimplanter."
 	item = /obj/item/organ/cyberimp/brain/anti_stun
 	cost = 12
 
 /datum/uplink_item/cyber_implants/reviver
 	name = "Reviver Implant"
-	desc = "This implant will attempt to revive you if you lose consciousness. It must be implanted via surgery."
+	desc = "This implant will attempt to revive you if you lose consciousness. Comes with an autoimplanter."
 	item = /obj/item/organ/cyberimp/chest/reviver
 	cost = 8
 
 /datum/uplink_item/cyber_implants/bundle
 	name = "Cybernetic Implants Bundle"
-	desc = "A random selection of cybernetic implants. Guaranteed 5 high quality implants. \
-			They must be implanted via surgery."
-	item = /obj/item/weapon/storage/box/cyber_implants
+	desc = "A random selection of cybernetic implants. Guaranteed 5 high quality implants. Comes with an autoimplanter."
+	item = /obj/item/weapon/storage/box/cyber_implants/bundle
 	cost = 40
+	cant_discount = TRUE
 
 // Pointless
 /datum/uplink_item/badass
