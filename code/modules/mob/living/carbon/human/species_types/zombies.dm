@@ -40,7 +40,7 @@
 			C.put_in_hands(zh)
 
 	// Next, deal with the source of this zombie corruption
-	var/obj/item/organ/body_egg/zombie_infection/infection
+	var/obj/item/organ/zombie_infection/infection
 	infection = C.getorganslot("zombie_infection")
 	if(!infection)
 		infection = new(C)

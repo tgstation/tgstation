@@ -45,7 +45,7 @@
 		// zombies)
 		return
 
-	var/obj/item/organ/body_egg/zombie_infection/infection
+	var/obj/item/organ/zombie_infection/infection
 	infection = target.getorganslot("zombie_infection")
 	if(!infection)
 		infection = new(target)
