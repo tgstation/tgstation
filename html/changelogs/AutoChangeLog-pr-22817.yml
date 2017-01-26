@@ -1,5 +1,0 @@
-author: "coiax"
-delete-after: True
-changes: 
-  - rscadd: "The nuclear operative cybernetic implant bundle now actually contains implants."
-  - rscdel: "The cybernetic implant bundle is no longer eligible for discounts (bundles are, in general, not eligible)."

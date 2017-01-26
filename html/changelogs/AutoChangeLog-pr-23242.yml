@@ -1,5 +1,0 @@
-author: "Tofa01 & XDTM"
-delete-after: True
-changes: 
-  - rscadd: "Adds radio alert messages going to medical channel to the cryo tube when a patient is fully restored."
-  - soundadd: "Adds new alert sound for cryo tube. (cryo_warning.ogg)"
