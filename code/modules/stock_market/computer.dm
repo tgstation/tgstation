@@ -20,6 +20,9 @@
 
 /obj/machinery/computer/stockexchange/attack_ai(mob/user)
 	return attack_hand(user)
+	
+/obj/machinery/computer/stockexchange/attack_robot(mob/user)
+	return attack_hand(user)
 
 /obj/machinery/computer/stockexchange/attack_hand(var/mob/user)
 	if(..())
