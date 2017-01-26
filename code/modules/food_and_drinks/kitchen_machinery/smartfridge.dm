@@ -450,8 +450,7 @@
 // ----------------------------
 /obj/machinery/smartfridge/disks
 	name = "disk compartmentalizer"
-	description = "A machine capable of storing a variety of disks. Denoted by most as the DSU (disk storage unit)."
-	item_state = "diskstorage"
+	desc = "A machine capable of storing a variety of disks. Denoted by most as the DSU (disk storage unit)."
 
 /obj/machinery/smartfridge/disks/accept_check(obj/item/O)
 	if(istype(O,/obj/item/weapon/disk/))
