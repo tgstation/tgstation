@@ -10,6 +10,7 @@ var/global/datum/getrev/revdata = new()
 	var/head_file = return_file_text(".git/logs/HEAD")
 	if(SERVERTOOLS && fexists("..\\prtestjob.lk"))
 		testmerge = file2list("..\\prtestjob.lk")
+		listclearnulls(testmerge)
 	var/testlen = max(testmerge.len - 1, 0)
 	var/regex/head_log = new("(\\w{40}) .+> (\\d{10}).+(?=(\n.*(\\w{40}).*){[testlen]}\n*\\Z)")
 	head_log.Find(head_file)
@@ -21,8 +22,7 @@ var/global/datum/getrev/revdata = new()
 	if(testmerge.len)
 		world.log << commit
 		for(var/line in testmerge)
-			if(line)
-				world.log << "Test merge active of PR #[line]"
+			world.log << "Test merge active of PR #[line]"
 		world.log << "Based off master commit [parentcommit]"
 	else
 		world.log << parentcommit
@@ -37,8 +37,7 @@ var/global/datum/getrev/revdata = new()
 		src << "<b>Server revision compiled on:</b> [revdata.date]"
 		if(revdata.testmerge.len)
 			for(var/line in revdata.testmerge)
-				if(line)
-					src << "Test merge active of PR <a href='[config.githuburl]/pull/[line]'>#[line]</a>"
+				src << "Test merge active of PR <a href='[config.githuburl]/pull/[line]'>#[line]</a>"
 			src << "Based off master commit <a href='[config.githuburl]/commit/[revdata.parentcommit]'>[revdata.parentcommit]</a>"
 		else
 			src << "<a href='[config.githuburl]/commit/[revdata.parentcommit]'>[revdata.parentcommit]</a>"
