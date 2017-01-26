@@ -461,6 +461,14 @@
 	category = "Mobility"
 	cost = 1
 
+/datum/spellbook_entry/item/voice_of_god
+	name = "Voice of a (Magical) God"
+	desc = "Magical vocal cords that compel the listener to do a variety of tasks. Powerful, but takes time to recharge, as well as being linked to your physical body. Use in hand to attach them."
+	item_path = /obj/item/organ/vocal_cords/colossus/wizard
+	log_name = "VG"
+	category = "Assistance"
+	cost = 3
+
 /datum/spellbook_entry/summon
 	name = "Summon Stuff"
 	category = "Rituals"
