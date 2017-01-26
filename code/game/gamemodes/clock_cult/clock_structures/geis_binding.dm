@@ -50,9 +50,6 @@
 		"<span class='warning'>A [name] appears around you!</span>[can_resist ? "\n<span class='userdanger'>Resist!</span>":""]")
 		if(!can_resist)
 			repair_and_interrupt()
-			if(iscarbon(M))
-				var/mob/living/carbon/C = M
-				C.silent += 4
 	else
 		var/obj/effect/overlay/temp/ratvar/geis_binding/G = new /obj/effect/overlay/temp/ratvar/geis_binding(M.loc)
 		var/obj/effect/overlay/temp/ratvar/geis_binding/T = new /obj/effect/overlay/temp/ratvar/geis_binding/top(M.loc)
@@ -89,6 +86,9 @@
 		var/mob/living/L = m
 		if(L)
 			L.Stun(1, 1, 1)
+			if(iscarbon(L))
+				var/mob/living/carbon/C = L
+				C.silent += 4
 	visible_message("<span class='sevtug'>[src] flares brightly!</span>")
 	var/obj/effect/overlay/temp/ratvar/geis_binding/G1 = new /obj/effect/overlay/temp/ratvar/geis_binding(loc)
 	var/obj/effect/overlay/temp/ratvar/geis_binding/G2 = new /obj/effect/overlay/temp/ratvar/geis_binding(loc)
