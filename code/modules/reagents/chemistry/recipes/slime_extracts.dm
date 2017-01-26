@@ -787,3 +787,16 @@
 	P.loc = get_turf(holder.my_atom)
 	..()
 
+/datum/chemical_reaction/slime/flight_potion
+	name = "Flight Potion"
+	id = "flightpotion"
+	required_reagents = list("water" = 1)
+	required_other = 1
+	required_container = /obj/item/slime_extract/rainbow
+
+/datum/chemical_reaction/slime/flight_potion/on_reaction(datum/reagents/holder)
+	feedback_add_details("slime_cores_used","[type]")
+	var/obj/item/weapon/reagent_containers/glass/bottle/potion/flight/P = new /obj/item/weapon/reagent_containers/glass/bottle/potion/flight
+	P.loc = get_turf(holder.my_atom)
+	..()
+
