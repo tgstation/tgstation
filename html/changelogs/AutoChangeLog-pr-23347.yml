@@ -1,0 +1,4 @@
+author: "Tofa01"
+delete-after: True
+changes: 
+  - bugfix: "Added missing row of pixels to Flypeople torso so head connects to body properly."
