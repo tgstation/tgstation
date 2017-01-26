@@ -20,6 +20,7 @@
 
 	var/can_be_pushed = TRUE
 	var/magpulsing = FALSE
+	var/can_trample = TRUE
 
 	var/did_feedback = FALSE
 	var/feedback_key
@@ -244,6 +245,7 @@
 	feedback_key = "cyborg_medical"
 	can_be_pushed = FALSE
 	hat_offset = 3
+	can_trample = FALSE
 
 /obj/item/weapon/robot_module/engineering
 	name = "Engineering"
@@ -316,6 +318,7 @@
 	moduleselect_icon = "janitor"
 	feedback_key = "cyborg_janitor"
 	hat_offset = -5
+	can_trample = FALSE //CLEAN
 
 /obj/item/weapon/reagent_containers/spray/cyborg_drying
 	name = "drying agent spray"
@@ -376,6 +379,7 @@
 			cyborg_base_icon = "kent"
 			special_light_key = "medical"
 			hat_offset = 3
+			can_trample = FALSE
 		if("Tophat")
 			cyborg_base_icon = "tophat"
 			special_light_key = null
@@ -416,6 +420,7 @@
 	moduleselect_icon = "malf"
 	can_be_pushed = FALSE
 	hat_offset = 3
+	can_trample = FALSE
 
 /datum/robot_energy_storage
 	var/name = "Generic energy storage"

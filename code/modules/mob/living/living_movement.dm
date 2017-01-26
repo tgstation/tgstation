@@ -8,7 +8,7 @@
 /mob/living/proc/trample(size_multiplier, trample_damage = TRAMPLE_DAMAGE) //tramples all lying mobs in the tile
 	if(world.time <= next_move)
 		return FALSE
-	if(m_intent != MOVE_INTENT_RUN || buckled || get_num_legs() < 2 || lying || incapacitated(TRUE, TRUE) || (movement_type & FLYING))
+	if(m_intent != MOVE_INTENT_RUN || buckled || get_num_legs() < 2 || lying || incapacitated(TRUE, TRUE) || (movement_type & FLYING) || !mob_has_gravity())
 		return FALSE
 	changeNext_move(CLICK_CD_RAPID)
 	var/list/targets = list()
@@ -21,11 +21,8 @@
 	shuffle(targets)
 	if(size_multiplier)
 		trample_damage *= size_multiplier //do more damage based on size; tiny mobs can't trample, bigger mobs can
-	var/tripchance = max((targets_len * 10) - (movement_delay() * (targets_len * 5)), 0) //for 5 targets, this is a 50% chance to trip minus an amount based on your movement delay
-	if(prob(tripchance) && Weaken(3, FALSE)) //don't update canmove immediately
-		for(var/obj/item/I in held_items)
-			accident(I)
-		update_canmove() //update it after throwing shit
+	var/tripchance = targets_len * 10
+	if(prob(tripchance) && Weaken(3))
 		trample_damage *= 0.5
 		tripchance = TRUE //did trip!
 	else
