@@ -181,7 +181,7 @@ Security Officer
 	L |= ..() | check_config_for_sec_maint()
 	return L
 
-var/list/available_depts = list("Engineering", "Supply", "Medical", "Science")
+var/list/available_depts = list(SEC_DEPT_ENGINEERING, SEC_DEPT_MEDICAL, SEC_DEPT_SCIENCE, SEC_DEPT_SUPPLY)
 
 /datum/job/officer/after_spawn(mob/living/carbon/human/H)
 	// Assign department security
