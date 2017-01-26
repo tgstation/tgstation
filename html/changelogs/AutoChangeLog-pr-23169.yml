@@ -1,0 +1,5 @@
+author: "XDTM"
+delete-after: True
+changes: 
+  - rscadd: "Voice of God has received a few more commands."
+  - rscadd: "You can now use job abbreviations (ex. hos > head of security) and first names (ex. Duke > Duke Hayka) to focus targets."
