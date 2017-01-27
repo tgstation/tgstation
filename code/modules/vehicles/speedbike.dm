@@ -7,8 +7,8 @@
 	var/image/overlay = null
 
 /obj/vehicle/space/speedbike/buckle_mob()
- 	. = ..()
-		riding_datum = new/datum/riding/space/speedbike
+	. = ..()
+	riding_datum = new/datum/riding/space/speedbike
 
 /obj/vehicle/space/speedbike/New()
 	. = ..()
