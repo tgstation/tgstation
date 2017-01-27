@@ -28,9 +28,21 @@
 	using.screen_loc = ui_swaphand_position(owner,2)
 	static_inventory += using
 
+	if(mymob.possible_a_intents)
+		if(mymob.possible_a_intents.len == 4)
+			// All possible intents - full intent selector
+			action_intent = new /obj/screen/act_intent/segmented
+		else
+			action_intent = new /obj/screen/act_intent
+			action_intent.icon = ui_style
+		action_intent.icon_state = mymob.a_intent
+		static_inventory += action_intent
+
+
 	zone_select = new /obj/screen/zone_sel()
 	zone_select.icon = ui_style
 	zone_select.update_icon(mymob)
+	static_inventory += zone_select
 
 	using = new /obj/screen/inventory/craft
 	using.icon = ui_style
