@@ -22,8 +22,8 @@ var/datum/subsystem/objects/SSobj
 
 /datum/subsystem/objects/Initialize(timeofdayl)
 	fire_overlay.appearance_flags = RESET_COLOR
-	trigger_atom_spawners()
 	setupGenetics() //to set the mutations' place in structural enzymes, so monkey.initialize() knows where to put the monkey mutation.
+	trigger_atom_spawners()
 	for(var/thing in world)
 		var/atom/A = thing
 		A.Initialize(TRUE)
