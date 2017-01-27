@@ -25,7 +25,7 @@ var/datum/subsystem/communications/SScommunications
 	if(!can_announce(user, is_silicon))
 		return FALSE
 	if(is_silicon)
-		minor_announce(input,"[user.name] Announces:")
+		minor_announce(html_decode(input),"[user.name] Announces:")
 		silicon_message_cooldown = world.time + COMMUNICATION_COOLDOWN_AI
 	else
 		priority_announce(html_decode(input), null, 'sound/misc/announce.ogg', "Captain")
