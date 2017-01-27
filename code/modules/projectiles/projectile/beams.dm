@@ -24,6 +24,10 @@
 		var/mob/living/carbon/M = target
 		M.IgniteMob()
 
+/obj/item/projectile/beam/mediumlaser
+	name = "medium laser"
+	damage = 30
+
 /obj/item/projectile/beam/weak
 	damage = 15
 	armour_penetration = 50
