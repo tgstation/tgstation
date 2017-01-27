@@ -28841,6 +28841,7 @@
 	icon_state = "alarm0";
 	pixel_x = -22
 	},
+/obj/item/device/destTagger,
 /turf/open/floor/plasteel/bot,
 /area/crew_quarters/kitchen)
 "aZU" = (
@@ -90108,6 +90109,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
+/obj/item/device/destTagger,
 /turf/open/floor/plasteel/warning{
 	dir = 1
 	},
@@ -90238,6 +90240,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
+/obj/item/device/destTagger,
 /turf/open/floor/plasteel/whiteyellow/corner,
 /area/medical/chemistry)
 "deT" = (
