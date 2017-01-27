@@ -237,7 +237,10 @@
 		areaInstance = null
 	. = ..()
 
-/obj/docking_port/mobile/initialize()
+/obj/docking_port/mobile/Initialize(mapload)
+	..()
+	if(!mapload)
+		return
 	var/area/A = get_area(src)
 	if(istype(A, /area/shuttle))
 		areaInstance = A
@@ -391,7 +394,7 @@
 /obj/docking_port/mobile/proc/create_ripples(obj/docking_port/stationary/S1)
 	var/list/turfs = ripple_area(S1)
 	for(var/t in turfs)
-		ripples += PoolOrNew(/obj/effect/overlay/temp/ripple, t)
+		ripples += new /obj/effect/overlay/temp/ripple(t)
 
 /obj/docking_port/mobile/proc/remove_ripples()
 	for(var/R in ripples)

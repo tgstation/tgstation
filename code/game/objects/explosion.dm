@@ -145,7 +145,7 @@ var/explosionid = 1
 
 		if(T)
 			if(flame_dist && prob(40) && !isspaceturf(T) && !T.density)
-				PoolOrNew(/obj/effect/hotspot, T) //Mostly for ambience!
+				new /obj/effect/hotspot(T) //Mostly for ambience!
 			if(dist > 0)
 				T.explosion_level = max(T.explosion_level, dist)	//let the bigger one have it
 				T.explosion_id = id
@@ -162,9 +162,7 @@ var/explosionid = 1
 				I.throw_speed = 4 //Temporarily change their throw_speed for embedding purposes (Reset when it finishes throwing, regardless of hitting anything)
 				I.throw_at(throw_at, throw_range, I.throw_speed)
 
-		if(world.tick_usage > CURRENT_TICKLIMIT)
-			stoplag()
-
+		if(TICK_CHECK)
 			var/circumference = (PI * init_dist * 2) + 8 //+8 to prevent shit gaps
 			if(exploded_this_tick.len > circumference)	//only do this every revolution
 				for(var/Unexplode in exploded_this_tick)

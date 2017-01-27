@@ -11,6 +11,8 @@ var/datum/subsystem/objects/SSobj
 	init_order = 12
 	priority = 40
 
+	var/initialized = FALSE
+	var/old_initialized
 	var/list/atom_spawners = list()
 	var/list/processing = list()
 	var/list/currentrun = list()
@@ -24,9 +26,17 @@ var/datum/subsystem/objects/SSobj
 	setupGenetics() //to set the mutations' place in structural enzymes, so monkey.initialize() knows where to put the monkey mutation.
 	for(var/thing in world)
 		var/atom/A = thing
-		A.initialize()
+		A.Initialize(TRUE)
 		CHECK_TICK
+	initialized = TRUE
 	. = ..()
+
+/datum/subsystem/objects/proc/map_loader_begin()
+	old_initialized = initialized
+	initialized = FALSE
+
+/datum/subsystem/objects/proc/map_loader_stop()
+	initialized = old_initialized
 
 /datum/subsystem/objects/proc/trigger_atom_spawners(zlevel, ignore_z=FALSE)
 	for(var/V in atom_spawners)
@@ -58,11 +68,14 @@ var/datum/subsystem/objects/SSobj
 
 /datum/subsystem/objects/proc/setup_template_objects(list/objects)
 	trigger_atom_spawners(0, ignore_z=TRUE)
-	for(var/A in objects)
-		var/atom/B = A
-		B.initialize()
+	if(initialized)
+		for(var/A in objects)
+			var/atom/B = A
+			B.Initialize(TRUE)
 
 /datum/subsystem/objects/Recover()
+	initialized = SSobj.initialized
+	old_initialized = SSobj.old_initialized
 	if (istype(SSobj.atom_spawners))
 		atom_spawners = SSobj.atom_spawners
 	if (istype(SSobj.processing))

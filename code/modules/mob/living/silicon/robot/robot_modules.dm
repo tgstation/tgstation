@@ -191,9 +191,9 @@
 
 /obj/item/weapon/robot_module/proc/do_transform_animation()
 	var/mob/living/silicon/robot/R = loc
-	var/obj/effect/overlay/temp/decoy/fading/fivesecond/ANM = PoolOrNew(/obj/effect/overlay/temp/decoy/fading/fivesecond, list(R.loc, R))
+	var/obj/effect/overlay/temp/decoy/fading/fivesecond/ANM = new /obj/effect/overlay/temp/decoy/fading/fivesecond(R.loc, R)
 	ANM.layer = R.layer - 0.01
-	PoolOrNew(/obj/effect/overlay/temp/small_smoke, R.loc)
+	new /obj/effect/overlay/temp/small_smoke(R.loc)
 	if(R.hat)
 		R.hat.forceMove(get_turf(R))
 		R.hat = null

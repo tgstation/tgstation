@@ -362,7 +362,7 @@
 
 /obj/machinery/door/airlock/cult/New()
 	..()
-	PoolOrNew(openingoverlaytype, src.loc)
+	new openingoverlaytype(src.loc)
 
 /obj/machinery/door/airlock/cult/canAIControl(mob/user)
 	return (iscultist(user) && !isAllPowerCut())
@@ -371,10 +371,10 @@
 	if(!density)
 		return 1
 	if(friendly || iscultist(M) || istype(M, /mob/living/simple_animal/shade) || isconstruct(M))
-		PoolOrNew(openingoverlaytype, loc)
+		new openingoverlaytype(loc)
 		return 1
 	else
-		PoolOrNew(/obj/effect/overlay/temp/cult/sac, loc)
+		new /obj/effect/overlay/temp/cult/sac(loc)
 		var/atom/throwtarget
 		throwtarget = get_edge_target_turf(src, get_dir(src, get_step_away(M, src)))
 		M << pick(sound('sound/hallucinations/turn_around1.ogg',0,1,50), sound('sound/hallucinations/turn_around2.ogg',0,1,50))
@@ -432,8 +432,8 @@
 /obj/machinery/door/airlock/clockwork/New()
 	..()
 	var/turf/T = get_turf(src)
-	PoolOrNew(/obj/effect/overlay/temp/ratvar/door, T)
-	PoolOrNew(/obj/effect/overlay/temp/ratvar/beam/door, T)
+	new /obj/effect/overlay/temp/ratvar/door(T)
+	new /obj/effect/overlay/temp/ratvar/beam/door(T)
 	change_construction_value(5)
 
 /obj/machinery/door/airlock/clockwork/Destroy()

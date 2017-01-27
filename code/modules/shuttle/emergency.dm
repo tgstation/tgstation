@@ -86,13 +86,12 @@
 
 	if((old_len != authorized.len) && !ENGINES_STARTED)
 		var/alert = (authorized.len > old_len)
+		var/repeal = (authorized.len < old_len)
 		var/remaining = auth_need - authorized.len
 		if(authorized.len && remaining)
-			minor_announce("[remaining] authorizations \
-				needed until shuttle is launched early", null, alert)
-		else
-			minor_announce("All authorizations to launch the shuttle \
-				early have been revoked.")
+			minor_announce("[remaining] authorizations needed until shuttle is launched early", null, alert)
+		if(repeal)
+			minor_announce("Early launch authorization revoked, [remaining] authorizations needed")
 
 /obj/machinery/computer/emergency_shuttle/proc/authorize(mob/user, source)
 	var/obj/item/weapon/card/id/ID = user.get_idcard()
@@ -427,8 +426,11 @@
 	var/edge_distance = 16
 	// Minimal distance from the map edge, setting this too low can result in shuttle landing on the edge and getting "sliced"
 
-/obj/docking_port/stationary/random/initialize()
+/obj/docking_port/stationary/random/Initialize(mapload)
 	..()
+	if(!mapload)
+		return
+
 	var/list/turfs = get_area_turfs(target_area)
 	var/turf/T = pick(turfs)
 
