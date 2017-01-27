@@ -438,7 +438,7 @@
 	icon = 'icons/obj/smooth_structures/clockwork_window.dmi'
 	icon_state = "clockwork_window_single"
 	resistance_flags = FIRE_PROOF | ACID_PROOF
-	max_integrity = 100
+	max_integrity = 80
 	armor = list(melee = 60, bullet = 25, laser = 0, energy = 0, bomb = 25, bio = 100, rad = 100, fire = 80, acid = 100)
 	explosion_block = 2 //fancy AND hard to destroy. the most useful combination.
 	glass_type = /obj/item/stack/tile/brass
@@ -495,7 +495,7 @@
 	canSmoothWith = null
 	fulltile = 1
 	dir = FULLTILE_WINDOW_DIR
-	max_integrity = 150
+	max_integrity = 120
 	level = 3
 	glass_amount = 2
 	made_glow = TRUE

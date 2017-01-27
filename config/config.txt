@@ -187,6 +187,10 @@ ALLOW_HOLIDAYS
 ##Uncomment to show the names of the admin sending a pm from IRC instead of showing as a stealthmin.
 #SHOW_IRC_NAME
 
+##Defines the ticklimit for subsystem initialization (In percents of a byond tick). Lower makes world start smoother. Higher makes it faster.
+##This is currently a testing optimized setting. A good value for production would be 98.
+TICK_LIMIT_MC_INIT 500
+
 ##Defines the ticklag for the world.  0.9 is the normal one, 0.5 is smoother.
 TICKLAG 0.5
 

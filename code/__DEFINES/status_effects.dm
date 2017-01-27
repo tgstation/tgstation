@@ -19,3 +19,5 @@
 /////////////
 // DEBUFFS //
 /////////////
+
+#define STATUS_EFFECT_SIGILMARK /datum/status_effect/sigil_mark
