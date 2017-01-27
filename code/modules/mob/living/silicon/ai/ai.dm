@@ -455,7 +455,7 @@ var/list/ai_list = list()
 			break
 		if(found)
 			break
-	world << "FOUND [found] SEARCH_RANGE [search_range] DOOR [D]
+	world << "FOUND [found] SEARCH_RANGE [search_range] DOOR [D]"
 	if(!istype(D))
 		src << "<span class='warning'>No door found!</span>"
 		return
