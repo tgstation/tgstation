@@ -426,6 +426,7 @@ var/list/ai_list = list()
 	if(href_list["opennear"])
 		var/mob/M = href_list["opennear"]
 		if(!istype(M))
+			src << "<span class='warning'>Target not found!</span>"
 			return
 		if(M in trackable_mobs())
 			open_nearest_door(M)
