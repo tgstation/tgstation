@@ -298,8 +298,10 @@ var/static/regex/firstname = new("^\[^\\s-\]+") //First word before whitespace o
 		a_intent = input
 	else
 		var/current_intent = possible_a_intents.Find(a_intent)
+
 		if(!current_intent)
-			return
+			// Failsafe. Just in case some badmin was playing with VV.
+			current_intent = 1
 
 		if(input == INTENT_HOTKEY_RIGHT)
 			current_intent += 1
