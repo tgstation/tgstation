@@ -21,7 +21,6 @@
 /mob/living/simple_animal/hostile/clockwork/fragment/New()
 	if(prob(1))
 		name = "anime fragment"
-		real_name = name
 		desc = "I-it's not like I want to show you the light of the Justiciar or anything, B-BAKA!"
 	..()
 	SetLuminosity(2,1)
