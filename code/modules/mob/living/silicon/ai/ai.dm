@@ -381,22 +381,11 @@ var/list/ai_list = list()
 			else
 				src << "<span class='notice'>Unable to locate the holopad.</span>"
 	if(href_list["track"])
-		var/string = href_list["track"]
-		trackable_mobs()
-		var/list/trackeable = list()
-		trackeable += track.humans + track.others
-		var/list/target = list()
-		for(var/I in trackeable)
-			var/mob/M = trackeable[I]
-			if(M.name == string)
-				target += M
-		if(name == string)
-			target += src
-		if(target.len)
-			ai_actual_track(pick(target))
+		var/mob/M = camera_lock_by_name(href_list["track"])
+		if(M)
+			ai_actual_track(M)
 		else
 			src << "Target is not on or near any active cameras on the station."
-		return
 	if(href_list["callbot"]) //Command a bot to move to a selected location.
 		if(call_bot_cooldown > world.time)
 			src << "<span class='danger'>Error: Your last call bot command is still processing, please wait for the bot to finish calculating a route.</span>"
@@ -415,7 +404,6 @@ var/list/ai_list = list()
 	if(href_list["botrefresh"]) //Refreshes the bot control panel.
 		botcall()
 		return
-
 	if (href_list["ai_take_control"]) //Mech domination
 		var/obj/mecha/M = locate(href_list["ai_take_control"])
 		if(controlled_mech)
@@ -424,14 +412,27 @@ var/list/ai_list = list()
 		if(M)
 			M.transfer_ai(AI_MECH_HACK,src, usr) //Called om the mech itself.
 	if(href_list["opennear"])
-		var/string = href_list["opennear"]
-		var/list/trackeable = shuffle(trackable_mobs())
-		for(var/mob/M in trackeable)
-			if(istype(M) && (M.name == string))
-				open_nearest_door(M)
-				return
-		src << "<span class='warning'>Target not found or not on active cameras!</span>"
-		return
+		var/mob/M = camera_lock_by_name(href_list["opennear"])
+		if(M)
+			open_nearest_door(M)
+		else
+			src << "<span class='warning'>Target not found or not on active cameras!</span>"
+
+/mob/living/silicon/ai/proc/camera_lock_by_name(namestring)
+	trackable_mobs()
+	var/list/trackable = list()
+	trackable += track.humans + track.others
+	var/list/targets = list()
+	for(var/I in trackable)
+		var/mob/M = trackable[I]
+		if(M.name == namestring)
+			targets += M
+	if(name = namestring)
+		targets += src
+	if(targets.len)
+		return pick(targets)
+	else
+		return FALSE
 
 /mob/living/silicon/ai/proc/open_nearest_door(mob/M)
 	if(stat == DEAD)
