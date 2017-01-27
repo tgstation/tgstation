@@ -275,7 +275,7 @@ Proc for attack log creation, because really why not
 			break
 
 		if(Tloc && (!target || Tloc != target.loc))
-			if(Uloc != Tloc && !drifting)
+			if((Uloc != Tloc || Tloc != user) && !drifting)
 				. = 0
 				break
 
