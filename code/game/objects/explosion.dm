@@ -6,6 +6,9 @@ var/explosionid = 1
 	epicenter = get_turf(epicenter)
 	if(!epicenter)
 		return
+	// an explosion originating in an explosion dampener would be snuffed out
+	if(epicenter.flags & EXPLOSION_PROOF)
+		return
 
 	// Archive the uncapped explosion for the doppler array
 	var/orig_dev_range = devastation_range
@@ -114,8 +117,10 @@ var/explosionid = 1
 
 	var/list/exploded_this_tick = list()	//open turfs that need to be blocked off while we sleep
 	for(var/turf/T in affected_turfs)
-
-		if (!T)
+		if(!T)
+			continue
+		// an explosion proof turf protects itself and its contents
+		if(T.flags & EXPLOSION_PROOF)
 			continue
 		var/init_dist = cheap_hypotenuse(T.x, T.y, x0, y0)
 		var/dist = init_dist
