@@ -21,6 +21,7 @@
  *		Toy xeno
  *      Kitty toys!
  *		Snowballs
+ *		Rubber ball (fetch for Ian)
  */
 
 
@@ -1396,3 +1397,49 @@
 
 /obj/item/toy/dummy/GetVoice()
 	return doll_name
+
+
+/obj/item/toy/rubber_ball //Spawns in the HoP's backpack. Use it to play fetch with Ian.
+	name = "red rubber ball"
+	desc = "A squeaky rubber ball. Slightly gnawed."
+	icon = 'icons/obj/toy.dmi'
+	icon_state = "rubber_ball"
+	w_class = WEIGHT_CLASS_TINY
+
+/obj/item/toy/rubber_ball/attack_self(mob/living/user)
+	user.visible_message("<span class='notice'>[user] squeezes [src]!</span>", "<span class='notice'>You squeeze [src].</span>")
+	playsound(user, "squeak", 50, 1)
+	user.changeNext_move(CLICK_CD_MELEE)
+	for(var/mob/living/simple_animal/pet/dog/corgi/Ian/I in view(5, user))
+		I.visible_message("<b>[I]</b> stares intensely at [src] in [user]'s hand.</b>", "<span class='narsie'>BALL?????</span>")
+		I.setDir(get_dir(I, user))
+
+/obj/item/toy/rubber_ball/throw_impact(atom/target)
+	playsound(src, 'sound/items/squeak_bounce.ogg', 50, 1)
+	if(!isliving(thrownby)) //No fetch without a thrower
+		return
+	for(var/mob/living/simple_animal/pet/dog/corgi/Ian/I in view(5, src)) //Fetch AI!
+		I.visible_message("<span class='danger'>[I] chases after [src]!</span>", "<span class='narsie'>BALL!!!!!</span>")
+		for(var/i = 0, i < 7, i++) //Limited number of steps
+			step_to(I, loc, 1)
+			sleep(3)
+			if(I.Adjacent(get_turf(src))) //grab dat ball
+				I.visible_message("<span class='notice'>[I] snatches up [src]!</span>")
+				playsound(I, 'sound/items/squeak_bounce.ogg', 50, 1)
+				I.movement_target = src
+				forceMove(I)
+				break
+		if(!I.movement_target || !thrownby)
+			I.visible_message("<span class='warning'>[I] loses interest.</span>")
+			if(loc == I)
+				forceMove(get_turf(I))
+			thrownby = null
+		else
+			for(var/i = 0, i < 7, i++)
+				step_to(I, thrownby, 1)
+				sleep(3)
+				if(I.Adjacent(thrownby)) //mission successful
+					I.visible_message("<span class='notice'>[I] drops [src] at [thrownby]'s feet!</span>", "<span class='narsie'>I'M A GOOD BOY!!!!!</span>")
+					I.movement_target.forceMove(get_turf(thrownby))
+					I.movement_target = null
+					return

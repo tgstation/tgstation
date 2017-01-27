@@ -359,6 +359,10 @@
 					if(isturf(S.loc) || ishuman(S.loc))
 						movement_target = S
 						break
+				for(var/obj/item/toy/rubber_ball/B in oview(src, 4))
+					if(isturf(B.loc) || ishuman(B.loc))
+						movement_target = B
+						break
 			if(movement_target)
 				stop_automated_movement = 1
 				step_to(src,movement_target,1)
@@ -387,6 +391,9 @@
 					else if(ishuman(movement_target.loc) )
 						if(prob(20))
 							emote("me", 1, "stares at [movement_target.loc]'s [movement_target] with a sad puppy-face")
+					else if(istype(movement_target, /obj/item/toy/rubber_ball/))
+						visible_message("<span class='notice'>[src] [pick("plays with", "gnaws", "bats around")] [movement_target].</span>")
+						playsound(movement_target, "squeak", 50, 1)
 
 		if(prob(1))
 			emote("me", 1, pick("dances around.","chases its tail!"))
