@@ -6,7 +6,7 @@
 	name = "meat"
 	desc = "A slab of meat"
 	icon_state = "meat"
-	dried_type = /obj/item/weapon/reagent_containers/food/snacks/sosjerky
+	dried_type = /obj/item/weapon/reagent_containers/food/snacks/sosjerky/healthy
 	bitesize = 3
 	list_reagents = list("nutriment" = 3)
 	cooked_type = /obj/item/weapon/reagent_containers/food/snacks/meat/steak/plain

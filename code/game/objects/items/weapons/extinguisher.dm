@@ -147,7 +147,7 @@
 
 		for(var/a=0, a<5, a++)
 			spawn(0)
-				var/obj/effect/particle_effect/water/W = PoolOrNew( /obj/effect/particle_effect/water, get_turf(src) )
+				var/obj/effect/particle_effect/water/W = new /obj/effect/particle_effect/water(get_turf(src))
 				var/turf/my_target = pick(the_targets)
 				if(precision)
 					the_targets -= my_target

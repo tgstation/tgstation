@@ -69,9 +69,9 @@
 
 /turf/open/floor/clockwork/New()
 	..()
-	PoolOrNew(/obj/effect/overlay/temp/ratvar/floor, src)
-	PoolOrNew(/obj/effect/overlay/temp/ratvar/beam, src)
-	realappearence = PoolOrNew(/obj/effect/clockwork/overlay/floor, src)
+	new /obj/effect/overlay/temp/ratvar/floor(src)
+	new /obj/effect/overlay/temp/ratvar/beam(src)
+	realappearence = new /obj/effect/clockwork/overlay/floor(src)
 	realappearence.linked = src
 	change_construction_value(1)
 
@@ -129,7 +129,7 @@
 	return ..()
 
 /turf/open/floor/clockwork/make_plating()
-	PoolOrNew(/obj/item/stack/tile/brass, src)
+	new /obj/item/stack/tile/brass(src)
 	return ..()
 
 /turf/open/floor/clockwork/narsie_act()

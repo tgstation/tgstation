@@ -319,24 +319,14 @@
 	O.screen_loc = screen_loc
 	return O
 
-/proc/Show2Group4Delay(obj/O, list/group, delay=0)
-	if(!isobj(O))
-		return
-	if(!group)
-		group = clients
-	for(var/client/C in group)
-		C.screen += O
-	if(delay)
-		spawn(delay)
-			for(var/client/C in group)
-				C.screen -= O
+/proc/remove_images_from_clients(image/I, list/show_to)
+	for(var/client/C in show_to)
+		C.images -= I
 
 /proc/flick_overlay(image/I, list/show_to, duration)
 	for(var/client/C in show_to)
 		C.images += I
-	spawn(duration)
-		for(var/client/C in show_to)
-			C.images -= I
+	addtimer(CALLBACK(GLOBAL_PROC, /.proc/remove_images_from_clients, I, show_to), duration)
 
 /proc/flick_overlay_view(image/I, atom/target, duration) //wrapper for the above, flicks to everyone who can see the target atom
 	var/list/viewing = list()
@@ -405,6 +395,27 @@
 
 	return new /datum/projectile_data(src_x, src_y, time, distance, power_x, power_y, dest_x, dest_y)
 
+/proc/showCandidatePollWindow(mob/dead/observer/G, poll_time, Question, list/candidates, ignore_category, time_passed)
+	set waitfor = 0
+
+	G << 'sound/misc/notice2.ogg' //Alerting them to their consideration
+	switch(ignore_category ? askuser(G,Question,"Please answer in [poll_time/10] seconds!","Yes","No","Never for this round", StealFocus=0, Timeout=poll_time) : askuser(G,Question,"Please answer in [poll_time/10] seconds!","Yes","No", StealFocus=0, Timeout=poll_time))
+		if(1)
+			G << "<span class='notice'>Choice registered: Yes.</span>"
+			if((world.time-time_passed)>poll_time)
+				G << "<span class='danger'>Sorry, you were too late for the consideration!</span>"
+				G << 'sound/machines/buzz-sigh.ogg'
+			else
+				candidates += G
+		if(2)
+			G << "<span class='danger'>Choice registered: No.</span>"
+		if(3)
+			var/list/L = poll_ignore[ignore_category]
+			if(!L)
+				poll_ignore[ignore_category] = list()
+			poll_ignore[ignore_category] += G.ckey
+			G << "<span class='danger'>Choice registered: Never for this round.</span>"
+
 /proc/pollCandidates(var/Question, var/jobbanType, var/datum/game_mode/gametypeCheck, var/be_special_flag = 0, var/poll_time = 300, var/ignore_category = null)
 	var/list/mob/dead/observer/candidates = list()
 	var/time_passed = world.time
@@ -423,24 +434,8 @@
 		if (jobbanType)
 			if(jobban_isbanned(G, jobbanType) || jobban_isbanned(G, "Syndicate"))
 				continue
-		spawn(0)
-			G << 'sound/misc/notice2.ogg' //Alerting them to their consideration
-			switch(ignore_category ? askuser(G,Question,"Please answer in [poll_time/10] seconds!","Yes","No","Never for this round", StealFocus=0, Timeout=poll_time) : askuser(G,Question,"Please answer in [poll_time/10] seconds!","Yes","No", StealFocus=0, Timeout=poll_time))
-				if(1)
-					G << "<span class='notice'>Choice registered: Yes.</span>"
-					if((world.time-time_passed)>poll_time)
-						G << "<span class='danger'>Sorry, you were too late for the consideration!</span>"
-						G << 'sound/machines/buzz-sigh.ogg'
-					else
-						candidates += G
-				if(2)
-					G << "<span class='danger'>Choice registered: No.</span>"
-				if(3)
-					var/list/L = poll_ignore[ignore_category]
-					if(!L)
-						poll_ignore[ignore_category] = list()
-					poll_ignore[ignore_category] += G.ckey
-					G << "<span class='danger'>Choice registered: Never for this round.</span>"
+
+		showCandidatePollWindow(G, poll_time, Question, candidates, ignore_category, time_passed)
 	sleep(poll_time)
 
 	//Check all our candidates, to make sure they didn't log off during the wait period.
