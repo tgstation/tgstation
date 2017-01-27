@@ -5,15 +5,16 @@
 	..(message)
 
 /mob/living/silicon/ai/compose_track_href(atom/movable/speaker, namepart)
-	. = ""
 	var/mob/M = speaker.GetSource()
 	if(M)
-		. += "<a href='?src=\ref[src];track=[html_encode(namepart)]'>"
+		return "<a href='?src=\ref[src];track=[html_encode(namepart)]'>"
+	return
 
-/mob/living/silicon/ai/proc/compose_open_href(atom/movable/speaker)
-	. = ""
+/mob/living/silicon/ai/compose_open_href(atom/movable/speaker)
 	var/mob/M = speaker.GetSource()
-	. += "</a><a href='?src=\ref[src];opennear=[speaker]'>\[<b>OPEN</b>\]</a>"
+	if(M)
+		return "</a><a href='?src=\ref[src];opennear=[M]'><b>OPEN</b></a>"
+	..()
 
 /mob/living/silicon/ai/compose_job(atom/movable/speaker, message_langs, raw_message, radio_freq)
 	//Also includes the </a> for AI hrefs, for convenience.
