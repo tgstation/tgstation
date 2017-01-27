@@ -12,22 +12,23 @@
 		return FALSE
 	changeNext_move(CLICK_CD_RANGE)
 	var/list/targets = list()
+	var/trip_chance = 0
 	for(var/mob/living/L in loc)
 		if(L.lying && L.mob_size <= mob_size)
 			targets += L
+			if(L.stat == CONSCIOUS)
+				trip_chance += 10
 	var/targets_len = LAZYLEN(targets)
 	if(!targets_len)
 		return FALSE
 	shuffle(targets)
-	var/tripchance = targets_len * 10
-	if(prob(tripchance) && Weaken(3, FALSE))
+	var/tripped = FALSE
+	if(prob(trip_chance) && Weaken(3, FALSE))
 		for(var/obj/item/I in held_items)
 			accident(I)
 		update_canmove()
 		trample_damage *= 0.5
-		tripchance = TRUE //did trip!
-	else
-		tripchance = FALSE //did not trip!
+		tripped = TRUE //did trip!
 	var/list/tramplemessage = list("<span class='danger'>")
 	var/list/tramplelogs = list()
 	for(var/i in targets)
@@ -50,7 +51,7 @@
 	add_logs(src, null, "trampled [tramplelogs.Join()]")
 	tramplemessage += " [targets_len == 1 ? "is":"are"] [trampled_verb] by [name]"
 	var/tramplermessage = "<span class='warning'>You [trample_verb] [targets_len == 1 ? "somebody":"multiple somebodies"]!</span>"
-	if(tripchance)
+	if(tripped)
 		tramplemessage += ", who trips!</span>"
 		tramplermessage = "<span class='userdanger'>You [trample_verb] [targets_len == 1 ? "somebody":"multiple somebodies"] and tripped!</span>"
 	else
