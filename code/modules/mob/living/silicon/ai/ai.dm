@@ -425,7 +425,7 @@ var/list/ai_list = list()
 			M.transfer_ai(AI_MECH_HACK,src, usr) //Called om the mech itself.
 	if(href_list["opennear"])
 		var/mob/M = href_list["opennear"]
-		if(!istype(M))
+		if(!M)
 			src << "<span class='warning'>Target not found!</span>"
 			return
 		if(M in trackable_mobs())
@@ -434,16 +434,28 @@ var/list/ai_list = list()
 			src << "<span class='warning'>Target not on cameras!</span>"
 
 /mob/living/silicon/ai/proc/open_nearest_door(mob/M)
+	if(stat == DEAD)
+		src << "You are dead!"
+		return
+	if(control_disabled)
+		src << "Wireless control is disabled!"
+		return
 	var/obj/machinery/door/airlock/D = null
 	var/found = FALSE
 	var/search_range = 0
-	for(search_range = 0, search_range < 5, search_range++)
-		for(var/obj/machinery/door/airlock/A in range(search_range,M))
+	for(search_range = 0, search_range < 6, search_range++)
+		world << "DEBUG: SEARCHING: RANGE AT [search_range]!"
+		for(var/obj/machinery/door/airlock/A in range(search_range,get_turf(M)))
+			if(!cameranet.checkTurfVis(get_turf(A)))
+				world << "DEBUG: [A] IS NOT ON CAMERAS! SKIPPING!"
+				continue
+			world << "DEBUG: FOUND [A]!"
 			D = A
 			found = TRUE
 			break
 		if(found)
 			break
+	world << "FOUND [found] SEARCH_RANGE [search_range] DOOR [D]
 	if(!istype(D))
 		src << "<span class='warning'>No door found!</span>"
 		return
