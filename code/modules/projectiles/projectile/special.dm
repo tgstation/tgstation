@@ -64,6 +64,17 @@
 		S.take_overall_damage(anti_armour_damage*0.75, anti_armour_damage*0.25)
 	return 1
 
+/obj/item/projectile/bullet/srmrocket
+	name ="SRM-8 Rocket"
+	desc = "Boom"
+	icon = 'icons/obj/grenade.dmi'
+	icon_state = "missile"
+	damage = 50
+
+/obj/item/projectile/bullet/srmrocket/on_hit(atom/target, blocked=0)
+	..()
+	explosion(target, 0, 0, 2, 4, 0)
+
 /obj/item/projectile/temp
 	name = "freeze beam"
 	icon_state = "ice_2"
