@@ -53,25 +53,25 @@
 		M.swap_hand()
 	return 1
 
-/obj/screen/inventory/craft
+/obj/screen/craft
 	name = "crafting menu"
 	icon = 'icons/mob/screen_midnight.dmi'
 	icon_state = "craft"
 	screen_loc = ui_crafting
 
-/obj/screen/inventory/craft/Click()
+/obj/screen/craft/Click()
 	var/mob/living/M = usr
 	if(isobserver(usr))
 		return
 	M.OpenCraftingMenu()
 
-/obj/screen/inventory/area_creator
+/obj/screen/area_creator
 	name = "create new area"
 	icon = 'icons/mob/screen_midnight.dmi'
 	icon_state = "area_edit"
 	screen_loc = ui_building
 
-/obj/screen/inventory/area_creator/Click()
+/obj/screen/area_creator/Click()
 	if(usr.incapacitated())
 		return 1
 	var/area/A = get_area(usr)

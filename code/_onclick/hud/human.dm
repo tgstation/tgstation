@@ -90,7 +90,7 @@
 	var/obj/screen/using
 	var/obj/screen/inventory/inv_box
 
-	using = new /obj/screen/inventory/craft
+	using = new /obj/screen/craft
 	using.icon = ui_style
 	static_inventory += using
 
@@ -99,7 +99,7 @@
 	wheels += using
 	static_inventory += using
 
-	using = new /obj/screen/inventory/area_creator
+	using = new /obj/screen/area_creator
 	using.icon = ui_style
 	static_inventory += using
 
