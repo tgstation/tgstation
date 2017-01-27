@@ -1,6 +1,0 @@
-author: "coiax"
-delete-after: True
-changes: 
-  - rscadd: "Telecrystals can be purchased in stacks of five and twenty."
-  - rscadd: "The entire stack of telecrystals are added to the uplink when
-charging them."

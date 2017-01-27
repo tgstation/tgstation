@@ -915,6 +915,7 @@
 #include "code\game\turfs\simulated\floor\plasteel_floor.dm"
 #include "code\game\turfs\simulated\floor\plating.dm"
 #include "code\game\turfs\simulated\floor\reinf_floor.dm"
+#include "code\game\turfs\simulated\floor\warning.dm"
 #include "code\game\turfs\simulated\floor\plating\asteroid.dm"
 #include "code\game\turfs\simulated\floor\plating\lava.dm"
 #include "code\game\turfs\simulated\floor\plating\misc_plating.dm"

@@ -1,4 +1,0 @@
-author: "Tofa01"
-delete-after: True
-changes: 
-  - tweak: "Moved Meta station AI MiniSat tracking beacon to AI MiniSat entrance. Should prevent being regular teleported into space."

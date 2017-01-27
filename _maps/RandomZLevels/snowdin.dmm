@@ -1,4 +1,4 @@
-//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
 "aa" = (
 /turf/closed/indestructible/rock/snow,
 /area/awaymission/snowdin)
@@ -3323,10 +3323,9 @@
 	},
 /area/awaymission/snowdin/sekret)
 "iX" = (
-/turf/open/floor/plasteel{
+/turf/open/floor/plasteel/warning{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
-/obj/effect/turf_decal/stripes/line,
 /area/awaymission/snowdin/sekret)
 "iY" = (
 /obj/machinery/light/small,
@@ -3599,21 +3598,17 @@
 	name = "Armory";
 	req_access_txt = "150"
 	},
-/turf/open/floor/plasteel/black{
+/turf/open/floor/plasteel/darkwarning{
 	baseturf = /turf/open/floor/plating/asteroid/snow;
+	dir = 9;
 	tag = "icon-warndark (NORTHWEST)"
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 9
 	},
 /area/awaymission/snowdin/sekret)
 "jJ" = (
-/turf/open/floor/plasteel/black{
+/turf/open/floor/plasteel/darkwarning{
 	baseturf = /turf/open/floor/plating/asteroid/snow;
+	dir = 5;
 	tag = "icon-warndark (NORTHEAST)"
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 5
 	},
 /area/awaymission/snowdin/sekret)
 "jK" = (
@@ -3650,8 +3645,7 @@
 	name = "Armory";
 	req_access_txt = "150"
 	},
-/turf/open/floor/plasteel/black,
-/obj/effect/turf_decal/stripes/line{
+/turf/open/floor/plasteel/darkwarning{
 	dir = 8
 	},
 /area/awaymission/snowdin/sekret)
@@ -3680,12 +3674,10 @@
 	},
 /area/awaymission/snowdin/sekret)
 "jS" = (
-/turf/open/floor/plasteel/black{
+/turf/open/floor/plasteel/darkwarning{
 	tag = "icon-warndark (EAST)";
+	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/snow
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
 	},
 /area/awaymission/snowdin/sekret)
 "jT" = (
@@ -3755,22 +3747,18 @@
 /obj/item/ammo_box/magazine/smgm9mm,
 /obj/item/ammo_box/a40mm,
 /obj/item/ammo_box/foambox/riot,
-/turf/open/floor/plasteel/black{
+/turf/open/floor/plasteel/darkwarning{
 	baseturf = /turf/open/floor/plating/asteroid/snow;
+	dir = 9;
 	tag = "icon-warndark (NORTHWEST)"
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 9
 	},
 /area/awaymission/snowdin/sekret)
 "kb" = (
 /obj/machinery/porta_turret/syndicate,
-/turf/open/floor/plasteel/black{
+/turf/open/floor/plasteel/darkwarning{
 	baseturf = /turf/open/floor/plating/asteroid/snow;
+	dir = 5;
 	tag = "icon-warndark (NORTHEAST)"
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 5
 	},
 /area/awaymission/snowdin/sekret)
 "kc" = (
@@ -3908,8 +3896,7 @@
 /obj/item/weapon/gun/ballistic/automatic/speargun,
 /obj/item/weapon/twohanded/spear,
 /obj/item/weapon/twohanded/spear,
-/turf/open/floor/plasteel/black,
-/obj/effect/turf_decal/stripes/line{
+/turf/open/floor/plasteel/darkwarning{
 	dir = 8
 	},
 /area/awaymission/snowdin/sekret)
@@ -4033,8 +4020,7 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/turf/open/floor/plasteel/black,
-/obj/effect/turf_decal/stripes/line{
+/turf/open/floor/plasteel/darkwarning{
 	dir = 8
 	},
 /area/awaymission/snowdin/sekret)
@@ -4093,8 +4079,7 @@
 	},
 /area/awaymission/snowdin/sekret)
 "kQ" = (
-/turf/open/floor/plasteel/black,
-/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/plasteel/darkwarning,
 /area/awaymission/snowdin/sekret)
 "kR" = (
 /obj/structure/table,
@@ -4106,24 +4091,20 @@
 /obj/structure/rack,
 /obj/item/weapon/gun/ballistic/automatic/mini_uzi,
 /obj/item/weapon/gun/ballistic/automatic/mini_uzi,
-/turf/open/floor/plasteel/black{
+/turf/open/floor/plasteel/darkwarning{
 	tag = "icon-warndark (SOUTHWEST)";
+	dir = 10;
 	baseturf = /turf/open/floor/plating/asteroid/snow
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 10
 	},
 /area/awaymission/snowdin/sekret)
 "kT" = (
 /obj/structure/rack,
 /obj/item/weapon/gun/ballistic/automatic/shotgun/bulldog/unrestricted,
 /obj/item/weapon/gun/ballistic/automatic/shotgun/bulldog/unrestricted,
-/turf/open/floor/plasteel/black{
+/turf/open/floor/plasteel/darkwarning{
 	tag = "icon-warndark (SOUTHEAST)";
+	dir = 6;
 	baseturf = /turf/open/floor/plating/asteroid/snow
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 6
 	},
 /area/awaymission/snowdin/sekret)
 "kU" = (
@@ -4720,10 +4701,8 @@
 	dir = 1
 	},
 /obj/item/ammo_casing/c10mm,
-/turf/open/floor/plasteel{
-	baseturf = /turf/open/floor/plating/asteroid/snow
-	},
-/obj/effect/turf_decal/stripes/line{
+/turf/open/floor/plasteel/warning{
+	baseturf = /turf/open/floor/plating/asteroid/snow;
 	dir = 8
 	},
 /area/awaymission/snowdin/sekret)
@@ -4880,10 +4859,8 @@
 "mH" = (
 /obj/structure/window/reinforced,
 /obj/item/ammo_casing/c10mm,
-/turf/open/floor/plasteel{
-	baseturf = /turf/open/floor/plating/asteroid/snow
-	},
-/obj/effect/turf_decal/stripes/line{
+/turf/open/floor/plasteel/warning{
+	baseturf = /turf/open/floor/plating/asteroid/snow;
 	dir = 8
 	},
 /area/awaymission/snowdin/sekret)
@@ -4966,10 +4943,8 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/turf/open/floor/plasteel{
-	baseturf = /turf/open/floor/plating/asteroid/snow
-	},
-/obj/effect/turf_decal/stripes/line{
+/turf/open/floor/plasteel/warning{
+	baseturf = /turf/open/floor/plating/asteroid/snow;
 	dir = 8
 	},
 /area/awaymission/snowdin/sekret)
@@ -5025,10 +5000,8 @@
 /obj/structure/window/reinforced,
 /obj/item/ammo_casing/c10mm,
 /obj/item/ammo_casing/c10mm,
-/turf/open/floor/plasteel{
-	baseturf = /turf/open/floor/plating/asteroid/snow
-	},
-/obj/effect/turf_decal/stripes/line{
+/turf/open/floor/plasteel/warning{
+	baseturf = /turf/open/floor/plating/asteroid/snow;
 	dir = 8
 	},
 /area/awaymission/snowdin/sekret)
@@ -5110,10 +5083,8 @@
 	dir = 1
 	},
 /obj/item/ammo_casing/a357,
-/turf/open/floor/plasteel{
-	baseturf = /turf/open/floor/plating/asteroid/snow
-	},
-/obj/effect/turf_decal/stripes/line{
+/turf/open/floor/plasteel/warning{
+	baseturf = /turf/open/floor/plating/asteroid/snow;
 	dir = 8
 	},
 /area/awaymission/snowdin/sekret)
@@ -5179,10 +5150,8 @@
 "ns" = (
 /obj/structure/window/reinforced,
 /obj/item/ammo_casing/a357,
-/turf/open/floor/plasteel{
-	baseturf = /turf/open/floor/plating/asteroid/snow
-	},
-/obj/effect/turf_decal/stripes/line{
+/turf/open/floor/plasteel/warning{
+	baseturf = /turf/open/floor/plating/asteroid/snow;
 	dir = 8
 	},
 /area/awaymission/snowdin/sekret)

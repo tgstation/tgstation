@@ -1,4 +1,4 @@
-//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
 "aa" = (
 /turf/open/space,
 /area/space)
@@ -210,11 +210,9 @@
 	name = "UO45 Central Hall"
 	})
 "at" = (
-/turf/open/floor/plasteel{
+/turf/open/floor/plasteel/warning{
+	dir = 1;
 	heat_capacity = 1e+006
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
 	},
 /area/awaycontent/a1{
 	has_gravity = 1;
@@ -4846,11 +4844,9 @@
 	})
 "hB" = (
 /obj/machinery/r_n_d/destructive_analyzer,
-/turf/open/floor/plasteel{
+/turf/open/floor/plasteel/warning{
+	dir = 1;
 	heat_capacity = 1e+006
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
 	},
 /area/awaycontent/a5{
 	has_gravity = 1;
@@ -4858,11 +4854,9 @@
 	})
 "hC" = (
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel{
+/turf/open/floor/plasteel/warning{
+	dir = 1;
 	heat_capacity = 1e+006
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
 	},
 /area/awaycontent/a5{
 	has_gravity = 1;
@@ -4870,22 +4864,18 @@
 	})
 "hD" = (
 /obj/machinery/r_n_d/protolathe,
-/turf/open/floor/plasteel{
+/turf/open/floor/plasteel/warning{
+	dir = 1;
 	heat_capacity = 1e+006
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
 	},
 /area/awaycontent/a5{
 	has_gravity = 1;
 	name = "UO45 Research"
 	})
 "hE" = (
-/turf/open/floor/plasteel/white{
+/turf/open/floor/plasteel/warnwhite{
+	dir = 8;
 	heat_capacity = 1e+006
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
 	},
 /area/awaycontent/a5{
 	has_gravity = 1;
@@ -5466,11 +5456,9 @@
 /obj/structure/sign/nosmoking_2{
 	pixel_x = -32
 	},
-/turf/open/floor/plasteel/white{
+/turf/open/floor/plasteel/warnwhite{
+	dir = 1;
 	heat_capacity = 1e+006
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
 	},
 /area/awaycontent/a5{
 	has_gravity = 1;
@@ -5484,11 +5472,9 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/turf/open/floor/plasteel/white{
+/turf/open/floor/plasteel/warnwhite{
+	dir = 1;
 	heat_capacity = 1e+006
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
 	},
 /area/awaycontent/a5{
 	has_gravity = 1;
@@ -5501,11 +5487,9 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/turf/open/floor/plasteel/white{
+/turf/open/floor/plasteel/warnwhite{
+	dir = 1;
 	heat_capacity = 1e+006
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
 	},
 /area/awaycontent/a5{
 	has_gravity = 1;
@@ -5518,11 +5502,9 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/turf/open/floor/plasteel/white{
+/turf/open/floor/plasteel/warnwhite/corner{
+	dir = 4;
 	heat_capacity = 1e+006
-	},
-/obj/effect/turf_decal/stripes/corner{
-	dir = 4
 	},
 /area/awaycontent/a5{
 	has_gravity = 1;
@@ -6265,11 +6247,9 @@
 	})
 "jF" = (
 /obj/structure/closet/l3closet/scientist,
-/turf/open/floor/plasteel{
+/turf/open/floor/plasteel/warning{
+	dir = 1;
 	heat_capacity = 1e+006
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
 	},
 /area/awaycontent/a6{
 	has_gravity = 1;
@@ -6277,11 +6257,9 @@
 	})
 "jG" = (
 /obj/structure/closet/l3closet/scientist,
-/turf/open/floor/plasteel{
+/turf/open/floor/plasteel/warning{
+	dir = 5;
 	heat_capacity = 1e+006
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 5
 	},
 /area/awaycontent/a6{
 	has_gravity = 1;
@@ -6925,11 +6903,9 @@
 	},
 /obj/item/device/assembly/prox_sensor,
 /obj/item/device/assembly/prox_sensor,
-/turf/open/floor/plasteel/black{
+/turf/open/floor/plasteel/darkwarning{
+	dir = 4;
 	heat_capacity = 1e+006
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
 	},
 /area/awaycontent/a6{
 	has_gravity = 1;
@@ -6950,11 +6926,9 @@
 "kA" = (
 /obj/structure/tank_dispenser/oxygen,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel{
+/turf/open/floor/plasteel/warning{
+	dir = 1;
 	heat_capacity = 1e+006
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
 	},
 /area/awaycontent/a6{
 	has_gravity = 1;
@@ -6967,11 +6941,9 @@
 	scrub_N2O = 0;
 	scrub_Toxins = 0
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/plasteel/warning{
+	dir = 1;
 	heat_capacity = 1e+006
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
 	},
 /area/awaycontent/a6{
 	has_gravity = 1;
@@ -6984,11 +6956,9 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/plasteel/warning{
+	dir = 1;
 	heat_capacity = 1e+006
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
 	},
 /area/awaycontent/a6{
 	has_gravity = 1;
@@ -7299,22 +7269,18 @@
 /obj/structure/sign/nosmoking_2{
 	pixel_x = -32
 	},
-/turf/open/floor/plasteel/white{
+/turf/open/floor/plasteel/warnwhite{
+	dir = 9;
 	heat_capacity = 1e+006
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 9
 	},
 /area/space)
 "la" = (
 /obj/machinery/shower{
 	pixel_y = 15
 	},
-/turf/open/floor/plasteel/white{
+/turf/open/floor/plasteel/warnwhite{
+	dir = 1;
 	heat_capacity = 1e+006
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
 	},
 /area/awaycontent/a5{
 	has_gravity = 1;
@@ -7324,11 +7290,9 @@
 /obj/structure/sink{
 	pixel_y = 25
 	},
-/turf/open/floor/plasteel/white{
+/turf/open/floor/plasteel/warnwhite{
+	dir = 5;
 	heat_capacity = 1e+006
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 5
 	},
 /area/awaycontent/a5{
 	has_gravity = 1;
@@ -7506,11 +7470,9 @@
 /obj/structure/sign/nosmoking_2{
 	pixel_x = -32
 	},
-/turf/open/floor/plasteel/black{
+/turf/open/floor/plasteel/darkwarning{
+	dir = 4;
 	heat_capacity = 1e+006
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
 	},
 /area/awaycontent/a6{
 	has_gravity = 1;
@@ -8176,11 +8138,9 @@
 	})
 "lZ" = (
 /obj/machinery/suit_storage_unit/engine,
-/turf/open/floor/plating{
+/turf/open/floor/plating/warnplate{
+	dir = 8;
 	heat_capacity = 1e+006
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
 	},
 /area/awaycontent/a3{
 	has_gravity = 1;
@@ -8197,11 +8157,9 @@
 	pixel_x = 3;
 	pixel_y = -7
 	},
-/turf/open/floor/plasteel/black{
+/turf/open/floor/plasteel/darkwarning{
+	dir = 4;
 	heat_capacity = 1e+006
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
 	},
 /area/awaycontent/a6{
 	has_gravity = 1;
@@ -8335,11 +8293,9 @@
 	})
 "ml" = (
 /obj/structure/closet/firecloset,
-/turf/open/floor/plasteel/white{
+/turf/open/floor/plasteel/warnwhite{
+	dir = 10;
 	heat_capacity = 1e+006
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 10
 	},
 /area/awaycontent/a5{
 	has_gravity = 1;
@@ -8353,11 +8309,9 @@
 	pixel_y = -32
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/white{
+/turf/open/floor/plasteel/warnwhite{
+	dir = 2;
 	heat_capacity = 1e+006
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 2
 	},
 /area/awaycontent/a5{
 	has_gravity = 1;
@@ -8365,11 +8319,9 @@
 	})
 "mn" = (
 /obj/structure/closet/emcloset,
-/turf/open/floor/plasteel/white{
+/turf/open/floor/plasteel/warnwhite{
+	dir = 6;
 	heat_capacity = 1e+006
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 6
 	},
 /area/awaycontent/a5{
 	has_gravity = 1;
@@ -8576,22 +8528,18 @@
 /obj/item/device/flashlight,
 /obj/item/device/flashlight,
 /obj/item/device/flashlight,
-/turf/open/floor/plasteel/black{
+/turf/open/floor/plasteel/darkwarning/corner{
+	dir = 8;
 	heat_capacity = 1e+006
-	},
-/obj/effect/turf_decal/stripes/corner{
-	dir = 8
 	},
 /area/awaycontent/a6{
 	has_gravity = 1;
 	name = "UO45 Gateway"
 	})
 "mC" = (
-/turf/open/floor/plasteel/black{
+/turf/open/floor/plasteel/darkwarning{
+	dir = 1;
 	heat_capacity = 1e+006
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
 	},
 /area/awaycontent/a6{
 	has_gravity = 1;
@@ -8607,11 +8555,9 @@
 	layer = 2.9
 	},
 /obj/item/weapon/tank/jetpack/carbondioxide,
-/turf/open/floor/plasteel/black{
+/turf/open/floor/plasteel/darkwarning{
+	dir = 1;
 	heat_capacity = 1e+006
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
 	},
 /area/awaycontent/a6{
 	has_gravity = 1;
@@ -8635,11 +8581,9 @@
 	layer = 2.9
 	},
 /obj/item/clothing/shoes/magboots,
-/turf/open/floor/plasteel/black{
+/turf/open/floor/plasteel/darkwarning{
+	dir = 1;
 	heat_capacity = 1e+006
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
 	},
 /area/awaycontent/a6{
 	has_gravity = 1;
@@ -8656,11 +8600,9 @@
 	layer = 2.9
 	},
 /obj/item/clothing/shoes/magboots,
-/turf/open/floor/plasteel/black{
+/turf/open/floor/plasteel/darkwarning{
+	dir = 1;
 	heat_capacity = 1e+006
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
 	},
 /area/awaycontent/a6{
 	has_gravity = 1;
@@ -8668,11 +8610,9 @@
 	})
 "mG" = (
 /obj/structure/reagent_dispensers/watertank,
-/turf/open/floor/plasteel/black{
+/turf/open/floor/plasteel/darkwarning{
+	dir = 1;
 	heat_capacity = 1e+006
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
 	},
 /area/awaycontent/a6{
 	has_gravity = 1;
@@ -8680,11 +8620,9 @@
 	})
 "mH" = (
 /obj/structure/reagent_dispensers/fueltank,
-/turf/open/floor/plasteel/black{
+/turf/open/floor/plasteel/darkwarning{
+	dir = 1;
 	heat_capacity = 1e+006
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
 	},
 /area/awaycontent/a6{
 	has_gravity = 1;
@@ -9435,11 +9373,9 @@
 	d2 = 4;
 	icon_state = "2-4"
 	},
-/turf/open/floor/plasteel/black{
+/turf/open/floor/plasteel/darkwarning/corner{
+	dir = 2;
 	heat_capacity = 1e+006
-	},
-/obj/effect/turf_decal/stripes/corner{
-	dir = 2
 	},
 /area/awaycontent/a3{
 	has_gravity = 1;
@@ -9462,11 +9398,9 @@
 	icon_state = "4-8";
 	pixel_x = 0
 	},
-/turf/open/floor/plasteel/black{
+/turf/open/floor/plasteel/darkwarning{
+	dir = 2;
 	heat_capacity = 1e+006
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 2
 	},
 /area/awaycontent/a3{
 	has_gravity = 1;
@@ -9478,11 +9412,9 @@
 	d2 = 8;
 	icon_state = "2-8"
 	},
-/turf/open/floor/plasteel/black{
+/turf/open/floor/plasteel/darkwarning/corner{
+	dir = 1;
 	heat_capacity = 1e+006
-	},
-/obj/effect/turf_decal/stripes/corner{
-	dir = 1
 	},
 /area/awaycontent/a3{
 	has_gravity = 1;
@@ -10117,11 +10049,9 @@
 	icon_state = "1-2";
 	pixel_y = 0
 	},
-/turf/open/floor/plasteel/black{
+/turf/open/floor/plasteel/darkwarning{
+	dir = 4;
 	heat_capacity = 1e+006
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
 	},
 /area/awaycontent/a3{
 	has_gravity = 1;
@@ -10166,11 +10096,9 @@
 	icon_state = "1-2";
 	pixel_y = 0
 	},
-/turf/open/floor/plasteel/black{
+/turf/open/floor/plasteel/darkwarning{
+	dir = 8;
 	heat_capacity = 1e+006
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
 	},
 /area/awaycontent/a3{
 	has_gravity = 1;
@@ -10524,11 +10452,9 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/black{
+/turf/open/floor/plasteel/darkwarning{
+	dir = 4;
 	heat_capacity = 1e+006
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
 	},
 /area/awaycontent/a3{
 	has_gravity = 1;
@@ -10609,11 +10535,9 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/turf/open/floor/plasteel/black{
+/turf/open/floor/plasteel/darkwarning{
+	dir = 8;
 	heat_capacity = 1e+006
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
 	},
 /area/awaycontent/a3{
 	has_gravity = 1;
@@ -10986,11 +10910,9 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/black{
+/turf/open/floor/plasteel/darkwarning/corner{
+	dir = 8;
 	heat_capacity = 1e+006
-	},
-/obj/effect/turf_decal/stripes/corner{
-	dir = 8
 	},
 /area/awaycontent/a3{
 	has_gravity = 1;
@@ -11006,11 +10928,9 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
 	dir = 4
 	},
-/turf/open/floor/plasteel/black{
+/turf/open/floor/plasteel/darkwarning{
+	dir = 1;
 	heat_capacity = 1e+006
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
 	},
 /area/awaycontent/a3{
 	has_gravity = 1;
@@ -11031,11 +10951,9 @@
 	icon_state = "intact";
 	dir = 10
 	},
-/turf/open/floor/plasteel/black{
+/turf/open/floor/plasteel/darkwarning{
+	dir = 1;
 	heat_capacity = 1e+006
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
 	},
 /area/awaycontent/a3{
 	has_gravity = 1;
@@ -11048,11 +10966,9 @@
 	icon_state = "4-8";
 	pixel_x = 0
 	},
-/turf/open/floor/plasteel/black{
+/turf/open/floor/plasteel/darkwarning{
+	dir = 1;
 	heat_capacity = 1e+006
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
 	},
 /area/awaycontent/a3{
 	has_gravity = 1;
@@ -11064,11 +10980,9 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
-/turf/open/floor/plasteel/black{
+/turf/open/floor/plasteel/darkwarning/corner{
+	dir = 4;
 	heat_capacity = 1e+006
-	},
-/obj/effect/turf_decal/stripes/corner{
-	dir = 4
 	},
 /area/awaycontent/a3{
 	has_gravity = 1;
@@ -13482,8 +13396,9 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/obj/effect/turf_decal/stripes/corner{
-	dir = 8
+/turf/open/floor/plasteel/caution/corner{
+	dir = 8;
+	heat_capacity = 1e+006
 	},
 /area/awaycontent/a2{
 	has_gravity = 1;
@@ -13499,8 +13414,9 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/obj/effect/turf_decal/stripes/corner{
-	dir = 8
+/turf/open/floor/plasteel/caution/corner{
+	dir = 8;
+	heat_capacity = 1e+006
 	},
 /area/awaycontent/a2{
 	has_gravity = 1;
@@ -13516,8 +13432,9 @@
 	pixel_x = 0;
 	pixel_y = -24
 	},
-/obj/effect/turf_decal/stripes/corner{
-	dir = 8
+/turf/open/floor/plasteel/caution/corner{
+	dir = 8;
+	heat_capacity = 1e+006
 	},
 /area/awaycontent/a2{
 	has_gravity = 1;
@@ -13525,8 +13442,9 @@
 	})
 "sI" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
-/obj/effect/turf_decal/stripes/corner{
-	dir = 8
+/turf/open/floor/plasteel/caution/corner{
+	dir = 8;
+	heat_capacity = 1e+006
 	},
 /area/awaycontent/a2{
 	has_gravity = 1;
@@ -14817,11 +14735,9 @@
 	})
 "us" = (
 /obj/structure/closet/firecloset,
-/turf/open/floor/plating{
+/turf/open/floor/plating/warnplate{
+	dir = 9;
 	heat_capacity = 1e+006
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 9
 	},
 /area/awaycontent/a5{
 	has_gravity = 1;
@@ -14832,11 +14748,9 @@
 	icon_state = "manifold";
 	dir = 8
 	},
-/turf/open/floor/plating{
+/turf/open/floor/plating/warnplate{
+	dir = 1;
 	heat_capacity = 1e+006
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
 	},
 /area/awaycontent/a5{
 	has_gravity = 1;
@@ -14849,11 +14763,9 @@
 	},
 /obj/structure/table/reinforced,
 /obj/item/weapon/wrench,
-/turf/open/floor/plating{
+/turf/open/floor/plating/warnplate{
+	dir = 5;
 	heat_capacity = 1e+006
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 5
 	},
 /area/awaycontent/a5{
 	has_gravity = 1;
@@ -14913,8 +14825,9 @@
 	name = "Tank Monitor";
 	sensors = list("UO45_n2_sensor" = "Nitrogen", "UO45_o2_sensor" = "Oxygen", "UO45_mix_sensor" = "Gas Mix Tank")
 	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 9
+/turf/open/floor/plasteel/caution{
+	dir = 9;
+	heat_capacity = 1e+006
 	},
 /area/awaycontent/a3{
 	has_gravity = 1;
@@ -15045,11 +14958,9 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating{
+/turf/open/floor/plating/warnplate{
+	dir = 8;
 	heat_capacity = 1e+006
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
 	},
 /area/awaycontent/a5{
 	has_gravity = 1;
@@ -15070,11 +14981,9 @@
 /obj/machinery/atmospherics/components/binary/valve{
 	dir = 2
 	},
-/turf/open/floor/plating{
+/turf/open/floor/plating/warnplate{
+	dir = 4;
 	heat_capacity = 1e+006
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
 	},
 /area/awaycontent/a5{
 	has_gravity = 1;
@@ -15184,8 +15093,9 @@
 	name = "Distribution and Waste Monitor";
 	sensors = list("UO45_air_sensor" = "Mixed Air Supply Tank", "UO45_distro_meter" = "Distribution Loop", "UO45_waste_meter" = "Waste Loop")
 	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
+/turf/open/floor/plasteel/caution{
+	dir = 8;
+	heat_capacity = 1e+006
 	},
 /area/awaycontent/a3{
 	has_gravity = 1;
@@ -15389,11 +15299,9 @@
 	})
 "vh" = (
 /obj/machinery/portable_atmospherics/scrubber,
-/turf/open/floor/plating{
+/turf/open/floor/plating/warnplate{
+	dir = 10;
 	heat_capacity = 1e+006
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 10
 	},
 /area/awaycontent/a5{
 	has_gravity = 1;
@@ -15404,10 +15312,9 @@
 	dir = 1
 	},
 /obj/machinery/portable_atmospherics/canister/air,
-/turf/open/floor/plating{
+/turf/open/floor/plating/warnplate{
 	heat_capacity = 1e+006
 	},
-/obj/effect/turf_decal/stripes/line,
 /area/awaycontent/a5{
 	has_gravity = 1;
 	name = "UO45 Research"
@@ -15417,11 +15324,9 @@
 	dir = 1
 	},
 /obj/machinery/portable_atmospherics/canister/air,
-/turf/open/floor/plating{
+/turf/open/floor/plating/warnplate{
+	dir = 6;
 	heat_capacity = 1e+006
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 6
 	},
 /area/awaycontent/a5{
 	has_gravity = 1;
@@ -15537,8 +15442,9 @@
 "vs" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/computer/atmos_alert,
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
+/turf/open/floor/plasteel/caution{
+	dir = 8;
+	heat_capacity = 1e+006
 	},
 /area/awaycontent/a3{
 	has_gravity = 1;
@@ -15842,8 +15748,9 @@
 	dir = 5
 	},
 /obj/machinery/computer/station_alert,
-/obj/effect/turf_decal/stripes/line{
-	dir = 10
+/turf/open/floor/plasteel/caution{
+	dir = 10;
+	heat_capacity = 1e+006
 	},
 /area/awaycontent/a3{
 	has_gravity = 1;
@@ -16919,11 +16826,9 @@
 	dir = 2;
 	id = "UO45_mining"
 	},
-/turf/open/floor/plating{
+/turf/open/floor/plating/warnplate{
+	dir = 4;
 	heat_capacity = 1e+006
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
 	},
 /area/awaycontent/a4{
 	has_gravity = 1;
@@ -16936,11 +16841,9 @@
 	input_dir = 4;
 	output_dir = 8
 	},
-/turf/open/floor/plating{
+/turf/open/floor/plating/warnplate{
+	dir = 5;
 	heat_capacity = 1e+006
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 5
 	},
 /area/awaycontent/a4{
 	has_gravity = 1;
@@ -16995,11 +16898,9 @@
 /obj/structure/sign/nosmoking_2{
 	pixel_x = -32
 	},
-/turf/open/floor/plating{
+/turf/open/floor/plating/warnplate{
+	dir = 4;
 	heat_capacity = 1e+006
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
 	},
 /area/awaycontent/a4{
 	has_gravity = 1;
@@ -17068,11 +16969,9 @@
 	dir = 1;
 	output_dir = 2
 	},
-/turf/open/floor/plating{
+/turf/open/floor/plating/warnplate{
+	dir = 5;
 	heat_capacity = 1e+006
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 5
 	},
 /area/awaycontent/a4{
 	has_gravity = 1;
@@ -17187,11 +17086,9 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/turf/open/floor/plating{
+/turf/open/floor/plating/warnplate{
+	dir = 4;
 	heat_capacity = 1e+006
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
 	},
 /area/awaycontent/a4{
 	has_gravity = 1;
@@ -17402,11 +17299,9 @@
 	input_dir = 8;
 	output_dir = 4
 	},
-/turf/open/floor/plating{
+/turf/open/floor/plating/warnplate{
+	dir = 5;
 	heat_capacity = 1e+006
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 5
 	},
 /area/awaycontent/a4{
 	has_gravity = 1;
@@ -17525,20 +17420,18 @@
 	})
 "yc" = (
 /obj/structure/ore_box,
-/turf/open/floor/plasteel{
+/turf/open/floor/plasteel/warning{
 	heat_capacity = 1e+006
 	},
-/obj/effect/turf_decal/stripes/line,
 /area/awaycontent/a4{
 	has_gravity = 1;
 	name = "UO45 Mining"
 	})
 "yd" = (
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel{
+/turf/open/floor/plasteel/warning{
 	heat_capacity = 1e+006
 	},
-/obj/effect/turf_decal/stripes/line,
 /area/awaycontent/a4{
 	has_gravity = 1;
 	name = "UO45 Mining"
@@ -17556,10 +17449,9 @@
 	pixel_y = 0
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel{
+/turf/open/floor/plasteel/warning{
 	heat_capacity = 1e+006
 	},
-/obj/effect/turf_decal/stripes/line,
 /area/awaycontent/a4{
 	has_gravity = 1;
 	name = "UO45 Mining"
