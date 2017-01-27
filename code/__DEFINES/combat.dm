@@ -98,7 +98,7 @@
 #define COMBAT_MESSAGE_RANGE 3
 
 //the define for trample damage, split between multiple mobs
-#define TRAMPLE_DAMAGE 2.5 //be aware that this is multiplied by mob size
+#define TRAMPLE_DAMAGE 5 //be aware that this is multiplied by mob size
 
 //Combat object defines
 
