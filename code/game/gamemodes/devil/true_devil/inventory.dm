@@ -1,5 +1,5 @@
 /mob/living/carbon/true_devil/doUnEquip(obj/item/I, force)
-	if(..(I,force))
+	if(..())
 		update_inv_hands()
 		return 1
 	return 0
