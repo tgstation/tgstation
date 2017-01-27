@@ -463,12 +463,12 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	else
 		client.view = world.view
 
-/mob/dead/observer/verb/add_view_range(input as text)
+/mob/dead/observer/verb/add_view_range(input as num)
 	set name = "Add View Range"
-
-	var/max_view = client.prefs.unlock_content ? 14 : 10
+	set hidden = TRUE
+	var/max_view = client.prefs.unlock_content ? GHOST_MAX_VIEW_RANGE_MEMBER : GHOST_MAX_VIEW_RANGE_DEFAULT
 	if(input)
-		client.view = Clamp(client.view + text2num(input), 1, max_view)
+		client.view = Clamp(client.view + input, 1, max_view)
 
 /mob/dead/observer/verb/boo()
 	set category = "Ghost"
