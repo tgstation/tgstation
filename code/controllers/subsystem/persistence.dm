@@ -80,10 +80,15 @@ var/datum/subsystem/persistence/SSpersistence
 	var/saved_json
 	chisel_messages_sav[MAP_NAME] >> saved_json
 
+	if(!saved_json)
+		return
+
 	var/saved_messages = json_decode(saved_json)
 
 	for(var/item in saved_messages)
 		var/turf/T = locate(item["x"], item["y"], ZLEVEL_STATION)
+		if(!isturf(T))
+			continue
 		if(locate(/obj/structure/chisel_message) in T)
 			continue
 		var/obj/structure/chisel_message/M = new(T)

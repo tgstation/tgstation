@@ -1,5 +1,5 @@
 /obj/item/soapstone
-	name = "soapstone"
+	name = "chisel"
 	desc = "Leave informative messages for the crew, including the crew of future shifts!\n(Not suitable for engraving on shuttles, off station or on cats. Side effects may include beatings, bannings and orbital bombardment.)"
 	icon = 'icons/obj/items.dmi'
 	icon_state = "soapstone"
@@ -7,6 +7,10 @@
 	throw_range = 5
 	w_class = WEIGHT_CLASS_TINY
 	var/tool_speed = 50
+
+/obj/item/soapstone/New()
+	. = ..()
+	name = pick("soapstone", "chisel", "chalk", "magic marker")
 
 /obj/item/soapstone/afterattack(atom/target, mob/user, proximity)
 	var/turf/T = get_turf(target)
