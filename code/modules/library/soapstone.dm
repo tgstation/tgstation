@@ -134,7 +134,6 @@
 /obj/structure/chisel_message/examine(mob/user)
 	..()
 	user << "<span class='warning'>[hidden_message]</span>"
-	user << "This message was engraved by <span class='name'>[creator_name]</span>."
 
 /obj/structure/chisel_message/Destroy()
 	if(persists)
