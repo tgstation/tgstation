@@ -291,8 +291,8 @@
 			changeNext_move(CLICK_CD_BREAKOUT)
 			last_special = world.time + CLICK_CD_BREAKOUT
 		if(type == 2)
-			changeNext_move(CLICK_CD_RANGED)
-			last_special = world.time + CLICK_CD_RANGED
+			changeNext_move(CLICK_CD_RANGE)
+			last_special = world.time + CLICK_CD_RANGE
 		cuff_resist(I)
 
 
