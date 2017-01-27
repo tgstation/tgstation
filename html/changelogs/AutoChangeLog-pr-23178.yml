@@ -1,4 +1,0 @@
-author: "Joan"
-delete-after: True
-changes: 
-  - tweak: "Invoking Inath-neq and Invoking Nzcrentr now both take 10 seconds to invoke, from 15."
