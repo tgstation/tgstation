@@ -191,6 +191,13 @@
 /turf/open/floor/plasteel/escape/corner
 	icon_state = "escapecorner"
 
+
+/turf/open/floor/plasteel/caution
+	icon_state = "caution"
+/turf/open/floor/plasteel/caution/corner
+	icon_state = "cautioncorner"
+
+
 /turf/open/floor/plasteel/whitebot
 	icon_state = "whitebot"
 /turf/open/floor/plasteel/whitebot/delivery
