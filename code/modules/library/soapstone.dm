@@ -8,9 +8,26 @@
 	w_class = WEIGHT_CLASS_TINY
 	var/tool_speed = 50
 
+	var/w_engrave = "engrave"
+	var/w_engraving = "engraving"
+	var/w_chipping = "chipping"
+
 /obj/item/soapstone/New()
 	. = ..()
+	random_name()
+
+/obj/item/soapstone/proc/random_name()
 	name = pick("soapstone", "chisel", "chalk", "magic marker")
+	if(name == "chalk" || name == "magic marker")
+		desc = replacetext(desc, "engraving", "scribbling")
+		w_engrave = "scribble"
+		w_engraving = "scribbling"
+		w_chipping = "sketching"
+	if(name == "soapstone" || name == "chisel")
+		desc = replacetext(desc, "scribbling", "engraving")
+		w_engrave = initial(w_engrave)
+		w_engraving = initial(w_engraving)
+		w_chipping = initial(w_chipping)
 
 /obj/item/soapstone/afterattack(atom/target, mob/user, proximity)
 	var/turf/T = get_turf(target)
@@ -20,11 +37,11 @@
 	var/obj/structure/chisel_message/already_message = locate(/obj/structure/chisel_message) in T
 
 	if(!good_chisel_message_location(T))
-		user << "<span class='warning'>It's not appropriate to engrave on [T].</span>"
+		user << "<span class='warning'>It's not appropriate to [w_engrave] on [T].</span>"
 		return
 
 	if(already_message)
-		user.visible_message("<span class='notice'>[user] starts erasing [already_message].</span>", "<span class='notice'>You start erasing [already_message].</span>", "<span class='italics'>You hear a chipping sound.</span>")
+		user.visible_message("<span class='notice'>[user] starts erasing [already_message].</span>", "<span class='notice'>You start erasing [already_message].</span>", "<span class='italics'>You hear a [w_chipping] sound.</span>")
 		playsound(loc, 'sound/items/gavel.ogg', 50, 1, -1)
 
 		if(do_after(user, tool_speed, target=target))
@@ -34,20 +51,20 @@
 			playsound(loc, 'sound/items/gavel.ogg', 50, 1, -1)
 		return
 
-	var/message = stripped_input(user, "What would you like to engrave?", "Chisel Message")
+	var/message = stripped_input(user, "What would you like to [w_engrave]?", "[name] Message")
 	if(!message)
-		user << "You decide not to chisel anything."
+		user << "You decide not to [w_engrave] anything."
 		return
 
 	if(!target.Adjacent(user) && locate(/obj/structure/chisel_message) in T)
-		user << "You decide not to chisel anything."
+		user << "You decide not to [w_engrave] anything."
 		return
 
 	playsound(loc, 'sound/items/gavel.ogg', 50, 1, -1)
-	user.visible_message("<span class='notice'>[user] starts engraving a message into [T].</span>", "You start engraving a message into [T].", "<span class='italics'>You hear a chipping sound.</span>")
+	user.visible_message("<span class='notice'>[user] starts [w_engraving] a message into [T].</span>", "You start [w_engraving] a message into [T].", "<span class='italics'>You hear a [w_chipping] sound.</span>")
 	if(do_after(user, tool_speed, target=T))
 		if(!locate(/obj/structure/chisel_message in T))
-			user << "You chisel a message into [T]."
+			user << "You [w_engrave] a message into [T]."
 			playsound(loc, 'sound/items/gavel.ogg', 50, 1, -1)
 			var/obj/structure/chisel_message/M = new(T)
 			M.register(user, message)
