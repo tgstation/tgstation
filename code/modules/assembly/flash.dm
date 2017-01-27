@@ -47,9 +47,12 @@
 	if(!crit_fail)
 		crit_fail = 1
 		update_icon()
+	if(ismob(loc))
+		var/mob/M = loc
+		M.visible_message("<span class='danger'>[src] burns out!</span>","<span class='userdanger'>[src] burns out!</span>")
+	else
 		var/turf/T = get_turf(src)
-		if(T)
-			T.visible_message("[src] burns out!")
+		T.visible_message("<span class='danger'>[src] burns out!</span>")
 
 
 /obj/item/device/assembly/flash/proc/flash_recharge(interval=10)
@@ -174,11 +177,11 @@
 
 /obj/item/device/assembly/flash/cyborg/attack(mob/living/M, mob/user)
 	..()
-	PoolOrNew(/obj/effect/overlay/temp/borgflash, get_turf(src))
+	new /obj/effect/overlay/temp/borgflash(get_turf(src))
 
 /obj/item/device/assembly/flash/cyborg/attack_self(mob/user)
 	..()
-	PoolOrNew(/obj/effect/overlay/temp/borgflash, get_turf(src))
+	new /obj/effect/overlay/temp/borgflash(get_turf(src))
 
 /obj/item/device/assembly/flash/cyborg/attackby(obj/item/weapon/W, mob/user, params)
 	return

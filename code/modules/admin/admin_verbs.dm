@@ -494,19 +494,21 @@ var/list/admin_verbs_hideable = list(
 	set name = "Drop Bomb"
 	set desc = "Cause an explosion of varying strength at your location."
 
-	var/list/choices = list("Small Bomb", "Medium Bomb", "Big Bomb", "Custom Bomb")
-	var/choice = input("What size explosion would you like to produce?") in choices
+	var/list/choices = list("Small Bomb (1, 2, 3, 3)", "Medium Bomb (2, 3, 4, 4)", "Big Bomb (3, 5, 7, 5)", "Maxcap", "Custom Bomb")
+	var/choice = input("What size explosion would you like to produce? WARNING: These ignore the maxcap") as null|anything in choices
 	var/turf/epicenter = mob.loc
 
 	switch(choice)
 		if(null)
 			return 0
-		if("Small Bomb")
-			explosion(epicenter, 1, 2, 3, 3)
-		if("Medium Bomb")
-			explosion(epicenter, 2, 3, 4, 4)
-		if("Big Bomb")
-			explosion(epicenter, 3, 5, 7, 5)
+		if("Small Bomb (1, 2, 3, 3)")
+			explosion(epicenter, 1, 2, 3, 3, TRUE, TRUE)
+		if("Medium Bomb (2, 3, 4, 4)")
+			explosion(epicenter, 2, 3, 4, 4, TRUE, TRUE)
+		if("Big Bomb (3, 5, 7, 5)")
+			explosion(epicenter, 3, 5, 7, 5, TRUE, TRUE)
+		if("Maxcap")
+			explosion(epicenter, MAX_EX_DEVESTATION_RANGE, MAX_EX_HEAVY_RANGE, MAX_EX_LIGHT_RANGE, MAX_EX_FLASH_RANGE)
 		if("Custom Bomb")
 			var/devastation_range = input("Devastation range (in tiles):") as null|num
 			if(devastation_range == null)
@@ -520,8 +522,11 @@ var/list/admin_verbs_hideable = list(
 			var/flash_range = input("Flash range (in tiles):") as null|num
 			if(flash_range == null)
 				return
+			if(devastation_range > MAX_EX_DEVESTATION_RANGE || heavy_impact_range > MAX_EX_HEAVY_RANGE || light_impact_range > MAX_EX_LIGHT_RANGE || flash_range > MAX_EX_FLASH_RANGE)
+				if(alert("Bomb is bigger than the maxcap. Continue?",,"Yes","No") != "Yes")
+					return
 			epicenter = mob.loc //We need to reupdate as they may have moved again
-			explosion(epicenter, devastation_range, heavy_impact_range, light_impact_range, flash_range)
+			explosion(epicenter, devastation_range, heavy_impact_range, light_impact_range, flash_range, TRUE, TRUE)
 	message_admins("[ADMIN_LOOKUPFLW(usr)] creating an admin explosion at [epicenter.loc].")
 	log_admin("[key_name(usr)] created an admin explosion at [epicenter.loc].")
 	feedback_add_details("admin_verb","DB") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
@@ -705,7 +710,6 @@ var/list/admin_verbs_hideable = list(
 		var/list/candidates
 		var/turf/open/floor/tile
 		var/j,k
-		var/mob/living/carbon/human/mob
 
 		for (var/i = 1 to amount)
 			j = 100
@@ -725,9 +729,8 @@ var/list/admin_verbs_hideable = list(
 						while ((!tile || !istype(tile)) && --k > 0)
 
 						if (tile)
-							mob = new/mob/living/carbon/human/interactive(tile)
-
-							testing("Spawned test mob with name \"[mob.name]\" at [tile.x],[tile.y],[tile.z]")
+							new/mob/living/carbon/human/interactive(tile)
+							testing("Spawned test mob at [tile.x],[tile.y],[tile.z]")
 			while (!area && --j > 0)
 
 /client/proc/toggle_AI_interact()

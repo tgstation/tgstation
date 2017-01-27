@@ -31,7 +31,7 @@
 			extinguishes_left--
 			H.visible_message("<span class='warning'>[H]'s suit automatically extinguishes them!</span>","<span class='warning'>Your suit automatically extinguishes you.</span>")
 			H.ExtinguishMob()
-			PoolOrNew(/obj/effect/particle_effect/water, get_turf(H))
+			new /obj/effect/particle_effect/water(get_turf(H))
 
 
 //I just want the light feature of the hardsuit helmet

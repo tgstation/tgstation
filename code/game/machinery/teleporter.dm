@@ -14,11 +14,10 @@
 
 /obj/machinery/computer/teleporter/New()
 	src.id = "[rand(1000, 9999)]"
-	link_power_station()
 	..()
-	return
 
-/obj/machinery/computer/teleporter/initialize()
+/obj/machinery/computer/teleporter/Initialize()
+	..()
 	link_power_station()
 
 /obj/machinery/computer/teleporter/Destroy()
@@ -235,7 +234,6 @@
 
 /obj/machinery/teleport/hub/New()
 	..()
-	link_power_station()
 	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/teleporter_hub(null)
 	B.apply_default_parts(src)
 
@@ -248,7 +246,8 @@
 							/obj/item/weapon/stock_parts/matter_bin = 1)
 	def_components = list(/obj/item/weapon/ore/bluespace_crystal = /obj/item/weapon/ore/bluespace_crystal/artificial)
 
-/obj/machinery/teleport/hub/initialize()
+/obj/machinery/teleport/hub/Initialize()
+	..()
 	link_power_station()
 
 /obj/machinery/teleport/hub/Destroy()
@@ -350,7 +349,6 @@
 	..()
 	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/teleporter_station(null)
 	B.apply_default_parts(src)
-	link_console_and_hub()
 
 /obj/item/weapon/circuitboard/machine/teleporter_station
 	name = "Teleporter Station (Machine Board)"
@@ -362,7 +360,8 @@
 							/obj/item/weapon/stock_parts/console_screen = 1)
 	def_components = list(/obj/item/weapon/ore/bluespace_crystal = /obj/item/weapon/ore/bluespace_crystal/artificial)
 
-/obj/machinery/teleport/station/initialize()
+/obj/machinery/teleport/station/Initialize()
+	..()
 	link_console_and_hub()
 
 /obj/machinery/teleport/station/RefreshParts()

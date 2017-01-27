@@ -177,20 +177,15 @@
 		if(id_icon)
 			W.icon_state = id_icon
 		if(id_access)
-			var/datum/job/jobdatum
 			for(var/jobtype in typesof(/datum/job))
 				var/datum/job/J = new jobtype
 				if(J.title == id_access)
-					jobdatum = J
+					W.access = J.get_access()
 					break
-			if(jobdatum)
-				W.access = jobdatum.get_access()
-			else
+		if(id_access_list)
+			if(!islist(W.access))
 				W.access = list()
-			if(id_access_list)
-				if(!W.access)
-					W.access = list()
-				W.access |= id_access_list
+			W.access |= id_access_list
 		if(id_job)
 			W.assignment = id_job
 		W.registered_name = H.real_name

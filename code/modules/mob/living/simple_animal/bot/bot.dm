@@ -302,7 +302,7 @@
 /mob/living/simple_animal/bot/emp_act(severity)
 	var/was_on = on
 	stat |= EMPED
-	PoolOrNew(/obj/effect/overlay/temp/emp, loc)
+	new /obj/effect/overlay/temp/emp(loc)
 	if(paicard)
 		paicard.emp_act(severity)
 		src.visible_message("[paicard] is flies out of [bot_name]!","<span class='warning'>You are forcefully ejected from [bot_name]!</span>")

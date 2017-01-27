@@ -1,4 +1,0 @@
-author: "Mervill"
-delete-after: True
-changes: 
-  - bugfix: "You will now lose the lawyer's speech bubble effect if you unequip the layer's badge"

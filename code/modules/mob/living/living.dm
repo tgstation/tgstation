@@ -829,9 +829,9 @@
 	. = ..()
 
 // Called when we are hit by a bolt of polymorph and changed
-// Generally the mob we are currently in, is about to be deleted
+// Generally the mob we are currently in is about to be deleted
 /mob/living/proc/wabbajack_act(mob/living/new_mob)
-	new_mob.name = name
+	new_mob.name = real_name
 	new_mob.real_name = real_name
 
 	if(mind)

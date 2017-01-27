@@ -37,7 +37,7 @@
 		A.original = target
 		A.current = curloc
 		if(!A.suppressed && firing_effect_type)
-			PoolOrNew(firing_effect_type, list(get_turf(src), chassis.dir))
+			new firing_effect_type(get_turf(src), chassis.dir)
 
 
 		var/spread = 0

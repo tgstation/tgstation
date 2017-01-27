@@ -38948,7 +38948,6 @@
 	name = "\improper MiniSat Foyer"
 	})
 "bps" = (
-/obj/item/device/radio/beacon,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
@@ -40295,6 +40294,7 @@
 	d2 = 8
 	},
 /obj/machinery/holopad,
+/obj/item/device/radio/beacon,
 /turf/open/floor/plasteel/black,
 /area/ai_monitored/turret_protected/tcomfoyer{
 	name = "\improper MiniSat Foyer"

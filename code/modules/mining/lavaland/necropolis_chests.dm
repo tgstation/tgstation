@@ -141,10 +141,10 @@
 	if(linked.z == CENTCOMM)
 		user << "[linked] is somewhere you can't go."
 
-	PoolOrNew(/obj/effect/particle_effect/smoke, user.loc)
+	new /obj/effect/particle_effect/smoke(user.loc)
 	user.forceMove(get_turf(linked))
 	feedback_add_details("warp_cube","[src.type]")
-	PoolOrNew(/obj/effect/particle_effect/smoke, user.loc)
+	new /obj/effect/particle_effect/smoke(user.loc)
 
 /obj/item/device/warp_cube/red
 	name = "red cube"
@@ -353,18 +353,11 @@
 	desc = "A boat used for traversing lava."
 	icon_state = "goliath_boat"
 	icon = 'icons/obj/lavaland/dragonboat.dmi'
-	keytype = /obj/item/weapon/oar
 	resistance_flags = LAVA_PROOF | FIRE_PROOF
 
-/obj/vehicle/lavaboat/relaymove(mob/user, direction)
-	var/turf/next = get_step(src, direction)
-	var/turf/current = get_turf(src)
-
-	if(istype(next, /turf/open/floor/plating/lava) || istype(current, /turf/open/floor/plating/lava)) //We can move from land to lava, or lava to land, but not from land to land
-		..()
-	else
-		user << "Boats don't go on land!"
-		return 0
+/obj/vehicle/lavaboat/buckle_mob()
+	. = ..()
+	riding_datum = new/datum/riding/boat
 
 /obj/item/weapon/oar
 	name = "oar"
@@ -408,11 +401,11 @@
 /obj/vehicle/lavaboat/dragon
 	name = "mysterious boat"
 	desc = "This boat moves where you will it, without the need for an oar."
-	keytype = null
 	icon_state = "dragon_boat"
-	generic_pixel_y = 2
-	generic_pixel_x = 1
-	vehicle_move_delay = 1
+
+/obj/vehicle/lavaboat/dragon/buckle_mob()
+	..()
+	riding_datum = new/datum/riding/boat/dragon
 
 //Potion of Flight
 /obj/item/weapon/reagent_containers/glass/bottle/potion
@@ -663,7 +656,7 @@
 		if(!istype(T))
 			return
 		if(!istype(T, turf_type))
-			var/obj/effect/overlay/temp/lavastaff/L = PoolOrNew(/obj/effect/overlay/temp/lavastaff, T)
+			var/obj/effect/overlay/temp/lavastaff/L = new /obj/effect/overlay/temp/lavastaff(T)
 			L.alpha = 0
 			animate(L, alpha = 255, time = create_delay)
 			user.visible_message("<span class='danger'>[user] points [src] at [T]!</span>")
@@ -739,6 +732,10 @@
 		user << "[choice] is already dead!"
 		used = FALSE
 		return
+	if(choice == user)
+		user << "You feel like writing your own name into a cursed death warrant would be unwise."
+		used = FALSE
+		return
 	else
 
 		var/mob/living/L = choice
@@ -810,7 +807,7 @@
 			timer = world.time + cooldown_time
 			if(isliving(target) && chaser_timer <= world.time) //living and chasers off cooldown? fire one!
 				chaser_timer = world.time + chaser_cooldown
-				PoolOrNew(/obj/effect/overlay/temp/hierophant/chaser, list(get_turf(user), user, target, chaser_speed, friendly_fire_check))
+				new /obj/effect/overlay/temp/hierophant/chaser(get_turf(user), user, target, chaser_speed, friendly_fire_check)
 				add_logs(user, target, "fired a chaser at", src)
 			else
 				addtimer(CALLBACK(src, .proc/cardinal_blasts, T, user), 0) //otherwise, just do cardinal blast
@@ -865,7 +862,7 @@
 			if(do_after(user, 50, target = user) && !beacon)
 				var/turf/T = get_turf(user)
 				playsound(T,'sound/magic/Blind.ogg', 200, 1, -4)
-				PoolOrNew(/obj/effect/overlay/temp/hierophant/telegraph/teleport, list(T, user))
+				new /obj/effect/overlay/temp/hierophant/telegraph/teleport(T, user)
 				beacon = new/obj/effect/hierophant(T)
 				user.update_action_buttons_icon()
 				user.visible_message("<span class='hierophant_warning'>[user] places a strange machine beneath [user.p_their()] feet!</span>", \
@@ -892,8 +889,8 @@
 	timer = world.time + 50
 	addtimer(CALLBACK(src, .proc/prepare_icon_update), 0)
 	beacon.icon_state = "hierophant_tele_on"
-	var/obj/effect/overlay/temp/hierophant/telegraph/edge/TE1 = PoolOrNew(/obj/effect/overlay/temp/hierophant/telegraph/edge, user.loc)
-	var/obj/effect/overlay/temp/hierophant/telegraph/edge/TE2 = PoolOrNew(/obj/effect/overlay/temp/hierophant/telegraph/edge, beacon.loc)
+	var/obj/effect/overlay/temp/hierophant/telegraph/edge/TE1 = new /obj/effect/overlay/temp/hierophant/telegraph/edge(user.loc)
+	var/obj/effect/overlay/temp/hierophant/telegraph/edge/TE2 = new /obj/effect/overlay/temp/hierophant/telegraph/edge(beacon.loc)
 	if(do_after(user, 40, target = user) && user && beacon)
 		var/turf/T = get_turf(beacon)
 		var/turf/source = get_turf(user)
@@ -905,8 +902,8 @@
 			addtimer(CALLBACK(src, .proc/prepare_icon_update), 0)
 			beacon.icon_state = "hierophant_tele_off"
 			return
-		PoolOrNew(/obj/effect/overlay/temp/hierophant/telegraph, list(T, user))
-		PoolOrNew(/obj/effect/overlay/temp/hierophant/telegraph, list(source, user))
+		new /obj/effect/overlay/temp/hierophant/telegraph(T, user)
+		new /obj/effect/overlay/temp/hierophant/telegraph(source, user)
 		playsound(T,'sound/magic/Wand_Teleport.ogg', 200, 1)
 		playsound(source,'sound/machines/AirlockOpen.ogg', 200, 1)
 		if(!do_after(user, 3, target = user) || !user || !beacon) //no walking away shitlord
@@ -927,13 +924,13 @@
 			beacon.icon_state = "hierophant_tele_off"
 			return
 		add_logs(user, beacon, "teleported self from ([source.x],[source.y],[source.z]) to")
-		PoolOrNew(/obj/effect/overlay/temp/hierophant/telegraph/teleport, list(T, user))
-		PoolOrNew(/obj/effect/overlay/temp/hierophant/telegraph/teleport, list(source, user))
+		new /obj/effect/overlay/temp/hierophant/telegraph/teleport(T, user)
+		new /obj/effect/overlay/temp/hierophant/telegraph/teleport(source, user)
 		for(var/t in RANGE_TURFS(1, T))
-			var/obj/effect/overlay/temp/hierophant/blast/B = PoolOrNew(/obj/effect/overlay/temp/hierophant/blast, list(t, user, TRUE)) //blasts produced will not hurt allies
+			var/obj/effect/overlay/temp/hierophant/blast/B = new /obj/effect/overlay/temp/hierophant/blast(t, user, TRUE) //blasts produced will not hurt allies
 			B.damage = 30
 		for(var/t in RANGE_TURFS(1, source))
-			var/obj/effect/overlay/temp/hierophant/blast/B = PoolOrNew(/obj/effect/overlay/temp/hierophant/blast, list(t, user, TRUE)) //but absolutely will hurt enemies
+			var/obj/effect/overlay/temp/hierophant/blast/B = new /obj/effect/overlay/temp/hierophant/blast(t, user, TRUE) //but absolutely will hurt enemies
 			B.damage = 30
 		for(var/mob/living/L in range(1, source))
 			addtimer(CALLBACK(src, .proc/teleport_mob, source, L, T, user), 0) //regardless, take all mobs near us along
@@ -978,10 +975,10 @@
 /obj/item/weapon/hierophant_club/proc/cardinal_blasts(turf/T, mob/living/user) //fire cardinal cross blasts with a delay
 	if(!T)
 		return
-	PoolOrNew(/obj/effect/overlay/temp/hierophant/telegraph/cardinal, list(T, user))
+	new /obj/effect/overlay/temp/hierophant/telegraph/cardinal(T, user)
 	playsound(T,'sound/effects/bin_close.ogg', 200, 1)
 	sleep(2)
-	PoolOrNew(/obj/effect/overlay/temp/hierophant/blast, list(T, user, friendly_fire_check))
+	new /obj/effect/overlay/temp/hierophant/blast(T, user, friendly_fire_check)
 	for(var/d in cardinal)
 		addtimer(CALLBACK(src, .proc/blast_wall, T, d, user), 0)
 
@@ -994,15 +991,15 @@
 	for(var/i in 1 to range)
 		if(!J)
 			return
-		PoolOrNew(/obj/effect/overlay/temp/hierophant/blast, list(J, user, friendly_fire_check))
+		new /obj/effect/overlay/temp/hierophant/blast(J, user, friendly_fire_check)
 		previousturf = J
 		J = get_step(previousturf, dir)
 
 /obj/item/weapon/hierophant_club/proc/aoe_burst(turf/T, mob/living/user) //make a 3x3 blast around a target
 	if(!T)
 		return
-	PoolOrNew(/obj/effect/overlay/temp/hierophant/telegraph, list(T, user))
+	new /obj/effect/overlay/temp/hierophant/telegraph(T, user)
 	playsound(T,'sound/effects/bin_close.ogg', 200, 1)
 	sleep(2)
 	for(var/t in RANGE_TURFS(1, T))
-		PoolOrNew(/obj/effect/overlay/temp/hierophant/blast, list(t, user, friendly_fire_check))
+		new /obj/effect/overlay/temp/hierophant/blast(t, user, friendly_fire_check)

@@ -155,7 +155,7 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 				var/list/shuttles = flatten_list(shuttle_templates)
 				var/datum/map_template/shuttle/S = locate(href_list["chosen_shuttle"]) in shuttles
 				if(S && istype(S))
-					if(SSshuttle.emergency.mode != SHUTTLE_CALL && SSshuttle.emergency.mode != SHUTTLE_RECALL && SSshuttle.emergency.mode != SHUTTLE_IDLE)
+					if(SSshuttle.emergency.mode != SHUTTLE_RECALL && SSshuttle.emergency.mode != SHUTTLE_IDLE)
 						usr << "It's a bit late to buy a new shuttle, don't you think?"
 						return
 					if(SSshuttle.shuttle_purchased)
@@ -478,7 +478,7 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 			if (src.currmsg)
 				dat += "<B>[src.messagetitle[src.currmsg]]</B><BR><BR>[src.messagetext[src.currmsg]]"
 				if (src.authenticated)
-					dat += "<BR><BR>\[ <A HREF='?src=\ref[src];operation=delmessage'>Delete \]"
+					dat += "<BR><BR>\[ <A HREF='?src=\ref[src];operation=delmessage'>Delete</a> \]"
 			else
 				src.state = STATE_MESSAGELIST
 				src.attack_hand(user)

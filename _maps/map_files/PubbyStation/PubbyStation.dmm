@@ -1,4 +1,4 @@
-//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aaa" = (
 /turf/open/space,
 /area/space)
@@ -24359,7 +24359,8 @@
 	id = "jangarage";
 	name = "Custodial Closet Shutters Control";
 	pixel_x = -25;
-	pixel_y = 0
+	pixel_y = 0;
+	req_access_txt = "26"
 	},
 /obj/structure/cable{
 	d1 = 2;
@@ -50391,7 +50392,8 @@
 	id = "jangarage";
 	name = "Custodial Closet Shutters Control";
 	pixel_x = 25;
-	pixel_y = 0
+	pixel_y = 0;
+	req_access_txt = "26"
 	},
 /turf/open/floor/plasteel/neutral/corner,
 /area/hallway/primary/central)

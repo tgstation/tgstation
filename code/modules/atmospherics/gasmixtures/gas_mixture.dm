@@ -38,7 +38,7 @@ var/list/gaslist_cache = null
 	var/volume //liters
 	var/last_share
 	var/tmp/fuel_burnt
-	var/atom/holder
+	var/datum/holder
 
 /datum/gas_mixture/New(volume = CELL_VOLUME)
 	..()
