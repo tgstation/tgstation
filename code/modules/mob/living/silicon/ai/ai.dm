@@ -424,14 +424,14 @@ var/list/ai_list = list()
 		if(M)
 			M.transfer_ai(AI_MECH_HACK,src, usr) //Called om the mech itself.
 	if(href_list["opennear"])
-		var/mob/M = href_list["opennear"]
-		if(!M)
-			src << "<span class='warning'>Target not found!</span>"
-			return
-		if(M in trackable_mobs())
-			open_nearest_door(M)
-		else
-			src << "<span class='warning'>Target not on cameras!</span>"
+		var/string = href_list["opennear"]
+		var/list/trackeable = shuffle(trackable_mobs())
+		for(var/mob/M in trackeable)
+			if(istype(M) && (M.name == string))
+				open_nearest_door(M)
+				return
+		src << "<span class='warning'>Target not found or not on active cameras!</span>"
+		return
 
 /mob/living/silicon/ai/proc/open_nearest_door(mob/M)
 	if(stat == DEAD)
@@ -444,18 +444,14 @@ var/list/ai_list = list()
 	var/found = FALSE
 	var/search_range = 0
 	for(search_range = 0, search_range < 6, search_range++)
-		world << "DEBUG: SEARCHING: RANGE AT [search_range]!"
 		for(var/obj/machinery/door/airlock/A in range(search_range,get_turf(M)))
 			if(!cameranet.checkTurfVis(get_turf(A)))
-				world << "DEBUG: [A] IS NOT ON CAMERAS! SKIPPING!"
 				continue
-			world << "DEBUG: FOUND [A]!"
 			D = A
 			found = TRUE
 			break
 		if(found)
 			break
-	world << "FOUND [found] SEARCH_RANGE [search_range] DOOR [D]"
 	if(!istype(D))
 		src << "<span class='warning'>No door found!</span>"
 		return
@@ -475,7 +471,7 @@ var/list/ai_list = list()
 		src << "<span class='warning'>Unable to open airlock: Door is physically constrained!</span>"
 		return
 	D.open()
-	src << "<span class='boldnotice'>Opening [D.name] for [M.name]!</span>"
+	//src << "<span class='boldnotice'>Opening [D.name] for [M.name]!</span>"
 
 /mob/living/silicon/ai/proc/switchCamera(obj/machinery/camera/C)
 
