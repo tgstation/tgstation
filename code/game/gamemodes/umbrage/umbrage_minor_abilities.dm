@@ -6,8 +6,7 @@
 	var/psi_cost = 0
 	var/blacklisted = 1 //If the ability isn't available from Divulge
 
-/datum/action/innate/umbrage/Activate() //When making a new umbrage ability, add ..() at the end of its Activate()
-	..()
+/datum/action/innate/umbrage/Activate() //When you're making an ability, put ..() in Activate() when you should be consuming psi
 	var/datum/umbrage/U = get_umbrage()
 	if(U)
 		U.use_psi(psi_cost)
@@ -27,7 +26,7 @@
 
 
 //Devour Will: After a brief charge-up, equips a dark bead.
-//	- The dark bead disappears after one second of no use.
+//	- The dark bead disappears after three seconds of no use.
 //	- Attacking someone using the dark bead will drain their thoughts.
 //	- This knocks them out as well as fully recharging psi.
 //	- Finally, they will be made vulnerable to Veil Mind for five ticks.
@@ -41,8 +40,6 @@
 	var/victims = list() //A list of people we've used the bead on recently; we can't drain them again so soon
 
 /datum/action/innate/umbrage/devour_will/IsAvailable()
-	if(!usr)
-		return
 	if(!usr.get_empty_held_indexes())
 		usr << "<span class='warning'>You need a free hand to create a dark bead!</span>"
 		return
@@ -74,11 +71,6 @@
 	blacklisted = 0
 	psi_cost = 30
 
-/datum/action/innate/umbrage/veil_mind/IsAvailable()
-	if(!usr)
-		return
-	return ..()
-
 /datum/action/innate/umbrage/veil_mind/Activate()
 	var/mob/living/carbon/human/H = usr
 	if(!H.can_speak_vocal())
@@ -107,23 +99,18 @@
 				L << "<span class='warning'>...but you can't hear it!</span>"
 			else
 				if(L.status_flags & FAKEDEATH)
-					usr << "<span class='velvet'><b>[L]</b> has become a veil.</span>"
-					L << "<span class='velvet_large'><b>ukq wna ieja jks</b></span>"
-					L << "<b>Your mind goes numb. Your thoughts go blank. You feel more vulnerable than you have ever felt. But then, you dream.\n\
-					You dream of a vast, empty Void in the deep of space. Stars do not tread there, for they fear what lies within.\n\
-					An ancient, unknowable being makes the Void its home. It has a name, but to speak it is heresy. It has a form, but to behold it is madness.\n\
-					You hear the voice of the Progenitor reach for you, and you are helpeless to resist its call. Your mind tears itself to tatters, and you know you are destined for much, much more.\n\
-					Your former allegiances are now forfeit. You serve the Progenitor above all else, and you must answer to its servants, the umbrages. Obey their every command, and perhaps you will soon be free...</b>"
-					L << sound('sound/magic/become_veil.ogg', volume = 50)
-					flash_color(L, flash_color = "#21007F", flash_time = 100)
+					if(ticker.mode.antag_veil(L))
+						usr << "<span class='velvet'><b>[L.real_name]</b> has become a veil!</span>"
 				else
 					L << "<span class='boldwarning'>...and it scrambles your thoughts!</span>"
 					L.dir = pick(cardinal)
 					L.confused += 2
+	..()
+	return 1
 
 
 
-//Demented Outburst: Deafens and confuses listeners. Even if they can't hear it, everyone will be knocked away and staggered by its force.
+//Demented Outburst: Deafens and confuses listeners. Even if they can't hear it, they will be thrown away and staggered by its force.
 /datum/action/innate/umbrage/demented_outburst
 	name = "Demented Outburst"
 	desc = "Deafens and confuses listeners, and knocks away everyone nearby. Incredibly loud.<br><br>Costs 80 psi."
@@ -131,11 +118,6 @@
 	check_flags = AB_CHECK_CONSCIOUS
 	blacklisted = 0
 	psi_cost = 80 //big boom = big cost
-
-/datum/action/innate/umbrage/demented_outburst/IsAvailable()
-	if(!usr)
-		return
-	return ..()
 
 /datum/action/innate/umbrage/demented_outburst/Activate()
 	usr.visible_message("<span class='warning'>[usr] begins to growl!</span>", "<span class='velvet_bold'>cap...</span><br>\

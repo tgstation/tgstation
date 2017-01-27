@@ -10,8 +10,8 @@
 
 /obj/item/weapon/umbrage_dark_bead/New()
 	..()
-	animate(src, alpha = 30, time = 10)
-	spawn(10)
+	animate(src, alpha = 30, time = 30)
+	spawn(30)
 		if(!eating)
 			loc << "<span class='warning'>You were too slow! [src] faded away.</span>"
 			qdel(src)
@@ -58,3 +58,48 @@
 			linked_ability.victims -= L
 			user << "<span class='notice'>[L] has recovered from their draining and is vulnerable to Devour Will again.</span>"
 	return 1
+
+
+//Psionic barrier: Created during Divulge. Has a regenerating health pool and protects the umbrage from harm.
+/obj/structure/psionic_barrier
+	name = "psionic barrier"
+	desc = "A violet tint to the air. It doesn't seem to have a physical presence."
+	obj_integrity = 200
+	max_integrity = 200
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "purplesparkles"
+	resistance_flags = FIRE_PROOF | LAVA_PROOF | UNACIDABLE
+	anchored = 1
+	opacity = 0
+	density = 1
+	mouse_opacity = 2
+
+/obj/structure/psionic_barrier/New()
+	..()
+	START_PROCESSING(SSprocessing, src)
+	QDEL_IN(src, 500)
+
+/obj/structure/psionic_barrier/Destroy()
+	if(!obj_integrity)
+		visible_message("<span class='warning'>[src] vanishes in a burst of violet energy!</span>")
+		playsound(src, 'sound/effects/hit_on_shattered_glass.ogg', 50, 1)
+		PoolOrNew(/obj/effect/overlay/temp/revenant/cracks, get_turf(src))
+	STOP_PROCESSING(SSprocessing, src)
+	return ..()
+
+/obj/structure/psionic_barrier/process()
+	obj_integrity = max(0, min(max_integrity, obj_integrity + 5))
+
+
+//Psionic vortex: Created during Divulge. Used for flavor.
+/obj/structure/fluff/psionic_vortex
+	name = "psionic vortex"
+	desc = "A swirling void streaked with violet energy. It seems harmless."
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "bhole3"
+	resistance_flags = FIRE_PROOF | LAVA_PROOF | UNACIDABLE
+	deconstructible = FALSE
+
+/obj/structure/fluff/psionic_vortex/New()
+	..()
+	QDEL_IN(src, 520)

@@ -51,6 +51,7 @@
 	else
 		return 0 //How are you doing this in the first place?
 	src << "<span class='velvet_bold'>saa'teo</span>"
+	listclearnulls(ticker.mode.umbrages_and_veils)
 	for(var/V in ticker.mode.umbrages_and_veils)
 		var/datum/mind/M = V
 		if(M.current.z != z || M.current.stat)

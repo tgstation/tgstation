@@ -81,9 +81,7 @@ Idea and initial code by Xhuis (my 3rd gamemode now...)
 	for(var/U in initial_umbrages)
 		var/datum/mind/umbrage_mind = U
 		var/mob/living/H = umbrage_mind.current
-		antag_umbrage(H)
-		umbrages += U //Temp.
-		umbrages_and_veils += U
+		antag_umbrage(H, 1)
 		greet_umbrage(H)
 		equip_umbrage(H)
 	..()
@@ -93,9 +91,25 @@ Idea and initial code by Xhuis (my 3rd gamemode now...)
 	if(!U)
 		return
 	U << "<span class='velvet_large'><b>You are an umbrage!</b></span>"
-	U << "<i>Use <b>.a</b> before your message to speak over the Mindlink.</i>"
+	U << "<i>Use <b>.a</b> before your messages to speak over the Mindlink. This only works across your current z-level.</i>"
 	U << "<i>Look for the info button in the top left of your screen if you need help.</i>"
 	return 1
+
+/datum/game_mode/proc/greet_veil(mob/living/V)
+	if(!V)
+		return
+	V << "<span class='velvet_large'><b>ukq wna ieja jks</b></span>" //"you are mine now"
+	V << "<b>Your mind goes numb. Your thoughts go blank. You feel utterly empty. \n\
+	A mind brushes against your own. You dream.\n\
+	Of a vast, empty Void in the deep of space.\n\
+	Something lies in the Void. Ancient. Unknowable. It watches you with hungry eyes. \n\
+	Eyes filled with stars.\n\
+	You feel a vast consciousness slowly consume your own and your mind rips itself apart.\n\
+	Serve the umbrages above all else. Your former allegiances are now forfeit. Their goal is yours, and yours is theirs.</b>"
+	V << "<i>Use <b>.a</b> before your messages to speak over the Mindlink. This only works across your current z-level.</i>"
+	V << "<i>Ask for help from your masters or fellows if you're new to this role.</i>"
+	V << sound('sound/magic/become_veil.ogg', volume = 50)
+	flash_color(V, flash_color = "#21007F", flash_time = 100)
 
 /datum/game_mode/proc/equip_umbrage(mob/living/U)
 	var/datum/umbrage/S = new
@@ -107,9 +121,28 @@ Idea and initial code by Xhuis (my 3rd gamemode now...)
 	D.Grant(U)
 	return
 
-/datum/game_mode/proc/antag_umbrage(mob/living/U)
 #warn Umbrages need antag datums when LeoZ finishes his rework
-	return
+/datum/game_mode/proc/antag_umbrage(mob/living/U, silent)
+	if(!U.mind)
+		return
+	if(!silent)
+		greet_umbrage(U)
+	var/datum/mind/M = U.mind
+	umbrages += M
+	umbrages_and_veils += M
+	M.special_role = "Umbrage"
+	return 1
+
+/datum/game_mode/proc/antag_veil(mob/living/U, silent)
+	if(!can_become_veil(U))
+		return
+	if(!silent)
+		greet_veil(U)
+	var/datum/mind/M = U.mind
+	veils += M
+	umbrages_and_veils += M
+	M.special_role = "Veil"
+	return 1
 
 ///////////
 // PROCS //
@@ -120,17 +153,33 @@ Idea and initial code by Xhuis (my 3rd gamemode now...)
 		var/datum/mind/T = V
 		if(T = M)
 			return 1
-	return 0
+	return
 
 /proc/is_veil(datum/mind/M)
 	for(var/V in ticker.mode.veils)
 		var/datum/mind/T = V
 		if(T = M)
 			return 1
-	return 0
+	return
 
 /proc/is_umbrage_or_veil(datum/mind/M)
 	return is_umbrage(M) || is_veil(M)
 
+/proc/can_become_veil(mob/living/M)
+	if(is_veil(M))
+		return
+	if(M.stat == DEAD || !M.mind || !M.client)
+		return
+	if(M.isloyal())
+		M.visible_message("<span class='warning'>[M] seems to resist an unseen force!</span>", \
+						"<b>Your mind goes numb. Your thoughts go blank. You feel utterly empty. \n\
+						A mind brushes against your own. You dream.\n\
+						Of a vast, empty Void in the deep of space.\n\
+						Something lies in the Void. Ancient. Unknowable. It watches you with hungry eyes. \n\
+						Eyes filled with stars.</b>\n\
+						<span class='boldwarning'>And not a single fuck was given.</span>")
+		return
+	return 1
+
 /proc/is_umbrage_progenitor(datum/mind/M)
-	return 0
+	return
