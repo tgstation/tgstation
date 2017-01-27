@@ -418,7 +418,7 @@
 	crate_name = "exile implant crate"
 
 /datum/supply_pack/security/armory/ionrifles
-	name = "Ion Carbines Crate
+	name = "Ion Carbines Crate"
 	cost = 2500
 	contains = list(/obj/item/weapon/gun/energy/ionrifle/carbine,
 					/obj/item/weapon/gun/energy/ionrifle/carbine)
