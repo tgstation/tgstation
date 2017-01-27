@@ -139,17 +139,17 @@
 		message_admins("Convert_roundtype failed due to round length. Limit is [config.midround_antag_time_check] minutes.")
 		return null
 
-	var/list/antag_canadates = list()
+	var/list/antag_candidates = list()
 
 	for(var/mob/living/carbon/human/H in living_crew)
 		if(H.client && H.client.prefs.allow_midround_antag)
-			antag_canadates += H
+			antag_candidates += H
 
-	if(!antag_canadates)
-		message_admins("Convert_roundtype failed due to no antag canadates.")
+	if(!antag_candidates)
+		message_admins("Convert_roundtype failed due to no antag candidates.")
 		return null
 
-	antag_canadates = shuffle(antag_canadates)
+	antag_candidates = shuffle(antag_candidates)
 
 	if(config.protect_roles_from_antagonist)
 		replacementmode.restricted_jobs += replacementmode.protected_jobs
@@ -162,7 +162,7 @@
 		if(!config.midround_antag[ticker.mode.config_tag])
 			round_converted = 0
 			return 1
-		for(var/mob/living/carbon/human/H in antag_canadates)
+		for(var/mob/living/carbon/human/H in antag_candidates)
 			replacementmode.make_antag_chance(H)
 		round_converted = 2
 		message_admins("-- IMPORTANT: The roundtype has been converted to [replacementmode.name], antagonists may have been created! --")

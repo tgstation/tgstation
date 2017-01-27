@@ -846,7 +846,7 @@ var/list/ai_list = list()
 			if(isturf(loc))
 				if(eyeobj)
 					client.eye = eyeobj
-					client.perspective = MOB_PERSPECTIVE
+					client.perspective = EYE_PERSPECTIVE
 				else
 					client.eye = client.mob
 					client.perspective = MOB_PERSPECTIVE
