@@ -101,9 +101,10 @@ Idea and initial code by Xhuis (my 3rd gamemode now...)
 	var/datum/umbrage/S = new
 	S.linked_mind = U.mind
 	U.mind.umbrage_psionics = S
-	for(var/V in subtypesof(/datum/action/innate/umbrage))
-		var/datum/action/innate/umbrage/A = new V
-		A.Grant(U)
+	var/datum/action/innate/umbrage/tutorial/T = new
+	T.Grant(U)
+	var/datum/action/innate/umbrage/divulge/D = new
+	D.Grant(U)
 	return
 
 /datum/game_mode/proc/antag_umbrage(mob/living/U)

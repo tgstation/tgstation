@@ -47,7 +47,7 @@
 		else
 			processed_message = "<span class='velvet_large'><b>\[Mindlink\] Progenitor [real_name]:</b> \"[message]\"</span>" //Progenitors get big spooky text
 	else if(is_veil(mind))
-		processed_message = "<span class='velvet'><b>\[Mindlink\] [real_name]:</b> \"[message]\""
+		processed_message = "<span class='velvet'><b>\[Mindlink\] [real_name]:</b> \"[message]\"</span>"
 	else
 		return 0 //How are you doing this in the first place?
 	src << "<span class='velvet_bold'>saa'teo</span>"

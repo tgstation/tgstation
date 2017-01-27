@@ -4,6 +4,7 @@
 	background_icon_state = "bg_alien"
 	buttontooltipstyle = "alien"
 	var/psi_cost = 0
+	var/blacklisted = 1 //If the ability isn't available from Divulge
 
 /datum/action/innate/umbrage/Activate() //When making a new umbrage ability, add ..() at the end of its Activate()
 	..()
@@ -36,6 +37,7 @@
 	button_icon_state = "umbrage_devour_will"
 	check_flags = AB_CHECK_RESTRAINED|AB_CHECK_STUNNED|AB_CHECK_LYING|AB_CHECK_CONSCIOUS
 	psi_cost = 20
+	blacklisted = 0
 	var/victims = list() //A list of people we've used the bead on recently; we can't drain them again so soon
 
 /datum/action/innate/umbrage/devour_will/IsAvailable()
@@ -69,6 +71,7 @@
 	desc = "Converts nearby eligible targets into thralls. To be eligible, they must be alive and recently drained by Devour Will.<br><br>Costs 30 psi."
 	button_icon_state = "umbrage_veil_mind"
 	check_flags = AB_CHECK_STUNNED|AB_CHECK_CONSCIOUS
+	blacklisted = 0
 	psi_cost = 30
 
 /datum/action/innate/umbrage/veil_mind/IsAvailable()
@@ -126,6 +129,7 @@
 	desc = "Deafens and confuses listeners, and knocks away everyone nearby. Incredibly loud.<br><br>Costs 80 psi."
 	button_icon_state = "umbrage_demented_outburst"
 	check_flags = AB_CHECK_CONSCIOUS
+	blacklisted = 0
 	psi_cost = 80 //big boom = big cost
 
 /datum/action/innate/umbrage/demented_outburst/IsAvailable()
