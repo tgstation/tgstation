@@ -50,37 +50,42 @@ def update_map(map_filepath, update_file=None, update_string=None, verbose=False
 def props_to_string(props):
     return "{{{0}}}".format(";".join([k+" = "+props[k] for k in props]))
 
-def string_to_props(propstring):
+#urgent todo: replace with actual parser, this is slow as janitor in crit
+split_re = re.compile('((?:[A-Za-z0-9_\-$]+)\s*=\s*(?:"(?:.+?)"|[^";]*)|@OLD)')
+
+def string_to_props(propstring,verbose = False):
     props = dict()
-    # this is obviously unsafe with shit like meme=";fuckyou" but this is
-    # simple tool
-    for raw_prop in propstring.split(';'):
+    for raw_prop in re.split(split_re,propstring):
+        if not raw_prop or raw_prop.strip() == ';':
+            continue
         prop = raw_prop.split('=', maxsplit=1)
         props[prop[0].strip()] = prop[1].strip() if len(prop) > 1 else None
+    if verbose:
+        print("{0} to {1}".format(propstring,props))
     return props
 
-def parse_rep_string(replacement_string):
+def parse_rep_string(replacement_string,verbose = False):
     # translates /blah/blah {meme = "test",} into path,prop dictionary tuple
     match = re.match(replacement_re, replacement_string)
     path = match.group(1)
     props = match.group(3)
     if props:
-        prop_dict = string_to_props(props)
+        prop_dict = string_to_props(props, verbose)
     else:
         prop_dict = dict()
     return path.strip(), prop_dict
 
 def update_path(mapdata, replacement_string, verbose=False):
     old_path_part, new_path_part = replacement_string.split(':', maxsplit=1)
-    old_path, old_path_props = parse_rep_string(old_path_part)
+    old_path, old_path_props = parse_rep_string(old_path_part,verbose)
     new_paths = dict()
     for replacement_def in new_path_part.split(','):
-        new_path, new_path_props = parse_rep_string(replacement_def)
+        new_path, new_path_props = parse_rep_string(replacement_def,verbose)
         new_paths[new_path] = new_path_props
 
     def replace_def(match):
         if match.group(2):
-            old_props = string_to_props(match.group(2))
+            old_props = string_to_props(match.group(2),verbose)
         else:
             old_props = dict()
         for filter_prop in old_path_props:
