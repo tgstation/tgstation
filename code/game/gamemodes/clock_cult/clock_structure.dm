@@ -76,6 +76,10 @@
 		return FAILED_UNFASTEN
 	return ..()
 
+/obj/structure/destructible/clockwork/powered/attack_ai(mob/user)
+	if(is_servant_of_ratvar(user))
+		attack_hand(user)
+
 /obj/structure/destructible/clockwork/attack_animal(mob/living/simple_animal/M)
 	if(is_servant_of_ratvar(M))
 		attack_hand(M)
@@ -157,10 +161,6 @@
 		user << "<span class='warning'>[src] needs to be disabled before it can be unsecured!</span>"
 		return FAILED_UNFASTEN
 	return ..()
-
-/obj/structure/destructible/clockwork/powered/attack_ai(mob/user)
-	if(is_servant_of_ratvar(user))
-		attack_hand(user)
 
 /obj/structure/destructible/clockwork/powered/proc/toggle(fast_process, mob/living/user)
 	if(user)
