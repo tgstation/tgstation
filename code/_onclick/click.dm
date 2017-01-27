@@ -388,7 +388,7 @@
 	if(modifier["shift"])
 		var/view = 0
 		if(delta_y > 0)
-			view = 1
-		else
 			view = -1
+		else
+			view = 1
 		add_view_range(view)
