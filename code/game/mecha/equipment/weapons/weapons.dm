@@ -278,6 +278,18 @@
 	randomspread = 1
 	projectile_delay = 2
 
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack
+	name = "\improper SRM-8 missile rack"
+	desc = "A weapon for combat exosuits. Shoots light explosive missiles."
+	icon_state = "mecha_missilerack"
+	origin_tech = "combat=5;materials=4;engineering=4"
+	projectile = /obj/item/projectile/bullet/srmrocket
+	fire_sound = 'sound/weapons/grenadelaunch.ogg'
+	projectiles = 8
+	projectile_energy_cost = 1000
+	equip_cooldown = 60
+
+
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher
 	var/missile_speed = 2
 	var/missile_range = 30
@@ -296,18 +308,6 @@
 //used for projectile initilisation (priming flashbang) and additional logging
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/proc/proj_init(var/obj/O)
 	return
-
-/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/missile_rack
-	name = "\improper SRM-8 missile rack"
-	desc = "A weapon for combat exosuits. Shoots light explosive missiles."
-	icon_state = "mecha_missilerack"
-	origin_tech = "combat=5;materials=4;engineering=4"
-	projectile = /obj/item/projectile/bullet/srmrocket
-	fire_sound = 'sound/weapons/grenadelaunch.ogg'
-	projectiles = 8
-	projectile_energy_cost = 1000
-	equip_cooldown = 60
-
 
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/flashbang
