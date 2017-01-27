@@ -18,11 +18,11 @@
 	var/global/list/possible_true_names = list("Servant", "Warden", "Serf", "Page", "Usher", "Knave", "Vassal", "Escort")
 	var/mob/living/host //The mob that the marauder is living inside of
 	var/recovering = FALSE //If the marauder is recovering from recalling
-	var/blockchance = 17 //chance to block melee attacks entirely
-	var/counterchance = 17 //chance to counterattack after blocking
+	var/blockchance = 17 //chance to block attacks entirely
+	var/counterchance = 30 //chance to counterattack after blocking
 	var/static/list/damage_heal_order = list(OXY, BURN, BRUTE, TOX) //we heal our host's damage in this order
-	playstyle_string = "<span class='sevtug'>You are a clockwork marauder</span><b>, a living extension of Sevtug's will. As a marauder, you are somewhat slow, but may block and or counter \
-	melee attacks, negating the damage and attacking for bonus damage, respectively, in addition to being immune to extreme temperatures and pressures. \
+	playstyle_string = "<span class='sevtug'>You are a clockwork marauder</span><b>, a living extension of Sevtug's will. As a marauder, you are somewhat slow, but may block attacks, \
+	and have a chance to also counter blocked melee attacks for extra damage, in addition to being immune to extreme temperatures and pressures. \
 	Your primary goal is to serve the creature that you are now a part of. You can use <span class='sevtug_small'><i>:b</i></span> to communicate silently with your master, \
 	but can only exit if your master calls your true name or if they are exceptionally damaged. \
 	\n\n\
@@ -273,17 +273,17 @@
 		playsound(src, 'sound/magic/clockwork/fellowship_armory.ogg', 30, 1, 0, 1) //clang
 		visible_message("<span class='boldannounce'>[src] blocks [target && istype(textobject, /obj/item) ? "[target]'s [textobject.name]":"\the [textobject]"]!</span>", \
 		"<span class='userdanger'>You block [target && istype(textobject, /obj/item) ? "[target]'s [textobject.name]":"\the [textobject]"]!</span>")
+		if(target && Adjacent(target))
+			if(prob(counterchance))
+				counterchance = initial(counterchance)
+				var/previousattacktext = attacktext
+				attacktext = "counters"
+				target.attack_animal(src)
+				attacktext = previousattacktext
+			else
+				counterchance = min(counterchance + initial(counterchance), 100)
 	else
 		blockchance = min(blockchance + initial(blockchance), 100)
-	if(target && Adjacent(target))
-		if(prob(counterchance))
-			counterchance = initial(counterchance)
-			var/previousattacktext = attacktext
-			attacktext = "counters"
-			target.attack_animal(src)
-			attacktext = previousattacktext
-		else
-			counterchance = min(counterchance + initial(counterchance), 100)
 	if(ratvar_awakens)
 		blockchance = 80
 		counterchance = 80

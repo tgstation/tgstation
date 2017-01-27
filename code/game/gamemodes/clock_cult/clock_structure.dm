@@ -76,7 +76,7 @@
 		return FAILED_UNFASTEN
 	return ..()
 
-/obj/structure/destructible/clockwork/powered/attack_ai(mob/user)
+/obj/structure/destructible/clockwork/attack_ai(mob/user)
 	if(is_servant_of_ratvar(user))
 		attack_hand(user)
 
