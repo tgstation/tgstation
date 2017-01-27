@@ -472,11 +472,9 @@
 		viewpichelper(Ainfo)
 
 /obj/item/device/camera/afterattack(atom/target, mob/user, flag)
-	if(!on || !pictures_left)
+	if(!on || !pictures_left || (!isturf(target) && !isturf(target.loc)))
 		return
-	var/turf/T = locate(target.x,target.y,target.z)
-	if(!isturf(T))
-		return
+
 	captureimage(target, user, flag)
 
 	playsound(loc, pick('sound/items/polaroid1.ogg', 'sound/items/polaroid2.ogg'), 75, 1, -3)
