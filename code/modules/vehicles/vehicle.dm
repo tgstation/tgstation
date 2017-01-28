@@ -25,7 +25,6 @@
 	icon_state = "key"
 	w_class = WEIGHT_CLASS_TINY
 
-
 //BUCKLE HOOKS
 /obj/vehicle/unbuckle_mob(mob/living/buckled_mob,force = 0)
 	if(riding_datum)
@@ -45,8 +44,8 @@
 	if(user.client)
 		user.client.view = view_range
 	if(riding_datum)
-		riding_datum.handle_vehicle_offsets()
 		riding_datum.ridden = src
+		riding_datum.handle_vehicle_offsets()
 
 //MOVEMENT
 /obj/vehicle/relaymove(mob/user, direction)
