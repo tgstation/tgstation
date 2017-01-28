@@ -79,7 +79,6 @@ var/global/datum/getrev/revdata = new()
 		if(has_pr_details)
 			details = ": '" + testmerge[line]["title"] + "' by " + testmerge[line]["user"]["login"]
 		. += "<a href='[config.githuburl]/pull/[line]'>#[line][details]</a><br/>"
-	. += "Based off master commit <a href='[config.githuburl]/commit/[parentcommit]'>[parentcommit]</a>"
 
 /client/verb/showrevinfo()
 	set category = "OOC"
@@ -90,8 +89,8 @@ var/global/datum/getrev/revdata = new()
 		src << "<b>Server revision compiled on:</b> [revdata.date]"
 		if(revdata.testmerge.len)
 			src << revdata.GetTestMergeInfo()
-		else
-			src << "<a href='[config.githuburl]/commit/[revdata.parentcommit]'>[revdata.parentcommit]</a>"
+			src << "Based off master commit:"
+		src << "<a href='[config.githuburl]/commit/[revdata.parentcommit]'>[revdata.parentcommit]</a>"
 	else
 		src << "Revision unknown"
 	src << "<b>Current Infomational Settings:</b>"
