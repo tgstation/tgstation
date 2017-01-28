@@ -63,7 +63,8 @@
 		laname = sanitizeSQL(H.lastattacker:real_name)
 		lakey = sanitizeSQL(H.lastattacker:key)
 	var/sqltime = time2text(world.realtime, "YYYY-MM-DD hh:mm:ss")
-	var/coord = "[H.x], [H.y], [H.z]"
+	var/url = "byond://[world.address]:[world.port]"
+	var/coord = "[H.x], [H.y], [H.z], [MAP_NAME], [url]"
 	//world << "INSERT INTO death (name, byondkey, job, special, pod, tod, laname, lakey, gender, bruteloss, fireloss, brainloss, oxyloss) VALUES ('[sqlname]', '[sqlkey]', '[sqljob]', '[sqlspecial]', '[sqlpod]', '[sqltime]', '[laname]', '[lakey]', '[H.gender]', [H.bruteloss], [H.getFireLoss()], [H.brainloss], [H.getOxyLoss()])"
 	establish_db_connection()
 	if(!dbcon.IsConnected())
@@ -98,7 +99,8 @@
 		laname = sanitizeSQL(H.lastattacker:real_name)
 		lakey = sanitizeSQL(H.lastattacker:key)
 	var/sqltime = time2text(world.realtime, "YYYY-MM-DD hh:mm:ss")
-	var/coord = "[H.x], [H.y], [H.z]"
+	var/url = "byond://[world.address]:[world.port]"
+	var/coord = "[H.x], [H.y], [H.z], [MAP_NAME], [url]"
 	//world << "INSERT INTO death (name, byondkey, job, special, pod, tod, laname, lakey, gender, bruteloss, fireloss, brainloss, oxyloss) VALUES ('[sqlname]', '[sqlkey]', '[sqljob]', '[sqlspecial]', '[sqlpod]', '[sqltime]', '[laname]', '[lakey]', '[H.gender]', [H.bruteloss], [H.getFireLoss()], [H.brainloss], [H.getOxyLoss()])"
 	establish_db_connection()
 	if(!dbcon.IsConnected())
