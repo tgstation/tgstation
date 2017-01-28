@@ -150,7 +150,7 @@
 			add_overlay(active_overlay)
 
 
-/obj/screen/inventory/hand/Click()
+/obj/screen/inventory/hand/Click(location, control, params)
 	// At this point in client Click() code we have passed the 1/10 sec check and little else
 	// We don't even know if it's a middle click
 	if(world.time <= usr.next_move)
@@ -160,9 +160,12 @@
 	if (istype(usr.loc,/obj/mecha)) // stops inventory actions in a mech
 		return 1
 
-	if(ismob(usr))
-		var/mob/M = usr
-		M.swap_hand(held_index)
+	if(hud.mymob.active_hand_index == held_index)
+		var/obj/item/I = hud.mymob.get_active_held_item()
+		if(I)
+			I.Click(location, control, params)
+	else
+		hud.mymob.swap_hand(held_index)
 	return 1
 
 /obj/screen/close
