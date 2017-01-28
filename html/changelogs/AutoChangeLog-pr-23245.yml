@@ -1,5 +1,0 @@
-author: "Joan"
-delete-after: True
-changes: 
-  - tweak: "Brass windows no longer start off anchored, but are constructed instantly."
-  - bugfix: "You can no longer stack multiple windows of the same direction on a tile."
