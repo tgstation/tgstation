@@ -214,7 +214,8 @@ Judgement: 12 servants, 5 caches, 300 CV, and any existing AIs are converted or 
 		if(!do_after(invoker, chant_interval, target = invoker))
 			break
 		clockwork_say(invoker, text2ratvar(pick(chant_invocations)), whispered)
-		chant_effects(i)
+		if(!chant_effects(i))
+			break
 	if(invoker && slab)
 		chant_end_effects()
 	return TRUE

@@ -76,8 +76,7 @@
 			new mineralType(src)
 		feedback_add_details("ore_mined","[mineralType]|[mineralAmt]")
 	ChangeTurf(turf_type, defer_change)
-	spawn(10)
-		AfterChange()
+	addtimer(CALLBACK(src, .proc/AfterChange), 1, TIMER_UNIQUE)
 	playsound(src, 'sound/effects/break_stone.ogg', 50, 1) //beautiful destruction
 	return
 
@@ -466,8 +465,7 @@
 			G.icon_state = "Gibtonite ore 2"
 
 	ChangeTurf(turf_type, defer_change)
-	spawn(10)
-		AfterChange()
+	addtimer(CALLBACK(src, .proc/AfterChange), 1, TIMER_UNIQUE)
 
 
 /turf/closed/mineral/gibtonite/volcanic

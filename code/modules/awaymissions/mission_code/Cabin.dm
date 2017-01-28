@@ -7,7 +7,7 @@
 	density = 0
 	var/active = 1
 
-/obj/structure/firepit/initialize()
+/obj/structure/firepit/Initialize()
 	..()
 	toggleFirepit()
 
@@ -17,7 +17,6 @@
 		toggleFirepit()
 	else
 		..()
-
 
 /obj/structure/firepit/attackby(obj/item/W,mob/living/user,params)
 	if(!active)
@@ -90,7 +89,7 @@
 	if(istype(T,/turf/open/floor/plating/asteroid/snow))
 		return ..(T)
 	return 0
-	
+
 /datum/mapGeneratorModule/bottomlayer/snow
 	spawnableTurfs = list(/turf/open/floor/plating/asteroid/snow/atmosphere = 100)
 

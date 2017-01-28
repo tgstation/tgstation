@@ -27,8 +27,9 @@
 	src.target = null
 	return ..()
 
-/obj/machinery/meter/initialize()
-	if (!target)
+/obj/machinery/meter/Initialize(mapload)
+	..()
+	if (mapload && !target)
 		src.target = locate(/obj/machinery/atmospherics/pipe) in loc
 
 /obj/machinery/meter/process_atmos()
@@ -131,13 +132,8 @@
 
 // TURF METER - REPORTS A TILE'S AIR CONTENTS
 //	why are you yelling?
+/obj/machinery/meter/turf
 
-/obj/machinery/meter/turf/New()
+/obj/machinery/meter/turf/Initialize()
 	..()
 	src.target = loc
-	return 1
-
-
-/obj/machinery/meter/turf/initialize()
-	if (!target)
-		src.target = loc

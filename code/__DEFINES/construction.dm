@@ -47,6 +47,11 @@
 #define EM_SECURED 1
 #define EM_WELDED 2
 
+//Construction defines for the pinion airlock
+#define GEAR_SECURE 1
+#define GEAR_UNFASTENED 2
+#define GEAR_LOOSE 3
+
 //other construction-related things
 
 //windows affected by nar-sie turn this color.

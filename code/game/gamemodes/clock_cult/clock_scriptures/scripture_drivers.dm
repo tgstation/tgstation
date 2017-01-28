@@ -35,6 +35,7 @@
 					C.apply_damage(cultist_damage * 0.5, BURN, "l_leg")
 					C.apply_damage(cultist_damage * 0.5, BURN, "r_leg")
 				C.toggle_move_intent()
+	return TRUE
 
 
 //Judicial Visor: Creates a judicial visor, which can smite an area.
@@ -84,11 +85,11 @@
 	return TRUE
 
 
-//Sentinel's Compromise: Allows the invoker to select a nearby servant and convert their brute and burn damage into half as much toxin damage.
+//Sentinel's Compromise: Allows the invoker to select a nearby servant and convert their brute, burn, and oxygen damage into half as much toxin damage.
 /datum/clockwork_scripture/ranged_ability/sentinels_compromise
-	descname = "Convert Brute/Burn to Half Toxin"
+	descname = "Convert Brute/Burn/Oxygen to Half Toxin"
 	name = "Sentinel's Compromise"
-	desc = "Charges your slab with healing power, allowing you to convert all of a target Servant's brute and burn damage to half as much toxin damage."
+	desc = "Charges your slab with healing power, allowing you to convert all of a target Servant's brute, burn, and oxygen damage to half as much toxin damage."
 	invocations = list("Mend the wounds of...", "...my inferior flesh.")
 	channel_time = 30
 	required_components = list(VANGUARD_COGWHEEL = 2)
@@ -98,7 +99,7 @@
 	primary_component = VANGUARD_COGWHEEL
 	sort_priority = 4
 	quickbind = TRUE
-	quickbind_desc = "Allows you to convert a Servant's brute and burn damage to half toxin damage.<br><b>Click your slab to disable.</b>"
+	quickbind_desc = "Allows you to convert a Servant's brute, burn, and oxygen damage to half toxin damage.<br><b>Click your slab to disable.</b>"
 	slab_icon = "compromise"
 	ranged_type = /obj/effect/proc_holder/slab/compromise
 	ranged_message = "<span class='inathneq_small'><i>You charge the clockwork slab with healing power.</i>\n\
@@ -130,9 +131,10 @@
 
 /datum/clockwork_scripture/ranged_ability/geis_prep/run_scripture()
 	var/servants = 0
-	for(var/mob/living/M in living_mob_list)
-		if(is_servant_of_ratvar(M) && (ishuman(M) || issilicon(M)))
-			servants++
+	if(!ratvar_awakens)
+		for(var/mob/living/M in all_clockwork_mobs)
+			if(ishuman(M) || issilicon(M))
+				servants++
 	if(servants > SCRIPT_SERVANT_REQ)
 		whispered = FALSE
 		servants -= SCRIPT_SERVANT_REQ
@@ -160,15 +162,17 @@
 
 /datum/clockwork_scripture/geis/run_scripture()
 	var/servants = 0
-	for(var/mob/living/M in living_mob_list)
-		if(is_servant_of_ratvar(M) && (ishuman(M) || issilicon(M)))
-			servants++
-	if(servants > SCRIPT_SERVANT_REQ)
-		servants -= SCRIPT_SERVANT_REQ
-		channel_time = min(channel_time + servants*7, 120)
+	if(!ratvar_awakens)
+		for(var/mob/living/M in all_clockwork_mobs)
+			if(ishuman(M) || issilicon(M))
+				servants++
 	if(target.buckled)
 		target.buckled.unbuckle_mob(target, TRUE)
 	binding = new(get_turf(target))
+	if(servants > SCRIPT_SERVANT_REQ)
+		servants -= SCRIPT_SERVANT_REQ
+		channel_time = min(channel_time + servants*7, 120)
+		binding.can_resist = TRUE
 	binding.setDir(target.dir)
 	binding.buckle_mob(target, TRUE)
 	return ..()
@@ -206,22 +210,26 @@
 			L.confused = min(L.confused + 20, 100)
 			L.dizziness = min(L.dizziness + 20, 100)
 			L.Weaken(1)
-	invoker.visible_message("<span class='warning'>[invoker] is suddenly covered with a thin layer of dark purple smoke!</span>")
+	invoker.visible_message("<span class='warning'>[invoker] is suddenly covered with a thin layer of purple smoke!</span>")
 	var/invoker_old_color = invoker.color
-	invoker.color = "#AF0AAF"
+	invoker.color = list("#AF0AAF", "#AF0AAF", "#AF0AAF", rgb(0,0,0))
 	animate(invoker, color = invoker_old_color, time = flee_time+grace_period)
 	addtimer(CALLBACK(invoker, /atom/proc/update_atom_colour), flee_time+grace_period)
 	if(chant_number != chant_amount) //if this is the last chant, we don't have a movement period because the chant is over
 		var/endtime = world.time + flee_time
 		var/starttime = world.time
 		progbar = new(invoker, flee_time, invoker)
-		progbar.bar.color = "#AF0AAF"
+		progbar.bar.color = list("#AF0AAF", "#AF0AAF", "#AF0AAF", rgb(0,0,0))
 		animate(progbar.bar, color = initial(progbar.bar.color), time = flee_time+grace_period)
-		while(world.time < endtime && invoker && slab && invoker.get_active_held_item() == slab)
+		while(world.time < endtime && can_recite())
 			sleep(1)
 			progbar.update(world.time - starttime)
 		qdel(progbar)
-		sleep(grace_period)
+		if(can_recite())
+			sleep(grace_period)
+		else
+			return FALSE
+	return TRUE
 
 /datum/clockwork_scripture/channeled/taunting_tirade/chant_end_effects()
 	qdel(progbar)

@@ -9,7 +9,7 @@
 	girder_type = /obj/structure/girder/cult
 
 /turf/closed/wall/mineral/cult/New()
-	PoolOrNew(/obj/effect/overlay/temp/cult/turf, src)
+	new /obj/effect/overlay/temp/cult/turf(src)
 	..()
 
 /turf/closed/wall/mineral/cult/devastate_wall()
@@ -31,11 +31,11 @@
 	desc = "A cold stone wall engraved with indecipherable symbols. Studying them causes your head to pound."
 
 /turf/closed/wall/mineral/cult/artificer/break_wall()
-	PoolOrNew(/obj/effect/overlay/temp/cult/turf, get_turf(src))
+	new /obj/effect/overlay/temp/cult/turf(get_turf(src))
 	return null //excuse me we want no runed metal here
 
 /turf/closed/wall/mineral/cult/artificer/devastate_wall()
-	PoolOrNew(/obj/effect/overlay/temp/cult/turf, get_turf(src))
+	new /obj/effect/overlay/temp/cult/turf(get_turf(src))
 
 //Clockwork wall: Causes nearby tinkerer's caches to generate components.
 /turf/closed/wall/clockwork
@@ -52,9 +52,9 @@
 
 /turf/closed/wall/clockwork/New()
 	..()
-	PoolOrNew(/obj/effect/overlay/temp/ratvar/wall, src)
-	PoolOrNew(/obj/effect/overlay/temp/ratvar/beam, src)
-	realappearence = PoolOrNew(/obj/effect/clockwork/overlay/wall, src)
+	new /obj/effect/overlay/temp/ratvar/wall(src)
+	new /obj/effect/overlay/temp/ratvar/beam(src)
+	realappearence = new /obj/effect/clockwork/overlay/wall(src)
 	realappearence.linked = src
 	change_construction_value(5)
 
@@ -72,6 +72,11 @@
 		qdel(realappearence)
 		realappearence = null
 	return ..()
+
+/turf/closed/wall/clockwork/ReplaceWithLattice()
+	..()
+	for(var/obj/structure/lattice/L in src)
+		L.ratvar_act()
 
 /turf/closed/wall/clockwork/narsie_act()
 	..()

@@ -175,7 +175,7 @@ var/const/tk_maxrange = 15
 /obj/item/tk_grab/proc/apply_focus_overlay()
 	if(!focus)
 		return
-	PoolOrNew(/obj/effect/overlay/temp/telekinesis, get_turf(focus))
+	new /obj/effect/overlay/temp/telekinesis(get_turf(focus))
 
 
 /obj/item/tk_grab/update_icon()
