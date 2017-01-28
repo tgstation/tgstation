@@ -13,7 +13,7 @@
 	export_types = list(/obj/item/organ/brain/alien)
 
 /datum/export/organ/alien/acid
-	cost = 3000
+	cost = 5000
 	unit_name = "alien acid gland"
 	export_types = list(/obj/item/organ/alien/acid)
 
