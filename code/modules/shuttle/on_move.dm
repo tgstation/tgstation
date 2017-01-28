@@ -18,10 +18,10 @@
 	. = ..()
 	if(!.)
 		return
-	addtimer(CALLBACK(src, .proc/close), 0, TIMER_UNIQUE)
+	INVOKE((src, .proc/close))
 	// Close any attached airlocks as well
 	for(var/obj/machinery/door/D in orange(1, src))
-		addtimer(CALLBACK(src, .proc/close), 0, TIMER_UNIQUE)
+		INVOKE_AGAIN((src, .proc/close))
 
 /obj/machinery/door/airlock/onShuttleMove()
 	shuttledocked = 0
