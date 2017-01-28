@@ -552,5 +552,5 @@
 
 
 /mob/living/simple_animal/buckle_mob(mob/living/buckled_mob, force = 0, check_loc = 1)
-	..()
+	. = ..()
 	riding_datum = new/datum/riding/animal
