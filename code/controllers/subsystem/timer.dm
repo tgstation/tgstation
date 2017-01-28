@@ -299,11 +299,11 @@ proc/addtimer(datum/callback/callback, wait, flags)
 
 	var/hash
 
-
 	if (flags & TIMER_UNIQUE)
 		var/list/hashlist = list(callback.object, "(\ref[callback.object])", callback.delegate, wait, flags & TIMER_CLIENT_TIME)
 		hashlist += callback.arguments
 		hash = hashlist.Join("|||||||")
+
 		var/datum/timedevent/hash_timer = SStimer.hashes[hash]
 		if(hash_timer)
 			if (flags & TIMER_OVERRIDE)
