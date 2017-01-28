@@ -273,6 +273,9 @@ var/inerror = 0
 			split[i] = "\[[time2text(world.timeofday,"hh:mm:ss")]\][split[i]]"
 	e.desc = jointext(split, "\n")
 	inerror = 0
+	spawn()
+		world << "<span class='boldannounce'>Runtime detected! Crashing the server because coderbus is a bunch of idiots who think crashing the server on minor errors is a good thing."
+		del(world)
 	return ..(e)
 
 /world/proc/load_mode()
