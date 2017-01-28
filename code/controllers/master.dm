@@ -198,6 +198,7 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 		SS.queued_time = 0
 		SS.queue_next = null
 		SS.queue_prev = null
+		SS.state = SS_IDLE
 		if (SS.flags & SS_TICKER)
 			tickersubsystems += SS
 			timer += world.tick_lag * rand(1, 5)
@@ -303,6 +304,7 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 // This is what decides if something should run.
 /datum/controller/master/proc/CheckQueue(list/subsystemstocheck)
 	. = 0 //so the mc knows if we runtimed
+
 	//we create our variables outside of the loops to save on overhead
 	var/datum/subsystem/SS
 	var/SS_flags
@@ -311,7 +313,7 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 		if (!thing)
 			subsystemstocheck -= thing
 		SS = thing
-		if (SS.queued_time) //already in the queue
+		if (SS.state != SS_IDLE)
 			continue
 		if (SS.can_fire <= 0)
 			continue
@@ -322,10 +324,6 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 			subsystemstocheck -= SS
 		if (!(SS_flags & SS_TICKER) && (SS_flags & SS_KEEP_TIMING) && SS.last_fire + (SS.wait * 0.75) > world.time)
 			continue
-
-		//Queue it to run.
-		//	(we loop thru a linked list until we get to the end or find the right point)
-		//	(this lets us sort our run order correctly without having to re-sort the entire already sorted list)
 		SS.enqueue()
 	. = 1
 
@@ -356,9 +354,7 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 		while (queue_node)
 			if (ran && world.tick_usage > TICK_LIMIT_RUNNING)
 				break
-			if (!istype(queue_node))
-				world.log << "[__FILE__]:[__LINE__] queue_node bad, now equals: [queue_node](\ref[queue_node])"
-				return
+
 			queue_node_flags = queue_node.flags
 			queue_node_priority = queue_node.queued_priority
 
@@ -373,9 +369,6 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 					queue_priority_count -= queue_node_priority
 					queue_priority_count += queue_node.queued_priority
 					current_tick_budget -= queue_node_priority
-					if (!istype(queue_node))
-						world.log << "[__FILE__]:[__LINE__] queue_node bad, now equals: [queue_node](\ref[queue_node])"
-						return
 					queue_node = queue_node.queue_next
 					continue
 
@@ -396,24 +389,25 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 				ran_non_ticker = TRUE
 			ran = TRUE
 			tick_usage = world.tick_usage
-			queue_node_paused = queue_node.paused
-			queue_node.paused = FALSE
+			queue_node_paused = (queue_node.state == SS_PAUSED || queue_node.state == SS_PAUSING)
 			last_type_processed = queue_node
 
-			queue_node.fire(queue_node_paused)
+			queue_node.state = SS_RUNNING
 
+			var/state = queue_node.ignite(queue_node_paused)
+			if (state == SS_RUNNING)
+				state = SS_IDLE
 			current_tick_budget -= queue_node_priority
 			tick_usage = world.tick_usage - tick_usage
 
 			if (tick_usage < 0)
 				tick_usage = 0
 
-			if (queue_node.paused)
+			queue_node.state = state
+
+			if (state == SS_PAUSED)
 				queue_node.paused_ticks++
 				queue_node.paused_tick_usage += tick_usage
-				if (!istype(queue_node))
-					world.log << "[__FILE__]:[__LINE__] queue_node bad, now equals: [queue_node](\ref[queue_node])"
-					return
 				queue_node = queue_node.queue_next
 				continue
 
@@ -447,9 +441,7 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 
 			//remove from queue
 			queue_node.dequeue()
-			if (!istype(queue_node))
-				world.log << "[__FILE__]:[__LINE__] queue_node bad, now equals: [queue_node](\ref[queue_node])"
-				return
+
 			queue_node = queue_node.queue_next
 
 	. = 1
@@ -482,7 +474,7 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 		SS.queue_prev = null
 		SS.queued_priority = 0
 		SS.queued_time = 0
-		SS.paused = 0
+		SS.state = SS_IDLE
 	if (queue_head && !istype(queue_head))
 		world.log << "MC: SoftReset: Found bad data in subsystem queue, queue_head = '[queue_head]'"
 	queue_head = null
