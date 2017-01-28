@@ -345,7 +345,6 @@
 /area/wreck/ai)
 "aaO" = (
 /obj/machinery/ai_slipper{
-	icon_state = "motion0";
 	uses = 8
 	},
 /obj/machinery/power/terminal{
@@ -625,7 +624,6 @@
 	icon_state = "2-8"
 	},
 /obj/machinery/ai_slipper{
-	icon_state = "motion0";
 	uses = 8
 	},
 /turf/open/floor/plasteel/white,
