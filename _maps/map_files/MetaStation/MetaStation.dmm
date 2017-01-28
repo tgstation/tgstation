@@ -28517,7 +28517,6 @@
 /turf/closed/wall/r_wall,
 /area/engine/chiefs_office)
 "aXT" = (
-/obj/structure/bookcase/manuals/engineering,
 /obj/machinery/keycard_auth{
 	pixel_x = -25;
 	pixel_y = 25
@@ -28532,6 +28531,7 @@
 	pixel_x = -27;
 	pixel_y = 0
 	},
+/obj/machinery/modular_computer/console/preset/engineering,
 /turf/open/floor/plasteel/vault,
 /area/engine/chiefs_office)
 "aXU" = (
@@ -36155,7 +36155,10 @@
 /turf/open/floor/plating,
 /area/bridge)
 "bkL" = (
-/obj/item/weapon/folder/white,
+/obj/item/weapon/folder/white{
+	pixel_x = 4;
+	pixel_y = -3
+	},
 /obj/structure/cable/yellow{
 	d1 = 1;
 	d2 = 2;
@@ -37169,14 +37172,12 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/structure/filingcabinet/chestdrawer{
-	pixel_y = 3
-	},
 /obj/machinery/airalarm{
 	dir = 4;
 	pixel_x = -23;
 	pixel_y = 0
 	},
+/obj/machinery/modular_computer/console/preset/command,
 /turf/open/floor/plasteel/darkblue/side{
 	dir = 9
 	},
@@ -46501,7 +46502,10 @@
 /area/bridge)
 "bBZ" = (
 /obj/structure/table/wood,
-/obj/item/weapon/folder/white,
+/obj/item/weapon/folder/white{
+	pixel_x = 4;
+	pixel_y = -3
+	},
 /turf/open/floor/carpet,
 /area/bridge)
 "bCa" = (
@@ -51002,7 +51006,10 @@
 /turf/open/floor/carpet,
 /area/security/vacantoffice)
 "bJT" = (
-/obj/item/weapon/folder/white,
+/obj/item/weapon/folder/white{
+	pixel_x = 4;
+	pixel_y = -3
+	},
 /obj/structure/table/wood,
 /turf/open/floor/carpet,
 /area/security/vacantoffice)
@@ -54674,7 +54681,10 @@
 	})
 "bQs" = (
 /obj/structure/table/wood,
-/obj/item/weapon/folder/white,
+/obj/item/weapon/folder/white{
+	pixel_x = 4;
+	pixel_y = -3
+	},
 /turf/open/floor/wood,
 /area/security/vacantoffice)
 "bQt" = (
@@ -59713,8 +59723,14 @@
 	req_access_txt = "0";
 	req_one_access_txt = "30;35"
 	},
-/obj/item/weapon/folder/white,
-/obj/item/weapon/folder/white,
+/obj/item/weapon/folder/white{
+	pixel_x = 4;
+	pixel_y = -3
+	},
+/obj/item/weapon/folder/white{
+	pixel_x = 4;
+	pixel_y = -3
+	},
 /turf/open/floor/plasteel/green{
 	dir = 4
 	},
@@ -60716,8 +60732,14 @@
 	})
 "caS" = (
 /obj/structure/table,
-/obj/item/weapon/folder/white,
-/obj/item/weapon/folder/white,
+/obj/item/weapon/folder/white{
+	pixel_x = 4;
+	pixel_y = -3
+	},
+/obj/item/weapon/folder/white{
+	pixel_x = 4;
+	pixel_y = -3
+	},
 /obj/item/weapon/pen,
 /obj/structure/extinguisher_cabinet{
 	pixel_x = 0;
@@ -61703,7 +61725,10 @@
 /area/hallway/primary/aft)
 "ccF" = (
 /obj/structure/table,
-/obj/item/weapon/folder/white,
+/obj/item/weapon/folder/white{
+	pixel_x = 4;
+	pixel_y = -3
+	},
 /obj/item/clothing/glasses/science,
 /turf/open/floor/plasteel/whitepurple/side{
 	dir = 1
@@ -64164,8 +64189,14 @@
 	})
 "cgE" = (
 /obj/structure/table,
-/obj/item/weapon/folder/white,
-/obj/item/weapon/folder/white,
+/obj/item/weapon/folder/white{
+	pixel_x = 4;
+	pixel_y = -3
+	},
+/obj/item/weapon/folder/white{
+	pixel_x = 4;
+	pixel_y = -3
+	},
 /obj/item/weapon/pen,
 /turf/open/floor/plating,
 /area/maintenance/aft{
@@ -65015,8 +65046,14 @@
 	})
 "chV" = (
 /obj/structure/table,
-/obj/item/weapon/folder/white,
-/obj/item/weapon/folder/white,
+/obj/item/weapon/folder/white{
+	pixel_x = 4;
+	pixel_y = -3
+	},
+/obj/item/weapon/folder/white{
+	pixel_x = 4;
+	pixel_y = -3
+	},
 /obj/item/weapon/pen,
 /obj/machinery/power/apc{
 	dir = 1;
@@ -65236,14 +65273,20 @@
 /area/medical/chemistry)
 "cil" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/folder/white,
+/obj/item/weapon/folder/white{
+	pixel_x = 4;
+	pixel_y = -3
+	},
 /obj/machinery/door/window/northleft{
 	dir = 2;
 	name = "Chemistry Desk";
 	req_access_txt = "5; 33"
 	},
 /obj/machinery/door/firedoor,
-/obj/item/weapon/folder/white,
+/obj/item/weapon/folder/white{
+	pixel_x = 4;
+	pixel_y = -3
+	},
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "chemistry_shutters";
 	name = "chemistry shutters"
@@ -65293,8 +65336,14 @@
 "cir" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/pen,
-/obj/item/weapon/folder/white,
-/obj/item/weapon/folder/white,
+/obj/item/weapon/folder/white{
+	pixel_x = 4;
+	pixel_y = -3
+	},
+/obj/item/weapon/folder/white{
+	pixel_x = 4;
+	pixel_y = -3
+	},
 /obj/machinery/door/firedoor,
 /obj/machinery/door/window/eastright{
 	dir = 2;
@@ -69028,7 +69077,10 @@
 "coT" = (
 /obj/structure/table,
 /obj/structure/disposalpipe/segment,
-/obj/item/weapon/folder/white,
+/obj/item/weapon/folder/white{
+	pixel_x = 4;
+	pixel_y = -3
+	},
 /obj/item/weapon/disk/tech_disk{
 	pixel_x = 0;
 	pixel_y = 0
@@ -69591,7 +69643,10 @@
 	},
 /area/medical/cmo)
 "cpR" = (
-/obj/item/weapon/folder/white,
+/obj/item/weapon/folder/white{
+	pixel_x = 4;
+	pixel_y = -3
+	},
 /obj/item/clothing/glasses/hud/health,
 /obj/structure/cable/yellow{
 	d1 = 1;
@@ -69961,8 +70016,14 @@
 /area/toxins/explab)
 "cqy" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/folder/white,
-/obj/item/weapon/folder/white,
+/obj/item/weapon/folder/white{
+	pixel_x = 4;
+	pixel_y = -3
+	},
+/obj/item/weapon/folder/white{
+	pixel_x = 4;
+	pixel_y = -3
+	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 8
 	},
@@ -70041,7 +70102,10 @@
 	})
 "cqF" = (
 /obj/structure/table,
-/obj/item/weapon/folder/white,
+/obj/item/weapon/folder/white{
+	pixel_x = 4;
+	pixel_y = -3
+	},
 /obj/item/weapon/reagent_containers/blood/random,
 /obj/item/weapon/reagent_containers/blood/random,
 /obj/item/weapon/reagent_containers/blood/empty{
@@ -70361,14 +70425,20 @@
 /area/medical/chemistry)
 "crj" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/folder/white,
+/obj/item/weapon/folder/white{
+	pixel_x = 4;
+	pixel_y = -3
+	},
 /obj/machinery/door/firedoor,
 /obj/machinery/door/window/eastright{
 	dir = 8;
 	name = "Chemistry Desk";
 	req_access_txt = "5; 33"
 	},
-/obj/item/weapon/folder/white,
+/obj/item/weapon/folder/white{
+	pixel_x = 4;
+	pixel_y = -3
+	},
 /obj/item/weapon/pen,
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "chemistry_shutters_2";
@@ -70407,8 +70477,14 @@
 	name = "Research and Development Desk";
 	req_access_txt = "7"
 	},
-/obj/item/weapon/folder/white,
-/obj/item/weapon/folder/white,
+/obj/item/weapon/folder/white{
+	pixel_x = 4;
+	pixel_y = -3
+	},
+/obj/item/weapon/folder/white{
+	pixel_x = 4;
+	pixel_y = -3
+	},
 /obj/machinery/door/firedoor,
 /obj/item/weapon/pen,
 /obj/machinery/door/poddoor/shutters/preopen{
@@ -72996,13 +73072,8 @@
 	},
 /area/crew_quarters/hor)
 "cvm" = (
-/obj/item/weapon/folder/white,
-/obj/item/weapon/stamp/rd{
-	pixel_x = 3;
-	pixel_y = -2
-	},
-/obj/structure/table/reinforced,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/modular_computer/console/preset/research,
 /turf/open/floor/plasteel/cafeteria{
 	dir = 5
 	},
@@ -73672,7 +73743,10 @@
 	})
 "cww" = (
 /obj/structure/table,
-/obj/item/weapon/folder/white,
+/obj/item/weapon/folder/white{
+	pixel_x = 4;
+	pixel_y = -3
+	},
 /obj/item/clothing/neck/stethoscope,
 /obj/machinery/light/small{
 	dir = 8
@@ -73840,8 +73914,14 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
-/obj/item/weapon/folder/white,
-/obj/item/weapon/folder/white,
+/obj/item/weapon/folder/white{
+	pixel_x = 4;
+	pixel_y = -3
+	},
+/obj/item/weapon/folder/white{
+	pixel_x = 4;
+	pixel_y = -3
+	},
 /obj/item/weapon/storage/pill_bottle/mutadone,
 /obj/item/weapon/storage/pill_bottle/mannitol,
 /obj/structure/table/glass,
@@ -74498,7 +74578,10 @@
 /area/medical/genetics)
 "cxQ" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/folder/white,
+/obj/item/weapon/folder/white{
+	pixel_x = 4;
+	pixel_y = -3
+	},
 /obj/item/weapon/pen,
 /obj/machinery/door/firedoor,
 /obj/machinery/door/window/eastright{
@@ -74904,7 +74987,10 @@
 	})
 "cyA" = (
 /obj/structure/table,
-/obj/item/weapon/folder/white,
+/obj/item/weapon/folder/white{
+	pixel_x = 4;
+	pixel_y = -3
+	},
 /obj/item/clothing/neck/stethoscope,
 /obj/machinery/light/small{
 	dir = 8
@@ -75268,12 +75354,22 @@
 	pixel_x = 0;
 	pixel_y = 7
 	},
-/obj/item/weapon/pen,
 /obj/structure/table,
 /obj/machinery/newscaster{
 	pixel_x = 0;
 	pixel_y = -30
 	},
+/obj/item/weapon/stamp/rd{
+	pixel_x = -11;
+	pixel_y = 0;
+	pixel_x = 3;
+	pixel_y = -2
+	},
+/obj/item/weapon/folder/white{
+	pixel_x = 9;
+	pixel_y = -1
+	},
+/obj/item/weapon/pen,
 /turf/open/floor/plasteel/cafeteria{
 	dir = 5
 	},
@@ -75616,7 +75712,10 @@
 /turf/open/floor/plating,
 /area/medical/genetics)
 "czI" = (
-/obj/item/weapon/folder/white,
+/obj/item/weapon/folder/white{
+	pixel_x = 4;
+	pixel_y = -3
+	},
 /obj/item/stack/packageWrap,
 /obj/item/weapon/pen,
 /obj/item/weapon/reagent_containers/spray/cleaner,
@@ -76675,7 +76774,10 @@
 	pixel_x = -27;
 	pixel_y = 0
 	},
-/obj/item/weapon/folder/white,
+/obj/item/weapon/folder/white{
+	pixel_x = 4;
+	pixel_y = -3
+	},
 /obj/item/weapon/paper/range{
 	pixel_x = 2;
 	pixel_y = 2
@@ -76867,8 +76969,14 @@
 	})
 "cBQ" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/folder/white,
-/obj/item/weapon/folder/white,
+/obj/item/weapon/folder/white{
+	pixel_x = 4;
+	pixel_y = -3
+	},
+/obj/item/weapon/folder/white{
+	pixel_x = 4;
+	pixel_y = -3
+	},
 /obj/machinery/door/firedoor,
 /obj/item/weapon/reagent_containers/glass/bottle/epinephrine,
 /obj/item/weapon/reagent_containers/syringe,
@@ -79613,7 +79721,10 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/item/weapon/folder/white,
+/obj/item/weapon/folder/white{
+	pixel_x = 4;
+	pixel_y = -3
+	},
 /obj/item/clothing/gloves/color/latex,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -79667,8 +79778,14 @@
 	name = "Robotics Desk";
 	req_access_txt = "29"
 	},
-/obj/item/weapon/folder/white,
-/obj/item/weapon/folder/white,
+/obj/item/weapon/folder/white{
+	pixel_x = 4;
+	pixel_y = -3
+	},
+/obj/item/weapon/folder/white{
+	pixel_x = 4;
+	pixel_y = -3
+	},
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "robotics_shutters";
@@ -80011,8 +80128,14 @@
 	},
 /area/medical/virology)
 "cGY" = (
-/obj/item/weapon/folder/white,
-/obj/item/weapon/folder/white,
+/obj/item/weapon/folder/white{
+	pixel_x = 4;
+	pixel_y = -3
+	},
+/obj/item/weapon/folder/white{
+	pixel_x = 4;
+	pixel_y = -3
+	},
 /obj/item/weapon/pen/red,
 /obj/machinery/requests_console{
 	department = "Virology";
@@ -80909,8 +81032,14 @@
 /area/toxins/test_area)
 "cIC" = (
 /obj/structure/table/glass,
-/obj/item/weapon/folder/white,
-/obj/item/weapon/folder/white,
+/obj/item/weapon/folder/white{
+	pixel_x = 4;
+	pixel_y = -3
+	},
+/obj/item/weapon/folder/white{
+	pixel_x = 4;
+	pixel_y = -3
+	},
 /obj/item/weapon/pen/red,
 /obj/structure/cable/yellow{
 	d1 = 2;
@@ -81793,8 +81922,14 @@
 	dir = 1;
 	pixel_y = -24
 	},
-/obj/item/weapon/folder/white,
-/obj/item/weapon/folder/white,
+/obj/item/weapon/folder/white{
+	pixel_x = 4;
+	pixel_y = -3
+	},
+/obj/item/weapon/folder/white{
+	pixel_x = 4;
+	pixel_y = -3
+	},
 /obj/machinery/light,
 /obj/item/weapon/hand_labeler,
 /obj/item/weapon/pen,
@@ -83228,7 +83363,10 @@
 	})
 "cMf" = (
 /obj/structure/table,
-/obj/item/weapon/folder/white,
+/obj/item/weapon/folder/white{
+	pixel_x = 4;
+	pixel_y = -3
+	},
 /obj/item/weapon/pen,
 /turf/open/floor/plasteel/black,
 /area/toxins/server{
@@ -83379,8 +83517,14 @@
 /obj/machinery/newscaster{
 	pixel_x = -30
 	},
-/obj/item/weapon/folder/white,
-/obj/item/weapon/folder/white,
+/obj/item/weapon/folder/white{
+	pixel_x = 4;
+	pixel_y = -3
+	},
+/obj/item/weapon/folder/white{
+	pixel_x = 4;
+	pixel_y = -3
+	},
 /obj/item/weapon/paper,
 /obj/item/weapon/pen/red,
 /obj/structure/extinguisher_cabinet{
@@ -92240,7 +92384,10 @@
 /area/shuttle/abandoned)
 "dct" = (
 /obj/structure/table,
-/obj/item/weapon/folder/white,
+/obj/item/weapon/folder/white{
+	pixel_x = 4;
+	pixel_y = -3
+	},
 /obj/effect/decal/cleanable/dirt{
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
