@@ -138,7 +138,7 @@
 	var/turf/T = get_turf(src)
 	message_admins("[key_name(chassis.occupant, chassis.occupant.client)](<A HREF='?_src_=holder;adminmoreinfo=\ref[chassis.occupant]'>?</A>) fired a [src] in ([T.x],[T.y],[T.z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>JMP</a>)",0,1)
 	log_game("[key_name(chassis.occupant)] fired a [src] ([T.x],[T.y],[T.z])")
-	addtimer(TG, "prime", det_time)
+	addtimer(CALLBACK(TG, /obj/item/weapon/grenade/chem_grenade/teargas.proc/prime), det_time)
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/teargas/can_attach(obj/mecha/M as obj)
 	if((M.equipment.len<M.max_equip) && (istype(M, /obj/mecha/combat) || istype(M, /obj/mecha/working/sec_ripley)))
@@ -158,7 +158,7 @@
 		return 1
 	return 0
 
-/*/obj/vehicle/secway/New()
+/obj/vehicle/secway/New()
 	var/first = TRUE
 	if(first == TRUE)
 		var/obj/mecha/working/sec_ripley/SR = new /obj/mecha/working/sec_ripley
@@ -170,8 +170,7 @@
 /turf/open/floor/plasteel/red/side/New()
 	var/first = TRUE
 	if(src.x == 125 && src.y == 173 && src.z == 1 && first == TRUE)
-		qdel(src)
-		var/turf/open/floor/mech_bay_recharge_floor/rf = PoolOrNew(/turf/open/floor/mech_bay_recharge_floor, src)
+		src.ChangeTurf(/turf/open/floor/mech_bay_recharge_floor)
 		var/obj/machinery/computer/mech_bay_power_console/C = new /obj/machinery/computer/mech_bay_power_console
 		C.x = 126
 		C.y = 173
@@ -180,7 +179,7 @@
 		P.x = 124
 		P.y = 173
 		P.z = 1
-		P.recharging_turf = rf
+		P.recharging_turf = src
 		first = FALSE
 	else
-		..()*/
+		..()

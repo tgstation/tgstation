@@ -1,7 +1,7 @@
-/obj/item/projectile/energy/white_only/heatgun
+/obj/item/projectile/energy/white_dev/heatgun
 	name = "heat beam"
 	icon_state = "heat_beam"
-	icon = 'icons/obj/guns/white_only.dmi'
+	icon = 'icons/obj/guns/white_dev.dmi'
 	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
 	damage = 10
 	luminosity = 1
@@ -12,7 +12,7 @@
 	flag = "energy"
 	eyeblur = 2
 
-/obj/item/projectile/energy/white_only/heatgun/on_hit(atom/target, blocked = 0)//These two could likely check temp protection on the mob
+/obj/item/projectile/energy/white_dev/heatgun/on_hit(atom/target, blocked = 0)//These two could likely check temp protection on the mob
 	..()
 	if(isliving(target))
 		var/mob/living/M = target
