@@ -15,6 +15,8 @@
 		OR
 		var/result = C.InvokeAsync(args, to, add) //Sleeps will not block, returns . on the first sleep (then continues on in the "background" after the sleep/block ends), otherwise operates normally.
 
+		Optionally do INVOKE(<CALLBACK args>) to immediately create and call InvokeAsync
+
 	PROC TYPEPATH SHORTCUTS (these operate on paths, not types, so to these shortcuts, datum is NOT a parent of atom, etc...)
 
 		global proc while in another global proc:
