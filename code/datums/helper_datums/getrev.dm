@@ -30,6 +30,9 @@ var/global/datum/getrev/revdata = new()
 	world.log << "Current map - [MAP_NAME]" //can't think of anywhere better to put it
 
 /datum/getrev/proc/DownloadPRDetails()
+	if(!text2num(config.githubrepoid))
+		world.log << "Invalid github repo id: [config.githubrepoid]"
+		return
 	for(var/line in testmerge)
 		//"This has got to be the ugliest hack I have ever done"
 		//warning, here be dragons
@@ -44,7 +47,10 @@ var/global/datum/getrev/revdata = new()
 			 ||      /    \)___)\
 			 | \____(      )___) )___
 			  \______(_______;;; __;;;
-		*/
+			*/
+		if(!text2num(line))
+			world.log << "Invalid PR number: [line]"
+			return
 		var/url = "https://api.github.com/repositories/[config.githubrepoid]/pulls/[line].json"
 		var/temp_file = "prcheck[line].json"
 		var/command = "powershell -Command \"curl -O [temp_file] [url]\""
