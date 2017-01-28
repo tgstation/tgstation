@@ -287,15 +287,15 @@ var/global/list/datum/stack_recipe/runed_metal_recipes = list ( \
  * Brass
  */
 var/global/list/datum/stack_recipe/brass_recipes = list ( \
-	new/datum/stack_recipe("wall gear", /obj/structure/destructible/clockwork/wall_gear, 3, time = 30, one_per_turf = 1, on_floor = 1), \
+	new/datum/stack_recipe("wall gear", /obj/structure/destructible/clockwork/wall_gear, 3, time = 30, one_per_turf = TRUE, on_floor = TRUE), \
 	null,
-	new/datum/stack_recipe("pinion airlock", /obj/machinery/door/airlock/clockwork, 5, time = 50, one_per_turf = 1, on_floor = 1), \
-	new/datum/stack_recipe("brass pinion airlock", /obj/machinery/door/airlock/clockwork/brass, 5, time = 50, one_per_turf = 1, on_floor = 1), \
-	new/datum/stack_recipe("brass windoor", /obj/machinery/door/window/clockwork, 2, time = 30, one_per_turf = 1, on_floor = 1), \
+	new/datum/stack_recipe("pinion airlock", /obj/machinery/door/airlock/clockwork, 5, time = 50, one_per_turf = TRUE, on_floor = TRUE), \
+	new/datum/stack_recipe("brass pinion airlock", /obj/machinery/door/airlock/clockwork/brass, 5, time = 50, one_per_turf = TRUE, on_floor = TRUE), \
+	new/datum/stack_recipe("brass windoor", /obj/machinery/door/window/clockwork, 2, time = 30, on_floor = TRUE, window_checks = TRUE), \
 	null,
-	new/datum/stack_recipe("directional brass window", /obj/structure/window/reinforced/clockwork, time = 15, one_per_turf = 1, on_floor = 1), \
-	new/datum/stack_recipe("brass window", /obj/structure/window/reinforced/clockwork/fulltile, 2, time = 30, one_per_turf = 1, on_floor = 1), \
-	new/datum/stack_recipe("brass table frame", /obj/structure/table_frame/brass, 1, time = 5, one_per_turf = 1, on_floor = 1) \
+	new/datum/stack_recipe("directional brass window", /obj/structure/window/reinforced/clockwork/unanchored, time = 0, on_floor = TRUE, window_checks = TRUE), \
+	new/datum/stack_recipe("fulltile brass window", /obj/structure/window/reinforced/clockwork/fulltile/unanchored, 2, time = 0, on_floor = TRUE, window_checks = TRUE), \
+	new/datum/stack_recipe("brass table frame", /obj/structure/table_frame/brass, 1, time = 5, one_per_turf = TRUE, on_floor = TRUE) \
 )
 
 /obj/item/stack/tile/brass

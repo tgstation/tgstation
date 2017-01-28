@@ -1,5 +1,0 @@
-author: "Joan"
-delete-after: True
-changes: 
-  - experiment: "Redesigned: Volt Void now allows you to fire up to 5 energy rays at targets in view; each ray does 25 laser damage to non-Servants in the target tile. The ray will consume power to do up to double damage, however."
-  - wip: "Failing to fire a Volt Void ray will damage you, though you won't die from it unless you have access to a lot of power and are either low on health or fail all five rays in a row."

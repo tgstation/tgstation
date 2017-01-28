@@ -22,7 +22,7 @@ To draw a rune, use an arcane tome.
 	icon = 'icons/obj/rune.dmi'
 	icon_state = "1"
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
-	layer = ABOVE_NORMAL_TURF_LAYER
+	layer = LOW_OBJ_LAYER
 	color = "#FF0000"
 
 	var/invocation = "Aiy ele-mayo!" //This is said by cultists when the rune is invoked.

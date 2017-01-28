@@ -1,0 +1,4 @@
+author: "Joan"
+delete-after: True
+changes: 
+  - rscadd: "Vitality Matrices now share vitality globally, allowing you to use vitality gained from any Matrix."

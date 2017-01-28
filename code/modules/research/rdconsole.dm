@@ -186,8 +186,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			if(t_disk)
 				if(!n)
 					for(var/tech in t_disk.tech_stored)
-						if(tech)
-							files.AddTech2Known(tech)
+						files.AddTech2Known(tech)
 				else
 					files.AddTech2Known(t_disk.tech_stored[n])
 				updateUsrDialog()
@@ -210,7 +209,9 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 
 	else if(href_list["copy_tech"]) //Copy some technology data from the research holder to the disk.
 		var/slot = text2num(href_list["copy_tech"])
-		t_disk.tech_stored[slot] = files.known_tech[href_list["copy_tech_ID"]]
+		var/datum/tech/T = files.known_tech[href_list["copy_tech_ID"]]
+		if(T)
+			t_disk.tech_stored[slot] = T.copy()
 		screen = 1.2
 
 	else if(href_list["updt_design"]) //Updates the research holder with design data from the design disk.
