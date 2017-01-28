@@ -1345,6 +1345,7 @@
 #include "code\modules\library\lib_machines.dm"
 #include "code\modules\library\lib_readme.dm"
 #include "code\modules\library\random_books.dm"
+#include "code\modules\library\soapstone.dm"
 #include "code\modules\lighting\lighting_system.dm"
 #include "code\modules\mining\abandoned_crates.dm"
 #include "code\modules\mining\equipment.dm"
