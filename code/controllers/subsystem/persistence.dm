@@ -9,10 +9,17 @@ var/datum/subsystem/persistence/SSpersistence
 	var/list/new_secret_satchels 	= list() //these are objects
 	var/old_secret_satchels 		= ""
 
+	var/savefile/containment_failure_save
+	var/containment_failure_counter
+
 /datum/subsystem/persistence/New()
 	NEW_SS_GLOBAL(SSpersistence)
 
 /datum/subsystem/persistence/Initialize()
+	initialize_secret_satchels()
+	initialize_shifts_since_containment_failure()
+
+/datum/subsystem/persistence/proc/initialize_secret_satchels()
 	secret_satchels = new /savefile("data/npc_saves/SecretSatchels.sav")
 	satchel_blacklist = typecacheof(list(/obj/item/stack/tile/plasteel, /obj/item/weapon/crowbar))
 	secret_satchels[MAP_NAME] >> old_secret_satchels
@@ -39,8 +46,24 @@ var/datum/subsystem/persistence/SSpersistence
 
 	..()
 
+/datum/subsystem/persistence/proc/initialize_shifts_since_containment_failure()
+	containment_failure_save = new("data/npc_saves/ContainmentFailure.sav")
+	containment_failure_save["counter"] >> containment_failure_counter
+
+/datum/subsystem/persistence/proc/notify_containment_failure()
+	containment_failure_counter = -1
+
 /datum/subsystem/persistence/proc/CollectData()
 	CollectSecretSatchels()
+	CollectContainmentFailure()
+
+/datum/subsystem/persistence/proc/CollectContainmentFailure()
+	if(containment_failure_counter < 0)
+		containment_failure_counter = 0
+	else
+		containment_failure_counter++
+
+	containment_failure_save["counter"] << containment_failure_counter
 
 /datum/subsystem/persistence/proc/PlaceSecretSatchel(list/expanded_old_satchels)
 	var/satchel_string

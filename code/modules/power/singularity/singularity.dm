@@ -119,9 +119,6 @@
 	dissipate()
 	check_energy()
 
-	return
-
-
 /obj/singularity/attack_ai() //to prevent ais from gibbing themselves when they click on one.
 	return
 
@@ -131,6 +128,7 @@
 	var/count = locate(/obj/machinery/field/containment) in urange(30, src, 1)
 	if(!count)
 		message_admins("A singulo has been created without containment fields active ([x],[y],[z])",1)
+		SSpersistence.notify_containment_failure()
 	investigate_log("was created. [count?"":"<font color='red'>No containment fields were active</font>"]","singulo")
 
 /obj/singularity/proc/dissipate()
