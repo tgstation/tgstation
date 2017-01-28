@@ -15,7 +15,7 @@
 		OR
 		var/result = C.InvokeAsync(args, to, add) //Sleeps will not block, returns . on the first sleep (then continues on in the "background" after the sleep/block ends), otherwise operates normally.
 
-		Optionally do INVOKE_ASYNC(<CALLBACK args>) to immediately create and call InvokeAsync
+		Optionally do INVOKE(<CALLBACK args>) to immediately create and call InvokeAsync
 
 	PROC TYPEPATH SHORTCUTS (these operate on paths, not types, so to these shortcuts, datum is NOT a parent of atom, etc...)
 
@@ -49,13 +49,30 @@
 	var/delegate
 	var/list/arguments
 
+
+#define CALLBACK_INVOKE \
+	if (!object){\
+		return;\
+	}\
+	var/list/calling_arguments = arguments;\
+	if (length(args)){\
+		if (length(arguments)){\
+			calling_arguments = calling_arguments + args; /*not += so that it creates a new list so the arguments list stays clean*/\
+		}else{\
+			calling_arguments = args;\
+		}\
+	}\
+	if (object == GLOBAL_PROC){\
+		return call(delegate)(arglist(calling_arguments));\
+	}\
+	return call(object, delegate)(arglist(calling_arguments));
+
 /datum/callback/New(thingtocall, proctocall, ...)
 	if (thingtocall)
 		object = thingtocall
 	delegate = proctocall
 	if (length(args) > 2)
 		arguments = args.Copy(3)
-
 
 /datum/callback/immediate/New(thingtocall, proctocall, ...)
 	set waitfor = FALSE
@@ -67,12 +84,14 @@
 	if (length(args) > 2)
 		arguments = args.Copy(3)
 
-#include "callback_invoke.dm"
+	CALLBACK_INVOKE
 
 /datum/callback/proc/Invoke(...)
-#include "callback_invoke.dm"
+	CALLBACK_INVOKE
 
 //copy and pasted because fuck proc overhead
 /datum/callback/proc/InvokeAsync(...)
 	set waitfor = FALSE
-#include "callback_invoke.dm"
+	CALLBACK_INVOKE
+
+#undef CALLBACK_INVOKE
