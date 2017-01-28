@@ -146,10 +146,10 @@
 
 /datum/spacevine_mutation/explosive/on_explosion(explosion_severity, target, obj/structure/spacevine/holder)
 	if(explosion_severity < 3)
-		qdel(src)
+		qdel(holder)
 	else
 		. = 1
-		QDEL_IN(src, 5)
+		QDEL_IN(holder, 5)
 
 /datum/spacevine_mutation/explosive/on_death(obj/structure/spacevine/holder, mob/hitter, obj/item/I)
 	explosion(holder.loc, 0, 0, severity, 0, 0)
