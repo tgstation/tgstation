@@ -289,21 +289,25 @@ var/datum/subsystem/timer/SStimer
 	prev = null
 	return QDEL_HINT_QUEUE
 
+var/list/overhead_calls
+
 proc/addtimer(datum/callback/callback, wait, flags)
 	if (!callback)
 		return
 
+	var/hash
+
+#define CREATE_HASH	var/list/hashlist = list(callback.object, "(\ref[callback.object])", callback.delegate, wait, flags & TIMER_CLIENT_TIME);hashlist += callback.arguments;hash = hashlist.Join("|||||||")
+
 	if (wait <= 0)
+		CREATE_HASH
+		if(!LAZYACCESS(overhead_calls,hash))
+			stack_trace("Old async call syntax detected for timer [hash]. Please use INVOKE(X) instead of addtimer(CALLBACK(X),0)")
 		callback.InvokeAsync()
 		return
 
-	var/hash
-
 	if (flags & TIMER_UNIQUE)
-		var/list/hashlist = list(callback.object, "(\ref[callback.object])", callback.delegate, wait, flags & TIMER_CLIENT_TIME)
-		hashlist += callback.arguments
-		hash = hashlist.Join("|||||||")
-
+		CREATE_HASH
 		var/datum/timedevent/hash_timer = SStimer.hashes[hash]
 		if(hash_timer)
 			if (flags & TIMER_OVERRIDE)
@@ -312,7 +316,7 @@ proc/addtimer(datum/callback/callback, wait, flags)
 				if (hash_timer.flags & TIMER_STOPPABLE)
 					. = hash_timer.id
 				return
-
+#undef CREATE_HASH
 
 	var/timeToRun = world.time + wait
 	if (flags & TIMER_CLIENT_TIME)
