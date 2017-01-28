@@ -1,0 +1,5 @@
+author: "coiax"
+delete-after: True
+changes: 
+  - rscadd: "The Human-level Intelligence event now occurs slightly more often,
+and produces a classified message."
