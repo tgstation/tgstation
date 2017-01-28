@@ -8,15 +8,16 @@
 
 /obj/structure/destructible/cult/examine(mob/user)
 	..()
-	var/can_see_cult = iscultist(user) || isobserver(user)
-	var/t_It = p_they(TRUE)
-	var/t_is = p_are()
-	if(!(resistance_flags & INDESTRUCTIBLE))
-		if(can_see_cult)
-			user << "<span class='cult'>[t_It] [t_is] at <b>[round(obj_integrity * 100 / max_integrity)]%</b> stability.</span>"
 	user << "<span class='notice'>\The [src] is [anchored ? "":"not "]secured to the floor.</span>"
-	if(can_see_cult && cooldowntime > world.time)
-		user << "<span class='cultitalic'>The magic in [src] is too weak, [t_It] will be ready to use again in [getETA()].</span>"
+	if((iscultist(user) || isobserver(user)) && cooldowntime > world.time)
+		user << "<span class='cultitalic'>The magic in [src] is too weak, [p_they()] will be ready to use again in [getETA()].</span>"
+
+/obj/structure/destructible/cult/examine_status(mob/user)
+	if(iscultist(user) || isobserver(user))
+		var/t_It = p_they(TRUE)
+		var/t_is = p_are()
+		return "<span class='cult'>[t_It] [t_is] at <b>[round(obj_integrity * 100 / max_integrity)]%</b> stability.</span>"
+	return ..()
 
 /obj/structure/destructible/cult/attack_animal(mob/living/simple_animal/M)
 	if(istype(M, /mob/living/simple_animal/hostile/construct/builder))
