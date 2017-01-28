@@ -48,8 +48,8 @@
 		tracking = null
 	return ..()
 
+/obj/item/device/camera_bug/interact(mob/user = usr)
 
-/obj/item/weapon/circuitboard/computer/camera_bug/interact(mob/user = usr)
 	var/datum/browser/popup = new(user, "camerabug","Camera Bug",nref=src)
 	popup.set_content(menu(get_cameras()))
 	popup.open()
