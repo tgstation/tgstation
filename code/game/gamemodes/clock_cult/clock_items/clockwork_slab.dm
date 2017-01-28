@@ -443,7 +443,7 @@
 		if("toggle")
 			recollecting = !recollecting
 		if("recite")
-			INVOKE_ASYNC(src, .proc/recite_scripture, text2path(params["category"]), usr, FALSE)
+			INVOKE(src, .proc/recite_scripture, text2path(params["category"]), usr, FALSE)
 		if("select")
 			selected_scripture = params["category"]
 		if("component")

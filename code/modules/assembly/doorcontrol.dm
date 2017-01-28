@@ -72,7 +72,7 @@
 				D.safe = !D.safe
 
 	for(var/D in open_or_close)
-		INVOKE_ASYNC(D, doors_need_closing ? /obj/machinery/door/airlock.proc/close : /obj/machinery/door/airlock.proc/open)
+		INVOKE(D, doors_need_closing ? /obj/machinery/door/airlock.proc/close : /obj/machinery/door/airlock.proc/open)
 
 	sleep(10)
 	cooldown = 0

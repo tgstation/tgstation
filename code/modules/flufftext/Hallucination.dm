@@ -400,7 +400,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 	my_target = T
 	QDEL_IN(src, 300)
 	step_away(src,my_target,2)
-	INVOKE_ASYNC(src, .proc/attack_loop)
+	INVOKE(src, .proc/attack_loop)
 
 
 /obj/effect/fake_attacker/proc/updateimage()

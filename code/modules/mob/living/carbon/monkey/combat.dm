@@ -149,7 +149,7 @@
 
 		// next to target
 		if(Adjacent(pickupTarget) || Adjacent(pickupTarget.loc))
-			INVOKE_ASYNC(src, .proc/walk2derpless, pickupTarget.loc)
+			INVOKE(src, .proc/walk2derpless, pickupTarget.loc)
 
 			// who cares about these items, i want that one!
 			drop_all_held_items()
@@ -166,7 +166,7 @@
 				if(!pickpocketing)
 					pickpocketing = TRUE
 					M.visible_message("[src] starts trying to take [pickupTarget] from [M]", "[src] tries to take [pickupTarget]!")
-					INVOKE_ASYNC(src, .proc/pickpocket, M)
+					INVOKE(src, .proc/pickpocket, M)
 
 		else
 			if(pickupTimer >= 8)
@@ -174,7 +174,7 @@
 				pickupTarget = null
 				pickupTimer = 0
 			else
-				INVOKE_ASYNC(src, .proc/walk2derpless, pickupTarget.loc)
+				INVOKE(src, .proc/walk2derpless, pickupTarget.loc)
 
 		return TRUE
 
@@ -229,7 +229,7 @@
 				return TRUE
 
 			if(target != null)
-				INVOKE_ASYNC(src, .proc/walk2derpless, target)
+				INVOKE(src, .proc/walk2derpless, target)
 
 			// pickup any nearby weapon
 			if(!pickupTarget && prob(MONKEY_WEAPON_PROB))
@@ -308,7 +308,7 @@
 
 			if(target.pulledby != src && !istype(target.pulledby, /mob/living/carbon/monkey/))
 
-				INVOKE_ASYNC(src, .proc/walk2derpless, target.loc)
+				INVOKE(src, .proc/walk2derpless, target.loc)
 
 				if(Adjacent(target) && isturf(target.loc))
 					a_intent = INTENT_GRAB
@@ -321,7 +321,7 @@
 						frustration = 0
 
 			else if(!disposing_body)
-				INVOKE_ASYNC(src, .proc/walk2derpless, bodyDisposal.loc)
+				INVOKE(src, .proc/walk2derpless, bodyDisposal.loc)
 
 				if(Adjacent(bodyDisposal))
 					disposing_body = TRUE

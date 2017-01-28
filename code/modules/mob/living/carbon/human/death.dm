@@ -33,7 +33,7 @@
 	if(ticker && ticker.mode)
 		sql_report_death(src)
 	if(mind && mind.devilinfo)
-		INVOKE_ASYNC(mind.devilinfo, /datum/devilinfo.proc/beginResurrectionCheck, src)
+		INVOKE(mind.devilinfo, /datum/devilinfo.proc/beginResurrectionCheck, src)
 
 /mob/living/carbon/human/proc/makeSkeleton()
 	status_flags |= DISFIGURED

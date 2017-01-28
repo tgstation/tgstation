@@ -28,7 +28,7 @@
 	for(var/thing in thing_to_check)
 		if(droppable(thing))
 			. = 1
-			INVOKE_ASYNC(src, .proc/drop, thing)
+			INVOKE(src, .proc/drop, thing)
 
 /turf/open/chasm/proc/droppable(atom/movable/AM)
 	if(!isliving(AM) && !isobj(AM))

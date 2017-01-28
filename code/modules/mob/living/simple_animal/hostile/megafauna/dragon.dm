@@ -123,7 +123,7 @@ Difficulty: Medium
 
 /obj/effect/overlay/temp/target/New(loc)
 	..()
-	INVOKE_ASYNC(src, .proc/fall)
+	INVOKE(src, .proc/fall)
 
 /obj/effect/overlay/temp/target/proc/fall()
 	var/turf/T = get_turf(src)
@@ -141,15 +141,15 @@ Difficulty: Medium
 
 	if(prob(15 + anger_modifier) && !client)
 		if(health < maxHealth/2)
-			INVOKE_ASYNC(src, .proc/swoop_attack, 1)
+			INVOKE(src, .proc/swoop_attack, 1)
 		else
 			fire_rain()
 
 	else if(prob(10+anger_modifier) && !client)
 		if(health > maxHealth/2)
-			INVOKE_ASYNC(src, .proc/swoop_attack)
+			INVOKE(src, .proc/swoop_attack)
 		else
-			INVOKE_ASYNC(src, .proc/triple_swoop)
+			INVOKE(src, .proc/triple_swoop)
 	else
 		fire_walls()
 
@@ -163,7 +163,7 @@ Difficulty: Medium
 	playsound(get_turf(src),'sound/magic/Fireball.ogg', 200, 1)
 
 	for(var/d in cardinal)
-		INVOKE_ASYNC(src, .proc/fire_wall, d)
+		INVOKE(src, .proc/fire_wall, d)
 
 /mob/living/simple_animal/hostile/megafauna/dragon/proc/fire_wall(dir)
 	var/list/hit_things = list(src)

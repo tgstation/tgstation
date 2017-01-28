@@ -82,9 +82,9 @@
 /datum/teleport/proc/playSpecials(atom/location,datum/effect_system/effect,sound)
 	if(location)
 		if(effect)
-			INVOKE_ASYNC(src, .proc/do_effect, location, effect)
+			INVOKE(src, .proc/do_effect, location, effect)
 		if(sound)
-			INVOKE_ASYNC(src, .proc/do_sound, location, sound)
+			INVOKE(src, .proc/do_sound, location, sound)
 
 /datum/teleport/proc/do_effect(atom/location, datum/effect_system/effect)
 	src = null

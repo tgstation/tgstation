@@ -564,7 +564,7 @@ var/datum/subsystem/ticker/ticker
 	//map rotate chance defaults to 75% of the length of the round (in minutes)
 	if (!prob((world.time/600)*config.maprotatechancedelta))
 		return
-	INVOKE_ASYNC(GLOBAL_PROC, /.proc/maprotate)
+	INVOKE(GLOBAL_PROC, /.proc/maprotate)
 
 
 /world/proc/has_round_started()
