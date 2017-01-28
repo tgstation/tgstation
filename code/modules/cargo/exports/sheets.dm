@@ -114,7 +114,7 @@
 // Major players would pay a lot to get some, so you can get a lot of money from producing and selling those.
 // Just don't forget to fire all your production staff before the end of month.
 /datum/export/stack/abductor
-	cost = 10000
+	cost = 3500
 	message = "of alien alloy"
 	export_types = list(/obj/item/stack/sheet/mineral/abductor)
 
