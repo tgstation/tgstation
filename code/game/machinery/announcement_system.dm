@@ -158,8 +158,11 @@ var/list/announcement_systems = list()
 	add_fingerprint(usr)
 	interact(usr)
 
-/obj/machinery/announcement_system/attack_ai(mob/living/silicon/ai/user)
-	if(!isAI(user))
+/obj/machinery/announcement_system/attack_robot(mob/living/silicon/user)
+	. = attack_ai(user)
+
+/obj/machinery/announcement_system/attack_ai(mob/living/silicon/user)
+	if(!issilicon(user))
 		return
 	if(stat & BROKEN)
 		user << "<span class='warning'>[src]'s firmware appears to be malfunctioning!</span>"

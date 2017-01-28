@@ -34,7 +34,8 @@
 							/obj/machinery/smartfridge/drinks = "drinks",
 							/obj/machinery/smartfridge/extract = "slimes",
 							/obj/machinery/smartfridge/chemistry = "chems",
-							/obj/machinery/smartfridge/chemistry/virology = "viruses")
+							/obj/machinery/smartfridge/chemistry/virology = "viruses",
+							/obj/machinery/smartfridge/disks = "disks")
 
 /obj/item/weapon/circuitboard/machine/smartfridge/New(loc, new_type)
 	if(new_type)
@@ -96,13 +97,13 @@
 
 		if(contents.len >= max_n_of_items)
 			user << "<span class='warning'>\The [src] is full!</span>"
-			return 0
+			return FALSE
 
 		if(accept_check(O))
 			load(O)
 			user.visible_message("[user] has added \the [O] to \the [src].", "<span class='notice'>You add \the [O] to \the [src].</span>")
 			updateUsrDialog()
-			return 1
+			return TRUE
 
 		if(istype(O, /obj/item/weapon/storage/bag))
 			var/obj/item/weapon/storage/P = O
@@ -124,15 +125,15 @@
 										 "<span class='notice'>You load \the [src] with \the [O].</span>")
 				if(O.contents.len > 0)
 					user << "<span class='warning'>Some items are refused.</span>"
-				return 1
+				return TRUE
 			else
 				user << "<span class='warning'>There is nothing in [O] to put in [src]!</span>"
-				return 0
+				return FALSE
 
 	if(user.a_intent != INTENT_HARM)
 		user << "<span class='warning'>\The [src] smartly refuses [O].</span>"
 		updateUsrDialog()
-		return 0
+		return FALSE
 	else
 		return ..()
 
@@ -140,8 +141,8 @@
 
 /obj/machinery/smartfridge/proc/accept_check(obj/item/O)
 	if(istype(O,/obj/item/weapon/reagent_containers/food/snacks/grown/) || istype(O,/obj/item/seeds/) || istype(O,/obj/item/weapon/grown/))
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 /obj/machinery/smartfridge/proc/load(obj/item/O)
 	if(istype(O.loc,/mob))
@@ -159,7 +160,7 @@
 	return src.attack_hand(user)
 
 /obj/machinery/smartfridge/attack_ai(mob/user)
-	return 0
+	return FALSE
 
 /obj/machinery/smartfridge/attack_hand(mob/user)
 	user.set_machine(src)
@@ -171,7 +172,7 @@
 
 /obj/machinery/smartfridge/interact(mob/user)
 	if(stat)
-		return 0
+		return FALSE
 
 	var/dat = "<TT><b>Select an item:</b><br>"
 
@@ -354,9 +355,9 @@
 
 /obj/machinery/smartfridge/drinks/accept_check(obj/item/O)
 	if(!istype(O,/obj/item/weapon/reagent_containers) || !O.reagents || !O.reagents.reagent_list.len)
-		return 0
+		return FALSE
 	if(istype(O,/obj/item/weapon/reagent_containers/glass) || istype(O,/obj/item/weapon/reagent_containers/food/drinks) || istype(O,/obj/item/weapon/reagent_containers/food/condiment))
-		return 1
+		return TRUE
 
 // ----------------------------
 //  Food smartfridge
@@ -366,8 +367,8 @@
 
 /obj/machinery/smartfridge/food/accept_check(obj/item/O)
 	if(istype(O,/obj/item/weapon/reagent_containers/food/snacks/))
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 // -------------------------------------
 // Xenobiology Slime-Extract Smartfridge
@@ -378,10 +379,10 @@
 
 /obj/machinery/smartfridge/extract/accept_check(obj/item/O)
 	if(istype(O,/obj/item/slime_extract))
-		return 1
+		return TRUE
 	if(istype(O,/obj/item/device/slime_scanner))
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 /obj/machinery/smartfridge/extract/New()
 	..()
@@ -417,18 +418,18 @@
 		if(O.contents.len)
 			for(var/obj/item/I in O)
 				if(!accept_check(I))
-					return 0
-			return 1
-		return 0
+					return FALSE
+			return TRUE
+		return FALSE
 	if(!istype(O,/obj/item/weapon/reagent_containers))
-		return 0
+		return FALSE
 	if(istype(O,/obj/item/weapon/reagent_containers/pill)) // empty pill prank ok
-		return 1
+		return TRUE
 	if(!O.reagents || !O.reagents.reagent_list.len) // other empty containers not accepted
-		return 0
+		return FALSE
 	if(istype(O,/obj/item/weapon/reagent_containers/syringe) || istype(O,/obj/item/weapon/reagent_containers/glass/bottle) || istype(O,/obj/item/weapon/reagent_containers/glass/beaker) || istype(O,/obj/item/weapon/reagent_containers/spray))
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 // ----------------------------
 // Virology Medical Smartfridge
@@ -443,3 +444,16 @@
 		/obj/item/weapon/reagent_containers/glass/bottle/mutagen = 1,
 		/obj/item/weapon/reagent_containers/glass/bottle/plasma = 1,
 		/obj/item/weapon/reagent_containers/glass/bottle/synaptizine = 1)
+
+// ----------------------------
+// Disk """fridge"""
+// ----------------------------
+/obj/machinery/smartfridge/disks
+	name = "disk compartmentalizer"
+	desc = "A machine capable of storing a variety of disks. Denoted by most as the DSU (disk storage unit)."
+
+/obj/machinery/smartfridge/disks/accept_check(obj/item/O)
+	if(istype(O,/obj/item/weapon/disk/))
+		return TRUE
+	else
+		return FALSE
