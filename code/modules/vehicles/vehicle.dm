@@ -45,8 +45,8 @@
 	if(user.client)
 		user.client.view = view_range
 	if(riding_datum)
-		riding_datum.handle_vehicle_offsets()
 		riding_datum.ridden = src
+		riding_datum.handle_vehicle_offsets()
 
 //MOVEMENT
 /obj/vehicle/relaymove(mob/user, direction)
