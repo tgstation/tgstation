@@ -540,7 +540,6 @@
 #include "code\game\machinery\computer\buildandrepair.dm"
 #include "code\game\machinery\computer\camera.dm"
 #include "code\game\machinery\computer\camera_advanced.dm"
-#include "code\game\machinery\computer\camera_advanced_camera_bug.dm"
 #include "code\game\machinery\computer\card.dm"
 #include "code\game\machinery\computer\cloning.dm"
 #include "code\game\machinery\computer\communications.dm"

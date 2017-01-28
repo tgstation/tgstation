@@ -25,7 +25,7 @@
 	anchored = 1
 	var/start_active = 0 //If it ignores the random chance to start broken on round start
 	var/invuln = null
-	var/obj/item/weapon/circuitboard/computer/camera_bug/bug = null
+	var/obj/item/device/camera_bug/bug = null
 	var/obj/structure/camera_assembly/assembly = null
 
 	//OTHER
@@ -221,7 +221,7 @@
 				O << browse(text("<HTML><HEAD><TITLE>[]</TITLE></HEAD><BODY><TT>[]</TT></BODY></HTML>", itemname, info), text("window=[]", itemname))
 		return
 
-	else if(istype(W, /obj/item/weapon/circuitboard/computer/camera_bug))
+	else if(istype(W, /obj/item/device/camera_bug))
 		if(!can_use())
 			user << "<span class='notice'>Camera non-functional.</span>"
 			return
