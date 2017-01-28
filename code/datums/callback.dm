@@ -69,7 +69,7 @@
 	else
 		call(thingtocall, proctocall)(arglist(calling_arguments))
 
-#define CALLBACK_INVOKE_ASYNC \
+#define CALLBACK_INVOKE \
 	if (!object)\
 	{\
 		return;\
@@ -93,11 +93,11 @@
 	return call(object, delegate)(arglist(calling_arguments));
 
 /datum/callback/proc/Invoke(...)
-	CALLBACK_INVOKE_ASYNC
+	CALLBACK_INVOKE
 
 //copy and pasted because fuck proc overhead
 /datum/callback/proc/InvokeAsync(...)
 	set waitfor = FALSE
-	CALLBACK_INVOKE_ASYNC
+	CALLBACK_INVOKE
 
 #undef CALLBACK_INVOKE_ASYNC
