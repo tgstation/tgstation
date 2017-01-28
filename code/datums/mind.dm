@@ -1495,7 +1495,7 @@
 			if(istype(S, type))
 				continue
 		S.charge_counter = delay
-		INVOKE(S, /obj/effect/proc_holder/spell.proc/start_recharge)
+		INVOKE_ASYNC(S, /obj/effect/proc_holder/spell.proc/start_recharge)
 
 /datum/mind/proc/get_ghost(even_if_they_cant_reenter)
 	for(var/mob/dead/observer/G in dead_mob_list)

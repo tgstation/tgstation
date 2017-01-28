@@ -20,14 +20,14 @@
 	owner.status_flags |= XENO_HOST
 	START_PROCESSING(SSobj, src)
 	owner.med_hud_set_status()
-	INVOKE(src, .proc/AddInfectionImages, owner)
+	INVOKE_ASYNC(src, .proc/AddInfectionImages, owner)
 
 /obj/item/organ/body_egg/Remove(var/mob/living/carbon/M, special = 0)
 	STOP_PROCESSING(SSobj, src)
 	if(owner)
 		owner.status_flags &= ~(XENO_HOST)
 		owner.med_hud_set_status()
-		INVOKE(src, .proc/RemoveInfectionImages, owner)
+		INVOKE_ASYNC(src, .proc/RemoveInfectionImages, owner)
 	..()
 
 /obj/item/organ/body_egg/process()

@@ -160,7 +160,7 @@
 	..()
 	SetLuminosity(4, 3)
 	user = caster
-	INVOKE(src, .proc/judicialblast)
+	INVOKE_ASYNC(src, .proc/judicialblast)
 
 /obj/effect/clockwork/judicial_marker/proc/judicialblast()
 	playsound(src, 'sound/magic/MAGIC_MISSILE.ogg', 50, 1, 1, 1)

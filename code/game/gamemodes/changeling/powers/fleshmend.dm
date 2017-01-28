@@ -36,7 +36,7 @@
 			by quick repeated use!</span>"
 
 	recent_uses++
-	INVOKE(src, .proc/fleshmend, user)
+	INVOKE_ASYNC(src, .proc/fleshmend, user)
 
 	feedback_add_details("changeling_powers","RR")
 	return 1

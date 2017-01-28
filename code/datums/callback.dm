@@ -15,7 +15,7 @@
 		OR
 		var/result = C.InvokeAsync(args, to, add) //Sleeps will not block, returns . on the first sleep (then continues on in the "background" after the sleep/block ends), otherwise operates normally.
 		OR
-		INVOKE_ASYNC(<CALLBACK args>) to immediately create and call InvokeAsync
+		INVOKE_ASYNC_ASYNC(<CALLBACK args>) to immediately create and call InvokeAsync
 
 	PROC TYPEPATH SHORTCUTS (these operate on paths, not types, so to these shortcuts, datum is NOT a parent of atom, etc...)
 
@@ -69,7 +69,7 @@
 	else
 		call(thingtocall, proctocall)(arglist(calling_arguments))
 
-#define CALLBACK_INVOKE \
+#define CALLBACK_INVOKE_ASYNC \
 	if (!object)\
 	{\
 		return;\
@@ -93,11 +93,11 @@
 	return call(object, delegate)(arglist(calling_arguments));
 
 /datum/callback/proc/Invoke(...)
-	CALLBACK_INVOKE
+	CALLBACK_INVOKE_ASYNC
 
 //copy and pasted because fuck proc overhead
 /datum/callback/proc/InvokeAsync(...)
 	set waitfor = FALSE
-	CALLBACK_INVOKE
+	CALLBACK_INVOKE_ASYNC
 
-#undef CALLBACK_INVOKE
+#undef CALLBACK_INVOKE_ASYNC
