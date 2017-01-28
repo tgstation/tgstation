@@ -35,7 +35,7 @@
 	if(isliving(AM))
 		var/mob/living/L = AM
 		if(L.stat <= stat_affected)
-			if((!is_servant_of_ratvar(L) || (is_servant_of_ratvar(L) && affects_servants)) && L.mind && (!isdrone(L) || istype(L, /mob/living/simple_animal/drone/cogscarab)))
+			if((!is_servant_of_ratvar(L) || (affects_servants && is_servant_of_ratvar(L))) && (L.mind || L.has_status_effect(STATUS_EFFECT_SIGILMARK)) && !isdrone(L))
 				var/obj/item/I = L.null_rod_check()
 				if(I)
 					L.visible_message("<span class='warning'>[L]'s [I.name] [resist_string], protecting them from [src]'s effects!</span>", \
@@ -271,7 +271,7 @@
 	stat_affected = DEAD
 	resist_string = "glows shimmering yellow"
 	sigil_name = "Vitality Matrix"
-	var/vitality = 0
+	var/static/vitality = 0
 	var/base_revive_cost = 20
 	var/sigil_active = FALSE
 	var/animation_number = 3 //each cycle increments this by 1, at 4 it produces an animation and resets
@@ -280,7 +280,7 @@
 /obj/effect/clockwork/sigil/vitality/examine(mob/user)
 	..()
 	if(is_servant_of_ratvar(user) || isobserver(user))
-		user << "<span class='[vitality ? "inathneq_small":"alloy"]'>It is storing <b>[ratvar_awakens ? "INFINITE":"[vitality]"]</b> units of vitality.</span>"
+		user << "<span class='[vitality ? "inathneq_small":"alloy"]'>It has access to <b>[ratvar_awakens ? "INFINITE":"[vitality]"]</b> units of vitality.</span>"
 		user << "<span class='inathneq_small'>It requires at least <b>[base_revive_cost]</b> units of vitality to revive dead Servants, in addition to any damage the Servant has.</span>"
 
 /obj/effect/clockwork/sigil/vitality/sigil_effects(mob/living/L)

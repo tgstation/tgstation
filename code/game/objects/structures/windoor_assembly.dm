@@ -16,7 +16,7 @@
 	icon_state = "l_windoor_assembly01"
 	anchored = 0
 	density = 0
-	setDir(NORTH)
+	dir = NORTH
 
 	var/ini_dir
 	var/obj/item/weapon/electronics/airlock/electronics = null
@@ -32,8 +32,10 @@
 	..()
 	user << "<span class='notice'>Alt-click to rotate it clockwise.</span>"
 
-/obj/structure/windoor_assembly/New(dir=NORTH)
+/obj/structure/windoor_assembly/New(loc, set_dir)
 	..()
+	if(set_dir)
+		dir = set_dir
 	ini_dir = dir
 	air_update_turf(1)
 
@@ -45,6 +47,7 @@
 /obj/structure/windoor_assembly/Move()
 	var/turf/T = loc
 	..()
+	setDir(ini_dir)
 	move_update_air(T)
 
 /obj/structure/windoor_assembly/update_icon()
@@ -55,8 +58,17 @@
 		return 1
 	if(get_dir(loc, target) == dir) //Make sure looking at appropriate border
 		return !density
-	else
-		return 1
+	if(istype(mover, /obj/structure/window))
+		var/obj/structure/window/W = mover
+		if(!valid_window_location(loc, W.ini_dir))
+			return FALSE
+	else if(istype(mover, /obj/structure/windoor_assembly))
+		var/obj/structure/windoor_assembly/W = mover
+		if(!valid_window_location(loc, W.ini_dir))
+			return FALSE
+	else if(istype(mover, /obj/machinery/door/window) && !valid_window_location(loc, mover.dir))
+		return FALSE
+	return 1
 
 /obj/structure/windoor_assembly/CanAtmosPass(turf/T)
 	if(get_dir(loc, T) == dir)
@@ -313,20 +325,21 @@
 	set src in oview(1)
 	if(usr.stat || !usr.canmove || usr.restrained())
 		return
-	if (anchored)
+	if(anchored)
 		usr << "<span class='warning'>[src] cannot be rotated while it is fastened to the floor!</span>"
-		return 0
-	//if(state != "01")
-		//update_nearby_tiles(need_rebuild=1) //Compel updates before
+		return FALSE
 
-	setDir(turn(dir, 270))
+	var/target_dir = turn(dir, 270)
 
-	//if(state != "01")
-		//update_nearby_tiles(need_rebuild=1)
+	if(!valid_window_location(loc, target_dir))
+		usr << "<span class='warning'>[src] cannot be rotated in that direction!</span>"
+		return FALSE
+
+	setDir(target_dir)
 
 	ini_dir = dir
 	update_icon()
-	return
+	return TRUE
 
 /obj/structure/windoor_assembly/AltClick(mob/user)
 	..()

@@ -1,0 +1,6 @@
+author: "coiax"
+delete-after: True
+changes: 
+  - bugfix: "Deadchat is now notified of any deaths on the shuttle or on
+Centcom. The CTF arena does not generate death messages, due to the high
+levels of death."

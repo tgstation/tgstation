@@ -1,0 +1,6 @@
+author: "Joan"
+delete-after: True
+changes: 
+  - tweak: "Geis now mutes human targets if there are less than 6 Servants."
+  - tweak: "Geis no longer produces resist messages below 6 Servants; this isn't a change, as Geis cannot be successfully resisted below 6 Servants."
+  - tweak: "Applying Geis to an already bound target will also mute them, in addition to preventing resistance."
