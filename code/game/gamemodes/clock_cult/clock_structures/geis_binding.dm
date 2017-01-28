@@ -15,6 +15,7 @@
 	buckle_lying = 0
 	buckle_prevents_pull = TRUE
 	var/resisting = FALSE
+	var/can_resist = FALSE
 	var/mob_layer = MOB_LAYER
 
 /obj/structure/destructible/clockwork/geis_binding/examine(mob/user)
@@ -30,6 +31,7 @@
 	qdel(src)
 
 /obj/structure/destructible/clockwork/geis_binding/post_buckle_mob(mob/living/M)
+	..()
 	if(M.buckled == src)
 		desc = "A flickering, glowing purple ring around [M]."
 		clockwork_desc = "A binding ring around [M], preventing [M.p_them()] from taking action while [M.p_theyre()] being converted."
@@ -45,7 +47,9 @@
 			M.put_in_hands(B, i)
 		M.regenerate_icons()
 		M.visible_message("<span class='warning'>A [name] appears around [M]!</span>", \
-		"<span class='warning'>A [name] appears around you!</span>\n<span class='userdanger'>Resist!</span>")
+		"<span class='warning'>A [name] appears around you!</span>[can_resist ? "\n<span class='userdanger'>Resist!</span>":""]")
+		if(!can_resist)
+			repair_and_interrupt()
 	else
 		var/obj/effect/overlay/temp/ratvar/geis_binding/G = new /obj/effect/overlay/temp/ratvar/geis_binding(M.loc)
 		var/obj/effect/overlay/temp/ratvar/geis_binding/T = new /obj/effect/overlay/temp/ratvar/geis_binding/top(M.loc)
@@ -60,7 +64,7 @@
 			M.unEquip(GB, TRUE)
 
 /obj/structure/destructible/clockwork/geis_binding/relaymove(mob/user, direction)
-	if(isliving(user))
+	if(isliving(user) && can_resist)
 		var/mob/living/L = user
 		L.resist()
 
@@ -82,6 +86,9 @@
 		var/mob/living/L = m
 		if(L)
 			L.Stun(1, 1, 1)
+			if(iscarbon(L))
+				var/mob/living/carbon/C = L
+				C.silent += 4
 	visible_message("<span class='sevtug'>[src] flares brightly!</span>")
 	var/obj/effect/overlay/temp/ratvar/geis_binding/G1 = new /obj/effect/overlay/temp/ratvar/geis_binding(loc)
 	var/obj/effect/overlay/temp/ratvar/geis_binding/G2 = new /obj/effect/overlay/temp/ratvar/geis_binding(loc)
@@ -98,7 +105,7 @@
 
 /obj/structure/destructible/clockwork/geis_binding/user_unbuckle_mob(mob/living/buckled_mob, mob/user)
 	if(buckled_mob == user)
-		if(!resisting)
+		if(!resisting && can_resist)
 			resisting = TRUE
 			user.visible_message("<span class='warning'>[user] starts struggling against [src]...</span>", "<span class='userdanger'>You start breaking out of [src]...</span>")
 			while(do_after(user, 10, target = src) && resisting && obj_integrity)
@@ -114,10 +121,10 @@
 /obj/item/geis_binding
 	name = "glowing ring"
 	desc = "A flickering ring preventing you from holding items."
-	force = 0
 	icon = 'icons/effects/clockwork_effects.dmi'
 	icon_state = "geisbinding_full"
-	flags = NODROP|ABSTRACT|DROPDEL|NOBLUDGEON
+	flags = NODROP|ABSTRACT|DROPDEL
 
-/obj/item/geis_binding/afterattack(atom/target, mob/living/user, proximity_flag, params)
+/obj/item/geis_binding/pre_attackby(atom/target, mob/living/user, params)
 	user.resist()
+	return FALSE
