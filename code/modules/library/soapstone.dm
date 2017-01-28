@@ -46,6 +46,10 @@
 	if(!proximity)
 		return
 
+	if(!remaining_uses)
+		// The dull chisel is dull.
+		user << "<span class='warning'>[src] is [w_dull].</span>"
+
 	var/obj/structure/chisel_message/already_message = locate(/obj/structure/chisel_message) in T
 
 	if(!good_chisel_message_location(T))
