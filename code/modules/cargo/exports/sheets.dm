@@ -113,11 +113,11 @@
 // Alien Alloy. Like plasteel, but better.
 // Major players would pay a lot to get some, so you can get a lot of money from producing and selling those.
 // Just don't forget to fire all your production staff before the end of month.
-// Abductor alloy is too rewarding for 5 sheets plasma and 5 sheets metal for some alien alloy where you can get the abductor tools easily from mining
-// /datum/export/stack/abductor
-//	cost = 10000
-//	message = "of alien alloy"
-//	export_types = list(/obj/item/stack/sheet/mineral/abductor)
+
+/datum/export/stack/abductor
+	cost = 5000
+        message = "of alien alloy"
+	export_types = list(/obj/item/stack/sheet/mineral/abductor)
 
 // Adamantine. Does not occur naurally.
 /datum/export/stack/adamantine
