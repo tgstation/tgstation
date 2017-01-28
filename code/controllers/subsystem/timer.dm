@@ -302,7 +302,7 @@ proc/addtimer(datum/callback/callback, wait, flags, suppress_zero_warning = FALS
 			var/less_unique_hash = hashlist.Join("|||||||")
 			if(!LAZYACCESS(addtimer_overhead_calls,less_unique_hash))
 				LAZYADD(addtimer_overhead_calls,less_unique_hash)
-				stack_trace("Old async call syntax detected for timer [less_unique_hash]. Please use INVOKE(X) instead of addtimer(CALLBACK(X),0)")
+				stack_trace("Old async call syntax detected for timer [less_unique_hash]. Please use INVOKE_ASYNC(X) instead of addtimer(CALLBACK(X),0)")
 		callback.InvokeAsync()
 		return
 

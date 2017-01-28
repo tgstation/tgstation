@@ -53,7 +53,7 @@
 	current_target = target
 	active = TRUE
 	current_beam = new(user,current_target,time=6000,beam_icon_state="medbeam",btype=/obj/effect/ebeam/medical)
-	INVOKE(current_beam, /datum/beam.proc/Start)
+	INVOKE_ASYNC(current_beam, /datum/beam.proc/Start)
 
 	feedback_add_details("gun_fired","[src.type]")
 

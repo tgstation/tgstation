@@ -18,10 +18,10 @@
 	. = ..()
 	if(!.)
 		return
-	INVOKE(src, .proc/close)
+	INVOKE_ASYNC(src, .proc/close)
 	// Close any attached airlocks as well
 	for(var/obj/machinery/door/D in orange(1, src))
-		INVOKE(src, .proc/close)
+		INVOKE_ASYNC(src, .proc/close)
 
 /obj/machinery/door/airlock/onShuttleMove()
 	shuttledocked = 0
