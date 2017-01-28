@@ -381,7 +381,7 @@ var/list/ai_list = list()
 			else
 				src << "<span class='notice'>Unable to locate the holopad.</span>"
 	if(href_list["track"])
-		var/mob/M = camera_lock_by_name(href_list["track"])
+		var/mob/M = pick(camera_lock_by_name(href_list["track"]))
 		if(M)
 			ai_actual_track(M)
 		else
@@ -404,7 +404,7 @@ var/list/ai_list = list()
 	if(href_list["botrefresh"]) //Refreshes the bot control panel.
 		botcall()
 		return
-	if (href_list["ai_take_control"]) //Mech domination
+	if(href_list["ai_take_control"]) //Mech domination
 		var/obj/mecha/M = locate(href_list["ai_take_control"])
 		if(controlled_mech)
 			src << "You are already loaded into an onboard computer!"
@@ -412,7 +412,7 @@ var/list/ai_list = list()
 		if(M)
 			M.transfer_ai(AI_MECH_HACK,src, usr) //Called om the mech itself.
 	if(href_list["opennear"])
-		var/mob/M = camera_lock_by_name(href_list["opennear"])
+		var/mob/M = pick(camera_lock_by_name(href_list["opennear"]))
 		if(M)
 			open_nearest_door(M)
 		else
@@ -420,19 +420,16 @@ var/list/ai_list = list()
 
 /mob/living/silicon/ai/proc/camera_lock_by_name(namestring)
 	trackable_mobs()
-	var/list/trackable = list()
-	trackable += track.humans + track.others
+	var/list/trackeable = list()
+	trackeable += track.humans + track.others
 	var/list/targets = list()
-	for(var/I in trackable)
-		var/mob/M = trackable[I]
+	for(var/I in trackeable)
+		var/mob/M = trackeable[I]
 		if(M.name == namestring)
 			targets += M
-	if(name = namestring)
+	if(name == namestring)
 		targets += src
-	if(targets.len)
-		return pick(targets)
-	else
-		return FALSE
+	return targets
 
 /mob/living/silicon/ai/proc/open_nearest_door(mob/M)
 	if(stat == DEAD)
@@ -447,6 +444,8 @@ var/list/ai_list = list()
 	for(search_range = 0, search_range < 6, search_range++)
 		for(var/obj/machinery/door/airlock/A in range(search_range,get_turf(M)))
 			if(!cameranet.checkTurfVis(get_turf(A)))
+				continue
+			if(!A.density)
 				continue
 			D = A
 			found = TRUE
@@ -472,7 +471,7 @@ var/list/ai_list = list()
 		src << "<span class='warning'>Unable to open airlock: Door is physically constrained!</span>"
 		return
 	D.open()
-	//src << "<span class='boldnotice'>Opening [D.name] for [M.name]!</span>"
+	src << "<span class='boldnotice'>Opening the nearest door to [M.name]!</span>"
 
 /mob/living/silicon/ai/proc/switchCamera(obj/machinery/camera/C)
 
