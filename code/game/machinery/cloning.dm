@@ -134,7 +134,7 @@
 		if(!G)
 			return FALSE
 	if(clonemind.damnation_type) //Can't clone the damned.
-		INVOKE((src, .proc/horrifyingsound))
+		INVOKE(src, .proc/horrifyingsound)
 		mess = 1
 		icon_state = "pod_g"
 		update_icon()

@@ -1,5 +1,4 @@
 #define GLOBAL_PROC	"some_magic_bullshit"
 
 #define CALLBACK new /datum/callback
-#define INVOKE(args) var/datum/callback/invoking_callback = new args; invoking_callback.InvokeAsync()
-#define INVOKE_AGAIN(args) invoking_callback = new args; invoking_callback.InvokeAsync()
+#define INVOKE ;new /datum/callback/immediate	//semicolon to prevent shit from trying to assign us/use us as an arg

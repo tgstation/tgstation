@@ -134,7 +134,7 @@
 				on = !on
 
 				if(on)
-					INVOKE((src, .proc/magnetic_process))
+					INVOKE(src, .proc/magnetic_process)
 
 
 

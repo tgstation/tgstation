@@ -51,7 +51,7 @@ would spawn and follow the beaker, even if it is carried or thrown.
 	for(var/i in 1 to number)
 		if(total_effects > 20)
 			return
-		INVOKE((src, .proc/generate_effect))
+		INVOKE(src, .proc/generate_effect)
 
 /datum/effect_system/proc/generate_effect()
 	if(holder)

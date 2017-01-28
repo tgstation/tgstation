@@ -78,7 +78,7 @@
 /obj/item/device/assembly/prox_sensor/dropped()
 	..()
 	if(scanning)
-		INVOKE((src, .proc/sense))
+		INVOKE(src, .proc/sense)
 
 /obj/item/device/assembly/prox_sensor/Destroy()
 	if(scanning)

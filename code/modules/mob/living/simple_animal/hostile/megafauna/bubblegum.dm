@@ -88,19 +88,19 @@ Difficulty: Hard
 
 	var/warped = FALSE
 	if(!try_bloodattack())
-		INVOKE((src, .proc/blood_spray))
+		INVOKE(src, .proc/blood_spray)
 		warped = blood_warp()
 		if(warped && prob(100 - anger_modifier))
 			return
 
 	if(prob(90 - anger_modifier) || slaughterlings())
 		if(health > maxHealth * 0.5)
-			INVOKE((src, .proc/charge))
+			INVOKE(src, .proc/charge)
 		else
 			if(prob(70) || warped)
-				INVOKE((src, .proc/triple_charge))
+				INVOKE(src, .proc/triple_charge)
 			else
-				INVOKE((src, .proc/warp_charge))
+				INVOKE(src, .proc/warp_charge)
 
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/New()
@@ -201,7 +201,7 @@ Difficulty: Hard
 /mob/living/simple_animal/hostile/megafauna/bubblegum/proc/try_bloodattack()
 	var/list/targets = get_mobs_on_blood()
 	if(targets.len)
-		INVOKE((src, .proc/bloodattack, targets, prob(50)))
+		INVOKE(src, .proc/bloodattack, targets, prob(50))
 
 		return TRUE
 	return FALSE

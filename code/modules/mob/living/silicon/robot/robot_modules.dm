@@ -178,7 +178,7 @@
 	R.module = RM
 	R.update_module_innate()
 	RM.rebuild_modules()
-	INVOKE((RM, .proc/do_transform_animation))
+	INVOKE(RM, .proc/do_transform_animation)
 	qdel(src)
 	return RM
 
