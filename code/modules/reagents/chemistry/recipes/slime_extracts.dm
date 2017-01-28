@@ -796,7 +796,6 @@
 
 /datum/chemical_reaction/slime/flight_potion/on_reaction(datum/reagents/holder)
 	feedback_add_details("slime_cores_used","[type]")
-	var/obj/item/weapon/reagent_containers/glass/bottle/potion/flight/P = new /obj/item/weapon/reagent_containers/glass/bottle/potion/flight
-	P.loc = get_turf(holder.my_atom)
+	new/obj/item/weapon/reagent_containers/glass/bottle/potion/flight(get_turf(holder.my_atom))
 	..()
 
