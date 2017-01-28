@@ -42,7 +42,7 @@
 
 	var/turf/T = get_turf(A)
 
-	if(istype(A, /obj/item/weapon/reagent_containers/glass/bucket))
+	if(istype(A, /obj/item/weapon/reagent_containers/glass/bucket) || istype(A, /obj/structure/janitorialcart))
 		return
 
 	if(T)

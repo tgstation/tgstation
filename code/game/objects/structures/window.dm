@@ -55,7 +55,6 @@
 	if(rods)
 		debris += new /obj/item/stack/rods(src, rods)
 
-
 /obj/structure/window/narsie_act()
 	add_atom_colour(NARSIE_WINDOW_COLOUR, FIXED_COLOUR_PRIORITY)
 	for(var/obj/item/weapon/shard/shard in debris)
@@ -85,9 +84,17 @@
 		return 0	//full tile window, you can't move into it!
 	if(get_dir(loc, target) == dir)
 		return !density
-	else
-		return 1
-
+	if(istype(mover, /obj/structure/window))
+		var/obj/structure/window/W = mover
+		if(!valid_window_location(loc, W.ini_dir))
+			return FALSE
+	else if(istype(mover, /obj/structure/windoor_assembly))
+		var/obj/structure/windoor_assembly/W = mover
+		if(!valid_window_location(loc, W.ini_dir))
+			return FALSE
+	else if(istype(mover, /obj/machinery/door/window) && !valid_window_location(loc, mover.dir))
+		return FALSE
+	return 1
 
 /obj/structure/window/CheckExit(atom/movable/O as mob|obj, target)
 	if(istype(O) && O.checkpass(PASSGLASS))
@@ -251,13 +258,19 @@
 
 	if(anchored)
 		usr << "<span class='warning'>[src] cannot be rotated while it is fastened to the floor!</span>"
-		return 0
+		return FALSE
 
-	setDir(turn(dir, 90))
+	var/target_dir = turn(dir, 90)
+
+	if(!valid_window_location(loc, target_dir))
+		usr << "<span class='warning'>[src] cannot be rotated in that direction!</span>"
+		return FALSE
+
+	setDir(target_dir)
 	air_update_turf(1)
 	ini_dir = dir
 	add_fingerprint(usr)
-	return
+	return TRUE
 
 
 /obj/structure/window/verb/revrotate()
@@ -270,13 +283,19 @@
 
 	if(anchored)
 		usr << "<span class='warning'>[src] cannot be rotated while it is fastened to the floor!</span>"
-		return 0
+		return FALSE
 
-	setDir(turn(dir, 270))
+	var/target_dir = turn(dir, 270)
+
+	if(!valid_window_location(loc, target_dir))
+		usr << "<span class='warning'>[src] cannot be rotated in that direction!</span>"
+		return FALSE
+
+	setDir(target_dir)
 	air_update_turf(1)
 	ini_dir = dir
 	add_fingerprint(usr)
-	return
+	return TRUE
 
 /obj/structure/window/AltClick(mob/user)
 	..()
@@ -348,6 +367,9 @@
 
 	return 1
 
+/obj/structure/window/unanchored
+	anchored = FALSE
+
 /obj/structure/window/reinforced
 	name = "reinforced window"
 	icon_state = "rwindow"
@@ -356,6 +378,9 @@
 	max_integrity = 50
 	explosion_block = 1
 	glass_type = /obj/item/stack/sheet/rglass
+
+/obj/structure/window/reinforced/unanchored
+	anchored = FALSE
 
 /obj/structure/window/reinforced/tinted
 	name = "tinted window"
@@ -379,6 +404,9 @@
 	canSmoothWith = list(/obj/structure/window/fulltile, /obj/structure/window/reinforced/fulltile, /obj/structure/window/reinforced/tinted/fulltile)
 	glass_amount = 2
 
+/obj/structure/window/fulltile/unanchored
+	anchored = FALSE
+
 /obj/structure/window/reinforced/fulltile
 	icon = 'icons/obj/smooth_structures/reinforced_window.dmi'
 	icon_state = "r_window"
@@ -389,6 +417,9 @@
 	canSmoothWith = list(/obj/structure/window/fulltile, /obj/structure/window/reinforced/fulltile, /obj/structure/window/reinforced/tinted/fulltile)
 	level = 3
 	glass_amount = 2
+
+/obj/structure/window/reinforced/fulltile/unanchored
+	anchored = FALSE
 
 /obj/structure/window/reinforced/tinted/fulltile
 	icon = 'icons/obj/smooth_structures/tinted_window.dmi'
@@ -455,6 +486,7 @@
 		if(direct)
 			var/obj/effect/E = new /obj/effect/overlay/temp/ratvar/window/single(get_turf(src))
 			setDir(direct)
+			ini_dir = direct
 			E.setDir(direct)
 			made_glow = TRUE
 	else
@@ -489,6 +521,9 @@
 		animate(src, color = previouscolor, time = 8)
 		addtimer(CALLBACK(src, /atom/proc/update_atom_colour), 8)
 
+/obj/structure/window/reinforced/clockwork/unanchored
+	anchored = FALSE
+
 /obj/structure/window/reinforced/clockwork/fulltile
 	icon_state = "clockwork_window"
 	smooth = SMOOTH_TRUE
@@ -499,3 +534,6 @@
 	level = 3
 	glass_amount = 2
 	made_glow = TRUE
+
+/obj/structure/window/reinforced/clockwork/fulltile/unanchored
+	anchored = FALSE
