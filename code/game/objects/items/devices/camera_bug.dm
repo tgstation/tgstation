@@ -5,7 +5,7 @@
 
 
 
-/obj/item/weapon/circuitboard/computer/camera_bug
+/obj/item/device/camera_bug
 	name = "camera bug"
 	desc = "For illicit snooping through the camera network."
 	icon = 'icons/obj/device.dmi'
@@ -33,11 +33,11 @@
 	var/last_found = null
 	var/last_seen = null
 
-/obj/item/weapon/circuitboard/computer/camera_bug/New()
+/obj/item/device/camera_bug/New()
 	..()
 	START_PROCESSING(SSobj, src)
 
-/obj/item/weapon/circuitboard/computer/camera_bug/Destroy()
+/obj/item/device/camera_bug/Destroy()
 	get_cameras()
 	for(var/cam_tag in bugged_cameras)
 		var/obj/machinery/camera/camera = bugged_cameras[cam_tag]
@@ -48,17 +48,16 @@
 		tracking = null
 	return ..()
 
-
-/obj/item/weapon/circuitboard/computer/camera_bug/interact(mob/user = usr)
+/obj/item/device/camera_bug/interact(mob/user = usr)
 	var/datum/browser/popup = new(user, "camerabug","Camera Bug",nref=src)
 	popup.set_content(menu(get_cameras()))
 	popup.open()
 
-/obj/item/weapon/circuitboard/computer/camera_bug/attack_self(mob/user)
+/obj/item/device/camera_bug/attack_self(mob/user)
 	user.set_machine(src)
 	interact(user)
 
-/obj/item/weapon/circuitboard/computer/camera_bug/check_eye(mob/user)
+/obj/item/device/camera_bug/check_eye(mob/user)
 	if ( loc != user || user.incapacitated() || user.eye_blind || !current )
 		user.unset_machine()
 		return 0
@@ -69,10 +68,10 @@
 		user.unset_machine()
 		return 0
 	return 1
-/obj/item/weapon/circuitboard/computer/camera_bug/on_unset_machine(mob/user)
+/obj/item/device/camera_bug/on_unset_machine(mob/user)
 	user.reset_perspective(null)
 
-/obj/item/weapon/circuitboard/computer/camera_bug/proc/get_cameras()
+/obj/item/device/camera_bug/proc/get_cameras()
 	if( world.time > (last_net_update + 100))
 		bugged_cameras = list()
 		for(var/obj/machinery/camera/camera in cameranet.cameras)
@@ -84,7 +83,7 @@
 	return bugged_cameras
 
 
-/obj/item/weapon/circuitboard/computer/camera_bug/proc/menu(list/cameras)
+/obj/item/device/camera_bug/proc/menu(list/cameras)
 	if(!cameras || !cameras.len)
 		return "No bugged cameras found."
 
@@ -137,12 +136,12 @@
 				return .(cameras)
 	return html
 
-/obj/item/weapon/circuitboard/computer/camera_bug/proc/get_seens()
+/obj/item/device/camera_bug/proc/get_seens()
 	if(current && current.can_use())
 		var/list/seen = current.can_see()
 		return seen
 
-/obj/item/weapon/circuitboard/computer/camera_bug/proc/camera_report()
+/obj/item/device/camera_bug/proc/camera_report()
 	// this should only be called if current exists
 	var/dat = ""
 	var/list/seen = get_seens()
@@ -187,7 +186,7 @@
 	else
 		return "Camera Offline<br>"
 
-/obj/item/weapon/circuitboard/computer/camera_bug/Topic(href,list/href_list)
+/obj/item/device/camera_bug/Topic(href,list/href_list)
 	if(usr != loc)
 		usr.unset_machine()
 		usr << browse(null, "window=camerabug")
@@ -254,7 +253,7 @@
 
 	interact()
 
-/obj/item/weapon/circuitboard/computer/camera_bug/process()
+/obj/item/device/camera_bug/process()
 	if(track_mode == BUGMODE_LIST || (world.time < (last_tracked + refresh_interval)))
 		return
 	last_tracked = world.time
