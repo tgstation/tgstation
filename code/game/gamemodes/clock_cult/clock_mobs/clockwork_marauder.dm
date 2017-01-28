@@ -322,6 +322,7 @@
 	if(resulthealth > MARAUDER_EMERGE_THRESHOLD && health != maxHealth)
 		recovering = TRUE
 		src << "<span class='userdanger'>You have weakened and will need to recover before manifesting again!</span>"
+		host << "<span class='sevtug'>[true_name] has weakened and will need to recover before manifesting again!</span>"
 	return TRUE
 
 /mob/living/simple_animal/hostile/clockwork/marauder/proc/try_emerge()
