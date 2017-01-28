@@ -42,6 +42,16 @@
 
 */
 
+var/datum/callback/asyncsingleton = new()
+
+/proc/callasync(thingtocall, proctocall, ...)
+	asyncsingleton.object = thingtocall
+	asyncsingleton.delegate = proctocall
+	if (length(args) > 2)
+		. = asyncsingleton.InvokeAsync(args.Copy(3))
+	else
+		. = asyncsingleton.InvokeAsync()
+
 /datum/callback
 	var/datum/object = GLOBAL_PROC
 	var/delegate
