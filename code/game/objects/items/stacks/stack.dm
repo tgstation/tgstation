@@ -127,6 +127,15 @@
 		O.setDir(usr.dir)
 		use(R.req_amount * multiplier)
 
+		//START: oh fuck i'm so sorry
+		if(istype(O, /obj/structure/windoor_assembly))
+			var/obj/structure/windoor_assembly/W = O
+			W.ini_dir = W.dir
+		else if(istype(O, /obj/structure/window))
+			var/obj/structure/window/W = O
+			W.ini_dir = W.dir
+		//END: oh fuck i'm so sorry
+
 		//is it a stack ?
 		if (R.max_res_amount > 1)
 			var/obj/item/stack/new_item = O
@@ -159,7 +168,10 @@
 		else
 			usr << "<span class='warning'>You haven't got enough [src] to build \the [R.title]!</span>"
 		return 0
-	if (R.one_per_turf && (locate(R.result_type) in usr.loc))
+	if(R.window_checks && !valid_window_location(usr.loc, usr.dir))
+		usr << "<span class='warning'>The [R.title] won't fit here!</span>"
+		return 0
+	if(R.one_per_turf && (locate(R.result_type) in usr.loc))
 		usr << "<span class='warning'>There is another [R.title] here!</span>"
 		return 0
 	if(R.on_floor && !isfloorturf(usr.loc))
@@ -275,7 +287,7 @@
 /obj/item/stack/microwave_act(obj/machinery/microwave/M)
 	if(M && M.dirty < 100)
 		M.dirty += amount
-		
+
 /*
  * Recipe datum
  */
@@ -286,10 +298,11 @@
 	var/res_amount = 1
 	var/max_res_amount = 1
 	var/time = 0
-	var/one_per_turf = 0
-	var/on_floor = 0
+	var/one_per_turf = FALSE
+	var/on_floor = FALSE
+	var/window_checks = FALSE
 
-/datum/stack_recipe/New(title, result_type, req_amount = 1, res_amount = 1, max_res_amount = 1, time = 0, one_per_turf = 0, on_floor = 0)
+/datum/stack_recipe/New(title, result_type, req_amount = 1, res_amount = 1, max_res_amount = 1, time = 0, one_per_turf = FALSE, on_floor = FALSE, window_checks = FALSE)
 	src.title = title
 	src.result_type = result_type
 	src.req_amount = req_amount
@@ -298,3 +311,4 @@
 	src.time = time
 	src.one_per_turf = one_per_turf
 	src.on_floor = on_floor
+	src.window_checks = window_checks
