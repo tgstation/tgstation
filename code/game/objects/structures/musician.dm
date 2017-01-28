@@ -308,8 +308,6 @@
 				else
 					sleep(tempo)
 		repeat--
-		if(repeat >= 0) // don't show the last -1 repeat
-			updateDialog(user)
 	playing = 0
 	repeat = 0
 	updateDialog(user)

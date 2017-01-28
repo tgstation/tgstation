@@ -90,6 +90,7 @@ var/list/blacklisted_tesla_types = typecacheof(list(/obj/machinery/atmospherics,
 		var/turf/T = get_step(src, move_dir)
 		if(can_move(T))
 			loc = T
+			setDir(move_dir)
 			for(var/mob/living/carbon/C in loc)
 				dust_mobs(C)
 
