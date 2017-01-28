@@ -49,7 +49,7 @@
 
 
 /datum/round_event_control/hivebot_invasion/false_alarm
-	name = "Hivebot Invasion"
+	name = "Hivebot Invasion (False Alarm)"
 	typepath = /datum/round_event/hivebot_false_alarm
 	weight = 5
 	max_occurrences = 1
