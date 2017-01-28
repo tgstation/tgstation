@@ -166,4 +166,13 @@
 		dna.species.mutant_bodyparts |= "wings"
 	update_body()
 
+/datum/emote/living/carbon/human/inhale
+	key = "inhale"
+	message = "inhales"
+
+/datum/emote/living/carbon/human/exhale
+	key = "exhale"
+	message = "exhales"
+
+
 //Ayy lmao
