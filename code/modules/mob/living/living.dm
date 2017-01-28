@@ -829,9 +829,9 @@
 	. = ..()
 
 // Called when we are hit by a bolt of polymorph and changed
-// Generally the mob we are currently in, is about to be deleted
+// Generally the mob we are currently in is about to be deleted
 /mob/living/proc/wabbajack_act(mob/living/new_mob)
-	new_mob.name = name
+	new_mob.name = real_name
 	new_mob.real_name = real_name
 
 	if(mind)
@@ -900,7 +900,7 @@
 //Mobs on Fire end
 
 // used by secbot and monkeys Crossed
-/mob/living/proc/knockOver(var/mob/living/carbon/C)	
+/mob/living/proc/knockOver(var/mob/living/carbon/C)
 	C.visible_message("<span class='warning'>[pick( \
 					  "[C] dives out of [src]'s way!", \
 					  "[C] stumbles over [src]!", \
@@ -909,4 +909,3 @@
 					  "[C] topples over [src]!", \
 					  "[C] leaps out of [src]'s way!")]</span>")
 	C.Weaken(2)
-	

@@ -49,7 +49,6 @@
 	var/lights_power = 6
 	var/last_user_hud = 1 // used to show/hide the mecha hud while preserving previous preference
 
-
 	var/bumpsmash = 0 //Whether or not the mech destroys walls by running into it.
 	//inner atmos
 	var/use_internal_tank = 0
@@ -117,7 +116,7 @@
 
 	var/occupant_sight_flags = 0 //sight flags to give to the occupant (e.g. mech mining scanner gives meson-like vision)
 
-	hud_possible = list (DIAG_STAT_HUD, DIAG_BATT_HUD, DIAG_MECH_HUD)
+	hud_possible = list (DIAG_STAT_HUD, DIAG_BATT_HUD, DIAG_MECH_HUD, DIAG_TRACK_HUD)
 
 
 /obj/mecha/New()
@@ -142,6 +141,7 @@
 	diag_hud_set_mechhealth()
 	diag_hud_set_mechcell()
 	diag_hud_set_mechstat()
+	diag_hud_set_mechtracking()
 
 
 /obj/mecha/Destroy()
@@ -373,6 +373,7 @@
 	diag_hud_set_mechhealth()
 	diag_hud_set_mechcell()
 	diag_hud_set_mechstat()
+	diag_hud_set_mechtracking()
 
 
 /obj/mecha/proc/drop_item()//Derpfix, but may be useful in future for engineering exosuits.
@@ -627,6 +628,21 @@
 			break
 		//Nothing like a big, red link to make the player feel powerful!
 		user << "<a href='?src=\ref[user];ai_take_control=\ref[src]'><span class='userdanger'>ASSUME DIRECT CONTROL?</span></a><br>"
+	else
+		examine(user)
+		if(occupant)
+			user << "<span class='warning'>This exosuit has a pilot and cannot be controlled.</span>"
+			return
+		var/can_control_mech = 0
+		for(var/obj/item/mecha_parts/mecha_tracking/ai_control/A in trackers)
+			can_control_mech = 1
+			user << "<span class='notice'>\icon[src] Status of [name]:</span>\n\
+				[A.get_mecha_info()]"
+			break
+		if(!can_control_mech)
+			user << "<span class='warning'>You cannot control exosuits without AI control beacons installed.</span>"
+			return
+		user << "<a href='?src=\ref[user];ai_take_control=\ref[src]'><span class='boldnotice'>Take control of exosuit?</span></a><br>"
 
 /obj/mecha/transfer_ai(interaction, mob/user, mob/living/silicon/ai/AI, obj/item/device/aicard/card)
 	if(!..())
@@ -654,12 +670,13 @@
 			AI << "You have been downloaded to a mobile storage device. Wireless connection offline."
 			user << "<span class='boldnotice'>Transfer successful</span>: [AI.name] ([rand(1000,9999)].exe) removed from [name] and stored within local memory."
 
-		if(AI_MECH_HACK) //Called by Malf AI mob on the mech.
-			new /obj/structure/AIcore/deactivated(AI.loc)
-			if(occupant) //Oh, I am sorry, were you using that?
-				AI << "<span class='warning'>Pilot detected! Forced ejection initiated!"
-				occupant << "<span class='danger'>You have been forcibly ejected!</span>"
-				go_out(1) //IT IS MINE, NOW. SUCK IT, RD!
+		if(AI_MECH_HACK) //Called by AIs on the mech
+			AI.linked_core = new /obj/structure/AIcore/deactivated(AI.loc)
+			if(AI.can_dominate_mechs)
+				if(occupant) //Oh, I am sorry, were you using that?
+					AI << "<span class='warning'>Pilot detected! Forced ejection initiated!"
+					occupant << "<span class='danger'>You have been forcibly ejected!</span>"
+					go_out(1) //IT IS MINE, NOW. SUCK IT, RD!
 			ai_enter_mech(AI, interaction)
 
 		if(AI_TRANS_FROM_CARD) //Using an AI card to upload to a mech.
@@ -693,10 +710,10 @@
 	AI.remote_control = src
 	AI.canmove = 1 //Much easier than adding AI checks! Be sure to set this back to 0 if you decide to allow an AI to leave a mech somehow.
 	AI.can_shunt = 0 //ONE AI ENTERS. NO AI LEAVES.
-	AI << "[interaction == AI_MECH_HACK ? "<span class='announce'>Takeover of [name] complete! You are now loaded onto the onboard computer. Do not attempt to leave the station sector!</span>" \
+	AI << "[AI.can_dominate_mechs ? "<span class='announce'>Takeover of [name] complete! You are now loaded onto the onboard computer. Do not attempt to leave the station sector!</span>" \
 	: "<span class='notice'>You have been uploaded to a mech's onboard computer."]"
 	AI << "<span class='reallybig boldnotice'>Use Middle-Mouse to activate mech functions and equipment. Click normally for AI interactions.</span>"
-	GrantActions(AI)
+	GrantActions(AI, !AI.can_dominate_mechs)
 
 
 //An actual AI (simple_animal mecha pilot) entering the mech
@@ -916,11 +933,25 @@
 		var/mob/living/brain/brain = occupant
 		RemoveActions(brain)
 		mob_container = brain.container
-	else if(isAI(occupant) && forced) //This should only happen if there are multiple AIs in a round, and at least one is Malf.
-		RemoveActions(occupant)
-		occupant.gib()  //If one Malf decides to steal a mech from another AI (even other Malfs!), they are destroyed, as they have nowhere to go when replaced.
-		occupant = null
-		return
+	else if(isAI(occupant))
+		var/mob/living/silicon/ai/AI = occupant
+		if(forced)//This should only happen if there are multiple AIs in a round, and at least one is Malf.
+			RemoveActions(occupant)
+			occupant.gib()  //If one Malf decides to steal a mech from another AI (even other Malfs!), they are destroyed, as they have nowhere to go when replaced.
+			occupant = null
+			return
+		else
+			if(!AI.linked_core)
+				AI << "<span class='userdanger'>Inactive core destroyed. Unable to return.</span>"
+				AI.linked_core = null
+				return
+			AI << "<span class='notice'>Returning to core...</span>"
+			AI.controlled_mech = null
+			AI.remote_control = null
+			RemoveActions(occupant, 1)
+			mob_container = AI
+			newloc = get_turf(AI.linked_core)
+			qdel(AI.linked_core)
 	else
 		return
 	var/mob/living/L = occupant

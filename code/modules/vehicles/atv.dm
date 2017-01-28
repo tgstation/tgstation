@@ -45,4 +45,3 @@
 	. = ..()
 	riding_datum = new/datum/riding/atv/turret
 
-

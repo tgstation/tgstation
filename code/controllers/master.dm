@@ -130,7 +130,7 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 	sortTim(subsystems, /proc/cmp_subsystem_init)
 
 	// Initialize subsystems.
-	CURRENT_TICKLIMIT = TICK_LIMIT_MC_INIT
+	CURRENT_TICKLIMIT = config.tick_limit_mc_init
 	for (var/datum/subsystem/SS in subsystems)
 		if (SS.flags & SS_NO_INIT)
 			continue

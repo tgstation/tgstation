@@ -38,6 +38,8 @@ var/global/list/r_wings_list = list()
 var/global/list/ghost_forms_with_directions_list = list("ghost") //stores the ghost forms that support directional sprites
 var/global/list/ghost_forms_with_accessories_list = list("ghost") //stores the ghost forms that support hair and other such things
 
+var/global/list/security_depts_prefs = list(SEC_DEPT_RANDOM, SEC_DEPT_NONE, SEC_DEPT_ENGINEERING, SEC_DEPT_MEDICAL, SEC_DEPT_SCIENCE, SEC_DEPT_SUPPLY)
+
 	//Backpacks
 #define GBACKPACK "Grey Backpack"
 #define GSATCHEL "Grey Satchel"

@@ -264,6 +264,7 @@
 		W.forceMove(src)
 		trackers += W
 		user.visible_message("[user] attaches [W] to [src].", "<span class='notice'>You attach [W] to [src].</span>")
+		diag_hud_set_mechtracking()
 		return
 	else
 		return ..()
@@ -312,7 +313,7 @@
 			L.narsie_act()
 
 /obj/mecha/ratvar_act()
-	if(occupant)
+	if((ratvar_awakens || clockwork_gateway_activated) && occupant)
 		if(is_servant_of_ratvar(occupant)) //reward the minion that got a mech by repairing it
 			full_repair(TRUE)
 		else

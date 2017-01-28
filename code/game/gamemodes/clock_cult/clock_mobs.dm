@@ -147,6 +147,7 @@
 	var/blockchance = 20 //chance to block melee attacks entirely
 	var/counterchance = 30 //chance to counterattack after blocking
 	var/combattimer = 50 //after 5 seconds of not being hit ot attacking we count as 'out of combat' and lose block/counter chance
+	var/static/list/damage_heal_order = list(OXY, BURN, BRUTE, TOX) //we heal our host's damage in this order
 	playstyle_string = "<span class='sevtug'>You are a clockwork marauder</span><b>, a living extension of Sevtug's will. As a marauder, you are somewhat slow, but may block melee attacks \
 	and have a chance to also counter blocked melee attacks for extra damage, in addition to being immune to extreme temperatures and pressures. \
 	Your primary goal is to serve the creature that you are now a part of. You can use <span class='sevtug_small'><i>:b</i></span> to communicate silently with your master, \
@@ -226,10 +227,7 @@
 		resulthealth = round((abs(HEALTH_THRESHOLD_DEAD - host.health) / abs(HEALTH_THRESHOLD_DEAD - host.maxHealth)) * 100)
 	if(ratvar_awakens || resulthealth <= MARAUDER_EMERGE_THRESHOLD)
 		new /obj/effect/overlay/temp/heal(host.loc, "#AF0AAF")
-		host.adjustBruteLoss(-1)
-		host.adjustFireLoss(-1)
-		host.adjustToxLoss(-1)
-		host.adjustOxyLoss(-3)
+		host.heal_ordered_damage(4, damage_heal_order)
 
 /mob/living/simple_animal/hostile/clockwork/marauder/proc/update_stats()
 	if(ratvar_awakens)
@@ -275,7 +273,7 @@
 	emerge_from_host(0, 1)
 	visible_message("<span class='warning'>[src]'s equipment clatters lifelessly to the ground as the red flames within dissipate.</span>", \
 	"<span class='userdanger'>Your equipment falls away. You feel a moment of confusion before your fragile form is annihilated.</span>")
-	..()
+	. = ..()
 
 /mob/living/simple_animal/hostile/clockwork/marauder/Stat()
 	..()
@@ -497,7 +495,7 @@
 	host.visible_message("<span class='warning'>[host]'s skin flashes crimson!</span>", "<span class='heavy_brass'>You feel [true_name]'s consciousness settle in your mind.</span>")
 	visible_message("<span class='warning'>[src] suddenly disappears!</span>", "<span class='heavy_brass'>You return to [host].</span>")
 	forceMove(host)
-	if(resulthealth > MARAUDER_EMERGE_THRESHOLD)
+	if(resulthealth > MARAUDER_EMERGE_THRESHOLD && health != maxHealth)
 		recovering = TRUE
 		src << "<span class='userdanger'>You have weakened and will need to recover before manifesting again!</span>"
 	return 1

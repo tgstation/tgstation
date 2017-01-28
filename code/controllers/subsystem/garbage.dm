@@ -247,7 +247,6 @@ var/datum/subsystem/garbage_collector/SSgarbage
 	find_references(FALSE)
 
 /datum/proc/find_references(skip_alert)
-	set background = 1
 	running_find_references = type
 	if(usr && usr.client)
 		if(usr.client.running_find_references)
@@ -280,6 +279,7 @@ var/datum/subsystem/garbage_collector/SSgarbage
 			else if(islist(variable))
 				if(src in variable)
 					testing("Found [src.type] \ref[src] in [thing.type]'s [varname] list var.")
+		CHECK_TICK
 	testing("Completed search for references to a [type].")
 	if(usr && usr.client)
 		usr.client.running_find_references = null

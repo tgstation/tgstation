@@ -523,7 +523,7 @@
 			client.screen |= l_hand
 
 //ANIMAL RIDING
-/mob/living/simple_animal/unbuckle_mob(mob/living/buckled_mob,force = 0)
+/mob/living/simple_animal/unbuckle_mob(mob/living/buckled_mob, force = 0, check_loc = 1)
 	if(riding_datum)
 		riding_datum.restore_position(buckled_mob)
 	. = ..()
@@ -551,7 +551,6 @@
 		riding_datum.handle_vehicle_offsets()
 
 
-/mob/living/simple_animal/buckle_mob()
-	..()
+/mob/living/simple_animal/buckle_mob(mob/living/buckled_mob, force = 0, check_loc = 1)
+	. = ..()
 	riding_datum = new/datum/riding/animal
-
