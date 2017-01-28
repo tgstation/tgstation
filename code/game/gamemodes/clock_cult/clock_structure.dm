@@ -44,18 +44,19 @@
 		desc = clockwork_desc
 	..()
 	desc = initial(desc)
-	if(!(resistance_flags & INDESTRUCTIBLE))
+	if(unanchored_icon)
+		user << "<span class='notice'>[src] is [anchored ? "":"not "]secured to the floor.</span>"
+
+/obj/structure/destructible/clockwork/examine_status(mob/user)
+	if(is_servant_of_ratvar(user) || isobserver(user))
 		var/t_It = p_they(TRUE)
 		var/t_is = p_are()
-		var/servant_message = "[t_It] [t_is] at <b>[obj_integrity]/[max_integrity]</b> integrity"
 		var/heavily_damaged = FALSE
 		var/healthpercent = (obj_integrity/max_integrity) * 100
 		if(healthpercent < 50)
 			heavily_damaged = TRUE
-		if(can_see_clockwork)
-			user << "<span class='[heavily_damaged ? "alloy":"brass"]'>[servant_message][heavily_damaged ? "!":"."]</span>"
-	if(unanchored_icon)
-		user << "<span class='notice'>[src] is [anchored ? "":"not "]secured to the floor.</span>"
+		return "<span class='[heavily_damaged ? "alloy":"brass"]'>[t_It] [t_is] at <b>[obj_integrity]/[max_integrity]</b> integrity[heavily_damaged ? "!":"."]</span>"
+	return ..()
 
 /obj/structure/destructible/clockwork/hulk_damage()
 	return 20
