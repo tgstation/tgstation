@@ -743,7 +743,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 /datum/uplink_item/stealthy_tools/camera_bug
 	name = "Camera Bug"
 	desc = "Enables you to view all cameras on the network and track a target. Bugging cameras allows you \
-			to disable them remotely. Also can be used as circuitboard, in order to build advanced camera console."
+			to disable them remotely."
 	item = /obj/item/device/camera_bug
 	cost = 1
 	surplus = 90

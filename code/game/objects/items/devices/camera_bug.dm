@@ -16,7 +16,6 @@
 	throw_range	= 20
 	origin_tech = "syndicate=1;engineering=3"
 	flags = NOBLUDGEON
-	build_path = /obj/machinery/computer/camera_advanced/camera_bug
 
 	var/obj/machinery/camera/current = null
 
