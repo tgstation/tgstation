@@ -264,6 +264,7 @@
 		W.forceMove(src)
 		trackers += W
 		user.visible_message("[user] attaches [W] to [src].", "<span class='notice'>You attach [W] to [src].</span>")
+		diag_hud_set_mechtracking()
 		return
 	else
 		return ..()
