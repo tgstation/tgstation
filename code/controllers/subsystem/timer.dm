@@ -291,18 +291,11 @@ var/datum/subsystem/timer/SStimer
 
 var/list/addtimer_overhead_calls
 
-proc/addtimer(datum/callback/callback, wait, flags, suppress_zero_warning = FALSE)
+proc/addtimer(datum/callback/callback, wait, flags)
 	if (!callback)
 		return
 
-
 	if (wait <= 0)
-		if(!suppress_zero_warning)
-			var/list/hashlist = list("[callback.object]", callback.delegate, wait, flags & TIMER_CLIENT_TIME)
-			var/less_unique_hash = hashlist.Join("|||||||")
-			if(!LAZYACCESS(addtimer_overhead_calls,less_unique_hash))
-				LAZYADD(addtimer_overhead_calls,less_unique_hash)
-				stack_trace("Old async call syntax detected for timer [less_unique_hash]. Please use INVOKE_ASYNC(X) instead of addtimer(CALLBACK(X),0)")
 		callback.InvokeAsync()
 		return
 
