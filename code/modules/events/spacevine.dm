@@ -352,8 +352,8 @@
 		if(!master.vines.len)
 			var/obj/item/seeds/kudzu/KZ = new(loc)
 			KZ.mutations |= mutations
-			KZ.potency = min(100, master.mutativeness * 10)
-			KZ.production = (master.spread_cap / initial(master.spread_cap)) * 5
+			KZ.set_potency(master.mutativeness * 10)
+			KZ.set_production((master.spread_cap / initial(master.spread_cap)) * 5)
 	mutations = list()
 	SetOpacity(0)
 	if(has_buckled_mobs())

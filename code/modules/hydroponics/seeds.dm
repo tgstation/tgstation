@@ -211,7 +211,7 @@
 		C.value = weed_rate
 
 /obj/item/seeds/proc/adjust_weed_chance(adjustamt)
-	weed_chance = Clamp(weed_chance + adjustamt, 0, 67)
+	weed_chance = Clamp(weed_chance + adjustamt, 0, 100)
 	var/datum/plant_gene/core/C = get_gene(/datum/plant_gene/core/weed_chance)
 	if(C)
 		C.value = weed_chance
