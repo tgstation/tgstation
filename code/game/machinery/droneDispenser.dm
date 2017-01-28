@@ -129,6 +129,24 @@
 	recharge_sound = null
 	recharge_message = null
 
+/obj/machinery/droneDispenser/hivebot/invasion
+	name = "invasion fabricator"
+	desc = "A huge machine designed to withstand intense pressures. It whirs with activity as steam hisses from vents in its sides."
+	production_time = 10
+	dispense_type = /mob/living/simple_animal/hostile/hivebot
+	work_sound = 'sound/machines/copier.ogg'
+	begin_create_message = "closes, humming and whirring..."
+	end_create_message = "slams open, revealing a hivebot!"
+	recharge_sound = null
+	recharge_message = null
+
+/obj/machinery/droneDispenser/hivebot/invasion/ex_act(severity)
+	return //hivebot don give a fuck about bombs
+
+/obj/machinery/droneDispenser/hivebot/invasion/process()
+	dispense_type = pick(/mob/living/simple_animal/hostile/hivebot, /mob/living/simple_animal/hostile/hivebot/range, /mob/living/simple_animal/hostile/hivebot/rapid)
+	..()
+
 /obj/machinery/droneDispenser/swarmer
 	name = "swarmer fabricator"
 	desc = "An alien machine of unknown origin. \
