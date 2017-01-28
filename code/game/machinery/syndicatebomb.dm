@@ -11,8 +11,8 @@
 	layer = BELOW_MOB_LAYER //so people can't hide it and it's REALLY OBVIOUS
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 
-	var/minimum_timer = 60
-	var/timer_set = 60
+	var/minimum_timer = 90
+	var/timer_set = 90
 	var/maximum_timer = 60000
 
 	var/can_unanchor = TRUE
