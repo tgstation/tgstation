@@ -45420,6 +45420,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
+/obj/machinery/modular_computer/console/preset/engineering,
 /turf/open/floor/plasteel/yellow/side{
 	tag = "icon-yellow (EAST)";
 	dir = 4
