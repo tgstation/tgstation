@@ -1677,7 +1677,7 @@
 /area/engine/engineering)
 "aep" = (
 /obj/machinery/ai_slipper{
-	icon_state = "motion0";
+	
 	uses = 10
 	},
 /turf/open/floor/bluegrid,
@@ -8376,7 +8376,7 @@
 /area/maintenance/fsmaint)
 "auD" = (
 /obj/machinery/ai_slipper{
-	icon_state = "motion0";
+	
 	uses = 10
 	},
 /obj/structure/cable/cyan{
