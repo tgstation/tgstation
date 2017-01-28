@@ -394,7 +394,7 @@ obj/effect/overlay/temp/drone/laser_beacon/New(loc, caster)
 	if(ismineralturf(loc)) //drill mineral turfs
 		var/turf/closed/mineral/M = loc
 		M.gets_drilled(caster)
-	addtimer(src, "fall", 0)
+	addtimer(CALLBACK(src, .proc/fall), 0)
 
 
 obj/effect/overlay/temp/drone/laser_beacon/proc/fall()
@@ -470,11 +470,11 @@ obj/effect/overlay/temp/drone/laser_beacon/green_cross/fall()
 /obj/item/weapon/gun/energy/white/cross_laser
 	name = "Laser staff"
 	desc = "A  energy-based heat laser gun that fires concentrated orbs of very hot light which pass through glass and thin metal end explode into laser shots."
-	icon = 'icons/obj/guns/white_only.dmi'
+	icon = 'icons/obj/guns/white_dev.dmi'
 	icon_state = "cross_staff"
 	item_state = "cross_staff"
-	lefthand_file = 'icons/mob/inhands/white_only_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/white_only_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/white_dev_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/white_dev_righthand.dmi'
 	fire_sound = 'sound/weapons/laser3.ogg'
 	w_class = 4
 	materials = list(MAT_METAL=5000)
