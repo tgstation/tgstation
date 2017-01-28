@@ -381,9 +381,11 @@ var/list/ai_list = list()
 			else
 				src << "<span class='notice'>Unable to locate the holopad.</span>"
 	if(href_list["track"])
-		var/mob/M = pick(camera_lock_by_name(href_list["track"]))
-		if(M)
-			ai_actual_track(M)
+		var/list/targets = camera_lock_by_name(href_list["track"])
+		if(targets.len)
+			var/mob/M = pick(targets)
+			if(M)
+				ai_actual_track(M)
 		else
 			src << "Target is not on or near any active cameras on the station."
 	if(href_list["callbot"]) //Command a bot to move to a selected location.
