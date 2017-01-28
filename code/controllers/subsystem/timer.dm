@@ -289,8 +289,6 @@ var/datum/subsystem/timer/SStimer
 	prev = null
 	return QDEL_HINT_QUEUE
 
-var/list/addtimer_overhead_calls
-
 proc/addtimer(datum/callback/callback, wait, flags)
 	if (!callback)
 		return
@@ -300,6 +298,7 @@ proc/addtimer(datum/callback/callback, wait, flags)
 		return
 
 	var/hash
+
 
 	if (flags & TIMER_UNIQUE)
 		var/list/hashlist = list(callback.object, "(\ref[callback.object])", callback.delegate, wait, flags & TIMER_CLIENT_TIME)
@@ -313,6 +312,7 @@ proc/addtimer(datum/callback/callback, wait, flags)
 				if (hash_timer.flags & TIMER_STOPPABLE)
 					. = hash_timer.id
 				return
+
 
 	var/timeToRun = world.time + wait
 	if (flags & TIMER_CLIENT_TIME)
