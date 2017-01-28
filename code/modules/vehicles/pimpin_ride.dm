@@ -13,7 +13,7 @@
 		mybag = null
 	return ..()
 
-/obj/vehicle/janicart/buckle_mob(mob/living/buckled_mob, force = 0)
+/obj/vehicle/janicart/buckle_mob(mob/living/buckled_mob, force = 0, check_loc = 0)
 	. = ..()
 	riding_datum = new/datum/riding/janicart
 

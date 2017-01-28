@@ -6,9 +6,9 @@
 	var/overlay_state = "cover_blue"
 	var/image/overlay = null
 
-/obj/vehicle/space/speedbike/buckle_mob(mob/living/M, force = 0)
-	. = ..()
-	riding_datum = new/datum/riding/space/speedbike
+/obj/vehicle/space/speedbike/buckle_mob(mob/living/M, force = 0, check_loc = 1)
+ 	. = ..()
+		riding_datum = new/datum/riding/space/speedbike
 
 /obj/vehicle/space/speedbike/New()
 	. = ..()
@@ -29,7 +29,7 @@
 
 /obj/vehicle/space/speedbike/Move(newloc,move_dir)
 	if(has_buckled_mobs())
-		PoolOrNew(/obj/effect/overlay/temp/speedbike_trail,list(loc,move_dir))
+		new /obj/effect/overlay/temp/speedbike_trail(loc,move_dir)
 	. = ..()
 
 /obj/vehicle/space/speedbike/red
