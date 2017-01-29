@@ -181,13 +181,17 @@ Proc for attack log creation, because really why not
 		living_target = target
 
 	if(is_mob_user)
-		var/message = "\[[time_stamp()]\] <font color='red'>[user ? "[user.name][(user.ckey) ? "([user.ckey])" : ""]" : "NON-EXISTANT SUBJECT"] has [what_done] [target ? "[target.name][(is_mob_target && target.ckey) ? "([target.ckey])" : ""]" : "NON-EXISTANT SUBJECT"][object ? " with [object]" : " "][addition][(living_target) ? " (NEWHP: [living_target.health])" : ""][(attack_location) ? "([attack_location.x],[attack_location.y],[attack_location.z])" : ""]</font>"
+		var/message = "\[[time_stamp()]\] <font color='red'>[user ? "[user.name][(user.ckey) ? "([user.ckey])" : ""]" : "NON-EXISTANT SUBJECT"] has [what_done] \
+		[is_mob_target ? "[target.name][target.ckey ? "([target.ckey])" : ""]" : "[target ? "[target]" : "NON-EXISTANT SUBJECT"]"][object ? " with [object]" : " "][addition]\
+		[(living_target) ? " (NEWHP: [living_target.health])" : ""][(attack_location) ? "([attack_location.x],[attack_location.y],[attack_location.z])" : ""]</font>"
 		user.attack_log += message
 		if(user.mind)
 			user.mind.attack_log += message
 
 	if(is_mob_target)
-		var/message = "\[[time_stamp()]\] <font color='orange'>[target ? "[target.name][(target.ckey) ? "([target.ckey])" : ""]" : "NON-EXISTANT SUBJECT"] has been [what_done] by [user ? "[user.name][(is_mob_user && user.ckey) ? "([user.ckey])" : ""]" : "NON-EXISTANT SUBJECT"][object ? " with [object]" : " "][addition][(living_target) ? " (NEWHP: [living_target.health])" : ""][(attack_location) ? "([attack_location.x],[attack_location.y],[attack_location.z])" : ""]</font>"
+		var/message = "\[[time_stamp()]\] <font color='orange'>[target ? "[target.name][(target.ckey) ? "([target.ckey])" : ""]" : "NON-EXISTANT SUBJECT"] has been [what_done] by \
+		[is_mob_user ? "[user.name][user.ckey ? "([user.ckey])" : ""]" : "[user ? "[user]" : "NON-EXISTANT SUBJECT"]"][object ? " with [object]" : " "][addition]\
+		[(living_target) ? " (NEWHP: [living_target.health])" : ""][(attack_location) ? "([attack_location.x],[attack_location.y],[attack_location.z])" : ""]</font>"
 		target.attack_log += message
 		if(target.mind)
 			target.mind.attack_log += message

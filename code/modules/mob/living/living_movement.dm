@@ -42,12 +42,14 @@
 		else
 			tramplemessage += "[L] "
 		if(L.be_trampled(trample_damage, src, trampled_verb))
-			if(targets[targets_len] == L) //multiple trampled, and this is the last!
-				tramplelogs += "and [L ? "[L]":"NON-EXISTANT SUBJECT"]"
+			if(targets_len == 1) //same logic as the above, but for logging
+				tramplelogs += "[L ? L :"SUBJECT KILLED BY DAMAGE"]"
+			else if(targets[targets_len] == L)
+				tramplelogs += "and [L ? L :"SUBJECT KILLED BY DAMAGE"]"
 			else if(targets_len > 2)
-				tramplelogs += "[L ? "[L]":"NON-EXISTANT SUBJECT"], "
+				tramplelogs += "[L ? L :"SUBJECT KILLED BY DAMAGE"], "
 			else
-				tramplelogs += "[L ? "[L]":"NON-EXISTANT SUBJECT"] "
+				tramplelogs += "[L ? L :"SUBJECT KILLED BY DAMAGE"] "
 	add_logs(src, null, "trampled [tramplelogs.Join()]")
 	tramplemessage += " [targets_len == 1 ? "is":"are"] [trampled_verb] by [name]"
 	var/tramplermessage = "<span class='warning'>You [trample_verb] [targets_len == 1 ? "somebody":"multiple somebodies"]!</span>"
