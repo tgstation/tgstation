@@ -1,0 +1,5 @@
+author: "coiax"
+delete-after: True
+changes: 
+  - rscadd: "Any silicons created by bolts of change have no laws."
+  - rscadd: "Cyborgs are immune to polymorph while changing module."
