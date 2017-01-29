@@ -1,4 +1,0 @@
-author: "Xhuis"
-delete-after: True
-changes: 
-  - tweak: "Some timed actions are no longer interrupted while drifting through space."

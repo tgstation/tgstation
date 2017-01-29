@@ -1,7 +1,0 @@
-author: "coiax"
-delete-after: True
-changes: 
-  - rscadd: "Adds Romerol to the traitor uplink for 25 TC. (This means you need a discount, or to work with another traitor to afford it). Romerol is a highly experimental bioterror agent which silently create dormant nodules to be etched into the grey matter of the brain. On death, these nodules take control of the dead body, causing limited revivification, along with slurred speech, aggression, and the ability to infect others with this agent."
-  - rscdel: "Zombie infections are no longer visible on MediHUD."
-  - rscdel: "Zombies no longer tear open airlocks, since they can just smash them open just as fast."
-  - rscdel: "Zombies are no longer TOXINLOVING."
