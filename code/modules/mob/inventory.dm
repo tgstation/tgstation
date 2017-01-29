@@ -292,7 +292,7 @@
 		I.layer = initial(I.layer)
 		I.plane = initial(I.plane)
 		I.appearance_flags &= ~NO_CLIENT_COLOR
-		if(!no_move || (I.flags & DROPDEL))	//item may be moved/del'd immedietely, don't bother moving it
+		if(!no_move && !(I.flags & DROPDEL))	//item may be moved/qdel'd immedietely, don't bother moving it
 			I.forceMove(newloc)
 		I.dropped(src)
 	return TRUE
