@@ -1010,7 +1010,7 @@ var/list/datum/outfit/custom_outfits = list() //Admin created outfits
 		return
 
 	for(var/mob/living/carbon/human/H in mob_list)
-		new /obj/item/organ/body_egg/zombie_infection(H)
+		new /obj/item/organ/zombie_infection(H)
 
 	message_admins("[key_name_admin(usr)] added a latent zombie infection to all humans.")
 	log_admin("[key_name(usr)] added a latent zombie infection to all humans.")
@@ -1027,7 +1027,7 @@ var/list/datum/outfit/custom_outfits = list() //Admin created outfits
 	if(confirm != "Yes")
 		return
 
-	for(var/obj/item/organ/body_egg/zombie_infection/I in zombie_infection_list)
+	for(var/obj/item/organ/zombie_infection/I in zombie_infection_list)
 		qdel(I)
 
 	message_admins("[key_name_admin(usr)] cured all zombies.")

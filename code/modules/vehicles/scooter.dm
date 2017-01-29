@@ -13,11 +13,9 @@
 			user << "<span class='notice'>You remove the handlebars from [src].</span>"
 			qdel(src)
 
-/obj/vehicle/scooter/buckle_mob()
-	. = ..()
-	riding_datum = new/datum/riding/scooter
 
-/obj/vehicle/scooter/buckle_mob(mob/living/M, force = 0)
+/obj/vehicle/scooter/buckle_mob(mob/living/M, force = 0, check_loc = 1)
+	riding_datum = new/datum/riding/scooter
 	if(!istype(M))
 		return 0
 	if(M.get_num_legs() < 2 && M.get_num_arms() <= 0)
@@ -35,7 +33,7 @@
 
 	density = 0
 
-/obj/vehicle/scooter/skateboard/buckle_mob()
+/obj/vehicle/scooter/skateboard/buckle_mob(mob/living/M, force = 0, check_loc = 1)
 	. = ..()
 	riding_datum = new/datum/riding/scooter/skateboard
 

@@ -6,7 +6,7 @@
 	sexes = 0
 	blacklisted = 1
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/zombie
-	species_traits = list(NOBREATH,RESISTCOLD,RESISTPRESSURE,NOBLOOD,RADIMMUNE,NOZOMBIE,EASYDISMEMBER,EASYLIMBATTACHMENT,TOXINLOVER)
+	species_traits = list(NOBREATH,RESISTCOLD,RESISTPRESSURE,NOBLOOD,RADIMMUNE,NOZOMBIE,EASYDISMEMBER,EASYLIMBATTACHMENT)
 	mutant_organs = list(/obj/item/organ/tongue/zombie)
 
 /datum/species/zombie/infectious
@@ -40,7 +40,7 @@
 			C.put_in_hands(zh)
 
 	// Next, deal with the source of this zombie corruption
-	var/obj/item/organ/body_egg/zombie_infection/infection
+	var/obj/item/organ/zombie_infection/infection
 	infection = C.getorganslot("zombie_infection")
 	if(!infection)
 		infection = new(C)

@@ -1,4 +1,3 @@
-
 /datum/riding
 	var/generic_pixel_x = 0 //All dirs show this pixel_x for the driver
 	var/generic_pixel_y = 0 //All dirs show this pixel_y for the driver, use these vars if the pixel shift is stable across all dir, override handle_vehicle_offsets otherwise.
@@ -39,7 +38,7 @@
 
 
 //BUCKLE HOOKS
-/datum/riding/proc/restore_position(mob/living/buckled_mob,force = 0)
+/datum/riding/proc/restore_position(mob/living/buckled_mob)
 	if(istype(buckled_mob))
 		buckled_mob.pixel_x = 0
 		buckled_mob.pixel_y = 0

@@ -32,8 +32,12 @@
 */
 /atom/Click(location,control,params)
 	usr.ClickOn(src, params)
+
 /atom/DblClick(location,control,params)
 	usr.DblClickOn(src,params)
+
+/atom/MouseWheel(delta_x,delta_y,location,control,params)
+	usr.MouseWheelOn(src, delta_x, delta_y, params)
 
 /*
 	Standard mob ClickOn()
@@ -372,3 +376,19 @@
 		if(T)
 			T.Click(location, control, params)
 	. = 1
+
+
+/* MouseWheelOn */
+
+/mob/proc/MouseWheelOn(atom/A, delta_x, delta_y, params)
+	return
+
+/mob/dead/observer/MouseWheelOn(atom/A, delta_x, delta_y, params)
+	var/list/modifier = params2list(params)
+	if(modifier["shift"])
+		var/view = 0
+		if(delta_y > 0)
+			view = -1
+		else
+			view = 1
+		add_view_range(view)

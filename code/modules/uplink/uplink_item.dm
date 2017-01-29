@@ -632,6 +632,13 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	cost = 6
 	surplus = 50
 
+/datum/uplink_item/stealthy_weapons/romerol_kit
+	name = "Romerol"
+	desc = "A highly experimental bioterror agent which creates dormant nodules to be etched into the grey matter of the brain. On death, these nodules take control of the dead body, causing limited revivification, along with slurred speech, aggression, and the ability to infect others with this agent."
+	item = /obj/item/weapon/storage/box/syndie_kit/romerol
+	cost = 25
+	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/gang)
+
 /datum/uplink_item/stealthy_weapons/dart_pistol
 	name = "Dart Pistol"
 	desc = "A miniaturized version of a normal syringe gun. It is very quiet when fired and can fit into any \
