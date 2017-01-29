@@ -141,7 +141,7 @@
 	if(!locate(/obj/item/weapon) in held_items)
 		best_force = 0
 
-	if(restrained() || blacklistItems[pickupTarget])
+	if(restrained() || blacklistItems[pickupTarget] || (pickupTarget.flags & NODROP))
 		pickupTarget = null
 
 	if(!resisting && pickupTarget)
@@ -344,10 +344,12 @@
 	if(do_mob(src, M, MONKEY_ITEM_SNATCH_DELAY) && pickupTarget)
 		for(var/obj/item/I in M.held_items)
 			if(I == pickupTarget)
-				M.visible_message("<span class='danger'>[src] snatches [pickupTarget] from [M].</span>", "<span class='userdanger'>[src] snatched [pickupTarget]!</span>")
-				M.unEquip(pickupTarget)
-				if(!qdeleted(pickupTarget))
-					equip_item(pickupTarget)
+				if(M.unEquip(pickupTarget))
+					M.visible_message("<span class='danger'>[src] snatches [pickupTarget] from [M].</span>", "<span class='userdanger'>[src] snatched [pickupTarget]!</span>")
+					if(!qdeleted(pickupTarget))
+						equip_item(pickupTarget)
+				else
+					M.visible_message("<span class='danger'>[src] tried to snatch [pickupTarget] from [M], but failed!</span>", "<span class='userdanger'>[src] tried to grab [pickupTarget]!</span>")
 	pickpocketing = FALSE
 	pickupTarget = null
 	pickupTimer = 0
