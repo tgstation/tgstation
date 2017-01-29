@@ -1,4 +1,0 @@
-author: "vcordie"
-delete-after: True
-changes: 
-  - bugfix: "Loads the HADES carbine with the correct bullet."

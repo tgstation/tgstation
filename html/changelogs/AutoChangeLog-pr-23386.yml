@@ -1,4 +1,0 @@
-author: "Sogui"
-delete-after: True
-changes: 
-  - tweak: "All security (and captain) suit sensors are set to max by default"

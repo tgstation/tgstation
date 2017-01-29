@@ -1,6 +1,0 @@
-author: "Supermichael777"
-delete-after: True
-changes: 
-  - tweak: "The wooden chair with wings is now craft-able. -1 non reconstruct-able map object"
-  - rscadd: "Added the Tiki mask, you can make it in wood's crafting menu."
-  - imageadd: "Ported Tiki mask's sprites from Hippie station.  It is under the same Creative Commons 3.0 BY-SA as the rest of our sprites.  They are from Nienhaus."

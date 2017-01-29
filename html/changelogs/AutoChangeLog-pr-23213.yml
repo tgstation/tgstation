@@ -1,6 +1,0 @@
-author: "XDTM"
-delete-after: True
-changes: 
-  - tweak: "Implanting chainsaws is now a prosthetic replacement instead of its own surgery."
-  - rscadd: "You can now implant synthetic armblades (from an emagged limb grower) into people's arms to use it at its full potential."
-  - rscdel: "Chainsaw removal surgery has been removed as well; you'll have to sever the limb and get a new one."
