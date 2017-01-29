@@ -1,0 +1,5 @@
+author: "coiax"
+delete-after: True
+changes: 
+  - rscadd: "EMPs may cause random wires to be pulsed. Please ensure that
+sensitive equipment avoids exposure to heavy electromagnetic pulses."
