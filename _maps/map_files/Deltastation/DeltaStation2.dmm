@@ -3558,6 +3558,10 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
+/obj/machinery/atmospherics/components/unary/vent_pump{
+	dir = 2;
+	on = 1
+	},
 /turf/open/floor/plasteel/bot,
 /area/maintenance/starboard{
 	name = "Fore Starboard Maintenance"
@@ -3818,7 +3822,11 @@
 /turf/closed/wall,
 /area/security/checkpoint2)
 "ahO" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+	tag = "icon-manifold (WEST)";
+	icon_state = "manifold";
+	dir = 8
+	},
 /turf/open/floor/plasteel/neutral/side{
 	dir = 8;
 	heat_capacity = 1e+006
@@ -3832,6 +3840,11 @@
 	tag = "icon-1-2";
 	icon_state = "1-2"
 	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	tag = "icon-intact (EAST)";
+	icon_state = "intact";
+	dir = 4
+	},
 /turf/open/floor/plasteel/delivery,
 /area/maintenance/starboard{
 	name = "Fore Starboard Maintenance"
@@ -3843,28 +3856,49 @@
 	req_access_txt = "12"
 	},
 /obj/structure/barricade/wooden,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	tag = "icon-intact (EAST)";
+	icon_state = "intact";
+	dir = 4
+	},
 /turf/open/floor/plasteel/warning/side,
 /area/maintenance/starboard{
 	name = "Fore Starboard Maintenance"
 	})
 "ahR" = (
 /obj/effect/decal/cleanable/blood/old,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	tag = "icon-intact (EAST)";
+	icon_state = "intact";
+	dir = 4
+	},
 /turf/open/floor/plasteel/red,
 /area/maintenance/starboard{
 	name = "Fore Starboard Maintenance"
 	})
 "ahS" = (
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	tag = "icon-intact (EAST)";
+	icon_state = "intact";
+	dir = 4
+	},
 /turf/open/floor/plasteel/white,
 /area/maintenance/starboard{
 	name = "Fore Starboard Maintenance"
 	})
 "ahT" = (
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden,
 /turf/open/floor/plasteel/red,
 /area/maintenance/starboard{
 	name = "Fore Starboard Maintenance"
 	})
 "ahU" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	tag = "icon-intact (EAST)";
+	icon_state = "intact";
+	dir = 4
+	},
 /turf/open/floor/plasteel/white,
 /area/maintenance/starboard{
 	name = "Fore Starboard Maintenance"
@@ -3874,16 +3908,26 @@
 	pixel_x = 32;
 	pixel_y = 32
 	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	tag = "icon-intact (EAST)";
+	icon_state = "intact";
+	dir = 4
+	},
 /turf/open/floor/plasteel/delivery,
 /area/maintenance/starboard{
 	name = "Fore Starboard Maintenance"
 	})
 "ahW" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	tag = "icon-intact (EAST)";
+	icon_state = "intact";
+	dir = 4
+	},
 /obj/machinery/door/airlock/maintenance_hatch{
 	name = "Maintenance Hatch";
 	req_access_txt = "12"
 	},
-/obj/effect/decal/cleanable/dirt,
 /obj/structure/barricade/wooden,
 /turf/open/floor/plasteel/warning/side,
 /area/maintenance/starboard{
@@ -3897,7 +3941,10 @@
 	})
 "ahY" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/vomit/old,
+/obj/machinery/atmospherics/components/unary/vent_pump{
+	dir = 8;
+	on = 1
+	},
 /turf/open/floor/plasteel/red,
 /area/maintenance/starboard{
 	name = "Fore Starboard Maintenance"
@@ -4258,6 +4305,11 @@
 	})
 "aiK" = (
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/airalarm{
+	dir = 1;
+	icon_state = "alarm0";
+	pixel_y = -22
+	},
 /turf/open/floor/plasteel/bot,
 /area/maintenance/starboard{
 	name = "Fore Starboard Maintenance"
@@ -117280,6 +117332,35 @@
 /area/construction/hallway{
 	name = "\improper MiniSat Exterior"
 	})
+"ebW" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/maintenance/starboard{
+	name = "Fore Starboard Maintenance"
+	})
+"ebX" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	tag = "icon-intact (EAST)";
+	icon_state = "intact";
+	dir = 4
+	},
+/turf/open/floor/plasteel/red,
+/area/maintenance/starboard{
+	name = "Fore Starboard Maintenance"
+	})
+"ebY" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	tag = "icon-intact (EAST)";
+	icon_state = "intact";
+	dir = 4
+	},
+/turf/open/floor/plasteel/delivery,
+/area/maintenance/starboard{
+	name = "Fore Starboard Maintenance"
+	})
 
 (1,1,1) = {"
 aaa
@@ -160522,7 +160603,7 @@ afG
 afV
 aeX
 afn
-afn
+ebW
 aiE
 ajH
 akE
@@ -161807,7 +161888,7 @@ aft
 afZ
 agD
 ahj
-ahT
+ebX
 aiI
 ajH
 akJ
@@ -162578,7 +162659,7 @@ aaH
 aaf
 aeX
 ahl
-ahX
+ebY
 aiK
 aeX
 aaf

@@ -449,7 +449,10 @@
 		if("component")
 			var/list/components = list("Random Components")
 			for(var/i in clockwork_component_cache)
-				components["[get_component_name(i)] [(clockwork_component_cache[i])]"] = i
+				var/cache_components = 0
+				if(clockwork_caches)
+					cache_components = clockwork_component_cache[i]
+				components["[get_component_name(i)] [(cache_components + stored_components[i])]"] = i
 			var/input_component = input("Choose a component type.", "Target Component") as null|anything in components
 			if(input_component && !..())
 				target_component_id = components[input_component]

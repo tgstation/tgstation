@@ -1,0 +1,4 @@
+author: "Cobby"
+delete-after: True
+changes: 
+  - tweak: "AI's can now be your banker by manipulating the stock machine."

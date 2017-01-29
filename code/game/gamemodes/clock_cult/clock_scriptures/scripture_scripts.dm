@@ -300,12 +300,9 @@
 			if(!ratvar_awakens && !iscyborg(invoker) && !isclockmob(invoker) && !isdrone(invoker))
 				var/obj/structure/destructible/clockwork/powered/volt_checker/VC = new/obj/structure/destructible/clockwork/powered/volt_checker(get_turf(invoker))
 				var/multiplier = 0.4
-				var/minimum_power = Floor(VC.total_accessable_power() * 0.2, MIN_CLOCKCULT_POWER)
-				var/usable_power = min(minimum_power, 1000)
-				var/used_power = 0
-				while(used_power < usable_power && VC.try_use_power(MIN_CLOCKCULT_POWER))
-					used_power += MIN_CLOCKCULT_POWER
-					multiplier += 0.01
+				var/usable_power = min(Floor(VC.total_accessable_power() * 0.2, MIN_CLOCKCULT_POWER), 1000)
+				if(VC.try_use_power(usable_power))
+					multiplier += (usable_power * 0.0004) //at maximum power, should be 0.8 multiplier
 				qdel(VC)
 				var/obj/effect/overlay/temp/ratvar/volt_hit/VH = new /obj/effect/overlay/temp/ratvar/volt_hit(get_turf(invoker), null, multiplier)
 				invoker.visible_message("<span class='warning'>[invoker] is struck by [invoker.p_their()] own [VH.name]!</span>", "<span class='userdanger'>You're struck by your own [VH.name]!</span>")
