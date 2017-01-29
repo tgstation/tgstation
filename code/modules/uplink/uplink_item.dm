@@ -705,6 +705,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	item = /obj/item/weapon/storage/box/syndie_kit/chameleon
 	cost = 4
 	exclude_modes = list(/datum/game_mode/nuclear)
+	player_minimum = 20
 
 /datum/uplink_item/stealthy_tools/chameleon/nuke
 	cost = 6
@@ -718,7 +719,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	item = /obj/item/clothing/shoes/chameleon
 	cost = 2
 	exclude_modes = list(/datum/game_mode/nuclear)
-	player_minimum = 25
+	player_minimum = 20
 
 /datum/uplink_item/stealthy_tools/syndigaloshes/nuke
 	name = "Stealthy No-Slip Chameleon Shoes"
