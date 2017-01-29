@@ -134,6 +134,7 @@
 				SetScore(BOSS_SCORE,C,1)
 				SetScore(score_type,C,1)
 
+
 /proc/UnlockMedal(medal,client/player)
 
 	if(!player || !medal)
