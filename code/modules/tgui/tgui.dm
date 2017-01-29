@@ -35,6 +35,8 @@
 	var/list/datum/tgui/children = list() // Children of this UI.
 	var/titlebar = TRUE
 	var/custom_browser_id = FALSE
+	var/delay = 5
+	var/current_delay
 
  /**
   * public
@@ -267,6 +269,10 @@
 /datum/tgui/Topic(href, href_list)
 	if(user != usr)
 		return // Something is not right here.
+
+	if(current_delay > world.time)
+		return
+	current_delay = world.time + delay
 
 	var/action = href_list["action"]
 	var/params = href_list; params -= "action"
