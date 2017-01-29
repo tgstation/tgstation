@@ -52,3 +52,7 @@
 	else
 		visible_message("<span class='notice'>The newly grown [M.name] looks up at you with friendly eyes.</span>")
 	qdel(src)
+
+/obj/item/toy/carpplushie/dehy_carp/greytide
+	mobtype = /mob/living/carbon/human/interactive/greytide/ //viva
+	icon_state = "assistant"

@@ -688,6 +688,14 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	surplus = 10
 	exclude_modes = list(/datum/game_mode/nuclear)
 
+/datum/uplink_item/stealthy_weapons/greytide
+	name = "GT bundle"
+	desc = "Rejected androids developed for a secret initiative, dehydrated for portability. Useful for distractions. \
+	Just add water."
+	item = /obj/item/weapon/storage/box/syndie_kit/greytide
+	cost = 15
+
+
 // Stealth Items
 /datum/uplink_item/stealthy_tools
 	category = "Stealth and Camouflage Items"
