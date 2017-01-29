@@ -1,0 +1,7 @@
+author: "Fox McCloud"
+delete-after: True
+changes: 
+  - bugfix: "Fixes Kudzu seed gene stats not being properly altered by certain reagents"
+  - bugfix: "Fixes Kudzu vine dropped seeds not properly having gene stats set"
+  - bugfix: "Fixes glowshrooms having an invalidly high lifespan"
+  - bugfix: "Fixes explosive vines not properly chaining"
