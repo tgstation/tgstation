@@ -28,8 +28,8 @@ var/datum/subsystem/air/SSair
 	var/list/hotspots = list()
 	var/list/networks = list()
 	var/list/obj/machinery/atmos_machinery = list()
-	
-	
+
+
 
 	//Special functions lists
 	var/list/turf/active_super_conductivity = list()
@@ -38,6 +38,9 @@ var/datum/subsystem/air/SSair
 
 	var/list/currentrun = list()
 	var/currentpart = SSAIR_PIPENETS
+
+	var/initialized = FALSE
+	var/list/to_activate
 
 
 /datum/subsystem/air/New()
@@ -61,6 +64,8 @@ var/datum/subsystem/air/SSair
 
 
 /datum/subsystem/air/Initialize(timeofday)
+	initialized = TRUE
+	activate_queued_turfs()
 	setup_allturfs()
 	setup_atmos_machinery()
 	setup_pipenets()
@@ -244,8 +249,18 @@ var/datum/subsystem/air/SSair
 		if(T.excited_group)
 			T.excited_group.garbage_collect()
 
+/datum/subsystem/air/proc/activate_queued_turfs()
+	if(LAZYLEN(to_activate))
+		for(var/T in to_activate)
+			add_to_active(T, to_activate[T])
+	to_activate = null
 
 /datum/subsystem/air/proc/add_to_active(turf/open/T, blockchanges = 1)
+	if(!initialized)
+		LAZYINITLIST(to_activate)
+		to_activate[T] = blockchanges
+		return
+
 	if(istype(T) && T.air)
 		T.excited = 1
 		active_turfs |= T
