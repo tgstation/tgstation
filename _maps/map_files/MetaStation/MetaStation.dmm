@@ -24354,7 +24354,6 @@
 	icon_state = "2-8"
 	},
 /obj/machinery/ai_slipper{
-	icon_state = "motion0";
 	uses = 8
 	},
 /turf/open/floor/plasteel/black,
@@ -28710,7 +28709,6 @@
 /area/ai_monitored/turret_protected/ai)
 "aYk" = (
 /obj/machinery/ai_slipper{
-	icon_state = "motion0";
 	uses = 10
 	},
 /turf/open/floor/bluegrid,
@@ -30696,7 +30694,6 @@
 /area/ai_monitored/turret_protected/ai)
 "bbr" = (
 /obj/machinery/ai_slipper{
-	icon_state = "motion0";
 	uses = 10
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -30741,7 +30738,6 @@
 /area/ai_monitored/turret_protected/ai)
 "bbv" = (
 /obj/machinery/ai_slipper{
-	icon_state = "motion0";
 	uses = 10
 	},
 /obj/structure/cable{
@@ -34516,7 +34512,6 @@
 	dir = 6
 	},
 /obj/machinery/ai_slipper{
-	icon_state = "motion0";
 	uses = 10
 	},
 /turf/open/floor/bluegrid,
@@ -38972,7 +38967,6 @@
 	dir = 1
 	},
 /obj/machinery/ai_slipper{
-	icon_state = "motion0";
 	uses = 10
 	},
 /turf/open/floor/plasteel/darkblue/corner{
@@ -39064,7 +39058,6 @@
 	dir = 4
 	},
 /obj/machinery/ai_slipper{
-	icon_state = "motion0";
 	uses = 10
 	},
 /turf/open/floor/plasteel/darkwarning{
@@ -40251,7 +40244,6 @@
 	d2 = 8
 	},
 /obj/machinery/ai_slipper{
-	icon_state = "motion0";
 	uses = 10
 	},
 /turf/open/floor/plasteel/black,
@@ -40376,7 +40368,6 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/ai_slipper{
-	icon_state = "motion0";
 	uses = 10
 	},
 /mob/living/simple_animal/bot/secbot/pingsky,
@@ -40501,7 +40492,6 @@
 	dir = 4
 	},
 /obj/machinery/ai_slipper{
-	icon_state = "motion0";
 	uses = 10
 	},
 /turf/open/floor/plasteel/black,
@@ -41452,7 +41442,6 @@
 	pixel_y = 30
 	},
 /obj/machinery/ai_slipper{
-	icon_state = "motion0";
 	uses = 10
 	},
 /obj/machinery/flasher{

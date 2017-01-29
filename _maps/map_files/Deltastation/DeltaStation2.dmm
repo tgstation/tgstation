@@ -40322,7 +40322,6 @@
 	icon_state = "2-8"
 	},
 /obj/machinery/ai_slipper{
-	icon_state = "motion0";
 	uses = 10
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -43555,7 +43554,6 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/ai_slipper{
-	icon_state = "motion0";
 	uses = 10
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -43592,7 +43590,6 @@
 	pixel_y = 30
 	},
 /obj/machinery/ai_slipper{
-	icon_state = "motion0";
 	uses = 10
 	},
 /obj/machinery/flasher{
@@ -43620,7 +43617,6 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/ai_slipper{
-	icon_state = "motion0";
 	uses = 10
 	},
 /turf/open/floor/plasteel/circuit/gcircuit,
@@ -47662,7 +47658,6 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/ai_slipper{
-	icon_state = "motion0";
 	uses = 10
 	},
 /turf/open/floor/plasteel/circuit/gcircuit,
@@ -52086,7 +52081,6 @@
 /area/ai_monitored/turret_protected/aisat_interior)
 "bPj" = (
 /obj/machinery/ai_slipper{
-	icon_state = "motion0";
 	uses = 10
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -53414,10 +53408,6 @@
 	tag = "icon-4-8";
 	icon_state = "4-8"
 	},
-/obj/machinery/ai_slipper{
-	icon_state = "motion0";
-	uses = 10
-	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
 	on = 1;
@@ -53434,6 +53424,9 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
+	},
+/obj/machinery/ai_slipper{
+	uses = 10
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 8
@@ -53557,10 +53550,6 @@
 /obj/structure/cable/white{
 	tag = "icon-4-8";
 	icon_state = "4-8"
-	},
-/obj/machinery/ai_slipper{
-	icon_state = "motion0";
-	uses = 10
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 2;
@@ -61669,7 +61658,6 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/ai_slipper{
-	icon_state = "motion0";
 	uses = 10
 	},
 /turf/open/floor/plasteel/circuit/gcircuit,
@@ -117361,6 +117349,18 @@
 /area/maintenance/starboard{
 	name = "Fore Starboard Maintenance"
 	})
+"ebZ" = (
+/obj/structure/cable/white{
+	tag = "icon-4-8";
+	icon_state = "4-8"
+	},
+/obj/machinery/ai_slipper{
+	uses = 10
+	},
+/turf/open/floor/plasteel/vault{
+	dir = 8
+	},
+/area/ai_monitored/turret_protected/aisat_interior)
 
 (1,1,1) = {"
 aaa
@@ -126997,7 +126997,7 @@ bpK
 bLp
 bNw
 bPo
-bRt
+ebZ
 bTM
 bNw
 bLp
