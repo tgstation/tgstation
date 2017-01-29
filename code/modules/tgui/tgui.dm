@@ -8,7 +8,7 @@
   * tgui datum (represents a UI).
  **/
 
-#define TOPIC_DELAY 5
+#define TOPIC_DELAY 2
 
 /datum/tgui
 	var/mob/user // The mob who opened/is using the UI.
