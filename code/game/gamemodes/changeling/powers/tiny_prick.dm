@@ -246,3 +246,22 @@
 		target.reagents.add_reagent("frostoil", 30)
 	feedback_add_details("changeling_powers","CS")
 	return 1
+
+/obj/effect/proc_holder/changeling/sting/death
+	name = "Death Sting"
+	desc = "Causes huge amounts of suffocation damage as well as some other damage to a target, resulting in death unless they are promptly tended to with medical attention."
+	helptext = "Wow, this is powerful."
+	sting_icon = "sting_cryo"
+	chemical_cost = 75
+	dna_cost = 4
+	genetic_damage = 100
+
+/obj/effect/proc_holder/changeling/sting/death/sting_action(mob/user, mob/living/carbon/target)
+	add_logs(user, target, "stung", "deathsting")
+	if(target.reagents)
+		target.reagents.add_reagent("deathoil", 10)
+	target.adjustBruteLoss(10)
+	target.adjustBurnLoss(10)
+	target.adjustToxLoss(20)
+	feedback_add_details("changeling_powers", "DS")
+	return TRUE

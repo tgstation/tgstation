@@ -692,7 +692,7 @@
 	color = "#3C5133"
 	metabolization_rate = 0.08 * REAGENTS_METABOLISM
 	toxpwr = 0.15
-	
+
 /datum/reagent/toxin/anacea/on_mob_life(mob/living/M)
 	var/remove_amt = 5
 	if(holder.has_reagent("calomel") || holder.has_reagent("pen_acid"))
@@ -700,7 +700,7 @@
 	for(var/datum/reagent/medicine/R in M.reagents.reagent_list)
 		M.reagents.remove_reagent(R.id,remove_amt)
 	return ..()
-	
+
 //ACID
 
 
@@ -779,3 +779,13 @@
 	if(prob(30))
 		M << "You should sit down and take a rest..."
 	..()
+
+/datum/reagent/toxin/deathsting
+	name = "Death Oil"
+	id = "deathoil"
+	description = "An extremely potent toxin that causes death unless prompt medical attention is given to the victim."
+	toxpwr = 2.5
+	metabolization_rate = 4 * REAGENTS_METABOLISM
+
+/datum/reagent/toxin/deathsting/on_mob_life(mob/living/M)
+	M.adjustOxyLoss(10)
