@@ -260,8 +260,8 @@
 	add_logs(user, target, "stung", "deathsting")
 	if(target.reagents)
 		target.reagents.add_reagent("deathoil", 10)
-	target.adjustBruteLoss(10)
-	target.adjustBurnLoss(10)
+	target.adjustBruteLoss(20)
+	target.adjustFireLoss(20)
 	target.adjustToxLoss(20)
 	feedback_add_details("changeling_powers", "DS")
 	return TRUE

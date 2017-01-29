@@ -788,4 +788,4 @@
 	metabolization_rate = 4 * REAGENTS_METABOLISM
 
 /datum/reagent/toxin/deathsting/on_mob_life(mob/living/M)
-	M.adjustOxyLoss(10)
+	M.adjustOxyLoss(20)
