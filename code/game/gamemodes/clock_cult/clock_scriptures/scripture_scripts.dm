@@ -9,7 +9,6 @@
 	desc = "Forms an automatic short-range turret that deals low sustained damage to the unenlightened in its range."
 	invocations = list("Guardians...", "...of the Engine...", "...defend us!")
 	channel_time = 120
-	required_components = list(BELLIGERENT_EYE = 2, REPLICANT_ALLOY = 1)
 	consumed_components = list(BELLIGERENT_EYE = 1, REPLICANT_ALLOY = 1)
 	object_path = /obj/structure/destructible/clockwork/ocular_warden
 	creator_message = "<span class='brass'>You form an ocular warden, which will focus its searing gaze upon nearby unenlightened.</span>"
@@ -37,7 +36,6 @@
 	desc = "Creates a small shell fitted for soul vessels. Adding an active soul vessel to it results in a small construct with tools and an inbuilt proselytizer."
 	invocations = list("Call forth...", "...the workers of Armorer.")
 	channel_time = 60
-	required_components = list(BELLIGERENT_EYE = 2, HIEROPHANT_ANSIBLE = 1)
 	consumed_components = list(BELLIGERENT_EYE = 1, HIEROPHANT_ANSIBLE = 1)
 	object_path = /obj/structure/destructible/clockwork/shell/cogscarab
 	creator_message = "<span class='brass'>You form a cogscarab, a constructor soul vessel receptacle.</span>"
@@ -58,7 +56,6 @@
 	It grows faster to invoke with more nearby servants."
 	invocations = list("Shield us...", "...with the...", "... fragments of Engine!")
 	channel_time = 100
-	required_components = list(VANGUARD_COGWHEEL = 2, REPLICANT_ALLOY = 1)
 	consumed_components = list(VANGUARD_COGWHEEL = 1, REPLICANT_ALLOY = 1)
 	usage_tip = "Before using, advise adjacent allies to remove their helmets, external suits, gloves, and shoes."
 	tier = SCRIPTURE_SCRIPT
@@ -99,7 +96,6 @@
 	desc = "Places a luminous sigil that will enslave any valid beings standing on it after a time."
 	invocations = list("Divinity, enlighten...", "...those who trespass here!")
 	channel_time = 60
-	required_components = list(BELLIGERENT_EYE = 1, GEIS_CAPACITOR = 2)
 	consumed_components = list(BELLIGERENT_EYE = 1, GEIS_CAPACITOR = 1)
 	whispered = TRUE
 	object_path = /obj/effect/clockwork/sigil/submission
@@ -120,7 +116,6 @@
 	desc = "Forms an ancient positronic brain with an overriding directive to serve Ratvar."
 	invocations = list("Herd the souls of...", "...the blasphemous damned!")
 	channel_time = 30
-	required_components = list(VANGUARD_COGWHEEL = 1, GEIS_CAPACITOR = 2)
 	consumed_components = list(VANGUARD_COGWHEEL = 1, GEIS_CAPACITOR = 1)
 	whispered = TRUE
 	object_path = /obj/item/device/mmi/posibrain/soul_vessel
@@ -141,7 +136,6 @@
 	desc = "Forms a device that, when used on certain objects, converts them into their Ratvarian equivalents. It requires power to function."
 	invocations = list("With this device...", "...his presence shall be made known.")
 	channel_time = 20
-	required_components = list(GEIS_CAPACITOR = 1, REPLICANT_ALLOY = 2)
 	consumed_components = list(GEIS_CAPACITOR = 1, REPLICANT_ALLOY = 1)
 	whispered = TRUE
 	object_path = /obj/item/clockwork/clockwork_proselytizer/preloaded
@@ -162,8 +156,7 @@
 	desc = "Grants the invoker the ability to call forth a powerful Ratvarian spear every three minutes. The spear will deal significant damage to Nar-Sie's dogs and silicon lifeforms, but will \
 	vanish three minutes after being summoned."
 	invocations = list("Grant me...", "...the might of brass!")
-	channel_time = 20
-	required_components = list(REPLICANT_ALLOY = 2, HIEROPHANT_ANSIBLE = 1)
+	channel_time = 2
 	consumed_components = list(REPLICANT_ALLOY = 1, HIEROPHANT_ANSIBLE = 1)
 	whispered = TRUE
 	usage_tip = "You can impale human targets with the spear by pulling them, then attacking. Throwing the spear at a mob will do massive damage and stun them, but break the spear."
@@ -229,7 +222,6 @@
 	Each servant assisting in the invocation adds one additional use and four additional seconds to the gateway's uses and duration."
 	invocations = list("Spatial Gateway...", "...activate!")
 	channel_time = 80
-	required_components = list(VANGUARD_COGWHEEL = 1, HIEROPHANT_ANSIBLE = 2)
 	consumed_components = list(VANGUARD_COGWHEEL = 1, HIEROPHANT_ANSIBLE = 1)
 	multiple_invokers_used = TRUE
 	multiple_invokers_optional = TRUE
@@ -278,7 +270,6 @@
 	chant_invocations = list("Use charge to kill!", "Slay with power!", "Hunt with energy!")
 	chant_amount = 5
 	chant_interval = 4
-	required_components = list(GEIS_CAPACITOR = 1, HIEROPHANT_ANSIBLE = 2)
 	consumed_components = list(GEIS_CAPACITOR = 1, HIEROPHANT_ANSIBLE = 1)
 	usage_tip = "Though it requires you to stand still, this scripture can do massive damage."
 	tier = SCRIPTURE_SCRIPT

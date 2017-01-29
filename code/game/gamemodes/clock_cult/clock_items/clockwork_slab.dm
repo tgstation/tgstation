@@ -354,7 +354,7 @@
 		\
 		The second function of the clockwork slab is <b><font color=#BE8700>Recollection</font></b>, which will display this guide.<br><br>\
 		\
-		The third to fifth functions are three buttons in the top left while holding the slab.<br>From left to right, they are:<br>\
+		The remaining functions are several buttons in the top left while holding the slab.<br>From left to right, they are:<br>\
 		<b><font color=#DAAA18>Hierophant Network</font></b>, which allows communication to other Servants.<br>")
 		if(LAZYLEN(quickbound))
 			for(var/i in 1 to quickbound.len)
@@ -425,17 +425,24 @@
 				temp_info["bound"] = "<b>[found]</b>"
 			if(S.invokers_required > 1)
 				temp_info["invokers"] = "<font color=#B18B25>Invokers: <b>[S.invokers_required]</b></font>"
-			for(var/i in S.required_components)
-				temp_info["required"][i] += S.required_components[i]
-			var/list/really_temp_data = list()
-			for(var/i in temp_info["required"])
-				if(temp_info["required"][i])
-					really_temp_data += "<font color=[get_component_color_bright(i)]>[get_component_acronym(i)] <b>[temp_info["required"][i]]</b></font> "
-			really_temp_data = really_temp_data.Join()
-			temp_info["required"] = really_temp_data
+			var/costs_components = FALSE
+			for(var/i in S.consumed_components)
+				if(S.consumed_components[i])
+					temp_info["required"][i] += S.consumed_components[i]
+					costs_components = TRUE
+			if(costs_components) //if we have a component cost, we'll need a : next to the recital button
+				var/list/really_temp_data = list(": ")
+				for(var/i in temp_info["required"])
+					if(temp_info["required"][i])
+						really_temp_data += "<font color=[get_component_color_bright(i)]>[get_component_acronym(i)] <b>[temp_info["required"][i]]</b></font> "
+				really_temp_data = really_temp_data.Join()
+				temp_info["required"] = really_temp_data
+			else //and if we don't, we won't.
+				temp_info["required"] = ""
 			data["scripture"] += list(temp_info)
 	data["recollection"] = recollecting
-	data["rec_text"] = recollection()
+	if(recollecting)
+		data["rec_text"] = recollection()
 	return data
 
 /obj/item/clockwork/slab/ui_act(action, params)
