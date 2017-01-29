@@ -472,7 +472,7 @@ var/list/ai_list = list()
 	if(D.welded)
 		src << "<span class='warning'>Unable to open airlock: Airlock is physically constrained!</span>"
 		return
-	src << "<span class='boldnotice'>Opening the nearest airlock to [M.name]!</span>"
+	src << "<span class='boldnotice'>Opening [D.name] for [M.name]!</span>"
 	D.open()
 
 /mob/living/silicon/ai/proc/switchCamera(obj/machinery/camera/C)
