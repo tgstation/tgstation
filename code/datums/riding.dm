@@ -288,10 +288,10 @@
 		return
 
 /datum/riding/cyborg/handle_vehicle_layer()
-	if(ridden.dir == NORTH)
-		ridden.layer = OBJ_LAYER
-	else
+	if(ridden.dir == SOUTH)
 		ridden.layer = ABOVE_MOB_LAYER
+	else
+		ridden.layer = OBJ_LAYER
 	if(!ridden.buckled_mobs)
 		ridden.layer = MOB_LAYER
 
@@ -309,10 +309,10 @@
 					M.pixel_x = 0
 					M.pixel_y = 4
 				if(EAST)
-					M.pixel_x = -4
-					M.pixel_y = -2
+					M.pixel_x = -6
+					M.pixel_y = 2
 				if(WEST)
-					M.pixel_x = 4
+					M.pixel_x = 6
 					M.pixel_y = 2
 
 /datum/riding/cyborg/proc/on_vehicle_move()
@@ -323,6 +323,10 @@
 
 /datum/riding/cyborg/proc/force_dismount()
 	for(var/mob/living/M in ridden.buckled_mobs)
+		ridden.unbuckle_mob(M)
+		var/turf/target = get_edge_target_turf(ridden, ridden.dir)
+		var/turf/targetm = get_step(get_turf(ridden), ridden.dir)
+		M.forceMove(targetm)
 		M.visible_message("<span class='boldwarning'>[M] is thrown clear of [ridden] by rapid spinning!</span>")
-		M.throw_at(get_edge_target_turf(ridden, ridden.dir), 14, 5)
+		M.throw_at(target, 14, 5)
 		M.Weaken(3)
