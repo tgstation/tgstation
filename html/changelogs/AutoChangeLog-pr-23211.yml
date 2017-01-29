@@ -1,0 +1,4 @@
+author: "Kor"
+delete-after: True
+changes: 
+  - rscdel: "Stimpacks are no longer available in the mining vendor."
