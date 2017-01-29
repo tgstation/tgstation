@@ -31,3 +31,5 @@
 	update_icons()
 
 	sql_report_cyborg_death(src)
+
+	unbuckle_all_mobs(TRUE)

@@ -1005,6 +1005,15 @@
 	. = ..()
 	buckle_mob(M)
 
+/mob/living/silicon/robot/buckle_mob(mob/living/M, force = 0, check_loc = 1)
+	if(stat)
+		return
+	if(incapacitated())
+		return
+	if(M.restrained())
+		return
+	. = ..(M, force, check_loc)
+
 /mob/living/silicon/robot/unbuckle_mob(mob/user)
 	. = ..(user)
 	riding_datum.restore_position(user)
