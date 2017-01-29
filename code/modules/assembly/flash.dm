@@ -282,3 +282,7 @@
 
 	if(holder)
 		holder.update_icon()
+
+/obj/item/device/assembly/flash/shield/hitreaction(obj/item/weapon/W, mob/user, params)
+	activate()
+	return ..()
