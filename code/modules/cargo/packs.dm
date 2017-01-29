@@ -418,8 +418,8 @@
 	crate_name = "exile implant crate"
 
 /datum/supply_pack/security/armory/ionslugs
-	name = "Ion Slugs Crate"
-	cost = 3000
+	name = "Ion Buckshot Crate"
+	cost = 6000
 	contains = list(/obj/item/ammo_casing/shotgun/ion,
 					/obj/item/ammo_casing/shotgun/ion,
 					/obj/item/ammo_casing/shotgun/ion,
