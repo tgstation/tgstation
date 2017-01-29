@@ -36,7 +36,7 @@
 	key = "honk"
 	key_third_person = "honks"
 	message = "honks."
-	message_param p= "honks at %t"
+	message_param = "honks at %t"
 	vary = TRUE
 	sound = 'sound/items/bikehorn.ogg'
 
