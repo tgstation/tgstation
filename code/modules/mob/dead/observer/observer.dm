@@ -187,7 +187,7 @@ var/list/image/ghost_images_simple = list() //this is a list of all ghost images
 		if(facial_hair_style)
 			S = facial_hair_styles_list[facial_hair_style]
 			if(S)
-				facial_hair_image = image("icon" = S.icon, "icon_state" = "[S.icon_state]_s", "layer" = -HAIR_LAYER)
+				facial_hair_image = image("icon" = S.icon, "icon_state" = "[S.icon_state]", "layer" = -HAIR_LAYER)
 				if(facial_hair_color)
 					facial_hair_image.color = "#" + facial_hair_color
 				facial_hair_image.alpha = 200
@@ -196,7 +196,7 @@ var/list/image/ghost_images_simple = list() //this is a list of all ghost images
 		if(hair_style)
 			S = hair_styles_list[hair_style]
 			if(S)
-				hair_image = image("icon" = S.icon, "icon_state" = "[S.icon_state]_s", "layer" = -HAIR_LAYER)
+				hair_image = image("icon" = S.icon, "icon_state" = "[S.icon_state]", "layer" = -HAIR_LAYER)
 				if(hair_color)
 					hair_image.color = "#" + hair_color
 				hair_image.alpha = 200
