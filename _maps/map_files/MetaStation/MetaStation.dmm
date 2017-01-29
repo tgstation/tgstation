@@ -71361,6 +71361,8 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
+/obj/item/weapon/storage/box/pillbottles,
+/obj/item/weapon/storage/box/pillbottles,
 /turf/open/floor/plasteel/warnwhite{
 	dir = 4
 	},
