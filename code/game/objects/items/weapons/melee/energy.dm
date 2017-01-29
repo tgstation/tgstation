@@ -184,21 +184,7 @@
 	item_color = "red"
 
 /obj/item/weapon/melee/energy/sword/saber/attackby(obj/item/weapon/W, mob/living/user, params)
-	if(istype(W, /obj/item/weapon/melee/energy/sword/saber))
-		user << "<span class='notice'>You attach the ends of the two \
-			energy swords, making a single double-bladed weapon! \
-			You're cool.</span>"
-		var/obj/item/weapon/melee/energy/sword/saber/other_esword = W
-		var/obj/item/weapon/twohanded/dualsaber/newSaber = new(user.loc)
-		if(hacked || other_esword.hacked)
-			newSaber.hacked = TRUE
-			newSaber.item_color = "rainbow"
-		user.unEquip(W)
-		user.unEquip(src)
-		qdel(W)
-		qdel(src)
-		user.put_in_hands(newSaber)
-	else if(istype(W, /obj/item/device/multitool))
+	if(istype(W, /obj/item/device/multitool))
 		if(hacked == 0)
 			hacked = 1
 			item_color = "rainbow"
