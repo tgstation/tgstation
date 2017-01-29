@@ -1,4 +1,0 @@
-author: "Xhuis"
-delete-after: True
-changes: 
-  - rscadd: "AI control beacons are a new item created from the exosuit fabricator. When installed into a mech, it allows AIs to jump to and from that mech freely. Note that malfunctioning AIs with the domination power unlocked will instead be forced to dominate the mech."
