@@ -418,16 +418,21 @@
 	crate_name = "exile implant crate"
 
 /datum/supply_pack/security/armory/ionslugs
-	name = "Ion Buckshot Crate"
-	cost = 6000
+	name = "Electromagnetic Warfare Crate"
+	cost = 15000
 	contains = list(/obj/item/ammo_casing/shotgun/ion,
 					/obj/item/ammo_casing/shotgun/ion,
 					/obj/item/ammo_casing/shotgun/ion,
 					/obj/item/ammo_casing/shotgun/ion,
 					/obj/item/ammo_casing/shotgun/ion,
 					/obj/item/ammo_casing/shotgun/ion,
-					/obj/item/ammo_casing/shotgun/ion)
-	crate_name = "Ion Ammo Crate"
+					/obj/item/ammo_casing/shotgun/ion,
+					/obj/item/weapon/gun/energy/ionrifle,
+					/obj/item/weapon/grenade/empgrenade,
+					/obj/item/weapon/grenade/empgrenade,
+					/obj/item/weapon/grenade/empgrenade)
+	contraband = True
+	crate_name = "EMP Crate"
 
 /datum/supply_pack/security/securitybarriers
 	name = "Security Barriers Crate"
