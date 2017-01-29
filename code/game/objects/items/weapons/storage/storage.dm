@@ -307,6 +307,8 @@
 	if(usr)
 		if(!usr.transferItemToLoc(W, src))
 			return 0
+	else
+		W.forceMove(src)
 	if(silent)
 		prevent_warning = 1
 	if(W.pulledby)
