@@ -72,6 +72,11 @@
 	key_third_person = "wags"
 	message = "wags their tail."
 
+/datum/emote/living/carbon/human/fart
+	key = "fart"
+	key_third_person = "farts"
+	message = "farts."
+
 /datum/emote/living/carbon/human/wag/run_emote(mob/user, params)
 	. = ..()
 	var/mob/living/carbon/human/H = user
