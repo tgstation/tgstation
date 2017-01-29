@@ -23,12 +23,66 @@
 	var/can_flashlight = 0
 	var/gang //Is this a gang outfit?
 	var/scan_reagents = 0 //Can the wearer see reagents while it's equipped?
+	var/list/species_restricted = null //Only these species can wear this kit.
 
 	//Var modification - PLEASE be careful with this I know who you are and where you live
 	var/list/user_vars_to_edit = list() //VARNAME = VARVALUE eg: "name" = "butts"
 	var/list/user_vars_remembered = list() //Auto built by the above + dropped() + equipped()
 
 	var/obj/item/weapon/storage/internal/pocket/pockets = null
+
+//BS12: Species-restricted clothing check.
+/obj/item/clothing/mob_can_equip(mob/M, slot)
+
+	//if we can't equip the item anyway, don't bother with species_restricted (also cuts down on spam)
+	if(!..())
+		return FALSE
+
+	// Skip species restriction checks on non-equipment slots
+	if(slot in list(slot_in_backpack, slot_l_store, slot_r_store))
+		return TRUE
+
+	if(species_restricted && ishuman(M))
+
+		var/wearable = null
+		var/exclusive = null
+		var/mob/living/carbon/human/H = M
+
+		if("exclude" in species_restricted)
+			exclusive = TRUE
+
+		if(H.dna.species)
+			if(exclusive)
+				if(!(H.dna.species.name in species_restricted))
+					wearable = TRUE
+			else
+				if(H.dna.species.name in species_restricted)
+					wearable = TRUE
+
+			if(!wearable)
+				M << "<font color = 'red'>Your species cannot wear [src].</font>"
+				return FALSE
+
+	return TRUE
+
+/obj/item/clothing/proc/refit_for_species(var/target_species)
+	//Set species_restricted list
+	switch(target_species)
+		if("Human")//humanoid bodytypes
+			species_restricted = list("exclude","Lizardperson","Ash Walker")
+		else
+			species_restricted = list(target_species)
+
+	//Set icon
+	if(sprite_sheets && (target_species in sprite_sheets))
+		icon_override = sprite_sheets[target_species]
+	else
+		icon_override = initial(icon_override)
+
+	if(sprite_sheets_obj && (target_species in sprite_sheets_obj))
+		icon = sprite_sheets_obj[target_species]
+	else
+		icon = initial(icon)
 
 /obj/item/clothing/New()
 	..()

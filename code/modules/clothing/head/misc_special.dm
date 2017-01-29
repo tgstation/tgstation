@@ -27,6 +27,11 @@
 	visor_flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
 	visor_flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 	resistance_flags = FIRE_PROOF
+	species_fit = list("Lizardperson", "Ash Walker")
+	sprite_sheets = list(
+		"Lizardperson" = 'icons/mob/species/lizard/head.dmi',
+		"Ash Walker" = 'icons/mob/species/lizard/head.dmi'
+		)
 
 /obj/item/clothing/head/welding/attack_self(mob/user)
 	weldingvisortoggle(user)
