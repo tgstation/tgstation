@@ -274,6 +274,12 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 			return M
 	return 0
 
+var/static/regex/firstname = new("^\[^\\s-\]+") //First word before whitespace or "-"
+
+/mob/proc/first_name()
+	firstname.Find(real_name)
+	return firstname.match
+
 /mob/proc/abiotic(full_body = 0)
 	for(var/obj/item/I in held_items)
 		if(!(I.flags & NODROP))
@@ -485,3 +491,12 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 		return 1
 	else
 		return 0
+
+mob/proc/click_random_mob()
+	var/list/nearby_mobs = list()
+	for(var/mob/living/L in range(1, src))
+		if(L!=src)
+			nearby_mobs |= L
+	if(nearby_mobs.len)
+		var/mob/living/T = pick(nearby_mobs)
+		ClickOn(T)
