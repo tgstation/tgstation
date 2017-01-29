@@ -246,6 +246,15 @@
 	description = "A salt made of sodium chloride. Commonly used to season food."
 	reagent_state = SOLID
 	color = "#FFFFFF" // rgb: 255,255,255
+	overdose_threshold = 30
+
+/datum/reagent/consumable/sodiumchloride/overdose_process(mob/living/M)
+	var/high_message = pick("You feel really upset.", "You feel really cranky.", "You feel like crying.", "You feel like shouting about how unfair your life is.")
+	if(prob(10))
+		M << "<span class='notice'>[high_message]</span>"
+	if(prob(5))
+		M.emote(pick("frown","pout","scowl","sniff","sulks","glares"))
+	..()
 
 /datum/reagent/consumable/sodiumchloride/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
 	if(!istype(M))
