@@ -1,0 +1,4 @@
+author: "BlakHoleSun"
+delete-after: True
+changes: 
+  - rscadd: "Added new reaction with the rainbow slime extract. Injecting a rainbow slime extract with 5u of holy water and 5u of uranium gives you a flight potion."
