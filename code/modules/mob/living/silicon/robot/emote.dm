@@ -10,6 +10,7 @@
 	key = "boop"
 	key_third_person = "boops"
 	message = "boops."
+	message_param = "boops %t"
 
 /datum/emote/sound/silicon/buzz
 	key = "buzz"
@@ -21,18 +22,21 @@
 /datum/emote/sound/silicon/buzz2
 	key = "buzz2"
 	message = "buzzes twice."
+	message_param = "buzzes twice at %t"
 	sound = 'sound/machines/buzz-two.ogg'
 
 /datum/emote/sound/silicon/chime
 	key = "chime"
 	key_third_person = "chimes"
 	message = "chimes."
+	message_param = "chimes at %t"
 	sound = 'sound/machines/chime.ogg'
 
 /datum/emote/sound/silicon/honk
 	key = "honk"
 	key_third_person = "honks"
 	message = "honks."
+	message_param p= "honks at %t"
 	vary = TRUE
 	sound = 'sound/items/bikehorn.ogg'
 
@@ -43,12 +47,6 @@
 	message_param = "pings at %t."
 	sound = 'sound/machines/ping.ogg'
 
-/datum/emote/sound/silicon/chime
-	key = "chime"
-	key_third_person = "chimes"
-	message = "chimes."
-	sound = 'sound/machines/chime.ogg'
-
 /datum/emote/sound/silicon/sad
 	key = "sad"
 	message = "plays a sad trombone..."
@@ -57,7 +55,35 @@
 /datum/emote/sound/silicon/warn
 	key = "warn"
 	message = "blares an alarm!"
+	message_param = "warns %t!"
 	sound = 'sound/machines/warning-buzzer.ogg'
+
+/datum/emote/sound/silicon/beep
+	key = "beep"
+	message = "beeps enthusiastically!"
+	message_param = "beeps enthusiastically at %t!"
+	sound = 'sound/machines/Cyborg-emote-chipper.ogg'
+
+/datum/emote/sound/silicon/chuckle
+	key = "chuckle"
+	key_third_person = "chortle"
+	message = "chortles."
+	message_param = "chortles at %t."
+	sound = 'sound/machines/Cyborg-emote-chuckle.ogg'
+
+/datum/emote/sound/silicon/query
+	key = "?"
+	key_third_person = "what"
+	message = "queries."
+	message_param = "queries at %t."
+	sound = 'sound/machines/Cyborg-emote-confused.ogg'
+
+/datum/emote/sound/silicon/okay
+	key = "okay"
+	message = "acknowledges."
+	message_param = "acknowledges %t"
+	sound = 'sound/machines/Cyborg-emote-okay.ogg'
+
 
 /mob/living/silicon/robot/verb/powerwarn()
 	set category = "Robot Commands"
