@@ -420,14 +420,7 @@
 /datum/supply_pack/security/armory/ionslugs
 	name = "Electromagnetic Warfare Crate"
 	cost = 15000
-	contains = list(/obj/item/ammo_casing/shotgun/ion,
-					/obj/item/ammo_casing/shotgun/ion,
-					/obj/item/ammo_casing/shotgun/ion,
-					/obj/item/ammo_casing/shotgun/ion,
-					/obj/item/ammo_casing/shotgun/ion,
-					/obj/item/ammo_casing/shotgun/ion,
-					/obj/item/ammo_casing/shotgun/ion,
-					/obj/item/weapon/gun/energy/ionrifle,
+	contains = list(/obj/item/weapon/gun/energy/ionrifle,
 					/obj/item/weapon/grenade/empgrenade,
 					/obj/item/weapon/grenade/empgrenade,
 					/obj/item/weapon/grenade/empgrenade)
