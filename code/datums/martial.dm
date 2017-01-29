@@ -7,6 +7,7 @@
 	var/datum/martial_art/base = null // The permanent style
 	var/deflection_chance = 0 //Chance to deflect projectiles
 	var/block_chance = 0 //Chance to block melee attacks using items while on throw mode.
+	var/catch_chance = 0 //Chance to catch and throw back items instantly regardless of throw mode
 	var/restraining = 0 //used in cqc's disarm_act to check if the disarmed is being restrained and so whether they should be put in a chokehold or not
 	var/help_verb = null
 
@@ -155,6 +156,7 @@
 
 /datum/martial_art/plasma_fist
 	name = "Plasma Fist"
+	catch_chance = 30
 	help_verb = /mob/living/carbon/human/proc/plasma_fist_help
 
 
@@ -248,6 +250,7 @@
 /datum/martial_art/the_sleeping_carp
 	name = "The Sleeping Carp"
 	deflection_chance = 100
+	catch_chance = 60
 	help_verb = /mob/living/carbon/human/proc/sleeping_carp_help
 
 /datum/martial_art/the_sleeping_carp/proc/check_streak(mob/living/carbon/human/A, mob/living/carbon/human/D)

@@ -139,7 +139,19 @@
 		throwpower = I.throwforce
 		if(I.thrownby == src) //No throwing stuff at yourself to trigger hit reactions
 			return ..()
-	if(check_shields(throwpower, "\the [AM.name]", AM, THROWN_PROJECTILE_ATTACK))
+	if(martial_art && martial_art.catch_chance)
+		if(prob(martial_art.catch_chance))
+			if(canmove && !restrained() && I && isturf(I.loc))
+				var/thrower = I.thrownby
+				if(put_in_hands(I))
+					visible_message("<span class='warning'>[src] catches [I]!</span>")
+					if(!(a_intent == "help") && thrower && thrower in view(src))
+						sleep(1)
+						unEquip(I)
+						visible_message("<span class='danger'>[src] has thrown [I]!</span>")
+						I.throw_at(thrower,I.throw_range,I.throw_speed,src)
+					return 1
+	else if(check_shields(throwpower, "\the [AM.name]", AM, THROWN_PROJECTILE_ATTACK))
 		hitpush = 0
 		skipcatch = 1
 		blocked = 1
