@@ -424,7 +424,7 @@
 					/obj/item/weapon/grenade/empgrenade,
 					/obj/item/weapon/grenade/empgrenade,
 					/obj/item/weapon/grenade/empgrenade)
-	contraband = True
+	contraband = TRUE
 	crate_name = "EMP Crate"
 
 /datum/supply_pack/security/securitybarriers
