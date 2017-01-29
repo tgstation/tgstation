@@ -1,4 +1,0 @@
-author: "Tofa01"
-delete-after: True
-changes: 
-  - bugfix: "Mop will no longer try and clean tile under janitorial cart when wetting the mop."
