@@ -49,7 +49,7 @@
 	clockwork_desc = "A divine link to the Celestial Derelict, allowing for limited recital of scripture.\n\
 	Hitting a slab, a Servant with a slab, or a cache will <b>transfer</b> this slab's components into the target, the target's slab, or the global cache, respectively."
 	nonhuman_usable = TRUE
-	quickbound = list(/datum/clockwork_scripture/ranged_ability/linked_vanguard, /datum/clockwork_scripture/ranged_ability/judicial_marker, \
+	quickbound = list(/datum/clockwork_scripture/ranged_ability/judicial_marker, /datum/clockwork_scripture/ranged_ability/linked_vanguard, \
 	/datum/clockwork_scripture/create_object/tinkerers_cache)
 	actions_types = list()
 
