@@ -1,4 +1,4 @@
-//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
 /turf/open/space,
 /area/space)
@@ -679,7 +679,8 @@
 /turf/open/floor/plasteel/airless/asteroid,
 /area/mine/abandoned)
 "cl" = (
-/turf/open/floor/plasteel/airless/asteroid/warning{
+/turf/open/floor/plasteel/airless/asteroid,
+/obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 2
 	},
 /area/mine/abandoned)
@@ -687,7 +688,8 @@
 /obj/item/weapon/shard{
 	icon_state = "medium"
 	},
-/turf/open/floor/plasteel/airless/asteroid/warning{
+/turf/open/floor/plasteel/airless/asteroid,
+/obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 2
 	},
 /area/mine/abandoned)
@@ -718,17 +720,20 @@
 /turf/open/floor/plating/airless/astplate,
 /area/mine/abandoned)
 "cp" = (
-/turf/open/floor/plasteel/airless/asteroid/warning{
+/turf/open/floor/plasteel/airless/asteroid,
+/obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 10
 	},
 /area/mine/unexplored)
 "cq" = (
-/turf/open/floor/plasteel/airless/asteroid/warning{
+/turf/open/floor/plasteel/airless/asteroid,
+/obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 2
 	},
 /area/mine/unexplored)
 "cr" = (
-/turf/open/floor/plasteel/airless/asteroid/warning{
+/turf/open/floor/plasteel/airless/asteroid,
+/obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 6
 	},
 /area/mine/unexplored)
@@ -1303,10 +1308,12 @@
 	icon_state = "tube1";
 	dir = 8
 	},
-/turf/open/floor/plasteel/asteroid/warning,
+/turf/open/floor/plasteel/asteroid,
+/obj/effect/turf_decal/stripes/asteroid/line,
 /area/mine/laborcamp)
 "dT" = (
-/turf/open/floor/plasteel/asteroid/warning,
+/turf/open/floor/plasteel/asteroid,
+/obj/effect/turf_decal/stripes/asteroid/line,
 /area/mine/explored)
 "dU" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
@@ -1394,7 +1401,8 @@
 /area/mine/laborcamp)
 "ef" = (
 /obj/structure/ore_box,
-/turf/open/floor/plasteel/asteroid/warning{
+/turf/open/floor/plasteel/asteroid,
+/obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 8
 	},
 /area/mine/explored)
@@ -1472,12 +1480,14 @@
 	dir = 4;
 	network = list("Labor")
 	},
-/turf/open/floor/plasteel/asteroid/warning{
+/turf/open/floor/plasteel/asteroid,
+/obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 1
 	},
 /area/mine/explored)
 "eq" = (
-/turf/open/floor/plasteel/asteroid/warning{
+/turf/open/floor/plasteel/asteroid,
+/obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 1
 	},
 /area/mine/explored)
@@ -1485,7 +1495,8 @@
 /obj/machinery/conveyor_switch/oneway{
 	id = "gulag"
 	},
-/turf/open/floor/plasteel/asteroid/warning{
+/turf/open/floor/plasteel/asteroid,
+/obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 1
 	},
 /area/mine/explored)
@@ -1641,7 +1652,8 @@
 	dir = 8;
 	network = list("MINE")
 	},
-/turf/open/floor/plasteel/warning{
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
 /area/mine/north_outpost)
@@ -1771,7 +1783,8 @@
 /turf/open/floor/plasteel,
 /area/mine/north_outpost)
 "fe" = (
-/turf/open/floor/plasteel/warning{
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
 /area/mine/north_outpost)
@@ -1792,7 +1805,8 @@
 /obj/structure/disposalpipe/trunk{
 	dir = 4
 	},
-/turf/open/floor/plasteel/bot,
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/bot,
 /area/mine/north_outpost)
 "fg" = (
 /obj/structure/disposalpipe/segment{
@@ -1809,7 +1823,8 @@
 /turf/open/floor/plating,
 /area/mine/explored)
 "fi" = (
-/turf/open/floor/plasteel/airless/asteroid/warning{
+/turf/open/floor/plasteel/airless/asteroid,
+/obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 1
 	},
 /area/mine/north_outpost)
@@ -1817,7 +1832,8 @@
 /obj/machinery/conveyor_switch{
 	id = "mining_north"
 	},
-/turf/open/floor/plasteel/airless/asteroid/warning{
+/turf/open/floor/plasteel/airless/asteroid,
+/obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 1
 	},
 /area/mine/north_outpost)
@@ -1884,7 +1900,8 @@
 /area/mine/north_outpost)
 "fv" = (
 /obj/structure/rack,
-/turf/open/floor/plasteel/bot,
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/bot,
 /area/mine/north_outpost)
 "fw" = (
 /obj/structure/disposalpipe/segment,
@@ -1933,7 +1950,8 @@
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4
 	},
-/turf/open/floor/plasteel/warning{
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
 /area/mine/laborcamp/security)
@@ -1950,7 +1968,8 @@
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4
 	},
-/turf/open/floor/plasteel/warning{
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/stripes/line{
 	dir = 2
 	},
 /area/mine/laborcamp/security)
@@ -1974,7 +1993,8 @@
 /turf/open/floor/plating,
 /area/mine/laborcamp)
 "fG" = (
-/turf/open/floor/plasteel/warning{
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
 /area/mine/laborcamp/security)
@@ -2142,7 +2162,8 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/turf/open/floor/plasteel/warning{
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
 /area/mine/laborcamp/security)
@@ -2297,14 +2318,17 @@
 	name = "EXTERNAL AIRLOCK";
 	pixel_x = -32
 	},
-/turf/open/floor/plasteel/warning,
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/stripes/line,
 /area/mine/north_outpost)
 "gv" = (
-/turf/open/floor/plasteel/warning,
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/stripes/line,
 /area/mine/north_outpost)
 "gw" = (
 /obj/structure/ore_box,
-/turf/open/floor/plasteel/warning,
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/stripes/line,
 /area/mine/north_outpost)
 "gx" = (
 /obj/structure/grille,
@@ -2437,17 +2461,20 @@
 /turf/open/floor/plating,
 /area/mine/laborcamp/security)
 "gM" = (
-/turf/open/floor/plasteel/airless/asteroid/warning{
+/turf/open/floor/plasteel/airless/asteroid,
+/obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 10
 	},
 /area/mine/explored)
 "gN" = (
-/turf/open/floor/plasteel/airless/asteroid/warning{
+/turf/open/floor/plasteel/airless/asteroid,
+/obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 2
 	},
 /area/mine/explored)
 "gO" = (
-/turf/open/floor/plasteel/airless/asteroid/warning{
+/turf/open/floor/plasteel/airless/asteroid,
+/obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 6
 	},
 /area/mine/explored)
@@ -2456,24 +2483,28 @@
 	dir = 1
 	},
 /obj/structure/disposalpipe/segment,
-/turf/open/floor/plasteel/airless/asteroid/warning{
+/turf/open/floor/plasteel/airless/asteroid,
+/obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 1
 	},
 /area/mine/north_outpost)
 "gQ" = (
 /obj/structure/disposalpipe/segment,
-/turf/open/floor/plasteel/airless/asteroid/warning{
+/turf/open/floor/plasteel/airless/asteroid,
+/obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 1
 	},
 /area/mine/explored)
 "gR" = (
-/turf/open/floor/plasteel/airless/asteroid/warning{
+/turf/open/floor/plasteel/airless/asteroid,
+/obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 5
 	},
 /area/mine/explored)
 "gS" = (
 /obj/structure/disposalpipe/segment,
-/turf/open/floor/plasteel/airless/asteroid/warning{
+/turf/open/floor/plasteel/airless/asteroid,
+/obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 2
 	},
 /area/mine/explored)
@@ -2502,7 +2533,8 @@
 /turf/open/floor/plating/airless/astplate,
 /area/mine/explored)
 "gX" = (
-/turf/open/floor/plasteel/airless/asteroid/warning{
+/turf/open/floor/plasteel/airless/asteroid,
+/obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 9
 	},
 /area/mine/explored)
@@ -2730,22 +2762,26 @@
 /area/mine/west_outpost)
 "hH" = (
 /obj/machinery/recharge_station,
-/turf/open/floor/plasteel/bot,
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/bot,
 /area/mine/west_outpost)
 "hI" = (
 /obj/structure/tank_dispenser/oxygen,
-/turf/open/floor/plasteel/bot,
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/bot,
 /area/mine/west_outpost)
 "hJ" = (
 /obj/structure/rack,
 /obj/machinery/light{
 	dir = 1
 	},
-/turf/open/floor/plasteel/bot,
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/bot,
 /area/mine/west_outpost)
 "hK" = (
 /obj/structure/rack,
-/turf/open/floor/plasteel/bot,
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/bot,
 /area/mine/west_outpost)
 "hL" = (
 /obj/structure/window/reinforced{
@@ -2762,13 +2798,15 @@
 /obj/machinery/disposal/deliveryChute{
 	pixel_y = 5
 	},
-/turf/open/floor/plasteel/bot,
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/bot,
 /area/mine/west_outpost)
 "hM" = (
 /turf/open/floor/plasteel,
 /area/mine/west_outpost)
 "hN" = (
-/turf/open/floor/plasteel/warning{
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
 /area/mine/west_outpost)
@@ -2786,7 +2824,8 @@
 /turf/open/floor/plating,
 /area/mine/west_outpost)
 "hP" = (
-/turf/open/floor/plasteel/airless/asteroid/warning{
+/turf/open/floor/plasteel/airless/asteroid,
+/obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 5
 	},
 /area/mine/west_outpost)
@@ -2820,13 +2859,15 @@
 /turf/open/floor/plasteel,
 /area/mine/west_outpost)
 "hU" = (
-/turf/open/floor/plasteel/warning{
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
 /area/mine/west_outpost)
 "hV" = (
 /obj/structure/disposalpipe/segment,
-/turf/open/floor/plasteel/warning{
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
 /area/mine/west_outpost)
@@ -2845,7 +2886,8 @@
 /turf/open/floor/plasteel/airless/asteroid,
 /area/mine/west_outpost)
 "hY" = (
-/turf/open/floor/plasteel/airless/asteroid/warning{
+/turf/open/floor/plasteel/airless/asteroid,
+/obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 4
 	},
 /area/mine/west_outpost)
@@ -2904,12 +2946,14 @@
 /area/mine/west_outpost)
 "ig" = (
 /obj/structure/ore_box,
-/turf/open/floor/plasteel/warning{
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
 /area/mine/west_outpost)
 "ih" = (
-/turf/open/floor/plasteel/airless/asteroid/warning{
+/turf/open/floor/plasteel/airless/asteroid,
+/obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 6
 	},
 /area/mine/west_outpost)
@@ -3077,7 +3121,8 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/open/floor/plasteel/airless/asteroid/warning{
+/turf/open/floor/plasteel/airless/asteroid,
+/obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 8
 	},
 /area/mine/explored)
@@ -3085,7 +3130,8 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/open/floor/plasteel/airless/asteroid/warning{
+/turf/open/floor/plasteel/airless/asteroid,
+/obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 4
 	},
 /area/mine/explored)
@@ -3286,7 +3332,8 @@
 /turf/open/floor/plating,
 /area/mine/west_outpost)
 "jh" = (
-/turf/open/floor/plasteel/airless/asteroid/warning{
+/turf/open/floor/plasteel/airless/asteroid,
+/obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 1
 	},
 /area/mine/explored)
@@ -3297,7 +3344,8 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/turf/open/floor/plasteel/airless/asteroid/warning{
+/turf/open/floor/plasteel/airless/asteroid,
+/obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 1
 	},
 /area/mine/explored)
@@ -3575,13 +3623,19 @@
 /obj/structure/disposalpipe/trunk{
 	dir = 1
 	},
-/turf/open/floor/plasteel/bot{
+/turf/open/floor/plasteel{
+	dir = 1
+	},
+/obj/effect/turf_decal/bot{
 	dir = 1
 	},
 /area/mine/production)
 "jU" = (
 /obj/structure/closet/crate,
-/turf/open/floor/plasteel/bot{
+/turf/open/floor/plasteel{
+	dir = 1
+	},
+/obj/effect/turf_decal/bot{
 	dir = 1
 	},
 /area/mine/production)
@@ -3590,7 +3644,10 @@
 	dir = 6
 	},
 /obj/structure/closet/crate,
-/turf/open/floor/plasteel/bot{
+/turf/open/floor/plasteel{
+	dir = 1
+	},
+/obj/effect/turf_decal/bot{
 	dir = 1
 	},
 /area/mine/production)
@@ -3639,12 +3696,14 @@
 	pixel_x = 0;
 	pixel_y = 32
 	},
-/turf/open/floor/plasteel/warning{
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
 /area/mine/eva)
 "kd" = (
-/turf/open/floor/plasteel/airless/asteroid/warning{
+/turf/open/floor/plasteel/airless/asteroid,
+/obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 5
 	},
 /area/mine/eva)
@@ -3704,7 +3763,8 @@
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
 "kk" = (
-/turf/open/floor/plasteel/warning{
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
 /area/mine/living_quarters)
@@ -3728,12 +3788,14 @@
 /turf/open/space,
 /area/mine/production)
 "ko" = (
-/turf/open/floor/plasteel/warning{
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
 /area/mine/production)
 "kp" = (
-/turf/open/floor/plasteel/warning{
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
 /area/mine/production)
@@ -3743,7 +3805,8 @@
 	d2 = 4;
 	icon_state = "2-4"
 	},
-/turf/open/floor/plasteel/warning{
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
 /area/mine/production)
@@ -3755,7 +3818,8 @@
 	pixel_y = 0
 	},
 /obj/machinery/atmospherics/pipe/simple,
-/turf/open/floor/plasteel/warning{
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
 /area/mine/production)
@@ -3770,9 +3834,10 @@
 	name = "Mining Station EVA";
 	req_access_txt = "54"
 	},
-/turf/open/floor/plasteel/delivery{
+/turf/open/floor/plasteel{
 	name = "floor"
 	},
+/obj/effect/turf_decal/delivery,
 /area/mine/eva)
 "kt" = (
 /obj/structure/cable{
@@ -3793,7 +3858,8 @@
 /turf/open/floor/plasteel/floorgrime,
 /area/mine/eva)
 "kw" = (
-/turf/open/floor/plasteel/warning{
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
 /area/mine/eva)
@@ -3805,7 +3871,8 @@
 /turf/open/floor/plasteel/airless/asteroid,
 /area/mine/eva)
 "ky" = (
-/turf/open/floor/plasteel/airless/asteroid/warning{
+/turf/open/floor/plasteel/airless/asteroid,
+/obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 4
 	},
 /area/mine/eva)
@@ -3888,7 +3955,8 @@
 	icon_state = "4-8";
 	pixel_y = 0
 	},
-/turf/open/floor/plasteel/warning{
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
 /area/mine/living_quarters)
@@ -3951,7 +4019,8 @@
 	icon_state = "4-8";
 	pixel_y = 0
 	},
-/turf/open/floor/plasteel/warning{
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
 /area/mine/production)
@@ -3989,7 +4058,8 @@
 /obj/machinery/atmospherics/pipe/manifold{
 	dir = 4
 	},
-/turf/open/floor/plasteel/warning{
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
 /area/mine/production)
@@ -4026,12 +4096,14 @@
 /area/mine/eva)
 "kU" = (
 /obj/structure/ore_box,
-/turf/open/floor/plasteel/warning{
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
 /area/mine/eva)
 "kV" = (
-/turf/open/floor/plasteel/airless/asteroid/warning{
+/turf/open/floor/plasteel/airless/asteroid,
+/obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 6
 	},
 /area/mine/eva)
@@ -4080,7 +4152,8 @@
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4
 	},
-/turf/open/floor/plasteel/warning{
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
 /area/mine/living_quarters)
@@ -4137,7 +4210,8 @@
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4
 	},
-/turf/open/floor/plasteel/warning{
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
 /area/mine/production)
@@ -4145,7 +4219,8 @@
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4
 	},
-/turf/open/floor/plasteel/warning/corner{
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/stripes/corner{
 	dir = 1
 	},
 /area/mine/production)
@@ -4170,7 +4245,8 @@
 	icon_state = "alarm0";
 	pixel_x = 24
 	},
-/turf/open/floor/plasteel/warning{
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
 /area/mine/production)
@@ -4184,12 +4260,14 @@
 	icon_state = "tube1";
 	dir = 8
 	},
-/turf/open/floor/plasteel/airless/asteroid/warning{
+/turf/open/floor/plasteel/airless/asteroid,
+/obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 2
 	},
 /area/mine/production)
 "ln" = (
-/turf/open/floor/plasteel/airless/asteroid/warning{
+/turf/open/floor/plasteel/airless/asteroid,
+/obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 2
 	},
 /area/mine/production)
@@ -4197,7 +4275,8 @@
 /obj/machinery/conveyor_switch{
 	id = "mining_external"
 	},
-/turf/open/floor/plasteel/airless/asteroid/warning{
+/turf/open/floor/plasteel/airless/asteroid,
+/obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 2
 	},
 /area/mine/production)
@@ -4246,7 +4325,8 @@
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
 "lv" = (
-/turf/open/floor/plasteel/warning{
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
 /area/mine/production)
@@ -4268,7 +4348,8 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple,
-/turf/open/floor/plasteel/warning{
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
 /area/mine/production)
@@ -4289,7 +4370,8 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/turf/open/floor/plasteel/warning{
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
 /area/mine/production)
@@ -4314,7 +4396,8 @@
 /obj/structure/disposalpipe/trunk{
 	dir = 8
 	},
-/turf/open/floor/plasteel/warning{
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
 /area/mine/production)
@@ -4330,7 +4413,8 @@
 	dir = 4;
 	id = "mining_external"
 	},
-/turf/open/floor/plasteel/warning{
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
 /area/mine/production)
@@ -4445,7 +4529,8 @@
 	name = "Station Intercom (General)";
 	pixel_x = -28
 	},
-/turf/open/floor/plasteel/warning{
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
 /area/mine/production)
@@ -4466,7 +4551,8 @@
 	pixel_x = 32;
 	pixel_y = 0
 	},
-/turf/open/floor/plasteel/warning{
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
 /area/mine/production)
@@ -4559,10 +4645,12 @@
 /area/mine/living_quarters)
 "mg" = (
 /obj/structure/ore_box,
-/turf/open/floor/plasteel/warning,
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/stripes/line,
 /area/mine/living_quarters)
 "mh" = (
-/turf/open/floor/plasteel/warning,
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/stripes/line,
 /area/mine/living_quarters)
 "mi" = (
 /obj/structure/sign/securearea{
@@ -4573,7 +4661,8 @@
 	pixel_x = 32;
 	pixel_y = 0
 	},
-/turf/open/floor/plasteel/warning,
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/stripes/line,
 /area/mine/living_quarters)
 "mj" = (
 /obj/machinery/power/apc{
@@ -4586,7 +4675,8 @@
 	icon_state = "0-4";
 	d2 = 4
 	},
-/turf/open/floor/plasteel/warning{
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
 /area/mine/production)
@@ -4601,15 +4691,17 @@
 /area/mine/production)
 "ml" = (
 /obj/machinery/atmospherics/pipe/simple,
-/turf/open/floor/plasteel/warning{
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
 /area/mine/production)
 "mm" = (
 /obj/machinery/mineral/equipment_vendor,
-/turf/open/floor/plasteel/delivery{
+/turf/open/floor/plasteel{
 	name = "floor"
 	},
+/obj/effect/turf_decal/delivery,
 /area/mine/production)
 "mn" = (
 /obj/machinery/mineral/mint{
@@ -4630,7 +4722,10 @@
 	pixel_y = 28
 	},
 /obj/structure/closet/crate,
-/turf/open/floor/plasteel/bot{
+/turf/open/floor/plasteel{
+	dir = 1
+	},
+/obj/effect/turf_decal/bot{
 	dir = 1
 	},
 /area/mine/production)
@@ -4645,13 +4740,19 @@
 	info = "A hastily written note has been scribbled here... <br><br> Please use the ore redemption machine in the cargo office for smelting. PLEASE! <br><br>--The Research Staff";
 	name = "URGENT!"
 	},
-/turf/open/floor/plasteel/bot{
+/turf/open/floor/plasteel{
+	dir = 1
+	},
+/obj/effect/turf_decal/bot{
 	dir = 1
 	},
 /area/mine/production)
 "mr" = (
 /obj/structure/barricade/wooden,
-/turf/open/floor/plasteel/bot{
+/turf/open/floor/plasteel{
+	dir = 1
+	},
+/obj/effect/turf_decal/bot{
 	dir = 1
 	},
 /area/mine/production)
@@ -4703,7 +4804,8 @@
 /turf/open/floor/plasteel/loadingarea,
 /area/mine/production)
 "mz" = (
-/turf/open/floor/plasteel/warning{
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
 /area/mine/production)
@@ -4718,15 +4820,17 @@
 	dir = 4
 	},
 /obj/structure/barricade/wooden,
-/turf/open/floor/plasteel/delivery{
+/turf/open/floor/plasteel{
 	name = "floor"
 	},
+/obj/effect/turf_decal/delivery,
 /area/mine/production)
 "mC" = (
 /turf/open/floor/plasteel/airless/asteroid,
 /area/mine/explored)
 "mD" = (
-/turf/open/floor/plasteel/airless/asteroid/warning{
+/turf/open/floor/plasteel/airless/asteroid,
+/obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 4
 	},
 /area/mine/explored)
@@ -4760,12 +4864,14 @@
 /area/mine/production)
 "mH" = (
 /obj/item/device/radio/beacon,
-/turf/open/floor/plasteel/warning{
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
 /area/mine/production)
 "mI" = (
-/turf/open/floor/plasteel/warning/corner{
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/stripes/corner{
 	dir = 4
 	},
 /area/mine/production)
@@ -4788,16 +4894,20 @@
 	pixel_x = 30;
 	pixel_y = 1
 	},
-/turf/open/floor/plasteel/delivery{
+/turf/open/floor/plasteel{
 	name = "floor"
 	},
+/obj/effect/turf_decal/delivery,
 /area/mine/production)
 "mK" = (
 /obj/structure/closet/crate{
 	icon_state = "crateopen";
 	opened = 1
 	},
-/turf/open/floor/plasteel/bot{
+/turf/open/floor/plasteel{
+	dir = 1
+	},
+/obj/effect/turf_decal/bot{
 	dir = 1
 	},
 /area/mine/production)
@@ -4819,7 +4929,8 @@
 	name = "Station Intercom (General)";
 	pixel_x = 28
 	},
-/turf/open/floor/plasteel/warning{
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
 /area/mine/production)
@@ -4830,7 +4941,8 @@
 	input_dir = 1;
 	output_dir = 2
 	},
-/turf/open/floor/plasteel/warning{
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
 /area/mine/production)
@@ -4850,9 +4962,10 @@
 	name = "Mining Shuttle Airlock";
 	req_access_txt = "0"
 	},
-/turf/open/floor/plasteel/delivery{
+/turf/open/floor/plasteel{
 	name = "floor"
 	},
+/obj/effect/turf_decal/delivery,
 /area/mine/production)
 "mQ" = (
 /turf/open/floor/plasteel,
@@ -4870,7 +4983,8 @@
 	dir = 2;
 	icon_state = "pipe-c"
 	},
-/turf/open/floor/plasteel/warning/corner{
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/stripes/corner{
 	dir = 8
 	},
 /area/mine/production)
@@ -4883,7 +4997,8 @@
 	id = "mining_internal";
 	name = "mining conveyor"
 	},
-/turf/open/floor/plasteel/warning{
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
 /area/mine/production)
@@ -4892,7 +5007,8 @@
 	dir = 2;
 	id = "mining_internal"
 	},
-/turf/open/floor/plasteel/warning{
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
 /area/mine/production)
@@ -4903,12 +5019,14 @@
 /turf/open/floor/plating/asteroid/airless,
 /area/mine/explored)
 "mX" = (
-/turf/open/floor/plasteel/warning{
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
 /area/mine/production)
 "mY" = (
-/turf/open/floor/plasteel/warning/corner{
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/stripes/corner{
 	dir = 1
 	},
 /area/mine/production)
@@ -4936,7 +5054,8 @@
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4
 	},
-/turf/open/floor/plasteel/warning{
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
 /area/mine/production)
@@ -4951,9 +5070,10 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/open/floor/plasteel/delivery{
+/turf/open/floor/plasteel{
 	name = "floor"
 	},
+/obj/effect/turf_decal/delivery,
 /area/mine/production)
 "nd" = (
 /obj/machinery/atmospherics/pipe/simple{
@@ -4963,7 +5083,8 @@
 	dir = 2;
 	icon_state = "pipe-c"
 	},
-/turf/open/floor/plasteel/warning{
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
 /area/mine/production)
@@ -4971,7 +5092,8 @@
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4
 	},
-/turf/open/floor/plasteel/warning/corner{
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/stripes/corner{
 	dir = 4
 	},
 /area/mine/production)
@@ -4985,7 +5107,8 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/turf/open/floor/plasteel/warning{
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
 /area/mine/production)
@@ -4998,7 +5121,8 @@
 	dir = 1;
 	output_dir = 2
 	},
-/turf/open/floor/plasteel/warning{
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
 /area/mine/production)
@@ -5010,7 +5134,8 @@
 /turf/open/floor/plasteel,
 /area/mine/production)
 "nk" = (
-/turf/open/floor/plasteel/warning{
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
 /area/mine/production)
@@ -5019,24 +5144,28 @@
 	name = "Processing Area";
 	req_access_txt = "48"
 	},
-/turf/open/floor/plasteel/delivery{
+/turf/open/floor/plasteel{
 	name = "floor"
 	},
+/obj/effect/turf_decal/delivery,
 /area/mine/production)
 "nm" = (
 /obj/structure/disposalpipe/segment,
-/turf/open/floor/plasteel/warning{
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
 /area/mine/production)
 "nn" = (
-/turf/open/floor/plasteel/warning{
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/stripes/line{
 	dir = 2
 	},
 /area/mine/production)
 "no" = (
 /obj/structure/ore_box,
-/turf/open/floor/plasteel/warning{
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
 /area/mine/production)
@@ -5052,7 +5181,8 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/open/floor/plasteel/warning{
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
 /area/mine/production)
@@ -5061,12 +5191,14 @@
 	dir = 8;
 	icon_state = "pipe-c"
 	},
-/turf/open/floor/plasteel/warning{
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/stripes/line{
 	dir = 2
 	},
 /area/mine/production)
 "ns" = (
-/turf/open/floor/plasteel/warning{
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
 /area/mine/production)
@@ -5075,9 +5207,10 @@
 /obj/machinery/door/window/northleft{
 	name = "Output Access"
 	},
-/turf/open/floor/plasteel/delivery{
+/turf/open/floor/plasteel{
 	name = "floor"
 	},
+/obj/effect/turf_decal/delivery,
 /area/mine/production)
 "nu" = (
 /obj/machinery/door/window/northleft{
@@ -5085,9 +5218,10 @@
 	icon_state = "right";
 	name = "Output Access"
 	},
-/turf/open/floor/plasteel/delivery{
+/turf/open/floor/plasteel{
 	name = "floor"
 	},
+/obj/effect/turf_decal/delivery,
 /area/mine/production)
 "nv" = (
 /obj/machinery/mineral/stacking_unit_console,
@@ -5145,7 +5279,10 @@
 	dir = 1;
 	pixel_y = -1
 	},
-/turf/open/floor/plasteel/bot{
+/turf/open/floor/plasteel{
+	dir = 1
+	},
+/obj/effect/turf_decal/bot{
 	dir = 1
 	},
 /area/mine/production)
@@ -5155,20 +5292,25 @@
 	opened = 1
 	},
 /obj/machinery/light,
-/turf/open/floor/plasteel/bot{
+/turf/open/floor/plasteel{
+	dir = 1
+	},
+/obj/effect/turf_decal/bot{
 	dir = 1
 	},
 /area/mine/production)
 "nC" = (
 /obj/structure/ore_box,
-/turf/open/floor/plasteel/delivery{
+/turf/open/floor/plasteel{
 	name = "floor"
 	},
+/obj/effect/turf_decal/delivery,
 /area/mine/production)
 "nD" = (
-/turf/open/floor/plasteel/delivery{
+/turf/open/floor/plasteel{
 	name = "floor"
 	},
+/obj/effect/turf_decal/delivery,
 /area/mine/production)
 "nE" = (
 /obj/machinery/conveyor{
@@ -5177,7 +5319,8 @@
 	},
 /obj/structure/plasticflaps,
 /obj/structure/barricade/wooden,
-/turf/open/floor/plasteel/warning{
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
 /area/mine/production)
@@ -5186,7 +5329,8 @@
 	dir = 1;
 	input_dir = 4
 	},
-/turf/open/floor/plasteel/warning{
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
 /area/mine/production)
@@ -5195,7 +5339,8 @@
 	dir = 8;
 	id = "mining_internal"
 	},
-/turf/open/floor/plasteel/warning{
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
 /area/mine/production)
@@ -5208,7 +5353,8 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/turf/open/floor/plasteel/warning/corner{
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/stripes/corner{
 	dir = 4
 	},
 /area/mine/production)
@@ -5241,7 +5387,8 @@
 /obj/structure/disposalpipe/trunk{
 	dir = 1
 	},
-/turf/open/floor/plasteel/warning{
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
 /area/mine/production)
