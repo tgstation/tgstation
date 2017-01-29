@@ -112,6 +112,8 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	var/smoketime = 300
 	var/chem_volume = 30
 	heat = 1000
+	var/mob/living/rigger
+	var/rigCkey = "null"
 
 /obj/item/clothing/mask/cigarette/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is huffing [src] as quickly as [user.p_they()] can! It looks like [user.p_theyre()] trying to give [user.p_them()]self cancer.</span>")
@@ -139,9 +141,22 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	if(!proximity || lit) //can't dip if cigarette is lit (it will heat the reagents in the glass instead)
 		return
 	if(istype(glass))	//you can dip cigarettes into beakers
+		var/plasmarig = 0
+		var/welderrig = 0
+		if(glass.reagents.has_reagent(plasma))
+			plasmarig = 1
+		if(glass.reagents.has_reagent(welding_fuel))
+			welderrig = 1
 		var/transfered = glass.reagents.trans_to(src, chem_volume)
 		if(transfered)	//if reagents were transfered, show the message
 			user << "<span class='notice'>You dip \the [src] into \the [glass].</span>"
+			if(plasmarig || welderrig)
+				rigger = user
+				rigCkey = user.ckey
+				var/turf/T = get_turf(src)
+				var/logtext = "[user]([ckey]) has rigged a cigarette with an explosive plasma or welding fuel at [T.x],[T.y],[T.z]."
+				message_admins(logtext)
+				log_game(logtext)
 		else			//if not, either the beaker was empty, or the cigarette was full
 			if(!glass.reagents.total_volume)
 				user << "<span class='notice'>[glass] is empty.</span>"
@@ -161,21 +176,29 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	force = 4
 	if(reagents.get_reagent_amount("plasma")) // the plasma explodes when exposed to fire
 		var/datum/effect_system/reagents_explosion/e = new()
-		e.set_up(round(reagents.get_reagent_amount("plasma") / 2.5, 1), get_turf(src), 0, 0)
+		var/turf/selfturf = get_turf(src)
+		e.set_up(round(reagents.get_reagent_amount("plasma") / 2.5, 1), selfturf, 0, 0)
 		e.start()
 		if(ismob(loc))
 			var/mob/M = loc
 			M.unEquip(src, 1)
+		var/logtext = "Cigarette plasma explosion occured at [selfturf.x], [selfturf.y], [selfturf.z]. Rigging mob is [rigger]. CKEY: [rigCkey]."
+		message_admins(logtext)
+		log_game(logtext)
 		qdel(src)
 		return
 	if(reagents.get_reagent_amount("welding_fuel")) // the fuel explodes, too, but much less violently
 		var/datum/effect_system/reagents_explosion/e = new()
-		e.set_up(round(reagents.get_reagent_amount("welding_fuel") / 5, 1), get_turf(src), 0, 0)
+		var/turf/selfturf = get_turf(src)
+		e.set_up(round(reagents.get_reagent_amount("welding_fuel") / 5, 1), selfturf, 0, 0)
 		e.start()
 		if(ismob(loc))
 			var/mob/M = loc
 			M.unEquip(src, 1)
-		qdel(src)
+		var/logtext = "Cigarette plasma explosion occured at [selfturf.x], [selfturf.y], [selfturf.z]. Rigging mob is [rigger]. CKEY: [rigCkey]."
+		message_admins(logtext)
+		log_game(logtext)
+	 	qdel(src)
 		return
 	// allowing reagents to react after being lit
 	reagents.set_reacting(TRUE)
