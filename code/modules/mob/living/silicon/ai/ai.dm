@@ -82,6 +82,8 @@ var/list/ai_list = list()
 
 	var/obj/machinery/camera/portable/builtInCamera
 
+	var/obj/structure/AIcore/deactivated/linked_core //For exosuit control
+
 /mob/living/silicon/ai/New(loc, datum/ai_laws/L, mob/target_ai)
 	..()
 	if(!target_ai) //If there is no player/brain inside.
@@ -419,7 +421,16 @@ var/list/ai_list = list()
 	if (href_list["ai_take_control"]) //Mech domination
 		var/obj/mecha/M = locate(href_list["ai_take_control"])
 		if(controlled_mech)
-			src << "You are already loaded into an onboard computer!"
+			src << "<span class='warning'>You are already loaded into an onboard computer!</span>"
+			return
+		if(!cameranet.checkCameraVis(M))
+			src << "<span class='warning'>Exosuit is no longer near active cameras.</span>"
+			return
+		if(lacks_power())
+			src << "<span class='warning'>You're depowered!</span>"
+			return
+		if(!isturf(loc))
+			src << "<span class='warning'>You aren't in your core!</span>"
 			return
 		if(M)
 			M.transfer_ai(AI_MECH_HACK,src, usr) //Called om the mech itself.

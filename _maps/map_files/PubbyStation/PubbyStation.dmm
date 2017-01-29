@@ -345,7 +345,6 @@
 /area/wreck/ai)
 "aaO" = (
 /obj/machinery/ai_slipper{
-	icon_state = "motion0";
 	uses = 8
 	},
 /obj/machinery/power/terminal{
@@ -625,7 +624,6 @@
 	icon_state = "2-8"
 	},
 /obj/machinery/ai_slipper{
-	icon_state = "motion0";
 	uses = 8
 	},
 /turf/open/floor/plasteel/white,
@@ -45420,6 +45418,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
+/obj/machinery/modular_computer/console/preset/engineering,
 /turf/open/floor/plasteel/yellow/side{
 	tag = "icon-yellow (EAST)";
 	dir = 4

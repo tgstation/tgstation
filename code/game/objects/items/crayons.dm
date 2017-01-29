@@ -346,7 +346,7 @@
 					else
 						user << "<span class='warning'>There isn't enough space to paint!</span>"
 						return
-	
+
 	if(!instant)
 		user << "<span class='notice'>You finish drawing \the [temp].</span>"
 	else
