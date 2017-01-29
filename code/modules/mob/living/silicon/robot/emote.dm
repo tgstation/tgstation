@@ -10,7 +10,7 @@
 	key = "boop"
 	key_third_person = "boops"
 	message = "boops."
-	message_param = "boops %t"
+	message_param = "boops %t."
 
 /datum/emote/sound/silicon/buzz
 	key = "buzz"
