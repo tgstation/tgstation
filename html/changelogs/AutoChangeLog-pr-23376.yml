@@ -1,0 +1,4 @@
+author: "Lzimann"
+delete-after: True
+changes: 
+  - rscadd: "You can now change your view range as ghost. To do so, either use the View Range verb in the ghost tab, the mouse scroll up/down or control + \"+\"/\"-\". The verb also works as a reset if you changed your view."
