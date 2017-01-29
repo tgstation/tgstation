@@ -13,7 +13,7 @@
 /mob/living/silicon/ai/compose_open_href(atom/movable/speaker, namepart)
 	var/mob/M = speaker.GetSource()
 	if(M)
-		return "</a><a href='?src=\ref[src];opennear=[html_encode(namepart)]'><b> \[OPEN DOOR\]</b></a>"
+		return "</a><a href='?src=\ref[src];opennear=[html_encode(namepart)]'><b> \[O\]</b></a>"
 	..()
 
 /mob/living/silicon/ai/compose_job(atom/movable/speaker, message_langs, raw_message, radio_freq)
