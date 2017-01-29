@@ -33,7 +33,14 @@
 		/obj/item/device/analyzer,
 		/obj/item/weapon/extinguisher/mini,
 		/obj/item/device/radio,
-		/obj/item/clothing/gloves
+		/obj/item/clothing/gloves,
+		/obj/item/clothing/glasses,
+		/obj/item/device/geiger_counter,
+		/obj/item/weapon/airlock_painter,
+		/obj/item/device/plant_analyzer,
+		/obj/item/weapon/cultivator,
+		/obj/item/weapon/hatchet,
+		/obj/item/weapon/shovel/spade
 		)
 
 /obj/item/weapon/storage/belt/utility/chief
@@ -105,7 +112,6 @@
 		/obj/item/weapon/bikehorn/rubberducky,
 		/obj/item/clothing/mask/surgical,
 		/obj/item/clothing/mask/breath,
-		/obj/item/clothing/mask/breath/medical,
 		/obj/item/weapon/surgical_drapes, //for true paramedics
 		/obj/item/weapon/scalpel,
 		/obj/item/weapon/circular_saw,
@@ -144,7 +150,6 @@
 		/obj/item/ammo_casing/shotgun,
 		/obj/item/ammo_box,
 		/obj/item/weapon/reagent_containers/food/snacks/donut,
-		/obj/item/weapon/reagent_containers/food/snacks/donut/jelly,
 		/obj/item/weapon/kitchen/knife/combat,
 		/obj/item/device/flashlight/seclite,
 		/obj/item/weapon/melee/classic_baton/telescopic,
