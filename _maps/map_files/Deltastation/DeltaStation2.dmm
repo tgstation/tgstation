@@ -10240,7 +10240,7 @@
 /obj/item/clothing/shoes/laceup,
 /turf/open/floor/plasteel,
 /obj/effect/turf_decal/bot,
-/area/space)
+/area/janitor)
 "asI" = (
 /obj/structure/closet/l3closet/janitor,
 /obj/machinery/requests_console{
