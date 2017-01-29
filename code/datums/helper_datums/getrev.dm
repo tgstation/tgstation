@@ -30,7 +30,9 @@ var/global/datum/getrev/revdata = new()
 	world.log << "Current map - [MAP_NAME]" //can't think of anywhere better to put it
 
 /datum/getrev/proc/DownloadPRDetails()
-	if(!text2num(config.githubrepoid))
+	if(!config.githubrepoid)
+		return
+	if(!isnum(config.githubrepoid))
 		world.log << "Invalid github repo id: [config.githubrepoid]"
 		return
 	for(var/line in testmerge)
@@ -48,7 +50,7 @@ var/global/datum/getrev/revdata = new()
 			 | \____(      )___) )___
 			  \______(_______;;; __;;;
 			*/
-		if(!text2num(line))
+		if(!isnum(line))
 			world.log << "Invalid PR number: [line]"
 			return
 		var/url = "https://api.github.com/repositories/[config.githubrepoid]/pulls/[line].json"
@@ -77,7 +79,7 @@ var/global/datum/getrev/revdata = new()
 	for(var/line in testmerge)
 		var/details = ""
 		if(has_pr_details)
-			details = ": '" + testmerge[line]["title"] + "' by " + testmerge[line]["user"]["login"]
+			details = ": '" + html_encode(testmerge[line]["title"]) + "' by " + html_encode(testmerge[line]["user"]["login"])
 		. += "<a href='[config.githuburl]/pull/[line]'>#[line][details]</a><br/>"
 
 /client/verb/showrevinfo()
