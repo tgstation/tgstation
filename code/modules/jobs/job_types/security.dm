@@ -285,8 +285,8 @@ var/list/available_depts = list(SEC_DEPT_ENGINEERING, SEC_DEPT_MEDICAL, SEC_DEPT
 	implants = list(/obj/item/weapon/implant/mindshield)
 
 
-/obj/item/device/radio/headset/headset_sec/alt/department/New()
-	wires = new(src)
+/obj/item/device/radio/headset/headset_sec/alt/department/Initialize()
+	wires = new/datum/wires/radio(src)
 	secure_radio_connections = new
 	recalculateChannels()
 	..()
