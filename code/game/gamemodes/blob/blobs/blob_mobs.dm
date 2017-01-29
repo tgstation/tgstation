@@ -133,7 +133,7 @@
 	movement_type = GROUND
 	death_cloud_size = 0
 	icon = H.icon
-	icon_state = "zombie_s"
+	icon_state = "zombie"
 	H.hair_style = null
 	H.update_hair()
 	human_overlays = H.overlays

@@ -61,7 +61,7 @@
 	sort_priority = 3
 
 /datum/clockwork_scripture/memory_allocation/check_special_requirements()
-	for(var/mob/living/simple_animal/hostile/clockwork/marauder/M in living_mob_list)
+	for(var/mob/living/simple_animal/hostile/clockwork/marauder/M in all_clockwork_mobs)
 		if(M.host == invoker)
 			invoker << "<span class='warning'>You can only house one marauder at a time!</span>"
 			return FALSE
@@ -72,12 +72,12 @@
 
 /datum/clockwork_scripture/memory_allocation/proc/create_marauder()
 	invoker.visible_message("<span class='warning'>A purple tendril appears from [invoker]'s [slab.name] and impales itself in [invoker.p_their()] forehead!</span>", \
-	"<span class='heavy_brass'>A tendril flies from [slab] into your forehead. You begin waiting while it painfully rearranges your thought pattern...</span>")
+	"<span class='sevtug'>A tendril flies from [slab] into your forehead. You begin waiting while it painfully rearranges your thought pattern...</span>")
 	invoker.notransform = TRUE //Vulnerable during the process
 	slab.busy = "Thought Modification in progress"
 	if(!do_after(invoker, 50, target = invoker))
 		invoker.visible_message("<span class='warning'>The tendril, covered in blood, retracts from [invoker]'s head and back into the [slab.name]!</span>", \
-		"<span class='heavy_brass'>Total agony overcomes you as the tendril is forced out early!</span>")
+		"<span class='userdanger'>Total agony overcomes you as the tendril is forced out early!</span>")
 		invoker.notransform = FALSE
 		invoker.Stun(5)
 		invoker.Weaken(5)
@@ -90,7 +90,7 @@
 	if(!check_special_requirements())
 		return FALSE
 	invoker << "<span class='warning'>The tendril shivers slightly as it selects a marauder...</span>"
-	var/list/marauder_candidates = pollCandidates("Do you want to play as the clockwork marauder of [invoker.real_name]?", ROLE_SERVANT_OF_RATVAR, null, FALSE, 100)
+	var/list/marauder_candidates = pollCandidates("Do you want to play as the clockwork marauder of [invoker.real_name]?", ROLE_SERVANT_OF_RATVAR, null, FALSE, 50)
 	if(!check_special_requirements())
 		return FALSE
 	if(!marauder_candidates.len)
@@ -101,14 +101,9 @@
 	var/mob/dead/observer/theghost = pick(marauder_candidates)
 	var/mob/living/simple_animal/hostile/clockwork/marauder/M = new(invoker)
 	M.key = theghost.key
-	M.host = invoker
-	M << M.playstyle_string
-	M << "<b>Your true name is \"[M.true_name]\". You can change this <i>once</i> by using the Change True Name verb in your Marauder tab.</b>"
-	add_servant_of_ratvar(M, TRUE)
+	M.bind_to_host(invoker)
 	invoker.visible_message("<span class='warning'>The tendril retracts from [invoker]'s head, sealing the entry wound as it does so!</span>", \
-	"<span class='heavy_brass'>The procedure was successful! [M.true_name], a clockwork marauder, has taken up residence in your mind. Communicate with it via the \"Linked Minds\" ability in the \
-	Clockwork tab.</span>")
-	invoker.verbs += /mob/living/proc/talk_with_marauder
+	"<span class='sevtug'>[M.true_name], a clockwork marauder, has taken up residence in your mind. Communicate with it via the \"Linked Minds\" action button.</span>")
 	return TRUE
 
 

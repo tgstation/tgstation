@@ -41,7 +41,7 @@
 /datum/clockwork_scripture/create_object/judicial_visor
 	descname = "Delayed Area Stun Glasses"
 	name = "Judicial Visor"
-	desc = "Forms a visor that, when worn, will grant the ability to smite an area, stunning, muting, and damaging the nonfaithful. \
+	desc = "Forms a visor that, when worn, will grant the ability to smite an area, stunning, muting, and damaging non-Servants. \
 	Cultists of Nar-Sie will be set on fire, though they will be stunned for half the time."
 	invocations = list("Grant me the flames of Engine!")
 	channel_time = 10
@@ -54,6 +54,8 @@
 	space_allowed = TRUE
 	primary_component = BELLIGERENT_EYE
 	sort_priority = 2
+	quickbind = TRUE
+	quickbind_desc = "Creates a Judicial Visor, which can create a Judicial Marker at an area, stunning, muting, and damaging non-Servants after a delay."
 
 
 //Vanguard: Provides twenty seconds of stun immunity. At the end of the twenty seconds, 25% of all stuns absorbed are applied to the invoker.
@@ -290,6 +292,8 @@
 	space_allowed = TRUE
 	primary_component = HIEROPHANT_ANSIBLE
 	sort_priority = 9
+	quickbind = TRUE
+	quickbind_desc = "Creates a pair of Wraith Spectacles, which grant true sight but cause gradual vision loss."
 
 
 //Sigil of Transgression: Creates a sigil of transgression, which stuns the first nonservant to cross it.

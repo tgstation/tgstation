@@ -1,4 +1,4 @@
-//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
 /turf/closed/mineral/random,
 /area/space)
@@ -1067,7 +1067,8 @@
 	},
 /area/awaymission/spacebattle/cruiser)
 "dC" = (
-/turf/open/floor/plasteel/warning{
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
 /area/awaymission/spacebattle/cruiser)
@@ -1188,7 +1189,8 @@
 	},
 /area/awaymission/spacebattle/cruiser)
 "dW" = (
-/turf/open/floor/plasteel/warning{
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
 /area/awaymission/spacebattle/cruiser)
@@ -1285,7 +1287,8 @@
 /area/awaymission/spacebattle/cruiser)
 "ej" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
-/turf/open/floor/plasteel/warning{
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
 /area/awaymission/spacebattle/cruiser)
@@ -2270,7 +2273,8 @@
 /area/awaymission/spacebattle/cruiser)
 "hr" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
-/turf/open/floor/plasteel/warning{
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
 /area/awaymission/spacebattle/cruiser)
@@ -2383,7 +2387,8 @@
 /turf/open/floor/plasteel,
 /area/awaymission/spacebattle/cruiser)
 "hM" = (
-/turf/open/floor/plasteel/warning{
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
 /area/awaymission/spacebattle/cruiser)

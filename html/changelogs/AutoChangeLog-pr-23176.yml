@@ -1,5 +1,0 @@
-author: "coiax"
-delete-after: True
-changes: 
-  - rscadd: "The Librarian now starts with a chisel/soapstone/chalk/magic marker capable of engraving messages for subsequent shifts, and permanently erasing messages that the Librarian is unhappy with. It has limited uses, so order more at Cargo."
-  - bugfix: "The contraband cream pie crate is now locked, and requires Theatre access."
