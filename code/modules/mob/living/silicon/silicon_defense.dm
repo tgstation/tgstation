@@ -110,9 +110,8 @@
 				M.Weaken(2)
 	if(Proj.stun || Proj.weaken)
 		for(var/mob/living/M in buckled_mobs)
-			M.Stun(Proj.stun)
-			M.Weaken(Proj.weaken)
-			M.visible_message("<span class='boldwarning'>[M] is stunned by the [Proj]!</span>")
+			unbuckle_mob(M)
+			M.visible_message("<span class='boldwarning'>[M] is knocked off of [src] by the [Proj]!</span>")
 	Proj.on_hit(src)
 	return 2
 
