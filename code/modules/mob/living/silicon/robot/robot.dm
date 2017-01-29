@@ -89,7 +89,9 @@
 	/obj/item/clothing/head/sombrero,
 	/obj/item/clothing/head/witchunter_hat)
 
-
+	can_buckle = TRUE
+	buckle_lying = FALSE
+	var/datum/riding/cyborg/riding_datum = null
 
 /mob/living/silicon/robot/New(loc)
 	spark_system = new /datum/effect_system/spark_spread()
@@ -152,6 +154,9 @@
 	aicamera = new/obj/item/device/camera/siliconcam/robot_camera(src)
 	toner = tonermax
 	diag_hud_set_borgcell()
+
+	riding_datum = new /datum/riding/cyborg
+	riding_datum.ridden = src
 
 //If there's an MMI in the robot, have it ejected when the mob goes away. --NEO
 /mob/living/silicon/robot/Destroy()

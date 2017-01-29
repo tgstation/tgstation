@@ -276,3 +276,53 @@
 		handle_vehicle_offsets()
 	else
 		user << "<span class='notice'>You'll need something  to guide the [ridden.name].</span>"
+
+//CYBORGS. NO, THEY ARE NOT ANIMALS.
+/datum/riding/cyborg
+	keytype = null
+	vehicle_move_delay = 1
+
+/datum/riding/cyborg/proc/ride_check(mob/user)
+	if(user.incapacitated())
+		ridden.unbuckle_mob(user)
+		return
+
+/datum/riding/cyborg/handle_vehicle_layer()
+	if(ridden.dir == NORTH)
+		ridden.layer = OBJ_LAYER
+	else
+		ridden.layer = ABOVE_MOB_LAYER
+	if(!ridden.buckled_mobs)
+		ridden.layer = MOB_LAYER
+
+/datum/riding/cyborg/handle_vehicle_offsets()
+	if(ridden.has_buckled_mobs())
+		for(var/mob/living/M in ridden.buckled_mobs)
+			if(!istype(M, /mob/living))
+				continue
+			M.setDir(ridden.dir)
+			switch(ridden.dir)
+				if(NORTH)
+					M.pixel_x = 0
+					M.pixel_y = 4
+				if(SOUTH)
+					M.pixel_x = 0
+					M.pixel_y = 4
+				if(EAST)
+					M.pixel_x = -4
+					M.pixel_y = -2
+				if(WEST)
+					M.pixel_x = 4
+					M.pixel_y = 2
+
+/datum/riding/cyborg/proc/on_vehicle_move()
+	for(var/mob/living/M in ridden.buckled_mobs)
+		ride_check(M)
+	handle_vehicle_offsets()
+	handle_vehicle_layer()
+
+/datum/riding/cyborg/proc/force_dismount()
+	for(var/mob/living/M in ridden.buckled_mobs)
+		M.visible_message("<span class='boldwarning'>[M] is thrown clear of [ridden] by rapid spinning!</span>")
+		M.throw_at(get_edge_target_turf(ridden, ridden.dir), 14, 5)
+		M.Weaken(3)
