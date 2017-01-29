@@ -455,7 +455,7 @@ var/list/ai_list = list()
 		if(found)
 			break
 	if(!istype(D))
-		src << "<span class='warning'>No door found!</span>"
+		src << "<span class='warning'>No closed airlock that is on cameras have been found!</span>"
 		return
 	if(!D.canAIControl(src))
 		src << "<span class='warning'>Airlock control blocked by remote interface. Manual hacking required!</span>"
@@ -470,9 +470,9 @@ var/list/ai_list = list()
 		src << "<span class='warning'>Warning: Airlock bolted. Manual control necessary.</span>"
 		return
 	if(D.welded)
-		src << "<span class='warning'>Unable to open airlock: Door is physically constrained!</span>"
+		src << "<span class='warning'>Unable to open airlock: Airlock is physically constrained!</span>"
 		return
-	src << "<span class='boldnotice'>Opening the nearest door to [M.name]!</span>"
+	src << "<span class='boldnotice'>Opening the nearest airlock to [M.name]!</span>"
 	D.open()
 
 /mob/living/silicon/ai/proc/switchCamera(obj/machinery/camera/C)
