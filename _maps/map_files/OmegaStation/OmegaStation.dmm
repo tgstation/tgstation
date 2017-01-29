@@ -2761,7 +2761,6 @@
 	icon_state = "1-4"
 	},
 /obj/machinery/ai_slipper{
-	icon_state = "motion0";
 	uses = 10
 	},
 /obj/machinery/requests_console{
@@ -4300,7 +4299,6 @@
 	icon_state = "1-8"
 	},
 /obj/machinery/ai_slipper{
-	icon_state = "motion0";
 	uses = 10
 	},
 /obj/structure/cable/white{
