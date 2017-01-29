@@ -54,12 +54,14 @@
 
 /datum/emote/sound/silicon/warn
 	key = "warn"
+	key_third_person = "warns"
 	message = "blares an alarm!"
 	message_param = "warns %t!"
 	sound = 'sound/machines/warning-buzzer.ogg'
 
 /datum/emote/sound/silicon/beep
 	key = "beep"
+	key_third_person = "beeps"
 	message = "beeps enthusiastically!"
 	message_param = "beeps enthusiastically at %t!"
 	sound = 'sound/machines/Cyborg-emote-chipper.ogg'
@@ -80,6 +82,7 @@
 
 /datum/emote/sound/silicon/okay
 	key = "okay"
+	key_third_person = "alright"
 	message = "acknowledges."
 	message_param = "acknowledges %t"
 	sound = 'sound/machines/Cyborg-emote-okay.ogg'
