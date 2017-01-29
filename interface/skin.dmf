@@ -215,6 +215,14 @@ macro "default"
 		name = "F12"
 		command = "F12"
 		is-disabled = false
+	elem 
+		name = "ALT"
+		command = "toggle-walk-run"
+		is-disabled = false
+	elem 
+		name = "ALT+UP"
+		command = "toggle-walk-run"
+		is-disabled = false
 
 macro "hotkeys"
 	elem 
@@ -516,6 +524,14 @@ macro "hotkeys"
 	elem 
 		name = "F12"
 		command = "F12"
+		is-disabled = false
+	elem 
+		name = "ALT"
+		command = "toggle-walk-run"
+		is-disabled = false
+	elem 
+		name = "ALT+UP"
+		command = "toggle-walk-run"
 		is-disabled = false
 
 macro "robot-default"

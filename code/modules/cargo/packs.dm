@@ -1381,16 +1381,6 @@
 					/obj/item/weapon/book/manual/random/,
 					/obj/item/weapon/book/random/triple)
 
-/datum/supply_pack/misc/posters
-	name = "Corporate Posters Crate"
-	cost = 800
-	contains = list(/obj/item/weapon/poster/legit,
-					/obj/item/weapon/poster/legit,
-					/obj/item/weapon/poster/legit,
-					/obj/item/weapon/poster/legit,
-					/obj/item/weapon/poster/legit)
-	crate_name = "corporate posters crate"
-
 /datum/supply_pack/misc/paper
 	name = "Bureaucracy Crate"
 	cost = 1500

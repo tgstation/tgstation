@@ -1,0 +1,8 @@
+author: "Joan"
+delete-after: True
+changes: 
+  - rscadd: "Clockwork Marauders now grant their host action buttons to force them to emerge/recall and communicate with them, instead of requiring the host to type their name or use a verb, respectively."
+  - rscdel: "Clockwork Marauders no longer see their block and counter chances; this was mostly useless info, as knowing the chance didn't matter as to what you'd do."
+  - rscdel: "Clockwork Marauders can no longer change their name."
+  - tweak: "Clockwork Marauders have a slightly lower chance to block, and take slightly more damage when far from their host."
+  - bugfix: "Fixes a bug where Clockwork Marauders never suffered reduced damage and speed at low health and never got the damage bonus at high health."

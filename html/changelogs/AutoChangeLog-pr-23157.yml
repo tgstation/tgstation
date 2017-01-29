@@ -1,0 +1,6 @@
+author: "bgobandit"
+delete-after: True
+changes: 
+  - rscadd: "The library computer can now upload scanned books to the newscaster. Remember, seditious or unsavory news channels should receive a Nanotrasen D-Notice!"
+  - rscadd: "The library computer can now print corporate posters as well as Bibles."
+  - rscdel: "Cargo no longer offers a corporate poster crate. Nobody ever bought it anyway."

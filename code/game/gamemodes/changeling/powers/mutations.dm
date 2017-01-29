@@ -150,7 +150,7 @@
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "arm_blade"
 	item_state = "arm_blade"
-	flags = ABSTRACT | NODROP | DROPDEL
+	flags = ABSTRACT | NODROP
 	w_class = WEIGHT_CLASS_HUGE
 	force = 25
 	throwforce = 0 //Just to be on the safe side
@@ -159,11 +159,14 @@
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	sharpness = IS_SHARP
+	var/can_drop = FALSE
 
-/obj/item/weapon/melee/arm_blade/New(location,silent)
+/obj/item/weapon/melee/arm_blade/New(location,silent,synthetic)
 	..()
 	if(ismob(loc) && !silent)
 		loc.visible_message("<span class='warning'>A grotesque blade forms around [loc.name]\'s arm!</span>", "<span class='warning'>Our arm twists and mutates, transforming it into a deadly blade.</span>", "<span class='italics'>You hear organic matter ripping and tearing!</span>")
+	if(synthetic)
+		can_drop = TRUE
 
 /obj/item/weapon/melee/arm_blade/afterattack(atom/target, mob/user, proximity)
 	if(!proximity)
@@ -195,6 +198,12 @@
 		user.visible_message("<span class='warning'>[user] forces the airlock to open with their [src]!</span>", "<span class='warning'>We force the airlock to open.</span>", \
 		"<span class='italics'>You hear a metal screeching sound.</span>")
 		A.open(2)
+
+/obj/item/weapon/melee/arm_blade/dropped(mob/user)
+	..()
+	if(can_drop)
+		new /obj/item/weapon/melee/synthetic_arm_blade(get_turf(user))
+	qdel(src)
 
 /***************************************\
 |***********COMBAT TENTACLES*************|
