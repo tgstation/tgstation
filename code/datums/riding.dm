@@ -310,10 +310,10 @@
 					M.pixel_y = 4
 				if(EAST)
 					M.pixel_x = -6
-					M.pixel_y = 2
+					M.pixel_y = 3
 				if(WEST)
 					M.pixel_x = 6
-					M.pixel_y = 2
+					M.pixel_y = 3
 
 /datum/riding/cyborg/proc/on_vehicle_move()
 	for(var/mob/living/M in ridden.buckled_mobs)

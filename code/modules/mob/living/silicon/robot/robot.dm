@@ -1004,3 +1004,7 @@
 /mob/living/silicon/robot/MouseDrop_T(mob/living/M, mob/living/user)
 	. = ..()
 	buckle_mob(M)
+
+/mob/living/silicon/robot/unbuckle_mob(mob/user)
+	. = ..(user)
+	riding_datum.restore_position(user)
