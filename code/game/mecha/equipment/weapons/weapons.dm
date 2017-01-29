@@ -278,6 +278,18 @@
 	randomspread = 1
 	projectile_delay = 2
 
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack
+	name = "\improper SRM-8 missile rack"
+	desc = "A weapon for combat exosuits. Shoots light explosive missiles."
+	icon_state = "mecha_missilerack"
+	origin_tech = "combat=5;materials=4;engineering=4"
+	projectile = /obj/item/projectile/bullet/srmrocket
+	fire_sound = 'sound/weapons/grenadelaunch.ogg'
+	projectiles = 8
+	projectile_energy_cost = 1000
+	equip_cooldown = 60
+
+
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher
 	var/missile_speed = 2
 	var/missile_range = 30
@@ -298,35 +310,6 @@
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/proc/proj_init(var/obj/O)
 	return
 
-/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/missile_rack
-	name = "\improper SRM-8 missile rack"
-	desc = "A weapon for combat exosuits. Shoots light explosive missiles."
-	icon_state = "mecha_missilerack"
-	origin_tech = "combat=5;materials=4;engineering=4"
-	projectile = /obj/item/missile
-	fire_sound = 'sound/weapons/grenadelaunch.ogg'
-	projectiles = 8
-	projectile_energy_cost = 1000
-	equip_cooldown = 60
-
-/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/missile_rack/proj_init(var/obj/item/missile/M)
-	M.primed = 1
-	var/turf/T = get_turf(src)
-	message_admins("[ADMIN_LOOKUP(chassis.occupant)] fired a [src] in [ADMIN_COORDJMP(T)]",0,1)
-	log_game("[key_name(chassis.occupant)] fired a [src] [COORD(T)]")
-
-/obj/item/missile
-	icon = 'icons/obj/grenade.dmi'
-	icon_state = "missile"
-	var/primed = null
-	throwforce = 15
-
-/obj/item/missile/throw_impact(atom/hit_atom)
-	if(primed)
-		explosion(hit_atom, 0, 0, 2, 4, 0)
-		qdel(src)
-	else
-		..()
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/flashbang
 	name = "\improper SGL-6 grenade launcher"
