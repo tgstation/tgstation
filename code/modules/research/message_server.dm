@@ -223,6 +223,7 @@ var/obj/machinery/blackbox_recorder/blackbox
 	if (blackbox)
 		if (istype(blackbox,/obj/machinery/blackbox_recorder))
 			qdel(src)
+			return
 	blackbox = src
 
 
