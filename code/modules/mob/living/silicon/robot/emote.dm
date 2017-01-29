@@ -64,28 +64,28 @@
 	key_third_person = "beeps"
 	message = "beeps enthusiastically!"
 	message_param = "beeps enthusiastically at %t!"
-	sound = 'sound/machines/Cyborg-emote-chipper.ogg'
+	sound = 'sound/machines/cyborg/Cyborg-emote-chipper.ogg'
 
 /datum/emote/sound/silicon/chuckle
 	key = "chuckle"
 	key_third_person = "chortle"
 	message = "chortles."
 	message_param = "chortles at %t."
-	sound = 'sound/machines/Cyborg-emote-chuckle.ogg'
+	sound = 'sound/machines/cyborg/Cyborg-emote-chuckle.ogg'
 
 /datum/emote/sound/silicon/query
 	key = "?"
 	key_third_person = "what"
 	message = "queries."
 	message_param = "queries at %t."
-	sound = 'sound/machines/Cyborg-emote-confused.ogg'
+	sound = 'sound/machines/cyborg/Cyborg-emote-confused.ogg'
 
 /datum/emote/sound/silicon/okay
 	key = "okay"
 	key_third_person = "alright"
 	message = "acknowledges."
 	message_param = "acknowledges %t"
-	sound = 'sound/machines/Cyborg-emote-okay.ogg'
+	sound = 'sound/machines/cyborg/Cyborg-emote-okay.ogg'
 
 
 /mob/living/silicon/robot/verb/powerwarn()
