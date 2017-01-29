@@ -272,12 +272,12 @@
 /datum/clockwork_scripture/channeled/volt_void
 	descname = "Channeled, Targeted Energy Blasts"
 	name = "Volt Void" //Alternative name: "On all levels but physical, I am a power sink"
-	desc = "Allows you to fire energy rays at target locations; more power consumed causes more damage. Channeled every fourth of a second for a maximum of ten seconds."
-	channel_time = 20
+	desc = "Allows you to fire energy rays at target locations; more power consumed causes more damage. Channeled every fifth of a second for a maximum of ten seconds."
+	channel_time = 30
 	invocations = list("Amperage...", "...grant me your power!")
 	chant_invocations = list("Use charge to kill!", "Slay with power!", "Hunt with energy!")
-	chant_amount = 5
-	chant_interval = 4
+	chant_amount = 4
+	chant_interval = 5
 	required_components = list(GEIS_CAPACITOR = 1, HIEROPHANT_ANSIBLE = 2)
 	consumed_components = list(GEIS_CAPACITOR = 1, HIEROPHANT_ANSIBLE = 1)
 	usage_tip = "Though it requires you to stand still, this scripture can do massive damage."
@@ -285,7 +285,7 @@
 	primary_component = HIEROPHANT_ANSIBLE
 	sort_priority = 10
 	quickbind = TRUE
-	quickbind_desc = "Allows you to fire energy rays at target locations. Failing to fire causes backlash.<br><b>Maximum 5 chants.</b>"
+	quickbind_desc = "Allows you to fire energy rays at target locations. Failing to fire causes backlash.<br><b>Maximum 4 chants.</b>"
 	var/static/list/nzcrentr_insults = list("You're not very good at aiming.", "You hunt badly.", "What a waste of energy.", "Almost funny to watch.",
 	"Boss says </span><span class='heavy_brass'>\"Click something, you idiot!\"</span><span class='nzcrentr'>.", "Stop wasting components if you can't aim.")
 
@@ -324,7 +324,7 @@
 	ranged_type = /obj/effect/proc_holder/slab/volt
 	ranged_message = "<span class='nzcrentr_small'><i>You charge the clockwork slab with shocking might.</i>\n\
 	<b>Left-click a target to fire, quickly!</b></span>"
-	timeout_time = 16
+	timeout_time = 20
 
 /obj/structure/destructible/clockwork/powered/volt_checker
 	invisibility = INVISIBILITY_ABSTRACT
