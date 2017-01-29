@@ -1,4 +1,4 @@
-//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aaa" = (
 /turf/open/space,
 /area/space)
@@ -57259,7 +57259,6 @@
 	pixel_y = 0
 	},
 /obj/machinery/ai_slipper{
-	icon_state = "motion0";
 	uses = 10
 	},
 /obj/machinery/atmospherics/pipe/manifold4w/supply/hidden,
@@ -57327,7 +57326,6 @@
 	icon_state = "2-4"
 	},
 /obj/machinery/ai_slipper{
-	icon_state = "motion0";
 	uses = 10
 	},
 /obj/machinery/atmospherics/pipe/manifold4w/supply/hidden,
@@ -57384,7 +57382,6 @@
 	pixel_y = 0
 	},
 /obj/machinery/ai_slipper{
-	icon_state = "motion0";
 	uses = 10
 	},
 /obj/structure/cable{
@@ -58172,7 +58169,6 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/ai_slipper{
-	icon_state = "motion0";
 	uses = 10
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -60054,7 +60050,6 @@
 /area/ai_monitored/turret_protected/ai)
 "cAT" = (
 /obj/machinery/ai_slipper{
-	icon_state = "motion0";
 	uses = 10
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -60164,7 +60159,6 @@
 	dir = 1
 	},
 /obj/machinery/ai_slipper{
-	icon_state = "motion0";
 	uses = 10
 	},
 /turf/open/floor/bluegrid,

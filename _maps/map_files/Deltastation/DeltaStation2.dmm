@@ -3554,18 +3554,6 @@
 /area/maintenance/starboard{
 	name = "Fore Starboard Maintenance"
 	})
-"ahi" = (
-/obj/machinery/light/small{
-	dir = 1
-	},
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	dir = 2;
-	on = 1
-	},
-/turf/open/floor/plasteel/bot,
-/area/maintenance/starboard{
-	name = "Fore Starboard Maintenance"
-	})
 "ahj" = (
 /turf/open/floor/plasteel/white/side,
 /area/maintenance/starboard{
@@ -3821,131 +3809,9 @@
 /obj/structure/sign/nanotrasen,
 /turf/closed/wall,
 /area/security/checkpoint2)
-"ahO" = (
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
-	tag = "icon-manifold (WEST)";
-	icon_state = "manifold";
-	dir = 8
-	},
-/turf/open/floor/plasteel/neutral/side{
-	dir = 8;
-	heat_capacity = 1e+006
-	},
-/area/maintenance/starboard{
-	name = "Fore Starboard Maintenance"
-	})
-"ahP" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/cable/white{
-	tag = "icon-1-2";
-	icon_state = "1-2"
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	tag = "icon-intact (EAST)";
-	icon_state = "intact";
-	dir = 4
-	},
-/turf/open/floor/plasteel/delivery,
-/area/maintenance/starboard{
-	name = "Fore Starboard Maintenance"
-	})
-"ahQ" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/door/airlock/maintenance_hatch{
-	name = "Maintenance Hatch";
-	req_access_txt = "12"
-	},
-/obj/structure/barricade/wooden,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	tag = "icon-intact (EAST)";
-	icon_state = "intact";
-	dir = 4
-	},
-/turf/open/floor/plasteel/warning/side,
-/area/maintenance/starboard{
-	name = "Fore Starboard Maintenance"
-	})
-"ahR" = (
-/obj/effect/decal/cleanable/blood/old,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	tag = "icon-intact (EAST)";
-	icon_state = "intact";
-	dir = 4
-	},
-/turf/open/floor/plasteel/red,
-/area/maintenance/starboard{
-	name = "Fore Starboard Maintenance"
-	})
-"ahS" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	tag = "icon-intact (EAST)";
-	icon_state = "intact";
-	dir = 4
-	},
-/turf/open/floor/plasteel/white,
-/area/maintenance/starboard{
-	name = "Fore Starboard Maintenance"
-	})
-"ahT" = (
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden,
-/turf/open/floor/plasteel/red,
-/area/maintenance/starboard{
-	name = "Fore Starboard Maintenance"
-	})
-"ahU" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	tag = "icon-intact (EAST)";
-	icon_state = "intact";
-	dir = 4
-	},
-/turf/open/floor/plasteel/white,
-/area/maintenance/starboard{
-	name = "Fore Starboard Maintenance"
-	})
-"ahV" = (
-/obj/machinery/newscaster{
-	pixel_x = 32;
-	pixel_y = 32
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	tag = "icon-intact (EAST)";
-	icon_state = "intact";
-	dir = 4
-	},
-/turf/open/floor/plasteel/delivery,
-/area/maintenance/starboard{
-	name = "Fore Starboard Maintenance"
-	})
-"ahW" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	tag = "icon-intact (EAST)";
-	icon_state = "intact";
-	dir = 4
-	},
-/obj/machinery/door/airlock/maintenance_hatch{
-	name = "Maintenance Hatch";
-	req_access_txt = "12"
-	},
-/obj/structure/barricade/wooden,
-/turf/open/floor/plasteel/warning/side,
-/area/maintenance/starboard{
-	name = "Fore Starboard Maintenance"
-	})
 "ahX" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/delivery,
-/area/maintenance/starboard{
-	name = "Fore Starboard Maintenance"
-	})
-"ahY" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	dir = 8;
-	on = 1
-	},
-/turf/open/floor/plasteel/red,
 /area/maintenance/starboard{
 	name = "Fore Starboard Maintenance"
 	})
@@ -4298,17 +4164,6 @@
 	dir = 8;
 	icon_state = "alarm0";
 	pixel_x = 24
-	},
-/turf/open/floor/plasteel/bot,
-/area/maintenance/starboard{
-	name = "Fore Starboard Maintenance"
-	})
-"aiK" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/airalarm{
-	dir = 1;
-	icon_state = "alarm0";
-	pixel_y = -22
 	},
 /turf/open/floor/plasteel/bot,
 /area/maintenance/starboard{
@@ -40308,28 +40163,6 @@
 	},
 /turf/open/floor/plasteel/circuit/gcircuit,
 /area/ai_monitored/turret_protected/ai)
-"buX" = (
-/obj/structure/cable/white{
-	tag = "icon-4-8";
-	icon_state = "4-8"
-	},
-/obj/structure/cable/white{
-	tag = "icon-2-4";
-	icon_state = "2-4"
-	},
-/obj/structure/cable/white{
-	tag = "icon-2-8";
-	icon_state = "2-8"
-	},
-/obj/machinery/ai_slipper{
-	icon_state = "motion0";
-	uses = 10
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/turf/open/floor/plasteel/circuit/gcircuit,
-/area/ai_monitored/turret_protected/ai)
 "buY" = (
 /obj/structure/cable/white{
 	tag = "icon-4-8";
@@ -43549,18 +43382,6 @@
 	dir = 8
 	},
 /area/ai_monitored/turret_protected/ai)
-"bAe" = (
-/obj/structure/cable/white{
-	tag = "icon-1-2";
-	icon_state = "1-2"
-	},
-/obj/machinery/ai_slipper{
-	icon_state = "motion0";
-	uses = 10
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/open/floor/plasteel/circuit/gcircuit,
-/area/ai_monitored/turret_protected/ai)
 "bAf" = (
 /obj/machinery/turretid{
 	icon_state = "control_stun";
@@ -43583,25 +43404,6 @@
 	dir = 6
 	},
 /area/ai_monitored/turret_protected/ai)
-"bAg" = (
-/obj/machinery/requests_console{
-	department = "AI";
-	departmentType = 5;
-	name = "AI RC";
-	pixel_x = 30;
-	pixel_y = 30
-	},
-/obj/machinery/ai_slipper{
-	icon_state = "motion0";
-	uses = 10
-	},
-/obj/machinery/flasher{
-	id = "AI";
-	pixel_x = 23;
-	pixel_y = -23
-	},
-/turf/open/floor/plasteel/vault,
-/area/ai_monitored/turret_protected/ai)
 "bAh" = (
 /obj/machinery/door/window{
 	base_state = "rightsecure";
@@ -43613,17 +43415,6 @@
 /turf/open/floor/plasteel/vault{
 	dir = 10
 	},
-/area/ai_monitored/turret_protected/ai)
-"bAi" = (
-/obj/structure/cable/white{
-	tag = "icon-1-2";
-	icon_state = "1-2"
-	},
-/obj/machinery/ai_slipper{
-	icon_state = "motion0";
-	uses = 10
-	},
-/turf/open/floor/plasteel/circuit/gcircuit,
 /area/ai_monitored/turret_protected/ai)
 "bAj" = (
 /obj/item/device/radio/intercom{
@@ -47653,17 +47444,6 @@
 /obj/structure/cable/white{
 	tag = "icon-4-8";
 	icon_state = "4-8"
-	},
-/turf/open/floor/plasteel/circuit/gcircuit,
-/area/ai_monitored/turret_protected/ai)
-"bHq" = (
-/obj/structure/cable/white{
-	tag = "icon-4-8";
-	icon_state = "4-8"
-	},
-/obj/machinery/ai_slipper{
-	icon_state = "motion0";
-	uses = 10
 	},
 /turf/open/floor/plasteel/circuit/gcircuit,
 /area/ai_monitored/turret_protected/ai)
@@ -52084,16 +51864,6 @@
 /obj/machinery/atmospherics/pipe/manifold4w/scrubbers/hidden,
 /turf/open/floor/plasteel/grimy,
 /area/ai_monitored/turret_protected/aisat_interior)
-"bPj" = (
-/obj/machinery/ai_slipper{
-	icon_state = "motion0";
-	uses = 10
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/turf/open/floor/plasteel/grimy,
-/area/ai_monitored/turret_protected/aisat_interior)
 "bPk" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -53409,36 +53179,6 @@
 	dir = 8
 	},
 /area/ai_monitored/turret_protected/aisat_interior)
-"bRk" = (
-/obj/structure/cable/white{
-	tag = "icon-4-8";
-	icon_state = "4-8"
-	},
-/obj/machinery/ai_slipper{
-	icon_state = "motion0";
-	uses = 10
-	},
-/obj/machinery/atmospherics/components/unary/vent_scrubber{
-	dir = 4;
-	on = 1;
-	scrub_Toxins = 0
-	},
-/turf/open/floor/plasteel/vault{
-	dir = 5
-	},
-/area/ai_monitored/turret_protected/aisat_interior)
-"bRl" = (
-/obj/structure/cable/white{
-	tag = "icon-4-8";
-	icon_state = "4-8"
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/turf/open/floor/plasteel/vault{
-	dir = 8
-	},
-/area/ai_monitored/turret_protected/aisat_interior)
 "bRm" = (
 /obj/structure/cable/white{
 	tag = "icon-4-8";
@@ -53551,23 +53291,6 @@
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 8
-	},
-/area/ai_monitored/turret_protected/aisat_interior)
-"bRv" = (
-/obj/structure/cable/white{
-	tag = "icon-4-8";
-	icon_state = "4-8"
-	},
-/obj/machinery/ai_slipper{
-	icon_state = "motion0";
-	uses = 10
-	},
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	dir = 2;
-	on = 1
-	},
-/turf/open/floor/plasteel/vault{
-	dir = 5
 	},
 /area/ai_monitored/turret_protected/aisat_interior)
 "bRw" = (
@@ -61661,17 +61384,6 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/open/floor/plasteel/circuit/gcircuit,
-/area/ai_monitored/turret_protected/ai_upload)
-"cfP" = (
-/obj/structure/cable/white{
-	tag = "icon-1-2";
-	icon_state = "1-2"
-	},
-/obj/machinery/ai_slipper{
-	icon_state = "motion0";
-	uses = 10
-	},
 /turf/open/floor/plasteel/circuit/gcircuit,
 /area/ai_monitored/turret_protected/ai_upload)
 "cfQ" = (
@@ -77841,10 +77553,6 @@
 /area/medical/medbay{
 	name = "Medbay Central"
 	})
-"cIx" = (
-/obj/machinery/disposal/bin,
-/turf/open/floor/plasteel/delivery,
-/area/hallway/primary/central)
 "cIy" = (
 /obj/machinery/vending/snack,
 /obj/machinery/light,
@@ -116948,41 +116656,6 @@
 /obj/structure/lattice/catwalk,
 /turf/open/space,
 /area/solar/auxstarboard)
-"ebc" = (
-/obj/structure/shuttle/engine/propulsion{
-	tag = "icon-propulsion (NORTH)";
-	icon_state = "propulsion";
-	dir = 1
-	},
-/turf/open/floor/plating/warnplate{
-	dir = 1
-	},
-/area/space)
-"ebd" = (
-/obj/structure/window/reinforced,
-/obj/structure/shuttle/engine/heater{
-	tag = "icon-heater (NORTH)";
-	icon_state = "heater";
-	dir = 1
-	},
-/turf/open/floor/plating/warnplate{
-	dir = 1
-	},
-/area/space)
-"ebe" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/space)
-"ebf" = (
-/obj/machinery/door/airlock/shuttle{
-	name = "Transport Shuttle Airlock";
-	req_access_txt = "0"
-	},
-/turf/open/floor/plasteel/warnwhite/side{
-	tag = "icon-white_warn_side (EAST)";
-	icon_state = "white_warn_side";
-	dir = 4
-	},
-/area/space)
 "ebg" = (
 /obj/structure/chair/office/dark{
 	dir = 4
@@ -116994,128 +116667,6 @@
 	},
 /turf/open/floor/plating/warnplate,
 /area/maintenance/auxsolarstarboard)
-"ebh" = (
-/turf/closed/wall/mineral/titanium/nodiagonal,
-/area/space)
-"ebi" = (
-/turf/open/floor/plasteel/delivery,
-/area/space)
-"ebj" = (
-/turf/closed/wall/mineral/titanium,
-/area/space)
-"ebk" = (
-/obj/machinery/recharger,
-/obj/structure/extinguisher_cabinet{
-	pixel_x = -26
-	},
-/obj/structure/table/reinforced,
-/turf/open/floor/plasteel/bot,
-/area/space)
-"ebl" = (
-/obj/machinery/recharger,
-/obj/machinery/vending/wallmed{
-	name = "Emergency NanoMed";
-	pixel_x = 26;
-	pixel_y = 0;
-	req_access_txt = "0";
-	use_power = 0
-	},
-/obj/structure/table/reinforced,
-/turf/open/floor/plasteel/bot,
-/area/space)
-"ebm" = (
-/obj/structure/window/shuttle,
-/obj/structure/grille,
-/turf/open/floor/plating,
-/area/space)
-"ebn" = (
-/turf/open/floor/plasteel/warnwhite/end{
-	tag = "icon-white_warn_end (NORTH)";
-	icon_state = "white_warn_end";
-	dir = 1
-	},
-/area/space)
-"ebo" = (
-/obj/machinery/door/airlock/shuttle{
-	name = "Transport Shuttle Airlock";
-	req_access_txt = "0"
-	},
-/turf/open/floor/plasteel/warnwhite/side,
-/area/space)
-"ebp" = (
-/obj/structure/sign/nanotrasen,
-/turf/closed/wall/mineral/titanium,
-/area/space)
-"ebq" = (
-/obj/structure/chair{
-	dir = 4
-	},
-/turf/open/floor/plasteel/bot,
-/area/space)
-"ebr" = (
-/turf/open/floor/plasteel/warnwhite/side,
-/area/space)
-"ebs" = (
-/obj/structure/chair{
-	dir = 8
-	},
-/turf/open/floor/plasteel/bot,
-/area/space)
-"ebt" = (
-/obj/structure/chair{
-	dir = 4
-	},
-/obj/machinery/ai_status_display{
-	pixel_x = -32
-	},
-/turf/open/floor/plasteel/bot,
-/area/space)
-"ebu" = (
-/obj/structure/chair{
-	dir = 8
-	},
-/obj/machinery/status_display{
-	pixel_x = 32
-	},
-/turf/open/floor/plasteel/bot,
-/area/space)
-"ebv" = (
-/obj/structure/chair{
-	dir = 4
-	},
-/obj/machinery/status_display{
-	pixel_x = -32
-	},
-/turf/open/floor/plasteel/bot,
-/area/space)
-"ebw" = (
-/obj/structure/chair{
-	dir = 8
-	},
-/obj/machinery/ai_status_display{
-	pixel_x = 32
-	},
-/turf/open/floor/plasteel/bot,
-/area/space)
-"ebx" = (
-/turf/open/floor/plasteel/warnwhite/end,
-/area/space)
-"eby" = (
-/obj/structure/closet/crate,
-/turf/open/floor/plasteel/bot,
-/area/space)
-"ebz" = (
-/obj/structure/chair/office/light,
-/turf/open/floor/plasteel/warnwhite/end{
-	tag = "icon-white_warn_end (NORTH)";
-	icon_state = "white_warn_end";
-	dir = 1
-	},
-/area/space)
-"ebA" = (
-/obj/machinery/computer/shuttle/ferry/request,
-/turf/open/floor/plasteel/warnwhite/end,
-/area/space)
 "ebB" = (
 /obj/structure/cable{
 	d1 = 2;
@@ -117183,16 +116734,6 @@
 	name = "\improper Toxins Lab"
 	})
 "ebG" = (
-/turf/open/floor/engine,
-/area/engine/gravity_generator{
-	name = "Atmospherics Engine"
-	})
-"ebH" = (
-/turf/open/floor/engine,
-/area/engine/gravity_generator{
-	name = "Atmospherics Engine"
-	})
-"ebI" = (
 /turf/open/floor/engine,
 /area/engine/gravity_generator{
 	name = "Atmospherics Engine"
@@ -117333,6 +116874,62 @@
 	name = "\improper MiniSat Exterior"
 	})
 "ebW" = (
+/obj/machinery/light/small{
+	dir = 1
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump{
+	dir = 2;
+	on = 1
+	},
+/turf/open/floor/plasteel/bot,
+/area/maintenance/starboard{
+	name = "Fore Starboard Maintenance"
+	})
+"ebX" = (
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+	tag = "icon-manifold (WEST)";
+	icon_state = "manifold";
+	dir = 8
+	},
+/turf/open/floor/plasteel/neutral/side{
+	dir = 8;
+	heat_capacity = 1e+006
+	},
+/area/maintenance/starboard{
+	name = "Fore Starboard Maintenance"
+	})
+"ebY" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable/white{
+	tag = "icon-1-2";
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	tag = "icon-intact (EAST)";
+	icon_state = "intact";
+	dir = 4
+	},
+/turf/open/floor/plasteel/delivery,
+/area/maintenance/starboard{
+	name = "Fore Starboard Maintenance"
+	})
+"ebZ" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/door/airlock/maintenance_hatch{
+	name = "Maintenance Hatch";
+	req_access_txt = "12"
+	},
+/obj/structure/barricade/wooden,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	tag = "icon-intact (EAST)";
+	icon_state = "intact";
+	dir = 4
+	},
+/turf/open/floor/plasteel/warning/side,
+/area/maintenance/starboard{
+	name = "Fore Starboard Maintenance"
+	})
+"eca" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
@@ -117340,7 +116937,8 @@
 /area/maintenance/starboard{
 	name = "Fore Starboard Maintenance"
 	})
-"ebX" = (
+"ecb" = (
+/obj/effect/decal/cleanable/blood/old,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	tag = "icon-intact (EAST)";
 	icon_state = "intact";
@@ -117350,7 +116948,74 @@
 /area/maintenance/starboard{
 	name = "Fore Starboard Maintenance"
 	})
-"ebY" = (
+"ecc" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	tag = "icon-intact (EAST)";
+	icon_state = "intact";
+	dir = 4
+	},
+/turf/open/floor/plasteel/white,
+/area/maintenance/starboard{
+	name = "Fore Starboard Maintenance"
+	})
+"ecd" = (
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden,
+/turf/open/floor/plasteel/red,
+/area/maintenance/starboard{
+	name = "Fore Starboard Maintenance"
+	})
+"ece" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	tag = "icon-intact (EAST)";
+	icon_state = "intact";
+	dir = 4
+	},
+/turf/open/floor/plasteel/white,
+/area/maintenance/starboard{
+	name = "Fore Starboard Maintenance"
+	})
+"ecf" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	tag = "icon-intact (EAST)";
+	icon_state = "intact";
+	dir = 4
+	},
+/turf/open/floor/plasteel/red,
+/area/maintenance/starboard{
+	name = "Fore Starboard Maintenance"
+	})
+"ecg" = (
+/obj/machinery/newscaster{
+	pixel_x = 32;
+	pixel_y = 32
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	tag = "icon-intact (EAST)";
+	icon_state = "intact";
+	dir = 4
+	},
+/turf/open/floor/plasteel/delivery,
+/area/maintenance/starboard{
+	name = "Fore Starboard Maintenance"
+	})
+"ech" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	tag = "icon-intact (EAST)";
+	icon_state = "intact";
+	dir = 4
+	},
+/obj/machinery/door/airlock/maintenance_hatch{
+	name = "Maintenance Hatch";
+	req_access_txt = "12"
+	},
+/obj/structure/barricade/wooden,
+/turf/open/floor/plasteel/warning/side,
+/area/maintenance/starboard{
+	name = "Fore Starboard Maintenance"
+	})
+"eci" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	tag = "icon-intact (EAST)";
@@ -117361,6 +117026,170 @@
 /area/maintenance/starboard{
 	name = "Fore Starboard Maintenance"
 	})
+"ecj" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/components/unary/vent_pump{
+	dir = 8;
+	on = 1
+	},
+/turf/open/floor/plasteel/red,
+/area/maintenance/starboard{
+	name = "Fore Starboard Maintenance"
+	})
+"eck" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/airalarm{
+	dir = 1;
+	icon_state = "alarm0";
+	pixel_y = -22
+	},
+/turf/open/floor/plasteel/bot,
+/area/maintenance/starboard{
+	name = "Fore Starboard Maintenance"
+	})
+"ecl" = (
+/obj/structure/cable/white{
+	tag = "icon-4-8";
+	icon_state = "4-8"
+	},
+/obj/structure/cable/white{
+	tag = "icon-2-4";
+	icon_state = "2-4"
+	},
+/obj/structure/cable/white{
+	tag = "icon-2-8";
+	icon_state = "2-8"
+	},
+/obj/machinery/ai_slipper{
+	uses = 10
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel/circuit/gcircuit,
+/area/ai_monitored/turret_protected/ai)
+"ecm" = (
+/obj/structure/cable/white{
+	tag = "icon-1-2";
+	icon_state = "1-2"
+	},
+/obj/machinery/ai_slipper{
+	uses = 10
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/turf/open/floor/plasteel/circuit/gcircuit,
+/area/ai_monitored/turret_protected/ai)
+"ecn" = (
+/obj/machinery/requests_console{
+	department = "AI";
+	departmentType = 5;
+	name = "AI RC";
+	pixel_x = 30;
+	pixel_y = 30
+	},
+/obj/machinery/ai_slipper{
+	uses = 10
+	},
+/obj/machinery/flasher{
+	id = "AI";
+	pixel_x = 23;
+	pixel_y = -23
+	},
+/turf/open/floor/plasteel/vault,
+/area/ai_monitored/turret_protected/ai)
+"eco" = (
+/obj/structure/cable/white{
+	tag = "icon-1-2";
+	icon_state = "1-2"
+	},
+/obj/machinery/ai_slipper{
+	uses = 10
+	},
+/turf/open/floor/plasteel/circuit/gcircuit,
+/area/ai_monitored/turret_protected/ai)
+"ecp" = (
+/obj/structure/cable/white{
+	tag = "icon-4-8";
+	icon_state = "4-8"
+	},
+/obj/machinery/ai_slipper{
+	uses = 10
+	},
+/turf/open/floor/plasteel/circuit/gcircuit,
+/area/ai_monitored/turret_protected/ai)
+"ecq" = (
+/obj/machinery/ai_slipper{
+	uses = 10
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel/grimy,
+/area/ai_monitored/turret_protected/aisat_interior)
+"ecr" = (
+/obj/structure/cable/white{
+	tag = "icon-4-8";
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber{
+	dir = 4;
+	on = 1;
+	scrub_Toxins = 0
+	},
+/turf/open/floor/plasteel/vault{
+	dir = 5
+	},
+/area/ai_monitored/turret_protected/aisat_interior)
+"ecs" = (
+/obj/structure/cable/white{
+	tag = "icon-4-8";
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/machinery/ai_slipper{
+	uses = 10
+	},
+/turf/open/floor/plasteel/vault{
+	dir = 8
+	},
+/area/ai_monitored/turret_protected/aisat_interior)
+"ect" = (
+/obj/structure/cable/white{
+	tag = "icon-4-8";
+	icon_state = "4-8"
+	},
+/obj/machinery/ai_slipper{
+	uses = 10
+	},
+/turf/open/floor/plasteel/vault{
+	dir = 8
+	},
+/area/ai_monitored/turret_protected/aisat_interior)
+"ecu" = (
+/obj/structure/cable/white{
+	tag = "icon-4-8";
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump{
+	dir = 2;
+	on = 1
+	},
+/turf/open/floor/plasteel/vault{
+	dir = 5
+	},
+/area/ai_monitored/turret_protected/aisat_interior)
+"ecv" = (
+/obj/structure/cable/white{
+	tag = "icon-1-2";
+	icon_state = "1-2"
+	},
+/obj/machinery/ai_slipper{
+	uses = 10
+	},
+/turf/open/floor/plasteel/circuit/gcircuit,
+/area/ai_monitored/turret_protected/ai_upload)
 
 (1,1,1) = {"
 aaa
@@ -124170,7 +123999,7 @@ bpK
 bLp
 bNn
 bPe
-bRk
+ecr
 bTC
 bVF
 bLp
@@ -124427,7 +124256,7 @@ bpK
 bLp
 bNo
 bPf
-bRl
+ecs
 bTD
 bVG
 bLp
@@ -124932,7 +124761,7 @@ btx
 buU
 bwA
 byp
-bAe
+ecm
 byp
 byp
 bFw
@@ -125700,18 +125529,18 @@ bpK
 bpK
 bsq
 btA
-buX
+ecl
 bwC
 byr
-bAg
+ecn
 bBN
 bpK
 bFy
-bHq
+ecp
 bAd
 bLs
 bNt
-bPj
+ecq
 bRq
 bTI
 bVJ
@@ -125720,7 +125549,7 @@ bZa
 caZ
 ccM
 cet
-cfP
+ecv
 chl
 ciT
 cep
@@ -126474,7 +126303,7 @@ btx
 bva
 bwE
 bys
-bAi
+eco
 bys
 bys
 bFB
@@ -126997,7 +126826,7 @@ bpK
 bLp
 bNw
 bPo
-bRt
+ect
 bTM
 bNw
 bLp
@@ -127254,7 +127083,7 @@ bpK
 bLp
 bNx
 bPp
-bRv
+ecu
 bTB
 bVN
 bLp
@@ -159832,7 +159661,7 @@ afD
 afT
 agA
 ahf
-ahO
+ebX
 aiC
 ajF
 aeX
@@ -160089,7 +159918,7 @@ afE
 afU
 agB
 ahg
-ahP
+ebY
 aiD
 ajG
 aeX
@@ -160346,7 +160175,7 @@ afF
 afc
 aeX
 afc
-ahQ
+ebZ
 afc
 aeX
 aeX
@@ -160603,7 +160432,7 @@ afG
 afV
 aeX
 afn
-ebW
+eca
 aiE
 ajH
 akE
@@ -160860,7 +160689,7 @@ afH
 afW
 agC
 afn
-ahR
+ecb
 aiF
 aeX
 akF
@@ -161117,7 +160946,7 @@ afG
 afX
 agD
 ahh
-ahS
+ecc
 aiG
 aeX
 akG
@@ -161373,8 +161202,8 @@ afs
 afI
 afY
 agE
-ahi
-ahT
+ebW
+ecd
 aiH
 aeX
 akH
@@ -161631,7 +161460,7 @@ afJ
 afZ
 agF
 ahh
-ahU
+ece
 ahX
 aeX
 akI
@@ -161888,7 +161717,7 @@ aft
 afZ
 agD
 ahj
-ebX
+ecf
 aiI
 ajH
 akJ
@@ -162145,7 +161974,7 @@ afs
 aga
 aeX
 ahk
-ahV
+ecg
 aiJ
 aeX
 aeX
@@ -162402,7 +162231,7 @@ afu
 aeX
 aeX
 aeX
-ahW
+ech
 aeX
 aeX
 aaf
@@ -162659,8 +162488,8 @@ aaH
 aaf
 aeX
 ahl
-ebY
-aiK
+eci
+eck
 aeX
 aaf
 alI
@@ -162916,7 +162745,7 @@ aaf
 aaf
 aeX
 ahm
-ahY
+ecj
 aiL
 aeX
 aaf
