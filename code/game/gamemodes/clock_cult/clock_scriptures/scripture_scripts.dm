@@ -297,13 +297,20 @@
 	var/turf/T = get_turf(invoker)
 	if(!ray.run_scripture() && slab && invoker)
 		if(can_recite() && T == get_turf(invoker))
-			if(!ratvar_awakens && !iscyborg(invoker) && !isclockmob(invoker) && !isdrone(invoker))
+			if(!ratvar_awakens)
 				var/obj/structure/destructible/clockwork/powered/volt_checker/VC = new/obj/structure/destructible/clockwork/powered/volt_checker(get_turf(invoker))
-				var/multiplier = 0.4
+				var/multiplier = 0.5
 				var/usable_power = min(Floor(VC.total_accessable_power() * 0.2, MIN_CLOCKCULT_POWER), 1000)
 				if(VC.try_use_power(usable_power))
-					multiplier += (usable_power * 0.0004) //at maximum power, should be 0.8 multiplier
+					multiplier += (usable_power * 0.0005) //at maximum power, should be 1 multiplier
 				qdel(VC)
+				if(iscyborg(invoker))
+					var/mob/living/silicon/robot/C = invoker
+					if(C.cell)
+						var/prev_power = usable_power //we don't want to increase the multiplier past 1
+						usable_power = min(Floor(C.cell.charge * 0.2, MIN_CLOCKCULT_POWER), 1000) - prev_power
+						if(usable_power > 0 && C.cell.use(usable_power))
+							multiplier += (usable_power * 0.0005)
 				var/obj/effect/overlay/temp/ratvar/volt_hit/VH = new /obj/effect/overlay/temp/ratvar/volt_hit(get_turf(invoker), null, multiplier)
 				invoker.visible_message("<span class='warning'>[invoker] is struck by [invoker.p_their()] own [VH.name]!</span>", "<span class='userdanger'>You're struck by your own [VH.name]!</span>")
 				invoker.adjustFireLoss(VH.damage) //you have to fail all five blasts to die to this
