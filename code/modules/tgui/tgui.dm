@@ -7,6 +7,9 @@
  /**
   * tgui datum (represents a UI).
  **/
+
+#define TOPIC_DELAY 5
+
 /datum/tgui
 	var/mob/user // The mob who opened/is using the UI.
 	var/datum/src_object // The object which owns the UI.
@@ -35,8 +38,7 @@
 	var/list/datum/tgui/children = list() // Children of this UI.
 	var/titlebar = TRUE
 	var/custom_browser_id = FALSE
-	var/delay = 5
-	var/current_delay
+	var/current_topic_delay
 
  /**
   * public
@@ -270,10 +272,6 @@
 	if(user != usr)
 		return // Something is not right here.
 
-	if(current_delay > world.time)
-		return
-	current_delay = world.time + delay
-
 	var/action = href_list["action"]
 	var/params = href_list; params -= "action"
 
@@ -292,6 +290,9 @@
 		if("tgui:nofrills")
 			user.client.prefs.tgui_fancy = FALSE
 		else
+			if(current_topic_delay > world.time)
+				return
+			current_topic_delay = world.time + TOPIC_DELAY
 			update_status(push = 0) // Update the window state.
 			if(src_object.ui_act(action, params, src, state)) // Call ui_act() on the src_object.
 				SStgui.update_uis(src_object) // Update if the object requested it.
@@ -381,3 +382,5 @@
 
 /datum/tgui/proc/set_titlebar(value)
 	titlebar = value
+
+#undef TOPIC_DELAY
