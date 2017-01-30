@@ -248,9 +248,6 @@ var/datum/subsystem/air/SSair
 			T.excited_group.garbage_collect()
 
 /datum/subsystem/air/proc/add_to_active(turf/open/T, blockchanges = 1)
-	if(!initialized)
-		return
-
 	if(istype(T) && T.air)
 		T.excited = 1
 		active_turfs |= T
@@ -258,7 +255,7 @@ var/datum/subsystem/air/SSair
 			currentrun |= T
 		if(blockchanges && T.excited_group)
 			T.excited_group.garbage_collect()
-	else
+	else if(initialized)
 		for(var/turf/S in T.atmos_adjacent_turfs)
 			add_to_active(S)
 
