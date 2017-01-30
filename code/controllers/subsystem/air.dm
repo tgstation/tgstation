@@ -247,12 +247,6 @@ var/datum/subsystem/air/SSair
 		if(T.excited_group)
 			T.excited_group.garbage_collect()
 
-/datum/subsystem/air/proc/activate_queued_turfs()
-	if(LAZYLEN(to_activate))
-		for(var/T in to_activate)
-			add_to_active(T, to_activate[T])
-	to_activate = null
-
 /datum/subsystem/air/proc/add_to_active(turf/open/T, blockchanges = 1)
 	if(!initialized)
 		return
