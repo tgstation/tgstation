@@ -39,20 +39,6 @@
 			completed_asset_jobs += job
 			return
 
-	var/abort = FALSE
-	if (!holder && config.secondtopiclimit)
-		var/second = round(world.time, 10)
-		if (!topiclimiter)
-			topiclimiter = new(LIMITER_SIZE)
-		if (second != topiclimiter[CURRENT_SECOND])
-			topiclimiter[CURRENT_SECOND] = second
-			topiclimiter[SECOND_COUNT] = 0
-
-		if (topiclimiter[SECOND_COUNT] > config.secondtopiclimit)
-			src << "<span class='danger'>Your previous action was ignored because you've done too many in a second</span>"
-			abort = TRUE //this is so failed topics still increase the minute count.
-		topiclimiter[SECOND_COUNT] += 1
-
 	if (!holder && config.minutetopiclimit)
 		var/minute = round(world.time, 600)
 		if (!topiclimiter)
@@ -62,17 +48,26 @@
 			topiclimiter[MINUTE_COUNT] = 0
 		topiclimiter[MINUTE_COUNT] += 1
 		if (topiclimiter[MINUTE_COUNT] > config.minutetopiclimit)
-			if (!abort)
-				var/msg = "Your previous action was ignored because you've done too many in a minute."
-				if (minute != topiclimiter[ADMINSWARNED_AT]) //only one admin message per-minute. (if they spam the admins can just boot/ban them)
-					topiclimiter[ADMINSWARNED_AT] = minute
-					msg += " Administrators have been informed."
-					log_game("[key_name(src)] Has hit the per-minute topic limit of [config.minutetopiclimit] topic calls in a given game minute")
-					message_admins("[key_name_admin(src)] [ADMIN_KICK(usr)] Has hit the per-minute topic limit of [config.minutetopiclimit] topic calls in a given game minute")
-				src << "<span class='danger'>[msg]</span>"
-				abort = TRUE
-	if (abort)
-		return
+			var/msg = "Your previous action was ignored because you've done too many in a minute."
+			if (minute != topiclimiter[ADMINSWARNED_AT]) //only one admin message per-minute. (if they spam the admins can just boot/ban them)
+				topiclimiter[ADMINSWARNED_AT] = minute
+				msg += " Administrators have been informed."
+				log_game("[key_name(src)] Has hit the per-minute topic limit of [config.minutetopiclimit] topic calls in a given game minute")
+				message_admins("[key_name_admin(src)] [ADMIN_KICK(usr)] Has hit the per-minute topic limit of [config.minutetopiclimit] topic calls in a given game minute")
+			src << "<span class='danger'>[msg]</span>"
+			return
+
+	if (!holder && config.secondtopiclimit)
+		var/second = round(world.time, 10)
+		if (!topiclimiter)
+			topiclimiter = new(LIMITER_SIZE)
+		if (second != topiclimiter[CURRENT_SECOND])
+			topiclimiter[CURRENT_SECOND] = second
+			topiclimiter[SECOND_COUNT] = 0
+		topiclimiter[SECOND_COUNT] += 1
+		if (topiclimiter[SECOND_COUNT] > config.secondtopiclimit)
+			src << "<span class='danger'>Your previous action was ignored because you've done too many in a second</span>"
+			return
 
 	//Logs all hrefs
 	if(config && config.log_hrefs && href_logfile)
