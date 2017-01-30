@@ -1023,6 +1023,46 @@
 	. = ..(M, force, check_loc)
 
 /mob/living/silicon/robot/unbuckle_mob(mob/user)
-	unequip_buckle_inhands(M)
+	if(iscarbon(user))
+		unequip_buckle_inhands(user)
 	. = ..(user)
 	riding_datum.restore_position(user)
+
+/mob/living/silicon/robot/proc/unequip_buckle_inhands(mob/living/carbon/user)
+	for(var/obj/item/weapon/twohanded/offhand/riding/cyborg/O in user.contents)
+		qdel(O)
+	return TRUE
+
+/mob/living/silicon/robot/proc/equip_buckle_inhands(mob/living/carbon/user)
+	var/obj/item/weapon/twohanded/offhand/riding/cyborg/inhand = new /obj/item/weapon/twohanded/offhand/riding/cyborg(user, src)
+	return user.put_in_hands(inhand, TRUE)
+
+/obj/item/weapon/twohanded/offhand/riding/cyborg
+	var/mob/living/carbon/rider
+	var/mob/living/silicon/robot/ridden
+
+/obj/item/weapon/twohanded/offhand/riding/cyborg/New(mob/living/carbon/A, mob/living/silicon/robot/B)
+	rider = A
+	ridden = B
+	. = ..()
+
+/obj/item/weapon/twohanded/offhand/riding/cyborg/unwield()
+	qdel(src)
+
+/obj/item/weapon/twohanded/offhand/riding/cyborg/wield()
+	qdel(src)
+
+/obj/item/weapon/twohanded/offhand/riding/cyborg/dropped()
+	qdel(src)
+
+/obj/item/weapon/twohanded/offhand/riding/cyborg/equipped()
+	if(loc != rider)
+		qdel(src)
+	. = ..()
+
+/obj/item/weapon/twohanded/offhand/riding/cyborg/Destroy()
+	if(rider in ridden.buckled_mobs)
+		ridden.unbuckle_mob(rider)
+
+/obj/item/weapon/twohanded/offhand/riding/cyborg/attack_self()
+	qdel(src)
