@@ -32,11 +32,11 @@
 	zone_select.icon = ui_style
 	zone_select.update_icon(mymob)
 
-	using = new /obj/screen/inventory/craft
+	using = new /obj/screen/craft
 	using.icon = ui_style
 	static_inventory += using
 
-	using = new /obj/screen/inventory/area_creator
+	using = new /obj/screen/area_creator
 	using.icon = ui_style
 	static_inventory += using
 
