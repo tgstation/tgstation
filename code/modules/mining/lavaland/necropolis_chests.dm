@@ -829,7 +829,7 @@
 		blast_range -= round(health_percent * 10) //one additional range for each missing 10% of health
 
 /obj/item/weapon/hierophant_club/update_icon()
-	icon_state = "hierophant_club[timer <= world.time ? "_ready":""][(beacon && || !qdeleted(beacon)) ? "":"_beacon"]"
+	icon_state = "hierophant_club[timer <= world.time ? "_ready":""][(beacon && !qdeleted(beacon)) ? "":"_beacon"]"
 	item_state = icon_state
 	if(ismob(loc))
 		var/mob/M = loc
