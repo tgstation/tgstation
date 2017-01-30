@@ -7,7 +7,6 @@
 	name = "Linked Vanguard"
 	invocations = list("Shield us...", "...from darkness!")
 	channel_time = 30
-	required_components = list(VANGUARD_COGWHEEL = 1)
 	primary_component = VANGUARD_COGWHEEL
 	quickbind_desc = "Allows you to grant a Servant and yourself stun immunity, as the Vanguard scripture.<br><b>Click your slab to disable.</b>"
 	slab_icon = "vanguard"
@@ -28,7 +27,6 @@
 	name = "Judicial Marker"
 	invocations = list("May heathens...", "...kneel under our force!")
 	channel_time = 30
-	required_components = list(BELLIGERENT_EYE = 1)
 	primary_component = BELLIGERENT_EYE
 	quickbind_desc = "Allows you to place a Judicial Marker to stun and damage a target location.<br><b>Click your slab to disable.</b>"
 	slab_icon = "judicial"
@@ -40,5 +38,5 @@
 
 //Volt Void, but with a different quickbind desc
 /datum/clockwork_scripture/channeled/volt_void/cyborg
-	quickbind_desc = "Allows you to fire energy rays at target locations using your own power.<br><b>Maximum 5 chants.</b>"
+	quickbind_desc = "Allows you to fire energy rays at target locations using your own power. Failing to fire causes backlash.<br><b>Maximum 4 chants.</b>"
 	tier = SCRIPTURE_PERIPHERAL

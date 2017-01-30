@@ -168,7 +168,6 @@
 		var/mob/living/carbon/C = src
 		for(var/obj/item/weapon/bloodcrawl/BC in C)
 			BC.flags = null
-			C.unEquip(BC)
 			qdel(BC)
 	qdel(src.holder)
 	src.holder = null

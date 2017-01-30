@@ -691,7 +691,7 @@
 				return
 		if(0)
 			if(istype(W, /obj/item/weapon/electronics/airalarm))
-				if(user.unEquip(W))
+				if(user.temporarilyRemoveItemFromInventory(W))
 					user << "<span class='notice'>You insert the circuit.</span>"
 					buildstage = 1
 					update_icon()

@@ -21253,17 +21253,11 @@
 	})
 "aJT" = (
 /obj/effect/decal/cleanable/cobweb,
-/obj/machinery/field/generator{
-	anchored = 0;
-	state = 2
-	},
+/obj/machinery/field/generator,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "aJU" = (
-/obj/machinery/field/generator{
-	anchored = 0;
-	state = 2
-	},
+/obj/machinery/field/generator,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "aJV" = (
