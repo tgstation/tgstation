@@ -1,0 +1,5 @@
+author: "Fox McCloud"
+delete-after: True
+changes: 
+  - tweak: "Plant analyzers will now display plant traits"
+  - tweak: "Plant analyzers will now display all of a grown's genetic reagents"
