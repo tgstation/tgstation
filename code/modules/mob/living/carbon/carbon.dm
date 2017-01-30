@@ -91,13 +91,10 @@
 					return 1
 	return ..()
 
-/mob/living/carbon/throw_impact(atom/hit_atom,datum/throwingdatum)
+/mob/living/carbon/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	. = ..()
-	var/datum/thrownthing/TD
-	if(istype(throwingdatum, datum/thrownthing))
-		TD = throwningdatum
 	if(hit_atom.density && isturf(hit_atom))
-		if(istype(TD.thrower, /mob/living/silicon/robot))
+		if(istype(throwingdatum.thrower, /mob/living/silicon/robot))
 			return
 		Weaken(1)
 		take_bodypart_damage(10)
@@ -107,7 +104,7 @@
 			return
 		victim.Weaken(1)
 		Weaken(1)
-		if(!istype(TD.thrower, /mob/living/silicon/robot))
+		if(!istype(throwingdatum.thrower, /mob/living/silicon/robot))
 			victim.take_bodypart_damage(10)
 			take_bodypart_damage(10)
 		visible_message("<span class='danger'>[src] crashes into [victim], knocking them both over!</span>", "<span class='userdanger'>You violently crash into [victim]!</span>")
