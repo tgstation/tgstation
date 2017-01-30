@@ -16,7 +16,6 @@
 			new /obj/item/weapon/storage/fancy/cigarettes/cigpack_syndicate (src) // 2 tc this shit heals
 			new /obj/item/device/flashlight/emp(src) // 2 tc
 			new /obj/item/device/chameleon(src) // 7 tc
-			return
 
 		if("stealth") // 31 tc
 			new /obj/item/weapon/gun/energy/kinetic_accelerator/crossbow(src)
@@ -25,7 +24,6 @@
 			new /obj/item/device/chameleon(src)
 			new /obj/item/weapon/soap/syndie(src)
 			new /obj/item/clothing/glasses/thermal/syndi(src)
-			return
 
 		if("bond") // 29 tc
 			new /obj/item/weapon/gun/ballistic/automatic/pistol(src)
@@ -36,8 +34,6 @@
 			new /obj/item/weapon/card/id/syndicate(src)
 			new /obj/item/weapon/reagent_containers/syringe/stimulants(src)
 
-			return
-
 		if("screwed") // 29 tc
 			new /obj/item/device/sbeacondrop/bomb(src)
 			new /obj/item/weapon/grenade/syndieminibomb(src)
@@ -45,7 +41,6 @@
 			new /obj/item/clothing/suit/space/syndicate/black/red(src)
 			new /obj/item/clothing/head/helmet/space/syndicate/black/red(src)
 			new /obj/item/device/encryptionkey/syndicate(src)
-			return
 
 		if("guns") // 28 tc now
 			new /obj/item/weapon/gun/ballistic/revolver(src)
@@ -56,7 +51,6 @@
 			new /obj/item/clothing/gloves/color/latex/nitrile(src)
 			new /obj/item/clothing/mask/gas/clown_hat(src)
 			new /obj/item/clothing/under/suit_jacket/really_black(src)
-			return
 
 		if("murder") // 28 tc now
 			new /obj/item/weapon/melee/energy/sword/saber(src)
@@ -65,16 +59,14 @@
 			new /obj/item/clothing/shoes/chameleon(src)
 			new /obj/item/device/encryptionkey/syndicate(src)
 			new /obj/item/weapon/grenade/syndieminibomb(src)
-			return
 
 		if("implant") // 55+ tc holy shit what the fuck this is a lottery disguised as fun boxes isn't it?
 			new /obj/item/weapon/implanter/freedom(src)
-			new /obj/item/weapon/implanter/uplink(src)
+			new /obj/item/weapon/implanter/uplink/precharged(src)
 			new /obj/item/weapon/implanter/emp(src)
 			new /obj/item/weapon/implanter/adrenalin(src)
 			new /obj/item/weapon/implanter/explosive(src)
 			new /obj/item/weapon/implanter/storage(src)
-			return
 
 		if("hacker") // 26 tc
 			new /obj/item/weapon/aiModule/syndicate(src)
@@ -82,14 +74,12 @@
 			new /obj/item/device/encryptionkey/binary(src)
 			new /obj/item/weapon/aiModule/toyAI(src)
 			new /obj/item/device/multitool/ai_detect(src)
-			return
 
 		if("lordsingulo") // 24 tc
 			new /obj/item/device/sbeacondrop(src)
 			new /obj/item/clothing/suit/space/syndicate/black/red(src)
 			new /obj/item/clothing/head/helmet/space/syndicate/black/red(src)
 			new /obj/item/weapon/card/emag(src)
-			return
 
 		if("sabotage") // 26 tc now
 			new /obj/item/weapon/grenade/plastic/c4 (src)
@@ -110,7 +100,6 @@
 			new /obj/item/weapon/card/id/syndicate(src)
 			new /obj/item/clothing/shoes/chameleon(src) //because slipping while being a dark lord sucks
 			new /obj/item/weapon/spellbook/oneuse/summonitem(src)
-			return
 
 		if("sniper") //This shit is unique so can't really balance it around tc, also no silencer because getting killed without ANY indicator on what killed you sucks
 			new /obj/item/weapon/gun/ballistic/automatic/sniper_rifle(src) // 12 tc
@@ -119,7 +108,6 @@
 			new /obj/item/clothing/gloves/color/latex/nitrile(src)
 			new /obj/item/clothing/mask/gas/clown_hat(src)
 			new /obj/item/clothing/under/suit_jacket/really_black(src)
-			return
 
 		if("metaops") // 30 tc
 			new /obj/item/clothing/suit/space/hardsuit/syndi(src) // 8 tc
@@ -130,7 +118,6 @@
 			new /obj/item/weapon/grenade/plastic/c4 (src) // 1 tc
 			new /obj/item/weapon/grenade/plastic/c4 (src) // 1 tc
 			new /obj/item/weapon/card/emag(src) // 6 tc
-			return
 
 		if("ninja") // 33 tc worth
 			new /obj/item/weapon/katana(src) // Unique , hard to tell how much tc this is worth. 8 tc?
@@ -158,15 +145,6 @@
 	var/obj/item/weapon/implanter/O = new(src)
 	O.imp = new /obj/item/weapon/implant/freedom(O)
 	O.update_icon()
-	return
-
-/*/obj/item/weapon/storage/box/syndie_kit/imp_compress
-	name = "Compressed Matter Implant (with injector)"
-/obj/item/weapon/storage/box/syndie_kit/imp_compress/New()
-	new /obj/item/weapon/implanter/compressed(src)
-	..()
-	return
-*/
 
 /obj/item/weapon/storage/box/syndie_kit/imp_microbomb
 	name = "Microbomb Implant (with injector)"
@@ -176,7 +154,6 @@
 	O.imp = new /obj/item/weapon/implant/explosive(O)
 	O.update_icon()
 	..()
-	return
 
 /obj/item/weapon/storage/box/syndie_kit/imp_macrobomb
 	name = "Macrobomb Implant (with injector)"
@@ -186,7 +163,6 @@
 	O.imp = new /obj/item/weapon/implant/explosive/macro(O)
 	O.update_icon()
 	..()
-	return
 
 /obj/item/weapon/storage/box/syndie_kit/imp_uplink
 	name = "boxed uplink implant (with injector)"
@@ -196,7 +172,6 @@
 	var/obj/item/weapon/implanter/O = new(src)
 	O.imp = new /obj/item/weapon/implant/uplink(O)
 	O.update_icon()
-	return
 
 /obj/item/weapon/storage/box/syndie_kit/bioterror
 	name = "bioterror syringe box"
@@ -205,7 +180,6 @@
 	..()
 	for(var/i in 1 to 7)
 		new /obj/item/weapon/reagent_containers/syringe/bioterror(src)
-	return
 
 /obj/item/weapon/storage/box/syndie_kit/imp_adrenal
 	name = "boxed adrenal implant (with injector)"
@@ -215,7 +189,6 @@
 	var/obj/item/weapon/implanter/O = new(src)
 	O.imp = new /obj/item/weapon/implant/adrenalin(O)
 	O.update_icon()
-	return
 
 /obj/item/weapon/storage/box/syndie_kit/imp_storage
 	name = "boxed storage implant (with injector)"
@@ -223,7 +196,6 @@
 /obj/item/weapon/storage/box/syndie_kit/imp_storage/New()
 	..()
 	new /obj/item/weapon/implanter/storage(src)
-	return
 
 /obj/item/weapon/storage/box/syndie_kit/space
 	name = "boxed space suit and helmet"
@@ -234,7 +206,6 @@
 	..()
 	new /obj/item/clothing/suit/space/syndicate/black/red(src) // Black and red is so in right now
 	new /obj/item/clothing/head/helmet/space/syndicate/black/red(src)
-	return
 
 /obj/item/weapon/storage/box/syndie_kit/emp
 	name = "boxed EMP kit"
@@ -267,7 +238,6 @@
 	new /obj/item/weapon/reagent_containers/glass/bottle/curare(src)
 	new /obj/item/weapon/reagent_containers/glass/bottle/amanitin(src)
 	new /obj/item/weapon/reagent_containers/syringe(src)
-	return
 
 /obj/item/weapon/storage/box/syndie_kit/nuke
 	name = "box"
