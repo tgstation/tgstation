@@ -230,6 +230,27 @@
 					buckled_mob.pixel_x = 10
 					buckled_mob.pixel_y = 5
 
+//SPEEDUWAGON
+
+/datum/riding/space/speedbike/speedwagon/handle_vehicle_offsets()
+	if(ridden.has_buckled_mobs())
+		for(var/m in ridden.buckled_mobs)
+			var/mob/living/buckled_mob = m
+			buckled_mob.setDir(ridden.dir)
+			switch(ridden.dir)
+				if(NORTH)
+					buckled_mob.pixel_x = -5
+					buckled_mob.pixel_y = -5
+				if(SOUTH)
+					buckled_mob.pixel_x = 5
+					buckled_mob.pixel_y = 3
+				if(EAST)
+					buckled_mob.pixel_x = -8
+					buckled_mob.pixel_y = 5
+				if(WEST)
+					buckled_mob.pixel_x = 8
+					buckled_mob.pixel_y = 5
+
 ///////////////BOATS////////////
 /datum/riding/boat
 	keytype = /obj/item/weapon/oar
