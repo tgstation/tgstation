@@ -1,4 +1,4 @@
-//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
 /turf/open/space,
 /area/space)
@@ -139,19 +139,23 @@
 /turf/open/floor/mineral/silver,
 /area/ruin/unpowered/no_grav)
 "C" = (
-/turf/open/floor/plating/astplate/warning{
-	dir = 8;
+/turf/open/floor/plating/astplate{
 	icon_state = "astplate_warn";
 	initial_gas_mix = "TEMP=2.7";
 	tag = "icon-astplate_warn (WEST)"
 	},
+/obj/effect/turf_decal/stripes/asteroid/line{
+	dir = 8
+	},
 /area/ruin/unpowered/no_grav)
 "D" = (
-/turf/open/floor/plating/astplate/warning{
-	dir = 4;
+/turf/open/floor/plating/astplate{
 	icon_state = "astplate_warn";
 	initial_gas_mix = "TEMP=2.7";
 	tag = "icon-astplate_warn (EAST)"
+	},
+/obj/effect/turf_decal/stripes/asteroid/line{
+	dir = 4
 	},
 /area/ruin/unpowered/no_grav)
 "E" = (
@@ -167,19 +171,23 @@
 /turf/open/floor/plating/asteroid/airless,
 /area/ruin/unpowered/no_grav)
 "H" = (
-/turf/open/floor/plating/astplate/warning{
-	dir = 10;
+/turf/open/floor/plating/astplate{
 	icon_state = "astplate_warn";
 	initial_gas_mix = "TEMP=2.7";
 	tag = "icon-astplate_warn (SOUTHWEST)"
 	},
+/obj/effect/turf_decal/stripes/asteroid/line{
+	dir = 10
+	},
 /area/ruin/unpowered/no_grav)
 "I" = (
-/turf/open/floor/plating/astplate/warning{
-	dir = 6;
+/turf/open/floor/plating/astplate{
 	icon_state = "astplate_warn";
 	initial_gas_mix = "TEMP=2.7";
 	tag = "icon-astplate_warn (SOUTHEAST)"
+	},
+/obj/effect/turf_decal/stripes/asteroid/line{
+	dir = 6
 	},
 /area/ruin/unpowered/no_grav)
 "J" = (
