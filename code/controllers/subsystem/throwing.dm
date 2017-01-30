@@ -135,5 +135,5 @@ var/datum/subsystem/throwing/SSthrowing
 			continue
 		if (AM.density && !(AM.pass_flags & LETPASSTHROW) && !(AM.flags & ON_BORDER))
 			thrownthing.throwing = 0
-			thrownthing.throw_impact(AM)
+			thrownthing.throw_impact(AM, src)
 			return 1

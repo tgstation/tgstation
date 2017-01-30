@@ -211,7 +211,7 @@
 /atom/movable/proc/checkpass(passflag)
 	return pass_flags&passflag
 
-/atom/movable/proc/throw_impact(atom/hit_atom)
+/atom/movable/proc/throw_impact(atom/hit_atom, datum/thrownthing)
 	return hit_atom.hitby(src)
 
 /atom/movable/hitby(atom/movable/AM, skipcatch, hitpush = 1, blocked)
