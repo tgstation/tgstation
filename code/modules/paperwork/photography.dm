@@ -499,8 +499,8 @@
 	if(istype(I, /obj/item/weapon/photo))
 		if(!displayed)
 			var/obj/item/weapon/photo/P = I
-			user.unEquip(P)
-			P.forceMove(src)
+			if(!user.transferItemToLoc(P, src))
+				return
 			displayed = P
 			update_icon()
 		else
@@ -587,7 +587,8 @@
 	else if(istype(O, /obj/item/weapon/photo))
 		if(!framed)
 			var/obj/item/weapon/photo/P = O
-			user.unEquip(P)
+			if(!user.transferItemToLoc(P, src))
+				return
 			P.forceMove(src)
 			framed = P
 			update_icon()
