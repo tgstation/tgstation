@@ -232,6 +232,9 @@
 
 	var/list/gamemode_cache = null
 
+	var/minutetopiclimit
+	var/secondtopiclimit
+
 /datum/configuration/New()
 	gamemode_cache = typecacheof(/datum/game_mode,TRUE)
 	for(var/T in gamemode_cache)
@@ -482,7 +485,10 @@
 					config.client_error_version = text2num(value)
 				if("client_error_message")
 					config.client_error_message = value
-
+				if("minute_topic_limit")
+					config.minutetopiclimit = text2num(value)
+				if("second_topic_limit")
+					config.secondtopiclimit = text2num(value)
 				else
 					diary << "Unknown setting in configuration: '[name]'"
 
