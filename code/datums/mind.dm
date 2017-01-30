@@ -1237,7 +1237,7 @@
 		switch(href_list["common"])
 			if("undress")
 				for(var/obj/item/W in current)
-					current.unEquip(W, 1) //The 1 forces all items to drop, since this is an admin undress.
+					current.dropItemToGround(W, TRUE) //The 1 forces all items to drop, since this is an admin undress.
 			if("takeuplink")
 				take_uplink()
 				memory = null//Remove any memory they may have had.
@@ -1495,7 +1495,7 @@
 			if(istype(S, type))
 				continue
 		S.charge_counter = delay
-		addtimer(CALLBACK(S, /obj/effect/proc_holder/spell.proc/start_recharge), 0)
+		INVOKE_ASYNC(S, /obj/effect/proc_holder/spell.proc/start_recharge)
 
 /datum/mind/proc/get_ghost(even_if_they_cant_reenter)
 	for(var/mob/dead/observer/G in dead_mob_list)

@@ -40,7 +40,7 @@
 		ticker.mode.servants_of_ratvar += owner.mind
 		ticker.mode.update_servant_icons_added(owner.mind)
 		if(jobban_isbanned(owner, ROLE_SERVANT_OF_RATVAR))
-			addtimer(CALLBACK(ticker.mode, /datum/game_mode.proc/replace_jobbaned_player, owner, ROLE_SERVANT_OF_RATVAR, ROLE_SERVANT_OF_RATVAR), 0)
+			INVOKE_ASYNC(ticker.mode, /datum/game_mode.proc/replace_jobbaned_player, owner, ROLE_SERVANT_OF_RATVAR, ROLE_SERVANT_OF_RATVAR)
 	if(owner.mind)
 		owner.mind.special_role = "Servant of Ratvar"
 	owner.attack_log += "\[[time_stamp()]\] <font color=#BE8700>Has been converted to the cult of Ratvar!</font>"

@@ -20,7 +20,7 @@
 			var/datum/game_mode/cult/C = ticker.mode
 			C.memorize_cult_objectives(owner.mind)
 		if(jobban_isbanned(owner, ROLE_CULTIST))
-			addtimer(CALLBACK(ticker.mode, /datum/game_mode.proc/replace_jobbaned_player, owner, ROLE_CULTIST, ROLE_CULTIST), 0)
+			INVOKE_ASYNC(ticker.mode, /datum/game_mode.proc/replace_jobbaned_player, owner, ROLE_CULTIST, ROLE_CULTIST)
 	if(owner.mind)
 		owner.mind.special_role = "Cultist"
 	owner.attack_log += "\[[time_stamp()]\] <font color=#960000>Has been converted to the cult of Nar'Sie!</font>"

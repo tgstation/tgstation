@@ -325,7 +325,7 @@
 		if(user.disabilities & CLUMSY && prob(10))
 			user.visible_message("<span class='warning'>[user] accidentally ignites themselves!</span>", \
 								"<span class='userdanger'>You miss the paper and accidentally light yourself on fire!</span>")
-			user.unEquip(P)
+			user.dropItemToGround(P)
 			user.adjust_fire_stacks(1)
 			user.IgniteMob()
 			return
@@ -333,7 +333,7 @@
 		if(!(in_range(user, src))) //to prevent issues as a result of telepathically lighting a paper
 			return
 
-		user.unEquip(src)
+		user.dropItemToGround(src)
 		user.visible_message("<span class='danger'>[user] lights [src] ablaze with [P]!</span>", "<span class='danger'>You light [src] on fire!</span>")
 		fire_act()
 

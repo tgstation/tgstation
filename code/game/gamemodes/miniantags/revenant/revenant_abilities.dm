@@ -194,7 +194,7 @@
 /obj/effect/proc_holder/spell/aoe_turf/revenant/overload/cast(list/targets, mob/living/simple_animal/revenant/user = usr)
 	if(attempt_cast(user))
 		for(var/turf/T in targets)
-			addtimer(CALLBACK(src, .proc/overload, T, user), 0)
+			INVOKE_ASYNC(src, .proc/overload, T, user)
 
 /obj/effect/proc_holder/spell/aoe_turf/revenant/overload/proc/overload(turf/T, mob/user)
 	for(var/obj/machinery/light/L in T)
@@ -234,7 +234,7 @@
 /obj/effect/proc_holder/spell/aoe_turf/revenant/defile/cast(list/targets, mob/living/simple_animal/revenant/user = usr)
 	if(attempt_cast(user))
 		for(var/turf/T in targets)
-			addtimer(CALLBACK(src, .proc/defile, T), 0)
+			INVOKE_ASYNC(src, .proc/defile, T)
 
 /obj/effect/proc_holder/spell/aoe_turf/revenant/defile/proc/defile(turf/T)
 	if(T.flags & NOJAUNT)
@@ -281,7 +281,7 @@
 /obj/effect/proc_holder/spell/aoe_turf/revenant/malfunction/cast(list/targets, mob/living/simple_animal/revenant/user = usr)
 	if(attempt_cast(user))
 		for(var/turf/T in targets)
-			addtimer(CALLBACK(src, .proc/malfunction, T, user), 0)
+			INVOKE_ASYNC(src, .proc/malfunction, T, user)
 
 /obj/effect/proc_holder/spell/aoe_turf/revenant/malfunction/proc/malfunction(turf/T, mob/user)
 	for(var/mob/living/simple_animal/bot/bot in T)
@@ -325,7 +325,7 @@
 /obj/effect/proc_holder/spell/aoe_turf/revenant/blight/cast(list/targets, mob/living/simple_animal/revenant/user = usr)
 	if(attempt_cast(user))
 		for(var/turf/T in targets)
-			addtimer(CALLBACK(src, .proc/blight, T, user), 0)
+			INVOKE_ASYNC(src, .proc/blight, T, user)
 
 /obj/effect/proc_holder/spell/aoe_turf/revenant/blight/proc/blight(turf/T, mob/user)
 	for(var/mob/living/mob in T)

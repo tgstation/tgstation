@@ -881,7 +881,7 @@
 		magichead.flags |= NODROP		//curses!
 		magichead.flags_inv &= ~HIDEFACE //so you can still see their face
 		magichead.voicechange = 1	//NEEEEIIGHH
-		if(!user.unEquip(user.wear_mask))
+		if(!user.dropItemToGround(user.wear_mask))
 			qdel(user.wear_mask)
 		user.equip_to_slot_if_possible(magichead, slot_wear_mask, 1, 1)
 		qdel(src)

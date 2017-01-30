@@ -41,7 +41,7 @@
 		var/image/GB = new('icons/effects/clockwork_effects.dmi', src, "geisbinding_top", M.layer + 0.01)
 		add_overlay(GB)
 		for(var/obj/item/I in M.held_items)
-			M.unEquip(I)
+			M.dropItemToGround(I)
 		for(var/i in M.get_empty_held_indexes())
 			var/obj/item/geis_binding/B = new(M)
 			M.put_in_hands(B, i)
@@ -61,7 +61,7 @@
 		animate(T, transform = matrix()*2, alpha = 0, time = 8, easing = EASE_OUT)
 		M.visible_message("<span class='warning'>[src] snaps into glowing pieces and dissipates!</span>")
 		for(var/obj/item/geis_binding/GB in M.held_items)
-			M.unEquip(GB, TRUE)
+			M.dropItemToGround(GB, TRUE)
 
 /obj/structure/destructible/clockwork/geis_binding/relaymove(mob/user, direction)
 	if(isliving(user) && can_resist)

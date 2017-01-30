@@ -314,12 +314,7 @@ var/datum/subsystem/ticker/ticker
 					sleep(35)
 					flick("station_intact",cinematic)
 					world << sound('sound/ambience/signal.ogg')
-					sleep(100)
-					if(cinematic)
-						qdel(cinematic)
-						cinematic = null
-					for(var/mob/M in mob_list)
-						M.notransform = FALSE
+					addtimer(CALLBACK(src, .proc/finish_cinematic, null, FALSE), 100)
 					return	//Faster exit, since nothing happened
 				else //Station nuked (nuke,explosion,summary)
 					flick("intro_nuke",cinematic)
@@ -331,26 +326,27 @@ var/datum/subsystem/ticker/ticker
 	//If its actually the end of the round, wait for it to end.
 	//Otherwise if its a verb it will continue on afterwards.
 
-	if(mode)
-		mode.explosion_in_progress = 0
-		world << "<B>The station was destoyed by the nuclear blast!</B>"
-		mode.station_was_nuked = (station_missed<2)	//station_missed==1 is a draw. the station becomes irradiated and needs to be evacuated.
-														//kinda shit but I couldn't  get permission to do what I wanted to do.
 	var/bombloc = null
 	if(actually_blew_up)
 		if(bomb && bomb.loc)
 			bombloc = bomb.z
 		else if(!station_missed)
 			bombloc = ZLEVEL_STATION
+		
+		if(mode)
+			mode.explosion_in_progress = 0
+			world << "<B>The station was destoyed by the nuclear blast!</B>"
+			mode.station_was_nuked = (station_missed<2)	//station_missed==1 is a draw. the station becomes irradiated and needs to be evacuated.
 
-	addtimer(CALLBACK(src, .proc/finish_cinematic, bombloc), 300)
+	addtimer(CALLBACK(src, .proc/finish_cinematic, bombloc, actually_blew_up), 300)
 
-/datum/subsystem/ticker/proc/finish_cinematic(killz)
+/datum/subsystem/ticker/proc/finish_cinematic(killz, actually_blew_up)
 	if(cinematic)
 		qdel(cinematic)		//end the cinematic
+		cinematic = null
 	for(var/mob/M in mob_list)
 		M.notransform = FALSE
-		if(!isnull(killz) && M.stat != DEAD && M.z == killz)
+		if(actually_blew_up && !isnull(killz) && M.stat != DEAD && M.z == killz)
 			M.gib()
 
 /datum/subsystem/ticker/proc/create_characters()
@@ -592,7 +588,7 @@ var/datum/subsystem/ticker/ticker
 	//map rotate chance defaults to 75% of the length of the round (in minutes)
 	if (!prob((world.time/600)*config.maprotatechancedelta))
 		return
-	addtimer(CALLBACK(GLOBAL_PROC, /.proc/maprotate), 0)
+	INVOKE_ASYNC(GLOBAL_PROC, /.proc/maprotate)
 
 
 /world/proc/has_round_started()

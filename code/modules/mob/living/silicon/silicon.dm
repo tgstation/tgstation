@@ -11,6 +11,7 @@
 	see_in_dark = 8
 	bubble_icon = "machine"
 	weather_immunities = list("ash")
+	possible_a_intents = list(INTENT_HELP, INTENT_HARM)
 
 	var/syndicate = 0
 	var/datum/ai_laws/laws = null//Now... THEY ALL CAN ALL HAVE LAWS

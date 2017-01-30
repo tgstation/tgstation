@@ -56,9 +56,10 @@
 	else if(istype(over_object, /obj/screen/inventory/hand))
 		var/obj/screen/inventory/hand/H = over_object
 		if(!remove_item_from_storage(M))
-			if(!M.unEquip(src))
-				return
-		M.put_in_hand(src, H.held_index)
+			M.temporarilyRemoveItemFromInventory(src, TRUE)
+		if(!M.put_in_hand(src, H.held_index))
+			qdel(src)
+			return
 
 	add_fingerprint(M)
 
@@ -106,18 +107,16 @@
 /obj/item/weapon/paper_bin/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/paper))
 		var/obj/item/weapon/paper/P = I
-		if(!user.unEquip(P))
+		if(!user.transferItemToLoc(P, src))
 			return
-		P.loc = src
 		user << "<span class='notice'>You put [P] in [src].</span>"
 		papers.Add(P)
 		total_paper++
 		update_icon()
 	else if(istype(I, /obj/item/weapon/pen))
 		var/obj/item/weapon/pen/P = I
-		if(!user.unEquip(P))
+		if(!user.transferItemToLoc(P, src))
 			return
-		P.loc = src
 		user << "<span class='notice'>You put [P] in [src].</span>"
 		bin_pen = P
 		update_icon()

@@ -1,0 +1,11 @@
+author: "coiax"
+delete-after: True
+changes: 
+  - rscadd: "You can regain a use of a soapstone by erasing one of your own
+messages. (This means you can remove a message if you don't like the
+colour and want to try rephrasing it to get a better colour). Erasing
+someone else's message still uses a charge."
+  - bugfix: "Fixes bugs where you'd spend a charge without engraving anything."
+  - bugfix: "Fixes a bug where the wrong ckey was entered in the engraving,
+you won't be able to take advantage of the \"recharging\" on messages made
+before this change."

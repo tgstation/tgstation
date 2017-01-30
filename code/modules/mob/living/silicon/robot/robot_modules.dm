@@ -178,7 +178,7 @@
 	R.module = RM
 	R.update_module_innate()
 	RM.rebuild_modules()
-	addtimer(CALLBACK(RM, .proc/do_transform_animation), 0)
+	INVOKE_ASYNC(RM, .proc/do_transform_animation)
 	qdel(src)
 	return RM
 
