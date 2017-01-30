@@ -94,8 +94,8 @@
 /mob/living/carbon/throw_impact(atom/hit_atom,datum/throwingdatum)
 	. = ..()
 	var/datum/thrownthing/TD
-	if(istype(throwingdatum, datum/thrownthing)
-		var/datum/thrownthing/TD = throwningdatum
+	if(istype(throwingdatum, datum/thrownthing))
+		TD = throwningdatum
 	if(hit_atom.density && isturf(hit_atom))
 		if(istype(TD.thrower, /mob/living/silicon/robot))
 			return
