@@ -1012,6 +1012,9 @@
 		return
 	if(M.restrained())
 		return
+	if(istype(M, /mob/living/silicon/robot))
+		M.visible_message("<span class='warning'>[M] really can't seem to mount the [src]...</span>")
+		return
 	. = ..(M, force, check_loc)
 
 /mob/living/silicon/robot/unbuckle_mob(mob/user)
