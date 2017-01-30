@@ -1,3 +1,13 @@
+30 January 2017, by Lzimann
+
+Modified table 'death', adding the columns 'mapname' and 'server'.
+
+ALTER TABLE `death` ADD COLUMN `mapname` TEXT NOT NULL AFTER `coord`, ADD COLUMN `server` TEXT NOT NULL AFTER `mapname`
+
+Remember to add a prefix to the table name if you use them
+
+----------------------------------------------------
+
 1 September 2016, by Jordie0608
 
 Modified table 'notes', adding column 'secret'.
