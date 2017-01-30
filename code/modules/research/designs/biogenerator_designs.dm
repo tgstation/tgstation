@@ -135,7 +135,7 @@
 	name = "Utility Belt"
 	id = "toolbelt"
 	build_type = BIOGENERATOR
-	materials = list(MAT_BIOMASS = 500)
+	materials = list(MAT_BIOMASS = 300)
 	build_path = /obj/item/weapon/storage/belt/utility
 	category = list("initial","Leather and Cloth")
 
@@ -143,7 +143,7 @@
 	name = "Security belt"
 	id = "secbelt"
 	build_type = BIOGENERATOR
-	materials = list(MAT_BIOMASS = 500)
+	materials = list(MAT_BIOMASS = 300)
 	build_path = /obj/item/weapon/storage/belt/security
 	category = list("initial","Leather and Cloth")
 
@@ -151,7 +151,7 @@
 	name = "Medical belt"
 	id = "medbel"
 	build_type = BIOGENERATOR
-	materials = list(MAT_BIOMASS = 500)
+	materials = list(MAT_BIOMASS = 300)
 	build_path = /obj/item/weapon/storage/belt/medical
 	category = list("initial","Leather and Cloth")
 
@@ -159,7 +159,7 @@
 	name = "Janitorial belt"
 	id = "janibelt"
 	build_type = BIOGENERATOR
-	materials = list(MAT_BIOMASS = 500)
+	materials = list(MAT_BIOMASS = 300)
 	build_path = /obj/item/weapon/storage/belt/janitor
 	category = list("initial","Leather and Cloth")
 
@@ -167,7 +167,7 @@
 	name = "Bandolier belt"
 	id = "bandolier"
 	build_type = BIOGENERATOR
-	materials = list(MAT_BIOMASS = 500)
+	materials = list(MAT_BIOMASS = 300)
 	build_path = /obj/item/weapon/storage/belt/bandolier
 	category = list("initial","Leather and Cloth")
 
