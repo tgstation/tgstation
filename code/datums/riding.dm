@@ -305,9 +305,15 @@
 
 /datum/riding/cyborg/proc/ride_check(mob/user)
 	if(user.incapacitated())
-		user << "<span class='userdanger'>You fall off of [ridden]!</span>"
-		ridden.unbuckle_mob(user)
-		return
+		var/kick = TRUE
+		if(istype(ridden, /mob/living/silicon/robot))
+			var/mob/living/silicon/robot/R = ridden
+			if(R.module && R.module.ride_allow_incapacitated)
+				kick = FALSE
+		if(kick)
+			user << "<span class='userdanger'>You fall off of [ridden]!</span>"
+			ridden.unbuckle_mob(user)
+			return
 	if(istype(user, /mob/living/carbon))
 		var/mob/living/carbon/carbonuser = user
 		if(!carbonuser.get_num_arms())
@@ -329,19 +335,25 @@
 			if(!istype(M, /mob/living))
 				continue
 			M.setDir(ridden.dir)
-			switch(ridden.dir)
-				if(NORTH)
-					M.pixel_x = 0
-					M.pixel_y = 4
-				if(SOUTH)
-					M.pixel_x = 0
-					M.pixel_y = 4
-				if(EAST)
-					M.pixel_x = -6
-					M.pixel_y = 3
-				if(WEST)
-					M.pixel_x = 6
-					M.pixel_y = 3
+			if(istype(ridden, /mob/living/silicon/robot))
+				var/mob/living/silicon/robot/R = ridden
+				if(istype(R.module))
+					M.pixel_x = R.module.ride_offset_x[ridden.dir]
+					M.pixel_y = R.module.ride_offset_y[ridden.dir]
+			else
+				switch(ridden.dir)
+					if(NORTH)
+						M.pixel_x = 0
+						M.pixel_y = 4
+					if(SOUTH)
+						M.pixel_x = 0
+						M.pixel_y = 4
+					if(EAST)
+						M.pixel_x = -6
+						M.pixel_y = 3
+					if(WEST)
+						M.pixel_x = 6
+						M.pixel_y = 3
 
 /datum/riding/cyborg/proc/on_vehicle_move()
 	for(var/mob/living/M in ridden.buckled_mobs)
