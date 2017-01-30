@@ -698,6 +698,9 @@ var/list/airlock_overlays = list()
 /obj/machinery/door/airlock/attack_paw(mob/user)
 	return src.attack_hand(user)
 
+/obj/machinery/door/airlock/hulk_damage()
+	return 15
+
 /obj/machinery/door/airlock/attack_hand(mob/user)
 	if(!(issilicon(user) || IsAdminGhost(user)))
 		if(src.isElectrified())
