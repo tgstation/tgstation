@@ -26,11 +26,11 @@
 	if(emag_programs.len)
 		dat += "<br>"
 		if(emagged)
-			dat += "Safety protocol: <span class='bad'>Offline</span> <a href='?\ref[src];safety=1'>Engage</a><br>"
+			dat += "<span class='bad'>HUMAN HARM PREVENTION PROTOCOL</span>: <span class='bad'>Offline</span>"
 			for(var/area/A in emag_programs)
 				dat += "<a href='?src=\ref[src];loadarea=[A.type]'>[A.name]</a><br>"
 		else
-			dat += "Safety protocol: <span class='good'>Online</span> <a href='?\ref[src];safety=0'>Disengage</a><br>"
+			dat += "<span class='bad'>HUMAN HARM PREVENTION PROTOCOL</span>: <span class='good'>Online</span> <a href='?\ref[src];safety=0'>Disengage</a><br>"
 
 	var/datum/browser/popup = new(user, "computer", name, 400, 500)
 	popup.set_content(dat)
