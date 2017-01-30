@@ -31,7 +31,7 @@
 		SetLuminosity(0)
 
 /obj/structure/destructible/clockwork/powered/interdiction_lens/attack_hand(mob/living/user)
-	if(user.canUseTopic(src, !issilicon(user)))
+	if(user.canUseTopic(src, !issilicon(user), NO_DEXTERY))
 		if(disabled)
 			user << "<span class='warning'>As you place your hand on the gemstone, cold tendrils of black matter crawl up your arm. You quickly pull back.</span>"
 			return 0
@@ -86,7 +86,7 @@
 			var/atom/movable/A = M
 			if(!A || qdeleted(A) || A == target_apc)
 				continue
-			power_drained += (A.power_drain(TRUE) * efficiency)
+			power_drained += Floor(A.power_drain(TRUE) * efficiency, MIN_CLOCKCULT_POWER)
 
 			if(prob(1 * rage_modifier))
 				A << "<span class='neovgre'>\"[text2ratvar(pick(rage_messages))]\"</span>"

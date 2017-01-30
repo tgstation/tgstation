@@ -1,6 +1,6 @@
 /mob/living/carbon/alien/humanoid
 	name = "alien"
-	icon_state = "alien_s"
+	icon_state = "alien"
 	pass_flags = PASSTABLE
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab/xeno = 5, /obj/item/stack/sheet/animalhide/xeno = 1)
 	limb_destroyer = 1
