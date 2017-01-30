@@ -2,7 +2,7 @@
 
 /obj/item/weapon/storage/box/syndicate/New()
 	..()
-	switch (pickweight(list("bloodyspai" = 3, "stealth" = 2, "bond" = 2, "screwed" = 2, "sabotage" = 3, "guns" = 2, "murder" = 2, "implant" = 1, "hacker" = 3, "lordsingulo" = 1, "darklord" = 1, "sniper" = 1, "metaops" = 1, "ninja" = 1)))
+	switch (pickweight(list("bloodyspai" = 3, "stealth" = 2, "bond" = 2, "screwed" = 2, "sabotage" = 3, "guns" = 2, "murder" = 2, "implant" = 1, "hacker" = 3, "lordsingulo" = 1, "darklord" = 1, "sniper" = 1, "metaops" = 1, "ninja" = 1, "tclown" = 2)))
 		if("bloodyspai") // 27 tc now this is more right
 			new /obj/item/clothing/under/chameleon(src) // 2 tc since it's not the full set
 			new /obj/item/clothing/mask/chameleon(src) // Goes with above
@@ -35,7 +35,6 @@
 			new /obj/item/clothing/under/chameleon(src)
 			new /obj/item/weapon/card/id/syndicate(src)
 			new /obj/item/weapon/reagent_containers/syringe/stimulants(src)
-
 			return
 
 		if("screwed") // 29 tc
@@ -144,6 +143,17 @@
 			new /obj/item/weapon/storage/belt/military/assault(src) // 3 tc
 			new /obj/item/weapon/card/id/syndicate(src) // 2 tc
 			new /obj/item/device/chameleon(src) // 7 tc
+
+			
+		if("tclown") // Tunnelclowns the predetors of maint
+			new /obj/item/clothing/glasses/thermal/monocle(src) // 4tc since copypasta thermals
+			new /obj/item/clothing/suit/hooded/chaplain_hoodie(src)
+			new /obj/item/clothing/shoes/clown_shoes(src)
+			new /obj/item/weapon/twohanded/fireaxe(src)
+			new /obj/item/clothing/mask/gas/clown_hat(src)
+			new /obj/item/weapon/bikehorn(src)
+			new /obj/item/clothing/gloves/combat(src)
+			new /obj/item/organ/heart/demon(src)
 
 /obj/item/weapon/storage/box/syndie_kit
 	name = "box"
