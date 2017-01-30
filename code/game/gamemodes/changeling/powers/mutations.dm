@@ -29,7 +29,7 @@
 
 /obj/effect/proc_holder/changeling/weapon/proc/check_weapon(mob/user, obj/item/hand_item)
 	if(istype(hand_item, weapon_type))
-		user.unEquip(hand_item, 1) //DROPDEL will delete the item
+		user.temporarilyRemoveItemFromInventory(hand_item, TRUE) //DROPDEL will delete the item
 		if(!silent)
 			playsound(user, 'sound/effects/blobattack.ogg', 30, 1)
 			user.visible_message("<span class='warning'>With a sickening crunch, [user] reforms their [weapon_name_simple] into an arm!</span>", "<span class='notice'>We assimilate the [weapon_name_simple] back into our body.</span>", "<span class='italics>You hear organic matter ripping and tearing!</span>")
@@ -89,8 +89,8 @@
 	var/mob/living/carbon/human/H = user
 	if(istype(H.wear_suit, suit_type) || istype(H.head, helmet_type))
 		H.visible_message("<span class='warning'>[H] casts off their [suit_name_simple]!</span>", "<span class='warning'>We cast off our [suit_name_simple][genetic_damage > 0 ? ", temporarily weakening our genomes." : "."]</span>", "<span class='italics'>You hear the organic matter ripping and tearing!</span>")
-		H.unEquip(H.head, TRUE) //The qdel on dropped() takes care of it
-		H.unEquip(H.wear_suit, TRUE)
+		H.temporarilyRemoveItemFromInventory(H.head, TRUE) //The qdel on dropped() takes care of it
+		H.temporarilyRemoveItemFromInventory(H.wear_suit, TRUE)
 		H.update_inv_wear_suit()
 		H.update_inv_head()
 		H.update_hair()
@@ -117,8 +117,8 @@
 		user << "\the [user.head] is stuck on your head, you cannot grow a [helmet_name_simple] over it!"
 		return
 
-	user.unEquip(user.head)
-	user.unEquip(user.wear_suit)
+	user.dropItemToGround(user.head)
+	user.dropItemToGround(user.wear_suit)
 
 	user.equip_to_slot_if_possible(new suit_type(user), slot_wear_suit, 1, 1, 1)
 	user.equip_to_slot_if_possible(new helmet_type(user), slot_head, 1, 1, 1)
@@ -312,7 +312,7 @@
 
 /obj/item/projectile/tentacle/on_hit(atom/target, blocked = 0)
 	var/mob/living/carbon/human/H = firer
-	H.unEquip(source.gun,1) //Unequip thus delete the tentacle on hit
+	H.dropItemToGround(source.gun, TRUE) //Unequip thus delete the tentacle on hit
 	if(blocked >= 100)
 		return 0
 	if(istype(target, /obj/item))
@@ -414,7 +414,6 @@
 		if(ishuman(loc))
 			var/mob/living/carbon/human/H = loc
 			H.visible_message("<span class='warning'>With a sickening crunch, [H] reforms his shield into an arm!</span>", "<span class='notice'>We assimilate our shield into our body</span>", "<span class='italics>You hear organic matter ripping and tearing!</span>")
-			H.unEquip(src, 1)
 		qdel(src)
 		return 0
 	else

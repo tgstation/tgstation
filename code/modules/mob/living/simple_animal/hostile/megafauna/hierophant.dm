@@ -114,7 +114,7 @@ Difficulty: Hard
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/devour(mob/living/L)
 	for(var/obj/item/W in L)
-		if(!L.unEquip(W))
+		if(!L.dropItemToGround(W))
 			qdel(W)
 	visible_message(
 		"<span class='hierophant_warning'>\"[pick(kill_phrases)]\"\n[src] annihilates [L]!</span>",

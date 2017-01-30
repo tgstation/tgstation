@@ -1004,5 +1004,5 @@ var/list/wall_runes = list()
 		new_human.visible_message("<span class='warning'>[new_human] suddenly dissolves into bones and ashes.</span>", \
 								  "<span class='cultlarge'>Your link to the world fades. Your form breaks apart.</span>")
 		for(var/obj/I in new_human)
-			new_human.unEquip(I)
+			new_human.dropItemToGround(I)
 		new_human.dust()

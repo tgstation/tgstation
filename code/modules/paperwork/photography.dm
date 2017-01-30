@@ -168,7 +168,7 @@
 		if(pictures_left)
 			user << "<span class='notice'>[src] still has some film in it!</span>"
 			return
-		if(!user.unEquip(I))
+		if(!user.temporarilyRemoveItemFromInventory(I))
 			return
 		user << "<span class='notice'>You insert [I] into [src].</span>"
 		qdel(I)

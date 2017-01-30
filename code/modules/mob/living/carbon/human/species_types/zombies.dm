@@ -32,7 +32,7 @@
 	for(var/V in C.held_items)
 		var/obj/item/I = V
 		if(istype(I))
-			if(C.unEquip(I))
+			if(C.dropItemToGround(I))
 				var/obj/item/zombie_hand/zh = new /obj/item/zombie_hand()
 				C.put_in_hands(zh)
 		else	//Entries in the list should only ever be items or null, so if it's not an item, we can assume it's an empty hand
@@ -49,7 +49,7 @@
 	. = ..()
 	for(var/obj/item/I in C.held_items)
 		if(istype(I, /obj/item/zombie_hand))
-			C.unEquip(I, TRUE)
+			qdel(I)
 
 
 // Your skin falls off

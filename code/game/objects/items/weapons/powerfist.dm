@@ -63,11 +63,10 @@
 		if(tank)
 			user << "<span class='warning'>\The [src] already has a tank.</span>"
 			return
-		if(!user.unEquip(thetank))
+		if(!user.transferItemToLoc(thetank, src))
 			return
 		user << "<span class='notice'>You hook \the [thetank] up to \the [src].</span>"
 		tank = thetank
-		thetank.forceMove(src)
 
 
 /obj/item/weapon/melee/powerfist/attack(mob/living/target, mob/living/user)

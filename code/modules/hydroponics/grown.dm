@@ -170,9 +170,10 @@
 
 // For item-containing growns such as eggy or gatfruit
 /obj/item/weapon/reagent_containers/food/snacks/grown/shell/attack_self(mob/user)
-	user.unEquip(src)
+	var/obj/item/T
 	if(trash)
-		var/obj/item/T = generate_trash()
+		T = generate_trash()
+	qdel(src)
+	if(trash)
 		user.put_in_hands(T)
 		user << "<span class='notice'>You open [src]\'s shell, revealing \a [T].</span>"
-	qdel(src)

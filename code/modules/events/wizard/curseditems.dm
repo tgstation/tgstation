@@ -49,7 +49,7 @@
 			if(loadout[i])
 				var/obj/item/J = loadout[i]
 				var/obj/item/I = new J //dumb but required because of byond throwing a fit anytime new gets too close to a list
-				H.unEquip(slots[i])
+				H.temporarilyRemoveItemFromInventory(slots[i], TRUE)
 				H.equip_to_slot_or_del(I, wearslots[i])
 				I.flags |= NODROP
 				I.name = "cursed " + I.name

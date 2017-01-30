@@ -66,8 +66,8 @@
 			visible_message("<span class='danger'>[usr] tries to empty [src]'s pouches.</span>", \
 							"<span class='userdanger'>[usr] tries to empty [src]'s pouches.</span>")
 			if(do_mob(usr, src, POCKET_STRIP_DELAY * 0.5))
-				unEquip(r_store)
-				unEquip(l_store)
+				dropItemToGround(r_store)
+				dropItemToGround(l_store)
 
 /mob/living/carbon/alien/humanoid/cuff_resist(obj/item/I)
 	playsound(src, 'sound/voice/hiss5.ogg', 40, 1, 1)  //Alien roars when starting to break free

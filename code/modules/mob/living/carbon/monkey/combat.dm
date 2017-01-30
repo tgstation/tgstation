@@ -345,8 +345,7 @@
 		for(var/obj/item/I in M.held_items)
 			if(I == pickupTarget)
 				M.visible_message("<span class='danger'>[src] snatches [pickupTarget] from [M].</span>", "<span class='userdanger'>[src] snatched [pickupTarget]!</span>")
-				M.unEquip(pickupTarget)
-				if(!qdeleted(pickupTarget))
+				if(M.temporarilyRemoveItemFromInventory(pickupTarget) && !qdeleted(pickupTarget))
 					equip_item(pickupTarget)
 	pickpocketing = FALSE
 	pickupTarget = null
@@ -453,5 +452,5 @@
 
 /mob/living/carbon/monkey/proc/monkeyDrop(var/obj/item/A)
 	if(A)
-		unEquip(A, 1)
+		dropItemToGround(A, TRUE)
 		update_icons()

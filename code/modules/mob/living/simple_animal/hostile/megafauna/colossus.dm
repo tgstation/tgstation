@@ -438,7 +438,7 @@ Difficulty: Very Hard
 	if(..() && ishuman(user) && !(user in affected_targets))
 		var/mob/living/carbon/human/H = user
 		for(var/obj/item/W in H)
-			H.unEquip(W)
+			H.dropItemToGround(W)
 		var/datum/job/clown/C = new /datum/job/clown()
 		C.equip(H)
 		qdel(C)

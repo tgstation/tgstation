@@ -263,8 +263,6 @@ RCD
 		if((matter + R.ammoamt) > max_matter)
 			user << "<span class='warning'>The RCD can't hold any more matter-units!</span>"
 			return
-		if(!user.unEquip(W))
-			return
 		qdel(W)
 		matter += R.ammoamt
 		playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
@@ -280,24 +278,16 @@ RCD
 		return ..()
 
 /obj/item/weapon/rcd/proc/loadwithsheets(obj/item/stack/sheet/S, value, mob/user)
-    var/maxsheets = round((max_matter-matter)/value)    //calculate the max number of sheets that will fit in RCD
-    if(maxsheets > 0)
-        if(S.amount > maxsheets)
-            //S.amount -= maxsheets
-            S.use(maxsheets)
-            matter += value*maxsheets
-            playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
-            user << "<span class='notice'>You insert [maxsheets] [S.name] sheets into the RCD. </span>"
-        else
-            matter += value*(S.amount)
-            user.unEquip()
-            playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
-            user << "<span class='notice'>You insert [S.amount] [S.name] sheets into the RCD. </span>"
-            S.use(S.amount)
-
-        return 1
-    user << "<span class='warning'>You can't insert any more [S.name] sheets into the RCD!"
-    return 0
+	var/maxsheets = round((max_matter-matter)/value)    //calculate the max number of sheets that will fit in RCD
+	if(maxsheets > 0)
+		var/amount_to_use = min(S.amount, maxsheets)
+		S.use(amount_to_use)
+		matter += value*amount_to_use
+		playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
+		user << "<span class='notice'>You insert [amount_to_use] [S.name] sheets into the RCD. </span>"
+		return 1
+	user << "<span class='warning'>You can't insert any more [S.name] sheets into the RCD!"
+	return 0
 
 /obj/item/weapon/rcd/attack_self(mob/user)
 	//Change the mode

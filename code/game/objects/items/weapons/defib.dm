@@ -95,9 +95,10 @@
 		var/mob/M = src.loc
 		if(istype(over_object, /obj/screen/inventory/hand))
 			var/obj/screen/inventory/hand/H = over_object
-			if(!M.unEquip(src))
+			if(!M.temporarilyRemoveItemFromInventory(src))
 				return
-			M.put_in_hand(src, H.held_index)
+			if(!M.put_in_hand(src, H.held_index))
+				qdel(src)	//wewie
 
 
 /obj/item/weapon/defibrillator/attackby(obj/item/weapon/W, mob/user, params)
@@ -112,9 +113,8 @@
 			if(C.maxcharge < paddles.revivecost)
 				user << "<span class='notice'>[src] requires a higher capacity cell.</span>"
 				return
-			if(!user.unEquip(W))
+			if(!user.transferItemToLoc(W, src))
 				return
-			W.loc = src
 			bcell = W
 			user << "<span class='notice'>You install a cell in [src].</span>"
 			update_icon()
@@ -191,7 +191,7 @@
 /obj/item/weapon/defibrillator/proc/remove_paddles(mob/user) //this fox the bug with the paddles when other player stole you the defib when you have the paddles equiped
 	if(ismob(paddles.loc))
 		var/mob/M = paddles.loc
-		M.unEquip(paddles,1)
+		M.dropItemToGround(paddles, TRUE)
 	return
 
 /obj/item/weapon/defibrillator/Destroy()
@@ -337,7 +337,6 @@
 	if(!req_defib)
 		return 1 //If it doesn't need a defib, just say it exists
 	if (!mainunit || !istype(mainunit, /obj/item/weapon/defibrillator))	//To avoid weird issues from admin spawns
-		M.unEquip(O)
 		qdel(O)
 		return 0
 	else

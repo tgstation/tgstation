@@ -108,7 +108,7 @@
 			playsound(user, fire_sound, 50, 1)
 			user << "<span class='userdanger'>[src] blows up in your face!</span>"
 			user.take_bodypart_damage(0,20)
-			user.unEquip(src)
+			user.dropItemToGround(src)
 			return 0
 	..()
 

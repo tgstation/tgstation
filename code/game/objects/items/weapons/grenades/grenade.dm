@@ -71,7 +71,7 @@
 /obj/item/weapon/grenade/proc/update_mob()
 	if(ismob(loc))
 		var/mob/M = loc
-		M.unEquip(src)
+		M.dropItemToGround(src)
 
 
 /obj/item/weapon/grenade/attackby(obj/item/weapon/W, mob/user, params)

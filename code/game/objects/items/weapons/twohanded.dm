@@ -182,13 +182,13 @@
 /obj/item/weapon/twohanded/required/wield(mob/living/carbon/user)
 	..()
 	if(!wielded)
-		user.unEquip(src)
+		user.dropItemToGround(src)
 
 /obj/item/weapon/twohanded/required/unwield(mob/living/carbon/user, show_message = TRUE)
 	if(show_message)
 		user << "<span class='notice'>You drop [src].</span>"
 	..(user, FALSE)
-	user.unEquip(src)
+	user.dropItemToGround(src)
 
 /*
  * Fireaxe

@@ -339,9 +339,11 @@
 
 			if(istype(over_object, /obj/screen/inventory/hand))
 				var/obj/screen/inventory/hand/H = over_object
-				if(!M.unEquip(src))
+				if(!M.temporarilyRemoveItemFromInventory(src))
 					return
-				M.put_in_hand(src, H.held_index)
+				if(!M.put_in_hand(src, H.held_index))
+					qdel(src)
+					return //fuck these things
 
 			add_fingerprint(usr)
 
