@@ -194,8 +194,10 @@
 	screen_loc = ui_acti
 
 /obj/screen/act_intent/Click(location, control, params)
-	if(ishuman(usr) && (usr.client.prefs.toggles & INTENT_STYLE))
+	usr.a_intent_change(INTENT_HOTKEY_RIGHT)
 
+/obj/screen/act_intent/segmented/Click(location, control, params)
+	if(usr.client.prefs.toggles & INTENT_STYLE)
 		var/_x = text2num(params2list(params)["icon-x"])
 		var/_y = text2num(params2list(params)["icon-y"])
 
@@ -210,9 +212,8 @@
 
 		else if(_x>=17 && _y>=17)
 			usr.a_intent_change(INTENT_DISARM)
-
 	else
-		usr.a_intent_change(INTENT_HOTKEY_RIGHT)
+		return ..()
 
 /obj/screen/act_intent/alien
 	icon = 'icons/mob/screen_alien.dmi'
