@@ -284,8 +284,15 @@
 
 /datum/riding/cyborg/proc/ride_check(mob/user)
 	if(user.incapacitated())
+		user << "<span class='userdanger'>You fall off of [ridden]!</span>"
 		ridden.unbuckle_mob(user)
 		return
+	if(istype(user, /mob/living/carbon))
+		var/mob/living/carbon/carbonuser = user
+		if(!carbonuser.get_num_arms())
+			ridden.unbuckle_mob(user)
+			user << "<span class='userdanger'>You can't grab onto [ridden] with no hands!</span>"
+			return
 
 /datum/riding/cyborg/handle_vehicle_layer()
 	if(ridden.dir == SOUTH)
