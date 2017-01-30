@@ -9640,7 +9640,7 @@
 /obj/item/clothing/shoes/laceup,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
-/area/space)
+/area/janitor)
 "asI" = (
 /obj/structure/closet/l3closet/janitor,
 /obj/machinery/requests_console{
