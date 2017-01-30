@@ -29241,6 +29241,7 @@
 	pixel_x = 3;
 	pixel_y = 3
 	},
+/obj/item/device/destTagger,
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
 "bnE" = (
@@ -31254,6 +31255,7 @@
 	},
 /obj/item/weapon/hand_labeler,
 /obj/item/stack/packageWrap,
+/obj/item/device/destTagger,
 /turf/open/floor/plasteel/white/side{
 	dir = 2
 	},
@@ -61212,6 +61214,12 @@
 /obj/item/weapon/reagent_containers/blood/random,
 /turf/open/floor/plasteel,
 /area/medical/sleeper)
+"cCq" = (
+/obj/structure/table,
+/obj/item/device/destTagger,
+/obj/item/stack/packageWrap,
+/turf/open/floor/plasteel/cafeteria,
+/area/crew_quarters/kitchen)
 
 (1,1,1) = {"
 aaa
@@ -100141,7 +100149,7 @@ aJI
 aRG
 aSO
 aTO
-aVG
+cCq
 aVz
 aVz
 bak

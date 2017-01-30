@@ -57573,6 +57573,7 @@
 	pixel_y = -24;
 	req_access_txt = "28"
 	},
+/obj/item/device/destTagger,
 /turf/open/floor/plasteel/cafeteria{
 	dir = 5
 	},
@@ -69890,6 +69891,7 @@
 /obj/item/stack/packageWrap,
 /obj/item/weapon/hand_labeler,
 /obj/structure/table/glass,
+/obj/item/device/destTagger,
 /turf/open/floor/plasteel/whiteyellow/side{
 	dir = 4
 	},
@@ -72395,8 +72397,13 @@
 	pixel_y = -30
 	},
 /obj/structure/table,
+<<<<<<< HEAD
+/obj/item/device/destTagger,
+/turf/open/floor/plasteel/warning{
+=======
 /turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
+>>>>>>> 622fd5ebdcebaf565ec7507c7b0cdcfbefa7f80d
 	dir = 1
 	},
 /area/toxins/lab)

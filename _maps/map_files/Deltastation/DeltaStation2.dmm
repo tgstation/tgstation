@@ -29754,8 +29754,13 @@
 	icon_state = "alarm0";
 	pixel_x = -22
 	},
+<<<<<<< HEAD
+/obj/item/device/destTagger,
+/turf/open/floor/plasteel/bot,
+=======
 /turf/open/floor/plasteel,
 /obj/effect/turf_decal/bot,
+>>>>>>> 622fd5ebdcebaf565ec7507c7b0cdcfbefa7f80d
 /area/crew_quarters/kitchen)
 "aZU" = (
 /turf/open/floor/plasteel/red,
@@ -92678,8 +92683,13 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
+<<<<<<< HEAD
+/obj/item/device/destTagger,
+/turf/open/floor/plasteel/warning{
+=======
 /turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
+>>>>>>> 622fd5ebdcebaf565ec7507c7b0cdcfbefa7f80d
 	dir = 1
 	},
 /area/toxins/lab)
@@ -92814,6 +92824,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
+/obj/item/device/destTagger,
 /turf/open/floor/plasteel/whiteyellow/corner,
 /area/medical/chemistry)
 "deT" = (
