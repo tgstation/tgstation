@@ -586,6 +586,14 @@
 	item_color = "villain"
 	can_adjust = 0
 
+/obj/item/clothing/under/sailor
+	name = "sailor suit"
+	desc = "Skipper's in the wardroom drinkin gin'."
+	icon_state = "sailor"
+	item_state = "b_suit"
+	item_color = "sailor"
+	can_adjust = 0
+
 /obj/item/clothing/under/plasmaman
 	name = "plasma envirosuit"
 	desc = "A special containment suit that allows plasma-based lifeforms to exist safely in an oxygenated environment, and automatically extinguishes them in a crisis. Despite being airtight, it's not spaceworthy."

@@ -161,3 +161,35 @@
 	name = "carp mask"
 	desc = "Gnash gnash."
 	icon_state = "carp_mask"
+
+/obj/item/clothing/mask/gas/tiki_mask
+	name = "tiki mask"
+	desc = "A creepy wooden mask. Surprisingly expresive for a poorly carved bit of wood."
+	icon_state = "tiki_eyebrow"
+	item_state = "tiki_eyebrow"
+	resistance_flags = FLAMMABLE
+	obj_integrity = 100
+	max_integrity = 100
+	dog_fashion = null
+
+
+obj/item/clothing/mask/gas/tiki_mask/ui_action_click(mob/user)
+
+	var/mob/M = usr
+	var/list/options = list()
+	options["Original Tiki"] = "tiki_eyebrow"
+	options["Happy Tiki"] = "tiki_happy"
+	options["Confused Tiki"] = "tiki_confused"
+	options["Angry Tiki"] ="tiki_angry"
+
+	var/choice = input(M,"To what form do you wish to change this mask?","Morph Mask") in options
+
+	if(src && choice && !M.stat && in_range(M,src))
+		icon_state = options[choice]
+		item_state = options[choice]
+		user.update_inv_wear_mask()
+		for(var/X in actions)
+			var/datum/action/A = X
+			A.UpdateButtonIcon()
+		M << "The Tiki Mask has now changed into the [choice] Mask!"
+		return 1
