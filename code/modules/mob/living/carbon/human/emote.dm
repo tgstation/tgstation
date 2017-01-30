@@ -188,25 +188,3 @@
 	if(!yes)
 		return FALSE
 	. = ..(users, params)
-
-
-//The code execution of the emote datum is located at code/datums/emotes.dm
-/mob/living/emote(act, m_type = null, message = null)
-	act = lowertext(act)
-	var/param = message
-	var/custom_param = findchar(act, " ")
-	if(custom_param)
-		param = copytext(act, custom_param + 1, length(act) + 1)
-		act = copytext(act, 1, custom_param)
-
-	var/datum/emote/E = emote_list[act]
-	if(!E)
-		src << "<span class='notice'>Unusable emote '[act]'. Say *help for a list.</span>"
-		return
-	E.run_emote(src, param, m_type)
-
-
-	/datum/emote/living/deathgasp/run_emote(mob/user, params)
-	. = ..()
-	if(. && isalienadult(user))
-		playsound(user.loc, 'sound/voice/hiss6.ogg', 80, 1, 1)
