@@ -1,4 +1,0 @@
-author: "CoreOverload"
-delete-after: True
-changes: 
-  - tweak: "Clicking item slot now clicks the item in it."

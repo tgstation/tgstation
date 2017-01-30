@@ -1,5 +1,0 @@
-author: "Joan"
-delete-after: True
-changes: 
-  - tweak: "Volt Void now only allows you to fire 4 volt rays instead of 5, and the damage of each ray has been reduced to 20, from 25."
-  - rscdel: "Cyborgs using Volt Void now take damage if they fail to fire."

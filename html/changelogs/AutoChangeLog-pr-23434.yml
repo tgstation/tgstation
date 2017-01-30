@@ -1,7 +1,0 @@
-author: "coiax"
-delete-after: True
-changes: 
-  - rscadd: "Camoflaged HUDs given to head revolutionaries now function the same
-as chameleon glasses in the chameleon kit bundle, giving them an action
-button and far more disguise options."
-  - rscadd: "Syndicate thermals are also now more like chameleon glasses as well."

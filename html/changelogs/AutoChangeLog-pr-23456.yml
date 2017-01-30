@@ -1,4 +1,0 @@
-author: "Joan"
-delete-after: True
-changes: 
-  - experiment: "Clockwork scripture can no longer require more components than it consumes: This means that most scriptures \"\"cost\"\" one less component."

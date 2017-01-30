@@ -1,7 +1,0 @@
-author: "coiax"
-delete-after: True
-changes: 
-  - rscdel: "The Syndicate \"Uplink Implant\" now has no TC precharged. You can
-charge it with the use of physical telecrystals. The price has been
-reduced from 14TC to 4TC accordingly. (The uplink implant in the implant
-bundle still has 10TC)."
