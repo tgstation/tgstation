@@ -1018,8 +1018,11 @@
 	if(istype(M, /mob/living/simple_animal/bot))
 		M.visible_message("<span class='boldwarning'>No. Just... no.</span>")
 		return
+	if(!equip_buckle_inhands(M))
+		return
 	. = ..(M, force, check_loc)
 
 /mob/living/silicon/robot/unbuckle_mob(mob/user)
+	unequip_buckle_inhands(M)
 	. = ..(user)
 	riding_datum.restore_position(user)
