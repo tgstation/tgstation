@@ -195,7 +195,7 @@
 		var/armor_block = run_armor_check(affecting, "melee")
 		if(user.limb_destroyer)
 			dismembering_strike(user, affecting.body_zone)
-		visible_message("<span class='danger'>[user] has [hulk_verb]ed [src]!</span>", "<span class='userdanger'>[user] has [hulk_verb]ed [src]!</span>")
+		visible_message("<span class='danger'>[user] has [hulk_verb]ed [src]!</span>", "<span class='userdanger'>[user] has [hulk_verb]ed you!</span>")
 		playsound(loc, user.dna.species.attack_sound, 25, 1, -1)
 		damage_clothes(15, BRUTE, "melee")
 		apply_damage(15, BRUTE, affecting, armor_block)
