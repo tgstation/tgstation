@@ -175,7 +175,7 @@
 	var/silent_ai = 0
 	var/silent_borg = 0
 
-	var/roundstart_role_uplink_items = 0 //Whether or not traitors can only order uplink items that coincide with their roundstart job rather than their current one.
+	var/roundstart_role_uplink_items = 1 //Whether or not traitors can only order uplink items that coincide with their roundstart job rather than their current one.
 
 	var/damage_multiplier = 1 //Modifier for damage to all mobs. Impacts healing as well.
 

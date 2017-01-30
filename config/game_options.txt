@@ -308,8 +308,8 @@ SEC_START_BRIG
 #SANDBOX_AUTOCLOSE
 
 ### ROLE-SPECIFIC TRAITOR ITEMS ###
-## Uncomment to restrict role-specific traitor items to what traitors start the round as, not as their ID.
-#ROUNDSTART_ROLE_UPLINK_ITEMS
+## If uncommented, the only job-specific uplink items traitors can order are those their roundstart job gives, not their ID's job.
+ROUNDSTART_ROLE_UPLINK_ITEMS
 
 ### ROUNDSTART SILICON LAWS ###
 ## This controls what the AI's laws are at the start of the round.
