@@ -314,7 +314,7 @@ var/datum/subsystem/ticker/ticker
 					sleep(35)
 					flick("station_intact",cinematic)
 					world << sound('sound/ambience/signal.ogg')
-					addtimer(CALLBACK(src, .proc/finish_cinematic, null, FALSE, station_missed), 100)
+					addtimer(CALLBACK(src, .proc/finish_cinematic, null, FALSE), 100)
 					return	//Faster exit, since nothing happened
 				else //Station nuked (nuke,explosion,summary)
 					flick("intro_nuke",cinematic)
@@ -338,9 +338,9 @@ var/datum/subsystem/ticker/ticker
 			world << "<B>The station was destoyed by the nuclear blast!</B>"
 			mode.station_was_nuked = (station_missed<2)	//station_missed==1 is a draw. the station becomes irradiated and needs to be evacuated.
 
-	addtimer(CALLBACK(src, .proc/finish_cinematic, bombloc, actually_blew_up, station_missed), 300)
+	addtimer(CALLBACK(src, .proc/finish_cinematic, bombloc, actually_blew_up), 300)
 
-/datum/subsystem/ticker/proc/finish_cinematic(killz, actually_blew_up, station_missed)
+/datum/subsystem/ticker/proc/finish_cinematic(killz, actually_blew_up)
 	if(cinematic)
 		qdel(cinematic)		//end the cinematic
 		cinematic = null
