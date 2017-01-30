@@ -62,31 +62,15 @@ It is possible to destroy the net by the occupant or someone else.
 		density = 0//Make the net pass-through.
 		invisibility = INVISIBILITY_ABSTRACT//Make the net invisible so all the animations can play out.
 		resistance_flags |= INDESTRUCTIBLE //Make the net invincible so that an explosion/something else won't kill it while, spawn() is running.
-		for(var/obj/item/W in M)
-			if(ishuman(M))
-				var/mob/living/carbon/human/H = M
-				if(W == H.w_uniform)
-					continue//So all they're left with are shoes and uniform.
-				if(W == H.shoes)
-					continue
-			M.unEquip(W)
 
 		playsound(M.loc, 'sound/effects/sparks4.ogg', 50, 1)
 		new /obj/effect/overlay/temp/dir_setting/ninja/phase/out(get_turf(M), M.dir)
 
 		visible_message("[M] suddenly vanishes!")
-		M.forceMove(pick(holdingfacility)) //Throw mob in to the holding facility.
-		M << "<span class='danger'>You appear in a strange place!</span>"
+		qdel(M)
 
 		if(!isnull(master))//As long as they still exist.
 			master << "<span class='notice'><b>SUCCESS</b>: transport procedure of \the [affecting] complete.</span>"
-		M.notransform = 0
-		var/datum/effect_system/spark_spread/spark_system = new /datum/effect_system/spark_spread()
-		spark_system.set_up(5, 0, M.loc)
-		spark_system.start()
-		playsound(M.loc, 'sound/effects/phasein.ogg', 25, 1)
-		playsound(M.loc, 'sound/effects/sparks2.ogg', 50, 1)
-		new /obj/effect/overlay/temp/dir_setting/ninja/phase(get_turf(M), M.dir)
 		qdel(src)
 
 	else//And they are free.
