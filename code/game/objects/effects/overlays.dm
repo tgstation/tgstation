@@ -333,7 +333,7 @@
 		var/matrix/M = new
 		M.Turn(Get_Angle(src, user))
 		transform = M
-	addtimer(CALLBACK(src, .proc/volthit), 0)
+	INVOKE_ASYNC(src, .proc/volthit)
 
 /obj/effect/overlay/temp/ratvar/volt_hit/proc/volthit()
 	if(user)

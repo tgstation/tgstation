@@ -23,7 +23,7 @@
 
 /obj/structure/destructible/clockwork/massive/celestial_gateway/New()
 	..()
-	addtimer(CALLBACK(src, .proc/spawn_animation), 0)
+	INVOKE_ASYNC(src, .proc/spawn_animation)
 
 /obj/structure/destructible/clockwork/massive/celestial_gateway/proc/spawn_animation()
 	var/turf/T = get_turf(src)
@@ -215,7 +215,7 @@
 					sleep(3)
 					new/obj/structure/destructible/clockwork/massive/ratvar(startpoint)
 				else
-					addtimer(CALLBACK(SSshuttle.emergency, /obj/docking_port/mobile/emergency.proc/request, null, 0), 0) //call the shuttle immediately
+					INVOKE_ASYNC(SSshuttle.emergency, /obj/docking_port/mobile/emergency.proc/request, null, 0) //call the shuttle immediately
 					sleep(3)
 					send_to_playing_players("<span class='ratvar'>\"[text2ratvar("Behold")]!\"</span>\n<span class='inathneq_large'>\"[text2ratvar("See Engine's mercy")]!\"</span>\n\
 					<span class='sevtug_large'>\"[text2ratvar("Observe Engine's design skills")]!\"</span>\n<span class='nezbere_large'>\"[text2ratvar("Behold Engine's light")]!!\"</span>\n\
