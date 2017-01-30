@@ -147,14 +147,14 @@
 /obj/machinery/smartfridge/proc/load(obj/item/O)
 	if(istype(O.loc,/mob))
 		var/mob/M = O.loc
-		if(!M.unEquip(O))
+		if(!M.transferItemToLoc(O, src))
 			usr << "<span class='warning'>\the [O] is stuck to your hand, you cannot put it in \the [src]!</span>"
 			return
-	else if(istype(O.loc,/obj/item/weapon/storage))
-		var/obj/item/weapon/storage/S = O.loc
-		S.remove_from_storage(O,src)
-
-	O.loc = src
+	else
+		if(istype(O.loc,/obj/item/weapon/storage))
+			var/obj/item/weapon/storage/S = O.loc
+			S.remove_from_storage(O,src)
+		O.forceMove(src)
 
 /obj/machinery/smartfridge/attack_paw(mob/user)
 	return src.attack_hand(user)

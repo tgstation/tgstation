@@ -69,7 +69,7 @@ It is possible to destroy the net by the occupant or someone else.
 					continue//So all they're left with are shoes and uniform.
 				if(W == H.shoes)
 					continue
-			M.unEquip(W)
+			M.dropItemToGround(W)
 
 		playsound(M.loc, 'sound/effects/sparks4.ogg', 50, 1)
 		new /obj/effect/overlay/temp/dir_setting/ninja/phase/out(get_turf(M), M.dir)

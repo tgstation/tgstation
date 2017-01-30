@@ -7,7 +7,7 @@
 	circuit = /obj/item/weapon/circuitboard/computer/cloning
 	req_access = list(access_heads) //Only used for record deletion right now.
 	var/obj/machinery/dna_scannernew/scanner = null //Linked scanner. For scanning.
-	var/obj/machinery/clonepod/pod1 = null //Linked cloning pod.
+	var/list/pods //Linked cloning pods
 	var/temp = "Inactive"
 	var/scantemp_ckey
 	var/scantemp = "Ready to Scan"
@@ -18,33 +18,65 @@
 	var/loading = 0 // Nice loading text
 	var/autoprocess = 0
 
-/obj/machinery/computer/cloning/New()
+/obj/machinery/computer/cloning/Initialize()
 	..()
-	spawn(5)
-		updatemodules()
+	updatemodules(TRUE)
+
+/obj/machinery/computer/cloning/Destroy()
+	if(pods)
+		for(var/P in pods)
+			DetachCloner(P)
+		pods = null
+	return ..()
+
+/obj/machinery/computer/cloning/proc/GetAvailablePod(mind = null)
+	if(pods)
+		for(var/P in pods)
+			var/obj/machinery/clonepod/pod = P
+			if(pod.occupant && pod.clonemind == mind)
+				return null
+			if(pod.is_operational() && !(pod.occupant || pod.mess))
+				return pod
+
+/obj/machinery/computer/cloning/proc/HasEfficientPod()
+	if(pods)
+		for(var/P in pods)
+			var/obj/machinery/clonepod/pod = P
+			if(pod.is_operational() && pod.efficiency > 5)
+				return TRUE
+
+/obj/machinery/computer/cloning/proc/GetAvailableEfficientPod(mind = null)
+	if(pods)
+		for(var/P in pods)
+			var/obj/machinery/clonepod/pod = P
+			if(pod.occupant && pod.clonemind == mind)
+				return pod
+			else if(!. && pod.is_operational() && !(pod.occupant || pod.mess) && pod.efficiency > 5)
+				. = pod
 
 /obj/machinery/computer/cloning/process()
-	if(!(scanner && pod1 && autoprocess))
+	if(!(scanner && LAZYLEN(pods) && autoprocess))
 		return
 
-	if(!pod1.is_operational())
-		return
-
-	if(scanner.occupant && (scanner.scan_level > 2))
+	if(scanner.occupant && scanner.scan_level > 2)
 		scan_mob(scanner.occupant)
 
-	if(!(pod1.occupant || pod1.mess) && (pod1.efficiency > 5))
-		for(var/datum/data/record/R in records)
-			if(!(pod1.occupant || pod1.mess))
-				if(pod1.growclone(R.fields["ckey"], R.fields["name"], R.fields["UI"], R.fields["SE"], R.fields["mind"], R.fields["mrace"], R.fields["features"], R.fields["factions"]))
-					records -= R
+	for(var/datum/data/record/R in records)
+		var/obj/machinery/clonepod/pod = GetAvailableEfficientPod(R.fields["mind"])
+			
+		if(!pod)
+			return
 
-/obj/machinery/computer/cloning/proc/updatemodules()
+		if(pod.occupant)
+			continue	//how though?
+
+		if(pod.growclone(R.fields["ckey"], R.fields["name"], R.fields["UI"], R.fields["SE"], R.fields["mind"], R.fields["mrace"], R.fields["features"], R.fields["factions"]))
+			records -= R
+
+/obj/machinery/computer/cloning/proc/updatemodules(findfirstcloner)
 	src.scanner = findscanner()
-	src.pod1 = findcloner()
-
-	if (!isnull(src.pod1))
-		src.pod1.connected = src // Some variable the pod needs
+	if(findfirstcloner && !LAZYLEN(pods))
+		findcloner()
 
 /obj/machinery/computer/cloning/proc/findscanner()
 	var/obj/machinery/dna_scannernew/scannerf = null
@@ -70,7 +102,16 @@
 		podf = locate(/obj/machinery/clonepod, get_step(src, dir))
 
 		if (!isnull(podf) && podf.is_operational())
-			return podf
+			AttachCloner(podf)
+
+/obj/machinery/computer/cloning/proc/AttachCloner(obj/machinery/clonepod/pod)
+	if(!pod.connected)
+		pod.connected = src
+		LAZYADD(pods, pod)
+
+/obj/machinery/computer/cloning/proc/DetachCloner(obj/machinery/clonepod/pod)
+	pod.connected = null
+	LAZYREMOVE(pods, pod)
 
 /obj/machinery/computer/cloning/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/disk/data)) //INSERT SOME DISKETTES
@@ -82,6 +123,23 @@
 			user << "<span class='notice'>You insert [W].</span>"
 			playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
 			src.updateUsrDialog()
+	else if(istype(W,/obj/item/device/multitool))
+		var/obj/item/device/multitool/P = W
+		
+		if(istype(P.buffer, /obj/machinery/clonepod))
+			if(get_area_master(P.buffer) != get_area_master(src))
+				user << "<font color = #666633>-% Cannot link machines across power zones. Buffer cleared %-</font color>"
+				P.buffer = null
+				return
+			user << "<font color = #666633>-% Successfully linked [P.buffer] with [src] %-</font color>"
+			var/obj/machinery/clonepod/pod = P.buffer
+			if(pod.connected)
+				pod.connected.DetachCloner(pod)
+			AttachCloner(pod)
+		else
+			P.buffer = src
+			user << "<font color = #666633>-% Successfully stored \ref[P.buffer] [P.buffer.name] in buffer %-</font color>"
+		return
 	else
 		return ..()
 
@@ -97,11 +155,12 @@
 	if(..())
 		return
 
-	updatemodules()
+	updatemodules(TRUE)
 
 	var/dat = ""
 	dat += "<a href='byond://?src=\ref[src];refresh=1'>Refresh</a>"
-	if(scanner && pod1 && ((scanner.scan_level > 2) || (pod1.efficiency > 5)))
+	
+	if(scanner && HasEfficientPod() && scanner.scan_level > 2)
 		if(!autoprocess)
 			dat += "<a href='byond://?src=\ref[src];task=autoprocess'>Autoprocess</a>"
 		else
@@ -114,12 +173,12 @@
 	switch(src.menu)
 		if(1)
 			// Modules
-			if (isnull(src.scanner) || isnull(src.pod1))
+			if (isnull(src.scanner) || !LAZYLEN(pods))
 				dat += "<h3>Modules</h3>"
 				//dat += "<a href='byond://?src=\ref[src];relmodules=1'>Reload Modules</a>"
 				if (isnull(src.scanner))
 					dat += "<font class='bad'>ERROR: No Scanner detected!</font><br>"
-				if (isnull(src.pod1))
+				if (!LAZYLEN(pods))
 					dat += "<font class='bad'>ERROR: No Pod detected</font><br>"
 
 			// Scanner
@@ -335,20 +394,21 @@
 		var/datum/data/record/C = find_record("id", href_list["clone"], records)
 		//Look for that player! They better be dead!
 		if(C)
+			var/obj/machinery/clonepod/pod = GetAvailablePod()
 			//Can't clone without someone to clone.  Or a pod.  Or if the pod is busy. Or full of gibs.
-			if(!pod1)
-				temp = "<font class='bad'>No Clonepod detected.</font>"
+			if(!LAZYLEN(pods))
+				temp = "<font class='bad'>No Clonepods detected.</font>"
 				playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
-			else if(pod1.occupant)
-				temp = "<font class='bad'>Clonepod is currently occupied.</font>"
-				playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
-			else if(pod1.mess)
-				temp = "<font class='bad'>Clonepod malfunction.</font>"
+			else if(!pod)
+				temp = "<font class='bad'>No Clonepods available.</font>"
 				playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
 			else if(!config.revival_cloning)
 				temp = "<font class='bad'>Unable to initiate cloning cycle.</font>"
 				playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
-			else if(pod1.growclone(C.fields["ckey"], C.fields["name"], C.fields["UI"], C.fields["SE"], C.fields["mind"], C.fields["mrace"], C.fields["features"], C.fields["factions"]))
+			else if(pod.occupant)
+				temp = "<font class='bad'>Cloning cycle already in progress.</font>"
+				playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
+			else if(pod.growclone(C.fields["ckey"], C.fields["name"], C.fields["UI"], C.fields["SE"], C.fields["mind"], C.fields["mrace"], C.fields["features"], C.fields["factions"]))
 				temp = "[C.fields["name"]] => <font class='good'>Cloning cycle in progress...</font>"
 				playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
 				records.Remove(C)

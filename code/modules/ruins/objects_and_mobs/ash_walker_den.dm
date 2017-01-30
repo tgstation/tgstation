@@ -29,7 +29,7 @@
 			else
 				meat_counter ++
 			for(var/obj/item/W in H)
-				H.unEquip(W)
+				H.dropItemToGround(W)
 			H.gib()
 			adjustHealth(-maxHealth * 0.05)//restores 5% hp of tendril
 

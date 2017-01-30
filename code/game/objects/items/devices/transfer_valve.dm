@@ -22,18 +22,16 @@
 			return
 
 		if(!tank_one)
-			if(!user.unEquip(item))
+			if(!user.transferItemToLoc(item, src))
 				return
 			tank_one = item
-			item.loc = src
 			user << "<span class='notice'>You attach the tank to the transfer valve.</span>"
 			if(item.w_class > w_class)
 				w_class = item.w_class
 		else if(!tank_two)
-			if(!user.unEquip(item))
+			if(!user.transferItemToLoc(item, src))
 				return
 			tank_two = item
-			item.loc = src
 			user << "<span class='notice'>You attach the tank to the transfer valve.</span>"
 			if(item.w_class > w_class)
 				w_class = item.w_class
@@ -48,9 +46,9 @@
 		if(attached_device)
 			user << "<span class='warning'>There is already a device attached to the valve, remove it first!</span>"
 			return
-		user.remove_from_mob(item)
+		if(!user.transferItemToLoc(item, src))
+			return
 		attached_device = A
-		A.loc = src
 		user << "<span class='notice'>You attach the [item] to the valve controls and secure it.</span>"
 		A.holder = src
 		A.toggle_secure()	//this calls update_icon(), which calls update_icon() on the holder (i.e. the bomb).

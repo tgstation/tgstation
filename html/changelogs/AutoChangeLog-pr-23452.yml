@@ -1,0 +1,5 @@
+author: "Tofa01"
+delete-after: True
+changes: 
+  - bugfix: "[Delta] Fixes area names for Deltastation"
+  - bugfix: "[Delta] Fixes custodial closet being cold all the time on Deltastation"

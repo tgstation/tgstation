@@ -1,0 +1,6 @@
+author: "Cyberboss"
+delete-after: True
+changes: 
+  - bugfix: "Judicial visors now recharge properly"
+  - bugfix: "Gluon grenades now properly freeze turfs"
+  - bugfix: "Revs are now properly jobbanned"

@@ -137,40 +137,40 @@
 			if(facial_hair_style)
 				S = facial_hair_styles_list[facial_hair_style]
 				if(S)
-					var/image/img_facial_s = image("icon" = S.icon, "icon_state" = "[S.icon_state]_s", "layer" = -HAIR_LAYER, "dir"=SOUTH)
-					img_facial_s.color = "#" + facial_hair_color
-					img_facial_s.alpha = hair_alpha
-					standing += img_facial_s
+					var/image/img_facial = image("icon" = S.icon, "icon_state" = "[S.icon_state]", "layer" = -HAIR_LAYER, "dir"=SOUTH)
+					img_facial.color = "#" + facial_hair_color
+					img_facial.alpha = hair_alpha
+					standing += img_facial
 
 			//Applies the debrained overlay if there is no brain
 			if(!brain)
 				if(animal_origin == ALIEN_BODYPART)
-					standing += image("icon"='icons/mob/animal_parts.dmi', "icon_state" = "debrained_alien_s", "layer" = -HAIR_LAYER, "dir"=SOUTH)
+					standing += image("icon"='icons/mob/animal_parts.dmi', "icon_state" = "debrained_alien", "layer" = -HAIR_LAYER, "dir"=SOUTH)
 				else if(animal_origin == LARVA_BODYPART)
-					standing += image("icon"='icons/mob/animal_parts.dmi', "icon_state" = "debrained_larva_s", "layer" = -HAIR_LAYER, "dir"=SOUTH)
+					standing += image("icon"='icons/mob/animal_parts.dmi', "icon_state" = "debrained_larva", "layer" = -HAIR_LAYER, "dir"=SOUTH)
 				else if(!(NOBLOOD in species_flags_list))
-					standing += image("icon"='icons/mob/human_face.dmi', "icon_state" = "debrained_s", "layer" = -HAIR_LAYER, "dir"=SOUTH)
+					standing += image("icon"='icons/mob/human_face.dmi', "icon_state" = "debrained", "layer" = -HAIR_LAYER, "dir"=SOUTH)
 			else
 				if(hair_style)
 					S = hair_styles_list[hair_style]
 					if(S)
-						var/image/img_hair_s = image("icon" = S.icon, "icon_state" = "[S.icon_state]_s", "layer" = -HAIR_LAYER, "dir"=SOUTH)
-						img_hair_s.color = "#" + hair_color
-						img_hair_s.alpha = hair_alpha
-						standing += img_hair_s
+						var/image/img_hair = image("icon" = S.icon, "icon_state" = "[S.icon_state]", "layer" = -HAIR_LAYER, "dir"=SOUTH)
+						img_hair.color = "#" + hair_color
+						img_hair.alpha = hair_alpha
+						standing += img_hair
 
 
 		// lipstick
 		if(lip_style)
-			var/image/lips = image("icon"='icons/mob/human_face.dmi', "icon_state"="lips_[lip_style]_s", "layer" = -BODY_LAYER, "dir"=SOUTH)
+			var/image/lips = image("icon"='icons/mob/human_face.dmi', "icon_state"="lips_[lip_style]", "layer" = -BODY_LAYER, "dir"=SOUTH)
 			lips.color = lip_color
 			standing += lips
 
 		// eyes
 		if(eye_color)
-			var/image/img_eyes_s = image("icon" = 'icons/mob/human_face.dmi', "icon_state" = "[eyes]_s", "layer" = -BODY_LAYER, "dir"=SOUTH)
-			img_eyes_s.color = "#" + eye_color
-			standing += img_eyes_s
+			var/image/img_eyes = image("icon" = 'icons/mob/human_face.dmi', "icon_state" = "[eyes]", "layer" = -BODY_LAYER, "dir"=SOUTH)
+			img_eyes.color = "#" + eye_color
+			standing += img_eyes
 
 	return standing
 
@@ -181,7 +181,7 @@
 
 /obj/item/bodypart/head/alien
 	icon = 'icons/mob/animal_parts.dmi'
-	icon_state = "alien_head_s"
+	icon_state = "alien_head"
 	px_x = 0
 	px_y = 0
 	dismemberable = 0
@@ -195,7 +195,7 @@
 
 /obj/item/bodypart/head/larva
 	icon = 'icons/mob/animal_parts.dmi'
-	icon_state = "larva_head_s"
+	icon_state = "larva_head"
 	px_x = 0
 	px_y = 0
 	dismemberable = 0

@@ -192,7 +192,6 @@
 		force -= rand(1, (force / 3) + 1)
 	else
 		usr << "<span class='warning'>All the petals have fallen off the [name] from violent whacking!</span>"
-		usr.unEquip(src)
 		qdel(src)
 
 /obj/item/weapon/grown/novaflower/pickup(mob/living/carbon/human/user)

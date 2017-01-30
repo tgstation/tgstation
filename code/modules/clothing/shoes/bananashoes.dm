@@ -41,7 +41,7 @@
 	if(!bananium.get_item_material_amount(O))
 		user << "<span class='notice'>This item has no bananium!</span>"
 		return
-	if(!user.unEquip(O))
+	if(!user.dropItemToGround(O))
 		user << "<span class='notice'>You can't drop [O]!</span>"
 		return
 

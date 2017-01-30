@@ -178,7 +178,7 @@
 	R.module = RM
 	R.update_module_innate()
 	RM.rebuild_modules()
-	addtimer(CALLBACK(RM, .proc/do_transform_animation), 0)
+	INVOKE_ASYNC(RM, .proc/do_transform_animation)
 	qdel(src)
 	return RM
 
@@ -191,6 +191,7 @@
 
 /obj/item/weapon/robot_module/proc/do_transform_animation()
 	var/mob/living/silicon/robot/R = loc
+	R.notransform = TRUE
 	var/obj/effect/overlay/temp/decoy/fading/fivesecond/ANM = new /obj/effect/overlay/temp/decoy/fading/fivesecond(R.loc, R)
 	ANM.layer = R.layer - 0.01
 	new /obj/effect/overlay/temp/small_smoke(R.loc)
@@ -210,6 +211,7 @@
 	if(!prev_lockcharge)
 		R.SetLockdown(0)
 	R.anchored = FALSE
+	R.notransform = FALSE
 	R.notify_ai(2)
 	if(R.hud_used)
 		R.hud_used.update_robot_modules_display()

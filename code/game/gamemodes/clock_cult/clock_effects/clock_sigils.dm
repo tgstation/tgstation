@@ -307,7 +307,7 @@
 				L.visible_message("<span class='warning'>[L] collapses in on [L.p_them()]self as [src] flares bright blue!</span>")
 				L << "<span class='inathneq_large'>\"[text2ratvar("Your life will not be wasted.")]\"</span>"
 				for(var/obj/item/W in L)
-					if(!L.unEquip(W))
+					if(!L.dropItemToGround(W))
 						qdel(W)
 				L.dust()
 			else
