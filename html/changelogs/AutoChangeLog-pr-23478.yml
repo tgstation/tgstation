@@ -1,0 +1,4 @@
+author: "MrStonedOne"
+delete-after: True
+changes: 
+  - rscadd: "Because of abuse, actions on interfaces are throttled. Some bursting is allowed. You will get a message if an action is ignored. Server operators can configure this in config.dm"
