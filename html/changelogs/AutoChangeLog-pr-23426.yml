@@ -1,0 +1,4 @@
+author: "coiax"
+delete-after: True
+changes: 
+  - rscadd: "Syndicate bombs and nuclear devices now have a minimum timer of 90 seconds."
