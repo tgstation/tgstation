@@ -40,7 +40,6 @@ var/datum/subsystem/air/SSair
 	var/currentpart = SSAIR_PIPENETS
 
 	var/initialized = FALSE
-	var/list/to_activate
 
 
 /datum/subsystem/air/New()
@@ -65,7 +64,6 @@ var/datum/subsystem/air/SSair
 
 /datum/subsystem/air/Initialize(timeofday)
 	initialized = TRUE
-	activate_queued_turfs()
 	setup_allturfs()
 	setup_atmos_machinery()
 	setup_pipenets()
@@ -257,8 +255,6 @@ var/datum/subsystem/air/SSair
 
 /datum/subsystem/air/proc/add_to_active(turf/open/T, blockchanges = 1)
 	if(!initialized)
-		LAZYINITLIST(to_activate)
-		to_activate[T] = blockchanges
 		return
 
 	if(istype(T) && T.air)
