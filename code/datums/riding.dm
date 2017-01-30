@@ -326,7 +326,7 @@
 		ridden.unbuckle_mob(M)
 		var/turf/target = get_edge_target_turf(ridden, ridden.dir)
 		var/turf/targetm = get_step(get_turf(ridden), ridden.dir)
-		M.forceMove(targetm)
+		M.Move(targetm)
 		M.visible_message("<span class='boldwarning'>[M] is thrown clear of [ridden] by rapid spinning!</span>")
 		M.throw_at(target, 14, 5)
 		M.Weaken(3)
