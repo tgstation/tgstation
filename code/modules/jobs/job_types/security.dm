@@ -181,40 +181,44 @@ Security Officer
 	L |= ..() | check_config_for_sec_maint()
 	return L
 
-var/list/sec_departments = list("engineering", "supply", "medical", "science")
+var/list/available_depts = list(SEC_DEPT_ENGINEERING, SEC_DEPT_MEDICAL, SEC_DEPT_SCIENCE, SEC_DEPT_SUPPLY)
 
 /datum/job/officer/after_spawn(mob/living/carbon/human/H)
-	// Assign departament security
-	if(!sec_departments.len)
-		return
-	var/department = pick(sec_departments)
-	sec_departments -= department
+	// Assign department security
+	var/department
+	if(H && H.client && H.client.prefs)
+		department = H.client.prefs.prefered_security_department
+		if(!LAZYLEN(available_depts) || department == "None")
+			return
+		else if(department in available_depts)
+			LAZYREMOVE(available_depts, department)
+		else
+			department = pick_n_take(available_depts)
 	var/ears = null
 	var/tie = null
 	var/list/dep_access = null
 	var/destination = null
 	var/spawn_point = null
-
 	switch(department)
-		if("supply")
+		if(SEC_DEPT_SUPPLY)
 			ears = /obj/item/device/radio/headset/headset_sec/alt/department/supply
 			dep_access = list(access_mailsorting, access_mining, access_mining_station)
 			destination = /area/security/checkpoint/supply
 			spawn_point = locate(/obj/effect/landmark/start/depsec/supply) in department_security_spawns
 			tie = /obj/item/clothing/tie/armband/cargo
-		if("engineering")
+		if(SEC_DEPT_ENGINEERING)
 			ears = /obj/item/device/radio/headset/headset_sec/alt/department/engi
 			dep_access = list(access_construction, access_engine)
 			destination = /area/security/checkpoint/engineering
 			spawn_point = locate(/obj/effect/landmark/start/depsec/engineering) in department_security_spawns
 			tie = /obj/item/clothing/tie/armband/engine
-		if("medical")
+		if(SEC_DEPT_MEDICAL)
 			ears = /obj/item/device/radio/headset/headset_sec/alt/department/med
 			dep_access = list(access_medical)
 			destination = /area/security/checkpoint/medical
 			spawn_point = locate(/obj/effect/landmark/start/depsec/medical) in department_security_spawns
 			tie =  /obj/item/clothing/tie/armband/medblue
-		if("science")
+		if(SEC_DEPT_SCIENCE)
 			ears = /obj/item/device/radio/headset/headset_sec/alt/department/sci
 			dep_access = list(access_research)
 			destination = /area/security/checkpoint/science
@@ -281,12 +285,11 @@ var/list/sec_departments = list("engineering", "supply", "medical", "science")
 	implants = list(/obj/item/weapon/implant/mindshield)
 
 
-/obj/item/device/radio/headset/headset_sec/department/New()
-	wires = new(src)
+/obj/item/device/radio/headset/headset_sec/alt/department/Initialize()
+	wires = new/datum/wires/radio(src)
 	secure_radio_connections = new
-
-	initialize()
 	recalculateChannels()
+	..()
 
 /obj/item/device/radio/headset/headset_sec/alt/department/engi
 	keyslot = new /obj/item/device/encryptionkey/headset_sec

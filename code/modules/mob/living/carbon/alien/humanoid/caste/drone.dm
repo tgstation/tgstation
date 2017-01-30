@@ -3,7 +3,7 @@
 	caste = "d"
 	maxHealth = 125
 	health = 125
-	icon_state = "aliend_s"
+	icon_state = "aliend"
 
 
 /mob/living/carbon/alien/humanoid/drone/New()

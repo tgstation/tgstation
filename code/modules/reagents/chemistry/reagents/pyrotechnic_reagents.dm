@@ -63,7 +63,7 @@
 		if(isfloorturf(F))
 			for(var/turf/turf in range(1,F))
 				if(!locate(/obj/effect/hotspot) in turf)
-					PoolOrNew(/obj/effect/hotspot, F)
+					new /obj/effect/hotspot(F)
 	if(iswallturf(T))
 		var/turf/closed/wall/W = T
 		if(prob(reac_volume))
@@ -75,7 +75,7 @@
 			M.adjust_fire_stacks(min(reac_volume/5, 10))
 			M.IgniteMob()
 			if(!locate(/obj/effect/hotspot) in M.loc)
-				PoolOrNew(/obj/effect/hotspot, M.loc)
+				new /obj/effect/hotspot(M.loc)
 
 /datum/reagent/sorium
 	name = "Sorium"

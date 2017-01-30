@@ -29,9 +29,8 @@
 
 /obj/item/weapon/clipboard/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/paper))
-		if(!user.unEquip(W))
+		if(!user.transferItemToLoc(W, src))
 			return
-		W.loc = src
 		toppaper = W
 		user << "<span class='notice'>You clip the paper onto \the [src].</span>"
 		update_icon()
@@ -79,9 +78,8 @@
 				var/obj/item/held = usr.get_active_held_item()
 				if(istype(held, /obj/item/weapon/pen))
 					var/obj/item/weapon/pen/W = held
-					if(!usr.unEquip(W))
+					if(!usr.transferItemToLoc(W, src))
 						return
-					W.loc = src
 					haspen = W
 					usr << "<span class='notice'>You slot [W] into [src].</span>"
 

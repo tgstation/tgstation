@@ -19,8 +19,7 @@ would spawn and follow the beaker, even if it is carried or thrown.
 /obj/effect/particle_effect/Destroy()
 	if(ticker)
 		cameranet.updateVisibility(src)
-	..()
-	return QDEL_HINT_PUTINPOOL
+	. = ..()
 
 /datum/effect_system
 	var/number = 3
@@ -52,12 +51,12 @@ would spawn and follow the beaker, even if it is carried or thrown.
 	for(var/i in 1 to number)
 		if(total_effects > 20)
 			return
-		addtimer(CALLBACK(src, .proc/generate_effect), 0)
+		INVOKE_ASYNC(src, .proc/generate_effect)
 
 /datum/effect_system/proc/generate_effect()
 	if(holder)
 		location = get_turf(holder)
-	var/obj/effect/E = PoolOrNew(effect_type, location)
+	var/obj/effect/E = new effect_type(location)
 	total_effects++
 	var/direction
 	if(cardinals)

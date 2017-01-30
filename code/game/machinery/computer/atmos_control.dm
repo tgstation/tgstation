@@ -32,9 +32,10 @@
 			"gases" = list()
 		)
 		var/total_moles = air_sample.total_moles()
-		for(var/gas_id in air_sample.gases)
-			var/gas_name = air_sample.gases[gas_id][GAS_META][META_GAS_NAME]
-			signal.data["gases"][gas_name] = air_sample.gases[gas_id][MOLES] / total_moles * 100
+		if(total_moles)
+			for(var/gas_id in air_sample.gases)
+				var/gas_name = air_sample.gases[gas_id][GAS_META][META_GAS_NAME]
+				signal.data["gases"][gas_name] = air_sample.gases[gas_id][MOLES] / total_moles * 100
 
 		radio_connection.post_signal(src, signal, filter = RADIO_ATMOSIA)
 
@@ -44,14 +45,10 @@
 	frequency = new_frequency
 	radio_connection = SSradio.add_object(src, frequency, RADIO_ATMOSIA)
 
-/obj/machinery/air_sensor/initialize()
-	set_frequency(frequency)
-
-/obj/machinery/air_sensor/New()
+/obj/machinery/air_sensor/Initialize()
 	..()
 	SSair.atmos_machinery += src
-	if(SSradio)
-		set_frequency(frequency)
+	set_frequency(frequency)
 
 /obj/machinery/air_sensor/Destroy()
 	SSair.atmos_machinery -= src
@@ -85,10 +82,9 @@
 	var/list/sensor_information = list()
 	var/datum/radio_frequency/radio_connection
 
-/obj/machinery/computer/atmos_control/New()
+/obj/machinery/computer/atmos_control/Initialize()
 	..()
-	if(SSradio)
-		set_frequency(frequency)
+	set_frequency(frequency)
 
 /obj/machinery/computer/atmos_control/Destroy()
 	if(SSradio)
@@ -134,9 +130,6 @@
 	SSradio.remove_object(src, frequency)
 	frequency = new_frequency
 	radio_connection = SSradio.add_object(src, frequency, RADIO_ATMOSIA)
-
-/obj/machinery/computer/atmos_control/initialize()
-	set_frequency(frequency)
 
 /////////////////////////////////////////////////////////////
 // LARGE TANK CONTROL

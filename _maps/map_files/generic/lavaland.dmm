@@ -1297,8 +1297,10 @@
 	id = "mining_internal"
 	},
 /obj/structure/plasticflaps,
-/turf/open/floor/plating/warnplate{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
 /area/mine/production)
@@ -1307,10 +1309,12 @@
 	dir = 8;
 	id = "mining_internal"
 	},
-/turf/open/floor/plating/warnplate{
+/turf/open/floor/plating{
 	tag = "icon-warnplate (NORTH)";
-	dir = 1;
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
 	},
 /area/mine/production)
 "cH" = (
@@ -1329,10 +1333,12 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/turf/open/floor/plating/warnplate/corner{
+/turf/open/floor/plating{
 	tag = "icon-warnplatecorner (EAST)";
-	dir = 4;
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/obj/effect/turf_decal/stripes/corner{
+	dir = 4
 	},
 /area/mine/production)
 "cJ" = (
@@ -2145,9 +2151,10 @@
 	frequency = 1439;
 	pixel_y = 23
 	},
-/turf/open/floor/plasteel/bot{
+/turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
+/obj/effect/turf_decal/bot,
 /area/mine/production)
 "eu" = (
 /obj/structure/extinguisher_cabinet{
@@ -2166,14 +2173,16 @@
 /area/mine/production)
 "ev" = (
 /obj/structure/ore_box,
-/turf/open/floor/plasteel/bot{
+/turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
+/obj/effect/turf_decal/bot,
 /area/mine/production)
 "ew" = (
-/turf/open/floor/plasteel/bot{
+/turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
+/obj/effect/turf_decal/bot,
 /area/mine/production)
 "ex" = (
 /obj/structure/cable{
@@ -2309,9 +2318,10 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/turf/open/floor/plasteel/delivery{
+/turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
+/obj/effect/turf_decal/delivery,
 /area/mine/production)
 "eM" = (
 /obj/structure/cable{
@@ -2441,9 +2451,10 @@
 	icon_state = "crateopen";
 	opened = 1
 	},
-/turf/open/floor/plasteel/bot{
+/turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
+/obj/effect/turf_decal/bot,
 /area/mine/production)
 "eX" = (
 /obj/machinery/atmospherics/components/unary/vent_pump{
@@ -2477,8 +2488,10 @@
 	input_dir = 1;
 	output_dir = 2
 	},
-/turf/open/floor/plating/warnplate{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
 /area/mine/production)
@@ -2559,10 +2572,12 @@
 	dir = 2;
 	id = "mining_internal"
 	},
-/turf/open/floor/plating/warnplate{
+/turf/open/floor/plating{
 	tag = "icon-warnplate (WEST)";
-	dir = 8;
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
 	},
 /area/mine/production)
 "fj" = (
@@ -2663,8 +2678,10 @@
 	dir = 1;
 	output_dir = 2
 	},
-/turf/open/floor/plating/warnplate{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
 /area/mine/production)
@@ -2748,9 +2765,10 @@
 	},
 /area/mine/laborcamp)
 "fF" = (
-/turf/open/floor/plasteel/delivery{
+/turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
+/obj/effect/turf_decal/delivery,
 /area/mine/laborcamp)
 "fG" = (
 /obj/machinery/mineral/processing_unit{

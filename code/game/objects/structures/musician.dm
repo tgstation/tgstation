@@ -113,8 +113,6 @@
 				else
 					sleep(tempo)
 		repeat--
-		if(repeat >= 0) // don't show the last -1 repeat
-			updateDialog(user)
 	playing = 0
 	repeat = 0
 	updateDialog(user)
@@ -325,9 +323,10 @@
 	song = null
 	return ..()
 
-/obj/structure/piano/initialize()
-	song.tempo = song.sanitize_tempo(song.tempo) // tick_lag isn't set when the map is loaded
+/obj/structure/piano/Initialize(mapload)
 	..()
+	if(mapload)
+		song.tempo = song.sanitize_tempo(song.tempo) // tick_lag isn't set when the map is loaded
 
 /obj/structure/piano/attack_hand(mob/user)
 	if(!user.IsAdvancedToolUser())

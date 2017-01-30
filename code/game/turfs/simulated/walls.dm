@@ -59,7 +59,8 @@
 	switch(severity)
 		if(1)
 			//SN src = null
-			src.ChangeTurf(src.baseturf)
+			var/turf/NT = ChangeTurf(baseturf)
+			NT.contents_explosion(severity, target)
 			return
 		if(2)
 			if (prob(50))
@@ -241,7 +242,7 @@
 	if(prob(20))
 		ChangeTurf(/turf/closed/wall/mineral/cult)
 
-/turf/closed/wall/ratvar_act(force)
+/turf/closed/wall/ratvar_act(force, ignore_mobs)
 	. = ..()
 	if(.)
 		ChangeTurf(/turf/closed/wall/clockwork)

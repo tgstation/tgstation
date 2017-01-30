@@ -138,6 +138,4 @@
 			K.move_to_delay -= round(seed.production / 50)
 			K.health = K.maxHealth
 			K.visible_message("<span class='notice'>The Killer Tomato growls as it suddenly awakens.</span>")
-			if(user)
-				user.unEquip(src)
 			qdel(src)

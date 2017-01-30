@@ -21,6 +21,8 @@
 
 	var/explosion_level = 0	//for preventing explosion dodging
 	var/explosion_id = 0
+	
+	var/list/decals
 
 /turf/New()
 	..()
@@ -245,10 +247,6 @@
 	ChangeTurf(baseturf)
 	new /obj/structure/lattice(locate(x, y, z))
 
-/turf/proc/ReplaceWithCatwalk()
-	ChangeTurf(baseturf)
-	new /obj/structure/lattice/catwalk(locate(x, y, z))
-
 /turf/proc/phase_damage_creatures(damage,mob/U = null)//>Ninja Code. Hurts and knocks out creatures on this turf //NINJACODE
 	for(var/mob/living/M in src)
 		if(M==U)
@@ -335,10 +333,12 @@
 			A.ex_act(severity, target)
 			CHECK_TICK
 
-/turf/ratvar_act(force)
-	. = (prob(40) || force)
+/turf/ratvar_act(force, ignore_mobs, probability = 40)
+	. = (prob(probability) || force)
 	for(var/I in src)
 		var/atom/A = I
+		if(ignore_mobs && ismob(A))
+			continue
 		if(ismob(A) || .)
 			A.ratvar_act()
 
@@ -431,3 +431,14 @@
 		return
 	if(has_gravity(src))
 		playsound(src, "bodyfall", 50, 1)
+
+
+/turf/proc/add_decal(decal,group)
+	LAZYINITLIST(decals)
+	decals[group] += decal
+	add_overlay(decals[group])
+
+/turf/proc/remove_decal(group)
+	LAZYINITLIST(decals)
+	overlays -= decals[group]
+	decals[group] = null

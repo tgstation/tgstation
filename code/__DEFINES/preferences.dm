@@ -41,3 +41,9 @@
 #define PARALLAX_DELAY_MED     1
 #define PARALLAX_DELAY_LOW     2
 
+#define SEC_DEPT_NONE "None"
+#define SEC_DEPT_RANDOM "Random"
+#define SEC_DEPT_ENGINEERING "Engineering"
+#define SEC_DEPT_MEDICAL "Medical"
+#define SEC_DEPT_SCIENCE "Science"
+#define SEC_DEPT_SUPPLY "Supply"

@@ -70,7 +70,7 @@
 							M.loc.visible_message("<span class='caution'>[M] suddenly appears!</span>")
 							item_to_retrieve = null
 							break
-						M.unEquip(item_to_retrieve)
+						M.dropItemToGround(item_to_retrieve)
 
 						if(iscarbon(M)) //Edge case housekeeping
 							var/mob/living/carbon/C = M

@@ -183,7 +183,7 @@ var/const/SAFETY_COOLDOWN = 100
 	// Remove and recycle the equipped items
 	if(eat_victim_items)
 		for(var/obj/item/I in L.get_equipped_items())
-			if(L.unEquip(I))
+			if(L.dropItemToGround(I))
 				eat(I, sound=FALSE)
 
 	// Instantly lie down, also go unconscious from the pain, before you die.

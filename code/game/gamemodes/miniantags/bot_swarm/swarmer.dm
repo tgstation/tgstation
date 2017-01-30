@@ -242,13 +242,14 @@
 	return TRUE
 
 /obj/machinery/door/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
+	var/isonshuttle = istype(get_area(src), /area/shuttle)
 	for(var/turf/T in range(1, src))
-		if(isspaceturf(T) || istype(T.loc, /area/space))
+		if(isspaceturf(T) || (!isonshuttle && (istype(T.loc, /area/shuttle) || istype(T.loc, /area/space))) || (isonshuttle && !istype(T.loc, /area/shuttle)))
 			S << "<span class='warning'>Destroying this object has the potential to cause a hull breach. Aborting.</span>"
 			S.target = null
 			return FALSE
-	return TRUE
 	S.DisIntegrate(src)
+	return TRUE
 
 /obj/machinery/camera/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
 	S.DisIntegrate(src)
@@ -328,16 +329,18 @@
 	return FALSE
 
 /turf/closed/wall/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
+	var/isonshuttle = istype(loc, /area/shuttle)
 	for(var/turf/T in range(1, src))
-		if(isspaceturf(T) || istype(T.loc, /area/space))
+		if(isspaceturf(T) || (!isonshuttle && (istype(T.loc, /area/shuttle) || istype(T.loc, /area/space))) || (isonshuttle && !istype(T.loc, /area/shuttle)))
 			S << "<span class='warning'>Destroying this object has the potential to cause a hull breach. Aborting.</span>"
 			S.target = null
 			return TRUE
 	return ..()
 
 /obj/structure/window/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
+	var/isonshuttle = istype(get_area(src), /area/shuttle)
 	for(var/turf/T in range(1, src))
-		if(isspaceturf(T) || istype(T.loc, /area/space))
+		if(isspaceturf(T) || (!isonshuttle && (istype(T.loc, /area/shuttle) || istype(T.loc, /area/space))) || (isonshuttle && !istype(T.loc, /area/shuttle)))
 			S << "<span class='warning'>Destroying this object has the potential to cause a hull breach. Aborting.</span>"
 			S.target = null
 			return TRUE
@@ -362,6 +365,16 @@
 /obj/machinery/droneDispenser/swarmer/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
 	S << "<span class='warning'>This object is receiving unactivated swarmer shells to help us. Aborting.</span>"
 	return FALSE
+
+/obj/stucture/lattice/catwalk/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
+	. = ..()
+	var/turf/here = get_turf(src)
+	for(var/A in here.contents)
+		var/obj/structure/cable/C = A
+		if(istype(C))
+			S << "<span class='warning'>Disrupting the power grid would bring no benefit to us. Aborting.</span>"
+			return FALSE
+
 
 /obj/item/device/unactivated_swarmer/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
 	if(S.resources + 50 > S.max_resources)
@@ -396,7 +409,7 @@
 		resources++
 		do_attack_animation(target)
 		changeNext_move(CLICK_CD_MELEE)
-		var/obj/effect/overlay/temp/swarmer/integrate/I = PoolOrNew(/obj/effect/overlay/temp/swarmer/integrate, get_turf(target))
+		var/obj/effect/overlay/temp/swarmer/integrate/I = new /obj/effect/overlay/temp/swarmer/integrate(get_turf(target))
 		I.pixel_x = target.pixel_x
 		I.pixel_y = target.pixel_y
 		I.pixel_z = target.pixel_z
@@ -413,7 +426,7 @@
 
 
 /mob/living/simple_animal/hostile/swarmer/proc/DisIntegrate(atom/movable/target)
-	PoolOrNew(/obj/effect/overlay/temp/swarmer/disintegration, get_turf(target))
+	new /obj/effect/overlay/temp/swarmer/disintegration(get_turf(target))
 	do_attack_animation(target)
 	changeNext_move(CLICK_CD_MELEE)
 	target.ex_act(3)
@@ -461,7 +474,7 @@
 /mob/living/simple_animal/hostile/swarmer/proc/DismantleMachine(obj/machinery/target)
 	do_attack_animation(target)
 	src << "<span class='info'>We begin to dismantle this machine. We will need to be uninterrupted.</span>"
-	var/obj/effect/overlay/temp/swarmer/dismantle/D = PoolOrNew(/obj/effect/overlay/temp/swarmer/dismantle, get_turf(target))
+	var/obj/effect/overlay/temp/swarmer/dismantle/D = new /obj/effect/overlay/temp/swarmer/dismantle(get_turf(target))
 	D.pixel_x = target.pixel_x
 	D.pixel_y = target.pixel_y
 	D.pixel_z = target.pixel_z
@@ -471,7 +484,7 @@
 		M.amount = 5
 		for(var/obj/item/I in target.component_parts)
 			I.loc = M.loc
-		var/obj/effect/overlay/temp/swarmer/disintegration/N = PoolOrNew(/obj/effect/overlay/temp/swarmer/disintegration, get_turf(target))
+		var/obj/effect/overlay/temp/swarmer/disintegration/N = new /obj/effect/overlay/temp/swarmer/disintegration(get_turf(target))
 		N.pixel_x = target.pixel_x
 		N.pixel_y = target.pixel_y
 		N.pixel_z = target.pixel_z

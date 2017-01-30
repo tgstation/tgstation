@@ -242,7 +242,7 @@
 					T.MakeSlippery(min_wet_time = 20, wet_time_to_add = 15)
 			else
 				visible_message("<span class='danger'>[src] whirs and bubbles violently, before releasing a plume of froth!</span>")
-				PoolOrNew(/obj/effect/particle_effect/foam, loc)
+				new /obj/effect/particle_effect/foam(loc)
 
 	else
 		..()

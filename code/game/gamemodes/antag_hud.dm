@@ -42,19 +42,15 @@
 //MIND PROCS
 //these are called by mind.transfer_to()
 /datum/mind/proc/transfer_antag_huds(datum/atom_hud/antag/newhud)
-	leave_all_huds()
+	leave_all_antag_huds()
 	ticker.mode.set_antag_hud(current, antag_hud_icon_state)
 	if(newhud)
 		newhud.join_hud(current)
 
-/datum/mind/proc/leave_all_huds()
+/datum/mind/proc/leave_all_antag_huds()
 	for(var/datum/atom_hud/antag/hud in huds)
 		if(current in hud.hudusers)
 			hud.leave_hud(current)
-
-	for(var/datum/atom_hud/data/hud in huds)
-		if(current in hud.hudusers)
-			hud.remove_hud_from(current)
 
 /datum/atom_hud/antag/gang
 	var/color = null
