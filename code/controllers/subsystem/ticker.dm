@@ -333,7 +333,7 @@ var/datum/subsystem/ticker/ticker
 		else if(!station_missed)
 			bombloc = ZLEVEL_STATION
 		
-		if(mode)mode)
+		if(mode)
 			mode.explosion_in_progress = 0
 			world << "<B>The station was destoyed by the nuclear blast!</B>"
 			mode.station_was_nuked = (station_missed<2)	//station_missed==1 is a draw. the station becomes irradiated and needs to be evacuated.
