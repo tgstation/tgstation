@@ -589,7 +589,6 @@
 			var/obj/item/weapon/photo/P = O
 			if(!user.transferItemToLoc(P, src))
 				return
-			P.forceMove(src)
 			framed = P
 			update_icon()
 		else
