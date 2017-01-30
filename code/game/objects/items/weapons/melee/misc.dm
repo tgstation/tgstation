@@ -36,8 +36,10 @@
 	item_state = "arm_blade"
 	origin_tech = "combat=5,biotech=5"
 	w_class = WEIGHT_CLASS_HUGE
-	force = 15
+	force = 20
 	throwforce = 10
+	hitsound = 'sound/weapons/bladeslice.ogg'
+	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	sharpness = IS_SHARP
 
 /obj/item/weapon/melee/sabre

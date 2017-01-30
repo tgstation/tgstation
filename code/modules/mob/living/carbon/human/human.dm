@@ -3,7 +3,7 @@
 	real_name = "Unknown"
 	voice_name = "Unknown"
 	icon = 'icons/mob/human.dmi'
-	icon_state = "caucasian_m_s"
+	icon_state = "caucasian_m"
 
 
 

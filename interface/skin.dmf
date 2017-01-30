@@ -167,6 +167,14 @@ macro "default"
 		name = "CTRL+NUMPAD8"
 		command = "body-toggle-head"
 		is-disabled = false
+	elem
+		name = "CTRL+ADD"
+		command = "Add-View-Range 1"
+		is-disabled = false
+	elem
+		name = "CTRL+SUBTRACT"
+		command = "Add-View-Range -1"
+		is_disabled = false
 	elem 
 		name = "F1"
 		command = "adminhelp"
@@ -218,6 +226,14 @@ macro "default"
 	elem 
 		name = "F12"
 		command = "F12"
+		is-disabled = false
+	elem 
+		name = "ALT"
+		command = "toggle-walk-run"
+		is-disabled = false
+	elem 
+		name = "ALT+UP"
+		command = "toggle-walk-run"
 		is-disabled = false
 
 macro "hotkeys"
@@ -473,6 +489,14 @@ macro "hotkeys"
 		name = "NUMPAD8"
 		command = "body-toggle-head"
 		is-disabled = false
+	elem
+		name = "CTRL+ADD"
+		command = "Add-View-Range 1"
+		is-disabled = false
+	elem
+		name = "CTRL+SUBTRACT"
+		command = "Add-View-Range -1"
+		is_disabled = false
 	elem 
 		name = "F1"
 		command = "adminhelp"
@@ -524,6 +548,14 @@ macro "hotkeys"
 	elem 
 		name = "F12"
 		command = "F12"
+		is-disabled = false
+	elem 
+		name = "ALT"
+		command = "toggle-walk-run"
+		is-disabled = false
+	elem 
+		name = "ALT+UP"
+		command = "toggle-walk-run"
 		is-disabled = false
 
 macro "robot-default"

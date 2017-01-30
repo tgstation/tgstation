@@ -43,6 +43,8 @@ var/datum/subsystem/shuttle/SSshuttle
 	var/shuttle_purchased = FALSE //If the station has purchased a replacement escape shuttle this round
 	var/list/shuttle_purchase_requirements_met = list() //For keeping track of ingame events that would unlock new shuttles, such as defeating a boss or discovering a secret item
 
+	var/lockdown = FALSE	//disallow transit after nuke goes off
+
 /datum/subsystem/shuttle/New()
 	NEW_SS_GLOBAL(SSshuttle)
 
