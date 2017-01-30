@@ -557,3 +557,5 @@
 	..()
 	riding_datum = new/datum/riding/animal
 
+/mob/living/simple_animal/proc/play_with_toys() //Used for stuff like playing fetch
+	return
