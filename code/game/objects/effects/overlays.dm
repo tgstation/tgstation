@@ -317,7 +317,7 @@
 	duration = 5
 	icon_state = "volt_hit"
 	var/mob/user
-	var/damage = 25
+	var/damage = 20
 
 /obj/effect/overlay/temp/ratvar/volt_hit/New(loc, caster, multiplier)
 	if(multiplier)
