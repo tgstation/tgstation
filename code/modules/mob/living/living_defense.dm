@@ -267,7 +267,6 @@
 	if(origin && istype(origin, /datum/spacevine_mutation) && isvineimmune(src))
 		return
 	..()
-	flash_act()
 
 //Looking for irradiate()? It's been moved to radiation.dm under the rad_act() for mobs.
 

@@ -23,7 +23,7 @@
 		var/mob/living/simple_animal/A = new mobtype(get_turf(src))
 		A.visible_message("<span class='brass'>[src][spawn_message]</span>")
 		S.brainmob.mind.transfer_to(A)
-		A.fully_replace_character_name(null, "[initial(A.name)] ([S.brainmob.name])")
+		A.fully_replace_character_name(null, "[findtext(A.name, initial(A.name)) ? "[initial(A.name)]":"[A.name]"] ([S.brainmob.name])")
 		user.drop_item()
 		qdel(S)
 		qdel(src)

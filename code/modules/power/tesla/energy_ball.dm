@@ -16,7 +16,8 @@ var/list/blacklisted_tesla_types = typecacheof(list(/obj/machinery/atmospherics,
 										/obj/structure/disposalpipe,
 										/obj/structure/sign,
 										/obj/machinery/gateway,
-										/obj/structure/lattice))
+										/obj/structure/lattice,
+										/obj/structure/grille))
 
 /obj/singularity/energy_ball
 	name = "energy ball"
@@ -90,6 +91,7 @@ var/list/blacklisted_tesla_types = typecacheof(list(/obj/machinery/atmospherics,
 		var/turf/T = get_step(src, move_dir)
 		if(can_move(T))
 			loc = T
+			setDir(move_dir)
 			for(var/mob/living/carbon/C in loc)
 				dust_mobs(C)
 

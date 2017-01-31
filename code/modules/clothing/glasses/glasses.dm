@@ -248,12 +248,23 @@
 
 /obj/item/clothing/glasses/thermal/syndi	//These are now a traitor item, concealed as mesons.	-Pete
 	name = "Chameleon Thermals"
-	desc = "A pair of thermal optic goggles with an onboard chameleon generator. Toggle to disguise."
+	desc = "A pair of thermal optic goggles with an onboard chameleon generator."
 	origin_tech = "magnets=3;syndicate=4"
 	flash_protect = -1
 
-/obj/item/clothing/glasses/thermal/syndi/attack_self(mob/user)
-	chameleon(user)
+	var/datum/action/item_action/chameleon/change/chameleon_action
+
+/obj/item/clothing/glasses/thermal/syndi/New()
+	..()
+	chameleon_action = new(src)
+	chameleon_action.chameleon_type = /obj/item/clothing/glasses
+	chameleon_action.chameleon_name = "Glasses"
+	chameleon_action.chameleon_blacklist = typecacheof(/obj/item/clothing/glasses/changeling, only_root_path = TRUE)
+	chameleon_action.initialize_disguises()
+
+/obj/item/clothing/glasses/thermal/syndi/emp_act(severity)
+	..()
+	chameleon_action.emp_randomise()
 
 /obj/item/clothing/glasses/thermal/monocle
 	name = "Thermoncle"
@@ -317,58 +328,6 @@
 			user << "<span class='notice'>The eye winks at you and vanishes into the abyss, you feel really unlucky.</span>"
 		qdel(src)
 	..()
-
-/obj/item/clothing/glasses/proc/chameleon(var/mob/user)
-	var/input_glasses = input(user, "Choose a piece of eyewear to disguise as.", "Choose glasses style.") as null|anything in list("Sunglasses", "Medical HUD", "Mesons", "Science Goggles", "Glasses", "Security Sunglasses","Eyepatch","Welding","Gar")
-
-	if(user && src in user.contents)
-		switch(input_glasses)
-			if("Sunglasses")
-				desc = "Strangely ancient technology used to help provide rudimentary eye cover. Enhanced shielding blocks many flashes."
-				name = "sunglasses"
-				icon_state = "sun"
-				item_state = "sunglasses"
-			if("Medical HUD")
-				name = "Health Scanner HUD"
-				desc = "A heads-up display that scans the humans in view and provides accurate data about their health status."
-				icon_state = "healthhud"
-				item_state = "healthhud"
-			if("Mesons")
-				name = "Optical Meson Scanner"
-				desc = "Used by engineering and mining staff to see basic structural and terrain layouts through walls, regardless of lighting condition."
-				icon_state = "meson"
-				item_state = "meson"
-			if("Science Goggles")
-				name = "Science Goggles"
-				desc = "A pair of snazzy goggles used to protect against chemical spills."
-				icon_state = "purple"
-				item_state = "glasses"
-			if("Glasses")
-				name = "Prescription Glasses"
-				desc = "Made by Nerd. Co."
-				icon_state = "glasses"
-				item_state = "glasses"
-			if("Security Sunglasses")
-				name = "HUDSunglasses"
-				desc = "Sunglasses with a HUD."
-				icon_state = "sunhud"
-				item_state = "sunglasses"
-			if("Eyepatch")
-				name = "eyepatch"
-				desc = "Yarr."
-				icon_state = "eyepatch"
-				item_state = "eyepatch"
-			if("Welding")
-				name = "welding goggles"
-				desc = "Protects the eyes from welders; approved by the mad scientist association."
-				icon_state = "welding-g"
-				item_state = "welding-g"
-			if("Gar")
-				desc = "Just who the hell do you think I am?!"
-				name = "gar glasses"
-				icon_state = "gar"
-				item_state = "gar"
-
 
 /obj/item/clothing/glasses/AltClick(mob/user)
 	if(glass_colour_type && ishuman(user))

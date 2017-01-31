@@ -772,14 +772,14 @@
 		if(!myseed)
 			if(istype(O, /obj/item/seeds/kudzu))
 				investigate_log("had Kudzu planted in it by [user.ckey]([user]) at ([x],[y],[z])","kudzu")
-			user.unEquip(O)
+			if(!user.transferItemToLoc(O, src))
+				return
 			user << "<span class='notice'>You plant [O].</span>"
 			dead = 0
 			myseed = O
 			age = 1
 			plant_health = myseed.endurance
 			lastcycle = world.time
-			O.forceMove(src)
 			update_icon()
 		else
 			user << "<span class='warning'>[src] already has seeds in it!</span>"

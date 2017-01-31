@@ -77,7 +77,7 @@ Difficulty: Very Hard
 			double_spiral()
 		else
 			visible_message("<span class='colossus'>\"<b>Judgement.</b>\"</span>")
-			addtimer(CALLBACK(src, .proc/spiral_shoot, rand(0, 1)), 0)
+			INVOKE_ASYNC(src, .proc/spiral_shoot, rand(0, 1))
 
 	else if(prob(20))
 		ranged_cooldown = world.time + 30
@@ -88,7 +88,7 @@ Difficulty: Very Hard
 			blast()
 		else
 			ranged_cooldown = world.time + 40
-			addtimer(CALLBACK(src, .proc/alternating_dir_shots), 0)
+			INVOKE_ASYNC(src, .proc/alternating_dir_shots)
 
 
 /mob/living/simple_animal/hostile/megafauna/colossus/New()
@@ -108,11 +108,11 @@ Difficulty: Very Hard
 /obj/effect/overlay/temp/at_shield/New(new_loc, new_target)
 	..()
 	target = new_target
-	addtimer(CALLBACK(src, /atom/movable/proc/orbit, target, 0, FALSE, 0, 0, FALSE, TRUE), 0)
+	INVOKE_ASYNC(src, /atom/movable/proc/orbit, target, 0, FALSE, 0, 0, FALSE, TRUE)
 
 /mob/living/simple_animal/hostile/megafauna/colossus/bullet_act(obj/item/projectile/P)
 	if(!stat)
-		var/obj/effect/overlay/temp/at_shield/AT = PoolOrNew(/obj/effect/overlay/temp/at_shield, src.loc, src)
+		var/obj/effect/overlay/temp/at_shield/AT = new /obj/effect/overlay/temp/at_shield(src.loc, src)
 		var/random_x = rand(-32, 32)
 		AT.pixel_x += random_x
 
@@ -139,8 +139,8 @@ Difficulty: Very Hard
 	visible_message("<span class='colossus'>\"<b>Die.</b>\"</span>")
 
 	sleep(10)
-	addtimer(CALLBACK(src, .proc/spiral_shoot), 0)
-	addtimer(CALLBACK(src, .proc/spiral_shoot, 1), 0)
+	INVOKE_ASYNC(src, .proc/spiral_shoot)
+	INVOKE_ASYNC(src, .proc/spiral_shoot, 1)
 
 /mob/living/simple_animal/hostile/megafauna/colossus/proc/spiral_shoot(negative = 0, counter_start = 1)
 	var/counter = counter_start
@@ -438,7 +438,7 @@ Difficulty: Very Hard
 	if(..() && ishuman(user) && !(user in affected_targets))
 		var/mob/living/carbon/human/H = user
 		for(var/obj/item/W in H)
-			H.unEquip(W)
+			H.dropItemToGround(W)
 		var/datum/job/clown/C = new /datum/job/clown()
 		C.equip(H)
 		qdel(C)
@@ -556,7 +556,7 @@ Difficulty: Very Hard
 	if(..())
 		for(var/i in range(1, src))
 			if(isturf(i))
-				PoolOrNew(/obj/effect/overlay/temp/cult/sparks, i)
+				new /obj/effect/overlay/temp/cult/sparks(i)
 				continue
 			if(ishuman(i))
 				var/mob/living/carbon/human/H = i
@@ -644,7 +644,7 @@ Difficulty: Very Hard
 		var/mob/living/L = target
 		if(L.stat < DEAD)
 			L.heal_overall_damage(heal_power, heal_power)
-			PoolOrNew(/obj/effect/overlay/temp/heal, list(get_turf(target), "#80F5FF"))
+			new /obj/effect/overlay/temp/heal(get_turf(target), "#80F5FF")
 
 /mob/living/simple_animal/hostile/lightgeist/ghostize()
 	. = ..()
@@ -667,7 +667,7 @@ Difficulty: Very Hard
 	if(..())
 		var/list/L = list()
 		var/turf/T = get_step(src, dir)
-		PoolOrNew(/obj/effect/overlay/temp/emp/pulse,T)
+		new /obj/effect/overlay/temp/emp/pulse(T)
 		for(var/i in T)
 			if(istype(i, /obj/item) && !is_type_in_typecache(i, banned_items_typecache))
 				var/obj/item/W = i

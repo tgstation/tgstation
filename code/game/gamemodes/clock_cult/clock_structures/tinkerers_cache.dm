@@ -44,9 +44,9 @@
 			break
 	if(linkedwall && wall_generation_cooldown <= world.time)
 		wall_generation_cooldown = world.time + (CACHE_PRODUCTION_TIME * get_efficiency_mod(TRUE))
-		generate_cache_component(null, src)
+		var/component_id = generate_cache_component(null, src)
 		playsound(linkedwall, 'sound/magic/clockwork/fellowship_armory.ogg', rand(15, 20), 1, -3, 1, 1)
-		visible_message("<span class='warning'>Something cl[pick("ank", "ink", "unk", "ang")]s around inside of [src]...</span>")
+		visible_message("<span class='[get_component_span(component_id)]'>Something</span><span class='warning'> cl[pick("ank", "ink", "unk", "ang")]s around inside of [src]...</span>")
 
 /obj/structure/destructible/clockwork/cache/attackby(obj/item/I, mob/living/user, params)
 	if(!is_servant_of_ratvar(user))
@@ -78,11 +78,16 @@
 
 /obj/structure/destructible/clockwork/cache/attack_hand(mob/living/user)
 	..()
-	if(is_servant_of_ratvar(user) && linkedwall)
-		if(wall_generation_cooldown > world.time)
-			user << "<span class='alloy'>It will produce a component in <b>[(world.time - wall_generation_cooldown) * 0.1]</b> seconds.</span>"
+	if(is_servant_of_ratvar(user))
+		if(linkedwall)
+			if(wall_generation_cooldown > world.time)
+				user << "<span class='alloy'>[src] will produce a component in <b>[(world.time - wall_generation_cooldown) * 0.1]</b> seconds.</span>"
+			else
+				user << "<span class='brass'>[src] is about to produce a component!</span>"
+		else if(anchored)
+			user << "<span class='alloy'>[src] is unlinked! Construct a Clockwork Wall nearby to generate components!</span>"
 		else
-			user << "<span class='brass'>It is about to produce a component!</span>"
+			user << "<span class='alloy'>[src] needs to be secured to generate components!</span>"
 
 /obj/structure/destructible/clockwork/cache/examine(mob/user)
 	..()

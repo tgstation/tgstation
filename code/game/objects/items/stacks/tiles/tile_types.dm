@@ -18,10 +18,6 @@
 	pixel_x = rand(-3, 3)
 	pixel_y = rand(-3, 3) //randomize a little
 
-/obj/item/stack/tile/Destroy()
-	..()
-	return QDEL_HINT_PUTINPOOL
-
 /obj/item/stack/tile/attackby(obj/item/W, mob/user, params)
 
 	if (istype(W, /obj/item/weapon/weldingtool))

@@ -26,6 +26,7 @@
 	assemblytype = /obj/structure/firelock_frame
 	armor = list(melee = 30, bullet = 30, laser = 20, energy = 20, bomb = 10, bio = 100, rad = 100, fire = 95, acid = 70)
 	CanAtmosPass = ATMOS_PASS_PROC
+	var/boltslocked = TRUE
 
 /obj/machinery/door/firedoor/Bumped(atom/AM)
 	if(panel_open || operating)
@@ -47,23 +48,29 @@
 /obj/machinery/door/firedoor/attackby(obj/item/weapon/C, mob/user, params)
 	add_fingerprint(user)
 	if(operating)
-		return//Already doing something.
-
-	if(istype(C, /obj/item/weapon/wrench) && panel_open)
-		playsound(get_turf(src), C.usesound, 50, 1)
-		user.visible_message("<span class='notice'>[user] starts undoing [src]'s bolts...</span>", \
-							 "<span class='notice'>You start unfastening [src]'s floor bolts...</span>")
-		if(!do_after(user, 50*C.toolspeed, target = src))
+		return
+	
+	if(welded)
+		if(istype(C, /obj/item/weapon/wrench))
+			if(boltslocked)
+				user << "<span class='notice'>There are screws locking the bolts in place!</span>"
+				return
+			playsound(get_turf(src), C.usesound, 50, 1)
+			user.visible_message("<span class='notice'>[user] starts undoing [src]'s bolts...</span>", \
+								 "<span class='notice'>You start unfastening [src]'s floor bolts...</span>")
+			if(!do_after(user, 50*C.toolspeed, target = src))
+				return
+			playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
+			user.visible_message("<span class='notice'>[user] unfastens [src]'s bolts.</span>", \
+								 "<span class='notice'>You undo [src]'s floor bolts.</span>")
+			deconstruct(TRUE)
 			return
-		playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
-		user.visible_message("<span class='notice'>[user] unfastens [src]'s bolts.</span>", \
-							 "<span class='notice'>You undo [src]'s floor bolts.</span>")
-		deconstruct(TRUE)
-		return
-
-	if(istype(C, /obj/item/weapon/screwdriver))
-		default_deconstruction_screwdriver(user, icon_state, icon_state, C)
-		return
+		if(istype(C, /obj/item/weapon/screwdriver))
+			user.visible_message("<span class='notice'>[user] [boltslocked ? "unlocks" : "locks"] [src]'s bolts...</span>", \
+								 "<span class='notice'>You [boltslocked ? "unlock" : "lock"] [src]'s floor bolts...</span>")
+			playsound(get_turf(src), C.usesound, 50, 1)
+			boltslocked = !boltslocked
+			return
 
 	return ..()
 
@@ -79,6 +86,7 @@
 /obj/machinery/door/firedoor/try_to_crowbar(obj/item/I, mob/user)
 	if(welded || operating)
 		return
+
 	if(density)
 		open()
 	else

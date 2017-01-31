@@ -17,14 +17,9 @@
 	user.visible_message("<span class='suicide'>[user] hooks [user.p_them()]self to the electropack and spams the trigger! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return (FIRELOSS)
 
-/obj/item/device/electropack/initialize()
-	if(SSradio)
-		SSradio.add_object(src, frequency, RADIO_CHAT)
-
-/obj/item/device/electropack/New()
-	if(SSradio)
-		SSradio.add_object(src, frequency, RADIO_CHAT)
+/obj/item/device/electropack/Initialize()
 	..()
+	SSradio.add_object(src, frequency, RADIO_CHAT)
 
 /obj/item/device/electropack/Destroy()
 	if(SSradio)
@@ -44,15 +39,13 @@
 		var/obj/item/assembly/shock_kit/A = new /obj/item/assembly/shock_kit( user )
 		A.icon = 'icons/obj/assemblies.dmi'
 
-		if(!user.unEquip(W))
+		if(!user.transferItemToLoc(W, A))
 			user << "<span class='warning'>[W] is stuck to your hand, you cannot attach it to [src]!</span>"
 			return
-		W.loc = A
 		W.master = A
 		A.part1 = W
 
-		user.unEquip(src)
-		loc = A
+		user.transferItemToLoc(src, A, TRUE)
 		master = A
 		A.part2 = src
 

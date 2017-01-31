@@ -69,14 +69,17 @@ var/datum/subsystem/lighting/SSlighting
 			if (A.lighting_use_dynamic == DYNAMIC_LIGHTING_IFSTARLIGHT)
 				A.luminosity = 0
 
+	CHECK_TICK
 	for(var/thing in changed_lights)
 		var/datum/light_source/LS = thing
 		LS.check()
+		CHECK_TICK
 	changed_lights.Cut()
 
 	for(var/thing in turfs_to_init)
 		var/turf/T = thing
 		T.init_lighting()
+		CHECK_TICK
 	changed_turfs.Cut()
 
 	..()

@@ -23,6 +23,7 @@
 	var/list/acted_explosions	//for explosion dodging
 	glide_size = 8
 	appearance_flags = TILE_BOUND
+	var/datum/forced_movement/force_moving = null	//handled soley by forced_movement.dm
 
 
 
@@ -139,10 +140,12 @@
 		if(pulledby)
 			pulledby.stop_pulling()
 		var/atom/oldloc = loc
-		if(oldloc)
+		var/same_loc = oldloc == destination.loc
+		if(oldloc && !same_loc)
 			oldloc.Exited(src, destination)
 		loc = destination
-		destination.Entered(src, oldloc)
+		if(!same_loc)
+			destination.Entered(src, oldloc)
 		var/area/old_area = get_area(oldloc)
 		var/area/destarea = get_area(destination)
 		if(old_area != destarea)
@@ -288,7 +291,7 @@
 		SpinAnimation(5, 1)
 
 	SSthrowing.processing[src] = TT
-	if (SSthrowing.paused && length(SSthrowing.currentrun))
+	if (SSthrowing.state == SS_PAUSED && length(SSthrowing.currentrun))
 		SSthrowing.currentrun[src] = TT
 	TT.tick()
 

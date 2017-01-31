@@ -4,6 +4,7 @@
  *		Camera Film
  *		Photos
  *		Photo Albums
+ *		Picture Frames
  *		AI Photography
  */
 
@@ -53,7 +54,7 @@
 /obj/item/weapon/photo/examine(mob/user)
 	..()
 
-	if(in_range(user, src))
+	if(in_range(src, user))
 		show(user)
 	else
 		user << "<span class='warning'>You need to get closer to get a good look at this photo!</span>"
@@ -168,7 +169,7 @@
 		if(pictures_left)
 			user << "<span class='notice'>[src] still has some film in it!</span>"
 			return
-		if(!user.unEquip(I))
+		if(!user.temporarilyRemoveItemFromInventory(I))
 			return
 		user << "<span class='notice'>You insert [I] into [src].</span>"
 		qdel(I)
@@ -303,7 +304,7 @@
 
 /obj/item/device/camera/proc/printpicture(mob/user, icon/temp, mobs, flag) //Normal camera proc for creating photos
 	var/obj/item/weapon/photo/P = new/obj/item/weapon/photo(get_turf(src))
-	if(Adjacent(user)) //needed because of TK
+	if(in_range(src, user)) //needed because of TK
 		user.put_in_hands(P)
 	var/icon/small_img = icon(temp)
 	var/icon/ic = icon('icons/obj/items.dmi',"photo")
@@ -484,3 +485,124 @@
 	C.toner -= 20	 //Cyborgs are very ineffeicient at printing an image
 	visible_message("[C.name] spits out a photograph from a narrow slot on its chassis.")
 	usr << "<span class='notice'>You print a photograph.</span>"
+
+// Picture frames
+
+/obj/item/weapon/picture_frame
+	name = "picture frame"
+	desc = "The perfect showcase for your favorite deathtrap memories."
+	icon = 'icons/obj/decals.dmi'
+	icon_state = "frame-empty"
+	var/obj/item/weapon/photo/displayed
+
+/obj/item/weapon/picture_frame/attackby(obj/item/I, mob/user)
+	if(istype(I, /obj/item/weapon/photo))
+		if(!displayed)
+			var/obj/item/weapon/photo/P = I
+			if(!user.transferItemToLoc(P, src))
+				return
+			displayed = P
+			update_icon()
+		else
+			user << "<span class=notice>\The [src] already contains a photo.</span>"
+
+	..()
+
+/obj/item/weapon/picture_frame/attack_hand(mob/user)
+	if(user.get_inactive_held_item() != src)
+		..()
+		return
+	if(contents.len)
+		var/obj/item/I = pick(contents)
+		user.put_in_hands(I)
+		user << "<span class='notice'>You carefully remove the photo from \the [src].</span>"
+		displayed = null
+		update_icon()
+
+/obj/item/weapon/picture_frame/attack_self(mob/user)
+	user.examinate(src)
+
+/obj/item/weapon/picture_frame/examine(mob/user)
+	if(user.is_holding(src) && displayed)
+		displayed.show(user)
+	else
+		..()
+
+/obj/item/weapon/picture_frame/update_icon()
+	overlays.Cut()
+	if(displayed)
+		overlays |= getFlatIcon(displayed)
+	else
+		icon_state = initial(icon_state)
+
+/obj/item/weapon/picture_frame/afterattack(atom/target, mob/user, proximity)
+	var/turf/T = target
+	if(!iswallturf(T))
+		return
+	user.visible_message("<span class='notice'>[user] fastens [src] to [T].</span>", \
+						 "<span class='notice'>You attach the sign to [T].</span>")
+	playsound(T, 'sound/items/Deconstruct.ogg', 50, 1)
+	var/obj/structure/sign/picture_frame/PF = new /obj/structure/sign/picture_frame(T)
+	PF.overlays = overlays.Copy()
+	if(displayed)
+		PF.framed = displayed
+	if(contents.len)
+		var/obj/item/I = pick(contents)
+		I.forceMove(PF)
+	qdel(src)
+
+/obj/structure/sign/picture_frame
+	name = "picture frame"
+	desc = "Every time you look it makes you laugh."
+	icon = 'icons/obj/decals.dmi'
+	icon_state = "frame-empty"
+	var/obj/item/weapon/photo/framed
+
+/obj/structure/sign/picture_frame/examine(mob/user)
+	if(in_range(src, user) && framed)
+		framed.show(user)
+	else
+		..()
+
+/obj/structure/sign/picture_frame/attackby(obj/item/O, mob/user, params)
+	if(istype(O, /obj/item/weapon/screwdriver))
+		user.visible_message("<span class='notice'>[user] starts removing [src]...</span>", \
+							 "<span class='notice'>You start unfastening [src].</span>")
+		playsound(src, O.usesound, 50, 1)
+		if(!do_after(user, 30*O.toolspeed, target = src))
+			return
+		playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
+		user.visible_message("<span class='notice'>[user] unfastens [src].</span>", \
+							 "<span class='notice'>You unfasten [src].</span>")
+		var/obj/item/weapon/picture_frame/F = new /obj/item/weapon/picture_frame(get_turf(user))
+		if(framed)
+			F.displayed = framed
+			framed = null
+		if(contents.len)
+			var/obj/item/I = pick(contents)
+			I.forceMove(F)
+		F.update_icon()
+		qdel(src)
+
+	else if(istype(O, /obj/item/weapon/photo))
+		if(!framed)
+			var/obj/item/weapon/photo/P = O
+			if(!user.transferItemToLoc(P, src))
+				return
+			framed = P
+			update_icon()
+		else
+			user << "<span class=notice>\The [src] already contains a photo.</span>"
+
+	..()
+
+/obj/structure/sign/picture_frame/attack_hand(mob/user)
+	if(framed)
+		framed.show()
+
+/obj/structure/sign/picture_frame/update_icon()
+	overlays.Cut()
+	if(framed)
+		overlays |= getFlatIcon(framed)
+	else
+		icon_state = initial(icon_state)

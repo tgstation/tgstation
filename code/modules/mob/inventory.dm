@@ -236,14 +236,14 @@
 	if(!loc || !loc.allow_drop())
 		return
 	for(var/obj/item/I in held_items)
-		unEquip(I)
+		dropItemToGround(I)
 
 //Drops the item in our active hand.
 /mob/proc/drop_item()
 	if(!loc || !loc.allow_drop())
 		return
 	var/obj/item/held = get_active_held_item()
-	return unEquip(held)
+	return dropItemToGround(held)
 
 
 //Here lie drop_from_inventory and before_item_take, already forgotten and not missed.
@@ -255,7 +255,27 @@
 		return FALSE
 	return TRUE
 
-/mob/proc/unEquip(obj/item/I, force) //Force overrides NODROP for things like wizarditis and admin undress.
+//The following functions are the same save for one small difference
+
+//for when you want the item to end up on the ground
+//will force move the item to the ground and call the turf's Entered
+/mob/proc/dropItemToGround(obj/item/I, force = FALSE)
+	return doUnEquip(I, force, loc, FALSE)
+
+//for when the item will be immediately placed in a loc other than the ground
+/mob/proc/transferItemToLoc(obj/item/I, newloc = null, force = FALSE)
+	return doUnEquip(I, force, newloc, FALSE)
+
+//visibly unequips I but it is NOT MOVED AND REMAINS IN SRC
+//item MUST BE FORCEMOVE'D OR QDEL'D
+/mob/proc/temporarilyRemoveItemFromInventory(obj/item/I, force = FALSE)
+	return doUnEquip(I, force, null, TRUE)
+
+//DO NOT CALL THIS PROC
+//use one of the above 2 helper procs
+//you may override it, but do not modify the args
+/mob/proc/doUnEquip(obj/item/I, force, newloc, no_move) //Force overrides NODROP for things like wizarditis and admin undress.
+													//Use no_move if the item is just gonna be immediately moved afterward
 	if(!I) //If there's nothing to drop, the drop is automatically succesfull. If(unEquip) should generally be used to check for NODROP.
 		return TRUE
 
@@ -272,17 +292,10 @@
 		I.layer = initial(I.layer)
 		I.plane = initial(I.plane)
 		I.appearance_flags &= ~NO_CLIENT_COLOR
-		I.forceMove(loc)
+		if(!no_move && !(I.flags & DROPDEL))	//item may be moved/qdel'd immedietely, don't bother moving it
+			I.forceMove(newloc)
 		I.dropped(src)
 	return TRUE
-
-
-//Attemps to remove an object on a mob.  Will not move it to another area or such, just removes from the mob.
-/mob/proc/remove_from_mob(var/obj/item/I)
-	unEquip(I)
-	I.screen_loc = null
-	return TRUE
-
 
 //Outdated but still in use apparently. This should at least be a human proc.
 //Daily reminder to murder this - Remie.
@@ -385,7 +398,7 @@
 /mob/proc/change_number_of_hands(amt)
 	if(amt < held_items.len)
 		for(var/i in held_items.len to amt step -1)
-			unEquip(held_items[i])
+			dropItemToGround(held_items[i])
 	held_items.len = amt
 
 	if(hud_used)

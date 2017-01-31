@@ -82,6 +82,8 @@ var/list/ai_list = list()
 
 	var/obj/machinery/camera/portable/builtInCamera
 
+	var/obj/structure/AIcore/deactivated/linked_core //For exosuit control
+
 /mob/living/silicon/ai/New(loc, datum/ai_laws/L, mob/target_ai)
 	..()
 	if(!target_ai) //If there is no player/brain inside.
@@ -118,7 +120,7 @@ var/list/ai_list = list()
 	eyeobj.loc = src.loc
 	rename_self("ai")
 
-	holo_icon = getHologramIcon(icon('icons/mob/AI.dmi',"holo1"))
+	holo_icon = getHologramIcon(icon('icons/mob/AI.dmi',"default"))
 
 	spark_system = new /datum/effect_system/spark_spread()
 	spark_system.set_up(5, 0, src)
@@ -419,7 +421,16 @@ var/list/ai_list = list()
 	if (href_list["ai_take_control"]) //Mech domination
 		var/obj/mecha/M = locate(href_list["ai_take_control"])
 		if(controlled_mech)
-			src << "You are already loaded into an onboard computer!"
+			src << "<span class='warning'>You are already loaded into an onboard computer!</span>"
+			return
+		if(!cameranet.checkCameraVis(M))
+			src << "<span class='warning'>Exosuit is no longer near active cameras.</span>"
+			return
+		if(lacks_power())
+			src << "<span class='warning'>You're depowered!</span>"
+			return
+		if(!isturf(loc))
+			src << "<span class='warning'>You aren't in your core!</span>"
 			return
 		if(M)
 			M.transfer_ai(AI_MECH_HACK,src, usr) //Called om the mech itself.
@@ -498,7 +509,7 @@ var/list/ai_list = list()
 	call_bot_cooldown = world.time + CALL_BOT_COOLDOWN
 	Bot.call_bot(src, waypoint)
 	call_bot_cooldown = 0
-	
+
 
 /mob/living/silicon/ai/triggerAlarm(class, area/A, O, obj/alarmsource)
 	if(alarmsource.z != z)
@@ -637,41 +648,63 @@ var/list/ai_list = list()
 	if(stat == 2)
 		return //won't work if dead
 	var/input
-	if(alert("Would you like to select a hologram based on a crew member or switch to unique avatar?",,"Crew Member","Unique")=="Crew Member")
+	switch(alert("Would you like to select a hologram based on a crew member, an animal, or switch to a unique avatar?",,"Crew Member","Unique","Animal"))
+		if("Crew Member")
+			var/list/personnel_list = list()
 
-		var/personnel_list[] = list()
+			for(var/datum/data/record/t in data_core.locked)//Look in data core locked.
+				personnel_list["[t.fields["name"]]: [t.fields["rank"]]"] = t.fields["image"]//Pull names, rank, and image.
 
-		for(var/datum/data/record/t in data_core.locked)//Look in data core locked.
-			personnel_list["[t.fields["name"]]: [t.fields["rank"]]"] = t.fields["image"]//Pull names, rank, and image.
+			if(personnel_list.len)
+				input = input("Select a crew member:") as null|anything in personnel_list
+				var/icon/character_icon = personnel_list[input]
+				if(character_icon)
+					qdel(holo_icon)//Clear old icon so we're not storing it in memory.
+					holo_icon = getHologramIcon(icon(character_icon))
+			else
+				alert("No suitable records found. Aborting.")
 
-		if(personnel_list.len)
-			input = input("Select a crew member:") as null|anything in personnel_list
-			var/icon/character_icon = personnel_list[input]
-			if(character_icon)
-				qdel(holo_icon)//Clear old icon so we're not storing it in memory.
-				holo_icon = getHologramIcon(icon(character_icon))
+		if("Animal")
+			var/list/icon_list = list(
+			"bear" = 'icons/mob/animal.dmi',
+			"carp" = 'icons/mob/animal.dmi',
+			"chicken" = 'icons/mob/animal.dmi',
+			"corgi" = 'icons/mob/pets.dmi',
+			"cow" = 'icons/mob/animal.dmi',
+			"crab" = 'icons/mob/animal.dmi',
+			"fox" = 'icons/mob/pets.dmi',
+			"goat" = 'icons/mob/animal.dmi',
+			"cat" = 'icons/mob/pets.dmi',
+			"cat2" = 'icons/mob/pets.dmi',
+			"poly" = 'icons/mob/animal.dmi',
+			"pug" = 'icons/mob/pets.dmi',
+			"spider" = 'icons/mob/animal.dmi'
+			)
+
+			input = input("Please select a hologram:") as null|anything in icon_list
+			if(input)
+				qdel(holo_icon)
+				switch(input)
+					if("poly")
+						holo_icon = getHologramIcon(icon(icon_list[input],"parrot_fly"))
+					if("chicken")
+						holo_icon = getHologramIcon(icon(icon_list[input],"chicken_brown"))
+					if("spider")
+						holo_icon = getHologramIcon(icon(icon_list[input],"guard"))
+					else
+						holo_icon = getHologramIcon(icon(icon_list[input], input))
 		else
-			alert("No suitable records found. Aborting.")
+			var/list/icon_list = list(
+				"default" = 'icons/mob/AI.dmi',
+				"floating face" = 'icons/mob/AI.dmi',
+				"xeno queen" = 'icons/mob/AI.dmi',
+				"horror" = 'icons/mob/AI.dmi'
+				)
 
-	else
-		var/icon_list[] = list(
-		"default",
-		"floating face",
-		"xeno queen",
-		"space carp"
-		)
-		input = input("Please select a hologram:") as null|anything in icon_list
-		if(input)
-			qdel(holo_icon)
-			switch(input)
-				if("default")
-					holo_icon = getHologramIcon(icon('icons/mob/AI.dmi',"holo1"))
-				if("floating face")
-					holo_icon = getHologramIcon(icon('icons/mob/AI.dmi',"holo2"))
-				if("xeno queen")
-					holo_icon = getHologramIcon(icon('icons/mob/AI.dmi',"holo3"))
-				if("space carp")
-					holo_icon = getHologramIcon(icon('icons/mob/AI.dmi',"holo4"))
+			input = input("Please select a hologram:") as null|anything in icon_list
+			if(input)
+				qdel(holo_icon)
+				holo_icon = getHologramIcon(icon(icon_list[input], input))
 	return
 
 /mob/living/silicon/ai/proc/corereturn()
@@ -824,7 +857,7 @@ var/list/ai_list = list()
 			if(isturf(loc))
 				if(eyeobj)
 					client.eye = eyeobj
-					client.perspective = MOB_PERSPECTIVE
+					client.perspective = EYE_PERSPECTIVE
 				else
 					client.eye = client.mob
 					client.perspective = MOB_PERSPECTIVE

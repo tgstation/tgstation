@@ -222,7 +222,7 @@ var/list/slime_colours = list("rainbow", "grey", "purple", "metal", "orange",
 			Feedon(Food)
 	..()
 
-/mob/living/simple_animal/slime/unEquip(obj/item/W)
+/mob/living/simple_animal/slime/doUnEquip(obj/item/W)
 	return
 
 /mob/living/simple_animal/slime/start_pulling(atom/movable/AM)
