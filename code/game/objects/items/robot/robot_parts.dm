@@ -248,6 +248,29 @@
 		else
 			user << "<span class='warning'>The MMI must go in after everything else!</span>"
 
+	else if(istype(W, /obj/item/borg/upgrade/ai))
+		var/obj/item/borg/upgrade/ai/M = W
+		if(check_completion())
+			if(!isturf(loc))
+				user << "<span class='warning'>You can't put [M] in, the frame has to be standing on the ground to be perfectly precise!</span>"
+				return
+			if(!user.drop_item())
+				user << "<span class='warning'>[M] is stuck to your hand!</span>"
+				return
+			qdel(M)
+			var/mob/living/silicon/robot/O = new /mob/living/silicon/robot(get_turf(loc),TRUE)
+			O.cell = chest.cell
+			chest.cell.loc = O
+			chest.cell = null
+			O.locked = panel_locked
+			O.job = "Cyborg"
+			forceMove(O)
+			O.robot_suit = src
+			if(!locomotion)
+				O.lockcharge = 1
+				O.update_canmove()
+
+
 	else if(istype(W,/obj/item/weapon/pen))
 		user << "<span class='warning'>You need to use a multitool to name [src]!</span>"
 	else

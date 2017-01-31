@@ -17,6 +17,9 @@
 	if(stat == DEAD)
 		return
 
+	if(deployed)
+		undeploy()
+
 	. = ..()
 
 	locked = 0 //unlock cover
