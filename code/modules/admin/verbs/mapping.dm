@@ -259,3 +259,14 @@ var/global/say_disabled = 0
 		message_admins("[src.ckey] used 'Disable all communication verbs', killing all communication methods.")
 	else
 		message_admins("[src.ckey] used 'Disable all communication verbs', restoring all communication methods.")
+
+/client/proc/load_new_z_level()
+	set category = "Special Verbs"
+	set name = "Load New Z-Level"
+
+	var/path = input("Path of the map to load","") as text
+	if(!path)
+		return
+
+	load_z_level(path)
+	message_admins("[src.ckey] loaded new zlevel ([world.maxz]): [path]")

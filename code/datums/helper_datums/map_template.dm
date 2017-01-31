@@ -17,7 +17,9 @@
 		name = rename
 
 /datum/map_template/proc/preload_size(path)
+	var/dmm_suite/maploader = new
 	var/bounds = maploader.load_map(file(path), 1, 1, 1, cropMap=FALSE, measureOnly=TRUE)
+	qdel(maploader)
 	if(bounds)
 		width = bounds[MAP_MAXX] // Assumes all templates are rectangular, have a single Z level, and begin at 1,1,1
 		height = bounds[MAP_MAXY]
@@ -44,17 +46,28 @@
 	SSmachine.setup_template_powernets(cables)
 	SSair.setup_template_machinery(atmos_machines)
 
-/datum/map_template/proc/load(turf/T, centered = FALSE)
+/datum/map_template/proc/load(turf/T = null, centered = FALSE)
 	if(centered)
 		T = locate(T.x - round(width/2) , T.y - round(height/2) , T.z)
-	if(!T)
-		return
-	if(T.x+width > world.maxx)
-		return
-	if(T.y+height > world.maxy)
-		return
+	if(T)
+		if(T.x+width > world.maxx)
+			return
+		if(T.y+height > world.maxy)
+			return
+	else
+		if(width > world.maxx)
+			return
+		if(height > world.maxy)
+			return
 
-	var/list/bounds = maploader.load_map(get_file(), T.x, T.y, T.z, cropMap=TRUE)
+	var/dmm_suite/maploader = new
+	var/list/bounds
+	if(T)
+		bounds = maploader.load_map(get_file(), T.x, T.y, T.z, cropMap=TRUE)
+	else
+		bounds = maploader.load_map(get_file())
+		smooth_zlevel(world.maxz)
+	qdel(maploader)
 	if(!bounds)
 		return 0
 
