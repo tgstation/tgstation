@@ -1,11 +1,5 @@
 var/datum/subsystem/objects/SSobj
 
-/datum/var/isprocessing = 0
-/datum/proc/process()
-	set waitfor = 0
-	STOP_PROCESSING(SSobj, src)
-	return 0
-
 /datum/subsystem/objects
 	name = "Objects"
 	init_order = 12
