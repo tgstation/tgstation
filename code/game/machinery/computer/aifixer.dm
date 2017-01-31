@@ -7,7 +7,6 @@
 	circuit = /obj/item/weapon/circuitboard/computer/aifixer
 	icon_keyboard = "tech_key"
 	icon_screen = "ai-fixer"
-	var/fix_next_tick = 0
 
 /obj/machinery/computer/aifixer/attackby(obj/I, mob/user, params)
 	if(occupier && istype(I, /obj/item/weapon/screwdriver))
@@ -72,22 +71,18 @@
 	return
 
 /obj/machinery/computer/aifixer/proc/Fix()
-	. = TRUE
-	if(world.time < fix_next_tick)
-		return
-	while(. && world.time < fix_next_tick)
-		. = use_power(1000)
-		if(.)
-			fix_next_tick = world.time + 10
-			occupier.adjustOxyLoss(-1, 0)
-			occupier.adjustFireLoss(-1, 0)
-			occupier.adjustToxLoss(-1, 0)
-			occupier.adjustBruteLoss(-1, 0)
-			occupier.updatehealth()
-			occupier.updatehealth()
-			if(occupier.health >= 0 && occupier.stat == DEAD)
-				occupier.revive()
-			. = occupier.health < 100
+	. = use_power(1000)
+	if(.)
+		fix_next_tick = world.time + 10
+		occupier.adjustOxyLoss(-1, 0)
+		occupier.adjustFireLoss(-1, 0)
+		occupier.adjustToxLoss(-1, 0)
+		occupier.adjustBruteLoss(-1, 0)
+		occupier.updatehealth()
+		occupier.updatehealth()
+		if(occupier.health >= 0 && occupier.stat == DEAD)
+			occupier.revive()
+		. = occupier.health < 100
 
 /obj/machinery/computer/aifixer/process()
 	if(..())
