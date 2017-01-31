@@ -114,7 +114,7 @@ Difficulty: Hard
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/devour(mob/living/L)
 	for(var/obj/item/W in L)
-		if(!L.unEquip(W))
+		if(!L.dropItemToGround(W))
 			qdel(W)
 	visible_message(
 		"<span class='hierophant_warning'>\"[pick(kill_phrases)]\"\n[src] annihilates [L]!</span>",
@@ -139,7 +139,7 @@ Difficulty: Hard
 /mob/living/simple_animal/hostile/megafauna/hierophant/AttackingTarget()
 	if(!blinking)
 		if(target && isliving(target))
-			addtimer(CALLBACK(src, .proc/melee_blast, get_turf(target)), 0) //melee attacks on living mobs produce a 3x3 blast
+			INVOKE_ASYNC(src, .proc/melee_blast, get_turf(target)) //melee attacks on living mobs produce a 3x3 blast
 		..()
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/DestroySurroundings()
@@ -229,9 +229,9 @@ Difficulty: Hard
 						cross_counter--
 						var/delay = 7
 						if(prob(60))
-							addtimer(CALLBACK(src, .proc/cardinal_blasts, target), 0)
+							INVOKE_ASYNC(src, .proc/cardinal_blasts, target)
 						else
-							addtimer(CALLBACK(src, .proc/diagonal_blasts, target), 0)
+							INVOKE_ASYNC(src, .proc/diagonal_blasts, target)
 							delay = 5 //this one isn't so mean, so do the next one faster(if there is one)
 						sleep(delay)
 					animate(src, color = oldcolor, time = 8)
@@ -268,18 +268,18 @@ Difficulty: Hard
 	else if(prob(70 - anger_modifier)) //a cross blast of some type
 		if(prob(anger_modifier)) //at us?
 			if(prob(anger_modifier * 2) && health < maxHealth * 0.5) //we're super angry do it at all dirs
-				addtimer(CALLBACK(src, .proc/alldir_blasts, src), 0)
+				INVOKE_ASYNC(src, .proc/alldir_blasts, src)
 			else if(prob(60))
-				addtimer(CALLBACK(src, .proc/cardinal_blasts, src), 0)
+				INVOKE_ASYNC(src, .proc/cardinal_blasts, src)
 			else
-				addtimer(CALLBACK(src, .proc/diagonal_blasts, src), 0)
+				INVOKE_ASYNC(src, .proc/diagonal_blasts, src)
 		else //at them?
 			if(prob(anger_modifier * 2) && health < maxHealth * 0.5 && !target_is_slow) //we're super angry do it at all dirs
-				addtimer(CALLBACK(src, .proc/alldir_blasts, target), 0)
+				INVOKE_ASYNC(src, .proc/alldir_blasts, target)
 			else if(prob(60))
-				addtimer(CALLBACK(src, .proc/cardinal_blasts, target), 0)
+				INVOKE_ASYNC(src, .proc/cardinal_blasts, target)
 			else
-				addtimer(CALLBACK(src, .proc/diagonal_blasts, target), 0)
+				INVOKE_ASYNC(src, .proc/diagonal_blasts, target)
 	else if(chaser_cooldown < world.time) //if chasers are off cooldown, fire some!
 		var/obj/effect/overlay/temp/hierophant/chaser/C = new /obj/effect/overlay/temp/hierophant/chaser(loc, src, target, chaser_speed, FALSE)
 		chaser_cooldown = world.time + initial(chaser_cooldown)
@@ -288,7 +288,7 @@ Difficulty: Hard
 			OC.moving = 4
 			OC.moving_dir = pick(cardinal - C.moving_dir)
 	else //just release a burst of power
-		addtimer(CALLBACK(src, .proc/burst, get_turf(src)), 0)
+		INVOKE_ASYNC(src, .proc/burst, get_turf(src))
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/proc/diagonal_blasts(mob/victim) //fire diagonal cross blasts with a delay
 	var/turf/T = get_turf(victim)
@@ -299,7 +299,7 @@ Difficulty: Hard
 	sleep(2)
 	new /obj/effect/overlay/temp/hierophant/blast(T, src, FALSE)
 	for(var/d in diagonals)
-		addtimer(CALLBACK(src, .proc/blast_wall, T, d), 0)
+		INVOKE_ASYNC(src, .proc/blast_wall, T, d)
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/proc/cardinal_blasts(mob/victim) //fire cardinal cross blasts with a delay
 	var/turf/T = get_turf(victim)
@@ -310,7 +310,7 @@ Difficulty: Hard
 	sleep(2)
 	new /obj/effect/overlay/temp/hierophant/blast(T, src, FALSE)
 	for(var/d in cardinal)
-		addtimer(CALLBACK(src, .proc/blast_wall, T, d), 0)
+		INVOKE_ASYNC(src, .proc/blast_wall, T, d)
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/proc/alldir_blasts(mob/victim) //fire alldir cross blasts with a delay
 	var/turf/T = get_turf(victim)
@@ -321,7 +321,7 @@ Difficulty: Hard
 	sleep(2)
 	new /obj/effect/overlay/temp/hierophant/blast(T, src, FALSE)
 	for(var/d in alldirs)
-		addtimer(CALLBACK(src, .proc/blast_wall, T, d), 0)
+		INVOKE_ASYNC(src, .proc/blast_wall, T, d)
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/proc/blast_wall(turf/T, set_dir) //make a wall of blasts beam_range tiles long
 	var/range = beam_range
@@ -340,13 +340,13 @@ Difficulty: Hard
 		return
 	arena_cooldown = world.time + initial(arena_cooldown)
 	for(var/d in cardinal)
-		addtimer(CALLBACK(src, .proc/arena_squares, T, d), 0)
+		INVOKE_ASYNC(src, .proc/arena_squares, T, d)
 	for(var/t in RANGE_TURFS(11, T))
 		if(t && get_dist(t, T) == 11)
 			new /obj/effect/overlay/temp/hierophant/wall(t)
 			new /obj/effect/overlay/temp/hierophant/blast(t, src, FALSE)
 	if(get_dist(src, T) >= 11) //hey you're out of range I need to get closer to you!
-		addtimer(CALLBACK(src, .proc/blink, T), 0)
+		INVOKE_ASYNC(src, .proc/blink, T)
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/proc/arena_squares(turf/T, set_dir) //make a fancy effect extending from the arena target
 	var/turf/previousturf = T
@@ -567,7 +567,7 @@ Difficulty: Hard
 	if(ismineralturf(loc)) //drill mineral turfs
 		var/turf/closed/mineral/M = loc
 		M.gets_drilled(caster)
-	addtimer(CALLBACK(src, .proc/blast), 0)
+	INVOKE_ASYNC(src, .proc/blast)
 
 /obj/effect/overlay/temp/hierophant/blast/proc/blast()
 	var/turf/T = get_turf(src)
@@ -629,7 +629,7 @@ Difficulty: Hard
 		if(H.beacon == src)
 			user << "<span class='notice'>You start removing your hierophant beacon...</span>"
 			H.timer = world.time + 51
-			addtimer(CALLBACK(H, /obj/item/weapon/hierophant_club.proc/prepare_icon_update), 0)
+			INVOKE_ASYNC(H, /obj/item/weapon/hierophant_club.proc/prepare_icon_update)
 			if(do_after(user, 50, target = src))
 				playsound(src,'sound/magic/Blind.ogg', 200, 1, -4)
 				new /obj/effect/overlay/temp/hierophant/telegraph/teleport(get_turf(src), user)
@@ -639,7 +639,7 @@ Difficulty: Hard
 				qdel(src)
 			else
 				H.timer = world.time
-				addtimer(CALLBACK(H, /obj/item/weapon/hierophant_club.proc/prepare_icon_update), 0)
+				INVOKE_ASYNC(H, /obj/item/weapon/hierophant_club.proc/prepare_icon_update)
 		else
 			user << "<span class='hierophant_warning'>You touch the beacon with the club, but nothing happens.</span>"
 	else

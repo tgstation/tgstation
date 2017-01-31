@@ -9,7 +9,6 @@
 	desc = "Forms an automatic short-range turret that deals low sustained damage to the unenlightened in its range."
 	invocations = list("Guardians...", "...of the Engine...", "...defend us!")
 	channel_time = 120
-	required_components = list(BELLIGERENT_EYE = 2, REPLICANT_ALLOY = 1)
 	consumed_components = list(BELLIGERENT_EYE = 1, REPLICANT_ALLOY = 1)
 	object_path = /obj/structure/destructible/clockwork/ocular_warden
 	creator_message = "<span class='brass'>You form an ocular warden, which will focus its searing gaze upon nearby unenlightened.</span>"
@@ -37,7 +36,6 @@
 	desc = "Creates a small shell fitted for soul vessels. Adding an active soul vessel to it results in a small construct with tools and an inbuilt proselytizer."
 	invocations = list("Call forth...", "...the workers of Armorer.")
 	channel_time = 60
-	required_components = list(BELLIGERENT_EYE = 2, HIEROPHANT_ANSIBLE = 1)
 	consumed_components = list(BELLIGERENT_EYE = 1, HIEROPHANT_ANSIBLE = 1)
 	object_path = /obj/structure/destructible/clockwork/shell/cogscarab
 	creator_message = "<span class='brass'>You form a cogscarab, a constructor soul vessel receptacle.</span>"
@@ -58,7 +56,6 @@
 	It grows faster to invoke with more nearby servants."
 	invocations = list("Shield us...", "...with the...", "... fragments of Engine!")
 	channel_time = 100
-	required_components = list(VANGUARD_COGWHEEL = 2, REPLICANT_ALLOY = 1)
 	consumed_components = list(VANGUARD_COGWHEEL = 1, REPLICANT_ALLOY = 1)
 	usage_tip = "Before using, advise adjacent allies to remove their helmets, external suits, gloves, and shoes."
 	tier = SCRIPTURE_SCRIPT
@@ -99,7 +96,6 @@
 	desc = "Places a luminous sigil that will enslave any valid beings standing on it after a time."
 	invocations = list("Divinity, enlighten...", "...those who trespass here!")
 	channel_time = 60
-	required_components = list(BELLIGERENT_EYE = 1, GEIS_CAPACITOR = 2)
 	consumed_components = list(BELLIGERENT_EYE = 1, GEIS_CAPACITOR = 1)
 	whispered = TRUE
 	object_path = /obj/effect/clockwork/sigil/submission
@@ -120,7 +116,6 @@
 	desc = "Forms an ancient positronic brain with an overriding directive to serve Ratvar."
 	invocations = list("Herd the souls of...", "...the blasphemous damned!")
 	channel_time = 30
-	required_components = list(VANGUARD_COGWHEEL = 1, GEIS_CAPACITOR = 2)
 	consumed_components = list(VANGUARD_COGWHEEL = 1, GEIS_CAPACITOR = 1)
 	whispered = TRUE
 	object_path = /obj/item/device/mmi/posibrain/soul_vessel
@@ -141,7 +136,6 @@
 	desc = "Forms a device that, when used on certain objects, converts them into their Ratvarian equivalents. It requires power to function."
 	invocations = list("With this device...", "...his presence shall be made known.")
 	channel_time = 20
-	required_components = list(GEIS_CAPACITOR = 1, REPLICANT_ALLOY = 2)
 	consumed_components = list(GEIS_CAPACITOR = 1, REPLICANT_ALLOY = 1)
 	whispered = TRUE
 	object_path = /obj/item/clockwork/clockwork_proselytizer/preloaded
@@ -163,7 +157,6 @@
 	vanish three minutes after being summoned."
 	invocations = list("Grant me...", "...the might of brass!")
 	channel_time = 20
-	required_components = list(REPLICANT_ALLOY = 2, HIEROPHANT_ANSIBLE = 1)
 	consumed_components = list(REPLICANT_ALLOY = 1, HIEROPHANT_ANSIBLE = 1)
 	whispered = TRUE
 	usage_tip = "You can impale human targets with the spear by pulling them, then attacking. Throwing the spear at a mob will do massive damage and stun them, but break the spear."
@@ -229,7 +222,6 @@
 	Each servant assisting in the invocation adds one additional use and four additional seconds to the gateway's uses and duration."
 	invocations = list("Spatial Gateway...", "...activate!")
 	channel_time = 80
-	required_components = list(VANGUARD_COGWHEEL = 1, HIEROPHANT_ANSIBLE = 2)
 	consumed_components = list(VANGUARD_COGWHEEL = 1, HIEROPHANT_ANSIBLE = 1)
 	multiple_invokers_used = TRUE
 	multiple_invokers_optional = TRUE
@@ -272,20 +264,19 @@
 /datum/clockwork_scripture/channeled/volt_void
 	descname = "Channeled, Targeted Energy Blasts"
 	name = "Volt Void" //Alternative name: "On all levels but physical, I am a power sink"
-	desc = "Allows you to fire energy rays at target locations; more power consumed causes more damage. Channeled every fourth of a second for a maximum of ten seconds."
-	channel_time = 20
+	desc = "Allows you to fire energy rays at target locations; more power consumed causes more damage. Channeled every fifth of a second for a maximum of ten seconds."
+	channel_time = 30
 	invocations = list("Amperage...", "...grant me your power!")
 	chant_invocations = list("Use charge to kill!", "Slay with power!", "Hunt with energy!")
-	chant_amount = 5
-	chant_interval = 4
-	required_components = list(GEIS_CAPACITOR = 1, HIEROPHANT_ANSIBLE = 2)
+	chant_amount = 4
+	chant_interval = 5
 	consumed_components = list(GEIS_CAPACITOR = 1, HIEROPHANT_ANSIBLE = 1)
 	usage_tip = "Though it requires you to stand still, this scripture can do massive damage."
 	tier = SCRIPTURE_SCRIPT
 	primary_component = HIEROPHANT_ANSIBLE
 	sort_priority = 10
 	quickbind = TRUE
-	quickbind_desc = "Allows you to fire energy rays at target locations. Failing to fire causes backlash.<br><b>Maximum 5 chants.</b>"
+	quickbind_desc = "Allows you to fire energy rays at target locations. Failing to fire causes backlash.<br><b>Maximum 4 chants.</b>"
 	var/static/list/nzcrentr_insults = list("You're not very good at aiming.", "You hunt badly.", "What a waste of energy.", "Almost funny to watch.",
 	"Boss says </span><span class='heavy_brass'>\"Click something, you idiot!\"</span><span class='nzcrentr'>.", "Stop wasting components if you can't aim.")
 
@@ -297,16 +288,20 @@
 	var/turf/T = get_turf(invoker)
 	if(!ray.run_scripture() && slab && invoker)
 		if(can_recite() && T == get_turf(invoker))
-			if(!ratvar_awakens && !iscyborg(invoker) && !isclockmob(invoker) && !isdrone(invoker))
+			if(!ratvar_awakens)
 				var/obj/structure/destructible/clockwork/powered/volt_checker/VC = new/obj/structure/destructible/clockwork/powered/volt_checker(get_turf(invoker))
-				var/multiplier = 0.4
-				var/minimum_power = Floor(VC.total_accessable_power() * 0.2, MIN_CLOCKCULT_POWER)
-				var/usable_power = min(minimum_power, 1000)
-				var/used_power = 0
-				while(used_power < usable_power && VC.try_use_power(MIN_CLOCKCULT_POWER))
-					used_power += MIN_CLOCKCULT_POWER
-					multiplier += 0.01
+				var/multiplier = 0.5
+				var/usable_power = min(Floor(VC.total_accessable_power() * 0.2, MIN_CLOCKCULT_POWER), 1000)
+				if(VC.try_use_power(usable_power))
+					multiplier += (usable_power * 0.0005) //at maximum power, should be 1 multiplier
 				qdel(VC)
+				if(iscyborg(invoker))
+					var/mob/living/silicon/robot/C = invoker
+					if(C.cell)
+						var/prev_power = usable_power //we don't want to increase the multiplier past 1
+						usable_power = min(Floor(C.cell.charge * 0.2, MIN_CLOCKCULT_POWER), 1000) - prev_power
+						if(usable_power > 0 && C.cell.use(usable_power))
+							multiplier += (usable_power * 0.0005)
 				var/obj/effect/overlay/temp/ratvar/volt_hit/VH = new /obj/effect/overlay/temp/ratvar/volt_hit(get_turf(invoker), null, multiplier)
 				invoker.visible_message("<span class='warning'>[invoker] is struck by [invoker.p_their()] own [VH.name]!</span>", "<span class='userdanger'>You're struck by your own [VH.name]!</span>")
 				invoker.adjustFireLoss(VH.damage) //you have to fail all five blasts to die to this
@@ -327,7 +322,7 @@
 	ranged_type = /obj/effect/proc_holder/slab/volt
 	ranged_message = "<span class='nzcrentr_small'><i>You charge the clockwork slab with shocking might.</i>\n\
 	<b>Left-click a target to fire, quickly!</b></span>"
-	timeout_time = 16
+	timeout_time = 20
 
 /obj/structure/destructible/clockwork/powered/volt_checker
 	invisibility = INVISIBILITY_ABSTRACT

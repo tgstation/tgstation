@@ -125,7 +125,7 @@
 			var/mob/living/carbon/T = target
 			if(T.client != null)
 				for(var/obj/item/W in T)
-					T.unEquip(W)
+					T.dropItemToGround(W)
 				init_shade(T, user)
 				return 1
 			else
@@ -149,7 +149,7 @@
 						getCultGhost(T,user)
 					else
 						for(var/obj/item/W in T)
-							T.unEquip(W)
+							T.dropItemToGround(W)
 						init_shade(T, user, vic = 1)
 						qdel(T)
 				else
@@ -258,7 +258,7 @@
 		return 0
 	T.ckey = chosen_ghost.ckey
 	for(var/obj/item/W in T)
-		T.unEquip(W)
+		T.dropItemToGround(W)
 	init_shade(T, U)
 	qdel(T)
 	return 1

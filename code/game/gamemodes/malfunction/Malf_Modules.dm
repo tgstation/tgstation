@@ -165,7 +165,7 @@
 	for(var/obj/machinery/door/D in airlocks)
 		if(D.z != ZLEVEL_STATION)
 			continue
-		addtimer(CALLBACK(D, /obj/machinery/door.proc/hostile_lockdown, src), 0)
+		INVOKE_ASYNC(D, /obj/machinery/door.proc/hostile_lockdown, src)
 		addtimer(CALLBACK(D, /obj/machinery/door.proc/disable_lockdown), 900)
 
 	var/obj/machinery/computer/communications/C = locate() in machines

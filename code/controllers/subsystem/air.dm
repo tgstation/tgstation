@@ -76,7 +76,7 @@ var/datum/subsystem/air/SSair
 	if(currentpart == SSAIR_PIPENETS || !resumed)
 		process_pipenets(resumed)
 		cost_pipenets = MC_AVERAGE(cost_pipenets, TICK_DELTA_TO_MS(world.tick_usage - timer))
-		if(paused)
+		if(state != SS_RUNNING)
 			return
 		resumed = 0
 		currentpart = SSAIR_ATMOSMACHINERY
@@ -85,7 +85,7 @@ var/datum/subsystem/air/SSair
 		timer = world.tick_usage
 		process_atmos_machinery(resumed)
 		cost_atmos_machinery = MC_AVERAGE(cost_atmos_machinery, TICK_DELTA_TO_MS(world.tick_usage - timer))
-		if(paused)
+		if(state != SS_RUNNING)
 			return
 		resumed = 0
 		currentpart = SSAIR_ACTIVETURFS
@@ -94,7 +94,7 @@ var/datum/subsystem/air/SSair
 		timer = world.tick_usage
 		process_active_turfs(resumed)
 		cost_turfs = MC_AVERAGE(cost_turfs, TICK_DELTA_TO_MS(world.tick_usage - timer))
-		if(paused)
+		if(state != SS_RUNNING)
 			return
 		resumed = 0
 		currentpart = SSAIR_EXCITEDGROUPS
@@ -103,7 +103,7 @@ var/datum/subsystem/air/SSair
 		timer = world.tick_usage
 		process_excited_groups(resumed)
 		cost_groups = MC_AVERAGE(cost_groups, TICK_DELTA_TO_MS(world.tick_usage - timer))
-		if(paused)
+		if(state != SS_RUNNING)
 			return
 		resumed = 0
 		currentpart = SSAIR_HIGHPRESSURE
@@ -112,7 +112,7 @@ var/datum/subsystem/air/SSair
 		timer = world.tick_usage
 		process_high_pressure_delta(resumed)
 		cost_highpressure = MC_AVERAGE(cost_highpressure, TICK_DELTA_TO_MS(world.tick_usage - timer))
-		if(paused)
+		if(state != SS_RUNNING)
 			return
 		resumed = 0
 		currentpart = SSAIR_HOTSPOTS
@@ -121,7 +121,7 @@ var/datum/subsystem/air/SSair
 		timer = world.tick_usage
 		process_hotspots(resumed)
 		cost_hotspots = MC_AVERAGE(cost_hotspots, TICK_DELTA_TO_MS(world.tick_usage - timer))
-		if(paused)
+		if(state != SS_RUNNING)
 			return
 		resumed = 0
 		currentpart = SSAIR_SUPERCONDUCTIVITY
@@ -130,7 +130,7 @@ var/datum/subsystem/air/SSair
 		timer = world.tick_usage
 		process_super_conductivity(resumed)
 		cost_superconductivity = MC_AVERAGE(cost_superconductivity, TICK_DELTA_TO_MS(world.tick_usage - timer))
-		if(paused)
+		if(state != SS_RUNNING)
 			return
 		resumed = 0
 	currentpart = SSAIR_PIPENETS
@@ -271,6 +271,7 @@ var/datum/subsystem/air/SSair
 		if (T.blocks_air)
 			continue
 		T.Initalize_Atmos(times_fired)
+		CHECK_TICK
 
 	if(active_turfs.len)
 		var/starting_ats = active_turfs.len
@@ -286,6 +287,7 @@ var/datum/subsystem/air/SSair
 			var/list/new_turfs_to_check = list()
 			for(var/turf/open/T in turfs_to_check)
 				new_turfs_to_check += T.resolve_active_graph()
+			CHECK_TICK
 
 			active_turfs += new_turfs_to_check
 			turfs_to_check = new_turfs_to_check
@@ -296,6 +298,7 @@ var/datum/subsystem/air/SSair
 			var/datum/excited_group/EG = thing
 			EG.self_breakdown(space_is_all_consuming = 1)
 			EG.dismantle()
+			CHECK_TICK
 
 		var/msg = "HEY! LISTEN! [(world.timeofday - timer)/10] Seconds were wasted processing [starting_ats] turf(s) (connected to [ending_ats] other turfs) with atmos differences at round start."
 		world << "<span class='boldannounce'>[msg]</span>"

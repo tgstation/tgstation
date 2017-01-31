@@ -173,7 +173,7 @@
 		Robot.notify_ai(1)
 	else
 		for(var/obj/item/W in contents)
-			if(!M.unEquip(W))
+			if(!M.dropItemToGround(W))
 				qdel(W)
 
 	var/mob/living/new_mob
@@ -202,6 +202,9 @@
 				new_mob.job = "Cyborg"
 				var/mob/living/silicon/robot/Robot = new_mob
 				Robot.mmi.transfer_identity(M)	//Does not transfer key/client.
+				Robot.clear_inherent_laws()
+				Robot.clear_zeroth_law(0)
+				Robot.connected_ai = null
 		if("slime")
 			new_mob = new /mob/living/simple_animal/slime/random(M.loc)
 		if("xeno")

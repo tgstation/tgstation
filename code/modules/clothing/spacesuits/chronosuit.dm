@@ -128,7 +128,7 @@
 		exposed += user.held_items
 		for(var/exposed_item in exposed)
 			var/obj/item/exposed_I = exposed_item
-			if(exposed_I && !(exposed_I.type in chronosafe_items) && user.unEquip(exposed_I))
+			if(exposed_I && !(exposed_I.type in chronosafe_items) && user.dropItemToGround(exposed_I))
 				user << "<span class='notice'>Your [exposed_I.name] got left behind.</span>"
 
 		user.ExtinguishMob()

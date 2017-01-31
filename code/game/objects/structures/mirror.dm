@@ -42,7 +42,7 @@
 
 		H.update_hair()
 
-/obj/structure/mirror/examine_status()
+/obj/structure/mirror/examine_status(mob/user)
 	if(broken)
 		return // no message spam
 	..()
