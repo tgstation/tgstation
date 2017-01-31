@@ -1007,6 +1007,8 @@
 	if(!riding_datum)
 		riding_datum = new /datum/riding/cyborg
 		riding_datum.ridden = src
+	if(buckled_mobs.len > max_buckled_mobs)
+		return
 	if(stat)
 		return
 	if(incapacitated())
@@ -1054,7 +1056,7 @@
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "offhand"
 	w_class = WEIGHT_CLASS_HUGE
-	flags = ABSTRACT | NODROP
+	flags = ABSTRACT
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	var/mob/living/carbon/rider
 	var/mob/living/silicon/robot/ridden
