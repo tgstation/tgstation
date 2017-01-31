@@ -125,6 +125,8 @@ var/datum/subsystem/throwing/SSthrowing
 			thrownthing.newtonian_move(init_dir)
 	else
 		thrownthing.newtonian_move(init_dir)
+		thrownthing.throw_impact(thrownthing.hit_obj, src)
+		thrownthing.hit_obj = null
 	if (callback)
 		callback.Invoke()
 

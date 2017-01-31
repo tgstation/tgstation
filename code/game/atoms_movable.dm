@@ -24,6 +24,7 @@
 	glide_size = 8
 	appearance_flags = TILE_BOUND
 	var/datum/forced_movement/force_moving = null	//handled soley by forced_movement.dm
+	var/atom/hit_obj = null
 
 
 
@@ -128,7 +129,7 @@
 	if((A && yes))
 		if(throwing)
 			throwing = 0
-			throw_impact(A)
+			hit_obj = A
 			. = 1
 			if(!A || qdeleted(A))
 				return
@@ -211,7 +212,7 @@
 /atom/movable/proc/checkpass(passflag)
 	return pass_flags&passflag
 
-/atom/movable/proc/throw_impact(atom/hit_atom, datum/thrownthing)
+/atom/movable/proc/throw_impact(atom/hit_atom, throwingdatum)
 	return hit_atom.hitby(src)
 
 /atom/movable/hitby(atom/movable/AM, skipcatch, hitpush = 1, blocked)
