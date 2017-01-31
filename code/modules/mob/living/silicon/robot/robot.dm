@@ -1009,6 +1009,8 @@
 		riding_datum.ridden = src
 	if(buckled_mobs.len > max_buckled_mobs)
 		return
+	if(M in buckled_mobs)
+		return
 	if(stat)
 		return
 	if(incapacitated())
@@ -1056,14 +1058,11 @@
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "offhand"
 	w_class = WEIGHT_CLASS_HUGE
-	flags = ABSTRACT
+	flags = ABSTRACT | DROPDEL | NOBLUDGEON
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	var/mob/living/carbon/rider
 	var/mob/living/silicon/robot/ridden
 	var/dropping = FALSE
-
-/obj/item/cyborgride_offhand/dropped()
-	qdel(src)
 
 /obj/item/cyborgride_offhand/equipped()
 	if(loc != rider)
@@ -1077,5 +1076,3 @@
 		dropping = TRUE
 	. = ..()
 
-/obj/item/cyborgride_offhand/attack_self()
-	return
