@@ -157,7 +157,9 @@ var/datum/subsystem/ticker/ticker
 	//Configure mode and assign player to special mode stuff
 	var/can_continue = 0
 	can_continue = src.mode.pre_setup()		//Choose antagonists
+	CHECK_TICK
 	SSjob.DivideOccupations() 				//Distribute jobs
+	CHECK_TICK
 
 	if(!Debug2)
 		if(!can_continue)
@@ -184,11 +186,16 @@ var/datum/subsystem/ticker/ticker
 		toggle_ooc(0) // Turn it off
 	round_start_time = world.time
 
+	CHECK_TICK
 	start_landmarks_list = shuffle(start_landmarks_list) //Shuffle the order of spawn points so they dont always predictably spawn bottom-up and right-to-left
 	create_characters() //Create player characters and transfer them
+	CHECK_TICK
 	collect_minds()
+	CHECK_TICK
 	equip_characters()
+	CHECK_TICK
 	data_core.manifest()
+	CHECK_TICK
 
 	Master.RoundStart()
 
