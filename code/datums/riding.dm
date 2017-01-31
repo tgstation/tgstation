@@ -368,6 +368,6 @@
 		var/turf/targetm = get_step(get_turf(ridden), ridden.dir)
 		M.Move(targetm)
 		M.visible_message("<span class='boldwarning'>[M] is thrown clear of [ridden] by rapid spinning!</span>")
-		M.throw_at(target, 14, 5)
+		M.throw_at(target, 14, 5, ridden)
 		M.Weaken(3)
 
