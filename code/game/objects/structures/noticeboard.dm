@@ -29,9 +29,8 @@
 			user << "<span class='info'>You are not authorized to add notices</span>"
 			return
 		if(notices < 5)
-			if(!user.unEquip(O))
+			if(!user.transferItemToLoc(O, src))
 				return
-			O.loc = src
 			notices++
 			icon_state = "nboard0[notices]"
 			user << "<span class='notice'>You pin the [O] to the noticeboard.</span>"

@@ -186,7 +186,7 @@
 
 /obj/machinery/door/emp_act(severity)
 	if(prob(20/severity) && (istype(src,/obj/machinery/door/airlock) || istype(src,/obj/machinery/door/window)) )
-		addtimer(CALLBACK(src, .proc/open), 0)
+		INVOKE_ASYNC(src, .proc/open)
 	if(prob(40/severity))
 		if(secondsElectrified == 0)
 			secondsElectrified = -1

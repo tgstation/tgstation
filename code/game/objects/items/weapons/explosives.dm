@@ -82,10 +82,10 @@
 	user << "<span class='notice'>You start planting the bomb...</span>"
 
 	if(do_after(user, 50, target = AM))
-		if(!user.unEquip(src))
+		if(!user.temporarilyRemoveItemFromInventory(src))
 			return
 		src.target = AM
-		loc = null
+		forceMove(null)
 
 		var/message = "[ADMIN_LOOKUPFLW(user)] planted [name] on [target.name] at [ADMIN_COORDJMP(target)] with [timer] second fuse"
 		bombers += message

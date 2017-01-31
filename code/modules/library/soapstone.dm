@@ -9,6 +9,7 @@
 	var/tool_speed = 50
 	var/remaining_uses = 3
 
+	var/non_dull_name
 	var/w_engrave = "engrave"
 	var/w_engraving = "engraving"
 	var/w_chipping = "chipping"
@@ -39,18 +40,27 @@
 
 /obj/item/soapstone/examine(mob/user)
 	. = ..()
-	user << "It has [remaining_uses] uses left."
+	if(remaining_uses != -1)
+		user << "It has [remaining_uses] uses left."
+	else
+		user << "It looks like it can be used an unlimited number of times."
 
 /obj/item/soapstone/afterattack(atom/target, mob/user, proximity)
 	var/turf/T = get_turf(target)
 	if(!proximity)
 		return
 
-	if(!remaining_uses)
-		// The dull chisel is dull.
-		user << "<span class='warning'>[src] is [w_dull].</span>"
 
 	var/obj/structure/chisel_message/already_message = locate(/obj/structure/chisel_message) in T
+
+	var/our_message = FALSE
+	if(already_message)
+		our_message = already_message.creator_key == user.ckey
+
+	if(!remaining_uses && !our_message)
+		// The dull chisel is dull.
+		user << "<span class='warning'>[src] is [w_dull].</span>"
+		return
 
 	if(!good_chisel_message_location(T))
 		user << "<span class='warning'>It's not appropriate to [w_engrave] on [T].</span>"
@@ -60,11 +70,17 @@
 		user.visible_message("<span class='notice'>[user] starts erasing [already_message].</span>", "<span class='notice'>You start erasing [already_message].</span>", "<span class='italics'>You hear a [w_chipping] sound.</span>")
 		playsound(loc, 'sound/items/gavel.ogg', 50, 1, -1)
 
-		if(do_after(user, tool_speed, target=target) && spend_use())
+		// Removing our own messages refunds a charge
+
+		if((our_message || can_use()) && do_after(user, tool_speed, target=target) && (our_message || can_use()))
 			user.visible_message("<span class='notice'>[user] has erased [already_message].</span>", "<span class='notice'>You erased [already_message].</span>")
 			already_message.persists = FALSE
 			qdel(already_message)
 			playsound(loc, 'sound/items/gavel.ogg', 50, 1, -1)
+			if(our_message)
+				refund_use()
+			else
+				remove_use()
 		return
 
 	var/message = stripped_input(user, "What would you like to [w_engrave]?", "[name] Message")
@@ -78,21 +94,38 @@
 
 	playsound(loc, 'sound/items/gavel.ogg', 50, 1, -1)
 	user.visible_message("<span class='notice'>[user] starts [w_engraving] a message into [T].</span>", "You start [w_engraving] a message into [T].", "<span class='italics'>You hear a [w_chipping] sound.</span>")
-	if(do_after(user, tool_speed, target=T))
-		if(!locate(/obj/structure/chisel_message in T) && spend_use())
+	if(can_use() && do_after(user, tool_speed, target=T) && can_use())
+		if(!locate(/obj/structure/chisel_message in T))
 			user << "You [w_engrave] a message into [T]."
 			playsound(loc, 'sound/items/gavel.ogg', 50, 1, -1)
 			var/obj/structure/chisel_message/M = new(T)
 			M.register(user, message)
+			remove_use()
 
-/obj/item/soapstone/proc/spend_use(mob/user)
-	if(!remaining_uses)
-		. = FALSE
-	else
-		remaining_uses--
-		if(!remaining_uses)
-			name = "[w_dull] [name]"
+/obj/item/soapstone/proc/can_use()
+	if(remaining_uses == -1 || remaining_uses >= 0)
 		. = TRUE
+	else
+		. = FALSE
+
+/obj/item/soapstone/proc/remove_use()
+	if(remaining_uses <= 0)
+		// -1 == unlimited, 0 == empty
+		return
+
+	remaining_uses--
+	if(!remaining_uses)
+		non_dull_name = name
+		name = "[w_dull] [name]"
+
+/obj/item/soapstone/proc/refund_use()
+	if(remaining_uses == -1)
+		return
+	var/was_dull = remaining_uses
+	remaining_uses++
+
+	if(was_dull)
+		name = non_dull_name
 
 /* Persistent engraved messages, etched onto the station turfs to serve
    as instructions and/or memes for the next generation of spessmen.
@@ -100,6 +133,9 @@
    Limited in location to station_z only. Can be smashed out or exploded,
    but only permamently removed with the librarian's soapstone.
 */
+
+/obj/item/soapstone/infinite
+	remaining_uses = -1
 
 /proc/good_chisel_message_location(turf/T)
 	if(!T)
@@ -141,8 +177,8 @@
 
 /obj/structure/chisel_message/proc/register(mob/user, newmessage)
 	hidden_message = newmessage
-	creator_name = user.name
-	creator_key = user.key
+	creator_name = user.real_name
+	creator_key = user.ckey
 	realdate = world.timeofday
 	map = MAP_NAME
 	update_icon()

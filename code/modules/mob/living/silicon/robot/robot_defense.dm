@@ -5,7 +5,7 @@
 		user << "<span class='notice'>You begin to place [I] on [src]'s head...</span>"
 		src << "<span class='notice'>[user] is placing [I] on your head...</span>"
 		if(do_after(user, 30, target = src))
-			user.unEquip(I, 1)
+			user.temporarilyRemoveItemFromInventory(I, TRUE)
 			place_on_head(I)
 			return
 	if(I.force && I.damtype != STAMINA && stat != DEAD) //only sparks if real damage is dealt.

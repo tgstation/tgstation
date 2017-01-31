@@ -99,6 +99,9 @@ var/list/preferences_datums = list()
 
 	var/parallax = PARALLAX_HIGH
 
+	var/uplink_spawn_loc = UPLINK_PDA
+
+
 /datum/preferences/New(client/C)
 	parent = C
 	custom_names["ai"] = pick(ai_names)
@@ -203,7 +206,8 @@ var/list/preferences_datums = list()
 			dat += "<b>Underwear:</b><BR><a href ='?_src_=prefs;preference=underwear;task=input'>[underwear]</a><BR>"
 			dat += "<b>Undershirt:</b><BR><a href ='?_src_=prefs;preference=undershirt;task=input'>[undershirt]</a><BR>"
 			dat += "<b>Socks:</b><BR><a href ='?_src_=prefs;preference=socks;task=input'>[socks]</a><BR>"
-			dat += "<b>Backpack:</b><BR><a href ='?_src_=prefs;preference=bag;task=input'>[backbag]</a><BR></td>"
+			dat += "<b>Backpack:</b><BR><a href ='?_src_=prefs;preference=bag;task=input'>[backbag]</a><BR>"
+			dat += "<b>Uplink Spawn Location:</b><BR><a href ='?_src_=prefs;preference=uplink_loc;task=input'>[uplink_spawn_loc]</a><BR></td>"
 
 			if(pref_species.use_skintones)
 
@@ -472,7 +476,7 @@ var/list/preferences_datums = list()
 	dat += "<a href='?_src_=prefs;preference=reset_all'>Reset Setup</a>"
 	dat += "</center>"
 
-	var/datum/browser/popup = new(user, "preferences", "<div align='center'>Character Setup</div>", 640, 750)
+	var/datum/browser/popup = new(user, "preferences", "<div align='center'>Character Setup</div>", 640, 770)
 	popup.set_content(dat)
 	popup.open(0)
 
@@ -958,6 +962,7 @@ var/list/preferences_datums = list()
 						var/temp_hsv = RGBtoHSV(features["mcolor"])
 						if(features["mcolor"] == "#000" || (!(MUTCOLORS_PARTSONLY in pref_species.species_traits) && ReadHSV(temp_hsv)[3] < ReadHSV("#7F7F7F")[3]))
 							features["mcolor"] = pref_species.default_color
+
 				if("mutant_color")
 					var/new_mutantcolor = input(user, "Choose your character's alien/mutant color:", "Character Preference") as color|null
 					if(new_mutantcolor)
@@ -1044,6 +1049,11 @@ var/list/preferences_datums = list()
 					if(new_backbag)
 						backbag = new_backbag
 
+				if("uplink_loc")
+					var/new_loc = input(user, "Choose your character's traitor uplink spawn location:", "Character Preference") as null|anything in uplink_spawn_loc_list
+					if(new_loc)
+						uplink_spawn_loc = new_loc
+
 				if("clown_name")
 					var/new_clown_name = reject_bad_name( input(user, "Choose your character's clown name:", "Character Preference")  as text|null )
 					if(new_clown_name)
@@ -1085,10 +1095,12 @@ var/list/preferences_datums = list()
 						custom_names["deity"] = new_deity_name
 					else
 						user << "<font color='red'>Invalid name. Your name should be at least 2 and at most [MAX_NAME_LEN] characters long. It may only contain the characters A-Z, a-z, -, ' and .</font>"
+
 				if("sec_dept")
 					var/department = input(user, "Choose your prefered security department:", "Security Departments") as null|anything in security_depts_prefs
 					if(department)
 						prefered_security_department = department
+
 				if ("preferred_map")
 					var/maplist = list()
 					var/default = "Default"
@@ -1104,6 +1116,7 @@ var/list/preferences_datums = list()
 					var/pickedmap = input(user, "Choose your preferred map. This will be used to help weight random map selection.", "Character Preference")  as null|anything in maplist
 					if (pickedmap)
 						preferred_map = maplist[pickedmap]
+
 				if ("clientfps")
 					var/version_message
 					if (user.client && user.client.byond_version < 511)
@@ -1119,7 +1132,6 @@ var/list/preferences_datums = list()
 					var/pickedui = input(user, "Choose your UI style.", "Character Preference")  as null|anything in list("Midnight", "Plasmafire", "Retro", "Slimecore", "Operative", "Clockwork")
 					if(pickedui)
 						UI_style = pickedui
-
 
 		else
 			switch(href_list["preference"])

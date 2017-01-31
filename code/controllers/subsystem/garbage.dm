@@ -54,7 +54,7 @@ var/datum/subsystem/garbage_collector/SSgarbage
 
 /datum/subsystem/garbage_collector/fire()
 	HandleToBeQueued()
-	if (!paused)
+	if(state == SS_RUNNING)
 		HandleQueue()
 
 //If you see this proc high on the profile, what you are really seeing is the garbage collection/soft delete overhead in byond.

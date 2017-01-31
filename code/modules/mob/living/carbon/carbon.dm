@@ -157,7 +157,7 @@
 
 	else if(!(I.flags & (NODROP|ABSTRACT)))
 		thrown_thing = I
-		unEquip(I)
+		dropItemToGround(I)
 
 	if(thrown_thing)
 		visible_message("<span class='danger'>[src] has thrown [thrown_thing].</span>")
@@ -381,8 +381,7 @@
 			update_inv_legcuffed()
 			return
 		else
-			unEquip(I)
-			I.dropped()
+			dropItemToGround(I)
 			return
 		return TRUE
 
@@ -400,7 +399,7 @@
 	if(!I || (I.flags & (NODROP|ABSTRACT)))
 		return
 
-	unEquip(I)
+	dropItemToGround(I)
 
 	var/modifier = 0
 	if(disabilities & CLUMSY)

@@ -106,7 +106,7 @@
 	for(var/slot_id in no_equip)
 		var/obj/item/thing = C.get_item_by_slot(slot_id)
 		if(thing && (!thing.species_exception || !is_type_in_list(src,thing.species_exception)))
-			C.unEquip(thing)
+			C.dropItemToGround(thing)
 
 	var/obj/item/organ/heart/heart = C.getorganslot("heart")
 	var/obj/item/organ/lungs/lungs = C.getorganslot("lungs")

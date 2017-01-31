@@ -48,7 +48,7 @@
 				usr << "<span class='warning'>Their hands are full.</span>"
 				return
 
-			if(!usr.unEquip(I))
+			if(!usr.dropItemToGround(I))
 				return
 
 			if(!put_in_hands(I))

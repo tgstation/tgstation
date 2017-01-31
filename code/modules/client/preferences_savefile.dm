@@ -286,6 +286,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["undershirt"]			>> undershirt
 	S["socks"]				>> socks
 	S["backbag"]			>> backbag
+	S["uplink_loc"]			>> uplink_spawn_loc
 	S["feature_mcolor"]					>> features["mcolor"]
 	S["feature_lizard_tail"]			>> features["tail_lizard"]
 	S["feature_lizard_snout"]			>> features["snout"]
@@ -351,6 +352,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	eye_color		= sanitize_hexcolor(eye_color, 3, 0)
 	skin_tone		= sanitize_inlist(skin_tone, skin_tones)
 	backbag			= sanitize_inlist(backbag, backbaglist, initial(backbag))
+	uplink_spawn_loc = sanitize_inlist(uplink_spawn_loc, uplink_spawn_loc_list, initial(uplink_spawn_loc))
 	features["mcolor"]	= sanitize_hexcolor(features["mcolor"], 3, 0)
 	features["tail_lizard"]	= sanitize_inlist(features["tail_lizard"], tails_list_lizard)
 	features["tail_human"] 	= sanitize_inlist(features["tail_human"], tails_list_human, "None")
@@ -402,6 +404,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["undershirt"]			<< undershirt
 	S["socks"]				<< socks
 	S["backbag"]			<< backbag
+	S["uplink_loc"]			<< uplink_spawn_loc
 	S["species"]			<< pref_species.id
 	S["feature_mcolor"]					<< features["mcolor"]
 	S["feature_lizard_tail"]			<< features["tail_lizard"]

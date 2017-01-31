@@ -60,7 +60,6 @@
 	else
 		target.regenerate_limb(target_zone)
 		user.visible_message("[user] finishes attaching [tool]!", "<span class='notice'>You attach [tool].</span>")
-		user.unEquip(tool)
 		qdel(tool)
 		if(istype(tool, /obj/item/weapon/twohanded/required/chainsaw))
 			var/obj/item/weapon/mounted_chainsaw/new_arm = new(target)

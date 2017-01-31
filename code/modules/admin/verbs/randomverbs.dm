@@ -10,7 +10,7 @@
 		return
 
 	for(var/obj/item/W in M)
-		if(!M.unEquip(W))
+		if(!M.dropItemToGround(W))
 			qdel(W)
 			M.regenerate_icons()
 
