@@ -1023,9 +1023,10 @@
 		if(!module.allow_riding)
 			M.visible_message("<span class='boldwarning'>Unfortunately, [M] just can't seem to hold onto [src]!</span>")
 			return
-	if(!equip_buckle_inhands(M))	//MAKE SURE THIS IS LAST!
-		M.visible_message("<span class='boldwarning'>[M] can't climb onto [src] because his hands are full!</span>")
-		return
+	if(iscarbon(M))
+		if(!equip_buckle_inhands(M))	//MAKE SURE THIS IS LAST!
+			M.visible_message("<span class='boldwarning'>[M] can't climb onto [src] because his hands are full!</span>")
+			return
 	. = ..(M, force, check_loc)
 	riding_datum.handle_vehicle_offsets()
 
