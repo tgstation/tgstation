@@ -277,7 +277,11 @@
 		if(do_after(user, 120*I.toolspeed, target = src))
 			user << "<span class='notice'>You wound the tape back in.</span>"
 			fix()
-
+    else if(ruined && istype(W, /obj/item/weapon/pen))
+		user << "<span class='notice'>You start winding the tape back in...</span>"
+		if(do_after(user, 120, target = src))
+			user << "<span class='notice'>You wound the tape back in.</span>"
+			fix()
 
 //Random colour tapes
 /obj/item/device/tape/random/New()
