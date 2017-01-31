@@ -254,7 +254,6 @@
 	if(remaining_mats)
 		for(var/M=1 to remaining_mats)
 			new stack_type(get_turf(loc))
-	user.unEquip(src,1) //Even NODROP chairs are destroyed.
 	qdel(src)
 
 

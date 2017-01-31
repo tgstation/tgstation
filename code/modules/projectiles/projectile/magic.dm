@@ -173,7 +173,7 @@
 		Robot.notify_ai(1)
 	else
 		for(var/obj/item/W in contents)
-			if(!M.unEquip(W))
+			if(!M.dropItemToGround(W))
 				qdel(W)
 
 	var/mob/living/new_mob

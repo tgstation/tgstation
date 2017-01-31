@@ -181,6 +181,7 @@
 		if(isliving(M))
 			var/mob/living/L = M
 			L.update_canmove()
+	occupant = null
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/close_machine(mob/living/carbon/user)
 	if((isnull(user) || istype(user)) && state_open && !panel_open)

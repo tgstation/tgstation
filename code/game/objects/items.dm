@@ -107,9 +107,10 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 	actions_types = null
 
 /obj/item/Destroy()
+	flags &= ~DROPDEL	//prevent reqdels
 	if(ismob(loc))
 		var/mob/m = loc
-		m.unEquip(src, 1)
+		m.temporarilyRemoveItemFromInventory(src, TRUE)
 	for(var/X in actions)
 		qdel(X)
 	return ..()
@@ -235,7 +236,7 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 
 	throwing = 0
 	if(loc == user)
-		if(!user.unEquip(src))
+		if(!user.dropItemToGround(src))
 			return
 
 	pickup(user)
@@ -256,7 +257,7 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 
 	throwing = 0
 	if(loc == user)
-		if(!user.unEquip(src))
+		if(!user.dropItemToGround(src))
 			return
 
 	pickup(user)
@@ -269,7 +270,7 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 
 	if(!A.has_fine_manipulation)
 		if(src in A.contents) // To stop Aliens having items stuck in their pockets
-			A.unEquip(src)
+			A.dropItemToGround(src)
 		user << "<span class='warning'>Your claws aren't capable of such fine manipulation!</span>"
 		return
 	attack_paw(A)
@@ -342,8 +343,6 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 		var/datum/action/A = X
 		A.Remove(user)
 	if(DROPDEL & flags)
-		//Prevents infinite loops where Destroy() calls an objects dropped() function
-		flags &= ~DROPDEL
 		qdel(src)
 
 // called just as an item is picked up (loc is not yet changed)

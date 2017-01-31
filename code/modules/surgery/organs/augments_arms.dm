@@ -72,8 +72,7 @@
 		var/obj/item/device/assembly/flash/F = holder
 		F.SetLuminosity(0)
 
-	owner.unEquip(holder, 1)
-	holder.forceMove(src)
+	owner.transferItemToLoc(holder, src, TRUE)
 	holder = null
 	playsound(get_turf(owner), 'sound/mecha/mechmove03.ogg', 50, 1)
 
@@ -96,7 +95,7 @@
 	var/obj/item/arm_item = owner.get_active_held_item()
 
 	if(arm_item)
-		if(!owner.unEquip(arm_item))
+		if(!owner.dropItemToGround(arm_item))
 			owner << "<span class='warning'>Your [arm_item] interferes with [src]!</span>"
 			return
 		else

@@ -56,21 +56,23 @@
 	if (istype(A, /obj/item/ammo_box/magazine))
 		var/obj/item/ammo_box/magazine/AM = A
 		if (!magazine && istype(AM, mag_type))
-			user.remove_from_mob(AM)
-			magazine = AM
-			magazine.forceMove(src)
-			user << "<span class='notice'>You load a new magazine into \the [src].</span>"
-			chamber_round()
-			A.update_icon()
-			update_icon()
-			return 1
+			if(user.transferItemToLoc(AM, src))
+				magazine = AM
+				user << "<span class='notice'>You load a new magazine into \the [src].</span>"
+				chamber_round()
+				A.update_icon()
+				update_icon()
+				return 1
+			else
+				user << "<span class='warning'>You cannot seem to get \the [src] out of your hands!</span>"
+				return
 		else if (magazine)
 			user << "<span class='notice'>There's already a magazine in \the [src].</span>"
 	if(istype(A, /obj/item/weapon/suppressor))
 		var/obj/item/weapon/suppressor/S = A
 		if(can_suppress)
 			if(!suppressed)
-				if(!user.unEquip(A))
+				if(!user.transferItemToLoc(A, src))
 					return
 				user << "<span class='notice'>You screw [S] onto [src].</span>"
 				suppressed = A
@@ -78,7 +80,6 @@
 				S.initial_w_class = w_class
 				fire_sound = 'sound/weapons/Gunshot_silenced.ogg'
 				w_class = WEIGHT_CLASS_NORMAL //so pistols do not fit in pockets when suppressed
-				A.loc = src
 				update_icon()
 				return
 			else

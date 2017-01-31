@@ -267,11 +267,13 @@
 			if(do_mob(usr, src, POCKET_STRIP_DELAY/delay_denominator)) //placing an item into the pocket is 4 times faster
 				if(pocket_item)
 					if(pocket_item == (pocket_id == slot_r_store ? r_store : l_store)) //item still in the pocket we search
-						unEquip(pocket_item)
+						dropItemToGround(pocket_item)
 				else
 					if(place_item)
-						usr.unEquip(place_item)
-						equip_to_slot_if_possible(place_item, pocket_id, 0, 1)
+						if(place_item.mob_can_equip(src, usr, pocket_id, FALSE, TRUE))
+							usr.temporarilyRemoveItemFromInventory(place_item, TRUE)
+							equip_to_slot(place_item, pocket_id, TRUE)
+						//do nothing otherwise
 
 				// Update strip window
 				if(usr.machine == src && in_range(src, usr))
@@ -625,7 +627,7 @@
 /mob/living/carbon/human/singularity_pull(S, current_size)
 	if(current_size >= STAGE_THREE)
 		for(var/obj/item/hand in held_items)
-			if(prob(current_size * 5) && hand.w_class >= ((11-current_size)/2)  && unEquip(hand))
+			if(prob(current_size * 5) && hand.w_class >= ((11-current_size)/2)  && dropItemToGround(hand))
 				step_towards(hand, src)
 				src << "<span class='warning'>\The [S] pulls \the [hand] from your grip!</span>"
 	rad_act(current_size * 3)
@@ -696,10 +698,10 @@
 	if(dna && dna.check_mutation(HULK))
 		say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
 		if(..(I, cuff_break = FAST_CUFFBREAK))
-			unEquip(I)
+			dropItemToGround(I)
 	else
 		if(..())
-			unEquip(I)
+			dropItemToGround(I)
 
 /mob/living/carbon/human/clean_blood()
 	var/mob/living/carbon/human/H = src

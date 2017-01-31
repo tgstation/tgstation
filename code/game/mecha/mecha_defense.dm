@@ -258,10 +258,9 @@
 		return 1
 
 	else if(istype(W, /obj/item/mecha_parts/mecha_tracking))
-		if(!user.unEquip(W))
+		if(!user.transferItemToLoc(W, src))
 			user << "<span class='warning'>\the [W] is stuck to your hand, you cannot put it in \the [src]!</span>"
 			return
-		W.forceMove(src)
 		trackers += W
 		user.visible_message("[user] attaches [W] to [src].", "<span class='notice'>You attach [W] to [src].</span>")
 		diag_hud_set_mechtracking()
