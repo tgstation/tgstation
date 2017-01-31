@@ -1,6 +1,3 @@
-#define HIVEBOT_CRUX_IDLE "Idle" //Orbit the crux or whoever's holding it
-#define HIVEBOT_CRUX_FETCH "Fetch" //Grab an item and bring it back to our holder
-
 //Hivebot cruxes are dropped by hivebot swarm cores. When used, they create a friendly hivebot that understands limited speech and responds to its master's commands.
 //If the hivebot dies, a new one can be created from the crux after some time.
 //The crux acts as the hivebot's senses, and everything the hivebot does can be traced back to the crux that controls it.
@@ -15,8 +12,6 @@
 	w_class = WEIGHT_CLASS_SMALL
 	origin_tech = "engineering=5;magnets=4;programming=4"
 	var/hivebot_name //If applicable, a custom name for the summoned hivebot
-	var/mob/living/simple_animal/hostile/hivebot/worker/child //The child worker of this crux
-	var/current_orders = "Idle" //What the worker is supposed to be doing
 
 /obj/item/device/hivebot_crux/examine(mob/user)
 	..()

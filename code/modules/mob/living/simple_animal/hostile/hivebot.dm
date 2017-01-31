@@ -52,30 +52,6 @@
 	maxHealth = 80
 	ranged = 1
 
-/mob/living/simple_animal/hostile/hivebot/worker
-	name = "worker hivebot"
-	desc = "A cute little yellow robot. It has tiny little tools on its arms."
-	icon_state = "EngBot"
-	health = 100
-	maxHealth = 100
-	healable = 1 //pet magic!
-	faction = list("hivebot", "neutral")
-	gold_core_spawnable = 0
-	wander = 0
-	var/obj/item/device/hivebot_crux/parent //The parent crux for this worker
-
-/mob/living/simple_animal/hostile/hivebot/worker/New()
-	..()
-	if(prob(1) && name == initial(name)) //Only rename if we don't have a custom name
-		name = "bee hive bot"
-		desc = "According to all known laws of aviation..."
-
-/mob/living/simple_animal/hostile/hivebot/worker/Life()
-	..()
-	if(loc != get_turf(parent) && parent.current_orders == HIVEBOT_CRUX_IDLE)
-		visible_message("<span class='warning'>[src] warps away!</span>")
-		qdel(src)
-
 /mob/living/simple_animal/hostile/hivebot/death(gibbed)
 	var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 	s.set_up(3, 1, src)
