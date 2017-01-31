@@ -435,10 +435,6 @@ var/list/blood_splatter_icons = list()
 	sleep(1)
 	stoplag()
 
-//This is called just before maps and objects are initialized, use it to spawn other mobs/objects
-//effects at world start up without causing runtimes
-/atom/proc/spawn_atom_to_world()
-
 //Called after New if the world is not loaded with TRUE
 //Called from base of New if the world is loaded with FALSE
 /atom/proc/Initialize(mapload)
