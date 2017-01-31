@@ -40,7 +40,10 @@ var/datum/subsystem/objects/SSobj
 	else
 		for(var/atom/A in world)
 			if(!A.initialized)	//this check is to make sure we don't call it twice on an object that was created in a previous Initialize call
+				var/start_tick = world.time
 				A.Initialize(TRUE)
+				if(start_tick != world.time)
+					WARNING("[A]: [A.type] slept during it's Initialize!")
 				CHECK_TICK
 
 	initialized = INITIALIZATION_INNEW_REGULAR
