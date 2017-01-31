@@ -40,7 +40,7 @@
 			return head
 		if(slot_generic_dextrous_storage)
 			return internal_storage
-	..()
+	return ..()
 
 
 /mob/living/simple_animal/drone/equip_to_slot(obj/item/I, slot)
