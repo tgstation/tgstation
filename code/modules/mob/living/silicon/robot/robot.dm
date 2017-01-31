@@ -155,9 +155,6 @@
 	toner = tonermax
 	diag_hud_set_borgcell()
 
-	riding_datum = new /datum/riding/cyborg
-	riding_datum.ridden = src
-
 //If there's an MMI in the robot, have it ejected when the mob goes away. --NEO
 /mob/living/silicon/robot/Destroy()
 	if(mmi && mind)//Safety for when a cyborg gets dust()ed. Or there is no MMI inside.
@@ -1006,6 +1003,9 @@
 	buckle_mob(M)
 
 /mob/living/silicon/robot/buckle_mob(mob/living/M, force = 0, check_loc = 1)
+	if(!riding_datum)
+		riding_datum = new /datum/riding/cyborg
+		riding_datum.ridden = src
 	if(stat)
 		return
 	if(incapacitated())
