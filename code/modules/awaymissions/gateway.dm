@@ -15,7 +15,7 @@ var/obj/machinery/gateway/centerstation/the_gateway = null
 	var/list/linked = list()
 	var/can_link = FALSE	//Is this the centerpiece?
 
-/obj/machinery/gateway/initialize()
+/obj/machinery/gateway/Initialize()
 	randomspawns = awaydestinations
 
 /obj/machinery/gateway/proc/toggleoff()
