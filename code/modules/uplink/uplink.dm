@@ -140,3 +140,8 @@ var/global/list/uplinks = list()
 	hidden_uplink = new(src)
 	hidden_uplink.active = TRUE
 	hidden_uplink.lockable = FALSE
+
+/obj/item/weapon/pen/uplink/New()
+	..()
+	hidden_uplink = new(src)
+	traitor_unlock_degrees = 360
