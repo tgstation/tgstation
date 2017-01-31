@@ -184,3 +184,6 @@ Temporary Items
 .apdisk
 
 *.before
+
+#Visual studio stuff
+*.vscode/*
