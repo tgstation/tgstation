@@ -1030,7 +1030,9 @@
 
 /mob/living/silicon/robot/proc/unequip_buckle_inhands(mob/living/carbon/user)
 	for(var/obj/item/weapon/twohanded/offhand/riding/cyborg/O in user.contents)
-		qdel(O)
+		if(!O.dropping)
+			O.dropping = TRUE
+			qdel(O)
 	return TRUE
 
 /mob/living/silicon/robot/proc/equip_buckle_inhands(mob/living/carbon/user)
@@ -1040,6 +1042,8 @@
 /obj/item/weapon/twohanded/offhand/riding/cyborg
 	var/mob/living/carbon/rider
 	var/mob/living/silicon/robot/ridden
+	wielded = TRUE
+	var/dropping = FALSE
 
 /obj/item/weapon/twohanded/offhand/riding/cyborg/New(mob/living/carbon/A, mob/living/silicon/robot/B)
 	rider = A
@@ -1061,8 +1065,11 @@
 	. = ..()
 
 /obj/item/weapon/twohanded/offhand/riding/cyborg/Destroy()
-	if(rider in ridden.buckled_mobs)
-		ridden.unbuckle_mob(rider)
+	if(!dropping)
+		if(rider in ridden.buckled_mobs)
+			ridden.unbuckle_mob(rider)
+		dropping = TRUE
+	. = ..()
 
 /obj/item/weapon/twohanded/offhand/riding/cyborg/attack_self()
-	qdel(src)
+	return

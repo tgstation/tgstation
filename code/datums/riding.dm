@@ -338,8 +338,8 @@
 			if(istype(ridden, /mob/living/silicon/robot))
 				var/mob/living/silicon/robot/R = ridden
 				if(istype(R.module))
-					M.pixel_x = R.module.ride_offset_x[ridden.dir]
-					M.pixel_y = R.module.ride_offset_y[ridden.dir]
+					M.pixel_x = R.module.ride_offset_x[dir2text(ridden.dir)]
+					M.pixel_y = R.module.ride_offset_y[dir2text(ridden.dir)]
 			else
 				switch(ridden.dir)
 					if(NORTH)
