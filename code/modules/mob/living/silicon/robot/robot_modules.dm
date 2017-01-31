@@ -29,6 +29,7 @@
 	var/list/ride_offset_x = list("north" = 0, "south" = 0, "east" = -6, "west" = 6)
 	var/list/ride_offset_y = list("north" = 4, "south" = 4, "east" = 3, "west" = 3)
 	var/ride_allow_incapacitated = FALSE
+	var/allow_riding = TRUE
 
 /obj/item/weapon/robot_module/New()
 	..()

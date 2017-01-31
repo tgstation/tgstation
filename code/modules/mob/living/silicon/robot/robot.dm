@@ -1000,7 +1000,8 @@
 
 /mob/living/silicon/robot/MouseDrop_T(mob/living/M, mob/living/user)
 	. = ..()
-	buckle_mob(M)
+	if(!(M in buckled_mobs))
+		buckle_mob(M)
 
 /mob/living/silicon/robot/buckle_mob(mob/living/M, force = 0, check_loc = 1)
 	if(!riding_datum)
@@ -1018,9 +1019,15 @@
 	if(istype(M, /mob/living/simple_animal/bot))
 		M.visible_message("<span class='boldwarning'>No. Just... no.</span>")
 		return
-	if(!equip_buckle_inhands(M))
+	if(module)
+		if(!module.allow_riding)
+			M.visible_message("<span class='boldwarning'>Unfortunately, [M] just can't seem to hold onto [src]!</span>")
+			return
+	if(!equip_buckle_inhands(M))	//MAKE SURE THIS IS LAST!
+		M.visible_message("<span class='boldwarning'>[M] can't climb onto [src] because his hands are full!</span>")
 		return
 	. = ..(M, force, check_loc)
+	riding_datum.handle_vehicle_offsets()
 
 /mob/living/silicon/robot/unbuckle_mob(mob/user)
 	if(iscarbon(user))
@@ -1036,7 +1043,9 @@
 	return TRUE
 
 /mob/living/silicon/robot/proc/equip_buckle_inhands(mob/living/carbon/user)
-	var/obj/item/cyborgride_offhand/inhand = new /obj/item/cyborgride_offhand(user, src)
+	var/obj/item/cyborgride_offhand/inhand = new /obj/item/cyborgride_offhand(user)
+	inhand.rider = user
+	inhand.ridden = src
 	return user.put_in_hands(inhand, TRUE)
 
 /obj/item/cyborgride_offhand
@@ -1049,11 +1058,6 @@
 	var/mob/living/carbon/rider
 	var/mob/living/silicon/robot/ridden
 	var/dropping = FALSE
-
-/obj/item/cyborgride_offhand/New(mob/living/carbon/A, mob/living/silicon/robot/B)
-	rider = A
-	ridden = B
-	. = ..()
 
 /obj/item/cyborgride_offhand/dropped()
 	qdel(src)
