@@ -4,7 +4,7 @@
 	icon = 'icons/effects/96x96.dmi'
 	icon_state = "hivebot_swarm_core"
 	pixel_x = -32
-	pixel_y = -32
+	pixel_y = -16
 	use_power = 0
 	obj_integrity = 250
 	max_integrity = 250
@@ -72,13 +72,22 @@
 		say("TARGET LOST. RESUMING FABRICATION ROUTINE.")
 		threat_to_swarm = null
 		return
-	var/list/combat_actions = list("saw" = 25 * (get_dist(threat_to_swarm, src) <= 2), "laser" = 50)
+	var/turf/T = get_turf(src)
+	var/list/combat_actions = list("saw" = 1 * (get_dist(threat_to_swarm, src) <= 2), "swarm" = 1, "laser" = 2)
 	switch(pickweight(combat_actions))
 		if("laser")
-			threat_to_swarm.Beam(get_turf(src), "sat_beam", time = 5)
+			threat_to_swarm.Beam(T, "sat_beam", time = 5)
 			threat_to_swarm.adjustFireLoss(15)
 			playsound(src, 'sound/weapons/plasma_cutter.ogg', 50, 1)
 			playsound(threat_to_swarm, 'sound/weapons/sear.ogg', 50, 1)
+		if("swarm")
+			visible_message("<span class='warning'>[src] warps in a swarm of hivebots!</span>")
+			for(var/i in 1 to 3)
+				new/mob/living/simple_animal/hostile/hivebot(T)
+			for(var/i in 1 to 2)
+				new/mob/living/simple_animal/hostile/hivebot/ranged(T)
+			new/mob/living/simple_animal/hostile/hivebot/engineer(T)
+			recharge_period = 5 //Give some time to mop up the adds
 		if("saw")
 			var/turf/target_turf = get_turf(threat_to_swarm)
 			visible_message("<span class='warning'>[src] revs its buzzsaw!</span>")

@@ -167,7 +167,7 @@
 	icon = 'icons/effects/96x96.dmi'
 	icon_state = "hivebot_swarm_core_dead"
 	pixel_x = -32
-	pixel_y = -32
+	pixel_y = -16
 	density = 1
 
 /obj/structure/fluff/hivebot_swarm_core/examine(mob/user)
