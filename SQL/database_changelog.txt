@@ -17,7 +17,7 @@ INSERT INTO `feedback`.`messages`
 INSERT INTO `feedback`.`messages`
 (`type`,`targetckey`,`adminckey`,`text`,`timestamp`,`lasteditor`,`edits`) SELECT "watchlist entry", `ckey`, `adminckey`, `reason`, `timestamp`, `last_editor`, `edits` FROM `feedback`.`watch`
 
-It's not nessecary to delete the 'notes', 'memos', and 'watchlist' tables but they will no longer be used.
+It's not necessary to delete the 'notes', 'memos', and 'watchlist' tables but they will no longer be used.
 
 Remember to add a prefix to the table names if you use them
 
