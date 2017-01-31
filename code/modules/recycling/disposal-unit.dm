@@ -396,7 +396,7 @@
 	updateDialog()
 
 	if(flush && air_contents.return_pressure() >= SEND_PRESSURE) // flush can happen even without power
-		addtimer(CALLBACK(src, .proc/flush), 0)
+		INVOKE_ASYNC(src, .proc/flush)
 
 	if(stat & NOPOWER) // won't charge if no power
 		return

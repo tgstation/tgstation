@@ -73,9 +73,8 @@
 	playsound(get_turf(user),'sound/items/change_drill.ogg',50,1)
 	var/obj/item/weapon/wirecutters/power/s_drill = new /obj/item/weapon/screwdriver/power
 	user << "<span class='notice'>You attach the screw driver bit to [src].</span>"
-	user.unEquip(src)
-	user.put_in_active_hand(s_drill)
 	qdel(src)
+	user.put_in_active_hand(s_drill)
 
 /obj/item/weapon/wrench/power/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is pressing [src] against [user.p_their()] head! It looks like [user.p_theyre()] trying to commit suicide!")
@@ -106,7 +105,7 @@
 		return
 
 	for(var/obj/item/W in user)
-		user.unEquip(W)
+		user.dropItemToGround(W)
 
 	var/obj/item/weapon/wrench/medical/W = new /obj/item/weapon/wrench/medical(loc)
 	W.add_fingerprint(user)
@@ -203,9 +202,8 @@
 	playsound(get_turf(user),'sound/items/change_drill.ogg',50,1)
 	var/obj/item/weapon/wrench/power/b_drill = new /obj/item/weapon/wrench/power
 	user << "<span class='notice'>You attach the bolt driver bit to [src].</span>"
-	user.unEquip(src)
-	user.put_in_active_hand(b_drill)
 	qdel(src)
+	user.put_in_active_hand(b_drill)
 
 /obj/item/weapon/screwdriver/cyborg
 	name = "powered screwdriver"
@@ -302,9 +300,8 @@
 	playsound(get_turf(user),"sound/items/change_jaws.ogg",50,1)
 	var/obj/item/weapon/crowbar/power/pryjaws = new /obj/item/weapon/crowbar/power
 	user << "<span class='notice'>You attach the pry jaws to [src].</span>"
-	user.unEquip(src)
-	user.put_in_active_hand(pryjaws)
 	qdel(src)
+	user.put_in_active_hand(pryjaws)
 /*
  * Welding Tool
  */
@@ -561,8 +558,7 @@
 		if (R.use(1))
 			var/obj/item/weapon/flamethrower/F = new /obj/item/weapon/flamethrower(user.loc)
 			if(!remove_item_from_storage(F))
-				user.unEquip(src)
-				loc = F
+				user.transferItemToLoc(src, F, TRUE)
 			F.weldtool = src
 			add_fingerprint(user)
 			user << "<span class='notice'>You add a rod to a welder, starting to build a flamethrower.</span>"
@@ -742,6 +738,5 @@
 	playsound(get_turf(user),"sound/items/change_jaws.ogg",50,1)
 	var/obj/item/weapon/wirecutters/power/cutjaws = new /obj/item/weapon/wirecutters/power
 	user << "<span class='notice'>You attach the cutting jaws to [src].</span>"
-	user.unEquip(src)
-	user.put_in_active_hand(cutjaws)
 	qdel(src)
+	user.put_in_active_hand(cutjaws)

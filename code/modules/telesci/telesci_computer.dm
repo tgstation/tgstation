@@ -68,9 +68,9 @@
 		updateDialog()
 	else if(istype(W, /obj/item/device/gps))
 		if(!inserted_gps)
+			if(!user.transferItemToLoc(W, src))
+				return
 			inserted_gps = W
-			user.unEquip(W)
-			W.loc = src
 			user.visible_message("[user] inserts [W] into \the [src]'s GPS device slot.", "<span class='notice'>You insert [W] into \the [src]'s GPS device slot.</span>")
 	else if(istype(W, /obj/item/device/multitool))
 		var/obj/item/device/multitool/M = W

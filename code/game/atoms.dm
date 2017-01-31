@@ -111,8 +111,9 @@
 			var/atom/movable/M = A
 			if(isliving(M.loc))
 				var/mob/living/L = M.loc
-				L.unEquip(M)
-			M.loc = src
+				L.transferItemToLoc(M, src)
+			else
+				M.forceMove(src)
 
 /atom/proc/assume_air(datum/gas_mixture/giver)
 	qdel(giver)
@@ -163,7 +164,8 @@
 	return
 
 /atom/proc/emp_act(severity)
-	return
+	if(istype(wires))
+		wires.emp_pulse()
 
 /atom/proc/bullet_act(obj/item/projectile/P, def_zone)
 	. = P.on_hit(src, 0, def_zone)

@@ -61,9 +61,8 @@
 			user << "<span class='warning'>You have already inserted a cell!</span>"
 			return
 		else
-			if(!user.unEquip(W))
+			if(!user.transferItemToLoc(W, src))
 				return
-			W.loc = src
 			src.cell = W
 			user << "<span class='notice'>You insert the cell.</span>"
 	else if(istype(W, /obj/item/stack/cable_coil))
@@ -118,9 +117,8 @@
 			user << "<span class='warning'>You can't use a broken flash!</span>"
 			return
 		else
-			if(!user.unEquip(W))
+			if(!user.transferItemToLoc(F, src))
 				return
-			F.loc = src
 			if(src.flash1)
 				src.flash2 = F
 			else

@@ -25,10 +25,9 @@
 	if(!usr)
 		return
 	if(!reagents.total_volume)
-		usr.unEquip(src)	//so icons update :[
 		var/obj/item/trash_item = generate_trash(usr)
-		usr.put_in_hands(trash_item)
 		qdel(src)
+		usr.put_in_hands(trash_item)
 
 
 /obj/item/weapon/reagent_containers/food/snacks/attack_self(mob/user)
@@ -42,7 +41,6 @@
 		eatverb = pick("bite","chew","nibble","gnaw","gobble","chomp")
 	if(!reagents.total_volume)						//Shouldn't be needed but it checks to see if it has anything left in it.
 		user << "<span class='notice'>None of [src] left, oh no!</span>"
-		M.unEquip(src)	//so icons update :[
 		qdel(src)
 		return 0
 	if(iscarbon(M))
@@ -318,7 +316,7 @@
 			user << "<span class='warning'>[src] is full.</span>"
 			return 0
 		user << "<span class='notice'>You slip [W] inside [src].</span>"
-		user.unEquip(W)
+		user.transferItemToLoc(W, src)
 		add_fingerprint(user)
 		contents += W
 		stored_item = 1
