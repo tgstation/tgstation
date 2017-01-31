@@ -52,15 +52,15 @@
 	/obj/item/clothing/shoes/magboots)) //replace this only if ratvar is up
 
 /datum/clockwork_scripture/fellowship_armory/run_scripture()
-	for(var/mob/living/L in orange(1, get_turf(invoker)))
-		if(is_servant_of_ratvar(L) && L.can_speak_vocal())
+	for(var/mob/living/L in orange(1, invoker))
+		if(is_servant_of_ratvar(L) && L.stat == CONSCIOUS && L.can_speak_vocal())
 			channel_time = max(channel_time - 10, 0)
 	return ..()
 
 /datum/clockwork_scripture/fellowship_armory/scripture_effects()
 	var/affected = 0
-	for(var/mob/living/L in view(7, invoker))
-		if(!is_servant_of_ratvar(L))
+	for(var/mob/living/L in view(7, get_turf(invoker)))
+		if(L.stat == DEAD || !is_servant_of_ratvar(L))
 			continue
 		var/do_message = 0
 		var/obj/item/I = L.get_item_by_slot(slot_wear_suit)
