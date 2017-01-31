@@ -16,6 +16,7 @@ var/obj/machinery/gateway/centerstation/the_gateway = null
 	var/can_link = FALSE	//Is this the centerpiece?
 
 /obj/machinery/gateway/Initialize()
+	..()
 	randomspawns = awaydestinations
 
 /obj/machinery/gateway/proc/toggleoff()
