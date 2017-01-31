@@ -73,7 +73,7 @@ var/datum/subsystem/air/SSair
 	if(currentpart == SSAIR_PIPENETS || !resumed)
 		process_pipenets(resumed)
 		cost_pipenets = MC_AVERAGE(cost_pipenets, TICK_DELTA_TO_MS(world.tick_usage - timer))
-		if(paused)
+		if(state != SS_RUNNING)
 			return
 		resumed = 0
 		currentpart = SSAIR_ATMOSMACHINERY
@@ -82,7 +82,7 @@ var/datum/subsystem/air/SSair
 		timer = world.tick_usage
 		process_atmos_machinery(resumed)
 		cost_atmos_machinery = MC_AVERAGE(cost_atmos_machinery, TICK_DELTA_TO_MS(world.tick_usage - timer))
-		if(paused)
+		if(state != SS_RUNNING)
 			return
 		resumed = 0
 		currentpart = SSAIR_ACTIVETURFS
@@ -91,7 +91,7 @@ var/datum/subsystem/air/SSair
 		timer = world.tick_usage
 		process_active_turfs(resumed)
 		cost_turfs = MC_AVERAGE(cost_turfs, TICK_DELTA_TO_MS(world.tick_usage - timer))
-		if(paused)
+		if(state != SS_RUNNING)
 			return
 		resumed = 0
 		currentpart = SSAIR_EXCITEDGROUPS
@@ -100,7 +100,7 @@ var/datum/subsystem/air/SSair
 		timer = world.tick_usage
 		process_excited_groups(resumed)
 		cost_groups = MC_AVERAGE(cost_groups, TICK_DELTA_TO_MS(world.tick_usage - timer))
-		if(paused)
+		if(state != SS_RUNNING)
 			return
 		resumed = 0
 		currentpart = SSAIR_HIGHPRESSURE
@@ -109,7 +109,7 @@ var/datum/subsystem/air/SSair
 		timer = world.tick_usage
 		process_high_pressure_delta(resumed)
 		cost_highpressure = MC_AVERAGE(cost_highpressure, TICK_DELTA_TO_MS(world.tick_usage - timer))
-		if(paused)
+		if(state != SS_RUNNING)
 			return
 		resumed = 0
 		currentpart = SSAIR_HOTSPOTS
@@ -118,7 +118,7 @@ var/datum/subsystem/air/SSair
 		timer = world.tick_usage
 		process_hotspots(resumed)
 		cost_hotspots = MC_AVERAGE(cost_hotspots, TICK_DELTA_TO_MS(world.tick_usage - timer))
-		if(paused)
+		if(state != SS_RUNNING)
 			return
 		resumed = 0
 		currentpart = SSAIR_SUPERCONDUCTIVITY
@@ -127,7 +127,7 @@ var/datum/subsystem/air/SSair
 		timer = world.tick_usage
 		process_super_conductivity(resumed)
 		cost_superconductivity = MC_AVERAGE(cost_superconductivity, TICK_DELTA_TO_MS(world.tick_usage - timer))
-		if(paused)
+		if(state != SS_RUNNING)
 			return
 		resumed = 0
 	currentpart = SSAIR_PIPENETS
