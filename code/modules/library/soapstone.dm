@@ -21,6 +21,7 @@
 
 /obj/item/soapstone/proc/random_name()
 	name = pick("soapstone", "chisel", "chalk", "magic marker")
+	non_dull_name = name
 	if(name == "chalk" || name == "magic marker")
 		desc = replacetext(desc, "engraving", "scribbling")
 		w_engrave = "scribble"
@@ -121,7 +122,7 @@
 /obj/item/soapstone/proc/refund_use()
 	if(remaining_uses == -1)
 		return
-	var/was_dull = remaining_uses
+	var/was_dull = !remaining_uses
 	remaining_uses++
 
 	if(was_dull)
