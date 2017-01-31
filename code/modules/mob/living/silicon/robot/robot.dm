@@ -1007,10 +1007,11 @@
 	if(!riding_datum)
 		riding_datum = new /datum/riding/cyborg
 		riding_datum.ridden = src
-	if(buckled_mobs.len > max_buckled_mobs)
-		return
-	if(M in buckled_mobs)
-		return
+	if(buckled_mobs)
+		if(buckled_mobs.len > max_buckled_mobs)
+			return
+		if(M in buckled_mobs)
+			return
 	if(stat)
 		return
 	if(incapacitated())
@@ -1042,8 +1043,11 @@
 
 /mob/living/silicon/robot/proc/unequip_buckle_inhands(mob/living/carbon/user)
 	for(var/obj/item/cyborgride_offhand/O in user.contents)
-		if(!O.dropping)
-			O.dropping = TRUE
+		if(O.ridden != src)	//This shouldn't EVER happen.
+			continue
+		if(O.selfdeleting)
+			continue
+		else
 			qdel(O)
 	return TRUE
 
@@ -1062,17 +1066,20 @@
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	var/mob/living/carbon/rider
 	var/mob/living/silicon/robot/ridden
-	var/dropping = FALSE
+	var/selfdeleting = FALSE
+
+/obj/item/cyborgride_offhand/dropped()
+	selfdeleting = TRUE
+	. = ..()
 
 /obj/item/cyborgride_offhand/equipped()
 	if(loc != rider)
+		selfdeleting = TRUE
 		qdel(src)
 	. = ..()
 
 /obj/item/cyborgride_offhand/Destroy()
-	if(!dropping)
+	if(selfdeleting)
 		if(rider in ridden.buckled_mobs)
 			ridden.unbuckle_mob(rider)
-		dropping = TRUE
 	. = ..()
-
