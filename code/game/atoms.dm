@@ -438,8 +438,8 @@ var/list/blood_splatter_icons = list()
 //Called after New if the world is not loaded with TRUE
 //Called from base of New if the world is loaded with FALSE
 //This base must be called or derivatives must set initialized to TRUE to prevent repeat calls
+//Derivatives must not sleep
 /atom/proc/Initialize(mapload)
-	set waitfor = 0
 	#ifdef TESTING
 	if(initialized)
 		stack_trace("Warning: [type] initialized multiple times!")
