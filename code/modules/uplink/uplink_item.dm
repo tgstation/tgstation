@@ -1137,17 +1137,8 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 
 // Role-specific items
 /datum/uplink_item/role_restricted
-	category = "Role-Restricted (may be empty!)"
+	category = "Role-Restricted"
 	exclude_modes = list(/datum/game_mode/nuclear)
-
-/datum/uplink_item/role_restricted/test
-	name = "test item"
-	desc = "A special deck of space-grade playing cards with a mono-molecular edge and metal reinforcement, \
-			making them slightly more robust than a normal deck of cards. \
-			You can also play card games with them or leave them on your victims."
-	item = /obj/item/toy/cards/deck/syndicate
-	cost = 1
-	restricted_roles = list("Assistant")
 
 // Pointless
 /datum/uplink_item/badass
