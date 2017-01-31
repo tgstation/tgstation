@@ -9,13 +9,16 @@ var/obj/machinery/gateway/centerstation/the_gateway = null
 	anchored = 1
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	var/active = 0
-
+	var/checkparts = TRUE
+	var/list/obj/effect/landmark/randomspawns = list()
 
 /obj/machinery/gateway/centerstation/New()
 	..()
 	if(!the_gateway)
 		the_gateway = src
 
+/obj/machinery/gateway/centerstation/initialize()
+	randomspawns = awaydestinations
 
 /obj/machinery/gateway/centerstation/Destroy()
 	if(the_gateway == src)
@@ -87,20 +90,21 @@ var/obj/machinery/gateway/centerstation/the_gateway = null
 		if(G)
 			linked.Add(G)
 			continue
-
+		if(!checkparts)
+			continue
 		//this is only done if we fail to find a part
 		ready = 0
 		toggleoff()
 		break
 
-	if(linked.len == 8)
+	if((linked.len == 8) || !checkparts)
 		ready = 1
 
 
 /obj/machinery/gateway/centerstation/proc/toggleon(mob/user)
 	if(!ready)
 		return
-	if(linked.len != 8)
+	if((linked.len != 8) && checkparts)
 		return
 	if(!powered())
 		return
@@ -154,7 +158,7 @@ var/obj/machinery/gateway/centerstation/the_gateway = null
 				M.client.move_delay = max(world.time + 5, M.client.move_delay)
 		return
 	else
-		var/obj/effect/landmark/dest = pick(awaydestinations)
+		var/obj/effect/landmark/dest = pick(randomspawns)
 		if(dest)
 			AM.forceMove(get_turf(dest))
 			AM.setDir(SOUTH)
@@ -204,20 +208,22 @@ var/obj/machinery/gateway/centerstation/the_gateway = null
 		if(G)
 			linked.Add(G)
 			continue
+		if(!checkparts)
+			continue
 
 		//this is only done if we fail to find a part
 		ready = 0
 		toggleoff()
 		break
 
-	if(linked.len == 8)
+	if((linked.len == 8) || !checkparts)
 		ready = 1
 
 
 /obj/machinery/gateway/centeraway/proc/toggleon(mob/user)
 	if(!ready)
 		return
-	if(linked.len != 8)
+	if((linked.len != 8) && checkparts)
 		return
 	if(!stationgate)
 		user << "<span class='notice'>Error: No destination found.</span>"
