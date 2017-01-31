@@ -1029,47 +1029,46 @@
 	riding_datum.restore_position(user)
 
 /mob/living/silicon/robot/proc/unequip_buckle_inhands(mob/living/carbon/user)
-	for(var/obj/item/weapon/twohanded/offhand/riding/cyborg/O in user.contents)
+	for(var/obj/item/cyborgride_offhand/O in user.contents)
 		if(!O.dropping)
 			O.dropping = TRUE
 			qdel(O)
 	return TRUE
 
 /mob/living/silicon/robot/proc/equip_buckle_inhands(mob/living/carbon/user)
-	var/obj/item/weapon/twohanded/offhand/riding/cyborg/inhand = new /obj/item/weapon/twohanded/offhand/riding/cyborg(user, src)
+	var/obj/item/cyborgride_offhand/inhand = new /obj/item/cyborgride_offhand(user, src)
 	return user.put_in_hands(inhand, TRUE)
 
-/obj/item/weapon/twohanded/offhand/riding/cyborg
+/obj/item/cyborgride_offhand
+	name = "offhand"
+	icon = 'icons/obj/weapons.dmi'
+	icon_state = "offhand"
+	w_class = WEIGHT_CLASS_HUGE
+	flags = ABSTRACT | NODROP
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	var/mob/living/carbon/rider
 	var/mob/living/silicon/robot/ridden
-	wielded = TRUE
 	var/dropping = FALSE
 
-/obj/item/weapon/twohanded/offhand/riding/cyborg/New(mob/living/carbon/A, mob/living/silicon/robot/B)
+/obj/item/cyborgride_offhand/New(mob/living/carbon/A, mob/living/silicon/robot/B)
 	rider = A
 	ridden = B
 	. = ..()
 
-/obj/item/weapon/twohanded/offhand/riding/cyborg/unwield()
+/obj/item/cyborgride_offhand/dropped()
 	qdel(src)
 
-/obj/item/weapon/twohanded/offhand/riding/cyborg/wield()
-	qdel(src)
-
-/obj/item/weapon/twohanded/offhand/riding/cyborg/dropped()
-	qdel(src)
-
-/obj/item/weapon/twohanded/offhand/riding/cyborg/equipped()
+/obj/item/cyborgride_offhand/equipped()
 	if(loc != rider)
 		qdel(src)
 	. = ..()
 
-/obj/item/weapon/twohanded/offhand/riding/cyborg/Destroy()
+/obj/item/cyborgride_offhand/Destroy()
 	if(!dropping)
 		if(rider in ridden.buckled_mobs)
 			ridden.unbuckle_mob(rider)
 		dropping = TRUE
 	. = ..()
 
-/obj/item/weapon/twohanded/offhand/riding/cyborg/attack_self()
+/obj/item/cyborgride_offhand/attack_self()
 	return
