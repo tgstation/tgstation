@@ -16494,7 +16494,7 @@
 	},
 /obj/machinery/door/airlock/external{
 	name = "External Solar Access";
-	req_access_txt = 24;
+	req_access_txt = "24";
 	req_one_access = null
 	},
 /obj/effect/turf_decal/stripes/line{
