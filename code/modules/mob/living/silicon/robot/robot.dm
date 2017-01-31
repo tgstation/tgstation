@@ -1008,7 +1008,7 @@
 		riding_datum = new /datum/riding/cyborg
 		riding_datum.ridden = src
 	if(buckled_mobs)
-		if(buckled_mobs.len > max_buckled_mobs)
+		if(buckled_mobs.len >= max_buckled_mobs)
 			return
 		if(M in buckled_mobs)
 			return
