@@ -443,6 +443,8 @@
 		if(!G.key || !G.client)
 			candidates.Remove(G)
 
+	listclearnulls(candidates)
+
 	return candidates
 
 /proc/pollCandidatesForMob(Question, jobbanType, datum/game_mode/gametypeCheck, be_special_flag = 0, poll_time = 300, mob/M, ignore_category = null)

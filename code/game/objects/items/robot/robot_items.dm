@@ -66,6 +66,8 @@
 			user << "ERROR: ARM ACTUATORS OVERLOADED."
 
 /obj/item/borg/cyborghug/attack(mob/living/M, mob/living/silicon/robot/user)
+	if(M == user)
+		return
 	switch(mode)
 		if(0)
 			if(M.health >= 0)

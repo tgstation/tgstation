@@ -1,0 +1,4 @@
+author: "RemieRichards"
+delete-after: True
+changes: 
+  - rscadd: "Added the ability to choose where your uplink spawns, choose between the classic PDA, the \"woops you don't actually have a PDA\" fallback Radio uplink and the brand new Pen uplink!"
