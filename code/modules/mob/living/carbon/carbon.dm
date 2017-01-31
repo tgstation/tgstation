@@ -93,20 +93,26 @@
 
 /mob/living/carbon/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	. = ..()
+	var/hurt = TRUE
+	if(istype(throwingdatum, /datum/thrownthing))
+		var/datum/thrownthing/D = throwingdatum
+		if(istype(D.thrower, /mob/living/silicon/robot))
+			var/mob/living/silicon/robot/R = D.thrower
+			if(!R.emagged)
+				hurt = FALSE
 	if(hit_atom.density && isturf(hit_atom))
-		if(istype(throwingdatum.thrower, /mob/living/silicon/robot))
-			return
-		Weaken(1)
-		take_bodypart_damage(10)
+		if(hurt)
+			Weaken(1)
+			take_bodypart_damage(10)
 	if(iscarbon(hit_atom) && hit_atom != src)
 		var/mob/living/carbon/victim = hit_atom
 		if(victim.movement_type & FLYING)
 			return
-		victim.Weaken(1)
-		Weaken(1)
-		if(!istype(throwingdatum.thrower, /mob/living/silicon/robot))
+		if(hurt)
 			victim.take_bodypart_damage(10)
 			take_bodypart_damage(10)
+			victim.Weaken(1)
+			Weaken(1)
 		visible_message("<span class='danger'>[src] crashes into [victim], knocking them both over!</span>", "<span class='userdanger'>You violently crash into [victim]!</span>")
 		playsound(src,'sound/weapons/punch1.ogg',50,1)
 
