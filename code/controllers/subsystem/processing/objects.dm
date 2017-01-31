@@ -74,7 +74,7 @@ var/datum/subsystem/objects/SSobj
 
 /datum/subsystem/objects/Recover()
 	initialized = SSobj.initialized
-	if(initialized == INITIALIZATION_INNEW_MAPLOAD) //0.o?
+	if(initialized == INITIALIZATION_INNEW_MAPLOAD)
 		InitializeAtoms()
 	old_initialized = SSobj.old_initialized
 
