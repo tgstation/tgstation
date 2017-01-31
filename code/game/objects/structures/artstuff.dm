@@ -19,7 +19,7 @@
 /obj/structure/easel/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/canvas))
 		var/obj/item/weapon/canvas/C = I
-		user.unEquip(C)
+		user.dropItemToGround(C)
 		painting = C
 		C.loc = get_turf(src)
 		C.layer = layer+0.1

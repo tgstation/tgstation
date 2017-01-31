@@ -35,7 +35,7 @@
 	if(isliving(AM))
 		var/mob/living/L = AM
 		if(L.stat <= stat_affected)
-			if((!is_servant_of_ratvar(L) || (is_servant_of_ratvar(L) && affects_servants)) && L.mind && (!isdrone(L) || istype(L, /mob/living/simple_animal/drone/cogscarab)))
+			if((!is_servant_of_ratvar(L) || (affects_servants && is_servant_of_ratvar(L))) && (L.mind || L.has_status_effect(STATUS_EFFECT_SIGILMARK)) && !isdrone(L))
 				var/obj/item/I = L.null_rod_check()
 				if(I)
 					L.visible_message("<span class='warning'>[L]'s [I.name] [resist_string], protecting them from [src]'s effects!</span>", \
@@ -68,7 +68,7 @@
 	L.visible_message("<span class='warning'>[src] appears around [L] in a burst of light!</span>", \
 	"<span class='userdanger'>[target_flashed ? "An unseen force":"The glowing sigil around you"] holds you in place!</span>")
 	L.Stun(5)
-	PoolOrNew(/obj/effect/overlay/temp/ratvar/sigil/transgression, get_turf(src))
+	new /obj/effect/overlay/temp/ratvar/sigil/transgression(get_turf(src))
 	qdel(src)
 
 
@@ -101,7 +101,7 @@
 	animate(src, color = "#AF0AAF", time = convert_time)
 	var/obj/effect/overlay/temp/ratvar/sigil/glow
 	if(glow_type)
-		glow = PoolOrNew(glow_type, get_turf(src))
+		glow = new glow_type(get_turf(src))
 		animate(glow, alpha = 255, time = convert_time)
 	var/I = 0
 	while(I < convert_time && get_turf(L) == get_turf(src))
@@ -171,7 +171,7 @@
 /obj/effect/clockwork/sigil/transmission
 	name = "suspicious sigil"
 	desc = "A glowing orange sigil. The air around it feels staticky."
-	clockwork_desc = "A sigil that will serve as a battery for clockwork structures. Use Volt Void while standing on it to charge it."
+	clockwork_desc = "A sigil that will serve as a battery for clockwork structures."
 	icon_state = "sigiltransmission"
 	color = "#EC8A2D"
 	alpha = 50
@@ -271,7 +271,7 @@
 	stat_affected = DEAD
 	resist_string = "glows shimmering yellow"
 	sigil_name = "Vitality Matrix"
-	var/vitality = 0
+	var/static/vitality = 0
 	var/base_revive_cost = 20
 	var/sigil_active = FALSE
 	var/animation_number = 3 //each cycle increments this by 1, at 4 it produces an animation and resets
@@ -280,7 +280,7 @@
 /obj/effect/clockwork/sigil/vitality/examine(mob/user)
 	..()
 	if(is_servant_of_ratvar(user) || isobserver(user))
-		user << "<span class='[vitality ? "inathneq_small":"alloy"]'>It is storing <b>[ratvar_awakens ? "INFINITE":"[vitality]"]</b> units of vitality.</span>"
+		user << "<span class='[vitality ? "inathneq_small":"alloy"]'>It has access to <b>[ratvar_awakens ? "INFINITE":"[vitality]"]</b> units of vitality.</span>"
 		user << "<span class='inathneq_small'>It requires at least <b>[base_revive_cost]</b> units of vitality to revive dead Servants, in addition to any damage the Servant has.</span>"
 
 /obj/effect/clockwork/sigil/vitality/sigil_effects(mob/living/L)
@@ -291,23 +291,23 @@
 	addtimer(CALLBACK(src, .proc/update_alpha), 10)
 	sleep(10)
 //as long as they're still on the sigil and are either not a servant or they're a servant AND it has remaining vitality
-	while(L && (!is_servant_of_ratvar(L) || (is_servant_of_ratvar(L) && vitality)) && get_turf(L) == get_turf(src))
+	while(L && (!is_servant_of_ratvar(L) || (is_servant_of_ratvar(L) && (ratvar_awakens || vitality))) && get_turf(L) == get_turf(src))
 		sigil_active = TRUE
 		if(animation_number >= 4)
-			PoolOrNew(/obj/effect/overlay/temp/ratvar/sigil/vitality, get_turf(src))
+			new /obj/effect/overlay/temp/ratvar/sigil/vitality(get_turf(src))
 			animation_number = 0
 		animation_number++
 		if(!is_servant_of_ratvar(L))
 			var/vitality_drained = 0
 			if(L.stat == DEAD)
 				vitality_drained = L.maxHealth
-				var/obj/effect/overlay/temp/ratvar/sigil/vitality/V = PoolOrNew(/obj/effect/overlay/temp/ratvar/sigil/vitality, get_turf(src))
+				var/obj/effect/overlay/temp/ratvar/sigil/vitality/V = new /obj/effect/overlay/temp/ratvar/sigil/vitality(get_turf(src))
 				animate(V, alpha = 0, transform = matrix()*2, time = 8)
 				playsound(L, 'sound/magic/WandODeath.ogg', 50, 1)
 				L.visible_message("<span class='warning'>[L] collapses in on [L.p_them()]self as [src] flares bright blue!</span>")
 				L << "<span class='inathneq_large'>\"[text2ratvar("Your life will not be wasted.")]\"</span>"
 				for(var/obj/item/W in L)
-					if(!L.unEquip(W))
+					if(!L.dropItemToGround(W))
 						qdel(W)
 				L.dust()
 			else

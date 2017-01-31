@@ -118,7 +118,7 @@
 	playsound(loc, 'sound/effects/spray.ogg', 10, 1, -3)
 	if (H && !qdeleted(H))
 		for(var/obj/item/W in H)
-			H.unEquip(W)
+			H.dropItemToGround(W)
 			if(prob(50))
 				step(W, pick(alldirs))
 		H.hair_style = "Bald"

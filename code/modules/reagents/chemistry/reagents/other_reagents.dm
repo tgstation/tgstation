@@ -214,6 +214,12 @@
 	name = "Unholy Water"
 	id = "unholywater"
 	description = "Something that shouldn't exist on this plane of existence."
+	
+/datum/reagent/fuel/unholywater/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
+	if(method == TOUCH || method == VAPOR)
+		M.reagents.add_reagent("unholywater", (reac_volume/4))
+		return
+	return ..()
 
 /datum/reagent/fuel/unholywater/on_mob_life(mob/living/M)
 	if(iscultist(M))
@@ -227,7 +233,7 @@
 		M.adjustFireLoss(-2, 0)
 	else
 		M.adjustBrainLoss(3)
-		M.adjustToxLoss(2, 0)
+		M.adjustToxLoss(1, 0)
 		M.adjustFireLoss(2, 0)
 		M.adjustOxyLoss(2, 0)
 		M.adjustBruteLoss(2, 0)
@@ -263,7 +269,7 @@
 	if (!istype(T))
 		return
 	if(reac_volume >= 1)
-		T.MakeSlippery(wet_setting=TURF_WET_LUBE, min_wet_time=15, min(wet_time_to_add=reac_volume*2, 120))
+		T.MakeSlippery(TURF_WET_LUBE, 15, min(reac_volume * 2, 120))
 
 /datum/reagent/spraytan
 	name = "Spray Tan"
@@ -1359,7 +1365,7 @@
 //Misc reagents
 
 /datum/reagent/romerol
-	name = "romerol"
+	name = "Romerol"
 	// the REAL zombie powder
 	id = "romerol"
 	description = "Romerol is a highly experimental bioterror agent \
@@ -1373,11 +1379,11 @@
 
 /datum/reagent/romerol/on_mob_life(mob/living/carbon/human/H)
 	// Silently add the zombie infection organ to be activated upon death
-	new /obj/item/organ/body_egg/zombie_infection(H)
+	new /obj/item/organ/zombie_infection(H)
 	..()
 
 /datum/reagent/growthserum
-	name = "Growth serum"
+	name = "Growth Serum"
 	id = "growthserum"
 	description = "A commercial chemical designed to help older men in the bedroom."//not really it just makes you a giant
 	color = "#ff0000"//strong red. rgb 255, 0, 0

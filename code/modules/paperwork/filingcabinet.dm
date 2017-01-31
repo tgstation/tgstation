@@ -31,10 +31,12 @@
 	icon_state = "tallcabinet"
 
 
-/obj/structure/filingcabinet/initialize()
-	for(var/obj/item/I in loc)
-		if(istype(I, /obj/item/weapon/paper) || istype(I, /obj/item/weapon/folder) || istype(I, /obj/item/weapon/photo))
-			I.loc = src
+/obj/structure/filingcabinet/Initialize(mapload)
+	..()
+	if(mapload)
+		for(var/obj/item/I in loc)
+			if(istype(I, /obj/item/weapon/paper) || istype(I, /obj/item/weapon/folder) || istype(I, /obj/item/weapon/photo))
+				I.loc = src
 
 /obj/structure/filingcabinet/deconstruct(disassembled = TRUE)
 	if(!(flags & NODECONSTRUCT))

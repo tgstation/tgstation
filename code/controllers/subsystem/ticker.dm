@@ -74,6 +74,8 @@ var/datum/subsystem/ticker/ticker
 			world << "<span class='boldnotice'>Welcome to [station_name()]!</span>"
 			world << "Please set up your character and select \"Ready\". The game will start in [config.lobby_countdown] seconds."
 			current_state = GAME_STATE_PREGAME
+			for(var/client/C in clients)
+				window_flash(C) //let them know lobby has opened up.
 
 		if(GAME_STATE_PREGAME)
 				//lobby stats for statpanels
@@ -114,11 +116,13 @@ var/datum/subsystem/ticker/ticker
 				current_state = GAME_STATE_FINISHED
 				toggle_ooc(1) // Turn it on
 				declare_completion(force_ending)
-				spawn(50)
-					if(mode.station_was_nuked)
-						world.Reboot("Station destroyed by Nuclear Device.", "end_proper", "nuke")
-					else
-						world.Reboot("Round ended.", "end_proper", "proper completion")
+				addtimer(CALLBACK(src, .proc/NukeCleanup), 50)
+
+/datum/subsystem/ticker/proc/NukeCleanup()
+	if(mode.station_was_nuked)
+		world.Reboot("Station destroyed by Nuclear Device.", "end_proper", "nuke")
+	else
+		world.Reboot("Round ended.", "end_proper", "proper completion")
 
 /datum/subsystem/ticker/proc/setup()
 		//Create and announce mode
@@ -197,47 +201,53 @@ var/datum/subsystem/ticker/ticker
 			var/datum/holiday/holiday = SSevent.holidays[holidayname]
 			world << "<h4>[holiday.greet()]</h4>"
 
-
-	spawn(0)//Forking here so we dont have to wait for this to finish
-		mode.post_setup()
-		//Cleanup some stuff
-		for(var/obj/effect/landmark/start/S in landmarks_list)
-			//Deleting Startpoints but we need the ai point to AI-ize people later
-			if(S.name != "AI")
-				qdel(S)
-
-		var/list/adm = get_admin_counts()
-		if(!adm["present"])
-			send2irc("Server", "Round just started with no active admins online!")
+	PostSetup()
 
 	return 1
 
+/datum/subsystem/ticker/proc/PostSetup()
+	set waitfor = 0
+	mode.post_setup()
+	//Cleanup some stuff
+	for(var/obj/effect/landmark/start/S in landmarks_list)
+		//Deleting Startpoints but we need the ai point to AI-ize people later
+		if(S.name != "AI")
+			qdel(S)
+
+	var/list/adm = get_admin_counts()
+	if(!adm["present"])
+		send2irc("Server", "Round just started with no active admins online!")
+
+/datum/subsystem/ticker/proc/station_explosion_detonation(atom/bomb)
+	if(bomb)	//BOOM
+		var/turf/epi = bomb.loc
+		qdel(bomb)
+		if(epi)
+			explosion(epi, 0, 256, 512, 0, TRUE, TRUE, 0, TRUE)
+
 //Plus it provides an easy way to make cinematics for other events. Just use this as a template
-/datum/subsystem/ticker/proc/station_explosion_cinematic(station_missed=0, override = null)
+/datum/subsystem/ticker/proc/station_explosion_cinematic(station_missed=0, override = null, atom/bomb = null)
 	if( cinematic )
 		return	//already a cinematic in progress!
 
 	for (var/datum/html_interface/hi in html_interfaces)
 		hi.closeAll()
+	SStgui.close_all_uis()
+
+	//Turn off the shuttles, there's no escape now
+	if(!station_missed && bomb)
+		SSshuttle.registerHostileEnvironment(src)
+		SSshuttle.lockdown = TRUE
+
 	//initialise our cinematic screen object
 	cinematic = new /obj/screen{icon='icons/effects/station_explosion.dmi';icon_state="station_intact";layer=21;mouse_opacity=0;screen_loc="1,0";}(src)
 
-	if(station_missed)
-		for(var/mob/M in mob_list)
-			M.notransform = TRUE //stop everything moving
-			if(M.client)
-				M.client.screen += cinematic	//show every client the cinematic
-	else	//nuke kills everyone on z-level 1 to prevent "hurr-durr I survived"
-		for(var/mob/M in mob_list)
-			if(M.client)
-				M.client.screen += cinematic
-			if(M.stat != DEAD)
-				var/turf/T = get_turf(M)
-				if(T && T.z==1)
-					M.death(0) //no mercy
-				else
-					M.notransform=TRUE //no moving for you
+	for(var/mob/M in mob_list)
+		M.notransform = TRUE //stop everything moving
+		if(M.client)
+			M.client.screen += cinematic	//show every client the cinematic
 
+	var/actually_blew_up = TRUE
 	//Now animate the cinematic
 	switch(station_missed)
 		if(NUKE_NEAR_MISS)	//nuke was nearby but (mostly) missed
@@ -248,27 +258,32 @@ var/datum/subsystem/ticker/ticker
 					flick("intro_nuke",cinematic)
 					sleep(35)
 					world << sound('sound/effects/explosionfar.ogg')
+					station_explosion_detonation(bomb)
 					flick("station_intact_fade_red",cinematic)
 					cinematic.icon_state = "summary_nukefail"
 				if("gang war") //Gang Domination (just show the override screen)
 					cinematic.icon_state = "intro_malf_still"
 					flick("intro_malf",cinematic)
+					actually_blew_up = FALSE
 					sleep(70)
 				if("fake") //The round isn't over, we're just freaking people out for fun
 					flick("intro_nuke",cinematic)
 					sleep(35)
 					world << sound('sound/items/bikehorn.ogg')
 					flick("summary_selfdes",cinematic)
+					actually_blew_up = FALSE
 				else
 					flick("intro_nuke",cinematic)
 					sleep(35)
 					world << sound('sound/effects/explosionfar.ogg')
-					//flick("end",cinematic)
+					station_explosion_detonation(bomb)
 
 
 		if(NUKE_MISS_STATION || NUKE_SYNDICATE_BASE)	//nuke was nowhere nearby	//TODO: a really distant explosion animation
 			sleep(50)
 			world << sound('sound/effects/explosionfar.ogg')
+			station_explosion_detonation(bomb)
+			actually_blew_up = station_missed == NUKE_SYNDICATE_BASE	//don't kill everyone on station if it detonated off station
 		else	//station was destroyed
 			if( mode && !override )
 				override = mode.name
@@ -278,47 +293,61 @@ var/datum/subsystem/ticker/ticker
 					sleep(35)
 					flick("station_explode_fade_red",cinematic)
 					world << sound('sound/effects/explosionfar.ogg')
+					station_explosion_detonation(bomb)
 					cinematic.icon_state = "summary_nukewin"
 				if("AI malfunction") //Malf (screen,explosion,summary)
 					flick("intro_malf",cinematic)
 					sleep(76)
 					flick("station_explode_fade_red",cinematic)
 					world << sound('sound/effects/explosionfar.ogg')
+					station_explosion_detonation(bomb)	//TODO: If we ever decide to actually detonate the vault bomb
 					cinematic.icon_state = "summary_malf"
 				if("blob") //Station nuked (nuke,explosion,summary)
 					flick("intro_nuke",cinematic)
 					sleep(35)
 					flick("station_explode_fade_red",cinematic)
 					world << sound('sound/effects/explosionfar.ogg')
+					station_explosion_detonation(bomb)	//TODO: no idea what this case could be
 					cinematic.icon_state = "summary_selfdes"
 				if("no_core") //Nuke failed to detonate as it had no core
 					flick("intro_nuke",cinematic)
 					sleep(35)
 					flick("station_intact",cinematic)
 					world << sound('sound/ambience/signal.ogg')
-					sleep(100)
-					if(cinematic)
-						qdel(cinematic)
-						cinematic = null
-					for(var/mob/M in mob_list)
-						M.notransform = FALSE
+					addtimer(CALLBACK(src, .proc/finish_cinematic, null, FALSE), 100)
 					return	//Faster exit, since nothing happened
 				else //Station nuked (nuke,explosion,summary)
 					flick("intro_nuke",cinematic)
 					sleep(35)
 					flick("station_explode_fade_red", cinematic)
 					world << sound('sound/effects/explosionfar.ogg')
+					station_explosion_detonation(bomb)
 					cinematic.icon_state = "summary_selfdes"
 	//If its actually the end of the round, wait for it to end.
 	//Otherwise if its a verb it will continue on afterwards.
-	spawn(300)
-		if(cinematic)
-			qdel(cinematic)		//end the cinematic
-		for(var/mob/M in mob_list)
-			M.notransform = FALSE //gratz you survived
-	return
 
+	var/bombloc = null
+	if(actually_blew_up)
+		if(bomb && bomb.loc)
+			bombloc = bomb.z
+		else if(!station_missed)
+			bombloc = ZLEVEL_STATION
+		
+		if(mode)
+			mode.explosion_in_progress = 0
+			world << "<B>The station was destoyed by the nuclear blast!</B>"
+			mode.station_was_nuked = (station_missed<2)	//station_missed==1 is a draw. the station becomes irradiated and needs to be evacuated.
 
+	addtimer(CALLBACK(src, .proc/finish_cinematic, bombloc, actually_blew_up), 300)
+
+/datum/subsystem/ticker/proc/finish_cinematic(killz, actually_blew_up)
+	if(cinematic)
+		qdel(cinematic)		//end the cinematic
+		cinematic = null
+	for(var/mob/M in mob_list)
+		M.notransform = FALSE
+		if(actually_blew_up && !isnull(killz) && M.stat != DEAD && M.z == killz)
+			M.gib()
 
 /datum/subsystem/ticker/proc/create_characters()
 	for(var/mob/new_player/player in player_list)
@@ -493,7 +522,6 @@ var/datum/subsystem/ticker/ticker
 				world << "<b><font color='green'>The borers were successful!</font></b>"
 			else
 				world << "<b><font color='red'>The borers have failed!</font></b>"
-	return TRUE
 
 	mode.declare_station_goal_completion()
 
@@ -560,8 +588,7 @@ var/datum/subsystem/ticker/ticker
 	//map rotate chance defaults to 75% of the length of the round (in minutes)
 	if (!prob((world.time/600)*config.maprotatechancedelta))
 		return
-	spawn(0) //compiling a map can lock up the mc for 30 to 60 seconds if we don't spawn
-		maprotate()
+	INVOKE_ASYNC(GLOBAL_PROC, /.proc/maprotate)
 
 
 /world/proc/has_round_started()

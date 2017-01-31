@@ -1,4 +1,4 @@
-#define MC_TICK_CHECK ( world.tick_usage > CURRENT_TICKLIMIT ? pause() : 0 )
+#define MC_TICK_CHECK ( ( world.tick_usage > CURRENT_TICKLIMIT || src.state != SS_RUNNING ) ? pause() : 0 )
 // Used to smooth out costs to try and avoid oscillation.
 #define MC_AVERAGE_FAST(average, current) (0.7 * (average) + 0.3 * (current))
 #define MC_AVERAGE(average, current) (0.8 * (average) + 0.2 * (current))
@@ -44,6 +44,15 @@
 //	This flag overrides SS_KEEP_TIMING
 #define SS_POST_FIRE_TIMING 128
 
+//SUBSYSTEM STATES
+#define SS_IDLE 0		//aint doing shit.
+#define SS_QUEUED 1		//queued to run
+#define SS_RUNNING 2	//actively running
+#define SS_PAUSED 3		//paused by mc_tick_check
+#define SS_SLEEPING 4	//fire() slept.
+#define SS_PAUSING 5 	//in the middle of pausing
+
+
 //Timing subsystem
 //Don't run if there is an identical unique timer active
 #define TIMER_UNIQUE		0x1
@@ -53,4 +62,5 @@
 //	tracking this is more expensive,
 //	should only be used in conjuction with things that have to progress client side, such as animate() or sound()
 #define TIMER_CLIENT_TIME	0x4
-
+//Timer can be stopped using deltimer()
+#define TIMER_STOPPABLE		0x8

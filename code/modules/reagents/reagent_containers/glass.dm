@@ -255,7 +255,6 @@
 	else if(isprox(O))
 		user << "<span class='notice'>You add [O] to [src].</span>"
 		qdel(O)
-		user.unEquip(src)
 		qdel(src)
 		user.put_in_hands(new /obj/item/weapon/bucket_sensor)
 	else

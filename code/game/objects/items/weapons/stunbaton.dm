@@ -73,9 +73,8 @@
 			if(C.maxcharge < hitcost)
 				user << "<span class='notice'>[src] requires a higher capacity cell.</span>"
 				return
-			if(!user.unEquip(W))
+			if(!user.transferItemToLoc(W, src))
 				return
-			W.loc = src
 			bcell = W
 			user << "<span class='notice'>You install a cell in [src].</span>"
 			update_icon()

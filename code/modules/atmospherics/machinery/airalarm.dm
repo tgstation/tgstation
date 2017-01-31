@@ -138,8 +138,6 @@
 		name = "[A.name] Air Alarm"
 
 	update_icon()
-	if(ticker && ticker.current_state == 3)//if the game is running
-		initialize()
 
 /obj/machinery/airalarm/Destroy()
 	if(SSradio)
@@ -148,7 +146,8 @@
 	wires = null
 	return ..()
 
-/obj/machinery/airalarm/initialize()
+/obj/machinery/airalarm/Initialize(mapload)
+	..()
 	set_frequency(frequency)
 
 /obj/machinery/airalarm/ui_status(mob/user)
@@ -692,7 +691,7 @@
 				return
 		if(0)
 			if(istype(W, /obj/item/weapon/electronics/airalarm))
-				if(user.unEquip(W))
+				if(user.temporarilyRemoveItemFromInventory(W))
 					user << "<span class='notice'>You insert the circuit.</span>"
 					buildstage = 1
 					update_icon()

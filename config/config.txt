@@ -187,6 +187,10 @@ ALLOW_HOLIDAYS
 ##Uncomment to show the names of the admin sending a pm from IRC instead of showing as a stealthmin.
 #SHOW_IRC_NAME
 
+##Defines the ticklimit for subsystem initialization (In percents of a byond tick). Lower makes world start smoother. Higher makes it faster.
+##This is currently a testing optimized setting. A good value for production would be 98.
+TICK_LIMIT_MC_INIT 500
+
 ##Defines the ticklag for the world.  0.9 is the normal one, 0.5 is smoother.
 TICKLAG 0.5
 
@@ -293,3 +297,13 @@ ANNOUNCE_ADMIN_LOGOUT
 #CLIENT_WARN_MESSAGE Byond is really close to releasing 510 beta as the stable release, please take this time to try it out. Reports are that the client preforms better then the version you are using, and also handles network lag better. Shortly after it's release we will end up using 510 client features and you will be forced to update.
 #CLIENT_ERROR_VERSION 509
 #CLIENT_ERROR_MESSAGE Your version of byond is not supported. Please upgrade.
+
+## TOPIC RATE LIMITING
+## This allows you to limit how many topic calls (clicking on a interface window) the client can do in any given game second and/or game minute.
+## Admins are exempt from these limits.
+## Hitting the minute limit notifies admins.
+## Set to 0 or comment out to disable.
+SECOND_TOPIC_LIMIT 10
+
+MINUTE_TOPIC_LIMIT 100
+

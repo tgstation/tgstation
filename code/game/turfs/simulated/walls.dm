@@ -242,7 +242,7 @@
 	if(prob(20))
 		ChangeTurf(/turf/closed/wall/mineral/cult)
 
-/turf/closed/wall/ratvar_act(force)
+/turf/closed/wall/ratvar_act(force, ignore_mobs)
 	. = ..()
 	if(.)
 		ChangeTurf(/turf/closed/wall/clockwork)

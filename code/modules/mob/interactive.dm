@@ -527,7 +527,7 @@
 		if(BP.can_be_inserted(I,0))
 			BP.handle_item_insertion(I,0)
 	else
-		unEquip(I,TRUE)
+		dropItemToGround(I,TRUE)
 	update_hands = 1
 
 /mob/living/carbon/human/interactive/proc/targetRange(towhere)
@@ -678,7 +678,7 @@
 					take_to_slot(C,1)
 					if(!equip_to_appropriate_slot(C))
 						var/obj/item/I = get_item_by_slot(C)
-						unEquip(I)
+						dropItemToGround(I)
 						spawn(5)
 							equip_to_appropriate_slot(C)
 				update_hands = 1

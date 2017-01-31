@@ -40,7 +40,7 @@
 
 /mob/living/simple_animal/hostile/guardian/charger/Move()
 	if(charging)
-		PoolOrNew(/obj/effect/overlay/temp/decoy/fading, list(loc,src))
+		new /obj/effect/overlay/temp/decoy/fading(loc,src)
 	. = ..()
 
 /mob/living/simple_animal/hostile/guardian/charger/snapback()

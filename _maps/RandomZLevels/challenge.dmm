@@ -1,4 +1,4 @@
-//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
 /turf/open/space,
 /area/space)
@@ -230,6 +230,7 @@
 /area/awaymission/challenge/main)
 "aR" = (
 /turf/open/floor/plasteel,
+/obj/effect/turf_decal/stripes/line,
 /area/awaymission/challenge/main)
 "aS" = (
 /obj/machinery/power/emitter{
@@ -310,7 +311,8 @@
 /turf/open/floor/plating/airless,
 /area/awaymission/challenge/main)
 "ba" = (
-/turf/open/floor/plasteel{
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
 /area/awaymission/challenge/main)
@@ -329,7 +331,8 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/turf/open/floor/plating{
+/turf/open/floor/plating,
+/obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
 /area/awaymission/challenge/main)
@@ -337,7 +340,8 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/turf/open/floor/plating{
+/turf/open/floor/plating,
+/obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
 /area/awaymission/challenge/main)
@@ -357,7 +361,8 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/turf/open/floor/plating{
+/turf/open/floor/plating,
+/obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
 /area/awaymission/challenge/main)
@@ -368,7 +373,8 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/turf/open/floor/plating{
+/turf/open/floor/plating,
+/obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
 /area/awaymission/challenge/main)
@@ -391,7 +397,8 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/turf/open/floor/plating{
+/turf/open/floor/plating,
+/obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
 /area/awaymission/challenge/main)
@@ -431,7 +438,8 @@
 	state = 2;
 	use_power = 0
 	},
-/turf/open/floor/plating{
+/turf/open/floor/plating,
+/obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
 /area/awaymission/challenge/main)
@@ -460,7 +468,8 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/turf/open/floor/plating{
+/turf/open/floor/plating,
+/obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
 /area/awaymission/challenge/main)
@@ -482,7 +491,8 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/turf/open/floor/plating{
+/turf/open/floor/plating,
+/obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
 /area/awaymission/challenge/main)
@@ -502,13 +512,15 @@
 	dir = 8
 	},
 /obj/structure/window/reinforced,
-/turf/open/floor/plating{
+/turf/open/floor/plating,
+/obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
 /area/awaymission/challenge/main)
 "bv" = (
 /obj/structure/window/reinforced,
-/turf/open/floor/plating{
+/turf/open/floor/plating,
+/obj/effect/turf_decal/stripes/line{
 	dir = 2
 	},
 /area/awaymission/challenge/main)
@@ -517,7 +529,8 @@
 	dir = 4
 	},
 /obj/structure/window/reinforced,
-/turf/open/floor/plating{
+/turf/open/floor/plating,
+/obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
 /area/awaymission/challenge/main)
@@ -545,12 +558,14 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel,
+/obj/effect/turf_decal/stripes/line,
 /area/awaymission/challenge/main)
 "bz" = (
 /obj/machinery/light{
 	dir = 4
 	},
 /turf/open/floor/plasteel,
+/obj/effect/turf_decal/stripes/line,
 /area/awaymission/challenge/main)
 "bA" = (
 /obj/structure/grille,
@@ -562,7 +577,8 @@
 /area/awaymission/challenge/main)
 "bB" = (
 /obj/item/clothing/gloves/color/yellow,
-/turf/open/floor/plasteel{
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
 /area/awaymission/challenge/main)
@@ -607,17 +623,17 @@
 /turf/open/floor/plasteel/airless,
 /area/awaymission/challenge/main)
 "bF" = (
-/turf/open/floor/plasteel/white{
+/turf/open/floor/plasteel/white/corner{
 	dir = 2
 	},
 /area/awaymission/challenge/main)
 "bG" = (
-/turf/open/floor/plasteel/white{
+/turf/open/floor/plasteel/white/side{
 	dir = 2
 	},
 /area/awaymission/challenge/main)
 "bH" = (
-/turf/open/floor/plasteel/white{
+/turf/open/floor/plasteel/white/corner{
 	dir = 8
 	},
 /area/awaymission/challenge/main)
@@ -721,7 +737,7 @@
 /area/awaymission/challenge/end)
 "bQ" = (
 /obj/item/weapon/gun/ballistic/revolver/russian,
-/turf/open/floor/plasteel/white{
+/turf/open/floor/plasteel/white/side{
 	dir = 2
 	},
 /area/awaymission/challenge/main)
@@ -754,7 +770,8 @@
 /turf/open/floor/plating/airless,
 /area/awaymission/challenge/main)
 "bU" = (
-/turf/open/floor/plasteel/white{
+/turf/open/floor/plasteel/white,
+/obj/effect/turf_decal/stripes/line{
 	dir = 2
 	},
 /area/awaymission/challenge/main)
@@ -875,7 +892,7 @@
 /turf/open/floor/bluegrid,
 /area/awaymission/challenge/end)
 "co" = (
-/turf/open/floor/plasteel/black{
+/turf/open/floor/plasteel/vault{
 	dir = 8
 	},
 /area/awaymission/challenge/end)
@@ -1084,7 +1101,7 @@
 /obj/machinery/gateway{
 	dir = 9
 	},
-/turf/open/floor/plasteel/black{
+/turf/open/floor/plasteel/vault{
 	dir = 1
 	},
 /area/awaymission/challenge/end)
@@ -1092,7 +1109,7 @@
 /obj/machinery/gateway{
 	dir = 1
 	},
-/turf/open/floor/plasteel/black{
+/turf/open/floor/plasteel/vault{
 	dir = 8
 	},
 /area/awaymission/challenge/end)
@@ -1100,7 +1117,7 @@
 /obj/machinery/gateway{
 	dir = 5
 	},
-/turf/open/floor/plasteel/black{
+/turf/open/floor/plasteel/vault{
 	dir = 4
 	},
 /area/awaymission/challenge/end)
@@ -1114,7 +1131,7 @@
 /obj/machinery/gateway{
 	dir = 8
 	},
-/turf/open/floor/plasteel/black{
+/turf/open/floor/plasteel/vault{
 	dir = 8
 	},
 /area/awaymission/challenge/end)
@@ -1128,7 +1145,7 @@
 /obj/machinery/gateway{
 	dir = 4
 	},
-/turf/open/floor/plasteel/black{
+/turf/open/floor/plasteel/vault{
 	dir = 8
 	},
 /area/awaymission/challenge/end)
@@ -1136,7 +1153,7 @@
 /obj/machinery/gateway{
 	dir = 10
 	},
-/turf/open/floor/plasteel/black{
+/turf/open/floor/plasteel/vault{
 	dir = 4
 	},
 /area/awaymission/challenge/end)
@@ -1147,7 +1164,7 @@
 	pixel_y = 1;
 	d2 = 2
 	},
-/turf/open/floor/plasteel/black{
+/turf/open/floor/plasteel/vault{
 	dir = 8
 	},
 /area/awaymission/challenge/end)
@@ -1155,7 +1172,7 @@
 /obj/machinery/gateway{
 	dir = 6
 	},
-/turf/open/floor/plasteel/black{
+/turf/open/floor/plasteel/vault{
 	dir = 1
 	},
 /area/awaymission/challenge/end)

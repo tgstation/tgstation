@@ -39,10 +39,9 @@
 	if(W.is_sharp())
 		user << "<span class='notice'>You cut the potato into wedges with [W].</span>"
 		var/obj/item/weapon/reagent_containers/food/snacks/grown/potato/wedges/Wedges = new /obj/item/weapon/reagent_containers/food/snacks/grown/potato/wedges
-		if(!remove_item_from_storage(user))
-			user.unEquip(src)
-		user.put_in_hands(Wedges)
+		remove_item_from_storage(user)
 		qdel(src)
+		user.put_in_hands(Wedges)
 	else
 		return ..()
 

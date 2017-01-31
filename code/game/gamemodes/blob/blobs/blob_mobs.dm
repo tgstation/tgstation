@@ -32,7 +32,7 @@
 /mob/living/simple_animal/hostile/blob/blob_act(obj/structure/blob/B)
 	if(stat != DEAD && health < maxHealth)
 		for(var/i in 1 to 2)
-			var/obj/effect/overlay/temp/heal/H = PoolOrNew(/obj/effect/overlay/temp/heal, get_turf(src)) //hello yes you are being healed
+			var/obj/effect/overlay/temp/heal/H = new /obj/effect/overlay/temp/heal(get_turf(src)) //hello yes you are being healed
 			if(overmind)
 				H.color = overmind.blob_reagent_datum.complementary_color
 			else
@@ -133,7 +133,7 @@
 	movement_type = GROUND
 	death_cloud_size = 0
 	icon = H.icon
-	icon_state = "zombie_s"
+	icon_state = "zombie"
 	H.hair_style = null
 	H.update_hair()
 	human_overlays = H.overlays

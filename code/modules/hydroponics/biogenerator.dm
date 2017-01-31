@@ -147,9 +147,8 @@
 		if(i >= max_items)
 			user << "<span class='warning'>The biogenerator is full! Activate it.</span>"
 		else
-			user.unEquip(O)
-			O.loc = src
-			user << "<span class='info'>You put [O.name] in [src.name]</span>"
+			if(user.transferItemToLoc(O, src))
+				user << "<span class='info'>You put [O.name] in [src.name]</span>"
 		return 1 //no afterattack
 	else if (istype(O, /obj/item/weapon/disk/design_disk))
 		user.visible_message("[user] begins to load \the [O] in \the [src]...",

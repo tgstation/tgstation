@@ -42,7 +42,7 @@
 
 /obj/effect/particle_effect/smoke/proc/kill_smoke()
 	STOP_PROCESSING(SSobj, src)
-	addtimer(CALLBACK(src, .proc/fade_out), 0)
+	INVOKE_ASYNC(src, .proc/fade_out)
 	QDEL_IN(src, 10)
 
 /obj/effect/particle_effect/smoke/process()
@@ -255,7 +255,7 @@
 
 /datum/effect_system/smoke_spread/chem/New()
 	..()
-	chemholder = PoolOrNew(/obj)
+	chemholder = new /obj()
 	var/datum/reagents/R = new/datum/reagents(500)
 	chemholder.reagents = R
 	R.my_atom = chemholder

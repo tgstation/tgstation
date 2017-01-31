@@ -6,7 +6,7 @@
 	sexes = 0
 	blacklisted = 1
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/zombie
-	species_traits = list(NOBREATH,RESISTCOLD,RESISTPRESSURE,NOBLOOD,RADIMMUNE,NOZOMBIE,EASYDISMEMBER,EASYLIMBATTACHMENT,TOXINLOVER)
+	species_traits = list(NOBREATH,RESISTCOLD,RESISTPRESSURE,NOBLOOD,RADIMMUNE,NOZOMBIE,EASYDISMEMBER,EASYLIMBATTACHMENT)
 	mutant_organs = list(/obj/item/organ/tongue/zombie)
 
 /datum/species/zombie/infectious
@@ -29,12 +29,18 @@
 	. = ..()
 	// Drop items in hands
 	// If you're a zombie lucky enough to have a NODROP item, then it stays.
-	for(var/obj/item/I in C.held_items)
-		C.unEquip(I)
-		C.put_in_hands(new /obj/item/zombie_hand(C))
+	for(var/V in C.held_items)
+		var/obj/item/I = V
+		if(istype(I))
+			if(C.dropItemToGround(I))
+				var/obj/item/zombie_hand/zh = new /obj/item/zombie_hand()
+				C.put_in_hands(zh)
+		else	//Entries in the list should only ever be items or null, so if it's not an item, we can assume it's an empty hand
+			var/obj/item/zombie_hand/zh = new /obj/item/zombie_hand()
+			C.put_in_hands(zh)
 
 	// Next, deal with the source of this zombie corruption
-	var/obj/item/organ/body_egg/zombie_infection/infection
+	var/obj/item/organ/zombie_infection/infection
 	infection = C.getorganslot("zombie_infection")
 	if(!infection)
 		infection = new(C)
@@ -43,7 +49,7 @@
 	. = ..()
 	for(var/obj/item/I in C.held_items)
 		if(istype(I, /obj/item/zombie_hand))
-			C.unEquip(I, TRUE)
+			qdel(I)
 
 
 // Your skin falls off

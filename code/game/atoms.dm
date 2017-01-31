@@ -40,6 +40,8 @@
 	if(luminosity)
 		light = new(src)
 
+	if(SSobj && SSobj.initialized)
+		Initialize(FALSE)
 	//. = ..() //uncomment if you are dumb enough to add a /datum/New() proc
 
 /atom/Destroy()
@@ -107,8 +109,9 @@
 			var/atom/movable/M = A
 			if(isliving(M.loc))
 				var/mob/living/L = M.loc
-				L.unEquip(M)
-			M.loc = src
+				L.transferItemToLoc(M, src)
+			else
+				M.forceMove(src)
 
 /atom/proc/assume_air(datum/gas_mixture/giver)
 	qdel(giver)
@@ -159,7 +162,8 @@
 	return
 
 /atom/proc/emp_act(severity)
-	return
+	if(istype(wires))
+		wires.emp_pulse()
 
 /atom/proc/bullet_act(obj/item/projectile/P, def_zone)
 	. = P.on_hit(src, 0, def_zone)
@@ -245,9 +249,11 @@
 
 /atom/proc/hitby(atom/movable/AM, skipcatch, hitpush, blocked)
 	if(density && !has_gravity(AM)) //thrown stuff bounces off dense stuff in no grav, unless the thrown stuff ends up inside what it hit(embedding, bola, etc...).
-		spawn(2) //very short wait, so we can actually see the impact.
-			if(AM && isturf(AM.loc))
-				step(AM, turn(AM.dir, 180))
+		addtimer(CALLBACK(src, .proc/hitby_react, AM), 2)
+
+/atom/proc/hitby_react(atom/movable/AM)
+	if(AM && isturf(AM.loc))
+		step(AM, turn(AM.dir, 180))
 
 var/list/blood_splatter_icons = list()
 
@@ -431,8 +437,10 @@ var/list/blood_splatter_icons = list()
 //effects at world start up without causing runtimes
 /atom/proc/spawn_atom_to_world()
 
-//This will be called after the map and objects are loaded
-/atom/proc/initialize()
+//Called after New if the world is not loaded with TRUE
+//Called from base of New if the world is loaded with FALSE
+/atom/proc/Initialize(mapload)
+	set waitfor = 0
 	return
 
 //the vision impairment to give to the mob whose perspective is set to that atom (e.g. an unfocused camera giving you an impaired vision when looking through it)
@@ -445,7 +453,7 @@ var/list/blood_splatter_icons = list()
 
 /atom/proc/add_vomit_floor(mob/living/carbon/M, toxvomit = 0)
 	if(isturf(src))
-		var/obj/effect/decal/cleanable/vomit/V = PoolOrNew(/obj/effect/decal/cleanable/vomit, src)
+		var/obj/effect/decal/cleanable/vomit/V = new /obj/effect/decal/cleanable/vomit(src)
 		// Make toxins vomit look different
 		if(toxvomit)
 			V.icon_state = "vomittox_[pick(1,4)]"
