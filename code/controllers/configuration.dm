@@ -362,7 +362,7 @@
 				if("githuburl")
 					config.githuburl = value
 				if("githubrepoid")
-					config.githuburl = value
+					config.githubrepoid = value
 				if("guest_jobban")
 					config.guest_jobban = 1
 				if("guest_ban")
