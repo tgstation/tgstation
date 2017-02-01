@@ -35,7 +35,7 @@
 
 	var/list/atmos_overlay_types //gas IDs of current active gas overlays
 
-/turf/open/New()
+/turf/open/Initialize()
 	..()
 	if(!blocks_air)
 		air = new
@@ -79,6 +79,8 @@
 	return GM
 
 /turf/open/return_air()
+	if(!initialized)
+		Initialize()
 	return air
 
 /turf/temperature_expose()
@@ -113,11 +115,12 @@
 
 /turf/open/proc/tile_graphic()
 	. = new /list
-	var/list/gases = air.gases
-	for(var/id in gases)
-		var/gas = gases[id]
-		if(gas[GAS_META][META_GAS_OVERLAY] && gas[MOLES] > gas[GAS_META][META_GAS_MOLES_VISIBLE])
-			. += gas[GAS_META][META_GAS_OVERLAY]
+	if(air)
+		var/list/gases = air.gases
+		for(var/id in gases)
+			var/gas = gases[id]
+			if(gas[GAS_META][META_GAS_OVERLAY] && gas[MOLES] > gas[GAS_META][META_GAS_MOLES_VISIBLE])
+				. += gas[GAS_META][META_GAS_OVERLAY]
 
 /////////////////////////////SIMULATION///////////////////////////////////
 
