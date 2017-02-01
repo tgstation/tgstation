@@ -1,0 +1,4 @@
+author: "Xhuis"
+delete-after: True
+changes: 
+  - rscadd: "You can now fold up bluespace body bags with creatures or objects inside. You can't fold them up if too many things are inside, but anything you fold up in can be carried around in the object and redeployed at any time."
