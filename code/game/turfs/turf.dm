@@ -21,7 +21,7 @@
 
 	var/explosion_level = 0	//for preventing explosion dodging
 	var/explosion_id = 0
-	
+
 	var/list/decals
 
 /turf/Initialize()
@@ -40,6 +40,7 @@
 
 /turf/Destroy()
 	visibilityChanged()
+	initialized = FALSE
 	..()
 	return QDEL_HINT_HARDDEL_NOW
 
