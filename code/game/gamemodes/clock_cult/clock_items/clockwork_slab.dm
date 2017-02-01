@@ -45,40 +45,40 @@
 	if(!is_servant_of_ratvar(user))
 		add_servant_of_ratvar(user)
 
-/obj/item/clockwork/slab/cyborg
+/obj/item/clockwork/slab/cyborg //three scriptures, plus a spear and proselytizer
 	clockwork_desc = "A divine link to the Celestial Derelict, allowing for limited recital of scripture.\n\
 	Hitting a slab, a Servant with a slab, or a cache will <b>transfer</b> this slab's components into the target, the target's slab, or the global cache, respectively."
 	nonhuman_usable = TRUE
-	quickbound = list(/datum/clockwork_scripture/ranged_ability/judicial_marker, /datum/clockwork_scripture/ranged_ability/sentinels_compromise, \
-	/datum/clockwork_scripture/create_object/sigil_of_transgression, /datum/clockwork_scripture/create_object/vitality_matrix)
+	quickbound = list(/datum/clockwork_scripture/ranged_ability/judicial_marker, /datum/clockwork_scripture/ranged_ability/linked_vanguard, \
+	/datum/clockwork_scripture/create_object/tinkerers_cache)
 	actions_types = list()
 
-/obj/item/clockwork/slab/cyborg/engineer
-	quickbound = list(/datum/clockwork_scripture/create_object/tinkerers_cache, /datum/clockwork_scripture/create_object/sigil_of_transgression, \
-	/datum/clockwork_scripture/create_object/ocular_warden, /datum/clockwork_scripture/create_object/tinkerers_daemon)
+/obj/item/clockwork/slab/cyborg/engineer //five scriptures, plus a proselytizer
+	quickbound = list(/datum/clockwork_scripture/create_object/replicant, /datum/clockwork_scripture/create_object/cogscarab, \
+	/datum/clockwork_scripture/create_object/soul_vessel, /datum/clockwork_scripture/create_object/sigil_of_transmission, /datum/clockwork_scripture/create_object/interdiction_lens)
 
-/obj/item/clockwork/slab/cyborg/medical
+/obj/item/clockwork/slab/cyborg/medical //five scriptures, plus a spear
 	quickbound = list(/datum/clockwork_scripture/ranged_ability/linked_vanguard, /datum/clockwork_scripture/ranged_ability/sentinels_compromise, /datum/clockwork_scripture/fellowship_armory, \
-	/datum/clockwork_scripture/create_object/mending_motor)
+	/datum/clockwork_scripture/create_object/vitality_matrix, /datum/clockwork_scripture/create_object/mending_motor)
 
-/obj/item/clockwork/slab/cyborg/security
-	quickbound = list(/datum/clockwork_scripture/channeled/belligerent, /datum/clockwork_scripture/ranged_ability/judicial_marker, /datum/clockwork_scripture/create_object/ocular_warden)
-
-/obj/item/clockwork/slab/cyborg/peacekeeper
+/obj/item/clockwork/slab/cyborg/security //four scriptures, plus a spear
 	quickbound = list(/datum/clockwork_scripture/channeled/belligerent, /datum/clockwork_scripture/ranged_ability/judicial_marker, /datum/clockwork_scripture/channeled/taunting_tirade, \
-	/datum/clockwork_scripture/create_object/mania_motor)
+	/datum/clockwork_scripture/channeled/volt_void/cyborg)
 
-/obj/item/clockwork/slab/cyborg/janitor
-	quickbound = list(/datum/clockwork_scripture/channeled/belligerent, /datum/clockwork_scripture/channeled/volt_void/cyborg, /datum/clockwork_scripture/create_object/sigil_of_transmission, \
-	/datum/clockwork_scripture/create_object/interdiction_lens)
+/obj/item/clockwork/slab/cyborg/peacekeeper //four scriptures, plus a spear
+	quickbound = list(/datum/clockwork_scripture/channeled/belligerent, /datum/clockwork_scripture/ranged_ability/judicial_marker, /datum/clockwork_scripture/channeled/taunting_tirade, \
+	/datum/clockwork_scripture/channeled/volt_void/cyborg)
 
-/obj/item/clockwork/slab/cyborg/service
-	quickbound = list(/datum/clockwork_scripture/create_object/replicant, /datum/clockwork_scripture/fellowship_armory, /datum/clockwork_scripture/spatial_gateway, \
-	/datum/clockwork_scripture/create_object/clockwork_obelisk)
+/obj/item/clockwork/slab/cyborg/janitor //five scriptures, plus a proselytizer
+	quickbound = list(/datum/clockwork_scripture/create_object/replicant, /datum/clockwork_scripture/create_object/sigil_of_transgression, \
+	/datum/clockwork_scripture/create_object/ocular_warden, /datum/clockwork_scripture/create_object/mania_motor, /datum/clockwork_scripture/create_object/tinkerers_daemon)
 
-/obj/item/clockwork/slab/cyborg/miner
-	quickbound = list(/datum/clockwork_scripture/ranged_ability/judicial_marker, /datum/clockwork_scripture/ranged_ability/linked_vanguard, \
-	/datum/clockwork_scripture/create_object/sigil_of_transgression, /datum/clockwork_scripture/spatial_gateway)
+/obj/item/clockwork/slab/cyborg/service //five scriptures, plus xray vision
+	quickbound = list(/datum/clockwork_scripture/create_object/replicant, /datum/clockwork_scripture/create_object/tinkerers_cache, \
+	/datum/clockwork_scripture/fellowship_armory, /datum/clockwork_scripture/spatial_gateway, /datum/clockwork_scripture/create_object/clockwork_obelisk)
+
+/obj/item/clockwork/slab/cyborg/miner //three scriptures, plus a spear and xray vision
+	quickbound = list(/datum/clockwork_scripture/ranged_ability/linked_vanguard, /datum/clockwork_scripture/spatial_gateway, /datum/clockwork_scripture/channeled/volt_void/cyborg)
 
 /obj/item/clockwork/slab/cyborg/access_display(mob/living/user)
 	user << "<span class='warning'>Use the action buttons to recite your limited set of scripture!</span>"

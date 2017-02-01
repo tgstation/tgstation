@@ -291,7 +291,7 @@
 		SpinAnimation(5, 1)
 
 	SSthrowing.processing[src] = TT
-	if (SSthrowing.paused && length(SSthrowing.currentrun))
+	if (SSthrowing.state == SS_PAUSED && length(SSthrowing.currentrun))
 		SSthrowing.currentrun[src] = TT
 	TT.tick()
 

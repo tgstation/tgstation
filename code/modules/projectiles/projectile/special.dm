@@ -67,7 +67,6 @@
 /obj/item/projectile/bullet/srmrocket
 	name ="SRM-8 Rocket"
 	desc = "Boom"
-	icon = 'icons/obj/grenade.dmi'
 	icon_state = "missile"
 	damage = 30
 
