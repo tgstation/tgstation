@@ -18,6 +18,7 @@
 /turf/open/space/Initialize()
 	icon_state = SPACE_ICON_STATE
 	air = space_gas
+	initialized = TRUE
 
 /turf/open/space/Destroy(force)
 	if(force)
