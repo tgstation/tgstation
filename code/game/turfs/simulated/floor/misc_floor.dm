@@ -14,8 +14,8 @@
 	floor_tile = /obj/item/stack/tile/plasteel
 
 /turf/open/floor/bluegrid/Initialize()
-	..()
 	SSmapping.nuke_tiles += src
+	..()
 
 /turf/open/floor/bluegrid/Destroy()
 	SSmapping.nuke_tiles -= src

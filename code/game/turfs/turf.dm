@@ -40,6 +40,7 @@
 
 /turf/Destroy()
 	visibilityChanged()
+	initialized = FALSE
 	..()
 	return QDEL_HINT_HARDDEL_NOW
 

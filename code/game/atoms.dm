@@ -23,11 +23,10 @@
 
 	var/list/atom_colours	 //used to store the different colors on an atom
 							//its inherent color, the colored paint applied on it, special color effect etc...
-	var/initialized
+	var/initialized = FALSE
 
 
 /atom/New()
-	initialized = FALSE
 	//atom creation method that preloads variables at creation
 	if(use_preloader && (src.type == _preloader.target_path))//in case the instanciated atom is creating other atoms in New()
 		_preloader.load(src)
@@ -42,9 +41,9 @@
 	if(luminosity)
 		light = new(src)
 
-	var/initialized = SSobj.initialized
-	if(initialized > INITIALIZATION_INSSOBJ)
-		Initialize(initialized == INITIALIZATION_INNEW_MAPLOAD)
+	var/do_initialize = SSobj.initialized
+	if(do_initialize > INITIALIZATION_INSSOBJ)
+		Initialize(do_initialize == INITIALIZATION_INNEW_MAPLOAD)
 	//. = ..() //uncomment if you are dumb enough to add a /datum/New() proc
 
 /atom/Destroy()
@@ -441,10 +440,8 @@ var/list/blood_splatter_icons = list()
 //This base must be called or derivatives must set initialized to TRUE to prevent repeat calls
 //Derivatives must not sleep
 /atom/proc/Initialize(mapload)
-#ifdef TESTING
 	if(initialized)
 		stack_trace("Warning: [src]([type]) initialized multiple times!")
-#endif
 	initialized = TRUE
 
 //the vision impairment to give to the mob whose perspective is set to that atom (e.g. an unfocused camera giving you an impaired vision when looking through it)

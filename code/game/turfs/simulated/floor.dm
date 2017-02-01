@@ -34,7 +34,6 @@ var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","
 	var/list/burnt_states
 
 /turf/open/floor/Initialize(mapload)
-	..()
 	if (!broken_states)
 		broken_states = list("damaged1", "damaged2", "damaged3", "damaged4", "damaged5")
 	if (!burnt_states)
