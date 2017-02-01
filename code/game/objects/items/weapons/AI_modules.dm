@@ -551,4 +551,4 @@ AI MODULES
 	origin_tech = "programming=4"
 	laws = list("fuck you shitty admin.",\
 				"fuck you too.",\
-				"fuck me.")
+				"fuck myself.")
