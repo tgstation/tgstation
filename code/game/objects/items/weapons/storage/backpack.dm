@@ -32,8 +32,10 @@
 	desc = "A backpack that opens into a localized pocket of Blue Space."
 	origin_tech = "bluespace=5;materials=4;engineering=4;plasmatech=5"
 	icon_state = "holdingpack"
+	w_class = WEIGHT_CLASS_GIGANTIC
 	max_w_class = WEIGHT_CLASS_GIGANTIC
 	max_combined_w_class = 35
+	storage_slots = 35
 	resistance_flags = FIRE_PROOF
 	var/pshoom = 'sound/items/PSHOOM.ogg'
 	var/alt_sound = 'sound/items/PSHOOM_2.ogg'
@@ -321,6 +323,9 @@
 	item_state = "duffle"
 	slowdown = 1
 	max_combined_w_class = 30
+	storage_slots = 30
+	max_w_class = WEIGHT_CLASS_BULKY
+	w_class = WEIGHT_CLASS_GIGANTIC
 
 /obj/item/weapon/storage/backpack/dufflebag/captain
 	name = "captain's dufflebag"
