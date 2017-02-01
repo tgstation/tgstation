@@ -283,6 +283,10 @@
 	var/emagged = FALSE
 	var/cooldownnormal = 200
 	var/cooldownemag = 600
+	var/emagged_harmalarm_sound = 'sound/machines/warning-buzzer.ogg'
+	var/normal_harmalarm_sound = 'sound/AI/harmalarm.ogg'
+	var/normal_message = "<font color='red' size='7'>HUMAN HARM</font>"
+	var/emagged_message = "<font color='red' size='7'>BZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZT</font>"
 
 /obj/item/device/harmalarm/emag_act(mob/user)
 	emagged = !emagged
@@ -313,8 +317,8 @@
 		for(var/mob/living/carbon/M in get_hearers_in_view(9, user))
 			if(M.get_ear_protection() == FALSE)
 				M.confused += 6
-		audible_message("<font color='red' size='7'>HUMAN HARM</font>")
-		playsound(get_turf(src), 'sound/AI/harmalarm.ogg', 70, 3)
+		audible_message(normal_message)
+		playsound(get_turf(src), normal_harmalarm_sound, 70, 3)
 		cooldown = world.time + cooldownnormal
 		log_game("[user.ckey]([user]) used a Cyborg Harm Alarm in ([user.x],[user.y],[user.z])")
 		if(iscyborg(user))
@@ -324,7 +328,7 @@
 		return
 
 	if(safety == FALSE)
-		user.audible_message("<font color='red' size='7'>BZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZT</font>")
+		user.audible_message(emagged_message)
 		for(var/mob/living/carbon/C in get_hearers_in_view(9, user))
 			var/bang_effect = C.soundbang_act(2, 0, 0, 5)
 			switch(bang_effect)
@@ -337,7 +341,7 @@
 					C.confused += 10
 					C.stuttering += 15
 					C.Jitter(25)
-		playsound(get_turf(src), 'sound/machines/warning-buzzer.ogg', 130, 3)
+		playsound(get_turf(src), emagged_harmalarm_sound, 130, 3)
 		cooldown = world.time + cooldownemag
 		log_game("[user.ckey]([user]) used an emagged Cyborg Harm Alarm in ([user.x],[user.y],[user.z])")
 
