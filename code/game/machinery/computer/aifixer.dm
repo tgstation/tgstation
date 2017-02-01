@@ -73,7 +73,6 @@
 /obj/machinery/computer/aifixer/proc/Fix()
 	. = use_power(1000)
 	if(.)
-		fix_next_tick = world.time + 10
 		occupier.adjustOxyLoss(-1, 0)
 		occupier.adjustFireLoss(-1, 0)
 		occupier.adjustToxLoss(-1, 0)
