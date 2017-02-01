@@ -54,7 +54,7 @@
 
 /mob/living/simple_animal/hostile/hivebot/engineer
 	name = "engineer hivebot"
-	desc = "A robot with a tiny welder on its arm."
+	desc = "A little robot with a tiny welder on its arm."
 	icon_state = "EngBot"
 	health = 25
 	maxHealth = 25

@@ -68,7 +68,7 @@
 	say("SUBJECT STATUS: THREAT TO SWARM. TARGET LOCKED.")
 
 /obj/machinery/hivebot_swarm_core/proc/defend_the_swarm()
-	if(!threat_to_swarm || get_dist(threat_to_swarm, src) > 7 || threat_to_swarm.stat)
+	if(!threat_to_swarm || !threat_to_swarm in view(7, src) || threat_to_swarm.stat)
 		say("TARGET LOST. RESUMING FABRICATION ROUTINE.")
 		threat_to_swarm = null
 		return
@@ -82,10 +82,11 @@
 			playsound(threat_to_swarm, 'sound/weapons/sear.ogg', 50, 1)
 		if("swarm")
 			visible_message("<span class='warning'>[src] warps in a swarm of hivebots!</span>")
+			playsound(src, 'sound/effects/phasein.ogg', 100, 1)
 			for(var/i in 1 to 3)
 				new/mob/living/simple_animal/hostile/hivebot(T)
 			for(var/i in 1 to 2)
-				new/mob/living/simple_animal/hostile/hivebot/ranged(T)
+				new/mob/living/simple_animal/hostile/hivebot/range(T)
 			new/mob/living/simple_animal/hostile/hivebot/engineer(T)
 			recharge_period = 5 //Give some time to mop up the adds
 		if("saw")
