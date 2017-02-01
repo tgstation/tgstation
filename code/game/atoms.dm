@@ -23,10 +23,11 @@
 
 	var/list/atom_colours	 //used to store the different colors on an atom
 							//its inherent color, the colored paint applied on it, special color effect etc...
-	var/initialized = FALSE
+	var/initialized
 
 
 /atom/New()
+	initialized = FALSE
 	//atom creation method that preloads variables at creation
 	if(use_preloader && (src.type == _preloader.target_path))//in case the instanciated atom is creating other atoms in New()
 		_preloader.load(src)
