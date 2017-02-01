@@ -141,7 +141,7 @@
 	if(!locate(/obj/item/weapon) in held_items)
 		best_force = 0
 
-	if(restrained() || blacklistItems[pickupTarget])
+	if(restrained() || blacklistItems[pickupTarget] || (pickupTarget.flags & NODROP))
 		pickupTarget = null
 
 	if(!resisting && pickupTarget)
@@ -347,6 +347,8 @@
 				M.visible_message("<span class='danger'>[src] snatches [pickupTarget] from [M].</span>", "<span class='userdanger'>[src] snatched [pickupTarget]!</span>")
 				if(M.temporarilyRemoveItemFromInventory(pickupTarget) && !qdeleted(pickupTarget))
 					equip_item(pickupTarget)
+				else
+					M.visible_message("<span class='danger'>[src] tried to snatch [pickupTarget] from [M], but failed!</span>", "<span class='userdanger'>[src] tried to grab [pickupTarget]!</span>")
 	pickpocketing = FALSE
 	pickupTarget = null
 	pickupTimer = 0
