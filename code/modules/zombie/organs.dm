@@ -52,7 +52,7 @@
 	if(!iszombie(owner))
 		owner << "<span class='narsiesmall'>You can feel your heart stopping, but something isn't right... \
 		life has not completely abandoned your broken form. You can only feel a deep and immutable hunger that \
-		not even death can stop! You will rise again!!!</span>"
+		not even death can stop! You will rise again!</span>"
 	var/revive_time = rand(revive_time_min, revive_time_max)
 	var/flags = TIMER_STOPPABLE
 	timer_id = addtimer(CALLBACK(src, .proc/zombify), revive_time, flags)
@@ -75,4 +75,4 @@
 	playsound(owner.loc, 'sound/hallucinations/far_noise.ogg', 50, 1)
 	owner.do_jitter_animation(living_transformation_time * 10)
 	owner.Stun(living_transformation_time)
-owner << "<span class='alertalien'>You are now a zombie!</span>"
+	owner << "<span class='alertalien'>You are now a zombie!</span>"
