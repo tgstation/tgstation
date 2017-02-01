@@ -96,7 +96,7 @@
 	var/hurt = TRUE
 	if(istype(throwingdatum, /datum/thrownthing))
 		var/datum/thrownthing/D = throwingdatum
-		if(istype(D.thrower, /mob/living/silicon/robot))
+		if(iscyborg(D.thrower))
 			var/mob/living/silicon/robot/R = D.thrower
 			if(!R.emagged)
 				hurt = FALSE

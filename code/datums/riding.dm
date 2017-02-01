@@ -332,10 +332,8 @@
 /datum/riding/cyborg/handle_vehicle_offsets()
 	if(ridden.has_buckled_mobs())
 		for(var/mob/living/M in ridden.buckled_mobs)
-			if(!istype(M, /mob/living))
-				continue
 			M.setDir(ridden.dir)
-			if(istype(ridden, /mob/living/silicon/robot))
+			if(iscyborg(ridden))
 				var/mob/living/silicon/robot/R = ridden
 				if(istype(R.module))
 					M.pixel_x = R.module.ride_offset_x[dir2text(ridden.dir)]

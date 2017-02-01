@@ -1018,10 +1018,10 @@
 		return
 	if(M.restrained())
 		return
-	if(istype(M, /mob/living/silicon/robot))
+	if(iscyborg(M))
 		M.visible_message("<span class='warning'>[M] really can't seem to mount the [src]...</span>")
 		return
-	if(istype(M, /mob/living/simple_animal/bot))
+	if(isbot(M))
 		M.visible_message("<span class='boldwarning'>No. Just... no.</span>")
 		return
 	if(module)
