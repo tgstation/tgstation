@@ -40,7 +40,6 @@
 
 /turf/Destroy()
 	visibilityChanged()
-	initialized = FALSE
 	..()
 	return QDEL_HINT_HARDDEL_NOW
 
@@ -184,6 +183,8 @@
 	var/old_ex_id = explosion_id
 
 	Destroy()	//❄
+	if(initialized)
+		world.log << "Fuck your shit ass cunt"
 	var/turf/W = new path(src)
 
 	W.proximity_checkers = old_checkers
