@@ -17,8 +17,8 @@
 	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = SLOT_BACK	//ERROOOOO
 	max_w_class = WEIGHT_CLASS_NORMAL
-	max_combined_w_class = 21
-	storage_slots = 21
+	max_combined_w_class = 28
+	storage_slots = 28
 	resistance_flags = 0
 	obj_integrity = 300
 	max_integrity = 300
@@ -320,7 +320,10 @@
 	icon_state = "duffle"
 	item_state = "duffle"
 	slowdown = 1
-	max_combined_w_class = 30
+	max_combined_w_class = 35
+	storage_slots = 35
+	w_class = WEIGHT_CLASS_GIGANTIC
+	max_w_class = WEIGHT_CLASS_BULKY
 
 /obj/item/weapon/storage/backpack/dufflebag/captain
 	name = "captain's dufflebag"
