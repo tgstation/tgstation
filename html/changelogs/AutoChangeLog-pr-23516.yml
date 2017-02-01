@@ -1,5 +1,0 @@
-author: "Cyberboss"
-delete-after: True
-changes: 
-  - bugfix: "Progress bars will now stack vertically instead of on top of each other"
-  - bugfix: "Progress bars will no longer be affected by lighting"
