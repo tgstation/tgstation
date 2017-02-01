@@ -297,3 +297,45 @@
 		handle_vehicle_offsets()
 	else
 		user << "<span class='notice'>You'll need something  to guide the [ridden.name].</span>"
+
+
+///////Humans. Yes, I said humans. No, this won't end well...//////////
+/datum/riding/human
+	keytype = null
+
+/datum/riding/human/proc/on_vehicle_move()
+	handle_vehicle_offsets()
+	handle_vehicle_layer()
+
+
+/datum/riding/human/handle_vehicle_offsets()
+	for(var/mob/living/M in ridden.buckled_mobs())
+
+//Override this to set your vehicle's various pixel offsets
+//if they differ between directions, otherwise use the
+//generic variables
+/datum/riding/proc/handle_vehicle_offsets()
+	if(ridden.has_buckled_mobs())
+		for(var/m in ridden.buckled_mobs)
+			var/mob/living/buckled_mob = m
+			buckled_mob.setDir(ridden.dir)
+			buckled_mob.pixel_x = generic_pixel_x
+			buckled_mob.pixel_y = generic_pixel_y
+
+//KEYS
+/datum/riding/proc/keycheck(mob/user)
+	if(keytype)
+		if(user.is_holding_item_of_type(keytype))
+			return TRUE
+	else
+		return TRUE
+	return FALSE
+
+
+//BUCKLE HOOKS
+/datum/riding/proc/restore_position(mob/living/buckled_mob)
+	if(istype(buckled_mob))
+		buckled_mob.pixel_x = 0
+		buckled_mob.pixel_y = 0
+		if(buckled_mob.client)
+			buckled_mob.client.view = world.view
