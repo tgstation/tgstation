@@ -14,7 +14,7 @@
 
 // BEGIN_INCLUDE
 #include "_maps\__MAP_DEFINES.dm"
-#include "_maps\tgstation2.dm"
+#include "_maps\aquastation.dm"
 #include "code\_compile_options.dm"
 #include "code\world.dm"
 #include "code\__DATASTRUCTURES\heap.dm"
