@@ -26,12 +26,14 @@ var/datum/subsystem/objects/SSobj
 /datum/subsystem/objects/Initialize(timeofdayl)
 	fire_overlay.appearance_flags = RESET_COLOR
 	setupGenetics() //to set the mutations' place in structural enzymes, so monkey.initialize() knows where to put the monkey mutation.
+	initialized = INITIALIZATION_INNEW_MAPLOAD
 	InitializeAtoms()
 	. = ..()
 
 /datum/subsystem/objects/proc/InitializeAtoms(list/objects = null)
+	if(initialized == INITIALIZATION_INSSOBJ)
+		return
 	initialized = INITIALIZATION_INNEW_MAPLOAD
-
 	if(objects)
 		for(var/thing in objects)
 			var/atom/A = thing
@@ -45,7 +47,6 @@ var/datum/subsystem/objects/SSobj
 				if(start_tick != world.time)
 					WARNING("[A]: [A.type] slept during it's Initialize!")
 				CHECK_TICK
-
 	initialized = INITIALIZATION_INNEW_REGULAR
 
 /datum/subsystem/objects/proc/map_loader_begin()
