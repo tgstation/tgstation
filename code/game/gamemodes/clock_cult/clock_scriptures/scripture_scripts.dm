@@ -53,7 +53,7 @@
 	descname = "Trap, Damage to Healing"
 	name = "Vitality Matrix"
 	desc = "Scribes a sigil beneath the invoker which drains life from any living non-Servants that cross it. Servants that cross it, however, will be healed based on how much Vitality all \
-	Matrices have drained from non-Servants. Dead Servants can be revived by this sigil if there is vitality equal to the target Servant's damage."
+	Matrices have drained from non-Servants. Dead Servants can be revived by this sigil if there is vitality equal to the target Servant's non-oxygen damage."
 	invocations = list("Divinity...", "...steal their life...", "...for these shells!")
 	channel_time = 60
 	consumed_components = list(BELLIGERENT_EYE = 1, VANGUARD_COGWHEEL = 1)

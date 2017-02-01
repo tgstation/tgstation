@@ -272,6 +272,7 @@
 	resist_string = "glows shimmering yellow"
 	sigil_name = "Vitality Matrix"
 	var/static/vitality = 0
+	var/base_revive_cost = 20
 	var/sigil_active = FALSE
 	var/animation_number = 3 //each cycle increments this by 1, at 4 it produces an animation and resets
 	var/static/list/damage_heal_order = list(CLONE, TOX, BURN, BRUTE, OXY) //we heal damage in this order
@@ -283,7 +284,7 @@
 		if(ratvar_awakens)
 			user << "<span class='inathneq_small'>It can revive Servants at no cost!</span>"
 		else
-			user << "<span class='inathneq_small'>It can revive Servants at a cost of vitality equal to the damage they have, in addition to being destroyed in the process.</span>"
+			user << "<span class='inathneq_small'>It can revive Servants at a cost of <b>[base_revive_cost]</b> vitality plus vitality equal to the non-oxygen damage they have, in addition to being destroyed in the process.</span>"
 
 /obj/effect/clockwork/sigil/vitality/sigil_effects(mob/living/L)
 	if((is_servant_of_ratvar(L) && L.suiciding) || sigil_active)
@@ -323,7 +324,7 @@
 				break
 		else
 			if(L.stat == DEAD)
-				var/revival_cost = L.getCloneLoss() + L.getToxLoss() + L.getFireLoss() + L.getBruteLoss() + L.getOxyLoss()
+				var/revival_cost = base_revive_cost + L.getCloneLoss() + L.getToxLoss() + L.getFireLoss() + L.getBruteLoss() //ignores oxygen damage
 				if(ratvar_awakens)
 					revival_cost = 0
 				var/mob/dead/observer/ghost = L.get_ghost(TRUE)
