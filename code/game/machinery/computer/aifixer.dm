@@ -98,7 +98,6 @@
 		playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 25, 0)
 		active = TRUE
 		add_fingerprint(usr)
-		fix_next_tick = world.time + 10
 
 /obj/machinery/computer/aifixer/update_icon()
 	..()
