@@ -347,7 +347,7 @@
 				M.visible_message("<span class='danger'>[src] snatches [pickupTarget] from [M].</span>", "<span class='userdanger'>[src] snatched [pickupTarget]!</span>")
 				if(M.temporarilyRemoveItemFromInventory(pickupTarget) && !qdeleted(pickupTarget))
 					equip_item(pickupTarget)
-        else
+				else
 					M.visible_message("<span class='danger'>[src] tried to snatch [pickupTarget] from [M], but failed!</span>", "<span class='userdanger'>[src] tried to grab [pickupTarget]!</span>")
 	pickpocketing = FALSE
 	pickupTarget = null
