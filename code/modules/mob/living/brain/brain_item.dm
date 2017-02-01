@@ -12,6 +12,7 @@
 	attack_verb = list("attacked", "slapped", "whacked")
 	var/mob/living/brain/brainmob = null
 	var/damaged_brain = 0 //whether the brain organ is damaged.
+	var/decoy_override = 0	//I apologize to the security players, and myself, who abused this, but this is going to go.
 
 /obj/item/organ/brain/Insert(mob/living/carbon/C, special = 0)
 	..()
@@ -74,7 +75,10 @@
 		else
 			user << "This one seems particularly lifeless. Perhaps it will regain some of its luster later."
 	else
-		user << "This one is completely devoid of life."
+		if(decoy_override)
+			user << "This one seems particularly lifeless. Perhaps it will regain some of its luster later."
+		else
+			user << "This one is completely devoid of life."
 
 /obj/item/organ/brain/attack(mob/living/carbon/C, mob/user)
 	if(!istype(C))
