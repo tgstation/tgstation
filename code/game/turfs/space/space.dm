@@ -20,12 +20,6 @@
 	air = space_gas
 	initialized = TRUE
 
-/turf/open/space/Destroy(force)
-	if(force)
-		. = ..()
-	else
-		return QDEL_HINT_LETMELIVE
-
 /turf/open/space/attack_ghost(mob/dead/observer/user)
 	if(destination_z)
 		var/turf/T = locate(destination_x, destination_y, destination_z)
