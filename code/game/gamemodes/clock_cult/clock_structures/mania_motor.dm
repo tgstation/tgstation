@@ -30,7 +30,7 @@
 /obj/structure/destructible/clockwork/powered/mania_motor/examine(mob/user)
 	..()
 	if(is_servant_of_ratvar(user) || isobserver(user))
-		user << "<span class='sevtug_small'>It requires <b>[mania_cost]W</b> to run, and at least <b>[convert_cost]W</b> to attempt to convert humans adjecent to it.</span>"
+		user << "<span class='sevtug_small'>It requires <b>[mania_cost]W</b> to run, and at least <b>[convert_cost]W</b> to attempt to convert humans adjacent to it.</span>"
 
 /obj/structure/destructible/clockwork/powered/mania_motor/forced_disable(bad_effects)
 	if(active)
@@ -72,7 +72,7 @@
 			H.playsound_local(T, hum, 80, 1)
 			if(!H.stat)
 				if(H.getBrainLoss() < 100)
-					H.adjustBrainLoss(15 * efficiency)
+					H.adjustBrainLoss(20 * efficiency)
 					H.visible_message("<span class='warning'>[H] reaches out and touches [src].</span>", "<span class='sevtug'>You touch [src] involuntarily.</span>")
 				else
 					H.Paralyse(3)
