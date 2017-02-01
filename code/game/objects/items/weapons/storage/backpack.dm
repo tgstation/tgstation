@@ -34,6 +34,7 @@
 	icon_state = "holdingpack"
 	max_w_class = WEIGHT_CLASS_GIGANTIC
 	max_combined_w_class = 35
+	storage_slots = 35
 	resistance_flags = FIRE_PROOF
 	var/pshoom = 'sound/items/PSHOOM.ogg'
 	var/alt_sound = 'sound/items/PSHOOM_2.ogg'
