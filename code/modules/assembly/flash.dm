@@ -94,9 +94,6 @@
 			visible_message("<span class='disarm'>[user] blinds [M] with the flash!</span>")
 			user << "<span class='danger'>You blind [M] with the flash!</span>"
 			M << "<span class='userdanger'>[user] blinds you with the flash!</span>"
-			if(M.weakeyes)
-				M.Stun(2)
-				M.visible_message("<span class='disarm'>[M] gasps and shields their eyes!</span>", "<span class='userdanger'>You gasp and shield your eyes!</span>")
 		else
 			visible_message("<span class='disarm'>[user] fails to blind [M] with the flash!</span>")
 			user << "<span class='warning'>You fail to blind [M] with the flash!</span>"
