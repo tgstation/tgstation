@@ -87,8 +87,6 @@
 /obj/item/device/assembly/flash/proc/flash_carbon(mob/living/carbon/M, mob/user = null, power = 15, targeted = 1)
 	add_logs(user, M, "flashed", src)
 	if(user && targeted)
-		if(M.weakeyes)
-			M.Weaken(3) //quick weaken bypasses eye protection but has no eye flash
 		if(M.flash_act(1, 1))
 			M.confused += power
 			terrible_conversion_proc(M, user)
