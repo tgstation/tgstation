@@ -72,7 +72,7 @@
 			H.playsound_local(T, hum, 80, 1)
 			if(!H.stat)
 				if(H.getBrainLoss() < 100)
-					H.adjustBrainLoss(20 * efficiency)
+					H.adjustBrainLoss(30 * efficiency)
 					H.visible_message("<span class='warning'>[H] reaches out and touches [src].</span>", "<span class='sevtug'>You touch [src] involuntarily.</span>")
 				else
 					H.Paralyse(3)
