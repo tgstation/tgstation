@@ -66,8 +66,8 @@
 		if(is_servant_of_ratvar(H) || H.null_rod_check() || H.stat == DEAD)
 			continue
 		if(!H.Adjacent(src))
-			 H << "<span class='sevtug'>\"[text2ratvar(pick(close_messages))]\"</span>"
-			 continue
+			H << "<span class='sevtug'>\"[text2ratvar(pick(close_messages))]\"</span>"
+			continue
 		if(try_use_power(convert_cost))
 			H.playsound_local(T, hum, 80, 1)
 			if(!H.stat)
