@@ -104,7 +104,7 @@ Idea and initial code by Xhuis (my 3rd gamemode now...)
 	Of a vast, empty Void in the deep of space.\n\
 	Something lies in the Void. Ancient. Unknowable. It watches you with hungry eyes. \n\
 	Eyes filled with stars.\n\
-	You feel a vast consciousness slowly consume your own and your mind rips itself apart.\n\
+	You feel a vast consciousness slowly consume your own and the veil falls away.\n\
 	Serve the umbrages above all else. Your former allegiances are now forfeit. Their goal is yours, and yours is theirs.</b>"
 	V << "<i>Use <b>.a</b> before your messages to speak over the Mindlink. This only works across your current z-level.</i>"
 	V << "<i>Ask for help from your masters or fellows if you're new to this role.</i>"

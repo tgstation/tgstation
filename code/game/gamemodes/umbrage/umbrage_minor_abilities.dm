@@ -6,23 +6,57 @@
 	var/psi_cost = 0
 	var/blacklisted = 1 //If the ability isn't available from Divulge
 
-/datum/action/innate/umbrage/Activate() //When you're making an ability, put ..() in Activate() when you should be consuming psi
-	var/datum/umbrage/U = get_umbrage()
-	if(U)
-		U.use_psi(psi_cost)
+/datum/action/innate/umbrage/Trigger() //When you're making an ability, put ..() in Activate() when you should be consuming psi
+	if(..())
+		var/datum/umbrage/U = get_umbrage()
+		if(U)
+			U.use_psi(psi_cost)
 
 /datum/action/innate/umbrage/IsAvailable()
 	var/datum/umbrage/U = get_umbrage()
 	if(!U)
 		return
 	if(U.psi < psi_cost)
-		usr << "<span class='warning'>You need more psi!</span>"
 		return
 	return ..()
 
 /datum/action/innate/umbrage/proc/get_umbrage()
 	return owner.mind.umbrage_psionics
 
+
+//Pass: Equips umbral tendrils.
+// - The tendrils' uses are many and varied, including mobility, offense, and more.
+/datum/action/innate/umbrage/pass
+	name = "Pass"
+	desc = "Twists an active arm into tendrils with many uses.<br><br>Costs no psi initially. Actions cost varying psi."
+	button_icon_state = "umbrage_pass"
+	check_flags = AB_CHECK_RESTRAINED|AB_CHECK_STUNNED|AB_CHECK_CONSCIOUS
+	psi_cost = 0
+	blacklisted = 0
+
+/datum/action/innate/umbrage/pass/IsAvailable()
+	if(!usr.get_empty_held_indexes())
+		return
+	return ..()
+
+/datum/action/innate/umbrage/pass/Activate()
+	usr.visible_message("<span class='warning'>[usr]'s arm contorts into tentacles!</span>", "<span class='velvet_bold'>ikna</span><br>\
+	<span class='notice'>You transform your arm into umbral tendrils.</span>")
+	playsound(usr, 'sound/magic/devour_will_begin.ogg', 50, 0)
+	var/obj/item/weapon/umbral_tendrils/T = new
+	usr.put_in_hands(T)
+	T.linked_umbrage = get_umbrage()
+	active = 1
+	return 1
+
+
+/datum/action/innate/umbrage/pass/Deactivate()
+	usr.visible_message("<span class='warning'>[usr]'s tentacles contort into an arm!</span>", "<span class='velvet_bold'>haoo</span><br>\
+	<span class='notice'>You reform your arm.</span>")
+	for(var/obj/item/weapon/umbral_tendrils/T in usr)
+		qdel(T)
+	active = 0
+	return 1
 
 
 //Devour Will: After a brief charge-up, equips a dark bead.
@@ -41,7 +75,6 @@
 
 /datum/action/innate/umbrage/devour_will/IsAvailable()
 	if(!usr.get_empty_held_indexes())
-		usr << "<span class='warning'>You need a free hand to create a dark bead!</span>"
 		return
 	return ..()
 
@@ -54,12 +87,10 @@
 	usr.visible_message("<span class='warning'>A glowing black orb appears in [usr]'s hand!</span>", "<span class='velvet_bold'>...iejz</span><br>\
 	<span class='notice'>You form a dark bead in your hand.</span>")
 	playsound(usr, 'sound/magic/devour_will_form.ogg', 50, 0)
-	var/obj/item/weapon/umbrage_dark_bead/B = new
+	var/obj/item/weapon/dark_bead/B = new
 	usr.put_in_hands(B)
 	B.linked_ability = src
-	..()
 	return 1
-
 
 
 //Veil Mind: Converts all eligible targets nearby into veils. Targets become eligible for a short time when drained by Devour Will.
@@ -105,9 +136,7 @@
 					L << "<span class='boldwarning'>...and it scrambles your thoughts!</span>"
 					L.dir = pick(cardinal)
 					L.confused += 2
-	..()
 	return 1
-
 
 
 //Demented Outburst: Deafens and confuses listeners. Even if they can't hear it, they will be thrown away and staggered by its force.
@@ -152,6 +181,4 @@
 				L.visible_message("<span class='warning'>The blast knocks [L] off their feet!</span>", "<span class='userdanger'>The force bowls you over!</span>")
 				L.Weaken(3)
 				L.soundbang_act(1, 3, 5, 0)
-	var/datum/umbrage/U = get_umbrage()
-	U.use_psi(psi_cost)
 	return 1

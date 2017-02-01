@@ -1,14 +1,16 @@
 //Dark bead: Formed by the Devour Will ability. See umbrage_abilities.dm for more details.
-/obj/item/weapon/umbrage_dark_bead
+/obj/item/weapon/dark_bead
 	name = "dark bead"
 	desc = "A glowing black orb. It's fading fast."
-	icon_state = "umbrage_dark_bead"
+	icon_state = "dark_bead"
+	item_state = "ratvars_flame"
 	flags = NODROP
+	resistance_flags = FIRE_PROOF | LAVA_PROOF | UNACIDABLE | INDESTRUCTIBLE
 	w_class = 5
 	var/eating = 0 //If we're devouring someone's will
 	var/datum/action/innate/umbrage/devour_will/linked_ability //The ability that keeps data for us
 
-/obj/item/weapon/umbrage_dark_bead/New()
+/obj/item/weapon/dark_bead/New()
 	..()
 	animate(src, alpha = 30, time = 30)
 	spawn(30)
@@ -16,7 +18,7 @@
 			loc << "<span class='warning'>You were too slow! [src] faded away.</span>"
 			qdel(src)
 
-/obj/item/weapon/umbrage_dark_bead/attack(mob/living/carbon/L, mob/living/user)
+/obj/item/weapon/dark_bead/attack(mob/living/carbon/L, mob/living/user)
 	if(!is_umbrage(user.mind) || eating || L == user) //no eating urself ;)))))))
 		return
 	var/datum/umbrage/U = linked_ability.get_umbrage()
@@ -31,19 +33,22 @@
 	eating = 1
 	user.visible_message("<span class='warning'>[user] grasps [L] and leans in close...</span>", "<span class='velvet_bold'>cera qo...</span><br>\
 	<span class='danger'>You begin siphoning [L]'s mental energy...</span>")
+	L << "<span class='userdanger'><i>AAAAAAAAAAAAAA-</i></span>"
+	L.Stun(3)
 	playsound(L, 'sound/magic/devour_will.ogg', 100, 0) //T A S T Y   S O U L S
 	if(!do_mob(user, L, 30))
 		user.Weaken(3)
+		L << "<span class='boldwarning'>All right. You're all right.</span>"
 		L.Weaken(3)
 		qdel(src)
 		return
-	user.visible_message("<span class='warning'>[user] sucks something out of [L]'s body!</span>", "<span class='velvet_bold'>...aranupdejc</span><br>\
-	<span class='boldannounce'>You have devoured [L]'s will. Your psi has been fully restored.</span><br>\
+	user.visible_message("<span class='warning'>[user] rips something out of [L]'s face!</span>", "<span class='velvet_bold'>...aranupdejc</span><br>\
+	<span class='boldannounce'>You devour [L]'s will. Your psi has been fully restored.</span><br>\
 	<span class='warning'>[L] is now severely weakened and will take some time to recover.</span>")
 	playsound(L, 'sound/magic/devour_will_victim.ogg', 50, 0)
 	U.psi = U.max_psi
 	playsound(L, "bodyfall", 50, 1)
-	L << "<span class='userdanger'>You suddenly feel... empty. Vulnerable. You slip into unconsciousness...</span>"
+	L << "<span class='userdanger'>You suddenly feel... empty. Thoughts try to form, but flit away. You slip into a deep, deep slumber...</span>"
 	L << sound('sound/magic/devour_will_end.ogg', volume = 75)
 	linked_ability.victims += L
 	L.Paralyse(30)
@@ -58,6 +63,16 @@
 			linked_ability.victims -= L
 			user << "<span class='notice'>[L] has recovered from their draining and is vulnerable to Devour Will again.</span>"
 	return 1
+
+
+
+//Umbral tendrils: Formed by the Pass ability. See umbrage_abilities.dm for more details.
+/obj/item/weapon/umbral_tendrils
+	name = "umbral tendrils"
+	desc = "A mass of purple, glowing tentacles."
+	icon_state = "dark_bead"
+	flags = NODROP
+	resistance_flags = FIRE_PROOF | LAVA_PROOF | UNACIDABLE | INDE
 
 
 //Psionic barrier: Created during Divulge. Has a regenerating health pool and protects the umbrage from harm.

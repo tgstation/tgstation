@@ -58,7 +58,7 @@
 				playsound(user, 'sound/magic/divulge_01.ogg', 70, 0)
 			if(2)
 				user.visible_message("<span class='userdanger'>Gravity fluctuates. Psychic tendrils extend outward and feel blindly around the area.</span>", \
-									"<span class='velvet'>Gravity around you fluctuates. You tentatively reach out, touch with your mind.</span>")
+									"<span class='velvet'>Gravity around you fluctuates. You tentatively reach out, feel with your mind.</span>")
 				for(var/atom/A in view(3, user))
 					spawn(rand(10, 40))
 						if(prob(25))
@@ -67,7 +67,7 @@
 			if(3)
 				user.visible_message("<span class='userdanger'>Sigils form along [user]'s body. \His skin blackens as \he glows a blinding purple.</span>", \
 									"<span class='velvet'>Your body begins to warp. Conscious thought vanishes as power overwhelms you.</span>")
-				animate(user, color = "#5c00e6", time = 200)
+				animate(user, color = list(rgb(0, 0, 0), rgb(0, 0, 0), rgb(0, 0, 0), rgb(0, 0, 0)), time = 200) //Produces a slow skin-blackening effect
 				playsound(user, 'sound/magic/divulge_03.ogg', 90, 0)
 		if(!do_after(user, 150, target = user))
 			user.visible_message("<span class='warning'>[user] falls to the ground!</span>", "<span class='userdanger'>Your transformation was interrupted!</span>")
@@ -80,7 +80,7 @@
 	for(var/i in 1 to 20)
 		user << "<span class='velvet_bold'>[pick("I- I- I-", "Mind-", "Sigils-", "Can't think-", "<i>POWER-</i>", "W-EE--EEE-", "<i>TAKE-</i>", "M-M-MOOORE-")]</span>"
 		sleep(1.1) //Spooky flavor message spam
-	user.visible_message("<span class='userdanger'>[user] lets out a primal howl of freedom!</span>", "<span class='velvet_large'><b>YOU ARE FREE!!</b></span>")
+	user.visible_message("<span class='userdanger'>A tremendous shockwave emanates from [user]!</span>", "<span class='velvet_large'><b>YOU ARE FREE!!</b></span>")
 	playsound(user, 'sound/magic/divulge_end.ogg', 100, 0)
 	user.underwear = "Nude"
 	user.undershirt = "Nude"
