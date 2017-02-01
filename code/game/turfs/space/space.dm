@@ -15,11 +15,6 @@
 	var/global/datum/gas_mixture/space/space_gas = new
 	plane = PLANE_SPACE
 
-/turf/open/space/New()
-	if(SSobj.initialized)
-		icon_state = SPACE_ICON_STATE
-		air = space_gas
-
 /turf/open/space/Initialize()
 	icon_state = SPACE_ICON_STATE
 	air = space_gas
