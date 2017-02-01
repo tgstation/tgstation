@@ -57,6 +57,7 @@
 	available_chems = list()
 	for(var/i in 1 to I)
 		available_chems |= possible_chems[i]
+	reset_chem_buttons()
 
 /obj/machinery/sleeper/update_icon()
 	icon_state = initial(icon_state)
