@@ -12,7 +12,7 @@
 	attack_verb = list("attacked", "slapped", "whacked")
 	var/mob/living/brain/brainmob = null
 	var/damaged_brain = 0 //whether the brain organ is damaged.
-	var/decoy_override = 0	//I apologize to the security players, and myself, who abused this, but this is going to go.
+	var/decoy_override = FALSE	//I apologize to the security players, and myself, who abused this, but this is going to go.
 
 /obj/item/organ/brain/Insert(mob/living/carbon/C, special = 0)
 	..()
