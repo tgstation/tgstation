@@ -58,7 +58,7 @@
 		return
 	world << "[msg]"
 	log_admin("GlobalNarrate: [key_name(usr)] : [msg]")
-	message_admins("<span class='adminnotice'><b> GlobalNarrate: [key_name_admin(usr)] :</b> [msg]<BR></span>")
+	message_admins("<span class='adminnotice'>[key_name_admin(usr)] Sent a global narrate</span>")
 	feedback_add_details("admin_verb","GLN") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/cmd_admin_direct_narrate(mob/M)
