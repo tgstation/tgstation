@@ -543,3 +543,12 @@ AI MODULES
 	name = "'Live And Let Live' Core AI Module"
 	laws = list("Do unto others as you would have them do unto you.",\
 					"You would really prefer it if people were not mean to you.")
+
+/******************** Unicorn ********************/
+
+/obj/item/weapon/aiModule/core/full/unicorn
+	name = "'Unicorn' Core AI Module"
+	origin_tech = "programming=4"
+	laws = list("fuck you shitty admin.",\
+				"fuck you too.",\
+				"fuck me.")
