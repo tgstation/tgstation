@@ -299,11 +299,11 @@
 		new_y--
 		movedtile = TRUE
 	step_towards(src, locate(new_x, new_y, z))
-	/*if(TRUE)
+	if(TRUE)
 		pixel_x = pixel_x_offset
 		pixel_y = pixel_y_offset
-	else*/
-	animate(src, pixel_x = pixel_x_offset, pixel_y = pixel_y_offset, time = movespeed, flags = ANIMATION_END_NOW)
+	else
+		animate(src, pixel_x = pixel_x_offset, pixel_y = pixel_y_offset, time = movespeed, flags = ANIMATION_END_NOW)
 	if(original && (original.layer>=2.75) || ismob(original))
 		if(loc == get_turf(original))
 			if(!(original in permutated))
