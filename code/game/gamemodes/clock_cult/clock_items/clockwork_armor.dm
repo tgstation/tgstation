@@ -187,6 +187,9 @@
 	all_clockwork_objects -= src
 	return ..()
 
+/obj/item/clothing/shoes/clockwork/negates_gravity()
+	return TRUE
+
 /obj/item/clothing/shoes/clockwork/ratvar_act()
 	if(ratvar_awakens)
 		flags |= NOSLIP
