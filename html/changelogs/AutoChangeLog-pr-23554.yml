@@ -1,0 +1,7 @@
+author: "Joan"
+delete-after: True
+changes: 
+  - wip: "The Vitality Matrix scripture is now a Script, from an Application. Its cost has been accordingly adjusted."
+  - tweak: "Vitality Matrices will be consumed upon successfully reviving a Servant. They also drain and heal conscious targets slightly slower."
+  - wip: "The Fellowship Armory scripture is now an Application, from a Script. Its cost has been accordingly adjusted."
+  - tweak: "Fellowship Armory now affects all Servants in view of the invoker, and will replace weaker gear and armor with its Ratvarian armor. Also, clockwork treads now allow you to move in no gravity like magboots."

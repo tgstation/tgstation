@@ -440,8 +440,10 @@ var/list/blood_splatter_icons = list()
 //This base must be called or derivatives must set initialized to TRUE to prevent repeat calls
 //Derivatives must not sleep
 /atom/proc/Initialize(mapload)
+#ifdef TESTING
 	if(initialized)
 		stack_trace("Warning: [src]([type]) initialized multiple times!")
+#endif
 	initialized = TRUE
 
 //the vision impairment to give to the mob whose perspective is set to that atom (e.g. an unfocused camera giving you an impaired vision when looking through it)

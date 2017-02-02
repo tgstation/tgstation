@@ -56,6 +56,9 @@
 				affected_mob.mind.transfer_to(new_mob)
 			else
 				new_mob.key = affected_mob.key
+
+		new_mob.name = affected_mob.real_name
+		new_mob.real_name = new_mob.name
 		qdel(affected_mob)
 
 
@@ -184,7 +187,7 @@
 	stage3	= list("<span class='danger'>Your appendages are melting away.</span>", "<span class='danger'>Your limbs begin to lose their shape.</span>")
 	stage4	= list("<span class='danger'>You are turning into a slime.</span>")
 	stage5	= list("<span class='danger'>You have become a slime.</span>")
-	new_form = /mob/living/simple_animal/slime
+	new_form = /mob/living/simple_animal/slime/random
 
 /datum/disease/transformation/slime/stage_act()
 	..()

@@ -1,0 +1,6 @@
+author: "Joan"
+delete-after: True
+changes: 
+  - rscdel: "Mania Motors no longer instantly convert people next to them."
+  - rscadd: "Instead, you have to remain next to them for several seconds, after which you will be knocked out, then converted if possible."
+  - tweak: "Mania Motors now cost slightly less power to run."

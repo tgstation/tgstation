@@ -31,7 +31,7 @@
 	alt_covers_chest = 1
 
 /obj/item/clothing/under/rank/scientist
-	desc = "It's made of a special fiber that provides minor protection against biohazards. It has markings that denote the wearer as a scientist."
+	desc = "It's made of a special fiber that provides minor protection against explosives. It has markings that denote the wearer as a scientist."
 	name = "scientist's jumpsuit"
 	icon_state = "toxins"
 	item_state = "w_suit"
