@@ -201,6 +201,9 @@
 /mob/living/carbon/human/attack_hand(mob/living/carbon/human/M)
 	if(..())	//to allow surgery to return properly.
 		return
+	if(M.a_intent == INTENT_DISARM)
+		if(M.buckled_mobs && (src in M.buckled_mobs) && M.riding_datum)
+			M.riding_datum.force_dismount(src)
 	dna.species.spec_attack_hand(M, src)
 
 
