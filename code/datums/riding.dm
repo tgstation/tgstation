@@ -310,11 +310,11 @@
 		ride_check(M)
 
 /datum/riding/human/proc/ride_check(mob/living/M)
-	if(M.incapacitated())
+	if(M.incapacitated() || ridden.incapacitated() || ridden.stat || ridden.restrained())
 		M.visible_message("<span class='boldwarning'>[M] falls off of [ridden]!</span>")
 		ridden.unbuckle_mob(M)
 		return FALSE
-	if(M.handcuffed)
+	if(M.restrained())
 		M.visible_message("<span class='boldwarning'>[M] can't hang onto [ridden] with their hands cuffed!</span>")	//Honestly this should put the ridden mob in a chokehold.
 		ridden.unbuckle_mob(M)
 		return FALSE

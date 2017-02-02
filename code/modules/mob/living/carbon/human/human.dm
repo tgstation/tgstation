@@ -912,17 +912,72 @@
 		return
 	if((target != pulling) || (grab_state < GRAB_AGGRESSIVE))
 		user << "<span class='boldwarning'>[src] must aggressively grab you for you to climb onto them!</span>"
-	if(!(target in buckled_mobs))
-		buckle_mob(target)
+	if(!ishuman(target))
+		if(user != src)
+			user << "<span class='boldwarning'>[src] can't lift [M]!</span>"
+		else
+			user << "<span class='boldwarning'>You can't lift [M]!</span>"
+		return
+	buckle_mob(target)
 
-/mob/living/carbon/human/buckle_mob(mob/living/M)
+/mob/living/carbon/human/buckle_mob(mob/living/M, force = FALSE, check_loc = TRUE)
 	if(!riding_datum)
 		riding_datum = new /datum/riding/human
 		riding_datum.ridden = src
-	if(buckled_mobs && (M in buckled_mobs))
-		return
-	if(!ishuman(M))	//Sorry, only humans are supported/allowed!
+	if(buckled_mobs && ((M in buckled_mobs) || (buckled_mobs.len >= max_buckled_mob)))
 		return
 	if(!riding_datum.ride_check(M))
 		return
-	buckle_mob(M)
+	if(!equip_buckle_inhands(M))
+		M.visible_message("<span class='boldwarning'>[M] can't climb onto [src] because his hands are full!</span>")
+		return
+	. = ..(M, force, check_loc)
+	riding_datum.handle_vehicle_offsets()
+
+/mob/living/carbon/human/unbuckle_mob(mob/living/M)
+	unequip_buckle_inhands(M)
+	. = ..(M)
+	riding_datum.restore_position(M)
+
+/mob/living/carbon/human/proc/unequip_buckle_inhands(mob/living/carbon/user)
+	for(var/obj/item/cyborgride_offhand/O in user.contents)
+		if(O.ridden != src)	//This shouldn't EVER happen.
+			continue
+		if(O.selfdeleting)
+			continue
+		else
+			qdel(O)
+	return TRUE
+
+/mob/living/carbon/human/proc/equip_buckle_inhands(mob/living/carbon/user)
+	var/obj/item/cyborgride_offhand/inhand = new /obj/item/cyborgride_offhand(user)
+	inhand.rider = user
+	inhand.ridden = src
+	return user.put_in_hands(inhand, TRUE)
+
+/obj/item/cyborgride_offhand			//COPYPASTED CODE UNTIL CYBORG RIDING GETS IN SO I CAN REUSE.
+	name = "offhand"
+	icon = 'icons/obj/weapons.dmi'
+	icon_state = "offhand"
+	w_class = WEIGHT_CLASS_HUGE
+	flags = ABSTRACT | DROPDEL | NOBLUDGEON
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	var/mob/living/carbon/rider
+	var/mob/living/silicon/robot/ridden
+	var/selfdeleting = FALSE
+
+/obj/item/cyborgride_offhand/dropped()
+	selfdeleting = TRUE
+	. = ..()
+
+/obj/item/cyborgride_offhand/equipped()
+	if(loc != rider)
+		selfdeleting = TRUE
+		qdel(src)
+	. = ..()
+
+/obj/item/cyborgride_offhand/Destroy()
+	if(selfdeleting)
+		if(rider in ridden.buckled_mobs)
+			ridden.unbuckle_mob(rider)
+	. = ..()
