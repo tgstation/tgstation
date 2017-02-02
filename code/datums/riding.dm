@@ -311,7 +311,7 @@
 
 /datum/riding/human/proc/ride_check(mob/living/M)
 	var/mob/living/carbon/human/H = ridden	//IF this runtimes I'm blaming the admins.
-	if(M.incapacitated() || H.incapacitated() || H.stat || H.restrained())
+	if(M.incapacitated(FALSE, TRUE) || H.incapacitated(FALSE, TRUE))
 		M.visible_message("<span class='boldwarning'>[M] falls off of [ridden]!</span>")
 		ridden.unbuckle_mob(M)
 		return FALSE
@@ -326,16 +326,16 @@
 		switch(ridden.dir)
 			if(NORTH)
 				M.pixel_x = 0
-				M.pixel_y = 4
+				M.pixel_y = 6
 			if(SOUTH)
 				M.pixel_x = 0
-				M.pixel_y = 4
+				M.pixel_y = 6
 			if(EAST)
-				M.pixel_x = -4
-				M.pixel_y = 2
+				M.pixel_x = -6
+				M.pixel_y = 4
 			if(WEST)
-				M.pixel_x = 4
-				M.pixel_y = 2
+				M.pixel_x = 6
+				M.pixel_y = 4
 
 /datum/riding/human/handle_vehicle_layer()
 	. = ..()

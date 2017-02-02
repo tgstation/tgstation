@@ -906,28 +906,24 @@
 	.["Toggle Purrbation"] = "?_src_=vars;purrbation=\ref[src]"
 
 /mob/living/carbon/human/MouseDrop_T(mob/living/target, mob/living/user)
+	if((target != pulling) || (grab_state < GRAB_AGGRESSIVE) || (user != target) || )	//Get consent first :^)
+		. = ..()
+		return
+	buckle_mob(target, FALSE, TRUE, FALSE)
 	. = ..()
-	if(target != user)																			//Get consent first :^)
-		user << "<span class='boldwarning'>[target] must climb onto [src] themselves!</span>"
-		return
-	if((target != pulling) || (grab_state < GRAB_AGGRESSIVE))
-		user << "<span class='boldwarning'>[src] must aggressively grab you for you to climb onto them!</span>"
-		return
-	if(!ishuman(target))
-		if(user != src)
-			user << "<span class='boldwarning'>[src] can't lift [target]!</span>"
-		else
-			user << "<span class='boldwarning'>You can't lift [target]!</span>"
-		return
-	buckle_mob(target)
 
-/mob/living/carbon/human/buckle_mob(mob/living/M, force = FALSE, check_loc = TRUE)
+/mob/living/carbon/human/buckle_mob(mob/living/M, force = FALSE, check_loc = TRUE, yes = FALSE)
+	if(!ishuman(M))
+		return
+	if(!yes)
+		return
 	if(!riding_datum)
 		riding_datum = new /datum/riding/human
 		riding_datum.ridden = src
 	if(buckled_mobs && ((M in buckled_mobs) || (buckled_mobs.len >= max_buckled_mobs)))
 		return
-	if(!riding_datum.ride_check(M))
+	if(M.incapacitated(FALSE, TRUE) || incapacitated(FALSE, TRUE))
+		M.visible_message("<span class='boldwarning'>[M] can't hang onto [src]!</span>")
 		return
 	if(!equip_buckle_inhands(M))
 		M.visible_message("<span class='boldwarning'>[M] can't climb onto [src] because [M.p_their()] hands are full!</span>")
