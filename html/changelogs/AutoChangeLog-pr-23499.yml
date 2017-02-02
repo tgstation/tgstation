@@ -1,0 +1,6 @@
+author: "coiax"
+delete-after: True
+changes: 
+  - rscadd: "A victim of a transformation disease will retain their name."
+  - tweak: "The slime transformation disease can turn you into any colour or
+age of slime."

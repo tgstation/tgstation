@@ -23,6 +23,9 @@
 	master = null
 	return ..()
 
+/obj/screen/examine(mob/user)
+	return
+
 /obj/screen/orbit()
 	return
 

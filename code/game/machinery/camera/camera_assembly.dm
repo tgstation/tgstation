@@ -31,6 +31,12 @@
 	if(building)
 		setDir(ndir)
 
+/obj/structure/camera_assembly/Destroy()
+	for(var/I in upgrades)
+		qdel(I)
+	upgrades.Cut()
+	return ..()
+
 /obj/structure/camera_assembly/attackby(obj/item/W, mob/living/user, params)
 	switch(state)
 		if(1)

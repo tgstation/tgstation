@@ -227,8 +227,6 @@
 	if(.) // we've been flashed
 		if(visual)
 			return
-		if(weakeyes)
-			Stun(2)
 
 		if (damage == 1)
 			src << "<span class='warning'>Your eyes sting a little.</span>"
