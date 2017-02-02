@@ -1,5 +1,6 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
-//Model dictionary trimmed on: 31-01-2017 23:17 (UTC)
+"" = (
+UTC)
 "aaa" = (
 /turf/open/space,
 /area/space)
@@ -3906,6 +3907,8 @@
 	},
 /obj/structure/rack,
 /obj/item/weapon/storage/fancy/donut_box,
+/obj/item/weapon/gun/energy/e_gun/dragnet,
+/obj/item/weapon/gun/energy/e_gun/dragnet,
 /turf/open/floor/plasteel/vault{
 	dir = 1
 	},
