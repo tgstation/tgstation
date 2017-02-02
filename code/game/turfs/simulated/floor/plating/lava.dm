@@ -8,11 +8,14 @@
 	slowdown = 2
 	luminosity = 1
 	var/static/list/safeties_typecache = list(/obj/structure/lattice/catwalk)
+	var/static/typecache_initialized = FALSE
 	//if anything matching this typecache is found in the lava, we don't burn things
 
 /turf/open/floor/plating/lava/Initialize()
 	..()
-	safeties_typecache = typecacheof(safeties_typecache)
+	if(!typecache_initialized)
+		safeties_typecache = typecacheof(safeties_typecache)
+		typecache_initialized = TRUE
 
 /turf/open/floor/plating/lava/ex_act()
 	return
