@@ -38609,6 +38609,10 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
+/obj/item/stack/sheet/mineral/silver,
+/obj/item/stack/sheet/mineral/silver,
+/obj/item/stack/sheet/mineral/silver,
+/obj/item/stack/sheet/mineral/silver,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
@@ -42138,6 +42142,10 @@
 	pixel_y = -22
 	},
 /obj/machinery/light/small,
+/obj/item/stack/sheet/mineral/gold,
+/obj/item/stack/sheet/mineral/gold,
+/obj/item/stack/sheet/mineral/gold,
+/obj/item/stack/sheet/mineral/gold,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
@@ -137899,7 +137907,7 @@ aaf
 aaf
 aBX
 aBX
-eca
+aEN
 aBX
 aBZ
 aBZ
