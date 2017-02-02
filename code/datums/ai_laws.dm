@@ -1,3 +1,4 @@
+#define LAW_DEVIL "devil"
 #define LAW_ZEROTH "zeroth"
 #define LAW_INHERENT "inherent"
 #define LAW_SUPPLIED "supplied"
@@ -240,6 +241,22 @@
 	var/datum/ai_laws/templaws = new lawtype()
 	inherent = templaws.inherent
 
+/datum/ai_laws/proc/get_law_amount(groups)
+	var/law_amount = 0
+	if(devillaws && (LAW_DEVIL in groups))
+		law_amount++
+	if(zeroth && (LAW_ZEROTH in groups))
+		law_amount++
+	if(ion.len && (LAW_ION in groups))
+		law_amount += ion.len
+	if(inherent.len && (LAW_INHERENT in groups))
+		law_amount += inherent.len
+	if(supplied.len && (LAW_SUPPLIED in groups))
+		for(var/index = 1, index <= supplied.len, index++)
+			var/law = supplied[index]
+			if(length(law) > 0)
+				law_amount++
+	return law_amount
 
 /datum/ai_laws/proc/set_law_sixsixsix(laws)
 	devillaws = laws
@@ -286,6 +303,22 @@
 			inherent[rand(1,inherent.len)] = law
 		if(LAW_SUPPLIED)
 			supplied[rand(1,supplied.len)] = law
+
+/datum/ai_laws/proc/remove_law(number)
+	if(number <= 0)
+		return
+	if(inherent.len && number <= inherent.len)
+		inherent -= inherent[number]
+		return
+	var/list/supplied_laws = list()
+	for(var/index = 1, index <= supplied.len, index++)
+		var/law = supplied[index]
+		if(length(law) > 0)
+			supplied_laws += index //storing the law number instead of the law
+	if(supplied_laws.len && number <= (inherent.len+supplied_laws.len))
+		var/law_to_remove = supplied_laws[number-inherent.len]
+		supplied -= supplied[law_to_remove]
+		return
 
 /datum/ai_laws/proc/clear_supplied_laws()
 	supplied = list()
