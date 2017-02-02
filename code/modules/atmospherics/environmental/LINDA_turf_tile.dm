@@ -79,8 +79,6 @@
 	return GM
 
 /turf/open/return_air()
-	if(!initialized)
-		Initialize()
 	return air
 
 /turf/temperature_expose()
