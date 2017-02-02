@@ -930,7 +930,7 @@
 	if(!riding_datum.ride_check(M))
 		return
 	if(!equip_buckle_inhands(M))
-		M.visible_message("<span class='boldwarning'>[M] can't climb onto [src] because his hands are full!</span>")
+		M.visible_message("<span class='boldwarning'>[M] can't climb onto [src] because [M.p_their()] hands are full!</span>")
 		return
 	. = ..(M, force, check_loc)
 	riding_datum.handle_vehicle_offsets()
