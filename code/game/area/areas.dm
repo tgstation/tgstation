@@ -441,4 +441,5 @@ var/list/teleportlocs = list()
 	power_environ = 0
 	always_unpowered = 0
 	valid_territory = 0
+	blob_allowed = 0
 	addSorted()
