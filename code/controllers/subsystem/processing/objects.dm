@@ -44,15 +44,24 @@ var/datum/subsystem/objects/SSobj
 			if(A.Initialize(TRUE))
 				LAZYADD(late_loaders, A)
 			CHECK_TICK
+		testing("Initialized [objects.len] atoms")
 	else
+		#ifdef TESTING
+		var/count = 0
+		#endif
 		for(var/atom/A in world)
 			if(!A.initialized)	//this check is to make sure we don't call it twice on an object that was created in a previous Initialize call
 				var/start_tick = world.time
 				if(A.Initialize(TRUE))
 					LAZYADD(late_loaders, A)
+				#ifdef TESTING
+				else
+					++count
+				#endif TESTING
 				if(start_tick != world.time)
 					WARNING("[A]: [A.type] slept during it's Initialize!")
 				CHECK_TICK
+		testing("Roundstart initialized [count] atoms")
 
 	initialized = INITIALIZATION_INNEW_REGULAR
 
@@ -64,6 +73,7 @@ var/datum/subsystem/objects/SSobj
 			if(start_tick != world.time)
 				WARNING("[A]: [A.type] slept during it's Initialize!")
 			CHECK_TICK
+		testing("Late-initialized [late_loaders.len] atoms")
 
 /datum/subsystem/objects/proc/map_loader_begin()
 	old_initialized = initialized
