@@ -957,10 +957,10 @@
 	inhand1.rider = user
 	inhand1.ridden = src
 	inhand2.rider = user
-	inhand2.ridden = src1
+	inhand2.ridden = src
 	. += user.put_in_hands(inhand1, TRUE)
 	. += user.put_in_hands(inhand2, TRUE)
-	if(. < user.get_num_arms)
+	if(. < user.get_num_arms())
 		. = FALSE
 		unequip_buckle_inhands(user)
 
