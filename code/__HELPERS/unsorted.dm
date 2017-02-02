@@ -755,32 +755,6 @@ Turf and target are seperate in case you want to teleport some distance from a t
 		loc = loc.loc
 	return null
 
-//Quick type checks for some tools
-var/global/list/common_tools = list(
-/obj/item/stack/cable_coil,
-/obj/item/weapon/wrench,
-/obj/item/weapon/weldingtool,
-/obj/item/weapon/screwdriver,
-/obj/item/weapon/wirecutters,
-/obj/item/device/multitool,
-/obj/item/weapon/crowbar)
-
-/proc/istool(O)
-	if(O && is_type_in_list(O, common_tools))
-		return 1
-	return 0
-
-/proc/is_pointed(obj/item/W)
-	if(istype(W, /obj/item/weapon/pen))
-		return 1
-	if(istype(W, /obj/item/weapon/screwdriver))
-		return 1
-	if(istype(W, /obj/item/weapon/reagent_containers/syringe))
-		return 1
-	if(istype(W, /obj/item/weapon/kitchen/fork))
-		return 1
-	else
-		return 0
 
 //For objects that should embed, but make no sense being is_sharp or is_pointed()
 //e.g: rods
@@ -1285,16 +1259,14 @@ proc/pick_closest_path(value, list/matches = get_fancy_list_of_atom_types())
 #define DELTA_CALC max(((max(world.tick_usage, world.cpu) / 100) * max(Master.sleep_delta,1)), 1)
 
 /proc/stoplag()
-	. = round(1*DELTA_CALC)
-	sleep(world.tick_lag)
-	if (world.tick_usage > TICK_LIMIT_TO_RUN) //woke up, still not enough tick, sleep for more.
-		. += round(2*DELTA_CALC)
-		sleep(world.tick_lag*2*DELTA_CALC)
-		if (world.tick_usage > TICK_LIMIT_TO_RUN) //woke up, STILL not enough tick, sleep for more.
-			. += round(4*DELTA_CALC)
-			sleep(world.tick_lag*4*DELTA_CALC)
-			//you might be thinking of adding more steps to this, or making it use a loop and a counter var
-			//	not worth it.
+	. = 0
+	var/i = 1
+	do
+		. += round(i*DELTA_CALC)
+		sleep(i*world.tick_lag*DELTA_CALC)
+		i *= 2
+	while (world.tick_usage > min(TICK_LIMIT_TO_RUN, CURRENT_TICKLIMIT))
+
 #undef DELTA_CALC
 
 /proc/flash_color(mob_or_client, flash_color="#960000", flash_time=20)

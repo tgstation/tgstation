@@ -1,4 +1,0 @@
-author: "Joan"
-delete-after: True
-changes: 
-  - bugfix: "Tesla coils and grounding rods must be anchored with a closed panel to function, ie; not explode when shocked."

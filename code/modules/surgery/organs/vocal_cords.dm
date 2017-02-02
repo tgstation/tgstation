@@ -60,7 +60,7 @@ var/static/regex/multispin_words = regex("like a record baby")
 	slot = "vocal_cords"
 	actions_types = list(/datum/action/item_action/organ_action/colossus)
 	var/next_command = 0
-	var/cooldown_stun = 900
+	var/cooldown_stun = 1200
 	var/cooldown_damage = 600
 	var/cooldown_meme = 300
 	var/cooldown_none = 150
@@ -112,15 +112,25 @@ var/static/regex/multispin_words = regex("like a record baby")
 	return TRUE
 
 /obj/item/organ/vocal_cords/colossus/handle_speech(message)
+	spans = list("colossus","yell") //reset spans, just in case someone gets deculted or the cords change owner
+	if(iscultist(owner))
+		spans = list("narsiesmall")
+	else if (is_servant_of_ratvar(owner))
+		spans = list("ratvar")
 	return uppertext(message)
 
 /obj/item/organ/vocal_cords/colossus/speak_with(message)
+	var/log_message = uppertext(message)
 	message = lowertext(message)
 	playsound(get_turf(owner), 'sound/magic/clockwork/invoke_general.ogg', 300, 1, 5)
 
 	var/mob/living/list/listeners = list()
 	for(var/mob/living/L in get_hearers_in_view(8, owner))
-		if(!L.ear_deaf && L != owner && L.stat != DEAD)
+		if(!L.ear_deaf && !L.null_rod_check() && L != owner && L.stat != DEAD)
+			if(ishuman(L))
+				var/mob/living/carbon/human/H = L
+				if(istype(H.ears, /obj/item/clothing/ears/earmuffs))
+					continue
 			listeners += L
 
 	if(!listeners.len)
@@ -128,7 +138,6 @@ var/static/regex/multispin_words = regex("like a record baby")
 		return
 
 	var/power_multiplier = base_multiplier
-	spans = list("colossus","yell") //reset spans, just in case someone gets deculted or the cords change owner
 
 	if(owner.mind)
 		//Chaplains are very good at speaking with the voice of god
@@ -144,10 +153,8 @@ var/static/regex/multispin_words = regex("like a record baby")
 	//Cultists are closer to their gods and are more powerful, but they'll give themselves away
 	if(iscultist(owner))
 		power_multiplier *= 2
-		spans = list("narsiesmall")
 	else if (is_servant_of_ratvar(owner))
 		power_multiplier *= 2
-		spans = list("ratvar")
 
 	//Try to check if the speaker specified a name or a job to focus on
 	var/list/specific_listeners = list()
@@ -444,4 +451,7 @@ var/static/regex/multispin_words = regex("like a record baby")
 
 	else
 		next_command = world.time + cooldown_none
+
+	message_admins("[key_name_admin(owner)] has said '[log_message]' with a Voice of God, affecting [english_list(listeners)], with a power multiplier of [power_multiplier].")
+	log_game("[key_name(owner)] has said '[log_message]' with a Voice of God, affecting [english_list(listeners)], with a power multiplier of [power_multiplier].")
 

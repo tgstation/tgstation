@@ -57,11 +57,10 @@
 		var/mob/living/body = pick_n_take(bodies)
 
 		body << "Your mob has been taken over by a ghost!"
-		message_admins("[key_name_admin(ghost)] has taken control \
-			of ([key_name_admin(body)])")
+		message_admins("[key_name_admin(ghost)] has taken control of ([key_name_admin(body)])")
 		body.ghostize(0)
 		body.key = ghost.key
-		PoolOrNew(/obj/effect/overlay/temp/sparkle, body)
+		PoolOrNew(/obj/effect/overlay/temp/gravpush, get_turf(body))
 
 /obj/effect/fun_balloon/sentience/emergency_shuttle
 	name = "shuttle sentience fun balloon"
@@ -80,7 +79,7 @@
 /obj/effect/fun_balloon/scatter/effect()
 	for(var/mob/living/M in range(effect_range, get_turf(src)))
 		var/turf/T = find_safe_turf()
-		PoolOrNew(/obj/effect/overlay/temp/sparkle, M)
+		PoolOrNew(/obj/effect/overlay/temp/gravpush, get_turf(M))
 		M.forceMove(T)
 		M << "<span class='notice'>Pop!</span>"
 

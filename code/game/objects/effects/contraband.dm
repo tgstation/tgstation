@@ -225,21 +225,16 @@ list(name = "- Carbon Dioxide", desc = " This informational poster teaches the v
 	add_fingerprint(user)
 
 /obj/structure/sign/poster/proc/roll_and_drop(turf/location, official)
+	pixel_x = 0
+	pixel_y = 0
+	var/obj/item/weapon/poster/P
 	if (!official)
-		var/obj/item/weapon/poster/contraband/P = new(src, serial_number)
-		P.resulting_poster = src
-		P.loc = location
-		P.pixel_x = 0
-		P.pixel_y = 0
-		loc = P
+		P = new /obj/item/weapon/poster/contraband(src, serial_number)
 	else
-		var/obj/item/weapon/poster/legit/P = new(src, serial_number)
-		P.resulting_poster = src
-		P.loc = location
-		P.pixel_x = 0
-		P.pixel_y = 0
-		loc = P
-
+		P = new /obj/item/weapon/poster/legit(src, serial_number)
+	P.resulting_poster = src
+	P.forceMove(location)
+	loc = P
 
 //seperated to reduce code duplication. Moved here for ease of reference and to unclutter r_wall/attackby()
 /turf/closed/wall/proc/place_poster(obj/item/weapon/poster/P, mob/user)

@@ -142,7 +142,7 @@
 	if(!src || qdeleted(src) || !user || !user.is_holding(src) || user.incapacitated() || !actual_selected_rune)
 		return ..(user, 0)
 	var/turf/target = get_turf(actual_selected_rune)
-	if(is_blocked_turf(target))
+	if(is_blocked_turf(target, TRUE))
 		user << "<span class='warning'>The target rune is blocked. Attempting to teleport to it would be massively unwise.</span>"
 		return ..(user, 0)
 	user.visible_message("<span class='warning'>Dust flows from [user]'s hand, and [user.p_they()] disappear in a flash of red light!</span>", \
