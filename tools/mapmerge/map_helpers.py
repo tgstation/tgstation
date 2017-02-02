@@ -253,6 +253,9 @@ def get_map_raw_text(mapfile):
         return reading.read()
 
 def parse_map(map_raw_text): #still does not support more than one z level per file, but should parse any format
+    in_comment_line = False
+    comment_trigger = False
+
     in_quote_block = False
     in_key_block = False
     in_data_block = False
@@ -289,9 +292,26 @@ def parse_map(map_raw_text): #still does not support more than one z level per f
 
         if not in_map_block:
 
-            if char == "\n" or char == "\t":
+            if char == "\n":
+                in_comment_line = False
+                comment_trigger = False
                 continue
 
+            if in_comment_line:
+                continue
+
+            if char == "\t":
+                continue
+
+            if char == "/" and not in_quote_block:
+                if comment_trigger:
+                    in_comment_line = True
+                    continue
+                else:
+                    comment_trigger = True
+            else:
+                comment_trigger = False
+            
             if in_data_block:
 
                 if in_varedit_block:
