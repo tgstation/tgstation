@@ -439,6 +439,8 @@ var/list/blood_splatter_icons = list()
 //Called from base of New if the world is loaded with FALSE
 //This base must be called or derivatives must set initialized to TRUE to prevent repeat calls
 //Derivatives must not sleep
+//Returning TRUE while mapload is TRUE will cause the object to be initialized again with mapload = FALSE when everything else is done
+//(Useful for things that requires turfs to have air). This base may only be called once, however
 /atom/proc/Initialize(mapload)
 	if(initialized)
 		stack_trace("Warning: [src]([type]) initialized multiple times!")
