@@ -26,7 +26,7 @@
 		HMN.regenerate_icons()
 	if(aug_message && !special)
 		owner << "<span class='notice'>[aug_message]</span>"
-
+	M.update_tint()
 	owner.update_sight()
 
 /obj/item/organ/cyberimp/eyes/Remove(var/mob/living/carbon/M, var/special = 0)
@@ -35,6 +35,7 @@
 		var/mob/living/carbon/human/HMN = owner
 		HMN.eye_color = old_eye_color
 		HMN.regenerate_icons()
+	M.update_tint()
 	..()
 
 /obj/item/organ/cyberimp/eyes/emp_act(severity)
