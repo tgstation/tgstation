@@ -51,8 +51,8 @@
 		return
 	if(!iszombie(owner))
 		owner << "<span class='narsiesmall'>You can feel your heart stopping, but something isn't right... \
-		life has not completely abandoned your broken form. You can only feel a deep and immutable hunger that \
-		not even death can stop! You will rise again!</span>"
+		life has not abandoned your broken form. You can only feel a deep and immutable hunger that \
+		not even death can stop, you will rise again!</span>"
 	var/revive_time = rand(revive_time_min, revive_time_max)
 	var/flags = TIMER_STOPPABLE
 	timer_id = addtimer(CALLBACK(src, .proc/zombify), revive_time, flags)
