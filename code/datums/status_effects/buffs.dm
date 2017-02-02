@@ -27,7 +27,7 @@
 /datum/status_effect/void_price
 	id = "void_price"
 	duration = 300
-	tick_interval = 3
+	tick_interval = 30
 	alert_type = /obj/screen/alert/status_effect/void_price
 
 /obj/screen/alert/status_effect/void_price
