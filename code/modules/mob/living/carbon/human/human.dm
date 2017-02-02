@@ -904,3 +904,25 @@
 	.["Make alien"] = "?_src_=vars;makealien=\ref[src]"
 	.["Make slime"] = "?_src_=vars;makeslime=\ref[src]"
 	.["Toggle Purrbation"] = "?_src_=vars;purrbation=\ref[src]"
+
+/mob/living/carbon/human/MouseDrop_T(mob/living/target, mob/living/user)
+	. = ..()
+	if(target != user)																			//Get consent first :^)
+		user << "<span class='boldwarning'>[target] must climb onto [src] themselves!</span>"
+		return
+	if((target != pulling) || (grab_state < GRAB_AGGRESSIVE))
+		user << "<span class='boldwarning'>[src] must aggressively grab you for you to climb onto them!</span>"
+	if(!(target in buckled_mobs))
+		buckle_mob(target)
+
+/mob/living/carbon/human/buckle_mob(mob/living/M)
+	if(!riding_datum)
+		riding_datum = new /datum/riding/human
+		riding_datum.ridden = src
+	if(buckled_mobs && (M in buckled_mobs))
+		return
+	if(!ishuman(M))	//Sorry, only humans are supported/allowed!
+		return
+	if(!riding_datum.ride_check(M))
+		return
+	buckle_mob(M)

@@ -312,21 +312,31 @@
 /datum/riding/human/proc/ride_check(mob/living/M)
 	if(M.incapacitated())
 		M.visible_message("<span class='boldwarning'>[M] falls off of [ridden]!</span>")
-
+		ridden.unbuckle_mob(M)
+		return FALSE
+	if(M.handcuffed)
+		M.visible_message("<span class='boldwarning'>[M] can't hang onto [ridden] with their hands cuffed!</span>")	//Honestly this should put the ridden mob in a chokehold.
+		ridden.unbuckle_mob(M)
+		return FALSE
 
 /datum/riding/human/handle_vehicle_offsets()
 	for(var/mob/living/M in ridden.buckled_mobs)
 		M.setDir(ridden.dir)
 		switch(ridden.dir)
 			if(NORTH)
-				M.pixel_x =
-				M.pixel_y =
+				M.pixel_x = 0
+				M.pixel_y = 4
 			if(SOUTH)
-				M.pixel_x =
-				M.pixel_y =
+				M.pixel_x = 0
+				M.pixel_y = 4
 			if(EAST)
-				M.pixel_x =
-				M.pixel_y =
+				M.pixel_x = -4
+				M.pixel_y = 2
 			if(WEST)
-				M.pixel_x =
-				M.pixel_y =
+				M.pixel_x = 4
+				M.pixel_y = 2
+
+/datum/riding/human/handle_vehicle_layer()
+	. = ..()
+	if(ridden.buckled_mobs && !ridden.buckled_mobs.len)
+		ridden.layer = MOB_LAYER

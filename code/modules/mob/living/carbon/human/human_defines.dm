@@ -50,3 +50,4 @@ var/global/default_martial_art = new/datum/martial_art
 
 	var/drunkenness = 0 //Overall drunkenness - check handle_alcohol() in life.dm for effects
 	var/datum/personal_crafting/handcrafting
+	var/datum/riding/human/riding_datum
