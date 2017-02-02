@@ -209,10 +209,10 @@ update_label("John Doe", "Clowny")
 
 /obj/item/weapon/card/id/ert
 	name = "\improper Centcom ID"
-	desc = "A ERT ID card"
+	desc = "An ERP ID card"
 	icon_state = "centcom"
-	registered_name = "Emergency Response Team Commander"
-	assignment = "Emergency Response Team Commander"
+	registered_name = "Emergency Response Personnel Commander"
+	assignment = "Emergency Response Personnel Commander"
 
 /obj/item/weapon/card/id/ert/New()
 	access = get_all_accesses()+get_ert_access("commander")-access_change_ids

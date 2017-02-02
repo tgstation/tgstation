@@ -442,17 +442,17 @@
 	switch(alert)
 		if("Delta: Deathsquad")
 			return makeDeathsquad()
-		if("Red: Elite ERT (Armoury Access + Pulse Weapons)")
+		if("Red: Elite ERP (Armoury Access + Pulse Weapons)")
 			alert = "Red"
-		if("Amber: Full ERT (Armoury Access)")
+		if("Amber: Full ERP (Armoury Access)")
 			alert = "Amber"
-		if("Blue: Light ERT (No Armoury Access)")
+		if("Blue: Light ERP (No Armoury Access)")
 			alert = "Blue"
 		if("Green: Centcom Official")
 			return makeOfficial()
 	var/teamsize = min(7,input("Maximum size of team? (7 max)", "Select Team Size",4) as null|num)
-	var/mission = input("Assign a mission to the Emergency Response Team", "Assign Mission", "Assist the station.")
-	var/list/mob/dead/observer/candidates = pollCandidates("Do you wish to be considered for a Code [alert] Nanotrasen Emergency Response Team?", "deathsquad", null)
+	var/mission = input("Assign a mission to the Emergency Response Personnel", "Assign Mission", "Assist the station.")
+	var/list/mob/dead/observer/candidates = pollCandidates("Do you wish to be considered for a Code [alert] Nanotrasen Emergency Response Personnel?", "deathsquad", null)
 	var/teamSpawned = 0
 
 	if(candidates.len > 0)
@@ -520,7 +520,7 @@
 			ERTOperative.mind.objectives += missionobj
 
 			//Greet the commando
-			ERTOperative << "<B><font size=3 color=red>You are [numagents==1?"the Emergency Response Team Commander":"an Emergency Response Officer"].</font></B>"
+			ERTOperative << "<B><font size=3 color=red>You are [numagents==1?"the Emergency Response Personnel Commander":"an Emergency Response Personnel Officer"].</font></B>"
 			var/missiondesc = "Your squad is being sent on a Code [alert] mission to [station_name()] by Nanotrasen's Security Division."
 			if(numagents == 1) //If Squad Leader
 				missiondesc += " Lead your squad to ensure the completion of the mission. Avoid civilian casualites when possible. Board the shuttle when your team is ready."
@@ -534,7 +534,7 @@
 
 			//Logging and cleanup
 			if(numagents == 1)
-				message_admins("A Code [alert] emergency response team has spawned with the mission: [mission]")
+				message_admins("A Code [alert] ERP team has spawned with the mission: [mission]")
 			log_game("[key_name(ERTOperative)] has been selected as an Emergency Response Officer")
 			numagents--
 			teamSpawned++

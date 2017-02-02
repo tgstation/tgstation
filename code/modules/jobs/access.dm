@@ -222,7 +222,7 @@
 			return get_all_centcom_access()
 		if("Centcom Commander")
 			return get_all_centcom_access()
-		if("Emergency Response Team Commander")
+		if("Emergency Response Personnel Commander")
 			return get_ert_access("commander")
 		if("Security Response Officer")
 			return get_ert_access("sec")
@@ -467,7 +467,7 @@
 	return get_all_jobs() + list("Prisoner")
 
 /proc/get_all_centcom_jobs()
-	return list("VIP Guest","Custodian","Thunderdome Overseer","Centcom Official","Medical Officer","Death Commando","Research Officer","Special Ops Officer","Admiral","Centcom Commander","Emergency Response Team Commander","Security Response Officer","Engineer Response Officer", "Medical Response Officer","Centcom Bartender")
+	return list("VIP Guest","Custodian","Thunderdome Overseer","Centcom Official","Medical Officer","Death Commando","Research Officer","Special Ops Officer","Admiral","Centcom Commander","Emergency Response Personnel Commander","Security Response Officer","Engineer Response Officer", "Medical Response Officer","Centcom Bartender")
 
 /obj/item/proc/GetJobName() //Used in secHUD icon generation
 	var/obj/item/weapon/card/id/I = GetID()

@@ -1,6 +1,6 @@
 /obj/structure/closet/secure_closet/ertCom
 	name = "commander's closet"
-	desc = "Emergency Response Team equipment locker."
+	desc = "Emergency Response Personnel equipment locker."
 	req_access = list(access_cent_captain)
 	icon_state = "cap"
 
@@ -21,7 +21,7 @@
 
 /obj/structure/closet/secure_closet/ertSec
 	name = "security closet"
-	desc = "Emergency Response Team equipment locker."
+	desc = "Emergency Response Personnel equipment locker."
 	req_access = list(access_cent_specops)
 	icon_state = "hos"
 
@@ -35,7 +35,7 @@
 
 /obj/structure/closet/secure_closet/ertMed
 	name = "medical closet"
-	desc = "Emergency Response Team equipment locker."
+	desc = "Emergency Response Personnel equipment locker."
 	req_access = list(access_cent_medical)
 	icon_state = "cmo"
 
@@ -51,7 +51,7 @@
 
 /obj/structure/closet/secure_closet/ertEngi
 	name = "engineer closet"
-	desc = "Emergency Response Team equipment locker."
+	desc = "Emergency Response Personnel equipment locker."
 	req_access = list(access_cent_storage)
 	icon_state = "ce"
 
