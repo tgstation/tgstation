@@ -171,9 +171,9 @@
 	return t
 
 /datum/computer_file/program/filemanager/proc/prepare_printjob(t) // Additional stuff to parse if we want to print it and make a happy Head of Personnel. Forms FTW.
-	t = parse_tags(t)
 	t = replacetext(t, "\[field\]", "<span class=\"paper_field\"></span>")
 	t = replacetext(t, "\[sign\]", "<span class=\"paper_field\"></span>")
+	t = parse_tags(t)
 	return t
 
 /datum/computer_file/program/filemanager/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = default_state)
