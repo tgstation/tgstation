@@ -874,6 +874,8 @@
 			connected_ai << "<br><br><span class='notice'>NOTICE - Cyborg module change detected: [name] has loaded the [designation] module.</span><br>"
 		if(3) //New Name
 			connected_ai << "<br><br><span class='notice'>NOTICE - Cyborg reclassification detected: [oldname] is now designated as [newname].</span><br>"
+		if(4) //New Shell
+			connected_ai << "<br><br><span class='notice'>NOTICE - New cyborg shell detected: <a href='?src=\ref[connected_ai];track=[html_encode(name)]'>[name]</a></span><br>"
 
 /mob/living/silicon/robot/canUseTopic(atom/movable/M, be_close = 0)
 	if(stat || lockcharge || low_power_mode)
@@ -1028,10 +1030,16 @@
 	name = real_name
 	if(camera)
 		camera.c_tag = real_name	//update the camera name too
-	connected_ai = mainframe
+	//connected_ai = mainframe
 	lawsync()
 	if(radio)
+		radio.subspace_transmission = TRUE
 		radio.keyslot = new /obj/item/device/encryptionkey/ai	//Let the AI keep its channels
+		for(var/ch_name in radio.channels)
+			SSradio.remove_object(radio, radiochannels[ch_name])
+			radio.secure_radio_connections[ch_name] = null
+		radio.recalculateChannels()
+
 	verbs += /mob/living/silicon/robot/proc/undeploy
 
 /mob/living/silicon/robot/proc/undeploy()
@@ -1050,10 +1058,14 @@
 		if(istype(radio.keyslot,/obj/item/device/encryptionkey/ai))
 			qdel(radio.keyslot)
 			radio.keyslot = null
-//	real_name = "[real_name]'s "
-//	name = real_name
-//	if(camera)
-//		camera.c_tag = real_name	//update the camera name too
+			for(var/ch_name in radio.channels)
+				SSradio.remove_object(radio, radiochannels[ch_name])
+				radio.secure_radio_connections[ch_name] = null
+			radio.recalculateChannels()
+	real_name = "[real_name] shell [rand(100, 999)]"	//Randomizing the name on leaving, so it shows up seperately in the shells list
+	name = real_name
+	if(camera)
+		camera.c_tag = real_name	//update the camera name too
 	return TRUE
 
 /mob/living/silicon/robot/shell/New(loc,newshell = TRUE)

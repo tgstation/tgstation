@@ -69,7 +69,8 @@
 		var/mob/living/silicon/S = owner
 		if(iscyborg(S))
 			var/mob/living/silicon/robot/R = S
-			R.UnlinkSelf()
+			if(!R.deployed)
+				R.UnlinkSelf()
 			R.module.rebuild_modules()
 		else if(isAI(S))
 			var/mob/living/silicon/ai/A = S

@@ -259,6 +259,19 @@
 				return
 			qdel(M)
 			var/mob/living/silicon/robot/O = new /mob/living/silicon/robot(get_turf(loc),TRUE)
+
+			if(!aisync)
+				lawsync = 0
+				O.connected_ai = null
+			else
+				if(forced_ai)
+					O.connected_ai = forced_ai
+				O.notify_ai(4)
+			if(!lawsync)
+				O.lawupdate = 0
+				O.make_laws()
+
+
 			O.cell = chest.cell
 			chest.cell.loc = O
 			chest.cell = null

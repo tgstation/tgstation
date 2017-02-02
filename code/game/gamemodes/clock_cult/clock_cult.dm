@@ -66,6 +66,14 @@ Credit where due:
 
 /proc/add_servant_of_ratvar(mob/living/L, silent = FALSE)
 	var/update_type = /datum/antagonist/clockcultist
+	if(iscyborg(L))
+		var/mob/living/silicon/robot/R = L
+		if(R.deployed)
+			var/mob/living/silicon/ai/ai = R.mainframe
+			R.undeploy()
+			ai << "<span class='heavy_brass'>Error. Surge Detected. Returning to core..</span>"
+			add_servant_of_ratvar(ai, FALSE)
+			return TRUE
 	if(silent)
 		update_type = /datum/antagonist/clockcultist/silent
 	. = L.gain_antag_datum(update_type)

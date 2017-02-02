@@ -913,12 +913,12 @@ var/list/ai_list = list()
 	var/list/possible = list()
 
 	for(var/mob/living/silicon/robot/R in available_ai_shells)
-		if(R.shell && !R.deployed && (R.stat != DEAD))
+		if(R.shell && !R.deployed && (R.stat != DEAD) && (!R.connected_ai ||(R.connected_ai == src)))
 			possible += R
 
 	var/mob/living/silicon/robot/target = input(usr, "Which body to control?") as null|anything in possible
 
-	if (!target || target.stat == DEAD)
+	if (!target || target.stat == DEAD || target.deployed || !(!target.connected_ai ||(target.connected_ai == src)))
 		return
 
 	else if(mind)
