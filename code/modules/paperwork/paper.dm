@@ -181,6 +181,7 @@
 	t = replacetext(t, "\[center\]", "<center>")
 	t = replacetext(t, "\[/center\]", "</center>")
 	t = replacetext(t, "\[br\]", "<BR>")
+	t = replacetext(t, "\n", "<BR>")
 	t = replacetext(t, "\[b\]", "<B>")
 	t = replacetext(t, "\[/b\]", "</B>")
 	t = replacetext(t, "\[i\]", "<I>")
@@ -191,7 +192,7 @@
 	t = replacetext(t, "\[/large\]", "</font>")
 	t = replacetext(t, "\[sign\]", "<font face=\"[SIGNFONT]\"><i>[user.real_name]</i></font>")
 	t = replacetext(t, "\[field\]", "<span class=\"paper_field\"></span>")
-	t = replacetext(t, "\[tab\]", "&nbsp;")
+	t = replacetext(t, "\[tab\]", "&nbsp;&nbsp;&nbsp;&nbsp;")
 
 	if(!iscrayon)
 		t = replacetext(t, "\[*\]", "<li>")
@@ -225,6 +226,17 @@
 		fields++
 
 	return t
+
+/obj/item/weapon/paper/proc/reload_fields() // Useful if you made the paper programicly and want to include fields. Also runs updateinfolinks() for you.
+	fields = 0
+	var/laststart = 1
+	while(1)
+		var/i = findtext(info, "<span class=\"paper_field\">", laststart)
+		if(i == 0)
+			break
+		laststart = i+1
+		fields++
+	updateinfolinks()
 
 
 /obj/item/weapon/paper/proc/openhelp(mob/user)

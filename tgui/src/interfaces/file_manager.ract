@@ -49,7 +49,7 @@
 			<ui-button action='PRG_edit'>EDIT</ui-button>
 			<ui-button action='PRG_printfile'>PRINT</ui-button>
 			</div><hr>
-			{{data.filedata}}
+			{{{data.filedata}}}
 		{{else}}
 			<h2>Available files (local):</h2>
 			<table>

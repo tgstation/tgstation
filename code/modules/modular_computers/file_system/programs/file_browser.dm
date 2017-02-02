@@ -15,7 +15,7 @@
 		return 1
 
 	var/obj/item/weapon/computer_hardware/hard_drive/HDD = computer.all_components[MC_HDD]
-	var/obj/item/weapon/computer_hardware/hard_drive/RHDD = computer.all_components[MC_HDD]
+	var/obj/item/weapon/computer_hardware/hard_drive/RHDD = computer.all_components[MC_SDD]
 	var/obj/item/weapon/computer_hardware/printer/printer = computer.all_components[MC_PRINT]
 
 	switch(action)
@@ -84,7 +84,7 @@
 			if(F.do_not_edit && (alert("WARNING: This file is not compatible with editor. Editing it may result in permanently corrupted formatting or damaged data consistency. Edit anyway?", "Incompatible File", "No", "Yes") == "No"))
 				return 1
 			// 16384 is the limit for file length in characters. Currently, papers have value of 2048 so this is 8 times as long, since we can't edit parts of the file independently.
-			var/newtext = sanitize(html_decode(input(usr, "Editing file [open_file]. You may use most tags used in paper formatting:", "Text Editor", F.stored_data) as message|null), 16384)
+			var/newtext = sanitize(html_decode(input(usr, "Editing file [open_file]. You may use most tags used in paper formatting:", "Text Editor", html_decode(F.stored_data)) as message|null), 16384)
 			if(!newtext)
 				return
 			if(F)
@@ -110,7 +110,7 @@
 			if(!printer)
 				error = "Missing Hardware: Your computer does not have required hardware to complete this operation."
 				return 1
-			if(!printer.print_text(parse_tags(F.stored_data)))
+			if(!printer.print_text("<font face=\"[computer.emagged ? CRAYON_FONT : PRINTER_FONT]\">" + prepare_printjob(F.stored_data) + "</font>", open_file))
 				error = "Hardware error: Printer was unable to print the file. It may be out of paper."
 				return 1
 		if("PRG_copytousb")
@@ -132,11 +132,11 @@
 			var/datum/computer_file/C = F.clone(0)
 			HDD.store_file(C)
 
-
 /datum/computer_file/program/filemanager/proc/parse_tags(t)
 	t = replacetext(t, "\[center\]", "<center>")
 	t = replacetext(t, "\[/center\]", "</center>")
 	t = replacetext(t, "\[br\]", "<BR>")
+	t = replacetext(t, "\n", "<BR>")
 	t = replacetext(t, "\[b\]", "<B>")
 	t = replacetext(t, "\[/b\]", "</B>")
 	t = replacetext(t, "\[i\]", "<I>")
@@ -168,8 +168,14 @@
 	t = replacetext(t, "\[td\]", "<td>")
 	t = replacetext(t, "\[cell\]", "<td>")
 	t = replacetext(t, "\[logo\]", "<img src = ntlogo.png>")
+	t = replacetext(t, "\[tab\]", "&nbsp;&nbsp;&nbsp;&nbsp;")
 	return t
 
+/datum/computer_file/program/filemanager/proc/prepare_printjob(t) // Additional stuff to parse if we want to print it and make a happy Head of Personnel. Forms FTW.
+	t = parse_tags(t)
+	t = replacetext(t, "\[field\]", "<span class=\"paper_field\"></span>")
+	t = replacetext(t, "\[sign\]", "<span class=\"paper_field\"></span>")
+	return t
 
 /datum/computer_file/program/filemanager/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = default_state)
 
@@ -179,7 +185,7 @@
 		var/datum/asset/assets = get_asset_datum(/datum/asset/simple/headers)
 		assets.send(user)
 
-		ui = new(user, src, ui_key, "file_manager", "NTOS File Manage", 575, 700, state = state)
+		ui = new(user, src, ui_key, "file_manager", "NTOS File Manager", 575, 700, state = state)
 		ui.open()
 		ui.set_autoupdate(state = 1)
 
