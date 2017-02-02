@@ -167,7 +167,6 @@
 	t = replacetext(t, "\[tr\]", "</td><tr>")
 	t = replacetext(t, "\[td\]", "<td>")
 	t = replacetext(t, "\[cell\]", "<td>")
-	t = replacetext(t, "\[logo\]", "<img src = ntlogo.png>")
 	t = replacetext(t, "\[tab\]", "&nbsp;&nbsp;&nbsp;&nbsp;")
 	return t
 
