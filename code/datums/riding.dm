@@ -310,7 +310,8 @@
 		ride_check(M)
 
 /datum/riding/human/proc/ride_check(mob/living/M)
-	if(M.incapacitated() || ridden.incapacitated() || ridden.stat || ridden.restrained())
+	var/mob/living/carbon/human/H = ridden	//IF this runtimes I'm blaming the admins.
+	if(M.incapacitated() || H.incapacitated() || H.stat || H.restrained())
 		M.visible_message("<span class='boldwarning'>[M] falls off of [ridden]!</span>")
 		ridden.unbuckle_mob(M)
 		return FALSE

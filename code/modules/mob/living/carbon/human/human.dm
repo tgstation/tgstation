@@ -914,9 +914,9 @@
 		user << "<span class='boldwarning'>[src] must aggressively grab you for you to climb onto them!</span>"
 	if(!ishuman(target))
 		if(user != src)
-			user << "<span class='boldwarning'>[src] can't lift [M]!</span>"
+			user << "<span class='boldwarning'>[src] can't lift [target]!</span>"
 		else
-			user << "<span class='boldwarning'>You can't lift [M]!</span>"
+			user << "<span class='boldwarning'>You can't lift [target]!</span>"
 		return
 	buckle_mob(target)
 
@@ -924,7 +924,7 @@
 	if(!riding_datum)
 		riding_datum = new /datum/riding/human
 		riding_datum.ridden = src
-	if(buckled_mobs && ((M in buckled_mobs) || (buckled_mobs.len >= max_buckled_mob)))
+	if(buckled_mobs && ((M in buckled_mobs) || (buckled_mobs.len >= max_buckled_mobs)))
 		return
 	if(!riding_datum.ride_check(M))
 		return
