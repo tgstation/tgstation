@@ -23,6 +23,8 @@
 	if(iscarbon(target))
 		var/mob/living/carbon/M = target
 		M.IgniteMob()
+	else if(isturf(target))
+		impact_effect_type = /obj/effect/overlay/temp/impact_effect/red_laser/wall
 
 /obj/item/projectile/beam/weak
 	damage = 15

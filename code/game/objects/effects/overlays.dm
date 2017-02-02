@@ -551,6 +551,10 @@
 	icon_state = "impact_laser"
 	duration = 4
 
+/obj/effect/overlay/temp/impact_effect/red_laser/wall
+	icon_state = "impact_laser_wall"
+	duration = 10
+
 /obj/effect/overlay/temp/impact_effect/blue_laser
 	icon_state = "impact_laser_blue"
 	duration = 4

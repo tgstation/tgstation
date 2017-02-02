@@ -309,31 +309,60 @@
 			traitor_mob << "Your training has allowed you to overcome your clownish nature, allowing you to wield weapons without harming yourself."
 			traitor_mob.dna.remove_mutation(CLOWNMUT)
 
-	var/loc = ""
-	var/obj/item/I = locate(/obj/item/device/pda) in traitor_mob.contents //Hide the uplink in a PDA if available, otherwise radio
-	if(!I)
-		I = locate(/obj/item/device/radio) in traitor_mob.contents
+	var/list/all_contents = traitor_mob.GetAllContents()
+	var/obj/item/device/pda/PDA = locate() in all_contents
+	var/obj/item/device/radio/R = locate() in all_contents
+	var/obj/item/weapon/pen/P = locate() in all_contents //including your PDA-pen!
 
-	if (!I)
-		traitor_mob << "Unfortunately, the Syndicate wasn't able to get you a radio."
+	var/obj/item/uplink_loc
+
+	if(traitor_mob.client && traitor_mob.client.prefs)
+		switch(traitor_mob.client.prefs.uplink_spawn_loc)
+			if(UPLINK_PDA)
+				uplink_loc = PDA
+				if(!uplink_loc)
+					uplink_loc = R
+				if(!uplink_loc)
+					uplink_loc = P
+			if(UPLINK_RADIO)
+				uplink_loc = R
+				if(!uplink_loc)
+					uplink_loc = PDA
+				if(!uplink_loc)
+					uplink_loc = P
+			if(UPLINK_PEN)
+				uplink_loc = P
+				if(!uplink_loc)
+					uplink_loc = PDA
+				if(!uplink_loc)
+					uplink_loc = R
+
+	if (!uplink_loc)
+		traitor_mob << "Unfortunately, the Syndicate wasn't able to get you an Uplink."
 		. = 0
 	else
-		var/obj/item/device/uplink/U = new(I)
+		var/obj/item/device/uplink/U = new(uplink_loc)
 		U.owner = "[traitor_mob.key]"
-		I.hidden_uplink = U
+		uplink_loc.hidden_uplink = U
 
-		if(istype(I, /obj/item/device/radio))
-			var/obj/item/device/radio/R = I
+		if(uplink_loc == R)
 			R.traitor_frequency = sanitize_frequency(rand(MIN_FREQ, MAX_FREQ))
 
-			traitor_mob << "The Syndicate have cunningly disguised a Syndicate Uplink as your [R.name] [loc]. Simply dial the frequency [format_frequency(R.traitor_frequency)] to unlock its hidden features."
-			traitor_mob.mind.store_memory("<B>Radio Frequency:</B> [format_frequency(R.traitor_frequency)] ([R.name] [loc]).")
-		else if(istype(I, /obj/item/device/pda))
-			var/obj/item/device/pda/P = I
-			P.lock_code = "[rand(100,999)] [pick("Alpha","Bravo","Charlie","Delta","Echo","Foxtrot","Golf","Hotel","India","Juliet","Kilo","Lima","Mike","November","Oscar","Papa","Quebec","Romeo","Sierra","Tango","Uniform","Victor","Whiskey","X-ray","Yankee","Zulu")]"
+			traitor_mob << "The Syndicate have cunningly disguised a Syndicate Uplink as your [R.name]. Simply dial the frequency [format_frequency(R.traitor_frequency)] to unlock its hidden features."
+			traitor_mob.mind.store_memory("<B>Radio Frequency:</B> [format_frequency(R.traitor_frequency)] ([R.name]).")
 
-			traitor_mob << "The Syndicate have cunningly disguised a Syndicate Uplink as your [P.name] [loc]. Simply enter the code \"[P.lock_code]\" into the ringtone select to unlock its hidden features."
-			traitor_mob.mind.store_memory("<B>Uplink Passcode:</B> [P.lock_code] ([P.name] [loc]).")
+		else if(uplink_loc == PDA)
+			PDA.lock_code = "[rand(100,999)] [pick("Alpha","Bravo","Charlie","Delta","Echo","Foxtrot","Golf","Hotel","India","Juliet","Kilo","Lima","Mike","November","Oscar","Papa","Quebec","Romeo","Sierra","Tango","Uniform","Victor","Whiskey","X-ray","Yankee","Zulu")]"
+
+			traitor_mob << "The Syndicate have cunningly disguised a Syndicate Uplink as your [PDA.name]. Simply enter the code \"[PDA.lock_code]\" into the ringtone select to unlock its hidden features."
+			traitor_mob.mind.store_memory("<B>Uplink Passcode:</B> [PDA.lock_code] ([PDA.name]).")
+
+		else if(uplink_loc == P)
+			P.traitor_unlock_degrees = rand(1, 360)
+
+			traitor_mob << "The Syndicate have cunningly disguised a Syndicate Uplink as your [P.name]. Simply twist the top of the pen [P.traitor_unlock_degrees] from its starting position to unlock its hidden features."
+			traitor_mob.mind.store_memory("<B>Uplink Degrees:</B> [P.traitor_unlock_degrees] ([P.name]).")
+
 	if(!safety) // If they are not a rev. Can be added on to.
 		give_codewords(traitor_mob)
 

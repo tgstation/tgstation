@@ -5,9 +5,12 @@
 
 /obj/item/clothing/glasses/visor_toggling()
 	..()
-	vision_flags ^= initial(vision_flags)
-	darkness_view ^= initial(darkness_view)
-	invis_view ^= initial(invis_view)
+	if(visor_vars_to_toggle & VISOR_VISIONFLAGS)
+		vision_flags ^= initial(vision_flags)
+	if(visor_vars_to_toggle & VISOR_DARKNESSVIEW)
+		darkness_view ^= initial(darkness_view)
+	if(visor_vars_to_toggle & VISOR_INVISVIEW)
+		invis_view ^= initial(invis_view)
 
 /obj/item/clothing/glasses/weldingvisortoggle(mob/user)
 	. = ..()
@@ -209,6 +212,7 @@
 	materials = list(MAT_METAL = 250)
 	flash_protect = 2
 	tint = 2
+	visor_vars_to_toggle = VISOR_FLASHPROTECT | VISOR_TINT
 	flags_cover = GLASSESCOVERSEYES
 	visor_flags_inv = HIDEEYES
 	glass_colour_type = /datum/client_colour/glass_colour/gray
@@ -222,7 +226,6 @@
 	desc = "Covers the eyes, preventing sight."
 	icon_state = "blindfold"
 	item_state = "blindfold"
-//	vision_flags = BLIND
 	flash_protect = 2
 	tint = 3			// to make them blind
 
