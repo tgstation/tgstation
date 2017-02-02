@@ -78,7 +78,7 @@
 /obj/item/device/assembly/prox_sensor/dropped()
 	..()
 	if(scanning)
-		addtimer(CALLBACK(src, .proc/sense), 0)
+		INVOKE_ASYNC(src, .proc/sense)
 
 /obj/item/device/assembly/prox_sensor/Destroy()
 	if(scanning)

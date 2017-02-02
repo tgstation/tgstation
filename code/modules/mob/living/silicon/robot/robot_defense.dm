@@ -5,7 +5,7 @@
 		user << "<span class='notice'>You begin to place [I] on [src]'s head...</span>"
 		src << "<span class='notice'>[user] is placing [I] on your head...</span>"
 		if(do_after(user, 30, target = src))
-			user.unEquip(I, 1)
+			user.temporarilyRemoveItemFromInventory(I, TRUE)
 			place_on_head(I)
 			return
 	if(I.force && I.damtype != STAMINA && stat != DEAD) //only sparks if real damage is dealt.
@@ -126,7 +126,7 @@
 		return
 
 	SetEmagged(1)
-	SetLockdown(1) //Borgs were getting into trouble because they would attack the emagger before the new laws were shown
+	SetStunned(3) //Borgs were getting into trouble because they would attack the emagger before the new laws were shown
 	lawupdate = 0
 	connected_ai = null
 	message_admins("[key_name_admin(user)] emagged cyborg [key_name_admin(src)].  Laws overridden.")
@@ -154,7 +154,6 @@
 	src << "<b>Obey these laws:</b>"
 	laws.show_laws(src)
 	src << "<span class='danger'>ALERT: [user.real_name] is your new master. Obey your new laws and their commands.</span>"
-	SetLockdown(0)
 	update_icons()
 
 

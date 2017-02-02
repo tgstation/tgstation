@@ -59,7 +59,7 @@
 	if(new_headgear)
 		// Force drop the item in the headslot, even though
 		// it's NODROP
-		D.unEquip(target, 1)
+		D.dropItemToGround(target, TRUE)
 		qdel(old_headgear)
 		// where is `slot_head` defined? WHO KNOWS
 		D.equip_to_slot(new_headgear, slot_head)

@@ -182,13 +182,13 @@
 /obj/item/weapon/twohanded/required/wield(mob/living/carbon/user)
 	..()
 	if(!wielded)
-		user.unEquip(src)
+		user.dropItemToGround(src)
 
 /obj/item/weapon/twohanded/required/unwield(mob/living/carbon/user, show_message = TRUE)
 	if(show_message)
 		user << "<span class='notice'>You drop [src].</span>"
 	..(user, FALSE)
-	user.unEquip(src)
+	user.dropItemToGround(src)
 
 /*
  * Fireaxe
@@ -286,7 +286,7 @@
 		impale(user)
 		return
 	if((wielded) && prob(50))
-		addtimer(CALLBACK(src, .proc/jedi_spin, user), 0, TIMER_UNIQUE)
+		INVOKE_ASYNC(src, .proc/jedi_spin, user)
 
 /obj/item/weapon/twohanded/dualsaber/proc/jedi_spin(mob/living/user)
 	for(var/i in list(1,2,4,8,4,2,1,2,4,8,4,2))
@@ -354,7 +354,7 @@
 	playsound(loc, hitsound, get_clamped_volume(), 1, -1)
 	add_fingerprint(user)
 	// Light your candles while spinning around the room
-	addtimer(CALLBACK(src, .proc/jedi_spin, user), 0, TIMER_UNIQUE)
+	INVOKE_ASYNC(src, .proc/jedi_spin, user)
 
 /obj/item/weapon/twohanded/dualsaber/green/New()
 	item_color = "green"

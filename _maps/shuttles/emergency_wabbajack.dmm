@@ -1,4 +1,4 @@
-//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
 /turf/open/space,
 /area/space)
@@ -264,29 +264,25 @@
 /area/shuttle/escape)
 "aW" = (
 /turf/open/floor/plasteel/yellow,
-/turf/open/floor/plasteel/warningline{
-	tag = "icon-warningline (NORTH)";
+/obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
 /area/shuttle/escape)
 "aX" = (
 /turf/open/floor/plasteel/yellow,
-/turf/open/floor/plasteel/warningline{
-	tag = "icon-warningline (NORTHEAST)";
+/obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
 /area/shuttle/escape)
 "aY" = (
 /turf/open/floor/plasteel/whitered,
-/turf/open/floor/plasteel/warningline{
-	tag = "icon-warningline (NORTHWEST)";
+/obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
 /area/shuttle/escape)
 "aZ" = (
 /turf/open/floor/plasteel/whitered,
-/turf/open/floor/plasteel/warningline{
-	tag = "icon-warningline (NORTH)";
+/obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
 /area/shuttle/escape)
@@ -299,15 +295,13 @@
 /area/shuttle/escape)
 "bb" = (
 /turf/open/floor/plasteel/yellow,
-/turf/open/floor/plasteel/warningline{
-	tag = "icon-warningline (EAST)";
+/obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
 /area/shuttle/escape)
 "bc" = (
 /turf/open/floor/plasteel/whitered,
-/turf/open/floor/plasteel/warningline{
-	tag = "icon-warningline (WEST)";
+/obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
 /area/shuttle/escape)

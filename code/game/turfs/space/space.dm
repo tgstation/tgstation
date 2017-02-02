@@ -33,9 +33,6 @@
 /turf/open/space/Initalize_Atmos(times_fired)
 	return
 
-/turf/open/space/ChangeTurf(path)
-	. = ..()
-
 /turf/open/space/TakeTemperature(temp)
 
 /turf/open/space/RemoveLattice()

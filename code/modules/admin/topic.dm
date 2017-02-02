@@ -1335,12 +1335,7 @@
 			return
 
 		for(var/obj/item/I in M)
-			M.unEquip(I)
-			if(I)
-				I.loc = M.loc
-				I.layer = initial(I.layer)
-				I.plane = initial(I.plane)
-				I.dropped(M)
+			M.dropItemToGround(I, TRUE)
 
 		M.Paralyse(5)
 		sleep(5)
@@ -1366,12 +1361,7 @@
 			return
 
 		for(var/obj/item/I in M)
-			M.unEquip(I)
-			if(I)
-				I.loc = M.loc
-				I.layer = initial(I.layer)
-				I.plane = initial(I.plane)
-				I.dropped(M)
+			M.dropItemToGround(I, TRUE)
 
 		M.Paralyse(5)
 		sleep(5)
@@ -1420,12 +1410,7 @@
 			return
 
 		for(var/obj/item/I in M)
-			M.unEquip(I)
-			if(I)
-				I.loc = M.loc
-				I.layer = initial(I.layer)
-				I.plane = initial(I.plane)
-				I.dropped(M)
+			M.dropItemToGround(I, TRUE)
 
 		if(ishuman(M))
 			var/mob/living/carbon/human/observer = M

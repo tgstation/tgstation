@@ -59,7 +59,7 @@
 		if(!I.can_be_package_wrapped())
 			return
 		if(user.is_holding(I))
-			if(!user.unEquip(I))
+			if(!user.dropItemToGround(I))
 				return
 		else if(!isturf(I.loc))
 			return

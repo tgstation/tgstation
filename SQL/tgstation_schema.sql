@@ -135,6 +135,8 @@ CREATE TABLE `death` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `pod` text NOT NULL COMMENT 'Place of death',
   `coord` text NOT NULL COMMENT 'X, Y, Z POD',
+  `mapname` text NOT NULL,
+  `server` text NOT NULL,
   `tod` datetime NOT NULL COMMENT 'Time of death',
   `job` text NOT NULL,
   `special` text NOT NULL,
@@ -147,6 +149,7 @@ CREATE TABLE `death` (
   `brainloss` int(11) NOT NULL,
   `fireloss` int(11) NOT NULL,
   `oxyloss` int(11) NOT NULL,
+  
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;

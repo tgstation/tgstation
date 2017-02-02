@@ -82,7 +82,7 @@
 		AM.ex_act()
 
 /obj/item/smallDelivery/attack_self(mob/user)
-	user.unEquip(src)
+	user.temporarilyRemoveItemFromInventory(src, TRUE)
 	for(var/X in contents)
 		var/atom/movable/AM = X
 		user.put_in_hands(AM)
@@ -92,7 +92,7 @@
 /obj/item/smallDelivery/attack_self_tk(mob/user)
 	if(ismob(loc))
 		var/mob/M = loc
-		M.unEquip(src)
+		M.temporarilyRemoveItemFromInventory(src, TRUE)
 		for(var/X in contents)
 			var/atom/movable/AM = X
 			M.put_in_hands(AM)

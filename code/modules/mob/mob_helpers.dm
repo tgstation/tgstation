@@ -274,6 +274,12 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 			return M
 	return 0
 
+var/static/regex/firstname = new("^\[^\\s-\]+") //First word before whitespace or "-"
+
+/mob/proc/first_name()
+	firstname.Find(real_name)
+	return firstname.match
+
 /mob/proc/abiotic(full_body = 0)
 	for(var/obj/item/I in held_items)
 		if(!(I.flags & NODROP))
@@ -285,49 +291,34 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 	set name = "a-intent"
 	set hidden = 1
 
-	if(ishuman(src) || isalienadult(src) || isbrain(src))
-		switch(input)
-			if(INTENT_HELP, INTENT_DISARM, INTENT_GRAB, INTENT_HARM)
-				a_intent = input
-			if(INTENT_HOTKEY_RIGHT)
-				switch (a_intent)
-					if(INTENT_HELP)
-						a_intent = INTENT_DISARM
-					if(INTENT_DISARM)
-						a_intent = INTENT_GRAB
-					if(INTENT_GRAB)
-						a_intent = INTENT_HARM
-					if(INTENT_HARM)
-						a_intent = INTENT_HELP
-			if(INTENT_HOTKEY_LEFT)
-				switch (a_intent)
-					if(INTENT_HELP)
-						a_intent = INTENT_HARM
-					if(INTENT_DISARM)
-						a_intent = INTENT_HELP
-					if(INTENT_GRAB)
-						a_intent = INTENT_DISARM
-					if(INTENT_HARM)
-						a_intent = INTENT_GRAB
+	if(!possible_a_intents || !possible_a_intents.len)
+		return
 
-		if(hud_used && hud_used.action_intent)
-			hud_used.action_intent.icon_state = "[a_intent]"
+	if(input in possible_a_intents)
+		a_intent = input
+	else
+		var/current_intent = possible_a_intents.Find(a_intent)
 
-	else if(iscyborg(src) || ismonkey(src) || islarva(src))
-		switch(input)
-			if(INTENT_HELP)
-				a_intent = INTENT_HELP
-			if(INTENT_HARM)
-				a_intent = INTENT_HARM
-			if(INTENT_HOTKEY_RIGHT, INTENT_HOTKEY_LEFT)
-				switch (a_intent)
-					if(INTENT_HELP)
-						a_intent = INTENT_HARM
-					if(INTENT_HARM)
-						a_intent = INTENT_HELP
+		if(!current_intent)
+			// Failsafe. Just in case some badmin was playing with VV.
+			current_intent = 1
 
-		if(hud_used && hud_used.action_intent)
-			hud_used.action_intent.icon_state = "[a_intent]"
+		if(input == INTENT_HOTKEY_RIGHT)
+			current_intent += 1
+		if(input == INTENT_HOTKEY_LEFT)
+			current_intent -= 1
+
+		// Handle looping
+		if(current_intent < 1)
+			current_intent = possible_a_intents.len
+		if(current_intent > possible_a_intents.len)
+			current_intent = 1
+
+		a_intent = possible_a_intents[current_intent]
+
+	if(hud_used && hud_used.action_intent)
+		hud_used.action_intent.icon_state = "[a_intent]"
+
 
 /proc/is_blind(A)
 	if(ismob(A))
@@ -485,3 +476,12 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 		return 1
 	else
 		return 0
+
+mob/proc/click_random_mob()
+	var/list/nearby_mobs = list()
+	for(var/mob/living/L in range(1, src))
+		if(L!=src)
+			nearby_mobs |= L
+	if(nearby_mobs.len)
+		var/mob/living/T = pick(nearby_mobs)
+		ClickOn(T)

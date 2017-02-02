@@ -30,4 +30,4 @@
 
 	update_icons()
 
-	sql_report_cyborg_death(src)
+	sql_report_death(src)
