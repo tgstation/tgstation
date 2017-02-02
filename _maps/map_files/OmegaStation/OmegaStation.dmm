@@ -37532,28 +37532,21 @@
 	pixel_x = -24;
 	pixel_y = -24
 	},
-/obj/machinery/button/door{
-	id = "chapelprivacy";
-	name = "Chemistry Shutter Control";
-	pixel_x = 0;
-	pixel_y = -24;
-	req_access_txt = "0"
+/obj/structure/cable/white{
+	tag = "icon-4-8";
+	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/structure/cable/white{
-	tag = "icon-4-8";
-	icon_state = "4-8"
-	},
 /turf/open/floor/plasteel/black,
 /area/chapel/main)
 "biO" = (
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden,
 /obj/structure/cable/white{
 	tag = "icon-4-8";
 	icon_state = "4-8"
 	},
+/obj/machinery/atmospherics/pipe/manifold4w/supply/hidden,
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
@@ -37607,6 +37600,13 @@
 	tag = "icon-wooden_chair (WEST)";
 	icon_state = "wooden_chair";
 	dir = 8
+	},
+/obj/machinery/button/door{
+	id = "chapelprivacy";
+	name = "Chapel Privacy Shutters";
+	pixel_x = 0;
+	pixel_y = -24;
+	req_access_txt = "0"
 	},
 /turf/open/floor/plasteel{
 	icon_state = "chapel"
@@ -39130,6 +39130,108 @@
 	},
 /turf/open/floor/plasteel/blue,
 /area/shuttle/arrival)
+"blA" = (
+/obj/machinery/door/airlock/centcom{
+	name = "Mass Driver Room";
+	req_access_txt = "27"
+	},
+/turf/open/floor/plasteel/vault{
+	dir = 5
+	},
+/area/chapel/main)
+"blB" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/closed/wall,
+/area/chapel/main)
+"blC" = (
+/obj/machinery/mass_driver{
+	id = "chapelgun"
+	},
+/turf/open/floor/plating,
+/area/chapel/main)
+"blD" = (
+/obj/machinery/door/window{
+	dir = 8;
+	name = "Mass Driver";
+	req_access_txt = "22"
+	},
+/obj/machinery/airalarm{
+	dir = 8;
+	icon_state = "alarm0";
+	pixel_x = 24
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump{
+	dir = 4;
+	external_pressure_bound = 140;
+	on = 1;
+	pressure_checks = 0
+	},
+/turf/open/floor/plasteel/vault{
+	dir = 5
+	},
+/area/chapel/main)
+"blE" = (
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+	tag = "icon-manifold-b-f (EAST)";
+	dir = 4
+	},
+/turf/closed/wall,
+/area/chapel/main)
+"blF" = (
+/obj/machinery/atmospherics/components/unary/vent_pump{
+	dir = 4;
+	external_pressure_bound = 140;
+	on = 1;
+	pressure_checks = 0
+	},
+/turf/open/floor/plating,
+/area/chapel/main)
+"blG" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/machinery/camera{
+	c_tag = "Chapel Mass Driver";
+	dir = 8;
+	network = list("SS13")
+	},
+/obj/machinery/light/small,
+/obj/machinery/button/massdriver{
+	id = "chapelmassdoor";
+	name = "mass driver blast door button";
+	pixel_x = 24;
+	pixel_y = -8
+	},
+/obj/machinery/button/massdriver{
+	id = "chapelgun";
+	pixel_x = 24;
+	pixel_y = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel/vault{
+	dir = 5
+	},
+/area/chapel/main)
+"blH" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 9
+	},
+/turf/closed/wall,
+/area/chapel/main)
+"blI" = (
+/obj/machinery/door/poddoor{
+	id = "chapelmassdoor";
+	name = "Chapel Launcher Door"
+	},
+/turf/open/floor/plating,
+/area/chapel/main)
+"blJ" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/fulltile,
+/turf/open/floor/plating,
+/area/chapel/main)
 
 (1,1,1) = {"
 aaa
@@ -76287,9 +76389,9 @@ bfu
 big
 biM
 bfu
-aaa
-aaa
-aaa
+blC
+blF
+blI
 aaa
 aaa
 aaa
@@ -76543,10 +76645,10 @@ bgG
 bhs
 bih
 biN
-bfu
-aaa
-aaa
-aaa
+blA
+blD
+blG
+blJ
 aaa
 aaa
 aaa
@@ -76800,10 +76902,10 @@ bgH
 bht
 bii
 biO
-bjl
-aaa
-aaa
-aaa
+blB
+blE
+blH
+bfu
 aaa
 aaa
 aaa
@@ -77828,7 +77930,7 @@ bgL
 bhw
 bim
 biS
-bjm
+bfu
 aaa
 aaa
 aaa
