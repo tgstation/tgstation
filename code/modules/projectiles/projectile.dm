@@ -20,10 +20,15 @@
 	var/atom/original = null // the original target clicked
 	var/turf/starting = null // the projectile's starting turf
 	var/list/permutated = list() // we've passed through these atoms, don't try to hit them again
-	var/paused = FALSE //for suspending the projectile midair
+	var/paused = TRUE //for suspending the projectile midair
 	var/p_x = 16
 	var/p_y = 16			// the pixel location of the tile that the player clicked. Default is the center
-	var/speed = 0.8			//Amount of deciseconds it takes for projectile to travel
+
+	var/tick_rate = 1
+	var/tick_current = 0
+	var/movespeed = 1
+	var/currentmove = 0
+
 	var/Angle = 0
 	var/spread = 0			//amount (in degrees) of projectile spread
 	var/legacy = 0			//legacy projectile system
@@ -53,6 +58,10 @@
 
 /obj/item/projectile/New()
 	permutated = list()
+	if(SSprojectiles)
+		SSprojectiles.processing.Add(src)
+	else
+		qdel(src)
 	return ..()
 
 /obj/item/projectile/proc/Range()
@@ -169,93 +178,6 @@
 /obj/item/projectile/Process_Spacemove(var/movement_dir = 0)
 	return 1 //Bullets don't drift in space
 
-/obj/item/projectile/proc/fire(setAngle, atom/direct_target)
-	if(!log_override && firer && original)
-		add_logs(firer, original, "fired at", src, " [get_area(src)]")
-	if(direct_target)
-		prehit(direct_target)
-		direct_target.bullet_act(src, def_zone)
-		qdel(src)
-		return
-	if(setAngle)
-		Angle = setAngle
-	if(!legacy) //new projectiles
-		set waitfor = 0
-		var/next_run = world.time
-		while(loc)
-			if(paused)
-				next_run = world.time
-				sleep(1)
-				continue
-
-			if((!( current ) || loc == current))
-				current = locate(Clamp(x+xo,1,world.maxx),Clamp(y+yo,1,world.maxy),z)
-
-			if(!Angle)
-				Angle=round(Get_Angle(src,current))
-			if(spread)
-				Angle += (rand() - 0.5) * spread
-			var/matrix/M = new
-			M.Turn(Angle)
-			transform = M
-
-			var/Pixel_x=round(sin(Angle)+16*sin(Angle)*2)
-			var/Pixel_y=round(cos(Angle)+16*cos(Angle)*2)
-			var/pixel_x_offset = pixel_x + Pixel_x
-			var/pixel_y_offset = pixel_y + Pixel_y
-			var/new_x = x
-			var/new_y = y
-
-			while(pixel_x_offset > 16)
-				pixel_x_offset -= 32
-				pixel_x -= 32
-				new_x++// x++
-			while(pixel_x_offset < -16)
-				pixel_x_offset += 32
-				pixel_x += 32
-				new_x--
-
-			while(pixel_y_offset > 16)
-				pixel_y_offset -= 32
-				pixel_y -= 32
-				new_y++
-			while(pixel_y_offset < -16)
-				pixel_y_offset += 32
-				pixel_y += 32
-				new_y--
-
-			step_towards(src, locate(new_x, new_y, z))
-			next_run += max(world.tick_lag, speed)
-			var/delay = next_run - world.time
-			if(delay <= world.tick_lag*2)
-				pixel_x = pixel_x_offset
-				pixel_y = pixel_y_offset
-			else
-				animate(src, pixel_x = pixel_x_offset, pixel_y = pixel_y_offset, time = max(1, (delay <= 3 ? delay - 1 : delay)), flags = ANIMATION_END_NOW)
-
-			if(original && (original.layer>=2.75) || ismob(original))
-				if(loc == get_turf(original))
-					if(!(original in permutated))
-						Bump(original, 1)
-			Range()
-			if (delay > 0)
-				sleep(delay)
-
-	else //old projectile system
-		set waitfor = 0
-		while(loc)
-			if(!paused)
-				if((!( current ) || loc == current))
-					current = locate(Clamp(x+xo,1,world.maxx),Clamp(y+yo,1,world.maxy),z)
-				step_towards(src, current)
-				if(original && (original.layer>=2.75) || ismob(original))
-					if(loc == get_turf(original))
-						if(!(original in permutated))
-							Bump(original, 1)
-				Range()
-			sleep(config.run_speed * 0.9)
-
-
 /obj/item/projectile/proc/preparePixelProjectile(atom/target, var/turf/targloc, mob/living/user, params, spread)
 	var/turf/curloc = get_turf(user)
 	src.loc = get_turf(user)
@@ -302,7 +224,101 @@
 		Bump(AM, 1)
 
 /obj/item/projectile/Destroy()
+	if(SSprojectiles)
+		SSprojectiles.processing.Remove(src)
 	return ..()
 
 /obj/item/projectile/experience_pressure_difference()
 	return
+
+/obj/item/projectile/process(wait)
+	tick_current += wait
+	while(tick_current >= tick_rate)
+		tick()
+		tick_current -= tick_rate
+
+/obj/item/projectile/proc/tick()
+	currentmove += tick_rate
+	while(currentmove >= movespeed)
+		move_proj()
+		currentmove -= movespeed
+
+/obj/item/projectile/proc/move_proj()
+	if(legacy)
+		legacymove()
+	else
+		pixelmove()
+
+/obj/item/projectile/proc/fire(setAngle, atom/direct_target)
+	if(!log_override && firer && original)
+		add_logs(firer, original, "fired at", src, " [get_area(src)]")
+	if(direct_target)
+		prehit(direct_target)
+		direct_target.bullet_act(src, def_zone)
+		qdel(src)
+		return
+	if(setAngle)
+		Angle = setAngle
+	paused = FALSE
+
+/obj/item/projectile/proc/pixelmove()
+	if((!( current ) || loc == current))
+		current = locate(Clamp(x+xo,1,world.maxx),Clamp(y+yo,1,world.maxy),z)
+	if(!Angle)
+		Angle=round(Get_Angle(src,current))
+	if(spread)
+		Angle += (rand() - 0.5) * spread
+	var/matrix/M = new
+	M.Turn(Angle)
+	transform = M
+	var/Pixel_x=round(sin(Angle)+16*sin(Angle)*2)
+	var/Pixel_y=round(cos(Angle)+16*cos(Angle)*2)
+	var/pixel_x_offset = pixel_x + Pixel_x
+	var/pixel_y_offset = pixel_y + Pixel_y
+	var/new_x = x
+	var/new_y = y
+	var/movedtile = FALSE
+	while(pixel_x_offset > 16)
+		pixel_x_offset -= 32
+		pixel_x -= 32
+		new_x++// x++
+		movedtile = TRUE
+	while(pixel_x_offset < -16)
+		pixel_x_offset += 32
+		pixel_x += 32
+		new_x--
+		movedtile = TRUE
+	while(pixel_y_offset > 16)
+		pixel_y_offset -= 32
+		pixel_y -= 32
+		new_y++
+		movedtile = TRUE
+	while(pixel_y_offset < -16)
+		pixel_y_offset += 32
+		pixel_y += 32
+		new_y--
+		movedtile = TRUE
+	step_towards(src, locate(new_x, new_y, z))
+	/*if(TRUE)
+		pixel_x = pixel_x_offset
+		pixel_y = pixel_y_offset
+	else*/
+	animate(src, pixel_x = pixel_x_offset, pixel_y = pixel_y_offset, time = movespeed, flags = ANIMATION_END_NOW)
+	if(original && (original.layer>=2.75) || ismob(original))
+		if(loc == get_turf(original))
+			if(!(original in permutated))
+				Bump(original, 1)
+	if(movedtile)
+		Range()
+
+/obj/item/projectile/proc/legacymove()
+	if(paused)
+		return
+	if(!(current) || loc == current)
+		current = locate(Clamp(x+xo,1,world.maxx),Clamp(y+yo,1,world.maxy),z)
+	step_towards(src, current)
+	if(original && (original.layer >= 2.75) || ismob(original))
+		if(loc == get_turf(original))
+			if(!(original in permutated))
+				Bump(original, TRUE)
+	Range()

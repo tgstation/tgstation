@@ -243,7 +243,6 @@
 //// SNIPER BULLETS
 
 /obj/item/projectile/bullet/sniper
-	speed = 0		//360 alwaysscope.
 	damage = 70
 	stun = 5
 	weaken = 5

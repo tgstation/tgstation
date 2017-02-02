@@ -168,6 +168,7 @@
 #include "code\controllers\subsystem\parallax.dm"
 #include "code\controllers\subsystem\persistence.dm"
 #include "code\controllers\subsystem\ping.dm"
+#include "code\controllers\subsystem\projectile.dm"
 #include "code\controllers\subsystem\radio.dm"
 #include "code\controllers\subsystem\religion.dm"
 #include "code\controllers\subsystem\server_maintenance.dm"
