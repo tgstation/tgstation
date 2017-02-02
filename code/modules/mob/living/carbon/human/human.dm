@@ -906,7 +906,7 @@
 	.["Toggle Purrbation"] = "?_src_=vars;purrbation=\ref[src]"
 
 /mob/living/carbon/human/MouseDrop_T(mob/living/target, mob/living/user)
-	if((target != pulling) || (grab_state < GRAB_AGGRESSIVE) || (user != target) || )	//Get consent first :^)
+	if((target != pulling) || (grab_state < GRAB_AGGRESSIVE) || (user != target))	//Get consent first :^)
 		. = ..()
 		return
 	buckle_mob(target, FALSE, TRUE, FALSE)
