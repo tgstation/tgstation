@@ -950,11 +950,19 @@
 			qdel(O)
 	return TRUE
 
-/mob/living/carbon/human/proc/equip_buckle_inhands(mob/living/carbon/user)
-	var/obj/item/cyborgride_offhand/inhand = new /obj/item/cyborgride_offhand(user)
-	inhand.rider = user
-	inhand.ridden = src
-	return user.put_in_hands(inhand, TRUE)
+/mob/living/carbon/human/proc/equip_buckle_inhands(mob/living/carbon/human/user)
+	var/obj/item/cyborgride_offhand/inhand1 = new /obj/item/cyborgride_offhand(user)
+	var/obj/item/cyborgride_offhand/inhand2 = new /obj/item/cyborgride_offhand(user)
+	. = 0
+	inhand1.rider = user
+	inhand1.ridden = src
+	inhand2.rider = user
+	inhand2.ridden = src1
+	. += user.put_in_hands(inhand1, TRUE)
+	. += user.put_in_hands(inhand2, TRUE)
+	if(. < user.get_num_arms)
+		. = FALSE
+		unequip_buckle_inhands(user)
 
 /obj/item/cyborgride_offhand			//COPYPASTED CODE UNTIL CYBORG RIDING GETS IN SO I CAN REUSE.
 	name = "offhand"
