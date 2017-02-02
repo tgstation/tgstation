@@ -1,0 +1,4 @@
+author: "Joan"
+delete-after: True
+changes: 
+  - tweak: "Clockwork Marauders have 25% less health, 300 health from 400."

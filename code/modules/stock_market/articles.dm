@@ -106,7 +106,7 @@ var/global/list/FrozenAccounts = list()
 	var/ticksp = "[ticksc]"
 	while (length(ticksp) < 5)
 		ticksp = "0[ticksp]"
-	spacetime = "[ticksp][time2text(world.realtime, "MM")][time2text(world.realtime, "DD")]2556"
+	spacetime = "[ticksp][time2text(world.realtime, "MM")][time2text(world.realtime, "DD")][text2num(time2text(world.realtime, "YYYY"))+540]"
 
 /datum/article/proc/formatArticle()
 	if (spacetime == "")

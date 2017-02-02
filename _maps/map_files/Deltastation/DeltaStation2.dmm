@@ -16494,7 +16494,8 @@
 	},
 /obj/machinery/door/airlock/external{
 	name = "External Solar Access";
-	req_access_txt = "24"
+	req_access_txt = "24";
+	req_one_access = null
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -16577,7 +16578,8 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/airlock/atmos{
 	name = "Fore Port Solar Access";
-	req_access_txt = "24"
+	req_access_txt = "24";
+	req_one_access = null
 	},
 /obj/structure/cable/white{
 	tag = "icon-4-8";
@@ -117745,6 +117747,24 @@
 	dir = 8
 	},
 /area/ai_monitored/turret_protected/aisat_interior)
+"eca" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
+	pixel_x = 0;
+	tag = ""
+	},
+/obj/machinery/door/airlock/external{
+	name = "External Solar Access";
+	req_access_txt = "24";
+	req_one_access = null
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/maintenance/auxsolarport)
 
 (1,1,1) = {"
 aaa
@@ -137879,7 +137899,7 @@ aaf
 aaf
 aBX
 aBX
-aEN
+eca
 aBX
 aBZ
 aBZ

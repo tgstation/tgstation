@@ -5,12 +5,14 @@
 	max_integrity = 200
 	integrity_failure = 80
 	var/damaged_clothes = 0 //similar to machine's BROKEN stat and structure's broken var
-	var/flash_protect = 0		//Malk: What level of bright light protection item has. 1 = Flashers, Flashes, & Flashbangs | 2 = Welding | -1 = OH GOD WELDING BURNT OUT MY RETINAS
-	var/tint = 0				//Malk: Sets the item's level of visual impairment tint, normally set to the same as flash_protect
-	var/up = 0					//	   but seperated to allow items to protect but not impair vision, like space helmets
-	var/visor_flags = 0			// flags that are added/removed when an item is adjusted up/down
-	var/visor_flags_inv = 0		// same as visor_flags, but for flags_inv
-	var/visor_flags_cover = 0	// same as above, but for flags_cover
+	var/flash_protect = 0		//What level of bright light protection item has. 1 = Flashers, Flashes, & Flashbangs | 2 = Welding | -1 = OH GOD WELDING BURNT OUT MY RETINAS
+	var/tint = 0				//Sets the item's level of visual impairment tint, normally set to the same as flash_protect
+	var/up = 0					//but seperated to allow items to protect but not impair vision, like space helmets
+	var/visor_flags = 0			//flags that are added/removed when an item is adjusted up/down
+	var/visor_flags_inv = 0		//same as visor_flags, but for flags_inv
+	var/visor_flags_cover = 0	//same as above, but for flags_cover
+//what to toggle when toggled with weldingvisortoggle()
+	var/visor_vars_to_toggle = VISOR_FLASHPROTECT | VISOR_TINT | VISOR_VISIONFLAGS | VISOR_DARKNESSVIEW | VISOR_INVISVIEW
 	lefthand_file = 'icons/mob/inhands/clothing_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/clothing_righthand.dmi'
 	var/alt_desc = null
@@ -719,8 +721,10 @@ BLIND     // can't see anything
 	flags_inv ^= visor_flags_inv
 	flags_cover ^= initial(flags_cover)
 	icon_state = "[initial(icon_state)][up ? "up" : ""]"
-	flash_protect ^= initial(flash_protect)
-	tint ^= initial(tint)
+	if(visor_vars_to_toggle & VISOR_FLASHPROTECT)
+		flash_protect ^= initial(flash_protect)
+	if(visor_vars_to_toggle & VISOR_TINT)
+		tint ^= initial(tint)
 
 
 /obj/item/clothing/proc/can_use(mob/user)

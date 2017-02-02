@@ -130,6 +130,15 @@
 	toggle_lock(user)
 	return
 
+/obj/structure/fireaxecabinet/attack_tk(mob/user)
+	if(locked)
+		user <<"<span class='warning'> The [name] won't budge!</span>"
+		return
+	else
+		open = !open
+		update_icon()
+		return
+
 /obj/structure/fireaxecabinet/update_icon()
 	cut_overlays()
 	if(fireaxe)

@@ -17448,9 +17448,7 @@
 	pixel_y = 0;
 	req_access_txt = "18"
 	},
-/turf/open/floor/plasteel/black{
-	tag = "icon-warndark (EAST)"
-	},
+/turf/open/floor/plasteel/black,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
@@ -18206,9 +18204,7 @@
 	name = "Station Intercom (General)";
 	pixel_x = -27
 	},
-/turf/open/floor/plasteel/black{
-	tag = "icon-warndark (EAST)"
-	},
+/turf/open/floor/plasteel/black,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
@@ -18772,9 +18768,7 @@
 	dir = 4;
 	network = list("SS13")
 	},
-/turf/open/floor/plasteel/black{
-	tag = "icon-warndark (EAST)"
-	},
+/turf/open/floor/plasteel/black,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
@@ -19267,9 +19261,7 @@
 	pixel_x = -26;
 	pixel_y = 0
 	},
-/turf/open/floor/plasteel/black{
-	tag = "icon-warndark (EAST)"
-	},
+/turf/open/floor/plasteel/black,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
@@ -19888,9 +19880,7 @@
 /obj/item/stack/sheet/plasteel{
 	amount = 10
 	},
-/turf/open/floor/plasteel/black{
-	tag = "icon-warndark (EAST)"
-	},
+/turf/open/floor/plasteel/black,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
@@ -43115,10 +43105,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 10
 	},
-/turf/open/floor/plasteel/black{
-	tag = "icon-black_warn_corner (NORTH)";
-	icon_state = "black_warn_corner"
-	},
+/turf/open/floor/plasteel/black,
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
 	},
@@ -43490,10 +43477,7 @@
 	pixel_x = -32;
 	pixel_y = 0
 	},
-/turf/open/floor/plasteel/black{
-	tag = "icon-black_warn_corner (NORTH)";
-	icon_state = "black_warn_corner"
-	},
+/turf/open/floor/plasteel/black,
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
 	},
@@ -44153,10 +44137,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/turf/open/floor/plasteel/black{
-	tag = "icon-black_warn_corner (EAST)";
-	icon_state = "black_warn_corner"
-	},
+/turf/open/floor/plasteel/black,
 /obj/effect/turf_decal/stripes/corner{
 	dir = 4
 	},
@@ -44382,10 +44363,7 @@
 	dir = 9;
 	pixel_y = 0
 	},
-/turf/open/floor/plasteel/black{
-	tag = "icon-black_warn_corner (EAST)";
-	icon_state = "black_warn_corner"
-	},
+/turf/open/floor/plasteel/black,
 /obj/effect/turf_decal/stripes/corner{
 	dir = 4
 	},
@@ -52320,10 +52298,7 @@
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
 "cbL" = (
-/turf/open/floor/plasteel/black{
-	tag = "icon-black_warn_corner (WEST)";
-	icon_state = "black_warn_corner"
-	},
+/turf/open/floor/plasteel/black,
 /obj/effect/turf_decal/stripes/corner{
 	dir = 8
 	},

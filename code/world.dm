@@ -208,8 +208,6 @@ var/last_irc_status = 0
 				continue
 			C.Export("##action=load_rsc", ticker.round_end_sound)
 	sleep(delay)
-	if(blackbox)
-		blackbox.save_all_data_to_sql()
 	if(ticker.delay_end)
 		world << "<span class='boldannounce'>Reboot was cancelled by an admin.</span>"
 		return
@@ -221,6 +219,10 @@ var/last_irc_status = 0
 				mapchanging = 0 //map rotation can in some cases be finished but never exit, this is a failsafe
 				Reboot("Map change timed out", time = 10)
 		return
+	OnReboot(reason, feedback_c, feedback_r, round_end_sound_sent)
+	..(0)
+
+/world/proc/OnReboot(reason, feedback_c, feedback_r, round_end_sound_sent)
 	feedback_set_details("[feedback_c]","[feedback_r]")
 	log_game("<span class='boldannounce'>Rebooting World. [reason]</span>")
 	kick_clients_in_lobby("<span class='boldannounce'>The round came to an end with you in the lobby.</span>", 1) //second parameter ensures only afk clients are kicked
@@ -245,6 +247,8 @@ var/last_irc_status = 0
 			world << sound(ticker.round_end_sound)
 		else
 			world << sound(pick('sound/AI/newroundsexy.ogg','sound/misc/apcdestroyed.ogg','sound/misc/bangindonk.ogg','sound/misc/leavingtg.ogg', 'sound/misc/its_only_game.ogg', 'sound/misc/yeehaw.ogg')) // random end sounds!! - LastyBatsy
+	if(blackbox)
+		blackbox.save_all_data_to_sql()
 	sleep(soundwait)
 	Master.Shutdown()	//run SS shutdowns
 	for(var/thing in clients)
@@ -253,7 +257,6 @@ var/last_irc_status = 0
 			continue
 		if(config.server)	//if you set a server location in config.txt, it sends you there instead of trying to reconnect to the same world address. -- NeoFite
 			C << link("byond://[config.server]")
-	..(0)
 
 var/inerror = 0
 /world/Error(var/exception/e)
