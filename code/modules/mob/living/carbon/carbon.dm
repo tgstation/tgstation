@@ -568,6 +568,8 @@
 		. += HT.tint
 	if(wear_mask)
 		. += wear_mask.tint
+	for(var/obj/item/organ/cyberimp/eyes/E in internal_organs)
+		. += E.tint
 
 //this handles hud updates
 /mob/living/carbon/update_damage_hud()
