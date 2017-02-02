@@ -59,6 +59,7 @@
 									'sound/ambience/ambigen10.ogg','sound/ambience/ambigen11.ogg',\
 									'sound/ambience/ambigen12.ogg','sound/ambience/ambigen14.ogg')
 	flags = CAN_BE_DIRTY
+	var/firedoors_last_closed_on = 0
 
 
 /*Adding a wizard area teleport list because motherfucking lag -- Urist*/
@@ -120,7 +121,9 @@ var/list/teleportlocs = list()
 
 	blend_mode = BLEND_MULTIPLY // Putting this in the constructor so that it stops the icons being screwed up in the map editor.
 
-
+/area/Destroy()
+	STOP_PROCESSING(SSobj, src)
+	return ..()
 
 /area/proc/poweralert(state, obj/source)
 	if (state != poweralm)
@@ -183,6 +186,15 @@ var/list/teleportlocs = list()
 		return 1
 	return 0
 
+/area/proc/CloseFiredoors()
+	firedoors_last_closed_on = world.time
+	for(var/obj/machinery/door/firedoor/D in src)
+		if(!D.welded)
+			if(D.operating)
+				D.nextstate = CLOSED
+			else if(!D.density)
+				INVOKE_ASYNC(D, /obj/machinery/door/firedoor.proc/close)
+
 /area/proc/firealert(obj/source)
 	if(always_unpowered == 1) //no fire alarms in space/asteroid
 		return
@@ -192,12 +204,7 @@ var/list/teleportlocs = list()
 	for(var/area/RA in related)
 		if (!( RA.fire ))
 			RA.set_fire_alarm_effect()
-			for(var/obj/machinery/door/firedoor/D in RA)
-				if(!D.welded)
-					if(D.operating)
-						D.nextstate = CLOSED
-					else if(!D.density)
-						INVOKE_ASYNC(D, /obj/machinery/door/firedoor.proc/close)
+			RA.CloseFiredoors()
 			for(var/obj/machinery/firealarm/F in RA)
 				F.update_icon()
 		for (var/obj/machinery/camera/C in RA)
@@ -211,6 +218,8 @@ var/list/teleportlocs = list()
 		D.triggerAlarm("Fire", src, cameras, source)
 	for(var/datum/computer_file/program/alarm_monitor/p in alarmdisplay)
 		p.triggerAlarm("Fire", src, cameras, source)
+
+	START_PROCESSING(SSobj, src)
 
 /area/proc/firereset(obj/source)
 	for(var/area/RA in related)
@@ -235,6 +244,13 @@ var/list/teleportlocs = list()
 		D.cancelAlarm("Fire", src, source)
 	for(var/datum/computer_file/program/alarm_monitor/p in alarmdisplay)
 		p.cancelAlarm("Fire", src, source)
+
+	STOP_PROCESSING(SSobj, src)
+
+/area/process()
+	if(firedoors_last_closed_on + 100 < world.time)	//every 10 seconds
+		for(var/area/RA in related)
+			RA.CloseFiredoors()
 
 /area/proc/burglaralert(obj/trigger)
 	if(always_unpowered == 1) //no burglar alarms in space/asteroid

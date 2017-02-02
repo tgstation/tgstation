@@ -362,7 +362,7 @@
 		W.dropped(M)
 	W.layer = initial(W.layer)
 	W.plane = initial(W.plane)
-	W.loc = new_location
+	W.forceMove(new_location)
 
 	for(var/mob/M in can_see_contents())
 		orient2hud(M)
