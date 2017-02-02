@@ -912,6 +912,7 @@
 		return
 	if((target != pulling) || (grab_state < GRAB_AGGRESSIVE))
 		user << "<span class='boldwarning'>[src] must aggressively grab you for you to climb onto them!</span>"
+		return
 	if(!ishuman(target))
 		if(user != src)
 			user << "<span class='boldwarning'>[src] can't lift [target]!</span>"
