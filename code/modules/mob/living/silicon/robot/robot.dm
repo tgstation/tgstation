@@ -456,7 +456,9 @@
 		update_icons()
 
 	else if(istype(W, /obj/item/weapon/screwdriver) && opened && cell)	// radio
-		if(radio)
+		if(shell)
+			user << "You can't seem to open the radio compartment"	//No, you're not getting infinite radio keys.
+		else if(radio)
 			radio.attackby(W,user)//Push it to the radio to let it handle everything
 		else
 			user << "<span class='warning'>Unable to locate a radio!</span>"
