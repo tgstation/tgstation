@@ -22,7 +22,7 @@
 
 /obj/item/device/geiger_counter/Destroy()
 	STOP_PROCESSING(SSobj, src)
-	..()
+	return ..()
 
 /obj/item/device/geiger_counter/process()
 	if(emagged)
