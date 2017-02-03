@@ -1,5 +1,4 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
-//Model dictionary trimmed on: 31-01-2017 23:17 (UTC)
 "aaa" = (
 /turf/open/space,
 /area/space)
@@ -73083,7 +73082,6 @@
 	},
 /area/crew_quarters/hor)
 "ctb" = (
-/obj/machinery/computer/aifixer,
 /obj/structure/window/reinforced{
 	dir = 4
 	},
@@ -73095,6 +73093,7 @@
 	pixel_x = 0;
 	pixel_y = 30
 	},
+/obj/machinery/modular_computer/console/preset/research,
 /turf/open/floor/plasteel/cafeteria{
 	dir = 5
 	},
@@ -126198,7 +126197,7 @@ coe
 cpq
 cqJ
 crP
-cta
+cuN
 ctR
 cuN
 cvR
