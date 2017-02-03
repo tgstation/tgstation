@@ -71,5 +71,4 @@
 	update_client_colour()
 	if(client)
 		client.click_intercept = null
-
-	client.view = world.view // Resets the client.view in case it was changed.
+		client.view = world.view // Resets the client.view in case it was changed.
