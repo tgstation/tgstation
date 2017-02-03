@@ -26,12 +26,11 @@
 			valentines |= M
 
 
-	for(var/mob/living/L in valentines)
-		valentines -= L
+	while(valentines.len)
+		var/mob/living/L = pick_n_take(valentines)
 		if(valentines.len)
-			var/mob/living/date = pick(valentines)
+			var/mob/living/date = pick_n_take(valentines)
 
-			valentines -= date
 
 			forge_valentines_objective(L, date)
 
@@ -45,7 +44,6 @@
 			normiesgetout.owner = L.mind
 			ticker.mode.traitors |= L.mind
 			L.mind.objectives += normiesgetout
-
 
 /proc/forge_valentines_objective(mob/living/lover,mob/living/date)
 
