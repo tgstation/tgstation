@@ -922,10 +922,12 @@
 		riding_datum.ridden = src
 	if(buckled_mobs && ((M in buckled_mobs) || (buckled_mobs.len >= max_buckled_mobs)))
 		return
+	if(buckled)	//NO INFINITE STACKING!!
+		return
 	if(M.incapacitated(FALSE, TRUE) || incapacitated(FALSE, TRUE))
 		M.visible_message("<span class='boldwarning'>[M] can't hang onto [src]!</span>")
 		return
-	if(!equip_buckle_inhands(M))
+	if(!equip_buckle_inhands(M))	//MAKE SURE THIS IS LAST!!
 		M.visible_message("<span class='boldwarning'>[M] can't climb onto [src] because [M.p_their()] hands are full!</span>")
 		return
 	. = ..(M, force, check_loc)

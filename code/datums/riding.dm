@@ -319,8 +319,8 @@
 		M.visible_message("<span class='boldwarning'>[M] can't hang onto [ridden] with their hands cuffed!</span>")	//Honestly this should put the ridden mob in a chokehold.
 		ridden.unbuckle_mob(M)
 		return FALSE
-	if(ridden.pulling == M)
-		ridden.stop_pulling()
+	if(H.pulling == M)
+		H.stop_pulling()
 
 /datum/riding/human/handle_vehicle_offsets()
 	for(var/mob/living/M in ridden.buckled_mobs)
