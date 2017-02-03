@@ -108,7 +108,6 @@
 			lip_color = "white"
 		// eyes
 		if(EYECOLOR in S.species_traits)
-			eyes = S.eyes
 			eye_color = H.eye_color
 		else
 			eyes = "eyes"

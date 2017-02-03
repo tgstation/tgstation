@@ -728,3 +728,45 @@
 		if(!T)
 			T = new()
 			T.Insert(src)
+
+
+//Eyes
+
+/obj/item/organ/eyes
+	name = "eyes"
+	desc = "I see you!"
+	zone = "eyes"
+	slot = "eye_sight"
+
+	var/sight_flags = 0
+	var/see_in_dark = 2
+	var/tint = 0
+	var/eye_color = "fff"
+	var/old_eye_color = "fff"
+	var/flash_protect = 0
+	var/see_invisible = SEE_INVISIBLE_LIVING
+
+/obj/item/organ/eyes/Insert(mob/living/carbon/M, special = 0)
+	..()
+	if(ishuman(owner) && eye_color)
+		var/mob/living/carbon/human/HMN = owner
+		old_eye_color = HMN.eye_color
+		HMN.eye_color = eye_color
+		HMN.regenerate_icons()
+	M.update_tint()
+	owner.update_sight()
+
+/obj/item/organ/eyes/Remove(mob/living/carbon/M, special = 0)
+	M.sight ^= sight_flags
+	if(ishuman(M) && eye_color)
+		var/mob/living/carbon/human/HMN = owner
+		HMN.eye_color = old_eye_color
+		HMN.regenerate_icons()
+	M.update_tint()
+	..()
+
+/obj/item/organ/eyes/shadow
+	name = "shadow eyes"
+	desc = "A spooky set of eyes that can see in the dark."
+	see_in_dark = 8
+	see_invisible = SEE_INVISIBLE_MINIMUM
