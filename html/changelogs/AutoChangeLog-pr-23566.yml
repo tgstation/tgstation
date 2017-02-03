@@ -1,0 +1,4 @@
+author: "Cyberboss"
+delete-after: True
+changes: 
+  - tweak: "Firedoors will eventually reseal themselves if left open during a fire alarm"

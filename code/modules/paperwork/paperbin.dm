@@ -9,6 +9,7 @@
 	throw_speed = 3
 	throw_range = 7
 	pressure_resistance = 8
+	var/papertype = /obj/item/weapon/paper
 	var/total_paper = 30
 	var/list/papers = list()
 	var/obj/item/weapon/pen/bin_pen
@@ -88,7 +89,7 @@
 			P = papers[papers.len]
 			papers.Remove(P)
 		else
-			P = new /obj/item/weapon/paper
+			P = new papertype(src)
 			if(SSevent.holidays && SSevent.holidays[APRIL_FOOLS])
 				if(prob(30))
 					P.info = "<font face=\"[CRAYON_FONT]\" color=\"red\"><b>HONK HONK HONK HONK HONK HONK HONK<br>HOOOOOOOOOOOOOOOOOOOOOONK<br>APRIL FOOLS</b></font>"
@@ -133,9 +134,15 @@
 
 /obj/item/weapon/paper_bin/update_icon()
 	if(total_paper < 1)
-		icon_state = "paper_bin0"
+		icon_state = "paper_bin_0"
 	else
-		icon_state = "paper_bin1"
+		icon_state = "[initial(icon_state)]"
 	cut_overlays()
 	if(bin_pen)
 		add_overlay(image(icon=bin_pen.icon,icon_state=bin_pen.icon_state))
+
+/obj/item/weapon/paper_bin/construction
+	name = "construction paper bin"
+	desc = "Contains all the paper you'll never need, IN COLOR!"
+	icon_state = "paper_binc"
+	papertype = /obj/item/weapon/paper/construction

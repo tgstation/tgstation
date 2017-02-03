@@ -1,0 +1,5 @@
+author: "coiax"
+delete-after: True
+changes: 
+  - rscadd: "The Abductor event can now happen at any time, rather than thirty
+(30) minute plus rounds."

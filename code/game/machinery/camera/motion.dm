@@ -35,6 +35,12 @@
 		targets += target
 	return 1
 
+/obj/machinery/camera/Destroy()
+	var/area/ai_monitored/A = get_area(src)
+	if(istype(A))
+		A.motioncameras -= src
+	return ..()
+
 /obj/machinery/camera/proc/lostTarget(mob/target)
 	var/list/targets = getTargetList()
 	if (target in targets)

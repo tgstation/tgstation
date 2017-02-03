@@ -352,6 +352,16 @@
 	update_icon()
 
 /*
+ * Construction paper
+ */
+
+/obj/item/weapon/paper/construction
+
+/obj/item/weapon/paper/construction/New()
+	..()
+	color = pick("FF0000", "#33cc33", "#ffb366", "#551A8B", "#ff80d5", "#4d94ff")
+
+/*
  * Premade paper
  */
 
@@ -393,7 +403,7 @@
 
 /obj/item/weapon/paper/mining
 	name = "paper- Smelting Operations Closed"
-	info = "<B>**NOTICE**</B><BR><BR>Smelting operations moved on-station.<BR><BR>Take your unrefined ore to the Redeption Machine in the Delivery Office to redeem points.<BR><BR>--SS13 Command"
+	info = "<B>**NOTICE**</B><BR><BR>Smelting operations moved on-station.<BR><BR>Take your unrefined ore to the Redemption Machine in the Delivery Office to redeem points.<BR><BR>--SS13 Command"
 
 /obj/item/weapon/paper/crumpled
 	name = "paper scrap"
