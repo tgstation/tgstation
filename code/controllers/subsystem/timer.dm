@@ -294,11 +294,6 @@ proc/addtimer(datum/callback/callback, wait, flags)
 	if (!callback)
 		return
 
-	if (wait <= 0)
-		spawn(0)	//This is the one legal spawn
-			callback.Invoke()
-		return
-
 	var/hash
 
 	if (flags & TIMER_UNIQUE)
