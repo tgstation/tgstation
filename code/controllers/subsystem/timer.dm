@@ -295,7 +295,8 @@ proc/addtimer(datum/callback/callback, wait, flags)
 		return
 
 	if (wait <= 0)
-		callback.InvokeAsync()
+		spawn(0)	//This is the one legal spawn
+			callback.Invoke()
 		return
 
 	var/hash
