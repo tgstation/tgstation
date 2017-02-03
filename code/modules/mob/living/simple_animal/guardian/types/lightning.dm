@@ -59,7 +59,8 @@
 		summonerchain = null
 	if(enemychains.len)
 		for(var/chain in enemychains)
-			if(!chain || qdeleted(chain))
+			var/datum/cd = chain
+			if(!chain || qdeleted(cd))
 				enemychains -= chain
 
 /mob/living/simple_animal/hostile/guardian/beam/proc/shockallchains()

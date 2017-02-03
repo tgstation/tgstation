@@ -203,22 +203,6 @@ var/datum/subsystem/garbage_collector/SSgarbage
 	else if(D.gc_destroyed == GC_CURRENTLY_BEING_QDELETED)
 		CRASH("[D.type] destroy proc was called multiple times, likely due to a qdel loop in the Destroy logic")
 
-// Returns 1 if the object has been queued for deletion.
-/proc/qdeleted(datum/D)
-	if(!istype(D))
-		return FALSE
-	if(D.gc_destroyed)
-		return TRUE
-	return FALSE
-
-// Returns true if the object's destroy has been called (set just before it is called)
-/proc/qdestroying(datum/D)
-	if(!istype(D))
-		return FALSE
-	if(D.gc_destroyed == GC_CURRENTLY_BEING_QDELETED)
-		return TRUE
-	return FALSE
-
 // Default implementation of clean-up code.
 // This should be overridden to remove all references pointing to the object being destroyed.
 // Return the appropriate QDEL_HINT; in most cases this is QDEL_HINT_QUEUE.

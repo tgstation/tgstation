@@ -248,10 +248,10 @@
 	var/list/data = list()
 	data["bodies"] = list()
 	for(var/b in SS.bodies)
-		if(!b || qdeleted(b) || !isslimeperson(b))
+		var/mob/living/carbon/human/body = b
+		if(!body || qdeleted(body) || !isslimeperson(body))
 			SS.bodies -= b
 			continue
-		var/mob/living/carbon/human/body = b
 
 		var/list/L = list()
 		// HTML colors need a # prefix

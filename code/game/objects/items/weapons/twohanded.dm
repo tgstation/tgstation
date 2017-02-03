@@ -169,7 +169,7 @@
 	..()
 	var/slotbit = slotdefine2slotbit(slot)
 	if(slot_flags & slotbit)
-		var/O = user.is_holding_item_of_type(/obj/item/weapon/twohanded/offhand)
+		var/datum/O = user.is_holding_item_of_type(/obj/item/weapon/twohanded/offhand)
 		if(!O || qdeleted(O))
 			return
 		qdel(O)
