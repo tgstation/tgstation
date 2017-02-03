@@ -340,7 +340,10 @@
 				M.pixel_y = 4
 
 /datum/riding/human/handle_vehicle_layer()
-	. = ..()
+	if(ridden.dir != NORTH)
+		ridden.layer = ABOVE_MOB_LAYER
+	else
+		ridden.layer = OBJ_LAYER
 	if(ridden.buckled_mobs && !ridden.buckled_mobs.len)
 		ridden.layer = MOB_LAYER
 
