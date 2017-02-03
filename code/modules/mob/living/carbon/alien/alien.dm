@@ -41,13 +41,13 @@
 
 	create_internal_organs()
 
-	AddAbility(new/obj/effect/proc_holder/alien/nightvisiontoggle(null))
 	..()
 
 /mob/living/carbon/alien/create_internal_organs()
 	internal_organs += new /obj/item/organ/brain/alien
 	internal_organs += new /obj/item/organ/alien/hivenode
 	internal_organs += new /obj/item/organ/tongue/alien
+	internal_organs += new /obj/item/organ/eyes/night_vision/alien
 	..()
 
 /mob/living/carbon/alien/assess_threat() // beepsky won't hunt aliums

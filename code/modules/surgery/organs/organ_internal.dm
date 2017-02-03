@@ -765,8 +765,27 @@
 	M.update_tint()
 	..()
 
-/obj/item/organ/eyes/shadow
+/obj/item/organ/eyes/night_vision
 	name = "shadow eyes"
 	desc = "A spooky set of eyes that can see in the dark."
 	see_in_dark = 8
 	see_invisible = SEE_INVISIBLE_MINIMUM
+	actions_types = list(/datum/action/item_action/organ_action/use)
+	var/night_vision = TRUE
+
+/obj/item/organ/eyes/night_vision/ui_action_click()
+	if(night_vision)
+		see_in_dark = 4
+		see_invisible = SEE_INVISIBLE_LIVING
+		night_vision = FALSE
+	else
+		see_in_dark = 8
+		see_invisible = SEE_INVISIBLE_MINIMUM
+		night_vision = TRUE
+
+/obj/item/organ/eyes/night_vision/alien
+	name = "alien eyes"
+	desc = "It turned out they had them after all!"
+	see_in_dark = 8
+	see_invisible = SEE_INVISIBLE_MINIMUM
+	sight_flags = SEE_MOBS
