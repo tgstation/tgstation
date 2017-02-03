@@ -135,6 +135,8 @@ CREATE TABLE `SS13_death` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `pod` text NOT NULL COMMENT 'Place of death',
   `coord` text NOT NULL COMMENT 'X, Y, Z POD',
+  `mapname` text NOT NULL,
+  `server` text NOT NULL,
   `tod` datetime NOT NULL COMMENT 'Time of death',
   `job` text NOT NULL,
   `special` text NOT NULL,

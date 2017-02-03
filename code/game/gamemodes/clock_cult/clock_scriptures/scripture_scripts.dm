@@ -48,45 +48,25 @@
 	quickbind_desc = "Creates a Cogscarab Shell, which produces a Cogscarab when filled with a Soul Vessel."
 
 
-//Fellowship Armory: Arms the invoker and nearby servants with Ratvarian armor.
-/datum/clockwork_scripture/fellowship_armory
-	descname = "Area Servant Armor"
-	name = "Fellowship Armory"
-	desc = "Equips the invoker and any nearby servants with Ratvarian armor. This armor provides high melee resistance but a weakness to lasers. \
-	It grows faster to invoke with more nearby servants."
-	invocations = list("Shield us...", "...with the...", "... fragments of Engine!")
-	channel_time = 100
-	consumed_components = list(VANGUARD_COGWHEEL = 1, REPLICANT_ALLOY = 1)
-	usage_tip = "Before using, advise adjacent allies to remove their helmets, external suits, gloves, and shoes."
+//Vitality Matrix: Creates a sigil which will drain health from nonservants and can use that health to heal or even revive servants.
+/datum/clockwork_scripture/create_object/vitality_matrix
+	descname = "Trap, Damage to Healing"
+	name = "Vitality Matrix"
+	desc = "Scribes a sigil beneath the invoker which drains life from any living non-Servants that cross it. Servants that cross it, however, will be healed based on how much Vitality all \
+	Matrices have drained from non-Servants. Dead Servants can be revived by this sigil if there is vitality equal to the target Servant's non-oxygen damage."
+	invocations = list("Divinity...", "...steal their life...", "...for these shells!")
+	channel_time = 60
+	consumed_components = list(BELLIGERENT_EYE = 1, VANGUARD_COGWHEEL = 1)
+	whispered = TRUE
+	object_path = /obj/effect/clockwork/sigil/vitality
+	creator_message = "<span class='brass'>A vitality matrix appears below you. It will drain life from non-Servants and heal Servants that cross it.</span>"
+	usage_tip = "The sigil will be consumed upon reviving a Servant."
 	tier = SCRIPTURE_SCRIPT
-	multiple_invokers_used = TRUE
-	multiple_invokers_optional = TRUE
+	one_per_tile = TRUE
 	primary_component = VANGUARD_COGWHEEL
-	sort_priority = 4
+	sort_priority = 3
 	quickbind = TRUE
-	quickbind_desc = "Attempts to armor all nearby Servants with powerful Ratvarian armor."
-
-/datum/clockwork_scripture/fellowship_armory/run_scripture()
-	for(var/mob/living/L in orange(1, get_turf(invoker)))
-		if(is_servant_of_ratvar(L) && L.can_speak_vocal())
-			channel_time = max(channel_time - 10, 0)
-	return ..()
-
-/datum/clockwork_scripture/fellowship_armory/scripture_effects()
-	var/affected = 0
-	for(var/mob/living/L in range(1, invoker))
-		if(!is_servant_of_ratvar(L))
-			continue
-		var/do_message = 0
-		do_message += L.equip_to_slot_or_del(new/obj/item/clothing/head/helmet/clockwork(null), slot_head)
-		do_message += L.equip_to_slot_or_del(new/obj/item/clothing/suit/armor/clockwork(null), slot_wear_suit)
-		do_message += L.equip_to_slot_or_del(new/obj/item/clothing/gloves/clockwork(null), slot_gloves)
-		do_message += L.equip_to_slot_or_del(new/obj/item/clothing/shoes/clockwork(null), slot_shoes)
-		if(do_message)
-			L.visible_message("<span class='warning'>Strange armor appears on [L]!</span>", "<span class='heavy_brass'>A bright shimmer runs down your body, equipping you with Ratvarian armor.</span>")
-			playsound(L, 'sound/magic/clockwork/fellowship_armory.ogg', 15*do_message, 1) //get sound loudness based on how much we equipped
-			affected++
-	return affected
+	quickbind_desc = "Creates a Vitality Matrix, which drains non-Servants on it to heal Servants that cross it."
 
 
 //Sigil of Submission: Creates a sigil of submission, which converts one heretic above it after a delay.
