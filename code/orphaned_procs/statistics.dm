@@ -65,12 +65,12 @@
 	var/sqltime = time2text(world.realtime, "YYYY-MM-DD hh:mm:ss")
 	var/coord = "[L.x], [L.y], [L.z]"
 	var/map = MAP_NAME
-	var/server = "[world.address]:[world.port]"
+	var/server = "[world.internet_address]:[world.port]"
 	establish_db_connection()
 	if(!dbcon.IsConnected())
 		log_game("SQL ERROR during death reporting. Failed to connect.")
 	else
-		var/DBQuery/query = dbcon.NewQuery("INSERT INTO [format_table_name("death")] (name, byondkey, job, special, pod, tod, laname, lakey, gender, bruteloss, fireloss, brainloss, oxyloss, coord, mapname, server) VALUES ('[sqlname]', '[sqlkey]', '[sqljob]', '[sqlspecial]', '[sqlpod]', '[sqltime]', '[laname]', '[lakey]', '[L.gender]', [L.getBruteLoss()], [L.getFireLoss()], [L.brainloss], [L.getOxyLoss()], '[coord]', '[map]', [server]')")
+		var/DBQuery/query = dbcon.NewQuery("INSERT INTO [format_table_name("death")] (name, byondkey, job, special, pod, tod, laname, lakey, gender, bruteloss, fireloss, brainloss, oxyloss, coord, mapname, server) VALUES ('[sqlname]', '[sqlkey]', '[sqljob]', '[sqlspecial]', '[sqlpod]', '[sqltime]', '[laname]', '[lakey]', '[L.gender]', [L.getBruteLoss()], [L.getFireLoss()], [L.brainloss], [L.getOxyLoss()], '[coord]', '[map]', '[server]')")
 		if(!query.Execute())
 			var/err = query.ErrorMsg()
 			log_game("SQL ERROR during death reporting. Error : \[[err]\]\n")
