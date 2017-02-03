@@ -152,7 +152,7 @@ var/global/normal_ooc_colour = OOC_COLOR
 		usr << "<span class='notice'>Sorry, that function is not enabled on this server.</span>"
 		return
 
-	show_note(usr.ckey, null, 1)
+	browse_messages(null, usr.ckey, null, 1)
 
 /client/proc/ignore_key(client)
 	var/client/C = client

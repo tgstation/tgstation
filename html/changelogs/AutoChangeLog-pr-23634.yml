@@ -1,0 +1,5 @@
+author: "coiax"
+delete-after: True
+changes: 
+  - bugfix: "Engraved messages can no longer be moved by a gravitational
+singularity."

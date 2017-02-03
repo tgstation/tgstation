@@ -234,7 +234,7 @@ var/next_external_rsc = 0
 
 	if(holder)
 		add_admin_verbs()
-		admin_memo_output("Show")
+		src << get_message_output("memo")
 		adminGreet()
 		if((global.comms_key == "default_pwd" || length(global.comms_key) <= 6) && global.comms_allowed) //It's the default value or less than 6 characters long, but it somehow didn't disable comms.
 			src << "<span class='danger'>The server's API key is either too short or is the default value! Consider changing it immediately!</span>"
@@ -268,7 +268,7 @@ var/next_external_rsc = 0
 		findJoinDate()
 
 	sync_client_with_db(tdata)
-
+	get_message_output("watchlist entry", ckey)
 	check_ip_intel()
 
 	send_resources()
@@ -292,7 +292,7 @@ var/next_external_rsc = 0
 
 	if(config && config.autoconvert_notes)
 		convert_notes_sql(ckey)
-
+	src << get_message_output("message", ckey)
 	if(!winexists(src, "asset_cache_browser")) // The client is using a custom skin, tell them.
 		src << "<span class='warning'>Unable to access asset cache browser, if you are using a custom skin file, please allow DS to download the updated version, if you are not, then make a bug report. This is not a critical issue but can cause issues with resource downloading, as it is impossible to know when extra resources arrived to you.</span>"
 
@@ -371,12 +371,6 @@ var/next_external_rsc = 0
 	else
 		if (check_randomizer(connectiontopic))
 			return
-
-	var/watchreason = check_watchlist(sql_ckey)
-	if(watchreason)
-		current_watchlist[sql_ckey] = watchreason
-		message_admins("<font color='red'><B>Notice: </B></font><font color='blue'>[key_name_admin(src)] is on the watchlist and has just connected - Reason: [watchreason]</font>")
-		send2irc_adminless_only("Watchlist", "[key_name(src)] is on the watchlist and has just connected - Reason: [watchreason]")
 
 	var/sql_ip = sanitizeSQL(src.address)
 	var/sql_computerid = sanitizeSQL(src.computer_id)
@@ -472,24 +466,24 @@ var/next_external_rsc = 0
 	var/const/adminckey = "CID-Error"
 	var/sql_ckey = sanitizeSQL(ckey)
 	//check to see if we noted them in the last day.
-	var/DBQuery/query_get_notes = dbcon.NewQuery("SELECT id FROM [format_table_name("notes")] WHERE ckey = '[sql_ckey]' AND adminckey = '[adminckey]' AND timestamp + INTERVAL 1 DAY < NOW()")
+	var/DBQuery/query_get_notes = dbcon.NewQuery("SELECT id FROM [format_table_name("messages")] WHERE type = 'note' AND targetckey = '[sql_ckey]' AND adminckey = '[adminckey]' AND timestamp + INTERVAL 1 DAY < NOW()")
 	if(!query_get_notes.Execute())
 		var/err = query_get_notes.ErrorMsg()
-		log_game("SQL ERROR obtaining id from notes table. Error : \[[err]\]\n")
+		log_game("SQL ERROR obtaining id from messages table. Error : \[[err]\]\n")
 		return
 	if (query_get_notes.NextRow())
 		return
 
 	//regardless of above, make sure their last note is not from us, as no point in repeating the same note over and over.
-	query_get_notes = dbcon.NewQuery("SELECT adminckey FROM [format_table_name("notes")] WHERE ckey = '[sql_ckey]' ORDER BY timestamp DESC LIMIT 1")
+	query_get_notes = dbcon.NewQuery("SELECT adminckey FROM [format_table_name("messages")] WHERE targetckey = '[sql_ckey]' ORDER BY timestamp DESC LIMIT 1")
 	if(!query_get_notes.Execute())
 		var/err = query_get_notes.ErrorMsg()
-		log_game("SQL ERROR obtaining id from notes table. Error : \[[err]\]\n")
+		log_game("SQL ERROR obtaining adminckey from notes table. Error : \[[err]\]\n")
 		return
 	if (query_get_notes.NextRow())
 		if (query_get_notes.item[1] == adminckey)
 			return
-	add_note(ckey, "Detected as using a cid randomizer.", null, adminckey, 0, null, 0)
+	create_message("note", sql_ckey, adminckey, "Detected as using a cid randomizer.", null, null, 0, 0)
 
 
 /client/proc/check_ip_intel()
