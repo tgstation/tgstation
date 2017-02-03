@@ -1,0 +1,5 @@
+author: "Jordie0608"
+delete-after: True
+changes: 
+  - tweak: "Admin notes, memos and watchlist entries now use a generalized system, they can all be accessed from the former notes browser."
+  - rscadd: "Added to this are messages, which allow admins to leave a message for players that is delivered to them when they next connect."
