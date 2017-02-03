@@ -294,6 +294,8 @@ proc/addtimer(datum/callback/callback, wait, flags)
 	if (!callback)
 		return
 
+	wait = max(wait, 0)
+
 	var/hash
 
 	if (flags & TIMER_UNIQUE)
