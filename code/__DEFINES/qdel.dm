@@ -14,5 +14,5 @@
 #define GC_QUEUED_FOR_HARD_DEL -2
 #define GC_CURRENTLY_BEING_QDELETED -3
 
-#define QDELETED(X) (istype(X, /datum) && X.gc_destroyed)
-#define QDESTROYING(X) (istype(X, /datum) && X.gc_destroyed == GC_CURRENTLY_BEING_QDELETED)
+#define QDELETED(X) (X && X.gc_destroyed)
+#define QDESTROYING(X) (X && X.gc_destroyed == GC_CURRENTLY_BEING_QDELETED)
