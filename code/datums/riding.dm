@@ -315,10 +315,12 @@
 		M.visible_message("<span class='boldwarning'>[M] falls off of [ridden]!</span>")
 		ridden.unbuckle_mob(M)
 		return FALSE
-	if(M.restrained())
+	if(M.restrained(TRUE))
 		M.visible_message("<span class='boldwarning'>[M] can't hang onto [ridden] with their hands cuffed!</span>")	//Honestly this should put the ridden mob in a chokehold.
 		ridden.unbuckle_mob(M)
 		return FALSE
+	if(ridden.pulling == M)
+		ridden.stop_pulling()
 
 /datum/riding/human/handle_vehicle_offsets()
 	for(var/mob/living/M in ridden.buckled_mobs)
@@ -343,6 +345,6 @@
 		ridden.layer = MOB_LAYER
 
 /datum/riding/human/proc/force_dismount(mob/living/user)
-	user.Weaken(2)
+	user.Weaken(3)
 	ridden.unbuckle_mob(user)
 	user.visible_message("<span class='boldwarning'>[ridden] pushes [user] off of them!</span>")

@@ -909,7 +909,7 @@
 	if((target != pulling) || (grab_state < GRAB_AGGRESSIVE) || (user != target))	//Get consent first :^)
 		. = ..()
 		return
-	buckle_mob(target, FALSE, TRUE, FALSE)
+	buckle_mob(target, FALSE, TRUE, TRUE)
 	. = ..()
 
 /mob/living/carbon/human/buckle_mob(mob/living/M, force = FALSE, check_loc = TRUE, yes = FALSE)
