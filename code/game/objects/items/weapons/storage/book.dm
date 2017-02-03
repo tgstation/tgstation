@@ -56,7 +56,6 @@ var/global/list/bibleitemstates = list("bible", "koran", "scrapbook", "bible",  
 
 		if(B.icon_state == "honk1" || B.icon_state == "honk2")
 			var/mob/living/carbon/human/H = usr
-			new /obj/item/weapon/bikehorn(B)
 			H.dna.add_mutation(CLOWNMUT)
 			H.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/clown_hat(H), slot_wear_mask)
 
