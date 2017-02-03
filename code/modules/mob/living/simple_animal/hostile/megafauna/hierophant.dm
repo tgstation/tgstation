@@ -80,7 +80,7 @@ Difficulty: Hard
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/Life()
 	. = ..()
-	if(. && spawned_beacon && !qdeleted(spawned_beacon) && !client)
+	if(. && spawned_beacon && !QDELETED(spawned_beacon) && !client)
 		if(target || loc == spawned_beacon.loc)
 			timeout_time = initial(timeout_time)
 		else
@@ -500,7 +500,7 @@ Difficulty: Hard
 	if(!currently_seeking)
 		currently_seeking = TRUE
 		targetturf = get_turf(target)
-		while(target && src && !qdeleted(src) && currently_seeking && x && y && targetturf) //can this target actually be sook out
+		while(target && src && !QDELETED(src) && currently_seeking && x && y && targetturf) //can this target actually be sook out
 			if(!moving) //we're out of tiles to move, find more and where the target is!
 				more_previouser_moving_dir = previous_moving_dir
 				previous_moving_dir = moving_dir

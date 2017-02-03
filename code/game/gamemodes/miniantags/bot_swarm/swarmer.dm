@@ -40,7 +40,7 @@
 	if(crit_fail)
 		user << "Swarmer has been depowered."
 		return
-	if(qdeleted(src))
+	if(QDELETED(src))
 		user << "Swarmer has been occupied by someone else."
 		return
 	var/mob/living/simple_animal/hostile/swarmer/S = new /mob/living/simple_animal/hostile/swarmer(get_turf(loc))

@@ -74,7 +74,7 @@
 		user << "<span class='warning'>The panel must be closed before operating this machine!</span>"
 		return
 
-	if(!linked_pad || qdeleted(linked_pad))
+	if(!linked_pad || QDELETED(linked_pad))
 		user << "<span class='warning'>There is no linked pad!</span>"
 		return
 
@@ -112,14 +112,14 @@
 		teleporting = 1
 
 		spawn(teleport_speed)
-			if(!src || qdeleted(src))
+			if(!src || QDELETED(src))
 				teleporting = 0
 				return
 			if(stat & NOPOWER)
 				user << "<span class='warning'>[src] is unpowered!</span>"
 				teleporting = 0
 				return
-			if(!linked_pad || qdeleted(linked_pad) || linked_pad.stat & NOPOWER)
+			if(!linked_pad || QDELETED(linked_pad) || linked_pad.stat & NOPOWER)
 				user << "<span class='warning'>Linked pad is not responding to ping. Teleport aborted.</span>"
 				teleporting = 0
 				return

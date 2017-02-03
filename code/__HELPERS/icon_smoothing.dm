@@ -112,7 +112,7 @@
 /proc/smooth_icon(atom/A)
 	if(!A || !A.smooth || !A.z)
 		return
-	if(qdeleted(A))
+	if(QDELETED(A))
 		return
 	if((A.smooth & SMOOTH_TRUE) || (A.smooth & SMOOTH_MORE))
 		var/adjacencies = calculate_adjacencies(A)

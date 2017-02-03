@@ -144,7 +144,7 @@ var/list/total_extraction_beacons = list()
 	icon_state = "subspace_amplifier"
 
 /obj/item/fulton_core/attack_self(mob/user)
-	if(do_after(user,15,target = user) && !qdeleted(src))
+	if(do_after(user,15,target = user) && !QDELETED(src))
 		new /obj/structure/extraction_point(get_turf(user))
 		qdel(src)
 

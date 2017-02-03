@@ -293,7 +293,7 @@ var/datum/subsystem/garbage_collector/SSgarbage
 	if(!running_find_references)
 		find_references(TRUE)
 
-/client/verb/show_qdeleted()
+/client/verb/show_QDELETED()
 	set category = "Debug"
 	set name = "Show qdel() Log"
 	set desc = "Render the qdel() log and display it"
@@ -309,5 +309,5 @@ var/datum/subsystem/garbage_collector/SSgarbage
 	for(var/path in tmplist)
 		dat += "[path] - [tmplist[path]] times<BR>"
 
-	usr << browse(dat, "window=qdeletedlog")
+	usr << browse(dat, "window=QDELETEDlog")
 #endif

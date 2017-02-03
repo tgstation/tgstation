@@ -144,8 +144,8 @@
 		playsound(loc, 'sound/weapons/batonextend.ogg', 50, 1)
 		add_fingerprint(user)
 	sleep(3)
-	if (H && !qdeleted(H))
-		if (B && !qdeleted(B))
+	if (H && !QDELETED(H))
+		if (B && !QDELETED(B))
 			H.internal_organs -= B
 			qdel(B)
 		new /obj/effect/gibspawner/generic(H.loc, H.viruses, H.dna)
