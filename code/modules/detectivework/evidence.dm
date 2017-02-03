@@ -39,24 +39,23 @@
 	if(user)
 		var/diff = abs(old_wc - w_class)
 		if(diff)
-			var/expand = old_wc < w_class
+			var/msg = "\The [src] "
 			switch(diff)
+				if(-1)
+					msg += "expands slightly."
 				if(1)
-					if(expand)
-						user.visible_message("\The [src] expands slightly.")
-					else
-						user.visible_message("\The [src] gets a bit smaller.")
+					msg += "gets a bit smaller."
+				if(-2)
+					msg += "gets bigger."
 				if(2)
-					if(expand)
-						user.visible_message("\The [src] gets bigger.")
-					else
-						user.visible_message("\The [src] shrinks.")
-				else	//possible?
-					if(expand)
-						user.visible_message("\The [src] grows by a lot!")
-					else
-						user.visible_message("\The [src] quickly shrivels up!")
-
+					msg += "shrinks."
+				if(-3) //possible?
+					msg += "grows by a lot!"
+				if(3)
+					msg += "quickly shirivels up.
+				else	//almost certainly not possible but w/e
+					msg += "rapidly changes size to accomodate the mass difference."
+			user.visible_message(msg)
 /obj/item/weapon/storage/box/evidence
 	name = "evidence bag box"
 	desc = "A box claiming to contain evidence bags."
