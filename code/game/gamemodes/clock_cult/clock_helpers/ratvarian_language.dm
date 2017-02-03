@@ -67,18 +67,12 @@ List of nuances:
 
 
 /proc/text2ratvar(text) //Takes english and applies ratvarian styling rules (and rot13) to it.
+	var/ratvarian = add_ratvarian_regex(text) //run the regexes twice, so that you catch people translating it beforehand
+	ratvarian = rot13(ratvarian)
+	return add_ratvarian_regex(ratvarian)
+
+/proc/add_ratvarian_regex(text)
 	var/ratvarian 	= replacetext(text, 		RATVAR_OF_MATCH, 		RATVAR_OF_REPLACEMENT)
-	ratvarian 		= replacetext(ratvarian,	RATVAR_GUA_MATCH, 		RATVAR_GUA_REPLACEMENT)
-	ratvarian 		= replacetext(ratvarian,	RATVAR_TH_MATCH, 		RATVAR_TH_REPLACEMENT)
-	ratvarian 		= replacetext(ratvarian,	RATVAR_TI_MATCH, 		RATVAR_TI_REPLACEMENT)
-	ratvarian 		= replacetext(ratvarian, 	RATVAR_ET_MATCH, 		RATVAR_ET_REPLACEMENT)
-	ratvarian 		= replacetext(ratvarian, 	RATVAR_TE_MATCH, 		RATVAR_TE_REPLACEMENT)
-	ratvarian 		= replacetext(ratvarian, 	RATVAR_PRE_AND_MATCH,	RATVAR_PRE_AND_REPLACEMENT)
-	ratvarian 		= replacetext(ratvarian, 	RATVAR_POST_AND_MATCH,	RATVAR_POST_AND_REPLACEMENT)
-	ratvarian 		= replacetext(ratvarian, 	RATVAR_TO_MATCH, 		RATVAR_TO_REPLACEMENT)
-	ratvarian 		= replacetext(ratvarian, 	RATVAR_MY_MATCH, 		RATVAR_MY_REPLACEMENT)
-	ratvarian 		= rot13(ratvarian) //run the regexes twice, so that you catch people translating it beforehand
-	ratvarian 		= replacetext(ratvarian, 	RATVAR_OF_MATCH, 		RATVAR_OF_REPLACEMENT)
 	ratvarian 		= replacetext(ratvarian,	RATVAR_GUA_MATCH, 		RATVAR_GUA_REPLACEMENT)
 	ratvarian 		= replacetext(ratvarian,	RATVAR_TH_MATCH, 		RATVAR_TH_REPLACEMENT)
 	ratvarian 		= replacetext(ratvarian,	RATVAR_TI_MATCH, 		RATVAR_TI_REPLACEMENT)
@@ -90,15 +84,12 @@ List of nuances:
 	return replacetext(ratvarian, 				RATVAR_MY_MATCH, 		RATVAR_MY_REPLACEMENT)
 
 /proc/ratvar2text(ratvarian) //Reverts ravarian styling and rot13 in text.
-	var/text 	= replacetext(ratvarian, 			REVERSE_RATVAR_HYPHEN_GUA_MATCH,	 		REVERSE_RATVAR_HYPHEN_GUA_REPLACEMENT)
-	text 		= replacetext(text, 			REVERSE_RATVAR_HYPHEN_PRE_AND_MATCH,	 	REVERSE_RATVAR_HYPHEN_PRE_AND_REPLACEMENT)
-	text 		= replacetext(text, 			REVERSE_RATVAR_HYPHEN_POST_AND_MATCH,	 	REVERSE_RATVAR_HYPHEN_POST_AND_REPLACEMENT)
-	text 		= replacetext(text, 			REVERSE_RATVAR_HYPHEN_TO_MY_MATCH,			REVERSE_RATVAR_HYPHEN_TO_MY_REPLACEMENT)
-	text 		= replacetext(text, 			REVERSE_RATVAR_HYPHEN_TE_MATCH,				REVERSE_RATVAR_HYPHEN_TE_REPLACEMENT)
-	text 		= replacetext(text, 			REVERSE_RATVAR_HYPHEN_ET_MATCH,				REVERSE_RATVAR_HYPHEN_ET_REPLACEMENT)
-	text 		= replacetext(text, 			REVERSE_RATVAR_HYPHEN_OF_MATCH,				REVERSE_RATVAR_HYPHEN_OF_REPLACEMENT)
-	text 		= replacetext(rot13(text), 		"`",								 		"") //run the regexes twice, so that you catch people translating it beforehand
-	text 		= replacetext(text, 			REVERSE_RATVAR_HYPHEN_GUA_MATCH,	 		REVERSE_RATVAR_HYPHEN_GUA_REPLACEMENT)
+	var/text = remove_ratvarian_regex(ratvarian) //run the regexes twice, so that you catch people translating it beforehand
+	text = replacetext(rot13(text), "`", "")
+	return remove_ratvarian_regex(text)
+
+/proc/remove_ratvarian_regex(ratvarian)
+	var/text 	= replacetext(ratvarian, 		REVERSE_RATVAR_HYPHEN_GUA_MATCH,	 		REVERSE_RATVAR_HYPHEN_GUA_REPLACEMENT)
 	text 		= replacetext(text, 			REVERSE_RATVAR_HYPHEN_PRE_AND_MATCH,	 	REVERSE_RATVAR_HYPHEN_PRE_AND_REPLACEMENT)
 	text 		= replacetext(text, 			REVERSE_RATVAR_HYPHEN_POST_AND_MATCH,	 	REVERSE_RATVAR_HYPHEN_POST_AND_REPLACEMENT)
 	text 		= replacetext(text, 			REVERSE_RATVAR_HYPHEN_TO_MY_MATCH,			REVERSE_RATVAR_HYPHEN_TO_MY_REPLACEMENT)
