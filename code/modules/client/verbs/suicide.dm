@@ -4,7 +4,10 @@
 	set hidden = 1
 	if(!canSuicide())
 		return
+	var/oldkey = ckey
 	var/confirm = alert("Are you sure you want to commit suicide?", "Confirm Suicide", "Yes", "No")
+	if(ckey != oldkey)
+		return
 	if(!canSuicide())
 		return
 	if(confirm == "Yes")
