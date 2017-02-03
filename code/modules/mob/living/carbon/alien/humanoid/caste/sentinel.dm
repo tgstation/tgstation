@@ -3,7 +3,7 @@
 	caste = "s"
 	maxHealth = 150
 	health = 150
-	icon_state = "aliens_s"
+	icon_state = "aliens"
 
 
 /mob/living/carbon/alien/humanoid/sentinel/New()

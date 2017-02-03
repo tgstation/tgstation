@@ -1,0 +1,5 @@
+author: "Tofa01"
+delete-after: True
+changes: 
+  - rscadd: "[Delta] Removes space money from gold crate replaces with 3 Gold Bars Gold Wrestling belt is still there."
+  - rscadd: "[Delta] Removes space money from silver crate replaces with 5 Silver Coins."

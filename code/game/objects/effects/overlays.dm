@@ -317,7 +317,7 @@
 	duration = 5
 	icon_state = "volt_hit"
 	var/mob/user
-	var/damage = 25
+	var/damage = 20
 
 /obj/effect/overlay/temp/ratvar/volt_hit/New(loc, caster, multiplier)
 	if(multiplier)
@@ -333,7 +333,7 @@
 		var/matrix/M = new
 		M.Turn(Get_Angle(src, user))
 		transform = M
-	addtimer(CALLBACK(src, .proc/volthit), 0)
+	INVOKE_ASYNC(src, .proc/volthit)
 
 /obj/effect/overlay/temp/ratvar/volt_hit/proc/volthit()
 	if(user)
@@ -550,6 +550,10 @@
 /obj/effect/overlay/temp/impact_effect/red_laser
 	icon_state = "impact_laser"
 	duration = 4
+
+/obj/effect/overlay/temp/impact_effect/red_laser/wall
+	icon_state = "impact_laser_wall"
+	duration = 10
 
 /obj/effect/overlay/temp/impact_effect/blue_laser
 	icon_state = "impact_laser_blue"

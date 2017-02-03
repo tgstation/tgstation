@@ -275,8 +275,9 @@ Proc for attack log creation, because really why not
 			break
 
 		if(Tloc && (!target || Tloc != target.loc))
-			. = 0
-			break
+			if((Uloc != Tloc || Tloc != user) && !drifting)
+				. = 0
+				break
 
 		if(needhand)
 			//This might seem like an odd check, but you can still need a hand even when it's empty

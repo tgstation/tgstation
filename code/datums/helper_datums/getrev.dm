@@ -68,17 +68,17 @@ var/global/datum/getrev/revdata = new()
 					continue
 				probs[ctag] = 1
 				prob_sum += config.probabilities[ctag]
-			for(var/i in 1 to config.probabilities.len)
-				if(config.probabilities[i] > 0 && (i in probs))
-					var/percentage = round(config.probabilities[i] / prob_sum * 100, 0.1)
-					src << "[i] [percentage]%"
+			for(var/ctag in probs)
+				if(config.probabilities[ctag] > 0)
+					var/percentage = round(config.probabilities[ctag] / prob_sum * 100, 0.1)
+					src << "[ctag] [percentage]%"
 		
 		src <<"<b>All Game Mode Odds:</b>"
 		var/sum = 0
-		for(var/i in 1 to config.probabilities.len)
-			sum += config.probabilities[i]
-		for(var/i in 1 to config.probabilities.len)
-			if(config.probabilities[i] > 0)
-				var/percentage = round(config.probabilities[i] / sum * 100, 0.1)
-				src << "[i] [percentage]%"
+		for(var/ctag in config.probabilities)
+			sum += config.probabilities[ctag]
+		for(var/ctag in config.probabilities)
+			if(config.probabilities[ctag] > 0)
+				var/percentage = round(config.probabilities[ctag] / sum * 100, 0.1)
+				src << "[ctag] [percentage]%"
 	return

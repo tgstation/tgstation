@@ -85,7 +85,7 @@
 	update_limb(1)
 	C.bodyparts -= src
 	if(held_index)
-		C.unEquip(owner.get_item_for_held_index(held_index), 1)
+		C.dropItemToGround(owner.get_item_for_held_index(held_index), 1)
 		C.hand_bodyparts[held_index] = null
 
 	owner = null
@@ -134,6 +134,7 @@
 	if(C.mind && C.mind.changeling)
 		LB.brain = new //changeling doesn't lose its real brain organ, we drop a decoy.
 		LB.brain.loc = LB
+		LB.brain.decoy_override = TRUE
 	else			//if not a changeling, we put the brain organ inside the dropped head
 		Remove(C)	//and put the player in control of the brainmob
 		loc = LB
@@ -162,7 +163,7 @@
 			if(R)
 				R.update_icon()
 		if(C.gloves)
-			C.unEquip(C.gloves, 1)
+			C.dropItemToGround(C.gloves, TRUE)
 		C.update_inv_gloves() //to remove the bloody hands overlay
 
 
@@ -180,32 +181,30 @@
 			if(L)
 				L.update_icon()
 		if(C.gloves)
-			C.unEquip(C.gloves, 1)
+			C.dropItemToGround(C.gloves, TRUE)
 		C.update_inv_gloves() //to remove the bloody hands overlay
 
 
 /obj/item/bodypart/r_leg/drop_limb(special)
 	if(owner && !special)
-		owner.Weaken(2)
 		if(owner.legcuffed)
 			owner.legcuffed.loc = owner.loc
 			owner.legcuffed.dropped(owner)
 			owner.legcuffed = null
 			owner.update_inv_legcuffed()
 		if(owner.shoes)
-			owner.unEquip(owner.shoes, 1)
+			owner.dropItemToGround(owner.shoes, TRUE)
 	..()
 
 /obj/item/bodypart/l_leg/drop_limb(special) //copypasta
 	if(owner && !special)
-		owner.Weaken(2)
 		if(owner.legcuffed)
 			owner.legcuffed.loc = owner.loc
 			owner.legcuffed.dropped(owner)
 			owner.legcuffed = null
 			owner.update_inv_legcuffed()
 		if(owner.shoes)
-			owner.unEquip(owner.shoes, 1)
+			owner.dropItemToGround(owner.shoes, TRUE)
 	..()
 
 /obj/item/bodypart/head/drop_limb(special)
@@ -213,7 +212,7 @@
 		//Drop all worn head items
 		for(var/X in list(owner.glasses, owner.ears, owner.wear_mask, owner.head))
 			var/obj/item/I = X
-			owner.unEquip(I, 1)
+			owner.dropItemToGround(I, TRUE)
 	name = "[owner.real_name]'s head"
 	..()
 

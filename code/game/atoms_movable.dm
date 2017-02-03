@@ -139,21 +139,29 @@
 	if(destination)
 		if(pulledby)
 			pulledby.stop_pulling()
+
 		var/atom/oldloc = loc
-		var/same_loc = oldloc == destination.loc
-		if(oldloc && !same_loc)
-			oldloc.Exited(src, destination)
-		loc = destination
-		if(!same_loc)
-			destination.Entered(src, oldloc)
+		var/same_loc = oldloc == destination
 		var/area/old_area = get_area(oldloc)
 		var/area/destarea = get_area(destination)
-		if(old_area != destarea)
-			destarea.Entered(src)
+
+		if(oldloc && !same_loc)
+			oldloc.Exited(src, destination)
+			if(old_area)
+				old_area.Exited(src, destination)
+
+		loc = destination
+
+		if(!same_loc)
+			destination.Entered(src, oldloc)
+			if(destarea && old_area != destarea)
+				destarea.Entered(src, oldloc)
+
 		for(var/atom/movable/AM in destination)
 			if(AM == src)
 				continue
 			AM.Crossed(src)
+
 		Moved(oldloc, 0)
 		return 1
 	return 0
@@ -291,7 +299,7 @@
 		SpinAnimation(5, 1)
 
 	SSthrowing.processing[src] = TT
-	if (SSthrowing.paused && length(SSthrowing.currentrun))
+	if (SSthrowing.state == SS_PAUSED && length(SSthrowing.currentrun))
 		SSthrowing.currentrun[src] = TT
 	TT.tick()
 

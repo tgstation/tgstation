@@ -43,19 +43,12 @@
 							"<span class='userdanger'>[user] forces [M] to [apply_method] [src].</span>")
 
 
-	user.unEquip(src) //icon update
 	add_logs(user, M, "fed", reagentlist(src))
-	loc = M //Put the pill inside the mob. This fixes the issue where the pill appears to drop to the ground after someone eats it.
-
 	if(reagents.total_volume)
 		reagents.reaction(M, apply_type)
 		reagents.trans_to(M, reagents.total_volume)
-		qdel(src)
-		return 1
-	else
-		qdel(src)
-		return 1
-	return 0
+	qdel(src)
+	return 1
 
 
 /obj/item/weapon/reagent_containers/pill/afterattack(obj/target, mob/user , proximity)

@@ -59,19 +59,19 @@ STI KALY - blind
 		var/mob/living/carbon/human/H = affected_mob
 		if(prob(chance))
 			if(!istype(H.head, /obj/item/clothing/head/wizard))
-				if(!H.unEquip(H.head))
+				if(!H.dropItemToGround(H.head))
 					qdel(H.head)
 				H.equip_to_slot_or_del(new /obj/item/clothing/head/wizard(H), slot_head)
 			return
 		if(prob(chance))
 			if(!istype(H.wear_suit, /obj/item/clothing/suit/wizrobe))
-				if(!H.unEquip(H.wear_suit))
+				if(!H.dropItemToGround(H.wear_suit))
 					qdel(H.wear_suit)
 				H.equip_to_slot_or_del(new /obj/item/clothing/suit/wizrobe(H), slot_wear_suit)
 			return
 		if(prob(chance))
 			if(!istype(H.shoes, /obj/item/clothing/shoes/sandal/magic))
-				if(!H.unEquip(H.shoes))
+				if(!H.dropItemToGround(H.shoes))
 					qdel(H.shoes)
 			H.equip_to_slot_or_del(new /obj/item/clothing/shoes/sandal/magic(H), slot_shoes)
 			return

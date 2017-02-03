@@ -177,8 +177,8 @@
 /obj/structure/alien/weeds/node/New()
 	icon = 'icons/obj/smooth_structures/alien/weednode.dmi'
 	..()
-	var/obj/structure/alien/weeds/W = locate(/obj/structure/alien/weeds)
-	if(W)
+	var/obj/structure/alien/weeds/W = locate(/obj/structure/alien/weeds) in loc
+	if(W && W != src)
 		qdel(W)
 	START_PROCESSING(SSobj, src)
 
@@ -284,7 +284,7 @@
 /obj/structure/alien/egg/Moved(oldloc)
 	remove_from_proximity_list(oldloc, 1)
 	if(status == GROWN)
-		add_to_proximity_list(src, 1)	
+		add_to_proximity_list(src, 1)
 	return ..()
 
 /obj/structure/alien/egg/deconstruct()

@@ -54,7 +54,7 @@
 		for(var/datum/spacevine_mutation/SM in mutations)
 			if(SM.quality == NEGATIVE)
 				temp_mut_list += SM
-		if(prob(20))
+		if(prob(20) && temp_mut_list.len)
 			mutations.Remove(pick(temp_mut_list))
 		temp_mut_list.Cut()
 
@@ -62,7 +62,7 @@
 		for(var/datum/spacevine_mutation/SM in mutations)
 			if(SM.quality == POSITIVE)
 				temp_mut_list += SM
-		if(prob(20))
+		if(prob(20) && temp_mut_list.len)
 			mutations.Remove(pick(temp_mut_list))
 		temp_mut_list.Cut()
 
@@ -70,21 +70,21 @@
 		for(var/datum/spacevine_mutation/SM in mutations)
 			if(SM.quality == MINOR_NEGATIVE)
 				temp_mut_list += SM
-		if(prob(20))
+		if(prob(20) && temp_mut_list.len)
 			mutations.Remove(pick(temp_mut_list))
 		temp_mut_list.Cut()
 
 	if(S.has_reagent("blood", 15))
-		production = Clamp(production + rand(15, -5),1,10)
+		adjust_production(rand(15, -5))
 
 	if(S.has_reagent("amatoxin", 5))
-		production = Clamp(production + rand(5, -15),1,10)
+		adjust_production(rand(5, -15))
 
 	if(S.has_reagent("plasma", 5))
-		potency = Clamp(potency + rand(5, -15),0,100)
+		adjust_potency(rand(5, -15))
 
 	if(S.has_reagent("holywater", 10))
-		potency = Clamp(potency + rand(15, -5),0,100)
+		adjust_potency(rand(15, -5))
 
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/kudzupod

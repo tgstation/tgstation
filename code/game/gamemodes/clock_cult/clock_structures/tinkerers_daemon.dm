@@ -92,7 +92,7 @@
 				for(var/mob/living/L in living_mob_list)
 					if(is_servant_of_ratvar(L))
 						servants++
-				if(!is_servant_of_ratvar(user) || !user.canUseTopic(src, !issilicon(user)) || active || !clockwork_caches || servants * 0.2 < clockwork_daemons)
+				if(!is_servant_of_ratvar(user) || !user.canUseTopic(src, !issilicon(user), NO_DEXTERY) || active || !clockwork_caches || servants * 0.2 < clockwork_daemons)
 					return
 				if(!component_id_to_produce)
 					user << "<span class='warning'>You decide not to select a component and activate the daemon.</span>"

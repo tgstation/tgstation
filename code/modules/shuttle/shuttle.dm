@@ -345,6 +345,8 @@
 	mode = SHUTTLE_RECALL
 
 /obj/docking_port/mobile/proc/enterTransit()
+	if(SSshuttle.lockdown && z == ZLEVEL_STATION)	//emp went off, no escape
+		return
 	previous = null
 //		if(!destination)
 //			return
