@@ -152,9 +152,12 @@ var/list/blacklisted_tesla_types = typecacheof(list(/obj/machinery/atmospherics,
 
 
 /obj/singularity/energy_ball/proc/dust_mobs(atom/A)
-	if(istype(A, /mob/living/carbon))
-		var/mob/living/carbon/C = A
-		C.dust()
+	if(!iscarbon(A))
+		return
+	for(var/obj/machinery/power/grounding_rod/GR in orange(src, 2))
+		return
+	var/mob/living/carbon/C = A
+	C.dust()
 
 /proc/tesla_zap(atom/source, zap_range = 3, power, explosive = FALSE)
 	. = source.dir
