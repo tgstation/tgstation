@@ -28,7 +28,7 @@ var/datum/subsystem/mobs/SSmob
 	while(currentrun.len)
 		var/mob/M = currentrun[currentrun.len]
 		currentrun.len--
-		if(M)
+		if(M & !qdeleted(M))
 			M.Life(seconds)
 		else
 			mob_list.Remove(M)

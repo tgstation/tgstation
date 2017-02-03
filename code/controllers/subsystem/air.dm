@@ -142,7 +142,7 @@ var/datum/subsystem/air/SSair
 	while(currentrun.len)
 		var/datum/thing = currentrun[currentrun.len]
 		currentrun.len--
-		if(thing)
+		if(thing && !qdeleted(thing))
 			thing.process()
 		else
 			networks.Remove(thing)
@@ -159,7 +159,7 @@ var/datum/subsystem/air/SSair
 	while(currentrun.len)
 		var/obj/machinery/M = currentrun[currentrun.len]
 		currentrun.len--
-		if(!M || (M.process_atmos(seconds) == PROCESS_KILL))
+		if(!M || qdeleted(M) || (M.process_atmos(seconds) == PROCESS_KILL))
 			atmos_machinery.Remove(M)
 		if(MC_TICK_CHECK)
 			return
@@ -185,7 +185,7 @@ var/datum/subsystem/air/SSair
 	while(currentrun.len)
 		var/obj/effect/hotspot/H = currentrun[currentrun.len]
 		currentrun.len--
-		if (H)
+		if (H && !qdeleted(H))
 			H.process()
 		else
 			hotspots -= H

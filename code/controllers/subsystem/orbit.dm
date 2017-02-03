@@ -27,7 +27,7 @@ var/datum/subsystem/orbit/SSorbit
 	while (currentrun.len)
 		var/datum/orbit/O = currentrun[currentrun.len]
 		currentrun.len--
-		if (!O)
+		if (!O || qdeleted(O))
 			processing -= O
 			if (MC_TICK_CHECK)
 				return

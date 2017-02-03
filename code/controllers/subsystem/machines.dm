@@ -47,7 +47,7 @@ var/datum/subsystem/machines/SSmachine
 	while(currentrun.len)
 		var/datum/thing = currentrun[currentrun.len]
 		currentrun.len--
-		if(thing && thing.process(seconds) != PROCESS_KILL)
+		if(thing && !qdeleted(thing) && thing.process(seconds) != PROCESS_KILL)
 			if(thing:use_power)
 				thing:auto_use_power() //add back the power state
 		else

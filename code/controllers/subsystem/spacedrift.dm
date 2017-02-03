@@ -27,7 +27,7 @@ var/datum/subsystem/spacedrift/SSspacedrift
 	while (currentrun.len)
 		var/atom/movable/AM = currentrun[currentrun.len]
 		currentrun.len--
-		if (!AM)
+		if (!AM || qdeleted(AM))
 			processing -= AM
 			if (MC_TICK_CHECK)
 				return

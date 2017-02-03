@@ -33,7 +33,7 @@ var/datum/subsystem/tgui/SStgui
 	while(currentrun.len)
 		var/datum/tgui/ui = currentrun[currentrun.len]
 		currentrun.len--
-		if(ui && ui.user && ui.src_object)
+		if(ui && !qdeleted(ui) && ui.user && ui.src_object)
 			ui.process()
 		else
 			processing_uis.Remove(ui)

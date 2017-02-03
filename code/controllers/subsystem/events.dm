@@ -42,7 +42,7 @@ var/datum/subsystem/events/SSevent
 	while(currentrun.len)
 		var/datum/thing = currentrun[currentrun.len]
 		currentrun.len--
-		if(thing)
+		if(thing && !qdeleted(thing))
 			thing.process()
 		else
 			running.Remove(thing)

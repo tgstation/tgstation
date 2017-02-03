@@ -21,7 +21,7 @@ var/datum/subsystem/parallax/SSparallax
 	while(length(currentrun))
 		var/client/C = currentrun[currentrun.len]
 		currentrun.len--
-		if (!C || !C.eye)
+		if (!C || qdeleted(C) || !C.eye)
 			if (MC_TICK_CHECK)
 				return
 			continue
