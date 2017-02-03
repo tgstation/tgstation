@@ -37,7 +37,7 @@
 		if(istype(I))
 			w_class = max(w_class, I.w_class + 1)
 	if(user)
-		var/diff = abs(old_wc - w_class)
+		var/diff = old_wc - w_class
 		if(diff)
 			var/msg = "\The [src] "
 			switch(diff)
