@@ -260,15 +260,18 @@
 /datum/reagent/medicine/salglu_solution
 	name = "Saline-Glucose Solution"
 	id = "salglu_solution"
-	description = "Has a 30% chance per metabolism cycle to heal brute and burn damage. Can be used as a blood substitute on an IV drip."
+	description = "Has a 33% chance per metabolism cycle to heal brute and burn damage. Can be used as a blood substitute on an IV drip."
 	reagent_state = LIQUID
 	color = "#DCDCDC"
-	metabolization_rate = 0.75 * REAGENTS_METABOLISM
+	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 
 /datum/reagent/medicine/salglu_solution/on_mob_life(mob/living/M)
-	if(prob(30))
+	if(prob(33))
 		M.adjustBruteLoss(-0.5*REM, 0)
 		M.adjustFireLoss(-0.5*REM, 0)
+		if(iscarbon(M))
+			var/mob/living/carbon/C = M
+			C.blood_volume += 0.2
 		. = 1
 	..()
 
