@@ -345,6 +345,7 @@
 		ridden.layer = MOB_LAYER
 
 /datum/riding/human/proc/force_dismount(mob/living/user)
-	user.Weaken(3)
 	ridden.unbuckle_mob(user)
+	user.Weaken(3)
+	user.Stun(3)
 	user.visible_message("<span class='boldwarning'>[ridden] pushes [user] off of them!</span>")
