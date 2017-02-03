@@ -155,7 +155,8 @@ var/list/blacklisted_tesla_types = typecacheof(list(/obj/machinery/atmospherics,
 	if(!iscarbon(A))
 		return
 	for(var/obj/machinery/power/grounding_rod/GR in orange(src, 2))
-		return
+		if(GR.anchored)
+			return
 	var/mob/living/carbon/C = A
 	C.dust()
 
