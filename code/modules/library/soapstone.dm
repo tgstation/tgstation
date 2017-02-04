@@ -58,7 +58,7 @@
 	if(already_message)
 		our_message = already_message.creator_key == user.ckey
 
-	if(!remaining_uses && !our_message)
+	if(!remaining_uses && !already_message)
 		// The dull chisel is dull.
 		user << "<span class='warning'>[src] is [w_dull].</span>"
 		return
@@ -73,15 +73,13 @@
 
 		// Removing our own messages refunds a charge
 
-		if((our_message || can_use()) && do_after(user, tool_speed, target=target) && (our_message || can_use()))
+		if(do_after(user, tool_speed, target=target))
 			user.visible_message("<span class='notice'>[user] has erased [already_message].</span>", "<span class='notice'>You erased [already_message].</span>")
 			already_message.persists = FALSE
 			qdel(already_message)
 			playsound(loc, 'sound/items/gavel.ogg', 50, 1, -1)
 			if(our_message)
 				refund_use()
-			else
-				remove_use()
 		return
 
 	var/message = stripped_input(user, "What would you like to [w_engrave]?", "[name] Message")
