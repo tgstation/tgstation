@@ -410,15 +410,23 @@
 //call_function:	<function name> ['(' [arguments] ')']
 	call_function(i, list/node, list/arguments)
 		if(length(tokenl(i)))
-			node += token(i++)
+			var/procname = ""
+			if(token(i) == "global" && token(i+1) == ".")
+				i += 2
+				procname = "global."
+			node += procname + token(i++)
 			if(token(i) != "(")
 				parse_error("Expected ( but found '[token(i)]'")
 			else if(token(i + 1) != ")")
+				var/list/expression_list_temp = list()
 				do
-					i = expression(i + 1, arguments)
+					i = expression(i + 1, expression_list_temp)
 					if(token(i) == ",")
+						arguments[++arguments.len] = expression_list_temp
+						expression_list_temp = list()
 						continue
 				while(token(i) && token(i) != ")")
+				arguments[++arguments.len] = expression_list_temp
 			else
 				i++
 		else

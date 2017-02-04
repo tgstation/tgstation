@@ -39,7 +39,6 @@
 	if(!querys || querys.len < 1)
 		return
 
-
 	var/query_log = "executed SDQL query: \"[query_text]\"."
 	message_admins("[key_name_admin(usr)] [query_log]")
 	query_log = "[usr.ckey]([usr]) [query_log]"
@@ -47,7 +46,6 @@
 	NOTICE(query_log)
 
 	try
-
 		for(var/list/query_tree in querys)
 			var/list/from_objs = list()
 			var/list/select_types = list()
@@ -95,8 +93,15 @@
 					var/list/args_list = query_tree["args"]
 
 					for(var/datum/d in objs)
+						var/list/new_args = list()
+						for(var/a in args_list)
+							new_args += SDQL_expression(d, a)
 						for(var/v in call_list)
-							SDQL_callproc(d, v, args_list)
+							if(copytext(v, 1, 8) == "global.")
+								v = "/proc/[copytext(v, 8)]"
+								call(v)(arglist(new_args))
+							else
+								SDQL_callproc(d, v, new_args)
 							CHECK_TICK
 
 				if("delete")
@@ -146,12 +151,11 @@
 							else
 								for(var/v in vals)
 									d.vars[v] = vals[v]
-							CHECK_TICK
-
+								CHECK_TICK
 	catch(var/exception/e)
-		usr << "<span class='warning'>A runtime error has occured during the execution of your query and your query has been aborted.</span>"
-		usr << e
-		return FALSE
+		usr << "NAME:[e.name]"
+		usr << "FILE:[e.file]"
+		usr << "LINE:[e.line]"
 
 /proc/SDQL_callproc(thing, procname, args_list)
 	set waitfor = 0
