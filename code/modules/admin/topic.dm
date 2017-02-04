@@ -8,7 +8,7 @@
 	if(href_list["rejectadminhelp"])
 		if(!check_rights(R_ADMIN))
 			return
-		var/client/C = locate(href_list["rejectadminhelp"])
+		var/client/C = locate(href_list["rejectadminhelp"]) in clients
 		if(!C)
 			return
 		if (deltimer(C.adminhelptimerid))
@@ -24,7 +24,7 @@
 		log_admin("[key_name(usr)] Rejected [C.key]'s admin help.")
 
 	else if(href_list["icissue"])
-		var/client/C = locate(href_list["icissue"])
+		var/client/C = locate(href_list["icissue"]) in clients
 		if(!C)
 			return
 
