@@ -381,3 +381,10 @@
 	R.module.add_module(S, FALSE, TRUE)
 
 	return 1
+
+
+/obj/item/borg/upgrade/ai
+	name = "ai control module"
+	desc = "Used to kick in a cyborg's VTEC systems, increasing their speed."
+	icon_state = "cyborg_upgrade2"
+	origin_tech = "engineering=4;materials=5;programming=4"

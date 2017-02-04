@@ -5,6 +5,8 @@
 	if (src.notransform)
 		return
 
+	if(deployed)
+		handle_mainframe()
 	..()
 	handle_robot_hud_updates()
 	handle_robot_cell()
@@ -114,3 +116,16 @@
 	update_transform()
 	update_action_buttons_icon()
 	return canmove
+
+/mob/living/silicon/robot/proc/handle_mainframe()
+	if(!deployed)
+		return
+	if(mainframe)
+		if(mainframe.stat == DEAD)
+			undeploy()
+	else
+		ghostize(0)	//AI got gibbed
+		deployed = FALSE
+		mainframe.deployed_shell = null
+		mainframe = null
+		verbs -= /mob/living/silicon/robot/proc/undeploy

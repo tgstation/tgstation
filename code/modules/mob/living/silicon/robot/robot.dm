@@ -15,7 +15,11 @@
 	var/braintype = "Cyborg"
 	var/obj/item/robot_suit/robot_suit = null //Used for deconstruction to remember what the borg was constructed out of..
 	var/obj/item/device/mmi/mmi = null
+	var/obj/item/borg/upgrade/ai/aimind = null
 
+	var/shell = FALSE
+	var/deployed = FALSE
+	var/mob/living/silicon/ai/mainframe = null
 
 //Hud stuff
 
@@ -91,7 +95,7 @@
 
 
 
-/mob/living/silicon/robot/New(loc)
+/mob/living/silicon/robot/New(loc,newshell)
 	spark_system = new /datum/effect_system/spark_spread()
 	spark_system.set_up(5, 0, src)
 	spark_system.attach(src)
@@ -133,7 +137,16 @@
 	..()
 
 	//MMI stuff. Held togheter by magic. ~Miauw
-	if(!mmi || !mmi.brainmob)
+	if(newshell)
+		aimind = new /obj/item/borg/upgrade/ai(src)
+		shell = TRUE
+		available_ai_shells += src
+		real_name = "AI Shell"
+		name = real_name
+		if(camera)
+			camera.c_tag = real_name	//update the camera name too
+
+	else if(!mmi || !mmi.brainmob)
 		mmi = new (src)
 		mmi.brain = new /obj/item/organ/brain(mmi)
 		mmi.brain.name = "[real_name]'s brain"
@@ -174,6 +187,18 @@
 		mmi = null
 	if(connected_ai)
 		connected_ai.connected_robots -= src
+	if(shell)
+		if(src in available_ai_shells)
+			available_ai_shells -= src
+	if(deployed)
+		if(mainframe)
+			undeploy()
+		else
+			ghostize()
+
+	if(aimind)
+		qdel(aimind)
+		aimind = null
 	qdel(wires)
 	qdel(module)
 	qdel(eye_lights)
@@ -208,6 +233,8 @@
 
 
 /mob/living/silicon/robot/proc/updatename()
+	if(shell)
+		return
 	var/changed_name = ""
 	if(custom_name)
 		changed_name = custom_name
@@ -429,7 +456,9 @@
 		update_icons()
 
 	else if(istype(W, /obj/item/weapon/screwdriver) && opened && cell)	// radio
-		if(radio)
+		if(shell)
+			user << "You can't seem to open the radio compartment"	//No, you're not getting infinite radio keys.
+		else if(radio)
 			radio.attackby(W,user)//Push it to the radio to let it handle everything
 		else
 			user << "<span class='warning'>Unable to locate a radio!</span>"
@@ -847,6 +876,8 @@
 			connected_ai << "<br><br><span class='notice'>NOTICE - Cyborg module change detected: [name] has loaded the [designation] module.</span><br>"
 		if(3) //New Name
 			connected_ai << "<br><br><span class='notice'>NOTICE - Cyborg reclassification detected: [oldname] is now designated as [newname].</span><br>"
+		if(4) //New Shell
+			connected_ai << "<br><br><span class='notice'>NOTICE - New cyborg shell detected: <a href='?src=\ref[connected_ai];track=[html_encode(name)]'>[name]</a></span><br>"
 
 /mob/living/silicon/robot/canUseTopic(atom/movable/M, be_close = 0)
 	if(stat || lockcharge || low_power_mode)
@@ -995,3 +1026,49 @@
 	hat = new_hat
 	new_hat.forceMove(src)
 	update_icons()
+
+/mob/living/silicon/robot/proc/deploy_init()
+	real_name = mainframe.real_name
+	name = real_name
+	if(camera)
+		camera.c_tag = real_name	//update the camera name too
+	//connected_ai = mainframe
+	lawsync()
+	if(radio)
+		radio.subspace_transmission = TRUE
+		radio.keyslot = new /obj/item/device/encryptionkey/ai	//Let the AI keep its channels
+		for(var/ch_name in radio.channels)
+			SSradio.remove_object(radio, radiochannels[ch_name])
+			radio.secure_radio_connections[ch_name] = null
+		radio.recalculateChannels()
+
+	verbs += /mob/living/silicon/robot/proc/undeploy
+
+/mob/living/silicon/robot/proc/undeploy()
+	set category = "Robot Commands"
+	set name = "Return to Core"
+
+	if(!deployed || !mainframe)
+		return FALSE
+
+	mind.transfer_to(mainframe)
+	deployed = FALSE
+	mainframe.deployed_shell = null
+	mainframe = null
+	verbs -= /mob/living/silicon/robot/proc/undeploy
+	if(radio)
+		if(istype(radio.keyslot,/obj/item/device/encryptionkey/ai))
+			qdel(radio.keyslot)
+			radio.keyslot = null
+			for(var/ch_name in radio.channels)
+				SSradio.remove_object(radio, radiochannels[ch_name])
+				radio.secure_radio_connections[ch_name] = null
+			radio.recalculateChannels()
+	real_name = "[real_name] shell [rand(100, 999)]"	//Randomizing the name on leaving, so it shows up seperately in the shells list
+	name = real_name
+	if(camera)
+		camera.c_tag = real_name	//update the camera name too
+	return TRUE
+
+/mob/living/silicon/robot/shell/New(loc,newshell = TRUE)
+	..()
