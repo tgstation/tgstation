@@ -18,9 +18,8 @@
 
 */
 
-/datum/proc/SDQL_update(list/vars_list)
-	for(var/v in vars_list)
-		vars[v] = vars_list[v]
+/datum/proc/SDQL_update(const/var_name, new_value)
+	vars[var_name] = new_value
 	return TRUE
 
 /client/proc/SDQL2_query(query_text as message)
@@ -142,11 +141,19 @@
 					if("set" in query_tree)
 						var/list/set_list = query_tree["set"]
 						for(var/datum/d in objs)
-							var/list/set_vals = set_list.Copy()
-							for(var/v in set_vals)
-								set_vals[v] = SDQL_expression(d, set_list[v])
-							d.SDQL_update(set_vals)
+							for(var/list/sets in set_list)
+								var/datum/temp = d
+								var/i = 0
+								for(var/v in sets)
+									if(++i == sets.len)
+										temp.SDQL_update(v, SDQL_expression(d, set_list[sets]))
+										break
+									if(temp.vars.Find(v) && (istype(temp.vars[v], /datum)))
+										temp = temp.vars[v]
+									else
+										break
 							CHECK_TICK
+
 	catch(var/exception/e)
 		usr << "<span class='boldwarning'>A runtime error has occured in your SDQL2-query.</span>"
 		usr << "\[NAME\][e.name]"
@@ -389,6 +396,12 @@
 	else if(copytext(expression[i], 1, 2) in list("'", "\""))
 		val = copytext(expression[i], 2, length(expression[i]))
 
+	else if(expression[i] == "\[")
+		var/list/expressions_list = expression[++i]
+		val = list()
+		for(var/list/expression_list in expressions_list)
+			val += SDQL_expression(object, expression_list)
+
 	else
 		val = SDQL_var(object, expression, i)
 		i = expression.len
@@ -429,7 +442,7 @@
 /proc/SDQL2_tokenize(query_text)
 
 	var/list/whitespace = list(" ", "\n", "\t")
-	var/list/single = list("(", ")", ",", "+", "-", ".", ";", "{", "}")
+	var/list/single = list("(", ")", ",", "+", "-", ".", ";", "{", "}", "\[", "]")
 	var/list/multi = list(
 					"=" = list("", "="),
 					"<" = list("", "=", ">"),

@@ -256,12 +256,14 @@
 	return i
 
 //assignment:	<variable name> '=' expression
-/datum/SDQL_parser/proc/assignment(i, list/node)
-	node += token(i)
-	if(token(i + 1) == "=")
-		var/varname = token(i)
-		node[varname] = list()
-		i = expression(i + 2, node[varname])
+/datum/SDQL_parser/proc/assignment(var/i, var/list/node, var/list/assignment_list = list())
+	assignment_list += token(i)
+	if(token(i + 1) == ".")
+		i = assignment(i + 2, node, assignment_list)
+	else if(token(i + 1) == "=")
+		var/exp_list = list()
+		node[assignment_list] = exp_list
+		i = expression(i + 2, exp_list)
 	else
 		parse_error("Assignment expected, but no = found")
 	return i
@@ -281,6 +283,27 @@
 	else
 		i++
 	return i
+
+//array:	'[' expression, expression, ... ']'
+/datum/SDQL_parser/proc/array(i, list/node)
+	if(copytext(token(i), 1, 2) != "\[")
+		parse_error("Expected an array but found '[token(i)]'")
+		return i + 1
+	node += token(i)
+	var/list/expression_list = list()
+	if(token(i + 1) != "]")
+		var/list/temp_expression_list = list()
+		do
+			i = expression(i + 1, temp_expression_list)
+			if(token(i) == ",")
+				expression_list[++expression_list.len] = temp_expression_list
+				temp_expression_list = list()
+		while(token(i) && token(i) != "]")
+		expression_list[++expression_list.len] = temp_expression_list
+	else
+		i++
+	node[++node.len] = expression_list
+	return i + 1
 
 //object_type:	<type path> | string
 /datum/SDQL_parser/proc/object_type(i, list/node)
@@ -413,6 +436,8 @@
 		i++
 	else if(copytext(token(i), 1, 2) in list("'", "\""))
 		i = string(i, node)
+	else if(copytext(token(i), 1, 2) == "\[") // Start a list.
+		i = array(i, node)
 	else
 		i = variable(i, node)
 	return i
