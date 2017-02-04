@@ -41,8 +41,8 @@
 		//Stuff jammed in your limbs hurts
 		handle_embedded_objects()
 
-	//Update our name based on whether our face is obscured/disfigured
-	name = get_visible_name()
+	//Everyone is a person, this is for the identity system.
+	name = "Person"
 
 	dna.species.spec_life(src) // for mutantraces
 

@@ -22,10 +22,7 @@
 /proc/cultist_commune(mob/living/user, message)
 	if(!message)
 		return
-	if(!ishuman(user))
-		user.say("O bidai nabora se[pick("'","`")]sma!")
-	else
-		user.whisper("O bidai nabora se[pick("'","`")]sma!")
+	user.whisper("O bidai nabora se[pick("'","`")]sma!")
 	sleep(10)
 	if(!user)
 		return
@@ -33,7 +30,7 @@
 		user.say(html_decode(message))
 	else
 		user.whisper(html_decode(message))
-	var/my_message = "<span class='cultitalic'><b>[(ishuman(user) ? "Acolyte" : "Construct")] [user]:</b> [message]</span>"
+	var/my_message = "<span class='cultitalic'><b>[(ishuman(user) ? "Acolyte" : "Construct")] [user.real_name]:</b> [message]</span>"
 	for(var/mob/M in mob_list)
 		if(iscultist(M))
 			M << my_message

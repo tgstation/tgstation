@@ -1,3 +1,5 @@
+<link rel='ractive' href='./chameleon-headset.ract'>
+
 <script>
   component.exports = {
     computed: {
@@ -15,6 +17,11 @@
         action='listen'>
         {{data.listening ? "On": "Off"}}</ui-button>
     </ui-section>
+	{{#if data.headset == 2}}
+		<ui-section label='Voice Changer'>
+			<ui-button icon='user-secret' action='voicechanger'>Open</ui-button>
+		</ui-section>
+	{{/if}}
   {{else}}
     <ui-section label='Microphone'>
       <ui-button icon='{{data.broadcasting ? "power-off" : "close"}}' style='{{data.broadcasting ? "selected" : null}}'

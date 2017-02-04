@@ -440,6 +440,7 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 /proc/changeling_transform(mob/living/carbon/human/user, datum/changelingprofile/chosen_prof)
 	var/datum/dna/chosen_dna = chosen_prof.dna
 	user.real_name = chosen_prof.name
+	user.voiceprint = chosen_dna.voiceprint
 	user.underwear = chosen_prof.underwear
 	user.undershirt = chosen_prof.undershirt
 	user.socks = chosen_prof.socks

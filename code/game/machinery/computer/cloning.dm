@@ -70,7 +70,7 @@
 		if(pod.occupant)
 			continue	//how though?
 
-		if(pod.growclone(R.fields["ckey"], R.fields["name"], R.fields["UI"], R.fields["SE"], R.fields["mind"], R.fields["mrace"], R.fields["features"], R.fields["factions"]))
+		if(pod.growclone(R.fields["ckey"], R.fields["name"], R.fields["UI"], R.fields["SE"], R.fields["mind"], R.fields["mrace"], R.fields["features"], R.fields["factions"], R.fields["voiceprint"]))
 			records -= R
 
 /obj/machinery/computer/cloning/proc/updatemodules(findfirstcloner)
@@ -408,7 +408,7 @@
 			else if(pod.occupant)
 				temp = "<font class='bad'>Cloning cycle already in progress.</font>"
 				playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
-			else if(pod.growclone(C.fields["ckey"], C.fields["name"], C.fields["UI"], C.fields["SE"], C.fields["mind"], C.fields["mrace"], C.fields["features"], C.fields["factions"]))
+			else if(pod.growclone(C.fields["ckey"], C.fields["name"], C.fields["UI"], C.fields["SE"], C.fields["mind"], C.fields["mrace"], C.fields["features"], C.fields["factions"], C.fields["voiceprint"]))
 				temp = "[C.fields["name"]] => <font class='good'>Cloning cycle in progress...</font>"
 				playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
 				records.Remove(C)
@@ -468,6 +468,7 @@
 		R.fields["mrace"] = rando_race.type
 	R.fields["ckey"] = subject.ckey
 	R.fields["name"] = subject.real_name
+	R.fields["voiceprint"] = subject.voiceprint
 	R.fields["id"] = copytext(md5(subject.real_name), 2, 6)
 	R.fields["UE"] = subject.dna.unique_enzymes
 	R.fields["UI"] = subject.dna.uni_identity

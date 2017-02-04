@@ -158,6 +158,7 @@
 		H.dna.transfer_identity(vr_human)
 		vr_human.name = H.name
 		vr_human.real_name = H.real_name
+		vr_human.voiceprint = H.voiceprint
 		vr_human.socks = H.socks
 		vr_human.undershirt = H.undershirt
 		vr_human.underwear = H.underwear

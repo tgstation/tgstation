@@ -107,7 +107,11 @@
 	action_intent.icon_state = mymob.a_intent
 	static_inventory += action_intent
 
-	using = new /obj/screen/mov_intent
+	using = new /obj/screen/identity_manager
+	using.icon = ui_style
+	static_inventory += using
+
+	using = new /obj/screen/mov_intent()
 	using.icon = ui_style
 	using.icon_state = (mymob.m_intent == MOVE_INTENT_RUN ? "running" : "walking")
 	using.screen_loc = ui_movi

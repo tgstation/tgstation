@@ -30,6 +30,7 @@
 					mind = bloodSample.data["mind"]
 					ckey = bloodSample.data["ckey"]
 					realName = bloodSample.data["real_name"]
+					voiceprint = bloodSample.data["voiceprint"]
 					blood_gender = bloodSample.data["gender"]
 					blood_type = bloodSample.data["blood_type"]
 					features = bloodSample.data["features"]
@@ -90,6 +91,8 @@
 			podman.real_name = realName
 		else
 			podman.real_name = "Pod Person [rand(0,999)]"
+		if(voiceprint)
+			podman.voiceprint = voiceprint
 		mind.transfer_to(podman)
 		if(ckey)
 			podman.ckey = ckey
@@ -99,7 +102,7 @@
 		podman.faction |= factions
 		if(!features["mcolor"])
 			features["mcolor"] = "#59CE00"
-		podman.hardset_dna(null,null,podman.real_name,blood_type,/datum/species/pod,features)//Discard SE's and UI's, podman cloning is inaccurate, and always make them a podman
+		podman.hardset_dna(null,null,podman.real_name,blood_type,/datum/species/pod,features,podman.voiceprint)//Discard SE's and UI's, podman cloning is inaccurate, and always make them a podman
 		podman.set_cloned_appearance()
 
 	else //else, one packet of seeds. maybe two

@@ -53,7 +53,6 @@
 	if(ishuman(loc))
 		var/mob/living/carbon/human/M = loc
 		new /obj/effect/overlay/temp/dir_setting/ninja/cloak(get_turf(M), M.dir)
-		M.name_override = disguise.name
 		M.icon = disguise.icon
 		M.icon_state = disguise.icon_state
 		M.overlays = disguise.overlays
@@ -66,7 +65,6 @@
 	if(ishuman(loc))
 		var/mob/living/carbon/human/M = loc
 		new /obj/effect/overlay/temp/dir_setting/ninja(get_turf(M), M.dir)
-		M.name_override = null
 		M.cut_overlays()
 		M.regenerate_icons()
 
@@ -169,20 +167,20 @@
 		if(GIZMO_MARK)
 			mark(target, user)
 
-/obj/item/device/abductor/gizmo/proc/scan(atom/target, mob/living/user)
+/obj/item/device/abductor/gizmo/proc/scan(mob/living/carbon/human/target, mob/living/user)
 	if(ishuman(target))
 		if(console!=null)
 			console.AddSnapshot(target)
-			user << "<span class='notice'>You scan [target] and add them to the database.</span>"
+			user.show_message("<span class='notice'>You scan [target.real_name] and add them to the database.</span>")
 
-/obj/item/device/abductor/gizmo/proc/mark(atom/target, mob/living/user)
+/obj/item/device/abductor/gizmo/proc/mark(mob/living/carbon/human/target, mob/living/user)
 	if(marked == target)
 		user << "<span class='warning'>This specimen is already marked!</span>"
 		return
 	if(ishuman(target))
 		if(isabductor(target))
 			marked = target
-			user << "<span class='notice'>You mark [target] for future retrieval.</span>"
+			user.show_message("<span class='notice'>You mark [IDENTITY_SUBJECT(1)] for future retrieval.</span>", subjects=list(target))
 		else
 			prepare(target,user)
 	else
@@ -190,12 +188,12 @@
 
 /obj/item/device/abductor/gizmo/proc/prepare(atom/target, mob/living/user)
 	if(get_dist(target,user)>1)
-		user << "<span class='warning'>You need to be next to the specimen to prepare it for transport!</span>"
+		user.show_message("<span class='warning'>You need to be next to the specimen to prepare it for transport!</span>")
 		return
-	user << "<span class='notice'>You begin preparing [target] for transport...</span>"
+	user.show_message("<span class='notice'>You begin preparing [IDENTITY_SUBJECT(1)] for transport...</span>", subjects=list(target))
 	if(do_after(user, 100, target = target))
 		marked = target
-		user << "<span class='notice'>You finish preparing [target] for transport.</span>"
+		user.show_message("<span class='notice'>You finish preparing [IDENTITY_SUBJECT(1)] for transport.</span>", subjects=list(target))
 
 
 /obj/item/device/abductor/silencer

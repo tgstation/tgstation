@@ -21,6 +21,7 @@
 		var/mob/living/carbon/human/I = new /mob/living/carbon/human(W.loc)
 		W.dna.transfer_identity(I, transfer_SE=1)
 		I.real_name = I.dna.real_name
+		I.voiceprint = I.dna.voiceprint
 		I.name = I.dna.real_name
 		I.updateappearance(mutcolor_update=1)
 		I.domutcheck()

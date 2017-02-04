@@ -164,17 +164,8 @@
 		return
 	var/datum/sprite_accessory/S
 	var/list/standing = list()
-	var/hair_hidden = 0
-	var/facialhair_hidden = 0
-	//we check if our hat or helmet hides our facial hair.
-	if(H.head)
-		var/obj/item/I = H.head
-		if(I.flags_inv & HIDEFACIALHAIR)
-			facialhair_hidden = 1
-	if(H.wear_mask)
-		var/obj/item/clothing/mask/M = H.wear_mask
-		if(M.flags_inv & HIDEFACIALHAIR)
-			facialhair_hidden = 1
+	var/hair_hidden = H.hair_covered()
+	var/facialhair_hidden = H.facial_hair_covered()
 
 	if(H.facial_hair_style && (FACEHAIR in species_traits) && !facialhair_hidden)
 		S = facial_hair_styles_list[H.facial_hair_style]
@@ -196,15 +187,6 @@
 
 			standing += img_facial
 
-	//we check if our hat or helmet hides our hair.
-	if(H.head)
-		var/obj/item/I = H.head
-		if(I.flags_inv & HIDEHAIR)
-			hair_hidden = 1
-	if(H.wear_mask)
-		var/obj/item/clothing/mask/M = H.wear_mask
-		if(M.flags_inv & HIDEHAIR)
-			hair_hidden = 1
 	if(!hair_hidden)
 		if(!H.getorgan(/obj/item/organ/brain)) //Applies the debrained overlay if there is no brain
 			if(!(NOBLOOD in species_traits))

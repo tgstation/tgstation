@@ -173,7 +173,7 @@
 
 /obj/machinery/abductor/console/proc/AddSnapshot(mob/living/carbon/human/target)
 	var/datum/icon_snapshot/entry = new
-	entry.name = target.name
+	entry.name = target.real_name
 	entry.icon = target.icon
 	entry.icon_state = target.icon_state
 	entry.overlays = target.get_overlays_copy(list(HANDS_LAYER))

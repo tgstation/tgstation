@@ -58,6 +58,7 @@
 		C = owner
 
 	real_name = C.real_name
+	voiceprint = C.voiceprint
 	if(C.disabilities & HUSK)
 		real_name = "Unknown"
 		hair_style = "Bald"

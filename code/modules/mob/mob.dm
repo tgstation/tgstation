@@ -54,7 +54,54 @@ var/next_mob_id = 0
 
 	usr << t
 
-/mob/proc/show_message(msg, type, alt_msg, alt_type)//Message, type of message (1 or 2), alternative message, alt message type (1 or 2)
+/mob/proc/identity_subject_name(atom/movable/AM)
+	var/list/AM_identity = mind.identity_cache[AM]
+	var/AM_name
+	var/AM_voiceprint
+	var/AM_voiceprint_time
+	var/AM_faceprint
+	var/AM_faceprint_time
+	var/AM_temp
+	var/AM_temp_time
+	if(AM_identity)
+		AM_voiceprint = AM_identity[1]
+		AM_voiceprint_time = AM_identity[2]
+		AM_faceprint = AM_identity[3]
+		AM_faceprint_time = AM_identity[4]
+		AM_temp = AM_identity[5]
+		AM_temp_time = AM_identity[6]
+	else
+		AM_identity = new(6)
+	if(AM_faceprint && AM_faceprint_time >= (world.time - IDENTITY_EXPIRE_TIME))
+		var/list/AM_FP_entry = mind.get_print_entry(AM_faceprint, CATEGORY_FACEPRINTS)
+		if(AM_FP_entry)
+			AM_name = AM_FP_entry[3]
+	if(!AM_name && AM_voiceprint && AM_voiceprint_time >= (world.time - IDENTITY_EXPIRE_TIME))
+		var/list/AM_VP_entry = mind.get_print_entry(AM_voiceprint, CATEGORY_VOICEPRINTS)
+		if(AM_VP_entry)
+			AM_name = AM_VP_entry[3]
+	if(!AM_name)
+		if(AM_temp && AM_temp_time >= (world.time - TEMP_IDENTITY_EXPIRE))
+			AM_name = AM_temp
+		else
+			AM_name = AM.default_identity_seen()
+			AM_identity[5] = AM_name
+			AM_identity[6] = world.time
+	mind.identity_cache[AM] = AM_identity
+	. = AM_name
+
+/mob/proc/parse_identity_subjects(msg, list/subjects)
+	if(subjects && mind && subjects.len)
+		for(var/i=1, i<=subjects.len, i++)
+			var/subject_string = IDENTITY_SUBJECT(i)
+			if(!findtextEx(msg, subject_string))
+				break
+			var/atom/movable/AM = subjects[i]
+			var/AM_name = identity_subject_name(AM)
+			msg = replacetextEx(msg, subject_string, AM_name)
+	. = msg
+
+/mob/proc/show_message(msg, type, alt_msg, alt_type, list/subjects)//Message, type of message (1 or 2), alternative message, alt message type (1 or 2), list of subjects in message or alternative message
 
 	if(!client)
 		return
@@ -82,6 +129,7 @@ var/next_mob_id = 0
 		if(type & 2) //audio
 			src << "<I>... You can almost hear something ...</I>"
 	else
+		msg = parse_identity_subjects(msg, subjects)
 		src << msg
 
 // Show a message to all player mobs who sees this atom
@@ -92,8 +140,9 @@ var/next_mob_id = 0
 // blind_message (optional) is what blind people will hear e.g. "You hear something!"
 // vision_distance (optional) define how many tiles away the message can be seen.
 // ignored_mob (optional) doesn't show any message to a given mob if TRUE.
+// subjects (optional) subjects in the message ordered according to the indexes in the message
 
-/atom/proc/visible_message(message, self_message, blind_message, vision_distance, ignored_mob)
+/atom/proc/visible_message(message, self_message, blind_message, vision_distance, ignored_mob, list/subjects) 
 	var/turf/T = get_turf(src)
 	if(!T)
 		return
@@ -121,7 +170,7 @@ var/next_mob_id = 0
 						msg = blind_message
 					else
 						continue
-		M.show_message(msg,1,blind_message,2)
+		M.show_message(msg,1,blind_message,2,subjects)
 
 // Show a message to all mobs in earshot of this one
 // This would be for audible actions by the src mob

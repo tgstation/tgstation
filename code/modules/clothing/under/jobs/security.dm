@@ -20,6 +20,7 @@
 	alt_covers_chest = 1
 	sensor_mode = 3
 	random_sensor = 0
+	identity_name = "Security Officer"
 
 /obj/item/clothing/under/rank/security/grey
 	icon_state = "security"
@@ -38,6 +39,7 @@
 	alt_covers_chest = 1
 	sensor_mode = 3
 	random_sensor = 0
+	identity_name = "Warden"
 
 /obj/item/clothing/under/rank/warden/grey
 	icon_state = "warden"
@@ -58,6 +60,7 @@
 	alt_covers_chest = 1
 	sensor_mode = 3
 	random_sensor = 0
+	identity_name = "Detective"
 
 /obj/item/clothing/under/rank/det/grey
 	name = "noir suit"
@@ -81,6 +84,7 @@
 	alt_covers_chest = 1
 	sensor_mode = 3
 	random_sensor = 0
+	identity_name = "Head of Security"
 
 /obj/item/clothing/under/rank/head_of_security/grey
 	icon_state = "hos"

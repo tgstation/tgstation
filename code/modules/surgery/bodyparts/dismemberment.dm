@@ -298,7 +298,10 @@
 		H.lip_color = lip_color
 	if(real_name)
 		C.real_name = real_name
+	if(voiceprint)
+		C.voiceprint = voiceprint
 	real_name = ""
+	voiceprint = null
 	name = initial(name)
 	..()
 

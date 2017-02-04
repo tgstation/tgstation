@@ -7,6 +7,7 @@
 	item_state = "bar_suit"
 	item_color = "barman"
 	alt_covers_chest = 1
+	identity_name = "Bartender"
 
 /obj/item/clothing/under/rank/captain //Alright, technically not a 'civilian' but its better then giving a .dm file for a single define.
 	desc = "It's a blue jumpsuit with some gold markings denoting the rank of \"Captain\"."
@@ -16,6 +17,7 @@
 	item_color = "captain"
 	sensor_mode = 3
 	random_sensor = 0
+	identity_name = "Captain"
 
 /obj/item/clothing/under/rank/cargo
 	name = "quartermaster's jumpsuit"
@@ -23,6 +25,7 @@
 	icon_state = "qm"
 	item_state = "lb_suit"
 	item_color = "qm"
+	identity_name = "Quartermaster"
 
 /obj/item/clothing/under/rank/cargotech
 	name = "cargo technician's jumpsuit"
@@ -32,6 +35,7 @@
 	item_color = "cargo"
 	body_parts_covered = CHEST|GROIN|ARMS
 	mutantrace_variation = MUTANTRACE_VARIATION
+	identity_name = "Cargo Tech"
 
 
 /obj/item/clothing/under/rank/chaplain
@@ -41,6 +45,7 @@
 	item_state = "bl_suit"
 	item_color = "chapblack"
 	can_adjust = 0
+	identity_name = "Chaplain"
 
 /obj/item/clothing/under/rank/chef
 	name = "cook's suit"
@@ -48,6 +53,7 @@
 	icon_state = "chef"
 	item_color = "chef"
 	alt_covers_chest = 1
+	identity_name = "Cook"
 
 /obj/item/clothing/under/rank/clown
 	name = "clown suit"
@@ -57,6 +63,7 @@
 	item_color = "clown"
 	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = 0
+	identity_name = "Clown"
 
 /obj/item/clothing/under/rank/clown/hit_reaction()
 	playsound(loc, 'sound/items/bikehorn.ogg', 50, 1, -1)
@@ -69,6 +76,7 @@
 	item_state = "b_suit"
 	item_color = "hop"
 	can_adjust = 0
+	identity_name = "Head of Personnel"
 
 /obj/item/clothing/under/rank/hydroponics
 	desc = "It's a jumpsuit designed to protect against minor plant-related hazards."
@@ -77,6 +85,7 @@
 	item_state = "g_suit"
 	item_color = "hydroponics"
 	permeability_coefficient = 0.50
+	identity_name = "Botanist"
 
 /obj/item/clothing/under/rank/janitor
 	desc = "It's the official uniform of the station's janitor. It has minor protection from biohazards."
@@ -84,11 +93,13 @@
 	icon_state = "janitor"
 	item_color = "janitor"
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 10, rad = 0, fire = 0, acid = 0)
+	identity_name = "Janitor"
 
 /obj/item/clothing/under/lawyer
 	desc = "Slick threads."
 	name = "Lawyer suit"
 	can_adjust = 0
+	identity_name = "Lawyer"
 
 /obj/item/clothing/under/lawyer/black
 	icon_state = "lawyer_black"
@@ -144,6 +155,7 @@
 	item_state = "red_suit"
 	item_color = "red_suit"
 	can_adjust = 0
+	identity_name = "Librarian"
 
 /obj/item/clothing/under/rank/librarian/curator
 	name = "treasure hunter uniform"
@@ -151,6 +163,7 @@
 	icon_state = "curator"
 	item_state = "curator"
 	item_color = "curator"
+	identity_name = "Treasure Hunter"
 
 /obj/item/clothing/under/rank/mime
 	name = "mime's outfit"
@@ -158,6 +171,7 @@
 	icon_state = "mime"
 	item_state = "mime"
 	item_color = "mime"
+	identity_name = "Mime"
 
 /obj/item/clothing/under/rank/miner
 	desc = "It's a snappy jumpsuit with a sturdy set of overalls. It is very dirty."
@@ -165,6 +179,7 @@
 	icon_state = "miner"
 	item_state = "miner"
 	item_color = "miner"
+	identity_name = "Shaft Miner"
 
 /obj/item/clothing/under/rank/miner/lavaland
 	desc = "A green uniform for operating in hazardous environments."

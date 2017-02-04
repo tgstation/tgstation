@@ -506,8 +506,8 @@ var/list/non_fakeattack_weapons = list(/obj/item/weapon/gun/ballistic, /obj/item
 
 /obj/effect/hallucination/whispers/New(loc,var/mob/living/carbon/T)
 	target = T
-	var/speak_messages = list("I'm watching you...","[target.name]!","Go away!","Kchck-Chkck? Kchchck!","Did you hear that?","What did you do ?","Why?","Give me that!","Honk!","HELP!!")
-	var/radio_messages = list("Xenos!","Singularity loose!","They are arming the nuke!","They butchered Ian!","H-help!","[pick(teleportlocs)]!!","Where's [target.name]?","Call the shuttle!")
+	var/speak_messages = list("I'm watching you...","[target.real_name]!","Go away!","Kchck-Chkck? Kchchck!","Did you hear that?","What did you do ?","Why?","Give me that!","Honk!","HELP!!")
+	var/radio_messages = list("Xenos!","Singularity loose!","They are arming the nuke!","They butchered Ian!","H-help!","[pick(teleportlocs)]!!","Where's [target.real_name]?","Call the shuttle!")
 
 	var/list/mob/living/carbon/people = list()
 	var/list/mob/living/carbon/person = null
@@ -521,13 +521,15 @@ var/list/non_fakeattack_weapons = list(/obj/item/weapon/gun/ballistic, /obj/item
 				person = H
 		people += H
 	if(person) //Basic talk
-		target << target.compose_message(person,person.languages_understood,pick(speak_messages),null,person.get_spans())
+		var/voiceprint_name = target.get_voiceprint_name(person, person.get_voiceprint())
+		target << target.compose_message(person, person.languages_understood, pick(speak_messages), null, person.get_spans(), voiceprint_name)
 	else // Radio talk
 		var/list/humans = list()
 		for(var/mob/living/carbon/human/H in living_mob_list)
 			humans += H
 		person = pick(humans)
-		target << target.compose_message(person,person.languages_understood,pick(radio_messages),"1459",person.get_spans())
+		var/voiceprint_name = target.get_voiceprint_name(person, person.get_voiceprint())
+		target << target.compose_message(person, person.languages_understood, pick(radio_messages), "1459", person.get_spans(), voiceprint_name)
 	qdel(src)
 
 /obj/effect/hallucination/message

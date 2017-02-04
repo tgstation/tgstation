@@ -39,8 +39,6 @@
 /mob/living/carbon/human/get_visible_name()
 	var/face_name = get_face_name("")
 	var/id_name = get_id_name("")
-	if(name_override)
-		return name_override
 	if(face_name)
 		if(id_name && (id_name != face_name))
 			return "[face_name] (as [id_name])"
@@ -49,16 +47,19 @@
 		return id_name
 	return "Unknown"
 
+/mob/living/carbon/human/can_see_face()
+	. = TRUE
+	if( (wear_mask && (wear_mask.flags_inv&HIDEFACE)) || \
+	(head && (head.flags_inv&HIDEFACE)) )	//Wearing a mask or hat which hides our face
+		return FALSE
+
+	var/obj/item/bodypart/O = get_bodypart("head")
+	if( !O || (status_flags&DISFIGURED) || (O.brutestate+O.burnstate)>2 || cloneloss>50 )	//disfigured
+		. = FALSE
+
 //Returns "Unknown" if facially disfigured and real_name if not. Useful for setting name when Fluacided or when updating a human's name variable
 /mob/living/carbon/human/proc/get_face_name(if_no_face="Unknown")
-	if( wear_mask && (wear_mask.flags_inv&HIDEFACE) )	//Wearing a mask which hides our face, use id-name if possible
-		return if_no_face
-	if( head && (head.flags_inv&HIDEFACE) )
-		return if_no_face		//Likewise for hats
-	var/obj/item/bodypart/O = get_bodypart("head")
-	if( !O || (status_flags&DISFIGURED) || (O.brutestate+O.burnstate)>2 || cloneloss>50 || !real_name )	//disfigured. use id-name if possible
-		return if_no_face
-	return real_name
+	. = ((can_see_face() && real_name) ? real_name : if_no_face)
 
 //gets name from ID or PDA itself, ID inside PDA doesn't matter
 //Useful when player is being seen by other mobs
@@ -95,9 +96,6 @@
 
 /mob/living/carbon/human/IsAdvancedToolUser()
 	return 1//Humans can use guns and such
-
-/mob/living/carbon/human/InCritical()
-	return (health <= HEALTH_THRESHOLD_CRIT && stat == UNCONSCIOUS)
 
 /mob/living/carbon/human/reagent_check(datum/reagent/R)
 	return dna.species.handle_chemicals(R,src)

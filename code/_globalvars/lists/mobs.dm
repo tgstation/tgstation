@@ -7,7 +7,7 @@ var/list/stealthminID = list()						//reference list with IDs that store ckeys, 
 //Since it didn't really belong in any other category, I'm putting this here
 //This is for procs to replace all the goddamn 'in world's that are chilling around the code
 
-var/global/list/player_list = list()				//all mobs **with clients attached**. Excludes /mob/new_player
+var/global/list/player_list = list()				//all mobs **with clients attached**.
 var/global/list/mob_list = list()					//all mobs, including clientless
 var/global/list/living_mob_list = list()			//all alive mobs, including clientless. Excludes /mob/new_player
 var/global/list/dead_mob_list = list()				//all dead mobs, including clientless. Excludes /mob/new_player
