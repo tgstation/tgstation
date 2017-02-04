@@ -10,6 +10,10 @@
 	var/static/list/safeties_typecache = list(/obj/structure/lattice/catwalk)
 	//if anything matching this typecache is found in the lava, we don't burn things
 
+	light_range = 2
+	light_power = 0.75
+	light_color = "#c48a18"
+
 /turf/open/floor/plating/lava/New()
 	..()
 	safeties_typecache = typecacheof(safeties_typecache)

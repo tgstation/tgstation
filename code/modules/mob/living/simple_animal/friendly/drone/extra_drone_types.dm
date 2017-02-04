@@ -127,9 +127,7 @@
 
 /mob/living/simple_animal/drone/cogscarab/New()
 	. = ..()
-	#warn a
-	//SetLuminosity(2,1)
-	set_light(2)
+	set_light(2, 0.1)
 	qdel(access_card) //we don't have free access
 	access_card = null
 	verbs -= /mob/living/simple_animal/drone/verb/check_laws

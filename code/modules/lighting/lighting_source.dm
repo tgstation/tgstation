@@ -92,10 +92,7 @@
 		top_atom = new_top_atom
 
 		if (top_atom != source_atom)
-			if(!top_atom.light_sources)
-				top_atom.light_sources = list()
-
-			top_atom.light_sources += src // Add ourselves to the light sources of our new top atom.
+			LAZYADD(src, top_atom.light_sources) // Add ourselves to the light sources of our new top atom.
 
 	EFFECT_UPDATE
 
@@ -121,7 +118,7 @@
 		top_atom = source_atom
 		. = 1
 
-	if (istype(top_atom, /turf))
+	if (isturf(top_atom))
 		if (source_turf != top_atom)
 			source_turf = top_atom
 			. = 1

@@ -26,9 +26,7 @@
 /obj/structure/destructible/clockwork/powered/interdiction_lens/toggle(fast_process, mob/living/user)
 	. = ..()
 	if(active)
-		#warn falloff?
-		//SetLuminosity(4, 2)
-		set_light(4)
+		set_light(4, 0.2)
 	else
 		set_light(0)
 
@@ -48,9 +46,7 @@
 	recharging = world.time + recharge_time
 	flick("interdiction_lens_discharged", src)
 	icon_state = "interdiction_lens_inactive"
-	#warn falloff?
-	//SetLuminosity(2,1)
-	set_light(2)
+	set_light(2, 0.1)
 	disabled = TRUE
 	return TRUE
 

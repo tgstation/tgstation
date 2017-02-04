@@ -121,9 +121,7 @@
 	..()
 	switch(icon_state)
 		if("basalt1", "basalt2", "basalt3") //5 and 9 are too dark to glow and make the amount of glows in tunnels too high
-			#warn ???
-			//SetLuminosity(1, 1) //this is basically a 3.75% chance that a basalt floor glows
-			set_light(1)
+			set_light(1, 0.1)
 
 /turf/open/floor/plating/asteroid/basalt/gets_dug()
 	if(!dug)

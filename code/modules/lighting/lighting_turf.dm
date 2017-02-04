@@ -61,6 +61,16 @@
 
 	return CLAMP01(totallums)
 
+// Returns a boolean whether the turf is on soft lighting.
+// Soft lighting being the threshold at which point the overlay considers
+// itself as too dark to allow sight and see_in_dark becomes useful.
+// So basically if this returns true the tile is unlit black.
+/turf/proc/is_softly_lit()
+	if (!lighting_overlay)
+		return FALSE
+	
+	return !lighting_overlay.luminosity
+
 // Can't think of a good name, this proc will recalculate the has_opaque_atom variable.
 /turf/proc/recalc_atom_opacity()
 	has_opaque_atom = FALSE

@@ -212,7 +212,6 @@
 	var/area/old = get_area(get_turf(creator))
 	var/old_gravity = old.has_gravity
 
-	#warn TODO: doesn't change_area, probably fucked. Double check this. Damnit TG!
 	var/area/A
 	for(var/key in turfs)
 		if(key == str)
@@ -221,13 +220,20 @@
 			turfs -= turfs[key]
 			turfs -= key
 	if(A)
-		A.contents += turfs
 		A.set_dynamic_lighting()
+		for (var/turf/T in turfs)
+			var/area/old_area = T.loc
+			A.contents += T
+			T.change_area(old_area, T)
+		
 	else
 		A = new
 		A.setup(str)
-		A.contents += turfs
 		A.set_dynamic_lighting()
+		for (var/turf/T in turfs)
+			var/area/old_area = T.loc
+			A.contents += T
+			T.change_area(old_area, T)
 	A.has_gravity = old_gravity
 	creator << "<span class='notice'>You have created a new area, named [str]. It is now weather proof, and constructing an APC will allow it to be powered.</span>"
 	return 1

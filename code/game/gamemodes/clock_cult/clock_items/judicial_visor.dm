@@ -158,9 +158,7 @@
 
 /obj/effect/clockwork/judicial_marker/New(loc, caster)
 	..()
-	#warn falloff?
-	//SetLuminosity(4, 3)
-	set_light(4)
+	set_light(4, 0.3)
 	user = caster
 	addtimer(CALLBACK(src, .proc/judicialblast), 0)
 

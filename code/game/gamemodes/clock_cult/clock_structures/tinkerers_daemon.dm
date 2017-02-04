@@ -120,9 +120,7 @@
 		component_glow.color = component_color
 		add_overlay(component_glow)
 		production_time = world.time + production_cooldown //don't immediately produce when turned on after being off
-		#warn falloff?
-		//SetLuminosity(2, 1)
-		set_light(2)
+		set_light(2, 0.1)
 	else
 		cut_overlays()
 		set_light(0)
