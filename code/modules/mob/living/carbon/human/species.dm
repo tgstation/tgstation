@@ -245,7 +245,7 @@
 	// eyes
 	var/has_eyes = TRUE
 
-	if(!H.getorgan(/obj/item/organ/eyes))
+	if(!H.getorgan(/obj/item/organ/eyes) && HD)
 		standing += image("icon"='icons/mob/human_face.dmi', "icon_state" = "eyes_missing", "layer" = -BODY_LAYER)
 		has_eyes = FALSE
 
