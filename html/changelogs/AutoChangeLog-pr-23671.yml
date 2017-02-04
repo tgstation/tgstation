@@ -1,0 +1,6 @@
+author: "Kor"
+delete-after: True
+changes: 
+  - rscadd: "Eyes are now organs. You can remove or implant them into peoples heads with organ manipulation surgery. A mob without eyes will obviously have trouble seeing."
+  - rscadd: "All special eye powers are now tied to their respective organs. For example, this means you can harvest an alien or shadow persons eyes, have them implanted, and gain toggle-able night vision."
+  - rscadd: "All cybernetic eye implants are now cybernetic eyes, meaning you must replace the patients organic eyes. HUD implants are still just regular implants."
