@@ -3906,6 +3906,8 @@
 	},
 /obj/structure/rack,
 /obj/item/weapon/storage/fancy/donut_box,
+/obj/item/weapon/gun/energy/e_gun/dragnet,
+/obj/item/weapon/gun/energy/e_gun/dragnet,
 /turf/open/floor/plasteel/vault{
 	dir = 1
 	},
