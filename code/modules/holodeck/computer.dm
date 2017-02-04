@@ -194,16 +194,16 @@
 
 /obj/machinery/computer/holodeck/Destroy()
 	emergency_shutdown()
-	..()
+	return ..()
 
 /obj/machinery/computer/holodeck/emp_act(severity)
 	emergency_shutdown()
-	..()
+	return ..()
 
 /obj/machinery/computer/holodeck/ex_act(severity, target)
 	emergency_shutdown()
-	..()
+	return ..()
 
 /obj/machinery/computer/holodeck/blob_act(obj/structure/blob/B)
 	emergency_shutdown()
-	..()
+	return ..()

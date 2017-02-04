@@ -134,6 +134,7 @@
 	if(C.mind && C.mind.changeling)
 		LB.brain = new //changeling doesn't lose its real brain organ, we drop a decoy.
 		LB.brain.loc = LB
+		LB.brain.decoy_override = TRUE
 	else			//if not a changeling, we put the brain organ inside the dropped head
 		Remove(C)	//and put the player in control of the brainmob
 		loc = LB
