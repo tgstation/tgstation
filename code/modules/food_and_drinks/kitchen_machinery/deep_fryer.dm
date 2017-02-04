@@ -78,7 +78,7 @@ insert ascii eagle on american flag background here
 			S.overlays = frying.overlays
 			S.icon_state = frying.icon_state
 			S.desc = frying.desc
-			src.reagents.trans_to(S, 2*cook_time)
+			reagents.trans_to(S, 2*(cook_time/15))
 			switch(cook_time)
 				if(0 to 15)
 					S.color = rgb(166,103,54)
