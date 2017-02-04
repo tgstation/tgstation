@@ -23,11 +23,4 @@
 	name = "lighting plane master"
 	plane = LIGHTING_PLANE
 	blend_mode = BLEND_MULTIPLY
-	/*color = list(
-		-1,  0,  0,  0,
-		 0, -1,  0,  0,
-		 0,  0, -1,  0,
-		 0,  0,  0,  0,
-		 1,  1,  1,  1
-	)*/
 	mouse_opacity = 0
