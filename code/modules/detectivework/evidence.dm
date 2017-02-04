@@ -52,7 +52,7 @@
 				if(-3) //possible?
 					msg += "grows by a lot!"
 				if(3)
-					msg += "quickly shirivels up.
+					msg += "quickly shirivels up."
 				else	//almost certainly not possible but w/e
 					msg += "rapidly changes size to accomodate the mass difference."
 			user.visible_message(msg)
