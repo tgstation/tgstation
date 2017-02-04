@@ -108,7 +108,7 @@
 		return						//this doesn't happen
 
 	var/ref_client = "\ref[src]"
-	msg = "<span class='adminnotice'><b><font color=red>HELP: </font><A HREF='?priv_msg=[ckey];ahelp_reply=1'>[key_name(src)]</A> [ADMIN_QUE(mob)] [ADMIN_PP(mob)] [ADMIN_VV(src)] [ADMIN_SM(src)] [ADMIN_FLW(src)] [ADMIN_TP(src)] (<A HREF='?_src_=holder;rejectadminhelp=[ref_client]'>REJT</A>) (<A HREF='?_src_=holder;icissue=[ref_client]>IC</A>) :</b> [msg]</span>"
+	msg = "<span class='adminnotice'><b><font color=red>HELP: </font><A HREF='?priv_msg=[ckey];ahelp_reply=1'>[key_name(src)]</A> [ADMIN_QUE(mob)] [ADMIN_PP(mob)] [ADMIN_VV(mob)] [ADMIN_SM(mob)] [ADMIN_FLW(mob)] [ADMIN_TP(mob)] (<A HREF='?_src_=holder;rejectadminhelp=[ref_client]'>REJT</A>) (<A HREF='?_src_=holder;icissue=[ref_client]'>IC</A>):</b> [msg]</span>"
 
 	//send this msg to all admins
 
