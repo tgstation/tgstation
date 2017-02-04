@@ -248,7 +248,7 @@
 
 	type = text2path(type)
 	var/typecache = typecacheof(type)
-	
+
 	if(ispath(type, /mob))
 		for(var/mob/d in location)
 			if(typecache[d.type])
@@ -389,22 +389,42 @@
 	return list("val" = val, "i" = i)
 
 /proc/SDQL_var(datum/object, list/expression, start = 1)
+	var/v
 
 	if(expression[start] in object.vars)
+		v = object.vars[expression[start]]
 
-		if(start < expression.len && expression[start + 1] == ".")
-			return SDQL_var(object.vars[expression[start]], expression[start + 2])
-
-		else
-			return object.vars[expression[start]]
-
+	else if(expression[start] == "{" && start < expression.len)
+		if(lowertext(copytext(expression[start + 1], 1, 3)) != "0x")
+			usr << "<span class='danger'>Invalid pointer syntax: [expression[start + 1]]</span>"
+			return null
+		v = locate("\[[expression[start + 1]]]")
+		if(!v)
+			usr << "<span class='danger'>Invalid pointer: [expression[start + 1]]</span>"
+			return null
+		start++
 	else
-		return null
+		switch(expression[start])
+			if("usr")
+				v = usr
+			if("src")
+				v = object
+			if("marked")
+				if(usr.client && usr.client.holder && usr.client.holder.marked_datum)
+					v = usr.client.holder.marked_datum
+				else
+					return null
+			else
+				return null
+	if(start < expression.len && expression[start + 1] == ".")
+		return SDQL_var(v, expression[start + 2])
+	else
+		return v
 
 /proc/SDQL2_tokenize(query_text)
 
 	var/list/whitespace = list(" ", "\n", "\t")
-	var/list/single = list("(", ")", ",", "+", "-", ".", ";")
+	var/list/single = list("(", ")", ",", "+", "-", ".", ";", "{", "}")
 	var/list/multi = list(
 					"=" = list("", "="),
 					"<" = list("", "=", ">"),

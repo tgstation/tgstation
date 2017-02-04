@@ -342,19 +342,22 @@
 
 
 //variable:	<variable name> | <variable name> '.' variable
-	variable(i, list/node)
-		var/list/L = list(token(i))
-		node[++node.len] = L
+/datum/SDQL_parser/proc/variable(i, list/node)
+	var/list/L = list(token(i))
+	node[++node.len] = L
 
-		if(token(i + 1) == ".")
-			L += "."
-			i = variable(i + 2, L)
+	if(token(i) == "{")
+		L += token(i+1)
+		i += 2
+		if(token(i) != "}")
+			parse_error("Missing } at end of pointer.")
 
-		else
-			i++
-
-		return i
-
+	if(token(i + 1) == ".")
+		L += "."
+		i = variable(i + 2, L)
+	else
+		i++
+	return i
 
 //object_type:	<type path> | string
 	object_type(i, list/node)
