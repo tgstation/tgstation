@@ -22,7 +22,7 @@
 	vars[var_name] = new_value
 	return TRUE
 
-/client/proc/SDQL_update(var/const/var_name, var/new_value)
+/client/SDQL_update(var/const/var_name, var/new_value)
 	vars[var_name] = new_value
 	return TRUE
 
@@ -136,14 +136,10 @@
 				if("set" in query_tree)
 					var/list/set_list = query_tree["set"]
 					for(var/datum/d in objs)
-						var/list/vals = list()
 						for(var/v in set_list)
 							v = SDQL_expression(d, v)
-							d.SDQL_update(v.name, v)
+							d.SDQL_update(set_list[v.name], set_list[v])
 						CHECK_TICK
-
-
-
 
 /proc/SDQL_callproc(thing, procname, args_list)
 	set waitfor = 0
