@@ -823,3 +823,7 @@ var/global/BSACooldown = 0
 				"Admin login: [key_name(src)]")
 		if(string)
 			message_admins("[string]")
+
+
+/datum/admins/SDQL_update(var/const/var_name, var/new_value)
+	return FALSE	//No.

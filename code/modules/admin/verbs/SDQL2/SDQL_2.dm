@@ -18,11 +18,26 @@
 
 */
 
+/datum/proc/SDQL_update(var/const/var_name, var/new_value)
+	vars[var_name] = new_value
+	return TRUE
+
+/client/proc/SDQL_update(var/const/var_name, var/new_value)
+	vars[var_name] = new_value
+	return TRUE
+
 /client/proc/SDQL2_query(query_text as message)
 	set category = "Debug"
 	if(!check_rights(R_DEBUG))  //Shouldn't happen... but just to be safe.
 		message_admins("<span class='danger'>ERROR: Non-admin [key_name(usr, usr.client)] attempted to execute a SDQL query!</span>")
 		log_admin("Non-admin [usr.ckey]([usr]) attempted to execute a SDQL query!")
+		return FALSE
+
+	var/query_log = "executed SDQL query: \"[query_text]\"."
+	message_admins("[key_name_admin(usr)] [query_log]")
+	query_log = "[usr.ckey]([usr]) [query_log]"
+	log_game(query_log)
+	NOTICE(query_log)
 
 	if(!query_text || length(query_text) < 1)
 		return
@@ -38,14 +53,6 @@
 
 	if(!querys || querys.len < 1)
 		return
-
-
-	var/query_log = "executed SDQL query: \"[query_text]\"."
-	message_admins("[key_name_admin(usr)] [query_log]")
-	query_log = "[usr.ckey]([usr]) [query_log]"
-	log_game(query_log)
-	NOTICE(query_log)
-
 
 	for(var/list/query_tree in querys)
 		var/list/from_objs = list()
@@ -131,20 +138,8 @@
 					for(var/datum/d in objs)
 						var/list/vals = list()
 						for(var/v in set_list)
-							if(v in d.vars)
-								vals += v
-								vals[v] = SDQL_expression(d, set_list[v])
-
-						if(isturf(d))
-							for(var/v in vals)
-								if(v == "x" || v == "y" || v == "z")
-									continue
-
-								d.vars[v] = vals[v]
-
-						else
-							for(var/v in vals)
-								d.vars[v] = vals[v]
+							v = SDQL_expression(d, v)
+							d.SDQL_update(v.name, v)
 						CHECK_TICK
 
 
@@ -248,7 +243,7 @@
 
 	type = text2path(type)
 	var/typecache = typecacheof(type)
-	
+
 	if(ispath(type, /mob))
 		for(var/mob/d in location)
 			if(typecache[d.type])
