@@ -180,8 +180,8 @@
 /obj/item/weapon/storage/toolbox/his_grace/examine(mob/user)
 	..()
 	if(awakened)
-		if(victims.len)
-			user << "You hear the distant murmuring of [victims.len] victims to [src]."
+		if(victims)
+			user << "You hear the distant murmuring of [victims] victims to [src]."
 		switch(bloodthirst)
 			if(HIS_GRACE_SATIATED to HIS_GRACE_PECKISH)
 				user << "<span class='danger'>[src] isn't very hungry. Not yet.</span>"
@@ -312,6 +312,7 @@
 	playsound(src, 'sound/items/eatfood.ogg', 100, 1)
 	meal.forceMove(src)
 	adjust_bloodthirst(-(bloodthirst - victims)) //Never fully sated, and it starts off higher as it eats
+	victims++
 
 /obj/item/weapon/storage/toolbox/his_grace/proc/change_phases()
 	switch(bloodthirst)
