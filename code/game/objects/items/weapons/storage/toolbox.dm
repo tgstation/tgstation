@@ -291,6 +291,8 @@
 	icon_state = initial(icon_state)
 	gender = initial(gender)
 	awakened = 0
+	victims = 0
+	warning_messages = initial(warning_messages)
 	adjust_bloodthirst(-bloodthirst)
 	STOP_PROCESSING(SSprocessing, src)
 	send_to_playing_players("<span class='boldannounce'><font size=6>HIS GRACE HAS RETURNED TO SLUMBER</font></span>")
