@@ -18,7 +18,7 @@
 
 */
 
-/datum/proc/SDQL_update(var/list/vars_list)
+/datum/proc/SDQL_update(list/vars_list)
 	for(var/v in vars_list)
 		vars[v] = vars_list[v]
 	return TRUE
