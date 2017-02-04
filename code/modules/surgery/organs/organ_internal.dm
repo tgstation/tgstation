@@ -855,12 +855,6 @@
 	M.AddLuminosity(-15)
 	..()
 
-/obj/item/organ/eyes/robotic/flashlight/transfer_to_limb(obj/item/bodypart/head/LB, mob/living/carbon/human/C)
-	LB.eyes = src
-	LB.AddLuminosity(15)
-	..()
-
-
 // Welding shield implant
 /obj/item/organ/eyes/robotic/shield
 	name = "shielded robotic eyes"
