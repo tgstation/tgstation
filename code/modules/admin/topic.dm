@@ -35,7 +35,7 @@
 		C << msg
 
 		message_admins("[key_name_admin(usr)] marked [C.key]'s as an IC issue.")
-		message_admins("[key_name(usr)] marked [C.key]'s as an IC issue.")
+		log_admin("[key_name(usr)] marked [C.key]'s as an IC issue.")
 
 	else if(href_list["stickyban"])
 		stickyban(href_list["stickyban"],href_list)
