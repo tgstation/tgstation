@@ -92,7 +92,7 @@ mob/camera/aiEye/remote/base_construction/New(loc)
 	window_action.Grant(user)
 	fan_action.target = src
 	fan_action.Grant(user)
-	eyeobj.invisibility = INVISIBILITY_LIGHTING //When the eye is in use, make it visible to players so they know when someone is building.
+	eyeobj.invisibility = 0 //When the eye is in use, make it visible to players so they know when someone is building.
 
 
 /datum/action/innate/aux_base //Parent aux base action
