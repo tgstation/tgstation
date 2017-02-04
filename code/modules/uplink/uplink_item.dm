@@ -1164,7 +1164,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	name = "Romerol"
 	desc = "A highly experimental bioterror agent which creates dormant nodules to be etched into the grey matter of the brain. On death, these nodules take control of the dead body, causing limited revivification, along with slurred speech, aggression, and the ability to infect others with this agent."
 	item = /obj/item/weapon/storage/box/syndie_kit/romerol
-	cost = 25
+	cost = 20
 	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/gang)
 	restricted_roles = list("Medical Doctor", "Chemist", "Geneticist", "Virologist", "Chief Medical Officer")
 
