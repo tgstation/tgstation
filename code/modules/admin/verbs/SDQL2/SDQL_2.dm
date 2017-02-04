@@ -106,7 +106,7 @@
 						for(var/v in call_list)
 							if(copytext(v,1,8) == "global.")
 								v = "/proc/[copytext(v,8)]"
-								call(v)(arglist(new_args))
+								SDQL_callproc_global(v,new_args)
 							else
 								SDQL_callproc(d, v, new_args)
 						CHECK_TICK
@@ -153,8 +153,12 @@
 		usr << "\[FILE\][e.file]"
 		usr << "\[LINE\][e.line]"
 
+/proc/SDQL_callproc_global(procname,args_list)
+	set waitfor = FALSE
+	call(procname)(arglist(args_list))
+
 /proc/SDQL_callproc(thing, procname, args_list)
-	set waitfor = 0
+	set waitfor = FALSE
 	if(hascall(thing, procname))
 		call(thing, procname)(arglist(args_list))
 
