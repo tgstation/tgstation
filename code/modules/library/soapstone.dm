@@ -176,6 +176,9 @@
 		persists = FALSE
 		qdel(src)
 
+/obj/structure/chisel_message/singularity_pull()
+	return
+
 /obj/structure/chisel_message/proc/register(mob/user, newmessage)
 	hidden_message = newmessage
 	creator_name = user.real_name

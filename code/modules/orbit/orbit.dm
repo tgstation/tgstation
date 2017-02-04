@@ -33,7 +33,7 @@
 			if (!orbiting.orbiters.len)//we are the last orbit, delete the list
 				orbiting.orbiters = null
 		orbiting = null
-	..()
+	return ..()
 
 /datum/orbit/proc/Check(turf/targetloc)
 	if (!orbiter)

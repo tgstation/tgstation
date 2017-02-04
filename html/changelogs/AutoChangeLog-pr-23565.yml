@@ -1,0 +1,4 @@
+author: "Cyberboss"
+delete-after: True
+changes: 
+  - tweak: "Machine frames will no longer be anchored when created"

@@ -79,6 +79,8 @@
 				return
 			if(L.buckled)
 				return
+			if(user.pulling != L)
+				return
 			playsound(src.loc, "sound/effects/splat.ogg", 25, 1)
 			L.visible_message("<span class='danger'>[user] slams [L] onto the meat spike!</span>", "<span class='userdanger'>[user] slams you onto the meat spike!</span>", "<span class='italics'>You hear a squishy wet noise.</span>")
 			L.loc = src.loc

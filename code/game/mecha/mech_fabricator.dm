@@ -452,7 +452,8 @@
 		if(inserted)
 			user << "<span class='notice'>You insert [inserted] sheet\s into [src].</span>"
 			if(W && W.materials.len)
-				user.put_in_active_hand(W)
+				if(!qdeleted(W))
+					user.put_in_active_hand(W)
 				var/mat_overlay = "fab-load-[material2name(W.materials[1])]"
 				add_overlay(mat_overlay)
 				sleep(10)

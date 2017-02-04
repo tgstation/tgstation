@@ -38603,12 +38603,20 @@
 /obj/structure/closet/crate{
 	name = "Silver Crate"
 	},
-/obj/item/stack/spacecash/c1000,
-/obj/item/stack/spacecash/c1000,
-/obj/item/stack/spacecash/c500,
 /obj/machinery/light/small{
 	dir = 1
 	},
+/obj/item/weapon/coin/silver{
+	pixel_z = -6
+	},
+/obj/item/weapon/coin/silver{
+	pixel_z = 6
+	},
+/obj/item/weapon/coin/silver{
+	pixel_x = 6
+	},
+/obj/item/weapon/coin/silver,
+/obj/item/weapon/coin/silver,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
@@ -42129,15 +42137,15 @@
 	name = "Gold Crate"
 	},
 /obj/item/weapon/storage/belt/champion,
-/obj/item/stack/spacecash/c1000,
-/obj/item/stack/spacecash/c1000,
-/obj/item/stack/spacecash/c500,
 /obj/machinery/airalarm{
 	dir = 1;
 	icon_state = "alarm0";
 	pixel_y = -22
 	},
 /obj/machinery/light/small,
+/obj/item/stack/sheet/mineral/gold,
+/obj/item/stack/sheet/mineral/gold,
+/obj/item/stack/sheet/mineral/gold,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
@@ -137899,7 +137907,7 @@ aaf
 aaf
 aBX
 aBX
-eca
+aEN
 aBX
 aBZ
 aBZ
