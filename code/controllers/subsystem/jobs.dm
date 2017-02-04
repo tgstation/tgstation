@@ -404,7 +404,32 @@ var/datum/controller/subsystem/job/SSjob
 			H.loc = S.loc
 
 	if(H.mind)
-		H.mind.assigned_role = rank
+		var/datum/mind/H_mind = H.mind
+		H_mind.assigned_role = rank
+
+		if(H.voiceprint && (!joined_late || world.time - round_start_time <= config.latejoin_identity_retcon))
+			var/list/H_knowledge_positions = list()
+			for(var/list/positions_list in identity_initial_knowledge_positions)
+				if(rank in positions_list)
+					H_knowledge_positions |= positions_list
+			if(H_knowledge_positions.len)
+				for(var/_T_mind in ticker.minds-H_mind)
+					var/datum/mind/T_mind = _T_mind
+					if(T_mind.current)
+						var/mob/living/T = T_mind.current
+						if(!H_mind.get_print_entry(T.voiceprint, CATEGORY_VOICEPRINTS) && T.voiceprint && T_mind.assigned_role)
+							var/T_rank = T_mind.assigned_role
+							var/T_take
+							var/T_give
+							if(T_rank in everybody_knows_these_positions)
+								T_take = TRUE
+							if(T_rank in H_knowledge_positions)
+								T_take = TRUE
+								T_give = !T_mind.get_print_entry(H.voiceprint, CATEGORY_VOICEPRINTS)
+							if(T_take)
+								H_mind.set_print_manual(T.voiceprint, T.real_name, CATEGORY_VOICEPRINTS)
+							if(T_give)
+								T_mind.set_print_manual(H.voiceprint, H.real_name, CATEGORY_VOICEPRINTS)
 
 	if(job)
 		var/new_mob = job.equip(H)

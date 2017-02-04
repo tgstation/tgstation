@@ -21,6 +21,7 @@
 	item_state = "ek"
 	item_color = "ek"
 	can_adjust = 0
+	identity_name = "Patriot"
 
 /obj/item/clothing/under/scratch
 	name = "white suit"
@@ -36,6 +37,7 @@
 	icon_state = "sl_suit"
 	item_color = "sl_suit"
 	can_adjust = 0
+	identity_name = "Amish Folk"
 
 /obj/item/clothing/under/roman
 	name = "roman armor"
@@ -46,6 +48,7 @@
 	can_adjust = 0
 	strip_delay = 100
 	resistance_flags = 0
+	identity_name = "Roman Soldier"
 
 /obj/item/clothing/under/waiter
 	name = "waiter's outfit"
@@ -64,6 +67,7 @@
 	has_sensor = 2
 	sensor_mode = 3
 	random_sensor = 0
+	identity_name = "Prisoner"
 
 /obj/item/clothing/under/rank/mailman
 	name = "mailman's jumpsuit"
@@ -71,6 +75,7 @@
 	icon_state = "mailman"
 	item_state = "b_suit"
 	item_color = "mailman"
+	identity_name = "Mailman"
 
 /obj/item/clothing/under/rank/psyche
 	name = "psychedelic jumpsuit"
@@ -110,6 +115,7 @@
 	item_state = "g_suit"
 	item_color = "officer"
 	alt_covers_chest = 1
+	identity_name = "Centcom Official"
 
 /obj/item/clothing/under/rank/centcom_commander
 	desc = "It's a jumpsuit worn by Centcom's highest-tier Commanders."
@@ -117,6 +123,7 @@
 	icon_state = "centcom"
 	item_state = "dg_suit"
 	item_color = "centcom"
+	identity_name = "Centcom Commander"
 
 /obj/item/clothing/under/space
 	name = "\improper NASA jumpsuit"
@@ -158,6 +165,7 @@
 	icon_state = "owl"
 	item_color = "owl"
 	can_adjust = 0
+	identity_name = "The Owl"
 
 /obj/item/clothing/under/griffin
 	name = "griffon uniform"
@@ -165,6 +173,7 @@
 	icon_state = "griffin"
 	item_color = "griffin"
 	can_adjust = 0
+	identity_name = "The Griffon"
 
 /obj/item/clothing/under/cloud
 	name = "cloud"
@@ -180,6 +189,7 @@
 	item_state = "dg_suit"
 	item_color = "green_suit"
 	can_adjust = 0
+	identity_name = "Captain"
 
 /obj/item/clothing/under/gimmick/rank/head_of_personnel/suit
 	name = "head of personnel's suit"
@@ -188,6 +198,7 @@
 	item_state = "g_suit"
 	item_color = "teal_suit"
 	can_adjust = 0
+	identity_name = "Head of Personnel"
 
 /obj/item/clothing/under/suit_jacket
 	name = "black suit"
@@ -504,6 +515,7 @@
 	body_parts_covered = CHEST|GROIN
 	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = 0
+	identity_name = "Maid"
 
 /obj/item/clothing/under/plaid_skirt
 	name = "red plaid skirt"
@@ -571,6 +583,7 @@
 	icon_state = "jester"
 	item_color = "jester"
 	can_adjust = 0
+	identity_name = "Jester"
 
 /obj/item/clothing/under/geisha
 	name = "geisha suit"

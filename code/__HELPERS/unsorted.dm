@@ -1424,5 +1424,9 @@ var/valid_HTTPSGet = FALSE
 
 #define UNTIL(X) while(!(X)) stoplag()
 
-/proc/to_chat(target, message)
+
+/proc/to_chat(target, message, list/subjects)
+	if(subjects)
+		var/mob/M = target
+		message = M.parse_identity_subjects(message, subjects)
 	target << message

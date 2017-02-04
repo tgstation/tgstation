@@ -42,6 +42,7 @@
 
 /obj/item/clothing/suit/bio_suit/virology
 	icon_state = "bio_virology"
+	identity_name = "Virologist"
 
 
 //Security biosuit, grey with red stripe across the chest
@@ -52,6 +53,7 @@
 /obj/item/clothing/suit/bio_suit/security
 	armor = list(melee = 25, bullet = 15, laser = 25, energy = 10, bomb = 25, bio = 100, rad = 20, fire = 30, acid = 100)
 	icon_state = "bio_security"
+	identity_name = "Security Officer"
 
 
 //Janitor's biosuit, grey with purple arms
@@ -60,6 +62,7 @@
 
 /obj/item/clothing/suit/bio_suit/janitor
 	icon_state = "bio_janitor"
+	identity_name = "Janitor"
 
 
 //Scientist's biosuit, white with a pink-ish hue
@@ -68,6 +71,7 @@
 
 /obj/item/clothing/suit/bio_suit/scientist
 	icon_state = "bio_scientist"
+	identity_name = "Scientist"
 
 
 //CMO's biosuit, blue stripe
@@ -76,6 +80,7 @@
 
 /obj/item/clothing/head/bio_hood/cmo
 	icon_state = "bio_cmo"
+	identity_name = "Chief Medical Officer"
 
 
 //Plague Dr mask can be found in clothing/masks/gasmask.dm
@@ -86,3 +91,4 @@
 	item_state = "bio_suit"
 	strip_delay = 40
 	put_on_delay = 20
+	identity_name = "Plague Doctor"

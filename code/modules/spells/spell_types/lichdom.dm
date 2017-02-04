@@ -78,8 +78,9 @@
 			lich.equip_to_slot_or_del(new /obj/item/clothing/head/wizard/black(lich), slot_head)
 
 			lich.real_name = M.mind.name
+			lich.voiceprint = voiceprint
 			M.mind.transfer_to(lich)
-			lich.hardset_dna(null,null,lich.real_name,null,/datum/species/skeleton)
+			lich.hardset_dna(null,null,lich.real_name,null,/datum/species/skeleton,lich.voiceprint)
 			to_chat(lich, "<span class='warning'>Your bones clatter and shutter as you are pulled back into this world!</span>")
 			charge_max += 600
 			var/mob/old_body = current_body
@@ -130,6 +131,7 @@
 			poi_list |= marked_item
 
 			to_chat(M, "<span class='userdanger'>With a hideous feeling of emptiness you watch in horrified fascination as skin sloughs off bone! Blood boils, nerves disintegrate, eyes boil in their sockets! As your organs crumble to dust in your fleshless chest you come to terms with your choice. You're a lich!</span>")
+			voiceprint = M.voiceprint
 			M.set_species(/datum/species/skeleton)
 			current_body = M.mind.current
 			if(ishuman(M))

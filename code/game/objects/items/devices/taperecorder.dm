@@ -92,10 +92,23 @@
 		icon_state = "taperecorder_idle"
 
 
-/obj/item/device/taperecorder/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, spans)
+/obj/item/device/taperecorder/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, spans, voice_print, message_mode)
 	if(mytape && recording)
 		mytape.timestamp += mytape.used_capacity
-		mytape.storedinfo += "\[[time2text(mytape.used_capacity * 10,"mm:ss")]\] [message]"
+		var/reference = "\ref[speaker][voice_print]"
+		if(!mytape.storedvirts[reference])
+			var/atom/movable/virtualspeaker/virt = new
+			virt.name = speaker.GetVoice()
+			virt.languages_spoken = speaker.languages_spoken
+			virt.source = speaker
+			virt.verb_say = speaker.verb_say
+			virt.verb_ask = speaker.verb_ask
+			virt.verb_exclaim = speaker.verb_exclaim
+			virt.verb_whisper = speaker.verb_whisper
+			virt.verb_yell = speaker.verb_yell
+			virt.voiceprint = voice_print
+			mytape.storedvirts[reference] = virt
+		mytape.storedinfo[++mytape.storedinfo.len] = list("\[[time2text(mytape.used_capacity * 10,"mm:ss")]\]", raw_message, spans, reference)
 
 /obj/item/device/taperecorder/verb/record()
 	set name = "Start Recording"
@@ -191,6 +204,32 @@
 	playing = 0
 	update_icon()
 
+/obj/item/device/taperecorder/say(list/recording)
+	if(istext(recording))
+		return ..()
+	if(!can_speak())
+		return
+	if(!mytape || !recording || !recording.len)
+		return
+	var/timestamp = recording[1]
+	var/raw_message = recording[2]
+	var/list/their_spans = recording[3]
+	var/atom/movable/virtualspeaker/virt = mytape.storedvirts[recording[4]]
+	var/my_spans = get_spans()
+	var/rendered = compose_said_message(virt, timestamp, raw_message, my_spans, their_spans)
+	for(var/atom/movable/AM in get_hearers_in_view(6, src))
+		var/voice_print = virt.voiceprint
+		if(voice_print && isliving(AM))
+			var/voiceprint_name = AM.get_voiceprint_name(virt, voice_print)
+			rendered = compose_said_message(virt, timestamp, raw_message, my_spans, their_spans, AM, voiceprint_name)
+		AM.Hear(rendered, src, virt.languages_spoken, raw_message, , my_spans)
+
+/obj/item/device/taperecorder/proc/compose_recorded_message(atom/movable/virtualspeaker/virt, timestamp, raw_message, list/my_spans, list/their_spans, atom/movable/hearer=src, voiceprint_name)
+	. = "[timestamp] [hearer.compose_message(virt, virt.languages_spoken, raw_message, , their_spans, voiceprint_name)]"
+
+/obj/item/device/taperecorder/proc/compose_said_message(atom/movable/virtualspeaker/virt, timestamp, raw_message, list/my_spans, list/their_spans, atom/movable/hearer=src, voiceprint_name)
+	var/message = compose_recorded_message(virt, timestamp, raw_message, my_spans, their_spans, hearer, voiceprint_name)
+	. = compose_message(src, languages_spoken, message, , my_spans)
 
 /obj/item/device/taperecorder/attack_self(mob/user)
 	if(!mytape || mytape.ruined)
@@ -214,12 +253,27 @@
 		return
 	if(recording || playing)
 		return
-
 	to_chat(usr, "<span class='notice'>Transcript printed.</span>")
+	var/t1 = "<B>Transcript (random names):</B><BR><BR>"
+	var/list/speakers = list()
+	var/list/random_names = list()
+	var/datum/species/S = new
+	for(var/virt in mytape.storedvirts)
+		var/rand_name = S.random_name(pick(MALE, FEMALE))
+		while(random_names[rand_name])
+			rand_name = S.random_name(pick(MALE, FEMALE))
+		random_names[rand_name] = TRUE
+		speakers[virt] = rand_name
+	for(var/entry in mytape.storedinfo)
+		if(istext(entry))
+			t1 += "[entry]<BR>"
+		else
+			var/list/entry_list = entry
+			var/timestamp = entry_list[1]
+			var/raw_message = entry_list[2]
+			var/reference = entry_list[4]
+			t1 += "[timestamp] [speakers[reference]] - [raw_message]<BR>"
 	var/obj/item/weapon/paper/P = new /obj/item/weapon/paper(get_turf(src))
-	var/t1 = "<B>Transcript:</B><BR><BR>"
-	for(var/i = 1, mytape.storedinfo.len >= i, i++)
-		t1 += "[mytape.storedinfo[i]]<BR>"
 	P.info = t1
 	P.name = "paper- 'Transcript'"
 	usr.put_in_hands(P)
@@ -245,6 +299,7 @@
 	var/max_capacity = 600
 	var/used_capacity = 0
 	var/list/storedinfo = list()
+	var/list/storedvirts = list()
 	var/list/timestamp = list()
 	var/ruined = 0
 

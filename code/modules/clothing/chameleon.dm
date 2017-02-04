@@ -142,6 +142,7 @@
 		var/obj/item/I = target
 		I.item_state = initial(picked_item.item_state)
 		I.item_color = initial(picked_item.item_color)
+		I.identity_name = initial(picked_item.identity_name)
 		if(istype(I, /obj/item/clothing) && istype(initial(picked_item), /obj/item/clothing))
 			var/obj/item/clothing/CL = I
 			var/obj/item/clothing/PCL = picked_item
@@ -343,9 +344,7 @@
 	permeability_coefficient = 0.01
 	flags_cover = MASKCOVERSEYES | MASKCOVERSMOUTH
 
-	var/vchange = 1
-
-	var/datum/action/item_action/chameleon/change/chameleon_action
+	var/datum/action/item_action/chameleon/change/chameleon_action = null
 
 /obj/item/clothing/mask/chameleon/New()
 	..()
@@ -358,17 +357,11 @@
 /obj/item/clothing/mask/chameleon/emp_act(severity)
 	chameleon_action.emp_randomise()
 
-/obj/item/clothing/mask/chameleon/attack_self(mob/user)
-	vchange = !vchange
-	to_chat(user, "<span class='notice'>The voice changer is now [vchange ? "on" : "off"]!</span>")
-
-
 /obj/item/clothing/mask/chameleon/drone
 	//Same as the drone chameleon hat, undroppable and no protection
 	flags = NODROP
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 0, acid = 0)
 	// Can drones use the voice changer part? Let's not find out.
-	vchange = 0
 
 /obj/item/clothing/mask/chameleon/drone/New()
 	..()
@@ -377,9 +370,6 @@
 	togglehatmask_action.UpdateButtonIcon()
 	var/datum/action/item_action/chameleon/drone/randomise/randomise_action = new(src)
 	randomise_action.UpdateButtonIcon()
-
-/obj/item/clothing/mask/chameleon/drone/attack_self(mob/user)
-	to_chat(user, "<span class='notice'>The [src] does not have a voice changer.</span>")
 
 /obj/item/clothing/shoes/chameleon
 	name = "black shoes"
@@ -557,6 +547,16 @@
 	name = "radio headset"
 	var/datum/action/item_action/chameleon/change/chameleon_action
 
+	var/chosen_voice
+	var/chosen_voiceprint
+	var/selected_voice
+	var/voice_masking = FALSE
+	var/list/recorded_voiceprints = list()
+	var/list/voiceprint_refs = list()
+	var/list/voiceprint_speeches = list()
+	var/list/voiceprint_pseudonyms = list()
+	var/recording = FALSE
+
 /obj/item/device/radio/headset/chameleon/New()
 	..()
 	chameleon_action = new(src)
@@ -566,6 +566,146 @@
 
 /obj/item/device/radio/headset/chameleon/emp_act(severity)
 	chameleon_action.emp_randomise()
+
+/obj/item/device/radio/headset/chameleon/proc/add_fake_voiceprint()
+	if(chosen_voice && ishuman(loc))
+		var/mob/living/carbon/human/H = loc
+		if(H.ears == src)
+			H.fake_voiceprint = chosen_voiceprint
+
+/obj/item/device/radio/headset/chameleon/proc/remove_fake_voiceprint(mob/user)
+	if(!user)
+		user = loc
+		if(!istype(user))
+			return
+		if(ishuman(user))
+			var/mob/living/carbon/human/H = user
+			if(H.ears != src)
+				return
+	if(user.fake_voiceprint == chosen_voiceprint)
+		user.fake_voiceprint = null
+
+/obj/item/device/radio/headset/chameleon/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, list/spans, voice_print, message_mode)
+	if(recording && voice_print)
+		message = languages_understood & message_langs ? raw_message : stars(raw_message)
+		var/list/voiceprint_ref = voiceprint_refs[voice_print]
+		var/list/speeches = voiceprint_speeches[voiceprint_ref]
+		if(!voiceprint_ref)
+			voiceprint_ref = generate_voiceprint_ref()
+			speeches = list()
+			var/datum/species/S = new
+			var/pseudonym = S.random_name(pick(MALE, FEMALE))
+			voiceprint_pseudonyms[voiceprint_ref] = pseudonym
+			voiceprint_refs[voice_print] = voiceprint_ref
+			recorded_voiceprints[voiceprint_ref] = voice_print
+		speeches += message
+		voiceprint_speeches -= voiceprint_ref
+		voiceprint_speeches.Insert(1, voiceprint_ref)
+		voiceprint_speeches[voiceprint_ref] = speeches
+
+/obj/item/device/radio/headset/chameleon/dropped(mob/user)
+	..()
+	remove_fake_voiceprint(user)
+
+/obj/item/device/radio/headset/chameleon/equipped(mob/user, slot)
+	..()
+	if(loc == user && slot == slot_ears && voice_masking)
+		add_fake_voiceprint()
+	else
+		remove_fake_voiceprint(user)
+
+/obj/item/device/radio/headset/chameleon/proc/generate_voiceprint_ref()
+	var/generated_ref = random_string(6, hex_characters)
+	while(recorded_voiceprints[generated_ref])
+		generated_ref = random_string(6, hex_characters)
+	. = generated_ref
+
+/obj/item/device/radio/headset/chameleon/ui_data(mob/user)
+	var/list/data = ..()
+	data["headset"] = 2
+	data["recording"] = recording
+	data["speeches"] = voiceprint_speeches.len ? voiceprint_speeches : null
+	data["pseudonyms"] = voiceprint_pseudonyms
+	data["voicemasking"] = voice_masking
+	data["chosenvoice"] = chosen_voice
+	data["selectedvoice"] = selected_voice
+	. = data
+
+/obj/item/device/radio/headset/chameleon/proc/toggle_recording()
+	recording = !recording
+
+/obj/item/device/radio/headset/chameleon/proc/toggle_voice_masking()
+	if(chosen_voice)
+		voice_masking = !voice_masking
+		if(voice_masking)
+			add_fake_voiceprint()
+		else
+			remove_fake_voiceprint()
+
+/obj/item/device/radio/headset/chameleon/proc/choose_voice(voiceprint_ref)
+	var/no_voice = !voiceprint_ref || voiceprint_ref == chosen_voice
+	chosen_voice = no_voice ? null : voiceprint_ref
+	chosen_voiceprint = no_voice ? null : recorded_voiceprints[voiceprint_ref]
+	if(voice_masking)
+		if(no_voice)
+			voice_masking = FALSE
+			remove_fake_voiceprint()
+		else
+			add_fake_voiceprint()
+
+/obj/item/device/radio/headset/chameleon/proc/clear_voices()
+	choose_voice(null)
+	recorded_voiceprints = list()
+	voiceprint_refs = list()
+	voiceprint_speeches = list()
+	voiceprint_pseudonyms = list()
+	remove_fake_voiceprint()
+
+/obj/item/device/radio/headset/chameleon/proc/open_voice_changer(mob/user, datum/ui_state/state = inventory_state)
+	var/datum/tgui/voicechanger_ui = SStgui.try_update_ui(user, src, "voicechanger")
+	if(!voicechanger_ui)
+		voicechanger_ui = new(user, src, "voicechanger", "chameleon-headset", "Voice Changer", 370, 280, null, state)
+		voicechanger_ui.set_style("syndicate")
+		voicechanger_ui.open()
+
+/obj/item/device/radio/headset/chameleon/ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
+	if(..())
+		return
+	switch(action)
+		if("voicechanger")
+			open_voice_changer(ui.user, state)
+		if("togglerecord")
+			toggle_recording()
+			. = TRUE
+		if("usevoice")
+			var/choice = params["voice"]
+			if(recorded_voiceprints[choice])
+				choose_voice(choice)
+				. = TRUE
+		if("selectvoice")
+			var/choice = params["voice"]
+			if(selected_voice != choice)
+				selected_voice = choice
+			else
+				selected_voice = null
+			. = TRUE
+		if("deletevoice")
+			var/voice = params["voice"]
+			var/voice_print = recorded_voiceprints[voice]
+			if(voice_print)
+				voiceprint_speeches -= voice
+				voiceprint_pseudonyms -= voice
+				voiceprint_refs -= voice_print
+				recorded_voiceprints -= voice
+				if(chosen_voice == voice)
+					choose_voice(null)
+				. = TRUE
+		if("togglevoicemasking")
+			toggle_voice_masking()
+			. = TRUE
+		if("clearvoices")
+			clear_voices()
+			. = TRUE
 
 /obj/item/device/pda/chameleon
 	name = "PDA"

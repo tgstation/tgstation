@@ -139,6 +139,7 @@
 	var/protect_assistant_from_antagonist = 0 //If assistants can be traitor/cult/other
 	var/enforce_human_authority = 0		//If non-human species are barred from joining as a head of staff
 	var/allow_latejoin_antagonists = 0 	// If late-joining players can be traitor/changeling
+	var/latejoin_identity_retcon = -1	// how long past roundstart are latejoins filled in with identity information about their crewmates
 	var/list/continuous = list()		// which roundtypes continue if all antagonists die
 	var/list/midround_antag = list() 	// which roundtypes use the midround antagonist system
 	var/midround_antag_time_check = 60  // How late (in minutes) you want the midround antag system to stay on, setting this to 0 will disable the system
@@ -667,6 +668,8 @@
 					config.enforce_human_authority	= 1
 				if("allow_latejoin_antagonists")
 					config.allow_latejoin_antagonists	= 1
+				if("latejoin_identity_retcon")
+					config.latejoin_identity_retcon = text2num(value)*10
 				if("allow_random_events")
 					config.allow_random_events		= 1
 

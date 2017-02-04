@@ -1,0 +1,181 @@
+<script>
+	import { act } from 'util/byond'
+	const CATEGORY_VOICEPRINTS = 1
+	const CATEGORY_FACEPRINTS = 2
+	const IDMAN_MODE_EDIT = 1
+	const IDMAN_MODE_LINK = 2
+	const IDENTITY_MANUAL = 1
+	const IDENTITY_INTERACT = 2
+	component.exports = {
+		computed: {
+			categoryName () {
+				switch (this.get('data.category')) {
+					case 1: return 'voice'
+					case 2: return 'face'
+				}
+			},
+			otherCategoryName () {
+				switch (this.get('data.category')) {
+					case 1: return 'face'
+					case 2: return 'voice'
+				}
+			},
+			categoryIcon () {
+				switch (this.get('data.category')) {
+					case 1: return 'comment'
+					case 2: return 'user'
+				}
+			}
+		},
+		oninit () {
+			this.on({
+				rowHover (event, printref) {
+					if (printref) {
+						this.set('hoveredRef', printref)
+					}
+				},
+				selectPrint (event, printref) {
+					if (!event.component && !this.get('selectMode') && printref) {
+						var selectedPrint = this.get('data.selectedref')
+						if (selectedPrint != printref)
+							act(this.get('config.ref'), "selectprint", {"printref" : printref})
+						else
+							act(this.get('config.ref'), "cancelselect")
+						return false
+					}
+				},
+				submitName (event, printref) {
+					var newName = this.get('editingName')
+					if (newName) {
+						var sanitizedName = newName.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
+						act(this.get('config.ref'), "writeprint", {"printref": printref, "name": sanitizedName})
+					}
+					this.set('editingName', "")
+					return false
+				},
+				popBubble () {
+					return false
+				}
+			})
+			this.observe('data.selectedref data.selectmode', () => {
+				var selectRef = this.get('data.selectedref')
+				var selectedMode = this.get('data.selectmode')
+				if (selectRef && selectedMode == IDMAN_MODE_EDIT) {
+					var prints = this.get('data.prints')
+					var oldprint = prints.find((print) => {
+						if (print["printref"] == selectRef) {
+							return true
+						}
+					})
+					if (oldprint) {
+						this.set('editingName', oldprint["name"])
+					}
+				}
+			}, {"init": false})
+		},
+		data: {
+			editingName: "",
+			hoveredRef: "",
+			CATEGORY_VOICEPRINTS: CATEGORY_VOICEPRINTS,
+			CATEGORY_FACEPRINTS: CATEGORY_FACEPRINTS,
+			IDMAN_MODE_LINK: IDMAN_MODE_LINK,
+			IDMAN_MODE_EDIT: IDMAN_MODE_EDIT,
+			IDENTITY_MANUAL: IDENTITY_MANUAL,
+			IDENTITY_INTERACT: IDENTITY_INTERACT,
+			identityClass (state) {
+				if (state > IDENTITY_INTERACT) {
+					return 'italic'
+				} else if (state == IDENTITY_MANUAL) {
+					return 'bold'
+				}
+			}
+		}
+	}
+</script>
+<ui-display>
+	<ui-display title='{{data.selectmode != IDMAN_MODE_LINK ? "<i class='fa fa-"+categoryIcon+"'></i> "+text.upperCaseFirst(categoryName)+"s" : "Select a "+categoryName+" to link with"}}'>
+	{{#if data.selectmode != IDMAN_MODE_LINK}}
+		<ui-button style='{{data.category == CATEGORY_VOICEPRINTS ? "selected" : null}}' icon='comment' action='changecategory' params='{"category": "1"}'>Voices</ui-button>
+		<ui-button style='{{data.category == CATEGORY_FACEPRINTS ? "selected" : null}}' icon='user' action='changecategory' params='{"category": "2"}'>Faces</ui-button>
+	{{else}}
+		<ui-button action='cancelselect'>Cancel linking mode</ui-button>
+	{{/if}}
+	</ui-display>
+	{{#if data.prints && data.prints.length}}
+		<table>
+			<thead>
+				<tr class='bold highlight'>
+					<th>
+						Time
+					</th>
+					<th>
+						Name
+					</th>
+					<th>
+						Last message
+					</th>
+				</tr>
+			</thead>
+			<tbody>
+				{{#each data.prints}}
+					<tr class='{{data.selectedref == printref ? "printselected" : null}}' on-mouseenter='rowHover:{{printref}}' on-click-enter='selectPrint:{{printref}}'>
+						<td>
+							{{timestamp}}
+						</td>
+						<td>
+							{{#if data.selectmode == IDMAN_MODE_EDIT && data.selectedref == printref}}
+								<input type='text' value='{{editingName}}' on-enter-blur='submitName:{{printref}}' autofocus/>
+							{{else}}
+								<span class='{{identityClass(identitystate)}}'>{{{name}}}</span>
+							{{/if}}
+						</td>
+						<td>
+							<span class='italic'>{{#lastmsg}}&quot;{{{lastmsg}}}&quot;{{/lastmsg}}</span>
+						</td>
+						<td on-click-enter='popBubble'>
+							{{#if hoveredRef == printref}}
+								{{#if data.selectmode != IDMAN_MODE_LINK}}
+									<ui-button icon='pencil' action='editprint' params='{"printref": "{{printref}}"}'>
+										Rename
+									</ui-button>
+									<ui-button icon='trash' action='deleteprint' params='{"printref": "{{printref}}"}'>
+										Forget
+									</ui-button>
+								{{/if}}
+								{{#if linked}}
+									<ui-button icon='unlink' style='{{data.selectmode != IDMAN_MODE_LINK ? null : "disabled"}}' action='unlinkprint' params='{"printref": "{{printref}}"}'>
+										Unlink from {{otherCategoryName}}
+									</ui-button>
+								{{else}}
+									<ui-button icon='link' action='linkprint' params='{"printref": "{{printref}}"}'>
+										{{#if data.selectmode != IDMAN_MODE_LINK}}
+											Link with {{otherCategoryName}}
+										{{else}}
+											Finish link
+										{{/if}}
+									</ui-button>
+								{{/if}}
+							{{/if}}
+						<td>
+					</tr>
+				{{/each}}
+			</tbody>
+		</table>
+	{{else}}
+		<ui-notice>You can't recall any {{categoryName}}s at the moment.</ui-notice>
+	{{/if}}
+</ui-display>
+
+<style>
+	table {
+		border-collapse: collapse;
+	}
+	td {
+		padding: 2px;
+	}
+	tr.printselected {
+		border-left-width: 5px;
+		border-left-style: solid;
+		border-left-color: color-normal;
+	}
+</style>

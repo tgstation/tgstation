@@ -6,6 +6,7 @@
 	req_one_access = list(access_security, access_forensics_lockers)
 	circuit = /obj/item/weapon/circuitboard/computer/secure_data
 	var/obj/item/weapon/card/id/scan = null
+	var/obj/item/device/tape/tape = null
 	var/authenticated = null
 	var/rank = null
 	var/screen = null
@@ -16,6 +17,7 @@
 	var/printing = null
 	var/can_change_id = 0
 	var/list/Perp
+	var/list/tapeinfo
 	var/tempname = null
 	//Sorting Variables
 	var/sortBy = "name"
@@ -26,15 +28,33 @@
 /obj/machinery/computer/secure_data/attackby(obj/item/O, mob/user, params)
 	if(istype(O, /obj/item/weapon/card/id))
 		if(!scan)
-			if(!user.drop_item())
-				return
-			O.loc = src
-			scan = O
+			scan = handle_insertion(user, scan, /obj/item/weapon/card/id)
 			to_chat(user, "<span class='notice'>You insert [O].</span>")
 		else
 			to_chat(user, "<span class='warning'>There's already an ID card in the console.</span>")
+	else if(istype(O, /obj/item/device/tape))
+		if(!tape)
+			tape = handle_insertion(user, tape, /obj/item/device/tape)
+			to_chat(user, "<span class='notice'>You insert [O].</span>")
+		else
+			to_chat(user, "<span class='warning'>There's already a cassette tape in the console.</span>")
 	else
 		return ..()
+
+/obj/machinery/computer/secure_data/proc/handle_insertion(mob/user, obj/item/insertion, typepath)
+	if(insertion)
+		if(ishuman(user) && !user.get_active_held_item())
+			user.put_in_hands(insertion)
+		else
+			insertion.loc = get_turf(src)
+		. = null
+	else
+		var/obj/item/I = user.get_active_held_item()
+		if(istype(I, typepath))
+			if(!user.drop_item())
+				return
+			I.loc = src
+			. = I
 
 //Someone needs to break down the dat += into chunks instead of long ass lines.
 /obj/machinery/computer/secure_data/attack_hand(mob/user)
@@ -48,7 +68,9 @@
 	if(temp)
 		dat = text("<TT>[]</TT><BR><BR><A href='?src=\ref[];choice=Clear Screen'>Clear Screen</A>", temp, src)
 	else
-		dat = text("Confirm Identity: <A href='?src=\ref[];choice=Confirm Identity'>[]</A><HR>", src, (scan ? text("[]", scan.name) : "----------"))
+		dat = text("Confirm Identity: <A href='?src=\ref[];choice=Confirm Identity'>[]</A> ", src, (scan ? text("[]", scan.name) : "----------"))
+		dat += text("Cassette Tape: <A href='?src=\ref[];choice=Cassette Tape'>[]</A> ", src, (tape ? "Eject" : "-----"))
+		dat += "<HR>"
 		if(authenticated)
 			switch(screen)
 				if(1)
@@ -178,14 +200,16 @@
 						if(config.mutant_races)
 							dat += "<tr><td>Species:</td><td><A href ='?src=\ref[src];choice=Edit Field;field=species'>&nbsp;[active1.fields["species"]]&nbsp;</A></td></tr>"
 						dat += {"<tr><td>Rank:</td><td><A href='?src=\ref[src];choice=Edit Field;field=rank'>&nbsp;[active1.fields["rank"]]&nbsp;</A></td></tr>
-						<tr><td>Fingerprint:</td><td><A href='?src=\ref[src];choice=Edit Field;field=fingerprint'>&nbsp;[active1.fields["fingerprint"]]&nbsp;</A></td></tr>
+						<tr><td>Fingerprint:</td><td><A href='?src=\ref[src];choice=Edit Field;field=fingerprint'>&nbsp;[active1.fields["fingerprint"]]&nbsp;</A></td></tr>"}
+						var/voice_sample = active1.fields["voice_sample"]
+						dat += {"<tr><td>Voice sample:</td><td><A href='?src=\ref[src];choice=Edit Field;field=voiceprint'>&nbsp;[voice_sample ? "&quot;[voice_sample]&quot;" : "None"]&nbsp;</A></td></tr>
 						<tr><td>Physical Status:</td><td>&nbsp;[active1.fields["p_stat"]]&nbsp;</td></tr>
 						<tr><td>Mental Status:</td><td>&nbsp;[active1.fields["m_stat"]]&nbsp;</td></tr>
 						</table></td>
-						<td><table><td align = center><a href='?src=\ref[src];choice=Edit Field;field=show_photo_front'><img src=photo_front height=80 width=80 border=4></a><br>
-						<a href='?src=\ref[src];choice=Edit Field;field=upd_photo_front'>Update front photo</a></td>
-						<td align = center><a href='?src=\ref[src];choice=Edit Field;field=show_photo_side'><img src=photo_side height=80 width=80 border=4></a><br>
-						<a href='?src=\ref[src];choice=Edit Field;field=upd_photo_side'>Update side photo</a></td></table>
+						<td><table><td align = center><a href='?src=\ref[src];choice=Edit Field;field=show_photo;side=front'><img src=photo_front height=80 width=80 border=4></a><br>
+						<a href='?src=\ref[src];choice=Edit Field;field=upd_photo;side=front'>Update front photo</a></td>
+						<td align = center><a href='?src=\ref[src];choice=Edit Field;field=show_photo;side=side'><img src=photo_side height=80 width=80 border=4></a><br>
+						<a href='?src=\ref[src];choice=Edit Field;field=upd_photo;side=side'>Update side photo</a></td></table>
 						</td></tr></table></td></tr></table>"}
 					else
 						dat += "<br>General Record Lost!<br>"
@@ -291,19 +315,10 @@ What a mess.*/
 				active2 = null
 
 			if("Confirm Identity")
-				if(scan)
-					if(ishuman(usr) && !usr.get_active_held_item())
-						usr.put_in_hands(scan)
-					else
-						scan.loc = get_turf(src)
-					scan = null
-				else
-					var/obj/item/I = usr.get_active_held_item()
-					if(istype(I, /obj/item/weapon/card/id))
-						if(!usr.drop_item())
-							return
-						I.loc = src
-						scan = I
+				scan = handle_insertion(usr, scan, /obj/item/weapon/card/id)
+
+			if("Cassette Tape")
+				tape = handle_insertion(usr, tape, /obj/item/device/tape)
 
 			if("Log Out")
 				authenticated = null
@@ -579,6 +594,46 @@ What a mess.*/
 							if(!canUseSecurityRecordsConsole(usr, t1, a1))
 								return
 							active1.fields["fingerprint"] = t1
+					if("voiceprint")
+						if(istype(active1, /datum/data/record))
+							temp = "<h5>Voice sample:</h5>"
+							temp += "<ul>"
+							if(tape)
+								var/list/print_lookup = list()
+								var/list/random_names = list()
+								var/list/_tapeinfo = list()
+								var/datum/species/S = new
+								for(var/list/entry in tape.storedinfo)
+									if(!islist(entry))
+										continue
+									var/timestamp = entry[1]
+									var/message = entry[2]
+									if(!message)
+										continue
+									var/virtref = entry[4]
+									var/atom/movable/virtualspeaker/virt = tape.storedvirts[virtref]
+									if(!virt)
+										continue
+									var/voice_print = virt.voiceprint
+									if(!voice_print)
+										continue
+									var/random_name = print_lookup[voice_print]
+									if(!random_name)
+										random_name = S.random_name(pick(MALE, FEMALE))
+										while(random_names[random_name])
+											random_name = S.random_name(pick(MALE, FEMALE))
+										random_names[random_name] = TRUE
+										print_lookup[voice_print] = random_name
+									var/list/new_entry = new(2)
+									var/infopos = ++_tapeinfo.len
+									new_entry = new(2)
+									new_entry[1] = voice_print
+									new_entry[2] = message
+									_tapeinfo[infopos] = new_entry
+									temp += "<li>[timestamp] [random_name] <a href='?src=\ref[src];choice=Change Voice Sample;voicesample=[infopos]'>&quot;[message]&quot;</a></li>"
+								tapeinfo = _tapeinfo
+							temp += "<li><a href='?src=\ref[src];choice=Change Voice Sample;voicesample=none'>None</a></li>"
+							temp += "</ul>"
 					if("sex")
 						if(istype(active1, /datum/data/record))
 							if(active1.fields["sex"] == "Male")
@@ -597,26 +652,34 @@ What a mess.*/
 							if(!canUseSecurityRecordsConsole(usr, t1, a1))
 								return
 							active1.fields["species"] = t1
-					if("show_photo_front")
-						if(active1.fields["photo_front"])
-							if(istype(active1.fields["photo_front"], /obj/item/weapon/photo))
-								var/obj/item/weapon/photo/P = active1.fields["photo_front"]
-								P.show(usr)
-					if("upd_photo_front")
-						var/icon/photo = get_photo(usr)
-						if(photo)
-							qdel(active1.fields["photo_front"])
-							active1.fields["photo_front"] = photo
-					if("show_photo_side")
-						if(active1.fields["photo_side"])
-							if(istype(active1.fields["photo_side"], /obj/item/weapon/photo))
-								var/obj/item/weapon/photo/P = active1.fields["photo_side"]
-								P.show(usr)
-					if("upd_photo_side")
-						var/icon/photo = get_photo(usr)
-						if(photo)
-							qdel(active1.fields["photo_side"])
-							active1.fields["photo_side"] = photo
+					if("show_photo")
+						var/side = href_list["side"]
+						if(side && side in list("front", "side"))
+							var/phototext = "photo_[side]"
+							if(active1.fields[phototext])
+								var/obj/item/weapon/photo/P = active1.fields[phototext]
+								if(istype(P))
+									P.show(usr)
+					if("upd_photo")
+						var/side = href_list["side"]
+						if(side && side in list("front", "side"))
+							var/phototext = "photo_[side]"
+							var/obj/item/weapon/photo/P = get_photo(usr)
+							if(P)
+								qdel(active1.fields[phototext])
+								active1.fields[phototext] = P
+								var/new_faceprint
+								if(P.mobinfo && P.mobinfo.len)
+									var/list/M_info = P.mobinfo[1]
+									if(istype(M_info) && M_info[1])
+										new_faceprint = M_info[2]
+								if(!new_faceprint)
+									var/obj/item/weapon/photo/otherP = active1.fields["photo_[side == "front" ? "side" : "front"]"]
+									if(istype(otherP) && otherP.mobinfo && otherP.mobinfo.len)
+										var/list/M_info = otherP.mobinfo[1]
+										if(islist(M_info) && M_info.len && M_info[1])
+											new_faceprint = M_info[2]
+								active1.fields["faceprint"] = new_faceprint
 					if("mi_crim_add")
 						if(istype(active1, /datum/data/record))
 							var/t1 = stripped_input(usr, "Please input minor crime names:", "Secure. records", "", null)
@@ -681,7 +744,17 @@ What a mess.*/
 							active1.fields["rank"] = href_list["rank"]
 							if(href_list["rank"] in get_all_jobs())
 								active1.fields["real_rank"] = href_list["real_rank"]
-
+					if("Change Voice Sample")
+						if(active1)
+							var/infopos = href_list["voicesample"]
+							if(infopos == "none")
+								active1.fields["voiceprint"] = null
+								active1.fields["voice_sample"] = null
+							else
+								var/list/entry = tapeinfo[text2num(infopos)]
+								if(entry)
+									active1.fields["voiceprint"] = entry[1]
+									active1.fields["voice_sample"] = entry[2]
 					if("Change Criminal Status")
 						if(active2)
 							var/old_field = active2.fields["criminal"]

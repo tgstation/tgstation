@@ -133,7 +133,7 @@
 	return examine(user)
 
 //Start growing a human clone in the pod!
-/obj/machinery/clonepod/proc/growclone(ckey, clonename, ui, se, mindref, datum/species/mrace, list/features, factions)
+/obj/machinery/clonepod/proc/growclone(ckey, clonename, ui, se, mindref, datum/species/mrace, list/features, factions, voice_print)
 	if(panel_open)
 		return FALSE
 	if(mess || attempting)
@@ -163,7 +163,7 @@
 
 	var/mob/living/carbon/human/H = new /mob/living/carbon/human(src)
 
-	H.hardset_dna(ui, se, H.real_name, null, mrace, features)
+	H.hardset_dna(ui, se, H.real_name, null, mrace, features, voice_print)
 
 	if(efficiency > 2)
 		var/list/unclean_mutations = (not_good_mutations|bad_mutations)
@@ -181,6 +181,7 @@
 	if(!clonename)	//to prevent null names
 		clonename = "clone ([rand(0,999)])"
 	H.real_name = clonename
+	H.voiceprint = voice_print
 
 	icon_state = "pod_1"
 	//Get the clone body ready

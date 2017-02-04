@@ -106,6 +106,7 @@
 	if(istype(C))
 		sleep(10)
 		C.real_name = NewDNA.real_name
+		C.voiceprint = NewDNA.voiceprint
 		NewDNA.transfer_identity(C, transfer_SE=1)
 		C.updateappearance(mutcolor_update=1)
 		C.domutcheck()

@@ -212,8 +212,17 @@ var/record_id_num = 1001
 		var/image = get_id_photo(H, C)
 		var/obj/item/weapon/photo/photo_front = new()
 		var/obj/item/weapon/photo/photo_side = new()
-		photo_front.photocreate(null, icon(image, dir = SOUTH))
-		photo_side.photocreate(null, icon(image, dir = WEST))
+		var/faceprint = H.get_faceprint()
+		var/list/M_info = new(3)
+		if(faceprint)
+			M_info[1] = TRUE
+			M_info[2] = faceprint
+		else
+			M_info[1] = FALSE
+			M_info[2] = H.real_name
+		M_info[3] = FALSE
+		photo_front.photocreate(null, icon(image, dir = SOUTH), list(M_info))
+		photo_side.photocreate(null, icon(image, dir = WEST), list(M_info.Copy()))
 
 		//These records should ~really~ be merged or something
 		//General Record
@@ -224,7 +233,11 @@ var/record_id_num = 1001
 		G.fields["age"]			= H.age
 		if(config.mutant_races)
 			G.fields["species"]	= H.dna.species.name
+		if(faceprint)
+			G.fields["faceprint"] = H.get_faceprint()
 		G.fields["fingerprint"]	= md5(H.dna.uni_identity)
+		G.fields["voiceprint"]	= H.voiceprint
+		G.fields["voice_sample"] = "Hello, my name is [H.real_name]."
 		G.fields["p_stat"]		= "Active"
 		G.fields["m_stat"]		= "Stable"
 		G.fields["sex"]			= H.gender
@@ -263,6 +276,7 @@ var/record_id_num = 1001
 		var/datum/data/record/L = new()
 		L.fields["id"]			= md5("[H.real_name][H.mind.assigned_role]")	//surely this should just be id, like the others?
 		L.fields["name"]		= H.real_name
+		L.fields["voiceprint"]	= H.voiceprint
 		L.fields["rank"] 		= H.mind.assigned_role
 		L.fields["age"]			= H.age
 		L.fields["sex"]			= H.gender

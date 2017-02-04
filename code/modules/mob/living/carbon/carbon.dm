@@ -793,3 +793,11 @@
 	.["Make AI"] = "?_src_=vars;makeai=\ref[src]"
 	.["Modify bodypart"] = "?_src_=vars;editbodypart=\ref[src]"
 	.["Modify organs"] = "?_src_=vars;editorgans=\ref[src]"
+
+/mob/living/carbon/proc/facial_hair_covered()
+	if((head && head.flags_inv & HIDEFACIALHAIR) || (wear_mask && wear_mask.flags_inv & HIDEFACIALHAIR))
+		. = 1
+
+/mob/living/carbon/proc/hair_covered()
+	if((head && head.flags_inv & HIDEHAIR) || (wear_mask && wear_mask.flags_inv & HIDEHAIR))
+		. = 1

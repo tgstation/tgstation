@@ -53,7 +53,6 @@
 	if(ishuman(loc))
 		var/mob/living/carbon/human/M = loc
 		new /obj/effect/overlay/temp/dir_setting/ninja/cloak(get_turf(M), M.dir)
-		M.name_override = disguise.name
 		M.icon = disguise.icon
 		M.icon_state = disguise.icon_state
 		M.cut_overlays()
@@ -67,7 +66,6 @@
 	if(ishuman(loc))
 		var/mob/living/carbon/human/M = loc
 		new /obj/effect/overlay/temp/dir_setting/ninja(get_turf(M), M.dir)
-		M.name_override = null
 		M.cut_overlays()
 		M.regenerate_icons()
 
@@ -170,20 +168,20 @@
 		if(GIZMO_MARK)
 			mark(target, user)
 
-/obj/item/device/abductor/gizmo/proc/scan(atom/target, mob/living/user)
+/obj/item/device/abductor/gizmo/proc/scan(mob/living/carbon/human/target, mob/living/user)
 	if(ishuman(target))
 		if(console!=null)
 			console.AddSnapshot(target)
-			to_chat(user, "<span class='notice'>You scan [target] and add them to the database.</span>")
+			to_chat(user, "<span class='notice'>You scan [target.real_name] and add them to the database.</span>")
 
-/obj/item/device/abductor/gizmo/proc/mark(atom/target, mob/living/user)
+/obj/item/device/abductor/gizmo/proc/mark(mob/living/carbon/human/target, mob/living/user)
 	if(marked == target)
 		to_chat(user, "<span class='warning'>This specimen is already marked!</span>")
 		return
 	if(ishuman(target))
 		if(isabductor(target))
 			marked = target
-			to_chat(user, "<span class='notice'>You mark [target] for future retrieval.</span>")
+			to_chat(user, "<span class='notice'>You mark [target.real_name] for future retrieval.</span>")
 		else
 			prepare(target,user)
 	else
@@ -193,10 +191,10 @@
 	if(get_dist(target,user)>1)
 		to_chat(user, "<span class='warning'>You need to be next to the specimen to prepare it for transport!</span>")
 		return
-	to_chat(user, "<span class='notice'>You begin preparing [target] for transport...</span>")
+	to_chat(user, "<span class='notice'>You begin preparing [IDENTITY_SUBJECT(1)] for transport...</span>", list(target))
 	if(do_after(user, 100, target = target))
 		marked = target
-		to_chat(user, "<span class='notice'>You finish preparing [target] for transport.</span>")
+		to_chat(user, "<span class='notice'>You finish preparing [IDENTITY_SUBJECT(1)] for transport.</span>", list(target))
 
 
 /obj/item/device/abductor/silencer

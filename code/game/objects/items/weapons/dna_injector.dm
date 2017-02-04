@@ -44,8 +44,9 @@
 			if(fields["name"] && fields["UE"] && fields["blood_type"])
 				M.real_name = fields["name"]
 				M.dna.unique_enzymes = fields["UE"]
-				M.name = M.real_name
 				M.dna.blood_type = fields["blood_type"]
+				if(fields["voiceprint"])
+					M.voiceprint = fields["voiceprint"]
 			if(fields["UI"])	//UI+UE
 				M.dna.uni_identity = merge_text(M.dna.uni_identity, fields["UI"])
 				M.updateappearance(mutations_overlay_update=1)
@@ -345,6 +346,10 @@
 				M.name = M.real_name
 				M.dna.blood_type = fields["blood_type"]
 				M.dna.temporary_mutations[UE_CHANGED] = endtime
+				if(fields["voiceprint"])
+					if(!M.dna.previous["voiceprint"])
+						M.dna.previous["voiceprint"] = M.voiceprint
+					M.voiceprint = fields["voiceprint"]
 			if(fields["UI"])	//UI+UE
 				if(!M.dna.previous["UI"])
 					M.dna.previous["UI"] = M.dna.uni_identity

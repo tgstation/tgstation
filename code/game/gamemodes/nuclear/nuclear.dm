@@ -289,7 +289,7 @@
 	return 1
 
 
-/proc/nukelastname(mob/M) //--All praise goes to NEO|Phyte, all blame goes to DH, and it was Cindi-Kate's idea. Also praise Urist for copypasta ho.
+/proc/nukelastname(mob/M)
 	var/randomname = pick(last_names)
 	var/newname = copytext(sanitize(input(M,"You are the nuke operative [pick("Czar", "Boss", "Commander", "Chief", "Kingpin", "Director", "Overlord")]. Please choose a last name for your family.", "Name change",randomname)),1,MAX_NAME_LEN)
 
@@ -304,10 +304,15 @@
 	return capitalize(newname)
 
 /proc/NukeNameAssign(lastname,list/syndicates)
-	for(var/datum/mind/synd_mind in syndicates)
+	for(var/_synd_mind in syndicates)
+		var/datum/mind/synd_mind = _synd_mind
 		var/mob/living/carbon/human/H = synd_mind.current
 		synd_mind.name = H.dna.species.random_name(H.gender,0,lastname)
-		synd_mind.current.real_name = synd_mind.name
+		H.real_name = synd_mind.name
+		if(H.voiceprint)
+			for(var/_other_synd in syndicates-synd_mind)
+				var/datum/mind/other_synd = _other_synd
+				other_synd.set_print_manual(H.voiceprint, H.real_name, CATEGORY_VOICEPRINTS)
 	return
 
 /proc/is_nuclear_operative(mob/M)

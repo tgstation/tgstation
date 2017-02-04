@@ -107,7 +107,7 @@
 			charge_counter = charge_max
 			return
 		log_say("RevenantTransmit: [key_name(user)]->[key_name(M)] : [msg]")
-		to_chat(user, "<span class='revenboldnotice'>You transmit to [M]:</span> <span class='revennotice'>[msg]</span>")
+		to_chat(user, "<span class='revenboldnotice'>You transmit to [M.real_name]:</span> <span class='revennotice'>[msg]</span>")
 		to_chat(M, "<span class='revenboldnotice'>You hear something behind you talking...</span> <span class='revennotice'>[msg]</span>")
 		for(var/ded in dead_mob_list)
 			if(!isobserver(ded))

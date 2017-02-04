@@ -84,6 +84,22 @@
 		return 1
 	create_area(usr)
 
+/obj/screen/identity_manager
+	name = "identity manager"
+	icon = 'icons/mob/screen_midnight.dmi'
+	icon_state = "identity"
+	layer = HUD_LAYER
+	plane = HUD_PLANE
+	screen_loc = ui_identity
+
+/obj/screen/identity_manager/Click()
+	var/mob/M = usr
+	if(isobserver(usr))
+		return
+	var/datum/mind/Mi = M.mind
+	if(Mi)
+		Mi.open_idman()
+
 /obj/screen/inventory
 	var/slot_id	// The indentifier for the slot. It has nothing to do with ID cards.
 	var/icon_empty // Icon when empty. For now used only by humans.

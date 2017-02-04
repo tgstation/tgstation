@@ -170,8 +170,8 @@
 	var/datum/sprite_accessory/S
 	var/list/standing = list()
 
-	var/hair_hidden = FALSE //ignored if the matching dynamic_X_suffix is non-empty
-	var/facialhair_hidden = FALSE // ^
+	var/hair_hidden = H.hair_covered() //ignored if the matching dynamic_X_suffix is non-empty
+	var/facialhair_hidden = H.facial_hair_covered() // ^
 
 	var/dynamic_hair_suffix = "" //if this is non-null, and hair+suffix matches an iconstate, then we render that hair instead
 	var/dynamic_fhair_suffix = ""

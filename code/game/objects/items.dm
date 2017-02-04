@@ -84,6 +84,7 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 	var/embedded_unsafe_removal_time = EMBEDDED_UNSAFE_REMOVAL_TIME //A time in ticks, multiplied by the w_class.
 
 	var/flags_cover = 0 //for flags such as GLASSESCOVERSEYES
+	var/identity_name // Used for getting identity from clothing.
 	var/heat = 0
 	var/sharpness = IS_BLUNT
 	var/toolspeed = 1

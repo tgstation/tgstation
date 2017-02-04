@@ -8,6 +8,7 @@
 	var/datum/species/species = new /datum/species/human() //The type of mutant race the player is if applicable (i.e. potato-man)
 	var/list/features = list("FFF") //first value is mutant color
 	var/real_name //Stores the real name of the person who originally got this dna datum. Used primarely for changelings,
+	var/voiceprint
 	var/list/mutations = list()   //All mutations are from now on here
 	var/list/temporary_mutations = list() //Timers for temporary mutations
 	var/list/previous = list() //For temporary name/ui/ue/blood_type modifications
@@ -26,6 +27,7 @@
 	destination.set_species(species.type, icon_update=0)
 	destination.dna.features = features.Copy()
 	destination.dna.real_name = real_name
+	destination.dna.voiceprint = voiceprint
 	destination.dna.temporary_mutations = temporary_mutations.Copy()
 	if(transfer_SE)
 		destination.dna.struc_enzymes = struc_enzymes
@@ -38,6 +40,7 @@
 	new_dna.features = features.Copy()
 	new_dna.species = new species.type
 	new_dna.real_name = real_name
+	new_dna.voiceprint = voiceprint
 	new_dna.mutations = mutations.Copy()
 
 /datum/dna/proc/add_mutation(mutation_name)
@@ -104,7 +107,8 @@
 	. = ""
 	if(istype(holder))
 		real_name = holder.real_name
-		. += md5(holder.real_name)
+		voiceprint = holder.voiceprint
+		. += md5("[holder.real_name][holder.voiceprint]")
 	else
 		. += random_string(DNA_UNIQUE_ENZYMES_LEN, hex_characters)
 	return .
@@ -224,7 +228,7 @@
 	return dna
 
 
-/mob/living/carbon/human/proc/hardset_dna(ui, se, newreal_name, newblood_type, datum/species/mrace, newfeatures)
+/mob/living/carbon/human/proc/hardset_dna(ui, se, newreal_name, newblood_type, datum/species/mrace, newfeatures, newvoiceprint)
 
 	if(newfeatures)
 		dna.features = newfeatures
@@ -235,6 +239,9 @@
 	if(newreal_name)
 		real_name = newreal_name
 		dna.generate_unique_enzymes()
+
+	if(newvoiceprint)
+		voiceprint = newvoiceprint
 
 	if(newblood_type)
 		dna.blood_type = newblood_type
@@ -259,6 +266,9 @@
 	if(!dna.species)
 		var/rando_race = pick(config.roundstart_races)
 		dna.species = new rando_race()
+
+/mob/living/carbon/proc/update_voiceprint()
+	voiceprint = dna.voiceprint
 
 //proc used to update the mob's appearance after its dna UI has been changed
 /mob/living/carbon/proc/updateappearance(icon_update=1, mutcolor_update=0, mutations_overlay_update=0)

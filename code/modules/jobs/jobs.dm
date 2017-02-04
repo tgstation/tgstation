@@ -122,6 +122,18 @@ var/list/nonhuman_positions = list(
 	"pAI"
 )
 
+var/list/food_service_positions = list(
+	"Bartender",
+//	"Botanist",
+	"Cook"
+)
+
+var/list/everybody_knows_these_positions = list(
+	"Captain",
+	"Clown"
+)
+
+var/list/identity_initial_knowledge_positions = list(command_positions, engineering_positions, medical_positions, science_positions, supply_positions-"Head of Personnel", security_positions, food_service_positions)
 
 /proc/guest_jobbans(job)
 	return ((job in command_positions) || (job in nonhuman_positions) || (job in security_positions))

@@ -1,5 +1,5 @@
 /mob/living/carbon/human
-	name = "Unknown"
+	name = "Person"
 	real_name = "Unknown"
 	voice_name = "Unknown"
 	icon = 'icons/mob/human.dmi'
@@ -23,6 +23,8 @@
 
 	//initialize limbs first
 	create_bodyparts()
+
+	voiceprint = generate_voiceprint()
 
 	//initialize dna. for spawned humans; overwritten by other code
 	create_dna(src)
@@ -575,7 +577,7 @@
 
 	//Check for ID
 	var/obj/item/weapon/card/id/idcard = get_idcard()
-	if(judgebot.idcheck && !idcard && name=="Unknown")
+	if(judgebot.idcheck && !idcard && default_identity_seen()=="Unknown")
 		threatcount += 4
 
 	//Check for weapons

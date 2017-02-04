@@ -7,11 +7,64 @@
 	var/t_has = p_have()
 	var/t_is = p_are()
 
-	var/msg = "<span class='info'>*---------*\nThis is <EM>[src.name]</EM>!\n"
+	var/see_face = can_see_face()
+
+	var/displayed_name = name
+	var/datum/mind/user_mind = user.mind
+	if(user == src)
+		displayed_name = real_name
+	else if(user_mind)
+		var/list/faceprint_entry
+		var/faceprint
+		var/interact_identity = default_identity_interact()
+		var/seen_identity = default_identity_seen()
+		if(see_face)
+			faceprint = get_faceprint()
+			if(faceprint)
+				faceprint_entry = user_mind.get_print_entry(faceprint, CATEGORY_FACEPRINTS)
+				var/faceprint_state
+				var/faceprint_name
+				user_mind.handle_faceprint_caching(src, faceprint)
+				if(faceprint_entry)
+					faceprint_state = faceprint_entry[1]
+					faceprint_name = faceprint_entry[3]
+				if(interact_identity == seen_identity && !faceprint_name)
+					faceprint_name = interact_identity
+				else if(!faceprint_name || faceprint_state > IDENTITY_INTERACT)
+					faceprint_state = IDENTITY_INTERACT
+					faceprint_name = interact_identity
+					faceprint_entry = new(4)
+					faceprint_entry[1] = faceprint_state
+					faceprint_entry[2] = world.time
+					faceprint_entry[3] = faceprint_name
+				displayed_name = faceprint_name
+		else
+			displayed_name = interact_identity
+		var/list/cache_entry = user_mind.identity_cache[src]
+		var/voice_print
+		var/list/voiceprint_entry
+		if(cache_entry)
+			voice_print = cache_entry[1]
+			var/voiceprint_cache_time = cache_entry[2]
+			if(voice_print && voiceprint_cache_time >= (world.time - IDENTITY_EXPIRE_TIME))
+				voiceprint_entry = user_mind.get_print_entry(voice_print, CATEGORY_VOICEPRINTS)
+				var/voiceprint_state
+				if(voiceprint_entry)
+					voiceprint_state = voiceprint_entry[1]
+					if(voiceprint_state >= IDENTITY_INTERACT)
+						voiceprint_entry[1] = IDENTITY_INTERACT
+						voiceprint_entry[3] = interact_identity
+					if(faceprint_entry)
+						voiceprint_entry[4] = faceprint
+						faceprint_entry[4] = voice_print
+		if(faceprint_entry)
+			user_mind.set_print_entry(faceprint, faceprint_entry, CATEGORY_FACEPRINTS)
+		if(voiceprint_entry)
+			user_mind.set_print_entry(voice_print, voiceprint_entry, CATEGORY_VOICEPRINTS)
+
+	var/msg = "<span class='info'>*---------*\nThis is <EM>[displayed_name]</EM>!\n"
 
 	var/list/obscured = check_obscured_slots()
-	var/skipface = (wear_mask && (wear_mask.flags_inv & HIDEFACE)) || (head && (head.flags_inv & HIDEFACE))
-
 	//uniform
 	if(w_uniform && !(slot_w_uniform in obscured))
 		//Ties
@@ -243,7 +296,7 @@
 			if(stun_absorption[i]["end_time"] > world.time && stun_absorption[i]["examine_message"])
 				msg += "[t_He] [t_is][stun_absorption[i]["examine_message"]]\n"
 
-	if(drunkenness && !skipface && !appears_dead) //Drunkenness
+	if(drunkenness && see_face && !appears_dead) //Drunkenness
 		switch(drunkenness)
 			if(11 to 21)
 				msg += "[t_He] [t_is] slightly flushed.\n"

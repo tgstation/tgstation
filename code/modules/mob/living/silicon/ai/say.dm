@@ -4,15 +4,22 @@
 		return
 	..(message)
 
-/mob/living/silicon/ai/compose_track_href(atom/movable/speaker, namepart)
+/mob/living/silicon/ai/compose_namepart(atom/movable/speaker, namepart, radio_freq)
+	. = namepart
+	if(!speaker)
+		return
 	var/mob/M = speaker.GetSource()
 	if(M)
-		return "<a href='?src=\ref[src];track=[html_encode(namepart)]'>"
-	return ""
-
-/mob/living/silicon/ai/compose_job(atom/movable/speaker, message_langs, raw_message, radio_freq)
-	//Also includes the </a> for AI hrefs, for convenience.
-	return "[radio_freq ? " (" + speaker.GetJob() + ")" : ""]" + "[speaker.GetSource() ? "</a>" : ""]"
+		var/voice_print = M.get_voiceprint()
+		var/datum/data/record/G
+		if(voice_print)
+			G = find_record("voiceprint", voice_print, data_core.general)
+		var/record_id
+		var/assignment = "Unassigned"
+		if(G)
+			record_id = G.fields["id"]
+			assignment = G.fields["rank"]
+		. = "<a href='?src=\ref[src][ai_track_href(M, record_id)]'>[namepart][radio_freq ? " ([assignment])" : ""]</a>"
 
 /mob/living/silicon/ai/IsVocal()
 	return !config.silent_ai
@@ -49,7 +56,7 @@
 
 	var/obj/machinery/holopad/T = current
 	if(istype(T) && T.masters[src])//If there is a hologram and its master is the user.
-		send_speech(message, 7, T, "robot", get_spans())
+		send_speech(message, 6, T, "robot", get_spans(), get_voiceprint())
 		to_chat(src, "<i><span class='game say'>Holopad transmitted, <span class='name'>[real_name]</span> <span class='message robot'>\"[message]\"</span></span></i>")
 	else
 		to_chat(src, "No holopad connected.")
