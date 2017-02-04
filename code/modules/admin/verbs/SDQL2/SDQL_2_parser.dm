@@ -96,11 +96,8 @@
 	return lowertext(token(i))
 
 
-
-/datum/SDQL_parser/proc
-
 //query:	select_query | delete_query | update_query
-	query(i, list/node)
+/datum/SDQL_parser/proc/query(i, list/node)
 		query_type = tokenl(i)
 
 		switch(query_type)
@@ -123,7 +120,7 @@
 
 
 //	select_query:	'SELECT' select_list [('FROM' | 'IN') from_list] ['WHERE' bool_expression]
-	select_query(i, list/node)
+/datum/SDQL_parser/proc/select_query(i, list/node)
 		var/list/select = list()
 		i = select_list(i + 1, select)
 
@@ -150,7 +147,7 @@
 
 
 //delete_query:	'DELETE' select_list [('FROM' | 'IN') from_list] ['WHERE' bool_expression]
-	delete_query(i, list/node)
+/datum/SDQL_parser/proc/delete_query(i, list/node)
 		var/list/select = list()
 		i = select_list(i + 1, select)
 
@@ -177,7 +174,7 @@
 
 
 //update_query:	'UPDATE' select_list [('FROM' | 'IN') from_list] 'SET' assignments ['WHERE' bool_expression]
-	update_query(i, list/node)
+/datum/SDQL_parser/proc/update_query(i, list/node)
 		var/list/select = list()
 		i = select_list(i + 1, select)
 
@@ -213,7 +210,7 @@
 
 
 //call_query:	'CALL' call_function ['ON' select_list [('FROM' | 'IN') from_list] ['WHERE' bool_expression]]
-	call_query(i, list/node)
+/datum/SDQL_parser/proc/call_query(i, list/node)
 		var/list/func = list()
 		var/list/arguments = list()
 		i = call_function(i + 1, func, arguments)
@@ -251,7 +248,7 @@
 
 
 //select_list:	select_item [',' select_list]
-	select_list(i, list/node)
+/datum/SDQL_parser/proc/select_list(i, list/node)
 		i = select_item(i, node)
 
 		if(token(i) == ",")
@@ -261,7 +258,7 @@
 
 
 //from_list:	from_item [',' from_list]
-	from_list(i, list/node)
+/datum/SDQL_parser/proc/from_list(i, list/node)
 		i = from_item(i, node)
 
 		if(token(i) == ",")
@@ -271,7 +268,7 @@
 
 
 //assignments:	assignment, [',' assignments]
-	assignments(i, list/node)
+/datum/SDQL_parser/proc/assignments(i, list/node)
 		i = assignment(i, node)
 
 		if(token(i) == ",")
@@ -281,7 +278,7 @@
 
 
 //select_item:	'*' | select_function | object_type
-	select_item(i, list/node)
+/datum/SDQL_parser/proc/select_item(i, list/node)
 
 		if(token(i) == "*")
 			node += "*"
@@ -297,7 +294,7 @@
 
 
 //from_item:	'world' | object_type
-	from_item(i, list/node)
+/datum/SDQL_parser/proc/from_item(i, list/node)
 
 		if(token(i) == "world")
 			node += "world"
@@ -310,7 +307,7 @@
 
 
 //bool_expression:	expression [bool_operator bool_expression]
-	bool_expression(i, list/node)
+/datum/SDQL_parser/proc/bool_expression(i, list/node)
 
 		var/list/bool = list()
 		i = expression(i, bool)
@@ -325,7 +322,7 @@
 
 
 //assignment:	<variable name> '=' expression
-	assignment(i, list/node)
+/datum/SDQL_parser/proc/assignment(i, list/node)
 
 		node += token(i)
 
@@ -342,7 +339,7 @@
 
 
 //variable:	<variable name> | <variable name> '.' variable
-	variable(i, list/node)
+/datum/SDQL_parser/proc/variable(i, list/node)
 		var/list/L = list(token(i))
 		node[++node.len] = L
 
@@ -357,7 +354,7 @@
 
 
 //object_type:	<type path> | string
-	object_type(i, list/node)
+/datum/SDQL_parser/proc/object_type(i, list/node)
 
 		if(copytext(token(i), 1, 2) == "/")
 			node += token(i)
@@ -369,7 +366,7 @@
 
 
 //comparitor:	'=' | '==' | '!=' | '<>' | '<' | '<=' | '>' | '>='
-	comparitor(i, list/node)
+/datum/SDQL_parser/proc/comparitor(i, list/node)
 
 		if(token(i) in list("=", "==", "!=", "<>", "<", "<=", ">", ">="))
 			node += token(i)
@@ -381,7 +378,7 @@
 
 
 //bool_operator:	'AND' | '&&' | 'OR' | '||'
-	bool_operator(i, list/node)
+/datum/SDQL_parser/proc/bool_operator(i, list/node)
 
 		if(tokenl(i) in list("and", "or", "&&", "||"))
 			node += token(i)
@@ -393,7 +390,7 @@
 
 
 //string:	''' <some text> ''' | '"' <some text > '"'
-	string(i, list/node)
+/datum/SDQL_parser/proc/string(i, list/node)
 
 		if(copytext(token(i), 1, 2) in list("'", "\""))
 			node += copytext(token(i),2,-1)
@@ -405,7 +402,7 @@
 
 
 //call_function:	<function name> ['(' [arguments] ')']
-	call_function(i, list/node, list/arguments)
+/datum/SDQL_parser/proc/call_function(i, list/node, list/arguments)
 		if(length(tokenl(i)))
 			node += token(i++)
 			if(token(i) != "(")
@@ -424,7 +421,7 @@
 
 
 //select_function:	count_function
-	select_function(i, list/node)
+/datum/SDQL_parser/proc/select_function(i, list/node)
 
 		parse_error("Sorry, function calls aren't available yet")
 
@@ -432,7 +429,7 @@
 
 
 //expression:	( unary_expression | '(' expression ')' | value ) [binary_operator expression]
-	expression(i, list/node)
+/datum/SDQL_parser/proc/expression(i, list/node)
 
 		if(token(i) in unary_operators)
 			i = unary_expression(i, node)
@@ -470,7 +467,7 @@
 
 
 //unary_expression:	unary_operator ( unary_expression | value | '(' expression ')' )
-	unary_expression(i, list/node)
+/datum/SDQL_parser/proc/unary_expression(i, list/node)
 
 		if(token(i) in unary_operators)
 			var/list/unary_exp = list()
@@ -507,7 +504,7 @@
 
 
 //binary_operator:	comparitor | '+' | '-' | '/' | '*' | '&' | '|' | '^'
-	binary_operator(i, list/node)
+/datum/SDQL_parser/proc/binary_operator(i, list/node)
 
 		if(token(i) in (binary_operators + comparitors))
 			node += token(i)
@@ -519,7 +516,7 @@
 
 
 //value:	variable | string | number | 'null'
-	value(i, list/node)
+/datum/SDQL_parser/proc/value(i, list/node)
 
 		if(token(i) == "null")
 			node += "null"
