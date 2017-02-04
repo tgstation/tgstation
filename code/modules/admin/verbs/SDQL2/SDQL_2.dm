@@ -147,7 +147,7 @@
 								set_vals[v] = SDQL_expression(d, set_list[v])
 							d.SDQL_update(set_vals)
 							CHECK_TICK
-	catch(var/exception/e)
+	catch(exception/e)
 		usr << "<span class='boldwarning'>A runtime error has occured in your SDQL2-query.</span>"
 		usr << "\[NAME\][e.name]"
 		usr << "\[FILE\][e.file]"
