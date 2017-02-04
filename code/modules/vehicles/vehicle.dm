@@ -42,7 +42,7 @@
 	M.loc = get_turf(src)
 	..()
 	if(user.client)
-		user.client.view = view_range
+		user.client.change_view(view_range)
 	if(riding_datum)
 		riding_datum.ridden = src
 		riding_datum.handle_vehicle_offsets()
