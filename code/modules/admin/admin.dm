@@ -825,5 +825,5 @@ var/global/BSACooldown = 0
 			message_admins("[string]")
 
 
-/datum/admins/SDQL_update(var/const/var_name, var/new_value)
+/datum/admins/SDQL_update()
 	return FALSE	//No.

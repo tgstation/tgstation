@@ -18,12 +18,9 @@
 
 */
 
-/datum/proc/SDQL_update(var/const/var_name, var/new_value)
-	vars[var_name] = new_value
-	return TRUE
-
-/client/SDQL_update(var/const/var_name, var/new_value)
-	vars[var_name] = new_value
+/datum/proc/SDQL_update(var/list/vars_list)
+	for(var/v in vars_list)
+		vars[v] = vars_list[v]
 	return TRUE
 
 /client/proc/SDQL2_query(query_text as message)
@@ -136,13 +133,10 @@
 				if("set" in query_tree)
 					var/list/set_list = query_tree["set"]
 					for(var/datum/d in objs)
-						var/list/set_vals = list()
-						for(var/v in set_list)
-							if(v in d.vars)
-								vals += v
-								vals[v] = SDQL_expression(d, set_list[v])
-						for(var/v in vals)
-							d.SDQL_update(set_list[v.name], set_list[v])
+						var/list/set_vals = set_list.Copy()
+						for(var/v in set_vals)
+							set_vals[v] = SDQL_expression(d, set_list[v])
+						d.SDQL_update(set_vals)
 						CHECK_TICK
 
 /proc/SDQL_callproc(thing, procname, args_list)

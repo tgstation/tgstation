@@ -24,8 +24,8 @@
 
 	var/list/decals
 
-/turf/SDQL_update(var/const/var_name, var/new_value)
-	if(var_name == "x" || var_name == "y" || var_name == "z")
+/turf/SDQL_update(var/list/vars_list)
+	if(("x" in vars_list) || ("y" in vars_list) || ("z" in vars_list))
 		return FALSE
 	. = ..()
 
