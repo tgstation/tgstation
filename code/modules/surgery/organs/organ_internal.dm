@@ -767,14 +767,13 @@
 	owner.update_sight()
 
 /obj/item/organ/eyes/Remove(mob/living/carbon/M, special = 0)
-	..()
 	M.sight ^= sight_flags
 	if(ishuman(M) && eye_color)
 		var/mob/living/carbon/human/HMN = owner
 		HMN.eye_color = old_eye_color
-	M.regenerate_icons()
+		HMN.regenerate_icons()
 	M.update_tint()
-
+	..()
 
 /obj/item/organ/eyes/night_vision
 	name = "shadow eyes"
