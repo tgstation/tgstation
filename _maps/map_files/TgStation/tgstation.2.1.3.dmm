@@ -10008,9 +10008,7 @@
 	c_tag = "Auxillary Base Construction";
 	dir = 8
 	},
-/obj/structure/mining_shuttle_beacon{
-	dir = 2
-	},
+/obj/machinery/computer/camera_advanced/base_construction,
 /turf/open/floor/plasteel/yellow/side{
 	dir = 4
 	},
@@ -61215,6 +61213,12 @@
 /obj/item/weapon/reagent_containers/blood/random,
 /turf/open/floor/plasteel,
 /area/medical/sleeper)
+"cCq" = (
+/obj/structure/mining_shuttle_beacon{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/shuttle/auxillary_base)
 
 (1,1,1) = {"
 aaa
@@ -71593,7 +71597,7 @@ aqI
 arD
 arD
 arD
-arD
+cCq
 arD
 arD
 arD
