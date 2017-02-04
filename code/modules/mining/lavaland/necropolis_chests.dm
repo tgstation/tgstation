@@ -355,7 +355,7 @@
 	icon = 'icons/obj/lavaland/dragonboat.dmi'
 	resistance_flags = LAVA_PROOF | FIRE_PROOF
 
-/obj/vehicle/lavaboat/buckle_mob()
+/obj/vehicle/lavaboat/buckle_mob(mob/living/M, force = 0, check_loc = 1)
 	. = ..()
 	riding_datum = new/datum/riding/boat
 
@@ -403,7 +403,7 @@
 	desc = "This boat moves where you will it, without the need for an oar."
 	icon_state = "dragon_boat"
 
-/obj/vehicle/lavaboat/dragon/buckle_mob()
+/obj/vehicle/lavaboat/dragon/buckle_mob(mob/living/M, force = 0, check_loc = 1)
 	..()
 	riding_datum = new/datum/riding/boat/dragon
 
