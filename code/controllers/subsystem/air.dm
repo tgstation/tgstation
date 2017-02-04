@@ -39,9 +39,6 @@ var/datum/subsystem/air/SSair
 	var/list/currentrun = list()
 	var/currentpart = SSAIR_PIPENETS
 
-	var/initialized = FALSE
-
-
 /datum/subsystem/air/New()
 	NEW_SS_GLOBAL(SSair)
 
@@ -63,7 +60,6 @@ var/datum/subsystem/air/SSair
 
 
 /datum/subsystem/air/Initialize(timeofday)
-	initialized = TRUE
 	setup_allturfs()
 	setup_atmos_machinery()
 	setup_pipenets()
@@ -255,9 +251,11 @@ var/datum/subsystem/air/SSair
 			currentrun |= T
 		if(blockchanges && T.excited_group)
 			T.excited_group.garbage_collect()
-	else if(initialized)
+	else if(T.initialized)
 		for(var/turf/S in T.atmos_adjacent_turfs)
 			add_to_active(S)
+	else
+		T.requires_activation = TRUE
 
 
 /datum/subsystem/air/proc/setup_allturfs()

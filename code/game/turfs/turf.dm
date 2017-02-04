@@ -23,6 +23,7 @@
 	var/explosion_id = 0
 
 	var/list/decals
+	var/requires_activation	//add to air processing after initialize?
 
 /turf/Initialize()
 	..()
@@ -34,6 +35,9 @@
 
 	for(var/atom/movable/AM in src)
 		Entered(AM)
+
+	if(requires_activation)
+		SSair.add_to_active(src)
 
 /turf/proc/Initalize_Atmos(times_fired)
 	CalculateAdjacentTurfs()
