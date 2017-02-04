@@ -49,6 +49,7 @@
 			update_icon_dropped()
 		else
 			I.loc = T
+	SetLuminosity((initial(luminosity)))
 
 /obj/item/bodypart/head/update_limb(dropping_limb, mob/living/carbon/source)
 	var/mob/living/carbon/C
