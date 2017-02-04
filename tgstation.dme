@@ -1379,7 +1379,6 @@
 #include "code\modules\mob\mob_movement.dm"
 #include "code\modules\mob\mob_transformation_simple.dm"
 #include "code\modules\mob\say.dm"
-#include "code\modules\mob\say_readme.dm"
 #include "code\modules\mob\status_procs.dm"
 #include "code\modules\mob\transform_procs.dm"
 #include "code\modules\mob\update_icons.dm"
