@@ -136,8 +136,12 @@
 				if("set" in query_tree)
 					var/list/set_list = query_tree["set"]
 					for(var/datum/d in objs)
+						var/list/set_vals = list()
 						for(var/v in set_list)
-							v = SDQL_expression(d, v)
+							if(v in d.vars)
+								vals += v
+								vals[v] = SDQL_expression(d, set_list[v])
+						for(var/v in vals)
 							d.SDQL_update(set_list[v.name], set_list[v])
 						CHECK_TICK
 
