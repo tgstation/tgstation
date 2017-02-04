@@ -18,7 +18,11 @@
 /turf/open/space/Initialize()
 	icon_state = SPACE_ICON_STATE
 	air = space_gas
+	
+	if(initialized)
+		stack_trace("Warning: [src]([type]) initialized multiple times!")
 	initialized = TRUE
+
 	if(requires_activation)
 		SSair.add_to_active(src)
 

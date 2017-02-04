@@ -26,7 +26,9 @@
 	var/requires_activation	//add to air processing after initialize?
 
 /turf/Initialize()
-	..()
+	if(initialized)
+		stack_trace("Warning: [src]([type]) initialized multiple times!")
+	initialized = TRUE
 
 	levelupdate()
 	if(smooth)
