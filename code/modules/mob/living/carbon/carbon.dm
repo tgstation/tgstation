@@ -582,13 +582,13 @@
 	if(wear_mask)
 		. += wear_mask.tint
 
-	var/has_eyes = FALSE
-	for(var/obj/item/organ/eyes/E in internal_organs)
+	var/obj/item/organ/eyes/E = getorganslot("eye_sight")
+	if(E)
 		. += E.tint
-		has_eyes = TRUE
 
-	if(!has_eyes)
+	else
 		. += INFINITY
+
 //this handles hud updates
 /mob/living/carbon/update_damage_hud()
 
