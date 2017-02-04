@@ -1,0 +1,5 @@
+author: "coiax"
+delete-after: True
+changes: 
+  - tweak: "The deadchat notification of randomly triggered events now uses
+the deadsay span."
