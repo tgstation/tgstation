@@ -7,7 +7,7 @@
   </ui-section>
   <ui-section label='Approval'>
     <ui-button
-      icon='thumbs-up'
+      icon='arrow-up'
       state='{{data.is_creator ? 'disabled' : data.has_liked ? 'selected' : null}}'
       action='like'>{{data.num_likes}}</ui-button>
     <ui-button
@@ -15,10 +15,11 @@
       state='{{data.is_creator ? 'disabled' : !data.has_liked && !data.has_disliked ? 'selected' : null}}'
       action='neutral'></ui-button>
     <ui-button
-      icon='thumbs-down'
+      icon='arrow-down'
       state='{{data.is_creator ? 'disabled' : data.has_disliked ? 'selected' : null}}'
       action='dislike'>{{data.num_dislikes}}</ui-button>
    </ui-section>
+</ui-display>
 {{#if data.admin_mode}}
   <ui-display title='Admin Panel'>
     <ui-section label='Creator Ckey'>{{data.creator_key}}</ui-section>
