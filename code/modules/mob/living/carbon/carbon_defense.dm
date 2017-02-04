@@ -1,8 +1,12 @@
 
 /mob/living/carbon/get_eye_protection()
 	var/number = ..()
-	for(var/obj/item/organ/cyberimp/eyes/EFP in internal_organs)
-		number += EFP.flash_protect
+
+	var/obj/item/organ/eyes/E = getorganslot("eye_sight")
+	if(!E)
+		number = INFINITY //Can't get flashed without eyes
+	else
+		number += E.flash_protect
 	return number
 
 /mob/living/carbon/get_ear_protection()
