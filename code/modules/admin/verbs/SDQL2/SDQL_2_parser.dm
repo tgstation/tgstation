@@ -316,29 +316,29 @@
 
 //call_function:	<function name> ['(' [arguments] ')']
 /datum/SDQL_parser/proc/call_function(i, list/node, list/arguments)
-		if(length(tokenl(i)))
-			var/procname = ""
-			if(token(i) == "global" && token(i+1) == ".")
-				i += 2
-				procname = "global."
-			node += procname + token(i++)
-			if(token(i) != "(")
-				parse_error("Expected ( but found '[token(i)]'")
-			else if(token(i + 1) != ")")
-				var/list/expression_list_temp = list()
-				do
-					i = expression(i + 1, expression_list_temp)
-					if(token(i) == ",")
-						arguments[++arguments.len] = expression_list_temp
-						expression_list_temp = list()
-						continue
-				while(token(i) && token(i) != ")")
-				arguments[++arguments.len] = expression_list_temp
-			else
-				i++
+	if(length(tokenl(i)))
+		var/procname = ""
+		if(token(i) == "global" && token(i+1) == ".")
+			i += 2
+			procname = "global."
+		node += procname + token(i++)
+		if(token(i) != "(")
+			parse_error("Expected ( but found '[token(i)]'")
+		else if(token(i + 1) != ")")
+			var/list/expression_list_temp = list()
+			do
+				i = expression(i + 1, expression_list_temp)
+				if(token(i) == ",")
+					arguments[++arguments.len] = expression_list_temp
+					expression_list_temp = list()
+					continue
+			while(token(i) && token(i) != ")")
+			arguments[++arguments.len] = expression_list_temp
 		else
-			parse_error("Expected a function but found nothing")
-		return i + 1
+			i++
+	else
+		parse_error("Expected a function but found nothing")
+	return i + 1
 
 //select_function:	count_function
 /datum/SDQL_parser/proc/select_function(i, list/node)
