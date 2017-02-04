@@ -398,7 +398,8 @@
 	id = "XCCHangar1";
 	name = "XCC Main Hangar"
 	},
-/turf/open/floor/plasteel/delivery,
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/delivery,
 /area/awaymission/centcomAway/hangar)
 "bm" = (
 /turf/open/floor/plasteel/vault{
@@ -1493,7 +1494,8 @@
 /area/awaymission/centcomAway/hangar)
 "eS" = (
 /obj/machinery/telecomms/relay/preset/ruskie,
-/turf/open/floor/plasteel/delivery,
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/delivery,
 /area/awaymission/centcomAway/general)
 "eT" = (
 /obj/machinery/door/airlock/engineering{
@@ -2635,7 +2637,8 @@
 	id = "XCCsec3";
 	name = "XCC Main Access Shutters"
 	},
-/turf/open/floor/plasteel/delivery,
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/delivery,
 /area/awaymission/centcomAway/general)
 "iu" = (
 /obj/structure/flora/ausbushes,
@@ -2682,10 +2685,12 @@
 	id = "XCCMechs";
 	name = "XCC Mech Bay"
 	},
-/turf/open/floor/plasteel/delivery,
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/delivery,
 /area/awaymission/centcomAway/hangar)
 "iz" = (
-/turf/open/floor/plasteel/bot,
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/bot,
 /area/awaymission/centcomAway/hangar)
 "iA" = (
 /obj/machinery/mass_driver{
@@ -2693,7 +2698,8 @@
 	id = "XCCMechs";
 	name = "gravpult"
 	},
-/turf/open/floor/plasteel/bot,
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/bot,
 /area/awaymission/centcomAway/hangar)
 "iB" = (
 /turf/open/floor/plasteel/loadingarea{
@@ -3108,7 +3114,8 @@
 	id = "XCCFerry";
 	name = "XCC Ferry Hangar"
 	},
-/turf/open/floor/plasteel/delivery,
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/delivery,
 /area/awaymission/centcomAway/hangar)
 "jM" = (
 /obj/structure/chair,
@@ -3146,14 +3153,16 @@
 	id = "XCCsec1";
 	name = "XCC Checkpoint 1 Shutters"
 	},
-/turf/open/floor/plasteel/delivery,
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/delivery,
 /area/awaymission/centcomAway/general)
 "jS" = (
 /obj/machinery/door/poddoor/shutters{
 	id = "XCCsec2";
 	name = "XCC Checkpoint 2 Shutters"
 	},
-/turf/open/floor/plasteel/delivery,
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/delivery,
 /area/awaymission/centcomAway/general)
 "jT" = (
 /obj/structure/grille,
@@ -3268,7 +3277,10 @@
 /turf/open/floor/plating,
 /area/awaymission/centcomAway/hangar)
 "kj" = (
-/turf/open/floor/plasteel/delivery{
+/turf/open/floor/plasteel{
+	dir = 6
+	},
+/obj/effect/turf_decal/delivery{
 	dir = 6
 	},
 /area/awaymission/centcomAway/general)
@@ -3740,7 +3752,8 @@
 	id = "XCCtdomemelee";
 	name = "XCC Thunderdome Melee"
 	},
-/turf/open/floor/plasteel/delivery,
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/delivery,
 /area/awaymission/centcomAway/thunderdome)
 "lB" = (
 /obj/item/weapon/reagent_containers/glass/rag,
@@ -3794,7 +3807,8 @@
 	id = "XCCtdome";
 	name = "XCC Thunderdome"
 	},
-/turf/open/floor/plasteel/delivery,
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/delivery,
 /area/awaymission/centcomAway/thunderdome)
 "lK" = (
 /obj/machinery/igniter,
@@ -3911,7 +3925,8 @@
 	id = "XCCtdomeguns";
 	name = "XCC Thunderdome Guns"
 	},
-/turf/open/floor/plasteel/delivery,
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/delivery,
 /area/awaymission/centcomAway/thunderdome)
 "mc" = (
 /obj/item/weapon/soap/nanotrasen,

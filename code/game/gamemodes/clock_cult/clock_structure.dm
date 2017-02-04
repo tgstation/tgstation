@@ -44,18 +44,19 @@
 		desc = clockwork_desc
 	..()
 	desc = initial(desc)
-	if(!(resistance_flags & INDESTRUCTIBLE))
+	if(unanchored_icon)
+		user << "<span class='notice'>[src] is [anchored ? "":"not "]secured to the floor.</span>"
+
+/obj/structure/destructible/clockwork/examine_status(mob/user)
+	if(is_servant_of_ratvar(user) || isobserver(user))
 		var/t_It = p_they(TRUE)
 		var/t_is = p_are()
-		var/servant_message = "[t_It] [t_is] at <b>[obj_integrity]/[max_integrity]</b> integrity"
 		var/heavily_damaged = FALSE
 		var/healthpercent = (obj_integrity/max_integrity) * 100
 		if(healthpercent < 50)
 			heavily_damaged = TRUE
-		if(can_see_clockwork)
-			user << "<span class='[heavily_damaged ? "alloy":"brass"]'>[servant_message][heavily_damaged ? "!":"."]</span>"
-	if(unanchored_icon)
-		user << "<span class='notice'>[src] is [anchored ? "":"not "]secured to the floor.</span>"
+		return "<span class='[heavily_damaged ? "alloy":"brass"]'>[t_It] [t_is] at <b>[obj_integrity]/[max_integrity]</b> integrity[heavily_damaged ? "!":"."]</span>"
+	return ..()
 
 /obj/structure/destructible/clockwork/hulk_damage()
 	return 20
@@ -75,6 +76,10 @@
 		user << "<span class='warning'>[src] is too damaged to unsecure!</span>"
 		return FAILED_UNFASTEN
 	return ..()
+
+/obj/structure/destructible/clockwork/attack_ai(mob/user)
+	if(is_servant_of_ratvar(user))
+		attack_hand(user)
 
 /obj/structure/destructible/clockwork/attack_animal(mob/living/simple_animal/M)
 	if(is_servant_of_ratvar(M))
@@ -157,10 +162,6 @@
 		user << "<span class='warning'>[src] needs to be disabled before it can be unsecured!</span>"
 		return FAILED_UNFASTEN
 	return ..()
-
-/obj/structure/destructible/clockwork/powered/attack_ai(mob/user)
-	if(is_servant_of_ratvar(user))
-		attack_hand(user)
 
 /obj/structure/destructible/clockwork/powered/proc/toggle(fast_process, mob/living/user)
 	if(user)

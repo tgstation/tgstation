@@ -275,6 +275,10 @@ var/global/list/ghost_accs_options = list(GHOST_ACCS_NONE, GHOST_ACCS_DIR, GHOST
 
 #define GHOST_OTHERS_DEFAULT_OPTION			GHOST_OTHERS_THEIR_SETTING
 
+#define GHOST_MAX_VIEW_RANGE_DEFAULT 10
+#define GHOST_MAX_VIEW_RANGE_MEMBER 14
+
+
 var/global/list/ghost_others_options = list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DEFAULT_SPRITE, GHOST_OTHERS_THEIR_SETTING) //Same as ghost_accs_options.
 
 //Color Defines

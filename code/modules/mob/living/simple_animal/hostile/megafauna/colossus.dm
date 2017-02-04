@@ -77,7 +77,7 @@ Difficulty: Very Hard
 			double_spiral()
 		else
 			visible_message("<span class='colossus'>\"<b>Judgement.</b>\"</span>")
-			addtimer(CALLBACK(src, .proc/spiral_shoot, rand(0, 1)), 0)
+			INVOKE_ASYNC(src, .proc/spiral_shoot, rand(0, 1))
 
 	else if(prob(20))
 		ranged_cooldown = world.time + 30
@@ -88,7 +88,7 @@ Difficulty: Very Hard
 			blast()
 		else
 			ranged_cooldown = world.time + 40
-			addtimer(CALLBACK(src, .proc/alternating_dir_shots), 0)
+			INVOKE_ASYNC(src, .proc/alternating_dir_shots)
 
 
 /mob/living/simple_animal/hostile/megafauna/colossus/New()
@@ -108,7 +108,7 @@ Difficulty: Very Hard
 /obj/effect/overlay/temp/at_shield/New(new_loc, new_target)
 	..()
 	target = new_target
-	addtimer(CALLBACK(src, /atom/movable/proc/orbit, target, 0, FALSE, 0, 0, FALSE, TRUE), 0)
+	INVOKE_ASYNC(src, /atom/movable/proc/orbit, target, 0, FALSE, 0, 0, FALSE, TRUE)
 
 /mob/living/simple_animal/hostile/megafauna/colossus/bullet_act(obj/item/projectile/P)
 	if(!stat)
@@ -139,8 +139,8 @@ Difficulty: Very Hard
 	visible_message("<span class='colossus'>\"<b>Die.</b>\"</span>")
 
 	sleep(10)
-	addtimer(CALLBACK(src, .proc/spiral_shoot), 0)
-	addtimer(CALLBACK(src, .proc/spiral_shoot, 1), 0)
+	INVOKE_ASYNC(src, .proc/spiral_shoot)
+	INVOKE_ASYNC(src, .proc/spiral_shoot, 1)
 
 /mob/living/simple_animal/hostile/megafauna/colossus/proc/spiral_shoot(negative = 0, counter_start = 1)
 	var/counter = counter_start
@@ -438,7 +438,7 @@ Difficulty: Very Hard
 	if(..() && ishuman(user) && !(user in affected_targets))
 		var/mob/living/carbon/human/H = user
 		for(var/obj/item/W in H)
-			H.unEquip(W)
+			H.dropItemToGround(W)
 		var/datum/job/clown/C = new /datum/job/clown()
 		C.equip(H)
 		qdel(C)

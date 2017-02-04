@@ -214,7 +214,7 @@
 	if(reinf)
 		prosel_cost -= POWER_ROD
 	for(var/obj/structure/grille/G in get_turf(src))
-		addtimer(CALLBACK(proselytizer, /obj/item/clockwork/clockwork_proselytizer.proc/proselytize, G, user), 0)
+		INVOKE_ASYNC(proselytizer, /obj/item/clockwork/clockwork_proselytizer.proc/proselytize, G, user)
 	return list("operation_time" = prosel_time, "new_obj_type" = windowtype, "power_cost" = prosel_cost, "spawn_dir" = dir, "dir_in_new" = new_dir)
 
 /obj/structure/window/reinforced/clockwork/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer)
@@ -363,14 +363,14 @@
 /mob/living/silicon/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer)
 	. = TRUE
 	if(proselytizer_heal(user, proselytizer) && user)
-		user.visible_message("<span class='notice'>[user]'s [proselytizer.name] stops coverin[src == user ? "g [user.p_them()]" : "g [src]"] [src] with glowing orange energy.</span>", \
+		user.visible_message("<span class='notice'>[user]'s [proselytizer.name] stops coverin[src == user ? "g [user.p_them()]" : "g [src]"] with glowing orange energy.</span>", \
 		"<span class='alloy'>You finish repairin[src == user ? "g yourself. You are":"g [src]. [p_they(TRUE)] [p_are()]"] now at <b>[abs(HEALTH_THRESHOLD_DEAD - health)]/[abs(HEALTH_THRESHOLD_DEAD - maxHealth)]</b> health.</span>")
 
 //Same with clockwork mobs.
 /mob/living/simple_animal/hostile/clockwork/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer)
 	. = TRUE
 	if(proselytizer_heal(user, proselytizer) && user)
-		user.visible_message("<span class='notice'>[user]'s [proselytizer.name] stops coverin[src == user ? "g [user.p_them()]" : "g [src]"] [src] with glowing orange energy.</span>", \
+		user.visible_message("<span class='notice'>[user]'s [proselytizer.name] stops coverin[src == user ? "g [user.p_them()]" : "g [src]"] with glowing orange energy.</span>", \
 		"<span class='alloy'>You finish repairin[src == user ? "g yourself. You are":"g [src]. [p_they(TRUE)] [p_are()]"] now at <b>[health]/[maxHealth]</b> health.</span>")
 
 //Cogscarabs get special interaction because they're drones and have innate self-heals/revives.

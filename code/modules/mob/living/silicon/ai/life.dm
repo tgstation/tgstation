@@ -11,6 +11,8 @@
 
 		update_gravity(mob_has_gravity())
 
+		handle_status_effects()
+
 		if(malfhack && malfhack.aidisabled)
 			deltimer(malfhacking)
 			// This proc handles cleanup of screen notifications and

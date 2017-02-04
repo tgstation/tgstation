@@ -26,7 +26,6 @@
 	new /obj/effect/particle_effect/sparks(loc)
 	playsound(src.loc, "sparks", 50, 1)
 	blink_mob(user)
-	user.unEquip(src)
 	qdel(src)
 
 /obj/item/weapon/ore/bluespace_crystal/proc/blink_mob(mob/living/L)

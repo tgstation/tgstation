@@ -253,10 +253,10 @@
 				break
 	if(KA.get_remaining_mod_capacity() >= cost)
 		if(.)
+			if(!user.transferItemToLoc(src, KA))
+				return
 			user << "<span class='notice'>You install the modkit.</span>"
 			playsound(loc, 'sound/items/Screwdriver.ogg', 100, 1)
-			user.unEquip(src)
-			forceMove(KA)
 			KA.modkits += src
 		else
 			user << "<span class='notice'>The modkit you're trying to install would conflict with an already installed modkit. Use a crowbar to remove existing modkits.</span>"

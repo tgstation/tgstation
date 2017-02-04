@@ -201,10 +201,11 @@
 /obj/machinery/door/poddoor{
 	id = "UO45_Elevator"
 	},
-/turf/open/floor/plasteel/delivery{
+/turf/open/floor/plasteel{
 	heat_capacity = 1e+006;
 	name = "floor"
 	},
+/obj/effect/turf_decal/delivery,
 /area/awaycontent/a1{
 	has_gravity = 1;
 	name = "UO45 Central Hall"
@@ -7283,10 +7284,11 @@
 	id = "UO45_biohazard";
 	name = "biohazard containment door"
 	},
-/turf/open/floor/plasteel/delivery{
+/turf/open/floor/plasteel{
 	heat_capacity = 1e+006;
 	name = "floor"
 	},
+/obj/effect/turf_decal/delivery,
 /area/awaycontent/a5{
 	has_gravity = 1;
 	name = "UO45 Research"
@@ -11958,9 +11960,12 @@
 	initialize_directions = 10
 	},
 /obj/machinery/portable_atmospherics/scrubber,
-/turf/open/floor/plasteel/bot{
+/turf/open/floor/plasteel{
 	dir = 2;
 	heat_capacity = 1e+006
+	},
+/obj/effect/turf_decal/bot{
+	dir = 2
 	},
 /area/awaycontent/a3{
 	has_gravity = 1;
@@ -11968,9 +11973,12 @@
 	})
 "qN" = (
 /obj/machinery/portable_atmospherics/canister/air,
-/turf/open/floor/plasteel/bot{
+/turf/open/floor/plasteel{
 	dir = 2;
 	heat_capacity = 1e+006
+	},
+/obj/effect/turf_decal/bot{
+	dir = 2
 	},
 /area/awaycontent/a3{
 	has_gravity = 1;
@@ -12518,9 +12526,12 @@
 "rx" = (
 /obj/machinery/atmospherics/pipe/simple/cyan/visible,
 /obj/machinery/portable_atmospherics/scrubber,
-/turf/open/floor/plasteel/bot{
+/turf/open/floor/plasteel{
 	dir = 2;
 	heat_capacity = 1e+006
+	},
+/obj/effect/turf_decal/bot{
+	dir = 2
 	},
 /area/awaycontent/a3{
 	has_gravity = 1;
@@ -13482,8 +13493,9 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/obj/effect/turf_decal/stripes/corner{
-	dir = 8
+/turf/open/floor/plasteel/caution/corner{
+	dir = 8;
+	heat_capacity = 1e+006
 	},
 /area/awaycontent/a2{
 	has_gravity = 1;
@@ -13499,8 +13511,9 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/obj/effect/turf_decal/stripes/corner{
-	dir = 8
+/turf/open/floor/plasteel/caution/corner{
+	dir = 8;
+	heat_capacity = 1e+006
 	},
 /area/awaycontent/a2{
 	has_gravity = 1;
@@ -13516,8 +13529,9 @@
 	pixel_x = 0;
 	pixel_y = -24
 	},
-/obj/effect/turf_decal/stripes/corner{
-	dir = 8
+/turf/open/floor/plasteel/caution/corner{
+	dir = 8;
+	heat_capacity = 1e+006
 	},
 /area/awaycontent/a2{
 	has_gravity = 1;
@@ -13525,8 +13539,9 @@
 	})
 "sI" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
-/obj/effect/turf_decal/stripes/corner{
-	dir = 8
+/turf/open/floor/plasteel/caution/corner{
+	dir = 8;
+	heat_capacity = 1e+006
 	},
 /area/awaycontent/a2{
 	has_gravity = 1;
@@ -14655,9 +14670,12 @@
 	dir = 1
 	},
 /obj/machinery/portable_atmospherics/canister/air,
-/turf/open/floor/plasteel/bot{
+/turf/open/floor/plasteel{
 	dir = 2;
 	heat_capacity = 1e+006
+	},
+/obj/effect/turf_decal/bot{
+	dir = 2
 	},
 /area/awaycontent/a3{
 	has_gravity = 1;
@@ -14913,8 +14931,9 @@
 	name = "Tank Monitor";
 	sensors = list("UO45_n2_sensor" = "Nitrogen", "UO45_o2_sensor" = "Oxygen", "UO45_mix_sensor" = "Gas Mix Tank")
 	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 9
+/turf/open/floor/plasteel/caution{
+	dir = 9;
+	heat_capacity = 1e+006
 	},
 /area/awaycontent/a3{
 	has_gravity = 1;
@@ -15184,8 +15203,9 @@
 	name = "Distribution and Waste Monitor";
 	sensors = list("UO45_air_sensor" = "Mixed Air Supply Tank", "UO45_distro_meter" = "Distribution Loop", "UO45_waste_meter" = "Waste Loop")
 	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
+/turf/open/floor/plasteel/caution{
+	dir = 8;
+	heat_capacity = 1e+006
 	},
 /area/awaycontent/a3{
 	has_gravity = 1;
@@ -15282,10 +15302,11 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/turf/open/floor/plasteel/delivery{
+/turf/open/floor/plasteel{
 	heat_capacity = 1e+006;
 	name = "floor"
 	},
+/obj/effect/turf_decal/delivery,
 /area/awaycontent/a3{
 	has_gravity = 1;
 	name = "UO45 Engineering"
@@ -15305,10 +15326,11 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 9
 	},
-/turf/open/floor/plasteel/delivery{
+/turf/open/floor/plasteel{
 	heat_capacity = 1e+006;
 	name = "floor"
 	},
+/obj/effect/turf_decal/delivery,
 /area/awaycontent/a3{
 	has_gravity = 1;
 	name = "UO45 Engineering"
@@ -15323,10 +15345,11 @@
 	name = "engineering security door"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/open/floor/plasteel/delivery{
+/turf/open/floor/plasteel{
 	heat_capacity = 1e+006;
 	name = "floor"
 	},
+/obj/effect/turf_decal/delivery,
 /area/awaycontent/a3{
 	has_gravity = 1;
 	name = "UO45 Engineering"
@@ -15537,8 +15560,9 @@
 "vs" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/computer/atmos_alert,
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
+/turf/open/floor/plasteel/caution{
+	dir = 8;
+	heat_capacity = 1e+006
 	},
 /area/awaycontent/a3{
 	has_gravity = 1;
@@ -15842,8 +15866,9 @@
 	dir = 5
 	},
 /obj/machinery/computer/station_alert,
-/obj/effect/turf_decal/stripes/line{
-	dir = 10
+/turf/open/floor/plasteel/caution{
+	dir = 10;
+	heat_capacity = 1e+006
 	},
 /area/awaycontent/a3{
 	has_gravity = 1;
@@ -15989,9 +16014,12 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/turf/open/floor/plasteel/bot{
+/turf/open/floor/plasteel{
 	dir = 2;
 	heat_capacity = 1e+006
+	},
+/obj/effect/turf_decal/bot{
+	dir = 2
 	},
 /area/awaycontent/a3{
 	has_gravity = 1;
@@ -16002,9 +16030,12 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/turf/open/floor/plasteel/bot{
+/turf/open/floor/plasteel{
 	dir = 2;
 	heat_capacity = 1e+006
+	},
+/obj/effect/turf_decal/bot{
+	dir = 2
 	},
 /area/awaycontent/a3{
 	has_gravity = 1;
@@ -16015,9 +16046,12 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 9
 	},
-/turf/open/floor/plasteel/bot{
+/turf/open/floor/plasteel{
 	dir = 2;
 	heat_capacity = 1e+006
+	},
+/obj/effect/turf_decal/bot{
+	dir = 2
 	},
 /area/awaycontent/a3{
 	has_gravity = 1;

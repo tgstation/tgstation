@@ -435,6 +435,8 @@
 
 /turf/proc/add_decal(decal,group)
 	LAZYINITLIST(decals)
+	if(!decals[group])
+		decals[group] = list()
 	decals[group] += decal
 	add_overlay(decals[group])
 

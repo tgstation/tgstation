@@ -105,6 +105,7 @@
 	icon_state = "yellow"
 	requires_power = 0
 	has_gravity = 1
+	flags = NO_DEATHRATTLE
 
 /area/ctf/control_room
 	name = "Control Room A"

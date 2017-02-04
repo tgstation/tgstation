@@ -1805,7 +1805,8 @@
 /obj/structure/disposalpipe/trunk{
 	dir = 4
 	},
-/turf/open/floor/plasteel/bot,
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/bot,
 /area/mine/north_outpost)
 "fg" = (
 /obj/structure/disposalpipe/segment{
@@ -1899,7 +1900,8 @@
 /area/mine/north_outpost)
 "fv" = (
 /obj/structure/rack,
-/turf/open/floor/plasteel/bot,
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/bot,
 /area/mine/north_outpost)
 "fw" = (
 /obj/structure/disposalpipe/segment,
@@ -2760,22 +2762,26 @@
 /area/mine/west_outpost)
 "hH" = (
 /obj/machinery/recharge_station,
-/turf/open/floor/plasteel/bot,
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/bot,
 /area/mine/west_outpost)
 "hI" = (
 /obj/structure/tank_dispenser/oxygen,
-/turf/open/floor/plasteel/bot,
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/bot,
 /area/mine/west_outpost)
 "hJ" = (
 /obj/structure/rack,
 /obj/machinery/light{
 	dir = 1
 	},
-/turf/open/floor/plasteel/bot,
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/bot,
 /area/mine/west_outpost)
 "hK" = (
 /obj/structure/rack,
-/turf/open/floor/plasteel/bot,
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/bot,
 /area/mine/west_outpost)
 "hL" = (
 /obj/structure/window/reinforced{
@@ -2792,7 +2798,8 @@
 /obj/machinery/disposal/deliveryChute{
 	pixel_y = 5
 	},
-/turf/open/floor/plasteel/bot,
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/bot,
 /area/mine/west_outpost)
 "hM" = (
 /turf/open/floor/plasteel,
@@ -3616,13 +3623,19 @@
 /obj/structure/disposalpipe/trunk{
 	dir = 1
 	},
-/turf/open/floor/plasteel/bot{
+/turf/open/floor/plasteel{
+	dir = 1
+	},
+/obj/effect/turf_decal/bot{
 	dir = 1
 	},
 /area/mine/production)
 "jU" = (
 /obj/structure/closet/crate,
-/turf/open/floor/plasteel/bot{
+/turf/open/floor/plasteel{
+	dir = 1
+	},
+/obj/effect/turf_decal/bot{
 	dir = 1
 	},
 /area/mine/production)
@@ -3631,7 +3644,10 @@
 	dir = 6
 	},
 /obj/structure/closet/crate,
-/turf/open/floor/plasteel/bot{
+/turf/open/floor/plasteel{
+	dir = 1
+	},
+/obj/effect/turf_decal/bot{
 	dir = 1
 	},
 /area/mine/production)
@@ -3818,9 +3834,10 @@
 	name = "Mining Station EVA";
 	req_access_txt = "54"
 	},
-/turf/open/floor/plasteel/delivery{
+/turf/open/floor/plasteel{
 	name = "floor"
 	},
+/obj/effect/turf_decal/delivery,
 /area/mine/eva)
 "kt" = (
 /obj/structure/cable{
@@ -4681,9 +4698,10 @@
 /area/mine/production)
 "mm" = (
 /obj/machinery/mineral/equipment_vendor,
-/turf/open/floor/plasteel/delivery{
+/turf/open/floor/plasteel{
 	name = "floor"
 	},
+/obj/effect/turf_decal/delivery,
 /area/mine/production)
 "mn" = (
 /obj/machinery/mineral/mint{
@@ -4704,7 +4722,10 @@
 	pixel_y = 28
 	},
 /obj/structure/closet/crate,
-/turf/open/floor/plasteel/bot{
+/turf/open/floor/plasteel{
+	dir = 1
+	},
+/obj/effect/turf_decal/bot{
 	dir = 1
 	},
 /area/mine/production)
@@ -4719,13 +4740,19 @@
 	info = "A hastily written note has been scribbled here... <br><br> Please use the ore redemption machine in the cargo office for smelting. PLEASE! <br><br>--The Research Staff";
 	name = "URGENT!"
 	},
-/turf/open/floor/plasteel/bot{
+/turf/open/floor/plasteel{
+	dir = 1
+	},
+/obj/effect/turf_decal/bot{
 	dir = 1
 	},
 /area/mine/production)
 "mr" = (
 /obj/structure/barricade/wooden,
-/turf/open/floor/plasteel/bot{
+/turf/open/floor/plasteel{
+	dir = 1
+	},
+/obj/effect/turf_decal/bot{
 	dir = 1
 	},
 /area/mine/production)
@@ -4793,9 +4820,10 @@
 	dir = 4
 	},
 /obj/structure/barricade/wooden,
-/turf/open/floor/plasteel/delivery{
+/turf/open/floor/plasteel{
 	name = "floor"
 	},
+/obj/effect/turf_decal/delivery,
 /area/mine/production)
 "mC" = (
 /turf/open/floor/plasteel/airless/asteroid,
@@ -4866,16 +4894,20 @@
 	pixel_x = 30;
 	pixel_y = 1
 	},
-/turf/open/floor/plasteel/delivery{
+/turf/open/floor/plasteel{
 	name = "floor"
 	},
+/obj/effect/turf_decal/delivery,
 /area/mine/production)
 "mK" = (
 /obj/structure/closet/crate{
 	icon_state = "crateopen";
 	opened = 1
 	},
-/turf/open/floor/plasteel/bot{
+/turf/open/floor/plasteel{
+	dir = 1
+	},
+/obj/effect/turf_decal/bot{
 	dir = 1
 	},
 /area/mine/production)
@@ -4930,9 +4962,10 @@
 	name = "Mining Shuttle Airlock";
 	req_access_txt = "0"
 	},
-/turf/open/floor/plasteel/delivery{
+/turf/open/floor/plasteel{
 	name = "floor"
 	},
+/obj/effect/turf_decal/delivery,
 /area/mine/production)
 "mQ" = (
 /turf/open/floor/plasteel,
@@ -5037,9 +5070,10 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/open/floor/plasteel/delivery{
+/turf/open/floor/plasteel{
 	name = "floor"
 	},
+/obj/effect/turf_decal/delivery,
 /area/mine/production)
 "nd" = (
 /obj/machinery/atmospherics/pipe/simple{
@@ -5110,9 +5144,10 @@
 	name = "Processing Area";
 	req_access_txt = "48"
 	},
-/turf/open/floor/plasteel/delivery{
+/turf/open/floor/plasteel{
 	name = "floor"
 	},
+/obj/effect/turf_decal/delivery,
 /area/mine/production)
 "nm" = (
 /obj/structure/disposalpipe/segment,
@@ -5172,9 +5207,10 @@
 /obj/machinery/door/window/northleft{
 	name = "Output Access"
 	},
-/turf/open/floor/plasteel/delivery{
+/turf/open/floor/plasteel{
 	name = "floor"
 	},
+/obj/effect/turf_decal/delivery,
 /area/mine/production)
 "nu" = (
 /obj/machinery/door/window/northleft{
@@ -5182,9 +5218,10 @@
 	icon_state = "right";
 	name = "Output Access"
 	},
-/turf/open/floor/plasteel/delivery{
+/turf/open/floor/plasteel{
 	name = "floor"
 	},
+/obj/effect/turf_decal/delivery,
 /area/mine/production)
 "nv" = (
 /obj/machinery/mineral/stacking_unit_console,
@@ -5242,7 +5279,10 @@
 	dir = 1;
 	pixel_y = -1
 	},
-/turf/open/floor/plasteel/bot{
+/turf/open/floor/plasteel{
+	dir = 1
+	},
+/obj/effect/turf_decal/bot{
 	dir = 1
 	},
 /area/mine/production)
@@ -5252,20 +5292,25 @@
 	opened = 1
 	},
 /obj/machinery/light,
-/turf/open/floor/plasteel/bot{
+/turf/open/floor/plasteel{
+	dir = 1
+	},
+/obj/effect/turf_decal/bot{
 	dir = 1
 	},
 /area/mine/production)
 "nC" = (
 /obj/structure/ore_box,
-/turf/open/floor/plasteel/delivery{
+/turf/open/floor/plasteel{
 	name = "floor"
 	},
+/obj/effect/turf_decal/delivery,
 /area/mine/production)
 "nD" = (
-/turf/open/floor/plasteel/delivery{
+/turf/open/floor/plasteel{
 	name = "floor"
 	},
+/obj/effect/turf_decal/delivery,
 /area/mine/production)
 "nE" = (
 /obj/machinery/conveyor{

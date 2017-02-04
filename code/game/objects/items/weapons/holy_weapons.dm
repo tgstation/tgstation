@@ -49,9 +49,8 @@
 
 	if(holy_weapon)
 		holy_weapon.reskinned = TRUE
-		M.unEquip(src)
-		M.put_in_active_hand(holy_weapon)
 		qdel(src)
+		M.put_in_active_hand(holy_weapon)
 
 /obj/item/weapon/nullrod/godhand
 	icon_state = "disintegrate"

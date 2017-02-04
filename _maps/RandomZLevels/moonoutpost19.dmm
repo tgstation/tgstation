@@ -1451,7 +1451,7 @@
 	id = "awaysyndie"
 	},
 /turf/open/floor/plating{
-	initial_gas_mix = "co2=48.7;n2 = 13.2;o2 = 32.4;TEMP = 251";
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	heat_capacity = 1e+006;
 	temperature = 251
 	},
@@ -1563,7 +1563,7 @@
 	},
 /obj/structure/alien/weeds/node,
 /turf/open/floor/plasteel{
-	initial_gas_mix = "co2=48.7;n2 = 13.2;o2 = 32.4;TEMP = 251";
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	heat_capacity = 1e+006;
 	temperature = 251
 	},
@@ -1583,7 +1583,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel{
-	initial_gas_mix = "co2=48.7;n2 = 13.2;o2 = 32.4;TEMP = 251";
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	heat_capacity = 1e+006;
 	temperature = 251
 	},
@@ -1600,7 +1600,7 @@
 	pixel_y = 32
 	},
 /turf/open/floor/plasteel{
-	initial_gas_mix = "co2=48.7;n2 = 13.2;o2 = 32.4;TEMP = 251";
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	heat_capacity = 1e+006;
 	temperature = 251
 	},
@@ -1730,7 +1730,7 @@
 	})
 "co" = (
 /turf/open/floor/plasteel{
-	initial_gas_mix = "co2=48.7;n2 = 13.2;o2 = 32.4;TEMP = 251";
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	heat_capacity = 1e+006;
 	temperature = 251
 	},
@@ -1949,7 +1949,7 @@
 	output_dir = 2
 	},
 /turf/open/floor/plating{
-	initial_gas_mix = "co2=48.7;n2 = 13.2;o2 = 32.4;TEMP = 251";
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	heat_capacity = 1e+006;
 	temperature = 251
 	},
@@ -1972,7 +1972,7 @@
 "cE" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel{
-	initial_gas_mix = "co2=48.7;n2 = 13.2;o2 = 32.4;TEMP = 251";
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	heat_capacity = 1e+006;
 	temperature = 251
 	},
@@ -2147,7 +2147,7 @@
 	name = "mining conveyor"
 	},
 /turf/open/floor/plasteel{
-	initial_gas_mix = "co2=48.7;n2 = 13.2;o2 = 32.4;TEMP = 251";
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	heat_capacity = 1e+006;
 	temperature = 251
 	},
@@ -2230,7 +2230,7 @@
 "cV" = (
 /obj/structure/alien/weeds/node,
 /turf/open/floor/plasteel{
-	initial_gas_mix = "co2=48.7;n2 = 13.2;o2 = 32.4;TEMP = 251";
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	heat_capacity = 1e+006;
 	temperature = 251
 	},
@@ -2276,11 +2276,14 @@
 /obj/structure/alien/weeds{
 	icon_state = "weeds2"
 	},
-/turf/open/floor/plasteel/bot{
+/turf/open/floor/plasteel{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	dir = 1;
 	heat_capacity = 1e+006;
 	temperature = 251
+	},
+/obj/effect/turf_decal/bot{
+	dir = 1
 	},
 /area/awaycontent/a4{
 	has_gravity = 1;
@@ -2368,7 +2371,7 @@
 	output_dir = 2
 	},
 /turf/open/floor/plating{
-	initial_gas_mix = "co2=48.7;n2 = 13.2;o2 = 32.4;TEMP = 251";
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	heat_capacity = 1e+006;
 	temperature = 251
 	},
@@ -2394,11 +2397,14 @@
 	amount = 10
 	},
 /obj/structure/alien/weeds,
-/turf/open/floor/plasteel/bot{
+/turf/open/floor/plasteel{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	dir = 1;
 	heat_capacity = 1e+006;
 	temperature = 251
+	},
+/obj/effect/turf_decal/bot{
+	dir = 1
 	},
 /area/awaycontent/a4{
 	has_gravity = 1;
@@ -2479,7 +2485,7 @@
 "dm" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel{
-	initial_gas_mix = "co2=48.7;n2 = 13.2;o2 = 32.4;TEMP = 251";
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	heat_capacity = 1e+006;
 	temperature = 251
 	},
@@ -2492,7 +2498,7 @@
 	})
 "dn" = (
 /turf/open/floor/plasteel{
-	initial_gas_mix = "co2=48.7;n2 = 13.2;o2 = 32.4;TEMP = 251";
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	heat_capacity = 1e+006;
 	temperature = 251
 	},
@@ -2653,7 +2659,7 @@
 	status = 2
 	},
 /turf/open/floor/plating{
-	initial_gas_mix = "co2=48.7;n2 = 13.2;o2 = 32.4;TEMP = 251";
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	heat_capacity = 1e+006;
 	temperature = 251
 	},
@@ -2681,7 +2687,7 @@
 /obj/item/weapon/pickaxe/drill,
 /obj/item/clothing/head/helmet/space/syndicate/orange,
 /turf/open/floor/plating{
-	initial_gas_mix = "co2=48.7;n2 = 13.2;o2 = 32.4;TEMP = 251";
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	heat_capacity = 1e+006;
 	temperature = 251
 	},
@@ -2732,7 +2738,7 @@
 	},
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/open/floor/plating{
-	initial_gas_mix = "co2=48.7;n2 = 13.2;o2 = 32.4;TEMP = 251";
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	heat_capacity = 1e+006;
 	temperature = 251
 	},
@@ -2759,7 +2765,7 @@
 /obj/structure/rack,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating{
-	initial_gas_mix = "co2=48.7;n2 = 13.2;o2 = 32.4;TEMP = 251";
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	heat_capacity = 1e+006;
 	temperature = 251
 	},
@@ -6037,10 +6043,11 @@
 	layer = 2.9;
 	name = "Acid-Proof biohazard containment door"
 	},
-/turf/open/floor/plasteel/delivery{
+/turf/open/floor/plasteel{
 	heat_capacity = 1e+006;
 	name = "floor"
 	},
+/obj/effect/turf_decal/delivery,
 /area/awaycontent/a2{
 	has_gravity = 1;
 	name = "MO19 Research"

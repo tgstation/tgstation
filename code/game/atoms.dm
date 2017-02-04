@@ -23,6 +23,7 @@
 
 	var/list/atom_colours	 //used to store the different colors on an atom
 							//its inherent color, the colored paint applied on it, special color effect etc...
+	var/initialized = FALSE
 
 
 /atom/New()
@@ -40,8 +41,9 @@
 	if(luminosity)
 		light = new(src)
 
-	if(SSobj && SSobj.initialized)
-		Initialize(FALSE)
+	var/initialized = SSobj.initialized
+	if(initialized > INITIALIZATION_INSSOBJ)
+		Initialize(initialized == INITIALIZATION_INNEW_MAPLOAD)
 	//. = ..() //uncomment if you are dumb enough to add a /datum/New() proc
 
 /atom/Destroy()
@@ -109,8 +111,9 @@
 			var/atom/movable/M = A
 			if(isliving(M.loc))
 				var/mob/living/L = M.loc
-				L.unEquip(M)
-			M.loc = src
+				L.transferItemToLoc(M, src)
+			else
+				M.forceMove(src)
 
 /atom/proc/assume_air(datum/gas_mixture/giver)
 	qdel(giver)
@@ -161,7 +164,8 @@
 	return
 
 /atom/proc/emp_act(severity)
-	return
+	if(istype(wires))
+		wires.emp_pulse()
 
 /atom/proc/bullet_act(obj/item/projectile/P, def_zone)
 	. = P.on_hit(src, 0, def_zone)
@@ -431,15 +435,16 @@ var/list/blood_splatter_icons = list()
 	sleep(1)
 	stoplag()
 
-//This is called just before maps and objects are initialized, use it to spawn other mobs/objects
-//effects at world start up without causing runtimes
-/atom/proc/spawn_atom_to_world()
-
 //Called after New if the world is not loaded with TRUE
 //Called from base of New if the world is loaded with FALSE
+//This base must be called or derivatives must set initialized to TRUE to prevent repeat calls
+//Derivatives must not sleep
 /atom/proc/Initialize(mapload)
-	set waitfor = 0
-	return
+#ifdef TESTING
+	if(initialized)
+		stack_trace("Warning: [src]([type]) initialized multiple times!")
+#endif
+	initialized = TRUE
 
 //the vision impairment to give to the mob whose perspective is set to that atom (e.g. an unfocused camera giving you an impaired vision when looking through it)
 /atom/proc/get_remote_view_fullscreens(mob/user)

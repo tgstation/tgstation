@@ -2151,9 +2151,10 @@
 	frequency = 1439;
 	pixel_y = 23
 	},
-/turf/open/floor/plasteel/bot{
+/turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
+/obj/effect/turf_decal/bot,
 /area/mine/production)
 "eu" = (
 /obj/structure/extinguisher_cabinet{
@@ -2172,14 +2173,16 @@
 /area/mine/production)
 "ev" = (
 /obj/structure/ore_box,
-/turf/open/floor/plasteel/bot{
+/turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
+/obj/effect/turf_decal/bot,
 /area/mine/production)
 "ew" = (
-/turf/open/floor/plasteel/bot{
+/turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
+/obj/effect/turf_decal/bot,
 /area/mine/production)
 "ex" = (
 /obj/structure/cable{
@@ -2315,9 +2318,10 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/turf/open/floor/plasteel/delivery{
+/turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
+/obj/effect/turf_decal/delivery,
 /area/mine/production)
 "eM" = (
 /obj/structure/cable{
@@ -2447,9 +2451,10 @@
 	icon_state = "crateopen";
 	opened = 1
 	},
-/turf/open/floor/plasteel/bot{
+/turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
+/obj/effect/turf_decal/bot,
 /area/mine/production)
 "eX" = (
 /obj/machinery/atmospherics/components/unary/vent_pump{
@@ -2760,9 +2765,10 @@
 	},
 /area/mine/laborcamp)
 "fF" = (
-/turf/open/floor/plasteel/delivery{
+/turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
+/obj/effect/turf_decal/delivery,
 /area/mine/laborcamp)
 "fG" = (
 /obj/machinery/mineral/processing_unit{

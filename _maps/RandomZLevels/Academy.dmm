@@ -1794,7 +1794,7 @@
 	},
 /area/awaymission/academy/classrooms)
 "fu" = (
-/obj/effect/turf_decal/stripes/corner{
+/turf/open/floor/plasteel/caution/corner{
 	dir = 4
 	},
 /area/awaymission/academy/classrooms)
@@ -1985,9 +1985,10 @@
 /area/awaymission/academy/classrooms)
 "fS" = (
 /obj/structure/window/reinforced,
-/turf/open/floor/plasteel/delivery{
+/turf/open/floor/plasteel{
 	name = "floor"
 	},
+/obj/effect/turf_decal/delivery,
 /area/awaymission/academy/classrooms)
 "fT" = (
 /obj/structure/table/reinforced,
@@ -2305,9 +2306,10 @@
 "gK" = (
 /obj/structure/window/reinforced,
 /obj/item/ammo_casing,
-/turf/open/floor/plasteel/delivery{
+/turf/open/floor/plasteel{
 	name = "floor"
 	},
+/obj/effect/turf_decal/delivery,
 /area/awaymission/academy/classrooms)
 "gL" = (
 /mob/living/simple_animal/hostile/bear,

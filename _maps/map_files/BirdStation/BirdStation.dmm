@@ -814,7 +814,8 @@
 /obj/structure/cable/cyan{
 	icon_state = "0-2"
 	},
-/turf/open/floor/plasteel/bot,
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/bot,
 /area/engine/engineering)
 "ace" = (
 /obj/machinery/light{
@@ -1030,7 +1031,8 @@
 /obj/structure/cable/cyan{
 	icon_state = "0-2"
 	},
-/turf/open/floor/plasteel/bot,
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/bot,
 /area/engine/engineering)
 "acI" = (
 /obj/machinery/atmospherics/pipe/manifold/general/visible{
@@ -1695,7 +1697,6 @@
 /area/engine/engineering)
 "aep" = (
 /obj/machinery/ai_slipper{
-	icon_state = "motion0";
 	uses = 10
 	},
 /turf/open/floor/bluegrid,
@@ -5201,7 +5202,8 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/turf/open/floor/plasteel/bot,
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/bot,
 /area/teleporter{
 	name = "\improper Teleporter Room"
 	})
@@ -5991,7 +5993,8 @@
 	})
 "aoF" = (
 /obj/machinery/suit_storage_unit/standard_unit,
-/turf/open/floor/plasteel/bot,
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/bot,
 /area/ai_monitored/storage/eva{
 	name = "E.V.A. Storage"
 	})
@@ -6766,7 +6769,8 @@
 	dir = 1;
 	network = list("SS13")
 	},
-/turf/open/floor/plasteel/bot,
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/bot,
 /area/ai_monitored/storage/eva{
 	name = "E.V.A. Storage"
 	})
@@ -8383,10 +8387,12 @@
 	home_destination = "Cargo #1";
 	suffix = "#1"
 	},
-/turf/open/floor/plasteel/delivery,
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/delivery,
 /area/quartermaster/storage)
 "auv" = (
-/turf/open/floor/plasteel/bot,
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/bot,
 /area/quartermaster/storage)
 "auw" = (
 /obj/machinery/light{
@@ -8438,7 +8444,6 @@
 /area/maintenance/fsmaint)
 "auD" = (
 /obj/machinery/ai_slipper{
-	icon_state = "motion0";
 	uses = 10
 	},
 /obj/structure/cable/cyan{
@@ -8624,7 +8629,8 @@
 	location = "Cargo #2";
 	name = "navigation beacon"
 	},
-/turf/open/floor/plasteel/delivery,
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/delivery,
 /area/quartermaster/storage)
 "auY" = (
 /obj/machinery/atmospherics/pipe/simple/cyan/hidden,
@@ -8896,7 +8902,8 @@
 /obj/structure/cable/cyan{
 	icon_state = "1-2"
 	},
-/turf/open/floor/plasteel/bot,
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/bot,
 /area/hallway/primary/central)
 "avI" = (
 /obj/structure/cable/cyan{
@@ -9383,7 +9390,8 @@
 	lootcount = 2;
 	name = "2maintenance loot spawner"
 	},
-/turf/open/floor/plasteel/bot,
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/bot,
 /area/quartermaster/storage)
 "awZ" = (
 /obj/structure/closet/crate,
@@ -9391,7 +9399,8 @@
 	lootcount = 3;
 	name = "3maintenance loot spawner"
 	},
-/turf/open/floor/plasteel/bot,
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/bot,
 /area/quartermaster/storage)
 "axa" = (
 /obj/structure/closet/crate,
@@ -9399,7 +9408,8 @@
 	lootcount = 4;
 	name = "4maintenance loot spawner"
 	},
-/turf/open/floor/plasteel/bot,
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/bot,
 /area/quartermaster/storage)
 "axb" = (
 /obj/structure/cable/cyan{
@@ -9631,7 +9641,8 @@
 /obj/structure/cable/cyan{
 	icon_state = "4-8"
 	},
-/turf/open/floor/plasteel/bot,
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/bot,
 /area/quartermaster/storage)
 "axN" = (
 /obj/structure/closet/crate,
@@ -9642,7 +9653,8 @@
 /obj/structure/cable/cyan{
 	icon_state = "4-8"
 	},
-/turf/open/floor/plasteel/bot,
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/bot,
 /area/quartermaster/storage)
 "axO" = (
 /obj/structure/closet/crate/medical,
@@ -9653,7 +9665,8 @@
 /obj/structure/cable/cyan{
 	icon_state = "4-8"
 	},
-/turf/open/floor/plasteel/bot,
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/bot,
 /area/quartermaster/storage)
 "axP" = (
 /obj/structure/closet/crate,
@@ -9664,7 +9677,8 @@
 /obj/structure/cable/cyan{
 	icon_state = "4-8"
 	},
-/turf/open/floor/plasteel/bot,
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/bot,
 /area/quartermaster/storage)
 "axQ" = (
 /obj/structure/cable/cyan{
@@ -9826,17 +9840,19 @@
 	name = "cargo bay airlock";
 	req_access_txt = "31"
 	},
-/turf/open/floor/plasteel/delivery{
+/turf/open/floor/plasteel{
 	name = "floor"
 	},
+/obj/effect/turf_decal/delivery,
 /area/quartermaster/miningdock{
 	name = "\improper Mining Office"
 	})
 "ayl" = (
 /obj/machinery/camera/autoname,
-/turf/open/floor/plasteel/delivery{
+/turf/open/floor/plasteel{
 	name = "floor"
 	},
+/obj/effect/turf_decal/delivery,
 /area/quartermaster/miningdock{
 	name = "\improper Mining Office"
 	})
@@ -10145,9 +10161,10 @@
 /turf/open/floor/plasteel,
 /area/maintenance/fsmaint)
 "ayZ" = (
-/turf/open/floor/plasteel/delivery{
+/turf/open/floor/plasteel{
 	name = "floor"
 	},
+/obj/effect/turf_decal/delivery,
 /area/quartermaster/miningdock{
 	name = "\improper Mining Office"
 	})
@@ -10306,10 +10323,12 @@
 	location = "Disposals";
 	name = "navigation beacon"
 	},
-/turf/open/floor/plasteel/delivery,
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/delivery,
 /area/maintenance/disposal)
 "azv" = (
-/turf/open/floor/plasteel/bot,
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/bot,
 /area/maintenance/disposal)
 "azw" = (
 /obj/vehicle/janicart,
@@ -11818,7 +11837,8 @@
 	icon_state = "intact";
 	dir = 4
 	},
-/turf/open/floor/plasteel/bot,
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/bot,
 /area/crew_quarters/sleep)
 "aDa" = (
 /obj/machinery/navbeacon{
@@ -11835,7 +11855,8 @@
 	icon_state = "intact";
 	dir = 4
 	},
-/turf/open/floor/plasteel/delivery,
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/delivery,
 /area/crew_quarters/sleep)
 "aDb" = (
 /obj/machinery/power/apc{
@@ -13730,14 +13751,16 @@
 /area/shuttle/escape)
 "aHY" = (
 /obj/machinery/door/airlock/external,
-/turf/open/floor/plasteel/delivery{
+/turf/open/floor/plasteel{
 	name = "floor"
 	},
+/obj/effect/turf_decal/delivery,
 /area/hallway/secondary/exit)
 "aHZ" = (
-/turf/open/floor/plasteel/delivery{
+/turf/open/floor/plasteel{
 	name = "floor"
 	},
+/obj/effect/turf_decal/delivery,
 /area/hallway/secondary/exit)
 "aIa" = (
 /turf/open/floor/plasteel,
@@ -15405,7 +15428,8 @@
 /turf/open/floor/carpet,
 /area/crew_quarters/heads)
 "aLY" = (
-/turf/open/floor/plasteel/bot,
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/bot,
 /area/maintenance/asmaint2)
 "aLZ" = (
 /obj/structure/closet/secure_closet/chemical,
@@ -15995,7 +16019,8 @@
 	pixel_x = 0;
 	pixel_y = 32
 	},
-/turf/open/floor/plasteel/bot,
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/bot,
 /area/security/brig)
 "aNp" = (
 /obj/item/weapon/twohanded/required/kirbyplants{
@@ -16012,7 +16037,8 @@
 	pixel_x = 0;
 	pixel_y = 32
 	},
-/turf/open/floor/plasteel/bot,
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/bot,
 /area/security/brig)
 "aNr" = (
 /obj/effect/spawner/structure/window/reinforced,
@@ -16449,7 +16475,8 @@
 /obj/structure/cable/cyan{
 	icon_state = "1-8"
 	},
-/turf/open/floor/plasteel/bot,
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/bot,
 /area/medical/robotics)
 "aOy" = (
 /obj/machinery/navbeacon{
@@ -16462,9 +16489,10 @@
 /obj/structure/cable/cyan{
 	icon_state = "4-8"
 	},
-/turf/open/floor/plasteel/delivery{
+/turf/open/floor/plasteel{
 	name = "floor"
 	},
+/obj/effect/turf_decal/delivery,
 /area/medical/robotics)
 "aOz" = (
 /obj/structure/cable/cyan{
@@ -16563,7 +16591,8 @@
 /turf/open/floor/plasteel/white,
 /area/maintenance/asmaint2)
 "aOP" = (
-/turf/open/floor/plasteel/whitebot,
+/turf/open/floor/plasteel/white,
+/obj/effect/turf_decal/bot,
 /area/toxins/xenobiology)
 "aOQ" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
@@ -17293,14 +17322,16 @@
 /obj/item/clothing/head/cone,
 /obj/item/clothing/head/cone,
 /obj/item/clothing/head/cone,
-/turf/open/floor/plasteel/bot,
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/bot,
 /area/security/brig)
 "aQC" = (
 /obj/structure/window/reinforced{
 	dir = 8
 	},
 /obj/machinery/syndicatebomb/training,
-/turf/open/floor/plasteel/bot,
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/bot,
 /area/security/brig)
 "aQD" = (
 /obj/machinery/computer/crew,
@@ -17521,7 +17552,8 @@
 	dir = 4
 	},
 /obj/item/key/security,
-/turf/open/floor/plasteel/bot,
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/bot,
 /area/security/brig)
 "aRf" = (
 /obj/structure/table,
@@ -17955,9 +17987,10 @@
 /obj/structure/cable/cyan{
 	icon_state = "4-8"
 	},
-/turf/open/floor/plasteel/delivery{
+/turf/open/floor/plasteel{
 	name = "floor"
 	},
+/obj/effect/turf_decal/delivery,
 /area/medical/robotics)
 "aRU" = (
 /obj/machinery/button/door{
@@ -18341,9 +18374,10 @@
 	icon_state = "intact";
 	dir = 8
 	},
-/turf/open/floor/plasteel/delivery{
+/turf/open/floor/plasteel{
 	name = "floor"
 	},
+/obj/effect/turf_decal/delivery,
 /area/medical/robotics)
 "aSQ" = (
 /obj/structure/cable/cyan{
@@ -18447,7 +18481,8 @@
 	icon_state = "plant-21";
 	layer = 4.1
 	},
-/turf/open/floor/plasteel/whitebot,
+/turf/open/floor/plasteel/white,
+/obj/effect/turf_decal/bot,
 /area/maintenance/fore{
 	name = "Security Maintenance"
 	})
@@ -18831,7 +18866,8 @@
 	icon_state = "plant-06";
 	level = 4.1
 	},
-/turf/open/floor/plasteel/whitebot,
+/turf/open/floor/plasteel/white,
+/obj/effect/turf_decal/bot,
 /area/maintenance/fore{
 	name = "Security Maintenance"
 	})
@@ -18840,7 +18876,8 @@
 	icon_state = "plant-06";
 	level = 4.1
 	},
-/turf/open/floor/plasteel/whitebot,
+/turf/open/floor/plasteel/white,
+/obj/effect/turf_decal/bot,
 /area/maintenance/fore{
 	name = "Security Maintenance"
 	})
@@ -19047,15 +19084,18 @@
 /obj/machinery/shieldwallgen{
 	req_access = null
 	},
-/turf/open/floor/plasteel/bot,
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/bot,
 /area/toxins/misc_lab)
 "aUw" = (
 /obj/structure/reagent_dispensers/fueltank,
-/turf/open/floor/plasteel/bot,
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/bot,
 /area/toxins/misc_lab)
 "aUx" = (
 /obj/machinery/portable_atmospherics/scrubber,
-/turf/open/floor/plasteel/bot,
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/bot,
 /area/toxins/misc_lab)
 "aUy" = (
 /obj/machinery/chem_master,
@@ -19088,7 +19128,10 @@
 	name = "blobstart"
 	},
 /obj/structure/target_stake,
-/turf/open/floor/plasteel/bot{
+/turf/open/floor/plasteel{
+	dir = 2
+	},
+/obj/effect/turf_decal/bot{
 	dir = 2
 	},
 /area/toxins/misc_lab)
@@ -19138,7 +19181,8 @@
 /obj/item/weapon/twohanded/required/kirbyplants{
 	icon_state = "plant-22"
 	},
-/turf/open/floor/plasteel/whitebot,
+/turf/open/floor/plasteel/white,
+/obj/effect/turf_decal/bot,
 /area/maintenance/fore{
 	name = "Security Maintenance"
 	})
@@ -19171,7 +19215,8 @@
 	},
 /obj/item/device/flashlight,
 /obj/structure/closet/crate,
-/turf/open/floor/plasteel/bot,
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/bot,
 /area/maintenance/fore{
 	name = "Security Maintenance"
 	})
@@ -19298,7 +19343,8 @@
 "aVc" = (
 /obj/structure/reagent_dispensers/fueltank,
 /obj/machinery/light/small,
-/turf/open/floor/plasteel/bot,
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/bot,
 /area/toxins/misc_lab)
 "aVd" = (
 /obj/machinery/chem_dispenser/constructable,
@@ -19358,7 +19404,8 @@
 	icon_state = "plant-05";
 	layer = 4.1
 	},
-/turf/open/floor/plasteel/whitebot,
+/turf/open/floor/plasteel/white,
+/obj/effect/turf_decal/bot,
 /area/maintenance/fore{
 	name = "Security Maintenance"
 	})
@@ -19531,7 +19578,8 @@
 	icon_state = "plant-02";
 	layer = 4.1
 	},
-/turf/open/floor/plasteel/whitebot,
+/turf/open/floor/plasteel/white,
+/obj/effect/turf_decal/bot,
 /area/maintenance/fore{
 	name = "Security Maintenance"
 	})
@@ -19540,7 +19588,8 @@
 	icon_state = "plant-02";
 	layer = 4.1
 	},
-/turf/open/floor/plasteel/whitebot,
+/turf/open/floor/plasteel/white,
+/obj/effect/turf_decal/bot,
 /area/maintenance/fore{
 	name = "Security Maintenance"
 	})
@@ -19780,7 +19829,8 @@
 	icon_state = "plant-17";
 	layer = 4.1
 	},
-/turf/open/floor/plasteel/whitebot,
+/turf/open/floor/plasteel/white,
+/obj/effect/turf_decal/bot,
 /area/maintenance/fore{
 	name = "Security Maintenance"
 	})
@@ -19832,7 +19882,8 @@
 /turf/open/floor/plasteel/white,
 /area/security/warden)
 "aWq" = (
-/turf/open/floor/plasteel/whitebot/delivery,
+/turf/open/floor/plasteel/white,
+/obj/effect/turf_decal/delivery,
 /area/security/warden)
 "aWr" = (
 /obj/machinery/power/apc{
@@ -20344,7 +20395,8 @@
 /obj/structure/cable/cyan{
 	icon_state = "1-4"
 	},
-/turf/open/floor/plasteel/delivery,
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/delivery,
 /area/maintenance/fore{
 	name = "Security Maintenance"
 	})
@@ -20499,7 +20551,8 @@
 	name = "Security Maintenance"
 	})
 "aXZ" = (
-/turf/open/floor/plasteel/bot,
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/bot,
 /area/maintenance/fore{
 	name = "Security Maintenance"
 	})
@@ -20833,7 +20886,8 @@
 	icon_state = "intact";
 	dir = 4
 	},
-/turf/open/floor/plasteel/bot,
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/bot,
 /area/maintenance/asmaint2)
 "aYS" = (
 /obj/machinery/navbeacon{
@@ -20847,7 +20901,8 @@
 	icon_state = "intact";
 	dir = 4
 	},
-/turf/open/floor/plasteel/delivery,
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/delivery,
 /area/maintenance/asmaint2)
 "aYT" = (
 /obj/structure/closet/cardboard,
@@ -22245,7 +22300,8 @@
 	location = "Arrivals Building Area";
 	name = "navigation beacon"
 	},
-/turf/open/floor/plasteel/delivery,
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/delivery,
 /area/maintenance/asmaint2)
 "bbV" = (
 /obj/machinery/light/small{
@@ -22280,7 +22336,8 @@
 	},
 /obj/item/device/flashlight,
 /obj/structure/closet/crate,
-/turf/open/floor/plasteel/bot,
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/bot,
 /area/maintenance/asmaint2)
 "bca" = (
 /obj/machinery/door/airlock/maintenance{
@@ -22670,9 +22727,10 @@
 	name = "Security Maintenance"
 	})
 "bdj" = (
-/turf/open/floor/plasteel/delivery{
+/turf/open/floor/plasteel{
 	name = "floor"
 	},
+/obj/effect/turf_decal/delivery,
 /area/maintenance/fore{
 	name = "Security Maintenance"
 	})
@@ -23337,7 +23395,8 @@
 "beI" = (
 /obj/structure/rack,
 /obj/item/weapon/gun/energy/e_gun/dragnet,
-/turf/open/floor/plasteel/bot,
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/bot,
 /area/security/warden)
 "beJ" = (
 /obj/structure/rack,
@@ -23351,7 +23410,8 @@
 	pixel_y = 5
 	},
 /obj/item/weapon/gun/ballistic/shotgun/riot,
-/turf/open/floor/plasteel/bot,
+/turf/open/floor/plasteel,
+/obj/effect/turf_decal/bot,
 /area/security/warden)
 "beK" = (
 /obj/structure/cable/cyan{
@@ -23828,8 +23888,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/cyan/hidden,
 /turf/open/floor/plasteel{
-	tag = "icon-warningcorner";
-	icon_state = "warningcorner"
+	tag = "icon-warningcorner"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 2

@@ -1982,22 +1982,26 @@
 /area/ruin/hotel/workroom)
 "eC" = (
 /obj/structure/closet/crate,
-/turf/open/floor/plasteel/whitebot,
+/turf/open/floor/plasteel/white,
+/obj/effect/turf_decal/bot,
 /area/ruin/hotel/workroom)
 "eD" = (
 /obj/structure/closet/crate,
 /obj/item/clothing/head/rice_hat,
-/turf/open/floor/plasteel/whitebot,
+/turf/open/floor/plasteel/white,
+/obj/effect/turf_decal/bot,
 /area/ruin/hotel/workroom)
 "eE" = (
 /obj/structure/closet/crate,
 /obj/item/weapon/bedsheet/patriot,
-/turf/open/floor/plasteel/whitebot,
+/turf/open/floor/plasteel/white,
+/obj/effect/turf_decal/bot,
 /area/ruin/hotel/workroom)
 "eF" = (
 /obj/structure/closet/crate,
 /obj/item/weapon/card/id/away/hotel,
-/turf/open/floor/plasteel/whitebot,
+/turf/open/floor/plasteel/white,
+/obj/effect/turf_decal/bot,
 /area/ruin/hotel/workroom)
 "eG" = (
 /turf/closed/wall,
@@ -4421,14 +4425,12 @@
 /area/ruin/hotel/security)
 "kO" = (
 /turf/open/floor/plasteel/darkyellow,
-/turf/open/floor/plasteel/warningline,
+/obj/effect/turf_decal/stripes/line,
 /area/ruin/hotel/security)
 "kP" = (
 /turf/open/floor/plasteel/darkyellow,
-/turf/open/floor/plasteel/warningline/corner{
-	tag = "icon-warninglinecorners (WEST)";
-	icon_state = "warninglinecorners";
-	dir = 8
+/obj/effect/turf_decal/stripes/corner{
+	dir = 2
 	},
 /area/ruin/hotel/security)
 "kQ" = (
@@ -4546,9 +4548,7 @@
 /area/ruin/hotel/security)
 "lf" = (
 /turf/open/floor/plasteel/darkyellow,
-/turf/open/floor/plasteel/warningline{
-	tag = "icon-warningline (WEST)";
-	icon_state = "warningline";
+/obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
 /area/ruin/hotel/security)
