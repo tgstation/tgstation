@@ -729,11 +729,21 @@
 			T = new()
 			T.Insert(src)
 
+	if(!getorganslot("eye_sight"))
+		var/obj/item/organ/eyes/E
+
+		if(dna && dna.species && dna.species.mutanteyes)
+			E = new dna.species.mutanteyes()
+
+		else
+			E = new()
+		E.Insert(src)
 
 //Eyes
 
 /obj/item/organ/eyes
 	name = "eyes"
+	icon_state = "eyeballs"
 	desc = "I see you!"
 	zone = "eyes"
 	slot = "eye_sight"
@@ -797,6 +807,7 @@
 
 /obj/item/organ/eyes/robotic
 	name = "robotic eyes"
+	icon_state = "cybernetic eyeballs"
 	desc = "Your vision is augmented."
 
 /obj/item/organ/eyes/robotic/emp_act(severity)
