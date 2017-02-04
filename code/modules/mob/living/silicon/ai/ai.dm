@@ -906,6 +906,9 @@ var/list/ai_list = list()
 			exclusive control."
 		apc.update_icon()
 
+/mob/living/silicon/ai/resist()
+	return
+
 /mob/living/silicon/ai/spawned/New(loc, datum/ai_laws/L, mob/target_ai)
 	if(!target_ai)
 		target_ai = src //cheat! just give... ourselves as the spawned AI, because that's technically correct
