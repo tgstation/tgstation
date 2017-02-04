@@ -789,3 +789,69 @@
 	see_in_dark = 8
 	see_invisible = SEE_INVISIBLE_MINIMUM
 	sight_flags = SEE_MOBS
+
+
+
+
+///Robotic
+
+/obj/item/organ/eyes/robotic
+	name = "robotic eyes"
+	desc = "Your vision is augmented."
+
+/obj/item/organ/eyes/robotic/emp_act(severity)
+	if(!owner)
+		return
+	if(severity > 1)
+		if(prob(10 * severity))
+			return
+	owner << "<span class='warning'>Static obfuscates your vision!</span>"
+	owner.flash_act(visual = 1)
+
+/obj/item/organ/eyes/robotic/xray
+	name = "X-ray eyes"
+	desc = "These cybernetic eyes will give you X-ray vision. Blinking is futile."
+	eye_color = "000"
+	see_in_dark = 8
+	sight_flags = SEE_MOBS | SEE_OBJS | SEE_TURFS
+
+/obj/item/organ/eyes/robotic/thermals
+	name = "Thermals eyes"
+	desc = "These cybernetic eye implants will give you Thermal vision. Vertical slit pupil included."
+	eye_color = "FC0"
+	origin_tech = "materials=5;programming=4;biotech=4;magnets=4;syndicate=1"
+	sight_flags = SEE_MOBS
+	see_invisible = SEE_INVISIBLE_MINIMUM
+	flash_protect = -1
+	see_in_dark = 8
+
+/obj/item/organ/eyes/robotic/flashlight
+	name = "flashlight eyes"
+	desc = "It's two flashlights rigged together with some wire. Why would you put these in someones head?"
+	eye_color ="fee5a3"
+	icon = 'icons/obj/lighting.dmi'
+	icon_state = "flashlight_eyes"
+	flash_protect = 2
+	tint = INFINITY
+
+/obj/item/organ/eyes/robotic/flashlight/emp_act(severity)
+	return
+
+/obj/item/organ/eyes/robotic/flashlight/Insert(var/mob/living/carbon/M, var/special = 0)
+	..()
+	M.AddLuminosity(15)
+
+
+/obj/item/organ/eyes/robotic/flashlight/Remove(var/mob/living/carbon/M, var/special = 0)
+	M.AddLuminosity(-15)
+	..()
+
+// Welding shield implant
+/obj/item/organ/eyes/robotic/shield
+	name = "shielded robotic eyes"
+	desc = "These reactive micro-shields will protect you from welders and flashes without obscuring your vision."
+	origin_tech = "materials=4;biotech=3;engineering=4;plasmatech=3"
+	flash_protect = 2
+
+/obj/item/organ/eyes/robotic/shield/emp_act(severity)
+	return
