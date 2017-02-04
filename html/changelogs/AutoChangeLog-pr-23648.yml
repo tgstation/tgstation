@@ -1,5 +1,0 @@
-author: "coiax"
-delete-after: True
-changes: 
-  - rscdel: "The wizard spell \"Rod Form\" does not produce a message in deadchat
-everytime it is used."
