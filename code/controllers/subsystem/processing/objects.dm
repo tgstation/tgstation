@@ -4,12 +4,6 @@ var/datum/subsystem/objects/SSobj
 #define INITIALIZATION_INNEW_MAPLOAD 1	//New should call Initialize(TRUE)
 #define INITIALIZATION_INNEW_REGULAR 2	//New should call Initialize(FALSE)
 
-/datum/var/isprocessing = 0
-/datum/proc/process()
-	set waitfor = 0
-	STOP_PROCESSING(SSobj, src)
-	return 0
-
 /datum/subsystem/objects
 	name = "Objects"
 	init_order = 12
