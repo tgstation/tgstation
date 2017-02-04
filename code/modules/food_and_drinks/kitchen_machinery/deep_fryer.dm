@@ -40,6 +40,9 @@ insert ascii eagle on american flag background here
 		usr << "You can make out [frying] in the oil."
 
 /obj/machinery/deepfryer/attackby(obj/item/I, mob/user)
+	if(!reagents.total_volume)
+		user << "There's nothing to fry with in [src]!"
+		return
 	if(istype(I, /obj/item/weapon/reagent_containers/food/snacks/deepfryholder))
 		user << "<span class='userdanger'>Your cooking skills are not up to the legendary Doublefry technique.</span>"
 		return
@@ -47,13 +50,13 @@ insert ascii eagle on american flag background here
 		if(user.drop_item() && !frying)
 			user << "<span class='notice'>You put [I] into [src].</span>"
 			frying = I
-			frying.loc = src
+			frying.forceMove(src)
 			icon_state = "fryer_on"
 
 /obj/machinery/deepfryer/process()
 	..()
-	if (!reagents.has_reagent("nutriment"))
-		reagents.add_reagent("nutriment", 25)
+	if(!reagents.total_volume)
+		return
 	if(frying)
 		cook_time++
 		if(cook_time == 30)
@@ -94,22 +97,22 @@ insert ascii eagle on american flag background here
 			if(istype(frying, /obj/item/weapon/reagent_containers/food/snacks/))
 				qdel(frying)
 			else
-				frying.loc = S
+				frying.forceMove(S)
 
 			icon_state = "fryer_off"
 			user.put_in_hands(S)
-			S = null
 			frying = null
 			cook_time = 0
 			return
-	else if(user.pulling && user.a_intent == "grab" && isliving(user.pulling) && reagents.total_volume)
-		var/mob/living/L = user.pulling
-		if(!iscarbon(L))
+	else if(user.pulling && user.a_intent == "grab" && iscarbon(user.pulling) && reagents.total_volume)
+		if(user.grab_state < GRAB_AGGRESSIVE)
+			user << "<span class='warning'>You need a better grip to do that!</span>"
 			return
-		var/mob/living/carbon/C = L
+		var/mob/living/carbon/C = user.pulling
 		user.visible_message("<span class = 'danger'>[user] dunks [C]'s face in [src]!</span>")
 		reagents.reaction(C, TOUCH)
 		C.adjustFireLoss(reagents.total_volume)
 		reagents.remove_any((reagents.total_volume/2))
 		C.Weaken(3)
+		user.changeNext_move(CLICK_CD_MELEE)
 	..()
