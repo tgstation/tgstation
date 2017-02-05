@@ -189,6 +189,12 @@
 	W.explosion_level = old_ex_level
 	W.explosion_id = old_ex_id
 
+	//update firedoor adjacency
+	var/list/turfs_to_check = get_adjacent_open_turfs() | src
+	for(var/I in turfs_to_check)
+		var/turf/T = I
+		for(var/obj/machinery/door/firedoor/FD in T)
+			FD.CalculateAffectingAreas()
 
 	if(!defer_change)
 		W.AfterChange(ignore_air)
