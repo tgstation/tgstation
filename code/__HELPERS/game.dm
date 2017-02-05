@@ -55,12 +55,18 @@
 	if(istype(T))
 		return T
 
-/proc/get_adjacent_open_areas(atom/center)
+/proc/get_adjacent_open_turfs(atom/center)
 	. = list(get_open_turf_in_dir(center, NORTH),
 			get_open_turf_in_dir(center, SOUTH),
 			get_open_turf_in_dir(center, EAST),
 			get_open_turf_in_dir(center, WEST))
 	listclearnulls(.)
+
+/proc/get_adjacent_open_areas(atom/center)
+	. = list()
+	var/list/adjacent_turfs = get_adjacent_open_turfs(center)
+	for(var/I in adjacent_turfs)
+		. |= get_area(I)
 
 // Like view but bypasses luminosity check
 
