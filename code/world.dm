@@ -314,11 +314,11 @@ var/inerror = 0
 	var/s = ""
 
 	if (config && config.server_name)
-		s += "<span style='font-size: 12px;'><b>[config.server_name]</b> &#8212; </span>"
+		s += "<span style='font-size:95%'><b>[config.server_name]</b> &#8212; </span>"
 
-	s += "<span style='font-size: 11px;'><b>[station_name()]</b></span>";
-	s += "<span style='font-size: 9px;'> ("
-	s += "<a href=\"http://[config.wikiurl]\">"
+	s += "<span style='font-size:85%'><b>[station_name()]</b></span>";
+	s += "<span style='font-size:75%'> ("
+	s += "<a href='[config.wikiurl]'>"
 	s += "[game_version]"
 	s += "</a>"
 	s += ")</span>"
@@ -356,7 +356,7 @@ var/inerror = 0
 		features += "hosted by <b>[config.hostedby]</b>"
 
 	if (features)
-		s += "<span style='font-size: 7px;'>: [jointext(features, ", ")]</span>"
+		s += "<span style='font-size:65%'>: [jointext(features, ", ")]</span>"
 
 	status = s
 
