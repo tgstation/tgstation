@@ -47,7 +47,7 @@ var/global/chaos = FALSE
 
 /obj/machinery/gravity_generator/proc/fuck_my_shit_up()
 	chaos = TRUE
-	for(var/client/C in world)
+	for(var/client/C in clients)
 		C.setDir(pick(cardinal))
 	for(var/mob/M in world)
 		M << "<span class='userdanger'>You feel sick as your feet leave the ground and you're flung across the room!</span>"
@@ -57,7 +57,7 @@ var/global/chaos = FALSE
 
 /obj/machinery/gravity_generator/proc/restore_my_shit()
 	chaos = FALSE
-	for(var/client/C in world)
+	for(var/client/C in clients)
 		if(prob(5))
 			C.setDir(pick(cardinal))
 		else
