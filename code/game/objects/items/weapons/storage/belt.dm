@@ -282,6 +282,28 @@
 	icon_state = "grenadebeltold"
 	item_state = "security"
 
+/obj/item/weapon/storage/belt/botany
+	name = "botanist belt"
+	desc = "Can hold various botanical supplies."
+	icon_state = "botanybelt"
+	item_state = "botany"
+	storage_slots = 7
+	can_hold = list(
+	    /obj/item/weapon/cultivator,
+	    /obj/item/weapon/shovel/spade,
+	    /obj/item/weapon/reagent_containers/syringe,
+	    /obj/item/weapon/reagent_containers/glass,
+	    /obj/item/weapon/reagent_containers/spray,
+	    /obj/item/seeds,
+	    /obj/item/weapon/hatchet,
+	    /obj/item/weapon/wrench,
+	    /obj/item/device/plant_analyzer,
+	    /obj/item/weapon/lighter,
+	    /obj/item/weapon/rollingpaper,
+	    /obj/item/weapon/reagent_containers/food/snacks/grown,
+	    /obj/item/weapon/disk/plantgene
+	    )
+
 /obj/item/weapon/storage/belt/military/assault
 	name = "assault belt"
 	desc = "A tactical assault belt."
