@@ -21724,12 +21724,6 @@
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "aIi" = (
-/obj/machinery/atmospherics/components/trinary/filter{
-	dir = 4;
-	filter_type = "plasma";
-	name = "plasma filter";
-	on = 1
-	},
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -21738,6 +21732,11 @@
 	tag = ""
 	},
 /obj/effect/turf_decal/stripes/line,
+/obj/machinery/atmospherics/components/trinary/filter/flipped{
+	tag = "icon-filter_off_f (EAST)";
+	icon_state = "filter_off_f";
+	dir = 4
+	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "aIj" = (
@@ -21785,7 +21784,7 @@
 /area/engine/engineering)
 "aIl" = (
 /obj/machinery/atmospherics/components/binary/pump{
-	dir = 4;
+	dir = 8;
 	name = "Gas to Filter";
 	on = 1
 	},
@@ -27109,13 +27108,11 @@
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "aQK" = (
-/obj/machinery/atmospherics/components/binary/pump{
-	dir = 8;
-	icon_state = "pump_map";
-	name = "Gas to Loop"
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/simple{
+	dir = 4
 	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
@@ -27129,12 +27126,11 @@
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "aQM" = (
-/obj/machinery/atmospherics/pipe/manifold/general/visible{
-	dir = 1
-	},
-/obj/machinery/meter,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
+	},
+/obj/machinery/atmospherics/components/trinary/filter{
+	dir = 4
 	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
@@ -27181,15 +27177,14 @@
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "aQR" = (
-/obj/machinery/atmospherics/components/trinary/filter/flipped{
-	tag = "icon-filter_off_f (EAST)";
-	icon_state = "filter_off_f";
-	dir = 4
-	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/obj/machinery/atmospherics/pipe/manifold/general/visible{
+	dir = 1
+	},
+/obj/machinery/meter,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "aQS" = (
@@ -27571,7 +27566,7 @@
 /area/engine/engineering)
 "aRG" = (
 /obj/machinery/atmospherics/components/binary/pump{
-	dir = 1;
+	dir = 2;
 	name = "Gas to Cooling Loop";
 	on = 1
 	},
@@ -27682,7 +27677,7 @@
 /area/engine/engineering)
 "aRQ" = (
 /obj/machinery/atmospherics/components/binary/pump{
-	dir = 2;
+	dir = 1;
 	name = "Gas to Cooling Loop";
 	on = 1
 	},
@@ -39234,6 +39229,17 @@
 /obj/structure/window/reinforced/fulltile,
 /turf/open/floor/plating,
 /area/chapel/main)
+"blK" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/machinery/atmospherics/components/binary/pump{
+	dir = 4;
+	icon_state = "pump_map";
+	name = "Gas to Loop"
+	},
+/turf/open/floor/plasteel,
+/area/engine/engineering)
 
 (1,1,1) = {"
 aaa
@@ -71740,7 +71746,7 @@ aMY
 aOb
 aOE
 aLO
-aQL
+blK
 aRP
 aSZ
 aEt
