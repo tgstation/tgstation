@@ -1,6 +1,6 @@
-/obj/effect/proc_holder/spell/targeted/lightning
-	name = "Lightning Bolt"
-	desc = "Charges up and throws a lightning bolt at nearby enemies. Classic."
+/obj/effect/proc_holder/spell/targeted/tesla
+	name = "Tesla Blast"
+	desc = "Blast lightning at your foes!"
 	charge_type = "recharge"
 	charge_max	= 300
 	clothes_req = 1
@@ -82,3 +82,63 @@
 		var/mob/living/next = pick(possible_targets)
 		if(next)
 			Bolt(current,next,max((bolt_energy-5),5),bounces-1,user)
+
+/obj/effect/proc_holder/lightningbolt
+	name = "Lightning Bolt"
+	desc = "Fire a high powered lightning bolt at your foes!"
+	school = "evocation"
+	charge_max = 200
+	clothes_req = 0
+	invocation = "UN'LTD P'WAH"
+	invocation_type = "shout"
+	cooldown_min = 30
+	var/projectile_type = /obj/item/projectile/magic/lightning
+	action_icon_state = "lightning"
+	sound = 'sound/magic/lightningbolt.ogg'
+	active = FALSE
+
+/obj/effect/proc_holder/spell/lightningbolt/Click()
+	var/mob/living/user = usr
+	if(!istype(user))
+		return
+	var/msg
+	if(!can_cast(user))
+		msg = "<span class='warning'>You can no longer cast Lightning Bolt!</span>"
+		remove_ranged_ability(msg)
+		return
+	if(active)
+		msg = "<span class='notice'>You reabsorb the energy in your hands...</span>"
+		remove_ranged_ability(msg)
+	else
+		msg = "<span class='notice'>You charge your hands with arcane lightning! <B>Left-click to shoot it at a target!</B></span>"
+		add_ranged_ability(user, msg, TRUE)
+
+/obj/effect/proc_holder/spell/lightningbolt/update_icon()
+	if(!action)
+		return
+	action.button_icon_state = "lightning[active]"
+	action.UpdateButtonIcon()
+
+/obj/effect/proc_holder/spell/lightningbolt/InterceptClickOn(mob/living/caller, params, atom/target)
+	if(..())
+		return FALSE
+	if(!cast_check(0, ranged_ability_user))
+		remove_ranged_ability()
+		return FALSE
+	var/list/targets = list(target)
+	perform(targets,user = ranged_ability_user)
+	return TRUE
+
+/obj/effect/proc_holder/spell/fireball/cast(list/targets, mob/living/user)
+	var/target = targets[1] //There is only ever one target for fireball
+	var/turf/T = user.loc
+	var/turf/U = get_step(user, user.dir) // Get the tile infront of the move, based on their direction
+	if(!isturf(U) || !isturf(T))
+		return FALSE
+	var/obj/item/projectile/P = new projectile_type(user.loc)
+	P.current = get_turf(user)
+	P.preparePixelProjectile(target, get_turf(target), user)
+	P.fire()
+	user.newtonian_move(get_dir(U, T))
+	remove_ranged_ability() //Auto-disable the ability once successfully performed
+	return TRUE

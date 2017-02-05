@@ -387,3 +387,49 @@
 	nodamage = 0
 	armour_penetration = 0
 	flag = "magic"
+
+/obj/item/projectile/magic/lightning
+	name = "lightning bolt"
+	icon_state = "tesla_projectile"	//Better sprites are REALLY needed and appreciated!~
+	damage = 15
+	damage_type = BURN
+	nodamage = 0
+	speed = 0.3
+
+	var/tesla_power = 20000
+	var/tesla_range = 15
+	var/chain
+	var/mob/living/caster
+
+/obj/item/projectile/magic/lightning/Range()
+	var/turf/T1 = get_step(src,turn(dir, -45))
+	var/turf/T2 = get_step(src,turn(dir, 45))
+	var/turf/T3 = get_step(src,dir)
+	var/mob/living/L = locate(/mob/living) in T1 //if there's a mob alive in our front right diagonal, we hit it.
+	if(L && L.stat != DEAD)
+		Bump(L,1) //Magic Bullet #teachthecontroversy
+		return
+	L = locate(/mob/living) in T2
+	if(L && L.stat != DEAD)
+		Bump(L,1)
+		return
+	L = locate(/mob/living) in T3
+	if(L && L.stat != DEAD)
+		Bump(L,1)
+		return
+	..()
+
+/obj/item/projectile/magic/lightning/fire(setAngle)
+	if(caster)
+		chain = caster.Beam(src, icon_state = "lightning[rand(1, 12)]", time = INFINITY, maxdistance = INFINITY)
+	..()
+
+/obj/item/projectile/magic/lightning/on_hit(target)
+	. = ..()
+	var/turf/T = get_turf(target)
+	tesla_zap(src, tesla_range, tesla_power)
+	qdel(src)
+
+/obj/item/projectile/magic/lightning/Destroy()
+	qdel(chain)
+	. = ..()
