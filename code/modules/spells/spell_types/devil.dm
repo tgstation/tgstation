@@ -80,7 +80,7 @@
 	invocation_type = "shout"
 	range = 2
 
-	fireball_type = /obj/item/projectile/magic/fireball/infernal
+	fireball_type = /obj/item/projectile/magic/aoe/fireball/infernal
 
 	action_background_icon_state = "bg_demon"
 

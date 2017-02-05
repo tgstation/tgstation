@@ -233,6 +233,10 @@
 	log_name = "LB"
 	cost = 3
 
+/datum/spellbook_entry/lightningbolt/Buy(mob/living/carbon/human/user,obj/item/weapon/spellbook/book) //return 1 on success
+	. = ..()
+	user.
+
 /datum/spellbook_entry/infinite_guns
 	name = "Lesser Summon Guns"
 	spell_type = /obj/effect/proc_holder/spell/targeted/infinite_guns/gun

@@ -380,18 +380,18 @@
 	var/chain
 	var/mob/living/caster
 
-/obj/item/projectile/magic/lightning/aoe/fire(setAngle)
+/obj/item/projectile/magic/aoe/lightning/fire(setAngle)
 	if(caster)
 		chain = caster.Beam(src, icon_state = "lightning[rand(1, 12)]", time = INFINITY, maxdistance = INFINITY)
 	..()
 
-/obj/item/projectile/magic/lightning/aoe/on_hit(target)
+/obj/item/projectile/magic/aoe/lightning/on_hit(target)
 	. = ..()
 	var/turf/T = get_turf(target)
 	tesla_zap(src, tesla_range, tesla_power)
 	qdel(src)
 
-/obj/item/projectile/magic/lightning/Destroy()
+/obj/item/projectile/magic/aoe/lightning/Destroy()
 	qdel(chain)
 	. = ..()
 
@@ -408,7 +408,7 @@
 	var/exp_flash = 3
 	var/exp_fire = 2
 
-/obj/item/projectile/magic/fireball/aoe/on_hit(target)
+/obj/item/projectile/magic/aoe/fireball/on_hit(target)
 	. = ..()
 	var/turf/T = get_turf(target)
 	explosion(T, -1, exp_heavy, exp_light, exp_flash, 0, flame_range = exp_fire)
@@ -416,7 +416,7 @@
 		var/mob/living/M = target
 		M.take_overall_damage(0,10) //between this 10 burn, the 10 brute, the explosion brute, and the onfire burn, your at about 65 damage if you stop drop and roll immediately
 
-/obj/item/projectile/magic/fireball/aoe/infernal
+/obj/item/projectile/magic/aoe/fireball/infernal
 	name = "infernal fireball"
 	exp_heavy = -1
 	exp_light = -1

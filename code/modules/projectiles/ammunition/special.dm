@@ -23,7 +23,7 @@
 	projectile_type = /obj/item/projectile/magic/door
 
 /obj/item/ammo_casing/magic/fireball
-	projectile_type = /obj/item/projectile/magic/fireball
+	projectile_type = /obj/item/projectile/magic/aoe/fireball
 
 /obj/item/ammo_casing/magic/chaos
 	projectile_type = /obj/item/projectile/magic
