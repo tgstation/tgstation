@@ -15,7 +15,6 @@
 	var/datum/data/record/active2
 	var/a_id = null
 	var/temp = null
-	var/printing = null
 	//Sorting Variables
 	var/sortBy = "name"
 	var/order = 1 // -1 = Descending - 1 = Ascending
@@ -529,32 +528,29 @@
 					src.screen = 4
 
 			else if(href_list["print_p"])
-				if(!( src.printing ))
-					src.printing = 1
-					data_core.medicalPrintCount++
-					playsound(loc, 'sound/items/poster_being_created.ogg', 100, 1)
-					sleep(30)
-					var/obj/item/weapon/paper/P = new /obj/item/weapon/paper( src.loc )
-					P.info = "<CENTER><B>Medical Record - (MR-[data_core.medicalPrintCount])</B></CENTER><BR>"
-					if(active1 in data_core.general)
-						P.info += text("Name: [] ID: []<BR>\nSex: []<BR>\nAge: []<BR>", src.active1.fields["name"], src.active1.fields["id"], src.active1.fields["sex"], src.active1.fields["age"])
-						if(config.mutant_races)
-							P.info += "\nSpecies: [active1.fields["species"]]<BR>"
-						P.info += text("\nFingerprint: []<BR>\nPhysical Status: []<BR>\nMental Status: []<BR>", src.active1.fields["fingerprint"], src.active1.fields["p_stat"], src.active1.fields["m_stat"])
-					else
-						P.info += "<B>General Record Lost!</B><BR>"
-					if(active2 in data_core.medical)
-						P.info += text("<BR>\n<CENTER><B>Medical Data</B></CENTER><BR>\nBlood Type: []<BR>\nDNA: []<BR>\n<BR>\nMinor Disabilities: []<BR>\nDetails: []<BR>\n<BR>\nMajor Disabilities: []<BR>\nDetails: []<BR>\n<BR>\nAllergies: []<BR>\nDetails: []<BR>\n<BR>\nCurrent Diseases: [] (per disease info placed in log/comment section)<BR>\nDetails: []<BR>\n<BR>\nImportant Notes:<BR>\n\t[]<BR>\n<BR>\n<CENTER><B>Comments/Log</B></CENTER><BR>", src.active2.fields["blood_type"], src.active2.fields["b_dna"], src.active2.fields["mi_dis"], src.active2.fields["mi_dis_d"], src.active2.fields["ma_dis"], src.active2.fields["ma_dis_d"], src.active2.fields["alg"], src.active2.fields["alg_d"], src.active2.fields["cdi"], src.active2.fields["cdi_d"], src.active2.fields["notes"])
-						var/counter = 1
-						while(src.active2.fields[text("com_[]", counter)])
-							P.info += text("[]<BR>", src.active2.fields[text("com_[]", counter)])
-							counter++
-						P.name = text("MR-[] '[]'", data_core.medicalPrintCount, src.active1.fields["name"])
-					else
-						P.info += "<B>Medical Record Lost!</B><BR>"
-						P.name = text("MR-[] '[]'", data_core.medicalPrintCount, "Record Lost")
-					P.info += "</TT>"
-					src.printing = null
+				data_core.medicalPrintCount++
+				var/title = ""
+				var/text = ""
+				text = "<CENTER><B>Medical Record - (MR-[data_core.medicalPrintCount])</B></CENTER><BR>"
+				if(active1 in data_core.general)
+					text += text("Name: [] ID: []<BR>\nSex: []<BR>\nAge: []<BR>", src.active1.fields["name"], src.active1.fields["id"], src.active1.fields["sex"], src.active1.fields["age"])
+					if(config.mutant_races)
+						text += "\nSpecies: [active1.fields["species"]]<BR>"
+					text += text("\nFingerprint: []<BR>\nPhysical Status: []<BR>\nMental Status: []<BR>", src.active1.fields["fingerprint"], src.active1.fields["p_stat"], src.active1.fields["m_stat"])
+				else
+					text += "<B>General Record Lost!</B><BR>"
+				if(active2 in data_core.medical)
+					text += text("<BR>\n<CENTER><B>Medical Data</B></CENTER><BR>\nBlood Type: []<BR>\nDNA: []<BR>\n<BR>\nMinor Disabilities: []<BR>\nDetails: []<BR>\n<BR>\nMajor Disabilities: []<BR>\nDetails: []<BR>\n<BR>\nAllergies: []<BR>\nDetails: []<BR>\n<BR>\nCurrent Diseases: [] (per disease info placed in log/comment section)<BR>\nDetails: []<BR>\n<BR>\nImportant Notes:<BR>\n\t[]<BR>\n<BR>\n<CENTER><B>Comments/Log</B></CENTER><BR>", src.active2.fields["blood_type"], src.active2.fields["b_dna"], src.active2.fields["mi_dis"], src.active2.fields["mi_dis_d"], src.active2.fields["ma_dis"], src.active2.fields["ma_dis_d"], src.active2.fields["alg"], src.active2.fields["alg_d"], src.active2.fields["cdi"], src.active2.fields["cdi_d"], src.active2.fields["notes"])
+					var/counter = 1
+					while(src.active2.fields[text("com_[]", counter)])
+						text += text("[]<BR>", src.active2.fields[text("com_[]", counter)])
+						counter++
+					title = text("MR-[] '[]'", data_core.medicalPrintCount, src.active1.fields["name"])
+				else
+					text += "<B>Medical Record Lost!</B><BR>"
+					title = text("MR-[] '[]'", data_core.medicalPrintCount, "Record Lost")
+				text += "</TT>"
+				new_printjob(title, text)
 
 	src.add_fingerprint(usr)
 	src.updateUsrDialog()

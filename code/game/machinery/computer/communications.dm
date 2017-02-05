@@ -30,10 +30,10 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 	var/const/STATE_CONFIRM_LEVEL = 9
 	var/const/STATE_TOGGLE_EMERGENCY = 10
 	var/const/STATE_PURCHASE = 11
-
 	var/status_display_freq = "1435"
 	var/stat_msg1
 	var/stat_msg2
+	default_printer = "dot_matrix"
 
 
 /obj/machinery/computer/communications/New()

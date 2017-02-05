@@ -1,3 +1,5 @@
+
+
 /obj/machinery/computer
 	name = "computer"
 	icon = 'icons/obj/computer.dmi'
@@ -17,6 +19,17 @@
 	var/icon_keyboard = "generic_key"
 	var/icon_screen = "generic"
 	var/clockwork = FALSE
+	var/list/printer_spooler = list()
+	var/printing = FALSE
+	var/printer_jammed = FALSE
+	// "my_printer" = list(string/startSound, string/printSound, string/jamSound, number/warmupTime, number/printTimeTillEject, number/printTimeFinish, number/jamProb)
+	var/list/printer_type = list(
+		"text_only" = list(0, 0, 0, 150, 200, 25, 10),
+		"inkjet" = list("sound/machines/printer/inkjet/start.ogg", "sound/machines/printer/inkjet/printing.ogg", 0, 150, 200, 25, 10),
+		"dot_matrix" = list(0, "sound/machines/printer/dotmatrix/printing.ogg", 0, 0, 190, 10, 0) // Dot matrix printers are bulletproof man
+	)
+	var/default_printer = "inkjet"
+
 
 /obj/machinery/computer/New(location, obj/item/weapon/circuitboard/C)
 	..(location)
@@ -58,6 +71,87 @@
 		icon_keyboard = initial(icon_keyboard)
 		icon_state = initial(icon_state)
 		update_icon()
+
+/obj/machinery/computer/verb/clear_printer()
+	set name = "Clear printer"
+	set src in view(1)
+	if(usr.stat || !ishuman(usr) || !usr.canmove || usr.restrained())
+		return
+	if(printer_jammed)
+		new/obj/item/weapon/paper(src.loc)
+		usr.visible_message("<span class='notice'>[usr] removes a jam in the [src]'s printer.</span>", "<span class='notice'>You remove a jam in the [src]'s printer.</span>")
+		printer_jammed = FALSE
+		printing = TRUE
+		do_print()
+	else
+		usr << "<span class='notice'>There's no jam of any kind in [src]'s printer.</span>"
+
+/obj/machinery/computer/proc/do_print()
+	if(!(stat & (NOPOWER|BROKEN)) & printing)
+		if(printer_jammed)
+			src.visible_message("<span class='danger'>The [src] printer beeps with a message: PAPER JAM</span>")
+			return
+		var/list/printjob = printer_spooler[1]
+		var/list/printer = printer_type[default_printer]
+		if(printer[7])
+			if(prob(printer[7]))
+				if(printer[3])
+					playsound(src.loc, printer[2], 100, 0)
+					src.visible_message("<span class='danger'>The [src] printer beeps with a message: PAPER JAM</span>")
+				else
+					src.visible_message("<span class='danger'>The [src] printer makes a cringing crunch before it beeps with a message: PAPER JAM</span>")
+				printer_jammed = TRUE
+				printing = FALSE
+				return
+		if(printer[2])
+			playsound(src.loc, printer[2], 100, 0)
+		else
+			src.visible_message("<span class='notice'>The printer whirrs noisly as it prints a document.</span>")
+		if(printer[5])
+			sleep(printer[5]) // Paper is being ejected after this point
+		var/obj/item/weapon/paper/P = new/obj/item/weapon/paper(src.loc)
+		P.name = printjob[1]
+		P.info = printjob[2]
+		P.update_icon()
+		P.updateinfolinks()
+		printer_spooler.Cut(1,2)
+		if(printer[6])
+			sleep(printer[6]) // Finish the sound
+		if(printer_spooler.len > 0)
+			do_print()
+		else
+			printing = FALSE
+	else
+		printer_spooler = new/list()
+
+
+/obj/machinery/computer/proc/new_printjob(title = "Printed Paper" , text = "")
+	if(printer_spooler.len > 4)
+		if(prob(20))
+			src.visible_message("<span class='danger'>The [src] printer beeps with a message: PC LOAD LETTER</span>")
+		else
+			src.visible_message("<span class='danger'>The [src] printer beeps with a message: MEMORY FULL</span>")
+		return
+	else
+		if(!(stat & (NOPOWER|BROKEN)))
+			printer_spooler[++printer_spooler.len] = list(title, text)
+		else
+			return
+	if(!printing)
+		if(printer_jammed)
+			src.visible_message("<span class='danger'>The [src] printer beeps with a message: PAPER JAM</span>")
+			return
+		var/list/printer = printer_type[default_printer]
+		printing = TRUE
+		if(printer[1])
+			playsound(src.loc, printer[1], 100, 0)
+		else
+			src.visible_message("<span class='notice'>The [src] printer makes a nosiy clatter as it warms up.</span>")
+		if(printer[4])
+			sleep(printer[4]) // Wait until printer is warmed up
+		do_print()
+
+
 
 /obj/machinery/computer/update_icon()
 	cut_overlays()

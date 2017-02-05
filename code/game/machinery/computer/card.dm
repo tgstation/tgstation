@@ -15,7 +15,6 @@ var/time_last_changed_position = 0
 	var/obj/item/weapon/card/id/modify = null
 	var/authenticated = 0
 	var/mode = 0
-	var/printing = null
 	var/list/region_access = null
 	var/list/head_subordinates = null
 	var/target_dept = 0 //Which department this computer has access to. 0=all departments
@@ -498,17 +497,13 @@ var/time_last_changed_position = 0
 				playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
 
 		if ("print")
-			if (!( printing ))
-				printing = 1
-				sleep(50)
-				var/obj/item/weapon/paper/P = new /obj/item/weapon/paper( loc )
-				var/t1 = "<B>Crew Manifest:</B><BR>"
-				for(var/datum/data/record/t in sortRecord(data_core.general))
-					t1 += t.fields["name"] + " - " + t.fields["rank"] + "<br>"
-				P.info = t1
-				P.name = "paper- 'Crew Manifest'"
-				printing = null
-				playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
+			var/title = "paper- 'Crew Manifest'"
+			var/text = ""
+			var/t1 = "<B>Crew Manifest:</B><BR>"
+			for(var/datum/data/record/t in sortRecord(data_core.general))
+				t1 += t.fields["name"] + " - " + t.fields["rank"] + "<br>"
+			text = t1
+			new_printjob(title, text)
 	if (modify)
 		modify.update_label()
 	updateUsrDialog()
