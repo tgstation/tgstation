@@ -24,13 +24,6 @@
 	//cut cables on the edge
 	if(DIR_CHECK_TURF_AREA(NORTH) || DIR_CHECK_TURF_AREA(SOUTH) || DIR_CHECK_TURF_AREA(EAST) || DIR_CHECK_TURF_AREA(WEST))
 		cut_cable_from_powernet()
-
-/obj/structure/disposalpipe/onShuttleMove()
-	. = ..()
-	var/A = get_area(src)
-	//break pipes on the edge
-	if(DIR_CHECK_TURF_AREA(NORTH) || DIR_CHECK_TURF_AREA(SOUTH) || DIR_CHECK_TURF_AREA(EAST) || DIR_CHECK_TURF_AREA(WEST))
-		deconstruct(FALSE)
 #undef DIR_CHECK_TURF_AREA
 
 /atom/movable/light/onShuttleMove()
