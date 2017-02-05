@@ -47,4 +47,9 @@
 	else
 		explanation_text = "You must know what time it is, all the time."
 		
+/datum/objective/sintouched/licky
+	explanation_text = "You must lick anything that you find interesting."
+	
+/datum/objective/sintouched/music
+	explanation_text = "Start playing music, you're the best musician ever. If anyone hates it, beat them on the head with your instrument!"
 	
