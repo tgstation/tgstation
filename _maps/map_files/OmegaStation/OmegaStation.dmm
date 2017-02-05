@@ -39233,7 +39233,7 @@
 	dir = 4;
 	icon_state = "pump_map";
 	name = "Gas to Loop";
-	step_x = 0
+	
 	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
