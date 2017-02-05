@@ -215,7 +215,7 @@ var/datum/subsystem/ticker/ticker
 			qdel(S)
 
 	var/list/adm = get_admin_counts()
-	if(!adm["present"])
+	if(!adm["present"].len)
 		send2irc("Server", "Round just started with no active admins online!")
 
 /datum/subsystem/ticker/proc/station_explosion_detonation(atom/bomb)
