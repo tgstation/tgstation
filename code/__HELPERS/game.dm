@@ -43,6 +43,13 @@
 		areas |= T.loc
 	return areas
 
+/proc/get_adjacent_areas(atom/center)
+	. = list(get_area(get_ranged_target_turf(center, NORTH, 1)))
+	. |= list(get_area(get_ranged_target_turf(center, SOUTH, 1)))
+	. |= list(get_area(get_ranged_target_turf(center, EAST, 1)))
+	. |= list(get_area(get_ranged_target_turf(center, WEST, 1)))
+	listclearnulls(.)
+
 // Like view but bypasses luminosity check
 
 /proc/get_hear(range, atom/source)
