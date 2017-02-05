@@ -19617,6 +19617,7 @@
 	tag = "icon-4-8";
 	icon_state = "4-8"
 	},
+/obj/machinery/deepfryer,
 /turf/open/floor/plasteel/red,
 /area/crew_quarters/kitchen)
 "aFe" = (
