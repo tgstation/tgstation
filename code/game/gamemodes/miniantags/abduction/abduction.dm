@@ -456,3 +456,23 @@
 
 /datum/objective/abductee/pragnant
 	explanation_text = "You are pregnant and soon due. Find a safe place to deliver your baby."
+
+/datum/objective/abductee/engine
+	explanation_text = "Go have a good conversation with the Singularity/Tesla/Supermatter crystal. Bonus points if it responds."
+	
+/datum/objective/abductee/teamredisbetterthangreen
+	explanation_text = "Tell the AI (or a borg/pAI/drone if there is no AI) some corny technology jokes until it cries for help."
+	
+/datum/objective/abductee/time/New()
+	..()
+	if(istype(ticker.mode, /datum/game_mode/clockwork_cult))
+		explanation_text = "Go bug a bronze worshipper to give you a clock."
+	else
+		explanation_text = "You must know what time it is, all the time."
+		
+/datum/objective/abductee/licky
+	explanation_text = "You must lick anything that you find interesting."
+	
+/datum/objective/abductee/music
+	explanation_text = "Start playing music, you're the best musician ever. If anyone hates it, beat them on the head with your instrument!"
+	
