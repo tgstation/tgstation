@@ -97,7 +97,7 @@ var/last_irc_status = 0
 		if(world.time - last_irc_status < IRC_STATUS_THROTTLE)
 			return
 		var/list/adm = get_admin_counts()
-		var/status = "Admins: [adm["total"]] (Active: [adm["present"]] AFK: [adm["afk"]] Stealth: [adm["stealth"]] Skipped: [adm["noflags"]]). "
+		var/status = "Admins: [adm["total"].len] (Active: [english_list(adm["present"])] AFK: [english_list(adm["afk"])] Stealth: [english_list(adm["stealth"])] Skipped: [english_list(adm["noflags"])]). "
 		status += "Players: [clients.len] (Active: [get_active_player_count(0,1,0)]). Mode: [ticker.mode.name]."
 		send2irc("Status", status)
 		last_irc_status = world.time
@@ -117,7 +117,7 @@ var/last_irc_status = 0
 		s["revision_date"] = revdata.date
 
 		var/list/adm = get_admin_counts()
-		s["admins"] = adm["present"] + adm["afk"] //equivalent to the info gotten from adminwho
+		s["admins"] = adm["present"].len + adm["afk"].len //equivalent to the info gotten from adminwho
 		s["gamestate"] = 1
 		if(ticker)
 			s["gamestate"] = ticker.current_state
