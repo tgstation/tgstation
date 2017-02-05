@@ -17,6 +17,15 @@
 		if(get_area(node[I]) != get_area(src))
 			nullifyNode(I)
 
+/obj/structure/cable/onShuttleMove()
+	. = ..()
+	var/A = get_area(src)
+	//cut cables on the edge
+#define DIR_CHECK_TURF_AREA(X) (get_ranged_target_turf(src, X, 1) != A)
+	if(DIR_CHECK_TURF_AREA(NORTH) || DIR_CHECK_TURF_AREA(SOUTH) || DIR_CHECK_TURF_AREA(EAST) || DIR_CHECK_TURF_AREA(WEST))
+		cut_cable_from_powernet()
+#undef DIR_CHECK_TURF_AREA
+
 /atom/movable/light/onShuttleMove()
 	return 0
 
