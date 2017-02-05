@@ -398,11 +398,10 @@
 
 	else if(expression[i] == "\[")
 		var/list/expressions_list = expression[++i]
-		val = list()
+		var/list/val2 = list()
 		for(var/list/expression_list in expressions_list)
-			val.len++
-			val[val.len] = SDQL_expression(object, expression_list)
-
+			val2[++val2.len] = SDQL_expression(object, expression_list)
+		val = val2
 	else
 		val = SDQL_var(object, expression, i)
 		i = expression.len
