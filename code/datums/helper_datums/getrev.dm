@@ -82,7 +82,7 @@ var/global/datum/getrev/revdata = new()
 /datum/getrev/proc/GetTestMergeInfo()
 	if(!testmerge.len)
 		return ""
-	. = "The following pull requests are currently test merged:<br/>"
+	. = "The following pull requests are currently test merged:<br><br/>"
 	for(var/line in testmerge)
 		var/details = ""
 		if(has_pr_details)
