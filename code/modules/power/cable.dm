@@ -474,7 +474,7 @@ var/global/list/datum/stack_recipe/cable_coil_recipes = list ( \
 	update_icon()
 
 /obj/item/stack/cable_coil/suicide_act(mob/living/user)
-	if((locate(/obj/structure/stool) in user.loc) || (locate(/obj/structure/bed) in usr.loc) || (locate(/obj/structure/table) in user.loc) || (locate(/obj/structure/toilet) in user.loc))
+	if((locate(/obj/structure/bed) in usr.loc) || (locate(/obj/structure/table) in user.loc) || (locate(/obj/structure/toilet) in user.loc))
 		user.visible_message("<span class='suicide'>[user] is making a noose with the [src]! It looks like \he's trying to commit suicide.</span>")
 		if(do_after(user, 20, target = user.loc))
 			qdel(src)
@@ -484,7 +484,7 @@ var/global/list/datum/stack_recipe/cable_coil_recipes = list ( \
 			if(user.mob_has_gravity)
 				if(ishuman(user))
 					var/mob/living/carbon/human/H = user
-					affecting = H.get_organ("head")
+					var/affecting = H.get_organ("head")
 				user.say("--Hrnk!!")
 				user.apply_damage(max(100 - user.getBruteLoss(), 0), BRUTE, affecting) //Pretty hardcore damage
 				user.adjustOxyLoss(30)
@@ -516,8 +516,6 @@ var/global/list/datum/stack_recipe/cable_coil_recipes = list ( \
 	icon = 'icons/obj/objects.dmi'
 	anchored = 1
 	can_buckle = 1
-	burn_state = 0 //Burnable
-	burntime = 30
 	layer = 5
 	var/image/over = null
 	var/ticks = 0
@@ -525,10 +523,12 @@ var/global/list/datum/stack_recipe/cable_coil_recipes = list ( \
 /obj/structure/noose/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/wirecutters))
 		user.visible_message("[user] cuts the noose.", "<span class='notice'>You cut the noose.</span>")
-		if(buckled_mob && buckled_mob.mob_has_gravity)
-			buckled_mob.visible_message("<span class='danger'>[buckled_mob] falls over and hits the ground!</span>",\
+		if(has_buckled_mobs())
+			for(var/m in buckled_mobs)
+				if(m.mob_has_gravity)
+					m.visible_message("<span class='danger'>[m] falls over and hits the ground!</span>",\
 										"<span class='userdanger'>You fall over and hit the ground!</span>")
-			buckled_mob.adjustBruteLoss(10)
+				m.adjustBruteLoss(10)
 		var/obj/item/stack/cable_coil/C = new(get_turf(src))
 		C.amount = 25
 		qdel(src)
@@ -546,7 +546,7 @@ var/global/list/datum/stack_recipe/cable_coil_recipes = list ( \
 	return ..()
 
 /obj/structure/noose/post_buckle_mob(mob/living/M)
-	if(M == buckled_mob)
+	if(M in buckled_mobs)
 		layer = MOB_LAYER
 		overlays += over
 		SSobj.processing.Add(src)
@@ -560,9 +560,8 @@ var/global/list/datum/stack_recipe/cable_coil_recipes = list ( \
 		M.pixel_x = initial(M.pixel_x)
 		M.pixel_y = M.get_standard_pixel_y_offset(M.lying)
 
-/obj/structure/noose/user_unbuckle_mob(mob/living/user)
-	if(buckled_mob && buckled_mob.buckled == src)
-		var/mob/living/M = buckled_mob
+/obj/structure/noose/user_unbuckle_mob(mob/M, mob/living/user)
+	if(M && M.buckled == src)
 		if(M != user)
 			user.visible_message("<span class='notice'>[user] begins to untie the noose over [M]'s neck...</span>",\
 								"<span class='notice'>You begin to untie the noose over [M]'s neck...</span>")
@@ -588,7 +587,7 @@ var/global/list/datum/stack_recipe/cable_coil_recipes = list ( \
 		if(istype(M, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = M
 			H.noosed = 0
-		unbuckle_mob()
+		unbuckle_mob(M)
 		add_fingerprint(user)
 
 /obj/structure/noose/user_buckle_mob(mob/living/carbon/human/M, mob/user)
@@ -597,9 +596,8 @@ var/global/list/datum/stack_recipe/cable_coil_recipes = list ( \
 
 	var/hashead = 0
 
-	for(var/obj/item/organ/limb/temp in M.organs) //Checks if the target has a head.
-		if(temp.body_part == HEAD)
-			hashead = 1
+	if(obj/item/bodypart/head in M.organs) //Checks if the target has a head.
+		hashead = 1
 
 	if(hashead != 1)
 		user << "<span class='danger'>They don't have a head....</span>"
@@ -643,39 +641,40 @@ var/global/list/datum/stack_recipe/cable_coil_recipes = list ( \
 			return 0
 
 /obj/structure/noose/process()
-	if(!buckled_mob)
+	if(!buckled_mobs)
 		SSobj.processing.Remove(src)
 		buckled_mob.pixel_x = initial(buckled_mob.pixel_x)
 		pixel_x = initial(pixel_x)
 		return
 	ticks++
-	switch(ticks)
-		if(1)
-			pixel_x -= 1
-			buckled_mob.pixel_x -= 1
-		if(2)
-			pixel_x = initial(pixel_x)
-			buckled_mob.pixel_x = initial(buckled_mob.pixel_x)
-		if(3) //Every third tick it plays a sound and RNG's a flavor text
-			pixel_x += 1
-			buckled_mob.pixel_x += 1
-			if(buckled_mob.mob_has_gravity)
-				if(prob(50))
-					var/flavor_text = list("<span class='suicide'>[buckled_mob]'s legs flail for anything to stand on.</span>",\
-											"<span class='suicide'>[buckled_mob]'s hands are desperately clutching the noose.</span>",\
-											"<span class='suicide'>[buckled_mob]'s limbs sway back and forth with diminishing strength.</span>")
-					if(buckled_mob.stat == DEAD)
-						flavor_text = list("<span class='suicide'>[buckled_mob]'s limbs lifelessly sway back and forth.</span>",\
-											"<span class='suicide'>[buckled_mob]'s eyes stare straight ahead.</span>")
-					buckled_mob.visible_message(pick(flavor_text))
-				playsound(buckled_mob.loc, 'sound/effects/noose_idle.ogg', 50, 1, -3)
-		if(4)
-			pixel_x = initial(pixel_x)
-			buckled_mob.pixel_x = initial(buckled_mob.pixel_x)
-			ticks = 0
-	if(buckled_mob.mob_has_gravity)
-		buckled_mob.adjustOxyLoss(5)
-		buckled_mob.emote("gasp")
+	for(var/buckled_mob in buckled_mobs)
+		switch(ticks)
+			if(1)
+				pixel_x -= 1
+				buckled_mob.pixel_x -= 1
+			if(2)
+				pixel_x = initial(pixel_x)
+				buckled_mob.pixel_x = initial(buckled_mob.pixel_x)
+			if(3) //Every third tick it plays a sound and RNG's a flavor text
+				pixel_x += 1
+				buckled_mob.pixel_x += 1
+				if(buckled_mob.mob_has_gravity)
+					if(prob(50))
+						var/flavor_text = list("<span class='suicide'>[buckled_mob]'s legs flail for anything to stand on.</span>",\
+												"<span class='suicide'>[buckled_mob]'s hands are desperately clutching the noose.</span>",\
+												"<span class='suicide'>[buckled_mob]'s limbs sway back and forth with diminishing strength.</span>")
+						if(buckled_mob.stat == DEAD)
+							flavor_text = list("<span class='suicide'>[buckled_mob]'s limbs lifelessly sway back and forth.</span>",\
+												"<span class='suicide'>[buckled_mob]'s eyes stare straight ahead.</span>")
+						buckled_mob.visible_message(pick(flavor_text))
+					playsound(buckled_mob.loc, 'sound/effects/noose_idle.ogg', 50, 1, -3)
+			if(4)
+				pixel_x = initial(pixel_x)
+				buckled_mob.pixel_x = initial(buckled_mob.pixel_x)
+				ticks = 0
+		if(buckled_mob.mob_has_gravity)
+			buckled_mob.adjustOxyLoss(5)
+			buckled_mob.emote("gasp")
 
 ///////////////////////////////////
 // General procedures
