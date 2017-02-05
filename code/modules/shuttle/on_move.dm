@@ -17,7 +17,7 @@
 		if(get_area(nodes[I]) != get_area(src))
 			nullifyNode(I)
 
-#define DIR_CHECK_TURF_AREA(X) (get_ranged_target_turf(src, X, 1) != A)
+#define DIR_CHECK_TURF_AREA(X) (get_area(get_ranged_target_turf(src, X, 1)) != A)
 /obj/structure/cable/onShuttleMove()
 	. = ..()
 	var/A = get_area(src)
