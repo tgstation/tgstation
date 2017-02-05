@@ -260,7 +260,7 @@ var/datum/subsystem/air/SSair
 			add_to_active(S)
 	else if(map_loading)
 		if(queued_for_activation)
-			queued_for_activation |= T
+			queued_for_activation[T] = T
 		return
 	else
 		T.requires_activation = TRUE
