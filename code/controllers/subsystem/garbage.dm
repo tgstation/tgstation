@@ -569,7 +569,6 @@ var/datum/subsystem/garbage_collector/SSgarbage
 	SearchVar(deadmins)
 	SearchVar(directory)
 	SearchVar(stealthminID)
-	SearchVar(current_watchlist)
 	SearchVar(player_list)
 	SearchVar(mob_list)
 	SearchVar(living_mob_list)
