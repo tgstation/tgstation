@@ -579,7 +579,7 @@ Difficulty: Very Hard
 	..()
 	if(ready_to_deploy)
 		var/be_helper = alert("Become a Lightgeist? (Warning, You can no longer be cloned!)",,"Yes","No")
-		if(be_helper == "Yes" && !qdeleted(src) && isobserver(user))
+		if(be_helper == "Yes" && !QDELETED(src) && isobserver(user))
 			var/mob/living/simple_animal/hostile/lightgeist/W = new /mob/living/simple_animal/hostile/lightgeist(get_turf(loc))
 			W.key = user.key
 
@@ -706,7 +706,7 @@ Difficulty: Very Hard
 
 /obj/structure/closet/stasis/process()
 	if(holder_animal)
-		if(holder_animal.stat == DEAD && !qdeleted(holder_animal))
+		if(holder_animal.stat == DEAD && !QDELETED(holder_animal))
 			dump_contents()
 			holder_animal.gib()
 			return
@@ -734,7 +734,7 @@ Difficulty: Very Hard
 		L.disabilities &= ~MUTE
 		L.status_flags &= ~GODMODE
 		L.notransform = 0
-		if(holder_animal && !qdeleted(holder_animal))
+		if(holder_animal && !QDELETED(holder_animal))
 			holder_animal.mind.transfer_to(L)
 			L.mind.RemoveSpell(/obj/effect/proc_holder/spell/targeted/exit_possession)
 		if(kill || !isanimal(loc))

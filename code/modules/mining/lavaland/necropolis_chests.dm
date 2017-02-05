@@ -831,7 +831,7 @@
 		blast_range -= round(health_percent * 10) //one additional range for each missing 10% of health
 
 /obj/item/weapon/hierophant_club/update_icon()
-	icon_state = "hierophant_club[timer <= world.time ? "_ready":""][(beacon && !qdeleted(beacon)) ? "":"_beacon"]"
+	icon_state = "hierophant_club[timer <= world.time ? "_ready":""][(beacon && !QDELETED(beacon)) ? "":"_beacon"]"
 	item_state = icon_state
 	if(ismob(loc))
 		var/mob/M = loc
@@ -853,7 +853,7 @@
 	if(!user.is_holding(src)) //you need to hold the staff to teleport
 		user << "<span class='warning'>You need to hold the club in your hands to [beacon ? "teleport with it":"detach the beacon"]!</span>"
 		return
-	if(!beacon || qdeleted(beacon))
+	if(!beacon || QDELETED(beacon))
 		if(isturf(user.loc))
 			user.visible_message("<span class='hierophant_warning'>[user] starts fiddling with [src]'s pommel...</span>", \
 			"<span class='notice'>You start detaching the hierophant beacon...</span>")
@@ -906,7 +906,7 @@
 		new /obj/effect/overlay/temp/hierophant/telegraph(source, user)
 		playsound(T,'sound/magic/Wand_Teleport.ogg', 200, 1)
 		playsound(source,'sound/machines/AirlockOpen.ogg', 200, 1)
-		if(!do_after(user, 3, target = user) || !user || !beacon || qdeleted(beacon)) //no walking away shitlord
+		if(!do_after(user, 3, target = user) || !user || !beacon || QDELETED(beacon)) //no walking away shitlord
 			teleporting = FALSE
 			if(user)
 				user.update_action_buttons_icon()
