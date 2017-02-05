@@ -29,7 +29,8 @@
 	return ..()
 
 /obj/structure/destructible/clockwork/ratvar_act()
-	obj_integrity = max_integrity
+	if(ratvar_awakens || clockwork_gateway_activated)
+		obj_integrity = max_integrity
 
 /obj/structure/destructible/clockwork/narsie_act()
 	if(take_damage(rand(25, 50), BRUTE) && src) //if we still exist

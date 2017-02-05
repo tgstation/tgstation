@@ -301,7 +301,7 @@
 		playsound(loc, O.usesound, 50, 1)
 		user << "<span class='warning'>You start [anchored ? "unwrenching" : "wrenching"] [src]...</span>"
 		if(do_after(user, 20*O.toolspeed, target = src))
-			if(qdeleted(src))
+			if(QDELETED(src))
 				return
 			user << "<span class='notice'>You [anchored ? "unwrench" : "wrench"] [src].</span>"
 			anchored = !anchored
@@ -325,7 +325,7 @@
 		user.visible_message("<span class='warning'>[user] starts putting [target] onto the photocopier!</span>", "<span class='notice'>You start putting [target] onto the photocopier...</span>")
 
 	if(do_after(user, 20, target = src))
-		if(!target || qdeleted(target) || qdeleted(src) || !Adjacent(target)) //check if the photocopier/target still exists.
+		if(!target || QDELETED(target) || QDELETED(src) || !Adjacent(target)) //check if the photocopier/target still exists.
 			return
 
 		if(target == user)
@@ -363,7 +363,7 @@
 		return 1
 
 /obj/machinery/photocopier/proc/copier_blocked()
-	if(qdeleted(src))
+	if(QDELETED(src))
 		return
 	if(loc.density)
 		return 1

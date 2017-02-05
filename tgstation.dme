@@ -1246,6 +1246,7 @@
 #include "code\modules\food_and_drinks\food\snacks_vend.dm"
 #include "code\modules\food_and_drinks\food\snacks\dough.dm"
 #include "code\modules\food_and_drinks\food\snacks\meat.dm"
+#include "code\modules\food_and_drinks\kitchen_machinery\deep_fryer.dm"
 #include "code\modules\food_and_drinks\kitchen_machinery\food_cart.dm"
 #include "code\modules\food_and_drinks\kitchen_machinery\gibber.dm"
 #include "code\modules\food_and_drinks\kitchen_machinery\icecream_vat.dm"

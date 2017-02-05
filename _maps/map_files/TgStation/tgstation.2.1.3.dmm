@@ -10008,7 +10008,9 @@
 	c_tag = "Auxillary Base Construction";
 	dir = 8
 	},
-/obj/machinery/computer/camera_advanced/base_construction,
+/obj/structure/mining_shuttle_beacon{
+	dir = 2
+	},
 /turf/open/floor/plasteel/yellow/side{
 	dir = 4
 	},
@@ -61214,11 +61216,13 @@
 /turf/open/floor/plasteel,
 /area/medical/sleeper)
 "cCq" = (
-/obj/structure/mining_shuttle_beacon{
-	dir = 4
-	},
-/turf/open/floor/plating,
-/area/shuttle/auxillary_base)
+/obj/machinery/deepfryer,
+/turf/open/floor/plasteel/cafeteria,
+/area/crew_quarters/kitchen)
+"cCr" = (
+/obj/machinery/deepfryer,
+/turf/open/floor/plasteel/cafeteria,
+/area/crew_quarters/kitchen)
 
 (1,1,1) = {"
 aaa
@@ -71597,7 +71601,7 @@ aqI
 arD
 arD
 arD
-cCq
+arD
 arD
 arD
 arD
@@ -99892,7 +99896,7 @@ aRB
 aSL
 aTN
 aVD
-aVz
+cCq
 cAg
 bak
 bbz
@@ -100149,7 +100153,7 @@ aRG
 aSO
 aTO
 aVG
-aVz
+cCr
 aVz
 bak
 bbz

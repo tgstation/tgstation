@@ -16,7 +16,6 @@
 	var/roundstart = 0	// can this mob be chosen at roundstart? (assuming the config option is checked?)
 	var/default_color = "#FFF"	// if alien colors are disabled, this is the color that will be used by that race
 
-	var/eyes = "eyes"	// which eyes the race uses. at the moment, the only types of eyes are "eyes" (regular eyes) and "jelleyes" (three eyes)
 	var/sexes = 1		// whether or not the race has sexual characteristics. at the moment this is only 0 for skeletons and shadows
 	var/hair_color = null	// this allows races to have specific hair colors... if null, it uses the H's hair/facial hair colors. if "mutcolor", it uses the H's mutant_color
 	var/hair_alpha = 255	// the alpha used by the hair. 255 is completely solid, 0 is transparent.
@@ -47,9 +46,6 @@
 	var/damage_overlay_type = "human" //what kind of damage overlays (if any) appear on our species when wounded?
 	var/fixed_mut_color = "" //to use MUTCOLOR with a fixed color that's independent of dna.feature["mcolor"]
 
-	var/invis_sight = SEE_INVISIBLE_LIVING
-	var/darksight = 2
-
 	// species flags. these can be found in flags.dm
 	var/list/species_traits = list()
 
@@ -65,6 +61,9 @@
 	//Flight and floating
 	var/override_float = 0
 
+
+	//Eyes
+	var/obj/item/organ/eyes/mutanteyes = /obj/item/organ/eyes
 	///////////
 	// PROCS //
 	///////////
@@ -242,6 +241,14 @@
 
 	var/obj/item/bodypart/head/HD = H.get_bodypart("head")
 
+
+	// eyes
+	var/has_eyes = TRUE
+
+	if(!H.getorgan(/obj/item/organ/eyes) && HD)
+		standing += image("icon"='icons/mob/human_face.dmi', "icon_state" = "eyes_missing", "layer" = -BODY_LAYER)
+		has_eyes = FALSE
+
 	if(!(H.disabilities & HUSK))
 		// lipstick
 		if(H.lip_style && (LIPS in species_traits) && HD)
@@ -250,8 +257,8 @@
 			standing	+= lips
 
 		// eyes
-		if((EYECOLOR in species_traits) && HD)
-			var/image/img_eyes = image("icon" = 'icons/mob/human_face.dmi', "icon_state" = "[eyes]", "layer" = -BODY_LAYER)
+		if((EYECOLOR in species_traits) && HD && has_eyes)
+			var/image/img_eyes = image("icon" = 'icons/mob/human_face.dmi', "icon_state" = "eyes", "layer" = -BODY_LAYER)
 			img_eyes.color = "#" + H.eye_color
 			standing	+= img_eyes
 
@@ -779,42 +786,6 @@
 			H.throw_alert("nutrition", /obj/screen/alert/hungry)
 		else
 			H.throw_alert("nutrition", /obj/screen/alert/starving)
-
-
-/datum/species/proc/update_sight(mob/living/carbon/human/H)
-	H.sight = initial(H.sight)
-	H.see_in_dark = darksight
-	H.see_invisible = invis_sight
-
-	if(H.client.eye != H)
-		var/atom/A = H.client.eye
-		if(A.update_remote_sight(H)) //returns 1 if we override all other sight updates.
-			return
-
-	for(var/obj/item/organ/cyberimp/eyes/E in H.internal_organs)
-		H.sight |= E.sight_flags
-		if(E.dark_view)
-			H.see_in_dark = E.dark_view
-		if(E.see_invisible)
-			H.see_invisible = min(H.see_invisible, E.see_invisible)
-
-	if(H.glasses)
-		var/obj/item/clothing/glasses/G = H.glasses
-		H.sight |= G.vision_flags
-		H.see_in_dark = max(G.darkness_view, H.see_in_dark)
-		if(G.invis_override)
-			H.see_invisible = G.invis_override
-		else
-			H.see_invisible = min(G.invis_view, H.see_invisible)
-
-	for(var/X in H.dna.mutations)
-		var/datum/mutation/M = X
-		if(M.name == XRAY)
-			H.sight |= (SEE_TURFS|SEE_MOBS|SEE_OBJS)
-			H.see_in_dark = max(H.see_in_dark, 8)
-
-	if(H.see_override)	//Override all
-		H.see_invisible = H.see_override
 
 /datum/species/proc/update_health_hud(mob/living/carbon/human/H)
 	return 0

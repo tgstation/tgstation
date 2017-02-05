@@ -239,10 +239,10 @@
 		chassis.log_message("Toggled zoom mode.")
 		chassis.occupant_message("<font color='[chassis.zoom_mode?"blue":"red"]'>Zoom mode [chassis.zoom_mode?"en":"dis"]abled.</font>")
 		if(chassis.zoom_mode)
-			owner.client.view = 12
+			owner.client.change_view(12)
 			owner << sound('sound/mecha/imag_enh.ogg',volume=50)
 		else
-			owner.client.view = world.view//world.view - default mob view size
+			owner.client.change_view(world.view) //world.view - default mob view size
 		UpdateButtonIcon()
 
 /datum/action/innate/mecha/mech_switch_damtype

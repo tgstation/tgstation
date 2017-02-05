@@ -916,7 +916,7 @@ var/list/WALLITEMS_INVERSE = typecacheof(list(
 
 /proc/IsValidSrc(datum/D)
 	if(istype(D))
-		return !qdeleted(D)
+		return !QDELETED(D)
 	return 0
 
 

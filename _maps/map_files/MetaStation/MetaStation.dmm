@@ -1,4 +1,5 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+//Model dictionary trimmed on: 02-02-2017 02:51 (UTC)
 "aaa" = (
 /turf/open/space,
 /area/space)
@@ -3905,6 +3906,8 @@
 	},
 /obj/structure/rack,
 /obj/item/weapon/storage/fancy/donut_box,
+/obj/item/weapon/gun/energy/e_gun/dragnet,
+/obj/item/weapon/gun/energy/e_gun/dragnet,
 /turf/open/floor/plasteel/vault{
 	dir = 1
 	},
@@ -25564,11 +25567,11 @@
 	},
 /area/mining_construction)
 "aRF" = (
+/obj/structure/reagent_dispensers/fueltank,
 /obj/machinery/light{
 	icon_state = "tube1";
 	dir = 4
 	},
-/obj/machinery/computer/camera_advanced/base_construction,
 /turf/open/floor/plasteel/yellow/side{
 	dir = 5
 	},
@@ -40954,8 +40957,6 @@
 /obj/item/stack/cable_coil/random,
 /obj/item/stack/cable_coil/random,
 /obj/item/stack/cable_coil/random,
-/obj/item/weapon/paper_bin/construction,
-/obj/item/stack/cable_coil,
 /turf/open/floor/plasteel,
 /area/storage/art)
 "bre" = (
@@ -54884,7 +54885,7 @@
 	},
 /area/crew_quarters/kitchen)
 "bOV" = (
-/obj/machinery/holopad,
+/obj/machinery/deepfryer,
 /turf/open/floor/plasteel/cafeteria{
 	dir = 5
 	},
@@ -73082,7 +73083,6 @@
 	},
 /area/crew_quarters/hor)
 "ctb" = (
-/obj/machinery/computer/aifixer,
 /obj/structure/window/reinforced{
 	dir = 4
 	},
@@ -73094,6 +73094,7 @@
 	pixel_x = 0;
 	pixel_y = 30
 	},
+/obj/machinery/modular_computer/console/preset/research,
 /turf/open/floor/plasteel/cafeteria{
 	dir = 5
 	},
@@ -94427,11 +94428,22 @@
 /turf/open/floor/plating/airless,
 /area/toxins/xenobiology)
 "ddD" = (
-/obj/structure/reagent_dispensers/fueltank,
-/turf/open/floor/plasteel/yellow/side{
-	dir = 1
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
+	dir = 8;
+	initialize_directions = 11
 	},
-/area/mining_construction)
+/obj/machinery/deepfryer,
+/turf/open/floor/plasteel/cafeteria{
+	dir = 5
+	},
+/area/crew_quarters/kitchen)
+"ddE" = (
+/obj/effect/landmark/start{
+	name = "Cook"
+	},
+/obj/machinery/holopad,
+/turf/open/floor/plasteel/cafeteria,
+/area/crew_quarters/kitchen)
 
 (1,1,1) = {"
 aaa
@@ -105591,7 +105603,7 @@ cVL
 cVL
 cWJ
 cWK
-ddD
+aRE
 aSK
 cYL
 aVz
@@ -126203,7 +126215,7 @@ coe
 cpq
 cqJ
 crP
-cta
+cuN
 ctR
 cuN
 cvR
@@ -128235,7 +128247,7 @@ bHb
 bMP
 bKg
 bLL
-bNz
+ddD
 bOT
 bQC
 bLK
@@ -129007,7 +129019,7 @@ bBT
 bKj
 bLN
 bLK
-bOR
+ddE
 bQF
 bNz
 bSV

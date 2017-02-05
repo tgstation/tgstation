@@ -1,0 +1,5 @@
+author: "coiax"
+delete-after: True
+changes: 
+  - bugfix: "The mulligan reagent can now be created with 1u stable mutation
+toxin + 1u unstable mutagen."
