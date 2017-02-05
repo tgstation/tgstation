@@ -253,4 +253,4 @@
 	if(!wet && wet_time)
 		wet_time = 0
 	if(wet)
-		addtimer(CALLBACK(src, .proc/HandleWet), 15)
+		addtimer(CALLBACK(src, .proc/HandleWet), 15, TIMER_UNIQUE)
