@@ -13,13 +13,17 @@
 		src << "Guests may not use OOC."
 		return
 
-	if(oocmuted(ckey))
-		src << "<span class='danger'><big><b>No way for you, dick.</b></big></span>"
-		return
+	msg = copytext(sanitize(msg), 1, MAX_MESSAGE_LEN)
+	var/raw_msg = msg
 
-	msg = strip_html_properly(sanitize(msg))
 	if(!msg)
 		return
+
+	msg = emoji_parse(msg)
+
+	if((copytext(msg, 1, 2) in list(".",";",":","#")) || (findtext(lowertext(copytext(msg, 1, 5)), "say")))
+		if(alert("Your message \"[raw_msg]\" looks like it was meant for in game communication, say it in OOC?", "Meant for OOC?", "No", "Yes") != "Yes")
+			return
 
 	if(!(prefs.chat_toggles & CHAT_OOC))
 		src << "<span class='danger'>You have OOC muted.</span>"
@@ -47,20 +51,12 @@
 			message_admins("[key_name_admin(src)] has attempted to advertise in OOC: [msg]")
 			return
 
-	var/raw_msg = msg
-
-	msg = emoji_parse(msg)
-
-	if((copytext(msg, 1, 2) in list(".",";",":","#")) || (findtext(lowertext(copytext(msg, 1, 5)), "say")))
-		if(alert("Your message \"[raw_msg]\" looks like it was meant for in game communication, say it in OOC?", "Meant for OOC?", "No", "Yes") != "Yes")
-			return
-
 	log_ooc("[mob.name]/[key] : [raw_msg]")
 
 	var/keyname = key
-//	if(prefs.unlock_content)
-//		if(prefs.toggles & MEMBER_PUBLIC)
-//			keyname = "<font color='[prefs.ooccolor ? prefs.ooccolor : normal_ooc_colour]'><img style='width:9px;height:9px;' class=icon src=\ref['icons/member_content.dmi'] iconstate=blag>[keyname]</font>"
+	//if(prefs.unlock_content)
+	//	if(prefs.toggles & MEMBER_PUBLIC)
+		//	keyname = "<font color='[prefs.ooccolor ? prefs.ooccolor : normal_ooc_colour]'><img style='width:9px;height:9px;' class=icon src=\ref['icons/member_content.dmi'] iconstate=blag>[keyname]</font>"
 
 	for(var/client/C in clients)
 		if(C.prefs.chat_toggles & CHAT_OOC)
@@ -104,7 +100,7 @@ var/global/normal_ooc_colour = OOC_COLOR
 	set category = "Preferences"
 
 	if(!holder || check_rights_for(src, R_ADMIN))
-//		if(!is_content_unlocked())
+	//	if(!is_content_unlocked())
 		return
 
 	var/new_ooccolor = input(src, "Please select your OOC color.", "OOC color", prefs.ooccolor) as color|null
@@ -120,7 +116,7 @@ var/global/normal_ooc_colour = OOC_COLOR
 	set category = "Preferences"
 
 	if(!holder || check_rights_for(src, R_ADMIN))
-//		if(!is_content_unlocked())
+	//	if(!is_content_unlocked())
 		return
 
 		prefs.ooccolor = initial(prefs.ooccolor)
@@ -156,7 +152,7 @@ var/global/normal_ooc_colour = OOC_COLOR
 		usr << "<span class='notice'>Sorry, that function is not enabled on this server.</span>"
 		return
 
-	show_note(usr.ckey, null, 1)
+	browse_messages(null, usr.ckey, null, 1)
 
 /client/proc/ignore_key(client)
 	var/client/C = client

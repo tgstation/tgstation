@@ -17,10 +17,10 @@ def tgm_check(map_file):
 def save_map(map_data,filepath,tgm=False):
     map_data['dictionary'] = map_helpers.sort_dictionary(map_data['dictionary'])
     if tgm:
-        map_helpers.write_dictionary_tgm(filepath, map_data['dictionary'])
+        map_helpers.write_dictionary_tgm(filepath, map_data['dictionary'],None)
         map_helpers.write_grid_coord_small(filepath, map_data['grid'], map_data['maxx'], map_data['maxy'])
     else:
-        map_helpers.write_dictionary(filepath, map_data['dictionary'])
+        map_helpers.write_dictionary(filepath, map_data['dictionary'],None)
         map_helpers.write_grid(filepath, map_data['grid'], map_data['maxx'], map_data['maxy'])
 
 def update_all_maps(update_file=None, update_string=None, map_directory=None, verbose=False):

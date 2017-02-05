@@ -8,7 +8,7 @@
 	if(href_list["rejectadminhelp"])
 		if(!check_rights(R_ADMIN))
 			return
-		var/client/C = locate(href_list["rejectadminhelp"])
+		var/client/C = locate(href_list["rejectadminhelp"]) in clients
 		if(!C)
 			return
 		if (deltimer(C.adminhelptimerid))
@@ -22,6 +22,20 @@
 
 		message_admins("[key_name_admin(usr)] Rejected [C.key]'s admin help. [C.key]'s Adminhelp verb has been returned to them.")
 		log_admin("[key_name(usr)] Rejected [C.key]'s admin help.")
+
+	else if(href_list["icissue"])
+		var/client/C = locate(href_list["icissue"]) in clients
+		if(!C)
+			return
+
+		var/msg = "<font color='red' size='4'><b>- AdminHelp marked as IC issue! -</b></font><br>"
+		msg += "<font color='red'><b>Losing is part of the game!</b></font><br>"
+		msg += "<font color='red'>Your character will frequently die, sometimes without even a possibility of avoiding it. Events will often be out of your control. No matter how good or prepared you are, sometimes you just lose.</font>"
+
+		C << msg
+
+		message_admins("[key_name_admin(usr)] marked [C.key]'s admin help as an IC issue.")
+		log_admin("[key_name(usr)] marked [C.key]'s admin help as an IC issue.")
 
 	else if(href_list["stickyban"])
 		stickyban(href_list["stickyban"],href_list)
@@ -238,20 +252,7 @@
 		if(!DB_ban_record(bantype, playermob, banduration, banreason, banjob, null, banckey, banip, bancid ))
 			usr << "<span class='danger'>Failed to apply ban.</span>"
 			return
-		add_note(banckey, banreason, null, usr.ckey, 0, null, 0)
-
-	else if(href_list["unmutef"])
-		if(!check_rights(R_BAN))	return
-		remove_mute(href_list["unmutef"])
-		mutepanel()
-
-	else if(href_list["permamute"])
-		if(!check_rights(R_BAN))	return
-		addmute(href_list["permamute"], usr.ckey, href_list["chat"])
-
-	else if(href_list["showmultiacc"])
-		if(!check_rights(R_ADMIN))	return
-		showAccounts(usr, href_list["showmultiacc"])
+		create_message("note", banckey, null, banreason, null, null, 0, 0)
 
 	else if(href_list["editrights"])
 		if(!check_rights(R_PERMISSIONS))
@@ -580,13 +581,13 @@
 					return
 				minutes = CMinutes + mins
 				duration = GetExp(minutes)
-				reason = sanitize_russian(input(usr,"Reason?","Reason",reason2), 1)
+				reason = sanitize_russian(input(usr,"Please State Reason.","Reason",reason2) as message)|null
 				if(!reason)
 					return
 			if("No")
 				temp = 0
 				duration = "Perma"
-				reason = sanitize_russian(input(usr,"Reason?","Reason",reason2), 1)
+				reason = sanitize_russian(input(usr,"Please State Reason.","Reason",reason2) as message)|null
 				if(!reason)
 					return
 
@@ -630,7 +631,7 @@
 
 		else switch(alert("Appearance ban [M.ckey]?",,"Yes","No", "Cancel"))
 			if("Yes")
-				var/reason = sanitize_russian(input(usr,"Please State Reason","Reason") as message)
+				var/reason = sanitize_russian(input(usr,"Please State Reason.","Reason") as message)|null
 				if(!reason)
 					return
 				if(!DB_ban_record(BANTYPE_JOB_PERMA, M, -1, reason, "appearance"))
@@ -641,7 +642,7 @@
 				ban_unban_log_save("[key_name(usr)] appearance banned [key_name(M)]. reason: [reason]")
 				log_admin("[key_name(usr)] appearance banned [key_name(M)]. \nReason: [reason]")
 				feedback_inc("ban_appearance",1)
-				add_note(M.ckey, "Appearance banned - [reason]", null, usr.ckey, 0, null, 0)
+				create_message("note", M.ckey, null, "Appearance banned - [reason]", null, null, 0, 0)
 				message_admins("<span class='adminnotice'>[key_name_admin(usr)] appearance banned [key_name_admin(M)].</span>")
 				M << "<span class='boldannounce'><BIG>You have been appearance banned by [usr.client.ckey].</BIG></span>"
 				M << "<span class='boldannounce'>The reason is: [reason]</span>"
@@ -1012,7 +1013,7 @@
 					var/mins = input(usr,"How long (in minutes)?","Ban time",1440) as num|null
 					if(!mins)
 						return
-					var/reason = sanitize_russian(input(usr,"Please State Reason","Reason") as message)
+					var/reason = sanitize_russian(input(usr,"Please State Reason.","Reason") as message)|null
 					if(!reason)
 						return
 
@@ -1031,7 +1032,7 @@
 							msg = job
 						else
 							msg += ", [job]"
-					add_note(M.ckey, "Banned  from [msg] - [reason]", null, usr.ckey, 0, null, 0)
+					create_message("note", M.ckey, null, "Banned  from [msg] - [reason]", null, null, 0, 0)
 					message_admins("<span class='adminnotice'>[key_name_admin(usr)] banned [key_name_admin(M)] from [msg] for [mins] minutes.</span>")
 					M << "<span class='boldannounce'><BIG>You have been [(msg == ("ooc" || "appearance")) ? "banned" : "jobbanned"] by [usr.client.ckey] from: [msg].</BIG></span>"
 					M << "<span class='boldannounce'>The reason is: [reason]</span>"
@@ -1039,7 +1040,7 @@
 					href_list["jobban2"] = 1 // lets it fall through and refresh
 					return 1
 				if("No")
-					var/reason = sanitize_russian(input(usr,"Please State Reason","Reason") as message)
+					var/reason = sanitize_russian(input(usr,"Please State Reason","Reason") as message)|null
 					if(reason)
 						var/msg
 						for(var/job in notbannedlist)
@@ -1056,7 +1057,7 @@
 								msg = job
 							else
 								msg += ", [job]"
-						add_note(M.ckey, "Banned  from [msg] - [reason]", null, usr.ckey, 0, null, 0)
+						create_message("note", M.ckey, null, "Banned  from [msg] - [reason]", null, null, 0, 0)
 						message_admins("<span class='adminnotice'>[key_name_admin(usr)] banned [key_name_admin(M)] from [msg].</span>")
 						M << "<span class='boldannounce'><BIG>You have been [(msg == ("ooc" || "appearance")) ? "banned" : "jobbanned"] by [usr.client.ckey] from: [msg].</BIG></span>"
 						M << "<span class='boldannounce'>The reason is: [reason]</span>"
@@ -1108,57 +1109,87 @@
 			//M.client = null
 			qdel(M.client)
 
-	//Player Notes
+	else if(href_list["addmessage"])
+		var/target_ckey = href_list["addmessage"]
+		create_message("message", target_ckey, secret = 0)
+
 	else if(href_list["addnote"])
 		var/target_ckey = href_list["addnote"]
-		add_note(target_ckey)
+		create_message("note", target_ckey)
+
+	else if(href_list["addwatch"])
+		var/target_ckey = href_list["addwatch"]
+		create_message("watchlist entry", target_ckey, secret = 1)
+
+	else if(href_list["addmemo"])
+		create_message("memo", secret = 0, browse = 1)
+
+	else if(href_list["addmessageempty"])
+		create_message("message", secret = 0)
 
 	else if(href_list["addnoteempty"])
-		add_note()
+		create_message("note")
 
-	else if(href_list["removenote"])
-		var/note_id = href_list["removenote"]
-		remove_note(note_id)
+	else if(href_list["addwatchempty"])
+		create_message("watchlist entry", secret = 1)
 
-	else if(href_list["editnote"])
-		var/note_id = href_list["editnote"]
-		edit_note(note_id)
+	else if(href_list["deletemessage"])
+		var/message_id = href_list["deletemessage"]
+		delete_message(message_id)
 
-	else if(href_list["shownote"])
-		var/target = href_list["shownote"]
-		show_note(index = target)
+	else if(href_list["deletemessageempty"])
+		var/message_id = href_list["deletemessageempty"]
+		delete_message(message_id, browse = 1)
+
+	else if(href_list["editmessage"])
+		var/message_id = href_list["editmessage"]
+		edit_message(message_id)
+
+	else if(href_list["editmessageempty"])
+		var/message_id = href_list["editmessageempty"]
+		edit_message(message_id, browse = 1)
+
+	else if(href_list["secretmessage"])
+		var/message_id = href_list["secretmessage"]
+		toggle_message_secrecy(message_id)
+
+	else if(href_list["searchmessages"])
+		var/target = href_list["searchmessages"]
+		browse_messages(index = target)
 
 	else if(href_list["nonalpha"])
 		var/target = href_list["nonalpha"]
 		target = text2num(target)
-		show_note(index = target)
+		browse_messages(index = target)
 
-	else if(href_list["shownoteckey"])
-		var/target_ckey = href_list["shownoteckey"]
-		show_note(target_ckey)
+	else if(href_list["showmessages"])
+		var/target = href_list["showmessages"]
+		browse_messages(index = target)
 
-	else if(href_list["shownoteckeylinkless"])
-		var/target_ckey = href_list["shownoteckeylinkless"]
-		show_note(target_ckey, null, 1)
+	else if(href_list["showmemo"])
+		browse_messages("memo")
 
-	else if(href_list["notessearch"])
-		var/target = href_list["notessearch"]
-		show_note(index = target)
+	else if(href_list["showwatch"])
+		browse_messages("watchlist entry")
 
-	else if(href_list["noteedits"])
-		var/note_id = sanitizeSQL("[href_list["noteedits"]]")
-		var/DBQuery/query_noteedits = dbcon.NewQuery("SELECT edits FROM [format_table_name("notes")] WHERE id = '[note_id]'")
-		if(!query_noteedits.Execute())
-			var/err = query_noteedits.ErrorMsg()
-			log_game("SQL ERROR obtaining edits from notes table. Error : \[[err]\]\n")
+	else if(href_list["showmessageckey"])
+		var/target = href_list["showmessageckey"]
+		browse_messages(target_ckey = target)
+
+	else if(href_list["showmessageckeylinkless"])
+		var/target = href_list["showmessageckeylinkless"]
+		browse_messages(target_ckey = target, linkless = 1)
+
+	else if(href_list["messageedits"])
+		var/message_id = sanitizeSQL("[href_list["messageedits"]]")
+		var/DBQuery/query_get_message_edits = dbcon.NewQuery("SELECT edits FROM [format_table_name("messages")] WHERE id = '[message_id]'")
+		if(!query_get_message_edits.Execute())
+			var/err = query_get_message_edits.ErrorMsg()
+			log_game("SQL ERROR obtaining edits from messages table. Error : \[[err]\]\n")
 			return
-		if(query_noteedits.NextRow())
-			var/edit_log = query_noteedits.item[1]
-			usr << browse(sanitize_russian(edit_log,1),"window=noteedits")
-
-	else if(href_list["secretnote"])
-		var/note_id = href_list["secretnote"]
-		toggle_note_secrecy(note_id)
+		if(query_get_message_edits.NextRow())
+			var/edit_log = query_get_message_edits.item[1]
+			usr << browse(sanitize_russian(edit_log,"window=noteedits"))
 
 	else if(href_list["newban"])
 		if(!check_rights(R_BAN))
@@ -1223,48 +1254,6 @@
 				qdel(M.client)
 			if("Cancel")
 				return
-
-	//Watchlist
-	else if(href_list["watchadd"])
-		var/target_ckey = locate(href_list["watchadd"])
-		usr.client.watchlist_add(target_ckey)
-
-	else if(href_list["watchremove"])
-		var/target_ckey = href_list["watchremove"]
-		usr.client.watchlist_remove(target_ckey)
-
-	else if(href_list["watchedit"])
-		var/target_ckey = href_list["watchedit"]
-		usr.client.watchlist_edit(target_ckey)
-
-	else if(href_list["watchaddbrowse"])
-		usr.client.watchlist_add(null, 1)
-
-	else if(href_list["watchremovebrowse"])
-		var/target_ckey = href_list["watchremovebrowse"]
-		usr.client.watchlist_remove(target_ckey, 1)
-
-	else if(href_list["watcheditbrowse"])
-		var/target_ckey = href_list["watcheditbrowse"]
-		usr.client.watchlist_edit(target_ckey, 1)
-
-	else if(href_list["watchsearch"])
-		var/target_ckey = href_list["watchsearch"]
-		usr.client.watchlist_show(target_ckey)
-
-	else if(href_list["watchshow"])
-		usr.client.watchlist_show()
-
-	else if(href_list["watcheditlog"])
-		var/target_ckey = sanitizeSQL("[href_list["watcheditlog"]]")
-		var/DBQuery/query_watchedits = dbcon.NewQuery("SELECT edits FROM [format_table_name("watch")] WHERE ckey = '[target_ckey]'")
-		if(!query_watchedits.Execute())
-			var/err = query_watchedits.ErrorMsg()
-			log_game("SQL ERROR obtaining edits from watch table. Error : \[[err]\]\n")
-			return
-		if(query_watchedits.NextRow())
-			var/edit_log = query_watchedits.item[1]
-			usr << browse(edit_log,"window=watchedits")
 
 	else if(href_list["mute"])
 		if(!check_rights(R_ADMIN))
@@ -1810,7 +1799,7 @@
 			return
 
 		message_admins("[src.owner] has started answering [key_name(H)]'s Centcomm request.")
-		var/input = sanitize(input(src.owner, "Please enter a message to reply to [key_name(H)] via their headset.","Outgoing message from Centcom", ""))
+		var/input = input(src.owner, "Please enter a message to reply to [key_name(H)] via their headset.","Outgoing message from Centcom", "")
 		if(!input)
 			message_admins("[src.owner] decided not to answer [key_name(H)]'s Centcomm request.")
 			return
@@ -2229,18 +2218,6 @@
 		var/datum/newscaster/feed_message/FM = locate(href_list["ac_lock_comment"])
 		FM.locked ^= 1
 		src.access_news_network()
-
-	else if(href_list["memoeditlist"])
-		var/sql_key = sanitizeSQL("[href_list["memoeditlist"]]")
-		var/DBQuery/query_memoedits = dbcon.NewQuery("SELECT edits FROM [format_table_name("memo")] WHERE (ckey = '[sql_key]')")
-		if(!query_memoedits.Execute())
-			var/err = query_memoedits.ErrorMsg()
-			log_game("SQL ERROR obtaining edits from memo table. Error : \[[err]\]\n")
-			return
-		if(query_memoedits.NextRow())
-			var/edit_log = query_memoedits.item[1]
-			usr << browse(sanitize_russian(edit_log,1),"window=memoeditlist")
-
 
 	else if(href_list["check_antagonist"])
 		if(!check_rights(R_ADMIN))

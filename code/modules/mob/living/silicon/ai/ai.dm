@@ -33,6 +33,7 @@ var/list/ai_list = list()
 	var/list/connected_robots = list()
 	var/aiRestorePowerRoutine = 0
 	var/requires_power = POWER_REQ_ALL
+	var/can_be_carded = TRUE
 	//var/list/laws = list()
 	var/alarms = list("Motion"=list(), "Fire"=list(), "Atmosphere"=list(), "Power"=list(), "Camera"=list(), "Burglar"=list())
 	var/viewalerts = 0
@@ -790,6 +791,9 @@ var/list/ai_list = list()
 		if(!mind)
 			user << "<span class='warning'>No intelligence patterns detected.</span>"    //No more magical carding of empty cores, AI RETURN TO BODY!!!11
 			return
+		if(!can_be_carded)
+			user << "<span class='boldwarning'>Transfer failed.</span>"
+			return
 		new /obj/structure/AIcore/deactivated(loc)//Spawns a deactivated terminal at AI location.
 		ai_restore_power()//So the AI initially has power.
 		control_disabled = 1//Can't control things remotely if you're stuck in a card!
@@ -901,6 +905,9 @@ var/list/ai_list = list()
 		src << "Hack complete. \The [apc] is now under your \
 			exclusive control."
 		apc.update_icon()
+
+/mob/living/silicon/ai/resist()
+	return
 
 /mob/living/silicon/ai/spawned/New(loc, datum/ai_laws/L, mob/target_ai)
 	if(!target_ai)

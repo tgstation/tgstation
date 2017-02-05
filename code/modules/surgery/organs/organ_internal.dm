@@ -728,3 +728,139 @@
 		if(!T)
 			T = new()
 			T.Insert(src)
+
+	if(!getorganslot("eye_sight"))
+		var/obj/item/organ/eyes/E
+
+		if(dna && dna.species && dna.species.mutanteyes)
+			E = new dna.species.mutanteyes()
+
+		else
+			E = new()
+		E.Insert(src)
+
+//Eyes
+
+/obj/item/organ/eyes
+	name = "eyes"
+	icon_state = "eyeballs"
+	desc = "I see you!"
+	zone = "eyes"
+	slot = "eye_sight"
+
+	var/sight_flags = 0
+	var/see_in_dark = 2
+	var/tint = 0
+	var/eye_color = "fff"
+	var/old_eye_color = "fff"
+	var/flash_protect = 0
+	var/see_invisible = SEE_INVISIBLE_LIVING
+
+/obj/item/organ/eyes/Insert(mob/living/carbon/M, special = 0)
+	..()
+	if(ishuman(owner) && eye_color)
+		var/mob/living/carbon/human/HMN = owner
+		old_eye_color = HMN.eye_color
+		HMN.eye_color = eye_color
+		HMN.regenerate_icons()
+	M.update_tint()
+	owner.update_sight()
+
+/obj/item/organ/eyes/Remove(mob/living/carbon/M, special = 0)
+	..()
+	if(ishuman(M) && eye_color)
+		var/mob/living/carbon/human/HMN = M
+		HMN.eye_color = old_eye_color
+		HMN.regenerate_icons()
+	M.update_tint()
+	M.update_sight()
+
+/obj/item/organ/eyes/night_vision
+	name = "shadow eyes"
+	desc = "A spooky set of eyes that can see in the dark."
+	see_in_dark = 8
+	see_invisible = SEE_INVISIBLE_MINIMUM
+	actions_types = list(/datum/action/item_action/organ_action/use)
+	var/night_vision = TRUE
+
+/obj/item/organ/eyes/night_vision/ui_action_click()
+	if(night_vision)
+		see_in_dark = 4
+		see_invisible = SEE_INVISIBLE_LIVING
+		night_vision = FALSE
+	else
+		see_in_dark = 8
+		see_invisible = SEE_INVISIBLE_MINIMUM
+		night_vision = TRUE
+
+/obj/item/organ/eyes/night_vision/alien
+	name = "alien eyes"
+	desc = "It turned out they had them after all!"
+	see_in_dark = 8
+	see_invisible = SEE_INVISIBLE_MINIMUM
+	sight_flags = SEE_MOBS
+
+
+///Robotic
+
+/obj/item/organ/eyes/robotic
+	name = "robotic eyes"
+	icon_state = "cybernetic_eyeballs"
+	desc = "Your vision is augmented."
+
+/obj/item/organ/eyes/robotic/emp_act(severity)
+	if(!owner)
+		return
+	if(severity > 1)
+		if(prob(10 * severity))
+			return
+	owner << "<span class='warning'>Static obfuscates your vision!</span>"
+	owner.flash_act(visual = 1)
+
+/obj/item/organ/eyes/robotic/xray
+	name = "X-ray eyes"
+	desc = "These cybernetic eyes will give you X-ray vision. Blinking is futile."
+	eye_color = "000"
+	see_in_dark = 8
+	sight_flags = SEE_MOBS | SEE_OBJS | SEE_TURFS
+
+/obj/item/organ/eyes/robotic/thermals
+	name = "Thermals eyes"
+	desc = "These cybernetic eye implants will give you Thermal vision. Vertical slit pupil included."
+	eye_color = "FC0"
+	origin_tech = "materials=5;programming=4;biotech=4;magnets=4;syndicate=1"
+	sight_flags = SEE_MOBS
+	see_invisible = SEE_INVISIBLE_MINIMUM
+	flash_protect = -1
+	see_in_dark = 8
+
+/obj/item/organ/eyes/robotic/flashlight
+	name = "flashlight eyes"
+	desc = "It's two flashlights rigged together with some wire. Why would you put these in someones head?"
+	eye_color ="fee5a3"
+	icon = 'icons/obj/lighting.dmi'
+	icon_state = "flashlight_eyes"
+	flash_protect = 2
+	tint = INFINITY
+
+/obj/item/organ/eyes/robotic/flashlight/emp_act(severity)
+	return
+
+/obj/item/organ/eyes/robotic/flashlight/Insert(var/mob/living/carbon/M, var/special = 0)
+	..()
+	M.AddLuminosity(15)
+
+
+/obj/item/organ/eyes/robotic/flashlight/Remove(var/mob/living/carbon/M, var/special = 0)
+	M.AddLuminosity(-15)
+	..()
+
+// Welding shield implant
+/obj/item/organ/eyes/robotic/shield
+	name = "shielded robotic eyes"
+	desc = "These reactive micro-shields will protect you from welders and flashes without obscuring your vision."
+	origin_tech = "materials=4;biotech=3;engineering=4;plasmatech=3"
+	flash_protect = 2
+
+/obj/item/organ/eyes/robotic/shield/emp_act(severity)
+	return

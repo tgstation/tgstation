@@ -100,7 +100,7 @@
 	tesla_zap(src, 10, power/shock_coeff)
 
 /obj/machinery/power/grounding_rod
-	name = "Grounding Rod"
+	name = "grounding rod"
 	desc = "Keep an area from being fried from Edison's Bane."
 	icon = 'icons/obj/tesla_engine/tesla_coil.dmi'
 	icon_state = "grounding_rod0"

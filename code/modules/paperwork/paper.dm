@@ -60,11 +60,11 @@
 			user << "<span class='danger'>There are indecipherable images scrawled on the paper in what looks to be... <i>blood?</i></span>"
 			return
 	if(in_range(user, src) || isobserver(user))
-		if( !(ishuman(user) || isobserver(user) || issilicon(user)) )
-			user << browse(sanitize_russian("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[stars(info)]<HR>[stamps]</BODY></HTML>",1), "window=[name]")
+		if(user.is_literate())
+			user << browse(sanitize_russian("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[info]<HR>[stamps]</BODY></HTML>", "window=[name]"))
 			onclose(user, "[name]")
 		else
-			user << browse(sanitize_russian("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[info]<HR>[stamps]</BODY></HTML>",1), "window=[name]")
+			user << browse(sanitize_russian("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[stars(info)]<HR>[stamps]</BODY></HTML>", "window=[name]"))
 			onclose(user, "[name]")
 	else
 		user << "<span class='notice'>It is too far away.</span>"
@@ -75,17 +75,15 @@
 	set category = "Object"
 	set src in usr
 
-	if(usr.stat || !usr.canmove || usr.restrained())
+	if(usr.incapacitated() || !usr.is_literate())
 		return
-
-	if(!ishuman(usr))
-		return
-	var/mob/living/carbon/human/H = usr
-	if(H.disabilities & CLUMSY && prob(25))
-		H << "<span class='warning'>You cut yourself on the paper! Ahhhh! Ahhhhh!</span>"
-		H.damageoverlaytemp = 9001
-		H.update_damage_hud()
-		return
+	if(ishuman(usr))
+		var/mob/living/carbon/human/H = usr
+		if(H.disabilities & CLUMSY && prob(25))
+			H << "<span class='warning'>You cut yourself on the paper! Ahhhh! Ahhhhh!</span>"
+			H.damageoverlaytemp = 9001
+			H.update_damage_hud()
+			return
 	var/n_name = sanitize_russian(stripped_input(usr, "What would you like to label the paper?", "Paper Labelling", null, MAX_NAME_LEN))
 	if((loc == usr && usr.stat == 0))
 		name = "paper[(n_name ? text("- '[n_name]'") : null)]"
@@ -112,10 +110,10 @@
 	else //cyborg or AI not seeing through a camera
 		dist = get_dist(src, user)
 	if(dist < 2)
-		usr << browse(sanitize_russian("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[info]<HR>[stamps]</BODY></HTML>",1), "window=[name]")
+		usr << browse(sanitize_russian("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[info]<HR>[stamps]</BODY></HTML>", "window=[name]"))
 		onclose(usr, "[name]")
 	else
-		usr << browse(sanitize_russian("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[stars(info)]<HR>[stamps]</BODY></HTML>",1), "window=[name]")
+		usr << browse(sanitize_russian("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[stars(info)]<HR>[stamps]</BODY></HTML>", "window=[name]"))
 		onclose(usr, "[name]")
 
 
@@ -183,6 +181,7 @@
 	t = replacetext(t, "\[center\]", "<center>")
 	t = replacetext(t, "\[/center\]", "</center>")
 	t = replacetext(t, "\[br\]", "<BR>")
+	t = replacetext(t, "\n", "<BR>")
 	t = replacetext(t, "\[b\]", "<B>")
 	t = replacetext(t, "\[/b\]", "</B>")
 	t = replacetext(t, "\[i\]", "<I>")
@@ -193,7 +192,7 @@
 	t = replacetext(t, "\[/large\]", "</font>")
 	t = replacetext(t, "\[sign\]", "<font face=\"[SIGNFONT]\"><i>[user.real_name]</i></font>")
 	t = replacetext(t, "\[field\]", "<span class=\"paper_field\"></span>")
-	t = replacetext(t, "\[tab\]", "&nbsp;")
+	t = replacetext(t, "\[tab\]", "&nbsp;&nbsp;&nbsp;&nbsp;")
 
 	if(!iscrayon)
 		t = replacetext(t, "\[*\]", "<li>")
@@ -228,6 +227,17 @@
 
 	return t
 
+/obj/item/weapon/paper/proc/reload_fields() // Useful if you made the paper programicly and want to include fields. Also runs updateinfolinks() for you.
+	fields = 0
+	var/laststart = 1
+	while(1)
+		var/i = findtext(info, "<span class=\"paper_field\">", laststart)
+		if(i == 0)
+			break
+		laststart = i+1
+		fields++
+	updateinfolinks()
+
 
 /obj/item/weapon/paper/proc/openhelp(mob/user)
 	user << browse({"<HTML><HEAD><TITLE>Pen Help</TITLE></HEAD>
@@ -258,7 +268,7 @@
 
 	if(href_list["write"])
 		var/id = href_list["write"]
-		var/t =  sanitize_russian(stripped_multiline_input("Enter what you want to write:", "Write"),1)
+		var/t =  sanitize_russian(stripped_multiline_input("Enter what you want to write:", "Write", no_trim=TRUE))
 		if(!t)
 			return
 		var/obj/item/i = usr.get_active_held_item()	//Check to see if he still got that darn pen, also check if he's using a crayon or pen.
@@ -270,12 +280,9 @@
 
 		if(!in_range(src, usr) && loc != usr && !istype(loc, /obj/item/weapon/clipboard) && loc.loc != usr && usr.get_active_held_item() != i)	//Some check to see if he's allowed to write
 			return
-		var/last_fields_value = fields
+
 		t = parsepencode(t, i, usr, iscrayon) // Encode everything from pencode to html
-		if(fields > 50)
-			usr << "<span class='warning'>Too many fields. Sorry, you can't do this.</span>"
-			fields = last_fields_value
-			return
+
 		if(t != null)	//No input from the user means nothing needs to be added
 			if(id!="end")
 				addtofield(text2num(id), t) // He wants to edit a field, let him.
@@ -283,7 +290,7 @@
 				info += t // Oh, he wants to edit to the end of the file, let him.
 				updateinfolinks()
 
-			usr << browse(sanitize_russian(russian_text2html("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[info_links]<HR>[stamps]</BODY></HTML>",1), "window=[name]")) // Update the window
+			usr << browse(sanitize_russian(russian_text2html("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[info_links]<HR>[stamps]</BODY></HTML>", "window=[name]"))) // Update the window
 			update_icon()
 
 
@@ -297,8 +304,8 @@
 		return
 
 	if(istype(P, /obj/item/weapon/pen) || istype(P, /obj/item/toy/crayon))
-		if(user.IsAdvancedToolUser())
-			user << browse(sanitize_russian("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[info_links]<HR>[stamps]</BODY></HTML>",1), "window=[name]")
+		if(user.is_literate())
+			user << browse(sanitize_russian("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[info_links]<HR>[stamps]</BODY></HTML>", "window=[name]"))
 			return
 		else
 			user << "<span class='notice'>You don't know how to read or write.</span>"
