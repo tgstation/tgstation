@@ -794,6 +794,7 @@ var/list/ai_list = list()
 		if(!can_be_carded)
 			user << "<span class='boldwarning'>Transfer failed.</span>"
 			return
+		ShutOffDoomsdayDevice()
 		new /obj/structure/AIcore/deactivated(loc)//Spawns a deactivated terminal at AI location.
 		ai_restore_power()//So the AI initially has power.
 		control_disabled = 1//Can't control things remotely if you're stuck in a card!
