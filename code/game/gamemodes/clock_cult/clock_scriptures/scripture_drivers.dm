@@ -213,13 +213,12 @@
 	addtimer(CALLBACK(invoker, /atom/proc/update_atom_colour), flee_time+grace_period)
 	if(chant_number != chant_amount) //if this is the last chant, we don't have a movement period because the chant is over
 		var/endtime = world.time + flee_time
-		var/starttime = world.time
 		progbar = new(invoker, flee_time, invoker)
 		progbar.bar.color = list("#AF0AAF", "#AF0AAF", "#AF0AAF", rgb(0,0,0))
 		animate(progbar.bar, color = initial(progbar.bar.color), time = flee_time+grace_period)
 		while(world.time < endtime && can_recite())
 			sleep(1)
-			progbar.update(world.time - starttime)
+			progbar.update(endtime - world.time)
 		qdel(progbar)
 		if(can_recite())
 			sleep(grace_period)

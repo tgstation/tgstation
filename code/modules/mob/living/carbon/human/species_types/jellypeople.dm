@@ -4,7 +4,6 @@
 	id = "jelly"
 	default_color = "00FF90"
 	say_mod = "chirps"
-	eyes = "jelleyes"
 	species_traits = list(MUTCOLORS,EYECOLOR,NOBLOOD,VIRUSIMMUNE,TOXINLOVER)
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/slime
 	exotic_blood = "slimejelly"
@@ -99,10 +98,8 @@
 	name = "Slimeperson"
 	id = "slime"
 	default_color = "00FFFF"
-	darksight = 3
 	species_traits = list(MUTCOLORS,EYECOLOR,HAIR,FACEHAIR,NOBLOOD,VIRUSIMMUNE, TOXINLOVER)
 	say_mod = "says"
-	eyes = "eyes"
 	hair_color = "mutcolor"
 	hair_alpha = 150
 	ignored_by = list(/mob/living/simple_animal/slime)
