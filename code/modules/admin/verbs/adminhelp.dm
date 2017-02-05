@@ -146,13 +146,18 @@
 
 /proc/send2irc_adminless_only(source, msg, requiredflags = R_BAN)
 	var/list/adm = get_admin_counts(requiredflags)
-	. = adm["present"].len
+	var/list/activemins = adm["present"]
+	. = activemins.len
 	if(. <= 0)
 		var/final = ""
-		if(!adm["afk"].len && !adm["stealth"].len && !adm["noflags"].len)
+		var/list/afkmins = adm["afk"]
+		var/list/stealthmins = adm["stealth"]
+		var/list/powerlessmins = adm["noflags"]
+		var/list/allmins = adm["total"]
+		if(!afkmins.len && !stealthmins.len && !powerlessmins.len)
 			final = "[msg] - No admins online"
 		else
-			final = "[msg] - All admins stealthed\[[english_list(adm["stealth"])]\], AFK\[[english_list(adm["afk"])]\], or lacks +BAN\[english_list(adm["noflags"])]\]! Total: adm["present"].len "
+			final = "[msg] - All admins stealthed\[[english_list(stealthmins)]\], AFK\[[english_list(afkmins)]\], or lacks +BAN\[[english_list(powerlessmins)]\]! Total: [allmins.len] "
 		send2irc(source,final)
 		send2otherserver(source,final)
 
