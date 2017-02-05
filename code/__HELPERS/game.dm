@@ -44,10 +44,10 @@
 	return areas
 
 /proc/get_adjacent_areas(atom/center)
-	. = list(get_area(get_ranged_target_turf(center, NORTH, 1)))
-	. |= list(get_area(get_ranged_target_turf(center, SOUTH, 1)))
-	. |= list(get_area(get_ranged_target_turf(center, EAST, 1)))
-	. |= list(get_area(get_ranged_target_turf(center, WEST, 1)))
+	. = list(get_area(get_ranged_target_turf(center, NORTH, 1)),
+			get_area(get_ranged_target_turf(center, SOUTH, 1)),
+			get_area(get_ranged_target_turf(center, EAST, 1)),
+			get_area(get_ranged_target_turf(center, WEST, 1)))
 	listclearnulls(.)
 
 /proc/get_open_turf_in_dir(atom/center, dir)

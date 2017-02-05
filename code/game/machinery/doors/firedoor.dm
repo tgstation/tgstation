@@ -40,7 +40,7 @@
 		var/area/A = I
 		LAZYADD(A.firedoors, src)
 
-//see also turf/ChangeTurf for adjacency shennanigans
+//see also turf/AfterChange for adjacency shennanigans
 
 /obj/machinery/door/firedoor/proc/remove_from_areas()
 	if(affecting_areas)
