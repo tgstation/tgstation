@@ -61215,6 +61215,14 @@
 /obj/item/weapon/reagent_containers/blood/random,
 /turf/open/floor/plasteel,
 /area/medical/sleeper)
+"cCq" = (
+/obj/machinery/deepfryer,
+/turf/open/floor/plasteel/cafeteria,
+/area/crew_quarters/kitchen)
+"cCr" = (
+/obj/machinery/deepfryer,
+/turf/open/floor/plasteel/cafeteria,
+/area/crew_quarters/kitchen)
 
 (1,1,1) = {"
 aaa
@@ -99888,7 +99896,7 @@ aRB
 aSL
 aTN
 aVD
-aVz
+cCq
 cAg
 bak
 bbz
@@ -100145,7 +100153,7 @@ aRG
 aSO
 aTO
 aVG
-aVz
+cCr
 aVz
 bak
 bbz

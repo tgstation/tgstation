@@ -29387,6 +29387,7 @@
 /turf/open/floor/plasteel,
 /area/crew_quarters/kitchen)
 "bbq" = (
+/obj/machinery/deepfryer,
 /mob/living/carbon/monkey/punpun,
 /turf/open/floor/plasteel/red,
 /area/crew_quarters/kitchen)
@@ -117775,6 +117776,10 @@
 	},
 /turf/open/floor/plasteel,
 /area/maintenance/auxsolarport)
+"ecb" = (
+/obj/machinery/deepfryer,
+/turf/open/floor/plasteel/red,
+/area/crew_quarters/kitchen)
 
 (1,1,1) = {"
 aaa
@@ -155399,7 +155404,7 @@ aGY
 aGZ
 aYv
 aZV
-aZU
+ecb
 bcD
 bdZ
 bfP
