@@ -27181,6 +27181,7 @@
 /obj/machinery/atmospherics/pipe/manifold/general/visible{
 	dir = 1
 	},
+/obj/machinery/meter,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "aQS" = (
@@ -39232,8 +39233,7 @@
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 4;
 	icon_state = "pump_map";
-	name = "Gas to Loop";
-	
+	name = "Gas to Loop"
 	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
