@@ -42,7 +42,7 @@
 	
 /datum/objective/sintouched/time/New()
 	..()
-	if(istype(ticker.mode, /datum/game_mode/clock_cult))
+	if(istype(ticker.mode, /datum/game_mode/clockwork_cult))
 		explanation_text = "Go bug a bronze worshipper to give you a clock."
 	else
 		explanation_text = "You must know what time it is, all the time."
