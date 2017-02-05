@@ -1,11 +1,11 @@
 
 /obj/effect/proc_holder/spell/aimed
 	name = "aimed projectile spell"
-	var/projectile_type = /obj/item/projectile/magic
+	var/projectile_type = /obj/item/projectile/magic/teleport
 	var/deactive_msg = "You discharge your projectile..."
 	var/active_msg = "You charge your projectile!"
 	var/base_icon_state = "projectile"
-	active_icon_state = "projectile"
+	var/active_icon_state = "projectile"
 
 /obj/effect/proc_holder/spell/aimed/Click()
 	var/mob/living/user = usr
@@ -45,12 +45,12 @@
 	var/turf/U = get_step(user, user.dir) // Get the tile infront of the move, based on their direction
 	if(!isturf(U) || !isturf(T))
 		return FALSE
-	fire(user, target)
+	fire_projectile(user, target)
 	user.newtonian_move(get_dir(U, T))
 	remove_ranged_ability() //Auto-disable the ability once successfully performed
 	return TRUE
 
-/obj/effect/proc_holders/spell/aimed/proc/fire(mob/living/user, atom/target)
+/obj/effect/proc_holder/spell/aimed/proc/fire_projectile(mob/living/user, atom/target)
 	var/obj/item/projectile/P = new projectile_type(user.loc)
 	P.current = get_turf(user)
 	P.preparePixelProjectile(target, get_turf(target), user)
@@ -76,7 +76,7 @@
 	active_msg = "You energize your hand with arcane lightning!"
 	deactive_msg = "You let the energy flow out of your hands back into yourself..."
 
-/obj/effect/proc_holder/spell/aimed/lightningbolt/fire(mob/living/user, atom/target)
+/obj/effect/proc_holder/spell/aimed/lightningbolt/fire_projectile(mob/living/user, atom/target)
 	var/obj/item/projectile/magic/aoe/lightning/P = new /obj/item/projectile/magic/aoe/lightning(user.loc)
 	P.current = get_turf(user)
 	P.preparePixelProjectile(target, get_turf(target), user)
@@ -86,10 +86,9 @@
 	P.fire()
 	return TRUE
 
-/obj/effect/proc_holder/spell/fireball
+/obj/effect/proc_holder/spell/aimed/fireball
 	name = "Fireball"
 	desc = "This spell fires a fireball at a target and does not require wizard garb."
-
 	school = "evocation"
 	charge_max = 60
 	clothes_req = 0
