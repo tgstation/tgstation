@@ -41,6 +41,8 @@
 	explanation_text = "Tell the AI (or a borg/pAI/drone if there is no AI) some corny technology jokes until it cries for help."
 	
 /datum/objective/sintouched/time
+
+/datum/objective/sintouched/time/New()
 	if(istype(ticker.mode, /datum/game_mode/clock_cult))
 		explanation_text = "Go bug a bronze worshipper to give you a clock."
 	else
