@@ -482,18 +482,16 @@ var/global/list/datum/stack_recipe/cable_coil_recipes = list ( \
 			N.buckle_mob(user)
 			var/obj/item/organ/limb/affecting = null
 			if(user.mob_has_gravity)
-				if(ishuman(user))
-					var/mob/living/carbon/human/H = user
-					var/affecting = H.get_organ("head")
 				user.say("--Hrnk!!")
-				user.apply_damage(max(100 - user.getBruteLoss(), 0), BRUTE, affecting) //Pretty hardcore damage
+				user.apply_damage(max(170, 0), BRUTE, head) //Pretty hardcore damage
 				user.adjustOxyLoss(30)
 				playsound(user.loc, 'sound/effects/noosed.ogg', 50, 1, -1)
 				playsound(user.loc, 'sound/misc/crack.ogg', 50, 1, -3)
 				user << "<span class='suicide'>With a loud crack in your neck, you feel your consciousness slipping away...</span>"
-				return
+				return(OXYLOSS)
 		else
-			return
+			user.visible_message("<span class='suicide'>[user] slips and breaks every bone in \his body!</span>")
+				return(BRUTELOSS
 	else
 		user.visible_message("<span class='suicide'>[user] is strangling \himself with the [src]! It looks like \he's trying to commit suicide.</span>")
 		return(OXYLOSS)
@@ -524,7 +522,7 @@ var/global/list/datum/stack_recipe/cable_coil_recipes = list ( \
 	if(istype(W, /obj/item/weapon/wirecutters))
 		user.visible_message("[user] cuts the noose.", "<span class='notice'>You cut the noose.</span>")
 		if(has_buckled_mobs())
-			for(var/m in buckled_mobs)
+			for(mob/m in buckled_mobs)
 				if(m.mob_has_gravity)
 					m.visible_message("<span class='danger'>[m] falls over and hits the ground!</span>",\
 										"<span class='userdanger'>You fall over and hit the ground!</span>")
