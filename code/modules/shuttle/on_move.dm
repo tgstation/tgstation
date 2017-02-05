@@ -14,7 +14,7 @@
 /obj/machinery/atmospherics/onShuttleMove()
 	. = ..()
 	for(DEVICE_TYPE_LOOP)
-		if(get_area(node[I]) != get_area(src))
+		if(get_area(nodes[I]) != get_area(src))
 			nullifyNode(I)
 
 /obj/structure/cable/onShuttleMove()
@@ -24,6 +24,13 @@
 #define DIR_CHECK_TURF_AREA(X) (get_ranged_target_turf(src, X, 1) != A)
 	if(DIR_CHECK_TURF_AREA(NORTH) || DIR_CHECK_TURF_AREA(SOUTH) || DIR_CHECK_TURF_AREA(EAST) || DIR_CHECK_TURF_AREA(WEST))
 		cut_cable_from_powernet()
+
+/obj/structure/disposalpipe/onShuttleMove()
+	. = ..()
+	var/A = get_area(src)
+	//break pipes on the edge
+	if(DIR_CHECK_TURF_AREA(NORTH) || DIR_CHECK_TURF_AREA(SOUTH) || DIR_CHECK_TURF_AREA(EAST) || DIR_CHECK_TURF_AREA(WEST))
+		deconstruct(FALSE)
 #undef DIR_CHECK_TURF_AREA
 
 /atom/movable/light/onShuttleMove()
