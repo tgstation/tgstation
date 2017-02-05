@@ -172,6 +172,9 @@ var/global/list/soapstone_suffixes = list() //Read from "strings/soapstone_suffi
 	var/list/raters = list() //Ckeys who have rated this message
 
 /obj/structure/chisel_message/attack_hand(mob/user)
+	if(user.ckey == creator.key)
+		user << "<span class='warning'>You can't rate your own messages!</span>"
+		return
 	if(raters[user.ckey])
 		user << "<span class='warning'>You've already rated this message!</span>"
 		return
