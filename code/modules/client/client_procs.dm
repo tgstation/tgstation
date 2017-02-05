@@ -302,7 +302,7 @@ var/next_external_rsc = 0
 		tooltips = new /datum/tooltip(src)
 
 	if(chaos)
-		dir = pick(cardinals)
+		dir = pick(cardinal)
 
 
 //////////////

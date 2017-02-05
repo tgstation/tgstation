@@ -29,7 +29,6 @@ var/global/chaos = FALSE
 	use_power = 0
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	var/sprite_number = 0
-	var/emagged = FALSE
 
 /obj/machinery/gravity_generator/emag_act()
 	if(emagged)
@@ -49,11 +48,11 @@ var/global/chaos = FALSE
 /obj/machinery/gravity_generator/proc/fuck_my_shit_up()
 	chaos = TRUE
 	for(var/client/C in world)
-		C.dir = pick(cardinals)
+		C.dir = pick(cardinal)
 	for(var/mob/M in world)
 		M << "<span class='userdanger'>You feel sick as your feet leave the ground and you're flung across the room!</span>"
 		if(isliving(M))
-			M.throw_at(get_edge_target_turf(src, pick(cardinals)), 14, 3)
+			M.throw_at(get_edge_target_turf(src, pick(cardinal)), 14, 3)
 			M.Weaken(5)
 
 /obj/machinery/gravity_generator/proc/restore_my_shit()
@@ -64,9 +63,9 @@ var/global/chaos = FALSE
 		M << "<span class='userdanger'>You're once more flung across the room as gravity returns back to normal.. Or.. is it normal?!</span>"
 		if(prob(5))
 			if(M.client)
-				M.client.dir = pick(cardinals)	//RIP.
+				M.client.dir = pick(cardinal)	//RIP.
 		if(isliving(M))
-			M.throw_at(get_edge_target_turf(src, pick(cardinals)), 14, 3)
+			M.throw_at(get_edge_target_turf(src, pick(cardinal)), 14, 3)
 			M.Weaken(5)
 
 /obj/machinery/gravity_generator/throw_at()
