@@ -14,6 +14,7 @@ var/global/datum/getrev/revdata = new()
 		for(var/I in tmp)
 			if(I && I != "")
 				testmerge |= I
+	testmerge = list("23734")
 	var/testlen = max(testmerge.len - 1, 0)
 	var/regex/head_log = new("(\\w{40}) .+> (\\d{10}).+(?=(\n.*(\\w{40}).*){[testlen]}\n*\\Z)")
 	head_log.Find(head_file)
@@ -34,7 +35,7 @@ var/global/datum/getrev/revdata = new()
 /datum/getrev/proc/DownloadPRDetails()
 	if(!config.githubrepoid)
 		return
-	if(!isnum(config.githubrepoid))
+	if(!isnum(text2num(config.githubrepoid)))
 		world.log << "Invalid github repo id: [config.githubrepoid]"
 		return
 	for(var/line in testmerge)
@@ -52,7 +53,7 @@ var/global/datum/getrev/revdata = new()
 			 | \____(      )___) )___
 			  \______(_______;;; __;;;
 			*/
-		if(!isnum(line))
+		if(!isnum(text2num(line)))
 			world.log << "Invalid PR number: [line]"
 			return
 		var/url = "https://api.github.com/repositories/[config.githubrepoid]/pulls/[line].json"
@@ -82,7 +83,7 @@ var/global/datum/getrev/revdata = new()
 		var/details = ""
 		if(has_pr_details)
 			details = ": '" + html_encode(testmerge[line]["title"]) + "' by " + html_encode(testmerge[line]["user"]["login"])
-		. += "<a href='[config.githuburl]/pull/[line]'>#[line][details]</a><br/>"
+		. += "<a href='[config.githuburl]/pull/[line]'>#[line][details]</a><br></br>"
 
 /client/verb/showrevinfo()
 	set category = "OOC"
