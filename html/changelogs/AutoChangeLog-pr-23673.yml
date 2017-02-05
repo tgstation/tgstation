@@ -1,0 +1,6 @@
+author: "Swindly"
+delete-after: True
+changes: 
+  - bugfix: "Saline-glucose solution can no longer decrease blood volume"
+  - rscadd: "Cyborg hyposprays can now dispense saline-glucose solution"
+  - rscadd: "Saline-glucose solution now increases blood volume when it heals"
