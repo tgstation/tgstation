@@ -75,7 +75,7 @@ var/global/list/soapstone_suffixes = list() //Read from "strings/soapstone_suffi
 			return
 		if(alert(user, "Erase this message?", name, "Yes", "No") == "Yes")
 			user.visible_message("<span class='notice'>[user] swipes away [msg].</span>", "<span class='notice'>You sweep away [msg].</span>")
-			playsound(msg, 'sound/items/soapstone_write.ogg', 50, 1)
+			playsound(msg, 'sound/items/gavel.ogg', 50, 1)
 			msg.persists = 0
 			qdel(msg)
 			refund_use()
@@ -95,7 +95,7 @@ var/global/list/soapstone_suffixes = list() //Read from "strings/soapstone_suffi
 	if(!user.Adjacent(T) || !good_chisel_message_location(T) || locate(/obj/structure/chisel_message) in T)
 		return
 	user.visible_message("<span class='notice'>[user] writes a message onto [T]!</span>", "<span class='notice'>You write a message onto [T].</span>")
-	playsound(T, 'sound/items/soapstone_write.ogg', 50, 1)
+	playsound(T, 'sound/items/gavel.ogg', 50, 1)
 	var/obj/structure/chisel_message/M = new(T)
 	M.register(user, processed_message)
 	remove_use()
@@ -180,18 +180,14 @@ var/global/list/soapstone_suffixes = list() //Read from "strings/soapstone_suffi
 			for(var/client/C in clients)
 				if(C.ckey == creator_key)
 					C.mob << "<span class='notice'>One of your messages was rated as positive!</span>"
-					C << sound('sound/items/soapstone_rate.ogg', volume = 50)
 			user << "<span class='noticealien'>You rated this message as positive.</span>"
-			playsound(src, 'sound/items/soapstone_rate.ogg', 50, 1)
 			positive_ratings++
 			raters[user.ckey] = "positive"
 		if("Negative")
 			for(var/client/C in clients)
 				if(C.ckey == creator_key)
 					C.mob << "<span class='danger'>One of your messages was rated as negative!</span>"
-					C << sound('sound/items/soapstone_rate.ogg', volume = 50)
 			user << "<span class='danger'>You rated this message as negative.</span>"
-			playsound(src, 'sound/items/soapstone_rate.ogg', 50, 1)
 			negative_ratings++
 			raters[user.ckey] = "negative"
 
