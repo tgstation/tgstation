@@ -64,15 +64,15 @@
 	text += "<font color='red'><b>Make Talisman</b></font> functions like the normal Create Talisman rune, but the talismans it creates are weaker. To use, write the rune and put some paper \
 	on top of it, then put a rune that can be made into a talisman nearby and invoke the talisman rune. If you've done everything right, the paper will become a talisman and the other \
 	rune will disappear.<br><br>"
-	text += "<font color='red'><b>Phase Walk</b></font> is something that the new editions don't include. Using it will allow you to walk through walls while active, but you take more damage \
-	from all sources and the effect only applies when you're within around a three-tile radius.<br><br>"
+	text += "<font color='red'><b>Phase Walk</b></font> is something that the new editions don't include. Using it will allow you to walk through walls while active, but you must stay within \
+	three tiles of the rune to do so.<br><br>"
 	text += "<font color='red'><b>Stun</b></font> is considered a war crime by the cult and has been purged from most archives, but we managed to get a manuscript of how to use it. When you \
 	invoke it, it just blinds and briefly knocks down everyone nearby. Not particularly useful; its real strength lies in the talisman it can be used to make - see below.<br><br>"
 	text += "<font color='red'><b>Warp</b></font> lets you set up a network of transportation runes that you can teleport between at will. Teleportation takes time and is loud, in comparison to \
 	the silent, instant teleportation that Nar-Sian cultists can do. You're teleported randomly, so it may take you some time to get where you actually need to go.<br><br>"
 	text += "The <font color='red'><b>EMP Talisman</b></font> is made from a Fry Circuits rune and emits a small EMP blast. Consumed on use.<br><br>"
 	text += "The <font color='red'><b>Stun Talisman</b></font> is made from a Stun rune. Extremely infamous for its use in ages prior, attacking someone with it will blind them, knock them down, \
-	and slur their speech for a short time. Like any bootleg talisman, though, this is incredibly loud and obvious. Consumed on use."
+	and slur their speech for a short time. Like any bootleg talisman, though, this is incredibly loud and obvious. Consumed on use.<br><br>"
 	text += "The <font color='red'><b>Warp Talisman</b></font> is made from a Warp rune and instantly teleports you to a random Warp rune. Consumed on use.<br><br>"
 	var/datum/browser/popup = new(user, "tome", "", 800, 600)
 	popup.set_content(text)
@@ -119,6 +119,7 @@
 	var/rune_in_use = 0 // Used for some runes, this is for when you want a rune to not be usable when in use.
 	var/scribe_delay = 50 //how long the rune takes to create
 	var/scribe_damage = 0.1 //how much damage you take doing it
+	var/obj/item/weapon/paper/bootleg_talisman/talisman_type //If applicable, the type of talisman this rune can be made into
 	var/datum/mind/reader
 
 /obj/effect/bootleg_rune/proc/is_reader(mob/living/user)
@@ -131,10 +132,13 @@
 	if(is_reader(user) || user.stat == DEAD)
 		user << "<b>Name:</b> [reader_name]"
 		user << "<b>Use:</b> [reader_desc]"
+		user << "<b>Talisman Compatible:</b> [talisman_type ? "Yes" : "No"]"
 
 /obj/effect/bootleg_rune/attack_hand(mob/living/user)
 	if(!is_reader(user))
 		user << "<span class='warning'>You can't mouth the words without fumbling over them.</span>"
+		return
+	if(rune_in_use)
 		return
 	if(invoke(user))
 		user.say(invocation)
@@ -153,12 +157,205 @@
 		return
 	return
 
+
+/obj/effect/bootleg_rune/astral_communion
+	reader_name = "Astral Communion"
+	reader_desc = "Allows you to wander the spirit world for a limited time."
+	invocation = "Fwesh mah erl nyag rya!"
+	icon_state = "7"
+	color = "#0000FF"
+	rune_in_use = 0
+	var/mob/living/affecting
+
+/obj/effect/bootleg_rune/astral_communion/examine(mob/user)
+	..()
+	if(affecting)
+		user << "<span class='warning'>[affecting] is surrounded by unearthly energies!</span>"
+
+/obj/effect/bootleg_rune/astral_communion/invoke(mob/living/user)
+	rune_in_use = 1
+	affecting = user
+	user.visible_message("<span class='warning'>[user] freezes statue-still, their eyes glazing over...</span>", \
+						 "<span class='cult'>You find yourself in the spirit world. Neat. Your body is wasting away, though... hurry!</span>")
+	user.ghostize(1)
+	START_PROCESSING(SSfastprocess, src)
+	user.loc = get_turf(src)
+	user.setDir(NORTH)
+	user.color = color
+	return 1
+
+/obj/effect/bootleg_rune/astral_communion/process()
+	if(!affecting)
+		return
+	affecting.adjustBruteLoss(0.1)
+	if(affecting.loc != get_turf(src))
+		affecting.visible_message("<span class='warning'>A spectral tendril wraps around [affecting] and pulls [affecting.p_them()] back to the rune!</span>")
+		Beam(affecting,icon_state="b_beam",time=2)
+		sleep(2)
+		affecting.forceMove(get_turf(src))
+		affecting.setDir(NORTH)
+	if(affecting.key)
+		affecting.visible_message("<span class='warning'>[affecting] slowly relaxes, the glow around [affecting.p_them()] dimming.</span>", \
+							 "<span class='cult'>You are re-united with your physical form. [src] releases its hold over you.</span>")
+		animate(affecting, color = initial(affecting.color), time = 30)
+		affecting.Weaken(3)
+		rune_in_use = 0
+		affecting = null
+		STOP_PROCESSING(SSfastprocess, src)
+		return
+	if(!affecting.stat && affecting.health <= 50)
+		if(prob(1))
+			var/mob/dead/observer/G = affecting.get_ghost()
+			G << "<span class='cultitalic'>Maybe you should go back...</span>"
+	if(affecting.stat == UNCONSCIOUS)
+		if(prob(1))
+			var/mob/dead/observer/G = affecting.get_ghost()
+			G << "<span class='cultitalic'>You feel the link between you and your body weakening... you must hurry!</span>"
+	if(affecting.stat == DEAD)
+		affecting.color = initial(affecting.color)
+		rune_in_use = 0
+		affecting = null
+		var/mob/dead/observer/G = affecting.get_ghost()
+		G << "<span class='cultitalic'><b>You suddenly feel your physical form pass on. [src]'s exertion has killed you!</b></span>"
+		STOP_PROCESSING(SSfastprocess, src)
+		return
+
+
+/obj/effect/bootleg_rune/fry_circuits
+	reader_name = "Fry Circuits"
+	reader_desc = "Emits a moderately-sized EMP."
+	invocation = "Tagh faraqha fel damar det!"
+	icon_state = "5"
+	color = "#0000FF"
+	talisman_type = /obj/item/weapon/paper/bootleg_talisman/fry_circuits
+
+/obj/effect/bootleg_rune/fry_circuits/invoke(mob/living/user)
+	visible_message("<span class='warning'>[src] glows blue for a moment before vanishing.</span>")
+	playsound(src, 'sound/items/Welder2.ogg', 25, 1)
+	user << "<span class='cultitalic'>You feel a minute vibration pass through you...</span>"
+	empulse(src, 4, 10)
+	qdel(src)
+
+
+/obj/effect/bootleg_rune/make_talisman
+	reader_name = "Make Talisman"
+	reader_desc = "Transforms compatible runes into portable talismans."
+	invocation = "Hdrak vloso, mirkanas verbot!"
+	icon_state = "3"
+	color = "#FF00FF"
+
+/obj/effect/bootleg_rune/make_talisman/invoke(mob/living/user)
+	var/list/nearby_runes = list()
+	var/list/papers = list()
+	var/obj/item/weapon/paper/bootleg_talisman/talisman_type
+	for(var/obj/effect/bootleg_rune/B in range(1, src))
+		if(B.talisman_type)
+			nearby_runes[B.reader_name] = B.talisman_type
+	if(!nearby_runes.len)
+		user << "<span class='warning'>There are no compatible runes adjacent to this one!</span>"
+		return
+	var/rune_name = input(user, "Choose a rune to make into a talisman.", reader_name) as null|anything in nearby_runes
+	if(!src || qdeleted(src) || !rune_name || !user.Adjacent(src) || user.incapacitated())
+		return
+	talisman_type = nearby_runes[rune_name]
+	for(var/obj/item/weapon/paper/P in loc)
+		if(!istype(P, /obj/item/weapon/paper/talisman) && !istype(P, /obj/item/weapon/paper/bootleg_talisman))
+			papers += P
+	if(!papers.len)
+		user << "<span class='warning'>There are no papers on top of [src]!</span>"
+		return
+	var/obj/item/weapon/paper/THE_CHOSEN_PAPER = pick(papers)
+	var/obj/item/weapon/paper/bootleg_talisman/new_talisman = new talisman_type (get_turf(src))
+	visible_message("<span class='warning'>Bloody images form on [THE_CHOSEN_PAPER]!</span>")
+	new_talisman.pixel_y = rand(-2, 2)
+	new_talisman.pixel_y = rand(-2, 2)
+	flick("paper_talisman", src)
+	qdel(THE_CHOSEN_PAPER)
+	for(var/obj/effect/bootleg_rune/B in range(1, src)) //This is silly, but because of how the assoc. list works is required
+		if(B.talisman_type == new_talisman.type)
+			qdel(B)
+			return 1
+	return
+
+
+/obj/effect/bootleg_rune/phase_walk
+	reader_name = "Phase Walk"
+	reader_desc = "Allows incorporeal movement within a three-tile radius."
+	invocation = "Lats git spuki!"
+	color = "#FF0000"
+	var/toggled = 0
+	var/mob/living/spooky_ghost
+
+/obj/effect/bootleg_rune/phase_walk/Destroy()
+	STOP_PROCESSING(SSfastprocess, src)
+	if(toggled && spooky_ghost && spooky_ghost.incorporeal_move) //Nice try!
+		spooky_ghost.visible_message("<span class='warning'>[spooky_ghost] pops back into reality!</span>", "<span class='cult'>You feel normal again.</span>")
+		spooky_ghost.floating = 0
+		playsound(spooky_ghost, 'sound/magic/Ethereal_Exit.ogg', 50, 1)
+		spooky_ghost.alpha = initial(spooky_ghost.alpha)
+		spooky_ghost.incorporeal_move = 0
+		spooky_ghost.Weaken(3)
+	return ..()
+
+
+/obj/effect/bootleg_rune/phase_walk/invoke(mob/living/user)
+	if(user.incorporeal_move && !toggled)
+		user << "<span class='warning'>You're already incorporeal!</span>"
+		return
+	toggled = !toggled
+	if(toggled)
+		user.visible_message("<span class='warning'>[user] fades partially out of existence!</span>", "<span class='cult'>You feel strangely light.</span>")
+		user.floating = 1
+		playsound(user, 'sound/magic/Ethereal_Enter.ogg', 50, 1)
+		user.alpha = 150
+		user.incorporeal_move = 3
+		spooky_ghost = user
+		START_PROCESSING(SSfastprocess, src)
+	else
+		user.visible_message("<span class='warning'>[user] pops back into reality!</span>", "<span class='cult'>You feel normal again.</span>")
+		user.floating = 0
+		playsound(user, 'sound/magic/Ethereal_Exit.ogg', 50, 1)
+		user.alpha = initial(user.alpha)
+		user.incorporeal_move = 0
+		spooky_ghost = null
+		STOP_PROCESSING(SSfastprocess, src)
+	return 1
+
+/obj/effect/bootleg_rune/phase_walk/process()
+	if(!toggled || !spooky_ghost)
+		return
+	if(get_dist(spooky_ghost, src) > 3)
+		spooky_ghost << "<span class='boldwarning'>You're yanked back to [src]! You can't go that far!</span>"
+		spooky_ghost.forceMove(get_turf(src))
+		spooky_ghost.Weaken(1)
+
+
+/obj/effect/bootleg_rune/stun
+	reader_name = "Stun"
+	reader_desc = "Blinds anyone nearby, and knocks over anyone adjacent."
+	invocation = "Fuuma jin!"
+	icon_state = "3"
+	color = "#0000FF"
+	talisman_type = /obj/item/weapon/paper/bootleg_talisman/stun
+
+/obj/effect/bootleg_rune/stun/invoke(mob/living/user)
+	visible_message("<span class='warning'>[src] explodes in a flash of red light!</span>")
+	playsound(src, 'sound/effects/phasein.ogg', 50, 1)
+	for(var/mob/living/L in view(7, src))
+		L.flash_act(1, 1)
+	for(var/mob/living/L in range(1, src))
+		L.Weaken(3)
+	qdel(src)
+	return 1
+
+
 var/list/warp_runes = list() //Every warp rune in existence
 /obj/effect/bootleg_rune/warp
-	color = "#0000FF"
-	invocation = "Sasso carta forbici!"
 	reader_name = "Warp"
 	reader_desc = "Teleports you to other warp runes when invoked."
+	invocation = "Sasso carta forbici!"
+	color = "#0000FF"
+	talisman_type = /obj/item/weapon/paper/bootleg_talisman/warp
 
 /obj/effect/bootleg_rune/warp/New()
 	..()
@@ -172,7 +369,7 @@ var/list/warp_runes = list() //Every warp rune in existence
 	if(warp_runes.len <= 1)
 		user << "<span class='warning'>There are no other warp runes!</span>"
 		return
-	user.audible_message("<span class='notice'>You start chanting [src]'s words...</span>", "<span class='warning'>[user] begins chanting in tongues!</span>")
+	user.audible_message("<span class='notice'>You start chanting [src]'s words...</span>", "<span class='warning'>[user] starts chanting in tongues!</span>")
 	if(!do_after(user, 30, target = src))
 		return
 	user.visible_message("<span class='warning'>[user] vanishes in a flash of red light!</span>", "<span class='cult'>Your vision blurs, and you messily appear somewhere else.</span>")
@@ -184,4 +381,152 @@ var/list/warp_runes = list() //Every warp rune in existence
 	var/old_color = user.color //So as to retain any discoloration
 	user.color = rgb(255, 0, 0)
 	animate(user, color = old_color, time = 50)
+	return 1
+
+
+/obj/item/weapon/paper/bootleg_talisman //Portable versions of certain runes with different effects.
+	name = "bootleg talisman"
+	desc = "A talisman stolen from actual cultists."
+	var/reader_name = "Knockoff Talisman"
+	var/reader_desc = "A Great Value brand talisman."
+	var/invocation = "I ran out of ideas for invocations, sorry."
+
+/obj/item/weapon/paper/bootleg_talisman/attack_self(mob/living/user)
+	return
+
+/obj/item/weapon/paper/bootleg_talisman/attack(mob/living/target, mob/living/user)
+	return
+
+
+/obj/item/weapon/paper/bootleg_talisman/fry_circuits
+	reader_name = "EMP Talisman"
+	reader_desc = "Emits a small EMP blast."
+	invocation = "Tagh faraqha fel damar det!"
+
+/obj/item/weapon/paper/bootleg_talisman/fry_circuits/attack_self(mob/living/user)
+	user.say(invocation)
+	empulse(user, 2, 5)
+	user.drop_item()
+	qdel(src)
+
+
+/obj/item/weapon/paper/bootleg_talisman/stun
+	reader_name = "Stun Talisman"
+	reader_desc = "Stuns, blinds, and mutes the person you attack."
+	invocation = "Fuuma jin!"
+
+/obj/item/weapon/paper/bootleg_talisman/stun/New()
+	..()
+	if(prob(5))
+		new/obj/item/weapon/paper/bootleg_talisman/imitation_stun(get_turf(src)) //That's what you get for trusting knockoffs!
+		qdel(src)
+
+/obj/item/weapon/paper/bootleg_talisman/stun/attack(mob/living/target, mob/living/user)
+	if(user == target)
+		return
+	user.visible_message("<span class='warning'>[user] holds up [src], which explodes in a flash of red light!</span>", "<span class='cult'>You hold up the [reader_name]!</span>")
+	user.say(invocation)
+	target.Stun(4)
+	target.Weaken(4)
+	target.flash_act(1, 1)
+	if(iscarbon(target))
+		var/mob/living/carbon/C = target
+		C.cultslurring += 4
+		C.Jitter(4)
+	user.drop_item()
+	qdel(src)
+
+
+/obj/item/weapon/paper/bootleg_talisman/imitation_stun //No, this isn't a replacement stun paper. It's a cheap knockoff, it doesn't work.
+	reader_name = "\"Stun\" Talisman"
+	reader_desc = "Stuns, blinds, and mutes the person you attack. At least, that's what it says on the box."
+	invocation = "Dream sign \'evil sealing talisman\'!"
+
+/obj/item/weapon/paper/bootleg_talisman/imitation_stun/attack(mob/living/target, mob/living/user)
+	if(user == target)
+		return
+	user.visible_message("<span class='warning'>[user] holds up [src]!</span>", "<span class='cult'>You hold up the [reader_name]!</span>")
+	user.say(invocation)
+	switch(rand(1, 10)) //Yep, luck-based talismans. Welcome to knockoffs!
+		if(1) //The talisman explodes in the user's face, stunning them and silencing them for a ridiculous duration.
+			user.visible_message("<span class='warning'>[src] explodes on [user]'s face!</span>", "<span class='cultitalic'><b>AND IT EXPLODES IN YOUR FACE GOD FUCKING DAMN IT</b></span>")
+			playsound(user, 'sound/weapons/flashbang.ogg', 75, 1)
+			user << 'sound/weapons/flash_ring.ogg'
+			user.Stun(10)
+			user.Weaken(10)
+			user.flash_act(1,1)
+			if(iscarbon(user))
+				var/mob/living/carbon/C = user
+				C.silent += 5
+				C.stuttering += 15
+				C.cultslurring += 15
+				C.Jitter(15)
+		if(2) //The talisman spawns a confused artificer.
+			user.visible_message("<span class='warning'>A confused artificer appears in front of [user]!</span>", "<span class='cultitalic'>And a confused, angry artificer appears. Fuck.</span>")
+			playsound(user, 'sound/effects/phasein.ogg', 50, 1)
+			playsound(user, 'sound/effects/Reee.ogg', 100, 0)
+			new/mob/living/simple_animal/hostile/construct/builder/hostile(get_turf(user))
+		if(3) //The invoker is slammed into the ground.
+			user.visible_message("<span class='warning'>[src] causes a blast of force!</span>", "<span class='cultitalic'>And it sends you flying to the ground. Yay.</span>")
+			playsound(user, 'sound/magic/Repulse.ogg', 50, 1)
+			user.Weaken(3)
+		if(4) //Both the user and the target are set on fire.
+			user << "<span class='cultitalic'><b>OHGODFIREITBURNS</b></span>"
+			playsound(user, 'sound/magic/Fireball.ogg', 50, 1)
+			playsound(target, 'sound/magic/Fireball.ogg', 50, 1)
+			user.adjust_fire_stacks(5)
+			target.adjust_fire_stacks(5)
+			user.IgniteMob()
+			target.IgniteMob()
+		if(5) //Nothing happens. Really the best result you can hope for.
+			user.visible_message("<span class='warning'>Literally nothing happens.</span>", "<span class='cult'>Literally nothing happens. You can't be serious.</span>")
+		if(6) //Both the user and the target are fully healed.
+			user.visible_message("<span class='notice'>[user] and [target] regenerate all wounds!</span>", "<span class='cult'>And you both regenerate all injuries. Oh well.</span>")
+			playsound(user, 'sound/magic/Staff_Healing.ogg', 50, 1)
+			playsound(target, 'sound/magic/Staff_Healing.ogg', 50, 1)
+			user.fully_heal()
+			target.fully_heal()
+		if(7) //The target drops whatever they're holding.
+			user << "<span class='cult'>And they drop what they're holding!</span>"
+			target.visible_message("<span class='warning'>[target]'s hand convulses!</span>", "<span class='userdanger'>Your hand suddenly forces itself open!</span>")
+			target.drop_item()
+		if(8) //The target is slightly confused.
+			user << "<span class='cult'>And they're very slightly confused! Wow!</span>"
+			target << "<span class='warning'>You feel mildly confused.</span>"
+			playsound(user, 'sound/magic/Blind.ogg', 50, 1)
+			target.confused += 5
+		if(9) //The target is frozen in place for one second.
+			user << "<span class='cultitalic'><b>AND IT WORKS!</b> Wait, nevermind...</span>"
+			target.Stun(1)
+		if(10) //The target is blinded and knocked down for a few seconds.
+			user.visible_message("<span class='warning'>[src] explodes in a flash of off-brand red light!</span>", "<span class='cultitalic'><b>IT WORKED!! HOLY SHIT, IT WORKED!!</b></span>")
+			target.flash_act(1, 1)
+			target.Weaken(3)
+	user.drop_item()
+	qdel(src)
+
+
+/obj/item/weapon/paper/bootleg_talisman/warp
+	reader_name = "Warp Talisman"
+	reader_desc = "Teleports you to a random warp rune."
+	invocation = "Sasso carta forbici!"
+
+/obj/item/weapon/paper/bootleg_talisman/warp/attack_self(mob/living/user)
+	user.visible_message("<span class='warning'>[user] holds up [src]!</span>", "<span class='cult'>You hold up the [reader_name]!</span>")
+	user.say(invocation)
+	var/obj/effect/bootleg_rune/warp/destination = pick(warp_runes)
+	if(!destination)
+		user.visible_message("<span class='danger'>Nothing happens...</span>", "<span class='cultitalic'>Nothing happens!</span>")
+		return
+	var/turf/T = get_turf(user)
+	user.forceMove(get_turf(destination))
+	T.visible_message("<span class='warning'>[user] is pulled through [src]!</span>")
+	playsound(T, 'sound/magic/enter_blood.ogg', 50, 1)
+	user.visible_message("<span class='warning'>[user] appears in a flash of red light! And blood. Gross.</span>", "<span class='cult'>Your vision blurs, and you messily appear somewhere else.</span>")
+	playsound(user, 'sound/magic/exit_blood.ogg', 50, 1)
+	var/old_color = user.color
+	user.color = rgb(255, 0, 0)
+	animate(user, color = old_color, time = 30)
+	user.drop_item()
+	qdel(src)
 	return 1
