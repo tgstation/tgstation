@@ -35,7 +35,6 @@
 	projectile_type = /obj/item/projectile/magic/arcane_barrage
 
 /obj/item/ammo_casing/magic/chaos/newshot()
-	projectile_type = pick(typesof(/obj/item/projectile/magic))
 	..()
 
 /obj/item/ammo_casing/magic/honk
