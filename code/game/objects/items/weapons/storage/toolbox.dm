@@ -135,6 +135,29 @@
 	slab_type = /obj/item/clockwork/slab/debug
 	proselytizer_type = /obj/item/clockwork/clockwork_proselytizer/scarab/debug
 
+
+/obj/item/weapon/storage/toolbox/artistic
+	name = "artistic toolbox"
+	desc = "A toolbox painted bright green. Why anyone would store art supplies in a toolbox is beyond you, but it has plenty of extra space."
+	icon_state = "green"
+	item_state = "artistic_toolbox"
+	max_combined_w_class = 20
+	storage_slots = 10
+	w_class = 5 //Holds more than a regular toolbox!
+
+/obj/item/weapon/storage/toolbox/artistic/New()
+	..()
+	new/obj/item/weapon/storage/crayons(src)
+	new/obj/item/weapon/crowbar(src)
+	new/obj/item/stack/cable_coil/red(src)
+	new/obj/item/stack/cable_coil/yellow(src)
+	new/obj/item/stack/cable_coil/blue(src)
+	new/obj/item/stack/cable_coil/green(src)
+	new/obj/item/stack/cable_coil/pink(src)
+	new/obj/item/stack/cable_coil/orange(src)
+	new/obj/item/stack/cable_coil/cyan(src)
+	new/obj/item/stack/cable_coil/white(src)
+
 #define HIS_GRACE_SATIATED 0 //He hungers not. If bloodthirst is set to this, His Grace is asleep.
 #define HIS_GRACE_PECKISH 30 //Slightly hungry. Slightly increased damage and nothing else.
 #define HIS_GRACE_HUNGRY 60 //Getting closer. Increased danage and slight healing. It also starts eating anyone around it if it's left on the ground.
@@ -149,35 +172,32 @@
 //If the wielder fails to feed His Grace in time, it will devour them.
 //Leaving His Grace alone for some time will reset its timer and put it to sleep.
 //Using His Grace effectively is a delicate balancing act of keeping it hungry enough to induce benefits but sated enough to let you live.
-/obj/item/weapon/storage/toolbox/his_grace
+/obj/item/weapon/storage/toolbox/artistic/his_grace
 	name = "artistic toolbox"
 	desc = "A toolbox painted bright green. Looking at it makes you feel uneasy."
-	icon_state = "green"
-	item_state = "artistic_toolbox"
-	w_class = 5
 	origin_tech = "combat=4;engineering=4;syndicate=2"
 	var/awakened = 0
 	var/bloodthirst = HIS_GRACE_SATIATED
 	var/victims = 0
-	var/warning_messages = list("peckish", "hungry", "famished", "starving", "consume") //Messages that have NOT been shown
+	var/list/warning_messages = list("peckish", "hungry", "famished", "starving", "consume") //Messages that have NOT been shown
 
-/obj/item/weapon/storage/toolbox/his_grace/Destroy()
+/obj/item/weapon/storage/toolbox/artistic/his_grace/Destroy()
 	for(var/mob/living/L in src)
 		L.forceMove(get_turf(src))
 	return ..()
 
-/obj/item/weapon/storage/toolbox/his_grace/attack_self(mob/living/user)
+/obj/item/weapon/storage/toolbox/artistic/his_grace/attack_self(mob/living/user)
 	if(!awakened)
 		user << "<span class='notice'>[src] begins to vibrate...</span>"
 		addtimer(CALLBACK(src, .proc/awaken), 50)
 
-/obj/item/weapon/storage/toolbox/his_grace/attack(mob/living/M, mob/user)
+/obj/item/weapon/storage/toolbox/artistic/his_grace/attack(mob/living/M, mob/user)
 	if(awakened && M.stat)
 		consume(M)
 	else
 		..()
 
-/obj/item/weapon/storage/toolbox/his_grace/examine(mob/user)
+/obj/item/weapon/storage/toolbox/artistic/his_grace/examine(mob/user)
 	..()
 	if(awakened)
 		if(victims)
@@ -196,11 +216,11 @@
 			if(HIS_GRACE_CONSUME_OWNER to HIS_GRACE_FALL_ASLEEP)
 				user << "<span class='boldwarning'>[src] is shaking violently and staring directly at you.</span>"
 
-/obj/item/weapon/storage/toolbox/his_grace/relaymove(mob/living/user) //Allows changelings, etc. to climb out of the box after they revive
+/obj/item/weapon/storage/toolbox/artistic/his_grace/relaymove(mob/living/user) //Allows changelings, etc. to climb out of the box after they revive
 	user.forceMove(get_turf(src))
 	user.visible_message("<span class='warning'>[user] scrambles out of [src]!</span>", "<span class='notice'>You climb out of [src]!</span>")
 
-/obj/item/weapon/storage/toolbox/his_grace/process()
+/obj/item/weapon/storage/toolbox/artistic/his_grace/process()
 	if(!awakened)
 		return
 	adjust_bloodthirst(1 + victims) //Maybe adjust this?
@@ -258,7 +278,7 @@
 					consume(L)
 					return
 
-/obj/item/weapon/storage/toolbox/his_grace/proc/awaken() //Attempts to awaken. This can only occur if organs fill the box, and gives out a global warning.
+/obj/item/weapon/storage/toolbox/artistic/his_grace/proc/awaken() //Attempts to awaken. This can only occur if organs fill the box, and gives out a global warning.
 	if(awakened)
 		return
 	var/organ_count = 0
@@ -282,7 +302,7 @@
 		icon_state = "green_awakened"
 		START_PROCESSING(SSprocessing, src)
 
-/obj/item/weapon/storage/toolbox/his_grace/proc/drowse() //Falls asleep, spitting out all victims and resetting to zero.
+/obj/item/weapon/storage/toolbox/artistic/his_grace/proc/drowse() //Falls asleep, spitting out all victims and resetting to zero.
 	if(!awakened)
 		return
 	visible_message("<span class='boldwarning'>[src] slowly stops rattling and falls still... but it still lurks in its sleep.</span>")
@@ -300,10 +320,10 @@
 	for(var/mob/living/L in src)
 		L.forceMove(get_turf(src))
 
-/obj/item/weapon/storage/toolbox/his_grace/proc/adjust_bloodthirst(amt)
+/obj/item/weapon/storage/toolbox/artistic/his_grace/proc/adjust_bloodthirst(amt)
 	bloodthirst = min(max(1, bloodthirst + amt), HIS_GRACE_FALL_ASLEEP)
 
-/obj/item/weapon/storage/toolbox/his_grace/proc/consume(mob/living/meal)
+/obj/item/weapon/storage/toolbox/artistic/his_grace/proc/consume(mob/living/meal)
 	if(!meal)
 		return
 	meal.adjustBruteLoss(200)
@@ -314,7 +334,7 @@
 	adjust_bloodthirst(-(bloodthirst - victims)) //Never fully sated, and it starts off higher as it eats
 	victims++
 
-/obj/item/weapon/storage/toolbox/his_grace/proc/change_phases()
+/obj/item/weapon/storage/toolbox/artistic/his_grace/proc/change_phases()
 	switch(bloodthirst)
 		if(HIS_GRACE_SATIATED to HIS_GRACE_PECKISH)
 			force = 15 //Constantly keep its power low if it's this full

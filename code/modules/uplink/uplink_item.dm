@@ -1172,7 +1172,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	His Grace grants benefits to its wielder, with a more intense hunger equaling more benefits, but be wary: if it gets too hungry, it will kill you and destroy your body. \
 	If you leave His Grace alone for some time, it will eventually return to its inactive state. \
 	To activate His Grace, place five assorted organs inside of it and use it in your hand."
-	item = /obj/item/weapon/storage/toolbox/his_grace
+	item = /obj/item/weapon/storage/toolbox/artistic/his_grace
 	cost = 20
 	restricted_roles = list("Chaplain")
 	surplus = 5 //Very low chance to get it in a surplus crate even without being the chaplain
