@@ -40,28 +40,30 @@ List of nuances:
 #define RATVAR_ET_REPLACEMENT		"$1-$2"
 #define RATVAR_TE_MATCH				regex("(\[tT]\[eE])(\\w)","g")
 #define RATVAR_TE_REPLACEMENT		"$1-$2"
-#define RATVAR_PRE_AND_MATCH		regex("(\\w)\\s(\[aA]\[nN]\[dD])(\\s)","g")
+#define RATVAR_PRE_AND_MATCH		regex("(\\w)\\s(\[aA]\[nN]\[dD])(\\s|\\W)","g")
 #define RATVAR_PRE_AND_REPLACEMENT	"$1-$2$3"
-#define RATVAR_POST_AND_MATCH		regex("-(\[aA]\[nN]\[dD])\\s(\\w)","g")
-#define RATVAR_POST_AND_REPLACEMENT	"-$1-$2"
+#define RATVAR_POST_AND_MATCH		regex("(\\W)(\[aA]\[nN]\[dD])\\s(\\w)","g")
+#define RATVAR_POST_AND_REPLACEMENT	"$1$2-$3"
 #define RATVAR_TO_MATCH				regex("(\\s)(\[tT]\[oO])\\s(\\w)","g")
 #define RATVAR_TO_REPLACEMENT		"$1$2-$3"
 #define RATVAR_MY_MATCH 			regex("(\\s)(\[mM]\[yY])\\s(\\w)","g")
 #define RATVAR_MY_REPLACEMENT		"$1$2-$3"
 
 //Regexes used to remove ratvarian styling from english
-#define REVERSE_RATVAR_HYPHEN_AND_MATCH			regex("(\\w)-(\[aA]\[nN]\[dD])-(\\w)","g") //specifically structured to support -emphasis-, including with -and-
-#define REVERSE_RATVAR_HYPHEN_AND_REPLACEMENT	"$1 $2 $3"
-#define REVERSE_RATVAR_HYPHEN_TO_MY_MATCH		regex("(\[tTmM]\[oOyY])-","g")
-#define REVERSE_RATVAR_HYPHEN_TO_MY_REPLACEMENT	"$1 "
-#define REVERSE_RATVAR_HYPHEN_TE_MATCH			regex("(\[tT]\[eE])-","g")
-#define REVERSE_RATVAR_HYPHEN_TE_REPLACEMENT	"$1"
-#define REVERSE_RATVAR_HYPHEN_ET_MATCH			regex("-(\[eE]\[tT])","g")
-#define REVERSE_RATVAR_HYPHEN_ET_REPLACEMENT	"$1"
-#define REVERSE_RATVAR_HYPHEN_GUA_MATCH			regex("(\[gG]\[uU])-(\[aA])","g")
-#define REVERSE_RATVAR_HYPHEN_GUA_REPLACEMENT	"$1$2"
-#define REVERSE_RATVAR_HYPHEN_OF_MATCH			regex("-(\[oO]\[fF])","g")
-#define REVERSE_RATVAR_HYPHEN_OF_REPLACEMENT	" $1"
+#define REVERSE_RATVAR_HYPHEN_PRE_AND_MATCH			regex("(\\w)-(\[aA]\[nN]\[dD])","g") //specifically structured to support -emphasis-, including with -and-
+#define REVERSE_RATVAR_HYPHEN_PRE_AND_REPLACEMENT	"$1 $2"
+#define REVERSE_RATVAR_HYPHEN_POST_AND_MATCH		regex("(\[aA]\[nN]\[dD])-(\\w)","g")
+#define REVERSE_RATVAR_HYPHEN_POST_AND_REPLACEMENT	"$1 $2"
+#define REVERSE_RATVAR_HYPHEN_TO_MY_MATCH			regex("(\[tTmM]\[oOyY])-","g")
+#define REVERSE_RATVAR_HYPHEN_TO_MY_REPLACEMENT		"$1 "
+#define REVERSE_RATVAR_HYPHEN_TE_MATCH				regex("(\[tT]\[eE])-","g")
+#define REVERSE_RATVAR_HYPHEN_TE_REPLACEMENT		"$1"
+#define REVERSE_RATVAR_HYPHEN_ET_MATCH				regex("-(\[eE]\[tT])","g")
+#define REVERSE_RATVAR_HYPHEN_ET_REPLACEMENT		"$1"
+#define REVERSE_RATVAR_HYPHEN_GUA_MATCH				regex("(\[gG]\[uU])-(\[aA])","g")
+#define REVERSE_RATVAR_HYPHEN_GUA_REPLACEMENT		"$1$2"
+#define REVERSE_RATVAR_HYPHEN_OF_MATCH				regex("-(\[oO]\[fF])","g")
+#define REVERSE_RATVAR_HYPHEN_OF_REPLACEMENT		" $1"
 
 
 /proc/text2ratvar(text) //Takes english and applies ratvarian styling rules (and rot13) to it.
@@ -87,12 +89,13 @@ List of nuances:
 	return remove_ratvarian_regex(text)
 
 /proc/remove_ratvarian_regex(ratvarian)
-	var/text 	= replacetext(ratvarian, 	REVERSE_RATVAR_HYPHEN_GUA_MATCH,	REVERSE_RATVAR_HYPHEN_GUA_REPLACEMENT)
-	text 		= replacetext(text, 		REVERSE_RATVAR_HYPHEN_AND_MATCH,	REVERSE_RATVAR_HYPHEN_AND_REPLACEMENT)
-	text 		= replacetext(text, 		REVERSE_RATVAR_HYPHEN_TO_MY_MATCH,	REVERSE_RATVAR_HYPHEN_TO_MY_REPLACEMENT)
-	text 		= replacetext(text, 		REVERSE_RATVAR_HYPHEN_TE_MATCH,		REVERSE_RATVAR_HYPHEN_TE_REPLACEMENT)
-	text 		= replacetext(text, 		REVERSE_RATVAR_HYPHEN_ET_MATCH,		REVERSE_RATVAR_HYPHEN_ET_REPLACEMENT)
-	return replacetext(text, 				REVERSE_RATVAR_HYPHEN_OF_MATCH,		REVERSE_RATVAR_HYPHEN_OF_REPLACEMENT)
+	var/text 	= replacetext(ratvarian, 	REVERSE_RATVAR_HYPHEN_GUA_MATCH,		REVERSE_RATVAR_HYPHEN_GUA_REPLACEMENT)
+	text 		= replacetext(text, 		REVERSE_RATVAR_HYPHEN_PRE_AND_MATCH,	REVERSE_RATVAR_HYPHEN_PRE_AND_REPLACEMENT)
+	text 		= replacetext(text, 		REVERSE_RATVAR_HYPHEN_POST_AND_MATCH,	REVERSE_RATVAR_HYPHEN_POST_AND_REPLACEMENT)
+	text 		= replacetext(text, 		REVERSE_RATVAR_HYPHEN_TO_MY_MATCH,		REVERSE_RATVAR_HYPHEN_TO_MY_REPLACEMENT)
+	text 		= replacetext(text, 		REVERSE_RATVAR_HYPHEN_TE_MATCH,			REVERSE_RATVAR_HYPHEN_TE_REPLACEMENT)
+	text 		= replacetext(text, 		REVERSE_RATVAR_HYPHEN_ET_MATCH,			REVERSE_RATVAR_HYPHEN_ET_REPLACEMENT)
+	return replacetext(text, 				REVERSE_RATVAR_HYPHEN_OF_MATCH,			REVERSE_RATVAR_HYPHEN_OF_REPLACEMENT)
 
 //Causes the mob or AM in question to speak a message; it assumes that the message is already translated to ratvar speech using text2ratvar()
 /proc/clockwork_say(atom/movable/AM, message, whisper=FALSE)
