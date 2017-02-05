@@ -1909,6 +1909,7 @@
 #include "code\modules\shuttle\white_ship.dm"
 #include "code\modules\space_transition\space_transition.dm"
 #include "code\modules\spells\spell.dm"
+#include "code\modules\spells\spell_types\aimed.dm"
 #include "code\modules\spells\spell_types\area_teleport.dm"
 #include "code\modules\spells\spell_types\barnyard.dm"
 #include "code\modules\spells\spell_types\bloodcrawl.dm"

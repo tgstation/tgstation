@@ -104,7 +104,7 @@
 
 /datum/spellbook_entry/fireball
 	name = "Fireball"
-	spell_type = /obj/effect/proc_holder/spell/fireball
+	spell_type = /obj/effect/proc_holder/spell/aimed/fireball
 	log_name = "FB"
 
 /datum/spellbook_entry/rod_form
@@ -229,7 +229,7 @@
 
 /datum/spellbook_entry/lightningbolt
 	name = "Lightning Bolt"
-	spell_type = /obj/effect/proc_holder/spell/lightningbolt
+	spell_type = /obj/effect/proc_holder/spell/aimed/lightningbolt
 	log_name = "LB"
 	cost = 3
 
@@ -788,7 +788,7 @@
 	return
 
 /obj/item/weapon/spellbook/oneuse/fireball
-	spell = /obj/effect/proc_holder/spell/fireball
+	spell = /obj/effect/proc_holder/spell/aimed/fireball
 	spellname = "fireball"
 	icon_state ="bookfireball"
 	desc = "This book feels warm to the touch."

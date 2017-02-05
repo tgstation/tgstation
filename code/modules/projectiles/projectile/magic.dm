@@ -377,6 +377,7 @@
 
 	var/tesla_power = 20000
 	var/tesla_range = 15
+	var/tesla_boom = FALSE
 	var/chain
 	var/mob/living/caster
 
@@ -387,7 +388,7 @@
 
 /obj/item/projectile/magic/aoe/lightning/on_hit(target)
 	. = ..()
-	tesla_zap(src, tesla_range, tesla_power)
+	tesla_zap(src, tesla_range, tesla_power, tesla_boom)
 	qdel(src)
 
 /obj/item/projectile/magic/aoe/lightning/Destroy()
