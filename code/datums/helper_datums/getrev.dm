@@ -33,9 +33,11 @@ var/global/datum/getrev/revdata = new()
 
 /datum/getrev/proc/DownloadPRDetails()
 	if(!config.githubrepoid)
+		if(testmerge.len)
+			world.log << "PR details download failed: No github repo config set"
 		return
 	if(!isnum(text2num(config.githubrepoid)))
-		world.log << "Invalid github repo id: [config.githubrepoid]"
+		world.log << "PR details download failed: Invalid github repo id: [config.githubrepoid]"
 		return
 	for(var/line in testmerge)
 		//"This has got to be the ugliest hack I have ever done"
@@ -53,23 +55,27 @@ var/global/datum/getrev/revdata = new()
 			  \______(_______;;; __;;;
 			*/
 		if(!isnum(text2num(line)))
-			world.log << "Invalid PR number: [line]"
+			world.log << "PR details download failed: Invalid PR number: [line]"
 			return
 		var/url = "https://api.github.com/repositories/[config.githubrepoid]/pulls/[line].json"
 		var/temp_file = "prcheck[line].json"
 		var/command = "powershell -Command \"curl -O [temp_file] [url]\""
 		world.log << "Running command: [command]"
-		if(shell(command) != 0)
+		var/result = shell(command)
+		if(result != 0)
+			world.log << "PR details download failed: shell exited with code: [result]"
 			return
 
 		var/f = file(temp_file)
 		if(!f)
+			world.log << "PR details download failed: Temp file not found"
 			return
 		testmerge[line] = json_decode(file2text(f))
 		f = null
 		fdel(temp_file)
 
 		if(!testmerge[line])
+			world.log << "PR details download failed: null details returned"
 			return
 		CHECK_TICK
 	has_pr_details = TRUE
