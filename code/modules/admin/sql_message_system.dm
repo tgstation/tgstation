@@ -235,7 +235,7 @@
 				data += " <a href='?_src_=holder;deletemessage=[id]'>\[Delete\]</a>"
 				if(type == "note")
 					data += " <a href='?_src_=holder;secretmessage=[id]'>[secret ? "<b>\[Secret\]</b>" : "\[Not secret\]"]</a>"
-				if(type == "message-sent")
+				if(type == "message sent")
 					data += " <font size='2'>Message has been sent</font>"
 					if(editor_ckey)
 						data += "|"
@@ -247,7 +247,7 @@
 			switch(type)
 				if("message")
 					messagedata += data
-				if("message-sent")
+				if("message sent")
 					messagedata += data
 				if("watchlist entry")
 					watchdata += data
@@ -325,7 +325,7 @@ proc/get_message_output(type, target_ckey)
 			if("message")
 				output += "<font color='red' size='3'><b>Admin message left by <span class='prefix'>[admin_ckey]</span> on [timestamp]</b></font>"
 				output += "<br><font color='red'>[text]</font><br>"
-				var/DBQuery/query_message_read = dbcon.NewQuery("UPDATE [format_table_name("messages")] SET type = 'message-sent' WHERE id = [message_id]")
+				var/DBQuery/query_message_read = dbcon.NewQuery("UPDATE [format_table_name("messages")] SET type = 'message sent' WHERE id = [message_id]")
 				if(!query_message_read.Execute())
 					var/err = query_message_read.ErrorMsg()
 					log_game("SQL ERROR updating message type. Error : \[[err]\]\n")
