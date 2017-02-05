@@ -14,7 +14,6 @@ var/global/datum/getrev/revdata = new()
 		for(var/I in tmp)
 			if(I && I != "")
 				testmerge |= I
-	testmerge = list("23734")
 	var/testlen = max(testmerge.len - 1, 0)
 	var/regex/head_log = new("(\\w{40}) .+> (\\d{10}).+(?=(\n.*(\\w{40}).*){[testlen]}\n*\\Z)")
 	head_log.Find(head_file)
