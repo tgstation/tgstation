@@ -132,27 +132,27 @@
 	return
 
 /proc/get_admin_counts(requiredflags = R_BAN)
-	. = list("total" = 0, "noflags" = 0, "afk" = 0, "stealth" = 0, "present" = 0)
+	. = list("total" = list(), "noflags" = list(), "afk" = list(), "stealth" = list(), "present" = list())
 	for(var/client/X in admins)
-		.["total"]++
+		.["total"] += X
 		if(requiredflags != 0 && !check_rights_for(X, requiredflags))
-			.["noflags"]++
+			.["noflags"] += X
 		else if(X.is_afk())
-			.["afk"]++
+			.["afk"] += X
 		else if(X.holder.fakekey)
-			.["stealth"]++
+			.["stealth"] += X
 		else
-			.["present"]++
+			.["present"] += X
 
 /proc/send2irc_adminless_only(source, msg, requiredflags = R_BAN)
 	var/list/adm = get_admin_counts(requiredflags)
-	. = adm["present"]
+	. = adm["present"].len
 	if(. <= 0)
 		var/final = ""
-		if(!adm["afk"] && !adm["stealth"] && !adm["noflags"])
+		if(!adm["afk"].len && !adm["stealth"].len && !adm["noflags"].len)
 			final = "[msg] - No admins online"
 		else
-			final = "[msg] - All admins AFK ([adm["afk"]]/[adm["total"]]), stealthminned ([adm["stealth"]]/[adm["total"]]), or lack[rights2text(requiredflags, " ")] ([adm["noflags"]]/[adm["total"]])"
+			final = "[msg] - All admins stealthed\[[english_list(adm["stealth"])]\], AFK\[[english_list(adm["afk"])]\], or lacks +BAN\[english_list(adm["noflags"])]\]! Total: adm["present"].len "
 		send2irc(source,final)
 		send2otherserver(source,final)
 
