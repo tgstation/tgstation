@@ -599,6 +599,17 @@ var/list/binary = list("0","1")
 		result += ascii2text(ca)
 	return jointext(result, "")
 
+	/proc/capitalize_uni(var/t as text)
+	var/s = 2
+	if (copytext(t,1,2) == ";")
+		s += 1
+	else if (copytext(t,1,2) == ":")
+		if(copytext(t,3,4) == " ")
+			s+=3
+		else
+			s+=2
+	return pointization(uppertext_uni(copytext(t, s - 1, s)) + copytext(t, s))
+	
 /proc/pointization(text as text)
 	if (!text)
 		return
@@ -609,6 +620,32 @@ var/list/binary = list("0","1")
 	text += "."
 	return text
 
+	/proc/uppertext_uni(text as text)
+	var/rep = "?"
+	var/index = findtext(text, "y")
+	while(index)
+		text = copytext(text, 1, index) + rep + copytext(text, index + 1)
+		index = findtext(text, "y")
+	var/t = ""
+	for(var/i = 1, i <= length(text), i++)
+		var/a = text2ascii(text, i)
+		if (a > 223)
+			t += ascii2text(a - 32)
+		else if (a == 184)
+			t += ascii2text(168)
+		else t += ascii2text(a)
+	return t
+
+	/proc/lowertext_uni(text as text)
+	var/t = ""
+	for(var/i = 1, i <= length(text), i++)
+		var/a = text2ascii(text, i)
+		if (a > 191 && a < 224)
+			t += ascii2text(a + 32)
+		else if (a == 168)
+			t += ascii2text(184)
+		else t += ascii2text(a)
+	return t
 
 /proc/ruscapitalize(t as text)
 	var/s = 2
