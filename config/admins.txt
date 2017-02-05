@@ -122,3 +122,4 @@ kevinz000 = Game Master
 Tacolizard = Game Master
 TrustyGun = Game Master
 Cyberboss = Game Master
+Sometinyprick = Game Master
