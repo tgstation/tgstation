@@ -17,53 +17,6 @@
 		var/mob/M = target
 		M.death(0)
 
-/obj/item/projectile/magic/fireball
-	name = "bolt of fireball"
-	icon_state = "fireball"
-	damage = 10
-	damage_type = BRUTE
-	nodamage = 0
-
-	//explosion values
-	var/exp_heavy = 0
-	var/exp_light = 2
-	var/exp_flash = 3
-	var/exp_fire = 2
-
-/obj/item/projectile/magic/fireball/Range()
-	var/turf/T1 = get_step(src,turn(dir, -45))
-	var/turf/T2 = get_step(src,turn(dir, 45))
-	var/turf/T3 = get_step(src,dir)
-	var/mob/living/L = locate(/mob/living) in T1 //if there's a mob alive in our front right diagonal, we hit it.
-	if(L && L.stat != DEAD)
-		Bump(L,1) //Magic Bullet #teachthecontroversy
-		return
-	L = locate(/mob/living) in T2
-	if(L && L.stat != DEAD)
-		Bump(L,1)
-		return
-	L = locate(/mob/living) in T3
-	if(L && L.stat != DEAD)
-		Bump(L,1)
-		return
-	..()
-
-/obj/item/projectile/magic/fireball/on_hit(target)
-	. = ..()
-	var/turf/T = get_turf(target)
-	explosion(T, -1, exp_heavy, exp_light, exp_flash, 0, flame_range = exp_fire)
-	if(ismob(target)) //multiple flavors of pain
-		var/mob/living/M = target
-		M.take_overall_damage(0,10) //between this 10 burn, the 10 brute, the explosion brute, and the onfire burn, your at about 65 damage if you stop drop and roll immediately
-
-/obj/item/projectile/magic/fireball/infernal
-	name = "infernal fireball"
-	exp_heavy = -1
-	exp_light = -1
-	exp_flash = 4
-	exp_fire= 5
-
-
 /obj/item/projectile/magic/resurrection
 	name = "bolt of resurrection"
 	icon_state = "ion"
@@ -388,43 +341,51 @@
 	armour_penetration = 0
 	flag = "magic"
 
-/obj/item/projectile/magic/lightning
+/obj/item/projectile/magic/aoe
+	name = "Area Bolt"
+	desc = "What the fuck does this do?!"
+	damage = 0
+	var/proxdet = TRUE
+
+/obj/item/projectile/magic/aoe/range()
+	if(proxdet)
+		var/turf/T1 = get_step(src,turn(dir, -45))
+		var/turf/T2 = get_step(src,turn(dir, 45))
+		var/turf/T3 = get_step(src,dir)
+		var/mob/living/L = locate(/mob/living) in T1 //if there's a mob alive in our front right diagonal, we hit it.
+		if(L && L.stat != DEAD)
+			Bump(L,1) //Magic Bullet #teachthecontroversy
+			return
+		L = locate(/mob/living) in T2
+		if(L && L.stat != DEAD)
+			Bump(L,1)
+			return
+		L = locate(/mob/living) in T3
+		if(L && L.stat != DEAD)
+			Bump(L,1)
+			return
+	..()
+
+/obj/item/projectile/magic/aoe/lightning
 	name = "lightning bolt"
 	icon_state = "tesla_projectile"	//Better sprites are REALLY needed and appreciated!~
 	damage = 15
 	damage_type = BURN
 	nodamage = 0
 	speed = 0.3
+	flag = "magic"
 
 	var/tesla_power = 20000
 	var/tesla_range = 15
 	var/chain
 	var/mob/living/caster
 
-/obj/item/projectile/magic/lightning/Range()
-	var/turf/T1 = get_step(src,turn(dir, -45))
-	var/turf/T2 = get_step(src,turn(dir, 45))
-	var/turf/T3 = get_step(src,dir)
-	var/mob/living/L = locate(/mob/living) in T1 //if there's a mob alive in our front right diagonal, we hit it.
-	if(L && L.stat != DEAD)
-		Bump(L,1) //Magic Bullet #teachthecontroversy
-		return
-	L = locate(/mob/living) in T2
-	if(L && L.stat != DEAD)
-		Bump(L,1)
-		return
-	L = locate(/mob/living) in T3
-	if(L && L.stat != DEAD)
-		Bump(L,1)
-		return
-	..()
-
-/obj/item/projectile/magic/lightning/fire(setAngle)
+/obj/item/projectile/magic/lightning/aoe/fire(setAngle)
 	if(caster)
 		chain = caster.Beam(src, icon_state = "lightning[rand(1, 12)]", time = INFINITY, maxdistance = INFINITY)
 	..()
 
-/obj/item/projectile/magic/lightning/on_hit(target)
+/obj/item/projectile/magic/lightning/aoe/on_hit(target)
 	. = ..()
 	var/turf/T = get_turf(target)
 	tesla_zap(src, tesla_range, tesla_power)
@@ -433,3 +394,31 @@
 /obj/item/projectile/magic/lightning/Destroy()
 	qdel(chain)
 	. = ..()
+
+/obj/item/projectile/magic/aoe/fireball
+	name = "bolt of fireball"
+	icon_state = "fireball"
+	damage = 10
+	damage_type = BRUTE
+	nodamage = 0
+
+	//explosion values
+	var/exp_heavy = 0
+	var/exp_light = 2
+	var/exp_flash = 3
+	var/exp_fire = 2
+
+/obj/item/projectile/magic/fireball/aoe/on_hit(target)
+	. = ..()
+	var/turf/T = get_turf(target)
+	explosion(T, -1, exp_heavy, exp_light, exp_flash, 0, flame_range = exp_fire)
+	if(ismob(target)) //multiple flavors of pain
+		var/mob/living/M = target
+		M.take_overall_damage(0,10) //between this 10 burn, the 10 brute, the explosion brute, and the onfire burn, your at about 65 damage if you stop drop and roll immediately
+
+/obj/item/projectile/magic/fireball/aoe/infernal
+	name = "infernal fireball"
+	exp_heavy = -1
+	exp_light = -1
+	exp_flash = 4
+	exp_fire= 5
