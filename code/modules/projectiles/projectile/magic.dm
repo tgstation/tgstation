@@ -347,7 +347,7 @@
 	damage = 0
 	var/proxdet = TRUE
 
-/obj/item/projectile/magic/aoe/range()
+/obj/item/projectile/magic/aoe/Range()
 	if(proxdet)
 		var/turf/T1 = get_step(src,turn(dir, -45))
 		var/turf/T2 = get_step(src,turn(dir, 45))
@@ -387,7 +387,6 @@
 
 /obj/item/projectile/magic/aoe/lightning/on_hit(target)
 	. = ..()
-	var/turf/T = get_turf(target)
 	tesla_zap(src, tesla_range, tesla_power)
 	qdel(src)
 

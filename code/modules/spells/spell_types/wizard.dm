@@ -291,7 +291,7 @@
 	if(!isturf(U) || !isturf(T))
 		return 0
 
-	var/obj/item/projectile/magic/fireball/FB = new fireball_type(user.loc)
+	var/obj/item/projectile/magic/aoe/fireball/FB = new fireball_type(user.loc)
 	FB.current = get_turf(user)
 	FB.preparePixelProjectile(target, get_turf(target), user)
 	FB.fire()

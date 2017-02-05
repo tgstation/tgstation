@@ -235,7 +235,7 @@
 
 /datum/spellbook_entry/lightningbolt/Buy(mob/living/carbon/human/user,obj/item/weapon/spellbook/book) //return 1 on success
 	. = ..()
-	user.
+	user.tesla_ignore = TRUE
 
 /datum/spellbook_entry/infinite_guns
 	name = "Lesser Summon Guns"

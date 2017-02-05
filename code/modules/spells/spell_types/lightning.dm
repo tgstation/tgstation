@@ -92,7 +92,7 @@
 	invocation = "UN'LTD P'WAH"
 	invocation_type = "shout"
 	cooldown_min = 30
-	var/projectile_type = /obj/item/projectile/magic/lightning
+	var/projectile_type = /obj/item/projectile/magic/aoe/lightning
 	action_icon_state = "lightning"
 	sound = 'sound/magic/lightningbolt.ogg'
 	active = FALSE

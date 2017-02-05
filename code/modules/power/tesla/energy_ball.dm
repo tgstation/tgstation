@@ -199,7 +199,7 @@ var/list/blacklisted_tesla_types = typecacheof(list(/obj/machinery/atmospherics,
 		else if(isliving(A))
 			var/dist = get_dist(source, A)
 			var/mob/living/L = A
-			if(dist <= zap_range && (dist < closest_dist || !closest_mob) && L.stat != DEAD)
+			if(dist <= zap_range && (dist < closest_dist || !closest_mob) && L.stat != DEAD && !L.tesla_ignore)
 				closest_mob = L
 				closest_atom = A
 				closest_dist = dist
