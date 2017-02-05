@@ -1,0 +1,4 @@
+author: "Lzimann"
+delete-after: True
+changes: 
+  - rscadd: "Tesla zaps can now generate an energy ball if they zap a tesla generator!"
