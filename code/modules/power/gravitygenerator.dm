@@ -41,14 +41,14 @@ var/global/chaos = FALSE
 	priority_announce("WARNING: GRAVITATIONAL ANOMALY DETECTED!", "Subspace Sensor Network", TRUE)
 	sleep(50)
 	fuck_my_shit_up()
-	sleep(120)
+	sleep(1200)
 	restore_my_shit()
 	emagged = FALSE
 
 /obj/machinery/gravity_generator/proc/fuck_my_shit_up()
 	chaos = TRUE
 	for(var/client/C in world)
-		C.dir = pick(cardinal)
+		C.setDir(pick(cardinal))
 	for(var/mob/M in world)
 		M << "<span class='userdanger'>You feel sick as your feet leave the ground and you're flung across the room!</span>"
 		if(isliving(M))
@@ -58,12 +58,12 @@ var/global/chaos = FALSE
 /obj/machinery/gravity_generator/proc/restore_my_shit()
 	chaos = FALSE
 	for(var/client/C in world)
-		C.dir = NORTH
+		if(prob(5))
+			C.setDir(pick(cardinal))
+		else
+			C.setDir(NORTH)
 	for(var/mob/M in world)
 		M << "<span class='userdanger'>You're once more flung across the room as gravity returns back to normal.. Or.. is it normal?!</span>"
-		if(prob(5))
-			if(M.client)
-				M.client.dir = pick(cardinal)	//RIP.
 		if(isliving(M))
 			M.throw_at(get_edge_target_turf(src, pick(cardinal)), 14, 3)
 			M.Weaken(5)
