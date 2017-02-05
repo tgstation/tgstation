@@ -199,6 +199,6 @@
 	. = ..()
 	//Do this *after* the turf has changed as qdel in spacevines will call changeturf again if it hasn't
 	for(var/obj/structure/spacevine/SV in src)
-		if(!qdestroying(SV))//Helps avoid recursive loops
+		if(!QDESTROYING(SV))//Helps avoid recursive loops
 			qdel(SV)
 	UpdateAffectingLights()

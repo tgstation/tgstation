@@ -65,7 +65,7 @@
 	if(key || !playable_spider)//Someone is in it or the fun police are shutting it down
 		return 0
 	var/spider_ask = alert("Become a spider?", "Are you australian?", "Yes", "No")
-	if(spider_ask == "No" || !src || qdeleted(src))
+	if(spider_ask == "No" || !src || QDELETED(src))
 		return 1
 	if(key)
 		user << "<span class='notice'>Someone else already took this spider.</span>"

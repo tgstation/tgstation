@@ -105,7 +105,7 @@ var/datum/subsystem/persistence/SSpersistence
 /datum/subsystem/persistence/proc/CollectSecretSatchels()
 	for(var/A in new_secret_satchels)
 		var/obj/item/weapon/storage/backpack/satchel/flat/F = A
-		if(qdeleted(F) || F.z != ZLEVEL_STATION || F.invisibility != INVISIBILITY_MAXIMUM)
+		if(QDELETED(F) || F.z != ZLEVEL_STATION || F.invisibility != INVISIBILITY_MAXIMUM)
 			continue
 		var/list/savable_obj = list()
 		for(var/obj/O in F)

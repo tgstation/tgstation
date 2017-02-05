@@ -419,7 +419,7 @@ By design, d1 is the smallest direction and d2 is the highest
 	powernet.remove_cable(src) //remove the cut cable from its powernet
 
 	spawn(0) //so we don't rebuild the network X times when singulo/explosion destroys a line of X cables
-		if(O && !qdeleted(O))
+		if(O && !QDELETED(O))
 			var/datum/powernet/newPN = new()// creates a new powernet...
 			propagate_network(O, newPN)//... and propagates it to the other side of the cable
 

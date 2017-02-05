@@ -885,7 +885,7 @@ var/list/ai_list = list()
 	malfhacking = 0
 	clear_alert("hackingapc")
 
-	if(!istype(apc) || qdeleted(apc) || apc.stat & BROKEN)
+	if(!istype(apc) || QDELETED(apc) || apc.stat & BROKEN)
 		src << "<span class='danger'>Hack aborted. The designated APC no \
 			longer exists on the power network.</span>"
 		playsound(get_turf(src), 'sound/machines/buzz-two.ogg', 50, 1)

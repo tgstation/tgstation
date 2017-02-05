@@ -284,7 +284,7 @@ var/datum/subsystem/shuttle/SSshuttle
 
 /datum/subsystem/shuttle/proc/checkHostileEnvironment()
 	for(var/datum/d in hostileEnvironments)
-		if(!istype(d) || qdeleted(d))
+		if(!istype(d) || QDELETED(d))
 			hostileEnvironments -= d
 	emergencyNoEscape = hostileEnvironments.len
 

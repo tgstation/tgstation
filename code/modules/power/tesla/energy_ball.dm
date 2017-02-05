@@ -17,8 +17,8 @@ var/list/blacklisted_tesla_types = typecacheof(list(/obj/machinery/atmospherics,
 										/obj/structure/sign,
 										/obj/machinery/gateway,
 										/obj/structure/lattice,
-										/obj/structure/grille))
-
+										/obj/structure/grille,
+										/obj/machinery/the_singularitygen/tesla))
 /obj/singularity/energy_ball
 	name = "energy ball"
 	desc = "An energy ball."
@@ -147,7 +147,7 @@ var/list/blacklisted_tesla_types = typecacheof(list(/obj/machinery/atmospherics,
 		orbitingball.orbiting_balls -= src
 		orbitingball.dissipate_strength = orbitingball.orbiting_balls.len
 	..()
-	if (!loc && !qdeleted(src))
+	if (!loc && !QDELETED(src))
 		qdel(src)
 
 
