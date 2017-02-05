@@ -11,6 +11,12 @@
 		return 0
 	. = ..()
 
+/obj/machinery/atmospherics/onShuttleMove()
+	. = ..()
+	for(DEVICE_TYPE_LOOP)
+		if(get_area(node[I]) != get_area(src))
+			nullifyNode(I)
+
 /atom/movable/light/onShuttleMove()
 	return 0
 
