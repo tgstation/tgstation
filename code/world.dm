@@ -311,13 +311,13 @@ var/inerror = 0
 
 
 /world/proc/update_status()
-	var/s = ""
+	var/s = "<span style='font-size:65%'>"
 
 	if (config && config.server_name)
-		s += "<span style='font-size:80%'><b>[config.server_name]</b> &#8212; </span>"
+		s += "<b>[config.server_name]</b> &#8212; "
 
-	s += "<span style='font-size:70%'><b>[station_name()]</b></span>";
-	s += "<span style='font-size:60%'>(<a href='[config.wikiurl]'>Wiki</a>)</span>"
+	s += " <b>[station_name()]</b> ";
+	s += " (<a href='[config.wikiurl]'>Wiki</a>) "
 
 	var/list/features = list()
 
@@ -352,12 +352,12 @@ var/inerror = 0
 		features += "hosted by <b>[config.hostedby]</b>"
 
 	if (features)
-		s += "<span style='font-size:50%'>: [jointext(features, ", ")]</span>"
-
+		s += ": [jointext(features, ", ")]"
+	s += "</span>"
 	status = s
 
 /proc/get_status()
-	return world.status
+	return html_encode(world.status)
 
 #define FAILED_DB_CONNECTION_CUTOFF 5
 var/failed_db_connections = 0
