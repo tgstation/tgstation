@@ -222,10 +222,16 @@
 	log_name = "LD"
 	category = "Defensive"
 
+/datum/spellbook_entry/teslablast
+	name = "Tesla Blast"
+	spell_type = /obj/effect/proc_holder/spell/targeted/tesla
+	log_name = "TB"
+
 /datum/spellbook_entry/lightningbolt
 	name = "Lightning Bolt"
-	spell_type = /obj/effect/proc_holder/spell/targeted/lightning
+	spell_type = /obj/effect/proc_holder/spell/lightningbolt
 	log_name = "LB"
+	cost = 3
 
 /datum/spellbook_entry/infinite_guns
 	name = "Lesser Summon Guns"

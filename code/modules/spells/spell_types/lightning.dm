@@ -88,7 +88,7 @@
 	desc = "Fire a high powered lightning bolt at your foes!"
 	school = "evocation"
 	charge_max = 200
-	clothes_req = 0
+	clothes_req = 1
 	invocation = "UN'LTD P'WAH"
 	invocation_type = "shout"
 	cooldown_min = 30
@@ -129,8 +129,8 @@
 	perform(targets,user = ranged_ability_user)
 	return TRUE
 
-/obj/effect/proc_holder/spell/fireball/cast(list/targets, mob/living/user)
-	var/target = targets[1] //There is only ever one target for fireball
+/obj/effect/proc_holder/spell/lightningbolt/cast(list/targets, mob/living/user)
+	var/target = targets[1]
 	var/turf/T = user.loc
 	var/turf/U = get_step(user, user.dir) // Get the tile infront of the move, based on their direction
 	if(!isturf(U) || !isturf(T))
