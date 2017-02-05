@@ -400,7 +400,7 @@
 		var/list/expressions_list = expression[++i]
 		val = list()
 		for(var/list/expression_list in expressions_list)
-			val += SDQL_expression(object, expression_list)
+			val[++val.len] = SDQL_expression(object, expression_list)
 
 	else
 		val = SDQL_var(object, expression, i)
