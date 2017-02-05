@@ -65,7 +65,7 @@
 /obj/singularity/narsie/Bump(atom/A)
 	var/turf/T = get_turf(A)
 	if(T == loc)
-		T = get_step(A.dir) //please don't slam into a window like a bird, nar-sie
+		T = get_step(A, A.dir) //please don't slam into a window like a bird, nar-sie
 	forceMove(T)
 
 
