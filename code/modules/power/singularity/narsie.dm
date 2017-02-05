@@ -63,8 +63,10 @@
 
 
 /obj/singularity/narsie/Bump(atom/A)
-	forceMove(get_turf(A))
-	A.narsie_act()
+	var/turf/T = get_turf(A)
+	if(T == loc)
+		T = get_step(A.dir) //please don't slam into a window like a bird, nar-sie
+	forceMove(T)
 
 
 /obj/singularity/narsie/mezzer()
