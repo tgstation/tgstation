@@ -76,10 +76,11 @@ var/global/list/soapstone_suffixes = list() //Read from "strings/soapstone_suffi
 		if(alert(user, "Erase this message?", name, "Yes", "No") == "Yes")
 			user.visible_message("<span class='notice'>[user] swipes away [msg].</span>", "<span class='notice'>You sweep away [msg].</span>")
 			playsound(msg, 'sound/items/soapstone_write.ogg', 50, 1)
-			msg.alpha = 0
 			msg.persists = 0
+			qdel(msg)
 			refund_use()
 			return
+		return
 	var/prefix = input(user, "Choose a prefix for your message.", name) as null|anything in soapstone_prefixes
 	if(!prefix)
 		return
@@ -91,7 +92,7 @@ var/global/list/soapstone_suffixes = list() //Read from "strings/soapstone_suffi
 	if(!suffix)
 		return
 	var/processed_message = replacetext(prefix, "****", suffix)
-	if(!user.Adjacent(T))
+	if(!user.Adjacent(T) || !good_chisel_message_location(T) || locate(/obj/structure/chisel_message) in T)
 		return
 	user.visible_message("<span class='notice'>[user] writes a message onto [T]!</span>", "<span class='notice'>You write a message onto [T].</span>")
 	playsound(T, 'sound/items/soapstone_write.ogg', 50, 1)
@@ -170,7 +171,7 @@ var/global/list/soapstone_suffixes = list() //Read from "strings/soapstone_suffi
 
 	var/list/raters = list() //Ckeys who have rated this message
 
-/obj/structure/chisel_message/attack_hand(mob/living/user)
+/obj/structure/chisel_message/attack_hand(mob/user)
 	if(raters[user.ckey])
 		user << "<span class='warning'>You've already rated this message!</span>"
 		return
@@ -212,12 +213,6 @@ var/global/list/soapstone_suffixes = list() //Read from "strings/soapstone_suffi
 	realdate = world.timeofday
 	map = MAP_NAME
 	update_icon()
-
-/obj/structure/chisel_message/update_icon()
-	..()
-	var/hash = md5(hidden_message)
-	var/newcolor = copytext(hash, 1, 7)
-	add_atom_colour("#[newcolor]", FIXED_COLOUR_PRIORITY)
 
 /obj/structure/chisel_message/proc/pack()
 	var/list/data = list()
