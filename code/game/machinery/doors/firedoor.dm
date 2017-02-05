@@ -35,7 +35,7 @@
 
 /obj/machinery/door/firedoor/proc/CalculateAffectingAreas()
 	remove_from_areas()
-	affecting_areas = get_adjacent_areas(src) | get_area(src)
+	affecting_areas = get_adjacent_open_areas(src) | get_area(src)
 	for(var/I in affecting_areas)
 		var/area/A = I
 		LAZYADD(A.firedoors, src)
