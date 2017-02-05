@@ -314,14 +314,10 @@ var/inerror = 0
 	var/s = ""
 
 	if (config && config.server_name)
-		s += "<span style='font-size:95%'><b>[config.server_name]</b> &#8212; </span>"
+		s += "<span style='font-size:80%'><b>[config.server_name]</b> &#8212; </span>"
 
-	s += "<span style='font-size:85%'><b>[station_name()]</b></span>";
-	s += "<span style='font-size:75%'> ("
-	s += "<a href='[config.wikiurl]'>"
-	s += "[game_version]"
-	s += "</a>"
-	s += ")</span>"
+	s += "<span style='font-size:70%'><b>[station_name()]</b></span>";
+	s += "<span style='font-size:60%'>(<a href='[config.wikiurl]'>Wiki</a>)</span>"
 
 	var/list/features = list()
 
@@ -356,9 +352,12 @@ var/inerror = 0
 		features += "hosted by <b>[config.hostedby]</b>"
 
 	if (features)
-		s += "<span style='font-size:65%'>: [jointext(features, ", ")]</span>"
+		s += "<span style='font-size:50%'>: [jointext(features, ", ")]</span>"
 
 	status = s
+
+/proc/get_status()
+	return world.status
 
 #define FAILED_DB_CONNECTION_CUTOFF 5
 var/failed_db_connections = 0
