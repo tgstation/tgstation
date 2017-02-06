@@ -431,11 +431,12 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 	switch(src.state)
 		if(STATE_DEFAULT)
 			if (src.authenticated)
-				if(SSshuttle.emergencyLastCallLoc)
-					dat += "<BR>Most recent shuttle call/recall traced to: <b>[format_text(SSshuttle.emergencyLastCallLoc.name)]</b>"
-				else
-					dat += "<BR>Unable to trace most recent shuttle call/recall signal."
-				dat += "<BR>Logged in as: [auth_id]"
+				if(SSshuttle.emergencyCallAmount)
+					if(SSshuttle.emergencyLastCallLoc)
+						dat += "Most recent shuttle call/recall traced to: <b>[format_text(SSshuttle.emergencyLastCallLoc.name)]</b><BR>"
+					else
+						dat += "Unable to trace most recent shuttle call/recall signal.<BR>"
+				dat += "Logged in as: [auth_id]"
 				dat += "<BR>"
 				dat += "<BR>\[ <A HREF='?src=\ref[src];operation=logout'>Log Out</A> \]<BR>"
 				dat += "<BR><B>General Functions</B>"
@@ -581,10 +582,11 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 	var/dat = ""
 	switch(src.aistate)
 		if(STATE_DEFAULT)
-			if(SSshuttle.emergencyLastCallLoc)
-				dat += "<BR>Latest emergency signal trace attempt successful.<BR>Last signal origin: <b>[format_text(SSshuttle.emergencyLastCallLoc.name)]</b>.<BR>"
-			else
-				dat += "<BR>Latest emergency signal trace attempt failed.<BR>"
+			if(SSshuttle.emergencyCallAmount)
+				if(SSshuttle.emergencyLastCallLoc)
+					dat += "Latest emergency signal trace attempt successful.<BR>Last signal origin: <b>[format_text(SSshuttle.emergencyLastCallLoc.name)]</b>.<BR>"
+				else
+					dat += "Latest emergency signal trace attempt failed.<BR>"
 			if(authenticated)
 				dat += "Current login: [auth_id]"
 			else
