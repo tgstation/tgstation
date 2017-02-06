@@ -481,7 +481,7 @@
 
 	if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/monkeycube))
 		var/obj/item/weapon/reagent_containers/food/snacks/monkeycube/M = O
-		user << "<span class='notice'>You place [src] under a stream of water...</span>"
+		user << "<span class='notice'>You place [O] under a stream of water...</span>"
 		user.drop_item()
 		M.loc = get_turf(src)
 		M.Expand()
