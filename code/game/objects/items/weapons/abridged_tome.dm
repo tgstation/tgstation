@@ -13,12 +13,12 @@
 
 /obj/item/weapon/abridged_tome/examine(mob/living/user)
 	..()
-	if(is_reader(user) || user.stat == DEAD)
+	if(is_reader(user) || iscultist(user) || user.stat == DEAD)
 		user << "<span class='cult'>An old version of the arcane tome no longer in circulation. This one reached #1 on Acribus' Top Reads list.</span>"
 		user << "<span class='cult'>Used to scribe certain runes, and can also be used as a powerful burn weapon.</span>"
 
 /obj/item/weapon/abridged_tome/attack(mob/living/M, mob/living/user)
-	if(!is_reader(user))
+	if(!is_reader(user) && !iscultist(user))
 		return ..()
 	if(iscultist(M))
 		if(M.reagents && M.reagents.has_reagent("holywater"))
@@ -36,7 +36,7 @@
 	add_logs(user, M, "smacked", src)
 
 /obj/item/weapon/abridged_tome/attack_self(mob/living/user)
-	if(!is_reader(user))
+	if(!is_reader(user) && !iscultist(user))
 		if(!reader)
 			user << "<span class='notice'>You cut open a finger and press a droplet of blood onto [src]'s pages. You can read them now.</span>"
 			user.take_bodypart_damage(0.1)
@@ -98,7 +98,7 @@
 		return
 	user.visible_message("<span class='warning'>[user] creates a strange circle in their own blood!</span>", "<span class='cult'>You finish drawing the arcane markings of the Geometer.</span>")
 	var/obj/effect/bootleg_rune/B = new rune_type (get_turf(user))
-	B.reader = reader
+	B.reader = user.mind
 	return 1
 
 
