@@ -215,7 +215,7 @@
 	helptext = "We can use it once to retrieve a distant item. If used on living creatures, the effect depends on the intent: \
 	Help will simply drag them closer, Disarm will grab whatever they're holding instead of them, Grab will put the victim in our hold after catching it, \
 	and Harm will stun it, and stab it if we're also holding a sharp weapon. Cannot be used while in lesser form."
-	chemical_cost = 20
+	chemical_cost = 10
 	dna_cost = 2
 	genetic_damage = 5
 	req_human = 1
