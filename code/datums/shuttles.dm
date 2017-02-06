@@ -149,6 +149,7 @@
 	Outside of admin intervention, it cannot explode. \
 	It does, however, still dust anything on contact, emits high levels of radiation, and induce hallucinations in anyone looking at it without protective goggles. \
 	Emitters spawn powered on, expect admin notices, they are harmless."
+	credit_cost = 100000
 
 /datum/map_template/shuttle/emergency/imfedupwiththisworld
 	suffix = "imfedupwiththisworld"
