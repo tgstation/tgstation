@@ -85,7 +85,7 @@
 	message_alien = "lets out a waning guttural screech, green blood bubbling from its maw..."
 	message_larva = "lets out a sickly hiss of air and falls limply to the floor..."
 	message_monkey = "lets out a faint chimper as it collapses and stops moving..."
-	stat_allowed = UNCONSCIOUS
+	stat_allowed = DEAD
 
 /datum/emote/living/deathgasp/run_emote(mob/user, params)
 	. = ..()
