@@ -40,7 +40,7 @@ List of nuances:
 #define RATVAR_ET_REPLACEMENT		"$1-$2"
 #define RATVAR_TE_MATCH				regex("(\[tT]\[eE])(\\w)","g")
 #define RATVAR_TE_REPLACEMENT		"$1-$2"
-#define RATVAR_PRE_AND_MATCH		regex("(\\w)\\s(\[aA]\[nN]\[dD])(\\s|\\W)","g")
+#define RATVAR_PRE_AND_MATCH		regex("(\\w)\\s(\[aA]\[nN]\[dD])(\\W)","g")
 #define RATVAR_PRE_AND_REPLACEMENT	"$1-$2$3"
 #define RATVAR_POST_AND_MATCH		regex("(\\W)(\[aA]\[nN]\[dD])\\s(\\w)","g")
 #define RATVAR_POST_AND_REPLACEMENT	"$1$2-$3"
