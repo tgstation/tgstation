@@ -51,6 +51,7 @@
 	obj_integrity = 200
 	max_integrity = 200
 	integrity_failure = 50
+	resistance_flags = FIRE_PROOF
 	var/area/area
 	var/areastring = null
 	var/obj/item/weapon/stock_parts/cell/cell
