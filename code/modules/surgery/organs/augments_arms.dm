@@ -236,3 +236,210 @@
 	desc = "A set of surgical tools hidden behind a concealed panel on the user's arm"
 	contents = newlist(/obj/item/weapon/retractor, /obj/item/weapon/hemostat, /obj/item/weapon/cautery, /obj/item/weapon/surgicaldrill, /obj/item/weapon/scalpel, /obj/item/weapon/circular_saw, /obj/item/weapon/surgical_drapes)
 	origin_tech = "materials=3;engineering=3;biotech=3;programming=2;magnets=3"
+
+/obj/item/organ/cyberimp/arm/bluespace_crusher
+	name = "bluespace crusher implant"
+	desc = "A hand-mounted experimental device that uses bluespace to separate matter from our reality, effectively deleting it. Nobody actually knows where it ends up."
+	contents = newlist(/obj/item/weapon/bluespace_crusher)
+	origin_tech = "materials=6;bluespace=6;biotech=4;programming=4"
+	icon_state = "bscrusher_implant"
+	var/crystals = 0
+	var/charges = 0
+	var/charge_cooldown = 600
+	var/next_charge = null
+
+/obj/item/organ/cyberimp/arm/bluespace_crusher/New()
+	..()
+	for(var/obj/item/weapon/bluespace_crusher/B in items_list)
+		B.implant = src
+
+/obj/item/organ/cyberimp/arm/bluespace_crusher/examine(mob/user)
+	..()
+	if(crystals)
+		user << "<span class='notice'>It's loaded with [crystals] crystal[crystals > 1 ? "s":""].</span>"
+	else
+		user << "<span class='notice'>It's not loaded with any crystals.</span>"
+
+/obj/item/organ/cyberimp/arm/bluespace_crusher/Insert()
+	..()
+	START_PROCESSING(SSobj, src)
+
+/obj/item/organ/cyberimp/arm/bluespace_crusher/Remove()
+	..()
+	STOP_PROCESSING(SSobj, src)
+	next_charge = null
+
+/obj/item/organ/cyberimp/arm/bluespace_crusher/Destroy()
+	STOP_PROCESSING(SSobj, src)
+	return ..()
+
+/obj/item/organ/cyberimp/arm/bluespace_crusher/process()
+	if(!next_charge && charges < crystals)
+		next_charge = world.time + charge_cooldown
+	if(world.time > next_charge && charges < crystals)
+		charges++
+		owner << "<span class='notice'>Your [name] has charged a crystal. It now has [charges] charged crystals.</span>"
+
+/obj/item/organ/cyberimp/arm/bluespace_crusher/attackby(obj/item/weapon/W, mob/user, params)
+	if(istype(W,/obj/item/weapon/ore/bluespace_crystal))
+		if(crystals < 3)
+			qdel(W)
+			crystals++
+			charges++
+			user << "<span class='notice'>You insert [W] into [src].</span>"
+			return
+		else
+			user << "<span class='notice'>[src]'s crystal slots are full!</span>"
+			return
+	..()
+
+/obj/item/organ/cyberimp/arm/bluespace_crusher/loaded
+	crystals = 3
+	charges = 3
+
+/obj/item/weapon/bluespace_crusher
+	name = "bluespace crusher"
+	desc = "It appears to erase matter and even space itself."
+	icon_state = "bscrusher"
+	item_state = "ratvars_flame"
+	w_class = WEIGHT_CLASS_HUGE
+	flags = ABSTRACT | NODROP
+	force = 40 //Only if charged
+	armour_penetration = 100 //Same here
+	block_chance = 50
+	attack_verb = list("swiped")
+	var/obj/item/organ/cyberimp/arm/bluespace_crusher/implant
+
+/obj/item/weapon/bluespace_crusher/New()
+	..()
+	hitsound = null //otherwise it gets the default hitsound
+
+/obj/item/weapon/bluespace_crusher/attackby(obj/item/weapon/W, mob/user, params)
+	if(istype(W,/obj/item/weapon/ore/bluespace_crystal))
+		if(implant.crystals < 3)
+			qdel(W)
+			implant.crystals++
+			implant.charges++
+			user << "<span class='notice'>You insert [W] into [src].</span>"
+			return
+		else
+			user << "<span class='notice'>[src]'s crystal slots are full!</span>"
+			return
+	..()
+
+/obj/item/weapon/bluespace_crusher/examine(mob/user)
+	..()
+	if(implant.crystals > 1)
+		if(implant.charges > 1)
+			user << "<span class='notice'>It's loaded with [implant.crystals] crystals, [implant.charges] of which are charged.</span>"
+		else
+			user << "<span class='notice'>It's loaded with [implant.crystals] crystals, [implant.charges ? "[implant.charges] of which is charged":"none of which are charged"].</span>"
+	else if (implant.crystals)
+		user << "<span class='notice'>It's loaded with [implant.crystals] crystal, which [implant.charges ? "is charged":"isn't charged"].</span>"
+	else
+		user << "<span class='notice'>It's not loaded with any crystals.</span>"
+
+
+/obj/item/weapon/bluespace_crusher/proc/use_charge(mob/user, silent = FALSE)
+	if(!implant.charges)
+		if(!implant.crystals)
+			if(!silent)
+				user << "<span class='notice'>[src] requires at least a bluespace crystal to use!</span>"
+			return FALSE
+		if(!silent)
+			user << "<span class='notice'>[src] is still recharging!</span>"
+		return FALSE
+
+	implant.charges--
+	return TRUE
+
+/obj/item/weapon/bluespace_crusher/proc/attack_effect(turf/T)
+	new /obj/effect/overlay/temp/bluespace_swipe(T)
+	playsound(T,"sound/weapons/resonator_blast.ogg",50,1)
+
+
+/obj/item/weapon/bluespace_crusher/afterattack(atom/target, mob/user, proximity)
+	if(proximity)
+		if(istype(target, /obj/item) && use_charge(user))
+			attack_effect(get_turf(target))
+			new /obj/effect/overlay/temp/emp/pulse(get_turf(target))
+			user.visible_message("<span class='danger'>[user] swipes at [target] with [user.p_their()] [src], erasing it from existence!</span>", \
+			"<span class='danger'>You swipe at [target] with [src], erasing it from existence!</span>")
+			log_game("[key_name(user)] has deleted [target] with a bluespace crusher.")
+			qdel(target)
+		return
+
+	if(!use_charge(user))
+		return
+
+	attack_effect(get_step_towards(user, target))
+	new /obj/effect/overlay/temp/emp/pulse(get_turf(target))
+
+	var/list/targets = list()
+	for(var/atom/movable/A in get_turf(target))
+		if(!A.anchored)
+			targets += A
+
+	if(!isturf(target) && target in targets)
+		user.visible_message("<span class='danger'>[user] crushes spacetime, drawing [target] closer to [user.p_them()]!</span>", \
+		"<span class='danger'>You crush spacetime, drawing [target] closer to you!</span>")
+	else if(targets.len > 1)
+		user.visible_message("<span class='danger'>[user] crushes spacetime, attracting several objects!</span>", \
+		"<span class='danger'>You crush spacetime, attracting several objects!</span>")
+	else if(targets.len)
+		user.visible_message("<span class='danger'>[user] crushes spacetime, attracting [targets[1]] closer to [user.p_them()]!</span>", \
+		"<span class='danger'>You crush spacetime, drawing [targets[1]] closer to you!</span>")
+	else
+		user.visible_message("<span class='danger'>[user] crushes spacetime, but nothing happens!</span>", \
+		"<span class='danger'>You crush spacetime, but you fail to attract anything!</span>")
+
+	while(targets.len)
+		for(var/atom/movable/A in targets)
+			if(QDELETED(A) || get_dist(A,user) > 12 || A.anchored) //breaks in case of teleportation
+				targets -= A
+				continue
+			if(!A.Move(get_step_towards(A, user)))
+				targets -= A
+				continue
+			if(get_dist(A,user) <= 1)
+				targets -= A
+				continue
+		sleep(1)
+
+/obj/item/weapon/bluespace_crusher/attack(mob/M, mob/user)
+	if(!use_charge(user, silent = TRUE))
+		force = 0
+		armour_penetration = 0
+		..()
+	else
+		force = 40
+		armour_penetration = 100
+		attack_effect(get_turf(M))
+		..()
+
+
+/obj/item/weapon/bluespace_crusher/attack_obj(obj/O, mob/living/user)
+	if(!use_charge(user))
+		return
+
+	user.changeNext_move(CLICK_CD_MELEE)
+
+	attack_effect(get_turf(O))
+
+	user.visible_message("<span class='danger'>[user] swipes at [O] with [user.p_their()] [src], erasing part of it!</span>", \
+	"<span class='danger'>You swipe at [O] with [src], erasing part of it from existence!</span>")
+	O.take_damage(150, BRUTE, "melee", 0)
+	return FALSE
+
+/obj/item/weapon/bluespace_crusher/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance, atom/movable/AM, attack_type)
+	if(attack_type == THROWN_PROJECTILE_ATTACK && istype(AM, /obj/item) && prob(block_chance) && use_charge(owner, silent = TRUE))
+		owner.visible_message("<span class='danger'>[owner] swipes at [AM] in midair with [owner.p_their()] [src], erasing it!</span>", \
+		"<span class='danger'>You swipe at [AM] in midair with [src], erasing it!</span>")
+		return TRUE
+	else
+		return FALSE
+
+
+
+
+

@@ -465,6 +465,15 @@
 	icon_state = "empdisable"
 	duration = 5
 
+/obj/effect/overlay/temp/bluespace_swipe
+	name = "bluespace swipe"
+	icon_state = "swipe"
+	duration = 8
+
+/obj/effect/overlay/temp/bluespace_swipe/New()
+	add_atom_colour("#0000CC", FIXED_COLOUR_PRIORITY)
+	..()
+
 /obj/effect/overlay/temp/emp
 	name = "emp sparks"
 	icon_state = "empdisable"
