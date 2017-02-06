@@ -36,7 +36,8 @@
 /obj/item/weapon/paper/pickup(user)
 	if(contact_poison && ishuman(user))
 		var/mob/living/carbon/human/H = user
-		if(!H.gloves || (H.gloves && H.gloves.transfer_prints))
+		var/obj/item/clothing/gloves/G = H.gloves
+		if(!istype(G) || G.transfer_prints)
 			H.reagents.add_reagent(contact_poison,contact_poison_volume)
 			contact_poison = null
 	..()
