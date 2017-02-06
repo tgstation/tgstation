@@ -6,10 +6,9 @@ var/global/list/all_status_effects = list() //a list of all status effects, if f
 
 /datum/status_effect
 	var/id = "effect" //Used for screen alerts.
-	var/duration = -1 //How long the status effect lasts in SECONDS. Enter -1 for an effect that never ends unless removed through some means.
-	var/tick_interval = 1 //How many seconds between ticks. Leave at 1 for every second.
+	var/duration = -1 //How long the status effect lasts in DECISECONDS. Enter -1 for an effect that never ends unless removed through some means.
+	var/tick_interval = 10 //How many deciseconds between ticks, approximately. Leave at 10 for every second.
 	var/mob/living/owner //The mob affected by the status effect.
-	var/cosmetic = FALSE //If the status effect only exists for flavor.
 	var/unique = TRUE //If there can be multiple status effects of this type on one mob.
 	var/alert_type = /obj/screen/alert/status_effect //the alert thrown by the status effect, contains name and description
 
@@ -22,7 +21,7 @@ var/global/list/all_status_effects = list() //a list of all status effects, if f
 	addtimer(CALLBACK(src, .proc/start_ticking), 1) //Give us time to set any variables
 
 /datum/status_effect/Destroy()
-	STOP_PROCESSING(SSprocessing, src)
+	STOP_PROCESSING(SSfastprocess, src)
 	if(owner)
 		owner.clear_alert(id)
 		on_remove()
@@ -37,22 +36,22 @@ var/global/list/all_status_effects = list() //a list of all status effects, if f
 		qdel(src)
 		return
 	on_apply()
+	if(duration != -1)
+		duration = world.time + initial(duration)
+	tick_interval = world.time + initial(tick_interval)
 	if(alert_type)
 		var/obj/screen/alert/status_effect/A = owner.throw_alert(id, alert_type)
 		A.attached_effect = src //so the alert can reference us, if it needs to
-	START_PROCESSING(SSprocessing, src)
+	START_PROCESSING(SSfastprocess, src)
 
 /datum/status_effect/process()
 	if(!owner)
 		qdel(src)
 		return
-	if(duration != -1)
-		duration--
-	tick_interval--
-	if(!tick_interval)
+	if(tick_interval < world.time)
 		tick()
-		tick_interval = initial(tick_interval)
-	if(!duration)
+		tick_interval = world.time + initial(tick_interval)
+	if(duration != -1 && duration < world.time)
 		qdel(src)
 
 /datum/status_effect/proc/on_apply() //Called whenever the buff is applied.

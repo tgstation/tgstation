@@ -200,9 +200,8 @@
 			if(infodisplay.len)
 				screenmob.client.screen -= infodisplay
 
-	if(plane_masters.len)
-		for(var/thing in plane_masters)
-			screenmob.client.screen += plane_masters[thing]
+	for(var/thing in plane_masters)
+		screenmob.client.screen += plane_masters[thing]
 	hud_version = display_hud_version
 	persistent_inventory_update(screenmob)
 	mymob.update_action_buttons(1)
