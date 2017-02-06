@@ -1116,3 +1116,84 @@
 	M.adjustToxLoss(2, 0)
 	. = 1
 	..()
+
+/datum/reagent/medicine/naloxone
+	name = "Naloxone"
+	id = "naloxone"
+	description = "Stabilizes other reagents in the bloodstream to prevent overdoses. Does not prevent overdosing on itself. Can stop overdoses in progress if applied quickly."
+	reagent_state = LIQUID
+	color = "#67A96D"
+	overdose_threshold = 30
+	addiction_threshold = 25
+	metabolization_rate = 0.5
+
+/datum/reagent/medicine/naloxone/on_mob_life(mob/living/M)
+	if(!overdosed)
+		for(var/I in M.reagents.reagent_list)
+			if(I == src)
+				continue
+			var/datum/reagent/R = I
+			R.overdose_threshold = INFINITY
+			if(R.overdosed && R.current_cycle < 5)	//10 seconds of overdose curing
+				R.overdosed = FALSE
+	..()
+	. = 1
+
+/datum/reagent/medicine/naloxone/on_mob_delete(mob/M)
+	..()
+	for(var/I in M.reagents.reagent_list)
+		if(I == src)
+			continue
+		var/datum/reagent/R = I
+		R.overdose_threshold = initial(R.overdose_threshold)
+
+/datum/reagent/medicine/naloxone/overdose_start(mob/living/M, suppress_message = FALSE)
+	if(!suppress_message)
+		M << "<span class='userdanger'>You feel like you took too much of [src]... And everything else!</span>"
+	return TRUE
+
+/datum/reagent/medicine/naloxone/overdose_process(mob/living/M)
+	for(var/I in M.reagents.reagent_list)
+		if(I == src)
+			continue
+		var/datum/reagent/R = I
+		if(!R.overdosed)
+			R.overdosed = TRUE
+			R.overdose_start(M, TRUE)
+	return TRUE
+
+/datum/reagent/medicine/naloxone/addiction_act_stage1(mob/living/M)
+	..()
+	for(var/I in M.reagents.reagent_list)
+		if(I == src)
+			continue
+		var/datum/reagent/R = I
+		if(!R.addiction_stage)
+			R.addiction_act_stage1(M, TRUE)
+
+/datum/reagent/medicine/naloxone/addiction_act_stage2(mob/living/M)
+	..()
+	for(var/I in M.reagents.reagent_list)
+		if(I == src)
+			continue
+		var/datum/reagent/R = I
+		if(!R.addiction_stage)
+			R.addiction_act_stage2(M, TRUE)
+
+/datum/reagent/medicine/naloxone/addiction_act_stage3(mob/living/M)
+	..()
+	for(var/I in M.reagents.reagent_list)
+		if(I == src)
+			continue
+		var/datum/reagent/R = I
+		if(!R.addiction_stage)
+			R.addiction_act_stage3(M, TRUE)
+
+/datum/reagent/medicine/naloxone/addiction_act_stage4(mob/living/M)
+	..()
+	for(var/I in M.reagents.reagent_list)
+		if(I == src)
+			continue
+		var/datum/reagent/R = I
+		if(!R.addiction_stage)
+			R.addiction_act_stage4(M, TRUE)
