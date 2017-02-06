@@ -182,7 +182,8 @@
 		return FALSE
 	if(state != 2)
 		return FALSE
-	if(usepower(active_power_usage))
+	if(avail(active_power_usage))
+		add_load(active_power_usage)
 		fire_beam()
 
 /obj/machinery/power/emitter/proc/fire_beam()
