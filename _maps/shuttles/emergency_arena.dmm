@@ -1,0 +1,72 @@
+"a" = (/turf/closed/indestructible/necropolis,/area/lavaland/underground/shuttle_arena)
+"b" = (/turf/open/indestructible/necropolis,/area/lavaland/underground/shuttle_arena)
+"c" = (/obj/effect/forcefield/arena_shuttle,/turf/open/indestructible/necropolis,/area/lavaland/underground/shuttle_arena)
+"d" = (/turf/open/floor/plating/lava/smooth,/area/lavaland/underground/shuttle_arena)
+"e" = (/obj/effect/landmark/shuttle_arena_entrance,/turf/open/indestructible/necropolis,/area/lavaland/underground/shuttle_arena)
+"f" = (/obj/effect/light_emitter,/turf/open/indestructible/necropolis,/area/lavaland/underground/shuttle_arena)
+"g" = (/turf/open/space,/area/space)
+"h" = (/turf/closed/indestructible/necropolis,/area/shuttle/escape)
+"i" = (/turf/open/indestructible{tag = "icon-cult"; icon_state = "cult"},/area/shuttle/escape)
+"j" = (/obj/structure/closet/crate/necropolis/dragon,/turf/open/indestructible{tag = "icon-cult"; icon_state = "cult"},/area/shuttle/escape)
+"k" = (/turf/open/indestructible/necropolis,/area/shuttle/escape)
+"l" = (/obj/structure/fluff/drake_statue,/turf/open/indestructible{tag = "icon-cult"; icon_state = "cult"},/area/shuttle/escape)
+"m" = (/obj/structure/closet/crate/necropolis/tendril,/turf/open/indestructible/necropolis,/area/shuttle/escape)
+"n" = (/obj/structure/fluff/drake_statue,/turf/open/indestructible/necropolis,/area/shuttle/escape)
+"o" = (/obj/effect/forcefield/arena_shuttle_entrance,/turf/open/indestructible/necropolis,/area/shuttle/escape)
+"p" = (/obj/effect/forcefield/arena_shuttle_entrance,/obj/docking_port/mobile/emergency{name = "The Arena"; timid = 1},/turf/open/indestructible/necropolis,/area/shuttle/escape)
+"q" = (/obj/effect/landmark/shuttle_arena_safe,/turf/open/indestructible/necropolis,/area/shuttle/escape)
+"r" = (/obj/effect/landmark/shuttle_arena_safe,/turf/open/indestructible{tag = "icon-cult"; icon_state = "cult"},/area/shuttle/escape)
+"s" = (/obj/structure/healingfountain,/turf/open/indestructible/necropolis,/area/shuttle/escape)
+
+(1,1,1) = {"
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+abbbbabbbbbbbbbbbaaaccccaaabbbbbbbbbbbbbbbbbbbbdda
+abbbebbbbbbbbbbebaaabbbbaaabbbbbbbbbbbbbbbbbbbbdda
+abbbbbbbbbbbbbbbbaaabbbbaaabbbbbbbebbbbbbbbbbbbbba
+aabbbabbfbbbbbbbbbaabbbbaabbbbbbbbbbbbbbabbbbbbbba
+abbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbabbbebbbba
+abbbbbbbbbbbbabbbbbbbbbbbbbbbbbbbbbbbfbbabbbbbbbba
+abbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbabbbbbbbba
+abbbbbbbbbbbbbbbbbbbbbbbbbebbaabbbbbbbbbaaaaaabbba
+abbbbbabbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbba
+abbbbbbbbbbbbebbbbbbbddbbbbbbbbbbbbbbbbbbbbbbbbbba
+abbebbdddbbbbbbbbbbbbddbbbbbbbbbbbbbbbbbbbbbbbbbba
+abbbbbdddbbbbbbbbbbbbbddbbbbbbbbbbaabbbbbbbbbfbbba
+abbbbbdddbbbbaabbbbbbbbddbbbbbbbbbaabbbbbbbbbbbbba
+abbbbbbddbbbbbfbbbbbbbbbbbbbbbbbbbaabbbbbbbbbbbbba
+abbbbbbbdbbbbbbbbbbbbbbbbbbbbbbbbbaabbbbbbbbbbbbba
+abbbbbbbbbbbbbbbebbbbbbbbbbbbbbbbbaabbbbbbbebbbbba
+abbbaaabbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbba
+abbbbbabbbbbbbbbbbbbbbbbbbbbbbbebbbbbbbbbbbbbbbbba
+abbbbbbbbbbbbbbbbbbbbddddbbbbabbbbbbbbbbbbbbbbbbba
+abbbbbbbbbbbbbbbbbbbbddddbbbbabbbbbbbbbbbbbbbbbbba
+abbbbbebbbbbbbbbbbbbbbbbbbbbbabbbbbbbbfbbbbbbbbbba
+abbbbbbbbbbbbbbddbbbbbbbbbbbbabbbbbbbbebbbbbbbbbba
+abbbbbbbbbbbbbbddbbbbbbbbbbbbabbbbbbbbbbbbbbbbddda
+abbebbbbbbbbbdddbbbbbbbbbbbbbabbbbbbbbbbbbbbbbddda
+abbbbbbbbbbbddddbbbbbbbbbbaaaaabbbbbbbbbbbbbbbddda
+aaaaaaaaaaaaadbbbbbbbbbbbbaaaaabbbbbbbbbbbbaabddda
+ggggggggggggabbbbbbbbbbbbbbbbfbbbbbbbbbbbbbaebddda
+hhhhhhhhhhhgaaaaaabbbbebbbbbbbbbebbbbbbbbbbabbddda
+hhiijjjjiihgabbbbbbbbbbbbbbbbbbbbbbbbbbbbbbabbddda
+hhklijjilkhgabbbbbbbbbbbbbbbbbbbbbbbbbbbddddddddda
+hhkmiiiimkhgabbbbbbbbbbbbbbbbbbbbbbbbbbbddddddddda
+hhkkkkkkkkhgabbbbbbbbbbbbbbbbbbbbbbbbbbbddddddddda
+hhknkkkknkhgabbbbbbbbbbbbdddbbbbbbbbbbbbddddddddda
+hhkmkkkkmkhgabbbbbbbbdddddddbbbbbbbbbbbbddddddddda
+ohkkkkkkkkhgabbbbbbbddbbbdddbbbbbbabbbbbbbbbbdddda
+hhknkkkknkhgabbbbbbbdbbbbbbbbbbbbbabbbbbbbbbbdddda
+phkmkkkkmkhgabbebbbbbbbbbbbbbbbbbbabaaabbbbbbdddda
+hhkkkkkkkkhgabbbbbbbbbbbbbbbbbbbbbabbbabbbbbbbbdda
+hhklikkknkhgabbbbbbbbbbbbbbbbbbebbabbeabbbbbbbbdda
+hhkmkkkkmkhgabbbbbbbbbbbbbbbbbbbbbaaaaaaabbbbbbbba
+hhkkkkkkkkhgabbbbbbaaaaaabbbbbbbbbabbbbbbbfbbbbbba
+hhknkkkinkhgabbbbbbbbbbbabbbbbfbbbabbbbbbbbbbbbbba
+ohkmkkkkmkhgabbbbbbbbbebabbbbbbbbbbbbbbbbbbbbbebba
+hhkkkkkkkkhgabbbbbbabbbbabbbbbbbbbbbbbbbbbbbbbbbba
+ohknkkkknkhgabbbbbbaaaaaabbbbbbbbbbbbbbbbbbbbbbbba
+hhqqqqqqqqhgabbbbbbbbbbbbbbbbbbbbbbbbbbbbbbaaabbba
+hhrqqqqqqrhgabbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbba
+hhssssssshhgafbbbbbbbbbbbebbbbbbbbbbbbbbebbbbbbbba
+ghhhhhhhhhggaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+"}

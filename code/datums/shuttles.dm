@@ -73,6 +73,19 @@
 	admin_notes = "Due to the limited space for non paying crew, this shuttle may cause a riot."
 	credit_cost = 10000
 
+
+/datum/map_template/shuttle/emergency/arena
+	suffix = "arena"
+	name = "The Arena"
+	description = "The crew must pass through an otherworldy arena to board this shuttle. Expect massive casualties. The source of the Bloody Signal must be tracked down and eliminated to unlock this shuttle."
+	admin_notes = "RIP AND TEAR."
+	credit_cost = 10000
+
+/datum/map_template/shuttle/emergency/arena/prerequisites_met()
+	if("bubblegum" in SSshuttle.shuttle_purchase_requirements_met)
+		return TRUE
+	return FALSE
+
 /datum/map_template/shuttle/emergency/birdboat
 	suffix = "birdboat"
 	name = "Birdboat Station Emergency Shuttle"
