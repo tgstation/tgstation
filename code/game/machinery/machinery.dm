@@ -535,6 +535,8 @@ Class Procs:
 				src.visible_message("<span class='danger'>The [src] printer beeps with a message: PC LOAD LETTER</span>")
 			else
 				src.visible_message("<span class='danger'>The [src] printer beeps with a message: MEMORY FULL</span>")
+			if(item)
+				qdel(item)
 			return FALSE // Print job can not print
 		printer_spooler[++printer_spooler.len] = list(title, text, printer, item)
 		if(!printing)

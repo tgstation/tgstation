@@ -435,13 +435,11 @@ What a mess.*/
 
 						var/info = stripped_multiline_input(usr, "Please input a description for the poster:", "Print Wanted Poster", default_description, null)
 						if(info)
-							playsound(loc, 'sound/items/poster_being_created.ogg', 100, 1)
-							printing = 1
-							sleep(30)
-							if((istype(active1, /datum/data/record) && data_core.general.Find(active1)))//make sure the record still exists.
-								var/obj/item/weapon/photo/photo = active1.fields["photo_front"]
-								new /obj/item/weapon/poster/legit/wanted(src.loc, photo.img, wanted_name, info)
-							printing = 0
+							var/obj/item/weapon/photo/photo = active1.fields["photo_front"]
+							var/obj/item/weapon/poster/legit/wanted/P = new/obj/item/weapon/poster/legit/wanted(src.loc, photo.img, wanted_name, info)
+							P.forceMove(src)
+							new_printjob(item = P)
+
 
 //RECORD DELETE
 			if("Delete All Records")

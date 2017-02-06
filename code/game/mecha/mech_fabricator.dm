@@ -158,6 +158,7 @@
 	add_overlay("fab-active")
 	use_power = 2
 	updateUsrDialog()
+	playsound(src.loc, "sound/machines/printer/ambigious3d/medium.ogg", 100, 1) // !P@
 	sleep(get_construction_time_w_coeff(D))
 	use_power = 1
 	overlays -= "fab-active"

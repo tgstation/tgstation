@@ -439,7 +439,8 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 		var/P = being_built.build_path //lets save these values before the spawn() just in case. Nobody likes runtimes.
 
 		coeff *= being_built.lathe_time_factor
-
+		if(linked_lathe && g2g)
+			playsound(src.loc, "sound/machines/printer/ambigious3d/medium.ogg", 100, 1) // !P@
 		spawn(32*coeff*amount**0.8)
 			if(linked_lathe)
 				if(g2g) //And if we only fail the material requirements, we still spend time and power
@@ -513,6 +514,8 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				linked_imprinter.reagents.remove_reagent(R, being_built.reagents_list[R]/coeff)
 
 		var/P = being_built.build_path //lets save these values before the spawn() just in case. Nobody likes runtimes.
+		if(linked_imprinter && g2g)
+			playsound(src.loc, "sound/machines/printer/ambigious3d/short.ogg", 100, 1) // !P@
 		spawn(16)
 			if(linked_imprinter)
 				if(g2g)
