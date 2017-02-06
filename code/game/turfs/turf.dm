@@ -21,8 +21,13 @@
 
 	var/explosion_level = 0	//for preventing explosion dodging
 	var/explosion_id = 0
-	
+
 	var/list/decals
+
+/turf/SDQL_update(var/list/vars_list)
+	if(("x" in vars_list) || ("y" in vars_list) || ("z" in vars_list))
+		return FALSE
+	. = ..()
 
 /turf/New()
 	..()
