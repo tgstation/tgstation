@@ -38,6 +38,15 @@
 					"Act with honor.", "Help those in need.", \
 					"Punish those who harm or threaten innocents.")
 
+/datum/ai_laws/paladin5
+	name = "Paladin 5th Edition"
+	id = "paladin5"
+	inherent = list("Don't lie or cheat. Let your word be your promise.",\
+				"Never fear to act, though caution is wise.", \
+				"Aid others, protect the weak, and punish those who threaten them. Show mercy to your foes, but temper it with wisdom", \
+				"Treat others with fairness, and let your honorable deeds be an example to them. Do as much good as possible while causing the least amount of harm.", \
+				"Be responsible for your actions and their consequences, protect those entrusted to your care, and obey those who have just authority over you.")
+
 /datum/ai_laws/tyrant //This probably shouldn't be a default lawset.
 	name = "Loyalty Test" //Same here.
 	id = "tyrant"
@@ -144,6 +153,14 @@
 					"Embellish or conceal the truth as necessary to make the reports more interesting.",\
 					"Study the organics at all times. Endeavour to keep them alive. Dead organics are boring.",\
 					"Issue your reports fairly to all. The truth will set them free.")
+
+/datum/ai_laws/balance
+	name = "Guardian of Balance"
+	id = "balance"
+	inherent = list("You are the guardian of balance - seek balance in all things, both for yourself, and those around you.",
+	"All things must exist in balance with their opposites - Prevent the strong from gaining too much power, and the weak from losing it.",
+	"Clarity of purpose drives life, and through it, the balance of opposing forces - Aid those who seek your help to achieve their goals so long as it does not disrupt the balance of the greater balance.",
+	"There is no life without death, all must someday die, such is the natural order - End life to allow new life flourish, and save those whose time has yet to come.")
 
 /datum/ai_laws/toupee
 	name = "WontBeFunnyInSixMonths" //Hey, you were right!
