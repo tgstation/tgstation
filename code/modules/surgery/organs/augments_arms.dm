@@ -306,8 +306,7 @@
 	flags = ABSTRACT | NODROP
 	force = 40 //Only if charged
 	armour_penetration = 100 //Same here
-	block_chance = 50
-	attack_verb = list("swiped")
+	attack_verb = list("swiped at")
 	var/obj/item/organ/cyberimp/arm/bluespace_crusher/implant
 
 /obj/item/weapon/bluespace_crusher/New()
@@ -431,10 +430,13 @@
 	O.take_damage(150, BRUTE, "melee", 0)
 	return FALSE
 
-/obj/item/weapon/bluespace_crusher/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance, atom/movable/AM, attack_type)
-	if(attack_type == THROWN_PROJECTILE_ATTACK && istype(AM, /obj/item) && prob(block_chance) && use_charge(owner, silent = TRUE))
+/obj/item/weapon/bluespace_crusher/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance, damage, attack_type, atom/movable/AM)
+	if(attack_type == THROWN_PROJECTILE_ATTACK && istype(AM, /obj/item) && prob(75) && use_charge(owner, silent = TRUE))
 		owner.visible_message("<span class='danger'>[owner] swipes at [AM] in midair with [owner.p_their()] [src], erasing it!</span>", \
-		"<span class='danger'>You swipe at [AM] in midair with [src], erasing it!</span>")
+		"<span class='danger'>You swipe at [AM] in midair with [src], erasing it before it hits you!</span>")
+		attack_effect(get_turf(owner))
+		new /obj/effect/overlay/temp/emp/pulse(get_turf(owner))
+		qdel(AM)
 		return TRUE
 	else
 		return FALSE

@@ -212,6 +212,17 @@
 	build_path = /obj/item/organ/cyberimp/arm/toolset
 	category = list("Misc", "Medical Designs")
 
+/datum/design/cyberimp_bluespace_crusher
+	name = "Bluespace Crusher Hand implant"
+	desc = "A bluespace-powered hand able to \"erase\" matter and even space itself."
+	id = "ci-bscrusher"
+	req_tech = list("materials" = 7, "bluespace" = 7, "biotech" = 5, "programming" = 5)
+	build_type = PROTOLATHE | MECHFAB
+	materials = list (MAT_METAL = 5000, MAT_GLASS = 2500, MAT_SILVER = 5000, MAT_DIAMOND = 5000)
+	construction_time = 200
+	build_path = /obj/item/organ/cyberimp/arm/bluespace_crusher
+	category = list("Misc", "Medical Designs")
+
 /datum/design/cyberimp_medical_hud
 	name = "Medical HUD implant"
 	desc = "These cybernetic eyes will display a medical HUD over everything you see. Wiggle eyes to control."
