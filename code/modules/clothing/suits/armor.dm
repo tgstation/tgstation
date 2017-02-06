@@ -221,6 +221,12 @@
 		return 1
 	return 0
 
+/obj/item/clothing/suit/armor/reactive/teleport/adv
+	rad_amount = 0
+	reactivearmor_cooldown_duration = 0
+	tele_range = 8
+	hit_reaction_chance = 70
+
 /obj/item/clothing/suit/armor/reactive/fire
 	name = "reactive incendiary armor"
 	desc = "An experimental suit of armor with a reactive sensor array rigged to a flame emitter. For the stylish pyromaniac."
