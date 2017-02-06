@@ -19,7 +19,7 @@
 			// messenging the client
 			malfhacked(malfhack)
 
-		if(!eyeobj || qdeleted(eyeobj) || !eyeobj.loc)
+		if(!eyeobj || QDELETED(eyeobj) || !eyeobj.loc)
 			view_core()
 
 		if(machine)

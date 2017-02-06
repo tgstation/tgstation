@@ -28,6 +28,7 @@
 	var/max_distance = 13
 	var/mob/living/wizard
 	var/turf/start_turf
+	notify = FALSE
 
 /obj/effect/immovablerod/wizard/Move()
 	if(get_dist(start_turf, get_turf(src)) >= max_distance)

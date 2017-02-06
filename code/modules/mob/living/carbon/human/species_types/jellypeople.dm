@@ -4,7 +4,6 @@
 	id = "jelly"
 	default_color = "00FF90"
 	say_mod = "chirps"
-	eyes = "jelleyes"
 	species_traits = list(MUTCOLORS,EYECOLOR,NOBLOOD,VIRUSIMMUNE,TOXINLOVER)
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/slime
 	exotic_blood = "slimejelly"
@@ -99,10 +98,8 @@
 	name = "Slimeperson"
 	id = "slime"
 	default_color = "00FFFF"
-	darksight = 3
 	species_traits = list(MUTCOLORS,EYECOLOR,HAIR,FACEHAIR,NOBLOOD,VIRUSIMMUNE, TOXINLOVER)
 	say_mod = "says"
-	eyes = "eyes"
 	hair_color = "mutcolor"
 	hair_alpha = 150
 	ignored_by = list(/mob/living/simple_animal/slime)
@@ -248,10 +245,10 @@
 	var/list/data = list()
 	data["bodies"] = list()
 	for(var/b in SS.bodies)
-		if(!b || qdeleted(b) || !isslimeperson(b))
+		var/mob/living/carbon/human/body = b
+		if(!body || QDELETED(body) || !isslimeperson(body))
 			SS.bodies -= b
 			continue
-		var/mob/living/carbon/human/body = b
 
 		var/list/L = list()
 		// HTML colors need a # prefix
@@ -311,7 +308,7 @@
 			var/mob/living/carbon/human/selected = locate(params["ref"])
 			if(!(selected in SS.bodies))
 				return
-			if(!selected || qdeleted(selected) || !isslimeperson(selected))
+			if(!selected || QDELETED(selected) || !isslimeperson(selected))
 				SS.bodies -= selected
 				return
 			if(M.current == selected)

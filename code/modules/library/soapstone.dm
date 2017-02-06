@@ -36,6 +36,7 @@ var/global/list/soapstone_suffixes = list() //Read from "strings/soapstone_suffi
 		"Musings" = strings(SOAPSTONE_SUFFIX_FILE, "Musings"), \
 		)
 	random_name()
+	check_name() // could start empty
 
 /obj/item/soapstone/proc/random_name()
 	name = pick("soapstone", "chisel", "chalk", "magic marker")
@@ -68,18 +69,20 @@ var/global/list/soapstone_suffixes = list() //Read from "strings/soapstone_suffi
 	if(!good_chisel_message_location(T))
 		user << "<span class='warning'>You can't write there!</span>"
 		return
-	var/obj/structure/chisel_message/msg = locate(/obj/structure/chisel_message) in T
-	if(msg)
-		if(msg.creator_key != user.ckey)
-			user << "<span class='warning'>You can't write there!</span>"
-			return
-		if(alert(user, "Erase this message?", name, "Yes", "No") == "Yes")
-			user.visible_message("<span class='notice'>[user] swipes away [msg].</span>", "<span class='notice'>You sweep away [msg].</span>")
-			playsound(msg, 'sound/items/gavel.ogg', 50, 1)
-			msg.persists = 0
-			qdel(msg)
-			refund_use()
-			return
+
+	if(already_message)
+		user.visible_message("<span class='notice'>[user] starts erasing [already_message].</span>", "<span class='notice'>You start erasing [already_message].</span>", "<span class='italics'>You hear a [w_chipping] sound.</span>")
+		playsound(loc, 'sound/items/gavel.ogg', 50, 1, -1)
+
+		// Removing our own messages refunds a charge
+
+		if(do_after(user, tool_speed, target=target))
+			user.visible_message("<span class='notice'>[user] has erased [already_message].</span>", "<span class='notice'>You erased [already_message].</span>")
+			already_message.persists = FALSE
+			qdel(already_message)
+			playsound(loc, 'sound/items/gavel.ogg', 50, 1, -1)
+			if(our_message)
+				refund_use()
 		return
 	var/prefix = input(user, "Choose a prefix for your message.", name) as null|anything in soapstone_prefixes
 	if(!prefix)
@@ -113,18 +116,19 @@ var/global/list/soapstone_suffixes = list() //Read from "strings/soapstone_suffi
 		return
 
 	remaining_uses--
-	if(!remaining_uses)
-		non_dull_name = name
-		name = "[w_dull] [name]"
+	check_name()
 
 /obj/item/soapstone/proc/refund_use()
 	if(remaining_uses == -1)
 		return
-	var/was_dull = !remaining_uses
 	remaining_uses++
+	check_name()
 
-	if(was_dull)
+/obj/item/soapstone/proc/check_name()
+	if(remaining_uses)
 		name = non_dull_name
+	else
+		name = "[w_dull] [name]"
 
 /* Persistent engraved messages, etched onto the station turfs to serve
    as instructions and/or memes for the next generation of spessmen.
@@ -135,6 +139,9 @@ var/global/list/soapstone_suffixes = list() //Read from "strings/soapstone_suffi
 
 /obj/item/soapstone/infinite
 	remaining_uses = -1
+
+/obj/item/soapstone/empty
+	remaining_uses = 0
 
 /proc/good_chisel_message_location(turf/T)
 	if(!T)
