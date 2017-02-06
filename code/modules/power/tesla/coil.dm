@@ -90,9 +90,9 @@
 	if((last_zap + zap_cooldown) > world.time)
 		return FALSE
 	last_zap = world.time
-	var/coeff = (50 - (input_power_multiplier * 8))
+	var/coeff = (20 - ((input_power_multiplier - 1) * 5))
 	coeff = max(coeff, 10)
-	var/shock_coeff = (10 - (input_power_multiplier*2))
+	var/shock_coeff = (4 - (input_power_multiplier - 1)
 	shock_coeff = max(shock_coeff, 2)
 	var/power = (powernet.avail/coeff)
 	add_load(power)
