@@ -246,7 +246,13 @@ var/last_irc_status = 0
 		if(ticker && ticker.round_end_sound)
 			world << sound(ticker.round_end_sound)
 		else
-			world << sound(pick('sound/AI/newroundsexy.ogg','sound/misc/apcdestroyed.ogg','sound/misc/bangindonk.ogg','sound/misc/leavingtg.ogg', 'sound/misc/its_only_game.ogg', 'sound/misc/yeehaw.ogg')) // random end sounds!! - LastyBatsy
+			world << sound(pick('sound/AI/newroundsexy.ogg',
+			'sound/misc/apcdestroyed.ogg',
+			'sound/misc/bangindonk.ogg',
+			'sound/misc/leavingtg.ogg',
+			'sound/misc/its_only_game.ogg',
+			'sound/misc/yeehaw.ogg',
+			'sound/misc/disappointed.ogg')) // random end sounds!! - LastyBatsy
 	if(blackbox)
 		blackbox.save_all_data_to_sql()
 	sleep(soundwait)

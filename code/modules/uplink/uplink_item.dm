@@ -1131,15 +1131,15 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 
 
 /datum/uplink_item/cyber_implants/thermals
-	name = "Thermal Vision Implant"
+	name = "Thermal eyes"
 	desc = "These cybernetic eyes will give you thermal vision. Comes with a free autoimplanter."
-	item = /obj/item/organ/cyberimp/eyes/thermals
+	item = /obj/item/organ/eyes/robotic/thermals
 	cost = 8
 
 /datum/uplink_item/cyber_implants/xray
 	name = "X-Ray Vision Implant"
 	desc = "These cybernetic eyes will give you X-ray vision. Comes with an autoimplanter."
-	item = /obj/item/organ/cyberimp/eyes/xray
+	item = /obj/item/organ/eyes/robotic/xray
 	cost = 10
 
 /datum/uplink_item/cyber_implants/antistun
@@ -1165,6 +1165,14 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 /datum/uplink_item/role_restricted
 	category = "Role-Restricted"
 	exclude_modes = list(/datum/game_mode/nuclear)
+
+/datum/uplink_item/role_restricted/ez_clean_bundle
+	name = "EZ Clean Grenade Bundle"
+	desc = "A box with three cleaner grenades using the trademark Waffle Co. formula. Serves as a cleaner and causes acid damage to anyone standing nearby. The acid only affects carbon-based creatures."
+	item = /obj/item/weapon/storage/box/syndie_kit/ez_clean
+	cost = 6
+	surplus = 20
+	restricted_roles = list("Janitor")
 
 /datum/uplink_item/role_restricted/his_grace
 	name = "His Grace"

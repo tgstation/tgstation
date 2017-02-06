@@ -6,6 +6,9 @@ var/list/admin_ranks = list()								//list of all admin_rank datums
 	var/list/adds
 	var/list/subs
 
+/datum/admin_rank/SDQL_update()
+	return FALSE	//Nice try trivialadmin!
+
 /datum/admin_rank/New(init_name, init_rights, list/init_adds, list/init_subs)
 	name = init_name
 	switch(name)

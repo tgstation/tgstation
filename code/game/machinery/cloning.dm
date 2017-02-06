@@ -382,7 +382,7 @@
 
 /obj/machinery/clonepod/ex_act(severity, target)
 	..()
-	if(!qdeleted(src))
+	if(!QDELETED(src))
 		locked = FALSE
 		go_out()
 

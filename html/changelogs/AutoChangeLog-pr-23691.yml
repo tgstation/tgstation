@@ -1,0 +1,4 @@
+author: "JJRcop"
+delete-after: True
+changes: 
+  - tweak: "Adds 4% chance when assigning a valentines day date to also assign someone else to the same date, but your date will still have you as their only date."

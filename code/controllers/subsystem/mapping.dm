@@ -2,7 +2,7 @@ var/datum/subsystem/mapping/SSmapping
 
 /datum/subsystem/mapping
 	name = "Mapping"
-	init_order = 100000
+	init_order = 13
 	flags = SS_NO_FIRE
 	display_order = 50
 
@@ -57,7 +57,7 @@ var/datum/subsystem/mapping/SSmapping
 
 /datum/subsystem/mapping/proc/check_nuke_threats()
 	for(var/datum/d in nuke_threats)
-		if(!istype(d) || qdeleted(d))
+		if(!istype(d) || QDELETED(d))
 			nuke_threats -= d
 
 	var/threats = nuke_threats.len

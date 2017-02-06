@@ -1,0 +1,4 @@
+author: "Cyberboss"
+delete-after: True
+changes: 
+  - bugfix: "Wire, atmos, and disposal networks no longer work across hyperspace when on the border of a shuttle"
