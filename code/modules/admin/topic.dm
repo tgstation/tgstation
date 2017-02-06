@@ -1712,7 +1712,7 @@
 
 		var/punishment = input("Choose a punishment", "DIVINE SMITING") as null|anything in punishment_list
 
-		if(!punishment)
+		if(QDELETED(H) || !punishment)
 			return
 
 		switch(punishment)
