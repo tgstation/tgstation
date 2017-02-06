@@ -213,3 +213,9 @@
 	id = "tricordrazine"
 	results = list("tricordrazine" = 3)
 	required_reagents = list("bicaridine" = 1, "kelotane" = 1, "antitoxin" = 1)
+
+/datum/chemical_reaction/naloxone
+	name = "Naloxone"
+	id = "naloxone"
+	results = list("naloxone" = 2)
+	required_reagents = list("oxygen" = 3, "hydrogen" = 1, "ammonia" = 1)
