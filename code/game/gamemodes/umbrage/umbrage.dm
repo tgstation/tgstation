@@ -151,14 +151,14 @@ Idea and initial code by Xhuis (my 3rd gamemode now...)
 /proc/is_umbrage(datum/mind/M)
 	for(var/V in ticker.mode.umbrages)
 		var/datum/mind/T = V
-		if(T = M)
+		if(T == M)
 			return 1
 	return
 
 /proc/is_veil(datum/mind/M)
 	for(var/V in ticker.mode.veils)
 		var/datum/mind/T = V
-		if(T = M)
+		if(T == M)
 			return 1
 	return
 

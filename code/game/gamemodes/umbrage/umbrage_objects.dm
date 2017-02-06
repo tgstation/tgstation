@@ -43,9 +43,10 @@
 		qdel(src)
 		return
 	user.visible_message("<span class='warning'>[user] rips something out of [L]'s face!</span>", "<span class='velvet_bold'>...aranupdejc</span><br>\
-	<span class='boldannounce'>You devour [L]'s will. Your psi has been fully restored.</span><br>\
+	<span class='boldannounce'>You devour [L]'s will. Your psi has been fully restored, and your max psi has increased by 10.</span><br>\
 	<span class='warning'>[L] is now severely weakened and will take some time to recover.</span>")
 	playsound(L, 'sound/magic/devour_will_victim.ogg', 50, 0)
+	U.max_psi += 10
 	U.psi = U.max_psi
 	playsound(L, "bodyfall", 50, 1)
 	L << "<span class='userdanger'>You suddenly feel... empty. Thoughts try to form, but flit away. You slip into a deep, deep slumber...</span>"
@@ -72,7 +73,8 @@
 	desc = "A mass of purple, glowing tentacles."
 	icon_state = "dark_bead"
 	flags = NODROP
-	resistance_flags = FIRE_PROOF | LAVA_PROOF | UNACIDABLE | INDE
+	resistance_flags = FIRE_PROOF | LAVA_PROOF | UNACIDABLE | INDESTRUCTIBLE
+	var/datum/umbrage/linked_umbrage
 
 
 //Psionic barrier: Created during Divulge. Has a regenerating health pool and protects the umbrage from harm.
