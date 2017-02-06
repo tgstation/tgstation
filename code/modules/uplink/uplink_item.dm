@@ -1124,7 +1124,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 
 /datum/uplink_item/cyber_implants/spawn_item(turf/loc, obj/item/device/uplink/U)
 	if(item)
-		if(istype(item, /obj/item/organ/cyberimp))
+		if(istype(item, /obj/item/organ))
 			return new /obj/item/weapon/storage/box/cyber_implants(loc, item)
 		else
 			return ..()
