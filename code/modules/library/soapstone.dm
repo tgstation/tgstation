@@ -73,7 +73,7 @@ var/global/list/soapstone_suffixes = list() //Read from "strings/soapstone_suffi
 			return
 		else
 			if(alert(user, "Erase this message?", name, "Yes", "No") == "Yes")
-				visible_message("<span class='notice'>[user] erases [msg].</span>", "<span class='notice'>You permanently erase [msg].</span>")
+				user.visible_message("<span class='notice'>[user] erases [msg].</span>", "<span class='notice'>You permanently erase [msg].</span>")
 				playsound(T, 'sound/items/gavel.ogg', 50, 1)
 				refund_use()
 				msg.persists = 0
