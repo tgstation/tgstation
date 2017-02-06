@@ -344,8 +344,9 @@
 		cut_overlays()
 		set_light(0)
 	else if(on)
-		var/image/I = image(icon,"glowstick-glow",color)
-		add_overlay(I)
+		var/mutable_appearance/glowstick_overlay = mutable_appearance(icon, "glowstick-glow")
+		glowstick_overlay.color = color
+		add_overlay(glowstick_overlay)
 		item_state = "glowstick-on"
 		set_light(brightness_on)
 	else

@@ -135,7 +135,7 @@
 		icon_state = "[initial(icon_state)]"
 	cut_overlays()
 	if(bin_pen)
-		add_overlay(image(icon=bin_pen.icon,icon_state=bin_pen.icon_state))
+		add_overlay(mutable_appearance(bin_pen.icon, bin_pen.icon_state))
 
 /obj/item/weapon/paper_bin/construction
 	name = "construction paper bin"

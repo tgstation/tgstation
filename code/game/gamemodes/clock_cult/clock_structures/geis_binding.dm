@@ -42,8 +42,7 @@
 		icon_state = "geisbinding"
 		mob_layer = M.layer
 		layer = M.layer - 0.01
-		var/image/GB = new('icons/effects/clockwork_effects.dmi', src, "geisbinding_top", M.layer + 0.01)
-		add_overlay(GB)
+		add_overlay(mutable_appearance('icons/effects/clockwork_effects.dmi', "geisbinding_top", M.layer + 0.01))
 		for(var/obj/item/I in M.held_items)
 			M.dropItemToGround(I)
 		for(var/i in M.get_empty_held_indexes())

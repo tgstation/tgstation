@@ -392,7 +392,7 @@
 			return
 
 		if (CC.use(1))
-			add_overlay(image('icons/obj/economy.dmi',"coin_string_overlay"))
+			add_overlay("coin_string_overlay")
 			string_attached = 1
 			to_chat(user, "<span class='notice'>You attach a string to the coin.</span>")
 		else

@@ -73,8 +73,8 @@
 
 /obj/item/weapon/storage/bag/easterbasket/proc/countEggs()
 	cut_overlays()
-	add_overlay(image("icon" = icon, "icon_state" = "basket-grass", "layer" = -1))
-	add_overlay(image("icon" = icon, "icon_state" = "basket-egg[contents.len <= 5 ? contents.len : 5]", "layer" = -1))
+	add_overlay("basket-grass")
+	add_overlay("basket-egg[min(contents.len, 5)]")
 
 /obj/item/weapon/storage/bag/easterbasket/remove_from_storage(obj/item/W as obj, atom/new_location)
 	..()

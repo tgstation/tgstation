@@ -37,10 +37,10 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 	//These variables store hair data if the ghost originates from a species with head and/or facial hair.
 	var/hair_style
 	var/hair_color
-	var/image/hair_image
+	var/mutable_appearance/hair_overlay
 	var/facial_hair_style
 	var/facial_hair_color
-	var/image/facial_hair_image
+	var/mutable_appearance/facial_hair_overlay
 
 	var/updatedir = 1						//Do we have to update our dir as the ghost moves around?
 	var/lastsetting = null	//Stores the last setting that ghost_others was set to, for a little more efficiency when we update ghost images. Null means no update is necessary
@@ -161,13 +161,13 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 		ghost_accs = client.prefs.ghost_accs
 		ghost_others = client.prefs.ghost_others
 
-	if(hair_image)
-		cut_overlay(hair_image)
-		hair_image = null
+	if(hair_overlay)
+		cut_overlay(hair_overlay)
+		hair_overlay = null
 
-	if(facial_hair_image)
-		cut_overlay(facial_hair_image)
-		facial_hair_image = null
+	if(facial_hair_overlay)
+		cut_overlay(facial_hair_overlay)
+		facial_hair_overlay = null
 
 
 	if(new_form)
@@ -188,19 +188,19 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 		if(facial_hair_style)
 			S = GLOB.facial_hair_styles_list[facial_hair_style]
 			if(S)
-				facial_hair_image = image("icon" = S.icon, "icon_state" = "[S.icon_state]", "layer" = -HAIR_LAYER)
+				facial_hair_overlay = mutable_appearance(S.icon, "[S.icon_state]", -HAIR_LAYER)
 				if(facial_hair_color)
-					facial_hair_image.color = "#" + facial_hair_color
-				facial_hair_image.alpha = 200
-				add_overlay(facial_hair_image)
+					facial_hair_overlay.color = "#" + facial_hair_color
+				facial_hair_overlay.alpha = 200
+				add_overlay(facial_hair_overlay)
 		if(hair_style)
 			S = GLOB.hair_styles_list[hair_style]
 			if(S)
-				hair_image = image("icon" = S.icon, "icon_state" = "[S.icon_state]", "layer" = -HAIR_LAYER)
+				hair_overlay = mutable_appearance(S.icon, "[S.icon_state]", -HAIR_LAYER)
 				if(hair_color)
-					hair_image.color = "#" + hair_color
-				hair_image.alpha = 200
-				add_overlay(hair_image)
+					hair_overlay.color = "#" + hair_color
+				hair_overlay.alpha = 200
+				add_overlay(hair_overlay)
 
 /*
  * Increase the brightness of a color by calculating the average distance between the R, G and B values,
