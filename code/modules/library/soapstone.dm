@@ -69,21 +69,6 @@ var/global/list/soapstone_suffixes = list() //Read from "strings/soapstone_suffi
 	if(!good_chisel_message_location(T))
 		user << "<span class='warning'>You can't write there!</span>"
 		return
-
-	if(already_message)
-		user.visible_message("<span class='notice'>[user] starts erasing [already_message].</span>", "<span class='notice'>You start erasing [already_message].</span>", "<span class='italics'>You hear a [w_chipping] sound.</span>")
-		playsound(loc, 'sound/items/gavel.ogg', 50, 1, -1)
-
-		// Removing our own messages refunds a charge
-
-		if(do_after(user, tool_speed, target=target))
-			user.visible_message("<span class='notice'>[user] has erased [already_message].</span>", "<span class='notice'>You erased [already_message].</span>")
-			already_message.persists = FALSE
-			qdel(already_message)
-			playsound(loc, 'sound/items/gavel.ogg', 50, 1, -1)
-			if(our_message)
-				refund_use()
-		return
 	var/prefix = input(user, "Choose a prefix for your message.", name) as null|anything in soapstone_prefixes
 	if(!prefix)
 		return
