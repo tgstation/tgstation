@@ -1003,7 +1003,7 @@
 	if(!(M in buckled_mobs))
 		buckle_mob(M)
 
-/mob/living/silicon/robot/buckle_mob(mob/living/M, force = 0, check_loc = 1)
+/mob/living/silicon/robot/buckle_mob(mob/living/M, force = FALSE, check_loc = TRUE)
 	if(!riding_datum)
 		riding_datum = new /datum/riding/cyborg
 		riding_datum.ridden = src
@@ -1043,7 +1043,8 @@
 
 /mob/living/silicon/robot/proc/unequip_buckle_inhands(mob/living/carbon/user)
 	for(var/obj/item/cyborgride_offhand/O in user.contents)
-		if(O.ridden != src)	//This shouldn't EVER happen.
+		if(O.ridden != src)
+			CRASH("RIDING OFFHAND ON WRONG MOB")
 			continue
 		if(O.selfdeleting)
 			continue
