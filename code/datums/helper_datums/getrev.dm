@@ -77,17 +77,18 @@ var/global/datum/getrev/revdata = new()
 			world.log << "PR details download failed: null details returned"
 			return
 		CHECK_TICK
+	world.log << "PR details successfully downloaded"
 	has_pr_details = TRUE
 
 /datum/getrev/proc/GetTestMergeInfo()
 	if(!testmerge.len)
 		return ""
-	. = "The following pull requests are currently test merged:<br><br/>"
+	. = "The following pull requests are currently test merged:<br>"
 	for(var/line in testmerge)
 		var/details = ""
 		if(has_pr_details)
 			details = ": '" + html_encode(testmerge[line]["title"]) + "' by " + html_encode(testmerge[line]["user"]["login"])
-		. += "<a href='[config.githuburl]/pull/[line]'>#[line][details]</a><br></br>"
+		. += "<a href='[config.githuburl]/pull/[line]'>#[line][details]</a><br>"
 
 /client/verb/showrevinfo()
 	set category = "OOC"
