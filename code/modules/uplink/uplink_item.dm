@@ -1174,6 +1174,16 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	surplus = 20
 	restricted_roles = list("Janitor")
 
+/datum/uplink_item/role_restricted/RD
+	restricted_roles = list("Research Director")
+
+/datum/uplink_item/role_restricted/RD/RTA
+	name = "Advanced Reactive Teleportation Armor"
+	desc = "A perfected version of the Reactive Teleportation armor, with faster recharge cycles, removal of the radiation leak, increased reaction chance, and a bluespace sensor to prevent teleporting into space!"
+	item = /obj/item/clothing/armor/reactive/teleport/adv
+	cost = 18
+	surplus = 40	//This makes it rare right?
+
 // Pointless
 /datum/uplink_item/badass
 	category = "(Pointless) Badassery"
