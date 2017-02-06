@@ -55,11 +55,12 @@
 		removechains()
 
 /mob/living/simple_animal/hostile/guardian/beam/proc/cleardeletedchains()
-	if(summonerchain && qdeleted(summonerchain))
+	if(summonerchain && QDELETED(summonerchain))
 		summonerchain = null
 	if(enemychains.len)
 		for(var/chain in enemychains)
-			if(!chain || qdeleted(chain))
+			var/datum/cd = chain
+			if(!chain || QDELETED(cd))
 				enemychains -= chain
 
 /mob/living/simple_animal/hostile/guardian/beam/proc/shockallchains()

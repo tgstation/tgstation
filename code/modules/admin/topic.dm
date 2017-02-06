@@ -8,7 +8,7 @@
 	if(href_list["rejectadminhelp"])
 		if(!check_rights(R_ADMIN))
 			return
-		var/client/C = locate(href_list["rejectadminhelp"])
+		var/client/C = locate(href_list["rejectadminhelp"]) in clients
 		if(!C)
 			return
 		if (deltimer(C.adminhelptimerid))
@@ -22,6 +22,20 @@
 
 		message_admins("[key_name_admin(usr)] Rejected [C.key]'s admin help. [C.key]'s Adminhelp verb has been returned to them.")
 		log_admin("[key_name(usr)] Rejected [C.key]'s admin help.")
+
+	else if(href_list["icissue"])
+		var/client/C = locate(href_list["icissue"]) in clients
+		if(!C)
+			return
+
+		var/msg = "<font color='red' size='4'><b>- AdminHelp marked as IC issue! -</b></font><br>"
+		msg += "<font color='red'><b>Losing is part of the game!</b></font><br>"
+		msg += "<font color='red'>Your character will frequently die, sometimes without even a possibility of avoiding it. Events will often be out of your control. No matter how good or prepared you are, sometimes you just lose.</font>"
+
+		C << msg
+
+		message_admins("[key_name_admin(usr)] marked [C.key]'s admin help as an IC issue.")
+		log_admin("[key_name(usr)] marked [C.key]'s admin help as an IC issue.")
 
 	else if(href_list["stickyban"])
 		stickyban(href_list["stickyban"],href_list)

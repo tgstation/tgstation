@@ -107,9 +107,8 @@
 	if(!mob)
 		return						//this doesn't happen
 
-	var/ref_mob = "\ref[mob]"
 	var/ref_client = "\ref[src]"
-	msg = "<span class='adminnotice'><b><font color=red>HELP: </font><A HREF='?priv_msg=[ckey];ahelp_reply=1'>[key_name(src)]</A> (<A HREF='?_src_=holder;adminmoreinfo=[ref_mob]'>?</A>) (<A HREF='?_src_=holder;adminplayeropts=[ref_mob]'>PP</A>) (<A HREF='?_src_=vars;Vars=[ref_mob]'>VV</A>) (<A HREF='?_src_=holder;subtlemessage=[ref_mob]'>SM</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=[ref_mob]'>FLW</A>) (<A HREF='?_src_=holder;traitor=[ref_mob]'>TP</A>) (<A HREF='?_src_=holder;rejectadminhelp=[ref_client]'>REJT</A>):</b> [msg]</span>"
+	msg = "<span class='adminnotice'><b><font color=red>HELP: </font><A HREF='?priv_msg=[ckey];ahelp_reply=1'>[key_name(src)]</A> [ADMIN_QUE(mob)] [ADMIN_PP(mob)] [ADMIN_VV(mob)] [ADMIN_SM(mob)] [ADMIN_FLW(mob)] [ADMIN_TP(mob)] (<A HREF='?_src_=holder;rejectadminhelp=[ref_client]'>REJT</A>) (<A HREF='?_src_=holder;icissue=[ref_client]'>IC</A>):</b> [msg]</span>"
 
 	//send this msg to all admins
 
