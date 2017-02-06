@@ -29,7 +29,8 @@
 	var/maxcopies = 10	//how many copies can be copied at once- idea shamelessly stolen from bs12's copier!
 	var/greytoggle = "Greyscale"
 	var/mob/living/ass //i can't believe i didn't write a stupid-ass comment about this var when i first coded asscopy.
-	var/busy = 0
+	default_printer = "dot_matrix" // todo: Make copier sounds.
+	max_printjobs = 10 // Propper copiers/printers get decent queue sizes.
 
 /obj/machinery/photocopier/attack_ai(mob/user)
 	return attack_hand(user)
@@ -66,39 +67,39 @@
 	if(href_list["copy"])
 		if(copy)
 			for(var/i = 0, i < copies, i++)
-				if(toner > 0 && !busy && copy)
+				if(toner > 0 && printer_can_print(1))
 					var/copy_as_paper = 1
 					if(istype(copy, /obj/item/weapon/paper/contract/employment))
 						var/obj/item/weapon/paper/contract/employment/E = copy
 						var/obj/item/weapon/paper/contract/employment/C = new /obj/item/weapon/paper/contract/employment (loc, E.target.current)
 						if(C)
 							copy_as_paper = 0
-					if(copy_as_paper)
+							C.forceMove(src)
+							new_printjob(item = C)
+					if(copy_as_paper && (length(copy.info) > 0)) //Only print and add content if the copied doc has words on it
 						var/obj/item/weapon/paper/c = new /obj/item/weapon/paper (loc)
-						if(length(copy.info) > 0)	//Only print and add content if the copied doc has words on it
-							if(toner > 10)	//lots of toner, make it dark
-								c.info = "<font color = #101010>"
-							else			//no toner? shitty copies for you!
-								c.info = "<font color = #808080>"
-							var/copied = copy.info
-							copied = replacetext(copied, "<font face=\"[PEN_FONT]\" color=", "<font face=\"[PEN_FONT]\" nocolor=")	//state of the art techniques in action
-							copied = replacetext(copied, "<font face=\"[CRAYON_FONT]\" color=", "<font face=\"[CRAYON_FONT]\" nocolor=")	//This basically just breaks the existing color tag, which we need to do because the innermost tag takes priority.
-							c.info += copied
-							c.info += "</font>"
-							c.name = copy.name
-							c.fields = copy.fields
-							c.update_icon()
-							c.updateinfolinks()
-							toner--
-					busy = 1
-					sleep(15)
-					busy = 0
+						if(toner > 10)	//lots of toner, make it dark
+							c.info = "<font color = #101010>"
+						else			//no toner? shitty copies for you!
+							c.info = "<font color = #808080>"
+						var/copied = copy.info
+						copied = replacetext(copied, "<font face=\"[PEN_FONT]\" color=", "<font face=\"[PEN_FONT]\" nocolor=")	//state of the art techniques in action
+						copied = replacetext(copied, "<font face=\"[CRAYON_FONT]\" color=", "<font face=\"[CRAYON_FONT]\" nocolor=")	//This basically just breaks the existing color tag, which we need to do because the innermost tag takes priority.
+						c.info += copied
+						c.info += "</font>"
+						c.name = copy.name
+						c.fields = copy.fields
+						c.update_icon()
+						c.updateinfolinks()
+						toner--
+						c.forceMove(src)
+						new_printjob(item = c)
 				else
 					break
 			updateUsrDialog()
 		else if(photocopy)
 			for(var/i = 0, i < copies, i++)
-				if(toner >= 5 && !busy && photocopy)  //Was set to = 0, but if there was say 3 toner left and this ran, you would get -2 which would be weird for ink
+				if(toner >= 5 && printer_can_print(1))  //Was set to = 0, but if there was say 3 toner left and this ran, you would get -2 which would be weird for ink
 					var/obj/item/weapon/photo/p = new /obj/item/weapon/photo (loc)
 					var/icon/I = icon(photocopy.icon, photocopy.icon_state)
 					var/icon/img = icon(photocopy.img)
@@ -123,19 +124,17 @@
 					p.pixel_x = rand(-10, 10)
 					p.pixel_y = rand(-10, 10)
 					p.blueprints = photocopy.blueprints //a copy of a picture is still good enough for the syndicate
-					busy = 1
-					sleep(15)
-					busy = 0
+					p.forceMove(src)
+					new_printjob(item = p)
 				else
 					break
 		else if(doccopy)
 			for(var/i = 0, i < copies, i++)
-				if(toner > 5 && !busy && doccopy)
-					new /obj/item/documents/photocopy(loc, doccopy)
+				if(toner > 5 && printer_can_print(1))
+					var/obj/item/documents/photocopy/c = new/obj/item/documents/photocopy(loc, doccopy)
 					toner-= 6 // the sprite shows 6 papers, yes I checked
-					busy = 1
-					sleep(15)
-					busy = 0
+					c.forceMove(src)
+					new_printjob(item = c)
 				else
 					break
 			updateUsrDialog()
@@ -145,7 +144,7 @@
 				if(ishuman(ass) && (ass.get_item_by_slot(slot_w_uniform) || ass.get_item_by_slot(slot_wear_suit)))
 					usr << "<span class='notice'>You feel kind of silly, copying [ass == usr ? "your" : ass][ass == usr ? "" : "\'s"] ass with [ass == usr ? "your" : "their"] clothes on.</span>" //'
 					break
-				else if(toner >= 5 && !busy && check_ass()) //You have to be sitting on the copier and either be a xeno or a human without clothes on.
+				else if(toner >= 5 && printer_can_print(1) && check_ass()) //You have to be sitting on the copier and either be a xeno or a human without clothes on.
 					if(isalienadult(ass) || istype(ass,/mob/living/simple_animal/hostile/alien)) //Xenos have their own asses, thanks to Pybro.
 						temp_img = icon("icons/ass/assalien.png")
 					else if(ishuman(ass)) //Suit checks are in check_ass
@@ -170,9 +169,8 @@
 					ic.Blend(small_img,ICON_OVERLAY, 10, 13)
 					p.icon = ic
 					toner -= 5
-					busy = 1
-					sleep(15)
-					busy = 0
+					p.forceMove(src)
+					new_printjob(item = p)
 				else
 					break
 		updateUsrDialog()
@@ -200,7 +198,7 @@
 	else if(href_list["aipic"])
 		if(!isAI(usr))
 			return
-		if(toner >= 5 && !busy)
+		if(toner >= 5 && printer_can_print(1))
 			var/list/nametemp = list()
 			var/find
 			var/datum/picture/selection
@@ -225,9 +223,8 @@
 			p.pixel_x = rand(-10, 10)
 			p.pixel_y = rand(-10, 10)
 			toner -= 5	 //AI prints color pictures only, thus they can do it more efficiently
-			busy = 1
-			sleep(15)
-			busy = 0
+			p.forceMove(src)
+			new_printjob(item = p)
 		updateUsrDialog()
 	else if(href_list["colortoggle"])
 		if(greytoggle == "Greyscale")
