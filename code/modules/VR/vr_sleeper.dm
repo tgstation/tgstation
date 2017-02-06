@@ -129,7 +129,7 @@
 
 /obj/machinery/vr_sleeper/ui_data(mob/user)
 	var/list/data = list()
-	if(vr_human && !qdeleted(vr_human))
+	if(vr_human && !QDELETED(vr_human))
 		data["can_delete_avatar"] = TRUE
 		var/status
 		switch(user.stat)
