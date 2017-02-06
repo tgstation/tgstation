@@ -66,6 +66,20 @@ var/global/list/soapstone_suffixes = list() //Read from "strings/soapstone_suffi
 	var/turf/T = get_turf(target)
 	if(!proximity)
 		return
+	var/obj/structure/chisel_message/msg = locate() in T
+	if(msg)
+		if(msg.creator_key != user.ckey)
+			user << "<span class='warning'>There's already a message there!</span>"
+			return
+		else
+			if(alert(user, "Erase this message?", name, "Yes", "No") == "Yes")
+				visible_message("<span class='notice'>[user] erases [msg].</span>", "<span class='notice'>You permanently erase [msg].</span>")
+				playsound(T, 'sound/items/gavel.ogg', 50, 1)
+				refund_use()
+				msg.persists = 0
+				qdel(msg)
+				return
+			return
 	if(!good_chisel_message_location(T))
 		user << "<span class='warning'>You can't write there!</span>"
 		return
