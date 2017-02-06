@@ -21,6 +21,8 @@
 	//Sorting Variables
 	var/sortBy = "name"
 	var/order = 1 // -1 = Descending - 1 = Ascending
+	default_printer = "inkjet"
+	max_printjobs = 5
 
 
 /obj/machinery/computer/secure_data/attackby(obj/item/O, mob/user, params)

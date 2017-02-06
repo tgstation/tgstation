@@ -44,6 +44,9 @@
 							"Dinnerware",
 							"Imported"
 							)
+	// default_printer = "3d_printer" todo
+	default_printer = "inkjet" // Just to screw with people. Might change in later commit.
+	max_printjobs = 2 // The autolathe is pretty basic.
 
 /obj/machinery/autolathe/New()
 	..()
@@ -210,6 +213,7 @@
 				use_power(power)
 				icon_state = "autolathe"
 				flick("autolathe_n",src)
+				playsound(src.loc, "sound/machines/printer/ambigious3d/medium.ogg", 100, 1) // !P@
 				if(is_stack)
 					spawn(32*coeff)
 						use_power(power)

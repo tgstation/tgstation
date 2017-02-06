@@ -43,6 +43,26 @@ Class Variables:
          MAINT:8 -- machine is currently under going maintenance.
          EMPED:16 -- temporary broken by EMP pulse
 
+   printer_types (list) > (list)s
+      The available sounds, timings, and probabilities for printing in the following format for each element:
+      	"my_printer" = list(string/startSound, string/printSound, string/jamSound, number/warmupTime, number/printTimeTillEject, number/printTimeFinish, number/jamProb)
+
+      printTimeTillEject is how much time it takes until the paper is finally ejected
+      printTimeFinish is the remaining time until the printer is ready to process the next print job
+      jamProb is the probability of jamming
+
+      If a falsey value is given for sounds, a visible message replacement will be used.
+
+   default_printer (string)
+      The default set of sounds, timings, and probabilities called by name
+
+   max_printjobs (num)
+      The maxium amount of print jobs until the machine emits an error and rejects it
+      Zero for unlimited
+
+   printer_jam_time (num)
+      How long it takes until the print is unjammed
+
 Class Procs:
    New()                     'game/machinery/machine.dm'
 
@@ -90,7 +110,17 @@ Class Procs:
    is_operational()
 		Returns 0 if the machine is unpowered, broken or undergoing maintenance, something else if not
 
-	Compiled by Aygar
+   new_printjob(string/title, string/text, string/printer, obj/item)
+      Creates and queues a printjob to be done on the machine either with plain paper or any object.
+      Returns false if queuing failed for any reason, true otherwise.
+
+      Using item will suppress title, text, and paper generation.
+	  string/title is the title, or name, of the paper you wish to print.
+	  string/text is the text, or info, put onto the paper.
+	  string/printer is the name for the set of sounds, timings, and probablities to use for the printjob as avaiable in printer_types.
+	  obj/item is the object to be treated as if it was a print job. Suppresses title, text, and normal paper generation.
+
+   Compiled by Aygar
 */
 
 /obj/machinery
@@ -123,6 +153,22 @@ Class Procs:
 	var/interact_open = 0 // Can the machine be interacted with when in maint/when the panel is open.
 	var/interact_offline = 0 // Can the machine be interacted with while de-powered.
 	var/speed_process = 0 // Process as fast as possible?
+	// Machine Printing
+	// list/printer_spooler holds print jobs formated in list(string/title, string/text, string/printer, obj/item)
+	// See new_printjob for more information.
+	var/list/printer_spooler = list()
+	// boolean/printing if the printer is busy
+	var/printing = FALSE
+	var/list/printer_types = list(
+		"text_only" = list(0, 0, 0, 150, 200, 25, 10),
+		"inkjet" = list("sound/machines/printer/inkjet/start.ogg", "sound/machines/printer/inkjet/printing.ogg", 0, 63, 105, 25, 10),
+		"dot_matrix" = list(0, "sound/machines/printer/dotmatrix/printing.ogg", 0, 0, 60, 10, 0) // Dot matrix printers are bulletproof man
+	)
+	var/default_printer = "dot_matrix"
+	var/max_printjobs = 0
+	// boolean/printer_jammed to keep track if the printer needs to annouce it was unjammed
+	var/printer_jammed = FALSE
+	var/printer_jam_time = 50
 
 /obj/machinery/New()
 	if (!armor)
@@ -141,6 +187,7 @@ Class Procs:
 		STOP_PROCESSING(SSmachine, src)
 	else
 		STOP_PROCESSING(SSfastprocess, src)
+	printer_clear()
 	dropContents()
 	return ..()
 
@@ -450,6 +497,7 @@ Class Procs:
 
 //called on deconstruction before the final deletion
 /obj/machinery/proc/on_deconstruction()
+	printer_clear()
 	return
 
 /obj/machinery/allow_drop()
@@ -479,3 +527,109 @@ Class Procs:
 		emp_act(2)
 	else
 		ex_act(2)
+
+/obj/machinery/proc/new_printjob(title = "Printed Paper" , text = "", printer = default_printer, obj/item = null)
+	if(is_operational())
+		if(max_printjobs & printer_spooler.len >= max_printjobs)
+			if(prob(20))
+				src.visible_message("<span class='danger'>The [src] printer beeps with a message: PC LOAD LETTER</span>")
+			else
+				src.visible_message("<span class='danger'>The [src] printer beeps with a message: MEMORY FULL</span>")
+			return FALSE // Print job can not print
+		printer_spooler[++printer_spooler.len] = list(title, text, printer, item)
+		if(!printing)
+			var/list/cur_printer = printer_types[printer]
+			printing = TRUE
+			if(cur_printer[1])
+				playsound(src.loc, cur_printer[1], 100, 0)
+			else
+				src.visible_message("<span class='notice'>The [src] printer makes a noisy clatter as it warms up.</span>")
+			addtimer(CALLBACK(src, .proc/printer_warmed_up), cur_printer[4])
+		return TRUE // Print job has been sent.
+	else
+		printer_clear() // Power turned off or broken. Clear spooler.
+		return FALSE // Print job can not print
+
+/obj/machinery/proc/printer_warmed_up() // If we want to do something special.
+	printer_start_print()
+	return
+
+/obj/machinery/proc/printer_start_print()
+	if(is_operational() && printing)
+		var/list/printjob = printer_spooler[1]
+		var/list/printer = printer_types[printjob[3]]
+		if(printer[7])
+			if(prob(printer[7]))
+				if(printer[3])
+					playsound(src.loc, printer[2], 100, 0)
+					src.visible_message("<span class='danger'>The [src] printer beeps with a message: JAM</span>")
+				else
+					src.visible_message("<span class='danger'>The [src] printer makes a cringing crunch before it beeps with a message: JAM</span>")
+				printer_is_jammed()
+				return
+		printer_printing_paper()
+	else
+		printer_clear()
+		printing = FALSE
+	return
+/obj/machinery/proc/printer_is_jammed()
+	printer_jammed = TRUE
+	addtimer(CALLBACK(src, .proc/printer_is_unjammed), printer_jam_time)
+	return
+
+/obj/machinery/proc/printer_is_unjammed()
+	printer_jammed = FALSE
+	src.visible_message("<span class='notice'>The [src] printer unjams itself, continuing to print.</span>")
+	printer_printing_paper()
+	return
+
+/obj/machinery/proc/printer_printing_paper()
+	if(is_operational() && printing)
+		var/list/printjob = printer_spooler[1]
+		var/list/printer = printer_types[printjob[3]]
+		if(printer[2])
+			playsound(src.loc, printer[2], 100, 0)
+		else
+			src.visible_message("<span class='notice'>The [src] printer whirrs noisily as it prints a document.</span>")
+		addtimer(CALLBACK(src, .proc/printer_ejecting_paper), printer[5])
+	else
+		printer_clear()
+		printing = FALSE
+		printer_jammed = FALSE
+	return
+
+/obj/machinery/proc/printer_ejecting_paper()
+	if(is_operational() && printing) // Gotta check one more time. Don't want to eject paper into nothing or without power.
+		var/list/printjob = printer_spooler[1]
+		var/list/printer = printer_types[printjob[3]]
+		if(!printjob[4])
+			var/obj/item/weapon/paper/P = new/obj/item/weapon/paper(src.loc)
+			P.name = printjob[1]
+			P.info = printjob[2]
+			P.update_icon()
+			P.updateinfolinks()
+		else // This printjob has an item. Eject it.
+			var/turf/T = get_turf(src)
+			var/obj/item = printjob[4]
+			item.forceMove(T)
+		printer_spooler.Cut(1,2)
+		addtimer(CALLBACK(src, .proc/printer_finished_printing), printer[6])
+	else
+		printer_clear()
+		printing = FALSE
+	return
+
+/obj/machinery/proc/printer_finished_printing()
+	if(printer_spooler.len)
+		printer_start_print()
+	else
+		printing = FALSE
+	return
+
+/obj/machinery/proc/printer_clear() // Removes printjobs safely.
+	for(var/i = 1 to printer_spooler.len) // SureokaywhateveryousayIguess
+		var/list/printjob = printer_spooler[i]
+		if(printjob[4])
+			qdel(printjob[4])
+	printer_spooler.len = 0
+	return

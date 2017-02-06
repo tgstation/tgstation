@@ -41,6 +41,8 @@ var/time_last_changed_position = 0
 	//This is used to keep track of opened positions for jobs to allow instant closing
 	//Assoc array: "JobName" = (int)<Opened Positions>
 	var/list/opened_positions = list();
+	default_printer = "inkjet"
+	max_printjobs = 5
 
 /obj/machinery/computer/card/attackby(obj/O, mob/user, params)//TODO:SANITY
 	if(istype(O, /obj/item/weapon/card/id))

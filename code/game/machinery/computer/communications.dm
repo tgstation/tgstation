@@ -35,7 +35,6 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 	var/stat_msg2
 	default_printer = "dot_matrix"
 
-
 /obj/machinery/computer/communications/New()
 	shuttle_caller_list += src
 	..()
