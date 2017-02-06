@@ -38749,7 +38749,7 @@
 /turf/open/floor/plasteel/white,
 /area/medical/sleeper)
 "bGS" = (
-/obj/machinery/limbgrower,
+/obj/structure/closet/crate/freezer/surplus_limbs,
 /obj/item/weapon/reagent_containers/glass/beaker/synthflesh,
 /turf/open/floor/plasteel/white,
 /area/medical/sleeper)

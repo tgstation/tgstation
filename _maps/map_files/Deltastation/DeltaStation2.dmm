@@ -95145,7 +95145,7 @@
 	},
 /area/medical/genetics_cloning)
 "dmX" = (
-/obj/machinery/limbgrower,
+/obj/structure/closet/crate/freezer/surplus_limbs,
 /turf/open/floor/plasteel/whitepurple/corner{
 	dir = 8
 	},

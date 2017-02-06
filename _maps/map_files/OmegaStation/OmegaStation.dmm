@@ -29861,7 +29861,7 @@
 	pixel_x = -24;
 	pixel_y = -24
 	},
-/obj/machinery/limbgrower,
+/obj/structure/closet/crate/freezer/surplus_limbs,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
 /turf/open/floor/plasteel/whiteblue/corner{
 	dir = 8
