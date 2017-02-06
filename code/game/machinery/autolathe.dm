@@ -44,9 +44,6 @@
 							"Dinnerware",
 							"Imported"
 							)
-	// default_printer = "3d_printer" todo
-	default_printer = "inkjet" // Just to screw with people. Might change in later commit.
-	max_printjobs = 2 // The autolathe is pretty basic.
 
 /obj/machinery/autolathe/New()
 	..()
