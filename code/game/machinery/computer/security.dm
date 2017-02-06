@@ -414,7 +414,6 @@ What a mess.*/
 				text += "</TT>"
 				new_printjob(title, text)
 			if("Print Poster")
-				if(!( printing ))
 					var/wanted_name = stripped_input(usr, "Please enter an alias for the criminal:", "Print Wanted Poster", active1.fields["name"])
 					if(wanted_name)
 						var/default_description = "A poster declaring [wanted_name] to be a dangerous individual, wanted by Nanotrasen. Report any sightings to security immediately."

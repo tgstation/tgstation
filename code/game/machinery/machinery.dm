@@ -120,6 +120,9 @@ Class Procs:
 	  string/printer is the name for the set of sounds, timings, and probablities to use for the printjob as avaiable in printer_types.
 	  obj/item is the object to be treated as if it was a print job. Suppresses title, text, and normal paper generation.
 
+   print_can_print(number/alert)
+	  Checks if the printer can print and, optionally, display a visible message if it can not.
+
    Compiled by Aygar
 */
 
@@ -528,13 +531,24 @@ Class Procs:
 	else
 		ex_act(2)
 
+/obj/machinery/proc/printer_can_print(alert = FALSE)
+	if(max_printjobs && printer_spooler.len >= max_printjobs)
+		if(alert)
+			printer_memory_full()
+		return FALSE
+	else
+		return TRUE
+
+/obj/machinery/proc/printer_memory_full()
+	if(prob(20))
+		src.visible_message("<span class='danger'>The [src] printer beeps with a message: PC LOAD LETTER</span>")
+	else
+		src.visible_message("<span class='danger'>The [src] printer beeps with a message: MEMORY FULL</span>")
+	return
+
 /obj/machinery/proc/new_printjob(title = "Printed Paper" , text = "", printer = default_printer, obj/item = null)
 	if(is_operational())
-		if(max_printjobs & printer_spooler.len >= max_printjobs)
-			if(prob(20))
-				src.visible_message("<span class='danger'>The [src] printer beeps with a message: PC LOAD LETTER</span>")
-			else
-				src.visible_message("<span class='danger'>The [src] printer beeps with a message: MEMORY FULL</span>")
+		if(!printer_can_print(1))
 			if(item)
 				qdel(item)
 			return FALSE // Print job can not print
