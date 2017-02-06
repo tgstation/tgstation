@@ -1111,6 +1111,7 @@
 /area/shuttle/arrival)
 "abZ" = (
 /obj/effect/turf_decal/delivery,
+/obj/structure/closet/wardrobe/mixed,
 /turf/open/floor/plasteel,
 /area/shuttle/arrival)
 "aca" = (
@@ -2162,15 +2163,18 @@
 /turf/open/floor/plasteel,
 /area/shuttle/arrival)
 "aej" = (
+/obj/structure/closet/wardrobe/black,
 /turf/open/floor/plasteel/neutral/side,
 /area/shuttle/arrival)
 "aek" = (
+/obj/structure/closet/wardrobe/grey,
 /turf/open/floor/plasteel/blue/corner,
 /area/shuttle/arrival)
 "ael" = (
 /turf/open/floor/plasteel/blue/side,
 /area/shuttle/arrival)
 "aem" = (
+/obj/structure/closet/wardrobe/yellow,
 /turf/open/floor/plasteel/blue/corner{
 	tag = "icon-bluecorner (WEST)";
 	icon_state = "bluecorner";
@@ -15039,6 +15043,7 @@
 	})
 "aCB" = (
 /obj/machinery/light,
+/obj/structure/closet/wardrobe/mixed,
 /turf/open/floor/plasteel/grimy,
 /area/crew_quarters/sleep{
 	name = "Service Hall"
@@ -18384,6 +18389,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
+/obj/structure/closet/wardrobe/mixed,
 /turf/open/floor/wood,
 /area/crew_quarters/sleep{
 	name = "Service Hall"
@@ -66665,6 +66671,9 @@
 	icon_state = "intact";
 	dir = 9
 	},
+/obj/item/weapon/storage/pod{
+	pixel_x = 32
+	},
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 4
 	},
@@ -69053,9 +69062,6 @@
 /turf/open/floor/plasteel/neutral,
 /area/crew_quarters/locker)
 "csI" = (
-/obj/structure/table,
-/obj/item/weapon/paper_bin,
-/obj/item/weapon/pen,
 /obj/machinery/light{
 	dir = 4;
 	icon_state = "tube1"
@@ -69065,6 +69071,7 @@
 	icon_state = "intact";
 	dir = 10
 	},
+/obj/structure/closet/wardrobe/black,
 /turf/open/floor/plasteel/neutral/corner,
 /area/crew_quarters/locker)
 "csJ" = (
@@ -70087,12 +70094,11 @@
 /turf/open/floor/plasteel/neutral,
 /area/crew_quarters/locker)
 "cur" = (
-/obj/structure/table,
-/obj/item/weapon/storage/firstaid/regular,
 /obj/machinery/status_display{
 	pixel_x = 32
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/closet/wardrobe/grey,
 /turf/open/floor/plasteel/neutral/corner,
 /area/crew_quarters/locker)
 "cus" = (
@@ -70878,10 +70884,8 @@
 /turf/open/floor/plasteel/neutral,
 /area/crew_quarters/locker)
 "cvO" = (
-/obj/structure/table,
-/obj/item/weapon/folder,
-/obj/item/weapon/pen,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/closet/wardrobe/green,
 /turf/open/floor/plasteel/neutral/corner,
 /area/crew_quarters/locker)
 "cvP" = (
@@ -71745,6 +71749,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
+/obj/structure/closet/wardrobe/pjs,
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 8;
 	heat_capacity = 1e+006
@@ -71854,6 +71859,7 @@
 	icon_state = "manifold";
 	dir = 4
 	},
+/obj/structure/closet/wardrobe/pink,
 /turf/open/floor/plasteel/neutral/corner,
 /area/crew_quarters/locker)
 "cxt" = (
@@ -72791,6 +72797,7 @@
 	tag = "icon-1-2";
 	icon_state = "1-2"
 	},
+/obj/structure/closet/wardrobe/white,
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 8;
 	heat_capacity = 1e+006
@@ -72805,10 +72812,8 @@
 /turf/open/floor/plasteel/neutral,
 /area/crew_quarters/locker)
 "cyS" = (
-/obj/item/weapon/storage/pod{
-	pixel_x = 32
-	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/closet/wardrobe/mixed,
 /turf/open/floor/plasteel/neutral/corner,
 /area/crew_quarters/locker)
 "cyT" = (
@@ -73896,6 +73901,7 @@
 	dir = 2;
 	icon_state = "pipe-c"
 	},
+/obj/structure/closet/wardrobe/yellow,
 /turf/open/floor/plasteel/neutral/corner,
 /area/crew_quarters/locker)
 "cAK" = (
@@ -107575,6 +107581,15 @@
 	pixel_y = 3
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/doorButtons/access_button{
+	dir = 1;
+	idDoor = "virology_airlock_exterior";
+	idSelf = "virology_airlock_control";
+	name = "Virology Access Button";
+	pixel_x = 0;
+	pixel_y = -24;
+	req_access_txt = "39"
+	},
 /turf/open/floor/plasteel/whitegreen/corner{
 	dir = 8
 	},
@@ -107866,12 +107881,17 @@
 	tag = "icon-1-2";
 	icon_state = "1-2"
 	},
-/obj/machinery/door/airlock/virology{
-	name = "Virology Access";
-	req_access_txt = "39"
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
+	},
+/obj/machinery/door/airlock/virology{
+	autoclose = 0;
+	frequency = 1449;
+	icon_state = "door_locked";
+	id_tag = "virology_airlock_exterior";
+	locked = 1;
+	name = "Virology Exterior Airlock";
+	req_access_txt = "39"
 	},
 /turf/open/floor/plasteel{
 	tag = "icon-plasteel_warn_side (EAST)"
@@ -108739,12 +108759,17 @@
 	tag = "icon-4-8";
 	icon_state = "4-8"
 	},
-/obj/machinery/door/airlock/virology{
-	name = "Virology Access";
-	req_access_txt = "39"
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
+	},
+/obj/machinery/door/airlock/virology{
+	autoclose = 0;
+	frequency = 1449;
+	icon_state = "door_locked";
+	id_tag = "virology_airlock_interior";
+	locked = 1;
+	name = "Virology Interior Airlock";
+	req_access_txt = "39"
 	},
 /turf/open/floor/plasteel,
 /area/medical/virology)
@@ -117780,6 +117805,63 @@
 /obj/machinery/deepfryer,
 /turf/open/floor/plasteel/red,
 /area/crew_quarters/kitchen)
+"ecc" = (
+/obj/structure/closet/wardrobe/green,
+/turf/open/floor/plasteel/neutral/side,
+/area/shuttle/arrival)
+"ecd" = (
+/obj/machinery/doorButtons/access_button{
+	dir = 4;
+	idDoor = "virology_airlock_interior";
+	idSelf = "virology_airlock_control";
+	name = "Virology Access Button";
+	pixel_x = -10;
+	pixel_y = 0;
+	req_access_txt = "39"
+	},
+/turf/closed/wall/r_wall,
+/area/medical/virology)
+"ece" = (
+/obj/structure/cable/white{
+	d2 = 2;
+	icon_state = "0-2";
+	tag = "icon-0-2"
+	},
+/turf/closed/wall/r_wall,
+/area/medical/virology)
+"ecf" = (
+/obj/structure/cable/white{
+	tag = "icon-4-8";
+	icon_state = "4-8"
+	},
+/obj/structure/cable/white{
+	tag = "icon-2-4";
+	icon_state = "2-4"
+	},
+/obj/structure/cable/white{
+	tag = "icon-1-4";
+	icon_state = "1-4"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 2
+	},
+/obj/machinery/doorButtons/airlock_controller{
+	idExterior = "virology_airlock_exterior";
+	idInterior = "virology_airlock_interior";
+	idSelf = "virology_airlock_control";
+	name = "Virology Access Console";
+	pixel_x = 0;
+	pixel_y = 22;
+	req_access_txt = "39"
+	},
+/turf/open/floor/plasteel{
+	tag = "icon-plasteel_warn_side (WEST)"
+	},
+/area/medical/virology)
+"ecg" = (
+/obj/structure/cable/white,
+/turf/closed/wall/r_wall,
+/area/medical/virology)
 
 (1,1,1) = {"
 aaa
@@ -157158,7 +157240,7 @@ acn
 acn
 acn
 acn
-aej
+ecc
 abV
 abV
 abW
@@ -164489,7 +164571,7 @@ dGR
 cKs
 cKs
 dJl
-dJp
+ecd
 dKY
 dJp
 dJp
@@ -164746,9 +164828,9 @@ dGS
 cDe
 aaa
 aaa
-dJq
-dKZ
-dMh
+ece
+ecf
+ecg
 aaa
 aaa
 dJp
