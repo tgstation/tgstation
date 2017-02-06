@@ -463,12 +463,8 @@
 /datum/objective/abductee/teamredisbetterthangreen
 	explanation_text = "Tell the AI (or a borg/pAI/drone if there is no AI) some corny technology jokes until it cries for help."
 	
-/datum/objective/abductee/time/New()
-	..()
-	if(istype(ticker.mode, /datum/game_mode/clockwork_cult))
-		explanation_text = "Go bug a bronze worshipper to give you a clock."
-	else
-		explanation_text = "You must know what time it is, all the time."
+/datum/objective/abductee/time
+	explanation_text = "Go bug a bronze worshipper to give you a clock."
 		
 /datum/objective/abductee/licky
 	explanation_text = "You must lick anything that you find interesting."
