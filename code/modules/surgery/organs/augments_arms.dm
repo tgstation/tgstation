@@ -274,11 +274,12 @@
 	return ..()
 
 /obj/item/organ/cyberimp/arm/bluespace_crusher/process()
-	if(!next_charge && charges < crystals)
+	if(!next_charge || charges == crystals) //can't charge if fully charged
 		next_charge = world.time + charge_cooldown
 	if(world.time > next_charge && charges < crystals)
 		charges++
 		owner << "<span class='notice'>Your [name] has charged a crystal. It now has [charges] charged crystals.</span>"
+		next_charge = world.time + charge_cooldown
 
 /obj/item/organ/cyberimp/arm/bluespace_crusher/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W,/obj/item/weapon/ore/bluespace_crystal))
