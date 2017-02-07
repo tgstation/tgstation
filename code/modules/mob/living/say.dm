@@ -83,7 +83,7 @@ var/list/department_radio_keys = list(
 var/list/crit_allowed_modes = list(MODE_WHISPER,MODE_CHANGELING,MODE_ALIEN)
 
 /mob/living/say(message, bubble_type,var/list/spans = list(), sanitize = TRUE)
-	message = capitalize_uni(message)
+//	message = capitalize_uni(message)
 	if(sanitize)
 		message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
 	if(!message || message == "")
