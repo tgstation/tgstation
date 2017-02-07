@@ -21,8 +21,8 @@
 /datum/proc/SDQL_update(const/var_name, new_value)
 	if(var_name == "vars" || var_name = "var_edited")
 		return FALSE
-	if(!vars_edited)
-		vars_edited == TRUE
+	if(!var_edited)
+		var_edited == TRUE
 	vars[var_name] = new_value
 	return TRUE
 
