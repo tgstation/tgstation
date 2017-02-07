@@ -21,6 +21,11 @@
 		qdel(dna)
 	return ..()
 
+/mob/living/carbon/SDQL_update(const/var_name, new_value)
+	if(var_name == "bodyparts" || var_name == "hand_bodyparts")	//if I wanted to remove everyone's hands I'd qdel them.
+		return FALSE
+	. = ..()
+
 /mob/living/carbon/relaymove(mob/user, direction)
 	if(user in src.stomach_contents)
 		if(prob(40))
