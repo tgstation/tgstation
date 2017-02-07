@@ -117993,6 +117993,21 @@
 	},
 /turf/open/floor/wood,
 /area/crew_quarters/sleep)
+"ecj" = (
+/obj/item/weapon/reagent_containers/food/condiment/saltshaker{
+	pixel_x = -8;
+	pixel_y = 5
+	},
+/obj/item/weapon/reagent_containers/food/condiment/peppermill{
+	pixel_x = -8
+	},
+/obj/structure/table/wood,
+/obj/item/clothing/head/hardhat/cakehat{
+	pixel_x = 4;
+	pixel_y = 3
+	},
+/turf/open/floor/plasteel/redyellow,
+/area/crew_quarters/bar/atrium)
 
 (1,1,1) = {"
 aaa
@@ -155610,7 +155625,7 @@ aJA
 aLb
 aMK
 aGY
-aLa
+ecj
 aRH
 aGY
 aGY
