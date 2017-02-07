@@ -22,7 +22,7 @@
 	return ..()
 
 /mob/living/carbon/SDQL_update(const/var_name, new_value)
-	if(var_name == "bodyparts" || var_name == "hand_bodyparts")	//if I wanted to remove everyone's hands I'd qdel them.
+	if(var_name == "bodyparts" || var_name == "hand_bodyparts" || var_name == "stomach_contents" || var_name == "internal_organs" || var_name == "internal_organs_slot")	//if I wanted to remove everyone's hands I'd qdel them.
 		return FALSE
 	. = ..()
 
