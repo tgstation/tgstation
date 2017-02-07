@@ -162,8 +162,12 @@
 
 /obj/effect/forcefield/arena_shuttle/Bumped(mob/M as mob|obj)
 	if(!warp_points.len)
-		for(var/obj/effect/landmark/shuttle_arena_safe/S in landmarks_list)
-			warp_points |= S
+		warp_points = get_area_turfs(/area/shuttle/escape)
+		for(var/turf/T in warp_points)
+			for(var/atom/movable/AM in T)
+				if(AM.density && AM.anchored)
+					warp_points -= T
+					break
 	if(!isliving(M))
 		return
 	else
@@ -171,8 +175,8 @@
 		if(L.pulling && istype(L.pulling, /obj/item/bodypart/head))
 			L << "Your offering is accepted. You may pass."
 			qdel(L.pulling)
-			var/obj/effect/landmark/LA = pick(warp_points)
-			L.forceMove(get_turf(LA))
+			var/turf/LA = pick(warp_points)
+			L.forceMove(LA)
 			L.hallucination = 0
 			L << "<span class='reallybig redtext'>The battle is won. Your bloodlust subsides.</span>"
 			for(var/obj/item/weapon/twohanded/required/chainsaw/doomslayer/chainsaw in L)
@@ -203,12 +207,12 @@
 	var/obj/effect/landmark/LA = pick(warp_points)
 
 	M.forceMove(get_turf(LA))
+	M << "<span class='reallybig redtext'>You're trapped in a deadly arena! To escape, you'll need to drag a severed head to the escape portals.</span>"
 	spawn()
 		var/obj/effect/mine/pickup/bloodbath/B = new(M)
 		B.mineEffect(M)
-		M << "<span class='reallybig redtext'>You're trapped in a deadly arena! To escape, you'll need to drag a severed head to the escape portals.</span>"
 
 
-
-/area/lavaland/underground/shuttle_arena
+/area/shuttle_arena
 	name = "arena"
+	has_gravity = 1
