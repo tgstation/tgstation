@@ -51,8 +51,8 @@
 	icon_state = "alarm0"
 	anchored = 1
 	use_power = 1
-	idle_power_usage = 4
-	active_power_usage = 8
+	idle_power_usage = 5
+	active_power_usage = 50
 	power_channel = ENVIRON
 	req_access = list(access_atmospherics)
 	obj_integrity = 250
@@ -553,6 +553,8 @@
 /obj/machinery/airalarm/process()
 	if((stat & (NOPOWER|BROKEN)) || shorted)
 		return
+
+	use_power = (mode == AALARM_MODE_SCRUBBING || mode == AALARM_MODE_OFF) ? 1 : 2
 
 	var/turf/location = get_turf(src)
 	if(!location)
