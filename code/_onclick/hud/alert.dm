@@ -244,6 +244,49 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	desc = "You have no factory, and are slowly dying!"
 	icon_state = "blobbernaut_nofactory"
 	alerttooltipstyle = "blob"
+	
+// BLOODCULT
+
+/obj/screen/alert/bloodsense
+    name = "Blood Sense"
+    desc = "Allows you to sense blood that is manipulated by dark magicks."
+    icon_state = "blood"
+    var/image/finder
+
+/obj/screen/alert/bloodsense/New()
+	..()
+	finder = new('icons/mob/screen_alert.dmi', "finder_center")
+	add_overlay(finder)
+	START_PROCESSING(SSprocessing, src)
+	process()
+
+/obj/screen/alert/bloodsense/Destroy()
+    qdel(finder)
+    finder = null
+    STOP_PROCESSING(SSprocessing, src)
+    return ..()
+
+/obj/screen/alert/bloodsense/process()
+	if(!blood_target)
+		return
+	var/turf/Q = get_turf(blood_target)
+	var/turf/A = get_turf(mob_viewer)
+	if(Q.z != A.z) //The target is on a different Z level, we cannot sense that far.
+		return
+	finder.dir = get_dir(A, Q)
+	var/Qdist = get_dist(A, Q)
+	setDir(finder.dir)
+	cut_overlays()
+	switch(Qdist)
+		if(2 to 7)
+			finder.icon_state = "finder_near"
+		if(8 to 20)
+			finder.icon_state = "finder_med"
+		if(21 to INFINITY)
+			finder.icon_state = "finder_far"
+		else
+			finder.icon_state = "finder_center"
+	add_overlay(finder)
 
 // CLOCKCULT
 /obj/screen/alert/clockwork
