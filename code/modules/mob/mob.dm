@@ -1,5 +1,6 @@
 /mob/Destroy()//This makes sure that mobs with clients/keys are not just deleted from the game.
 	mob_list -= src
+	SSmob.currentrun -= src
 	dead_mob_list -= src
 	living_mob_list -= src
 	all_clockwork_mobs -= src
