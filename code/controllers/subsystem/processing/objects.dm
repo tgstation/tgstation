@@ -33,11 +33,15 @@ var/datum/subsystem/objects/SSobj
 	initialized = INITIALIZATION_INNEW_MAPLOAD
 
 	if(objects)
-		for(var/thing in objects)
-			var/atom/A = thing
-			if(A.Initialize(TRUE))
-				LAZYADD(late_loaders, A)
-			CHECK_TICK
+		for(var/I in objects)
+			var/atom/A = I
+			if(!A.initialized)	//this check is to make sure we don't call it twice on an object that was created in a previous Initialize call
+				var/start_tick = world.time
+				if(A.Initialize(TRUE))
+					LAZYADD(late_loaders, A)
+				if(start_tick != world.time)
+					WARNING("[A]: [A.type] slept during it's Initialize!")
+				CHECK_TICK
 		testing("Initialized [objects.len] atoms")
 	else
 		#ifdef TESTING

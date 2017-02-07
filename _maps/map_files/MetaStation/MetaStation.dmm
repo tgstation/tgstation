@@ -1,5 +1,5 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
-//Model dictionary trimmed on: 31-01-2017 23:17 (UTC)
+//Model dictionary trimmed on: 02-02-2017 02:51 (UTC)
 "aaa" = (
 /turf/open/space,
 /area/space)
@@ -40957,8 +40957,6 @@
 /obj/item/stack/cable_coil/random,
 /obj/item/stack/cable_coil/random,
 /obj/item/stack/cable_coil/random,
-/obj/item/weapon/paper_bin/construction,
-/obj/item/stack/cable_coil,
 /turf/open/floor/plasteel,
 /area/storage/art)
 "bre" = (
@@ -54887,7 +54885,7 @@
 	},
 /area/crew_quarters/kitchen)
 "bOV" = (
-/obj/machinery/holopad,
+/obj/machinery/deepfryer,
 /turf/open/floor/plasteel/cafeteria{
 	dir = 5
 	},
@@ -94429,6 +94427,23 @@
 /obj/structure/disposaloutlet,
 /turf/open/floor/plating/airless,
 /area/toxins/xenobiology)
+"ddD" = (
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
+	dir = 8;
+	initialize_directions = 11
+	},
+/obj/machinery/deepfryer,
+/turf/open/floor/plasteel/cafeteria{
+	dir = 5
+	},
+/area/crew_quarters/kitchen)
+"ddE" = (
+/obj/effect/landmark/start{
+	name = "Cook"
+	},
+/obj/machinery/holopad,
+/turf/open/floor/plasteel/cafeteria,
+/area/crew_quarters/kitchen)
 
 (1,1,1) = {"
 aaa
@@ -128232,7 +128247,7 @@ bHb
 bMP
 bKg
 bLL
-bNz
+ddD
 bOT
 bQC
 bLK
@@ -129004,7 +129019,7 @@ bBT
 bKj
 bLN
 bLK
-bOR
+ddE
 bQF
 bNz
 bSV

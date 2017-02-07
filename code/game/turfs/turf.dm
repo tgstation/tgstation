@@ -25,6 +25,11 @@
 	var/list/decals
 	var/requires_activation	//add to air processing after initialize?
 
+/turf/SDQL_update(const/var_name, new_value)
+	if(var_name == "x" || var_name == "y" || var_name == "z")
+		return FALSE
+	. = ..()
+
 /turf/Initialize()
 	if(initialized)
 		stack_trace("Warning: [src]([type]) initialized multiple times!")
