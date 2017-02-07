@@ -174,15 +174,16 @@
 
 
 /proc/ircadminwho()
-	var/msg = "Admins: "
-	for(var/client/C in admins)
-		msg += "[C] "
+	var/list/message = list("Admins: ")
+	var/list/admin_keys = list()
+	for(var/adm in admins)
+		var/client/C = adm
+		admin_keys += "[C][C.holder.fakekey ? "(Stealth)" : ""][C.is_afk() ? "(AFK)" : ""]"
 
-		if(C.holder.fakekey)
-			msg += "(Stealth)"
+	for(var/admin in admin_keys)
+		if(LAZYLEN(admin_keys) > 1)
+			message += ", [admin]"
+		else
+			message += "[admin]"
 
-		if(C.is_afk())
-			msg += "(AFK)"
-		msg += ", "
-
-	return msg
+	return jointext(message)
