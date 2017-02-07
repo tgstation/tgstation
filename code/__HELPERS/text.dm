@@ -549,7 +549,7 @@ var/list/binary = list("0","1")
 	if(html)
 		rep = "&#x44F;"
 	else
-		rep = "&#255;"
+		rep = "&#x44F;"
 	var/list/c = splittext(msg, "ÿ")
 	if(c.len == 1)
 		return msg
@@ -567,7 +567,7 @@ var/list/binary = list("0","1")
 	if(html)
 		rep = "&#x44F;"
 	else
-		rep = "&#255;"
+		rep = "&#x44F;"
 	var/list/c = splittext(msg, "ÿ")
 	if(c.len == 1)
 		return msg
@@ -621,11 +621,11 @@ var/list/binary = list("0","1")
 	return text
 
 /proc/uppertext_uni(text as text)
-	var/rep = "?"
-	var/index = findtext(text, "y")
+	var/rep = "ß"
+	var/index = findtext(text, "ÿ")
 	while(index)
 		text = copytext(text, 1, index) + rep + copytext(text, index + 1)
-		index = findtext(text, "y")
+		index = findtext(text, "ÿ")
 	var/t = ""
 	for(var/i = 1, i <= length(text), i++)
 		var/a = text2ascii(text, i)
