@@ -63,7 +63,7 @@
 			for(var/obj/item/I in stored_items)
 				owner << "<span class='notice'>Your [owner.get_held_index_name(owner.get_held_index_of_item(I))]'s grip tightens.</span>"
 				I.flags |= NODROP
-				
+
 	else
 		release_items()
 		owner << "<span class='notice'>Your hands relax...</span>"
@@ -157,8 +157,8 @@
 /obj/item/weapon/storage/box/cyber_implants/bundle
 	name = "boxed cybernetic implants"
 	var/list/boxed = list(
-		/obj/item/organ/cyberimp/eyes/xray,
-		/obj/item/organ/cyberimp/eyes/thermals,
+		/obj/item/organ/eyes/robotic/xray,
+		/obj/item/organ/eyes/robotic/thermals,
 		/obj/item/organ/cyberimp/brain/anti_stun,
 		/obj/item/organ/cyberimp/chest/reviver)
 	var/amount = 5

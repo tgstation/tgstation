@@ -55,7 +55,7 @@
 
 /turf/open/chasm/proc/drop(atom/movable/AM)
 	//Make sure the item is still there after our sleep
-	if(!AM || qdeleted(AM))
+	if(!AM || QDELETED(AM))
 		return
 
 	var/turf/T = locate(drop_x, drop_y, drop_z)
@@ -84,7 +84,7 @@
 
 /turf/open/chasm/straight_down/lava_land_surface/drop(atom/movable/AM)
 	//Make sure the item is still there after our sleep
-	if(!AM || qdeleted(AM))
+	if(!AM || QDELETED(AM))
 		return
 	AM.visible_message("<span class='boldwarning'>[AM] falls into [src]!</span>", "<span class='userdanger'>You stumble and stare into an abyss before you. It stares back, and you fall \
 	into the enveloping dark.</span>")
@@ -96,13 +96,13 @@
 	animate(AM, transform = matrix() - matrix(), alpha = 0, color = rgb(0, 0, 0), time = 10)
 	for(var/i in 1 to 5)
 		//Make sure the item is still there after our sleep
-		if(!AM || qdeleted(AM))
+		if(!AM || QDELETED(AM))
 			return
 		AM.pixel_y--
 		sleep(2)
 
 	//Make sure the item is still there after our sleep
-	if(!AM || qdeleted(AM))
+	if(!AM || QDELETED(AM))
 		return
 
 	if(iscyborg(AM))

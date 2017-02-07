@@ -10,7 +10,7 @@
 	tracked_implants += src
 
 /obj/item/weapon/implant/tracking/Destroy()
-	..()
+	. = ..()
 	tracked_implants -= src
 
 /obj/item/weapon/implanter/tracking/New()

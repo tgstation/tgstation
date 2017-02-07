@@ -91,6 +91,8 @@ Credit dupes that require a lot of manual work shouldn't be removed, unless they
 		return FALSE
 	if(!get_cost(O, contr, emag))
 		return FALSE
+	if(O.flags & HOLOGRAM)
+		return FALSE
 	return TRUE
 
 // Called only once, when the object is actually sold by the datum.

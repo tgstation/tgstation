@@ -1,0 +1,4 @@
+author: "coiax"
+delete-after: True
+changes: 
+  - rscdel: "Tesla balls cannot dust people near grounding rods."

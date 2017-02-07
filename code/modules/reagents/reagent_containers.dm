@@ -71,7 +71,7 @@
 	if(reagents)
 		for(var/datum/reagent/R in reagents.reagent_list)
 			R.on_ex_act()
-	if(!qdeleted(src))
+	if(!QDELETED(src))
 		..()
 
 /obj/item/weapon/reagent_containers/fire_act(exposed_temperature, exposed_volume)
@@ -109,7 +109,7 @@
 	else
 		visible_message("<span class='notice'>[src] spills its contents all over [target].</span>")
 		reagents.reaction(target, TOUCH)
-		if(qdeleted(src))
+		if(QDELETED(src))
 			return
 
 	reagents.clear_reagents()

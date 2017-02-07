@@ -241,7 +241,7 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 /obj/effect/proc_holder/spell/proc/start_recharge()
 	if(action)
 		action.UpdateButtonIcon()
-	while(charge_counter < charge_max && !qdeleted(src))
+	while(charge_counter < charge_max && !QDELETED(src))
 		sleep(1)
 		charge_counter++
 	if(action)

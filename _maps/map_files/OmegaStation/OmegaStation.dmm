@@ -8693,6 +8693,8 @@
 	pixel_x = -32;
 	pixel_y = 0
 	},
+/obj/item/weapon/gun/energy/e_gun/dragnet,
+/obj/item/weapon/gun/energy/e_gun/dragnet,
 /turf/open/floor/plasteel/red/corner{
 	dir = 8
 	},
@@ -19615,6 +19617,7 @@
 	tag = "icon-4-8";
 	icon_state = "4-8"
 	},
+/obj/machinery/deepfryer,
 /turf/open/floor/plasteel/red,
 /area/crew_quarters/kitchen)
 "aFe" = (
