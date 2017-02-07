@@ -2,6 +2,7 @@
 	name = "scooter"
 	desc = "A fun way to get around."
 	icon_state = "scooter"
+	ignore_lube = FALSE
 
 /obj/vehicle/scooter/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/wrench))

@@ -14,6 +14,7 @@
 	var/auto_door_open = TRUE
 	var/view_range = 7
 	var/datum/riding/riding_datum = null
+	var/ignore_lube = TRUE
 
 /obj/vehicle/update_icon()
 	return
