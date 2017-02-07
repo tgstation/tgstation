@@ -1,0 +1,5 @@
+author: "Cyberboss"
+delete-after: True
+changes: 
+  - bugfix: "The target moving while being implanted will no longer continue the implant"
+  - bugfix: "Implanters now show progress bars as they were intended to"

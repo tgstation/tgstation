@@ -1,0 +1,4 @@
+author: "Cyberboss"
+delete-after: True
+changes: 
+  - rscadd: "The job subsystem now loads instantly. No more waiting to set your occupation prefs!"
