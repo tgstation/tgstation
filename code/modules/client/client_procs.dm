@@ -25,6 +25,11 @@
 	If you have any  questions about this stuff feel free to ask. ~Carn
 	*/
 
+/client/SDQL_update(const/var_name, new_value)
+	if(var_name == "ckey" || var_name == "verbs" || var_name == "images" || var_name == "connection" || var_name == "byond_version" || var_name == "address" || var_name == "cgi" || var_name == "computer_id")
+		return FALSE
+	. = ..()
+
 /client/Topic(href, href_list, hsrc)
 	if(!usr || usr != mob)	//stops us calling Topic for somebody else's client. Also helps prevent usr=null
 		return
