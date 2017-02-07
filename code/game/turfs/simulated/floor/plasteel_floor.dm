@@ -411,6 +411,7 @@
 /turf/open/floor/plasteel/stage_bleft
 	icon_state = "stage_bleft"
 
+
 /turf/open/floor/plasteel/stairs
 	icon_state = "stairs"
 /turf/open/floor/plasteel/stairs/left
