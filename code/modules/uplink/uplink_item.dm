@@ -1166,6 +1166,14 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	category = "Role-Restricted"
 	exclude_modes = list(/datum/game_mode/nuclear)
 
+/datum/uplink_item/role_restricted/ez_clean_bundle
+	name = "EZ Clean Grenade Bundle"
+	desc = "A box with three cleaner grenades using the trademark Waffle Co. formula. Serves as a cleaner and causes acid damage to anyone standing nearby. The acid only affects carbon-based creatures."
+	item = /obj/item/weapon/storage/box/syndie_kit/ez_clean
+	cost = 6
+	surplus = 20
+	restricted_roles = list("Janitor")
+
 // Pointless
 /datum/uplink_item/badass
 	category = "(Pointless) Badassery"

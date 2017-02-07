@@ -294,9 +294,7 @@ proc/addtimer(datum/callback/callback, wait, flags)
 	if (!callback)
 		return
 
-	if (wait <= 0)
-		callback.InvokeAsync()
-		return
+	wait = max(wait, 0)
 
 	var/hash
 
