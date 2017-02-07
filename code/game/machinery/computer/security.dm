@@ -808,7 +808,7 @@ What a mess.*/
 		var/datum/picture/selection = tempAI.GetPhoto()
 		if(selection)
 			P = new()
-			P.photocreate(selection.fields["icon"], selection.fields["img"], selection.fields["desc"])
+			P.photocreate(selection.fields["icon"], selection.fields["img"], selection.fields["mobinfo"])
 	else if(istype(user.get_active_held_item(), /obj/item/weapon/photo))
 		P = user.get_active_held_item()
 	return P
