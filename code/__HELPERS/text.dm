@@ -549,7 +549,7 @@ var/list/binary = list("0","1")
 	if(html)
 		rep = "&#x44F;"
 	else
-		rep = "&#x44F;"
+		rep = "&#255;"
 	var/list/c = splittext(msg, "ÿ")
 	if(c.len == 1)
 		return msg
@@ -567,7 +567,7 @@ var/list/binary = list("0","1")
 	if(html)
 		rep = "&#x44F;"
 	else
-		rep = "&#x44F;"
+		rep = "&#255;"
 	var/list/c = splittext(msg, "ÿ")
 	if(c.len == 1)
 		return msg
