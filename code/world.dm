@@ -13,8 +13,8 @@
 var/list/map_transition_config = MAP_TRANSITION_CONFIG
 
 /world/New()
+	world.log << "World loaded at [world.timeofday]"
 	map_ready = 1
-	world.log << "Map is ready."
 
 #if (PRELOAD_RSC == 0)
 	external_rsc_urls = file2list("config/external_rsc_urls.txt","\n")
@@ -68,7 +68,6 @@ var/list/map_transition_config = MAP_TRANSITION_CONFIG
 	#endif
 
 	Master.Setup(10, FALSE)
-
 
 #define IRC_STATUS_THROTTLE 50
 var/last_irc_status = 0
@@ -182,14 +181,14 @@ var/last_irc_status = 0
 		else
 			return ircadminwho()
 
-
+#define WORLD_REBOOT(X) world.log << "World rebooted at [world.timeofday]"; ..(X)
 /world/Reboot(var/reason, var/feedback_c, var/feedback_r, var/time)
 	if (reason == 1) //special reboot, do none of the normal stuff
 		if (usr)
 			log_admin("[key_name(usr)] Has requested an immediate world restart via client side debugging tools")
 			message_admins("[key_name_admin(usr)] Has requested an immediate world restart via client side debugging tools")
 		world << "<span class='boldannounce'>Rebooting World immediately due to host request</span>"
-		return ..(1)
+		WORLD_REBOOT(1)
 	var/delay
 	if(time)
 		delay = time
@@ -220,7 +219,8 @@ var/last_irc_status = 0
 				Reboot("Map change timed out", time = 10)
 		return
 	OnReboot(reason, feedback_c, feedback_r, round_end_sound_sent)
-	..(0)
+	WORLD_REBOOT(0)
+#undef WORLD_REBOOT
 
 /world/proc/OnReboot(reason, feedback_c, feedback_r, round_end_sound_sent)
 	feedback_set_details("[feedback_c]","[feedback_r]")
