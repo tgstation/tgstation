@@ -23,6 +23,7 @@
 	damage = 10
 	damage_type = BRUTE
 	nodamage = 0
+	speed = 1
 
 	//explosion values
 	var/exp_heavy = 0
