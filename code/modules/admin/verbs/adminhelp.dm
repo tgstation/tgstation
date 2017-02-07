@@ -186,4 +186,4 @@
 		else
 			message += "[admin]"
 
-	return jointext(message)
+	return jointext(message, "")
