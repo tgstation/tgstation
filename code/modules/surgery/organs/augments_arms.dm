@@ -412,7 +412,7 @@
 		armour_penetration = 0
 		..()
 	else
-		force = 40
+		force = 30
 		armour_penetration = 100
 		attack_effect(get_turf(M))
 		..()
