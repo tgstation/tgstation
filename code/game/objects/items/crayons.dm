@@ -124,7 +124,7 @@
 /obj/item/toy/crayon/proc/check_empty(mob/user)
 	// When eating a crayon, check_empty() can be called twice producing
 	// two messages unless we check for being deleted first
-	if(qdeleted(src))
+	if(QDELETED(src))
 		return TRUE
 
 	. = FALSE

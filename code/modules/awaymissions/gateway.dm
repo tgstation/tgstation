@@ -16,6 +16,7 @@ var/obj/machinery/gateway/centerstation/the_gateway = null
 	var/can_link = FALSE	//Is this the centerpiece?
 
 /obj/machinery/gateway/Initialize()
+	..()
 	randomspawns = awaydestinations
 
 /obj/machinery/gateway/proc/toggleoff()
@@ -143,7 +144,7 @@ var/obj/machinery/gateway/centerstation/the_gateway = null
 		return
 	if(!detect())
 		return
-	if(!awaygate || qdeleted(awaygate))
+	if(!awaygate || QDELETED(awaygate))
 		return
 
 	if(awaygate.calibrated)
@@ -213,7 +214,7 @@ var/obj/machinery/gateway/centerstation/the_gateway = null
 		return
 	if(!active)
 		return
-	if(!stationgate || qdeleted(stationgate))
+	if(!stationgate || QDELETED(stationgate))
 		return
 	if(istype(AM, /mob/living/carbon))
 		var/mob/living/carbon/C = AM

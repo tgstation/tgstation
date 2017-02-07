@@ -379,7 +379,7 @@
 			if(M.current && M.current.stat != DEAD)
 				cultists |= M.current
 		var/mob/living/cultist_to_receive = input(user, "Who do you wish to call to [src]?", "Followers of the Geometer") as null|anything in (cultists - user)
-		if(!Adjacent(user) || !src || qdeleted(src) || user.incapacitated())
+		if(!Adjacent(user) || !src || QDELETED(src) || user.incapacitated())
 			return
 		if(!cultist_to_receive)
 			user << "<span class='cultitalic'>You require a destination!</span>"

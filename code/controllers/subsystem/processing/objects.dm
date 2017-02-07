@@ -4,12 +4,6 @@ var/datum/subsystem/objects/SSobj
 #define INITIALIZATION_INNEW_MAPLOAD 1	//New should call Initialize(TRUE)
 #define INITIALIZATION_INNEW_REGULAR 2	//New should call Initialize(FALSE)
 
-/datum/var/isprocessing = 0
-/datum/proc/process()
-	set waitfor = 0
-	STOP_PROCESSING(SSobj, src)
-	return 0
-
 /datum/subsystem/objects
 	name = "Objects"
 	init_order = 12
@@ -35,10 +29,14 @@ var/datum/subsystem/objects/SSobj
 		return
 	initialized = INITIALIZATION_INNEW_MAPLOAD
 	if(objects)
-		for(var/thing in objects)
-			var/atom/A = thing
-			A.Initialize(TRUE)
-			CHECK_TICK
+		for(var/I in objects)
+			var/atom/A = I
+			if(!A.initialized)	//this check is to make sure we don't call it twice on an object that was created in a previous Initialize call
+				var/start_tick = world.time
+				A.Initialize(TRUE)
+				if(start_tick != world.time)
+					WARNING("[A]: [A.type] slept during it's Initialize!")
+				CHECK_TICK
 	else
 		for(var/atom/A in world)
 			if(!A.initialized)	//this check is to make sure we don't call it twice on an object that was created in a previous Initialize call

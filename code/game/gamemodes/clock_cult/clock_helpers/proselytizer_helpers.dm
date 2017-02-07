@@ -47,7 +47,7 @@
 	return FALSE
 
 /turf/open/floor/clockwork/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer)
-	if(locate(/obj/structure/table) in loc)
+	if(locate(/obj/structure/table) in src)
 		return FALSE
 	if(is_blocked_turf(src, TRUE))
 		user << "<span class='warning'>Something is in the way, preventing you from proselytizing [src] into a clockwork wall.</span>"

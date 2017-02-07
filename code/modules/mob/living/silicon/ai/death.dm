@@ -19,6 +19,19 @@
 	shuttle_caller_list -= src
 	SSshuttle.autoEvac()
 
+	ShutOffDoomsdayDevice()
+
+	if(explosive)
+		spawn(10)
+			explosion(src.loc, 3, 6, 12, 15)
+
+	for(var/obj/machinery/ai_status_display/O in world) //change status
+		if(src.key)
+			O.mode = 2
+			if(istype(loc, /obj/item/device/aicard))
+				loc.icon_state = "aicard-404"
+
+/mob/living/silicon/ai/proc/ShutOffDoomsdayDevice()
 	if(nuking)
 		set_security_level("red")
 		nuking = FALSE
@@ -30,13 +43,3 @@
 		doomsday_device.timing = FALSE
 		SSshuttle.clearHostileEnvironment(doomsday_device)
 		qdel(doomsday_device)
-	if(explosive)
-		spawn(10)
-			explosion(src.loc, 3, 6, 12, 15)
-
-	for(var/obj/machinery/ai_status_display/O in world) //change status
-		if(src.key)
-			O.mode = 2
-			if(istype(loc, /obj/item/device/aicard))
-				loc.icon_state = "aicard-404"
-
