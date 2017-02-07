@@ -210,11 +210,11 @@
 	if(health >= 0 && !(status_flags & FAKEDEATH))
 
 		if(lying)
-			M.visible_message("<span class='notice'>[M] shakes [src] trying to get [p_them()] up!</span>", \
-							"<span class='notice'>You shake [src] trying to get [p_them()] up!</span>")
+			M.visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)] shakes [IDENTITY_SUBJECT(2)] trying to get [p_them()] up!</span>", \
+							"<span class='notice'>You shake [IDENTITY_SUBJECT(2)] trying to get [p_them()] up!</span>", subjects=list(M, src))
 		else
-			M.visible_message("<span class='notice'>[M] hugs [src] to make [p_them()] feel better!</span>", \
-						"<span class='notice'>You hug [src] to make [p_them()] feel better!</span>")
+			M.visible_message("<span class='notice'>[IDENTITY_SUBJECT(1)] hugs [IDENTITY_SUBJECT(2)] to make [p_them()] feel better!</span>", \
+						"<span class='notice'>You hug [IDENTITY_SUBJECT(2)] to make [p_them()] feel better!</span>", subjects=list(M, src))
 		AdjustSleeping(-5)
 		AdjustParalysis(-3)
 		AdjustStunned(-3)

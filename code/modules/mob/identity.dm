@@ -61,12 +61,63 @@ var/global/list/used_voiceprints = list()
 /atom/movable/proc/default_identity_interact()
 	. = name
 
+/atom/movable/proc/get_interact_name(atom/movable/target)
+	. = target.default_identity_interact()
+
+/mob/proc/identity_subject_name(atom/movable/AM)
+	if(mind)
+		var/list/AM_identity = mind.identity_cache[AM]
+		var/AM_name
+		var/AM_voiceprint
+		var/AM_voiceprint_time
+		var/AM_faceprint
+		var/AM_faceprint_time
+		var/AM_temp
+		var/AM_temp_time
+		if(AM_identity)
+			AM_voiceprint = AM_identity[1]
+			AM_voiceprint_time = AM_identity[2]
+			AM_faceprint = AM_identity[3]
+			AM_faceprint_time = AM_identity[4]
+			AM_temp = AM_identity[5]
+			AM_temp_time = AM_identity[6]
+		else
+			AM_identity = new(6)
+		if(AM_faceprint && AM_faceprint_time >= (world.time - IDENTITY_EXPIRE_TIME))
+			var/list/AM_FP_entry = mind.get_print_entry(AM_faceprint, CATEGORY_FACEPRINTS)
+			if(AM_FP_entry)
+				AM_name = AM_FP_entry[3]
+		if(!AM_name && AM_voiceprint && AM_voiceprint_time >= (world.time - IDENTITY_EXPIRE_TIME))
+			var/list/AM_VP_entry = mind.get_print_entry(AM_voiceprint, CATEGORY_VOICEPRINTS)
+			if(AM_VP_entry)
+				AM_name = AM_VP_entry[3]
+		if(!AM_name)
+			if(AM_temp && AM_temp_time >= (world.time - TEMP_IDENTITY_EXPIRE))
+				AM_name = AM_temp
+			else
+				AM_name = AM.default_identity_seen()
+				AM_identity[5] = AM_name
+				AM_identity[6] = world.time
+		mind.identity_cache[AM] = AM_identity
+		. = AM_name
+
+/mob/proc/parse_identity_subjects(msg, list/subjects)
+	if(subjects && subjects.len)
+		for(var/i=1, i<=subjects.len, i++)
+			var/subject_string = IDENTITY_SUBJECT(i)
+			if(!findtextEx(msg, subject_string))
+				continue
+			var/atom/movable/AM = subjects[i]
+			var/AM_name = identity_subject_name(AM)
+			msg = replacetextEx(msg, subject_string, AM_name)
+	. = msg
+
 /mob/living/can_see_face()
 	. = TRUE
 
 /mob/living/get_voiceprint_name(atom/movable/speaker, voice_print)
 	. = speaker.name
-	if(client && mind && voice_print && speaker)
+	if(client && mind && voice_print)
 		if(voice_print == voiceprint)
 			. = "[real_name]"
 		else
@@ -98,15 +149,127 @@ var/global/list/used_voiceprints = list()
 		if(speaker == src)
 			. = "[.] <span class='italics'>(You)</span>"
 
+/mob/living/get_interact_name(atom/movable/target)
+	. = target.name
+	if(target == src)
+		. = real_name
+	else if(mind)
+		var/list/faceprint_entry
+		var/faceprint
+		var/interact_identity = target.default_identity_interact()
+		var/seen_identity = target.default_identity_seen()
+		if(target.can_see_face())
+			faceprint = target.get_faceprint()
+			if(faceprint)
+				faceprint_entry = mind.get_print_entry(faceprint, CATEGORY_FACEPRINTS)
+				var/faceprint_state
+				var/faceprint_name
+				mind.handle_faceprint_caching(target, faceprint)
+				if(faceprint_entry)
+					faceprint_state = faceprint_entry[1]
+					faceprint_name = faceprint_entry[3]
+				if(interact_identity == seen_identity && !faceprint_name)
+					faceprint_name = interact_identity
+				else if(!faceprint_name || faceprint_state > IDENTITY_INTERACT)
+					faceprint_state = IDENTITY_INTERACT
+					faceprint_name = interact_identity
+					faceprint_entry = new(4)
+					faceprint_entry[1] = faceprint_state
+					faceprint_entry[2] = world.time
+					faceprint_entry[3] = faceprint_name
+				. = faceprint_name
+		else
+			. = interact_identity
+		var/list/cache_entry = mind.identity_cache[target]
+		var/voice_print
+		var/list/voiceprint_entry
+		if(cache_entry)
+			voice_print = cache_entry[1]
+			var/voiceprint_cache_time = cache_entry[2]
+			if(voice_print && voiceprint_cache_time >= (world.time - IDENTITY_EXPIRE_TIME))
+				voiceprint_entry = mind.get_print_entry(voice_print, CATEGORY_VOICEPRINTS)
+				var/voiceprint_state
+				if(voiceprint_entry)
+					voiceprint_state = voiceprint_entry[1]
+					if(voiceprint_state >= IDENTITY_INTERACT)
+						voiceprint_entry[1] = IDENTITY_INTERACT
+						voiceprint_entry[3] = interact_identity
+					if(faceprint_entry)
+						voiceprint_entry[4] = faceprint
+						faceprint_entry[4] = voice_print
+		if(faceprint_entry)
+			mind.set_print_entry(faceprint, faceprint_entry, CATEGORY_FACEPRINTS)
+		if(voiceprint_entry)
+			mind.set_print_entry(voice_print, voiceprint_entry, CATEGORY_VOICEPRINTS)
+
 /mob/living/silicon/get_voiceprint_name(atom/movable/speaker, voice_print)
 	. = speaker.name
-	if(client && voice_print && speaker)
+	if(client && voice_print)
 		var/datum/data/record/G = find_record("voiceprint", voice_print, data_core.general)
 		if(G)
 			var/G_name = G.fields["name"]
 			. = G_name ? G_name : "&lt;NAME MISSING{[G.fields["id"]]}&gt;"
 		else
 			. = "&lt;NO RECORD&gt;"
+
+/mob/living/silicon/get_interact_name(atom/movable/target)
+	. = target.name
+	if(client)
+		var/datum/data/record/G
+		if(target.can_see_face())
+			var/faceprint = target.get_faceprint()
+			if(faceprint)
+				G = find_record("faceprint", faceprint, data_core.general)
+		if(G)
+			var/G_name = G.fields["name"]
+			. = G_name ? G_name : "&lt;NAME MISSING{[G.fields["id"]]}&gt;"
+		else
+			. = "&lt;NO RECORD&gt;"
+
+/mob/living/silicon/identity_subject_name(atom/movable/AM)
+	var/list/AM_identity = mind.identity_cache[AM]
+	var/AM_name
+	var/AM_temp
+	var/AM_temp_time
+	if(AM_identity)
+		AM_temp = AM_identity[5]
+		AM_temp_time = AM_identity[6]
+	else
+		AM_identity = new(6)
+	if(AM_temp && AM_temp_time >= (world.time - TEMP_IDENTITY_EXPIRE))
+		AM_name = AM_temp
+	else
+		var/faceprint = AM.get_faceprint()
+		var/datum/data/record/G
+		if(faceprint)
+			G = find_record("faceprint", faceprint, data_core.general)
+		if(G)
+			var/G_name = G.fields["name"]
+			AM_name = G_name ? G_name : "&lt;NAME MISSING{[G.fields["id"]]}&gt;"
+		else
+			AM_name = "&lt;NO RECORD&gt;"
+		AM_identity[5] = AM_name
+		AM_identity[6] = world.time
+	mind.identity_cache[AM] = AM_identity
+	. = AM_name
+
+/mob/dead/observer/get_voiceprint_name(atom/movable/speaker, voice_print)
+	. = speaker.name
+	if(ismob(speaker))
+		var/mob/M = speaker
+		. = M.real_name
+
+/mob/dead/observer/get_interact_name(atom/movable/target)
+	. = target.name
+	if(ismob(target))
+		var/mob/M = target
+		. = M.real_name
+
+/mob/dead/observer/identity_subject_name(atom/movable/AM)
+	. = AM.name
+	if(ismob(AM))
+		var/mob/M = AM
+		. = M.real_name
 
 /mob/living/proc/last_voiceprint_message(voice_print, message)
 	if(client && mind && voice_print && message)

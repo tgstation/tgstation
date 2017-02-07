@@ -291,10 +291,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 				continue
 		if(M.client && M.client.holder && M.client.holder.fakekey) //stealthmins
 			continue
-		var/name = avoid_assoc_duplicate_keys(M.name, namecounts)
-
-		if(M.real_name && M.real_name != M.name)
-			name += " \[[M.real_name]\]"
+		var/name = avoid_assoc_duplicate_keys(M.real_name, namecounts)
 		if(M.stat == DEAD)
 			if(isobserver(M))
 				name += " \[ghost\]"

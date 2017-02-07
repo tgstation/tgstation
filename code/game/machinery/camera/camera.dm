@@ -219,7 +219,7 @@
 						G = find_record("faceprint", faceprint, data_core.general)
 					if(G)
 						record_id = G.fields["id"]
-				AI.show_message("<b><a href='?src=\ref[AI][AI.ai_track_href(record_id)]'>[IDENTITY_SUBJECT(1)]</a></b> holds <a href='?_src_=usr;show_paper=1;'>\a [itemname]</a> up to one of your cameras ...", subjects=list(U))
+				AI.show_message("<b><a href='?src=\ref[AI][AI.ai_track_href(U, record_id)]'>[IDENTITY_SUBJECT(1)]</a></b> holds <a href='?_src_=usr;show_paper=1;'>\a [itemname]</a> up to one of your cameras ...", subjects=list(U))
 				AI.last_paper_seen = "<HTML><HEAD><TITLE>[itemname]</TITLE></HEAD><BODY><TT>[info]</TT></BODY></HTML>"
 			else if (O.client && O.client.eye == src)
 				O.show_message("[IDENTITY_SUBJECT(1)] holds \a [itemname] up to one of the cameras ...", subjects=list(U))
