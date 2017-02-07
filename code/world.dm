@@ -198,7 +198,7 @@ var/last_irc_status = 0
 	if(ticker.delay_end)
 		world << "<span class='boldannounce'>An admin has delayed the round end.</span>"
 		return
-	world << "<span class='boldannounce'>Rebooting World in [delay/10] [delay > 10 ? "seconds" : "second"]. [reason]</span>"
+	world << "<span class='boldannounce'>Rebooting World in [delay/10] [(delay >= 10 && delay < 20) ? "second" : "seconds"]. [reason]</span>"
 	var/round_end_sound_sent = FALSE
 	if(ticker.round_end_sound)
 		round_end_sound_sent = TRUE
@@ -225,7 +225,6 @@ var/last_irc_status = 0
 /world/proc/OnReboot(reason, feedback_c, feedback_r, round_end_sound_sent)
 	feedback_set_details("[feedback_c]","[feedback_r]")
 	log_game("<span class='boldannounce'>Rebooting World. [reason]</span>")
-	kick_clients_in_lobby("<span class='boldannounce'>The round came to an end with you in the lobby.</span>", 1) //second parameter ensures only afk clients are kicked
 #ifdef dellogging
 	var/log = file("data/logs/del.log")
 	log << time2text(world.realtime)
@@ -234,35 +233,39 @@ var/last_irc_status = 0
 		if(count > 10)
 			log << "#[count]\t[index]"
 #endif
-	var/soundwait = 0
-	if (ticker.round_end_sound && !round_end_sound_sent)
-		soundwait = 10
-		for(var/thing in clients)
-			var/client/C = thing
-			if (!C)
-				continue
-			C.Export("##action=load_rsc", ticker.round_end_sound)
-	spawn(soundwait/2)
-		if(ticker && ticker.round_end_sound)
-			world << sound(ticker.round_end_sound)
-		else
-			world << sound(pick('sound/AI/newroundsexy.ogg',
-			'sound/misc/apcdestroyed.ogg',
-			'sound/misc/bangindonk.ogg',
-			'sound/misc/leavingtg.ogg',
-			'sound/misc/its_only_game.ogg',
-			'sound/misc/yeehaw.ogg',
-			'sound/misc/disappointed.ogg')) // random end sounds!! - LastyBatsy
 	if(blackbox)
 		blackbox.save_all_data_to_sql()
-	sleep(soundwait)
 	Master.Shutdown()	//run SS shutdowns
+	RoundEndSound(round_end_sound_sent)
+	kick_clients_in_lobby("<span class='boldannounce'>The round came to an end with you in the lobby.</span>", 1) //second parameter ensures only afk clients are kicked
+	world << "<span class='boldannounce'>Rebooting world. Loading next map...</span>"
 	for(var/thing in clients)
 		var/client/C = thing
-		if (!C)
-			continue
-		if(config.server)	//if you set a server location in config.txt, it sends you there instead of trying to reconnect to the same world address. -- NeoFite
+		if(C && config.server)	//if you set a server location in config.txt, it sends you there instead of trying to reconnect to the same world address. -- NeoFite
 			C << link("byond://[config.server]")
+
+/world/proc/RoundEndSound(round_end_sound_sent)
+	set waitfor = FALSE
+	var/round_end_sound
+	if(!ticker && ticker.round_end_sound)
+		round_end_sound = ticker.round_end_sound
+		if (!round_end_sound_sent)
+			for(var/thing in clients)
+				var/client/C = thing
+				if (!C)
+					continue
+				C.Export("##action=load_rsc", round_end_sound)
+	else
+		round_end_sound = pick(\
+		'sound/roundend/newroundsexy.ogg',
+		'sound/roundend/apcdestroyed.ogg',
+		'sound/roundend/bangindonk.ogg',
+		'sound/roundend/leavingtg.ogg',
+		'sound/roundend/its_only_game.ogg',
+		'sound/roundend/yeehaw.ogg',
+		'sound/roundend/disappointed.ogg'\
+		)
+	world << sound(round_end_sound)
 
 var/inerror = 0
 /world/Error(var/exception/e)
