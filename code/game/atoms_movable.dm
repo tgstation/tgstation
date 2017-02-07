@@ -2,7 +2,7 @@
 	layer = OBJ_LAYER
 	var/last_move = null
 	var/anchored = 0
-	var/throwing = 0
+	var/datum/thrownthing/throwing = null
 	var/throw_speed = 2 //How many tiles to move per ds when being thrown. Float values are fully supported
 	var/throw_range = 7
 	var/mob/pulledby = null
@@ -24,9 +24,6 @@
 	glide_size = 8
 	appearance_flags = TILE_BOUND
 	var/datum/forced_movement/force_moving = null	//handled soley by forced_movement.dm
-	var/atom/hit_obj = null
-
-
 
 /atom/movable/Move(atom/newloc, direct = 0)
 	if(!loc || !newloc) return 0
@@ -128,13 +125,11 @@
 /atom/movable/Bump(atom/A, yes) //the "yes" arg is to differentiate our Bump proc from byond's, without it every Bump() call would become a double Bump().
 	if((A && yes))
 		if(throwing)
-			throwing = 0
-			hit_obj = A
+			throwing.hit_atom(A)
 			. = 1
 			if(!A || qdeleted(A))
 				return
 		A.Bumped(src)
-
 
 /atom/movable/proc/forceMove(atom/destination)
 	if(destination)
@@ -295,7 +290,7 @@
 	if(pulledby)
 		pulledby.stop_pulling()
 
-	throwing = 1
+	throwing = TT
 	if(spin)
 		SpinAnimation(5, 1)
 
