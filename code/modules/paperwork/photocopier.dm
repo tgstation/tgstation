@@ -220,7 +220,7 @@
 			var/icon/img = selection.fields["img"]
 			p.icon = I
 			p.img = img
-			p.desc = selection.fields["desc"]
+			p.mobinfo = selection.fields["mobinfo"]
 			p.blueprints = selection.fields["blueprints"]
 			p.pixel_x = rand(-10, 10)
 			p.pixel_y = rand(-10, 10)

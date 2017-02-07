@@ -820,7 +820,7 @@ var/list/obj/machinery/newscaster/allCasters = list()
 			if(q.fields["name"] == find)
 				selection = q
 				break
-		P.photocreate(selection.fields["icon"], selection.fields["img"], selection.fields["desc"])
+		P.photocreate(selection.fields["icon"], selection.fields["img"], selection.fields["mobinfo"])
 		P.sillynewscastervar = 1
 		photo = P
 		qdel(P)
