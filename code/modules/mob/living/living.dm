@@ -17,6 +17,10 @@
 	medhud.add_to_hud(src)
 	faction |= "\ref[src]"
 
+/mob/living/SDQL_update(const/var_name, new_value)
+	if(var_name == "implants")
+		return FALSE
+	. = ..()
 
 /mob/living/prepare_huds()
 	..()
