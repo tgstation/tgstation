@@ -13,7 +13,7 @@
 /datum/protected_configuration/vv_get_var(var_name)
 	return debug_variable(var_name, "SECRET", 0, src)
 
-/datum/protected_configuratoin/SDQL_update()
+/datum/protected_configuration/SDQL_update()
 	return FALSE	//no.
 
 /datum/protected_configuration/vv_edit_var(var_name, var_value)
