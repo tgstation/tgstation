@@ -42,6 +42,8 @@ mob/camera/aiEye/remote/base_construction/New(loc)
 	var/datum/action/innate/aux_base/window_type/window_action = new //Action for setting the window type
 	var/datum/action/innate/aux_base/place_fan/fan_action = new //Action for spawning fans
 	var/fans_remaining = 0 //Number of fans in stock.
+	var/datum/action/innate/aux_base/install_turret/turret_action = new //Action for spawning turrets
+	var/turret_stock = 0 //Turrets in stock
 	var/obj/machinery/computer/shuttle/auxillary_base/found_aux_console //Tracker for the Aux base console, so the eye can always find it.
 
 	icon_screen = "mining"
@@ -53,9 +55,10 @@ mob/camera/aiEye/remote/base_construction/New(loc)
 
 /obj/machinery/computer/camera_advanced/base_construction/Initialize(mapload)
 	..()
-	if(mapload) //Map spawned consoles have a filled RCD and four tiny fans
+	if(mapload) //Map spawned consoles have a filled RCD and stocked special structures
 		RCD.matter = RCD.max_matter
 		fans_remaining = 4
+		turret_stock = 4
 
 /obj/machinery/computer/camera_advanced/base_construction/CreateEye()
 
@@ -92,6 +95,8 @@ mob/camera/aiEye/remote/base_construction/New(loc)
 	window_action.Grant(user)
 	fan_action.target = src
 	fan_action.Grant(user)
+	turret_action.target = src
+	turret_action.Grant(user)
 	eyeobj.invisibility = 0 //When the eye is in use, make it visible to players so they know when someone is building.
 
 
@@ -140,6 +145,7 @@ mob/camera/aiEye/remote/base_construction/New(loc)
 	origin.airlock_mode_action.Remove(target)
 	origin.window_action.Remove(target)
 	origin.fan_action.Remove(target)
+	origin.turret_action.Remove(target)
 	remote_eye.invisibility = INVISIBILITY_MAXIMUM //Hide the eye when not in use.
 
 	..()
@@ -172,6 +178,7 @@ mob/camera/aiEye/remote/base_construction/New(loc)
 
 	owner.changeNext_move(CLICK_CD_RANGE)
 	B.RCD.afterattack(rcd_target, owner, TRUE) //Activate the RCD and force it to work remotely!
+	playsound(target_turf, 'sound/items/Deconstruct.ogg', 60, 1)
 
 /datum/action/innate/aux_base/switch_mode
 	name = "Switch Mode"
@@ -220,7 +227,8 @@ datum/action/innate/aux_base/place_fan/Activate()
 		owner << "<span class='warning'>[B] is out of fans!</span>"
 		return
 
-	check_spot()
+	if(!check_spot())
+		return
 
 	if(fan_turf.density)
 		owner << "<span class='warning'>Fans may only be placed on a floor.</span>"
@@ -229,3 +237,30 @@ datum/action/innate/aux_base/place_fan/Activate()
 	new /obj/structure/fans/tiny(fan_turf)
 	B.fans_remaining--
 	owner << "<span class='notice'>Tiny fan placed. [B.fans_remaining] remaining.</span>"
+	playsound(fan_turf, 'sound/machines/click.ogg', 50, 1)
+
+datum/action/innate/aux_base/install_turret
+	name = "Install Plasma Anti-Wildlife Turret"
+	button_icon_state = "build_turret"
+
+datum/action/innate/aux_base/install_turret/Activate()
+	if(..())
+		return
+
+	if(!check_spot())
+		return
+
+	if(!B.turret_stock)
+		owner << "<span class='warning'>Unable to construct additional turrets.</span>"
+		return
+
+	var/turf/turret_turf = get_turf(remote_eye)
+
+	if(is_blocked_turf(turret_turf))
+		owner << "<span class='warning'>Location is obtructed by something. Please clear the location and try again.</span>"
+		return
+
+	new /obj/machinery/porta_turret/aux_base(turret_turf)
+	B.turret_stock--
+	owner << "<span class='notice'>Turret installation complete!</span>"
+	playsound(turret_turf, 'sound/items/drill_use.ogg', 65, 1)
