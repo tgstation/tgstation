@@ -17647,11 +17647,6 @@
 /obj/structure/extinguisher_cabinet{
 	pixel_x = 26
 	},
-/obj/item/device/radio/intercom{
-	name = "Station Intercom";
-	pixel_x = 0;
-	pixel_y = -24
-	},
 /obj/machinery/power/terminal,
 /obj/structure/cable{
 	d2 = 8;
@@ -18385,6 +18380,11 @@
 /obj/structure/cable/white{
 	tag = "icon-0-8";
 	icon_state = "0-8"
+	},
+/obj/item/device/radio/intercom{
+	name = "Station Intercom";
+	pixel_x = 0;
+	pixel_y = -24
 	},
 /turf/open/floor/plasteel/vault,
 /area/engine/gravity_generator{
