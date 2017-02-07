@@ -1024,7 +1024,10 @@
 /area/shuttle/arrival)
 "abX" = (
 /obj/structure/table/reinforced,
-/obj/item/device/analyzer,
+/obj/item/device/analyzer{
+	pixel_x = 7;
+	pixel_y = 3
+	},
 /turf/open/floor/plasteel/yellow/side{
 	dir = 8
 	},
@@ -4863,7 +4866,9 @@
 /turf/open/space,
 /area/solar/auxport)
 "ajK" = (
-/obj/structure/reflector/single,
+/obj/structure/reflector/single{
+	anchored = 1
+	},
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
@@ -4879,9 +4884,10 @@
 	})
 "ajM" = (
 /obj/structure/reflector/box{
-	tag = "icon-reflector_box (EAST)";
+	anchored = 1;
+	dir = 4;
 	icon_state = "reflector_box";
-	dir = 4
+	tag = "icon-reflector_box (EAST)"
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 5
@@ -4912,9 +4918,10 @@
 	})
 "ajP" = (
 /obj/structure/reflector/single{
-	tag = "icon-reflector (WEST)";
+	anchored = 1;
+	dir = 8;
 	icon_state = "reflector";
-	dir = 8
+	tag = "icon-reflector (WEST)"
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 8
@@ -5350,7 +5357,9 @@
 	name = "Atmospherics Engine"
 	})
 "akQ" = (
-/obj/structure/reflector/double,
+/obj/structure/reflector/double{
+	anchored = 1
+	},
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
@@ -5359,9 +5368,10 @@
 	})
 "akR" = (
 /obj/structure/reflector/double{
-	tag = "icon-reflector_double (NORTH)";
+	anchored = 1;
+	dir = 1;
 	icon_state = "reflector_double";
-	dir = 1
+	tag = "icon-reflector_double (NORTH)"
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 5
@@ -5830,9 +5840,10 @@
 /area/solar/auxport)
 "alP" = (
 /obj/structure/reflector/double{
-	tag = "icon-reflector_double (EAST)";
+	anchored = 1;
+	dir = 4;
 	icon_state = "reflector_double";
-	dir = 4
+	tag = "icon-reflector_double (EAST)"
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 5
@@ -6443,7 +6454,9 @@
 	name = "Atmospherics Engine"
 	})
 "anb" = (
-/obj/structure/reflector/box,
+/obj/structure/reflector/box{
+	anchored = 1
+	},
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
@@ -6969,9 +6982,10 @@
 /area/solar/auxport)
 "aoa" = (
 /obj/structure/reflector/single{
-	tag = "icon-reflector (NORTH)";
+	anchored = 1;
+	dir = 1;
 	icon_state = "reflector";
-	dir = 1
+	tag = "icon-reflector (NORTH)"
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 8
@@ -8597,10 +8611,22 @@
 /area/solar/auxport)
 "aqY" = (
 /obj/structure/table/reinforced,
-/obj/item/device/analyzer,
+/obj/item/device/analyzer{
+	pixel_x = 7;
+	pixel_y = 3
+	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/turf_decal/bot,
+/obj/item/clothing/glasses/meson{
+	pixel_y = 1
+	},
+/obj/item/clothing/glasses/meson{
+	pixel_y = 1
+	},
+/obj/item/clothing/glasses/meson{
+	pixel_y = 1
+	},
 /turf/open/floor/plasteel,
 /area/engine/gravity_generator{
 	name = "Atmospherics Engine"
@@ -9462,7 +9488,7 @@
 "asq" = (
 /obj/machinery/atmospherics/components/trinary/filter{
 	dir = 4;
-	filter_type = "n2";
+	filter_type = "o2";
 	on = 1
 	},
 /turf/open/floor/plasteel/yellow,
@@ -14424,6 +14450,7 @@
 	})
 "aBt" = (
 /obj/machinery/door/airlock{
+	id_tag = "AuxCabinA";
 	name = "Cabin A";
 	req_access_txt = "25"
 	},
@@ -15030,6 +15057,15 @@
 "aCz" = (
 /obj/structure/table/wood,
 /obj/item/device/flashlight/lamp,
+/obj/machinery/button/door{
+	id = "AuxCabinA";
+	name = "Dormitory Door Lock";
+	normaldoorcontrol = 1;
+	pixel_x = -26;
+	pixel_y = 7;
+	req_access_txt = "0";
+	specialfunctions = 4
+	},
 /turf/open/floor/plasteel/grimy,
 /area/crew_quarters/sleep{
 	name = "Service Hall"
@@ -17689,6 +17725,7 @@
 	})
 "aGO" = (
 /obj/machinery/door/airlock{
+	id_tag = "AuxCabinB";
 	name = "Cabin B"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -18370,6 +18407,15 @@
 "aHY" = (
 /obj/structure/table/wood,
 /obj/item/weapon/paper_bin,
+/obj/machinery/button/door{
+	id = "AuxCabinB";
+	name = "Dormitory Door Lock";
+	normaldoorcontrol = 1;
+	pixel_x = -26;
+	pixel_y = 7;
+	req_access_txt = "0";
+	specialfunctions = 4
+	},
 /turf/open/floor/wood,
 /area/crew_quarters/sleep{
 	name = "Service Hall"
@@ -29108,7 +29154,10 @@
 /area/atmos)
 "baM" = (
 /obj/structure/table/reinforced,
-/obj/item/device/analyzer,
+/obj/item/device/analyzer{
+	pixel_x = 7;
+	pixel_y = 3
+	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
@@ -34536,10 +34585,7 @@
 /turf/open/floor/plasteel,
 /area/hydroponics)
 "bkK" = (
-/obj/structure/table/reinforced,
-/obj/item/weapon/paper_bin,
-/obj/item/weapon/pen,
-/obj/effect/turf_decal/bot,
+/obj/machinery/smartfridge/disks,
 /turf/open/floor/plasteel,
 /area/hydroponics)
 "bkL" = (
@@ -39788,7 +39834,10 @@
 /obj/structure/table/reinforced,
 /obj/item/weapon/crowbar/red,
 /obj/item/weapon/wrench,
-/obj/item/device/analyzer,
+/obj/item/device/analyzer{
+	pixel_x = 7;
+	pixel_y = 3
+	},
 /obj/machinery/newscaster{
 	pixel_x = -32
 	},
@@ -41788,8 +41837,14 @@
 /area/storage/tech)
 "bxj" = (
 /obj/structure/table/reinforced,
-/obj/item/device/analyzer,
-/obj/item/device/analyzer,
+/obj/item/device/analyzer{
+	pixel_x = 7;
+	pixel_y = 3
+	},
+/obj/item/device/analyzer{
+	pixel_x = 7;
+	pixel_y = 3
+	},
 /obj/item/device/assembly/signaler,
 /obj/item/device/assembly/signaler,
 /obj/effect/turf_decal/bot,
@@ -42932,8 +42987,14 @@
 /area/storage/primary)
 "bzj" = (
 /obj/structure/table/reinforced,
-/obj/item/device/analyzer,
-/obj/item/device/analyzer,
+/obj/item/device/analyzer{
+	pixel_x = 7;
+	pixel_y = 3
+	},
+/obj/item/device/analyzer{
+	pixel_x = 7;
+	pixel_y = 3
+	},
 /obj/item/device/assembly/signaler,
 /obj/item/device/assembly/signaler,
 /obj/machinery/light{
@@ -74662,6 +74723,15 @@
 /obj/structure/table/wood,
 /obj/item/weapon/folder/blue,
 /obj/item/weapon/lighter,
+/obj/machinery/button/door{
+	id = "Dorm1";
+	name = "Dormitory Door Lock";
+	normaldoorcontrol = 1;
+	pixel_x = -26;
+	pixel_y = 7;
+	req_access_txt = "0";
+	specialfunctions = 4
+	},
 /turf/open/floor/plasteel/grimy,
 /area/crew_quarters/sleep)
 "cCf" = (
@@ -74683,6 +74753,15 @@
 "cCi" = (
 /obj/structure/table/wood,
 /obj/item/weapon/paper_bin,
+/obj/machinery/button/door{
+	id = "Dorm3";
+	name = "Dormitory Door Lock";
+	normaldoorcontrol = 1;
+	pixel_x = -26;
+	pixel_y = 7;
+	req_access_txt = "0";
+	specialfunctions = 4
+	},
 /turf/open/floor/carpet,
 /area/crew_quarters/sleep)
 "cCj" = (
@@ -75349,6 +75428,7 @@
 "cDp" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock{
+	id_tag = "Dorm1";
 	name = "Cabin 1"
 	},
 /turf/open/floor/plasteel/grimy,
@@ -75356,6 +75436,7 @@
 "cDq" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock{
+	id_tag = "Dorm2";
 	name = "Cabin 2"
 	},
 /turf/open/floor/wood,
@@ -75363,6 +75444,7 @@
 "cDr" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock{
+	id_tag = "Dorm3";
 	name = "Cabin 3"
 	},
 /turf/open/floor/carpet,
@@ -78435,6 +78517,7 @@
 "cIM" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock{
+	id_tag = "Dorm4";
 	name = "Cabin 4"
 	},
 /turf/open/floor/wood,
@@ -78442,6 +78525,7 @@
 "cIN" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock{
+	id_tag = "Dorm5";
 	name = "Cabin 5"
 	},
 /turf/open/floor/carpet,
@@ -78449,6 +78533,7 @@
 "cIO" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock{
+	id_tag = "Dorm6";
 	name = "Cabin 6"
 	},
 /turf/open/floor/plasteel/grimy,
@@ -79538,8 +79623,15 @@
 /turf/open/floor/wood,
 /area/crew_quarters/sleep)
 "cKL" = (
-/obj/structure/table/wood,
-/obj/item/device/flashlight/lamp/green,
+/obj/machinery/button/door{
+	id = "Dorm5";
+	name = "Dormitory Door Lock";
+	normaldoorcontrol = 1;
+	pixel_x = -26;
+	pixel_y = 7;
+	req_access_txt = "0";
+	specialfunctions = 4
+	},
 /turf/open/floor/carpet,
 /area/crew_quarters/sleep)
 "cKM" = (
@@ -79558,6 +79650,15 @@
 /obj/structure/table/wood,
 /obj/item/weapon/folder/blue,
 /obj/item/weapon/pen/blue,
+/obj/machinery/button/door{
+	id = "Dorm6";
+	name = "Dormitory Door Lock";
+	normaldoorcontrol = 1;
+	pixel_x = -26;
+	pixel_y = 7;
+	req_access_txt = "0";
+	specialfunctions = 4
+	},
 /turf/open/floor/plasteel/grimy,
 /area/crew_quarters/sleep)
 "cKO" = (
@@ -81381,7 +81482,10 @@
 /area/maintenance/electrical)
 "cOi" = (
 /obj/structure/table/reinforced,
-/obj/item/device/analyzer,
+/obj/item/device/analyzer{
+	pixel_x = 7;
+	pixel_y = 3
+	},
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
 /area/maintenance/electrical)
@@ -96951,7 +97055,10 @@
 /area/hallway/secondary/construction)
 "dqo" = (
 /obj/structure/table,
-/obj/item/device/analyzer,
+/obj/item/device/analyzer{
+	pixel_x = 7;
+	pixel_y = 3
+	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
@@ -117862,6 +117969,30 @@
 /obj/structure/cable/white,
 /turf/closed/wall/r_wall,
 /area/medical/virology)
+"ech" = (
+/obj/machinery/button/door{
+	id = "Dorm2";
+	name = "Dormitory Door Lock";
+	normaldoorcontrol = 1;
+	pixel_x = -26;
+	pixel_y = 7;
+	req_access_txt = "0";
+	specialfunctions = 4
+	},
+/turf/open/floor/wood,
+/area/crew_quarters/sleep)
+"eci" = (
+/obj/machinery/button/door{
+	id = "Dorm4";
+	name = "Dormitory Door Lock";
+	normaldoorcontrol = 1;
+	pixel_x = -26;
+	pixel_y = 7;
+	req_access_txt = "0";
+	specialfunctions = 4
+	},
+/turf/open/floor/wood,
+/area/crew_quarters/sleep)
 
 (1,1,1) = {"
 aaa
@@ -168133,7 +168264,7 @@ cGb
 cHs
 cvP
 cCg
-cyX
+eci
 cNS
 cxw
 cvP
@@ -169153,8 +169284,8 @@ cuu
 cvP
 cxw
 cyV
-cyX
 cCg
+ech
 cvP
 cEq
 cGc
