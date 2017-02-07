@@ -62,7 +62,7 @@
 	return ..()
 
 /atom/SDQL_update(const/var_name, new_value)
-	if(var_name == "contents")
+	if(var_name == "contents" || var_name == "admin_spawned")
 		return FALSE
 	. = ..()
 
