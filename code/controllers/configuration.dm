@@ -13,6 +13,9 @@
 /datum/protected_configuration/vv_get_var(var_name)
 	return debug_variable(var_name, "SECRET", 0, src)
 
+/datum/protected_configuratoin/SDQL_update()
+	return FALSE	//no.
+
 /datum/protected_configuration/vv_edit_var(var_name, var_value)
 	return FALSE
 
@@ -854,6 +857,9 @@
 			runnable_modes[M] = probabilities[M.config_tag]
 			//world << "DEBUG: runnable_mode\[[runnable_modes.len]\] = [M.config_tag]"
 	return runnable_modes
+
+/datum/configuration/SDQL_update()
+	return FALSE	//just varedit the damn thing.
 
 /datum/configuration/proc/get_runnable_midround_modes(crew)
 	var/list/datum/game_mode/runnable_modes = new
