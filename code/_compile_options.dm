@@ -50,6 +50,10 @@
 #warn compiling in TESTING mode. testing() debug messages will be visible.
 #endif
 
+#ifdef TRAVISTESTING
+#define TESTING
+#endif
+
 //Update this whenever you need to take advantage of more recent byond features
 #define MIN_COMPILER_VERSION 510
 #if DM_VERSION < MIN_COMPILER_VERSION

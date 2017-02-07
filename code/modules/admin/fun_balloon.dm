@@ -15,7 +15,7 @@
 	. = ..()
 
 /obj/effect/fun_balloon/process()
-	if(!popped && check() && !qdeleted(src))
+	if(!popped && check() && !QDELETED(src))
 		popped = TRUE
 		effect()
 		pop()

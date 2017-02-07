@@ -1,4 +1,0 @@
-author: "Cobby"
-delete-after: True
-changes: 
-  - rscadd: "Ghosts will now be informed when an event has been triggered by our lovely RNG system."
