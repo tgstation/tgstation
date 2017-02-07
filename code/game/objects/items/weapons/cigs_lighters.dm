@@ -163,18 +163,12 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		var/datum/effect_system/reagents_explosion/e = new()
 		e.set_up(round(reagents.get_reagent_amount("plasma") / 2.5, 1), get_turf(src), 0, 0)
 		e.start()
-		if(ismob(loc))
-			var/mob/M = loc
-			M.unEquip(src, 1)
 		qdel(src)
 		return
 	if(reagents.get_reagent_amount("welding_fuel")) // the fuel explodes, too, but much less violently
 		var/datum/effect_system/reagents_explosion/e = new()
 		e.set_up(round(reagents.get_reagent_amount("welding_fuel") / 5, 1), get_turf(src), 0, 0)
 		e.start()
-		if(ismob(loc))
-			var/mob/M = loc
-			M.unEquip(src, 1)
 		qdel(src)
 		return
 	// allowing reagents to react after being lit
@@ -217,7 +211,6 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		new type_butt(location)
 		if(ismob(loc))
 			M << "<span class='notice'>Your [name] goes out.</span>"
-			M.unEquip(src, 1)	//un-equip it so the overlays can update //Force the un-equip so the overlays update
 		qdel(src)
 		return
 	open_flame()
@@ -566,16 +559,14 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	if(istype(target, /obj/item/weapon/reagent_containers/food/snacks/grown))
 		var/obj/item/weapon/reagent_containers/food/snacks/grown/O = target
 		if(O.dry)
-			user.unEquip(target, 1)
-			user.unEquip(src, 1)
 			var/obj/item/clothing/mask/cigarette/rollie/R = new /obj/item/clothing/mask/cigarette/rollie(user.loc)
 			R.chem_volume = target.reagents.total_volume
 			target.reagents.trans_to(R, R.chem_volume)
+			qdel(target)
+			qdel(src)
 			user.put_in_active_hand(R)
 			user << "<span class='notice'>You roll the [target.name] into a rolling paper.</span>"
 			R.desc = "Dried [target.name] rolled up in a thin piece of paper."
-			qdel(target)
-			qdel(src)
 		else
 			user << "<span class='warning'>You need to dry this first!</span>"
 	else
@@ -707,9 +698,6 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 					var/datum/effect_system/reagents_explosion/e = new()
 					e.set_up(round(reagents.get_reagent_amount("plasma") / 2.5, 1), get_turf(src), 0, 0)
 					e.start()
-					if(ismob(loc))
-						var/mob/M = loc
-						M.unEquip(src, 1)
 					qdel(src)
 				return
 		reagents.remove_any(REAGENTS_METABOLISM)
@@ -744,7 +732,6 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		if(prob(5))//small chance for the vape to break and deal damage if it's emagged
 			playsound(get_turf(src), 'sound/effects/pop_expl.ogg', 50, 0)
 			M.apply_damage(20, BURN, "head")
-			M.unEquip(src, 1)
 			M.Weaken(15, 1, 0)
 			qdel(src)
 			var/datum/effect_system/spark_spread/sp = new /datum/effect_system/spark_spread

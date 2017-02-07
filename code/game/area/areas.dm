@@ -197,7 +197,7 @@ var/list/teleportlocs = list()
 					if(D.operating)
 						D.nextstate = CLOSED
 					else if(!D.density)
-						addtimer(CALLBACK(D, /obj/machinery/door/firedoor.proc/close), 0)
+						INVOKE_ASYNC(D, /obj/machinery/door/firedoor.proc/close)
 			for(var/obj/machinery/firealarm/F in RA)
 				F.update_icon()
 		for (var/obj/machinery/camera/C in RA)
@@ -223,7 +223,7 @@ var/list/teleportlocs = list()
 					if(D.operating)
 						D.nextstate = OPEN
 					else if(D.density)
-						addtimer(CALLBACK(D, /obj/machinery/door/firedoor.proc/open), 0)
+						INVOKE_ASYNC(D, /obj/machinery/door/firedoor.proc/open)
 			for(var/obj/machinery/firealarm/F in RA)
 				F.update_icon()
 
@@ -294,7 +294,7 @@ var/list/teleportlocs = list()
 				if(D.operating)
 					D.nextstate = OPEN
 				else if(D.density)
-					addtimer(CALLBACK(D, /obj/machinery/door/firedoor.proc/open), 0)
+					INVOKE_ASYNC(D, /obj/machinery/door/firedoor.proc/open)
 
 /area/proc/updateicon()
 	if ((fire || eject || party) && (!requires_power||power_environ))//If it doesn't require power, can still activate this proc.

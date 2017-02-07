@@ -1,4 +1,4 @@
-//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
 /turf/open/space,
 /area/space)
@@ -479,8 +479,10 @@
 /obj/machinery/gateway{
 	dir = 9
 	},
-/turf/open/floor/plasteel/darkwarning{
-	tag = "icon-warndark (NORTHWEST)";
+/turf/open/floor/plasteel/black{
+	tag = "icon-warndark (NORTHWEST)"
+	},
+/obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
 /area/awaymission/research/interior/gateway)
@@ -488,7 +490,8 @@
 /obj/machinery/gateway{
 	dir = 1
 	},
-/turf/open/floor/plasteel/darkwarning{
+/turf/open/floor/plasteel/black,
+/obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
 /area/awaymission/research/interior/gateway)
@@ -496,8 +499,10 @@
 /obj/machinery/gateway{
 	dir = 5
 	},
-/turf/open/floor/plasteel/darkwarning{
-	tag = "icon-warndark (NORTHEAST)";
+/turf/open/floor/plasteel/black{
+	tag = "icon-warndark (NORTHEAST)"
+	},
+/obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
 /area/awaymission/research/interior/gateway)
@@ -618,7 +623,8 @@
 /obj/machinery/gateway{
 	dir = 8
 	},
-/turf/open/floor/plasteel/darkwarning{
+/turf/open/floor/plasteel/black,
+/obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
 /area/awaymission/research/interior/gateway)
@@ -632,8 +638,10 @@
 /obj/machinery/gateway{
 	dir = 4
 	},
-/turf/open/floor/plasteel/darkwarning{
-	tag = "icon-warndark (EAST)";
+/turf/open/floor/plasteel/black{
+	tag = "icon-warndark (EAST)"
+	},
+/obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
 /area/awaymission/research/interior/gateway)
@@ -669,8 +677,10 @@
 /obj/machinery/gateway{
 	dir = 10
 	},
-/turf/open/floor/plasteel/darkwarning{
-	tag = "icon-warndark (SOUTHWEST)";
+/turf/open/floor/plasteel/black{
+	tag = "icon-warndark (SOUTHWEST)"
+	},
+/obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
 /area/awaymission/research/interior/gateway)
@@ -679,14 +689,17 @@
 /obj/effect/landmark{
 	name = "awaystart"
 	},
-/turf/open/floor/plasteel/darkwarning,
+/turf/open/floor/plasteel/black,
+/obj/effect/turf_decal/stripes/line,
 /area/awaymission/research/interior/gateway)
 "ca" = (
 /obj/machinery/gateway{
 	dir = 6
 	},
-/turf/open/floor/plasteel/darkwarning{
-	tag = "icon-warndark (SOUTHEAST)";
+/turf/open/floor/plasteel/black{
+	tag = "icon-warndark (SOUTHEAST)"
+	},
+/obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
 /area/awaymission/research/interior/gateway)

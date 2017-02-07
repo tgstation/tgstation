@@ -64,6 +64,20 @@
 		S.take_overall_damage(anti_armour_damage*0.75, anti_armour_damage*0.25)
 	return 1
 
+/obj/item/projectile/bullet/srmrocket
+	name ="SRM-8 Rocket"
+	desc = "Boom"
+	icon_state = "missile"
+	damage = 30
+
+/obj/item/projectile/bullet/srmrocket/on_hit(atom/target, blocked=0)
+	..()
+	if(!isliving(target)) //if the target isn't alive, so is a wall or something
+		explosion(target, 0, 1, 2, 4)
+	else
+		explosion(target, 0, 0, 2, 4)
+	return 1
+
 /obj/item/projectile/temp
 	name = "freeze beam"
 	icon_state = "ice_2"

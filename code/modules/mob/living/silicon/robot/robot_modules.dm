@@ -178,7 +178,7 @@
 	R.module = RM
 	R.update_module_innate()
 	RM.rebuild_modules()
-	addtimer(CALLBACK(RM, .proc/do_transform_animation), 0)
+	INVOKE_ASYNC(RM, .proc/do_transform_animation)
 	qdel(src)
 	return RM
 
@@ -191,6 +191,7 @@
 
 /obj/item/weapon/robot_module/proc/do_transform_animation()
 	var/mob/living/silicon/robot/R = loc
+	R.notransform = TRUE
 	var/obj/effect/overlay/temp/decoy/fading/fivesecond/ANM = new /obj/effect/overlay/temp/decoy/fading/fivesecond(R.loc, R)
 	ANM.layer = R.layer - 0.01
 	new /obj/effect/overlay/temp/small_smoke(R.loc)
@@ -210,6 +211,7 @@
 	if(!prev_lockcharge)
 		R.SetLockdown(0)
 	R.anchored = FALSE
+	R.notransform = FALSE
 	R.notify_ai(2)
 	if(R.hud_used)
 		R.hud_used.update_robot_modules_display()
@@ -224,7 +226,7 @@
 	/obj/item/device/t_scanner/adv_mining_scanner, /obj/item/weapon/restraints/handcuffs/cable/zipties/cyborg, \
 	/obj/item/weapon/soap/nanotrasen, /obj/item/borg/cyborghug)
 	emag_modules = list(/obj/item/weapon/melee/energy/sword/cyborg)
-	ratvar_modules = list(/obj/item/clockwork/slab/cyborg, /obj/item/clockwork/ratvarian_spear/cyborg)
+	ratvar_modules = list(/obj/item/clockwork/slab/cyborg, /obj/item/clockwork/ratvarian_spear/cyborg, /obj/item/clockwork/clockwork_proselytizer/cyborg)
 	moduleselect_icon = "standard"
 	feedback_key = "cyborg_standard"
 	hat_offset = -3
@@ -238,7 +240,7 @@
 	/obj/item/weapon/circular_saw, /obj/item/weapon/extinguisher/mini, /obj/item/roller/robo, /obj/item/borg/cyborghug/medical, \
 	/obj/item/stack/medical/gauze/cyborg, /obj/item/borg/lollipop)
 	emag_modules = list(/obj/item/weapon/reagent_containers/borghypo/hacked)
-	ratvar_modules = list(/obj/item/clockwork/slab/cyborg/medical)
+	ratvar_modules = list(/obj/item/clockwork/slab/cyborg/medical, /obj/item/clockwork/ratvarian_spear/cyborg)
 	cyborg_base_icon = "medical"
 	moduleselect_icon = "medical"
 	feedback_key = "cyborg_medical"
@@ -294,7 +296,7 @@
 	basic_modules = list(/obj/item/device/assembly/flash/cyborg, /obj/item/weapon/cookiesynth, /obj/item/device/harmalarm, /obj/item/weapon/reagent_containers/borghypo/peace, \
 	/obj/item/weapon/holosign_creator/cyborg, /obj/item/borg/cyborghug/peacekeeper, /obj/item/weapon/extinguisher)
 	emag_modules = list(/obj/item/weapon/reagent_containers/borghypo/peace/hacked)
-	ratvar_modules = list(/obj/item/clockwork/slab/cyborg/peacekeeper)
+	ratvar_modules = list(/obj/item/clockwork/slab/cyborg/peacekeeper, /obj/item/clockwork/ratvarian_spear/cyborg)
 	cyborg_base_icon = "peace"
 	moduleselect_icon = "standard"
 	feedback_key = "cyborg_peacekeeper"
@@ -388,7 +390,7 @@
 	/obj/item/weapon/crowbar/cyborg, /obj/item/weapon/weldingtool/mini, /obj/item/weapon/extinguisher/mini, /obj/item/weapon/storage/bag/sheetsnatcher/borg, \
 	/obj/item/device/t_scanner/adv_mining_scanner, /obj/item/weapon/gun/energy/kinetic_accelerator/cyborg, /obj/item/device/gps/cyborg)
 	emag_modules = list(/obj/item/borg/stun)
-	ratvar_modules = list(/obj/item/clockwork/slab/cyborg/miner, /obj/item/borg/sight/xray/truesight_lens)
+	ratvar_modules = list(/obj/item/clockwork/slab/cyborg/miner, /obj/item/clockwork/ratvarian_spear/cyborg, /obj/item/borg/sight/xray/truesight_lens)
 	cyborg_base_icon = "miner"
 	moduleselect_icon = "miner"
 	feedback_key = "cyborg_miner"

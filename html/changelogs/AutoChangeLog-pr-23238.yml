@@ -1,6 +1,0 @@
-author: "kevinz000"
-delete-after: True
-changes: 
-  - rscadd: "Emitters and Tesla Coils now have activation wires!"
-  - rscadd: "Emitters will shoot out an emitter bolt when pulsed, regardless of it is on."
-  - rscadd: "Tesla coils will shoot lightning when pulsed, if it is connected to a cable that has power."

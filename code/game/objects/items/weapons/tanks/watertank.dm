@@ -67,14 +67,12 @@
 /obj/item/weapon/watertank/proc/remove_noz()
 	if(ismob(noz.loc))
 		var/mob/M = noz.loc
-		M.unEquip(noz, 1)
+		M.temporarilyRemoveItemFromInventory(noz, TRUE)
 	return
 
 /obj/item/weapon/watertank/Destroy()
 	if (on)
-		remove_noz()
 		qdel(noz)
-		noz = null
 	return ..()
 
 /obj/item/weapon/watertank/attack_hand(mob/user)
@@ -87,7 +85,7 @@
 	var/mob/M = src.loc
 	if(istype(M) && istype(over_object, /obj/screen/inventory/hand))
 		var/obj/screen/inventory/hand/H = over_object
-		if(!M.unEquip(src))
+		if(!M.temporarilyRemoveItemFromInventory(src))
 			return
 		M.put_in_hand(src, H.held_index)
 
@@ -138,8 +136,7 @@
 
 /proc/check_tank_exists(parent_tank, mob/living/carbon/human/M, obj/O)
 	if (!parent_tank || !istype(parent_tank, /obj/item/weapon/watertank))	//To avoid weird issues from admin spawns
-		M.unEquip(O)
-		qdel(0)
+		qdel(O)
 		return 0
 	else
 		return 1
