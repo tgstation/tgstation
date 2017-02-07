@@ -55,6 +55,50 @@
 		
 		-->
 		<div class="commit sansserif">
+			<h2 class="date">07 February 2017</h2>
+			<h3 class="author">Cyberboss updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">Wire, atmos, and disposal networks no longer work across hyperspace when on the border of a shuttle</li>
+				<li class="bugfix">Implants that work on death will now work for simple_animals</li>
+				<li class="bugfix">The target moving while being implanted will no longer continue the implant</li>
+				<li class="bugfix">Implanters now show progress bars as they were intended to</li>
+				<li class="bugfix">Pipe painters are no longer aggressive</li>
+				<li class="bugfix">Carding the AI will now stop a doomsday device</li>
+				<li class="rscadd">The job subsystem now loads instantly. No more waiting to set your occupation prefs!</li>
+			</ul>
+			<h3 class="author">JJRcop updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="tweak">Adds 4% chance when assigning a valentines day date to also assign someone else to the same date, but your date will still have you as their only date.</li>
+			</ul>
+			<h3 class="author">Poojawa updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">[Delta] Active turfs down from 300+</li>
+				<li class="bugfix">[Delta] Janitor closet isn't 2.7K anymore</li>
+				<li class="bugfix">[Delta] Various pipe fixes</li>
+			</ul>
+			<h3 class="author">Swindly updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">Robotic eyes can no longer be eaten</li>
+			</ul>
+			<h3 class="author">Tofa01 updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">Fixes grammar issue when changing someones appearance via plastic surgery.</li>
+				<li class="tweak">[OmegaStation] Allows Chaplain job to be selectable.</li>
+			</ul>
+			<h3 class="author">iamthedigitalme updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="imageadd">Legion has a new, animated sprite.</li>
+			</ul>
+			<h3 class="author">kevinz000 updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">ADMINS: SDQL2 has been given some new features!</li>
+				<li class="bugfix">SDQL2 now gives you an exception on runtime instead of flooding server runtime logs.</li>
+				<li class="rscadd">SDQL2 now supports usr, which makes that variable reference to whatever mob you are in, src, which targets the object it is being called on itself, and marked, which targets the datum marked by the admin calling it. Also, it supports hex references (the hex number at the top of a VV panel) in {}s, so you can target nearly anything! Also, global procs are supported by global.[procname](args), for CALL queries.</li>
+				<li class="bugfix">SDQL2 can no longer edit /datum/admins or /datum/admin_rank, and is protected from changing x/y/z of a turf and anything that would cause broken movement for movable atoms.</li>
+				<li class="rscadd">SDQL2 can now get list input with [arg1, arg2]!</li>
+				<li class="experiment">Do '"<string>"' to put strings inside of SDQL2 or it won't work.</li>
+			</ul>
+
 			<h2 class="date">06 February 2017</h2>
 			<h3 class="author">Xhuis updated:</h3>
 			<ul class="changes bgimages16">
@@ -1295,76 +1339,6 @@
 			<h3 class="author">Thunder12345 updated:</h3>
 			<ul class="changes bgimages16">
 				<li class="bugfix">You can now only order a replacement shuttle once</li>
-			</ul>
-
-			<h2 class="date">06 December 2016</h2>
-			<h3 class="author">BASILMAN YOUR MAIN MAN updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">fixes people "walking over the glass shard!" when they're on the ground, changes message when incapacitated</li>
-			</ul>
-			<h3 class="author">Chnkr updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">Nuclear Operatives can now customize the message broadcast to the station when declaring war.</li>
-			</ul>
-			<h3 class="author">Cyberboss updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">The atmos waste lines for the Metastation Kitchen and Botany departments is now actually connected</li>
-			</ul>
-			<h3 class="author">Gun Hog updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">Nanotrasen Janitorial Sciences Division is proud to announce a new concept for the Advanced Mop prototype; It now includes a built-in condenser for self re-hydration! See your local Scientist today! In the event that janitorial staff wish to use more expensive solutions, the condenser may be shut off with a handy handle switch!</li>
-			</ul>
-			<h3 class="author">Incoming5643 updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">The timer for shuttle calls/recalls now scales with the security level of the station (Code Red/Green, etc.). You no longer have to feel dumb if you forget to call Code Red before you call the shuttle!</li>
-				<li class="rscadd">Shuttles called in Code Green (the lowest level) now take 20 minutes to arrive, but may be recalled for up to 10 minutes. They also don't require a reason to be called.</li>
-				<li class="experiment">That doesn't mean you should call a code green shuttle every round the moment it finishes refueling.</li>
-				<li class="rscadd">Server owners may now customize the population levels required to play various modes. Keep in mind that this does not preserve the balance of the mode if you change it drastically. See game_modes.txt for details.</li>
-			</ul>
-			<h3 class="author">Joan updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">You can now proselytize floor tiles at a rate of 20 tiles to 1 brass sheet or 2 tiles to 1 liquified alloy for cogscarabs.</li>
-				<li class="rscadd">Proselytizers will automatically pry up floor tiles if those tiles can be proselytized.</li>
-				<li class="tweak">Brass floor tiles no longer exist. Instead, you can just apply brass sheets to a tile. Crowbarring up a clockwork floor will yield that brass sheet.</li>
-				<li class="rscadd">You can now cancel AI intellicard wiping.</li>
-				<li class="tweak">Geis now takes 5 seconds to resist.</li>
-			</ul>
-			<h3 class="author">Mervill updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">Examining now lists the neck slot</li>
-			</ul>
-			<h3 class="author">MisterTikva updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">Nanotrasen informs that certain berry and root plants have been infused with additional genetic traits.</li>
-				<li class="rscadd">Watermelons now have water in them!</li>
-				<li class="rscadd">Blumpkin's chlorine production has been reduced for better workplace efficiency.</li>
-				<li class="rscadd">Squishy plants now obey the laws of physics and will squash all over you if fall on them.</li>
-			</ul>
-			<h3 class="author">Shadowlight213 updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">The lavaland syndicate agents, as well as the ID for all simple_animal syndicate corpses should have their ID actually have syndicate access on it now!</li>
-			</ul>
-			<h3 class="author">Swindly updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">Adds a new toxin: Anacea. It metabolizes very slowly and quickly purges medicines in the victim while dealing light toxin damage. Its recipe is 1 part Haloperidol, 1 part Impedrezene, 1 part Radium.</li>
-			</ul>
-			<h3 class="author">WJohn updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">AI core turrets can once again hit you if you are standing in front of the glass panes, or in the viewing area's doorway.</li>
-			</ul>
-			<h3 class="author">XDTM updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">Quantum Pads are now buildable in R&D!</li>
-				<li class="rscadd">Quantum Pads, once built, can be linked to other Quantum Pads using a multitool. Using a Pad who has been linked will teleport everything on the sending pad to the linked pad!</li>
-				<li class="rscadd">Pads do not need to be linked in pairs: Pad A can lead to Pad B which can lead to pad C.</li>
-				<li class="rscadd">Upgrading a Quantum Pad will reduce the cooldown, charge-up time, and power consumption.</li>
-				<li class="rscadd">Quantum Pads require a bluespace crystal, a micro manipulator, a capacitor and a cable piece.</li>
-			</ul>
-			<h3 class="author">kilkun updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">New lore surrounding the various SWAT suits.</li>
-				<li class="tweak">Captain's hardsuit/SWAT suit got a few buffs. It's now much more robust.</li>
-				<li class="bugfix">Captain's space suit is now heat proof as well as fireproof. Long overlooked no longer.</li>
 			</ul>
 		</div>
 

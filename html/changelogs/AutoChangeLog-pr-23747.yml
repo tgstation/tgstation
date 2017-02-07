@@ -1,0 +1,4 @@
+author: "Cyberboss"
+delete-after: True
+changes: 
+  - bugfix: "The rare case of duping your inventory at roundstart has been fixed"
