@@ -36,10 +36,10 @@
 	var/list/atmos_overlay_types //gas IDs of current active gas overlays
 
 /turf/open/Initialize()
-	..()
 	if(!blocks_air)
 		air = new
 		air.copy_from_turf(src)
+	..()
 
 /turf/open/Destroy()
 	if(active_hotspot)
