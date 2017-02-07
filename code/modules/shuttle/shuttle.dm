@@ -697,4 +697,13 @@
 		else
 			dst = destination
 		. += " towards [dst ? dst.name : "unknown location"] ([timeLeft(600)] minutes)"
+
+
+// attempts to locate /obj/machinery/computer/shuttle with matching ID inside the shuttle
+/obj/docking_port/mobile/proc/getControlConsole()
+	for(var/obj/machinery/computer/shuttle/S in areaInstance)
+		if(S.shuttleId == id)
+			return S
+	return null
+
 #undef DOCKING_PORT_HIGHLIGHT
