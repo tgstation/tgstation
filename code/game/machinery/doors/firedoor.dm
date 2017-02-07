@@ -16,6 +16,7 @@
 	density = 0
 	obj_integrity = 300
 	max_integrity = 300
+	resistance_flags = FIRE_PROOF
 	heat_proof = 1
 	glass = 1
 	var/nextstate = null
@@ -25,7 +26,6 @@
 	closingLayer = CLOSED_FIREDOOR_LAYER
 	assemblytype = /obj/structure/firelock_frame
 	armor = list(melee = 30, bullet = 30, laser = 20, energy = 20, bomb = 10, bio = 100, rad = 100, fire = 95, acid = 70)
-	CanAtmosPass = ATMOS_PASS_PROC
 	var/boltslocked = TRUE
 
 /obj/machinery/door/firedoor/Bumped(atom/AM)
@@ -49,7 +49,7 @@
 	add_fingerprint(user)
 	if(operating)
 		return
-	
+
 	if(welded)
 		if(istype(C, /obj/item/weapon/wrench))
 			if(boltslocked)
@@ -160,6 +160,7 @@
 /obj/machinery/door/firedoor/border_only
 	icon = 'icons/obj/doors/edge_Doorfire.dmi'
 	flags = ON_BORDER
+	CanAtmosPass = ATMOS_PASS_PROC
 
 /obj/machinery/door/firedoor/border_only/CanPass(atom/movable/mover, turf/target, height=0)
 	if(istype(mover) && mover.checkpass(PASSGLASS))
