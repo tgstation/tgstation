@@ -387,12 +387,9 @@
 	launch_status = UNLAUNCHED
 
 /obj/docking_port/mobile/pod/request()
-	var/emagged = FALSE
 	var/obj/machinery/computer/shuttle/S = getControlConsole()
-	if(S)
-		emagged = S.emagged
 
-	if(security_level == SEC_LEVEL_RED || security_level == SEC_LEVEL_DELTA || emagged)
+	if(security_level == SEC_LEVEL_RED || security_level == SEC_LEVEL_DELTA || (S && S.emagged))
 		if(launch_status == UNLAUNCHED)
 			launch_status = EARLY_LAUNCHED
 			return ..()
@@ -424,7 +421,7 @@
 /obj/machinery/computer/shuttle/pod/emag_act(mob/user)
 	if(!emagged)
 		emagged = TRUE
-		user << "<span class='notice'>You fried the pod's alert level checking system.</span>"
+		user << "<span class='warning'>You fry the pod's alert level checking system.</span>"
 
 /obj/docking_port/stationary/random
 	name = "escape pod"
