@@ -55,53 +55,6 @@ var/next_mob_id = 0
 
 	to_chat(usr, t)
 
-/mob/proc/identity_subject_name(atom/movable/AM)
-	var/list/AM_identity = mind.identity_cache[AM]
-	var/AM_name
-	var/AM_voiceprint
-	var/AM_voiceprint_time
-	var/AM_faceprint
-	var/AM_faceprint_time
-	var/AM_temp
-	var/AM_temp_time
-	if(AM_identity)
-		AM_voiceprint = AM_identity[1]
-		AM_voiceprint_time = AM_identity[2]
-		AM_faceprint = AM_identity[3]
-		AM_faceprint_time = AM_identity[4]
-		AM_temp = AM_identity[5]
-		AM_temp_time = AM_identity[6]
-	else
-		AM_identity = new(6)
-	if(AM_faceprint && AM_faceprint_time >= (world.time - IDENTITY_EXPIRE_TIME))
-		var/list/AM_FP_entry = mind.get_print_entry(AM_faceprint, CATEGORY_FACEPRINTS)
-		if(AM_FP_entry)
-			AM_name = AM_FP_entry[3]
-	if(!AM_name && AM_voiceprint && AM_voiceprint_time >= (world.time - IDENTITY_EXPIRE_TIME))
-		var/list/AM_VP_entry = mind.get_print_entry(AM_voiceprint, CATEGORY_VOICEPRINTS)
-		if(AM_VP_entry)
-			AM_name = AM_VP_entry[3]
-	if(!AM_name)
-		if(AM_temp && AM_temp_time >= (world.time - TEMP_IDENTITY_EXPIRE))
-			AM_name = AM_temp
-		else
-			AM_name = AM.default_identity_seen()
-			AM_identity[5] = AM_name
-			AM_identity[6] = world.time
-	mind.identity_cache[AM] = AM_identity
-	. = AM_name
-
-/mob/proc/parse_identity_subjects(msg, list/subjects)
-	if(subjects && mind && subjects.len)
-		for(var/i=1, i<=subjects.len, i++)
-			var/subject_string = IDENTITY_SUBJECT(i)
-			if(!findtextEx(msg, subject_string))
-				break
-			var/atom/movable/AM = subjects[i]
-			var/AM_name = identity_subject_name(AM)
-			msg = replacetextEx(msg, subject_string, AM_name)
-	. = msg
-
 /mob/proc/show_message(msg, type, alt_msg, alt_type, list/subjects)//Message, type of message (1 or 2), alternative message, alt message type (1 or 2), list of subjects in message or alternative message
 
 	if(!client)

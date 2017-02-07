@@ -383,30 +383,3 @@
 
 /mob/living/silicon/is_literate()
 	return 1
-
-/mob/living/silicon/identity_subject_name(atom/movable/AM)
-	var/list/AM_identity = mind.identity_cache[AM]
-	var/AM_name
-	var/AM_temp
-	var/AM_temp_time
-	if(AM_identity)
-		AM_temp = AM_identity[5]
-		AM_temp_time = AM_identity[6]
-	else
-		AM_identity = new(6)
-	if(AM_temp && AM_temp_time >= (world.time - TEMP_IDENTITY_EXPIRE))
-		AM_name = AM_temp
-	else
-		var/faceprint = AM.get_faceprint()
-		var/datum/data/record/G
-		if(faceprint)
-			G = find_record("faceprint", faceprint, data_core.general)
-		if(G)
-			var/G_name = G.fields["name"]
-			AM_name = G_name ? G_name : "&lt;NAME MISSING{[G.fields["id"]]}&gt;"
-		else
-			AM_name = "&lt;NO RECORD&gt;"
-		AM_identity[5] = AM_name
-		AM_identity[6] = world.time
-	mind.identity_cache[AM] = AM_identity
-	. = AM_name
