@@ -54,7 +54,6 @@
 		life has not abandoned your broken form. You can only feel a deep and immutable hunger that \
 		not even death can stop, you will rise again!</span>"
 		owner << "<span class = 'userdanger'>You are an antagonist.</span>" // because apparently the concept that zombies might be bad guys is too hard to grasp
-		owner.special_role = "zombie"
 	var/revive_time = rand(revive_time_min, revive_time_max)
 	var/flags = TIMER_STOPPABLE
 	timer_id = addtimer(CALLBACK(src, .proc/zombify), revive_time, flags)
