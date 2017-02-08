@@ -59,6 +59,13 @@
 	Has medical facilities."
 	credit_cost = 5000
 
+/datum/map_template/shuttle/emergency/fightclub
+	suffix = "fightclub"
+	name = "The Emergency Rage Cage"
+	description = "An escape shuttle with all standard facilities expanded to include a fighting pit for the more rowdy and agitated crew to knock some skulls in. Try not to let those asimov-bound silicon weenies ruin the fun."
+	admin_notes = "Standard shuttle layout. Slightly re-arranged and expanded to fit a rage cage."
+	credit_cost = 4000
+
 /datum/map_template/shuttle/emergency/meteor
 	suffix = "meteor"
 	name = "An Asteroid With Engines Strapped To It"
