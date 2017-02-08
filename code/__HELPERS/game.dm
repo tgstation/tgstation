@@ -395,6 +395,48 @@
 
 	return new /datum/projectile_data(src_x, src_y, time, distance, power_x, power_y, dest_x, dest_y)
 
+/proc/pollCultists()
+	var/time_passed = world.time
+	set waitfor = FALSE
+	var/list/yes_voters = new
+	var/list/cult_total = new
+	for(var/mob/M in mob_list)
+		spawn(0)
+		if(iscultist(M))
+			M << 'sound/misc/notice2.ogg' //Alerting them to their consideration
+			M.verbs -= /mob/living/proc/cult_master
+			switch(askuser(M,"[usr] seeks to lead your cult, do you support  them?","Please answer in 20 seconds!","Yes","No","Abstain", StealFocus=0, Timeout=200))
+				if(1)
+					M << "<span class='notice'>Choice registered: Yes.</span>"
+					if((world.time-time_passed)>200)
+						M << "<span class='danger'>Sorry, you were too late for the consideration!</span>"
+						M << 'sound/machines/buzz-sigh.ogg'
+					else
+						yes_voters += M
+						cult_total += M
+				if(2)
+					M << "<span class='danger'>Choice registered: No.</span>"
+					cult_total += M
+				if(3)
+					M << "<span class='danger'>Choice registered: Abstain.</span>"
+	sleep(200)
+	if(yes_voters.len > (cult_total.len/2))
+		var/datum/action/innate/cultmast/FinalReckoning= new()
+		var/datum/action/innate/cultmark/Mark= new()
+		FinalReckoning.Grant(usr)
+		Mark.Grant(usr)
+		usr.mind.special_role = "Cult Master"
+		for(var/mob/M in mob_list)
+			if(iscultist(M))
+				M << "[usr] has the cult's support and is now their master. Follow the master's orders to the best of your ability!"
+		return 1
+	else
+		for(var/mob/M in mob_list)
+			if(iscultist(M))
+				M << "[usr] could not win the cult's support and shall continue to serve as an acolyte"
+				M.verbs += /mob/living/proc/cult_master
+		return 0
+
 /proc/showCandidatePollWindow(mob/dead/observer/G, poll_time, Question, list/candidates, ignore_category, time_passed)
 	set waitfor = 0
 
