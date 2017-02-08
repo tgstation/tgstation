@@ -9,6 +9,9 @@
 	name = "/tg/ Station 13"
 	fps = 20
 	visibility = 0
+#ifdef GC_FAILURE_HARD_LOOKUP
+	loop_checks = FALSE
+#endif
 
 var/list/map_transition_config = MAP_TRANSITION_CONFIG
 
