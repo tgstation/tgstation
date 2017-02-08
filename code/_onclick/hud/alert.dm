@@ -33,8 +33,8 @@
 			else //no need to update
 				return 0
 	else
-		alert = new type()
-
+		alert = PoolOrNew(type)
+	alert.mob_viewer = src
 	if(new_master)
 		var/old_layer = new_master.layer
 		var/old_plane = new_master.plane
@@ -85,6 +85,7 @@
 	var/timeout = 0 //If set to a number, this alert will clear itself after that many deciseconds
 	var/severity = 0
 	var/alerttooltipstyle = ""
+	var/mob/mob_viewer //the mob viewing this alert
 
 
 /obj/screen/alert/MouseEntered(location,control,params)
@@ -244,7 +245,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	desc = "You have no factory, and are slowly dying!"
 	icon_state = "blobbernaut_nofactory"
 	alerttooltipstyle = "blob"
-	
+
 // BLOODCULT
 
 /obj/screen/alert/bloodsense
@@ -287,6 +288,8 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 		else
 			finder.icon_state = "finder_center"
 	add_overlay(finder)
+
+
 
 // CLOCKCULT
 /obj/screen/alert/clockwork
@@ -629,8 +632,8 @@ so as to remain in compliance with the most up-to-date laws."
 		return usr.client.Click(master, location, control, params)
 
 /obj/screen/alert/Destroy()
-	. = ..()
+	..()
 	severity = 0
 	master = null
 	screen_loc = ""
-
+	return QDEL_HINT_PUTINPOOL //Don't destroy me, I have a family!
