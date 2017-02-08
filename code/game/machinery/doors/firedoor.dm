@@ -27,6 +27,31 @@
 	assemblytype = /obj/structure/firelock_frame
 	armor = list(melee = 30, bullet = 30, laser = 20, energy = 20, bomb = 10, bio = 100, rad = 100, fire = 95, acid = 70)
 	var/boltslocked = TRUE
+	var/list/affecting_areas
+
+/obj/machinery/door/firedoor/Initialize()
+	..()
+	CalculateAffectingAreas()
+
+/obj/machinery/door/firedoor/proc/CalculateAffectingAreas()
+	remove_from_areas()
+	affecting_areas = get_adjacent_open_areas(src) | get_area(src)
+	for(var/I in affecting_areas)
+		var/area/A = I
+		LAZYADD(A.firedoors, src)
+
+//see also turf/AfterChange for adjacency shennanigans
+
+/obj/machinery/door/firedoor/proc/remove_from_areas()
+	if(affecting_areas)
+		for(var/I in affecting_areas)
+			var/area/A = I
+			LAZYREMOVE(A.firedoors, src)
+
+/obj/machinery/door/firedoor/Destroy()
+	remove_from_areas()
+	affecting_areas.Cut()
+	return ..()
 
 /obj/machinery/door/firedoor/Bumped(atom/AM)
 	if(panel_open || operating)
