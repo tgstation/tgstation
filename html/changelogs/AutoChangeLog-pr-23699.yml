@@ -1,0 +1,5 @@
+author: "Xhuis"
+delete-after: True
+changes: 
+  - rscadd: "Artistic toolboxes now spawn in maintenance and possess various supplies for wire art and crayon art."
+  - rscadd: "Traitors can now obtain His Grace. Chaplains can buy it for 20 TC, or it can be found in a surplus crate."

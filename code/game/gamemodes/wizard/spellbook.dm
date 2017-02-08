@@ -104,7 +104,7 @@
 
 /datum/spellbook_entry/fireball
 	name = "Fireball"
-	spell_type = /obj/effect/proc_holder/spell/fireball
+	spell_type = /obj/effect/proc_holder/spell/aimed/fireball
 	log_name = "FB"
 
 /datum/spellbook_entry/rod_form
@@ -222,10 +222,20 @@
 	log_name = "LD"
 	category = "Defensive"
 
+/datum/spellbook_entry/teslablast
+	name = "Tesla Blast"
+	spell_type = /obj/effect/proc_holder/spell/targeted/tesla
+	log_name = "TB"
+
 /datum/spellbook_entry/lightningbolt
 	name = "Lightning Bolt"
-	spell_type = /obj/effect/proc_holder/spell/targeted/lightning
+	spell_type = /obj/effect/proc_holder/spell/aimed/lightningbolt
 	log_name = "LB"
+	cost = 3
+
+/datum/spellbook_entry/lightningbolt/Buy(mob/living/carbon/human/user,obj/item/weapon/spellbook/book) //return 1 on success
+	. = ..()
+	user.tesla_ignore = TRUE
 
 /datum/spellbook_entry/infinite_guns
 	name = "Lesser Summon Guns"
@@ -778,7 +788,7 @@
 	return
 
 /obj/item/weapon/spellbook/oneuse/fireball
-	spell = /obj/effect/proc_holder/spell/fireball
+	spell = /obj/effect/proc_holder/spell/aimed/fireball
 	spellname = "fireball"
 	icon_state ="bookfireball"
 	desc = "This book feels warm to the touch."
