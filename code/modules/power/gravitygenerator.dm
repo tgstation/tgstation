@@ -130,6 +130,7 @@ var/const/GRAV_NEEDS_WRENCH = 3
 	var/charge_count = 100
 	var/current_overlay = null
 	var/broken_state = 0
+	var/grav_dir = FALSE
 
 /obj/machinery/gravity_generator/main/Destroy() // If we somehow get deleted, remove all of our other parts.
 	investigate_log("was destroyed!", "gravity")
@@ -159,6 +160,9 @@ var/const/GRAV_NEEDS_WRENCH = 3
 		part.main_part = src
 		parts += part
 		part.update_icon()
+
+/obj/machinery/gravity_generator/main/emag_act()
+	emagged = TRUE
 
 /obj/machinery/gravity_generator/main/proc/connected_parts()
 	return parts.len == 8
@@ -250,6 +254,13 @@ var/const/GRAV_NEEDS_WRENCH = 3
 		dat += "Unpowered."
 
 	dat += "<br>Gravity Charge: [charge_count]%</div>"
+	if(emagged)
+		dat += "<br><span class='userdanger'>SYSTEM OVERRIDDEN: <A href='?src=\ref[src];reset_emagged=1'>RESET?</A></span>"
+		dat += "<br><span class='danger'>SET GRAVITATIONAL DIRECTION: [grav_dir]</span>"
+		dat += "<br><span class='boldnotice'><A href='?src=\ref[src];set_dir=1'>NORTH</A> <A href='?src=\ref[src];set_dir=2'>SOUTH</A>"
+		dat += " <A href='?src=\ref[src];set_dir=4'>EAST</A> <A href='?src=\ref[src];set_dir=8'>WEST</A></span>"
+		if(grav_dir != SSgravity.gravity_direction)
+			dat += "<br><span class='userdanger'>DIRECTION CHANGE PENDING POWER CYCLE!</span>"
 
 	var/datum/browser/popup = new(user, "gravgen", name)
 	popup.set_content(dat)
@@ -266,6 +277,17 @@ var/const/GRAV_NEEDS_WRENCH = 3
 		investigate_log("was toggled [breaker ? "<font color='green'>ON</font>" : "<font color='red'>OFF</font>"] by [usr.key].", "gravity")
 		set_power()
 		src.updateUsrDialog()
+	if(href_list["reset_emagged"])
+		emagged = FALSE
+		fix_gravity_direction()
+	if(href_list["set_dir"])
+		set_gravity_direction(href_list["set_dir"])
+
+/obj/machinery/gravity_generator/main/proc/fix_gravity_direction()
+	grav_dir = FALSE
+
+/obj/machinery/gravity_generator/main/proc/set_gravity_direction(set_dir)
+	grav_dir = set_dir
 
 // Power and Icon States
 
@@ -314,7 +336,10 @@ var/const/GRAV_NEEDS_WRENCH = 3
 			alert = 1
 			investigate_log("was brought offline and there is now no gravity for this level.", "gravity")
 			message_admins("The gravity generator was brought offline with no backup generator. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>[area.name]</a>)")
-
+	if(!on)
+		SSgravity.set_gravity_direction(FALSE)
+	else
+		SSgravity.set_gravity_direction(grav_dir)
 	update_icon()
 	update_list()
 	src.updateUsrDialog()
