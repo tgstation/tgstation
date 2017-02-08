@@ -219,10 +219,6 @@ macro "default"
 		name = "ALT"
 		command = "toggle-walk-run"
 		is-disabled = false
-	elem 
-		name = "ALT+UP"
-		command = "toggle-walk-run"
-		is-disabled = false
 
 macro "hotkeys"
 	elem 
@@ -527,10 +523,6 @@ macro "hotkeys"
 		is-disabled = false
 	elem 
 		name = "ALT"
-		command = "toggle-walk-run"
-		is-disabled = false
-	elem 
-		name = "ALT+UP"
 		command = "toggle-walk-run"
 		is-disabled = false
 

@@ -138,7 +138,7 @@ Hotkey-Mode: (hotkey-mode must be on)
 \t3 = grab-intent
 \t4 = harm-intent
 \tNumpad = Body target selection (Press 8 repeatedly for Head->Eyes->Mouth)
-\tAlt(HOLD) = Alter movement intent 
+\tAlt = Alter movement intent 
 </font>"}
 
 	var/other = {"<font color='purple'>
