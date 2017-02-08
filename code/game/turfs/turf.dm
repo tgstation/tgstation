@@ -44,6 +44,7 @@
 		Entered(AM)
 
 	if(requires_activation)
+		CalculateAdjacentTurfs()
 		SSair.add_to_active(src)
 
 /turf/proc/Initalize_Atmos(times_fired)
