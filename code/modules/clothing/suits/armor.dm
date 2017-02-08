@@ -191,6 +191,7 @@
 	var/tele_range = 6
 	var/rad_amount= 15
 	reactivearmor_cooldown_duration = 100
+	var/nospace = FALSE
 
 /obj/item/clothing/suit/armor/reactive/teleport/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance)
 	if(!active)
@@ -203,6 +204,8 @@
 		owner.visible_message("<span class='danger'>The reactive teleport system flings [H] clear of [attack_text], shutting itself off in the process!</span>")
 		var/list/turfs = new/list()
 		for(var/turf/T in orange(tele_range, H))
+			if(istype(T,/turf/space) && nospace)
+				continue
 			if(T.density)
 				continue
 			if(T.x>world.maxx-tele_range || T.x<tele_range)
@@ -220,6 +223,13 @@
 		reactivearmor_cooldown = world.time + reactivearmor_cooldown_duration
 		return 1
 	return 0
+
+/obj/item/clothing/suit/armor/reactive/teleport/adv
+	rad_amount = 0
+	reactivearmor_cooldown_duration = 0
+	tele_range = 8
+	hit_reaction_chance = 70
+	nospace = TRUE
 
 /obj/item/clothing/suit/armor/reactive/fire
 	name = "reactive incendiary armor"
