@@ -301,7 +301,7 @@
 			else
 				info += t // Oh, he wants to edit to the end of the file, let him.
 				updateinfolinks()
-			i.on_write(src)
+			i.on_write(src,usr)
 			usr << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[info_links]<HR>[stamps]</BODY></HTML>", "window=[name]") // Update the window
 			update_icon()
 
