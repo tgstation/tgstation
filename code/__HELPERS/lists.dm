@@ -67,6 +67,24 @@
 		return 0
 	return L[A.type]
 
+//Checks for a string in a list
+/proc/is_string_in_list(string, list/L)
+	if(!L || !L.len || !string)
+		return
+	for(var/V in L)
+		if(string == V)
+			return 1
+	return
+
+//Removes a string from a list
+/proc/remove_strings_from_list(string, list/L)
+	if(!L || !L.len || !string)
+		return
+	for(var/V in L)
+		if(V == string)
+			L -= V //No return here so that it removes all strings of that type
+	return
+
 //returns a new list with only atoms that are in typecache L
 /proc/typecache_filter_list(list/atoms, list/typecache)
 	. = list()

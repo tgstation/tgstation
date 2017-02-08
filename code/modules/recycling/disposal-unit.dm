@@ -196,7 +196,7 @@
 		playsound(src, 'sound/machines/disposalflush.ogg', 50, 0, 0)
 		last_sound = world.time
 	sleep(5)
-	if(qdeleted(src))
+	if(QDELETED(src))
 		return
 	var/obj/structure/disposalholder/H = new()
 	newHolderDestination(H)

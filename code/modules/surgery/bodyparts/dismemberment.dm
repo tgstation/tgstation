@@ -35,6 +35,8 @@
 	var/turf/target_turf = get_turf(src)
 	for(var/i in 1 to t_range-1)
 		var/turf/new_turf = get_step(target_turf, direction)
+		if(!new_turf)
+			break
 		target_turf = new_turf
 		if(new_turf.density)
 			break
@@ -145,6 +147,9 @@
 		LB.brainmob.container = LB
 		LB.brainmob.stat = DEAD
 
+/obj/item/organ/eyes/transfer_to_limb(obj/item/bodypart/head/LB, mob/living/carbon/human/C)
+	LB.eyes = src
+	..()
 
 /obj/item/bodypart/chest/drop_limb(special)
 	return
@@ -289,7 +294,6 @@
 		H.hair_style = hair_style
 		H.facial_hair_color = facial_hair_color
 		H.facial_hair_style = facial_hair_style
-		H.eye_color = eye_color
 		H.lip_style = lip_style
 		H.lip_color = lip_color
 	if(real_name)

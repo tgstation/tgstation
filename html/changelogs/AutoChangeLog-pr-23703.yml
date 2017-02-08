@@ -1,0 +1,5 @@
+author: "coiax"
+delete-after: True
+changes: 
+  - rscadd: "Added metal rods and floor tiles to Standard cyborgs."
+  - rscadd: "Added a remote signaling device to Engineering cyborg."

@@ -503,7 +503,7 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 	else ..()
 
 /obj/item/throw_impact(atom/A)
-	if(A && !qdeleted(A))
+	if(A && !QDELETED(A))
 		var/itempush = 1
 		if(w_class < 4)
 			itempush = 0 //too light to push anything
@@ -582,7 +582,7 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 	return 0
 
 /obj/item/burn()
-	if(!qdeleted(src))
+	if(!QDELETED(src))
 		var/turf/T = get_turf(src)
 		var/ash_type = /obj/effect/decal/cleanable/ash
 		if(w_class == WEIGHT_CLASS_HUGE || w_class == WEIGHT_CLASS_GIGANTIC)
@@ -592,7 +592,7 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 		..()
 
 /obj/item/acid_melt()
-	if(!qdeleted(src))
+	if(!QDELETED(src))
 		var/turf/T = get_turf(src)
 		var/obj/effect/decal/cleanable/molten_object/MO = new(T)
 		MO.pixel_x = rand(-16,16)

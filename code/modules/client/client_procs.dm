@@ -551,3 +551,10 @@ var/next_external_rsc = 0
 			return FALSE
 		if ("key")
 			return FALSE
+
+
+/client/proc/change_view(new_size)
+	if (isnull(new_size))
+		CRASH("change_view called without argument.")
+
+	view = new_size

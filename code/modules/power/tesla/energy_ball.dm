@@ -17,8 +17,8 @@ var/list/blacklisted_tesla_types = typecacheof(list(/obj/machinery/atmospherics,
 										/obj/structure/sign,
 										/obj/machinery/gateway,
 										/obj/structure/lattice,
-										/obj/structure/grille))
-
+										/obj/structure/grille,
+										/obj/machinery/the_singularitygen/tesla))
 /obj/singularity/energy_ball
 	name = "energy ball"
 	desc = "An energy ball."
@@ -147,14 +147,18 @@ var/list/blacklisted_tesla_types = typecacheof(list(/obj/machinery/atmospherics,
 		orbitingball.orbiting_balls -= src
 		orbitingball.dissipate_strength = orbitingball.orbiting_balls.len
 	..()
-	if (!loc && !qdeleted(src))
+	if (!loc && !QDELETED(src))
 		qdel(src)
 
 
 /obj/singularity/energy_ball/proc/dust_mobs(atom/A)
-	if(istype(A, /mob/living/carbon))
-		var/mob/living/carbon/C = A
-		C.dust()
+	if(!iscarbon(A))
+		return
+	for(var/obj/machinery/power/grounding_rod/GR in orange(src, 2))
+		if(GR.anchored)
+			return
+	var/mob/living/carbon/C = A
+	C.dust()
 
 /proc/tesla_zap(atom/source, zap_range = 3, power, explosive = FALSE)
 	. = source.dir
@@ -199,7 +203,7 @@ var/list/blacklisted_tesla_types = typecacheof(list(/obj/machinery/atmospherics,
 		else if(isliving(A))
 			var/dist = get_dist(source, A)
 			var/mob/living/L = A
-			if(dist <= zap_range && (dist < closest_dist || !closest_mob) && L.stat != DEAD)
+			if(dist <= zap_range && (dist < closest_dist || !closest_mob) && L.stat != DEAD && !L.tesla_ignore)
 				closest_mob = L
 				closest_atom = A
 				closest_dist = dist
