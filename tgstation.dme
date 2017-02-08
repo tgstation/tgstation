@@ -14,7 +14,7 @@
 
 // BEGIN_INCLUDE
 #include "_maps\__MAP_DEFINES.dm"
-#include "_maps\tgstation2.dm"
+#include "_maps\runtimestation.dm"
 #include "code\_compile_options.dm"
 #include "code\world.dm"
 #include "code\__DATASTRUCTURES\heap.dm"
@@ -209,6 +209,7 @@
 #include "code\datums\riding.dm"
 #include "code\datums\ruins.dm"
 #include "code\datums\shuttles.dm"
+#include "code\datums\soullink.dm"
 #include "code\datums\votablemap.dm"
 #include "code\datums\antagonists\antag_datum.dm"
 #include "code\datums\antagonists\datum_clockcult.dm"
