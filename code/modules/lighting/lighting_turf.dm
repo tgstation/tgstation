@@ -37,7 +37,7 @@
 		if (!lighting_corners_initialised)
 			generate_missing_corners()
 
-		PoolOrNew(/atom/movable/lighting_overlay, src)
+		new/atom/movable/lighting_overlay(src)
 
 		for (var/datum/lighting_corner/C in corners)
 			if (!C.active) // We would activate the corner, calculate the lighting for it.
@@ -68,7 +68,7 @@
 /turf/proc/is_softly_lit()
 	if (!lighting_overlay)
 		return FALSE
-	
+
 	return !lighting_overlay.luminosity
 
 // Can't think of a good name, this proc will recalculate the has_opaque_atom variable.

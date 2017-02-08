@@ -97,7 +97,7 @@ var/list/lighting_update_overlays  = list() // List of lighting overlays queued 
 		var/atom/movable/lighting_overlay/O = currentrun_overlays[currentrun_overlays.len]
 		currentrun_overlays.len--
 
-		if (qdeleted(O))
+		if (QDELETED(O))
 			continue
 
 		O.update_overlay()

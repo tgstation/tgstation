@@ -850,11 +850,11 @@
 
 /obj/item/organ/eyes/robotic/flashlight/Insert(var/mob/living/carbon/M, var/special = 0)
 	..()
-	M.AddLuminosity(15)
+	set_light(15)
 
 
 /obj/item/organ/eyes/robotic/flashlight/Remove(var/mob/living/carbon/M, var/special = 0)
-	M.AddLuminosity(-15)
+	set_light(-15)
 	..()
 
 // Welding shield implant

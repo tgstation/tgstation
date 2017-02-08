@@ -558,3 +558,5 @@ var/next_external_rsc = 0
 		CRASH("change_view called without argument.")
 
 	view = new_size
+	if (mob.hud_used)
+		mob.hud_used.lighting_backdrop.update_size(new_size)

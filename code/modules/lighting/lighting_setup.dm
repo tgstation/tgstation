@@ -13,4 +13,4 @@
 		if (!IS_DYNAMIC_LIGHTING(A))
 			continue
 
-		PoolOrNew(/atom/movable/lighting_overlay, list(T, TRUE))
+		new/atom/movable/lighting_overlay(T, TRUE)

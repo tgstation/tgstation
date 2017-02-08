@@ -20,7 +20,7 @@
 
 /mob/living/simple_animal/hostile/clockwork/fragment/New()
 	..()
-	SetLuminosity(2,1)
+	set_light(2, 0.1)
 	if(prob(1))
 		name = "anime fragment"
 		desc = "I-it's not like I want to show you the light of the Justiciar or anything, B-BAKA!"
