@@ -110,7 +110,6 @@
 							new /obj/effect/overlay/temp/dir_setting/cult/phase(mobloc, M.dir)
 							playsound(mobloc, "sparks", 100, 1)
 						if (4)
-							new /obj/effect/overlay/temp/cult/spray (mobloc)
 							playsound(mobloc, 'sound/magic/lightningbolt.ogg', 100, 1)
 							mobloc = get_turf(owner)
 							M.forceMove(mobloc)
