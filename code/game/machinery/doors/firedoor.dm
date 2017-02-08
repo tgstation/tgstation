@@ -44,6 +44,18 @@
 		stat |= NOPOWER
 	return
 
+/obj/machinery/door/firedoor/attack_hand(mob/user)
+	if(welded || operating || !density)
+		return
+	
+	user.visible_message("<span class='warning'>[user] struggles to activate \the [src]'s manual override.</span>",
+						 "<span class='warning'>You struggle to activate \the [src]'s manual override.</span>")
+	playsound(src, 'sound/machines/airlock_alien_prying.ogg', 10)
+
+	if(do_after(user, 50, TRUE, src))
+		if(welded || operating || !density)
+			return
+		open()
 
 /obj/machinery/door/firedoor/attackby(obj/item/weapon/C, mob/user, params)
 	add_fingerprint(user)
