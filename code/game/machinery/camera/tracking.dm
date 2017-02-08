@@ -65,14 +65,16 @@
 	return targets
 
 /mob/living/silicon/ai/proc/ai_track_href(atom/A, record_id)
+	var/turf/T = get_turf(A)
+	var/coords_href
+	if(T && cameranet.checkTurfVis(T))
+		coords_href = ";X=[T.x];Y=[T.y];Z=[T.z]"
 	if(record_id)
-		. = ";track=[record_id]"
+		. = ";track=[record_id][coords_href]"
+	else if(coords_href)
+		. = ";trackfromcoords=1[coords_href]"
 	else
-		var/turf/T = get_turf(A)
-		if(T)
-			. = ";trackfromcoords=1;X=[T.x];Y=[T.y];Z=[T.z]"
-		else
-			. = ";notrace=1"
+		. = ";notrace=1"
 
 /mob/living/silicon/ai/proc/mobs_from_record(datum/data/record/R)
 	if(!R)
@@ -153,6 +155,19 @@
 				return
 
 			sleep(10)
+
+/mob/living/silicon/ai/proc/ai_coords_track(x, y, z)
+	var/turf/T = locate(x, y, z)
+	if(T && cameranet.checkTurfVis(T))
+		. = 1
+		cameraFollow = null
+		src.eyeobj.setLoc(T)
+		var/list/targets = list()
+		for(var/mob/living/L in T.contents)
+			targets += L
+		if(targets && targets.len)
+			ai_actual_track(pick(targets))
+			. = 2
 
 /proc/near_camera(mob/living/M)
 	if (!isturf(M.loc))

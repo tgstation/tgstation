@@ -386,33 +386,28 @@ var/list/ai_list = list()
 		var/datum/data/record/G
 		if(record_id)
 			G = find_record("id", record_id, data_core.general)
-		if(!G)
-			return
-		var/list/targets = mobs_from_record(G)
+		var/list/targets
+		if(G)
+			targets = mobs_from_record(G)
+		else
+			src << "<span class='notice'>Unable to locate specified record.</span>"
 		if(targets && targets.len)
 			ai_actual_track(pick(targets))
 		else
-			to_chat(src, "<span class='notice'>Target is not on or near any active cameras on the station.</span>")
-		return
+			var/x = text2num(href_list["X"])
+			var/y = text2num(href_list["Y"])
+			var/z = text2num(href_list["Z"])
+			if(src.eyeobj && x && y && z)
+				var/coordstracking = ai_coords_track(x, y, z) >= 2
+				if(!coordstracking && G)
+					to_chat(src, "<span class='notice'>Facial recognition failed for target.</span>")
 	if(href_list["trackfromcoords"])
-		if(!src.eyeobj)
-			return
 		var/x = text2num(href_list["X"])
 		var/y = text2num(href_list["Y"])
 		var/z = text2num(href_list["Z"])
-		if(!(x && y && z))
-			return
-		var/turf/T = locate(x, y, z)
-		if(T && cameranet.checkTurfVis(T))
-			cameraFollow = null
-			src.eyeobj.setLoc(T)
-			var/list/targets = list()
-			for(var/mob/living/L in T.contents)
-				targets += L
-			if(targets && targets.len)
-				ai_actual_track(pick(targets))
-		else
-			src << "<span class='notice'>Specified coordinates are not visible on camera.</span>"
+		if(src.eyeobj && x && y && z)
+			if(!ai_coords_track(x, y, z))
+				src << "<span class='notice'>Specified coordinates are not visible on camera.</span>"
 	if(href_list["notrace"])
 		src << "<span class='notice'>Unable to acquire trace.</span>"
 	if(href_list["callbot"]) //Command a bot to move to a selected location.
