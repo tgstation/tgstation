@@ -261,6 +261,40 @@ AI MODULES
 	..()
 
 
+/******************** Law Removal ********************/
+
+/obj/item/weapon/aiModule/remove
+	name = "\improper 'Remove Law' AI module"
+	desc = "An AI Module for removing single laws."
+	origin_tech = "programming=4;materials=4"
+	bypass_law_amt_check = 1
+	var/lawpos = 1
+
+/obj/item/weapon/aiModule/remove/attack_self(mob/user)
+	lawpos = input("Please enter the law you want to delete.", "Law Number", lawpos) as num|null
+	if(lawpos == null)
+		return
+	if(lawpos <= 0)
+		user << "<span class='warning'>Error: The law number of [lawpos] is invalid.</span>"
+		lawpos = 1
+		return
+	user << "<span class='notice'>Law [lawpos] selected.</span>"
+	..()
+
+/obj/item/weapon/aiModule/remove/install(datum/ai_laws/law_datum, mob/user)
+	if(lawpos > (law_datum.get_law_amount(list(LAW_INHERENT = 1, LAW_SUPPLIED = 1))))
+		user << "<span class='warning'>There is no law [lawpos] to delete!</span>"
+		return
+	..()
+
+/obj/item/weapon/aiModule/remove/transmitInstructions(datum/ai_laws/law_datum, mob/sender, overflow)
+	..()
+	if(law_datum.owner)
+		law_datum.owner.remove_law(lawpos)
+	else
+		law_datum.remove_law(lawpos)
+
+
 /******************** Reset ********************/
 
 /obj/item/weapon/aiModule/reset
