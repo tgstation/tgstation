@@ -13947,7 +13947,7 @@
 /obj/machinery/atmospherics/pipe/simple/cyan/visible,
 /obj/structure/lattice/catwalk,
 /turf/open/space,
-/area/space/nearstation)
+/area/space)
 "aIu" = (
 /obj/structure/chair{
 	dir = 4
@@ -14396,7 +14396,7 @@
 "aJp" = (
 /obj/structure/lattice,
 /turf/open/space,
-/area/space/nearstation)
+/area/space)
 "aJq" = (
 /obj/structure/cable/cyan{
 	icon_state = "4-8"
@@ -55496,7 +55496,7 @@ aiW
 ajk
 ajz
 ajI
-aJp
+aay
 aaa
 abS
 aaa
@@ -55752,8 +55752,8 @@ aiX
 adF
 ajl
 ajA
-aIt
-aIt
+acg
+acg
 acg
 akp
 akM
