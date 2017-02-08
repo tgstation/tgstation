@@ -44,6 +44,13 @@
 		stat |= NOPOWER
 	return
 
+/obj/machinery/door/firedoor/attack_hand(mob/user)
+	if(operating || !density)
+		return
+	
+	user.visible_message("[user] bangs on \the [src].",
+						 "You bang on \the [src].")
+	playsound(loc, 'sound/effects/Glassknock.ogg', 10, FALSE, frequency = 32000)
 
 /obj/machinery/door/firedoor/attackby(obj/item/weapon/C, mob/user, params)
 	add_fingerprint(user)
