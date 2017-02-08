@@ -29,10 +29,14 @@ var/datum/subsystem/objects/SSobj
 		return
 	initialized = INITIALIZATION_INNEW_MAPLOAD
 	if(objects)
-		for(var/thing in objects)
-			var/atom/A = thing
-			A.Initialize(TRUE)
-			CHECK_TICK
+		for(var/I in objects)
+			var/atom/A = I
+			if(!A.initialized)	//this check is to make sure we don't call it twice on an object that was created in a previous Initialize call
+				var/start_tick = world.time
+				A.Initialize(TRUE)
+				if(start_tick != world.time)
+					WARNING("[A]: [A.type] slept during it's Initialize!")
+				CHECK_TICK
 	else
 		for(var/atom/A in world)
 			if(!A.initialized)	//this check is to make sure we don't call it twice on an object that was created in a previous Initialize call

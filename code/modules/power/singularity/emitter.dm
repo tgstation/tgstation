@@ -168,6 +168,8 @@
 				investigate_log("lost power and turned <font color='red'>off</font>","singulo")
 				log_game("Emitter lost power in ([x],[y],[z])")
 			return
+		if(!check_delay())
+			return FALSE
 		fire_beam()
 
 /obj/machinery/power/emitter/proc/check_delay()
@@ -175,9 +177,16 @@
 		return TRUE
 	return FALSE
 
-/obj/machinery/power/emitter/proc/fire_beam()
+/obj/machinery/power/emitter/proc/fire_beam_pulse()
 	if(!check_delay())
 		return FALSE
+	if(state != 2)
+		return FALSE
+	if(avail(active_power_usage))
+		add_load(active_power_usage)
+		fire_beam()
+
+/obj/machinery/power/emitter/proc/fire_beam()
 	src.last_shot = world.time
 	if(src.shot_number < 3)
 		src.fire_delay = 20

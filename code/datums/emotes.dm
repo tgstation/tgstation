@@ -13,6 +13,7 @@ var/global/list/emote_list = list()
 	var/message_robot = "" //Message displayed if the user is a robot
 	var/message_AI = "" //Message displayed if the user is an AI
 	var/message_monkey = "" //Message displayed if the user is a monkey
+	var/message_simple = "" //Message to display if the user is a simple_animal
 	var/message_param = "" //Message to display if a param was given
 	var/emote_type = EMOTE_VISIBLE //Whether the emote is visible or audible
 	var/restraint_check = FALSE //Checks if the mob is restrained before performing the emote
@@ -80,6 +81,8 @@ var/global/list/emote_list = list()
 		. = message_AI
 	else if(ismonkey(user) && message_monkey)
 		. = message_monkey
+	else if(istype(user, /mob/living/simple_animal) && message_simple)
+		. = message_simple
 
 /datum/emote/proc/select_param(mob/user, params)
 	return replacetext(message_param, "%t", params)

@@ -794,6 +794,7 @@ var/list/ai_list = list()
 		if(!can_be_carded)
 			user << "<span class='boldwarning'>Transfer failed.</span>"
 			return
+		ShutOffDoomsdayDevice()
 		new /obj/structure/AIcore/deactivated(loc)//Spawns a deactivated terminal at AI location.
 		ai_restore_power()//So the AI initially has power.
 		control_disabled = 1//Can't control things remotely if you're stuck in a card!
@@ -885,7 +886,7 @@ var/list/ai_list = list()
 	malfhacking = 0
 	clear_alert("hackingapc")
 
-	if(!istype(apc) || qdeleted(apc) || apc.stat & BROKEN)
+	if(!istype(apc) || QDELETED(apc) || apc.stat & BROKEN)
 		src << "<span class='danger'>Hack aborted. The designated APC no \
 			longer exists on the power network.</span>"
 		playsound(get_turf(src), 'sound/machines/buzz-two.ogg', 50, 1)

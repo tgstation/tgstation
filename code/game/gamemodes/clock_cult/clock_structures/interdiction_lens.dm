@@ -84,7 +84,7 @@
 
 		for(var/M in atoms_to_test)
 			var/atom/movable/A = M
-			if(!A || qdeleted(A) || A == target_apc)
+			if(!A || QDELETED(A) || A == target_apc)
 				continue
 			power_drained += Floor(A.power_drain(TRUE) * efficiency, MIN_CLOCKCULT_POWER)
 

@@ -450,6 +450,8 @@
 			else if(S.siemens_coefficient == (-1))
 				total_coeff -= 1
 		siemens_coeff = total_coeff
+		if(tesla_ignore)
+			siemens_coeff = 0
 	else if(!safety)
 		var/gloves_siemens_coeff = 1
 		if(gloves)
