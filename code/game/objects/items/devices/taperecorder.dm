@@ -279,7 +279,7 @@
 			fix()
     else if(ruined && istype(W, /obj/item/weapon/pen))
 		user << "<span class='notice'>You start winding the tape back in...</span>"
-		if(do_after(user, 120, target = src))
+		if(do_after(user, 120*1.5, target = src))
 			user << "<span class='notice'>You wound the tape back in.</span>"
 			fix()
 
