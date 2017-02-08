@@ -61,10 +61,10 @@
 			return
 	if(in_range(user, src) || isobserver(user))
 		if(user.is_literate())
-			user << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[info]<HR>[stamps]</BODY></HTML>", "window=[name]")
+			user << browse(sanitize_russian("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[info]<HR>[stamps]</BODY></HTML>",1), "window=[name]")
 			onclose(user, "[name]")
 		else
-			user << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[stars(info)]<HR>[stamps]</BODY></HTML>", "window=[name]")
+			user << browse(sanitize_russian("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[stars(info)]<HR>[stamps]</BODY></HTML>",1), "window=[name]")
 			onclose(user, "[name]")
 	else
 		user << "<span class='notice'>It is too far away.</span>"
@@ -84,7 +84,7 @@
 			H.damageoverlaytemp = 9001
 			H.update_damage_hud()
 			return
-	var/n_name = stripped_input(usr, "What would you like to label the paper?", "Paper Labelling", null, MAX_NAME_LEN)
+	var/n_name = sanitize_russian(stripped_input(usr, "What would you like to label the paper?", "Paper Labelling", null, MAX_NAME_LEN))
 	if((loc == usr && usr.stat == 0))
 		name = "paper[(n_name ? text("- '[n_name]'") : null)]"
 	add_fingerprint(usr)
@@ -110,10 +110,10 @@
 	else //cyborg or AI not seeing through a camera
 		dist = get_dist(src, user)
 	if(dist < 2)
-		usr << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[info]<HR>[stamps]</BODY></HTML>", "window=[name]")
+		usr << browse(sanitize_russian("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[info]<HR>[stamps]</BODY></HTML>",1), "window=[name]")
 		onclose(usr, "[name]")
 	else
-		usr << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[stars(info)]<HR>[stamps]</BODY></HTML>", "window=[name]")
+		usr << browse(sanitize_russian("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[stars(info)]<HR>[stamps]</BODY></HTML>",1), "window=[name]")
 		onclose(usr, "[name]")
 
 
@@ -268,7 +268,7 @@
 
 	if(href_list["write"])
 		var/id = href_list["write"]
-		var/t =  stripped_multiline_input("Enter what you want to write:", "Write", no_trim=TRUE)
+		var/t =  sanitize_russian(stripped_multiline_input("Enter what you want to write:", "Write", no_trim=TRUE), 1)
 		if(!t)
 			return
 		var/obj/item/i = usr.get_active_held_item()	//Check to see if he still got that darn pen, also check if he's using a crayon or pen.
@@ -290,7 +290,7 @@
 				info += t // Oh, he wants to edit to the end of the file, let him.
 				updateinfolinks()
 
-			usr << browse(russian_text2html("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[info_links]<HR>[stamps]</BODY></HTML>", "window=[name]")) // Update the window
+			usr << browse(sanitize_russian(russian_text2html("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[info_links]<HR>[stamps]</BODY></HTML>"),1), "window=[name]") // Update the window
 			update_icon()
 
 
@@ -305,7 +305,7 @@
 
 	if(istype(P, /obj/item/weapon/pen) || istype(P, /obj/item/toy/crayon))
 		if(user.is_literate())
-			user << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[info_links]<HR>[stamps]</BODY></HTML>", "window=[name]")
+			user << browse(sanitize_russian("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[info_links]<HR>[stamps]</BODY></HTML>",1), "window=[name]")
 			return
 		else
 			user << "<span class='notice'>You don't know how to read or write.</span>"
