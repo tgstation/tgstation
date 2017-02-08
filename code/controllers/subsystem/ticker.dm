@@ -210,7 +210,8 @@ var/datum/subsystem/ticker/ticker
 			qdel(S)
 
 	var/list/adm = get_admin_counts()
-	if(!adm["present"])
+	var/list/allmins = adm["present"]
+	if(!allmins.len)
 		send2irc("Server", "Round just started with no active admins online!")
 
 /datum/subsystem/ticker/proc/station_explosion_detonation(atom/bomb)
@@ -327,7 +328,7 @@ var/datum/subsystem/ticker/ticker
 			bombloc = bomb.z
 		else if(!station_missed)
 			bombloc = ZLEVEL_STATION
-		
+
 		if(mode)
 			mode.explosion_in_progress = 0
 			world << "<B>The station was destoyed by the nuclear blast!</B>"

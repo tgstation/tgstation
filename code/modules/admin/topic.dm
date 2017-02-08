@@ -1087,6 +1087,9 @@
 	else if(href_list["showwatch"])
 		browse_messages("watchlist entry")
 
+	else if(href_list["showwatchfilter"])
+		browse_messages("watchlist entry", filter = 1)
+
 	else if(href_list["showmessageckey"])
 		var/target = href_list["showmessageckey"]
 		browse_messages(target_ckey = target)
