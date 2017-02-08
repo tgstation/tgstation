@@ -43,9 +43,19 @@
 	..()
 	update_size(new_size)
 
-/obj/screen/lighting_backdrop/proc/update_size(new_size)
-	var/matrix/M = matrix()
-	var/size = new_size*2 + 1
+/obj/screen/lighting_backdrop/proc/update_size(new_size=world.view)
+	var/x = 0
+	var/y = 0
+	if (istext(new_size))
+		var/regex/re = regex("(\\d+)x(\\d+)")
+		re.Find(new_size)
+		x = text2num(re.group[1])
+		y = text2num(re.group[2])
 
-	M.Scale(size)
+	else
+		x = y = new_size * 2 + 1
+
+	var/matrix/M = matrix()
+	M.Scale(x, y)
+	M.Translate((x-1) / 2 * world.icon_size, (y-1) / 2 * world.icon_size)
 	transform = M
