@@ -69,7 +69,7 @@
 			user << "<span class='notice'>[C] seems to not be sentient.  You cannot summon a contract for [C.p_them()].</span>"
 
 
-/obj/effect/proc_holder/spell/fireball/hellish
+/obj/effect/proc_holder/spell/aimed/fireball/hellish
 	name = "Hellfire"
 	desc = "This spell launches hellfire at the target."
 
@@ -80,7 +80,7 @@
 	invocation_type = "shout"
 	range = 2
 
-	fireball_type = /obj/item/projectile/magic/fireball/infernal
+	projectile_type = /obj/item/projectile/magic/aoe/fireball/infernal
 
 	action_background_icon_state = "bg_demon"
 
@@ -136,7 +136,7 @@
 	spawn_dust()
 	src.visible_message("<span class='warning'>[src] disappears in a flashfire!</span>")
 	playsound(get_turf(src), 'sound/magic/enter_blood.ogg', 100, 1, -1)
-	var/obj/effect/dummy/slaughter/holder = PoolOrNew(/obj/effect/dummy/slaughter,loc)
+	var/obj/effect/dummy/slaughter/holder = new /obj/effect/dummy/slaughter(loc)
 	src.ExtinguishMob()
 	if(buckled)
 		buckled.unbuckle_mob(src,force=1)

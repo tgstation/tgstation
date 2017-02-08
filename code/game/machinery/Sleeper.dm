@@ -23,12 +23,15 @@
 		list("antitoxin", "mutadone", "mannitol", "pen_acid"),
 		list("omnizine")
 	)
+	var/list/chem_buttons	//Used when emagged to scramble which chem is used, eg: antitoxin -> morphine
+	var/scrambled_chems = FALSE //Are chem buttons scrambled? used as a warning
 
 /obj/machinery/sleeper/New()
 	..()
 	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/sleeper(null)
 	B.apply_default_parts(src)
 	update_icon()
+	reset_chem_buttons()
 
 /obj/item/weapon/circuitboard/machine/sleeper
 	name = "Sleeper (Machine Board)"
@@ -54,6 +57,7 @@
 	available_chems = list()
 	for(var/i in 1 to I)
 		available_chems |= possible_chems[i]
+	reset_chem_buttons()
 
 /obj/machinery/sleeper/update_icon()
 	icon_state = initial(icon_state)
@@ -160,10 +164,16 @@
 				return
 			if(inject_chem(chem))
 				. = TRUE
+				if(scrambled_chems && prob(5))
+					usr << "<span class='warning'>Chem System Re-route detected, results may not be as expected!</span>"
+
+/obj/machinery/sleeper/emag_act(mob/user)
+	scramble_chem_buttons()
+	user << "<span class='warning'>You scramble the sleepers user interface!</span>"
 
 /obj/machinery/sleeper/proc/inject_chem(chem)
 	if((chem in available_chems) && chem_allowed(chem))
-		occupant.reagents.add_reagent(chem, 10)
+		occupant.reagents.add_reagent(chem_buttons[chem], 10) //emag effect kicks in here so that the "intended" chem is used for all checks, for extra FUUU
 		return TRUE
 
 /obj/machinery/sleeper/proc/chem_allowed(chem)
@@ -172,6 +182,18 @@
 	var/amount = occupant.reagents.get_reagent_amount(chem) + 10 <= 20 * efficiency
 	var/occ_health = occupant.health > min_health || chem == "epinephrine"
 	return amount && occ_health
+
+/obj/machinery/sleeper/proc/reset_chem_buttons()
+	scrambled_chems = FALSE
+	LAZYINITLIST(chem_buttons)
+	for(var/chem in available_chems)
+		chem_buttons[chem] = chem
+
+/obj/machinery/sleeper/proc/scramble_chem_buttons()
+	scrambled_chems = TRUE
+	var/list/av_chem = available_chems.Copy()
+	for(var/chem in av_chem)
+		chem_buttons[chem] = pick_n_take(av_chem) //no dupes, allow for random buttons to still be correct
 
 
 /obj/machinery/sleeper/syndie

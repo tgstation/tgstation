@@ -156,7 +156,7 @@ Class Procs:
 /obj/machinery/emp_act(severity)
 	if(use_power && !stat)
 		use_power(7500/severity)
-		PoolOrNew(/obj/effect/overlay/temp/emp, loc)
+		new /obj/effect/overlay/temp/emp(loc)
 	..()
 
 /obj/machinery/proc/open_machine(drop = 1)
@@ -433,9 +433,7 @@ Class Procs:
 			user << "<span class='warning'>It's on fire!</span>"
 		var/healthpercent = (obj_integrity/max_integrity) * 100
 		switch(healthpercent)
-			if(100 to INFINITY)
-				user <<  "It seems pristine and undamaged."
-			if(50 to 100)
+			if(50 to 99)
 				user <<  "It looks slightly damaged."
 			if(25 to 50)
 				user <<  "It appears heavily damaged."

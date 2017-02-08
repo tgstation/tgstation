@@ -9,7 +9,6 @@
 			<A href='?src=\ref[src];secrets=list_job_debug'>Show Job Debug</A><BR>
 			<A href='?src=\ref[src];secrets=admin_log'>Admin Log</A><BR>
 			<A href='?src=\ref[src];secrets=show_admins'>Show Admin List</A><BR>
-			<A href='?src=\ref[src];secrets=show_current_watchlist'>Show online players in the watchlist</A><BR>
 			<BR>
 			"}
 
@@ -119,13 +118,6 @@
 					var/datum/admins/D = admin_datums[ckey]
 					dat += "[ckey] - [D.rank.name]<br>"
 				usr << browse(dat, "window=showadmins;size=600x500")
-
-		if("show_current_watchlist")
-			var/dat = "<B>Watchlist: </B><HR>"
-			if(current_watchlist)
-				for(var/ckey in current_watchlist)
-					dat += "[ckey] - [current_watchlist[ckey]]"
-				usr << browse(dat, "window=showcurrentwatchlist;size=600x500")
 
 		if("tdomereset")
 			if(!check_rights(R_ADMIN))
@@ -419,7 +411,7 @@
 					var/forename = names.len > 1 ? names[2] : names[1]
 					var/newname = "[forename]-[pick(honorifics["[H.gender]"])]"
 					H.fully_replace_character_name(H.real_name,newname)
-					H.unEquip(H.w_uniform)
+					H.temporarilyRemoveItemFromInventory(H.w_uniform, TRUE)
 					H.equip_to_slot_or_del(I, slot_w_uniform)
 					I.flags |= NODROP
 				else

@@ -157,7 +157,7 @@
 
 	else if(!(I.flags & (NODROP|ABSTRACT)))
 		thrown_thing = I
-		unEquip(I)
+		dropItemToGround(I)
 
 	if(thrown_thing)
 		visible_message("<span class='danger'>[src] has thrown [thrown_thing].</span>")
@@ -279,13 +279,20 @@
 
 /mob/living/carbon/resist_restraints()
 	var/obj/item/I = null
+	var/type = 0
 	if(handcuffed)
 		I = handcuffed
+		type = 1
 	else if(legcuffed)
 		I = legcuffed
+		type = 2
 	if(I)
-		changeNext_move(CLICK_CD_BREAKOUT)
-		last_special = world.time + CLICK_CD_BREAKOUT
+		if(type == 1)
+			changeNext_move(CLICK_CD_BREAKOUT)
+			last_special = world.time + CLICK_CD_BREAKOUT
+		if(type == 2)
+			changeNext_move(CLICK_CD_RANGE)
+			last_special = world.time + CLICK_CD_RANGE
 		cuff_resist(I)
 
 
@@ -374,8 +381,7 @@
 			update_inv_legcuffed()
 			return
 		else
-			unEquip(I)
-			I.dropped()
+			dropItemToGround(I)
 			return
 		return TRUE
 
@@ -393,7 +399,7 @@
 	if(!I || (I.flags & (NODROP|ABSTRACT)))
 		return
 
-	unEquip(I)
+	dropItemToGround(I)
 
 	var/modifier = 0
 	if(disabilities & CLUMSY)
@@ -523,21 +529,34 @@
 		see_invisible = SEE_INVISIBLE_OBSERVER
 		return
 
-	see_invisible = initial(see_invisible)
-	see_in_dark = initial(see_in_dark)
 	sight = initial(sight)
+	var/obj/item/organ/eyes/E = getorganslot("eye_sight")
+	if(!E)
+		update_tint()
+	else
+		see_invisible = E.see_invisible
+		see_in_dark = E.see_in_dark
+		sight |= E.sight_flags
 
 	if(client.eye != src)
 		var/atom/A = client.eye
 		if(A.update_remote_sight(src)) //returns 1 if we override all other sight updates.
 			return
 
-	for(var/obj/item/organ/cyberimp/eyes/E in internal_organs)
-		sight |= E.sight_flags
-		if(E.dark_view)
-			see_in_dark = max(see_in_dark,E.dark_view)
-		if(E.see_invisible)
-			see_invisible = min(see_invisible, E.see_invisible)
+	if(glasses)
+		var/obj/item/clothing/glasses/G = glasses
+		sight |= G.vision_flags
+		see_in_dark = max(G.darkness_view, see_in_dark)
+		if(G.invis_override)
+			see_invisible = G.invis_override
+		else
+			see_invisible = min(G.invis_view, see_invisible)
+	if(dna)
+		for(var/X in dna.mutations)
+			var/datum/mutation/M = X
+			if(M.name == XRAY)
+				sight |= (SEE_TURFS|SEE_MOBS|SEE_OBJS)
+				see_in_dark = max(see_in_dark, 8)
 
 	if(see_override)
 		see_invisible = see_override
@@ -562,6 +581,13 @@
 		. += HT.tint
 	if(wear_mask)
 		. += wear_mask.tint
+
+	var/obj/item/organ/eyes/E = getorganslot("eye_sight")
+	if(E)
+		. += E.tint
+
+	else
+		. += INFINITY
 
 //this handles hud updates
 /mob/living/carbon/update_damage_hud()
@@ -703,7 +729,7 @@
 		return 0
 
 /mob/living/carbon/harvest(mob/living/user)
-	if(qdeleted(src))
+	if(QDELETED(src))
 		return
 	var/organs_amt = 0
 	for(var/X in internal_organs)

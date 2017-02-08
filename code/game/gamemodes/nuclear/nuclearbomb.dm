@@ -21,8 +21,8 @@ var/bomb_set
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
 	var/timer_set = 60
-	var/default_timer_set = 60
-	var/minimum_timer_set = 60
+	var/default_timer_set = 90
+	var/minimum_timer_set = 90
 	var/maximum_timer_set = 3600
 	var/ui_style = "nanotrasen"
 
@@ -424,7 +424,7 @@ var/bomb_set
 	sleep(100)
 
 	if(!core)
-		ticker.station_explosion_cinematic(3,"no_core")
+		ticker.station_explosion_cinematic(3,"no_core",src)
 		ticker.mode.explosion_in_progress = 0
 		return
 
@@ -443,19 +443,17 @@ var/bomb_set
 	else
 		off_station = NUKE_NEAR_MISS
 
-	if(ticker.mode && ticker.mode.name == "nuclear emergency")
+	if(istype(ticker.mode, /datum/game_mode/nuclear))
 		var/obj/docking_port/mobile/Shuttle = SSshuttle.getShuttle("syndicate")
-		ticker.mode:syndies_didnt_escape = (Shuttle && Shuttle.z == ZLEVEL_CENTCOM) ? 0 : 1
-		ticker.mode:nuke_off_station = off_station
-	ticker.station_explosion_cinematic(off_station,null)
+		var/datum/game_mode/nuclear/NM = ticker.mode
+		NM.syndies_didnt_escape = (Shuttle && Shuttle.z == ZLEVEL_CENTCOM) ? 0 : 1
+		NM.nuke_off_station = off_station
+
+	ticker.station_explosion_cinematic(off_station,null,src)
 	if(ticker.mode)
-		ticker.mode.explosion_in_progress = 0
-		if(ticker.mode.name == "nuclear emergency")
-			ticker.mode:nukes_left --
-		else
-			world << "<B>The station was destoyed by the nuclear blast!</B>"
-		ticker.mode.station_was_nuked = (off_station<2)	//offstation==1 is a draw. the station becomes irradiated and needs to be evacuated.
-														//kinda shit but I couldn't  get permission to do what I wanted to do.
+		if(istype(ticker.mode, /datum/game_mode/nuclear))
+			var/datum/game_mode/nuclear/NM = ticker.mode
+			NM.nukes_left --
 		if(!ticker.mode.check_finished())//If the mode does not deal with the nuke going off so just reboot because everyone is stuck as is
 			spawn()
 				world.Reboot("Station destroyed by Nuclear Device.", "end_error", "nuke - unhandled ending")
@@ -559,12 +557,13 @@ This is here to make the tiles around the station mininuke change when it's arme
 
 	if(ismob(loc))
 		var/mob/M = loc
-		M.remove_from_mob(src)
-	if(istype(loc, /obj/item/weapon/storage))
+		M.transferItemToLoc(src, targetturf, TRUE)	//nodrops disks when?
+	else if(istype(loc, /obj/item/weapon/storage))
 		var/obj/item/weapon/storage/S = loc
 		S.remove_from_storage(src, targetturf)
+	else
+		forceMove(targetturf)
 	// move the disc, so ghosts remain orbiting it even if it's "destroyed"
-	forceMove(targetturf)
 	return targetturf
 
 /obj/item/weapon/disk/nuclear/Destroy(force)

@@ -16,9 +16,8 @@
 		if(user.mind && user.mind.isholy)
 			user << "<span class='boldannounce'>The power of your faith melts away the [src]!</span>"
 			var/obj/item/weapon/ore/slag/wrath = new /obj/item/weapon/ore/slag
-			user.unEquip(src)
-			user.put_in_active_hand(wrath)
 			qdel(src)
+			user.put_in_active_hand(wrath)
 	if(is_servant_of_ratvar(user) && prob(20))
 		var/pickedmessage = pick(servant_of_ratvar_messages)
 		user << "<span class='[message_span]'>[servant_of_ratvar_messages[pickedmessage] ? "[text2ratvar(pickedmessage)]" : pickedmessage]</span>"
@@ -138,7 +137,7 @@
 /obj/item/clockwork/alloy_shards
 	name = "replicant alloy shards"
 	desc = "Broken shards of some oddly malleable metal. They occasionally move and seem to glow."
-	clockwork_desc = "Broken shards of replicant alloy. Could be proselytized for liquified replicant alloy."
+	clockwork_desc = "Broken shards of replicant alloy. Can be proselytized for additional power."
 	icon_state = "alloy_shards"
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	var/randomsinglesprite = FALSE
@@ -155,7 +154,7 @@
 /obj/item/clockwork/alloy_shards/proc/replace_name_desc()
 	name = "replicant alloy shard"
 	desc = "A broken shard of some oddly malleable metal. It occasionally moves and seems to glow."
-	clockwork_desc = "A broken shard of replicant alloy. Could be proselytized for liquified replicant alloy."
+	clockwork_desc = "A broken shard of replicant alloy. Can be proselytized for additional power."
 
 /obj/item/clockwork/alloy_shards/large
 	randomsinglesprite = TRUE
@@ -172,9 +171,9 @@
 /obj/item/clockwork/alloy_shards/medium/gear_bit/replace_name_desc()
 	name = "gear bit"
 	desc = "A broken chunk of a gear. You want it."
-	clockwork_desc = "A broken chunk of a gear. Could be proselytized for liquified replicant alloy."
+	clockwork_desc = "A broken chunk of a gear. Can be proselytized for additional power."
 
-/obj/item/clockwork/alloy_shards/medium/gear_bit/large //gives more alloy
+/obj/item/clockwork/alloy_shards/medium/gear_bit/large //gives more power
 
 /obj/item/clockwork/alloy_shards/medium/gear_bit/large/replace_name_desc()
 	..()

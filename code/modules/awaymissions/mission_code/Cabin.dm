@@ -7,7 +7,7 @@
 	density = 0
 	var/active = 1
 
-/obj/structure/firepit/initialize()
+/obj/structure/firepit/Initialize()
 	..()
 	toggleFirepit()
 
@@ -17,7 +17,6 @@
 		toggleFirepit()
 	else
 		..()
-
 
 /obj/structure/firepit/attackby(obj/item/W,mob/living/user,params)
 	if(!active)

@@ -67,6 +67,24 @@
 		return 0
 	return L[A.type]
 
+//Checks for a string in a list
+/proc/is_string_in_list(string, list/L)
+	if(!L || !L.len || !string)
+		return
+	for(var/V in L)
+		if(string == V)
+			return 1
+	return
+
+//Removes a string from a list
+/proc/remove_strings_from_list(string, list/L)
+	if(!L || !L.len || !string)
+		return
+	for(var/V in L)
+		if(V == string)
+			L -= V //No return here so that it removes all strings of that type
+	return
+
 //returns a new list with only atoms that are in typecache L
 /proc/typecache_filter_list(list/atoms, list/typecache)
 	. = list()
@@ -76,9 +94,13 @@
 			. += A
 
 //Like typesof() or subtypesof(), but returns a typecache instead of a list
-/proc/typecacheof(path, ignore_root_path)
+/proc/typecacheof(path, ignore_root_path, only_root_path = FALSE)
 	if(ispath(path))
-		var/list/types = ignore_root_path ? subtypesof(path) : typesof(path)
+		var/list/types = list()
+		if(only_root_path)
+			types = list(path)
+		else
+			types = ignore_root_path ? subtypesof(path) : typesof(path)
 		var/list/L = list()
 		for(var/T in types)
 			L[T] = TRUE
@@ -92,8 +114,11 @@
 					L[T] = TRUE
 		else
 			for(var/P in pathlist)
-				for(var/T in typesof(P))
-					L[T] = TRUE
+				if(only_root_path)
+					L[P] = TRUE
+				else
+					for(var/T in typesof(P))
+						L[T] = TRUE
 		return L
 
 //Empties the list by setting the length to 0. Hopefully the elements get garbage collected

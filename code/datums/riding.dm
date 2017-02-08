@@ -1,4 +1,3 @@
-
 /datum/riding
 	var/generic_pixel_x = 0 //All dirs show this pixel_x for the driver
 	var/generic_pixel_y = 0 //All dirs show this pixel_y for the driver, use these vars if the pixel shift is stable across all dir, override handle_vehicle_offsets otherwise.
@@ -39,12 +38,12 @@
 
 
 //BUCKLE HOOKS
-/datum/riding/proc/restore_position(mob/living/buckled_mob,force = 0)
+/datum/riding/proc/restore_position(mob/living/buckled_mob)
 	if(istype(buckled_mob))
 		buckled_mob.pixel_x = 0
 		buckled_mob.pixel_y = 0
 		if(buckled_mob.client)
-			buckled_mob.client.view = world.view
+			buckled_mob.client.change_view(world.view)
 
 
 
@@ -229,6 +228,27 @@
 					buckled_mob.pixel_y = 5
 				if(WEST)
 					buckled_mob.pixel_x = 10
+					buckled_mob.pixel_y = 5
+
+//SPEEDUWAGON
+
+/datum/riding/space/speedbike/speedwagon/handle_vehicle_offsets()
+	if(ridden.has_buckled_mobs())
+		for(var/m in ridden.buckled_mobs)
+			var/mob/living/buckled_mob = m
+			buckled_mob.setDir(ridden.dir)
+			switch(ridden.dir)
+				if(NORTH)
+					buckled_mob.pixel_x = -5
+					buckled_mob.pixel_y = -5
+				if(SOUTH)
+					buckled_mob.pixel_x = 5
+					buckled_mob.pixel_y = 3
+				if(EAST)
+					buckled_mob.pixel_x = -8
+					buckled_mob.pixel_y = 5
+				if(WEST)
+					buckled_mob.pixel_x = 8
 					buckled_mob.pixel_y = 5
 
 ///////////////BOATS////////////

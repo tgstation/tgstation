@@ -71,10 +71,9 @@
 			return
 		else
 			if(I.reagents.total_volume)
-				if(!user.unEquip(I))
+				if(!user.transferItemToLoc(I, src))
 					return
 				user << "<span class='notice'>You add [I] to the [initial(name)] assembly.</span>"
-				I.loc = src
 				beakers += I
 			else
 				user << "<span class='warning'>[I] is empty!</span>"
@@ -84,12 +83,11 @@
 		var/obj/item/device/assembly_holder/A = I
 		if(isigniter(A.a_left) == isigniter(A.a_right))	//Check if either part of the assembly has an igniter, but if both parts are igniters, then fuck it
 			return
-		if(!user.unEquip(I))
+		if(!user.transferItemToLoc(I, src))
 			return
 
 		nadeassembly = A
 		A.master = src
-		A.loc = src
 		assemblyattacher = user.ckey
 
 		stage_change(WIRED)
@@ -229,10 +227,9 @@
 	//make a special case you might as well do it explicitly. -Sayu
 /obj/item/weapon/grenade/chem_grenade/large/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/slime_extract) && stage == WIRED)
-		if(!user.unEquip(I))
+		if(!user.transferItemToLoc(I, src))
 			return
 		user << "<span class='notice'>You add [I] to the [initial(name)] assembly.</span>"
-		I.loc = src
 		beakers += I
 	else
 		return ..()
@@ -382,6 +379,25 @@
 
 	beakers += B1
 	beakers += B2
+
+
+/obj/item/weapon/grenade/chem_grenade/ez_clean
+	name = "cleaner grenade"
+	desc = "Waffle Co.-brand foaming space cleaner. In a special applicator for rapid cleaning of wide areas."
+	stage = READY
+
+/obj/item/weapon/grenade/chem_grenade/ez_clean/New()
+	..()
+	var/obj/item/weapon/reagent_containers/glass/beaker/large/B1 = new(src)
+	var/obj/item/weapon/reagent_containers/glass/beaker/large/B2 = new(src)
+
+	B1.reagents.add_reagent("fluorosurfactant", 40)
+	B2.reagents.add_reagent("water", 40)
+	B2.reagents.add_reagent("ez_clean", 60) //ensures a  t h i c c  distribution
+
+	beakers += B1
+	beakers += B2
+
 
 
 /obj/item/weapon/grenade/chem_grenade/teargas

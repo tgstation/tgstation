@@ -11,6 +11,7 @@
 	see_in_dark = 8
 	bubble_icon = "machine"
 	weather_immunities = list("ash")
+	possible_a_intents = list(INTENT_HELP, INTENT_HARM)
 
 	var/syndicate = 0
 	var/datum/ai_laws/laws = null//Now... THEY ALL CAN ALL HAVE LAWS
@@ -203,13 +204,13 @@
 
 	if (src.laws.devillaws && src.laws.devillaws.len)
 		for(var/index = 1, index <= src.laws.devillaws.len, index++)
-			if (src.devillawcheck[index] == "Yes" || force)
+			if (force || src.devillawcheck[index] == "Yes")
 				src.say("[radiomod] 666. [src.laws.devillaws[index]]")
 				sleep(10)
 
 
 	if (src.laws.zeroth)
-		if (src.lawcheck[1] == "Yes" || force)
+		if (force || src.lawcheck[1] == "Yes")
 			src.say("[radiomod] 0. [src.laws.zeroth]")
 			sleep(10)
 
@@ -217,7 +218,7 @@
 		var/law = src.laws.ion[index]
 		var/num = ionnum()
 		if (length(law) > 0)
-			if (src.ioncheck[index] == "Yes" || force)
+			if (force || src.ioncheck[index] == "Yes")
 				src.say("[radiomod] [num]. [law]")
 				sleep(10)
 
@@ -225,21 +226,20 @@
 		var/law = src.laws.inherent[index]
 
 		if (length(law) > 0)
-			if (src.lawcheck[index+1] == "Yes" || force)
+			if (force || src.lawcheck[index+1] == "Yes")
 				src.say("[radiomod] [number]. [law]")
+				number++
 				sleep(10)
-			number++
-
 
 	for (var/index = 1, index <= src.laws.supplied.len, index++)
 		var/law = src.laws.supplied[index]
 
 		if (length(law) > 0)
 			if(src.lawcheck.len >= number+1)
-				if (src.lawcheck[number+1] == "Yes" || force)
+				if (force || src.lawcheck[number+1] == "Yes")
 					src.say("[radiomod] [number]. [law]")
+					number++
 					sleep(10)
-				number++
 
 
 /mob/living/silicon/proc/checklaws() //Gives you a link-driven interface for deciding what laws the statelaws() proc will share with the crew. --NeoFite

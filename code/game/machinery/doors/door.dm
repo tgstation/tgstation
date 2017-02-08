@@ -83,7 +83,7 @@
 				if(world.time - mecha.occupant.last_bumped <= 10)
 					return
 				mecha.occupant.last_bumped = world.time
-			if(mecha.occupant && (src.allowed(mecha.occupant) || src.check_access_list(mecha.operation_req_access) || emergency == 1))
+			if(mecha.occupant && (src.allowed(mecha.occupant) || src.check_access_list(mecha.operation_req_access)))
 				open()
 			else
 				do_animate("deny")
@@ -108,7 +108,7 @@
 		user = null
 
 	if(density && !emagged)
-		if(allowed(user) || src.emergency == 1)
+		if(allowed(user))
 			open()
 		else
 			do_animate("deny")
@@ -133,7 +133,7 @@
 		return
 	if(!requiresID())
 		user = null //so allowed(user) always succeeds
-	if(allowed(user) || emergency == 1)
+	if(allowed(user))
 		if(density)
 			open()
 		else
@@ -141,6 +141,11 @@
 		return
 	if(density)
 		do_animate("deny")
+
+/obj/machinery/door/allowed(mob/M)
+	if(emergency)
+		return TRUE
+	return ..()
 
 /obj/machinery/door/proc/try_to_weld(obj/item/weapon/weldingtool/W, mob/user)
 	return
@@ -186,7 +191,7 @@
 
 /obj/machinery/door/emp_act(severity)
 	if(prob(20/severity) && (istype(src,/obj/machinery/door/airlock) || istype(src,/obj/machinery/door/window)) )
-		addtimer(CALLBACK(src, .proc/open), 0)
+		INVOKE_ASYNC(src, .proc/open)
 	if(prob(40/severity))
 		if(secondsElectrified == 0)
 			secondsElectrified = -1
@@ -300,7 +305,7 @@
 		M.take_damage(DOOR_CRUSH_DAMAGE)
 
 /obj/machinery/door/proc/autoclose()
-	if(!qdeleted(src) && !density && !operating && !locked && !welded && autoclose)
+	if(!QDELETED(src) && !density && !operating && !locked && !welded && autoclose)
 		close()
 
 /obj/machinery/door/proc/requiresID()

@@ -215,6 +215,12 @@
 	id = "unholywater"
 	description = "Something that shouldn't exist on this plane of existence."
 
+/datum/reagent/fuel/unholywater/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
+	if(method == TOUCH || method == VAPOR)
+		M.reagents.add_reagent("unholywater", (reac_volume/4))
+		return
+	return ..()
+
 /datum/reagent/fuel/unholywater/on_mob_life(mob/living/M)
 	if(iscultist(M))
 		M.drowsyness = max(M.drowsyness-5, 0)
@@ -227,7 +233,7 @@
 		M.adjustFireLoss(-2, 0)
 	else
 		M.adjustBrainLoss(3)
-		M.adjustToxLoss(2, 0)
+		M.adjustToxLoss(1, 0)
 		M.adjustFireLoss(2, 0)
 		M.adjustOxyLoss(2, 0)
 		M.adjustBruteLoss(2, 0)
@@ -263,7 +269,7 @@
 	if (!istype(T))
 		return
 	if(reac_volume >= 1)
-		T.MakeSlippery(wet_setting=TURF_WET_LUBE, min_wet_time=15, min(wet_time_to_add=reac_volume*2, 120))
+		T.MakeSlippery(TURF_WET_LUBE, 15, min(reac_volume * 2, 120))
 
 /datum/reagent/spraytan
 	name = "Spray Tan"
@@ -373,7 +379,7 @@
 	H.visible_message("<b>[H]</b> falls to the ground and screams as [H.p_their()] skin bubbles and froths!") //'froths' sounds painful when used with SKIN.
 	H.Weaken(3, 0)
 	spawn(30)
-		if(!H || qdeleted(H))
+		if(!H || QDELETED(H))
 			return
 
 		var/current_species = H.dna.species.type
@@ -890,6 +896,23 @@
 				H.wash_cream()
 			M.clean_blood()
 
+/datum/reagent/space_cleaner/ez_clean
+	name = "EZ Clean"
+	id = "ez_clean"
+	description = "A powerful, acidic cleaner sold by Waffle Co. Affects organic matter while leaving other objects unaffected."
+	metabolization_rate = 1.5 * REAGENTS_METABOLISM
+
+/datum/reagent/space_cleaner/ez_clean/on_mob_life(mob/living/M)
+	M.adjustBruteLoss(3.33)
+	M.adjustFireLoss(3.33)
+	M.adjustToxLoss(3.33)
+	..()
+
+/datum/reagent/space_cleaner/ez_clean/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
+	..()
+	if((method == TOUCH || method == VAPOR) && !issilicon(M))
+		M.adjustBruteLoss(1)
+		M.adjustFireLoss(1)
 
 /datum/reagent/cryptobiolin
 	name = "Cryptobiolin"
@@ -1359,7 +1382,7 @@
 //Misc reagents
 
 /datum/reagent/romerol
-	name = "romerol"
+	name = "Romerol"
 	// the REAL zombie powder
 	id = "romerol"
 	description = "Romerol is a highly experimental bioterror agent \
@@ -1373,11 +1396,11 @@
 
 /datum/reagent/romerol/on_mob_life(mob/living/carbon/human/H)
 	// Silently add the zombie infection organ to be activated upon death
-	new /obj/item/organ/body_egg/zombie_infection(H)
+	new /obj/item/organ/zombie_infection(H)
 	..()
 
 /datum/reagent/growthserum
-	name = "Growth serum"
+	name = "Growth Serum"
 	id = "growthserum"
 	description = "A commercial chemical designed to help older men in the bedroom."//not really it just makes you a giant
 	color = "#ff0000"//strong red. rgb 255, 0, 0

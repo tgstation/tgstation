@@ -796,43 +796,38 @@
 		var/obj/item/weapon/stock_parts/S = I
 		if(istype(S, /obj/item/weapon/stock_parts/manipulator))
 			usermessage("[I] has been sucessfully installed into systems.")
-			if(user.unEquip(I))
+			if(user.transferItemToLoc(I, src))
 				if(part_manip)
 					part_manip.forceMove(get_turf(src))
 					part_manip = null
-				I.loc = src
 				part_manip = I
 		if(istype(S, /obj/item/weapon/stock_parts/scanning_module))
 			usermessage("[I] has been sucessfully installed into systems.")
-			if(user.unEquip(I))
+			if(user.transferItemToLoc(I, src))
 				if(part_scan)
 					part_scan.forceMove(get_turf(src))
 					part_scan = null
-				I.loc = src
 				part_scan = I
 		if(istype(S, /obj/item/weapon/stock_parts/micro_laser))
 			usermessage("[I] has been sucessfully installed into systems.")
-			if(user.unEquip(I))
+			if(user.transferItemToLoc(I, src))
 				if(part_laser)
 					part_laser.forceMove(get_turf(src))
 					part_laser = null
-				I.loc = src
 				part_laser = I
 		if(istype(S, /obj/item/weapon/stock_parts/matter_bin))
 			usermessage("[I] has been sucessfully installed into systems.")
-			if(user.unEquip(I))
+			if(user.transferItemToLoc(I, src))
 				if(part_bin)
 					part_bin.forceMove(get_turf(src))
 					part_bin = null
-				I.loc = src
 				part_bin = I
 		if(istype(S, /obj/item/weapon/stock_parts/capacitor))
 			usermessage("[I] has been sucessfully installed into systems.")
-			if(user.unEquip(I))
+			if(user.transferItemToLoc(I, src))
 				if(part_cap)
 					part_cap.forceMove(get_turf(src))
 					part_cap = null
-				I.loc = src
 				part_cap = I
 	update_parts()
 	..()
@@ -1084,7 +1079,7 @@
 		pack.flags &= ~NODROP
 		resync()
 		if(user)
-			user.unEquip(pack, 1)
+			user.transferItemToLoc(pack, src, TRUE)
 			user.update_inv_wear_suit()
 			user.visible_message("<span class='notice'>[user]'s [pack.name] detaches from their back and retracts into their [src]!</span>")
 	pack.loc = src
@@ -1115,7 +1110,7 @@
 	shoes.flags &= ~NODROP
 	playsound(src.loc, 'sound/mecha/mechmove03.ogg', 50, 1)
 	if(user)
-		user.unEquip(shoes, 1)
+		user.transferItemToLoc(shoes, src, TRUE)
 		user.update_inv_wear_suit()
 		user.visible_message("<span class='notice'>[user]'s [shoes.name] retracts back into their [name]!</span>")
 	shoes.loc = src
@@ -1151,7 +1146,7 @@
 	usermessage("You detach the flightpack.")
 
 /obj/item/clothing/suit/space/hardsuit/flightsuit/proc/attach_pack(obj/item/device/flightpack/F)
-	F.loc = src
+	F.forceMove(src)
 	pack = F
 	pack.relink_suit(src)
 	usermessage("You attach and fasten the flightpack.")
@@ -1163,7 +1158,7 @@
 	usermessage("You detach the flight shoes.")
 
 /obj/item/clothing/suit/space/hardsuit/flightsuit/proc/attach_shoes(obj/item/clothing/shoes/flightshoes/S)
-	S.loc = src
+	S.forceMove(src)
 	shoes = S
 	shoes.relink_suit(src)
 	usermessage("You attach and fasten a pair of flight shoes.")
@@ -1229,14 +1224,14 @@
 			addmsg += english_list(addmsglist)
 			usermessage("The flightpack you are trying to install is not fully assembled and operational![addmsg].", 1)
 			return FALSE
-		if(user.unEquip(F))
+		if(user.temporarilyRemoveItemFromInventory(F))
 			attach_pack(F)
 	if(istype(I, /obj/item/clothing/shoes/flightshoes))
 		var/obj/item/clothing/shoes/flightshoes/S = I
 		if(shoes)
 			usermessage("There are already shoes installed!", 1)
 			return FALSE
-		if(user.unEquip(S))
+		if(user.temporarilyRemoveItemFromInventory(S))
 			attach_shoes(S)
 	..()
 
@@ -1277,12 +1272,12 @@
 
 /obj/item/clothing/head/helmet/space/hardsuit/flightsuit/proc/toggle_zoom(mob/living/user, force_off = FALSE)
 	if(zoom || force_off)
-		user.client.view = world.view
+		user.client.change_view(world.view)
 		user << "<span class='boldnotice'>Disabling smart zooming image enhancement...</span>"
 		zoom = FALSE
 		return FALSE
 	else
-		user.client.view = zoom_range
+		user.client.change_view(zoom_range)
 		user << "<span class='boldnotice'>Enabling smart zooming image enhancement!</span>"
 		zoom = TRUE
 		return TRUE

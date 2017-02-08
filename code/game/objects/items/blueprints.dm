@@ -235,9 +235,15 @@
 			A.contents += T
 			T.change_area(old_area, T)
 	A.has_gravity = old_gravity
+
+	for(var/area/RA in old.related)
+		if(RA.firedoors)
+			for(var/D in RA.firedoors)
+				var/obj/machinery/door/firedoor/FD = D
+				FD.CalculateAffectingAreas()
+
 	creator << "<span class='notice'>You have created a new area, named [str]. It is now weather proof, and constructing an APC will allow it to be powered.</span>"
 	return 1
-
 
 /obj/item/areaeditor/proc/edit_area()
 	var/area/A = get_area()
@@ -251,6 +257,10 @@
 	set_area_machinery_title(A,str,prevname)
 	for(var/area/RA in A.related)
 		RA.name = str
+		if(RA.firedoors)
+			for(var/D in RA.firedoors)
+				var/obj/machinery/door/firedoor/FD = D
+				FD.CalculateAffectingAreas()
 	usr << "<span class='notice'>You rename the '[prevname]' to '[str]'.</span>"
 	interact()
 	return 1

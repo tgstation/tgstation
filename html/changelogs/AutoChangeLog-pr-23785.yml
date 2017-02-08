@@ -1,0 +1,5 @@
+author: "coiax"
+delete-after: True
+changes: 
+  - rscadd: "Adds a 'Guardian of Balance' lawset and AI module, currently admin
+spawn only."

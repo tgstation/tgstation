@@ -98,9 +98,8 @@
 			return
 		if(igniter)
 			return
-		if(!user.unEquip(W))
+		if(!user.transferItemToLoc(W, src))
 			return
-		I.loc = src
 		igniter = I
 		update_icon()
 		return
@@ -109,10 +108,9 @@
 		if(ptank)
 			user << "<span class='notice'>There is already a plasma tank loaded in [src]!</span>"
 			return
-		if(!user.unEquip(W))
+		if(!user.transferItemToLoc(W, src))
 			return
 		ptank = W
-		W.loc = src
 		update_icon()
 		return
 

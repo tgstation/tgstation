@@ -23,6 +23,11 @@
 	master = null
 	return ..()
 
+/obj/screen/examine(mob/user)
+	return
+
+/obj/screen/orbit()
+	return
 
 /obj/screen/text
 	icon = null
@@ -51,25 +56,25 @@
 		M.swap_hand()
 	return 1
 
-/obj/screen/inventory/craft
+/obj/screen/craft
 	name = "crafting menu"
 	icon = 'icons/mob/screen_midnight.dmi'
 	icon_state = "craft"
 	screen_loc = ui_crafting
 
-/obj/screen/inventory/craft/Click()
+/obj/screen/craft/Click()
 	var/mob/living/M = usr
 	if(isobserver(usr))
 		return
 	M.OpenCraftingMenu()
 
-/obj/screen/inventory/area_creator
+/obj/screen/area_creator
 	name = "create new area"
 	icon = 'icons/mob/screen_midnight.dmi'
 	icon_state = "area_edit"
 	screen_loc = ui_building
 
-/obj/screen/inventory/area_creator/Click()
+/obj/screen/area_creator/Click()
 	if(usr.incapacitated())
 		return 1
 	var/area/A = get_area(usr)
@@ -85,7 +90,7 @@
 	layer = HUD_LAYER
 	plane = HUD_PLANE
 
-/obj/screen/inventory/Click()
+/obj/screen/inventory/Click(location, control, params)
 	// At this point in client Click() code we have passed the 1/10 sec check and little else
 	// We don't even know if it's a middle click
 	if(world.time <= usr.next_move)
@@ -93,8 +98,14 @@
 
 	if(usr.incapacitated())
 		return 1
-	if (istype(usr.loc,/obj/mecha)) // stops inventory actions in a mech
+	if(istype(usr.loc,/obj/mecha)) // stops inventory actions in a mech
 		return 1
+
+	if(hud && hud.mymob && slot_id)
+		var/obj/item/inv_item = hud.mymob.get_item_by_slot(slot_id)
+		if(inv_item)
+			return inv_item.Click(location, control, params)
+
 	if(usr.attack_ui(slot_id))
 		usr.update_inv_hands()
 	return 1
@@ -142,7 +153,7 @@
 			add_overlay(active_overlay)
 
 
-/obj/screen/inventory/hand/Click()
+/obj/screen/inventory/hand/Click(location, control, params)
 	// At this point in client Click() code we have passed the 1/10 sec check and little else
 	// We don't even know if it's a middle click
 	if(world.time <= usr.next_move)
@@ -152,9 +163,12 @@
 	if (istype(usr.loc,/obj/mecha)) // stops inventory actions in a mech
 		return 1
 
-	if(ismob(usr))
-		var/mob/M = usr
-		M.swap_hand(held_index)
+	if(hud.mymob.active_hand_index == held_index)
+		var/obj/item/I = hud.mymob.get_active_held_item()
+		if(I)
+			I.Click(location, control, params)
+	else
+		hud.mymob.swap_hand(held_index)
 	return 1
 
 /obj/screen/close
@@ -183,8 +197,10 @@
 	screen_loc = ui_acti
 
 /obj/screen/act_intent/Click(location, control, params)
-	if(ishuman(usr) && (usr.client.prefs.toggles & INTENT_STYLE))
+	usr.a_intent_change(INTENT_HOTKEY_RIGHT)
 
+/obj/screen/act_intent/segmented/Click(location, control, params)
+	if(usr.client.prefs.toggles & INTENT_STYLE)
 		var/_x = text2num(params2list(params)["icon-x"])
 		var/_y = text2num(params2list(params)["icon-y"])
 
@@ -199,9 +215,8 @@
 
 		else if(_x>=17 && _y>=17)
 			usr.a_intent_change(INTENT_DISARM)
-
 	else
-		usr.a_intent_change(INTENT_HOTKEY_RIGHT)
+		return ..()
 
 /obj/screen/act_intent/alien
 	icon = 'icons/mob/screen_alien.dmi'

@@ -444,7 +444,7 @@
 		if(!materials.has_space(material_amount))
 			user << "<span class='warning'>\The [src] is full. Please remove some materials from [src] in order to insert more.</span>"
 			return 1
-		if(!user.unEquip(W))
+		if(!user.temporarilyRemoveItemFromInventory(W))
 			user << "<span class='warning'>\The [W] is stuck to you and cannot be placed into [src].</span>"
 			return 1
 
@@ -452,6 +452,8 @@
 		if(inserted)
 			user << "<span class='notice'>You insert [inserted] sheet\s into [src].</span>"
 			if(W && W.materials.len)
+				if(!QDELETED(W))
+					user.put_in_active_hand(W)
 				var/mat_overlay = "fab-load-[material2name(W.materials[1])]"
 				add_overlay(mat_overlay)
 				sleep(10)

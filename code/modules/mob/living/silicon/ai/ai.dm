@@ -33,6 +33,7 @@ var/list/ai_list = list()
 	var/list/connected_robots = list()
 	var/aiRestorePowerRoutine = 0
 	var/requires_power = POWER_REQ_ALL
+	var/can_be_carded = TRUE
 	//var/list/laws = list()
 	var/alarms = list("Motion"=list(), "Fire"=list(), "Atmosphere"=list(), "Power"=list(), "Camera"=list(), "Burglar"=list())
 	var/viewalerts = 0
@@ -81,6 +82,8 @@ var/list/ai_list = list()
 	var/acceleration = 1
 
 	var/obj/machinery/camera/portable/builtInCamera
+
+	var/obj/structure/AIcore/deactivated/linked_core //For exosuit control
 
 /mob/living/silicon/ai/New(loc, datum/ai_laws/L, mob/target_ai)
 	..()
@@ -419,7 +422,16 @@ var/list/ai_list = list()
 	if (href_list["ai_take_control"]) //Mech domination
 		var/obj/mecha/M = locate(href_list["ai_take_control"])
 		if(controlled_mech)
-			src << "You are already loaded into an onboard computer!"
+			src << "<span class='warning'>You are already loaded into an onboard computer!</span>"
+			return
+		if(!cameranet.checkCameraVis(M))
+			src << "<span class='warning'>Exosuit is no longer near active cameras.</span>"
+			return
+		if(lacks_power())
+			src << "<span class='warning'>You're depowered!</span>"
+			return
+		if(!isturf(loc))
+			src << "<span class='warning'>You aren't in your core!</span>"
 			return
 		if(M)
 			M.transfer_ai(AI_MECH_HACK,src, usr) //Called om the mech itself.
@@ -779,6 +791,10 @@ var/list/ai_list = list()
 		if(!mind)
 			user << "<span class='warning'>No intelligence patterns detected.</span>"    //No more magical carding of empty cores, AI RETURN TO BODY!!!11
 			return
+		if(!can_be_carded)
+			user << "<span class='boldwarning'>Transfer failed.</span>"
+			return
+		ShutOffDoomsdayDevice()
 		new /obj/structure/AIcore/deactivated(loc)//Spawns a deactivated terminal at AI location.
 		ai_restore_power()//So the AI initially has power.
 		control_disabled = 1//Can't control things remotely if you're stuck in a card!
@@ -846,7 +862,7 @@ var/list/ai_list = list()
 			if(isturf(loc))
 				if(eyeobj)
 					client.eye = eyeobj
-					client.perspective = MOB_PERSPECTIVE
+					client.perspective = EYE_PERSPECTIVE
 				else
 					client.eye = client.mob
 					client.perspective = MOB_PERSPECTIVE
@@ -870,7 +886,7 @@ var/list/ai_list = list()
 	malfhacking = 0
 	clear_alert("hackingapc")
 
-	if(!istype(apc) || qdeleted(apc) || apc.stat & BROKEN)
+	if(!istype(apc) || QDELETED(apc) || apc.stat & BROKEN)
 		src << "<span class='danger'>Hack aborted. The designated APC no \
 			longer exists on the power network.</span>"
 		playsound(get_turf(src), 'sound/machines/buzz-two.ogg', 50, 1)
@@ -890,6 +906,9 @@ var/list/ai_list = list()
 		src << "Hack complete. \The [apc] is now under your \
 			exclusive control."
 		apc.update_icon()
+
+/mob/living/silicon/ai/resist()
+	return
 
 /mob/living/silicon/ai/spawned/New(loc, datum/ai_laws/L, mob/target_ai)
 	if(!target_ai)

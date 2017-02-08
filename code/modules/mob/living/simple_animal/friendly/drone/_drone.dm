@@ -130,9 +130,9 @@
 /mob/living/simple_animal/drone/death(gibbed)
 	..(gibbed)
 	if(internal_storage)
-		unEquip(internal_storage)
+		dropItemToGround(internal_storage)
 	if(head)
-		unEquip(head)
+		dropItemToGround(head)
 
 	alert_drones(DRONE_NET_DISCONNECT)
 
@@ -142,9 +142,9 @@
 
 /mob/living/simple_animal/drone/ratvar_act()
 	if(internal_storage)
-		unEquip(internal_storage)
+		dropItemToGround(internal_storage)
 	if(head)
-		unEquip(head)
+		dropItemToGround(head)
 	var/mob/living/simple_animal/drone/cogscarab/ratvar/R = new /mob/living/simple_animal/drone/cogscarab/ratvar(loc)
 	R.setDir(dir)
 	if(mind)

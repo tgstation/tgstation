@@ -5,6 +5,7 @@
 	icon_state ="book"
 	throw_speed = 2
 	throw_range = 5
+	storage_slots = 1
 	w_class = WEIGHT_CLASS_NORMAL
 	resistance_flags = FLAMMABLE
 	var/title = "book"
@@ -55,7 +56,6 @@ var/global/list/bibleitemstates = list("bible", "koran", "scrapbook", "bible",  
 
 		if(B.icon_state == "honk1" || B.icon_state == "honk2")
 			var/mob/living/carbon/human/H = usr
-			new /obj/item/weapon/bikehorn(B)
 			H.dna.add_mutation(CLOWNMUT)
 			H.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/clown_hat(H), slot_wear_mask)
 
@@ -156,8 +156,4 @@ var/global/list/bibleitemstates = list("bible", "koran", "scrapbook", "bible",  
 
 /obj/item/weapon/storage/book/bible/booze/New()
 	..()
-	new /obj/item/weapon/reagent_containers/food/drinks/beer(src)
-	new /obj/item/weapon/reagent_containers/food/drinks/beer(src)
-	new /obj/item/stack/spacecash(src)
-	new /obj/item/stack/spacecash(src)
-	new /obj/item/stack/spacecash(src)
+	new /obj/item/weapon/reagent_containers/food/drinks/bottle/whiskey(src)

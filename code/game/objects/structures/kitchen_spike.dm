@@ -1,4 +1,5 @@
 //////Kitchen Spike
+#define VIABLE_MOB_CHECK(X) (isliving(X) && !issilicon(X) && !isbot(X))
 
 /obj/structure/kitchenspike_frame
 	name = "meatspike frame"
@@ -71,12 +72,14 @@
 		return ..()
 
 /obj/structure/kitchenspike/attack_hand(mob/user)
-	if(isliving(user.pulling) && user.a_intent == INTENT_GRAB && !has_buckled_mobs())
+	if(VIABLE_MOB_CHECK(user.pulling) && user.a_intent == INTENT_GRAB && !has_buckled_mobs())
 		var/mob/living/L = user.pulling
 		if(do_mob(user, src, 120))
 			if(has_buckled_mobs()) //to prevent spam/queing up attacks
 				return
 			if(L.buckled)
+				return
+			if(user.pulling != L)
 				return
 			playsound(src.loc, "sound/effects/splat.ogg", 25, 1)
 			L.visible_message("<span class='danger'>[user] slams [L] onto the meat spike!</span>", "<span class='userdanger'>[user] slams you onto the meat spike!</span>", "<span class='italics'>You hear a squishy wet noise.</span>")
@@ -146,3 +149,5 @@
 		new /obj/item/stack/sheet/metal(src.loc, 4)
 	new /obj/item/stack/rods(loc, 4)
 	qdel(src)
+
+#undef VIABLE_MOB_CHECK

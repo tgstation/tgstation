@@ -29,7 +29,7 @@
 	return 1
 
 /datum/spellbook_entry/proc/Buy(mob/living/carbon/human/user,obj/item/weapon/spellbook/book) //return 1 on success
-	if(!S || qdeleted(S))
+	if(!S || QDELETED(S))
 		S = new spell_type()
 	//Check if we got the spell already
 	for(var/obj/effect/proc_holder/spell/aspell in user.mind.spell_list)
@@ -104,7 +104,7 @@
 
 /datum/spellbook_entry/fireball
 	name = "Fireball"
-	spell_type = /obj/effect/proc_holder/spell/fireball
+	spell_type = /obj/effect/proc_holder/spell/aimed/fireball
 	log_name = "FB"
 
 /datum/spellbook_entry/rod_form
@@ -222,10 +222,20 @@
 	log_name = "LD"
 	category = "Defensive"
 
+/datum/spellbook_entry/teslablast
+	name = "Tesla Blast"
+	spell_type = /obj/effect/proc_holder/spell/targeted/tesla
+	log_name = "TB"
+
 /datum/spellbook_entry/lightningbolt
 	name = "Lightning Bolt"
-	spell_type = /obj/effect/proc_holder/spell/targeted/lightning
+	spell_type = /obj/effect/proc_holder/spell/aimed/lightningbolt
 	log_name = "LB"
+	cost = 3
+
+/datum/spellbook_entry/lightningbolt/Buy(mob/living/carbon/human/user,obj/item/weapon/spellbook/book) //return 1 on success
+	. = ..()
+	user.tesla_ignore = TRUE
 
 /datum/spellbook_entry/infinite_guns
 	name = "Lesser Summon Guns"
@@ -568,7 +578,8 @@
 	else
 		user << "It appears to have no author."
 
-/obj/item/weapon/spellbook/proc/Initialize()
+/obj/item/weapon/spellbook/Initialize()
+	..()
 	var/entry_types = subtypesof(/datum/spellbook_entry) - /datum/spellbook_entry/item - /datum/spellbook_entry/summon
 	for(var/T in entry_types)
 		var/datum/spellbook_entry/E = new T
@@ -578,11 +589,6 @@
 		else
 			qdel(E)
 	tab = categories[1]
-
-/obj/item/weapon/spellbook/New()
-	..()
-	Initialize()
-
 
 /obj/item/weapon/spellbook/attackby(obj/item/O, mob/user, params)
 	if(istype(O, /obj/item/weapon/antag_spawner/contract))
@@ -782,7 +788,7 @@
 	return
 
 /obj/item/weapon/spellbook/oneuse/fireball
-	spell = /obj/effect/proc_holder/spell/fireball
+	spell = /obj/effect/proc_holder/spell/aimed/fireball
 	spellname = "fireball"
 	icon_state ="bookfireball"
 	desc = "This book feels warm to the touch."
@@ -885,7 +891,7 @@
 		magichead.flags |= NODROP		//curses!
 		magichead.flags_inv &= ~HIDEFACE //so you can still see their face
 		magichead.voicechange = 1	//NEEEEIIGHH
-		if(!user.unEquip(user.wear_mask))
+		if(!user.dropItemToGround(user.wear_mask))
 			qdel(user.wear_mask)
 		user.equip_to_slot_if_possible(magichead, slot_wear_mask, 1, 1)
 		qdel(src)

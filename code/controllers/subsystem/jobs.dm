@@ -2,7 +2,7 @@ var/datum/subsystem/job/SSjob
 
 /datum/subsystem/job
 	name = "Jobs"
-	init_order = 5
+	init_order = 14
 	flags = SS_NO_FIRE
 
 	var/list/occupations = list()		//List of all jobs

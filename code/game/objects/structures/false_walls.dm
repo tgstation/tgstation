@@ -51,7 +51,7 @@
 	if(density)
 		do_the_flick()
 		sleep(5)
-		if(!qdeleted(src))
+		if(!QDELETED(src))
 			density = 0
 			set_opacity(0)
 			update_icon()
@@ -63,7 +63,7 @@
 		do_the_flick()
 		density = 1
 		sleep(5)
-		if(!qdeleted(src))
+		if(!QDELETED(src))
 			set_opacity(1)
 			update_icon()
 	air_update_turf(1)
@@ -141,7 +141,7 @@
 /obj/structure/falsewall/storage_contents_dump_act(obj/item/weapon/storage/src_object, mob/user)
 	return 0
 
-/obj/structure/falsewall/examine_status() //So you can't detect falsewalls by examine.
+/obj/structure/falsewall/examine_status(mob/user) //So you can't detect falsewalls by examine.
 	return null
 
 /*
@@ -330,8 +330,8 @@
 /obj/structure/falsewall/brass/New(loc)
 	..()
 	var/turf/T = get_turf(src)
-	PoolOrNew(/obj/effect/overlay/temp/ratvar/wall/false, T)
-	PoolOrNew(/obj/effect/overlay/temp/ratvar/beam/falsewall, T)
+	new /obj/effect/overlay/temp/ratvar/wall/false(T)
+	new /obj/effect/overlay/temp/ratvar/beam/falsewall(T)
 	change_construction_value(4)
 
 /obj/structure/falsewall/brass/Destroy()
@@ -339,4 +339,5 @@
 	return ..()
 
 /obj/structure/falsewall/brass/ratvar_act()
-	obj_integrity = max_integrity
+	if(ratvar_awakens)
+		obj_integrity = max_integrity

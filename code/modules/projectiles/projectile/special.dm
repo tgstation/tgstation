@@ -64,6 +64,20 @@
 		S.take_overall_damage(anti_armour_damage*0.75, anti_armour_damage*0.25)
 	return 1
 
+/obj/item/projectile/bullet/srmrocket
+	name ="SRM-8 Rocket"
+	desc = "Boom"
+	icon_state = "missile"
+	damage = 30
+
+/obj/item/projectile/bullet/srmrocket/on_hit(atom/target, blocked=0)
+	..()
+	if(!isliving(target)) //if the target isn't alive, so is a wall or something
+		explosion(target, 0, 1, 2, 4)
+	else
+		explosion(target, 0, 0, 2, 4)
+	return 1
+
 /obj/item/projectile/temp
 	name = "freeze beam"
 	icon_state = "ice_2"
@@ -247,7 +261,7 @@
 		var/throwtarget = get_edge_target_turf(src, get_dir(src, get_step_away(A, src)))
 		A.throw_at(throwtarget,power+1,1)
 	for(var/turf/F in range(T,power))
-		PoolOrNew(/obj/effect/overlay/temp/gravpush, F)
+		new /obj/effect/overlay/temp/gravpush(F)
 
 /obj/item/projectile/gravityattract
 	name = "attraction bolt"
@@ -274,7 +288,7 @@
 			continue
 		A.throw_at(T, power+1, 1)
 	for(var/turf/F in range(T,power))
-		PoolOrNew(/obj/effect/overlay/temp/gravpush, F)
+		new /obj/effect/overlay/temp/gravpush(F)
 
 /obj/item/projectile/gravitychaos
 	name = "gravitational blast"
@@ -301,5 +315,5 @@
 			continue
 		A.throw_at(get_edge_target_turf(A, pick(cardinal)), power+1, 1)
 	for(var/turf/Z in range(T,power))
-		PoolOrNew(/obj/effect/overlay/temp/gravpush, Z)
+		new /obj/effect/overlay/temp/gravpush(Z)
 

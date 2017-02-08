@@ -115,12 +115,14 @@ var/list/airlock_overlays = list()
 		max_integrity = normal_integrity
 	if(damage_deflection == AIRLOCK_DAMAGE_DEFLECTION_N && security_level > AIRLOCK_SECURITY_METAL)
 		damage_deflection = AIRLOCK_DAMAGE_DEFLECTION_R
-	update_icon()
 
-/obj/machinery/door/airlock/initialize()
-	. = ..()
+/obj/machinery/door/airlock/Initialize()
+	..()
 	if (cyclelinkeddir)
 		cyclelinkairlock()
+	if(frequency)
+		set_frequency(frequency)
+	update_icon()
 
 /obj/machinery/door/airlock/proc/cyclelinkairlock()
 	if (cyclelinkedairlock)
@@ -272,7 +274,7 @@ var/list/airlock_overlays = list()
 			var/cont = 1
 			while (cont)
 				sleep(10)
-				if(qdeleted(src))
+				if(QDELETED(src))
 					return
 				cont = 0
 				if(secondsMainPowerLost>0)
@@ -706,7 +708,7 @@ var/list/airlock_overlays = list()
 
 	if(ishuman(user) && prob(40) && src.density)
 		var/mob/living/carbon/human/H = user
-		if(H.getBrainLoss() >= 60)
+		if(H.getBrainLoss() >= 60 && Adjacent(user))
 			playsound(src.loc, 'sound/effects/bang.ogg', 25, 1)
 			if(!istype(H.head, /obj/item/clothing/head/helmet))
 				H.visible_message("<span class='danger'>[user] headbutts the airlock.</span>", \
@@ -1402,7 +1404,7 @@ var/list/airlock_overlays = list()
 		operating = 1
 		update_icon(AIRLOCK_EMAG, 1)
 		sleep(6)
-		if(qdeleted(src))
+		if(QDELETED(src))
 			return
 		operating = 0
 		if(!open())

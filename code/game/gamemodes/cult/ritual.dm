@@ -180,7 +180,7 @@ This file contains the arcane tome files.
 	if(!possible_runes.len)
 		return
 	entered_rune_name = input(user, "Choose a rite to scribe.", "Sigils of Power") as null|anything in possible_runes
-	if(!src || qdeleted(src) || !Adjacent(user) || user.incapacitated() || !check_rune_turf(Turf, user))
+	if(!src || QDELETED(src) || !Adjacent(user) || user.incapacitated() || !check_rune_turf(Turf, user))
 		return
 	for(var/T in typesof(/obj/effect/rune))
 		var/obj/effect/rune/R = T
@@ -196,7 +196,7 @@ This file contains the arcane tome files.
 		return
 	Turf = get_turf(user) //we may have moved. adjust as needed...
 	A = get_area(src)
-	if(!src || qdeleted(src) || !Adjacent(user) || user.incapacitated() || !check_rune_turf(Turf, user))
+	if(!src || QDELETED(src) || !Adjacent(user) || user.incapacitated() || !check_rune_turf(Turf, user))
 		return
 	if(ispath(rune_to_scribe, /obj/effect/rune/narsie))
 		if(ticker.mode.name == "cult")
@@ -221,8 +221,7 @@ This file contains the arcane tome files.
 			A = get_area(src)
 			if(!check_rune_turf(Turf, user) || (loc.z && loc.z != ZLEVEL_STATION)|| !A.blob_allowed)
 				return
-			var/locname = initial(A.name)
-			priority_announce("Figments from an eldritch god are being summoned by [user] into [locname] from an unknown dimension. Disrupt the ritual at all costs!","Central Command Higher Dimensionsal Affairs", 'sound/AI/spanomalies.ogg')
+			priority_announce("Figments from an eldritch god are being summoned by [user] into [A.map_name] from an unknown dimension. Disrupt the ritual at all costs!","Central Command Higher Dimensionsal Affairs", 'sound/AI/spanomalies.ogg')
 			for(var/B in spiral_range_turfs(1, user, 1))
 				var/obj/structure/emergency_shield/sanguine/N = new(B)
 				shields += N
@@ -236,7 +235,7 @@ This file contains the arcane tome files.
 	if(!do_after(user, initial(rune_to_scribe.scribe_delay), target = get_turf(user)))
 		for(var/V in shields)
 			var/obj/structure/emergency_shield/sanguine/S = V
-			if(S && !qdeleted(S))
+			if(S && !QDELETED(S))
 				qdel(S)
 		return
 	if(!check_rune_turf(Turf, user))
@@ -245,7 +244,7 @@ This file contains the arcane tome files.
 						 "<span class='cult'>You finish drawing the arcane markings of the Geometer.</span>")
 	for(var/V in shields)
 		var/obj/structure/emergency_shield/S = V
-		if(S && !qdeleted(S))
+		if(S && !QDELETED(S))
 			qdel(S)
 	var/obj/effect/rune/R = new rune_to_scribe(Turf, chosen_keyword)
 	user << "<span class='cult'>The [lowertext(R.cultist_name)] rune [R.cultist_desc]</span>"

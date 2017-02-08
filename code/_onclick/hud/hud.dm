@@ -209,9 +209,8 @@
 			if(infodisplay.len)
 				screenmob.client.screen -= infodisplay
 
-	if(plane_masters.len)
-		for(var/thing in plane_masters)
-			screenmob.client.screen += plane_masters[thing]
+	for(var/thing in plane_masters)
+		screenmob.client.screen += plane_masters[thing]
 
 	screenmob.client.screen += lighting_backdrop
 	hud_version = display_hud_version

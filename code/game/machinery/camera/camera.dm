@@ -54,8 +54,9 @@
 			world.log << "[src.c_tag] [src.x] [src.y] [src.z] conflicts with [C.c_tag] [C.x] [C.y] [C.z]"
 	*/
 
-/obj/machinery/camera/initialize()
-	if(z == 1 && prob(3) && !start_active)
+/obj/machinery/camera/Initialize(mapload)
+	..()
+	if(mapload && z == 1 && prob(3) && !start_active)
 		toggle_cam()
 
 /obj/machinery/camera/Move()

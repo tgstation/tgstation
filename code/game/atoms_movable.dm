@@ -25,7 +25,10 @@
 	appearance_flags = TILE_BOUND
 	var/datum/forced_movement/force_moving = null	//handled soley by forced_movement.dm
 
-
+/atom/movable/SDQL_update(const/var_name, new_value)
+	if(var_name == "step_x" || var_name == "step_y" || var_name == "step_size" || var_name == "bound_x" || var_name == "bound_y" || var_name == "bound_width" || var_name == "bound_height")
+		return FALSE	//PLEASE no.
+	. = ..()
 
 /atom/movable/Move(atom/newloc, direct = 0)
 	if(!loc || !newloc) return 0
@@ -120,7 +123,7 @@
 			throwing = 0
 			throw_impact(A)
 			. = 1
-			if(!A || qdeleted(A))
+			if(!A || QDELETED(A))
 				return
 		A.Bumped(src)
 
@@ -129,21 +132,29 @@
 	if(destination)
 		if(pulledby)
 			pulledby.stop_pulling()
+
 		var/atom/oldloc = loc
-		var/same_loc = oldloc == destination.loc
-		if(oldloc && !same_loc)
-			oldloc.Exited(src, destination)
-		loc = destination
-		if(oldloc && !same_loc)
-			destination.Entered(src, oldloc)
+		var/same_loc = oldloc == destination
 		var/area/old_area = get_area(oldloc)
 		var/area/destarea = get_area(destination)
-		if(old_area != destarea)
-			destarea.Entered(src)
+
+		if(oldloc && !same_loc)
+			oldloc.Exited(src, destination)
+			if(old_area)
+				old_area.Exited(src, destination)
+
+		loc = destination
+
+		if(!same_loc)
+			destination.Entered(src, oldloc)
+			if(destarea && old_area != destarea)
+				destarea.Entered(src, oldloc)
+
 		for(var/atom/movable/AM in destination)
 			if(AM == src)
 				continue
 			AM.Crossed(src)
+
 		Moved(oldloc, 0)
 		return 1
 	return 0
@@ -281,7 +292,7 @@
 		SpinAnimation(5, 1)
 
 	SSthrowing.processing[src] = TT
-	if (SSthrowing.paused && length(SSthrowing.currentrun))
+	if (SSthrowing.state == SS_PAUSED && length(SSthrowing.currentrun))
 		SSthrowing.currentrun[src] = TT
 	TT.tick()
 

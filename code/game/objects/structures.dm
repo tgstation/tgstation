@@ -97,16 +97,14 @@
 			user << "<span class='warning'>It's on fire!</span>"
 		if(broken)
 			user << "<span class='notice'>It looks broken.</span>"
-		var/examine_status = examine_status()
+		var/examine_status = examine_status(user)
 		if(examine_status)
 			user << examine_status
 
-/obj/structure/proc/examine_status() //An overridable proc, mostly for falsewalls.
+/obj/structure/proc/examine_status(mob/user) //An overridable proc, mostly for falsewalls.
 	var/healthpercent = (obj_integrity/max_integrity) * 100
 	switch(healthpercent)
-		if(100 to INFINITY)
-			return  "It seems pristine and undamaged."
-		if(50 to 100)
+		if(50 to 99)
 			return  "It looks slightly damaged."
 		if(25 to 50)
 			return  "It appears heavily damaged."

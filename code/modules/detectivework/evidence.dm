@@ -38,7 +38,7 @@
 			var/obj/item/weapon/storage/U = I.loc
 			U.remove_from_storage(I, src)
 		if(user.is_holding(I))
-			user.unEquip(I)
+			user.dropItemToGround(I)
 		else
 			return
 

@@ -177,8 +177,8 @@
 /obj/structure/alien/weeds/node/New()
 	icon = 'icons/obj/smooth_structures/alien/weednode.dmi'
 	..()
-	var/obj/structure/alien/weeds/W = locate(/obj/structure/alien/weeds)
-	if(W)
+	var/obj/structure/alien/weeds/W = locate(/obj/structure/alien/weeds) in loc
+	if(W && W != src)
 		qdel(W)
 	START_PROCESSING(SSobj, src)
 

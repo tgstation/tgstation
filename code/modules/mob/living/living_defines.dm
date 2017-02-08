@@ -75,3 +75,4 @@
 	var/list/status_effects //a list of all status effects the mob has
 
 	var/list/implants = null
+	var/tesla_ignore = FALSE

@@ -15,7 +15,7 @@
 /obj/item/weapon/melee/cultblade/attack(mob/living/target, mob/living/carbon/human/user)
 	if(!iscultist(user))
 		user.Weaken(5)
-		user.unEquip(src, 1)
+		user.dropItemToGround(src, TRUE)
 		user.visible_message("<span class='warning'>A powerful force shoves [user] away from [target]!</span>", \
 							 "<span class='cultlarge'>\"You shouldn't play with sharp things. You'll poke someone's eye out.\"</span>")
 		if(ishuman(user))
@@ -38,7 +38,7 @@
 			user << "<span class='userdanger'>A horrible force yanks at your arm!</span>"
 			user.emote("scream")
 			user.apply_damage(30, BRUTE, pick("l_arm", "r_arm"))
-			user.unEquip(src)
+			user.dropItemToGround(src)
 
 /obj/item/weapon/melee/cultblade/dagger
 	name = "sacrificial dagger"
@@ -179,7 +179,7 @@
 		if(!is_servant_of_ratvar(user))
 			user << "<span class='cultlarge'>\"I wouldn't advise that.\"</span>"
 			user << "<span class='warning'>An overwhelming sense of nausea overpowers you!</span>"
-			user.unEquip(src, 1)
+			user.dropItemToGround(src, TRUE)
 			user.Dizzy(30)
 			user.Weaken(5)
 		else
@@ -187,13 +187,13 @@
 			user << "<span class='userdanger'>The armor squeezes at your body!</span>"
 			user.emote("scream")
 			user.adjustBruteLoss(25)
-			user.unEquip(src, 1)
+			user.dropItemToGround(src, TRUE)
 
 /obj/item/clothing/suit/hooded/cultrobes/cult_shield/hit_reaction(mob/living/carbon/human/owner, attack_text, isinhands)
 	if(current_charges)
 		owner.visible_message("<span class='danger'>\The [attack_text] is deflected in a burst of blood-red sparks!</span>")
 		current_charges--
-		PoolOrNew(/obj/effect/overlay/temp/cult/sparks, get_turf(owner))
+		new /obj/effect/overlay/temp/cult/sparks(get_turf(owner))
 		if(!current_charges)
 			owner.visible_message("<span class='danger'>The runed shield around [owner] suddenly disappears!</span>")
 			owner.update_inv_wear_suit()
@@ -231,7 +231,7 @@
 		if(!is_servant_of_ratvar(user))
 			user << "<span class='cultlarge'>\"I wouldn't advise that.\"</span>"
 			user << "<span class='warning'>An overwhelming sense of nausea overpowers you!</span>"
-			user.unEquip(src, 1)
+			user.dropItemToGround(src, TRUE)
 			user.Dizzy(30)
 			user.Weaken(5)
 		else
@@ -239,7 +239,7 @@
 			user << "<span class='userdanger'>The robes squeeze at your body!</span>"
 			user.emote("scream")
 			user.adjustBruteLoss(25)
-			user.unEquip(src, 1)
+			user.dropItemToGround(src, TRUE)
 
 /obj/item/clothing/glasses/night/cultblind
 	desc = "May nar-sie guide you through the darkness and shield you from the light."
@@ -253,14 +253,14 @@
 	..()
 	if(!iscultist(user))
 		user << "<span class='cultlarge'>\"You want to be blind, do you?\"</span>"
-		user.unEquip(src, 1)
+		user.dropItemToGround(src, TRUE)
 		user.Dizzy(30)
 		user.Weaken(5)
 		user.blind_eyes(30)
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/unholywater
 	name = "flask of unholy water"
-	desc = "Toxic to nonbelievers; this water renews and reinvigorates the faithful of nar'sie."
+	desc = "Toxic to nonbelievers; reinvigorating to the faithful - this flask may be sipped or thrown."
 	icon_state = "holyflask"
 	color = "#333333"
 	list_reagents = list("unholywater" = 40)
@@ -274,7 +274,7 @@
 
 /obj/item/device/shuttle_curse/attack_self(mob/user)
 	if(!iscultist(user))
-		user.unEquip(src, 1)
+		user.dropItemToGround(src, TRUE)
 		user.Weaken(5)
 		user << "<span class='warning'>A powerful force shoves you away from [src]!</span>"
 		return
@@ -327,7 +327,7 @@
 		user << "<span class='warning'>\The [src] is dull and unmoving in your hands.</span>"
 		return
 	if(!iscultist(user))
-		user.unEquip(src, 1)
+		user.dropItemToGround(src, TRUE)
 		step(src, pick(alldirs))
 		user << "<span class='warning'>\The [src] flickers out of your hands, your connection to this dimension is too strong!</span>"
 		return
@@ -341,14 +341,14 @@
 		if(uses <= 0)
 			icon_state ="shifter_drained"
 		playsound(mobloc, "sparks", 50, 1)
-		PoolOrNew(/obj/effect/overlay/temp/dir_setting/cult/phase/out, list(mobloc, C.dir))
+		new /obj/effect/overlay/temp/dir_setting/cult/phase/out(mobloc, C.dir)
 
 		var/atom/movable/pulled = handle_teleport_grab(destination, C)
 		C.forceMove(destination)
 		if(pulled)
 			C.start_pulling(pulled) //forcemove resets pulls, so we need to re-pull
 
-		PoolOrNew(/obj/effect/overlay/temp/dir_setting/cult/phase, list(destination, C.dir))
+		new /obj/effect/overlay/temp/dir_setting/cult/phase(destination, C.dir)
 		playsound(destination, 'sound/effects/phasein.ogg', 25, 1)
 		playsound(destination, "sparks", 50, 1)
 
@@ -379,7 +379,7 @@
 			if(M.current && M.current.stat != DEAD)
 				cultists |= M.current
 		var/mob/living/cultist_to_receive = input(user, "Who do you wish to call to [src]?", "Followers of the Geometer") as null|anything in (cultists - user)
-		if(!Adjacent(user) || !src || qdeleted(src) || user.incapacitated())
+		if(!Adjacent(user) || !src || QDELETED(src) || user.incapacitated())
 			return
 		if(!cultist_to_receive)
 			user << "<span class='cultitalic'>You require a destination!</span>"

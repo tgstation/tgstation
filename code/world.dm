@@ -9,11 +9,13 @@
 	name = "/tg/ Station 13"
 	fps = 20
 	visibility = 0
+#ifdef GC_FAILURE_HARD_LOOKUP
+	loop_checks = FALSE
+#endif
 
 var/list/map_transition_config = MAP_TRANSITION_CONFIG
 
 /world/New()
-	check_for_cleanbot_bug()
 	map_ready = 1
 	world.log << "Map is ready."
 
@@ -59,9 +61,6 @@ var/list/map_transition_config = MAP_TRANSITION_CONFIG
 
 	data_core = new /datum/datacore()
 
-	spawn(10)
-		Master.Setup()
-
 	SortAreas()						//Build the list of all existing areas and sort it alphabetically
 	process_teleport_locs()			//Sets up the wizard teleport locations
 
@@ -71,8 +70,8 @@ var/list/map_transition_config = MAP_TRANSITION_CONFIG
 	map_name = "Unknown"
 	#endif
 
+	Master.Setup(10, FALSE)
 
-	return
 
 #define IRC_STATUS_THROTTLE 50
 var/last_irc_status = 0
@@ -101,7 +100,8 @@ var/last_irc_status = 0
 		if(world.time - last_irc_status < IRC_STATUS_THROTTLE)
 			return
 		var/list/adm = get_admin_counts()
-		var/status = "Admins: [adm["total"]] (Active: [adm["present"]] AFK: [adm["afk"]] Stealth: [adm["stealth"]] Skipped: [adm["noflags"]]). "
+		var/list/allmins = adm["total"]
+		var/status = "Admins: [allmins.len] (Active: [english_list(adm["present"])] AFK: [english_list(adm["afk"])] Stealth: [english_list(adm["stealth"])] Skipped: [english_list(adm["noflags"])]). "
 		status += "Players: [clients.len] (Active: [get_active_player_count(0,1,0)]). Mode: [ticker.mode.name]."
 		send2irc("Status", status)
 		last_irc_status = world.time
@@ -121,7 +121,9 @@ var/last_irc_status = 0
 		s["revision_date"] = revdata.date
 
 		var/list/adm = get_admin_counts()
-		s["admins"] = adm["present"] + adm["afk"] //equivalent to the info gotten from adminwho
+		var/list/presentmins = adm["present"]
+		var/list/afkmins = adm["afk"]
+		s["admins"] = presentmins.len + afkmins.len //equivalent to the info gotten from adminwho
 		s["gamestate"] = 1
 		if(ticker)
 			s["gamestate"] = ticker.current_state
@@ -212,8 +214,6 @@ var/last_irc_status = 0
 				continue
 			C.Export("##action=load_rsc", ticker.round_end_sound)
 	sleep(delay)
-	if(blackbox)
-		blackbox.save_all_data_to_sql()
 	if(ticker.delay_end)
 		world << "<span class='boldannounce'>Reboot was cancelled by an admin.</span>"
 		return
@@ -225,6 +225,10 @@ var/last_irc_status = 0
 				mapchanging = 0 //map rotation can in some cases be finished but never exit, this is a failsafe
 				Reboot("Map change timed out", time = 10)
 		return
+	OnReboot(reason, feedback_c, feedback_r, round_end_sound_sent)
+	..(0)
+
+/world/proc/OnReboot(reason, feedback_c, feedback_r, round_end_sound_sent)
 	feedback_set_details("[feedback_c]","[feedback_r]")
 	log_game("<span class='boldannounce'>Rebooting World. [reason]</span>")
 	kick_clients_in_lobby("<span class='boldannounce'>The round came to an end with you in the lobby.</span>", 1) //second parameter ensures only afk clients are kicked
@@ -248,7 +252,15 @@ var/last_irc_status = 0
 		if(ticker && ticker.round_end_sound)
 			world << sound(ticker.round_end_sound)
 		else
-			world << sound(pick('sound/AI/newroundsexy.ogg','sound/misc/apcdestroyed.ogg','sound/misc/bangindonk.ogg','sound/misc/leavingtg.ogg', 'sound/misc/its_only_game.ogg')) // random end sounds!! - LastyBatsy
+			world << sound(pick('sound/AI/newroundsexy.ogg',
+			'sound/misc/apcdestroyed.ogg',
+			'sound/misc/bangindonk.ogg',
+			'sound/misc/leavingtg.ogg',
+			'sound/misc/its_only_game.ogg',
+			'sound/misc/yeehaw.ogg',
+			'sound/misc/disappointed.ogg')) // random end sounds!! - LastyBatsy
+	if(blackbox)
+		blackbox.save_all_data_to_sql()
 	sleep(soundwait)
 	Master.Shutdown()	//run SS shutdowns
 	for(var/thing in clients)
@@ -257,7 +269,6 @@ var/last_irc_status = 0
 			continue
 		if(config.server)	//if you set a server location in config.txt, it sends you there instead of trying to reconnect to the same world address. -- NeoFite
 			C << link("byond://[config.server]")
-	..(0)
 
 var/inerror = 0
 /world/Error(var/exception/e)
@@ -293,6 +304,10 @@ var/inerror = 0
 
 /world/proc/load_motd()
 	join_motd = file2text("config/motd.txt")
+	join_motd += "<br>"
+	for(var/line in revdata.testmerge)
+		if(line)
+			join_motd += "Test merge active of PR <a href='[config.githuburl]/pull/[line]'>#[line]</a><br>"
 
 /world/proc/load_configuration()
 	protected_config = new /datum/protected_configuration()

@@ -69,9 +69,9 @@
 
 /turf/open/floor/clockwork/New()
 	..()
-	PoolOrNew(/obj/effect/overlay/temp/ratvar/floor, src)
-	PoolOrNew(/obj/effect/overlay/temp/ratvar/beam, src)
-	realappearence = PoolOrNew(/obj/effect/clockwork/overlay/floor, src)
+	new /obj/effect/overlay/temp/ratvar/floor(src)
+	new /obj/effect/overlay/temp/ratvar/beam(src)
+	realappearence = new /obj/effect/clockwork/overlay/floor(src)
 	realappearence.linked = src
 	change_construction_value(1)
 
@@ -129,7 +129,7 @@
 	return ..()
 
 /turf/open/floor/clockwork/make_plating()
-	PoolOrNew(/obj/item/stack/tile/brass, src)
+	new /obj/item/stack/tile/brass(src)
 	return ..()
 
 /turf/open/floor/clockwork/narsie_act()
@@ -199,5 +199,5 @@
 	. = ..()
 	//Do this *after* the turf has changed as qdel in spacevines will call changeturf again if it hasn't
 	for(var/obj/structure/spacevine/SV in src)
-		if(!qdestroying(SV))//Helps avoid recursive loops
+		if(!QDESTROYING(SV))//Helps avoid recursive loops
 			qdel(SV)
