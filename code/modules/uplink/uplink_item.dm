@@ -1183,6 +1183,17 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	surplus = 20
 	restricted_roles = list("Janitor")
 
+/datum/uplink_item/role_restricted/his_grace
+	name = "His Grace"
+	desc = "An incredibly dangerous weapon recovered from a station overcome by the grey tide. Once activated, it will thirst for blood and must be used to kill in order to sate that thirst. \
+	His Grace grants benefits to its wielder, with a more intense hunger equaling more benefits, but be wary: if it gets too hungry, it will kill you and destroy your body. \
+	If you leave His Grace alone for some time, it will eventually return to its inactive state. \
+	To activate His Grace, place five assorted organs inside of it and use it in your hand."
+	item = /obj/item/weapon/storage/toolbox/artistic/his_grace
+	cost = 20
+	restricted_roles = list("Chaplain")
+	surplus = 5 //Very low chance to get it in a surplus crate even without being the chaplain
+
 // Pointless
 /datum/uplink_item/badass
 	category = "(Pointless) Badassery"
