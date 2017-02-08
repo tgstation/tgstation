@@ -169,6 +169,8 @@
 	..()
 
 /mob/living/carbon/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, safety = 0, override = 0, tesla_shock = 0, illusion = 0)
+	if(tesla_shock && tesla_ignore)
+		return FALSE
 	shock_damage *= siemens_coeff
 	if(dna && dna.species)
 		shock_damage *= dna.species.siemens_coeff

@@ -4629,7 +4629,7 @@
 "bLa" = (/obj/machinery/atmospherics/components/unary/vent_pump{dir = 1; external_pressure_bound = 101.325; on = 1; pressure_checks = 1},/turf/open/floor/plasteel/white,/area/medical/sleeper)
 "bLb" = (/obj/machinery/vending/wallmed{pixel_x = 28; pixel_y = 0},/obj/machinery/camera{c_tag = "Medbay Recovery Room"; dir = 8; network = list("SS13")},/obj/machinery/iv_drip,/turf/open/floor/plasteel/white,/area/medical/sleeper)
 "bLc" = (/obj/structure/table,/obj/item/weapon/hand_labeler,/obj/item/weapon/gun/syringe,/turf/open/floor/plasteel/white,/area/medical/sleeper)
-"bLd" = (/obj/machinery/limbgrower,/obj/item/weapon/reagent_containers/glass/beaker/synthflesh,/turf/open/floor/plasteel/white,/area/medical/sleeper)
+"bLd" = (/obj/structure/closet/crate/freezer/surplus_limbs,/obj/item/weapon/reagent_containers/glass/beaker/synthflesh,/turf/open/floor/plasteel/white,/area/medical/sleeper)
 "bLe" = (/obj/structure/table,/obj/item/weapon/folder/white,/obj/item/clothing/neck/stethoscope,/obj/machinery/vending/wallmed{pixel_y = 28},/obj/machinery/light/small{dir = 8},/turf/open/floor/plasteel/white,/area/medical/medbay)
 "bLf" = (/obj/structure/chair/office/light{dir = 8},/obj/machinery/atmospherics/components/unary/vent_pump{dir = 4; on = 1},/turf/open/floor/plasteel/white,/area/medical/medbay)
 "bLg" = (/obj/structure/closet/secure_closet/personal/patient,/obj/machinery/button/door{id = "medpriv4"; name = "Privacy Shutters"; pixel_y = 25},/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 4},/turf/open/floor/plasteel/white,/area/medical/medbay)

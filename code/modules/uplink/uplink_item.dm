@@ -638,6 +638,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	desc = "A highly experimental bioterror agent which creates dormant nodules to be etched into the grey matter of the brain. On death, these nodules take control of the dead body, causing limited revivification, along with slurred speech, aggression, and the ability to infect others with this agent."
 	item = /obj/item/weapon/storage/box/syndie_kit/romerol
 	cost = 25
+	cant_discount = TRUE
 	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/gang)
 
 /datum/uplink_item/stealthy_weapons/dart_pistol
@@ -1166,6 +1167,14 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	category = "Role-Restricted"
 	exclude_modes = list(/datum/game_mode/nuclear)
 
+/datum/uplink_item/role_restricted/reverse_revolver
+	name = "Reverse Revolver"
+	desc = "A revolver that always fires at its user. \"Accidentally\" drop your weapon, then watch as the greedy corporate pigs blow their own brains all over the wall. \
+	The revolver itself is actually real. Only clumsy people, and clowns, can fire it normally. Honk."
+	cost = 14
+	item = /obj/item/weapon/gun/ballistic/revolver/reverse
+	restricted_roles = list("Clown")
+
 /datum/uplink_item/role_restricted/ez_clean_bundle
 	name = "EZ Clean Grenade Bundle"
 	desc = "A box with three cleaner grenades using the trademark Waffle Co. formula. Serves as a cleaner and causes acid damage to anyone standing nearby. The acid only affects carbon-based creatures."
@@ -1173,6 +1182,17 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	cost = 6
 	surplus = 20
 	restricted_roles = list("Janitor")
+
+/datum/uplink_item/role_restricted/his_grace
+	name = "His Grace"
+	desc = "An incredibly dangerous weapon recovered from a station overcome by the grey tide. Once activated, it will thirst for blood and must be used to kill in order to sate that thirst. \
+	His Grace grants benefits to its wielder, with a more intense hunger equaling more benefits, but be wary: if it gets too hungry, it will kill you and destroy your body. \
+	If you leave His Grace alone for some time, it will eventually return to its inactive state. \
+	To activate His Grace, place five assorted organs inside of it and use it in your hand."
+	item = /obj/item/weapon/storage/toolbox/artistic/his_grace
+	cost = 20
+	restricted_roles = list("Chaplain")
+	surplus = 5 //Very low chance to get it in a surplus crate even without being the chaplain
 
 // Pointless
 /datum/uplink_item/badass

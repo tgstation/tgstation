@@ -1,6 +1,6 @@
-/obj/effect/proc_holder/spell/targeted/lightning
-	name = "Lightning Bolt"
-	desc = "Charges up and throws a lightning bolt at nearby enemies. Classic."
+/obj/effect/proc_holder/spell/targeted/tesla
+	name = "Tesla Blast"
+	desc = "Blast lightning at your foes!"
 	charge_type = "recharge"
 	charge_max	= 300
 	clothes_req = 1
@@ -16,12 +16,12 @@
 
 	action_icon_state = "lightning"
 
-/obj/effect/proc_holder/spell/targeted/lightning/Click()
+/obj/effect/proc_holder/spell/targeted/tesla/Click()
 	if(!ready && cast_check())
 		StartChargeup()
 	return 1
 
-/obj/effect/proc_holder/spell/targeted/lightning/proc/StartChargeup(mob/user = usr)
+/obj/effect/proc_holder/spell/targeted/tesla/proc/StartChargeup(mob/user = usr)
 	ready = 1
 	user << "<span class='notice'>You start gathering the power.</span>"
 	Snd = new/sound('sound/magic/lightning_chargeup.ogg',channel = 7)
@@ -36,18 +36,18 @@
 	else
 		revert_cast(user, 0)
 
-/obj/effect/proc_holder/spell/targeted/lightning/proc/Reset(mob/user = usr)
+/obj/effect/proc_holder/spell/targeted/tesla/proc/Reset(mob/user = usr)
 	ready = 0
 	if(halo)
 		user.overlays.Remove(halo)
 
-/obj/effect/proc_holder/spell/targeted/lightning/revert_cast(mob/user = usr, message = 1)
+/obj/effect/proc_holder/spell/targeted/tesla/revert_cast(mob/user = usr, message = 1)
 	if(message)
 		user << "<span class='notice'>No target found in range.</span>"
 	Reset(user)
 	..()
 
-/obj/effect/proc_holder/spell/targeted/lightning/cast(list/targets, mob/user = usr)
+/obj/effect/proc_holder/spell/targeted/tesla/cast(list/targets, mob/user = usr)
 	ready = 0
 	var/mob/living/carbon/target = targets[1]
 	Snd=sound(null, repeat = 0, wait = 1, channel = Snd.channel) //byond, why you suck?
@@ -63,7 +63,7 @@
 	Bolt(user,target,30,5,user)
 	Reset(user)
 
-/obj/effect/proc_holder/spell/targeted/lightning/proc/Bolt(mob/origin,mob/target,bolt_energy,bounces,mob/user = usr)
+/obj/effect/proc_holder/spell/targeted/tesla/proc/Bolt(mob/origin,mob/target,bolt_energy,bounces,mob/user = usr)
 	origin.Beam(target,icon_state="lightning[rand(1,12)]",time=5)
 	var/mob/living/carbon/current = target
 	if(bounces < 1)
