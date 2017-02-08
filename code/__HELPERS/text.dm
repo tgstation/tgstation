@@ -604,7 +604,7 @@ var/list/binary = list("0","1")
 			s+=3
 		else
 			s+=2
-	return pointization(uppertext_uni(copytext(t, s - 1, s)) + copytext(t, s))
+	return pointization(uppertext_uni(copytext(t, 1, s)) + copytext(t, s))
 
 /proc/pointization(text as text)
 	if (!text)
