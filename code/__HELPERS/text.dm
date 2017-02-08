@@ -94,27 +94,23 @@ proc/russian_text2html(msg)
 			else			non_whitespace = 1
 	if(non_whitespace)		return sanitize_russian(text)		//only accepts the text if it has some non-spaces
 
-// Used to get a sanitized input.
-///proc/stripped_input(var/mob/user, var/message = "", var/title = "", var/default = "", var/max_length=MAX_MESSAGE_LEN)
-//	var/name = sanitize(input(user, message, title, default))
-//	return strip_html_simple(name, max_length)
 
 // Used to get a properly sanitized input, of max_length
 // no_trim is self explanatory but it prevents the input from being trimed if you intend to parse newlines or whitespace.
 /proc/stripped_input(mob/user, message = "", title = "", default = "", max_length=MAX_MESSAGE_LEN, no_trim=FALSE)
 	var/name = input(user, message, title, default) as text|null
 	if(no_trim)
-		return copytext(rhtml_encode(name), 1, max_length)
+		return copytext(rhtml_encode(name, 1), 1, max_length)
 	else
-		return trim(rhtml_encode(name), max_length) //trim is "outside" because html_encode can expand single symbols into multiple symbols (such as turning < into &lt;)
+		return trim(rhtml_encode(name, 1), max_length) //trim is "outside" because html_encode can expand single symbols into multiple symbols (such as turning < into &lt;)
 
 // Used to get a properly sanitized multiline input, of max_length
 /proc/stripped_multiline_input(mob/user, message = "", title = "", default = "", max_length=MAX_MESSAGE_LEN, no_trim=FALSE)
 	var/name = input(user, message, title, default) as message|null
 	if(no_trim)
-		return copytext(rhtml_encode(name), 1, max_length)
+		return copytext(rhtml_encode(name, 1), 1, max_length)
 	else
-		return trim(rhtml_encode(name), max_length)
+		return trim(rhtml_encode(name, 1), max_length)
 
 //Filters out undesirable characters from names
 /proc/reject_bad_name(t_in, allow_numbers=0, max_length=MAX_NAME_LEN)
@@ -549,7 +545,7 @@ var/list/binary = list("0","1")
 	if(html)
 		rep = "&#x44F;"
 	else
-		rep = "&#x44F;"
+		rep = "&#255;"
 	var/list/c = splittext(msg, "ÿ")
 	if(c.len == 1)
 		return msg
@@ -567,7 +563,7 @@ var/list/binary = list("0","1")
 	if(html)
 		rep = "&#x44F;"
 	else
-		rep = "&#x44F;"
+		rep = "&#255;"
 	var/list/c = splittext(msg, "ÿ")
 	if(c.len == 1)
 		return msg
@@ -608,7 +604,7 @@ var/list/binary = list("0","1")
 			s+=3
 		else
 			s+=2
-	return pointization(uppertext_uni(copytext(t, s - 1, s)) + copytext(t, s))
+	return pointization(uppertext_uni(copytext(t, 1, s)) + copytext(t, s))
 
 /proc/pointization(text as text)
 	if (!text)

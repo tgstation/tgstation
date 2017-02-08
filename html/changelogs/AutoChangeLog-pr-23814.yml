@@ -1,0 +1,4 @@
+author: "uraniummeltdown"
+delete-after: True
+changes: 
+  - tweak: "Kinetic Accelerator Cosmetic and Tracer Modkits now don't use mod capacity. Cosmetic kits change the name of the KA."
