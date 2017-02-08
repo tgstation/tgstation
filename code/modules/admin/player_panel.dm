@@ -354,13 +354,7 @@
 					dead_players++
 		dat += "<BR><b>Connected players: [connected_players].
 		dat += "<BR><font color='green'>Living Players: [living_players]([living_players-living_connected_players] \[DC\]) ([living_antagonists] antagonists).</font>
-		dat += "<BR><font color='red'>Dead players: [dead_players].
-		
-		
-
-		
-		
-		
+		dat += "<BR><font color='red'>Dead players: [dead_players]</font></b>"
 		dat += "<BR>"
 		dat += "<a href='?_src_=holder;end_round=\ref[usr]'>End Round Now</a><br>"
 		dat += "<a href='?_src_=holder;delay_round_end=1'>[ticker.delay_end ? "End Round Normally" : "Delay Round End"]</a><br>"
