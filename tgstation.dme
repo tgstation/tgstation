@@ -732,6 +732,7 @@
 #include "code\game\objects\items\stacks\tiles\light.dm"
 #include "code\game\objects\items\stacks\tiles\tile_mineral.dm"
 #include "code\game\objects\items\stacks\tiles\tile_types.dm"
+#include "code\game\objects\items\weapons\abridged_tome.dm"
 #include "code\game\objects\items\weapons\AI_modules.dm"
 #include "code\game\objects\items\weapons\airlock_painter.dm"
 #include "code\game\objects\items\weapons\cards_ids.dm"

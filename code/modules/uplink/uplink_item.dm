@@ -1183,6 +1183,14 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	surplus = 20
 	restricted_roles = list("Janitor")
 
+/datum/uplink_item/role_restricted/abridged_arcane_tome
+	name = "Arcane Tome (Abridged)"
+	desc = "An arcane tome given as a gift from Nar-Sian cultists. Most of it has been cut, allowing basic use while retaining one's own sanity."
+	item = /obj/item/weapon/abridged_tome
+	cost = 12
+	restricted_roles = list("Librarian")
+	surplus = 15
+
 // Pointless
 /datum/uplink_item/badass
 	category = "(Pointless) Badassery"
