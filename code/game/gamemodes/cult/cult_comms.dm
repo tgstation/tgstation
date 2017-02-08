@@ -63,7 +63,7 @@
 
 	text += "<font color='red'><b>V. GROW THE CULT</b></font><br>There are certain basic strategies that all cultists should master. STUN talismans are the foundation of a successful cult. If you intend to convert the stunned person \
 	you should use cuffs or a talisman of shackling on them and remove their headset before they recover (this must be done quickly). Some targets like security or hardsuit users cannot have their headsets removed quickly, you can use \
-	your tome as a powerful melee weapon to beat them unconscious or an additional stun or EMP talisman to keep them quiet. Anyone with a loyalty implant cannot be converted and should be sacrificed, sacrifice victims will their soul \ 
+	your tome as a powerful melee weapon to beat them unconscious or an additional stun or EMP talisman to keep them quiet. Anyone with a loyalty implant cannot be converted and should be sacrificed, sacrifice victims will their soul \
 	behind in a shard, these shards can be used on construct shells to make powerful servants for the cult. Your construct minions can invoke many runes, but cannot create their own.<br><br>"
 
 	text += "<font color='red'><b>VI. VICTORY</b></font><br>You have two ultimate goals as a cultist, sacrifice your target, and summon Nar-Sie. Sacrificing the target involves killing that individual and then placing \
