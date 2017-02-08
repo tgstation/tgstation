@@ -41,7 +41,7 @@ var/datum/subsystem/gravity/SSgravity
 	throw_everything()
 
 /datum/subsystem/gravity/proc/stun_all_mobs()
-	for(var/mob/living/carbon/C in world)
+	for(var/mob/living/carbon/C in mob_list)
 		if(C.z == 1)
 			C.Weaken(gravstun_amount)
 
@@ -51,12 +51,14 @@ var/datum/subsystem/gravity/SSgravity
 	for(var/atom/movable/A in world)
 		if(!A.anchored && A.z == 1)
 			processing += A
-	recalculation_tick_cost = (before - world.time)
+		CHECK_TICK
+	currentrun = processing.Copy()
+	recalculation_tick_cost = (world.time - before)
 	world << "<span class='userdanger'>DEBUG: RECALCULATION TOOK [recalculation_tick_cost] TICKS!</span>"
 
 /datum/subsystem/gravity/proc/throw_everything()
 	throwing = TRUE
-	src.currentrun = processing.Copy()
+	currentrun = processing.Copy()
 	fire(TRUE)
 
 /datum/subsystem/gravity/fire(resumed = FALSE)
@@ -70,18 +72,19 @@ var/datum/subsystem/gravity/SSgravity
 	if(!resumed)
 		src.currentrun = processing.Copy()
 		throwing = FALSE
+	var/list/currentrun = src.currentrun
 	while(currentrun.len)
 		var/atom/movable/A = currentrun[currentrun.len]
-		currentrun--
+		currentrun.len--
 		if(A)
 			if(A.anchored)
 				processing -= A
 				continue
 			if(!throwing)
 				for(var/i = 0, i < gravity_strength, i++)
-					step(A, gravity_direction)
+					A.gravity_act(gravity_direction, gravity_strength)
 			else
-				A.throw_at(get_edge_target_turf(A, gravity_direction), 25, 3)
+				A.gravity_act(gravity_direction, gravity_strength, TRUE)
 		else
 			processing -= A
 		if(MC_TICK_CHECK)

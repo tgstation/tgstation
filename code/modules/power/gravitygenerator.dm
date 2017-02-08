@@ -259,6 +259,7 @@ var/const/GRAV_NEEDS_WRENCH = 3
 		dat += "<br><span class='danger'>SET GRAVITATIONAL DIRECTION: [grav_dir]</span>"
 		dat += "<br><span class='boldnotice'><A href='?src=\ref[src];set_dir=1'>NORTH</A> <A href='?src=\ref[src];set_dir=2'>SOUTH</A>"
 		dat += " <A href='?src=\ref[src];set_dir=4'>EAST</A> <A href='?src=\ref[src];set_dir=8'>WEST</A></span>"
+		dat += "<br><span class='userdanger'><A href='?src=\ref[src];set_dir=0'>RESET DIRECTION</A></span>"
 		if(grav_dir != SSgravity.gravity_direction)
 			dat += "<br><span class='userdanger'>DIRECTION CHANGE PENDING POWER CYCLE!</span>"
 
