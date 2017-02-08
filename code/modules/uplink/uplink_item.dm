@@ -1165,7 +1165,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 // Role-specific items
 /datum/uplink_item/role_restricted
 	category = "Role-Restricted"
-	exclude_modes = list(/datum/game_mode/nuclear
+	exclude_modes = list(/datum/game_mode/nuclear)
 	surplus = 0
 
 /datum/uplink_item/role_restricted/reverse_revolver
