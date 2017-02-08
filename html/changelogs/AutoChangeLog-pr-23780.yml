@@ -1,0 +1,11 @@
+author: "Tofa01"
+delete-after: True
+changes: 
+  - tweak: "[Delta] Changes NW supermatter filter to filter O2 instead of N2"
+  - rscadd: "[Delta] Adds wardrobes to Dorms & Arrivals Shuttle"
+  - rscadd: "[Delta] Adds access buttons to virology doors for extra security"
+  - rscadd: "[Delta] Adds bolt door button to all dorms"
+  - rscadd: "[Delta] Adds three pairs of optical meson scanners to supermatter room"
+  - rscadd: "[Delta] Adds a disk fridge to botany"
+  - rscadd: "[Delta] Adds a cake hat to the bar"
+  - bugfix: "[Delta] Fixes misplaced station intercom in Supermatter SMES room"
