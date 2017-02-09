@@ -168,6 +168,6 @@
 	return
 
 /obj/item/weapon/pen/poison/on_write(obj/item/weapon/paper/P, mob/user)
-	P.contact_poison = "delayed_poison"
+	P.contact_poison = "delayed_toxin"
 	P.contact_poison_volume = 10
 	add_logs(user,P,"used poison pen on")

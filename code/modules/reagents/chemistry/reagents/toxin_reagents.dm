@@ -781,18 +781,19 @@
 	..()
 
 /datum/reagent/toxin/delayed
-	name = "Delayed Toxin"
+	name = "Toxin Microcapsules"
 	id = "delayed_toxin"
 	description = "Causes heavy toxin damage after a brief time of inactivity."
 	reagent_state = LIQUID
 	metabolization_rate = 0 //stays in the system until active.
+	var/actual_metaboliztion_rate = REAGENTS_METABOLISM
 	toxpwr = 0
-	var/actual_toxpwr = 6
+	var/actual_toxpwr = 5
 	var/delay = 30
 
 /datum/reagent/toxin/delayed/on_mob_life(mob/living/M)
 	if(current_cycle > delay)
-		holder.remove_reagent(id, metabolization_rate * M.metabolism_efficiency)
+		holder.remove_reagent(id, actual_metaboliztion_rate * M.metabolism_efficiency)
 		M.adjustToxLoss(actual_toxpwr*REM, 0)
 		if(prob(10))
 			M.Weaken(1, 0)
