@@ -63,6 +63,9 @@ proc/russian_html2text(msg)
 proc/russian_text2html(msg)
 	return replacetext(msg, "&#255;", "&#1103;")
 
+proc/russian_44f2html(msg)
+	return replacetext(msg, "&#x44F;", "&#255;")
+
 //Runs byond's sanitization proc along-side sanitize_simple
 /proc/sanitize(t,list/repl_chars = null)
 	t = replacetext(t, "\proper", "")
