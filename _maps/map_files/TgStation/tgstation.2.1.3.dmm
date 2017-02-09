@@ -61223,6 +61223,242 @@
 /obj/machinery/deepfryer,
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/kitchen)
+"cCs" = (
+/obj/structure/fluff/buoy,
+/turf/open/space,
+/area/space)
+"cCt" = (
+/obj/structure/fluff/buoy,
+/turf/open/space,
+/area/space)
+"cCu" = (
+/obj/structure/fluff/buoy,
+/turf/open/space,
+/area/space)
+"cCv" = (
+/obj/structure/fluff/buoy,
+/turf/open/space,
+/area/space)
+"cCw" = (
+/obj/structure/fluff/buoy,
+/turf/open/space,
+/area/space)
+"cCx" = (
+/obj/structure/fluff/buoy,
+/turf/open/space,
+/area/space)
+"cCy" = (
+/obj/structure/fluff/buoy,
+/turf/open/space,
+/area/space)
+"cCz" = (
+/obj/structure/fluff/buoy,
+/turf/open/space,
+/area/space)
+"cCA" = (
+/obj/structure/fluff/buoy,
+/turf/open/space,
+/area/space)
+"cCB" = (
+/obj/structure/fluff/buoy,
+/turf/open/space,
+/area/space)
+"cCC" = (
+/obj/structure/fluff/buoy,
+/turf/open/space,
+/area/space)
+"cCD" = (
+/obj/structure/fluff/buoy,
+/turf/open/space,
+/area/space)
+"cCE" = (
+/obj/structure/fluff/buoy,
+/turf/open/space,
+/area/space)
+"cCF" = (
+/obj/structure/fluff/buoy,
+/turf/open/space,
+/area/space)
+"cCG" = (
+/obj/structure/fluff/buoy,
+/turf/open/space,
+/area/space)
+"cCH" = (
+/obj/structure/fluff/buoy,
+/turf/open/space,
+/area/space)
+"cCI" = (
+/obj/structure/fluff/buoy,
+/turf/open/space,
+/area/space)
+"cCJ" = (
+/obj/structure/fluff/buoy,
+/turf/open/space,
+/area/space)
+"cCK" = (
+/obj/structure/fluff/buoy,
+/turf/open/space,
+/area/space)
+"cCL" = (
+/obj/structure/fluff/buoy,
+/turf/open/space,
+/area/space)
+"cCM" = (
+/obj/structure/fluff/buoy,
+/turf/open/space,
+/area/space)
+"cCN" = (
+/obj/structure/fluff/buoy,
+/turf/open/space,
+/area/space)
+"cCO" = (
+/obj/structure/fluff/buoy,
+/turf/open/space,
+/area/space)
+"cCP" = (
+/obj/structure/fluff/buoy,
+/turf/open/space,
+/area/space)
+"cCQ" = (
+/obj/structure/fluff/buoy,
+/turf/open/space,
+/area/space)
+"cCR" = (
+/obj/structure/fluff/buoy,
+/turf/open/space,
+/area/space)
+"cCS" = (
+/obj/structure/fluff/buoy,
+/turf/open/space,
+/area/space)
+"cCT" = (
+/obj/structure/fluff/buoy,
+/turf/open/space,
+/area/space)
+"cCU" = (
+/obj/structure/fluff/buoy,
+/turf/open/space,
+/area/space)
+"cCV" = (
+/obj/structure/fluff/buoy,
+/turf/open/space,
+/area/space)
+"cCW" = (
+/obj/structure/fluff/buoy,
+/turf/open/space,
+/area/space)
+"cCX" = (
+/obj/structure/fluff/buoy,
+/turf/open/space,
+/area/space)
+"cCY" = (
+/obj/structure/fluff/buoy,
+/turf/open/space,
+/area/space)
+"cCZ" = (
+/obj/structure/fluff/buoy,
+/turf/open/space,
+/area/space)
+"cDa" = (
+/obj/structure/fluff/buoy,
+/turf/open/space,
+/area/space)
+"cDb" = (
+/obj/structure/fluff/buoy,
+/turf/open/space,
+/area/space)
+"cDc" = (
+/obj/structure/fluff/buoy,
+/turf/open/space,
+/area/space)
+"cDd" = (
+/obj/structure/fluff/buoy,
+/turf/open/space,
+/area/space)
+"cDe" = (
+/obj/structure/fluff/buoy,
+/turf/open/space,
+/area/space)
+"cDf" = (
+/obj/structure/fluff/buoy,
+/turf/open/space,
+/area/space)
+"cDg" = (
+/obj/structure/fluff/buoy,
+/turf/open/space,
+/area/space)
+"cDh" = (
+/obj/structure/fluff/buoy,
+/turf/open/space,
+/area/space)
+"cDi" = (
+/obj/structure/fluff/buoy,
+/turf/open/space,
+/area/space)
+"cDj" = (
+/obj/structure/fluff/buoy,
+/turf/open/space,
+/area/space)
+"cDk" = (
+/obj/structure/fluff/buoy,
+/turf/open/space,
+/area/space)
+"cDl" = (
+/obj/structure/fluff/buoy,
+/turf/open/space,
+/area/space)
+"cDm" = (
+/obj/structure/fluff/buoy,
+/turf/open/space,
+/area/space)
+"cDn" = (
+/obj/structure/fluff/buoy,
+/turf/open/space,
+/area/space)
+"cDo" = (
+/obj/structure/fluff/buoy,
+/turf/open/space,
+/area/space)
+"cDp" = (
+/obj/structure/fluff/buoy,
+/turf/open/space,
+/area/space)
+"cDq" = (
+/obj/structure/fluff/buoy,
+/turf/open/space,
+/area/space)
+"cDr" = (
+/obj/structure/fluff/buoy,
+/turf/open/space,
+/area/space)
+"cDs" = (
+/obj/structure/fluff/buoy,
+/turf/open/space,
+/area/space)
+"cDt" = (
+/obj/structure/fluff/buoy,
+/turf/open/space,
+/area/space)
+"cDu" = (
+/obj/structure/fluff/buoy,
+/turf/open/space,
+/area/space)
+"cDv" = (
+/obj/structure/fluff/buoy,
+/turf/open/space,
+/area/space)
+"cDw" = (
+/obj/structure/fluff/buoy,
+/turf/open/space,
+/area/space)
+"cDx" = (
+/obj/structure/fluff/buoy,
+/turf/open/space,
+/area/space)
+"cDy" = (
+/obj/structure/fluff/buoy,
+/turf/open/space,
+/area/space)
 
 (1,1,1) = {"
 aaa
@@ -67502,7 +67738,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+cCI
 aaa
 aaa
 aaa
@@ -68029,7 +68265,7 @@ aae
 aaa
 aaa
 aaa
-aaa
+cCK
 aaa
 aaa
 aaa
@@ -68760,7 +68996,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+cCB
 aaa
 aaa
 aaa
@@ -69320,7 +69556,7 @@ aaa
 aaf
 aaa
 aaa
-aaa
+cCM
 aaa
 aaa
 aaa
@@ -72965,7 +73201,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+cDb
 aaa
 aaa
 aaa
@@ -73904,7 +74140,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+cCF
 aaa
 aaa
 aaa
@@ -74518,7 +74754,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+cDd
 aaa
 aaa
 aaa
@@ -74728,7 +74964,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+cCP
 aaa
 aaa
 aaa
@@ -75268,7 +75504,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+cCY
 aaa
 aaa
 aaa
@@ -75430,7 +75666,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+cCy
 aaa
 aaS
 aaS
@@ -76830,7 +77066,7 @@ aaf
 aaS
 aaa
 aaa
-aaa
+cDc
 aaa
 aaa
 aaa
@@ -77307,7 +77543,7 @@ czs
 aaa
 aaa
 aaa
-aaa
+cCT
 aaa
 aaa
 aaa
@@ -79284,7 +79520,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+cCv
 aaa
 aaa
 aaS
@@ -79658,7 +79894,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+cDe
 aaa
 aaa
 aaa
@@ -81096,7 +81332,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+cCC
 aaa
 aaa
 aaa
@@ -81464,7 +81700,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+cDj
 aaa
 aaa
 aaa
@@ -83404,7 +83640,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+cCA
 aaa
 aaa
 aae
@@ -84294,7 +84530,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+cDk
 aaa
 aaa
 aaa
@@ -84937,7 +85173,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+cCu
 aaa
 abb
 abt
@@ -85317,7 +85553,7 @@ cig
 aaa
 aaa
 aaa
-aaa
+cDh
 aaa
 aaa
 aaa
@@ -85589,7 +85825,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+cDp
 aaa
 aaa
 aaa
@@ -87240,7 +87476,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+cCs
 aaa
 aaa
 aag
@@ -89707,7 +89943,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+cDu
 aaa
 aaa
 aaa
@@ -90844,7 +91080,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+cCt
 aaa
 aaf
 aaa
@@ -92788,7 +93024,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+cDs
 aaa
 aaa
 aaa
@@ -95092,7 +95328,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+cDl
 aaa
 aaa
 aaa
@@ -95218,7 +95454,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+cCw
 aaa
 aaa
 aaf
@@ -95889,7 +96125,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+cDv
 aaa
 aaa
 aaa
@@ -96899,7 +97135,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+cDr
 aaa
 aaa
 aaa
@@ -97802,7 +98038,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+cCE
 aaa
 aaa
 aaa
@@ -98472,7 +98708,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+cDy
 aaa
 aaa
 aaa
@@ -99588,7 +99824,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+cCz
 aaa
 aaa
 aaa
@@ -100153,7 +100389,7 @@ aRG
 aSO
 aTO
 aVG
-cCr
+cCq
 aVz
 bak
 bbz
@@ -101038,7 +101274,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+cDx
 aaa
 aaa
 aaa
@@ -102574,7 +102810,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+cDw
 aaa
 aaa
 aaa
@@ -102790,7 +103026,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+cDf
 aaa
 aaa
 aaa
@@ -103956,7 +104192,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+cCx
 aaa
 aaa
 aaS
@@ -104097,7 +104333,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+cDt
 aaa
 aaa
 aaa
@@ -105878,7 +106114,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+cDi
 aaa
 aaa
 aaa
@@ -106796,7 +107032,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+cCD
 aaa
 aaf
 aaf
@@ -106921,7 +107157,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+cDq
 aaa
 aaa
 aaa
@@ -109485,7 +109721,7 @@ aaa
 aaS
 aaa
 aaa
-aaa
+cDm
 aaa
 aaa
 aaa
@@ -110149,7 +110385,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+cCG
 aaa
 aaa
 atS
@@ -111288,7 +111524,7 @@ aaS
 aaa
 aaa
 aaa
-aaa
+cDo
 aaa
 aaa
 aaa
@@ -112475,7 +112711,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+cCH
 aaa
 aaa
 aaa
@@ -112759,7 +112995,7 @@ cwI
 aaa
 aaa
 aaa
-aaa
+cCN
 aaa
 aaa
 aaa
@@ -113341,7 +113577,7 @@ aaS
 aaa
 aaa
 aaa
-aaa
+cDn
 aaa
 aaa
 aaa
@@ -114613,7 +114849,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+cDg
 aaa
 aaa
 aaa
@@ -115368,7 +115604,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+cDa
 aaa
 aaa
 aaa
@@ -116075,6 +116311,7 @@ aaa
 aaa
 aaa
 aaa
+cCJ
 aaa
 aaa
 aaa
@@ -116099,8 +116336,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
+cCO
 aaa
 aaa
 aaa
@@ -116602,7 +116838,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+cCL
 aaa
 aaa
 aaa
@@ -116646,7 +116882,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+cCZ
 aaa
 aaa
 aaa
@@ -117139,7 +117375,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+cCS
 aaa
 aaa
 aaa
@@ -117665,7 +117901,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+cCU
 aaa
 aaa
 aaa
@@ -118700,7 +118936,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+cCW
 aaa
 aaa
 aaa
@@ -119447,7 +119683,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+cCQ
 aaa
 aaa
 aaa
@@ -121270,7 +121506,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+cCX
 aaa
 aaa
 aaa
@@ -122020,7 +122256,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+cCR
 aaa
 aaa
 aaa
@@ -122291,7 +122527,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+cCV
 aaa
 aaa
 aaa
