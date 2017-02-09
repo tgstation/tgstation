@@ -142,3 +142,33 @@
 	icon_state = "pill18"
 	list_reagents = list("insulin" = 50)
 	roundstart = 1
+
+/obj/item/weapon/genderpill //its a "pill"
+	name = "strange red pill"
+	desc = "The mythical redpill on gender issues. Do not snort."
+	icon_state = "pill4"
+	var/used = FALSE
+	var/newgender = null
+	force = 0
+	
+/obj/item/weapon/genderpill/attack_self(mob/user)
+	return
+	
+/obj/item/weapon/genderpill/attack(mob/M, mob/user, def_zone)
+	if(used)
+		return
+	used = 1  //anti lag
+	if(M == user)
+		if(M.gender == FEMALE)
+			M.gender = MALE
+			newgender = pick(dude, man, boy, bro)
+		else
+			M.gender = FEMALE
+			newgender = pick(dudette, woman, girl, brodette)
+		M.regenerate_icons()
+		M.dna.generate_uni_identity()
+		M.visible_message("<span class='notice'>[user] swalows the [src] and morphs into a [newgender]!</span>")
+		qdel(src)
+	else
+		M.visible_message("<span class='notice'>[user] attempts to feed [M] the [src] but it turns blue!  Looks like [M] wasn't ready to see from the other side.</span>")
+		qdel(src)
