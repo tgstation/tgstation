@@ -36,29 +36,29 @@
 
 /datum/hud/proc/apply_parallax_pref()
 	var/client/C = mymob.client
-	switch(C.prefs.parallax)
-		if (PARALLAX_INSANE)
-			C.parallax_throttle = FALSE
-			C.parallax_layers_max = 4
-			return TRUE
+	if(C.prefs) 
+		switch(C.prefs.parallax)
+			if (PARALLAX_INSANE)
+				C.parallax_throttle = FALSE
+				C.parallax_layers_max = 4
+				return TRUE
 
-		if (PARALLAX_MED)
-			C.parallax_throttle = PARALLAX_DELAY_MED
-			C.parallax_layers_max = 2
-			return TRUE
+			if (PARALLAX_MED)
+				C.parallax_throttle = PARALLAX_DELAY_MED
+				C.parallax_layers_max = 2
+				return TRUE
 
-		if (PARALLAX_LOW)
-			C.parallax_throttle = PARALLAX_DELAY_LOW
-			C.parallax_layers_max = 1
-			return TRUE
+			if (PARALLAX_LOW)
+				C.parallax_throttle = PARALLAX_DELAY_LOW
+				C.parallax_layers_max = 1
+				return TRUE
 
-		if (PARALLAX_DISABLE)
-			return FALSE
+			if (PARALLAX_DISABLE)
+				return FALSE
 
-		else
-			C.parallax_throttle = PARALLAX_DELAY_DEFAULT
-			C.parallax_layers_max = 3
-			return TRUE
+	C.parallax_throttle = PARALLAX_DELAY_DEFAULT
+	C.parallax_layers_max = 3
+	return TRUE
 
 /datum/hud/proc/update_parallax_pref()
 	remove_parallax()

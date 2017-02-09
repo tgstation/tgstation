@@ -292,7 +292,7 @@
 /obj/item/weapon/paper/contract/infernal/magic/FulfillContract(mob/living/carbon/human/user = target.current, blood = 0)
 	if(!istype(user) || !user.mind)
 		return -1
-	user.mind.AddSpell(new /obj/effect/proc_holder/spell/fireball(null))
+	user.mind.AddSpell(new /obj/effect/proc_holder/spell/aimed/fireball(null))
 	user.mind.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/knock(null))
 	return ..()
 

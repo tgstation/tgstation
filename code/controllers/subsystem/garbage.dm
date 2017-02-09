@@ -92,6 +92,10 @@ var/datum/subsystem/garbage_collector/SSgarbage
 		var/datum/A
 		A = locate(refID)
 		if (A && A.gc_destroyed == GCd_at_time) // So if something else coincidently gets the same ref, it's not deleted by mistake
+			#ifdef GC_FAILURE_HARD_LOOKUP
+			A.find_references()
+			#endif
+
 			// Something's still referring to the qdel'd object.  Kill it.
 			var/type = A.type
 			testing("GC: -- \ref[A] | [type] was unable to be GC'd and was deleted --")
@@ -203,22 +207,6 @@ var/datum/subsystem/garbage_collector/SSgarbage
 	else if(D.gc_destroyed == GC_CURRENTLY_BEING_QDELETED)
 		CRASH("[D.type] destroy proc was called multiple times, likely due to a qdel loop in the Destroy logic")
 
-// Returns 1 if the object has been queued for deletion.
-/proc/qdeleted(datum/D)
-	if(!istype(D))
-		return FALSE
-	if(D.gc_destroyed)
-		return TRUE
-	return FALSE
-
-// Returns true if the object's destroy has been called (set just before it is called)
-/proc/qdestroying(datum/D)
-	if(!istype(D))
-		return FALSE
-	if(D.gc_destroyed == GC_CURRENTLY_BEING_QDELETED)
-		return TRUE
-	return FALSE
-
 // Default implementation of clean-up code.
 // This should be overridden to remove all references pointing to the object being destroyed.
 // Return the appropriate QDEL_HINT; in most cases this is QDEL_HINT_QUEUE.
@@ -236,7 +224,8 @@ var/datum/subsystem/garbage_collector/SSgarbage
 /datum/var/gc_destroyed //Time when this object was destroyed.
 
 #ifdef TESTING
-/datum/var/running_find_references
+/datum/var/running_find_references 
+/datum/var/last_find_references = 0
 
 /datum/verb/find_refs()
 	set category = "Debug"
@@ -270,17 +259,10 @@ var/datum/subsystem/garbage_collector/SSgarbage
 		usr.client.running_find_references = type
 
 	testing("Beginning search for references to a [type].")
+	last_find_references = world.time
 	find_references_in_globals()
 	for(var/datum/thing in world)
-		if(usr && usr.client && !usr.client.running_find_references) return
-		for(var/varname in thing.vars)
-			var/variable = thing.vars[varname]
-			if(variable == src)
-				testing("Found [src.type] \ref[src] in [thing.type]'s [varname] var.")
-			else if(islist(variable))
-				if(src in variable)
-					testing("Found [src.type] \ref[src] in [thing.type]'s [varname] list var.")
-		CHECK_TICK
+		DoSearchVar(thing, "WorldRef: [thing]")
 	testing("Completed search for references to a [type].")
 	if(usr && usr.client)
 		usr.client.running_find_references = null
@@ -328,22 +310,38 @@ var/datum/subsystem/garbage_collector/SSgarbage
 
 	usr << browse(dat, "window=qdeletedlog")
 
-#define SearchVar(X) DoSearchVar(X, #X)
+#define SearchVar(X) DoSearchVar(X, "Global: " + #X)
 
 /datum/proc/DoSearchVar(X, Xname)
-	if(islist(X))
-		if(src in X)
-			testing("Found [src.type] \ref[src] in global list [Xname].")
-	else if(istype(X, /datum))
+	if(usr && usr.client && !usr.client.running_find_references) return
+	if(istype(X, /datum))
 		var/datum/D = X
+		if(D.last_find_references == last_find_references)
+			return
+		D.last_find_references = last_find_references
 		for(var/V in D.vars)
 			for(var/varname in D.vars)
 				var/variable = D.vars[varname]
 				if(variable == src)
-					testing("Found [src.type] \ref[src] in [D.type]'s [varname] var. Global: [Xname]")
-				else if(islist(variable) && src in variable)
-					testing("Found [src.type] \ref[src] in [D.type]'s [varname] list var. Global: [Xname]")
+					testing("Found [src.type] \ref[src] in [D.type]'s [varname] var. [Xname]")
+				else if(islist(variable))
+					if(src in variable)
+						testing("Found [src.type] \ref[src] in [D.type]'s [varname] list var. Global: [Xname]")
+#ifdef GC_FAILURE_HARD_LOOKUP
+					for(var/I in variable)
+						DoSearchVar(I, TRUE)
+				else
+					DoSearchVar(variable, "[Xname]: [varname]")
+#endif
+	else if(islist(X)) 
+		if(src in X)
+			testing("Found [src.type] \ref[src] in list [Xname].")
+#ifdef GC_FAILURE_HARD_LOOKUP
+		for(var/I in X)
+			DoSearchVar(I, Xname + ": list")
+#else
 	CHECK_TICK
+#endif
 
 //if find_references isn't working for some datum
 //update this list using tools/DMTreeToGlobalsList
@@ -569,7 +567,6 @@ var/datum/subsystem/garbage_collector/SSgarbage
 	SearchVar(deadmins)
 	SearchVar(directory)
 	SearchVar(stealthminID)
-	SearchVar(current_watchlist)
 	SearchVar(player_list)
 	SearchVar(mob_list)
 	SearchVar(living_mob_list)
