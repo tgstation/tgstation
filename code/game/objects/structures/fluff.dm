@@ -160,3 +160,10 @@
 	name = "shrine"
 	desc = "A shrine dedicated to a deity."
 	icon_state = "shrine"
+
+
+/obj/structure/fluff/buoy
+	name = "buoy"
+	desc = "To help those unfortunate enough to be lost in space."
+	icon = 'icons/obj/fluff.dmi'
+	icon_state = "buoy"
