@@ -49,6 +49,12 @@ insert ascii eagle on american flag background here
 	if(istype(I, /obj/item/weapon/reagent_containers/food/snacks/deepfryholder))
 		user << "<span class='userdanger'>Your cooking skills are not up to the legendary Doublefry technique.</span>"
 		return
+	if(default_unfasten_wrench(user, I))
+		return
+	else if(exchange_parts(user, I))
+		return
+	else if(default_deconstruction_screwdriver(user, "fryer_off", "fryer_off" ,I)	//where's the open maint panel icon?!
+		return
 	else
 		if(I.type in blacklisted_items)
 			user << "<span class='warning'>You don't think the [I] would fry very well...</span>"
