@@ -37,7 +37,7 @@
 		return
 	if(lifespan > 0)
 		spawn(lifespan)
-			qdel(src)
+			destroy_effect()
 
 /obj/effect/portal/Destroy()
 	portals -= src

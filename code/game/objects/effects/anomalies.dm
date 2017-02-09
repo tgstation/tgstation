@@ -43,12 +43,12 @@
 	if(death_time < world.time)
 		if(loc)
 			detonate()
-		qdel(src)
+		destroy_effect()
 
 /obj/effect/anomaly/Destroy()
 	poi_list.Remove(src)
 	STOP_PROCESSING(SSobj, src)
-	qdel(countdown)
+	countdown.destroy_effect()
 	return ..()
 
 /obj/effect/anomaly/proc/anomalyEffect()
@@ -60,7 +60,7 @@
 
 /obj/effect/anomaly/ex_act(severity, target)
 	if(severity == 1)
-		qdel(src)
+		destroy_effect()
 
 /obj/effect/anomaly/proc/anomalyNeutralize()
 	new /obj/effect/particle_effect/smoke/bad(loc)
@@ -68,7 +68,7 @@
 	for(var/atom/movable/O in src)
 		O.loc = src.loc
 
-	qdel(src)
+	destroy_effect()
 
 
 /obj/effect/anomaly/attackby(obj/item/I, mob/user, params)
@@ -284,7 +284,7 @@
 /obj/effect/anomaly/bhole/anomalyEffect()
 	..()
 	if(!isturf(loc)) //blackhole cannot be contained inside anything. Weird stuff might happen
-		qdel(src)
+		destroy_effect()
 		return
 
 	grav(rand(0,3), rand(2,3), 50, 25)

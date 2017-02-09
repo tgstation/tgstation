@@ -20,7 +20,7 @@
 
 /obj/effect/decal/cleanable/proc/replace_decal(obj/effect/decal/cleanable/C)
 	if(mergeable_decal)
-		qdel(C)
+		destroy_effect()
 
 /obj/effect/decal/cleanable/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/reagent_containers/glass) || istype(W, /obj/item/weapon/reagent_containers/food/drinks))
@@ -35,7 +35,7 @@
 			user << "<span class='notice'>You scoop up [src] into [W]!</span>"
 			reagents.trans_to(W, reagents.total_volume)
 			if(!reagents.total_volume) //scooped up all of it
-				qdel(src)
+				destroy_effect()
 				return
 	if(W.is_hot()) //todo: make heating a reagent holder proc
 		if(istype(W, /obj/item/clothing/mask/cigarette))

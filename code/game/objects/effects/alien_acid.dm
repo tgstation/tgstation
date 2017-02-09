@@ -43,7 +43,7 @@
 /obj/effect/acid/process()
 	. = 1
 	if(!target)
-		qdel(src)
+		destroy_effect()
 		return 0
 
 	if(prob(5))
@@ -58,7 +58,7 @@
 
 	acid_level = max(acid_level - (5 + 2*round(sqrt(acid_level))), 0)
 	if(acid_level <= 0)
-		qdel(src)
+		destroy_effect()
 		return 0
 
 /obj/effect/acid/Crossed(AM as mob|obj)
@@ -87,7 +87,7 @@
 		if(target_strength <= 0)
 			target.visible_message("<span class='warning'>[target] collapses under its own weight into a puddle of goop and undigested debris!</span>")
 			target.acid_melt()
-			qdel(src)
+			destroy_effect()
 		else
 
 			switch(target_strength)
