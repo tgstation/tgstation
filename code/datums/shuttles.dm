@@ -59,12 +59,12 @@
 	Has medical facilities."
 	credit_cost = 5000
 
-/datum/map_template/shuttle/emergency/fightclub
-	suffix = "fightclub"
-	name = "The Emergency Rage Cage"
+/datum/map_template/shuttle/emergency/russiafightpit
+	suffix = "russiafightpit"
+	name = "Mother Russia Bleeds"
 	description = "An escape shuttle with all standard facilities expanded to include a fighting pit for the more rowdy and agitated crew to knock some skulls in. Try not to let those asimov-bound silicon weenies ruin the fun."
 	admin_notes = "Standard shuttle layout. Slightly re-arranged and expanded to fit a rage cage."
-	credit_cost = 4000
+	credit_cost = 5000
 
 /datum/map_template/shuttle/emergency/meteor
 	suffix = "meteor"
