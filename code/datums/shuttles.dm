@@ -46,8 +46,8 @@
 	credit_cost = -7500
 
 /datum/map_template/shuttle/emergency/airless/prerequisites_met()
-	// first 5 minutes only
-	return world.time - round_start_time < CHALLENGE_TIME_LIMIT
+	// first 10 minutes only
+	return world.time - round_start_time < 6000
 
 /datum/map_template/shuttle/emergency/asteroid
 	suffix = "asteroid"
