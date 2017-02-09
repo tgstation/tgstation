@@ -4,6 +4,7 @@
 	background_icon_state = "bg_alien"
 	buttontooltipstyle = "alien"
 	var/psi_cost = 0
+	var/lucidity_cost = 0 //How much lucidity the ability costs to buy; if this is 0, it isn't listed on the catalog
 	var/blacklisted = 1 //If the ability isn't available from Divulge
 
 /datum/action/innate/umbrage/Trigger() //When you're making an ability, put ..() in Activate() when you should be consuming psi
@@ -22,16 +23,53 @@
 
 /datum/action/innate/umbrage/proc/get_umbrage()
 	return owner.mind.umbrage_psionics
+	return 1
+
+
+//Devour Will: After a brief charge-up, equips a dark bead.
+//	- The dark bead disappears after three seconds of no use.
+//	- Attacking someone using the dark bead will drain their thoughts.
+//	- This knocks them out as well as fully recharging psi.
+//	- Finally, they will be made vulnerable to Veil Mind for five ticks.
+/datum/action/innate/umbrage/devour_will
+	name = "Devour Will"
+	desc = "Creates a dark bead that can be used on a human to fully recharge psi and knock them out.<br><br>Costs 20 psi."
+	button_icon_state = "umbrage_devour_will"
+	check_flags = AB_CHECK_RESTRAINED|AB_CHECK_STUNNED|AB_CHECK_LYING|AB_CHECK_CONSCIOUS
+	psi_cost = 20
+	lucidity_cost = 0 //Baseline
+	blacklisted = 0
+	var/victims = list() //A list of people we've used the bead on recently; we can't drain them again so soon
+
+/datum/action/innate/umbrage/devour_will/IsAvailable()
+	if(!usr.get_empty_held_indexes())
+		return
+	return ..()
+
+/datum/action/innate/umbrage/devour_will/Activate()
+	usr.visible_message("<span class='warning'>[usr]'s hand begins to shimmer...</span>", "<span class='velvet_bold'>pwga...</span><br>\
+	<span class='notice'>You begin forming a dark bead...</span>")
+	playsound(usr, 'sound/magic/devour_will_begin.ogg', 50, 0)
+	if(!do_after(usr, 10, target = usr))
+		return
+	usr.visible_message("<span class='warning'>A glowing black orb appears in [usr]'s hand!</span>", "<span class='velvet_bold'>...iejz</span><br>\
+	<span class='notice'>You form a dark bead in your hand.</span>")
+	playsound(usr, 'sound/magic/devour_will_form.ogg', 50, 0)
+	var/obj/item/weapon/dark_bead/B = new
+	usr.put_in_hands(B)
+	B.linked_ability = src
+	return 1
 
 
 //Pass: Equips umbral tendrils.
 // - The tendrils' uses are many and varied, including mobility, offense, and more.
 /datum/action/innate/umbrage/pass
 	name = "Pass"
-	desc = "Twists an active arm into tendrils with many uses.<br><br>Costs no psi initially. Actions cost varying psi."
+	desc = "Twists an active arm into tendrils with many uses."
 	button_icon_state = "umbrage_pass"
 	check_flags = AB_CHECK_RESTRAINED|AB_CHECK_STUNNED|AB_CHECK_CONSCIOUS
 	psi_cost = 0
+	lucidity_cost = 1
 	blacklisted = 0
 
 /datum/action/innate/umbrage/pass/IsAvailable()
@@ -59,48 +97,15 @@
 	return 1
 
 
-//Devour Will: After a brief charge-up, equips a dark bead.
-//	- The dark bead disappears after three seconds of no use.
-//	- Attacking someone using the dark bead will drain their thoughts.
-//	- This knocks them out as well as fully recharging psi.
-//	- Finally, they will be made vulnerable to Veil Mind for five ticks.
-/datum/action/innate/umbrage/devour_will
-	name = "Devour Will"
-	desc = "Creates a dark bead that can be used on a human to fully recharge psi and knock them out.<br><br>Costs 20 psi."
-	button_icon_state = "umbrage_devour_will"
-	check_flags = AB_CHECK_RESTRAINED|AB_CHECK_STUNNED|AB_CHECK_LYING|AB_CHECK_CONSCIOUS
-	psi_cost = 20
-	blacklisted = 0
-	var/victims = list() //A list of people we've used the bead on recently; we can't drain them again so soon
-
-/datum/action/innate/umbrage/devour_will/IsAvailable()
-	if(!usr.get_empty_held_indexes())
-		return
-	return ..()
-
-/datum/action/innate/umbrage/devour_will/Activate()
-	usr.visible_message("<span class='warning'>[usr]'s hand begins to shimmer...</span>", "<span class='velvet_bold'>pwga...</span><br>\
-	<span class='notice'>You begin forming a dark bead...</span>")
-	playsound(usr, 'sound/magic/devour_will_begin.ogg', 50, 0)
-	if(!do_after(usr, 10, target = usr))
-		return
-	usr.visible_message("<span class='warning'>A glowing black orb appears in [usr]'s hand!</span>", "<span class='velvet_bold'>...iejz</span><br>\
-	<span class='notice'>You form a dark bead in your hand.</span>")
-	playsound(usr, 'sound/magic/devour_will_form.ogg', 50, 0)
-	var/obj/item/weapon/dark_bead/B = new
-	usr.put_in_hands(B)
-	B.linked_ability = src
-	return 1
-
-
 //Veil Mind: Converts all eligible targets nearby into veils. Targets become eligible for a short time when drained by Devour Will.
 /datum/action/innate/umbrage/veil_mind
 	name = "Veil Mind"
-	desc = "Converts nearby eligible targets into thralls. To be eligible, they must be alive and recently drained by Devour Will.<br><br>Costs 30 psi."
+	desc = "Converts nearby eligible targets into thralls. To be eligible, they must be alive and recently drained by Devour Will."
 	button_icon_state = "umbrage_veil_mind"
 	check_flags = AB_CHECK_STUNNED|AB_CHECK_CONSCIOUS
-	blacklisted = 0
 	psi_cost = 30
+	lucidity_cost = 1 //Yep, thralling is optional! It's just one of many possible playstyles.
+	blacklisted = 0
 
 /datum/action/innate/umbrage/veil_mind/Activate()
 	var/mob/living/carbon/human/H = usr
@@ -142,11 +147,12 @@
 //Demented Outburst: Deafens and confuses listeners. Even if they can't hear it, they will be thrown away and staggered by its force.
 /datum/action/innate/umbrage/demented_outburst
 	name = "Demented Outburst"
-	desc = "Deafens and confuses listeners, and knocks away everyone nearby. Incredibly loud.<br><br>Costs 80 psi."
+	desc = "Deafens and confuses listeners, and knocks away everyone nearby. Incredibly loud."
 	button_icon_state = "umbrage_demented_outburst"
 	check_flags = AB_CHECK_CONSCIOUS
-	blacklisted = 0
 	psi_cost = 80 //big boom = big cost
+	lucidity_cost = 2
+	blacklisted = 0
 
 /datum/action/innate/umbrage/demented_outburst/Activate()
 	usr.visible_message("<span class='warning'>[usr] begins to growl!</span>", "<span class='velvet_bold'>cap...</span><br>\

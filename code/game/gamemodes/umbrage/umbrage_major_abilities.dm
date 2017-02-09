@@ -7,13 +7,11 @@
 	psi_cost = 0
 
 /datum/action/innate/umbrage/tutorial/Activate()
-	switch(alert(usr, "Basic or in-depth tutorial?", "Umbrage Tutorial", "Basic", "Advanced", "tl;dr"))
+	switch(alert(usr, "Basic or in-depth tutorial?", "Umbrage Tutorial", "Basic", "Advanced", "Cancel"))
 		if("Basic")
 			//basic_tutorial(usr)
 		if("Advanced")
 			//advanced_tutorial(usr)
-		if("tl;dr")
-			usr << "<span class='warning'>Read the tutorial, jackass.</span>"
 
 #warn Do the tutorials at some point
 
@@ -104,9 +102,8 @@
 	user.name = umbrage_name
 	sleep(50)
 	user << "<span class='velvet_bold'>Your mind has expanded. All powers are now available. Avoid the light. Keep to the shadows. Your time will come.</span>"
+	var/datum/umbrage/U = get_umbrage()
 	for(var/V in subtypesof(/datum/action/innate/umbrage))
-		var/datum/action/innate/umbrage/A = new V
-		if(A.blacklisted)
-			qdel(A)
-		else
-			A.Grant(user)
+		var/datum/action/innate/umbrage/A = V
+		if(!initial(A.blacklisted) && !initial(A.psi_cost))
+			U.give_ability(initial(A.name))

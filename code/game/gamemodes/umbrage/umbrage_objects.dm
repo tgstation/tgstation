@@ -43,10 +43,10 @@
 		qdel(src)
 		return
 	user.visible_message("<span class='warning'>[user] rips something out of [L]'s face!</span>", "<span class='velvet_bold'>...aranupdejc</span><br>\
-	<span class='boldannounce'>You devour [L]'s will. Your psi has been fully restored, and your max psi has increased by 10.</span><br>\
+	<span class='boldnotice'>You devour [L]'s will. Your psi has been fully restored.\n\
+	Additionally, you have gained one lucidity. Use it to purchase and upgrade abilities.</span><br>\
 	<span class='warning'>[L] is now severely weakened and will take some time to recover.</span>")
 	playsound(L, 'sound/magic/devour_will_victim.ogg', 50, 0)
-	U.max_psi += 10
 	U.psi = U.max_psi
 	playsound(L, "bodyfall", 50, 1)
 	L << "<span class='userdanger'>You suddenly feel... empty. Thoughts try to form, but flit away. You slip into a deep, deep slumber...</span>"
