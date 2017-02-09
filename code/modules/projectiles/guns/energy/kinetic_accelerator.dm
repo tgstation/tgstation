@@ -379,7 +379,7 @@
 	cost = 0
 	denied_type = /obj/item/borg/upgrade/modkit/chassis_mod
 	var/chassis_icon = "kineticgun_u"
-	var/chassis_name = "super-kinetic acclerator"
+	var/chassis_name = "super-kinetic accelerator"
 
 /obj/item/borg/upgrade/modkit/chassis_mod/install(obj/item/weapon/gun/energy/kinetic_accelerator/KA, mob/user)
 	. = ..()
