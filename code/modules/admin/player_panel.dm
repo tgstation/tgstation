@@ -355,7 +355,7 @@
 				else if(M.stat != DEAD && M.mind && !isbrain(M))
 					living_players++
 					if(M.mind.special_role)
-						living_antagonists++
+						living_players_antagonists++
 					if(M.client)
 						living_players_connected++
 				else if((M.stat == DEAD )||(isobserver(M)))
