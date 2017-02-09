@@ -192,7 +192,7 @@ var/datum/subsystem/vote/SSvote
 		if(mode == "custom")
 			text += "\n[question]"
 		log_vote(text)
-		world << "\n<font color='purple'><b>[text]</b>\nType <b>vote</b> or click <a href='?src=\ref[src]'>here</a> to place your votes.\nYou have [config.vote_period/10] seconds to vote.</font>"
+		world << russian_44f2html("\n<font color='purple'><b>[text]</b>\nType <b>vote</b> or click <a href='?src=\ref[src]'>here</a> to place your votes.\nYou have [config.vote_period/10] seconds to vote.</font>")
 		time_remaining = round(config.vote_period/10)
 		for(var/c in clients)
 			var/client/C = c
